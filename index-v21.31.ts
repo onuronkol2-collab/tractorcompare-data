@@ -1423,8 +1423,12 @@ function splitCompositeSpecification(spec: AnyRow): AnyRow[] {
     const isRear = nameKey.startsWith("rear");
     const tireKey = isRear ? "rear_tire_size" : "front_tire_size";
     const tireName = isRear ? "Rear tire size" : "Front tire size";
-    const optionMatch = semanticEvidence.match(/\b(R1\s+Agricultural|R3\s+Turf|R4\s+Industrial)\b/i);
-    const optionScope = optionMatch ? `Tire option: ${optionMatch[1].replace(/\s+/g, " ")}` : null;
+    const evidenceKey = normalise(semanticEvidence);
+    const optionScope = evidenceKey.includes("r1agricultural")
+      ? "Tire option: R1 Agricultural"
+      : evidenceKey.includes("r3turf")
+        ? "Tire option: R3 Turf"
+        : (evidenceKey.includes("r4industrial") ? "Tire option: R4 Industrial" : null);
     push(tireName, value, unit, tireKey, "tires", combinedEvidence, optionScope);
     return out;
   }
@@ -1454,7 +1458,8 @@ function splitCompositeSpecification(spec: AnyRow): AnyRow[] {
   if (isImperialUnit && hasMetricCounterpart && !isPowerField) return out;
 
   // Engine power can be returned as separate HP and kW rows under the same source label.
-  // Canonicalize the unit before fingerprinting so HP and kW do not collide.
+  // Respect the row's selected unit first. Do not re-expand both units from the same
+  // bilingual evidence for each separate Gemini row, which would manufacture duplicates.
   if (nameKey === "enginepower" || nameKey === "enginepowerkw") {
     const powerEvidence = combined + " " + evidence;
     const hp = powerEvidence.match(/([\d.,]+)\s*(?:hp|bhp|ps)\b/i);
@@ -1462,12 +1467,20 @@ function splitCompositeSpecification(spec: AnyRow): AnyRow[] {
     const parsePower = (raw: string) => raw.includes(",")
       ? (/,{1}\d{3}$/.test(raw) ? raw.replace(/,/g, "") : raw.replace(",", "."))
       : raw;
-    if (hp && kw) {
-      push("Engine power", parsePower(hp[1]), /\bps\b/i.test(hp[0]) ? "PS" : "HP", "engine_power", "engine", combinedEvidence);
+    const declaredUnit = String(unit ?? "").toLowerCase();
+    const rowIsKw = nameKey === "enginepowerkw" || /\bkw\b/i.test(declaredUnit) || /\bkw\b/i.test(value);
+    const rowIsHp = /\b(hp|bhp|ps)\b/i.test(declaredUnit) || /\b(hp|bhp|ps)\b/i.test(value);
+    if (rowIsKw) {
+      push("Engine power (kW)", parsePower(kw?.[1] ?? value), "kW", "engine_power_kw", "engine", combinedEvidence);
+    } else if (rowIsHp) {
+      const unitLabel = /\bps\b/i.test(declaredUnit + " " + value) ? "PS" : "HP";
+      push("Engine power", parsePower(hp?.[1] ?? value), unitLabel, "engine_power", "engine", combinedEvidence);
+    } else if (hp && kw) {
+      // A single combined row without a declared primary unit is split into two fields.
+      push("Engine power", parsePower(hp[1]), /\\bps\\b/i.test(hp[0]) ? "PS" : "HP", "engine_power", "engine", combinedEvidence);
       push("Engine power (kW)", parsePower(kw[1]), "kW", "engine_power_kw", "engine", combinedEvidence);
-    } else if (nameKey === "enginepowerkw" || /\bkw\b/i.test(unit ?? "") || /\bkw\b/i.test(value)) {
-      const numeric = kw?.[1] ?? value;
-      push("Engine power (kW)", parsePower(numeric), "kW", "engine_power_kw", "engine", combinedEvidence);
+    } else if (kw) {
+      push("Engine power (kW)", parsePower(kw[1]), "kW", "engine_power_kw", "engine", combinedEvidence);
     } else {
       push("Engine power", hp ? parsePower(hp[1]) : value, unit, "engine_power", "engine", combinedEvidence);
     }
