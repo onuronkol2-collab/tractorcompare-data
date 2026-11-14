@@ -1,4 +1,4 @@
-// TractorCompare AI Edge Function — v21.16 (mandatory human review; LS J27 exact model and variant verification)
+// TractorCompare AI Edge Function — v21.17 (mandatory human review; LS J27 exact variant and composite specification parsing)
 import { createClient } from "npm:@supabase/supabase-js@2";
 
 const corsHeaders = {
@@ -1231,7 +1231,7 @@ function canonicalInfo(specName: string): { key: string | null; className: strin
     ptospeed: { key: "pto_nominal_speed", className: "power_take_off", name: "PTO nominal speed" },
     ptoengagement: { key: "pto_type", className: "power_take_off", name: "PTO engagement" },
     ptocontrol: { key: "pto_control", className: "power_take_off", name: "PTO control" },
-    ptop s: { key: "pto_power", className: "power_take_off", name: "PTO power" },
+    ptops: { key: "pto_power", className: "power_take_off", name: "PTO power" },
     rearpto: { key: "pto_nominal_speed", className: "power_take_off", name: "Rear PTO speed" },
     rearptospeed: { key: "pto_nominal_speed", className: "power_take_off", name: "Rear PTO speed" },
     steeringtype: { key: "steering_type", className: "chassis", name: "Steering type" },
