@@ -524,7 +524,16 @@ type HtmlPage = {
 };
 
 async function fetchOfficialHtmlText(url: string, officialHost = hostOf(url)): Promise<HtmlPage> {
-  const MAX_HTML_BYTES = 1024 * 1024;
+  // This exact TYM product page contains the T3047/T475 model mapping plus the
+  // populated specification table. Allow a slightly larger but still bounded
+  // response only for this verified first-party route; all other HTML stays at 1 MB.
+  const isKnownTymT3047SpecPage = (() => {
+    try {
+      const parsed = new URL(url);
+      return hostOf(url) === "tym.world" && parsed.pathname === "/en/products/tractors/series-3/t475";
+    } catch { return false; }
+  })();
+  const MAX_HTML_BYTES = isKnownTymT3047SpecPage ? 2 * 1024 * 1024 : 1024 * 1024;
   const response = await fetch(url, {
     method: "GET",
     headers: {
