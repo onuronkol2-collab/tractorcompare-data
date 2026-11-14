@@ -1323,7 +1323,7 @@ function splitCompositeSpecification(spec: AnyRow): AnyRow[] {
       const v = raw.trim();
       return v.includes(",") ? (/,\d{3}$/.test(v) ? v.replace(/,/g, "") : v.replace(",", ".")) : v;
     };
-    if (pair) {\bkw\b/.test(unitText)) {
+    if (pair) {
       if (nameKey === "enginehpkw") {
         const primaryUnit = /\bps\b/.test(unitText) ? "PS" : "HP";
         push("Engine power", parseNumber(pair[1]), primaryUnit, "engine_power", "engine", combinedEvidence);
