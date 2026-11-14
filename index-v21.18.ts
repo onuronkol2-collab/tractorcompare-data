@@ -1236,8 +1236,8 @@ function canonicalInfo(specName: string): { key: string | null; className: strin
     ptops: { key: "pto_power", className: "power_take_off", name: "PTO power" },
     rearpto: { key: "pto_nominal_speed", className: "power_take_off", name: "Rear PTO speed" },
     rearptospeed: { key: "pto_nominal_speed", className: "power_take_off", name: "Rear PTO speed" },
-    steeringtype: { key: "steering_type", className: "chassis", name: "Steering type" },
-    braketype: { key: "brake_type", className: "chassis", name: "Brake type" },
+    steeringtype: { key: "steering_type", className: "steering", name: "Steering type" },
+    braketype: { key: "brake_type", className: "brakes", name: "Brake type" },
     rearbrakingsystem: { key: "rear_braking_system", className: "chassis", name: "Rear braking system" },
     reardifferentiallock: { key: "rear_differential_lock", className: "powertrain", name: "Rear differential lock" },
     fronttire: { key: "front_tire_size", className: "tires", name: "Front tire size" },
@@ -1269,7 +1269,7 @@ function canonicalInfo(specName: string): { key: string | null; className: strin
     rearviewmirror: { key: "rear_view_mirror_count", className: "operator_station", name: "Rear-view mirror count" },
     mechanicallyadjustableseat: { key: "operator_seat_configuration", className: "operator_station", name: "Operator seat configuration" },
     worklights: { key: "front_work_lights_count", className: "electrical", name: "Front work lights count" },
-    towhook: { key: "tow_hook", className: "chassis", name: "Tow hook" },
+    towhook: { key: "tow_hook", className: "implements", name: "Tow hook" },
   };
   return map[key] ? { ...map[key] } : { key: null, className: null, name: specName };
 }
