@@ -1387,7 +1387,7 @@ function splitCompositeSpecification(spec: AnyRow): AnyRow[] {
   }
 
   // PTO power is scoped by transmission variant (SS/HST) and separated by unit.
-  if (nameKey === "ptopower" || nameKey === "ptopowerkw" || nameKey === "ptops") {
+  if (nameKey === "ptopower" || nameKey === "ptopowerkw") {
     const unitText = `${unit ?? ""} ${value}`.toLowerCase();
     const kw = combined.match(/([\d.,]+)\s*kw\b/i);
     const powerNumber = kw?.[1] ?? value;
