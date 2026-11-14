@@ -1359,8 +1359,9 @@ function splitCompositeSpecification(spec: AnyRow): AnyRow[] {
 
   // Separate gross engine power into distinct HP and kW canonical fields.
   if (nameKey === "grossenginepower") {
-    const hp = combined.match(/([\d.,]+)\s*(?:hp|bhp|ps)\b/i);
-    const kw = combined.match(/([\d.,]+)\s*kw\b/i);
+    const powerEvidence = `${combined} ${evidence}`;
+    const hp = powerEvidence.match(/([\d.,]+)\s*(?:hp|bhp|ps)\b/i);
+    const kw = powerEvidence.match(/([\d.,]+)\s*kw\b/i);
     const parsePower = (raw: string) => raw.includes(",")
       ? (/,{1}\d{3}$/.test(raw) ? raw.replace(/,/g, "") : raw.replace(",", "."))
       : raw;
