@@ -273,7 +273,47 @@ BEGIN
        IS DISTINCT FROM 'capacities' THEN
         RAISE EXCEPTION 'v21.32 transmission/hydraulic capacity class validation failed';
     END IF;
+
+    IF public.tc_canonical_spec_key_v21_32_alias('3-point hitch category', 'Category 3-point hitch I')
+       IS DISTINCT FROM 'three_point_linkage_category' THEN
+        RAISE EXCEPTION 'v21.32 3-point hitch alias validation failed';
+    END IF;
+
+    IF public.tc_canonical_spec_key_v21_32_alias('Hydraulic pump type', 'Dual gear pump')
+       IS DISTINCT FROM 'hydraulic_pump_type' THEN
+        RAISE EXCEPTION 'v21.32 hydraulic pump type alias validation failed';
+    END IF;
+
+    IF public.tc_canonical_spec_key_v21_32_alias('Rear remote valves', '1')
+       IS DISTINCT FROM 'hydraulic_remote_valve_count' THEN
+        RAISE EXCEPTION 'v21.32 rear remote valve alias validation failed';
+    END IF;
+
+    IF public.tc_canonical_spec_key_v21_32_alias('Coolant capacity', '6.5 L')
+       IS DISTINCT FROM 'coolant_capacity' THEN
+        RAISE EXCEPTION 'v21.32 coolant capacity alias validation failed';
+    END IF;
+
+    IF public.tc_canonical_spec_key_v21_32_alias('Crankcase oil capacity', '6.4 L')
+       IS DISTINCT FROM 'engine_oil_capacity' THEN
+        RAISE EXCEPTION 'v21.32 crankcase oil capacity alias validation failed';
+    END IF;
+
+    IF public.tc_canonical_spec_key_v21_32_alias('Front axle fluid capacity', '2.1 L')
+       IS DISTINCT FROM 'front_axle_capacity' THEN
+        RAISE EXCEPTION 'v21.32 front axle fluid capacity alias validation failed';
+    END IF;
+
+    IF public.tc_canonical_spec_key_v21_32_alias('Transmission and hydraulics fluid capacity', '32.2 L')
+       IS DISTINCT FROM 'transmission_hydraulic_system_capacity' THEN
+        RAISE EXCEPTION 'v21.32 transmission/hydraulics capacity alias validation failed';
+    END IF;
+
+    IF public.tc_canonical_spec_key_v21_32_alias('R4 Industrial tire - Rear', '12.5-20 10PR')
+       IS DISTINCT FROM 'rear_tire_size' THEN
+        RAISE EXCEPTION 'v21.32 R4 rear tire alias validation failed';
+    END IF;
 END;
-$$;
+$;
 
 COMMIT;
