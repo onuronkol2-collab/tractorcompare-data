@@ -2985,4 +2985,4 @@ Deno.serve(async (req: Request) => {
   }
 });
 
-// END OF FILE - complete TractorCompare AI Edge Function v21.15 source (12 MB PDF cap, 60-second Gemini start timeout, 1 MB HTML reader, alternate official manufacturer host support, upstream-error batch isolation; sequential batch queue worker).
+// END OF FILE - complete TractorCompare AI Edge Function v21.19 source (mandatory human approval; exact LS J27 variant validation; split HP/PS and dimension parsing; canonical taxonomy alignment).
