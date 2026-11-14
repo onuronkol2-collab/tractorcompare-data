@@ -88,7 +88,17 @@ function extractExactModelVariantIdentityEvidence(sourceText: string, modelName:
   const modelParts = String(modelName ?? "").match(/[a-z0-9]+/gi) ?? [];
   const variantParts = String(variant ?? "").match(/[a-z0-9]+/gi) ?? [];
   if (!raw || !modelParts.length || !variantParts.length) return null;
-  const escapeRegex = (part: string) => part.replace(/[.*+?^${}()|[\]\\]/g, "\\function cleanCatalogVariant(value: unknown): string | null {");
+  const modelPattern = modelParts.join("[\\s._,–—/\\-]*");
+  const variantPattern = variantParts.join("[\\s._,–—/\\-]*");
+  const expression = new RegExp("(^|[^a-z0-9])(" + modelPattern + ")[\\s._,–—/\\-]+(" + variantPattern + ")(?=$|[^a-z0-9])", "i");
+  const match = expression.exec(raw);
+  if (!match || match.index === undefined) return null;
+  const start = Math.max(0, match.index - 180);
+  const end = Math.min(raw.length, match.index + match[0].length + 300);
+  return raw.slice(start, end).replace(/\\s+/g, " ").trim().slice(0, 600);
+}
+
+function cleanCatalogVariant(value: unknown): string | null {");
   const modelPattern = modelParts.map(escapeRegex).join("[\\s._,–—/\\-]*");
   const variantPattern = variantParts.map(escapeRegex).join("[\\s._,–—/\\-]*");
   const expression = new RegExp(`(^|[^a-z0-9])(${modelPattern})[\\s._,–—/\\-]+(${variantPattern})(?=$|[^a-z0-9])`, "i");
@@ -656,12 +666,8 @@ function hasExactTokenSequence(text: string, value: string): boolean {
   const raw = String(text ?? "");
   const parts = String(value ?? "").match(/[a-z0-9]+/gi) ?? [];
   if (!raw || !parts.length) return false;
-  const escapeRegex = (part: string) => part.replace(/[.*+?^${}()|[\]\\]/g, "\\function exactModelMatch(text: string, modelName: string): boolean {
-  const modelKey = normalise(modelName);
-  return modelKey.length >= 4 && normalise(text).includes(modelKey);
-}");
-  const pattern = parts.map(escapeRegex).join("[\\s._,–—/\\-]*");
-  return new RegExp(`(^|[^a-z0-9])(${pattern})(?=$|[^a-z0-9])`, "i").test(raw);
+  const pattern = parts.join("[\\s._,–—/\\-]*");
+  return new RegExp("(^|[^a-z0-9])(" + pattern + ")(?=$|[^a-z0-9])", "i").test(raw);
 }
 
 // The three-character code J27 is an explicitly documented LS Mtron model.
