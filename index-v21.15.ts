@@ -262,6 +262,40 @@ function evidenceSupportsValue(value: string, evidence: string): boolean {
   return false;
 }
 
+function officialDiscoveryFallbackUrl(brandName: string, modelName: string, configuredWebsite: string): { url: string; sourceType: string; notes: string } {
+  const brandKey = normalise(brandName);
+  const modelKey = normalise(modelName);
+  if (brandKey === "landini") {
+    // Official Landini product-range index on its current first-party domain.
+    // Discovery only; model-specific pages / brochures remain required.
+    return {
+      url: "https://landini-tractors.com/as/en/products.html",
+      sourceType: "official_website",
+      notes: "Official Landini product-range index on the current first-party domain; discovery only",
+    };
+  }
+  if (brandKey === "lstractor" && modelKey === "j") {
+    // Exact LS Mtron J family page, including the J27 HST / J27 GEAR table.
+    return {
+      url: "https://www.lstractor.com/en/product/tractor/tractor_J",
+      sourceType: "official_product_page",
+      notes: "Official LS Mtron J product page; detailed models J27 HST and J27 GEAR",
+    };
+  }
+  if (brandKey === "lstractor") {
+    return {
+      url: "https://www.lstractor.com/en",
+      sourceType: "official_website",
+      notes: "Official LS Mtron global website on the current first-party domain; discovery only",
+    };
+  }
+  return {
+    url: configuredWebsite,
+    sourceType: "official_website",
+    notes: "Official manufacturer homepage fallback; product page will be discovered from same-domain links/sitemap",
+  };
+}
+
 function chooseSource(
   brand: AnyRow,
   modelName: string,
@@ -328,14 +362,17 @@ function chooseSource(
       return Boolean(modelKey && text.includes(modelKey));
     }) ?? null;
 
-    // If no exact-model source exists, start at the manufacturer's homepage and
-    // let the same-domain crawler inspect product links and sitemaps.
+    // If no exact-model source exists, use the current first-party product index
+    // for manufacturers whose legacy registered homepage is no longer the best
+    // crawl entry point. This is discovery only; relevance and exact identity
+    // checks remain mandatory for research evidence.
     if (!chosen && officialWebsite && isHttpsUrl(officialWebsite)) {
+      const fallback = officialDiscoveryFallbackUrl(String(brand.name), modelName, officialWebsite);
       chosen = {
-        source_url: officialWebsite,
-        source_type: "official_website",
+        source_url: fallback.url,
+        source_type: fallback.sourceType,
         publisher: brand.name,
-        notes: "Official manufacturer homepage fallback; product page will be discovered from same-domain links/sitemap",
+        notes: fallback.notes,
       };
     }
   }
@@ -1049,8 +1086,34 @@ async function discoverOfficialSources(
 
   const primaryPacket = packets.find((packet) => packet.source.url === primary.url);
   if (!primaryPacket) {
+    // Only an automatically selected official homepage/product index may be
+    // bypassed, and only when another fetched first-party packet independently
+    // proves exact model relevance. A manually registered/selected primary
+    // source remains mandatory and cannot be silently replaced.
+    const isDiscoveryFallback = primary.sourceType === "official_website";
+    const verifiedFallbackPackets = isDiscoveryFallback
+      ? packets.filter((packet) => {
+          const relevance = sourceRelevance(
+            packet.finalUrl || packet.source.url,
+            packet.title || packet.source.notes || "",
+            packet.source.discoveryParentUrl ?? null,
+            modelName,
+            Boolean(packet.pdfBase64),
+          );
+          return relevance.preferred && relevance.modelSpecific;
+        })
+      : [];
+    if (verifiedFallbackPackets.length > 0) {
+      console.warn(
+        `[crawler] primary discovery page unavailable; proceeding only with ${verifiedFallbackPackets.length} independently model-specific official packet(s) for ${brand.name} ${modelName}`
+      );
+      return verifiedFallbackPackets.slice(0, 4);
+    }
     const diagnostics = sourceFetchFailures.slice(0, 8).join(" || ").slice(0, 1400);
-    throw new Error(`Verilen resmî ana kaynak okunamadı. URL'nin üretici alanında ve erişilebilir olduğundan emin olun. Kaynak tanısı: ${diagnostics || "Kaynak indirme/okuma aşamasında açıklayıcı bir HTTP hata mesajı alınamadı."}`);
+    throw new Error(
+      `Resmî kaynak paketi oluşturulamadı. Birincil kaynak: ${primary.url} [${primary.sourceType}]. `
+      + `Doğrulanmış alternatif model kaynağı: bulunamadı. Kaynak tanısı: ${diagnostics || "İndirme başarısızlığı ayrıntısı yok; üretici sayfası robots/anti-bot veya JS ile oluşturulan içerik nedeniyle okunamamış olabilir."}`
+    );
   }
   return [primaryPacket, ...packets.filter((packet) => packet !== primaryPacket)].slice(0, 4);
 }
