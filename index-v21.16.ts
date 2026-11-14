@@ -81,8 +81,6 @@ function extractExactModelIdentityEvidence(sourceText: string, modelName: string
   return raw.slice(start, end).replace(/\s+/g, " ").trim().slice(0, 600);
 }
 
-// Catalog notes such as "Catalog listing - review" are not real tractor variants.
-// Treat these placeholders as an empty variant during matching and persistence.
 function extractExactModelVariantIdentityEvidence(sourceText: string, modelName: string, variant: string): string | null {
   const raw = String(sourceText ?? "");
   const modelParts = String(modelName ?? "").match(/[a-z0-9]+/gi) ?? [];
@@ -95,24 +93,14 @@ function extractExactModelVariantIdentityEvidence(sourceText: string, modelName:
   if (!match || match.index === undefined) return null;
   const start = Math.max(0, match.index - 180);
   const end = Math.min(raw.length, match.index + match[0].length + 300);
-  return raw.slice(start, end).replace(/\\s+/g, " ").trim().slice(0, 600);
+  return raw.slice(start, end).replace(/\s+/g, " ").trim().slice(0, 600);
 }
 
-function cleanCatalogVariant(value: unknown): string | null {");
-  const modelPattern = modelParts.map(escapeRegex).join("[\\s._,–—/\\-]*");
-  const variantPattern = variantParts.map(escapeRegex).join("[\\s._,–—/\\-]*");
-  const expression = new RegExp(`(^|[^a-z0-9])(${modelPattern})[\\s._,–—/\\-]+(${variantPattern})(?=$|[^a-z0-9])`, "i");
-  const match = expression.exec(raw);
-  if (!match || match.index === undefined) return null;
-  const start = Math.max(0, match.index - 180);
-  const end = Math.min(raw.length, match.index + match[0].length + 300);
-  return raw.slice(start, end).replace(/\\s+/g, " ").trim().slice(0, 600);
-}
-
+// Catalog notes such as "Catalog listing - review" are not real tractor variants.
+// Treat these placeholders as an empty variant during matching and persistence.
 function cleanCatalogVariant(value: unknown): string | null {
   const raw = String(value ?? "").trim();
   if (!raw) return null;
-
   const key = normalise(raw);
   const placeholders = new Set([
     "cataloglistingreview",
@@ -132,7 +120,6 @@ function cleanCatalogVariant(value: unknown): string | null {
     "na",
     "n/a",
   ]);
-
   return placeholders.has(key) ? null : raw;
 }
 
