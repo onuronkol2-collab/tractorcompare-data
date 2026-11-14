@@ -2402,7 +2402,12 @@ async function completeResearch(runInput: AnyRow, interaction: AnyRow) {
   // "global" is the catalog default, not proof that a market-specific source
   // applies worldwide. When the official source identifies a concrete market,
   // preserve that market as a separate catalog identity.
-  const targetMarket = requestedMarketIsGeneric && resultMarket && normalise(resultMarket) !== "global"
+  // Queue-pinned research must remain attached to the exact catalog row and must not
+  // silently fork that row because a source describes a broad sales territory (for
+  // example, a brochure marked for international distribution). Preserve that
+  // source territory separately for human review; non-pinned research may still
+  // create a market-specific identity when the source explicitly proves one.
+  const targetMarket = requestedMarketIsGeneric && !run.tractor_id && resultMarket && normalise(resultMarket) !== "global"
     ? resultMarket
     : requestedMarket;
   const marketMatch = requestedMarketIsGeneric
@@ -2873,6 +2878,9 @@ async function completeResearch(runInput: AnyRow, interaction: AnyRow) {
   const resultMeta = {
     model_found: modelFound,
     model_name: requestedModel,
+    catalog_market_requested: requestedMarket,
+    source_market_scope: resultMarket || null,
+    market_scope_needs_human_review: Boolean(requestedMarketIsGeneric && resultMarket && normalise(resultMarket) !== "global"),
     specifications_found: rawSpecs.length,
     atomic_specifications: atomicSpecs.length,
     findings_saved: persistedFindingTotal,
