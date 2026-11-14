@@ -1164,8 +1164,6 @@ function canonicalInfo(specName: string): { key: string | null; className: strin
     enginemanufacturer: { key: "engine_make_model", className: "engine", name: "Engine make and model" },
     grossenginepower: { key: "engine_gross_power", className: "engine", name: "Gross engine power" },
     grossenginepowerkw: { key: "engine_gross_power_kw", className: "engine", name: "Gross engine power (kW)" },
-    ptopower: { key: "pto_power", className: "power_take_off", name: "PTO power" },
-    ptopowerkw: { key: "pto_power_kw", className: "power_take_off", name: "PTO power (kW)" },
     engineaspiration: { key: "engine_aspiration", className: "engine", name: "Engine aspiration" },
     aircleaner: { key: "engine_air_cleaner", className: "engine", name: "Engine air cleaner" },
     fuelsystem: { key: "engine_fuel_system", className: "engine", name: "Engine fuel system" },
