@@ -1477,7 +1477,7 @@ function splitCompositeSpecification(spec: AnyRow): AnyRow[] {
       push("Engine power", parsePower(hp?.[1] ?? value), unitLabel, "engine_power", "engine", combinedEvidence);
     } else if (hp && kw) {
       // A single combined row without a declared primary unit is split into two fields.
-      push("Engine power", parsePower(hp[1]), /\\bps\\b/i.test(hp[0]) ? "PS" : "HP", "engine_power", "engine", combinedEvidence);
+      push("Engine power", parsePower(hp[1]), /\bps\b/i.test(hp[0]) ? "PS" : "HP", "engine_power", "engine", combinedEvidence);
       push("Engine power (kW)", parsePower(kw[1]), "kW", "engine_power_kw", "engine", combinedEvidence);
     } else if (kw) {
       push("Engine power (kW)", parsePower(kw[1]), "kW", "engine_power_kw", "engine", combinedEvidence);
