@@ -1164,6 +1164,8 @@ function canonicalInfo(specName: string): { key: string | null; className: strin
     enginemanufacturer: { key: "engine_make_model", className: "engine", name: "Engine make and model" },
     grossenginepower: { key: "engine_gross_power", className: "engine", name: "Gross engine power" },
     grossenginepowerkw: { key: "engine_gross_power_kw", className: "engine", name: "Gross engine power (kW)" },
+    ptopower: { key: "pto_power", className: "power_take_off", name: "PTO power" },
+    ptopowerkw: { key: "pto_power_kw", className: "power_take_off", name: "PTO power (kW)" },
     engineaspiration: { key: "engine_aspiration", className: "engine", name: "Engine aspiration" },
     aircleaner: { key: "engine_air_cleaner", className: "engine", name: "Engine air cleaner" },
     fuelsystem: { key: "engine_fuel_system", className: "engine", name: "Engine fuel system" },
@@ -1218,7 +1220,7 @@ function canonicalInfo(specName: string): { key: string | null; className: strin
     hydraulicmainflow: { key: "hydraulic_main_flow", className: "hydraulics", name: "Main hydraulic flow" },
     mainhydraulicflow: { key: "hydraulic_main_flow", className: "hydraulics", name: "Main hydraulic flow" },
     hydraulicpumpflow: { key: "hydraulic_main_flow", className: "hydraulics", name: "Hydraulic pump flow" },
-    implementflow: { key: "hydraulic_main_flow", className: "hydraulics", name: "Implement flow" },
+    implementflow: { key: "hydraulic_implement_flow", className: "hydraulics", name: "Implement flow" },
     steeringflow: { key: "hydraulic_steering_flow", className: "hydraulics", name: "Steering flow" },
     totalflow: { key: "hydraulic_total_flow", className: "hydraulics", name: "Total hydraulic flow" },
     pumptype: { key: "hydraulic_pump_type", className: "hydraulics", name: "Hydraulic pump type" },
@@ -1349,6 +1351,14 @@ function splitCompositeSpecification(spec: AnyRow): AnyRow[] {
   const combined = `${value} ${unit ?? ""}`.trim();
   const combinedEvidence = `${originalName}: ${evidence}`.slice(0, 2000);
 
+  // If the same non-power quantity is separately returned in imperial units
+  // while its metric counterpart is explicitly printed in the same evidence,
+  // keep the metric finding only. Never collapse HP/PS versus kW power pairs.
+  const isImperialUnit = /^(?:cu\.?\s*in\.?|in\.?|inches?|ft\.?|feet|lb|lbs|pounds?|gal|gallons?|qt|quarts?|gpm|mph)$/i.test(unit ?? "");
+  const hasMetricCounterpart = /[\d.,]+\s*(?:mm|cm|m|kg|g|l|lit(?:er|re)s?|cc|cm³|cm3|kw|km\/h|l\s*\/\s*min)\b/i.test(evidence);
+  const isPowerField = /(?:grossenginepower|ptopower|enginehpkw|ptops)/.test(nameKey);
+  if (isImperialUnit && hasMetricCounterpart && !isPowerField) return out;
+
   // Separate gross engine power into distinct HP and kW canonical fields.
   if (nameKey === "grossenginepower") {
     const hp = combined.match(/([\d.,]+)\s*(?:hp|bhp|ps)\b/i);
@@ -1366,6 +1376,24 @@ function splitCompositeSpecification(spec: AnyRow): AnyRow[] {
 
   if (nameKey === "heighttotopofrops") {
     push("Overall height", value, unit, "overall_height", "dimensions_weights", combinedEvidence, "To top of ROPS");
+    return out;
+  }
+
+  if (/^hitchliftcapacityat/.test(nameKey)) {
+    push("Rear lift capacity", value, unit, "rear_lift_capacity", "hydraulics", combinedEvidence, "24 inches behind link ends");
+    return out;
+  }
+  if (nameKey === "hitchliftcapacity") {
+    push("Rear lift capacity", value, unit, "rear_lift_capacity", "hydraulics", combinedEvidence, "At hitch link ends");
+    return out;
+  }
+
+  // PTO power is scoped by transmission variant (SS/HST) and separated by unit.
+  if (nameKey === "ptopower" || nameKey === "ptopowerkw" || nameKey === "ptops") {
+    const unitText = String(unit ?? "").toLowerCase();
+    const kwOnly = nameKey === "ptopowerkw" || /\bkw\b/.test(unitText);
+    if (kwOnly) push("PTO power (kW)", value, "kW", "pto_power_kw", "power_take_off", combinedEvidence);
+    else push("PTO power", value, unit, "pto_power", "power_take_off", combinedEvidence);
     return out;
   }
 
@@ -1438,6 +1466,8 @@ function splitCompositeSpecification(spec: AnyRow): AnyRow[] {
   if (nameKey === "type") {
     if (/\b(open\s*cent(?:re|er)|closed\s*cent(?:re|er)|load[- ]sensing|constant[- ]flow|pressure[- ]compensated)\b/i.test(combined)) {
       push("Hydraulic system type", value, null, "hydraulic_system_type", "hydraulics");
+    } else if (/\b(natural|normally)\s+aspirat(?:ed|ion)|turbocharg(?:ed|ing)|supercharg(?:ed|ing)|aspirat(?:ed|ion)\b/i.test(combined)) {
+      push("Engine aspiration", value, null, "engine_aspiration", "engine");
     } else {
       push(originalName, value, unit, null, null);
     }
@@ -1583,6 +1613,7 @@ const SPEC_OUTPUT_SCHEMA: AnyRow = {
     summary: { type: "string" },
     specifications: {
       type: "array",
+      maxItems: 60,
       items: {
         type: "object",
         properties: {
@@ -2068,11 +2099,11 @@ RESEARCH RULES
 6. Do NOT reinterpret generic "Capacity". It might be lifting, tank, load or another capacity. Keep the exact source label; do not rename it "Rear lift capacity" unless the source says so.
 7. Do not place a combined engine or transmission paragraph in a single field when the parts are explicit. You may return atomic items such as Engine make, Engine cylinders, Engine displacement, Engine fuel type, Engine emission standard, Drivetrain, Forward gears, Reverse gears and Transmission type.
 7a. COVERAGE: inspect every populated row in the technical-specification table and extract every explicit tractor specification up to the 40-item limit. Do not stop after headline values. Ignore only blank/dash placeholders and accessory-only specifications that do not describe the tractor itself.
-7b. VARIANT COLUMNS: when one brochure table explicitly lists multiple transmission configurations (for example SS and HST), do not merge or choose one. Emit separate findings for each variant-specific value, set measurement_standard to "Transmission variant: SS" or "Transmission variant: HST", and repeat that variant label in evidence_text. Keep common rows separate only when the brochure presents them as common to the model. All such findings remain pending for human review.
+7b. VARIANT COLUMNS: when one brochure table explicitly lists multiple transmission configurations (for example SS and HST), do not merge or choose one. Emit separate findings for each variant-specific value, set measurement_standard to "Transmission variant: SS" or "Transmission variant: HST", and repeat that variant label in evidence_text. This includes transmission type, gear configuration, maximum speed and PTO power. For PTO power, emit the HP/PS and kW values as separate atomic findings for each variant with distinct canonical names/units. Keep common rows separate only when the brochure presents them as common to the model. All such findings remain pending for human review.
 7c. UNIT PAIRS: when one non-power specification is printed in metric and imperial units on the same row, create one finding using the metric value/unit and keep both printed values in evidence_text; do not create a second duplicate finding for the imperial equivalent. For gross engine power and PTO power, keep separately labelled HP/PS and kW values under distinct canonical keys.
 8. For transmission notation 9+3, do not assume direction unless source context clearly says forward/reverse gear counts. If ambiguous return the original combined label/value.
 9. Keep units exactly as shown. Do not convert units. Use confidence from 0 to 1 (not 0 to 100); 1.0 only for explicit exact-source values.
-10. Include at most 40 specs. Use null for absent fields. No invented model years or variants. A brochure publication/print/copyright/access date is NOT a tractor model year; set model_year=null unless the source explicitly identifies the tractor's model year.
+10. Include at most 60 specs. Use null for absent fields. No invented model years or variants. A brochure publication/print/copyright/access date is NOT a tractor model year; set model_year=null unless the source explicitly identifies the tractor's model year.
 11. STRICT VARIANT RULE: Requested variant is ${variantInput ?? "not specified"}. Never take a value from a conflicting sibling version (for example 2WD vs 4WD, cabin vs platform). When a source or table contains multiple variants, extract a value only when the relevant row/column is explicitly tied to the requested variant; quote that variant in evidence_text. If the correct column cannot be established, omit the value or leave it pending. Do not infer that sibling variants share a specification.
 
 SOURCE MATERIAL (all URLs belong to the registered manufacturer's official domain):
@@ -2403,7 +2434,7 @@ async function completeResearch(runInput: AnyRow, interaction: AnyRow) {
     publishedModel = Boolean(tractor && tractor.status === "published" && identityMatches.length === 1);
   }
 
-  const rawSpecs = Array.isArray(result.specifications) ? result.specifications.slice(0, 40) : [];
+  const rawSpecs = Array.isArray(result.specifications) ? result.specifications.slice(0, 60) : [];
   const atomicSpecs = rawSpecs.flatMap((spec: AnyRow) => splitCompositeSpecification(spec));
   let pendingCount = 0;
   let approvedCount = 0;
