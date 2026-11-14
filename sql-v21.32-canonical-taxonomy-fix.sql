@@ -326,6 +326,6 @@ BEGIN
         RAISE EXCEPTION 'v21.32 R4 rear tire alias validation failed';
     END IF;
 END;
-$;
+$$;
 
 COMMIT;
