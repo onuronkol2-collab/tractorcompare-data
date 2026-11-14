@@ -1,4 +1,4 @@
-// TractorCompare AI Edge Function — v21.15 (mandatory human review; official host aliases; detailed source diagnostics)
+// TractorCompare AI Edge Function — v21.16 (mandatory human review; LS J27 exact model and variant verification)
 import { createClient } from "npm:@supabase/supabase-js@2";
 
 const corsHeaders = {
