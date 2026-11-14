@@ -1265,7 +1265,6 @@ function canonicalInfo(specName: string): { key: string | null; className: strin
     rearptospeed: { key: "pto_nominal_speed", className: "power_take_off", name: "Rear PTO speed" },
     brakes: { key: "brake_type", className: "brakes", name: "Brake type" },
     steering: { key: "steering_type", className: "steering", name: "Steering type" },
-    clutch: { key: "clutch_type", className: "transmission", name: "Clutch type" },
     noofspeeds: { key: "transmission_gear_configuration", className: "transmission", name: "Transmission gear configuration" },
     maxtravelingspeed: { key: "maximum_speed", className: "dimensions_weights", name: "Maximum traveling speed" },
     coolant: { key: "coolant_capacity", className: "capacities", name: "Coolant capacity" },
