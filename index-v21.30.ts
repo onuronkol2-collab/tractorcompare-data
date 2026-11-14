@@ -1318,6 +1318,8 @@ function canonicalInfo(specName: string): { key: string | null; className: strin
     heighttotopofrops: { key: "overall_height", className: "dimensions_weights", name: "Overall height" },
     r1agriculturalfront: { key: "front_tire_size", className: "tires", name: "Front tire size" },
     r1agriculturalrear: { key: "rear_tire_size", className: "tires", name: "Rear tire size" },
+    r3turffront: { key: "front_tire_size", className: "tires", name: "Front tire size" },
+    r3turfrear: { key: "rear_tire_size", className: "tires", name: "Rear tire size" },
     r4industrialfront: { key: "front_tire_size", className: "tires", name: "Front tire size" },
     r4industrialrear: { key: "rear_tire_size", className: "tires", name: "Rear tire size" },
     steeringtype: { key: "steering_type", className: "steering", name: "Steering type" },
@@ -1414,12 +1416,12 @@ function splitCompositeSpecification(spec: AnyRow): AnyRow[] {
     return out;
   }
 
-  // R1/R4 tire fitments are optional configurations, not concurrent sizes.
+  // R1/R3/R4 tire fitments are optional configurations, not concurrent sizes.
   if (/^(front|rear)tire(?:size)?$/.test(nameKey)) {
     const isRear = nameKey.startsWith("rear");
     const tireKey = isRear ? "rear_tire_size" : "front_tire_size";
     const tireName = isRear ? "Rear tire size" : "Front tire size";
-    const optionMatch = semanticEvidence.match(/\b(R1\s+Agricultural|R4\s+Industrial)\b/i);
+    const optionMatch = semanticEvidence.match(/\b(R1\s+Agricultural|R3\s+Turf|R4\s+Industrial)\b/i);
     const optionScope = optionMatch ? `Tire option: ${optionMatch[1].replace(/\s+/g, " ")}` : null;
     push(tireName, value, unit, tireKey, "tires", combinedEvidence, optionScope);
     return out;
