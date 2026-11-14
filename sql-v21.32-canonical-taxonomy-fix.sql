@@ -109,6 +109,8 @@ SELECT CASE
     -- Keep this exception before the broad transmission_ classification.
     WHEN p_key IN (
         'front_axle_capacity',
+        'engine_oil_capacity',
+        'hydraulic_oil_capacity',
         'transmission_hydraulic_system_capacity',
         'transmission_oil_capacity'
     ) THEN 'capacities'
@@ -151,11 +153,11 @@ SELECT CASE
         'weight_range', 'wheelbase', 'ground_clearance', 'overall_length',
         'overall_width', 'overall_width_range', 'overall_height', 'track_width',
         'front_track_width', 'rear_track_width', 'turning_radius', 'seat_height',
-        'power_to_weight_ratio', 'maximum_speed', 'speed_range'
+        'power_to_weight_ratio', 'speed_range'
     ) THEN 'dimensions_weights'
 
     WHEN p_key IN (
-        'forward_speed_range', 'maximum_road_speed', 'minimum_speed',
+        'maximum_speed', 'forward_speed_range', 'maximum_road_speed', 'minimum_speed',
         'min_forward_speed', 'max_forward_speed'
     ) THEN 'performance'
 
@@ -272,6 +274,16 @@ BEGIN
     IF public.tc_canonical_spec_class('transmission_hydraulic_system_capacity')
        IS DISTINCT FROM 'capacities' THEN
         RAISE EXCEPTION 'v21.32 transmission/hydraulic capacity class validation failed';
+    END IF;
+
+    IF public.tc_canonical_spec_class('engine_oil_capacity')
+       IS DISTINCT FROM 'capacities' THEN
+        RAISE EXCEPTION 'v21.32 engine oil capacity class validation failed';
+    END IF;
+
+    IF public.tc_canonical_spec_class('maximum_speed')
+       IS DISTINCT FROM 'performance' THEN
+        RAISE EXCEPTION 'v21.32 maximum speed class validation failed';
     END IF;
 
     IF public.tc_canonical_spec_key_v21_32_alias('3-point hitch category', 'Category 3-point hitch I')
