@@ -1456,16 +1456,16 @@ function splitCompositeSpecification(spec: AnyRow): AnyRow[] {
   // Engine power can be returned as separate HP and kW rows under the same source label.
   // Canonicalize the unit before fingerprinting so HP and kW do not collide.
   if (nameKey === "enginepower" || nameKey === "enginepowerkw") {
-    const powerEvidence = `${combined} ${evidence}`;
-    const hp = powerEvidence.match(/([\\d.,]+)\\s*(?:hp|bhp|ps)\\b/i);
-    const kw = powerEvidence.match(/([\\d.,]+)\\s*kw\\b/i);
+    const powerEvidence = combined + " " + evidence;
+    const hp = powerEvidence.match(/([\d.,]+)\s*(?:hp|bhp|ps)\b/i);
+    const kw = powerEvidence.match(/([\d.,]+)\s*kw\b/i);
     const parsePower = (raw: string) => raw.includes(",")
-      ? (/,{1}\\d{3}$/.test(raw) ? raw.replace(/,/g, "") : raw.replace(",", "."))
+      ? (/,{1}\d{3}$/.test(raw) ? raw.replace(/,/g, "") : raw.replace(",", "."))
       : raw;
     if (hp && kw) {
-      push("Engine power", parsePower(hp[1]), /\\bps\\b/i.test(hp[0]) ? "PS" : "HP", "engine_power", "engine", combinedEvidence);
+      push("Engine power", parsePower(hp[1]), /\bps\b/i.test(hp[0]) ? "PS" : "HP", "engine_power", "engine", combinedEvidence);
       push("Engine power (kW)", parsePower(kw[1]), "kW", "engine_power_kw", "engine", combinedEvidence);
-    } else if (nameKey === "enginepowerkw" || /\\bkw\\b/i.test(unit ?? "") || /\\bkw\\b/i.test(value)) {
+    } else if (nameKey === "enginepowerkw" || /\bkw\b/i.test(unit ?? "") || /\bkw\b/i.test(value)) {
       const numeric = kw?.[1] ?? value;
       push("Engine power (kW)", parsePower(numeric), "kW", "engine_power_kw", "engine", combinedEvidence);
     } else {
