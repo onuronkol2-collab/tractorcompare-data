@@ -90,33 +90,82 @@ function scoreSpec(spec: PublicSpec): number {
     + (spec.source_type === "official_product_page" ? 5 : 0);
 }
 
+function timestampScore(value: string | null): number {
+  if (!value) return 0;
+  const timestamp = Date.parse(value);
+  return Number.isFinite(timestamp) ? timestamp : 0;
+}
+
+function stableTextCompare(left: string | null, right: string | null): number {
+  const a = left ?? "";
+  const b = right ?? "";
+  return a < b ? -1 : a > b ? 1 : 0;
+}
+
+/**
+ * Lower-ranked values win. The final spec_id comparison guarantees the same
+ * representative is selected even when every quality signal is tied.
+ */
+function compareSpecQuality(a: PublicSpec, b: PublicSpec): number {
+  const scoreDifference = scoreSpec(b) - scoreSpec(a);
+  if (scoreDifference !== 0) return scoreDifference;
+
+  const verifiedDifference = timestampScore(b.verified_at) - timestampScore(a.verified_at);
+  if (verifiedDifference !== 0) return verifiedDifference;
+
+  const evidenceLengthDifference =
+    (b.evidence_text?.trim().length ?? 0) - (a.evidence_text?.trim().length ?? 0);
+  if (evidenceLengthDifference !== 0) return evidenceLengthDifference;
+
+  const sourceTypeRank: Record<string, number> = {
+    manufacturer_specification: 4,
+    official_product_page: 3,
+    manufacturer: 2,
+    technical_report: 1,
+    independent_test: 1,
+  };
+  const sourceTypeDifference =
+    (sourceTypeRank[b.source_type ?? ""] ?? 0)
+    - (sourceTypeRank[a.source_type ?? ""] ?? 0);
+  if (sourceTypeDifference !== 0) return sourceTypeDifference;
+
+  const sourceUrlDifference = stableTextCompare(a.source_url, b.source_url);
+  if (sourceUrlDifference !== 0) return sourceUrlDifference;
+
+  return stableTextCompare(a.spec_id, b.spec_id);
+}
+
 /**
  * Suppress only exact semantic duplicates. Different units, measurement
  * standards or rated RPM values remain separate because they may describe
- * legitimately different measurements.
+ * legitimately different measurements. A deterministic quality comparator
+ * selects the same best-supported row on every build.
  */
 function deduplicateSpecs(specifications: PublicSpec[]): PublicSpec[] {
-  const ranked = [...specifications].sort((a, b) => scoreSpec(b) - scoreSpec(a));
-  const kept: PublicSpec[] = [];
+  const bestByIdentity = new Map<string, PublicSpec>();
 
-  for (const candidate of ranked) {
-    const key = candidate.canonical_key || normalise(candidate.spec_name);
-    const exactDuplicate = kept.some((item) =>
-      (item.canonical_key || normalise(item.spec_name)) === key
-      && normalise(item.spec_value) === normalise(candidate.spec_value)
-      && normalise(item.unit) === normalise(candidate.unit)
-      && normalise(item.measurement_standard) === normalise(candidate.measurement_standard)
-      && Number(item.rated_rpm ?? 0) === Number(candidate.rated_rpm ?? 0)
-    );
-    if (!exactDuplicate) {
-      kept.push({ ...candidate, source_url: safeHttpUrl(candidate.source_url) });
+  for (const candidate of specifications) {
+    const identity = [
+      normalise(candidate.canonical_key || candidate.spec_name),
+      normalise(candidate.spec_value),
+      normalise(candidate.unit),
+      normalise(candidate.measurement_standard),
+      String(candidate.rated_rpm ?? 0),
+    ].join("|");
+
+    const currentBest = bestByIdentity.get(identity);
+    if (!currentBest || compareSpecQuality(candidate, currentBest) < 0) {
+      bestByIdentity.set(identity, candidate);
     }
   }
 
-  return kept.sort((a, b) =>
-    (a.comparison_class || "other").localeCompare(b.comparison_class || "other")
-    || a.spec_name.localeCompare(b.spec_name)
-  );
+  return [...bestByIdentity.values()]
+    .map((spec) => ({ ...spec, source_url: safeHttpUrl(spec.source_url) }))
+    .sort((a, b) =>
+      (a.comparison_class || "other").localeCompare(b.comparison_class || "other")
+      || a.spec_name.localeCompare(b.spec_name)
+      || a.spec_id.localeCompare(b.spec_id)
+    );
 }
 
 function getPublicApiKey(): { key: string; isLegacyJwt: boolean } {
@@ -339,12 +388,12 @@ const specLabels: Record<string, { en: string; tr: string }> = {
   engine_torque_rpm: { en: "Engine speed at maximum torque", tr: "Azami torkta motor devri" },
   fuel_tank_capacity: { en: "Fuel tank capacity", tr: "Yakıt deposu kapasitesi" },
   ground_clearance: { en: "Ground clearance", tr: "Yerden yükseklik" },
-  hydraulic_valve_count: { en: "Hydraulic valves", tr: "Hidrolik valf sayısı" },
+  hydraulic_valve_count: { en: "Hydraulic outlets / valves", tr: "Hidrolik çıkış / valf sayısı" },
   rear_lift_capacity: { en: "Rear lift capacity", tr: "Arka kaldırma kapasitesi" },
   overall_height: { en: "Overall height", tr: "Toplam yükseklik" },
   overall_length: { en: "Overall length", tr: "Toplam uzunluk" },
   pto_speeds: { en: "PTO speeds", tr: "PTO devirleri" },
-  drive_configuration: { en: "Drive configuration", tr: "Çekiş sistemi" },
+  drive_configuration: { en: "Four-wheel-drive control actuation", tr: "Dört çeker kumanda tahriki" },
   transmission_forward_gears: { en: "Forward gears", tr: "İleri vites sayısı" },
   transmission_reverse_gears: { en: "Reverse gears", tr: "Geri vites sayısı" },
   transmission_type: { en: "Transmission type", tr: "Şanzıman tipi" },
@@ -356,6 +405,25 @@ export function specLabel(spec: PublicSpec, lang: "en" | "tr"): string {
   const mapped = specLabels[spec.canonical_key || ""];
   return mapped ? mapped[lang] : String(spec.spec_name || spec.canonical_key || "Specification")
     .replace(/_/g, " ").replace(/\b\w/g, (letter) => letter.toUpperCase());
+}
+
+/**
+ * The 2075 BK 4WD manufacturer page and its technical brochure currently
+ * disagree on overall length. Keep the value visible, but explain the conflict
+ * until the manufacturer confirms the correct figure.
+ */
+export function verificationNotice(spec: PublicSpec, lang: "en" | "tr"): string | null {
+  const evidence = spec.evidence_text ?? "";
+  const hasLengthConflict = spec.canonical_key === "overall_length"
+    && spec.verified_at === null
+    && evidence.includes("3830")
+    && evidence.includes("3930");
+
+  if (!hasLengthConflict) return null;
+
+  return lang === "tr"
+    ? "Başak'ın resmî ürün sayfası 3.830 mm, 2075 BK 4WD teknik broşürü ise 3.930 mm belirtiyor. Üretici teyidi gelene kadar bu ölçüyü kesin karşılaştırma değeri olarak kullanmayın."
+    : "Başak's official product page lists 3,830 mm, while the 2075 BK 4WD technical brochure lists 3,930 mm. Treat this dimension as provisional until the manufacturer confirms the correct figure.";
 }
 
 export function categoryLabel(category: string | null, lang: "en" | "tr"): string {
