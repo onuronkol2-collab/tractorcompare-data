@@ -87,7 +87,7 @@ Then run:
 deno run --allow-read=./benchmark --allow-write=./benchmark/out --allow-net --allow-env=GEMINI_API_KEY,GEMINI_MODEL,BENCHMARK_LIMIT,BENCHMARK_PROVIDERS,GEMINI_BILLING_TIER ./benchmark/model_benchmark.ts ./benchmark/manifest.json
 ```
 
-After the first PDF succeeds, set BENCHMARK_LIMIT to 20 and repeat for the full Gemini-only run. The runner downloads each PDF once and saves raw answers, parsed JSON, token usage, declared billing tier, price estimate, latency, and PDF checksum under benchmark/out.
+After the first PDF succeeds, set BENCHMARK_LIMIT to 20 and repeat for the full Gemini-only run. The runner downloads each PDF once and saves raw answers, parsed JSON, token usage, declared billing tier, price estimate, latency, and PDF checksum under benchmark/out. During Gemini requests it prints progress and automatically retries temporary server-load errors (including HTTP 503) twice, waiting 15 and then 30 seconds. A request can still time out after four minutes per attempt.
 
 ### Optional paid comparison later
 
