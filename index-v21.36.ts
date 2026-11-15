@@ -1,4 +1,4 @@
-// TractorCompare AI Edge Function — v21.36 (v21.35 recovery + explicit identity diagnostics + confidence calibration diagnostics; human review)
+// TractorCompare AI Edge Function — v21.37 (v21.36 + Lamborghini Target taxonomy, configuration-safe fuel capacities and equipment availability coverage; human review)
 import { createClient } from "npm:@supabase/supabase-js@2";
 
 const corsHeaders = {
@@ -1387,6 +1387,24 @@ function canonicalInfo(specName: string): { key: string | null; className: strin
     mechanicallyadjustableseat: { key: "operator_seat_configuration", className: "operator_station", name: "Operator seat configuration" },
     worklights: { key: "front_work_lights_count", className: "electrical", name: "Front work lights count" },
     towhook: { key: "tow_hook", className: "implements", name: "Tow hook" },
+
+    // v21.37: spelling and table-label aliases observed in Lamborghini Spire F/S/V 80 Target.
+    fronttyresize: { key: "front_tire_size", className: "tires", name: "Front tire size" },
+    reartyresize: { key: "rear_tire_size", className: "tires", name: "Rear tire size" },
+    heightatbonnet: { key: "bonnet_height", className: "dimensions_weights", name: "Height at bonnet" },
+    maxlength: { key: "overall_length", className: "dimensions_weights", name: "Overall length" },
+    totalheight: { key: "overall_height", className: "dimensions_weights", name: "Overall height" },
+    totaladmissibleload: { key: "total_admissible_load", className: "dimensions_weights", name: "Total admissible load" },
+    injectionpressure: { key: "engine_injection_pressure", className: "engine", name: "Engine injection pressure" },
+    injectionatpressure: { key: "engine_injection_pressure", className: "engine", name: "Engine injection pressure" },
+    enginepoweratratedspeedhp: { key: "engine_rated_power", className: "engine", name: "Engine power at rated speed" },
+    enginepoweratratedspeedkw: { key: "engine_rated_power", className: "engine", name: "Engine power at rated speed" },
+    opencentrehydraulicsystemflowstd: { key: "hydraulic_main_flow", className: "hydraulics", name: "Hydraulic main flow" },
+    opencentrehydraulicsystemflowopt: { key: "hydraulic_main_flow", className: "hydraulics", name: "Hydraulic main flow" },
+    opencentrehydraulicsystemstd: { key: "hydraulic_main_flow", className: "hydraulics", name: "Hydraulic main flow" },
+    opencentrehydraulicsystemwithdoublepumpopt: { key: "hydraulic_main_flow", className: "hydraulics", name: "Hydraulic main flow" },
+    rearspoolvalvesstd: { key: "hydraulic_remote_valve_count", className: "hydraulics", name: "Rear spool valves" },
+    fueltankcapacitywithadditionaltank: { key: "fuel_tank_capacity", className: "capacities", name: "Fuel tank capacity with additional tank" },
   };
   return map[key] ? { ...map[key] } : { key: null, className: null, name: specName };
 }
@@ -1426,6 +1444,39 @@ function splitCompositeSpecification(spec: AnyRow): AnyRow[] {
 
   const semanticEvidence = `${originalName} ${value} ${evidence}`;
 
+  // Configuration-paired fuel tank capacities: the manufacturer's parentheses
+  // explicitly encode the capacity with front lift/PTO. Preserve both numeric
+  // values as separate, comparable findings instead of discarding the bracketed value.
+  const isFuelTankCapacity = /fuel\s+tanks?\s+capacity/i.test(originalName);
+  const valuePair = /^\s*(\d+(?:\.\d+)?)\s*\(\s*(\d+(?:\.\d+)?)\s*\)\s*$/.exec(value);
+  const evidencePair = /fuel\s+tanks?\s+capacity[\s\S]{0,180}?\b(\d+(?:\.\d+)?)\s*\(\s*(\d+(?:\.\d+)?)\s*\)/i.exec(evidence);
+  const tankPair = valuePair ?? evidencePair;
+  if (isFuelTankCapacity && unit && tankPair) {
+    const isAdditionalTank = /additional\s+fuel\s+tank|with\s+additional\s+tank/i.test(originalName + " " + evidence);
+    const tankName = isAdditionalTank ? "Fuel tank capacity with additional tank" : "Fuel tank capacity";
+    const tankPrefix = isAdditionalTank ? "Additional fuel tank; " : "";
+    push(tankName, tankPair[1], unit, "fuel_tank_capacity", "capacities", combinedEvidence, `${tankPrefix}Without front lift/PTO`);
+    push(tankName, tankPair[2], unit, "fuel_tank_capacity", "capacities", combinedEvidence, `${tankPrefix}With front lift/PTO`);
+    return out;
+  }
+
+  // Keep standard and optional hydraulic pump flow rates distinct.
+  if (/^opencentrehydraulicsystem/.test(nameKey)) {
+    const scope = /opt$/.test(nameKey) || /doublepump/i.test(originalName)
+      ? "Optional double-pump configuration"
+      : "Standard configuration";
+    push("Hydraulic main flow", value, unit, "hydraulic_main_flow", "hydraulics", combinedEvidence, scope);
+    return out;
+  }
+  if (/^rearspoolvalves/.test(nameKey)) {
+    push("Rear spool valves", value, unit, "hydraulic_remote_valve_count", "hydraulics", combinedEvidence, "Standard configuration");
+    return out;
+  }
+  if (/^enginepoweratratedspeed/.test(nameKey)) {
+    push("Engine power at rated speed", value, unit, "engine_rated_power", "engine", combinedEvidence, spec.measurement_standard ?? "ECE R120");
+    return out;
+  }
+
   // TYM may label engine aspiration as "Type", while Gemini may normalize
   // the label to "Engine description". Preserve the source's explicit meaning.
   if ((nameKey === "type" || nameKey === "enginedescription")
@@ -1448,7 +1499,7 @@ function splitCompositeSpecification(spec: AnyRow): AnyRow[] {
 
   // R1/R3/R4 tire fitments are optional configurations, not concurrent sizes.
   const explicitTireOption = /^(r1agricultural|r3turf|r4industrial)tire(front|rear)$/.exec(nameKey);
-  if (/^(front|rear)tire(?:size)?$/.test(nameKey) || explicitTireOption) {
+  if (/^(front|rear)(?:tire|tyre)(?:size)?$/.test(nameKey) || explicitTireOption) {
     const isRear = explicitTireOption ? explicitTireOption[2] === "rear" : nameKey.startsWith("rear");
     const tireKey = isRear ? "rear_tire_size" : "front_tire_size";
     const tireName = isRear ? "Rear tire size" : "Front tire size";
@@ -2291,7 +2342,18 @@ async function startResearch(body: AnyRow) {
   for (const packet of packets) packet.documentId = String(docsByUrl.get(packet.source.url)?.id ?? "");
   for (const packet of packets) await getOrCreateDataSource(brand.name, packet.source);
 
-  const modelSpecificPrompt = brandKeyForSource === "tym" && normalise(modelInput) === "t3047"
+  const lamborghiniKey = normalise(brand.name);
+  const lamborghiniModelKey = normalise(modelInput);
+  const isLamborghiniSpireF = lamborghiniKey === "lamborghinitrattori" && lamborghiniModelKey === "spireftarget";
+  const isLamborghiniSpireS = lamborghiniKey === "lamborghinitrattori" && lamborghiniModelKey === "spires80target";
+  const isLamborghiniSpireV = lamborghiniKey === "lamborghinitrattori" && lamborghiniModelKey === "spirev80target";
+  const modelSpecificPrompt = isLamborghiniSpireF
+    ? "LAMBORGHINI SPIRE F 80 TARGET IDENTITY AND PAGE RULE: The catalog name 'Spire F Target' is the manufacturer's exact product-page designation for the Spire F 80 Target. Use only the dedicated 'TECHNICAL DATA SPIRE F 80 TARGET' table on printed PDF page 5. Never use the S table on page 6 or V table on page 7. The official PDF distinguishes this model's rear lift capacity as 2800 kg. Preserve the two transmission blocks (Mechanical Shuttle and Powershuttle) as separate configurations. FUEL TANK CONFIGURATION: The source prints 'Fuel tank capacity (with front lift/PTO) 55 (35)' and 'Fuel tanks capacity with additional fuel tank (with front lift/PTO) 95 (75)'. Interpret and emit four distinct findings: 55 L without front lift/PTO, 35 L with front lift/PTO, 95 L with additional fuel tank without front lift/PTO, and 75 L with additional fuel tank with front lift/PTO. Quote the full printed row as evidence for each pair. HYDRAULICS: Preserve standard open-centre flow 54 l/min and optional double-pump flow 64 l/min as separate scopes; rear spool valves = 3 standard. DIMENSIONS: Only use F table's tyre sizes, wheelbase, length, heights, width, weight and admissible load. ENGINE: Maximum power 76 HP / 55.8 kW is distinct from rated-speed power 75 HP / 55.2 kW; do not merge. EQUIPMENT AVAILABILITY: Decode the legend: filled square = standard, empty square = optional, dash = not available. Extract every populated option/equipment row. All findings remain pending human review."
+    : isLamborghiniSpireS
+      ? "LAMBORGHINI SPIRE S 80 TARGET IDENTITY AND PAGE RULE: Use only the dedicated 'TECHNICAL DATA SPIRE S 80 TARGET' table on printed PDF page 6. Never use the F table on page 5 or V table on page 7. Rear lift capacity is 2600 kg. The additional-fuel-tank row is 85 (65) l: emit 85 L without front lift/PTO and 65 L with front lift/PTO as separate findings. Main tank row is 55 (35) l: emit 55 L without front lift/PTO and 35 L with front lift/PTO. Preserve the Mechanical Shuttle and Powershuttle blocks separately. Keep only S-table tyre sizes and dimensions. Decode filled square = standard, empty square = optional, dash = not available, and extract every populated equipment row. All findings remain pending human review."
+      : isLamborghiniSpireV
+        ? "LAMBORGHINI SPIRE V 80 TARGET IDENTITY AND PAGE RULE: Use only the dedicated 'TECHNICAL DATA SPIRE V 80 TARGET' table on printed PDF page 7. Never use the F table on page 5 or S table on page 6. Rear lift capacity is 2600 kg. The additional-fuel-tank row is 85 (65) l: emit 85 L without front lift/PTO and 65 L with front lift/PTO as separate findings. Main tank row is 55 (35) l: emit 55 L without front lift/PTO and 35 L with front lift/PTO. Preserve the Mechanical Shuttle and Powershuttle blocks separately. Keep only V-table tyre sizes and dimensions. Decode filled square = standard, empty square = optional, dash = not available, and extract every populated equipment row. All findings remain pending human review."
+        : brandKeyForSource === "tym" && normalise(modelInput) === "t3047"
     ? "TYM T3047 MODEL-COLUMN RULE: The official TYM product page https://www.tym.world/en/products/tractors/series-3/t475 identifies catalog model T3047 (T475), Series 3. The attached official 2026 Series 3 specification guide has separate model columns T475, F50C and F50. Extract only the T475 column for T3047; ignore F50C and F50.\nFULL-CATALOGUE COVERAGE: Inspect every page and every populated technical table in the attached PDF, not only the engine/transmission page. Extract all tractor specifications up to the 60-item cap. In particular, inspect the dimensions/weights and tyre tables for: overall length with ROPS and with Cab as separate scopes; overall width; wheelbase, preserving Mechanical/HST differences where shown; height to top of ROPS and Cab height as separate scopes; ground clearance; turning radius with brakes and without brakes, preserving ROPS/Cab scopes; weight with ROPS and with Cab; and front/rear tyre sizes for each explicitly listed R1, R3 and R4 option. Do not assume an option or value that is not printed.\nTRANSMISSION AND LIFT SCOPES: Where the T475 column lists Mechanical/SS and HST, preserve each configuration separately for speed, gear configuration, transmission description and PTO power. For rear hitch capacity, keep capacity at hitch link ends separate from capacity measured 24 inches behind link ends. Never merge these measurement positions. Keep ROPS and Cab measurements separate exactly as the table labels them.\nUNIT-CONSISTENCY CHECK: When a row prints both metric and imperial values, quote both exactly in evidence_text and do not convert, correct or choose between them. If the printed pair appears mathematically inconsistent, retain the metric value as a pending candidate and make the discrepancy explicit in the evidence text for human review. Do not silently repair a source error. The catalogue states it is for international territories; preserve this as source-market context, do not invent a specific country or silently change the catalog market."
     : brandKeyForSource === "tym" && normalise(modelInput) === "t3035" && normalise(variantInput ?? "") === "f36series3"
       ? "TYM T3035 (F36) SERIES 3 RULE: Use only the attached official F36 Series 3 brochure at https://tym-new.euwest01.umbraco.io/media/b01j3nc1/f36-produktbroschu-re.pdf. The official TYM product page https://www.tym.world/en/products/tractors/series-3/f36 identifies this identity as T3035 (F36), Series 3. This is the non-Cab F36 model; do not mix the separate T3035 (F36C) cab model or T3048 (F50/F50C). TRANSMISSION VARIANTS: Within F36, F36RN is Synchro-shuttle with F12 x R12; F36HN is HST with 3-Range. Preserve variant-specific transmission description, gear count and maximum speed separately using measurement_standard values 'Transmission variant: F36RN' and 'Transmission variant: F36HN'. Never merge F36RN and F36HN into one value. CATALOGUE COVERAGE: inspect every technical table on every page, up to the 60-finding cap. Include engine, hydraulics, hitch, PTO, capacities, dimensions, weights and all explicitly enumerated R1/R3/R4 tire alternatives. Where the catalogue numbers tires as options 1, 2, 3 etc., preserve the option number in measurement_standard alongside tire type (for example 'Tire option: R1 Agricultural; option 2'). Do not combine distinct tire options. SOURCE CONFLICT: The brochure feature text calls this a 4-cylinder Stage V engine, but the technical specification table lists 3 cylinders. Preserve the technical table's explicit row as a finding and record the source's contradictory four-cylinder promotional text as a human-review warning; do not silently reconcile it. UNIT-CONSISTENCY: preserve both units exactly as printed, do not convert. The brochure identifies Series 3 F36 but does not state a specific country; keep requested global market and flag source market scope for human review."
@@ -2318,10 +2380,13 @@ RESEARCH RULES
 7a. COVERAGE: inspect every populated row in every technical-specification table and extract every explicit tractor specification up to the 60-item limit. Do not stop after headline values. Ignore only blank/dash placeholders and accessory-only specifications that do not describe the tractor itself.
 7b. VARIANT COLUMNS: when one brochure table explicitly lists multiple transmission configurations (for example SS and HST), do not merge or choose one. Emit separate findings for each variant-specific value, set measurement_standard to "Transmission variant: SS" or "Transmission variant: HST", and repeat that variant label in evidence_text. This includes transmission type, gear configuration, maximum speed and PTO power. For PTO power, emit the HP/PS and kW values as separate atomic findings for each variant with distinct canonical names/units. Keep common rows separate only when the brochure presents them as common to the model. All such findings remain pending for human review.
 7c. UNIT PAIRS: when one non-power specification is printed in metric and imperial units on the same row, create one finding using the metric value/unit and keep both printed values in evidence_text; do not create a second duplicate finding for the imperial equivalent. For gross engine power and PTO power, keep separately labelled HP/PS and kW values under distinct canonical keys. Never silently correct an inconsistent printed conversion; preserve the exact source pair and explicitly flag it in evidence_text for human verification.
+7d. PARENTHETICAL CONFIGURATIONS: Never discard a second numeric value in parentheses when the source row explains an equipment configuration such as '(with front lift/PTO)'. Create separate findings for the base value and the parenthetical configuration value. Preserve the exact full row in evidence_text. Put the scope in measurement_standard (for example 'Without front lift/PTO' and 'With front lift/PTO'); do not collapse both values into one numeric spec.
+7e. EQUIPMENT AVAILABILITY SYMBOLS: When a technical table contains a legend such as filled square = STD, empty square = OPT, and dash = Not available, decode every populated equipment row into a separate finding with spec_value exactly 'Standard', 'Optional', or 'Not available'. Set measurement_standard to 'Equipment availability'. Quote the feature label and the legend interpretation in evidence_text. Do not treat these symbols as blank values.
 8. For transmission notation 9+3, do not assume direction unless source context clearly says forward/reverse gear counts. If ambiguous return the original combined label/value.
 9. Keep units exactly as shown. Do not convert units. Report confidence from 0 to 1 (not 0 to 100) as a conservative evidence-support rating, NOT as a statistically calibrated probability. Use 0.98–1.0 only when the exact value and its scope are explicitly printed in the attached source and the evidence quote directly supports the value; use 0.90–0.97 for clear source evidence requiring limited normalization; use 0.75–0.89 when evidence is relevant but incomplete or the interpretation needs review; use below 0.75 for ambiguous or weak evidence. Do not assign 1.0 by default or give every specification the same score. If a value cannot be grounded in an exact source passage, omit it rather than inflating confidence. Human approval remains mandatory regardless of confidence.
 10. Include at most 60 specs. Use null for absent fields. No invented model years or variants. A brochure publication/print/copyright/access date is NOT a tractor model year; set model_year=null unless the source explicitly identifies the tractor's model year.
 11. STRICT VARIANT RULE: Requested variant is ${variantInput ?? "not specified"}. Never take a value from a conflicting sibling version (for example 2WD vs 4WD, cabin vs platform). When a source or table contains multiple variants, extract a value only when the relevant row/column is explicitly tied to the requested variant; quote that variant in evidence_text. If the correct column cannot be established, omit the value or leave it pending. Do not infer that sibling variants share a specification.
+12. CONFIGURATION COMPLETENESS: Preserve STD/OPT status, equipment option markers, and accessory-dependent values as explicit scopes. Do not present optional equipment as standard and do not silently drop a value in parentheses.
 
 ${modelSpecificPrompt}\n\nSOURCE MATERIAL (all URLs belong to the registered manufacturer's official domain):
 ${packets.map((packet, i) => `\n--- SOURCE ${i + 1} ---\nURL: ${packet.source.url}\nTITLE: ${packet.title}\nTYPE: ${packet.pdfBase64 ? "OFFICIAL PDF DOCUMENT ATTACHED" : "OFFICIAL WEB PAGE TEXT"}\n${packet.text ? packet.text : "PDF content is attached as a document input part. Read its tables and footnotes directly."}`).join("\n")}
@@ -3461,4 +3526,4 @@ Deno.serve(async (req: Request) => {
   }
 });
 
-// END OF FILE - complete TractorCompare AI Edge Function v21.34 source (direct official TYM T3035/F36 Series 3 PDF identity; mandatory human approval).
+// END OF FILE - complete TractorCompare AI Edge Function v21.37 source (Lamborghini Spire F/S/V Target configuration-safe extraction; mandatory human approval).
