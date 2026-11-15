@@ -1,0 +1,122 @@
+---
+import "../styles/global.css";
+import { brand } from "../config/brand";
+
+interface Props {
+  lang: "en" | "tr";
+  title: string;
+  description: string;
+}
+
+const { lang, title, description } = Astro.props;
+const isEnglish = lang === "en";
+const indexingEnabled =
+  import.meta.env.PUBLIC_INDEXING_ENABLED === "true" && Boolean(Astro.site);
+const canonicalUrl = indexingEnabled
+  ? new URL(Astro.url.pathname, Astro.site!).toString()
+  : undefined;
+const englishUrl = indexingEnabled ? new URL("/", Astro.site!).toString() : undefined;
+const turkishUrl = indexingEnabled ? new URL("/tr/", Astro.site!).toString() : undefined;
+
+const nav = isEnglish
+  ? { platform: "Platform", data: "Data principles", about: "Our approach", language: "Türkçe" }
+  : { platform: "Platform", data: "Veri ilkeleri", about: "Yaklaşımımız", language: "English" };
+---
+
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#101a16" />
+    <meta name="description" content={description} />
+    <meta name="robots" content={indexingEnabled ? "index,follow,max-image-preview:large" : "noindex,nofollow"} />
+    <title>{title}</title>
+    {canonicalUrl && <link rel="canonical" href={canonicalUrl} />}
+    {englishUrl && <link rel="alternate" hreflang="en" href={englishUrl} />}
+    {turkishUrl && <link rel="alternate" hreflang="tr" href={turkishUrl} />}
+    {englishUrl && <link rel="alternate" hreflang="x-default" href={englishUrl} />}
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:locale" content={isEnglish ? "en_US" : "tr_TR"} />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">{isEnglish ? "Skip to content" : "İçeriğe geç"}</a>
+    <header class="site-header">
+      <div class="container header-inner">
+        <a class="brand-lockup" href={isEnglish ? "/" : "/tr/"} aria-label={brand.name}>
+          <span class="brand-symbol" aria-hidden="true">
+            <svg viewBox="0 0 40 40" fill="none">
+              <path d="M8 25.5h21.5l3-6.5h-8.2l-2.6-5.4h-7.2v7.1H8v4.8Z" stroke="currentColor" stroke-width="2.1" stroke-linejoin="round"/>
+              <path d="M14.5 13.6h7.1l2.7 5.4h-9.8v-5.4Z" fill="currentColor" opacity=".24"/>
+              <circle cx="14" cy="28.3" r="3.4" stroke="currentColor" stroke-width="2.1"/>
+              <circle cx="29.2" cy="28.3" r="2.5" stroke="currentColor" stroke-width="2.1"/>
+              <path d="M5 32h30" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" opacity=".5"/>
+            </svg>
+          </span>
+          <span class="brand-words">
+            <strong>{brand.name}</strong>
+            <small>TECHNICAL DATA PLATFORM</small>
+          </span>
+        </a>
+
+        <nav class="desktop-nav" aria-label={isEnglish ? "Main navigation" : "Ana gezinme"}>
+          <a href="#platform">{nav.platform}</a>
+          <a href="#data">{nav.data}</a>
+          <a href="#approach">{nav.about}</a>
+        </nav>
+
+        <div class="header-actions">
+          <a class="language-switch" href={isEnglish ? "/tr/" : "/"} aria-label={nav.language}>
+            <span class="language-dot"></span>{nav.language}
+          </a>
+          <a class="header-cta" href="#platform">
+            {isEnglish ? "Explore" : "Keşfet"} <span aria-hidden="true">↗</span>
+          </a>
+        </div>
+      </div>
+    </header>
+
+    <main id="main">
+      <slot />
+    </main>
+
+    <footer class="site-footer">
+      <div class="container footer-main">
+        <div>
+          <a class="brand-lockup footer-brand" href={isEnglish ? "/" : "/tr/"}>
+            <span class="brand-symbol" aria-hidden="true">
+              <svg viewBox="0 0 40 40" fill="none">
+                <path d="M8 25.5h21.5l3-6.5h-8.2l-2.6-5.4h-7.2v7.1H8v4.8Z" stroke="currentColor" stroke-width="2.1" stroke-linejoin="round"/>
+                <circle cx="14" cy="28.3" r="3.4" stroke="currentColor" stroke-width="2.1"/>
+                <circle cx="29.2" cy="28.3" r="2.5" stroke="currentColor" stroke-width="2.1"/>
+                <path d="M5 32h30" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" opacity=".5"/>
+              </svg>
+            </span>
+            <span class="brand-words">
+              <strong>{brand.name}</strong>
+              <small>TECHNICAL DATA PLATFORM</small>
+            </span>
+          </a>
+          <p class="footer-note">
+            {isEnglish
+              ? "A clearer way to understand agricultural machinery."
+              : "Tarım makinelerini daha iyi anlamanın şeffaf yolu."}
+          </p>
+        </div>
+        <div class="footer-links">
+          <a href="#platform">{nav.platform}</a>
+          <a href="#data">{nav.data}</a>
+          <a href="#approach">{nav.about}</a>
+          <a href={isEnglish ? "/tr/" : "/"}>{nav.language}</a>
+        </div>
+      </div>
+      <div class="container footer-bottom">
+        <span>© {new Date().getFullYear()} {brand.name}</span>
+        <span>{isEnglish ? "Built around clarity, evidence and useful data." : "Açıklık, kanıt ve faydalı veri odağıyla geliştiriliyor."}</span>
+      </div>
+    </footer>
+  </body>
+</html>
