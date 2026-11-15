@@ -110,19 +110,20 @@ ORDER BY c.relname, con.contype, con.conname;
 
 -- 4. Index inventory and validity (including partial/unique indexes).
 SELECT
-  schemaname AS schema_name,
-  tablename AS table_name,
-  indexname AS index_name,
-  indexdef AS index_definition,
-  idx_scan,
-  idx_tup_read,
-  idx_tup_fetch
-FROM pg_indexes
-LEFT JOIN pg_stat_user_indexes
-  ON schemaname = (SELECT nspname FROM pg_namespace WHERE oid = (SELECT relnamespace FROM pg_class WHERE relname = pg_indexes.indexname LIMIT 1))
- AND indexname = pg_indexes.indexname
-WHERE schemaname = 'public'
-ORDER BY tablename, indexname;
+  i.schemaname AS schema_name,
+  i.tablename AS table_name,
+  i.indexname AS index_name,
+  i.indexdef AS index_definition,
+  s.idx_scan,
+  s.idx_tup_read,
+  s.idx_tup_fetch
+FROM pg_indexes i
+LEFT JOIN pg_stat_user_indexes s
+  ON s.schemaname = i.schemaname
+ AND s.relname = i.tablename
+ AND s.indexrelname = i.indexname
+WHERE i.schemaname = 'public'
+ORDER BY i.tablename, i.indexname;
 
 -- 5. Row-level security policies. An enabled RLS table with no applicable policy
 --    can intentionally deny access; policies must be reviewed together with grants.
@@ -180,17 +181,40 @@ SELECT
     ELSE 'Invoker context'
   END AS security_review,
   ARRAY(
-    SELECT r.rolname
-    FROM pg_roles r
-    WHERE r.rolname IN ('anon','authenticated','service_role','public','postgres')
-      AND has_function_privilege(r.oid, p.oid, 'EXECUTE')
-    ORDER BY r.rolname
+    SELECT x.role_name
+    FROM (
+      SELECT r.rolname AS role_name
+      FROM pg_roles r
+      WHERE r.rolname IN ('anon','authenticated','service_role','postgres','supabase_admin')
+        AND has_function_privilege(r.oid, p.oid, 'EXECUTE')
+      UNION
+      SELECT 'PUBLIC'::text
+      WHERE EXISTS (
+        SELECT 1
+        FROM aclexplode(COALESCE(p.proacl, acldefault('f', p.proowner))) acl
+        WHERE acl.grantee = 0
+          AND acl.privilege_type = 'EXECUTE'
+      )
+    ) x
+    ORDER BY x.role_name
   ) AS roles_with_execute
 FROM pg_proc p
 JOIN pg_namespace n ON n.oid = p.pronamespace
 JOIN pg_language l ON l.oid = p.prolang
 WHERE n.nspname = 'public'
 ORDER BY p.prosecdef DESC, p.proname, identity_arguments;
+
+-- 7b. Schema-level privileges (USAGE/CREATE) for public-facing/backend roles.
+SELECT
+  n.nspname AS schema_name,
+  r.rolname AS role_name,
+  has_schema_privilege(r.oid, n.oid, 'USAGE') AS can_use_schema,
+  has_schema_privilege(r.oid, n.oid, 'CREATE') AS can_create_in_schema
+FROM pg_namespace n
+CROSS JOIN pg_roles r
+WHERE n.nspname = 'public'
+  AND r.rolname IN ('anon','authenticated','service_role','postgres','supabase_admin')
+ORDER BY r.rolname;
 
 -- 8. Non-internal triggers and their target functions.
 SELECT
@@ -421,6 +445,64 @@ WHERE NULLIF(to_jsonb(s)->>'canonical_key','') IS NOT NULL
 GROUP BY 1,2,3,4,5,6
 HAVING count(*) > 1
 ORDER BY rows_in_same_scope DESC, model_name, canonical_key
+LIMIT 2000;
+
+-- 17b. Foreign-key-like lineage checks for live specs and findings.
+--      Human-managed specs may legitimately lack AI research documents; the owner
+--      flag is retained so missing lineage can be interpreted rather than deleted.
+SELECT
+  to_jsonb(t)->>'model_name' AS model_name,
+  to_jsonb(s)->>'id' AS spec_id,
+  to_jsonb(s)->>'spec_name' AS spec_name,
+  to_jsonb(s)->>'spec_value' AS spec_value,
+  to_jsonb(s)->>'managed_by_ai' AS managed_by_ai,
+  to_jsonb(s)->>'source_id' AS source_id,
+  to_jsonb(s)->>'source_document_id' AS source_document_id,
+  CASE
+    WHEN tr.id IS NULL THEN 'ORPHAN_TRACTOR_ID'
+    WHEN NULLIF(to_jsonb(s)->>'managed_by_ai','') = 'true'
+         AND NULLIF(to_jsonb(s)->>'source_id','') IS NULL THEN 'AI_SPEC_MISSING_SOURCE_ID'
+    WHEN NULLIF(to_jsonb(s)->>'source_id','') IS NOT NULL AND ds.id IS NULL THEN 'ORPHAN_SOURCE_ID'
+    WHEN NULLIF(to_jsonb(s)->>'source_document_id','') IS NOT NULL AND d.id IS NULL THEN 'ORPHAN_SOURCE_DOCUMENT_ID'
+    WHEN NULLIF(to_jsonb(s)->>'managed_by_ai','') = 'true'
+         AND NULLIF(to_jsonb(s)->>'source_document_id','') IS NULL THEN 'AI_SPEC_MISSING_SOURCE_DOCUMENT'
+    ELSE 'REVIEW'
+  END AS issue
+FROM public.tractor_specs s
+LEFT JOIN public.tractors tr ON tr.id::text = to_jsonb(s)->>'tractor_id'
+LEFT JOIN public.data_sources ds ON ds.id::text = to_jsonb(s)->>'source_id'
+LEFT JOIN public.ai_research_documents d ON d.id::text = to_jsonb(s)->>'source_document_id'
+LEFT JOIN public.tractors t ON t.id = tr.id
+WHERE tr.id IS NULL
+   OR (NULLIF(to_jsonb(s)->>'managed_by_ai','') = 'true'
+       AND NULLIF(to_jsonb(s)->>'source_id','') IS NULL)
+   OR (NULLIF(to_jsonb(s)->>'source_id','') IS NOT NULL AND ds.id IS NULL)
+   OR (NULLIF(to_jsonb(s)->>'source_document_id','') IS NOT NULL AND d.id IS NULL)
+   OR (NULLIF(to_jsonb(s)->>'managed_by_ai','') = 'true'
+       AND NULLIF(to_jsonb(s)->>'source_document_id','') IS NULL)
+ORDER BY model_name, spec_name
+LIMIT 2000;
+
+SELECT
+  to_jsonb(f)->>'id' AS finding_id,
+  to_jsonb(f)->>'run_id' AS run_id,
+  to_jsonb(f)->>'tractor_id' AS tractor_id,
+  to_jsonb(f)->>'inserted_spec_id' AS inserted_spec_id,
+  to_jsonb(f)->>'review_status' AS review_status,
+  CASE
+    WHEN r.id IS NULL THEN 'ORPHAN_RUN_ID'
+    WHEN tr.id IS NULL THEN 'ORPHAN_TRACTOR_ID'
+    WHEN NULLIF(to_jsonb(f)->>'inserted_spec_id','') IS NOT NULL AND s.id IS NULL THEN 'ORPHAN_INSERTED_SPEC_ID'
+    ELSE 'REVIEW'
+  END AS issue
+FROM public.ai_research_findings f
+LEFT JOIN public.ai_research_runs r ON r.id::text = to_jsonb(f)->>'run_id'
+LEFT JOIN public.tractors tr ON tr.id::text = to_jsonb(f)->>'tractor_id'
+LEFT JOIN public.tractor_specs s ON s.id::text = to_jsonb(f)->>'inserted_spec_id'
+WHERE r.id IS NULL
+   OR tr.id IS NULL
+   OR (NULLIF(to_jsonb(f)->>'inserted_spec_id','') IS NOT NULL AND s.id IS NULL)
+ORDER BY to_jsonb(f)->>'proposed_model_name', to_jsonb(f)->>'spec_name'
 LIMIT 2000;
 
 -- 18. Source-document provenance and source-family duplication signals.
