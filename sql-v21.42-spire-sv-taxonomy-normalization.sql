@@ -127,6 +127,13 @@ WITH x AS (
 )
 SELECT COALESCE(
   CASE
+    -- Preserve the v21.38 English spelling aliases explicitly. The v21.37
+    -- fallback chain does not include that later alias function.
+    WHEN n LIKE 'maximum traveling speed%'
+      OR n LIKE 'maximum travelling speed%'
+      OR n LIKE 'max traveling speed%'
+      OR n LIKE 'max travelling speed%'
+      THEN 'maximum_speed'
     WHEN n LIKE 'injection system%'
       OR n LIKE 'injection type%'
       OR n LIKE 'fuel injection system%'
@@ -203,7 +210,10 @@ BEGIN
      OR public.tc_canonical_spec_key_v21_42_alias('With rear tyre') IS DISTINCT FROM 'rear_tire_size'
      OR public.tc_canonical_spec_key_v21_42_alias('Number of speeds - 5 gears transmission') IS DISTINCT FROM 'transmission_gear_configuration'
      OR public.tc_canonical_spec_key_v21_42_alias('Max. length') IS DISTINCT FROM 'overall_length'
-     OR public.tc_canonical_spec_key_v21_42_alias('Maximum traveling speed') IS DISTINCT FROM 'maximum_speed' THEN
+     OR public.tc_canonical_spec_key_v21_42_alias('Maximum traveling speed') IS DISTINCT FROM 'maximum_speed'
+     OR public.tc_canonical_spec_key_v21_42_alias('Maximum travelling speed') IS DISTINCT FROM 'maximum_speed'
+     OR public.tc_canonical_spec_key_v21_42_alias('Max traveling speed') IS DISTINCT FROM 'maximum_speed'
+     OR public.tc_canonical_spec_key_v21_42_alias('Max travelling speed') IS DISTINCT FROM 'maximum_speed' THEN
     RAISE EXCEPTION 'v21.42 alias test failed. No finding rows have been changed.';
   END IF;
 
