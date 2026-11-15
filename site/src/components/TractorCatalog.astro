@@ -24,6 +24,7 @@ const detailPrefix = isEnglish ? "/tractors/" : "/tr/tractors/";
   </div></section>
   <section class="catalog-section"><div class="container">
     {catalog.configured && catalog.tractors.length > 0 ? <>
+      {catalog.tractors.length > 1 && <p style="margin:0 0 24px;"><a class="button button-primary" href={isEnglish ? "/compare/" : "/tr/compare/"}>{isEnglish ? "Compare published tractors ↗" : "Yayımlanmış traktörleri karşılaştır ↗"}</a></p>}
       <div class="catalog-toolbar">
         <label for="tractor-search">{isEnglish ? "Find a tractor" : "Traktör ara"}</label>
         <input id="tractor-search" type="search" placeholder={isEnglish ? "Search brand or model..." : "Marka veya model ara..."} autocomplete="off" />
