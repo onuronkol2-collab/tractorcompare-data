@@ -58,7 +58,10 @@ function toBase64(bytes: Uint8Array): string {
 }
 
 async function hash(bytes: Uint8Array): Promise<string> {
-  const digest = await crypto.subtle.digest("SHA-256", bytes);
+  // Copy into a fresh ArrayBuffer so newer TypeScript/Deno DOM typings accept it as BufferSource.
+  const safeBytes = new Uint8Array(bytes.byteLength);
+  safeBytes.set(bytes);
+  const digest = await crypto.subtle.digest("SHA-256", safeBytes.buffer);
   return Array.from(new Uint8Array(digest)).map((v) => v.toString(16).padStart(2, "0")).join("");
 }
 
