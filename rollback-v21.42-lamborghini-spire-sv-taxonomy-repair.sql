@@ -15,6 +15,7 @@ DECLARE
   v_meta_type text;
   v_run_meta jsonb;
   v_run_summary text;
+  v_current_summary text;
 BEGIN
   -- Lock the completed S research run and require the exact v21.42 post-state.
   SELECT data_type INTO v_meta_type
@@ -27,8 +28,8 @@ BEGIN
     RAISE EXCEPTION 'Rollback stopped: unsupported ai_research_runs.result_meta type: %.', v_meta_type;
   END IF;
 
-  SELECT COALESCE(result_meta::jsonb, '{}'::jsonb)
-    INTO v_run_meta
+  SELECT COALESCE(result_meta::jsonb, '{}'::jsonb), summary
+    INTO v_run_meta, v_current_summary
   FROM public.ai_research_runs
   WHERE id = '37450e92-79bd-4bca-8daf-c720676ab4ff'::uuid
     AND tractor_id = 'f9a68e93-5534-40b7-891f-ba0249fe25db'::uuid
@@ -39,7 +40,8 @@ BEGIN
     RAISE EXCEPTION 'Rollback stopped: Spire S completed research run was not found.';
   END IF;
 
-  IF v_run_meta ->> 'findings_saved' <> '57'
+  IF v_current_summary <> 'Lamborghini Trattori Spire S 80 Target was verified against the official manufacturer PDF page 6. The original 56 extracted findings remain source-backed; one composite injection-system cell was manually split into two atomic pending findings, resulting in 57 pending findings. No specifications were approved or published.'
+     OR v_run_meta ->> 'findings_saved' <> '57'
      OR v_run_meta ->> 'pending_findings' <> '57'
      OR v_run_meta ->> 'atomic_specifications' <> '61'
      OR COALESCE(v_run_meta #>> '{manual_normalization,additional_findings_created}', '') <> '1'
