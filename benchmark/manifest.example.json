@@ -1,6 +1,6 @@
 {
   "benchmark_version": "1.0",
-  "notes": "Starter manifest with 3 official PDFs; add 17 more official PDF cases before full 20-document run. Never put API keys here.",
+  "notes": "Curated 20 distinct first-party manufacturer PDF/manual sources; API keys never belong here.",
   "cases": [
     {
       "id": "caseih-farmall-110a",
@@ -56,6 +56,359 @@
         "engine_power_rated",
         "engine_power_max",
         "engine_power_boost",
+        "engine_cylinders",
+        "engine_displacement",
+        "transmission_type",
+        "hydraulic_pump_flow",
+        "rear_hitch_lift_capacity",
+        "pto_speeds",
+        "wheelbase",
+        "operating_weight"
+      ]
+    },
+    {
+      "id": "new-holland-td5-90",
+      "manufacturer": "New Holland",
+      "model": "TD5.90",
+      "variant": "Platform",
+      "market": "South Africa",
+      "pdf_url": "https://cnhi-p-001-delivery.sitecorecontenthub.cloud/api/public/content/c3d13220f29640458ef3f059d2865523?v=25dae628",
+      "filename": "new-holland-td5-technical-brochure.pdf",
+      "requested_fields": [
+        "engine_power_rated",
+        "engine_power_max",
+        "engine_cylinders",
+        "engine_displacement",
+        "transmission_type",
+        "transmission_gears_forward_reverse",
+        "hydraulic_pump_flow",
+        "rear_hitch_lift_capacity",
+        "wheelbase",
+        "operating_weight"
+      ]
+    },
+    {
+      "id": "kubota-m7040",
+      "manufacturer": "Kubota",
+      "model": "M7040",
+      "variant": "ROPS",
+      "market": "Global",
+      "pdf_url": "https://media.kubota.io/uploads/M7040-ROPS-Tractor-Operator-Manual.pdf",
+      "filename": "kubota-m7040-rops-operator-manual.pdf",
+      "requested_fields": [
+        "engine_power_rated",
+        "engine_cylinders",
+        "engine_displacement",
+        "transmission_type",
+        "transmission_gears_forward_reverse",
+        "hydraulic_pump_flow",
+        "pto_speeds",
+        "wheelbase",
+        "operating_weight"
+      ]
+    },
+    {
+      "id": "tym-t575",
+      "manufacturer": "TYM",
+      "model": "T4057",
+      "variant": "T575 / Series 4",
+      "market": "Global",
+      "pdf_url": "https://tym-infocaster.euwest01.umbraco.io/media/cvyhodmk/t575-product-brochure.pdf",
+      "filename": "tym-t575-series-4-brochure.pdf",
+      "requested_fields": [
+        "engine_power_max",
+        "engine_cylinders",
+        "engine_displacement",
+        "transmission_type",
+        "hydraulic_pump_flow",
+        "rear_hitch_lift_capacity",
+        "wheelbase",
+        "operating_weight"
+      ]
+    },
+    {
+      "id": "tym-t255",
+      "manufacturer": "TYM",
+      "model": "T1025",
+      "variant": "T255 / Series 1",
+      "market": "Global",
+      "pdf_url": "https://tym-infocaster.euwest01.umbraco.io/media/ghsmb5lj/t255-product-brochure.pdf",
+      "filename": "tym-t255-series-1-brochure.pdf",
+      "requested_fields": [
+        "engine_power_max",
+        "engine_cylinders",
+        "engine_displacement",
+        "transmission_type",
+        "hydraulic_pump_flow",
+        "rear_hitch_lift_capacity",
+        "wheelbase",
+        "operating_weight"
+      ]
+    },
+    {
+      "id": "tym-t6130",
+      "manufacturer": "TYM",
+      "model": "T6130",
+      "variant": "Series 6",
+      "market": "Global / International",
+      "pdf_url": "https://tym-infocaster.euwest01.umbraco.io/media/tekl4z2k/t6130-product-brochure.pdf",
+      "filename": "tym-t6130-series-6-brochure.pdf",
+      "requested_fields": [
+        "engine_power_max",
+        "engine_cylinders",
+        "engine_displacement",
+        "transmission_type",
+        "hydraulic_pump_flow",
+        "rear_hitch_lift_capacity",
+        "wheelbase",
+        "operating_weight"
+      ]
+    },
+    {
+      "id": "tym-f36-t3035",
+      "manufacturer": "TYM",
+      "model": "T3035",
+      "variant": "F36 / Series 3; isolate F36RN and F36HN; not F36C",
+      "market": "Global",
+      "pdf_url": "https://tym-new.euwest01.umbraco.io/media/b01j3nc1/f36-produktbroschu-re.pdf",
+      "filename": "tym-f36-series-3-brochure.pdf",
+      "requested_fields": [
+        "engine_power_max",
+        "engine_cylinders",
+        "engine_displacement",
+        "transmission_type",
+        "transmission_gears_forward_reverse",
+        "hydraulic_pump_flow",
+        "rear_hitch_lift_capacity",
+        "wheelbase",
+        "operating_weight"
+      ]
+    },
+    {
+      "id": "tym-t475-t3047",
+      "manufacturer": "TYM",
+      "model": "T3047",
+      "variant": "T475 / Series 3",
+      "market": "Global / International",
+      "pdf_url": "https://tym-new.euwest01.umbraco.io/media/rxdpgfxw/series-3-brochure.pdf",
+      "filename": "tym-series-3-t475-technical-guide.pdf",
+      "requested_fields": [
+        "engine_power_max",
+        "engine_cylinders",
+        "engine_displacement",
+        "transmission_type",
+        "hydraulic_pump_flow",
+        "rear_hitch_lift_capacity",
+        "wheelbase",
+        "operating_weight"
+      ]
+    },
+    {
+      "id": "john-deere-6r150",
+      "manufacturer": "John Deere",
+      "model": "6R 150",
+      "variant": null,
+      "market": "Australia / Region 4",
+      "pdf_url": "https://www.deere.com.au/assets/pdfs/region-4/products/utility-tractors/JD1448-6r-brochure-2021.pdf",
+      "filename": "john-deere-6r-2021-region-4-brochure.pdf",
+      "requested_fields": [
+        "engine_power_rated",
+        "engine_power_max",
+        "engine_power_boost",
+        "engine_cylinders",
+        "engine_displacement",
+        "transmission_type",
+        "hydraulic_pump_flow",
+        "rear_hitch_lift_capacity",
+        "pto_speeds",
+        "wheelbase",
+        "operating_weight"
+      ]
+    },
+    {
+      "id": "lamborghini-spire-f80-target",
+      "manufacturer": "Lamborghini Trattori",
+      "model": "Spire F 80 Target",
+      "variant": "Stage V / dedicated F Target technical table",
+      "market": "Europe",
+      "pdf_url": "https://www.lamborghini-tractors.com/en-eu/tractors/vineyards-orchards-compacts/download/7987_d432d453ca77b6271f17857f0d842cd0",
+      "filename": "lamborghini-spire-f-80-target-stage-v.pdf",
+      "requested_fields": [
+        "engine_power_rated",
+        "engine_power_max",
+        "engine_cylinders",
+        "engine_displacement",
+        "transmission_type",
+        "hydraulic_pump_flow",
+        "rear_hitch_lift_capacity",
+        "wheelbase",
+        "operating_weight"
+      ]
+    },
+    {
+      "id": "massey-ferguson-4708",
+      "manufacturer": "Massey Ferguson",
+      "model": "4708",
+      "variant": "Standard platform",
+      "market": "South Africa",
+      "pdf_url": "https://www.masseyferguson.com/content/dam/public/masseyfergusonglobal/markets/en_za/assets/productbrochures/tractors/mf-4700/17346_MF%204700-Brochure_South_Africa-2021.pdf",
+      "filename": "massey-ferguson-4700-south-africa-2021.pdf",
+      "requested_fields": [
+        "engine_power_rated",
+        "engine_power_max",
+        "engine_cylinders",
+        "engine_displacement",
+        "transmission_type",
+        "hydraulic_pump_flow",
+        "rear_hitch_lift_capacity",
+        "wheelbase",
+        "operating_weight"
+      ]
+    },
+    {
+      "id": "massey-ferguson-6s155",
+      "manufacturer": "Massey Ferguson",
+      "model": "6S.155",
+      "variant": null,
+      "market": "Türkiye",
+      "pdf_url": "https://www.masseyferguson.com/content/dam/public/masseyfergusonglobal/markets/tr_tr/assets/product-brochures/tractors/mf-6s/A-TR-17302_MF_6S_Broch_Turkish_V26_UB.pdf",
+      "filename": "massey-ferguson-6s-turkish-brochure.pdf",
+      "requested_fields": [
+        "engine_power_rated",
+        "engine_power_max",
+        "engine_power_boost",
+        "engine_torque_max",
+        "engine_cylinders",
+        "engine_displacement",
+        "transmission_type",
+        "hydraulic_pump_flow",
+        "rear_hitch_lift_capacity",
+        "wheelbase",
+        "operating_weight"
+      ]
+    },
+    {
+      "id": "john-deere-5095m",
+      "manufacturer": "John Deere",
+      "model": "5095M",
+      "variant": "5M Series / exact 5095M column",
+      "market": "Region 1",
+      "pdf_url": "https://www.deere.com/assets/pdfs/region-1/products/tractors/5M%20Series2.pdf",
+      "filename": "john-deere-5m-series-brochure.pdf",
+      "requested_fields": [
+        "engine_power_rated",
+        "engine_power_max",
+        "engine_cylinders",
+        "engine_displacement",
+        "transmission_type",
+        "hydraulic_pump_flow",
+        "rear_hitch_lift_capacity",
+        "pto_speeds",
+        "wheelbase",
+        "operating_weight"
+      ]
+    },
+    {
+      "id": "fendt-724-gen71",
+      "manufacturer": "Fendt",
+      "model": "724 Vario",
+      "variant": "700 Vario Gen7.1",
+      "market": "Australia / official brochure scope",
+      "pdf_url": "https://assets.agcocorp.com/adobe/assets/urn%3Aaaid:aem%3A10f6ac65-47d2-40ab-811f-697f96081a71/original/as/10f6ac65-47d2-40ab-811f-697f96081a71.pdf",
+      "filename": "fendt-700-vario-gen7-1-brochure.pdf",
+      "requested_fields": [
+        "engine_power_rated",
+        "engine_power_max",
+        "engine_power_boost",
+        "engine_torque_max",
+        "engine_cylinders",
+        "engine_displacement",
+        "transmission_type",
+        "hydraulic_pump_flow",
+        "rear_hitch_lift_capacity",
+        "pto_speeds",
+        "wheelbase",
+        "operating_weight"
+      ]
+    },
+    {
+      "id": "massey-ferguson-5s135",
+      "manufacturer": "Massey Ferguson",
+      "model": "5S.135",
+      "variant": "MF 5S / Turkish brochure scope; keep Dyna-4 and Dyna-6 configurations distinct",
+      "market": "Türkiye",
+      "pdf_url": "https://www.masseyferguson.com/content/dam/public/masseyfergusonglobal/markets/tr_tr/assets/product-brochures/tractors/mf-5s/A-TR-17244_MF_5_S_Brochure_Turkish_V24_UB.pdf",
+      "filename": "massey-ferguson-5s-turkish-brochure.pdf",
+      "requested_fields": [
+        "engine_power_rated",
+        "engine_power_max",
+        "engine_torque_max",
+        "engine_cylinders",
+        "engine_displacement",
+        "transmission_type",
+        "hydraulic_pump_flow",
+        "rear_hitch_lift_capacity",
+        "pto_speeds",
+        "wheelbase",
+        "operating_weight"
+      ]
+    },
+    {
+      "id": "caseih-maxxum150",
+      "manufacturer": "Case IH",
+      "model": "Maxxum 150",
+      "variant": "Series brochure; keep standard / Multicontroller / CVXDrive configurations separate",
+      "market": "Middle East and Africa / brochure scope",
+      "pdf_url": "https://cnhi-p-001-delivery.sitecorecontenthub.cloud/api/public/content/2385264d1cac4751a455521b66adba05?v=61898c6f",
+      "filename": "case-ih-maxxum-series-brochure.pdf",
+      "requested_fields": [
+        "engine_power_rated",
+        "engine_power_max",
+        "engine_cylinders",
+        "engine_displacement",
+        "transmission_type",
+        "hydraulic_pump_flow",
+        "rear_hitch_lift_capacity",
+        "pto_speeds",
+        "wheelbase",
+        "operating_weight"
+      ]
+    },
+    {
+      "id": "new-holland-all-new-t7-210",
+      "manufacturer": "New Holland",
+      "model": "All-New T7.210",
+      "variant": "Standard Wheelbase (All-New); not Classic or SideWinder II",
+      "market": "North America brochure scope",
+      "pdf_url": "https://cnhi-p-001-delivery.sitecorecontenthub.cloud/api/public/content/fa3299cc42db43309d25b81f73719c9f?v=d3614f44",
+      "filename": "new-holland-t7-series-2026-brochure.pdf",
+      "requested_fields": [
+        "engine_power_rated",
+        "engine_power_max",
+        "engine_power_boost",
+        "engine_torque_max",
+        "engine_cylinders",
+        "engine_displacement",
+        "transmission_type",
+        "hydraulic_pump_flow",
+        "rear_hitch_lift_capacity",
+        "pto_speeds",
+        "wheelbase",
+        "operating_weight"
+      ]
+    },
+    {
+      "id": "deutz-fahr-series-7-ttv",
+      "manufacturer": "DEUTZ-FAHR",
+      "model": "7230 TTV",
+      "variant": "Series 7 Agrotron TTV",
+      "market": "Global / brochure scope",
+      "pdf_url": "https://www.deutz-fahr.com/media/308.8514.3.4-8_7_Series_EN_1.pdf",
+      "filename": "deutz-fahr-series-7-ttv-brochure.pdf",
+      "requested_fields": [
+        "engine_power_rated",
+        "engine_power_max",
+        "engine_torque_max",
         "engine_cylinders",
         "engine_displacement",
         "transmission_type",
