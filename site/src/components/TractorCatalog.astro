@@ -7,8 +7,8 @@ const isEnglish = lang === "en";
 const catalog = await getPublicCatalog();
 const title = isEnglish ? "Tractor catalogue | TractorVS" : "Traktör kataloğu | TractorVS";
 const description = isEnglish
-  ? "Explore published tractor models with transparent source and verification status for their specifications."
-  : "Yayımlanmış traktör modellerini, teknik özelliklerini ve verilerin kanıt durumunu keşfedin.";
+  ? "Explore published tractor specifications with links to checked manufacturer documentation when available."
+  : "Yayımlanmış traktörlerin teknik özelliklerini ve doğrulanmış üretici kaynaklarını keşfedin.";
 const detailPrefix = isEnglish ? "/tractors/" : "/tr/tractors/";
 ---
 <SiteLayout lang={lang} title={title} description={description}>
@@ -16,8 +16,8 @@ const detailPrefix = isEnglish ? "/tractors/" : "/tr/tractors/";
     <p class="eyebrow"><span class="eyebrow-mark"></span>{isEnglish ? "TRACTOR DATABASE" : "TRAKTÖR VERİTABANI"}</p>
     <h1>{isEnglish ? "Explore the " : "Kataloğu "}<em>{isEnglish ? "catalogue." : "keşfet."}</em></h1>
     <p class="catalog-intro">{isEnglish
-      ? "Browse published models and review the source-status label beneath each technical value."
-      : "Yayımlanmış modelleri inceleyin; teknik verilerin kaynak ve kanıt durumunu görün."}</p>
+      ? "Browse published models and view checked manufacturer source links where available."
+      : "Yayımlanmış modelleri inceleyin; doğrulanmış resmî üretici kaynaklarını görüntüleyin."}</p>
     {catalog.configured && catalog.tractors.length > 0 && <div class="catalog-count">
       <strong>{catalog.tractors.length}</strong><span>{isEnglish ? "published models" : "yayımlanmış model"}</span>
     </div>}
