@@ -379,6 +379,13 @@ function officialDiscoveryFallbackUrl(brandName: string, modelName: string, conf
       notes: "Official Fendt technical-data endpoint for the Fendt 700 Vario Gen7.1 series. The table contains a dedicated Fendt 724 Vario column. Scope is Gen7.1 only; the catalog request has no year/generation, so do not generalize these values to earlier 724 Vario generations. Keep every finding pending human review.",
     };
   }
+  if (brandKey === "deutzfahr" && modelKey === "6165") {
+    return {
+      url: "https://www.deutz-fahr.com/media/308.8513.10.4-8_Serie_6_TU.pdf",
+      sourceType: "official_technical_pdf",
+      notes: "Official DEUTZ-FAHR Turkish 6 Series technical brochure, publication code 308.8513.10.4-8 (10/19). Printed page 48 has a dedicated 6165 TTV column in the 6 SERİSİ AGROTRON TTV table; printed pages 49 and 51 continue its hydraulics/equipment and dimensions. Use only the exact 6165 TTV column; do not use 6165.4 TTV or Powershift/RCShift columns. Variant scope is TTV Agrotron; the catalog model year is not specified.",
+    };
+  }
   if (brandKey === "landini") {
     // Official Landini product-range index on its current first-party domain.
     // Discovery only; model-specific pages / brochures remain required.
@@ -2604,6 +2611,40 @@ async function startResearch(body: AnyRow, callerUserId: string | null = null) {
     }
     packets = verifiedPackets;
   }
+  if (brandKeyForSource === "deutzfahr" && normalise(modelInput) === "6165") {
+    const exactDeutz6165TtvPdfUrl = "https://www.deutz-fahr.com/media/308.8513.10.4-8_Serie_6_TU.pdf";
+    const verifiedPackets = packets.filter((packet) => {
+      const sourceNotes = String(packet.source.notes ?? "");
+      const textHasExactColumn = Boolean(packet.text && /6165\s*TTV/i.test(packet.text));
+      return packet.source.url === exactDeutz6165TtvPdfUrl
+        && Number(packet.httpStatus) === 200
+        && /6\s*SERİSİ\s+AGROTRON\s+TTV/i.test(sourceNotes)
+        && textHasExactColumn;
+    });
+    if (verifiedPackets.length !== 1) {
+      const diagnostic = "DEUTZ-FAHR 6165 TTV için tek ve doğrulanmış resmî teknik broşür bulunamadı. 6165.4, Powershift ve RCShift tabloları Gemini'ye gönderilmedi; manuel kaynak incelemesi gerekiyor.";
+      await db.from("ai_research_runs").update({
+        status: "failed",
+        error_message: diagnostic,
+        result_meta: {
+          phase: "deutz_fahr_6165_ttv_source_allowlist",
+          discovered_source_count: packets.length,
+          accepted_source_count: verifiedPackets.length,
+          accepted_source_urls: verifiedPackets.map((packet) => packet.source.url),
+        },
+        completed_at: new Date().toISOString(),
+      }).eq("id", run.id);
+      return json(422, {
+        success: false,
+        run_id: run.id,
+        status: "needs_source",
+        error: diagnostic,
+        discovered_source_count: packets.length,
+        accepted_source_count: verifiedPackets.length,
+      });
+    }
+    packets = verifiedPackets;
+  }
   const documentRows = await Promise.all(packets.map(async (packet) => {
     const contentHash = await sha256Hex(packet.text ?? packet.pdfBase64 ?? packet.finalUrl);
     const versionLabel = packet.lastModified || packet.etag || `sha256:${contentHash.slice(0, 16)}`;
@@ -2631,6 +2672,11 @@ async function startResearch(body: AnyRow, callerUserId: string | null = null) {
       && normalise(modelInput) === "farmall110a"
       && packet.source.url === "https://cnhi-p-001-delivery.sitecorecontenthub.cloud/api/public/content/f07d27f3f2ff43caa2b582f82d53ceba?v=aa4634ce"
       && Number(packet.httpStatus) === 200;
+    const isVerifiedDeutzFahr6165TtvBrochure = brandKeyForSource === "deutzfahr"
+      && normalise(modelInput) === "6165"
+      && packet.source.url === "https://www.deutz-fahr.com/media/308.8513.10.4-8_Serie_6_TU.pdf"
+      && Number(packet.httpStatus) === 200
+      && Boolean(packet.text && /6165\s*TTV/i.test(packet.text));
     // Curated, exact first-party PDF page mappings. These are narrow allow-list
     // entries: the manufacturer, full requested model name, exact official PDF
     // URL and printed page heading must all match. This is not fuzzy matching.
@@ -2655,6 +2701,8 @@ async function startResearch(body: AnyRow, callerUserId: string | null = null) {
         ? "TC_EXACT_MODEL_EVIDENCE:puma150:Official Case IH Europe product page https://www.caseih.com/en-gb/europe/products/tractors/puma-series/puma-140-175 links this exact official 48-page Puma 140-175 Stage V technical brochure. Printed technical-data pages 46-47 explicitly identify Puma 150 CVXDrive, Puma 150 Multicontroller and Puma 150 model columns. This mapping is limited to this exact official brochure URL."
       : isVerifiedCaseIHFarmall110ABrochure
         ? "TC_EXACT_MODEL_EVIDENCE:farmall110a:Official Case IH Europe Farmall 90-110 A product page links this exact official three-page Farmall A brochure. Printed page 3 contains the exact FARMALL 110 A technical row. This curated identity mapping is limited to this exact PDF URL."
+      : isVerifiedDeutzFahr6165TtvBrochure
+        ? "TC_EXACT_MODEL_EVIDENCE:6165:Official DEUTZ-FAHR 6 Series brochure, exact 6 SERİSİ AGROTRON TTV table, dedicated 6165 TTV column. Use this mapping only for this exact PDF URL; 6165.4 TTV and Powershift/RCShift are separate model/configuration tables."
       : isVerifiedTymT3047Series3Pdf
         ? "TC_EXACT_MODEL_EVIDENCE:t3047:Official TYM product page https://www.tym.world/en/products/tractors/series-3/t475 explicitly identifies T3047 (T475), Series 3 and is the catalog identity cross-reference for this official T475 specification guide."
         : isVerifiedTymT3035F36Series3Pdf
@@ -2676,6 +2724,7 @@ async function startResearch(body: AnyRow, callerUserId: string | null = null) {
     const curatedModelIdentity = Boolean(
       isVerifiedCaseIHPuma150Brochure
       || isVerifiedCaseIHFarmall110ABrochure
+      || isVerifiedDeutzFahr6165TtvBrochure
       || isVerifiedTymT3047Series3Pdf || isVerifiedTymT3035F36Series3Pdf
       || isVerifiedLamborghiniSpireF80TargetPdf
       || isVerifiedLamborghiniSpireS80TargetPdf || isVerifiedLamborghiniSpireV80TargetPdf
@@ -2739,10 +2788,13 @@ async function startResearch(body: AnyRow, callerUserId: string | null = null) {
   const isCaseIHPuma150 = lamborghiniKey === "caseih" && lamborghiniModelKey === "puma150";
   const isCaseIHFarmall110A = lamborghiniKey === "caseih" && lamborghiniModelKey === "farmall110a";
   const isFendt516Vario = lamborghiniKey === "fendt" && lamborghiniModelKey === "516vario";
+  const isDeutzFahr6165 = lamborghiniKey === "deutzfahr" && lamborghiniModelKey === "6165";
   const isLamborghiniSpireF = lamborghiniKey === "lamborghinitrattori" && lamborghiniModelKey === "spireftarget";
   const isLamborghiniSpireS = lamborghiniKey === "lamborghinitrattori" && lamborghiniModelKey === "spires80target";
   const isLamborghiniSpireV = lamborghiniKey === "lamborghinitrattori" && lamborghiniModelKey === "spirev80target";
-  const modelSpecificPrompt = isCaseIHFarmall110A
+  const modelSpecificPrompt = isDeutzFahr6165
+    ? "DEUTZ-FAHR 6165 TTV EXACT VARIANT AND TABLE RULE: The catalog record is named 6165 and has no variant. The attached official DEUTZ-FAHR Turkish 6 Series brochure contains several different tractors/configurations. For this task, use ONLY the table headed '6 SERİSİ AGROTRON TTV' with the exact column '6165 TTV'. Do not use 6 SERİSİ AGROTRON POWERSHIFT / RCSHIFT, 6.4 SERİSİ, or 6165.4 TTV tables. Treat the result as variant '6165 TTV Agrotron' and repeat 'Variant: TTV Agrotron; Brochure publication code: 10/19; source locale: Turkish; model year: not specified' in measurement_standard/evidence_text for every configuration-specific finding. Engine table (printed page 48): Deutz TCD 6.1 L06, Stage V, 6 cylinders/6,057 cm3; max power ECE R120 120.8 kW/164 HP; boost max power 125.8 kW/171 HP; rated power 115.1 kW/157 HP; rated power with boost 119.9 kW/163 HP; EU registered power 120 kW/163 HP; max power speed 1,900 rpm; rated max engine speed 2,100 rpm; max torque 699 Nm at 1,400 rpm; torque rise 28%; 280 L fuel and 35 L AdBlue. Do not label 171 HP as rated power; it is maximum power with boost. Transmission is ZF Eccom 1.5; preserve 50 km/h and 40 km/h speed/rpm pairs separately. Rear PTO 540/540ECO/1000/1000ECO is standard; front electro-hydraulic 1000/1000ECO PTO is optional. Hydraulics/equipment table (printed page 49): standard variable pump 120 l/min and optional 170 l/min are separate; rear auxiliary valves and optional configurations must preserve standard/optional legend; rear lift is 9,200 kg; front lift capacity is 4,110 kg where the 6165 TTV column applies. Dimensions/weight table (printed page 51): use only the 6165 TTV column; wheelbase is 2,767 mm, do not use 2,543 or 2,848 mm values belonging to other configurations. Preserve minimum/maximum length, width, height, ground-clearance and unladen-weight ranges only when the printed table cell spans the 6165 TTV column; do not pull values from the Powershift table or adjacent 6165.4 TTV page. The brochure is dated by publication code 10/19 but does not state the tractor model year; do not infer a model year or assert the brochure is the current market-year specification. Keep all findings pending human review, and never auto-approve or update tractor_specs."
+    : isCaseIHFarmall110A
     ? "CASE IH FARMALL 110 A EXACT MODEL RULE: Use only the dedicated FARMALL 110 A row on printed page 3 of the attached official Case IH Farmall A brochure. Do not copy the adjacent Farmall 100 A or 90 A rows. Exact row: engine FPT F36, 4 cylinders, 3.6 L; maximum engine power 81 kW / 110 hp (ISO TR14396 - ECE R120); maximum torque 490 Nm at 1,300 rpm; transmission 12x12 ManualDrive or 12x12 Electronic PowerShuttle; maximum lift capacity 4,400 kg; standard/high pump flow 64/82 l/min; maximum permissible weight 6,500 kg; wheelbase 2,350 mm. The brochure's page 2 descriptive claims (82 l/min hydraulic pump, 4.4 tons rear lift, 3 PTO speeds) are series-level statements: use them only when they do not conflict with the explicit 110 A row, and retain the scope. Mark all source-dependent findings with 'Model: Farmall 110 A; Brochure circulation: worldwide; model year: not specified'. The brochure explicitly says equipment and model availability can vary by country; do not infer local-market availability or make optional features standard. Do not infer engine rated power from maximum power; keep the printed 'maximum engine power' label. Do not invent a model year. Extract every explicit 110 A row value and any unambiguous common specification up to the 60-finding limit. Ignore Farmall 100 A and Farmall 90 A rows. All findings remain pending human review; never auto-approve or update tractor_specs from this run."
     : isFendt516Vario
       ? "FENDT 516 VARIO GEN4 EXACT SCOPE RULE: The attached official Fendt 500 Vario Gen4 technical-data table is the only allowed source for this run. Use the dedicated 516 Vario column only. Preserve the Gen4 generation in every finding's measurement_standard and evidence_text as 'Generation: Fendt 500 Vario Gen4; Source locale: GB; model year: not specified'. Do not combine any values from the older Fendt 500 Vario / Gen3 endpoint; its engine displacement (4,038 cm3), rated power (163 hp), and ML90 transmission differ from Gen4 (5,017 cm3, 164 hp, TA120 VarioDrive). Do not infer a model year. Keep kW/hp pairs exactly as printed and distinguish nominal power from nominal power with DP ECE R120. Keep 152 l/min optional pump separate from 109 l/min standard pump. Keep rear and front power-lift ratings in daN as printed; do not silently convert them to kg. Record tyre sizes and configuration-specific data only from the 516 Vario column. The GB technical-data endpoint is not proof that every regional configuration is identical; preserve source locale and retain mandatory human review. All findings remain pending; never auto-approve or update tractor_specs."
