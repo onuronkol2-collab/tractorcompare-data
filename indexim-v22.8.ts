@@ -402,6 +402,12 @@ function autoApprovalRiskFlags(
   if (/pto/.test(ev) && /enginerpm|rpmat|rpmrated/.test(ev) && /pto/.test(name)) {
     if (!/engine.*rpm|rpm.*engine/.test(name)) flags.push("pto_shaft_speed_and_engine_rpm_may_be_merged");
   }
+  if (/pto/.test(name) && /540.{0,12}2160|2160.{0,12}540/.test(ev)) {
+    flags.push("pto_shaft_speed_and_engine_speed_pair_needs_separation");
+  }
+  if (/transmission|gearbox|sanziman/.test(name) && /optionaltransmission|transmissionoptions|orhst|orpowershift|orcvx|orautocommand/.test(ev)) {
+    flags.push("multiple_transmission_options_need_variant_scope");
+  }
 
   // Never mix implement, steering and total hydraulic flow.
   if (/flow|debit|hydraulic|hidrolik/.test(name) || key.includes("hydraulic")) {
