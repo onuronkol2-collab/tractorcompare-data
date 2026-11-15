@@ -41,6 +41,9 @@ The migration checks the exact finding IDs, run IDs, tractor IDs, old names/valu
 
 The existing v21.40 exact-ID queue path will claim only V's queue row. As `last_run_id` is already the completed run, it polls that existing run and marks the queue completed; it does not start a new Gemini research run. Do not call `start` and do not use `process_queue_batch` for this synchronization.
 
+## Rollback
+If and only if the v21.42 migration completed successfully and must be reverted, use `rollback-v21.42-lamborghini-spire-sv-taxonomy-repair.sql`. It checks the exact v21.42 post-state, restores the 18 original finding rows and S run metadata, and deletes only the single pending Common Rail split row created by this migration. It aborts if the records have since been edited or reviewed. Do not run the rollback as part of normal deployment.
+
 ## Notes
 - Audit results show every S/V finding has a value, evidence, and the expected printed PDF page.
 - S identity passed strict Gemini exact-name/token validation. V passed strict validation plus deterministic official PDF page-7 identity.
