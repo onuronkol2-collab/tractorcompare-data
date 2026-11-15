@@ -14,7 +14,7 @@ const detailPrefix = isEnglish ? "/tractors/" : "/tr/tractors/";
 <SiteLayout lang={lang} title={title} description={description}>
   <section class="catalog-hero"><div class="container">
     <p class="eyebrow"><span class="eyebrow-mark"></span>{isEnglish ? "TRACTOR DATABASE" : "TRAKTÖR VERİTABANI"}</p>
-    <h1>{isEnglish ? "Explore the <em>catalogue.</em>" : "Kataloğu <em>keşfet.</em>"}</h1>
+    <h1>{isEnglish ? "Explore the " : "Kataloğu "}<em>{isEnglish ? "catalogue." : "keşfet."}</em></h1>
     <p class="catalog-intro">{isEnglish
       ? "Browse published models and inspect the technical details behind each specification."
       : "Yayımlanmış modelleri inceleyin; her teknik özelliğin dayandığı kaynakları görün."}</p>
