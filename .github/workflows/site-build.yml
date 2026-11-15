@@ -16,6 +16,9 @@ on:
       - main
     paths:
       - "site/**"
+      - "supabase/verification/preflight_tractorvs_public_catalog_view.sql"
+      - "wrangler.jsonc"
+      - "package.json"
       - "supabase/migrations/20261115000400_tractorvs_public_catalog_view.sql"
       - "supabase/rollback/20261115000400_tractorvs_public_catalog_view_rollback.sql"
       - "supabase/verification/verify_tractorvs_public_catalog_view.sql"
