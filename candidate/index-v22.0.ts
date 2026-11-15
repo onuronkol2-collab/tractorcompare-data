@@ -3672,7 +3672,50 @@ async function pollResearch(body: AnyRow) {
     return json(200, { success: false, run_id: run.id, status: "failed", error: run.error_message });
   }
   if (!run.gemini_interaction_id) {
-    return json(409, { success: false, run_id: run.id, status: run.status, error: "Gemini interaction ID bu araştırma kaydında bulunamadı." });
+    // A queue worker may reclaim a stale queue row while the original request is
+    // still discovering sources. Keep polling during this setup phase rather than
+    // incorrectly failing the queue just because Gemini has not been started yet.
+    const createdAtMs = Date.parse(String(run.created_at ?? ""));
+    const staleSetup = ["queued", "running"].includes(String(run.status))
+      && Number.isFinite(createdAtMs)
+      && Date.now() - createdAtMs > 30 * 60 * 1000;
+
+    if (staleSetup) {
+      const message = "Araştırma 30 dakikadan uzun süredir Gemini interaction ID oluşturmadan running durumda kaldı. Kayıt güvenli biçimde failed olarak işaretlendi; kuyruk kontrollü yeni deneme başlatabilir.";
+      const previousMeta = run.result_meta && typeof run.result_meta === "object" && !Array.isArray(run.result_meta)
+        ? run.result_meta
+        : {};
+      const { error: staleUpdateError } = await db.from("ai_research_runs").update({
+        status: "failed",
+        error_message: message,
+        result_meta: { ...previousMeta, phase: "stale_start_recovery", stale_setup_timeout_minutes: 30 },
+        completed_at: new Date().toISOString(),
+      }).eq("id", run.id).in("status", ["queued", "running"]);
+      if (staleUpdateError) {
+        return json(503, {
+          success: false,
+          run_id: run.id,
+          status: "running",
+          retryable: true,
+          error: `Takılmış araştırma güvenli biçimde kapatılamadı: ${staleUpdateError.message}`,
+        });
+      }
+      return json(503, {
+        success: false,
+        run_id: run.id,
+        status: "failed",
+        retryable: true,
+        error: message,
+      });
+    }
+
+    return json(202, {
+      success: true,
+      run_id: run.id,
+      status: "running",
+      setup_phase: true,
+      message: "Kaynak keşfi/Gemini başlatma aşaması devam ediyor; aynı run_id ile daha sonra tekrar kontrol edin.",
+    });
   }
 
   console.log(`[poll] run=${run.id}`);
