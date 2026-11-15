@@ -1,0 +1,62 @@
+---
+import SiteLayout from "../layouts/SiteLayout.astro";
+import { formatDate, groupSpecifications, specLabel, sourceTypeLabel, type TractorRecord } from "../lib/catalog";
+interface Props { lang: "en" | "tr"; tractor: TractorRecord; }
+const { lang, tractor } = Astro.props;
+const isEnglish = lang === "en";
+const groups = groupSpecifications(tractor.specifications,lang);
+const listingUrl = isEnglish ? "/tractors/" : "/tr/tractors/";
+const title = isEnglish
+  ? tractor.brand_name+" "+tractor.model_name+" specifications | TractorVS"
+  : tractor.brand_name+" "+tractor.model_name+" teknik özellikleri | TractorVS";
+const description = isEnglish
+  ? "Source-linked technical specifications for "+tractor.brand_name+" "+tractor.model_name+"."
+  : tractor.brand_name+" "+tractor.model_name+" modelinin kaynak bağlantılı teknik özellikleri.";
+const summaryItems = [
+  {label:isEnglish?"Power":"Güç",value:tractor.horsepower!=null?tractor.horsepower+" HP":null},
+  {label:isEnglish?"Engine":"Motor",value:tractor.engine},
+  {label:isEnglish?"Transmission":"Şanzıman",value:tractor.transmission},
+  {label:isEnglish?"Weight":"Ağırlık",value:tractor.weight_kg!=null?tractor.weight_kg+" kg":null},
+].filter((item)=>item.value);
+---
+<SiteLayout lang={lang} title={title} description={description}>
+  <section class="model-hero"><div class="container">
+    <a class="catalog-breadcrumb" href={listingUrl}>← {isEnglish?"All tractors":"Tüm traktörler"}</a>
+    <p class="eyebrow"><span class="eyebrow-mark"></span>{isEnglish?"PUBLISHED MODEL / TECHNICAL PROFILE":"YAYIMLANMIŞ MODEL / TEKNİK PROFİL"}</p>
+    <p class="model-brand">{tractor.brand_name}</p><h1>{tractor.model_name}</h1>
+    <div class="model-meta">
+      {tractor.model_year&&<span>{tractor.model_year}</span>}
+      {tractor.variant&&<span>{tractor.variant}</span>}
+      {tractor.market&&<span>{tractor.market}</span>}
+      {tractor.brand_country&&<span>{tractor.brand_country}</span>}
+    </div>
+    {summaryItems.length>0&&<div class="model-summary-grid">{summaryItems.map((item)=>
+      <div><small>{item.label}</small><strong>{item.value}</strong></div>)}</div>}
+  </div></section>
+  <section class="model-spec-section"><div class="container">
+    <div class="model-spec-heading"><div>
+      <p class="eyebrow"><span class="eyebrow-mark"></span>{isEnglish?"SOURCE-BACKED DATA":"KAYNAĞI GÖSTERİLEN VERİ"}</p>
+      <h2>{isEnglish?"Technical specifications":"Teknik özellikler"}</h2>
+    </div><p>{isEnglish
+      ? "Values are shown as recorded in the published catalogue. Open the source to review the manufacturer's context."
+      : "Değerler yayımlanmış katalog kaydındaki biçimiyle gösterilir. Üreticinin bağlamını incelemek için kaynağı açın."}</p></div>
+    {groups.length>0?<div class="model-spec-groups">{groups.map((group)=>
+      <section class="model-spec-group"><h3>{group.label}</h3><div class="model-spec-grid">
+        {group.specifications.map((spec)=><article class="model-spec-card">
+          <div class="model-spec-top"><h4>{specLabel(spec,lang)}</h4>{spec.rated_rpm!=null&&<span>{spec.rated_rpm} rpm</span>}</div>
+          <p class="model-spec-value">{spec.spec_value}{spec.unit?" "+spec.unit:""}</p>
+          {spec.measurement_standard&&<p class="model-spec-note">{spec.measurement_standard}</p>}
+          {spec.evidence_text&&<blockquote>{spec.evidence_text}</blockquote>}
+          <div class="model-spec-source">
+            {spec.source_url
+              ? <a href={spec.source_url} target="_blank" rel="noopener noreferrer">{spec.source_publisher||(isEnglish?"Open source":"Kaynağı aç")} ↗</a>
+              : <span>{isEnglish?"Source link unavailable":"Kaynak bağlantısı bulunmuyor"}</span>}
+            <small>{sourceTypeLabel(spec.source_type,lang)}</small>
+            {spec.verified_at&&<small>{isEnglish?"Verified":"Doğrulandı"}: {formatDate(spec.verified_at,lang)}</small>}
+          </div>
+        </article>)}
+      </div></section>)}</div>
+    : <div class="catalog-empty"><h2>{isEnglish?"No published specifications are available.":"Yayımlanmış teknik özellik bulunmuyor."}</h2></div>}
+    <a class="button button-primary model-back-button" href={listingUrl}>{isEnglish?"Back to tractor catalogue":"Traktör kataloğuna dön"} <span aria-hidden="true">↗</span></a>
+  </div></section>
+</SiteLayout>

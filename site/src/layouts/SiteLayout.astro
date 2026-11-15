@@ -12,15 +12,23 @@ const { lang, title, description } = Astro.props;
 const isEnglish = lang === "en";
 const indexingEnabled =
   import.meta.env.PUBLIC_INDEXING_ENABLED === "true" && Boolean(Astro.site);
+const homePath = isEnglish ? "/" : "/tr/";
+const localizedPath = Astro.url.pathname.startsWith("/tr/")
+  ? Astro.url.pathname.slice(3)
+  : Astro.url.pathname === "/tr" ? "/" : Astro.url.pathname;
+const englishPath = localizedPath || "/";
+const turkishPath = "/tr" + (englishPath === "/" ? "/" : englishPath);
+const catalogPath = homePath + "tractors/";
+const languagePath = isEnglish ? turkishPath : englishPath;
 const canonicalUrl = indexingEnabled
   ? new URL(Astro.url.pathname, Astro.site!).toString()
   : undefined;
-const englishUrl = indexingEnabled ? new URL("/", Astro.site!).toString() : undefined;
-const turkishUrl = indexingEnabled ? new URL("/tr/", Astro.site!).toString() : undefined;
+const englishUrl = indexingEnabled ? new URL(englishPath, Astro.site!).toString() : undefined;
+const turkishUrl = indexingEnabled ? new URL(turkishPath, Astro.site!).toString() : undefined;
 
 const nav = isEnglish
-  ? { platform: "Platform", data: "Data principles", about: "Our approach", language: "Türkçe" }
-  : { platform: "Platform", data: "Veri ilkeleri", about: "Yaklaşımımız", language: "English" };
+  ? { platform: "Platform", catalog: "Tractor catalogue", data: "Data principles", about: "Our approach", language: "Türkçe" }
+  : { platform: "Platform", catalog: "Traktör kataloğu", data: "Veri ilkeleri", about: "Yaklaşımımız", language: "English" };
 ---
 
 <!doctype html>
@@ -63,16 +71,17 @@ const nav = isEnglish
         </a>
 
         <nav class="desktop-nav" aria-label={isEnglish ? "Main navigation" : "Ana gezinme"}>
-          <a href="#platform">{nav.platform}</a>
-          <a href="#data">{nav.data}</a>
-          <a href="#approach">{nav.about}</a>
+          <a href={homePath + "#platform"}>{nav.platform}</a>
+          <a href={catalogPath}>{nav.catalog}</a>
+          <a href={homePath + "#data"}>{nav.data}</a>
+          <a href={homePath + "#approach"}>{nav.about}</a>
         </nav>
 
         <div class="header-actions">
-          <a class="language-switch" href={isEnglish ? "/tr/" : "/"} aria-label={nav.language}>
+          <a class="language-switch" href={languagePath} aria-label={nav.language}>
             <span class="language-dot"></span>{nav.language}
           </a>
-          <a class="header-cta" href="#platform">
+          <a class="header-cta" href={catalogPath}>
             {isEnglish ? "Explore" : "Keşfet"} <span aria-hidden="true">↗</span>
           </a>
         </div>
@@ -107,10 +116,11 @@ const nav = isEnglish
           </p>
         </div>
         <div class="footer-links">
-          <a href="#platform">{nav.platform}</a>
-          <a href="#data">{nav.data}</a>
-          <a href="#approach">{nav.about}</a>
-          <a href={isEnglish ? "/tr/" : "/"}>{nav.language}</a>
+          <a href={homePath + "#platform"}>{nav.platform}</a>
+          <a href={catalogPath}>{nav.catalog}</a>
+          <a href={homePath + "#data"}>{nav.data}</a>
+          <a href={homePath + "#approach"}>{nav.about}</a>
+          <a href={languagePath}>{nav.language}</a>
         </div>
       </div>
       <div class="container footer-bottom">

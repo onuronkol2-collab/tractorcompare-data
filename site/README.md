@@ -1,18 +1,19 @@
 # TractorVS — bilingual website
 
-A bilingual Astro website scaffold in an isolated `site/` directory. The existing Supabase research pipeline, SQL snapshots, Edge Functions and tractor research data are kept separate and untouched by this frontend.
+A bilingual Astro website in an isolated \`site/\` directory. The existing Supabase research pipeline, SQL snapshots, Edge Functions and AI research data remain separate from the frontend.
 
 ## Current state
 
-- English landing page at `/`
-- Turkish landing page at `/tr/`
+- English landing page at \`/\` and Turkish landing page at \`/tr/\`
+- English public tractor catalogue at \`/tractors/\` and Turkish catalogue at \`/tr/tractors/\`
+- Build-time static model detail pages in both languages for records returned by the restricted public Supabase view
+- Source links, evidence excerpts and technical specification grouping on model pages
+- Catalogue search on the pre-rendered model list
 - Responsive, modern and technical visual system
-- Search-engine metadata and language alternates are prepared
-- Indexing is disabled by default for safe previews
-- Sitemap generation is enabled only after a production domain and indexing flag are configured
-- Cloudflare Workers Static Assets deployment configuration is included
-- The selected project brand is **TractorVS**
-- Domain registration availability and trademark clearance are not yet confirmed
+- Search-engine metadata, canonical URLs and language alternates
+- Indexing disabled by default for safe previews
+- Cloudflare Workers Static Assets deployment configuration
+- Selected public brand: **TractorVS**
 
 ## Requirements
 
@@ -24,51 +25,51 @@ A bilingual Astro website scaffold in an isolated `site/` directory. The existin
 
 From this directory:
 
-```bash
+\`\`\`bash
 npm install
 npm run dev
-```
+\`\`\`
 
-Open the local Astro URL shown in the terminal. The English page is at `/`; the Turkish page is at `/tr/`.
+## Build
 
-## Build and preview
-
-```bash
+\`\`\`bash
 npm run build
-npm run preview
-```
+\`\`\`
 
-The preview script builds the site before starting Wrangler.
+Without both \`SUPABASE_URL\` and \`SUPABASE_ANON_KEY\`, the site builds safely and shows an explicit catalogue-connection notice. It does not display sample or invented tractor records.
 
-## Production SEO configuration
+## Public catalogue connection
 
-After registering the final domain, set these environment variables in the Cloudflare build configuration:
+The production build reads only the restricted \`public.tractorvs_public_specs\` view, using a public/anon key and existing Supabase row-level security for the underlying published model/spec tables. The view returns only published tractor models, selected technical fields, evidence excerpts and source URL metadata. It does not expose draft models, AI findings, research documents, queue data, source notes or admin metadata.
 
-- `SITE_URL=https://YOUR-FINAL-DOMAIN`
-- `PUBLIC_INDEXING_ENABLED=true`
+Before configuring Cloudflare build variables:
 
-Without both values, the generated `robots.txt` disallows crawling, canonical URLs and language alternates are omitted, and sitemap generation remains off. This is deliberate so preview URLs and an unapproved domain are not indexed.
+1. Review and run \`supabase/migrations/20261115000400_tractorvs_public_catalog_view.sql\` in Supabase SQL Editor.
+2. Run \`supabase/verification/verify_tractorvs_public_catalog_view.sql\` and inspect the results.
+3. In Cloudflare Workers Builds, add \`SUPABASE_URL\` and \`SUPABASE_ANON_KEY\` as build variables. Use only the public anon/publishable key.
+4. Never add service-role, secret, database or Gemini keys to website build variables.
 
-## Cloudflare deployment
+The catalogue is generated at build time. After a published tractor or specification is added or changed, trigger a new website deployment to refresh the static pages.
 
-The Worker is configured to serve the static output in `dist/` using Workers Static Assets.
+## Production SEO
 
-```bash
+After registering and connecting the final domain, set:
+
+- \`SITE_URL=https://YOUR-FINAL-DOMAIN\`
+- \`PUBLIC_INDEXING_ENABLED=true\`
+
+Only enable indexing after the public model pages, domain, canonical URLs, language alternates and source links have been reviewed.
+
+## Deployment
+
+The Worker serves Astro's static output in \`dist/\` using Workers Static Assets.
+
+\`\`\`bash
 npm run deploy
-```
+\`\`\`
 
-For an initial safe preview, use the Cloudflare preview URL and keep `PUBLIC_INDEXING_ENABLED=false`. Connect the repository to Cloudflare Workers Builds only after the production domain and indexing settings are approved.
+No production custom domain is assumed by this scaffold. Domain registration availability and trademark clearance must be confirmed separately.
 
-## Brand
+## Existing systems
 
-The project owner's selected public brand is **TractorVS**. The same spelling is used in the Turkish and English experiences. Before launch, confirm the desired domain is available at the registrar and complete trademark clearance in the intended markets.
-
-## Next implementation steps
-
-1. Verify the preferred domain and complete trademark checks before registration.
-2. Verify the Supabase public read schema and row-level security before adding client-side data access.
-3. Connect catalogue and comparison routes to existing reviewed tractor/specification data.
-4. Add indexable model pages with source references and accurate canonical URLs.
-5. Complete the sitemap, structured data, privacy policy and contact details before production launch.
-
-No production deployment or live Supabase connection is configured by this scaffold.
+The website-only changes must not modify or deploy the existing AI Edge Functions, research pipeline, review dashboard or historical SQL snapshots. The separate v22.8 AI review PR remains independent and is not part of the public website deployment.
