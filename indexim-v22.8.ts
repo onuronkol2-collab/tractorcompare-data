@@ -372,6 +372,10 @@ function autoApprovalRiskFlags(
     if (basis.some(([_, present]) => present) && !labelHasBasis) {
       flags.push("weight_basis_not_explicit_in_field_name");
     }
+    const specificWeightBasis = /shipping|dispatch|rops|cab|ballast|minimum|platform/.test(name + key + scope);
+    if (basis.some(([_, present]) => present) && !specificWeightBasis) {
+      flags.push("weight_basis_not_separated_from_generic_weight_field");
+    }
     if (/operatingweight/.test(name) && /shippingweight|dispatchweight|minimumweight|weightwithrops|weightwithcab|withoutballast/.test(ev)) {
       flags.push("operating_weight_conflicts_with_source_basis");
     }
@@ -3267,6 +3271,9 @@ async function completeResearch(runInput: AnyRow, interaction: AnyRow) {
   const requestedMarket = String(run.requested_market ?? "global").trim() || "global";
   const resultMarket = String(result.market ?? "").trim();
   const requestedMarketIsGeneric = normalise(requestedMarket) === "global";
+  const resultMarketNeedsHumanReview = Boolean(
+    requestedMarketIsGeneric && resultMarket && normalise(resultMarket) !== "global"
+  );
   // "global" is the catalog default, not proof that a market-specific source
   // applies worldwide. When the official source identifies a concrete market,
   // preserve that market as a separate catalog identity.
@@ -3616,6 +3623,7 @@ async function completeResearch(runInput: AnyRow, interaction: AnyRow) {
           && yearMatch
           && Boolean(variantMatch)
           && Boolean(marketMatch)
+          && !resultMarketNeedsHumanReview
           && riskFlags.length === 0;
         const qualityMeta = {
           policy_version: "tc-auto-review-v1",
@@ -3651,6 +3659,7 @@ async function completeResearch(runInput: AnyRow, interaction: AnyRow) {
           ...(!confidenceOk ? ["evidence_support_score_below_threshold"] : []),
           ...(!yearMatch ? ["model_year_mismatch"] : []),
           ...(!marketMatch ? ["market_mismatch"] : []),
+          ...(resultMarketNeedsHumanReview ? ["source_market_scope_differs_from_catalog_market"] : []),
         ];
         const metaDecision = !safeToPublish ? "human_review" : (AUTO_APPROVE_VERIFIED_FINDINGS ? "eligible_for_auto_approval" : "review_only");
         const { error: qualityMetaError } = await db.from("ai_research_findings").update({
