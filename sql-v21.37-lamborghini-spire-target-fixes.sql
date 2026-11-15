@@ -129,6 +129,9 @@ SELECT CASE
       OR p_key IN ('clutch_type', 'clutch_control', 'clutch_diameter', 'gear_shift_type')
         THEN 'transmission'
 
+    WHEN p_key IN ('hydraulic_trailer_brake', 'four_wheel_braking')
+        THEN 'brakes'
+
     WHEN p_key LIKE 'hydraulic_%'
       OR p_key IN (
           'front_lift_capacity', 'rear_lift_capacity', 'hydraulic_lift_capacity',
@@ -149,7 +152,7 @@ SELECT CASE
       OR p_key IN ('brake_control', 'four_wheel_braking')
         THEN 'brakes'
 
-    WHEN p_key LIKE 'steering_%'
+    WHEN p_key LIKE 'steering_%' OR p_key = 'independent_steering_pump'
         THEN 'steering'
 
     WHEN p_key IN (
