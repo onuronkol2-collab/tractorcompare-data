@@ -1,4 +1,4 @@
-# TractorNexus — bilingual website
+# TractorVS — bilingual website
 
 A bilingual Astro website scaffold in an isolated `site/` directory. The existing Supabase research pipeline, SQL snapshots, Edge Functions and tractor research data are kept separate and untouched by this frontend.
 
@@ -11,7 +11,7 @@ A bilingual Astro website scaffold in an isolated `site/` directory. The existin
 - Indexing is disabled by default for safe previews
 - Sitemap generation is enabled only after a production domain and indexing flag are configured
 - Cloudflare Workers Static Assets deployment configuration is included
-- The selected project brand is **TractorNexus**
+- The selected project brand is **TractorVS**
 - Domain registration availability and trademark clearance are not yet confirmed
 
 ## Requirements
@@ -61,7 +61,7 @@ For an initial safe preview, use the Cloudflare preview URL and keep `PUBLIC_IND
 
 ## Brand
 
-The project owner's selected public brand is **TractorNexus**. The same spelling is used in the Turkish and English experiences. Before launch, confirm the desired domain is available at the registrar and complete trademark clearance in the intended markets.
+The project owner's selected public brand is **TractorVS**. The same spelling is used in the Turkish and English experiences. Before launch, confirm the desired domain is available at the registrar and complete trademark clearance in the intended markets.
 
 ## Next implementation steps
 
