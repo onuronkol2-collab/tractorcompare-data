@@ -19,6 +19,7 @@ const localizedPath = Astro.url.pathname.startsWith("/tr/")
 const englishPath = localizedPath || "/";
 const turkishPath = "/tr" + (englishPath === "/" ? "/" : englishPath);
 const catalogPath = homePath + "tractors/";
+const comparePath = homePath + "compare/";
 const languagePath = isEnglish ? turkishPath : englishPath;
 const canonicalUrl = indexingEnabled
   ? new URL(Astro.url.pathname, Astro.site!).toString()
@@ -27,8 +28,8 @@ const englishUrl = indexingEnabled ? new URL(englishPath, Astro.site!).toString(
 const turkishUrl = indexingEnabled ? new URL(turkishPath, Astro.site!).toString() : undefined;
 
 const nav = isEnglish
-  ? { platform: "Platform", catalog: "Tractor catalogue", data: "Data principles", about: "Our approach", language: "Türkçe" }
-  : { platform: "Platform", catalog: "Traktör kataloğu", data: "Veri ilkeleri", about: "Yaklaşımımız", language: "English" };
+  ? { platform: "Platform", catalog: "Tractor catalogue", compare: "Compare", data: "Data principles", about: "Our approach", language: "Türkçe" }
+  : { platform: "Platform", catalog: "Traktör kataloğu", compare: "Karşılaştır", data: "Veri ilkeleri", about: "Yaklaşımımız", language: "English" };
 ---
 
 <!doctype html>
@@ -73,6 +74,7 @@ const nav = isEnglish
         <nav class="desktop-nav" aria-label={isEnglish ? "Main navigation" : "Ana gezinme"}>
           <a href={homePath + "#platform"}>{nav.platform}</a>
           <a href={catalogPath}>{nav.catalog}</a>
+          <a href={comparePath}>{nav.compare}</a>
           <a href={homePath + "#data"}>{nav.data}</a>
           <a href={homePath + "#approach"}>{nav.about}</a>
         </nav>
@@ -118,6 +120,7 @@ const nav = isEnglish
         <div class="footer-links">
           <a href={homePath + "#platform"}>{nav.platform}</a>
           <a href={catalogPath}>{nav.catalog}</a>
+          <a href={comparePath}>{nav.compare}</a>
           <a href={homePath + "#data"}>{nav.data}</a>
           <a href={homePath + "#approach"}>{nav.about}</a>
           <a href={languagePath}>{nav.language}</a>

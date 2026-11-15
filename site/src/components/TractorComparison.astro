@@ -1,0 +1,255 @@
+---
+import SiteLayout from "../layouts/SiteLayout.astro";
+import { getPublicCatalog, specLabel, verificationNotice } from "../lib/catalog";
+import type { PublicSpec } from "../lib/catalog";
+
+interface Props { lang: "en" | "tr"; }
+const { lang } = Astro.props;
+const en = lang === "en";
+const catalog = await getPublicCatalog();
+
+type ComparedSpec = {
+  key: string;
+  label: string;
+  value: string;
+  unit: string | null;
+  context: string | null;
+  rpm: number | null;
+  source: string | null;
+  notice: string | null;
+};
+type ComparedModel = {
+  id: string;
+  title: string;
+  detailsUrl: string;
+  specs: ComparedSpec[];
+};
+const detailsPrefix = en ? "/tractors/" : "/tr/tractors/";
+const models: ComparedModel[] = catalog.tractors.map((tractor) => ({
+  id: tractor.tractor_id,
+  title: [tractor.brand_name, tractor.model_name, tractor.variant].filter(Boolean).join(" · "),
+  detailsUrl: detailsPrefix + tractor.slug + "/",
+  specs: tractor.specifications.map((spec: PublicSpec) => ({
+    key: spec.canonical_key || spec.spec_name,
+    label: specLabel(spec, lang),
+    value: spec.spec_value,
+    unit: spec.unit,
+    context: spec.measurement_standard,
+    rpm: spec.rated_rpm,
+    source: spec.source_url,
+    notice: verificationNotice(spec, lang),
+  })),
+}));
+const initialLeft = models[0];
+const initialRight = models[1];
+const missing = en ? "Not published" : "Yayımlanmadı";
+const initialKeys = [...new Set([
+  ...(initialLeft?.specs || []).map((spec) => spec.key),
+  ...(initialRight?.specs || []).map((spec) => spec.key),
+])].sort((a, b) => {
+  const leftLabel = initialLeft?.specs.find((spec) => spec.key === a)?.label
+    || initialRight?.specs.find((spec) => spec.key === a)?.label || a;
+  const rightLabel = initialLeft?.specs.find((spec) => spec.key === b)?.label
+    || initialRight?.specs.find((spec) => spec.key === b)?.label || b;
+  return leftLabel.localeCompare(rightLabel, lang);
+});
+const initialRows = initialKeys.map((key) => ({
+  key,
+  label: initialLeft?.specs.find((spec) => spec.key === key)?.label
+    || initialRight?.specs.find((spec) => spec.key === key)?.label || key,
+  left: initialLeft?.specs.filter((spec) => spec.key === key) || [],
+  right: initialRight?.specs.filter((spec) => spec.key === key) || [],
+}));
+const payload = JSON.stringify(models).replace(/</g, "\\u003c");
+---
+<SiteLayout
+  lang={lang}
+  title={en ? "Compare tractors | TractorVS" : "Traktör karşılaştır | TractorVS"}
+  description={en ? "Compare published tractor specifications side by side with manufacturer sources and measurement context." : "Yayımlanmış traktörleri, üretici kaynakları ve ölçüm koşullarıyla yan yana karşılaştırın."}
+>
+  <section class="tc-hero">
+    <div class="container">
+      <p class="eyebrow"><span class="eyebrow-mark"></span>{en ? "SOURCE-BACKED COMPARISON" : "KAYNAKLI TEKNİK KARŞILAŞTIRMA"}</p>
+      <h1>{en ? "Compare with " : "Traktörleri "}<em>{en ? "context." : "karşılaştır."}</em></h1>
+      <p>{en ? "Only published models are included. Different equipment versions and measurement conditions remain visible." : "Yalnızca yayımlanmış modeller gösterilir. Farklı donanımlar ve ölçüm koşulları gizlenmez."}</p>
+    </div>
+  </section>
+  <section class="tc-section">
+    <div class="container">
+      {models.length >= 2 ? <>
+        <div class="tc-picker">
+          <div>
+            <label for="tc-left">{en ? "First tractor" : "Birinci traktör"}</label>
+            <select id="tc-left">
+              {models.map((model, index) => <option value={model.id} selected={index === 0}>{model.title}</option>)}
+            </select>
+          </div>
+          <span class="tc-versus" aria-hidden="true">VS</span>
+          <div>
+            <label for="tc-right">{en ? "Second tractor" : "İkinci traktör"}</label>
+            <select id="tc-right">
+              {models.map((model, index) => <option value={model.id} selected={index === 1}>{model.title}</option>)}
+            </select>
+          </div>
+        </div>
+        <p class="tc-note">{en
+          ? "— means a specification has not been published for that model, not that the equipment is absent. Values with different standards, RPM or units must not be assumed directly equivalent."
+          : "— işareti özelliğin o model için yayımlanmadığını gösterir; ekipmanın bulunmadığı anlamına gelmez. Ölçüm standardı, devir veya birimi farklı değerler doğrudan eşdeğer kabul edilmemelidir."}</p>
+        <div class="tc-table-wrap">
+          <table class="tc-table">
+            <thead><tr>
+              <th scope="col">{en ? "Specification" : "Teknik özellik"}</th>
+              <th scope="col"><a id="tc-left-link" href={initialLeft?.detailsUrl}>{initialLeft?.title}</a></th>
+              <th scope="col"><a id="tc-right-link" href={initialRight?.detailsUrl}>{initialRight?.title}</a></th>
+            </tr></thead>
+            <tbody id="tc-rows">
+              {initialRows.map((row) => <tr>
+                <th scope="row">{row.label}</th>
+                {[row.left, row.right].map((items) => <td>
+                  {items.length ? items.map((spec) => <div class="tc-entry">
+                    <strong>{spec.value}{spec.unit ? " " + spec.unit : ""}</strong>
+                    {spec.context && <small>{en ? "Condition" : "Koşul"}: {spec.context}</small>}
+                    {spec.rpm != null && <small>{spec.rpm} rpm</small>}
+                    {spec.notice && <small class="tc-warning">{spec.notice}</small>}
+                    {spec.source && <a href={spec.source} rel="noopener noreferrer" target="_blank">{en ? "Manufacturer source" : "Üretici kaynağı"} ↗</a>}
+                  </div>) : <span class="tc-missing">— <small>{missing}</small></span>}
+                </td>)}
+              </tr>)}
+            </tbody>
+          </table>
+        </div>
+        <p class="tc-footnote">{en ? "Specifications are taken from the approved public catalogue at build time. Rebuild the site after publishing new tractors." : "Teknik özellikler derleme sırasında onaylı herkese açık katalogdan alınır. Yeni traktör yayımlandığında siteyi yeniden derleyin."}</p>
+      </> : <div class="tc-empty">
+        <h2>{en ? "Comparison is being prepared." : "Karşılaştırma hazırlanıyor."}</h2>
+        <p>{en ? "At least two published models are required. No draft or unapproved models are shown." : "En az iki yayımlanmış model gereklidir. Taslak ve onaylanmamış modeller gösterilmez."}</p>
+        <a href={en ? "/tractors/" : "/tr/tractors/"}>{en ? "View catalogue" : "Kataloğa dön"} ↗</a>
+      </div>}
+    </div>
+  </section>
+</SiteLayout>
+
+<script type="application/json" id="tc-payload" set:html={payload}></script>
+<script>
+  type Spec = { key: string; label: string; value: string; unit: string | null; context: string | null; rpm: number | null; source: string | null; notice: string | null };
+  type Model = { id: string; title: string; detailsUrl: string; specs: Spec[] };
+  const dataNode = document.querySelector<HTMLScriptElement>("#tc-payload");
+  const leftSelect = document.querySelector<HTMLSelectElement>("#tc-left");
+  const rightSelect = document.querySelector<HTMLSelectElement>("#tc-right");
+  const tbody = document.querySelector<HTMLTableSectionElement>("#tc-rows");
+  if (dataNode && leftSelect && rightSelect && tbody) {
+    const models = JSON.parse(dataNode.textContent || "[]") as Model[];
+    const lang = document.documentElement.lang === "tr" ? "tr" : "en";
+    const missing = lang === "tr" ? "Yayımlanmadı" : "Not published";
+    const sourceLabel = lang === "tr" ? "Üretici kaynağı" : "Manufacturer source";
+    const contextLabel = lang === "tr" ? "Koşul" : "Condition";
+    const params = new URLSearchParams(window.location.search);
+    const byId = (id: string) => models.find((model) => model.id === id);
+    const requestedLeft = params.get("left");
+    const requestedRight = params.get("right");
+    if (requestedLeft && byId(requestedLeft)) leftSelect.value = requestedLeft;
+    if (requestedRight && byId(requestedRight)) rightSelect.value = requestedRight;
+
+    function addText(parent: Element, tag: string, content: string, cssClass?: string) {
+      const child = document.createElement(tag);
+      child.textContent = content;
+      if (cssClass) child.className = cssClass;
+      parent.appendChild(child);
+    }
+    function renderCell(cell: HTMLTableCellElement, items: Spec[]) {
+      if (!items.length) {
+        addText(cell, "span", "— " + missing, "tc-missing");
+        return;
+      }
+      for (const spec of items) {
+        const entry = document.createElement("div");
+        entry.className = "tc-entry";
+        addText(entry, "strong", spec.value + (spec.unit ? " " + spec.unit : ""));
+        if (spec.context) addText(entry, "small", contextLabel + ": " + spec.context);
+        if (spec.rpm != null) addText(entry, "small", spec.rpm + " rpm");
+        if (spec.notice) addText(entry, "small", spec.notice, "tc-warning");
+        if (spec.source) {
+          try {
+            const url = new URL(spec.source);
+            if (url.protocol === "https:" || url.protocol === "http:") {
+              const link = document.createElement("a");
+              link.href = url.href;
+              link.target = "_blank";
+              link.rel = "noopener noreferrer";
+              link.textContent = sourceLabel + " ↗";
+              entry.appendChild(link);
+            }
+          } catch { /* Skip invalid URLs rather than exposing untrusted links. */ }
+        }
+        cell.appendChild(entry);
+      }
+    }
+    function render() {
+      if (leftSelect.value === rightSelect.value && models.length > 1) {
+        rightSelect.value = models.find((model) => model.id !== leftSelect.value)?.id || rightSelect.value;
+      }
+      const left = byId(leftSelect.value);
+      const right = byId(rightSelect.value);
+      if (!left || !right) return;
+      const leftLink = document.querySelector<HTMLAnchorElement>("#tc-left-link");
+      const rightLink = document.querySelector<HTMLAnchorElement>("#tc-right-link");
+      if (leftLink) { leftLink.href = left.detailsUrl; leftLink.textContent = left.title; }
+      if (rightLink) { rightLink.href = right.detailsUrl; rightLink.textContent = right.title; }
+      const keys = [...new Set([...left.specs, ...right.specs].map((spec) => spec.key))];
+      const label = (key: string) => left.specs.find((spec) => spec.key === key)?.label
+        || right.specs.find((spec) => spec.key === key)?.label || key;
+      keys.sort((a, b) => label(a).localeCompare(label(b), lang));
+      const rows = document.createDocumentFragment();
+      for (const key of keys) {
+        const tr = document.createElement("tr");
+        const th = document.createElement("th");
+        th.scope = "row";
+        th.textContent = label(key);
+        tr.appendChild(th);
+        for (const model of [left, right]) {
+          const td = document.createElement("td");
+          renderCell(td, model.specs.filter((spec) => spec.key === key));
+          tr.appendChild(td);
+        }
+        rows.appendChild(tr);
+      }
+      tbody.replaceChildren(rows);
+      const url = new URL(window.location.href);
+      url.searchParams.set("left", left.id);
+      url.searchParams.set("right", right.id);
+      window.history.replaceState(null, "", url.pathname + url.search);
+    }
+    leftSelect.addEventListener("change", render);
+    rightSelect.addEventListener("change", render);
+    render();
+  }
+</script>
+
+<style is:global>
+  .tc-hero { padding: 75px 0 65px; background: linear-gradient(115deg,#101a16,#1c3424); color:#f2f7ef; }
+  .tc-hero h1 { margin:0; font-size:clamp(38px,5.5vw,62px); letter-spacing:-.06em; }
+  .tc-hero h1 em { font-style:normal; color:#b7df91; }
+  .tc-hero p:last-child { color:#c0d1c1; max-width:720px; font-size:14px; line-height:1.9; margin:18px 0 0; }
+  .tc-section { padding:40px 0 85px; }
+  .tc-picker { display:grid; grid-template-columns:minmax(0,1fr) auto minmax(0,1fr); gap:20px; align-items:end; padding:22px; background:white; border:1px solid #dfe6dd; border-radius:14px; }
+  .tc-picker > div { min-width:0; }
+  .tc-picker label { display:block; margin-bottom:10px; font-size:12px; font-weight:800; }
+  .tc-picker select { width:100%; min-width:0; padding:13px; border:1px solid #ccd8cc; border-radius:8px; background:#f9fbf7; color:#182d1d; }
+  .tc-versus { padding:15px 3px; font:800 16px var(--mono); color:#427c50; }
+  .tc-note,.tc-footnote { max-width:900px; font-size:12px; color:#657366; line-height:1.85; margin:20px 0; }
+  .tc-table-wrap { overflow-x:auto; background:white; border:1px solid #dfe6dd; border-radius:12px; }
+  .tc-table { width:100%; min-width:680px; border-collapse:collapse; table-layout:fixed; }
+  .tc-table th,.tc-table td { padding:16px; border-bottom:1px solid #e6ebe4; text-align:left; vertical-align:top; overflow-wrap:anywhere; }
+  .tc-table thead th { position:sticky; top:0; background:#e7f0e4; font-size:13px; }
+  .tc-table thead th a { text-decoration:underline; text-underline-offset:3px; }
+  .tc-table tbody th { background:#f7faf4; color:#304637; font-size:12px; font-weight:700; width:28%; }
+  .tc-entry { display:grid; gap:5px; margin-bottom:14px; font-size:12px; }
+  .tc-entry:last-child { margin-bottom:0; }
+  .tc-entry strong { font-size:14px; }
+  .tc-entry small { color:#647569; font-size:11px; line-height:1.5; }
+  .tc-entry .tc-warning { color:#99561a; }
+  .tc-entry a { color:#2b6746; font-weight:800; font-size:11px; text-decoration:underline; text-underline-offset:3px; }
+  .tc-missing { color:#7c897c; font-size:12px; }
+  .tc-empty { padding:44px; border-radius:12px; background:white; border:1px solid #dfe6dd; }
+  .tc-empty a { color:#23613d; font-weight:800; text-decoration:underline; }
+  @media(max-width:680px) { .tc-picker { grid-template-columns:1fr; gap:10px; } .tc-versus { padding:0; } .tc-table th,.tc-table td { padding:12px; } }
+</style>
