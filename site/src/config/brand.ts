@@ -1,11 +1,11 @@
 /**
  * Public project identity.
- * The owner selected TractorMetric as the working brand.
- * Domain and trademark clearance must be completed before launch.
+ * TractorNexus is the project owner's selected brand.
+ * Domain availability and trademark clearance must be completed before launch.
  */
 export const brand = {
-  name: "TractorMetric",
-  descriptor: "Source-backed tractor specifications and comparisons",
-  shortMark: "TM",
+  name: "TractorNexus",
+  descriptor: "AI-assisted tractor data, verified specifications and comparisons",
+  shortMark: "TN",
   status: "selected-pending-domain-and-trademark-clearance",
 } as const;
