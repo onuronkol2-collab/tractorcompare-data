@@ -18,12 +18,11 @@ FROM (
     ('tractors'),
     ('brands')
 ) AS required(table_name)
-LEFT JOIN pg_catalog.pg_class AS c
-  ON c.relname = required.table_name
 LEFT JOIN pg_catalog.pg_namespace AS n
-  ON n.oid = c.relnamespace
- AND n.nspname = 'public'
-WHERE c.oid IS NULL OR n.oid IS NOT NULL
+  ON n.nspname = 'public'
+LEFT JOIN pg_catalog.pg_class AS c
+  ON c.relnamespace = n.oid
+ AND c.relname = required.table_name
 ORDER BY required.table_name;
 
 -- 2) data_sources must not already be readable by anon/authenticated,
