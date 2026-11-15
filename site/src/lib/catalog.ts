@@ -521,6 +521,15 @@ const approvedManufacturerHosts: Record<string, string[]> = {
   "tym": ["tym.world"],
   "fendt": ["fendt.com"],
   "massey ferguson": ["masseyferguson.com"],
+  "ls tractor": ["lstractor.com"],
+};
+
+// The original German F36 brochure is served from TYM's named Umbraco media
+// tenant. Only THIS reviewed exact PDF is permitted, never the shared CDN root.
+const approvedExactManufacturerDocuments: Record<string, string[]> = {
+  "tym": [
+    "https://tym-new.euwest01.umbraco.io/media/b01j3nc1/f36-produktbroschu-re.pdf",
+  ],
 };
 
 export function officialManufacturerSourceUrl(
@@ -533,9 +542,12 @@ export function officialManufacturerSourceUrl(
   const url = new URL(raw);
   if (url.protocol !== "https:" || url.username || url.password) return null;
   const approved = approvedManufacturerHosts[brandName.toLocaleLowerCase("tr-TR").trim()] || [];
-  return approved.some((root) =>
+  if (approved.some((root) =>
     url.hostname === root || url.hostname.endsWith("." + root)
-  ) ? url.toString() : null;
+  )) return url.toString();
+
+  return (approvedExactManufacturerDocuments[brandName.toLocaleLowerCase("tr-TR").trim()] || [])
+    .includes(url.toString()) ? url.toString() : null;
 }
 
 /**
