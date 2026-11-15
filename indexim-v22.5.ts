@@ -513,6 +513,24 @@ function chooseSource(
     }
   }
 
+  // Force the exact, reviewed first-party source for these three current queue targets.
+  // Do not let an older stored homepage/product-page link outrank the curated brochure/table.
+  const brandKey = normalise(String(brand.name));
+  if (
+    (brandKey === "caseih" && modelKey === "farmall110a")
+    || (brandKey === "fendt" && modelKey === "516vario")
+    || (brandKey === "deutzfahr" && modelKey === "6165")
+  ) {
+    const forced = officialDiscoveryFallbackUrl(String(brand.name), modelName, officialWebsite);
+    chosen = {
+      source_url: forced.url,
+      source_type: forced.sourceType,
+      publisher: brand.name,
+      notes: forced.notes,
+      source_priority: 100,
+    };
+  }
+
   if (!chosen) return null;
   const url = String(chosen.source_url ?? "").trim();
   if (!isHttpsUrl(url)) return null;
