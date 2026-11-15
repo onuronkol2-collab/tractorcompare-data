@@ -198,7 +198,7 @@ BEGIN
     AND table_name = 'ai_research_runs'
     AND column_name = 'result_meta';
 
-  IF v_meta_type NOT IN ('json', 'jsonb') THEN
+  IF v_meta_type IS NULL OR v_meta_type NOT IN ('json', 'jsonb') THEN
     RAISE EXCEPTION 'v21.42 rolled back: unsupported ai_research_runs.result_meta type: %.', v_meta_type;
   END IF;
 
@@ -218,6 +218,7 @@ BEGIN
     || jsonb_build_object(
       'findings_saved', 57,
       'pending_findings', 57,
+      'atomic_specifications', 61,
       'manual_normalization', jsonb_build_object(
         'reason', 'The composite Injection system cell on official PDF page 6 was split into separate Engine fuel system and Engine injection pressure findings.',
         'performed', true,
