@@ -144,7 +144,7 @@ async function callModel(provider: keyof typeof MODELS, item: TestCase, pdf64: s
             { inline_data: { mime_type: "application/pdf", data: pdf64 } },
             { text: promptFor(item) }
           ] }],
-          generationConfig: { temperature: 0, maxOutputTokens: 12000, responseMimeType: "application/json" }
+          generationConfig: { maxOutputTokens: 12000, responseMimeType: "application/json" }
         }),
         signal: AbortSignal.timeout(240000)
       }
