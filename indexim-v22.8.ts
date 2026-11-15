@@ -394,8 +394,12 @@ function autoApprovalRiskFlags(
         flags.push("power_measurement_scope_mismatch:" + tag);
       }
     }
-    if (/ratedpower/.test(ev) && /maximumpower/.test(name)) flags.push("rated_vs_maximum_power_mismatch");
-    if (/maximumpower/.test(ev) && /ratedpower/.test(name)) flags.push("maximum_vs_rated_power_mismatch");
+    const labelIsMaximumPower = /max|maximum/.test(name + key + scope);
+    const labelIsRatedPower = /rated/.test(name + key + scope);
+    const evidenceIsRatedPower = /ratedpower|ratedenginepower/.test(ev);
+    const evidenceIsMaximumPower = /maxpower|maximumpower|maxenginepower|maximumenginepower/.test(ev);
+    if (evidenceIsRatedPower && labelIsMaximumPower) flags.push("rated_vs_maximum_power_mismatch");
+    if (evidenceIsMaximumPower && labelIsRatedPower) flags.push("maximum_vs_rated_power_mismatch");
   }
 
   // PTO tables often print shaft speed and the corresponding engine RPM together.
