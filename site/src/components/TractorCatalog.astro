@@ -30,7 +30,7 @@ const detailPrefix = isEnglish ? "/tractors/" : "/tr/tractors/";
         <input id="tractor-search" type="search" placeholder={isEnglish ? "Search brand or model..." : "Marka veya model ara..."} autocomplete="off" />
         <span>{isEnglish ? "Only reviewed, published models are shown." : "Yalnızca incelenmiş ve yayımlanmış modeller gösterilir."}</span>
       </div>
-      <div class="tractor-card-grid" id="tractor-card-grid">
+      <div class:list={["tractor-card-grid", { "tractor-card-grid--two": catalog.tractors.length === 2 }]} id="tractor-card-grid">
         {catalog.tractors.map((tractor)=><a class="tractor-card" href={detailPrefix+tractor.slug+"/"}
           data-search={[tractor.brand_name,tractor.model_name,tractor.variant||"",tractor.market||"",tractor.engine||""].join(" ").toLowerCase()}>
           <div class="tractor-card-top"><span class="tractor-brand">{tractor.brand_name}</span><span class="tractor-card-arrow" aria-hidden="true">↗</span></div>
