@@ -1,0 +1,14 @@
+{
+  "name": "tractorvs-repository",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=22.23.4"
+  },
+  "workspaces": [
+    "site"
+  ],
+  "scripts": {
+    "build": "npm run build --workspace=tractorvs-site"
+  }
+}
