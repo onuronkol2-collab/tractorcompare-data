@@ -4,6 +4,8 @@ on:
   pull_request:
     paths:
       - "site/**"
+      - "package.json"
+      - "wrangler.jsonc"
       - "supabase/migrations/20261115000400_tractorvs_public_catalog_view.sql"
       - "supabase/rollback/20261115000400_tractorvs_public_catalog_view_rollback.sql"
       - "supabase/verification/verify_tractorvs_public_catalog_view.sql"
