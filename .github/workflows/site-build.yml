@@ -41,9 +41,9 @@ jobs:
       - name: Build through the repository-root entrypoint
         run: npm run build
 
-      - name: Verify root Wrangler config and language routes
+      - name: Verify Wrangler Preview configuration and language routes
         run: |
-          node -e "JSON.parse(require('node:fs').readFileSync('wrangler.jsonc', 'utf8'))"
+          node --input-type=module -e "import fs from 'node:fs'; for (const p of ['wrangler.jsonc','site/wrangler.jsonc']) { const c = JSON.parse(fs.readFileSync(p, 'utf8')); if (!c.previews || typeof c.previews !== 'object') throw new Error(p + ' is missing previews configuration'); }"
           test -f site/dist/index.html
           test -f site/dist/tr/index.html
           test -f site/dist/tractors/index.html
