@@ -105,3 +105,20 @@ test("2021 original Massey Ferguson brochure gets a link when evidence is checke
     ...official, source_url: mfSource,
   }, "Massey Ferguson"), mfSource);
 });
+
+test("LS Tractor manufacturer URL is visible with linked evidence", () => {
+  const lsUrl = "https://www.lstractor.com/en/product/tractor/tractor_J";
+  assert.equal(officialManufacturerSourceUrl({
+    ...official, source_url:lsUrl, source_type:"official_product_page",
+  }, "LS Tractor"), lsUrl);
+});
+
+test("only the reviewed exact TYM F36 PDF is allowed from shared media host", () => {
+  const tymUrl = "https://tym-new.euwest01.umbraco.io/media/b01j3nc1/f36-produktbroschu-re.pdf";
+  assert.equal(officialManufacturerSourceUrl({
+    ...official, source_url:tymUrl,
+  }, "TYM"), tymUrl);
+  assert.equal(officialManufacturerSourceUrl({
+    ...official, source_url:"https://tym-new.euwest01.umbraco.io/media/other/upload.pdf",
+  }, "TYM"), null);
+});
