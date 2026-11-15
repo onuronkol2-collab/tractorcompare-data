@@ -71,7 +71,7 @@ function promptFor(item: TestCase): string {
     "Variant/configuration: " + (item.variant || "not specified"),
     "Market: " + (item.market || "not specified"),
     "Fields to check: " + fields.join(", "),
-    "Rules: never mix model/variant/generation/market columns; separate rated, maximum, boost and PTO power; separate unladen/operating and permissible gross weight; preserve exact source value and unit; do not infer or convert.",
+    "Rules: never mix model/variant/generation/market columns; separate rated, maximum, boost and PTO power; separate unladen/operating and permissible gross weight; preserve exact source value and unit; do not infer or convert. When a source gives paired values in combined units or alternatives (for example 81 / 110 kW/hp or 64 / 82 l/min), set numeric_value to null and preserve the full pair in value and unit; never select only one number for a single numeric_value.",
     "For each finding give a 1-based PDF viewer page, printed page if different, a short verbatim evidence quote, measurement scope, and exact source column. If identity or value is ambiguous, report that rather than guessing.",
     "Output JSON only with this shape:",
     '{"document_identity":{"manufacturer":"string","exact_model":"string","variant":"string or null","market_scope":"string or null","status":"exact | partial | ambiguous | not_found","explanation":"string"},"findings":[{"key":"field key","value":"source wording","numeric_value":null,"unit":"string or null","measurement_scope":"string","pdf_page":1,"printed_page":null,"evidence_quote":"verbatim quote","variant_column":"string or null"}],"missing_or_ambiguous":[{"key":"field key","reason":"string"}],"warnings":["string"]}',
