@@ -73,6 +73,10 @@ The migration's RPC reuses the newest active run with a Gemini interaction ID wh
 5. Smoke-test an authenticated manual start, status ownership, rate-limit behavior, an internal queue run, immediate `last_run_id` persistence, and one incomplete-output recovery.
 6. Confirm new documents have their own identity metadata, document notes do not change during completion, and every new finding remains pending for human review.
 
+## Rollback order
+
+If v22 is deployed and must be reverted, first redeploy the previous Edge Function source (`indexim.txt` / v21.40), then run the rollback SQL. Do not remove the v22 database RPCs while the v22 Edge Function is still serving requests. The rollback intentionally leaves the added identity/ownership columns and rate-limit table in place.
+
 ## What remains deliberately out of scope
 
 - No deletion/merging of duplicate documents or runs.
