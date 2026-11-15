@@ -1,17 +1,18 @@
 ---
 import SiteLayout from "../layouts/SiteLayout.astro";
-import { formatDate, groupSpecifications, specLabel, sourceTypeLabel, specificationEvidenceLevel, specificationEvidenceLabel, verificationNotice, type TractorRecord } from "../lib/catalog";
+import { groupSpecifications, officialManufacturerSourceUrl, specLabel, verificationNotice, type TractorRecord } from "../lib/catalog";
 interface Props { lang: "en" | "tr"; tractor: TractorRecord; }
 const { lang, tractor } = Astro.props;
 const isEnglish = lang === "en";
 const groups = groupSpecifications(tractor.specifications,lang);
+const manufacturerDiscrepancies = [...new Set(tractor.specifications.map((spec) => verificationNotice(spec, lang)).filter((note): note is string => Boolean(note)))];
 const listingUrl = isEnglish ? "/tractors/" : "/tr/tractors/";
 const title = isEnglish
   ? tractor.brand_name+" "+tractor.model_name+" specifications | TractorVS"
   : tractor.brand_name+" "+tractor.model_name+" teknik özellikleri | TractorVS";
 const description = isEnglish
-  ? "Technical specifications with visible source and evidence status for "+tractor.brand_name+" "+tractor.model_name+"."
-  : tractor.brand_name+" "+tractor.model_name+" modelinin kaynak ve doğrulama durumu belirtilmiş teknik özellikleri.";
+  ? "Technical specifications for "+tractor.brand_name+" "+tractor.model_name+" with original manufacturer sources where verified."
+  : tractor.brand_name+" "+tractor.model_name+" modelinin teknik özellikleri ve varsa doğrulanmış resmî üretici kaynakları.";
 const summaryItems = [
   {label:isEnglish?"Power":"Güç",value:tractor.horsepower!=null?tractor.horsepower+" HP":null},
   {label:isEnglish?"Engine":"Motor",value:tractor.engine},
@@ -35,32 +36,24 @@ const summaryItems = [
   </div></section>
   <section class="model-spec-section"><div class="container">
     <div class="model-spec-heading"><div>
-      <p class="eyebrow"><span class="eyebrow-mark"></span>{isEnglish?"SPECIFICATIONS & EVIDENCE":"TEKNİK VERİ VE KANIT DURUMU"}</p>
+      <p class="eyebrow"><span class="eyebrow-mark"></span>{isEnglish?"TECHNICAL SPECIFICATIONS":"TEKNİK ÖZELLİKLER"}</p>
       <h2>{isEnglish?"Technical specifications":"Teknik özellikler"}</h2>
     </div><p>{isEnglish
-      ? "Published catalogue values show their evidence status. A source link is not itself a guarantee of manufacturer confirmation."
-      : "Yayımlanmış her teknik değerin altında kanıt durumu gösterilir. Bir kaynak bağlantısı bulunması tek başına üretici teyidi anlamına gelmez."}</p></div>
+      ? "The catalogue lists published values and links only to manufacturer documents that pass the source checks."
+      : "Yayımlanmış teknik değerler gösterilir; yalnızca doğrulanan resmî üretici kaynaklarına bağlantı verilir."}</p></div>
+    {manufacturerDiscrepancies.length>0 && <aside class="model-spec-warning" role="note">
+      <strong>{isEnglish?"Manufacturer data discrepancy":"Üretici verilerinde uyuşmazlık"}</strong>
+      {manufacturerDiscrepancies.map((note)=><p>{note}</p>)}
+    </aside>}
     {groups.length>0?<div class="model-spec-groups">{groups.map((group)=>
       <section class="model-spec-group"><h3>{group.label}</h3><div class="model-spec-grid">
         {group.specifications.map((spec)=><article class="model-spec-card">
           <div class="model-spec-top"><h4>{specLabel(spec,lang)}</h4>{spec.rated_rpm!=null&&<span>{spec.rated_rpm} rpm</span>}</div>
           <p class="model-spec-value">{spec.spec_value}{spec.unit?" "+spec.unit:""}</p>
-          <p class:list={["model-spec-evidence", "model-spec-evidence--"+specificationEvidenceLevel(spec)]}>
-            {specificationEvidenceLabel(specificationEvidenceLevel(spec),lang)}
-          </p>
           {spec.measurement_standard&&<p class="model-spec-note">{spec.measurement_standard}</p>}
-          {verificationNotice(spec, lang) && <aside class="model-spec-warning" role="note">
-            <strong>{isEnglish ? "Manufacturer confirmation pending" : "Üretici teyidi bekleniyor"}</strong>
-            <p>{verificationNotice(spec, lang)}</p>
-          </aside>}
-          {spec.evidence_text&&<blockquote>{spec.evidence_text}</blockquote>}
-          <div class="model-spec-source">
-            {spec.source_url
-              ? <a href={spec.source_url} target="_blank" rel="noopener noreferrer">{spec.source_publisher||(isEnglish?"Open source":"Kaynağı aç")} ↗</a>
-              : <span>{isEnglish?"Source link unavailable":"Kaynak bağlantısı bulunmuyor"}</span>}
-            <small>{sourceTypeLabel(spec.source_type,lang)}</small>
-            {spec.verified_at&&<small>{isEnglish?"Verified":"Doğrulandı"}: {formatDate(spec.verified_at,lang)}</small>}
-          </div>
+          {officialManufacturerSourceUrl(spec,tractor.brand_name) && <div class="model-spec-source">
+            <a href={officialManufacturerSourceUrl(spec,tractor.brand_name)!} target="_blank" rel="noopener noreferrer">{isEnglish?"Manufacturer source":"Üretici kaynağı"} ↗</a>
+          </div>}
         </article>)}
       </div></section>)}</div>
     : <div class="catalog-empty"><h2>{isEnglish?"No published specifications are available.":"Yayımlanmış teknik özellik bulunmuyor."}</h2></div>}
@@ -69,15 +62,6 @@ const summaryItems = [
 </SiteLayout>
 
 <style>
-  .model-spec-evidence {
-    margin: 6px 0 0;
-    color: #526c58;
-    font-size: 10px;
-    font-weight: 700;
-    line-height: 1.6;
-  }
-  .model-spec-evidence--third_party_reported { color: #656e7e; }
-  .model-spec-evidence--not_verified { color: #926325; }
   .model-spec-warning {
     margin: 14px 0 0;
     padding: 11px 12px;

@@ -507,6 +507,37 @@ export function specificationEvidenceLabel(
 }
 
 /**
+ * Display a source link only if it is evidence-backed AND on an approved
+ * original manufacturer host. A plausible-sounding source_type or a third
+ * party's URL alone can never authorize a visible manufacturer link.
+ *
+ * Evidence belonging to third parties is retained in the database but its
+ * link is not displayed, per site policy. Adding an official manufacturer
+ * root is a reviewed code change, not an AI-generated guess.
+ */
+const approvedManufacturerHosts: Record<string, string[]> = {
+  "başak traktör": ["basaktraktor.com.tr"],
+  "new holland": ["newholland.com.tr", "newholland.com"],
+  "tym": ["tym.world"],
+  "fendt": ["fendt.com"],
+};
+
+export function officialManufacturerSourceUrl(
+  spec: Pick<PublicSpec, "source_url" | "source_type" | "evidence_text" | "verified_at">,
+  brandName: string,
+): string | null {
+  if (specificationEvidenceLevel(spec) !== "manufacturer_documented") return null;
+  const raw = safeHttpUrl(spec.source_url);
+  if (!raw) return null;
+  const url = new URL(raw);
+  if (url.protocol !== "https:" || url.username || url.password) return null;
+  const approved = approvedManufacturerHosts[brandName.toLocaleLowerCase("tr-TR").trim()] || [];
+  return approved.some((root) =>
+    url.hostname === root || url.hostname.endsWith("." + root)
+  ) ? url.toString() : null;
+}
+
+/**
  * The 2075 BK 4WD manufacturer page and its technical brochure currently
  * disagree on overall length. Keep the value visible, but explain the conflict
  * until the manufacturer confirms the correct figure.

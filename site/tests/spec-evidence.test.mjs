@@ -3,6 +3,7 @@ import assert from "node:assert/strict";
 import {
   specificationEvidenceLevel,
   specificationEvidenceLabel,
+  officialManufacturerSourceUrl,
 } from "../src/lib/catalog.ts";
 
 const official = {
@@ -55,4 +56,45 @@ test("classification is read-only and does not change publication metadata", () 
   const record = Object.freeze({ ...official, status: "draft" });
   assert.equal(specificationEvidenceLevel(record), "manufacturer_documented");
   assert.equal(record.status, "draft");
+});
+
+test("only documented manufacturer URL on approved original domain is public", () => {
+  assert.equal(officialManufacturerSourceUrl(official, "New Holland"),
+    official.source_url);
+  assert.equal(officialManufacturerSourceUrl({
+    ...official,
+    source_url: "https://admin.basaktraktor.com.tr/upload/spec.pdf",
+  }, "Başak Traktör"), "https://admin.basaktraktor.com.tr/upload/spec.pdf");
+  assert.equal(officialManufacturerSourceUrl({
+    ...official,
+    source_url: "https://basaktraktor.com.tr/tractors/2075",
+  }, "Başak Traktör"), "https://basaktraktor.com.tr/tractors/2075");
+});
+
+test("third-party publications never produce visible links even with evidence", () => {
+  for (const source_type of ["independent_test", "technical_report", "review"]) {
+    assert.equal(officialManufacturerSourceUrl({
+      ...official, source_type, source_url:"https://tractordata.com/tractors/view",
+    }, "New Holland"), null);
+  }
+});
+
+test("source type cannot spoof official origin and manufacturer host is checked", () => {
+  for (const source_url of [
+    "https://tractordata.com/tractor-123",
+    "https://newholland.com.tr.evil.example/tractor",
+    "https://newholland.com.tr@evil.example/tractor",
+    "javascript:alert(1)",
+    "http://newholland.com.tr/tractor",
+  ]) {
+    assert.equal(officialManufacturerSourceUrl({
+      ...official, source_url,
+    }, "New Holland"), null, source_url);
+  }
+  assert.equal(officialManufacturerSourceUrl(official,"Unreviewed Brand"),null);
+});
+
+test("missing evidence never exposes manufacturer URL", () => {
+  assert.equal(officialManufacturerSourceUrl({...official, evidence_text:null},"New Holland"),null);
+  assert.equal(officialManufacturerSourceUrl({...official, verified_at:null},"New Holland"),null);
 });
