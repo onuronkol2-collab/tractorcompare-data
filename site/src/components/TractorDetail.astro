@@ -1,6 +1,6 @@
 ---
 import SiteLayout from "../layouts/SiteLayout.astro";
-import { formatDate, groupSpecifications, specLabel, sourceTypeLabel, verificationNotice, type TractorRecord } from "../lib/catalog";
+import { formatDate, groupSpecifications, specLabel, sourceTypeLabel, specificationEvidenceLevel, specificationEvidenceLabel, verificationNotice, type TractorRecord } from "../lib/catalog";
 interface Props { lang: "en" | "tr"; tractor: TractorRecord; }
 const { lang, tractor } = Astro.props;
 const isEnglish = lang === "en";
@@ -45,6 +45,9 @@ const summaryItems = [
         {group.specifications.map((spec)=><article class="model-spec-card">
           <div class="model-spec-top"><h4>{specLabel(spec,lang)}</h4>{spec.rated_rpm!=null&&<span>{spec.rated_rpm} rpm</span>}</div>
           <p class="model-spec-value">{spec.spec_value}{spec.unit?" "+spec.unit:""}</p>
+          <p class:list={["model-spec-evidence", "model-spec-evidence--"+specificationEvidenceLevel(spec)]}>
+            {specificationEvidenceLabel(specificationEvidenceLevel(spec),lang)}
+          </p>
           {spec.measurement_standard&&<p class="model-spec-note">{spec.measurement_standard}</p>}
           {verificationNotice(spec, lang) && <aside class="model-spec-warning" role="note">
             <strong>{isEnglish ? "Manufacturer confirmation pending" : "Üretici teyidi bekleniyor"}</strong>
@@ -66,6 +69,15 @@ const summaryItems = [
 </SiteLayout>
 
 <style>
+  .model-spec-evidence {
+    margin: 6px 0 0;
+    color: #526c58;
+    font-size: 10px;
+    font-weight: 700;
+    line-height: 1.6;
+  }
+  .model-spec-evidence--third_party_reported { color: #656e7e; }
+  .model-spec-evidence--not_verified { color: #926325; }
   .model-spec-warning {
     margin: 14px 0 0;
     padding: 11px 12px;
