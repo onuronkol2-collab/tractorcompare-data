@@ -447,6 +447,8 @@ SELECT COALESCE(
       THEN 'transmission_oil_capacity'
 
     WHEN n LIKE '%rear hitch category%'
+      OR n LIKE '%3 point hitch category%'
+      OR n LIKE '%3 point linkage category%'
       OR n LIKE '%three point hitch category%'
       OR n LIKE '%three point linkage category%'
       OR n LIKE '%three point linkage%'
