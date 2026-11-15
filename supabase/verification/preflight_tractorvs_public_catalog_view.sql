@@ -5,6 +5,12 @@
 BEGIN TRANSACTION READ ONLY;
 SET LOCAL statement_timeout = '30s';
 
+-- The invoker-security view option requires PostgreSQL 15 or newer.
+SELECT
+  current_setting('server_version') AS postgres_version,
+  current_setting('server_version_num')::integer >= 150000
+    AS security_invoker_supported;
+
 -- 1) Required tables must exist and have RLS enabled.
 SELECT
   required.table_name,
