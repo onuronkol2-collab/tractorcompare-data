@@ -1,6 +1,6 @@
-# TractorMetric — website starter
+# TractorNexus — bilingual website
 
-A bilingual Astro website scaffold, stored in this repository without changing the existing Supabase research pipeline or database files.
+A bilingual Astro website scaffold in an isolated `site/` directory. The existing Supabase research pipeline, SQL snapshots, Edge Functions and tractor research data are kept separate and untouched by this frontend.
 
 ## Current state
 
@@ -9,9 +9,10 @@ A bilingual Astro website scaffold, stored in this repository without changing t
 - Responsive, modern and technical visual system
 - Search-engine metadata and language alternates are prepared
 - Indexing is disabled by default for safe previews
-- Sitemap generation is enabled only after the production domain and indexing flag are configured
+- Sitemap generation is enabled only after a production domain and indexing flag are configured
 - Cloudflare Workers Static Assets deployment configuration is included
-- The user-selected brand is TractorMetric; domain and trademark clearance remain outstanding
+- The selected project brand is **TractorNexus**
+- Domain registration availability and trademark clearance are not yet confirmed
 
 ## Requirements
 
@@ -41,7 +42,7 @@ The preview script builds the site before starting Wrangler.
 
 ## Production SEO configuration
 
-After the final domain is registered, set these environment variables in the Cloudflare build configuration:
+After registering the final domain, set these environment variables in the Cloudflare build configuration:
 
 - `SITE_URL=https://YOUR-FINAL-DOMAIN`
 - `PUBLIC_INDEXING_ENABLED=true`
@@ -60,12 +61,14 @@ For an initial safe preview, use the Cloudflare preview URL and keep `PUBLIC_IND
 
 ## Brand
 
-The current visible identity is `TractorMetric`, selected by the project owner. Before launch, verify domain availability and conduct trademark clearance in the relevant markets. Update `src/config/brand.ts` only if the approved brand changes.
+The project owner's selected public brand is **TractorNexus**. The same spelling is used in the Turkish and English experiences. Before launch, confirm the desired domain is available at the registrar and complete trademark clearance in the intended markets.
 
 ## Next implementation steps
 
-1. Confirm the final brand and register the domain.
+1. Verify the preferred domain and complete trademark checks before registration.
 2. Verify the Supabase public read schema and row-level security before adding client-side data access.
 3. Connect catalogue and comparison routes to existing reviewed tractor/specification data.
 4. Add indexable model pages with source references and accurate canonical URLs.
 5. Complete the sitemap, structured data, privacy policy and contact details before production launch.
+
+No production deployment or live Supabase connection is configured by this scaffold.
