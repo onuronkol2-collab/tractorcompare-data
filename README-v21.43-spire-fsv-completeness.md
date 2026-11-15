@@ -32,7 +32,6 @@ The 24 new F page-5 findings include Common Rail injection type and the equipmen
 ### Normalizes S and V
 
 - Splits S's combined `Common Rail @ 2000 bar` finding into `Injection type = Common Rail` and a new `Engine injection pressure = 2000 bar` finding.
-- Aligns F's injection-pressure display label with S/V.
 - Changes S/V front-lift availability-only values to the actual `1500 kg` optional capacity.
 - Changes S/V front PTO availability-only values to the actual `1000 rpm` optional speed.
 - Labels the 2/4 mid-mounted hydraulic ways as optional.
