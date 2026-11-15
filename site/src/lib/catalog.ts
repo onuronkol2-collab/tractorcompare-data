@@ -398,7 +398,30 @@ const categoryLabels: Record<string, { en: string; tr: string }> = {
   implements: { en: "Implements & linkage", tr: "Ekipman ve askı sistemi" },
 };
 
+/**
+ * Only verified, semantically identical comparison keys are grouped together.
+ * No database records or source measurements are modified.
+ * Rated/maximum power and different hydraulic measurements remain distinct.
+ */
+const comparisonKeyAliases: Record<string, string> = {
+  forward_gears: "transmission_forward_gears",
+  reverse_gears: "transmission_reverse_gears",
+};
+
+export function comparisonKey(spec: Pick<PublicSpec, "canonical_key" | "spec_name">): string {
+  const key = spec.canonical_key?.trim() || spec.spec_name.trim();
+  return comparisonKeyAliases[key] ?? key;
+}
+
+const rawSpecNameLabels: Record<string, { en: string; tr: string }> = {
+  "Kuyruk Mili Devri (Motor Devri)": {
+    en: "PTO speed (engine RPM)",
+    tr: "Kuyruk mili devri (motor devri)",
+  },
+};
+
 const specLabels: Record<string, { en: string; tr: string }> = {
+  adblue_tank_capacity: { en: "AdBlue tank capacity", tr: "AdBlue deposu kapasitesi" },
   engine_aspiration: { en: "Aspiration", tr: "Motor besleme sistemi" },
   cooling_system: { en: "Cooling system", tr: "Soğutma sistemi" },
   engine_cylinders: { en: "Cylinder count", tr: "Silindir sayısı" },
@@ -407,26 +430,34 @@ const specLabels: Record<string, { en: string; tr: string }> = {
   engine_model: { en: "Engine model", tr: "Motor modeli" },
   engine_max_power: { en: "Maximum engine power", tr: "Azami motor gücü" },
   engine_power: { en: "Engine power", tr: "Motor gücü" },
+  engine_rated_power: { en: "Rated engine power", tr: "Nominal motor gücü" },
   engine_max_power_rpm: { en: "Engine speed at maximum power", tr: "Azami güçte motor devri" },
   engine_torque: { en: "Maximum torque", tr: "Azami tork" },
   engine_torque_rpm: { en: "Engine speed at maximum torque", tr: "Azami torkta motor devri" },
+  fuel_injection_system: { en: "Fuel injection system", tr: "Yakıt enjeksiyon sistemi" },
   fuel_tank_capacity: { en: "Fuel tank capacity", tr: "Yakıt deposu kapasitesi" },
   ground_clearance: { en: "Ground clearance", tr: "Yerden yükseklik" },
   hydraulic_valve_count: { en: "Hydraulic outlets / valves", tr: "Hidrolik çıkış / valf sayısı" },
+  hydraulic_remote_count: { en: "Hydraulic remote outlets", tr: "Hidrolik güç çıkışı sayısı" },
   rear_lift_capacity: { en: "Rear lift capacity", tr: "Arka kaldırma kapasitesi" },
   overall_height: { en: "Overall height", tr: "Toplam yükseklik" },
   overall_length: { en: "Overall length", tr: "Toplam uzunluk" },
+  maximum_road_speed: { en: "Maximum road speed", tr: "Azami yol hızı" },
   pto_speeds: { en: "PTO speeds", tr: "PTO devirleri" },
+  rear_track_width: { en: "Rear track width", tr: "Arka iz genişliği" },
   drive_configuration: { en: "Four-wheel-drive control actuation", tr: "Dört çeker kumanda tahriki" },
   transmission_forward_gears: { en: "Forward gears", tr: "İleri vites sayısı" },
   transmission_reverse_gears: { en: "Reverse gears", tr: "Geri vites sayısı" },
   transmission_type: { en: "Transmission type", tr: "Şanzıman tipi" },
+  torque_reserve: { en: "Torque reserve", tr: "Tork rezervi" },
   weight_kg: { en: "Operating weight", tr: "Çalışma ağırlığı" },
   wheelbase: { en: "Wheelbase", tr: "Dingil mesafesi" },
 };
 
 export function specLabel(spec: PublicSpec, lang: "en" | "tr"): string {
-  const mapped = specLabels[spec.canonical_key || ""];
+  const mapped = specLabels[spec.canonical_key || ""]
+    || specLabels[comparisonKey(spec)]
+    || rawSpecNameLabels[spec.spec_name.trim()];
   return mapped ? mapped[lang] : String(spec.spec_name || spec.canonical_key || "Specification")
     .replace(/_/g, " ").replace(/\b\w/g, (letter) => letter.toUpperCase());
 }
