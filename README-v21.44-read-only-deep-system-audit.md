@@ -26,27 +26,17 @@ If the transaction fails because one of the known core tables is missing or a pe
 
 ## Result sets
 
-The audit returns:
-1. Database context (no credentials).
-2. Public-schema objects and RLS flags.
-3. Full column inventory.
-4. Constraints and foreign keys.
-5. Indexes and index statistics.
-6. RLS policies.
-7. Effective table grants for `anon`, `authenticated`, `service_role`, `postgres`, and `supabase_admin`.
-8. Function/RPC security metadata and effective EXECUTE roles (not function bodies).
-9. Triggers and trigger-function security mode.
-10. Exact counts for the eight core tables.
-11. Tractor catalog status/market summary.
-12. Duplicate or ambiguous tractor identities.
-13. Queue health and nonterminal/overdue rows.
-14. Research run statuses/errors.
-15. AI finding counts by run/model/status/class and missing evidence indicators.
-16. Findings with document/source/page/evidence integrity problems.
-17. Duplicate finding fingerprints (candidates only; not deletion instructions).
-18. Current `tractor_specs` ownership/provenance and duplicate-scope candidates.
-19. Research document/source provenance and repeated source rows.
-20. Registered data-source distribution and PostgreSQL default privileges.
+The script emits **28 result sets**, grouped into these audit areas:
+1. Database context (no credentials), public objects, RLS state and complete column inventory.
+2. Constraints, foreign keys, indexes and index-use statistics.
+3. RLS policies, effective table privileges, `public` schema privileges, and PostgreSQL default privileges.
+4. Security-definer functions/RPCs, effective EXECUTE roles (including PUBLIC), triggers and trigger-function security mode. Function bodies and secrets are not output.
+5. Exact counts for the eight core tables, catalog status/market summary and duplicate/ambiguous tractor identities.
+6. Queue status/overdue work, problematic queue rows, research-run statuses and nonterminal/error runs.
+7. AI finding counts by run/model/status/class, missing evidence indicators, document/source/page mismatches and orphan links.
+8. Duplicate finding fingerprints (candidates only; not deletion instructions).
+9. Current `tractor_specs` ownership/provenance, duplicate-scope candidates and lineage problems.
+10. Research document provenance, repeated document rows and registered data-source distribution.
 
 ## How the results will be used
 
