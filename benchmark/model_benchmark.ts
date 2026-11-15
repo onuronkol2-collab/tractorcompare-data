@@ -221,9 +221,11 @@ async function main(): Promise<void> {
   const manifest = JSON.parse(await Deno.readTextFile(manifestPath));
   if (!Array.isArray(manifest.cases) || !manifest.cases.length) throw new Error("Manifest has no test cases.");
   const max = Number(Deno.env.get("BENCHMARK_LIMIT") ?? "20");
-  const cases: TestCase[] = manifest.cases.slice(0, max > 0 ? max : 20);
+  const startIndex = Math.max(0, Number(Deno.env.get("BENCHMARK_START") ?? "0") || 0);
+  const caseCount = max > 0 ? max : 20;
+  const cases: TestCase[] = manifest.cases.slice(startIndex, startIndex + caseCount);
   const results: Row[] = [];
-  console.log("Starting " + cases.length + " PDFs x " + providers.length + " selected model(s): " + providers.join(", ") + ". No production DB is accessed.");
+  console.log("Starting " + cases.length + " PDFs from case " + (startIndex + 1) + " x " + providers.length + " selected model(s): " + providers.join(", ") + ". No production DB is accessed.");
   for (const item of cases) {
     console.log("\n" + item.id + ": " + item.manufacturer + " " + item.model);
     let pdf: { b64: string; sha256: string; bytes: number };
