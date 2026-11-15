@@ -156,10 +156,10 @@ async function callModel(provider: Provider, item: TestCase, pdf64: string): Pro
   } else {
     response = await fetch(
       "https://generativelanguage.googleapis.com/v1beta/models/" + encodeURIComponent(model.id) +
-      ":generateContent?key=" + encodeURIComponent(model.key),
+      ":generateContent",
       {
         method: "POST",
-        headers: { "content-type": "application/json" },
+        headers: { "content-type": "application/json", "x-goog-api-key": model.key },
         body: JSON.stringify({
           contents: [{ role: "user", parts: [
             { inline_data: { mime_type: "application/pdf", data: pdf64 } },
