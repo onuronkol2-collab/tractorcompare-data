@@ -72,6 +72,7 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding:25px}
         <button data-status="pending" class="active">Bekleyenler</button>
         <button data-status="approved">Onaylananlar</button>
         <button data-status="rejected">Reddedilenler</button>
+        <button data-status="history">İşlem geçmişi</button>
       </div>
       <div id="selectAllRow" class="row small muted" style="margin:6px 0 12px"><label style="margin:0;display:flex;gap:8px;align-items:center;font-weight:500"><input type="checkbox" id="selectAll" style="width:auto"> Bu sayfadaki bekleyenleri seç</label><span id="listCount"></span></div>
       <div id="cards" class="cards"><div class="muted">Kayıtlar yükleniyor…</div></div>
@@ -98,6 +99,12 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding:25px}
     return String(v==null?"":v).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
   }
   function fmt(v){return v==null||v===""?"Belirtilmemiş":String(v);}
+  function safeHttpUrl(value){
+    try{
+      const url=new URL(String(value||""));
+      return url.protocol==="https:"||url.protocol==="http:" ? url.href : "";
+    }catch(e){return "";}
+  }
   function setupClient(){
     const url=$("supabaseUrl").value.trim().replace(/\/+$/,"");
     const key=$("anonKey").value.trim();
@@ -132,9 +139,9 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding:25px}
   }
   function render(item){
     const t=item.tractor||{}; const b=item.brand||{}; const d=item.document||{};
-    const source=d.source_url||item.source_url||"";
+    const source=safeHttpUrl(d.source_url||item.source_url||"");
     const page=item.page_number?("#page="+encodeURIComponent(item.page_number)):"";
-    const link=source?'<a target="_blank" rel="noopener" href="'+esc(source+page)+'">Kaynağı aç'+(item.page_number?" · PDF sayfa "+esc(item.page_number):"")+'</a>':'Kaynak bağlantısı yok';
+    const link=source?'<a target="_blank" rel="noopener noreferrer" href="'+esc(source+page)+'">Kaynağı aç'+(item.page_number?" · PDF sayfa "+esc(item.page_number):"")+'</a>':'Kaynak bağlantısı yok veya güvenli değil';
     const editable=item.review_status!=="rejected";
     return '<article class="finding" data-id="'+esc(item.id)+'">'+
       '<div class="finding-head"><div><h3>'+esc(b.name||item.proposed_brand_name||"Marka")+' '+esc(t.model_name||item.proposed_model_name||"Model")+'</h3>'+
@@ -159,6 +166,30 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding:25px}
       (item.review_status!=="pending"?'<button class="secondary" data-action="undo">Son işlemi geri al</button>':'')+
       '</div></article>';
   }
+  function renderHistory(event){
+    const finding=event.finding||{};
+    const tractor=event.tractor||{};
+    const actionLabels={auto_approve:"AI otomatik onayladı",approve:"Sen onayladın",edit_approve:"Sen düzelttin ve onayladın",reject:"Sen reddettin",undo:"Son işlem geri alındı"};
+    const oldValue=event.previous_data?.finding?.spec_value ?? event.previous_data?.spec?.spec_value ?? null;
+    const newValue=event.new_data?.spec_value ?? event.new_data?.spec?.spec_value ?? null;
+    const label=actionLabels[event.action]||event.action||"İşlem";
+    const title=(finding.proposed_brand_name||"Traktör")+" "+(tractor.model_name||finding.proposed_model_name||"");
+    const spec=finding.spec_name||event.new_data?.spec_name||"Teknik özellik";
+    const actor=event.actor_type==="ai"?"Yapay zekâ":"Yönetici";
+    const date=event.created_at?new Date(event.created_at).toLocaleString("tr-TR"):"";
+    const valueLine=(oldValue!==null||newValue!==null)
+      ? '<div class="meta"><span class="badge neutral">Önceki: '+esc(fmt(oldValue))+'</span><span class="badge neutral">Yeni: '+esc(fmt(newValue))+'</span></div>'
+      : "";
+    const undoButton=event.action!=="undo"&&event.finding_id
+      ? '<button class="secondary" data-action="undo">Bu işlemi geri al</button>'
+      : "";
+    return '<article class="finding" '+(event.finding_id?'data-id="'+esc(event.finding_id)+'"':'')+'>'+
+      '<div class="finding-head"><div><h3>'+esc(title)+'</h3><div class="muted small">'+esc(spec)+' · '+esc(date)+'</div></div>'+
+      '<span class="badge '+(event.actor_type==="ai"?"good":"neutral")+'">'+esc(actor)+'</span></div>'+
+      '<div class="value">'+esc(label)+'</div>'+valueLine+
+      '<div class="muted small">'+esc(event.notes||"")+'</div>'+
+      '<div class="actions">'+undoButton+'</div></article>';
+  }
   async function load(){
     $("cards").innerHTML='<div class="muted">Yükleniyor…</div>';
     const stats=await api("admin_review_stats");
@@ -166,10 +197,17 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding:25px}
     $("statAuto").textContent=stats.stats.auto_approved;
     $("statApproved").textContent=stats.stats.approved;
     $("statRejected").textContent=stats.stats.rejected;
-    const result=await api("admin_review_list",{status:state.status,limit:60});
-    state.findings=result.findings||[];
-    $("listCount").textContent=state.findings.length+" kayıt";
-    $("cards").innerHTML=state.findings.length?state.findings.map(render).join(""):'<div class="panel muted">Bu sekmede gösterilecek kayıt yok.</div>';
+    if(state.status==="history"){
+      const history=await api("admin_review_history",{limit:100});
+      const events=history.events||[];
+      $("listCount").textContent=events.length+" işlem";
+      $("cards").innerHTML=events.length?events.map(renderHistory).join(""):'<div class="panel muted">Henüz işlem geçmişi bulunmuyor.</div>';
+    }else{
+      const result=await api("admin_review_list",{status:state.status,limit:60});
+      state.findings=result.findings||[];
+      $("listCount").textContent=state.findings.length+" kayıt";
+      $("cards").innerHTML=state.findings.length?state.findings.map(render).join(""):'<div class="panel muted">Bu sekmede gösterilecek kayıt yok.</div>';
+    }
     $("selectAllRow").classList.toggle("hidden",state.status!=="pending");
     $("bulkApproveBtn").classList.toggle("hidden",state.status!=="pending");
   }
