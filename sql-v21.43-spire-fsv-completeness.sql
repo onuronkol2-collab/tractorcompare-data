@@ -330,7 +330,8 @@ WHERE id IN (
 
 -- 6) Reconcile research metadata to the manually normalized pending finding totals.
 UPDATE public.ai_research_runs r
-SET result_meta = COALESCE(r.result_meta, '{}'::jsonb)
+SET summary = 'Spire F Target was verified against the official Lamborghini Trattori technical table on printed page 5. After source-backed completeness normalization, 57 pending findings are retained for human review. No specifications were published and the tractor remains a draft model.',
+    result_meta = COALESCE(r.result_meta, '{}'::jsonb)
   || jsonb_build_object(
        'findings_saved', 57,
        'pending_findings', 57,
@@ -358,7 +359,8 @@ SET result_meta = COALESCE(r.result_meta, '{}'::jsonb)
 WHERE r.id = '374814b4-22c5-47bc-a2b3-2045e718e733'::uuid;
 
 UPDATE public.ai_research_runs r
-SET result_meta = COALESCE(r.result_meta, '{}'::jsonb)
+SET summary = 'Spire S 80 Target was verified against the official Lamborghini Trattori technical table on printed page 6. The combined Common Rail and 2000 bar source row was separated into two comparable pending findings. 57 findings remain pending human review. No specifications were published and the tractor remains a draft model.',
+    result_meta = COALESCE(r.result_meta, '{}'::jsonb)
   || jsonb_build_object(
        'findings_saved', 57,
        'pending_findings', 57,
