@@ -4487,11 +4487,21 @@ async function adminReviewAction(body: AnyRow, actorUserId: string) {
   const specValue = String(body.spec_value ?? finding.spec_value ?? "").trim();
   const unitRaw = body.unit === undefined ? finding.unit : body.unit;
   const unit = unitRaw === null || String(unitRaw).trim() === "" ? null : String(unitRaw).trim();
+  const evidenceText = String(body.evidence_text ?? finding.evidence_text ?? "").trim();
+  const pageNumber = body.page_number === undefined
+    ? (finding.page_number === null || finding.page_number === undefined ? null : Number(finding.page_number))
+    : (body.page_number === null || String(body.page_number).trim() === "" ? null : Number(body.page_number));
   if (!specName || specName.length > 120 || !specValue || specValue.length > 160 || (unit && unit.length > 40)) {
     return json(400, { success: false, error: "Özellik adı, değeri veya birimi geçersiz." });
   }
-  if (!String(finding.evidence_text ?? "").trim() || !finding.document_id || !finding.tractor_id) {
-    return json(409, { success: false, error: "Kaynak kanıtı, belge veya traktör bağlantısı eksik. Bu kayıt otomatik olarak onaylanamaz." });
+  if (!evidenceText || evidenceText.length > 2000 || !finding.document_id || !finding.tractor_id) {
+    return json(409, { success: false, error: "Kaynak kanıtı, belge veya traktör bağlantısı eksik." });
+  }
+  if (!evidenceSupportsValue(specValue, evidenceText)) {
+    return json(409, { success: false, error: "Düzeltilen değer kaynak kanıtı metninde bulunmuyor. Kanıt metnini ve sayfayı kontrol ederek tekrar dene." });
+  }
+  if (pageNumber !== null && (!Number.isInteger(pageNumber) || pageNumber < 1 || pageNumber > 10000)) {
+    return json(400, { success: false, error: "PDF sayfa numarası geçersiz." });
   }
   const { data: tractor, error: tractorError } = await db.from("tractors")
     .select("id,brand_id,model_name,model_year,variant,market,status").eq("id", finding.tractor_id).maybeSingle();
@@ -4502,6 +4512,10 @@ async function adminReviewAction(body: AnyRow, actorUserId: string) {
   const { data: doc, error: docError } = await db.from("ai_research_documents").select("*").eq("id", finding.document_id).maybeSingle();
   if (docError) throw new Error("Kaynak belge okunamadı: " + docError.message);
   if (!doc) return json(409, { success: false, error: "Kaynak belge bulunamadı." });
+  const isPdfFinding = String(doc.source_type ?? "").toLowerCase().includes("pdf") || isPdfSource(String(doc.source_url), String(doc.source_type ?? ""));
+  if (isPdfFinding && (!pageNumber || pageNumber < 1)) {
+    return json(409, { success: false, error: "PDF kaynağı için sayfa numarası zorunlu." });
+  }
 
   const canonical = canonicalInfo(specName);
   const canonicalKey = canonical.key ?? finding.canonical_key ?? null;
@@ -4537,7 +4551,7 @@ async function adminReviewAction(body: AnyRow, actorUserId: string) {
     tractor_id: tractor.id, spec_name: specName, spec_value: specValue, unit,
     source_id: sourceId, canonical_key: canonicalKey, comparison_class: comparisonClass,
     measurement_standard: finding.measurement_standard ?? null, rated_rpm: finding.rated_rpm ?? null,
-    evidence_text: finding.evidence_text, source_document_id: finding.document_id,
+    evidence_text: evidenceText, source_document_id: finding.document_id,
     source_priority: Number(doc.source_priority ?? 85), managed_by_ai: false,
     last_verified_at: now, verified_at: now, updated_at: now,
   };
@@ -4552,6 +4566,7 @@ async function adminReviewAction(body: AnyRow, actorUserId: string) {
   }
   const { error: findingUpdateError } = await db.from("ai_research_findings").update({
     spec_name: specName, spec_value: specValue, unit,
+    evidence_text: evidenceText, page_number: pageNumber,
     review_status: "approved",
     review_notes: action === "edit_approve" ? "Yönetici değeri düzenledi ve onayladı; kayıt insan tarafından yönetilir." : "Yönetici kaynak ve kanıtı kontrol ederek onayladı; kayıt insan tarafından yönetilir.",
     reviewed_at: now, inserted_spec_id: specId,
