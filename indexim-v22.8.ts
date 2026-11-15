@@ -3615,7 +3615,7 @@ async function completeResearch(runInput: AnyRow, interaction: AnyRow) {
           && riskFlags.length === 0;
         const qualityMeta = {
           policy_version: "tc-auto-review-v1",
-          auto_decision: safeToPublish && AUTO_APPROVE_VERIFIED_FINDINGS ? "auto_approved" : "human_review",
+          auto_decision: !safeToPublish ? "human_review" : (AUTO_APPROVE_VERIFIED_FINDINGS ? "eligible_for_auto_approval" : "review_only"),
           checks: {
             exact_model_identity: Boolean(identityOk),
             exact_variant_identity: Boolean(variantEvidenceOk),
@@ -3638,6 +3638,9 @@ async function completeResearch(runInput: AnyRow, interaction: AnyRow) {
         const holdReasons = [
           ...riskFlags,
           ...(!sourceIdentityOk ? ["official_source_or_exact_document_identity_not_proven"] : []),
+          ...(!key ? ["canonical_comparison_key_missing"] : []),
+          ...(!identityOk ? ["exact_model_identity_not_proven"] : []),
+          ...(priority < 85 ? ["source_priority_below_threshold"] : []),
           ...(!variantEvidenceOk ? ["requested_variant_not_proven"] : []),
           ...(!evidenceOk ? ["evidence_does_not_sufficiently_support_value"] : []),
           ...(!pageEvidenceOk ? ["pdf_page_reference_missing"] : []),
@@ -3645,7 +3648,7 @@ async function completeResearch(runInput: AnyRow, interaction: AnyRow) {
           ...(!yearMatch ? ["model_year_mismatch"] : []),
           ...(!marketMatch ? ["market_mismatch"] : []),
         ];
-        const metaDecision = safeToPublish && AUTO_APPROVE_VERIFIED_FINDINGS ? "auto_approved" : "human_review";
+        const metaDecision = !safeToPublish ? "human_review" : (AUTO_APPROVE_VERIFIED_FINDINGS ? "eligible_for_auto_approval" : "review_only");
         const { error: qualityMetaError } = await db.from("ai_research_findings").update({
           quality_meta: qualityMeta,
           review_notes: metaDecision === "auto_approved"
@@ -3682,7 +3685,12 @@ async function completeResearch(runInput: AnyRow, interaction: AnyRow) {
               updated_at: new Date().toISOString(),
             }).eq("id", sameScopedValue.id);
           }
-          await db.from("ai_research_findings").update({ review_status: "duplicate", review_notes: "Aynı kanonik özellik ve aynı ölçüm kapsamı zaten mevcut.", reviewed_at: new Date().toISOString() }).eq("id", finding.id);
+          await db.from("ai_research_findings").update({
+            review_status: "duplicate",
+            review_notes: "Aynı kanonik özellik ve aynı ölçüm kapsamı zaten mevcut.",
+            quality_meta: { ...qualityMeta, auto_decision: "duplicate" },
+            reviewed_at: new Date().toISOString(),
+          }).eq("id", finding.id);
           pendingCount--;
           duplicateCount++;
           continue;
@@ -3693,7 +3701,11 @@ async function completeResearch(runInput: AnyRow, interaction: AnyRow) {
           && Number(item.rated_rpm ?? 0) === Number(finding.rated_rpm ?? 0)
         );
         if (conflicting && !conflicting.managed_by_ai) {
-          await db.from("ai_research_findings").update({ review_status: "pending", review_notes: "Aynı kanonik özellikte insan tarafından yönetilen kayıt var; AI bu değeri otomatik değiştirmedi." }).eq("id", finding.id);
+          await db.from("ai_research_findings").update({
+            review_status: "pending",
+            quality_meta: { ...qualityMeta, auto_decision: "human_review", risk_flags: [...new Set([...riskFlags, "existing_human_managed_spec_conflict"])] },
+            review_notes: "Aynı kanonik özellikte insan tarafından yönetilen kayıt var; AI bu değeri otomatik değiştirmedi.",
+          }).eq("id", finding.id);
           continue;
         }
         if (conflicting && conflicting.managed_by_ai) {
@@ -3709,13 +3721,21 @@ async function completeResearch(runInput: AnyRow, interaction: AnyRow) {
             && Boolean(oldDoc?.content_hash) && Boolean(newDoc?.content_hash)
             && String(oldDoc?.content_hash) !== String(newDoc?.content_hash);
           if (priority < oldPriority || provablyOlderPublishedVersion) {
-            await db.from("ai_research_findings").update({ review_status: "pending", review_notes: provablyOlderPublishedVersion
-              ? "Yeni kaynak sürüm tarihi mevcut kaynaktan eski; otomatik değer değişikliği yapılmadı."
-              : "Mevcut AI kaynağının önceliği daha yüksek; daha düşük öncelikli kaynak otomatik değişiklik yapmadı." }).eq("id", finding.id);
+            await db.from("ai_research_findings").update({
+              review_status: "pending",
+              quality_meta: { ...qualityMeta, auto_decision: "human_review", risk_flags: [...new Set([...riskFlags, "existing_spec_source_has_precedence"])] },
+              review_notes: provablyOlderPublishedVersion
+                ? "Yeni kaynak sürüm tarihi mevcut kaynaktan eski; otomatik değer değişikliği yapılmadı."
+                : "Mevcut AI kaynağının önceliği daha yüksek; daha düşük öncelikli kaynak otomatik değişiklik yapmadı.",
+            }).eq("id", finding.id);
             continue;
           }
           if (priority === oldPriority && !newerPublishedVersion && !sameOfficialSourceChanged) {
-            await db.from("ai_research_findings").update({ review_status: "pending", review_notes: "Aynı öncelikteki önceki AI kaynağına göre daha yeni yayımlanmış sürüm veya içerik değişimi kanıtlanamadı; otomatik değer değişikliği yapılmadı." }).eq("id", finding.id);
+            await db.from("ai_research_findings").update({
+              review_status: "pending",
+              quality_meta: { ...qualityMeta, auto_decision: "human_review", risk_flags: [...new Set([...riskFlags, "same_priority_source_not_proven_newer"])] },
+              review_notes: "Aynı öncelikteki önceki AI kaynağına göre daha yeni yayımlanmış sürüm veya içerik değişimi kanıtlanamadı; otomatik değer değişikliği yapılmadı.",
+            }).eq("id", finding.id);
             continue;
           }
         }
@@ -3749,7 +3769,11 @@ async function completeResearch(runInput: AnyRow, interaction: AnyRow) {
           writtenId = inserted?.id ?? null;
         }
         if (writeError || !writtenId) {
-          await db.from("ai_research_findings").update({ review_status: "pending", review_notes: `Otomatik teknik özellik güncellemesi başarısız: ${writeError?.message ?? "ID dönmedi"}` }).eq("id", finding.id);
+          await db.from("ai_research_findings").update({
+            review_status: "pending",
+            quality_meta: { ...qualityMeta, auto_decision: "human_review", risk_flags: [...new Set([...riskFlags, "spec_write_failed"])] },
+            review_notes: `Otomatik teknik özellik güncellemesi başarısız: ${writeError?.message ?? "ID dönmedi"}`,
+          }).eq("id", finding.id);
           continue;
         }
         const { error: autoEventError } = await db.from("ai_review_events").insert({
@@ -3772,6 +3796,7 @@ async function completeResearch(runInput: AnyRow, interaction: AnyRow) {
               : "Yüksek güvenli resmî kaynak ve kanıt kontrolleri sağlandı; teknik özellik taslak traktör kaydına eklendi. Traktörün kendisi yayımlanmadı."),
           reviewed_at: new Date().toISOString(),
           inserted_spec_id: writtenId,
+          quality_meta: { ...qualityMeta, auto_decision: "auto_approved", approved_at: new Date().toISOString() },
         }).eq("id", finding.id);
         pendingCount--;
         approvedCount++;
