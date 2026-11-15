@@ -38,6 +38,13 @@ function modelFor(provider: Provider): { id: string; key: string; inputRate: num
   };
 }
 
+function ratesFor(provider: Provider): { input: number; output: number } {
+  const config = MODELS[provider];
+  if (provider === "gemini" && Date.now() >= Date.parse("2027-01-01T00:00:00Z")) {
+    return { input: 1.5, output: 7.5 };
+  }
+  return { input: config.inputRate, output: config.outputRate };
+}
 function checkKeys(providers: Provider[]): void {
   const missing = providers.filter((provider) => !modelFor(provider).key);
   if (missing.length) throw new Error("Missing API keys for selected providers: " + missing.join(", "));
@@ -173,7 +180,8 @@ async function callModel(provider: Provider, item: TestCase, pdf64: string): Pro
   const output = provider === "gemini"
     ? Number(usage.candidatesTokenCount ?? 0) + Number(usage.thoughtsTokenCount ?? 0)
     : Number(usage.output_tokens ?? 0);
-  const paidListPrice = input / 1e6 * model.inputRate + output / 1e6 * model.outputRate;
+  const rates = ratesFor(provider);
+  const paidListPrice = input / 1e6 * rates.input + output / 1e6 * rates.output;
   const billingTier = provider === "gemini"
     ? (Deno.env.get("GEMINI_BILLING_TIER") ?? "unverified") : "paid";
   return {
