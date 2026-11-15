@@ -74,7 +74,7 @@ BEGIN
 
   v_window_started_at := pg_catalog.to_timestamp(
     pg_catalog.floor(
-      pg_catalog.extract(epoch FROM pg_catalog.clock_timestamp()) / p_window_seconds
+      extract(epoch FROM pg_catalog.clock_timestamp()) / p_window_seconds
     ) * p_window_seconds
   );
 
@@ -389,7 +389,7 @@ WITH x AS (
   SELECT
     pg_catalog.regexp_replace(
       pg_catalog.lower(pg_catalog.translate(
-        pg_catalog.trim(COALESCE(p_name, '')),
+        pg_catalog.btrim(COALESCE(p_name, '')),
         'ÇĞİÖŞÜçğıöşü',
         'CGIOSUcgiosu'
       )),
@@ -399,7 +399,7 @@ WITH x AS (
     ) AS n,
     pg_catalog.regexp_replace(
       pg_catalog.lower(pg_catalog.translate(
-        pg_catalog.trim(COALESCE(p_evidence, '')),
+        pg_catalog.btrim(COALESCE(p_evidence, '')),
         'ÇĞİÖŞÜçğıöşü',
         'CGIOSUcgiosu'
       )),
