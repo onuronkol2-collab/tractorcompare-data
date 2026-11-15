@@ -3559,8 +3559,6 @@ async function completeResearch(runInput: AnyRow, interaction: AnyRow) {
       }
       for (const finding of [...insertedFindings, ...reusedPendingFindings]) {
         const key = String(finding.canonical_key ?? "").trim();
-        const doc = documents.find((d: AnyRow) => String(d.id) === String(finding.document_id));
-        const priority = Number(doc?.source_priority ?? 0);
         const source = sourceChoices.find((s) => s.url === finding.source_url) ?? sourceChoices[0];
         const docForFinding = finding.document_id
           ? documents.find((d: AnyRow) => String(d.id) === String(finding.document_id))
@@ -4398,14 +4396,14 @@ async function adminReviewList(body: AnyRow) {
   const [docsResult, tractorsResult] = await Promise.all([docsPromise, tractorsPromise]);
   if (docsResult.error) throw new Error("Kaynak belgeleri okunamadı: " + docsResult.error.message);
   if (tractorsResult.error) throw new Error("Traktör kayıtları okunamadı: " + tractorsResult.error.message);
-  const docs = new Map((docsResult.data ?? []).map((x: AnyRow) => [String(x.id), x]));
-  const tractors = new Map((tractorsResult.data ?? []).map((x: AnyRow) => [String(x.id), x]));
+  const docs = new Map<string, AnyRow>((docsResult.data ?? []).map((x: AnyRow) => [String(x.id), x] as [string, AnyRow]));
+  const tractors = new Map<string, AnyRow>((tractorsResult.data ?? []).map((x: AnyRow) => [String(x.id), x] as [string, AnyRow]));
   const brandIds = [...new Set((tractorsResult.data ?? []).map((x: AnyRow) => String(x.brand_id ?? "")).filter(Boolean))];
   const brandsResult = brandIds.length
     ? await db.from("brands").select("id,name,website_url").in("id", brandIds)
     : { data: [], error: null } as AnyRow;
   if (brandsResult.error) throw new Error("Markalar okunamadı: " + brandsResult.error.message);
-  const brands = new Map((brandsResult.data ?? []).map((x: AnyRow) => [String(x.id), x]));
+  const brands = new Map<string, AnyRow>((brandsResult.data ?? []).map((x: AnyRow) => [String(x.id), x] as [string, AnyRow]));
   const enriched = rows.map((finding: AnyRow) => {
     const tractor = tractors.get(String(finding.tractor_id ?? "")) ?? null;
     const doc = docs.get(String(finding.document_id ?? "")) ?? null;
