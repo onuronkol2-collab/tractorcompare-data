@@ -4112,7 +4112,6 @@ Deno.serve(async (req: Request) => {
       if (action === "function_version") {
         return json(200, {
           success: true,
-          function_name: "tractorcompare-research",
           function_version: "22.5",
           build_label: "v22.5-farmall110a-fendt516gen4-deutz6165",
           source_rules: {
