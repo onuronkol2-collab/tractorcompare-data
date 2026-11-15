@@ -12,12 +12,6 @@ const { lang, title, description } = Astro.props;
 const isEnglish = lang === "en";
 const indexingEnabled =
   import.meta.env.PUBLIC_INDEXING_ENABLED === "true" && Boolean(Astro.site);
-const canonicalUrl = indexingEnabled
-  ? new URL(Astro.url.pathname, Astro.site!).toString()
-  : undefined;
-const englishUrl = indexingEnabled ? new URL(englishPath, Astro.site!).toString() : undefined;
-const turkishUrl = indexingEnabled ? new URL(turkishPath, Astro.site!).toString() : undefined;
-
 const homePath = isEnglish ? "/" : "/tr/";
 const localizedPath = Astro.url.pathname.startsWith("/tr/")
   ? Astro.url.pathname.slice(3)
@@ -26,6 +20,11 @@ const englishPath = localizedPath || "/";
 const turkishPath = "/tr" + (englishPath === "/" ? "/" : englishPath);
 const catalogPath = homePath + "tractors/";
 const languagePath = isEnglish ? turkishPath : englishPath;
+const canonicalUrl = indexingEnabled
+  ? new URL(Astro.url.pathname, Astro.site!).toString()
+  : undefined;
+const englishUrl = indexingEnabled ? new URL(englishPath, Astro.site!).toString() : undefined;
+const turkishUrl = indexingEnabled ? new URL(turkishPath, Astro.site!).toString() : undefined;
 
 const nav = isEnglish
   ? { platform: "Platform", catalog: "Tractor catalogue", data: "Data principles", about: "Our approach", language: "Türkçe" }
