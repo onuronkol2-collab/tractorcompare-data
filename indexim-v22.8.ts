@@ -359,7 +359,7 @@ function autoApprovalRiskFlags(
 
   // Weight is only auto-approved when the label and the printed weight basis agree.
   if (/(weight|agirl|kg)$/.test(name) || key.includes("weight")) {
-    const basis = [
+    const basis: Array<[string, boolean]> = [
       ["shipping_weight", /shippingweight|dispatchweight|shipmentweight/.test(ev)],
       ["rops_weight", /rops/.test(ev)],
       ["cab_weight", /weightwithcab|cabweight/.test(ev)],
@@ -379,7 +379,7 @@ function autoApprovalRiskFlags(
 
   // Rated, maximum and power-management/boost figures are separate measurements.
   if (/power|guc|hp|horsepower/.test(name) || key.startsWith("engine_")) {
-    const variants = [
+    const variants: Array<[string, boolean]> = [
       ["ipm", /ipm/.test(ev)],
       ["epm", /epm/.test(ev)],
       ["dp", /dynamicperformance|dynamicpower|withdp/.test(ev)],
@@ -405,7 +405,7 @@ function autoApprovalRiskFlags(
 
   // Never mix implement, steering and total hydraulic flow.
   if (/flow|debit|hydraulic|hidrolik/.test(name) || key.includes("hydraulic")) {
-    const scopes = [
+    const scopes: Array<[string, boolean]> = [
       ["total", /totalflow|totalhydraulicflow/.test(ev)],
       ["implement", /implementflow|implementpump|flowforimplements|anbaugerate/.test(ev)],
       ["steering", /steeringflow|steeringpump/.test(ev)],
@@ -4428,7 +4428,11 @@ async function adminReviewAction(body: AnyRow, actorUserId: string) {
     const { data: events, error: eventsError } = await db.from("ai_review_events")
       .select("*").eq("finding_id", findingId).order("created_at", { ascending: false }).limit(10);
     if (eventsError) throw new Error("İşlem geçmişi okunamadı: " + eventsError.message);
-    const previousEvent = (events ?? []).find((x: AnyRow) => x.action !== "undo");
+    const undoneEventIds = new Set((events ?? [])
+      .filter((x: AnyRow) => x.action === "undo")
+      .map((x: AnyRow) => String(x.new_data?.undone_event_id ?? ""))
+      .filter(Boolean));
+    const previousEvent = (events ?? []).find((x: AnyRow) => x.action !== "undo" && !undoneEventIds.has(String(x.id)));
     if (!previousEvent) return json(409, { success: false, error: "Geri alınabilecek bir işlem geçmişi bulunamadı." });
     const newData = previousEvent.new_data ?? {};
     const previousData = previousEvent.previous_data ?? {};
@@ -4458,7 +4462,7 @@ async function adminReviewAction(body: AnyRow, actorUserId: string) {
     const { error: undoEventError } = await db.from("ai_review_events").insert({
       finding_id: findingId, tractor_id: finding.tractor_id, actor_type: "admin", actor_user_id: actorUserId,
       action: "undo", previous_data: { finding: finding, last_event_id: previousEvent.id },
-      new_data: { spec_id: specId || null }, notes: "Yönetici son inceleme işlemini geri aldı.",
+      new_data: { spec_id: specId || null, undone_event_id: previousEvent.id }, notes: "Yönetici son inceleme işlemini geri aldı.",
     });
     if (undoEventError) console.warn("[review-audit] undo event could not be stored: " + undoEventError.message);
     return json(200, { success: true, message: "Son işlem geri alındı." });
