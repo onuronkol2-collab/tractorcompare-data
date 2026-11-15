@@ -82,6 +82,36 @@ function normalise(value: unknown): string {
     .toLowerCase().replace(/[^a-z0-9]+/g, "");
 }
 
+/**
+ * Keep punctuation in measured values. Stripping punctuation would make
+ * different numbers or gear ratios look identical (5.3 vs 53, 16F/8R vs
+ * 16F8R). Normalize only case, accents and superficial whitespace.
+ */
+function normaliseMeasuredText(value: unknown): string {
+  return String(value ?? "").normalize("NFKC").normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "").toLowerCase()
+    .trim().replace(/\s+/g, " ")
+    .replace(/\s*([/,:;|+\-–—])\s*/g, "$1");
+}
+
+/**
+ * A conservative identity for display-only deduplication: do not conflate
+ * distinct measurement values, units, contexts or rated engine speeds.
+ */
+export function specificationIdentity(
+  spec: Pick<PublicSpec,
+    "canonical_key" | "spec_name" | "spec_value" |
+    "unit" | "measurement_standard" | "rated_rpm">
+): string {
+  return JSON.stringify([
+    normalise(spec.canonical_key || spec.spec_name),
+    normaliseMeasuredText(spec.spec_value),
+    normaliseMeasuredText(spec.unit),
+    normaliseMeasuredText(spec.measurement_standard),
+    spec.rated_rpm,
+  ]);
+}
+
 function scoreSpec(spec: PublicSpec): number {
   return Number(spec.spec_source_priority ?? 0) * 100
     + (spec.evidence_text?.trim() ? 50 : 0)
@@ -145,13 +175,7 @@ function deduplicateSpecs(specifications: PublicSpec[]): PublicSpec[] {
   const bestByIdentity = new Map<string, PublicSpec>();
 
   for (const candidate of specifications) {
-    const identity = [
-      normalise(candidate.canonical_key || candidate.spec_name),
-      normalise(candidate.spec_value),
-      normalise(candidate.unit),
-      normalise(candidate.measurement_standard),
-      String(candidate.rated_rpm ?? 0),
-    ].join("|");
+    const identity = specificationIdentity(candidate);
 
     const currentBest = bestByIdentity.get(identity);
     if (!currentBest || compareSpecQuality(candidate, currentBest) < 0) {
