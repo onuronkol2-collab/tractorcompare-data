@@ -1,0 +1,13 @@
+{
+  "name": "tractorvs-site",
+  "compatibility_date": "2026-11-15",
+  "workers_dev": true,
+  "preview_urls": true,
+  "assets": {
+    "directory": "./site/dist"
+  },
+  "observability": {
+    "enabled": true
+  },
+  "previews": {}
+}
