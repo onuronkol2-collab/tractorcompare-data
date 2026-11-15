@@ -108,22 +108,30 @@ LEFT JOIN pg_namespace rn ON rn.oid = rc.relnamespace
 WHERE n.nspname = 'public'
 ORDER BY c.relname, con.contype, con.conname;
 
--- 4. Index inventory and validity (including partial/unique indexes).
+-- 4. Index inventory and validity (including uniqueness, partial predicates,
+--    readiness/validity flags and actual usage statistics).
 SELECT
-  i.schemaname AS schema_name,
-  i.tablename AS table_name,
-  i.indexname AS index_name,
-  i.indexdef AS index_definition,
+  n.nspname AS schema_name,
+  tbl.relname AS table_name,
+  idx.relname AS index_name,
+  ix.indisprimary AS is_primary,
+  ix.indisunique AS is_unique,
+  ix.indisvalid AS is_valid,
+  ix.indisready AS is_ready,
+  ix.indislive AS is_live,
+  pg_get_expr(ix.indpred, ix.indrelid) AS partial_predicate,
+  pg_get_indexdef(ix.indexrelid) AS index_definition,
   s.idx_scan,
   s.idx_tup_read,
   s.idx_tup_fetch
-FROM pg_indexes i
+FROM pg_index ix
+JOIN pg_class idx ON idx.oid = ix.indexrelid
+JOIN pg_class tbl ON tbl.oid = ix.indrelid
+JOIN pg_namespace n ON n.oid = tbl.relnamespace
 LEFT JOIN pg_stat_user_indexes s
-  ON s.schemaname = i.schemaname
- AND s.relname = i.tablename
- AND s.indexrelname = i.indexname
-WHERE i.schemaname = 'public'
-ORDER BY i.tablename, i.indexname;
+  ON s.indexrelid = ix.indexrelid
+WHERE n.nspname = 'public'
+ORDER BY tbl.relname, idx.relname;
 
 -- 5. Row-level security policies. An enabled RLS table with no applicable policy
 --    can intentionally deny access; policies must be reviewed together with grants.
@@ -355,6 +363,1135 @@ SELECT
 FROM public.ai_research_findings f
 GROUP BY 1,2,3,4,5
 ORDER BY proposed_brand, proposed_model, run_id, review_status, comparison_class;
+
+-- 14b. Model-reported confidence distribution. This is a diagnostic signal,
+--      not a calibrated probability and not sufficient by itself for auto-approval.
+SELECT
+  to_jsonb(f)->>'run_id' AS run_id,
+  to_jsonb(f)->>'proposed_model_name' AS model_name,
+  count(*) AS findings,
+  count(*) FILTER (WHERE NULLIF(to_jsonb(f)->>'confidence','') IS NULL) AS missing_confidence,
+  count(*) FILTER (
+    WHERE (CASE
+      WHEN COALESCE(to_jsonb(f)->>'confidence','') ~ '^-?[0-9]+([.][0-9]+)?
+SELECT
+  to_jsonb(f)->>'id' AS finding_id,
+  to_jsonb(f)->>'run_id' AS run_id,
+  to_jsonb(f)->>'tractor_id' AS tractor_id,
+  to_jsonb(f)->>'proposed_model_name' AS model_name,
+  to_jsonb(f)->>'spec_name' AS spec_name,
+  to_jsonb(f)->>'spec_value' AS spec_value,
+  to_jsonb(f)->>'unit' AS unit,
+  to_jsonb(f)->>'source_url' AS finding_source_url,
+  to_jsonb(d)->>'source_url' AS document_source_url,
+  to_jsonb(d)->>'source_type' AS source_type,
+  to_jsonb(f)->>'page_number' AS page_number,
+  to_jsonb(f)->>'evidence_text' AS evidence_text,
+  to_jsonb(f)->>'review_status' AS review_status,
+  CASE
+    WHEN NULLIF(to_jsonb(f)->>'document_id','') IS NULL THEN 'MISSING_DOCUMENT_ID'
+    WHEN d.id IS NULL THEN 'ORPHAN_DOCUMENT_ID'
+    WHEN NULLIF(to_jsonb(f)->>'source_url','') IS NULL THEN 'MISSING_FINDING_SOURCE_URL'
+    WHEN to_jsonb(f)->>'source_url' IS DISTINCT FROM to_jsonb(d)->>'source_url' THEN 'SOURCE_URL_MISMATCH'
+    WHEN lower(COALESCE(to_jsonb(d)->>'source_type','')) LIKE '%pdf%'
+         AND NULLIF(to_jsonb(f)->>'page_number','') IS NULL THEN 'PDF_PAGE_MISSING'
+    WHEN NULLIF(to_jsonb(f)->>'evidence_text','') IS NULL THEN 'EVIDENCE_MISSING'
+    ELSE 'REVIEW'
+  END AS issue
+FROM public.ai_research_findings f
+LEFT JOIN public.ai_research_documents d
+  ON d.id::text = to_jsonb(f)->>'document_id'
+WHERE NULLIF(to_jsonb(f)->>'document_id','') IS NULL
+   OR d.id IS NULL
+   OR NULLIF(to_jsonb(f)->>'source_url','') IS NULL
+   OR (to_jsonb(f)->>'source_url') IS DISTINCT FROM (to_jsonb(d)->>'source_url')
+   OR (lower(COALESCE(to_jsonb(d)->>'source_type','')) LIKE '%pdf%'
+       AND NULLIF(to_jsonb(f)->>'page_number','') IS NULL)
+   OR NULLIF(to_jsonb(f)->>'evidence_text','') IS NULL
+ORDER BY to_jsonb(f)->>'proposed_model_name', to_jsonb(f)->>'spec_name'
+LIMIT 2000;
+
+-- 16. Finding fingerprint duplicates within the same research run.
+--     A duplicate here is a candidate for manual deduplication, not an instruction
+--     to delete: some specs legitimately repeat by transmission/tyre/package context.
+SELECT
+  to_jsonb(f)->>'run_id' AS run_id,
+  to_jsonb(f)->>'tractor_id' AS tractor_id,
+  COALESCE(to_jsonb(f)->>'canonical_key','<NULL>') AS canonical_key,
+  lower(regexp_replace(COALESCE(to_jsonb(f)->>'spec_value',''), '[^a-z0-9]+', '', 'g')) AS normalized_value,
+  lower(COALESCE(to_jsonb(f)->>'unit','')) AS normalized_unit,
+  COALESCE(to_jsonb(f)->>'measurement_standard','') AS measurement_scope,
+  COALESCE(to_jsonb(f)->>'rated_rpm','') AS rated_rpm,
+  count(*) AS duplicate_count,
+  array_agg(to_jsonb(f)->>'id' ORDER BY to_jsonb(f)->>'id') AS finding_ids,
+  array_agg(COALESCE(to_jsonb(f)->>'spec_name','') || ' = ' || COALESCE(to_jsonb(f)->>'spec_value','')) AS labels_and_values
+FROM public.ai_research_findings f
+GROUP BY 1,2,3,4,5,6,7
+HAVING count(*) > 1
+ORDER BY duplicate_count DESC, canonical_key
+LIMIT 2000;
+
+-- 16b. Conflicting finding values for the same tractor/canonical key/scope.
+--      This intentionally excludes market/variant separation only if those
+--      identities are already separate tractor rows. Never auto-resolve a conflict
+--      solely by choosing the newest or numerically largest value.
+SELECT
+  to_jsonb(f)->>'tractor_id' AS tractor_id,
+  to_jsonb(f)->>'proposed_model_name' AS model_name,
+  to_jsonb(f)->>'canonical_key' AS canonical_key,
+  lower(COALESCE(to_jsonb(f)->>'unit','')) AS normalized_unit,
+  COALESCE(to_jsonb(f)->>'measurement_standard','') AS measurement_scope,
+  COALESCE(to_jsonb(f)->>'rated_rpm','') AS rated_rpm,
+  count(*) AS finding_rows,
+  count(DISTINCT lower(regexp_replace(COALESCE(to_jsonb(f)->>'spec_value',''), '[^a-z0-9]+', '', 'g'))) AS distinct_values,
+  array_agg(DISTINCT COALESCE(to_jsonb(f)->>'spec_value','<NULL>')) AS proposed_values,
+  array_agg(DISTINCT COALESCE(to_jsonb(f)->>'review_status','<NULL>')) AS review_states,
+  array_agg(DISTINCT COALESCE(to_jsonb(f)->>'run_id','<NULL>')) AS run_ids
+FROM public.ai_research_findings f
+WHERE NULLIF(to_jsonb(f)->>'canonical_key','') IS NOT NULL
+GROUP BY 1,2,3,4,5,6
+HAVING count(DISTINCT lower(regexp_replace(COALESCE(to_jsonb(f)->>'spec_value',''), '[^a-z0-9]+', '', 'g'))) > 1
+ORDER BY distinct_values DESC, model_name, canonical_key
+LIMIT 2000;
+
+-- 17. Current tractor_specs ownership, provenance and duplicate/conflict indicators.
+SELECT
+  COALESCE(to_jsonb(s)->>'managed_by_ai','<NULL>') AS managed_by_ai,
+  COALESCE(to_jsonb(s)->>'canonical_key','<NULL>') AS canonical_key,
+  count(*) AS spec_rows,
+  count(*) FILTER (WHERE NULLIF(to_jsonb(s)->>'source_id','') IS NULL) AS missing_source_id,
+  count(*) FILTER (WHERE NULLIF(to_jsonb(s)->>'source_document_id','') IS NULL) AS missing_source_document_id,
+  count(*) FILTER (WHERE NULLIF(to_jsonb(s)->>'evidence_text','') IS NULL) AS missing_evidence,
+  count(*) FILTER (WHERE NULLIF(to_jsonb(s)->>'verified_at','') IS NULL) AS missing_verified_at,
+  count(*) FILTER (WHERE NULLIF(to_jsonb(s)->>'last_verified_at','') IS NULL) AS missing_last_verified_at
+FROM public.tractor_specs s
+GROUP BY 1,2
+ORDER BY 1,2;
+
+SELECT
+  to_jsonb(t)->>'model_name' AS model_name,
+  to_jsonb(s)->>'tractor_id' AS tractor_id,
+  to_jsonb(s)->>'canonical_key' AS canonical_key,
+  to_jsonb(s)->>'unit' AS unit,
+  to_jsonb(s)->>'measurement_standard' AS measurement_scope,
+  to_jsonb(s)->>'rated_rpm' AS rated_rpm,
+  count(*) AS rows_in_same_scope,
+  array_agg(to_jsonb(s)->>'spec_value' ORDER BY to_jsonb(s)->>'spec_value') AS values_in_scope,
+  array_agg(to_jsonb(s)->>'id' ORDER BY to_jsonb(s)->>'id') AS spec_ids,
+  array_agg(COALESCE(to_jsonb(s)->>'managed_by_ai','<NULL>') ORDER BY to_jsonb(s)->>'id') AS ownership_flags
+FROM public.tractor_specs s
+LEFT JOIN public.tractors t ON t.id::text = to_jsonb(s)->>'tractor_id'
+WHERE NULLIF(to_jsonb(s)->>'canonical_key','') IS NOT NULL
+GROUP BY 1,2,3,4,5,6
+HAVING count(*) > 1
+ORDER BY rows_in_same_scope DESC, model_name, canonical_key
+LIMIT 2000;
+
+-- 17b. Foreign-key-like lineage checks for live specs and findings.
+--      Human-managed specs may legitimately lack AI research documents; the owner
+--      flag is retained so missing lineage can be interpreted rather than deleted.
+SELECT
+  to_jsonb(t)->>'model_name' AS model_name,
+  to_jsonb(s)->>'id' AS spec_id,
+  to_jsonb(s)->>'spec_name' AS spec_name,
+  to_jsonb(s)->>'spec_value' AS spec_value,
+  to_jsonb(s)->>'managed_by_ai' AS managed_by_ai,
+  to_jsonb(s)->>'source_id' AS source_id,
+  to_jsonb(s)->>'source_document_id' AS source_document_id,
+  CASE
+    WHEN tr.id IS NULL THEN 'ORPHAN_TRACTOR_ID'
+    WHEN NULLIF(to_jsonb(s)->>'managed_by_ai','') = 'true'
+         AND NULLIF(to_jsonb(s)->>'source_id','') IS NULL THEN 'AI_SPEC_MISSING_SOURCE_ID'
+    WHEN NULLIF(to_jsonb(s)->>'source_id','') IS NOT NULL AND ds.id IS NULL THEN 'ORPHAN_SOURCE_ID'
+    WHEN NULLIF(to_jsonb(s)->>'source_document_id','') IS NOT NULL AND d.id IS NULL THEN 'ORPHAN_SOURCE_DOCUMENT_ID'
+    WHEN NULLIF(to_jsonb(s)->>'managed_by_ai','') = 'true'
+         AND NULLIF(to_jsonb(s)->>'source_document_id','') IS NULL THEN 'AI_SPEC_MISSING_SOURCE_DOCUMENT'
+    ELSE 'REVIEW'
+  END AS issue
+FROM public.tractor_specs s
+LEFT JOIN public.tractors tr ON tr.id::text = to_jsonb(s)->>'tractor_id'
+LEFT JOIN public.data_sources ds ON ds.id::text = to_jsonb(s)->>'source_id'
+LEFT JOIN public.ai_research_documents d ON d.id::text = to_jsonb(s)->>'source_document_id'
+LEFT JOIN public.tractors t ON t.id = tr.id
+WHERE tr.id IS NULL
+   OR (NULLIF(to_jsonb(s)->>'managed_by_ai','') = 'true'
+       AND NULLIF(to_jsonb(s)->>'source_id','') IS NULL)
+   OR (NULLIF(to_jsonb(s)->>'source_id','') IS NOT NULL AND ds.id IS NULL)
+   OR (NULLIF(to_jsonb(s)->>'source_document_id','') IS NOT NULL AND d.id IS NULL)
+   OR (NULLIF(to_jsonb(s)->>'managed_by_ai','') = 'true'
+       AND NULLIF(to_jsonb(s)->>'source_document_id','') IS NULL)
+ORDER BY model_name, spec_name
+LIMIT 2000;
+
+SELECT
+  to_jsonb(f)->>'id' AS finding_id,
+  to_jsonb(f)->>'run_id' AS run_id,
+  to_jsonb(f)->>'tractor_id' AS tractor_id,
+  to_jsonb(f)->>'inserted_spec_id' AS inserted_spec_id,
+  to_jsonb(f)->>'review_status' AS review_status,
+  CASE
+    WHEN r.id IS NULL THEN 'ORPHAN_RUN_ID'
+    WHEN tr.id IS NULL THEN 'ORPHAN_TRACTOR_ID'
+    WHEN NULLIF(to_jsonb(f)->>'inserted_spec_id','') IS NOT NULL AND s.id IS NULL THEN 'ORPHAN_INSERTED_SPEC_ID'
+    ELSE 'REVIEW'
+  END AS issue
+FROM public.ai_research_findings f
+LEFT JOIN public.ai_research_runs r ON r.id::text = to_jsonb(f)->>'run_id'
+LEFT JOIN public.tractors tr ON tr.id::text = to_jsonb(f)->>'tractor_id'
+LEFT JOIN public.tractor_specs s ON s.id::text = to_jsonb(f)->>'inserted_spec_id'
+WHERE r.id IS NULL
+   OR tr.id IS NULL
+   OR (NULLIF(to_jsonb(f)->>'inserted_spec_id','') IS NOT NULL AND s.id IS NULL)
+ORDER BY to_jsonb(f)->>'proposed_model_name', to_jsonb(f)->>'spec_name'
+LIMIT 2000;
+
+-- 18. Source-document provenance and source-family duplication signals.
+SELECT
+  COALESCE(to_jsonb(d)->>'source_type','<NULL>') AS source_type,
+  COALESCE(to_jsonb(d)->>'model_specific','<NULL>') AS model_specific,
+  COALESCE(to_jsonb(d)->>'is_preferred_technical_source','<NULL>') AS preferred_technical_source,
+  count(*) AS document_count,
+  count(DISTINCT to_jsonb(d)->>'source_url') AS distinct_urls,
+  count(*) FILTER (WHERE NULLIF(to_jsonb(d)->>'content_hash','') IS NULL) AS missing_content_hash,
+  count(*) FILTER (WHERE NULLIF(to_jsonb(d)->>'source_priority','') IS NULL) AS missing_source_priority,
+  count(*) FILTER (WHERE NULLIF(to_jsonb(d)->>'http_status','') IS NULL) AS missing_http_status,
+  count(*) FILTER (WHERE NULLIF(to_jsonb(d)->>'final_url','') IS NULL) AS missing_final_url,
+  count(*) FILTER (WHERE NULLIF(to_jsonb(d)->>'source_relevance_score','') IS NULL) AS missing_relevance_score
+FROM public.ai_research_documents d
+GROUP BY 1,2,3
+ORDER BY 1,2,3;
+
+SELECT
+  to_jsonb(d)->>'run_id' AS run_id,
+  to_jsonb(d)->>'source_url' AS source_url,
+  count(*) AS repeated_document_rows,
+  array_agg(to_jsonb(d)->>'id' ORDER BY to_jsonb(d)->>'id') AS document_ids,
+  array_agg(to_jsonb(d)->>'content_hash' ORDER BY to_jsonb(d)->>'id') AS content_hashes,
+  array_agg(to_jsonb(d)->>'source_priority' ORDER BY to_jsonb(d)->>'id') AS source_priorities
+FROM public.ai_research_documents d
+GROUP BY 1,2
+HAVING count(*) > 1
+ORDER BY repeated_document_rows DESC
+LIMIT 1000;
+
+-- 19. Data-source registry: URL and publisher diversity. Same-host URL copies
+--     must not be counted as independent evidence by an AI consensus engine.
+SELECT
+  COALESCE(to_jsonb(ds)->>'publisher','<NULL>') AS publisher,
+  COALESCE(to_jsonb(ds)->>'source_type','<NULL>') AS source_type,
+  COALESCE(to_jsonb(ds)->>'source_priority','<NULL>') AS source_priority,
+  count(*) AS source_rows,
+  count(DISTINCT to_jsonb(ds)->>'source_url') AS distinct_urls
+FROM public.data_sources ds
+GROUP BY 1,2,3
+ORDER BY source_rows DESC, publisher
+LIMIT 2000;
+
+-- 19b. Identical document hashes across distinct URLs.
+--       These URLs are potential mirrors/reposts, not independent evidence votes.
+SELECT
+  to_jsonb(d)->>'content_hash' AS content_hash,
+  count(*) AS document_rows,
+  count(DISTINCT to_jsonb(d)->>'source_url') AS distinct_source_urls,
+  count(DISTINCT lower(substring(to_jsonb(d)->>'source_url' FROM '^https?://([^/]+)'))) AS distinct_hosts,
+  array_agg(DISTINCT to_jsonb(d)->>'source_url') AS source_urls,
+  array_agg(DISTINCT to_jsonb(d)->>'publisher') AS publishers,
+  array_agg(DISTINCT to_jsonb(d)->>'run_id') AS run_ids
+FROM public.ai_research_documents d
+WHERE NULLIF(to_jsonb(d)->>'content_hash','') IS NOT NULL
+GROUP BY 1
+HAVING count(DISTINCT to_jsonb(d)->>'source_url') > 1
+ORDER BY distinct_hosts, distinct_source_urls DESC
+LIMIT 2000;
+
+-- 19c. Distribution by source host. Host is one signal for evidence-family
+--       grouping; corporate ownership and copied-content lineage need later review.
+SELECT
+  lower(substring(to_jsonb(d)->>'source_url' FROM '^https?://([^/]+)')) AS source_host,
+  count(*) AS document_rows,
+  count(DISTINCT to_jsonb(d)->>'source_url') AS distinct_urls,
+  count(DISTINCT to_jsonb(d)->>'content_hash') AS distinct_content_hashes,
+  count(DISTINCT to_jsonb(d)->>'publisher') AS publisher_labels,
+  array_agg(DISTINCT to_jsonb(d)->>'publisher') AS publisher_names
+FROM public.ai_research_documents d
+WHERE NULLIF(to_jsonb(d)->>'source_url','') IS NOT NULL
+GROUP BY 1
+ORDER BY document_rows DESC, source_host
+LIMIT 1000;
+
+-- 20. Default privileges for public schema objects (future tables/functions may
+--     be exposed differently from current objects).
+SELECT
+  pg_get_userbyid(d.defaclrole) AS grantor_role,
+  COALESCE(n.nspname, '<GLOBAL>') AS schema_name,
+  d.defaclobjtype AS object_type_code,
+  d.defaclacl AS default_acl
+FROM pg_default_acl d
+LEFT JOIN pg_namespace n ON n.oid = d.defaclnamespace
+WHERE d.defaclnamespace = 0
+   OR n.nspname = 'public'
+ORDER BY schema_name, object_type_code;
+
+COMMIT;
+
+-- End v21.44 read-only audit. No remediation or approval is executed here.
+
+      THEN (to_jsonb(f)->>'confidence')::numeric
+      ELSE NULL END) < 0
+  ) AS negative_confidence,
+  count(*) FILTER (
+    WHERE (CASE
+      WHEN COALESCE(to_jsonb(f)->>'confidence','') ~ '^-?[0-9]+([.][0-9]+)?
+SELECT
+  to_jsonb(f)->>'id' AS finding_id,
+  to_jsonb(f)->>'run_id' AS run_id,
+  to_jsonb(f)->>'tractor_id' AS tractor_id,
+  to_jsonb(f)->>'proposed_model_name' AS model_name,
+  to_jsonb(f)->>'spec_name' AS spec_name,
+  to_jsonb(f)->>'spec_value' AS spec_value,
+  to_jsonb(f)->>'unit' AS unit,
+  to_jsonb(f)->>'source_url' AS finding_source_url,
+  to_jsonb(d)->>'source_url' AS document_source_url,
+  to_jsonb(d)->>'source_type' AS source_type,
+  to_jsonb(f)->>'page_number' AS page_number,
+  to_jsonb(f)->>'evidence_text' AS evidence_text,
+  to_jsonb(f)->>'review_status' AS review_status,
+  CASE
+    WHEN NULLIF(to_jsonb(f)->>'document_id','') IS NULL THEN 'MISSING_DOCUMENT_ID'
+    WHEN d.id IS NULL THEN 'ORPHAN_DOCUMENT_ID'
+    WHEN NULLIF(to_jsonb(f)->>'source_url','') IS NULL THEN 'MISSING_FINDING_SOURCE_URL'
+    WHEN to_jsonb(f)->>'source_url' IS DISTINCT FROM to_jsonb(d)->>'source_url' THEN 'SOURCE_URL_MISMATCH'
+    WHEN lower(COALESCE(to_jsonb(d)->>'source_type','')) LIKE '%pdf%'
+         AND NULLIF(to_jsonb(f)->>'page_number','') IS NULL THEN 'PDF_PAGE_MISSING'
+    WHEN NULLIF(to_jsonb(f)->>'evidence_text','') IS NULL THEN 'EVIDENCE_MISSING'
+    ELSE 'REVIEW'
+  END AS issue
+FROM public.ai_research_findings f
+LEFT JOIN public.ai_research_documents d
+  ON d.id::text = to_jsonb(f)->>'document_id'
+WHERE NULLIF(to_jsonb(f)->>'document_id','') IS NULL
+   OR d.id IS NULL
+   OR NULLIF(to_jsonb(f)->>'source_url','') IS NULL
+   OR (to_jsonb(f)->>'source_url') IS DISTINCT FROM (to_jsonb(d)->>'source_url')
+   OR (lower(COALESCE(to_jsonb(d)->>'source_type','')) LIKE '%pdf%'
+       AND NULLIF(to_jsonb(f)->>'page_number','') IS NULL)
+   OR NULLIF(to_jsonb(f)->>'evidence_text','') IS NULL
+ORDER BY to_jsonb(f)->>'proposed_model_name', to_jsonb(f)->>'spec_name'
+LIMIT 2000;
+
+-- 16. Finding fingerprint duplicates within the same research run.
+--     A duplicate here is a candidate for manual deduplication, not an instruction
+--     to delete: some specs legitimately repeat by transmission/tyre/package context.
+SELECT
+  to_jsonb(f)->>'run_id' AS run_id,
+  to_jsonb(f)->>'tractor_id' AS tractor_id,
+  COALESCE(to_jsonb(f)->>'canonical_key','<NULL>') AS canonical_key,
+  lower(regexp_replace(COALESCE(to_jsonb(f)->>'spec_value',''), '[^a-z0-9]+', '', 'g')) AS normalized_value,
+  lower(COALESCE(to_jsonb(f)->>'unit','')) AS normalized_unit,
+  COALESCE(to_jsonb(f)->>'measurement_standard','') AS measurement_scope,
+  COALESCE(to_jsonb(f)->>'rated_rpm','') AS rated_rpm,
+  count(*) AS duplicate_count,
+  array_agg(to_jsonb(f)->>'id' ORDER BY to_jsonb(f)->>'id') AS finding_ids,
+  array_agg(COALESCE(to_jsonb(f)->>'spec_name','') || ' = ' || COALESCE(to_jsonb(f)->>'spec_value','')) AS labels_and_values
+FROM public.ai_research_findings f
+GROUP BY 1,2,3,4,5,6,7
+HAVING count(*) > 1
+ORDER BY duplicate_count DESC, canonical_key
+LIMIT 2000;
+
+-- 17. Current tractor_specs ownership, provenance and duplicate/conflict indicators.
+SELECT
+  COALESCE(to_jsonb(s)->>'managed_by_ai','<NULL>') AS managed_by_ai,
+  COALESCE(to_jsonb(s)->>'canonical_key','<NULL>') AS canonical_key,
+  count(*) AS spec_rows,
+  count(*) FILTER (WHERE NULLIF(to_jsonb(s)->>'source_id','') IS NULL) AS missing_source_id,
+  count(*) FILTER (WHERE NULLIF(to_jsonb(s)->>'source_document_id','') IS NULL) AS missing_source_document_id,
+  count(*) FILTER (WHERE NULLIF(to_jsonb(s)->>'evidence_text','') IS NULL) AS missing_evidence,
+  count(*) FILTER (WHERE NULLIF(to_jsonb(s)->>'verified_at','') IS NULL) AS missing_verified_at,
+  count(*) FILTER (WHERE NULLIF(to_jsonb(s)->>'last_verified_at','') IS NULL) AS missing_last_verified_at
+FROM public.tractor_specs s
+GROUP BY 1,2
+ORDER BY 1,2;
+
+SELECT
+  to_jsonb(t)->>'model_name' AS model_name,
+  to_jsonb(s)->>'tractor_id' AS tractor_id,
+  to_jsonb(s)->>'canonical_key' AS canonical_key,
+  to_jsonb(s)->>'unit' AS unit,
+  to_jsonb(s)->>'measurement_standard' AS measurement_scope,
+  to_jsonb(s)->>'rated_rpm' AS rated_rpm,
+  count(*) AS rows_in_same_scope,
+  array_agg(to_jsonb(s)->>'spec_value' ORDER BY to_jsonb(s)->>'spec_value') AS values_in_scope,
+  array_agg(to_jsonb(s)->>'id' ORDER BY to_jsonb(s)->>'id') AS spec_ids,
+  array_agg(COALESCE(to_jsonb(s)->>'managed_by_ai','<NULL>') ORDER BY to_jsonb(s)->>'id') AS ownership_flags
+FROM public.tractor_specs s
+LEFT JOIN public.tractors t ON t.id::text = to_jsonb(s)->>'tractor_id'
+WHERE NULLIF(to_jsonb(s)->>'canonical_key','') IS NOT NULL
+GROUP BY 1,2,3,4,5,6
+HAVING count(*) > 1
+ORDER BY rows_in_same_scope DESC, model_name, canonical_key
+LIMIT 2000;
+
+-- 17b. Foreign-key-like lineage checks for live specs and findings.
+--      Human-managed specs may legitimately lack AI research documents; the owner
+--      flag is retained so missing lineage can be interpreted rather than deleted.
+SELECT
+  to_jsonb(t)->>'model_name' AS model_name,
+  to_jsonb(s)->>'id' AS spec_id,
+  to_jsonb(s)->>'spec_name' AS spec_name,
+  to_jsonb(s)->>'spec_value' AS spec_value,
+  to_jsonb(s)->>'managed_by_ai' AS managed_by_ai,
+  to_jsonb(s)->>'source_id' AS source_id,
+  to_jsonb(s)->>'source_document_id' AS source_document_id,
+  CASE
+    WHEN tr.id IS NULL THEN 'ORPHAN_TRACTOR_ID'
+    WHEN NULLIF(to_jsonb(s)->>'managed_by_ai','') = 'true'
+         AND NULLIF(to_jsonb(s)->>'source_id','') IS NULL THEN 'AI_SPEC_MISSING_SOURCE_ID'
+    WHEN NULLIF(to_jsonb(s)->>'source_id','') IS NOT NULL AND ds.id IS NULL THEN 'ORPHAN_SOURCE_ID'
+    WHEN NULLIF(to_jsonb(s)->>'source_document_id','') IS NOT NULL AND d.id IS NULL THEN 'ORPHAN_SOURCE_DOCUMENT_ID'
+    WHEN NULLIF(to_jsonb(s)->>'managed_by_ai','') = 'true'
+         AND NULLIF(to_jsonb(s)->>'source_document_id','') IS NULL THEN 'AI_SPEC_MISSING_SOURCE_DOCUMENT'
+    ELSE 'REVIEW'
+  END AS issue
+FROM public.tractor_specs s
+LEFT JOIN public.tractors tr ON tr.id::text = to_jsonb(s)->>'tractor_id'
+LEFT JOIN public.data_sources ds ON ds.id::text = to_jsonb(s)->>'source_id'
+LEFT JOIN public.ai_research_documents d ON d.id::text = to_jsonb(s)->>'source_document_id'
+LEFT JOIN public.tractors t ON t.id = tr.id
+WHERE tr.id IS NULL
+   OR (NULLIF(to_jsonb(s)->>'managed_by_ai','') = 'true'
+       AND NULLIF(to_jsonb(s)->>'source_id','') IS NULL)
+   OR (NULLIF(to_jsonb(s)->>'source_id','') IS NOT NULL AND ds.id IS NULL)
+   OR (NULLIF(to_jsonb(s)->>'source_document_id','') IS NOT NULL AND d.id IS NULL)
+   OR (NULLIF(to_jsonb(s)->>'managed_by_ai','') = 'true'
+       AND NULLIF(to_jsonb(s)->>'source_document_id','') IS NULL)
+ORDER BY model_name, spec_name
+LIMIT 2000;
+
+SELECT
+  to_jsonb(f)->>'id' AS finding_id,
+  to_jsonb(f)->>'run_id' AS run_id,
+  to_jsonb(f)->>'tractor_id' AS tractor_id,
+  to_jsonb(f)->>'inserted_spec_id' AS inserted_spec_id,
+  to_jsonb(f)->>'review_status' AS review_status,
+  CASE
+    WHEN r.id IS NULL THEN 'ORPHAN_RUN_ID'
+    WHEN tr.id IS NULL THEN 'ORPHAN_TRACTOR_ID'
+    WHEN NULLIF(to_jsonb(f)->>'inserted_spec_id','') IS NOT NULL AND s.id IS NULL THEN 'ORPHAN_INSERTED_SPEC_ID'
+    ELSE 'REVIEW'
+  END AS issue
+FROM public.ai_research_findings f
+LEFT JOIN public.ai_research_runs r ON r.id::text = to_jsonb(f)->>'run_id'
+LEFT JOIN public.tractors tr ON tr.id::text = to_jsonb(f)->>'tractor_id'
+LEFT JOIN public.tractor_specs s ON s.id::text = to_jsonb(f)->>'inserted_spec_id'
+WHERE r.id IS NULL
+   OR tr.id IS NULL
+   OR (NULLIF(to_jsonb(f)->>'inserted_spec_id','') IS NOT NULL AND s.id IS NULL)
+ORDER BY to_jsonb(f)->>'proposed_model_name', to_jsonb(f)->>'spec_name'
+LIMIT 2000;
+
+-- 18. Source-document provenance and source-family duplication signals.
+SELECT
+  COALESCE(to_jsonb(d)->>'source_type','<NULL>') AS source_type,
+  COALESCE(to_jsonb(d)->>'model_specific','<NULL>') AS model_specific,
+  COALESCE(to_jsonb(d)->>'is_preferred_technical_source','<NULL>') AS preferred_technical_source,
+  count(*) AS document_count,
+  count(DISTINCT to_jsonb(d)->>'source_url') AS distinct_urls,
+  count(*) FILTER (WHERE NULLIF(to_jsonb(d)->>'content_hash','') IS NULL) AS missing_content_hash,
+  count(*) FILTER (WHERE NULLIF(to_jsonb(d)->>'source_priority','') IS NULL) AS missing_source_priority,
+  count(*) FILTER (WHERE NULLIF(to_jsonb(d)->>'http_status','') IS NULL) AS missing_http_status,
+  count(*) FILTER (WHERE NULLIF(to_jsonb(d)->>'final_url','') IS NULL) AS missing_final_url,
+  count(*) FILTER (WHERE NULLIF(to_jsonb(d)->>'source_relevance_score','') IS NULL) AS missing_relevance_score
+FROM public.ai_research_documents d
+GROUP BY 1,2,3
+ORDER BY 1,2,3;
+
+SELECT
+  to_jsonb(d)->>'run_id' AS run_id,
+  to_jsonb(d)->>'source_url' AS source_url,
+  count(*) AS repeated_document_rows,
+  array_agg(to_jsonb(d)->>'id' ORDER BY to_jsonb(d)->>'id') AS document_ids,
+  array_agg(to_jsonb(d)->>'content_hash' ORDER BY to_jsonb(d)->>'id') AS content_hashes,
+  array_agg(to_jsonb(d)->>'source_priority' ORDER BY to_jsonb(d)->>'id') AS source_priorities
+FROM public.ai_research_documents d
+GROUP BY 1,2
+HAVING count(*) > 1
+ORDER BY repeated_document_rows DESC
+LIMIT 1000;
+
+-- 19. Data-source registry: URL and publisher diversity. Same-host URL copies
+--     must not be counted as independent evidence by an AI consensus engine.
+SELECT
+  COALESCE(to_jsonb(ds)->>'publisher','<NULL>') AS publisher,
+  COALESCE(to_jsonb(ds)->>'source_type','<NULL>') AS source_type,
+  COALESCE(to_jsonb(ds)->>'source_priority','<NULL>') AS source_priority,
+  count(*) AS source_rows,
+  count(DISTINCT to_jsonb(ds)->>'source_url') AS distinct_urls
+FROM public.data_sources ds
+GROUP BY 1,2,3
+ORDER BY source_rows DESC, publisher
+LIMIT 2000;
+
+-- 20. Default privileges for public schema objects (future tables/functions may
+--     be exposed differently from current objects).
+SELECT
+  pg_get_userbyid(d.defaclrole) AS grantor_role,
+  COALESCE(n.nspname, '<GLOBAL>') AS schema_name,
+  d.defaclobjtype AS object_type_code,
+  d.defaclacl AS default_acl
+FROM pg_default_acl d
+LEFT JOIN pg_namespace n ON n.oid = d.defaclnamespace
+WHERE d.defaclnamespace = 0
+   OR n.nspname = 'public'
+ORDER BY schema_name, object_type_code;
+
+COMMIT;
+
+-- End v21.44 read-only audit. No remediation or approval is executed here.
+
+      THEN (to_jsonb(f)->>'confidence')::numeric
+      ELSE NULL END) > 1
+  ) AS confidence_over_one,
+  count(*) FILTER (
+    WHERE (CASE
+      WHEN COALESCE(to_jsonb(f)->>'confidence','') ~ '^-?[0-9]+([.][0-9]+)?
+SELECT
+  to_jsonb(f)->>'id' AS finding_id,
+  to_jsonb(f)->>'run_id' AS run_id,
+  to_jsonb(f)->>'tractor_id' AS tractor_id,
+  to_jsonb(f)->>'proposed_model_name' AS model_name,
+  to_jsonb(f)->>'spec_name' AS spec_name,
+  to_jsonb(f)->>'spec_value' AS spec_value,
+  to_jsonb(f)->>'unit' AS unit,
+  to_jsonb(f)->>'source_url' AS finding_source_url,
+  to_jsonb(d)->>'source_url' AS document_source_url,
+  to_jsonb(d)->>'source_type' AS source_type,
+  to_jsonb(f)->>'page_number' AS page_number,
+  to_jsonb(f)->>'evidence_text' AS evidence_text,
+  to_jsonb(f)->>'review_status' AS review_status,
+  CASE
+    WHEN NULLIF(to_jsonb(f)->>'document_id','') IS NULL THEN 'MISSING_DOCUMENT_ID'
+    WHEN d.id IS NULL THEN 'ORPHAN_DOCUMENT_ID'
+    WHEN NULLIF(to_jsonb(f)->>'source_url','') IS NULL THEN 'MISSING_FINDING_SOURCE_URL'
+    WHEN to_jsonb(f)->>'source_url' IS DISTINCT FROM to_jsonb(d)->>'source_url' THEN 'SOURCE_URL_MISMATCH'
+    WHEN lower(COALESCE(to_jsonb(d)->>'source_type','')) LIKE '%pdf%'
+         AND NULLIF(to_jsonb(f)->>'page_number','') IS NULL THEN 'PDF_PAGE_MISSING'
+    WHEN NULLIF(to_jsonb(f)->>'evidence_text','') IS NULL THEN 'EVIDENCE_MISSING'
+    ELSE 'REVIEW'
+  END AS issue
+FROM public.ai_research_findings f
+LEFT JOIN public.ai_research_documents d
+  ON d.id::text = to_jsonb(f)->>'document_id'
+WHERE NULLIF(to_jsonb(f)->>'document_id','') IS NULL
+   OR d.id IS NULL
+   OR NULLIF(to_jsonb(f)->>'source_url','') IS NULL
+   OR (to_jsonb(f)->>'source_url') IS DISTINCT FROM (to_jsonb(d)->>'source_url')
+   OR (lower(COALESCE(to_jsonb(d)->>'source_type','')) LIKE '%pdf%'
+       AND NULLIF(to_jsonb(f)->>'page_number','') IS NULL)
+   OR NULLIF(to_jsonb(f)->>'evidence_text','') IS NULL
+ORDER BY to_jsonb(f)->>'proposed_model_name', to_jsonb(f)->>'spec_name'
+LIMIT 2000;
+
+-- 16. Finding fingerprint duplicates within the same research run.
+--     A duplicate here is a candidate for manual deduplication, not an instruction
+--     to delete: some specs legitimately repeat by transmission/tyre/package context.
+SELECT
+  to_jsonb(f)->>'run_id' AS run_id,
+  to_jsonb(f)->>'tractor_id' AS tractor_id,
+  COALESCE(to_jsonb(f)->>'canonical_key','<NULL>') AS canonical_key,
+  lower(regexp_replace(COALESCE(to_jsonb(f)->>'spec_value',''), '[^a-z0-9]+', '', 'g')) AS normalized_value,
+  lower(COALESCE(to_jsonb(f)->>'unit','')) AS normalized_unit,
+  COALESCE(to_jsonb(f)->>'measurement_standard','') AS measurement_scope,
+  COALESCE(to_jsonb(f)->>'rated_rpm','') AS rated_rpm,
+  count(*) AS duplicate_count,
+  array_agg(to_jsonb(f)->>'id' ORDER BY to_jsonb(f)->>'id') AS finding_ids,
+  array_agg(COALESCE(to_jsonb(f)->>'spec_name','') || ' = ' || COALESCE(to_jsonb(f)->>'spec_value','')) AS labels_and_values
+FROM public.ai_research_findings f
+GROUP BY 1,2,3,4,5,6,7
+HAVING count(*) > 1
+ORDER BY duplicate_count DESC, canonical_key
+LIMIT 2000;
+
+-- 17. Current tractor_specs ownership, provenance and duplicate/conflict indicators.
+SELECT
+  COALESCE(to_jsonb(s)->>'managed_by_ai','<NULL>') AS managed_by_ai,
+  COALESCE(to_jsonb(s)->>'canonical_key','<NULL>') AS canonical_key,
+  count(*) AS spec_rows,
+  count(*) FILTER (WHERE NULLIF(to_jsonb(s)->>'source_id','') IS NULL) AS missing_source_id,
+  count(*) FILTER (WHERE NULLIF(to_jsonb(s)->>'source_document_id','') IS NULL) AS missing_source_document_id,
+  count(*) FILTER (WHERE NULLIF(to_jsonb(s)->>'evidence_text','') IS NULL) AS missing_evidence,
+  count(*) FILTER (WHERE NULLIF(to_jsonb(s)->>'verified_at','') IS NULL) AS missing_verified_at,
+  count(*) FILTER (WHERE NULLIF(to_jsonb(s)->>'last_verified_at','') IS NULL) AS missing_last_verified_at
+FROM public.tractor_specs s
+GROUP BY 1,2
+ORDER BY 1,2;
+
+SELECT
+  to_jsonb(t)->>'model_name' AS model_name,
+  to_jsonb(s)->>'tractor_id' AS tractor_id,
+  to_jsonb(s)->>'canonical_key' AS canonical_key,
+  to_jsonb(s)->>'unit' AS unit,
+  to_jsonb(s)->>'measurement_standard' AS measurement_scope,
+  to_jsonb(s)->>'rated_rpm' AS rated_rpm,
+  count(*) AS rows_in_same_scope,
+  array_agg(to_jsonb(s)->>'spec_value' ORDER BY to_jsonb(s)->>'spec_value') AS values_in_scope,
+  array_agg(to_jsonb(s)->>'id' ORDER BY to_jsonb(s)->>'id') AS spec_ids,
+  array_agg(COALESCE(to_jsonb(s)->>'managed_by_ai','<NULL>') ORDER BY to_jsonb(s)->>'id') AS ownership_flags
+FROM public.tractor_specs s
+LEFT JOIN public.tractors t ON t.id::text = to_jsonb(s)->>'tractor_id'
+WHERE NULLIF(to_jsonb(s)->>'canonical_key','') IS NOT NULL
+GROUP BY 1,2,3,4,5,6
+HAVING count(*) > 1
+ORDER BY rows_in_same_scope DESC, model_name, canonical_key
+LIMIT 2000;
+
+-- 17b. Foreign-key-like lineage checks for live specs and findings.
+--      Human-managed specs may legitimately lack AI research documents; the owner
+--      flag is retained so missing lineage can be interpreted rather than deleted.
+SELECT
+  to_jsonb(t)->>'model_name' AS model_name,
+  to_jsonb(s)->>'id' AS spec_id,
+  to_jsonb(s)->>'spec_name' AS spec_name,
+  to_jsonb(s)->>'spec_value' AS spec_value,
+  to_jsonb(s)->>'managed_by_ai' AS managed_by_ai,
+  to_jsonb(s)->>'source_id' AS source_id,
+  to_jsonb(s)->>'source_document_id' AS source_document_id,
+  CASE
+    WHEN tr.id IS NULL THEN 'ORPHAN_TRACTOR_ID'
+    WHEN NULLIF(to_jsonb(s)->>'managed_by_ai','') = 'true'
+         AND NULLIF(to_jsonb(s)->>'source_id','') IS NULL THEN 'AI_SPEC_MISSING_SOURCE_ID'
+    WHEN NULLIF(to_jsonb(s)->>'source_id','') IS NOT NULL AND ds.id IS NULL THEN 'ORPHAN_SOURCE_ID'
+    WHEN NULLIF(to_jsonb(s)->>'source_document_id','') IS NOT NULL AND d.id IS NULL THEN 'ORPHAN_SOURCE_DOCUMENT_ID'
+    WHEN NULLIF(to_jsonb(s)->>'managed_by_ai','') = 'true'
+         AND NULLIF(to_jsonb(s)->>'source_document_id','') IS NULL THEN 'AI_SPEC_MISSING_SOURCE_DOCUMENT'
+    ELSE 'REVIEW'
+  END AS issue
+FROM public.tractor_specs s
+LEFT JOIN public.tractors tr ON tr.id::text = to_jsonb(s)->>'tractor_id'
+LEFT JOIN public.data_sources ds ON ds.id::text = to_jsonb(s)->>'source_id'
+LEFT JOIN public.ai_research_documents d ON d.id::text = to_jsonb(s)->>'source_document_id'
+LEFT JOIN public.tractors t ON t.id = tr.id
+WHERE tr.id IS NULL
+   OR (NULLIF(to_jsonb(s)->>'managed_by_ai','') = 'true'
+       AND NULLIF(to_jsonb(s)->>'source_id','') IS NULL)
+   OR (NULLIF(to_jsonb(s)->>'source_id','') IS NOT NULL AND ds.id IS NULL)
+   OR (NULLIF(to_jsonb(s)->>'source_document_id','') IS NOT NULL AND d.id IS NULL)
+   OR (NULLIF(to_jsonb(s)->>'managed_by_ai','') = 'true'
+       AND NULLIF(to_jsonb(s)->>'source_document_id','') IS NULL)
+ORDER BY model_name, spec_name
+LIMIT 2000;
+
+SELECT
+  to_jsonb(f)->>'id' AS finding_id,
+  to_jsonb(f)->>'run_id' AS run_id,
+  to_jsonb(f)->>'tractor_id' AS tractor_id,
+  to_jsonb(f)->>'inserted_spec_id' AS inserted_spec_id,
+  to_jsonb(f)->>'review_status' AS review_status,
+  CASE
+    WHEN r.id IS NULL THEN 'ORPHAN_RUN_ID'
+    WHEN tr.id IS NULL THEN 'ORPHAN_TRACTOR_ID'
+    WHEN NULLIF(to_jsonb(f)->>'inserted_spec_id','') IS NOT NULL AND s.id IS NULL THEN 'ORPHAN_INSERTED_SPEC_ID'
+    ELSE 'REVIEW'
+  END AS issue
+FROM public.ai_research_findings f
+LEFT JOIN public.ai_research_runs r ON r.id::text = to_jsonb(f)->>'run_id'
+LEFT JOIN public.tractors tr ON tr.id::text = to_jsonb(f)->>'tractor_id'
+LEFT JOIN public.tractor_specs s ON s.id::text = to_jsonb(f)->>'inserted_spec_id'
+WHERE r.id IS NULL
+   OR tr.id IS NULL
+   OR (NULLIF(to_jsonb(f)->>'inserted_spec_id','') IS NOT NULL AND s.id IS NULL)
+ORDER BY to_jsonb(f)->>'proposed_model_name', to_jsonb(f)->>'spec_name'
+LIMIT 2000;
+
+-- 18. Source-document provenance and source-family duplication signals.
+SELECT
+  COALESCE(to_jsonb(d)->>'source_type','<NULL>') AS source_type,
+  COALESCE(to_jsonb(d)->>'model_specific','<NULL>') AS model_specific,
+  COALESCE(to_jsonb(d)->>'is_preferred_technical_source','<NULL>') AS preferred_technical_source,
+  count(*) AS document_count,
+  count(DISTINCT to_jsonb(d)->>'source_url') AS distinct_urls,
+  count(*) FILTER (WHERE NULLIF(to_jsonb(d)->>'content_hash','') IS NULL) AS missing_content_hash,
+  count(*) FILTER (WHERE NULLIF(to_jsonb(d)->>'source_priority','') IS NULL) AS missing_source_priority,
+  count(*) FILTER (WHERE NULLIF(to_jsonb(d)->>'http_status','') IS NULL) AS missing_http_status,
+  count(*) FILTER (WHERE NULLIF(to_jsonb(d)->>'final_url','') IS NULL) AS missing_final_url,
+  count(*) FILTER (WHERE NULLIF(to_jsonb(d)->>'source_relevance_score','') IS NULL) AS missing_relevance_score
+FROM public.ai_research_documents d
+GROUP BY 1,2,3
+ORDER BY 1,2,3;
+
+SELECT
+  to_jsonb(d)->>'run_id' AS run_id,
+  to_jsonb(d)->>'source_url' AS source_url,
+  count(*) AS repeated_document_rows,
+  array_agg(to_jsonb(d)->>'id' ORDER BY to_jsonb(d)->>'id') AS document_ids,
+  array_agg(to_jsonb(d)->>'content_hash' ORDER BY to_jsonb(d)->>'id') AS content_hashes,
+  array_agg(to_jsonb(d)->>'source_priority' ORDER BY to_jsonb(d)->>'id') AS source_priorities
+FROM public.ai_research_documents d
+GROUP BY 1,2
+HAVING count(*) > 1
+ORDER BY repeated_document_rows DESC
+LIMIT 1000;
+
+-- 19. Data-source registry: URL and publisher diversity. Same-host URL copies
+--     must not be counted as independent evidence by an AI consensus engine.
+SELECT
+  COALESCE(to_jsonb(ds)->>'publisher','<NULL>') AS publisher,
+  COALESCE(to_jsonb(ds)->>'source_type','<NULL>') AS source_type,
+  COALESCE(to_jsonb(ds)->>'source_priority','<NULL>') AS source_priority,
+  count(*) AS source_rows,
+  count(DISTINCT to_jsonb(ds)->>'source_url') AS distinct_urls
+FROM public.data_sources ds
+GROUP BY 1,2,3
+ORDER BY source_rows DESC, publisher
+LIMIT 2000;
+
+-- 20. Default privileges for public schema objects (future tables/functions may
+--     be exposed differently from current objects).
+SELECT
+  pg_get_userbyid(d.defaclrole) AS grantor_role,
+  COALESCE(n.nspname, '<GLOBAL>') AS schema_name,
+  d.defaclobjtype AS object_type_code,
+  d.defaclacl AS default_acl
+FROM pg_default_acl d
+LEFT JOIN pg_namespace n ON n.oid = d.defaclnamespace
+WHERE d.defaclnamespace = 0
+   OR n.nspname = 'public'
+ORDER BY schema_name, object_type_code;
+
+COMMIT;
+
+-- End v21.44 read-only audit. No remediation or approval is executed here.
+
+      THEN (to_jsonb(f)->>'confidence')::numeric
+      ELSE NULL END) >= 0.985
+  ) AS at_or_above_0985,
+  count(*) FILTER (
+    WHERE (CASE
+      WHEN COALESCE(to_jsonb(f)->>'confidence','') ~ '^-?[0-9]+([.][0-9]+)?
+SELECT
+  to_jsonb(f)->>'id' AS finding_id,
+  to_jsonb(f)->>'run_id' AS run_id,
+  to_jsonb(f)->>'tractor_id' AS tractor_id,
+  to_jsonb(f)->>'proposed_model_name' AS model_name,
+  to_jsonb(f)->>'spec_name' AS spec_name,
+  to_jsonb(f)->>'spec_value' AS spec_value,
+  to_jsonb(f)->>'unit' AS unit,
+  to_jsonb(f)->>'source_url' AS finding_source_url,
+  to_jsonb(d)->>'source_url' AS document_source_url,
+  to_jsonb(d)->>'source_type' AS source_type,
+  to_jsonb(f)->>'page_number' AS page_number,
+  to_jsonb(f)->>'evidence_text' AS evidence_text,
+  to_jsonb(f)->>'review_status' AS review_status,
+  CASE
+    WHEN NULLIF(to_jsonb(f)->>'document_id','') IS NULL THEN 'MISSING_DOCUMENT_ID'
+    WHEN d.id IS NULL THEN 'ORPHAN_DOCUMENT_ID'
+    WHEN NULLIF(to_jsonb(f)->>'source_url','') IS NULL THEN 'MISSING_FINDING_SOURCE_URL'
+    WHEN to_jsonb(f)->>'source_url' IS DISTINCT FROM to_jsonb(d)->>'source_url' THEN 'SOURCE_URL_MISMATCH'
+    WHEN lower(COALESCE(to_jsonb(d)->>'source_type','')) LIKE '%pdf%'
+         AND NULLIF(to_jsonb(f)->>'page_number','') IS NULL THEN 'PDF_PAGE_MISSING'
+    WHEN NULLIF(to_jsonb(f)->>'evidence_text','') IS NULL THEN 'EVIDENCE_MISSING'
+    ELSE 'REVIEW'
+  END AS issue
+FROM public.ai_research_findings f
+LEFT JOIN public.ai_research_documents d
+  ON d.id::text = to_jsonb(f)->>'document_id'
+WHERE NULLIF(to_jsonb(f)->>'document_id','') IS NULL
+   OR d.id IS NULL
+   OR NULLIF(to_jsonb(f)->>'source_url','') IS NULL
+   OR (to_jsonb(f)->>'source_url') IS DISTINCT FROM (to_jsonb(d)->>'source_url')
+   OR (lower(COALESCE(to_jsonb(d)->>'source_type','')) LIKE '%pdf%'
+       AND NULLIF(to_jsonb(f)->>'page_number','') IS NULL)
+   OR NULLIF(to_jsonb(f)->>'evidence_text','') IS NULL
+ORDER BY to_jsonb(f)->>'proposed_model_name', to_jsonb(f)->>'spec_name'
+LIMIT 2000;
+
+-- 16. Finding fingerprint duplicates within the same research run.
+--     A duplicate here is a candidate for manual deduplication, not an instruction
+--     to delete: some specs legitimately repeat by transmission/tyre/package context.
+SELECT
+  to_jsonb(f)->>'run_id' AS run_id,
+  to_jsonb(f)->>'tractor_id' AS tractor_id,
+  COALESCE(to_jsonb(f)->>'canonical_key','<NULL>') AS canonical_key,
+  lower(regexp_replace(COALESCE(to_jsonb(f)->>'spec_value',''), '[^a-z0-9]+', '', 'g')) AS normalized_value,
+  lower(COALESCE(to_jsonb(f)->>'unit','')) AS normalized_unit,
+  COALESCE(to_jsonb(f)->>'measurement_standard','') AS measurement_scope,
+  COALESCE(to_jsonb(f)->>'rated_rpm','') AS rated_rpm,
+  count(*) AS duplicate_count,
+  array_agg(to_jsonb(f)->>'id' ORDER BY to_jsonb(f)->>'id') AS finding_ids,
+  array_agg(COALESCE(to_jsonb(f)->>'spec_name','') || ' = ' || COALESCE(to_jsonb(f)->>'spec_value','')) AS labels_and_values
+FROM public.ai_research_findings f
+GROUP BY 1,2,3,4,5,6,7
+HAVING count(*) > 1
+ORDER BY duplicate_count DESC, canonical_key
+LIMIT 2000;
+
+-- 17. Current tractor_specs ownership, provenance and duplicate/conflict indicators.
+SELECT
+  COALESCE(to_jsonb(s)->>'managed_by_ai','<NULL>') AS managed_by_ai,
+  COALESCE(to_jsonb(s)->>'canonical_key','<NULL>') AS canonical_key,
+  count(*) AS spec_rows,
+  count(*) FILTER (WHERE NULLIF(to_jsonb(s)->>'source_id','') IS NULL) AS missing_source_id,
+  count(*) FILTER (WHERE NULLIF(to_jsonb(s)->>'source_document_id','') IS NULL) AS missing_source_document_id,
+  count(*) FILTER (WHERE NULLIF(to_jsonb(s)->>'evidence_text','') IS NULL) AS missing_evidence,
+  count(*) FILTER (WHERE NULLIF(to_jsonb(s)->>'verified_at','') IS NULL) AS missing_verified_at,
+  count(*) FILTER (WHERE NULLIF(to_jsonb(s)->>'last_verified_at','') IS NULL) AS missing_last_verified_at
+FROM public.tractor_specs s
+GROUP BY 1,2
+ORDER BY 1,2;
+
+SELECT
+  to_jsonb(t)->>'model_name' AS model_name,
+  to_jsonb(s)->>'tractor_id' AS tractor_id,
+  to_jsonb(s)->>'canonical_key' AS canonical_key,
+  to_jsonb(s)->>'unit' AS unit,
+  to_jsonb(s)->>'measurement_standard' AS measurement_scope,
+  to_jsonb(s)->>'rated_rpm' AS rated_rpm,
+  count(*) AS rows_in_same_scope,
+  array_agg(to_jsonb(s)->>'spec_value' ORDER BY to_jsonb(s)->>'spec_value') AS values_in_scope,
+  array_agg(to_jsonb(s)->>'id' ORDER BY to_jsonb(s)->>'id') AS spec_ids,
+  array_agg(COALESCE(to_jsonb(s)->>'managed_by_ai','<NULL>') ORDER BY to_jsonb(s)->>'id') AS ownership_flags
+FROM public.tractor_specs s
+LEFT JOIN public.tractors t ON t.id::text = to_jsonb(s)->>'tractor_id'
+WHERE NULLIF(to_jsonb(s)->>'canonical_key','') IS NOT NULL
+GROUP BY 1,2,3,4,5,6
+HAVING count(*) > 1
+ORDER BY rows_in_same_scope DESC, model_name, canonical_key
+LIMIT 2000;
+
+-- 17b. Foreign-key-like lineage checks for live specs and findings.
+--      Human-managed specs may legitimately lack AI research documents; the owner
+--      flag is retained so missing lineage can be interpreted rather than deleted.
+SELECT
+  to_jsonb(t)->>'model_name' AS model_name,
+  to_jsonb(s)->>'id' AS spec_id,
+  to_jsonb(s)->>'spec_name' AS spec_name,
+  to_jsonb(s)->>'spec_value' AS spec_value,
+  to_jsonb(s)->>'managed_by_ai' AS managed_by_ai,
+  to_jsonb(s)->>'source_id' AS source_id,
+  to_jsonb(s)->>'source_document_id' AS source_document_id,
+  CASE
+    WHEN tr.id IS NULL THEN 'ORPHAN_TRACTOR_ID'
+    WHEN NULLIF(to_jsonb(s)->>'managed_by_ai','') = 'true'
+         AND NULLIF(to_jsonb(s)->>'source_id','') IS NULL THEN 'AI_SPEC_MISSING_SOURCE_ID'
+    WHEN NULLIF(to_jsonb(s)->>'source_id','') IS NOT NULL AND ds.id IS NULL THEN 'ORPHAN_SOURCE_ID'
+    WHEN NULLIF(to_jsonb(s)->>'source_document_id','') IS NOT NULL AND d.id IS NULL THEN 'ORPHAN_SOURCE_DOCUMENT_ID'
+    WHEN NULLIF(to_jsonb(s)->>'managed_by_ai','') = 'true'
+         AND NULLIF(to_jsonb(s)->>'source_document_id','') IS NULL THEN 'AI_SPEC_MISSING_SOURCE_DOCUMENT'
+    ELSE 'REVIEW'
+  END AS issue
+FROM public.tractor_specs s
+LEFT JOIN public.tractors tr ON tr.id::text = to_jsonb(s)->>'tractor_id'
+LEFT JOIN public.data_sources ds ON ds.id::text = to_jsonb(s)->>'source_id'
+LEFT JOIN public.ai_research_documents d ON d.id::text = to_jsonb(s)->>'source_document_id'
+LEFT JOIN public.tractors t ON t.id = tr.id
+WHERE tr.id IS NULL
+   OR (NULLIF(to_jsonb(s)->>'managed_by_ai','') = 'true'
+       AND NULLIF(to_jsonb(s)->>'source_id','') IS NULL)
+   OR (NULLIF(to_jsonb(s)->>'source_id','') IS NOT NULL AND ds.id IS NULL)
+   OR (NULLIF(to_jsonb(s)->>'source_document_id','') IS NOT NULL AND d.id IS NULL)
+   OR (NULLIF(to_jsonb(s)->>'managed_by_ai','') = 'true'
+       AND NULLIF(to_jsonb(s)->>'source_document_id','') IS NULL)
+ORDER BY model_name, spec_name
+LIMIT 2000;
+
+SELECT
+  to_jsonb(f)->>'id' AS finding_id,
+  to_jsonb(f)->>'run_id' AS run_id,
+  to_jsonb(f)->>'tractor_id' AS tractor_id,
+  to_jsonb(f)->>'inserted_spec_id' AS inserted_spec_id,
+  to_jsonb(f)->>'review_status' AS review_status,
+  CASE
+    WHEN r.id IS NULL THEN 'ORPHAN_RUN_ID'
+    WHEN tr.id IS NULL THEN 'ORPHAN_TRACTOR_ID'
+    WHEN NULLIF(to_jsonb(f)->>'inserted_spec_id','') IS NOT NULL AND s.id IS NULL THEN 'ORPHAN_INSERTED_SPEC_ID'
+    ELSE 'REVIEW'
+  END AS issue
+FROM public.ai_research_findings f
+LEFT JOIN public.ai_research_runs r ON r.id::text = to_jsonb(f)->>'run_id'
+LEFT JOIN public.tractors tr ON tr.id::text = to_jsonb(f)->>'tractor_id'
+LEFT JOIN public.tractor_specs s ON s.id::text = to_jsonb(f)->>'inserted_spec_id'
+WHERE r.id IS NULL
+   OR tr.id IS NULL
+   OR (NULLIF(to_jsonb(f)->>'inserted_spec_id','') IS NOT NULL AND s.id IS NULL)
+ORDER BY to_jsonb(f)->>'proposed_model_name', to_jsonb(f)->>'spec_name'
+LIMIT 2000;
+
+-- 18. Source-document provenance and source-family duplication signals.
+SELECT
+  COALESCE(to_jsonb(d)->>'source_type','<NULL>') AS source_type,
+  COALESCE(to_jsonb(d)->>'model_specific','<NULL>') AS model_specific,
+  COALESCE(to_jsonb(d)->>'is_preferred_technical_source','<NULL>') AS preferred_technical_source,
+  count(*) AS document_count,
+  count(DISTINCT to_jsonb(d)->>'source_url') AS distinct_urls,
+  count(*) FILTER (WHERE NULLIF(to_jsonb(d)->>'content_hash','') IS NULL) AS missing_content_hash,
+  count(*) FILTER (WHERE NULLIF(to_jsonb(d)->>'source_priority','') IS NULL) AS missing_source_priority,
+  count(*) FILTER (WHERE NULLIF(to_jsonb(d)->>'http_status','') IS NULL) AS missing_http_status,
+  count(*) FILTER (WHERE NULLIF(to_jsonb(d)->>'final_url','') IS NULL) AS missing_final_url,
+  count(*) FILTER (WHERE NULLIF(to_jsonb(d)->>'source_relevance_score','') IS NULL) AS missing_relevance_score
+FROM public.ai_research_documents d
+GROUP BY 1,2,3
+ORDER BY 1,2,3;
+
+SELECT
+  to_jsonb(d)->>'run_id' AS run_id,
+  to_jsonb(d)->>'source_url' AS source_url,
+  count(*) AS repeated_document_rows,
+  array_agg(to_jsonb(d)->>'id' ORDER BY to_jsonb(d)->>'id') AS document_ids,
+  array_agg(to_jsonb(d)->>'content_hash' ORDER BY to_jsonb(d)->>'id') AS content_hashes,
+  array_agg(to_jsonb(d)->>'source_priority' ORDER BY to_jsonb(d)->>'id') AS source_priorities
+FROM public.ai_research_documents d
+GROUP BY 1,2
+HAVING count(*) > 1
+ORDER BY repeated_document_rows DESC
+LIMIT 1000;
+
+-- 19. Data-source registry: URL and publisher diversity. Same-host URL copies
+--     must not be counted as independent evidence by an AI consensus engine.
+SELECT
+  COALESCE(to_jsonb(ds)->>'publisher','<NULL>') AS publisher,
+  COALESCE(to_jsonb(ds)->>'source_type','<NULL>') AS source_type,
+  COALESCE(to_jsonb(ds)->>'source_priority','<NULL>') AS source_priority,
+  count(*) AS source_rows,
+  count(DISTINCT to_jsonb(ds)->>'source_url') AS distinct_urls
+FROM public.data_sources ds
+GROUP BY 1,2,3
+ORDER BY source_rows DESC, publisher
+LIMIT 2000;
+
+-- 20. Default privileges for public schema objects (future tables/functions may
+--     be exposed differently from current objects).
+SELECT
+  pg_get_userbyid(d.defaclrole) AS grantor_role,
+  COALESCE(n.nspname, '<GLOBAL>') AS schema_name,
+  d.defaclobjtype AS object_type_code,
+  d.defaclacl AS default_acl
+FROM pg_default_acl d
+LEFT JOIN pg_namespace n ON n.oid = d.defaclnamespace
+WHERE d.defaclnamespace = 0
+   OR n.nspname = 'public'
+ORDER BY schema_name, object_type_code;
+
+COMMIT;
+
+-- End v21.44 read-only audit. No remediation or approval is executed here.
+
+      THEN (to_jsonb(f)->>'confidence')::numeric
+      ELSE NULL END) < 0.85
+  ) AS below_085,
+  round(avg(CASE
+    WHEN COALESCE(to_jsonb(f)->>'confidence','') ~ '^-?[0-9]+([.][0-9]+)?
+SELECT
+  to_jsonb(f)->>'id' AS finding_id,
+  to_jsonb(f)->>'run_id' AS run_id,
+  to_jsonb(f)->>'tractor_id' AS tractor_id,
+  to_jsonb(f)->>'proposed_model_name' AS model_name,
+  to_jsonb(f)->>'spec_name' AS spec_name,
+  to_jsonb(f)->>'spec_value' AS spec_value,
+  to_jsonb(f)->>'unit' AS unit,
+  to_jsonb(f)->>'source_url' AS finding_source_url,
+  to_jsonb(d)->>'source_url' AS document_source_url,
+  to_jsonb(d)->>'source_type' AS source_type,
+  to_jsonb(f)->>'page_number' AS page_number,
+  to_jsonb(f)->>'evidence_text' AS evidence_text,
+  to_jsonb(f)->>'review_status' AS review_status,
+  CASE
+    WHEN NULLIF(to_jsonb(f)->>'document_id','') IS NULL THEN 'MISSING_DOCUMENT_ID'
+    WHEN d.id IS NULL THEN 'ORPHAN_DOCUMENT_ID'
+    WHEN NULLIF(to_jsonb(f)->>'source_url','') IS NULL THEN 'MISSING_FINDING_SOURCE_URL'
+    WHEN to_jsonb(f)->>'source_url' IS DISTINCT FROM to_jsonb(d)->>'source_url' THEN 'SOURCE_URL_MISMATCH'
+    WHEN lower(COALESCE(to_jsonb(d)->>'source_type','')) LIKE '%pdf%'
+         AND NULLIF(to_jsonb(f)->>'page_number','') IS NULL THEN 'PDF_PAGE_MISSING'
+    WHEN NULLIF(to_jsonb(f)->>'evidence_text','') IS NULL THEN 'EVIDENCE_MISSING'
+    ELSE 'REVIEW'
+  END AS issue
+FROM public.ai_research_findings f
+LEFT JOIN public.ai_research_documents d
+  ON d.id::text = to_jsonb(f)->>'document_id'
+WHERE NULLIF(to_jsonb(f)->>'document_id','') IS NULL
+   OR d.id IS NULL
+   OR NULLIF(to_jsonb(f)->>'source_url','') IS NULL
+   OR (to_jsonb(f)->>'source_url') IS DISTINCT FROM (to_jsonb(d)->>'source_url')
+   OR (lower(COALESCE(to_jsonb(d)->>'source_type','')) LIKE '%pdf%'
+       AND NULLIF(to_jsonb(f)->>'page_number','') IS NULL)
+   OR NULLIF(to_jsonb(f)->>'evidence_text','') IS NULL
+ORDER BY to_jsonb(f)->>'proposed_model_name', to_jsonb(f)->>'spec_name'
+LIMIT 2000;
+
+-- 16. Finding fingerprint duplicates within the same research run.
+--     A duplicate here is a candidate for manual deduplication, not an instruction
+--     to delete: some specs legitimately repeat by transmission/tyre/package context.
+SELECT
+  to_jsonb(f)->>'run_id' AS run_id,
+  to_jsonb(f)->>'tractor_id' AS tractor_id,
+  COALESCE(to_jsonb(f)->>'canonical_key','<NULL>') AS canonical_key,
+  lower(regexp_replace(COALESCE(to_jsonb(f)->>'spec_value',''), '[^a-z0-9]+', '', 'g')) AS normalized_value,
+  lower(COALESCE(to_jsonb(f)->>'unit','')) AS normalized_unit,
+  COALESCE(to_jsonb(f)->>'measurement_standard','') AS measurement_scope,
+  COALESCE(to_jsonb(f)->>'rated_rpm','') AS rated_rpm,
+  count(*) AS duplicate_count,
+  array_agg(to_jsonb(f)->>'id' ORDER BY to_jsonb(f)->>'id') AS finding_ids,
+  array_agg(COALESCE(to_jsonb(f)->>'spec_name','') || ' = ' || COALESCE(to_jsonb(f)->>'spec_value','')) AS labels_and_values
+FROM public.ai_research_findings f
+GROUP BY 1,2,3,4,5,6,7
+HAVING count(*) > 1
+ORDER BY duplicate_count DESC, canonical_key
+LIMIT 2000;
+
+-- 17. Current tractor_specs ownership, provenance and duplicate/conflict indicators.
+SELECT
+  COALESCE(to_jsonb(s)->>'managed_by_ai','<NULL>') AS managed_by_ai,
+  COALESCE(to_jsonb(s)->>'canonical_key','<NULL>') AS canonical_key,
+  count(*) AS spec_rows,
+  count(*) FILTER (WHERE NULLIF(to_jsonb(s)->>'source_id','') IS NULL) AS missing_source_id,
+  count(*) FILTER (WHERE NULLIF(to_jsonb(s)->>'source_document_id','') IS NULL) AS missing_source_document_id,
+  count(*) FILTER (WHERE NULLIF(to_jsonb(s)->>'evidence_text','') IS NULL) AS missing_evidence,
+  count(*) FILTER (WHERE NULLIF(to_jsonb(s)->>'verified_at','') IS NULL) AS missing_verified_at,
+  count(*) FILTER (WHERE NULLIF(to_jsonb(s)->>'last_verified_at','') IS NULL) AS missing_last_verified_at
+FROM public.tractor_specs s
+GROUP BY 1,2
+ORDER BY 1,2;
+
+SELECT
+  to_jsonb(t)->>'model_name' AS model_name,
+  to_jsonb(s)->>'tractor_id' AS tractor_id,
+  to_jsonb(s)->>'canonical_key' AS canonical_key,
+  to_jsonb(s)->>'unit' AS unit,
+  to_jsonb(s)->>'measurement_standard' AS measurement_scope,
+  to_jsonb(s)->>'rated_rpm' AS rated_rpm,
+  count(*) AS rows_in_same_scope,
+  array_agg(to_jsonb(s)->>'spec_value' ORDER BY to_jsonb(s)->>'spec_value') AS values_in_scope,
+  array_agg(to_jsonb(s)->>'id' ORDER BY to_jsonb(s)->>'id') AS spec_ids,
+  array_agg(COALESCE(to_jsonb(s)->>'managed_by_ai','<NULL>') ORDER BY to_jsonb(s)->>'id') AS ownership_flags
+FROM public.tractor_specs s
+LEFT JOIN public.tractors t ON t.id::text = to_jsonb(s)->>'tractor_id'
+WHERE NULLIF(to_jsonb(s)->>'canonical_key','') IS NOT NULL
+GROUP BY 1,2,3,4,5,6
+HAVING count(*) > 1
+ORDER BY rows_in_same_scope DESC, model_name, canonical_key
+LIMIT 2000;
+
+-- 17b. Foreign-key-like lineage checks for live specs and findings.
+--      Human-managed specs may legitimately lack AI research documents; the owner
+--      flag is retained so missing lineage can be interpreted rather than deleted.
+SELECT
+  to_jsonb(t)->>'model_name' AS model_name,
+  to_jsonb(s)->>'id' AS spec_id,
+  to_jsonb(s)->>'spec_name' AS spec_name,
+  to_jsonb(s)->>'spec_value' AS spec_value,
+  to_jsonb(s)->>'managed_by_ai' AS managed_by_ai,
+  to_jsonb(s)->>'source_id' AS source_id,
+  to_jsonb(s)->>'source_document_id' AS source_document_id,
+  CASE
+    WHEN tr.id IS NULL THEN 'ORPHAN_TRACTOR_ID'
+    WHEN NULLIF(to_jsonb(s)->>'managed_by_ai','') = 'true'
+         AND NULLIF(to_jsonb(s)->>'source_id','') IS NULL THEN 'AI_SPEC_MISSING_SOURCE_ID'
+    WHEN NULLIF(to_jsonb(s)->>'source_id','') IS NOT NULL AND ds.id IS NULL THEN 'ORPHAN_SOURCE_ID'
+    WHEN NULLIF(to_jsonb(s)->>'source_document_id','') IS NOT NULL AND d.id IS NULL THEN 'ORPHAN_SOURCE_DOCUMENT_ID'
+    WHEN NULLIF(to_jsonb(s)->>'managed_by_ai','') = 'true'
+         AND NULLIF(to_jsonb(s)->>'source_document_id','') IS NULL THEN 'AI_SPEC_MISSING_SOURCE_DOCUMENT'
+    ELSE 'REVIEW'
+  END AS issue
+FROM public.tractor_specs s
+LEFT JOIN public.tractors tr ON tr.id::text = to_jsonb(s)->>'tractor_id'
+LEFT JOIN public.data_sources ds ON ds.id::text = to_jsonb(s)->>'source_id'
+LEFT JOIN public.ai_research_documents d ON d.id::text = to_jsonb(s)->>'source_document_id'
+LEFT JOIN public.tractors t ON t.id = tr.id
+WHERE tr.id IS NULL
+   OR (NULLIF(to_jsonb(s)->>'managed_by_ai','') = 'true'
+       AND NULLIF(to_jsonb(s)->>'source_id','') IS NULL)
+   OR (NULLIF(to_jsonb(s)->>'source_id','') IS NOT NULL AND ds.id IS NULL)
+   OR (NULLIF(to_jsonb(s)->>'source_document_id','') IS NOT NULL AND d.id IS NULL)
+   OR (NULLIF(to_jsonb(s)->>'managed_by_ai','') = 'true'
+       AND NULLIF(to_jsonb(s)->>'source_document_id','') IS NULL)
+ORDER BY model_name, spec_name
+LIMIT 2000;
+
+SELECT
+  to_jsonb(f)->>'id' AS finding_id,
+  to_jsonb(f)->>'run_id' AS run_id,
+  to_jsonb(f)->>'tractor_id' AS tractor_id,
+  to_jsonb(f)->>'inserted_spec_id' AS inserted_spec_id,
+  to_jsonb(f)->>'review_status' AS review_status,
+  CASE
+    WHEN r.id IS NULL THEN 'ORPHAN_RUN_ID'
+    WHEN tr.id IS NULL THEN 'ORPHAN_TRACTOR_ID'
+    WHEN NULLIF(to_jsonb(f)->>'inserted_spec_id','') IS NOT NULL AND s.id IS NULL THEN 'ORPHAN_INSERTED_SPEC_ID'
+    ELSE 'REVIEW'
+  END AS issue
+FROM public.ai_research_findings f
+LEFT JOIN public.ai_research_runs r ON r.id::text = to_jsonb(f)->>'run_id'
+LEFT JOIN public.tractors tr ON tr.id::text = to_jsonb(f)->>'tractor_id'
+LEFT JOIN public.tractor_specs s ON s.id::text = to_jsonb(f)->>'inserted_spec_id'
+WHERE r.id IS NULL
+   OR tr.id IS NULL
+   OR (NULLIF(to_jsonb(f)->>'inserted_spec_id','') IS NOT NULL AND s.id IS NULL)
+ORDER BY to_jsonb(f)->>'proposed_model_name', to_jsonb(f)->>'spec_name'
+LIMIT 2000;
+
+-- 18. Source-document provenance and source-family duplication signals.
+SELECT
+  COALESCE(to_jsonb(d)->>'source_type','<NULL>') AS source_type,
+  COALESCE(to_jsonb(d)->>'model_specific','<NULL>') AS model_specific,
+  COALESCE(to_jsonb(d)->>'is_preferred_technical_source','<NULL>') AS preferred_technical_source,
+  count(*) AS document_count,
+  count(DISTINCT to_jsonb(d)->>'source_url') AS distinct_urls,
+  count(*) FILTER (WHERE NULLIF(to_jsonb(d)->>'content_hash','') IS NULL) AS missing_content_hash,
+  count(*) FILTER (WHERE NULLIF(to_jsonb(d)->>'source_priority','') IS NULL) AS missing_source_priority,
+  count(*) FILTER (WHERE NULLIF(to_jsonb(d)->>'http_status','') IS NULL) AS missing_http_status,
+  count(*) FILTER (WHERE NULLIF(to_jsonb(d)->>'final_url','') IS NULL) AS missing_final_url,
+  count(*) FILTER (WHERE NULLIF(to_jsonb(d)->>'source_relevance_score','') IS NULL) AS missing_relevance_score
+FROM public.ai_research_documents d
+GROUP BY 1,2,3
+ORDER BY 1,2,3;
+
+SELECT
+  to_jsonb(d)->>'run_id' AS run_id,
+  to_jsonb(d)->>'source_url' AS source_url,
+  count(*) AS repeated_document_rows,
+  array_agg(to_jsonb(d)->>'id' ORDER BY to_jsonb(d)->>'id') AS document_ids,
+  array_agg(to_jsonb(d)->>'content_hash' ORDER BY to_jsonb(d)->>'id') AS content_hashes,
+  array_agg(to_jsonb(d)->>'source_priority' ORDER BY to_jsonb(d)->>'id') AS source_priorities
+FROM public.ai_research_documents d
+GROUP BY 1,2
+HAVING count(*) > 1
+ORDER BY repeated_document_rows DESC
+LIMIT 1000;
+
+-- 19. Data-source registry: URL and publisher diversity. Same-host URL copies
+--     must not be counted as independent evidence by an AI consensus engine.
+SELECT
+  COALESCE(to_jsonb(ds)->>'publisher','<NULL>') AS publisher,
+  COALESCE(to_jsonb(ds)->>'source_type','<NULL>') AS source_type,
+  COALESCE(to_jsonb(ds)->>'source_priority','<NULL>') AS source_priority,
+  count(*) AS source_rows,
+  count(DISTINCT to_jsonb(ds)->>'source_url') AS distinct_urls
+FROM public.data_sources ds
+GROUP BY 1,2,3
+ORDER BY source_rows DESC, publisher
+LIMIT 2000;
+
+-- 20. Default privileges for public schema objects (future tables/functions may
+--     be exposed differently from current objects).
+SELECT
+  pg_get_userbyid(d.defaclrole) AS grantor_role,
+  COALESCE(n.nspname, '<GLOBAL>') AS schema_name,
+  d.defaclobjtype AS object_type_code,
+  d.defaclacl AS default_acl
+FROM pg_default_acl d
+LEFT JOIN pg_namespace n ON n.oid = d.defaclnamespace
+WHERE d.defaclnamespace = 0
+   OR n.nspname = 'public'
+ORDER BY schema_name, object_type_code;
+
+COMMIT;
+
+-- End v21.44 read-only audit. No remediation or approval is executed here.
+
+    THEN (to_jsonb(f)->>'confidence')::numeric
+    ELSE NULL END), 4) AS mean_reported_confidence
+FROM public.ai_research_findings f
+GROUP BY 1,2
+ORDER BY model_name, run_id;
 
 -- 15. Findings with source/document integrity problems or PDF page gaps.
 SELECT
