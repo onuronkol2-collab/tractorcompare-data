@@ -1,0 +1,43 @@
+name: Candidate v22.8 static validation
+
+on:
+  pull_request:
+    branches:
+      - candidate/ai-extraction-benchmark-2026-11-15
+    paths:
+      - "indexim-v22.8.ts"
+      - "admin/ai-review.html"
+      - "supabase/migrations/**"
+      - ".github/workflows/v22.8-candidate-check.yml"
+  push:
+    branches:
+      - candidate/v22.8-ai-auto-review-panel-2026-11-15
+
+permissions:
+  contents: read
+
+jobs:
+  typecheck:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out candidate
+        uses: actions/checkout@v4
+      - name: Set up Deno
+        uses: denoland/setup-deno@v2
+        with:
+          deno-version: v2.x
+      - name: Type-check Edge Function
+        run: deno check indexim-v22.8.ts
+      - name: Parse dashboard JavaScript
+        run: |
+          node <<'NODE'
+          const fs = require("node:fs");
+          const vm = require("node:vm");
+          const html = fs.readFileSync("admin/ai-review.html", "utf8");
+          const scripts = [...html.matchAll(/<script(?:\s[^>]*)?>([\s\S]*?)<\/script>/gi)]
+            .map((match) => match[1])
+            .filter((script) => script.trim());
+          if (!scripts.length) throw new Error("No dashboard script found");
+          for (const script of scripts) new vm.Script(script);
+          console.log("Dashboard JavaScript syntax is valid");
+          NODE
