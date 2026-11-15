@@ -36,14 +36,39 @@ BEGIN
 
   IF EXISTS (
     SELECT 1
-    FROM information_schema.column_privileges
-    WHERE table_schema = 'public'
-      AND table_name = 'data_sources'
-      AND grantee IN ('PUBLIC', 'anon', 'authenticated')
-      AND privilege_type = 'SELECT'
-      AND column_name IN ('id', 'publisher', 'source_url', 'source_type', 'accessed_at')
+    FROM pg_catalog.pg_class AS c
+    JOIN pg_catalog.pg_namespace AS n ON n.oid = c.relnamespace
+    WHERE n.nspname = 'public'
+      AND c.relname IN ('data_sources', 'tractor_specs', 'tractors', 'brands')
+      AND c.relrowsecurity IS NOT TRUE
   ) THEN
-    RAISE EXCEPTION 'Existing public column-level SELECT grants found on data_sources. Inspect them before applying this reversible grant.';
+    RAISE EXCEPTION 'Row level security must be enabled on data_sources, tractor_specs, tractors and brands before creating the public catalogue view.';
+  END IF;
+
+  IF has_table_privilege('anon', 'public.data_sources', 'SELECT')
+     OR has_table_privilege('authenticated', 'public.data_sources', 'SELECT')
+     OR EXISTS (
+       SELECT 1
+       FROM information_schema.table_privileges
+       WHERE table_schema = 'public'
+         AND table_name = 'data_sources'
+         AND grantee = 'PUBLIC'
+         AND privilege_type = 'SELECT'
+     ) THEN
+    RAISE EXCEPTION 'A public full-table SELECT grant exists on data_sources. Inspect and remove it before applying the restricted catalogue grant.';
+  END IF;
+
+  IF has_any_column_privilege('anon', 'public.data_sources', 'SELECT')
+     OR has_any_column_privilege('authenticated', 'public.data_sources', 'SELECT')
+     OR EXISTS (
+       SELECT 1
+       FROM information_schema.column_privileges
+       WHERE table_schema = 'public'
+         AND table_name = 'data_sources'
+         AND grantee = 'PUBLIC'
+         AND privilege_type = 'SELECT'
+     ) THEN
+    RAISE EXCEPTION 'Existing public column-level SELECT grants exist on data_sources. Inspect them before applying this reversible grant.';
   END IF;
 END
 $preflight$;
