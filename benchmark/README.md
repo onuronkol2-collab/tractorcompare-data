@@ -14,7 +14,7 @@ Prices are provider-published rates and can change. Re-check provider billing be
 
 ## Fair comparison
 
-All models receive the exact same PDF bytes (one download per PDF, same SHA-256), identical model/variant/market metadata, the same extraction prompt and field list, temperature zero where supported, and a 12,000-token output limit. Calls run sequentially.
+All models receive the exact same PDF bytes (one download per PDF, same SHA-256), identical model/variant/market metadata, the same extraction prompt and field list, provider-default sampling settings (to avoid unsupported cross-provider parameters), and a 12,000-token output limit. Calls run sequentially.
 
 Each finding must contain the value, unit, measurement scope, exact variant column, PDF page, and a verbatim evidence quote. The model must explicitly report missing or ambiguous information rather than guess.
 
