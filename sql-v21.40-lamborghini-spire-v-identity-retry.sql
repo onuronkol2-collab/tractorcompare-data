@@ -91,7 +91,7 @@ BEGIN
     SELECT COUNT(*) INTO v_count
     FROM public.tractor_research_queue q
     WHERE (
-      q.id = '8f407f35-5534-40b7-891f-ba0249fe25db'
+      q.id = '8f407f35-9112-4338-81ee-d1d9436b186d'
       AND q.tractor_id = 'f9a68e93-5534-40b7-891f-ba0249fe25db'
       AND q.last_run_id = '37450e92-79bd-4bca-8daf-c720676ab4ff'
       AND q.status IN ('retry', 'queued', 'running', 'completed')
@@ -130,7 +130,7 @@ SET
     last_error = NULL,
     completed_at = COALESCE(completed_at, now()),
     updated_at = now()
-WHERE id = '8f407f35-5534-40b7-891f-ba0249fe25db'
+WHERE id = '8f407f35-9112-4338-81ee-d1d9436b186d'
   AND tractor_id = 'f9a68e93-5534-40b7-891f-ba0249fe25db'
   AND last_run_id = '37450e92-79bd-4bca-8daf-c720676ab4ff'
   AND status IN ('retry', 'queued', 'running', 'completed');
@@ -167,7 +167,7 @@ FROM public.tractor_research_queue q
 JOIN public.tractors t ON t.id = q.tractor_id
 JOIN public.brands b ON b.id = t.brand_id
 WHERE q.id IN (
-    '8f407f35-5534-40b7-891f-ba0249fe25db',
+    '8f407f35-9112-4338-81ee-d1d9436b186d',
     'b914d47a-258c-45e3-85d3-2d8cb5b41e49'
 )
 ORDER BY t.model_name;
