@@ -111,69 +111,73 @@ reports AS (
 
   UNION ALL
 
-  SELECT
-    'TAXONOMY_SAMPLE_TRACTOR_SPEC'::text,
-    jsonb_build_object(
-      'id', s.id,
-      'tractor_id', s.tractor_id,
-      'spec_name', s.spec_name,
-      'spec_value', s.spec_value,
-      'unit', s.unit,
-      'canonical_key', s.canonical_key,
-      'comparison_class', s.comparison_class,
-      'measurement_standard', s.measurement_standard,
-      'rated_rpm', s.rated_rpm,
-      'managed_by_ai', s.managed_by_ai,
-      'source_document_id', s.source_document_id
-    )
-  FROM public.tractor_specs s
-  WHERE lower(coalesce(s.spec_name, '')) ~
-    '(max(imum)?[[:space:]_-]*power|transmission.*oil|oil.*capacity|hitch|3[[:space:]_-]?point|three[[:space:]_-]?point)'
-    OR s.canonical_key IN (
-      'engine_max_power',
-      'engine_max_power_with_boost',
-      'engine_max_power_with_ipm',
-      'engine_max_power_with_dp',
-      'transmission_oil_capacity',
-      'rear_hitch_category',
-      'three_point_linkage_category'
-    )
-  ORDER BY s.spec_name, s.created_at DESC
-  LIMIT 40
+  (
+    SELECT
+      'TAXONOMY_SAMPLE_TRACTOR_SPEC'::text AS report_section,
+      jsonb_build_object(
+        'id', s.id,
+        'tractor_id', s.tractor_id,
+        'spec_name', s.spec_name,
+        'spec_value', s.spec_value,
+        'unit', s.unit,
+        'canonical_key', s.canonical_key,
+        'comparison_class', s.comparison_class,
+        'measurement_standard', s.measurement_standard,
+        'rated_rpm', s.rated_rpm,
+        'managed_by_ai', s.managed_by_ai,
+        'source_document_id', s.source_document_id
+      ) AS details
+    FROM public.tractor_specs s
+    WHERE lower(coalesce(s.spec_name, '')) ~
+      '(max(imum)?[[:space:]_-]*power|transmission.*oil|oil.*capacity|hitch|3[[:space:]_-]?point|three[[:space:]_-]?point)'
+      OR s.canonical_key IN (
+        'engine_max_power',
+        'engine_max_power_with_boost',
+        'engine_max_power_with_ipm',
+        'engine_max_power_with_dp',
+        'transmission_oil_capacity',
+        'rear_hitch_category',
+        'three_point_linkage_category'
+      )
+    ORDER BY s.spec_name, s.created_at DESC
+    LIMIT 40
+  )
 
   UNION ALL
 
-  SELECT
-    'TAXONOMY_SAMPLE_FINDING'::text,
-    jsonb_build_object(
-      'id', f.id,
-      'run_id', f.run_id,
-      'tractor_id', f.tractor_id,
-      'spec_name', f.spec_name,
-      'spec_value', f.spec_value,
-      'unit', f.unit,
-      'canonical_key', f.canonical_key,
-      'comparison_class', f.comparison_class,
-      'measurement_standard', f.measurement_standard,
-      'rated_rpm', f.rated_rpm,
-      'review_status', f.review_status,
-      'evidence_text', left(f.evidence_text, 500),
-      'source_url', f.source_url
-    )
-  FROM public.ai_research_findings f
-  WHERE lower(coalesce(f.spec_name, '')) ~
-    '(max(imum)?[[:space:]_-]*power|transmission.*oil|oil.*capacity|hitch|3[[:space:]_-]?point|three[[:space:]_-]?point)'
-    OR f.canonical_key IN (
-      'engine_max_power',
-      'engine_max_power_with_boost',
-      'engine_max_power_with_ipm',
-      'engine_max_power_with_dp',
-      'transmission_oil_capacity',
-      'rear_hitch_category',
-      'three_point_linkage_category'
-    )
-  ORDER BY f.created_at DESC
-  LIMIT 60
+  (
+    SELECT
+      'TAXONOMY_SAMPLE_FINDING'::text AS report_section,
+      jsonb_build_object(
+        'id', f.id,
+        'run_id', f.run_id,
+        'tractor_id', f.tractor_id,
+        'spec_name', f.spec_name,
+        'spec_value', f.spec_value,
+        'unit', f.unit,
+        'canonical_key', f.canonical_key,
+        'comparison_class', f.comparison_class,
+        'measurement_standard', f.measurement_standard,
+        'rated_rpm', f.rated_rpm,
+        'review_status', f.review_status,
+        'evidence_text', left(f.evidence_text, 500),
+        'source_url', f.source_url
+      ) AS details
+    FROM public.ai_research_findings f
+    WHERE lower(coalesce(f.spec_name, '')) ~
+      '(max(imum)?[[:space:]_-]*power|transmission.*oil|oil.*capacity|hitch|3[[:space:]_-]?point|three[[:space:]_-]?point)'
+      OR f.canonical_key IN (
+        'engine_max_power',
+        'engine_max_power_with_boost',
+        'engine_max_power_with_ipm',
+        'engine_max_power_with_dp',
+        'transmission_oil_capacity',
+        'rear_hitch_category',
+        'three_point_linkage_category'
+      )
+    ORDER BY f.created_at DESC
+    LIMIT 60
+  )
 )
 SELECT report_section, details
 FROM reports
