@@ -214,6 +214,14 @@ BEGIN
     RAISE EXCEPTION 'v21.42 rolled back: completed Spire S research run was not found for metadata synchronization.';
   END IF;
 
+  IF v_run_meta ->> 'findings_saved' IS DISTINCT FROM '56'
+     OR v_run_meta ->> 'pending_findings' IS DISTINCT FROM '56'
+     OR v_run_meta ->> 'atomic_specifications' IS DISTINCT FROM '60'
+     OR v_run_meta ? 'manual_normalization'
+  THEN
+    RAISE EXCEPTION 'v21.42 rolled back: Spire S run metadata no longer matches the audited pre-migration state.';
+  END IF;
+
   v_run_meta := v_run_meta
     || jsonb_build_object(
       'findings_saved', 57,
