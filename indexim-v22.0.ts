@@ -2548,8 +2548,8 @@ async function startResearch(body: AnyRow, callerUserId: string | null = null) {
       ? `TC_EXACT_VARIANT_EVIDENCE:${normalise(modelInput)}:${normalise(variantInput)}:${extractedVariantEvidence}`
       : isVerifiedTymT3047Series3Pdf && normalise(variantInput ?? "") === "t475series3"
         ? "TC_EXACT_VARIANT_EVIDENCE:t3047:t475series3:Official TYM product page identifies T3047 (T475), Series 3; the attached official 2026 Series 3 specification guide contains a dedicated T475 model column."
-        : isVerifiedTymT3035F36Series3Pdf
-          ? "TC_EXACT_VARIANT_EVIDENCE:t3035:f36series3:Official TYM product page https://www.tym.world/en/products/tractors/series-3/f36 explicitly identifies T3035 (F36), Series 3; the attached official F36 Series 3 brochure identifies T3035 (F36). F36RN and F36HN are distinct transmission options within this same F36 model identity."
+        : isVerifiedTymT3035F36Series3Pdf && normalise(variantInput ?? "") === "f36series3"
+          ? "TC_EXACT_VARIANT_EVIDENCE:t3035:f36series3:Official TYM product page https://www.tym.world/en/products/tractors/series-3/f36 explicitly identifies T3035 (F36), Series 3; the attached official F36 Series 3 brochure identifies T3035 (F36). F36RN and F36HN remain distinct transmission options and are not inferred from this series-level mapping."
           : "TC_EXACT_VARIANT_EVIDENCE:not_required_or_not_found";
     const curatedModelIdentity = Boolean(
       isVerifiedTymT3047Series3Pdf || isVerifiedTymT3035F36Series3Pdf
@@ -2558,7 +2558,7 @@ async function startResearch(body: AnyRow, callerUserId: string | null = null) {
     );
     const curatedVariantIdentity = Boolean(
       (isVerifiedTymT3047Series3Pdf && normalise(variantInput ?? "") === "t475series3")
-      || isVerifiedTymT3035F36Series3Pdf
+      || (isVerifiedTymT3035F36Series3Pdf && normalise(variantInput ?? "") === "f36series3")
     );
     const modelIdentityVerified = Boolean(extractedModelEvidence || curatedModelIdentity);
     const variantIdentityVerified = !variantInput || Boolean(extractedVariantEvidence || curatedVariantIdentity);
