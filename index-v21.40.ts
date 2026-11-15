@@ -3648,4 +3648,4 @@ Deno.serve(async (req: Request) => {
   }
 });
 
-// END OF FILE - complete TractorCompare AI Edge Function v21.39 source (exact-ID queue processing; mandatory human approval).
+// END OF FILE - complete TractorCompare AI Edge Function v21.40 source (exact-ID queue processing and curated Lamborghini Spire PDF identity; mandatory human approval).
