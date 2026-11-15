@@ -72,7 +72,7 @@ function normalise(value: unknown): string {
     .replace(/[^a-z0-9]+/g, "");
 }
 
-const UUID_PATTERN = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+const UUID_PATTERN = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 function isUuid(value: unknown): value is string {
   return typeof value === "string" && UUID_PATTERN.test(value.trim());
 }
@@ -87,6 +87,7 @@ function positivePgInteger(value: unknown): number | null {
 }
 
 function normalizedConfidence(value: unknown): number | null {
+  if (value === null || value === undefined || (typeof value === "string" && !value.trim())) return null;
   const parsed = Number(value);
   if (!Number.isFinite(parsed) || parsed < 0) return null;
   if (parsed <= 1) return parsed;
@@ -1493,11 +1494,8 @@ function splitCompositeSpecification(spec: AnyRow): AnyRow[] {
   const unit = String(spec?.unit ?? "").trim() || null;
   if (!originalName || !value || !evidence) return [];
 
-  let confidence = Number(spec.confidence ?? 0);
-  if (!Number.isFinite(confidence)) confidence = 0;
-  const confidenceValue = normalizedConfidence(confidence);
-  if (confidenceValue === null) return [];
-  confidence = confidenceValue;
+  const confidence = normalizedConfidence(spec.confidence);
+  if (confidence === null) return [];
   const pageNumber = positivePgInteger(spec.page_number);
   const sourceUrl = String(spec.source_url ?? "").trim() || null;
   const out: AnyRow[] = [];
