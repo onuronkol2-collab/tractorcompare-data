@@ -1,6 +1,6 @@
 ---
 import SiteLayout from "../layouts/SiteLayout.astro";
-import { getPublicCatalog, specLabel, verificationNotice } from "../lib/catalog";
+import { getPublicCatalog, comparisonKey, specLabel, verificationNotice } from "../lib/catalog";
 import type { PublicSpec } from "../lib/catalog";
 
 interface Props { lang: "en" | "tr"; }
@@ -30,7 +30,7 @@ const models: ComparedModel[] = catalog.tractors.map((tractor) => ({
   title: [tractor.brand_name, tractor.model_name, tractor.variant].filter(Boolean).join(" · "),
   detailsUrl: detailsPrefix + tractor.slug + "/",
   specs: tractor.specifications.map((spec: PublicSpec) => ({
-    key: spec.canonical_key || spec.spec_name,
+    key: comparisonKey(spec),
     label: specLabel(spec, lang),
     value: spec.spec_value,
     unit: spec.unit,
