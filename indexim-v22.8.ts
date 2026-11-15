@@ -3651,8 +3651,8 @@ async function completeResearch(runInput: AnyRow, interaction: AnyRow) {
         const metaDecision = !safeToPublish ? "human_review" : (AUTO_APPROVE_VERIFIED_FINDINGS ? "eligible_for_auto_approval" : "review_only");
         const { error: qualityMetaError } = await db.from("ai_research_findings").update({
           quality_meta: qualityMeta,
-          review_notes: metaDecision === "auto_approved"
-            ? "Deterministik AI kalite kapıları geçti; resmî kaynak ve doğrudan kanıt doğrulandı."
+          review_notes: metaDecision === "eligible_for_auto_approval"
+            ? "Deterministik kalite kapıları geçti; mevcut özellik/kaynak önceliği kontrolleri tamamlanıyor."
             : "AI inceleme bekliyor: " + (holdReasons.length ? [...new Set(holdReasons)].join(", ") : "otomatik onay ayarı kapalı veya model kaydı henüz yayımlanmadı."),
         }).eq("id", finding.id);
         if (qualityMetaError) throw new Error("AI kalite değerlendirmesi kaydedilemedi: " + qualityMetaError.message);
