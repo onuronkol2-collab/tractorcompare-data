@@ -1,0 +1,10 @@
+---
+import TractorDetail from "../../../components/TractorDetail.astro";
+import { getPublicCatalog } from "../../../lib/catalog";
+export async function getStaticPaths() {
+  const catalog = await getPublicCatalog();
+  return catalog.tractors.map((tractor) => ({ params: { slug: tractor.slug }, props: { tractor } }));
+}
+const { tractor } = Astro.props;
+---
+<TractorDetail lang="tr" tractor={tractor} />
