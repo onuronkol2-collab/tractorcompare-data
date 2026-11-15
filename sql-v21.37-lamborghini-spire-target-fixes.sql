@@ -49,6 +49,51 @@ SELECT COALESCE(
             THEN 'hydraulic_remote_valve_count'
         WHEN n LIKE 'fuel tank capacity with additional%'
             THEN 'fuel_tank_capacity'
+        WHEN n LIKE 'groundspeed pto%'
+            THEN 'pto_ground_speed'
+        WHEN n LIKE 'front pto 1000%'
+            THEN 'front_pto_speed'
+        WHEN n LIKE 'mechanical rear lift%'
+          OR n LIKE 'electronic rear lift%'
+            THEN 'rear_lift_control_type'
+        WHEN n LIKE 'hydraulic right tie rod and stabilisers%'
+            THEN 'hydraulic_stabilizers'
+        WHEN n LIKE 'front lift%'
+            THEN 'front_lift_capacity'
+        WHEN n LIKE 'flow regulator%'
+            THEN 'hydraulic_flow_regulator'
+        WHEN n LIKE 'rear free return%'
+            THEN 'hydraulic_rear_free_return'
+        WHEN n LIKE 'mid mounted hydraulic ways%'
+            THEN 'mid_mounted_hydraulic_ways'
+        WHEN n LIKE 'mid mounted free return%'
+            THEN 'mid_mounted_free_return'
+        WHEN n LIKE '4 wheel braking%'
+            THEN 'four_wheel_braking'
+        WHEN n LIKE 'hydraulic trailer brake%'
+            THEN 'hydraulic_trailer_brake'
+        WHEN n LIKE 'electrohydraulic engagement for 4wd%'
+            THEN 'front_axle_drive_and_diff_lock'
+        WHEN n LIKE 'auto 4wd%'
+            THEN 'automatic_four_wheel_drive'
+        WHEN n LIKE 'independent steering pump%'
+            THEN 'independent_steering_pump'
+        WHEN n LIKE 'adaptive damping active self levelling functions%'
+            THEN 'independent_front_suspension_features'
+        WHEN n LIKE 'anti dive anti roll functions%'
+            THEN 'suspension_safety_features'
+        WHEN n LIKE 'differential traction control%'
+            THEN 'differential_traction_control'
+        WHEN n LIKE '4 post cab%'
+            THEN 'cab_configuration'
+        WHEN n LIKE 'driver seat with pneumatic suspension%'
+            THEN 'operator_seat_suspension'
+        WHEN n LIKE 'air conditioning%'
+            THEN 'air_conditioning'
+        WHEN n LIKE '4x halogen working lights%'
+            THEN 'work_lights'
+        WHEN n LIKE 'adjustable steering column%'
+            THEN 'adjustable_steering_column'
         ELSE NULL
     END,
     public.tc_canonical_spec_key_v21_33_alias(p_name, p_evidence),
@@ -96,10 +141,12 @@ SELECT CASE
 
     WHEN p_key IN (
         'drive_configuration', 'front_axle_drive', 'differential_lock',
-        'differential_lock_rear'
+        'differential_lock_rear', 'front_axle_drive_and_diff_lock',
+        'automatic_four_wheel_drive', 'differential_traction_control'
     ) THEN 'powertrain'
 
-    WHEN p_key LIKE '%brake%' OR p_key = 'brake_control'
+    WHEN p_key LIKE '%brake%'
+      OR p_key IN ('brake_control', 'four_wheel_braking')
         THEN 'brakes'
 
     WHEN p_key LIKE 'steering_%'
@@ -113,7 +160,8 @@ SELECT CASE
         'overall_width', 'overall_width_range', 'overall_height', 'track_width',
         'front_track_width', 'rear_track_width', 'turning_radius', 'seat_height',
         'power_to_weight_ratio', 'speed_range', 'bonnet_height',
-        'total_admissible_load'
+        'total_admissible_load', 'independent_front_suspension_features',
+        'suspension_safety_features'
     ) THEN 'dimensions_weights'
 
     WHEN p_key IN (
@@ -140,8 +188,10 @@ SELECT CASE
     WHEN p_key IN ('rops_configuration', 'safety_features')
         THEN 'safety'
 
-    WHEN p_key IN ('dashboard_features', 'seat_features', 'mirror_count')
-        THEN 'operator_station'
+    WHEN p_key IN (
+        'dashboard_features', 'seat_features', 'mirror_count',
+        'cab_configuration', 'operator_seat_suspension', 'air_conditioning'
+    ) THEN 'operator_station'
 
     ELSE 'other'
 END;
