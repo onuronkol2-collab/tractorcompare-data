@@ -60,6 +60,10 @@ const initialRows = initialKeys.map((key) => ({
   left: initialLeft?.specs.filter((spec) => spec.key === key) || [],
   right: initialRight?.specs.filter((spec) => spec.key === key) || [],
 }));
+const initialNotices = [...new Set([
+  ...(initialLeft?.specs || []).map((spec) => spec.notice),
+  ...(initialRight?.specs || []).map((spec) => spec.notice),
+].filter((note): note is string => Boolean(note)))];
 const payload = JSON.stringify(models).replace(/</g, "\\u003c");
 ---
 <SiteLayout
@@ -95,6 +99,9 @@ const payload = JSON.stringify(models).replace(/</g, "\\u003c");
         <p class="tc-note">{en
           ? "— means a specification has not been published for that model, not that the equipment is absent. Values with different standards, RPM or units must not be assumed directly equivalent."
           : "— işareti özelliğin o model için yayımlanmadığını gösterir; ekipmanın bulunmadığı anlamına gelmez. Ölçüm standardı, devir veya birimi farklı değerler doğrudan eşdeğer kabul edilmemelidir."}</p>
+        <aside id="tc-data-warning" class="tc-data-warning" role="note" hidden={initialNotices.length === 0}>
+          {initialNotices.map((notice)=><p>{notice}</p>)}
+        </aside>
         <div class="tc-table-wrap">
           <table class="tc-table">
             <thead><tr>
@@ -110,7 +117,6 @@ const payload = JSON.stringify(models).replace(/</g, "\\u003c");
                     <strong>{spec.value}{spec.unit ? " " + spec.unit : ""}</strong>
                     {spec.context && <small>{en ? "Condition" : "Koşul"}: {spec.context}</small>}
                     {spec.rpm != null && <small>{spec.rpm} rpm</small>}
-                    {spec.notice && <small class="tc-warning">{spec.notice}</small>}
                     {spec.source && <a href={spec.source} rel="noopener noreferrer" target="_blank">{en ? "Manufacturer source" : "Üretici kaynağı"} ↗</a>}
                   </div>) : <span class="tc-missing">— <small>{missing}</small></span>}
                 </td>)}
@@ -166,7 +172,6 @@ const payload = JSON.stringify(models).replace(/</g, "\\u003c");
         addText(entry, "strong", spec.value + (spec.unit ? " " + spec.unit : ""));
         if (spec.context) addText(entry, "small", contextLabel + ": " + spec.context);
         if (spec.rpm != null) addText(entry, "small", spec.rpm + " rpm");
-        if (spec.notice) addText(entry, "small", spec.notice, "tc-warning");
         if (spec.source) {
           try {
             const url = new URL(spec.source);
@@ -213,6 +218,14 @@ const payload = JSON.stringify(models).replace(/</g, "\\u003c");
         rows.appendChild(tr);
       }
       tbody.replaceChildren(rows);
+      const conflictBox = document.querySelector<HTMLElement>("#tc-data-warning");
+      if (conflictBox) {
+        const notes = [...new Set([...left.specs, ...right.specs]
+          .map((spec) => spec.notice).filter((note): note is string => Boolean(note)))];
+        conflictBox.replaceChildren();
+        for (const note of notes) addText(conflictBox, "p", note);
+        conflictBox.hidden = notes.length === 0;
+      }
       const url = new URL(window.location.href);
       url.searchParams.set("left", left.id);
       url.searchParams.set("right", right.id);
@@ -246,7 +259,9 @@ const payload = JSON.stringify(models).replace(/</g, "\\u003c");
   .tc-entry:last-child { margin-bottom:0; }
   .tc-entry strong { font-size:14px; }
   .tc-entry small { color:#647569; font-size:11px; line-height:1.5; }
-  .tc-entry .tc-warning { color:#99561a; }
+  .tc-data-warning { margin:20px 0; padding:13px 15px; border:1px solid #eadcb8; border-radius:9px; background:#fffaf0; color:#795e29; font-size:11px; line-height:1.7; }
+  .tc-data-warning[hidden] { display:none; }
+  .tc-data-warning p { margin:0; }
   .tc-entry a { color:#2b6746; font-weight:800; font-size:11px; text-decoration:underline; text-underline-offset:3px; }
   .tc-missing { color:#7c897c; font-size:12px; }
   .tc-empty { padding:44px; border-radius:12px; background:white; border:1px solid #dfe6dd; }
