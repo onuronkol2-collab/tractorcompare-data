@@ -4107,8 +4107,23 @@ Deno.serve(async (req: Request) => {
     if (!body || typeof body !== "object") return json(400, { success: false, error: "Geçerli JSON gövdesi gönderilmelidir." });
 
     const action = String(body.action ?? "start").toLowerCase();
-    if (["enqueue_catalog", "process_queue", "process_queue_batch", "process_queue_for_tractors", "queue_stats", "diagnose_queue_run"].includes(action)) {
+    if (["function_version", "enqueue_catalog", "process_queue", "process_queue_batch", "process_queue_for_tractors", "queue_stats", "diagnose_queue_run"].includes(action)) {
       if (!queueAuthorized(req)) return json(401, { success: false, error: "Araştırma kuyruğu için x-queue-secret başlığı geçerli olmalıdır." });
+      if (action === "function_version") {
+        return json(200, {
+          success: true,
+          function_name: "tractorcompare-research",
+          function_version: "22.5",
+          build_label: "v22.5-farmall110a-fendt516gen4-deutz6165",
+          source_rules: {
+            caseih_farmall110a: "official_farmall_a_2025_brochure_v644d87af",
+            fendt_516vario: "official_500_vario_gen4_1520018",
+            deutzfahr_6165: "official_6_series_6165_ttv_brochure_10_19"
+          },
+          preserved_rules: ["caseih_puma150_emea_brochure", "fendt_724_gen7_1", "diagnose_queue_run", "full_specification_audit"],
+          auto_approve: false
+        });
+      }
       if (action === "enqueue_catalog") return await enqueueCatalog();
       if (action === "process_queue") return await processQueue();
       if (action === "process_queue_batch") return await processQueueBatch(body);
@@ -4141,4 +4156,4 @@ Deno.serve(async (req: Request) => {
   }
 });
 
-// END OF FILE - TractorCompare AI Edge Function v22.4 candidate. No database migration required; adds queue-secret read-only diagnosis and strict Fendt 724 Gen7.1 source allow-list.
+// END OF FILE - TractorCompare AI Edge Function v22.5 candidate. No database migration required; exact Farmall 110A, Fendt 516 Gen4 and Deutz-Fahr 6165 TTV sources, queue-secret function_version endpoint, previous Puma 150 / Fendt 724 safeguards retained.
