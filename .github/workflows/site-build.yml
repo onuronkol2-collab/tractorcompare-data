@@ -5,6 +5,7 @@ on:
     paths:
       - "site/**"
       - "supabase/migrations/20261115000400_tractorvs_public_catalog_view.sql"
+      - "supabase/rollback/20261115000400_tractorvs_public_catalog_view_rollback.sql"
       - "supabase/verification/verify_tractorvs_public_catalog_view.sql"
       - ".github/workflows/site-build.yml"
   push:
@@ -13,6 +14,7 @@ on:
     paths:
       - "site/**"
       - "supabase/migrations/20261115000400_tractorvs_public_catalog_view.sql"
+      - "supabase/rollback/20261115000400_tractorvs_public_catalog_view_rollback.sql"
       - "supabase/verification/verify_tractorvs_public_catalog_view.sql"
       - ".github/workflows/site-build.yml"
 
@@ -40,7 +42,7 @@ jobs:
       - name: Build Astro site
         run: npm run build
 
-      - name: Verify both language routes and safe preview indexing
+      - name: Verify language routes and safe preview indexing
         run: |
           test -f dist/index.html
           test -f dist/tr/index.html
@@ -48,5 +50,5 @@ jobs:
           test -f dist/tr/tractors/index.html
           test -f dist/robots.txt
           grep -q "noindex,nofollow" dist/index.html
-          grep -q "noindex,nofollow" dist/tractors/index.html
+          grep -q "noindex,nofollow" dist/tr/index.html
           grep -q "Disallow: /" dist/robots.txt
