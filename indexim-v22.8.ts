@@ -18,7 +18,7 @@ const GEMINI_START_TIMEOUT_MS = 30_000;
 
 // v22.8: deterministic evidence gates decide which individual findings may be
 // auto-approved. Set TC_AUTO_APPROVE_VERIFIED_FINDINGS=false to run review-only.
-const AUTO_APPROVE_VERIFIED_FINDINGS = Deno.env.get("TC_AUTO_APPROVE_VERIFIED_FINDINGS") !== "false";
+const AUTO_APPROVE_VERIFIED_FINDINGS = Deno.env.get("TC_AUTO_APPROVE_VERIFIED_FINDINGS") === "true";
 const GEMINI_API = "https://generativelanguage.googleapis.com/v1beta/interactions";
 
 if (!SUPABASE_URL || !DB_SECRET_KEY) {
