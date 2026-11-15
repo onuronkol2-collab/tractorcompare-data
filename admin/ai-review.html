@@ -148,7 +148,8 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding:25px}
       '<div><label>Özellik adı</label><input data-field="spec_name" value="'+esc(item.spec_name)+'" '+(editable?"":"disabled")+'></div>'+
       '<div><label>Değer</label><input data-field="spec_value" value="'+esc(item.spec_value)+'" '+(editable?"":"disabled")+'></div>'+
       '<div><label>Birim</label><input data-field="unit" value="'+esc(item.unit||"")+'" '+(editable?"":"disabled")+'></div></div>'+
-      '<div class="evidence"><b>Kaynak kanıtı</b><br>'+esc(item.evidence_text||"Kanıt metni bulunamadı.")+'</div>'+
+      '<div class="evidence"><b>Kaynak kanıtı (gerekirse düzenle)</b><br><textarea data-field="evidence_text" '+(editable?"":"disabled")+'>'+esc(item.evidence_text||"")+'</textarea>'+
+      '<label>Kaynak sayfa numarası</label><input data-field="page_number" type="number" min="1" value="'+esc(item.page_number||"")+'" '+(editable?"":"disabled")+'></div>'+
       '<div class="source">'+link+' · Kaynak HTTP: '+esc(fmt(d.http_status))+' · Öncelik: '+esc(fmt(d.source_priority))+'</div>'+
       '<div class="muted small" style="margin-top:6px">AI notu: '+esc(item.review_notes||"Yok")+'</div>'+
       '<div class="actions">'+
@@ -223,7 +224,9 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding:25px}
         await review(id,"edit_approve",{
           spec_name:card.querySelector('[data-field="spec_name"]').value,
           spec_value:card.querySelector('[data-field="spec_value"]').value,
-          unit:card.querySelector('[data-field="unit"]').value
+          unit:card.querySelector('[data-field="unit"]').value,
+          evidence_text:card.querySelector('[data-field="evidence_text"]').value,
+          page_number:card.querySelector('[data-field="page_number"]').value
         });
       }
     }catch(err){message(err.message,true);}
