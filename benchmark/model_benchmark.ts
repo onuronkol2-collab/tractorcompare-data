@@ -226,8 +226,23 @@ async function main(): Promise<void> {
   console.log("Starting " + cases.length + " PDFs x " + providers.length + " selected model(s): " + providers.join(", ") + ". No production DB is accessed.");
   for (const item of cases) {
     console.log("\n" + item.id + ": " + item.manufacturer + " " + item.model);
-    const pdf = await getPdf(item);
-    console.log("PDF bytes " + pdf.bytes + "; SHA-256 " + pdf.sha256);
+    let pdf: { b64: string; sha256: string; bytes: number };
+    try {
+      pdf = await getPdf(item);
+      console.log("PDF bytes " + pdf.bytes + "; SHA-256 " + pdf.sha256);
+    } catch (error) {
+      const message = error instanceof Error ? error.message : String(error);
+      console.error("PDF download failed; skipping this document and continuing: " + message);
+      for (const provider of providers) {
+        results.push({
+          case_id: item.id, manufacturer: item.manufacturer, model_name: item.model,
+          variant: item.variant ?? null, market: item.market ?? null, pdf_url: item.pdf_url,
+          provider, model: modelFor(provider).id, stage: "pdf_download",
+          error: message
+        });
+      }
+      continue;
+    }
     for (const provider of providers) {
       try {
         console.log(provider + ": PDF downloaded; starting model analysis...");
