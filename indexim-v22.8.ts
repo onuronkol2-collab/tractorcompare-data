@@ -4630,7 +4630,10 @@ async function adminReviewAction(body: AnyRow, actorUserId: string) {
     source_id: sourceId, canonical_key: canonicalKey, comparison_class: comparisonClass,
     measurement_standard: finding.measurement_standard ?? null, rated_rpm: finding.rated_rpm ?? null,
     evidence_text: evidenceText, source_document_id: finding.document_id,
-    source_priority: Number(doc.source_priority ?? 85), managed_by_ai: false,
+    source_priority: Number(doc.source_priority ?? 85),
+    // A straightforward administrator approval confirms the evidence but keeps
+    // AI management active. Only a manual edit makes this spec human-managed.
+    managed_by_ai: action !== "edit_approve",
     last_verified_at: now, verified_at: now, updated_at: now,
   };
   let specId = existing?.id ?? null;
@@ -4646,7 +4649,7 @@ async function adminReviewAction(body: AnyRow, actorUserId: string) {
     spec_name: specName, spec_value: specValue, unit,
     evidence_text: evidenceText, page_number: pageNumber,
     review_status: "approved",
-    review_notes: action === "edit_approve" ? "Yönetici değeri düzenledi ve onayladı; kayıt insan tarafından yönetilir." : "Yönetici kaynak ve kanıtı kontrol ederek onayladı; kayıt insan tarafından yönetilir.",
+    review_notes: action === "edit_approve" ? "Yönetici değeri ve/veya kanıtı düzeltti; kayıt insan tarafından yönetilir ve AI üzerine yazmaz." : "Yönetici kaynak ve kanıtı onayladı; kayıt AI tarafından izlenmeye ve güvenli biçimde güncellenmeye devam eder.",
     reviewed_at: now, inserted_spec_id: specId,
     quality_meta: { ...(finding.quality_meta ?? {}), manual_review: true, manual_reviewed_at: now, manual_reviewed_by: actorUserId },
   }).eq("id", findingId);
