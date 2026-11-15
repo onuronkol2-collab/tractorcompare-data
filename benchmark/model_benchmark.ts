@@ -20,12 +20,12 @@ const MODELS = {
   openai: { id: Deno.env.get("OPENAI_MODEL") ?? "gpt-6.1-sol",
     key: Deno.env.get("OPENAI_API_KEY") ?? "", inputRate: 2, outputRate: 10 },
   gemini: { id: Deno.env.get("GEMINI_MODEL") ?? "gemini-3.8-flash",
-    key: Deno.env.get("GEMINI_API_KEY") ?? "", inputRate: 0.75, outputRate: 4.5 }
+    key: Deno.env.get("GEMINI_API_KEY") ?? "", inputRate: 0.75, outputRate: 3.75 }
 } as const;
 
-function checkKeys(): void {
-  const missing = Object.entries(MODELS).filter((entry) => !entry[1].key).map((entry) => entry[0]);
-  if (missing.length) throw new Error("Missing API keys: " + missing.join(", "));
+function checkKeys(providers: (keyof typeof MODELS)[]): void {
+  const missing = providers.filter((provider) => !MODELS[provider].key);
+  if (missing.length) throw new Error("Missing API keys for selected providers: " + missing.join(", "));
 }
 
 function toBase64(bytes: Uint8Array): string {
@@ -159,10 +159,14 @@ async function callModel(provider: keyof typeof MODELS, item: TestCase, pdf64: s
   const output = provider === "gemini"
     ? Number(usage.candidatesTokenCount ?? 0) + Number(usage.thoughtsTokenCount ?? 0)
     : Number(usage.output_tokens ?? 0);
+  const paidListPrice = input / 1e6 * model.inputRate + output / 1e6 * model.outputRate;
+  const billingTier = provider === "gemini"
+    ? (Deno.env.get("GEMINI_BILLING_TIER") ?? "unverified") : "paid";
   return {
-    provider, model: model.id, latency_ms: Date.now() - started,
+    provider, model: model.id, billing_tier: billingTier, latency_ms: Date.now() - started,
     input_tokens: input, output_tokens: output,
-    estimated_cost_usd: input / 1e6 * model.inputRate + output / 1e6 * model.outputRate,
+    estimated_cost_usd: provider === "gemini" && billingTier === "free" ? 0 : paidListPrice,
+    estimated_paid_list_price_usd: paidListPrice,
     response_text: text, parsed: parseJson(text),
     finish_reason: provider === "anthropic" ? payload.stop_reason ?? null :
       provider === "gemini" ? payload.candidates?.[0]?.finishReason ?? null : payload.status ?? null
@@ -170,15 +174,20 @@ async function callModel(provider: keyof typeof MODELS, item: TestCase, pdf64: s
 }
 
 async function main(): Promise<void> {
-  checkKeys();
+  const providers = (Deno.env.get("BENCHMARK_PROVIDERS") ?? "gemini")
+    .split(",").map((value) => value.trim().toLowerCase()).filter(Boolean) as (keyof typeof MODELS)[];
+  const allowedProviders = new Set(["anthropic", "openai", "gemini"]);
+  if (!providers.length || providers.some((provider) => !allowedProviders.has(provider))) {
+    throw new Error("BENCHMARK_PROVIDERS must contain anthropic, openai, and/or gemini.");
+  }
+  checkKeys(providers);
   const manifestPath = Deno.args[0] ?? "./benchmark/manifest.json";
   const manifest = JSON.parse(await Deno.readTextFile(manifestPath));
   if (!Array.isArray(manifest.cases) || !manifest.cases.length) throw new Error("Manifest has no test cases.");
   const max = Number(Deno.env.get("BENCHMARK_LIMIT") ?? "20");
   const cases: TestCase[] = manifest.cases.slice(0, max > 0 ? max : 20);
-  const providers: (keyof typeof MODELS)[] = ["anthropic", "openai", "gemini"];
   const results: Row[] = [];
-  console.log("Starting " + cases.length + " PDFs x 3 models sequentially. No production DB is accessed.");
+  console.log("Starting " + cases.length + " PDFs x " + providers.length + " selected model(s): " + providers.join(", ") + ". No production DB is accessed.");
   for (const item of cases) {
     console.log("\n" + item.id + ": " + item.manufacturer + " " + item.model);
     const pdf = await getPdf(item);
