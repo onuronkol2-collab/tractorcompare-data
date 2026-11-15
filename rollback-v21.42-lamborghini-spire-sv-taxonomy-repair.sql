@@ -41,10 +41,10 @@ BEGIN
   END IF;
 
   IF v_current_summary <> 'Lamborghini Trattori Spire S 80 Target was verified against the official manufacturer PDF page 6. The original 56 extracted findings remain source-backed; one composite injection-system cell was manually split into two atomic pending findings, resulting in 57 pending findings. No specifications were approved or published.'
-     OR v_run_meta ->> 'findings_saved' <> '57'
-     OR v_run_meta ->> 'pending_findings' <> '57'
-     OR v_run_meta ->> 'atomic_specifications' <> '61'
-     OR COALESCE(v_run_meta #>> '{manual_normalization,additional_findings_created}', '') <> '1'
+     OR v_run_meta ->> 'findings_saved' IS DISTINCT FROM '57'
+     OR v_run_meta ->> 'pending_findings' IS DISTINCT FROM '57'
+     OR v_run_meta ->> 'atomic_specifications' IS DISTINCT FROM '61'
+     OR v_run_meta #>> '{manual_normalization,additional_findings_created}' IS DISTINCT FROM '1'
   THEN
     RAISE EXCEPTION 'Rollback stopped: S run metadata no longer matches the exact v21.42 post-state.';
   END IF;
