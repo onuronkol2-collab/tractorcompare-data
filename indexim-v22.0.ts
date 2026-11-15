@@ -2407,6 +2407,9 @@ async function startResearch(body: AnyRow, callerUserId: string | null = null) {
   const { data: brand, error: brandError } = await db.from("brands").select("id,name,website_url").ilike("name", brandInput).maybeSingle();
   if (brandError) throw new Error(`Marka sorgusu başarısız: ${brandError.message}`);
   if (!brand) return json(404, { success: false, error: `Marka bulunamadı: ${brandInput}` });
+  if (!isUuid(brand.id)) {
+    throw new Error("Marka kaydında geçerli UUID bulunamadı; araştırma kaydı açılmadı.");
+  }
 
   // Queue-originated research is pinned to the exact tractor row that was claimed.
   // This is not fuzzy matching: the ID must belong to the same brand and exact model.
