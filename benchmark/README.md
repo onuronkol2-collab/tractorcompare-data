@@ -8,7 +8,7 @@ This benchmark is isolated from production. It does not call Supabase, update th
 |---|---|---:|
 | Anthropic | claude-sonnet-5-5 | $2 / $10 |
 | OpenAI | gpt-6.1-sol | $2 / $10 |
-| Google | gemini-3.8-flash | $0.75 / $3.75 through 2026-12-31; $1.50 / $7.50 from 2027-01-01 |
+| Google | gemini-3.8-flash | $0.75 / $4.50 through 2026-12-31; $1.50 / $7.50 from 2027-01-01 |
 
 Prices are provider-published rates and can change. Re-check provider billing before the full run.
 
@@ -20,12 +20,7 @@ Each finding must contain the value, unit, measurement scope, exact variant colu
 
 ## Starter dataset
 
-Three official PDFs already known in TractorCompare are included:
-1. Case IH Farmall 110A
-2. DEUTZ-FAHR 6165 TTV
-3. Case IH Puma 150 EMEA
-
-We need 17 more unique official PDFs for a 20-document dataset. To find documents already stored in the project, run this read-only SQL in Supabase SQL Editor and send me its result (URLs and source metadata only):
+Twenty distinct official manufacturer PDF/manual documents are curated in the manifest, spanning Case IH, New Holland, Kubota, TYM, John Deere, Fendt, DEUTZ-FAHR, Lamborghini Trattori, and Massey Ferguson. The set covers compact, utility, midrange, and high-horsepower tractors, as well as varied brochure layouts and one operator manual. Duplicate temporary Carraro links and irrelevant Agrale privacy/noise documents were excluded.
 
 SELECT DISTINCT ON (d.source_url)
     b.name AS manufacturer,
