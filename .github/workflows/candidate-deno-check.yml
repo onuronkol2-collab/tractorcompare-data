@@ -1,0 +1,29 @@
+name: Candidate Deno type check
+
+on:
+  pull_request:
+    paths:
+      - "candidate/index-v22.0.ts"
+      - ".github/workflows/candidate-deno-check.yml"
+  push:
+    branches:
+      - "candidate/v22.0-hardening-2026-11-15"
+    paths:
+      - "candidate/index-v22.0.ts"
+      - ".github/workflows/candidate-deno-check.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  deno-check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out candidate
+        uses: actions/checkout@v4
+      - name: Set up Deno
+        uses: denoland/setup-deno@v2
+        with:
+          deno-version: v2.x
+      - name: Type-check Edge Function candidate
+        run: deno check candidate/index-v22.0.ts
