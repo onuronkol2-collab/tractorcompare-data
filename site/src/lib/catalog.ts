@@ -463,6 +463,50 @@ export function specLabel(spec: PublicSpec, lang: "en" | "tr"): string {
 }
 
 /**
+ * Public evidence indicators are conservative display labels, not publication
+ * decisions or a substitute for a human's model/variant review.
+ * A bare URL, a timestamp alone or AI extraction alone is not enough.
+ */
+export type SpecificationEvidenceLevel =
+  | "manufacturer_documented"
+  | "third_party_reported"
+  | "not_verified";
+
+const manufacturerSourceTypes = new Set([
+  "manufacturer",
+  "manufacturer_specification",
+  "official_technical_specification",
+  "official_product_page",
+]);
+
+export function specificationEvidenceLevel(
+  spec: Pick<PublicSpec, "source_url" | "source_type" | "evidence_text" | "verified_at">,
+): SpecificationEvidenceLevel {
+  const sourcePresent = Boolean(safeHttpUrl(spec.source_url));
+  const supportingExcerpt = Boolean(spec.evidence_text?.trim());
+  const checkedAt = typeof spec.verified_at === "string"
+    && Number.isFinite(Date.parse(spec.verified_at));
+
+  if (!sourcePresent || !supportingExcerpt || !checkedAt) return "not_verified";
+  if (manufacturerSourceTypes.has(spec.source_type || "")) return "manufacturer_documented";
+  return "third_party_reported";
+}
+
+export function specificationEvidenceLabel(
+  level: SpecificationEvidenceLevel,
+  lang: "en" | "tr",
+): string {
+  if (lang === "tr") {
+    if (level === "manufacturer_documented") return "Üretici belgesine dayalı";
+    if (level === "third_party_reported") return "Üçüncü taraf kaynak · üretici teyidi yok";
+    return "Yeterli kanıt yok · doğrulanmadı";
+  }
+  if (level === "manufacturer_documented") return "Manufacturer document sourced";
+  if (level === "third_party_reported") return "Third-party source · not manufacturer-confirmed";
+  return "Insufficient evidence · unverified";
+}
+
+/**
  * The 2075 BK 4WD manufacturer page and its technical brochure currently
  * disagree on overall length. Keep the value visible, but explain the conflict
  * until the manufacturer confirms the correct figure.

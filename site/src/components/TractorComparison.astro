@@ -1,6 +1,6 @@
 ---
 import SiteLayout from "../layouts/SiteLayout.astro";
-import { getPublicCatalog, comparisonKey, specLabel, verificationNotice } from "../lib/catalog";
+import { getPublicCatalog, comparisonKey, specLabel, specificationEvidenceLevel, specificationEvidenceLabel, verificationNotice } from "../lib/catalog";
 import type { PublicSpec } from "../lib/catalog";
 
 interface Props { lang: "en" | "tr"; }
@@ -17,6 +17,8 @@ type ComparedSpec = {
   rpm: number | null;
   source: string | null;
   notice: string | null;
+  evidenceLevel: string;
+  evidenceLabel: string;
 };
 type ComparedModel = {
   id: string;
@@ -38,6 +40,8 @@ const models: ComparedModel[] = catalog.tractors.map((tractor) => ({
     rpm: spec.rated_rpm,
     source: spec.source_url,
     notice: verificationNotice(spec, lang),
+    evidenceLevel: specificationEvidenceLevel(spec),
+    evidenceLabel: specificationEvidenceLabel(specificationEvidenceLevel(spec),lang),
   })),
 }));
 const initialLeft = models[0];
@@ -108,6 +112,7 @@ const payload = JSON.stringify(models).replace(/</g, "\\u003c");
                 {[row.left, row.right].map((items) => <td>
                   {items.length ? items.map((spec) => <div class="tc-entry">
                     <strong>{spec.value}{spec.unit ? " " + spec.unit : ""}</strong>
+                    <small class:list={["tc-evidence", "tc-evidence--"+spec.evidenceLevel]}>{spec.evidenceLabel}</small>
                     {spec.context && <small>{en ? "Condition" : "Koşul"}: {spec.context}</small>}
                     {spec.rpm != null && <small>{spec.rpm} rpm</small>}
                     {spec.notice && <small class="tc-warning">{spec.notice}</small>}
@@ -130,7 +135,7 @@ const payload = JSON.stringify(models).replace(/</g, "\\u003c");
 
 <script type="application/json" id="tc-payload" set:html={payload}></script>
 <script>
-  type Spec = { key: string; label: string; value: string; unit: string | null; context: string | null; rpm: number | null; source: string | null; notice: string | null };
+  type Spec = { key: string; label: string; value: string; unit: string | null; context: string | null; rpm: number | null; source: string | null; notice: string | null; evidenceLevel: string; evidenceLabel: string };
   type Model = { id: string; title: string; detailsUrl: string; specs: Spec[] };
   const dataNode = document.querySelector<HTMLScriptElement>("#tc-payload");
   const leftSelect = document.querySelector<HTMLSelectElement>("#tc-left");
@@ -164,6 +169,7 @@ const payload = JSON.stringify(models).replace(/</g, "\\u003c");
         const entry = document.createElement("div");
         entry.className = "tc-entry";
         addText(entry, "strong", spec.value + (spec.unit ? " " + spec.unit : ""));
+        addText(entry, "small", spec.evidenceLabel, "tc-evidence tc-evidence--" + spec.evidenceLevel);
         if (spec.context) addText(entry, "small", contextLabel + ": " + spec.context);
         if (spec.rpm != null) addText(entry, "small", spec.rpm + " rpm");
         if (spec.notice) addText(entry, "small", spec.notice, "tc-warning");
@@ -247,6 +253,9 @@ const payload = JSON.stringify(models).replace(/</g, "\\u003c");
   .tc-entry strong { font-size:14px; }
   .tc-entry small { color:#647569; font-size:11px; line-height:1.5; }
   .tc-entry .tc-warning { color:#99561a; }
+  .tc-entry .tc-evidence { color:#526c58; font-size:10px; font-weight:700; }
+  .tc-entry .tc-evidence--third_party_reported { color:#656e7e; }
+  .tc-entry .tc-evidence--not_verified { color:#926325; }
   .tc-entry a { color:#2b6746; font-weight:800; font-size:11px; text-decoration:underline; text-underline-offset:3px; }
   .tc-missing { color:#7c897c; font-size:12px; }
   .tc-empty { padding:44px; border-radius:12px; background:white; border:1px solid #dfe6dd; }
