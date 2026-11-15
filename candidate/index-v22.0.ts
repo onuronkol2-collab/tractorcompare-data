@@ -3148,7 +3148,7 @@ async function completeResearch(runInput: AnyRow, interaction: AnyRow) {
     // Human-managed tractor_specs rows are never overwritten; only AI-managed rows can be upgraded.
     if (AUTO_APPROVE_VERIFIED_FINDINGS && tractor && identityOk && !pinnedIdentityOk) {
       const { data: currentSpecs, error: specsError } = await db.from("tractor_specs")
-        .select("id,spec_name,spec_value,unit,canonical_key,measurement_standard,rated_rpm,managed_by_ai,source_priority,source_document_id")
+        .select("id,spec_name,spec_value,unit,canonical_key,comparison_class,measurement_standard,rated_rpm,managed_by_ai,source_priority,source_document_id")
         .eq("tractor_id", tractor.id).limit(1500);
       if (specsError) throw new Error(`Mevcut teknik özellikler okunamadı: ${specsError.message}`);
       const current = currentSpecs ?? [];
@@ -3249,10 +3249,15 @@ async function completeResearch(runInput: AnyRow, interaction: AnyRow) {
           const newDate = newDoc?.source_last_modified ? Date.parse(String(newDoc.source_last_modified)) : NaN;
           const newerPublishedVersion = Number.isFinite(oldDate) && Number.isFinite(newDate) && newDate > oldDate;
           const provablyOlderPublishedVersion = Number.isFinite(oldDate) && Number.isFinite(newDate) && newDate < oldDate;
-          const sameOfficialSourceChanged = Boolean(oldDoc?.source_url)
-            && String(oldDoc.source_url) === String(newDoc?.source_url)
-            && Boolean(oldDoc?.content_hash) && Boolean(newDoc?.content_hash)
-            && String(oldDoc.content_hash) !== String(newDoc.content_hash);
+          const sameOfficialSourceChanged = Boolean(
+            oldDoc
+            && newDoc
+            && oldDoc.source_url
+            && oldDoc.source_url === newDoc.source_url
+            && oldDoc.content_hash
+            && newDoc.content_hash
+            && oldDoc.content_hash !== newDoc.content_hash
+          );
           if (priority < oldPriority || provablyOlderPublishedVersion) {
             await db.from("ai_research_findings").update({ review_status: "pending", review_notes: provablyOlderPublishedVersion
               ? "Yeni kaynak sürüm tarihi mevcut kaynaktan eski; otomatik değer değişikliği yapılmadı."
