@@ -2153,104 +2153,154 @@ async function processQueue(targetTractorId?: string) {
     throw new Error("Hedefli kuyruk RPC'si farklı bir traktör döndürdü; güvenlik kontrolü başarısız.");
   }
 
-  const { data: tractor, error: tractorError } = await db.from("tractors").select("*").eq("id", item.tractor_id).single();
-  if (tractorError || !tractor) {
-    await db.from("tractor_research_queue").update({ status: "failed", last_error: tractorError?.message ?? "Traktör kaydı bulunamadı.", updated_at: new Date().toISOString() }).eq("id", item.id);
-    return json(404, { success: false, error: "Kuyruktaki traktör kaydı bulunamadı.", queue_id: item.id });
-  }
-  const { data: brand, error: brandError } = await db.from("brands").select("name,website_url").eq("id", tractor.brand_id).single();
-  if (brandError || !brand) {
-    await db.from("tractor_research_queue").update({ status: "failed", last_error: brandError?.message ?? "Marka bulunamadı.", updated_at: new Date().toISOString() }).eq("id", item.id);
-    return json(404, { success: false, error: "Kuyruktaki traktörün markası bulunamadı.", queue_id: item.id });
-  }
-
-  let response: Response;
-  if (item.last_run_id) {
-    response = await pollResearch({ run_id: item.last_run_id });
-  } else {
-    const retryMarker = "TC_GEMINI_OUTPUT_RECOVERY_V1";
-    response = await startResearch({
-      action: "start",
-      brand: brand.name,
-      model: tractor.model_name,
-      model_year: tractor.model_year,
-      variant: cleanCatalogVariant(tractor.variant),
-      market: tractor.market ?? "global",
-      target_tractor_id: tractor.id,
-      queue_id: item.id,
-      output_recovery_retry: String(item.last_error ?? "").includes(retryMarker),
-    });
-  }
-  const result = await response.json().catch(() => ({}));
-  const now = new Date().toISOString();
-  const runId = String(result.run_id ?? item.last_run_id ?? "") || null;
-  const message = [result.error, result.details?.message, result.message].filter(Boolean).map(String).join(" | ");
-  if (result.status === "incomplete" && result.restart_required === true) {
-    const retryMarker = "TC_GEMINI_OUTPUT_RECOVERY_V1";
-    const alreadyUsedRecovery = String(item.last_error ?? "").includes(retryMarker);
-    if (alreadyUsedRecovery) {
-      const manualReviewMessage = "Gemini çıktısı 60.000 token ve düşük düşünme seviyesiyle yapılan tek kurtarma denemesinden sonra da tamamlanmadı. Otomatik tekrar durduruldu; kaynak paketi veya model kapsamı manuel incelenmeli.";
+  try {
+    const { data: tractor, error: tractorError } = await db.from("tractors").select("*").eq("id", item.tractor_id).single();
+    if (tractorError || !tractor) {
+      await db.from("tractor_research_queue").update({ status: "failed", last_error: tractorError?.message ?? "Traktör kaydı bulunamadı.", updated_at: new Date().toISOString() }).eq("id", item.id);
+      return json(404, { success: false, error: "Kuyruktaki traktör kaydı bulunamadı.", queue_id: item.id });
+    }
+    const { data: brand, error: brandError } = await db.from("brands").select("name,website_url").eq("id", tractor.brand_id).single();
+    if (brandError || !brand) {
+      await db.from("tractor_research_queue").update({ status: "failed", last_error: brandError?.message ?? "Marka bulunamadı.", updated_at: new Date().toISOString() }).eq("id", item.id);
+      return json(404, { success: false, error: "Kuyruktaki traktörün markası bulunamadı.", queue_id: item.id });
+    }
+  
+    let response: Response;
+    if (item.last_run_id) {
+      response = await pollResearch({ run_id: item.last_run_id });
+    } else {
+      const retryMarker = "TC_GEMINI_OUTPUT_RECOVERY_V1";
+      response = await startResearch({
+        action: "start",
+        brand: brand.name,
+        model: tractor.model_name,
+        model_year: tractor.model_year,
+        variant: cleanCatalogVariant(tractor.variant),
+        market: tractor.market ?? "global",
+        target_tractor_id: tractor.id,
+        queue_id: item.id,
+        output_recovery_retry: String(item.last_error ?? "").includes(retryMarker),
+      });
+    }
+    const result = await response.json().catch(() => ({}));
+    const now = new Date().toISOString();
+    const runId = String(result.run_id ?? item.last_run_id ?? "") || null;
+    const message = [result.error, result.details?.message, result.message].filter(Boolean).map(String).join(" | ");
+    if (result.status === "incomplete" && result.restart_required === true) {
+      const retryMarker = "TC_GEMINI_OUTPUT_RECOVERY_V1";
+      const alreadyUsedRecovery = String(item.last_error ?? "").includes(retryMarker);
+      if (alreadyUsedRecovery) {
+        const manualReviewMessage = "Gemini çıktısı 60.000 token ve düşük düşünme seviyesiyle yapılan tek kurtarma denemesinden sonra da tamamlanmadı. Otomatik tekrar durduruldu; kaynak paketi veya model kapsamı manuel incelenmeli.";
+        await db.from("tractor_research_queue").update({
+          status: "needs_source",
+          last_run_id: runId,
+          last_error: manualReviewMessage.slice(0, 1500),
+          updated_at: now,
+        }).eq("id", item.id);
+        return json(200, {
+          success: false,
+          queue_id: item.id,
+          tractor_id: tractor.id,
+          brand: brand.name,
+          model: tractor.model_name,
+          http_status: response.status,
+          queue_action: "needs_source_after_single_output_recovery",
+          research: result,
+          message: manualReviewMessage,
+        });
+      }
+      const next = new Date(Date.now() + 5_000).toISOString();
+      const recoveryMessage = `${retryMarker}: ${String(result.message ?? "Gemini çıktısı eksik; daha yüksek çıktı bütçesiyle tek kurtarma denemesi hazırlanıyor.")}`;
       await db.from("tractor_research_queue").update({
-        status: "needs_source",
-        last_run_id: runId,
-        last_error: manualReviewMessage.slice(0, 1500),
+        status: "retry",
+        last_run_id: null,
+        next_attempt_at: next,
+        last_error: recoveryMessage.slice(0, 1500),
         updated_at: now,
       }).eq("id", item.id);
       return json(200, {
-        success: false,
+        success: true,
         queue_id: item.id,
         tractor_id: tractor.id,
         brand: brand.name,
         model: tractor.model_name,
         http_status: response.status,
-        queue_action: "needs_source_after_single_output_recovery",
+        queue_action: "requeued_for_single_larger_output_recovery",
+        previous_run_id: item.last_run_id,
+        next_attempt_at: next,
         research: result,
-        message: manualReviewMessage,
       });
+    } else if (result.success && (result.model_found === false || result.tractor_match_required === true)) {
+      const reviewMessage = result.model_found === false
+        ? "Resmî sayfada tam model kimliği doğrulanamadı; kaynak/model kontrolü gerekiyor."
+        : "Birden fazla katalog kaydı eşleşti veya kayıt eşleştirmesi belirsiz; manuel kontrol gerekiyor.";
+      await db.from("tractor_research_queue").update({ status: "needs_source", last_run_id: runId, last_error: reviewMessage, updated_at: now }).eq("id", item.id);
+    } else if (result.success && (result.review_status === "needs_source")) {
+      await db.from("tractor_research_queue").update({ status: "needs_source", last_run_id: runId, last_error: "Araştırma tamamlandı ancak teknik bulgular kayıt altına alınamadı; kaynak/model denetimi gerekiyor.", updated_at: now }).eq("id", item.id);
+    } else if (result.success && (result.review_status || result.status === "completed" || result.message === "Bu araştırma daha önce tamamlandı.")) {
+      await db.from("tractor_research_queue").update({ status: "completed", last_run_id: runId, last_error: null, completed_at: now, updated_at: now }).eq("id", item.id);
+    } else if (result.success && (response.status === 202 || result.status === "running")) {
+      const next = new Date(Date.now() + 60_000).toISOString();
+      await db.from("tractor_research_queue").update({ status: "retry", last_run_id: runId, next_attempt_at: next, last_error: "Gemini işlemi devam ediyor; sonraki çağrıda durum kontrol edilecek.", updated_at: now }).eq("id", item.id);
+    } else if (response.status === 422) {
+      await db.from("tractor_research_queue").update({ status: "needs_source", last_run_id: runId, last_error: message.slice(0, 1500), updated_at: now }).eq("id", item.id);
+    } else if ((isRetryableProviderError(Number(result.http_status ?? response.status), message) || (/503|service_unavailable|high demand/i.test(message) && result.status === "failed")) && Number(item.attempt_count ?? 0) < 30) {
+      const delayMinutes = Math.min(60, Math.pow(2, Math.min(Number(item.attempt_count ?? 1), 5)));
+      const stillPolling = Boolean(item.last_run_id) && result.status !== "failed" && response.status !== 422;
+      await db.from("tractor_research_queue").update({ status: "retry", last_run_id: stillPolling ? String(item.last_run_id) : (response.status === 202 ? runId : null), next_attempt_at: new Date(Date.now() + delayMinutes * 60_000).toISOString(), last_error: message.slice(0, 1500), updated_at: now }).eq("id", item.id);
+    } else {
+      await db.from("tractor_research_queue").update({ status: "failed", last_run_id: runId, last_error: message.slice(0, 1500) || `HTTP ${response.status}`, updated_at: now }).eq("id", item.id);
     }
-    const next = new Date(Date.now() + 5_000).toISOString();
-    const recoveryMessage = `${retryMarker}: ${String(result.message ?? "Gemini çıktısı eksik; daha yüksek çıktı bütçesiyle tek kurtarma denemesi hazırlanıyor.")}`;
-    await db.from("tractor_research_queue").update({
-      status: "retry",
-      last_run_id: null,
-      next_attempt_at: next,
-      last_error: recoveryMessage.slice(0, 1500),
+    return json(200, { success: Boolean(result.success), queue_id: item.id, tractor_id: tractor.id, brand: brand.name, model: tractor.model_name, http_status: response.status, research: result });
+  } catch (error) {
+    // Recover only this exact claim. The claim's updated_at is a lease token:
+    // the atomic open-run RPC changes it when last_run_id is persisted, so a
+    // later worker/run cannot be overwritten by this recovery path.
+    const message = error instanceof Error ? error.message : String(error);
+    const now = new Date().toISOString();
+    const attempts = Number(item.attempt_count ?? 0);
+    const maxAttempts = Number(item.max_attempts ?? 30);
+    const canRetry = attempts < maxAttempts;
+    const delayMinutes = Math.min(60, Math.pow(2, Math.min(attempts, 5)));
+    const nextAttemptAt = canRetry
+      ? new Date(Date.now() + delayMinutes * 60_000).toISOString()
+      : null;
+    const recoveryUpdate: AnyRow = {
+      status: canRetry ? "retry" : "failed",
+      last_error: `TC_QUEUE_WORKER_EXCEPTION_V22_6: ${message}`.slice(0, 1500),
+      next_attempt_at: nextAttemptAt,
+      completed_at: null,
       updated_at: now,
-    }).eq("id", item.id);
+    };
+    const { data: recovered, error: recoveryError } = await db
+      .from("tractor_research_queue")
+      .update(recoveryUpdate)
+      .eq("id", item.id)
+      .eq("status", "running")
+      .eq("updated_at", item.updated_at)
+      .select("id,status,attempt_count,last_run_id,next_attempt_at,last_error")
+      .maybeSingle();
+
+    if (recoveryError) {
+      console.error(`[queue-recovery] ${item.id}: ${recoveryError.message}`);
+    }
     return json(200, {
-      success: true,
+      success: false,
       queue_id: item.id,
-      tractor_id: tractor.id,
-      brand: brand.name,
-      model: tractor.model_name,
-      http_status: response.status,
-      queue_action: "requeued_for_single_larger_output_recovery",
-      previous_run_id: item.last_run_id,
-      next_attempt_at: next,
-      research: result,
+      tractor_id: item.tractor_id,
+      http_status: 500,
+      queue_action: recovered
+        ? "requeued_after_worker_exception"
+        : "claim_lease_changed_no_recovery",
+      run_id: item.last_run_id ?? null,
+      error: message.slice(0, 1200),
+      recovery: recovered ?? null,
+      recovery_error: recoveryError?.message ?? null,
+      message: recovered
+        ? "Kuyruk çalışanında beklenmeyen hata yakalandı; aynı claim güvenli biçimde retry durumuna alındı."
+        : "Kuyruk claim zamanı değişmiş; daha yeni bir worker'ın kaydı ezilmedi.",
     });
-  } else if (result.success && (result.model_found === false || result.tractor_match_required === true)) {
-    const reviewMessage = result.model_found === false
-      ? "Resmî sayfada tam model kimliği doğrulanamadı; kaynak/model kontrolü gerekiyor."
-      : "Birden fazla katalog kaydı eşleşti veya kayıt eşleştirmesi belirsiz; manuel kontrol gerekiyor.";
-    await db.from("tractor_research_queue").update({ status: "needs_source", last_run_id: runId, last_error: reviewMessage, updated_at: now }).eq("id", item.id);
-  } else if (result.success && (result.review_status === "needs_source")) {
-    await db.from("tractor_research_queue").update({ status: "needs_source", last_run_id: runId, last_error: "Araştırma tamamlandı ancak teknik bulgular kayıt altına alınamadı; kaynak/model denetimi gerekiyor.", updated_at: now }).eq("id", item.id);
-  } else if (result.success && (result.review_status || result.status === "completed" || result.message === "Bu araştırma daha önce tamamlandı.")) {
-    await db.from("tractor_research_queue").update({ status: "completed", last_run_id: runId, last_error: null, completed_at: now, updated_at: now }).eq("id", item.id);
-  } else if (result.success && (response.status === 202 || result.status === "running")) {
-    const next = new Date(Date.now() + 60_000).toISOString();
-    await db.from("tractor_research_queue").update({ status: "retry", last_run_id: runId, next_attempt_at: next, last_error: "Gemini işlemi devam ediyor; sonraki çağrıda durum kontrol edilecek.", updated_at: now }).eq("id", item.id);
-  } else if (response.status === 422) {
-    await db.from("tractor_research_queue").update({ status: "needs_source", last_run_id: runId, last_error: message.slice(0, 1500), updated_at: now }).eq("id", item.id);
-  } else if ((isRetryableProviderError(Number(result.http_status ?? response.status), message) || (/503|service_unavailable|high demand/i.test(message) && result.status === "failed")) && Number(item.attempt_count ?? 0) < 30) {
-    const delayMinutes = Math.min(60, Math.pow(2, Math.min(Number(item.attempt_count ?? 1), 5)));
-    const stillPolling = Boolean(item.last_run_id) && result.status !== "failed" && response.status !== 422;
-    await db.from("tractor_research_queue").update({ status: "retry", last_run_id: stillPolling ? String(item.last_run_id) : (response.status === 202 ? runId : null), next_attempt_at: new Date(Date.now() + delayMinutes * 60_000).toISOString(), last_error: message.slice(0, 1500), updated_at: now }).eq("id", item.id);
-  } else {
-    await db.from("tractor_research_queue").update({ status: "failed", last_run_id: runId, last_error: message.slice(0, 1500) || `HTTP ${response.status}`, updated_at: now }).eq("id", item.id);
   }
-  return json(200, { success: Boolean(result.success), queue_id: item.id, tractor_id: tractor.id, brand: brand.name, model: tractor.model_name, http_status: response.status, research: result });
 }
 
 // Process only the explicitly supplied tractor IDs. This path never calls the global
@@ -4112,8 +4162,8 @@ Deno.serve(async (req: Request) => {
       if (action === "function_version") {
         return json(200, {
           success: true,
-          function_version: "22.5",
-          build_label: "v22.5-farmall110a-fendt516gen4-deutz6165",
+          function_version: "22.6",
+          build_label: "v22.6-queue-worker-recovery-2026-11-15",
           source_rules: {
             caseih_farmall110a: "official_farmall_a_2025_brochure_v644d87af",
             fendt_516vario: "official_500_vario_gen4_1520018",
@@ -4155,4 +4205,4 @@ Deno.serve(async (req: Request) => {
   }
 });
 
-// END OF FILE - TractorCompare AI Edge Function v22.5 candidate. No database migration required; exact Farmall 110A, Fendt 516 Gen4 and Deutz-Fahr 6165 TTV sources, queue-secret function_version endpoint, previous Puma 150 / Fendt 724 safeguards retained.
+// END OF FILE - TractorCompare AI Edge Function v22.6 candidate. No database migration required; v22.5 exact model source rules retained and claimed queue worker exceptions are safely recovered with compare-and-set lease protection.
