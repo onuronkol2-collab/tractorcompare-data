@@ -1,0 +1,265 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TractorCompare AI · Veri Kontrol Paneli</title>
+<meta name="robots" content="noindex,nofollow">
+<style>
+:root{color-scheme:light;--bg:#f5f7fa;--card:#fff;--ink:#172033;--muted:#687386;--line:#e3e8ef;--green:#16794a;--greenbg:#e8f6ee;--amber:#946200;--amberbg:#fff5d9;--red:#a93030;--redbg:#fff0ef;--blue:#245cc5}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
+header{background:#102a43;color:#fff;padding:22px max(18px,calc((100% - 1120px)/2));display:flex;align-items:center;justify-content:space-between;gap:16px}
+header strong{font-size:20px}header span{color:#c9d6e2;font-size:13px}
+main{max-width:1120px;margin:24px auto;padding:0 18px 48px}.panel{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px;margin-bottom:16px;box-shadow:0 4px 18px rgba(20,37,63,.04)}
+h1{font-size:24px;margin:0 0 6px}h2{font-size:18px;margin:0 0 12px}.muted{color:var(--muted)}.small{font-size:13px}
+.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}.stat{border:1px solid var(--line);border-radius:12px;padding:14px}.stat b{display:block;font-size:28px}.stat span{font-size:13px;color:var(--muted)}
+label{display:block;font-size:13px;font-weight:650;margin:10px 0 5px}input,select,textarea{width:100%;border:1px solid #cfd7e2;border-radius:9px;padding:10px 11px;font:inherit;background:#fff;color:var(--ink)}textarea{min-height:76px;resize:vertical}
+button,.button{border:0;border-radius:9px;padding:10px 14px;background:var(--blue);color:#fff;font-weight:650;font:inherit;cursor:pointer}
+button.secondary{background:#e9eef5;color:#25364a}button.success{background:var(--green)}button.danger{background:var(--red)}button:disabled{opacity:.5;cursor:not-allowed}
+.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}.row>*{flex:0 0 auto}.row .grow{flex:1 1 240px}
+.hidden{display:none!important}.tabs{display:flex;gap:8px;flex-wrap:wrap;margin:14px 0}.tabs button{background:#e9eef5;color:#334155}.tabs button.active{background:#102a43;color:#fff}
+.badge{display:inline-block;border-radius:99px;padding:3px 9px;font-size:12px;font-weight:700}.good{color:var(--green);background:var(--greenbg)}.warn{color:var(--amber);background:var(--amberbg)}.bad{color:var(--red);background:var(--redbg)}.neutral{color:#455468;background:#edf1f5}
+.cards{display:grid;gap:14px}.finding{background:#fff;border:1px solid var(--line);border-radius:14px;padding:18px}.finding-head{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}.finding h3{font-size:17px;margin:0}.finding .value{font-size:20px;font-weight:750;margin:8px 0}.meta{display:flex;gap:7px;flex-wrap:wrap;margin:10px 0}.risk{background:var(--amberbg);border:1px solid #f1d88c;border-radius:8px;padding:9px 11px;margin:10px 0;color:#634600;font-size:13px}
+.evidence{border-left:3px solid #a8b9cf;background:#f7f9fc;padding:10px 12px;border-radius:0 8px 8px 0;margin:12px 0;font-size:13px;white-space:pre-wrap}
+.fields{display:grid;grid-template-columns:2fr 2fr 1fr;gap:10px}.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}.source{font-size:13px;overflow-wrap:anywhere}.notice{padding:12px 14px;background:#edf5ff;border:1px solid #c9ddf7;border-radius:10px;color:#274c78;margin-top:12px}
+#message{margin:10px 0;padding:10px 12px;border-radius:9px;display:none}.error{background:var(--redbg);color:var(--red)}.ok{background:var(--greenbg);color:var(--green)}
+footer{color:var(--muted);font-size:12px;text-align:center;padding:25px}
+@media(max-width:720px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}.fields{grid-template-columns:1fr}.finding-head{display:block}header{align-items:flex-start;flex-direction:column}}
+</style>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+</head>
+<body>
+<header>
+  <div><strong>🚜 TractorCompare AI</strong><br><span>Teknik veri kontrol paneli</span></div>
+  <div id="sessionLabel">Güvenli yönetici girişi</div>
+</header>
+<main>
+  <section id="loginPanel" class="panel">
+    <h1>Hoş geldin</h1>
+    <p class="muted">Bu ekran yalnızca TractorCompare AI yöneticileri içindir. Supabase gizli anahtarı istenmez ve bu sayfaya yazılmamalıdır.</p>
+    <div class="grid" style="grid-template-columns:2fr 2fr">
+      <div><label for="supabaseUrl">Supabase proje URL'si</label><input id="supabaseUrl" placeholder="https://....supabase.co" autocomplete="url"></div>
+      <div><label for="anonKey">Supabase public / anon key</label><input id="anonKey" placeholder="sb_publishable_... veya eski anon key" autocomplete="off"></div>
+    </div>
+    <div class="grid" style="grid-template-columns:1fr 1fr">
+      <div><label for="email">Yönetici e-posta adresi</label><input id="email" type="email" autocomplete="username"></div>
+      <div><label for="password">Şifre</label><input id="password" type="password" autocomplete="current-password"></div>
+    </div>
+    <div class="row" style="margin-top:14px"><button id="loginBtn">Giriş yap</button></div>
+    <div class="notice">URL ve public/anon key yalnızca bu tarayıcıda saklanır. Yönetici yetkisi Supabase kullanıcı hesabının <b>app_metadata.tc_research_admin = true</b> alanından kontrol edilir. Giriş yaptıktan sonra yetkin yoksa panel erişimi reddedilir.</div>
+  </section>
+
+  <section id="appPanel" class="hidden">
+    <div class="panel">
+      <div class="row" style="justify-content:space-between">
+        <div><h1>AI veri merkezi</h1><div class="muted small">AI kanıtı güçlü kayıtları otomatik yayımlar; riskli kayıtları burada incelemeye bırakır.</div></div>
+        <div class="row"><button id="refreshBtn" class="secondary">Yenile</button><button id="logoutBtn" class="secondary">Çıkış</button></div>
+      </div>
+      <div id="message"></div>
+      <div class="grid" style="margin-top:16px">
+        <div class="stat"><b id="statPending">–</b><span>İnceleme bekliyor</span></div>
+        <div class="stat"><b id="statAuto">–</b><span>AI otomatik onayladı</span></div>
+        <div class="stat"><b id="statApproved">–</b><span>Toplam onaylandı</span></div>
+        <div class="stat"><b id="statRejected">–</b><span>Reddedildi</span></div>
+      </div>
+    </div>
+    <div class="panel">
+      <div class="row" style="justify-content:space-between">
+        <div><h2>Teknik özellik kayıtları</h2><div class="muted small">Kaynağı, sayfayı ve kanıtı gör; gerekiyorsa değeri düzelt.</div></div>
+        <div class="row"><button id="bulkApproveBtn" class="success">Seçilenleri onayla</button></div>
+      </div>
+      <div class="tabs" id="tabs">
+        <button data-status="pending" class="active">Bekleyenler</button>
+        <button data-status="approved">Onaylananlar</button>
+        <button data-status="rejected">Reddedilenler</button>
+      </div>
+      <div id="selectAllRow" class="row small muted" style="margin:6px 0 12px"><label style="margin:0;display:flex;gap:8px;align-items:center;font-weight:500"><input type="checkbox" id="selectAll" style="width:auto"> Bu sayfadaki bekleyenleri seç</label><span id="listCount"></span></div>
+      <div id="cards" class="cards"><div class="muted">Kayıtlar yükleniyor…</div></div>
+    </div>
+  </section>
+</main>
+<footer>TractorCompare AI · Yönetici araçları · Bu panelde yapılan işlemler denetim geçmişine kaydedilir.</footer>
+<script>
+(function(){
+  const $ = id => document.getElementById(id);
+  const state = { client:null, session:null, status:"pending", findings:[] };
+  const settings = {
+    url: localStorage.getItem("tc_review_supabase_url") || "",
+    key: localStorage.getItem("tc_review_anon_key") || ""
+  };
+  $("supabaseUrl").value = settings.url;
+  $("anonKey").value = settings.key;
+
+  function message(text, isError){
+    const el=$("message"); el.textContent=text; el.className=isError?"error":"ok"; el.style.display="block";
+    window.scrollTo({top:0,behavior:"smooth"});
+  }
+  function esc(v){
+    return String(v==null?"":v).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+  }
+  function fmt(v){return v==null||v===""?"Belirtilmemiş":String(v);}
+  function setupClient(){
+    const url=$("supabaseUrl").value.trim().replace(/\/+$/,"");
+    const key=$("anonKey").value.trim();
+    if(!/^https:\/\/[a-z0-9.-]+\.supabase\.co$/i.test(url)||!key) throw new Error("Supabase URL ve public/anon key bilgilerini kontrol et.");
+    localStorage.setItem("tc_review_supabase_url",url);
+    localStorage.setItem("tc_review_anon_key",key);
+    state.client=window.supabase.createClient(url,key,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});
+  }
+  async function api(action, extra){
+    const s=await state.client.auth.getSession();
+    const token=s.data.session && s.data.session.access_token;
+    if(!token) throw new Error("Oturum süresi dolmuş. Tekrar giriş yap.");
+    const response=await fetch(localStorage.getItem("tc_review_supabase_url")+"/functions/v1/tractor-ai",{
+      method:"POST",
+      headers:{"Content-Type":"application/json","apikey":localStorage.getItem("tc_review_anon_key"),"Authorization":"Bearer "+token},
+      body:JSON.stringify(Object.assign({action:action},extra||{}))
+    });
+    const body=await response.json().catch(()=>({}));
+    if(!response.ok||body.success===false) throw new Error(body.error||("İstek başarısız: HTTP "+response.status));
+    return body;
+  }
+  function showSignedIn(session){
+    state.session=session;
+    $("loginPanel").classList.add("hidden"); $("appPanel").classList.remove("hidden");
+    $("sessionLabel").textContent=session.user.email||"Yönetici oturumu";
+  }
+  function riskList(item){
+    const q=item.quality_meta||{}; const flags=Array.isArray(q.risk_flags)?q.risk_flags:[];
+    if(!flags.length && q.auto_decision==="auto_approved") return '<span class="badge good">AI kanıtla onayladı</span>';
+    if(!flags.length) return '<span class="badge neutral">İnsan kontrolü</span>';
+    return '<div class="risk"><b>AI neden bekletti?</b><ul>'+flags.map(x=>'<li>'+esc(x.replace(/_/g," "))+'</li>').join("")+'</ul></div>';
+  }
+  function render(item){
+    const t=item.tractor||{}; const b=item.brand||{}; const d=item.document||{};
+    const source=d.source_url||item.source_url||"";
+    const page=item.page_number?("#page="+encodeURIComponent(item.page_number)):"";
+    const link=source?'<a target="_blank" rel="noopener" href="'+esc(source+page)+'">Kaynağı aç'+(item.page_number?" · PDF sayfa "+esc(item.page_number):"")+'</a>':'Kaynak bağlantısı yok';
+    const editable=item.review_status!=="rejected";
+    return '<article class="finding" data-id="'+esc(item.id)+'">'+
+      '<div class="finding-head"><div><h3>'+esc(b.name||item.proposed_brand_name||"Marka")+' '+esc(t.model_name||item.proposed_model_name||"Model")+'</h3>'+
+      '<div class="muted small">'+esc(fmt(t.model_year||item.proposed_model_year))+' · '+esc(fmt(t.variant||item.proposed_variant))+' · '+esc(fmt(t.market||item.proposed_market))+'</div></div>'+
+      '<span class="badge '+(item.review_status==="approved"?"good":item.review_status==="rejected"?"bad":"warn")+'">'+esc(item.review_status)+'</span></div>'+
+      '<div class="meta"><span class="badge neutral">'+esc(item.canonical_key||item.comparison_class||"Teknik özellik")+'</span>'+
+      '<span class="badge neutral">Güven puanı: '+esc(fmt(item.confidence))+'</span>'+
+      '<span class="badge neutral">Sayfa: '+esc(fmt(item.page_number))+'</span></div>'+
+      riskList(item)+
+      '<div class="fields">'+
+      '<div><label>Özellik adı</label><input data-field="spec_name" value="'+esc(item.spec_name)+'" '+(editable?"":"disabled")+'></div>'+
+      '<div><label>Değer</label><input data-field="spec_value" value="'+esc(item.spec_value)+'" '+(editable?"":"disabled")+'></div>'+
+      '<div><label>Birim</label><input data-field="unit" value="'+esc(item.unit||"")+'" '+(editable?"":"disabled")+'></div></div>'+
+      '<div class="evidence"><b>Kaynak kanıtı</b><br>'+esc(item.evidence_text||"Kanıt metni bulunamadı.")+'</div>'+
+      '<div class="source">'+link+' · Kaynak HTTP: '+esc(fmt(d.http_status))+' · Öncelik: '+esc(fmt(d.source_priority))+'</div>'+
+      '<div class="muted small" style="margin-top:6px">AI notu: '+esc(item.review_notes||"Yok")+'</div>'+
+      '<div class="actions">'+
+      (item.review_status==="pending"?'<label style="display:flex;align-items:center;gap:6px;margin:0;font-weight:500"><input type="checkbox" class="pick" style="width:auto"> Seç</label>':'')+
+      (item.review_status!=="rejected"?'<button class="success" data-action="approve">Onayla</button><button data-action="edit_approve">Düzelt ve onayla</button>':'')+
+      (item.review_status==="pending"?'<button class="danger" data-action="reject">Reddet</button>':'')+
+      (item.review_status!=="pending"?'<button class="secondary" data-action="undo">Son işlemi geri al</button>':'')+
+      '</div></article>';
+  }
+  async function load(){
+    $("cards").innerHTML='<div class="muted">Yükleniyor…</div>';
+    const stats=await api("admin_review_stats");
+    $("statPending").textContent=stats.stats.pending;
+    $("statAuto").textContent=stats.stats.auto_approved;
+    $("statApproved").textContent=stats.stats.approved;
+    $("statRejected").textContent=stats.stats.rejected;
+    const result=await api("admin_review_list",{status:state.status,limit:60});
+    state.findings=result.findings||[];
+    $("listCount").textContent=state.findings.length+" kayıt";
+    $("cards").innerHTML=state.findings.length?state.findings.map(render).join(""):'<div class="panel muted">Bu sekmede gösterilecek kayıt yok.</div>';
+    $("selectAllRow").classList.toggle("hidden",state.status!=="pending");
+    $("bulkApproveBtn").classList.toggle("hidden",state.status!=="pending");
+  }
+  async function review(id, action, fields){
+    const data=Object.assign({finding_id:id,review_action:action},fields||{});
+    const result=await api("admin_review_action",data);
+    if(result.audit_warning) message("İşlem kaydedildi ancak denetim kaydı yazılamadı: "+result.audit_warning,true);
+    else message(result.message||"İşlem tamamlandı.",false);
+    await load();
+  }
+  $("loginBtn").addEventListener("click",async()=>{
+    try{
+      setupClient();
+      $("loginBtn").disabled=true;
+      const {data,error}=await state.client.auth.signInWithPassword({email:$("email").value.trim(),password:$("password").value});
+      if(error) throw error;
+      showSignedIn(data.session);
+      await load();
+    }catch(e){message(e.message||"Giriş yapılamadı.",true);}
+    finally{$("loginBtn").disabled=false;}
+  });
+  $("refreshBtn").addEventListener("click",()=>load().catch(e=>message(e.message,true)));
+  $("logoutBtn").addEventListener("click",async()=>{
+    try{await state.client.auth.signOut();}catch(e){}
+    state.session=null; $("appPanel").classList.add("hidden"); $("loginPanel").classList.remove("hidden"); $("sessionLabel").textContent="Güvenli yönetici girişi";
+  });
+  $("tabs").addEventListener("click",e=>{
+    const btn=e.target.closest("button[data-status]"); if(!btn)return;
+    state.status=btn.dataset.status;
+    $("tabs").querySelectorAll("button").forEach(x=>x.classList.toggle("active",x===btn));
+    $("selectAll").checked=false;
+    load().catch(err=>message(err.message,true));
+  });
+  $("cards").addEventListener("click",async e=>{
+    const btn=e.target.closest("button[data-action]"); if(!btn)return;
+    const card=btn.closest(".finding"); if(!card)return;
+    const id=card.dataset.id, action=btn.dataset.action;
+    try{
+      btn.disabled=true;
+      if(action==="reject"){
+        const notes=window.prompt("Neden reddediyorsun? (İsteğe bağlı)","Kaynak veya değer doğrulanamadı.");
+        if(notes===null)return;
+        await review(id,"reject",{notes:notes});
+      }else if(action==="undo"){
+        if(!window.confirm("Bu kaydın son onay/red işlemini geri almak istiyor musun?"))return;
+        await review(id,"undo");
+      }else if(action==="approve"){
+        if(!window.confirm("Bu teknik özelliği mevcut kanıtıyla onaylamak istiyor musun?"))return;
+        await review(id,"approve");
+      }else if(action==="edit_approve"){
+        if(!window.confirm("Düzenlediğin değeri kaydetmek ve insan tarafından yönetilen kayıt olarak onaylamak istiyor musun?"))return;
+        await review(id,"edit_approve",{
+          spec_name:card.querySelector('[data-field="spec_name"]').value,
+          spec_value:card.querySelector('[data-field="spec_value"]').value,
+          unit:card.querySelector('[data-field="unit"]').value
+        });
+      }
+    }catch(err){message(err.message,true);}
+    finally{btn.disabled=false;}
+  });
+  $("selectAll").addEventListener("change",()=>{
+    document.querySelectorAll(".pick").forEach(x=>x.checked=$("selectAll").checked);
+  });
+  $("bulkApproveBtn").addEventListener("click",async()=>{
+    const ids=[...document.querySelectorAll(".finding")].filter(card=>card.querySelector(".pick")?.checked).map(card=>card.dataset.id);
+    if(!ids.length){message("Önce onaylamak istediğin kayıtları seç.",true);return;}
+    if(!window.confirm(ids.length+" kayıt kanıtları mevcut haliyle onaylanacak. Devam edilsin mi?"))return;
+    $("bulkApproveBtn").disabled=true;
+    let ok=0,failed=0;
+    for(const id of ids){
+      try{await api("admin_review_action",{finding_id:id,review_action:"approve"});ok++;}
+      catch(e){failed++;}
+    }
+    message(ok+" kayıt onaylandı"+(failed?"; "+failed+" kayıt hata nedeniyle beklemede kaldı.":"."),failed>0);
+    $("selectAll").checked=false;
+    $("bulkApproveBtn").disabled=false;
+    await load().catch(e=>message(e.message,true));
+  });
+  if(window.supabase&&settings.url&&settings.key){
+    setupClient();
+    state.client.auth.getSession().then(async({data})=>{
+      if(data.session){
+        showSignedIn(data.session);
+        try{await load();}catch(e){message(e.message,true);}
+      }
+    });
+    state.client.auth.onAuthStateChange((_event,session)=>{
+      if(!session){state.session=null;$("appPanel").classList.add("hidden");$("loginPanel").classList.remove("hidden");}
+    });
+  }
+})();
+</script>
+</body>
+</html>
