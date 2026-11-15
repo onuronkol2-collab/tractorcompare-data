@@ -4448,6 +4448,36 @@ async function adminReviewList(body: AnyRow) {
   return json(200, { success: true, status, findings: enriched, limit });
 }
 
+
+async function adminReviewHistory(body: AnyRow) {
+  const limit = Math.max(1, Math.min(150, Number(body.limit ?? 80) || 80));
+  const { data: events, error } = await db.from("ai_review_events")
+    .select("id,finding_id,tractor_id,actor_type,actor_user_id,action,previous_data,new_data,notes,created_at")
+    .order("created_at", { ascending: false }).limit(limit);
+  if (error) throw new Error("İşlem geçmişi okunamadı: " + error.message);
+  const rows = events ?? [];
+  const findingIds = [...new Set(rows.map((x: AnyRow) => String(x.finding_id ?? "")).filter(Boolean))];
+  const { data: findings, error: findingsError } = findingIds.length
+    ? await db.from("ai_research_findings").select("id,spec_name,spec_value,unit,tractor_id,proposed_brand_name,proposed_model_name,proposed_model_year,proposed_variant,proposed_market").in("id", findingIds)
+    : { data: [], error: null } as AnyRow;
+  if (findingsError) throw new Error("Geçmiş bulguları okunamadı: " + findingsError.message);
+  const findingMap = new Map<string, AnyRow>((findings ?? []).map((x: AnyRow) => [String(x.id), x] as [string, AnyRow]));
+  const tractorIds = [...new Set((findings ?? []).map((x: AnyRow) => String(x.tractor_id ?? "")).filter(Boolean))];
+  const { data: tractors, error: tractorsError } = tractorIds.length
+    ? await db.from("tractors").select("id,model_name,model_year,variant,market").in("id", tractorIds)
+    : { data: [], error: null } as AnyRow;
+  if (tractorsError) throw new Error("Geçmiş traktörleri okunamadı: " + tractorsError.message);
+  const tractorMap = new Map<string, AnyRow>((tractors ?? []).map((x: AnyRow) => [String(x.id), x] as [string, AnyRow]));
+  return json(200, {
+    success: true,
+    events: rows.map((event: AnyRow) => {
+      const finding = findingMap.get(String(event.finding_id ?? "")) ?? null;
+      const tractor = finding ? tractorMap.get(String(finding.tractor_id ?? "")) ?? null : null;
+      return { ...event, finding, tractor };
+    }),
+  });
+}
+
 async function adminReviewAction(body: AnyRow, actorUserId: string) {
   const findingId = String(body.finding_id ?? "").trim();
   if (!isUuid(findingId)) return json(400, { success: false, error: "Geçerli finding_id gerekli." });
@@ -4661,7 +4691,7 @@ Deno.serve(async (req: Request) => {
       if (action === "queue_stats") return await queueStats();
       if (action === "diagnose_queue_run") return await diagnoseQueueRun(body);
     }
-    if (!["start", "research", "status", "poll", "diagnose", "admin_review_stats", "admin_review_list", "admin_review_action"].includes(action)) {
+    if (!["start", "research", "status", "poll", "diagnose", "admin_review_stats", "admin_review_list", "admin_review_history", "admin_review_action"].includes(action)) {
       return json(400, { success: false, error: "Geçersiz action. start, status, diagnose veya kuyruk işlemlerinden biri kullanılmalıdır." });
     }
     const user = await authenticateUser(req);
@@ -4674,6 +4704,7 @@ Deno.serve(async (req: Request) => {
       if (!adminAllowed) return json(429, { success: false, error: "İnceleme paneli hız sınırı aşıldı. Biraz sonra tekrar deneyin." });
       if (action === "admin_review_stats") return await adminReviewStats();
       if (action === "admin_review_list") return await adminReviewList(body);
+      if (action === "admin_review_history") return await adminReviewHistory(body);
       if (action === "admin_review_action") return await adminReviewAction(body, String(user.id));
     }
     const actionKey = action === "research" ? "start" : (action === "poll" ? "status" : action);
