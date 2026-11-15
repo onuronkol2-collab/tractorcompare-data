@@ -201,6 +201,23 @@ BEGIN
     RAISE EXCEPTION 'v21.43 preflight failed: S/V mid-mounted hydraulic way rows differ from the audit.';
   END IF;
 
+  -- All six speed rows must still be the exact pending records from the audit.
+  IF (SELECT count(*) FROM public.ai_research_findings
+      WHERE id IN (
+        '11d042cc-c34b-40c0-a4d3-9146618cad6d'::uuid,
+        '28e656af-2b6f-45cf-8dcc-ce96e4f56ede'::uuid,
+        '290359bf-226e-4354-866c-b70b3fae7229'::uuid,
+        '3cff61fb-42aa-4a44-918d-4cf0aa025ba5'::uuid,
+        '62e1c218-89a0-4fd4-b398-7f6e101aa65c'::uuid,
+        'b0fdac06-3df4-4968-b2a1-8a7d6d309c9e'::uuid
+      )
+        AND canonical_key = 'maximum_speed'
+        AND page_number IN (5,6,7)
+        AND review_status = 'pending'
+        AND evidence_text ILIKE '%40 ECO%') <> 6 THEN
+    RAISE EXCEPTION 'v21.43 preflight failed: one or more maximum-speed findings differ from the audited rows.';
+  END IF;
+
   -- There must be no exact duplicate of any proposed new finding.
   IF EXISTS (
     SELECT 1
