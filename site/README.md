@@ -1,4 +1,4 @@
-# TractorMetric AI — website starter
+# TractorMetric — website starter
 
 A bilingual Astro website scaffold, stored in this repository without changing the existing Supabase research pipeline or database files.
 
@@ -11,7 +11,7 @@ A bilingual Astro website scaffold, stored in this repository without changing t
 - Indexing is disabled by default for safe previews
 - Sitemap generation is enabled only after the production domain and indexing flag are configured
 - Cloudflare Workers Static Assets deployment configuration is included
-- The user-selected brand is TractorMetric AI; domain and trademark clearance remain outstanding
+- The user-selected brand is TractorMetric; domain and trademark clearance remain outstanding
 
 ## Requirements
 
@@ -60,7 +60,7 @@ For an initial safe preview, use the Cloudflare preview URL and keep `PUBLIC_IND
 
 ## Brand
 
-The current visible identity is `TractorMetric AI`, selected by the project owner. Before launch, verify domain availability and conduct trademark clearance in the relevant markets. Update `src/config/brand.ts` only if the approved brand changes.
+The current visible identity is `TractorMetric`, selected by the project owner. Before launch, verify domain availability and conduct trademark clearance in the relevant markets. Update `src/config/brand.ts` only if the approved brand changes.
 
 ## Next implementation steps
 
