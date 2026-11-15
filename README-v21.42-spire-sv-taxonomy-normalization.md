@@ -26,6 +26,10 @@ This is a database taxonomy-only migration. It corrects exactly 18 existing pend
 
 The mechanical-shuttle vs powershuttle distinction stays in `measurement_standard`; the gear-count configuration becomes comparable across F/S/V.
 
+## v21.42 alias compatibility correction
+
+The first v21.42 draft omitted the v21.38 `Maximum traveling/travelling speed` aliases from its fallback chain. Its alias preflight correctly stopped the transaction before any finding rows changed. The SQL file now explicitly preserves US/UK spelling and the shorter `Max traveling/travelling speed` forms, with four regression checks. Use the updated SQL file currently in this branch; do not use an earlier copy.
+
 ## Safety
 
 - The SQL begins a transaction and preflights all 18 exact IDs, tractor IDs, run IDs, model names, source URLs, spec names, values, units, page numbers, existing keys/classes, and pending review state.
