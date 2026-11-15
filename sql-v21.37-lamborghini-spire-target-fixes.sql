@@ -152,7 +152,8 @@ SELECT CASE
       OR p_key IN ('brake_control', 'four_wheel_braking')
         THEN 'brakes'
 
-    WHEN p_key LIKE 'steering_%' OR p_key = 'independent_steering_pump'
+    WHEN p_key LIKE 'steering_%'
+      OR p_key IN ('independent_steering_pump', 'adjustable_steering_column')
         THEN 'steering'
 
     WHEN p_key IN (
@@ -395,7 +396,7 @@ BEGIN
         'Fuel tank capacity', '35', 'l',
         'Fuel tank capacity (with front lift/PTO) l 55 (35) — parenthetical value is the front lift/PTO configuration.',
         5, f.confidence, 'pending',
-        'Manually separated from the manufacturer's paired capacity row. Parenthetical 35 l is retained as a distinct front lift/PTO configuration; requires human approval.',
+        'Manually separated from the manufacturer capacity row. Parenthetical 35 l is retained as a distinct front lift/PTO configuration; requires human approval.',
         f.created_tractor_id, now(),
         'fuel_tank_capacity', 'capacities', 'With front lift/PTO', NULL, f.source_url
     FROM public.ai_research_findings f
@@ -424,7 +425,7 @@ BEGIN
         'Fuel tank capacity with additional tank', '75', 'l',
         'Fuel tanks capacity with additional fuel tank (with front lift/PTO) l 95 (75) — parenthetical value is the front lift/PTO configuration.',
         5, f.confidence, 'pending',
-        'Manually separated from the manufacturer's paired additional-tank capacity row. Parenthetical 75 l is retained as a distinct front lift/PTO configuration; requires human approval.',
+        'Manually separated from the manufacturer additional-tank capacity row. Parenthetical 75 l is retained as a distinct front lift/PTO configuration; requires human approval.',
         f.created_tractor_id, now(),
         'fuel_tank_capacity', 'capacities', 'Additional fuel tank; with front lift/PTO', NULL, f.source_url
     FROM public.ai_research_findings f
@@ -441,9 +442,10 @@ BEGIN
       );
 
     -- Keep the family/model badge in the name, but make the numeric comparison field match the printed max power.
+    -- Keep the catalog's existing 80 HP model designation intact.
+    -- Exact manufacturer output (76 HP maximum / 75 HP at rated speed) remains in separate pending findings.
     UPDATE public.tractors
-    SET horsepower = 76,
-        variant = NULL,
+    SET variant = NULL,
         updated_at = now()
     WHERE id = '0c8f654d-3651-401c-8f7a-0e5d488e1b37'
       AND model_name = 'Spire F Target';
@@ -466,7 +468,6 @@ BEGIN
     UPDATE public.tractors
     SET model_name = 'Spire S 80 Target',
         variant = NULL,
-        horsepower = 76,
         updated_at = now()
     WHERE id = 'f9a68e93-5534-40b7-891f-ba0249fe25db'
       AND model_name = 'Spire S/V Target';
@@ -478,7 +479,7 @@ BEGIN
     )
     SELECT
         t.brand_id, 'Spire V 80 Target', t.model_year, NULL, t.market, 'draft',
-        76, t.engine, t.weight_kg, t.drivetrain, t.transmission,
+        t.horsepower, t.engine, t.weight_kg, t.drivetrain, t.transmission,
         now(), now()
     FROM public.tractors t
     WHERE t.id = 'f9a68e93-5534-40b7-891f-ba0249fe25db'
