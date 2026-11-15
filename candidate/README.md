@@ -49,7 +49,8 @@ Use only the intended administrator UUIDs. Do not put this allowlist or service-
 
 - The repository snapshot has no `supabase/config.toml` or existing `supabase/functions/` directory, so the live Edge Function name and JWT deployment configuration must be confirmed before deployment.
 - The canonical taxonomy corrections (maximum power with boost/IPM/DP, transmission oil capacity, and hitch category) need a final compatibility check against the app's comparison UI before a data-changing migration is authored.
-- PDF content-type verification, source discovery behavior, and a complete type-check/test suite remain to be validated.
-- The previous cross-document notes contamination is not retroactively rewritten. A separate read-only report must identify affected rows before any repair is considered.
+- The existing source pipeline checks the PDF `%PDF-` signature and requires HTML content types for web pages. It still needs a complete Deno type-check and staging tests against representative manufacturer sources.
+- Run `candidate/sql/20261115_conflict_and_notes_audit.sql` before resolving conflicts. It lists each duplicate active run with document/finding counts and identifies documents carrying the legacy `Gemini summary:` notes marker.
+- The previous cross-document notes contamination is not retroactively rewritten. Use that read-only report to identify affected rows before any repair is considered.
 - The 24 Agrale findings without page numbers remain pending until the PDF pages are visually checked.
 - All manual `tractor_specs` rows and current official PDF evidence remain protected.
