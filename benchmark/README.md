@@ -8,9 +8,19 @@ This benchmark is isolated from production. It does not call Supabase, update th
 |---|---|---:|
 | Anthropic | claude-sonnet-5-5 | $2 / $10 |
 | OpenAI | gpt-6.1-sol | $2 / $10 |
-| Google | gemini-3.8-flash | $0.75 / $4.50 through 2026-12-31; $1.50 / $7.50 from 2027-01-01 |
+| Google | gemini-3.8-flash | $0.75 / $3.75 through 2026-12-31; $1.50 / $7.50 from 2027-01-01 |
 
 Prices are provider-published rates and can change. Re-check provider billing before the full run.
+
+## Recommended now: free Gemini-only mode
+
+The runner defaults to BENCHMARK_PROVIDERS=gemini, so it calls only Gemini unless you explicitly select other providers. Free-tier input and output are free within Google's model limits and quotas. Confirm the selected project is marked Free Tier in Google AI Studio and has no paid billing account linked.
+
+Google states that Free Tier content may be used to improve its products. This benchmark uses public tractor brochures/manuals; do not submit private, confidential, or customer data.
+
+GEMINI_BILLING_TIER=free is only a reporting label. It does not control Google billing. Set it only after checking the project's actual Free Tier status in AI Studio. If not verified, leave it unset so the runner reports a conservative paid list-price estimate.
+
+Claude and OpenAI remain supported for later, once the site can cover API costs.
 
 ## Fair comparison
 
@@ -50,22 +60,34 @@ We will pick 20 distinct first-party PDFs across manufacturers, tractor classes,
 
 ## API keys
 
-Required local environment variables:
-- ANTHROPIC_API_KEY
-- OPENAI_API_KEY
-- GEMINI_API_KEY
+For the current free Gemini-only test, only GEMINI_API_KEY is required. Claude and OpenAI keys are optional and needed only for a future paid multi-model run.
 
 Keep keys in a secure local environment or secret manager. Never put them in this manifest, SQL, GitHub, or ChatGPT messages.
 
 ## Run with Deno 2.x
 
-Copy manifest.example.json to manifest.json, add 17 more cases, then from repository root run:
+The example manifest already contains 20 curated cases. Copy benchmark/manifest.example.json to benchmark/manifest.json.
 
-deno run --allow-read=./benchmark --allow-write=./benchmark/out --allow-net --allow-env=ANTHROPIC_API_KEY,OPENAI_API_KEY,GEMINI_API_KEY,ANTHROPIC_MODEL,OPENAI_MODEL,GEMINI_MODEL,BENCHMARK_LIMIT ./benchmark/model_benchmark.ts ./benchmark/manifest.json
+### Free Gemini smoke test (PowerShell)
 
-The runner processes up to 20 cases sequentially and saves raw answers, parsed JSON, token usage, estimated API cost, latency, and PDF checksums under benchmark/out.
+1. Create an API key in Google AI Studio: https://aistudio.google.com/.
+2. Confirm the project is marked Free Tier in AI Studio. The billing label in the script does not change the actual project billing tier.
+3. In PowerShell, set the following variables:
 
-Use BENCHMARK_LIMIT=1 for an initial connectivity smoke test before the full 20-PDF run.
+$env:GEMINI_API_KEY = YOUR_GEMINI_API_KEY
+$env:BENCHMARK_PROVIDERS = gemini
+$env:GEMINI_BILLING_TIER = free
+$env:BENCHMARK_LIMIT = 1
+
+Then run:
+
+deno run --allow-read=./benchmark --allow-write=./benchmark/out --allow-net --allow-env=GEMINI_API_KEY,GEMINI_MODEL,BENCHMARK_LIMIT,BENCHMARK_PROVIDERS,GEMINI_BILLING_TIER ./benchmark/model_benchmark.ts ./benchmark/manifest.json
+
+After the first PDF succeeds, set BENCHMARK_LIMIT to 20 and repeat for the full Gemini-only run. The runner downloads each PDF once and saves raw answers, parsed JSON, token usage, declared billing tier, price estimate, latency, and PDF checksum under benchmark/out.
+
+### Optional paid comparison later
+
+When the site earns revenue and you choose to pay for a broader comparison, explicitly set BENCHMARK_PROVIDERS to anthropic,openai,gemini and provide all three API keys. Gemini-only remains the default, so paid providers are not called accidentally.
 
 ## Ground truth and scoring
 
