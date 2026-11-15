@@ -7,6 +7,10 @@ BEGIN;
 
 DO $preflight$
 BEGIN
+  IF current_setting('server_version_num')::integer < 150000 THEN
+    RAISE EXCEPTION 'PostgreSQL 15 or newer is required for security_invoker public catalogue views.';
+  END IF;
+
   IF to_regclass('public.data_sources') IS NULL
      OR to_regclass('public.tractor_specs') IS NULL
      OR to_regclass('public.tractors') IS NULL
