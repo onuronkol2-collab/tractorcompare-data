@@ -10,6 +10,7 @@
 - New Edge Function candidate: `indexim-v22.0.ts`.
 - New database migration: `supabase/migrations/20261115000100_tractorcompare_v22_hardening.sql`.
 - Read-only verification: `supabase/verification/20261115000200_v22_hardening_verify.sql`.
+- Non-destructive rollback: `supabase/rollback/20261115000100_tractorcompare_v22_hardening_rollback.sql`.
 
 No current database rows were deleted, merged, reclassified or mass-updated. Existing `ai_research_documents.notes`, source URLs, final URLs, hashes, page references, findings, AI-managed specs and human-managed `tractor_specs` are preserved. The migration does not backfill identity evidence from legacy notes. New identity columns on existing documents default to unverified.
 
@@ -41,7 +42,7 @@ The migration is transactional and uses `IF NOT EXISTS` for added columns/table.
 - Adds a versioned taxonomy alias resolver and points the existing taxonomy trigger function to it.
 - Leaves `tc_set_finding_canonical_key()` unattached; no competing trigger is introduced.
 
-The SQL is prepared but has **not** been run against Supabase.
+The SQL is prepared but has **not** been run against Supabase. The rollback script restores the previous alias resolver, taxonomy trigger behavior and queue-claim search path, and removes v22 runtime RPCs/guards. It intentionally keeps the added identity/ownership columns and restricted rate-limit table so any v22 evidence or ownership values are not discarded.
 
 ## Important pre-deployment decisions
 
