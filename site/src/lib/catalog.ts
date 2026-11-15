@@ -519,6 +519,7 @@ const approvedManufacturerHosts: Record<string, string[]> = {
   "başak traktör": ["basaktraktor.com.tr"],
   "new holland": ["newholland.com.tr", "newholland.com"],
   "tym": ["tym.world"],
+  "fendt": ["fendt.com"],
 };
 
 export function officialManufacturerSourceUrl(
