@@ -74,10 +74,10 @@ The example manifest already contains 20 curated cases. Copy benchmark/manifest.
 2. Confirm the project is marked Free Tier in AI Studio. The billing label in the script does not change the actual project billing tier.
 3. In PowerShell, set the following variables:
 
-$env:GEMINI_API_KEY = YOUR_GEMINI_API_KEY
-$env:BENCHMARK_PROVIDERS = gemini
-$env:GEMINI_BILLING_TIER = free
-$env:BENCHMARK_LIMIT = 1
+$env:GEMINI_API_KEY = "YOUR_GEMINI_API_KEY"
+$env:BENCHMARK_PROVIDERS = "gemini"
+$env:GEMINI_BILLING_TIER = "free"
+$env:BENCHMARK_LIMIT = "1"
 
 Then run:
 
