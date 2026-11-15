@@ -2422,6 +2422,9 @@ async function startResearch(body: AnyRow, callerUserId: string | null = null) {
     return json(400, { success: false, error: "queue_id geçerli bir UUID olmalıdır." });
   }
   const queueId = rawQueueId;
+  if (callerUserId !== null && queueId) {
+    return json(400, { success: false, error: "queue_id yalnızca x-queue-secret ile doğrulanan sunucu kuyruğu tarafından gönderilebilir." });
+  }
   const outputRecoveryRetry = callerUserId === null && Boolean(queueId) && body.output_recovery_retry === true;
   let pinnedTarget: AnyRow | null = null;
   if (targetTractorId) {
