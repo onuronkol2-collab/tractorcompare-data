@@ -11,6 +11,10 @@ DECLARE
   v_updated integer := 0;
   v_inserted integer := 0;
   v_pending_count integer := 0;
+  v_run_updated integer := 0;
+  v_meta_type text;
+  v_run_meta jsonb;
+  v_run_summary text;
 BEGIN
   PERFORM 1
   FROM public.ai_research_findings
@@ -185,6 +189,71 @@ BEGIN
   GET DIAGNOSTICS v_inserted = ROW_COUNT;
   IF v_inserted <> 1 THEN
     RAISE EXCEPTION 'v21.42 rolled back: expected one S Target Engine fuel system finding; inserted %.', v_inserted;
+  END IF;
+
+  -- Keep the run-level audit counters aligned with the one manual atomic split.
+  SELECT data_type INTO v_meta_type
+  FROM information_schema.columns
+  WHERE table_schema = 'public'
+    AND table_name = 'ai_research_runs'
+    AND column_name = 'result_meta';
+
+  IF v_meta_type NOT IN ('json', 'jsonb') THEN
+    RAISE EXCEPTION 'v21.42 rolled back: unsupported ai_research_runs.result_meta type: %.', v_meta_type;
+  END IF;
+
+  SELECT COALESCE(result_meta::jsonb, '{}'::jsonb)
+    INTO v_run_meta
+  FROM public.ai_research_runs
+  WHERE id = '37450e92-79bd-4bca-8daf-c720676ab4ff'::uuid
+    AND tractor_id = 'f9a68e93-5534-40b7-891f-ba0249fe25db'::uuid
+    AND status = 'completed'
+  FOR UPDATE;
+
+  IF NOT FOUND THEN
+    RAISE EXCEPTION 'v21.42 rolled back: completed Spire S research run was not found for metadata synchronization.';
+  END IF;
+
+  v_run_meta := v_run_meta
+    || jsonb_build_object(
+      'findings_saved', 57,
+      'pending_findings', 57,
+      'manual_normalization', jsonb_build_object(
+        'reason', 'The composite Injection system cell on official PDF page 6 was split into separate Engine fuel system and Engine injection pressure findings.',
+        'performed', true,
+        'additional_findings_created', 1,
+        'all_findings_remain_pending', true,
+        'published_or_written_to_tractor_specs', false
+      ),
+      'dedupe_diagnostics',
+        COALESCE(v_run_meta -> 'dedupe_diagnostics', '{}'::jsonb)
+        || jsonb_build_object(
+          'persisted_findings_total', 57,
+          'persisted_pending_findings', 57
+        )
+    );
+
+  v_run_summary := 'Lamborghini Trattori Spire S 80 Target was verified against the official manufacturer PDF page 6. The original 56 extracted findings remain source-backed; one composite injection-system cell was manually split into two atomic pending findings, resulting in 57 pending findings. No specifications were approved or published.';
+
+  IF v_meta_type = 'jsonb' THEN
+    EXECUTE
+      'UPDATE public.ai_research_runs SET result_meta = $1, summary = $2 '
+      || 'WHERE id = $3 AND tractor_id = $4 AND status = ''completed'''
+      USING v_run_meta, v_run_summary,
+        '37450e92-79bd-4bca-8daf-c720676ab4ff'::uuid,
+        'f9a68e93-5534-40b7-891f-ba0249fe25db'::uuid;
+  ELSE
+    EXECUTE
+      'UPDATE public.ai_research_runs SET result_meta = $1::json, summary = $2 '
+      || 'WHERE id = $3 AND tractor_id = $4 AND status = ''completed'''
+      USING v_run_meta, v_run_summary,
+        '37450e92-79bd-4bca-8daf-c720676ab4ff'::uuid,
+        'f9a68e93-5534-40b7-891f-ba0249fe25db'::uuid;
+  END IF;
+
+  GET DIAGNOSTICS v_run_updated = ROW_COUNT;
+  IF v_run_updated <> 1 THEN
+    RAISE EXCEPTION 'v21.42 rolled back: expected exactly one Spire S run metadata update; got %.', v_run_updated;
   END IF;
 
   SELECT COUNT(*) INTO v_pending_count
