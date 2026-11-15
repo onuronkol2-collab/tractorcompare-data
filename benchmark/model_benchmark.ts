@@ -20,7 +20,7 @@ const MODELS = {
   openai: { id: Deno.env.get("OPENAI_MODEL") ?? "gpt-6.1-sol",
     key: Deno.env.get("OPENAI_API_KEY") ?? "", inputRate: 2, outputRate: 10 },
   gemini: { id: Deno.env.get("GEMINI_MODEL") ?? "gemini-3.8-flash",
-    key: Deno.env.get("GEMINI_API_KEY") ?? "", inputRate: 0.75, outputRate: 3.75 }
+    key: Deno.env.get("GEMINI_API_KEY") ?? "", inputRate: 0.75, outputRate: 4.5 }
 } as const;
 
 function checkKeys(): void {
