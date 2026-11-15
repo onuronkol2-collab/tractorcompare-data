@@ -503,36 +503,29 @@ BEGIN
                 jsonb_set(
                     jsonb_set(
                         jsonb_set(
-                            coalesce(result_meta, '{}'::jsonb),
-                            '{findings_saved}', to_jsonb(v_total_findings), true
+                            jsonb_set(
+                                jsonb_set(
+                                    coalesce(result_meta, '{}'::jsonb),
+                                    '{findings_saved}', to_jsonb(v_total_findings), true
+                                ),
+                                '{pending_findings}', to_jsonb(v_pending_findings), true
+                            ),
+                            '{dedupe_diagnostics,persisted_findings_total}', to_jsonb(v_total_findings), true
                         ),
-                        '{pending_findings}', to_jsonb(v_pending_findings), true
+                        '{dedupe_diagnostics,persisted_pending_findings}', to_jsonb(v_pending_findings), true
                     ),
-                    '{dedupe_diagnostics,persisted_findings_total}', to_jsonb(v_total_findings), true
+                    '{dedupe_diagnostics,newly_inserted_findings}', to_jsonb(v_total_findings), true
                 ),
-                '{dedupe_diagnostics,persisted_pending_findings}', to_jsonb(v_pending_findings), true
+                '{confidence_diagnostics,persisted_count}', to_jsonb(v_total_findings), true
             ),
-            '{dedupe_diagnostics,newly_inserted_findings}', to_jsonb(v_total_findings), true
-        ),
-        '{confidence_diagnostics,persisted_count}',
-        to_jsonb(v_total_findings),
-        true
-        ),
-        result_meta = jsonb_set(
-            jsonb_set(
-                coalesce(result_meta, '{}'::jsonb),
-                '{manual_normalization}',
-                jsonb_build_object(
-                    'performed', true,
-                    'reason', 'Parenthetical fuel-tank capacity values were preserved as separate configuration-specific findings; taxonomy aliases for the official Lamborghini table labels were normalized.',
-                    'additional_findings_created', 2,
-                    'all_findings_remain_pending', true,
-                    'published_or_written_to_tractor_specs', false
-                ),
-                true
+            '{manual_normalization}',
+            jsonb_build_object(
+                'performed', true,
+                'reason', 'Parenthetical fuel-tank capacity values were preserved as separate configuration-specific findings; taxonomy aliases for the official Lamborghini table labels were normalized.',
+                'additional_findings_created', 2,
+                'all_findings_remain_pending', true,
+                'published_or_written_to_tractor_specs', false
             ),
-            '{confidence_diagnostics,persisted_count}',
-            to_jsonb(v_total_findings),
             true
         )
     WHERE id = '374814b4-22c5-47bc-a2b3-2045e718e733';
