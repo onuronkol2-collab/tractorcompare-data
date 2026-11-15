@@ -1,0 +1,45 @@
+name: Site build validation
+
+on:
+  pull_request:
+    paths:
+      - "site/**"
+      - ".github/workflows/site-build.yml"
+  push:
+    branches:
+      - main
+    paths:
+      - "site/**"
+      - ".github/workflows/site-build.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: site
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22.23.4"
+
+      - name: Install dependencies
+        run: npm install --no-audit --no-fund
+
+      - name: Build Astro site
+        run: npm run build
+
+      - name: Verify both language routes and safe preview indexing
+        run: |
+          test -f dist/index.html
+          test -f dist/tr/index.html
+          test -f dist/robots.txt
+          grep -q "noindex,nofollow" dist/index.html
+          grep -q "Disallow: /" dist/robots.txt
