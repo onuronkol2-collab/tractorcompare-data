@@ -122,6 +122,20 @@ function getText(payload: Row, provider: string): string {
   return parts.filter((x: Row) => typeof x.text === "string").map((x: Row) => x.text).join("\n");
 }
 
+async function fetchWithRetry(url: string, init: RequestInit, provider: string): Promise<Response> {
+  const retryable = new Set([500, 502, 503, 504]);
+  const delays = [15000, 30000];
+  for (let attempt = 0; attempt < 3; attempt++) {
+    console.log(provider + ': sending request (' + (attempt + 1) + '/3)...');
+    const response = await fetch(url, { ...init, signal: AbortSignal.timeout(240000) });
+    if (!retryable.has(response.status) || attempt === 2) return response;
+    const waitMs = delays[attempt];
+    console.log(provider + ' HTTP ' + response.status + '; temporary server load. Retrying in ' +
+      Math.round(waitMs / 1000) + ' seconds (' + (attempt + 2) + '/3)...');
+    await new Promise((resolve) => setTimeout(resolve, waitMs));
+  }
+  throw new Error(provider + ' request failed after retry attempts.');
+}
 async function callModel(provider: Provider, item: TestCase, pdf64: string): Promise<Row> {
   const model = modelFor(provider);
   const started = Date.now();
@@ -154,7 +168,7 @@ async function callModel(provider: Provider, item: TestCase, pdf64: string): Pro
       signal: AbortSignal.timeout(240000)
     });
   } else {
-    response = await fetch(
+    response = await fetchWithRetry(
       "https://generativelanguage.googleapis.com/v1beta/models/" + encodeURIComponent(model.id) +
       ":generateContent",
       {
@@ -166,9 +180,9 @@ async function callModel(provider: Provider, item: TestCase, pdf64: string): Pro
             { text: promptFor(item) }
           ] }],
           generationConfig: { maxOutputTokens: 12000, responseMimeType: "application/json" }
-        }),
-        signal: AbortSignal.timeout(240000)
-      }
+        })
+      },
+      provider
     );
   }
   const payload = await response.json().catch(() => ({})) as Row;
@@ -216,6 +230,7 @@ async function main(): Promise<void> {
     console.log("PDF bytes " + pdf.bytes + "; SHA-256 " + pdf.sha256);
     for (const provider of providers) {
       try {
+        console.log(provider + ": PDF downloaded; starting model analysis...");
         const result = await callModel(provider, item, pdf.b64);
         results.push({
           case_id: item.id, manufacturer: item.manufacturer, model_name: item.model,
