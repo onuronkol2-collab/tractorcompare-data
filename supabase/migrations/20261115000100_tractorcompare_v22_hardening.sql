@@ -73,9 +73,11 @@ BEGIN
   END IF;
 
   v_window_started_at := pg_catalog.to_timestamp(
-    pg_catalog.floor(
-      extract(epoch FROM pg_catalog.clock_timestamp()) / p_window_seconds
-    ) * p_window_seconds
+    (
+      pg_catalog.floor(
+        extract(epoch FROM pg_catalog.clock_timestamp()) / p_window_seconds
+      ) * p_window_seconds
+    )::double precision
   );
 
   DELETE FROM public.tc_edge_rate_limits
