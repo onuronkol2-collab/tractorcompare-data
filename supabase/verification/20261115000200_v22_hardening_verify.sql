@@ -96,19 +96,24 @@ WITH reports AS (
     pg_catalog.jsonb_build_object(
       'case', v.case_name,
       'actual', public.tc_canonical_spec_key_v22_alias(v.spec_name, v.evidence_text),
+      'actual_class', public.tc_canonical_spec_class(public.tc_canonical_spec_key_v22_alias(v.spec_name, v.evidence_text)),
       'expected', v.expected_key,
+      'expected_class', v.expected_class,
       'pass', public.tc_canonical_spec_key_v22_alias(v.spec_name, v.evidence_text) = v.expected_key
+        AND public.tc_canonical_spec_class(public.tc_canonical_spec_key_v22_alias(v.spec_name, v.evidence_text)) = v.expected_class
     )
   FROM (VALUES
-    ('base max power', 'Maximum engine power', NULL::text, 'engine_max_power'),
-    ('boosted power', 'Maximum power with boost', NULL::text, 'engine_max_power_with_boost'),
-    ('IPM power', 'Maximum power with IPM', NULL::text, 'engine_max_power_with_ipm'),
-    ('DP power', 'Maximum power with DP', NULL::text, 'engine_max_power_with_dp'),
-    ('CPM power', 'Maximum power with CPM', NULL::text, 'engine_max_power_with_cpm'),
-    ('transmission oil', 'Transmission oil capacity', NULL::text, 'transmission_oil_capacity'),
-    ('rear hitch category', 'Arka askı bağlantısı', '3 Points - Category I Hitch', 'three_point_linkage_category'),
-    ('three point category', '3-point hitch category', 'Category, 3-point hitch I', 'three_point_linkage_category')
-  ) AS v(case_name, spec_name, evidence_text, expected_key)
+    ('base max power', 'Maximum engine power', NULL::text, 'engine_max_power', 'engine'),
+    ('boosted power', 'Maximum power with boost', NULL::text, 'engine_max_power_with_boost', 'engine'),
+    ('Turkish boosted power', 'Maksimum Motor Gücü (Ek Güç Üretimi İle)', NULL::text, 'engine_max_power_with_boost', 'engine'),
+    ('IPM power', 'Maximum power with IPM', NULL::text, 'engine_max_power_with_ipm', 'engine'),
+    ('DP power', 'Maximum power with DP', NULL::text, 'engine_max_power_with_dp', 'engine'),
+    ('CPM power', 'Maximum power with CPM', NULL::text, 'engine_max_power_with_cpm', 'engine'),
+    ('rated-speed power', 'Maximum power at rated engine speed', NULL::text, 'engine_rated_power', 'engine'),
+    ('transmission oil', 'Transmission oil capacity', NULL::text, 'transmission_oil_capacity', 'capacities'),
+    ('rear hitch category', 'Arka askı bağlantısı', '3 Points - Category I Hitch', 'three_point_linkage_category', 'implements'),
+    ('three point category', '3-point hitch category', 'Category, 3-point hitch I', 'three_point_linkage_category', 'implements')
+  ) AS v(case_name, spec_name, evidence_text, expected_key, expected_class)
 
   UNION ALL
   SELECT
