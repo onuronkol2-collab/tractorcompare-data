@@ -29,12 +29,22 @@ SELECT
     ELSE false END AS view_uses_security_barrier;
 
 SELECT
+  c.relname AS table_name,
+  c.relrowsecurity AS rls_enabled
+FROM pg_catalog.pg_class AS c
+JOIN pg_catalog.pg_namespace AS n ON n.oid = c.relnamespace
+WHERE n.nspname = 'public'
+  AND c.relname IN ('data_sources', 'tractor_specs', 'tractors', 'brands')
+ORDER BY c.relname;
+
+SELECT
   has_column_privilege('anon', 'public.data_sources', 'id', 'SELECT') AS anon_can_read_source_id,
   has_column_privilege('anon', 'public.data_sources', 'publisher', 'SELECT') AS anon_can_read_publisher,
   has_column_privilege('anon', 'public.data_sources', 'source_url', 'SELECT') AS anon_can_read_source_url,
   has_column_privilege('anon', 'public.data_sources', 'source_type', 'SELECT') AS anon_can_read_source_type,
   has_column_privilege('anon', 'public.data_sources', 'accessed_at', 'SELECT') AS anon_can_read_accessed_at,
-  has_table_privilege('anon', 'public.data_sources', 'SELECT') AS anon_has_full_table_select;
+  has_table_privilege('anon', 'public.data_sources', 'SELECT') AS anon_has_full_table_select,
+  has_table_privilege('authenticated', 'public.data_sources', 'SELECT') AS authenticated_has_full_table_select;
 
 SELECT
   policyname,
