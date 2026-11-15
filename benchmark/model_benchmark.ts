@@ -110,7 +110,7 @@ async function callModel(provider: keyof typeof MODELS, item: TestCase, pdf64: s
       method: "POST",
       headers: { "x-api-key": model.key, "anthropic-version": "2023-06-01", "content-type": "application/json" },
       body: JSON.stringify({
-        model: model.id, max_tokens: 12000, temperature: 0,
+        model: model.id, max_tokens: 12000,
         messages: [{ role: "user", content: [
           { type: "document", source: { type: "base64", media_type: "application/pdf", data: pdf64 } },
           { type: "text", text: promptFor(item) }
@@ -123,7 +123,7 @@ async function callModel(provider: keyof typeof MODELS, item: TestCase, pdf64: s
       method: "POST",
       headers: { "authorization": "Bearer " + model.key, "content-type": "application/json" },
       body: JSON.stringify({
-        model: model.id, max_output_tokens: 12000, temperature: 0,
+        model: model.id, max_output_tokens: 12000,
         input: [{ role: "user", content: [
           { type: "input_file", filename: item.filename || item.id + ".pdf",
             file_data: "data:application/pdf;base64," + pdf64, detail: "high" },
