@@ -45,6 +45,13 @@ Use only the intended administrator UUIDs. Do not put this allowlist or service-
 3. After the duplicate active-run audit is resolved, apply `supabase/migrations/202611150002_tc_active_research_unique_index.sql`. It refuses to create the index while any tractor has more than one queued/running run. It does not delete or rewrite records.
 4. Configure `TC_RESEARCH_ALLOWED_USER_IDS`, then deploy the candidate file to the correct existing Supabase Edge Function only after local/Deno type-checking and staging verification.
 
+## Read-only database audits to run next
+
+- `candidate/sql/20261115_conflict_and_notes_audit.sql`: duplicate active runs, per-run document/finding counts, and documents carrying the legacy merged-notes marker.
+- `candidate/sql/20261115_taxonomy_audit.sql`: current SQL function definitions, trigger wiring, canonical-key usage counts, and representative technical-spec/finding rows for power/hitch/transmission-oil taxonomy.
+
+Both audit scripts are read-only and do not modify the database.
+
 ## Remaining gates before production
 
 - The repository snapshot has no `supabase/config.toml` or existing `supabase/functions/` directory, so the live Edge Function name and JWT deployment configuration must be confirmed before deployment.
