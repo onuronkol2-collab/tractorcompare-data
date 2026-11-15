@@ -269,14 +269,6 @@ SET spec_name = 'Injection type',
 WHERE id = '1a2026a9-348b-45f4-91d7-efd89ed0f7bd'::uuid
   AND review_status = 'pending';
 
--- Normalize F's injection-pressure display label to match S/V while retaining its key/value.
-UPDATE public.ai_research_findings
-SET spec_name = 'Engine injection pressure',
-    review_notes = 'Canonical display label aligned with the other Spire F/S/V findings; source value and evidence are unchanged.'
-WHERE id = '0a049f71-e6e0-4ce4-aa42-c09f62982b14'::uuid
-  AND spec_name = 'Injection pressure'
-  AND review_status = 'pending';
-
 -- 4) Preserve the explicit capacities hidden in the availability-only S/V findings.
 UPDATE public.ai_research_findings
 SET spec_value = '1500',
