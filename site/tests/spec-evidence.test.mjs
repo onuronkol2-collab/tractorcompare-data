@@ -98,3 +98,10 @@ test("missing evidence never exposes manufacturer URL", () => {
   assert.equal(officialManufacturerSourceUrl({...official, evidence_text:null},"New Holland"),null);
   assert.equal(officialManufacturerSourceUrl({...official, verified_at:null},"New Holland"),null);
 });
+
+test("2021 original Massey Ferguson brochure gets a link when evidence is checked", () => {
+  const mfSource = "https://www.masseyferguson.com/content/dam/public/masseyfergusonglobal/markets/en_za/assets/productbrochures/tractors/mf-4700/17346_MF%204700-Brochure_South_Africa-2021.pdf";
+  assert.equal(officialManufacturerSourceUrl({
+    ...official, source_url: mfSource,
+  }, "Massey Ferguson"), mfSource);
+});

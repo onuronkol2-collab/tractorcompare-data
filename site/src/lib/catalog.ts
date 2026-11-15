@@ -520,6 +520,7 @@ const approvedManufacturerHosts: Record<string, string[]> = {
   "new holland": ["newholland.com.tr", "newholland.com"],
   "tym": ["tym.world"],
   "fendt": ["fendt.com"],
+  "massey ferguson": ["masseyferguson.com"],
 };
 
 export function officialManufacturerSourceUrl(
