@@ -15,19 +15,33 @@ const FIELDS = [
 ];
 
 const MODELS = {
-  anthropic: { id: Deno.env.get("ANTHROPIC_MODEL") ?? "claude-sonnet-5-5",
-    key: Deno.env.get("ANTHROPIC_API_KEY") ?? "", inputRate: 2, outputRate: 10 },
-  openai: { id: Deno.env.get("OPENAI_MODEL") ?? "gpt-6.1-sol",
-    key: Deno.env.get("OPENAI_API_KEY") ?? "", inputRate: 2, outputRate: 10 },
-  gemini: { id: Deno.env.get("GEMINI_MODEL") ?? "gemini-3.8-flash",
-    key: Deno.env.get("GEMINI_API_KEY") ?? "", inputRate: 0.75, outputRate: 3.75 }
+  anthropic: { defaultId: "claude-sonnet-5-5", inputRate: 2, outputRate: 10 },
+  openai: { defaultId: "gpt-6.1-sol", inputRate: 2, outputRate: 10 },
+  gemini: { defaultId: "gemini-3.8-flash", inputRate: 0.75, outputRate: 3.75 }
 } as const;
 
-function checkKeys(providers: (keyof typeof MODELS)[]): void {
-  const missing = providers.filter((provider) => !MODELS[provider].key);
-  if (missing.length) throw new Error("Missing API keys for selected providers: " + missing.join(", "));
+type Provider = keyof typeof MODELS;
+const PROVIDER_ENV: Record<Provider, { model: string; key: string }> = {
+  anthropic: { model: "ANTHROPIC_MODEL", key: "ANTHROPIC_API_KEY" },
+  openai: { model: "OPENAI_MODEL", key: "OPENAI_API_KEY" },
+  gemini: { model: "GEMINI_MODEL", key: "GEMINI_API_KEY" }
+};
+
+function modelFor(provider: Provider): { id: string; key: string; inputRate: number; outputRate: number } {
+  const envNames = PROVIDER_ENV[provider];
+  const config = MODELS[provider];
+  return {
+    id: Deno.env.get(envNames.model) ?? config.defaultId,
+    key: Deno.env.get(envNames.key) ?? "",
+    inputRate: config.inputRate,
+    outputRate: config.outputRate
+  };
 }
 
+function checkKeys(providers: Provider[]): void {
+  const missing = providers.filter((provider) => !modelFor(provider).key);
+  if (missing.length) throw new Error("Missing API keys for selected providers: " + missing.join(", "));
+}
 function toBase64(bytes: Uint8Array): string {
   let binary = "";
   for (let i = 0; i < bytes.length; i += 32768) {
@@ -101,8 +115,8 @@ function getText(payload: Row, provider: string): string {
   return parts.filter((x: Row) => typeof x.text === "string").map((x: Row) => x.text).join("\n");
 }
 
-async function callModel(provider: keyof typeof MODELS, item: TestCase, pdf64: string): Promise<Row> {
-  const model = MODELS[provider];
+async function callModel(provider: Provider, item: TestCase, pdf64: string): Promise<Row> {
+  const model = modelFor(provider);
   const started = Date.now();
   let response: Response;
   if (provider === "anthropic") {
@@ -210,7 +224,7 @@ async function main(): Promise<void> {
         results.push({
           case_id: item.id, manufacturer: item.manufacturer, model_name: item.model,
           variant: item.variant ?? null, pdf_url: item.pdf_url, pdf_sha256: pdf.sha256,
-          provider, model: MODELS[provider].id, error: message
+          provider, model: modelFor(provider).id, error: message
         });
         console.error(provider + " failed: " + message);
       }
