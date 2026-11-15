@@ -10,8 +10,8 @@ const title = isEnglish
   ? tractor.brand_name+" "+tractor.model_name+" specifications | TractorVS"
   : tractor.brand_name+" "+tractor.model_name+" teknik özellikleri | TractorVS";
 const description = isEnglish
-  ? "Source-linked technical specifications for "+tractor.brand_name+" "+tractor.model_name+"."
-  : tractor.brand_name+" "+tractor.model_name+" modelinin kaynak bağlantılı teknik özellikleri.";
+  ? "Technical specifications with visible source and evidence status for "+tractor.brand_name+" "+tractor.model_name+"."
+  : tractor.brand_name+" "+tractor.model_name+" modelinin kaynak ve doğrulama durumu belirtilmiş teknik özellikleri.";
 const summaryItems = [
   {label:isEnglish?"Power":"Güç",value:tractor.horsepower!=null?tractor.horsepower+" HP":null},
   {label:isEnglish?"Engine":"Motor",value:tractor.engine},
@@ -35,11 +35,11 @@ const summaryItems = [
   </div></section>
   <section class="model-spec-section"><div class="container">
     <div class="model-spec-heading"><div>
-      <p class="eyebrow"><span class="eyebrow-mark"></span>{isEnglish?"SOURCE-BACKED DATA":"KAYNAĞI GÖSTERİLEN VERİ"}</p>
+      <p class="eyebrow"><span class="eyebrow-mark"></span>{isEnglish?"SPECIFICATIONS & EVIDENCE":"TEKNİK VERİ VE KANIT DURUMU"}</p>
       <h2>{isEnglish?"Technical specifications":"Teknik özellikler"}</h2>
     </div><p>{isEnglish
-      ? "Values are shown as recorded in the published catalogue. Open the source to review the manufacturer's context."
-      : "Değerler yayımlanmış katalog kaydındaki biçimiyle gösterilir. Üreticinin bağlamını incelemek için kaynağı açın."}</p></div>
+      ? "Published catalogue values show their evidence status. A source link is not itself a guarantee of manufacturer confirmation."
+      : "Yayımlanmış her teknik değerin altında kanıt durumu gösterilir. Bir kaynak bağlantısı bulunması tek başına üretici teyidi anlamına gelmez."}</p></div>
     {groups.length>0?<div class="model-spec-groups">{groups.map((group)=>
       <section class="model-spec-group"><h3>{group.label}</h3><div class="model-spec-grid">
         {group.specifications.map((spec)=><article class="model-spec-card">

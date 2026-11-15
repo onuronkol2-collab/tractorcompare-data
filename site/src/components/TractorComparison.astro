@@ -69,13 +69,13 @@ const payload = JSON.stringify(models).replace(/</g, "\\u003c");
 <SiteLayout
   lang={lang}
   title={en ? "Compare tractors | TractorVS" : "Traktör karşılaştır | TractorVS"}
-  description={en ? "Compare published tractor specifications side by side with manufacturer sources and measurement context." : "Yayımlanmış traktörleri, üretici kaynakları ve ölçüm koşullarıyla yan yana karşılaştırın."}
+  description={en ? "Compare published tractor specifications with clear source-status labels and measurement context." : "Yayımlanmış traktörleri, kaynak ve doğrulama durumları ile ölçüm koşullarını görerek karşılaştırın."}
 >
   <section class="tc-hero">
     <div class="container">
-      <p class="eyebrow"><span class="eyebrow-mark"></span>{en ? "SOURCE-BACKED COMPARISON" : "KAYNAKLI TEKNİK KARŞILAŞTIRMA"}</p>
+      <p class="eyebrow"><span class="eyebrow-mark"></span>{en ? "TRANSPARENT SOURCE STATUS" : "KANIT DURUMU GÖSTERİLİR"}</p>
       <h1>{en ? "Compare with " : "Traktörleri "}<em>{en ? "context." : "karşılaştır."}</em></h1>
-      <p>{en ? "Only published models are included. Different equipment versions and measurement conditions remain visible." : "Yalnızca yayımlanmış modeller gösterilir. Farklı donanımlar ve ölçüm koşulları gizlenmez."}</p>
+      <p>{en ? "Only published models are included. Every displayed value is marked by evidence level; measurement conditions remain visible." : "Yalnızca yayımlanmış modeller gösterilir. Her değerin kanıt durumu, donanımı ve ölçüm koşulları açıkça belirtilir."}</p>
     </div>
   </section>
   <section class="tc-section">
