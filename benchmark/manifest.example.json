@@ -1,0 +1,70 @@
+{
+  "benchmark_version": "1.0",
+  "notes": "Starter manifest with 3 official PDFs; add 17 more official PDF cases before full 20-document run. Never put API keys here.",
+  "cases": [
+    {
+      "id": "caseih-farmall-110a",
+      "manufacturer": "Case IH",
+      "model": "Farmall 110A",
+      "variant": null,
+      "market": "Global / brochure scope",
+      "pdf_url": "https://cnhi-p-001-delivery.sitecorecontenthub.cloud/api/public/content/f07d27f3f2ff43caa2b582f82d53ceba?v=644d87af",
+      "filename": "case-ih-farmall-90-110-a-2025.pdf",
+      "requested_fields": [
+        "engine_power_max",
+        "engine_torque_max",
+        "engine_cylinders",
+        "engine_displacement",
+        "transmission_type",
+        "rear_hitch_lift_capacity",
+        "hydraulic_pump_flow",
+        "wheelbase",
+        "maximum_permissible_weight"
+      ]
+    },
+    {
+      "id": "deutzfahr-6165-ttv",
+      "manufacturer": "DEUTZ-FAHR",
+      "model": "6165",
+      "variant": "6165 TTV Agrotron",
+      "market": "Global / brochure scope",
+      "pdf_url": "https://www.deutz-fahr.com/media/308.8513.10.4-8_Serie_6_TU.pdf",
+      "filename": "deutz-fahr-6-series-technical-brochure-2019.pdf",
+      "requested_fields": [
+        "engine_power_rated",
+        "engine_power_max",
+        "engine_power_boost",
+        "engine_torque_max",
+        "engine_cylinders",
+        "engine_displacement",
+        "transmission_type",
+        "hydraulic_pump_flow",
+        "rear_hitch_lift_capacity",
+        "wheelbase",
+        "unladen_weight"
+      ]
+    },
+    {
+      "id": "caseih-puma-150",
+      "manufacturer": "Case IH",
+      "model": "Puma 150",
+      "variant": "EMEA brochure configurations",
+      "market": "EMEA",
+      "pdf_url": "https://cnhi-p-001-delivery.sitecorecontenthub.cloud/api/public/content/e964e57d031245dbb7d9b8d418e14619?v=42235c85",
+      "filename": "case-ih-puma-140-175-stage-v-emea.pdf",
+      "requested_fields": [
+        "engine_power_rated",
+        "engine_power_max",
+        "engine_power_boost",
+        "engine_cylinders",
+        "engine_displacement",
+        "transmission_type",
+        "hydraulic_pump_flow",
+        "rear_hitch_lift_capacity",
+        "pto_speeds",
+        "wheelbase",
+        "operating_weight"
+      ]
+    }
+  ]
+}
