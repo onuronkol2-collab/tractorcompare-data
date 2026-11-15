@@ -180,9 +180,7 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding:25px}
     const valueLine=(oldValue!==null||newValue!==null)
       ? '<div class="meta"><span class="badge neutral">Önceki: '+esc(fmt(oldValue))+'</span><span class="badge neutral">Yeni: '+esc(fmt(newValue))+'</span></div>'
       : "";
-    const undoButton=event.action!=="undo"&&event.finding_id
-      ? '<button class="secondary" data-action="undo">Bu işlemi geri al</button>'
-      : "";
+    const undoButton="";
     return '<article class="finding" '+(event.finding_id?'data-id="'+esc(event.finding_id)+'"':'')+'>'+
       '<div class="finding-head"><div><h3>'+esc(title)+'</h3><div class="muted small">'+esc(spec)+' · '+esc(date)+'</div></div>'+
       '<span class="badge '+(event.actor_type==="ai"?"good":"neutral")+'">'+esc(actor)+'</span></div>'+
