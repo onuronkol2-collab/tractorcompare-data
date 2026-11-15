@@ -74,20 +74,24 @@ The example manifest already contains 20 curated cases. Copy benchmark/manifest.
 2. Confirm the project is marked Free Tier in AI Studio. The billing label in the script does not change the actual project billing tier.
 3. In PowerShell, set the following variables:
 
+```powershell
 $env:GEMINI_API_KEY = "YOUR_GEMINI_API_KEY"
 $env:BENCHMARK_PROVIDERS = "gemini"
 $env:GEMINI_BILLING_TIER = "free"
 $env:BENCHMARK_LIMIT = "1"
+```
 
 Then run:
 
+```powershell
 deno run --allow-read=./benchmark --allow-write=./benchmark/out --allow-net --allow-env=GEMINI_API_KEY,GEMINI_MODEL,BENCHMARK_LIMIT,BENCHMARK_PROVIDERS,GEMINI_BILLING_TIER ./benchmark/model_benchmark.ts ./benchmark/manifest.json
+```
 
 After the first PDF succeeds, set BENCHMARK_LIMIT to 20 and repeat for the full Gemini-only run. The runner downloads each PDF once and saves raw answers, parsed JSON, token usage, declared billing tier, price estimate, latency, and PDF checksum under benchmark/out.
 
 ### Optional paid comparison later
 
-When the site earns revenue and you choose to pay for a broader comparison, explicitly set BENCHMARK_PROVIDERS to anthropic,openai,gemini and provide all three API keys. Gemini-only remains the default, so paid providers are not called accidentally.
+When the site earns revenue and you choose to pay for a broader comparison, explicitly set BENCHMARK_PROVIDERS to anthropic,openai,gemini and provide all three API keys locally. Add ANTHROPIC_API_KEY and OPENAI_API_KEY to Deno's --allow-env list (also add ANTHROPIC_MODEL and OPENAI_MODEL if you override model IDs). Gemini-only remains the default, so paid providers are not called accidentally.
 
 ## Ground truth and scoring
 
