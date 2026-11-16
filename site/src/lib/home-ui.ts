@@ -1,4 +1,4 @@
-import { LOCALES, type Locale } from "./locales";
+import { LOCALES, type Locale } from "./locales.ts";
 
 /** Language order: English, Turkish, Simplified Chinese, Hindi, Brazilian Portuguese, French, German, Russian, Japanese, Spanish. */
 export const HOME = {
