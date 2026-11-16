@@ -10,6 +10,7 @@ const supported = {
 };
 test("recovers trustworthy missing summary engine horsepower only",()=>{
   assert.equal(sourceBackedHorsepower([supported]),25.3);
+  assert.equal(sourceBackedHorsepower([{...supported,canonical_key:"engine_gross_power"}]),25.3);
   assert.equal(sourceBackedHorsepower([supported,{...supported,spec_value:"25.30"}]),25.3);
   assert.equal(sourceBackedHorsepower([{...supported,canonical_key:"",spec_name:"Rated engine power"}]),25.3);
 });
