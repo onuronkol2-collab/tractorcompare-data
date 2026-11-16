@@ -3,7 +3,7 @@ import { LOCALES, type Locale } from "./locales.ts";
 /**
  * Translation matrix in LOCALES order: EN, TR, ZH-Hans, HI, PT-BR, FR, DE, RU, JA, ES.
  * Technical values, model names, numeric units and source text are never translated.
- * Keep every entry at exactly 10 professionally reviewed translations.
+ * Keep every entry at exactly 10 carefully authored, auditable translations.
  */
 export const UI = {
   skip: ["Skip to content","İçeriğe geç","跳转到正文","मुख्य सामग्री पर जाएँ","Ir para o conteúdo","Aller au contenu","Zum Inhalt springen","Перейти к содержимому","本文へ移動","Ir al contenido"],
