@@ -92,9 +92,18 @@ function marketCompatibility(market: string | null, country: MarketCountry): "ma
   if (["turkey", "türkiye", "tr"].includes(m)) return country === "TR" ? "matched" : "excluded";
   if (["us", "usa", "united states", "north america"].includes(m)) return ["US","CA"].includes(country) ? "matched" : "excluded";
   if (["europe", "eu"].includes(m)) return ["FR","DE","ES"].includes(country) ? "matched" : "excluded";
+  const exactCountries: Record<string,MarketCountry> = {
+    india:"IN", china:"CN", brazil:"BR", brasil:"BR",
+    france:"FR", germany:"DE", deutschland:"DE",
+    russia:"RU", russian:"RU", japan:"JP", canada:"CA",
+    spain:"ES", españa:"ES",
+    türkiye:"TR", turkey:"TR",
+  };
+  if (exactCountries[m]) return exactCountries[m] === country ? "matched" : "excluded";
   if (m === "south africa") return "excluded";
   if (m.toUpperCase() === country) return "matched";
-  return "unknown";
+  // Unknown country-scoped markets are not treated as global inventory.
+  return "excluded";
 }
 
 export type AdvisorTractor = Pick<TractorRecord, "tractor_id" | "slug" | "brand_name" | "model_name" | "variant" | "market" | "model_year" | "horsepower">;
