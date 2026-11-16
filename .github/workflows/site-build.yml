@@ -59,3 +59,16 @@ jobs:
           grep -q "noindex,nofollow" site/dist/index.html
           grep -q "noindex,nofollow" site/dist/tr/index.html
           grep -q "Disallow: /" site/dist/robots.txt
+
+      - name: Validate all ten languages and bundle Cloudflare geo Worker
+        run: |
+          for locale in zh hi pt-br fr de ru ja es; do
+            test -f "site/dist/$locale/index.html"
+            test -f "site/dist/$locale/tractors/index.html"
+            test -f "site/dist/$locale/compare/index.html"
+            grep -q 'noindex,nofollow' "site/dist/$locale/index.html"
+          done
+          grep -q 'lang="zh-Hans"' site/dist/zh/index.html
+          grep -q 'lang="pt-BR"' site/dist/pt-br/index.html
+          node --input-type=module -e "import fs from 'node:fs'; for (const p of ['wrangler.jsonc','site/wrangler.jsonc']) { const c=JSON.parse(fs.readFileSync(p,'utf8')); if (!c.main || c.assets?.binding!=='ASSETS' || !c.assets.run_worker_first.includes('/') || !c.assets.run_worker_first.includes('/language/*')) throw new Error('Missing geo Worker setup: '+p) }"
+          npx wrangler deploy --dry-run --outdir .wrangler-dry-run
