@@ -367,3 +367,22 @@ button, input { font: inherit; }
   .model-summary-grid > div { padding: 13px; }
   .model-spec-heading { grid-template-columns: 1fr; gap: 15px; }
 }
+
+/* Accessible 10-language selector; does not force locale on deep links. */
+.locale-menu { position: relative; flex-shrink: 0; }
+.locale-menu > summary { cursor: pointer; list-style: none; white-space: nowrap; }
+.locale-menu > summary::-webkit-details-marker { display: none; }
+.locale-menu > summary:focus-visible { outline: 2px solid #b7df91; outline-offset: 5px; border-radius: 4px; }
+.locale-options {
+  position: absolute; right: 0; top: calc(100% + 17px); z-index: 40;
+  display: grid; width: min(255px, calc(100vw - 36px)); max-height: 72vh;
+  overflow-y: auto; padding: 8px; border: 1px solid #cbdccd;
+  border-radius: 12px; background: #fff; box-shadow: 0 16px 36px #08140e47;
+}
+.locale-options a { padding: 10px 12px; border-radius: 7px; color: #1d3425; font-size: 13px; font-weight: 650; }
+.locale-options a:hover,.locale-options a:focus-visible { background: #e8f0e6; color: #183e29; }
+.locale-options a[aria-current=page] { background: #d5eacc; font-weight: 850; }
+@media (max-width:720px) {
+  .locale-menu > summary { max-width: 136px; overflow: hidden; text-overflow: ellipsis; }
+  .header-cta { display:none; }
+}
