@@ -2,7 +2,7 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import {
   AREA_SQM, COUNTRY_AREA_UNITS, areaToHectares, horsepowerScreening,
-  recommendTractors, supportedMarketCountry,
+  recommendTractors, supportedMarketCountry, FARM_IMPLEMENT_TYPES,
 } from "../src/lib/farm-advisor.ts";
 import { MARKET_PRICES, matchingPrice, formatMarketPriceRange } from "../src/lib/market-prices.ts";
 import { advisorText, advisorTranslationIssues } from "../src/lib/advisor-i18n.ts";
@@ -89,6 +89,61 @@ test("all advisor labels exist in all ten supported languages",()=>{
   for (const lang of LOCALES) {
     for(const key of ["nav","heading","country","area","budget","priceUnknown","guideWarning","bigha"]){
       assert.ok(advisorText(lang,key).length>1);
+    }
+  }
+});
+
+test("equipment choices include plow and laser land levelling", () => {
+  assert.ok(FARM_IMPLEMENT_TYPES.includes("plow"));
+  assert.ok(FARM_IMPLEMENT_TYPES.includes("laser_leveler"));
+  assert.ok(FARM_IMPLEMENT_TYPES.includes("rotavator"));
+  assert.ok(FARM_IMPLEMENT_TYPES.includes("disc_harrow"));
+  assert.ok(FARM_IMPLEMENT_TYPES.includes("seeder"));
+});
+
+test("implement demand screens hardest tool, without stacking different tasks", () => {
+  const plow = horsepowerScreening({
+    ...farm, implement:"light", implements:["plow"], plowBodies:3,
+  });
+  const plowAndBaler = horsepowerScreening({
+    ...farm, implement:"light", implements:["plow","baler"], plowBodies:3,
+  });
+  assert.equal(plow.min, plowAndBaler.min);
+  assert.equal(plow.max, plowAndBaler.max);
+  const widerPlow = horsepowerScreening({
+    ...farm, implement:"light", implements:["plow"], plowBodies:5,
+  });
+  assert.ok(widerPlow.min > plow.min);
+  assert.ok(widerPlow.max > plow.max);
+});
+
+test("laser land leveller asks for extra manufacturer verification, with width sensitivity",()=>{
+  const narrow=horsepowerScreening({
+    ...farm,implement:"light",implements:["laser_leveler"],laserWidthMeters:3.5,
+  });
+  const wide=horsepowerScreening({
+    ...farm,implement:"light",implements:["laser_leveler"],laserWidthMeters:6,
+  });
+  assert.ok(narrow.min >= 70);
+  assert.ok(wide.max >= narrow.max);
+  assert.ok(wide.reasons.includes("laser_requires_manual_verification"));
+  assert.throws(() => horsepowerScreening({
+    ...farm,implements:["laser_leveler"],laserWidthMeters:100,
+  }));
+  assert.throws(() => horsepowerScreening({
+    ...farm,implements:["made_up_implement"],
+  }));
+});
+
+test("new equipment and clean-result labels are translated across ten locales",()=>{
+  for (const locale of LOCALES) {
+    for(const key of ["stepLand","stepEquipment","stepDetails","equipmentHelp",
+      "researchResults","resultsExplanation","modelDetails","laserCaution",
+      "plowCaution","ptoCaution","plowBodies","laserWidth"]){
+      assert.ok(advisorText(locale,key).trim().length>2, locale+"/"+key);
+    }
+    for(const kind of FARM_IMPLEMENT_TYPES) {
+      assert.ok(advisorText(locale,"imp_"+kind).trim().length>2,locale+"/"+kind);
     }
   }
 });
