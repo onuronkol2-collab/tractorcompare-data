@@ -203,7 +203,7 @@ const defaults:Record<string,string> = {
           list.appendChild(card);
         }
         results.appendChild(list);
-        results.appendChild(node("p",t("availability"),"advisor-warning"));
+        if (input.servicePriority) results.appendChild(node("p",t("availability"),"advisor-warning"));
         results.appendChild(node("p",t("priceNote"),"advisor-muted"));
       } catch {
         results.replaceChildren(node("p",t("lead")));
