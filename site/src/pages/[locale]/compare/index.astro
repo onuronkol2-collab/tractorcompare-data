@@ -1,0 +1,9 @@
+---
+import TractorComparison from "../../../components/TractorComparison.astro";
+import { NEW_LOCALES } from "../../../lib/locales";
+export function getStaticPaths() {
+  return NEW_LOCALES.map((locale) => ({ params: { locale }, props: { locale } }));
+}
+const { locale } = Astro.props;
+---
+<TractorComparison lang={locale} />
