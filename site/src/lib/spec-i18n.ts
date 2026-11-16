@@ -142,11 +142,46 @@ const CATEGORIES: Record<string, readonly string[]> = {
   performance: ["性能","प्रदर्शन","Desempenho","Performances","Leistungsdaten","Эксплуатационные показатели","性能","Rendimiento"],
 };
 
+/** Exact canonical synonyms only; do not alias max/nominal power or different flows. */
+const ALIASES: Record<string,string> = {
+  forward_gears: "transmission_forward_gears",
+  reverse_gears: "transmission_reverse_gears",
+  rated_engine_power: "engine_rated_power",
+  steering_pump_flow: "hydraulic_steering_flow",
+  engine_air_filter_type: "engine_air_cleaner",
+  engine_max_power_hp: "engine_max_power",
+  engine_rated_power_kw: "engine_rated_power",
+  front_tire_standard: "front_tire_size",
+  rear_tire_standard: "rear_tire_size",
+  rear_pto_speeds: "pto_speeds",
+  fuel_tank_capacity_standard: "fuel_tank_capacity",
+  hydraulic_pump_standard_flow: "hydraulic_main_flow",
+  operating_weight_range_kg: "weight_range",
+  rear_lift_capacity_daN: "rear_lift_capacity",
+  hydraulic_spool_valve_count: "hydraulic_remote_valve_count",
+};
+
+const EXTRA: Record<string,readonly string[]> = {
+  turning_radius: ["转弯半径","मुड़ने की त्रिज्या","Raio de giro","Rayon de braquage","Wenderadius","Радиус разворота","最小旋回半径","Radio de giro"],
+  forward_speed_range: ["前进速度范围","आगे की गति सीमा","Faixa de velocidades à frente","Plage de vitesses en marche avant","Vorwärts-Geschwindigkeitsbereich","Диапазон скоростей движения вперёд","前進速度範囲","Intervalo de velocidades de avance"],
+  reverse_speed_range: ["倒车速度范围","पीछे की गति सीमा","Faixa de velocidades à ré","Plage de vitesses en marche arrière","Rückwärts-Geschwindigkeitsbereich","Диапазон скоростей заднего хода","後進速度範囲","Intervalo de velocidades de retroceso"],
+  front_pto_speed_optional: ["选装前动力输出轴转速","वैकल्पिक फ्रंट पीटीओ गति","Rotação da TDP dianteira opcional","Régime de prise de force avant en option","Drehzahl der optionalen Frontzapfwelle","Обороты дополнительного переднего ВОМ","オプション前部PTO回転数","Régimen de la TDF delantera opcional"],
+  fuel_tank_capacity_optional: ["选装燃油箱容量","वैकल्पिक ईंधन टैंक क्षमता","Capacidade opcional do tanque","Capacité du réservoir en option","Optionales Tankvolumen","Ёмкость топливного бака (опция)","オプション燃料タンク容量","Capacidad del depósito opcional"],
+  hydraulic_pump_optional_flow: ["选装液压泵流量","वैकल्पिक हाइड्रोलिक पंप प्रवाह","Vazão opcional da bomba hidráulica","Débit de pompe hydraulique en option","Optionaler Hydraulikpumpen-Förderstrom","Подача дополнительного гидронасоса","オプション油圧ポンプ流量","Caudal opcional de bomba hidráulica"],
+  transmission_shuttle_type: ["换向机构类型","शटल रिवर्सर का प्रकार","Tipo de reversor","Type d’inverseur de marche","Wendeschaltung","Тип реверса трансмиссии","前後進切替方式","Tipo de inversor de marcha"],
+  exhaust_aftertreatment: ["排气后处理系统","एग्जॉस्ट आफ्टरट्रीटमेंट","Pós-tratamento de gases de escape","Post-traitement des gaz d’échappement","Abgasnachbehandlung","Система нейтрализации выхлопных газов","排気後処理装置","Postratamiento de gases de escape"],
+  engine_rated_power_with_dp_kw: ["DP模式额定功率（kW）","DP के साथ रेटेड पावर (kW)","Potência nominal com DP (kW)","Puissance nominale avec DP (kW)","Nennleistung mit DP (kW)","Номинальная мощность с DP (кВт)","DP使用時定格出力（kW）","Potencia nominal con DP (kW)"],
+  engine_max_power_with_dp_kw: ["DP模式最大功率（kW）","DP के साथ अधिकतम पावर (kW)","Potência máxima com DP (kW)","Puissance maximale avec DP (kW)","Maximalleistung mit DP (kW)","Максимальная мощность с DP (кВт)","DP使用時最高出力（kW）","Potencia máxima con DP (kW)"],
+  front_tire_option_1: ["前轮胎选项1","अगला टायर विकल्प 1","Pneu dianteiro opcional 1","Pneu avant en option 1","Vorderreifenoption 1","Вариант передних шин 1","前輪タイヤ選択肢1","Neumático delantero opcional 1"],
+  rear_tire_option_1: ["后轮胎选项1","पिछला टायर विकल्प 1","Pneu traseiro opcional 1","Pneu arrière en option 1","Hinterreifenoption 1","Вариант задних шин 1","後輪タイヤ選択肢1","Neumático trasero opcional 1"],
+  available_hydraulic_oil: ["可用液压油量","उपलब्ध हाइड्रोलिक तेल","Volume de óleo hidráulico disponível","Volume d’huile hydraulique disponible","Verfügbares Hydraulikölvolumen","Доступный объём гидравлического масла","使用可能な油圧オイル量","Volumen de aceite hidráulico disponible"],
+};
+
 const INDEX: Record<string, number> = { zh:0, hi:1, "pt-br":2, fr:3, de:4, ru:5, ja:6, es:7 };
 
 export function localizedSpecificationName(key: string | null, specName: string, lang: Locale): string | null {
   if (lang === "en" || lang === "tr") return null;
-  const value = TERM[key || ""] ?? TERM[specName.trim()];
+  const value = EXTRA[key || ""] ?? TERM[ALIASES[key || ""] || (key || "")] ?? TERM[specName.trim()];
   return value?.[INDEX[lang]] ?? null;
 }
 
@@ -156,7 +191,7 @@ export function localizedCategoryName(category: string | null, lang: Locale): st
 }
 
 export function validateTechnicalGlossary(): void {
-  for (const [key, terms] of Object.entries({ ...TERM, ...CATEGORIES })) {
+  for (const [key, terms] of Object.entries({ ...TERM, ...EXTRA, ...CATEGORIES })) {
     if (terms.length !== 8 || terms.some((term) => !term.trim())) {
       throw new Error("Invalid technical translation for " + key);
     }
