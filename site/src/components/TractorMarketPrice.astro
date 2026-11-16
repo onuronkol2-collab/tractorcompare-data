@@ -1,0 +1,89 @@
+---
+import type { TractorRecord } from "../lib/catalog";
+import { advisorText as t } from "../lib/advisor-i18n";
+import { COUNTRY_NAMES, COUNTRIES_BY_LOCALE } from "../lib/farm-advisor";
+import { MARKET_COUNTRIES, matchingPrice, formatMarketPriceRange } from "../lib/market-prices";
+import type { Locale } from "../lib/locales";
+interface Props {tractor:TractorRecord;lang:Locale}
+const {tractor,lang} = Astro.props;
+const selected=COUNTRIES_BY_LOCALE[lang]||"US";
+const price=matchingPrice(tractor,selected);
+const payload=JSON.stringify({
+  tractor_id:tractor.tractor_id, brand_name:tractor.brand_name,
+  model_name:tractor.model_name, variant:tractor.variant,
+  market:tractor.market, model_year:tractor.model_year,
+  lang,
+}).replace(/</g,"\\u003c");
+---
+<section class="model-market-price" data-market-price-block={tractor.tractor_id}>
+  <div class="container">
+    <div class="model-market-heading">
+      <h2>{t(lang,"priceTitle")}</h2>
+      <label>{t(lang,"country")}
+        <select data-model-price-country>
+          {MARKET_COUNTRIES.map((country)=>
+            <option value={country} selected={selected===country}>{COUNTRY_NAMES[country]}</option>
+          )}
+        </select>
+      </label>
+    </div>
+    <div class="model-market-price-value" data-model-price-value>
+      {price?formatMarketPriceRange(price,lang):t(lang,"priceUnknown")}
+    </div>
+    <p class="model-market-price-details" data-model-price-details>
+      {price?price.configuration+" · "+t(lang,"date")+": "+price.observedOn:""}
+    </p>
+    <p><a href={price?.sourceUrl||"#"} data-model-price-source
+      target="_blank" rel="noopener noreferrer" hidden={!price}>
+      {price?t(lang,"source")+": "+price.sourceName+" ↗":""}
+    </a></p>
+    <p class="model-market-price-note">{t(lang,"priceNote")}</p>
+    <script type="application/json" data-price-model-payload set:html={payload}></script>
+  </div>
+</section>
+<script>
+  import { matchingPrice, formatMarketPriceRange, MARKET_COUNTRIES } from "../lib/market-prices";
+  import type { MarketCountry } from "../lib/market-prices";
+  import { advisorText } from "../lib/advisor-i18n";
+  import type { Locale } from "../lib/locales";
+  document.querySelectorAll<HTMLElement>("[data-market-price-block]").forEach((block) => {
+    const raw=block.querySelector<HTMLElement>("[data-price-model-payload]");
+    const select=block.querySelector<HTMLSelectElement>("[data-model-price-country]");
+    const value=block.querySelector<HTMLElement>("[data-model-price-value]");
+    const details=block.querySelector<HTMLElement>("[data-model-price-details]");
+    const link=block.querySelector<HTMLAnchorElement>("[data-model-price-source]");
+    if(!raw || !select || !value || !details || !link) return;
+    const tractor=JSON.parse(raw.textContent||"{}") as {
+      brand_name:string;model_name:string;variant:string|null;
+      market:string|null;model_year:number|null;lang:Locale;
+    };
+    let manuallySelected=false;
+    const refresh=(country:MarketCountry)=>{
+      select.value=country;
+      const p=matchingPrice(tractor,country);
+      value.textContent=p?formatMarketPriceRange(p,tractor.lang):advisorText(tractor.lang,"priceUnknown");
+      details.textContent=p?p.configuration+" · "+advisorText(tractor.lang,"date")+": "+p.observedOn:"";
+      link.hidden=!p;
+      link.href=p?.sourceUrl||"#";
+      link.textContent=p?advisorText(tractor.lang,"source")+": "+p.sourceName+" ↗":"";
+    };
+    select.addEventListener("change",()=>{manuallySelected=true;refresh(select.value as MarketCountry);});
+    fetch("/api/visitor-country",{credentials:"same-origin",cache:"no-store"})
+      .then(r=>r.ok?r.json():null)
+      .then((geo:{country?:string}|null)=>{
+        if(!manuallySelected && geo && (MARKET_COUNTRIES as readonly string[]).includes(geo.country||""))
+          refresh(geo.country as MarketCountry);
+      }).catch(()=>{});
+  });
+</script>
+<style>
+.model-market-price {background:#edf4e9;border-block:1px solid #d7e5d0;padding:20px 0}
+.model-market-heading {display:flex;gap:20px;align-items:center;justify-content:space-between;flex-wrap:wrap}
+.model-market-heading h2{font-size:18px;margin:0}
+.model-market-heading label{font-size:11px;font-weight:700}
+.model-market-heading select{margin-left:8px;padding:8px;border:1px solid #c5d5c2;border-radius:7px;background:white}
+.model-market-price-value{font-size:23px;font-weight:800;color:#24583a;margin-top:12px}
+.model-market-price-details,.model-market-price-note{font-size:11px;color:#556b57;line-height:1.7;margin:8px 0}
+.model-market-price a{color:#246341;font-size:11px;font-weight:700;text-decoration:underline}
+.model-market-price [hidden]{display:none}
+</style>

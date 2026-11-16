@@ -3,6 +3,9 @@ import SiteLayout from "../layouts/SiteLayout.astro";
 import { getPublicCatalog } from "../lib/catalog";
 import { localizedPath, type Locale } from "../lib/locales";
 import { t } from "../lib/ui";
+import { advisorText as tx } from "../lib/advisor-i18n";
+import { COUNTRY_NAMES, COUNTRIES_BY_LOCALE } from "../lib/farm-advisor";
+import { MARKET_COUNTRIES, matchingPrice, formatMarketPriceRange } from "../lib/market-prices";
 interface Props { lang: Locale; }
 const { lang } = Astro.props;
 
@@ -10,6 +13,12 @@ const catalog = await getPublicCatalog();
 const title = t(lang,"catalogTitle") + " | TractorVS";
 const description = t(lang,"catalogDesc");
 const detailPrefix = localizedPath(lang,"/tractors/");
+const initialCountry = COUNTRIES_BY_LOCALE[lang] || "US";
+const pricePayload = JSON.stringify({lang,models:catalog.tractors.map((tractor)=>({
+  tractor_id:tractor.tractor_id,brand_name:tractor.brand_name,
+  model_name:tractor.model_name,variant:tractor.variant,
+  market:tractor.market,model_year:tractor.model_year
+}))}).replace(/</g,"\\u003c");
 ---
 <SiteLayout lang={lang} title={title} description={description}>
   <section class="catalog-hero"><div class="container">
@@ -23,6 +32,15 @@ const detailPrefix = localizedPath(lang,"/tractors/");
   <section class="catalog-section"><div class="container">
     {catalog.configured && catalog.tractors.length > 0 ? <>
       {catalog.tractors.length > 1 && <p style="margin:0 0 24px;"><a class="button button-primary" href={localizedPath(lang,"/compare/")}>{t(lang,"comparePublished")} ↗</a></p>}
+      <div class="catalog-price-filter">
+        <label for="catalog-price-country">{tx(lang,"country")}</label>
+        <select id="catalog-price-country">
+          {MARKET_COUNTRIES.map((country)=>
+            <option selected={country===initialCountry} value={country}>{COUNTRY_NAMES[country]}</option>
+          )}
+        </select>
+        <a href={localizedPath(lang,"/farm-advisor/")}>{tx(lang,"nav")} ↗</a>
+      </div>
       <div class="catalog-toolbar">
         <label for="tractor-search">{t(lang,"findTractor")}</label>
         <input id="tractor-search" type="search" placeholder={t(lang,"searchPlaceholder")} autocomplete="off" />
@@ -43,6 +61,11 @@ const detailPrefix = localizedPath(lang,"/tractors/");
             {tractor.engine && <div><strong>{tractor.engine}</strong><small>{t(lang,"engine")}</small></div>}
             {tractor.transmission && <div><strong>{tractor.transmission}</strong><small>{t(lang,"transmission")}</small></div>}
           </div>
+          <div class="tractor-price-summary" data-price-for={tractor.tractor_id}>
+            {matchingPrice(tractor,initialCountry)
+              ? tx(lang,"priceTitle")+": "+formatMarketPriceRange(matchingPrice(tractor,initialCountry)!,lang)
+              : tx(lang,"priceUnknown")}
+          </div>
           <div class="tractor-card-footer"><span>{tractor.specifications.length} {t(lang,"specifications")}</span><span>{t(lang,"viewModel")} →</span></div>
         </a>)}
       </div>
@@ -58,7 +81,38 @@ const detailPrefix = localizedPath(lang,"/tractors/");
     </div>}
   </div></section>
 </SiteLayout>
+<script type="application/json" id="catalog-price-payload" set:html={pricePayload}></script>
 <script>
+  import { matchingPrice, formatMarketPriceRange, MARKET_COUNTRIES } from "../lib/market-prices";
+  import type { MarketCountry } from "../lib/market-prices";
+  import { advisorText } from "../lib/advisor-i18n";
+  import type { Locale } from "../lib/locales";
+  const dataNode=document.getElementById("catalog-price-payload");
+  const countryControl=document.querySelector<HTMLSelectElement>("#catalog-price-country");
+  if (dataNode && countryControl) {
+    const data=JSON.parse(dataNode.textContent || "{}") as {lang:Locale;models:Array<{
+      tractor_id:string;brand_name:string;model_name:string;variant:string|null;market:string|null;model_year:number|null;
+    }>};
+    let manuallySelected=false;
+    const refresh = (country:MarketCountry) => {
+      countryControl.value=country;
+      for (const tractor of data.models) {
+        const el=document.querySelector<HTMLElement>('[data-price-for="'+tractor.tractor_id+'"]');
+        if (!el) continue;
+        const price=matchingPrice(tractor,country);
+        el.textContent=price
+          ? advisorText(data.lang,"priceTitle")+": "+formatMarketPriceRange(price,data.lang)
+          : advisorText(data.lang,"priceUnknown");
+      }
+    };
+    countryControl.addEventListener("change",()=>{manuallySelected=true;refresh(countryControl.value as MarketCountry);});
+    fetch("/api/visitor-country",{credentials:"same-origin",cache:"no-store"})
+      .then(r=>r.ok?r.json():null)
+      .then((geo:{country?:string}|null)=>{
+        if(!manuallySelected && geo && (MARKET_COUNTRIES as readonly string[]).includes(geo.country||""))
+          refresh(geo.country as MarketCountry);
+      }).catch(()=>{});
+  }
   const search = document.querySelector<HTMLInputElement>("#tractor-search");
   const cards = Array.from(document.querySelectorAll<HTMLElement>(".tractor-card"));
   const noResults = document.querySelector<HTMLElement>("#catalog-no-results");
@@ -73,3 +127,11 @@ const detailPrefix = localizedPath(lang,"/tractors/");
     if (noResults) noResults.hidden = visible > 0;
   });
 </script>
+
+<style>
+  .catalog-price-filter {display:flex;align-items:center;flex-wrap:wrap;gap:12px;margin-bottom:21px;padding:12px 15px;border:1px solid #dce8da;background:#fff;border-radius:10px;font-size:12px}
+  .catalog-price-filter label {font-weight:800}
+  .catalog-price-filter select {padding:8px 12px;border-radius:7px;border:1px solid #becdbc;background:#fff}
+  .catalog-price-filter a {color:#256c43;text-decoration:underline;font-weight:800}
+  .tractor-price-summary {padding:9px 0;margin-top:10px;border-top:1px solid #e1e9de;font-weight:700;font-size:11px;color:#3d6545;line-height:1.6}
+</style>

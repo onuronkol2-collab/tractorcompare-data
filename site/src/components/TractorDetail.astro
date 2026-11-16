@@ -1,5 +1,6 @@
 ---
 import SiteLayout from "../layouts/SiteLayout.astro";
+import TractorMarketPrice from "./TractorMarketPrice.astro";
 import { groupSpecifications, officialManufacturerSourceUrl, specLabel, verificationNotice, type TractorRecord } from "../lib/catalog";
 import { localizedPath, type Locale } from "../lib/locales";
 import { t } from "../lib/ui";
@@ -31,6 +32,7 @@ const summaryItems = [
     {summaryItems.length>0&&<div class="model-summary-grid">{summaryItems.map((item)=>
       <div><small>{item.label}</small><strong>{item.value}</strong></div>)}</div>}
   </div></section>
+  <TractorMarketPrice lang={lang} tractor={tractor} />
   <section class="model-spec-section"><div class="container">
     <div class="model-spec-heading"><div>
       <p class="eyebrow"><span class="eyebrow-mark"></span>{t(lang,"technicalSpecs")}</p>

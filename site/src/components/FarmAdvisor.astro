@@ -1,0 +1,239 @@
+---
+import SiteLayout from "../layouts/SiteLayout.astro";
+import { localizedPath, LOCALE_TAGS, type Locale } from "../lib/locales";
+import { getPublicCatalog } from "../lib/catalog";
+import { advisorText as tx } from "../lib/advisor-i18n";
+import { t } from "../lib/ui";
+import { COUNTRY_AREA_UNITS, COUNTRY_NAMES, COUNTRIES_BY_LOCALE } from "../lib/farm-advisor";
+import { COUNTRY_CURRENCIES, MARKET_COUNTRIES } from "../lib/market-prices";
+interface Props { lang: Locale }
+const { lang } = Astro.props;
+const catalog = await getPublicCatalog();
+const initialCountry = COUNTRIES_BY_LOCALE[lang] || "US";
+const published = catalog.tractors.map((tractor) => ({
+  tractor_id:tractor.tractor_id, slug:tractor.slug,
+  brand_name:tractor.brand_name, model_name:tractor.model_name,
+  variant:tractor.variant, market:tractor.market,
+  model_year:tractor.model_year, horsepower:tractor.horsepower,
+}));
+const bundle = JSON.stringify({published, lang}).replace(/</g,"\\u003c");
+const heading = tx(lang,"heading");
+const groups = [
+  {name:"crop", options:["grain","vegetables","orchard","vineyard","rice","pasture","mixed"]},
+  {name:"terrain",options:["flat","rolling","steep"]},
+  {name:"soil",options:["light","medium","heavy"]},
+  {name:"operation",options:["light","general","heavy"]},
+  {name:"implement",options:["light","medium","heavy"]},
+  {name:"trailer",options:["none","light","heavy"]},
+  {name:"condition",options:["either","new","used"]},
+] as const;
+const defaults:Record<string,string> = {
+  crop:"grain", terrain:"flat", soil:"medium", operation:"general",
+  implement:"medium", trailer:"none", condition:"either",
+};
+---
+<SiteLayout lang={lang} title={heading+" | TractorVS"} description={tx(lang,"lead")}>
+  <section class="advisor-hero"><div class="container">
+    <p class="eyebrow"><span class="eyebrow-mark"></span>TractorVS</p>
+    <h1>{heading}</h1><p>{tx(lang,"lead")}</p>
+    <a href={localizedPath(lang,"/tractors/")}>{t(lang,"navCatalog")} ↗</a>
+  </div></section>
+  <section class="advisor-section"><div class="container">
+    <form id="farm-advisor-form" class="advisor-form" novalidate>
+      <div class="advisor-grid">
+        <label>{tx(lang,"country")}
+          <select name="country" id="advisor-country" required>
+            {MARKET_COUNTRIES.map((country)=>
+              <option value={country} selected={country===initialCountry}>{COUNTRY_NAMES[country]}</option>
+            )}
+          </select>
+        </label>
+        <label>{tx(lang,"area")}
+          <input name="area" type="number" step="any" min="0.0001" max="100000000" value="50" required/>
+        </label>
+        <label>{tx(lang,"unit")}
+          <select name="unit" id="advisor-unit">
+            {Object.entries({
+              dekar:"dönüm / dekar (1.000 m²)", hectare:"ha (10.000 m²)",
+              acre:"acre (4.046,86 m²)", mu:"亩 mǔ (666,67 m²)",
+              tan:"反 tan (991,74 m²)", m2:"m²",
+            }).map(([code,label])=><option value={code} selected={code===COUNTRY_AREA_UNITS[initialCountry]}>{label}</option>)}
+          </select>
+        </label>
+        <label>{tx(lang,"hours")}
+          <input name="hours" type="number" min="0" max="8760" step="1" value="200" required/>
+        </label>
+        {groups.map((group)=><label>{tx(lang,group.name)}
+          <select name={group.name}>
+            {group.options.map((option)=><option value={option} selected={defaults[group.name]===option}>{tx(lang,option)}</option>)}
+          </select>
+        </label>)}
+        <label>{tx(lang,"budget")}
+          <div class="advisor-budget-input">
+            <input name="budget" type="number" min="0" step="any" placeholder="—"/>
+            <span id="advisor-currency">{COUNTRY_CURRENCIES[initialCountry]}</span>
+          </div>
+        </label>
+      </div>
+      <label class="advisor-check"><input name="service" type="checkbox" checked />{tx(lang,"service")}</label>
+      <p id="advisor-area-note" class="advisor-area-note" hidden>{tx(lang,"bigha")}</p>
+      <button type="submit" class="button button-primary">{tx(lang,"submit")} ↗</button>
+    </form>
+    <section class="advisor-results" id="advisor-results" aria-live="polite" aria-atomic="false">
+      <h2>{tx(lang,"results")}</h2>
+      <p>{tx(lang,"lead")}</p>
+    </section>
+  </div></section>
+</SiteLayout>
+<script type="application/json" id="advisor-data" set:html={bundle}></script>
+<script>
+  import {
+    COUNTRY_AREA_UNITS, COUNTRIES_BY_LOCALE, areaToHectares,
+    horsepowerScreening, recommendTractors
+  } from "../lib/farm-advisor";
+  import type {
+    AdvisorTractor, Crop, Soil, Terrain, Operation, Implement, Trailer,
+    Condition, AreaUnit, FarmInputs
+  } from "../lib/farm-advisor";
+  import {
+    COUNTRY_CURRENCIES, MARKET_COUNTRIES, formatMarketPriceRange,
+  } from "../lib/market-prices";
+  import type { MarketCountry } from "../lib/market-prices";
+  import { advisorText } from "../lib/advisor-i18n";
+  import type { Locale } from "../lib/locales";
+
+  const dataNode = document.getElementById("advisor-data");
+  const form = document.querySelector<HTMLFormElement>("#farm-advisor-form");
+  const results = document.querySelector<HTMLElement>("#advisor-results");
+  const countryInput = document.querySelector<HTMLSelectElement>("#advisor-country");
+  const unitInput = document.querySelector<HTMLSelectElement>("#advisor-unit");
+  const currency = document.getElementById("advisor-currency");
+  const areaNote = document.getElementById("advisor-area-note");
+  if (form && dataNode && results && countryInput && unitInput) {
+    const payload = JSON.parse(dataNode.textContent || "{}") as {published:AdvisorTractor[],lang:Locale};
+    const lang = payload.lang;
+    const t = (key: string):string => advisorText(lang,key);
+    const formatter = new Intl.NumberFormat(lang === "tr"?"tr-TR":lang, {maximumFractionDigits:2});
+    let countryChangedByUser = false;
+    let lastCountry = countryInput.value as MarketCountry;
+    const setCountry = (country:MarketCountry) => {
+      const previousDefault = COUNTRY_AREA_UNITS[lastCountry];
+      countryInput.value = country;
+      lastCountry = country;
+      if (unitInput.value === previousDefault) unitInput.value = COUNTRY_AREA_UNITS[country];
+      if (currency) currency.textContent = COUNTRY_CURRENCIES[country];
+      if (areaNote) areaNote.hidden = country !== "IN";
+    };
+    countryInput.addEventListener("change",() => {
+      countryChangedByUser = true;
+      setCountry(countryInput.value as MarketCountry);
+    });
+    setCountry(countryInput.value as MarketCountry);
+    // Best-effort edge country hint. Never override a deliberate selection.
+    fetch("/api/visitor-country", {credentials:"same-origin",cache:"no-store"})
+      .then((res) => res.ok ? res.json() : null)
+      .then((payload:{country?:string}|null) => {
+        if (!countryChangedByUser && payload && (MARKET_COUNTRIES as readonly string[]).includes(payload.country || "")) {
+          setCountry(payload.country as MarketCountry);
+        }
+      }).catch(() => {});
+    function field(name: string):string {
+      return (form!.elements.namedItem(name) as HTMLInputElement | HTMLSelectElement)?.value || "";
+    }
+    function node(tag: string,text: string,className?: string):HTMLElement {
+      const n = document.createElement(tag);
+      n.textContent=text;
+      if (className) n.className=className;
+      return n;
+    }
+    form.addEventListener("submit",(event)=>{
+      event.preventDefault();
+      const amount = Number(field("area"));
+      const hours = Number(field("hours"));
+      const rawBudget = field("budget");
+      const budget = rawBudget.trim() ? Number(rawBudget) : null;
+      if (!Number.isFinite(amount) || amount<=0 || !Number.isFinite(hours) || hours<0 ||
+        (budget!==null && (!Number.isFinite(budget)||budget<0))) {
+        form.reportValidity();
+        return;
+      }
+      try {
+        const country = field("country") as MarketCountry;
+        const hectares = areaToHectares(amount,field("unit") as AreaUnit);
+        const input:FarmInputs = {
+          country, hectares, annualHours:hours,
+          crop:field("crop") as Crop, soil:field("soil") as Soil,
+          terrain:field("terrain") as Terrain, operation:field("operation") as Operation,
+          implement:field("implement") as Implement, trailer:field("trailer") as Trailer,
+          condition:field("condition") as Condition, budget,
+          servicePriority:(form.elements.namedItem("service") as HTMLInputElement)?.checked || false,
+        };
+        const band = horsepowerScreening(input);
+        const matches = recommendTractors(payload.published,input,6);
+        results.replaceChildren(node("h2",t("results")));
+        results.appendChild(node("p",t("calculated") + ": " + formatter.format(hectares) + " ha"));
+        results.appendChild(node("h3",t("hpGuide")+": "+band.min+"–"+band.max+" HP"));
+        results.appendChild(node("p",t("guideWarning"),"advisor-warning"));
+        if (!matches.length) results.appendChild(node("p",t("unavailable")));
+        const list = document.createElement("div");
+        list.className = "advisor-result-grid";
+        for (const match of matches) {
+          const card = document.createElement("article");
+          card.className="advisor-result-card";
+          const link = document.createElement("a");
+          link.href=(lang==="en"?"/":"/"+lang+"/")+"tractors/"+match.tractor.slug+"/";
+          link.className="advisor-model-link";
+          link.textContent=[match.tractor.brand_name,match.tractor.model_name,match.tractor.variant].filter(Boolean).join(" · ")+" ↗";
+          card.appendChild(link);
+          card.appendChild(node("p",match.power+" HP · "+t(match.powerFit==="within"?"powerMatch":"nearMatch")));
+          if (match.marketFit==="unknown") card.appendChild(node("p",t("marketUnknown"),"advisor-muted"));
+          if (match.price) {
+            card.appendChild(node("strong",t("priceTitle")+": "+
+              formatMarketPriceRange(match.price,lang==="tr"?"tr-TR":lang)));
+            card.appendChild(node("p",t(match.priceFit==="in_budget"?"budgetOk":match.priceFit==="over_budget"?"overBudget":"noBudgetFit"),"advisor-muted"));
+            const a = document.createElement("a");
+            a.href=match.price.sourceUrl;
+            a.target="_blank"; a.rel="noopener noreferrer";
+            a.textContent=t("source")+": "+match.price.sourceName+" ↗";
+            card.appendChild(a);
+            card.appendChild(node("p",t("date")+": "+match.price.observedOn+" · "+match.price.configuration,"advisor-muted"));
+          } else {
+            card.appendChild(node("p",t("priceUnknown"),"advisor-muted"));
+          }
+          list.appendChild(card);
+        }
+        results.appendChild(list);
+        if (input.servicePriority) results.appendChild(node("p",t("availability"),"advisor-warning"));
+        results.appendChild(node("p",t("priceNote"),"advisor-muted"));
+      } catch {
+        results.replaceChildren(node("p",t("lead")));
+      }
+    });
+  }
+</script>
+<style>
+  .advisor-hero {padding:64px 0;background:linear-gradient(110deg,#102019,#1b3628);color:#f3f7ef}
+  .advisor-hero h1 {font-size:clamp(29px,4vw,52px);letter-spacing:-.04em;margin:0 0 16px}
+  .advisor-hero p {max-width:850px;line-height:1.8;color:#bed0bf}
+  .advisor-hero a {color:#b7df91}
+  .advisor-section {padding:38px 0 75px}
+  .advisor-form {padding:25px;border:1px solid #dce6d8;background:white;border-radius:16px}
+  .advisor-grid {display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+  .advisor-grid label {display:grid;gap:8px;font-weight:700;font-size:12px;color:#20382a}
+  .advisor-grid input,.advisor-grid select {width:100%;min-width:0;padding:12px;border-radius:8px;border:1px solid #bdc9bd;background:#fcfefb;color:#172a1d;font:inherit}
+  .advisor-budget-input {display:flex;align-items:center;border:1px solid #bdc9bd;border-radius:8px;overflow:hidden}
+  .advisor-budget-input input {border:0}
+  .advisor-budget-input span {padding:12px;background:#eef4ec;font-size:11px}
+  .advisor-check {display:flex;gap:9px;align-items:center;font-size:12px;margin:22px 0}
+  .advisor-area-note,.advisor-warning {padding:13px 15px;border-left:3px solid #bb9050;background:#fff9ed;font-size:12px;line-height:1.7}
+  .advisor-results {padding-top:38px}
+  .advisor-results h2 {font-size:28px}
+  .advisor-results h3 {margin-top:20px;font-size:18px}
+  .advisor-result-grid {display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin:24px 0}
+  .advisor-result-card {padding:21px;border:1px solid #dae5d6;border-radius:12px;background:white;overflow-wrap:anywhere;font-size:13px;line-height:1.65}
+  .advisor-result-card a {color:#26653c;text-decoration:underline;text-underline-offset:3px}
+  .advisor-model-link {font-weight:800;font-size:16px}
+  .advisor-muted {font-size:11px;color:#667766}
+  @media(max-width:850px){.advisor-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+  @media(max-width:560px){.advisor-grid,.advisor-result-grid{grid-template-columns:1fr}.advisor-form{padding:17px}}
+</style>

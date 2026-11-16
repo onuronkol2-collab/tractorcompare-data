@@ -40,6 +40,17 @@ export default {
   async fetch(request, env) {
     const url = new URL(request.url);
     const method = request.method;
+    if (url.pathname === "/api/visitor-country") {
+      if (method !== "GET" && method !== "HEAD") {
+        return new Response("Method not allowed",{status:405});
+      }
+      const code = typeof request.cf?.country === "string" &&
+        /^[A-Z]{2}$/.test(request.cf.country) ? request.cf.country : null;
+      return new Response(method === "HEAD" ? null : JSON.stringify({country:code}),{
+        headers:{"Content-Type":"application/json; charset=utf-8",
+                 "Cache-Control":"private, no-store","X-Robots-Tag":"noindex"}
+      });
+    }
     if (url.pathname.startsWith("/language/")) {
       if (method !== "GET" && method !== "HEAD") return new Response("Method not allowed", {status:405});
       const match = /^\/language\/([a-z-]+)\/?$/.exec(url.pathname);
