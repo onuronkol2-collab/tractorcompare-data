@@ -1,4 +1,4 @@
-import type { Locale } from "./locales";
+import type { Locale } from "./locales.ts";
 
 /**
  * Technical term glossary. Order: Chinese, Hindi, Brazilian Portuguese,
