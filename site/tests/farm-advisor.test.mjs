@@ -147,3 +147,24 @@ test("new equipment and clean-result labels are translated across ten locales",(
     }
   }
 });
+
+test("2026 country list ranges remain scoped to exact variants and tax basis", () => {
+  const nh={brand_name:"New Holland",model_name:"T5.110",
+    variant:"Dual Command", market:"Turkey",model_year:null};
+  const quote=matchingPrice(nh,"TR");
+  assert.equal(quote?.min,6610095);
+  assert.equal(quote?.max,6686197);
+  assert.equal(quote?.taxBasis,"included");
+  assert.equal(quote?.quoteKind,"manufacturer_msrp");
+  assert.equal(matchingPrice({...nh,variant:"Bluemaster MasterDrive"},"TR")?.min,6464891);
+  assert.equal(matchingPrice({...nh,variant:"Dual Command LE"},"TR"),null);
+  assert.equal(matchingPrice({...nh,model_year:2024},"TR"),null);
+  assert.equal(matchingPrice({...nh,market:"South Africa"},"TR"),null);
+  const basak={brand_name:"Başak Traktör",model_name:"5120",variant:null,
+    market:"global",model_year:null};
+  assert.equal(matchingPrice(basak,"TR")?.min,5099345);
+  assert.equal(matchingPrice(basak,"TR")?.max,5114548);
+  assert.equal(matchingPrice({...basak,variant:"unknown overseas trim"},"TR"),null);
+  assert.equal(matchingPrice({...basak,model_name:"2075 BK"},"TR"),null);
+  assert.equal(matchingPrice(basak,"DE"),null);
+});
