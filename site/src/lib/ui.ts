@@ -1,4 +1,4 @@
-import { LOCALES, type Locale } from "./locales";
+import { LOCALES, type Locale } from "./locales.ts";
 
 /**
  * Translation matrix in LOCALES order: EN, TR, ZH-Hans, HI, PT-BR, FR, DE, RU, JA, ES.
