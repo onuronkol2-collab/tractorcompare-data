@@ -97,8 +97,9 @@ function marketCompatibility(market: string | null, country: MarketCountry): "ma
   return "unknown";
 }
 
+export type AdvisorTractor = Pick<TractorRecord, "tractor_id" | "slug" | "brand_name" | "model_name" | "variant" | "market" | "model_year" | "horsepower">;
 export interface FarmMatch {
-  tractor: TractorRecord;
+  tractor: AdvisorTractor;
   score: number;
   power: number;
   marketFit: "matched" | "unknown";
@@ -108,7 +109,7 @@ export interface FarmMatch {
 }
 
 /** Rank known-power published catalog entries only; never promise availability. */
-export function recommendTractors(catalog: TractorRecord[], input: FarmInputs, limit = 5): FarmMatch[] {
+export function recommendTractors(catalog: AdvisorTractor[], input: FarmInputs, limit = 5): FarmMatch[] {
   const target = horsepowerScreening(input);
   const mid = (target.min + target.max) / 2;
   const output: FarmMatch[] = [];
