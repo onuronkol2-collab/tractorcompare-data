@@ -4,10 +4,16 @@
   "workers_dev": true,
   "preview_urls": true,
   "assets": {
-    "directory": "./site/dist"
+    "directory": "./site/dist",
+    "binding": "ASSETS",
+    "run_worker_first": [
+      "/",
+      "/language/*"
+    ]
   },
   "observability": {
     "enabled": true
   },
-  "previews": {}
+  "previews": {},
+  "main": "./site/worker/index.js"
 }
