@@ -78,8 +78,14 @@ export function horsepowerScreening(input: FarmInputs): { min: number; max: numb
   if (input.soil === "heavy") bump(8, 16, "soil");
   if (input.terrain === "rolling") bump(5, 9, "terrain");
   if (input.terrain === "steep") bump(9, 15, "terrain");
+  // Illustrative crop modifiers only. Orchard/vineyard width and row spacing
+  // must be verified separately; paddy tractors require suitable tyres/traction.
   if (input.crop === "orchard" || input.crop === "vineyard") bump(-5, -5, "crop");
-  if (input.crop === "rice") bump(4, 8, "crop");
+  else if (input.crop === "rice") bump(4, 8, "crop");
+  else if (input.crop === "grain") bump(5, 10, "crop");
+  else if (input.crop === "vegetables") bump(2, 5, "crop");
+  else if (input.crop === "pasture") bump(-3, 2, "crop");
+  else if (input.crop === "mixed") bump(4, 7, "crop");
   if (input.annualHours >= 800) bump(5, 12, "hours");
   min = Math.max(15, Math.min(300, Math.round(min)));
   max = Math.max(min + 10, Math.min(350, Math.round(max)));
