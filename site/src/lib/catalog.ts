@@ -1,5 +1,5 @@
-import type { Locale } from "./locales";
-import { localizedCategoryName, localizedSpecificationName } from "./spec-i18n";
+import type { Locale } from "./locales.ts";
+import { localizedCategoryName, localizedSpecificationName } from "./spec-i18n.ts";
 
 export interface PublicSpec {
   spec_id: string;
