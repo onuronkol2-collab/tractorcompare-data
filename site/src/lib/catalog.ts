@@ -1,3 +1,6 @@
+import type { Locale } from "./locales";
+import { localizedCategoryName, localizedSpecificationName } from "./spec-i18n";
+
 export interface PublicSpec {
   spec_id: string;
   spec_name: string;
@@ -454,11 +457,14 @@ const specLabels: Record<string, { en: string; tr: string }> = {
   wheelbase: { en: "Wheelbase", tr: "Dingil mesafesi" },
 };
 
-export function specLabel(spec: PublicSpec, lang: "en" | "tr"): string {
+export function specLabel(spec: PublicSpec, lang: Locale): string {
+  // Translation applies only to known canonical engineering labels, never values.
+  const localized = localizedSpecificationName(spec.canonical_key, spec.spec_name, lang);
+  if (localized) return localized;
   const mapped = specLabels[spec.canonical_key || ""]
     || specLabels[comparisonKey(spec)]
     || rawSpecNameLabels[spec.spec_name.trim()];
-  return mapped ? mapped[lang] : String(spec.spec_name || spec.canonical_key || "Specification")
+  return mapped ? mapped[lang === "tr" ? "tr" : "en"] : String(spec.spec_name || spec.canonical_key || "Specification")
     .replace(/_/g, " ").replace(/\b\w/g, (letter) => letter.toUpperCase());
 }
 
@@ -555,7 +561,7 @@ export function officialManufacturerSourceUrl(
  * disagree on overall length. Keep the value visible, but explain the conflict
  * until the manufacturer confirms the correct figure.
  */
-export function verificationNotice(spec: PublicSpec, lang: "en" | "tr"): string | null {
+export function verificationNotice(spec: PublicSpec, lang: Locale): string | null {
   const evidence = spec.evidence_text ?? "";
   const hasLengthConflict = spec.canonical_key === "overall_length"
     && spec.verified_at === null
@@ -564,17 +570,29 @@ export function verificationNotice(spec: PublicSpec, lang: "en" | "tr"): string 
 
   if (!hasLengthConflict) return null;
 
-  return lang === "tr"
-    ? "Başak'ın resmî ürün sayfası 3.830 mm, 2075 BK 4WD teknik broşürü ise 3.930 mm belirtiyor. Üretici teyidi gelene kadar bu ölçüyü kesin karşılaştırma değeri olarak kullanmayın."
-    : "Başak's official product page lists 3,830 mm, while the 2075 BK 4WD technical brochure lists 3,930 mm. Treat this dimension as provisional until the manufacturer confirms the correct figure.";
+  const notice: Record<Locale,string> = {
+    en: "Başak's official product page lists 3,830 mm, but the 2075 BK 4WD brochure lists 3,930 mm. Do not treat this length as confirmed until the manufacturer resolves the discrepancy.",
+    tr: "Başak'ın resmî ürün sayfası 3.830 mm, 2075 BK 4WD teknik broşürü ise 3.930 mm belirtiyor. Üretici açıklayana kadar bu uzunluğu kesin kabul etmeyin.",
+    zh: "Başak 官方产品页标注长度为 3,830 mm，而 2075 BK 4WD 技术手册标注为 3,930 mm。制造商澄清前，不应将该长度视为已确认。",
+    hi: "Başak के आधिकारिक उत्पाद पृष्ठ में लंबाई 3,830 mm है, जबकि 2075 BK 4WD ब्रोशर में 3,930 mm दी गई है। निर्माता द्वारा स्पष्ट किए जाने तक इसे पुष्ट मान न मानें।",
+    "pt-br": "A página oficial da Başak informa 3.830 mm, enquanto o folheto técnico do 2075 BK 4WD informa 3.930 mm. Não considere essa medida confirmada antes do esclarecimento do fabricante.",
+    fr: "La page officielle Başak indique 3 830 mm, tandis que la brochure du 2075 BK 4WD indique 3 930 mm. Cette longueur ne doit pas être considérée comme confirmée avant clarification du constructeur.",
+    de: "Die offizielle Başak-Produktseite nennt 3.830 mm, die Broschüre des 2075 BK 4WD dagegen 3.930 mm. Bis zur Klärung durch den Hersteller ist die Länge nicht als bestätigt anzusehen.",
+    ru: "На официальной странице Başak указано 3 830 мм, а в брошюре 2075 BK 4WD — 3 930 мм. До разъяснения производителя эту длину нельзя считать подтверждённой.",
+    ja: "Başakの公式製品ページには3,830 mm、2075 BK 4WDのカタログには3,930 mmと記載されています。メーカーの確認が取れるまで確定値として扱わないでください。",
+    es: "La página oficial de Başak indica 3.830 mm, mientras que el folleto del 2075 BK 4WD indica 3.930 mm. No considere confirmada esta medida hasta que el fabricante aclare la diferencia.",
+  };
+  return notice[lang];
 }
 
-export function categoryLabel(category: string | null, lang: "en" | "tr"): string {
+export function categoryLabel(category: string | null, lang: Locale): string {
+  const localized = localizedCategoryName(category, lang);
+  if (localized) return localized;
   const mapped = categoryLabels[category || ""];
-  return mapped ? mapped[lang] : lang === "en" ? "Other specifications" : "Diğer teknik özellikler";
+  return mapped ? mapped[lang === "tr" ? "tr" : "en"] : lang === "tr" ? "Diğer teknik özellikler" : "Other specifications";
 }
 
-export function groupSpecifications(specifications: PublicSpec[], lang: "en" | "tr") {
+export function groupSpecifications(specifications: PublicSpec[], lang: Locale) {
   const groups = new Map<string, PublicSpec[]>();
   for (const spec of specifications) {
     const key = spec.comparison_class || "other";
