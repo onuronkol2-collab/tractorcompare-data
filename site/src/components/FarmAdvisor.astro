@@ -1,11 +1,14 @@
 ---
 import SiteLayout from "../layouts/SiteLayout.astro";
-import { localizedPath, LOCALE_TAGS, type Locale } from "../lib/locales";
+import { localizedPath, type Locale } from "../lib/locales";
 import { getPublicCatalog } from "../lib/catalog";
 import { advisorText as tx } from "../lib/advisor-i18n";
 import { t } from "../lib/ui";
-import { COUNTRY_AREA_UNITS, COUNTRY_NAMES, COUNTRIES_BY_LOCALE } from "../lib/farm-advisor";
+import {
+  COUNTRY_AREA_UNITS, COUNTRY_NAMES, COUNTRIES_BY_LOCALE, FARM_IMPLEMENT_TYPES,
+} from "../lib/farm-advisor";
 import { COUNTRY_CURRENCIES, MARKET_COUNTRIES } from "../lib/market-prices";
+
 interface Props { lang: Locale }
 const { lang } = Astro.props;
 const catalog = await getPublicCatalog();
@@ -16,88 +19,176 @@ const published = catalog.tractors.map((tractor) => ({
   variant:tractor.variant, market:tractor.market,
   model_year:tractor.model_year, horsepower:tractor.horsepower,
 }));
-const bundle = JSON.stringify({published, lang}).replace(/</g,"\\u003c");
+const bundle = JSON.stringify({ published, lang }).replace(/</g,"\\u003c");
 const heading = tx(lang,"heading");
-const groups = [
-  {name:"crop", options:["grain","vegetables","orchard","vineyard","rice","pasture","mixed"]},
-  {name:"terrain",options:["flat","rolling","steep"]},
+const extras = [
   {name:"soil",options:["light","medium","heavy"]},
+  {name:"terrain",options:["flat","rolling","steep"]},
   {name:"operation",options:["light","general","heavy"]},
-  {name:"implement",options:["light","medium","heavy"]},
   {name:"trailer",options:["none","light","heavy"]},
   {name:"condition",options:["either","new","used"]},
 ] as const;
+const basicCrops = ["grain","vegetables","orchard","vineyard","rice","pasture","mixed"] as const;
 const defaults:Record<string,string> = {
-  crop:"grain", terrain:"flat", soil:"medium", operation:"general",
-  implement:"medium", trailer:"none", condition:"either",
+  soil:"medium",terrain:"flat",operation:"general",trailer:"none",condition:"either",
 };
+const areaUnitOptions = [
+  ["dekar","dönüm / dekar (1.000 m²)"],
+  ["hectare","ha (10.000 m²)"],
+  ["acre","acre (4.046,86 m²)"],
+  ["mu","亩 / mǔ (666,67 m²)"],
+  ["tan","反 / tan (991,74 m²)"],
+  ["m2","m²"],
+];
 ---
 <SiteLayout lang={lang} title={heading+" | TractorVS"} description={tx(lang,"lead")}>
-  <section class="advisor-hero"><div class="container">
-    <p class="eyebrow"><span class="eyebrow-mark"></span>TractorVS</p>
-    <h1>{heading}</h1><p>{tx(lang,"lead")}</p>
-    <a href={localizedPath(lang,"/tractors/")}>{t(lang,"navCatalog")} ↗</a>
-  </div></section>
-  <section class="advisor-section"><div class="container">
-    <form id="farm-advisor-form" class="advisor-form" novalidate>
-      <div class="advisor-grid">
-        <label>{tx(lang,"country")}
-          <select name="country" id="advisor-country" required>
-            {MARKET_COUNTRIES.map((country)=>
-              <option value={country} selected={country===initialCountry}>{COUNTRY_NAMES[country]}</option>
-            )}
-          </select>
-        </label>
-        <label>{tx(lang,"area")}
-          <input name="area" type="number" step="any" min="0.0001" max="100000000" value="50" required/>
-        </label>
-        <label>{tx(lang,"unit")}
-          <select name="unit" id="advisor-unit">
-            {Object.entries({
-              dekar:"dönüm / dekar (1.000 m²)", hectare:"ha (10.000 m²)",
-              acre:"acre (4.046,86 m²)", mu:"亩 mǔ (666,67 m²)",
-              tan:"反 tan (991,74 m²)", m2:"m²",
-            }).map(([code,label])=><option value={code} selected={code===COUNTRY_AREA_UNITS[initialCountry]}>{label}</option>)}
-          </select>
-        </label>
-        <label>{tx(lang,"hours")}
-          <input name="hours" type="number" min="0" max="8760" step="1" value="200" required/>
-        </label>
-        {groups.map((group)=><label>{tx(lang,group.name)}
-          <select name={group.name}>
-            {group.options.map((option)=><option value={option} selected={defaults[group.name]===option}>{tx(lang,option)}</option>)}
-          </select>
-        </label>)}
-        <label>{tx(lang,"budget")}
-          <div class="advisor-budget-input">
-            <input name="budget" type="number" min="0" step="any" placeholder="—"/>
-            <span id="advisor-currency">{COUNTRY_CURRENCIES[initialCountry]}</span>
-          </div>
-        </label>
-      </div>
-      <label class="advisor-check"><input name="service" type="checkbox" checked />{tx(lang,"service")}</label>
-      <p id="advisor-area-note" class="advisor-area-note" hidden>{tx(lang,"bigha")}</p>
-      <button type="submit" class="button button-primary">{tx(lang,"submit")} ↗</button>
-    </form>
-    <section class="advisor-results" id="advisor-results" aria-live="polite" aria-atomic="false">
-      <h2>{tx(lang,"results")}</h2>
+  <section class="advisor-hero">
+    <div class="container advisor-hero-inner">
+      <p class="eyebrow"><span class="eyebrow-mark"></span>TRACTORVS / FARM ADVISOR</p>
+      <h1>{heading}</h1>
       <p>{tx(lang,"lead")}</p>
-    </section>
-  </div></section>
+      <a class="advisor-return" href={localizedPath(lang,"/tractors/")}>← {t(lang,"navCatalog")}</a>
+    </div>
+  </section>
+
+  <section class="advisor-page">
+    <div class="container advisor-layout">
+      <section id="advisor-results" class="advisor-results" aria-live="polite" aria-atomic="false" hidden></section>
+
+      <form id="farm-advisor-form" class="advisor-form">
+        <section class="advisor-step" aria-labelledby="advisor-land-title">
+          <div class="advisor-step-head">
+            <span class="advisor-step-number" aria-hidden="true">01</span>
+            <h2 id="advisor-land-title">{tx(lang,"stepLand")}</h2>
+          </div>
+          <div class="advisor-fields advisor-fields--primary">
+            <label class="advisor-field">{tx(lang,"country")}
+              <select name="country" id="advisor-country" required>
+                {MARKET_COUNTRIES.map((country) =>
+                  <option value={country} selected={country===initialCountry}>{COUNTRY_NAMES[country]}</option>
+                )}
+              </select>
+            </label>
+            <label class="advisor-field">{tx(lang,"area")}
+              <input name="area" type="number" inputmode="decimal" step="any" min="0.0001"
+                max="100000000" value="50" required />
+            </label>
+            <label class="advisor-field">{tx(lang,"unit")}
+              <select name="unit" id="advisor-unit">
+                {areaUnitOptions.map(([code,label]) =>
+                  <option value={code} selected={code===COUNTRY_AREA_UNITS[initialCountry]}>{label}</option>
+                )}
+              </select>
+            </label>
+            <label class="advisor-field">{tx(lang,"crop")}
+              <select name="crop">
+                {basicCrops.map((option) =>
+                  <option value={option}>{tx(lang,option)}</option>
+                )}
+              </select>
+            </label>
+          </div>
+          <p id="advisor-area-note" class="advisor-area-note" hidden>{tx(lang,"bigha")}</p>
+        </section>
+
+        <section class="advisor-step" aria-labelledby="advisor-equipment-title">
+          <div class="advisor-step-head">
+            <span class="advisor-step-number" aria-hidden="true">02</span>
+            <div>
+              <h2 id="advisor-equipment-title">{tx(lang,"stepEquipment")}</h2>
+              <p class="advisor-section-lead">{tx(lang,"equipmentHelp")}</p>
+            </div>
+          </div>
+          <div class="advisor-tools" role="group" aria-label={tx(lang,"stepEquipment")}>
+            {FARM_IMPLEMENT_TYPES.map((kind,index) =>
+              <label class="advisor-tool">
+                <input type="checkbox" name="implements" value={kind} />
+                <span class="advisor-tool-index" aria-hidden="true">{String(index+1).padStart(2,"0")}</span>
+                <span class="advisor-tool-name">{tx(lang,("imp_"+kind) as "imp_plow")}</span>
+                <span class="advisor-tool-tick" aria-hidden="true">✓</span>
+              </label>
+            )}
+          </div>
+          <div class="advisor-equipment-details">
+            <label class="advisor-field advisor-detail-input" data-plow-detail hidden>
+              {tx(lang,"plowBodies")}
+              <select name="plowBodies" disabled>
+                {[2,3,4,5,6].map((number)=>
+                  <option value={number} selected={number===3}>{number}</option>
+                )}
+              </select>
+            </label>
+            <label class="advisor-field advisor-detail-input" data-laser-detail hidden>
+              {tx(lang,"laserWidth")}
+              <select name="laserWidth" disabled>
+                {["2.5","3.5","4.5","5","6","7","9"].map((width)=>
+                  <option value={width} selected={width==="3.5"}>{width} m</option>
+                )}
+              </select>
+            </label>
+          </div>
+        </section>
+
+        <section class="advisor-step advisor-step--more">
+          <details class="advisor-more">
+            <summary>
+              <span class="advisor-step-number" aria-hidden="true">03</span>
+              <span class="advisor-more-label">
+                <strong>{tx(lang,"stepDetails")}</strong>
+                <small>{tx(lang,"stepDetailsHint")}</small>
+              </span>
+              <span class="advisor-more-chevron" aria-hidden="true">⌄</span>
+            </summary>
+            <div class="advisor-fields advisor-fields--more">
+              {extras.map((group) =>
+                <label class="advisor-field">{tx(lang,group.name)}
+                  <select name={group.name}>
+                    {group.options.map((option) =>
+                      <option value={option} selected={defaults[group.name]===option}>{tx(lang,option)}</option>
+                    )}
+                  </select>
+                </label>
+              )}
+              <label class="advisor-field">{tx(lang,"hours")}
+                <input name="hours" type="number" inputmode="numeric" min="0" max="8760"
+                  value="200" step="1" required />
+              </label>
+              <label class="advisor-field">{tx(lang,"budget")}
+                <span class="advisor-budget-input">
+                  <input name="budget" type="number" inputmode="decimal" min="0" step="any" placeholder="—"/>
+                  <span id="advisor-currency">{COUNTRY_CURRENCIES[initialCountry]}</span>
+                </span>
+              </label>
+              <label class="advisor-check">
+                <input name="service" type="checkbox" checked />
+                <span>{tx(lang,"service")}</span>
+              </label>
+            </div>
+          </details>
+        </section>
+
+        <div class="advisor-submit-row">
+          <button type="submit" class="advisor-submit-button">
+            <span>{tx(lang,"submit")}</span><span aria-hidden="true">→</span>
+          </button>
+          <p>{tx(lang,"lead")}</p>
+        </div>
+      </form>
+    </div>
+  </section>
 </SiteLayout>
+
 <script type="application/json" id="advisor-data" set:html={bundle}></script>
 <script>
   import {
-    COUNTRY_AREA_UNITS, COUNTRIES_BY_LOCALE, areaToHectares,
-    horsepowerScreening, recommendTractors
+    COUNTRY_AREA_UNITS, areaToHectares, horsepowerScreening, recommendTractors,
+    FARM_IMPLEMENT_TYPES,
   } from "../lib/farm-advisor";
   import type {
     AdvisorTractor, Crop, Soil, Terrain, Operation, Implement, Trailer,
-    Condition, AreaUnit, FarmInputs
+    Condition, AreaUnit, FarmInputs, FarmImplement,
   } from "../lib/farm-advisor";
-  import {
-    COUNTRY_CURRENCIES, MARKET_COUNTRIES, formatMarketPriceRange,
-  } from "../lib/market-prices";
+  import { COUNTRY_CURRENCIES, MARKET_COUNTRIES, formatMarketPriceRange } from "../lib/market-prices";
   import type { MarketCountry } from "../lib/market-prices";
   import { advisorText } from "../lib/advisor-i18n";
   import type { Locale } from "../lib/locales";
@@ -109,131 +200,383 @@ const defaults:Record<string,string> = {
   const unitInput = document.querySelector<HTMLSelectElement>("#advisor-unit");
   const currency = document.getElementById("advisor-currency");
   const areaNote = document.getElementById("advisor-area-note");
+  const plowDetail = document.querySelector<HTMLElement>("[data-plow-detail]");
+  const laserDetail = document.querySelector<HTMLElement>("[data-laser-detail]");
   if (form && dataNode && results && countryInput && unitInput) {
     const payload = JSON.parse(dataNode.textContent || "{}") as {published:AdvisorTractor[],lang:Locale};
     const lang = payload.lang;
-    const t = (key: string):string => advisorText(lang,key);
-    const formatter = new Intl.NumberFormat(lang === "tr"?"tr-TR":lang, {maximumFractionDigits:2});
-    let countryChangedByUser = false;
-    let lastCountry = countryInput.value as MarketCountry;
-    const setCountry = (country:MarketCountry) => {
-      const previousDefault = COUNTRY_AREA_UNITS[lastCountry];
-      countryInput.value = country;
-      lastCountry = country;
-      if (unitInput.value === previousDefault) unitInput.value = COUNTRY_AREA_UNITS[country];
-      if (currency) currency.textContent = COUNTRY_CURRENCIES[country];
-      if (areaNote) areaNote.hidden = country !== "IN";
+    const t = (key: Parameters<typeof advisorText>[1]) => advisorText(lang,key);
+    const localeCode: string = lang === "tr" ? "tr-TR" : lang === "zh" ? "zh-CN" : lang;
+    const formatter = new Intl.NumberFormat(localeCode, {maximumFractionDigits:2});
+    let touched = false;
+    let unitTouched = false;
+
+    const selectedTools = ():FarmImplement[] =>
+      Array.from(form.querySelectorAll<HTMLInputElement>('input[name="implements"]:checked'))
+        .map((input) => input.value as FarmImplement)
+        .filter((kind) => (FARM_IMPLEMENT_TYPES as readonly string[]).includes(kind));
+
+    const updateEquipmentDetails = () => {
+      const picked = selectedTools();
+      for (const [element, kind] of [
+        [plowDetail,"plow"],[laserDetail,"laser_leveler"],
+      ] as const) {
+        if (!element) continue;
+        const active=picked.includes(kind);
+        element.hidden=!active;
+        element.querySelectorAll<HTMLInputElement|HTMLSelectElement>("input,select").forEach((field)=> {
+          field.disabled=!active;
+        });
+      }
     };
-    countryInput.addEventListener("change",() => {
-      countryChangedByUser = true;
+    form.querySelectorAll<HTMLInputElement>('input[name="implements"]').forEach((item) =>
+      item.addEventListener("change",updateEquipmentDetails)
+    );
+    updateEquipmentDetails();
+
+    const setCountry = (country:MarketCountry) => {
+      countryInput.value=country;
+      if (!unitTouched) unitInput.value=COUNTRY_AREA_UNITS[country];
+      if (currency) currency.textContent=COUNTRY_CURRENCIES[country];
+      if (areaNote) areaNote.hidden=country!=="IN";
+    };
+    unitInput.addEventListener("change",()=>{unitTouched=true; touched=true;});
+    form.addEventListener("input",()=>{touched=true;});
+    countryInput.addEventListener("change",()=>{
+      touched=true;
       setCountry(countryInput.value as MarketCountry);
     });
     setCountry(countryInput.value as MarketCountry);
-    // Best-effort edge country hint. Never override a deliberate selection.
-    fetch("/api/visitor-country", {credentials:"same-origin",cache:"no-store"})
-      .then((res) => res.ok ? res.json() : null)
-      .then((payload:{country?:string}|null) => {
-        if (!countryChangedByUser && payload && (MARKET_COUNTRIES as readonly string[]).includes(payload.country || "")) {
-          setCountry(payload.country as MarketCountry);
-        }
-      }).catch(() => {});
-    function field(name: string):string {
-      return (form!.elements.namedItem(name) as HTMLInputElement | HTMLSelectElement)?.value || "";
+    // Best-effort country hint only before user begins filling the form.
+    fetch("/api/visitor-country",{credentials:"same-origin",cache:"no-store"})
+      .then((response)=>response.ok?response.json():null)
+      .then((geo:{country?:string}|null)=>{
+        if(!touched && geo && (MARKET_COUNTRIES as readonly string[]).includes(geo.country||""))
+          setCountry(geo.country as MarketCountry);
+      }).catch(()=>{});
+
+    const field=(name:string):string =>
+      (form.elements.namedItem(name) as HTMLInputElement|HTMLSelectElement)?.value || "";
+
+    function node(tag:string,text:string,cssClass?:string):HTMLElement {
+      const child=document.createElement(tag);
+      child.textContent=text;
+      if(cssClass) child.className=cssClass;
+      return child;
     }
-    function node(tag: string,text: string,className?: string):HTMLElement {
-      const n = document.createElement(tag);
-      n.textContent=text;
-      if (className) n.className=className;
-      return n;
+    function detailNote(text:string):HTMLParagraphElement {
+      const element=document.createElement("p");
+      element.className="advisor-safety-note";
+      element.textContent=text;
+      return element;
     }
+
     form.addEventListener("submit",(event)=>{
       event.preventDefault();
-      const amount = Number(field("area"));
-      const hours = Number(field("hours"));
-      const rawBudget = field("budget");
-      const budget = rawBudget.trim() ? Number(rawBudget) : null;
-      if (!Number.isFinite(amount) || amount<=0 || !Number.isFinite(hours) || hours<0 ||
-        (budget!==null && (!Number.isFinite(budget)||budget<0))) {
-        form.reportValidity();
-        return;
-      }
+      if(!form.reportValidity()) return;
       try {
-        const country = field("country") as MarketCountry;
-        const hectares = areaToHectares(amount,field("unit") as AreaUnit);
-        const input:FarmInputs = {
+        const amount=Number(field("area"));
+        const hours=Number(field("hours"));
+        const rawBudget=field("budget");
+        const budget=rawBudget.trim()?Number(rawBudget):null;
+        if(!(amount>0) || !(hours>=0) ||
+          (budget!==null && (!Number.isFinite(budget)||budget<0))) return;
+
+        const picked=selectedTools();
+        const hectares=areaToHectares(amount,field("unit") as AreaUnit);
+        const country=field("country") as MarketCountry;
+        const input:FarmInputs={
           country, hectares, annualHours:hours,
           crop:field("crop") as Crop, soil:field("soil") as Soil,
           terrain:field("terrain") as Terrain, operation:field("operation") as Operation,
-          implement:field("implement") as Implement, trailer:field("trailer") as Trailer,
-          condition:field("condition") as Condition, budget,
-          servicePriority:(form.elements.namedItem("service") as HTMLInputElement)?.checked || false,
+          implement:"light" as Implement, implements:picked,
+          plowBodies:picked.includes("plow")?Number(field("plowBodies")):null,
+          laserWidthMeters:picked.includes("laser_leveler")?Number(field("laserWidth")):null,
+          trailer:field("trailer") as Trailer,
+          condition:field("condition") as Condition,budget,
+          servicePriority:(form.elements.namedItem("service") as HTMLInputElement)?.checked||false,
         };
-        const band = horsepowerScreening(input);
-        const matches = recommendTractors(payload.published,input,6);
-        results.replaceChildren(node("h2",t("results")));
-        results.appendChild(node("p",t("calculated") + ": " + formatter.format(hectares) + " ha"));
-        results.appendChild(node("h3",t("hpGuide")+": "+band.min+"–"+band.max+" HP"));
-        results.appendChild(node("p",t("guideWarning"),"advisor-warning"));
-        if (!matches.length) results.appendChild(node("p",t("unavailable")));
-        const list = document.createElement("div");
-        list.className = "advisor-result-grid";
-        for (const match of matches) {
-          const card = document.createElement("article");
+        const band=horsepowerScreening(input);
+        const matches=recommendTractors(payload.published,input,6);
+
+        results.replaceChildren();
+        const head=document.createElement("div");
+        head.className="advisor-results-header";
+        const title=node("h2",t("researchResults"));
+        title.tabIndex=-1;
+        head.appendChild(title);
+        head.appendChild(node("span",matches.length+" "+t("resultsModels"),"advisor-results-count"));
+        results.appendChild(head);
+        results.appendChild(node("p",t("resultsExplanation"),"advisor-results-intro"));
+
+        const metrics=document.createElement("div");
+        metrics.className="advisor-metrics";
+        const areaMetric=document.createElement("div");
+        areaMetric.appendChild(node("small",t("calculated")));
+        areaMetric.appendChild(node("strong",formatter.format(hectares)+" ha"));
+        const hpMetric=document.createElement("div");
+        hpMetric.appendChild(node("small",t("hpGuide")));
+        hpMetric.appendChild(node("strong",band.min+" – "+band.max+" HP"));
+        metrics.append(areaMetric,hpMetric);
+        results.appendChild(metrics);
+
+        const selected=document.createElement("div");
+        selected.className="advisor-selected-tools";
+        selected.appendChild(node("strong",t("equipmentSelected")+":","advisor-selected-tools-label"));
+        const pills=document.createElement("div");
+        pills.className="advisor-selected-pills";
+        if(picked.length) {
+          for(const kind of picked) pills.appendChild(node("span",t(("imp_"+kind) as "imp_plow")));
+        } else pills.appendChild(node("span",t("equipmentEmpty")));
+        selected.appendChild(pills);
+        results.appendChild(selected);
+
+        const notices=document.createElement("div");
+        notices.className="advisor-safety-notes";
+        if(picked.includes("laser_leveler")) notices.appendChild(detailNote(t("laserCaution")));
+        if(picked.includes("plow")) notices.appendChild(detailNote(t("plowCaution")));
+        if(picked.some((kind)=>["rotavator","mower","baler"].includes(kind))) notices.appendChild(detailNote(t("ptoCaution")));
+        if(picked.includes("front_loader")) notices.appendChild(detailNote(t("loaderCaution")));
+        notices.appendChild(detailNote(t("guideWarning")));
+        results.appendChild(notices);
+
+        if (!matches.length) results.appendChild(node("p",t("unavailable"),"advisor-empty"));
+        const list=document.createElement("ol");
+        list.className="advisor-result-list";
+        for(const [index,match] of matches.entries()) {
+          const card=document.createElement("li");
           card.className="advisor-result-card";
-          const link = document.createElement("a");
-          link.href=(lang==="en"?"/":"/"+lang+"/")+"tractors/"+match.tractor.slug+"/";
-          link.className="advisor-model-link";
-          link.textContent=[match.tractor.brand_name,match.tractor.model_name,match.tractor.variant].filter(Boolean).join(" · ")+" ↗";
-          card.appendChild(link);
-          card.appendChild(node("p",match.power+" HP · "+t(match.powerFit==="within"?"powerMatch":"nearMatch")));
-          if (match.marketFit==="unknown") card.appendChild(node("p",t("marketUnknown"),"advisor-muted"));
-          if (match.price) {
-            card.appendChild(node("strong",t("priceTitle")+": "+
-              formatMarketPriceRange(match.price,lang==="tr"?"tr-TR":lang)));
-            card.appendChild(node("p",t(match.priceFit==="in_budget"?"budgetOk":match.priceFit==="over_budget"?"overBudget":"noBudgetFit"),"advisor-muted"));
-            const a = document.createElement("a");
-            a.href=match.price.sourceUrl;
-            a.target="_blank"; a.rel="noopener noreferrer";
-            a.textContent=t("source")+": "+match.price.sourceName+" ↗";
-            card.appendChild(a);
-            card.appendChild(node("p",t("date")+": "+match.price.observedOn+" · "+match.price.configuration,"advisor-muted"));
+          const identity=document.createElement("div");
+          identity.className="advisor-card-identity";
+          identity.appendChild(node("span",String(index+1).padStart(2,"0"),"advisor-result-rank"));
+          const brandModel=document.createElement("div");
+          brandModel.className="advisor-result-model";
+          brandModel.appendChild(node("small",match.tractor.brand_name,"advisor-result-brand"));
+          brandModel.appendChild(node("h3",match.tractor.model_name,"advisor-result-name"));
+          if(match.tractor.variant) brandModel.appendChild(node("p",match.tractor.variant,"advisor-result-variant"));
+          identity.appendChild(brandModel);
+          card.appendChild(identity);
+
+          const facts=document.createElement("div");
+          facts.className="advisor-result-facts";
+          const power=document.createElement("div");
+          power.appendChild(node("small",t("powerBadge")));
+          power.appendChild(node("strong",match.power+" HP"));
+          power.appendChild(node("span",t(match.powerFit==="within"?"powerMatch":"nearMatch"),"advisor-fact-note"));
+          facts.appendChild(power);
+
+          const price=document.createElement("div");
+          price.appendChild(node("small",t("priceTitle")));
+          if(match.price) {
+            price.appendChild(node("strong",formatMarketPriceRange(match.price,localeCode)));
+            if(budget!==null) price.appendChild(node("span",
+              t(match.priceFit==="in_budget"?"budgetOk":match.priceFit==="over_budget"?"overBudget":"noBudgetFit"),
+              "advisor-fact-note"));
           } else {
-            card.appendChild(node("p",t("priceUnknown"),"advisor-muted"));
+            price.appendChild(node("span",t("priceUnknown"),"advisor-price-empty"));
           }
+          facts.appendChild(price);
+          card.appendChild(facts);
+          if(match.marketFit==="unknown") {
+            card.appendChild(node("p",t("marketUnknown"),"advisor-market-note"));
+          }
+
+          const footer=document.createElement("div");
+          footer.className="advisor-card-footer";
+          const a=document.createElement("a");
+          a.className="advisor-view-model";
+          a.href=(lang==="en"?"/":"/"+lang+"/")+"tractors/"+match.tractor.slug+"/";
+          a.textContent=t("modelDetails")+" ↗";
+          footer.appendChild(a);
+          if(match.price) {
+            const details=document.createElement("details");
+            details.className="advisor-price-details";
+            const summary=node("summary",t("priceDetails"));
+            details.appendChild(summary);
+            const source=document.createElement("a");
+            source.href=match.price.sourceUrl;
+            source.rel="noopener noreferrer";
+            source.target="_blank";
+            source.textContent=t("source")+": "+match.price.sourceName+" ↗";
+            details.appendChild(source);
+            details.appendChild(node("p",t("date")+": "+match.price.observedOn+" · "+match.price.configuration));
+            footer.appendChild(details);
+          }
+          card.appendChild(footer);
           list.appendChild(card);
         }
         results.appendChild(list);
-        if (input.servicePriority) results.appendChild(node("p",t("availability"),"advisor-warning"));
-        results.appendChild(node("p",t("priceNote"),"advisor-muted"));
+        if(input.servicePriority) results.appendChild(node("p",t("availability"),"advisor-final-note"));
+        results.appendChild(node("p",t("priceNote"),"advisor-final-note"));
+        results.appendChild(node("p",t("editFields"),"advisor-edit-hint"));
+        results.hidden=false;
+        const reduced=window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        requestAnimationFrame(()=>{
+          results.scrollIntoView({behavior:reduced?"instant":"smooth",block:"start"});
+          title.focus({preventScroll:true});
+        });
       } catch {
+        results.hidden=false;
         results.replaceChildren(node("p",t("lead")));
+        results.scrollIntoView({behavior:"auto",block:"start"});
       }
     });
   }
 </script>
+
 <style>
-  .advisor-hero {padding:64px 0;background:linear-gradient(110deg,#102019,#1b3628);color:#f3f7ef}
-  .advisor-hero h1 {font-size:clamp(29px,4vw,52px);letter-spacing:-.04em;margin:0 0 16px}
-  .advisor-hero p {max-width:850px;line-height:1.8;color:#bed0bf}
-  .advisor-hero a {color:#b7df91}
-  .advisor-section {padding:38px 0 75px}
-  .advisor-form {padding:25px;border:1px solid #dce6d8;background:white;border-radius:16px}
-  .advisor-grid {display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
-  .advisor-grid label {display:grid;gap:8px;font-weight:700;font-size:12px;color:#20382a}
-  .advisor-grid input,.advisor-grid select {width:100%;min-width:0;padding:12px;border-radius:8px;border:1px solid #bdc9bd;background:#fcfefb;color:#172a1d;font:inherit}
-  .advisor-budget-input {display:flex;align-items:center;border:1px solid #bdc9bd;border-radius:8px;overflow:hidden}
-  .advisor-budget-input input {border:0}
-  .advisor-budget-input span {padding:12px;background:#eef4ec;font-size:11px}
-  .advisor-check {display:flex;gap:9px;align-items:center;font-size:12px;margin:22px 0}
-  .advisor-area-note,.advisor-warning {padding:13px 15px;border-left:3px solid #bb9050;background:#fff9ed;font-size:12px;line-height:1.7}
-  .advisor-results {padding-top:38px}
-  .advisor-results h2 {font-size:28px}
-  .advisor-results h3 {margin-top:20px;font-size:18px}
-  .advisor-result-grid {display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin:24px 0}
-  .advisor-result-card {padding:21px;border:1px solid #dae5d6;border-radius:12px;background:white;overflow-wrap:anywhere;font-size:13px;line-height:1.65}
-  .advisor-result-card a {color:#26653c;text-decoration:underline;text-underline-offset:3px}
-  .advisor-model-link {font-weight:800;font-size:16px}
-  .advisor-muted {font-size:11px;color:#667766}
-  @media(max-width:850px){.advisor-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
-  @media(max-width:560px){.advisor-grid,.advisor-result-grid{grid-template-columns:1fr}.advisor-form{padding:17px}}
+  .advisor-hero {
+    padding:58px 0 62px;
+    background:linear-gradient(120deg,#0e2018 0%,#193b2a 100%);
+    color:#f3f7ef;
+  }
+  .advisor-hero-inner {max-width:1080px}
+  .advisor-hero .eyebrow {color:#a8d59b;margin-bottom:15px}
+  .advisor-hero h1 {
+    font-size:clamp(31px,4.6vw,56px);
+    line-height:1.12;letter-spacing:-.045em;
+    max-width:900px;margin:0 0 16px;
+  }
+  .advisor-hero p:not(.eyebrow) {
+    max-width:760px;font-size:14px;line-height:1.85;
+    color:#c7d8c7;margin:0 0 17px;
+  }
+  .advisor-return {color:#c4e8b5;font-size:12px;font-weight:800}
+  .advisor-page {padding:36px 0 92px}
+  .advisor-layout {max-width:1100px}
+  .advisor-form {background:#fff;border:1px solid #dce5da;border-radius:18px;box-shadow:0 12px 42px rgba(15,38,22,.045);overflow:hidden}
+  .advisor-step {padding:30px 34px;border-bottom:1px solid #e7ede5}
+  .advisor-step-head {display:flex;align-items:start;gap:14px;margin-bottom:23px}
+  .advisor-step-number {display:grid;place-items:center;flex:0 0 36px;height:36px;
+    border-radius:10px;background:#e6f1e2;color:#235f3d;font:800 12px var(--mono)}
+  .advisor-step-head h2 {font-size:20px;line-height:1.3;letter-spacing:-.025em;margin:4px 0 0}
+  .advisor-section-lead {font-size:12px;color:#687769;line-height:1.7;margin:6px 0 0}
+  .advisor-fields {display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
+  .advisor-field {display:flex;flex-direction:column;gap:9px;min-width:0;color:#2a4232;font-size:12px;font-weight:800}
+  .advisor-field select,.advisor-field input {
+    display:block;width:100%;min-width:0;border:1px solid #c9d7ca;border-radius:9px;
+    background:#fbfdfa;color:#1c3525;padding:12px 13px;
+    font:600 13px var(--sans);line-height:1.4;min-height:46px;
+  }
+  .advisor-field select:focus-visible,.advisor-field input:focus-visible {
+    outline:3px solid #a1cfa1;outline-offset:1px
+  }
+  .advisor-area-note {font-size:12px;color:#6c532f;background:#fff9ea;
+    border-left:3px solid #dcae63;padding:12px 14px;border-radius:6px;margin:16px 0 0}
+  .advisor-area-note[hidden],.advisor-detail-input[hidden],.advisor-results[hidden] {display:none!important}
+  .advisor-tools {display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+  .advisor-tool {position:relative;display:flex;align-items:center;gap:12px;min-width:0;
+    padding:13px 13px;border:1px solid #dce6da;border-radius:12px;
+    background:#fbfdf9;cursor:pointer;min-height:64px;transition:border-color .15s,background .15s}
+  .advisor-tool:hover {border-color:#86b894}
+  .advisor-tool:has(input:checked) {background:#ecf6ec;border-color:#4a9268;box-shadow:inset 0 0 0 1px #4a9268}
+  .advisor-tool:focus-within {outline:3px solid #a1cfa1;outline-offset:2px}
+  .advisor-tool input {accent-color:#2f794d;width:17px;height:17px;flex:none;margin:0}
+  .advisor-tool-index {color:#849887;font:700 10px var(--mono);flex:none}
+  .advisor-tool-name {font-size:13px;line-height:1.45;font-weight:750;color:#284235;min-width:0;overflow-wrap:anywhere}
+  .advisor-tool-tick {margin-left:auto;opacity:0;font-size:14px;font-weight:900;color:#287348;flex:none}
+  .advisor-tool:has(input:checked) .advisor-tool-tick {opacity:1}
+  .advisor-equipment-details {display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin-top:15px}
+  .advisor-equipment-details:empty{display:none}
+  .advisor-detail-input {padding:14px;border:1px solid #d8e6da;background:#f4f9f1;border-radius:10px}
+  .advisor-step--more {padding:0}
+  .advisor-more summary {display:flex;align-items:center;gap:15px;list-style:none;cursor:pointer;padding:24px 34px}
+  .advisor-more summary::-webkit-details-marker {display:none}
+  .advisor-more summary:focus-visible{outline:3px solid #a1cfa1;outline-offset:-4px}
+  .advisor-more-label{display:flex;flex:1;min-width:0;flex-direction:column;gap:5px}
+  .advisor-more-label strong {font-size:18px;color:#203d2c}
+  .advisor-more-label small {color:#748379;font-size:12px;line-height:1.55}
+  .advisor-more-chevron {font-size:25px;color:#4c7857;transition:transform .2s}
+  .advisor-more[open] .advisor-more-chevron {transform:rotate(180deg)}
+  .advisor-fields--more {padding:0 34px 30px}
+  .advisor-check {display:flex;align-items:center;gap:9px;font-size:12px;font-weight:700;line-height:1.6;color:#31503a;min-width:0}
+  .advisor-check input{width:18px;height:18px;accent-color:#2d7a4e;flex:none}
+  .advisor-budget-input{display:flex;min-width:0;align-items:stretch;border:1px solid #c9d7ca;border-radius:9px;overflow:hidden}
+  .advisor-budget-input input{border:0;border-radius:0}
+  .advisor-budget-input>span {display:grid;place-items:center;padding:0 13px;background:#eaf2e7;color:#315b3b;font:800 11px var(--mono)}
+  .advisor-submit-row {display:flex;align-items:center;gap:24px;padding:28px 34px;background:#f3f8f0}
+  .advisor-submit-button {display:flex;align-items:center;justify-content:space-between;gap:32px;
+    min-width:290px;padding:15px 21px;border:0;border-radius:10px;background:#215f3b;
+    color:white;cursor:pointer;font:800 14px var(--sans);line-height:1.4}
+  .advisor-submit-button:hover{background:#144d2d}
+  .advisor-submit-button:focus-visible{outline:3px solid #81b8a0;outline-offset:2px}
+  .advisor-submit-button span:last-child{font-size:22px}
+  .advisor-submit-row p {max-width:420px;margin:0;color:#617365;font-size:11px;line-height:1.75}
+
+  .advisor-results {scroll-margin-top:20px;margin:0 0 26px;padding:28px 30px;
+    border:1px solid #cddfcd;border-radius:18px;background:#fff;
+    box-shadow:0 16px 46px rgba(17,45,27,.08)}
+  .advisor-results-header{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+  .advisor-results-header h2 {margin:0;font-size:clamp(25px,3vw,33px);letter-spacing:-.035em;line-height:1.2;color:#1b3a28}
+  .advisor-results-header h2:focus{outline:none}
+  .advisor-results-count{font-size:11px;font-weight:800;color:#2a6640;padding:9px 12px;background:#ecf5e9;border-radius:30px}
+  .advisor-results-intro{font-size:12px;color:#6d7b70;line-height:1.75;margin:10px 0 20px;max-width:800px}
+  .advisor-metrics{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+  .advisor-metrics>div {padding:15px 17px;border-radius:11px;background:#f2f7ee;border:1px solid #e2ebdf;min-width:0}
+  .advisor-metrics small,.advisor-result-facts small{display:block;color:#6d7d70;font-size:11px;line-height:1.6;font-weight:700}
+  .advisor-metrics strong{display:block;font-size:22px;line-height:1.35;color:#1d5434;margin-top:4px}
+  .advisor-selected-tools{padding:18px 0 4px}
+  .advisor-selected-tools-label{display:block;font-size:11px;color:#65776a;margin-bottom:9px}
+  .advisor-selected-pills{display:flex;flex-wrap:wrap;gap:7px}
+  .advisor-selected-pills>span{font-size:11px;color:#275a37;background:#edf6ea;border-radius:50px;padding:7px 10px}
+  .advisor-safety-notes{margin:15px 0 18px}
+  .advisor-safety-note{padding:10px 13px;border-left:3px solid #c99f60;background:#fff9ef;
+    font-size:11px;line-height:1.75;margin:5px 0;color:#755936}
+  .advisor-empty{padding:18px;background:#f5f7f4;border-radius:9px;color:#617466;font-size:13px}
+  .advisor-result-list{list-style:none;margin:20px 0 0;padding:0;display:grid;grid-template-columns:1fr;gap:15px}
+  .advisor-result-card{display:grid;grid-template-columns:minmax(0,1fr) minmax(245px,.85fr);
+    gap:14px 26px;align-items:center;padding:21px 24px;
+    border:1px solid #dce5da;border-radius:14px;background:#fff;min-width:0}
+  .advisor-card-identity{display:flex;align-items:flex-start;gap:13px;min-width:0}
+  .advisor-result-rank{flex:0 0 38px;height:38px;border-radius:10px;background:#eaf3e8;
+    color:#2b7144;display:grid;place-items:center;font:800 13px var(--mono)}
+  .advisor-result-model{min-width:0}
+  .advisor-result-brand{display:block;color:#577460;font-size:10px;font-weight:800;line-height:1.4;letter-spacing:.06em}
+  .advisor-result-name{font-size:clamp(18px,2.2vw,24px);font-weight:850;line-height:1.2;
+    letter-spacing:-.025em;margin:4px 0 0;color:#1b3525;overflow-wrap:anywhere;word-break:normal}
+  .advisor-result-variant{font-size:12px;color:#607267;line-height:1.6;margin:7px 0 0;overflow-wrap:anywhere}
+  .advisor-result-facts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;min-width:0}
+  .advisor-result-facts>div{min-width:0;background:#f6f8f5;padding:12px 14px;border-radius:9px}
+  .advisor-result-facts strong{display:block;color:#214c33;font-size:15px;line-height:1.5;overflow-wrap:anywhere}
+  .advisor-fact-note{display:block;color:#688371;font-size:10px;line-height:1.55;margin-top:4px}
+  .advisor-price-empty{display:block;margin-top:5px;font-size:12px;line-height:1.5;color:#7b897e}
+  .advisor-market-note {grid-column:1/-1;color:#927037;background:#fff9ee;border-radius:8px;
+    margin:0;padding:10px 12px;font-size:11px;line-height:1.6}
+  .advisor-card-footer{grid-column:1/-1;display:flex;justify-content:space-between;align-items:center;
+    flex-wrap:wrap;gap:12px;padding-top:12px;border-top:1px solid #e7eee6}
+  .advisor-view-model {display:inline-flex;padding:10px 14px;color:#fff;background:#2b6a44;
+    border-radius:7px;font-weight:800;font-size:12px;text-decoration:none;line-height:1.5}
+  .advisor-view-model:hover {background:#194c32}
+  .advisor-price-details {min-width:0;color:#506b57;font-size:11px;max-width:100%;overflow-wrap:anywhere}
+  .advisor-price-details summary {font-weight:800;cursor:pointer}
+  .advisor-price-details a{display:block;margin:7px 0;color:#266a41;text-decoration:underline;overflow-wrap:anywhere}
+  .advisor-price-details p{margin:5px 0;line-height:1.7}
+  .advisor-final-note {font-size:11px;color:#708072;line-height:1.8;margin:13px 0 0}
+  .advisor-edit-hint{margin:18px 0 0;font-weight:700;font-size:12px;color:#256a40}
+  @media(max-width:900px) {
+    .advisor-tools{grid-template-columns:repeat(2,minmax(0,1fr))}
+    .advisor-result-card{grid-template-columns:1fr}
+    .advisor-card-footer{grid-column:1}
+    .advisor-market-note{grid-column:1}
+  }
+  @media(max-width:600px) {
+    .advisor-hero{padding:41px 0}
+    .advisor-page{padding:18px 0 55px}
+    .advisor-step{padding:23px 18px}
+    .advisor-fields,.advisor-fields--primary,.advisor-fields--more{grid-template-columns:1fr}
+    .advisor-tools{gap:9px}
+    .advisor-tool {padding:10px;gap:7px;min-height:62px}
+    .advisor-tool-index{display:none}
+    .advisor-tool-name{font-size:12px}
+    .advisor-equipment-details{grid-template-columns:1fr}
+    .advisor-more summary{padding:20px 18px}
+    .advisor-fields--more{padding:0 18px 24px}
+    .advisor-submit-row{flex-direction:column;align-items:stretch;padding:22px 18px;gap:12px}
+    .advisor-submit-button{min-width:0;width:100%}
+    .advisor-results{padding:22px 15px;margin-bottom:18px}
+    .advisor-metrics{grid-template-columns:1fr}
+    .advisor-result-card{padding:17px 14px}
+    .advisor-result-facts{grid-template-columns:1fr}
+  }
+  @media(max-width:385px) {.advisor-tools{grid-template-columns:1fr}}
 </style>
