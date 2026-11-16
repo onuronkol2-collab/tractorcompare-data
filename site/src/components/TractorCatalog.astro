@@ -1,34 +1,32 @@
 ---
 import SiteLayout from "../layouts/SiteLayout.astro";
 import { getPublicCatalog } from "../lib/catalog";
-interface Props { lang: "en" | "tr"; }
+import { localizedPath, type Locale } from "../lib/locales";
+import { t } from "../lib/ui";
+interface Props { lang: Locale; }
 const { lang } = Astro.props;
-const isEnglish = lang === "en";
+
 const catalog = await getPublicCatalog();
-const title = isEnglish ? "Tractor catalogue | TractorVS" : "Traktör kataloğu | TractorVS";
-const description = isEnglish
-  ? "Explore published tractor specifications with links to checked manufacturer documentation when available."
-  : "Yayımlanmış traktörlerin teknik özelliklerini ve doğrulanmış üretici kaynaklarını keşfedin.";
-const detailPrefix = isEnglish ? "/tractors/" : "/tr/tractors/";
+const title = t(lang,"catalogTitle") + " | TractorVS";
+const description = t(lang,"catalogDesc");
+const detailPrefix = localizedPath(lang,"/tractors/");
 ---
 <SiteLayout lang={lang} title={title} description={description}>
   <section class="catalog-hero"><div class="container">
-    <p class="eyebrow"><span class="eyebrow-mark"></span>{isEnglish ? "TRACTOR DATABASE" : "TRAKTÖR VERİTABANI"}</p>
-    <h1>{isEnglish ? "Explore the " : "Kataloğu "}<em>{isEnglish ? "catalogue." : "keşfet."}</em></h1>
-    <p class="catalog-intro">{isEnglish
-      ? "Browse published models and view checked manufacturer source links where available."
-      : "Yayımlanmış modelleri inceleyin; doğrulanmış resmî üretici kaynaklarını görüntüleyin."}</p>
+    <p class="eyebrow"><span class="eyebrow-mark"></span>{t(lang,"catalogEyebrow")}</p>
+    <h1>{t(lang,"catalogHeading")}</h1>
+    <p class="catalog-intro">{t(lang,"catalogIntro")}</p>
     {catalog.configured && catalog.tractors.length > 0 && <div class="catalog-count">
-      <strong>{catalog.tractors.length}</strong><span>{isEnglish ? "published models" : "yayımlanmış model"}</span>
+      <strong>{catalog.tractors.length}</strong><span>{t(lang,"publishedModels")}</span>
     </div>}
   </div></section>
   <section class="catalog-section"><div class="container">
     {catalog.configured && catalog.tractors.length > 0 ? <>
-      {catalog.tractors.length > 1 && <p style="margin:0 0 24px;"><a class="button button-primary" href={isEnglish ? "/compare/" : "/tr/compare/"}>{isEnglish ? "Compare published tractors ↗" : "Yayımlanmış traktörleri karşılaştır ↗"}</a></p>}
+      {catalog.tractors.length > 1 && <p style="margin:0 0 24px;"><a class="button button-primary" href={localizedPath(lang,"/compare/")}>{t(lang,"comparePublished")} ↗</a></p>}
       <div class="catalog-toolbar">
-        <label for="tractor-search">{isEnglish ? "Find a tractor" : "Traktör ara"}</label>
-        <input id="tractor-search" type="search" placeholder={isEnglish ? "Search brand or model..." : "Marka veya model ara..."} autocomplete="off" />
-        <span>{isEnglish ? "Only reviewed, published models are shown." : "Yalnızca incelenmiş ve yayımlanmış modeller gösterilir."}</span>
+        <label for="tractor-search">{t(lang,"findTractor")}</label>
+        <input id="tractor-search" type="search" placeholder={t(lang,"searchPlaceholder")} autocomplete="off" />
+        <span>{t(lang,"publishedOnly")}</span>
       </div>
       <div class:list={["tractor-card-grid", { "tractor-card-grid--two": catalog.tractors.length === 2 }]} id="tractor-card-grid">
         {catalog.tractors.map((tractor)=><a class="tractor-card" href={detailPrefix+tractor.slug+"/"}
@@ -42,21 +40,21 @@ const detailPrefix = isEnglish ? "/tractors/" : "/tr/tractors/";
           </div>
           <div class="tractor-card-specs">
             {tractor.horsepower != null && <div><strong>{tractor.horsepower}</strong><small>HP</small></div>}
-            {tractor.engine && <div><strong>{tractor.engine}</strong><small>{isEnglish ? "ENGINE" : "MOTOR"}</small></div>}
-            {tractor.transmission && <div><strong>{tractor.transmission}</strong><small>{isEnglish ? "TRANSMISSION" : "ŞANZIMAN"}</small></div>}
+            {tractor.engine && <div><strong>{tractor.engine}</strong><small>{t(lang,"engine")}</small></div>}
+            {tractor.transmission && <div><strong>{tractor.transmission}</strong><small>{t(lang,"transmission")}</small></div>}
           </div>
-          <div class="tractor-card-footer"><span>{tractor.specifications.length} {isEnglish ? "specifications" : "teknik özellik"}</span><span>{isEnglish ? "View model" : "Modeli incele"} →</span></div>
+          <div class="tractor-card-footer"><span>{tractor.specifications.length} {t(lang,"specifications")}</span><span>{t(lang,"viewModel")} →</span></div>
         </a>)}
       </div>
-      <p class="catalog-no-results" id="catalog-no-results" hidden>{isEnglish ? "No matching tractor was found." : "Aramanızla eşleşen traktör bulunamadı."}</p>
+      <p class="catalog-no-results" id="catalog-no-results" hidden>{t(lang,"noMatches")}</p>
     </> : <div class="catalog-empty">
       <span class="catalog-empty-mark">01 / DATA</span>
       <h2>{catalog.configured
-        ? (isEnglish ? "The catalogue is being prepared." : "Katalog hazırlanıyor.")
-        : (isEnglish ? "The public data connection is not configured yet." : "Herkese açık veri bağlantısı henüz yapılandırılmadı.")}</h2>
+        ? t(lang,"catalogPreparing")
+        : t(lang,"connectionMissing")}</h2>
       <p>{catalog.configured
-        ? (isEnglish ? "There are no published tractor models to display at the moment." : "Şu anda gösterilebilecek yayımlanmış traktör modeli bulunmuyor.")
-        : (isEnglish ? "Published tractor data will appear here after the secure Supabase connection is configured. No sample or unverified models are shown." : "Güvenli Supabase bağlantısı yapılandırıldığında yayımlanmış traktör verileri burada görünecek. Örnek veya doğrulanmamış modeller gösterilmez.")}</p>
+        ? t(lang,"noPublished")
+        : t(lang,"noConnection")}</p>
     </div>}
   </div></section>
 </SiteLayout>
