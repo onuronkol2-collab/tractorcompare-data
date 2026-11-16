@@ -113,7 +113,7 @@ const openGraphLocale: Record<Locale, string> = {
     <footer class="site-footer">
       <div class="container footer-main">
         <div>
-          <a class="brand-lockup footer-brand" href={isEnglish ? "/" : "/tr/"}>
+          <a class="brand-lockup footer-brand" href={homePath}>
             <span class="brand-symbol" aria-hidden="true">
               <svg viewBox="0 0 40 40" fill="none">
                 <path d="M8 25.5h21.5l3-6.5h-8.2l-2.6-5.4h-7.2v7.1H8v4.8Z" stroke="currentColor" stroke-width="2.1" stroke-linejoin="round"/>
@@ -124,7 +124,7 @@ const openGraphLocale: Record<Locale, string> = {
             </span>
             <span class="brand-words">
               <strong>{brand.name}</strong>
-              <small>{isEnglish ? "TRACTOR DATA INTELLIGENCE" : "TRAKTÖR VERİ PLATFORMU"}</small>
+              <small>{t(lang,"tagline")}</small>
             </span>
           </a>
           <p class="footer-note">
@@ -132,11 +132,11 @@ const openGraphLocale: Record<Locale, string> = {
           </p>
         </div>
         <div class="footer-links">
-          <a href={homePath + "#platform"}>{nav.platform}</a>
-          <a href={catalogPath}>{nav.catalog}</a>
-          <a href={comparePath}>{nav.compare}</a>
-          <a href={homePath + "#data"}>{nav.data}</a>
-          <a href={homePath + "#approach"}>{nav.about}</a>
+          <a href={homePath + "#platform"}>{t(lang,"navPlatform")}</a>
+          <a href={catalogPath}>{t(lang,"navCatalog")}</a>
+          <a href={comparePath}>{t(lang,"navCompare")}</a>
+          <a href={homePath + "#data"}>{t(lang,"navData")}</a>
+          <a href={homePath + "#approach"}>{t(lang,"navApproach")}</a>
           <a href="/language/en/?next=%2F">English</a>
         </div>
       </div>
