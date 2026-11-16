@@ -42,6 +42,18 @@ export type Terrain = "flat" | "rolling" | "steep";
 export type Soil = "light" | "medium" | "heavy";
 export type Operation = "light" | "general" | "heavy";
 export type Implement = "light" | "medium" | "heavy";
+export const FARM_IMPLEMENT_TYPES = [
+  "plow", "laser_leveler", "rotavator", "disc_harrow",
+  "cultivator", "seeder", "sprayer", "mower", "baler",
+  "front_loader", "trailer"
+] as const;
+export type FarmImplement = typeof FARM_IMPLEMENT_TYPES[number];
+export const FARM_IMPLEMENT_INTENSITY: Record<FarmImplement,Implement> = {
+  plow:"heavy", laser_leveler:"heavy", rotavator:"heavy",
+  disc_harrow:"medium", cultivator:"medium", seeder:"medium",
+  sprayer:"light", mower:"medium", baler:"heavy",
+  front_loader:"medium", trailer:"medium",
+};
 export type Trailer = "none" | "light" | "heavy";
 export type Condition = "new" | "used" | "either";
 
@@ -53,6 +65,10 @@ export interface FarmInputs {
   soil: Soil;
   operation: Operation;
   implement: Implement;
+  /** Selected tools are NOT simultaneously operated; screen by the most demanding task. */
+  implements?: FarmImplement[];
+  plowBodies?: number | null;
+  laserWidthMeters?: number | null;
   trailer: Trailer;
   annualHours: number;
   condition: Condition;
@@ -72,9 +88,27 @@ export function horsepowerScreening(input: FarmInputs): { min: number; max: numb
   };
   if (input.operation === "heavy") bump(18, 30, "workload");
   else if (input.operation === "light") bump(-7,-8, "workload");
-  if (input.implement === "heavy") bump(18, 24, "implement");
-  else if (input.implement === "medium") bump(6, 12, "implement");
+  const selectedTools = [...new Set(input.implements || [])];
+  if (selectedTools.some((tool) => !(tool in FARM_IMPLEMENT_INTENSITY))) throw new Error("Unknown implement");
+  if (input.plowBodies != null && (!Number.isInteger(input.plowBodies) || input.plowBodies < 2 || input.plowBodies > 6)) throw new Error("Invalid plow share count");
+  if (input.laserWidthMeters != null && (!Number.isFinite(input.laserWidthMeters) || input.laserWidthMeters < 2 || input.laserWidthMeters > 9)) throw new Error("Invalid laser working width");
+  const implementIntensity = selectedTools.length
+    ? selectedTools.some((tool) => FARM_IMPLEMENT_INTENSITY[tool] === "heavy") ? "heavy"
+      : selectedTools.some((tool) => FARM_IMPLEMENT_INTENSITY[tool] === "medium") ? "medium" : "light"
+    : input.implement;
+  if (implementIntensity === "heavy") bump(18, 24, "implement");
+  else if (implementIntensity === "medium") bump(6, 12, "implement");
+  // Avoid summing tool loads: plow, baler and leveller are not used simultaneously.
+  if (selectedTools.includes("plow") && (input.plowBodies || 0) >= 4) bump(9, 15, "plow_size");
+  // Laser levellers vary drastically by width, soil movement and manufacturer.
+  // This is an intentionally broad shortlist floor, not a declared implement HP rating.
+  if (selectedTools.includes("laser_leveler")) {
+    min = Math.max(min, 70);
+    max = Math.max(max, input.laserWidthMeters != null && input.laserWidthMeters >= 5 ? 155 : 110);
+    reasons.push("laser_requires_manual_verification");
+  }
   if (input.trailer === "heavy") bump(12, 20, "trailer");
+  else if (selectedTools.includes("trailer") && input.trailer === "none") bump(6, 12, "trailer");
   if (input.soil === "heavy") bump(8, 16, "soil");
   if (input.terrain === "rolling") bump(5, 9, "terrain");
   if (input.terrain === "steep") bump(9, 15, "terrain");
