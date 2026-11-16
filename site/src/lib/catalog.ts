@@ -201,7 +201,7 @@ function deduplicateSpecs(specifications: PublicSpec[]): PublicSpec[] {
  * value in tractors.horsepower; this safely surfaces those facts for catalogue
  * cards and the land-area advisor without writing to Supabase.
  *
- * Rated/engine power only: never mistake PTO power, maximum/boost power,
+ * Manufacturer-stated engine power (rated or gross) only: never mistake PTO power,
  * kW or a model name for rated horsepower. Conflicting values fail closed.
  */
 export function sourceBackedHorsepower(
@@ -209,7 +209,7 @@ export function sourceBackedHorsepower(
     "unit" | "source_url" | "evidence_text" | "verified_at">[]
 ): number | null {
   const values: number[] = [];
-  const acceptable = new Set(["engine_power", "engine_rated_power", "rated_engine_power"]);
+  const acceptable = new Set(["engine_power", "engine_rated_power", "rated_engine_power", "engine_gross_power"]);
   for (const spec of specs) {
     const key = (spec.canonical_key || "").trim().toLowerCase();
     const genericName = (spec.spec_name || "").trim().toLowerCase();
