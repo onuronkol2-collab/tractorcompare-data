@@ -3,6 +3,7 @@ import SiteLayout from "../layouts/SiteLayout.astro";
 import { localizedPath, LOCALE_TAGS, type Locale } from "../lib/locales";
 import { getPublicCatalog } from "../lib/catalog";
 import { advisorText as tx } from "../lib/advisor-i18n";
+import { t } from "../lib/ui";
 import { COUNTRY_AREA_UNITS, COUNTRY_NAMES, COUNTRIES_BY_LOCALE } from "../lib/farm-advisor";
 import { COUNTRY_CURRENCIES, MARKET_COUNTRIES } from "../lib/market-prices";
 interface Props { lang: Locale }
@@ -35,7 +36,7 @@ const defaults:Record<string,string> = {
   <section class="advisor-hero"><div class="container">
     <p class="eyebrow"><span class="eyebrow-mark"></span>TractorVS</p>
     <h1>{heading}</h1><p>{tx(lang,"lead")}</p>
-    <a href={localizedPath(lang,"/tractors/")}>{tx(lang,"navCatalog") || "←"} ↗</a>
+    <a href={localizedPath(lang,"/tractors/")}>{t(lang,"navCatalog")} ↗</a>
   </div></section>
   <section class="advisor-section"><div class="container">
     <form id="farm-advisor-form" class="advisor-form" novalidate>
@@ -114,9 +115,11 @@ const defaults:Record<string,string> = {
     const t = (key: string):string => advisorText(lang,key);
     const formatter = new Intl.NumberFormat(lang === "tr"?"tr-TR":lang, {maximumFractionDigits:2});
     let countryChangedByUser = false;
+    let lastCountry = countryInput.value as MarketCountry;
     const setCountry = (country:MarketCountry) => {
-      const previousDefault = COUNTRY_AREA_UNITS[countryInput.value as MarketCountry];
+      const previousDefault = COUNTRY_AREA_UNITS[lastCountry];
       countryInput.value = country;
+      lastCountry = country;
       if (unitInput.value === previousDefault) unitInput.value = COUNTRY_AREA_UNITS[country];
       if (currency) currency.textContent = COUNTRY_CURRENCIES[country];
       if (areaNote) areaNote.hidden = country !== "IN";
