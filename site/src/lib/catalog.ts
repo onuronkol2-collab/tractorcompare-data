@@ -195,6 +195,39 @@ function deduplicateSpecs(specifications: PublicSpec[]): PublicSpec[] {
     );
 }
 
+/**
+ * Read-only presentation bridge for the existing public catalogue. Some
+ * published models have source-backed engine-power specifications but no
+ * value in tractors.horsepower; this safely surfaces those facts for catalogue
+ * cards and the land-area advisor without writing to Supabase.
+ *
+ * Rated/engine power only: never mistake PTO power, maximum/boost power,
+ * kW or a model name for rated horsepower. Conflicting values fail closed.
+ */
+export function sourceBackedHorsepower(
+  specs: Pick<PublicSpec, "canonical_key" | "spec_name" | "spec_value" |
+    "unit" | "source_url" | "evidence_text" | "verified_at">[]
+): number | null {
+  const values: number[] = [];
+  const acceptable = new Set(["engine_power", "engine_rated_power", "rated_engine_power"]);
+  for (const spec of specs) {
+    const key = (spec.canonical_key || "").trim().toLowerCase();
+    const genericName = (spec.spec_name || "").trim().toLowerCase();
+    if (!acceptable.has(key) && !(key === "" &&
+      ["engine power","rated engine power","nominal engine power"].includes(genericName))) continue;
+    if (!/^(hp|bhp)$/i.test((spec.unit || "").trim())) continue;
+    if (!spec.evidence_text?.trim() || !spec.verified_at || !safeHttpUrl(spec.source_url)) continue;
+    const raw = (spec.spec_value || "").trim();
+    if (!/^\d{1,3}(?:[.,]\d{1,2})?$/.test(raw)) continue;
+    const value = Number(raw.replace(",","."));
+    if (Number.isFinite(value) && value >= 5 && value <= 999) values.push(value);
+  }
+  if (!values.length) return null;
+  // 75 vs 75.0 is equivalent; 74.5 vs 75 is a substantive conflict.
+  return values.every((value) => Math.abs(value - values[0]) < 0.000001)
+    ? values[0] : null;
+}
+
 function getPublicApiKey(): { key: string; isLegacyJwt: boolean } {
   const key = (
     process.env.SUPABASE_PUBLISHABLE_KEY
@@ -374,10 +407,14 @@ async function loadPublicCatalog(): Promise<PublicCatalog> {
     });
   }
 
-  const tractors = [...groups.values()].map((tractor) => ({
-    ...tractor,
-    specifications: deduplicateSpecs(tractor.specifications),
-  })).sort((a, b) =>
+  const tractors = [...groups.values()].map((tractor) => {
+    const specifications = deduplicateSpecs(tractor.specifications);
+    return {
+      ...tractor,
+      horsepower: tractor.horsepower ?? sourceBackedHorsepower(specifications),
+      specifications,
+    };
+  }).sort((a, b) =>
     a.brand_name.localeCompare(b.brand_name)
     || a.model_name.localeCompare(b.model_name)
   );
