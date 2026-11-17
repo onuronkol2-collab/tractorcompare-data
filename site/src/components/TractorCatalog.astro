@@ -48,7 +48,9 @@ const pricePayload = JSON.stringify({lang,models:catalog.tractors.map((tractor)=
       </div>
       <div class:list={["tractor-card-grid", { "tractor-card-grid--two": catalog.tractors.length === 2 }]} id="tractor-card-grid">
         {catalog.tractors.map((tractor)=><a class="tractor-card" href={detailPrefix+tractor.slug+"/"}
-          data-search={[tractor.brand_name,tractor.model_name,tractor.variant||"",tractor.market||"",tractor.engine||""].join(" ").toLowerCase()}>
+          data-search={[tractor.brand_name,tractor.model_name,tractor.variant||"",tractor.market||"",tractor.engine||""].join(" ").toLowerCase()}
+          data-tractor-market={tractor.market||""}
+          data-original-order={catalog.tractors.indexOf(tractor)}>
           <div class="tractor-card-top"><span class="tractor-brand">{tractor.brand_name}</span><span class="tractor-card-arrow" aria-hidden="true">↗</span></div>
           <h2>{tractor.model_name}</h2>
           <div class="tractor-card-meta">
@@ -86,6 +88,7 @@ const pricePayload = JSON.stringify({lang,models:catalog.tractors.map((tractor)=
   import { matchingPrice, formatMarketPriceRange, MARKET_COUNTRIES } from "../lib/market-prices";
   import type { MarketCountry } from "../lib/market-prices";
   import { advisorText } from "../lib/advisor-i18n";
+  import { marketCompatibility } from "../lib/farm-advisor";
   import type { Locale } from "../lib/locales";
   const dataNode=document.getElementById("catalog-price-payload");
   const countryControl=document.querySelector<HTMLSelectElement>("#catalog-price-country");
@@ -104,6 +107,9 @@ const pricePayload = JSON.stringify({lang,models:catalog.tractors.map((tractor)=
           ? advisorText(data.lang,"priceTitle")+": "+formatMarketPriceRange(price,data.lang)
           : advisorText(data.lang,"priceUnknown");
       }
+      // Price and technical-variant visibility now use the SAME selected country.
+      // Existing stable URLs remain crawlable: no forced IP redirects.
+      applyCountryFiltering();
     };
     countryControl.addEventListener("change",()=>{manuallySelected=true;refresh(countryControl.value as MarketCountry);});
     fetch("/api/visitor-country",{credentials:"same-origin",cache:"no-store"})
@@ -116,16 +122,33 @@ const pricePayload = JSON.stringify({lang,models:catalog.tractors.map((tractor)=
   const search = document.querySelector<HTMLInputElement>("#tractor-search");
   const cards = Array.from(document.querySelectorAll<HTMLElement>(".tractor-card"));
   const noResults = document.querySelector<HTMLElement>("#catalog-no-results");
-  search?.addEventListener("input", () => {
-    const query = (search.value || "").trim().toLocaleLowerCase();
+  const grid = document.querySelector<HTMLElement>("#tractor-card-grid");
+  function applyCountryFiltering() {
+    const query = (search?.value || "").trim().toLocaleLowerCase();
+    const country = (countryControl?.value || "US") as MarketCountry;
     let visible = 0;
     for (const card of cards) {
-      const match = (card.dataset.search || "").toLocaleLowerCase().includes(query);
-      card.hidden = !match;
-      if (match) visible += 1;
+      const fit = marketCompatibility(card.dataset.tractorMarket || null, country);
+      card.dataset.marketFit = fit;
+      const matchesSearch = (card.dataset.search || "").toLocaleLowerCase().includes(query);
+      card.hidden = fit === "excluded" || !matchesSearch;
+      if (!card.hidden) visible += 1;
+    }
+    // Exact market-specific listings before global/unknown market listings.
+    // Never combine technical specifications from distinct model records.
+    if (grid) {
+      const sorted = [...cards].sort((a,b)=>{
+        const rank = (el: HTMLElement) => el.dataset.marketFit === "matched" ? 0
+          : el.dataset.marketFit === "unknown" ? 1 : 2;
+        return rank(a)-rank(b)
+          || Number(a.dataset.originalOrder || 0)-Number(b.dataset.originalOrder || 0);
+      });
+      for (const card of sorted) grid.append(card);
     }
     if (noResults) noResults.hidden = visible > 0;
-  });
+  }
+  search?.addEventListener("input", applyCountryFiltering);
+  applyCountryFiltering();
 </script>
 
 <style>
