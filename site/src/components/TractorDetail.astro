@@ -1,12 +1,24 @@
 ---
 import SiteLayout from "../layouts/SiteLayout.astro";
 import TractorMarketPrice from "./TractorMarketPrice.astro";
-import { groupSpecifications, officialManufacturerSourceUrl, specLabel, verificationNotice, type TractorRecord } from "../lib/catalog";
+import { groupSpecifications, officialManufacturerSourceUrl, trustedIndependentSourceUrl, specLabel, verificationNotice, type TractorRecord } from "../lib/catalog";
 import { localizedPath, type Locale } from "../lib/locales";
 import { t } from "../lib/ui";
 interface Props { lang: Locale; tractor: TractorRecord; }
 const { lang, tractor } = Astro.props;
 const groups = groupSpecifications(tractor.specifications,lang);
+const independentSourceLabels: Record<Locale,string> = {
+  en:"Independent source (manufacturer not confirmed)",
+  tr:"Bağımsız kaynak (üretici teyidi yok)",
+  zh:"独立来源（未经制造商确认）",
+  hi:"स्वतंत्र स्रोत (निर्माता द्वारा अपुष्ट)",
+  "pt-br":"Fonte independente (sem confirmação do fabricante)",
+  fr:"Source indépendante (non confirmée par le constructeur)",
+  de:"Unabhängige Quelle (nicht vom Hersteller bestätigt)",
+  ru:"Независимый источник (без подтверждения производителя)",
+  ja:"独立資料（メーカー未確認）",
+  es:"Fuente independiente (sin confirmación del fabricante)",
+};
 const manufacturerDiscrepancies = [...new Set(tractor.specifications.map((spec) => verificationNotice(spec, lang)).filter((note): note is string => Boolean(note)))];
 const listingUrl = localizedPath(lang,"/tractors/");
 const title = tractor.brand_name + " " + tractor.model_name + " | " + t(lang,"modelSpecsTitle") + " | TractorVS";
@@ -50,6 +62,9 @@ const summaryItems = [
           {spec.measurement_standard&&<p class="model-spec-note">{spec.measurement_standard}</p>}
           {officialManufacturerSourceUrl(spec,tractor.brand_name) && <div class="model-spec-source">
             <a href={officialManufacturerSourceUrl(spec,tractor.brand_name)!} target="_blank" rel="noopener noreferrer">{t(lang,"manufacturerSource")} ↗</a>
+          </div>}
+          {trustedIndependentSourceUrl(spec) && <div class="model-spec-source">
+            <a href={trustedIndependentSourceUrl(spec)!} target="_blank" rel="noopener noreferrer">{independentSourceLabels[lang]} ↗</a>
           </div>}
         </article>)}
       </div></section>)}</div>
