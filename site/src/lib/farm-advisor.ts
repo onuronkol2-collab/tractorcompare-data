@@ -126,7 +126,7 @@ export function horsepowerScreening(input: FarmInputs): { min: number; max: numb
   return { min, max, reasons };
 }
 
-function marketCompatibility(market: string | null, country: MarketCountry): "matched" | "unknown" | "excluded" {
+export function marketCompatibility(market: string | null, country: MarketCountry): "matched" | "unknown" | "excluded" {
   const m = String(market || "").toLowerCase().trim();
   if (!m || m === "global" || m === "international") return "unknown";
   if (["turkey", "türkiye", "tr"].includes(m)) return country === "TR" ? "matched" : "excluded";
