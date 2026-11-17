@@ -598,6 +598,27 @@ export function officialManufacturerSourceUrl(
  * disagree on overall length. Keep the value visible, but explain the conflict
  * until the manufacturer confirms the correct figure.
  */
+/** Reviewed independent citation hosts only; evidence metadata is required.
+ * This is a hyperlink policy, NOT automatic approval of any figure.
+ * Do not broaden the hostname list without checking the publisher.
+ */
+const approvedIndependentHosts = new Set([
+  "tractordata.com", "www.tractordata.com",
+  "tractorjunction.com", "www.tractorjunction.com",
+  "tractorguru.in", "www.tractorguru.in",
+]);
+
+export function trustedIndependentSourceUrl(
+  spec: Pick<PublicSpec, "source_url" | "source_type" | "evidence_text" | "verified_at">,
+): string | null {
+  if (specificationEvidenceLevel(spec) !== "third_party_reported") return null;
+  const value = safeHttpUrl(spec.source_url);
+  if (!value) return null;
+  const url = new URL(value);
+  if (url.protocol !== "https:" || url.username || url.password) return null;
+  return approvedIndependentHosts.has(url.hostname.toLowerCase()) ? url.toString() : null;
+}
+
 export function verificationNotice(spec: PublicSpec, lang: Locale): string | null {
   const evidence = spec.evidence_text ?? "";
   const hasLengthConflict = spec.canonical_key === "overall_length"
