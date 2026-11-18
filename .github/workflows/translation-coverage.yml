@@ -1,0 +1,22 @@
+name: TractorVS published translation audit
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - ".github/workflows/translation-coverage.yml"
+      - "site/scripts/published-translation-audit.mjs"
+      - "site/src/lib/spec-i18n.ts"
+      - "site/src/lib/catalog.ts"
+permissions:
+  contents: read
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Inspect all published model pages across ten languages (read-only)
+        run: node site/scripts/published-translation-audit.mjs
