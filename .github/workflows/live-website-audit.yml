@@ -5,6 +5,7 @@ on:
     paths:
       - ".github/workflows/live-website-audit.yml"
       - "site/scripts/live-website-audit.mjs"
+      - "site/scripts/production-seo-audit.mjs"
   push:
     branches: [main]
     paths:
@@ -32,3 +33,5 @@ jobs:
         env:
           TRACTORVS_AUDIT_ORIGIN: https://tractorvs.com
         run: node site/scripts/live-website-audit.mjs
+      - name: Check full production sitemap, model SEO and all 10 languages
+        run: node site/scripts/production-seo-audit.mjs

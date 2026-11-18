@@ -5,10 +5,22 @@ import { t } from "./ui.ts";
 
 /** The original manufacturer identity, equipment and market are never inferred. */
 export function modelSeoMetadata(tractor: TractorRecord, lang: Locale) {
-  const identity = [tractor.brand_name + " " + tractor.model_name, tractor.variant,
-    tractor.market, tractor.model_year == null ? null : String(tractor.model_year)]
+  const model = tractor.brand_name + " " + tractor.model_name;
+  // A catalogue source/caveat following a semicolon is useful in the page,
+  // but not a readable search title. The full identity stays in description.
+  const variantLabel = tractor.variant?.split(";")[0]?.trim() || null;
+  const marketLabel = tractor.market?.trim().toLowerCase() === "global" ? null : tractor.market?.trim() || null;
+  const titleQualifiers = [
+    variantLabel && variantLabel.length <= 48 ? variantLabel : null,
+    marketLabel,
+    tractor.model_year == null ? null : String(tractor.model_year),
+  ].filter((part): part is string => Boolean(part));
+  const title = model + " " + t(lang, "modelSpecsTitle")
+    + (titleQualifiers.length ? " — " + titleQualifiers.join(" · ") : "")
+    + " | TractorVS";
+  const identity = [model, tractor.variant, tractor.market,
+    tractor.model_year == null ? null : String(tractor.model_year)]
     .filter((part): part is string => Boolean(part && part.trim()));
-  const title = identity.join(" | ") + " | " + t(lang, "modelSpecsTitle") + " | TractorVS";
   const descriptor = [
     tractor.horsepower == null ? null : t(lang, "power") + ": " + tractor.horsepower + " HP",
     tractor.specifications.length + " " + t(lang, "technicalSpecs"),
