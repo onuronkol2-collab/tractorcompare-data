@@ -1,0 +1,205 @@
+---
+import SiteLayout from "../layouts/SiteLayout.astro";
+import "../styles/home-experience.css";
+import { getPublicCatalog } from "../lib/catalog";
+import { homeText as h } from "../lib/home-ui";
+import { homeDiscoveryText as d } from "../lib/home-discovery-ui";
+import { localizedPath, type Locale } from "../lib/locales";
+import { t } from "../lib/ui";
+import { advisorText as tx } from "../lib/advisor-i18n";
+
+interface Props { lang: Locale; seoTitle?: string; seoDescription?: string }
+const { lang, seoTitle = "TractorVS | " + h(lang,"seoTitle"),
+  seoDescription = h(lang,"seoDesc") } = Astro.props;
+const catalogue = await getPublicCatalog();
+const catalogUrl = localizedPath(lang, "/tractors/");
+const compareUrl = localizedPath(lang, "/compare/");
+const advisorUrl = localizedPath(lang, "/farm-advisor/");
+const detailBase = localizedPath(lang, "/tractors/");
+const brandCounts = new Map<string,number>();
+for (const tractor of catalogue.tractors) {
+  brandCounts.set(tractor.brand_name, (brandCounts.get(tractor.brand_name) || 0) + 1);
+}
+const brands = [...brandCounts.entries()]
+  .sort((a,b) => b[1] - a[1] || a[0].localeCompare(b[0],lang)).slice(0,6);
+const sorted = [...catalogue.tractors]
+  .sort((a,b) => b.specifications.length-a.specifications.length ||
+    a.brand_name.localeCompare(b.brand_name,lang) ||
+    a.model_name.localeCompare(b.model_name,lang));
+const alreadyShown = new Set<string>();
+const featured = sorted.filter((tractor) => {
+  if (alreadyShown.has(tractor.brand_name)) return false;
+  alreadyShown.add(tractor.brand_name);
+  return true;
+}).slice(0,3);
+const spotlight = featured[0];
+const count = catalogue.tractors.length;
+---
+
+<SiteLayout lang={lang} title={seoTitle} description={seoDescription}>
+  <section class="home-hero" id="platform" aria-labelledby="home-heading">
+    <div class="container home-hero-inner">
+      <div class="home-intro">
+        <p class="home-kicker"><span class="home-live-dot" aria-hidden="true"></span>{h(lang,"eyebrow")}</p>
+        <h1 id="home-heading">{h(lang,"heroLead")} <em>{h(lang,"heroHighlight")}</em></h1>
+        <p class="home-intro-lede">{h(lang,"heroBody")}</p>
+        <form class="home-find" action={catalogUrl} method="get" role="search">
+          <label for="home-model-query">{d(lang,"searchLabel")}</label>
+          <div class="home-search-row">
+            <span class="home-search-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                <circle cx="10.8" cy="10.8" r="6.8"/><path d="m16 16 5 5"/>
+              </svg>
+            </span>
+            <input id="home-model-query" name="q" type="search" autocomplete="off"
+              placeholder={d(lang,"searchPlaceholder")} maxlength="100" />
+            <button type="submit">{d(lang,"searchButton")} <span aria-hidden="true">→</span></button>
+          </div>
+          <p class="home-search-note">{d(lang,"searchHint")}</p>
+        </form>
+        <div class="home-hero-links">
+          <a href={compareUrl}>{t(lang,"navCompare")} <span aria-hidden="true">↗</span></a>
+          <a href={advisorUrl}>{tx(lang,"nav")} <span aria-hidden="true">↗</span></a>
+        </div>
+      </div>
+      <div class="home-preview" aria-label="TractorVS">
+        <div class="home-preview-head">
+          <span class="home-kicker"><span class="home-live-dot" aria-hidden="true"></span>TractorVS</span>
+          <span class="home-preview-label">{t(lang,"publishedOnly")}</span>
+        </div>
+        <div class="home-tractor-art" aria-hidden="true">
+          <div class="home-orbit home-orbit-a"></div><div class="home-orbit home-orbit-b"></div>
+          <svg viewBox="0 0 520 310" fill="none" role="presentation">
+            <path d="M75 215h307l36-58h-78l-34-83h-96l-25 75H115l-40 66Z" fill="#243c30" stroke="#a8c5a5" stroke-width="2.3"/>
+            <path d="M211 75h95l33 82H191l20-82Z" fill="#52745a" stroke="#b9d3b3" stroke-width="2.3"/>
+            <path d="M230 87h64l21 57h-98l13-57Z" fill="#a9c8ad" fill-opacity=".26"/>
+            <path d="M115 149h90v66H75l40-66Z" fill="#314b3b" stroke="#a8c5a5" stroke-width="2.3"/>
+            <path d="M338 157h80l-36 58h-20l-24-58Z" fill="#314b3b" stroke="#a8c5a5" stroke-width="2.3"/>
+            <path d="M193 77h113" stroke="#d7e7d4" stroke-width="3" stroke-linecap="round"/>
+            <circle cx="147" cy="222" r="53" fill="#111b16" stroke="#a8c5a5" stroke-width="4"/>
+            <circle cx="147" cy="222" r="28" fill="#345340" stroke="#d1e1cd" stroke-width="2.5"/>
+            <circle cx="365" cy="222" r="37" fill="#111b16" stroke="#a8c5a5" stroke-width="4"/>
+            <circle cx="365" cy="222" r="18" fill="#345340" stroke="#d1e1cd" stroke-width="2.5"/>
+            <path d="M58 279h400" stroke="#77917c" stroke-width="2" stroke-linecap="round" stroke-dasharray="3 8" opacity=".65"/>
+          </svg>
+        </div>
+        {spotlight ? (
+          <a class="home-spotlight" href={detailBase + spotlight.slug + "/"}>
+            <div>
+              <span>{spotlight.brand_name}</span>
+              <strong>{spotlight.model_name}</strong>
+              <small>{spotlight.specifications.length} {t(lang,"specifications")}</small>
+            </div>
+            <span class="home-spotlight-arrow" aria-hidden="true">↗</span>
+          </a>
+        ) : (
+          <a class="home-spotlight" href={catalogUrl}>{h(lang,"heroCta")} <span aria-hidden="true">↗</span></a>
+        )}
+        <div class="home-preview-stats">
+          <div><strong>{count}</strong><span>{t(lang,"publishedModels")}</span></div>
+          <div><strong>{brandCounts.size}</strong><span>{d(lang,"brandsCount")}</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="home-choices" aria-labelledby="home-choices-title">
+    <div class="container">
+      <div class="home-section-heading">
+        <div>
+          <p class="home-section-kicker">{h(lang,"featuresEyebrow")}</p>
+          <h2 id="home-choices-title">{d(lang,"startHeading")}</h2>
+          <p>{d(lang,"startIntro")}</p>
+        </div>
+      </div>
+      <div class="home-action-grid">
+        <a class="home-action-card" href={catalogUrl}>
+          <span class="home-action-symbol" aria-hidden="true">⌕</span>
+          <span class="home-action-overline">01</span>
+          <h3>{t(lang,"navCatalog")}</h3>
+          <p>{d(lang,"catalogCardBody")}</p>
+          <span class="home-card-action">{h(lang,"heroCta")} <span aria-hidden="true">↗</span></span>
+        </a>
+        <a class="home-action-card home-action-card--accent" href={compareUrl}>
+          <span class="home-action-symbol" aria-hidden="true">⇄</span>
+          <span class="home-action-overline">02</span>
+          <h3>{t(lang,"navCompare")}</h3>
+          <p>{d(lang,"compareCardBody")}</p>
+          <span class="home-card-action">{t(lang,"navCompare")} <span aria-hidden="true">↗</span></span>
+        </a>
+        <a class="home-action-card" href={advisorUrl}>
+          <span class="home-action-symbol" aria-hidden="true">✳</span>
+          <span class="home-action-overline">03</span>
+          <h3>{tx(lang,"nav")}</h3>
+          <p>{d(lang,"advisorCardBody")}</p>
+          <span class="home-card-action">{tx(lang,"nav")} <span aria-hidden="true">↗</span></span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="home-models" id="models" aria-labelledby="home-models-title">
+    <div class="container">
+      <div class="home-section-heading home-section-heading--split">
+        <div>
+          <p class="home-section-kicker">{h(lang,"featuresEyebrow")}</p>
+          <h2 id="home-models-title">{d(lang,"featuredHeading")}</h2>
+          <p>{d(lang,"featuredIntro")}</p>
+        </div>
+        <a class="home-outline-link" href={catalogUrl}>{h(lang,"heroCta")} <span aria-hidden="true">↗</span></a>
+      </div>
+      {brands.length > 0 && (
+        <nav class="home-brand-row" aria-label={d(lang,"brandsHeading")}>
+          <strong>{d(lang,"brandsHeading")}</strong>
+          <div>
+            {brands.map(([brand,number]) => (
+              <a href={catalogUrl + "?q=" + encodeURIComponent(brand)}>
+                {brand}<span aria-hidden="true"> · {number}</span>
+              </a>
+            ))}
+          </div>
+        </nav>
+      )}
+      <div class="home-featured-grid">
+        {featured.map((tractor) => (
+          <a class="home-featured-card" href={detailBase + tractor.slug + "/"}>
+            <span class="home-featured-brand">{tractor.brand_name}</span>
+            <h3>{tractor.model_name}</h3>
+            {tractor.variant && <p class="home-featured-variant">{tractor.variant}</p>}
+            <div class="home-featured-facts">
+              {tractor.horsepower != null && <span><strong>{tractor.horsepower} HP</strong>{t(lang,"power")}</span>}
+              <span><strong>{tractor.specifications.length}</strong>{t(lang,"specifications")}</span>
+            </div>
+            <span class="home-featured-link">{d(lang,"modelDetails")} <span aria-hidden="true">↗</span></span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="home-evidence" id="data" aria-labelledby="home-evidence-title">
+    <div class="container home-evidence-layout">
+      <div>
+        <p class="home-section-kicker">{d(lang,"whyEyebrow")}</p>
+        <h2 id="home-evidence-title">{h(lang,"principlesTitle")}</h2>
+        <p>{h(lang,"principlesBody")}</p>
+      </div>
+      <div class="home-evidence-panel" id="approach">
+        <span class="home-evidence-number" aria-hidden="true">✓</span>
+        <h3>{h(lang,"approachTitle")}</h3>
+        <p>{h(lang,"approachBody")}</p>
+        <a href={catalogUrl}>{h(lang,"heroCta")} <span aria-hidden="true">↗</span></a>
+      </div>
+    </div>
+  </section>
+
+  <section class="home-last">
+    <div class="container home-last-inner">
+      <div>
+        <p class="home-section-kicker">{d(lang,"closeTitle")}</p>
+        <h2>{h(lang,"finalTitle")}</h2>
+      </div>
+      <a class="button button-light" href={catalogUrl}>{h(lang,"heroCta")} <span aria-hidden="true">↗</span></a>
+    </div>
+  </section>
+</SiteLayout>
