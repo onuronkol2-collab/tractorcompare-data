@@ -45,7 +45,7 @@ test("comparison UI preserves sourced spec identities and deep-linked model sele
   assert.match(compare,/event.key==="ArrowDown"/);
   assert.match(compare,/event.key==="Escape"/);
   assert.match(compare,/window.history.replaceState/);
-  assert.match(compare,/model.variant\?\.split\(";"\)/);
+  assert.match(compare,/tractor.variant\?\.split\(";"\)/);
 });
 test("every published model detail has a comparison CTA using stable tractor id",()=>{
   assert.match(detail,/const compareUrl = localizedPath\(lang,"\/compare\/"\) \+ "\?left=" \+ encodeURIComponent\(tractor.tractor_id\)/);
