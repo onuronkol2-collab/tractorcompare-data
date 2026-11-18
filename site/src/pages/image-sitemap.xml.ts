@@ -16,7 +16,7 @@ export const GET:APIRoute=async({site})=>{
         for(const locale of LOCALES){
           const page=new URL(localizedPath(locale,"/tractors/"+tractor.slug+"/"),site!).toString();
           entries.push("<url><loc>"+escapeXml(page)+"</loc><image:image><image:loc>"+
-            escapeXml(photo.fullUrl)+"</image:loc></image:image></url>");
+            escapeXml(new URL(photo.fullUrl,site!).toString())+"</image:loc></image:image></url>");
         }
       }
     }

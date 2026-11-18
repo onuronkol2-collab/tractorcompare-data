@@ -26,7 +26,7 @@ const summaryItems = [
   {label:t(lang,"weight"),value:tractor.weight_kg!=null?tractor.weight_kg+" kg":null},
 ].filter((item)=>item.value);
 ---
-<SiteLayout lang={lang} title={title} description={description} structuredData={structuredData} ogImage={cover?.displayUrl}>
+<SiteLayout lang={lang} title={title} description={description} structuredData={structuredData} ogImage={cover && Astro.site ? new URL(cover.displayUrl,Astro.site).toString() : null}>
   <section class="model-hero"><div class="container">
     <a class="catalog-breadcrumb" href={listingUrl}>← {t(lang,"allTractors")}</a>
     <p class="eyebrow"><span class="eyebrow-mark"></span>{t(lang,"modelEyebrow")}</p>

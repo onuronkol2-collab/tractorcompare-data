@@ -2,7 +2,7 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import {readFileSync} from "node:fs";
 import {LOCALES} from "../src/lib/locales.ts";
-import {APPROVED_TRACTOR_PHOTOS,tractorPhotos,primaryTractorPhoto,photoText,tractorPhotoAlt} from "../src/lib/tractor-photos.ts";
+import {APPROVED_TRACTOR_PHOTOS,tractorPhotos,primaryTractorPhoto,photoText,tractorPhotoAlt,resolveApprovedPhotoSource} from "../src/lib/tractor-photos.ts";
 import {modelStructuredData} from "../src/lib/model-seo.ts";
 const file=p=>readFileSync(new URL("../src/"+p,import.meta.url),"utf8");
 const tractor=(brand_name,model_name)=>({
@@ -26,12 +26,27 @@ test("each approved photograph has a verified model source and re-use license",(
   for(const image of APPROVED_TRACTOR_PHOTOS){
     assert.ok(!ids.has(image.fileId));ids.add(image.fileId);
     for(const field of ["thumbUrl","displayUrl","fullUrl"])
+      assert.match(image[field],/^\/images\/tractors\/[a-z0-9-]+-(480|960|1920)\.jpg$/);
+    for(const field of ["originThumbUrl","originDisplayUrl","originFullUrl"])
       assert.match(image[field],/^https:\/\/upload\.wikimedia\.org\/wikipedia\/commons\//);
     assert.match(image.sourcePage,/^https:\/\/commons\.wikimedia\.org\/wiki\/File:/);
     assert.match(image.licenseUrl,/^https:\/\/creativecommons\.org\/licenses\/by-sa\/(3|4)\.0\/$/);
     assert.ok(image.photographer.trim());
     assert.equal(image.configurationExact,false);
   }
+});
+test("the photo proxy accepts only fixed photo identities and resolutions",()=>{
+  for(const photo of APPROVED_TRACTOR_PHOTOS){
+    assert.equal(resolveApprovedPhotoSource(photo.thumbUrl),photo.originThumbUrl);
+    assert.equal(resolveApprovedPhotoSource(photo.displayUrl),photo.originDisplayUrl);
+    assert.equal(resolveApprovedPhotoSource(photo.fullUrl),photo.originFullUrl);
+  }
+  for(const uri of [
+    "/images/tractors/missing-960.jpg",
+    "/images/tractors/../../../admin",
+    "/images/tractors/belarus-82-1-homoatrox-2019-999.jpg",
+    "/images/tractors/https://example.com/480.jpg"
+  ])assert.equal(resolveApprovedPhotoSource(uri),null);
 });
 test("all photo interface controls are localized to ten languages",()=>{
   assert.equal(LOCALES.length,10);

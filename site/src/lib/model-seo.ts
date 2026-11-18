@@ -95,8 +95,8 @@ export function modelStructuredData(tractor: TractorRecord, lang: Locale, siteUr
   if(image)graph.push({
     "@type":"ImageObject",
     "@id":pageUrl+"#photo",
-    contentUrl:image.fullUrl,
-    thumbnailUrl:image.displayUrl,
+    contentUrl:new URL(image.fullUrl,siteUrl).toString(),
+    thumbnailUrl:new URL(image.displayUrl,siteUrl).toString(),
     caption:tractorPhotoAlt(tractor,lang),
     creator:{"@type":"Person",name:image.photographer},
     copyrightNotice:"© "+image.photographer,
