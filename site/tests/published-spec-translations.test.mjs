@@ -26,8 +26,8 @@ test("source text, numbers and unsupported keys are not translated into invented
   const fallback=specLabel({canonical_key:"unknown",spec_name:"Unknown manufacturer field"},"tr");
   assert.equal(fallback,"Unknown Manufacturer Field");
 });
-test("published dictionary covers 60 audited distinct English technical headings",()=>{
+test("published dictionary covers 62 audited distinct English technical headings",()=>{
   const required=new Set(Object.values(missing).flat());
-  assert.equal(required.size,60);
+  assert.equal(required.size,62);
   for(const name of required)assert.ok(PUBLISHED_SPEC_TERMS[name],name);
 });
