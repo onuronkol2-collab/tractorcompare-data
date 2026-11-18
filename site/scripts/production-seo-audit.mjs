@@ -99,13 +99,25 @@ for(let i=0;i<urls.length;i+=6){
     for(const raw of meta.json)try{
       const value=JSON.parse(raw);graphs.push(...(value["@graph"]||[value]));
     }catch(e){error("jsonld-parse",p,String(e));}
-    for(const type of ["Vehicle","WebPage","BreadcrumbList"])
+    for(const type of ["WebPage","BreadcrumbList"])
      if(!graphs.some(g=>g["@type"]===type))error("jsonld-"+type,p,"Missing "+type);
-    const vehicle=graphs.find(g=>g["@type"]==="Vehicle");
-    if(vehicle?.url!==page)error("vehicle-url",p,"Incorrect Vehicle JSON-LD URL");
-    const count=vehicle?.additionalProperty?.length||0;
-    if(count===0)warn("no-source-backed-jsonld",p,"No structured sourced specifications");
-    if(modelSample.length<6)modelSample.push({path:p,title:meta.title,description:meta.description,sourcedProperties:count,htmlBytes:Buffer.byteLength(body)});
+    // Accept legacy Vehicle only while Cloudflare deploys the new code.
+    // Old Vehicle markup triggers Google Product snippet eligibility errors.
+    const subject=graphs.find(g=>g["@type"]==="Thing")
+      || graphs.find(g=>g["@type"]==="Vehicle");
+    if(!subject)error("jsonld-main-entity",p,"Missing tractor identity");
+    if(subject?.url!==page)error("tractor-entity-url",p,"Incorrect model JSON-LD URL");
+    const webPage=graphs.find(g=>g["@type"]==="WebPage");
+    if(subject && webPage?.mainEntity?.["@id"]!==subject["@id"])
+      error("tractor-main-entity",p,"WebPage mainEntity does not point at tractor");
+    if(subject?.["@type"]==="Vehicle")
+      warn("legacy-product-schema",p,"Vehicle triggers Google Product snippet required-fields error");
+    if(graphs.some(g=>g["@type"]==="Product"))
+      error("product-schema",p,"Catalogue must not claim Product rich result eligibility");
+    if(subject?.["@type"]==="Thing" && ["offers","review","aggregateRating","additionalProperty","manufacturer"].some(k=>k in subject))
+      error("thing-product-properties",p,"Thing has inapplicable Product properties");
+    const count=subject?.subjectOf?.length || 0;
+    if(modelSample.length<6)modelSample.push({path:p,title:meta.title,description:meta.description,linkedManufacturerSources:count,entityType:subject?.["@type"],htmlBytes:Buffer.byteLength(body)});
    }
    valid++;
   }catch(e){error("page-fetch",page,String(e));}

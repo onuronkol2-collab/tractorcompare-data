@@ -1,5 +1,5 @@
 import type { TractorRecord } from "./catalog.ts";
-import { officialManufacturerSourceUrl, specificationEvidenceLevel } from "./catalog.ts";
+import { officialManufacturerSourceUrl } from "./catalog.ts";
 import { localizedPath, type Locale } from "./locales.ts";
 import { t } from "./ui.ts";
 
@@ -29,43 +29,44 @@ export function modelSeoMetadata(tractor: TractorRecord, lang: Locale) {
   return { title, description };
 }
 
-/** Valid, sourced facts only. No invented prices, offers, ratings, or images. */
+/**
+ * TractorVS is an independent specifications catalogue, not a seller.
+ *
+ * Vehicle is a subclass of schema.org/Product, so Google asks for an Offer,
+ * Review or AggregateRating on every model page even though the site does
+ * not collect verified offers or ratings. Do not invent those claims.
+ *
+ * Keep the indexed WebPage, its breadcrumbs, a stable identity for the
+ * documented tractor, and links to actual manufacturer evidence. The
+ * manufacturer-backed specification values remain visible in the HTML
+ * comparison cards, without claiming Product rich-result eligibility.
+ */
 export function modelStructuredData(tractor: TractorRecord, lang: Locale, siteUrl: string) {
   const pageUrl = new URL(localizedPath(lang, "/tractors/" + tractor.slug + "/"), siteUrl).toString();
   const listUrl = new URL(localizedPath(lang, "/tractors/"), siteUrl).toString();
   const homeUrl = new URL(localizedPath(lang, "/"), siteUrl).toString();
   const name = tractor.brand_name + " " + tractor.model_name;
   const meta = modelSeoMetadata(tractor, lang);
-  const propertySpecs = tractor.specifications.filter(
-    (spec) => specificationEvidenceLevel(spec) === "manufacturer_documented"
-      && spec.spec_value.trim() && spec.spec_name.trim()
-  ).slice(0, 60);
   const sourceLinks = [...new Set(tractor.specifications.map((spec) =>
     officialManufacturerSourceUrl(spec, tractor.brand_name)
   ).filter((url): url is string => Boolean(url)))].slice(0, 12);
-  const manufacturer: Record<string, unknown> = { "@type": "Organization", name: tractor.brand_name };
-  if (tractor.brand_website_url) manufacturer.url = tractor.brand_website_url;
-  const vehicle: Record<string, unknown> = {
-    "@type": "Vehicle",
+
+  const subject: Record<string, unknown> = {
+    "@type": "Thing",
     "@id": pageUrl + "#tractor",
-    name: name,
+    name,
     url: pageUrl,
-    model: tractor.model_name,
-    manufacturer,
+    identifier: tractor.tractor_id,
     description: meta.description,
   };
-  if (tractor.variant) vehicle.vehicleConfiguration = tractor.variant;
-  if (tractor.model_year != null) vehicle.vehicleModelDate = String(tractor.model_year);
-  if (propertySpecs.length) vehicle.additionalProperty = propertySpecs.map((spec) => ({
-    "@type": "PropertyValue",
-    name: spec.spec_name,
-    value: spec.spec_value,
-    ...(spec.unit ? { unitText: spec.unit } : {}),
-    ...(spec.measurement_standard ? { description: spec.measurement_standard } : {}),
-  }));
-  if (sourceLinks.length) vehicle.subjectOf = sourceLinks.map((url) => ({
+  const identityContext = [tractor.variant, tractor.market, tractor.model_year]
+    .filter((part) => part !== null && part !== undefined && String(part).trim())
+    .map(String);
+  if (identityContext.length) subject.disambiguatingDescription = identityContext.join(" · ");
+  if (sourceLinks.length) subject.subjectOf = sourceLinks.map((url) => ({
     "@type": "CreativeWork", url,
   }));
+
   return {
     "@context": "https://schema.org",
     "@graph": [
@@ -77,6 +78,7 @@ export function modelStructuredData(tractor: TractorRecord, lang: Locale, siteUr
         description: meta.description,
         inLanguage: lang === "zh" ? "zh-Hans" : lang === "pt-br" ? "pt-BR" : lang,
         mainEntity: { "@id": pageUrl + "#tractor" },
+        about: { "@id": pageUrl + "#tractor" },
       },
       {
         "@type": "BreadcrumbList",
@@ -86,7 +88,7 @@ export function modelStructuredData(tractor: TractorRecord, lang: Locale, siteUr
           { "@type": "ListItem", position: 3, name, item: pageUrl },
         ],
       },
-      vehicle,
+      subject,
     ],
   };
 }
