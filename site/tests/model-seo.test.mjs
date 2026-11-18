@@ -29,26 +29,48 @@ test("SEO titles distinguish model, market and equipment variant", () => {
   assert.match(a.description,/114 HP/);
 });
 
-test("Vehicle JSON-LD is localized and uses only sourced data", () => {
+test("technical comparison page uses WebPage and Thing, not a Product/Vehicle rich result", () => {
   const data = modelStructuredData(tractor, "tr", "https://tractorvs.example");
   const graph = data["@graph"];
   const page = graph[0];
-  const vehicle = graph[2];
-  assert.equal(page.url,"https://tractorvs.example/tr/tractors/mccormick-x5-120-a02c4df2/");
-  assert.equal(vehicle["@type"],"Vehicle");
-  assert.equal(vehicle.manufacturer.name,"McCormick");
-  assert.equal(vehicle.additionalProperty[0].unitText,"mm");
-  assert.ok(!("offers" in vehicle));
-  assert.ok(!("aggregateRating" in vehicle));
-  assert.ok(!("image" in vehicle));
+  const subject = graph[2];
+  const url = "https://tractorvs.example/tr/tractors/mccormick-x5-120-a02c4df2/";
+  assert.equal(page.url, url);
+  assert.equal(page["@type"], "WebPage");
+  assert.equal(page.mainEntity["@id"], url + "#tractor");
+  assert.equal(page.about["@id"], url + "#tractor");
+  assert.equal(page.inLanguage, "tr");
+  assert.equal(subject["@type"], "Thing");
+  assert.equal(subject.url, url);
+  assert.equal(subject.name, "McCormick X5.120");
+  assert.equal(subject.identifier, tractor.tractor_id);
+  assert.match(subject.disambiguatingDescription, /Europe/);
+  assert.ok(graph.some((part) => part["@type"] === "BreadcrumbList"));
+  assert.ok(!graph.some((part) => ["Product", "Vehicle", "Car"].includes(part["@type"])));
+  assert.ok(!("offers" in subject) && !("aggregateRating" in subject) && !("review" in subject));
+  assert.ok(!("additionalProperty" in subject), "Thing must not claim Product-only properties");
 });
 
-test("Unsourced measurements never enter JSON-LD properties", () => {
-  const clone = { ...tractor, specifications: tractor.specifications.map(s => ({
-    ...s,evidence_text:null
-  })) };
-  const vehicle = modelStructuredData(clone,"en","https://tractorvs.example")["@graph"][2];
-  assert.equal(vehicle.additionalProperty,undefined);
+test("manufacturer sources are linked without unsupported Product properties", () => {
+  const data = modelStructuredData(tractor, "en", "https://tractorvs.example");
+  const subject = data["@graph"][2];
+  assert.ok(Array.isArray(subject.subjectOf));
+  assert.ok(subject.subjectOf.every((source) => source["@type"] === "CreativeWork"));
+  assert.match(subject.subjectOf[0].url, /^https:\/\//);
+  assert.ok(!("manufacturer" in subject));
+});
+
+test("a missing manufacturer source does not create invented citations or offers", () => {
+  const clone = {
+    ...tractor,
+    specifications: tractor.specifications.map((spec) => ({
+      ...spec, source_url:null, source_publisher:null, evidence_text:null,
+    })),
+  };
+  const subject = modelStructuredData(clone,"en","https://tractorvs.example")["@graph"][2];
+  assert.equal(subject.subjectOf,undefined);
+  assert.equal(subject["@type"],"Thing");
+  assert.ok(!("offers" in subject));
 });
 
 test("long manufacturer citation is kept out of the search title", () => {
