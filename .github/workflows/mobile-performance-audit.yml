@@ -1,0 +1,71 @@
+name: TractorVS mobile performance baseline
+
+on:
+  pull_request:
+    paths:
+      - ".github/workflows/mobile-performance-audit.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  mobile_lighthouse:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Check Chrome and Node
+        run: |
+          node --version
+          command -v google-chrome || command -v chromium || true
+      - name: Measure representative Turkish pages with mobile Lighthouse
+        run: |
+          set -euo pipefail
+          mkdir -p /tmp/tractorvs-lighthouse
+          for route in home catalog model compare; do
+            case "$route" in
+              home) url="https://tractorvs.com/tr/" ;;
+              catalog) url="https://tractorvs.com/tr/tractors/" ;;
+              model) url="https://tractorvs.com/tr/tractors/belarus-80-1-ca3d18f9/" ;;
+              compare) url="https://tractorvs.com/tr/compare/" ;;
+            esac
+            echo "Auditing $route $url"
+            npx --yes lighthouse@12.8.2 "$url" \
+              --chrome-flags="--headless --no-sandbox --disable-dev-shm-usage" \
+              --only-categories=performance,accessibility,best-practices,seo \
+              --emulated-form-factor=mobile \
+              --throttling-method=simulate \
+              --output=json --output-path="/tmp/tractorvs-lighthouse/$route.json" \
+              --quiet
+          done
+          node --input-type=module <<'NODE'
+          import fs from "node:fs";
+          for (const route of ["home","catalog","model","compare"]) {
+            const a=JSON.parse(fs.readFileSync("/tmp/tractorvs-lighthouse/"+route+".json","utf8"));
+            const scores=Object.fromEntries(
+              ["performance","accessibility","best-practices","seo"].map(k=>[k,Math.round((a.categories[k]?.score??0)*100)]));
+            const ids=["first-contentful-paint","largest-contentful-paint","total-blocking-time","cumulative-layout-shift","speed-index","server-response-time"];
+            const vitals=Object.fromEntries(ids.map(k=>[k,a.audits[k]?.numericValue??null]));
+            const issues=Object.values(a.audits).filter(v=>v.score!==null&&v.score!==undefined&&v.score<0.9 && v.details?.type==="opportunity")
+              .sort((a,b)=>(b.details?.overallSavingsMs||0)-(a.details?.overallSavingsMs||0))
+              .slice(0,8)
+              .map(o=>({id:o.id,title:o.title,savings_ms:o.details?.overallSavingsMs||0}));
+            const accessibilityFindings=Object.values(a.audits)
+              .filter(v=>v.score!==null&&v.score!==undefined&&v.score<1&&
+                a.categories.accessibility.auditRefs.some(r=>r.id===v.id&&r.weight>0))
+              .map(v=>({id:v.id,title:v.title,score:v.score,description:v.description?.slice(0,180)||""}));
+            const contrastFailures=(a.audits["color-contrast"]?.details?.items || []).slice(0,30).map(i=>({
+              selector:i.node?.selector,html:i.node?.snippet?.slice(0,180),
+              explanation:i.node?.explanation?.slice(0,160),
+              summary:i.node?.failureSummary?.slice(0,180)
+            }));
+            console.log("TRACTORVS_MOBILE_BASELINE "+JSON.stringify({route,url:a.finalDisplayedUrl||a.finalUrl,scores,vitals,issues,accessibilityFindings,contrastFailures}));
+          }
+          NODE
+      - name: Upload diagnostic Lighthouse JSON
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: tractorvs-mobile-lighthouse
+          path: /tmp/tractorvs-lighthouse/*.json
+          retention-days: 7
