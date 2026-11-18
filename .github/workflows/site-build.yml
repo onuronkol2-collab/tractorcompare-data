@@ -80,6 +80,9 @@ jobs:
         run: |
           npm run build
           test -f site/dist/sitemap-index.xml
+          grep -q '^Allow: /$' site/dist/robots.txt
+          grep -q '^Sitemap: https://tractorvs.example/sitemap-index.xml$' site/dist/robots.txt
+          if grep -q '^Disallow: /$' site/dist/robots.txt; then echo 'Indexed build incorrectly disallows all crawling'; exit 1; fi
           for locale in en tr zh hi pt-br fr de ru ja es; do
             case "$locale" in
               en) path="site/dist/index.html" ;;
