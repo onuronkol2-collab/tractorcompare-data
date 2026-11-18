@@ -1,0 +1,22 @@
+name: TractorVS Image SEO live audit
+on:
+  pull_request:
+    paths:
+      - ".github/workflows/image-seo-live-audit.yml"
+      - "site/scripts/image-seo-live-audit.mjs"
+  workflow_dispatch:
+  schedule:
+    - cron: "30 6 * * 1"
+permissions:
+  contents: read
+jobs:
+  image_audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22.23.4"
+      - name: Verify first party public JPEGs, photo attribution and image sitemap
+        run: node site/scripts/image-seo-live-audit.mjs
