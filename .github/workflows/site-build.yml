@@ -80,6 +80,45 @@ jobs:
         run: |
           npm run build
           test -f site/dist/sitemap-index.xml
+          grep -q '^Allow: /
+            case "$locale" in
+              en) path="site/dist/index.html" ;;
+              *) path="site/dist/$locale/index.html" ;;
+            esac
+            test -f "$path"
+            grep -q 'rel="canonical"' "$path"
+            grep -q 'hreflang="x-default"' "$path"
+            grep -q 'hreflang="de"' "$path"
+            grep -q 'hreflang="pt-BR"' "$path"
+            grep -q 'hreflang="zh-Hans"' "$path"
+          done
+ site/dist/robots.txt
+          grep -q '^Sitemap: https://tractorvs.example/sitemap-index.xml
+            case "$locale" in
+              en) path="site/dist/index.html" ;;
+              *) path="site/dist/$locale/index.html" ;;
+            esac
+            test -f "$path"
+            grep -q 'rel="canonical"' "$path"
+            grep -q 'hreflang="x-default"' "$path"
+            grep -q 'hreflang="de"' "$path"
+            grep -q 'hreflang="pt-BR"' "$path"
+            grep -q 'hreflang="zh-Hans"' "$path"
+          done
+ site/dist/robots.txt
+          if grep -q '^Disallow: /
+            case "$locale" in
+              en) path="site/dist/index.html" ;;
+              *) path="site/dist/$locale/index.html" ;;
+            esac
+            test -f "$path"
+            grep -q 'rel="canonical"' "$path"
+            grep -q 'hreflang="x-default"' "$path"
+            grep -q 'hreflang="de"' "$path"
+            grep -q 'hreflang="pt-BR"' "$path"
+            grep -q 'hreflang="zh-Hans"' "$path"
+          done
+ site/dist/robots.txt; then echo 'Indexed build incorrectly disallows all crawling'; exit 1; fi
           for locale in en tr zh hi pt-br fr de ru ja es; do
             case "$locale" in
               en) path="site/dist/index.html" ;;
