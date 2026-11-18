@@ -54,6 +54,7 @@ if(unique.size!==allPages.length)error("duplicate-sitemap-url","/sitemap-index.x
   (allPages.length-unique.size)+" duplicate URLs");
 const modelByLocale=Object.fromEntries(Object.keys(languages).map(k=>[k,new Set()]));
 let valid=0, modelPages=0, modelSample=[];
+const titlesByLocale=new Map();
 const urls=[...unique];
 for(let i=0;i<urls.length;i+=6){
  await Promise.all(urls.slice(i,i+6).map(async page=>{
@@ -70,10 +71,13 @@ for(let i=0;i<urls.length;i+=6){
    if(meta.robots.includes("noindex"))error("blocked-meta",p,meta.robots);
    if(meta.canonical.length!==1 || meta.canonical[0]!==page)
     error("canonical",p,JSON.stringify(meta.canonical));
-   if(meta.title.length<10 || meta.description.length<30)
-    error("title-description",p,"Missing or very short title/description");
-   if(!meta.h1)error("heading",p,"H1 not found");
    const locale=p.match(/^\/(tr|zh|hi|pt-br|fr|de|ru|ja|es)\//)?.[1]||"en";
+   // CJK descriptions convey useful content with fewer characters. These
+   // checks are quality signals, not artificial Google length requirements.
+   if(meta.title.length < (locale==="zh"||locale==="ja" ? 6 : 10) ||
+      meta.description.length < (locale==="zh"||locale==="ja" ? 12 : 30))
+    error("title-description",p,"Missing or clearly empty title/description");
+   if(!meta.h1)error("heading",p,"H1 not found");
    if(meta.lang!==languages[locale])error("html-language",p,"HTML lang "+meta.lang+" expected "+languages[locale]);
    const base=p.replace(/^\/(tr|zh|hi|pt-br|fr|de|ru|ja|es)(?=\/)/,"");
    const alternateMap=new Map(meta.alternates.map(x=>[x.lang,x.url]));
@@ -86,6 +90,11 @@ for(let i=0;i<urls.length;i+=6){
    if(isModel){
     const slug=p.split("/").filter(Boolean).at(-1);
     modelByLocale[locale].add(slug);modelPages++;
+    const titleKey=locale+"::"+meta.title;
+    const previous=titlesByLocale.get(titleKey);
+    if(previous && previous!==p)error("duplicate-model-title",p,"Same title as "+previous);
+    titlesByLocale.set(titleKey,p);
+    if(meta.title.length>105)warn("verbose-title",p,"Title has "+meta.title.length+" characters");
     const graphs=[];
     for(const raw of meta.json)try{
       const value=JSON.parse(raw);graphs.push(...(value["@graph"]||[value]));
