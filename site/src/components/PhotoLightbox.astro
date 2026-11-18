@@ -1,0 +1,46 @@
+---
+import {photoText} from "../lib/tractor-photos";
+import type {Locale} from "../lib/locales";
+const {lang}=Astro.props as {lang:Locale};
+---
+<dialog id="tractor-photo-dialog" class="tractor-photo-dialog" aria-label={photoText(lang,"open")}>
+  <div class="tractor-photo-dialog-content">
+    <button type="button" data-photo-close class="tractor-photo-close" aria-label={photoText(lang,"close")}>×</button>
+    <img id="tractor-photo-dialog-img" alt="" width="1600" height="1000"/>
+    <p class="tractor-photo-dialog-caption"><span id="tractor-photo-dialog-name"></span>
+      <span><a id="tractor-photo-dialog-credit" rel="noopener noreferrer" target="_blank"></a> ·
+      <a id="tractor-photo-dialog-license" rel="noopener noreferrer" target="_blank"></a></span>
+    </p>
+  </div>
+</dialog>
+<script>
+  const dialog=document.querySelector<HTMLDialogElement>("#tractor-photo-dialog");
+  const img=document.querySelector<HTMLImageElement>("#tractor-photo-dialog-img");
+  const name=document.querySelector<HTMLElement>("#tractor-photo-dialog-name");
+  const credit=document.querySelector<HTMLAnchorElement>("#tractor-photo-dialog-credit");
+  const license=document.querySelector<HTMLAnchorElement>("#tractor-photo-dialog-license");
+  const close=document.querySelector<HTMLButtonElement>("[data-photo-close]");
+  const safe=(value:string)=>{
+    try{const u=new URL(value,location.href);return ["http:","https:"].includes(u.protocol)?u.href:null;}
+    catch{return null;}
+  };
+  document.addEventListener("click",e=>{
+    if(!(e.target instanceof Element))return;
+    const button=e.target.closest<HTMLElement>("[data-tractor-photo]");
+    if(!button||!dialog||!img||!name||!credit||!license)return;
+    const src=safe(button.dataset.photoUrl||"");
+    const source=safe(button.dataset.photoSource||"");
+    const rights=safe(button.dataset.photoLicense||"");
+    if(!src||!source||!rights)return;
+    e.preventDefault();
+    img.src=src;img.alt=button.dataset.photoLabel||"";
+    name.textContent=button.dataset.photoLabel||"";
+    credit.href=source;credit.textContent=button.dataset.photoCredit||"";
+    license.href=rights;license.textContent=button.dataset.photoLicenseName||"";
+    dialog.showModal();
+  });
+  const hide=()=>{dialog?.close();if(img)img.removeAttribute("src");};
+  close?.addEventListener("click",hide);
+  dialog?.addEventListener("click",e=>{if(e.target===dialog)hide();});
+  dialog?.addEventListener("close",()=>{if(img)img.removeAttribute("src");});
+</script>
