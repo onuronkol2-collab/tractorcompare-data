@@ -7,6 +7,7 @@ if (origin.protocol !== "https:" || !origin.hostname.endsWith(".workers.dev"))
 const pages = ["/", "/robots.txt", "/sitemap-index.xml",
   "/tractors/", "/tr/tractors/", "/tr/"];
 const results=[];
+const modelLinks = new Map();
 for (const path of pages) {
   const url = new URL(path,origin);
   try {
@@ -18,6 +19,11 @@ for (const path of pages) {
     const body = (await response.text()).slice(0,500000);
     const isHtml=(response.headers.get("content-type")||"").includes("text/html");
     const get=(regex)=>body.match(regex)?.[1] ?? null;
+    if (isHtml && (path === "/tractors/" || path === "/tr/tractors/")) {
+      const slugs = [...body.matchAll(/href=["'](\/(?:tr\/)?tractors\/[^"'?#]+\/?)["']/gi)]
+        .map((m) => m[1]);
+      modelLinks.set(path, [...new Set(slugs)].sort());
+    }
     const entry={
       path,
       status:response.status,
@@ -40,6 +46,24 @@ for (const path of pages) {
     results.push(entry);
     console.log("PUBLIC_PAGE_AUDIT "+JSON.stringify(entry));
   }
+}
+for (const [catalogue, links] of modelLinks) {
+  console.log("LIVE_CATALOG_SLUGS " + JSON.stringify({catalogue,total_links:links.length,links:links.slice(0,100)}));
+}
+const english = modelLinks.get("/tractors/") || [];
+for (const path of english.slice(0,4)) {
+  try {
+    const response = await fetch(new URL(path,origin),{signal:AbortSignal.timeout(16000),redirect:"follow"});
+    const html = (await response.text()).slice(0,500000);
+    console.log("LIVE_MODEL_PAGE " + JSON.stringify({
+      path, status:response.status,
+      h1:html.match(/<h1[^>]*>([\s\S]*?)<\/h1>/i)?.[1].replace(/<[^>]+>/g," ").trim() ?? null,
+      has_technical_specs:/(technical spec|technical data|wheelbase|transmission|spec-group|model-spec-card)/i.test(html),
+      canonical:html.match(/<link\s+rel=["']canonical["']\s+href=["']([^"']+)["']/i)?.[1] ?? null,
+      has_jsonld:/application\/ld\+json/i.test(html),
+      robots:html.match(/<meta\s+name=["']robots["']\s+content=["']([^"']+)["']/i)?.[1] ?? null
+    }));
+  } catch(e) { console.log("LIVE_MODEL_PAGE "+JSON.stringify({path,error:String(e)})); }
 }
 console.log("AUDIT_SUMMARY "+JSON.stringify({
   total:results.length,
