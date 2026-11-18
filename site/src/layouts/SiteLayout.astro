@@ -58,6 +58,7 @@ const openGraphLocale: Record<Locale, string> = {
       <link rel="alternate" hreflang={alternate.locale} href={alternate.href} />
     )}
     {indexingEnabled && <link rel="alternate" hreflang="x-default" href={new URL(plainPath,Astro.site!).toString()} />}
+    {indexingEnabled && <link rel="sitemap" type="application/xml" href="/sitemap-index.xml" />}
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta property="og:type" content="website" />
     <meta property="og:title" content={title} />
