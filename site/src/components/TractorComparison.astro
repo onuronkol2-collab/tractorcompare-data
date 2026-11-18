@@ -91,6 +91,7 @@ const labelsPayload = JSON.stringify({
   shared: cx(lang,"shared"),
   summary: cx(lang,"summary"),
   noShared: cx(lang,"noShared"),
+  specs: t(lang,"specifications"),
 }).replace(/</g, "\\u003c");
 ---
 <SiteLayout
@@ -211,108 +212,206 @@ const labelsPayload = JSON.stringify({
 <script type="application/json" id="tc-payload" set:html={payload}></script>
 <script type="application/json" id="tc-i18n" set:html={labelsPayload}></script>
 <script>
-  type Spec = { key: string; label: string; value: string; unit: string | null; context: string | null; rpm: number | null; source: string | null; notice: string | null };
-  type Model = { id: string; title: string; detailsUrl: string; specs: Spec[] };
-  const dataNode = document.querySelector<HTMLScriptElement>("#tc-payload");
-  const leftSelect = document.querySelector<HTMLSelectElement>("#tc-left");
-  const rightSelect = document.querySelector<HTMLSelectElement>("#tc-right");
-  const tbody = document.querySelector<HTMLTableSectionElement>("#tc-rows");
-  if (dataNode && leftSelect && rightSelect && tbody) {
-    const models = JSON.parse(dataNode.textContent || "[]") as Model[];
-    const lang = document.documentElement.lang;
-    const l10n = JSON.parse(document.querySelector("#tc-i18n")?.textContent || "{}") as {
-      missing: string; source: string; context: string;
+  import { normalizeTractorQuery } from "../lib/search";
+  type Spec = { key:string; label:string; value:string; unit:string|null; context:string|null; rpm:number|null; source:string|null; notice:string|null };
+  type Model = { id:string; title:string; brand:string; modelName:string;
+    variant:string|null; power:number|null; specsCount:number;
+    detailsUrl:string; specs:Spec[] };
+  const dataNode=document.querySelector<HTMLScriptElement>("#tc-payload");
+  const leftSelect=document.querySelector<HTMLSelectElement>("#tc-left");
+  const rightSelect=document.querySelector<HTMLSelectElement>("#tc-right");
+  const tbody=document.querySelector<HTMLTableSectionElement>("#tc-rows");
+  const picker=document.querySelector<HTMLElement>("#tc-picker");
+  if(dataNode&&leftSelect&&rightSelect&&tbody&&picker){
+    const models=JSON.parse(dataNode.textContent||"[]") as Model[];
+    const lang=document.documentElement.lang;
+    const l10n=JSON.parse(document.querySelector("#tc-i18n")?.textContent||"{}") as {
+      missing:string;source:string;context:string;search:string;noResults:string;
+      results:string;selected:string;exploreModel:string;shared:string;
+      summary:string;noShared:string;specs:string;
     };
-    const missing = l10n.missing;
-    const sourceLabel = l10n.source;
-    const contextLabel = l10n.context;
-    const params = new URLSearchParams(window.location.search);
-    const byId = (id: string) => models.find((model) => model.id === id);
-    const requestedLeft = params.get("left");
-    const requestedRight = params.get("right");
-    if (requestedLeft && byId(requestedLeft)) leftSelect.value = requestedLeft;
-    if (requestedRight && byId(requestedRight)) rightSelect.value = requestedRight;
+    const byId=(id:string)=>models.find(model=>model.id===id);
+    const params=new URLSearchParams(window.location.search);
+    if(params.get("left")&&byId(params.get("left")!))leftSelect.value=params.get("left")!;
+    if(params.get("right")&&byId(params.get("right")!))rightSelect.value=params.get("right")!;
+    let commonOnly=false;
+    let changedSide:"left"|"right"="left";
 
-    function addText(parent: Element, tag: string, content: string, cssClass?: string) {
-      const child = document.createElement(tag);
-      child.textContent = content;
-      if (cssClass) child.className = cssClass;
-      parent.appendChild(child);
+    function addText(parent:Element,tag:string,text:string,css?:string){
+      const item=document.createElement(tag);item.textContent=text;
+      if(css)item.className=css;parent.appendChild(item);return item;
     }
-    function renderCell(cell: HTMLTableCellElement, items: Spec[]) {
-      if (!items.length) {
-        addText(cell, "span", "— " + missing, "tc-missing");
-        return;
-      }
-      for (const spec of items) {
-        const entry = document.createElement("div");
-        entry.className = "tc-entry";
-        addText(entry, "strong", spec.value + (spec.unit ? " " + spec.unit : ""));
-        if (spec.context) addText(entry, "small", contextLabel + ": " + spec.context);
-        if (spec.rpm != null) addText(entry, "small", spec.rpm + " rpm");
-        if (spec.source) {
-          try {
-            const url = new URL(spec.source);
-            if (url.protocol === "https:" || url.protocol === "http:") {
-              const link = document.createElement("a");
-              link.href = url.href;
-              link.target = "_blank";
-              link.rel = "noopener noreferrer";
-              link.textContent = sourceLabel + " ↗";
-              entry.appendChild(link);
+    function renderCell(cell:HTMLTableCellElement,items:Spec[]){
+      if(!items.length){addText(cell,"span","— "+l10n.missing,"tc-missing");return;}
+      for(const spec of items){
+        const entry=document.createElement("div");entry.className="tc-entry";
+        addText(entry,"strong",spec.value+(spec.unit?" "+spec.unit:""));
+        if(spec.context)addText(entry,"small",l10n.context+": "+spec.context);
+        if(spec.rpm!=null)addText(entry,"small",spec.rpm+" rpm");
+        if(spec.source){
+          try{
+            const url=new URL(spec.source);
+            if(["https:","http:"].includes(url.protocol)){
+              const link=document.createElement("a");
+              link.href=url.href;link.target="_blank";link.rel="noopener noreferrer";
+              link.textContent=l10n.source+" ↗";entry.appendChild(link);
             }
-          } catch { /* Skip invalid URLs rather than exposing untrusted links. */ }
+          }catch{/* Invalid source URL: do not display untrusted links. */}
         }
         cell.appendChild(entry);
       }
     }
-    function render() {
-      if (leftSelect.value === rightSelect.value && models.length > 1) {
-        rightSelect.value = models.find((model) => model.id !== leftSelect.value)?.id || rightSelect.value;
+    function setPreview(side:"left"|"right",model:Model){
+      const preview=document.querySelector<HTMLAnchorElement>("#tc-"+side+"-preview");
+      const input=document.querySelector<HTMLInputElement>("#tc-"+side+"-search");
+      const header=document.querySelector<HTMLAnchorElement>("#tc-"+side+"-link");
+      if(input && document.activeElement!==input)input.value=model.title;
+      if(header){header.href=model.detailsUrl;header.textContent=model.title;}
+      if(preview){
+        preview.href=model.detailsUrl;
+        const strong=preview.querySelector("strong");
+        const variant=preview.querySelector("em");
+        if(strong)strong.textContent=model.title;
+        if(variant){variant.textContent=model.variant||"";variant.hidden=!model.variant;}
       }
-      const left = byId(leftSelect.value);
-      const right = byId(rightSelect.value);
-      if (!left || !right) return;
-      const leftLink = document.querySelector<HTMLAnchorElement>("#tc-left-link");
-      const rightLink = document.querySelector<HTMLAnchorElement>("#tc-right-link");
-      if (leftLink) { leftLink.href = left.detailsUrl; leftLink.textContent = left.title; }
-      if (rightLink) { rightLink.href = right.detailsUrl; rightLink.textContent = right.title; }
-      const keys = [...new Set([...left.specs, ...right.specs].map((spec) => spec.key))];
-      const label = (key: string) => left.specs.find((spec) => spec.key === key)?.label
-        || right.specs.find((spec) => spec.key === key)?.label || key;
-      keys.sort((a, b) => label(a).localeCompare(label(b), lang));
-      const rows = document.createDocumentFragment();
-      for (const key of keys) {
-        const tr = document.createElement("tr");
-        const th = document.createElement("th");
-        th.scope = "row";
-        th.textContent = label(key);
-        tr.appendChild(th);
-        for (const model of [left, right]) {
-          const td = document.createElement("td");
-          renderCell(td, model.specs.filter((spec) => spec.key === key));
-          tr.appendChild(td);
-        }
-        rows.appendChild(tr);
-      }
-      tbody.replaceChildren(rows);
-      const conflictBox = document.querySelector<HTMLElement>("#tc-data-warning");
-      if (conflictBox) {
-        const notes = [...new Set([...left.specs, ...right.specs]
-          .map((spec) => spec.notice).filter((note): note is string => Boolean(note)))];
-        conflictBox.replaceChildren();
-        for (const note of notes) addText(conflictBox, "p", note);
-        conflictBox.hidden = notes.length === 0;
-      }
-      const url = new URL(window.location.href);
-      url.searchParams.set("left", left.id);
-      url.searchParams.set("right", right.id);
-      window.history.replaceState(null, "", url.pathname + url.search);
     }
-    leftSelect.addEventListener("change", render);
-    rightSelect.addEventListener("change", render);
+    function render(){
+      if(leftSelect.value===rightSelect.value&&models.length>1){
+        if(changedSide==="right")
+          leftSelect.value=models.find(m=>m.id!==rightSelect.value)?.id||leftSelect.value;
+        else
+          rightSelect.value=models.find(m=>m.id!==leftSelect.value)?.id||rightSelect.value;
+      }
+      const left=byId(leftSelect.value),right=byId(rightSelect.value);
+      if(!left||!right)return;
+      setPreview("left",left);setPreview("right",right);
+      const keys=[...new Set([...left.specs,...right.specs].map(spec=>spec.key))];
+      const find=(model:Model,key:string)=>model.specs.filter(spec=>spec.key===key);
+      const label=(key:string)=>find(left,key)[0]?.label||find(right,key)[0]?.label||key;
+      keys.sort((a,b)=>label(a).localeCompare(label(b),lang));
+      const shared=keys.filter(key=>find(left,key).length>0&&find(right,key).length>0);
+      const visible=commonOnly?shared:keys;
+      const fragment=document.createDocumentFragment();
+      for(const key of visible){
+        const row=document.createElement("tr");
+        const th=document.createElement("th");
+        th.scope="row";th.textContent=label(key);row.appendChild(th);
+        for(const model of [left,right]){
+          const td=document.createElement("td");renderCell(td,find(model,key));row.appendChild(td);
+        }
+        fragment.appendChild(row);
+      }
+      tbody.replaceChildren(fragment);
+      const summary=document.querySelector<HTMLElement>("#tc-summary");
+      if(summary)summary.textContent=shared.length+" "+l10n.summary+" · "+keys.length+" "+l10n.specs;
+      const empty=document.querySelector<HTMLElement>("#tc-no-shared");
+      if(empty)empty.hidden=!(commonOnly&&!shared.length);
+      const notes=[...new Set([...left.specs,...right.specs].map(spec=>spec.notice)
+        .filter((v):v is string=>Boolean(v)))];
+      const warnings=document.querySelector<HTMLElement>("#tc-data-warning");
+      if(warnings){
+        warnings.replaceChildren();
+        for(const note of notes)addText(warnings,"p",note);
+        warnings.hidden=!notes.length;
+      }
+      const url=new URL(window.location.href);
+      url.searchParams.set("left",left.id);url.searchParams.set("right",right.id);
+      window.history.replaceState(null,"",url.pathname+url.search);
+    }
+    function makeCombobox(side:"left"|"right",select:HTMLSelectElement){
+      const input=document.querySelector<HTMLInputElement>("#tc-"+side+"-search");
+      const popup=document.querySelector<HTMLDivElement>("#tc-"+side+"-results");
+      if(!input||!popup)return;
+      let active=-1;
+      const options=()=>Array.from(popup.querySelectorAll<HTMLButtonElement>(".tc-result"));
+      const setActive=(n:number)=>{
+        active=n;const buttons=options();
+        for(const [i,option] of buttons.entries())
+          option.setAttribute("aria-selected",String(i===n));
+        if(buttons[n]){
+          input.setAttribute("aria-activedescendant",buttons[n].id);
+          buttons[n].scrollIntoView({block:"nearest"});
+        }else input.removeAttribute("aria-activedescendant");
+      };
+      const close=(restore=true)=>{
+        popup.hidden=true;input.setAttribute("aria-expanded","false");setActive(-1);
+        if(restore)input.value=byId(select.value)?.title||"";
+      };
+      const choose=(model:Model)=>{
+        select.value=model.id;changedSide=side;close();render();
+      };
+      const paint=(query:string)=>{
+        const q=normalizeTractorQuery(query);
+        const terms=q.split(/\s+/).filter(Boolean);
+        const results=models.filter(model=>{
+          const target=normalizeTractorQuery([model.title,model.variant].filter(Boolean).join(" "));
+          return terms.every(word=>target.includes(word));
+        }).sort((a,b)=>{
+          const aName=normalizeTractorQuery(a.title),bName=normalizeTractorQuery(b.title);
+          const rank=(name:string)=>name===q?0:name.startsWith(q)?1:name.includes(q)?2:3;
+          return rank(aName)-rank(bName)||a.title.localeCompare(b.title);
+        }).slice(0,8);
+        popup.replaceChildren();setActive(-1);
+        if(!results.length)addText(popup,"p",l10n.noResults,"tc-no-options");
+        for(const [i,model] of results.entries()){
+          const button=document.createElement("button");
+          button.type="button";button.role="option";button.id="tc-"+side+"-option-"+i;
+          button.className="tc-result";button.setAttribute("aria-selected","false");
+          const main=document.createElement("span");main.className="tc-result-main";
+          addText(main,"strong",model.title);
+          addText(main,"small",[model.variant,model.power==null?null:model.power+" HP",
+            model.specsCount+" "+l10n.specs].filter(Boolean).join(" · "));
+          button.append(main);
+          addText(button,"span","↗","tc-result-arrow");
+          button.addEventListener("click",()=>choose(model));
+          popup.appendChild(button);
+        }
+        popup.hidden=false;input.setAttribute("aria-expanded","true");
+      };
+      input.value=byId(select.value)?.title||"";
+      input.addEventListener("focus",()=>{input.select();paint("");});
+      input.addEventListener("input",()=>paint(input.value));
+      input.addEventListener("keydown",event=>{
+        if(event.key==="Escape"){if(!popup.hidden){event.preventDefault();close();}return;}
+        if(event.key==="ArrowDown"||event.key==="ArrowUp"){
+          if(popup.hidden)paint("");
+          const buttons=options();if(!buttons.length)return;
+          event.preventDefault();setActive(event.key==="ArrowDown"
+            ?(active+1)%buttons.length:(active-1+buttons.length)%buttons.length);
+        }else if(event.key==="Enter"&&!popup.hidden){
+          const btn=options()[active<0?0:active];if(btn){event.preventDefault();btn.click();}
+        }
+      });
+      document.addEventListener("pointerdown",event=>{
+        if(event.target instanceof Node&&!input.parentElement?.contains(event.target))close();
+      });
+      document.addEventListener("focusin",event=>{
+        if(event.target instanceof Node&&!input.parentElement?.contains(event.target))close();
+      });
+    }
+    picker.classList.add("tc-js-ready");
+    makeCombobox("left",leftSelect);makeCombobox("right",rightSelect);
+    leftSelect.addEventListener("change",()=>{changedSide="left";render();});
+    rightSelect.addEventListener("change",()=>{changedSide="right";render();});
+    const swap=document.querySelector<HTMLButtonElement>("#tc-swap");
+    swap?.addEventListener("click",()=>{
+      const left=leftSelect.value;
+      leftSelect.value=rightSelect.value;rightSelect.value=left;
+      changedSide="left";render();
+    });
+    const all=document.querySelector<HTMLButtonElement>("#tc-all");
+    const shared=document.querySelector<HTMLButtonElement>("#tc-shared");
+    function setFilter(sharedOnly:boolean){
+      commonOnly=sharedOnly;
+      all?.setAttribute("aria-pressed",String(!sharedOnly));
+      shared?.setAttribute("aria-pressed",String(sharedOnly));
+      render();
+    }
+    all?.addEventListener("click",()=>setFilter(false));
+    shared?.addEventListener("click",()=>setFilter(true));
     render();
   }
+
 </script>
 
 <style is:global>
