@@ -2,6 +2,7 @@ import type { TractorRecord } from "./catalog.ts";
 import { officialManufacturerSourceUrl } from "./catalog.ts";
 import { localizedPath, type Locale } from "./locales.ts";
 import { t } from "./ui.ts";
+import {primaryTractorPhoto,tractorPhotoAlt} from "./tractor-photos.ts";
 
 /** The original manufacturer identity, equipment and market are never inferred. */
 export function modelSeoMetadata(tractor: TractorRecord, lang: Locale) {
@@ -63,13 +64,13 @@ export function modelStructuredData(tractor: TractorRecord, lang: Locale, siteUr
     .filter((part) => part !== null && part !== undefined && String(part).trim())
     .map(String);
   if (identityContext.length) subject.disambiguatingDescription = identityContext.join(" · ");
+  const image=primaryTractorPhoto(tractor);
+  if(image) subject.image = { "@id":pageUrl+"#photo" };
   if (sourceLinks.length) subject.subjectOf = sourceLinks.map((url) => ({
     "@type": "CreativeWork", url,
   }));
 
-  return {
-    "@context": "https://schema.org",
-    "@graph": [
+  const graph:Record<string,unknown>[] = [
       {
         "@type": "WebPage",
         "@id": pageUrl + "#webpage",
@@ -79,6 +80,7 @@ export function modelStructuredData(tractor: TractorRecord, lang: Locale, siteUr
         inLanguage: lang === "zh" ? "zh-Hans" : lang === "pt-br" ? "pt-BR" : lang,
         mainEntity: { "@id": pageUrl + "#tractor" },
         about: { "@id": pageUrl + "#tractor" },
+        ...(image ? { primaryImageOfPage: { "@id":pageUrl+"#photo" } } : {}),
       },
       {
         "@type": "BreadcrumbList",
@@ -89,6 +91,18 @@ export function modelStructuredData(tractor: TractorRecord, lang: Locale, siteUr
         ],
       },
       subject,
-    ],
-  };
+  ];
+  if(image)graph.push({
+    "@type":"ImageObject",
+    "@id":pageUrl+"#photo",
+    contentUrl:image.fullUrl,
+    thumbnailUrl:image.displayUrl,
+    caption:tractorPhotoAlt(tractor,lang),
+    creator:{"@type":"Person",name:image.photographer},
+    copyrightNotice:"© "+image.photographer,
+    creditText:image.photographer+" · "+image.licenseName,
+    license:image.licenseUrl,
+    url:image.sourcePage,
+  });
+  return {"@context":"https://schema.org","@graph":graph};
 }
