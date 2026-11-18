@@ -19,7 +19,37 @@ export const APPROVED_TRACTOR_PHOTOS:readonly TractorPhoto[]=[
     width:2229,height:1824,photographer:"Homoatrox",
     sourcePage:"https://commons.wikimedia.org/wiki/File:Belarus_MTZ-82_1_tractor_(02).jpg",
     licenseName:"CC BY-SA 3.0",licenseUrl:"https://creativecommons.org/licenses/by-sa/3.0/",
-    configurationExact:false}
+    configurationExact:false},
+  {
+    brand:"New Holland",model:"T5.110",fileId:"new-holland-t5-110-pere-igor-2016",
+    thumbUrl:W+"thumb/5/53/Lanouaille_New_Holland_T5.110.jpg/480px-Lanouaille_New_Holland_T5.110.jpg",
+    displayUrl:W+"thumb/5/53/Lanouaille_New_Holland_T5.110.jpg/960px-Lanouaille_New_Holland_T5.110.jpg",
+    fullUrl:W+"5/53/Lanouaille_New_Holland_T5.110.jpg",
+    width:2649,height:1990,photographer:"Père Igor",
+    sourcePage:"https://commons.wikimedia.org/wiki/File:Lanouaille_New_Holland_T5.110.jpg",
+    licenseName:"CC BY-SA 4.0",licenseUrl:"https://creativecommons.org/licenses/by-sa/4.0/",
+    configurationExact:false
+  },
+  {
+    brand:"New Holland",model:"T6.180",fileId:"new-holland-t6-180-marcelx42-2025",
+    thumbUrl:W+"thumb/3/34/New_Holland_T6.180_Agritechnica_2025_%28DSC00717%29.jpg/480px-New_Holland_T6.180_Agritechnica_2025_%28DSC00717%29.jpg",
+    displayUrl:W+"thumb/3/34/New_Holland_T6.180_Agritechnica_2025_%28DSC00717%29.jpg/960px-New_Holland_T6.180_Agritechnica_2025_%28DSC00717%29.jpg",
+    fullUrl:W+"3/34/New_Holland_T6.180_Agritechnica_2025_%28DSC00717%29.jpg",
+    width:7008,height:3944,photographer:"MarcelX42",
+    sourcePage:"https://commons.wikimedia.org/wiki/File:New_Holland_T6.180_Agritechnica_2025_(DSC00717).jpg",
+    licenseName:"CC BY-SA 4.0",licenseUrl:"https://creativecommons.org/licenses/by-sa/4.0/",
+    configurationExact:false
+  },
+  {
+    brand:"Case IH",model:"Puma 150",fileId:"case-ih-puma-150-chris-woodrich-2025",
+    thumbUrl:W+"thumb/f/fb/Case_IH_Puma_150_Tractor%2C_Harrow_Fair%2C_Harrow%2C_Ontario%2C_2025-08-31_01.jpg/480px-Case_IH_Puma_150_Tractor%2C_Harrow_Fair%2C_Harrow%2C_Ontario%2C_2025-08-31_01.jpg",
+    displayUrl:W+"thumb/f/fb/Case_IH_Puma_150_Tractor%2C_Harrow_Fair%2C_Harrow%2C_Ontario%2C_2025-08-31_01.jpg/960px-Case_IH_Puma_150_Tractor%2C_Harrow_Fair%2C_Harrow%2C_Ontario%2C_2025-08-31_01.jpg",
+    fullUrl:W+"f/fb/Case_IH_Puma_150_Tractor%2C_Harrow_Fair%2C_Harrow%2C_Ontario%2C_2025-08-31_01.jpg",
+    width:4600,height:3680,photographer:"Chris Woodrich",
+    sourcePage:"https://commons.wikimedia.org/wiki/File:Case_IH_Puma_150_Tractor,_Harrow_Fair,_Harrow,_Ontario,_2025-08-31_01.jpg",
+    licenseName:"CC BY-SA 4.0",licenseUrl:"https://creativecommons.org/licenses/by-sa/4.0/",
+    configurationExact:false
+  }
 ];
 function norm(value:string):string{
   return value.normalize("NFKD").replace(/[\u0300-\u036f]/g,"")
