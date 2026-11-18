@@ -20,7 +20,7 @@ for (const path of pages) {
     const isHtml=(response.headers.get("content-type")||"").includes("text/html");
     const get=(regex)=>body.match(regex)?.[1] ?? null;
     if (isHtml && (path === "/tractors/" || path === "/tr/tractors/")) {
-      const slugs = [...body.matchAll(/href=["\u0027](\\\/(?:tr\\\/)?tractors\\\/[^"\u0027?#]+\\\/?)["\u0027]/gi)]
+      const slugs = [...body.matchAll(/href=["'](\/(?:tr\/)?tractors\/[^"'?#]+\/?)["']/gi)]
         .map((m) => m[1]);
       modelLinks.set(path, [...new Set(slugs)].sort());
     }
@@ -57,11 +57,11 @@ for (const path of english.slice(0,4)) {
     const html = (await response.text()).slice(0,500000);
     console.log("LIVE_MODEL_PAGE " + JSON.stringify({
       path, status:response.status,
-      h1:html.match(/<h1[^>]*>([\\s\\S]*?)<\\/h1>/i)?.[1].replace(/<[^>]+>/g," ").trim() ?? null,
+      h1:html.match(/<h1[^>]*>([\s\S]*?)<\/h1>/i)?.[1].replace(/<[^>]+>/g," ").trim() ?? null,
       has_technical_specs:/(technical spec|technical data|wheelbase|transmission|spec-group|model-spec-card)/i.test(html),
-      canonical:html.match(/<link\\s+rel=["\u0027]canonical["\u0027]\\s+href=["\u0027]([^"\u0027]+)["\u0027]/i)?.[1] ?? null,
-      has_jsonld:/application\\/ld\\+json/i.test(html),
-      robots:html.match(/<meta\\s+name=["\u0027]robots["\u0027]\\s+content=["\u0027]([^"\u0027]+)["\u0027]/i)?.[1] ?? null
+      canonical:html.match(/<link\s+rel=["']canonical["']\s+href=["']([^"']+)["']/i)?.[1] ?? null,
+      has_jsonld:/application\/ld\+json/i.test(html),
+      robots:html.match(/<meta\s+name=["']robots["']\s+content=["']([^"']+)["']/i)?.[1] ?? null
     }));
   } catch(e) { console.log("LIVE_MODEL_PAGE "+JSON.stringify({path,error:String(e)})); }
 }
