@@ -107,6 +107,19 @@ const openGraphLocale: Record<Locale, string> = {
               )}
             </div>
           </details>
+          <details class="mobile-nav">
+            <summary aria-label={t(lang,"navMain")} title={t(lang,"navMain")}>
+              <span class="mobile-menu-bars" aria-hidden="true"><span></span><span></span><span></span></span>
+            </summary>
+            <nav class="mobile-nav-links" aria-label={t(lang,"navMain")}>
+              <a href={homePath}>{t(lang,"navPlatform")}</a>
+              <a href={catalogPath}>{t(lang,"navCatalog")}</a>
+              <a href={comparePath}>{t(lang,"navCompare")}</a>
+              <a href={advisorPath}>{tx(lang,"nav")}</a>
+              <a href={homePath + "#data"}>{t(lang,"navData")}</a>
+              <a href={homePath + "#approach"}>{t(lang,"navApproach")}</a>
+            </nav>
+          </details>
           <a class="header-cta" href={catalogPath}>
             {t(lang,"navExplore")} <span aria-hidden="true">↗</span>
           </a>
