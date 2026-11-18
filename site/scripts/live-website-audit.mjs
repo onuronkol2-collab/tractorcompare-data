@@ -2,8 +2,11 @@
 // No database credentials, private API calls or external packages.
 const origin = new URL(process.env.TRACTORVS_AUDIT_ORIGIN ||
   "https://tractorvs-site.onuronkol2.workers.dev");
-if (origin.protocol !== "https:" || !origin.hostname.endsWith(".workers.dev"))
-  throw Error("Expected HTTPS workers.dev origin");
+const approvedHosts = new Set(["tractorvs.com", "tractorvs-site.onuronkol2.workers.dev"]);
+if (origin.protocol !== "https:" || !approvedHosts.has(origin.hostname) ||
+    origin.port || origin.username || origin.password) {
+  throw Error("The audit accepts only approved public TractorVS HTTPS hosts.");
+}
 const pages = ["/", "/robots.txt", "/sitemap-index.xml",
   "/tractors/", "/tr/tractors/", "/tr/"];
 const results=[];

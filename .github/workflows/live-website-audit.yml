@@ -24,7 +24,11 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: "22.23.4"
-      - name: Inspect public HTML, robots, sitemap and catalog pages
+      - name: Inspect workers.dev preview
         env:
           TRACTORVS_AUDIT_ORIGIN: https://tractorvs-site.onuronkol2.workers.dev
+        run: node site/scripts/live-website-audit.mjs
+      - name: Inspect tractorvs.com custom domain
+        env:
+          TRACTORVS_AUDIT_ORIGIN: https://tractorvs.com
         run: node site/scripts/live-website-audit.mjs
