@@ -77,13 +77,13 @@ const payload=JSON.stringify({
   });
 </script>
 <style>
-.model-market-price {background:#edf4e9;border-block:1px solid #d7e5d0;padding:20px 0}
+.model-market-price {background:linear-gradient(110deg,#edf4e9,#f5f8f1);border-block:1px solid #d7e5d0;padding:28px 0}
 .model-market-heading {display:flex;gap:20px;align-items:center;justify-content:space-between;flex-wrap:wrap}
-.model-market-heading h2{font-size:18px;margin:0}
-.model-market-heading label{font-size:11px;font-weight:700}
-.model-market-heading select{margin-left:8px;padding:8px;border:1px solid #c5d5c2;border-radius:7px;background:white}
-.model-market-price-value{font-size:23px;font-weight:800;color:#24583a;margin-top:12px}
-.model-market-price-details,.model-market-price-note{font-size:11px;color:#556b57;line-height:1.7;margin:8px 0}
-.model-market-price a{color:#246341;font-size:11px;font-weight:700;text-decoration:underline}
+.model-market-heading h2{font-size:clamp(20px,2.4vw,27px);line-height:1.25;margin:0;letter-spacing:-.03em}
+.model-market-heading label{font-size:14px;font-weight:800;color:#304b37}
+.model-market-heading select{margin-left:8px;min-height:44px;padding:9px 13px;border:1px solid #c5d5c2;border-radius:9px;background:white;color:#203c2a;font-size:14px}
+.model-market-price-value{font-size:clamp(23px,2.7vw,32px);font-weight:850;color:#24583a;margin-top:14px}
+.model-market-price-details,.model-market-price-note{font-size:13px;color:#52665a;line-height:1.7;margin:8px 0}
+.model-market-price a{color:#246341;font-size:14px;font-weight:800;text-decoration:underline;text-underline-offset:3px}
 .model-market-price [hidden]{display:none}
 </style>
