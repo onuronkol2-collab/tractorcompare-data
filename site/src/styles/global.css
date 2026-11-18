@@ -386,3 +386,36 @@ button, input { font: inherit; }
   .locale-menu > summary { max-width: 136px; overflow: hidden; text-overflow: ellipsis; }
   .header-cta { display:none; }
 }
+
+/* Small-screen navigation without an additional JavaScript bundle. */
+.mobile-nav { display: none; }
+.mobile-nav > summary {
+  width: 44px; min-height: 44px; display: grid; place-items: center;
+  cursor: pointer; list-style: none; border: 1px solid rgba(183,223,145,.42);
+  border-radius: 9px; color: #e5f2df;
+}
+.mobile-nav > summary::-webkit-details-marker { display: none; }
+.mobile-nav > summary:focus-visible, .mobile-nav-links a:focus-visible {
+  outline: 3px solid #b7df91; outline-offset: 3px;
+}
+.mobile-menu-bars { display: grid; gap: 5px; }
+.mobile-menu-bars span {
+  display: block; width: 20px; height: 2px; border-radius: 2px;
+  background: currentColor;
+}
+.mobile-nav-links {
+  position: absolute; right: 0; top: calc(100% + 10px); z-index: 80;
+  display: grid; width: min(320px, calc(100vw - 36px));
+  padding: 9px; border: 1px solid #d8e5d6; border-radius: 12px;
+  background: #fff; color: #172b20; box-shadow: 0 14px 35px rgba(2,16,8,.28);
+}
+.mobile-nav-links a {
+  display: flex; align-items: center; min-height: 44px; padding: 10px 13px;
+  border-radius: 7px; color: inherit; font-size: 14px; font-weight: 700;
+}
+.mobile-nav-links a:hover { background: #e8f0e6; }
+
+@media (max-width:720px) {
+  .mobile-nav { display: block; position: relative; flex: none; }
+  .header-actions { gap: 8px; }
+}
