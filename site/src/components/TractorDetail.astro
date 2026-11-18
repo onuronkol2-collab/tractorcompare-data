@@ -5,6 +5,7 @@ import { groupSpecifications, officialManufacturerSourceUrl, specLabel, verifica
 import { localizedPath, type Locale } from "../lib/locales";
 import { t } from "../lib/ui";
 import { compareText as cx } from "../lib/compare-ux";
+import { marketDisplayName } from "../lib/market-display";
 import { modelSeoMetadata, modelStructuredData } from "../lib/model-seo";
 interface Props { lang: Locale; tractor: TractorRecord; }
 const { lang, tractor } = Astro.props;
@@ -30,7 +31,7 @@ const summaryItems = [
     <div class="model-meta">
       {tractor.model_year&&<span>{tractor.model_year}</span>}
       {tractor.variant&&<span title={tractor.variant}>{tractor.variant.split(";")[0].trim()}</span>}
-      {tractor.market&&<span>{tractor.market}</span>}
+      {tractor.market&&<span>{marketDisplayName(tractor.market,lang)}</span>}
       {tractor.brand_country&&<span>{tractor.brand_country}</span>}
     </div>
     <a class="model-compare-action" href={compareUrl}>
