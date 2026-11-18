@@ -3,9 +3,11 @@ import SiteLayout from "../layouts/SiteLayout.astro";
 import { getPublicCatalog } from "../lib/catalog";
 import { localizedPath, type Locale } from "../lib/locales";
 import { t } from "../lib/ui";
+import { marketDisplayName } from "../lib/market-display";
 import { advisorText as tx } from "../lib/advisor-i18n";
-import { COUNTRY_NAMES, COUNTRIES_BY_LOCALE } from "../lib/farm-advisor";
+import { COUNTRIES_BY_LOCALE } from "../lib/farm-advisor";
 import { MARKET_COUNTRIES, matchingPrice, formatMarketPriceRange } from "../lib/market-prices";
+import { localizedCountryName } from "../lib/country-display";
 interface Props { lang: Locale; }
 const { lang } = Astro.props;
 
@@ -36,7 +38,7 @@ const pricePayload = JSON.stringify({lang,models:catalog.tractors.map((tractor)=
         <label for="catalog-price-country">{tx(lang,"country")}</label>
         <select id="catalog-price-country">
           {MARKET_COUNTRIES.map((country)=>
-            <option selected={country===initialCountry} value={country}>{COUNTRY_NAMES[country]}</option>
+            <option selected={country===initialCountry} value={country}>{localizedCountryName(country,lang)}</option>
           )}
         </select>
         <a href={localizedPath(lang,"/farm-advisor/")}>{tx(lang,"nav")} ↗</a>
@@ -53,8 +55,8 @@ const pricePayload = JSON.stringify({lang,models:catalog.tractors.map((tractor)=
           <h2>{tractor.model_name}</h2>
           <div class="tractor-card-meta">
             {tractor.model_year && <span>{tractor.model_year}</span>}
-            {tractor.variant && <span>{tractor.variant}</span>}
-            {tractor.market && <span>{tractor.market}</span>}
+            {tractor.variant && <span title={tractor.variant}>{tractor.variant.split(";")[0].trim()}</span>}
+            {tractor.market && <span>{marketDisplayName(tractor.market,lang)}</span>}
           </div>
           <div class="tractor-card-specs">
             {tractor.horsepower != null && <div><strong>{tractor.horsepower}</strong><small>HP</small></div>}

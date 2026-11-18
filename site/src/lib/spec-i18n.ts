@@ -130,6 +130,7 @@ const TERM: Record<string, readonly string[]> = {
 };
 
 const CATEGORIES: Record<string, readonly string[]> = {
+  other: ["其他技术参数","अन्य तकनीकी विवरण","Outras especificações","Autres caractéristiques","Weitere technische Daten","Прочие характеристики","その他の技術仕様","Otras especificaciones"],
   engine: ["发动机与功率","इंजन और पावर","Motor e potência","Moteur et puissance","Motor und Leistung","Двигатель и мощность","エンジン・出力","Motor y potencia"],
   transmission: ["变速箱","ट्रांसमिशन","Transmissão","Transmission","Getriebe","Трансмиссия","変速機","Transmisión"],
   hydraulics: ["液压系统","हाइड्रोलिक्स","Hidráulica","Hydraulique","Hydraulik","Гидравлика","油圧系統","Hidráulica"],
