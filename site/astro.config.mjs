@@ -10,5 +10,13 @@ export default defineConfig({
   build: {
     format: "directory",
   },
-  integrations: indexingEnabled ? [sitemap()] : [],
+  integrations: indexingEnabled ? [sitemap({
+    // Only permanent HTML pages belong in the sitemap. 404/chooser URLs do not.
+    filter: (page) => {
+      const pathname = new URL(page).pathname;
+      return !/^\/404(?:\.html|\/|$)/.test(pathname) && !pathname.startsWith('/language/');
+    },
+    // hreflang is already emitted in each page head; unused XML namespaces are not needed.
+    namespaces: { news: false, image: false, video: false, xhtml: false },
+  })] : [],
 });

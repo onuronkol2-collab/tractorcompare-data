@@ -1,0 +1,9 @@
+# Long-term browser caching ONLY for content-hashed Astro JS/CSS/assets.
+# HTML, robots.txt, feeds and other mutable files keep the platform default.
+/_astro/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# Avoid duplicate indexing of preview and workers.dev deployment URLs.
+# A final custom domain remains eligible only when build indexing is enabled.
+https://:version.:subdomain.workers.dev/*
+  X-Robots-Tag: noindex
