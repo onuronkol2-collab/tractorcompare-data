@@ -4,6 +4,8 @@ import { getPublicCatalog, comparisonKey, officialManufacturerSourceUrl, specLab
 import type { PublicSpec } from "../lib/catalog";
 import { localizedPath, type Locale } from "../lib/locales";
 import { t } from "../lib/ui";
+import { compareText as cx } from "../lib/compare-ux";
+import "../styles/compare-experience.css";
 
 interface Props { lang: Locale; }
 const { lang } = Astro.props;
@@ -23,13 +25,23 @@ type ComparedSpec = {
 type ComparedModel = {
   id: string;
   title: string;
+  brand: string;
+  modelName: string;
+  variant: string | null;
+  power: number | null;
+  specsCount: number;
   detailsUrl: string;
   specs: ComparedSpec[];
 };
 const detailsPrefix = localizedPath(lang,"/tractors/");
 const models: ComparedModel[] = catalog.tractors.map((tractor) => ({
   id: tractor.tractor_id,
-  title: [tractor.brand_name, tractor.model_name, tractor.variant].filter(Boolean).join(" · "),
+  title: tractor.brand_name + " " + tractor.model_name,
+  brand: tractor.brand_name,
+  modelName: tractor.model_name,
+  variant: tractor.variant?.split(";")[0]?.trim() || null,
+  power: tractor.horsepower,
+  specsCount: tractor.specifications.length,
   detailsUrl: detailsPrefix + tractor.slug + "/",
   specs: tractor.specifications.map((spec: PublicSpec) => ({
     key: comparisonKey(spec),
@@ -71,6 +83,14 @@ const labelsPayload = JSON.stringify({
   missing: t(lang,"notPublished"),
   source: t(lang,"manufacturerSource"),
   context: t(lang,"condition"),
+  search: cx(lang,"searchModel"),
+  noResults: cx(lang,"noResults"),
+  results: cx(lang,"results"),
+  selected: cx(lang,"selected"),
+  exploreModel: cx(lang,"exploreModel"),
+  shared: cx(lang,"shared"),
+  summary: cx(lang,"summary"),
+  noShared: cx(lang,"noShared"),
 }).replace(/</g, "\\u003c");
 ---
 <SiteLayout
@@ -79,36 +99,85 @@ const labelsPayload = JSON.stringify({
   description={t(lang,"compareDesc")}
 >
   <section class="tc-hero">
-    <div class="container">
-      <p class="eyebrow"><span class="eyebrow-mark"></span>{t(lang,"compareEyebrow")}</p>
-      <h1>{t(lang,"compareHeading")}</h1>
-      <p>{t(lang,"compareIntro")}</p>
+    <div class="container tc-hero-content">
+      <div>
+        <p class="eyebrow"><span class="eyebrow-mark"></span>{t(lang,"compareEyebrow")}</p>
+        <h1>{t(lang,"compareHeading")}</h1>
+        <p>{cx(lang,"stepIntro")}</p>
+      </div>
+      <div class="tc-hero-visual" aria-hidden="true">
+        <div class="tc-visual-card tc-visual-left"><span>01</span><strong>TractorVS</strong><i></i><i></i></div>
+        <span class="tc-visual-switch">⇄</span>
+        <div class="tc-visual-card tc-visual-right"><span>02</span><strong>TractorVS</strong><i></i><i></i></div>
+      </div>
     </div>
   </section>
   <section class="tc-section">
     <div class="container">
       {models.length >= 2 ? <>
-        <div class="tc-picker">
-          <div>
-            <label for="tc-left">{t(lang,"firstTractor")}</label>
-            <select id="tc-left">
-              {models.map((model, index) => <option value={model.id} selected={index === 0}>{model.title}</option>)}
+        <div class="tc-workspace-intro">
+          <span class="tc-step-number">01</span>
+          <div><h2>{cx(lang,"step")}</h2><p>{cx(lang,"stepIntro")}</p></div>
+        </div>
+        <div class="tc-picker" id="tc-picker">
+          <div class="tc-picker-side">
+            <label for="tc-left-search">{t(lang,"firstTractor")}</label>
+            <div class="tc-searchbox">
+              <input id="tc-left-search" class="tc-combo-input" type="search"
+                placeholder={cx(lang,"searchModel")} autocomplete="off" role="combobox"
+                aria-autocomplete="list" aria-expanded="false" aria-controls="tc-left-results" />
+              <div id="tc-left-results" class="tc-picker-results" role="listbox"
+                aria-label={t(lang,"firstTractor")} hidden></div>
+            </div>
+            <select id="tc-left" class="tc-native-select" aria-label={t(lang,"firstTractor")}>
+              {models.map((model, index) => <option value={model.id} selected={index===0}>{model.title}</option>)}
             </select>
+            <a id="tc-left-preview" class="tc-selected-preview" href={initialLeft?.detailsUrl}>
+              <span><small>{cx(lang,"selected")}</small><strong>{initialLeft?.title}</strong>
+                <em>{initialLeft?.variant}</em></span><span aria-hidden="true">↗</span>
+            </a>
           </div>
-          <span class="tc-versus" aria-hidden="true">VS</span>
-          <div>
-            <label for="tc-right">{t(lang,"secondTractor")}</label>
-            <select id="tc-right">
-              {models.map((model, index) => <option value={model.id} selected={index === 1}>{model.title}</option>)}
+          <button id="tc-swap" class="tc-swap" type="button" aria-label={cx(lang,"swap")}
+            title={cx(lang,"swap")}>⇄</button>
+          <div class="tc-picker-side">
+            <label for="tc-right-search">{t(lang,"secondTractor")}</label>
+            <div class="tc-searchbox">
+              <input id="tc-right-search" class="tc-combo-input" type="search"
+                placeholder={cx(lang,"searchModel")} autocomplete="off" role="combobox"
+                aria-autocomplete="list" aria-expanded="false" aria-controls="tc-right-results" />
+              <div id="tc-right-results" class="tc-picker-results" role="listbox"
+                aria-label={t(lang,"secondTractor")} hidden></div>
+            </div>
+            <select id="tc-right" class="tc-native-select" aria-label={t(lang,"secondTractor")}>
+              {models.map((model, index) => <option value={model.id} selected={index===1}>{model.title}</option>)}
             </select>
+            <a id="tc-right-preview" class="tc-selected-preview" href={initialRight?.detailsUrl}>
+              <span><small>{cx(lang,"selected")}</small><strong>{initialRight?.title}</strong>
+                <em>{initialRight?.variant}</em></span><span aria-hidden="true">↗</span>
+            </a>
           </div>
         </div>
+        <div class="tc-table-bar">
+          <div class="tc-table-bar-title">
+            <span class="tc-step-number">02</span><div>
+              <h2>{cx(lang,"tableIntro")}</h2>
+              <p id="tc-summary" role="status" aria-live="polite">{initialRows.filter((row)=>row.left.length&&row.right.length).length} {cx(lang,"summary")}</p>
+            </div>
+          </div>
+          <div class="tc-filters" role="group" aria-label={cx(lang,"tableIntro")}>
+            <button type="button" id="tc-all" aria-pressed="true">{cx(lang,"all")}</button>
+            <button type="button" id="tc-shared" aria-pressed="false">{cx(lang,"shared")}</button>
+          </div>
+        </div>
+        <p class="tc-swipe-hint">{cx(lang,"swipe")}</p>
+        <p id="tc-no-shared" class="tc-no-shared" role="status" hidden>{cx(lang,"noShared")}</p>
         <p class="tc-note">{t(lang,"comparisonCaveat")}</p>
         <aside id="tc-data-warning" class="tc-data-warning" role="note" hidden={initialNotices.length === 0}>
           {initialNotices.map((notice)=><p>{notice}</p>)}
         </aside>
         <div class="tc-table-wrap">
           <table class="tc-table">
+            <caption class="tc-sr-only">{t(lang,"compareHeading")}</caption>
             <thead><tr>
               <th scope="col">{t(lang,"specification")}</th>
               <th scope="col"><a id="tc-left-link" href={initialLeft?.detailsUrl}>{initialLeft?.title}</a></th>
