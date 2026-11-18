@@ -1,0 +1,30 @@
+name: TractorVS live website SEO smoke test
+
+on:
+  pull_request:
+    paths:
+      - ".github/workflows/live-website-audit.yml"
+      - "site/scripts/live-website-audit.mjs"
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/live-website-audit.yml"
+      - "site/scripts/live-website-audit.mjs"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 4
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22.23.4"
+      - name: Inspect public HTML, robots, sitemap and catalog pages
+        env:
+          TRACTORVS_AUDIT_ORIGIN: https://tractorvs-site.onuronkol2.workers.dev
+        run: node site/scripts/live-website-audit.mjs
