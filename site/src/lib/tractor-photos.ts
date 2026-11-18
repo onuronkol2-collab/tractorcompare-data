@@ -50,6 +50,16 @@ const PHOTO_ORIGINS:readonly Omit<TractorPhoto,"originThumbUrl"|"originDisplayUr
     sourcePage:"https://commons.wikimedia.org/wiki/File:Case_IH_Puma_150_Tractor,_Harrow_Fair,_Harrow,_Ontario,_2025-08-31_01.jpg",
     licenseName:"CC BY-SA 4.0",licenseUrl:"https://creativecommons.org/licenses/by-sa/4.0/",
     configurationExact:false
+  },
+  {
+    brand:"McCormick",model:"X5.120",fileId:"mccormick-x5-120-marcelx42-2023",
+    thumbUrl:W+"thumb/6/66/McCormick_X5.120_P3-Drive_Agritechnica_2023_%28DSC03865%29.jpg/480px-McCormick_X5.120_P3-Drive_Agritechnica_2023_%28DSC03865%29.jpg",
+    displayUrl:W+"thumb/6/66/McCormick_X5.120_P3-Drive_Agritechnica_2023_%28DSC03865%29.jpg/960px-McCormick_X5.120_P3-Drive_Agritechnica_2023_%28DSC03865%29.jpg",
+    fullUrl:W+"6/66/McCormick_X5.120_P3-Drive_Agritechnica_2023_%28DSC03865%29.jpg",
+    width:7008,height:3944,photographer:"MarcelX42",
+    sourcePage:"https://commons.wikimedia.org/wiki/File:McCormick_X5.120_P3-Drive_Agritechnica_2023_(DSC03865).jpg",
+    licenseName:"CC BY-SA 4.0",licenseUrl:"https://creativecommons.org/licenses/by-sa/4.0/",
+    configurationExact:false
   }
 ];
 /** Stable, first-party indexable image URLs; a fixed Worker allowlist proxies only approved photos. */
