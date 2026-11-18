@@ -8,10 +8,11 @@ export interface TractorPhoto {
   width:number; height:number; sourcePage:string;
   photographer:string; licenseName:string; licenseUrl:string;
   configurationExact:boolean;
+  originThumbUrl:string; originDisplayUrl:string; originFullUrl:string;
 }
 const W="https://upload.wikimedia.org/wikipedia/commons/";
 /* Photographer Homoatrox, own work, CC BY-SA 3.0, Belagro 2019. */
-export const APPROVED_TRACTOR_PHOTOS:readonly TractorPhoto[]=[
+const PHOTO_ORIGINS:readonly Omit<TractorPhoto,"originThumbUrl"|"originDisplayUrl"|"originFullUrl">[]=[
   {brand:"Belarus",model:"82.1",fileId:"belarus-82-1-homoatrox-2019",
     thumbUrl:W+"thumb/6/67/Belarus_MTZ-82_1_tractor_%2802%29.jpg/480px-Belarus_MTZ-82_1_tractor_%2802%29.jpg",
     displayUrl:W+"thumb/6/67/Belarus_MTZ-82_1_tractor_%2802%29.jpg/960px-Belarus_MTZ-82_1_tractor_%2802%29.jpg",
@@ -51,6 +52,23 @@ export const APPROVED_TRACTOR_PHOTOS:readonly TractorPhoto[]=[
     configurationExact:false
   }
 ];
+/** Stable, first-party indexable image URLs; a fixed Worker allowlist proxies only approved photos. */
+export const APPROVED_TRACTOR_PHOTOS:readonly TractorPhoto[]=PHOTO_ORIGINS.map(source=>({
+  ...source,
+  originThumbUrl:source.thumbUrl,
+  originDisplayUrl:source.displayUrl,
+  originFullUrl:source.displayUrl.replace("/960px-","/1920px-"),
+  thumbUrl:"/images/tractors/"+source.fileId+"-480.jpg",
+  displayUrl:"/images/tractors/"+source.fileId+"-960.jpg",
+  fullUrl:"/images/tractors/"+source.fileId+"-1920.jpg",
+}));
+export function resolveApprovedPhotoSource(pathname:string):string|null {
+  const m=/^\/images\/tractors\/([a-z0-9-]+)-(480|960|1920)\.jpg$/.exec(pathname);
+  if(!m)return null;
+  const photo=APPROVED_TRACTOR_PHOTOS.find(item=>item.fileId===m[1]);
+  return photo ? m[2]==="480" ? photo.originThumbUrl
+    : m[2]==="960" ? photo.originDisplayUrl : photo.originFullUrl : null;
+}
 function norm(value:string):string{
   return value.normalize("NFKD").replace(/[\u0300-\u036f]/g,"")
     .toLowerCase().replace(/ı/g,"i").replace(/[^a-z0-9]+/g,"");
