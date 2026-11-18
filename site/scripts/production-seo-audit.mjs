@@ -8,13 +8,22 @@ const matches=(txt,re)=>[...txt.matchAll(re)].map(m=>m[1]);
 async function fetchPage(url) {
   const u=new URL(url,BASE);
   if(u.origin!==BASE)throw Error("Refused external URL "+u.href);
-  for(let n=0;n<2;n++){
-    const response=await fetch(u,{redirect:"follow",signal:AbortSignal.timeout(25000)});
-    const body=await response.text();
-    if([429,502,503].includes(response.status)&&n===0)continue;
-    return {body,response};
+  let lastFailure;
+  for(let n=0;n<4;n++){
+    try{
+      const response=await fetch(u,{redirect:"follow",signal:AbortSignal.timeout(25000)});
+      if([429,502,503,504].includes(response.status) && n<3) {
+        lastFailure=new Error("Transient HTTP "+response.status);
+      } else {
+        const body=await response.text();
+        return {body,response};
+      }
+    }catch(e){
+      lastFailure=e;
+    }
+    if(n<3)await new Promise(resolve=>setTimeout(resolve,300*(n+1)));
   }
-  throw Error("Unexpected HTTP retry failure");
+  throw lastFailure || Error("Unexpected HTTP retry failure");
 }
 const xmlLocs=s=>matches(s,/<loc>([^<]+)<\/loc>/g).map(x=>x.replaceAll("&amp;","&"));
 const attr=(html,name)=>html.match(new RegExp("\\b"+name+"=['\"]([^'\"]+)['\"]","i"))?.[1]||null;
@@ -53,11 +62,11 @@ const unique=new Set(allPages);
 if(unique.size!==allPages.length)error("duplicate-sitemap-url","/sitemap-index.xml",
   (allPages.length-unique.size)+" duplicate URLs");
 const modelByLocale=Object.fromEntries(Object.keys(languages).map(k=>[k,new Set()]));
-let valid=0, modelPages=0, modelSample=[];
+let valid=0, modelPages=0, modelSample=[], fetchFailures=0;
 const titlesByLocale=new Map();
 const urls=[...unique];
-for(let i=0;i<urls.length;i+=6){
- await Promise.all(urls.slice(i,i+6).map(async page=>{
+for(let i=0;i<urls.length;i+=4){
+ await Promise.all(urls.slice(i,i+4).map(async page=>{
   try{
    const u=new URL(page),p=u.pathname;
    if(u.origin!==BASE || u.search || p.includes("/language/") || p.includes("/404")){
@@ -118,14 +127,18 @@ for(let i=0;i<urls.length;i+=6){
     if(modelSample.length<6)modelSample.push({path:p,title:meta.title,description:meta.description,linkedManufacturerSources:count,entityType:subject?.["@type"],htmlBytes:Buffer.byteLength(body)});
    }
    valid++;
-  }catch(e){error("page-fetch",page,String(e));}
+  }catch(e){fetchFailures++;error("page-fetch",page,String(e));}
  }));
 }
 const baseline=[...modelByLocale.en].sort().join("|");
-for(const [locale,slugs] of Object.entries(modelByLocale))
- if([...slugs].sort().join("|")!==baseline)
-  error("locale-model-mismatch",locale,"Published models differ across locales: "+slugs.size+" vs en="+modelByLocale.en.size);
-if(modelByLocale.en.size<17)error("missing-models","/tractors/","Fewer than 17 published model URLs in sitemap");
+// Incomplete network crawls are failures, but must not invent missing-model
+// claims: only compare complete per-locale inventories after every page loads.
+if(fetchFailures===0){
+  for(const [locale,slugs] of Object.entries(modelByLocale))
+   if([...slugs].sort().join("|")!==baseline)
+    error("locale-model-mismatch",locale,"Published models differ across locales: "+slugs.size+" vs en="+modelByLocale.en.size);
+  if(modelByLocale.en.size<17)error("missing-models","/tractors/","Fewer than 17 published model URLs in sitemap");
+}
 const report={
   site:BASE,sitemaps:siteMaps.length,sitemapUrls:unique.size,checkedPages:valid,
   modelPages,modelsPerLocale:Object.fromEntries(Object.entries(modelByLocale).map(([k,v])=>[k,v.size])),
