@@ -20,10 +20,12 @@ const paths=[
   "belarus-82-1-homoatrox-2019",
   "new-holland-t5-110-pere-igor-2016",
   "new-holland-t6-180-marcelx42-2025",
-  "case-ih-puma-150-chris-woodrich-2025"
+  "case-ih-puma-150-chris-woodrich-2025",
+  "mccormick-x5-120-marcelx42-2023"
 ];
 for(const name of paths){
- const url=origin+"/images/tractors/"+name+"-960.jpg";
+ for(const size of [960,1920]){
+ const url=origin+"/images/tractors/"+name+"-"+size+".jpg";
  try{
   const {r,bytes}=await get(url);
   const jpeg=bytes.length>1000&&bytes[0]===255&&bytes[1]===216&&bytes[2]===255;
@@ -31,6 +33,7 @@ for(const name of paths){
   if(!r.ok||!jpeg||!(r.headers.get("content-type")||"").includes("image/jpeg"))
     fail("Bad first-party photograph "+name+" status="+r.status);
  }catch(e){fail("Fetch "+name+" "+String(e));}
+ }
 }
 const sitemapUrl=origin+"/image-sitemap.xml";
 try{
