@@ -4,12 +4,14 @@ import TractorMarketPrice from "./TractorMarketPrice.astro";
 import { groupSpecifications, officialManufacturerSourceUrl, specLabel, verificationNotice, type TractorRecord } from "../lib/catalog";
 import { localizedPath, type Locale } from "../lib/locales";
 import { t } from "../lib/ui";
+import { compareText as cx } from "../lib/compare-ux";
 import { modelSeoMetadata, modelStructuredData } from "../lib/model-seo";
 interface Props { lang: Locale; tractor: TractorRecord; }
 const { lang, tractor } = Astro.props;
 const groups = groupSpecifications(tractor.specifications,lang);
 const manufacturerDiscrepancies = [...new Set(tractor.specifications.map((spec) => verificationNotice(spec, lang)).filter((note): note is string => Boolean(note)))];
 const listingUrl = localizedPath(lang,"/tractors/");
+const compareUrl = localizedPath(lang,"/compare/") + "?left=" + encodeURIComponent(tractor.tractor_id);
 const { title, description } = modelSeoMetadata(tractor, lang);
 const structuredData = import.meta.env.PUBLIC_INDEXING_ENABLED === "true" && Astro.site
   ? modelStructuredData(tractor, lang, Astro.site.toString()) : null;
@@ -27,10 +29,15 @@ const summaryItems = [
     <p class="model-brand">{tractor.brand_name}</p><h1>{tractor.brand_name} {tractor.model_name}</h1>
     <div class="model-meta">
       {tractor.model_year&&<span>{tractor.model_year}</span>}
-      {tractor.variant&&<span>{tractor.variant}</span>}
+      {tractor.variant&&<span title={tractor.variant}>{tractor.variant.split(";")[0].trim()}</span>}
       {tractor.market&&<span>{tractor.market}</span>}
       {tractor.brand_country&&<span>{tractor.brand_country}</span>}
     </div>
+    <a class="model-compare-action" href={compareUrl}>
+      <span class="model-compare-symbol" aria-hidden="true">⇄</span>
+      <span class="model-compare-copy"><strong>{cx(lang,"cta")}</strong><small>{cx(lang,"ctaHint")}</small></span>
+      <span class="model-compare-arrow" aria-hidden="true">↗</span>
+    </a>
     {summaryItems.length>0&&<div class="model-summary-grid">{summaryItems.map((item)=>
       <div><small>{item.label}</small><strong>{item.value}</strong></div>)}</div>}
   </div></section>
@@ -56,7 +63,10 @@ const summaryItems = [
         </article>)}
       </div></section>)}</div>
     : <div class="catalog-empty"><h2>{t(lang,"noModelSpecs")}</h2></div>}
-    <a class="button button-primary model-back-button" href={listingUrl}>{t(lang,"backToCatalog")} <span aria-hidden="true">↗</span></a>
+    <div class="model-bottom-actions">
+      <a class="button button-primary" href={compareUrl}>{cx(lang,"cta")} <span aria-hidden="true">⇄</span></a>
+      <a class="button button-secondary" href={listingUrl}>{t(lang,"backToCatalog")} <span aria-hidden="true">↗</span></a>
+    </div>
   </div></section>
 </SiteLayout>
 
@@ -83,4 +93,38 @@ const summaryItems = [
     margin: 0;
     color: inherit;
   }
+
+  .model-compare-action {
+    display: flex; align-items: center; gap: 16px;
+    max-width: 650px; padding: 17px 20px; margin: 25px 0 12px;
+    border: 1px solid rgba(183,223,145,.48); border-radius: 16px;
+    background: linear-gradient(110deg,#b7df91,#d5ecbf);
+    color: #183624; text-decoration: none; box-shadow: 0 13px 30px rgba(0,0,0,.16);
+    transition: transform .18s ease,box-shadow .18s ease;
+  }
+  .model-compare-action:hover {
+    transform: translateY(-2px); box-shadow: 0 19px 37px rgba(0,0,0,.20);
+  }
+  .model-compare-action:focus-visible { outline: 3px solid #d7f5b6; outline-offset: 4px; }
+  .model-compare-symbol {
+    display: grid; place-items: center; flex: none;
+    width: 48px; height: 48px; border-radius: 13px;
+    background: #285b40; color: #fff; font-size: 25px; font-weight: 800;
+  }
+  .model-compare-copy { display: grid; gap: 4px; min-width: 0; }
+  .model-compare-copy strong { font-size: clamp(17px,2vw,22px); font-weight: 850; line-height: 1.2; }
+  .model-compare-copy small { font-size: 13px; line-height: 1.5; color: #2e5137; }
+  .model-compare-arrow { margin-left: auto; font-size: 26px; flex: none; font-weight: 800; }
+  .model-bottom-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; margin-top: 24px; }
+  .model-bottom-actions .button { min-height: 48px; display: inline-flex; align-items: center; gap: 9px; }
+  .model-spec-warning { font-size: 13px; line-height: 1.8; padding: 17px 19px; }
+  .model-spec-warning strong { font-size: 12px; letter-spacing: .03em; }
+  @media(max-width:620px) {
+    .model-compare-action { padding: 14px; gap: 12px; }
+    .model-compare-symbol { width: 42px; height: 42px; font-size: 22px; }
+    .model-compare-arrow { font-size: 22px; }
+    .model-compare-copy small { font-size: 12px; }
+  }
+  @media(prefers-reduced-motion: reduce) { .model-compare-action { transition:none; } .model-compare-action:hover { transform:none; } }
+
 </style>
