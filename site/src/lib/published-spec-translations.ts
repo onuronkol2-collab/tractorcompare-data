@@ -8,6 +8,8 @@ import type { Locale } from "./locales.ts";
  * Missing languages keep the existing canonical technical glossary.
  */
 export const PUBLISHED_SPEC_TERMS: Record<string, Partial<Record<Locale,string>>> = {
+  "Front Axle Capacity": {"pt-br":"Capacidade do eixo dianteiro",es:"Capacidad del eje delantero"},
+  "Rear Lift Capacity At 24 Inches Behind Link Ends": {"pt-br":"Capacidade de elevação traseira a 24 polegadas atrás das extremidades dos braços",es:"Capacidad de elevación trasera a 24 pulgadas detrás de los extremos de los brazos"},
   "Gross Vehicle Weight": {zh:"车辆总质量","pt-br":"Peso bruto do veículo",fr:"Poids total autorisé du véhicule",es:"Peso bruto del vehículo"},
   "Wheelbase": {zh:"轴距","pt-br":"Distância entre eixos",fr:"Empattement",es:"Distancia entre ejes"},
   "Fuel Tank Capacity": {"pt-br":"Capacidade do tanque de combustível",fr:"Capacité du réservoir de carburant",de:"Kraftstofftankvolumen",es:"Capacidad del depósito de combustible"},

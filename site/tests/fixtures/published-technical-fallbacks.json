@@ -94,7 +94,9 @@
     "Structural Weight Nominal",
     "Turning Radius With Inner Wheel Braking",
     "Wheelbase Nominal",
-    "Front Differential Lock Standard"
+    "Front Differential Lock Standard",
+    "Front Axle Capacity",
+    "Rear Lift Capacity At 24 Inches Behind Link Ends"
   ],
   "fr": [
     "Fuel Tank Capacity",
@@ -198,6 +200,8 @@
     "Structural Weight Nominal",
     "Turning Radius With Inner Wheel Braking",
     "Wheelbase Nominal",
-    "Front Differential Lock Standard"
+    "Front Differential Lock Standard",
+    "Front Axle Capacity",
+    "Rear Lift Capacity At 24 Inches Behind Link Ends"
   ]
 }
