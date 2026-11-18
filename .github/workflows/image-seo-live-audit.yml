@@ -4,6 +4,11 @@ on:
     paths:
       - ".github/workflows/image-seo-live-audit.yml"
       - "site/scripts/image-seo-live-audit.mjs"
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/image-seo-live-audit.yml"
+      - "site/scripts/image-seo-live-audit.mjs"
   workflow_dispatch:
   schedule:
     - cron: "30 6 * * 1"
