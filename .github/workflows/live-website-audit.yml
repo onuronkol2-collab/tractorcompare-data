@@ -12,6 +12,9 @@ on:
       - ".github/workflows/live-website-audit.yml"
       - "site/scripts/live-website-audit.mjs"
   workflow_dispatch:
+  # Every Monday 09:00 Europe/Istanbul (06:00 UTC): public SEO regression check.
+  schedule:
+    - cron: "0 6 * * 1"
 
 permissions:
   contents: read
