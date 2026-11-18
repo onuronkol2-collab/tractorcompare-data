@@ -17,6 +17,7 @@ export const GET: APIRoute = ({ site }) => {
 Allow: /
 
 Sitemap: ${new URL("/sitemap-index.xml", siteUrl).toString()}
+Sitemap: ${new URL("/image-sitemap.xml", siteUrl).toString()}
 `
     : `User-agent: *
 Disallow: /

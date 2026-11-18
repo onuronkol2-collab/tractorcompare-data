@@ -130,3 +130,13 @@
 @media(prefers-reduced-motion: reduce) {
   .tc-result,.tc-swap { transition: none; }
 }
+
+/* A selected model photograph follows the current dropdown choice. */
+.tc-preview-photo{margin:4px 0 6px;border-radius:12px;background:#eaf2e7;overflow:hidden}
+.tc-preview-photo[hidden]{display:none}
+.tc-preview-photo-button{position:relative;display:block;width:100%;aspect-ratio:16/9;padding:0;border:0;background:#eaf2e7;cursor:zoom-in}
+.tc-preview-photo-button img{display:block;width:100%;height:100%;object-fit:contain}
+.tc-preview-photo-button:focus-visible{outline:3px solid #377a4a;outline-offset:-3px}
+.tc-preview-photo > small{display:block;margin:0;padding:5px 9px;font-size:11px;line-height:1.5;color:#3c5e42}
+.tc-preview-photo > small a{color:inherit;text-decoration:underline;text-underline-offset:2px}
+.tc-preview-photo-button .tractor-photo-brandmark{font-size:12px;bottom:9px;right:9px}

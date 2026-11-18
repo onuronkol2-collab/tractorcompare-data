@@ -1,0 +1,33 @@
+---
+import {tractorPhotos,photoText,tractorPhotoAlt} from "../lib/tractor-photos";
+import type {TractorRecord} from "../lib/catalog";
+import type {Locale} from "../lib/locales";
+interface Props { tractor:TractorRecord;lang:Locale;mode?:"hero"|"catalog"|"compare"; }
+const {tractor,lang,mode="hero"}=Astro.props;
+const photos=tractorPhotos(tractor);
+const label=tractorPhotoAlt(tractor,lang);
+---
+{photos.length>0 && <div class:list={["tractor-photo-gallery","tractor-photo-gallery--"+mode]}>
+  {photos.map((photo,index)=><figure class="tractor-photo-frame">
+    <button class="tractor-photo-button" type="button" data-tractor-photo
+      data-photo-url={photo.fullUrl} data-photo-label={label}
+      data-photo-credit={photo.photographer} data-photo-source={photo.sourcePage}
+      data-photo-license={photo.licenseUrl} data-photo-license-name={photo.licenseName}
+      aria-label={photoText(lang,"open")+": "+label}>
+      <img src={mode==="hero"?photo.displayUrl:photo.thumbUrl}
+        srcset={photo.thumbUrl+" 480w, "+photo.displayUrl+" 960w"}
+        sizes={mode==="hero"?"(max-width:760px) 100vw, 860px":"(max-width:680px) 100vw, 400px"}
+        width={photo.width} height={photo.height} decoding="async"
+        loading={mode==="hero"&&index===0?"eager":"lazy"} alt={label}/>
+      <span class="tractor-photo-brandmark" aria-hidden="true">tractorvs.com</span>
+      <span class="tractor-photo-zoom" aria-hidden="true">⤢</span>
+    </button>
+    {mode==="hero" ? <figcaption class="tractor-photo-caption">
+      <span>{photoText(lang,"credit")}: <a href={photo.sourcePage} target="_blank" rel="noopener noreferrer">{photo.photographer}</a>
+      · <a href={photo.licenseUrl} target="_blank" rel="noopener noreferrer">{photo.licenseName}</a></span>
+      {!photo.configurationExact&&<small>{photoText(lang,"representative")}</small>}
+    </figcaption> : <figcaption class="tractor-photo-short-credit">
+      <a href={photo.sourcePage} target="_blank" rel="noopener noreferrer">{photo.photographer} · {photo.licenseName}</a>
+    </figcaption>}
+  </figure>)}
+</div>}
