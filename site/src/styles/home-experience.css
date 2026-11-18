@@ -21,7 +21,7 @@
 .home-intro-lede { max-width: 620px; color: #c4d3c6; font-size: clamp(16px,1.45vw,18px); line-height: 1.75; margin: 22px 0 0; }
 .home-find { margin-top: 34px; max-width: 700px; padding: 16px; background: #f6f9f4; border-radius: 16px; box-shadow: 0 16px 46px rgba(5,13,8,.3); color: #1c3524; }
 .home-find label { display: block; margin: 0 0 11px 3px; font-size: 15px; font-weight: 850; letter-spacing: -.01em; }
-.home-search-row { display: flex; gap: 10px; align-items: stretch; }
+.home-search-row { position: relative; display: flex; gap: 10px; align-items: stretch; }
 .home-search-icon { display: grid; place-items: center; position: absolute; width: 26px; height: 26px; margin: 13px 0 0 13px; pointer-events: none; color: #54755a; }
 .home-search-icon svg { width: 22px; height: 22px; }
 .home-search-row input { flex: 1; min-width: 0; width: 100%; padding: 13px 14px 13px 46px; font-size: 15px; color: #1d3022; min-height: 52px; border: 1px solid #cbdccc; border-radius: 10px; background: #fff; outline: none; }
