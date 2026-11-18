@@ -24,7 +24,7 @@ test("source text, numbers and unsupported keys are not translated into invented
   assert.equal(publishedSpecificationLabel("model-specific unknown measured spec","tr"),null);
   assert.equal(publishedSpecificationLabel("Nominal rated power, ISO 14396","en"),null);
   const fallback=specLabel({canonical_key:"unknown",spec_name:"Unknown manufacturer field"},"tr");
-  assert.equal(fallback,"Unknown manufacturer field");
+  assert.equal(fallback,"Unknown Manufacturer Field");
 });
 test("published dictionary covers 60 audited distinct English technical headings",()=>{
   const required=new Set(Object.values(missing).flat());
