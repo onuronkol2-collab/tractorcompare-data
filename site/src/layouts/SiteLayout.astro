@@ -9,9 +9,12 @@ interface Props {
   lang: Locale;
   title: string;
   description: string;
+  structuredData?: Record<string, unknown> | null;
 }
 
-const { lang, title, description } = Astro.props;
+const { lang, title, description, structuredData = null } = Astro.props;
+// Escape literal HTML opener characters before embedding JSON-LD from database text.
+const structuredJson = structuredData ? JSON.stringify(structuredData).replace(/</g, "\\u003c") : null;
 const indexingEnabled =
   import.meta.env.PUBLIC_INDEXING_ENABLED === "true" && Boolean(Astro.site);
 const homePath = localizedPath(lang, "/");
@@ -49,6 +52,7 @@ const openGraphLocale: Record<Locale, string> = {
     <meta name="description" content={description} />
     <meta name="robots" content={indexingEnabled ? "index,follow,max-image-preview:large" : "noindex,nofollow"} />
     <title>{title}</title>
+    {structuredJson && <script type="application/ld+json" set:html={structuredJson} />}
     {canonicalUrl && <link rel="canonical" href={canonicalUrl} />}
     {alternatives.map((alternate) =>
       <link rel="alternate" hreflang={alternate.locale} href={alternate.href} />

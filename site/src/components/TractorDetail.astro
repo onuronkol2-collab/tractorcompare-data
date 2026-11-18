@@ -4,13 +4,15 @@ import TractorMarketPrice from "./TractorMarketPrice.astro";
 import { groupSpecifications, officialManufacturerSourceUrl, specLabel, verificationNotice, type TractorRecord } from "../lib/catalog";
 import { localizedPath, type Locale } from "../lib/locales";
 import { t } from "../lib/ui";
+import { modelSeoMetadata, modelStructuredData } from "../lib/model-seo";
 interface Props { lang: Locale; tractor: TractorRecord; }
 const { lang, tractor } = Astro.props;
 const groups = groupSpecifications(tractor.specifications,lang);
 const manufacturerDiscrepancies = [...new Set(tractor.specifications.map((spec) => verificationNotice(spec, lang)).filter((note): note is string => Boolean(note)))];
 const listingUrl = localizedPath(lang,"/tractors/");
-const title = tractor.brand_name + " " + tractor.model_name + " | " + t(lang,"modelSpecsTitle") + " | TractorVS";
-const description = tractor.brand_name + " " + tractor.model_name + ": " + t(lang,"modelDesc");
+const { title, description } = modelSeoMetadata(tractor, lang);
+const structuredData = import.meta.env.PUBLIC_INDEXING_ENABLED === "true" && Astro.site
+  ? modelStructuredData(tractor, lang, Astro.site.toString()) : null;
 const summaryItems = [
   {label:t(lang,"power"),value:tractor.horsepower!=null?tractor.horsepower+" HP":null},
   {label:t(lang,"engine"),value:tractor.engine},
@@ -18,11 +20,11 @@ const summaryItems = [
   {label:t(lang,"weight"),value:tractor.weight_kg!=null?tractor.weight_kg+" kg":null},
 ].filter((item)=>item.value);
 ---
-<SiteLayout lang={lang} title={title} description={description}>
+<SiteLayout lang={lang} title={title} description={description} structuredData={structuredData}>
   <section class="model-hero"><div class="container">
     <a class="catalog-breadcrumb" href={listingUrl}>← {t(lang,"allTractors")}</a>
     <p class="eyebrow"><span class="eyebrow-mark"></span>{t(lang,"modelEyebrow")}</p>
-    <p class="model-brand">{tractor.brand_name}</p><h1>{tractor.model_name}</h1>
+    <p class="model-brand">{tractor.brand_name}</p><h1>{tractor.brand_name} {tractor.model_name}</h1>
     <div class="model-meta">
       {tractor.model_year&&<span>{tractor.model_year}</span>}
       {tractor.variant&&<span>{tractor.variant}</span>}

@@ -565,6 +565,8 @@ const approvedManufacturerHosts: Record<string, string[]> = {
   "fendt": ["fendt.com"],
   "massey ferguson": ["masseyferguson.com"],
   "ls tractor": ["lstractor.com"],
+  "mccormick": ["mccormick-tractors.com"],
+  "landini": ["landini-tractors.com"],
 };
 
 // The original German F36 brochure is served from TYM's named Umbraco media
