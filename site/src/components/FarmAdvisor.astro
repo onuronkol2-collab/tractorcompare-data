@@ -5,10 +5,11 @@ import { getPublicCatalog } from "../lib/catalog";
 import { advisorText as tx } from "../lib/advisor-i18n";
 import { t } from "../lib/ui";
 import {
-  COUNTRY_AREA_UNITS, COUNTRY_NAMES, COUNTRIES_BY_LOCALE, FARM_IMPLEMENT_TYPES,
+  COUNTRY_AREA_UNITS, COUNTRIES_BY_LOCALE, FARM_IMPLEMENT_TYPES,
 } from "../lib/farm-advisor";
 import { COUNTRY_CURRENCIES, MARKET_COUNTRIES } from "../lib/market-prices";
 
+import { localizedCountryName } from "../lib/country-display";
 interface Props { lang: Locale }
 const { lang } = Astro.props;
 const catalog = await getPublicCatalog();
@@ -65,7 +66,7 @@ const areaUnitOptions = [
             <label class="advisor-field">{tx(lang,"country")}
               <select name="country" id="advisor-country" required>
                 {MARKET_COUNTRIES.map((country) =>
-                  <option value={country} selected={country===initialCountry}>{COUNTRY_NAMES[country]}</option>
+                  <option value={country} selected={country===initialCountry}>{localizedCountryName(country,lang)}</option>
                 )}
               </select>
             </label>

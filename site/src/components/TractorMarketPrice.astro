@@ -1,9 +1,10 @@
 ---
 import type { TractorRecord } from "../lib/catalog";
 import { advisorText as t } from "../lib/advisor-i18n";
-import { COUNTRY_NAMES, COUNTRIES_BY_LOCALE } from "../lib/farm-advisor";
+import { COUNTRIES_BY_LOCALE } from "../lib/farm-advisor";
 import { MARKET_COUNTRIES, matchingPrice, formatMarketPriceRange } from "../lib/market-prices";
 import type { Locale } from "../lib/locales";
+import { localizedCountryName } from "../lib/country-display";
 interface Props {tractor:TractorRecord;lang:Locale}
 const {tractor,lang} = Astro.props;
 const selected=COUNTRIES_BY_LOCALE[lang]||"US";
@@ -22,7 +23,7 @@ const payload=JSON.stringify({
       <label>{t(lang,"country")}
         <select data-model-price-country>
           {MARKET_COUNTRIES.map((country)=>
-            <option value={country} selected={selected===country}>{COUNTRY_NAMES[country]}</option>
+            <option value={country} selected={selected===country}>{localizedCountryName(country,lang)}</option>
           )}
         </select>
       </label>
