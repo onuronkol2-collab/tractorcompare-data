@@ -61,3 +61,16 @@ test("responsive comparison offers mobile scrolling, readable controls and keybo
   assert.match(css,/\.tc-section \.tc-table tbody th \{ position: sticky; left: 0/);
   assert.match(css,/@media\(max-width:690px\)/);
 });
+
+import {localizedCountryName} from "../src/lib/country-display.ts";
+import {marketDisplayName} from "../src/lib/market-display.ts";
+test("market and country labels are localized; underlying model identity is never changed",()=>{
+  assert.equal(marketDisplayName("global","tr"),"Dünya geneli");
+  assert.equal(marketDisplayName("Europe","tr"),"Avrupa");
+  assert.equal(marketDisplayName("Europe","de"),"Europa");
+  assert.equal(marketDisplayName("Unknown market","tr"),"Unknown market");
+  assert.equal(localizedCountryName("TR","tr"),"Türkiye");
+  assert.equal(localizedCountryName("US","tr"),"Amerika Birleşik Devletleri");
+  assert.equal(localizedCountryName("DE","de"),"Deutschland");
+  assert.notEqual(localizedCountryName("FR","fr"),localizedCountryName("FR","tr"));
+});
