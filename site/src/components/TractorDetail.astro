@@ -1,6 +1,8 @@
 ---
 import SiteLayout from "../layouts/SiteLayout.astro";
 import TractorMarketPrice from "./TractorMarketPrice.astro";
+import TractorPhoto from "./TractorPhoto.astro";
+import {primaryTractorPhoto} from "../lib/tractor-photos";
 import { groupSpecifications, officialManufacturerSourceUrl, specLabel, verificationNotice, type TractorRecord } from "../lib/catalog";
 import { localizedPath, type Locale } from "../lib/locales";
 import { t } from "../lib/ui";
@@ -14,6 +16,7 @@ const manufacturerDiscrepancies = [...new Set(tractor.specifications.map((spec) 
 const listingUrl = localizedPath(lang,"/tractors/");
 const compareUrl = localizedPath(lang,"/compare/") + "?left=" + encodeURIComponent(tractor.tractor_id);
 const { title, description } = modelSeoMetadata(tractor, lang);
+const cover=primaryTractorPhoto(tractor);
 const structuredData = import.meta.env.PUBLIC_INDEXING_ENABLED === "true" && Astro.site
   ? modelStructuredData(tractor, lang, Astro.site.toString()) : null;
 const summaryItems = [
@@ -23,7 +26,7 @@ const summaryItems = [
   {label:t(lang,"weight"),value:tractor.weight_kg!=null?tractor.weight_kg+" kg":null},
 ].filter((item)=>item.value);
 ---
-<SiteLayout lang={lang} title={title} description={description} structuredData={structuredData}>
+<SiteLayout lang={lang} title={title} description={description} structuredData={structuredData} ogImage={cover?.displayUrl}>
   <section class="model-hero"><div class="container">
     <a class="catalog-breadcrumb" href={listingUrl}>← {t(lang,"allTractors")}</a>
     <p class="eyebrow"><span class="eyebrow-mark"></span>{t(lang,"modelEyebrow")}</p>
@@ -39,6 +42,7 @@ const summaryItems = [
       <span class="model-compare-copy"><strong>{cx(lang,"cta")}</strong><small>{cx(lang,"ctaHint")}</small></span>
       <span class="model-compare-arrow" aria-hidden="true">↗</span>
     </a>
+    <TractorPhoto tractor={tractor} lang={lang} mode="hero" />
     {summaryItems.length>0&&<div class="model-summary-grid">{summaryItems.map((item)=>
       <div><small>{item.label}</small><strong>{item.value}</strong></div>)}</div>}
   </div></section>

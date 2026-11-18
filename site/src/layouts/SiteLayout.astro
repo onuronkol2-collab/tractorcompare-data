@@ -1,5 +1,7 @@
 ---
 import "../styles/global.css";
+import "../styles/tractor-photos.css";
+import PhotoLightbox from "../components/PhotoLightbox.astro";
 import { brand } from "../config/brand";
 import { LOCALES, LOCALE_NAMES, LOCALE_TAGS, localizedPath, unlocalizedPath, type Locale } from "../lib/locales";
 import { t } from "../lib/ui";
@@ -10,9 +12,10 @@ interface Props {
   title: string;
   description: string;
   structuredData?: Record<string, unknown> | null;
+  ogImage?: string | null;
 }
 
-const { lang, title, description, structuredData = null } = Astro.props;
+const { lang, title, description, structuredData = null, ogImage = null } = Astro.props;
 // Escape literal HTML opener characters before embedding JSON-LD from database text.
 const structuredJson = structuredData ? JSON.stringify(structuredData).replace(/</g, "\\u003c") : null;
 const indexingEnabled =
@@ -63,6 +66,8 @@ const openGraphLocale: Record<Locale, string> = {
     <meta property="og:type" content="website" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
+    {ogImage && <meta property="og:image" content={ogImage} />}
+    {ogImage && <meta name="twitter:card" content="summary_large_image" />}
     <meta property="og:locale" content={openGraphLocale[lang]} />
   </head>
   <body>
@@ -166,6 +171,7 @@ const openGraphLocale: Record<Locale, string> = {
         <span>{t(lang,"footerBottom")}</span>
       </div>
     </footer>
+    <PhotoLightbox lang={lang} />
   </body>
 </html>
 <script>

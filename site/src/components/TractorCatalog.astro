@@ -1,5 +1,6 @@
 ---
 import SiteLayout from "../layouts/SiteLayout.astro";
+import TractorPhoto from "./TractorPhoto.astro";
 import { getPublicCatalog } from "../lib/catalog";
 import { localizedPath, type Locale } from "../lib/locales";
 import { t } from "../lib/ui";
@@ -49,8 +50,10 @@ const pricePayload = JSON.stringify({lang,models:catalog.tractors.map((tractor)=
         <span>{t(lang,"publishedOnly")}</span>
       </div>
       <div class:list={["tractor-card-grid", { "tractor-card-grid--two": catalog.tractors.length === 2 }]} id="tractor-card-grid">
-        {catalog.tractors.map((tractor)=><a class="tractor-card" href={detailPrefix+tractor.slug+"/"}
+        {catalog.tractors.map((tractor)=><article class="tractor-card"
           data-search={[tractor.brand_name,tractor.model_name,tractor.variant||"",tractor.market||"",tractor.engine||""].join(" ").toLowerCase()}>
+          <TractorPhoto tractor={tractor} lang={lang} mode="catalog" />
+          <a class="tractor-card-main" href={detailPrefix+tractor.slug+"/"}>
           <div class="tractor-card-top"><span class="tractor-brand">{tractor.brand_name}</span><span class="tractor-card-arrow" aria-hidden="true">↗</span></div>
           <h2>{tractor.model_name}</h2>
           <div class="tractor-card-meta">
@@ -69,7 +72,8 @@ const pricePayload = JSON.stringify({lang,models:catalog.tractors.map((tractor)=
               : tx(lang,"priceUnknown")}
           </div>
           <div class="tractor-card-footer"><span>{tractor.specifications.length} {t(lang,"specifications")}</span><span>{t(lang,"viewModel")} →</span></div>
-        </a>)}
+          </a>
+        </article>)}
       </div>
       <p class="catalog-no-results" id="catalog-no-results" role="status" hidden>{t(lang,"noMatches")}</p>
     </> : <div class="catalog-empty">
@@ -141,6 +145,9 @@ const pricePayload = JSON.stringify({lang,models:catalog.tractors.map((tractor)=
 </script>
 
 <style>
+  .tractor-card-main { display:flex; flex-direction:column; flex:1; min-width:0; color:inherit; }
+  .tractor-card-main:focus-visible { outline:3px solid #438c57; outline-offset:3px; border-radius:8px; }
+  .tractor-card .tractor-photo-gallery { margin-bottom:13px; }
   .catalog-price-filter {display:flex;align-items:center;flex-wrap:wrap;gap:12px;margin-bottom:21px;padding:12px 15px;border:1px solid #dce8da;background:#fff;border-radius:10px;font-size:12px}
   .catalog-price-filter label {font-weight:800}
   .catalog-price-filter select {padding:8px 12px;border-radius:7px;border:1px solid #becdbc;background:#fff}
