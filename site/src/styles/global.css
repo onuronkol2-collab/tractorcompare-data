@@ -419,3 +419,58 @@ button, input { font: inherit; }
   .mobile-nav { display: block; position: relative; flex: none; }
   .header-actions { gap: 8px; }
 }
+
+
+/* 2026 readability refresh: existing palette remains unchanged.
+   Core content uses comfortably legible text on phones and desktops. */
+.brand-words strong { font-size: 17px; }
+.brand-words small { font-size: 10px; letter-spacing: .06em; }
+.desktop-nav { gap: clamp(12px,1.4vw,22px); }
+.desktop-nav a,.language-switch { font-size: 14px; }
+.header-inner { gap: 14px; }
+.header-actions { gap: 12px; }
+.header-cta { font-size: 14px; min-height: 44px; }
+.locale-options a { font-size: 15px; min-height: 44px; display:flex; align-items:center; }
+.footer-note { font-size: 13px; line-height: 1.7; }
+.footer-links a { font-size: 13px; min-height: 36px; display:flex; align-items:center; }
+.footer-bottom { font-size: 11px; line-height: 1.7; }
+.eyebrow { font-size: 12px; line-height: 1.5; }
+.button,.text-link { font-size: 15px; }
+.catalog-intro { font-size: 17px; }
+.catalog-count { font-size: 14px; }
+.catalog-toolbar label { font-size: 15px; }
+.catalog-toolbar input { min-height: 50px; font-size: 16px; }
+.catalog-toolbar > span { font-size: 13px; }
+.tractor-brand { font-size: 12px; }
+.tractor-card-meta { font-size: 13px; }
+.tractor-card-specs strong { font-size: 16px; }
+.tractor-card-specs small { font-size: 12px; }
+.tractor-card-footer { font-size: 13px; }
+.tractor-price-summary { font-size: 13px; }
+.model-brand { font-size: 12px; }
+.model-meta span { font-size: 13px; }
+.model-summary-grid small { font-size: 12px; }
+.model-summary-grid strong { font-size: 16px; }
+.model-spec-heading > p { font-size: 15px; }
+.model-spec-group > h3 { font-size: 20px; }
+.model-spec-top h4 { font-size: 14px; }
+.model-spec-top > span { font-size: 11px; }
+.model-spec-note { font-size: 13px; line-height: 1.65; }
+.model-spec-card blockquote { font-size: 13px; }
+.model-spec-source a { font-size: 13px; }
+.model-spec-source small,.model-spec-source > span { font-size: 12px; }
+.catalog-breadcrumb { font-size: 14px; }
+@media(max-width:1150px) {
+  .desktop-nav { display: none; }
+  .mobile-nav { display: block; position: relative; flex: none; }
+}
+@media(max-width:720px) {
+  .brand-words strong { font-size: 15px; }
+  .brand-words small { font-size: 9px; }
+  .language-switch { font-size: 12px; }
+  .footer-bottom { font-size: 11px; }
+  .catalog-section,.model-spec-section { padding: 46px 0 72px; }
+  .catalog-intro { font-size: 16px; }
+  .tractor-card { padding: 19px; }
+  .model-summary-grid { grid-template-columns: repeat(2,minmax(0,1fr)); }
+}
