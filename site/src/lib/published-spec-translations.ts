@@ -90,7 +90,7 @@ export const PUBLISHED_SPEC_TERMS: Record<string, Partial<Record<Locale,string>>
   "On-Board Electrical System Voltage": {"pt-br":"Tensão do sistema elétrico de bordo",fr:"Tension du circuit électrique de bord",es:"Tensión del sistema eléctrico de a bordo"},
   "Rated Drawbar Force": {"pt-br":"Força nominal de tração na barra",fr:"Effort nominal à la barre de traction",es:"Fuerza nominal de tiro en barra"},
   "Emission Stage": {zh:"排放阶段",ja:"排出ガス規制段階"},
-  "Engine Speed At Max Power": {zh:"最大出力時の发动机转速",ja:"最高出力時エンジン回転数"},
+  "Engine Speed At Max Power": {zh:"最大功率时发动机转速",ja:"最高出力時エンジン回転数"},
   "Front Differential Lock Standard": {"pt-br":"Bloqueio do diferencial dianteiro de série",fr:"Blocage de différentiel avant de série",es:"Bloqueo del diferencial delantero de serie"},
   "Factory Base Front Tire": {tr:"Fabrika standart ön lastiği"},
   "Factory Base Rear Tire": {tr:"Fabrika standart arka lastiği"},
