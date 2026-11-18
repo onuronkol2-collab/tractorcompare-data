@@ -1,5 +1,6 @@
 import type { Locale } from "./locales.ts";
 import { localizedCategoryName, localizedSpecificationName } from "./spec-i18n.ts";
+import { publishedSpecificationLabel } from "./published-spec-translations.ts";
 
 export interface PublicSpec {
   spec_id: string;
@@ -536,6 +537,10 @@ export function specLabel(spec: PublicSpec, lang: Locale): string {
   // Translation applies only to known canonical engineering labels, never values.
   const localized = localizedSpecificationName(spec.canonical_key, spec.spec_name, lang);
   if (localized) return localized;
+  // Exact, reviewed display-name fallback for published models whose canonical
+  // key is not yet included in the central 8-language engineering glossary.
+  const reviewed = publishedSpecificationLabel(spec.spec_name, lang);
+  if (reviewed) return reviewed;
   const mapped = specLabels[spec.canonical_key || ""]
     || specLabels[comparisonKey(spec)]
     || rawSpecNameLabels[spec.spec_name.trim()];
