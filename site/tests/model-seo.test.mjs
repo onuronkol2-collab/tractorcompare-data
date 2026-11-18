@@ -50,3 +50,22 @@ test("Unsourced measurements never enter JSON-LD properties", () => {
   const vehicle = modelStructuredData(clone,"en","https://tractorvs.example")["@graph"][2];
   assert.equal(vehicle.additionalProperty,undefined);
 });
+
+test("long manufacturer citation is kept out of the search title", () => {
+  const longVariant = "Serie 5 FPT Stage V; EU official brochure / equipment unspecified";
+  const model = { ...tractor, brand_name:"Landini", model_name:"5-085",
+    variant:longVariant, market:"Europe", horsepower:75 };
+  const seo = modelSeoMetadata(model,"en");
+  assert.match(seo.title,/Landini 5-085/);
+  assert.match(seo.title,/Serie 5 FPT Stage V/);
+  assert.doesNotMatch(seo.title,/brochure|unspecified|global/);
+  assert.match(seo.description,/equipment unspecified/);
+  assert.ok(seo.title.length < 105);
+});
+
+test("non-global markets distinguish otherwise identical equipment", () => {
+  const usa=modelSeoMetadata({ ...tractor, market:"US" },"en");
+  const eu=modelSeoMetadata({ ...tractor, market:"Europe" },"en");
+  assert.notEqual(usa.title,eu.title);
+  assert.match(usa.title,/US/);
+});
