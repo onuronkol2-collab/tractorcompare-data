@@ -86,6 +86,7 @@ const pricePayload = JSON.stringify({lang,models:catalog.tractors.map((tractor)=
   import { matchingPrice, formatMarketPriceRange, MARKET_COUNTRIES } from "../lib/market-prices";
   import type { MarketCountry } from "../lib/market-prices";
   import { advisorText } from "../lib/advisor-i18n";
+  import { normalizeTractorQuery } from "../lib/search";
   import type { Locale } from "../lib/locales";
   const dataNode=document.getElementById("catalog-price-payload");
   const countryControl=document.querySelector<HTMLSelectElement>("#catalog-price-country");
@@ -117,10 +118,10 @@ const pricePayload = JSON.stringify({lang,models:catalog.tractors.map((tractor)=
   const cards = Array.from(document.querySelectorAll<HTMLElement>(".tractor-card"));
   const noResults = document.querySelector<HTMLElement>("#catalog-no-results");
   const filterCatalog = (query: string) => {
-    const normalized = query.trim().toLocaleLowerCase();
+    const normalized = normalizeTractorQuery(query);
     let visible = 0;
     for (const card of cards) {
-      const match = (card.dataset.search || "").toLocaleLowerCase().includes(normalized);
+      const match = normalizeTractorQuery(card.dataset.search || "").includes(normalized);
       card.hidden = !match;
       if (match) visible++;
     }
