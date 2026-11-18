@@ -263,23 +263,33 @@ function getPublicApiKey(): { key: string; isLegacyJwt: boolean } {
   return { key, isLegacyJwt: false };
 }
 
-async function fetchPublicRows(endpoint: URL, apiKey: string, isLegacyJwt: boolean): Promise<unknown[]> {
+/**
+ * Load every published catalogue row. Use PostgREST's explicit offset/limit
+ * instead of mixing query limit with HTTP Range headers. The first page
+ * requests an exact count so an exact multiple of the page size (e.g. 1000)
+ * cannot cause a final out-of-range request (PGRST103/HTTP 416).
+ *
+ * Inconsistent counts/ranges fail closed: never publish a partial catalogue.
+ */
+export async function fetchPublicRows(endpoint: URL, apiKey: string, isLegacyJwt: boolean): Promise<unknown[]> {
   const allRows: unknown[] = [];
   const pageSize = 500;
   const maximumRows = 50_000;
+  let knownTotal: number | null = null;
+  let offset = 0;
 
-  for (let offset = 0; offset < maximumRows; offset += pageSize) {
+  while (offset < maximumRows) {
     const pageUrl = new URL(endpoint);
     pageUrl.searchParams.set("limit", String(pageSize));
+    pageUrl.searchParams.set("offset", String(offset));
 
     const headers: Record<string, string> = {
       apikey: apiKey,
       Accept: "application/json",
-      "Range-Unit": "items",
-      Range: offset + "-" + (offset + pageSize - 1),
     };
-    // New sb_publishable keys are opaque strings, not JWTs. Legacy anon keys
-    // are JWTs and may also be sent as Authorization for backwards compatibility.
+    if (offset === 0) headers.Prefer = "count=exact";
+    // A legacy anon JWT may also be used as Authorization. Opaque publishable
+    // keys are not JWTs. Never use a service-role or secret key.
     if (isLegacyJwt) headers.Authorization = "Bearer " + apiKey;
 
     const response = await fetch(pageUrl, {
@@ -291,30 +301,58 @@ async function fetchPublicRows(endpoint: URL, apiKey: string, isLegacyJwt: boole
     if (!response.ok) {
       throw new Error(
         "Supabase public catalogue request failed with HTTP " + response.status
-        + ". Check the view migration, grants, RLS policy and Cloudflare build variables."
+        + " at offset " + offset
+        + ". Check public-view pagination, grants, and Cloudflare build variables."
       );
     }
 
     const payload: unknown = await response.json();
     if (!Array.isArray(payload)) {
-      throw new Error("Supabase public catalogue returned an unexpected response.");
+      throw new Error("Supabase public catalogue returned an unexpected response at offset " + offset + ".");
+    }
+    if (payload.length > pageSize) {
+      throw new Error("Supabase public catalogue exceeded page size at offset " + offset + ".");
+    }
+
+    const contentRange = response.headers.get("content-range")?.trim() ?? "";
+    if (offset === 0) {
+      const countMatch = contentRange.match(/\/(\d+)$/);
+      if (!countMatch) {
+        throw new Error("Supabase public catalogue did not provide an exact total count on the first page.");
+      }
+      knownTotal = Number(countMatch[1]);
+      if (!Number.isSafeInteger(knownTotal) || knownTotal < 0) {
+        throw new Error("Supabase public catalogue returned an invalid total count.");
+      }
+      if (knownTotal >= maximumRows) {
+        throw new Error("The public catalogue reached the 50,000-row build limit. Review pagination before building.");
+      }
+    }
+
+    if (payload.length) {
+      const rowRange = contentRange.match(/^(\d+)-(\d+)\/(?:\d+|\*)$/);
+      if (!rowRange || Number(rowRange[1]) !== offset ||
+          Number(rowRange[2]) !== offset + payload.length - 1) {
+        throw new Error("Supabase public catalogue returned an inconsistent row range at offset " + offset + ".");
+      }
+    }
+
+    if (knownTotal === null || offset + payload.length > knownTotal ||
+        (payload.length === 0 && offset < knownTotal)) {
+      throw new Error("Supabase public catalogue count changed during the build; retry a new build.");
     }
 
     allRows.push(...payload);
+    offset += payload.length;
+    if (offset === knownTotal) return allRows;
 
-    const contentRange = response.headers.get("content-range");
-    const totalText = contentRange?.split("/")[1];
-    const total = totalText && totalText !== "*" ? Number(totalText) : null;
-
-    if (payload.length === 0 || payload.length < pageSize) break;
-    if (total !== null && Number.isFinite(total) && allRows.length >= total) break;
+    // Server-side page size may be lower than 500: advance by actual rows.
+    if (payload.length === 0) {
+      throw new Error("Supabase catalogue stopped before the expected record count.");
+    }
   }
 
-  if (allRows.length >= maximumRows) {
-    throw new Error("The public catalogue exceeded the 50,000-row build limit. Increase pagination in a reviewed change.");
-  }
-
-  return allRows;
+  throw new Error("The public catalogue reached the 50,000-row build limit; no partial site was generated.");
 }
 
 async function loadPublicCatalog(): Promise<PublicCatalog> {
