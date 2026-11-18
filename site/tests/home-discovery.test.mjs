@@ -57,3 +57,18 @@ test("search, mobile cards and keyboard interaction have responsive styles",()=>
   assert.match(global,/@media\(max-width:1150px\)/);
   assert.match(global,/\.catalog-toolbar input \{ min-height: 50px; font-size: 16px;/);
 });
+
+test("homepage autocomplete appears beneath search and supports keyboard",()=>{
+  assert.match(home,/role="combobox" aria-autocomplete="list" aria-expanded="false"/);
+  assert.match(home,/id="home-search-results" role="listbox"/);
+  assert.match(home,/role="status" aria-live="polite"/);
+  assert.match(home,/suggestionPayload/);
+  assert.match(home,/findTractorSuggestions\(models,query,6\)/);
+  assert.match(home,/option.href = model.url/);
+  assert.match(home,/event.key === "ArrowDown"/);
+  assert.match(home,/event.key === "ArrowUp"/);
+  assert.match(home,/event.key === "Escape"/);
+  assert.match(home,/event.key === "Enter"/);
+  assert.match(css,/\.home-search-results\[hidden\] \{ display: none; \}/);
+  assert.match(css,/\.home-search-option:focus-visible/);
+});

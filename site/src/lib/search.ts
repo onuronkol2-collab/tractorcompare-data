@@ -9,3 +9,39 @@ export function normalizeTractorQuery(value: string): string {
     .replace(/[\u0300-\u036f]/g, "")
     .replace(/ı/g, "i");
 }
+
+
+/** Published-only home autocomplete. The original catalog names remain unchanged. */
+export interface TractorSuggestion {
+  brand: string;
+  model: string;
+  variant: string | null;
+  year: number | null;
+  horsepower: number | null;
+  specs: number;
+  url: string;
+}
+export function findTractorSuggestions(
+  models: readonly TractorSuggestion[], query: string, limit = 6
+): TractorSuggestion[] {
+  const q = normalizeTractorQuery(query);
+  if (!q || !Number.isFinite(limit) || limit <= 0) return [];
+  const parts = q.split(/\s+/).filter(Boolean);
+  const hits: Array<{item:TractorSuggestion;rank:number}> = [];
+  for (const item of models) {
+    const brand = normalizeTractorQuery(item.brand);
+    const model = normalizeTractorQuery(item.model);
+    const fullName = brand + " " + model;
+    const target = fullName + " " + normalizeTractorQuery(item.variant || "");
+    if (!parts.every(part => target.includes(part))) continue;
+    const rank = fullName === q ? 0 : model === q ? 1
+      : fullName.startsWith(q) ? 2 : model.startsWith(q) ? 3
+      : brand.startsWith(q) ? 4 : fullName.includes(q) ? 5 : 6;
+    hits.push({item,rank});
+  }
+  hits.sort((a,b) => a.rank-b.rank ||
+    a.item.brand.localeCompare(b.item.brand) ||
+    a.item.model.localeCompare(b.item.model) ||
+    (a.item.variant || "").localeCompare(b.item.variant || ""));
+  return hits.slice(0,Math.floor(limit)).map(({item}) => item);
+}

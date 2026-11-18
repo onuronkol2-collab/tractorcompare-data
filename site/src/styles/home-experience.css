@@ -143,3 +143,50 @@
   .home-action-card,.home-featured-card { transition: none; }
   .home-action-card:hover,.home-featured-card:hover { transform: none; }
 }
+
+
+/* On-type suggestions: same TractorVS sage-green palette, mobile-friendly list. */
+.home-search-combobox { position: relative; }
+.home-hero { overflow: visible; }
+.home-find { position: relative; z-index: 5; }
+.home-search-results {
+  position: absolute; z-index: 50; top: calc(100% + 8px); left: 0; right: 0;
+  max-height: min(430px,55vh); overflow-y: auto; overscroll-behavior: contain;
+  padding: 9px; border: 1px solid #cedfca; border-radius: 13px;
+  background: #fff; box-shadow: 0 16px 42px rgba(9,27,15,.21);
+}
+.home-search-results[hidden] { display: none; }
+.home-search-results-heading {
+  margin: 4px 10px 7px; color: #53665a;
+  font-size: 12px; font-weight: 800; letter-spacing: .04em;
+}
+.home-search-option {
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  padding: 10px 13px; min-height: 69px; border-radius: 9px;
+  color: #183424; text-decoration: none; cursor: pointer;
+}
+.home-search-option + .home-search-option { border-top: 1px solid #edf1eb; }
+.home-search-option:hover,.home-search-option[aria-selected="true"] {
+  background: #e9f3e5; color: #183d26;
+}
+.home-search-option:focus-visible { outline: 3px solid #529a59; outline-offset: -3px; }
+.home-search-option-identity { min-width: 0; display: grid; gap: 2px; }
+.home-search-option-brand { color: #43684b; font-size: 12px; font-weight: 800; }
+.home-search-option-identity strong { font-size: 16px; line-height: 1.35; }
+.home-search-option-identity small {
+  color: #53665a; font-size: 12px; line-height: 1.5; overflow: hidden;
+  display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2;
+}
+.home-search-option-arrow {
+  display: grid; place-items: center; flex: none; width: 34px; height: 34px;
+  background: #dcebd5; color: #285b40; border-radius: 9px; font-size: 19px;
+}
+.home-search-empty { margin: 0; padding: 17px 14px; font-size: 14px; color: #53665a; }
+.home-search-status {
+  position: absolute; width: 1px; height: 1px; overflow: hidden;
+  clip-path: inset(50%); white-space: nowrap;
+}
+@media(max-width:620px) {
+  .home-search-results { max-height: min(340px,48vh); }
+  .home-search-option { min-height: 64px; padding: 9px; }
+}
