@@ -54,7 +54,12 @@ jobs:
               .filter(v=>v.score!==null&&v.score!==undefined&&v.score<1&&
                 a.categories.accessibility.auditRefs.some(r=>r.id===v.id&&r.weight>0))
               .map(v=>({id:v.id,title:v.title,score:v.score,description:v.description?.slice(0,180)||""}));
-            console.log("TRACTORVS_MOBILE_BASELINE "+JSON.stringify({route,url:a.finalDisplayedUrl||a.finalUrl,scores,vitals,issues,accessibilityFindings}));
+            const contrastFailures=(a.audits["color-contrast"]?.details?.items || []).slice(0,30).map(i=>({
+              selector:i.node?.selector,html:i.node?.snippet?.slice(0,180),
+              explanation:i.node?.explanation?.slice(0,160),
+              summary:i.node?.failureSummary?.slice(0,180)
+            }));
+            console.log("TRACTORVS_MOBILE_BASELINE "+JSON.stringify({route,url:a.finalDisplayedUrl||a.finalUrl,scores,vitals,issues,accessibilityFindings,contrastFailures}));
           }
           NODE
       - name: Upload diagnostic Lighthouse JSON
