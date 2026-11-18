@@ -20,8 +20,7 @@ const paths=[
   "belarus-82-1-homoatrox-2019",
   "new-holland-t5-110-pere-igor-2016",
   "new-holland-t6-180-marcelx42-2025",
-  "case-ih-puma-150-chris-woodrich-2025",
-  "mccormick-x5-120-marcelx42-2023"
+  "case-ih-puma-150-chris-woodrich-2025"
 ];
 for(const name of paths){
  const url=origin+"/images/tractors/"+name+"-960.jpg";
