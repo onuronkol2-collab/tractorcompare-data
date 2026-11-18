@@ -72,3 +72,4 @@ for(const locale of locales.slice(1)){
 }
 console.log("LANGUAGE_AUDIT_SUMMARY "+JSON.stringify({publishedURLs:urls.length,modelCounts:Object.fromEntries(locales.map(l=>[l,byLocale.get(l).size])),missingHeadingCounts:Object.fromEntries(locales.slice(1).map(l=>[l,suspects.filter(x=>x.locale===l).length])),fetchErrors:errors}));
 if(errors.length)process.exitCode=1;
+if(process.env.TRANSLATION_STRICT==="true" && suspects.length>0)process.exitCode=1;

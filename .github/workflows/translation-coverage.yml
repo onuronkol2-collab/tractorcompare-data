@@ -1,6 +1,9 @@
 name: TractorVS published translation audit
 on:
   workflow_dispatch:
+  # Weekly, just after the public SEO monitor (Monday 06:15 UTC).
+  schedule:
+    - cron: "15 6 * * 1"
   pull_request:
     paths:
       - ".github/workflows/translation-coverage.yml"
@@ -19,4 +22,6 @@ jobs:
         with:
           node-version: 22
       - name: Inspect all published model pages across ten languages (read-only)
+        env:
+          TRANSLATION_STRICT: ${{ github.event_name == 'schedule' && 'true' || 'false' }}
         run: node site/scripts/published-translation-audit.mjs
