@@ -59,7 +59,7 @@ test("the photo proxy accepts only fixed photo identities and resolutions",()=>{
 test("all photo interface controls are localized to ten languages",()=>{
   assert.equal(LOCALES.length,10);
   for(const locale of LOCALES){
-    for(const key of ["image","open","close","credit","representative"])
+    for(const key of ["image","open","close","credit","representative","pending"])
       assert.ok(photoText(locale,key).length>=3,key+" "+locale);
     assert.match(tractorPhotoAlt(tractor("Belarus","82.1"),locale),/82\.1/);
   }
@@ -110,4 +110,20 @@ test("historic photo batch is staged with rights and does not create records",()
   assert.equal(all.size,41);
   assert.ok(HISTORICAL_LICENSED_PHOTOS.every(x=>x.configurationExact===false));
   assert.ok(!HISTORICAL_LICENSED_PHOTOS.some(x=>["Product","Vehicle"].includes(x.model)));
+});
+
+test("missing photograph has readable ten-language placeholder, not a fabricated image", () => {
+  const component=file("components/TractorPhoto.astro");
+  const style=file("styles/tractor-photos.css");
+  for(const locale of LOCALES) {
+    assert.ok(photoText(locale,"pending").length >= 12, "Placeholder translation "+locale);
+  }
+  assert.equal(tractorPhotos(tractor("TYM","T6130")).length,0);
+  assert.equal(primaryTractorPhoto(tractor("TYM","T6130")),null);
+  assert.match(component,/photos\.length===0/);
+  assert.match(component,/tractor-photo-placeholder/);
+  assert.match(component,/photoText\(lang,"pending"\)/);
+  assert.match(component,/role="note"/);
+  assert.ok(component.indexOf("photos.length===0") < component.indexOf('photos.length>0'));
+  assert.match(style,/tractor-photo-gallery--catalog \.tractor-photo-placeholder/);
 });
