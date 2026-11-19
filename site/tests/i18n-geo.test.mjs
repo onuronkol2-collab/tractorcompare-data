@@ -1,3 +1,4 @@
+import {readFileSync} from "node:fs";
 import test from "node:test";
 import assert from "node:assert/strict";
 import { LOCALES, NEW_LOCALES, localizedPath, unlocalizedPath, preferredLocale } from "../src/lib/locales.ts";
@@ -5,6 +6,7 @@ import { UI, t, assertCompleteTranslations } from "../src/lib/ui.ts";
 import { HOME, homeText } from "../src/lib/home-ui.ts";
 import { validateTechnicalGlossary, localizedSpecificationName } from "../src/lib/spec-i18n.ts";
 import worker from "../worker/index.js";
+import { suggestedLocale } from "../src/lib/locale-hint.ts";
 
 test("ten locales include unchanged legacy English and Turkish paths", () => {
   assert.equal(LOCALES.length,10);
@@ -65,13 +67,16 @@ function mockRequest(path, country="DE", options={}) {
 }
 const env={ASSETS:{fetch:async () => new Response("static asset",{status:200})}};
 
-test("first navigation redirects by edge country but not crawler", async () => {
-  const response=await worker.fetch(mockRequest("/","DE"),env);
-  assert.equal(response.status,302);
-  assert.equal(response.headers.get("location"),"/de/");
-  assert.match(response.headers.get("cache-control"),/no-store/);
+test("canonical root is stable HTML for people, crawlers and every country", async () => {
+  for (const country of ["DE","TR","CN","US","JP"]) {
+    for(const agent of ["Mozilla/5.0","Googlebot","Bingbot"]) {
+      const response=await worker.fetch(mockRequest("/",country,{headers:{"user-agent":agent}}),env);
+      assert.equal(response.status,200,country+" / "+agent);
+      assert.equal(response.headers.get("location"),null);
+      assert.equal(response.headers.get("x-robots-tag"),null);
+    }
+  }
   assert.equal((await worker.fetch(mockRequest("/tr/","DE"),env)).status,200);
-  assert.equal((await worker.fetch(mockRequest("/","DE",{headers:{"user-agent":"Googlebot"}}),env)).status,200);
 });
 
 test("explicit visitor preference overrides country and is cookie-backed",async () => {
@@ -81,7 +86,8 @@ test("explicit visitor preference overrides country and is cookie-backed",async 
   assert.match(selected.headers.get("set-cookie"),/tractorvs_locale=ja/);
   assert.match(selected.headers.get("set-cookie"),/HttpOnly/);
   const returnVisit=await worker.fetch(mockRequest("/","DE",{headers:{cookie:"tractorvs_locale=ja"}}),env);
-  assert.equal(returnVisit.headers.get("location"),"/ja/");
+  assert.equal(returnVisit.status,200, "Saved locale must not rewrite the canonical root");
+  assert.equal(returnVisit.headers.get("location"),null);
 });
 
 test("language switch prevents external redirects and preserves safe query",async () => {
@@ -91,4 +97,20 @@ test("language switch prevents external redirects and preserves safe query",asyn
   assert.equal(protocolRelative.headers.get("location"),"/fr/");
   const safe=await worker.fetch(mockRequest("/language/fr/?next=%2Ffr%2Fcompare%2F%3Fleft%3Da%26right%3Db","TR"),env);
   assert.equal(safe.headers.get("location"),"/fr/compare/?left=a&right=b");
+});
+
+test("non-intrusive locale hint uses browser language, not guessed country",()=>{
+  assert.equal(suggestedLocale("tr-TR"),"tr");
+  assert.equal(suggestedLocale("zh-CN"),"zh");
+  assert.equal(suggestedLocale("pt-PT"),"pt-br");
+  assert.equal(suggestedLocale("ja-JP"),"ja");
+  assert.equal(suggestedLocale("de-DE"),"de");
+  assert.equal(suggestedLocale("en-GB"),null);
+  assert.equal(suggestedLocale("xx-XX"),null);
+  const layout=readFileSync(new URL("../src/layouts/SiteLayout.astro",import.meta.url),"utf8");
+  const prompt=readFileSync(new URL("../src/components/LocaleSuggestion.astro",import.meta.url),"utf8");
+  assert.match(layout,/lang==="en" && Astro.url.pathname==="\/" && <LocaleSuggestion/);
+  assert.match(prompt,/locale-suggestion\[hidden\]\{display:none\}/);
+  assert.match(prompt,/sessionStorage/);
+  assert.match(prompt,/\?next=/);
 });
