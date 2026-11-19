@@ -13,7 +13,7 @@ A multilingual Astro website in an isolated `site/` directory. The existing Supa
 - Responsive, modern and technical visual system
 - Reciprocal canonical/`hreflang` references prepared for all ten languages when indexing is explicitly enabled
 - Search indexing is disabled by default for safe previews
-- Cloudflare Workers Static Assets deployment with an edge Worker for root-only country localization and a persistent manual language preference
+- Cloudflare Workers Static Assets deployment with a stable canonical root, explicit language switching and optional language suggestion
 - Selected public brand: **TractorVS**
 
 ## Requirements
@@ -75,15 +75,45 @@ No production custom domain is assumed by this scaffold. Domain registration ava
 
 The website-only changes do not modify or deploy the existing AI Edge Functions, research pipeline or review dashboard. The separate v22.8 AI review PR remains independent and is not part of the public website deployment.
 
-## Country language on first visit (Cloudflare Workers)
+## Stable root, crawlable language choices and Cloudflare Worker
 
-- Root `/` is English for bots and users who prefer English. Human navigations to `/` may receive a **302** to the preferred locale chosen from Cloudflare's `request.cf.country` signal, with `Accept-Language` fallback.
-- The routing applies **only to the root**. Deep links such as `/fr/tractors/<slug>/`, `/tr/compare/` and indexed locale pages remain directly accessible; no country-based redirects are applied to those.
-- Supported country mappings cover Turkey, India, China, Brazil, France, Germany, Russia, Japan, Spain and English-speaking markets, with selected Spanish-speaking markets mapped to Spanish. Canada chooses French for French-language browser preference, otherwise English. Unsupported countries use compatible browser language, else English.
-- The accessible language menu links via `/language/<locale>/?next=<encoded-local-page>`. The edge Worker validates same-origin paths, sets an HTTP-only, Secure, SameSite=Lax preference cookie, and redirects to the same page in the chosen language. This is **not** a tracking cookie and does not store location details.
-- If geolocation is missing or inaccurate, the visitor can choose any language. Search crawlers receive the English root, and all other languages have permanent, crawlable locale URLs.
-- The Worker uses `main`, `assets.binding` and `assets.run_worker_first` in **both** the repository-root and `site/` Wrangler configurations. Deploy with the updated configuration; deploying assets alone would not enable country detection.
-- Server-side country detection is Cloudflare-specific; local Astro development does not reproduce Cloudflare geolocation. The `site/tests/i18n-geo.test.mjs` suite exercises the Worker behavior with explicit location mocks.
+- The root `/` serves the **same canonical English HTML** to users and search
+  engines, regardless of Cloudflare country or User-Agent; there are no
+  IP-based, geolocation or crawler-specific redirects. This avoids cloaking
+  and makes the English canonical page stable.
+- An **optional**, dismissible browser-language suggestion appears on the
+  English homepage. It never automatically redirects or changes the canonical.
+- The language menu links directly to permanent localized pages. The explicit
+  `/language/<locale>/?next=<encoded-path>` Worker endpoint can store a
+  Secure, HttpOnly, SameSite=Lax language preference after a user chooses it;
+  it validates same-origin next paths.
+- All 10 language homepages, catalogues, model pages, comparison routes and
+  localized tractor selection guides are real static HTML routes. The data
+  methodology still has genuine EN/TR pages only and shows the English
+  fallback honestly in other languages.
+- The Worker serves responsive on-site image proxy paths and does not modify
+  source/photograph attribution or override the restricted public catalogue.
+  Unit tests cover stable root, explicit language selection and locale routes.
+
+## Publishing additional tractors
+
+- First run the private, read-only
+  `supabase/verification/20261119_tractorvs_batch_publication_preflight.sql`
+  against the actual production Supabase database. It reports draft-specific
+  evidence gaps, conflicts and active identity duplicates **without publishing**.
+- Confirm every proposed tractor/trim against its original manufacturer
+  source, and run `supabase/verification/verify_tractorvs_public_catalog_view.sql`
+  before any status change. Do not automatically publish by an evidence count,
+  or publish every draft with a blanket UPDATE.
+- After promoting only reviewed UUIDs, rebuild/redeploy the static Cloudflare
+  Worker website. Model pages and sitemap do not appear merely because
+  Supabase status changed; they are generated at **build time**.
+- Verify all 10 new model URLs, canonicals, hreflang, source labels, images
+  and sitemap inclusion after deployment. Real Google indexing requires
+  Search Console evidence. Photo availability is not a prerequisite for a
+  truthful sourced model page if it displays a clear missing-photo notice.
+- Full release procedure is documented in
+  `supabase/docs/TRACTORVS_BATCH_PUBLICATION_GATE.md`.
 
 ## Language data and editorial checks
 
@@ -104,4 +134,4 @@ npm run build
 npx wrangler deploy --dry-run --outdir .wrangler-dry-run
 ```
 
-After deploying, verify root country selection, explicit language preference, all ten catalogues, direct model links, comparison behavior, and canonical/alternate tags when indexing is enabled. If the deployment is configured to use a custom build command, ensure the Worker still deploys with the updated root or `site/` Wrangler file.
+After deploying, verify stable canonical root for humans and crawlers, explicit language preference, all ten catalogues, direct model links, comparison behavior, and canonical/alternate tags when indexing is enabled. If the deployment is configured to use a custom build command, ensure the Worker still deploys with the updated root or `site/` Wrangler file.
