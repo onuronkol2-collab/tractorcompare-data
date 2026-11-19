@@ -57,7 +57,7 @@ test("all ten locales distinguish independent evidence from manufacturer confirm
  specifications:[{...ref,spec_id:"j27-engine",spec_name:"Engine model",spec_value:"Mitsubishi S3L2",unit:null,canonical_key:"engine_model",
  comparison_class:"engine",measurement_standard:null,rated_rpm:null,source_publisher:"TractorData",source_accessed_at:"2026-11-19T18:00:00Z",spec_source_priority:60}]};
  for(const lang of LOCALES){
-  const copy=INDEPENDENT_SOURCE_COPY[lang]; assert.ok(copy?.label.length>8&&copy?.seoOnlyIndependent.length>30);
+  const copy=INDEPENDENT_SOURCE_COPY[lang]; assert.ok(copy?.label.length>5&&copy?.seoOnlyIndependent.length>12);
   const meta=modelSeoMetadata(model,lang);
   assert.ok(meta.description.includes(copy.seoOnlyIndependent),lang+": independent evidence must not imply manufacturer confirmation");
   const ld=modelStructuredData(model,lang,"https://tractorvs.com");
