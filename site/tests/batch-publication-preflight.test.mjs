@@ -36,7 +36,7 @@ test("preflight reports actual private draft inventory and source/identity safeg
   assert.match(doc,/from `draft` to `published`/);
   assert.match(doc,/Cloudflare/i);
   assert.match(doc,/zero|0/);
-  assert.match(doc,/Do not.*UPDATE/i);
+  assert.match(doc,/Do not\\s+run an `UPDATE/i);
 });
 
 test("release docs reflect stable canonical root and static site rebuild requirement",()=>{
