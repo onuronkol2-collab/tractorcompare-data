@@ -61,3 +61,13 @@ test("general engine torque is not mislabeled maximum torque in eight locales",(
     localizedSpecificationName("engine_torque_with_epm","Engine torque with EPM","de")
   );
 });
+
+test("generic engine torque is never falsely labeled maximum in English or Turkish",()=>{
+  const generic={canonical_key:"engine_torque",spec_name:"Engine torque"};
+  const maxRPM={canonical_key:"engine_torque_rpm",spec_name:"Engine speed at maximum torque"};
+  assert.equal(specLabel(generic,"en"),"Engine torque");
+  assert.equal(specLabel(generic,"tr"),"Motor torku");
+  assert.equal(specLabel(maxRPM,"en"),"Engine speed at maximum torque");
+  assert.equal(specLabel(maxRPM,"tr"),"Azami torkta motor devri");
+  for(const lang of LOCALES)assert.doesNotMatch(specLabel(generic,lang),/^maximum torque$|^azami tork$/i);
+});
