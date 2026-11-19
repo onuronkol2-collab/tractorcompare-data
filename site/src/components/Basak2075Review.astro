@@ -1,10 +1,13 @@
 ---
 import SiteLayout from "../layouts/SiteLayout.astro";
 import {getPublicCatalog} from "../lib/catalog";
-import {localizedPath} from "../lib/locales";
-interface Props { lang:"en"|"tr" }
+import {localizedPath,LOCALES,type Locale} from "../lib/locales";
+import {reviewedLanguage} from "../lib/basak-2075-review-i18n";
+interface Props { lang:Locale }
 const {lang}=Astro.props;
 const tr=lang==="tr";
+const localized=reviewedLanguage(lang);
+const localizedDate=new Intl.DateTimeFormat(lang==="zh"?"zh-CN":lang==="pt-br"?"pt-BR":lang,{day:"numeric",month:"long",year:"numeric",timeZone:"UTC"}).format(new Date("2026-11-19T00:00:00Z"));
 const manufacturerUrl=tr
   ?"https://basaktraktor.com.tr/urunler/traktorler/tarla-traktorleri/2075-bk"
   :"https://basaktraktor.com.tr/en/products/tractors/field-tractors/2075-bk";
@@ -18,10 +21,10 @@ const publicModel=catalog.find(t=>
  (t.variant?.toLocaleLowerCase("en").includes("4wd") ?? false)) ??
  catalog.find(t=>t.brand_name.toLocaleLowerCase("tr").includes("başak") &&
  t.model_name.trim().toLocaleLowerCase("tr")==="2075 bk");
-const description=tr
+const baseDescription=tr
   ?"Başak 2075 BK teknik veri analizi: üretici belgesinde belirtilen 72 hp, 273 Nm, 16+8 şanzıman ve 540/540E kuyruk mili. Varyant ve kanıt sınırları."
   :"Başak 2075 BK technical document analysis: manufacturer-stated 72 hp, 273 Nm, 16+8 gears and 540/540E PTO, with variant and evidence limits.";
-const title=tr?"Başak 2075 BK Teknik İncelemesi (Kaynaklı) | TractorVS":"Başak 2075 BK: Source-Backed Technical Review | TractorVS";
+const baseTitle=tr?"Başak 2075 BK Teknik İncelemesi (Kaynaklı) | TractorVS":"Başak 2075 BK: Source-Backed Technical Review | TractorVS";
 const rows: Array<{tr:string;en:string;value:string;trValue?:string}> = [
  {tr:"Motor (üretici açıklaması)",en:"Engine (manufacturer specification)",value:"BT40845T3 · 4 cylinders · 3142 cm³ · turbo/intercooler",trValue:"BT40845T3 · 4 silindir · 3142 cm³ · turbo/ara soğutucu"},
  {tr:"Nominal ve azami motor gücü",en:"Rated and maximum engine power",value:"53 kW / 72 hp @ 2500 rpm"},
@@ -32,7 +35,7 @@ const rows: Array<{tr:string;en:string;value:string;trValue?:string}> = [
  {tr:"Ek ağırlıklar olmadan traktör kütlesi",en:"Tractor weight without additional ballast",value:"3080 kg"},
  {tr:"Yakıt deposu kapasitesi",en:"Fuel tank capacity",value:"72 L"},
 ];
-const sections=tr?[
+const baseSections=tr?[
  {h:"Bu traktör hakkında doğrulanabilenler",p:[
    "Başak'ın 2075 BK için yayımladığı teknik belgede BT40845T3 motor, dört silindir, 3142 cm³ hacim, turbo-intercooler besleme ve 53 kW / 72 hp motor gücü belirtiliyor. Azami tork 273 Nm olarak 1600 dev/dak koşulunda veriliyor. Bunlar bağımsız bir saha ölçümü değil, üreticinin katalog değerleridir.",
    "Mekanik senkromeçli 16 ileri / 8 geri vites ve 4WD elektro-hidrolik kumandası aynı teknik tabloda yer alıyor. İncelenen belgenin 4WD/standart konfigürasyonuna ait bilgiler, farklı pazar veya kabin/2WD seçeneklerine otomatik olarak uygulanmamalıdır."
@@ -67,7 +70,7 @@ const sections=tr?[
    "Verify a current local offer, warranty and parts/service support for the exact equipment and market. TractorVS has not owned or driven this model, fabricated owner reviews, or independently established fault frequency or reliability scores."
  ]}
 ];
-const references=tr?[
+const baseReferences=tr?[
  {name:"Başak Traktör 2075 BK — resmî ürün sayfası",url:manufacturerUrl},
  {name:"Başak Traktör 2075 BK — resmî teknik broşür (PDF)",url:brochureUrl},
  {name:"Başak Traktör 2075 BK Kabin — ayrı varyant",url:cabinUrl},
@@ -78,48 +81,61 @@ const references=tr?[
  {name:"Başak Traktör 2075 BK cab — separate variant",url:cabinUrl},
  {name:"Başak Traktör 2075 BK 2WD — separate variant",url:twoWheelUrl},
 ];
+const title=localized?.title ?? baseTitle;
+const description=localized?.meta ?? baseDescription;
+const sections=localized?localized.sectionTitles.map((h,i)=>({h,p:localized.sectionParagraphs[i]})):baseSections;
+const references=localized?[
+ {name:localized.manufacturerSource,url:manufacturerUrl},
+ {name:localized.pdfSource,url:brochureUrl},
+ {name:localized.cabinSource,url:cabinUrl},
+ {name:localized.twoWheelSource,url:twoWheelUrl}
+]:baseReferences;
 ---
-<SiteLayout lang={lang} title={title} description={description} availableLocales={["en","tr"]}>
+<SiteLayout lang={lang} title={title} description={description} availableLocales={LOCALES}>
   <article class="review-page">
     <div class="container review-wrap">
       <nav aria-label={tr?"İçerik yolu":"Breadcrumb"} class="review-crumb">
         <a href={localizedPath(lang,"/")}>TractorVS</a><span aria-hidden="true">/</span>
-        <span>{tr?"Kaynaklı teknik inceleme":"Source-backed technical review"}</span>
+        <span>{localized?.methodNote ?? (tr?"Kaynaklı teknik inceleme":"Source-backed technical review")}</span>
       </nav>
-      <p class="review-overline">{tr?"ÜRETİCİ BELGESİ ANALİZİ":"MANUFACTURER-DOCUMENT ANALYSIS"}</p>
-      <h1>{tr?"Başak 2075 BK: teknik özelliklerin kaynaklı incelemesi":"Başak 2075 BK: a source-backed technical analysis"}</h1>
-      <p class="review-lead">{tr
+      <p class="review-overline">{localized?.kicker ?? (tr?"ÜRETİCİ BELGESİ ANALİZİ":"MANUFACTURER-DOCUMENT ANALYSIS")}</p>
+      <h1>{localized?.h1 ?? (tr?"Başak 2075 BK: teknik özelliklerin kaynaklı incelemesi":"Başak 2075 BK: a source-backed technical analysis")}</h1>
+      <p class="review-lead">{localized?.lead ?? (tr
         ?"Başak'ın teknik dokümanındaki güç, şanzıman, PTO ve hidrolik verilerini yorumlarken varyant farklarını ve ölçüm sınırlarını ayrı tutuyoruz."
-        :"We examine the engine, transmission, PTO and hydraulic data in Başak's own technical literature while keeping variant differences and measurement limits explicit."}</p>
-      <p class="review-date"><strong>{tr?"Son kontrol:":"Last checked:"}</strong> <time datetime="2026-11-19">{tr?"19 Kasım 2026":"19 November 2026"}</time></p>
-      <p class="review-disclosure">{tr
+        :"We examine the engine, transmission, PTO and hydraulic data in Başak's own technical literature while keeping variant differences and measurement limits explicit.")}</p>
+      <p class="review-date"><strong>{localized?.lastChecked ?? (tr?"Son kontrol:":"Last checked:")}</strong> <time datetime="2026-11-19">{localizedDate}</time></p>
+      <p class="review-disclosure">{localized?.disclaimer ?? (tr
         ?"Bu bir saha testi veya sahip incelemesi değildir. Sayısal değerler Başak'ın resmî teknik broşüründen alınmış üretici beyanlarıdır; bağımsız performans ölçümleri değildir."
-        :"This is not a field test or an owner's review. All numeric values below are manufacturer-stated specifications from Başak's technical document, not independent performance measurements."}</p>
+        :"This is not a field test or an owner's review. All numeric values below are manufacturer-stated specifications from Başak's technical document, not independent performance measurements.")}</p>
       <section class="review-facts" aria-labelledby="facts-heading">
-        <h2 id="facts-heading">{tr?"Üretici belgesindeki teknik veriler":"Figures in the manufacturer's specification"}</h2>
+        <h2 id="facts-heading">{localized?.figures ?? (tr?"Üretici belgesindeki teknik veriler":"Figures in the manufacturer's specification")}</h2>
         <div class="review-table-scroll"><table>
-          <thead><tr><th scope="col">{tr?"Ölçüm / özellik":"Measurement / specification"}</th>
-            <th scope="col">{tr?"Üretici değeri":"Manufacturer's figure"}</th></tr></thead>
-          <tbody>{rows.map(row=><tr>
-            <th scope="row">{tr?row.tr:row.en}</th><td>{tr?row.trValue??row.value:row.value}</td>
+          <thead><tr><th scope="col">{localized?.label ?? (tr?"Ölçüm / özellik":"Measurement / specification")}</th>
+            <th scope="col">{localized?.value ?? (tr?"Üretici değeri":"Manufacturer's figure")}</th></tr></thead>
+          <tbody>{rows.map((row,i)=><tr>
+            <th scope="row">{localized?.rowLabels[i] ?? (tr?row.tr:row.en)}</th>
+            <td>{localized && i===0?localized.localizedValues[0]:
+               localized && i===3?localized.localizedValues[1]:
+               localized && i===4?localized.localizedValues[2]:
+               tr?row.trValue??row.value:row.value}</td>
           </tr>)}</tbody>
         </table></div>
-        <p class="review-source-line">{tr?"Tablo kaynağı:":"Table source:"} <a href={brochureUrl} target="_blank" rel="noopener noreferrer">{tr?"Başak 2075 BK resmî teknik broşürü":"Başak 2075 BK official brochure"}</a>.
-          {tr?"Değerler model yılı, pazar veya opsiyonlara göre değişebilir.":"Actual equipment may differ by year, market and options."}</p>
+        <p class="review-source-line">{localized?.tableSource ?? (tr?"Tablo kaynağı:":"Table source:")} <a href={brochureUrl} target="_blank" rel="noopener noreferrer">{localized?.pdfSource ?? (tr?"Başak 2075 BK resmî teknik broşürü":"Başak 2075 BK official brochure")}</a>.
+          {localized?.variantNote ?? (tr?"Değerler model yılı, pazar veya opsiyonlara göre değişebilir.":"Actual equipment may differ by year, market and options.")}</p>
       </section>
       {sections.map(section=><section class="review-prose">
         <h2>{section.h}</h2>
         {section.p.map(text=><p>{text}</p>)}
       </section>)}
       <section class="review-references">
-        <h2>{tr?"Kaynak tablosu":"Source register"}</h2>
-        <p>{tr?"Yalnızca üreticinin kendi kaynakları. Erişim/denetim tarihi: 19 Kasım 2026.":"Original manufacturer sources only. Checked 19 November 2026."}</p>
+        <h2>{localized?.sourceTitle ?? (tr?"Kaynak tablosu":"Source register")}</h2>
+        <p>{localized?.sourceIntro ?? (tr?"Yalnızca üreticinin kendi kaynakları. Erişim/denetim tarihi: 19 Kasım 2026.":"Original manufacturer sources only. Checked 19 November 2026.")}</p>
         <ul>{references.map(item=><li><a href={item.url} target="_blank" rel="noopener noreferrer">{item.name}</a></li>)}</ul>
       </section>
       <nav class="review-next" aria-label={tr?"İlgili sayfalar":"Related pages"}>
-        {publicModel && <a href={localizedPath(lang,"/tractors/"+publicModel.slug+"/")}>{tr?"TractorVS model sayfası":"TractorVS model details"}</a>}
-        <a href={localizedPath(lang,"/guides/choosing-a-tractor/")}>{tr?"Traktör seçim rehberi":"Tractor selection guide"}</a>
-        <a href={localizedPath(lang,"/tractors/")}>{tr?"Tüm modeller":"All models"}</a>
+        {publicModel && <a href={localizedPath(lang,"/tractors/"+publicModel.slug+"/")}>{localized?.modelPage ?? (tr?"TractorVS model sayfası":"TractorVS model details")}</a>}
+        <a href={localizedPath(lang,"/guides/choosing-a-tractor/")}>{localized?.selectionGuide ?? (tr?"Traktör seçim rehberi":"Tractor selection guide")}</a>
+        <a href={localizedPath(lang,"/tractors/")}>{localized?.catalog ?? (tr?"Tüm modeller":"All models")}</a>
       </nav>
     </div>
   </article>

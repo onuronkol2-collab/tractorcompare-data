@@ -98,8 +98,8 @@ const summaryItems = [
   </section>}
   {hasBasak2075Analysis && <section class="model-technical-analysis-link" aria-label={t(lang,"reviewedModelAnalysis")}>
     <div class="container">
-      <a href={lang==="tr"?"/tr/reviews/basak-2075-bk/":"/reviews/basak-2075-bk/"}>
-        {t(lang,"reviewedModelAnalysis")}{lang==="en"||lang==="tr"?"":" (EN)"} <span aria-hidden="true">↗</span>
+      <a href={localizedPath(lang,"/reviews/basak-2075-bk/")}>
+        {t(lang,"reviewedModelAnalysis")} <span aria-hidden="true">↗</span>
       </a>
     </div>
   </section>}
