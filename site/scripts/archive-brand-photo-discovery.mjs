@@ -1,3 +1,4 @@
+import {allowedPhotoReuseLicense} from "./photo-license-check.mjs";
 /** Bulk archive research; brand-level Commons searches avoid 405 API requests.
  * All results are candidates only. They NEVER publish to TractorVS.
  */
@@ -12,12 +13,7 @@ const aliases={
   "Deutz-Fahr":["Deutz-Fahr"],"Tümosan":["Tümosan","Tumosan"],
   "Lamborghini Trattori":["Lamborghini"]
 };
-const legal=(label,url)=>{
-  const name=String(label||"").toLowerCase();
-  return (/(^| )cc by(?:-sa)?(?: |$)|cc0|public domain/i.test(name)||
-    /creativecommons\.org\/(?:licenses\/by(?:-sa)?\/|publicdomain\/zero\/)/.test(String(url||"")))
-    && !/noncommercial|no derivatives|cc-by-nc|cc-by-nd/.test(name);
-};
+
 async function query(params){
   const url=new URL("https://commons.wikimedia.org/w/api.php");
   url.searchParams.set("action","query");
@@ -79,7 +75,7 @@ for(const [brand,models] of byBrand){
         const license=text("LicenseShortName")||text("UsageTerms");
         const licenseUrl=text("LicenseUrl");
         const author=text("Artist")||text("Credit");
-        if(!legal(license,licenseUrl)||!author||!info.url)continue;
+        if(!allowedPhotoReuseLicense(license,licenseUrl)||!author||!info.url)continue;
         media.push({fileTitle:item.title,photo:info.url,thumbnail:info.thumburl,
           page:info.descriptionurl,photographer:author.slice(0,180),
           license,licenseUrl,width:info.width,height:info.height});
