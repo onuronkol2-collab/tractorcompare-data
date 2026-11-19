@@ -7,7 +7,7 @@ export interface LocalizedReview {
   title:string;meta:string;kicker:string;h1:string;lead:string;
   lastChecked:string;disclaimer:string;figures:string;label:string;value:string;
   rowLabels:[string,string,string,string,string,string,string,string];
-  trValues:[string,string,string];
+  localizedValues:[string,string,string];
   sectionTitles:[string,string,string,string];
   sectionParagraphs:[[string,string],[string,string],[string,string],[string,string]];
   sourceTitle:string;sourceIntro:string;
