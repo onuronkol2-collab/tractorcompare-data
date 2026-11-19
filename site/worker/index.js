@@ -1,9 +1,8 @@
-import { isLocale, localizedPath, preferredLocale, unlocalizedPath } from "../src/lib/locales.ts";
+import { isLocale, localizedPath, unlocalizedPath } from "../src/lib/locales.ts";
 import {resolveApprovedPhotoSource} from "../src/lib/tractor-photos.ts";
 
 const cookieName = "tractorvs_locale";
 const oneYear = 60 * 60 * 24 * 365;
-const botPattern = /(?:googlebot|bingbot|duckduckbot|baiduspider|yandexbot|slurp|crawler|spider|facebookexternalhit|twitterbot|linkedinbot)/i;
 
 function cookieLocale(request) {
   const match = /(?:^|;\s*)tractorvs_locale=([a-z-]+)/i.exec(request.headers.get("cookie") || "");
@@ -82,23 +81,11 @@ export default {
       if (!match || !isLocale(match[1])) return new Response("Unknown locale", {status:404});
       return redirect(internalDestination(url, match[1]), match[1]);
     }
-    if (url.pathname !== "/" || method !== "GET") {
-      return env.ASSETS.fetch(request);
-    }
-
-    // All language URLs remain publicly accessible without geolocation redirects.
-    // Do not redirect crawlers: Google recommends crawlable, stable URLs.
-    const accept = request.headers.get("accept") || "";
-    const mode = request.headers.get("sec-fetch-mode");
-    if (!accept.includes("text/html") ||
-        (mode && mode !== "navigate") ||
-        botPattern.test(request.headers.get("user-agent") || "")) {
-      return env.ASSETS.fetch(request);
-    }
-    const chosen = cookieLocale(request) ||
-      preferredLocale(request.cf?.country, request.headers.get("accept-language") || "");
-    if (chosen === "en") return env.ASSETS.fetch(request);
-    return redirect(localizedPath(chosen, "/") + url.search);
+    // Every language URL, including the English canonical /, returns its own
+    // stable static HTML for both people and crawlers. Country/User-Agent
+    // detection must NOT redirect first-time visits or cloak search engines.
+    // Language changes remain explicit via /language/{locale}/.
+    return env.ASSETS.fetch(request);
   }
 };
 

@@ -1,0 +1,42 @@
+---
+/**
+ * Enhancement for humans on the English root only.
+ * Root HTML and canonical remain stable and crawlable; no browser is redirected.
+ */
+---
+<div class="locale-suggestion" id="locale-suggestion" hidden aria-label="Language suggestion" role="region">
+  <span class="locale-suggestion-copy">Prefer a different language?</span>
+  <a id="locale-suggestion-link" href="/">View language</a>
+  <button id="locale-suggestion-dismiss" type="button" aria-label="Dismiss language suggestion">×</button>
+</div>
+<script>
+  import {suggestedLocale} from "../lib/locale-hint";
+  import {LOCALE_NAMES} from "../lib/locales";
+  const banner=document.getElementById("locale-suggestion");
+  const link=document.getElementById("locale-suggestion-link") as HTMLAnchorElement|null;
+  const dismiss=document.getElementById("locale-suggestion-dismiss");
+  const locale=suggestedLocale(navigator.language);
+  let dismissed=false;
+  try{ dismissed=sessionStorage.getItem("tractorvs_locale_suggestion_dismissed")==="1"; }catch{}
+  if(banner && link && locale && !dismissed){
+    link.href="/language/"+locale+"/?next="+encodeURIComponent("/"+locale+"/");
+    link.lang=locale;
+    link.textContent=LOCALE_NAMES[locale]+" →";
+    banner.hidden=false;
+    dismiss?.addEventListener("click",()=>{
+      banner.hidden=true;
+      try{sessionStorage.setItem("tractorvs_locale_suggestion_dismissed","1");}catch{}
+    });
+  }
+</script>
+<style>
+  .locale-suggestion{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;
+    gap:10px 16px;padding:12px 18px;background:#eaf3e5;color:#244732;border-bottom:1px solid #bcd5ba;
+    font-size:14px;line-height:1.5}
+  .locale-suggestion[hidden]{display:none}
+  .locale-suggestion-copy{font-weight:600}
+  .locale-suggestion a{color:#1f5935;font-weight:800;text-decoration:underline;text-underline-offset:3px}
+  .locale-suggestion button{border:1px solid #8fb395;border-radius:999px;background:transparent;
+    color:#244732;padding:0;width:32px;height:32px;font-size:22px;cursor:pointer}
+  .locale-suggestion :is(a,button):focus-visible{outline:3px solid #276a3a;outline-offset:3px}
+</style>

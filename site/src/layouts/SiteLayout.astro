@@ -2,6 +2,7 @@
 import "../styles/global.css";
 import "../styles/tractor-photos.css";
 import PhotoLightbox from "../components/PhotoLightbox.astro";
+import LocaleSuggestion from "../components/LocaleSuggestion.astro";
 import { brand } from "../config/brand";
 import { LOCALES, LOCALE_NAMES, LOCALE_TAGS, localizedPath, unlocalizedPath, type Locale } from "../lib/locales";
 import { t } from "../lib/ui";
@@ -38,8 +39,7 @@ const alternatives = indexingEnabled
 const languageChoices = LOCALES.map((locale) => ({
   lang: locale,
   label: LOCALE_NAMES[locale],
-  url: "/language/" + locale + "/?next=" +
-    encodeURIComponent(localizedPath(locale, plainPath)),
+  url: localizedPath(locale, plainPath),
 }));
 const openGraphLocale: Record<Locale, string> = {
   en:"en_US", tr:"tr_TR", zh:"zh_CN", hi:"hi_IN", "pt-br":"pt_BR",
@@ -134,6 +134,7 @@ const openGraphLocale: Record<Locale, string> = {
     </header>
 
     <main id="main">
+      {lang==="en" && Astro.url.pathname==="/" && <LocaleSuggestion />}
       <slot />
     </main>
 
@@ -180,9 +181,9 @@ const openGraphLocale: Record<Locale, string> = {
   for (const link of document.querySelectorAll<HTMLAnchorElement>("[data-language-choice]")) {
     const code = link.dataset.languageCode;
     if (!code) continue;
-    const url = new URL(link.href);
-    const destination = new URLSearchParams(url.search).get("next") || "/";
-    url.searchParams.set("next", destination + window.location.search);
-    link.href = url.pathname + url.search;
+    const destination = new URL(link.href);
+    // Preserve model selections on direct canonical locale links.
+    destination.search = window.location.search;
+    link.href = destination.pathname + destination.search;
   }
 </script>
