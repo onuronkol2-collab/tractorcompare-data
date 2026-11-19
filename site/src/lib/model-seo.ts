@@ -1,4 +1,4 @@
-import {hasInternationalSonalikaContext,SONALIKA_EXPORT_COPY} from "./sonalika-context-i18n";
+import {hasInternationalSonalikaContext,SONALIKA_EXPORT_COPY} from "./sonalika-context-i18n.ts";
 import type { TractorRecord } from "./catalog.ts";
 import { officialManufacturerSourceUrl } from "./catalog.ts";
 import { localizedPath, type Locale } from "./locales.ts";
