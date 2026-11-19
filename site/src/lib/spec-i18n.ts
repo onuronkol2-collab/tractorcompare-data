@@ -20,7 +20,7 @@ const TERM: Record<string, readonly string[]> = {
   engine_max_power_rpm: ["最大功率转速","अधिकतम पावर पर इंजन RPM","Rotação na potência máxima","Régime à la puissance maximale","Drehzahl bei maximaler Leistung","Обороты при максимальной мощности","最高出力時エンジン回転数","Régimen a potencia máxima"],
   engine_rated_speed: ["额定发动机转速","रेटेड इंजन RPM","Rotação nominal do motor","Régime nominal du moteur","Nenndrehzahl des Motors","Номинальные обороты двигателя","定格エンジン回転数","Régimen nominal del motor"],
   engine_rated_rpm: ["额定发动机转速","रेटेड इंजन RPM","Rotação nominal do motor","Régime nominal du moteur","Nenndrehzahl des Motors","Номинальные обороты двигателя","定格エンジン回転数","Régimen nominal del motor"],
-  engine_torque: ["最大扭矩","अधिकतम टॉर्क","Torque máximo","Couple maximal","Maximales Drehmoment","Максимальный крутящий момент","最大トルク","Par máximo"],
+  engine_torque: ["发动机扭矩","इंजन टॉर्क","Torque do motor","Couple moteur","Motordrehmoment","Крутящий момент двигателя","エンジントルク","Par motor"],
   engine_torque_rpm: ["最大扭矩转速","अधिकतम टॉर्क पर इंजन RPM","Rotação no torque máximo","Régime au couple maximal","Drehzahl bei maximalem Drehmoment","Обороты при максимальном крутящем моменте","最大トルク発生回転数","Régimen a par máximo"],
   engine_torque_rated_rpm: ["最大扭矩转速","अधिकतम टॉर्क पर इंजन RPM","Rotação no torque máximo","Régime au couple maximal","Drehzahl bei maximalem Drehmoment","Обороты при максимальном крутящем моменте","最大トルク発生回転数","Régimen a par máximo"],
   engine_torque_rise: ["扭矩储备率","टॉर्क रिज़र्व","Reserva de torque","Réserve de couple","Drehmomentanstieg","Запас крутящего момента","トルク上昇率","Reserva de par"],
