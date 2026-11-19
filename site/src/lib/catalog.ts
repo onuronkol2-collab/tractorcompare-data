@@ -642,11 +642,11 @@ export function reviewedIndependentSourceUrl(
   const type = (spec.source_type || "").toLowerCase();
   if ((host === "www.tractordata.com" || host === "tractordata.com")
     && ["web_page", "independent_catalog", "technical_database"].includes(type)
-    && u.pathname.startsWith("/farm-tractors/") && /\\.html$/i.test(u.pathname))
+    && u.pathname.startsWith("/farm-tractors/") && u.pathname.toLowerCase().endsWith(".html"))
     return u.toString();
   if (host === "pruefberichte.dlg.org"
     && ["independent_test", "technical_report"].includes(type)
-    && u.pathname.startsWith("/filestorage/") && /\\.pdf$/i.test(u.pathname))
+    && u.pathname.startsWith("/filestorage/") && u.pathname.toLowerCase().endsWith(".pdf"))
     return u.toString();
   return null;
 }
