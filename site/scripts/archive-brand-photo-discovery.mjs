@@ -1,3 +1,4 @@
+import {matchesPhotoFileModel} from "./photo-model-identity.mjs";
 import {allowedPhotoReuseLicense} from "./photo-license-check.mjs";
 /** Bulk archive research; brand-level Commons searches avoid 405 API requests.
  * All results are candidates only. They NEVER publish to TractorVS.
@@ -44,13 +45,7 @@ for(const r of unique.values()){
   if(!byBrand.has(r.brand))byBrand.set(r.brand,[]);
   byBrand.get(r.brand).push(r);
 }
-function matched(title,brand,model){
-  const name=norm(title.replace(/^File:/i,""));
-  const brandNames=aliases[brand]||[brand];
-  if(!brandNames.some(x=>name.includes(norm(x))))return false;
-  const models=[model,...model.split(/\s*\|\s*/)].map(norm);
-  return models.some(x=>x.length>=3&&name.includes(x));
-}
+
 const results=[],errors=[];
 for(const [brand,models] of byBrand){
   const fileTitles=new Set();
@@ -61,7 +56,7 @@ for(const [brand,models] of byBrand){
         if(item.title?.startsWith("File:"))fileTitles.add(item.title);
     }catch(e){errors.push({brand,stage:"search",error:String(e)});}
   }
-  const titles=[...fileTitles].filter(t=>models.some(m=>matched(t,brand,m.model))).slice(0,90);
+  const titles=[...fileTitles].filter(t=>models.some(m=>matchesPhotoFileModel(brand,m.model,t))).slice(0,90);
   const media=[];
   for(let i=0;i<titles.length;i+=20){
     try{
@@ -84,7 +79,7 @@ for(const [brand,models] of byBrand){
   }
   let coverage=0;
   for(const model of models){
-    const photos=media.filter(v=>matched(v.fileTitle,brand,model.model)).slice(0,6);
+    const photos=media.filter(v=>matchesPhotoFileModel(brand,model.model,v.fileTitle)).slice(0,6);
     if(photos.length)coverage++;
     results.push({...model,photos});
   }
