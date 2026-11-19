@@ -59,6 +59,18 @@ for(const loc of siteMaps){
  }catch(e){error("sitemap-fetch",loc,String(e));}
 }
 const unique=new Set(allPages);
+const editorialPaths=[
+  "/methodology/","/tr/methodology/",
+  ...Object.keys(languages).map(lang=>
+    (lang==="en"?"/":"/"+lang+"/")+"guides/choosing-a-tractor/"),
+  "/reviews/basak-2075-bk/","/tr/reviews/basak-2075-bk/"
+];
+const absentEditorial=editorialPaths.filter(path=>!unique.has(BASE+path));
+for(const path of absentEditorial)
+  warn("editorial-sitemap-lag",path,
+    "Publicly authored editorial page not yet found in fetched production sitemap; verify deployment and CDN cache");
+console.log("TRACTORVS_EDITORIAL_SITEMAP "+
+  JSON.stringify({expected:editorialPaths.length,listed:editorialPaths.length-absentEditorial.length,absent:absentEditorial}));
 if(unique.size!==allPages.length)error("duplicate-sitemap-url","/sitemap-index.xml",
   (allPages.length-unique.size)+" duplicate URLs");
 const modelByLocale=Object.fromEntries(Object.keys(languages).map(k=>[k,new Set()]));
