@@ -1,3 +1,4 @@
+import {matchesPhotoFileModel} from "./photo-model-identity.mjs";
 import {allowedPhotoReuseLicense} from "./photo-license-check.mjs";
 /**
  * One-pass, read-only catalogue image discovery.
@@ -82,16 +83,7 @@ function splitBrandModel(name){
   const p=name.indexOf(" ");return p<0?{brand:name,model:""}:{brand:name.slice(0,p),model:name.slice(p+1)};
 }
 
-function sameModelTitle(brand,model,title){
-  const file=norm(title.replace(/^File:/i,""));
-  const brandTokens=brand.toLowerCase().replace(/[-_]/g," ").split(/\s+/).filter(t=>t.length>1);
-  const brandGood=brandTokens.every(x=>file.includes(norm(x)));
-  const m=norm(model);
-  if(!brandGood||m.length<2)return false;
-  const number=String(model).match(/[0-9]+(?:[.\-][0-9a-z]+)*/i)?.[0]||"";
-  if(number && !file.includes(norm(number)))return false;
-  return file.includes(m);
-}
+
 async function commonsCandidates(record){
   // Search the source model and only manufacturer-confirmed aliases.
   // Alias candidates still require human review: title and CC metadata are NOT
@@ -126,7 +118,7 @@ async function commonsCandidates(record){
     const license=text("LicenseShortName")||text("UsageTerms");
     const licenseUrl=text("LicenseUrl");
     const artist=text("Artist")||text("Credit");
-    const matching=sameModelTitle(record.brand,record.model,page.title||"") ||
+    const matching=matchesPhotoFileModel(record.brand,record.model,page.title||"") ||
       matchesManufacturerPhotoAlias(record.brand,record.model,page.title||"");
     const permitted=allowedPhotoReuseLicense(license,licenseUrl);
     return {fileTitle:page.title,url:info.url||null,
