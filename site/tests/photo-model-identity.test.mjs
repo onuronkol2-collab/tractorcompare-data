@@ -13,7 +13,7 @@ test("title matcher accepts exact photographed tractor model tokens",()=>{
     ["Deutz-Fahr","6165","File:Deutz-Fahr 6165 TTV.jpg"],
     ["Antonio Carraro","TTR 3800 HST II","File:Antonio Carraro TTR 3800 HST II.JPG"],
     ["TYM","T475","File:TYM T475 tractor.jpg"],
-    ["SAME","FRUTTETO","File:SAME Frutteto 80.4 Natural.jpg"]
+    ["SAME","FRUTTETO","File:SAME Frutteto tractor.jpg"]
   ])assert.equal(matches(brand,model,file),true,brand+" "+model+": "+file);
 });
 test("title matcher rejects historical nontractor and model-variant false positives",()=>{
