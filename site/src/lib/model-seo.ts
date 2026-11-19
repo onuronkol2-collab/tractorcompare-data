@@ -1,3 +1,4 @@
+import {hasInternationalSonalikaContext,SONALIKA_EXPORT_COPY} from "./sonalika-context-i18n.ts";
 import type { TractorRecord } from "./catalog.ts";
 import { officialManufacturerSourceUrl } from "./catalog.ts";
 import { localizedPath, type Locale } from "./locales.ts";
@@ -124,7 +125,9 @@ export function modelSeoMetadata(tractor: TractorRecord, lang: Locale) {
   const segments = [
     identity + ".",
     tractor.specifications.length ? copy.specs(tractor.specifications.length) : copy.empty,
-    tractor.horsepower == null ? null : copy.power(tractor.horsepower),
+    tractor.horsepower == null ? null : (hasInternationalSonalikaContext(tractor)
+      ? SONALIKA_EXPORT_COPY[lang].hpDescription(tractor.horsepower)
+      : copy.power(tractor.horsepower)),
     sourceCount ? copy.withSources : copy.withoutSources,
     variantContext && lang === "en" ? copy.note(variantContext.replace(/[.。।]+$/u, "")) : null,
   ].filter((part):part is string=>Boolean(part));

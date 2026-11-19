@@ -8,6 +8,7 @@ import { localizedPath, type Locale } from "../lib/locales";
 import { t } from "../lib/ui";
 import { compareText as cx } from "../lib/compare-ux";
 import { marketDisplayName } from "../lib/market-display";
+import {hasInternationalSonalikaContext,isSonalikaExportSourceNote,SONALIKA_EXPORT_COPY} from "../lib/sonalika-context-i18n.ts";
 import { modelSeoMetadata, modelStructuredData, originalVariantNote } from "../lib/model-seo";
 import { getPublicCatalog } from "../lib/catalog";
 import { morePublishedTractors } from "../lib/related-tractors";
@@ -26,8 +27,10 @@ const originalNote = originalVariantNote(tractor);
 const cover=primaryTractorPhoto(tractor);
 const structuredData = import.meta.env.PUBLIC_INDEXING_ENABLED === "true" && Astro.site
   ? modelStructuredData(tractor, lang, Astro.site.toString()) : null;
+const isSonalikaExport = hasInternationalSonalikaContext(tractor);
+const sonalikaCopy = SONALIKA_EXPORT_COPY[lang];
 const summaryItems = [
-  {label:t(lang,"power"),value:tractor.horsepower!=null?tractor.horsepower+" HP":null},
+  {label:isSonalikaExport ? sonalikaCopy.hpLabel : t(lang,"power"),value:tractor.horsepower!=null?tractor.horsepower+" HP":null},
   {label:t(lang,"engine"),value:tractor.engine},
   {label:t(lang,"transmission"),value:tractor.transmission},
   {label:t(lang,"weight"),value:tractor.weight_kg!=null?tractor.weight_kg+" kg":null},
@@ -61,6 +64,7 @@ const summaryItems = [
       <p class="eyebrow"><span class="eyebrow-mark"></span>{t(lang,"technicalSpecs")}</p>
       <h2>{t(lang,"technicalSpecs")}</h2>
     </div><p>{t(lang,"modelSpecIntro")}</p></div>
+    {isSonalikaExport && <aside class="model-spec-warning" role="note"><strong>{sonalikaCopy.heading}</strong><p>{sonalikaCopy.note}</p></aside>}
     {manufacturerDiscrepancies.length>0 && <aside class="model-spec-warning" role="note">
       <strong>{t(lang,"manufacturerDiscrepancy")}</strong>
       {manufacturerDiscrepancies.map((note)=><p>{note}</p>)}
@@ -70,7 +74,7 @@ const summaryItems = [
         {group.specifications.map((spec)=><article class="model-spec-card">
           <div class="model-spec-top"><h4>{specLabel(spec,lang)}</h4>{spec.rated_rpm!=null&&<span>{spec.rated_rpm} rpm</span>}</div>
           <p class="model-spec-value">{spec.spec_value}{spec.unit?" "+spec.unit:""}</p>
-          {spec.measurement_standard&&<p class="model-spec-note">{spec.measurement_standard}</p>}
+          {spec.measurement_standard&&!isSonalikaExportSourceNote(spec.measurement_standard)&&<p class="model-spec-note">{spec.measurement_standard}</p>}
           {officialManufacturerSourceUrl(spec,tractor.brand_name) && <div class="model-spec-source">
             <a href={officialManufacturerSourceUrl(spec,tractor.brand_name)!} target="_blank" rel="noopener noreferrer">{t(lang,"manufacturerSource")} ↗</a>
           </div>}
