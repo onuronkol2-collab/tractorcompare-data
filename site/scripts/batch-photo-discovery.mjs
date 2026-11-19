@@ -11,6 +11,7 @@
  */
 import {writeFile,readFile,mkdir} from "node:fs/promises";
 import {resolve} from "node:path";
+import {manufacturerPhotoAlias,matchesManufacturerPhotoAlias} from "./photo-model-aliases.mjs";
 
 const ORIGIN=process.env.TRACTORVS_URL||"https://tractorvs.com";
 const OUTPUT=resolve(process.env.TRACTOR_IMAGE_REPORT_DIR||"./photo-discovery-report");
@@ -97,20 +98,32 @@ function sameModelTitle(brand,model,title){
   return file.includes(m);
 }
 async function commonsCandidates(record){
-  const q=record.brand+" "+record.model;
-  const url=new URL("https://commons.wikimedia.org/w/api.php");
-  url.searchParams.set("action","query");
-  url.searchParams.set("format","json");
-  url.searchParams.set("formatversion","2");
-  url.searchParams.set("generator","search");
-  url.searchParams.set("gsrsearch","intitle:"+q);
-  url.searchParams.set("gsrnamespace","6");
-  url.searchParams.set("gsrlimit","15");
-  url.searchParams.set("prop","imageinfo");
-  url.searchParams.set("iiprop","url|size|mime|extmetadata");
-  url.searchParams.set("iiurlwidth","960");
-  const body=await get(url.toString(),true);
-  const pages=Array.isArray(body.query?.pages)?body.query.pages:[];
+  // Search the source model and only manufacturer-confirmed aliases.
+  // Alias candidates still require human review: title and CC metadata are NOT
+  // enough to prove exact model, configuration and licensing provenance.
+  const alias=manufacturerPhotoAlias(record.brand,record.model);
+  const searches=[record.brand+" "+record.model];
+  if(alias)searches.push(record.brand+" "+alias);
+  const found=new Map();
+  for(const q of searches){
+    const url=new URL("https://commons.wikimedia.org/w/api.php");
+    url.searchParams.set("action","query");
+    url.searchParams.set("format","json");
+    url.searchParams.set("formatversion","2");
+    url.searchParams.set("generator","search");
+    url.searchParams.set("gsrsearch","intitle:"+q);
+    url.searchParams.set("gsrnamespace","6");
+    url.searchParams.set("gsrlimit","15");
+    url.searchParams.set("prop","imageinfo");
+    url.searchParams.set("iiprop","url|size|mime|extmetadata");
+    url.searchParams.set("iiurlwidth","960");
+    const body=await get(url.toString(),true);
+    for(const page of Array.isArray(body.query?.pages)?body.query.pages:[]){
+      if(page.title)found.set(page.title,page);
+    }
+    if(q!==searches.at(-1))await delay(1250);
+  }
+  const pages=[...found.values()];
   const results=pages.map(page=>{
     const info=page.imageinfo?.[0]||{};
     const meta=info.extmetadata||{};
@@ -118,7 +131,8 @@ async function commonsCandidates(record){
     const license=text("LicenseShortName")||text("UsageTerms");
     const licenseUrl=text("LicenseUrl");
     const artist=text("Artist")||text("Credit");
-    const matching=sameModelTitle(record.brand,record.model,page.title||"");
+    const matching=sameModelTitle(record.brand,record.model,page.title||"") ||
+      matchesManufacturerPhotoAlias(record.brand,record.model,page.title||"");
     const permitted=supportedLicense(license,licenseUrl);
     return {fileTitle:page.title,url:info.url||null,
       thumbnail:info.thumburl||null,
@@ -129,7 +143,7 @@ async function commonsCandidates(record){
       reviewStatus:matching&&permitted&&artist&&info.url?"human_review_required":"unverified"};
   }).filter(x=>x.modelTextMatch || x.reuseLicensePermitted).slice(0,12);
   results.sort((a,b)=>Number(b.modelTextMatch&&b.reuseLicensePermitted)-Number(a.modelTextMatch&&a.reuseLicensePermitted));
-  return {search:q,matches:results.length,candidates:results};
+  return {search:searches.join(" | "),matches:results.length,candidates:results};
 }
 async function main(){
   await mkdir(OUTPUT,{recursive:true});
