@@ -1,0 +1,9 @@
+---
+import Basak2075Review from "../../../../components/Basak2075Review.astro";
+import {NEW_LOCALES} from "../../../../lib/locales";
+export function getStaticPaths() {
+  return NEW_LOCALES.map(locale=>({params:{locale},props:{locale}}));
+}
+const {locale}=Astro.props;
+---
+<Basak2075Review lang={locale} />
