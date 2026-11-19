@@ -28,6 +28,24 @@ jobs:
               for item in z.infolist()[:100]:
                 print('TRACTOR_ARCHIVE_FILE '+str({'filename':item.filename,'bytes':item.file_size}))
           PY
+      - name: Inspect archive structure without exposing private data
+        run: |
+          python - <<'PY'
+          import zipfile,json,re
+          with zipfile.ZipFile('tractordata.zip') as z:
+            raw=z.read('sql.txt').decode('utf-8','replace')
+          data={'size':len(raw),'starts_with_json':raw.lstrip().startswith(('{','[')),
+            'sql_copy_tractors':len(re.findall(r'COPY\\s+(?:public\\.)?tractors',raw,re.I)),
+            'sql_insert_tractors':len(re.findall(r'INSERT\\s+INTO\\s+(?:public\\.)?tractors',raw,re.I)),
+            'has_tractor_status':bool(re.search(r'model_name|tractor_id',raw,re.I))}
+          try:
+            parsed=json.loads(raw)
+            data['json_type']=type(parsed).__name__
+            if isinstance(parsed,dict):data['top_keys']=list(parsed)[:20]
+            elif isinstance(parsed,list):data['top_items']=len(parsed)
+          except Exception:data['json_type']='not-json'
+          print('TRACTOR_ARCHIVE_INSPECT '+json.dumps(data))
+          PY
       - name: Research all published tractor models and licensed Commons candidates
         run: node site/scripts/batch-photo-discovery.mjs
       - name: Preserve candidates and license evidence for review
