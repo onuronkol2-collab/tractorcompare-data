@@ -1,0 +1,23 @@
+name: TractorVS approved library photograph QA
+on:
+  pull_request:
+    paths:
+      - "site/scripts/verify-photo-library.mjs"
+      - ".github/workflows/photo-library-quality.yml"
+  workflow_dispatch:
+  # Weekly after the public image-sitemap check; non-publishing, read-only.
+  schedule:
+    - cron: "45 6 * * 1"
+permissions:
+  contents: read
+jobs:
+  verify_photos:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22.23.4"
+      - name: Check every approved first-party photo resolves to a real JPEG
+        run: node --experimental-strip-types site/scripts/verify-photo-library.mjs
