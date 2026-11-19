@@ -12,9 +12,9 @@ const tractor=(brand_name,model_name)=>({
   engine:null,transmission:null,drivetrain:null,weight_kg:null,specifications:[]
 });
 test("only exact matching tractor model identity receives a verified photo",()=>{
-  assert.equal(APPROVED_TRACTOR_PHOTOS.length,10);
+  assert.equal(APPROVED_TRACTOR_PHOTOS.length,11);
   assert.equal(tractorPhotos(tractor("Belarus","82.1")).length,4);
-  assert.equal(tractorPhotos(tractor("Belarus","80.1")).length,0);
+  assert.equal(tractorPhotos(tractor("Belarus","80.1")).length,1);
   assert.equal(tractorPhotos(tractor("New Holland","T5.110")).length,1);
   assert.equal(tractorPhotos(tractor("New Holland","T6.180")).length,1);
   assert.equal(tractorPhotos(tractor("Case IH","Puma 150")).length,1);

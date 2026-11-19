@@ -105,6 +105,15 @@ const PHOTO_ORIGINS:readonly Omit<TractorPhoto,"originThumbUrl"|"originDisplayUr
     sourcePage:"https://commons.wikimedia.org/wiki/File:McCormick_X5.110_HC_Agritechnica_2023_(DSC06793).jpg",
     licenseName:"CC BY-SA 4.0",licenseUrl:"https://creativecommons.org/licenses/by-sa/4.0/",
     configurationExact:false
+  },
+  {brand:"Belarus",model:"80.1",fileId:"belarus-80-1-nikolai-bulykin-kosmos-2026",
+    thumbUrl:W+"thumb/7/72/%D0%9A%D0%BE%D1%81%D0%BC%D0%BE%D1%81%2C_%D0%9C%D0%A2%D0%97-80.1_%D0%BD%D0%B0_%D0%96%D0%B5%D0%BB%D1%82%D0%BE%D0%BA%D1%81%D0%B0%D0%BD%D0%B5.jpg/480px-%D0%9A%D0%BE%D1%81%D0%BC%D0%BE%D1%81%2C_%D0%9C%D0%A2%D0%97-80.1_%D0%BD%D0%B0_%D0%96%D0%B5%D0%BB%D1%82%D0%BE%D0%BA%D1%81%D0%B0%D0%BD%D0%B5.jpg",
+    displayUrl:W+"thumb/7/72/%D0%9A%D0%BE%D1%81%D0%BC%D0%BE%D1%81%2C_%D0%9C%D0%A2%D0%97-80.1_%D0%BD%D0%B0_%D0%96%D0%B5%D0%BB%D1%82%D0%BE%D0%BA%D1%81%D0%B0%D0%BD%D0%B5.jpg/960px-%D0%9A%D0%BE%D1%81%D0%BC%D0%BE%D1%81%2C_%D0%9C%D0%A2%D0%97-80.1_%D0%BD%D0%B0_%D0%96%D0%B5%D0%BB%D1%82%D0%BE%D0%BA%D1%81%D0%B0%D0%BD%D0%B5.jpg",
+    fullUrl:W+"7/72/%D0%9A%D0%BE%D1%81%D0%BC%D0%BE%D1%81%2C_%D0%9C%D0%A2%D0%97-80.1_%D0%BD%D0%B0_%D0%96%D0%B5%D0%BB%D1%82%D0%BE%D0%BA%D1%81%D0%B0%D0%BD%D0%B5.jpg",
+    width:4525,height:2545,photographer:"Nikolai Bulykin",
+    sourcePage:"https://commons.wikimedia.org/wiki/File:%D0%9A%D0%BE%D1%81%D0%BC%D0%BE%D1%81%2C_%D0%9C%D0%A2%D0%97-80.1_%D0%BD%D0%B0_%D0%96%D0%B5%D0%BB%D1%82%D0%BE%D0%BA%D1%81%D0%B0%D0%BD%D0%B5.jpg",
+    licenseName:"CC BY-SA 4.0",licenseUrl:"https://creativecommons.org/licenses/by-sa/4.0/",
+    configurationExact:false
   }
 ];
 /** Stable, first-party indexable image URLs; a fixed Worker allowlist proxies only approved photos. */
