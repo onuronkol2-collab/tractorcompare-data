@@ -1,0 +1,107 @@
+---
+import SiteLayout from "../layouts/SiteLayout.astro";
+import type {Locale} from "../lib/locales";
+
+interface Props {lang:"en"|"tr";}
+const {lang}=Astro.props;
+const tr=lang==="tr";
+const title=tr?"TractorVS Verileri Nasıl Doğrular? | Kaynak ve Yöntem":"How TractorVS Checks Data | Sources and Method";
+const description=tr
+  ?"TractorVS teknik veri kaynaklarını, farklı varyantları, görsel kullanım haklarını ve veri sınırlamalarını nasıl ele alıyor?"
+  :"How TractorVS handles tractor identity, manufacturer documentation, technical specifications, photo licenses and limitations.";
+const sections=tr?[
+ {heading:"Hangi modeller yayımlanır?",body:[
+  "Sitedeki traktör sayfaları, yalnızca yayımlanmış modellerin yer aldığı herkese açık katalogdan oluşturulur. Taslak ve arşiv modelleri otomatik olarak indekslenen model sayfalarına dönüştürülmez.",
+  "Marka ve model adı tek başına her traktörü tanımlamaya yetmeyebilir. Üretim yılı, ülke pazarı, şanzıman, motor, kabin ve diğer donanım farkları ayrı varyantlara işaret edebilir. Aynı ailenin farklı donanımlarını tek bir teknik değer gibi birleştirmemeye çalışıyoruz."
+ ]},
+ {heading:"Teknik özelliklerin kanıtı",body:[
+  "Bir teknik değerin yanında bulunan kaynak bağlantısı ile o değerin üretici tarafından gerçekten belgelenmiş olması farklı şeylerdir. Kaynak değerlendirmesinde geçerli URL, değeri destekleyen açıklama ve doğrulama tarihi gibi kanıtların varlığı dikkate alınır. Birincil üretici belgesi ve üçüncü taraf raporu eşdeğer olarak sunulmaz.",
+  "Ölçümlerin birimleri ve koşulları korunur: örneğin nominal güç ile azami güç, PTO gücüyle motor gücü; kaldırma kapasitesiyle hidrolik debi aynı kavram değildir. Çelişen veya eksik verileri kesin sonuçlara dönüştürmeyiz."
+ ]},
+ {heading:"Karşılaştırma nasıl çalışır?",body:[
+  "Karşılaştırma tablosu, yayımlanmış model kayıtlarındaki teknik özelliklerden oluşur. Aynı adı taşıyan ölçümler farklı birim, standart, devir veya donanım koşullarına sahipse ayrı tutulabilir. Eksik bir değer tahmin edilmez.",
+  "Bir karşılaştırma, sahada yapılan bağımsız performans veya dayanıklılık testi anlamına gelmez. Traktör seçiminde ekipman üreticisinin şartlarını, yerel servis koşullarını ve gerektiğinde nitelikli uzman değerlendirmesini ayrıca dikkate alın."
+ ]},
+ {heading:"Fotoğraf ve lisans politikası",body:[
+  "Gerçek model fotoğraflarını yalnız model eşleşmesi ve yeniden kullanım hakkı birlikte doğrulandığında kullanırız. Mevcut fotoğrafların yanında fotoğrafçı ve lisans bağlantıları gösterilir; fotoğraftaki donanım kayıtlı varyanttan farklıysa uyarı gösterilebilir.",
+  "Bir fotoğraf için doğrulama yeterli değilse aynı traktörmüş gibi başka bir modelin görselini veya yapay zekâ üretimi gerçekçi bir resim sunmayız. Bunun yerine fotoğrafın henüz bulunmadığını açıkça belirtiriz."
+ ]},
+ {heading:"Fiyatlar, puanlar ve kullanıcı deneyimi",body:[
+  "Pazar bazlı fiyat bilgisi bulunduğunda tarih, para birimi ve ilgili ülke bağlamında değerlendirilmelidir; kaynaklı fiyat yoksa bunu belirtiriz. Ürünler için doğrulanmamış fiyat, kullanıcı yorumu veya satış teklifi oluşturmayız.",
+  "TractorVS'in teknik veri karşılaştırması, traktörleri bizzat kullandığımız veya test ettiğimiz iddiası değildir. Yeterli örnekleme dayanmayan arıza güvenilirliği sıralamaları, puanlar ve ödüller yayımlanmamalıdır."
+ ]},
+ {heading:"Düzeltmeler ve kaynak kodu",body:[
+  "Kaynak bağlantısı artık çalışmıyorsa veya bir varyantın teknik değeri yanlışsa ilgili model, kaynak ve iddianın hangi kısmının sorunlu olduğunu belirtmek önemlidir. Her düzeltmenin kaynağına göre değerlendirilmesi gerekir.",
+  "Katalog gösterimi, kaynak denetimi ve fotoğraf lisansı kurallarının bir kısmı açık kaynak kodunda incelenebilir. Bu açıklama, verilerin kusursuz olduğu veya bütün teknik özelliklerin bağımsız laboratuvarda ölçüldüğü garantisi değildir."
+ ]}
+]:[
+ {heading:"Which tractors are published?",body:[
+  "Indexed tractor detail pages are built from the public catalogue of published models, not from draft or archived records. A model discovered by research does not automatically become a published page.",
+  "Brand and model names alone may not distinguish engines, years, markets, transmissions, cabins or other equipment. We keep variant context rather than merging conflicting configurations into a single specification."
+ ]},
+ {heading:"What counts as source evidence?",body:[
+  "A source URL is not by itself proof that a measurement is manufacturer-confirmed. Evidence assessment considers a valid source link, supporting excerpt and verification date. Original manufacturer documentation and independent or third-party reporting are not presented as equivalent.",
+  "Units and measurement contexts matter: rated engine power, maximum engine power and PTO output are different metrics, just as rear lifting capacity and hydraulic flow are different. Missing values are not filled with guesses."
+ ]},
+ {heading:"How comparisons work",body:[
+  "Comparison tables use technical fields from published tractor records. Measurements with distinct units, standards, engine speeds or equipment contexts may remain separate rather than being combined incorrectly.",
+  "These comparisons are document-based technical analyses, not first-hand field tests of reliability, performance or durability. Before purchasing or selecting an implement, also consult the relevant operator manual and local qualified advice."
+ ]},
+ {heading:"Photographs and permissions",body:[
+  "A real photograph is used only when the pictured model identity and redistribution rights are both supported. Published gallery photographs include photographer attribution and a link to the original file and reuse license. Equipment pictured may differ from the specific variant recorded.",
+  "Where an approved photograph is unavailable, we display an explicit missing-photo notice. We do not substitute a different model, fabricate an image or assume that a manufacturer publicity photo is free for commercial reuse."
+ ]},
+ {heading:"Prices, ratings and personal experience",body:[
+  "Market-specific prices are meaningful only with their market, currency, date and source. If there is no relevant reviewed price we show that the price is unknown rather than inventing a figure. The site does not generate fictitious customer ratings or commercial offers.",
+  "Technical specification analysis is not a claim that TractorVS personally tested the tractor. Reliability rankings or fault scores should not be published without a disclosed method, evidence and adequate sample size."
+ ]},
+ {heading:"Corrections and inspectable sources",body:[
+  "To flag a possible error, identify the exact tractor variant, specification and document supporting the correction. Conflicting sources need review before a value can be treated as established.",
+  "The public repository contains the catalogue presentation rules, model evidence handling and photo policy. This methodology is a description of the site's approach, not a guarantee that every public specification is independently verified."
+ ]}
+];
+---
+<SiteLayout lang={lang} title={title} description={description} availableLocales={["en","tr"]}>
+  <article class="method-page">
+    <div class="container method-container">
+      <p class="method-overline">{tr?"TRACTORVS · ŞEFFAFLIK":"TRACTORVS · TRANSPARENCY"}</p>
+      <h1>{tr?"TractorVS verileri nasıl doğrular?":"How TractorVS checks its tractor data"}</h1>
+      <p class="method-lead">{tr
+        ?"Model kimliği, teknik belgeler, karşılaştırmalar ve görseller için hangi kanıtları kullandığımızı ve sınırlarımızı burada açıklıyoruz."
+        :"How model identity, engineering documents, comparison data and media rights are handled—and where verification remains limited."}</p>
+      <p class="method-updated"><strong>{tr?"Son güncelleme:":"Last updated:"}</strong> <time datetime="2026-11-19">{tr?"19 Kasım 2026":"19 November 2026"}</time></p>
+      {sections.map((section)=> <section class="method-section">
+        <h2>{section.heading}</h2>
+        {section.body.map((line)=><p>{line}</p>)}
+      </section>)}
+      <section class="method-references">
+        <h2>{tr?"İncelenebilir kaynaklar":"Inspect the public sources"}</h2>
+        <p>{tr
+          ?"Aşağıdaki bağlantılar kaynak kodunu ve fotoğraf politikasını gösterir. Üretici teknik belgelerine ilgili traktör sayfalarındaki bağlantılardan ulaşabilirsiniz."
+          :"These links expose the code and media policy. For manufacturer source documents, use the source links shown alongside the corresponding tractor specifications."}</p>
+        <ul>
+          <li><a href="https://github.com/onuronkol2-collab/tractorcompare-data/blob/main/site/src/lib/catalog.ts" rel="noopener noreferrer" target="_blank">{tr?"Katalog ve teknik veri değerlendirme kodu":"Public catalogue and evidence logic"}</a></li>
+          <li><a href="https://github.com/onuronkol2-collab/tractorcompare-data/blob/main/site/docs/TRACTORVS_IMAGE_POLICY.md" rel="noopener noreferrer" target="_blank">{tr?"Fotoğraf kullanım politikası":"Photographic media and licensing policy"}</a></li>
+          <li><a href="https://github.com/onuronkol2-collab/tractorcompare-data/issues" rel="noopener noreferrer" target="_blank">{tr?"Hata veya düzeltme bildirimleri (GitHub)":"Report corrections or issues (GitHub)"}</a></li>
+        </ul>
+      </section>
+    </div>
+  </article>
+</SiteLayout>
+<style>
+  .method-page{padding:clamp(44px,6vw,80px) 0 90px;background:#f7faf4;color:#203629}
+  .method-container{max-width:880px}
+  .method-overline{letter-spacing:.11em;font-size:12px;font-weight:850;color:#3d7550}
+  .method-page h1{font-size:clamp(31px,5vw,53px);line-height:1.15;letter-spacing:-.035em;margin:14px 0 18px;color:#152e1e}
+  .method-lead{font-size:clamp(16px,1.8vw,20px);line-height:1.7;color:#385841}
+  .method-updated{font-size:13px;color:#52705a;margin:20px 0 38px}
+  .method-section{padding:24px 0;border-top:1px solid #dce7d7}
+  .method-section h2,.method-references h2{font-size:clamp(21px,2.7vw,28px);line-height:1.25;margin:0 0 14px}
+  .method-section p,.method-references p{font-size:16px;line-height:1.85;color:#3e5546;margin:0 0 14px}
+  .method-references{padding:26px 24px;background:#e9f2e6;border:1px solid #cee1c7;border-radius:14px}
+  .method-references ul{padding-left:20px;margin:15px 0 0}
+  .method-references li{margin:10px 0;line-height:1.7}
+  .method-references a{color:#185c32;text-decoration:underline;text-underline-offset:3px;overflow-wrap:anywhere}
+  .method-references a:focus-visible{outline:3px solid #2e8552;outline-offset:3px}
+  @media(max-width:620px){.method-page{padding:40px 0 60px}.method-references{padding:20px}}
+</style>
