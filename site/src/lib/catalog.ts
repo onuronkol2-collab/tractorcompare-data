@@ -607,7 +607,7 @@ const approvedManufacturerHosts: Record<string, string[]> = {
   "tym": ["tym.world"],
   "fendt": ["fendt.com"],
   "massey ferguson": ["masseyferguson.com"],
-  "ls tractor": ["lstractor.com"],
+  "ls tractor": ["lstractor.com", "lstractorusa.com"],
   "mccormick": ["mccormick-tractors.com"],
   "landini": ["landini-tractors.com"],
 };
