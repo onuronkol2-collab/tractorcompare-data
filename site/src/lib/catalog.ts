@@ -611,6 +611,9 @@ const approvedManufacturerHosts: Record<string, string[]> = {
   "mccormick": ["mccormick-tractors.com"],
   "landini": ["landini-tractors.com"],
   "sonalika": ["international.sonalika.com"],
+  "yanmar": ["yanmar.com"],
+  "swaraj": ["swarajtractors.com"],
+  "kioti": ["kioti.com", "kioti-uk.com"],
 };
 
 // The original German F36 brochure is served from TYM's named Umbraco media
@@ -620,6 +623,33 @@ const approvedExactManufacturerDocuments: Record<string, string[]> = {
     "https://tym-new.euwest01.umbraco.io/media/b01j3nc1/f36-produktbroschu-re.pdf",
   ],
 };
+
+/**
+ * Established independent reference links are published ONLY for evidence-backed
+ * fields from an explicitly reviewed specialist hostname. The external source
+ * is attribution, NOT an independent confirmation by a tractor manufacturer.
+ * No unknown dealer, forum, redirect, homepage or arbitrary 'web_page' qualifies.
+ */
+export function reviewedIndependentSourceUrl(
+  spec: Pick<PublicSpec, "source_url" | "source_type" | "evidence_text" | "verified_at">,
+): string | null {
+  if (specificationEvidenceLevel(spec) !== "third_party_reported") return null;
+  const urlText = safeHttpUrl(spec.source_url);
+  if (!urlText) return null;
+  const u = new URL(urlText);
+  if (u.protocol !== "https:" || u.username || u.password || u.port) return null;
+  const host = u.hostname.toLowerCase();
+  const type = (spec.source_type || "").toLowerCase();
+  if ((host === "www.tractordata.com" || host === "tractordata.com")
+    && ["web_page", "independent_catalog", "technical_database"].includes(type)
+    && u.pathname.startsWith("/farm-tractors/") && u.pathname.toLowerCase().endsWith(".html"))
+    return u.toString();
+  if (host === "pruefberichte.dlg.org"
+    && ["independent_test", "technical_report"].includes(type)
+    && u.pathname.startsWith("/filestorage/") && u.pathname.toLowerCase().endsWith(".pdf"))
+    return u.toString();
+  return null;
+}
 
 export function officialManufacturerSourceUrl(
   spec: Pick<PublicSpec, "source_url" | "source_type" | "evidence_text" | "verified_at">,

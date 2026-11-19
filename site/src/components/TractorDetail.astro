@@ -3,7 +3,8 @@ import SiteLayout from "../layouts/SiteLayout.astro";
 import TractorMarketPrice from "./TractorMarketPrice.astro";
 import TractorPhoto from "./TractorPhoto.astro";
 import {primaryTractorPhoto} from "../lib/tractor-photos";
-import { groupSpecifications, officialManufacturerSourceUrl, specLabel, verificationNotice, type TractorRecord } from "../lib/catalog";
+import { groupSpecifications, officialManufacturerSourceUrl, reviewedIndependentSourceUrl, specLabel, verificationNotice, type TractorRecord } from "../lib/catalog";
+import {INDEPENDENT_SOURCE_COPY} from "../lib/independent-source-i18n.ts";
 import { localizedPath, type Locale } from "../lib/locales";
 import { t } from "../lib/ui";
 import { compareText as cx } from "../lib/compare-ux";
@@ -77,6 +78,9 @@ const summaryItems = [
           {spec.measurement_standard&&!isSonalikaExportSourceNote(spec.measurement_standard)&&<p class="model-spec-note">{spec.measurement_standard}</p>}
           {officialManufacturerSourceUrl(spec,tractor.brand_name) && <div class="model-spec-source">
             <a href={officialManufacturerSourceUrl(spec,tractor.brand_name)!} target="_blank" rel="noopener noreferrer">{t(lang,"manufacturerSource")} ↗</a>
+          </div>}
+          {reviewedIndependentSourceUrl(spec) && <div class="model-spec-source">
+            <a href={reviewedIndependentSourceUrl(spec)!} target="_blank" rel="noopener noreferrer">{INDEPENDENT_SOURCE_COPY[lang].label} ↗</a>
           </div>}
         </article>)}
       </div></section>)}</div>
