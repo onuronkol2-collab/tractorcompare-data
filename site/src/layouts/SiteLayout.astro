@@ -15,9 +15,10 @@ interface Props {
   structuredData?: Record<string, unknown> | null;
   ogImage?: string | null;
   indexable?: boolean;
+  availableLocales?: readonly Locale[];
 }
 
-const { lang, title, description, structuredData = null, ogImage = null, indexable = true } = Astro.props;
+const { lang, title, description, structuredData = null, ogImage = null, indexable = true, availableLocales = LOCALES } = Astro.props;
 // Escape literal HTML opener characters before embedding JSON-LD from database text.
 const structuredJson = structuredData ? JSON.stringify(structuredData).replace(/</g, "\\u003c") : null;
 const indexingEnabled =
@@ -31,12 +32,12 @@ const canonicalUrl = indexingEnabled
   ? new URL(Astro.url.pathname, Astro.site!).toString()
   : undefined;
 const alternatives = indexingEnabled
-  ? LOCALES.map((locale) => ({
+  ? availableLocales.map((locale) => ({
       locale: LOCALE_TAGS[locale],
       href: new URL(localizedPath(locale, plainPath), Astro.site!).toString(),
     }))
   : [];
-const languageChoices = LOCALES.map((locale) => ({
+const languageChoices = availableLocales.map((locale) => ({
   lang: locale,
   label: LOCALE_NAMES[locale],
   url: localizedPath(locale, plainPath),
@@ -160,6 +161,7 @@ const openGraphLocale: Record<Locale, string> = {
           </p>
         </div>
         <div class="footer-links">
+          <a href={lang==="tr"?"/tr/methodology/":"/methodology/"}>{t(lang,"methodologyLink")}</a>
           <a href={homePath + "#platform"}>{t(lang,"navPlatform")}</a>
           <a href={catalogPath}>{t(lang,"navCatalog")}</a>
           <a href={comparePath}>{t(lang,"navCompare")}</a>
