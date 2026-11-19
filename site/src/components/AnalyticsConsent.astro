@@ -29,7 +29,8 @@ const c = analyticsText(lang);
   const accept = document.getElementById("tractorvs-analytics-accept");
   const reject = document.getElementById("tractorvs-analytics-reject");
   const analyticsWindow = window as Window & {
-    dataLayer?: unknown[][];
+    // gtag.js expects the canonical `arguments` queue entries, not arrays.
+    dataLayer?: unknown[];
     gtag?: (...args: unknown[]) => void;
   };
 
@@ -45,8 +46,10 @@ const c = analyticsText(lang);
   function loadAnalyticsOnlyAfterConsent() {
     if (document.querySelector("script[data-tractorvs-ga4]")) return;
     analyticsWindow.dataLayer = analyticsWindow.dataLayer || [];
-    analyticsWindow.gtag = (...args: unknown[]) => {
-      analyticsWindow.dataLayer!.push(args);
+    // Google gtag.js consumes the Arguments object from each gtag call.
+    // Pushing a rest-parameter Array can leave config queued without firing a hit.
+    analyticsWindow.gtag = function gtag() {
+      analyticsWindow.dataLayer!.push(arguments);
     };
     // Basic consent mode v2: Google tags are NEVER loaded before the visitor
     // explicitly accepts, and analytics permission is recorded before config.
