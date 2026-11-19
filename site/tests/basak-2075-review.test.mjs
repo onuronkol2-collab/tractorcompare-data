@@ -1,14 +1,16 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import {readFileSync} from "node:fs";
-import {LOCALES} from "../src/lib/locales.ts";
+import {LOCALES,NEW_LOCALES,localizedPath} from "../src/lib/locales.ts";
+import {reviewedLanguage} from "../src/lib/basak-2075-review-i18n.ts";
 import {t} from "../src/lib/ui.ts";
 const read=path=>readFileSync(new URL("../src/"+path,import.meta.url),"utf8");
 const article=read("components/Basak2075Review.astro");
-test("technical analysis is authored in the two published language variants and has no fake field test",()=>{
+test("technical analysis is authored in ten locale routes and has no fake field test",()=>{
   assert.match(read("pages/reviews/basak-2075-bk/index.astro"),/lang="en"/);
   assert.match(read("pages/tr/reviews/basak-2075-bk/index.astro"),/lang="tr"/);
-  assert.match(article,/availableLocales=\{\["en","tr"\]\}/);
+  assert.match(article,/availableLocales=\{LOCALES\}/);
+  assert.match(read("pages/[locale]/reviews/basak-2075-bk/index.astro"),/NEW_LOCALES\.map/);
   assert.match(article,/not a field test or an owner's review/i);
   assert.match(article,/saha testi veya sahip incelemesi değildir/);
   assert.match(article,/datetime="2026-11-19"/);
@@ -25,7 +27,7 @@ test("every manufacturer figure is literal, source-linked and not confused with 
   assert.match(article,/manufacturer-stated specifications/);
   assert.doesNotMatch(article,/aggregateRating|priceCurrency|\bProduct\b.*@type/i);
 });
-test("model detail links only to the relevant Başak 2075 BK review with honest fallback language",()=>{
+test("model detail links only to the exact Başak 2075 BK review in the active locale",()=>{
   const detail=read("components/TractorDetail.astro");
   assert.match(detail,/hasBasak2075Analysis/);
   assert.match(detail,/tractor\.model_name\.trim\(\)\.toLocaleLowerCase\("tr"\)==="2075 bk"/);
@@ -46,4 +48,31 @@ test("Turkish manufacturer table labels preserve technical values and English eq
   assert.match(article,/const rows: Array<\{tr:string;en:string;value:string;trValue\?:string\}>/);
   for(const literal of ["53 kW / 72 hp @ 2500 rpm","273 Nm @ 1600 rpm","3000 kg","3080 kg","72 L"])
     assert.ok(article.includes(literal),"Measured number must be left unchanged: "+literal);
+});
+
+test("all eight newly authored review locales contain full evidence-bounded technical explanations",()=>{
+  for(const lang of NEW_LOCALES){
+    const r=reviewedLanguage(lang);
+    assert.ok(r,lang+" review translation missing");
+    assert.ok(r.h1.length>=8 && r.meta.length>=(lang==="zh"||lang==="ja"?35:80));
+    assert.equal(r.rowLabels.length,8,lang+" table headings");
+    assert.equal(r.localizedValues.length,3,lang+" natural engine/gear/PTO wording");
+    assert.equal(r.sectionTitles.length,4,lang+" full sections");
+    assert.equal(r.sectionParagraphs.length,4);
+    for(const part of r.sectionParagraphs){
+      assert.equal(part.length,2,lang+" analysis arguments");
+      assert.ok(part.every(t=>t.length>=(lang==="zh"||lang==="ja"?45:120)),lang+" substantive prose");
+    }
+    assert.ok(r.disclaimer.length>=(lang==="zh"||lang==="ja"?24:65),lang+" no-test disclaimer");
+    assert.ok(localizedPath(lang,"/reviews/basak-2075-bk/").startsWith("/"+lang+"/"));
+    assert.ok(r.sourceTitle && r.pdfSource && r.variantNote && r.methodNote);
+  }
+  assert.match(article,/reviewedLanguage\(lang\)/);
+  assert.match(article,/localized\?\.rowLabels\[i\]/);
+  assert.match(article,/localized\?localized\.sectionTitles/);
+  assert.match(article,/localized\?\.sourceIntro/);
+  assert.match(article,/const rows: Array<\{tr:string;en:string;value:string;trValue\?:string\}>/);
+  const detail=read("components/TractorDetail.astro");
+  assert.match(detail,/href=\{localizedPath\(lang,"\/reviews\/basak-2075-bk\/"\)\}/);
+  assert.doesNotMatch(detail,/reviewedModelAnalysis"\)\}\{lang==="en"/);
 });
