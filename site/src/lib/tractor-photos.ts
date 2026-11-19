@@ -129,7 +129,7 @@ export const APPROVED_TRACTOR_PHOTOS:readonly TractorPhoto[]=PHOTO_ORIGINS.map(s
   ...source,
   originThumbUrl:source.thumbUrl,
   originDisplayUrl:source.displayUrl,
-  originFullUrl:source.displayUrl.replace("/960px-","/1920px-"),
+  originFullUrl:source.width<=1920 ? source.fullUrl : source.displayUrl.replace("/960px-","/1920px-"),
   thumbUrl:"/images/tractors/"+source.fileId+"-480.jpg",
   displayUrl:"/images/tractors/"+source.fileId+"-960.jpg",
   fullUrl:"/images/tractors/"+source.fileId+"-1920.jpg",
