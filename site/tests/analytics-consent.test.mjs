@@ -1,6 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import {readFileSync} from "node:fs";
+import {runInNewContext} from "node:vm";
 import { LOCALES } from "../src/lib/locales.ts";
 import {ANALYTICS_TEXT, GA4_MEASUREMENT_ID, ANALYTICS_CHOICE_KEY, analyticsText} from "../src/lib/analytics-i18n.ts";
 
@@ -83,4 +84,25 @@ test("consent mode v2 explicitly grants analytics but never advertising before G
   assert.match(banner,/if \(choice === "accepted"\)/);
   assert.match(banner,/if \(current === "accepted"\)/);
   assert.doesNotMatch(layout,/gtag\/js\?id|google-analytics\.com/);
+});
+
+test("gtag queue uses real Arguments records, never rest arrays that can suppress GA4 hits",()=>{
+  const stub=banner.match(/analyticsWindow\.gtag = function gtag\(\) \{\s*analyticsWindow\.dataLayer!\.push\(arguments\);\s*\};/);
+  assert.ok(stub,"Expected canonical function gtag(){dataLayer.push(arguments)}.");
+  assert.doesNotMatch(banner,/dataLayer!\.push\(args\)/);
+  assert.match(banner,/dataLayer\?: unknown\[\]/);
+  const context={analyticsWindow:{dataLayer:[]}};
+  runInNewContext(stub[0].replace("dataLayer!","dataLayer"),context);
+  const gtag=context.analyticsWindow.gtag;
+  gtag("consent","update",{analytics_storage:"granted"});
+  gtag("js",new Date());
+  gtag("config","G-PZCNNEY1VN",{send_page_view:true});
+  assert.equal(context.analyticsWindow.dataLayer.length,3);
+  for(const entry of context.analyticsWindow.dataLayer)
+    assert.equal(Object.prototype.toString.call(entry),"[object Arguments]");
+  assert.equal(context.analyticsWindow.dataLayer[0][0],"consent");
+  assert.equal(context.analyticsWindow.dataLayer[0][1],"update");
+  assert.equal(context.analyticsWindow.dataLayer[2][0],"config");
+  assert.equal(context.analyticsWindow.dataLayer[2][1],"G-PZCNNEY1VN");
+  assert.equal(context.analyticsWindow.dataLayer[2][2].send_page_view,true);
 });
