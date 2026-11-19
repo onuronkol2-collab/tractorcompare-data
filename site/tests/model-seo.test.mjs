@@ -96,8 +96,8 @@ test("all ten locales have meaningful source-aware, nonempty descriptions", () =
   const locales = ["en","tr","zh","hi","pt-br","fr","de","ru","ja","es"];
   for (const locale of locales) {
     const a = modelSeoMetadata(tractor,locale);
-    assert.match(a.title,/McCormick X5\\.120/);
-    assert.match(a.description,/McCormick X5\\.120/);
+    assert.ok(a.title.includes("McCormick X5.120"));
+    assert.ok(a.description.includes("McCormick X5.120"));
     assert.match(a.description,/114 HP/);
     assert.match(a.description,/Stage V/);
     assert.ok(a.description.length > 75);
