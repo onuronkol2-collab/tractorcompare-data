@@ -5,6 +5,9 @@ on:
       - "site/scripts/verify-photo-library.mjs"
       - ".github/workflows/photo-library-quality.yml"
   workflow_dispatch:
+  # Weekly after the public image-sitemap check; non-publishing, read-only.
+  schedule:
+    - cron: "45 6 * * 1"
 permissions:
   contents: read
 jobs:
