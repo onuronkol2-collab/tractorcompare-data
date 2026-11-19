@@ -1,6 +1,7 @@
 import {hasInternationalSonalikaContext,SONALIKA_EXPORT_COPY} from "./sonalika-context-i18n.ts";
 import type { TractorRecord } from "./catalog.ts";
-import { officialManufacturerSourceUrl } from "./catalog.ts";
+import { officialManufacturerSourceUrl,reviewedIndependentSourceUrl } from "./catalog.ts";
+import {INDEPENDENT_SOURCE_COPY} from "./independent-source-i18n.ts";
 import { localizedPath, type Locale } from "./locales.ts";
 import { t } from "./ui.ts";
 import { marketDisplayName } from "./market-display.ts";
@@ -117,6 +118,8 @@ export function modelSeoMetadata(tractor: TractorRecord, lang: Locale) {
   const copy = MODEL_COPY[lang];
   const sourceCount = new Set(tractor.specifications.map(spec =>
     officialManufacturerSourceUrl(spec, tractor.brand_name)).filter(Boolean)).size;
+  const independentCount = new Set(tractor.specifications.map(spec =>
+    reviewedIndependentSourceUrl(spec)).filter(Boolean)).size;
   const variantContext = originalVariantNote(tractor);
   const details = [variantLabel, marketLabel,
     tractor.model_year == null ? null : String(tractor.model_year)]
@@ -128,7 +131,8 @@ export function modelSeoMetadata(tractor: TractorRecord, lang: Locale) {
     tractor.horsepower == null ? null : (hasInternationalSonalikaContext(tractor)
       ? SONALIKA_EXPORT_COPY[lang].hpDescription(tractor.horsepower)
       : copy.power(tractor.horsepower)),
-    sourceCount ? copy.withSources : copy.withoutSources,
+    sourceCount ? copy.withSources : (independentCount ? null : copy.withoutSources),
+    independentCount ? INDEPENDENT_SOURCE_COPY[lang].seoOnlyIndependent : null,
     variantContext && lang === "en" ? copy.note(variantContext.replace(/[.。।]+$/u, "")) : null,
   ].filter((part):part is string=>Boolean(part));
   return {title,description:segments.join(" ")};
@@ -152,9 +156,9 @@ export function modelStructuredData(tractor: TractorRecord, lang: Locale, siteUr
   const homeUrl = new URL(localizedPath(lang, "/"), siteUrl).toString();
   const name = tractor.brand_name + " " + tractor.model_name;
   const meta = modelSeoMetadata(tractor, lang);
-  const sourceLinks = [...new Set(tractor.specifications.map((spec) =>
-    officialManufacturerSourceUrl(spec, tractor.brand_name)
-  ).filter((url): url is string => Boolean(url)))].slice(0, 12);
+  const sourceLinks = [...new Set(tractor.specifications.flatMap((spec) => [
+    officialManufacturerSourceUrl(spec, tractor.brand_name), reviewedIndependentSourceUrl(spec),
+  ]).filter((url): url is string => Boolean(url)))].slice(0, 12);
 
   const subject: Record<string, unknown> = {
     "@type": "Thing",
