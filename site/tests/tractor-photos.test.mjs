@@ -12,13 +12,15 @@ const tractor=(brand_name,model_name)=>({
   engine:null,transmission:null,drivetrain:null,weight_kg:null,specifications:[]
 });
 test("only exact matching tractor model identity receives a verified photo",()=>{
-  assert.equal(APPROVED_TRACTOR_PHOTOS.length,5);
-  assert.equal(tractorPhotos(tractor("Belarus","82.1")).length,1);
-  assert.equal(tractorPhotos(tractor("Belarus","80.1")).length,0);
+  assert.equal(APPROVED_TRACTOR_PHOTOS.length,11);
+  assert.equal(tractorPhotos(tractor("Belarus","82.1")).length,4);
+  assert.equal(tractorPhotos(tractor("Belarus","80.1")).length,1);
   assert.equal(tractorPhotos(tractor("New Holland","T5.110")).length,1);
   assert.equal(tractorPhotos(tractor("New Holland","T6.180")).length,1);
   assert.equal(tractorPhotos(tractor("Case IH","Puma 150")).length,1);
   assert.equal(tractorPhotos(tractor("McCormick","X5.120")).length,1);
+  assert.equal(tractorPhotos(tractor("McCormick","X5.110")).length,1);
+  assert.equal(tractorPhotos(tractor("Landini","5-110")).length,1);
   assert.equal(tractorPhotos(tractor("Case IH","Puma 155")).length,0);
   assert.equal(primaryTractorPhoto(tractor("Unknown Brand","X")),null);
 });
@@ -69,7 +71,7 @@ test("ImageObject includes rights and never introduces Product rich result eligi
   assert.match(image.license,/creativecommons\.org/);
   assert.match(image.caption,/Belarus 82\.1/);
   assert.ok(!parts.some(x=>["Vehicle","Product"].includes(x["@type"])));
-  assert.ok(!modelStructuredData(tractor("Belarus","80.1"),"tr","https://tractorvs.com/")["@graph"]
+  assert.ok(!modelStructuredData(tractor("Belarus","80.0"),"tr","https://tractorvs.com/")["@graph"]
     .some(x=>x["@type"]==="ImageObject"));
 });
 test("fullscreen viewer, linked credits and public image sitemap use SSR images",()=>{

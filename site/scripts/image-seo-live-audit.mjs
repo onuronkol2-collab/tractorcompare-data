@@ -16,36 +16,34 @@ async function get(url,attempts=3){
   }
   throw last||new Error("Missing HTTP response");
 }
-const paths=[
-  "belarus-82-1-homoatrox-2019",
-  "new-holland-t5-110-pere-igor-2016",
-  "new-holland-t6-180-marcelx42-2025",
-  "case-ih-puma-150-chris-woodrich-2025",
-  "mccormick-x5-120-marcelx42-2023"
-];
-for(const name of paths){
- for(const size of [960,1920]){
- const url=origin+"/images/tractors/"+name+"-"+size+".jpg";
- try{
-  const {r,bytes}=await get(url);
-  const jpeg=bytes.length>1000&&bytes[0]===255&&bytes[1]===216&&bytes[2]===255;
-  console.log("TRACTOR_IMAGE "+JSON.stringify({url,status:r.status,type:r.headers.get("content-type"),bytes:bytes.length,jpeg}));
-  if(!r.ok||!jpeg||!(r.headers.get("content-type")||"").includes("image/jpeg"))
-    fail("Bad first-party photograph "+name+" status="+r.status);
- }catch(e){fail("Fetch "+name+" "+String(e));}
- }
-}
 const sitemapUrl=origin+"/image-sitemap.xml";
+const checked=new Set();
 try{
  const {r,bytes}=await get(sitemapUrl);
  const xml=new TextDecoder().decode(bytes);
- const urls=[...xml.matchAll(/<image:loc>([^<]+)<\/image:loc>/g)].map(m=>m[1]);
+ const urls=[...xml.matchAll(/<image:loc>([^<]+)<\/image:loc>/g)].map(m=>m[1].replaceAll("&amp;","&"));
  console.log("TRACTOR_IMAGE_SITEMAP "+JSON.stringify({http:r.status,count:urls.length,first:urls[0]}));
  if(!r.ok||!xml.includes('xmlns:image=')||urls.length<1)
    fail("Invalid/empty image sitemap "+r.status);
- if(urls.some(u=>!u.startsWith(origin+"/images/tractors/")))
-   fail("Image sitemap must use first-party image URLs");
+ for(const url of urls){
+   if(!url.startsWith(origin+"/images/tractors/")){fail("Image sitemap includes external media "+url);continue;}
+   const m=/\/images\/tractors\/([a-z0-9-]+)-1920\.jpg$/.exec(url);
+   if(!m){fail("Invalid image-sitemap photo URL "+url);continue;}
+   checked.add(m[1]);
+ }
 }catch(e){fail("Image sitemap fetch "+String(e));}
+for(const name of checked){
+ for(const size of [960,1920]){
+   const url=origin+"/images/tractors/"+name+"-"+size+".jpg";
+   try{
+     const {r,bytes}=await get(url);
+     const jpeg=bytes.length>1000&&bytes[0]===255&&bytes[1]===216&&bytes[2]===255;
+     console.log("TRACTOR_IMAGE "+JSON.stringify({url,status:r.status,type:r.headers.get("content-type"),bytes:bytes.length,jpeg}));
+     if(!r.ok||!jpeg||!(r.headers.get("content-type")||"").includes("image/jpeg"))
+       fail("Bad first-party photograph "+name+" status="+r.status);
+   }catch(e){fail("Fetch "+name+" "+String(e));}
+ }
+}
 try{
  const {r,bytes}=await get(origin+"/tr/tractors/belarus-82-1-940a988a/");
  const html=new TextDecoder().decode(bytes);
@@ -53,5 +51,5 @@ try{
  if(r.status!==200||!html.includes("ImageObject")||!html.includes("Homoatrox"))
    fail("Belarus 82.1 model page missing photo, license or ImageObject");
 }catch(e){fail("Model detail "+String(e));}
-console.log("TRACTOR_IMAGE_AUDIT_SUMMARY "+JSON.stringify({checked:paths.length,errors:errors.length}));
+console.log("TRACTOR_IMAGE_AUDIT_SUMMARY "+JSON.stringify({checked:checked.size,errors:errors.length}));
 if(errors.length)process.exitCode=1;

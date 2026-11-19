@@ -1,0 +1,33 @@
+name: TractorVS batch photo research
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - ".github/workflows/batch-photo-research.yml"
+      - "site/scripts/batch-photo-discovery.mjs"
+      - "site/scripts/extract-archived-tractor-inventory.py"
+      - "site/scripts/archive-brand-photo-discovery.mjs"
+permissions:
+  contents: read
+jobs:
+  research_all_models:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22.23.4"
+      - name: Export only model identities from historical tractor archive
+        run: python site/scripts/extract-archived-tractor-inventory.py
+      - name: Search licensed image candidates for ALL archived brands and models
+        run: node site/scripts/archive-brand-photo-discovery.mjs
+      - name: Independently recheck all CURRENT published model pages
+        run: node site/scripts/batch-photo-discovery.mjs
+      - name: Archive copyright and identity research without publishing drafts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: tractorvs-all-model-photo-research
+          path: photo-discovery-report
+          retention-days: 30

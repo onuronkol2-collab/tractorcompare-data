@@ -5,12 +5,13 @@ import type {Locale} from "../lib/locales";
 interface Props { tractor:TractorRecord;lang:Locale;mode?:"hero"|"catalog"|"compare"; }
 const {tractor,lang,mode="hero"}=Astro.props;
 const photos=tractorPhotos(tractor);
+const visiblePhotos=mode==="hero" ? photos : photos.slice(0,1);
 const label=tractorPhotoAlt(tractor,lang);
 ---
 {photos.length>0 && <div class:list={["tractor-photo-gallery","tractor-photo-gallery--"+mode]}>
-  {photos.map((photo,index)=><figure class="tractor-photo-frame">
+  {visiblePhotos.map((photo,index)=><figure class="tractor-photo-frame">
     <button class="tractor-photo-button" type="button" data-tractor-photo
-      data-photo-url={photo.fullUrl} data-photo-label={label}
+      data-photo-url={photo.fullUrl} data-photo-label={label+(photos.length>1?" — "+(index+1):"")}
       data-photo-credit={photo.photographer} data-photo-source={photo.sourcePage}
       data-photo-license={photo.licenseUrl} data-photo-license-name={photo.licenseName}
       aria-label={photoText(lang,"open")+": "+label}>
@@ -18,7 +19,7 @@ const label=tractorPhotoAlt(tractor,lang);
         srcset={photo.thumbUrl+" 480w, "+photo.displayUrl+" 960w"}
         sizes={mode==="hero"?"(max-width:760px) 100vw, 860px":"(max-width:680px) 100vw, 400px"}
         width={photo.width} height={photo.height} decoding="async"
-        loading={mode==="hero"&&index===0?"eager":"lazy"} alt={label}/>
+        loading={mode==="hero"&&index===0?"eager":"lazy"} alt={label+(photos.length>1?" — "+(index+1):"")}/>
       <span class="tractor-photo-brandmark" aria-hidden="true">tractorvs.com</span>
       <span class="tractor-photo-zoom" aria-hidden="true">⤢</span>
     </button>

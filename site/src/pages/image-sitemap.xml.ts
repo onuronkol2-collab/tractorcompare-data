@@ -12,12 +12,14 @@ export const GET:APIRoute=async({site})=>{
   if(enabled){
     const catalog=await getPublicCatalog(); // Published models only, never drafts.
     for(const tractor of catalog.tractors){
-      for(const photo of tractorPhotos(tractor)){
-        for(const locale of LOCALES){
-          const page=new URL(localizedPath(locale,"/tractors/"+tractor.slug+"/"),site!).toString();
-          entries.push("<url><loc>"+escapeXml(page)+"</loc><image:image><image:loc>"+
-            escapeXml(new URL(photo.fullUrl,site!).toString())+"</image:loc></image:image></url>");
-        }
+      const photos=tractorPhotos(tractor);
+      if(!photos.length)continue;
+      const photoXml=photos.map(photo=>"<image:image><image:loc>"+
+        escapeXml(new URL(photo.fullUrl,site!).toString())+
+        "</image:loc></image:image>").join("");
+      for(const locale of LOCALES){
+        const page=new URL(localizedPath(locale,"/tractors/"+tractor.slug+"/"),site!).toString();
+        entries.push("<url><loc>"+escapeXml(page)+"</loc>"+photoXml+"</url>");
       }
     }
   }
