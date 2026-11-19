@@ -8,7 +8,7 @@ import type { Locale } from "./locales.ts";
  * variants, standards and manufacturer-specific names are never rewritten.
  */
 const TERM: Record<string, readonly string[]> = {
-  engine_aspiration: ["进气方式","इंजन एयर इंडक्शन","Aspiração do motor","Admission du moteur","Motoraufladung","Система впуска двигателя","吸気方式","Aspiración del motor"],
+  engine_aspiration: ["进气方式","इंजन एयर इंडक्शन","Aspiração do motor","Admission du moteur","Ansaugart des Motors","Система впуска двигателя","吸気方式","Aspiración del motor"],
   engine_cylinders: ["气缸数","सिलेंडरों की संख्या","Número de cilindros","Nombre de cylindres","Zylinderzahl","Количество цилиндров","気筒数","Número de cilindros"],
   engine_displacement: ["发动机排量","इंजन विस्थापन","Cilindrada do motor","Cylindrée du moteur","Hubraum","Рабочий объём двигателя","総排気量","Cilindrada del motor"],
   engine_emission_standard: ["排放标准","उत्सर्जन मानक","Norma de emissões","Norme d’émissions","Abgasnorm","Экологический стандарт","排出ガス規制","Norma de emisiones"],

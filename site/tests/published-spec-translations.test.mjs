@@ -4,6 +4,7 @@ import {readFileSync} from "node:fs";
 import {LOCALES} from "../src/lib/locales.ts";
 import {publishedSpecificationLabel, PUBLISHED_SPEC_TERMS, validatePublishedSpecTranslations} from "../src/lib/published-spec-translations.ts";
 import {specLabel} from "../src/lib/catalog.ts";
+import {localizedSpecificationName} from "../src/lib/spec-i18n.ts";
 
 const missing=JSON.parse(readFileSync(new URL("./fixtures/published-technical-fallbacks.json",import.meta.url),"utf8"));
 
@@ -30,4 +31,12 @@ test("published dictionary covers 62 audited distinct English technical headings
   const required=new Set(Object.values(missing).flat());
   assert.equal(required.size,62);
   for(const name of required)assert.ok(PUBLISHED_SPEC_TERMS[name],name);
+});
+
+test("German engine aspiration describes intake method without implying forced induction",()=>{
+  const value=localizedSpecificationName("engine_aspiration","Aspiration","de");
+  assert.equal(value,"Ansaugart des Motors");
+  assert.notEqual(value,"Motoraufladung");
+  const source={canonical_key:"engine_aspiration",spec_name:"Engine aspiration"};
+  assert.equal(specLabel(source,"de"),value);
 });
