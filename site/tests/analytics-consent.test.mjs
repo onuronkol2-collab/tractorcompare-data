@@ -65,3 +65,22 @@ test("privacy and opt-in choices are available on actual ten-language static rou
   assert.match(privacy,/copy\.privacyChoice/);
   assert.match(read("src/styles/global.css"),/\.footer-analytics-settings:focus-visible/);
 });
+
+test("consent mode v2 explicitly grants analytics but never advertising before GA4 config",()=>{
+  const analyticsStart=banner.indexOf('function loadAnalyticsOnlyAfterConsent()');
+  const code=banner.slice(analyticsStart,banner.indexOf('function clearAnalyticsFirstPartyCookies()',analyticsStart));
+  const defaultAt=code.indexOf('analyticsWindow.gtag("consent", "default"');
+  const updateAt=code.indexOf('analyticsWindow.gtag("consent", "update"');
+  const configAt=code.indexOf('analyticsWindow.gtag("config"');
+  const requestAt=code.indexOf('document.head.appendChild(script)');
+  assert.ok(defaultAt>=0&&updateAt>defaultAt&&configAt>updateAt&&requestAt>configAt,
+    "Explicit consent default and grant must precede GA4 config and network loading");
+  assert.match(code,/analytics_storage:\s*"granted"/);
+  for(const key of ["ad_storage","ad_user_data","ad_personalization"]){
+    assert.match(code,new RegExp(key+':\\\\s*"denied"'));
+    assert.doesNotMatch(code,new RegExp(key+':\\\\s*"granted"'));
+  }
+  assert.match(banner,/if \(choice === "accepted"\)/);
+  assert.match(banner,/if \(current === "accepted"\)/);
+  assert.doesNotMatch(layout,/gtag\/js\?id|google-analytics\.com/);
+});
