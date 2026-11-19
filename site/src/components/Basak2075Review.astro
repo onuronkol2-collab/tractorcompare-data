@@ -23,11 +23,11 @@ const description=tr
   :"Başak 2075 BK technical document analysis: manufacturer-stated 72 hp, 273 Nm, 16+8 gears and 540/540E PTO, with variant and evidence limits.";
 const title=tr?"Başak 2075 BK Teknik İncelemesi (Kaynaklı) | TractorVS":"Başak 2075 BK: Source-Backed Technical Review | TractorVS";
 const rows=[
- {tr:"Motor (üretici açıklaması)",en:"Engine (manufacturer specification)",value:"BT40845T3 · 4 cylinders · 3142 cm³ · turbo/intercooler"},
+ {tr:"Motor (üretici açıklaması)",en:"Engine (manufacturer specification)",value:"BT40845T3 · 4 cylinders · 3142 cm³ · turbo/intercooler",trValue:"BT40845T3 · 4 silindir · 3142 cm³ · turbo/ara soğutucu"},
  {tr:"Nominal ve azami motor gücü",en:"Rated and maximum engine power",value:"53 kW / 72 hp @ 2500 rpm"},
  {tr:"Azami motor torku",en:"Maximum engine torque",value:"273 Nm @ 1600 rpm"},
- {tr:"Şanzıman",en:"Transmission",value:"Mechanical synchromesh · 16F / 8R"},
- {tr:"Kuyruk mili seçenekleri",en:"PTO speed options",value:"540 @ 1953 engine rpm · 540E @ 1506 engine rpm"},
+ {tr:"Şanzıman",en:"Transmission",value:"Mechanical synchromesh · 16F / 8R",trValue:"Mekanik senkromeçli · 16 ileri / 8 geri"},
+ {tr:"Kuyruk mili seçenekleri",en:"PTO speed options",value:"540 @ 1953 engine rpm · 540E @ 1506 engine rpm",trValue:"540 (1953 motor dev/dak) · 540E (1506 motor dev/dak)"},
  {tr:"Üreticinin belirttiği azami arka kaldırma kapasitesi",en:"Manufacturer-stated maximum rear hitch lift",value:"3000 kg"},
  {tr:"Ek ağırlıklar olmadan traktör kütlesi",en:"Tractor weight without additional ballast",value:"3080 kg"},
  {tr:"Yakıt deposu kapasitesi",en:"Fuel tank capacity",value:"72 L"},
@@ -101,7 +101,7 @@ const references=tr?[
           <thead><tr><th scope="col">{tr?"Ölçüm / özellik":"Measurement / specification"}</th>
             <th scope="col">{tr?"Üretici değeri":"Manufacturer's figure"}</th></tr></thead>
           <tbody>{rows.map(row=><tr>
-            <th scope="row">{tr?row.tr:row.en}</th><td>{row.value}</td>
+            <th scope="row">{tr?row.tr:row.en}</th><td>{tr?row.trValue??row.value:row.value}</td>
           </tr>)}</tbody>
         </table></div>
         <p class="review-source-line">{tr?"Tablo kaynağı:":"Table source:"} <a href={brochureUrl} target="_blank" rel="noopener noreferrer">{tr?"Başak 2075 BK resmî teknik broşürü":"Başak 2075 BK official brochure"}</a>.
