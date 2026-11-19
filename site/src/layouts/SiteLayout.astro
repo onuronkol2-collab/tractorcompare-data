@@ -3,6 +3,8 @@ import "../styles/global.css";
 import "../styles/tractor-photos.css";
 import PhotoLightbox from "../components/PhotoLightbox.astro";
 import LocaleSuggestion from "../components/LocaleSuggestion.astro";
+import AnalyticsConsent from "../components/AnalyticsConsent.astro";
+import { analyticsText } from "../lib/analytics-i18n.ts";
 import { brand } from "../config/brand";
 import { LOCALES, LOCALE_NAMES, LOCALE_TAGS, localizedPath, unlocalizedPath, type Locale } from "../lib/locales";
 import { t } from "../lib/ui";
@@ -24,6 +26,7 @@ const structuredJson = structuredData ? JSON.stringify(structuredData).replace(/
 const indexingEnabled =
   import.meta.env.PUBLIC_INDEXING_ENABLED === "true" && Boolean(Astro.site) && indexable;
 const homePath = localizedPath(lang, "/");
+const analyticsCopy = analyticsText(lang);
 const plainPath = unlocalizedPath(Astro.url.pathname);
 const catalogPath = localizedPath(lang, "/tractors/");
 const comparePath = localizedPath(lang, "/compare/");
@@ -169,6 +172,8 @@ const openGraphLocale: Record<Locale, string> = {
           <a href={advisorPath}>{tx(lang,"nav")}</a>
           <a href={homePath + "#data"}>{t(lang,"navData")}</a>
           <a href={homePath + "#approach"}>{t(lang,"navApproach")}</a>
+          <a href={localizedPath(lang,"/privacy/")}>{analyticsCopy.privacyLink}</a>
+          <button type="button" id="tractorvs-analytics-settings" class="footer-analytics-settings">{analyticsCopy.settings}</button>
         </div>
       </div>
       <div class="container footer-bottom">
@@ -177,6 +182,7 @@ const openGraphLocale: Record<Locale, string> = {
       </div>
     </footer>
     <PhotoLightbox lang={lang} />
+    <AnalyticsConsent lang={lang} />
   </body>
 </html>
 <script>
