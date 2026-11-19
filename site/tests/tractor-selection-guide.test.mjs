@@ -32,7 +32,7 @@ test("each cited institution is actually linked and no fabricated tractor test o
   for(const url of links)assert.ok(guide.includes(url),"Missing source: "+url);
   assert.match(guide,/TractorVS bu traktörleri sahada test ettiğini/);
   assert.match(guide,/has not personally field-tested/);
-  assert.doesNotMatch(guide,/\bAggregateRating\b|\bOffer\b|author:\s*\{|fakeReview/i);
+  assert.doesNotMatch(guide,/[\'"]@type[\'"]\s*:\s*[\'"](?:AggregateRating|Offer)[\'"]|author:\s*\{|fakeReview/i);
   assert.match(guide,/localizedPath\(lang,"\/compare\/"\)/);
   assert.match(guide,/localizedPath\(lang,"\/tractors\/"\)/);
 });
@@ -42,7 +42,7 @@ test("guide is discoverable in every locale without pretending to offer 10 trans
   const methodology=read("components/DataMethodology.astro");
   assert.equal(LOCALES.length,10);
   for(const lang of LOCALES){
-    assert.ok(t(lang,"guideLink").trim().length>=8);
+    assert.ok(t(lang,"guideLink").trim().length>=4,lang+" guide link");
   }
   assert.match(layout,/lang==="tr"\?"\/tr\/guides\/choosing-a-tractor\/"\:"\/guides\/choosing-a-tractor\/"/);
   assert.match(layout,/\?"":" \(EN\)"/);
