@@ -136,3 +136,23 @@ test("exact LS Tractor USA official model pages are linked when evidence is veri
     "https://lstractorusa.com@evil.example/tractor/mt122/"
   ])assert.equal(officialManufacturerSourceUrl({...official,source_url},"LS Tractor"),null);
 });
+
+test("official Zetor UK Forterra manufacturer table is linkable only with dated model-verified evidence",()=>{
+  const spec={
+    ...official,
+    source_url:"https://www.zetor.co.uk/zetor-forterra-technical-parameters",
+    source_type:"manufacturer_specification",
+    evidence_text:"Zetor Forterra CL 140 Stage V, ECE R120 power: 136.2 HP; verified from official UK model column.",
+    verified_at:"2026-11-19T20:00:00Z",
+  };
+  assert.equal(officialManufacturerSourceUrl(spec,"Zetor"),spec.source_url);
+  for(const source_url of [
+    "http://www.zetor.co.uk/zetor-forterra-technical-parameters",
+    "https://zetor.co.uk.evil.example/specification",
+    "https://zetor.co.uk@evil.example/specification",
+    "https://www.zetor.co.uk.evil.example/specification",
+    "https://www.unverified-zetor-brochures.example/test",
+  ])assert.equal(officialManufacturerSourceUrl({...spec,source_url},"Zetor"),null);
+  assert.equal(officialManufacturerSourceUrl({...spec,verified_at:null},"Zetor"),null);
+  assert.equal(officialManufacturerSourceUrl({...spec,source_type:"independent_test"},"Zetor"),null);
+});

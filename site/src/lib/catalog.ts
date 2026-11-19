@@ -614,6 +614,7 @@ const approvedManufacturerHosts: Record<string, string[]> = {
   "yanmar": ["yanmar.com"],
   "swaraj": ["swarajtractors.com"],
   "kioti": ["kioti.com", "kioti-uk.com"],
+  "zetor": ["zetor.com", "zetor.co.uk"],
 };
 
 // The original German F36 brochure is served from TYM's named Umbraco media
