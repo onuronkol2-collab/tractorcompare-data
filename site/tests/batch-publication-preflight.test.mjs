@@ -33,7 +33,7 @@ test("preflight reports actual private draft inventory and source/identity safeg
   ])assert.ok(sql.includes(token),"Missing release gate "+token);
   const doc=source("../supabase/docs/TRACTORVS_BATCH_PUBLICATION_GATE.md");
   assert.match(doc,/actual Supabase|current Supabase|Supabase is not connected/);
-  assert.match(doc,/status.*draft/);
+  assert.match(doc,/from `draft` to `published`/);
   assert.match(doc,/Cloudflare/i);
   assert.match(doc,/zero|0/);
   assert.match(doc,/Do not.*UPDATE/i);
