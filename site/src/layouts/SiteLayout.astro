@@ -13,13 +13,14 @@ interface Props {
   description: string;
   structuredData?: Record<string, unknown> | null;
   ogImage?: string | null;
+  indexable?: boolean;
 }
 
-const { lang, title, description, structuredData = null, ogImage = null } = Astro.props;
+const { lang, title, description, structuredData = null, ogImage = null, indexable = true } = Astro.props;
 // Escape literal HTML opener characters before embedding JSON-LD from database text.
 const structuredJson = structuredData ? JSON.stringify(structuredData).replace(/</g, "\\u003c") : null;
 const indexingEnabled =
-  import.meta.env.PUBLIC_INDEXING_ENABLED === "true" && Boolean(Astro.site);
+  import.meta.env.PUBLIC_INDEXING_ENABLED === "true" && Boolean(Astro.site) && indexable;
 const homePath = localizedPath(lang, "/");
 const plainPath = unlocalizedPath(Astro.url.pathname);
 const catalogPath = localizedPath(lang, "/tractors/");
