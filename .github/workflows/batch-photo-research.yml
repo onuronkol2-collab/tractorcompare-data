@@ -1,67 +1,33 @@
 name: TractorVS batch photo research
-
 on:
   workflow_dispatch:
   pull_request:
     paths:
-      - "site/scripts/batch-photo-discovery.mjs"
       - ".github/workflows/batch-photo-research.yml"
+      - "site/scripts/batch-photo-discovery.mjs"
+      - "site/scripts/extract-archived-tractor-inventory.py"
+      - "site/scripts/archive-brand-photo-discovery.mjs"
 permissions:
   contents: read
-
 jobs:
-  research_public_models:
+  research_all_models:
     runs-on: ubuntu-latest
-    timeout-minutes: 18
+    timeout-minutes: 25
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
           node-version: "22.23.4"
-      - name: Inspect bundled tractor inventory archives (file names only)
-        run: |
-          python - <<'PY'
-          import zipfile, os
-          path='tractordata.zip'
-          if os.path.exists(path):
-            with zipfile.ZipFile(path) as z:
-              for item in z.infolist()[:100]:
-                print('TRACTOR_ARCHIVE_FILE '+str({'filename':item.filename,'bytes':item.file_size}))
-          PY
-      - name: Inspect archive structure without exposing private data
-        run: |
-          python - <<'PY'
-          import zipfile,json,re
-          with zipfile.ZipFile('tractordata.zip') as z:
-            raw=z.read('sql.txt').decode('utf-8','replace')
-          data={'size':len(raw),'starts_with_json':raw.lstrip().startswith(('{','[')),
-            'sql_copy_tractors':len(re.findall(r'COPY\\s+(?:public\\.)?tractors',raw,re.I)),
-            'sql_insert_tractors':len(re.findall(r'INSERT\\s+INTO\\s+(?:public\\.)?tractors',raw,re.I)),
-            'has_tractor_status':bool(re.search(r'model_name|tractor_id',raw,re.I))}
-          try:
-            parsed=json.loads(raw)
-            data['json_type']=type(parsed).__name__
-            if isinstance(parsed,dict):data['top_keys']=list(parsed)[:20]
-            elif isinstance(parsed,list):data['top_items']=len(parsed)
-          except Exception:data['json_type']='not-json'
-          print('TRACTOR_ARCHIVE_INSPECT '+json.dumps(data))
-          PY
-      - name: Research all published tractor models and licensed Commons candidates
+      - name: Export only model identities from historical tractor archive
+        run: python site/scripts/extract-archived-tractor-inventory.py
+      - name: Search licensed image candidates for ALL archived brands and models
+        run: node site/scripts/archive-brand-photo-discovery.mjs
+      - name: Independently recheck all CURRENT published model pages
         run: node site/scripts/batch-photo-discovery.mjs
-      - name: Temporarily inspect checked-in legacy archive offline
-        run: |
-          mkdir -p archive-inspect
-          python - <<'PY'
-          from zipfile import ZipFile
-          with ZipFile('tractordata.zip') as z:
-            with open('archive-inspect/sql.txt','wb') as out: out.write(z.read('sql.txt'))
-          PY
-      - name: Preserve candidates and license evidence for review
+      - name: Archive copyright and identity research without publishing drafts
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: tractorvs-batch-photo-research
-          path: |
-            photo-discovery-report
-            archive-inspect/sql.txt
+          name: tractorvs-all-model-photo-research
+          path: photo-discovery-report
           retention-days: 30
