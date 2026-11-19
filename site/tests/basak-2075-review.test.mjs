@@ -33,3 +33,17 @@ test("model detail links only to the relevant Başak 2075 BK review with honest 
   assert.match(detail,/\/reviews\/basak-2075-bk\//);
   for(const lang of LOCALES)assert.ok(t(lang,"reviewedModelAnalysis").trim().length>=3,lang);
 });
+
+test("Turkish manufacturer table labels preserve technical values and English equivalents",()=>{
+  const article=read("components/Basak2075Review.astro");
+  for(const phrase of [
+    "4 silindir · 3142 cm³","Mekanik senkromeçli · 16 ileri / 8 geri",
+    "540 (1953 motor dev/dak) · 540E (1506 motor dev/dak)",
+    "Mechanical synchromesh · 16F / 8R",
+    "540 @ 1953 engine rpm · 540E @ 1506 engine rpm"
+  ])assert.ok(article.includes(phrase),"Missing identity-preserving translation: "+phrase);
+  assert.match(article,/tr\?row\.trValue\?\?row\.value:row\.value/);
+  assert.match(article,/const rows: Array<\{tr:string;en:string;value:string;trValue\?:string\}>/);
+  for(const literal of ["53 kW / 72 hp @ 2500 rpm","273 Nm @ 1600 rpm","3000 kg","3080 kg","72 L"])
+    assert.ok(article.includes(literal),"Measured number must be left unchanged: "+literal);
+});
