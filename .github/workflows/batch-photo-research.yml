@@ -1,0 +1,29 @@
+name: TractorVS batch photo research
+
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - "site/scripts/batch-photo-discovery.mjs"
+      - ".github/workflows/batch-photo-research.yml"
+permissions:
+  contents: read
+
+jobs:
+  research_public_models:
+    runs-on: ubuntu-latest
+    timeout-minutes: 18
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22.23.4"
+      - name: Research all published tractor models and licensed Commons candidates
+        run: node site/scripts/batch-photo-discovery.mjs
+      - name: Preserve candidates and license evidence for review
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: tractorvs-batch-photo-research
+          path: photo-discovery-report
+          retention-days: 30
