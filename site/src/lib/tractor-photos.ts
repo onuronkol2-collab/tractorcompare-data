@@ -1,5 +1,6 @@
 import type {TractorRecord} from "./catalog.ts";
 import type {Locale} from "./locales.ts";
+import {HISTORICAL_LICENSED_PHOTOS} from "./historical-licensed-photos.ts";
 
 /* Rights are NOT transferred by adding a TractorVS label. */
 export interface TractorPhoto {
@@ -12,7 +13,7 @@ export interface TractorPhoto {
 }
 const W="https://upload.wikimedia.org/wikipedia/commons/";
 /* Photographer Homoatrox, own work, CC BY-SA 3.0, Belagro 2019. */
-const PHOTO_ORIGINS:readonly Omit<TractorPhoto,"originThumbUrl"|"originDisplayUrl"|"originFullUrl">[]=[
+const ORIGINAL_PHOTO_ORIGINS:readonly Omit<TractorPhoto,"originThumbUrl"|"originDisplayUrl"|"originFullUrl">[]=[
   {brand:"Belarus",model:"82.1",fileId:"belarus-82-1-homoatrox-2019",
     thumbUrl:W+"thumb/6/67/Belarus_MTZ-82_1_tractor_%2802%29.jpg/480px-Belarus_MTZ-82_1_tractor_%2802%29.jpg",
     displayUrl:W+"thumb/6/67/Belarus_MTZ-82_1_tractor_%2802%29.jpg/960px-Belarus_MTZ-82_1_tractor_%2802%29.jpg",
@@ -115,6 +116,13 @@ const PHOTO_ORIGINS:readonly Omit<TractorPhoto,"originThumbUrl"|"originDisplayUr
     licenseName:"CC BY-SA 4.0",licenseUrl:"https://creativecommons.org/licenses/by-sa/4.0/",
     configurationExact:false
   }
+];
+/** Curated historical archive candidates are staged in code; they reach public pages
+ * ONLY if an exact brand/model is found in the published Supabase public catalogue.
+ * Displayed model variant warning remains mandatory for each photo. */
+const PHOTO_ORIGINS:readonly Omit<TractorPhoto,"originThumbUrl"|"originDisplayUrl"|"originFullUrl">[]=[
+  ...ORIGINAL_PHOTO_ORIGINS,
+  ...HISTORICAL_LICENSED_PHOTOS
 ];
 /** Stable, first-party indexable image URLs; a fixed Worker allowlist proxies only approved photos. */
 export const APPROVED_TRACTOR_PHOTOS:readonly TractorPhoto[]=PHOTO_ORIGINS.map(source=>({
