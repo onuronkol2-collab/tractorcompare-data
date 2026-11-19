@@ -1,6 +1,7 @@
+import {readFileSync} from "node:fs";
 import assert from "node:assert/strict";
 import test from "node:test";
-import { modelSeoMetadata, modelStructuredData } from "../src/lib/model-seo.ts";
+import { modelSeoMetadata, modelStructuredData, originalVariantNote } from "../src/lib/model-seo.ts";
 
 const tractor = {
   tractor_id:"a02c4df2-c719-5a26-abb2-6195cb8e23e5",
@@ -133,4 +134,19 @@ test("model titles and descriptions use each locale's market name without alteri
     const other=modelSeoMetadata({...tractor,market:"Turkey"},locale);
     assert.notEqual(meta.title,other.title);
   }
+});
+
+test("raw semicolon source notes do not leak untranslated into nine localized search descriptions",()=>{
+  const model={...tractor,variant:"Serie 5 FPT Stage V; EU official brochure / equipment unspecified"};
+  assert.equal(originalVariantNote(model),"EU official brochure / equipment unspecified");
+  assert.match(modelSeoMetadata(model,"en").description,/equipment unspecified/);
+  for(const locale of ["tr","zh","hi","pt-br","fr","de","ru","ja","es"]){
+    const meta=modelSeoMetadata(model,locale);
+    assert.ok(meta.title.includes("Serie 5 FPT Stage V"));
+    assert.doesNotMatch(meta.description,/EU official brochure|equipment unspecified/);
+  }
+  const detail=readFileSync(new URL("../src/components/TractorDetail.astro",import.meta.url),"utf8");
+  assert.match(detail,/originalVariantNote\(tractor\)/);
+  assert.match(detail,/class="model-original-note"/);
+  assert.match(detail,/\{originalNote\}/);
 });
