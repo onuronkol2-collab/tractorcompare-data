@@ -10,6 +10,10 @@ on:
       - "site/scripts/batch-photo-discovery.mjs"
       - "site/scripts/extract-archived-tractor-inventory.py"
       - "site/scripts/archive-brand-photo-discovery.mjs"
+      - "site/scripts/photo-model-identity.mjs"
+      - "site/scripts/photo-license-check.mjs"
+      - "site/scripts/photo-model-aliases.mjs"
+      - "site/tests/photo-*.test.mjs"
 permissions:
   contents: read
 jobs:
