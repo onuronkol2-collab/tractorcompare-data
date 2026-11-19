@@ -2,6 +2,7 @@ import type { TractorRecord } from "./catalog.ts";
 import { officialManufacturerSourceUrl } from "./catalog.ts";
 import { localizedPath, type Locale } from "./locales.ts";
 import { t } from "./ui.ts";
+import { marketDisplayName } from "./market-display.ts";
 import {primaryTractorPhoto,tractorPhotoAlt} from "./tractor-photos.ts";
 
 /** The original manufacturer identity, equipment and market are never inferred. */
@@ -99,7 +100,7 @@ export function modelSeoMetadata(tractor: TractorRecord, lang: Locale) {
   const model = tractor.brand_name + " " + tractor.model_name;
   const variantLabel = tractor.variant?.split(";")[0]?.trim() || null;
   const marketLabel = tractor.market?.trim().toLowerCase() === "global"
-    ? null : tractor.market?.trim() || null;
+    ? null : marketDisplayName(tractor.market, lang);
   const qualifiers = [
     variantLabel && variantLabel.length <= 48 ? variantLabel : null,
     marketLabel, tractor.model_year == null ? null : String(tractor.model_year)

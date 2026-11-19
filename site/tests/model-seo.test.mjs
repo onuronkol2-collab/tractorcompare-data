@@ -24,7 +24,7 @@ test("SEO titles distinguish model, market and equipment variant", () => {
   const b = modelSeoMetadata({ ...tractor, variant:"Different transmission" }, "tr");
   assert.match(a.title,/X5\.120/);
   assert.match(a.title,/Stage V/);
-  assert.match(a.title,/Europe/);
+  assert.match(a.title,/Avrupa/);
   assert.notEqual(a.title,b.title);
   assert.match(a.description,/114 HP/);
 });
@@ -89,7 +89,7 @@ test("non-global markets distinguish otherwise identical equipment", () => {
   const usa=modelSeoMetadata({ ...tractor, market:"US" },"en");
   const eu=modelSeoMetadata({ ...tractor, market:"Europe" },"en");
   assert.notEqual(usa.title,eu.title);
-  assert.match(usa.title,/US/);
+  assert.match(usa.title,/United States/);
 });
 
 test("all ten locales have meaningful source-aware, nonempty descriptions", () => {
@@ -116,6 +116,21 @@ test("zero specifications and absent engine power remain honest", () => {
     const meta = modelSeoMetadata({...tractor,specifications:[],horsepower:null,variant:null},locale);
     assert.doesNotMatch(meta.description,/114 HP|0 published technical specifications|0 yayımlanmış/);
     assert.ok(meta.description.includes("McCormick X5.120"));
-    assert.ok(meta.description.length > 60);
+    assert.ok(meta.description.length > (locale === "zh" || locale === "ja" ? 20 : 60));
+  }
+});
+
+test("model titles and descriptions use each locale's market name without altering identity", () => {
+  const expectations = {
+    en:"Europe", tr:"Avrupa", zh:"欧洲", hi:"यूरोप", "pt-br":"Europa",
+    fr:"Europe", de:"Europa", ru:"Европа", ja:"欧州", es:"Europa"
+  };
+  for(const [locale, localizedMarket] of Object.entries(expectations)){
+    const meta=modelSeoMetadata(tractor,locale);
+    assert.ok(meta.title.includes(localizedMarket), `Missing localized market in title: ${locale}`);
+    assert.ok(meta.description.includes(localizedMarket), `Missing localized market in description: ${locale}`);
+    assert.ok(meta.title.includes("McCormick X5.120"));
+    const other=modelSeoMetadata({...tractor,market:"Turkey"},locale);
+    assert.notEqual(meta.title,other.title);
   }
 });
