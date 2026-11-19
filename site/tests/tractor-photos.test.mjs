@@ -71,7 +71,7 @@ test("ImageObject includes rights and never introduces Product rich result eligi
   assert.match(image.license,/creativecommons\.org/);
   assert.match(image.caption,/Belarus 82\.1/);
   assert.ok(!parts.some(x=>["Vehicle","Product"].includes(x["@type"])));
-  assert.ok(!modelStructuredData(tractor("Belarus","80.1"),"tr","https://tractorvs.com/")["@graph"]
+  assert.ok(!modelStructuredData(tractor("Belarus","80.0"),"tr","https://tractorvs.com/")["@graph"]
     .some(x=>x["@type"]==="ImageObject"));
 });
 test("fullscreen viewer, linked credits and public image sitemap use SSR images",()=>{
