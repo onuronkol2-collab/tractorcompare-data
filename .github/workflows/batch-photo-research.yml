@@ -18,6 +18,16 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: "22.23.4"
+      - name: Inspect bundled tractor inventory archives (file names only)
+        run: |
+          python - <<'PY'
+          import zipfile, os
+          path='tractordata.zip'
+          if os.path.exists(path):
+            with zipfile.ZipFile(path) as z:
+              for item in z.infolist()[:100]:
+                print('TRACTOR_ARCHIVE_FILE '+str({'filename':item.filename,'bytes':item.file_size}))
+          PY
       - name: Research all published tractor models and licensed Commons candidates
         run: node site/scripts/batch-photo-discovery.mjs
       - name: Preserve candidates and license evidence for review
