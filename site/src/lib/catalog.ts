@@ -511,7 +511,7 @@ const specLabels: Record<string, { en: string; tr: string }> = {
   engine_power: { en: "Engine power", tr: "Motor gücü" },
   engine_rated_power: { en: "Rated engine power", tr: "Nominal motor gücü" },
   engine_max_power_rpm: { en: "Engine speed at maximum power", tr: "Azami güçte motor devri" },
-  engine_torque: { en: "Maximum torque", tr: "Azami tork" },
+  engine_torque: { en: "Engine torque", tr: "Motor torku" },
   engine_torque_rpm: { en: "Engine speed at maximum torque", tr: "Azami torkta motor devri" },
   fuel_injection_system: { en: "Fuel injection system", tr: "Yakıt enjeksiyon sistemi" },
   fuel_tank_capacity: { en: "Fuel tank capacity", tr: "Yakıt deposu kapasitesi" },
