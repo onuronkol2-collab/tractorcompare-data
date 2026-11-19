@@ -36,7 +36,7 @@ test("rejects NC, ND, contradictory or absent metadata, external redirects and f
 });
 test("both Commons discovery scripts must use the shared gate, never a looser independent predicate",()=>{
   for(const path of ["scripts/batch-photo-discovery.mjs","scripts/archive-brand-photo-discovery.mjs"]){
-    const src=readFileSync(new URL("../site/"+path,import.meta.url).pathname,"utf8");
+    const src=readFileSync(new URL("../"+path,import.meta.url).pathname,"utf8");
     assert.match(src,/import\s+\{allowedPhotoReuseLicense\}\s+from\s+"\.\/photo-license-check\.mjs"/);
     assert.match(src,/allowedPhotoReuseLicense\(license,licenseUrl\)/);
   }
