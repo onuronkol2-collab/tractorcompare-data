@@ -30,7 +30,7 @@ export function matchesPhotoFileModel(brand,model,fileTitle){
     const following=after.match(/^[^a-z0-9]+([a-z0-9]+)/i)?.[1];
     // Subseries/engine designators are not the series itself:
     // X4 is not X4.085, 5090 D is not 5090.D5, and 5-110 is not 5-110 HC.
-    if(/^[.\-][a-z0-9]/i.test(after))return false;
+    if(/^[.\-][0-9]/i.test(after))return false;
     if(["hc","tm","tc"].includes(following||"")&&!new RegExp("\\b"+following+"\\b","i").test(name))return false;
     const isNumericLessSeries=!/[0-9]/.test(name);
     const isShortAlphaNumericSeries=/^[a-z]{1,3}[0-9]{1,2}$/i.test(name.trim());
