@@ -74,6 +74,11 @@ const sections=tr?[
         <h2>{section.heading}</h2>
         {section.body.map((line)=><p>{line}</p>)}
       </section>)}
+      <p class="method-guide-link">
+        <a href={tr?"/tr/guides/choosing-a-tractor/":"/guides/choosing-a-tractor/"}>
+          {tr?"İlgili rehber: Traktör seçerken teknik veriler nasıl karşılaştırılır?":"Related guide: How to compare tractor specifications before choosing"}
+        </a>
+      </p>
       <section class="method-references">
         <h2>{tr?"İncelenebilir kaynaklar":"Inspect the public sources"}</h2>
         <p>{tr
@@ -89,6 +94,8 @@ const sections=tr?[
   </article>
 </SiteLayout>
 <style>
+  .method-guide-link a{display:inline-block;padding:12px 17px;border-radius:9px;background:#def0d9;font-weight:750;color:#195b32;text-decoration:underline;text-underline-offset:3px}
+  .method-guide-link a:focus-visible{outline:3px solid #2e8552;outline-offset:2px}
   .method-page{padding:clamp(44px,6vw,80px) 0 90px;background:#f7faf4;color:#203629}
   .method-container{max-width:880px}
   .method-overline{letter-spacing:.11em;font-size:12px;font-weight:850;color:#3d7550}
