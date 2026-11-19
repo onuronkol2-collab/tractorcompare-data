@@ -9,8 +9,12 @@ import { t } from "../lib/ui";
 import { compareText as cx } from "../lib/compare-ux";
 import { marketDisplayName } from "../lib/market-display";
 import { modelSeoMetadata, modelStructuredData } from "../lib/model-seo";
+import { getPublicCatalog } from "../lib/catalog";
+import { morePublishedTractors } from "../lib/related-tractors";
 interface Props { lang: Locale; tractor: TractorRecord; }
 const { lang, tractor } = Astro.props;
+// Same read-only, published-only catalogue already used by getStaticPaths.
+const moreModels = morePublishedTractors(tractor,(await getPublicCatalog()).tractors);
 const groups = groupSpecifications(tractor.specifications,lang);
 const manufacturerDiscrepancies = [...new Set(tractor.specifications.map((spec) => verificationNotice(spec, lang)).filter((note): note is string => Boolean(note)))];
 const listingUrl = localizedPath(lang,"/tractors/");
@@ -74,9 +78,32 @@ const summaryItems = [
       <a class="button button-secondary" href={listingUrl}>{t(lang,"backToCatalog")} <span aria-hidden="true">↗</span></a>
     </div>
   </div></section>
+  {moreModels.length > 0 && <section class="model-more-section">
+    <div class="container">
+      <h2>{t(lang,"moreModels")}</h2>
+      <ul class="model-more-list">
+        {moreModels.map((model) => <li>
+          <a href={localizedPath(lang,"/tractors/"+model.slug+"/")}>
+            <strong>{model.brand_name} {model.model_name}</strong>
+            <span>{[model.variant?.split(";")[0]?.trim(),marketDisplayName(model.market,lang),model.model_year]
+              .filter(value=>value !== null && value !== undefined && value !== "").join(" · ")}</span>
+          </a>
+        </li>)}
+      </ul>
+    </div>
+  </section>}
 </SiteLayout>
 
 <style>
+  .model-more-section { padding: 35px 0 60px; background: #f5f8f3; border-top: 1px solid #e0e9dc; }
+  .model-more-section h2 { margin: 0 0 20px; color: #183624; font-size: clamp(20px,2.3vw,27px); }
+  .model-more-list { list-style: none; display: grid; grid-template-columns: repeat(auto-fit,minmax(220px,1fr)); gap: 12px; padding: 0; margin: 0; }
+  .model-more-list li { min-width: 0; }
+  .model-more-list a { display: flex; flex-direction: column; gap: 6px; min-height: 88px; padding: 17px; border-radius: 12px; background: white; border: 1px solid #d3e1cf; text-decoration: none; color: #1d5131; overflow-wrap: anywhere; }
+  .model-more-list a:hover { border-color: #5d9471; text-decoration: underline; }
+  .model-more-list a:focus-visible { outline: 3px solid #438c57; outline-offset: 3px; }
+  .model-more-list a strong { font-size: 16px; }
+  .model-more-list a span { font-size: 13px; line-height: 1.5; color: #476b52; }
   .model-hero-description {max-width: 790px; margin: 18px 0 0; color: #d1ded3; font-size: clamp(14px,1.35vw,16px); line-height: 1.8; overflow-wrap: anywhere; }
   .model-spec-warning {
     margin: 14px 0 0;
