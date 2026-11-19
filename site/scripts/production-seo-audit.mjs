@@ -90,11 +90,20 @@ for(let i=0;i<urls.length;i+=4){
    if(meta.lang!==languages[locale])error("html-language",p,"HTML lang "+meta.lang+" expected "+languages[locale]);
    const base=p.replace(/^\/(tr|zh|hi|pt-br|fr|de|ru|ja|es)(?=\/)/,"");
    const alternateMap=new Map(meta.alternates.map(x=>[x.lang,x.url]));
+   // Methodology has only EN/TR translations; guides now have all ten.
+   // Expect reciprocal alternate tags ONLY when a matching indexable URL
+   // really exists in this fetched production sitemap inventory.
    for(const [l,code] of Object.entries(languages)){
     const expected=BASE+(l==="en"?base:"/"+l+base);
-    if(alternateMap.get(code)!==expected)error("hreflang",p,code+" expected "+expected);
+    const actual=alternateMap.get(code);
+    if(unique.has(expected) && actual!==expected)
+      error("hreflang",p,code+" expected "+expected);
+    if(!unique.has(expected) && actual)
+      error("hreflang-nonexistent",p,code+" points at an unlisted locale page "+actual);
    }
-   if(alternateMap.get("x-default")!==BASE+base)error("x-default",p,"Invalid default language");
+   const defaultExpected=BASE+base;
+   if(unique.has(defaultExpected) && alternateMap.get("x-default")!==defaultExpected)
+     error("x-default",p,"Invalid default language");
    const isModel=/\/tractors\/[^/]+\/$/.test(p);
    if(isModel){
     const slug=p.split("/").filter(Boolean).at(-1);

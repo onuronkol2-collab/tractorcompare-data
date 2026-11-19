@@ -8,7 +8,13 @@ if (origin.protocol !== "https:" || !approvedHosts.has(origin.hostname) ||
   throw Error("The audit accepts only approved public TractorVS HTTPS hosts.");
 }
 const pages = ["/", "/robots.txt", "/sitemap-index.xml",
-  "/tractors/", "/tr/tractors/", "/tr/"];
+  "/tractors/", "/tr/tractors/", "/tr/",
+  "/methodology/", "/tr/methodology/",
+  "/guides/choosing-a-tractor/", "/tr/guides/choosing-a-tractor/",
+  "/zh/guides/choosing-a-tractor/", "/hi/guides/choosing-a-tractor/",
+  "/pt-br/guides/choosing-a-tractor/", "/fr/guides/choosing-a-tractor/",
+  "/de/guides/choosing-a-tractor/", "/ru/guides/choosing-a-tractor/",
+  "/ja/guides/choosing-a-tractor/", "/es/guides/choosing-a-tractor/"];
 const results=[];
 const modelLinks = new Map();
 for (const path of pages) {
