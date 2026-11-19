@@ -48,6 +48,21 @@ const c = analyticsText(lang);
     analyticsWindow.gtag = (...args: unknown[]) => {
       analyticsWindow.dataLayer!.push(args);
     };
+    // Basic consent mode v2: Google tags are NEVER loaded before the visitor
+    // explicitly accepts, and analytics permission is recorded before config.
+    // No Google Ads consent is requested or granted.
+    analyticsWindow.gtag("consent", "default", {
+      analytics_storage: "denied",
+      ad_storage: "denied",
+      ad_user_data: "denied",
+      ad_personalization: "denied",
+    });
+    analyticsWindow.gtag("consent", "update", {
+      analytics_storage: "granted",
+      ad_storage: "denied",
+      ad_user_data: "denied",
+      ad_personalization: "denied",
+    });
     analyticsWindow.gtag("js", new Date());
     analyticsWindow.gtag("config", GA4_MEASUREMENT_ID, {
       send_page_view: true,
