@@ -116,7 +116,7 @@ test("zero specifications and absent engine power remain honest", () => {
     const meta = modelSeoMetadata({...tractor,specifications:[],horsepower:null,variant:null},locale);
     assert.doesNotMatch(meta.description,/114 HP|0 published technical specifications|0 yayımlanmış/);
     assert.ok(meta.description.includes("McCormick X5.120"));
-    assert.ok(meta.description.length > 60);
+    assert.ok(meta.description.length > (locale === "zh" || locale === "ja" ? 20 : 60));
   }
 });
 
