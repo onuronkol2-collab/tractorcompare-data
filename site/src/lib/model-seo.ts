@@ -5,29 +5,124 @@ import { t } from "./ui.ts";
 import {primaryTractorPhoto,tractorPhotoAlt} from "./tractor-photos.ts";
 
 /** The original manufacturer identity, equipment and market are never inferred. */
+/** Editorial microcopy for actual, published model facts.
+ * Search titles, descriptions and visible introductory copy share these strings.
+ * No generated sales claims, inferred manufacturer figures or unsupported sources.
+ */
+const MODEL_COPY: Record<Locale, {
+  specs:(count:number)=>string; empty:string; power:(hp:number)=>string;
+  withSources:string; withoutSources:string; note:(value:string)=>string;
+}> = {
+  en:{
+    specs:n=>`${n} published technical specifications.`,
+    empty:"Technical specifications have not yet been published.",
+    power:hp=>`Engine power: ${hp} HP.`,
+    withSources:"Manufacturer source links are included where verified.",
+    withoutSources:"No verified manufacturer source link is currently available.",
+    note:value=>`Configuration note: ${value}.`
+  },
+  tr:{
+    specs:n=>`${n} yayımlanmış teknik özellik.`,
+    empty:"Bu model için henüz teknik özellik yayımlanmadı.",
+    power:hp=>`Motor gücü: ${hp} HP.`,
+    withSources:"Doğrulanmış üretici belgelerine kaynak bağlantıları sunulur.",
+    withoutSources:"Bu model için henüz doğrulanmış üretici kaynağı bağlantısı bulunmuyor.",
+    note:value=>`Varyant notu: ${value}.`
+  },
+  zh:{
+    specs:n=>`已收录 ${n} 项技术参数。`,
+    empty:"此型号暂无已发布的技术参数。",
+    power:hp=>`发动机功率：${hp} HP。`,
+    withSources:"已附上经核实的制造商资料链接。",
+    withoutSources:"此型号目前没有已核实的制造商资料链接。",
+    note:value=>`配置说明：${value}。`
+  },
+  hi:{
+    specs:n=>`${n} प्रकाशित तकनीकी विवरण उपलब्ध हैं।`,
+    empty:"इस मॉडल के तकनीकी विवरण अभी प्रकाशित नहीं हुए हैं।",
+    power:hp=>`इंजन पावर: ${hp} HP।`,
+    withSources:"सत्यापित निर्माता दस्तावेज़ों के लिंक उपलब्ध हैं।",
+    withoutSources:"इस मॉडल के लिए सत्यापित निर्माता स्रोत का लिंक अभी उपलब्ध नहीं है।",
+    note:value=>`वेरिएंट संबंधी टिप्पणी: ${value}।`
+  },
+  "pt-br":{
+    specs:n=>`${n} especificações técnicas publicadas.`,
+    empty:"Ainda não há especificações técnicas publicadas para este modelo.",
+    power:hp=>`Potência do motor: ${hp} HP.`,
+    withSources:"Links para documentos do fabricante são fornecidos quando verificados.",
+    withoutSources:"Não há links verificados de fontes do fabricante para este modelo.",
+    note:value=>`Observação sobre a versão: ${value}.`
+  },
+  fr:{
+    specs:n=>`${n} caractéristiques techniques publiées.`,
+    empty:"Aucune caractéristique technique n'est encore publiée pour ce modèle.",
+    power:hp=>`Puissance moteur : ${hp} HP.`,
+    withSources:"Les documents constructeur sont liés lorsqu'ils ont été vérifiés.",
+    withoutSources:"Aucun lien constructeur vérifié n'est disponible pour ce modèle.",
+    note:value=>`Précision sur la version : ${value}.`
+  },
+  de:{
+    specs:n=>`${n} veröffentlichte technische Angaben.`,
+    empty:"Für dieses Modell liegen noch keine veröffentlichten technischen Angaben vor.",
+    power:hp=>`Motorleistung: ${hp} HP.`,
+    withSources:"Geprüfte Herstellerunterlagen sind verlinkt.",
+    withoutSources:"Für dieses Modell liegt derzeit kein geprüfter Herstellerquellen-Link vor.",
+    note:value=>`Hinweis zur Ausführung: ${value}.`
+  },
+  ru:{
+    specs:n=>`Опубликовано технических характеристик: ${n}.`,
+    empty:"Для этой модели пока нет опубликованных технических характеристик.",
+    power:hp=>`Мощность двигателя: ${hp} HP.`,
+    withSources:"Проверенные документы производителя доступны по ссылкам.",
+    withoutSources:"Для этой модели пока нет проверенной ссылки на источник производителя.",
+    note:value=>`Примечание о комплектации: ${value}.`
+  },
+  ja:{
+    specs:n=>`公開済みの技術仕様は${n}項目です。`,
+    empty:"このモデルの技術仕様はまだ公開されていません。",
+    power:hp=>`エンジン出力：${hp} HP。`,
+    withSources:"確認済みメーカー資料へのリンクを掲載しています。",
+    withoutSources:"確認済みメーカー資料へのリンクは現在ありません。",
+    note:value=>`仕様上の注記：${value}。`
+  },
+  es:{
+    specs:n=>`${n} especificaciones técnicas publicadas.`,
+    empty:"Todavía no hay especificaciones técnicas publicadas para este modelo.",
+    power:hp=>`Potencia del motor: ${hp} HP.`,
+    withSources:"Se incluyen enlaces a documentos del fabricante cuando están verificados.",
+    withoutSources:"Este modelo aún no tiene enlaces verificados a fuentes del fabricante.",
+    note:value=>`Nota sobre la variante: ${value}.`
+  }
+};
+
 export function modelSeoMetadata(tractor: TractorRecord, lang: Locale) {
   const model = tractor.brand_name + " " + tractor.model_name;
-  // A catalogue source/caveat following a semicolon is useful in the page,
-  // but not a readable search title. The full identity stays in description.
   const variantLabel = tractor.variant?.split(";")[0]?.trim() || null;
-  const marketLabel = tractor.market?.trim().toLowerCase() === "global" ? null : tractor.market?.trim() || null;
-  const titleQualifiers = [
+  const marketLabel = tractor.market?.trim().toLowerCase() === "global"
+    ? null : tractor.market?.trim() || null;
+  const qualifiers = [
     variantLabel && variantLabel.length <= 48 ? variantLabel : null,
-    marketLabel,
-    tractor.model_year == null ? null : String(tractor.model_year),
-  ].filter((part): part is string => Boolean(part));
+    marketLabel, tractor.model_year == null ? null : String(tractor.model_year)
+  ].filter((part):part is string=>Boolean(part));
   const title = model + " " + t(lang, "modelSpecsTitle")
-    + (titleQualifiers.length ? " — " + titleQualifiers.join(" · ") : "")
-    + " | TractorVS";
-  const identity = [model, tractor.variant, tractor.market,
+    + (qualifiers.length ? " — " + qualifiers.join(" · ") : "") + " | TractorVS";
+
+  const copy = MODEL_COPY[lang];
+  const sourceCount = new Set(tractor.specifications.map(spec =>
+    officialManufacturerSourceUrl(spec, tractor.brand_name)).filter(Boolean)).size;
+  const variantContext = tractor.variant?.split(";").slice(1).join(";").trim() || null;
+  const details = [variantLabel, marketLabel,
     tractor.model_year == null ? null : String(tractor.model_year)]
-    .filter((part): part is string => Boolean(part && part.trim()));
-  const descriptor = [
-    tractor.horsepower == null ? null : t(lang, "power") + ": " + tractor.horsepower + " HP",
-    tractor.specifications.length + " " + t(lang, "technicalSpecs"),
-  ].filter(Boolean).join(" · ");
-  const description = identity.join(" · ") + ". " + t(lang, "modelDesc") + " " + descriptor + ".";
-  return { title, description };
+    .filter((part):part is string=>Boolean(part));
+  const identity = model + (details.length ? " (" + details.join(" · ") + ")" : "");
+  const segments = [
+    identity + ".",
+    tractor.specifications.length ? copy.specs(tractor.specifications.length) : copy.empty,
+    tractor.horsepower == null ? null : copy.power(tractor.horsepower),
+    sourceCount ? copy.withSources : copy.withoutSources,
+    variantContext ? copy.note(variantContext.replace(/[.。।]+$/u, "")) : null,
+  ].filter((part):part is string=>Boolean(part));
+  return {title,description:segments.join(" ")};
 }
 
 /**
