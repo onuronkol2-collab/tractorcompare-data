@@ -31,6 +31,7 @@ const summaryItems = [
     <a class="catalog-breadcrumb" href={listingUrl}>← {t(lang,"allTractors")}</a>
     <p class="eyebrow"><span class="eyebrow-mark"></span>{t(lang,"modelEyebrow")}</p>
     <p class="model-brand">{tractor.brand_name}</p><h1>{tractor.brand_name} {tractor.model_name}</h1>
+    <p class="model-hero-description">{description}</p>
     <div class="model-meta">
       {tractor.model_year&&<span>{tractor.model_year}</span>}
       {tractor.variant&&<span title={tractor.variant}>{tractor.variant.split(";")[0].trim()}</span>}
@@ -76,6 +77,7 @@ const summaryItems = [
 </SiteLayout>
 
 <style>
+  .model-hero-description {max-width: 790px; margin: 18px 0 0; color: #d1ded3; font-size: clamp(14px,1.35vw,16px); line-height: 1.8; overflow-wrap: anywhere; }
   .model-spec-warning {
     margin: 14px 0 0;
     padding: 11px 12px;

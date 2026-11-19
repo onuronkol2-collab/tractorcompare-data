@@ -91,3 +91,31 @@ test("non-global markets distinguish otherwise identical equipment", () => {
   assert.notEqual(usa.title,eu.title);
   assert.match(usa.title,/US/);
 });
+
+test("all ten locales have meaningful source-aware, nonempty descriptions", () => {
+  const locales = ["en","tr","zh","hi","pt-br","fr","de","ru","ja","es"];
+  for (const locale of locales) {
+    const a = modelSeoMetadata(tractor,locale);
+    assert.ok(a.title.includes("McCormick X5.120"));
+    assert.ok(a.description.includes("McCormick X5.120"));
+    assert.match(a.description,/114 HP/);
+    assert.match(a.description,/Stage V/);
+    assert.ok(a.description.length > 75);
+    assert.doesNotMatch(a.description,/undefined|null|NaN/);
+    const withoutSource = modelSeoMetadata({
+      ...tractor,
+      specifications:tractor.specifications.map(spec=>({...spec,source_url:null}))
+    },locale).description;
+    assert.notEqual(a.description,withoutSource,`Source claims must change in ${locale}`);
+    assert.ok(withoutSource.length > 75);
+  }
+});
+
+test("zero specifications and absent engine power remain honest", () => {
+  for (const locale of ["en","tr","zh","hi","pt-br","fr","de","ru","ja","es"]) {
+    const meta = modelSeoMetadata({...tractor,specifications:[],horsepower:null,variant:null},locale);
+    assert.doesNotMatch(meta.description,/114 HP|0 published technical specifications|0 yayımlanmış/);
+    assert.ok(meta.description.includes("McCormick X5.120"));
+    assert.ok(meta.description.length > 60);
+  }
+});
