@@ -122,3 +122,17 @@ test("only the reviewed exact TYM F36 PDF is allowed from shared media host", ()
     ...official, source_url:"https://tym-new.euwest01.umbraco.io/media/other/upload.pdf",
   }, "TYM"), null);
 });
+
+test("exact LS Tractor USA official model pages are linked when evidence is verified",()=>{
+  for(const model of ["mt122","mt125","mt573c","mt573cps"]){
+    const url="https://lstractorusa.com/tractor/"+model+"/";
+    assert.equal(officialManufacturerSourceUrl({
+      ...official,source_url:url
+    },"LS Tractor"),url);
+  }
+  for(const source_url of [
+    "http://lstractorusa.com/tractor/mt122/",
+    "https://lstractorusa.com.evil.example/tractor/mt122/",
+    "https://lstractorusa.com@evil.example/tractor/mt122/"
+  ])assert.equal(officialManufacturerSourceUrl({...official,source_url},"LS Tractor"),null);
+});
