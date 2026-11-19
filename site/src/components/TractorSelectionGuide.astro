@@ -1,8 +1,9 @@
 ---
 import SiteLayout from "../layouts/SiteLayout.astro";
-import {localizedPath} from "../lib/locales";
+import {localizedPath, LOCALES, type Locale} from "../lib/locales";
+import {guideTranslation} from "../lib/tractor-guide-i18n";
 
-interface Props { lang: "en" | "tr"; }
+interface Props { lang: Locale; }
 const {lang}=Astro.props;
 const tr=lang==="tr";
 const sources=[
@@ -19,7 +20,7 @@ const sources=[
    en:"University of Minnesota Extension — Buying a used tractor",
    tr:"Minnesota Üniversitesi Tarım Yayım Birimi — İkinci el traktör seçimi"},
 ];
-const copy=tr ? {
+const baseCopy=tr ? {
   title:"Traktör seçerken nelere dikkat edilmeli? | TractorVS",
   meta:"Traktör seçimi için teknik rehber: motor ve PTO gücü, hidrolik debi, kaldırma, çekiş, güvenlik ve belgelenmiş testleri doğru karşılaştırın.",
   category:"TEKNİK ÖZELLİK REHBERİ",
@@ -132,17 +133,22 @@ const copy=tr ? {
   catalog:"Browse tractors",compare:"Open comparison",method:"Our data methodology",
   limits:"Important: This guide is not a product endorsement, independent field trial, owner review or safety certification."
 };
+const localizedGuide=guideTranslation(lang);
+const copy=localizedGuide ?? baseCopy;
+const pageDate=new Intl.DateTimeFormat(lang==="zh"?"zh-CN":lang==="pt-br"?"pt-BR":lang,{
+  day:"numeric",month:"long",year:"numeric",timeZone:"UTC"
+}).format(new Date("2026-11-19T00:00:00Z"));
 ---
-<SiteLayout lang={lang} title={copy.title} description={copy.meta} availableLocales={["en","tr"]}>
+<SiteLayout lang={lang} title={copy.title} description={copy.meta} availableLocales={LOCALES}>
   <article class="tractor-guide">
     <div class="container guide-body">
       <nav class="guide-crumb" aria-label={tr?"İçerik yolu":"Breadcrumb"}>
-        <a href={localizedPath(lang,"/")}>TractorVS</a><span aria-hidden="true">/</span><span>{tr?"Traktör seçim rehberi":"Tractor selection guide"}</span>
+        <a href={localizedPath(lang,"/")}>TractorVS</a><span aria-hidden="true">/</span><span>{localizedGuide?.breadcrumb ?? (tr?"Traktör seçim rehberi":"Tractor selection guide")}</span>
       </nav>
       <p class="guide-kicker">{copy.category}</p>
       <h1>{copy.h1}</h1>
       <p class="guide-lead">{copy.lead}</p>
-      <p class="guide-date"><strong>{copy.updated}:</strong> <time datetime="2026-11-19">{tr?"19 Kasım 2026":"19 November 2026"}</time></p>
+      <p class="guide-date"><strong>{copy.updated}:</strong> <time datetime="2026-11-19">{pageDate}</time></p>
       <p class="guide-honesty">{copy.noTest}</p>
       <ol class="guide-steps">
         {copy.sections.map((section,index)=><li>
@@ -173,7 +179,7 @@ const copy=tr ? {
         <div class="guide-actions">
           <a href={localizedPath(lang,"/tractors/")}>{copy.catalog}</a>
           <a href={localizedPath(lang,"/compare/")}>{copy.compare}</a>
-          <a href={localizedPath(lang,"/methodology/")}>{copy.method}</a>
+          <a href={lang==="tr"?"/tr/methodology/":"/methodology/"}>{copy.method}{lang==="en"||lang==="tr"?"":" (EN)"}</a>
         </div>
       </section>
     </div>
