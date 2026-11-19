@@ -4,6 +4,7 @@ import {readFileSync} from "node:fs";
 import {LOCALES} from "../src/lib/locales.ts";
 import {APPROVED_TRACTOR_PHOTOS,tractorPhotos,primaryTractorPhoto,photoText,tractorPhotoAlt,resolveApprovedPhotoSource} from "../src/lib/tractor-photos.ts";
 import {modelStructuredData} from "../src/lib/model-seo.ts";
+import {HISTORICAL_LICENSED_PHOTOS} from "../src/lib/historical-licensed-photos.ts";
 const file=p=>readFileSync(new URL("../src/"+p,import.meta.url),"utf8");
 const tractor=(brand_name,model_name)=>({
   tractor_id:"1a2b3c4d-1234-5678-90ab-abcdef012345",slug:"test-model",
@@ -12,7 +13,7 @@ const tractor=(brand_name,model_name)=>({
   engine:null,transmission:null,drivetrain:null,weight_kg:null,specifications:[]
 });
 test("only exact matching tractor model identity receives a verified photo",()=>{
-  assert.equal(APPROVED_TRACTOR_PHOTOS.length,11);
+  assert.equal(APPROVED_TRACTOR_PHOTOS.length,52);
   assert.equal(tractorPhotos(tractor("Belarus","82.1")).length,4);
   assert.equal(tractorPhotos(tractor("Belarus","80.1")).length,1);
   assert.equal(tractorPhotos(tractor("New Holland","T5.110")).length,1);
@@ -21,6 +22,10 @@ test("only exact matching tractor model identity receives a verified photo",()=>
   assert.equal(tractorPhotos(tractor("McCormick","X5.120")).length,1);
   assert.equal(tractorPhotos(tractor("McCormick","X5.110")).length,1);
   assert.equal(tractorPhotos(tractor("Landini","5-110")).length,1);
+  assert.equal(tractorPhotos(tractor("Fendt","724 Vario")).length,1);
+  assert.equal(tractorPhotos(tractor("Valtra","Q265")).length,1);
+  assert.equal(tractorPhotos(tractor("Başak Traktör","5120")).length,1);
+  assert.equal(tractorPhotos(tractor("Valtra","Q266")).length,0);
   assert.equal(tractorPhotos(tractor("Case IH","Puma 155")).length,0);
   assert.equal(primaryTractorPhoto(tractor("Unknown Brand","X")),null);
 });
@@ -33,7 +38,7 @@ test("each approved photograph has a verified model source and re-use license",(
     for(const field of ["originThumbUrl","originDisplayUrl","originFullUrl"])
       assert.match(image[field],/^https:\/\/upload\.wikimedia\.org\/wikipedia\/commons\//);
     assert.match(image.sourcePage,/^https:\/\/commons\.wikimedia\.org\/wiki\/File:/);
-    assert.match(image.licenseUrl,/^https:\/\/creativecommons\.org\/licenses\/by-sa\/(3|4)\.0\/$/);
+    assert.match(image.licenseUrl,/^https:\/\/creativecommons\.org\/(?:licenses\/by(?:-sa)?\/(?:2|3|4)\.0\/|publicdomain\/zero\/1\.0\/)$/);
     assert.ok(image.photographer.trim());
     assert.equal(image.configurationExact,false);
   }
@@ -97,4 +102,12 @@ test("fullscreen viewer, linked credits and public image sitemap use SSR images"
   assert.match(sitemap,/for\(const tractor of catalog\.tractors\)/);
   assert.match(sitemap,/for\(const locale of LOCALES\)/);
   assert.match(robots,/image-sitemap\.xml/);
+});
+
+test("historic photo batch is staged with rights and does not create records",()=>{
+  assert.equal(HISTORICAL_LICENSED_PHOTOS.length,41);
+  const all=new Set(HISTORICAL_LICENSED_PHOTOS.map(x=>x.fileId));
+  assert.equal(all.size,41);
+  assert.ok(HISTORICAL_LICENSED_PHOTOS.every(x=>x.configurationExact===false));
+  assert.ok(!HISTORICAL_LICENSED_PHOTOS.some(x=>["Product","Vehicle"].includes(x.model)));
 });
