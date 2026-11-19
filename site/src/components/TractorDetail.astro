@@ -15,6 +15,8 @@ interface Props { lang: Locale; tractor: TractorRecord; }
 const { lang, tractor } = Astro.props;
 // Same read-only, published-only catalogue already used by getStaticPaths.
 const moreModels = morePublishedTractors(tractor,(await getPublicCatalog()).tractors);
+const hasBasak2075Analysis = tractor.brand_name.toLocaleLowerCase("tr").includes("başak") &&
+  tractor.model_name.trim().toLocaleLowerCase("tr")==="2075 bk";
 const groups = groupSpecifications(tractor.specifications,lang);
 const manufacturerDiscrepancies = [...new Set(tractor.specifications.map((spec) => verificationNotice(spec, lang)).filter((note): note is string => Boolean(note)))];
 const listingUrl = localizedPath(lang,"/tractors/");
@@ -94,9 +96,20 @@ const summaryItems = [
       </ul>
     </div>
   </section>}
+  {hasBasak2075Analysis && <section class="model-technical-analysis-link" aria-label={t(lang,"reviewedModelAnalysis")}>
+    <div class="container">
+      <a href={lang==="tr"?"/tr/reviews/basak-2075-bk/":"/reviews/basak-2075-bk/"}>
+        {t(lang,"reviewedModelAnalysis")}{lang==="en"||lang==="tr"?"":" (EN)"} <span aria-hidden="true">↗</span>
+      </a>
+    </div>
+  </section>}
 </SiteLayout>
 
 <style>
+  .model-technical-analysis-link{padding:26px 0;background:#eef5e9;border-top:1px solid #cbdcc6}
+  .model-technical-analysis-link a{display:inline-flex;align-items:center;gap:10px;color:#195331;font-size:16px;font-weight:850;text-decoration:underline;text-underline-offset:4px}
+  .model-technical-analysis-link a:focus-visible{outline:3px solid #3c804d;outline-offset:3px}
+
   .model-original-note{max-width:790px;margin:12px 0 0;padding:10px 13px;border:1px solid rgba(183,223,145,.3);border-radius:10px;color:#d5e3d5;font-size:13px;line-height:1.6}
   .model-original-note summary{cursor:pointer;font-weight:700}
   .model-original-note summary:focus-visible{outline:3px solid #b7df91;outline-offset:2px}
