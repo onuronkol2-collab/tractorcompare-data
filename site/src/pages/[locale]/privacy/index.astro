@@ -1,0 +1,9 @@
+---
+import AnalyticsPrivacy from "../../../components/AnalyticsPrivacy.astro";
+import {NEW_LOCALES} from "../../../lib/locales.ts";
+export function getStaticPaths() {
+  return NEW_LOCALES.map(locale=>({params:{locale},props:{locale}}));
+}
+const {locale}=Astro.props;
+---
+<AnalyticsPrivacy lang={locale} />
