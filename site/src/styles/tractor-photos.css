@@ -25,3 +25,29 @@
 .tractor-photo-dialog-caption a{color:#d8efc5;text-decoration:underline;text-underline-offset:3px}
 @media(max-width:620px){.tractor-photo-dialog{width:100vw;max-width:100vw;max-height:100dvh;border-radius:0}.tractor-photo-dialog img{max-height:75dvh}.tractor-photo-dialog-content{padding:9px}}
 @media(prefers-reduced-motion:reduce){.tractor-photo-button img{transition:none}.tractor-photo-button:hover img{transform:none}}
+
+/* One prominent photo + compact extras on model detail. Single image on catalog cards. */
+.tractor-photo-gallery--hero:has(.tractor-photo-frame:nth-child(2)) {
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:10px;
+}
+.tractor-photo-gallery--hero:has(.tractor-photo-frame:nth-child(2)) .tractor-photo-frame:first-child {
+  grid-column:1 / -1;
+}
+.tractor-photo-gallery--hero:has(.tractor-photo-frame:nth-child(2)) .tractor-photo-frame:not(:first-child) .tractor-photo-button {
+  aspect-ratio:16/10;
+}
+.tractor-photo-gallery--hero .tractor-photo-frame:not(:first-child) .tractor-photo-brandmark {
+  bottom:8px;right:8px;font-size:11px;
+}
+@media(max-width:620px) {
+  .tractor-photo-gallery--hero:has(.tractor-photo-frame:nth-child(2)) {
+    grid-template-columns:repeat(2,minmax(0,1fr));
+  }
+  .tractor-photo-gallery--hero:has(.tractor-photo-frame:nth-child(2)) .tractor-photo-frame:first-child {
+    grid-column:1 / -1;
+  }
+  .tractor-photo-gallery--hero:has(.tractor-photo-frame:nth-child(2)) .tractor-photo-frame:not(:first-child) .tractor-photo-caption {
+    font-size:11px;padding:8px;
+  }
+}
