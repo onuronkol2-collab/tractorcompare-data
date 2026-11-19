@@ -22,7 +22,7 @@ const description=tr
   ?"Başak 2075 BK teknik veri analizi: üretici belgesinde belirtilen 72 hp, 273 Nm, 16+8 şanzıman ve 540/540E kuyruk mili. Varyant ve kanıt sınırları."
   :"Başak 2075 BK technical document analysis: manufacturer-stated 72 hp, 273 Nm, 16+8 gears and 540/540E PTO, with variant and evidence limits.";
 const title=tr?"Başak 2075 BK Teknik İncelemesi (Kaynaklı) | TractorVS":"Başak 2075 BK: Source-Backed Technical Review | TractorVS";
-const rows=[
+const rows: Array<{tr:string;en:string;value:string;trValue?:string}> = [
  {tr:"Motor (üretici açıklaması)",en:"Engine (manufacturer specification)",value:"BT40845T3 · 4 cylinders · 3142 cm³ · turbo/intercooler",trValue:"BT40845T3 · 4 silindir · 3142 cm³ · turbo/ara soğutucu"},
  {tr:"Nominal ve azami motor gücü",en:"Rated and maximum engine power",value:"53 kW / 72 hp @ 2500 rpm"},
  {tr:"Azami motor torku",en:"Maximum engine torque",value:"273 Nm @ 1600 rpm"},
