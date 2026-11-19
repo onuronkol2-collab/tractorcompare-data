@@ -109,6 +109,10 @@ test("non-intrusive locale hint uses browser language, not guessed country",()=>
   assert.equal(suggestedLocale("xx-XX"),null);
   const layout=readFileSync(new URL("../src/layouts/SiteLayout.astro",import.meta.url),"utf8");
   const prompt=readFileSync(new URL("../src/components/LocaleSuggestion.astro",import.meta.url),"utf8");
+  assert.match(layout,/url: localizedPath\(locale, plainPath\)/,
+    "Language menu must link to canonical locale paths, not redirect endpoints");
+  assert.doesNotMatch(layout,/url: "\/language\/" \+ locale/);
+  assert.match(layout,/destination.search = window.location.search/);
   assert.match(layout,/lang==="en" && Astro.url.pathname==="\/" && <LocaleSuggestion/);
   assert.match(prompt,/locale-suggestion\[hidden\]\{display:none\}/);
   assert.match(prompt,/sessionStorage/);
