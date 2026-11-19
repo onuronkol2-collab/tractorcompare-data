@@ -15,5 +15,7 @@ test("live public audit covers all ten guide routes and two authored methodology
   for(const locale of ["","tr/","zh/","hi/","pt-br/","fr/","de/","ru/","ja/","es/"]){
     assert.ok(source.includes('"/'+locale+'guides/choosing-a-tractor/"'),locale);
   }
-  for(const path of ["/methodology/","/tr/methodology/"])assert.ok(source.includes('"'+path+'"'));
+  for(const path of ["/methodology/","/tr/methodology/"])assert.ok(source.includes('"'+path+'"'))
+  for(const path of ["/reviews/basak-2075-bk/","/tr/reviews/basak-2075-bk/"])
+    assert.ok(source.includes('"'+path+'"'));;
 });
