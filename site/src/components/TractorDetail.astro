@@ -8,7 +8,7 @@ import { localizedPath, type Locale } from "../lib/locales";
 import { t } from "../lib/ui";
 import { compareText as cx } from "../lib/compare-ux";
 import { marketDisplayName } from "../lib/market-display";
-import { modelSeoMetadata, modelStructuredData } from "../lib/model-seo";
+import { modelSeoMetadata, modelStructuredData, originalVariantNote } from "../lib/model-seo";
 import { getPublicCatalog } from "../lib/catalog";
 import { morePublishedTractors } from "../lib/related-tractors";
 interface Props { lang: Locale; tractor: TractorRecord; }
@@ -20,6 +20,7 @@ const manufacturerDiscrepancies = [...new Set(tractor.specifications.map((spec) 
 const listingUrl = localizedPath(lang,"/tractors/");
 const compareUrl = localizedPath(lang,"/compare/") + "?left=" + encodeURIComponent(tractor.tractor_id);
 const { title, description } = modelSeoMetadata(tractor, lang);
+const originalNote = originalVariantNote(tractor);
 const cover=primaryTractorPhoto(tractor);
 const structuredData = import.meta.env.PUBLIC_INDEXING_ENABLED === "true" && Astro.site
   ? modelStructuredData(tractor, lang, Astro.site.toString()) : null;
@@ -36,6 +37,7 @@ const summaryItems = [
     <p class="eyebrow"><span class="eyebrow-mark"></span>{t(lang,"modelEyebrow")}</p>
     <p class="model-brand">{tractor.brand_name}</p><h1>{tractor.brand_name} {tractor.model_name}</h1>
     <p class="model-hero-description">{description}</p>
+    {originalNote && <details class="model-original-note"><summary>{t(lang,"originalVariantNote")}</summary><p>{originalNote}</p></details>}
     <div class="model-meta">
       {tractor.model_year&&<span>{tractor.model_year}</span>}
       {tractor.variant&&<span title={tractor.variant}>{tractor.variant.split(";")[0].trim()}</span>}
@@ -95,6 +97,11 @@ const summaryItems = [
 </SiteLayout>
 
 <style>
+  .model-original-note{max-width:790px;margin:12px 0 0;padding:10px 13px;border:1px solid rgba(183,223,145,.3);border-radius:10px;color:#d5e3d5;font-size:13px;line-height:1.6}
+  .model-original-note summary{cursor:pointer;font-weight:700}
+  .model-original-note summary:focus-visible{outline:3px solid #b7df91;outline-offset:2px}
+  .model-original-note p{margin:10px 0 0;overflow-wrap:anywhere}
+
   .model-more-section { padding: 35px 0 60px; background: #f5f8f3; border-top: 1px solid #e0e9dc; }
   .model-more-section h2 { margin: 0 0 20px; color: #183624; font-size: clamp(20px,2.3vw,27px); }
   .model-more-list { list-style: none; display: grid; grid-template-columns: repeat(auto-fit,minmax(220px,1fr)); gap: 12px; padding: 0; margin: 0; }

@@ -96,6 +96,11 @@ const MODEL_COPY: Record<Locale, {
   }
 };
 
+/** Keep original source/variant notes available without pretending to translate them. */
+export function originalVariantNote(tractor:Pick<TractorRecord,"variant">):string|null {
+  return tractor.variant?.split(";").slice(1).join(";").trim() || null;
+}
+
 export function modelSeoMetadata(tractor: TractorRecord, lang: Locale) {
   const model = tractor.brand_name + " " + tractor.model_name;
   const variantLabel = tractor.variant?.split(";")[0]?.trim() || null;
@@ -111,7 +116,7 @@ export function modelSeoMetadata(tractor: TractorRecord, lang: Locale) {
   const copy = MODEL_COPY[lang];
   const sourceCount = new Set(tractor.specifications.map(spec =>
     officialManufacturerSourceUrl(spec, tractor.brand_name)).filter(Boolean)).size;
-  const variantContext = tractor.variant?.split(";").slice(1).join(";").trim() || null;
+  const variantContext = originalVariantNote(tractor);
   const details = [variantLabel, marketLabel,
     tractor.model_year == null ? null : String(tractor.model_year)]
     .filter((part):part is string=>Boolean(part));
@@ -121,7 +126,7 @@ export function modelSeoMetadata(tractor: TractorRecord, lang: Locale) {
     tractor.specifications.length ? copy.specs(tractor.specifications.length) : copy.empty,
     tractor.horsepower == null ? null : copy.power(tractor.horsepower),
     sourceCount ? copy.withSources : copy.withoutSources,
-    variantContext ? copy.note(variantContext.replace(/[.。।]+$/u, "")) : null,
+    variantContext && lang === "en" ? copy.note(variantContext.replace(/[.。।]+$/u, "")) : null,
   ].filter((part):part is string=>Boolean(part));
   return {title,description:segments.join(" ")};
 }
