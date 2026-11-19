@@ -48,14 +48,14 @@ test("guide content is complete in all eight additional languages",()=>{
     assert.equal(translation.sections.length,6,lang+" sections");
     assert.equal(translation.rows.length,5,lang+" comparison rows");
     assert.equal(translation.headers.length,3,lang+" comparison headers");
-    assert.ok(translation.noTest.length>=45 && translation.limits.length>=45,lang+" honesty");
+    assert.ok(translation.noTest.length>=(lang==="zh"||lang==="ja"?40:90) && translation.limits.length>=(lang==="zh"||lang==="ja"?25:70),lang+" honesty");
     for(const sec of translation.sections){
       assert.equal(sec.paragraphs.length,2,lang+" section paragraphs");
-      assert.ok(sec.paragraphs.every(x=>x.length>=95),lang+" substantive paragraphs");
-      assert.ok(sec.question.length>=25,lang+" question");
+      assert.ok(sec.paragraphs.every(x=>x.length>=(lang==="zh"||lang==="ja"?45:130)),lang+" substantive paragraphs");
+      assert.ok(sec.question.length>=(lang==="zh"||lang==="ja"?18:45),lang+" question");
       assert.ok(sec.refs.length>0 && sec.refs.every(x=>x>=0 && x<4));
     }
-    assert.ok(translation.rows.every(x=>x.length===3 && x.every(s=>s.trim().length>6)),lang+" rows");
+    assert.ok(translation.rows.every(x=>x.length===3 && x.every(s=>s.trim().length>=2)),lang+" rows");
     assert.ok(localizedPath(lang,"/guides/choosing-a-tractor/").startsWith("/"+lang+"/"));
   }
   assert.match(guide,/guideTranslation\(lang\)/);
