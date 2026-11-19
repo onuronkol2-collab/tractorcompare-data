@@ -60,6 +60,51 @@ const PHOTO_ORIGINS:readonly Omit<TractorPhoto,"originThumbUrl"|"originDisplayUr
     sourcePage:"https://commons.wikimedia.org/wiki/File:McCormick_X5.120_P3-Drive_Agritechnica_2023_(DSC03865).jpg",
     licenseName:"CC BY-SA 4.0",licenseUrl:"https://creativecommons.org/licenses/by-sa/4.0/",
     configurationExact:false
+  },
+  {brand:"Belarus",model:"82.1",fileId:"belarus-82-1-homoatrox-open-day-2017-1",
+    thumbUrl:W+"thumb/d/d9/Belarus_82.1_%28open_day_2017%29_1.jpg/480px-Belarus_82.1_%28open_day_2017%29_1.jpg",
+    displayUrl:W+"thumb/d/d9/Belarus_82.1_%28open_day_2017%29_1.jpg/960px-Belarus_82.1_%28open_day_2017%29_1.jpg",
+    fullUrl:W+"d/d9/Belarus_82.1_%28open_day_2017%29_1.jpg",
+    width:3576,height:3156,photographer:"Homoatrox",
+    sourcePage:"https://commons.wikimedia.org/wiki/File:Belarus_82.1_(open_day_2017)_1.jpg",
+    licenseName:"CC BY-SA 4.0",licenseUrl:"https://creativecommons.org/licenses/by-sa/4.0/",
+    configurationExact:false
+  },
+  {brand:"Belarus",model:"82.1",fileId:"belarus-82-1-homoatrox-open-day-2017-2",
+    thumbUrl:W+"thumb/f/f1/Belarus_82.1_%28open_day_2017%29_2.jpg/480px-Belarus_82.1_%28open_day_2017%29_2.jpg",
+    displayUrl:W+"thumb/f/f1/Belarus_82.1_%28open_day_2017%29_2.jpg/960px-Belarus_82.1_%28open_day_2017%29_2.jpg",
+    fullUrl:W+"f/f1/Belarus_82.1_%28open_day_2017%29_2.jpg",
+    width:2976,height:3240,photographer:"Homoatrox",
+    sourcePage:"https://commons.wikimedia.org/wiki/File:Belarus_82.1_(open_day_2017)_2.jpg",
+    licenseName:"CC BY-SA 4.0",licenseUrl:"https://creativecommons.org/licenses/by-sa/4.0/",
+    configurationExact:false
+  },
+  {brand:"Belarus",model:"82.1",fileId:"belarus-82-1-eugene-zelenko-rakaw-1",
+    thumbUrl:W+"thumb/3/34/Belarus-Rakaw-Belarus_82.1-1.jpg/480px-Belarus-Rakaw-Belarus_82.1-1.jpg",
+    displayUrl:W+"thumb/3/34/Belarus-Rakaw-Belarus_82.1-1.jpg/960px-Belarus-Rakaw-Belarus_82.1-1.jpg",
+    fullUrl:W+"3/34/Belarus-Rakaw-Belarus_82.1-1.jpg",
+    width:6000,height:4000,photographer:"Eugene Zelenko",
+    sourcePage:"https://commons.wikimedia.org/wiki/File:Belarus-Rakaw-Belarus_82.1-1.jpg",
+    licenseName:"CC BY-SA 4.0",licenseUrl:"https://creativecommons.org/licenses/by-sa/4.0/",
+    configurationExact:false
+  },
+  {brand:"Landini",model:"5-110",fileId:"landini-5-110-roboshift-marcelx42-2023",
+    thumbUrl:W+"thumb/9/9b/Landini_5-110_RoboShift_Agritechnica_2023_%28DSC05711%29.jpg/480px-Landini_5-110_RoboShift_Agritechnica_2023_%28DSC05711%29.jpg",
+    displayUrl:W+"thumb/9/9b/Landini_5-110_RoboShift_Agritechnica_2023_%28DSC05711%29.jpg/960px-Landini_5-110_RoboShift_Agritechnica_2023_%28DSC05711%29.jpg",
+    fullUrl:W+"9/9b/Landini_5-110_RoboShift_Agritechnica_2023_%28DSC05711%29.jpg",
+    width:6487,height:3651,photographer:"MarcelX42",
+    sourcePage:"https://commons.wikimedia.org/wiki/File:Landini_5-110_RoboShift_Agritechnica_2023_(DSC05711).jpg",
+    licenseName:"CC BY-SA 4.0",licenseUrl:"https://creativecommons.org/licenses/by-sa/4.0/",
+    configurationExact:false
+  },
+  {brand:"McCormick",model:"X5.110",fileId:"mccormick-x5-110-hc-marcelx42-2023",
+    thumbUrl:W+"thumb/c/c2/McCormick_X5.110_HC_Agritechnica_2023_%28DSC06793%29.jpg/480px-McCormick_X5.110_HC_Agritechnica_2023_%28DSC06793%29.jpg",
+    displayUrl:W+"thumb/c/c2/McCormick_X5.110_HC_Agritechnica_2023_%28DSC06793%29.jpg/960px-McCormick_X5.110_HC_Agritechnica_2023_%28DSC06793%29.jpg",
+    fullUrl:W+"c/c2/McCormick_X5.110_HC_Agritechnica_2023_%28DSC06793%29.jpg",
+    width:7008,height:3944,photographer:"MarcelX42",
+    sourcePage:"https://commons.wikimedia.org/wiki/File:McCormick_X5.110_HC_Agritechnica_2023_(DSC06793).jpg",
+    licenseName:"CC BY-SA 4.0",licenseUrl:"https://creativecommons.org/licenses/by-sa/4.0/",
+    configurationExact:false
   }
 ];
 /** Stable, first-party indexable image URLs; a fixed Worker allowlist proxies only approved photos. */

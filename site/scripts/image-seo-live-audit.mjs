@@ -21,7 +21,12 @@ const paths=[
   "new-holland-t5-110-pere-igor-2016",
   "new-holland-t6-180-marcelx42-2025",
   "case-ih-puma-150-chris-woodrich-2025",
-  "mccormick-x5-120-marcelx42-2023"
+  "mccormick-x5-120-marcelx42-2023",
+  "belarus-82-1-homoatrox-open-day-2017-1",
+  "belarus-82-1-homoatrox-open-day-2017-2",
+  "belarus-82-1-eugene-zelenko-rakaw-1",
+  "landini-5-110-roboshift-marcelx42-2023",
+  "mccormick-x5-110-hc-marcelx42-2023"
 ];
 for(const name of paths){
  for(const size of [960,1920]){

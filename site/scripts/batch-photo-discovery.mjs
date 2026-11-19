@@ -16,6 +16,7 @@ const ORIGIN=process.env.TRACTORVS_URL||"https://tractorvs.com";
 const OUTPUT=resolve(process.env.TRACTOR_IMAGE_REPORT_DIR||"./photo-discovery-report");
 const USER_AGENT="TractorVS/1.0 (tractorvs.com; public photo license research)";
 const REQUEST_LIMIT=4;
+const COMMONS_BATCH=1;
 const delay=ms=>new Promise(r=>setTimeout(r,ms));
 const stripTags=s=>String(s||"").replace(/<[^>]*>/g,"").replace(/&amp;/g,"&").replace(/&quot;/g,'"').trim();
 const norm=s=>String(s||"").normalize("NFKD").replace(/[\u0300-\u036f]/g,"").toLowerCase()
@@ -160,8 +161,9 @@ async function main(){
     publicModelErrors:publicRecords.filter(x=>x.error).length,
     optionalDraftRows:privateRecords.length,uniqueModelSearches:entries.length}));
   const reviewed=[];
-  for(let start=0;start<entries.length;start+=REQUEST_LIMIT){
-    const result=await Promise.all(entries.slice(start,start+REQUEST_LIMIT).map(async entry=>{
+  for(let start=0;start<entries.length;start+=COMMONS_BATCH){
+    await delay(1400);
+    const result=await Promise.all(entries.slice(start,start+COMMONS_BATCH).map(async entry=>{
       try{return {...entry,...await commonsCandidates(entry)};}
       catch(e){return {...entry,error:String(e),candidates:[]};}
     }));
