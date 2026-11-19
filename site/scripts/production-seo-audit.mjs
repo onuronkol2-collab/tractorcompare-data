@@ -63,7 +63,8 @@ const editorialPaths=[
   "/methodology/","/tr/methodology/",
   ...Object.keys(languages).map(lang=>
     (lang==="en"?"/":"/"+lang+"/")+"guides/choosing-a-tractor/"),
-  "/reviews/basak-2075-bk/","/tr/reviews/basak-2075-bk/"
+  ...Object.keys(languages).map(lang=>
+    (lang==="en"?"/":"/"+lang+"/")+"reviews/basak-2075-bk/")
 ];
 const absentEditorial=editorialPaths.filter(path=>!unique.has(BASE+path));
 for(const path of absentEditorial)
