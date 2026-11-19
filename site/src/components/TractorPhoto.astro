@@ -8,6 +8,18 @@ const photos=tractorPhotos(tractor);
 const visiblePhotos=mode==="hero" ? photos : photos.slice(0,1);
 const label=tractorPhotoAlt(tractor,lang);
 ---
+{photos.length===0 && <div class:list={["tractor-photo-gallery","tractor-photo-gallery--"+mode]}>
+  <div class="tractor-photo-placeholder" role="note">
+    <svg viewBox="0 0 120 70" fill="none" aria-hidden="true" focusable="false">
+      <path d="M20 44h18l9-21h29l12 21h11v8H20v-8Z" stroke="currentColor" stroke-width="3" stroke-linejoin="round"/>
+      <path d="M52 25v19h30L73 25H52Z" stroke="currentColor" stroke-width="2"/>
+      <circle cx="41" cy="53" r="13" stroke="currentColor" stroke-width="3"/>
+      <circle cx="89" cy="53" r="9" stroke="currentColor" stroke-width="3"/>
+    </svg>
+    <strong>{tractor.brand_name} {tractor.model_name}</strong>
+    <span>{photoText(lang,"pending")}</span>
+  </div>
+</div>}
 {photos.length>0 && <div class:list={["tractor-photo-gallery","tractor-photo-gallery--"+mode]}>
   {visiblePhotos.map((photo,index)=><figure class="tractor-photo-frame">
     <button class="tractor-photo-button" type="button" data-tractor-photo
