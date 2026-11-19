@@ -61,6 +61,36 @@ After registering and connecting the final domain, set:
 
 Only enable indexing after the public model pages, domain, canonical URLs, language alternates and source links have been reviewed.
 
+## Google Analytics 4: explicit consent, not Google Tag Manager
+
+- The owner's public GA4 **measurement ID** is `G-PZCNNEY1VN`; the separate
+  Google tag `GTM-...` visible in Google's setup UI is **not** the GA4 stream
+  measurement ID. Do not copy Google's unconditioned install snippet into HTML
+  and do not install a duplicate GTM tag.
+- `SiteLayout.astro` includes one `AnalyticsConsent.astro` on all ten
+  locales, using localized language from `analytics-i18n.ts`.
+- On a first visit the banner is optional; **neither gtag.js nor an analytics
+  request is loaded until the visitor explicitly clicks Accept**. Rejection
+  means no GA4 script is fetched. The choice is stored locally under
+  `tractorvs_analytics_choice_v1` and can be changed using the footer
+  preferences button. Revoking consent reloads the page without the Google
+  Analytics script and attempts to clear known first-party `_ga` cookies.
+- Privacy pages in all ten locales are at `/privacy/`, `/tr/privacy/`, etc.;
+  they describe measurement, cookies, Google's processing, and revocation.
+- GA4's **Realtime** report only shows accepted visits after production
+  deployment (subject to browser blockers and Google's processing). An
+  unconsented test visit should **not** create a GA4 event; this is deliberate.
+  Existing Cloudflare request logs may still operate independently of GA4.
+- Google Consent Mode advanced modeling is deliberately not enabled: no Google
+  tag or consent ping is sent before affirmative consent. This opt-in
+  implementation is conservative, and legal review of the site's full
+  privacy/cookie disclosures may still be appropriate as requirements change.
+- QA: open a private/incognito window, inspect Network for
+  `googletagmanager.com` / `google-analytics.com` before accepting (none);
+  click Reject (none); reopen settings, click Accept (gtag.js request), and
+  revoke (request stops after reload). Check mobile, all ten locales, and
+  no duplicate GA4 tags.
+
 ## Deployment
 
 The Worker serves Astro's static output in `dist/` using Workers Static Assets.
