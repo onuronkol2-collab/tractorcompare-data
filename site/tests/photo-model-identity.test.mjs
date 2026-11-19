@@ -28,6 +28,12 @@ test("title matcher rejects historical nontractor and model-variant false positi
     ["Valtra","Q265","File:Valtra Q2650 tractor.jpg"],
     ["John Deere","5075E","File:Case IH 5075E.jpg"],
     ["Belarus","82.1","File:Belarus 82.10.jpg"],
+    ["McCormick","X4","File:McCormick X4.085 TM Agritechnica 2023.jpg"],
+    ["McCormick","X4","File:McCormick X4 TM at agritechnica.jpg"],
+    ["McCormick","X5","File:McCormick X5.110 HC tractor.jpg"],
+    ["McCormick","X6","File:McCormick X6.414 P6-Drive tractor.jpg"],
+    ["SAME","FRUTTETO","File:SAME Frutteto 80.4 Natural.jpg"],
+    ["Steyr","PLUS","File:Steyr 4120 Plus Agritechnica 2025.jpg"],
     ["New Holland","T5.110","File:New Holland T5.1100 tractor.jpg"]
   ])assert.equal(matches(brand,model,file),false,brand+" "+model+": "+file);
 });
