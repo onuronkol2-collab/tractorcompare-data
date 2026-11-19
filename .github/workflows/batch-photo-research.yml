@@ -48,10 +48,20 @@ jobs:
           PY
       - name: Research all published tractor models and licensed Commons candidates
         run: node site/scripts/batch-photo-discovery.mjs
+      - name: Temporarily inspect checked-in legacy archive offline
+        run: |
+          mkdir -p archive-inspect
+          python - <<'PY'
+          from zipfile import ZipFile
+          with ZipFile('tractordata.zip') as z:
+            with open('archive-inspect/sql.txt','wb') as out: out.write(z.read('sql.txt'))
+          PY
       - name: Preserve candidates and license evidence for review
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: tractorvs-batch-photo-research
-          path: photo-discovery-report
+          path: |
+            photo-discovery-report
+            archive-inspect/sql.txt
           retention-days: 30
