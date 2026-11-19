@@ -9,6 +9,7 @@ test("production SEO auditing validates only actually published locale alternati
   assert.match(source,/hreflang-nonexistent/);
   assert.match(source,/TRACTORVS_EDITORIAL_SITEMAP/);
   assert.match(source,/editorial-sitemap-lag/);
+  assert.match(source,/\+"reviews\/basak-2075-bk\/"\)/);
   assert.match(source,/reviews\/basak-2075-bk/);
   assert.match(source,/defaultExpected=BASE\+base/);
   assert.doesNotMatch(source,/if\(alternateMap\.get\(code\)!==expected\)error/);
