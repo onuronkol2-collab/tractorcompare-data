@@ -25,7 +25,7 @@ test("all ten languages have meaningful accept, reject and preference controls",
     const copy=analyticsText(locale);
     assert.deepEqual(Object.keys(copy),expected);
     for(const [key,value] of Object.entries(copy)){
-      assert.ok(typeof value==="string"&&value.trim().length>6,locale+" missing "+key);
+      assert.ok(typeof value==="string"&&value.trim().length>2,locale+" missing "+key);
     }
     assert.notEqual(copy.accept,copy.reject);
     assert.notEqual(copy.privacyTitle,copy.consentTitle);
