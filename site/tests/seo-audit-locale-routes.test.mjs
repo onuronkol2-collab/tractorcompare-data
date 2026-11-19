@@ -22,3 +22,12 @@ test("live public audit covers all ten guide routes and two authored methodology
   for(const locale of ["","tr/","zh/","hi/","pt-br/","fr/","de/","ru/","ja/","es/"])
     assert.ok(source.includes('"/'+locale+'reviews/basak-2075-bk/"'),locale);;
 });
+
+test("new public SEO smoke audit reports 404 translated pages, not just a success exit code",()=>{
+  const code=read("scripts/live-website-audit.mjs");
+  assert.match(code,/TRACTORVS_LIVE_EDITORIAL_HEALTH/);
+  assert.match(code,/http_non_ok/);
+  assert.match(code,/GITHUB_EVENT_NAME==="push"/);
+  assert.match(code,/editorialProblems\.length/);
+  assert.match(code,/process\.exitCode=1/);
+});

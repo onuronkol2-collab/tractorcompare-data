@@ -79,12 +79,25 @@ for (const path of english.slice(0,4)) {
     }));
   } catch(e) { console.log("LIVE_MODEL_PAGE "+JSON.stringify({path,error:String(e)})); }
 }
+const editorialProblems=results.filter(r=>
+  (r.path.includes("/guides/")||r.path.includes("/methodology/")||r.path.includes("/reviews/"))
+  && r.status!==200);
+console.log("TRACTORVS_LIVE_EDITORIAL_HEALTH "+JSON.stringify({
+  checked:results.filter(r=>/\/(guides|methodology|reviews)\//.test(r.path)).length,
+  errors:editorialProblems.length,
+  pages:editorialProblems.map(r=>({path:r.path,status:r.status??null,error:r.error??null}))
+}));
 console.log("AUDIT_SUMMARY "+JSON.stringify({
   total:results.length,
   http_ok:results.filter(r=>r.status>=200&&r.status<300).length,
+  http_non_ok:results.filter(r=>!(r.status>=200&&r.status<300)).length,
   requests_failed:results.filter(r=>r.error).length,
   robots:results.find(r=>r.path==="/robots.txt")?.robots_preview ?? null,
 }));
+// A PR can be tested before its pages are deployed: report missing URLs, but
+// only fail the post-push main-branch audit on missing published editorial pages.
+if(process.env.GITHUB_EVENT_NAME==="push" && editorialProblems.length)
+  process.exitCode=1;
 if(results.every(r=>r.error)) {
   process.exitCode=1;
 }
