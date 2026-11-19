@@ -1,7 +1,6 @@
 # TractorVS SEO release gate (2026-11-18)
 
-The repository intentionally keeps **PUBLIC_INDEXING_ENABLED=false** until
-a production domain, translations and model pages have been checked.
+Indexing is enabled only when a trusted production build explicitly sets **PUBLIC_INDEXING_ENABLED=true** and **SITE_URL**. A local or incomplete build remains noindexed by default.
 
 ## Build-time facts
 
@@ -9,7 +8,7 @@ a production domain, translations and model pages have been checked.
 - The public Supabase view provides only `status = published` tractors.
 - The stable slug includes a UUID prefix and is not derived solely from model name.
 - Technical facts preserve model variant, market, unit, rated RPM and source.
-- JSON-LD uses `Vehicle`, `WebPage` and `BreadcrumbList`; it does not invent offers, price, images, aggregate ratings or reviews.
+- JSON-LD uses `Thing`, `WebPage` and `BreadcrumbList`; `ImageObject` is added only for approved photographs with rights attribution. No invented offers, prices, aggregate ratings or reviews.
 - `SITE_URL` is needed for canonical URL, reciprocal hreflang and sitemap.
 - The existing 10-language locale structure must remain intact.
 
@@ -28,4 +27,4 @@ a production domain, translations and model pages have been checked.
 
 ## Rollback boundaries
 
-Both SEO patches are additive and isolated to `site/`; undo by reverting their Git commits and redeploying. The SQL index is a separate optional deployment: if already applied, drop only the dedicated index as a reviewed DDL operation. Do not run data-cleaning UPDATE/DELETE for identity conflicts without an evidence-based review.
+Website SEO changes are isolated to `site/`; undo a specific change by reverting its Git commit, rerunning checks and redeploying. The SQL index is a separate optional deployment: if already applied, drop only the dedicated index as a reviewed DDL operation. Do not run data-cleaning UPDATE/DELETE for identity conflicts without an evidence-based review.
