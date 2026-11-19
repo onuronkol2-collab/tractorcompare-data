@@ -40,3 +40,24 @@ test("German engine aspiration describes intake method without implying forced i
   const source={canonical_key:"engine_aspiration",spec_name:"Engine aspiration"};
   assert.equal(specLabel(source,"de"),value);
 });
+
+test("general engine torque is not mislabeled maximum torque in eight locales",()=>{
+  const expected={
+    zh:"发动机扭矩",hi:"इंजन टॉर्क","pt-br":"Torque do motor",
+    fr:"Couple moteur",de:"Motordrehmoment",ru:"Крутящий момент двигателя",
+    ja:"エンジントルク",es:"Par motor"
+  };
+  for(const [locale,label] of Object.entries(expected)){
+    assert.equal(localizedSpecificationName("engine_torque","Engine torque",locale),label);
+    assert.equal(specLabel({canonical_key:"engine_torque",spec_name:"Engine torque"},locale),label);
+  }
+  assert.notEqual(
+    localizedSpecificationName("engine_torque","Engine torque","zh"),
+    localizedSpecificationName("engine_torque_rpm","Engine torque RPM","zh"),
+    "General torque and the RPM of maximum torque must not collapse"
+  );
+  assert.notEqual(
+    localizedSpecificationName("engine_torque","Engine torque","de"),
+    localizedSpecificationName("engine_torque_with_epm","Engine torque with EPM","de")
+  );
+});
