@@ -157,6 +157,7 @@ const COPY={
   image:["Photograph:","Fotoğraf:","照片：","फ़ोटो:","Fotografia:","Photo :","Foto:","Фото:","写真：","Fotografía:"],
   open:["View photo full screen","Fotoğrafı tam ekran aç","全屏查看照片","फ़ोटो पूरी स्क्रीन में देखें","Ver foto em tela cheia","Voir la photo en plein écran","Foto im Vollbild öffnen","Открыть фото на весь экран","写真を全画面表示","Ver foto a pantalla completa"],
   close:["Close photo","Fotoğrafı kapat","关闭照片","फ़ोटो बंद करें","Fechar foto","Fermer la photo","Foto schließen","Закрыть фото","写真を閉じる","Cerrar foto"],
+  pending:["Verified model photograph not available yet.","Bu modelin doğrulanmış fotoğrafı henüz yok.","此型号暂无已核实的照片。","इस मॉडल की सत्यापित फ़ोटो अभी उपलब्ध नहीं है।","Ainda não há foto verificada deste modelo.","Aucune photo vérifiée pour ce modèle.","Für dieses Modell liegt noch kein geprüftes Foto vor.","Проверенная фотография этой модели пока недоступна.","このモデルの確認済み写真はまだありません。","Aún no hay una foto verificada de este modelo."],
   credit:["Photo credit","Fotoğraf kaynağı","照片署名","फ़ोटो श्रेय","Crédito da foto","Crédit photo","Bildnachweis","Автор фото","写真提供","Crédito fotográfico"],
   representative:[
     "Photographed equipment may differ from this recorded configuration.",
