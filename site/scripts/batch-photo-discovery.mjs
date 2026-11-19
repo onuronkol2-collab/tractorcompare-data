@@ -1,3 +1,4 @@
+import {allowedPhotoReuseLicense} from "./photo-license-check.mjs";
 /**
  * One-pass, read-only catalogue image discovery.
  * Pulls public LIVE model inventory from the current published sitemap;
@@ -80,13 +81,7 @@ function splitBrandModel(name){
   if(brand)return {brand,model:name.slice(brand.length).trim()};
   const p=name.indexOf(" ");return p<0?{brand:name,model:""}:{brand:name.slice(0,p),model:name.slice(p+1)};
 }
-const supportedLicense=(license,link)=>{
-  const label=String(license||"").toLowerCase();
-  const u=String(link||"").toLowerCase();
-  return (/\bcc0\b|cc by(?:-sa)?\b|public domain/i.test(label) ||
-    /creativecommons\.org\/(?:licenses\/by(?:-sa)?\/|publicdomain\/zero\/)/.test(u))
-    && !/nc|nd|noncommercial|no derivatives/.test(label);
-};
+
 function sameModelTitle(brand,model,title){
   const file=norm(title.replace(/^File:/i,""));
   const brandTokens=brand.toLowerCase().replace(/[-_]/g," ").split(/\s+/).filter(t=>t.length>1);
@@ -133,7 +128,7 @@ async function commonsCandidates(record){
     const artist=text("Artist")||text("Credit");
     const matching=sameModelTitle(record.brand,record.model,page.title||"") ||
       matchesManufacturerPhotoAlias(record.brand,record.model,page.title||"");
-    const permitted=supportedLicense(license,licenseUrl);
+    const permitted=allowedPhotoReuseLicense(license,licenseUrl);
     return {fileTitle:page.title,url:info.url||null,
       thumbnail:info.thumburl||null,
       descriptionUrl:info.descriptionurl||null,
