@@ -14,7 +14,8 @@ const pages = ["/", "/robots.txt", "/sitemap-index.xml",
   "/zh/guides/choosing-a-tractor/", "/hi/guides/choosing-a-tractor/",
   "/pt-br/guides/choosing-a-tractor/", "/fr/guides/choosing-a-tractor/",
   "/de/guides/choosing-a-tractor/", "/ru/guides/choosing-a-tractor/",
-  "/ja/guides/choosing-a-tractor/", "/es/guides/choosing-a-tractor/"];
+  "/ja/guides/choosing-a-tractor/", "/es/guides/choosing-a-tractor/",
+  "/reviews/basak-2075-bk/", "/tr/reviews/basak-2075-bk/"];
 const results=[];
 const modelLinks = new Map();
 for (const path of pages) {
