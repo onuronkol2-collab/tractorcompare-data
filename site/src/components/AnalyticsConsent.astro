@@ -1,0 +1,164 @@
+---
+import type { Locale } from "../lib/locales.ts";
+import { localizedPath } from "../lib/locales.ts";
+import { analyticsText } from "../lib/analytics-i18n.ts";
+
+interface Props { lang: Locale; }
+const { lang } = Astro.props;
+const c = analyticsText(lang);
+---
+<aside id="tractorvs-analytics-banner" class="tractorvs-analytics-banner" hidden
+      aria-labelledby="tractorvs-analytics-title" aria-describedby="tractorvs-analytics-description"
+      role="region">
+  <div class="tractorvs-analytics-copy">
+    <strong id="tractorvs-analytics-title">{c.consentTitle}</strong>
+    <p id="tractorvs-analytics-description">{c.consentDescription}</p>
+    <a class="tractorvs-analytics-link" href={localizedPath(lang,"/privacy/")}>{c.privacyLink}</a>
+  </div>
+  <div class="tractorvs-analytics-actions">
+    <button type="button" id="tractorvs-analytics-reject">{c.reject}</button>
+    <button type="button" id="tractorvs-analytics-accept">{c.accept}</button>
+  </div>
+</aside>
+<script>
+  import { ANALYTICS_CHOICE_KEY, GA4_MEASUREMENT_ID } from "../lib/analytics-i18n.ts";
+
+  type AnalyticsChoice = "accepted" | "rejected";
+  const banner = document.getElementById("tractorvs-analytics-banner");
+  const openSettings = document.getElementById("tractorvs-analytics-settings");
+  const accept = document.getElementById("tractorvs-analytics-accept");
+  const reject = document.getElementById("tractorvs-analytics-reject");
+  const analyticsWindow = window as Window & {
+    dataLayer?: unknown[][];
+    gtag?: (...args: unknown[]) => void;
+  };
+
+  function storedChoice(): AnalyticsChoice | null {
+    try {
+      const choice = window.localStorage.getItem(ANALYTICS_CHOICE_KEY);
+      return choice === "accepted" || choice === "rejected" ? choice : null;
+    } catch {
+      return null; // Fail closed when storage is unavailable.
+    }
+  }
+
+  function loadAnalyticsOnlyAfterConsent() {
+    if (document.querySelector("script[data-tractorvs-ga4]")) return;
+    analyticsWindow.dataLayer = analyticsWindow.dataLayer || [];
+    analyticsWindow.gtag = (...args: unknown[]) => {
+      analyticsWindow.dataLayer!.push(args);
+    };
+    analyticsWindow.gtag("js", new Date());
+    analyticsWindow.gtag("config", GA4_MEASUREMENT_ID, {
+      send_page_view: true,
+    });
+    const script = document.createElement("script");
+    script.async = true;
+    script.dataset.tractorvsGa4 = "";
+    script.src = "https://www.googletagmanager.com/gtag/js?id="
+      + encodeURIComponent(GA4_MEASUREMENT_ID);
+    document.head.appendChild(script);
+  }
+
+  function clearAnalyticsFirstPartyCookies() {
+    // Revocation should not leave the site's known GA first-party identifiers.
+    const names = document.cookie.split(";")
+      .map((part) => part.trim().split("=")[0])
+      .filter((name) => /^_ga(?:_|$)/.test(name));
+    for (const name of names) {
+      const encoded = encodeURIComponent(name);
+      document.cookie = encoded + "=; Max-Age=0; Path=/; SameSite=Lax";
+      if (window.location.hostname === "tractorvs.com" ||
+          window.location.hostname.endsWith(".tractorvs.com")) {
+        document.cookie = encoded
+          + "=; Max-Age=0; Path=/; Domain=.tractorvs.com; SameSite=Lax";
+      }
+    }
+  }
+
+  function choose(choice: AnalyticsChoice) {
+    try {
+      window.localStorage.setItem(ANALYTICS_CHOICE_KEY, choice);
+    } catch {
+      // Still respect the visitor's choice for this page.
+    }
+    if (banner) banner.hidden = true;
+    if (choice === "accepted") {
+      loadAnalyticsOnlyAfterConsent();
+    } else {
+      // A previously loaded tag cannot be un-loaded safely. Deny subsequent
+      // measurement and reload with the rejected preference so it stays absent.
+      if (document.querySelector("script[data-tractorvs-ga4]")) {
+        analyticsWindow.gtag?.("consent", "update", {
+          analytics_storage: "denied",
+          ad_storage: "denied",
+          ad_user_data: "denied",
+          ad_personalization: "denied",
+        });
+        clearAnalyticsFirstPartyCookies();
+        window.location.reload();
+      }
+    }
+  }
+
+  accept?.addEventListener("click", () => choose("accepted"));
+  reject?.addEventListener("click", () => choose("rejected"));
+  openSettings?.addEventListener("click", () => {
+    if (banner) banner.hidden = false;
+    reject?.focus();
+  });
+
+  const current = storedChoice();
+  if (current === "accepted") {
+    loadAnalyticsOnlyAfterConsent();
+  } else if (current === null && banner) {
+    banner.hidden = false;
+  }
+</script>
+<style>
+  .tractorvs-analytics-banner {
+    position: fixed;
+    z-index: 1000;
+    bottom: 18px;
+    left: max(18px, env(safe-area-inset-left));
+    right: max(18px, env(safe-area-inset-right));
+    width: min(760px, calc(100% - 36px));
+    margin-inline: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    border: 1px solid #a8c3ac;
+    border-radius: 16px;
+    box-shadow: 0 14px 45px #101a1633;
+    padding: 18px 20px;
+    background: #fff;
+    color: #17211c;
+    font-size: 13px;
+    line-height: 1.6;
+  }
+  .tractorvs-analytics-banner[hidden] { display: none; }
+  .tractorvs-analytics-copy { min-width: 0; flex: 1; }
+  .tractorvs-analytics-copy strong { font-size: 15px; }
+  .tractorvs-analytics-copy p { margin: 6px 0; }
+  .tractorvs-analytics-link { text-decoration: underline; text-underline-offset: 3px; color: #205938; font-weight: 650; }
+  .tractorvs-analytics-actions { display: flex; flex-direction: column; gap: 9px; flex-shrink: 0; }
+  .tractorvs-analytics-actions button {
+    border: 1px solid #285b40;
+    border-radius: 10px;
+    padding: 10px 14px;
+    min-width: 132px;
+    cursor: pointer;
+    background: #fff;
+    color: #194d31;
+    font-size: 12px;
+    font-weight: 700;
+  }
+  .tractorvs-analytics-actions #tractorvs-analytics-accept { background: #285b40; color: #fff; }
+  .tractorvs-analytics-banner :is(button,a):focus-visible { outline: 3px solid #e2a35b; outline-offset: 3px; }
+  @media (max-width: 640px) {
+    .tractorvs-analytics-banner { flex-direction: column; align-items: stretch; gap: 12px; bottom: 8px; padding: 14px; }
+    .tractorvs-analytics-actions { flex-direction: row; }
+    .tractorvs-analytics-actions button { flex: 1; min-width: 0; }
+  }
+</style>

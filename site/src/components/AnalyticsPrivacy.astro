@@ -1,0 +1,37 @@
+---
+import SiteLayout from "../layouts/SiteLayout.astro";
+import { analyticsText } from "../lib/analytics-i18n.ts";
+import type { Locale } from "../lib/locales.ts";
+interface Props { lang: Locale; }
+const { lang } = Astro.props;
+const copy = analyticsText(lang);
+---
+<SiteLayout
+  lang={lang}
+  title={copy.privacyTitle + " | TractorVS"}
+  description={copy.privacyIntro}
+>
+  <section class="tv-privacy-page">
+    <div class="container tv-privacy-content">
+      <h1>{copy.privacyTitle}</h1>
+      <p>{copy.privacyIntro}</p>
+      <h2>Google Analytics (GA4)</h2>
+      <p>{copy.privacyCollect}</p>
+      <h2>{copy.settings}</h2>
+      <p>{copy.privacyChoice}</p>
+      <p>
+        <a href="https://policies.google.com/technologies/partner-sites"
+          target="_blank" rel="noopener noreferrer">{copy.googleInfo} ↗</a>
+      </p>
+    </div>
+  </section>
+</SiteLayout>
+<style>
+  .tv-privacy-page { padding: clamp(60px,9vw,110px) 0; background: #f5f7f2; }
+  .tv-privacy-content { max-width: 900px; }
+  h1 { max-width: 800px; font-size: clamp(30px,5vw,52px); line-height: 1.16; margin: 0 0 28px; }
+  h2 { font-size: clamp(19px,3vw,27px); margin: 38px 0 12px; color: #285b40; }
+  p { max-width: 780px; font-size: 16px; line-height: 1.9; margin: 12px 0; }
+  a { color: #185137; font-weight: 700; text-decoration: underline; text-underline-offset: 4px; }
+  a:focus-visible { outline: 3px solid #e2a35b; outline-offset: 4px; }
+</style>
