@@ -9,6 +9,7 @@ export const UI = {
   skip: ["Skip to content","İçeriğe geç","跳转到正文","मुख्य सामग्री पर जाएँ","Ir para o conteúdo","Aller au contenu","Zum Inhalt springen","Перейти к содержимому","本文へ移動","Ir al contenido"],
   tagline: ["TRACTOR DATA PLATFORM","TRAKTÖR VERİ PLATFORMU","拖拉机数据平台","ट्रैक्टर डेटा प्लेटफ़ॉर्म","PLATAFORMA DE DADOS DE TRATORES","PLATEFORME DE DONNÉES TRACTEURS","TRAKTOREN-DATENPLATTFORM","ПЛАТФОРМА ДАННЫХ О ТРАКТОРАХ","トラクターデータプラットフォーム","PLATAFORMA DE DATOS DE TRACTORES"],
   navPlatform: ["Platform","Platform","平台","प्लेटफ़ॉर्म","Plataforma","Plateforme","Plattform","Платформа","プラットフォーム","Plataforma"],
+  moreModels: ["More tractor models","Diğer traktör modelleri","更多拖拉机型号","ट्रैक्टर के अन्य मॉडल","Mais modelos de tratores","Autres modèles de tracteurs","Weitere Traktormodelle","Другие модели тракторов","ほかのトラクターモデル","Más modelos de tractores"],
   navCatalog: ["Tractor catalogue","Traktör kataloğu","拖拉机目录","ट्रैक्टर सूची","Catálogo de tratores","Catalogue de tracteurs","Traktorkatalog","Каталог тракторов","トラクター一覧","Catálogo de tractores"],
   navCompare: ["Compare","Karşılaştır","对比","तुलना करें","Comparar","Comparer","Vergleichen","Сравнить","比較","Comparar"],
   navData: ["Data principles","Veri ilkeleri","数据原则","डेटा संबंधी सिद्धांत","Princípios dos dados","Principes des données","Datengrundsätze","Принципы работы с данными","データの原則","Principios de los datos"],
