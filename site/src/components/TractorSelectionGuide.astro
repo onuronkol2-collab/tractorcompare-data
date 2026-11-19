@@ -1,0 +1,217 @@
+---
+import SiteLayout from "../layouts/SiteLayout.astro";
+import {localizedPath} from "../lib/locales";
+
+interface Props { lang: "en" | "tr"; }
+const {lang}=Astro.props;
+const tr=lang==="tr";
+const sources=[
+  {url:"https://www.oecd.org/en/topics/tractors.html",
+   en:"OECD — Standard Codes for official tractor testing",
+   tr:"OECD — Resmî traktör test kodları"},
+  {url:"https://tractortestlab.unl.edu/",
+   en:"University of Nebraska — Tractor Test Laboratory",
+   tr:"Nebraska Üniversitesi — Traktör Test Laboratuvarı"},
+  {url:"https://tractortestlab.unl.edu/test-reports/",
+   en:"Nebraska Tractor Test Laboratory — Published test reports",
+   tr:"Nebraska Traktör Test Laboratuvarı — Yayımlanmış test raporları"},
+  {url:"https://extension.umn.edu/agriculture/farm-operations-and-systems/small-farms/buying-a-used-tractor",
+   en:"University of Minnesota Extension — Buying a used tractor",
+   tr:"Minnesota Üniversitesi Tarım Yayım Birimi — İkinci el traktör seçimi"},
+];
+const copy=tr ? {
+  title:"Traktör seçerken nelere dikkat edilmeli? | TractorVS",
+  meta:"Traktör seçimi için teknik rehber: motor ve PTO gücü, hidrolik debi, kaldırma, çekiş, güvenlik ve belgelenmiş testleri doğru karşılaştırın.",
+  category:"TEKNİK ÖZELLİK REHBERİ",
+  h1:"Traktör seçerken nelere dikkat edilmeli?",
+  lead:"Bir traktörü yalnızca beygir gücüne göre seçmek, yapacağınız iş ve kullanacağınız ekipman için önemli farkları gözden kaçırabilir. Bu rehberde önce işi tanımlıyor, ardından karşılaştırılabilir teknik verileri ve kaynaklarını nasıl okuyacağınızı gösteriyoruz.",
+  updated:"Hazırlanma / son kontrol",
+  noTest:"Bu içerik, kaynaklara dayalı teknik karşılaştırma yöntemidir. TractorVS bu traktörleri sahada test ettiğini veya kişisel kullanım deneyimi yaşadığını iddia etmez.",
+  sections:[
+    {title:"Önce traktörü değil, işi tanımlayın",
+      paragraphs:[
+        "Tarla sürümü, bahçe ve bağ işleri, yükleyici kullanımı, römork çekme ve uzun yol nakliyesi aynı önceliklere sahip değildir. Çalışacağınız alanın eğimi, geçiş genişliği, sıra aralığı, zemin türü ve ekipman listesi seçim için başlangıç noktasıdır.",
+        "Kullandığınız veya almayı düşündüğünüz ekipmanın kullanım kılavuzunda istenen güç, kuyruk mili devri, hidrolik bağlantı ve kütle sınırlarını belirleyin. İş tanımı olmadan yalnızca daha yüksek güç değerine bakmak doğru bir karşılaştırma yöntemi değildir."
+      ],question:"Kontrol sorusu: Hangi işi, hangi ekipmanla, hangi zeminde yapacağım?",refs:[3]},
+    {title:"Nominal motor gücü, azami güç, PTO ve çeki gücünü ayırın",
+      paragraphs:[
+        "Katalogdaki nominal motor gücü, azami motor gücü, kuyruk mili (PTO) çıkış gücü ve çeki demiri (drawbar) gücü birbirinin yerine geçmez. Aynı birimde görünmeleri, aynı yerden veya aynı koşullarda ölçüldükleri anlamına gelmez. Beygir gücü yazarken hp, metrik PS/CV ve kW tanımları da korunmalıdır.",
+        "OECD Code 2, traktör performansını karşılaştırmak için standart test yöntemleri tanımlar. Nebraska Tractor Test Laboratory resmî test raporları da bağımsız ölçüm bağlamı sunabilir. İki model için aynı ölçüm başlığı, yöntem ve çalışma koşulunu bulamadıysanız gerçek kullanım performansı sıralaması üretmeyin."
+      ],question:"Kontrol sorusu: Karşılaştırdığım güçler aynı tür, standart ve çalışma devrinde mi?",refs:[0,1,2]},
+    {title:"Kuyruk mili uyumu: yalnızca güç değil, devir ve bağlantı",
+      paragraphs:[
+        "PTO ile çalışan biçme, ilaçlama veya benzeri ekipmanlarda, ekipman üreticisinin istediği PTO hızı ve bağlantı koşulları belirleyicidir. Bir traktörde farklı PTO devir seçenekleri bulunabilir; fakat bu bilgi tek başına belirli ekipmanla tam uyumluluk veya yeterli güç anlamına gelmez.",
+        "PTO gücü bilgisi varsa hangi devirde ve hangi testte ölçüldiğini kontrol edin. PTO bağlantısını kullanırken ilgili traktör ve ekipman kılavuzundaki koruyucu muhafaza ve güvenlik talimatları esastır."
+      ],question:"Kontrol sorusu: Ekipmanımın gerektirdiği PTO devri, çıkış gücü ve güvenlik koşulları belgeli mi?",refs:[0,1]},
+    {title:"Hidrolik debiyi kaldırma kapasitesiyle karıştırmayın",
+      paragraphs:[
+        "Üç nokta askı sisteminin kaldırma kapasitesi genellikle kütle birimiyle; hidrolik pompa debisi ise hacim/zaman birimiyle gösterilir. Debi, kaldırma kapasitesi değildir. Pompa toplam debisi ile yardımcı çıkışlara veya ekipmana sağlanan kullanılabilir debi de farklı olabilir.",
+        "Üreticinin kapasiteyi hangi noktada ve hangi koşulda ölçtüğüne, bağlantı kategorisine, yardımcı valflerine ve varsa hidrolik basınç/debi notlarına bakın. Yalnızca yüksek kaldırma kapasitesine bakarak yükleyici veya hidrolik ekipmanın bütün görevlerde uygun olduğuna karar vermeyin."
+      ],question:"Kontrol sorusu: Ekipmanımın kaldırma, debi, basınç ve bağlantı gereksinimleri ayrı ayrı karşılanıyor mu?",refs:[0,1]},
+    {title:"Çekiş, boyut, koruma donanımı ve şanzıman",
+      paragraphs:[
+        "2WD ve 4WD, lastik düzeni, kütle dağılımı, dingil mesafesi ve zemin koşulları çekişi etkileyebilir. Bağ-bahçe işleri için traktörün dış genişliği ve yüksekliği, ağır çeki işlerinde ise uygun lastik ve çalışma ağırlığı daha belirgin olabilir. Tek bir ölçüm veya katalog değeri gerçek saha sonucunun yerine geçmez.",
+        "Senkromeçli, powershift ve kademesiz şanzımanları değerlendirirken kullanım düzenine bakın; birini her koşulda daha dayanıklı veya ekonomik ilan etmeyin. Kabin ve ROPS/FOPS gibi koruyucu yapıların varlığı ile uygulanan standart, tam model ve donanım için belgelenmelidir. OECD kodları farklı koruma yapıları için ayrı test usulleri içerir."
+      ],question:"Kontrol sorusu: Gerçek arazi ölçülerime ve güvenlik gereksinimlerime uygun varyant hangisi?",refs:[0]},
+    {title:"Servis, maliyet ve ikinci el durumunu ayrı değerlendirin",
+      paragraphs:[
+        "Satın alma fiyatı tek maliyet kalemi değildir. Yerel servis ve yedek parça erişimi, garanti kapsamı, ekipman uyumu ve beklenen çalışma düzeni toplam maliyet kararını etkiler. Güncel fiyat karşılaştırmalarında ülke, para birimi, tarih ve aynı donanım paketi açık olmalıdır.",
+        "İkinci el traktörde fiziksel inceleme ve bakım geçmişi belirleyicidir. Minnesota Üniversitesi'nin üretici bağımsız tarım yayım rehberi, kullanılan işe uygun traktör seçimini vurgular. Ekspertiz yapılmadan yalnızca ilan açıklamasından kondisyon veya arıza güvenilirliği puanı oluşturmayın."
+      ],question:"Kontrol sorusu: Toplam maliyeti ve makinenin belgeli bakım durumunu biliyor muyum?",refs:[3]}
+  ],
+  worksheetTitle:"Karşılaştırma yaparken şu alanları yan yana koyun",
+  headers:["Konu","Kaydetmeniz gereken veri","Yanlış çıkarım"],
+  rows:[
+    ["Güç","Nominal motor / azami motor / PTO / çeki gücü; birim ve test yöntemi","Hepsini aynı beygir gücü saymak"],
+    ["PTO","Hız seçenekleri, uygun bağlantı ve ekipmanın gereksinimi","Her ekipmanın uyacağını varsaymak"],
+    ["Hidrolik","Kaldırma noktası, kapasite, pompa/çıkış debisi, basınç","Debiyi kaldırma kapasitesi saymak"],
+    ["Gövde ve çekiş","2WD/4WD, ağırlık tanımı, lastik, ölçüler, koruma donanımı","Varyant farklarını yok saymak"],
+    ["Maliyet","Ülke, tarih, para birimi, servis, parça ve garanti","Kaynağı olmayan fiyat veya arıza puanı üretmek"]
+  ],
+  sourceTitle:"Kaynaklar ve doğrulama sınırı",
+  sourceIntro:"Aşağıdaki birincil/kurumsal kaynaklar ölçüm ve seçim yöntemini açıklar. Herhangi bir modelin belirli performansını bu rehberde ölçmedik. Bir modele ait güç, PTO veya hidrolik değerini değerlendirirken ilgili üretici dokümanını ve varsa tam model test raporunu ayrıca inceleyin.",
+  sourcePrefix:"Bölüm kaynakları",
+  ctaTitle:"Belgelenmiş modelleri inceleyin",
+  ctaDesc:"TractorVS'teki teknik özellikleri yan yana koyabilirsiniz. Eksik veya farklı standartta verilmiş alanları tahmin olarak doldurmayın.",
+  catalog:"Traktör kataloğu",compare:"Karşılaştırmaya geç",method:"Veri doğrulama yöntemimiz",
+  limits:"Dikkat: Bu rehber model önerisi, bağımsız saha deneyi, ürün incelemesi veya güvenlik sertifikası değildir."
+}:{
+  title:"How to Choose a Tractor: PTO, Power, Hydraulics & Safety | TractorVS",
+  meta:"A sourced tractor selection guide covering rated engine power, PTO and drawbar tests, hydraulics, traction, protective structures and verified comparisons.",
+  category:"TECHNICAL SELECTION GUIDE",
+  h1:"How to choose a tractor beyond horsepower",
+  lead:"Selecting a tractor by the headline horsepower figure alone can hide important differences in implement compatibility and everyday work. Start with the job and the equipment; then compare measurements that actually describe the same thing.",
+  updated:"Prepared / last reviewed",
+  noTest:"This is a document-based technical selection guide. TractorVS has not personally field-tested the tractors discussed or claimed first-hand operator experience.",
+  sections:[
+    {title:"Define the work before shopping for power",
+      paragraphs:[
+        "Field preparation, vineyard work, front-loader use, hauling trailers and road transport call for different configurations. Start with the land gradient, soil conditions, row spacing, access widths, expected working hours and the actual implements you need to operate.",
+        "List each implement's manufacturer-stated requirements for power, PTO speed, hydraulic connections and permitted load before comparing tractors. More rated engine power is not automatically the right answer without knowing what the machine must do."
+      ],question:"Ask: What jobs and implements will be used, on which terrain?",refs:[3]},
+    {title:"Distinguish rated engine, maximum, PTO and drawbar power",
+      paragraphs:[
+        "Rated engine power, maximum engine power, power at the power take-off (PTO) and drawbar power are different measurements. Expressing all of them in horsepower does not make them interchangeable. Keep the unit distinction between mechanical hp, metric PS/CV and kilowatts, as well as the engine speed and test conditions.",
+        "OECD Code 2 provides internationally standardized tractor performance procedures. The University of Nebraska Tractor Test Laboratory publishes reports that may give comparable independent measurements for specific tested configurations. If matching test headings and conditions are unavailable, do not turn brochure numbers into a performance ranking."
+      ],question:"Ask: Am I comparing the same power measurement, standard and operating speed?",refs:[0,1,2]},
+    {title:"PTO compatibility is about more than a power figure",
+      paragraphs:[
+        "Mowers, sprayers and other PTO-driven equipment have specific manufacturer requirements for shaft speed, connection and power. A tractor may offer more than one PTO speed, but the presence of a speed setting does not alone prove that a particular implement is compatible or adequately powered.",
+        "When a PTO power figure is documented, check the speed and test procedure it refers to. Follow the original tractor and implement manuals for guards, coupling and safe operation: catalogue data is no substitute for safety instructions."
+      ],question:"Ask: Does the tractor meet the implement's documented PTO speed, output and safety requirements?",refs:[0,1]},
+    {title:"Keep hydraulic flow and lift capacity separate",
+      paragraphs:[
+        "Three-point hitch lifting capacity is commonly expressed as a mass; hydraulic pump flow is a volume per unit of time. They are not interchangeable. Total pump flow and the usable flow available at auxiliary outlets or to an implement may also be different numbers.",
+        "Check where lift was measured, the hitch category, available remote valves and any stated pressure or flow conditions. A high rear lift figure does not establish that every hydraulic implement or loader task will work correctly."
+      ],question:"Ask: Are lift capacity, usable flow, pressure and coupling requirements separately satisfied?",refs:[0,1]},
+    {title:"Match traction, dimensions and protection to the site",
+      paragraphs:[
+        "2WD versus 4WD, tires, weight distribution, wheelbase and ground conditions can affect traction. Narrow-row operations may place a premium on overall width and height; demanding drawbar work may require different weight and tire choices. A single catalogue number does not predict field performance.",
+        "Evaluate synchromesh, powershift and continuously variable transmissions in the context of the job, rather than assuming one is universally more economical or durable. Confirm protective structures such as ROPS and FOPS, and the applicable test standard, for the exact tractor configuration. OECD has different codes for different protective structures."
+      ],question:"Ask: Which documented model configuration actually fits the land and safety requirements?",refs:[0]},
+    {title:"Include service costs and used-equipment condition",
+      paragraphs:[
+        "The purchase price is only part of ownership cost. Local service and parts availability, warranty, implement compatibility and planned use all matter. Price comparisons need a date, currency, market and genuinely comparable equipment configurations.",
+        "For used machinery, inspection and maintenance records matter far more than a confident advertisement. The University of Minnesota Extension's used-tractor guide emphasizes selecting a tractor suited to the intended job. Without independent condition evidence, do not invent durability scores or fault rates."
+      ],question:"Ask: Do I know the total cost and documented maintenance history?",refs:[3]}
+  ],
+  worksheetTitle:"Keep these fields side by side",
+  headers:["Area","Record these facts","Avoid this shortcut"],
+  rows:[
+    ["Power","Rated / maximum engine, PTO and drawbar power; units and tests","Treating all 'hp' numbers as identical"],
+    ["PTO","Shaft speed options and the implement's requirements","Assuming every attachment will fit"],
+    ["Hydraulics","Lift test point, capacity, pump/outlet flow, pressure","Equating flow with lifting capacity"],
+    ["Tractor and traction","2WD/4WD, weight definition, tires, dimensions, protective structures","Merging unlike model variants"],
+    ["Ownership cost","Country, date, currency, service, parts and warranty","Inventing prices or reliability ratings"]
+  ],
+  sourceTitle:"Sources and limits of this guide",
+  sourceIntro:"These official and institutional references explain how tractors may be tested and selected. We have not measured a particular tractor's performance in this guide. For any model-specific claim, consult its exact manufacturer document and, if available, the corresponding independent test report.",
+  sourcePrefix:"References for this section",
+  ctaTitle:"Compare the documented models",
+  ctaDesc:"TractorVS lets you examine the specifications that are actually available. Missing or differently measured fields should never be filled with guesswork.",
+  catalog:"Browse tractors",compare:"Open comparison",method:"Our data methodology",
+  limits:"Important: This guide is not a product endorsement, independent field trial, owner review or safety certification."
+};
+const basePath="/guides/choosing-a-tractor/";
+---
+<SiteLayout lang={lang} title={copy.title} description={copy.meta} availableLocales={["en","tr"]}>
+  <article class="tractor-guide">
+    <div class="container guide-body">
+      <nav class="guide-crumb" aria-label={tr?"İçerik yolu":"Breadcrumb"}>
+        <a href={localizedPath(lang,"/")}>TractorVS</a><span aria-hidden="true">/</span><span>{tr?"Traktör seçim rehberi":"Tractor selection guide"}</span>
+      </nav>
+      <p class="guide-kicker">{copy.category}</p>
+      <h1>{copy.h1}</h1>
+      <p class="guide-lead">{copy.lead}</p>
+      <p class="guide-date"><strong>{copy.updated}:</strong> <time datetime="2026-11-19">{tr?"19 Kasım 2026":"19 November 2026"}</time></p>
+      <p class="guide-honesty">{copy.noTest}</p>
+      <ol class="guide-steps">
+        {copy.sections.map((section,index)=><li>
+          <h2><span aria-hidden="true">{index+1}.</span> {section.title}</h2>
+          {section.paragraphs.map(p=><p>{p}</p>)}
+          <p class="guide-question">{section.question}</p>
+          <p class="guide-inline-sources">{copy.sourcePrefix}: {section.refs.map((idx)=><a href={sources[idx].url} target="_blank" rel="noopener noreferrer">{tr?sources[idx].tr:sources[idx].en}</a>)}</p>
+        </li>)}
+      </ol>
+      <section class="guide-checklist" aria-labelledby="guide-checklist-heading">
+        <h2 id="guide-checklist-heading">{copy.worksheetTitle}</h2>
+        <div class="guide-table-scroll">
+          <table>
+            <thead><tr>{copy.headers.map(h=><th scope="col">{h}</th>)}</tr></thead>
+            <tbody>{copy.rows.map(row=><tr>{row.map((cell,i)=>i===0?<th scope="row">{cell}</th>:<td>{cell}</td>)}</tr>)}</tbody>
+          </table>
+        </div>
+      </section>
+      <section class="guide-sources" aria-labelledby="guide-sources-heading">
+        <h2 id="guide-sources-heading">{copy.sourceTitle}</h2>
+        <p>{copy.sourceIntro}</p>
+        <ol>{sources.map(s=><li><a href={s.url} target="_blank" rel="noopener noreferrer">{tr?s.tr:s.en}</a></li>)}</ol>
+        <p><strong>{copy.limits}</strong></p>
+      </section>
+      <section class="guide-next" aria-labelledby="guide-next-heading">
+        <h2 id="guide-next-heading">{copy.ctaTitle}</h2>
+        <p>{copy.ctaDesc}</p>
+        <div class="guide-actions">
+          <a href={localizedPath(lang,"/tractors/")}>{copy.catalog}</a>
+          <a href={localizedPath(lang,"/compare/")}>{copy.compare}</a>
+          <a href={localizedPath(lang,"/methodology/")}>{copy.method}</a>
+        </div>
+      </section>
+    </div>
+  </article>
+</SiteLayout>
+<style>
+  .tractor-guide{padding:clamp(34px,5vw,65px) 0 80px;background:#f8faf5;color:#1e3427}
+  .guide-body{max-width:880px}
+  .guide-crumb{display:flex;align-items:center;gap:9px;flex-wrap:wrap;color:#59715e;font-size:13px;margin-bottom:24px}
+  .guide-crumb a,.tractor-guide a{color:#23643b;text-decoration:underline;text-underline-offset:3px;overflow-wrap:anywhere}
+  .guide-kicker{color:#3e7d4b;font-size:12px;font-weight:850;letter-spacing:.1em;margin-bottom:12px}
+  .tractor-guide h1{font-size:clamp(30px,4.8vw,48px);line-height:1.15;letter-spacing:-.035em;margin:0 0 22px;color:#183823}
+  .guide-lead{font-size:clamp(17px,1.8vw,20px);line-height:1.75;color:#3d5745}
+  .guide-date{font-size:13px;color:#62756b;margin:17px 0 26px}
+  .guide-honesty{background:#eef5e9;border-left:4px solid #39784a;padding:14px 18px;font-size:14px;line-height:1.7}
+  .guide-steps{list-style:none;counter-reset:none;padding:0;margin:27px 0 40px}
+  .guide-steps>li{padding:25px 0;border-bottom:1px solid #d8e3d5}
+  .tractor-guide h2{font-size:clamp(22px,2.6vw,28px);line-height:1.3;color:#1d3c28;margin:0 0 18px}
+  .guide-steps h2 span{color:#4e8f5f}
+  .guide-steps p,.guide-sources p,.guide-next p{font-size:16px;line-height:1.85;margin:0 0 15px}
+  .guide-question{font-weight:750;color:#285b3b;background:#edf4e9;padding:12px 15px;border-radius:8px}
+  .guide-inline-sources{font-size:12px!important;color:#4f6656}
+  .guide-inline-sources a{margin-right:10px}
+  .guide-table-scroll{overflow-x:auto}
+  .guide-checklist{padding:27px 0}
+  .guide-checklist table{width:100%;border-collapse:collapse;min-width:560px;font-size:14px;line-height:1.6}
+  .guide-checklist th,.guide-checklist td{text-align:left;vertical-align:top;padding:13px;border-bottom:1px solid #ccdac8}
+  .guide-checklist thead{background:#e3efe0}
+  .guide-checklist tbody th{font-weight:780;color:#234a31}
+  .guide-sources{background:#f1f5ec;padding:28px;border:1px solid #d4e0cf;border-radius:15px}
+  .guide-sources ol{margin:0 0 20px;padding-left:21px}
+  .guide-sources li{font-size:14px;line-height:1.7;margin:8px 0}
+  .guide-sources p:last-child{font-size:13px;margin:0}
+  .guide-next{margin-top:33px;padding:28px;border-radius:15px;background:#173424;color:#ecf7eb}
+  .guide-next h2,.guide-next p{color:inherit}
+  .guide-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:19px}
+  .guide-actions a{display:inline-block;background:#eaf5e6;padding:10px 15px;border-radius:8px;font-size:14px;font-weight:750;color:#18542e;text-decoration:none}
+  .guide-actions a:hover,.guide-actions a:focus-visible{text-decoration:underline;outline-offset:3px}
+  @media(max-width:620px){.tractor-guide{padding:28px 0 60px}.guide-sources,.guide-next{padding:21px}.guide-steps>li{padding:20px 0}}
+</style>
