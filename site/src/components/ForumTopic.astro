@@ -20,8 +20,8 @@ const schema=eligible?{
  name:topic.title,description:topic.body.slice(0,200),inLanguage:LOCALE_TAGS[lang],
  isAccessibleForFree:true,isPartOf:{"@type":"CollectionPage",url:new URL(forumUrl,origin).toString()}
 }:null;
-// Real authorship is unavailable in the public projection. Do not fabricate
-// DiscussionForumPosting author or engagement stats to chase rich results.
+// No real author identity is present in the public projection.
+// Never invent author profiles or engagement statistics for rich results.
 ---
 <SiteLayout lang={lang} title={topic.title+" | TractorVS"} description={topic.body.slice(0,190)}
   indexable={eligible} structuredData={schema} availableLocales={[lang]}>
