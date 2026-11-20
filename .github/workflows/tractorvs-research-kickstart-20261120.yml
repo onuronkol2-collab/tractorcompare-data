@@ -1,0 +1,40 @@
+# One-time, fail-closed first dispatch for TractorVS research. Reusable
+# chaining itself is defined in tractor-research-batch.yml.
+name: TractorVS one-time chain kickstart
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/tractorvs-research-kickstart-20261120.yml"
+
+permissions:
+  contents: read
+  actions: write
+
+jobs:
+  kickstart:
+    if: startsWith(github.event.head_commit.message, 'One-time TractorVS research kickstart (#102)')
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Verify required secrets exist without printing their contents
+        id: gate
+        env:
+          ANON_JWT: ${{ secrets.TRACTORVS_SUPABASE_ANON_JWT }}
+          QUEUE_SECRET: ${{ secrets.TRACTORVS_QUEUE_SECRET }}
+        run: |
+          if [ -n "$ANON_JWT" ] && [ -n "$QUEUE_SECRET" ]; then
+            echo "ready=true" >> "$GITHUB_OUTPUT"
+            echo "Both expected research secrets are configured."
+          else
+            echo "ready=false" >> "$GITHUB_OUTPUT"
+            echo "::warning::Research not started. Configure the two repository secrets in GitHub Actions. Never paste them in an issue or chat."
+          fi
+      - name: Start first bounded batch and immediate successors
+        if: steps.gate.outputs.ready == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh workflow run tractor-research-batch.yml --repo "$GITHUB_REPOSITORY" --ref main -f batches=1 -f remaining_cycles=2
+          echo "Started at most three sequential research runs, at most 3 tractors per run."
