@@ -12,6 +12,7 @@ import {GLOSSARY_ROWS,GLOSSARY_SECTIONS} from "../src/lib/tractor-glossary.ts";
 import {TRACTOR_PART_ROWS,TRACTOR_PART_SECTIONS} from "../src/lib/tractor-parts.ts";
 import {TECHNICAL_DEEP_DIVES} from "../src/lib/tractor-technical-deep-dives.ts";
 import {TRACTOR_LEARNING_CASES} from "../src/lib/tractor-learning-cases.ts";
+import {EDUCATION_UI_SOURCE} from "../src/lib/tractor-education-ui.ts";
 
 const target=process.env.EDU_TARGET_LOCALE;
 const langs=["zh","hi","pt-br","fr","de","ru","ja","es"];
@@ -24,7 +25,7 @@ const archiveDir=resolve("site/src/lib/education-draft-translations");
 const version=createHash("sha256").update(JSON.stringify({
  glossary:GLOSSARY_ROWS,glossarySections:GLOSSARY_SECTIONS,
  parts:TRACTOR_PART_ROWS,partSections:TRACTOR_PART_SECTIONS,
- articles:TECHNICAL_DEEP_DIVES, cases:TRACTOR_LEARNING_CASES
+ articles:TECHNICAL_DEEP_DIVES, cases:TRACTOR_LEARNING_CASES, ui:EDUCATION_UI_SOURCE
 })).digest("hex");
 const batches={
  glossary:GLOSSARY_ROWS.map(r=>({id:r[1],english:{name:r[3],definition:r[5],example:r[7],caution:r[9]},turkish:{name:r[2],definition:r[4],example:r[6],caution:r[8]}})),
@@ -33,10 +34,11 @@ const batches={
  partSections:Object.entries(TRACTOR_PART_SECTIONS).map(([id,x])=>({id,english:{name:x.en[0],intro:x.en[1]},turkish:{name:x.tr[0],intro:x.tr[1]}})),
  articleMeta:TECHNICAL_DEEP_DIVES.map(x=>({id:x.slug,english:{title:x.title.en,description:x.description.en,lead:x.lead.en},turkish:{title:x.title.tr,description:x.description.tr,lead:x.lead.tr}})),
  articleSections:TECHNICAL_DEEP_DIVES.flatMap(x=>x.sections.map(s=>({id:x.slug+"--"+s.anchor,english:{title:s.title.en,p0:s.paragraphs.en[0],p1:s.paragraphs.en[1]},turkish:{title:s.title.tr,p0:s.paragraphs.tr[0],p1:s.paragraphs.tr[1]}}))),
- cases:TRACTOR_LEARNING_CASES.map(x=>({id:x.id,english:{title:x.title.en,situation:x.situation.en,explanation:x.explanation.en,remember:x.remember.en},turkish:{title:x.title.tr,situation:x.situation.tr,explanation:x.explanation.tr,remember:x.remember.tr}}))
+ cases:TRACTOR_LEARNING_CASES.map(x=>({id:x.id,english:{title:x.title.en,situation:x.situation.en,explanation:x.explanation.en,remember:x.remember.en},turkish:{title:x.title.tr,situation:x.situation.tr,explanation:x.explanation.tr,remember:x.remember.tr}})),
+ ui:EDUCATION_UI_SOURCE.map(x=>({id:x.id,english:x.en,turkish:x.tr}))
 };
 const expected={
- glossary:96,parts:57,glossarySections:7,partSections:5,articleMeta:3,articleSections:15,cases:5
+ glossary:96,parts:57,glossarySections:7,partSections:5,articleMeta:3,articleSections:15,cases:5,ui:7
 };
 for(const [kind,items] of Object.entries(batches))
  if(items.length!==expected[kind])throw Error("Original editorial count changed: "+kind);
