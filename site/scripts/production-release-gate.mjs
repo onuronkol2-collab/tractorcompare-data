@@ -11,6 +11,7 @@
 import {readFileSync,readdirSync,existsSync} from "node:fs";
 import {resolve,basename,join} from "node:path";
 import {fileURLToPath} from "node:url";
+import {verifyPublishedSiteInventory} from "./verify-published-site-inventory.mjs";
 
 const projectRoot=resolve(fileURLToPath(new URL("..",import.meta.url)));
 const expectedOrigin="https://tractorvs.com";
@@ -118,7 +119,11 @@ export function preflight(env=process.env){
 export function postflight(env=process.env){
  const config=preflight(env);
  const floor=env.MIN_PUBLIC_TRACTOR_PAGES?Number(env.MIN_PUBLIC_TRACTOR_PAGES):100;
- return verifyProductionArtifacts({origin:config.origin,minTractors:floor});
+ const basic=verifyProductionArtifacts({origin:config.origin,minTractors:floor});
+ const protectedInventory=verifyPublishedSiteInventory({
+  origin:config.origin,configuredMinimum:floor
+ });
+ return {...basic,...protectedInventory};
 }
 
 if(process.argv[1]&&resolve(process.argv[1])===fileURLToPath(import.meta.url)){
