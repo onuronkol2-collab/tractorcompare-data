@@ -49,6 +49,17 @@ FROM public.tractor_specs;
 
 **Dikkat:** 305 bekleyen bulgudan yalnız 25'i `ai_research_documents.identity_evidence_verified = true` işaretli. Bu 25 içinde Deutz-Fahr 6165 TTV konfigürasyonu ve Fendt 724 Vario üretim dönemi / brüt ağırlık / gücün rated–maximum ayrımı gibi özel ölçüm ve varyant sorunları var. `identity_evidence_verified` bayrağını tek başına otomatik onay veya yayın ölçütü sayma.
 
+
+## Bir çalışma biter bitmez sıradakine geçmek (GitHub Actions)
+
+Yeni kontrollü **immediate continuation** seçeneği: GitHub Actions `TractorVS controlled research batch` iş akışında `remaining_cycles` girişini **0 / 1 / 2 / 4 / 8** arasından seç. İşlenen grup başarıyla biter, araştırma kuyruğu `queue_stats` tarafından doğrulanır, kuyrukta `queued` veya `retry` kalır, ilerleme kaydı her işte `success=true` gösterir ve devam hakkı kalırsa aynı GitHub Actions çalışma adımının sonunda `GITHUB_TOKEN` + `actions:write` ile **yeni bir workflow_dispatch** oluşturulur. Sonraki çalışma `remaining_cycles` sayısını **bir azaltarak** aynı main dalında başlar; kullanıcı tekrar Run workflow tuşuna basmaz. GitHub'ın concurrency kilidi ile önceki çalışmayla aynı anda çalışmaz.
+
+Her yeniden başlatma geçişinde GitHub Actions başlatma kuyruğu gecikmesi olabilir; anlık/milisaniye süre garantisi yoktur. `remaining_cycles=0` ise zincir başlatılmaz. Varsayılan 1 batch + 2 yeniden başlatma = en fazla 9 araştırma kuyruğu görevi. Üst sınır 8 batch ve 8 yeniden başlatma = en fazla 216 iş; bu maliyetli olabilir ve **Gemini limitini aşabilir**. Aylık 500–1000 TL bütçe doğrulanmadan büyük bir zincir başlatma. İlerleme raporları, yanlış model/kimlik kaynaklarında `needs_source`, boş kuyruk ve API hatalarında **otomatik durma** uygulanır.
+
+ÖNEMLİ: Bu akış mevcut Edge Function üzerinden araştırma kuyruğunu işler; **doğrudan `tractors.status` alanını `published` yapmaz.** Kaynak doğrulaması, model varyant kontrolü, SQL güvenlik kapısı ve Cloudflare üretim yeniden derlemesi kullanıcıdan yetkili olan ayrı yayın iş akışında sürdürülmelidir. GitHub bağlantısı `TRACTORVS_SUPABASE_ANON_JWT` ve `TRACTORVS_QUEUE_SECRET` isimli iki GitHub Actions Secret olmadan çalışmaz. Bu secret'ların kurulu olup olmadığı bağlayıcı tarafından doğrulanmamıştır; koyulduğunu varsayma. `service_role` JWT kullanma.
+
+Bu işlem her tamamlandığında kendi kendine yeniden başlayan **sınırlı** bir araştırma zinciridir; ChatGPT'nin saatlik görev sınırını değiştirmez. `workflow_run` ile sınırsız zincir kurulmamalı (GitHub 3 seviye sınırı). Proje güvenliği, araştırma maliyeti ve kaynak kalitesi nedeniyle sınırsız `remaining_cycles` desteklenmez.
+
 ## Hata yönetimi
 
 - **401 / 403:** JWT biçimi ve mevcut `TC_QUEUE_SECRET` eşleşmesini kontrol et; sırları hiçbir loga yazma.
