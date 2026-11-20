@@ -6,6 +6,26 @@
 const W="https://upload.wikimedia.org/wikipedia/commons/";
 const candidates=[
   {
+    "brand": "Belarus",
+    "model": "132N",
+    "fileId": "belarus-132n-picture30-2011",
+    "path": "c/c9/Belarus-132N.jpg",
+    "photographer": "Picture30",
+    "license": "CC BY-SA 3.0",
+    "width": 3072,
+    "height": 2304
+  },
+  {
+    "brand": "Belarus",
+    "model": "152",
+    "fileId": "belarus-152-homoatrox-2021",
+    "path": "2/28/Belarus_152_tractor_%28Belagro-2021%29.jpg",
+    "photographer": "Homoatrox",
+    "license": "CC BY-SA 3.0",
+    "width": 4578,
+    "height": 3746
+  },
+  {
     "brand": "Valtra",
     "model": "Q265",
     "fileId": "valtra-q265-65863feb",
