@@ -1,4 +1,5 @@
 name: TractorVS editorial translation smoke test
+# Run 2: synchronous provider mode after background Gemini interaction timed out.
 on:
   push:
     branches:
