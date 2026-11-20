@@ -19,7 +19,7 @@ The read-only audit:
 4. Finds suspicious power/weight units (such as kg/HP in a weight field) and duplicate/colliding model identities.
 5. Checks that unpublished tractor data cannot be read in `tractorvs_public_specs`.
 
-**NEVER** write draft model identities or private PDF research results into public GitHub Actions artifacts or public SEO pages. The SQL does not make any edits.
+**NEVER** write draft model identities or private PDF research results into public GitHub Actions artifacts or public SEO pages. The SQL does not make any edits. All published-view and source-table **RLS** policies remain unchanged; anonymous clients cannot access unpublished draft tractor specifications.
 
 ## Current source-verified production checkpoint
 
