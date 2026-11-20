@@ -1,0 +1,36 @@
+import assert from "node:assert/strict";
+import {readFileSync,existsSync} from "node:fs";
+import {join} from "node:path";
+const mode=process.argv[2];
+assert.ok(mode==="indexable"||mode==="noindex");
+const root="site/dist";
+const get=(p)=>readFileSync(join(root,p),"utf8");
+const ai=get("llms.txt");
+assert.match(ai,/TractorVS — tractor specifications/);
+assert.match(ai,/https:\/\/tractorvs\.com\/methodology\//);
+assert.match(ai,/https:\/\/tractorvs\.com\/sitemap-index\.xml/);
+assert.doesNotMatch(ai,/draft\/tractor|AggregateRating|Guaranteed AI ranking/i);
+for(const home of ["index.html","tr/index.html"]){
+ const html=get(home);
+ assert.match(html,/"@type":"Organization"/,home+" must identify publisher");
+ assert.match(html,/"@type":"WebSite"/,home+" must identify site");
+ assert.match(html,/"@id":"https:\/\/tractorvs\.example\/#organization"/,home+" publisher ID must be stable");
+ assert.doesNotMatch(html,/"@type":"SearchAction"/, "Google deprecated Sitelinks Search Box");
+ if(mode==="noindex")assert.match(html,/noindex,nofollow/);
+ else assert.match(html,/index,follow,max-image-preview:large/);
+}
+const robots=get("robots.txt");
+if(mode==="indexable"){
+ assert.match(robots,/User-agent: OAI-SearchBot\nAllow: \//);
+ assert.match(robots,/Sitemap: https:\/\/tractorvs\.example\/sitemap-index\.xml/);
+}else{
+ assert.match(robots,/Disallow: \//);
+ assert.doesNotMatch(robots,/User-agent: OAI-SearchBot\nAllow: \//);
+}
+const template=readFileSync("site/src/components/TractorDetail.astro","utf8");
+assert.match(template,/modelEvidenceAnswers\(tractor,lang\)/);
+assert.match(template,/model-answer-card/);
+const modelLogic=readFileSync("site/src/lib/model-evidence-answers.ts","utf8");
+assert.match(modelLogic,/spec\.verified_at/);
+assert.match(modelLogic,/spec\.evidence_text/);
+console.log("TractorVS GEO verified: optional AI navigation, public crawler policy, publisher identity, source-first model answers ("+mode+")");
