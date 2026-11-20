@@ -1,0 +1,36 @@
+name: Temporary reproducible npm lockfile capture
+
+on:
+  pull_request:
+    paths:
+      - ".github/workflows/tractorvs-lockfile-capture.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  capture:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22.23.4"
+          cache: ""
+      - name: Generate dependency locks without executing third-party install scripts
+        run: |
+          set -euo pipefail
+          npm install --package-lock-only --ignore-scripts --no-audit --no-fund
+          echo ROOT_LOCKFILE_BEGIN
+          printf "ROOT_LOCKFILE="
+          base64 -w0 package-lock.json
+          printf "\n"
+          echo ROOT_LOCKFILE_END
+          cd site
+          npm install --package-lock-only --workspaces=false --ignore-scripts --no-audit --no-fund
+          echo SITE_LOCKFILE_BEGIN
+          printf "SITE_LOCKFILE="
+          base64 -w0 package-lock.json
+          printf "\n"
+          echo SITE_LOCKFILE_END
