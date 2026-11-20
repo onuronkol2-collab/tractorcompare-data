@@ -563,6 +563,9 @@ const manufacturerSourceTypes = new Set([
   "manufacturer_specification",
   "official_technical_specification",
   "official_product_page",
+  "official_product_specification",
+  "official_technical_data",
+  "official_technical_pdf",
 ]);
 
 export function specificationEvidenceLevel(
@@ -655,6 +658,12 @@ export function reviewedIndependentSourceUrl(
     && ["independent_test", "technical_report"].includes(type)
     && u.pathname.startsWith("/filestorage/") && u.pathname.toLowerCase().endsWith(".pdf"))
     return u.toString();
+  // Exact, reviewed original Minsk Tractor Works catalogue hosted by a third-party distributor.
+  // It is a historical manufacturer-authored document, NOT a current official manufacturer URL.
+  // Never allow the mirror's parent folder, other files, alternate domains or query strings.
+  if (host === "netetrade.com" && type === "independent_catalog"
+    && u.pathname === "/media/mtw-holding---minsk-tractor-works/files/cb7a65db-f4fd-4c05-a33f-d0a827bbc2ba.pdf"
+    && u.search === "" && u.hash === "") return u.toString();
   return null;
 }
 
