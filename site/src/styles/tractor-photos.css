@@ -11,7 +11,8 @@
 .tractor-photo-caption a{color:#d8efc5;text-decoration:underline;text-underline-offset:3px}
 .tractor-photo-caption small{display:block;margin-top:4px;color:#cadaca;font-size:12px}
 .tractor-photo-short-credit{padding:5px 10px;font-size:11px;color:#d0ddd0;line-height:1.35}
-.tractor-photo-short-credit a{color:inherit;text-decoration:underline}
+.tractor-photo-short-credit a{color:inherit;text-decoration:underline;display:inline-flex;align-items:center;min-height:28px;line-height:1.4;padding:2px 0}
+.tractor-photo-short-credit a:focus-visible{outline:2px solid #d0ead3;outline-offset:2px}
 .tractor-photo-gallery--catalog .tractor-photo-button,.tractor-photo-gallery--compare .tractor-photo-button{aspect-ratio:16/10}
 .tractor-photo-gallery--catalog .tractor-photo-frame{border-radius:12px}
 .tractor-photo-gallery--catalog .tractor-photo-brandmark{font-size:11px;bottom:9px;right:9px}
