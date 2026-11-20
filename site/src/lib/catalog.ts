@@ -603,6 +603,7 @@ export function specificationEvidenceLabel(
  */
 const approvedManufacturerHosts: Record<string, string[]> = {
   "başak traktör": ["basaktraktor.com.tr"],
+  "tümosan": ["tumosan.com.tr"],
   "new holland": ["newholland.com.tr", "newholland.com"],
   "tym": ["tym.world"],
   "fendt": ["fendt.com"],
@@ -620,6 +621,11 @@ const approvedManufacturerHosts: Record<string, string[]> = {
 // The original German F36 brochure is served from TYM's named Umbraco media
 // tenant. Only THIS reviewed exact PDF is permitted, never the shared CDN root.
 const approvedExactManufacturerDocuments: Record<string, string[]> = {
+  // CNH distributes this verified New Holland South Africa TD5 brochure via a shared CDN.
+  // Never trust other documents or the CDN hostname generally.
+  "new holland": [
+    "https://cnhi-p-001-delivery.sitecorecontenthub.cloud/api/public/content/c3d13220f29640458ef3f059d2865523?v=25dae628",
+  ],
   "tym": [
     "https://tym-new.euwest01.umbraco.io/media/b01j3nc1/f36-produktbroschu-re.pdf",
   ],
