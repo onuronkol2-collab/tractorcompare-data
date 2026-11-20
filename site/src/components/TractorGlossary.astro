@@ -1,0 +1,402 @@
+---
+import SiteLayout from "../layouts/SiteLayout.astro";
+import {localizedPath} from "../lib/locales.ts";
+import {APPROVED_TRACTOR_PHOTOS} from "../lib/tractor-photos.ts";
+import {GLOSSARY_TERMS,GLOSSARY_SECTIONS,type GlossaryLanguage} from "../lib/tractor-glossary.ts";
+
+interface Props {lang:GlossaryLanguage}
+const {lang}=Astro.props;
+const tr=lang==="tr";
+const sectionList=Object.entries(GLOSSARY_SECTIONS).map(([key,label])=>({key,label:label[lang]}));
+const pagePath=localizedPath(lang,"/guides/tractor-technical-terms/");
+const catalogPath=localizedPath(lang,"/tractors/");
+const comparePath=localizedPath(lang,"/compare/");
+const selectionPath=localizedPath(lang,"/guides/choosing-a-tractor/");
+const title=tr?"Traktör Parçaları ve Teknik Terimler: 63 Açıklama | TractorVS":
+ "Tractor Parts & Technical Terms Explained: 63 Clear Definitions | TractorVS";
+const description=tr?
+ "Traktör motoru, PTO, hidrolik, şanzıman, lastik ve güvenlik terimleri. 63 özgün açıklama, gerçek kullanım örnekleri ve kaynaklı karşılaştırma rehberi.":
+ "Understand 63 tractor parts and specification terms: PTO, engine, hydraulics, gearbox, tyres and safety, with real-world examples and source guidance.";
+const hero=APPROVED_TRACTOR_PHOTOS.find(p=>p.brand==="New Holland"&&p.model==="T5.110");
+const showcase=[
+ APPROVED_TRACTOR_PHOTOS.find(p=>p.brand==="Case IH"&&p.model==="Puma 150"),
+ APPROVED_TRACTOR_PHOTOS.find(p=>p.brand==="McCormick"&&p.model==="X5.120"),
+].filter((x):x is NonNullable<typeof x>=>Boolean(x));
+const site=Astro.site||new URL("https://tractorvs.com");
+const pageUrl=new URL(pagePath,site).toString();
+const publicImage=hero?new URL(hero.displayUrl,site).toString():undefined;
+const structuredData={
+ "@context":"https://schema.org",
+ "@graph":[
+  {
+   "@type":"TechArticle",
+   "@id":pageUrl+"#article",
+   "headline":tr?"Traktör parçaları ve teknik özellikleri ne işe yarar?":"What do tractor parts and technical specifications mean?",
+   "description":description,
+   "inLanguage":lang,
+   "url":pageUrl,
+   "mainEntityOfPage":{"@type":"WebPage","@id":pageUrl},
+   "author":{"@type":"Organization","name":"TractorVS"},
+   "publisher":{"@type":"Organization","name":"TractorVS"},
+   "datePublished":"2026-11-20",
+   "dateModified":"2026-11-20",
+   "isAccessibleForFree":true,
+   "image":publicImage,
+   "about":[{"@type":"Thing","name":"Agricultural tractor"},{"@type":"Thing","name":"Tractor specifications"}],
+   "citation":["https://www.oecd.org/en/topics/tractors.html","https://tractortestlab.unl.edu/"]
+  },
+  {
+   "@type":"BreadcrumbList",
+   "itemListElement":[
+    {"@type":"ListItem","position":1,"name":tr?"Ana sayfa":"Home","item":new URL(localizedPath(lang,"/"),site).toString()},
+    {"@type":"ListItem","position":2,"name":tr?"Traktör teknik terimleri":"Tractor technical terms","item":pageUrl}
+   ]
+  },
+  ...(hero?[{
+   "@type":"ImageObject",
+   "contentUrl":publicImage,
+   "license":hero.licenseUrl,
+   "creditText":hero.photographer,
+   "creator":{"@type":"Person","name":hero.photographer},
+   "acquireLicensePage":hero.sourcePage,
+   "caption":tr?"New Holland T5.110 — konu anlatımı için temsilî traktör fotoğrafı":"New Holland T5.110 — illustrative tractor photograph"
+  }]:[])
+ ]
+};
+const queryTerms=(term:(typeof GLOSSARY_TERMS)[number])=>
+ [term.name.tr,term.name.en,term.definition.tr,term.definition.en].join(" ").toLowerCase();
+---
+<SiteLayout lang={lang} title={title} description={description} structuredData={structuredData}
+  ogImage={publicImage} availableLocales={["en","tr"]}>
+ <article class="glossary-page">
+  <header class="glossary-hero">
+   <div class="container glossary-hero-grid">
+    <div class="glossary-hero-content">
+     <nav class="glossary-breadcrumbs" aria-label={tr?"İçerik yolu":"Breadcrumb"}>
+      <a href={localizedPath(lang,"/")}>{tr?"Ana sayfa":"Home"}</a>
+      <span aria-hidden="true">/</span>
+      <span aria-current="page">{tr?"Teknik terimler":"Technical terms"}</span>
+     </nav>
+     <p class="glossary-kicker">{tr?"TRACTORVS • TARLA DİLİNDE TEKNİK BİLGİ":"TRACTORVS • TECH MADE UNDERSTANDABLE"}</p>
+     <h1>{tr?"Traktör parçaları ve teknik terimleri:": "Tractor parts and technical terms:"}
+      <span>{tr?"Ne işe yarar, nasıl karşılaştırılır?":"What they do and how to compare them"}</span>
+     </h1>
+     <p class="glossary-lead">{tr?
+       "Beygir gücü neden tek başına yeterli değildir? Kuyruk mili ile hidrolik kaldırıcı hangi işi yapar? Bir katalogdaki 2.500 kg neyi anlatır? Traktör teknik tablosunu, çiftçinin kararına yarayan bir dile çeviriyoruz.":
+       "Why is horsepower not enough? What do the PTO and rear linkage actually do? What does 2,500 kg in a brochure mean? Turn a tractor specification sheet into practical decisions you can explain."}</p>
+     <div class="glossary-hero-tags" aria-label={tr?"İçerik özellikleri":"Guide features"}>
+      <span><strong>{GLOSSARY_TERMS.length}</strong> {tr?"özgün terim":"original definitions"}</span>
+      <span><strong>{sectionList.length}</strong> {tr?"konu başlığı":"topics"}</span>
+      <span>{tr?"Örnek + karşılaştırma uyarısı":"Examples + comparison checks"}</span>
+     </div>
+     <div class="glossary-hero-actions">
+      <a class="glossary-main-cta" href="#sozluk">{tr?"Terimleri keşfet":"Explore terms"} <span aria-hidden="true">↓</span></a>
+      <a class="glossary-secondary-cta" href={comparePath}>{tr?"Modelleri karşılaştır":"Compare tractors"} <span aria-hidden="true">↗</span></a>
+     </div>
+    </div>
+    {hero&&<figure class="glossary-cover">
+      <button type="button" data-tractor-photo data-photo-url={hero.fullUrl}
+        data-photo-label={tr?"New Holland T5.110 temsilî traktör fotoğrafı":"New Holland T5.110 illustrative tractor photograph"}
+        data-photo-credit={hero.photographer} data-photo-source={hero.sourcePage}
+        data-photo-license={hero.licenseUrl} data-photo-license-name={hero.licenseName}
+        aria-label={tr?"Fotoğrafı tam ekranda aç":"Open full-size tractor photograph"}>
+       <img src={hero.displayUrl} srcset={hero.thumbUrl+" 480w, "+hero.displayUrl+" 960w"}
+        sizes="(max-width: 840px) 100vw, 540px" width={hero.width} height={hero.height}
+        alt={tr?"New Holland T5.110 traktörün dış görünümü; teknik terimler için genel örnek":
+          "New Holland T5.110 tractor exterior, general example for understanding technical terms"}
+        decoding="async" loading="eager" fetchpriority="high"/>
+       <span class="glossary-zoom" aria-hidden="true">⤢</span>
+      </button>
+      <figcaption>
+       {tr?"Konuya örnek traktör fotoğrafı; tüm anlatılan parçaları göstermez.":"Illustrative tractor photograph; it does not show every discussed component."}
+       <a href={hero.sourcePage} target="_blank" rel="noopener noreferrer">{hero.photographer}</a> ·
+       <a href={hero.licenseUrl} target="_blank" rel="noopener noreferrer">{hero.licenseName}</a>
+      </figcaption>
+    </figure>}
+   </div>
+  </header>
+
+  <div class="container glossary-content">
+   <section class="glossary-intro" aria-labelledby="giris">
+    <div>
+     <p class="glossary-section-kicker">{tr?"ÖNCE ŞUNU BİLELİM":"START HERE"}</p>
+     <h2 id="giris">{tr?"Aynı sayı, her zaman aynı özellik değildir.":"The same number doesn't always mean the same specification."}</h2>
+     <p>{tr?
+      "Bir traktörün 100 HP motor gücü, 100 HP kuyruk mili gücü verdiği anlamına gelmez. 3.000 kg kaldırma kapasitesi de 3.000 kg römork çekme sınırı değildir. Katalogdaki değerin hangi parçada, hangi noktada ve hangi donanımla ölçüldüğünü bilmek, doğru karşılaştırmanın ilk adımıdır.":
+      "An engine rated at 100 hp does not necessarily supply 100 hp at the PTO. A 3,000 kg rear lift rating is not a 3,000 kg trailer limit. First identify where the number is measured, under what conditions, and for which configuration."}</p>
+     <p>{tr?
+      "Her terimde üç soruyu cevaplıyoruz: Bu parça veya ölçü nedir? Gerçek işte neden önemlidir? İki traktörü kıyaslarken hangi ayrıntı sizi yanıltabilir?":
+      "Every entry answers three questions: what does it mean, why might it matter in real work, and what mistake can make a comparison misleading?"}</p>
+    </div>
+    <aside class="glossary-method" aria-label={tr?"Editoryal yöntem":"Editorial method"}>
+     <strong>{tr?"Bu rehber nasıl hazırlandı?":"How this guide was prepared"}</strong>
+     <p>{tr?
+       "Açıklamalar TractorVS için özgün olarak yazıldı. Genel teknik kavramlar üretici kılavuzları, OECD traktör test kodları ve Nebraska traktör test yöntemleri bağlamında değerlendirilir. Buradaki örnekler saha testi veya kişisel kullanım deneyimi iddiası değildir.":
+       "These explanations were written for TractorVS. Concepts are considered against manufacturer manuals, OECD tractor testing codes and Nebraska tractor test methods. Illustrations do not claim personal ownership or field testing."}</p>
+     <small>{tr?"Yayın ve içerik kontrol tarihi: 20 Kasım 2026":"Editorial publication and review: 20 November 2026"}</small>
+    </aside>
+   </section>
+
+   <section class="glossary-search-area" id="sozluk" aria-labelledby="sozluk-baslik">
+    <div class="glossary-search-heading">
+     <div>
+      <p class="glossary-section-kicker">{tr?"TEKNİK SÖZLÜK":"TECHNICAL GLOSSARY"}</p>
+      <h2 id="sozluk-baslik">{tr?"Aradığınız traktör terimini bulun":"Find the tractor term you need"}</h2>
+      <p>{tr?"Terim adına veya açıklamasına göre arayın; teknik kavramların anlamı sayfada doğrudan okunabilir.":"Search by a term or description. Every definition is readable directly on this page."}</p>
+     </div>
+     <div class="glossary-search-box">
+       <label for="glossary-query">{tr?"Sözlükte ara":"Search the glossary"}</label>
+       <input id="glossary-query" type="search" placeholder={tr?"Örn. PTO, tork, hidrolik debi...":"e.g. PTO, torque, hydraulic flow..."} autocomplete="off"/>
+       <p id="glossary-search-status" role="status" aria-live="polite">{tr?`${GLOSSARY_TERMS.length} terim listeleniyor`:`${GLOSSARY_TERMS.length} terms shown`}</p>
+     </div>
+    </div>
+    <nav class="glossary-quick-nav" aria-label={tr?"Terim konuları":"Glossary topics"}>
+      {sectionList.map(section=><a href={"#konu-"+section.key}>{section.label[0]}</a>)}
+    </nav>
+
+    {sectionList.map((section,i)=>{
+      const items=GLOSSARY_TERMS.filter(term=>term.category===section.key);
+      return <section class="glossary-group" id={"konu-"+section.key} data-glossary-group>
+       <div class="glossary-group-head">
+        <div class="glossary-group-index" aria-hidden="true">{String(i+1).padStart(2,"0")}</div>
+        <div><h2>{section.label[0]}</h2><p>{section.label[1]}</p></div>
+        <span class="glossary-group-count">{items.length} {tr?"terim":"terms"}</span>
+       </div>
+       <div class="glossary-grid">
+        {items.map(term=><section class="glossary-card" id={term.id} data-glossary-term
+            data-search={queryTerms(term)}>
+          <div class="glossary-card-header">
+            <h3>{term.name[lang]}</h3>
+            <a href={"#"+term.id} aria-label={tr?term.name.tr+" için bağlantı": "Link to "+term.name.en} title={tr?"Bu terime bağlantı":"Link to this term"}>#</a>
+          </div>
+          <p class="glossary-definition">{term.definition[lang]}</p>
+          <div class="glossary-example">
+           <strong>{tr?"GÜNLÜK ÖRNEK":"REAL-LIFE EXAMPLE"}</strong>
+           <p>{term.example[lang]}</p>
+          </div>
+          <div class="glossary-caution">
+           <strong>{tr?"KARŞILAŞTIRIRKEN":"BEFORE YOU COMPARE"}</strong>
+           <p>{term.caution[lang]}</p>
+          </div>
+         </section>)}
+       </div>
+      </section>;
+    })}
+    <p id="glossary-empty" class="glossary-empty" hidden>{tr?"Bu kelimeyle eşleşen terim bulunamadı. Farklı bir teknik ad deneyin.":"No matching term found. Try another technical word."}</p>
+   </section>
+
+   <section class="glossary-gallery" aria-labelledby="gorsel-baslik">
+    <div class="glossary-gallery-intro">
+      <p class="glossary-section-kicker">{tr?"GERÇEK TRAKTÖR FOTOĞRAFLARI":"REAL TRACTOR PHOTOGRAPHS"}</p>
+      <h2 id="gorsel-baslik">{tr?"Özellikleri gerçek modeller üzerinde inceleyin":"Explore the specifications of real tractors"}</h2>
+      <p>{tr?
+        "Fotoğraflar TractorVS'nin lisans denetiminden geçen görsel kütüphanesinden gelir. Bunlar parça söküm fotoğrafı değildir; model ve donanım farklarını anlamak için genel görünüm sunar.":
+        "These photographs come from TractorVS's license-reviewed library. They are general tractor views, not cutaway images or diagrams proving an internal component's exact shape."}</p>
+    </div>
+    <div class="glossary-gallery-grid">
+      {showcase.map(photo=><figure>
+        <button type="button" data-tractor-photo data-photo-url={photo.fullUrl}
+         data-photo-label={photo.brand+" "+photo.model}
+         data-photo-credit={photo.photographer} data-photo-source={photo.sourcePage}
+         data-photo-license={photo.licenseUrl} data-photo-license-name={photo.licenseName}
+         aria-label={(tr?"Fotoğrafı büyüt: ":"View photo: ")+photo.brand+" "+photo.model}>
+         <img src={photo.thumbUrl} srcset={photo.thumbUrl+" 480w, "+photo.displayUrl+" 960w"}
+          sizes="(max-width:700px) 100vw, 470px" width={photo.width} height={photo.height}
+          loading="lazy" decoding="async" alt={(tr?"Traktör genel görünümü: ":"Tractor exterior: ")+photo.brand+" "+photo.model}/>
+         <span class="glossary-zoom" aria-hidden="true">⤢</span>
+        </button>
+        <figcaption><strong>{photo.brand} {photo.model}</strong>
+          <span><a href={photo.sourcePage} target="_blank" rel="noopener noreferrer">{photo.photographer}</a>
+          · <a href={photo.licenseUrl} target="_blank" rel="noopener noreferrer">{photo.licenseName}</a></span>
+        </figcaption>
+      </figure>)}
+    </div>
+   </section>
+
+   <section class="glossary-questions" aria-labelledby="sorular">
+    <p class="glossary-section-kicker">{tr?"KISA YANITLAR":"QUICK ANSWERS"}</p>
+    <h2 id="sorular">{tr?"Traktör teknik tablosu hakkında sık sorulan sorular":"Common questions about tractor specifications"}</h2>
+    <div class="glossary-qa-list">
+     {(tr?[
+       ["Motor gücü ile PTO gücü aynı mı?","Hayır. Motor gücü krank milinde, PTO gücü ise kuyruk mili çıkışında ele alınır. PTO aktarım kayıpları ve test koşulları nedeniyle değerler aynı olmak zorunda değildir."],
+       ["4WD her durumda daha iyi mi?","Hayır. Dört çeker zorlu zeminde çekişe yardım edebilir; ancak ağırlık, lastik ve maliyet gibi etkiler kullanım amacına göre değerlendirilir."],
+       ["3.000 kg kaldırma kapasitesi ne demek?","Ölçüm konumu bilinmeden tam anlamı anlaşılamaz. Askı uçlarında ölçülen değer ile 610 mm gerideki değer eşdeğer değildir."],
+       ["Katalogda farklı HP değerleri varsa hangisini karşılaştırmalı?","Aynı ölçüm türünü, güç birimini, devri, standardı ve pazar/varyant koşullarını içeren değerleri eşleştirin."],
+     ]:[
+       ["Is engine power the same as PTO power?","No. Engine power is declared at the engine while PTO power is delivered at the output shaft. Driveline losses and test conditions mean the figures differ."],
+       ["Is 4WD always better?","No. It can improve traction on difficult ground, but weight, tyres, cost and the intended task still matter."],
+       ["What does a 3,000 kg lift rating mean?","You need its measurement point. A value measured at hitch ball ends is not equivalent to one measured 610 mm behind them."],
+       ["Which horsepower number should I compare?","Match the power type, unit, rpm, standard and market/variant before ranking models."],
+     ]).map(([q,a])=><details><summary>{q}</summary><p>{a}</p></details>)}
+    </div>
+   </section>
+
+   <section class="glossary-sources" aria-labelledby="kaynaklar">
+     <div><p class="glossary-section-kicker">{tr?"DOĞRULANABİLİR KAYNAKLAR":"VERIFIABLE REFERENCES"}</p>
+      <h2 id="kaynaklar">{tr?"Teknik bilgiyi nereden kontrol edebilirsiniz?":"Where to check technical claims"}</h2>
+      <p>{tr?
+       "Tek bir sayıdan kesin sonuç çıkarmayın. Kaynak belgede hangi modelin hangi pazar ve donanım sürümünün test edildiğini kontrol edin. Bu kaynaklar genel kavram ve test yöntemleri içindir; burada sayılan tüm modeller için test yapıldığı iddiası değildir.":
+       "Do not infer performance from one isolated number. Check the exact model, market and tested configuration. These references explain methods; they do not imply that every tractor mentioned here has been laboratory tested."}</p>
+     </div>
+     <ul>
+      <li><a href="https://www.oecd.org/en/topics/tractors.html" target="_blank" rel="noopener noreferrer">
+       <strong>{tr?"OECD traktör test kodları":"OECD tractor testing codes"}</strong>
+       <span>{tr?"Performans, güvenlik yapıları ve ölçüm koşulları":"Performance, protective structures and test methods"} ↗</span>
+      </a></li>
+      <li><a href="https://tractortestlab.unl.edu/" target="_blank" rel="noopener noreferrer">
+       <strong>{tr?"Nebraska Traktör Test Laboratuvarı":"Nebraska Tractor Test Laboratory"}</strong>
+       <span>{tr?"PTO ve çeki performansı test yaklaşımı":"PTO and drawbar testing approaches"} ↗</span>
+      </a></li>
+      <li><a href="https://tractortestlab.unl.edu/test-reports/" target="_blank" rel="noopener noreferrer">
+       <strong>{tr?"Yayımlanmış test raporları":"Published test reports"}</strong>
+       <span>{tr?"Belirli modellerin ölçüm sonuçlarını bulma":"Find documented test results for specific models"} ↗</span>
+      </a></li>
+     </ul>
+   </section>
+
+   <aside class="glossary-next">
+    <div>
+     <p class="glossary-section-kicker">{tr?"ŞİMDİ SIRA KARŞILAŞTIRMADA":"PUT YOUR KNOWLEDGE TO WORK"}</p>
+     <h2>{tr?"Terimleri öğrendiniz; şimdi gerçek traktörleri kıyaslayın.":"You know the terms. Now compare actual tractors."}</h2>
+     <p>{tr?"Aynı motor gücü sınıfındaki modellerin PTO, hidrolik, şanzıman ve boyut verilerini kaynaklarıyla yan yana görün.":
+        "Put sourced PTO, hydraulic, gearbox and dimensions data side by side, even for models in the same engine-power class."}</p>
+    </div>
+    <div class="glossary-next-actions">
+     <a class="glossary-main-cta" href={comparePath}>{tr?"Traktör karşılaştır":"Compare tractors"} ↗</a>
+     <a class="glossary-secondary-cta" href={catalogPath}>{tr?"Tüm modeller":"Browse models"} ↗</a>
+     <a class="glossary-secondary-cta" href={selectionPath}>{tr?"Traktör seçim rehberi":"How to choose a tractor"} ↗</a>
+    </div>
+   </aside>
+  </div>
+ </article>
+</SiteLayout>
+
+<style>
+ .glossary-page{background:#f4f7f2;color:#17251e;}
+ .glossary-page a:focus-visible,.glossary-page button:focus-visible,.glossary-page summary:focus-visible,
+ .glossary-page input:focus-visible{outline:3px solid #9dc86e;outline-offset:4px;}
+ .glossary-hero{padding:48px 0 64px;background:radial-gradient(ellipse at 70% 25%,#285437 0,transparent 52%),linear-gradient(130deg,#0c1c15,#183123);color:#f2f7ed;overflow:hidden;}
+ .glossary-hero-grid{display:grid;grid-template-columns:minmax(0,1.07fr) minmax(0,.93fr);gap:clamp(20px,4vw,60px);align-items:center;}
+ .glossary-breadcrumbs{display:flex;gap:10px;flex-wrap:wrap;color:#b9cbb9;font-size:12px;margin-bottom:32px;}
+ .glossary-breadcrumbs a{text-decoration:underline;text-underline-offset:3px;}
+ .glossary-kicker,.glossary-section-kicker{font-size:11px;font-weight:900;letter-spacing:.13em;color:#73a454;text-transform:uppercase;margin:0 0 13px;}
+ .glossary-kicker{color:#b9df91;}
+ .glossary-hero h1{font-size:clamp(34px,4.35vw,58px);line-height:1.11;letter-spacing:-.045em;margin:0;max-width:740px;}
+ .glossary-hero h1 span{display:block;color:#b9df91;}
+ .glossary-lead{max-width:630px;font-size:clamp(15px,1.4vw,19px);line-height:1.77;color:#d1e1d1;margin:24px 0;}
+ .glossary-hero-tags{display:flex;flex-wrap:wrap;gap:9px;margin-bottom:24px;}
+ .glossary-hero-tags span{border:1px solid #56745b;background:#203e2e;color:#e7f3e4;padding:8px 12px;border-radius:999px;font-size:12px;}
+ .glossary-hero-tags strong{font-size:14px;color:#c5ef9f;}
+ .glossary-hero-actions,.glossary-next-actions{display:flex;gap:11px;flex-wrap:wrap;}
+ .glossary-main-cta,.glossary-secondary-cta{display:inline-flex;align-items:center;justify-content:center;gap:12px;padding:12px 19px;border-radius:11px;font-weight:800;font-size:14px;min-height:47px;}
+ .glossary-main-cta{background:#b9df91;color:#173323;}
+ .glossary-secondary-cta{border:1px solid #96ba96;color:#f6fcf0;}
+ .glossary-cover{margin:0;padding:10px;background:#213a2b;border:1px solid #4e6c55;border-radius:22px;box-shadow:0 24px 70px #0004;}
+ .glossary-cover button,.glossary-gallery figure button{position:relative;display:block;width:100%;padding:0;border:0;cursor:zoom-in;background:#183322;overflow:hidden;border-radius:14px;}
+ .glossary-cover img,.glossary-gallery img{display:block;width:100%;height:auto;aspect-ratio:4/3;object-fit:cover;}
+ .glossary-zoom{position:absolute;right:13px;bottom:13px;font-size:24px;background:#15251de8;border-radius:9px;color:white;padding:5px 9px;}
+ .glossary-cover figcaption{font-size:11px;line-height:1.6;color:#d7e2d8;padding:11px 4px 3px;}
+ .glossary-cover figcaption a,.glossary-gallery figcaption a{text-decoration:underline;text-underline-offset:2px;}
+ .glossary-content{padding-block:58px 80px;}
+ .glossary-intro{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(0,1fr);gap:42px;align-items:start;margin-bottom:66px;}
+ .glossary-intro h2,.glossary-search-heading h2,.glossary-questions h2,.glossary-gallery h2,.glossary-sources h2,.glossary-next h2{font-size:clamp(25px,2.8vw,39px);line-height:1.2;letter-spacing:-.03em;margin:0 0 17px;color:#183b27;}
+ .glossary-intro p,.glossary-gallery-intro p,.glossary-sources p{line-height:1.85;font-size:16px;color:#425c48;}
+ .glossary-method{padding:26px;background:#e8f2e4;border:1px solid #c8dfc0;border-radius:18px;}
+ .glossary-method strong{display:block;font-size:18px;color:#1b4c2f;}
+ .glossary-method p{font-size:14px;line-height:1.75;margin:12px 0;color:#395540;}
+ .glossary-method small{font-size:12px;color:#506652;}
+ .glossary-search-area{scroll-margin-top:22px;}
+ .glossary-search-heading{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(260px,.6fr);gap:26px;align-items:end;margin-bottom:25px;}
+ .glossary-search-heading p{margin:0;color:#58695b;line-height:1.65;font-size:14px;}
+ .glossary-search-box{padding:17px 18px;border-radius:16px;border:1px solid #d4e1d2;background:white;box-shadow:0 9px 20px #183f1b0b;}
+ .glossary-search-box label{display:block;font-size:12px;font-weight:900;color:#234a31;margin-bottom:8px;}
+ .glossary-search-box input{width:100%;min-height:44px;padding:10px 12px;border-radius:9px;border:1px solid #abc9ae;background:#f8faf6;color:#1d3526;font-size:14px;}
+ .glossary-search-box #glossary-search-status{margin-top:6px;font-size:11px;}
+ .glossary-quick-nav{display:flex;flex-wrap:wrap;gap:9px;padding:17px 0 30px;border-bottom:1px solid #d3e2d2;}
+ .glossary-quick-nav a{background:white;border:1px solid #c9dbc9;padding:9px 12px;border-radius:999px;color:#265435;font-size:12px;font-weight:800;transition:background .15s;}
+ .glossary-quick-nav a:hover{background:#dfeedd;}
+ .glossary-group{scroll-margin-top:24px;padding-top:43px;}
+ .glossary-group-head{display:flex;gap:17px;align-items:flex-start;padding-bottom:19px;}
+ .glossary-group-index{display:grid;place-items:center;flex:none;width:52px;height:52px;border-radius:14px;background:#dcebd8;font-weight:900;color:#1a5a2e;font-size:20px;}
+ .glossary-group-head h2{margin:0 0 6px;font-size:clamp(23px,2.4vw,31px);letter-spacing:-.03em;color:#1e4a2c;}
+ .glossary-group-head p{margin:0;color:#556b57;line-height:1.6;font-size:13px;}
+ .glossary-group-count{margin-left:auto;white-space:nowrap;font-weight:800;font-size:11px;background:#e1eee0;border-radius:999px;padding:8px;color:#2c6335;}
+ .glossary-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;}
+ .glossary-card{scroll-margin-top:30px;background:white;border:1px solid #d8e5d7;border-radius:18px;padding:22px 23px;box-shadow:0 9px 24px #28463109;min-width:0;overflow-wrap:anywhere;}
+ .glossary-card:target{outline:3px solid #8ab45c;}
+ .glossary-card-header{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;}
+ .glossary-card-header h3{margin:0 0 13px;font-size:19px;line-height:1.35;letter-spacing:-.016em;color:#1a482a;}
+ .glossary-card-header a{font-size:14px;font-weight:900;color:#337347;padding:2px 4px;}
+ .glossary-definition{font-size:14px;line-height:1.8;color:#293f30;margin:0 0 16px;}
+ .glossary-example,.glossary-caution{border-top:1px solid #e5eae3;padding-top:11px;margin-top:10px;}
+ .glossary-example strong,.glossary-caution strong{font-size:10px;font-weight:900;letter-spacing:.08em;color:#2f7146;}
+ .glossary-caution strong{color:#9a6526;}
+ .glossary-example p,.glossary-caution p{margin:4px 0 0;color:#44584a;font-size:13px;line-height:1.7;}
+ .glossary-empty{padding:25px;text-align:center;border:1px dashed #d2a35d;background:#fff9ec;border-radius:16px;color:#764f1c;}
+ .glossary-gallery{margin:80px 0 62px;padding:30px;border-radius:24px;background:#e9f0e6;}
+ .glossary-gallery-intro{max-width:770px;}
+ .glossary-gallery-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;}
+ .glossary-gallery figure{margin:0;background:white;padding:8px;border-radius:18px;border:1px solid #d0dfce;}
+ .glossary-gallery img{aspect-ratio:16/10;}
+ .glossary-gallery figcaption{padding:12px 8px;display:flex;flex-direction:column;gap:5px;color:#254932;font-size:13px;}
+ .glossary-gallery figcaption span{color:#5f7665;font-size:11px;}
+ .glossary-questions{padding:13px 0 54px;}
+ .glossary-qa-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px;}
+ .glossary-qa-list details{border:1px solid #d2e0d0;border-radius:13px;padding:18px;background:white;}
+ .glossary-qa-list summary{font-weight:850;color:#244e32;cursor:pointer;line-height:1.45;}
+ .glossary-qa-list details p{margin:12px 0 0;font-size:14px;line-height:1.8;color:#4b6252;}
+ .glossary-sources{border-top:1px solid #cfdfcf;padding:52px 0;display:grid;grid-template-columns:1.1fr .9fr;gap:30px;}
+ .glossary-sources ul{display:grid;list-style:none;gap:10px;padding:0;margin:0;}
+ .glossary-sources li a{display:grid;gap:8px;border:1px solid #ceddce;background:white;border-radius:12px;padding:18px;color:#204e31;}
+ .glossary-sources li a:hover{border-color:#68a26a;}
+ .glossary-sources li a strong{font-size:14px;}
+ .glossary-sources li a span{font-size:12px;color:#5c7560;}
+ .glossary-next{padding:40px;border-radius:23px;background:linear-gradient(115deg,#153b24,#285b40);color:white;display:grid;grid-template-columns:1fr 260px;gap:20px;align-items:center;}
+ .glossary-next h2{color:#f0f8ed;margin-bottom:12px;}
+ .glossary-next p{line-height:1.8;color:#dae8d7;font-size:14px;}
+ .glossary-next .glossary-secondary-cta{color:#f0f8ed;}
+ @media(max-width:900px){
+  .glossary-hero-grid{grid-template-columns:1fr;}
+  .glossary-cover{max-width:630px;}
+  .glossary-intro,.glossary-search-heading,.glossary-sources,.glossary-next{grid-template-columns:1fr;}
+  .glossary-next-actions{flex-direction:row;}
+ }
+ @media(max-width:680px){
+  .glossary-hero{padding:28px 0 40px;}
+  .glossary-content{padding-block:40px 60px;}
+  .glossary-grid,.glossary-gallery-grid,.glossary-qa-list{grid-template-columns:1fr;}
+  .glossary-intro{gap:18px;margin-bottom:46px;}
+  .glossary-group-head{gap:11px;}
+  .glossary-group-index{width:40px;height:40px;font-size:15px;}
+  .glossary-group-count{display:none;}
+  .glossary-card{padding:18px;}
+  .glossary-gallery{padding:17px;margin:48px 0;}
+  .glossary-next{padding:25px;}
+  .glossary-next-actions{flex-direction:column;align-items:stretch;}
+ }
+ @media(prefers-reduced-motion:reduce){.glossary-page *{scroll-behavior:auto!important;}}
+</style>
+
+<script>
+ const input=document.getElementById("glossary-query");
+ const cards=[...document.querySelectorAll<HTMLElement>("[data-glossary-term]")];
+ const groups=[...document.querySelectorAll<HTMLElement>("[data-glossary-group]")];
+ const empty=document.getElementById("glossary-empty");
+ const status=document.getElementById("glossary-search-status");
+ const locale=document.documentElement.lang.toLowerCase().startsWith("tr")?"tr":"en";
+ const normalize=(s:string)=>s.toLocaleLowerCase(locale==="tr"?"tr-TR":"en-US").normalize("NFD")
+  .replace(/[\u0300-\u036f]/g,"").replace(/ı/g,"i");
+ if(input instanceof HTMLInputElement){
+  input.addEventListener("input",()=>{
+   const q=normalize(input.value.trim());
+   let visible=0;
+   for(const card of cards){
+    const ok=!q||normalize(card.dataset.search||card.textContent||"").includes(q);
+    card.hidden=!ok;if(ok)visible++;
+   }
+   for(const group of groups)group.hidden=![...group.querySelectorAll<HTMLElement>("[data-glossary-term]")].some(card=>!card.hidden);
+   if(empty)empty.hidden=visible!==0;
+   if(status)status.textContent=locale==="tr"?visible+" terim gösteriliyor":visible+" terms shown";
+  });
+ }
+</script>
