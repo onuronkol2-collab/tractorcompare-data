@@ -150,3 +150,37 @@ test("raw semicolon source notes do not leak untranslated into nine localized se
   assert.match(detail,/class="model-original-note"/);
   assert.match(detail,/\{originalNote\}/);
 });
+
+
+test("manufacturer product-page citations are described as sources, not necessarily documents, in ten locales", () => {
+  const expected = {
+    en:"Manufacturer source links are included where verified.",
+    tr:"Doğrulanmış üretici kaynaklarına bağlantılar sunulur.",
+    zh:"已提供经核实的制造商来源链接。",
+    hi:"सत्यापित निर्माता स्रोतों के लिंक उपलब्ध हैं।",
+    "pt-br":"Links para fontes do fabricante são fornecidos quando verificados.",
+    fr:"Des liens vers les sources du constructeur sont fournis après vérification.",
+    de:"Verifizierte Herstellerquellen sind verlinkt.",
+    ru:"Доступны ссылки на проверенные источники производителя.",
+    ja:"確認済みメーカー情報源へのリンクを掲載しています。",
+    es:"Se incluyen enlaces a fuentes del fabricante cuando están verificadas."
+  };
+  const productPage = {
+    ...tractor,
+    specifications: tractor.specifications.map(spec => ({
+      ...spec,
+      source_url:"https://www.mccormick-tractors.com/en/tractors/x5/",
+      source_type:"manufacturer_specification"
+    }))
+  };
+  for(const [locale, sentence] of Object.entries(expected)) {
+    const meta = modelSeoMetadata(productPage,locale);
+    assert.ok(meta.description.includes(sentence), `Source type misrepresented in ${locale}`);
+    assert.ok(meta.title.includes("McCormick X5.120"), `Model identity changed in ${locale}`);
+    const noSource = modelSeoMetadata({
+      ...productPage,
+      specifications:productPage.specifications.map(spec=>({...spec,source_url:null}))
+    },locale);
+    assert.ok(!noSource.description.includes(sentence), `Unsupported manufacturer claim in ${locale}`);
+  }
+});
