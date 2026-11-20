@@ -1,0 +1,46 @@
+name: TractorVS automatic recovery watchdog
+
+# GitHub Actions cron can be delayed under load; not a real-time guarantee.
+on:
+  schedule:
+    - cron: '11,41 * * * *'
+  # Initial PR merge bootstraps the watcher once; future runs use the schedule.
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/tractorvs-research-watchdog.yml"
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "Verify queue and budget only; never dispatch paid work"
+        type: boolean
+        default: true
+        required: true
+
+permissions:
+  contents: read
+  actions: write
+
+concurrency:
+  group: tractorvs-research-watchdog
+  cancel-in-progress: false
+
+jobs:
+  watchdog:
+    if: github.repository == 'onuronkol2-collab/tractorcompare-data' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Run tests before first automated dispatch
+        run: node --test scripts/tractor-research-budget.test.mjs scripts/tractor-research-watchdog.test.mjs
+      - name: Safely resume bounded queue research if budget and queue allow
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          TRACTORVS_SUPABASE_ANON_JWT: ${{ secrets.TRACTORVS_SUPABASE_ANON_JWT }}
+          TRACTORVS_QUEUE_SECRET: ${{ secrets.TRACTORVS_QUEUE_SECRET }}
+          TRACTORVS_DRY_RUN: ${{ github.event_name == 'workflow_dispatch' && inputs.dry_run == true }}
+        run: node scripts/tractor-research-watchdog.mjs
