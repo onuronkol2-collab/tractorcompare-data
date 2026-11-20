@@ -17,6 +17,7 @@ import {manufacturerPhotoAlias,matchesManufacturerPhotoAlias} from "./photo-mode
 
 const ORIGIN=process.env.TRACTORVS_URL||"https://tractorvs.com";
 const OUTPUT=resolve(process.env.TRACTOR_IMAGE_REPORT_DIR||"./photo-discovery-report");
+const PRIVATE_OUTPUT=process.env.TRACTOR_IMAGE_PRIVATE_REPORT_DIR?resolve(process.env.TRACTOR_IMAGE_PRIVATE_REPORT_DIR):null;
 const USER_AGENT="TractorVS/1.0 (tractorvs.com; public photo license research)";
 const REQUEST_LIMIT=4;
 const COMMONS_BATCH=1;
@@ -143,12 +144,16 @@ async function main(){
     privateRecords=input.filter(x=>x?.brand&&x?.model).map(x=>({
       ...x,status:x.status==="published"?"published":"draft",pageUrl:null}));
   }
+  if(privateRecords.length && (!PRIVATE_OUTPUT || PRIVATE_OUTPUT===OUTPUT || PRIVATE_OUTPUT.startsWith(OUTPUT+"/"))) {
+    throw Error("Draft research requires a separate, non-artifact TRACTOR_IMAGE_PRIVATE_REPORT_DIR");
+  }
   const identity=new Map();
   for(const item of [...publicRecords,...privateRecords]){
     if(!item.brand||!item.model)continue;
-    const key=norm(item.brand)+"|"+norm(item.model);
+    const key=[item.tractor_id||"",norm(item.brand),norm(item.model),norm(item.variant||""),norm(item.market||""),String(item.model_year||item.year||""),item.status].join("|");
     const current=identity.get(key);
-    if(!current)identity.set(key,{brand:item.brand,model:item.model,
+    if(!current)identity.set(key,{tractor_id:item.tractor_id||null,brand:item.brand,model:item.model,
+      variant:item.variant||null,market:item.market||null,year:item.model_year||item.year||null,
       status:item.status,publicPages:item.pageUrl?[item.pageUrl]:[],
       variants:[item.variant].filter(Boolean)});
     else{
@@ -169,7 +174,7 @@ async function main(){
       catch(e){return {...entry,error:String(e),candidates:[]};}
     }));
     reviewed.push(...result);
-    for(const entry of result){
+    for(const entry of result.filter(x=>x.status==="published")){
       const shortlist=entry.candidates.filter(x=>x.modelTextMatch&&x.reuseLicensePermitted);
       console.log("IMAGE_DISCOVERY "+JSON.stringify({brand:entry.brand,model:entry.model,
         status:entry.status,rightsClearedTitleCandidates:shortlist.length,
@@ -177,19 +182,25 @@ async function main(){
         error:entry.error||null}));
     }
   }
+  const publicReviewed=reviewed.filter(x=>x.status==="published");
+  const draftReviewed=reviewed.filter(x=>x.status!=="published");
+  if(draftReviewed.length){
+    await mkdir(PRIVATE_OUTPUT,{recursive:true});
+    await writeFile(PRIVATE_OUTPUT+"/draft-report.json",JSON.stringify({generatedAt:new Date().toISOString(),note:"PRIVATE DRAFT RESEARCH. DO NOT PUBLISH.",models:draftReviewed},null,2),{mode:0o600});
+  }
   const report={generatedAt:new Date().toISOString(),note:
     "Candidate discovery only. Photos are NOT published, uploaded, licensed by TractorVS, or identity-reviewed.",
     publicModelPages:publicRecords.length,optionalPrivateRecords:privateRecords.length,
-    modelSearches:reviewed.length,models:reviewed};
+    modelSearches:publicReviewed.length,models:publicReviewed};
   await writeFile(OUTPUT+"/report.json",JSON.stringify(report,null,2));
   await writeFile(OUTPUT+"/summary.csv","brand,model,status,license_title_candidates,search_error\n"+
-    reviewed.map(r=>[r.brand,r.model,r.status,
+    publicReviewed.map(r=>[r.brand,r.model,r.status,
       r.candidates.filter(c=>c.modelTextMatch&&c.reuseLicensePermitted).length,r.error||""]
       .map(v=>'"'+String(v).replaceAll('"','""')+'"').join(",")).join("\n")+"\n");
   const candidates=reviewed.reduce((n,r)=>n+r.candidates.filter(c=>c.modelTextMatch&&c.reuseLicensePermitted).length,0);
   const failed=reviewed.filter(r=>r.error).length;
   console.log("IMAGE_DISCOVERY_SUMMARY "+JSON.stringify({modelSearches:reviewed.length,
     rightsClearedTitleCandidates:candidates,searchFailures:failed,output:OUTPUT}));
-  if(!reviewed.length||publicRecords.some(x=>x.error))process.exitCode=1;
+  if(!publicReviewed.length||publicRecords.some(x=>x.error))process.exitCode=1;
 }
 main().catch(e=>{console.error("IMAGE_DISCOVERY_ERROR "+String(e));process.exitCode=1;});
