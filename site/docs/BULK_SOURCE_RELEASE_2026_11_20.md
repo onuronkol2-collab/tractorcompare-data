@@ -29,3 +29,17 @@ The owner's primary publishing automation remains the connected **hourly** ChatG
 GitHub `TractorVS free-first research watchdog` checks queue/auth/quota every 30 minutes **read-only** by default. Scheduled and push-triggered runs **do not dispatch paid Gemini calls**. A human may explicitly opt into a bounded `workflow_dispatch` fallback with `dry_run=false`, subject to the existing 6-run UTC daily / 24-run monthly ceiling; there is no automatic unlimited paid loop.
 
 Do not confuse an action-run success with a source-verified model publication or a production deployment. Inspect the production Cloudflare build status, `https://tractorvs.com/tractors/`, one model route and the sitemap after this change. Future published models should be associated with their own source family and dates.
+
+## Follow-up source-family release — Versatile Nemesis (20 November 2026)
+
+Five additional **North America / Stage V** Nemesis tractors were verified against the manufacturer's five-model technical specifications, including rated and peak engine power, PTO manufacturer estimates, torque, gearbox selection, hydraulic configurations and SAE rear linkage capacity. One guarded transaction published **Nemesis 175 / 195 / 210 / 235 / 255**, then confirmed all **238** model-linked technical specification rows (50 / 50 / 50 / 44 / 44) were source-evidenced, date-verified and surfaced in `tractorvs_public_specs`. The smallest three models gained documented 7,970 kg dry/base weight rows. The 1¾-inch rear PTO shaft optional configuration is distinguished from standard rpm selections; manufacturer estimated PTO output is not presented as certified test output.
+
+**Model distinction:** 175, 195 and 210 have 30F/15R ZF Powershift standard with optional ZF CVT; 235 and 255 have ZF CVT standard. North America was recorded as the brochure market; this is not proof of a model year or international availability.
+
+Official primary manufacturer sources:
+- Five-model Nemesis brochure with complete specifications: https://www.versatile-ag.com/NA/downloads/brochure/Versatile-Brochure-Nemesis.pdf
+- 2026 model guide: https://www.versatile-ag.com/NA/downloads/brochure/Versatile_Brochure.pdf
+- Current manufacturer range page: https://www.versatile-ag.com/NA/pages/product_nemesis.php
+
+The verified production database checkpoint after this batch is **100 published / 360 draft / 2 archived**; `tractorvs_public_specs` exposes 100 models and 3,093 rows. This is a *database* result. Static Cloudflare pages and sitemap must be checked **after** this merged commit triggers a new production deployment; a passing GitHub validation is not itself proof of a successful live deployment or Google indexing.
+
