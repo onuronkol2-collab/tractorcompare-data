@@ -9,8 +9,8 @@ const layout=readFileSync(new URL("../src/layouts/SiteLayout.astro",import.meta.
 const en=readFileSync(new URL("../src/pages/guides/tractor-technical-terms/index.astro",import.meta.url),"utf8");
 const tr=readFileSync(new URL("../src/pages/tr/guides/tractor-technical-terms/index.astro",import.meta.url),"utf8");
 
-test("63 original bilingual technical concepts with unique SEO-safe anchors and realistic comparison guidance",()=>{
- assert.equal(GLOSSARY_TERMS.length,63);
+test("89 original bilingual technical concepts with unique SEO-safe anchors and realistic comparison guidance",()=>{
+ assert.equal(GLOSSARY_TERMS.length,89);
  const seen=new Set();
  for(const x of GLOSSARY_TERMS){
   assert.match(x.id,/^[a-z0-9]+(?:-[a-z0-9]+)*$/);
