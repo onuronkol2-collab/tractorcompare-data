@@ -10,7 +10,7 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "npm run build && wrangler dev",
-    "deploy": "astro build && wrangler deploy",
+    "deploy": "npm run deploy:verified",
     "test": "node --experimental-strip-types --test tests/*.test.mjs",
     "build:production": "node scripts/production-release-gate.mjs preflight && npm run build && node scripts/production-release-gate.mjs postflight",
     "deploy:verified": "node scripts/production-release-gate.mjs postflight && wrangler deploy",
