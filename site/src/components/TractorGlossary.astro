@@ -3,6 +3,8 @@ import SiteLayout from "../layouts/SiteLayout.astro";
 import {localizedPath} from "../lib/locales.ts";
 import {APPROVED_TRACTOR_PHOTOS} from "../lib/tractor-photos.ts";
 import {GLOSSARY_TERMS,GLOSSARY_SECTIONS,type GlossaryLanguage} from "../lib/tractor-glossary.ts";
+import {TRACTOR_PARTS} from "../lib/tractor-parts.ts";
+import TractorParts from "./TractorParts.astro";
 
 interface Props {lang:GlossaryLanguage}
 const {lang}=Astro.props;
@@ -12,11 +14,10 @@ const pagePath=localizedPath(lang,"/guides/tractor-technical-terms/");
 const catalogPath=localizedPath(lang,"/tractors/");
 const comparePath=localizedPath(lang,"/compare/");
 const selectionPath=localizedPath(lang,"/guides/choosing-a-tractor/");
-const title=tr?`Traktör Parçaları ve Teknik Terimler: ${GLOSSARY_TERMS.length} Açıklama | TractorVS`:
- `Tractor Parts & Technical Terms Explained: ${GLOSSARY_TERMS.length} Definitions | TractorVS`;
+const title=tr?"Traktör Parçaları Ne İşe Yarar? Teknik Terimler | TractorVS":"Tractor Parts Explained and Technical Terms | TractorVS";
 const description=tr?
- "Traktör motoru, PTO, hidrolik, şanzıman, lastik ve güvenlik terimleri. özgün açıklamalar, gerçek kullanım örnekleri ve kaynaklı karşılaştırma rehberi.":
- "Understand tractor parts and specification terms: PTO, engine, hydraulics, gearbox, tyres and safety, with real-world examples and source guidance.";
+ `Traktörde ${TRACTOR_PARTS.length} parçanın ne işe yaradığını ve ${GLOSSARY_TERMS.length} teknik terimi sade örneklerle öğrenin. Motor, PTO, şanzıman, hidrolik ve güvenlik rehberi.`:
+ `Discover ${TRACTOR_PARTS.length} tractor parts and ${GLOSSARY_TERMS.length} technical terms in plain language: engine, PTO, gearbox, hydraulics and everyday examples.`;
 const hero=APPROVED_TRACTOR_PHOTOS.find(p=>p.brand==="New Holland"&&p.model==="T5.110");
 const showcase=[
  APPROVED_TRACTOR_PHOTOS.find(p=>p.brand==="Case IH"&&p.model==="Puma 150"),
@@ -82,10 +83,11 @@ const queryTerms=(term:(typeof GLOSSARY_TERMS)[number])=>
       <span>{tr?"Ne işe yarar, nasıl karşılaştırılır?":"What they do and how to compare them"}</span>
      </h1>
      <p class="glossary-lead">{tr?
-       "Beygir gücü neden tek başına yeterli değildir? Kuyruk mili ile hidrolik kaldırıcı hangi işi yapar? Bir katalogdaki 2.500 kg neyi anlatır? Traktör teknik tablosunu, çiftçinin kararına yarayan bir dile çeviriyoruz.":
-       "Why is horsepower not enough? What do the PTO and rear linkage actually do? What does 2,500 kg in a brochure mean? Turn a tractor specification sheet into practical decisions you can explain."}</p>
+       "Krank mili nerededir, mazot filtresi ne yapar, kuyruk mili neden döner? Parçaları önce günlük örneklerle tanıyalım. Sonra beygir gücü, tork ve hidrolik kapasitesi gibi sayıları aynı sadelikte öğrenelim.":
+       "Where is the crankshaft, why does a fuel filter matter, and how does a PTO turn a mower? Start with practical explanations of real parts, then learn how to read horsepower, torque and hydraulic ratings."}</p>
      <div class="glossary-hero-tags" aria-label={tr?"İçerik özellikleri":"Guide features"}>
-      <span><strong>{GLOSSARY_TERMS.length}</strong> {tr?"özgün terim":"original definitions"}</span>
+      <span><strong>{GLOSSARY_TERMS.length}</strong> {tr?"sade teknik terim":"plain-language terms"}</span>
+      <span><strong>{TRACTOR_PARTS.length}</strong> {tr?"traktör parçası":"actual tractor parts"}</span>
       <span><strong>{sectionList.length}</strong> {tr?"konu başlığı":"topics"}</span>
       <span>{tr?"Örnek + karşılaştırma uyarısı":"Examples + comparison checks"}</span>
      </div>
@@ -125,8 +127,8 @@ const queryTerms=(term:(typeof GLOSSARY_TERMS)[number])=>
       "Bir traktörün 100 HP motor gücü, 100 HP kuyruk mili gücü verdiği anlamına gelmez. 3.000 kg kaldırma kapasitesi de 3.000 kg römork çekme sınırı değildir. Katalogdaki değerin hangi parçada, hangi noktada ve hangi donanımla ölçüldüğünü bilmek, doğru karşılaştırmanın ilk adımıdır.":
       "An engine rated at 100 hp does not necessarily supply 100 hp at the PTO. A 3,000 kg rear lift rating is not a 3,000 kg trailer limit. First identify where the number is measured, under what conditions, and for which configuration."}</p>
      <p>{tr?
-      "Her terimde üç soruyu cevaplıyoruz: Bu parça veya ölçü nedir? Gerçek işte neden önemlidir? İki traktörü kıyaslarken hangi ayrıntı sizi yanıltabilir?":
-      "Every entry answers three questions: what does it mean, why might it matter in real work, and what mistake can make a comparison misleading?"}</p>
+      "Önce parçaları tanıyın: Nerededir, ne yapar, tarlada hangi işe yarar? Ardından teknik değerleri öğrenin. Bilmediğiniz kelimeyi sayfanın arama kutusunda bulabilirsiniz.":
+      "Start with each part: where is it, what does it do, and when would you notice it? Then explore the specification terms. Use the search box to find any word."}</p>
     </div>
     <aside class="glossary-method" aria-label={tr?"Editoryal yöntem":"Editorial method"}>
      <strong>{tr?"Bu rehber nasıl hazırlandı?":"How this guide was prepared"}</strong>
@@ -142,18 +144,25 @@ const queryTerms=(term:(typeof GLOSSARY_TERMS)[number])=>
      <div>
       <p class="glossary-section-kicker">{tr?"TEKNİK SÖZLÜK":"TECHNICAL GLOSSARY"}</p>
       <h2 id="sozluk-baslik">{tr?"Aradığınız traktör terimini bulun":"Find the tractor term you need"}</h2>
-      <p>{tr?"Terim adına veya açıklamasına göre arayın; teknik kavramların anlamı sayfada doğrudan okunabilir.":"Search by a term or description. Every definition is readable directly on this page."}</p>
+      <p>{tr?"Parça veya terim adını yazın. Önce parçanın görevini, sonra teknik sayının anlamını okuyun.":"Search for a part or technical term. Find its practical role before comparing its numbers."}</p>
      </div>
      <div class="glossary-search-box">
        <label for="glossary-query">{tr?"Sözlükte ara":"Search the glossary"}</label>
        <input id="glossary-query" type="search" placeholder={tr?"Örn. PTO, tork, hidrolik debi...":"e.g. PTO, torque, hydraulic flow..."} autocomplete="off"/>
-       <p id="glossary-search-status" role="status" aria-live="polite">{tr?`${GLOSSARY_TERMS.length} terim listeleniyor`:`${GLOSSARY_TERMS.length} terms shown`}</p>
+       <p id="glossary-search-status" role="status" aria-live="polite">{tr?`${GLOSSARY_TERMS.length+TRACTOR_PARTS.length} açıklama listeleniyor`:`${GLOSSARY_TERMS.length+TRACTOR_PARTS.length} explanations shown`}</p>
      </div>
     </div>
-    <nav class="glossary-quick-nav" aria-label={tr?"Terim konuları":"Glossary topics"}>
+    <nav class="glossary-quick-nav" aria-label={tr?"Terim ve parça konuları":"Glossary and parts topics"}>
+      <a href="#traktor-parcalari">{tr?"Gerçek parçalar":"Tractor parts"}</a>
       {sectionList.map(section=><a href={"#konu-"+section.key}>{section.label[0]}</a>)}
     </nav>
 
+    <TractorParts lang={lang}/>
+    <div class="glossary-terms-intro">
+      <p class="glossary-section-kicker">{tr?"TEKNİK DEĞERLERİ ANLAMAK":"UNDERSTAND THE NUMBERS"}</p>
+      <h2>{tr?"Teknik özellikler ne anlama gelir?":"What do tractor specifications mean?"}</h2>
+      <p>{tr?"Parçaları tanıdınız. Şimdi katalogdaki sayıları, bu sayıların tarlada ne işe yaradığını ve karşılaştırırken karıştırılan noktaları öğrenin.":"You have met the parts. Now learn what the numbers in a brochure mean and what to compare fairly."}</p>
+    </div>
     {sectionList.map((section,i)=>{
       const items=GLOSSARY_TERMS.filter(term=>term.category===section.key);
       return <section class="glossary-group" id={"konu-"+section.key} data-glossary-group>
@@ -169,20 +178,20 @@ const queryTerms=(term:(typeof GLOSSARY_TERMS)[number])=>
             <h3>{term.name[lang]}</h3>
             <a href={"#"+term.id} aria-label={tr?term.name.tr+" için bağlantı": "Link to "+term.name.en} title={tr?"Bu terime bağlantı":"Link to this term"}>#</a>
           </div>
-          <p class="glossary-definition">{term.definition[lang]}</p>
+          <div class="glossary-meaning"><strong>{tr?"KISACA NE DEMEK?":"PLAIN MEANING"}</strong><p class="glossary-definition">{term.definition[lang]}</p></div>
           <div class="glossary-example">
-           <strong>{tr?"GÜNLÜK ÖRNEK":"REAL-LIFE EXAMPLE"}</strong>
+           <strong>{tr?"TARLADA NE İŞE YARAR?":"EXAMPLE FROM FARM WORK"}</strong>
            <p>{term.example[lang]}</p>
           </div>
           <div class="glossary-caution">
-           <strong>{tr?"KARŞILAŞTIRIRKEN":"BEFORE YOU COMPARE"}</strong>
+           <strong>{tr?"BUNU KARIŞTIRMAYIN":"DON’T CONFUSE THIS"}</strong>
            <p>{term.caution[lang]}</p>
           </div>
          </section>)}
        </div>
       </section>;
     })}
-    <p id="glossary-empty" class="glossary-empty" hidden>{tr?"Bu kelimeyle eşleşen terim bulunamadı. Farklı bir teknik ad deneyin.":"No matching term found. Try another technical word."}</p>
+    <p id="glossary-empty" class="glossary-empty" hidden>{tr?"Böyle bir parça veya terim bulunamadı. Başka bir ad deneyin.":"No matching part or term. Try a different word."}</p>
    </section>
 
    <section class="glossary-deepdives" aria-labelledby="deep-dives-heading">
@@ -348,7 +357,12 @@ const queryTerms=(term:(typeof GLOSSARY_TERMS)[number])=>
  .glossary-card-header{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;}
  .glossary-card-header h3{margin:0 0 13px;font-size:19px;line-height:1.35;letter-spacing:-.016em;color:#1a482a;}
  .glossary-card-header a{font-size:14px;font-weight:900;color:#337347;padding:2px 4px;}
- .glossary-definition{font-size:14px;line-height:1.8;color:#293f30;margin:0 0 16px;}
+ .glossary-terms-intro{padding:34px 0 5px;border-top:1px solid #d2e1ce;margin-top:28px;}
+ .glossary-terms-intro h2{font-size:clamp(25px,2.8vw,36px);color:#194d2e;line-height:1.2;margin:0 0 12px;}
+ .glossary-terms-intro p:not(.glossary-section-kicker){font-size:14px;color:#546b56;line-height:1.8;max-width:850px;}
+ .glossary-meaning{border-left:3px solid #6fac75;padding:4px 0 3px 14px;margin-bottom:17px;}
+ .glossary-meaning strong{font-size:10px;font-weight:900;letter-spacing:.075em;color:#317144;}
+ .glossary-definition{font-size:15px;line-height:1.85;color:#293f30;margin:6px 0 0;}
  .glossary-example,.glossary-caution{border-top:1px solid #e5eae3;padding-top:11px;margin-top:10px;}
  .glossary-example strong,.glossary-caution strong{font-size:10px;font-weight:900;letter-spacing:.08em;color:#2f7146;}
  .glossary-caution strong{color:#9a6526;}
@@ -428,7 +442,7 @@ const queryTerms=(term:(typeof GLOSSARY_TERMS)[number])=>
    }
    for(const group of groups)group.hidden=![...group.querySelectorAll<HTMLElement>("[data-glossary-term]")].some(card=>!card.hidden);
    if(empty)empty.hidden=visible!==0;
-   if(status)status.textContent=locale==="tr"?visible+" terim gösteriliyor":visible+" terms shown";
+   if(status)status.textContent=locale==="tr"?visible+" açıklama gösteriliyor":visible+" explanations shown";
   });
  }
 </script>
