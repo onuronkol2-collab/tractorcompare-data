@@ -50,6 +50,28 @@ test("verified manufacturer host permissions do not authorize lookalike unrelate
  ])assert.equal(officialManufacturerSourceUrl({...ref,source_url:url,source_type:"manufacturer_specification"},brand),url);
  assert.equal(officialManufacturerSourceUrl({...ref,source_type:"manufacturer_specification",source_url:"https://kioti-uk.com.evil.example/brochure.pdf"},"Kioti"),null);
 });
+test("newly released official brochures show citations without opening shared CNH host broadly",()=>{
+ const official={...ref,source_type:"manufacturer_specification"};
+ const good=[
+   ["Landini","https://www.landini.it/wp-content/uploads/2017/11/flipbook-serie-2-ita-2017-cpy-2.pdf"],
+   ["Valtra","https://www.valtra.nl/content/dam/Brands/Valtra/en/Products/Brochures/2025/Valtra_Modelrange_brochure_2025_UK_screen-0201.pdf"],
+   ["SAME","https://www.same-tractors.com/media/308.8192.3.1-0_Dorado_Natural_EN_1.pdf"],
+   ["Versatile","https://www.versatile-ag.com/NA/downloads/brochure/Versatile-Brochure-Nemesis.pdf"],
+   ["STEYR","https://www.steyr-traktoren.com/en/agriculture/products/tractors/cervus-cvt"],
+   ["Steyr","https://cnhi-p-001-delivery.sitecorecontenthub.cloud/api/public/content/5f70203baa834372905d759fe9fd706f?v=fc8d3927"],
+   ["Steyr","https://cnhi-p-001-delivery.sitecorecontenthub.cloud/api/public/content/7eeca058f2bd4fe6892c36fcb39769a1?v=ebff5e26"],
+ ];
+ for(const [brand,url] of good) assert.equal(officialManufacturerSourceUrl({...official,source_url:url},brand),url);
+ for(const url of [
+   "https://cnhi-p-001-delivery.sitecorecontenthub.cloud/api/public/content/unknown-file?v=evil",
+   "https://cnhi-p-001-delivery.sitecorecontenthub.cloud.evil.example/api/public/content/5f70203baa834372905d759fe9fd706f?v=fc8d3927",
+   "https://www.valtra.nl.attacker.example/pdfs/tricky.pdf",
+   "https://www.same-tractors.com@attacker.example/official.pdf",
+ ]) assert.equal(officialManufacturerSourceUrl({...official,source_url:url},"Steyr"),null);
+ assert.equal(officialManufacturerSourceUrl({...official,source_url:good[5][1],evidence_text:null},"Steyr"),null);
+ assert.equal(officialManufacturerSourceUrl({...official,source_url:good[5][1],verified_at:null},"Steyr"),null);
+});
+
 test("all ten locales distinguish independent evidence from manufacturer confirmation",()=>{
  const model={tractor_id:"ls-j27",brand_name:"LS Tractor",model_name:"J27",variant:"GEAR",market:"global",model_year:null,horsepower:27,
  brand_country:"South Korea",brand_website_url:"https://www.lstractor.com/",slug:"ls-tractor-j27-fixture",

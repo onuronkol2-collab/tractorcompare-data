@@ -613,7 +613,13 @@ const approvedManufacturerHosts: Record<string, string[]> = {
   "massey ferguson": ["masseyferguson.com"],
   "ls tractor": ["lstractor.com", "lstractorusa.com"],
   "mccormick": ["mccormick-tractors.com"],
-  "landini": ["landini-tractors.com"],
+  "landini": ["landini-tractors.com", "landini.it"],
+  "valtra": ["valtra.com", "valtra.nl"],
+  "same": ["same-tractors.com"],
+  "versatile": ["versatile-ag.com"],
+  "steyr": ["steyr-traktoren.com"],
+  "mahindra": ["mahindratractor.com"],
+  "antonio carraro": ["antoniocarraro.it"],
   "sonalika": ["international.sonalika.com"],
   "yanmar": ["yanmar.com"],
   "swaraj": ["swarajtractors.com"],
@@ -631,6 +637,12 @@ const approvedExactManufacturerDocuments: Record<string, string[]> = {
   ],
   "tym": [
     "https://tym-new.euwest01.umbraco.io/media/b01j3nc1/f36-produktbroschu-re.pdf",
+  ],
+  // Original STEYR manufacturer brochures hosted on a shared CNH content hub:
+  // approve exact documents only, NEVER trust the entire CDN hostname.
+  "steyr": [
+    "https://cnhi-p-001-delivery.sitecorecontenthub.cloud/api/public/content/7eeca058f2bd4fe6892c36fcb39769a1?v=ebff5e26",
+    "https://cnhi-p-001-delivery.sitecorecontenthub.cloud/api/public/content/5f70203baa834372905d759fe9fd706f?v=fc8d3927",
   ],
 };
 
