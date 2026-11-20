@@ -86,7 +86,16 @@ jobs:
             process.exit(1);
           }
           if (response.status !== 200) {
-            console.error("GATEWAY_AUTH_REJECTED_HTTP_" + response.status);
+            const failure = await response.json().catch(() => ({}));
+            const code = String(failure?.error?.code ?? failure?.code ?? "");
+            const msg = String(failure?.error?.message ?? failure?.error ?? failure?.message ?? "");
+            if (/x-queue-secret|araştırma kuyruğu|queue.secret/i.test(msg)) {
+              console.error("QUEUE_SECRET_REJECTED: Supabase function rejected x-queue-secret.");
+            } else if (/jwt|token|invalid.*key/i.test(msg + " " + code)) {
+              console.error("JWT_REJECTED_BY_SUPABASE_GATEWAY.");
+            } else {
+              console.error("QUEUE_GATEWAY_REJECTED_HTTP_" + response.status + "_UNCLASSIFIED");
+            }
             process.exit(1);
           }
           const body = await response.json().catch(() => null);
