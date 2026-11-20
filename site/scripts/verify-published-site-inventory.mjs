@@ -65,13 +65,17 @@ export function verifyPublishedSiteInventory({
     "Missing "+locale+" model pages: "+slugs.length+" vs "+modelSlugs.length);
   check(slugs.every((slug,index)=>slug===modelSlugs[index]),
     "Model identity/slug mismatch in "+locale+" public catalogue");
-  const sitemapUrls=sitemapLocs.values();
-  let publishedUrls=0;
-  for(const url of sitemapUrls){
-   if(url.startsWith(origin+"/"+prefix+"tractors/"))publishedUrls++;
-  }
-  check(publishedUrls===modelSlugs.length,
-    "Only "+publishedUrls+" of "+modelSlugs.length+" "+locale+" model URLs appear in sitemap");
+  const modelUrlPrefix=origin+"/"+prefix+"tractors/";
+  const expectedModelUrls=new Set(slugs.map(slug=>modelUrlPrefix+slug+"/"));
+  // The catalogue index /tractors/ is NOT a model URL.
+  const actualModelUrls=[...sitemapLocs].filter(url=>
+    url.startsWith(modelUrlPrefix) && url!==modelUrlPrefix);
+  check(actualModelUrls.length===expectedModelUrls.size,
+    "Sitemap has "+actualModelUrls.length+" "+locale+" model URLs, expected "+expectedModelUrls.size);
+  for(const url of actualModelUrls)
+    check(expectedModelUrls.has(url),"Unexpected "+locale+" model URL in sitemap: "+url);
+  for(const url of expectedModelUrls)
+    check(sitemapLocs.has(url),"Published "+locale+" model is missing from sitemap: "+url);
   const sampleUrl=origin+"/"+prefix+"tractors/"+slugs[0]+"/";
   const sampleHtml=read(join(dist,prefix+"tractors",slugs[0],"index.html"));
   check(sampleHtml.includes('rel="canonical" href="'+sampleUrl+'"'),
