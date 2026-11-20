@@ -27,4 +27,18 @@ for(const file of [".node-version","site/.node-version"]){
 }
 if(!existsSync(resolve(root,"site/scripts/production-release-gate.mjs")))
  fail("Missing production release gate.");
+const repoLock=load("package-lock.json"),siteLock=load("site/package-lock.json");
+for(const [label,lock,name] of [
+ ["root",repoLock,"tractorvs-repository"],["site",siteLock,"tractorvs-site"]
+]){
+ if(lock.name!==name||lock.lockfileVersion!==3||!lock.packages)
+  fail(label+" npm lockfile missing, invalid or created with wrong npm version");
+ for(const [pkg,version] of [["astro","7.4.12"],["wrangler","4.162.0"]]){
+  const resolved=lock.packages["node_modules/"+pkg]?.version;
+  if(resolved!==version)fail(label+" resolved "+pkg+" version drift: "+resolved);
+ }
+ if(!lock.packages["node_modules/@astrojs/sitemap"]?.integrity)
+  fail(label+" sitemap dependency lock missing integrity verification");
+}
+console.log("[TractorVS] Pinned npm v10 root and Cloudflare site lockfiles validated");
 console.log("[TractorVS] CI Cloudflare build contract: both configs match, pinned Node/npm, safe release commands present");
