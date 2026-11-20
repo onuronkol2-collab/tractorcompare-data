@@ -31,10 +31,10 @@ jobs:
     # A fork PR never receives the translation secrets.
     if: github.repository == 'onuronkol2-collab/tractorcompare-data' && github.ref == 'refs/heads/feat/tractor-encyclopedia-10-language-editorial-20261120'
     runs-on: ubuntu-latest
-    timeout-minutes: 100
+    timeout-minutes: 45
     strategy:
       fail-fast: false
-      max-parallel: 2
+      max-parallel: 1
       matrix:
         locale: [zh, hi, pt-br, fr, de, ru, ja, es]
     steps:
@@ -47,7 +47,7 @@ jobs:
           TRACTORVS_SUPABASE_ANON_JWT: ${{ secrets.TRACTORVS_SUPABASE_ANON_JWT }}
           TRACTORVS_QUEUE_SECRET: ${{ secrets.TRACTORVS_QUEUE_SECRET }}
           EDU_TARGET_LOCALE: ${{ matrix.locale }}
-          EDU_MAX_GEMINI_CALLS: "55"
+          EDU_MAX_GEMINI_CALLS: "10"
           EDU_BATCH_SIZE: "5"
         run: node --experimental-strip-types site/scripts/translate-tractor-education.mjs
       - name: Upload draft for editorial review even on translation failure
