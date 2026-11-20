@@ -5,6 +5,9 @@ on:
     paths:
       - ".github/workflows/mobile-performance-audit.yml"
   workflow_dispatch:
+  # Free weekly mobile baseline, Monday 07:37 Europe/Istanbul (04:37 UTC).
+  schedule:
+    - cron: "37 4 * * 1"
 
 permissions:
   contents: read
