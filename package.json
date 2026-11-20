@@ -9,6 +9,10 @@
     "site"
   ],
   "scripts": {
-    "build": "npm run build --workspace=tractorvs-site"
-  }
+    "build": "npm run build --workspace=tractorvs-site",
+    "build:production": "npm run build:production --workspace=tractorvs-site",
+    "deploy:verified": "npm run deploy:verified --workspace=tractorvs-site",
+    "build:cloudflare": "npm run build:cloudflare --workspace=tractorvs-site"
+  },
+  "packageManager": "npm@10.9.2"
 }

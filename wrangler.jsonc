@@ -8,7 +8,9 @@
     "binding": "ASSETS",
     "run_worker_first": [
       "/",
-      "/language/*"
+      "/language/*",
+      "/api/visitor-country",
+      "/images/tractors/*"
     ]
   },
   "observability": {
