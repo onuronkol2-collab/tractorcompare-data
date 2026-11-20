@@ -11,7 +11,7 @@ for(const [lang,file] of Object.entries(paths)){
  const html=readFileSync(root+file,"utf8");
  assert.match(html,new RegExp(`<html[^>]+lang="${lang}"`),`${lang} lang`);
  const count=(html.match(/class="glossary-card"/g)||[]).length;
- assert.equal(count,89,`${lang} SSR must render 89 substantive term cards`);
+ assert.equal(count,96,`${lang} SSR must render 96 substantive term cards`);
  assert.match(html,/https:\/\/www\.oecd\.org\/en\/topics\/tractors\.html/);
  assert.match(html,/https:\/\/tractortestlab\.unl\.edu\//);
  assert.match(html,/\/images\/tractors\/[^"]+\.jpg/,"only approved first-party photos are in markup");
@@ -36,4 +36,4 @@ if(mode==="indexable"){
   assert.ok(xml.includes(url),`missing glossary in sitemap: ${url}`);
  }
 }
-console.log(`TractorVS glossary: 89 SSR terms, two original locales, ${mode} SEO checks passed`);
+console.log(`TractorVS glossary: 96 SSR terms, two original locales, ${mode} SEO checks passed`);
