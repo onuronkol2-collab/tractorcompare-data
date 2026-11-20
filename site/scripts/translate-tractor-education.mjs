@@ -13,6 +13,7 @@ import {TRACTOR_PART_ROWS,TRACTOR_PART_SECTIONS} from "../src/lib/tractor-parts.
 import {TECHNICAL_DEEP_DIVES} from "../src/lib/tractor-technical-deep-dives.ts";
 import {TRACTOR_LEARNING_CASES} from "../src/lib/tractor-learning-cases.ts";
 import {EDUCATION_UI_SOURCE} from "../src/lib/tractor-education-ui.ts";
+import {TRACTOR_EDUCATION_TERMINOLOGY} from "../src/lib/tractor-education-terminology.ts";
 
 const target=process.env.EDU_TARGET_LOCALE;
 const langs=["zh","hi","pt-br","fr","de","ru","ja","es"];
@@ -25,7 +26,7 @@ const archiveDir=resolve("site/src/lib/education-draft-translations");
 const version=createHash("sha256").update(JSON.stringify({
  glossary:GLOSSARY_ROWS,glossarySections:GLOSSARY_SECTIONS,
  parts:TRACTOR_PART_ROWS,partSections:TRACTOR_PART_SECTIONS,
- articles:TECHNICAL_DEEP_DIVES, cases:TRACTOR_LEARNING_CASES, ui:EDUCATION_UI_SOURCE
+ articles:TECHNICAL_DEEP_DIVES, cases:TRACTOR_LEARNING_CASES, ui:EDUCATION_UI_SOURCE, terminology:TRACTOR_EDUCATION_TERMINOLOGY
 })).digest("hex");
 const batches={
  glossary:GLOSSARY_ROWS.map(r=>({id:r[1],english:{name:r[3],definition:r[5],example:r[7],caution:r[9]},turkish:{name:r[2],definition:r[4],example:r[6],caution:r[8]}})),
@@ -91,7 +92,7 @@ function checkBatch(request,received){
 async function translate(items){
  if(Date.now()>deadline)throw Error("Locale translation time budget exceeded");
  if(++calls>maxCalls)throw Error("Gemini call cap exceeded for "+target);
- const started=await post({action:"start",target,records:items});
+ const started=await post({action:"start",target,records:items,terminology:TRACTOR_EDUCATION_TERMINOLOGY[target]});
  if(!started.interaction_id)throw Error("Provider did not issue interaction ID");
  for(let n=0;n<135;n++){
   await delay(n<4?2000:3000);
