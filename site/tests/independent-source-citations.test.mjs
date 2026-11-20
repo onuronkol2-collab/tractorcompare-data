@@ -68,3 +68,20 @@ test("all ten locales distinguish independent evidence from manufacturer confirm
  assert.match(detail,/reviewedIndependentSourceUrl\(spec\)/);
  assert.match(detail,/INDEPENDENT_SOURCE_COPY\[lang\]\.label/);
 });
+
+test("original Belarus manufacturer brochure mirrored by a distributor is attributed only as historical third-party-hosted evidence",()=>{
+ const source_url="https://netetrade.com/media/mtw-holding---minsk-tractor-works/files/cb7a65db-f4fd-4c05-a33f-d0a827bbc2ba.pdf";
+ const spec={...ref,source_url,source_type:"independent_catalog",evidence_text:"Original Minsk Tractor Works catalogue printed page 5: Belarus 132N GX390 model specifications"};
+ assert.equal(specificationEvidenceLevel(spec),"third_party_reported");
+ assert.equal(reviewedIndependentSourceUrl(spec),source_url);
+ assert.equal(officialManufacturerSourceUrl(spec,"Belarus"),null);
+ for(const url of [
+  "http://netetrade.com/media/mtw-holding---minsk-tractor-works/files/cb7a65db-f4fd-4c05-a33f-d0a827bbc2ba.pdf",
+  "https://netetrade.com.evil.example/media/mtw-holding---minsk-tractor-works/files/cb7a65db-f4fd-4c05-a33f-d0a827bbc2ba.pdf",
+  "https://netetrade.com@evil.example/media/mtw-holding---minsk-tractor-works/files/cb7a65db-f4fd-4c05-a33f-d0a827bbc2ba.pdf",
+  "https://netetrade.com/media/mtw-holding---minsk-tractor-works/files/other.pdf",
+  source_url+"?untrusted=1",
+ ]) assert.equal(reviewedIndependentSourceUrl({...spec,source_url:url}),null);
+ assert.equal(reviewedIndependentSourceUrl({...spec,source_type:"manufacturer_specification"}),null);
+ assert.equal(reviewedIndependentSourceUrl({...spec,verified_at:null}),null);
+});

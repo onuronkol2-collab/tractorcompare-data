@@ -193,3 +193,27 @@ test("CNH shared content hub is allowlisted ONLY for the actual model-verified T
   assert.equal(officialManufacturerSourceUrl({...src, evidence_text:""}, "New Holland"), null);
   assert.equal(officialManufacturerSourceUrl(src, "Case IH"), null);
 });
+
+test("Yanmar official product specification is linkable only from verified original manufacturer URL",()=>{
+  const specimen={...official,
+    source_type:"official_product_specification",
+    source_url:"https://www.yanmar.com/tr/agri/products/tractor/sa222r/",
+    evidence_text:"Yanmar SA222,R model-specific specifications: Engine horsepower 22 HP",
+  };
+  assert.equal(specificationEvidenceLevel(specimen),"manufacturer_documented");
+  assert.equal(officialManufacturerSourceUrl(specimen,"Yanmar"),specimen.source_url);
+  for(const url of [
+    "https://www.yanmar.com.evil.example/tr/agri/products/tractor/sa222r/",
+    "https://www.yanmar.com@evil.example/tr/agri/products/tractor/sa222r/",
+    "http://www.yanmar.com/tr/agri/products/tractor/sa222r/",
+  ]) assert.equal(officialManufacturerSourceUrl({...specimen,source_url:url},"Yanmar"),null);
+  assert.equal(officialManufacturerSourceUrl({...specimen,verified_at:null},"Yanmar"),null);
+});
+
+test("Fendt verified official technical-data source type passes original-domain gate",()=>{
+  const specimen={...official,source_type:"official_technical_data",
+    source_url:"https://api.fendt.com/techdata/GB/en/1551551",
+    evidence_text:"724 Vario | Rated power 179 kW / 243 hp"};
+  assert.equal(officialManufacturerSourceUrl(specimen,"Fendt"),specimen.source_url);
+  assert.equal(officialManufacturerSourceUrl({...specimen,source_url:"https://api.fendt.com.evil.example/techdata/GB/en/1551551"},"Fendt"),null);
+});
