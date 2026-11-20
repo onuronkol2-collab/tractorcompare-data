@@ -58,7 +58,7 @@ export async function fingerprintPublicView({ jwt, fetchFn = fetch, maxRows = MA
     });
     requireOk(response,[200,206],"Anon-only public view");
     const range = String(response.headers.get("content-range")||"");
-    const match = range.match(/^(\\d+)-(\\d+)\\/(\\d+)$/);
+    const match = range.match(/^(\d+)-(\d+)\/(\d+)$/);
     if (!match) throw new Error("Missing exact PostgREST content range.");
     const start = Number(match[1]), end = Number(match[2]), total = Number(match[3]);
     if (!Number.isSafeInteger(total) || total<=0 || total>maxRows) throw new Error("Public catalogue size unexpectedly large or empty.");
@@ -73,7 +73,7 @@ export async function fingerprintPublicView({ jwt, fetchFn = fetch, maxRows = MA
       }
       if (row.spec_id != null && typeof row.spec_id !== "string") throw new Error("Spec ID is invalid.");
       models.add(row.tractor_id);
-      hash.update(JSON.stringify(row)+"\\n");
+      hash.update(JSON.stringify(row)+"\n");
       read++;
     }
     if (read >= total) {
@@ -97,7 +97,7 @@ export async function getRecordedSnapshot({token,fetchFn=fetch}) {
   if(typeof file.sha!=="string" || file.encoding!=="base64" || typeof file.content!=="string"){
     throw new Error("Untrustworthy repository snapshot response.");
   }
-  const record=JSON.parse(Buffer.from(file.content.replace(/\\s/g,""),"base64").toString("utf8"));
+  const record=JSON.parse(Buffer.from(file.content.replace(/\s/g,""),"base64").toString("utf8"));
   return {sha:file.sha,record};
 }
 export async function runPublicationSync({repo,ref,jwt,token,fetchFn=fetch,dryRun=false,now=new Date()}) {
@@ -108,7 +108,7 @@ export async function runPublicationSync({repo,ref,jwt,token,fetchFn=fetch,dryRu
     return {changed:false,committed:false,reason:"public_catalogue_unchanged",...latest};
   }
   if(dryRun)return {changed:true,committed:false,reason:"dry_run_no_commit",...latest};
-  const payload=JSON.stringify({...latest,generated_at:now.toISOString()},null,2)+"\\n";
+  const payload=JSON.stringify({...latest,generated_at:now.toISOString()},null,2)+"\n";
   const message="chore(site): sync public catalogue revision ("+latest.published_models+" models)";
   const request={message,branch:"main",content:Buffer.from(payload,"utf8").toString("base64")};
   if(stored.sha)request.sha=stored.sha;
@@ -134,8 +134,8 @@ export async function main(){
     result.published_models+"; public_rows="+result.public_rows+"; committed="+result.committed;
   console.log(line);
   if(process.env.GITHUB_STEP_SUMMARY){
-    appendFileSync(process.env.GITHUB_STEP_SUMMARY,"## Public catalogue revision\\n\\n- "+line+
-    "\\n- This Git commit requests a Cloudflare Git build; it does NOT prove a production deployment or Google indexing.\\n");
+    appendFileSync(process.env.GITHUB_STEP_SUMMARY,"## Public catalogue revision\n\n- "+line+
+    "\n- This Git commit requests a Cloudflare Git build; it does NOT prove a production deployment or Google indexing.\n");
   }
 }
 if(process.argv[1] && resolve(process.argv[1])===fileURLToPath(import.meta.url))await main();
