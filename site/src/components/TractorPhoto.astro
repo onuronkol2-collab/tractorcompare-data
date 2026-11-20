@@ -31,7 +31,7 @@ const label=tractorPhotoAlt(tractor,lang);
         srcset={photo.thumbUrl+" 480w, "+photo.displayUrl+" 960w"}
         sizes={mode==="hero"?"(max-width:760px) 100vw, 860px":"(max-width:680px) 100vw, 400px"}
         width={photo.width} height={photo.height} decoding="async"
-        loading={mode==="hero"&&index===0?"eager":"lazy"} alt={label+(photos.length>1?" — "+(index+1):"")}/>
+        loading={mode==="hero"&&index===0?"eager":"lazy"} fetchpriority={mode==="hero"&&index===0?"high":undefined} alt={label+(photos.length>1?" — "+(index+1):"")}/>
       <span class="tractor-photo-brandmark" aria-hidden="true">tractorvs.com</span>
       <span class="tractor-photo-zoom" aria-hidden="true">⤢</span>
     </button>
