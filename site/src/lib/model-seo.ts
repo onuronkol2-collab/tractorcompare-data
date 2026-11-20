@@ -28,7 +28,7 @@ const MODEL_COPY: Record<Locale, {
     specs:n=>`${n} yayımlanmış teknik özellik.`,
     empty:"Bu model için henüz teknik özellik yayımlanmadı.",
     power:hp=>`Motor gücü: ${hp} HP.`,
-    withSources:"Doğrulanmış üretici belgelerine kaynak bağlantıları sunulur.",
+    withSources:"Doğrulanmış üretici kaynaklarına bağlantılar sunulur.",
     withoutSources:"Bu model için henüz doğrulanmış üretici kaynağı bağlantısı bulunmuyor.",
     note:value=>`Varyant notu: ${value}.`
   },
@@ -36,7 +36,7 @@ const MODEL_COPY: Record<Locale, {
     specs:n=>`已收录 ${n} 项技术参数。`,
     empty:"此型号暂无已发布的技术参数。",
     power:hp=>`发动机功率：${hp} HP。`,
-    withSources:"已附上经核实的制造商资料链接。",
+    withSources:"已提供经核实的制造商来源链接。",
     withoutSources:"此型号目前没有已核实的制造商资料链接。",
     note:value=>`配置说明：${value}。`
   },
@@ -44,7 +44,7 @@ const MODEL_COPY: Record<Locale, {
     specs:n=>`${n} प्रकाशित तकनीकी विवरण उपलब्ध हैं।`,
     empty:"इस मॉडल के तकनीकी विवरण अभी प्रकाशित नहीं हुए हैं।",
     power:hp=>`इंजन पावर: ${hp} HP।`,
-    withSources:"सत्यापित निर्माता दस्तावेज़ों के लिंक उपलब्ध हैं।",
+    withSources:"सत्यापित निर्माता स्रोतों के लिंक उपलब्ध हैं।",
     withoutSources:"इस मॉडल के लिए सत्यापित निर्माता स्रोत का लिंक अभी उपलब्ध नहीं है।",
     note:value=>`वेरिएंट संबंधी टिप्पणी: ${value}।`
   },
@@ -52,7 +52,7 @@ const MODEL_COPY: Record<Locale, {
     specs:n=>`${n} especificações técnicas publicadas.`,
     empty:"Ainda não há especificações técnicas publicadas para este modelo.",
     power:hp=>`Potência do motor: ${hp} HP.`,
-    withSources:"Links para documentos do fabricante são fornecidos quando verificados.",
+    withSources:"Links para fontes do fabricante são fornecidos quando verificados.",
     withoutSources:"Não há links verificados de fontes do fabricante para este modelo.",
     note:value=>`Observação sobre a versão: ${value}.`
   },
@@ -60,7 +60,7 @@ const MODEL_COPY: Record<Locale, {
     specs:n=>`${n} caractéristiques techniques publiées.`,
     empty:"Aucune caractéristique technique n'est encore publiée pour ce modèle.",
     power:hp=>`Puissance moteur : ${hp} HP.`,
-    withSources:"Les documents constructeur sont liés lorsqu'ils ont été vérifiés.",
+    withSources:"Des liens vers les sources du constructeur sont fournis après vérification.",
     withoutSources:"Aucun lien constructeur vérifié n'est disponible pour ce modèle.",
     note:value=>`Précision sur la version : ${value}.`
   },
@@ -68,7 +68,7 @@ const MODEL_COPY: Record<Locale, {
     specs:n=>`${n} veröffentlichte technische Angaben.`,
     empty:"Für dieses Modell liegen noch keine veröffentlichten technischen Angaben vor.",
     power:hp=>`Motorleistung: ${hp} HP.`,
-    withSources:"Geprüfte Herstellerunterlagen sind verlinkt.",
+    withSources:"Verifizierte Herstellerquellen sind verlinkt.",
     withoutSources:"Für dieses Modell liegt derzeit kein geprüfter Herstellerquellen-Link vor.",
     note:value=>`Hinweis zur Ausführung: ${value}.`
   },
@@ -76,7 +76,7 @@ const MODEL_COPY: Record<Locale, {
     specs:n=>`Опубликовано технических характеристик: ${n}.`,
     empty:"Для этой модели пока нет опубликованных технических характеристик.",
     power:hp=>`Мощность двигателя: ${hp} HP.`,
-    withSources:"Проверенные документы производителя доступны по ссылкам.",
+    withSources:"Доступны ссылки на проверенные источники производителя.",
     withoutSources:"Для этой модели пока нет проверенной ссылки на источник производителя.",
     note:value=>`Примечание о комплектации: ${value}.`
   },
@@ -84,7 +84,7 @@ const MODEL_COPY: Record<Locale, {
     specs:n=>`公開済みの技術仕様は${n}項目です。`,
     empty:"このモデルの技術仕様はまだ公開されていません。",
     power:hp=>`エンジン出力：${hp} HP。`,
-    withSources:"確認済みメーカー資料へのリンクを掲載しています。",
+    withSources:"確認済みメーカー情報源へのリンクを掲載しています。",
     withoutSources:"確認済みメーカー資料へのリンクは現在ありません。",
     note:value=>`仕様上の注記：${value}。`
   },
@@ -92,7 +92,7 @@ const MODEL_COPY: Record<Locale, {
     specs:n=>`${n} especificaciones técnicas publicadas.`,
     empty:"Todavía no hay especificaciones técnicas publicadas para este modelo.",
     power:hp=>`Potencia del motor: ${hp} HP.`,
-    withSources:"Se incluyen enlaces a documentos del fabricante cuando están verificados.",
+    withSources:"Se incluyen enlaces a fuentes del fabricante cuando están verificadas.",
     withoutSources:"Este modelo aún no tiene enlaces verificados a fuentes del fabricante.",
     note:value=>`Nota sobre la variante: ${value}.`
   }
