@@ -6,6 +6,8 @@ on:
       - ".github/workflows/tractor-research-batch.yml"
       - "scripts/tractor-research-batch.mjs"
       - "scripts/tractor-research-batch.test.mjs"
+      - "scripts/tractor-research-continuation.mjs"
+      - "scripts/tractor-research-continuation.test.mjs"
       - "supabase/docs/bulk-research-runbook.md"
   workflow_dispatch:
     inputs:
@@ -18,6 +20,17 @@ on:
           - "4"
           - "8"
         default: "1"
+        required: true
+      remaining_cycles:
+        description: "Further runs triggered immediately after successful completion; zero disables chaining"
+        type: choice
+        options:
+          - "0"
+          - "1"
+          - "2"
+          - "4"
+          - "8"
+        default: "2"
         required: true
 
 permissions:
@@ -37,13 +50,16 @@ jobs:
         with:
           node-version: "22"
       - name: Test queue caps, authentication and failure handling
-        run: node --test scripts/tractor-research-batch.test.mjs
+        run: node --test scripts/tractor-research-batch.test.mjs scripts/tractor-research-continuation.test.mjs
 
   process:
     if: github.event_name == 'workflow_dispatch'
     needs: test
     runs-on: ubuntu-latest
     timeout-minutes: 30
+    permissions:
+      contents: read
+      actions: write
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -63,3 +79,10 @@ jobs:
           path: tractor-research-progress.json
           if-no-files-found: warn
           retention-days: 14
+      - name: Dispatch next bounded research run immediately after success
+        if: success() && github.event_name == 'workflow_dispatch'
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          TRACTORVS_BATCHES: ${{ github.event.inputs.batches }}
+          TRACTORVS_REMAINING_CYCLES: ${{ github.event.inputs.remaining_cycles }}
+        run: node scripts/tractor-research-continuation.mjs
