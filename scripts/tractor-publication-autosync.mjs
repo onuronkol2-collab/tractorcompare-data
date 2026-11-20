@@ -100,6 +100,18 @@ export async function getRecordedSnapshot({token,fetchFn=fetch}) {
   const record=JSON.parse(Buffer.from(file.content.replace(/\s/g,""),"base64").toString("utf8"));
   return {sha:file.sha,record};
 }
+/** Require a manual investigation before recording a >5% model withdrawal.
+ * Prevents an accidental mass-unpublish from triggering a bad static rebuild.
+ */
+export function guardMassUnpublish(previous,current){
+ const before=previous?.published_models;
+ if(!Number.isSafeInteger(before)||before<1)return;
+ const floor=Math.ceil(before*0.95);
+ if(current.published_models<floor)throw new Error(
+  "Published catalogue regression blocked: "+before+" -> "+current.published_models+
+  " models (floor "+floor+"). Review the Supabase published-status changes before a new site commit.");
+}
+
 export async function runPublicationSync({repo,ref,jwt,token,fetchFn=fetch,dryRun=false,now=new Date()}) {
   validateScope(repo,ref);
   const latest=await fingerprintPublicView({jwt,fetchFn});
@@ -107,6 +119,7 @@ export async function runPublicationSync({repo,ref,jwt,token,fetchFn=fetch,dryRu
   if(stored.record?.fingerprint===latest.fingerprint) {
     return {changed:false,committed:false,reason:"public_catalogue_unchanged",...latest};
   }
+  guardMassUnpublish(stored.record,latest);
   if(dryRun)return {changed:true,committed:false,reason:"dry_run_no_commit",...latest};
   const payload=JSON.stringify({...latest,generated_at:now.toISOString()},null,2)+"\n";
   const message="chore(site): sync public catalogue revision ("+latest.published_models+" models)";

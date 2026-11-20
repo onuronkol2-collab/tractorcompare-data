@@ -2,7 +2,7 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import {
   REPO,SNAPSHOT_PATH,validateScope,validateAnon,fingerprintPublicView,
-  runPublicationSync,
+  runPublicationSync,guardMassUnpublish,
 } from "./tractor-publication-autosync.mjs";
 
 const jwt="e30."+Buffer.from(JSON.stringify({role:"anon"})).toString("base64url")+".sig";
@@ -122,4 +122,13 @@ test("fingerprint pagination handles 500+ row public views without skipping",asy
   const result=await fingerprintPublicView({jwt,fetchFn:mock});
   assert.equal(result.public_rows,501);
   assert.equal(result.published_models,2);
+});
+test("mass-unpublish guard blocks unintended static site rollbacks",async()=>{
+ assert.doesNotThrow(()=>guardMassUnpublish({published_models:172},{published_models:164}));
+ assert.throws(()=>guardMassUnpublish({published_models:172},{published_models:163}),
+  /Published catalogue regression blocked/);
+ const mock=fakeApi({prior:{fingerprint:"old",published_models:200,source:"anon_public_view"}});
+ await assert.rejects(runPublicationSync({...base,fetchFn:mock.fetchFn}),/regression blocked/);
+ assert.deepEqual(mock.calls,["supabase:GET","github:GET"],
+   "A regression must not create a GitHub release commit");
 });
