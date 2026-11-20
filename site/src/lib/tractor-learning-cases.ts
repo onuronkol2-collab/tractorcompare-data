@@ -36,7 +36,7 @@ export const TRACTOR_LEARNING_CASES=[
   id:"hydraulic-flow-vs-pressure",termId:"hydraulic-flow",
   title:{tr:"Kepçenin yavaş hareket etmesi basıncın düşük olduğu anlamına mı gelir?",en:"Does a slow loader mean hydraulic pressure is low?"},
   situation:{tr:"Bir traktörde kepçe yavaş kalkıyor. Katalogda yüksek hidrolik basınç yazdığı için bunun imkânsız olduğunu düşünebilirsiniz.",
-   en:"A loader raises slowly even though the brochure lists high hydraulic pressure."},
+   en:"A front loader raises slowly even though the brochure lists high hydraulic pressure. The operator wonders whether the pressure figure is wrong."},
   explanation:{tr:"Yağ debisi, bir dakikada hareket eden yağ miktarıdır; basınç ise silindirde oluşabilecek kuvvetle ilgilidir. Hareket hızı, kullanılabilir debiye ve silindir boyutuna bağlıdır. Basıncın yüksek olması tek başına hızlı hareket demek değildir.",
    en:"Flow describes how much oil moves per minute; pressure relates to the force a cylinder can produce. Movement speed also depends on available flow and cylinder size. High pressure alone does not guarantee quick movement."},
   remember:{tr:"Sorunu tek veriden teşhis etmeyin. Yağ kaçağı veya yüksek basınçlı hortumları elle kontrol etmeyin; güvenli servis talimatlarını izleyin.",
@@ -45,7 +45,7 @@ export const TRACTOR_LEARNING_CASES=[
  {
   id:"hot-engine-not-just-radiator",termId:"cooling",
   title:{tr:"Motor harareti artınca sorun kesin radyatör müdür?",en:"Does a hot engine always mean the radiator is faulty?"},
-  situation:{tr:"Uzun süren işte hararet göstergesi yükseliyor. İlk akla gelen parça radyatör oluyor.",
+  situation:{tr:"Uzun süren tarla işinde hararet göstergesi yükseliyor. Sürücü hemen radyatörün bozulduğunu düşünüyor.",
    en:"The temperature gauge rises during a long field task. You may immediately suspect the radiator."},
   explanation:{tr:"Radyatör ısıyı dışarı verir; fan, devirdaim pompası, termostat, soğutma sıvısı ve hava akışı da bu sürece katkı sağlar. Tek bir belirti, arızanın hangi parçada olduğunu kanıtlamaz.",
    en:"The radiator releases heat, but the fan, coolant pump, thermostat, coolant level and airflow also matter. A single symptom does not identify the failed component."},
