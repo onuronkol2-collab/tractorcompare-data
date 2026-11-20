@@ -28,3 +28,28 @@ Existing approved image assets are externally hosted licensed photographs.
 Site-hosted renditions are a future improvement, once each copyright condition is
 satisfied and correct attribution is retained. Google image indexing and rankings
 are never guaranteed.
+
+## Daily evidence discovery and independent verification
+
+The repository workflow `.github/workflows/batch-photo-research.yml` now
+executes **every day at 04:15 UTC** (07:15 Europe/Istanbul), in addition to
+authorized manual starts and the one-time main-branch bootstrap on merge.
+It collects photo-candidate evidence for the historical model archive and
+the live public model catalogue, storing machine-readable JSON and CSV as
+30-day GitHub Actions artifacts. PR validation runs only copyright and
+model-matching unit tests, not a full external image crawl.
+
+**Discovery is not publication.** Wikimedia Commons metadata and an exact
+file-title match are only preliminary checks. Before a new photo is publicly
+added to `site/src/lib/tractor-photos.ts` or
+`site/src/lib/historical-licensed-photos.ts`:
+- Match brand, model and visible equipment; mark configuration differences.
+- Inspect the original file page, author, license version and any additional
+  permission notices. A manufacturer's public product photo is NOT an
+  unrestricted redistribution license.
+- Keep creator/source/license attribution, full-screen display, SEO ImageObject
+  metadata and stable first-party image URLs.
+- Never set `rights_verified_at` or `image_asset_url` in the database
+  simply because an image appeared on a public product page.
+- Do not disclose unpublished tractor identities via public GitHub artifacts;
+  the public-photo sweep uses the published sitemap only.
