@@ -41,7 +41,7 @@ export const FORUM_TEXT:Record<Locale,Copy>={
  name:"社区",heading:"拖拉机问答、维修与车主经验",intro:"交流真实机型、保养维修及使用经验。新内容经审核后公开。",
  empty:"暂无审核通过的讨论。欢迎提交第一个有价值的问题。",search:"搜索讨论",all:"全部主题",compose:"发表主题",title:"主题标题",body:"详细描述问题或使用经验",
  category:"主题类别",model:"相关拖拉机",noModel:"不指定机型",
- consent:"我同意将帖子选择性地翻译为其他语言；不同意也可以参与。",submit:"提交审核",submitReply:"提交回复审核",reply:"撰写有帮助的回复",replies:"回复",
+ consent:"我自愿同意使用人工智能将帖子翻译成其他语言；不同意也可以参与。",submit:"提交审核",submitReply:"提交回复审核",reply:"撰写有帮助的回复",replies:"回复",
  email:"电子邮箱",sendLink:"发送登录邮件",otp:"邮件验证码（如有）",verify:"验证代码",login:"登录后发帖",logout:"退出登录",
  sent:"邮件已发送。请点击登录链接，或输入邮件中的验证码。",pending:"已提交审核，批准前不会公开。",
  authRequired:"请先使用邮箱登录。",signinNote:"邮箱登录需要正确的邮件服务与回调网址设置。",
