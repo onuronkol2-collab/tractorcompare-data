@@ -1,9 +1,14 @@
 name: TractorVS batch photo research
 on:
   workflow_dispatch:
-  # Fridays 07:15 Europe/Istanbul (04:15 UTC): all historical + current public identities.
+  # Daily at 07:15 Europe/Istanbul (04:15 UTC): historical + all public models.
   schedule:
-    - cron: "15 4 * * 5"
+    - cron: "15 4 * * *"
+  # Runs once after this schedule change is merged; CI checks PRs separately.
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/batch-photo-research.yml"
   pull_request:
     paths:
       - ".github/workflows/batch-photo-research.yml"
@@ -16,8 +21,25 @@ on:
       - "site/tests/photo-*.test.mjs"
 permissions:
   contents: read
+
+concurrency:
+  group: tractorvs-all-model-photo-research
+  cancel-in-progress: false
+
 jobs:
+  validate_photo_research:
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22.23.4"
+      - name: Validate model identity and image license checks without downloading all photos
+        run: node --test site/tests/photo-*.test.mjs
   research_all_models:
+    if: github.event_name != 'pull_request'
     runs-on: ubuntu-latest
     timeout-minutes: 25
     steps:
