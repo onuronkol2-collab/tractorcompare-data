@@ -48,6 +48,8 @@ Cloudflare, Build komutunu belirtilen root directory içinde çalıştırır. `s
 
 1. Önce GitHub **Actions → Site build validation** sonucunda güncel `main` commit'inin **yeşil** olduğunu doğrulayın.
 2. Cloudflare **Settings → Build** alanlarını yukarıdaki gibi kaydedin. Yeni en güncel `main` sürümü için **Deployments → View Build History** üzerinden build tetikleyin veya bağlantılı yeni commit derlemesini izleyin. Beş günlük eski build'i aynı kod sanıp tekrar denemeyin.
+**Yeni ayarlar için doğrulama notu (20 Kasım 2026):** Cloudflare'ın eski Build kayıtları eski komutları göstermeye devam eder. Yeni komutların devreye girdiği, yalnızca yeni ayarlar kaydedildikten sonra **yeni main commit'i için oluşturulan** derlemenin Build settings bölümünde `npm run build:cloudflare` / `npm run deploy:verified` göründüğünde kanıtlanır. Eski başarılı build'i yeniden denemek bu doğrulamayı yapmaz.
+
 3. Build logunda `[TractorVS] Production bundle has passed all release checks` ve `Production postflight OK` arayın. Hata varsa hangi kontrolün yayınlamayı durdurduğunu log bildirir.
 4. **Production Active Deployment** sürümünün yeni sürüm olduğundan emin olun. Yalnızca `Build successful` yazması yetmez.
 5. Canlı olarak `https://tractorvs.com/`, `/tr/`, `/tractors/`, `/tr/tractors/`, `/tr/guides/tractor-technical-terms/`, `/tr/guides/pto-and-power-take-off/`, `/robots.txt`, `/sitemap-index.xml`, `/image-sitemap.xml` ve en az iki gerçek model sayfasını açın. Fotoğraf proxy URL'lerinin döndüğünü kontrol edin.
