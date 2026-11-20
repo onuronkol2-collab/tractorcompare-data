@@ -71,7 +71,7 @@ const summaryItems = [
       <strong>{t(lang,"manufacturerDiscrepancy")}</strong>
       {manufacturerDiscrepancies.map((note)=><p>{note}</p>)}
     </aside>}
-    {(lang==="en"||lang==="tr") && <a class="model-spec-glossary-banner" href={localizedPath(lang,"/guides/tractor-technical-terms/")}><strong>{lang==="tr"?"Teknik terimler size ne anlatıyor?":"What do these technical terms mean?"}</strong><span>{lang==="tr"?"63 terimi örneklerle öğrenin; özellik adlarının yanındaki ? bağlantısından doğrudan açıklamaya gidin.":"Understand 63 terms with examples; the ? by each linked specification opens its definition."} ↗</span></a>}
+    {(lang==="en"||lang==="tr") && <a class="model-spec-glossary-banner" href={localizedPath(lang,"/guides/tractor-technical-terms/")}><strong>{lang==="tr"?"Teknik terimler size ne anlatıyor?":"What do these technical terms mean?"}</strong><span>{lang==="tr"?"Teknik terimleri örneklerle öğrenin; özellik adlarının yanındaki ? bağlantısından doğrudan açıklamaya gidin.":"Understand technical terms with examples; the ? by each linked specification opens its definition."} ↗</span></a>}
     {groups.length>0?<div class="model-spec-groups">{groups.map((group)=>
       <section class="model-spec-group"><h3>{group.label}</h3><div class="model-spec-grid">
         {group.specifications.map((spec)=><article class="model-spec-card">
