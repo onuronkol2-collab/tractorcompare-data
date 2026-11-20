@@ -165,3 +165,7 @@ npx wrangler deploy --dry-run --outdir .wrangler-dry-run
 ```
 
 After deploying, verify stable canonical root for humans and crawlers, explicit language preference, all ten catalogues, direct model links, comparison behavior, and canonical/alternate tags when indexing is enabled. If the deployment is configured to use a custom build command, ensure the Worker still deploys with the updated root or `site/` Wrangler file.
+
+## Safe Cloudflare production build and rollback (2026-11-20)
+
+Cloudflare Workers Builds **must use root directory `site`**, production build command `npm run build:cloudflare`, production deploy command `npm run deploy:verified`, and proper BUILD variables. These scripts refuse to publish a missing/unindexed/undersized catalogue and keep non-main previews noindex. **Full Turkish setup, recovery and rollback:** [Cloudflare release recovery](docs/CLOUDFLARE_RELEASE_RECOVERY_TR.md).
