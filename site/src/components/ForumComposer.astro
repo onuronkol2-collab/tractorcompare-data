@@ -1,0 +1,217 @@
+---
+import {forumText as ft,FORUM_CATEGORY_KEYS} from "../lib/forum-i18n.ts";
+import {publicForumClientConfig} from "../lib/forum.ts";
+import {getPublicCatalog} from "../lib/catalog.ts";
+import type {Locale} from "../lib/locales.ts";
+interface Props {lang:Locale; mode:"topic"|"reply"; topicId?:string}
+const {lang,mode,topicId}=Astro.props;
+const cfg=publicForumClientConfig();
+const catalogue=mode==="topic" ? (await getPublicCatalog()).tractors : [];
+const choices=[...catalogue].sort((a,b)=>
+ a.brand_name.localeCompare(b.brand_name)||a.model_name.localeCompare(b.model_name));
+const browserConfig=JSON.stringify(cfg?{url:cfg.url,key:cfg.key,lang,mode,topicId:topicId||null}:null);
+const strings=JSON.stringify({
+ pending:ft(lang,"pending"),sent:ft(lang,"sent"),authRequired:ft(lang,"authRequired"),
+ loading:ft(lang,"loading"),signinNote:ft(lang,"signinNote")
+});
+---
+<section class="community-composer" data-forum-composer
+ data-forum-config={browserConfig} data-forum-messages={strings}>
+ <h2>{mode==="topic"?ft(lang,"compose"):ft(lang,"reply")}</h2>
+ {cfg ? <>
+  <div class="forum-auth">
+    <form data-forum-email autocomplete="on">
+      <label>{ft(lang,"email")}
+       <input type="email" name="email" required autocomplete="email" maxlength="254" placeholder="name@example.com"/>
+      </label>
+      <button type="submit">{ft(lang,"sendLink")}</button>
+    </form>
+    <form data-forum-verify hidden>
+      <label>{ft(lang,"otp")}
+        <input type="text" name="code" inputmode="numeric" pattern="[0-9]{6,8}" maxlength="8" minlength="6" autocomplete="one-time-code"/>
+      </label>
+      <button type="submit">{ft(lang,"verify")}</button>
+    </form>
+    <button type="button" data-forum-logout hidden>{ft(lang,"logout")}</button>
+  </div>
+  <form data-forum-post hidden>
+    {mode==="topic"&&<>
+     <label>{ft(lang,"title")}
+      <input type="text" name="title" minlength="12" maxlength="160" required/>
+     </label>
+     <label>{ft(lang,"category")}
+      <select name="category" required>
+       {FORUM_CATEGORY_KEYS.map(key=><option value={key}>{ft(lang,key)}</option>)}
+      </select>
+     </label>
+     <label>{ft(lang,"model")}
+      <select name="tractor_id" data-forum-tractor>
+       <option value="">{ft(lang,"noModel")}</option>
+       {choices.map(t=><option value={t.tractor_id}>{t.brand_name} {t.model_name}{t.variant?" · "+t.variant:""}</option>)}
+      </select>
+     </label>
+    </>}
+    <label>{mode==="topic"?ft(lang,"body"):ft(lang,"reply")}
+      <textarea name="body" required minlength={mode==="topic"?40:10}
+       maxlength={mode==="topic"?12000:6000} rows={mode==="topic"?7:4}></textarea>
+    </label>
+    <label class="forum-checkbox">
+      <input type="checkbox" name="translation_consent"/>
+      <span>{ft(lang,"consent")}</span>
+    </label>
+    <button type="submit">{mode==="topic"?ft(lang,"submit"):ft(lang,"submitReply")}</button>
+  </form>
+  <p class="forum-guidelines">{ft(lang,"guidelines")}</p>
+  <p class="forum-message" data-forum-status role="status" aria-live="polite"></p>
+ </> : <p>{ft(lang,"signinNote")}</p>}
+</section>
+<style>
+.community-composer{margin:34px 0;border:1px solid #b9d8bf;padding:clamp(16px,3vw,28px);border-radius:17px;background:#f3faf1;color:#264a33}
+.community-composer h2{font-size:clamp(20px,2.5vw,26px);color:#195232;margin:0 0 17px}
+.community-composer form{display:grid;gap:13px;margin:0 0 18px}
+.community-composer label{display:grid;gap:8px;font-size:14px;font-weight:750;color:#2a5237}
+.community-composer input:not([type="checkbox"]),.community-composer select,.community-composer textarea{width:100%;max-width:100%;min-height:43px;border:1px solid #abc6ac;border-radius:10px;background:white;color:#243e2b;padding:11px 12px;font:inherit}
+.community-composer textarea{resize:vertical;line-height:1.6}
+.community-composer button{display:inline-flex;justify-content:center;align-items:center;padding:12px 19px;min-height:44px;border:0;border-radius:10px;background:#245e3b;color:white;cursor:pointer;font:inherit;font-weight:800;max-width:max-content}
+.community-composer button:hover{background:#194b2d}
+.community-composer button:disabled{opacity:.64;cursor:wait}
+.community-composer input:focus-visible,.community-composer textarea:focus-visible,.community-composer select:focus-visible,.community-composer button:focus-visible{outline:3px solid #83bc8a;outline-offset:2px}
+.community-composer .forum-checkbox{display:flex;flex-direction:row;align-items:start;gap:11px;font-size:13px;font-weight:500;line-height:1.6}
+.community-composer .forum-checkbox input{margin-top:4px;flex:none;width:17px;height:17px;accent-color:#22673c}
+.forum-guidelines{color:#516859;font-size:13px;line-height:1.65}
+.forum-message{font-size:14px;line-height:1.6;overflow-wrap:anywhere;font-weight:700;color:#25553b}
+.community-composer [hidden]{display:none!important}
+</style>
+<script>
+type FormContainer=HTMLElement & {dataset:DOMStringMap};
+const widgets=document.querySelectorAll<FormContainer>("[data-forum-composer]");
+for(const widget of widgets){
+ const cfg=JSON.parse(widget.dataset.forumConfig||"null") as
+   {url:string;key:string;lang:string;mode:"topic"|"reply";topicId:string|null}|null;
+ if(!cfg)continue;
+ const copy=JSON.parse(widget.dataset.forumMessages||"{}") as Record<string,string>;
+ const el=<T extends HTMLElement>(selector:string)=>widget.querySelector<T>(selector);
+ const authForm=el<HTMLFormElement>("[data-forum-email]");
+ const verifyForm=el<HTMLFormElement>("[data-forum-verify]");
+ const postForm=el<HTMLFormElement>("[data-forum-post]");
+ const logout=el<HTMLButtonElement>("[data-forum-logout]");
+ const message=el<HTMLElement>("[data-forum-status]");
+ const tokenKey="tractorvs_forum_access";
+ const header=(token?:string)=>({
+  apikey:cfg.key,"Content-Type":"application/json",
+  ...(token?{Authorization:"Bearer "+token}:{})
+ });
+ let token="";
+ let email="";
+ const msg=(text:string)=>{if(message)message.textContent=text};
+ function saveSession(jwt:string){
+  token=jwt;
+  try{sessionStorage.setItem(tokenKey,jwt)}catch{}
+ }
+ function setLogin(loggedIn:boolean){
+  if(postForm)postForm.hidden=!loggedIn;
+  if(authForm)authForm.hidden=loggedIn;
+  if(verifyForm)verifyForm.hidden=true;
+  if(logout)logout.hidden=!loggedIn;
+ }
+ async function verifySession(jwt:string):Promise<boolean>{
+  if(!jwt)return false;
+  try{
+   const r=await fetch(cfg.url+"/auth/v1/user",{
+    headers:{apikey:cfg.key,Authorization:"Bearer "+jwt},signal:AbortSignal.timeout(12000)
+   });
+   if(!r.ok)throw new Error("expired");
+   const data=await r.json();
+   if(typeof data?.id!=="string")throw new Error("invalid");
+   saveSession(jwt);setLogin(true);return true;
+  }catch{return false}
+ }
+ const hash=new URLSearchParams(location.hash.replace(/^#/,""));
+ const fromLink=hash.get("access_token");
+ if(fromLink){
+  history.replaceState(null,"",location.pathname+location.search);
+  verifySession(fromLink).then(ok=>{if(!ok)msg(copy.authRequired||"Sign in required")});
+ }else{
+  try{verifySession(sessionStorage.getItem(tokenKey)||"").then(ok=>{if(!ok)setLogin(false)})}
+  catch{setLogin(false)}
+ }
+ authForm?.addEventListener("submit",async ev=>{
+  ev.preventDefault();
+  const input=authForm.elements.namedItem("email") as HTMLInputElement|null;
+  email=input?.value.trim()||"";
+  if(!email||email.length>254)return;
+  const button=authForm.querySelector<HTMLButtonElement>("button");
+  if(button)button.disabled=true;msg(copy.loading||"...");
+  try{
+   const callback=new URL(location.pathname,location.origin).toString();
+   const res=await fetch(cfg.url+"/auth/v1/otp?redirect_to="+encodeURIComponent(callback),{
+    method:"POST",headers:header(),body:JSON.stringify({email,create_user:true}),
+    signal:AbortSignal.timeout(15000)
+   });
+   if(!res.ok)throw new Error("Email sign-in unavailable ("+res.status+")");
+   msg(copy.sent||"Email sent");
+   if(verifyForm)verifyForm.hidden=false;
+  }catch(e){msg((e as Error).message+" · "+(copy.signinNote||""))}
+  finally{if(button)button.disabled=false}
+ });
+ verifyForm?.addEventListener("submit",async ev=>{
+  ev.preventDefault();
+  const code=(verifyForm.elements.namedItem("code") as HTMLInputElement|null)?.value.trim()||"";
+  if(!/^[0-9]{6,8}$/.test(code)||!email){msg(copy.authRequired||"Sign in required");return}
+  msg(copy.loading||"...");
+  try{
+   const res=await fetch(cfg.url+"/auth/v1/verify",{
+    method:"POST",headers:header(),body:JSON.stringify({email,token:code,type:"email"}),
+    signal:AbortSignal.timeout(15000)
+   });
+   if(!res.ok)throw new Error("Email code rejected ("+res.status+")");
+   const data=await res.json();
+   if(!await verifySession(data.access_token))throw new Error("Could not establish a session.");
+   msg("");
+  }catch(e){msg((e as Error).message)}
+ });
+ logout?.addEventListener("click",()=>{
+  const existing=token;token="";try{sessionStorage.removeItem(tokenKey)}catch{}
+  setLogin(false);msg("");
+  if(existing)fetch(cfg.url+"/auth/v1/logout",{method:"POST",headers:header(existing)}).catch(()=>{});
+ });
+ const tractor=el<HTMLSelectElement>("[data-forum-tractor]");
+ const preselected=new URLSearchParams(location.search).get("tractor");
+ if(tractor&&preselected&&[...tractor.options].some(x=>x.value===preselected))tractor.value=preselected;
+ postForm?.addEventListener("submit",async ev=>{
+  ev.preventDefault();
+  if(!token){msg(copy.authRequired||"Sign in required");return}
+  const form=new FormData(postForm);
+  const body=String(form.get("body")||"").trim();
+  const consent=form.get("translation_consent")!==null;
+  const row:Record<string,unknown>={body,translation_consent:consent,status:"pending"};
+  let table="tc_forum_replies";
+  if(cfg.mode==="topic"){
+   table="tc_forum_topics";
+   const title=String(form.get("title")||"").trim();
+   if(title.length<12||title.length>160||body.length<40||body.length>12000){msg(copy.authRequired||"Invalid content length");return}
+   const id=crypto.randomUUID();
+   const prefix=title.normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase()
+    .replace(/[^a-z0-9]+/g,"-").replace(/^-+|-+$/g,"").slice(0,85)||"tractor-topic";
+   Object.assign(row,{id,title,slug:prefix+"-"+id.replace(/-/g,""),category:String(form.get("category")||"questions"),
+    locale:cfg.lang,tractor_id:form.get("tractor_id")||null});
+  }else{
+   if(!cfg.topicId||body.length<10||body.length>6000)return;
+   row.topic_id=cfg.topicId;row.source_locale=cfg.lang;
+  }
+  const button=postForm.querySelector<HTMLButtonElement>('button[type="submit"]');
+  if(button)button.disabled=true;msg(copy.loading||"...");
+  try{
+   const res=await fetch(cfg.url+"/rest/v1/"+table,{method:"POST",
+    headers:{...header(token),Prefer:"return=minimal"},
+    body:JSON.stringify(row),signal:AbortSignal.timeout(18000)});
+   if(!res.ok){
+    if(res.status===401||res.status===403){setLogin(false);throw new Error(copy.authRequired||"Sign in again")}
+    throw new Error("Submission unavailable ("+res.status+"). Check daily limits, field length and moderator settings.");
+   }
+   postForm.reset();msg(copy.pending||"Submitted for review");
+  }catch(e){msg((e as Error).message)}
+  finally{if(button)button.disabled=false}
+ });
+}
+</script>

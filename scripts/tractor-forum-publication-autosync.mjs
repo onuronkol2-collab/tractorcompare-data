@@ -1,0 +1,133 @@
+/**
+ * TractorVS zero-paid, anon-only forum revision listener.
+ *
+ * This DOES NOT publish, approve, translate, or read private posts. It watches
+ * already-moderated and consent-safe public language views. A changed snapshot
+ * requests a new static Cloudflare build. Hiding a harmful post changes the
+ * fingerprint too, so moderation removal is not blocked by a count floor.
+ */
+import {createHash} from "node:crypto";
+import {appendFileSync} from "node:fs";
+import {fileURLToPath} from "node:url";
+import {resolve} from "node:path";
+
+export const REPO="onuronkol2-collab/tractorcompare-data";
+export const REVISION_PATH="site/src/data/public-forum-sync.json";
+const PROJECT="aaufxtcvnzgavtlintiv";
+const API="https://"+PROJECT+".supabase.co/rest/v1";
+const MAX_ROWS=3000,PAGE=250;
+const COLLECTIONS=[
+ {table:"tc_forum_localized_topics",fields:"id,topic_id,locale,original_locale,slug,category,tractor_id,status,created_at,updated_at,title,body,seo_ready,machine_translated"},
+ {table:"tc_forum_localized_replies",fields:"id,topic_id,locale,original_locale,status,created_at,body,machine_translated"}
+];
+
+export function validateScope(repo,ref){
+ if(repo!==REPO||ref!=="refs/heads/main")throw Error("Forum sync is allowed only on TractorVS main.");
+}
+export function validateAnon(jwt){
+ const p=jwt?.split(".");
+ if(p?.length!==3)throw Error("Legacy anon JWT required for read-only forum sync.");
+ try{
+  const payload=JSON.parse(Buffer.from(p[1],"base64url").toString("utf8"));
+  if(payload.role!=="anon")throw Error("Only anon JWT is allowed, never service_role.");
+ }catch(err){throw Error("Non-anonymous or invalid JWT (forum sync blocked)");}
+}
+async function fetchPublicRows({table,fields,jwt,fetchFn}){
+ const results=[];
+ let total=null;
+ for(let offset=0;offset<=MAX_ROWS;offset+=PAGE){
+  const url=new URL(API+"/"+table);
+  url.searchParams.set("select",fields);
+  url.searchParams.set("order","id.asc,locale.asc");
+  url.searchParams.set("offset",String(offset));
+  url.searchParams.set("limit",String(PAGE));
+  const res=await fetchFn(url.toString(),{
+   headers:{apikey:jwt,Authorization:"Bearer "+jwt,Prefer:"count=exact",Accept:"application/json"},
+   signal:AbortSignal.timeout(25000)
+  });
+  if(res.status!==200&&res.status!==206)
+   throw Error("Forum public view failed with HTTP "+res.status+" ("+table+")");
+  const range=String(res.headers.get("content-range")||"");
+  const data=await res.json();
+  if(!Array.isArray(data))throw Error("Invalid forum view payload");
+  // PostgREST uses */0 when the view has no rows on some releases.
+  if(total===null&&data.length===0&&/^\*\/0$|^0-0\/0$/.test(range))
+   return [];
+  const match=range.match(/^(\d+)-(\d+)\/(\d+)$/);
+  if(!match)throw Error("PostgREST exact count missing for "+table+": "+range);
+  const start=Number(match[1]),end=Number(match[2]),count=Number(match[3]);
+  if(count>MAX_ROWS||count<1||!Number.isSafeInteger(count))
+   throw Error("Unbounded or invalid forum view count");
+  if(total===null)total=count;
+  if(total!==count||start!==offset||end!==offset+data.length-1)
+   throw Error("Forum view changed while paginating; retry next interval.");
+  if(data.some(row=>!row||typeof row.id!=="string"||typeof row.locale!=="string"||row.status!=="published"))
+   throw Error("Unapproved row in public forum view; abort.");
+  results.push(...data);
+  if(results.length===count)return results;
+  if(data.length!==PAGE)throw Error("Forum pagination truncated");
+ }
+ throw Error("Forum public view exceeds safe cap");
+}
+export async function fingerprintPublicForum({jwt,fetchFn=fetch}){
+ validateAnon(jwt);
+ const hash=createHash("sha256");
+ let total=0,publicTopics=0,publicReplies=0,indexableTopics=0;
+ for(const {table,fields} of COLLECTIONS){
+  const rows=await fetchPublicRows({table,fields,jwt,fetchFn});
+  total+=rows.length;
+  if(table==="tc_forum_localized_topics"){
+   publicTopics=rows.length;
+   indexableTopics=rows.filter(x=>x.seo_ready===true && x.body?.trim().length>=150).length;
+  }else publicReplies=rows.length;
+  for(const row of rows)hash.update(JSON.stringify([table,row])+"\n");
+ }
+ return {fingerprint:hash.digest("hex"),public_topics:publicTopics,
+  indexable_topics:indexableTopics,public_replies:publicReplies,public_rows:total,
+  source:"anon_public_forum_views",scope:PROJECT};
+}
+async function fetchRevision({token,fetchFn}){
+ const res=await fetchFn("https://api.github.com/repos/"+REPO+"/contents/"+REVISION_PATH+"?ref=main",{
+  headers:{Authorization:"Bearer "+token,Accept:"application/vnd.github+json"},
+  signal:AbortSignal.timeout(20000)
+ });
+ if(res.status===404)return {sha:null,record:null};
+ if(res.status!==200)throw Error("Current forum revision read failed ("+res.status+")");
+ const data=await res.json();
+ if(typeof data.sha!=="string"||data.encoding!=="base64"||typeof data.content!=="string")
+  throw Error("Current forum revision is invalid");
+ return {sha:data.sha,record:JSON.parse(Buffer.from(data.content.replace(/\s/g,""),"base64").toString("utf8"))};
+}
+export async function runForumSync({repo,ref,jwt,token,fetchFn=fetch,dryRun=false,now=new Date()}){
+ validateScope(repo,ref);validateAnon(jwt);
+ if(!token)throw Error("Repository-only GitHub token required.");
+ const latest=await fingerprintPublicForum({jwt,fetchFn});
+ const previous=await fetchRevision({token,fetchFn});
+ if(previous.record?.fingerprint===latest.fingerprint)
+  return {changed:false,committed:false,reason:"public_forum_unchanged",...latest};
+ if(dryRun)return {changed:true,committed:false,reason:"dry_run_no_commit",...latest};
+ const payload=JSON.stringify({...latest,generated_at:now.toISOString()},null,2)+"\n";
+ const request={message:"chore(site): refresh moderated forum public pages ("+latest.public_topics+" locale topics)",
+  branch:"main",content:Buffer.from(payload).toString("base64")};
+ if(previous.sha)request.sha=previous.sha;
+ const res=await fetchFn("https://api.github.com/repos/"+REPO+"/contents/"+REVISION_PATH,{
+  method:"PUT",
+  headers:{Authorization:"Bearer "+token,Accept:"application/vnd.github+json","Content-Type":"application/json"},
+  body:JSON.stringify(request),signal:AbortSignal.timeout(25000)
+ });
+ if(res.status!==200&&res.status!==201)throw Error("Forum fingerprint commit failed with HTTP "+res.status);
+ const data=await res.json();
+ if(typeof data?.commit?.sha!=="string")throw Error("Forum refresh commit not confirmed.");
+ return {changed:true,committed:true,reason:"moderated_forum_site_refresh_requested",...latest,commit:data.commit.sha};
+}
+if(process.argv[1]&&resolve(process.argv[1])===fileURLToPath(import.meta.url)){
+ const r=await runForumSync({repo:process.env.GITHUB_REPOSITORY,ref:process.env.GITHUB_REF,
+  jwt:process.env.TRACTORVS_SUPABASE_ANON_JWT,token:process.env.GITHUB_TOKEN,
+  dryRun:process.env.TRACTORVS_FORUM_DRY_RUN==="true"});
+ const summary="TractorVS forum sync: "+r.reason+"; public_locale_topics="+r.public_topics+
+ "; indexed_eligible="+r.indexable_topics+"; visible_replies="+r.public_replies+"; commit="+r.committed;
+ console.log(summary);
+ if(process.env.GITHUB_STEP_SUMMARY)
+  appendFileSync(process.env.GITHUB_STEP_SUMMARY,"## Moderated forum sync\n\n"+summary+
+   "\n\nThis updates static build input; it does not prove Google indexing.\n");
+}

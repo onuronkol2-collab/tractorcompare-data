@@ -1,0 +1,130 @@
+---
+import SiteLayout from "../layouts/SiteLayout.astro";
+import ForumComposer from "./ForumComposer.astro";
+import {forumText as ft,FORUM_CATEGORY_KEYS} from "../lib/forum-i18n.ts";
+import {publishedForumTopics,forumDate} from "../lib/forum.ts";
+import {getPublicCatalog} from "../lib/catalog.ts";
+import {localizedPath,type Locale} from "../lib/locales.ts";
+interface Props {lang:Locale}
+const {lang}=Astro.props;
+const topics=await publishedForumTopics(lang);
+const catalog=await getPublicCatalog();
+const tractors=new Map(catalog.tractors.map(t=>[t.tractor_id,t]));
+const publicCount=topics.filter(x=>x.seo_ready).length;
+const indexable=publicCount>0; // Empty or thin UGC pages must not enter the Google index.
+const path=localizedPath(lang,"/forum/");
+const origin=Astro.site||new URL("https://tractorvs.com");
+const schema=indexable?{
+ "@context":"https://schema.org","@type":"CollectionPage",
+ "@id":new URL(path,origin).toString()+"#community",
+ url:new URL(path,origin).toString(),name:ft(lang,"heading"),
+ description:ft(lang,"intro"),isAccessibleForFree:true
+}:null;
+---
+<SiteLayout lang={lang} title={ft(lang,"heading")+" | TractorVS"}
+ description={ft(lang,"intro")} indexable={indexable} structuredData={schema}>
+ <div class="community-shell">
+  <header class="community-hero">
+   <div class="container">
+    <p class="community-kicker">TRACTORVS · {ft(lang,"name")}</p>
+    <h1>{ft(lang,"heading")}</h1>
+    <p>{ft(lang,"intro")}</p>
+    <div class="community-guide">
+     <span>{ft(lang,"guidelines")}</span>
+    </div>
+   </div>
+  </header>
+  <div class="container community-main">
+   <section class="community-list" aria-label={ft(lang,"all")}>
+    <h2>{ft(lang,"all")}</h2>
+    {topics.length>0?<>
+     <div class="community-filters">
+      <label>
+       <span>{ft(lang,"search")}</span>
+       <input type="search" id="forum-filter" autocomplete="off" placeholder={ft(lang,"search")}/>
+      </label>
+      <div class="community-tabs" role="group" aria-label={ft(lang,"category")}>
+       <button class="is-active" type="button" data-forum-category="all" aria-pressed="true">{ft(lang,"all")}</button>
+       {FORUM_CATEGORY_KEYS.map(key=>
+        <button type="button" data-forum-category={key} aria-pressed="false">{ft(lang,key)}</button>)}
+      </div>
+     </div>
+     <div class="community-topic-grid" id="forum-topic-list">
+      {topics.map(topic=>{
+       const model=topic.tractor_id?tractors.get(topic.tractor_id):undefined;
+       return <article class="community-topic" data-forum-topic
+         data-forum-search={[topic.title,topic.body,model?.brand_name,model?.model_name].filter(Boolean).join(" ").toLocaleLowerCase()}
+         data-forum-topic-category={topic.category}>
+         <div class="community-topic-meta">
+          <span>{ft(lang,topic.category)}</span>
+          <time datetime={topic.created_at}>{forumDate(topic.created_at,lang)}</time>
+         </div>
+         <h3><a href={path+topic.slug+"/"}>{topic.title}</a></h3>
+         <p>{topic.body.length>235?topic.body.slice(0,232).trimEnd()+"…":topic.body}</p>
+         {model&&<p class="community-model">
+          <a href={localizedPath(lang,"/tractors/"+model.slug+"/")}>{model.brand_name} {model.model_name}</a>
+         </p>}
+         {topic.machine_translated&&<small>{ft(lang,"translated")}</small>}
+        </article>;
+      })}
+     </div>
+     <p id="forum-no-results" hidden role="status">{ft(lang,"noResults")}</p>
+    </>:<p class="community-empty">{ft(lang,"empty")}</p>}
+   </section>
+   <ForumComposer lang={lang} mode="topic"/>
+   <p class="community-help"><a href={localizedPath(lang,"/tractors/")}>{ft(lang,"help")} ↗</a></p>
+  </div>
+ </div>
+</SiteLayout>
+<style>
+ .community-shell{background:#f4f8f2;color:#294836;min-height:65vh}
+ .community-hero{padding:clamp(38px,6vw,72px) 0;background:linear-gradient(128deg,#112f20,#356241);color:#f1f8f0}
+ .community-kicker{letter-spacing:.13em;font-weight:800;font-size:12px;color:#cce9ba;margin-bottom:16px}
+ .community-hero h1{max-width:850px;font-size:clamp(31px,4.4vw,52px);line-height:1.13;margin:0 0 16px}
+ .community-hero p:not(.community-kicker){max-width:730px;line-height:1.75;font-size:16px;color:#d9ecdc}
+ .community-guide{max-width:730px;margin-top:22px;border-left:3px solid #aad39b;padding:9px 15px;background:#ffffff10;font-size:13px;line-height:1.8}
+ .community-main{padding-top:37px;padding-bottom:72px}
+ .community-list h2{font-size:clamp(22px,2.5vw,29px);color:#174b2b}
+ .community-filters{margin:23px 0}
+ .community-filters label{display:grid;max-width:520px;gap:7px;font-size:14px;font-weight:700}
+ .community-filters input{background:white;border:1px solid #a7c5ad;border-radius:10px;padding:11px 13px;min-height:44px;color:#263d2e}
+ .community-tabs{display:flex;flex-wrap:wrap;gap:9px;margin:15px 0}
+ .community-tabs button{background:white;border:1px solid #a7c5ad;padding:9px 13px;min-height:42px;border-radius:22px;color:#2e603f;cursor:pointer;font:inherit;font-size:13px}
+ .community-tabs button.is-active{background:#266b43;color:white}
+ .community-topic-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,335px),1fr));gap:14px}
+ .community-topic{border:1px solid #ccdccc;border-radius:15px;padding:21px;background:white;overflow-wrap:anywhere}
+ .community-topic-meta{display:flex;flex-wrap:wrap;gap:8px 15px;justify-content:space-between;color:#538161;font-size:12px}
+ .community-topic h3{font-size:20px;line-height:1.4;margin:12px 0;color:#255638}
+ .community-topic h3 a{color:inherit;text-decoration:underline;text-decoration-color:transparent;text-underline-offset:3px}
+ .community-topic h3 a:hover{text-decoration-color:currentColor}
+ .community-topic p{color:#4b5e4e;font-size:14px;line-height:1.72}
+ .community-model a,.community-help a{color:#266b42;text-decoration:underline;font-weight:750}
+ .community-empty{padding:22px;border-radius:14px;background:#e5efe1;border:1px solid #c9daca;line-height:1.75}
+ .community-help{font-size:14px;margin:18px 0}
+ .community-shell [hidden]{display:none!important}
+ .community-shell a:focus-visible,.community-shell button:focus-visible,.community-shell input:focus-visible{outline:3px solid #83bc8a;outline-offset:2px}
+</style>
+<script>
+ const input=document.querySelector<HTMLInputElement>("#forum-filter");
+ const cards=[...document.querySelectorAll<HTMLElement>("[data-forum-topic]")];
+ const categoryButtons=[...document.querySelectorAll<HTMLButtonElement>("[data-forum-category]")];
+ const noResults=document.querySelector<HTMLElement>("#forum-no-results");
+ let selected="all";
+ const filter=()=>{
+  const q=(input?.value||"").trim().toLocaleLowerCase();
+  let count=0;
+  for(const card of cards){
+   const visible=(selected==="all"||card.dataset.forumTopicCategory===selected)&&
+    (!q||(card.dataset.forumSearch||"").includes(q));
+   card.hidden=!visible;
+   if(visible)count++;
+  }
+  if(noResults)noResults.hidden=count>0;
+ };
+ input?.addEventListener("input",filter);
+ for(const button of categoryButtons)button.addEventListener("click",()=>{
+  selected=button.dataset.forumCategory||"all";
+  categoryButtons.forEach(b=>{const active=b===button;b.classList.toggle("is-active",active);b.setAttribute("aria-pressed",String(active))});
+  filter();
+ });
+</script>

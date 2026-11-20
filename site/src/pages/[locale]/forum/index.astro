@@ -1,0 +1,7 @@
+---
+import ForumHub from "../../../components/ForumHub.astro";
+import {NEW_LOCALES} from "../../../lib/locales.ts";
+export function getStaticPaths(){return NEW_LOCALES.map(locale=>({params:{locale},props:{locale}}))}
+const {locale}=Astro.props;
+---
+<ForumHub lang={locale}/>

@@ -9,6 +9,7 @@ import { brand } from "../config/brand";
 import { LOCALES, LOCALE_NAMES, LOCALE_TAGS, localizedPath, unlocalizedPath, type Locale } from "../lib/locales";
 import { t } from "../lib/ui";
 import { advisorText as tx } from "../lib/advisor-i18n";
+import {forumText as forumCopy} from "../lib/forum-i18n.ts";
 
 interface Props {
   lang: Locale;
@@ -31,6 +32,7 @@ const plainPath = unlocalizedPath(Astro.url.pathname);
 const catalogPath = localizedPath(lang, "/tractors/");
 const comparePath = localizedPath(lang, "/compare/");
 const advisorPath = localizedPath(lang, "/farm-advisor/");
+const forumPath = localizedPath(lang, "/forum/");
 const canonicalUrl = indexingEnabled
   ? new URL(Astro.url.pathname, Astro.site!).toString()
   : undefined;
@@ -100,6 +102,7 @@ const openGraphLocale: Record<Locale, string> = {
           <a href={catalogPath}>{t(lang,"navCatalog")}</a>
           <a href={comparePath}>{t(lang,"navCompare")}</a>
           <a href={advisorPath}>{tx(lang,"nav")}</a>
+          <a href={forumPath}>{forumCopy(lang,"name")}</a>
           <a href={homePath + "#data"}>{t(lang,"navData")}</a>
           <a href={homePath + "#approach"}>{t(lang,"navApproach")}</a>
         </nav>
@@ -126,6 +129,7 @@ const openGraphLocale: Record<Locale, string> = {
               <a href={catalogPath}>{t(lang,"navCatalog")}</a>
               <a href={comparePath}>{t(lang,"navCompare")}</a>
               <a href={advisorPath}>{tx(lang,"nav")}</a>
+              <a href={forumPath}>{forumCopy(lang,"name")}</a>
               <a href={homePath + "#data"}>{t(lang,"navData")}</a>
               <a href={homePath + "#approach"}>{t(lang,"navApproach")}</a>
             </nav>
@@ -171,6 +175,7 @@ const openGraphLocale: Record<Locale, string> = {
           <a href={catalogPath}>{t(lang,"navCatalog")}</a>
           <a href={comparePath}>{t(lang,"navCompare")}</a>
           <a href={advisorPath}>{tx(lang,"nav")}</a>
+          <a href={forumPath}>{forumCopy(lang,"name")}</a>
           <a href={homePath + "#data"}>{t(lang,"navData")}</a>
           <a href={homePath + "#approach"}>{t(lang,"navApproach")}</a>
           <a href={localizedPath(lang,"/privacy/")}>{analyticsCopy.privacyLink}</a>
