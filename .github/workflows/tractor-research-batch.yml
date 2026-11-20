@@ -52,7 +52,7 @@ jobs:
       - name: Process explicitly bounded queue batch
         env:
           TRACTORVS_BATCHES: ${{ github.event.inputs.batches }}
-          TRACTORVS_SUPABASE_SERVICE_ROLE_JWT: ${{ secrets.TRACTORVS_SUPABASE_SERVICE_ROLE_JWT }}
+          TRACTORVS_SUPABASE_ANON_JWT: ${{ secrets.TRACTORVS_SUPABASE_ANON_JWT }}
           TRACTORVS_QUEUE_SECRET: ${{ secrets.TRACTORVS_QUEUE_SECRET }}
         run: node scripts/tractor-research-batch.mjs
       - name: Upload restart-safe progress receipt
