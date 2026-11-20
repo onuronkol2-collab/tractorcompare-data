@@ -1,0 +1,61 @@
+name: TractorVS zero-paid published catalog sync
+
+# Supabase published changes alone do not rebuild static Astro pages.
+# Check anon-readable public rows only and write a tiny main-branch site
+# fingerprint when the public catalogue has actually changed.
+on:
+  schedule:
+    - cron: "17,47 * * * *"
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/tractorvs-publication-autosync.yml"
+  pull_request:
+    paths:
+      - ".github/workflows/tractorvs-publication-autosync.yml"
+      - "scripts/tractor-publication-autosync.mjs"
+      - "scripts/tractor-publication-autosync.test.mjs"
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "Verify only without committing a site refresh"
+        type: boolean
+        default: true
+        required: true
+
+concurrency:
+  group: tractorvs-zero-paid-catalog-revision
+  cancel-in-progress: false
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Test free-only public data reader and safe Github write
+        run: node --test scripts/tractor-publication-autosync.test.mjs
+
+  sync_public_only:
+    needs: tests
+    if: github.event_name != 'pull_request' && github.repository == 'onuronkol2-collab/tractorcompare-data' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 7
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Commit only after published public catalogue hash changes
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          TRACTORVS_SUPABASE_ANON_JWT: ${{ secrets.TRACTORVS_SUPABASE_ANON_JWT }}
+          TRACTORVS_CATALOG_DRY_RUN: ${{ github.event_name == 'workflow_dispatch' && inputs.dry_run == true }}
+        run: node scripts/tractor-publication-autosync.mjs
