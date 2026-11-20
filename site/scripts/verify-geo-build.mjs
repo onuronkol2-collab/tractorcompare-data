@@ -14,7 +14,7 @@ for(const home of ["index.html","tr/index.html"]){
  const html=get(home);
  assert.match(html,/"@type":"Organization"/,home+" must identify publisher");
  assert.match(html,/"@type":"WebSite"/,home+" must identify site");
- assert.match(html,/"@id":"https:\/\/tractorvs\.example\/#organization"/,home+" publisher ID must be stable");
+ assert.match(html,new RegExp('"@id":"https:\\/\\/tractorvs\\.'+(mode==="indexable"?"example":"com")+'\\/#organization"'),home+" publisher ID must be stable");
  assert.doesNotMatch(html,/"@type":"SearchAction"/, "Google deprecated Sitelinks Search Box");
  if(mode==="noindex")assert.match(html,/noindex,nofollow/);
  else assert.match(html,/index,follow,max-image-preview:large/);
