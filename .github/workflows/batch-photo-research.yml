@@ -1,9 +1,14 @@
 name: TractorVS batch photo research
 on:
   workflow_dispatch:
-  # Fridays 07:15 Europe/Istanbul (04:15 UTC): all historical + current public identities.
+  # Daily at 07:15 Europe/Istanbul (04:15 UTC): historical + all public models.
   schedule:
-    - cron: "15 4 * * 5"
+    - cron: "15 4 * * *"
+  # Runs once after this schedule change is merged; CI checks PRs separately.
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/batch-photo-research.yml"
   pull_request:
     paths:
       - ".github/workflows/batch-photo-research.yml"
@@ -16,6 +21,11 @@ on:
       - "site/tests/photo-*.test.mjs"
 permissions:
   contents: read
+
+concurrency:
+  group: tractorvs-all-model-photo-research
+  cancel-in-progress: false
+
 jobs:
   research_all_models:
     runs-on: ubuntu-latest
