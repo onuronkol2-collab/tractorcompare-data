@@ -13,7 +13,8 @@ test("all eight native agriculture lexicons preserve twenty identical technical 
   const terms=TRACTOR_EDUCATION_TERMINOLOGY[lang];
   assert.deepEqual(Object.keys(terms).sort(),ids);
   for(const [en,val] of Object.entries(terms)){
-   assert.ok(typeof val==="string"&&val.trim().length>=3);
+   assert.ok(typeof val==="string"&&val.trim().length>=(lang==="zh"?2:3),
+    "Meaningful Chinese two-character terms such as 扭矩 and 轴距 are valid: "+lang+" "+en);
    if(en==="540E")assert.ok(val.includes("540E"));
    if(en.startsWith("610 mm"))assert.ok(/610\s*mm|610\s*мм|610\s*ミリ|610\s*毫米/.test(val),
     "No 610 mm reference in "+lang);
