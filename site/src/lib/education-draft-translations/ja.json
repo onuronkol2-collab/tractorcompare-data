@@ -1,0 +1,38 @@
+{
+  "locale": "ja",
+  "sourceHash": "4d660f0e844d820dc0cac2b4dcf57475c48f3e3701f4ca624b57c51a093f568f",
+  "state": "draft-needs-editorial-review",
+  "machineProvider": "Gemini",
+  "createdAt": "2026-11-20T21:03:10.488Z",
+  "data": {
+    "glossary": {}
+  },
+  "validation": {
+    "requires": [
+      "native-language editorial review",
+      "terminology consistency",
+      "safety warning fidelity",
+      "number and unit fidelity",
+      "no English content fallbacks"
+    ],
+    "reviewed": false,
+    "complete": false
+  },
+  "summary": {
+    "glossary": 0
+  },
+  "errors": [
+    {
+      "kind": "glossary",
+      "start": 0,
+      "ids": [
+        "engine-power",
+        "rated-power",
+        "maximum-power",
+        "torque",
+        "torque-rise"
+      ],
+      "error": "TimeoutError: The operation was aborted due to timeout"
+    }
+  ]
+}
