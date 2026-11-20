@@ -17,6 +17,7 @@ function fixture(){
  const urls=[];
  for(const locale of PUBLIC_LOCALES){
   const prefix=locale==="en"?"":locale+"/";
+  urls.push("<loc>https://tractorvs.com/"+prefix+"tractors/</loc>");
   put(root,"dist/"+prefix+"index.html",'<html><head><meta name="robots" content="index,follow"></head></html>');
   for(const slug of ["tractor-a","tractor-b"]){
    const url="https://tractorvs.com/"+prefix+"tractors/"+slug+"/";
