@@ -3,7 +3,7 @@ import SiteLayout from "../layouts/SiteLayout.astro";
 import {localizedPath} from "../lib/locales.ts";
 import {APPROVED_TRACTOR_PHOTOS} from "../lib/tractor-photos.ts";
 import {GLOSSARY_TERMS,GLOSSARY_SECTIONS,type GlossaryLanguage} from "../lib/tractor-glossary.ts";
-import {TRACTOR_PARTS} from "../lib/tractor-parts.ts";
+import {TRACTOR_PARTS,GLOSSARY_TO_PART} from "../lib/tractor-parts.ts";
 import TractorParts from "./TractorParts.astro";
 
 interface Props {lang:GlossaryLanguage}
@@ -179,6 +179,7 @@ const queryTerms=(term:(typeof GLOSSARY_TERMS)[number])=>
             <a href={"#"+term.id} aria-label={tr?term.name.tr+" için bağlantı": "Link to "+term.name.en} title={tr?"Bu terime bağlantı":"Link to this term"}>#</a>
           </div>
           <div class="glossary-meaning"><strong>{tr?"KISACA NE DEMEK?":"PLAIN MEANING"}</strong><p class="glossary-definition">{term.definition[lang]}</p></div>
+          {Object.prototype.hasOwnProperty.call(GLOSSARY_TO_PART,term.id)&&<a class="glossary-see-part" href={"#"+GLOSSARY_TO_PART[term.id as keyof typeof GLOSSARY_TO_PART]}>{tr?"Bu bilgi hangi parçada kullanılır?":"See the physical tractor part"} <span aria-hidden="true">↗</span></a>}
           <div class="glossary-example">
            <strong>{tr?"TARLADA NE İŞE YARAR?":"EXAMPLE FROM FARM WORK"}</strong>
            <p>{term.example[lang]}</p>
@@ -360,6 +361,7 @@ const queryTerms=(term:(typeof GLOSSARY_TERMS)[number])=>
  .glossary-terms-intro{padding:34px 0 5px;border-top:1px solid #d2e1ce;margin-top:28px;}
  .glossary-terms-intro h2{font-size:clamp(25px,2.8vw,36px);color:#194d2e;line-height:1.2;margin:0 0 12px;}
  .glossary-terms-intro p:not(.glossary-section-kicker){font-size:14px;color:#546b56;line-height:1.8;max-width:850px;}
+ .glossary-see-part{display:inline-flex;align-items:center;gap:8px;margin-bottom:12px;color:#226840;font-size:12px;font-weight:850;text-decoration:underline;text-underline-offset:3px;}
  .glossary-meaning{border-left:3px solid #6fac75;padding:4px 0 3px 14px;margin-bottom:17px;}
  .glossary-meaning strong{font-size:10px;font-weight:900;letter-spacing:.075em;color:#317144;}
  .glossary-definition{font-size:15px;line-height:1.85;color:#293f30;margin:6px 0 0;}
