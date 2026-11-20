@@ -1,5 +1,5 @@
 name: TractorVS editorial translation smoke test
-# Run 2: synchronous provider mode after background Gemini interaction timed out.
+# Run 3: fallback to existing approved Gemini 3.7 Flash for 503 high demand.
 on:
   push:
     branches:
