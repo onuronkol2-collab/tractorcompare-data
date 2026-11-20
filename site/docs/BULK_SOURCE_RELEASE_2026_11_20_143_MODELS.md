@@ -32,3 +32,13 @@ A Supabase model status update does not rebuild static Astro pages by itself. Gi
 ## Next priorities
 
 Continue with other source families and exact model columns; do not redo these 31. Zetor PROXIMA CL/GP/HS are separate *trim families* rather than uniquely rated 100/110/120 HP model identities; Lamborghini Spire Target sources and Agrale 540 XT duplicate records need further validation. When a single-source batch hits a model exception, hold that identity and continue on other families rather than halting the whole research program.
+
+
+## Lamborghini Trattori Spire S/V Target — two more exact models, 106 specs
+
+Official original manufacturer brochure: https://www.lamborghini-tractors.com/en-eu/all/download/7988_b274e15de8fa324d508dde300f1d3fc8
+Source date/print code: 04/2025, code 308.8901.3.2-1. Separate S 80 Target and V 80 Target full technical columns were independently matched against all 106 existing manufacturer-linked raw spec records (53 each); every published row has explicit evidence text and a newly recorded verification date.
+
+Both tractors use FARMotion 35 Stage V, 3 cylinders / 2887 cc, 76 HP maximum ECE R120, 75 HP at rated speed, 341 Nm at 1500rpm. The S model has 1380 mm width, 2850 kg weight, 2371 mm height and 280/70 R18 tyres. The V model has 1166 mm width, 2830 kg weight, 2271 mm height and 180/95 R16 tyres. Each has 2600 kg rear linkage and standard 54 L/min / optional 64 L/min hydraulics. Mechanical splitter 30+15 and 45+45 HML Powershift are alternative gearbox packages; options must not be represented as unconditional factory standard. Exact source URL was adjusted from the older /vineyards-orchards-compacts/download route to the active manufacturer /en-eu/all/download address, with the original retained in source notes.
+
+A guarded production transaction published two model UUIDs only. New postflight: **145 published / 315 draft / 2 archived**, public view **145 tractor IDs / 4,336 technical rows**, **0 draft leak**. This is Supabase publication, not yet proof that the next Cloudflare production build has been deployed or crawled.
