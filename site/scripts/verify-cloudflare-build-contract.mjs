@@ -10,6 +10,7 @@ for(const [label,pkg] of [["root",repoPkg],["site",sitePkg]]){
  if(pkg.packageManager!=="npm@10.9.2")fail(label+" package manager is not pinned");
  if(!pkg.scripts["build:production"]||!pkg.scripts["deploy:verified"]||!pkg.scripts["build:cloudflare"])
   fail(label+" is missing release scripts");
+ if(!pkg.scripts.deploy?.includes("deploy:verified"))fail(label+" legacy deploy script bypasses production safety gate");
 }
 for(const [label,cfg,expected] of [["root",rootWrangler,{main:"./site/worker/index.js",dir:"./site/dist"}],
   ["site",siteWrangler,{main:"./worker/index.js",dir:"./dist"}]]){

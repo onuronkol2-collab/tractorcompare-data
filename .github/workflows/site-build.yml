@@ -77,6 +77,12 @@ jobs:
           node --input-type=module -e "import fs from 'node:fs'; for (const p of ['wrangler.jsonc','site/wrangler.jsonc']) { const c=JSON.parse(fs.readFileSync(p,'utf8')); if (!c.main || c.assets?.binding!=='ASSETS' || !c.assets.run_worker_first.includes('/') || !c.assets.run_worker_first.includes('/language/*')) throw new Error('Missing geo Worker setup: '+p) }"
           npx wrangler deploy --dry-run --outdir .wrangler-dry-run
 
+      - name: Verify actual Cloudflare site/ root and Wrangler bundle
+        working-directory: site
+        run: |
+          npm run build
+          npx wrangler deploy --dry-run --outdir ../.wrangler-site-dry-run
+
       - name: Validate SEO canonicals and reciprocal ten-language hreflang when explicitly enabled
         env:
           SITE_URL: https://tractorvs.example
