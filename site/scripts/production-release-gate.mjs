@@ -1,0 +1,134 @@
+/**
+ * Fail-closed production release gate for TractorVS Cloudflare Workers Builds.
+ * No credentials are printed or written; only build-time environment values
+ * are inspected. CI/preview builds keep using "npm run build" normally.
+ *
+ * Cloudflare Workers Builds:
+ * root directory: site
+ * build command: npm run build:production
+ * deploy command: npm run deploy:verified
+ */
+import {readFileSync,readdirSync,existsSync} from "node:fs";
+import {resolve,basename,join} from "node:path";
+import {fileURLToPath} from "node:url";
+
+const projectRoot=resolve(fileURLToPath(new URL("..",import.meta.url)));
+const expectedOrigin="https://tractorvs.com";
+
+function insist(ok,reason){
+ if(!ok)throw new Error("[TractorVS RELEASE BLOCKED] "+reason);
+}
+
+function readJSON(filename){
+ return JSON.parse(readFileSync(filename,"utf8"));
+}
+function validPublicKey(key){
+ if(typeof key!=="string"||!key.trim())return false;
+ const clean=key.trim();
+ if(clean.startsWith("sb_secret_"))return false;
+ if(clean.startsWith("sb_publishable_"))return clean.length>25;
+ if(clean.split(".").length!==3)return false;
+ try {
+  const data=JSON.parse(Buffer.from(clean.split(".")[1],"base64url").toString("utf8"));
+  return data.role==="anon";
+ } catch{return false;}
+}
+export function verifyProductionConfiguration(env=process.env,dir=process.cwd()){
+ const root=resolve(dir);
+ insist(root===projectRoot,"Set Cloudflare Settings > Build > Root directory to site. Build/deploy must run inside site/, not repository root.");
+ const pkg=readJSON(join(root,"package.json"));
+ const wrangler=readJSON(join(root,"wrangler.jsonc"));
+ insist(pkg.name==="tractorvs-site","Wrong package.json: expected site/package.json.");
+ insist(typeof pkg.dependencies?.astro==="string"&&typeof pkg.devDependencies?.wrangler==="string",
+   "Astro or Wrangler is missing from site/package.json.");
+ insist(wrangler.name==="tractorvs-site","Worker name must be tractorvs-site.");
+ insist(wrangler.main==="./worker/index.js"&&wrangler.assets?.directory==="./dist"&&wrangler.assets?.binding==="ASSETS",
+   "Worker entrypoint/static-assets directory differs from reviewed configuration.");
+ for(const route of ["/","/language/*","/api/visitor-country","/images/tractors/*"])
+  insist(wrangler.assets?.run_worker_first?.includes(route),"Missing Worker route for "+route);
+ if(env.WORKERS_CI_BRANCH)
+  insist(env.WORKERS_CI_BRANCH==="main","Production deploy is allowed only from main; not "+env.WORKERS_CI_BRANCH);
+ insist(env.PUBLIC_INDEXING_ENABLED==="true",
+   "PUBLIC_INDEXING_ENABLED=true is required in Cloudflare BUILD variables (not just runtime secrets).");
+ insist(env.SITE_URL===expectedOrigin,
+   "SITE_URL must equal https://tractorvs.com in Cloudflare BUILD variables.");
+ let supabase;
+ try{supabase=new URL(env.SUPABASE_URL||"");}catch{
+  throw new Error("[TractorVS RELEASE BLOCKED] SUPABASE_URL is missing or invalid in Cloudflare BUILD variables.");
+ }
+ insist(supabase.protocol==="https:"&&!supabase.username&&!supabase.password&&!supabase.search&&!supabase.hash,
+   "SUPABASE_URL must be an HTTPS project URL without credentials or query values.");
+ const key=(env.SUPABASE_PUBLISHABLE_KEY||env.SUPABASE_ANON_KEY||"").trim();
+ insist(validPublicKey(key),
+   "Set ONLY a Supabase publishable (sb_publishable_) or legacy anon key in Cloudflare BUILD variables. Never use service-role/secret keys.");
+ return {origin:expectedOrigin,worker:wrangler.name};
+}
+
+function readText(path){
+ insist(existsSync(path),"Expected generated file is missing: "+path.replace(projectRoot,"site"));
+ return readFileSync(path,"utf8");
+}
+
+export function verifyProductionArtifacts({dir=projectRoot,origin=expectedOrigin,minTractors=100}={}){
+ const dist=join(dir,"dist");
+ const html=readText(join(dist,"index.html"));
+ const tr=readText(join(dist,"tr/index.html"));
+ const robots=readText(join(dist,"robots.txt"));
+ const sitemap=readText(join(dist,"sitemap-index.xml"));
+ insist(!/noindex,nofollow|content="noindex/i.test(html),"English homepage is marked noindex.");
+ insist(!/noindex,nofollow|content="noindex/i.test(tr),"Turkish homepage is marked noindex.");
+ insist(html.includes('rel="canonical"')&&html.includes(origin),"English canonical is missing or wrong.");
+ insist(tr.includes('rel="canonical"')&&tr.includes(origin+"/tr/"),"Turkish canonical is missing or wrong.");
+ insist(robots.includes("Allow: /")&&!/Disallow:\s*\//.test(robots),"robots.txt blocks search engines.");
+ insist(robots.includes(origin+"/sitemap-index.xml"),"robots.txt does not reference production sitemap.");
+ insist(sitemap.includes("sitemap-"),"Sitemap index is empty.");
+ for(const route of ["guides/tractor-technical-terms","tr/guides/tractor-technical-terms",
+   "guides/pto-and-power-take-off","tr/guides/pto-and-power-take-off",
+   "guides/tractor-hydraulic-lift-explained","tr/guides/tractor-hydraulic-lift-explained",
+   "guides/tractor-engine-power-and-torque","tr/guides/tractor-engine-power-and-torque"]){
+  const page=readText(join(dist,route,"index.html"));
+  insist(!/noindex,nofollow/.test(page),"Guide unexpectedly has noindex: "+route);
+ }
+ const englishGlossary=readText(join(dist,"guides/tractor-technical-terms/index.html"));
+ const turkishGlossary=readText(join(dist,"tr/guides/tractor-technical-terms/index.html"));
+ for(const [locale,page] of [["en",englishGlossary],["tr",turkishGlossary]]){
+  const terms=(page.match(/class="glossary-card"/g)||[]).length;
+  const parts=(page.match(/class="part-card"/g)||[]).length;
+  insist(terms>=96&&parts>=57,locale+" guide unexpectedly lost terms/parts ("+terms+"/"+parts+").");
+ }
+ const tractorDir=join(dist,"tractors");
+ insist(existsSync(tractorDir),"Published model pages directory missing.");
+ const tractors=readdirSync(tractorDir,{withFileTypes:true})
+  .filter(entry=>entry.isDirectory()&&existsSync(join(tractorDir,entry.name,"index.html"))).length;
+ const floor=Number(minTractors);
+ insist(Number.isSafeInteger(floor)&&floor>=1,"MIN_PUBLIC_TRACTOR_PAGES must be a positive integer.");
+ insist(tractors>=floor,
+   "Only "+tractors+" English tractor pages generated, below safety floor "+floor+". Check Supabase public catalogue and build variables.");
+ const turkishTractors=join(dist,"tr/tractors");
+ const trCount=existsSync(turkishTractors)
+  ?readdirSync(turkishTractors,{withFileTypes:true})
+   .filter(entry=>entry.isDirectory()&&existsSync(join(turkishTractors,entry.name,"index.html"))).length : 0;
+ insist(trCount===tractors,"TR/EN model-page counts differ ("+trCount+"/"+tractors+").");
+ return {models:tractors,translatedModels:trCount,terms:96,parts:57,origin};
+}
+
+export function preflight(env=process.env){
+ return verifyProductionConfiguration(env,projectRoot);
+}
+export function postflight(env=process.env){
+ const config=preflight(env);
+ const floor=env.MIN_PUBLIC_TRACTOR_PAGES?Number(env.MIN_PUBLIC_TRACTOR_PAGES):100;
+ return verifyProductionArtifacts({origin:config.origin,minTractors:floor});
+}
+
+if(process.argv[1]&&resolve(process.argv[1])===fileURLToPath(import.meta.url)){
+ try {
+  const mode=process.argv[2];
+  insist(mode==="preflight"||mode==="postflight","Use preflight or postflight.");
+  const result=mode==="preflight"?preflight():postflight();
+  console.log("[TractorVS] Production "+mode+" OK: "+JSON.stringify(result));
+ }catch(error){
+  console.error(error instanceof Error?error.message:"Unknown release gate error");
+  process.exitCode=1;
+ }
+}
