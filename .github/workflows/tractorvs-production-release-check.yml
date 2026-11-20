@@ -28,7 +28,7 @@ jobs:
         with:
           node-version: "22.23.4"
       - name: Install declared workspace dependencies
-        run: npm install --no-audit --no-fund
+        run: npm ci --no-audit --no-fund
       - name: Verify exactly the Cloudflare production bundle, without deploying
         working-directory: site
         env:
