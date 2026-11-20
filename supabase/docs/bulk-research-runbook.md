@@ -1,12 +1,12 @@
-# TractorVS — 428 taslak için kontrollü toplu araştırma
+# TractorVS — kontrollü toplu araştırma ve güvenli zincirleme devam
 
-**20 Kasım 2026 durumu (canlı Supabase salt-okunur denetim):** 462 traktör (428 draft, 32 published, 2 archived), 7.198 teknik özellik, araştırma kuyruğunda 415 queued + 4 retry + 8 needs_source + 1 failed + 20 completed. AI bulguları 442 approved, 226 duplicate, 305 pending.
+**20 Kasım 2026 başlangıç durumundan sonraki güncel kontrol:** 462 traktör (379 draft, 81 published, 2 archived). İlk GitHub kuyruk denemesi sonrası 412 queued + 4 retry + 11 needs_source + 1 failed + 20 completed; sayılar her koşuda tekrar okunmalıdır. Önceki 428/32 değerleri artık geçerli değildir.
 
 ## Neden yeni bir çalıştırıcı var?
 
 Supabase Edge Function `tractor-ai-research` (v22.7, yayında) kuyruktan kayıtları kilitleyerek alabiliyor ve `process_queue_batch` isteğiyle en fazla **3** kayıt işleyebiliyor. Ancak projede bu işlevi çağıran `pg_cron` / `pg_net` kurulu değil. GitHub Actions çalıştırıcısı bu eksik orkestrasyonu mevcut Edge Function koduna, RLS kurallarına ve kaynak kayıtlarına dokunmadan sağlıyor.
 
-Bu iş akışı **yalnız elle başlatılır**. Gemini çağrıları ücret ve kota tüketebilir; bütçe doğrulanmadan otomatik, sınırsız tarama başlatılmaz. Her çalıştırmada 1, 2, 4 veya 8 grup = en çok 3, 6, 12 veya 24 kayıt; çağrılar sırayla yapılır, eşzamanlı yürütme GitHub Actions `concurrency` tarafından engellenir. Hatalı yanıt, upstream servis arızası veya boş kuyruk görülürse devam etmez.
+Bu iş akışı ilk kez **elle veya önceki koşunun kontrollü devam tetikleyicisiyle** başlatılır. Gemini çağrıları ücret ve kota tüketebilir; bütçe doğrulanmadan otomatik, sınırsız tarama başlatılmaz. Her çalıştırmada 1, 2, 4 veya 8 grup = en çok 3, 6, 12 veya 24 kayıt; çağrılar sırayla yapılır, eşzamanlı yürütme GitHub Actions `concurrency` tarafından engellenir. Sistem hatası, kimlik doğrulama sorunu, upstream servis arızası veya boş kuyruk görülürse devam etmez. Edge Function'da `needs_source` olarak tutulan kesin HTTP 422 kayıtlarıysa ayrı incelenmek üzere bırakılır; sadece bu kayıtlardan dolayı diğer modeller engellenmez.
 
 ## Bir defalık gizli anahtar kurulumu
 
@@ -52,9 +52,9 @@ FROM public.tractor_specs;
 
 ## Bir çalışma biter bitmez sıradakine geçmek (GitHub Actions)
 
-Yeni kontrollü **immediate continuation** seçeneği: GitHub Actions `TractorVS controlled research batch` iş akışında `remaining_cycles` girişini **0 / 1 / 2 / 4 / 8** arasından seç. İşlenen grup başarıyla biter, araştırma kuyruğu `queue_stats` tarafından doğrulanır, kuyrukta `queued` veya `retry` kalır, ilerleme kaydı her işte `success=true` gösterir ve devam hakkı kalırsa aynı GitHub Actions çalışma adımının sonunda `GITHUB_TOKEN` + `actions:write` ile **yeni bir workflow_dispatch** oluşturulur. Sonraki çalışma `remaining_cycles` sayısını **bir azaltarak** aynı main dalında başlar; kullanıcı tekrar Run workflow tuşuna basmaz. GitHub'ın concurrency kilidi ile önceki çalışmayla aynı anda çalışmaz.
+Yeni kontrollü **immediate continuation** seçeneği: GitHub Actions `TractorVS controlled research batch` iş akışında `remaining_cycles` girişini **0 / 1 / 2 / 4 / 8** arasından seç. İşlenen grup sistem hatası olmadan biter, araştırma kuyruğu `queue_stats` tarafından doğrulanır, kuyrukta `queued` veya `retry` kalır, her kayıt ya `success=true` ya da `queue_id` taşıyan belgelenmiş HTTP 422 kaynak eksikliği olduğunda ve devam hakkı kaldığında aynı GitHub Actions çalışma adımının sonunda `GITHUB_TOKEN` + `actions:write` ile **yeni bir workflow_dispatch** oluşturulur. Sonraki çalışma `remaining_cycles` sayısını **bir azaltarak** aynı main dalında başlar; kullanıcı tekrar Run workflow tuşuna basmaz. GitHub'ın concurrency kilidi ile önceki çalışmayla aynı anda çalışmaz.
 
-Her yeniden başlatma geçişinde GitHub Actions başlatma kuyruğu gecikmesi olabilir; anlık/milisaniye süre garantisi yoktur. `remaining_cycles=0` ise zincir başlatılmaz. Varsayılan 1 batch + 2 yeniden başlatma = en fazla 9 araştırma kuyruğu görevi. Üst sınır 8 batch ve 8 yeniden başlatma = en fazla 216 iş; bu maliyetli olabilir ve **Gemini limitini aşabilir**. Aylık 500–1000 TL bütçe doğrulanmadan büyük bir zincir başlatma. İlerleme raporları, yanlış model/kimlik kaynaklarında `needs_source`, boş kuyruk ve API hatalarında **otomatik durma** uygulanır.
+Her yeniden başlatma geçişinde GitHub Actions başlatma kuyruğu gecikmesi olabilir; anlık/milisaniye süre garantisi yoktur. `remaining_cycles=0` ise zincir başlatılmaz. Varsayılan 1 batch + 2 yeniden başlatma = en fazla 9 araştırma kuyruğu görevi. Üst sınır 8 batch ve 8 yeniden başlatma = en fazla 216 iş; bu maliyetli olabilir ve **Gemini limitini aşabilir**. Aylık 500–1000 TL bütçe doğrulanmadan büyük bir zincir başlatma. Kaynak/model kimliği doğrulanamayan HTTP 422 kayıtları `needs_source` durumunda bırakılır, koşunun `source_gaps` sayacında görünür ve güvenilir bilgi gibi yayımlanmaz. Kaynak eksikliğinden farklı hata (401, 429, 5xx, geçersiz cevap) **zinciri durdurur**; boş kuyruk da sonlandırır.
 
 ÖNEMLİ: Bu akış mevcut Edge Function üzerinden araştırma kuyruğunu işler; **doğrudan `tractors.status` alanını `published` yapmaz.** Kaynak doğrulaması, model varyant kontrolü, SQL güvenlik kapısı ve Cloudflare üretim yeniden derlemesi kullanıcıdan yetkili olan ayrı yayın iş akışında sürdürülmelidir. GitHub bağlantısı `TRACTORVS_SUPABASE_ANON_JWT` ve `TRACTORVS_QUEUE_SECRET` isimli iki GitHub Actions Secret olmadan çalışmaz. Bu secret'ların kurulu olup olmadığı bağlayıcı tarafından doğrulanmamıştır; koyulduğunu varsayma. `service_role` JWT kullanma.
 
@@ -63,6 +63,7 @@ Bu işlem her tamamlandığında kendi kendine yeniden başlayan **sınırlı** 
 ## Hata yönetimi
 
 - **401 / 403:** JWT biçimi ve mevcut `TC_QUEUE_SECRET` eşleşmesini kontrol et; sırları hiçbir loga yazma.
+- **HTTP 422 + gerçek kuyruk kaydı:** Resmî kaynak bulunamadı veya model kimliği belirsiz. Satır `needs_source` durumda kalır, `source_gaps` sayılır; diğer kayıtlar devam edebilir. Yanlışlıkla teknik veri yayımlanmaz.
 - **429 / 5xx:** Üst sağlayıcı kota veya geçici hatası; çalışma durur. Kayıttaki `retry` / `needs_source` durumuna ve Gemini hata metnine bak; sınırsız tekrar deneme.
 - **Boş kuyruk:** İşlem başarıyla durur; önceki `needs_source`, `failed` ve `pending` veri incelemeleri tamamlandı demek değildir.
 - **30 dakika iş süresi sınırı:** İş akışı otomatik kapanabilir; yeniden başlatırken yukarıdaki sayımlardan güvenle devam et. Aynı anda yeni koşu başlatma.
