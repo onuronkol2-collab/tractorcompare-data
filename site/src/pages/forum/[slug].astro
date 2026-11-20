@@ -1,0 +1,9 @@
+---
+import ForumTopic from "../../components/ForumTopic.astro";
+import {publishedForumTopics} from "../../lib/forum.ts";
+export async function getStaticPaths(){
+ return (await publishedForumTopics("en")).map(topic=>({params:{slug:topic.slug},props:{topic}}));
+}
+const {topic}=Astro.props;
+---
+<ForumTopic lang="en" topic={topic}/>
