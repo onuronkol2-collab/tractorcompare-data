@@ -15,6 +15,7 @@ import { modelSeoMetadata, modelStructuredData, originalVariantNote } from "../l
 import { getPublicCatalog } from "../lib/catalog";
 import { morePublishedTractors } from "../lib/related-tractors";
 import { modelEvidenceAnswers } from "../lib/model-evidence-answers.ts";
+import {forumText as forumCopy} from "../lib/forum-i18n.ts";
 interface Props { lang: Locale; tractor: TractorRecord; }
 const { lang, tractor } = Astro.props;
 // Same read-only, published-only catalogue already used by getStaticPaths.
@@ -91,6 +92,11 @@ const summaryItems = [
       </article>)}</div>
       <p class="model-answer-method"><a href={localizedPath(lang,"/methodology/")}>{lang==="tr"?"Kaynaklarımızı nasıl doğruluyoruz?":"How we verify technical sources"} ↗</a></p>
     </section>}
+    <a class="model-forum-discussion"
+      href={localizedPath(lang,"/forum/")+"?tractor="+encodeURIComponent(tractor.tractor_id)}>
+      <strong>{forumCopy(lang,"name")} · {forumCopy(lang,"compose")}</strong>
+      <span>{forumCopy(lang,"intro")} ↗</span>
+    </a>
     {(lang==="en"||lang==="tr") && <a class="model-spec-glossary-banner" href={localizedPath(lang,"/guides/tractor-technical-terms/")}><strong>{lang==="tr"?"Teknik terimler size ne anlatıyor?":"What do these technical terms mean?"}</strong><span>{lang==="tr"?"Teknik terimleri örneklerle öğrenin; özellik adlarının yanındaki ? bağlantısından doğrudan açıklamaya gidin.":"Understand technical terms with examples; the ? by each linked specification opens its definition."} ↗</span></a>}
     {groups.length>0?<div class="model-spec-groups">{groups.map((group)=>
       <section class="model-spec-group"><h3>{group.label}</h3><div class="model-spec-grid">
@@ -136,6 +142,11 @@ const summaryItems = [
 </SiteLayout>
 
 <style>
+ .model-forum-discussion{display:flex;flex-wrap:wrap;align-items:center;gap:6px 17px;margin:17px 0 22px;padding:17px 19px;background:#f2f8f7;border:1px solid #bcd5cf;border-radius:13px;color:#245b49;text-decoration:none}
+ .model-forum-discussion strong{font-size:15px;font-weight:900}
+ .model-forum-discussion span{font-size:13px;line-height:1.6}
+ .model-forum-discussion:hover{background:#e7f2ed;border-color:#7baa9b}
+ .model-forum-discussion:focus-visible{outline:3px solid #8abdae;outline-offset:3px}
  .model-evidence-answers{margin:20px 0 29px;padding:23px;border:1px solid #bfd5b8;border-radius:17px;background:#f2f8ed}
  .model-evidence-heading h2{font-size:clamp(21px,2.3vw,28px);color:#1d5134;margin:0 0 9px;line-height:1.3}
  .model-evidence-heading>p:last-child{font-size:14px;line-height:1.7;color:#46634c;margin:0 0 18px}
