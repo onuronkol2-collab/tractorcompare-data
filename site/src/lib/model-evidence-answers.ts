@@ -34,7 +34,7 @@ type Field={
  max:number;
 };
 const fields:readonly Field[]=[
- {id:"rated-power",keys:["engine_power","engine_rated_power","rated_engine_power","engine_gross_power"],unit:"hp",min:5,max:999},
+ {id:"rated-power",keys:["engine_power","engine_rated_power","rated_engine_power"],unit:"hp",min:5,max:999},
  {id:"pto-power",keys:["pto_power_hp","rear_pto_power_hp"],unit:"hp",min:5,max:999},
  {id:"wheelbase",keys:["wheelbase","wheelbase_mm"],unit:"mm",min:800,max:7000},
  {id:"fuel",keys:["fuel_tank_capacity","fuel_tank_capacity_l"],unit:"l",min:5,max:3000},
