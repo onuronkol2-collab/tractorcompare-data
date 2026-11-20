@@ -105,8 +105,10 @@ const maxBatch=Number(process.env.EDU_BATCH_SIZE||5);
 if(!Number.isInteger(maxBatch)||maxBatch<1||maxBatch>7)throw Error("Bad batch size");
 for(const [kind,items] of Object.entries(batches)){
  const result=output.data[kind]||{};
- for(let pos=0;pos<items.length;pos+=maxBatch){
-  const batch=items.slice(pos,pos+maxBatch).filter(row=>!result[row.id]);
+ // UI groups have different field names: schema-required fields cannot be shared.
+ const step=kind==="ui"?1:maxBatch;
+ for(let pos=0;pos<items.length;pos+=step){
+  const batch=items.slice(pos,pos+step).filter(row=>!result[row.id]);
   if(!batch.length)continue;
   try{
    const returned=await translate(batch);
