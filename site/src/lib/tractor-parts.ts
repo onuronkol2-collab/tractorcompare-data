@@ -1,0 +1,608 @@
+/** TractorVS original simple explanation of common tractor parts.
+ * Educational only: manufacturer manuals override these general examples.
+ */
+export const TRACTOR_PART_SECTIONS={
+  "motor": {
+    "tr": [
+      "Motor ve yakıt sistemi",
+      "Motorun içinde hangi parça ne yapıyor?"
+    ],
+    "en": [
+      "Engine and fuel",
+      "What happens under the bonnet?"
+    ]
+  },
+  "drive": {
+    "tr": [
+      "Hareket ve aktarma",
+      "Güç nasıl tekerleğe ulaşır?"
+    ],
+    "en": [
+      "Drive and transmission",
+      "How does power reach the wheels?"
+    ]
+  },
+  "hydraulic": {
+    "tr": [
+      "Hidrolik ve ekipman bağlantıları",
+      "Pulluk nasıl kalkıyor, kepçe nasıl hareket ediyor?"
+    ],
+    "en": [
+      "Hydraulics and linkage",
+      "How do implements and loaders move?"
+    ]
+  },
+  "pto": {
+    "tr": [
+      "Kuyruk mili (PTO)",
+      "Ekipmanın dönen kısmı nasıl çalışır?"
+    ],
+    "en": [
+      "Power take-off",
+      "How do rotating implements work?"
+    ]
+  },
+  "electrical": {
+    "tr": [
+      "Elektrik ve güvenlik",
+      "Marş, göstergeler ve sürücüyü koruyan parçalar."
+    ],
+    "en": [
+      "Electrical and safety",
+      "Starting, displays and operator protection."
+    ]
+  }
+} as const;
+export const TRACTOR_PART_ROWS=[
+  [
+    "motor",
+    "engine-block",
+    "Motor bloğu",
+    "Engine block",
+    "Kaput altında, motorun ana gövdesi.",
+    "The engine's main housing under the bonnet.",
+    "Silindirleri ve motorun içindeki pek çok parçayı taşır. Motorun iskeleti gibi düşünebilirsiniz.",
+    "Holds the cylinders and many moving parts, like the engine's skeleton.",
+    "Pistonlar bu gövdenin içinde hareket eder.",
+    "Pistons move inside this housing.",
+    "Çatlak veya kaçak şüphesi varsa kontrol ettirin.",
+    "Have suspected cracks or leaks inspected."
+  ],
+  [
+    "motor",
+    "piston",
+    "Piston",
+    "Piston",
+    "Motorun silindirlerinin içinde.",
+    "Inside the engine cylinders.",
+    "Yakıtın yanması pistonu iter. Bu hareket sonunda tekerleğe güç verecek dönüşe dönüşür.",
+    "Combustion pushes the piston, beginning the motion that powers the tractor.",
+    "Piston aşağı inerken biyel kolunu hareket ettirir.",
+    "The piston moves a connecting rod.",
+    "Motor bloğu ile piston aynı şey değildir.",
+    "The piston and block are different parts."
+  ],
+  [
+    "motor",
+    "piston-rings",
+    "Piston segmanları",
+    "Piston rings",
+    "Pistonun çevresinde.",
+    "Around each piston.",
+    "Yanma gazlarının aşağı kaçmasını ve yağın yukarı çıkmasını sınırlamaya yardım eder.",
+    "Help seal combustion gases and control oil in the cylinder.",
+    "Aşınırsa motor yağ tüketimi artabilir.",
+    "Worn rings can increase oil consumption.",
+    "Yağ eksilmesi tek başına segman arızasını kanıtlamaz.",
+    "Oil loss alone does not prove ring damage."
+  ],
+  [
+    "motor",
+    "connecting-rod",
+    "Biyel kolu",
+    "Connecting rod",
+    "Piston ile krank mili arasında.",
+    "Between piston and crankshaft.",
+    "Pistonun itme kuvvetini krank miline taşır.",
+    "Carries piston force to the crankshaft.",
+    "Piston aşağı inerken krankı döndürmeye yardım eder.",
+    "It helps turn the crank as the piston moves.",
+    "Motorun içinde onarımı uzmanlık gerektirir.",
+    "Internal repair needs trained personnel."
+  ],
+  [
+    "motor",
+    "crankshaft",
+    "Krank mili",
+    "Crankshaft",
+    "Motorun alt kısmında.",
+    "In the lower engine.",
+    "Pistonun yukarı-aşağı hareketini dönmeye çevirir.",
+    "Turns the piston's up-and-down motion into rotation.",
+    "Motor devri bu milin dönüş hızını anlatır.",
+    "Engine rpm describes this shaft's speed.",
+    "Kuyruk mili ile aynı parça değildir.",
+    "It is not the rear PTO shaft."
+  ],
+  [
+    "motor",
+    "camshaft",
+    "Eksantrik mili",
+    "Camshaft",
+    "Motorun içinde veya silindir kapağında.",
+    "Inside the engine or cylinder head.",
+    "Supapların tam zamanında açılıp kapanmasını sağlar.",
+    "Opens and closes engine valves at the correct time.",
+    "Havanın silindire alınması bu zamanlamaya bağlıdır.",
+    "Air intake depends on that timing.",
+    "Arızada uzman kontrolü gerekir.",
+    "Faults require proper diagnosis."
+  ],
+  [
+    "motor",
+    "valves",
+    "Emme ve egzoz supapları",
+    "Intake and exhaust valves",
+    "Silindir kapağında.",
+    "In the cylinder head.",
+    "Emme supabı havayı içeri alır; egzoz supabı yanmış gazı dışarı bırakır.",
+    "One valve admits air; another releases exhaust gas.",
+    "Motorun nefes alıp vermesindeki kapılar gibidir.",
+    "They act like the engine's breathing doors.",
+    "Ayar yöntemi her motor için aynı değildir.",
+    "Adjustment differs between engines."
+  ],
+  [
+    "motor",
+    "air-filter",
+    "Hava filtresi",
+    "Engine air filter",
+    "Hava giriş borusunda.",
+    "In the air intake line.",
+    "Topraktan kalkan tozu tutarak motoru korur.",
+    "Traps dust before it reaches the engine.",
+    "Tozlu hasatta daha çabuk kirlenebilir.",
+    "It may clog more quickly in dusty harvests.",
+    "Kuru filtreyi rastgele temizlemeyin.",
+    "Follow the manual for cleaning."
+  ],
+  [
+    "motor",
+    "turbocharger",
+    "Turbo",
+    "Turbocharger",
+    "Egzoz ve hava emiş hattı arasında.",
+    "Between the exhaust and intake.",
+    "Egzoz enerjisiyle motora daha fazla hava basar.",
+    "Uses exhaust energy to compress air entering the engine.",
+    "Küçük bir motor daha yüksek güç üretebilir.",
+    "A smaller engine can achieve higher output.",
+    "Motor çalışırken aşırı ısınan yüzeylere dokunmayın.",
+    "Do not touch hot turbo parts."
+  ],
+  [
+    "motor",
+    "fuel-filter",
+    "Mazot filtresi",
+    "Fuel filter",
+    "Depo ile enjeksiyon sistemi arasında.",
+    "Between tank and injection system.",
+    "Mazottaki kirleri tutarak enjektörleri korur.",
+    "Traps contamination to protect injectors.",
+    "Kirli mazot motoru düzensiz çalıştırabilir.",
+    "Dirty diesel may cause rough running.",
+    "Filtre değişiminde kılavuzdaki hava alma adımlarını izleyin.",
+    "Use the proper bleeding procedure."
+  ],
+  [
+    "motor",
+    "injector",
+    "Enjektör",
+    "Fuel injector",
+    "Motorun silindir girişinde.",
+    "At each engine combustion chamber.",
+    "Mazotu doğru zamanda ince damlacıklarla püskürtür.",
+    "Sprays fuel into the engine at the right moment.",
+    "İyi püskürtme düzgün yanmaya yardım eder.",
+    "Correct spray supports proper combustion.",
+    "Basınçlı enjektör hattına çalışırken dokunmayın.",
+    "Never open a live high-pressure fuel line."
+  ],
+  [
+    "motor",
+    "radiator",
+    "Radyatör",
+    "Radiator",
+    "Genellikle kaputun önünde.",
+    "Usually at the front of the bonnet.",
+    "Motor suyunun fazla ısısını havaya aktarır.",
+    "Releases excess heat from the coolant.",
+    "Tozla tıkanırsa hararet yükselebilir.",
+    "Dust blockage can contribute to overheating.",
+    "Motor sıcakken radyatör kapağını açmayın.",
+    "Never open a hot pressure cap."
+  ],
+  [
+    "motor",
+    "water-pump",
+    "Devirdaim pompası",
+    "Coolant pump",
+    "Motor soğutma hattında.",
+    "In the engine cooling circuit.",
+    "Sıcak suyu motor ile radyatör arasında dolaştırır.",
+    "Circulates coolant between engine and radiator.",
+    "Dolaşım olmazsa motor soğumakta zorlanır.",
+    "No circulation means poor cooling.",
+    "Dönen kayışa el yaklaştırmayın.",
+    "Keep hands clear of belts."
+  ],
+  [
+    "motor",
+    "thermostat",
+    "Termostat",
+    "Thermostat",
+    "Motorun soğutma devresinde.",
+    "In the coolant circuit.",
+    "Suyun dolaşımını yöneterek motorun uygun sıcaklığa ulaşmasına yardım eder.",
+    "Controls coolant flow as the engine warms.",
+    "Kışın motorun uygun sıcaklıkta çalışmasına yardımcıdır.",
+    "It helps regulate operating temperature in winter.",
+    "Sökmek kalıcı çözüm değildir.",
+    "Removing it is not a permanent fix."
+  ],
+  [
+    "motor",
+    "oil-pump",
+    "Motor yağ pompası",
+    "Engine oil pump",
+    "Motorun yağlama sisteminde.",
+    "Inside the lubrication system.",
+    "Motor yağını hareketli parçalara gönderir.",
+    "Moves oil to bearings and moving parts.",
+    "Yağ basıncı düşerse parçalarda aşınma artabilir.",
+    "Low oil pressure can cause serious wear.",
+    "Yağ basıncı ikazını görmezden gelmeyin.",
+    "Do not ignore oil-pressure warnings."
+  ],
+  [
+    "motor",
+    "oil-filter",
+    "Motor yağ filtresi",
+    "Engine oil filter",
+    "Motor yağ hattında.",
+    "In the engine oil circuit.",
+    "Yağdaki kirleri yakalar; motorun temiz yağla çalışmasına yardım eder.",
+    "Filters dirt from engine oil.",
+    "Yağ bakımında filtre de gözden geçirilir.",
+    "The filter is checked during oil service.",
+    "Hidrolik yağ filtresiyle karıştırmayın.",
+    "It differs from the hydraulic filter."
+  ],
+  [
+    "drive",
+    "clutch",
+    "Debriyaj",
+    "Clutch",
+    "Motor ile vites kutusu arasında.",
+    "Between engine and gearbox.",
+    "Motorun gücünü vites kutusundan geçici olarak ayırır.",
+    "Temporarily disconnects engine power from the gearbox.",
+    "Vites değiştirmeye yardım eder.",
+    "It helps during gear changes.",
+    "HST traktörde aynı tip pedal olmayabilir.",
+    "HST tractors can work differently."
+  ],
+  [
+    "drive",
+    "gearbox",
+    "Şanzıman",
+    "Transmission",
+    "Motorun arkasındaki aktarma gövdesinde.",
+    "Behind the engine.",
+    "Traktörün hızlı veya yavaş ilerlemesi için uygun dişli oranını seçer.",
+    "Selects ratios for fast or slow movement.",
+    "Pullukta yavaş, yolda hızlı vites seçilir.",
+    "Low gears suit heavy field work.",
+    "Vites sayısı tek başına güç göstergesi değildir.",
+    "Gear count alone is not a power rating."
+  ],
+  [
+    "drive",
+    "differential",
+    "Diferansiyel",
+    "Differential",
+    "Aksın içinde.",
+    "Inside the axle.",
+    "Virajda sağ ve sol tekerin farklı hızlarda dönmesini sağlar.",
+    "Allows the wheels to turn at different speeds in bends.",
+    "Dıştaki teker virajda daha uzun yol alır.",
+    "The outside wheel travels farther.",
+    "Diferansiyel kilidi bundan farklı bir işlevdir.",
+    "Differential lock is a separate function."
+  ],
+  [
+    "drive",
+    "front-drive-shaft",
+    "Ön çeker mili",
+    "Front drive shaft",
+    "Dört çeker traktörde ön aksa doğru.",
+    "On 4WD tractors towards the front axle.",
+    "Gücü ön tekerleklere taşır.",
+    "Carries drive towards the front wheels.",
+    "Çamurlu zeminde ön tekerler de çekişe katılabilir.",
+    "Front wheels may help traction on wet ground.",
+    "2WD traktörde bulunmayabilir.",
+    "Absent on some 2WD tractors."
+  ],
+  [
+    "drive",
+    "brakes",
+    "Fren sistemi",
+    "Brake system",
+    "Tekerleğin veya aksın fren düzeninde.",
+    "At the wheel or axle braking assembly.",
+    "Hareket eden traktörün hızını azaltır ve durdurur.",
+    "Slows and stops the moving tractor.",
+    "Römork çekerken doğru frenleme hayati önem taşır.",
+    "Braking is critical when towing.",
+    "Fren pedallarının yol kullanımını kılavuzdan kontrol edin.",
+    "Follow the manual for road braking."
+  ],
+  [
+    "pto",
+    "pto-output",
+    "Kuyruk mili çıkışı",
+    "PTO output",
+    "Traktörün arkasında; bazen önünde.",
+    "Usually at the rear of the tractor.",
+    "Motordan gelen dönme gücünü ekipmana aktarır.",
+    "Supplies rotary power to implements.",
+    "Biçme makinesi bu çıkışla döner.",
+    "A mower can turn using this output.",
+    "Tam durmadan mile yaklaşmayın.",
+    "Do not approach a spinning shaft."
+  ],
+  [
+    "pto",
+    "cardan",
+    "Kardan şaftı",
+    "Implement driveshaft",
+    "Traktör ile ekipmanın arasında.",
+    "Between tractor and implement.",
+    "Dönen hareketi kuyruk milinden ekipmana taşır.",
+    "Carries rotation from PTO to implement.",
+    "Rotovatörün bıçaklarına güç taşır.",
+    "Transfers power to a rotary tiller.",
+    "Muhafazasız kullanılması çok tehlikelidir.",
+    "Never use an unguarded shaft."
+  ],
+  [
+    "pto",
+    "pto-guard",
+    "PTO koruma kılıfı",
+    "PTO guard",
+    "Dönen şaftın çevresinde.",
+    "Around rotating PTO components.",
+    "Kıyafetin veya vücudun dönen şafta dolanmasını önlemeye yardım eder.",
+    "Helps prevent entanglement with moving shafts.",
+    "Bol kıyafet saniyeler içinde şafta dolanabilir.",
+    "Loose clothing can be pulled in rapidly.",
+    "Koruma olmadan çalıştırmayın.",
+    "Never operate without guarding."
+  ],
+  [
+    "hydraulic",
+    "hydraulic-pump",
+    "Hidrolik pompa",
+    "Hydraulic pump",
+    "Motor veya şanzımana bağlı.",
+    "Driven by the engine or gearbox.",
+    "Hidrolik yağı hareket ettirerek ekipman kaldırma gücü sağlar.",
+    "Moves oil to power linkage and implements.",
+    "Kepçeyi kaldıran sistem buradan beslenebilir.",
+    "A loader uses hydraulic oil flow.",
+    "Toplam pompa debisi çıkış debisine eşit olmayabilir.",
+    "Total pump flow may differ from usable output."
+  ],
+  [
+    "hydraulic",
+    "hydraulic-valve",
+    "Hidrolik valf",
+    "Hydraulic valve",
+    "Kumanda koluyla bağlantılı yağ bloğunda.",
+    "In the valve block linked to controls.",
+    "Yağın hangi silindire gideceğine karar verir.",
+    "Directs oil to the chosen cylinder.",
+    "Kepçe kolunu oynatınca yağın yönü değişir.",
+    "The loader lever directs oil.",
+    "Basınçlı devreyi sökmeyin.",
+    "Do not disconnect pressurised lines."
+  ],
+  [
+    "hydraulic",
+    "hydraulic-hose",
+    "Hidrolik hortum",
+    "Hydraulic hose",
+    "Pompa, valf ve silindirler arasında.",
+    "Between pumps, valves and cylinders.",
+    "Basınçlı yağı bir parçadan diğerine taşır.",
+    "Carries pressurised oil between components.",
+    "Kepçe kollarında esnek hortumlar görürsünüz.",
+    "You see flexible hoses on loaders.",
+    "Kaçağı elle aramayın; yağ deri altına girebilir.",
+    "Never feel for a leak: oil can penetrate skin."
+  ],
+  [
+    "hydraulic",
+    "hydraulic-cylinder",
+    "Hidrolik silindir",
+    "Hydraulic cylinder",
+    "Kaldırıcıda veya kepçede.",
+    "On linkage or loader arms.",
+    "Yağ basıncını itme ya da çekme hareketine çevirir.",
+    "Turns oil pressure into a push or pull.",
+    "Kepçenin yukarı kalkmasını sağlayabilir.",
+    "It can raise a loader bucket.",
+    "Yük varken sökmeyin.",
+    "Never disconnect under load."
+  ],
+  [
+    "hydraulic",
+    "lower-links",
+    "Alt askı kolları",
+    "Lower hitch links",
+    "Traktörün arkasında iki kol.",
+    "Two arms at the tractor rear.",
+    "Pulluk gibi ekipmanların alt bağlantılarını tutar.",
+    "Support the lower connections of implements.",
+    "Pulluk bu iki kola pimlerle bağlanır.",
+    "A plough connects with two lower pins.",
+    "Hareket eden kolların arasında durmayın.",
+    "Stay away from moving linkage."
+  ],
+  [
+    "hydraulic",
+    "top-link",
+    "Orta kol",
+    "Top link",
+    "Arka askının üst ortasında.",
+    "At the top of the rear hitch.",
+    "Ekipmanın öne veya arkaya eğimini ayarlar.",
+    "Adjusts the tilt of an implement.",
+    "Pulluğun açısı orta kol boyuyla değişir.",
+    "Top-link length affects implement angle.",
+    "Pimler güvenle sabitlenmelidir.",
+    "Secure hitch pins correctly."
+  ],
+  [
+    "hydraulic",
+    "stabilisers",
+    "Gergi kolları",
+    "Hitch stabilisers",
+    "Alt askı kollarının yanlarında.",
+    "Beside the lower hitch links.",
+    "Ekipmanın sağa-sola fazla sallanmasını önler.",
+    "Reduce unwanted sideways implement swing.",
+    "Yolda taşınan ekipmanın savrulmasını azaltır.",
+    "Helps prevent sway during transport.",
+    "Ekipmana uygun ayar yapılmalıdır.",
+    "Set them for the specific implement."
+  ],
+  [
+    "hydraulic",
+    "drawbar",
+    "Çeki demiri",
+    "Drawbar",
+    "Traktörün arkasında alçakta.",
+    "At the approved low rear hitch point.",
+    "Römorku traktöre bağlayan güçlü bağlantıdır.",
+    "Provides the correct towing connection.",
+    "Römork pimi bu bağlantıya yerleştirilir.",
+    "A trailer attaches with the correct pin.",
+    "Yüksek rastgele bağlantı geriye devrilme riski doğurur.",
+    "Incorrect high hitching risks rear rollover."
+  ],
+  [
+    "electrical",
+    "battery",
+    "Akü",
+    "Battery",
+    "Akü bölmesinde.",
+    "In the battery compartment.",
+    "Marş ve elektrik donanımına enerji depolar.",
+    "Stores energy for starting and electrical systems.",
+    "Soğukta zayıf akü marşı yavaşlatabilir.",
+    "A weak battery can crank slowly in winter.",
+    "Kutupları kısa devre etmeyin.",
+    "Avoid short circuits."
+  ],
+  [
+    "electrical",
+    "starter",
+    "Marş motoru",
+    "Starter motor",
+    "Motorun volanına yakın.",
+    "Near the engine flywheel.",
+    "İlk çalıştırmada motoru döndürür.",
+    "Cranks the engine to start.",
+    "Kontağı çevirince ilk dönme sesini duyarsınız.",
+    "You hear cranking when starting.",
+    "Alternatörle aynı parça değildir.",
+    "Different from the alternator."
+  ],
+  [
+    "electrical",
+    "alternator",
+    "Alternatör",
+    "Alternator",
+    "Motorun kayışla dönen kısmında.",
+    "Engine driven, often by a belt.",
+    "Motor çalışırken elektrik üretir ve aküyü şarj eder.",
+    "Generates electricity and charges the battery.",
+    "Çalışırken farları beslemeye yardım eder.",
+    "Helps power lights while running.",
+    "Dönen kayışa yaklaşmayın.",
+    "Keep clear of moving belts."
+  ],
+  [
+    "electrical",
+    "fusebox",
+    "Sigorta kutusu",
+    "Fuse box",
+    "Kabin veya motorun elektrik bölümünde.",
+    "In cab or engine electrical area.",
+    "Aşırı akımda devreyi keserek kabloları korur.",
+    "Cuts excessive current to protect wiring.",
+    "Bir far çalışmıyorsa sigorta kontrol edilebilir.",
+    "Check a fuse if a light fails.",
+    "Daha büyük amperli sigorta takmayın.",
+    "Never use a higher-rated fuse."
+  ],
+  [
+    "electrical",
+    "dashboard",
+    "Gösterge paneli",
+    "Dashboard",
+    "Direksiyonun önünde.",
+    "In front of the driver.",
+    "Hararet, devir, yakıt ve uyarıları gösterir.",
+    "Shows temperature, rpm, fuel and warnings.",
+    "Motor ısınırsa gösterge uyarır.",
+    "It can warn about overheating.",
+    "Kritik uyarıyı ihmal etmeyin.",
+    "Never ignore critical warnings."
+  ],
+  [
+    "electrical",
+    "rops",
+    "ROPS devrilme koruması",
+    "ROPS rollover frame",
+    "Açık platformun çevresinde veya onaylı kabinde.",
+    "Around open platforms or certified cabs.",
+    "Devrilmede sürücüye koruma alanı sağlamaya yardım eder.",
+    "Helps preserve space for an operator in a rollover.",
+    "Koruma ve emniyet kemeri birlikte kullanılır.",
+    "It works with the seat belt.",
+    "ROPS tek başına kemersiz güvenlik sağlamaz.",
+    "ROPS does not replace a seat belt."
+  ],
+  [
+    "electrical",
+    "seatbelt",
+    "Emniyet kemeri",
+    "Seat belt",
+    "Sürücü koltuğunda.",
+    "On the driver's seat.",
+    "Devrilme durumunda sürücünün koruma alanında kalmasına yardımcı olur.",
+    "Helps keep the driver within the protective space.",
+    "ROPS ile beraber önemlidir.",
+    "It matters together with ROPS.",
+    "Kılavuzdaki güvenlik talimatlarını izleyin.",
+    "Follow safety instructions."
+  ]
+] as const;
+export const TRACTOR_PARTS=TRACTOR_PART_ROWS.map(r=>({
+ group:r[0],id:"part-"+r[1],name:{tr:r[2],en:r[3]},
+ location:{tr:r[4],en:r[5]},purpose:{tr:r[6],en:r[7]},
+ example:{tr:r[8],en:r[9]},caution:{tr:r[10],en:r[11]}
+}));
