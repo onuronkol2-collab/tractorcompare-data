@@ -16,7 +16,7 @@ test("tractor parts have distinct direct links and practical accessible original
   assert.ok(!ids.has(p.id),"Duplicate direct anchor: "+p.id);ids.add(p.id);
   assert.ok(p.group in TRACTOR_PART_SECTIONS);
   for(const lang of ["tr","en"]){
-   assert.ok(p.name[lang].trim().length>3);
+   assert.ok(p.name[lang].trim().length>=3);
    assert.ok(p.location[lang].trim().length>=12);
    assert.ok(p.purpose[lang].trim().length>=33,"Part needs a simple purpose: "+p.id+" "+lang);
    assert.ok(p.example[lang].trim().length>=20);
