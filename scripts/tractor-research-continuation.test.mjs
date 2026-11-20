@@ -42,6 +42,31 @@ test("stop on cost cap, failed job, missing statistics, empty queue or zero prog
     "batch_not_successful");
 });
 
+test("verified source gaps may be skipped while the bounded chain continues", () => {
+  const sourceGap = {
+    ...receipt,
+    batches: [{
+      failed: 0, source_gaps: 2, processed: 3,
+      results: [
+        { queue_id: "missing-official-page", success: false, source_gap: true, http_status: 422 },
+        { queue_id: "ambiguous-identity", success: false, source_gap: true, http_status: 422 },
+        { queue_id: "found", success: true, source_gap: false, http_status: 200 },
+      ],
+    }],
+  };
+  assert.deepEqual(continuationDecision(sourceGap, "2", "1"), {
+    continue: true, reason: "progress_and_pending_queue", nextCycles: 1,
+  });
+  const fakeGap = {
+    ...sourceGap,
+    batches: [{
+      failed: 0, source_gaps: 1,
+      results: [{ queue_id: "wrong-status", success: false, source_gap: true, http_status: 401 }],
+    }],
+  };
+  assert.equal(continuationDecision(fakeGap, "2", "1").reason, "batch_job_failure_or_no_progress");
+});
+
 test("dispatches one branch-scoped successor with a decreasing counter", async () => {
   let requests = 0;
   const result = await dispatchContinuation({
