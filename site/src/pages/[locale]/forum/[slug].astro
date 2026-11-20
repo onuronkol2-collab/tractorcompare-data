@@ -1,0 +1,12 @@
+---
+import ForumTopic from "../../../components/ForumTopic.astro";
+import {NEW_LOCALES} from "../../../lib/locales.ts";
+import {publishedForumTopics} from "../../../lib/forum.ts";
+export async function getStaticPaths(){
+ const pages=await Promise.all(NEW_LOCALES.map(async locale=>
+  (await publishedForumTopics(locale)).map(topic=>({params:{locale,slug:topic.slug},props:{locale,topic}}))));
+ return pages.flat();
+}
+const {locale,topic}=Astro.props;
+---
+<ForumTopic lang={locale} topic={topic}/>
