@@ -34,6 +34,21 @@ const featured = sorted.filter((tractor) => {
 }).slice(0,3);
 const spotlight = featured[0];
 const count = catalogue.tractors.length;
+const homeUrl=new URL(localizedPath(lang,"/"),Astro.site||"https://tractorvs.com").toString();
+const siteUrl=new URL("/",Astro.site||"https://tractorvs.com").toString();
+const homeSchema={
+ "@context":"https://schema.org",
+ "@graph":[
+  {"@type":"Organization","@id":siteUrl+"#organization",name:"TractorVS",url:siteUrl,
+   description:"Independent agricultural machinery specifications and tractor comparisons."},
+  {"@type":"WebSite","@id":siteUrl+"#website",url:siteUrl,name:"TractorVS",
+   publisher:{"@id":siteUrl+"#organization"},
+   inLanguage:["en","tr","zh-Hans","hi","pt-BR","fr","de","ru","ja","es"]},
+  {"@type":"WebPage","@id":homeUrl+"#webpage",url:homeUrl,name:seoTitle,
+   description:seoDescription, inLanguage:lang==="zh"?"zh-Hans":lang==="pt-br"?"pt-BR":lang,
+   isPartOf:{"@id":siteUrl+"#website"},about:{"@id":siteUrl+"#organization"}}
+ ]
+};
 const suggestionPayload = JSON.stringify(catalogue.tractors.map((tractor) => ({
   brand: tractor.brand_name, model: tractor.model_name,
   variant: tractor.variant, year: tractor.model_year,
@@ -42,7 +57,7 @@ const suggestionPayload = JSON.stringify(catalogue.tractors.map((tractor) => ({
 }))).replace(/</g, "\\u003c");
 ---
 
-<SiteLayout lang={lang} title={seoTitle} description={seoDescription}>
+<SiteLayout lang={lang} title={seoTitle} description={seoDescription} structuredData={homeSchema}>
   <section class="home-hero" id="platform" aria-labelledby="home-heading">
     <div class="container home-hero-inner">
       <div class="home-intro">
