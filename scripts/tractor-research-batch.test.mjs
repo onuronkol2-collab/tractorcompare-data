@@ -55,6 +55,67 @@ test("queue empty is terminal and request authentication remains on the server",
   assert.deepEqual(report.queue_after, { queued: 0, completed: 428 });
 });
 
+test("model/source 422 goes to review without counting as a system failure", () => {
+  const receipt = conciseBatch({
+    requested_batch_size: 3,
+    stop_reason: "batch_limit_reached",
+    results: [
+      { success: false, queue_id: "needs-source-1", http_status: 422 },
+      { success: false, queue_id: "needs-source-2", http_status: 422 },
+      { success: true, queue_id: "researched", http_status: 200 },
+    ],
+  }, 200);
+  assert.equal(receipt.failed, 0);
+  assert.equal(receipt.source_gaps, 2);
+  assert.equal(receipt.results[0].source_gap, true);
+  assert.equal(receipt.results[1].source_gap, true);
+  assert.equal(receipt.results[2].source_gap, false);
+});
+
+test("missing source claim ID or non-422 rejection remains a true failure", () => {
+  const receipt = conciseBatch({
+    requested_batch_size: 3, stop_reason: "batch_limit_reached",
+    results: [
+      { success: false, queue_id: null, http_status: 422 },
+      { success: false, queue_id: "bad-input", http_status: 400 },
+      { success: false, queue_id: "provider-outage", http_status: 503 },
+    ],
+  }, 200);
+  assert.equal(receipt.source_gaps, 0);
+  assert.equal(receipt.failed, 3);
+});
+
+test("review-only first group continues to a second group without retrying it", async () => {
+  const calls = [];
+  const report = await runBatches({
+    batches: "2", jwt: ANON_JWT, queueSecret: "mock-secret",
+    fetchFn: async (_url, init) => {
+      const action = JSON.parse(init.body).action;
+      calls.push(action);
+      if (action === "queue_stats") {
+        return new Response(JSON.stringify({
+          success: true, queue: { queued: 402, retry: 4, needs_source: 14 },
+        }), { status: 200 });
+      }
+      const n = calls.filter(x => x === "process_queue_batch").length;
+      const results = n === 1
+        ? [{ success: false, queue_id: "not-found-1", http_status: 422 },
+           { success: false, queue_id: "not-found-2", http_status: 422 },
+           { success: false, queue_id: "not-found-3", http_status: 422 }]
+        : [{ success: true, queue_id: "valid-model", http_status: 200 }];
+      return new Response(JSON.stringify({
+        requested_batch_size: 3, stop_reason: "batch_limit_reached", results,
+      }), { status: 200 });
+    },
+  });
+  assert.deepEqual(calls, ["process_queue_batch", "process_queue_batch", "queue_stats"]);
+  assert.equal(report.stop_reason, "requested_batch_limit");
+  assert.equal(report.batches[0].failed, 0);
+  assert.equal(report.batches[0].source_gaps, 3);
+  assert.equal(report.batches[1].failed, 0);
+  assert.equal(report.batches[1].source_gaps, 0);
+});
+
 test("upstream failure stops future paid research calls", async () => {
   const actions = [];
   const report = await runBatches({
