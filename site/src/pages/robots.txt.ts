@@ -16,6 +16,10 @@ export const GET: APIRoute = ({ site }) => {
     ? `User-agent: *
 Allow: /
 
+# OAI-SearchBot may index public pages for ChatGPT Search.
+User-agent: OAI-SearchBot
+Allow: /
+
 Sitemap: ${new URL("/sitemap-index.xml", siteUrl).toString()}
 Sitemap: ${new URL("/image-sitemap.xml", siteUrl).toString()}
 `

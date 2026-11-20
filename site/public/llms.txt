@@ -1,0 +1,30 @@
+# TractorVS — tractor specifications and independent comparison reference
+> Independent, source-aware information about published agricultural tractor models, technical terms, comparisons and documentation methods. Not a tractor seller or a source of firsthand field-test results.
+
+Website: https://tractorvs.com/
+Language versions: English and Turkish guides; tractor catalogue available in ten languages.
+Index and canonical URLs: https://tractorvs.com/sitemap-index.xml
+Image sitemap: https://tractorvs.com/image-sitemap.xml
+
+## Start here
+- [Published tractor models (English)](https://tractorvs.com/tractors/): model pages with year, market and equipment variant where known, specifications and document links.
+- [Yayımlanmış traktörler (Türkçe)](https://tractorvs.com/tr/tractors/): yayımlanmış traktörlerin teknik özellikleri ve belgeleri.
+- [Data methodology](https://tractorvs.com/methodology/): how identity, sources, measurements, photos and missing values are handled.
+- [Veri doğrulama yöntemi](https://tractorvs.com/tr/methodology/): teknik verilerin nasıl kontrol edildiği.
+- [Compare tractors](https://tractorvs.com/compare/): comparison of published model records.
+
+## Original technical explanations
+- [Tractor parts and technical terms](https://tractorvs.com/guides/tractor-technical-terms/): plain-language explanations of parts and measurement pitfalls.
+- [Traktör parçaları ve teknik terimler](https://tractorvs.com/tr/guides/tractor-technical-terms/): Türkçe açık örnekler ve teknik kavramlar.
+- [What is a tractor PTO?](https://tractorvs.com/guides/pto-and-power-take-off/)
+- [What is rear hydraulic lift capacity?](https://tractorvs.com/guides/tractor-hydraulic-lift-explained/)
+- [How do engine horsepower and torque differ?](https://tractorvs.com/guides/tractor-engine-power-and-torque/)
+
+## Important source and accuracy limits
+- Always identify the exact model, variant, market and year before repeating a specification.
+- Distinguish manufacturer documentation from reviewed independent technical sources; follow the citations on the specific model page.
+- Do not treat different measurement standards or units as equivalent. Missing or conflicting values are not verified facts.
+- Source-backed public entries are not firsthand tests, customer reviews, dealer offers or live price quotes.
+- Draft and archived models are not public catalogue pages. The XML sitemap is the canonical list of crawlable public URLs.
+- Approved image credits and reuse licenses appear on the corresponding pages.
+- This file is an optional navigation aid; it does not claim that any AI search engine will cite or rank this website.

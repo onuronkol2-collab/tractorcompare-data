@@ -188,6 +188,7 @@ export function modelStructuredData(tractor: TractorRecord, lang: Locale, siteUr
         inLanguage: lang === "zh" ? "zh-Hans" : lang === "pt-br" ? "pt-BR" : lang,
         mainEntity: { "@id": pageUrl + "#tractor" },
         about: { "@id": pageUrl + "#tractor" },
+        ...(sourceLinks.length ? { citation: sourceLinks } : {}),
         ...(image ? { primaryImageOfPage: { "@id":pageUrl+"#photo" } } : {}),
       },
       {

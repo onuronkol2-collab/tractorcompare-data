@@ -14,6 +14,7 @@ import {hasInternationalSonalikaContext,isSonalikaExportSourceNote,SONALIKA_EXPO
 import { modelSeoMetadata, modelStructuredData, originalVariantNote } from "../lib/model-seo";
 import { getPublicCatalog } from "../lib/catalog";
 import { morePublishedTractors } from "../lib/related-tractors";
+import { modelEvidenceAnswers } from "../lib/model-evidence-answers.ts";
 interface Props { lang: Locale; tractor: TractorRecord; }
 const { lang, tractor } = Astro.props;
 // Same read-only, published-only catalogue already used by getStaticPaths.
@@ -26,6 +27,7 @@ const listingUrl = localizedPath(lang,"/tractors/");
 const compareUrl = localizedPath(lang,"/compare/") + "?left=" + encodeURIComponent(tractor.tractor_id);
 const { title, description } = modelSeoMetadata(tractor, lang);
 const originalNote = originalVariantNote(tractor);
+const answerItems=(lang==="tr"||lang==="en")?modelEvidenceAnswers(tractor,lang):[];
 const cover=primaryTractorPhoto(tractor);
 const structuredData = import.meta.env.PUBLIC_INDEXING_ENABLED === "true" && Astro.site
   ? modelStructuredData(tractor, lang, Astro.site.toString()) : null;
@@ -71,6 +73,24 @@ const summaryItems = [
       <strong>{t(lang,"manufacturerDiscrepancy")}</strong>
       {manufacturerDiscrepancies.map((note)=><p>{note}</p>)}
     </aside>}
+    {answerItems.length>0 && <section class="model-evidence-answers" aria-labelledby="model-answers-heading">
+      <div class="model-evidence-heading">
+        <p class="eyebrow"><span class="eyebrow-mark"></span>{lang==="tr"?"KAYNAĞI GÖSTERİLEN KISA CEVAPLAR":"SHORT ANSWERS WITH SOURCES"}</p>
+        <h2 id="model-answers-heading">{lang==="tr"?"Bu traktör hakkında doğrulanabilen bilgiler":"Documented facts about this tractor"}</h2>
+        <p>{lang==="tr"?"Buradaki rakamlar yalnızca bağlantılı kanıtı bulunan teknik kayıtlarımızdan alınır. Eksik veya çelişkili bilgiler kesinmiş gibi özetlenmez.":"Only reviewed, source-linked technical entries are summarized here. Missing or conflicting claims are not guessed."}</p>
+      </div>
+      <div class="model-answer-grid">{answerItems.map(item=><article class="model-answer-card">
+        <h3>{item.question}</h3>
+        <p>{item.answer}</p>
+        <div class="model-answer-links">
+          <a href={item.sourceUrl} target="_blank" rel="noopener noreferrer">
+            {lang==="tr"?(item.sourceType==="manufacturer"?"Üretici belgesi":"Bağımsız teknik kaynak"):(item.sourceType==="manufacturer"?"Manufacturer document":"Independent technical source")} ↗
+          </a>
+          {item.guidePath&&<a href={localizedPath(lang,item.guidePath)}>{lang==="tr"?"Terimi açıkla":"Explain the term"} ↗</a>}
+        </div>
+      </article>)}</div>
+      <p class="model-answer-method"><a href={localizedPath(lang,"/methodology/")}>{lang==="tr"?"Kaynaklarımızı nasıl doğruluyoruz?":"How we verify technical sources"} ↗</a></p>
+    </section>}
     {(lang==="en"||lang==="tr") && <a class="model-spec-glossary-banner" href={localizedPath(lang,"/guides/tractor-technical-terms/")}><strong>{lang==="tr"?"Teknik terimler size ne anlatıyor?":"What do these technical terms mean?"}</strong><span>{lang==="tr"?"Teknik terimleri örneklerle öğrenin; özellik adlarının yanındaki ? bağlantısından doğrudan açıklamaya gidin.":"Understand technical terms with examples; the ? by each linked specification opens its definition."} ↗</span></a>}
     {groups.length>0?<div class="model-spec-groups">{groups.map((group)=>
       <section class="model-spec-group"><h3>{group.label}</h3><div class="model-spec-grid">
@@ -116,6 +136,17 @@ const summaryItems = [
 </SiteLayout>
 
 <style>
+ .model-evidence-answers{margin:20px 0 29px;padding:23px;border:1px solid #bfd5b8;border-radius:17px;background:#f2f8ed}
+ .model-evidence-heading h2{font-size:clamp(21px,2.3vw,28px);color:#1d5134;margin:0 0 9px;line-height:1.3}
+ .model-evidence-heading>p:last-child{font-size:14px;line-height:1.7;color:#46634c;margin:0 0 18px}
+ .model-answer-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,255px),1fr));gap:13px}
+ .model-answer-card{padding:17px 18px;border:1px solid #d5e4cf;border-radius:13px;background:white;overflow-wrap:anywhere}
+ .model-answer-card h3{font-size:16px;color:#25543a;line-height:1.4;margin:0 0 11px}
+ .model-answer-card p{color:#364e3c;font-size:14px;line-height:1.8;margin:0 0 14px}
+ .model-answer-links{display:flex;flex-wrap:wrap;gap:10px 14px}
+ .model-answer-links a,.model-answer-method a{color:#226a42;text-decoration:underline;text-underline-offset:3px;font-weight:800;font-size:13px}
+ .model-answer-links a:focus-visible,.model-answer-method a:focus-visible{outline:3px solid #71a97c;outline-offset:3px}
+ .model-answer-method{margin:16px 0 0}
  .model-spec-glossary-banner{display:flex;flex-wrap:wrap;align-items:center;gap:7px 17px;padding:16px 19px;border:1px solid #bedab5;border-radius:13px;margin:17px 0 22px;background:#edf6e6;color:#1e4b2b;text-decoration:none;}
  .model-spec-glossary-banner:hover{border-color:#669e62;background:#e2f0d9;}
  .model-spec-glossary-banner strong{font-size:15px;font-weight:900;}
