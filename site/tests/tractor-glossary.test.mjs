@@ -9,8 +9,8 @@ const layout=readFileSync(new URL("../src/layouts/SiteLayout.astro",import.meta.
 const en=readFileSync(new URL("../src/pages/guides/tractor-technical-terms/index.astro",import.meta.url),"utf8");
 const tr=readFileSync(new URL("../src/pages/tr/guides/tractor-technical-terms/index.astro",import.meta.url),"utf8");
 
-test("89 original bilingual technical concepts with unique SEO-safe anchors and realistic comparison guidance",()=>{
- assert.equal(GLOSSARY_TERMS.length,89);
+test("96 original bilingual technical concepts with unique SEO-safe anchors and realistic comparison guidance",()=>{
+ assert.equal(GLOSSARY_TERMS.length,96);
  const seen=new Set();
  for(const x of GLOSSARY_TERMS){
   assert.match(x.id,/^[a-z0-9]+(?:-[a-z0-9]+)*$/);
@@ -28,7 +28,11 @@ test("89 original bilingual technical concepts with unique SEO-safe anchors and 
 
 test("model specification keys point only to valid glossary definitions",()=>{
  const cases={
+  engine_model:"engine-model",engine_type:"engine-type",
   engine_rated_power:"rated-power",rated_engine_power:"rated-power",
+  cab_suspension:"cab-suspension",battery_capacity:"battery",alternator:"alternator",
+  hydraulic_external_control:"external-controls",manufacturer_model_code:"model-identity",
+  engine_hp_category:"engine-power",
   engine_torque:"torque",engine_displacement:"displacement",
   power_range:"engine-power",pto_power_hp:"pto-power",
   rear_pto_speed:"pto-speeds",transmission_type:"manual-gearbox",
