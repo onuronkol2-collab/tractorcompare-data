@@ -1,0 +1,74 @@
+---
+import SiteLayout from "../layouts/SiteLayout.astro";
+import ForumComposer from "./ForumComposer.astro";
+import {forumText as ft} from "../lib/forum-i18n.ts";
+import {publishedForumReplies,forumDate,type ForumTopic} from "../lib/forum.ts";
+import {getPublicCatalog} from "../lib/catalog.ts";
+import {localizedPath,type Locale,LOCALE_TAGS} from "../lib/locales.ts";
+interface Props {lang:Locale;topic:ForumTopic}
+const {lang,topic}=Astro.props;
+const replies=await publishedForumReplies(lang,topic.topic_id);
+const catalog=(await getPublicCatalog()).tractors;
+const tractor=topic.tractor_id?catalog.find(t=>t.tractor_id===topic.tractor_id):null;
+const forumUrl=localizedPath(lang,"/forum/");
+const publicPath=forumUrl+topic.slug+"/";
+const eligible=Boolean(topic.seo_ready&&topic.status==="published"&&
+ topic.body.trim().length>=150&&topic.title.trim().length>=12);
+const origin=Astro.site||new URL("https://tractorvs.com");
+const schema=eligible?{
+ "@context":"https://schema.org","@type":"WebPage",url:new URL(publicPath,origin).toString(),
+ name:topic.title,description:topic.body.slice(0,200),inLanguage:LOCALE_TAGS[lang],
+ isAccessibleForFree:true,isPartOf:{"@type":"CollectionPage",url:new URL(forumUrl,origin).toString()}
+}:null;
+// Real authorship is unavailable in the public projection. Do not fabricate
+// DiscussionForumPosting author or engagement stats to chase rich results.
+---
+<SiteLayout lang={lang} title={topic.title+" | TractorVS"} description={topic.body.slice(0,190)}
+  indexable={eligible} structuredData={schema} availableLocales={[lang]}>
+ <div class="forum-thread">
+  <div class="container">
+   <nav class="thread-breadcrumb"><a href={forumUrl}>{ft(lang,"back")}</a> / {ft(lang,topic.category)}</nav>
+   <article class="forum-first-post">
+    <div class="thread-meta">
+     <span>{ft(lang,topic.category)}</span>
+     <time datetime={topic.created_at}>{forumDate(topic.created_at,lang)}</time>
+     {topic.machine_translated&&<span>{ft(lang,"translated")}</span>}
+    </div>
+    <h1>{topic.title}</h1>
+    <div class="forum-body">{topic.body.split(/\n\s*\n/).filter(Boolean).map(p=><p>{p}</p>)}</div>
+    {tractor&&<p class="forum-tractor">
+     <a href={localizedPath(lang,"/tractors/"+tractor.slug+"/")}>{tractor.brand_name} {tractor.model_name}</a>
+    </p>}
+   </article>
+   <section class="forum-replies" aria-labelledby="forum-replies-heading">
+    <h2 id="forum-replies-heading">{ft(lang,"replies")} ({replies.length})</h2>
+    {replies.map((reply,i)=><article class="forum-reply">
+      <div class="reply-meta">
+       <span>#{i+1}</span>
+       <time datetime={reply.created_at}>{forumDate(reply.created_at,lang)}</time>
+       {reply.machine_translated&&<span>{ft(lang,"translated")}</span>}
+      </div>
+      <div>{reply.body.split(/\n\s*\n/).filter(Boolean).map(p=><p>{p}</p>)}</div>
+    </article>)}
+   </section>
+   <ForumComposer lang={lang} mode="reply" topicId={topic.topic_id}/>
+   <nav class="forum-back"><a href={forumUrl}>{ft(lang,"back")} ↗</a></nav>
+  </div>
+ </div>
+</SiteLayout>
+<style>
+.forum-thread{background:#f3f8f1;color:#2b4b35;min-height:68vh;padding:32px 0 75px}
+.thread-breadcrumb,.forum-back{font-size:13px;color:#376e47;line-height:1.6;margin:0 0 18px}
+.forum-thread a{color:#23683e;text-decoration:underline;text-underline-offset:3px}
+.forum-first-post{background:white;border:1px solid #c9dac6;border-radius:18px;padding:clamp(20px,4vw,40px)}
+.forum-first-post h1{font-size:clamp(27px,3.7vw,42px);line-height:1.2;color:#205335;margin:17px 0 23px;overflow-wrap:anywhere}
+.thread-meta,.reply-meta{display:flex;gap:10px 20px;flex-wrap:wrap;color:#53765c;font-size:12px}
+.forum-body p,.forum-reply p{font-size:clamp(15px,1.8vw,17px);line-height:1.85;white-space:pre-wrap;overflow-wrap:anywhere;margin:0 0 18px}
+.forum-tractor{padding:12px 15px;background:#e8f1e4;border-radius:9px}
+.forum-replies{margin:34px 0}
+.forum-replies h2{font-size:clamp(21px,2.5vw,28px);color:#1a5232;margin-bottom:22px}
+.forum-reply{padding:22px 25px;background:#fff;border:1px solid #d3e3d2;border-radius:14px;margin:13px 0}
+.reply-meta{margin-bottom:15px}
+.forum-back{margin:24px 0}
+.forum-thread a:focus-visible{outline:3px solid #8cb78a;outline-offset:3px}
+</style>
