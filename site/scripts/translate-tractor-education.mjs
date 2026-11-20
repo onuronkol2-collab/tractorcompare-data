@@ -6,7 +6,7 @@
  * not routable or indexable until an independent locale QA gate passes.
  */
 import {createHash} from "node:crypto";
-import {mkdir,writeFile} from "node:fs/promises";
+import {mkdir,writeFile,readFile} from "node:fs/promises";
 import {resolve} from "node:path";
 import {GLOSSARY_ROWS,GLOSSARY_SECTIONS} from "../src/lib/tractor-glossary.ts";
 import {TRACTOR_PART_ROWS,TRACTOR_PART_SECTIONS} from "../src/lib/tractor-parts.ts";
@@ -48,6 +48,16 @@ const output={locale:target,sourceHash:version,state:"draft-needs-editorial-revi
   requires:["native-language editorial review","terminology consistency","safety warning fidelity","number and unit fidelity","no English content fallbacks"],
   reviewed:false
  }};
+const archiveFile=resolve(archiveDir,target+".json");
+try{
+ const previous=JSON.parse(await readFile(archiveFile,"utf8"));
+ if(previous?.sourceHash===version&&previous?.locale===target){
+  for(const [category,fields] of Object.entries(previous.data||{})){
+   if(fields&&typeof fields==="object")output.data[category]=fields;
+  }
+  console.log("RESUME_TRANSLATION "+target+" from identical source hash");
+ }
+}catch(err){if(err?.code!=="ENOENT")throw err;}
 const bad=[];
 let calls=0;
 const maxCalls=Number(process.env.EDU_MAX_GEMINI_CALLS||55);
@@ -93,9 +103,10 @@ async function translate(items){
 const maxBatch=Number(process.env.EDU_BATCH_SIZE||5);
 if(!Number.isInteger(maxBatch)||maxBatch<1||maxBatch>7)throw Error("Bad batch size");
 for(const [kind,items] of Object.entries(batches)){
- const result={};
+ const result=output.data[kind]||{};
  for(let pos=0;pos<items.length;pos+=maxBatch){
-  const batch=items.slice(pos,pos+maxBatch);
+  const batch=items.slice(pos,pos+maxBatch).filter(row=>!result[row.id]);
+  if(!batch.length)continue;
   try{
    const returned=await translate(batch);
    for(const item of batch)result[item.id]=returned.get(item.id);
@@ -114,6 +125,6 @@ output.summary=Object.fromEntries(Object.entries(output.data).map(([k,v])=>[k,Ob
 output.errors=bad;
 output.validation.complete=bad.length===0&&Object.entries(expected).every(([k,n])=>Object.keys(output.data[k]||{}).length===n);
 await mkdir(archiveDir,{recursive:true});
-await writeFile(resolve(archiveDir,target+".json"),JSON.stringify(output,null,2)+"\n","utf8");
+await writeFile(archiveFile,JSON.stringify(output,null,2)+"\n","utf8");
 console.log("TRANSLATION_DRAFT_SUMMARY "+JSON.stringify({locale:target,complete:output.validation.complete,hash:version,calls,counts:output.summary,failures:bad.length}));
 if(!output.validation.complete)process.exitCode=2;
