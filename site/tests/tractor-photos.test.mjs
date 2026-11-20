@@ -13,9 +13,11 @@ const tractor=(brand_name,model_name)=>({
   engine:null,transmission:null,drivetrain:null,weight_kg:null,specifications:[]
 });
 test("only exact matching tractor model identity receives a verified photo",()=>{
-  assert.equal(APPROVED_TRACTOR_PHOTOS.length,52);
+  assert.equal(APPROVED_TRACTOR_PHOTOS.length,54);
   assert.equal(tractorPhotos(tractor("Belarus","82.1")).length,4);
   assert.equal(tractorPhotos(tractor("Belarus","80.1")).length,1);
+  assert.equal(tractorPhotos(tractor("Belarus","132N")).length,1);
+  assert.equal(tractorPhotos(tractor("Belarus","152")).length,1);
   assert.equal(tractorPhotos(tractor("New Holland","T5.110")).length,1);
   assert.equal(tractorPhotos(tractor("New Holland","T6.180")).length,1);
   assert.equal(tractorPhotos(tractor("Case IH","Puma 150")).length,1);
@@ -29,6 +31,19 @@ test("only exact matching tractor model identity receives a verified photo",()=>
   assert.equal(tractorPhotos(tractor("Case IH","Puma 155")).length,0);
   assert.equal(primaryTractorPhoto(tractor("Unknown Brand","X")),null);
 });
+test("new Belarus photographs keep exact model names and rights credit", () => {
+  const photo132=tractorPhotos(tractor("Belarus","132N"))[0];
+  const photo152=tractorPhotos(tractor("Belarus","152"))[0];
+  assert.equal(photo132.photographer,"Picture30");
+  assert.equal(photo152.photographer,"Homoatrox");
+  assert.equal(photo132.licenseName,"CC BY-SA 3.0");
+  assert.equal(photo152.licenseName,"CC BY-SA 3.0");
+  assert.match(photo132.originFullUrl,/Belarus-132N\.jpg$/);
+  assert.match(photo152.originFullUrl,/Belarus_152_tractor_%28Belagro-2021%29\.jpg$/);
+  assert.equal(photo132.configurationExact,false);
+  assert.equal(photo152.configurationExact,false);
+});
+
 test("each approved photograph has a verified model source and re-use license",()=>{
   const ids=new Set();
   for(const image of APPROVED_TRACTOR_PHOTOS){
@@ -105,9 +120,9 @@ test("fullscreen viewer, linked credits and public image sitemap use SSR images"
 });
 
 test("historic photo batch is staged with rights and does not create records",()=>{
-  assert.equal(HISTORICAL_LICENSED_PHOTOS.length,41);
+  assert.equal(HISTORICAL_LICENSED_PHOTOS.length,43);
   const all=new Set(HISTORICAL_LICENSED_PHOTOS.map(x=>x.fileId));
-  assert.equal(all.size,41);
+  assert.equal(all.size,43);
   assert.ok(HISTORICAL_LICENSED_PHOTOS.every(x=>x.configurationExact===false));
   assert.ok(!HISTORICAL_LICENSED_PHOTOS.some(x=>["Product","Vehicle"].includes(x.model)));
 });
