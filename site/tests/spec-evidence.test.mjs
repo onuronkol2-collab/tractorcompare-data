@@ -156,3 +156,40 @@ test("official Zetor UK Forterra manufacturer table is linkable only with dated 
   assert.equal(officialManufacturerSourceUrl({...spec,verified_at:null},"Zetor"),null);
   assert.equal(officialManufacturerSourceUrl({...spec,source_type:"independent_test"},"Zetor"),null);
 });
+
+
+test("Tümosan 8095 exact manufacturer page appears only with dated source evidence", () => {
+  const src = {
+    ...official,
+    source_url: "https://www.tumosan.com.tr/tr/urunler/8095",
+    source_type: "manufacturer_specification",
+    evidence_text: "Tümosan 8095 resmî ürün tablosu: Nominal Motor Gücü (HP) = 95",
+  };
+  assert.equal(officialManufacturerSourceUrl(src, "Tümosan"), src.source_url);
+  for (const source_url of [
+    "http://www.tumosan.com.tr/tr/urunler/8095",
+    "https://www.tumosan.com.tr.evil.test/tr/urunler/8095",
+    "https://www.tumosan.com.tr@evil.test/tr/urunler/8095",
+  ]) assert.equal(officialManufacturerSourceUrl({...src, source_url}, "Tümosan"), null);
+  assert.equal(officialManufacturerSourceUrl({...src, verified_at:null}, "Tümosan"), null);
+});
+
+test("CNH shared content hub is allowlisted ONLY for the actual model-verified TD5 brochure", () => {
+  const url = "https://cnhi-p-001-delivery.sitecorecontenthub.cloud/api/public/content/c3d13220f29640458ef3f059d2865523?v=25dae628";
+  const src = {
+    ...official,
+    source_url: url,
+    source_type: "manufacturer_specification",
+    evidence_text: "New Holland TD5.90: Rated horsepower ISO TR14396 ECE R120 = 66/88 kW/hp",
+  };
+  assert.equal(officialManufacturerSourceUrl(src, "New Holland"), url);
+  for (const source_url of [
+    "https://cnhi-p-001-delivery.sitecorecontenthub.cloud/api/public/content/anotherfile?v=25dae628",
+    "https://cnhi-p-001-delivery.sitecorecontenthub.cloud/api/public/content/c3d13220f29640458ef3f059d2865523?v=malicious",
+    "https://cnhi-p-001-delivery.sitecorecontenthub.cloud.bad.test/api/public/content/c3d13220f29640458ef3f059d2865523?v=25dae628",
+    "http://cnhi-p-001-delivery.sitecorecontenthub.cloud/api/public/content/c3d13220f29640458ef3f059d2865523?v=25dae628",
+  ]) assert.equal(officialManufacturerSourceUrl({...src, source_url}, "New Holland"), null, source_url);
+  assert.equal(officialManufacturerSourceUrl({...src, source_type:"independent_test"}, "New Holland"), null);
+  assert.equal(officialManufacturerSourceUrl({...src, evidence_text:""}, "New Holland"), null);
+  assert.equal(officialManufacturerSourceUrl(src, "Case IH"), null);
+});
