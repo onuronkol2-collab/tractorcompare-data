@@ -185,6 +185,27 @@ const queryTerms=(term:(typeof GLOSSARY_TERMS)[number])=>
     <p id="glossary-empty" class="glossary-empty" hidden>{tr?"Bu kelimeyle eşleşen terim bulunamadı. Farklı bir teknik ad deneyin.":"No matching term found. Try another technical word."}</p>
    </section>
 
+   <section class="glossary-deepdives" aria-labelledby="deep-dives-heading">
+    <p class="glossary-section-kicker">{tr?"AYRINTILI TRAKTÖR REHBERLERİ":"IN-DEPTH TRACTOR GUIDES"}</p>
+    <h2 id="deep-dives-heading">{tr?"Bir terimin ötesine geçin: Gerçek işte nasıl kullanılır?":"Beyond a definition: What changes in real work?"}</h2>
+    <p class="glossary-deepdives-lead">{tr?"96 kavramı öğrendikten sonra motor, kuyruk mili ve hidrolik sistemlerin bir ekipman seçiminde nasıl birlikte değerlendirileceğini okuyun. Bu rehberler yalnızca sözlük tekrarları değildir: ölçüm farkları, uygulama adımları ve yanıltıcı katalog örneklerini açıklar.":"Once you've explored the 96 concepts, see how power, PTO and hydraulics work together in equipment selection. These articles go beyond definitions with measurement pitfalls, practical steps and brochure comparisons."}</p>
+    <div class="glossary-deepdives-grid">
+     {([
+       ["tractor-engine-power-and-torque",tr?"Motor gücü, tork, HP ve PS":"Engine power, torque, hp and PS",
+        tr?"Aynı '100 beygir' neden her zaman aynı değildir? Nominal güç, boost ve güç standardını doğru okuyun.":"Why two '100 hp' ratings can differ: rated output, boost and test standards."],
+       ["pto-and-power-take-off",tr?"PTO: 540, 540E ve 1000 devir":"PTO: 540, 540E and 1000 rpm",
+        tr?"Kuyruk mili nasıl çalışır, hangi ekipmanla uyumludur? Güç, bağlantı ve güvenlik kontrolleri.":"How the power take-off works and what speed, coupling and safety checks matter."],
+       ["tractor-hydraulic-lift-explained",tr?"Hidrolik: 610 mm, debi ve basınç":"Hydraulics: 610 mm, flow and pressure",
+        tr?"3.000 kg kaldırma ne demek? Askı ucu ile 610 mm geriden ölçülen değerler aynı değildir.":"What does a 3,000 kg lift rating mean? Understanding the 610 mm test point."]
+     ] as const).map(([slug,heading,desc],index)=><a href={localizedPath(lang,"/guides/"+slug+"/")}>
+       <span class="glossary-deepdives-index">0{index+1} / {tr?"UYGULAMALI REHBER":"PRACTICAL GUIDE"}</span>
+       <h3>{heading}</h3>
+       <p>{desc}</p>
+       <strong>{tr?"Rehberi oku":"Read the guide"} <span aria-hidden="true">↗</span></strong>
+     </a>)}
+    </div>
+   </section>
+
    <section class="glossary-gallery" aria-labelledby="gorsel-baslik">
     <div class="glossary-gallery-intro">
       <p class="glossary-section-kicker">{tr?"GERÇEK TRAKTÖR FOTOĞRAFLARI":"REAL TRACTOR PHOTOGRAPHS"}</p>
@@ -333,6 +354,17 @@ const queryTerms=(term:(typeof GLOSSARY_TERMS)[number])=>
  .glossary-caution strong{color:#9a6526;}
  .glossary-example p,.glossary-caution p{margin:4px 0 0;color:#44584a;font-size:13px;line-height:1.7;}
  .glossary-empty{padding:25px;text-align:center;border:1px dashed #d2a35d;background:#fff9ec;border-radius:16px;color:#764f1c;}
+ .glossary-deepdives{margin-top:70px;border-top:1px solid #cfdfcc;padding-top:50px}
+ .glossary-deepdives h2{font-size:clamp(26px,2.85vw,39px);line-height:1.2;color:#1d4b31;margin:0 0 13px}
+ .glossary-deepdives-lead{font-size:15px;line-height:1.85;color:#4a6250;max-width:800px;margin:0 0 25px}
+ .glossary-deepdives-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:15px}
+ .glossary-deepdives-grid a{display:flex;flex-direction:column;min-height:245px;gap:11px;padding:26px;border:1px solid #d0e0ce;border-radius:17px;background:#fff;color:#204c32;text-decoration:none}
+ .glossary-deepdives-grid a:hover{border-color:#669c6e;box-shadow:0 14px 30px #173c2210}
+ .glossary-deepdives-index{font-size:10px;letter-spacing:.08em;font-weight:900;color:#538258}
+ .glossary-deepdives-grid h3{font-size:clamp(18px,1.65vw,24px);line-height:1.32;color:#205038;margin:0}
+ .glossary-deepdives-grid p{font-size:13px;color:#536b58;line-height:1.7;margin:0}
+ .glossary-deepdives-grid strong{margin-top:auto;font-size:13px;color:#1f693b}
+ @media(max-width:850px){.glossary-deepdives-grid{grid-template-columns:1fr}.glossary-deepdives-grid a{min-height:0}}
  .glossary-gallery{margin:80px 0 62px;padding:30px;border-radius:24px;background:#e9f0e6;}
  .glossary-gallery-intro{max-width:770px;}
  .glossary-gallery-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;}

@@ -1,0 +1,175 @@
+---
+import SiteLayout from "../layouts/SiteLayout.astro";
+import {APPROVED_TRACTOR_PHOTOS} from "../lib/tractor-photos.ts";
+import {TECHNICAL_DEEP_DIVES,getTechnicalDeepDive,type TechnicalDeepDiveSlug} from "../lib/tractor-technical-deep-dives.ts";
+import {localizedPath} from "../lib/locales.ts";
+interface Props {lang:"en"|"tr"; slug:TechnicalDeepDiveSlug}
+const {lang,slug}=Astro.props;
+const guide=getTechnicalDeepDive(slug);
+if(!guide) throw new Error("Missing editorial deep dive "+slug);
+const tr=lang==="tr";
+const hub=localizedPath(lang,"/guides/tractor-technical-terms/");
+const catalog=localizedPath(lang,"/tractors/");
+const compare=localizedPath(lang,"/compare/");
+const permalink=localizedPath(lang,"/guides/"+guide.slug+"/");
+const base=Astro.site ?? new URL("https://tractorvs.com");
+const url=new URL(permalink,base).toString();
+const hero=APPROVED_TRACTOR_PHOTOS.find(p=>p.brand===guide.heroPhoto.brand&&p.model===guide.heroPhoto.model);
+const image=hero?new URL(hero.displayUrl,base).toString():undefined;
+const other=TECHNICAL_DEEP_DIVES.filter(x=>x.slug!==slug);
+const headline=guide.title[lang];
+const description=guide.description[lang];
+const structuredData={
+ "@context":"https://schema.org",
+ "@graph":[
+  {"@type":"TechArticle","@id":url+"#article",headline,description,url,
+   inLanguage:lang,mainEntityOfPage:{"@id":url+"#webpage"},
+   author:{"@type":"Organization",name:"TractorVS"},
+   publisher:{"@type":"Organization",name:"TractorVS"},
+   isAccessibleForFree:true,datePublished:"2026-11-20",dateModified:"2026-11-20",
+   ...(image?{image}:{}),
+   about:[{"@type":"Thing",name:"Agricultural tractor"},{"@type":"Thing",name:headline}]},
+  {"@type":"WebPage","@id":url+"#webpage",url,name:headline,description,inLanguage:lang,
+   mainEntity:{"@id":url+"#article"}},
+  {"@type":"BreadcrumbList",itemListElement:[
+   {"@type":"ListItem",position:1,name:tr?"Ana sayfa":"Home",item:new URL(localizedPath(lang,"/"),base).toString()},
+   {"@type":"ListItem",position:2,name:tr?"Traktör teknik terimleri":"Tractor technical terms",item:new URL(hub,base).toString()},
+   {"@type":"ListItem",position:3,name:headline,item:url}
+  ]}
+ ]
+};
+---
+<SiteLayout lang={lang} title={headline+" | TractorVS"} description={description}
+  availableLocales={["en","tr"]} ogImage={image} structuredData={structuredData}>
+<article class="learn-article">
+ <header class="learn-hero">
+  <div class="container learn-hero-inner">
+   <div class="learn-hero-text">
+    <nav class="learn-crumb" aria-label={tr?"İçerik yolu":"Breadcrumb"}>
+     <a href={localizedPath(lang,"/")}>{tr?"Ana sayfa":"Home"}</a><span>/</span>
+     <a href={hub}>{tr?"Teknik terimler":"Technical terms"}</a><span>/</span>
+     <span aria-current="page">{tr?"Detaylı rehber":"In-depth guide"}</span>
+    </nav>
+    <p class="learn-eyebrow">{tr?"TRACTORVS • UYGULAMALI TEKNİK REHBER":"TRACTORVS • PRACTICAL TECHNICAL GUIDE"}</p>
+    <h1>{headline}</h1>
+    <p class="learn-summary">{guide.lead[lang]}</p>
+    <div class="learn-hero-actions">
+      <a class="learn-button" href="#icerik">{tr?"Rehberi oku":"Read the guide"} ↓</a>
+      <a class="learn-button learn-quiet" href={compare}>{tr?"Traktör karşılaştır":"Compare tractors"} ↗</a>
+    </div>
+   </div>
+   {hero&&<figure class="learn-cover">
+    <button type="button" data-tractor-photo data-photo-url={hero.fullUrl}
+      data-photo-label={hero.brand+" "+hero.model}
+      data-photo-credit={hero.photographer} data-photo-source={hero.sourcePage}
+      data-photo-license={hero.licenseUrl} data-photo-license-name={hero.licenseName}
+      aria-label={tr?"Fotoğrafı tam ekran gör":"View photograph full screen"}>
+      <img src={hero.displayUrl} srcset={hero.thumbUrl+" 480w, "+hero.displayUrl+" 960w"}
+       sizes="(max-width:860px) 100vw, 530px" width={hero.width} height={hero.height}
+       loading="eager" decoding="async" alt={(tr?"Temsilî traktör fotoğrafı: ":"Illustrative tractor photo: ")+hero.brand+" "+hero.model}/>
+      <span class="learn-zoom" aria-hidden="true">⤢</span>
+    </button>
+    <figcaption>{tr?"Bu fotoğraf, anlatılan iç parçaların kesit görüntüsü değildir.":"This photograph is not a cutaway view of the internal parts."}
+      <a href={hero.sourcePage} target="_blank" rel="noopener noreferrer">{hero.photographer}</a> ·
+      <a href={hero.licenseUrl} target="_blank" rel="noopener noreferrer">{hero.licenseName}</a>
+    </figcaption>
+   </figure>}
+  </div>
+ </header>
+ <div class="container learn-content" id="icerik">
+   <div class="learn-grid">
+    <nav class="learn-toc" aria-label={tr?"İçindekiler":"On this page"}>
+     <strong>{tr?"BU REHBERDE":"IN THIS GUIDE"}</strong>
+     {guide.sections.map((section,i)=><a href={"#"+section.anchor}><span>{String(i+1).padStart(2,"0")}</span>{section.title[lang]}</a>)}
+     <a class="learn-toc-index" href={hub}>{tr?"96 terimli ana sözlük":"96-term main glossary"} ↗</a>
+    </nav>
+    <div class="learn-body">
+     <aside class="learn-keypoint">
+      <strong>{tr?"DOĞRU KARŞILAŞTIRMANIN KURALI":"THE FAIR-COMPARISON RULE"}</strong>
+      <p>{tr?"Aynı terimin farklı üretici kataloglarında başka ölçüm noktası, sürüm veya standartla açıklanabileceğini unutmayın. Bir sayının yanında bu koşullar yoksa onu kesin sonuç gibi sunmayın.":"The same label may refer to a different test point, configuration or standard across manufacturer brochures. Do not treat a number without those details as a conclusive ranking."}</p>
+     </aside>
+     {guide.sections.map((section,i)=><section class="learn-chapter" id={section.anchor}>
+       <p class="learn-chapter-index">{String(i+1).padStart(2,"0")} / {String(guide.sections.length).padStart(2,"0")}</p>
+       <h2>{section.title[lang]}</h2>
+       {section.paragraphs[lang].map(paragraph=><p>{paragraph}</p>)}
+     </section>)}
+     <section class="learn-related-terms" aria-labelledby="learn-terms-heading">
+      <p class="learn-eyebrow">{tr?"DERİNE İNİN":"GO DEEPER"}</p>
+      <h2 id="learn-terms-heading">{tr?"Bu yazıdaki terimlerin tek tek açıklamaları":"Individual definitions from this guide"}</h2>
+      <p>{tr?"Her terimin açıklamasını, kullanım örneğini ve karşılaştırma uyarısını ana teknik sözlükte okuyabilirsiniz.":"Each entry in the main glossary includes a definition, practical example and comparison caution."}</p>
+      <div>{guide.glossary.map(id=><a href={hub+"#"+id}>#{id.replaceAll("-"," ")} ↗</a>)}</div>
+     </section>
+     <section class="learn-further" aria-labelledby="learn-further-heading">
+      <h2 id="learn-further-heading">{tr?"Kaynağı nasıl doğrularız?":"How to verify a specification"}</h2>
+      <p>{tr?"Bu sayfa genel eğitim içeriğidir; bir traktörü kullandığımızı, parça söktüğümüzü veya özel test yaptığımızı iddia etmez. Somut model değerleri için üretici kılavuzundaki tam model, yıl, pazar ve donanım tanımını kontrol edin. Bağımsız test varsa kullanılan ölçüm yöntemini karşılaştırın.":"This article is educational and does not claim hands-on testing, component disassembly or tractor ownership. For a model-specific number, confirm the exact tractor, year, market and equipment in the producer's documentation. Where independent tests exist, compare their test procedures."}</p>
+      <ul>
+       <li><a href="https://tractortestlab.unl.edu/" target="_blank" rel="noopener noreferrer">{tr?"Nebraska Traktör Test Laboratuvarı":"Nebraska Tractor Test Laboratory"} ↗</a></li>
+       <li><a href="https://www.oecd.org/en/topics/tractors.html" target="_blank" rel="noopener noreferrer">{tr?"OECD traktör test kodları":"OECD tractor testing codes"} ↗</a></li>
+      </ul>
+      <small>{tr?"Editoryal kontrol: 20 Kasım 2026":"Editorial review: 20 November 2026"}</small>
+     </section>
+    </div>
+   </div>
+   <aside class="learn-next">
+    <div><p class="learn-eyebrow">{tr?"ÖĞRENDİĞİNİZİ UYGULAYIN":"PUT IT INTO PRACTICE"}</p><h2>{tr?"Şimdi modelleri yan yana değerlendirin.":"Now compare real tractor models."}</h2><p>{tr?"Üreticiye bağlanan teknik verileri bir arada inceleyin; farklı standartları aynı sayı kabul etmeyin.":"Review source-linked model specifications side by side, without confusing different measurement standards."}</p></div>
+    <div class="learn-next-buttons"><a href={compare}>{tr?"Karşılaştır":"Compare"} ↗</a><a href={catalog}>{tr?"Tüm traktörler":"All tractors"} ↗</a></div>
+   </aside>
+   <section class="learn-more" aria-label={tr?"Diğer teknik rehberler":"More technical guides"}>
+     <h2>{tr?"Diğer konuları keşfedin":"Explore related topics"}</h2>
+     <div class="learn-more-grid">{other.map(item=><a href={localizedPath(lang,"/guides/"+item.slug+"/")}>
+       <span>{tr?"KAPSAMLI TEKNİK REHBER":"IN-DEPTH TECHNICAL GUIDE"}</span>
+       <strong>{item.title[lang]}</strong><small>{item.description[lang]}</small><b aria-hidden="true">↗</b>
+     </a>)}</div>
+   </section>
+ </div>
+</article>
+</SiteLayout>
+<style>
+ .learn-article{background:#f4f7f2;color:#193122}
+ .learn-article a:focus-visible,.learn-article button:focus-visible{outline:3px solid #9dc86e;outline-offset:3px}
+ .learn-hero{background:radial-gradient(circle at 80% 10%,#2f6741,transparent 47%),linear-gradient(115deg,#0f2017,#1e3e2d);color:#f4f8ef;padding:48px 0 57px}
+ .learn-hero-inner{display:grid;grid-template-columns:minmax(0,1.13fr) minmax(0,.87fr);gap:clamp(24px,4vw,54px);align-items:center}
+ .learn-crumb{display:flex;gap:10px;flex-wrap:wrap;font-size:12px;color:#cee1d1;margin:0 0 26px}.learn-crumb a{text-decoration:underline;text-underline-offset:3px}
+ .learn-eyebrow{margin:0 0 13px;color:#9ac880;font-size:11px;font-weight:900;letter-spacing:.12em}
+ .learn-hero h1{font-size:clamp(30px,3.55vw,51px);line-height:1.12;letter-spacing:-.035em;margin:0 0 23px;overflow-wrap:anywhere}
+ .learn-summary{font-size:clamp(15px,1.4vw,19px);line-height:1.85;color:#dbe6dc;max-width:730px}
+ .learn-hero-actions{display:flex;flex-wrap:wrap;gap:11px;margin-top:25px}
+ .learn-button{display:inline-flex;align-items:center;justify-content:center;min-height:48px;border-radius:11px;background:#b8e093;color:#143523;padding:12px 18px;font-size:14px;font-weight:900}
+ .learn-quiet{background:transparent;border:1px solid #95bca0;color:#f1f9ef}
+ .learn-cover{margin:0;padding:8px;border:1px solid #66866a;background:#284432;border-radius:22px}
+ .learn-cover button{position:relative;display:block;width:100%;padding:0;border:0;background:transparent;cursor:zoom-in;border-radius:14px;overflow:hidden}
+ .learn-cover img{display:block;width:100%;height:auto;aspect-ratio:4/3;object-fit:cover}
+ .learn-zoom{position:absolute;right:14px;bottom:12px;padding:4px 10px;font-size:23px;border-radius:8px;background:#14291fe5}
+ .learn-cover figcaption{padding:11px 7px 5px;font-size:11px;line-height:1.7;color:#d0e1d4}.learn-cover figcaption a{text-decoration:underline}
+ .learn-content{padding-block:62px 90px}
+ .learn-grid{display:grid;grid-template-columns:minmax(210px,.27fr) minmax(0,.73fr);gap:clamp(26px,5vw,82px);align-items:start}
+ .learn-toc{position:sticky;top:20px;display:flex;flex-direction:column;gap:7px;padding:25px 19px;background:#e8f0e4;border:1px solid #d1dfca;border-radius:17px}
+ .learn-toc strong{font-size:12px;letter-spacing:.09em;color:#24573a;padding-bottom:12px}
+ .learn-toc a{display:flex;align-items:flex-start;gap:10px;padding:11px;border-radius:9px;color:#2d5338;font-size:13px;line-height:1.5}
+ .learn-toc a:hover{background:white;text-decoration:underline}
+ .learn-toc a span{font-variant-numeric:tabular-nums;color:#69846d;font-weight:900}
+ .learn-toc .learn-toc-index{font-weight:900;border-top:1px solid #cbddc6;border-radius:0;margin-top:12px}
+ .learn-body{min-width:0}
+ .learn-keypoint{padding:23px 26px;border-radius:17px;background:#e6f1e1;border:1px solid #c3ddb9}
+ .learn-keypoint strong{color:#27563a;font-size:12px;letter-spacing:.08em}.learn-keypoint p{color:#3f6349;line-height:1.8;margin:10px 0 0}
+ .learn-chapter{border-bottom:1px solid #cfded0;padding:34px 0 38px;scroll-margin-top:28px}
+ .learn-chapter-index{color:#4e8656;font-weight:900;font-size:12px;letter-spacing:.12em;margin:0 0 12px}
+ .learn-chapter h2,.learn-related-terms h2,.learn-further h2{font-size:clamp(24px,2.55vw,34px);line-height:1.22;letter-spacing:-.025em;margin:0 0 17px;color:#1c4a2f}
+ .learn-chapter p:not(.learn-chapter-index),.learn-related-terms p,.learn-further p{line-height:1.91;font-size:16px;color:#3d5845;margin:0 0 17px}
+ .learn-related-terms{padding:36px 0}.learn-related-terms>div{display:flex;flex-wrap:wrap;gap:9px}
+ .learn-related-terms>div a{border:1px solid #c3d9c2;border-radius:999px;background:white;color:#265d36;padding:10px 13px;font-weight:800;font-size:13px}
+ .learn-further{background:white;border:1px solid #d3dfd2;border-radius:18px;padding:26px;margin-bottom:48px}
+ .learn-further ul{margin:17px 0;padding-left:21px;line-height:2;color:#29563c}.learn-further a{text-decoration:underline}
+ .learn-further small{color:#69776b}
+ .learn-next{background:#1a452d;border-radius:23px;padding:35px;color:#f5faef;display:flex;align-items:center;justify-content:space-between;gap:25px}
+ .learn-next h2{font-size:clamp(24px,2.7vw,35px);margin:0 0 12px;line-height:1.2}.learn-next p{line-height:1.7;max-width:690px;color:#d3e4d5}
+ .learn-next-buttons{display:flex;flex-direction:column;gap:10px;min-width:170px}.learn-next-buttons a{border:1px solid #adcba4;border-radius:11px;padding:12px 17px;color:#f3f9ed;font-weight:800;text-align:center}
+ .learn-more{margin-top:65px}.learn-more h2{font-size:clamp(24px,2.7vw,33px);color:#1c4e30;margin-bottom:22px}
+ .learn-more-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:17px}
+ .learn-more-grid a{display:flex;flex-direction:column;gap:12px;background:white;padding:25px;border:1px solid #d8e5d1;border-radius:17px;color:#25533a}
+ .learn-more-grid a:hover{border-color:#5f9c69}.learn-more-grid span{font-size:10px;letter-spacing:.1em;font-weight:900;color:#51835c}
+ .learn-more-grid strong{font-size:19px;line-height:1.35}.learn-more-grid small{font-size:13px;line-height:1.6;color:#526b58}
+ .learn-more-grid b{margin-top:auto}
+ @media(max-width:860px){.learn-hero-inner,.learn-grid{grid-template-columns:1fr}.learn-toc{position:static}.learn-cover{max-width:630px}}
+ @media(max-width:620px){.learn-hero{padding:28px 0 40px}.learn-content{padding-block:36px 54px}.learn-next{flex-direction:column;align-items:stretch;padding:25px}.learn-more-grid{grid-template-columns:1fr}.learn-article .learn-chapter p:not(.learn-chapter-index){font-size:15px}}
+</style>
