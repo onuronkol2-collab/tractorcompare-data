@@ -36,7 +36,10 @@ export function continuationDecision(report, cycles, batches) {
   if (counts.queued + counts.retry === 0) return { continue: false, reason: "queue_drained" };
   if (!report.batches.every(b => b && b.failed === 0 &&
     Array.isArray(b.results) && b.results.length > 0 &&
-    b.results.every(x => x?.success === true && typeof x.queue_id === "string" && x.queue_id))) {
+    b.results.every(x => typeof x?.queue_id === "string" && x.queue_id && (
+      x.success === true ||
+      (x.success === false && x.source_gap === true && x.http_status === 422)
+    )))) {
     return { continue: false, reason: "batch_job_failure_or_no_progress" };
   }
   return { continue: true, reason: "progress_and_pending_queue", nextCycles: left - 1 };
