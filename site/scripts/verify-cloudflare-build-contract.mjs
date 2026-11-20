@@ -8,7 +8,7 @@ const repoPkg=load("package.json"),sitePkg=load("site/package.json");
 const rootWrangler=load("wrangler.jsonc"),siteWrangler=load("site/wrangler.jsonc");
 for(const [label,pkg] of [["root",repoPkg],["site",sitePkg]]){
  if(pkg.packageManager!=="npm@10.9.2")fail(label+" package manager is not pinned");
- if(!pkg.scripts["build:production"]||!pkg.scripts["deploy:verified"])
+ if(!pkg.scripts["build:production"]||!pkg.scripts["deploy:verified"]||!pkg.scripts["build:cloudflare"])
   fail(label+" is missing release scripts");
 }
 for(const [label,cfg,expected] of [["root",rootWrangler,{main:"./site/worker/index.js",dir:"./site/dist"}],
