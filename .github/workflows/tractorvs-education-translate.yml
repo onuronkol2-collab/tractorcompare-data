@@ -1,0 +1,108 @@
+name: TractorVS eight-language educational translation (private drafts)
+on:
+  push:
+    branches:
+      - feat/tractor-encyclopedia-10-language-editorial-20261120
+    paths:
+      - ".github/workflows/tractorvs-education-translate.yml"
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: tractorvs-education-translations
+  cancel-in-progress: false
+
+jobs:
+  translation_source:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22.23.4"
+      - name: Validate original editorial materials before spending translation tokens
+        run: |
+          npm ci --no-audit --no-fund
+          npm run test --workspace=tractorvs-site
+  locale_drafts:
+    needs: translation_source
+    # This workflow is intentionally limited to the owner-managed feature branch.
+    # A fork PR never receives the translation secrets.
+    if: github.repository == 'onuronkol2-collab/tractorcompare-data' && github.ref == 'refs/heads/feat/tractor-encyclopedia-10-language-editorial-20261120'
+    runs-on: ubuntu-latest
+    timeout-minutes: 100
+    strategy:
+      fail-fast: false
+      max-parallel: 2
+      matrix:
+        locale: [zh, hi, pt-br, fr, de, ru, ja, es]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22.23.4"
+      - name: Translate structured public editorial source through private Gemini proxy
+        env:
+          TRACTORVS_SUPABASE_ANON_JWT: ${{ secrets.TRACTORVS_SUPABASE_ANON_JWT }}
+          TRACTORVS_QUEUE_SECRET: ${{ secrets.TRACTORVS_QUEUE_SECRET }}
+          EDU_TARGET_LOCALE: ${{ matrix.locale }}
+          EDU_MAX_GEMINI_CALLS: "55"
+          EDU_BATCH_SIZE: "5"
+        run: node --experimental-strip-types site/scripts/translate-tractor-education.mjs
+      - name: Upload draft for editorial review even on translation failure
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: tractor-education-draft-${{ matrix.locale }}
+          path: site/src/lib/education-draft-translations/${{ matrix.locale }}.json
+          retention-days: 14
+          if-no-files-found: warn
+
+  gather_drafts:
+    needs: [translation_source,locale_drafts]
+    if: always() && needs.translation_source.result == 'success'
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: feat/tractor-encyclopedia-10-language-editorial-20261120
+          persist-credentials: true
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22.23.4"
+      - name: Download drafts for all successfully finished languages
+        uses: actions/download-artifact@v4
+        with:
+          pattern: tractor-education-draft-*
+          path: .translation-results
+          merge-multiple: true
+      - name: Assess completion and store non-indexable drafts on the feature branch
+        run: |
+          set -euo pipefail
+          shopt -s nullglob
+          files=(.translation-results/*.json)
+          if [ "${#files[@]}" -eq 0 ]; then
+            echo "::error::No translation result files produced; no publication."
+            exit 1
+          fi
+          mkdir -p site/src/lib/education-draft-translations
+          cp "${files[@]}" site/src/lib/education-draft-translations/
+          npm ci --no-audit --no-fund
+          for file in site/src/lib/education-draft-translations/*.json; do
+            locale="$(basename "$file" .json)"
+            echo "CHECKING TRANSLATION DRAFT: $locale"
+            EDU_TARGET_LOCALE="$locale" node --experimental-strip-types site/scripts/verify-education-translation-drafts.mjs ||
+              echo "::warning::Unapproved or incomplete translation: $locale (will NOT be published)"
+          done
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add site/src/lib/education-draft-translations
+          if ! git diff --cached --quiet; then
+            git commit -m "chore(i18n): store eight language editorial drafts for strict quality review [skip ci]"
+            git push origin HEAD:feat/tractor-encyclopedia-10-language-editorial-20261120
+          fi
+          echo "All outputs remain DRAFT. The site routes require separate editorial approval."
