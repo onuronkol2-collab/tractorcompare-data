@@ -98,7 +98,9 @@ export async function runBatches({ batches, jwt, queueSecret, fetchFn = fetch, o
 
 export async function main() {
   const outputPath = resolve("tractor-research-progress.json");
-  let report = { started_at: new Date().toISOString(), status: "failed_before_start" };
+  const checkpoint = { started_at: new Date().toISOString(), status: "in_progress", batches: [] };
+  let report = checkpoint;
+  writeFileSync(outputPath, JSON.stringify(checkpoint, null, 2) + "\n", { mode: 0o600 });
   const summaryFile = process.env.GITHUB_STEP_SUMMARY;
   try {
     report = await runBatches({
@@ -106,6 +108,9 @@ export async function main() {
       jwt: process.env.TRACTORVS_SUPABASE_SERVICE_ROLE_JWT,
       queueSecret: process.env.TRACTORVS_QUEUE_SECRET,
       onBatch: (batch, n) => {
+        checkpoint.batches.push(batch);
+        checkpoint.last_completed_batch = n;
+        writeFileSync(outputPath, JSON.stringify(checkpoint, null, 2) + "\n", { mode: 0o600 });
         console.log("Batch " + n + ": processed=" + batch.processed + " failed=" + batch.failed + " stop=" + batch.stop_reason);
       },
     });
@@ -122,8 +127,7 @@ export async function main() {
     console.log("Claimed " + checked + " jobs; failed " + failed + "; stop " + report.stop_reason);
     if (report.status === "stopped_after_failure") process.exitCode = 1;
   } catch (error) {
-    report.status = "failed";
-    report.error = String(error?.message ?? "Unknown error").slice(0, 160);
+    report = { ...checkpoint, status: "failed", error: String(error?.message ?? "Unknown error").slice(0, 160) };
     console.error(report.error);
     if (summaryFile) appendFileSync(summaryFile, "# TractorVS controlled research\n\nJob stopped with error: " + report.error + "\n");
     process.exitCode = 1;
