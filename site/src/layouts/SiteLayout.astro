@@ -165,6 +165,7 @@ const openGraphLocale: Record<Locale, string> = {
         </div>
         <div class="footer-links">
           <a href={localizedPath(lang,"/guides/choosing-a-tractor/")}>{t(lang,"guideLink")}</a>
+          <a href={localizedPath(lang==="tr"?"tr":"en","/guides/tractor-technical-terms/")}>{lang==="tr"?"Traktör parçaları ve teknik terimler":"Tractor parts & technical terms"}{lang!=="tr"&&lang!=="en"?" (EN)":""}</a>
           <a href={lang==="tr"?"/tr/methodology/":"/methodology/"}>{t(lang,"methodologyLink")}{lang==="en"||lang==="tr"?"":" (EN)"}</a>
           <a href={homePath + "#platform"}>{t(lang,"navPlatform")}</a>
           <a href={catalogPath}>{t(lang,"navCatalog")}</a>
