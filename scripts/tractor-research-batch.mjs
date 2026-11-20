@@ -29,19 +29,31 @@ export function conciseBatch(body, httpStatus) {
     throw new Error("Research endpoint returned an invalid batch structure.");
   }
   const stopReason = String(body.stop_reason ?? "unknown");
-  const results = body.results.map((item) => ({
-    queue_id: typeof item.queue_id === "string" ? item.queue_id : null,
-    tractor_id: typeof item.tractor_id === "string" ? item.tractor_id : null,
-    success: item.success === true,
-    http_status: Number(item.http_status ?? 0),
-    research_status: item.research_status == null ? null : String(item.research_status).slice(0, 60),
-  }));
-  const failed = results.filter((item) => !item.success).length;
+  const results = body.results.map((item) => {
+    const queueId = typeof item.queue_id === "string" ? item.queue_id : null;
+    const httpStatus = Number(item.http_status ?? 0);
+    const success = item.success === true;
+    // Edge Function processQueue() persists HTTP 422 source/model-identity gaps
+    // as needs_source. Those claims need human review, not another paid retry.
+    // Anything else (including 401/429/5xx or missing queue_id) is a true error.
+    const sourceGap = !success && Boolean(queueId) && httpStatus === 422;
+    return {
+      queue_id: queueId,
+      tractor_id: typeof item.tractor_id === "string" ? item.tractor_id : null,
+      success,
+      http_status: httpStatus,
+      research_status: item.research_status == null ? null : String(item.research_status).slice(0, 60),
+      source_gap: sourceGap,
+    };
+  });
+  const sourceGaps = results.filter((item) => item.source_gap).length;
+  const failed = results.filter((item) => !item.success && !item.source_gap).length;
   return {
     http_status: httpStatus,
     requested_batch_size: Number(body.requested_batch_size ?? 0),
     processed: results.length,
     failed,
+    source_gaps: sourceGaps,
     stop_reason: stopReason,
     results,
   };
@@ -129,14 +141,16 @@ export async function main() {
     report.status = report.stop_reason === "batch_failure_stop" ? "stopped_after_failure" : "completed_controlled_run";
     const checked = report.batches.reduce((n, b) => n + b.results.filter((r) => r.queue_id).length, 0);
     const failed = report.batches.reduce((n, b) => n + b.failed, 0);
+    const sourceGaps = report.batches.reduce((n, b) => n + (b.source_gaps ?? 0), 0);
     const summary = "# TractorVS controlled research\n\n" +
       "- Queue jobs claimed: " + checked + "\n" +
-      "- Failed results: " + failed + "\n" +
+      "- Source gaps safely left for review: " + sourceGaps + "\n" +
+      "- True failures: " + failed + "\n" +
       "- Stop reason: " + report.stop_reason + "\n" +
       "- Queue after: " + JSON.stringify(report.queue_after ?? "unavailable") + "\n" +
       "- No draft publication is performed by this runner.\n";
     if (summaryFile) appendFileSync(summaryFile, summary);
-    console.log("Claimed " + checked + " jobs; failed " + failed + "; stop " + report.stop_reason);
+    console.log("Claimed " + checked + " jobs; source_gaps " + sourceGaps + "; failed " + failed + "; stop " + report.stop_reason);
     if (report.status === "stopped_after_failure") process.exitCode = 1;
   } catch (error) {
     report = { ...checkpoint, status: "failed", error: String(error?.message ?? "Unknown error").slice(0, 160) };
