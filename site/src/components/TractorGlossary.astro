@@ -5,6 +5,7 @@ import {APPROVED_TRACTOR_PHOTOS} from "../lib/tractor-photos.ts";
 import {GLOSSARY_TERMS,GLOSSARY_SECTIONS,type GlossaryLanguage} from "../lib/tractor-glossary.ts";
 import {TRACTOR_PARTS,GLOSSARY_TO_PART} from "../lib/tractor-parts.ts";
 import TractorParts from "./TractorParts.astro";
+import TractorLearningCases from "./TractorLearningCases.astro";
 
 interface Props {lang:GlossaryLanguage}
 const {lang}=Astro.props;
@@ -158,6 +159,7 @@ const queryTerms=(term:(typeof GLOSSARY_TERMS)[number])=>
     </nav>
 
     <TractorParts lang={lang}/>
+    <TractorLearningCases lang={lang}/>
     <div class="glossary-terms-intro">
       <p class="glossary-section-kicker">{tr?"TEKNİK DEĞERLERİ ANLAMAK":"UNDERSTAND THE NUMBERS"}</p>
       <h2>{tr?"Teknik özellikler ne anlama gelir?":"What do tractor specifications mean?"}</h2>
