@@ -7,6 +7,7 @@ import {TRACTOR_PART_ROWS,TRACTOR_PART_SECTIONS} from "../src/lib/tractor-parts.
 import {TECHNICAL_DEEP_DIVES} from "../src/lib/tractor-technical-deep-dives.ts";
 import {TRACTOR_LEARNING_CASES} from "../src/lib/tractor-learning-cases.ts";
 import {EDUCATION_UI_SOURCE} from "../src/lib/tractor-education-ui.ts";
+import {TRACTOR_EDUCATION_TERMINOLOGY} from "../src/lib/tractor-education-terminology.ts";
 const LANGUAGES=["zh","hi","pt-br","fr","de","ru","ja","es"];
 const original=Object.fromEntries([
  ["glossary",GLOSSARY_ROWS.map(r=>({id:r[1],fields:{name:r[3],definition:r[5],example:r[7],caution:r[9]}}))],
@@ -20,7 +21,7 @@ const original=Object.fromEntries([
 ]);
 const hash=createHash("sha256").update(JSON.stringify({
  glossary:GLOSSARY_ROWS,glossarySections:GLOSSARY_SECTIONS,parts:TRACTOR_PART_ROWS,
- partSections:TRACTOR_PART_SECTIONS,articles:TECHNICAL_DEEP_DIVES,cases:TRACTOR_LEARNING_CASES,ui:EDUCATION_UI_SOURCE
+ partSections:TRACTOR_PART_SECTIONS,articles:TECHNICAL_DEEP_DIVES,cases:TRACTOR_LEARNING_CASES,ui:EDUCATION_UI_SOURCE,terminology:TRACTOR_EDUCATION_TERMINOLOGY
 })).digest("hex");
 function digits(s){return [...s.matchAll(/(?<![A-Za-z])\d+(?:[.,]\d+)?(?:E)?/g)].map(x=>x[0])}
 function scriptOk(lang,s){
