@@ -1,0 +1,56 @@
+name: TractorVS moderated forum static content refresh
+# Read only actual approved public posts from RLS-protected Supabase views.
+# Never read pending posts, service-role credentials or private user data.
+on:
+  schedule:
+    - cron: "12,42 * * * *"
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/tractorvs-forum-publication-autosync.yml"
+  pull_request:
+    paths:
+      - ".github/workflows/tractorvs-forum-publication-autosync.yml"
+      - "scripts/tractor-forum-publication-autosync.mjs"
+      - "scripts/tractor-forum-publication-autosync.test.mjs"
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "Check only, do not commit forum sitemap/site revision"
+        type: boolean
+        required: true
+        default: true
+concurrency:
+  group: tractorvs-moderated-forum-revision
+  cancel-in-progress: false
+permissions:
+  contents: read
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22.23.4"
+      - name: Check anonymity, pagination, no publish and safe revision behaviour
+        run: node --test scripts/tractor-forum-publication-autosync.test.mjs
+  sync:
+    if: github.event_name != 'pull_request' && github.repository == 'onuronkol2-collab/tractorcompare-data' && github.ref == 'refs/heads/main'
+    needs: validate
+    runs-on: ubuntu-latest
+    timeout-minutes: 7
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22.23.4"
+      - name: Request Cloudflare static rebuild only when approved forum fingerprint changes
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          TRACTORVS_SUPABASE_ANON_JWT: ${{ secrets.TRACTORVS_SUPABASE_ANON_JWT }}
+          TRACTORVS_FORUM_DRY_RUN: ${{ github.event_name == 'workflow_dispatch' && inputs.dry_run == true }}
+        run: node scripts/tractor-forum-publication-autosync.mjs
