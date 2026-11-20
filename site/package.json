@@ -13,7 +13,8 @@
     "deploy": "astro build && wrangler deploy",
     "test": "node --experimental-strip-types --test tests/*.test.mjs",
     "build:production": "node scripts/production-release-gate.mjs preflight && npm run build && node scripts/production-release-gate.mjs postflight",
-    "deploy:verified": "node scripts/production-release-gate.mjs postflight && wrangler deploy"
+    "deploy:verified": "node scripts/production-release-gate.mjs postflight && wrangler deploy",
+    "build:cloudflare": "node scripts/cloudflare-build.mjs"
   },
   "dependencies": {
     "@astrojs/sitemap": "3.7.5",
