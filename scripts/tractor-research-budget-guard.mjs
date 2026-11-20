@@ -18,14 +18,24 @@ export async function checkProcessAllowance({ githubToken, repo, ref, runId,
     runs, now, currentRunId: Number(runId), forExistingRun: true,
   });
 }
+export async function checkNextAllowance({ githubToken, repo, ref, runId,
+  fetchFn = fetch, now = new Date() }) {
+  assertTrustedScope(repo, ref);
+  const runs = await fetchResearchRuns({ githubToken, repo, fetchFn, now });
+  return decideResearchQuota({
+    runs, now, currentRunId: Number(runId), forExistingRun: false,
+  });
+}
 export async function main() {
-  const answer = await checkProcessAllowance({
+  const base = {
     githubToken: process.env.GITHUB_TOKEN,
     repo: process.env.GITHUB_REPOSITORY,
     ref: process.env.GITHUB_REF,
     runId: process.env.GITHUB_RUN_ID,
-    batches: process.env.TRACTORVS_BATCHES,
-  });
+  };
+  const answer = process.env.TRACTORVS_BUDGET_MODE === "continuation"
+    ? await checkNextAllowance(base)
+    : await checkProcessAllowance({ ...base, batches: process.env.TRACTORVS_BATCHES });
   const allowed = Boolean(answer.allowed);
   if (process.env.GITHUB_OUTPUT) {
     appendFileSync(process.env.GITHUB_OUTPUT, "allowed=" + allowed + "\n");
