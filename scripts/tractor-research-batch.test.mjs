@@ -78,3 +78,28 @@ test("missing secrets and an HTTP authorization failure never attempt additional
   }), /HTTP 401/);
   assert.equal(count, 1);
 });
+
+
+test("each completed batch is checkpointed before a later network failure", async () => {
+  const savedReceipts = [];
+  let calls = 0;
+  await assert.rejects(() => runBatches({
+    batches: "4",
+    jwt: "jwt",
+    queueSecret: "secret",
+    onBatch: (receipt, n) => savedReceipts.push({ n, receipt }),
+    fetchFn: async () => {
+      calls++;
+      if (calls === 1) return new Response(JSON.stringify({
+        requested_batch_size: 3,
+        stop_reason: "batch_limit_reached",
+        results: [{ queue_id: "first-claim", tractor_id: "tractor-1", success: true, http_status: 200 }],
+      }), { status: 200 });
+      return new Response("{}", { status: 502 });
+    },
+  }), /HTTP 502/);
+  assert.equal(calls, 2);
+  assert.equal(savedReceipts.length, 1);
+  assert.equal(savedReceipts[0].n, 1);
+  assert.equal(savedReceipts[0].receipt.results[0].queue_id, "first-claim");
+});
