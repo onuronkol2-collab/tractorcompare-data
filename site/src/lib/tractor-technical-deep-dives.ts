@@ -16,7 +16,7 @@ export const TECHNICAL_DEEP_DIVES = [
       "en": "Learn how the tractor power take-off works, why 540, 540E and 1000 rpm differ, and how to check safe implement compatibility."
     },
     "lead": {
-      "tr": "Traktörünüz tarlada ilerlerken arkasındaki biçme makinesi nasıl döner? İşte bu gücü aktaran parça kuyruk milidir. Ancak bir traktörde 'PTO var' yazması, her ekipmanın güvenle çalışacağı anlamına gelmez. Devir, mil bağlantısı ve gerçek çıkış gücü ayrı ayrı incelenmelidir.",
+      "tr": "Traktörün arkasındaki biçme makinesinin bıçakları nasıl döner? Traktör yalnızca makineyi çekmez; kuyruk mili denilen çıkışından döndürme gücü de verir. İşte PTO budur. Ancak traktörde PTO bulunması, her makinenin ona uyacağı anlamına gelmez. Ekipmanın istediği devir, milin bağlantısı ve kuyruk milinde kullanılabilen güç ayrı ayrı kontrol edilmelidir.",
       "en": "How does a mower rotate while the tractor moves? The power take-off carries mechanical power to the implement. But seeing 'PTO' on a specification sheet does not mean every attachment is compatible: speed, shaft coupling and usable power are separate questions."
     },
     "sections": [
@@ -28,8 +28,8 @@ export const TECHNICAL_DEEP_DIVES = [
         },
         "paragraphs": {
           "tr": [
-            "Motorun ürettiği dönme hareketi, traktörün aktarma düzeni üzerinden arka veya ön çıkış miline iletilir. Koruyuculu bir kardan miliyle bağlanan ekipman bu hareketi kullanarak kendi rotorunu, bıçaklarını veya pompasını döndürebilir. Buradaki iş, ekipmanı çekmekten farklıdır: çekiş için lastiğe, döner makine için PTO'ya güç gerekir.",
-            "Örneğin bir rotovatör hem traktörle birlikte ilerler hem de toprağı işlemek için döner. Hareketi sağlayan iki işlevin güç ihtiyacı aynı değerde gösterilmez. Traktör seçerken üreticinin motor gücü ile kuyruk mili gücünü ayrı satırlarda arayın."
+            "Bunu bir el mikserine benzetebilirsiniz: Mikserin içindeki motor ucu döndürür. Traktörde de motorun oluşturduğu dönme hareketi, aktarma parçalarından geçerek arkadaki kuyruk mili çıkışına ulaşır. Bir şaftla bağlanan biçme makinesi veya rotovatör, bu dönme hareketi sayesinde çalışır.",
+            "Traktörün ilerlemesi başka, arkasındaki makinenin dönmesi başka iştir. Örneğin rotovatörün toprağa doğru ilerlemesini lastikler sağlar; içindeki bıçakları ise PTO döndürür. Bu yüzden yalnızca motor beygirini değil, ekipmana aktarılabilen kuyruk mili gücünü de öğrenmelisiniz."
           ],
           "en": [
             "The engine's rotation passes through the driveline to a rear or front power output. With the correct guarded shaft, the implement uses that rotation for its blades, rotor or pump. Pulling an implement and rotating it are different tasks, so tyre traction and PTO power have different roles.",
@@ -45,8 +45,8 @@ export const TECHNICAL_DEEP_DIVES = [
         },
         "paragraphs": {
           "tr": [
-            "540 rpm, birçok tarım ekipmanının kullanabildiği nominal PTO dönüş hızıdır. 540E ise uygun traktörde aynı PTO devrinin daha düşük motor devrinde elde edilmesini amaçlayan ekonomik kademedir; ekipman hafif yükteyse gürültü ve tüketimi azaltmaya yardımcı olabilir. Bu özellik her traktörde bulunmaz ve her yükte avantaj sağlamaz.",
-            "1000 rpm, 540 rpm'nin 'daha güçlü seçeneği' olarak rastgele seçilmez. Ekipman etiketinde izin verilen dönüş hızı hangi değerse onu kullanın. 540 rpm için tasarlanmış bir ekipmanı 1000 rpm'de çalıştırmak ciddi hasara veya yaralanmaya yol açabilir."
+            "540 ve 1000 sayıları, kuyruk milinin bir dakikada kaç tur döndüğünü anlatır. Ekipmanın üstünde 540 yazıyorsa traktörde 540'a uygun ayar kullanılmalıdır. 1000 seçmek makinenin iki kat hızlı döndürülmesi anlamına gelebilir ve ciddi tehlike yaratabilir.",
+            "540E, bazı traktörlerde bulunan ekonomik ayardır. Kuyruk milini 540 devirde döndürürken motorun daha düşük devirde çalışmasına izin verebilir. Bu ayar özellikle hafif işlerde yararlı olabilir; fakat ağır yükte her zaman uygun değildir. Ekipmanın ve traktörün kullanım kılavuzuna uyun."
           ],
           "en": [
             "540 rpm is a common rated PTO shaft speed. On a compatible tractor, 540E can deliver a 540 rpm output at a lower engine speed, potentially reducing fuel use and noise in light work. It is not a universal feature or a guarantee of savings at heavy load.",
@@ -62,8 +62,8 @@ export const TECHNICAL_DEEP_DIVES = [
         },
         "paragraphs": {
           "tr": [
-            "Motor gücü krank milinde, PTO gücü ise kuyruk mili çıkışında ifade edilir. Aktarma sistemindeki kayıplar nedeniyle eşit olmak zorunda değildir. Ekipmanın ihtiyaç duyduğu asgari güç açıklanmışsa onu aynı birimdeki PTO gücüyle karşılaştırın; ölçümün tahmini mi test sonucu mu olduğuna da bakın.",
-            "PTO milinde çap ve kanal (yiv) sayısı önemlidir. Yaygın 1⅜ inç altı kanallı ve farklı yiv sayılarına sahip miller aynı bağlantı değildir. Mil uzunluğunun, kardan korumasının ve şaft açısının uygunluğunu ekipmanın üretici kılavuzundan kontrol edin."
+            "Motor gücü ile PTO gücü aynı şey değildir. Motor, gücü önce kendi içinde üretir. Bu güç kuyruk miline ulaşıncaya kadar aktarma parçalarından geçer. Bu nedenle 100 beygirlik motorun PTO'da tam 100 beygir vermesini beklemeyin. Ekipmanın istediği gücü PTO gücüyle karşılaştırın.",
+            "Milin ucundaki yivler ve çap da önemlidir. Bir tornavidanın yanlış uçla vidaya uymaması gibi, farklı kanallı şaftlar da birbirine doğrudan uymaz. Ayrıca kardan milinin uzunluğu, bağlantısı ve koruma kılıfı doğru olmalıdır. Şaft takarken motoru durdurun ve üreticinin güvenlik adımlarını izleyin."
           ],
           "en": [
             "Engine power is measured at the engine; PTO power is available at the output shaft and may be lower because of transmission losses. Compare the implement's stated requirement with PTO power on the same unit and test basis.",
@@ -79,8 +79,8 @@ export const TECHNICAL_DEEP_DIVES = [
         },
         "paragraphs": {
           "tr": [
-            "Bağımsız PTO, traktörün yürüyüş hareketinden ayrı devreye alınabilen sistemleri anlatır. Çift kademeli debriyaj ise pedala ilk basıldığında yürüyüşün, ikinci kademede kuyruk milinin ayrıldığı bazı düzenlerde görülür. Bu iki tanım her modelde aynı mekanizma değildir.",
-            "Özellikle balya makinesiyle dur-kalk yapılacaksa traktörün PTO'sunun hangi koşulda çalışmaya devam ettiğine bakın. Katalogda yalnızca 'independent' yazıyorsa kumanda tipi, kavrama ve emniyet koşullarını ayrıca okuyun."
+            "Bazı traktörlerde ayağınızı debriyaja basıp yürüyüşü durdurduğunuzda kuyruk mili dönmeye devam edebilir. Bu özellik işinize göre yararlı olabilir. Bağımsız PTO denilen sistemlerde kuyruk mili, yürüyüşten ayrı bir kumandayla devreye alınıp kapatılabilir.",
+            "İki kademeli debriyaj ise başka bir düzen olabilir: Pedala ilk basıldığında traktör durur, daha fazla basıldığında kuyruk mili de ayrılır. Her traktör aynı şekilde çalışmaz. Özellikle balya makinesi gibi ekipmanlarla çalışmadan önce modelin debriyaj ve PTO kullanımını kılavuzdan öğrenin."
           ],
           "en": [
             "An independent PTO can be controlled separately from tractor travel. In some two-stage clutch systems, pressing the pedal first disengages travel and then the PTO. Those mechanisms are not identical and should not be assumed to behave the same.",
@@ -96,8 +96,8 @@ export const TECHNICAL_DEEP_DIVES = [
         },
         "paragraphs": {
           "tr": [
-            "Önce kullanacağınız ekipmanın izin verilen PTO devirlerini ve güç gereksinimini yazın. Sonra traktörün gerçek kuyruk mili güç değerini, 540/540E/1000 seçeneklerini, mil kanal sayısını ve ekipmana bağlanma ölçülerini karşılaştırın. Bir değer eksikse eminmiş gibi kabul etmeyin.",
-            "Son olarak ekipmanın ağırlığını, üç nokta askı kategorisini ve gerekiyorsa hidrolik bağlantılarını da kontrol edin. Kuyruk mili uyumu, toplam ekipman uyumunun yalnızca bir parçasıdır. Döner şaftta koruma kapağı, kardan muhafazası ve motor kapalıyken bağlantı kuralı hayati önem taşır."
+            "Bir ekipman almadan önce üç temel soruyla başlayın: Makine 540 mı 1000 devir mi istiyor? Yaklaşık kaç beygirlik PTO gücüne ihtiyaç duyuyor? Kardan milinin bağlantısı traktörünüze uyuyor mu? Bu üç bilgi yoksa yalnızca traktörün marka ve beygirine bakarak karar vermeyin.",
+            "Sonra ekipmanın ağırlığına, arka askı bağlantısına ve gerekiyorsa hidrolik hortumlarına bakın. Kuyruk mili uyumlu olsa bile askı ya da ağırlık uygun olmayabilir. En önemlisi: Dönen şafta hiçbir zaman yaklaşmayın, korumasız çalıştırmayın, bağlantıyı motor kapalıyken ve tüm hareket durduğunda yapın."
           ],
           "en": [
             "Write down the implement's permitted PTO speeds and power requirement. Then compare verified tractor PTO power, selectable speed modes, spline geometry and coupling dimensions. An unlisted feature is unknown—not automatically present.",
@@ -130,7 +130,7 @@ export const TECHNICAL_DEEP_DIVES = [
       "en": "Understand rear linkage lift capacity, the 610 mm measurement point, hydraulic flow versus pressure and safe implement matching."
     },
     "lead": {
-      "tr": "Bir katalogda '3.000 kg hidrolik kaldırma' yazıyor. Bu değer, traktörün her koşulda 3 tonluk ekipmanı güvenle taşıyabileceği anlamına gelir mi? Hayır. Ölçüm konumu, ekipmanın ağırlık merkezi, traktörün dengesi ve hidrolik donanımı sonucu değiştirir.",
+      "tr": "Bir traktör ilanında “3.000 kg kaldırır” yazısını gördünüz. Peki bu, arkasına bağlanan her üç tonluk pulluğu güvenle kaldıracağı anlamına gelir mi? Hayır. Ekipmanın ne kadar arkaya uzandığı, yükün nereden ölçüldüğü ve traktörün dengesi çok önemlidir. Bu yazıda hidrolik kaldırıcıyı, yağın nasıl iş yaptığını ve katalogdaki sayıların neden farklı olabildiğini günlük örneklerle anlatıyoruz.",
       "en": "A brochure claims a rear hitch lift of 3,000 kg. Can the tractor safely carry any three-tonne implement? Not necessarily. The measurement point, implement centre of gravity, machine stability and hydraulic configuration all matter."
     },
     "sections": [
@@ -142,8 +142,8 @@ export const TECHNICAL_DEEP_DIVES = [
         },
         "paragraphs": {
           "tr": [
-            "Üç nokta askı sisteminin belirli bir konum ve standart altında kaldırabildiği yükü ifade eder. Bu sınır, römorkun çekme kapasitesiyle aynı şey değildir. Ekipmanın yalnızca kütlesi değil, bağlantı pimlerinden ne kadar uzağa uzandığı da önemlidir.",
-            "Aynı kütlede ama ağırlık merkezi daha geride olan bir ekipman, traktörün ön dingilini farklı derecede hafifletebilir. Kaldırma kapasitesini ön aks yük sınırı, uygun balast, fren ve yol taşımacılığı kurallarıyla birlikte değerlendirin."
+            "Traktörün arkasındaki iki alt kol ve bir orta kol, pulluk gibi ekipmanları tutar. Hidrolik sistem bu kolları yukarı kaldırır. Katalogda yazan kaldırma kapasitesi, kolların belirli bir noktada ve koşulda kaldırabileceği yükle ilgilidir. Bu, römorkun çekilebileceği ağırlık değildir.",
+            "Şöyle düşünün: Ağır bir çantayı elinize yakın taşımak, kolunuzu uzatarak taşımaktan daha kolaydır. Ekipman traktörden ne kadar geriye uzanırsa onu taşımak da o kadar zorlaşabilir. Traktörün ön tarafının hafiflemesi gibi denge sorunları da hesaba katılmalıdır."
           ],
           "en": [
             "Rear hitch lift capacity describes the mass a three-point linkage can raise under specified conditions. It is not the same as drawbar towing capacity.",
@@ -159,8 +159,8 @@ export const TECHNICAL_DEEP_DIVES = [
         },
         "paragraphs": {
           "tr": [
-            "Üretici teknik tablolarında 'at ball ends' (askı kolu uçlarında) ve '610 mm behind' (uçlardan 610 mm geride) ifadelerini görebilirsiniz. Yük askıdan uzaklaştıkça aynı kütlenin oluşturduğu moment artar; bu yüzden iki konum için verilen sayıların aynı olması beklenmez.",
-            "Örneğin iki traktörden birinin askı ucunda 3.000 kg, diğerinin 610 mm geride 2.700 kg kaldırdığını görürseniz sırf 3.000 daha büyük diye ilkini güçlü ilan etmeyin. Aynı ölçüm noktasındaki ve aynı şartlardaki değerleri karşılaştırın."
+            "Teknik tabloda “askı uçlarında” yazıyorsa yük, arka kolların bağlandığı yere yakın ölçülmüştür. “610 mm geride” yazıyorsa ölçüm, bu noktanın yaklaşık 61 santimetre arkasında yapılmıştır. Aynı ağırlık daha geride olduğunda traktöre daha fazla döndürme etkisi yapabilir.",
+            "Örneğin bir traktör “3.000 kg askı uçlarında”, diğeri “2.700 kg 610 mm geride” diyorsa ilkini hemen daha güçlü ilan etmek doğru olmaz. Çünkü iki sayı aynı yerden ölçülmemiştir. Gerçek karşılaştırma için aynı ölçüm noktasına ve aynı koşullara ait değerleri arayın."
           ],
           "en": [
             "Brochures may give a figure 'at ball ends' or '610 mm behind the ball ends'. Moving the load farther away increases the lever effect, so the two ratings are not necessarily equivalent.",
@@ -176,8 +176,8 @@ export const TECHNICAL_DEEP_DIVES = [
         },
         "paragraphs": {
           "tr": [
-            "Debi, birim zamanda taşınan yağ hacmidir ve hidrolik silindirin ne kadar hızlı hareket edebileceğiyle ilişkilidir. Basınç ise silindirin oluşturabileceği kuvveti etkiler. Çok yüksek bar değeri tek başına hızlı bir ön yükleyici demek değildir; çok yüksek debi de tek başına ağır yük kaldırma garantisi vermez.",
-            "Üstelik katalogdaki 'toplam debi' ile dış ekipman kullanımına ayrılmış 'implement flow' aynı olmayabilir. Direksiyon pompasının akışı toplam pompa değerine dahil olabilir. Bu ayrım özellikle ön yükleyici, kepçe ve hidrolik motor kullanan makinelerde önemlidir."
+            "Hidrolik sistemin içinde yağ dolaşır. Pompa yağı gönderir, kumanda valfi yağı yönlendirir, silindir ise bu basınçla itme veya çekme hareketi yapar. Debi “bir dakikada ne kadar yağ gidiyor?” sorusunun cevabıdır. Basınç ise o yağın silindirde oluşturabileceği kuvvetle ilgilidir.",
+            "Bir kepçenin hızlı hareket etmesi için uygun yağ akışı gerekir; ağır yük kaldırmak içinse silindirin yapısı ve basınç gibi başka şartlar da önemlidir. Katalogdaki toplam pompa debisinin tamamı kepçeye gitmeyebilir; direksiyon ayrı yağ kullanıyor veya toplam değere dahil ediliyor olabilir."
           ],
           "en": [
             "Hydraulic flow is the volume of oil available per unit time and influences cylinder speed. Pressure contributes to the force a cylinder can generate. High pressure does not automatically mean fast loader motion, nor does high flow guarantee lifting strength.",
@@ -193,8 +193,8 @@ export const TECHNICAL_DEEP_DIVES = [
         },
         "paragraphs": {
           "tr": [
-            "Kategori I, II ve III gibi ifadeler bağlantı pimi ve geometri ölçü sınıflarını anlatır; doğrudan kaldırma kapasitesi sıralaması değildir. Traktörle ekipmanın askı kategorileri uyumlu olmalıdır; bazı bağlantılar ancak üreticinin izin verdiği uygun parçalarla kullanılabilir.",
-            "Harici hidrolik çıkışlar, ekipmanın silindirini, katlanan bölümünü veya hidrolik motorunu çalıştırmak için yağ sağlar. Gerekli çıkış çiftinin sayısını, tek/çift etkili çalışma türünü ve debi gereksinimini ayrıca yazın."
+            "Arkadan bağlanan ekipmanlar çoğunlukla iki alt kol ve bir orta kolla tutulur. Kategori I, II veya III yazıyorsa bu, bağlantı pimlerinin ve askının ölçü sınıfını gösterir. Sayının büyük olması tek başına traktörün her ağır ekipmanı kaldıracağı anlamına gelmez.",
+            "Bir römorkun kasasını kaldırmak veya katlanan bir ekipmanı açmak için hidrolik hortumlar gerekebilir. Bu hortumlar traktörün arka hidrolik soketlerine takılır. Soket sayısını ve nasıl çalıştığını kontrol edin; yalnızca “hidrolik var” yazması her ekipmanın uyacağını göstermez."
           ],
           "en": [
             "Categories I, II and III refer to linkage pin sizes and geometry; they are not simply a ranking of load capacity. The tractor and implement connection categories must be compatible.",
@@ -210,8 +210,8 @@ export const TECHNICAL_DEEP_DIVES = [
         },
         "paragraphs": {
           "tr": [
-            "Bir ekipman için yalnız 'kaç kilo?' sorusuyla ilerlemeyin: toplam kütle, ağırlık merkezinin geriye uzaklığı, bağlantı kategorisi, hidrolik çıkış sayısı ve ön balast gereksinimi birlikte incelenir. Traktör kılavuzundaki izin verilen aks yükleri de bu kararın parçasıdır.",
-            "İki farklı kataloğun verdiği kaldırma değerlerinde ölçüm konumu yazmıyorsa farkı kesin bir performans sıralamasına çevirmeyin. Teknik tabloya 'ölçüm noktası açıklanmamış' notu koymak, yanlış kesinlikten daha değerlidir."
+            "Ekipman seçerken yalnızca kilogram sayısına bakmayın. Ekipmanın gerçek ağırlığını, ne kadar arkaya uzandığını, bağlantı kategorisini ve ihtiyaç duyduğu hidrolik soketleri yazın. Traktörün ön ağırlık gereksinimi ve aks sınırları da bu hesabın parçasıdır.",
+            "İki traktörü karşılaştırırken birinin kaldırma kapasitesi askı uçlarında, diğerininki 610 mm geride açıklanmışsa bu farkı görünür biçimde not edin. Ölçüm yeri belirtilmemişse eminmiş gibi sonuç çıkarmayın. Bakım veya bağlantı sırasında hidrolik basıncını güvenle boşaltın; kaçakları elle aramayın."
           ],
           "en": [
             "Record implement mass, how far its centre of gravity extends rearward, hitch category, remote outlets and front ballast needs. Check tractor axle limits and the actual implement manual.",
@@ -244,7 +244,7 @@ export const TECHNICAL_DEEP_DIVES = [
       "en": "A practical guide to tractor horsepower, PS and kW, rated versus maximum output, torque and how to compare engine and PTO ratings."
     },
     "lead": {
-      "tr": "İki traktörün broşüründe '100 beygir' yazıyor diye tarlada aynı işi yapmalarını beklemek doğru değildir. Devir, tork eğrisi, güç standardı, şanzıman kayıpları ve lastiğin yere tutunması sonucu değiştirir. Bu rehber rakamların ne anlattığını ve ne anlatmadığını açıklıyor.",
+      "tr": "Traktör bakarken en çok sorulan soru “Kaç beygir?” olur. Ama iki traktörün ikisinde de 100 beygir yazması, tarlada her işi aynı yapacakları anlamına gelmez. Çünkü güç, tork ve kuyruk miline aktarılan güç farklı şeylerdir. Ayrıca kataloglarda HP, PS ve kW gibi farklı birimler kullanılır. Gelin bu terimleri günlük örneklerle tanıyalım ve hangi sayıya ne zaman bakacağımızı anlayalım.",
       "en": "Two brochures both advertise '100 horsepower'—but that does not promise identical field performance. Engine speed, torque curve, test standard, driveline losses and tyre traction all influence the result. This guide explains what the figures actually mean."
     },
     "sections": [
@@ -256,8 +256,8 @@ export const TECHNICAL_DEEP_DIVES = [
         },
         "paragraphs": {
           "tr": [
-            "HP, İngiliz mekanik beygir gücünü; PS (metrik beygir gücü) farklı tanımlanmış bir gücü; kW ise uluslararası sistemdeki güç birimini belirtir. Yaklaşık olarak 1 kW = 1,341 HP = 1,360 PS. Bu nedenle farklı birimle yazılmış iki rakamı doğrudan yan yana koymak hatalı olabilir.",
-            "Örneğin katalogdaki 75 kW yaklaşık 100,6 HP veya 102,0 PS eder. Bu dönüşüm yalnız birimi değiştirir; azami güç ile nominal güç arasındaki farkı ortadan kaldırmaz. Hangi test standardının kullanıldığı yine incelenmelidir."
+            "HP, PS ve kW aynı şeyi, yani gücü anlatmak için kullanılan farklı ölçü birimleridir. Tıpkı metre ve santimetrenin uzunluğu farklı sayılarla göstermesi gibi düşünün. Yaklaşık olarak 1 kW, 1,341 HP veya 1,360 PS eder. Bu yüzden farklı birimle yazılmış rakamları doğrudan yarıştırmayın.",
+            "Örneğin 75 kW yazan bir motor yaklaşık 100,6 HP veya 102 PS değerindedir. Burada motor değişmedi, yalnızca sayı başka bir birime çevrildi. Ancak güç birimini eşitlemek yetmez: İki değerin de nominal mi, azami mi olduğuna ve hangi standartla ölçüldüğüne bakmalısınız."
           ],
           "en": [
             "Mechanical hp, metric PS and kilowatts measure power but have different unit sizes. Approximately 1 kW equals 1.341 mechanical hp or 1.360 PS. Compare values in a shared unit before drawing conclusions.",
@@ -273,8 +273,8 @@ export const TECHNICAL_DEEP_DIVES = [
         },
         "paragraphs": {
           "tr": [
-            "Nominal güç, üreticinin belirttiği anma devir koşulundaki çıkıştır. Azami güç motorun başka bir devirde ürettiği tepe değeri olabilir. Boost ise bazı traktörlerde yalnız belirli PTO veya nakliye koşullarında sunulan ek güçtür. Bu üçü aynı değer değildir.",
-            "Bir model '120 HP + 15 HP boost' olarak tanıtılıyorsa her ağır tarla işinde 135 HP kullanılacağını varsaymayın. Boost'un etkinleşme koşulunu, motor devrini ve ECE R120/ISO 14396 gibi test açıklamasını kaynaktan bulun."
+            "Nominal güç, motorun belirtilen devirdeki güç değeridir. Azami güç, motorun belli koşullarda ulaşabildiği en yüksek değerdir. Boost ise bazı modellerde yalnız belirli işlerde geçici olarak verilen ek güç olabilir. Bu üçünü aynı sayıymış gibi karşılaştırmak yanıltır.",
+            "Bir modelin ilanında 120 beygir ve ayrıca 15 beygir boost gördünüz. Bu, bütün gün pulluk çekerken sürekli 135 beygir vereceği anlamına gelmez. Ek gücün hangi şartta açıldığını üretici belgesinden kontrol edin. Bir bilgiden emin değilseniz o farkı açıkça belirtin."
           ],
           "en": [
             "Rated power refers to an output at stated rated conditions. Maximum output may occur at another engine speed. Boost can add power only under particular transport or PTO conditions, depending on the tractor.",
@@ -290,8 +290,8 @@ export const TECHNICAL_DEEP_DIVES = [
         },
         "paragraphs": {
           "tr": [
-            "Tork, krank milinin döndürme momentidir. Yük artıp devir düşünce motorun nasıl tepki verdiğini anlamak için tork eğrisi ve tork artış oranı yararlı olabilir. Ancak krank mili torku doğrudan lastiğin yere uyguladığı çekiş kuvveti değildir.",
-            "Bir traktör yüksek tork verebilir ama çok hızlı seçilmiş bir vites, yanlış lastik veya fazla patinaj nedeniyle tarlada verimsiz kalabilir. Motorun gücünü, torkun hangi rpm'de geldiğini ve uygun vites kademelerini birlikte ele alın."
+            "Tork motorun döndürme kuvvetidir. Sıkışmış bir kavanoz kapağını açarken daha güçlü çevirmek zorunda kalırsınız; burada konuştuğumuz kuvvetin benzerini motor krank milinde üretir. Tork özellikle motor zorlandığında nasıl tepki vereceğini anlamaya yardım eder.",
+            "Pulluk sert toprağa girince motorun devri düşebilir. Bazı motorlar o sırada torkunu artırıp işi sürdürmeye daha iyi uyum sağlayabilir. Fakat yüksek tork tek başına iyi çekiş demek değildir: Uygun vites, lastik, traktör ağırlığı ve patinaj da sonucu değiştirir."
           ],
           "en": [
             "Torque is turning moment at the crankshaft. A torque curve and torque rise can help explain how the engine behaves when load increases and rpm falls. Crankshaft torque is not the same thing as drawbar pull.",
@@ -307,8 +307,8 @@ export const TECHNICAL_DEEP_DIVES = [
         },
         "paragraphs": {
           "tr": [
-            "Pulluk çekme, biçme, balyalama ve yükleyici işleri güçten farklı biçimde yararlanır. Çeki işi için tekerleklerde kullanılabilen çekiş gücü ve patinaj önemlidir; döner makinede PTO çıkış gücü öne çıkar; hidrolik yükleyicide basınç, debi ve denge de hesaba katılır.",
-            "Aynı motor gücündeki iki traktörün PTO testlerinde farklı sonuçlar vermesi mümkündür. Testlerin aynı koşul ve standartta yapılması gerekir. Üreticinin motor HP değerini bağımsız bir PTO ölçümünün yerine koymayın."
+            "Motor gücü, motorun ürettiği gücü anlatır. Kuyruk mili gücü, bu gücün arkadaki dönen ekipmana ulaşan kısmıdır. Çeki işi yaparken lastiğin yere tutunması önem kazanır; biçme makinesi çalıştırırken kuyruk milindeki güç daha doğrudan bir bilgi olabilir.",
+            "Örneğin iki traktörün motoru 100 beygir diye açıklanmış olsa da kuyruk mili güçleri farklı olabilir. Birinin 100 beygir motor gücünü diğerinin kuyruk mili ölçümüyle yan yana koymayın. Aynı yerden ve benzer koşullarda ölçülen değerleri karşılaştırın."
           ],
           "en": [
             "Ploughing, mowing, baling and loader work demand power in different ways. Drawbar work depends on traction and slip; rotary implements depend on PTO output; loaders add hydraulic flow, pressure and stability.",
@@ -324,8 +324,8 @@ export const TECHNICAL_DEEP_DIVES = [
         },
         "paragraphs": {
           "tr": [
-            "Önce modelin yılını, ülke/pazar sürümünü ve motor kodunu doğrulayın. Sonra her sayı için HP mi PS mi kW mı olduğuna, nominal/azami/boost türüne, test standardına ve belirtilen motor devrine bakın. Bu koşullar eşleşmiyorsa tablonuza bir uyarı ekleyin.",
-            "'Daha büyük sayı her işte daha iyi traktör' demek yerine; ekipman ihtiyacını, PTO devrini, kaldırma kapasitesini, traktör ağırlığını, lastikleri ve servis koşullarını da değerlendirin. Doğru seçim tek rakamla değil, işin gereksinimiyle yapılır."
+            "İlk önce iki traktörün gerçekten aynı model yılına, ülke sürümüne ve motor düzenine ait olup olmadığını öğrenin. Sonra güç sayısının yanına şu bilgileri yazın: HP mi PS mi kW mı? Nominal mi azami mi? Kaç devirde verilmiş? Hangi ölçüm standardı kullanılmış?",
+            "Bir bilgi eksikse bunu “bilinmiyor” diye not etmek doğru bir davranıştır. Daha büyük beygir sayısı her zaman daha uygun traktör anlamına gelmez. Yapacağınız iş için gereken kuyruk mili devri, hidrolik kapasite, vites aralığı, lastikler ve servis desteğini de birlikte düşünün."
           ],
           "en": [
             "Confirm model year, market edition and engine code. Identify the unit, power category, test standard and rpm for each claim. If these differ or are unknown, mark the comparison as qualified rather than pretending the figures are identical.",

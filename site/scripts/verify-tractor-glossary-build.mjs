@@ -12,6 +12,9 @@ for(const [lang,file] of Object.entries(paths)){
  assert.match(html,new RegExp(`<html[^>]+lang="${lang}"`),`${lang} lang`);
  const count=(html.match(/class="glossary-card"/g)||[]).length;
  assert.equal(count,96,`${lang} SSR must render 96 substantive term cards`);
+ const parts=(html.match(/class="part-card"/g)||[]).length;
+ assert.equal(parts,57,`${lang} SSR must render 57 source-aware part explanations`);
+ assert.match(html,/class="parts-flow-grid"/, "four human-readable mechanism explanations must render");
  assert.match(html,/https:\/\/www\.oecd\.org\/en\/topics\/tractors\.html/);
  assert.match(html,/https:\/\/tractortestlab\.unl\.edu\//);
  assert.match(html,/\/images\/tractors\/[^"]+\.jpg/,"only approved first-party photos are in markup");

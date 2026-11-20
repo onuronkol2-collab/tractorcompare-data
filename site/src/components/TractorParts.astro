@@ -1,0 +1,157 @@
+---
+import {TRACTOR_PART_SECTIONS,TRACTOR_PARTS} from "../lib/tractor-parts.ts";
+interface Props {lang:"tr"|"en"}
+const {lang}=Astro.props;
+const tr=lang==="tr";
+const groups=Object.entries(TRACTOR_PART_SECTIONS).map(([id,labels])=>({id,label:labels[lang]}));
+const flows=tr?[
+ {title:"Motor gücü nasıl oluşur?",steps:["Mazot ve hava girer","Piston hareket eder","Krank mili döner"],desc:"Yakıtın yanması pistonları hareket ettirir; krank mili bu hareketi dönmeye çevirir."},
+ {title:"Traktör nasıl ilerler?",steps:["Motor döner","Şanzıman uygun oranı seçer","Aks ve lastikler hareket eder"],desc:"Yürüyüşe giden güç, şanzıman ve akslardan geçerek tekerleğe ulaşır."},
+ {title:"Ekipman nasıl döner?",steps:["Motor","Kuyruk mili","Korumalı kardan şaftı","Ekipman"],desc:"Biçme makinesi gibi döner ekipmanlar kuyruk milinden güç alabilir."},
+ {title:"Ekipman nasıl kaldırılır?",steps:["Hidrolik pompa","Kumanda valfi","Hidrolik silindir","Askı kolları"],desc:"Pompanın hareket ettirdiği yağ, silindirden kuvvet elde edilmesini sağlar."}
+]:[
+ {title:"How does the engine make power?",steps:["Fuel and air enter","Piston moves","Crankshaft rotates"],desc:"Combustion pushes the piston and the crankshaft converts its movement into rotation."},
+ {title:"How does the tractor move?",steps:["Engine turns","Gearbox selects a ratio","Axles and tyres move"],desc:"Drive passes through the gearbox and axles before reaching the ground."},
+ {title:"How does an implement rotate?",steps:["Engine","PTO output","Guarded driveshaft","Implement"],desc:"Rotating machines such as mowers can receive power from the PTO."},
+ {title:"How is an implement lifted?",steps:["Hydraulic pump","Control valve","Hydraulic cylinder","Linkage"],desc:"The pump moves oil and the cylinder provides a lifting force."}
+];
+---
+<section class="parts-education" id="traktor-parcalari" aria-labelledby="tractor-parts-heading">
+  <header class="parts-heading">
+    <p class="parts-kicker">{tr?"ÖNCE PARÇAYI TANI":"START WITH THE PARTS"}</p>
+    <h2 id="tractor-parts-heading">{tr?"Traktörün parçaları ne işe yarar?":"What do tractor parts actually do?"}</h2>
+    <p>{tr?
+      "Motorun içinde ne döner, ön yükleyici nasıl kalkar, pulluk hangi kola bağlanır? Parçaları ezberlemek yerine yaptıkları işi öğrenin. Her birinin traktörde nerede olduğunu ve günlük hayatta ne işe yaradığını anlattık.":
+      "What turns inside the engine, raises a loader or connects a plough? Rather than memorising names, discover the work each part does, where to find it and how it helps on a farm."}</p>
+    <div class="parts-stats">
+      <span><strong>{TRACTOR_PARTS.length}</strong> {tr?"parçanın sade açıklaması":"part explanations"}</span>
+      <span>{tr?"Nerede? • Ne yapar? • Örnek • Dikkat":"Where? • What? • Example • Caution"}</span>
+    </div>
+  </header>
+
+  <section class="parts-flow" aria-labelledby="tractor-flow-heading">
+    <h3 id="tractor-flow-heading">{tr?"Dört kısa örnekle traktörün çalışma mantığı":"How a tractor works in four simple flows"}</h3>
+    <p>{tr?"Aşağıdaki yollar kavramsal bir anlatımdır; her modelin iç düzeni aynı değildir.":"These flows are simplified explanations; exact component layouts differ by model."}</p>
+    <div class="parts-flow-grid">
+      {flows.map((item,index)=><section class="parts-flow-item">
+        <span class="parts-flow-number">{String(index+1).padStart(2,"0")}</span>
+        <h4>{item.title}</h4>
+        <ol>{item.steps.map(step=><li>{step}</li>)}</ol>
+        <p>{item.desc}</p>
+      </section>)}
+    </div>
+  </section>
+
+  <nav class="parts-jump" aria-label={tr?"Parça gruplarına git":"Jump to parts by system"}>
+    {groups.map(group=><a href={"#parca-grubu-"+group.id}>{group.label[0]}</a>)}
+  </nav>
+
+  {groups.map((group,i)=>{
+    const items=TRACTOR_PARTS.filter(p=>p.group===group.id);
+    return <section class="parts-group" id={"parca-grubu-"+group.id} data-glossary-group>
+      <div class="parts-group-heading">
+        <span class="parts-group-index" aria-hidden="true">{String(i+1).padStart(2,"0")}</span>
+        <div>
+          <h3>{group.label[0]}</h3>
+          <p>{group.label[1]}</p>
+        </div>
+        <small>{items.length} {tr?"parça":"parts"}</small>
+      </div>
+      <div class="parts-grid">
+        {items.map(part=><section class="part-card" id={part.id} data-glossary-term
+          data-search={[part.name.tr,part.name.en,part.location.tr,part.location.en,part.purpose.tr,part.purpose.en,part.example.tr,part.example.en].join(" ")}>
+          <div class="part-card-top">
+            <h4>{part.name[lang]}</h4>
+            <a href={"#"+part.id} title={tr?"Parçanın doğrudan bağlantısı":"Direct link to this part"}
+               aria-label={(tr?"Bağlantı: ":"Link: ")+part.name[lang]}>#</a>
+          </div>
+          <div class="part-main">
+            <strong>{tr?"BU PARÇA NE YAPAR?":"WHAT DOES IT DO?"}</strong>
+            <p>{part.purpose[lang]}</p>
+          </div>
+          <div class="part-details">
+            <div>
+              <strong>{tr?"NERESİNDE?":"WHERE IS IT?"}</strong>
+              <p>{part.location[lang]}</p>
+            </div>
+            <div>
+              <strong>{tr?"GÜNLÜK ÖRNEK":"AN EVERYDAY EXAMPLE"}</strong>
+              <p>{part.example[lang]}</p>
+            </div>
+          </div>
+          <div class="part-caution">
+            <strong>{tr?"AKLINIZDA KALSIN":"REMEMBER"}</strong>
+            <p>{part.caution[lang]}</p>
+          </div>
+        </section>)}
+      </div>
+    </section>
+  })}
+  <aside class="parts-source-note">
+    <strong>{tr?"Fotoğraflar ve güvenilirlik hakkında":"About photos and technical accuracy"}</strong>
+    <p>{tr?
+      "Bu anlatım tüm traktörlere birebir aynı parça yerleşimi atfetmez. Sitedeki lisanslı traktör fotoğrafları genel görünüm içindir; motorun içindeki parçayı gösterdiği iddia edilmez. Bağlama, sökme ve bakım için kendi modelinizin kullanım kılavuzunu esas alın.":
+      "This guide does not claim every tractor has the same component layout. Licensed tractor photographs elsewhere on this page are exterior examples, not cutaway photographs. Always consult your exact model's manual before servicing or connecting equipment."}</p>
+    <p>{tr?"Güvenlik okumaları: ":"Safety references: "}
+      <a href="https://extension.psu.edu/power-take-off-pto-safety" target="_blank" rel="noopener noreferrer">{tr?"Penn State PTO güvenliği":"Penn State PTO safety"}</a>
+      · <a href="https://www.pubs.ext.vt.edu/content/pubs_ext_vt_edu/en/BSE/BSE-48/BSE-48.html" target="_blank" rel="noopener noreferrer">{tr?"Virginia Tech traktör güvenliği":"Virginia Tech tractor safety"}</a>
+      · <a href="https://www.ars.usda.gov/northeast-area/docs/safety-health-and-environmental-training/tractor-safety/" target="_blank" rel="noopener noreferrer">{tr?"USDA traktör güvenliği":"USDA tractor safety"}</a>
+    </p>
+  </aside>
+</section>
+<style>
+.parts-education{margin:54px 0 78px;scroll-margin-top:23px;color:#1a3928}
+.parts-heading{max-width:900px}
+.parts-kicker{color:#376b3e;font-size:11px;letter-spacing:.14em;font-weight:900;margin:0 0 13px}
+.parts-heading h2{font-size:clamp(27px,3vw,41px);letter-spacing:-.035em;line-height:1.2;margin:0 0 15px;color:#16462c}
+.parts-heading>p:not(.parts-kicker){font-size:16px;line-height:1.9;color:#49604d}
+.parts-stats{display:flex;flex-wrap:wrap;gap:9px;margin:21px 0 30px}
+.parts-stats span{border:1px solid #bed6bc;background:#e8f2e4;border-radius:999px;padding:9px 14px;color:#285535;font-size:13px}
+.parts-stats strong{font-size:18px}
+.parts-flow{padding:27px;border-radius:21px;background:linear-gradient(135deg,#e6efdf,#f4f8ec);border:1px solid #c7dec1}
+.parts-flow h3{font-size:24px;margin:0 0 10px;color:#214f31}
+.parts-flow>p{font-size:13px;color:#566a53;line-height:1.65;margin:0 0 22px}
+.parts-flow-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.parts-flow-item{padding:21px;border:1px solid #d1e0cb;background:#fff;border-radius:15px}
+.parts-flow-number{font-weight:900;font-size:12px;letter-spacing:.1em;color:#477f4b}
+.parts-flow-item h4{font-size:18px;color:#204b30;margin:8px 0 14px;line-height:1.4}
+.parts-flow-item ol{display:flex;flex-wrap:wrap;gap:8px;list-style:none;padding:0;margin:0 0 13px}
+.parts-flow-item li{font-size:12px;font-weight:750;color:#17492c;padding:8px 10px;background:#e8f3e4;border-radius:9px}
+.parts-flow-item li:not(:last-child):after{content:"→";margin-left:9px;color:#519552;font-weight:900}
+.parts-flow-item p{font-size:13px;color:#506751;line-height:1.75;margin:0}
+.parts-jump{display:flex;flex-wrap:wrap;gap:9px;padding:26px 0 15px;border-bottom:1px solid #d5e2d2}
+.parts-jump a{padding:9px 13px;border:1px solid #b9d0b6;background:white;color:#235637;border-radius:999px;font-size:12px;font-weight:800}
+.parts-jump a:hover{background:#e4f0df}
+.parts-group{padding:36px 0 15px;scroll-margin-top:20px}
+.parts-group-heading{display:flex;gap:13px;align-items:flex-start;padding:0 0 18px}
+.parts-group-index{display:grid;place-items:center;flex:none;width:48px;height:48px;background:#d7e9ce;color:#285d34;border-radius:13px;font-weight:900}
+.parts-group-heading h3{font-size:clamp(22px,2.2vw,30px);line-height:1.28;margin:0 0 6px;color:#204a30}
+.parts-group-heading p{font-size:13px;color:#627363;line-height:1.6;margin:0}
+.parts-group-heading small{margin-left:auto;white-space:nowrap;background:#e2efe0;color:#37623d;border-radius:999px;padding:7px 10px;font-size:11px;font-weight:800}
+.parts-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.part-card{background:white;border:1px solid #cfdfcb;border-radius:17px;overflow-wrap:anywhere;padding:23px;scroll-margin-top:20px;box-shadow:0 8px 22px #20492b08}
+.part-card:target{outline:3px solid #a2ca89}
+.part-card-top{display:flex;align-items:flex-start;justify-content:space-between;gap:10px}
+.part-card h4{font-size:19px;line-height:1.33;margin:0 0 17px;color:#1d5130}
+.part-card-top a{font-size:14px;color:#3a773f;font-weight:900}
+.part-card strong{display:block;font-size:10px;font-weight:900;letter-spacing:.075em;color:#39784a}
+.part-card p{font-size:14px;line-height:1.8;color:#384c3b;margin:6px 0 0}
+.part-main{padding:14px 16px;border-radius:11px;background:#eff6eb;margin-bottom:14px}
+.part-main p{font-size:15px;font-weight:650;color:#20452d}
+.part-details{display:grid;grid-template-columns:1fr 1fr;gap:13px}
+.part-details>div{padding:6px 0}
+.part-caution{border-top:1px solid #e3eae0;margin-top:14px;padding-top:13px}
+.part-caution strong{color:#926126}
+.parts-source-note{margin-top:35px;padding:22px 25px;border:1px solid #bed9c1;background:#edf4e9;border-radius:15px}
+.parts-source-note strong{font-size:16px;color:#295e35}
+.parts-source-note p{line-height:1.85;font-size:13px;color:#45614a}
+.parts-source-note a{color:#245e39;font-weight:800;text-decoration:underline;text-underline-offset:2px}
+@media(max-width:740px){
+ .parts-flow-grid,.parts-grid{grid-template-columns:1fr}
+ .parts-group-heading small{display:none}
+ .parts-flow{padding:17px}
+ .part-card{padding:17px}
+ .part-details{grid-template-columns:1fr}
+}
+@media(prefers-reduced-motion:reduce){.parts-education *{scroll-behavior:auto!important}}
+</style>
