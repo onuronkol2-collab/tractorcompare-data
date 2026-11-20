@@ -1,5 +1,6 @@
 import {test} from "node:test";
 import assert from "node:assert/strict";
+import {buildMode} from "../scripts/cloudflare-build.mjs";
 import {resolve} from "node:path";
 import {fileURLToPath} from "node:url";
 import {verifyProductionConfiguration,verifyProductionArtifacts} from "../scripts/production-release-gate.mjs";
@@ -41,4 +42,11 @@ test("postbuild release checks fail rather than accept missing or empty publish 
   dir:resolve(site,"tests/nonexistent-released-site"),
   origin:"https://tractorvs.com",minTractors:100
  }),/TractorVS RELEASE BLOCKED/);
+});
+
+test("Cloudflare non-production branches always get noindex preview build mode",()=>{
+ assert.equal(buildMode("main"),"production");
+ assert.equal(buildMode(undefined),"production");
+ assert.equal(buildMode("feat/review"),"preview");
+ assert.equal(buildMode("staging"),"preview");
 });
