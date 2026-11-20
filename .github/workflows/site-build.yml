@@ -45,6 +45,9 @@ jobs:
       - name: Test conservative specification deduplication
         run: npm run test --workspace=tractorvs-site
 
+      - name: Validate production release gate and Worker configuration parity
+        run: node site/scripts/verify-cloudflare-build-contract.mjs
+
       - name: Build through the repository-root entrypoint
         run: npm run build
 
