@@ -12,10 +12,10 @@ Bu iş akışı **yalnız elle başlatılır**. Gemini çağrıları ücret ve k
 
 GitHub deposundaki `Settings → Secrets and variables → Actions → New repository secret` bölümünde:
 
-1. `TRACTORVS_SUPABASE_SERVICE_ROLE_JWT`: Supabase projesinin **legacy service_role JWT** anahtarı. Mevcut Edge Function `verify_jwt=true` olduğundan sıradan `sb_publishable_` veya `sb_secret_` anahtarı yerine geçmez. Bu yüksek yetkili gizli anahtarı yalnız GitHub Actions Secrets içine gir; tarayıcıdaki site koduna, PR'a, sohbete veya issue'ya yapıştırma.
+1. `TRACTORVS_SUPABASE_ANON_JWT`: Supabase projesinin **legacy anon (role=anon) JWT** anahtarı. Bu anahtar yalnız platformdaki `verify_jwt=true` giriş kontrolünü geçmek içindir; araştırma kuyruğuna yetki veren ayrı gizli anahtar ikinci maddede bulunur. **`service_role` JWT'si KULLANMA**; çalıştırıcı bunu özellikle reddeder. Modern `sb_publishable_` veya `sb_secret_` anahtarları JWT'nin yerine geçmez. Anahtarı GitHub Actions Secrets içine gir; PR/issue/sohbet loguna yapıştırma.
 2. `TRACTORVS_QUEUE_SECRET`: Supabase Edge Function yapılandırmasında mevcut `TC_QUEUE_SECRET` değerinin aynısı. Yeni bir değer üretip yalnız bir tarafa yazmak kimlik doğrulamasını bozacaktır. Bu değer de yalnız GitHub Actions Secrets içinde tutulmalıdır.
 
-Bu sırların mevcut olup olmadığı GitHub bağlayıcısıyla doğrulanamıyor. Kurulu değilse iş akışı **hiçbir araştırma kuyruğu kaydını almadan** güvenli biçimde hata verecek. Bu durumda iş başlamış gibi raporlama.
+Bu iki değerin GitHub Actions Secrets içinde tanımlı olup olmadığı GitHub bağlayıcısıyla doğrulanamıyor. Kurulu değilse iş akışı **hiçbir araştırma kuyruğu kaydını almadan** güvenli biçimde hata verecek. Bu durumda iş başlamış gibi raporlama.
 
 ## Çalıştırma
 

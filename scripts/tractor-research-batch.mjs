@@ -7,6 +7,17 @@ export const FUNCTION_URL = "https://aaufxtcvnzgavtlintiv.supabase.co/functions/
 export const MAX_BATCHES = 8;
 export const MAX_ITEMS_PER_BATCH = 3;
 
+// The queue secret authenticates the privileged queue route. Never send a service_role key.
+export function assertAnonJwt(jwt) {
+  if (typeof jwt !== "string" || jwt.split(".").length !== 3) {
+    throw new Error("Provide a valid legacy anon JWT, not a secret/publishable API key.");
+  }
+  let role;
+  try { role = JSON.parse(Buffer.from(jwt.split(".")[1], "base64url").toString("utf8")).role; }
+  catch { throw new Error("Legacy anon JWT has an invalid claims payload."); }
+  if (role !== "anon") throw new Error("Only role=anon JWT is permitted. Never use service_role or a user token.");
+}
+
 export function parseBatches(value) {
   const raw = String(value ?? "").trim();
   if (!/^[1-8]$/.test(raw)) throw new Error("Batch count must be an integer from 1 to 8.");
@@ -38,6 +49,7 @@ export function conciseBatch(body, httpStatus) {
 
 export async function runBatches({ batches, jwt, queueSecret, fetchFn = fetch, onBatch = () => {} }) {
   if (!jwt || !queueSecret) throw new Error("Required GitHub Actions secrets are not configured.");
+  assertAnonJwt(jwt);
   const batchCount = parseBatches(batches);
   const headers = {
     "Content-Type": "application/json",
@@ -105,7 +117,7 @@ export async function main() {
   try {
     report = await runBatches({
       batches: process.env.TRACTORVS_BATCHES || "1",
-      jwt: process.env.TRACTORVS_SUPABASE_SERVICE_ROLE_JWT,
+      jwt: process.env.TRACTORVS_SUPABASE_ANON_JWT,
       queueSecret: process.env.TRACTORVS_QUEUE_SECRET,
       onBatch: (batch, n) => {
         checkpoint.batches.push(batch);

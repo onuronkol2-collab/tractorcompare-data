@@ -1,6 +1,15 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { parseBatches, conciseBatch, runBatches, MAX_BATCHES, MAX_ITEMS_PER_BATCH } from "./tractor-research-batch.mjs";
+import { parseBatches, conciseBatch, runBatches, assertAnonJwt, MAX_BATCHES, MAX_ITEMS_PER_BATCH } from "./tractor-research-batch.mjs";
+
+const ANON_JWT = "e30." + Buffer.from(JSON.stringify({ role: "anon" })).toString("base64url") + ".sig";
+const SERVICE_JWT = "e30." + Buffer.from(JSON.stringify({ role: "service_role" })).toString("base64url") + ".sig";
+
+test("only legacy anon JWT can be used at the gateway", () => {
+  assert.doesNotThrow(() => assertAnonJwt(ANON_JWT));
+  assert.throws(() => assertAnonJwt(SERVICE_JWT), /Only role=anon/);
+  assert.throws(() => assertAnonJwt("sb_secret_mock"), /legacy anon/);
+});
 
 test("manual runs are strictly capped", () => {
   assert.equal(parseBatches("1"), 1);
@@ -27,13 +36,13 @@ test("queue empty is terminal and request authentication remains on the server",
   const actions = [];
   const report = await runBatches({
     batches: "8",
-    jwt: "mock-jwt",
+    jwt: ANON_JWT,
     queueSecret: "mock-secret",
     fetchFn: async (_url, init) => {
       const body = JSON.parse(init.body);
       actions.push(body.action);
       assert.equal(init.headers["x-queue-secret"], "mock-secret");
-      assert.equal(init.headers.Authorization, "Bearer mock-jwt");
+      assert.equal(init.headers.Authorization, "Bearer " + ANON_JWT);
       if (body.action === "queue_stats") {
         return new Response(JSON.stringify({ success: true, queue: { queued: 0, completed: 428 } }), { status: 200 });
       }
@@ -50,7 +59,7 @@ test("upstream failure stops future paid research calls", async () => {
   const actions = [];
   const report = await runBatches({
     batches: "8",
-    jwt: "mock-jwt",
+    jwt: ANON_JWT,
     queueSecret: "mock-secret",
     fetchFn: async (_url, init) => {
       const action = JSON.parse(init.body).action;
@@ -72,7 +81,7 @@ test("missing secrets and an HTTP authorization failure never attempt additional
   let count = 0;
   await assert.rejects(() => runBatches({
     batches: "8",
-    jwt: "jwt",
+    jwt: ANON_JWT,
     queueSecret: "secret",
     fetchFn: async () => { count++; return new Response("{}", { status: 401 }); },
   }), /HTTP 401/);
@@ -85,7 +94,7 @@ test("each completed batch is checkpointed before a later network failure", asyn
   let calls = 0;
   await assert.rejects(() => runBatches({
     batches: "4",
-    jwt: "jwt",
+    jwt: ANON_JWT,
     queueSecret: "secret",
     onBatch: (receipt, n) => savedReceipts.push({ n, receipt }),
     fetchFn: async () => {
