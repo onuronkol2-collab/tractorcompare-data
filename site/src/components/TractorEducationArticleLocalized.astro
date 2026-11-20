@@ -1,0 +1,158 @@
+---
+import SiteLayout from "../layouts/SiteLayout.astro";
+import {LOCALE_TAGS,LOCALES,localizedPath,type Locale} from "../lib/locales.ts";
+import {TECHNICAL_DEEP_DIVES,getTechnicalDeepDive,type TechnicalDeepDiveSlug} from "../lib/tractor-technical-deep-dives.ts";
+import {APPROVED_TRACTOR_PHOTOS} from "../lib/tractor-photos.ts";
+interface Props {lang:Exclude<Locale,"tr"|"en">;slug:TechnicalDeepDiveSlug}
+const {lang,slug}=Astro.props;
+const guide=getTechnicalDeepDive(slug);
+if(!guide)throw Error("Unknown tractor guide slug "+slug);
+const archives=import.meta.glob("../lib/education-draft-translations/*.json",{eager:true});
+const module=(archives[`../lib/education-draft-translations/${lang}.json`]||{}) as {default?:any};
+const data=module.default;
+if(!data||data.locale!==lang||data.validation?.complete!==true||data.validation?.reviewed!==true)
+ throw new Error("UNPUBLISHED ARTICLE TRANSLATION: "+lang+" has not passed editorial approval");
+const value=(group:string,id:string,key:string):string=>{
+ const v=data.data?.[group]?.[id]?.[key];
+ if(typeof v!=="string"||!v.trim())throw Error("Missing source-aligned translation: "+lang+" "+group+" "+id+" "+key);
+ return v;
+};
+const t=(id:string,key:string)=>value("ui",id,key);
+const title=value("articleMeta",slug,"title");
+const description=value("articleMeta",slug,"description");
+const lead=value("articleMeta",slug,"lead");
+const sections=guide.sections.map(s=>({
+ anchor:s.anchor,title:value("articleSections",slug+"--"+s.anchor,"title"),
+ p0:value("articleSections",slug+"--"+s.anchor,"p0"),
+ p1:value("articleSections",slug+"--"+s.anchor,"p1")
+}));
+const path=localizedPath(lang,"/guides/"+slug+"/");
+const hub=localizedPath(lang,"/guides/tractor-technical-terms/");
+const base=Astro.site||new URL("https://tractorvs.com");
+const url=new URL(path,base).toString();
+const hero=APPROVED_TRACTOR_PHOTOS.find(p=>p.brand===guide.heroPhoto.brand&&p.model===guide.heroPhoto.model);
+const image=hero?new URL(hero.displayUrl,base).toString():undefined;
+const schema={"@context":"https://schema.org","@graph":[
+ {"@type":"TechArticle","@id":url+"#article",url,headline:title,description,
+ inLanguage:LOCALE_TAGS[lang],isAccessibleForFree:true,
+ mainEntityOfPage:{"@type":"WebPage","@id":url+"#webpage"},
+ author:{"@type":"Organization",name:"TractorVS"},
+ publisher:{"@type":"Organization",name:"TractorVS"},
+ datePublished:"2026-11-20",dateModified:"2026-11-20",
+ ...(image?{image}:{}),
+ citation:["https://www.oecd.org/en/topics/tractors.html","https://tractortestlab.unl.edu/"]},
+ {"@type":"WebPage","@id":url+"#webpage",url,name:title,description,inLanguage:LOCALE_TAGS[lang],
+ mainEntity:{"@id":url+"#article"}},
+ {"@type":"BreadcrumbList",itemListElement:[
+  {"@type":"ListItem",position:1,name:t("navigation","home"),item:new URL(localizedPath(lang,"/"),base).toString()},
+  {"@type":"ListItem",position:2,name:t("navigation","breadcrumb"),item:new URL(hub,base).toString()},
+  {"@type":"ListItem",position:3,name:title,item:url}]}
+]};
+---
+<SiteLayout lang={lang} title={title+" | TractorVS"} description={description}
+ availableLocales={LOCALES} ogImage={image} structuredData={schema}>
+ <article class="multilingual-guide">
+  <header class="multilingual-guide-hero">
+    <div class="container guide-hero-grid">
+      <div>
+       <nav class="guide-crumb">
+        <a href={localizedPath(lang,"/")}>{t("navigation","home")}</a> /
+        <a href={hub}>{t("navigation","breadcrumb")}</a> /
+        {t("articles","guide")}
+       </nav>
+       <p class="guide-eyebrow">{t("articles","guide")} · TRACTORVS</p>
+       <h1>{title}</h1>
+       <p class="guide-lead">{lead}</p>
+       <a href="#content" class="guide-read">{t("articles","read")} ↓</a>
+      </div>
+      {hero&&<figure class="guide-photo">
+       <button type="button" data-tractor-photo data-photo-url={hero.fullUrl}
+        data-photo-label={hero.brand+" "+hero.model}
+        data-photo-credit={hero.photographer} data-photo-source={hero.sourcePage}
+        data-photo-license={hero.licenseUrl} data-photo-license-name={hero.licenseName}
+        aria-label={t("source","openPhoto")}>
+        <img src={hero.displayUrl} srcset={hero.thumbUrl+" 480w, "+hero.displayUrl+" 960w"}
+         sizes="(max-width:900px) 100vw, 480px" width={hero.width} height={hero.height}
+         loading="eager" decoding="async" alt={hero.brand+" "+hero.model}/>
+       </button>
+       <figcaption>{t("source","photo")} ·
+        <a href={hero.sourcePage} target="_blank" rel="noopener noreferrer">{hero.photographer}</a> ·
+        <a href={hero.licenseUrl} target="_blank" rel="noopener noreferrer">{hero.licenseName}</a>
+       </figcaption>
+      </figure>}
+    </div>
+  </header>
+  <div class="container guide-content" id="content">
+    <aside class="guide-index">
+      <h2>{t("articles","toc")}</h2>
+      <nav>{sections.map((s,i)=><a href={"#"+s.anchor}><span>{String(i+1).padStart(2,"0")}</span>{s.title}</a>)}</nav>
+      <a href={hub}>{t("hero","terms")} ↗</a>
+    </aside>
+    <div class="guide-main">
+      <aside class="guide-method">{t("source","intro")} {t("source","safe")}</aside>
+      {sections.map((s,i)=><section class="guide-chapter" id={s.anchor}>
+       <p class="chapter-count">{String(i+1).padStart(2,"0")} / 05</p>
+       <h2>{s.title}</h2>
+       <p>{s.p0}</p><p>{s.p1}</p>
+      </section>)}
+      <section class="guide-keyterms">
+       <h2>{t("articles","related")}</h2>
+       <div>{guide.glossary.map(id=><a href={hub+"#"+id}>#{id.replaceAll("-"," ")} ↗</a>)}</div>
+      </section>
+      <section class="guide-sources">
+       <h2>{t("articles","sources")}</h2>
+       <p>{t("source","intro")}</p>
+       <a href="https://www.oecd.org/en/topics/tractors.html" target="_blank" rel="noopener noreferrer">OECD tractor testing codes ↗</a>
+       <a href="https://tractortestlab.unl.edu/" target="_blank" rel="noopener noreferrer">Nebraska Tractor Test Laboratory ↗</a>
+       <a href="/methodology/">{t("hero","methods")} ↗</a>
+      </section>
+    </div>
+    <section class="guide-more">
+      <h2>{t("articles","other")}</h2>
+      <div>{TECHNICAL_DEEP_DIVES.filter(a=>a.slug!==slug).map(item=>
+       <a href={localizedPath(lang,"/guides/"+item.slug+"/")}>
+        <strong>{value("articleMeta",item.slug,"title")}</strong>
+        <span>{value("articleMeta",item.slug,"description")}</span>
+       </a>)}
+      </div>
+    </section>
+  </div>
+ </article>
+</SiteLayout>
+<style>
+ .multilingual-guide{background:#f4f8f2;color:#244532}
+ .multilingual-guide-hero{background:linear-gradient(120deg,#122b1b,#305740);color:#f0f8ed;padding:42px 0 54px}
+ .guide-hero-grid{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,.8fr);gap:28px;align-items:center}
+ .guide-crumb{font-size:12px;color:#dcebd9;margin-bottom:26px}.guide-crumb a{text-decoration:underline;color:inherit}
+ .guide-eyebrow{font-size:11px;font-weight:850;letter-spacing:.11em;color:#aed99c}
+ .multilingual-guide h1{font-size:clamp(31px,3.7vw,51px);line-height:1.12;letter-spacing:-.03em;margin:15px 0 20px}
+ .guide-lead{font-size:clamp(15px,1.65vw,19px);line-height:1.83;color:#e1ebde}
+ .guide-read{margin-top:24px;display:inline-flex;align-items:center;background:#b5dd9f;color:#18422a;text-decoration:none;padding:13px 20px;border-radius:10px;min-height:44px;font-weight:820}
+ .guide-photo{margin:0}.guide-photo button{border:0;padding:0;width:100%;background:transparent;cursor:zoom-in}
+ .guide-photo img{display:block;width:100%;height:auto;border-radius:13px}
+ .guide-photo figcaption{font-size:11px;color:#d6e5d6;line-height:1.7}
+ .guide-photo a{color:inherit;text-decoration:underline}
+ .guide-content{display:grid;grid-template-columns:minmax(195px,.3fr) minmax(0,.7fr);gap:30px;padding-top:46px;padding-bottom:70px}
+ .guide-index{position:sticky;top:30px;align-self:start;border:1px solid #cadccb;border-radius:14px;padding:18px;background:#fff}
+ .guide-index h2{font-size:17px;color:#1c5433}
+ .guide-index nav{display:flex;flex-direction:column;gap:10px;margin:13px 0}
+ .guide-index a{font-size:13px;line-height:1.6;color:#285c38;text-decoration:underline;text-underline-offset:3px}
+ .guide-index span{font-weight:900;padding-right:8px;color:#7e9b7f}
+ .guide-method{padding:18px;background:#e9f3e5;border-left:4px solid #739b64;border-radius:0 12px 12px 0;font-size:13px;line-height:1.7;margin-bottom:30px}
+ .guide-chapter{scroll-margin-top:25px;padding:22px 0 28px;border-bottom:1px solid #d4e4d1}
+ .chapter-count{font-size:12px;color:#598f58;font-weight:900}
+ .guide-chapter h2{font-size:clamp(22px,2.7vw,33px);line-height:1.28;color:#1e5735;margin:12px 0 17px}
+ .guide-chapter>p:not(.chapter-count){font-size:16px;line-height:1.94;color:#354a3d;margin-bottom:16px}
+ .guide-keyterms,.guide-sources{margin-top:30px;background:#edf5e9;border-radius:14px;padding:20px}
+ .guide-keyterms h2,.guide-sources h2{font-size:20px;color:#235539}
+ .guide-keyterms>div{display:flex;gap:10px;flex-wrap:wrap}
+ .guide-keyterms a,.guide-sources a{font-size:13px;font-weight:800;color:#24683f;text-decoration:underline;min-height:44px;display:inline-flex;align-items:center}
+ .guide-sources a{margin-right:18px}
+ .guide-more{grid-column:1/-1;margin-top:25px}
+ .guide-more h2{font-size:25px;color:#25583a}
+ .guide-more>div{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:14px}
+ .guide-more a{display:flex;flex-direction:column;gap:9px;background:white;border:1px solid #c9dbc5;border-radius:14px;padding:21px;text-decoration:none;color:#245336}
+ .guide-more strong{font-size:17px}.guide-more span{font-size:13px;line-height:1.65;color:#59715b}
+ .multilingual-guide a:focus-visible,.multilingual-guide button:focus-visible{outline:3px solid #8ab787;outline-offset:3px}
+ @media(max-width:850px){.guide-hero-grid,.guide-content{grid-template-columns:1fr}.guide-index{position:static}.guide-photo{max-width:600px}}
+</style>
