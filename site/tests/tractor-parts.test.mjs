@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 import {readFileSync} from "node:fs";
-import {TRACTOR_PARTS,TRACTOR_PART_SECTIONS} from "../src/lib/tractor-parts.ts";
+import {TRACTOR_PARTS,TRACTOR_PART_SECTIONS,GLOSSARY_TO_PART} from "../src/lib/tractor-parts.ts";
 import {GLOSSARY_TERMS} from "../src/lib/tractor-glossary.ts";
 import {TECHNICAL_DEEP_DIVES} from "../src/lib/tractor-technical-deep-dives.ts";
 const component=readFileSync(new URL("../src/components/TractorParts.astro",import.meta.url),"utf8");
@@ -23,6 +23,16 @@ test("tractor parts have distinct direct links and practical accessible original
    assert.ok(p.caution[lang].trim().length>=16);
   }
  }
+});
+test("direct links connect only real parts to appropriate technical terms",()=>{
+ const partIds=new Set(TRACTOR_PARTS.map(p=>p.id));
+ const technicalIds=new Set(GLOSSARY_TERMS.map(t=>t.id));
+ assert.ok(Object.keys(GLOSSARY_TO_PART).length>=40);
+ for(const [termId,partId] of Object.entries(GLOSSARY_TO_PART)){
+  assert.ok(technicalIds.has(termId),"Glossary term not found: "+termId);
+  assert.ok(partIds.has(partId),"Linked part does not exist: "+partId);
+ }
+ assert.match(glossary,/GLOSSARY_TO_PART\[term\.id/);
 });
 test("new parts are actually readable and searchable on the indexable glossary page",()=>{
  assert.match(glossary,/import TractorParts from "\.\/TractorParts\.astro"/);
