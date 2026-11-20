@@ -1,0 +1,65 @@
+name: TractorVS controlled research batch
+
+on:
+  pull_request:
+    paths:
+      - ".github/workflows/tractor-research-batch.yml"
+      - "scripts/tractor-research-batch.mjs"
+      - "scripts/tractor-research-batch.test.mjs"
+      - "supabase/docs/bulk-research-runbook.md"
+  workflow_dispatch:
+    inputs:
+      batches:
+        description: "Number of batches (each up to 3 tractor queue entries)"
+        type: choice
+        options:
+          - "1"
+          - "2"
+          - "4"
+          - "8"
+        default: "1"
+        required: true
+
+permissions:
+  contents: read
+
+concurrency:
+  group: tractorvs-research-production
+  cancel-in-progress: false
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Test queue caps, authentication and failure handling
+        run: node --test scripts/tractor-research-batch.test.mjs
+
+  process:
+    if: github.event_name == 'workflow_dispatch'
+    needs: test
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Process explicitly bounded queue batch
+        env:
+          TRACTORVS_BATCHES: ${{ github.event.inputs.batches }}
+          TRACTORVS_SUPABASE_SERVICE_ROLE_JWT: ${{ secrets.TRACTORVS_SUPABASE_SERVICE_ROLE_JWT }}
+          TRACTORVS_QUEUE_SECRET: ${{ secrets.TRACTORVS_QUEUE_SECRET }}
+        run: node scripts/tractor-research-batch.mjs
+      - name: Upload restart-safe progress receipt
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: tractorvs-research-progress
+          path: tractor-research-progress.json
+          if-no-files-found: warn
+          retention-days: 14
