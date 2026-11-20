@@ -51,6 +51,52 @@ jobs:
           node-version: "22"
       - name: Test queue caps, authentication and failure handling
         run: node --test scripts/tractor-research-batch.test.mjs scripts/tractor-research-continuation.test.mjs
+      - name: Read-only verify both research secrets and queue gateway
+        if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository
+        env:
+          TRACTORVS_SUPABASE_ANON_JWT: ${{ secrets.TRACTORVS_SUPABASE_ANON_JWT }}
+          TRACTORVS_QUEUE_SECRET: ${{ secrets.TRACTORVS_QUEUE_SECRET }}
+        run: |
+          node --input-type=module <<'NODE'
+          const jwt = process.env.TRACTORVS_SUPABASE_ANON_JWT ?? "";
+          const secret = process.env.TRACTORVS_QUEUE_SECRET ?? "";
+          if (!jwt || !secret) {
+            console.error("MISSING_SECRET: anon JWT " + (jwt ? "present" : "absent") + ", queue secret " + (secret ? "present" : "absent"));
+            process.exit(1);
+          }
+          let jwtRole;
+          try { jwtRole = JSON.parse(Buffer.from(jwt.split(".")[1], "base64url").toString("utf8")).role; }
+          catch { console.error("INVALID_ANON_JWT_FORMAT"); process.exit(1); }
+          if (jwtRole !== "anon") { console.error("INVALID_ANON_JWT_ROLE"); process.exit(1); }
+          let response;
+          try {
+            response = await fetch("https://aaufxtcvnzgavtlintiv.supabase.co/functions/v1/tractor-ai-research", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+                "apikey": jwt,
+                "Authorization": "Bearer " + jwt,
+                "x-queue-secret": secret,
+              },
+              body: JSON.stringify({ action: "queue_stats" }),
+              signal: AbortSignal.timeout(25000),
+            });
+          } catch (error) {
+            console.error("GATEWAY_NETWORK_CHECK_FAILED: " + (error?.name || "network_error"));
+            process.exit(1);
+          }
+          if (response.status !== 200) {
+            console.error("GATEWAY_AUTH_REJECTED_HTTP_" + response.status);
+            process.exit(1);
+          }
+          const body = await response.json().catch(() => null);
+          if (body?.success !== true || typeof body.queue?.queued !== "number") {
+            console.error("QUEUE_STATS_INVALID_RESPONSE");
+            process.exit(1);
+          }
+          console.log("VERIFIED: Both GitHub secrets exist, anon JWT is accepted, and queue secret is authenticated.");
+          console.log("Read-only queue check: queued=" + body.queue.queued + "; no research jobs were started.");
+          NODE
 
   process:
     if: github.event_name == 'workflow_dispatch'
