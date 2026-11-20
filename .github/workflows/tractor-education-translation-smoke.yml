@@ -1,0 +1,24 @@
+name: TractorVS editorial translation smoke test
+on:
+  push:
+    branches:
+      - feat/tractor-encyclopedia-10-language-editorial-20261120
+    paths:
+      - .github/workflows/tractor-education-translation-smoke.yml
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22.23.4"
+      - name: Exercise independent secured editorial translator with one source-backed sample
+        env:
+          TRACTORVS_SUPABASE_ANON_JWT: ${{ secrets.TRACTORVS_SUPABASE_ANON_JWT }}
+          TRACTORVS_QUEUE_SECRET: ${{ secrets.TRACTORVS_QUEUE_SECRET }}
+        run: node site/scripts/test-editorial-translation.mjs
