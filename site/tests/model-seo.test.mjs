@@ -150,3 +150,33 @@ test("raw semicolon source notes do not leak untranslated into nine localized se
   assert.match(detail,/class="model-original-note"/);
   assert.match(detail,/\{originalNote\}/);
 });
+
+
+test("published regional markets and archival unknowns are localized without changing source identity", async () => {
+  const { marketDisplayName } = await import("../src/lib/market-display.ts");
+  const expected = {
+    international: ["International catalogue","Uluslararası katalog"],
+    brazil: ["Brazil","Brezilya"],
+    "united kingdom": ["United Kingdom","Birleşik Krallık"],
+    "south africa": ["South Africa","Güney Afrika"],
+    "unspecified (historical catalogue)": ["Market unknown (archive)","Pazar bilinmiyor (arşiv)"],
+  };
+  for (const [market, [en, tr]] of Object.entries(expected)) {
+    assert.equal(marketDisplayName(market,"en"), en);
+    assert.equal(marketDisplayName(market,"tr"), tr);
+    const m = modelSeoMetadata({ ...tractor, market,variant:"Manufacturer-documented"}, "tr");
+    assert.ok(m.title.includes(tr), "localized region must appear in SEO title for "+market);
+    assert.ok(m.description.includes(tr), "localized region must appear in SEO description for "+market);
+  }
+  assert.equal(marketDisplayName("Türkiye","tr"),"Türkiye");
+  assert.equal(marketDisplayName("UK","tr"),"Birleşik Krallık");
+  assert.equal(marketDisplayName("Model year not stated","tr"),"Model year not stated",
+    "do not invent a translation for unknown market value");
+  for (const locale of ["en","tr","zh","hi","pt-br","fr","de","ru","ja","es"]) {
+    const desc = modelSeoMetadata({...tractor,market:"International",variant:"T194 / Series 1"},locale).description;
+    assert.ok(desc.length > 60);
+    assert.ok(!desc.includes("undefined"));
+    assert.notEqual(marketDisplayName("International",locale),"International",
+      "international market label should be explicitly localized as a catalogue for "+locale);
+  }
+});
