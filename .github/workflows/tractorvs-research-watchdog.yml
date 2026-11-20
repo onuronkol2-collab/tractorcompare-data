@@ -1,5 +1,6 @@
-name: TractorVS automatic recovery watchdog
+name: TractorVS free-first research watchdog
 
+# Free-first research health check. Scheduled calls are read-only and never spend Gemini tokens.
 # GitHub Actions cron can be delayed under load; not a real-time guarantee.
 on:
   schedule:
@@ -12,7 +13,7 @@ on:
   workflow_dispatch:
     inputs:
       dry_run:
-        description: "Verify queue and budget only; never dispatch paid work"
+        description: "Dry-run (default): queue/budget check only. Disable ONLY for explicit bounded paid fallback"
         type: boolean
         default: true
         required: true
@@ -37,10 +38,11 @@ jobs:
           node-version: "22"
       - name: Run tests before first automated dispatch
         run: node --test scripts/tractor-research-budget.test.mjs scripts/tractor-research-watchdog.test.mjs
-      - name: Safely resume bounded queue research if budget and queue allow
+      - name: Free-first check research queue and budget; paid fallback only with explicit manual opt-in
         env:
           GITHUB_TOKEN: ${{ github.token }}
           TRACTORVS_SUPABASE_ANON_JWT: ${{ secrets.TRACTORVS_SUPABASE_ANON_JWT }}
           TRACTORVS_QUEUE_SECRET: ${{ secrets.TRACTORVS_QUEUE_SECRET }}
-          TRACTORVS_DRY_RUN: ${{ github.event_name == 'workflow_dispatch' && inputs.dry_run == true }}
+          # Default for scheduled/push runs: read-only; user must explicitly disable dry_run in manual dispatch.
+          TRACTORVS_DRY_RUN: ${{ github.event_name != 'workflow_dispatch' || inputs.dry_run == true }}
         run: node scripts/tractor-research-watchdog.mjs
