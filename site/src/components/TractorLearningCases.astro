@@ -1,0 +1,46 @@
+---
+import {TRACTOR_LEARNING_CASES} from "../lib/tractor-learning-cases.ts";
+interface Props {lang:"en"|"tr"}
+const {lang}=Astro.props;
+const tr=lang==="tr";
+---
+<section class="case-study-section" id="gercek-tarla-ornekleri" aria-labelledby="case-study-heading">
+  <div class="case-study-heading">
+    <p class="case-study-kicker">{tr?"EZBERLEMEYİN, MANTIĞINI ÖĞRENİN":"LEARN THE REASON, NOT A SLOGAN"}</p>
+    <h2 id="case-study-heading">{tr?"Tarlada karşılaşabileceğiniz beş gerçekçi soru":"Five everyday tractor questions, explained simply"}</h2>
+    <p>{tr?
+      "Katalogdaki iki sayının aynı görünmesi, traktörlerin aynı işi yapacağı anlamına gelmez. Aşağıdaki örnekler belirli bir modelin arızasını teşhis etmez; farklı parçaların birlikte nasıl çalıştığını anlamanıza yardım eder.":
+      "Matching figures in a brochure do not guarantee that two tractors behave alike. These examples do not diagnose a particular tractor; they show how several parts and measurements work together."}</p>
+  </div>
+  <div class="case-study-list">
+    {TRACTOR_LEARNING_CASES.map((entry,i)=><article class="case-study-card" id={"durum-"+entry.id}>
+      <div class="case-study-index" aria-hidden="true">{String(i+1).padStart(2,"0")}</div>
+      <div class="case-study-content">
+        <h3>{entry.title[lang]}</h3>
+        <p class="case-study-situation">{entry.situation[lang]}</p>
+        <p><strong>{tr?"Neden böyle olabilir?":"Why can this happen?"}</strong> {entry.explanation[lang]}</p>
+        <p class="case-study-remember"><strong>{tr?"Güvenli yaklaşım":"Safe takeaway"}</strong> {entry.remember[lang]}</p>
+        <a class="case-study-term" href={"#"+entry.termId}>{tr?"İlgili teknik terimi öğren":"Read the related technical definition"} <span aria-hidden="true">↗</span></a>
+      </div>
+    </article>)}
+  </div>
+</section>
+<style>
+ .case-study-section{margin:56px 0 62px;scroll-margin-top:30px;color:#1a402d}
+ .case-study-kicker{font-size:11px;font-weight:900;letter-spacing:.12em;color:#477e4a;margin:0 0 12px}
+ .case-study-heading{max-width:890px;margin-bottom:22px}
+ .case-study-heading h2{font-size:clamp(25px,3vw,39px);color:#1e5133;line-height:1.2;margin:0 0 12px}
+ .case-study-heading>p:last-child{font-size:15px;line-height:1.8;color:#47604f}
+ .case-study-list{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,330px),1fr));gap:16px}
+ .case-study-card{display:flex;gap:14px;border:1px solid #c5dac5;border-radius:16px;background:#fcfefb;padding:22px}
+ .case-study-index{font-size:21px;font-weight:900;color:#467c56;line-height:1.2}
+ .case-study-content{flex:1;min-width:0}
+ .case-study-card h3{font-size:18px;line-height:1.3;margin:0 0 13px;color:#164e2c}
+ .case-study-card p{font-size:14px;line-height:1.8;color:#344d3e;margin:0 0 13px}
+ .case-study-situation{font-weight:650}
+ .case-study-card p strong{font-weight:850;color:#1c5c36}
+ .case-study-remember{padding:10px 12px;border-left:3px solid #6f9e6d;background:#edf5e9;border-radius:0 9px 9px 0}
+ .case-study-term{display:inline-flex;align-items:center;gap:5px;min-height:44px;color:#236746;font-weight:800;font-size:13px;text-decoration:underline;text-underline-offset:3px}
+ .case-study-term:focus-visible{outline:3px solid #7db787;outline-offset:2px}
+ @media(max-width:560px){.case-study-card{padding:18px}.case-study-list{grid-template-columns:1fr}}
+</style>
