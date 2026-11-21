@@ -132,3 +132,75 @@ test("CLI never prints raw private model, URL, excerpt, or API fields",()=>{
   assert.equal(child.stdout.includes(privateText),false);
  }
 });
+
+
+test("model mention after a different technical box does not validate earlier model's power",()=>{
+ const candidate=changed({
+  target:{brand:"Antonio Carraro",model:"MACH 2 R"},
+  document:{url:"https://www.antoniocarraro.it/en/catalogue/mach-2-r",
+   finalUrl:"https://www.antoniocarraro.it/en/catalogue/mach-2-r"},
+  evidence:{value:"74.2",modelTechnicalBlock:
+   "8900 R Power 74.2 hp \n MACH 2 R - tractor navigation heading"}
+ });
+ const result=evaluateSource(candidate);
+ assert.equal(result.state,"needs_evidence");
+ assert.equal(result.reason,"value_label_or_unit_missing_after_model");
+});
+
+test("two contradictory official TIGRE 3800 F engine displacements become conflict_review",()=>{
+ const a=changed({
+  target:{model:"TIGRE 3800 F"},
+  document:{url:"https://www.antoniocarraro.it/it/catalogo/tigre-3800-f",
+   finalUrl:"https://www.antoniocarraro.it/it/catalogo/tigre-3800-f",title:"TIGRE 3800 F"},
+  evidence:{key:"engine_displacement_cc",label:"Displacement",value:"1331",unit:"cc",
+   modelTechnicalBlock:"TIGRE 3800 F Displacement 1331 cc"}
+ });
+ const b=changed({
+  target:{model:"TIGRE 3800 F"},
+  document:{url:"https://www.antoniocarraro.it/en/catalogue/tigre-3800-f",
+   finalUrl:"https://www.antoniocarraro.it/en/catalogue/tigre-3800-f",title:"TIGRE 3800 F"},
+  evidence:{key:"engine_displacement_cc",label:"Displacement",value:"1642",unit:"cc",
+   modelTechnicalBlock:"TIGRE 3800 F Displacement 1642 cc"}
+ });
+ assert.equal(evaluateSource(a).state,"review_candidate");
+ assert.equal(evaluateSource(b).state,"review_candidate");
+ const result=aggregateTriage([a,b]);
+ assert.equal(result.cross_source_conflicts,2);
+ assert.equal(result.outcomes.conflict_review,2);
+ assert.equal(result.outcomes.review_candidate,undefined);
+ assert.equal(result.published,0);
+});
+
+test("same numeric fact in decimal comma and dot notation does not create conflict",()=>{
+ const first=changed({evidence:{value:"25,7",modelTechnicalBlock:"TONY 8900 SR Power 25,7 hp"}});
+ const second=changed({document:{
+  url:"https://www.antoniocarraro.it/it/catalogo/tony-8900-sr",
+  finalUrl:"https://www.antoniocarraro.it/it/catalogo/tony-8900-sr"
+ },evidence:{value:"25.7",modelTechnicalBlock:"TONY 8900 SR Power 25.7 hp"}});
+ const out=aggregateTriage([first,second]);
+ assert.equal(out.cross_source_conflicts,0);
+ assert.equal(out.outcomes.review_candidate,2);
+});
+
+test("independent market and standard scopes are never silently merged",()=>{
+ const eur=changed({target:{market:"Europe"},evidence:{
+   value:"74.2",modelTechnicalBlock:"TONY 8900 SR Europe Power 74.2 hp"
+ }});
+ const us=changed({target:{market:"US"},evidence:{
+   value:"98",modelTechnicalBlock:"TONY 8900 SR US Power 98 hp"
+ }});
+ const out=aggregateTriage([eur,us]);
+ assert.equal(out.cross_source_conflicts,0);
+ assert.equal(out.outcomes.review_candidate,2);
+});
+
+test("a blocked source cannot manufacture a cross-source conflict",()=>{
+ const verified=base;
+ const blocked=changed({document:{finalUrl:"https://evil.example/false"},evidence:{
+   value:"174.2",modelTechnicalBlock:"TONY 8900 SR Power 174.2 hp"
+ }});
+ const out=aggregateTriage([verified,blocked]);
+ assert.equal(out.cross_source_conflicts,0);
+ assert.equal(out.outcomes.blocked,1);
+ assert.equal(out.outcomes.review_candidate,1);
+});
