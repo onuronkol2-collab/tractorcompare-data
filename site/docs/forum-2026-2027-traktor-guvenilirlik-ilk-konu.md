@@ -6,6 +6,8 @@
 
 > **Kısa cevap:** 21 Kasım 2026'da dünya çapında “en çok / en az arızalanan traktör markası” için standartlaştırılmış, model ve üretim yılı eşleştirilmiş satış başına arıza oranları açık olarak doğrulanamadı. Bu nedenle kesin sıralama uydurmadık. İstatistiksel küresel lig yerine **19 kaynaklı model ve model ailesini** ele aldık. Sayı hedef değil: yeni kanıt geldikçe kapsam genişletilebilir.
 
+<span id="ozet" aria-hidden="true"></span>
+
 ## 30 saniyede araştırmanın özeti
 
 **En önemli sonuç:** 2026 itibarıyla traktör markalarının dünyadaki gerçek satış başına arıza oranlarını karşılaştırmaya elveren ortak bir veri tabanı bulunamadı. Bu yüzden TractorVS kesin bir “en iyi / en kötü marka” ligi oluşturmuyor.
@@ -71,6 +73,8 @@ Aşağıdaki iki bölüm **en kötüden en iyiye bir sıra değildir.** Aynı mo
 </table>
 </div>
 
+<span id="teknik-sorunlar" aria-hidden="true"></span>
+
 ## I. Somut teknik sorun kayıtları bulunan modeller
 
 Bu bölümdeki makineler için dikkat çeken onarımlar, yaşanan başka olumlu sonuçları silmez. “İlk 8 en fazla arızalanan” anlamı taşımaz.
@@ -127,6 +131,8 @@ Bu bölümdeki makineler için dikkat çeken onarımlar, yaşanan başka olumlu 
 **Kanıt:** 2025 anketi; yaklaşık 2016 üretimi; Model başına toplu motor saati yok çalışma saati veya çok kullanıcılı avrupa anketinin alt grubu. **Bulgular:** Klima bileşenleri ve egzoz arıtma sensörleriyle ilişkili arıza alanları bildirilmiş; motor gücü ve kullanımına ilişkin olumlu görüşler de var.
 
 **Sınır:** Yeni Maxxum üretiminin gerçek arıza oranı olarak okunamaz. **[Birincil saha kaynağı](https://www.profi.de/test/schleppertest/umfrage-vierzylinder-traktoren-mit-150-ps-im-vergleich-35798.html)**
+
+<span id="uzun-donem" aria-hidden="true"></span>
 
 ## II. Olumlu veya dengeli uzun dönem kullanım kanıtı bulunan modeller
 
@@ -198,6 +204,8 @@ Buradaki “olumlu” ifadesi sıfır arıza demek değildir. Tam iş göremezli
 **Sınır:** Claas örneklemi ankette yaklaşık %6; kesin karşılaştırmalı arıza sıralamasına uygun değil. **[Birincil saha kaynağı](https://www.profi.de/test/schleppertest/umfrage-vierzylinder-traktoren-mit-150-ps-im-vergleich-35798.html)**
 
 
+<span id="marka-degerlendirmesi" aria-hidden="true"></span>
+
 ## III. Marka güvenilirliği: ne söylenebilir, ne söylenemez?
 
 **John Deere:** 6120M ve 6250R'nin test kayıtları olumlu bazı bulgular veriyor; bunlar bütün John Deere traktörlerinin 2026–2027 arıza oranı değildir. **Fendt:** 728 Gen7'de erken servis ziyaretleri, 942 Gen6'da yaklaşık 11.000 saatlik yoğun kullanım görülüyor; ikisini marka ortalamasına çeviremeyiz. **New Holland:** Yeni tarihli T7.230 örneği dengeli; eski T6 anketindeki sensör sorunları ayrı üretim grubu. **Valtra:** N154 ve G125'in farklı yıllardaki uzun dönem kayıtları, “marka iyi/kötü” ifadesinin niçin yetersiz kaldığını gösteriyor.
@@ -237,6 +245,8 @@ Bu yayın **21 Kasım 2026** tarihli olduğu için 2027'nin gelecekte gerçekle�
 5. Fabrika kampanyaları ve teknik servis güncellemeleri.
 6. Arızadan sonra çalışılamayan gün/saat ve yedek makine ihtiyacı.
 7. Garanti kapsamı, parça bulunabilirliği ve yerel servis yanıt süresi.
+
+<span id="sik-sorulanlar" aria-hidden="true"></span>
 
 ## VII. Sık sorulan sorular
 
