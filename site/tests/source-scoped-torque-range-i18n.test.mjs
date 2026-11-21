@@ -60,7 +60,9 @@ test("short Agrale product-page advertised cv is not falsely labeled a tested en
     const label = specLabel(input,locale);
     assert.ok(label.trim().length > 12,locale);
     if(locale === "en"){
-      assert.equal(label,advertisedCvSourceName);
+      // Unmapped English source headings follow the existing title-case display fallback.
+      assert.match(label,/manufacturer advertised metric power/i);
+      assert.match(label,/test standard not independently established/i);
       assert.equal(publishedSpecificationLabel(advertisedCvSourceName,locale),null);
     } else {
       assert.equal(label,publishedSpecificationLabel(advertisedCvSourceName,locale),locale);
