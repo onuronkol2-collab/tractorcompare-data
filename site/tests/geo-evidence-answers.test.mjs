@@ -137,3 +137,14 @@ test("new GEO fields do not crowd out previously verified wheelbase and fuel ans
  ]);
  assert.ok(answers.every(x=>x.sourceUrl===source));
 });
+
+test("manufacturer HTML product pages are labelled sources, not presumed documents",()=>{
+ const detail=readFileSync(new URL("../src/components/TractorDetail.astro",import.meta.url),"utf8");
+ const index=readFileSync(new URL("../src/lib/model-source-index.ts",import.meta.url),"utf8");
+ assert.match(detail,/"Manufacturer source"/);
+ assert.match(detail,/"Üretici kaynağı"/);
+ assert.doesNotMatch(detail,/Manufacturer document|Üretici belgesi/);
+ assert.match(index,/official: "Manufacturer source"/);
+ assert.match(index,/official: "Üretici kaynağı"/);
+ assert.match(detail,/href=\{item\.sourceUrl\}/);
+});
