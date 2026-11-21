@@ -48,9 +48,28 @@ export function isSafeForumTopic(v:ForumTopic):boolean {
   typeof v.body==="string"&&v.body.trim().length>=(v.machine_translated?5:40)&&v.body.length<=(v.machine_translated?30000:12000)&&
   typeof v.id==="string"&&/^[a-f0-9-]{36}$/.test(v.id));
 }
+/** A moderated news article needs at least one real external citation before SEO indexing.
+ * A URL here is a traceability check, NOT proof that the linked source is correct.
+ * Ordinary questions, maintenance discussions and firsthand experience remain usable
+ * without external links. Do not treat our own methodology pages as evidence for news.
+ */
+export function hasExternalForumNewsSource(body:string):boolean {
+ for(const match of String(body||"").matchAll(/https?:\/\/[^\s<>"']{1,1500}/gi)){
+  const candidate=match[0].replace(/[.,;!?)}\]]+$/g,"");
+  try{
+   const url=new URL(candidate);
+   const host=url.hostname.toLowerCase();
+   if((url.protocol==="https:"||url.protocol==="http:")&&!url.username&&!url.password&&
+      host!=="tractorvs.com"&&!host.endsWith(".tractorvs.com")&&
+      host!=="localhost"&&!host.endsWith(".localhost"))return true;
+  }catch{}
+ }
+ return false;
+}
 export function isIndexableForumTopic(topic:ForumTopic):boolean {
  return topic.status==="published" && topic.seo_ready===true &&
-   (topic.machine_translated || (topic.title.trim().length>=12 && topic.body.trim().length>=150));
+   (topic.machine_translated || (topic.title.trim().length>=12 && topic.body.trim().length>=150)) &&
+   (topic.category!=="news" || hasExternalForumNewsSource(topic.body));
 }
 export async function allPublicForumTopics():Promise<ForumTopic[]> {
  if(!topicsCache)topicsCache=loadRows<ForumTopic>("tc_forum_localized_topics",
