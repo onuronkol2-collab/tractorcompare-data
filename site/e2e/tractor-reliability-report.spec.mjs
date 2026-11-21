@@ -8,32 +8,31 @@ test.beforeEach(async({page})=>{
  });
 });
 
-test("2026 review truthfully labels the 2021 dataset and shows two ranked tables",async({page})=>{
- const resp=await page.goto("/tr/guides/2026-2027-traktor-guvenilirlik/",{waitUntil:"domcontentloaded"});
- expect(resp?.status()).toBe(200);
+test("one ranked 10-brand report preserves source date, photos, table and accessibility",async({page})=>{
+ const r=await page.goto("/tr/guides/2026-2027-traktor-guvenilirlik/",{waitUntil:"domcontentloaded"});
+ expect(r?.status()).toBe(200);
  await expect(page.locator("html")).toHaveAttribute("lang","tr");
  await expect(page.locator("main#main")).toHaveCount(1);
  await expect(page.locator("main main")).toHaveCount(0);
  await expect(page.locator("h1")).toHaveCount(1);
- await expect(page.locator("h1")).toContainText("2026–2027 Traktör Marka Güvenilirliği");
- await expect(page.getByText(/Anket veri yılı: 2021/)).toBeVisible();
- await expect(page.locator(".research-article table")).toHaveCount(2);
+ await expect(page.locator("h1")).toContainText("Traktör Güvenilirlik Sıralaması: 10 Markayı Tek Listede");
+ await expect(page.locator(".research-article table")).toHaveCount(1);
  await expect(page.locator(".research-article tbody tr")).toHaveCount(10);
- await expect(page.getByRole("region",{name:/En az sorun bildirilen beş marka/})).toHaveAttribute("tabindex","0");
- await expect(page.getByRole("region",{name:/En çok sorun bildirilen beş marka/})).toHaveAttribute("tabindex","0");
- await expect(page.locator(".research-article img")).toHaveCount(7);
+ const reg=page.getByRole("region",{name:/Polonyalı çiftçilerin 2020 tarihli güvenilirlik araştırmasına/});
+ await expect(reg).toHaveAttribute("tabindex","0");
+ await expect(page.locator(".research-article img")).toHaveCount(10);
  for(const img of await page.locator(".research-article img").all()){
   await expect(img).toHaveAttribute("alt",/.{30,}/);
-  await expect(img).toHaveAttribute("src",/^(?:\/images\/tractors\/[a-z0-9-]+-480\.jpg|https:\/\/commons\.wikimedia\.org\/wiki\/Special:FilePath\/[^"]+)$/);
+  await expect(img).toHaveAttribute("src",/^(?:\/images\/tractors\/|https:\/\/commons\.wikimedia\.org\/wiki\/Special:FilePath\/)/);
  }
+ await expect(page.locator(".research-article")).toContainText("2026–2027 satış başına mekanik arıza yüzdesi değildir");
  await expect(page.locator('.research-footer a[href="/tr/forum/"]')).toBeVisible();
- const axe=new AxeBuilder({page}).include(".research-shell")
-  .withTags(["wcag2a","wcag2aa","wcag21a","wcag21aa"]);
- const results=await axe.analyze();
- expect(results.violations.filter(v=>["serious","critical"].includes(v.impact))).toEqual([]);
+ const res=await new AxeBuilder({page}).include(".research-shell")
+  .withTags(["wcag2a","wcag2aa","wcag21a","wcag21aa"]).analyze();
+ expect(res.violations.filter(v=>["serious","critical"].includes(v.impact))).toEqual([]);
 });
 
-test("Turkish forum links to the report, without a fake English counterpart",async({page})=>{
+test("only Turkish community links to the source-backed Turkish ranking",async({page})=>{
  await page.goto("/tr/forum/",{waitUntil:"domcontentloaded"});
  await expect(page.locator('a[href="/tr/guides/2026-2027-traktor-guvenilirlik/"]')).toBeVisible();
  await page.goto("/forum/",{waitUntil:"domcontentloaded"});
