@@ -700,7 +700,10 @@ export const RESIDUAL_PUBLIC_SPEC_TERMS: Record<string, Partial<Record<Locale,st
     "hi": "अधिकतम शक्ति पर इंजन की गति",
     "de": "Motordrehzahl bei Höchstleistung",
     "ru": "Частота вращения двигателя при максимальной мощности",
-    "ja": "最高出力時のエンジン回転数"
+    "ja": "最高出力時のエンジン回転数",
+    "pt-br": "Rotação do motor à potência máxima",
+    "fr": "Régime moteur à la puissance maximale",
+    "es": "Régimen del motor a la potencia máxima"
   },
   "Max / Rated Power (HP)": {
     "hi": "अधिकतम / रेटेड शक्ति (HP)",
@@ -819,7 +822,10 @@ export const RESIDUAL_PUBLIC_SPEC_TERMS: Record<string, Partial<Record<Locale,st
     "ja": "後進段数（12F+12R変速機オプション）"
   },
   "Fuel Capacity – Large Tank Option": {
-    "de": "Kraftstoffvolumen – großer Tank als Option"
+    "de": "Kraftstoffvolumen – großer Tank als Option",
+    "pt-br": "Capacidade de combustível – opção de tanque grande",
+    "fr": "Capacité de carburant – option grand réservoir",
+    "es": "Capacidad de combustible – opción de depósito grande"
   },
   "Full-Range Lifting Force": {
     "de": "Hubkraft über den gesamten Hubbereich"
@@ -834,7 +840,10 @@ export const RESIDUAL_PUBLIC_SPEC_TERMS: Record<string, Partial<Record<Locale,st
     "de": "Kraftstofftank (Liter)"
   },
   "Manufacturer Cab/ROPS Weight Boundary (Load Condition Unstated)": {
-    "de": "Herstellerangabe zur Gewichtsgrenze von Kabine/ROPS (Beladungszustand nicht angegeben)"
+    "de": "Herstellerangabe zur Gewichtsgrenze von Kabine/ROPS (Beladungszustand nicht angegeben)",
+    "pt-br": "Limite de peso cabine/ROPS declarado pelo fabricante (condição de carga não informada)",
+    "fr": "Limite de masse cabine/ROPS donné par le constructeur (état de charge non précisé)",
+    "es": "Límite de peso cabina/ROPS declarado por el fabricante (condición de carga no indicada)"
   },
   "Mid Pto Speed Rpm": {
     "de": "Drehzahl der mittleren Zapfwelle (U/min)"
@@ -856,7 +865,10 @@ export const RESIDUAL_PUBLIC_SPEC_TERMS: Record<string, Partial<Record<Locale,st
   },
   "Front Track Width": {
     "ru": "Ширина передней колеи",
-    "hi": "आगे के पहियों की ट्रैक चौड़ाई"
+    "hi": "आगे के पहियों की ट्रैक चौड़ाई",
+    "pt-br": "Largura da bitola dianteira",
+    "fr": "Largeur de voie avant",
+    "es": "Ancho de vía delantera"
   },
   "Fuel Tank With Additional Tank, No Front Lift/PTO": {
     "ru": "Топливный бак с дополнительным баком (без передней навески/ВОМ)"
@@ -901,5 +913,390 @@ export const RESIDUAL_PUBLIC_SPEC_TERMS: Record<string, Partial<Record<Locale,st
   },
   "Electrohydraulic 4WD And Differential Lock Engagement": {
     "ru": "Электрогидравлическое включение 4WD и блокировки дифференциала"
+  },
+  "Length With Front Linkage In Transport Position": {
+    "pt-br": "Comprimento com engate dianteiro na posição de transporte",
+    "fr": "Longueur avec relevage avant en position de transport",
+    "es": "Longitud con enganche delantero en posición de transporte"
+  },
+  "Length With Front Linkage Lowered": {
+    "pt-br": "Comprimento com engate dianteiro abaixado",
+    "fr": "Longueur avec relevage avant abaissé",
+    "es": "Longitud con enganche delantero bajado"
+  },
+  "Maximum Total Weight At 40 Km/H": {
+    "pt-br": "Peso total máximo a 40 km/h",
+    "fr": "Masse totale maximale à 40 km/h",
+    "es": "Peso total máximo a 40 km/h"
+  },
+  "Maximum Total Weight At 50 Km/H": {
+    "pt-br": "Peso total máximo a 50 km/h",
+    "fr": "Masse totale maximale à 50 km/h",
+    "es": "Peso total máximo a 50 km/h"
+  },
+  "ÖN Lastik SeçEnekleri": {
+    "pt-br": "Opções de pneus dianteiros",
+    "fr": "Options de pneus avant",
+    "es": "Opciones de neumáticos delanteros"
+  },
+  "Creeper Gear": {
+    "pt-br": "Marcha superlenta",
+    "fr": "Rapport rampant",
+    "es": "Marcha superlenta"
+  },
+  "CVT Opsiyonel üSt HıZı": {
+    "pt-br": "Velocidade máxima opcional da CVT",
+    "fr": "Vitesse de pointe optionnelle de la CVT",
+    "es": "Velocidad máxima opcional de la CVT"
+  },
+  "CVT Standart üSt HıZı": {
+    "pt-br": "Velocidade máxima de série da CVT",
+    "fr": "Vitesse de pointe de série de la CVT",
+    "es": "Velocidad máxima estándar de la CVT"
+  },
+  "DEF / AdBlue Deposu": {
+    "pt-br": "Tanque de DEF / AdBlue",
+    "fr": "Réservoir de DEF / AdBlue",
+    "es": "Depósito de DEF / AdBlue"
+  },
+  "Front Agricultural Tyre": {
+    "pt-br": "Pneu agrícola dianteiro",
+    "fr": "Pneu agricole avant",
+    "es": "Neumático agrícola delantero"
+  },
+  "Ground PTO": {
+    "pt-br": "TDP sincronizada com o deslocamento",
+    "fr": "Prise de force proportionnelle à l'avancement",
+    "es": "TDF sincronizada con el avance"
+  },
+  "Height With Maximum Tyre SRI": {
+    "pt-br": "Altura com pneu de SRI máximo",
+    "fr": "Hauteur avec pneu à SRI maximal",
+    "es": "Altura con neumático de SRI máximo"
+  },
+  "Height With Minimum Tyre SRI": {
+    "pt-br": "Altura com pneu de SRI mínimo",
+    "fr": "Hauteur avec pneu à SRI minimal",
+    "es": "Altura con neumático de SRI mínimo"
+  },
+  "Kabin Cam Alanı": {
+    "pt-br": "Área envidraçada da cabine",
+    "fr": "Surface vitrée de la cabine",
+    "es": "Superficie acristalada de la cabina"
+  },
+  "Length With Front Linkage (Transport)": {
+    "pt-br": "Comprimento com engate dianteiro (transporte)",
+    "fr": "Longueur avec relevage avant (transport)",
+    "es": "Longitud con enganche delantero (transporte)"
+  },
+  "Length Without Front Weight": {
+    "pt-br": "Comprimento sem lastro dianteiro",
+    "fr": "Longueur sans masse avant",
+    "es": "Longitud sin contrapeso delantero"
+  },
+  "Main Brake": {
+    "pt-br": "Freio principal",
+    "fr": "Frein principal",
+    "es": "Freno principal"
+  },
+  "Max Speed 2wd Kmh": {
+    "pt-br": "Velocidade máxima em 2WD (km/h)",
+    "fr": "Vitesse maximale en 2RM (km/h)",
+    "es": "Velocidad máxima en 2WD (km/h)"
+  },
+  "Min Speed 2wd Kmh": {
+    "pt-br": "Velocidade mínima em 2WD (km/h)",
+    "fr": "Vitesse minimale en 2RM (km/h)",
+    "es": "Velocidad mínima en 2WD (km/h)"
+  },
+  "ÖN Aks Opsiyonları": {
+    "pt-br": "Opções de eixo dianteiro",
+    "fr": "Options d'essieu avant",
+    "es": "Opciones de eje delantero"
+  },
+  "Overall Height With Cab": {
+    "pt-br": "Altura total com cabine",
+    "fr": "Hauteur hors tout avec cabine",
+    "es": "Altura total con cabina"
+  },
+  "Rear Agricultural Tyre": {
+    "pt-br": "Pneu agrícola traseiro",
+    "fr": "Pneu agricole arrière",
+    "es": "Neumático agrícola trasero"
+  },
+  "ŞAnzıMan Tipi": {
+    "pt-br": "Tipo de transmissão",
+    "fr": "Type de transmission",
+    "es": "Tipo de transmisión"
+  },
+  "Shuttle Type": {
+    "pt-br": "Tipo de inversor de marcha",
+    "fr": "Type d'inverseur de marche",
+    "es": "Tipo de inversor de marcha"
+  },
+  "Standart Kabin Halojen Far SayıSı": {
+    "pt-br": "Número de faróis halógenos da cabine padrão",
+    "fr": "Nombre de phares halogènes de la cabine standard",
+    "es": "Número de faros halógenos de la cabina estándar"
+  },
+  "Standart öN Aks": {
+    "pt-br": "Eixo dianteiro de série",
+    "fr": "Essieu avant de série",
+    "es": "Eje delantero de serie"
+  },
+  "Unladen Weight (Tanks Empty)": {
+    "pt-br": "Peso sem carga (tanques vazios)",
+    "fr": "Masse à vide (réservoirs vides)",
+    "es": "Peso en vacío (depósitos vacíos)"
+  },
+  "Urea/AdBlue Tank Capacity": {
+    "pt-br": "Capacidade do tanque de ureia/AdBlue",
+    "fr": "Capacité du réservoir d'urée/AdBlue",
+    "es": "Capacidad del depósito de urea/AdBlue"
+  },
+  "Wheelbase 2wd Mm": {
+    "pt-br": "Distância entre eixos em 2WD (mm)",
+    "fr": "Empattement en 2RM (mm)",
+    "es": "Distancia entre ejes en 2WD (mm)"
+  },
+  "Width At Minimum Tread": {
+    "pt-br": "Largura na bitola mínima",
+    "fr": "Largeur à voie minimale",
+    "es": "Anchura con vía mínima"
+  },
+  "Approx Operating Weight": {
+    "pt-br": "Peso operacional aproximado",
+    "fr": "Masse en ordre de marche approximative",
+    "es": "Peso operativo aproximado"
+  },
+  "Clutch On Gear Lever": {
+    "pt-br": "Comando da embreagem na alavanca de marchas",
+    "fr": "Commande d'embrayage sur le levier de vitesses",
+    "es": "Mando del embrague en la palanca de cambios"
+  },
+  "Engine Power Rpm": {
+    "pt-br": "Rotação do motor na potência indicada (rpm)",
+    "fr": "Régime moteur à la puissance indiquée (tr/min)",
+    "es": "Régimen del motor a la potencia indicada (rpm)"
+  },
+  "Height To Top ROPS Or Cab": {
+    "pt-br": "Altura até o topo do ROPS ou da cabine",
+    "fr": "Hauteur jusqu'au sommet du ROPS ou de la cabine",
+    "es": "Altura hasta la parte superior del ROPS o la cabina"
+  },
+  "Length, CVT": {
+    "pt-br": "Comprimento, versão CVT",
+    "fr": "Longueur, version CVT",
+    "es": "Longitud, versión CVT"
+  },
+  "Length, Powershift": {
+    "pt-br": "Comprimento, versão Powershift",
+    "fr": "Longueur, version Powershift",
+    "es": "Longitud, versión Powershift"
+  },
+  "Manufacturer Model Code": {
+    "pt-br": "Código de modelo do fabricante",
+    "fr": "Code modèle du constructeur",
+    "es": "Código de modelo del fabricante"
+  },
+  "Maximum Height": {
+    "pt-br": "Altura máxima",
+    "fr": "Hauteur maximale",
+    "es": "Altura máxima"
+  },
+  "Maximum Width": {
+    "pt-br": "Largura máxima",
+    "fr": "Largeur maximale",
+    "es": "Anchura máxima"
+  },
+  "Minimum Speed": {
+    "pt-br": "Velocidade mínima",
+    "fr": "Vitesse minimale",
+    "es": "Velocidad mínima"
+  },
+  "Minimum Speed With Creeper": {
+    "pt-br": "Velocidade mínima com marcha superlenta",
+    "fr": "Vitesse minimale avec gamme rampante",
+    "es": "Velocidad mínima con marcha superlenta"
+  },
+  "Overall Length Frame To Link": {
+    "pt-br": "Comprimento total do chassi à ligação",
+    "fr": "Longueur totale du châssis au point d'attelage",
+    "es": "Longitud total del bastidor al punto de enganche"
+  },
+  "Powershift Stages": {
+    "pt-br": "Número de estágios Powershift",
+    "fr": "Nombre de rapports Powershift",
+    "es": "Número de etapas Powershift"
+  },
+  "PTO Rated Power": {
+    "pt-br": "Potência nominal da TDP",
+    "fr": "Puissance nominale de la prise de force",
+    "es": "Potencia nominal de la TDF"
+  },
+  "Transmission Gears – Creeper Option": {
+    "pt-br": "Marchas da transmissão com opção superlenta",
+    "fr": "Rapports de transmission avec option rampante",
+    "es": "Marchas de la transmisión con opción superlenta"
+  },
+  "Transmission Gears – Standard": {
+    "pt-br": "Marchas da transmissão de série",
+    "fr": "Rapports de transmission de série",
+    "es": "Marchas de la transmisión estándar"
+  },
+  "Width With Tires": {
+    "pt-br": "Largura com pneus",
+    "fr": "Largeur avec pneus",
+    "es": "Anchura con neumáticos"
+  },
+  "Working Weight – CVT": {
+    "pt-br": "Peso em trabalho – CVT",
+    "fr": "Masse en travail – CVT",
+    "es": "Peso de trabajo – CVT"
+  },
+  "Working Weight – Powershift": {
+    "pt-br": "Peso em trabalho – Powershift",
+    "fr": "Masse en travail – Powershift",
+    "es": "Peso de trabajo – Powershift"
+  },
+  "2WD Dingil Mesafesi": {
+    "pt-br": "Distância entre eixos em 2WD",
+    "fr": "Empattement en 2RM",
+    "es": "Distancia entre ejes en 2WD"
+  },
+  "2WD Toplam Uzunluk": {
+    "pt-br": "Comprimento total em 2WD",
+    "fr": "Longueur totale en 2RM",
+    "es": "Longitud total en 2WD"
+  },
+  "40 Km/Sa HıZda Motor Devri": {
+    "pt-br": "Rotação do motor a 40 km/h",
+    "fr": "Régime moteur à 40 km/h",
+    "es": "Régimen del motor a 40 km/h"
+  },
+  "4WD Toplam Uzunluk": {
+    "pt-br": "Comprimento total em 4WD",
+    "fr": "Longueur totale en 4RM",
+    "es": "Longitud total en 4WD"
+  },
+  "50 Km/Sa HıZda Motor Devri": {
+    "pt-br": "Rotação do motor a 50 km/h",
+    "fr": "Régime moteur à 50 km/h",
+    "es": "Régimen del motor a 50 km/h"
+  },
+  "60 Km/Sa HıZda Motor Devri": {
+    "pt-br": "Rotação do motor a 60 km/h",
+    "fr": "Régime moteur à 60 km/h",
+    "es": "Régimen del motor a 60 km/h"
+  },
+  "Arka Aks Merkezinden GPS Antenine YüKseklik": {
+    "pt-br": "Altura do centro do eixo traseiro até a antena GPS",
+    "fr": "Hauteur de l'axe arrière à l'antenne GPS",
+    "es": "Altura desde el centro del eje trasero hasta la antena GPS"
+  },
+  "Arka Aks Merkezinden Tavan üStüNe YüKseklik": {
+    "pt-br": "Altura do centro do eixo traseiro até o teto",
+    "fr": "Hauteur de l'axe arrière au toit",
+    "es": "Altura desde el centro del eje trasero hasta el techo"
+  },
+  "Arka çAmurluk GenişLiğI UzatmasıZ": {
+    "pt-br": "Largura do para-lama traseiro sem extensão",
+    "fr": "Largeur d'aile arrière sans extension",
+    "es": "Anchura del guardabarros trasero sin extensión"
+  },
+  "Arka Iz GenişLiğI Aralığı": {
+    "pt-br": "Faixa de largura da bitola traseira",
+    "fr": "Plage de voie arrière",
+    "es": "Rango de ancho de vía trasera"
+  },
+  "Arka PTO 1000 IçIn Motor Devri": {
+    "pt-br": "Rotação do motor para TDP traseira a 1000 rpm",
+    "fr": "Régime moteur pour prise de force arrière à 1000 tr/min",
+    "es": "Régimen del motor para TDF trasera a 1000 rpm"
+  },
+  "Arka PTO 1000E IçIn Motor Devri": {
+    "pt-br": "Rotação do motor para TDP traseira a 1000E rpm",
+    "fr": "Régime moteur pour prise de force arrière 1000E",
+    "es": "Régimen del motor para TDF trasera 1000E"
+  },
+  "Arka PTO 540E IçIn Motor Devri": {
+    "pt-br": "Rotação do motor para TDP traseira a 540E rpm",
+    "fr": "Régime moteur pour prise de force arrière 540E",
+    "es": "Régimen del motor para TDF trasera 540E"
+  },
+  "Asgari Yerden YüKseklik": {
+    "pt-br": "Vão livre mínimo ao solo",
+    "fr": "Garde au sol minimale",
+    "es": "Despeje mínimo del suelo"
+  },
+  "Azami Arka Lastik SeçEnekleri": {
+    "pt-br": "Opções de pneus traseiros de maior dimensão",
+    "fr": "Options de pneus arrière de plus grande dimension",
+    "es": "Opciones de neumáticos traseros de mayor tamaño"
+  },
+  "Azami öN Lastik SeçEnekleri": {
+    "pt-br": "Opções de pneus dianteiros de maior dimensão",
+    "fr": "Options de pneus avant de plus grande dimension",
+    "es": "Opciones de neumáticos delanteros de mayor tamaño"
+  },
+  "BağLantı Referansları Arası Uzunluk": {
+    "pt-br": "Comprimento entre pontos de referência de ligação",
+    "fr": "Longueur entre points de référence d'attelage",
+    "es": "Longitud entre puntos de referencia de enganche"
+  },
+  "Baz DonanıM AğıRlığı": {
+    "pt-br": "Peso do equipamento básico",
+    "fr": "Masse de l'équipement de base",
+    "es": "Peso del equipamiento básico"
+  },
+  "Cab Height Std Mm": {
+    "pt-br": "Altura padrão da cabine (mm)",
+    "fr": "Hauteur standard de la cabine (mm)",
+    "es": "Altura estándar de la cabina (mm)"
+  },
+  "ÇAmurluk GenişLiğI Geniş Uzatma Ile": {
+    "pt-br": "Largura do para-lama com extensão larga",
+    "fr": "Largeur d'aile avec extension large",
+    "es": "Anchura del guardabarros con extensión ancha"
+  },
+  "ÇAmurluk GenişLiğI UzatmasıZ": {
+    "pt-br": "Largura do para-lama sem extensão",
+    "fr": "Largeur d'aile sans extension",
+    "es": "Anchura del guardabarros sin extensión"
+  },
+  "ÇEki Piminden öLçüLen DöNüş YarıçApı": {
+    "pt-br": "Raio de giro medido no pino de engate",
+    "fr": "Rayon de braquage mesuré à l'axe d'attelage",
+    "es": "Radio de giro medido en el pasador de enganche"
+  },
+  "ÇEkiş SeçEnekleri": {
+    "pt-br": "Opções de tração",
+    "fr": "Options de traction",
+    "es": "Opciones de tracción"
+  },
+  "Clutch Diameter Mm": {
+    "pt-br": "Diâmetro da embreagem (mm)",
+    "fr": "Diamètre d'embrayage (mm)",
+    "es": "Diámetro del embrague (mm)"
+  },
+  "Direksiyon DöNüş AçıSı (1960 Mm Iz)": {
+    "pt-br": "Ângulo de direção (bitola 1960 mm)",
+    "fr": "Angle de braquage (voie de 1960 mm)",
+    "es": "Ángulo de dirección (vía de 1960 mm)"
+  },
+  "Drive Arrangement": {
+    "pt-br": "Configuração de tração",
+    "fr": "Configuration de la transmission aux roues",
+    "es": "Configuración de tracción"
+  },
+  "Final Drive Reduction": {
+    "pt-br": "Redução final de transmissão",
+    "fr": "Rapport de réduction final",
+    "es": "Relación de reducción final"
+  },
+  "Front Track Mm": {
+    "pt-br": "Bitola dianteira (mm)",
+    "fr": "Voie avant (mm)",
+    "es": "Ancho de vía delantero (mm)"
   }
 };
