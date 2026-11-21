@@ -7,7 +7,9 @@ const checks = new Map([
   ["AGENTS.md", [
     "ALTIN KURAL", "TAM ENTEGRASYON", "GitHub", "Supabase",
     "Firecrawl", "Microsoft Clarity", "PostHog", "OpenSEO",
-    "Google Drive", "Süreklilik ve dürüst sınır",
+    "Google Drive", "Playwright", "axe-core", "CodeQL", "Dependabot",
+    "Cloudflare Web Analytics", "Malware alerts", "Secret Protection", "Push protection",
+    "Enable with JS Snippet installation", "Süreklilik ve dürüst sınır",
   ]],
   ["README.md", ["AGENTS.md"]],
   [".github/copilot-instructions.md", ["AGENTS.md", "Altın Entegrasyon Kuralı"]],
@@ -19,6 +21,7 @@ const checks = new Map([
   [".github/pull_request_template.md", ["AGENTS.md", "RLS", "SEO"]],
   ["docs/CHATGPT_PROJECT_INSTRUCTIONS.md", [
     "AGENTS.md", "Proje Talimatları", "maksimum kalite",
+    "Playwright", "axe-core", "CodeQL", "Dependabot", "Cloudflare Web Analytics",
   ]],
 ]);
 
