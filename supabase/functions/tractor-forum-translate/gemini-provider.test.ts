@@ -1,8 +1,15 @@
 import assert from "node:assert/strict";
 // Offline tests: no remote test libraries, secrets or Gemini requests.
-const assertEquals=assert.deepEqual;
-async function assertRejects(fn:()=>Promise<unknown>,_error?:typeof Error,message?:string) {
- await assert.rejects(fn,message?new RegExp(message):undefined);
+function assertEquals(actual:unknown, expected:unknown):void {
+ assert.deepEqual(actual,expected);
+}
+async function assertRejects(fn:()=>Promise<unknown>,_error?:typeof Error,message?:string):Promise<void> {
+ let threw=false;
+ try {await fn()} catch(error) {
+  threw=true;
+  if(message) assert.match(String((error as Error)?.message||error),new RegExp(message));
+ }
+ assert.ok(threw,"Expected promise rejection");
 }
 import {generateGeminiJson,requestBody} from "./gemini-provider.ts";
 
