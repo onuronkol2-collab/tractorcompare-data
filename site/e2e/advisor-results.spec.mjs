@@ -44,4 +44,36 @@ test("advisor shows five transparent recommendations and links to comparison", a
   await expect(cards.first().locator(".advisor-card-evidence a")).toHaveAttribute("href", "https://www.basaktraktor.com.tr/technical-specifications");
   await expect(cards.first().locator(".advisor-view-model")).toHaveAttribute("href", /^\/tr\/tractors\//);
   await expect(cards.first().locator(".advisor-compare-model")).toHaveAttribute("href", /\/tr\/compare\/\?left=advisor-fixture-/);
+  // Astro runtime-created nodes must receive actual result CSS, not just the
+  // scoped attributes present on server-rendered elements.
+  await expect(results.locator(".advisor-metric")).toHaveCount(3);
+  await expect(cards.first().locator(".advisor-card-profile")).toBeVisible();
+  await expect(cards.first().locator(".advisor-card-detail")).toBeVisible();
+  const checks=results.locator(".advisor-safety-more");
+  await expect(checks).toBeVisible();
+  await checks.locator("summary").click();
+  await expect(checks).toContainText("PTO ile çalışan ekipmanlarda");
+
+  await page.setViewportSize({width:1200,height:900});
+  const desktop=await cards.first().evaluate((card)=>{
+    const profile=card.querySelector(".advisor-card-profile").getBoundingClientRect();
+    const detail=card.querySelector(".advisor-card-detail").getBoundingClientRect();
+    return {display:getComputedStyle(card).display,cols:getComputedStyle(card).gridTemplateColumns,
+      profileRight:profile.right,detailLeft:detail.left,profileTop:profile.top,detailTop:detail.top};
+  });
+  expect(desktop.display).toBe("grid");
+  expect(desktop.detailLeft).toBeGreaterThan(desktop.profileRight);
+  expect(Math.abs(desktop.profileTop-desktop.detailTop)).toBeLessThan(3);
+
+  await page.setViewportSize({width:390,height:844});
+  const mobile=await cards.first().evaluate((card)=>{
+    const profile=card.querySelector(".advisor-card-profile").getBoundingClientRect();
+    const detail=card.querySelector(".advisor-card-detail").getBoundingClientRect();
+    const results=card.closest(".advisor-results");
+    return {profileBottom:profile.bottom,detailTop:detail.top,
+      overflow:results.scrollWidth-results.clientWidth};
+  });
+  expect(mobile.detailTop).toBeGreaterThanOrEqual(mobile.profileBottom-1);
+  expect(mobile.overflow).toBeLessThanOrEqual(2);
+
 });
