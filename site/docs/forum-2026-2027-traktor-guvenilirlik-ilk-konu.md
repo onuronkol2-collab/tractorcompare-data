@@ -232,13 +232,4 @@ Marka, tam model/varyant, üretim yılı ve ülke; güncel motor saati; ilk arı
 
 **Editoryal bağımsızlık:** Bu metin bir üreticinin sponsorlu açıklaması veya küresel arıza oranı sıralaması değildir. Farklı kaynakları TractorVS'nin açık yöntemine göre karşılaştıran özgün bir araştırma derlemesidir. Kaynağa erişimi sınırlı veya yeni versiyonlara genellenemeyen bilgiler sınırlılıklarıyla verilir.
 
-## SEO / GEO yayın alanları ve sürüm kontrolü
-
-- **Önerilen H1:** 2026–2027 Traktör Güvenilirlik Araştırması: Markalar ve Gerçek Saha Testleri
-- **SEO title:** 2026–2027 Traktör Arıza ve Güvenilirlik Araştırması | TractorVS
-- **Meta description:** 2026–2027 traktör arıza araştırması: Fendt, John Deere, Valtra, Kubota ve diğer markalardan gerçek saha testleri, motor saatleri ve satışa göre oran yöntemi.
-- **Önerilen slug:** 2026-2027-traktor-marka-model-ariza-arastirmasi
-- **Canonical:** Tek Türkçe özgün makale; doğrulanmamış otomatik çeviriye hreflang/canonical verme.
-- **Schema:** Gerçek yazar ve yayımlama tarihi mevcut olduğunda DiscussionForumPosting; uydurma değerlendirme puanı veya FAQ rich result garantisi yok.
-- **Yayın sınırlaması:** Mevcut forum görünümü ham Markdown'ı semantik olarak işlemiyor ve yazı uzunluğu veritabanında 12.000 karakterle sınırlı. Bu tam araştırma, forumun uzun makale desteği ve kaynağa bağlı editoryal doğrulama tamamlanmadan olduğu gibi yayımlanmamalı.
-- **Son güncelleme:** 21 Kasım 2026. Yeni kaynak veya hatanın düzeltilmesi halinde sürüm geçmişini koru.
+*Araştırma kesim tarihi: 21 Kasım 2026. Bu dosya, yeni ve karşılaştırılabilir kaynaklar elde edildiğinde sürüm geçmişi korunarak güncellenir.*
