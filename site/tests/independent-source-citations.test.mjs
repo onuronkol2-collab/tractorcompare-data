@@ -107,3 +107,12 @@ test("original Belarus manufacturer brochure mirrored by a distributor is attrib
  assert.equal(reviewedIndependentSourceUrl({...spec,source_type:"manufacturer_specification"}),null);
  assert.equal(reviewedIndependentSourceUrl({...spec,verified_at:null}),null);
 });
+
+test("the distributor-hosted Belarus catalogue stays attributed to a third-party host",()=>{
+ const url="https://kocyigit.com.tr/wp-content/uploads/2024/06/Katalog_Belarus_Traktor.pdf";
+ const row={...ref,source_url:url,source_type:"product_catalog"};
+ assert.equal(reviewedIndependentSourceUrl(row),url);
+ assert.equal(officialManufacturerSourceUrl(row,"Belarus"),null);
+ assert.equal(reviewedIndependentSourceUrl({...row,source_url:url+"?other"}),null);
+ assert.equal(reviewedIndependentSourceUrl({...row,evidence_text:null}),null);
+});

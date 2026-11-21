@@ -256,3 +256,21 @@ test("ISEKI UK subsidiary PDF is approved only at its exact reviewed document UR
   assert.equal(officialManufacturerSourceUrl({...sample,evidence_text:null},"Iseki"),null);
   assert.equal(officialManufacturerSourceUrl({...sample,source_type:"independent_test"},"Iseki"),null);
 });
+
+test("reviewed McCormick and STEYR technical tables remain document- and brand-specific",()=>{
+  const documents = [
+    ["McCormick", "https://www.mccormick.it/wp-content/uploads/2025/02/MC_TractorRange2025_Brochure_88p_6737432A2_Web_IT.pdf"],
+    ["McCormick", "https://www.mccormick.it/wp-content/uploads/2025/02/MC_TractorRange2025_Brochure_88p_6737433A2_Web_EN.pdf"],
+    ["McCormick", "https://www.mccormick.it/wp-content/uploads/2025/03/MC_RP5D-RP5E_X4F_Brochure_44p_6732663A2_web_EN.pdf"],
+    ["Steyr", "https://cnhi-p-001-delivery.sitecorecontenthub.cloud/api/public/content/73a2d291ba294a3489494574db262ed8?v=a0856698"],
+    ["Steyr", "https://cnhi-p-001-delivery.sitecorecontenthub.cloud/api/public/content/f4491a850bdb4fdba24a4c5a2baa11fb?v=362a03d2"],
+  ];
+  for (const [brand,url] of documents) {
+    const row={...official,source_url:url};
+    assert.equal(officialManufacturerSourceUrl(row,brand),url);
+    assert.equal(officialManufacturerSourceUrl(row,"Unrelated brand"),null);
+    assert.equal(officialManufacturerSourceUrl({...row,verified_at:null},brand),null);
+    assert.equal(officialManufacturerSourceUrl({...row,evidence_text:""},brand),null);
+    assert.equal(officialManufacturerSourceUrl({...row,source_url:url+"&other=1"},brand),null);
+  }
+});

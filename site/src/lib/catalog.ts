@@ -728,6 +728,9 @@ const approvedExactManufacturerDocuments: Record<string, string[]> = {
     "https://www.lamborghini-tractors.com/en-eu/all/download/7988_b274e15de8fa324d508dde300f1d3fc8",
   ],
   "mccormick": [
+    "https://www.mccormick.it/wp-content/uploads/2025/02/MC_TractorRange2025_Brochure_88p_6737432A2_Web_IT.pdf",
+    "https://www.mccormick.it/wp-content/uploads/2025/02/MC_TractorRange2025_Brochure_88p_6737433A2_Web_EN.pdf",
+    "https://www.mccormick.it/wp-content/uploads/2025/03/MC_RP5D-RP5E_X4F_Brochure_44p_6732663A2_web_EN.pdf",
     "https://www.mccormick.it/wp-content/uploads/2021/04/MC_RS57_X5.085_Brochure_2p_6736270A1_HR_EN.pdf",
   ],
   "yanmar": [
@@ -749,6 +752,8 @@ const approvedExactManufacturerDocuments: Record<string, string[]> = {
   // Original STEYR manufacturer brochures hosted on a shared CNH content hub:
   // approve exact documents only, NEVER trust the entire CDN hostname.
   "steyr": [
+    "https://cnhi-p-001-delivery.sitecorecontenthub.cloud/api/public/content/73a2d291ba294a3489494574db262ed8?v=a0856698",
+    "https://cnhi-p-001-delivery.sitecorecontenthub.cloud/api/public/content/f4491a850bdb4fdba24a4c5a2baa11fb?v=362a03d2",
     "https://cnhi-p-001-delivery.sitecorecontenthub.cloud/api/public/content/7eeca058f2bd4fe6892c36fcb39769a1?v=ebff5e26",
     "https://cnhi-p-001-delivery.sitecorecontenthub.cloud/api/public/content/5f70203baa834372905d759fe9fd706f?v=fc8d3927",
   ],
@@ -781,6 +786,8 @@ export function reviewedIndependentSourceUrl(
   if (type === "independent_test" && u.href === "https://dam.agcocorp.com/content/dam/multisite/fendt/marketing/multi-region/documents/marketing-material/testreports/tractors/700-vario-gen7/en/Fendt_724_Vario_Gen7_EN_digital.pdf")
     return "https://www.fendt.com/int/consultation-purchase/test-reports/fendt-700-vario-gen7-tested/";
   if (type === "web_page" && u.href === "https://www.mehanizacija-miler.si/Portals/0/Antonio%20Carraro/Serija%20Panther/RangePanther202572dpiEN.pdf?ver=2025-04-17-113113-483") return u.href;
+  // Historical MTZ technical tables hosted by a distributor.
+  if (type === "product_catalog" && u.href === "https://kocyigit.com.tr/wp-content/uploads/2024/06/Katalog_Belarus_Traktor.pdf") return u.href;
   // Exact, reviewed original Minsk Tractor Works catalogue hosted by a third-party distributor.
   // It is a historical manufacturer-authored document, NOT a current official manufacturer URL.
   // Never allow the mirror's parent folder, other files, alternate domains or query strings.
