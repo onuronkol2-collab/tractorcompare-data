@@ -34,7 +34,7 @@ test("one photo of each brand has a license attribution; model != sampled tracto
  assert.equal((article.match(/^!\[/gm)||[]).length,10);
  assert.equal((article.match(/CC BY-SA 4\.0/g)||[]).length,10);
  assert.equal((article.match(/Fotoğraf anket katılımcısına ait değildir/g)||[]).length,10);
- assert.match(article,/Valtra_G135_Agritechnica_2025/);
+ assert.match(article,/valtra-g135-9d4a4ea3/);
  assert.match(article,/Massey_Ferguson_5M\.95/);
 });
 test("single Turkish canonical article and original forum opening",()=>{
