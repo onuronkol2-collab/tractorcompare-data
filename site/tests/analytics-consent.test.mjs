@@ -3,7 +3,7 @@ import assert from "node:assert/strict";
 import {readFileSync} from "node:fs";
 import {runInNewContext} from "node:vm";
 import { LOCALES } from "../src/lib/locales.ts";
-import {ANALYTICS_TEXT, GA4_MEASUREMENT_ID, CLARITY_PROJECT_ID, ANALYTICS_CHOICE_KEY, analyticsText} from "../src/lib/analytics-i18n.ts";
+import {ANALYTICS_TEXT, GA4_MEASUREMENT_ID, CLARITY_PROJECT_ID, CLOUDFLARE_WEB_ANALYTICS_TOKEN, ANALYTICS_CHOICE_KEY, analyticsText} from "../src/lib/analytics-i18n.ts";
 
 const read=(file)=>readFileSync(new URL("../"+file,import.meta.url),"utf8");
 const banner=read("src/components/AnalyticsConsent.astro");
@@ -109,7 +109,7 @@ test("gtag queue uses real Arguments records, never rest arrays that can suppres
 
 test("Clarity project ID and ConsentV2 are gated by renewed, explicit analytics consent",()=>{
   assert.equal(CLARITY_PROJECT_ID,"zgzm6vovif");
-  assert.equal(ANALYTICS_CHOICE_KEY,"tractorvs_analytics_choice_v2");
+  assert.equal(ANALYTICS_CHOICE_KEY,"tractorvs_analytics_choice_v3");
   assert.match(banner,/function loadClarityOnlyAfterConsent\(\)/);
   assert.match(banner,/https:\/\/www\.clarity\.ms\/tag\//);
   assert.match(banner,/ad_Storage:\s*"denied"/);
@@ -148,6 +148,39 @@ test("Clarity consent is queued before tag insertion, and rejected analytics is 
   assert.ok(signal>0 && request>signal,"Explicit Clarity consent must be sent before script insertion");
   assert.match(code,/ad_Storage:\s*"denied"/);
   assert.match(code,/analytics_Storage:\s*"granted"/);
-  assert.match(banner,/if \(current === "accepted"\) \{\s*loadAnalyticsOnlyAfterConsent\(\);\s*loadClarityOnlyAfterConsent\(\);/);
+  assert.match(banner,/if \(current === "accepted"\) \{\s*loadAnalyticsOnlyAfterConsent\(\);\s*loadClarityOnlyAfterConsent\(\);\s*loadCloudflareOnlyAfterConsent\(\);/);
   assert.match(banner,/else if \(current === null && banner\) \{\s*banner.hidden = false;/);
+});
+
+test("Cloudflare RUM uses the existing public site token and is never injected before consent",()=>{
+  assert.equal(CLOUDFLARE_WEB_ANALYTICS_TOKEN,"3797c345a61a40c180b72ef3a95a23eb");
+  assert.equal(ANALYTICS_CHOICE_KEY,"tractorvs_analytics_choice_v3");
+  assert.match(banner,/function loadCloudflareOnlyAfterConsent\(\)/);
+  assert.match(banner,/script\.dataset\.cfBeacon = JSON\.stringify\(\{ token: CLOUDFLARE_WEB_ANALYTICS_TOKEN \}\)/);
+  assert.match(banner,/script\.src = "https:\/\/static\.cloudflareinsights\.com\/beacon\.min\.js"/);
+  assert.match(banner,/script\.type = "module"/);
+  assert.match(banner,/querySelector\('script\[src\*="static\.cloudflareinsights\.com\/beacon\.min\.js"\]'\)/);
+  assert.doesNotMatch(layout,/cloudflareinsights\.com\/beacon\.min\.js/);
+  assert.doesNotMatch(layout,/<script[^>]+data-cf-beacon/);
+  assert.match(banner,/loadCloudflareOnlyAfterConsent\(\);/);
+  assert.match(privacy,/copy\.cloudflareCollect/);
+  assert.match(privacy,/developers\.cloudflare\.com\/speed\/observatory\/rum-beacon/);
+  for(const locale of LOCALES){
+    const copy=analyticsText(locale);
+    assert.ok(copy.cloudflareConsent.length>80,locale+" missing Cloudflare consent disclosure");
+    assert.ok(copy.cloudflareCollect.length>120,locale+" missing Cloudflare privacy disclosure");
+    assert.ok(copy.cloudflareInfo.length>12,locale+" missing Cloudflare info link");
+  }
+});
+
+test("Cloudflare additions require renewed opt-in, preserve rejection and revoke all three providers",()=>{
+  const index=banner.indexOf("function storedChoice()");
+  const slice=banner.slice(index,banner.indexOf("function loadAnalyticsOnlyAfterConsent()",index));
+  assert.match(slice,/localStorage\.getItem\("tractorvs_analytics_choice_v2"\)/);
+  assert.match(slice,/if \(priorChoice === "rejected"\) return "rejected"/);
+  assert.match(slice,/if \(priorChoice === "accepted"\) \{[\s\S]*?clearAnalyticsFirstPartyCookies\(\);[\s\S]*?clearClarityFirstPartyCookies\(\);[\s\S]*?return null;/);
+  assert.match(banner,/if \(choice === "accepted"\) \{\s*loadAnalyticsOnlyAfterConsent\(\);\s*loadClarityOnlyAfterConsent\(\);\s*loadCloudflareOnlyAfterConsent\(\);/);
+  assert.match(banner,/script\[data-tractorvs-cloudflare\]/);
+  assert.match(banner,/window\.location\.reload\(\)/);
+  assert.match(banner,/id="tractorvs-cloudflare-description"/);
 });
