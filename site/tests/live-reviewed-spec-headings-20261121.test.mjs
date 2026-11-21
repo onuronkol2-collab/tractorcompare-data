@@ -11,8 +11,8 @@ const sourceSpec=(name)=>({
   evidence_text:"Actual cited source record",verified_at:"2026-11-21T16:00:00Z"
 });
 
-test("82 live-observed exact technical headings have reviewed localized variants",()=>{
-  assert.equal(Object.keys(REVIEWED).length,82);
+test("172 live-observed exact technical headings have reviewed localized variants",()=>{
+  assert.equal(Object.keys(REVIEWED).length,172);
   assert.doesNotThrow(validatePublishedSpecTranslations);
   let translated=0;
   for(const [name,langMap] of Object.entries(REVIEWED)){
@@ -28,7 +28,7 @@ test("82 live-observed exact technical headings have reviewed localized variants
       assert.deepEqual(record,before,"Localized display must not mutate OEM source measurements");
     }
   }
-  assert.equal(translated,198);
+  assert.equal(translated,354);
 });
 
 test("no speculative translation on unfamiliar source-specific technical headings",()=>{
