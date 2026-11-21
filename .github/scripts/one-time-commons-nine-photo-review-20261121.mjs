@@ -104,9 +104,14 @@ const successes=[],failures=[];
 for(const record of records){
  try{
   const p=await findPage(record);
-  const exactModel=record.brand==="Belarus"&&record.model==="922.3"
+  // Steyr official naming is "4115 KOMPAKT", while this vetted Commons
+  // file has the inverse word order "Kompakt 4115". This ONE literal
+  // model exception is documented and cannot match another version.
+  const inverseSteyr=record.brand==="Steyr" && record.model==="4115 KOMPAKT" &&
+    p.title==="File:Steyr Kompakt 4115.jpg";
+  const exactModel=inverseSteyr || (record.brand==="Belarus"&&record.model==="922.3"
    ? p.title.includes("Беларус-922.3")
-   : matchesPhotoFileModel(record.brand,record.model,p.title);
+   : matchesPhotoFileModel(record.brand,record.model,p.title));
   if(!exactModel)throw Error("Title not an exact model: "+record.fileId);
   const i=p.imageinfo?.[0];
   if(!i||i.mime!=="image/jpeg"||i.width!==record.width||i.height!==record.height)
