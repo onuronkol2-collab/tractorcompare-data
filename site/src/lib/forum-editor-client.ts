@@ -156,6 +156,7 @@ export function initForumEditor(
    const meta=make("small");meta.textContent=photo.name+" · "+Math.ceil(photo.blob.size/1024)+" KB";
    const altInput=make("input");
    altInput.type="text";altInput.required=true;altInput.minLength=10;altInput.maxLength=160;
+   altInput.readOnly=photo.reserved;
    altInput.placeholder=copy.alt;altInput.value=photo.alt;altInput.setAttribute("aria-label",copy.alt);
    altInput.addEventListener("input",()=>{photo.alt=altInput.value;img.alt=photo.alt||copy.photos});
    altLabel.append(make("span"),altInput);
@@ -261,5 +262,5 @@ export function initForumEditor(
    if(ok)setStatus(copy.photoRetrySuccess);
   }finally{retry.disabled=false}
  });
- return {valid,commit,clear,hasPhotos:()=>photos.length>0};
+ return {valid,commit,clear,refresh:()=>{paintPhotos();renderCounter()},hasPhotos:()=>photos.length>0};
 }
