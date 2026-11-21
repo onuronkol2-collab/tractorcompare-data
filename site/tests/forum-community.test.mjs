@@ -55,8 +55,8 @@ test("editorially moderated news requires an external HTTPS/HTTP citation before
  assert.equal(isIndexableForumTopic({...base,category:"questions"}),true, "ordinary firsthand questions do not require citations");
  const hub=text("../src/components/ForumHub.astro");
  const sitemap=text("../src/pages/forum-sitemap.xml.ts");
- assert.match(hub,/topics\\.filter\\(isIndexableForumTopic\\)/);
- assert.match(sitemap,/filter\\(isIndexableForumTopic\\)/);
+ assert.match(hub,/topics\.filter\(isIndexableForumTopic\)/);
+ assert.match(sitemap,/filter\(isIndexableForumTopic\)/);
 });
 test("direct text publication preserves least privilege and honest authorship",()=>{
  const composer=text("../src/components/ForumComposer.astro");
