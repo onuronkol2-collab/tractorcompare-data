@@ -5,11 +5,12 @@ import ForumMemberPanel from "./ForumMemberPanel.astro";
 import {forumText as ft,FORUM_CATEGORY_KEYS} from "../lib/forum-i18n.ts";
 import {memberText as mt} from "../lib/member-i18n.ts";
 import {FORUM_STARTER_GUIDES} from "../lib/forum-starter-guides.ts";
-import {publishedForumTopics,forumDate,isIndexableForumTopic,publicForumClientConfig} from "../lib/forum.ts";
+import {allPublicForumTopics,forumDate,isIndexableForumTopic,publicForumClientConfig} from "../lib/forum.ts";
+import {approvedForumHubLocales} from "../lib/forum-hub-locales.mjs";
 import {FORUM_LIVE_TEXT} from "../lib/forum-live-i18n.ts";
 import {forumSeoDescription} from "../lib/forum-format.mjs";
 import {getPublicCatalog} from "../lib/catalog.ts";
-import {localizedPath,type Locale} from "../lib/locales.ts";
+import {localizedPath,LOCALES,type Locale} from "../lib/locales.ts";
 interface Props {lang:Locale}
 const {lang}=Astro.props;
 const starters=FORUM_STARTER_GUIDES[lang];
@@ -18,7 +19,12 @@ const liveConfig=publicForumClientConfig()??(
  ?{url:"http://127.0.0.1:4173/forum-test-api",key:"inert-browser-fixture"}:null
 );
 const liveBrowserData=JSON.stringify(liveConfig?{...liveConfig,lang}:null);
-const topics=await publishedForumTopics(lang);
+const publicTopics=await allPublicForumTopics();
+const topics=publicTopics.filter(topic=>topic.locale===lang);
+// Link only to other forum hubs with at least one independently approved
+// indexed topic. Empty forums are deliberately noindex and must not appear
+// as reciprocal hreflang alternates.
+const indexableLocales=approvedForumHubLocales(publicTopics,LOCALES,isIndexableForumTopic);
 const catalog=await getPublicCatalog();
 const tractors=new Map(catalog.tractors.map(t=>[t.tractor_id,t]));
 const publicCount=topics.filter(isIndexableForumTopic).length;
@@ -33,7 +39,7 @@ const schema=indexable?{
 }:null;
 ---
 <SiteLayout lang={lang} title={ft(lang,"heading")+" | TractorVS"}
- description={ft(lang,"intro")} indexable={indexable} structuredData={schema}>
+ description={ft(lang,"intro")} indexable={indexable} indexableLocales={indexableLocales} structuredData={schema}>
  <div class="community-shell">
   <header class="community-hero">
    <div class="container">
