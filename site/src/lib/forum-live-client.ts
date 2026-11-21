@@ -82,6 +82,9 @@ export function initForumLive(root:HTMLElement):void{
    typeof cfg.url!=="string"||
    (!/^https:\/\/[a-z0-9-]+\.supabase\.co$/.test(cfg.url)&&
     !(cfg.url==="http://127.0.0.1:4173/forum-test-api"&&cfg.key==="inert-browser-fixture")))return;
+ // The inert browser fixture is only activated by explicit live-list tests.
+ // This preserves existing offline sign-in/posting tests with strict API mocks.
+ if(cfg.key==="inert-browser-fixture"&&!new URLSearchParams(location.search).has("live-forum-test"))return;
  const text=FORUM_LIVE_TEXT[cfg.lang];
  let call=0;
  async function refresh(showPending=false){
