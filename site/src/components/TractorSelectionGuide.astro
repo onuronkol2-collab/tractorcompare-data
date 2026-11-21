@@ -2,6 +2,7 @@
 import SiteLayout from "../layouts/SiteLayout.astro";
 import {localizedPath, LOCALES, BREADCRUMB_LABELS, type Locale} from "../lib/locales";
 import {guideTranslation} from "../lib/tractor-guide-i18n";
+import {editorialHubTranslation} from "../lib/editorial-hub-i18n";
 
 interface Props { lang: Locale; }
 const {lang}=Astro.props;
@@ -138,6 +139,8 @@ const copy=localizedGuide ?? baseCopy;
 const pageDate=new Intl.DateTimeFormat(lang==="zh"?"zh-CN":lang==="pt-br"?"pt-BR":lang,{
   day:"numeric",month:"long",year:"numeric",timeZone:"UTC"
 }).format(new Date("2026-11-19T00:00:00Z"));
+const editorialPath=localizedPath(lang,"/articles/");
+const editorialName=editorialHubTranslation(lang)?.hub ?? (tr?"Makaleler":"Articles");
 const pageUrl=new URL(localizedPath(lang,"/guides/choosing-a-tractor/"),Astro.site||"https://tractorvs.com").toString();
 const langTag=lang==="zh"?"zh-Hans":lang==="pt-br"?"pt-BR":lang;
 const schema={
@@ -155,7 +158,8 @@ const schema={
   {"@type":"BreadcrumbList",itemListElement:[
     {"@type":"ListItem",position:1,name:"TractorVS",
       item:new URL(localizedPath(lang,"/"),Astro.site||"https://tractorvs.com").toString()},
-    {"@type":"ListItem",position:2,name:copy.h1,item:pageUrl}
+    {"@type":"ListItem",position:2,name:editorialName,item:new URL(editorialPath,Astro.site||"https://tractorvs.com").toString()},
+    {"@type":"ListItem",position:3,name:copy.h1,item:pageUrl}
   ]}
  ]
 };
@@ -165,7 +169,8 @@ const schema={
   <article class="tractor-guide">
     <div class="container guide-body">
       <nav class="guide-crumb" aria-label={BREADCRUMB_LABELS[lang]}>
-        <a href={localizedPath(lang,"/")}>TractorVS</a><span aria-hidden="true">/</span><span>{localizedGuide?.breadcrumb ?? (tr?"Traktör seçim rehberi":"Tractor selection guide")}</span>
+        <a href={localizedPath(lang,"/")}>TractorVS</a><span aria-hidden="true">/</span>
+        <a href={editorialPath}>{editorialName}</a><span aria-hidden="true">/</span><span>{localizedGuide?.breadcrumb ?? (tr?"Traktör seçim rehberi":"Tractor selection guide")}</span>
       </nav>
       <p class="guide-kicker">{copy.category}</p>
       <h1>{copy.h1}</h1>
