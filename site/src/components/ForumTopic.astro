@@ -37,6 +37,7 @@ const origin=Astro.site||new URL("https://tractorvs.com");
 const schema=eligible?{
  "@context":"https://schema.org","@type":"WebPage",url:new URL(publicPath,origin).toString(),
  name:topic.title,description:seoDescription,inLanguage:LOCALE_TAGS[lang],
+ datePublished:topic.created_at,dateModified:topic.updated_at,
  ...(topicMedia.length?{image:topicMedia.map(photo=>({
   "@type":"ImageObject",contentUrl:forumMediaImageUrl(photo.id),caption:photo.alt_text
  }))}:{}),
