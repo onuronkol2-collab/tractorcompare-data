@@ -18,12 +18,13 @@ interface Props {
   description: string;
   structuredData?: Record<string, unknown> | null;
   ogImage?: string | null;
+  ogType?: "website" | "article";
   indexable?: boolean;
   indexableLocales?: readonly Locale[];
   availableLocales?: readonly Locale[];
 }
 
-const { lang, title, description, structuredData = null, ogImage = null, indexable = true, availableLocales = LOCALES, indexableLocales = availableLocales } = Astro.props;
+const { lang, title, description, structuredData = null, ogImage = null, ogType = "website", indexable = true, availableLocales = LOCALES, indexableLocales = availableLocales } = Astro.props;
 // Escape literal HTML opener characters before embedding JSON-LD from database text.
 const structuredJson = structuredData ? JSON.stringify(structuredData).replace(/</g, "\\u003c") : null;
 const indexingEnabled =
@@ -35,6 +36,13 @@ const catalogPath = localizedPath(lang, "/tractors/");
 const comparePath = localizedPath(lang, "/compare/");
 const advisorPath = localizedPath(lang, "/farm-advisor/");
 const forumPath = localizedPath(lang, "/forum/");
+const articlesPath = localizedPath(lang==="tr"?"tr":"en", "/articles/");
+// Do not imply translations exist: eight other locales link explicitly to English.
+const editorialLabel: Record<Locale,string> = {
+  en:"Articles",tr:"Makaleler",zh:"文章 (EN)",hi:"लेख (EN)",
+  "pt-br":"Artigos (EN)",fr:"Articles (EN)",de:"Artikel (EN)",
+  ru:"Статьи (EN)",ja:"記事 (EN)",es:"Artículos (EN)"
+};
 const canonicalUrl = indexingEnabled
   ? new URL(Astro.url.pathname, Astro.site!).toString()
   : undefined;
@@ -93,7 +101,7 @@ const openGraphLocale: Record<Locale, string> = {
     {indexingEnabled && indexableLocales.includes("en") && <link rel="alternate" hreflang="x-default" href={new URL(plainPath,Astro.site!).toString()} />}
     {indexingEnabled && <link rel="sitemap" type="application/xml" href="/sitemap-index.xml" />}
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta property="og:type" content="website" />
+    <meta property="og:type" content={ogType} />
     <meta property="og:site_name" content={brand.name} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
@@ -135,7 +143,7 @@ const openGraphLocale: Record<Locale, string> = {
           <a href={advisorPath}>{tx(lang,"nav")}</a>
           <a href={forumPath}>{forumCopy(lang,"name")}</a>
           <a href={homePath + "#data"}>{t(lang,"navData")}</a>
-          <a href={homePath + "#approach"}>{t(lang,"navApproach")}</a>
+          <a href={articlesPath}>{editorialLabel[lang]}</a>
         </nav>
 
         <div class="header-actions">
@@ -161,6 +169,7 @@ const openGraphLocale: Record<Locale, string> = {
               <a href={comparePath}>{t(lang,"navCompare")}</a>
               <a href={advisorPath}>{tx(lang,"nav")}</a>
               <a href={forumPath}>{forumCopy(lang,"name")}</a>
+              <a href={articlesPath}>{editorialLabel[lang]}</a>
               <a href={forumPath+"#forum-register-heading"}>{memberCopy(lang,"register")}</a>
               <a href={homePath + "#data"}>{t(lang,"navData")}</a>
               <a href={homePath + "#approach"}>{t(lang,"navApproach")}</a>
@@ -210,6 +219,7 @@ const openGraphLocale: Record<Locale, string> = {
           <a href={forumPath}>{forumCopy(lang,"name")}</a>
           <a href={homePath + "#data"}>{t(lang,"navData")}</a>
           <a href={homePath + "#approach"}>{t(lang,"navApproach")}</a>
+          <a href={articlesPath}>{editorialLabel[lang]}</a>
           <a href={localizedPath(lang,"/privacy/")}>{analyticsCopy.privacyLink}</a>
           <button type="button" id="tractorvs-analytics-settings" class="footer-analytics-settings">{analyticsCopy.settings}</button>
         </div>
