@@ -14,6 +14,8 @@ on:
       - "site/src/lib/reviewed-public-spec-headings.ts"
       - "site/tests/reviewed-public-spec-headings.test.mjs"
       - "site/src/lib/residual-public-spec-translations.ts"
+      - "site/src/lib/live-reviewed-spec-headings-20261121.ts"
+      - "site/tests/live-reviewed-spec-headings-20261121.test.mjs"
       - "site/tests/residual-public-spec-translations.test.mjs"
       - "site/tests/published-translation-built-audit.test.mjs"
       - "site/tests/fixtures/turkish-public-heading-residual-20261121.json"
@@ -28,10 +30,22 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22
-      - name: Inspect all published model pages across ten languages (read-only)
+      - name: Inspect every published model and SEO language invariant across ten languages (read-only)
         env:
           TRANSLATION_STRICT: ${{ github.event_name == 'schedule' && 'true' || 'false' }}
+          TRANSLATION_MIN_MODELS: "379"
+          TRANSLATION_VALIDATE_SEO: "true"
+          TRANSLATION_AUDIT_CONCURRENCY: "6"
+          TRANSLATION_REPORT_PATH: site/.translation-audit/live.json
         run: node site/scripts/published-translation-audit.mjs
+      - name: Preserve the COMPLETE untranslated source-heading inventory for careful reviewed corrections
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: tractorvs-live-translation-report
+          path: site/.translation-audit/live.json
+          if-no-files-found: ignore
+          retention-days: 14
 
   preview_translations:
     # Production-valued static HTML test runs on the PR only; never deploys.
@@ -64,6 +78,8 @@ jobs:
           TRANSLATION_MIN_MODELS: "379"
           TRANSLATION_MAX_TR_OCCURRENCES: "0"
           TRANSLATION_ZERO_LOCALES: "tr,zh,hi,de,ru,ja"
+          TRANSLATION_VALIDATE_SEO: "true"
+          TRANSLATION_AUDIT_CONCURRENCY: "8"
           TRANSLATION_REPORT_PATH: site/.translation-audit/preview.json
           TRANSLATION_STRICT: "false"
         run: node site/scripts/published-translation-audit.mjs
