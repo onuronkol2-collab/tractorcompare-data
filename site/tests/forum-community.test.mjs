@@ -2,6 +2,7 @@ import {test} from "node:test";
 import assert from "node:assert/strict";
 import {readFileSync} from "node:fs";
 import {FORUM_TEXT,FORUM_CATEGORY_KEYS} from "../src/lib/forum-i18n.ts";
+import {FORUM_STARTER_GUIDES} from "../src/lib/forum-starter-guides.ts";
 import {isSafeForumTopic} from "../src/lib/forum.ts";
 const text=path=>readFileSync(new URL(path,import.meta.url),"utf8");
 test("all ten forum locales have complete original UI, categories and consent semantics",()=>{
@@ -47,4 +48,24 @@ test("moderated posting never exposes service-role keys, publishes immediately, 
  assert.match(hub,/indexable=\{indexable\}/);
  assert.match(sitemap,/forum\(\?:/);
  assert.match(layout,/forumCopy\(lang,"name"\)/);
+});
+
+test("empty forum has useful original editorial guidance in ten locales, without manufactured UGC",()=>{
+ const locales=["en","tr","zh","hi","pt-br","fr","de","ru","ja","es"];
+ assert.deepEqual(Object.keys(FORUM_STARTER_GUIDES),locales);
+ for(const lang of locales){
+  const group=FORUM_STARTER_GUIDES[lang];
+  assert.ok(group.heading.length>12 && group.intro.length>40,lang);
+  assert.equal(group.items.length,3,lang);
+  assert.equal(new Set(group.items.map(i=>i.title)).size,3,lang);
+  for(const item of group.items){
+   assert.ok(Array.from(item.title).length >= (lang==="zh"||lang==="ja"?4:6) && Array.from(item.detail).length>35,lang+" "+item.title);
+  }
+ }
+ const hub=text("../src/components/ForumHub.astro");
+ assert.match(hub,/FORUM_STARTER_GUIDES\[lang\]/);
+ assert.match(hub,/class="community-starter-grid"/);
+ assert.match(hub,/indexable=\{indexable\}/);
+ assert.match(hub,/const indexable=publicCount>0/);
+ assert.doesNotMatch(hub,/<DiscussionForumPosting/);
 });
