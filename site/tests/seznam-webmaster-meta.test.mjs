@@ -8,7 +8,7 @@ const ownerTag='<meta name="seznam-wmt" content="j3zomI2WVcqwWkKadjNc1pXonj4g8L7
 test("Seznam verification uses the exact supplied 32-character ownership proof",()=>{
   assert.equal((layout.match(/name="seznam-wmt"/g)||[]).length,1);
   assert.ok(layout.includes(ownerTag),"Do not silently alter the webmaster token");
-  assert.match(layout,/plainPath==="/" && indexingEnabled && <meta name="seznam-wmt"/,
+  assert.ok(layout.includes('plainPath==="/" && indexingEnabled && <meta name="seznam-wmt"'),
     "Only public, indexable locale homepages carry the verification tag");
 });
 
