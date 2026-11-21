@@ -50,6 +50,14 @@ Bu araçlar Altın Entegrasyon Kuralı'nın parçasıdır. Her görevde ilgili o
 ### Bağlantı örnekleri (2026-11-21, dinamik envanter)
 GitHub (Actions, CodeQL, Dependabot, Dependency graph, Malware alerts, Secret Protection, Push protection, Private vulnerability reporting), Playwright, axe-core, Supabase, Cloudflare Workers, Cloudflare Web Analytics / RUM, ChatGPT otomasyonları, Firecrawl, Microsoft Clarity (Windsor.ai bağlantısı), PostHog, OpenSEO, Google Drive, Google Search Console, GA4 ve Bing Webmaster. **Bu liste sabit değildir**: eklenmiş, kaldırılmış veya bağlantısı değişmiş araçlar için oturumun güncel erişim durumunu kontrol et.
 
+### Yeni gönderiler için canlı okuma katmanı (21 Kasım 2026)
+
+- Mevcut statik Astro HTML sayfaları, canonical/hreflang, sitemap ve SEO kalitesi **aynen korunur**. ForumHub içindeki ek istemci katmanı yalnız anonim RLS korumalı `tc_forum_localized_topics` görünümünden henüz Cloudflare build'ine girmemiş konuları ziyaretçilere gösterir.
+- Canlı liste yalnız güvenli metin kullanır: DOM `textContent` ve güvenli kaynak bağlantıları (`rel=ugc nofollow noopener noreferrer`). HTML çalıştırılmaz, özel API anahtarları veya kayıt dışı medya yüklenmez.
+- Cloudflare'da kalıcı URL henüz oluşmamışsa ziyaretçiye uydurma/404 link verilmez. Tam metin forum ana sayfasında açılır; kalıcı konu URL'si, yanıtlar, onaylı medya ve SEO indeksi normal eşitleme/build sonrasında oluşur.
+- Bu canlı katman anında Google indekslemesi sağlamaz; JavaScript kapalıyken statik HTML yedeği korunur. Supabase kesintisinde statik içerik silinmez, açık uyarı gösterilir.
+- CI gerçek tarayıcı testleri anonim okuma, gizli/yanlış dil satırlarının reddi, tek sekmede yenileme, XSS korunumu, statik yedek, mobile ve erişilebilirlik senaryolarını kapsamalıdır.
+
 ### Forumun uçtan uca yayını için ek kalite kapısı (21 Kasım 2026)
 
 - **Veritabanı statüsü ile gerçek sayfa aynı değildir:** `published` yalnız güvenli Supabase kaydını gösterir; statik Astro/Cloudflare sayfası bir sonraki başarılı eşitleme ve üretim dağıtımını gerektirir. Kullanıcıya yanlış 'siteye anında çıktı' bildirimi verme.
