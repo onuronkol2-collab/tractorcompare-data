@@ -24,6 +24,21 @@ const hash=createHash("sha256").update(JSON.stringify({
  partSections:TRACTOR_PART_SECTIONS,articles:TECHNICAL_DEEP_DIVES,cases:TRACTOR_LEARNING_CASES,ui:EDUCATION_UI_SOURCE,terminology:TRACTOR_EDUCATION_TERMINOLOGY
 })).digest("hex");
 function digits(s){return [...s.matchAll(/(?<![A-Za-z])\d+(?:[.,]\d+)?(?:E)?/g)].map(x=>x[0])}
+/** Preserve the exact technical magnitude, allowing ONLY thousands grouping
+ * (3,000 / 3.000 / 3 000 / 3000) for source English integer thousands.
+ * Ordinary decimals, rpm, power standards and all other numeric literals
+ * remain exact; this is NOT numeric rounding or measurement conversion.
+ */
+export function technicalNumberRetained(sourceToken,translated){
+ if(typeof sourceToken!=="string" || typeof translated!=="string")return false;
+ if(/^[0-9]{1,3}(?:,[0-9]{3})+$/.test(sourceToken)){
+  const parts=sourceToken.split(",");
+  const grouped=parts.join("[,.\\s\\u00a0\\u202f]");
+  const plain=parts.join("");
+  return new RegExp("(?<![0-9.,])(?:"+grouped+"|"+plain+")(?![0-9.,])","u").test(translated);
+ }
+ return translated.includes(sourceToken);
+}
 function scriptOk(lang,s){
  if(lang==="zh")return /[\u4e00-\u9fff]/.test(s);
  if(lang==="hi")return /[\u0900-\u097f]/.test(s);
@@ -55,7 +70,7 @@ export function checkTranslationBundle(locale,doc,{requireApproved=false}={}){
       "Unnaturally long translation "+category+"/"+id+"/"+key);
     if(source.length>70&&value.toLowerCase().trim()===source.toLowerCase().trim())identical++;
     for(const n of digits(source)){
-     assert.ok(value.includes(n),"Technical number modified in "+locale+" "+category+"/"+id+"/"+key+": "+n);
+     assert.ok(technicalNumberRetained(n,value),"Technical number modified in "+locale+" "+category+"/"+id+"/"+key+": "+n);
      numerical++;
     }
     if(scriptOk(locale,value))script++;
