@@ -78,3 +78,52 @@ test("complete-locale QA gate catches Chinese regressions even if Turkish is cle
     assert.match(result.stderr,/"locale":"zh"/);
   }finally{rmSync(f.tmp,{recursive:true,force:true});}
 });
+
+test("preview audit checks exact model-slug parity, not just equal locale counts",()=>{
+  const f=fixture();
+  try{
+    const path=join(f.dist,"sitemap-0.xml");
+    const xml=readFileSync(path,"utf8").replace("/zh/tractors/quality-sample/","/zh/tractors/ghost-model/");
+    writeFileSync(path,xml);
+    const {result,report}=audit(f);
+    assert.notEqual(result.status,0);
+    const summary=JSON.parse(readFileSync(report,"utf8")).summary;
+    assert.ok(summary.fetchErrors.some(x=>x.includes("Missing localized model zh quality-sample")));
+    assert.ok(summary.fetchErrors.some(x=>x.includes("Orphan localized model zh ghost-model")));
+  }finally{rmSync(f.tmp,{recursive:true,force:true});}
+});
+
+test("deep language SEO audit refuses missing canonical, html lang, H1, or hreflang",()=>{
+  const f=fixture();
+  try{
+    const {result,report}=audit(f,{TRANSLATION_VALIDATE_SEO:"true"});
+    assert.notEqual(result.status,0);
+    const data=JSON.parse(readFileSync(report,"utf8"));
+    assert.equal(data.summary.seoMetadataChecked,true);
+    assert.ok(data.summary.fetchErrors.some(x=>x.includes("Incorrect HTML language")));
+    assert.ok(data.summary.fetchErrors.some(x=>x.includes("Wrong self-canonical")));
+    assert.ok(data.summary.fetchErrors.some(x=>x.includes("Missing or duplicated model hreflang")));
+    assert.ok(data.summary.fetchErrors.some(x=>x.includes("Missing/duplicate model H1")));
+  }finally{rmSync(f.tmp,{recursive:true,force:true});}
+});
+
+test("deep language SEO audit accepts fully reciprocal self-canonical ten-language model fixture",()=>{
+  const f=fixture();
+  try{
+    const langs={en:"en",tr:"tr",zh:"zh-Hans",hi:"hi","pt-br":"pt-BR",fr:"fr",de:"de",ru:"ru",ja:"ja",es:"es"};
+    const alternatives=Object.entries(langs).map(([lang,code])=>{
+      const u="https://tractorvs.com/"+(lang==="en"?"":lang+"/")+"tractors/quality-sample/";
+      return '<link rel="alternate" hreflang="'+code+'" href="'+u+'">';
+    }).join("")+'<link rel="alternate" hreflang="x-default" href="https://tractorvs.com/tractors/quality-sample/">';
+    for(const [lang,code] of Object.entries(langs)){
+      const url="https://tractorvs.com/"+(lang==="en"?"":lang+"/")+"tractors/quality-sample/";
+      const filename=join(f.dist,new URL(url).pathname.slice(1)+"index.html");
+      const label=lang==="tr"?"Üreticinin bildirdiği güç":"Manufacturer Stated Power";
+      writeFileSync(filename,'<html lang="'+code+'"><head><link rel="canonical" href="'+url+'">'+alternatives+
+        '</head><body><main><h1>Model details</h1><h4>'+label+'</h4></main></body></html>');
+    }
+    const {result,report}=audit(f,{TRANSLATION_VALIDATE_SEO:"true"});
+    assert.equal(result.status,0,result.stdout+" "+result.stderr);
+    assert.deepEqual(JSON.parse(readFileSync(report,"utf8")).summary.fetchErrors,[]);
+  }finally{rmSync(f.tmp,{recursive:true,force:true});}
+});
