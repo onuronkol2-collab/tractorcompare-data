@@ -183,6 +183,16 @@ if(minModels>0&&locales.some(l=>modelCounts[l]<minModels)){
   console.error("TRANSLATION_AUDIT_FAIL_TOO_FEW_MODELS "+JSON.stringify({minModels,modelCounts}));
   process.exitCode=1;
 }
+if(process.env.TRANSLATION_MAX_EN_SOURCE_OCCURRENCES!==undefined){
+  const limit=Number(process.env.TRANSLATION_MAX_EN_SOURCE_OCCURRENCES);
+  if(!Number.isInteger(limit)||limit<0)throw Error("Invalid English source leakage threshold");
+  if(summary.englishSourceOccurrences>limit){
+    console.error("TRANSLATION_AUDIT_ENGLISH_SOURCE_LEAKAGE "+JSON.stringify({
+      expectedMax:limit,actual:summary.englishSourceOccurrences
+    }));
+    process.exitCode=1;
+  }
+}
 if(process.env.TRANSLATION_MAX_TR_OCCURRENCES!==undefined){
   const limit=Number(process.env.TRANSLATION_MAX_TR_OCCURRENCES);
   if(!Number.isInteger(limit)||limit<0)throw Error("Invalid Turkish label threshold");
