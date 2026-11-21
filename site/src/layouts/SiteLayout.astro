@@ -94,11 +94,19 @@ const openGraphLocale: Record<Locale, string> = {
     {indexingEnabled && <link rel="sitemap" type="application/xml" href="/sitemap-index.xml" />}
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={brand.name} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
-    {ogImage && <meta property="og:image" content={ogImage} />}
-    {ogImage && <meta name="twitter:card" content="summary_large_image" />}
+    {canonicalUrl && <meta property="og:url" content={canonicalUrl} />}
     <meta property="og:locale" content={openGraphLocale[lang]} />
+    {indexingEnabled && indexableLocales.filter((locale) => locale !== lang).map((locale) =>
+      <meta property="og:locale:alternate" content={openGraphLocale[locale]} />
+    )}
+    {ogImage && <meta property="og:image" content={ogImage} />}
+    <meta name="twitter:card" content={ogImage ? "summary_large_image" : "summary"} />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    {ogImage && <meta name="twitter:image" content={ogImage} />}
   </head>
   <body>
     <a class="skip-link" href="#main">{t(lang,"skip")}</a>
