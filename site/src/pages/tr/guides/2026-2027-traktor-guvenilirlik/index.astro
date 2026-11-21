@@ -1,9 +1,9 @@
 ---
 import SiteLayout from "../../../../layouts/SiteLayout.astro";
-import { Content as Research } from "../../../../../docs/forum-2026-2027-traktor-guvenilirlik-ilk-konu.md";
+import { Content as Research } from "../../../../../docs/forum-2026-2027-yedi-marka-sorun-sikligi.md";
 
-const headline = "2026–2027 Traktör Güvenilirlik Araştırması: Markalar ve Gerçek Saha Testleri";
-const description = "Fendt, John Deere, Valtra, Kubota ve diğer traktör markaları için kaynaklı arıza araştırması. 19 model, motor saatleri ve satışa göre arıza oranı yöntemi.";
+const headline = "2026–2027 Traktör Marka Güvenilirliği: En Az ve En Çok Sorun Bildirilen 5 Marka";
+const description = "2026–2027 traktör alıcıları için 2021 anketinden kaynaklı marka karşılaştırması: Kubota, John Deere, Versatile ve diğer markalarda 100 traktör başına sorun sayısı.";
 const canonicalUrl = new URL(Astro.url.pathname, Astro.site ?? "https://tractorvs.com").toString();
 const schema = {
   "@context": "https://schema.org",
@@ -18,20 +18,20 @@ const schema = {
   dateModified: "2026-11-21",
   image: {
     "@type": "ImageObject",
-    contentUrl: "https://tractorvs.com/images/tractors/claas-axion-870-1c6e17f1-480.jpg",
+    contentUrl: "https://tractorvs.com/images/tractors/kubota-m6-141-4d0694e5-480.jpg",
     width: 480,
-    height: 360,
-    caption: "Claas Axion 870 modelini gösteren temsili fotoğraf; saha testindeki traktör değildir.",
-    creator: { "@type": "Person", name: "JoachimKohler-HB" },
-    creditText: "JoachimKohler-HB / Wikimedia Commons",
+    height: 270,
+    caption: "Kubota M6-141 marka temsil fotoğrafı; 2021 kullanıcı anketindeki traktör değildir.",
+    creator: { "@type": "Person", name: "MarcelX42" },
+    creditText: "MarcelX42 / Wikimedia Commons",
     license: "https://creativecommons.org/licenses/by-sa/4.0/",
-    acquireLicensePage: "https://commons.wikimedia.org/wiki/File:Claas_Axion_870.jpg",
+    acquireLicensePage: "https://commons.wikimedia.org/wiki/File:Kubota_M6-141_Utility_Agritechnica_2023_(DSC06031).jpg",
   },
 };
 ---
-<SiteLayout lang="tr" title={"2026–2027 Traktör Arıza ve Güvenilirlik Araştırması | TractorVS"}
+<SiteLayout lang="tr" title={"2026–2027 Traktör Marka Arızaları: 7 Markanın Karşılaştırması | TractorVS"}
   description={description} structuredData={schema}
-  ogImage="https://tractorvs.com/images/tractors/claas-axion-870-1c6e17f1-480.jpg"
+  ogImage="https://tractorvs.com/images/tractors/kubota-m6-141-4d0694e5-480.jpg"
   availableLocales={["tr"]} indexableLocales={["tr"]}>
   <section class="research-shell" aria-label="Araştırma raporu">
     <div class="research-container">
@@ -40,21 +40,11 @@ const schema = {
         <a href="/tr/forum/">Topluluk</a><span aria-hidden="true">/</span>
         <span aria-current="page">Güvenilirlik araştırması</span>
       </nav>
-      <div class="research-kicker">TRACTORVS · KAYNAKLI ARAŞTIRMA · 21 KASIM 2026</div>
+      <div class="research-kicker">TRACTORVS · ABD 2021 ANKETİ · 21 KASIM 2026 DEĞERLENDİRMESİ</div>
       <div class="research-lede">
-        <strong>Kanıt düzeyleri ayrıştırılmış araştırma</strong>
-        <p>Bağımsız uzun dönem testleri, tarihsel kullanıcı anketleri ve 2026 pazar verileri. Kaynaklar doğrudan bağlantılıdır; küresel satış başına arıza oranı bulunmadığında veri uydurulmaz.</p>
+        <strong>7 marka, 2 gerçek karşılaştırma listesi</strong>
+        <p>2021 tarihli bağımsız kullanıcı anketindeki yedi markanın 100 traktör başına bildirilen sorun olaylarını gösteriyoruz. 5 düşük ve 5 yüksek marka listelerinde üç marka tekrar eder; 2026–2027 satış/arıza yüzdeleri uydurulmaz.</p>
       </div>
-      <nav class="research-toc" aria-label="Araştırmada hızlı gezinme">
-        <strong>İlgilendiğiniz bölüme geçin</strong>
-        <div class="research-toc-links">
-          <a href="#ozet">30 saniyelik sonuç</a>
-          <a href="#teknik-sorunlar">Teknik sorun kayıtları</a>
-          <a href="#uzun-donem">Olumlu saha deneyimleri</a>
-          <a href="#marka-degerlendirmesi">Marka karşılaştırması</a>
-          <a href="#sik-sorulanlar">Sık sorulan sorular</a>
-        </div>
-      </nav>
       <article class="research-article" aria-label={headline}>
         <Research />
       </article>
@@ -101,6 +91,7 @@ const schema = {
 .research-article :global(.research-photo){max-width:590px;margin:26px auto 32px;background:#f7faf7;padding:12px;border:1px solid #e0e9df;border-radius:14px}
 .research-article :global(.research-photo img){display:block;width:100%;height:auto;max-width:480px;margin-inline:auto;object-fit:contain;border-radius:9px}
 .research-article :global(.research-photo figcaption){margin:12px 5px 3px;font-size:12px;line-height:1.75;color:#455d49}
+.research-article :global(p > img){display:block;max-width:100%;width:auto;max-height:370px;height:auto;object-fit:contain;border-radius:13px;background:#f5faf4;border:1px solid #e5eee4;margin:18px auto 8px}
 .research-article :global(a){overflow-wrap:anywhere}
 .research-footer{margin-top:28px;background:#e5f1e5;border:1px solid #d1e4d1;padding:clamp(18px,4vw,31px);border-radius:15px}
 .research-footer h2{color:#205a39;font-size:22px;margin:0 0 8px}
