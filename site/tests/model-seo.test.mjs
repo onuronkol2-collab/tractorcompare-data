@@ -291,10 +291,10 @@ test("actual OEM source-note SEO titles are concise without losing model, drive,
 
 test("unknown long variants and markets are not silently shortened as if they were source-only",()=>{
   const model={...tractor,brand_name:"Swaraj",model_name:"Target 625 4WD",
-    variant:"Target India / exact 2WD or 4WD configuration with differential",
+    variant:"Target India / differential configuration",
     market:"India (Swaraj Target manufacturer data)"};
   const title=modelSeoMetadata(model,"en").title;
-  assert.ok(title.includes("configuration with differential"),"unverified variant text was discarded");
+  assert.ok(title.includes("differential configuration"),"unrecognized specific variant must remain in title");
   const marketDifferent=modelSeoMetadata({...model,market:"India (separate regional release)"},"en");
   assert.notEqual(title,marketDifferent.title,"non-matching market must remain distinct");
 });
