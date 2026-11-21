@@ -1,0 +1,24 @@
+name: TractorVS Golden Rule integrity
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  schedule:
+    - cron: "17 4 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify-policy:
+    name: Verify AGENTS and agent instructions
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Verify permanent agent policy files and references
+        run: node scripts/verify-golden-rule.mjs
