@@ -7,3 +7,6 @@
 # A final custom domain remains eligible only when build indexing is enabled.
 https://:version.:subdomain.workers.dev/*
   X-Robots-Tag: noindex
+
+/comparison-data/*
+  X-Robots-Tag: noindex

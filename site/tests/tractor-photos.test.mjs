@@ -145,3 +145,11 @@ test("missing photograph has readable ten-language placeholder, not a fabricated
   assert.ok(component.indexOf("photos.length===0") < component.indexOf('photos.length>0'));
   assert.match(style,/tractor-photo-gallery--catalog \.tractor-photo-placeholder/);
 });
+
+test("approved mobile photo routes have a first-party JPEG in the release", () => {
+  for (const photo of APPROVED_TRACTOR_PHOTOS) {
+    const bytes = readFileSync(new URL("../public" + photo.thumbUrl, import.meta.url));
+    assert.equal(bytes.readUInt16BE(0), 0xffd8, photo.thumbUrl);
+    assert.equal(bytes.readUInt16BE(bytes.length - 2), 0xffd9, photo.thumbUrl);
+  }
+});

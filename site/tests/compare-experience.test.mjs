@@ -29,9 +29,9 @@ test("core visitor interface translation dictionaries cover all ten languages",(
 });
 test("comparison UI preserves sourced spec identities and deep-linked model selection",()=>{
   assert.match(compare,/getPublicCatalog\(\)/);
-  assert.match(compare,/comparisonKey\(spec\)/);
-  assert.match(compare,/specLabel\(spec, lang\)/);
-  assert.match(compare,/officialManufacturerSourceUrl\(spec, tractor.brand_name\)/);
+  assert.match(read("lib/comparison-specs.ts"),/comparisonKey\(spec\)/);
+  assert.match(read("lib/comparison-specs.ts"),/specLabel\(spec, lang\)/);
+  assert.match(read("lib/comparison-specs.ts"),/officialManufacturerSourceUrl\(spec, tractor.brand_name\)/);
   assert.match(compare,/new URLSearchParams\(window.location.search\)/);
   assert.match(compare,/params.get\("left"\)/);
   assert.match(compare,/params.get\("right"\)/);

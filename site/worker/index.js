@@ -45,6 +45,10 @@ export default {
       // Only the fixed approved-photo allowlist can be fetched. No arbitrary URL input.
       const upstream=resolveApprovedPhotoSource(url.pathname);
       if(!upstream)return new Response("Photo not found",{status:404});
+      if (url.pathname.endsWith("-480.jpg")) {
+        const thumbnail = await env.ASSETS.fetch(request);
+        if (thumbnail.ok && thumbnail.headers.get("Content-Type")?.startsWith("image/jpeg")) return thumbnail;
+      }
       try{
         const origin=await fetch(upstream,{
           method:"GET",redirect:"follow",signal:AbortSignal.timeout(20000),

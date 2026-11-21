@@ -127,7 +127,7 @@ const PHOTO_ORIGINS:readonly Omit<TractorPhoto,"originThumbUrl"|"originDisplayUr
 /** Stable, first-party indexable image URLs; a fixed Worker allowlist proxies only approved photos. */
 export const APPROVED_TRACTOR_PHOTOS:readonly TractorPhoto[]=PHOTO_ORIGINS.map(source=>({
   ...source,
-  originThumbUrl:source.thumbUrl,
+  originThumbUrl:source.thumbUrl.replace("/480px-", "/500px-"),
   originDisplayUrl:source.displayUrl,
   originFullUrl:source.width<=1920 ? source.fullUrl : source.displayUrl.replace("/960px-","/1920px-"),
   thumbUrl:"/images/tractors/"+source.fileId+"-480.jpg",

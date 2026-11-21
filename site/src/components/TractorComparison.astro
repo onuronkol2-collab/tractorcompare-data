@@ -1,7 +1,8 @@
 ---
 import SiteLayout from "../layouts/SiteLayout.astro";
-import { getPublicCatalog, comparisonKey, officialManufacturerSourceUrl, specLabel, verificationNotice } from "../lib/catalog";
-import type { PublicSpec } from "../lib/catalog";
+import { getPublicCatalog } from "../lib/catalog";
+import { comparisonSpecs } from "../lib/comparison-specs";
+import { INDEPENDENT_SOURCE_COPY } from "../lib/independent-source-i18n";
 import { localizedPath, type Locale } from "../lib/locales";
 import { t } from "../lib/ui";
 import { compareText as cx } from "../lib/compare-ux";
@@ -13,56 +14,21 @@ const { lang } = Astro.props;
 
 const catalog = await getPublicCatalog();
 
-type ComparedSpec = {
-  key: string;
-  label: string;
-  value: string;
-  unit: string | null;
-  context: string | null;
-  rpm: number | null;
-  source: string | null;
-  notice: string | null;
-};
-type ComparedModel = {
-  id: string;
-  title: string;
-  brand: string;
-  modelName: string;
-  variant: string | null;
-  power: number | null;
-  specsCount: number;
-  detailsUrl: string;
-  photo: {thumbUrl:string;fullUrl:string;photographer:string;sourcePage:string;licenseUrl:string;licenseName:string;alt:string} | null;
-  specs: ComparedSpec[];
-};
-const detailsPrefix = localizedPath(lang,"/tractors/");
-const models: ComparedModel[] = catalog.tractors.map((tractor) => ({
+const models = catalog.tractors.map((tractor, index) => ({
   id: tractor.tractor_id,
   title: tractor.brand_name + " " + tractor.model_name,
-  brand: tractor.brand_name,
-  modelName: tractor.model_name,
   variant: tractor.variant?.split(";")[0]?.trim() || null,
   power: tractor.horsepower,
   specsCount: tractor.specifications.length,
-  detailsUrl: detailsPrefix + tractor.slug + "/",
+  detailsUrl: localizedPath(lang, "/tractors/" + tractor.slug + "/"),
+  dataUrl: "/comparison-data/" + lang + "/" + tractor.tractor_id + ".json",
   photo: (() => {
-    const p=primaryTractorPhoto(tractor);
-    return p ? {
-      thumbUrl:p.thumbUrl,fullUrl:p.fullUrl,photographer:p.photographer,
+    const p = primaryTractorPhoto(tractor);
+    return p ? {thumbUrl:p.thumbUrl,fullUrl:p.fullUrl,photographer:p.photographer,
       sourcePage:p.sourcePage,licenseUrl:p.licenseUrl,licenseName:p.licenseName,
-      alt:tractorPhotoAlt(tractor,lang)
-    } : null;
+      alt:tractorPhotoAlt(tractor,lang)} : null;
   })(),
-  specs: tractor.specifications.map((spec: PublicSpec) => ({
-    key: comparisonKey(spec),
-    label: specLabel(spec, lang),
-    value: spec.spec_value,
-    unit: spec.unit,
-    context: spec.measurement_standard,
-    rpm: spec.rated_rpm,
-    source: officialManufacturerSourceUrl(spec, tractor.brand_name),
-    notice: verificationNotice(spec, lang),
-  })),
+  specs: index < 2 ? comparisonSpecs(tractor, lang) : undefined,
 }));
 const initialLeft = models[0];
 const initialRight = models[1];
@@ -93,6 +59,8 @@ const payload = JSON.stringify(models).replace(/</g, "\\u003c");
 const labelsPayload = JSON.stringify({
   missing: t(lang,"notPublished"),
   source: t(lang,"manufacturerSource"),
+  independent: INDEPENDENT_SOURCE_COPY[lang].label,
+  loadError: cx(lang,"loadError"),
   context: t(lang,"condition"),
   search: cx(lang,"searchModel"),
   noResults: cx(lang,"noResults"),
@@ -233,14 +201,14 @@ const labelsPayload = JSON.stringify({
                     <strong>{spec.value}{spec.unit ? " " + spec.unit : ""}</strong>
                     {spec.context && <small>{t(lang,"condition")}: {spec.context}</small>}
                     {spec.rpm != null && <small>{spec.rpm} rpm</small>}
-                    {spec.source && <a href={spec.source} rel="noopener noreferrer" target="_blank">{t(lang,"manufacturerSource")} ↗</a>}
+                    {spec.source && <a href={spec.source} rel="noopener noreferrer" target="_blank">{spec.independent ? INDEPENDENT_SOURCE_COPY[lang].label : t(lang,"manufacturerSource")} ↗</a>}
                   </div>) : <span class="tc-missing">— <small>{missing}</small></span>}
                 </td>)}
               </tr>)}
             </tbody>
           </table>
         </div>
-        <p class="tc-footnote">{t(lang,"comparisonFootnote")}</p>
+        <p id="tc-load-error" role="alert" hidden></p>
       </> : <div class="tc-empty">
         <h2>{t(lang,"comparisonPreparing")}</h2>
         <p>{t(lang,"comparisonNeedsTwo")}</p>
@@ -254,8 +222,8 @@ const labelsPayload = JSON.stringify({
 <script type="application/json" id="tc-i18n" set:html={labelsPayload}></script>
 <script>
   import { normalizeTractorQuery } from "../lib/search";
-  type Spec = { key:string; label:string; value:string; unit:string|null; context:string|null; rpm:number|null; source:string|null; notice:string|null };
-  type Model = { id:string; title:string; brand:string; modelName:string;
+  type Spec = { key:string; label:string; value:string; unit:string|null; context:string|null; rpm:number|null; source:string|null; independent:boolean; notice:string|null };
+  type Model = { id:string; title:string; dataUrl:string;
     variant:string|null; power:number|null; specsCount:number;
     detailsUrl:string; photo:{thumbUrl:string;fullUrl:string;photographer:string;sourcePage:string;licenseUrl:string;licenseName:string;alt:string}|null; specs:Spec[] };
   const dataNode=document.querySelector<HTMLScriptElement>("#tc-payload");
@@ -267,7 +235,7 @@ const labelsPayload = JSON.stringify({
     const models=JSON.parse(dataNode.textContent||"[]") as Model[];
     const lang=document.documentElement.lang;
     const l10n=JSON.parse(document.querySelector("#tc-i18n")?.textContent||"{}") as {
-      missing:string;source:string;context:string;search:string;noResults:string;
+      missing:string;source:string;independent:string;loadError:string;context:string;search:string;noResults:string;
       results:string;selected:string;exploreModel:string;shared:string;
       summary:string;noShared:string;specs:string;
     };
@@ -295,7 +263,7 @@ const labelsPayload = JSON.stringify({
             if(["https:","http:"].includes(url.protocol)){
               const link=document.createElement("a");
               link.href=url.href;link.target="_blank";link.rel="noopener noreferrer";
-              link.textContent=l10n.source+" ↗";entry.appendChild(link);
+              link.textContent=(spec.independent ? l10n.independent : l10n.source)+" ↗";entry.appendChild(link);
             }
           }catch{/* Invalid source URL: do not display untrusted links. */}
         }
@@ -337,7 +305,22 @@ const labelsPayload = JSON.stringify({
         if(variant){variant.textContent=model.variant||"";variant.hidden=!model.variant;}
       }
     }
-    function render(){
+    const pending = new Map<string, Promise<Spec[]>>();
+    async function loadSpecs(model: Model) {
+      if (model.specs) return;
+      let request = pending.get(model.id);
+      if (!request) {
+        request = fetch(model.dataUrl).then(async response => {
+          if (!response.ok) throw new Error("Comparison data unavailable");
+          return await response.json() as Spec[];
+        }).finally(() => pending.delete(model.id));
+        pending.set(model.id, request);
+      }
+      model.specs = await request;
+    }
+    let revision = 0;
+    async function render(){
+      const current = ++revision;
       if(leftSelect.value===rightSelect.value&&models.length>1){
         if(changedSide==="right")
           leftSelect.value=models.find(m=>m.id!==rightSelect.value)?.id||leftSelect.value;
@@ -346,6 +329,28 @@ const labelsPayload = JSON.stringify({
       }
       const left=byId(leftSelect.value),right=byId(rightSelect.value);
       if(!left||!right)return;
+      const error = document.querySelector<HTMLElement>("#tc-load-error");
+      if (error) error.hidden = true;
+      if (!left.specs || !right.specs) {
+        tbody.replaceChildren();
+        const summary = document.querySelector("#tc-summary");
+        if (summary) summary.textContent = "";
+        for (const id of ["tc-data-warning", "tc-no-shared"]) {
+          const item = document.getElementById(id);
+          if (item) item.hidden = true;
+        }
+        setPreview("left",left);setPreview("right",right);
+        try {
+          await Promise.all([loadSpecs(left), loadSpecs(right)]);
+        } catch {
+          if (current === revision && error) {
+            error.hidden = false;
+            error.textContent = l10n.loadError;
+          }
+          return;
+        }
+        if (current !== revision) return;
+      }
       setPreview("left",left);setPreview("right",right);
       const keys=[...new Set([...left.specs,...right.specs].map(spec=>spec.key))];
       const find=(model:Model,key:string)=>model.specs.filter(spec=>spec.key===key);

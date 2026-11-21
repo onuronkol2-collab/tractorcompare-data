@@ -544,6 +544,7 @@ export function specLabel(spec: PublicSpec, lang: Locale): string {
   const mapped = specLabels[spec.canonical_key || ""]
     || specLabels[comparisonKey(spec)]
     || rawSpecNameLabels[spec.spec_name.trim()];
+  if (!mapped && lang === "tr" && /[çğıöşüİ]/iu.test(spec.spec_name)) return spec.spec_name.replace(/_/g, " ");
   return mapped ? mapped[lang === "tr" ? "tr" : "en"] : String(spec.spec_name || spec.canonical_key || "Specification")
     .replace(/_/g, " ").replace(/\b\w/g, (letter) => letter.toUpperCase());
 }
@@ -568,6 +569,14 @@ const manufacturerSourceTypes = new Set([
   "official_technical_pdf",
 ]);
 
+// Legacy source-type labels identify both official and third-party material.
+const reviewedLegacyDocuments = new Map([
+  ["https://www.zetor.com/zetor-forterra-technical-parameters", "official"],
+  ["https://www.antoniocarraro.it/au/catalogue/Panther_22M", "web_page"],
+  ["https://www.swarajtractors.com/products", "product_catalog"],
+  ["https://www.yanmar.com/tr/agri/products/tractor/", "product_catalog"],
+]);
+
 export function specificationEvidenceLevel(
   spec: Pick<PublicSpec, "source_url" | "source_type" | "evidence_text" | "verified_at">,
 ): SpecificationEvidenceLevel {
@@ -577,7 +586,8 @@ export function specificationEvidenceLevel(
     && Number.isFinite(Date.parse(spec.verified_at));
 
   if (!sourcePresent || !supportingExcerpt || !checkedAt) return "not_verified";
-  if (manufacturerSourceTypes.has(spec.source_type || "")) return "manufacturer_documented";
+  if (manufacturerSourceTypes.has(spec.source_type || "") ||
+      (spec.source_type && reviewedLegacyDocuments.get(spec.source_url || "") === spec.source_type)) return "manufacturer_documented";
   return "third_party_reported";
 }
 
@@ -630,12 +640,35 @@ const approvedManufacturerHosts: Record<string, string[]> = {
 // The original German F36 brochure is served from TYM's named Umbraco media
 // tenant. Only THIS reviewed exact PDF is permitted, never the shared CDN root.
 const approvedExactManufacturerDocuments: Record<string, string[]> = {
+  "belarus": [
+    "https://mtz.ru/novosti/13-rukovodstva/48-belarus-80-1-82-1-820-rukovodstvo-po-ekspluatatsii",
+  ],
+  "agrale": [
+    "https://www.agrale.com.br/en/download/112",
+  ],
+  "iseki": [
+    "https://www.iseki.co.jp/global/cms/upload/pdf/products/tractor/t97_spec.pdf",
+  ],
+  "lamborghini trattori": [
+    "https://www.lamborghini-tractors.com/en-eu/all/download/7988_b274e15de8fa324d508dde300f1d3fc8",
+  ],
+  "mccormick": [
+    "https://www.mccormick.it/wp-content/uploads/2021/04/MC_RS57_X5.085_Brochure_2p_6736270A1_HR_EN.pdf",
+  ],
+  "yanmar": [
+    "https://www.yanmartractor.com/webres/File/Updated%202022%20EDA%20Files/YM347%202022%20Spec%20Sheet%20w%20EDA%208-17-22%20WEB.pdf",
+    "https://www.yanmartractor.com/webres/File/Updated%202022%20EDA%20Files/YM359%202022%20Spec%20Sheet%20w%20EDA%208-17-22%20WEB.pdf",
+  ],
   // CNH distributes this verified New Holland South Africa TD5 brochure via a shared CDN.
   // Never trust other documents or the CDN hostname generally.
   "new holland": [
     "https://cnhi-p-001-delivery.sitecorecontenthub.cloud/api/public/content/c3d13220f29640458ef3f059d2865523?v=25dae628",
   ],
   "tym": [
+    "https://tym-new.euwest01.umbraco.io/media/fybhyxtb/t575-product-brochure.pdf",
+    "https://tym-new.euwest01.umbraco.io/media/ghsmb5lj/t255-product-brochure.pdf",
+    "https://tym-new.euwest01.umbraco.io/media/rxdpgfxw/series-3-brochure.pdf",
+    "https://tym-new.euwest01.umbraco.io/media/tekl4z2k/t6130-product-brochure.pdf",
     "https://tym-new.euwest01.umbraco.io/media/b01j3nc1/f36-produktbroschu-re.pdf",
   ],
   // Original STEYR manufacturer brochures hosted on a shared CNH content hub:
@@ -670,6 +703,9 @@ export function reviewedIndependentSourceUrl(
     && ["independent_test", "technical_report"].includes(type)
     && u.pathname.startsWith("/filestorage/") && u.pathname.toLowerCase().endsWith(".pdf"))
     return u.toString();
+  if (type === "independent_test" && u.href === "https://dam.agcocorp.com/content/dam/multisite/fendt/marketing/multi-region/documents/marketing-material/testreports/tractors/700-vario-gen7/en/Fendt_724_Vario_Gen7_EN_digital.pdf")
+    return "https://www.fendt.com/int/consultation-purchase/test-reports/fendt-700-vario-gen7-tested/";
+  if (type === "web_page" && u.href === "https://www.mehanizacija-miler.si/Portals/0/Antonio%20Carraro/Serija%20Panther/RangePanther202572dpiEN.pdf?ver=2025-04-17-113113-483") return u.href;
   // Exact, reviewed original Minsk Tractor Works catalogue hosted by a third-party distributor.
   // It is a historical manufacturer-authored document, NOT a current official manufacturer URL.
   // Never allow the mirror's parent folder, other files, alternate domains or query strings.
@@ -693,7 +729,7 @@ export function officialManufacturerSourceUrl(
     url.hostname === root || url.hostname.endsWith("." + root)
   )) return url.toString();
 
-  return (approvedExactManufacturerDocuments[brandName.toLocaleLowerCase("tr-TR").trim()] || [])
+  return (approvedExactManufacturerDocuments[brandName.toLowerCase().trim()] || [])
     .includes(url.toString()) ? url.toString() : null;
 }
 
