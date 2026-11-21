@@ -6,6 +6,8 @@ on:
       - ".github/workflows/mobile-performance-audit.yml"
       - "site/scripts/mobile-lighthouse-summary.mjs"
       - "site/tests/mobile-lighthouse-summary.test.mjs"
+      - "site/scripts/catalog-mobile-html-baseline.mjs"
+      - "site/tests/catalog-mobile-html-baseline.test.mjs"
   workflow_dispatch:
   # Free weekly mobile baseline, Monday 07:37 Europe/Istanbul (04:37 UTC).
   schedule:
@@ -26,6 +28,11 @@ jobs:
           command -v google-chrome || command -v chromium || true
       - name: Test mobile Lighthouse summary parsing and field/ lab transparency
         run: node --test site/tests/mobile-lighthouse-summary.test.mjs
+      - name: Test catalogue HTML footprint parser without network access
+        run: node --test site/tests/catalog-mobile-html-baseline.test.mjs
+      - name: Measure live ten-locale catalogue HTML footprint and crawlable SSR links
+        if: github.event_name != 'pull_request'
+        run: node site/scripts/catalog-mobile-html-baseline.mjs
       - name: Measure indexable site templates and sampled languages with mobile Lighthouse
         run: |
           set -euo pipefail
