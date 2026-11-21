@@ -131,3 +131,43 @@ test("the six published articles expose matching, clickable editorial breadcrumb
   }
  }
 });
+
+
+test("all ten homepages offer real native-language editorial links in visible content",async ({page,browserName,isMobile})=>{
+ test.skip(browserName!=="chromium"||isMobile,"ten-language editorial discovery checked on desktop Chromium");
+ for(const locale of ["en","tr","zh","hi","pt-br","fr","de","ru","ja","es"]){
+  const prefix=locale==="en"?"":"/"+locale;
+  const response=await page.goto(prefix+"/",{waitUntil:"domcontentloaded"});
+  expect(response?.status(),locale+" homepage").toBe(200);
+  const hub=page.locator('.home-editorial a[href="'+prefix+'/articles/"]');
+  const guide=page.locator('.home-editorial-card[href="'+prefix+'/guides/choosing-a-tractor/"]');
+  const review=page.locator('.home-editorial-card[href="'+prefix+'/reviews/basak-2075-bk/"]');
+  await expect(page.locator(".home-editorial")).toHaveCount(1);
+  await expect(hub).toHaveCount(1);
+  await expect(guide).toHaveCount(1);
+  await expect(review).toHaveCount(1);
+  await expect(page.locator(".home-editorial h2")).toHaveCount(1);
+  await expect(guide.locator("h3")).not.toBeEmpty();
+  const canonical=await page.locator('link[rel="canonical"]').getAttribute("href");
+  expect(canonical).toBe("https://tractorvs.com"+prefix+"/");
+  await hub.click();
+  await expect(page.locator(".editorial-card")).toHaveCount(6);
+ }
+});
+
+test("localized tractor model pages offer a genuinely translated technical learning guide",async ({page,browserName,isMobile})=>{
+ test.skip(browserName!=="chromium"||isMobile,"representative model link smoke on desktop Chromium");
+ for(const locale of ["zh","de"]){
+  await page.goto("/"+locale+"/",{waitUntil:"domcontentloaded"});
+  const model=await page.locator(".home-featured-card").first().getAttribute("href");
+  expect(model).toMatch(new RegExp("^/"+locale+"/tractors/"));
+  const response=await page.goto(model,{waitUntil:"domcontentloaded"});
+  expect(response?.status(),locale+" published model").toBe(200);
+  const help=page.locator('.model-spec-glossary-banner[href="/'+locale+'/guides/choosing-a-tractor/"]');
+  await expect(help).toHaveCount(1);
+  await expect(help.locator("strong")).not.toBeEmpty();
+  await help.click();
+  await expect(page.locator(".guide-steps > li")).toHaveCount(6);
+  await expect(page.locator("html")).toHaveAttribute("lang",locale==="zh"?"zh-Hans":"de");
+ }
+});
