@@ -43,6 +43,7 @@ Aşağıdaki iki bölüm **en kötüden en iyiye bir sıra değildir.** Aynı mo
 <caption>TractorVS model kanıt tablosu — sonuçlar arıza yüzdesine göre sıralanmamıştır.</caption>
 <thead><tr><th scope="col">Model veya aile</th><th scope="col">Kanıt dönemi</th><th scope="col">Çalışma saati / örneklem</th><th scope="col">İlgili kanıt</th></tr></thead>
 <tbody>
+<tr><td>Massey Ferguson 8S.265 Dyna-7</td><td>2025'te yayımlanan saha testi</td><td>4.400</td><td>Teknik sorun kaydı</td></tr>
 <tr><td>Fendt 728 Vario Gen7</td><td>2026'da yayımlanan saha testi</td><td>1.800+</td><td>Teknik sorun kaydı</td></tr>
 <tr><td>Valtra G125 Eco HiTech</td><td>Ocak 2026 sayısı</td><td>7.080+</td><td>Teknik sorun kaydı</td></tr>
 <tr><td>Claas Axion 870 Cmatic</td><td>2025'te yayımlanan saha testi</td><td>4.900+</td><td>Teknik sorun kaydı</td></tr>
