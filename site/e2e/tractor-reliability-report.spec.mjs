@@ -18,6 +18,16 @@ test("research report renders as one semantic, source-linked Turkish article",as
  await expect(page.locator("h1")).toHaveCount(1);
  await expect(page.locator("h1")).toContainText("2026–2027 Traktör Güvenilirlik Araştırması");
  await expect(page.locator(".research-article table")).toHaveCount(1);
+ const tableRegion=page.getByRole("region",{name:/19 model için yayın dönemi/});
+ await expect(tableRegion).toHaveAttribute("tabindex","0");
+ await expect(page.locator(".research-article tbody tr")).toHaveCount(19);
+ await expect(page.locator(".research-article figure.research-photo")).toHaveCount(2);
+ for(const image of await page.locator(".research-article figure.research-photo img").all()){
+   await expect(image).toHaveAttribute("alt",/.{30,}/);
+   await image.scrollIntoViewIfNeeded();
+   await expect.poll(()=>image.evaluate(img=>img.complete&&img.naturalWidth>0)).toBeTruthy();
+ }
+ await expect(page.getByRole("navigation",{name:"Araştırmada hızlı gezinme"})).toBeVisible();
  expect(await page.locator(".research-article h3").count()).toBeGreaterThanOrEqual(19);
  expect(await page.locator('.research-article a[href^="https://www.profi"]').count()).toBeGreaterThanOrEqual(15);
  await expect(page.locator('.research-footer a[href="/tr/forum/"]')).toBeVisible();
