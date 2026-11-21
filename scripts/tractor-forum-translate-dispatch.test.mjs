@@ -21,13 +21,31 @@ test("exact request is queue-action only; no article, private key or account dat
  assert.equal(calls[0].req.headers["x-queue-secret"],"queue-secret");
  assert.ok(!calls[0].req.body.includes("service_role"));
 });
-test("queue empty, retry and failed states stop repeated provider requests",async()=>{
- for(const status of ["queue_empty","retry","failed"]){
-  let count=0;
-  const fetchFn=async()=>{count++;return new Response(JSON.stringify({success:true,processed:0,status}))};
-  await runTranslationQueue({jwt:anon,secret:"x",max:3,fetchFn});
-  assert.equal(count,1);
- }
+test("queue empty stops immediately; retries and failures do not block other due jobs",async()=>{
+ let count=0;
+ const empty=async()=>{count++;return new Response(JSON.stringify({success:true,processed:0,status:"queue_empty"}))};
+ assert.deepEqual(await runTranslationQueue({jwt:anon,secret:"x",max:3,fetchFn:empty}),
+  [{status:"queue_empty",processed:0}]);
+ assert.equal(count,1);
+ const replies=[
+  {success:true,processed:0,status:"retry"},
+  {success:true,processed:0,status:"failed"},
+  {success:true,processed:1,status:"ready",locale:"de"}
+ ];
+ let index=0;
+ const fetchFn=async()=>new Response(JSON.stringify(replies[index++]));
+ const result=await runTranslationQueue({jwt:anon,secret:"x",max:3,fetchFn});
+ assert.equal(index,3);
+ assert.deepEqual(result.map(x=>x.status),["retry","failed","ready"]);
+ assert.equal(result.at(-1).locale,"de");
+});
+test("retries remain bounded to three and do not silently pass the job",async()=>{
+ let count=0;
+ const fetchFn=async()=>{count++;return new Response(JSON.stringify({success:true,processed:0,status:"retry"}))};
+ const result=await runTranslationQueue({jwt:anon,secret:"x",max:3,fetchFn});
+ assert.equal(count,3);
+ assert.equal(result.filter(r=>r.status==="retry").length,3);
+ assert.ok(result.some(r=>r.status==="retry"));
 });
 test("rejects malformed receipts and unexpected target languages",()=>{
  assert.throws(()=>validateReceipt({success:true,processed:1,status:"ready",locale:"tr"}),/Unexpected/);

@@ -32,7 +32,11 @@ export async function runTranslationQueue({jwt,secret,fetchFn=fetch,max=3}){
   const parsed=await res.json();
   const receipt=validateReceipt(parsed);
   receipts.push(receipt);
-  if(receipt.status==="queue_empty"||receipt.status==="retry"||receipt.status==="failed")break;
+  // Each retry/failed receipt has already backed off its own job in the private DB.
+  // Continue to the next due job (bounded by max=3) rather than letting one
+  // overloaded language prevent other consented topics from progressing.
+  // A retry still fails the GitHub process job so no error is hidden.
+  if(receipt.status==="queue_empty")break;
  }
  return receipts;
 }
