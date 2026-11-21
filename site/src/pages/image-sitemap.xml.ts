@@ -2,6 +2,7 @@ import type {APIRoute} from "astro";
 import {getPublicCatalog} from "../lib/catalog";
 import {LOCALES,localizedPath} from "../lib/locales";
 import {tractorPhotos} from "../lib/tractor-photos";
+import {allPublicForumTopics,allPublicForumReplies,allPublicForumMedia,forumMediaImageUrl,isIndexableForumTopic} from "../lib/forum";
 
 export const prerender=true;
 const escapeXml=(value:string)=>value.replace(/&/g,"&amp;").replace(/</g,"&lt;")
@@ -21,6 +22,25 @@ export const GET:APIRoute=async({site})=>{
         const page=new URL(localizedPath(locale,"/tractors/"+tractor.slug+"/"),site!).toString();
         entries.push("<url><loc>"+escapeXml(page)+"</loc>"+photoXml+"</url>");
       }
+    }
+    // Include ONLY approved private-bucket-gateway photos attached to fully
+    // moderated, genuinely indexable forum pages. Drafts, rejected images,
+    // unauthorized uploads and thin/untranslated UGC are never added.
+    const [forumTopics,forumReplies,forumPhotos]=await Promise.all([
+      allPublicForumTopics(),allPublicForumReplies(),allPublicForumMedia()
+    ]);
+    const replyTopicIds=new Map(forumReplies.filter(row=>!row.machine_translated)
+      .map(row=>[row.id,row.topic_id]));
+    for(const topic of forumTopics){
+      if(!isIndexableForumTopic(topic))continue;
+      const media=forumPhotos.filter(photo=>
+        photo.topic_id===topic.topic_id ||
+        (photo.reply_id!==null&&replyTopicIds.get(photo.reply_id)===topic.topic_id));
+      if(!media.length)continue;
+      const page=new URL(localizedPath(topic.locale,"/forum/"+topic.slug+"/"),site!).toString();
+      const photos=media.map(photo=>"<image:image><image:loc>"+
+        escapeXml(forumMediaImageUrl(photo.id))+"</image:loc></image:image>").join("");
+      entries.push("<url><loc>"+escapeXml(page)+"</loc>"+photos+"</url>");
     }
   }
   const body='<?xml version="1.0" encoding="UTF-8"?>\n'+
