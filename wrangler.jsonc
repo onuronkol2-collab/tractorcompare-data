@@ -10,6 +10,7 @@
       "/",
       "/language/*",
       "/api/visitor-country",
+      "/sitemap.xml",
       "/images/tractors/*"
     ]
   },
