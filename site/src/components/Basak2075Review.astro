@@ -1,7 +1,7 @@
 ---
 import SiteLayout from "../layouts/SiteLayout.astro";
 import {getPublicCatalog} from "../lib/catalog";
-import {localizedPath,LOCALES,type Locale} from "../lib/locales";
+import {localizedPath,LOCALES,BREADCRUMB_LABELS,RELATED_PAGES_LABELS,type Locale} from "../lib/locales";
 import {reviewedLanguage} from "../lib/basak-2075-review-i18n";
 interface Props { lang:Locale }
 const {lang}=Astro.props;
@@ -118,7 +118,7 @@ const schema={
   availableLocales={LOCALES} structuredData={schema} ogType="article">
   <article class="review-page">
     <div class="container review-wrap">
-      <nav aria-label={tr?"İçerik yolu":"Breadcrumb"} class="review-crumb">
+      <nav aria-label={BREADCRUMB_LABELS[lang]} class="review-crumb">
         <a href={localizedPath(lang,"/")}>TractorVS</a><span aria-hidden="true">/</span>
         <span>{localized?.methodNote ?? (tr?"Kaynaklı teknik inceleme":"Source-backed technical review")}</span>
       </nav>
@@ -156,7 +156,7 @@ const schema={
         <p>{localized?.sourceIntro ?? (tr?"Yalnızca üreticinin kendi kaynakları. Erişim/denetim tarihi: 19 Kasım 2026.":"Original manufacturer sources only. Checked 19 November 2026.")}</p>
         <ul>{references.map(item=><li><a href={item.url} target="_blank" rel="noopener noreferrer">{item.name}</a></li>)}</ul>
       </section>
-      <nav class="review-next" aria-label={tr?"İlgili sayfalar":"Related pages"}>
+      <nav class="review-next" aria-label={RELATED_PAGES_LABELS[lang]}>
         {publicModel && <a href={localizedPath(lang,"/tractors/"+publicModel.slug+"/")}>{localized?.modelPage ?? (tr?"TractorVS model sayfası":"TractorVS model details")}</a>}
         <a href={localizedPath(lang,"/guides/choosing-a-tractor/")}>{localized?.selectionGuide ?? (tr?"Traktör seçim rehberi":"Tractor selection guide")}</a>
         <a href={localizedPath(lang,"/tractors/")}>{localized?.catalog ?? (tr?"Tüm modeller":"All models")}</a>
