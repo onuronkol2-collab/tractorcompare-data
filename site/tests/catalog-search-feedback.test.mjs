@@ -27,7 +27,7 @@ test("published model links remain server-rendered and the accessible search cou
  assert.match(catalog,/String\(catalog\.tractors\.length\)/);
  assert.match(catalog,/id="catalog-search-clear" type="button" hidden/);
  assert.match(catalog,/if \(clearSearch\) clearSearch\.hidden = !normalized/);
- assert.match(catalog,/filterCatalog\("")/);
+ assert.match(catalog,/filterCatalog\(""\)/);
  assert.match(catalog,/clearQueryFromURL\(\)/);
  assert.doesNotMatch(catalog,/const modelCount = [0-9]+|fakeResults|AI-generated result count/i);
 });
