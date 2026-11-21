@@ -10,7 +10,7 @@ const model=ORIGIN+"/tractors/sample-test/";
 const added=ORIGIN+"/tr/tractors/new-model/";
 const body=(url)=>'<html><head><link rel="canonical" href="'+url+'"></head><body><main>Real readable page</main></body></html>';
 const children=()=>[
-'<sitemapindex><sitemap><loc>'+ORIGIN+'/sitemap-0.xml</loc></sitemap></sitemapindex>',
+'<sitemapindex>'+[ORIGIN+'/sitemap-0.xml',ORIGIN+'/forum-sitemap.xml',ORIGIN+'/image-sitemap.xml'].map(u=>'<sitemap><loc>'+u+'</loc></sitemap>').join('')+'</sitemapindex>',
 '<urlset><url><loc>'+home+'</loc></url><url><loc>'+model+'</loc></url></urlset>'
 ];
 function mock({pages=[home,model],status=200,badPage=null}={}){
@@ -23,13 +23,15 @@ function mock({pages=[home,model],status=200,badPage=null}={}){
    if(url===ORIGIN+"/sitemap-index.xml")return new Response(children()[0]);
    if(url===ORIGIN+"/sitemap-0.xml")
      return new Response('<urlset>'+pages.map(u=>'<url><loc>'+u+'</loc></url>').join("")+'</urlset>');
+   if(url===ORIGIN+"/forum-sitemap.xml"||url===ORIGIN+"/image-sitemap.xml")
+     return new Response('<urlset></urlset>',{status:200});
    if(pages.includes(url))return new Response(body(url===badPage?home:url),{status:200});
    return new Response("missing",{status:404});
  };
  return {fetchFn,requests};
 }
 test("parsers accept canonical sitemap and reject other hosts or duplicate URLs",()=>{
- assert.deepEqual(parseIndex(children()[0]),[ORIGIN+"/sitemap-0.xml"]);
+ assert.deepEqual(parseIndex(children()[0]),[ORIGIN+"/sitemap-0.xml",ORIGIN+"/forum-sitemap.xml",ORIGIN+"/image-sitemap.xml"]);
  assert.equal(parsePageSitemap(children()[1]).size,2);
  assert.throws(()=>parsePageSitemap('<urlset><url><loc>https://evil.example/</loc></url></urlset>'));
  assert.throws(()=>parsePageSitemap('<urlset><url><loc>'+home+'</loc></url><url><loc>'+home+'</loc></url></urlset>'));
@@ -104,5 +106,35 @@ test("dry run never submits notifications or writes state",async()=>{
    assert.equal(r.mode,"baseline_only");
    assert.equal(m.requests.some(x=>x.url===INDEXNOW_URL),false);
    assert.throws(()=>readFileSync(statePath));
+ }finally{rmSync(dir,{recursive:true,force:true});}
+});
+
+test("a master sitemap missing independent forum or image XML cannot advance IndexNow checkpoint",async()=>{
+ const dir=mkdtempSync(join(tmpdir(),"tractorvs-seo-root-"));
+ try{
+  const good=mock();
+  const checkpoint=join(dir,"state.json");
+  const broken=async(url,options)=>{
+   if(url===ORIGIN+"/sitemap-index.xml")return new Response('<sitemapindex><sitemap><loc>'+ORIGIN+'/sitemap-0.xml</loc></sitemap></sitemapindex>');
+   return good.fetchFn(url,options);
+  };
+  await assert.rejects(()=>run({fetchFn:broken,statePath:checkpoint}),/must contain HTML, forum and image/);
+  assert.throws(()=>readFileSync(checkpoint),"Do not move watermark on incomplete sitemap");
+  assert.equal(good.requests.some(x=>x.url===INDEXNOW_URL),false);
+ }finally{rmSync(dir,{recursive:true,force:true});}
+});
+test("image sitemap duplicates do not add to public notifications",async()=>{
+ const dir=mkdtempSync(join(tmpdir(),"tractorvs-seo-dupe-"));
+ const checkpoint=join(dir,"state.json");
+ try{
+  const base=mock();
+  const withImage=async(url,opts)=>{
+   if(url===ORIGIN+"/image-sitemap.xml")
+     return new Response('<urlset><url><loc>'+home+'</loc></url></urlset>');
+   return base.fetchFn(url,opts);
+  };
+  const result=await run({fetchFn:withImage,statePath:checkpoint});
+  assert.equal(result.historical_urls_baselined,2,"Image duplicates must not inflate page coverage");
+  assert.equal(result.indexnow,"not_sent");
  }finally{rmSync(dir,{recursive:true,force:true});}
 });
