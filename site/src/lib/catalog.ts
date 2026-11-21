@@ -1,3 +1,4 @@
+import { REVIEWED_TURKISH_SOURCE_LABELS_EN } from "./reviewed-turkish-source-labels-en.ts";
 import type { Locale } from "./locales.ts";
 import { localizedCategoryName, localizedSpecificationName } from "./spec-i18n.ts";
 import { publishedSpecificationLabel, auditedResidualSpecificationLabel } from "./published-spec-translations.ts";
@@ -612,10 +613,17 @@ const auditedTurkishSourceHeadingInEnglish: Record<string,string> = {
   "çekiş sistemi": "Drive system",
   "yakıt deposu": "Fuel tank",
 };
+// Exact-source translations are deliberately limited to headings actually
+// measured on published English pages. Unknown source text remains intact.
+const REVIEWED_SOURCE_EN_LOOKUP=new Map(
+  Object.entries(REVIEWED_TURKISH_SOURCE_LABELS_EN).map(([name,english])=>[
+    name.trim().replace(/\s+/g," ").toLocaleLowerCase("tr"),english
+  ])
+);
 export function specLabel(spec: PublicSpec, lang: Locale): string {
   if (lang === "en") {
     const sourceName = spec.spec_name.trim().replace(/\s+/g," ").toLocaleLowerCase("tr");
-    const known = auditedTurkishSourceHeadingInEnglish[sourceName];
+    const known = auditedTurkishSourceHeadingInEnglish[sourceName] || REVIEWED_SOURCE_EN_LOOKUP.get(sourceName);
     if (known) return known;
   }
   // EPM describes a distinct power-boost condition. A generic canonical key
