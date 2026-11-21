@@ -35,6 +35,7 @@ const schema=indexable?{
     <p>{ft(lang,"intro")}</p>
     <div class="community-hero-links">
       <a class="compose-link" href="#forum-compose">{ft(lang,"compose")}</a>
+      <a class="compose-link community-link-alt" href="#forum-register-heading">{mt(lang,"register")}</a>
       <a class="compose-link community-link-alt" data-forum-leaderboard-link href="#forum-members">{mt(lang,"leaderboard")}</a>
     </div>
     <div class="community-guide">
@@ -43,6 +44,7 @@ const schema=indexable?{
    </div>
   </header>
   <div class="container community-main">
+   <ForumComposer lang={lang} mode="topic"/>
    <section class="community-list" aria-label={ft(lang,"all")}>
     <h2>{ft(lang,"all")}</h2>
     {topics.length>0?<>
@@ -91,7 +93,6 @@ const schema=indexable?{
       </section>
     </>}
    </section>
-   <ForumComposer lang={lang} mode="topic"/>
    <ForumMemberPanel lang={lang}/>
    <p class="community-help"><a href={localizedPath(lang,"/tractors/")}>{ft(lang,"help")} ↗</a></p>
   </div>
