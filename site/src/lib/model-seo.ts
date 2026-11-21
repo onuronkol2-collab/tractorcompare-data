@@ -6,6 +6,7 @@ import { localizedPath, type Locale } from "./locales.ts";
 import { t } from "./ui.ts";
 import { marketDisplayName } from "./market-display.ts";
 import {primaryTractorPhoto,tractorPhotoAlt} from "./tractor-photos.ts";
+import {matchedHeadlinePowerSource} from "./model-evidence-answers.ts";
 
 /** The original manufacturer identity, equipment and market are never inferred. */
 /** Editorial microcopy for actual, published model facts.
@@ -170,12 +171,18 @@ export function modelSeoMetadata(tractor: TractorRecord, lang: Locale) {
     tractor.model_year == null ? null : String(tractor.model_year)]
     .filter((part):part is string=>Boolean(part));
   const identity = model + (details.length ? " (" + details.join(" · ") + ")" : "");
+  // Search snippets must never assert an engine power number merely because
+  // an unsourced catalogue summary field contains one. The numeric claim
+  // only appears when the exact HP value matches dated, reviewed evidence.
+  // Sonalika's explicitly qualified *category* (not engine test output)
+  // retains its separate manufacturer-market wording.
+  const headlinePower=matchedHeadlinePowerSource(tractor);
   const segments = [
     identity + ".",
     tractor.specifications.length ? copy.specs(tractor.specifications.length) : copy.empty,
     tractor.horsepower == null ? null : (hasInternationalSonalikaContext(tractor)
       ? SONALIKA_EXPORT_COPY[lang].hpDescription(tractor.horsepower)
-      : copy.power(tractor.horsepower)),
+      : headlinePower ? copy.power(tractor.horsepower) : null),
     sourceCount ? copy.withSources : (independentCount ? null : copy.withoutSources),
     independentCount ? INDEPENDENT_SOURCE_COPY[lang].seoOnlyIndependent : null,
     variantContext && lang === "en" ? copy.note(variantContext.replace(/[.。।]+$/u, "")) : null,
