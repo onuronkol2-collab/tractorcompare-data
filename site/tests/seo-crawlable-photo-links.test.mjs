@@ -22,6 +22,8 @@ test("comparison credits have real hrefs and keep model-specific source URLs whe
  for(const side of ["Left","Right"]){
   assert.ok(compare.includes('href={initial'+side+'?.photo?.sourcePage || localizedPath(lang,"/tractors/")}'));
   assert.ok(compare.includes("photoCredit.href=photo.sourcePage;"));
+  assert.ok(compare.includes('alt={initial'+side+'?.photo?.alt || photoText(lang,"pending")}'),
+    "No-photo preview needs an honest localized alt fallback");
  }
  assert.match(compare,/id="tc-left-photo" hidden=\{!initialLeft\?\.photo\}/);
  assert.match(compare,/id="tc-right-photo" hidden=\{!initialRight\?\.photo\}/);
