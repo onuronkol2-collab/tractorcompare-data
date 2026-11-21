@@ -28,3 +28,11 @@ test("comparison credits have real hrefs and keep model-specific source URLs whe
  assert.match(compare,/id="tc-left-photo" hidden=\{!initialLeft\?\.photo\}/);
  assert.match(compare,/id="tc-right-photo" hidden=\{!initialRight\?\.photo\}/);
 });
+
+
+test("documented 4.37:1 review kicker contrast is improved without hiding source text",()=>{
+ const review=file("Basak2075Review.astro");
+ assert.match(review,/class="review-overline"/);
+ assert.match(review,/\.review-overline\{font-weight:850;color:#315f3d;/);
+ assert.doesNotMatch(review,/\.review-overline\{font-weight:850;color:#438253;/);
+});
