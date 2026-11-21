@@ -125,3 +125,40 @@ test("all seven released marketing and ECE power evidence labels are localized i
   }
   assert.doesNotThrow(validatePublishedSpecTranslations);
 });
+
+
+test("frequent published canonical fields have correctly scoped labels in all ten locales",()=>{
+  const keys=["engine_max_torque","service_interval_hours","engine_boost_power_hp","engine_boost_power_kw","engine_boost_max_torque","fuel_tank_capacity_basic","fuel_tank_capacity_steel_tank","maximum_permitted_mass","ground_clearance_rear","ground_clearance_mid","rear_tire_options","front_tire_options","engine_type","overall_width_max","operating_weight","transmission_reverser","front_axle_suspension","transmission_gears","drive_system","tractor_weight","front_track","rear_track","air_conditioning","rear_hydraulic_remotes","engine_aftertreatment"];
+  for(const key of keys){
+    const source={canonical_key:key,spec_name:key.replaceAll("_"," ")};
+    const english=specLabel(source,"en");
+    const turkish=specLabel(source,"tr");
+    assert.ok(english.length>=7,key+" lacks English");
+    assert.ok(turkish.length>=5,key+" lacks Turkish");
+    assert.notEqual(turkish.toLowerCase(),english.toLowerCase(),"Turkish English fallback "+key);
+    for(const lang of LOCALES){
+      const value=specLabel(source,lang);
+      assert.ok(value && value.trim().length>=3,lang+" missing "+key);
+      if(lang!=="en")assert.notEqual(value.toLowerCase(),english.toLowerCase(),lang+" English fallback "+key);
+    }
+  }
+});
+
+test("power, torque, load status, gear ratios, 2WD/4WD and tyre options do not collapse semantically",()=>{
+  const label=(k,lang)=>specLabel({canonical_key:k,spec_name:k.replaceAll("_"," ")},lang);
+  for(const locale of LOCALES){
+    assert.notEqual(label("engine_max_torque",locale),label("engine_torque",locale),locale+" max torque vs generic torque");
+    assert.notEqual(label("engine_max_torque",locale),label("engine_boost_max_torque",locale),locale+" boost torque");
+    assert.notEqual(label("engine_boost_power_hp",locale),label("engine_boost_power_kw",locale),locale+" boost power units");
+    assert.notEqual(label("maximum_permitted_mass",locale),label("operating_weight",locale),locale+" permitted mass versus weight");
+    assert.notEqual(label("front_tire_options",locale),label("front_tire_size",locale),locale+" options vs fitted tire");
+    assert.notEqual(label("rear_tire_options",locale),label("rear_tire_size",locale),locale+" options vs fitted tire");
+    assert.notEqual(label("ground_clearance_rear",locale),label("ground_clearance_mid",locale),locale+" clearance location");
+  }
+  assert.equal(label("drive_configuration","en"),"Drivetrain configuration (2WD/4WD)");
+  assert.equal(label("drive_configuration","tr"),"Çekiş düzeni (2WD/4WD)");
+  assert.equal(label("engine_max_torque_nm","tr"),label("engine_max_torque","tr"),"unit variant not different torque concept");
+  assert.equal(label("engine_displacement_cc","tr"),label("engine_displacement","tr"));
+  assert.equal(label("rear_pto_speeds","ja"),label("pto_speeds","ja"));
+  assert.equal(label("adblue_capacity","pt-br"),label("adblue_tank_capacity","pt-br"));
+});
