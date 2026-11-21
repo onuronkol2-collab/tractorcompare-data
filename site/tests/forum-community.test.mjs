@@ -3,7 +3,7 @@ import assert from "node:assert/strict";
 import {readFileSync} from "node:fs";
 import {FORUM_TEXT,FORUM_CATEGORY_KEYS} from "../src/lib/forum-i18n.ts";
 import {FORUM_STARTER_GUIDES} from "../src/lib/forum-starter-guides.ts";
-import {isSafeForumTopic} from "../src/lib/forum.ts";
+import {isSafeForumTopic,isIndexableForumTopic} from "../src/lib/forum.ts";
 const text=path=>readFileSync(new URL(path,import.meta.url),"utf8");
 test("all ten forum locales have complete original UI, categories and consent semantics",()=>{
  const locales=["en","tr","zh","hi","pt-br","fr","de","ru","ja","es"];
@@ -27,6 +27,11 @@ test("only explicitly published, safe-slug public forum topics may become static
  assert.equal(isSafeForumTopic({...row,status:"pending"}),false);
  assert.equal(isSafeForumTopic({...row,slug:"../../private"}),false);
  assert.equal(isSafeForumTopic({...row,title:"spam"}),false);
+ const ja={...row,locale:"ja",original_locale:"en",machine_translated:true,title:"油圧の低下",body:"暖機後に油圧が低下します。"};
+ assert.equal(isSafeForumTopic(ja),true);
+ assert.equal(isIndexableForumTopic(ja),true);
+ assert.equal(isIndexableForumTopic({...ja,seo_ready:false}),false);
+ assert.equal(isIndexableForumTopic(row),false);
 });
 test("moderated posting never exposes service-role keys, publishes immediately, or forges authorship",()=>{
  const composer=text("../src/components/ForumComposer.astro");
