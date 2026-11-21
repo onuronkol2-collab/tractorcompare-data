@@ -4,12 +4,19 @@ test("sign in, recover a draft, publish directly and check its status",async({pa
  const posted=[];
  let expired=false;
  let limited=true;
+ let articleLive=false;
  let verifiedCode="";
  let currentUser="user-a";
  await page.route("**/*",async route=>{
   const request=route.request();
   const url=new URL(request.url());
   if(url.hostname!=="127.0.0.1")return route.abort();
+  if(url.pathname.startsWith("/de/forum/") && url.pathname.includes("hidrolik-basinci")){
+   if(!articleLive)return route.fulfill({status:404,body:"Not yet deployed"});
+   const canonical=url.toString();
+   return route.fulfill({status:200,contentType:"text/html",
+    body:'<html><head><link rel="canonical" href="'+canonical+'"><meta name="robots" content="index,follow,max-image-preview:large"></head><body><h1>Tractor Topic</h1></body></html>'});
+  }
   if(!url.pathname.startsWith("/forum-test-api/"))return route.continue();
   if(url.pathname.endsWith("/auth/v1/user"))return route.fulfill({json:{id:currentUser}});
   if(url.pathname.endsWith("/auth/v1/otp"))return route.fulfill({json:{}});
@@ -82,6 +89,10 @@ test("sign in, recover a draft, publish directly and check its status",async({pa
  await expect(compose.locator("[data-forum-publication-panel]")).toBeVisible();
  await expect(compose.locator("[data-forum-publication-status]")).toContainText("henüz");
  await expect(compose.locator("[data-forum-publication-link]")).toBeHidden();
+ articleLive=true;
+ await compose.locator("[data-forum-publication-check]").click();
+ await expect(compose.locator("[data-forum-publication-link]")).toBeVisible();
+ await expect(compose.locator("[data-forum-publication-status]")).toContainText("herkese açık");
  await compose.locator("[data-forum-history] summary").click();
  await expect(compose.locator("[data-history-list]")).toContainText(title+" · Yayında");
  await post.locator("textarea").fill("Private draft for user A");
