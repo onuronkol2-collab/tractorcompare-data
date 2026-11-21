@@ -33,7 +33,7 @@ jobs:
       - name: Install production build dependencies from lockfile
         run: npm ci --no-audit --no-fund
       - name: Install pinned test-only tools without modifying repository lockfile
-        run: npm install --no-save --package-lock=false --ignore-scripts --workspace=tractorvs-site @playwright/test@1.65.1 @axe-core/playwright@4.14.0
+        run: npm install --no-save --package-lock=false --ignore-scripts @playwright/test@1.65.1 @axe-core/playwright@4.14.0
       - name: Install Chromium, Firefox and WebKit for CI
         run: npx playwright install --with-deps chromium firefox webkit
       - name: Build inert local TractorVS pages
