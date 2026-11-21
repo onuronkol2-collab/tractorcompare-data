@@ -86,7 +86,7 @@ test("missing one child, duplicate child, unexpected child or malformed XML fail
  try{
   const base=readFileSync(join(ctx.dist,"sitemap-index.xml"),"utf8");
   writeFileSync(join(ctx.dist,"sitemap-index.xml"),base.replace("<sitemap><loc>"+ORIGIN+"/forum-sitemap.xml</loc></sitemap>",""));
-  assert.throws(()=>extractPublishedUrls(ctx.dist),/Root sitemap must contain/);
+  assert.throws(()=>extractPublishedUrls(ctx.dist),/Unexpected number of sitemaps|Root sitemap must contain/);
   writeFileSync(join(ctx.dist,"sitemap-index.xml"),base.replace("</sitemapindex>","<sitemap><loc>"+ORIGIN+"/sitemap-0.xml</loc></sitemap></sitemapindex>"));
   assert.throws(()=>extractPublishedUrls(ctx.dist),/Duplicate sitemap child/);
   writeFileSync(join(ctx.dist,"sitemap-index.xml"),base.replace("forum-sitemap.xml","private-sitemap.xml"));
