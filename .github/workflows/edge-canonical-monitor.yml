@@ -1,0 +1,35 @@
+name: TractorVS HTTPS and www canonical edge audit
+
+on:
+  pull_request:
+    paths:
+      - ".github/workflows/edge-canonical-monitor.yml"
+      - "site/scripts/edge-canonical-audit.mjs"
+      - "site/tests/edge-canonical-audit.test.mjs"
+      - "docs/SEO_CANONICAL_EDGE_RUNBOOK_TR.md"
+  workflow_dispatch:
+  # Free public read-only probe after the daily site SEO monitor.
+  schedule:
+    - cron: "35 6 * * *"
+
+permissions:
+  contents: read
+
+jobs:
+  edge-canonical:
+    if: github.repository == 'onuronkol2-collab/tractorcompare-data'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22.23.4"
+      - name: Unit test 301/308 redirect and canonical verification
+        run: node --test site/tests/edge-canonical-audit.test.mjs
+      - name: Inspect production HTTP, HTTPS and optional www redirects
+        # Initial monitoring mode: report public Cloudflare settings rather
+        # than block unrelated PRs before the owner completes DNS/SSL changes.
+        env:
+          TRACTORVS_EDGE_CANONICAL_STRICT: "false"
+        run: node site/scripts/edge-canonical-audit.mjs
