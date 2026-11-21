@@ -116,9 +116,35 @@ export function originalVariantNote(tractor:Pick<TractorRecord,"variant">):strin
 
 export function modelSeoMetadata(tractor: TractorRecord, lang: Locale) {
   const model = tractor.brand_name + " " + tractor.model_name;
-  const variantLabel = tractor.variant?.split(";")[0]?.trim() || null;
-  const marketLabel = tractor.market?.trim().toLowerCase() === "global"
-    ? null : marketDisplayName(tractor.market, lang);
+  // The three verified manufacturer families below contain *catalogue-source notes*
+  // in the stored variant/market strings. Keep those complete originals in the
+  // visible technical record and structured-data disambiguatingDescription, but
+  // do not repeat editorial source wording in search titles. Unlike a blind
+  // character truncation, this never drops a real 2WD/4WD, Stage V or engine
+  // designation. Unrecognized variants retain the full original identity.
+  const rawVariant = tractor.variant?.split(";")[0]?.trim() || null;
+  const rawMarket = tractor.market?.trim() || null;
+  const isSwarajTarget = tractor.brand_name === "Swaraj"
+    && /^Target (?:625|630) (?:2WD|4WD)$/.test(tractor.model_name)
+    && rawVariant === "Target India / exact 2WD or 4WD configuration"
+    && rawMarket === "India (Swaraj Target manufacturer data)";
+  const isLamborghiniStageV = tractor.brand_name === "Lamborghini Trattori"
+    && /^Spire [SV] 80 Target$/.test(tractor.model_name)
+    && rawVariant === "Spire S/V Target / Stage V 2025 brochure"
+    && rawMarket === "Europe (manufacturer Stage V 04/2025)";
+  const isHistoricalBelarus = tractor.brand_name === "Belarus"
+    && /^(?:112N-01|132N|152)$/.test(tractor.model_name)
+    && rawVariant === "Honda GX390 · historical manufacturer catalogue"
+    && rawMarket === "Unspecified (historical catalogue)";
+
+  const variantLabel = isSwarajTarget ? null
+    : isLamborghiniStageV ? "Stage V"
+    : isHistoricalBelarus ? "Honda GX390"
+    : rawVariant;
+  const marketLabel = !rawMarket || rawMarket.toLowerCase() === "global" ? null
+    : isSwarajTarget ? marketDisplayName("India",lang)
+    : isLamborghiniStageV ? marketDisplayName("Europe",lang)
+    : marketDisplayName(rawMarket, lang);
   const qualifiers = [
     variantLabel && variantLabel.length <= 48 ? variantLabel : null,
     marketLabel, tractor.model_year == null ? null : String(tractor.model_year)
