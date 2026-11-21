@@ -27,14 +27,25 @@ export function extractPublishedUrls(dist){
   const index=readFileSync(join(dist,"sitemap-index.xml"),"utf8");
   if(!index.includes("<sitemapindex"))reject("Missing generated sitemap index");
   const files=locs(index);
-  if(!files.length||files.length>30)reject("Unexpected number of sitemaps");
+  if(files.length<3||files.length>30)reject("Unexpected number of sitemaps");
   const seen=new Set();
+  const seenChildren=new Set();
+  let htmlChildCount=0;
   for(const file of files){
     const u=new URL(file);
-    if(u.origin!==ORIGIN||!/^\/sitemap-[0-9]+\.xml$/.test(u.pathname))
+    if(u.origin!==ORIGIN||u.search||u.hash||
+       !/^\/(?:sitemap-[0-9]+|forum-sitemap|image-sitemap)\.xml$/.test(u.pathname))
       reject("Unexpected sitemap child URL: "+file);
+    if(seenChildren.has(u.pathname))reject("Duplicate sitemap child URL: "+file);
+    seenChildren.add(u.pathname);
     const content=readFileSync(join(dist,u.pathname.slice(1)),"utf8");
-    if(!content.includes("<urlset"))reject("Missing generated urlset: "+file);
+    if(!/<urlset(?:\s|>)/.test(content))reject("Missing generated urlset: "+file);
+    // Moderated forum entries and licensed image entries have their own
+    // sitemap rules; the rendered-HTML content hash ledger intentionally
+    // tracks Astro-generated page routes only. This prevents forum/image
+    // duplicates from creating artificial lastmod changes.
+    if(u.pathname==="/forum-sitemap.xml"||u.pathname==="/image-sitemap.xml")continue;
+    htmlChildCount++;
     for(const url of locs(content)){
       const parsed=new URL(url);
       if(parsed.origin!==ORIGIN||parsed.search||parsed.hash||!parsed.pathname.endsWith("/"))
@@ -44,6 +55,10 @@ export function extractPublishedUrls(dist){
       if(seen.size>20000)reject("Generated sitemap unexpectedly large");
     }
   }
+  if(!htmlChildCount||!seenChildren.has("/forum-sitemap.xml")||
+     !seenChildren.has("/image-sitemap.xml"))
+    reject("Root sitemap must contain HTML, image and forum child documents");
+  if(!seen.size)reject("No HTML page URL listed in generated sitemaps");
   return [...seen].sort();
 }
 export function significantContentDigest(html,url){

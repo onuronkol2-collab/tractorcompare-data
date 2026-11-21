@@ -4,7 +4,7 @@ import {mkdtempSync,mkdirSync,writeFileSync,readFileSync,rmSync} from "node:fs";
 import {tmpdir} from "node:os";
 import {join,dirname} from "node:path";
 import {createHash} from "node:crypto";
-import {significantContentDigest,deriveHistory,auditBuiltSitemap,ORIGIN} from "./tractor-sitemap-history.mjs";
+import {significantContentDigest,deriveHistory,auditBuiltSitemap,extractPublishedUrls,ORIGIN} from "./tractor-sitemap-history.mjs";
 
 const a=ORIGIN+"/", b=ORIGIN+"/tr/tractors/safe-model/";
 const hash=s=>createHash("sha256").update(s).digest("hex");
@@ -21,8 +21,11 @@ function setup(){
    mkdirSync(dirname(path),{recursive:true});writeFileSync(path,sample(url,body));
  };
  write(a,"Real homepage");write(b,"Real tractor page");
- writeFileSync(join(dist,"sitemap-index.xml"),'<sitemapindex><sitemap><loc>'+ORIGIN+'/sitemap-0.xml</loc></sitemap></sitemapindex>');
+ const childUrls=["sitemap-0.xml","forum-sitemap.xml","image-sitemap.xml"];
+ writeFileSync(join(dist,"sitemap-index.xml"),'<sitemapindex>'+childUrls.map(x=>'<sitemap><loc>'+ORIGIN+'/'+x+'</loc></sitemap>').join("")+'</sitemapindex>');
  writeFileSync(join(dist,"sitemap-0.xml"),'<urlset><url><loc>'+a+'</loc></url><url><loc>'+b+'</loc></url></urlset>');
+ writeFileSync(join(dist,"forum-sitemap.xml"),'<urlset><url><loc>'+ORIGIN+'/tr/forum/</loc></url></urlset>');
+ writeFileSync(join(dist,"image-sitemap.xml"),'<urlset><url><loc>'+b+'</loc></url></urlset>');
  return {root,dist,historyPath,lastmodPath,write};
 }
 test("significant-content hash ignores whitespace-only changes but detects content changes",()=>{
@@ -61,4 +64,35 @@ test("fail closed on sudden mass unpublishing and unreadable content",()=>{
  const h={version:1,pages:{[a]:{digest:hash("a"),modified:null},[b]:{digest:hash("b"),modified:null}}};
  assert.throws(()=>deriveHistory({pages:[[a,hash("a")]],previous:h,minPages:1,now:date1}),/shrinking/);
  assert.throws(()=>deriveHistory({pages:[[a,"invalid"],[b,hash("ok")]],previous:h,minPages:1,now:date1}),/digest/);
+});
+
+test("unified index includes forum/image without polluting HTML content change ledger",()=>{
+ const ctx=setup();
+ try{
+  assert.deepEqual(extractPublishedUrls(ctx.dist),[a,b].sort());
+  const first=auditBuiltSitemap({...ctx,now:date1,minPages:2});
+  assert.equal(first.pages,2,"Images/forum must never count as HTML lastmod records");
+  const firstHistory=readFileSync(ctx.historyPath,"utf8");
+  writeFileSync(join(ctx.dist,"image-sitemap.xml"),'<urlset><url><loc>'+a+'</loc></url></urlset>');
+  writeFileSync(join(ctx.dist,"forum-sitemap.xml"),'<urlset><url><loc>'+ORIGIN+'/tr/forum/approved-topic/</loc></url></urlset>');
+  const second=auditBuiltSitemap({...ctx,now:date2,minPages:2});
+  assert.equal(second.significant_changes,0,"Sitemap changes are not rendered HTML changes");
+  assert.equal(readFileSync(ctx.historyPath,"utf8"),firstHistory);
+ }finally{rmSync(ctx.root,{recursive:true,force:true});}
+});
+
+test("missing one child, duplicate child, unexpected child or malformed XML fails closed",()=>{
+ const ctx=setup();
+ try{
+  const base=readFileSync(join(ctx.dist,"sitemap-index.xml"),"utf8");
+  writeFileSync(join(ctx.dist,"sitemap-index.xml"),base.replace("<sitemap><loc>"+ORIGIN+"/forum-sitemap.xml</loc></sitemap>",""));
+  assert.throws(()=>extractPublishedUrls(ctx.dist),/Unexpected number of sitemaps|Root sitemap must contain/);
+  writeFileSync(join(ctx.dist,"sitemap-index.xml"),base.replace("</sitemapindex>","<sitemap><loc>"+ORIGIN+"/sitemap-0.xml</loc></sitemap></sitemapindex>"));
+  assert.throws(()=>extractPublishedUrls(ctx.dist),/Duplicate sitemap child/);
+  writeFileSync(join(ctx.dist,"sitemap-index.xml"),base.replace("forum-sitemap.xml","private-sitemap.xml"));
+  assert.throws(()=>extractPublishedUrls(ctx.dist),/Unexpected sitemap child URL/);
+  writeFileSync(join(ctx.dist,"sitemap-index.xml"),base);
+  writeFileSync(join(ctx.dist,"forum-sitemap.xml"),"not xml");
+  assert.throws(()=>extractPublishedUrls(ctx.dist),/Missing generated urlset/);
+ }finally{rmSync(ctx.root,{recursive:true,force:true});}
 });
