@@ -6,7 +6,7 @@
  * not routable or indexable until an independent locale QA gate passes.
  */
 import {createHash} from "node:crypto";
-import {mkdir,writeFile,readFile} from "node:fs/promises";
+import {mkdir,writeFile,readFile,rename} from "node:fs/promises";
 import {resolve} from "node:path";
 import {GLOSSARY_ROWS,GLOSSARY_SECTIONS} from "../src/lib/tractor-glossary.ts";
 import {TRACTOR_PART_ROWS,TRACTOR_PART_SECTIONS} from "../src/lib/tractor-parts.ts";
@@ -50,16 +50,41 @@ const output={locale:target,sourceHash:version,state:"draft-needs-editorial-revi
   reviewed:false
  }};
 const archiveFile=resolve(archiveDir,target+".json");
+// Resume only schema-conformant records. A malformed saved draft must not
+// permanently block the next attempt for that source row.
+function validSavedRow(category,id,fields){
+ const source=batches[category]?.find(row=>row.id===id);
+ if(!source||!fields||typeof fields!=="object"||Array.isArray(fields))return false;
+ const required=Object.keys(source.english);
+ return Object.keys(fields).length===required.length&&required.every(k=>
+  typeof fields[k]==="string"&&fields[k].trim().length>0);
+}
 try{
  const previous=JSON.parse(await readFile(archiveFile,"utf8"));
  if(previous?.sourceHash===version&&previous?.locale===target){
   for(const [category,fields] of Object.entries(previous.data||{})){
-   if(fields&&typeof fields==="object")output.data[category]=fields;
+   if(!Object.hasOwn(batches,category)||!fields||typeof fields!=="object"||Array.isArray(fields))continue;
+   const valid=Object.fromEntries(Object.entries(fields).filter(([id,row])=>validSavedRow(category,id,row)));
+   if(Object.keys(valid).length!==Object.keys(fields).length)
+    console.warn("DROPPED_INVALID_RESUME_ROWS "+target+" "+category+" "+(Object.keys(fields).length-Object.keys(valid).length));
+   output.data[category]=valid;
   }
   console.log("RESUME_TRANSLATION "+target+" from identical source hash");
  }
 }catch(err){if(err?.code!=="ENOENT")throw err;}
 const bad=[];
+async function saveDraft(){
+ output.summary=Object.fromEntries(Object.entries(output.data).map(([k,v])=>[k,Object.keys(v).length]));
+ output.errors=bad;
+ output.validation.complete=bad.length===0&&Object.entries(expected).every(([k,n])=>Object.keys(output.data[k]||{}).length===n);
+ await mkdir(archiveDir,{recursive:true});
+ const tmp=archiveFile+".tmp";
+ await writeFile(tmp,JSON.stringify(output,null,2)+"\n","utf8");
+ await rename(tmp,archiveFile);
+}
+// Persist at startup and after every successful batch. If CI hits its
+// 45-minute job limit, already translated valid rows survive via artifacts.
+await saveDraft();
 let calls=0;
 const maxCalls=Number(process.env.EDU_MAX_GEMINI_CALLS||55);
 if(!Number.isSafeInteger(maxCalls)||maxCalls<1||maxCalls>60)throw Error("Invalid Gemini call cap");
@@ -113,10 +138,14 @@ for(const [kind,items] of Object.entries(batches)){
   try{
    const returned=await translate(batch);
    for(const item of batch)result[item.id]=returned.get(item.id);
-   console.log("Translation OK "+target+" "+kind+" "+Math.min(pos+maxBatch,items.length)+"/"+items.length);
+   output.data[kind]=result;
+   await saveDraft();
+   console.log("Translation OK "+target+" "+kind+" "+Math.min(pos+step,items.length)+"/"+items.length);
   }catch(err){
    bad.push({kind,start:pos,ids:batch.map(x=>x.id),error:String(err).slice(0,190)});
    console.error("Translation BLOCKED "+target+" "+kind+" "+String(err).slice(0,180));
+   output.data[kind]=result;
+   await saveDraft();
    // Do not attempt to brute-force quota or safety failures.
    break;
   }
@@ -124,10 +153,6 @@ for(const [kind,items] of Object.entries(batches)){
  output.data[kind]=result;
  if(bad.length)break;
 }
-output.summary=Object.fromEntries(Object.entries(output.data).map(([k,v])=>[k,Object.keys(v).length]));
-output.errors=bad;
-output.validation.complete=bad.length===0&&Object.entries(expected).every(([k,n])=>Object.keys(output.data[k]||{}).length===n);
-await mkdir(archiveDir,{recursive:true});
-await writeFile(archiveFile,JSON.stringify(output,null,2)+"\n","utf8");
+await saveDraft();
 console.log("TRANSLATION_DRAFT_SUMMARY "+JSON.stringify({locale:target,complete:output.validation.complete,hash:version,calls,counts:output.summary,failures:bad.length}));
 if(!output.validation.complete)process.exitCode=2;
