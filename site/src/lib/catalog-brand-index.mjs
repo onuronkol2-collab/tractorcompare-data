@@ -45,3 +45,17 @@ export const BRAND_NAV_COPY={
   ja:{heading:"メーカー別のトラクター",intro:"メーカーを選ぶと、TractorVSに公開済みのモデルへ移動します。各メーカーの全製品を網羅するものではありません。",models:"モデル"},
   es:{heading:"Tractores por fabricante",intro:"Elige un fabricante para ir a sus modelos publicados en TractorVS. El directorio no representa toda la gama de la marca.",models:"modelos"}
 };
+
+/** Human-reviewed, intent-specific catalogue title text. No keyword stuffing. */
+export const CATALOG_SEARCH_TITLES={
+  en:"Tractor Models & Technical Specifications",
+  tr:"Traktör Modelleri ve Teknik Özellikleri",
+  zh:"拖拉机型号与技术参数",
+  hi:"ट्रैक्टर मॉडल और तकनीकी विवरण",
+  "pt-br":"Modelos de tratores e fichas técnicas",
+  fr:"Modèles de tracteurs et fiches techniques",
+  de:"Traktormodelle und technische Daten",
+  ru:"Модели тракторов и характеристики",
+  ja:"トラクターのモデルと技術仕様",
+  es:"Modelos de tractores y fichas técnicas"
+};
