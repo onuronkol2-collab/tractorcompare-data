@@ -59,7 +59,7 @@ for(const record of records){
   licenceAllowed(info.extmetadata||{},record);
   const thumb=info.thumburl;
   if(typeof thumb!=="string"||!thumb.startsWith("https://upload.wikimedia.org/wikipedia/commons/thumb/"))
-    throw Error("Unapproved thumb host "+record.id);
+    throw Error("Unapproved thumb host "+record.id+" "+String(thumb));
   if(info.thumbwidth!==500)throw Error("Thumbnail not 500px: "+record.id+": "+info.thumbwidth);
   const {body,mime}=await get(thumb);
   if(!/^image\/jpeg/i.test(mime)||body.length<9000||body.length>2500000||
