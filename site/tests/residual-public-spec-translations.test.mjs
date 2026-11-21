@@ -85,3 +85,10 @@ test("previously reviewed EPM and ISO standard translations are not overridden",
     assert.ok(iso?.includes("14396"),locale+" ISO lost");
   }
 });
+
+test("last audited Chinese and Russian labels are exact, source-scoped and no longer English",()=>{
+  assert.equal(publishedSpecificationLabel("Motor soğutma tipi","zh"),"发动机冷却方式");
+  assert.equal(publishedSpecificationLabel("Operator station / cab","ru"),"Рабочее место оператора / кабина");
+  assert.equal(specLabel({...exampleSpec("Motor soğutma tipi"),canonical_key:"engine_cooling"},"zh"),"发动机冷却方式");
+  assert.equal(specLabel({...exampleSpec("Operator station / cab"),canonical_key:"cab_type"},"ru"),"Рабочее место оператора / кабина");
+});
