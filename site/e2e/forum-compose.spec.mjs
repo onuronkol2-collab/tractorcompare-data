@@ -63,15 +63,15 @@ test("sign in, recover a draft, submit for moderation and check its status",asyn
  await page.reload();
  await expect(post.locator("textarea")).toHaveValue(body);
  await expect(post.locator('[name="source_locale"]')).toHaveValue("de");
- await post.locator("button").click();
+ await post.locator('button[type="submit"]').click();
  const status=compose.locator("[data-forum-status]");
  await expect(status).toHaveText("Son 24 saat için gönderi sınırına ulaştın.");
  expired=true;
- await post.locator("button").click();
+ await post.locator('button[type="submit"]').click();
  await expect(compose.locator("[data-forum-auth-gate] > summary")).toBeVisible();
  await signIn();
  await expect(post.locator("textarea")).toHaveValue(body);
- await post.locator("button").click();
+ await post.locator('button[type="submit"]').click();
  await expect(post.locator("textarea")).toHaveValue("");
  expect(posted).toHaveLength(1);
  expect(posted[0]).toMatchObject({title,body,status:"pending",locale:"de",translation_consent:false});
