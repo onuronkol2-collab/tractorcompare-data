@@ -40,15 +40,16 @@ export default {
   async fetch(request, env) {
     const url = new URL(request.url);
     const method = request.method;
-    // Yandex requires HTTP 200 at the exact *.html verification file URL.
+    // Yandex and Naver require HTTP 200 at exact *.html verification URLs.
     // Cloudflare's default HTML handling redirects *.html to extensionless paths.
-    // Serve the corresponding uploaded static asset without changing site-wide
+    // Serve only approved verification assets without changing site-wide
     // HTML canonical URLs or exposing an arbitrary asset proxy.
-    const yandexHtmlProofPaths = new Set([
+    const searchEngineHtmlProofPaths = new Set([
       "/yandex_6bf433db24ce4bb4.html",
       "/yandex_dd55c1f59fb67af2.html",
+      "/navera11c61023793bf35184978b1fed89d2e.html",
     ]);
-    if (yandexHtmlProofPaths.has(url.pathname)) {
+    if (searchEngineHtmlProofPaths.has(url.pathname)) {
       if (method !== "GET" && method !== "HEAD")
         return new Response("Method not allowed", {status:405, headers:{"Allow":"GET, HEAD"}});
       const assetUrl = new URL(url);

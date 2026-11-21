@@ -38,6 +38,34 @@ for (const [token, url] of proofs) {
   });
 }
 
+test("Naver HTML verification responds with exact uploaded text at unchanged URL", async () => {
+  const filename = "navera11c61023793bf35184978b1fed89d2e.html";
+  const url = `https://tractorvs.com/${filename}`;
+  const originalContent = readFileSync(new URL(`../public/${filename}`, import.meta.url), "utf8");
+  const env = {ASSETS: {fetch: async (req) => {
+    assert.equal(new URL(req.url).pathname, `/${filename.slice(0, -".html".length)}`);
+    assert.equal(req.method, "GET");
+    return new Response(originalContent, {status:200});
+  }}};
+  const cfgs = ["../../wrangler.jsonc", "../wrangler.jsonc"];
+  for (const path of cfgs) {
+    const cfg = JSON.parse(readFileSync(new URL(path, import.meta.url), "utf8"));
+    assert.ok(cfg.assets.run_worker_first.includes(`/${filename}`), path);
+    assert.equal(cfg.assets.html_handling, undefined);
+  }
+  const response = await worker.fetch(new Request(url), env);
+  assert.equal(response.status, 200);
+  assert.equal(response.headers.get("Location"), null);
+  assert.equal(await response.text(), originalContent);
+  const head = await worker.fetch(new Request(url, {method:"HEAD"}), env);
+  assert.equal(head.status, 200);
+  assert.equal(await head.text(), "");
+  const disallowed = await worker.fetch(new Request(url, {method:"POST"}), env);
+  assert.equal(disallowed.status, 405);
+  const missing = await worker.fetch(new Request(url), {ASSETS:{fetch:async()=>new Response("missing",{status:404})}});
+  assert.equal(missing.status, 503);
+});
+
 test("Yandex proof responds fail-closed when Cloudflare static asset is missing", async () => {
   const env={ASSETS:{fetch:async ()=>new Response("missing", {status:404})}};
   const result=await worker.fetch(new Request(proofs[1][1]), env);

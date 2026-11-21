@@ -19,14 +19,10 @@ test("Yandex HTTPS property has its own exact proof file", () => {
   assert.equal(html.match(/<body>/g)?.length, 1);
 });
 
-test("Naver verification tag is static and scoped to the English homepage head", () => {
+test("Naver verification file retains the exact uploaded text and the old meta tag is absent", () => {
+  const filename = "navera11c61023793bf35184978b1fed89d2e.html";
+  const content = readFileSync(new URL(`../public/${filename}`, import.meta.url), "utf8");
+  assert.equal(content, `naver-site-verification: ${filename}`);
   const layout = readFileSync(new URL("../src/layouts/SiteLayout.astro", import.meta.url), "utf8");
-  const marker = `{lang === "en" && plainPath === "/" && <meta name="naver-site-verification" content="${naverToken}" />}`;
-  assert.ok(layout.includes(marker));
-  assert.equal((layout.match(/name="naver-site-verification"/g) || []).length, 1);
-  const headStart = layout.indexOf("<head>");
-  const headEnd = layout.indexOf("</head>");
-  assert.ok(headStart >= 0 && headEnd > headStart);
-  const tagPosition = layout.indexOf(marker);
-  assert.ok(tagPosition > headStart && tagPosition < headEnd);
+  assert.ok(!layout.includes('name="naver-site-verification"'), "Old verification meta must be removed");
 });
