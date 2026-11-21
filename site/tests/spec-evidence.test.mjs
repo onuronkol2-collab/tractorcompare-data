@@ -248,3 +248,19 @@ test("maker-source links are visible for dated Agrale, ArmaTrac and Sonalika evi
   assert.equal(officialManufacturerSourceUrl({...official,source_url:sources[3][1]},"Agrale"),null);
   assert.equal(officialManufacturerSourceUrl({...official,source_url:"https://sonalika.com.evil.example/tractor/DI-734-Power-Plus"},"Sonalika"),null);
 });
+
+test("only the exact original ISEKI UK TXGS24 range PDF is linked, not arbitrary WordPress files",()=>{
+  const exact="https://www.iseki.co.uk/wp-content/uploads/2021/02/Iseki-TXGS24-Range-WEB-2.pdf";
+  const source={...official,source_url:exact,source_type:"manufacturer_specification",
+    evidence_text:"ISEKI UK official TXGS24 range maker technical brochure: model-specific published evidence",
+    verified_at:"2026-11-21T06:00:00Z"};
+  assert.equal(officialManufacturerSourceUrl(source,"Iseki"),exact);
+  for(const bad of [
+    exact.replace("https://","http://"),
+    exact.replace("Iseki-TXGS24-Range-WEB-2.pdf","other-tractor.pdf"),
+    exact.replace("https://","https://www.iseki.co.uk.evil.example@"),
+    exact.replace("www.iseki.co.uk","www.iseki.co.uk.evil.example")
+  ])assert.equal(officialManufacturerSourceUrl({...source,source_url:bad},"Iseki"),null,bad);
+  assert.equal(officialManufacturerSourceUrl({...source,evidence_text:null},"Iseki"),null);
+  assert.equal(officialManufacturerSourceUrl({...source,source_type:"independent_test"},"Iseki"),null);
+});
