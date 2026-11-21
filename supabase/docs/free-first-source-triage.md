@@ -21,6 +21,12 @@ STDOUT contains **aggregate counts only** (`records`, `unique_trusted_documents`
 
 `groupFetches()` groups records by trusted document URL for a future bounded authenticated fetcher; it **does not collapse distinct model/year/market/variant/evidence records**. This avoids repeated downloads of one catalogue while preserving exact equipment identity.
 
+## Cross-document conflict guard (21 November 2026)
+- A bounded source fact must appear **after** the exact target model in its supplied technical excerpt. A different model's earlier specification cannot be attached to a later navigation link.
+- Multiple separately reviewable sources with the same brand/model/variant/market/year/specification key/unit/measurement standard but **different measured values** become `conflict_review`, not `review_candidate`. Distinct markets, years or measurement standards are not combined. Decimal comma/dot representations of the same simple number are normalized only for conflict grouping.
+- For example, Antonio Carraro TIGRE 3800 F Italian/English HTML pages differ between **1331 cc and 1642 cc**; Antonio Carraro MACH 2 R marketing narrative and 8900 R technical tab differ between **98 hp and 74.2 hp**. Both remain private review items; no majority vote or arbitrary unit conversion.
+- These conservative guards only work for facts included in the input. A missing conflicting source is not proof of agreement, and a `review_candidate` is still **not a verified fact**.
+
 ## Tests and live status
 
 `node --test scripts/tractor-free-source-triage.test.mjs` exercises more than 10 synthetic manufacturer evidence scenarios: shared document, exact model vs lookalike, navigation-only false positives, unit/value boundaries, variant/year/market, power measurement standard, PDF extraction, redirects, bad HTTP, private output, and source deduplication.
