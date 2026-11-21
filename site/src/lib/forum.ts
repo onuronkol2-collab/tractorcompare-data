@@ -63,6 +63,21 @@ export async function allPublicForumReplies():Promise<ForumReply[]>{
     typeof x.body==="string"&&x.body.trim().length>=(x.machine_translated?5:10)&&x.body.length<=(x.machine_translated?16000:6000)));
  return repliesCache;
 }
+export function forumThreadReplies(rows:ForumReply[],lang:Locale,topicId:string) {
+ const originals=new Map<string,ForumReply>();
+ const translations=new Map<string,ForumReply>();
+ for(const row of rows){
+  if(row.topic_id!==topicId || row.status!=="published")continue;
+  if(!row.machine_translated && row.locale===row.original_locale)originals.set(row.id,row);
+  else if(row.machine_translated && row.locale===lang)translations.set(row.id,row);
+ }
+ return [...originals.values()].sort((a,b)=>a.created_at.localeCompare(b.created_at)||a.id.localeCompare(b.id))
+  .map(original=>{
+   const translated=translations.get(original.id);
+   const reply=translated?.original_locale===original.locale ? translated : original;
+   return {reply,original};
+  });
+}
 export async function publishedForumReplies(lang:Locale,topicId:string):Promise<ForumReply[]> {
  return (await allPublicForumReplies()).filter(x=>x.locale===lang&&x.topic_id===topicId)
   .sort((a,b)=>a.created_at.localeCompare(b.created_at));

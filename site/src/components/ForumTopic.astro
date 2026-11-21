@@ -2,17 +2,18 @@
 import SiteLayout from "../layouts/SiteLayout.astro";
 import ForumComposer from "./ForumComposer.astro";
 import {forumText as ft} from "../lib/forum-i18n.ts";
-import {allPublicForumTopics,isIndexableForumTopic,publishedForumReplies,forumDate,type ForumTopic} from "../lib/forum.ts";
+import {allPublicForumTopics,isIndexableForumTopic,allPublicForumReplies,forumThreadReplies,forumDate,type ForumTopic} from "../lib/forum.ts";
 import {getPublicCatalog} from "../lib/catalog.ts";
-import {localizedPath,type Locale,LOCALE_TAGS} from "../lib/locales.ts";
+import {localizedPath,type Locale,LOCALE_TAGS,LOCALE_NAMES} from "../lib/locales.ts";
 interface Props {lang:Locale;topic:ForumTopic}
 const {lang,topic}=Astro.props;
-const replies=await publishedForumReplies(lang,topic.topic_id);
+const replies=forumThreadReplies(await allPublicForumReplies(),lang,topic.topic_id);
 const catalog=(await getPublicCatalog()).tractors;
 const tractor=topic.tractor_id?catalog.find(t=>t.tractor_id===topic.tractor_id):null;
 const forumUrl=localizedPath(lang,"/forum/");
 const publicPath=forumUrl+topic.slug+"/";
 const versions=(await allPublicForumTopics()).filter(row=>row.topic_id===topic.topic_id);
+const originalTopic=topic.machine_translated?versions.find(row=>!row.machine_translated&&row.locale===topic.original_locale):null;
 const eligible=isIndexableForumTopic(topic);
 const availableLocales=versions.map(row=>row.locale);
 const indexableLocales=versions.filter(isIndexableForumTopic).map(row=>row.locale);
@@ -38,19 +39,27 @@ const schema=eligible?{
     </div>
     <h1>{topic.title}</h1>
     <div class="forum-body">{topic.body.split(/\n\s*\n/).filter(Boolean).map(p=><p>{p}</p>)}</div>
+    {originalTopic&&<a class="original-link" href={localizedPath(originalTopic.locale,"/forum/"+originalTopic.slug+"/")} hreflang={LOCALE_TAGS[originalTopic.locale]}>
+     {ft(lang,"readOriginal")} · <bdi lang={LOCALE_TAGS[originalTopic.locale]}>{LOCALE_NAMES[originalTopic.locale]}</bdi>
+    </a>}
     {tractor&&<p class="forum-tractor">
      <a href={localizedPath(lang,"/tractors/"+tractor.slug+"/")}>{tractor.brand_name} {tractor.model_name}</a>
     </p>}
    </article>
    <section class="forum-replies" aria-labelledby="forum-replies-heading">
     <h2 id="forum-replies-heading">{ft(lang,"replies")} ({replies.length})</h2>
-    {replies.map((reply,i)=><article class="forum-reply">
+    {replies.map(({reply,original},i)=><article class="forum-reply" id={"reply-"+reply.id}>
       <div class="reply-meta">
-       <span>#{i+1}</span>
+       <a href={"#reply-"+reply.id}>#{i+1}</a>
        <time datetime={reply.created_at}>{forumDate(reply.created_at,lang)}</time>
        {reply.machine_translated&&<span>{ft(lang,"translated")}</span>}
       </div>
-      <div>{reply.body.split(/\n\s*\n/).filter(Boolean).map(p=><p>{p}</p>)}</div>
+      {reply.locale!==lang&&<p class="reply-language">{ft(lang,"originalLanguage")} · <bdi lang={LOCALE_TAGS[reply.locale]}>{LOCALE_NAMES[reply.locale]}</bdi></p>}
+      <div lang={LOCALE_TAGS[reply.locale]}>{reply.body.split(/\n\s*\n/).filter(Boolean).map(p=><p>{p}</p>)}</div>
+      {reply.machine_translated&&<details class="reply-original">
+       <summary>{ft(lang,"readOriginal")} · <bdi lang={LOCALE_TAGS[original.locale]}>{LOCALE_NAMES[original.locale]}</bdi></summary>
+       <div lang={LOCALE_TAGS[original.locale]}>{original.body.split(/\n\s*\n/).filter(Boolean).map(p=><p>{p}</p>)}</div>
+      </details>}
     </article>)}
    </section>
    <ForumComposer lang={lang} mode="reply" topicId={topic.topic_id}/>
@@ -71,6 +80,9 @@ const schema=eligible?{
 .forum-replies h2{font-size:clamp(21px,2.5vw,28px);color:#1a5232;margin-bottom:22px}
 .forum-reply{padding:22px 25px;background:#fff;border:1px solid #d3e3d2;border-radius:14px;margin:13px 0}
 .reply-meta{margin-bottom:15px}
+.reply-original summary{cursor:pointer;padding-block:8px;color:#23683e}
+.reply-original summary:focus-visible{outline:3px solid #376e47;outline-offset:2px}
+.forum-reply{scroll-margin-top:6rem}
 .forum-back{margin:24px 0}
 .forum-thread a:focus-visible{outline:3px solid #8cb78a;outline-offset:3px}
 </style>

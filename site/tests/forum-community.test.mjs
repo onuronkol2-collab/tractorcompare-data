@@ -3,7 +3,7 @@ import assert from "node:assert/strict";
 import {readFileSync} from "node:fs";
 import {FORUM_TEXT,FORUM_CATEGORY_KEYS} from "../src/lib/forum-i18n.ts";
 import {FORUM_STARTER_GUIDES} from "../src/lib/forum-starter-guides.ts";
-import {isSafeForumTopic,isIndexableForumTopic} from "../src/lib/forum.ts";
+import {forumThreadReplies,isSafeForumTopic,isIndexableForumTopic} from "../src/lib/forum.ts";
 const text=path=>readFileSync(new URL(path,import.meta.url),"utf8");
 test("all ten forum locales have complete original UI, categories and consent semantics",()=>{
  const locales=["en","tr","zh","hi","pt-br","fr","de","ru","ja","es"];
@@ -73,4 +73,14 @@ test("empty forum has useful original editorial guidance in ten locales, without
  assert.match(hub,/indexable=\{indexable\}/);
  assert.match(hub,/const indexable=publicCount>0/);
  assert.doesNotMatch(hub,/<DiscussionForumPosting/);
+});
+
+test("threads show each published reply once with its matching original",()=>{
+ const original={id:"a",topic_id:"one",status:"published",locale:"tr",original_locale:"tr",machine_translated:false,created_at:"2026-11-20",body:"Özgün yanıt"};
+ const en={...original,locale:"en",machine_translated:true,body:"Translated reply"};
+ const de={...original,id:"b",locale:"de",original_locale:"de",created_at:"2026-11-21"};
+ const rows=[de,en,{...en,id:"orphan"},{...original,id:"pending",status:"pending"},{...en,topic_id:"two"},original];
+ assert.deepEqual(forumThreadReplies(rows,"en","one"),[{reply:en,original},{reply:de,original:de}]);
+ assert.deepEqual(forumThreadReplies(rows,"tr","one")[0],{reply:original,original});
+ assert.deepEqual(forumThreadReplies([{...en,original_locale:"de"},original],"en","one")[0],{reply:original,original});
 });
