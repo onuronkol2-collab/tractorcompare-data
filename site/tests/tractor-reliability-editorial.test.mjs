@@ -18,7 +18,7 @@ test("original editorial copy never sells 2021 owner observations as 2027 warran
  assert.match(article,/üç markası ortak/);
  assert.match(article,/Allis-Chalmers tarihsel bir markadır/);
  assert.match(article,/satış başına gerçek arıza yüzdesi/i);
- assert.match(article,/aynı traktörde birden çok sorun/);
+ assert.match(article,/[Aa]ynı traktörde birden çok sorun/);
 });
 
 test("source chart measurements are retained as incident counts per 100 evaluated tractors",()=>{
