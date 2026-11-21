@@ -53,7 +53,7 @@ const ORIGINAL_PHOTO_ORIGINS:readonly Omit<TractorPhoto,"originThumbUrl"|"origin
     configurationExact:false
   },
   {
-    brand:"McCormick",model:"X5.120",fileId:"mccormick-x5-120-marcelx42-2023",
+    brand:"McCormick",model:"X5.120 P3-Drive",fileId:"mccormick-x5-120-marcelx42-2023",
     thumbUrl:W+"thumb/6/66/McCormick_X5.120_P3-Drive_Agritechnica_2023_%28DSC03865%29.jpg/480px-McCormick_X5.120_P3-Drive_Agritechnica_2023_%28DSC03865%29.jpg",
     displayUrl:W+"thumb/6/66/McCormick_X5.120_P3-Drive_Agritechnica_2023_%28DSC03865%29.jpg/960px-McCormick_X5.120_P3-Drive_Agritechnica_2023_%28DSC03865%29.jpg",
     fullUrl:W+"6/66/McCormick_X5.120_P3-Drive_Agritechnica_2023_%28DSC03865%29.jpg",
@@ -89,7 +89,7 @@ const ORIGINAL_PHOTO_ORIGINS:readonly Omit<TractorPhoto,"originThumbUrl"|"origin
     licenseName:"CC BY-SA 4.0",licenseUrl:"https://creativecommons.org/licenses/by-sa/4.0/",
     configurationExact:false
   },
-  {brand:"Landini",model:"5-110",fileId:"landini-5-110-roboshift-marcelx42-2023",
+  {brand:"Landini",model:"5-110 RoboShift",fileId:"landini-5-110-roboshift-marcelx42-2023",
     thumbUrl:W+"thumb/9/9b/Landini_5-110_RoboShift_Agritechnica_2023_%28DSC05711%29.jpg/480px-Landini_5-110_RoboShift_Agritechnica_2023_%28DSC05711%29.jpg",
     displayUrl:W+"thumb/9/9b/Landini_5-110_RoboShift_Agritechnica_2023_%28DSC05711%29.jpg/960px-Landini_5-110_RoboShift_Agritechnica_2023_%28DSC05711%29.jpg",
     fullUrl:W+"9/9b/Landini_5-110_RoboShift_Agritechnica_2023_%28DSC05711%29.jpg",
@@ -98,7 +98,7 @@ const ORIGINAL_PHOTO_ORIGINS:readonly Omit<TractorPhoto,"originThumbUrl"|"origin
     licenseName:"CC BY-SA 4.0",licenseUrl:"https://creativecommons.org/licenses/by-sa/4.0/",
     configurationExact:false
   },
-  {brand:"McCormick",model:"X5.110",fileId:"mccormick-x5-110-hc-marcelx42-2023",
+  {brand:"McCormick",model:"X5.110 HC",fileId:"mccormick-x5-110-hc-marcelx42-2023",
     thumbUrl:W+"thumb/c/c2/McCormick_X5.110_HC_Agritechnica_2023_%28DSC06793%29.jpg/480px-McCormick_X5.110_HC_Agritechnica_2023_%28DSC06793%29.jpg",
     displayUrl:W+"thumb/c/c2/McCormick_X5.110_HC_Agritechnica_2023_%28DSC06793%29.jpg/960px-McCormick_X5.110_HC_Agritechnica_2023_%28DSC06793%29.jpg",
     fullUrl:W+"c/c2/McCormick_X5.110_HC_Agritechnica_2023_%28DSC06793%29.jpg",
