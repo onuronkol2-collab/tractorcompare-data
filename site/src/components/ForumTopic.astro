@@ -57,6 +57,7 @@ const schema=eligible?{
        data-thread-id={topic.topic_id} data-thread-config={engagementConfig}
        data-thread-copy={engagementCopy}>
       <button type="button" data-bookmark-toggle aria-pressed="false">{mt(lang,"saveTopic")}</button>
+      <button type="button" data-follow-toggle aria-pressed="false">{mt(lang,"followTopic")}</button>
       <span data-engagement-status role="status" aria-live="polite"></span>
    </div>
    <section class="forum-replies" aria-labelledby="forum-replies-heading">
@@ -124,14 +125,19 @@ if(community){
   ...(token?{Authorization:"Bearer "+token}:{})});
  const status=community.querySelector<HTMLElement>("[data-engagement-status]");
  const bookmark=community.querySelector<HTMLButtonElement>("[data-bookmark-toggle]");
+ const follow=community.querySelector<HTMLButtonElement>("[data-follow-toggle]");
  const buttons=[...document.querySelectorAll<HTMLElement>("[data-helpful-reply]")]
   .filter(el=>uuid.test(el.dataset.replyId||""));
- let ownId="",isBookmarked=false;
+ let ownId="",isBookmarked=false,isFollowing=false;
  const voted=new Set<string>();
  const say=(s:string)=>{if(status)status.textContent=s};
  function showBookmark(){
   if(bookmark){bookmark.setAttribute("aria-pressed",String(isBookmarked));
    bookmark.textContent=isBookmarked?labels.removeTopic:labels.saveTopic}
+ }
+ function showFollow(){
+  if(follow){follow.setAttribute("aria-pressed",String(isFollowing));
+   follow.textContent=isFollowing?labels.unfollowTopic:labels.followTopic}
  }
  function showVoted(){
   buttons.forEach(item=>{
@@ -166,7 +172,7 @@ if(community){
   }catch{}
  }
  async function sync(){
-  ownId="";voted.clear();isBookmarked=false;showVoted();showBookmark();
+  ownId="";voted.clear();isBookmarked=false;isFollowing=false;showVoted();showBookmark();showFollow();
   const token=getToken();
   if(!token||!cfg)return;
   try{
@@ -176,6 +182,18 @@ if(community){
    const p=new URLSearchParams({select:"topic_id",topic_id:"eq."+topicId,limit:"1"});
    const saved=await api("/rest/v1/tc_member_bookmarks?"+p,token) as {topic_id:string}[];
    isBookmarked=saved.length>0;showBookmark();
+   const followed=await api("/rest/v1/tc_member_topic_follows?"+
+    new URLSearchParams({select:"topic_id",topic_id:"eq."+topicId,limit:"1"}),token) as {topic_id:string}[];
+   isFollowing=followed.length>0;showFollow();
+   if(isFollowing){
+    // Viewing a followed thread marks its existing moderated replies as read.
+    // Do not modify notification timestamps for users who have not followed.
+    await api("/rest/v1/tc_member_topic_follows?"+
+      new URLSearchParams({topic_id:"eq."+topicId,member_id:"eq."+ownId}),token,{
+      method:"PATCH",headers:{"Content-Type":"application/json","Prefer":"return=minimal"},
+      body:JSON.stringify({last_seen_at:new Date().toISOString()})
+    });
+   }
    const ids=buttons.map(el=>el.dataset.replyId).filter(Boolean) as string[];
    if(ids.length){
     const query=new URLSearchParams({select:"reply_id",reply_id:"in.("+ids.join(",")+")"});
@@ -190,6 +208,19 @@ if(community){
   document.querySelector("#forum-compose")?.scrollIntoView({block:"start"});
   return false;
  }
+ follow?.addEventListener("click",async()=>{
+  if(!cfg||!uuid.test(topicId)||!requireSession())return;
+  follow.disabled=true;
+  try{
+   const endpoint="/rest/v1/tc_member_topic_follows"+
+    (isFollowing?"?topic_id=eq."+topicId+"&member_id=eq."+ownId:"");
+   await api(endpoint,getToken(),isFollowing?{method:"DELETE"}:{
+    method:"POST",headers:{"Content-Type":"application/json","Prefer":"return=minimal"},
+    body:JSON.stringify({topic_id:topicId})});
+   isFollowing=!isFollowing;showFollow();say("");
+  }catch{say(labels.voteError)}
+  finally{follow.disabled=false}
+ });
  bookmark?.addEventListener("click",async()=>{
   if(!cfg||!uuid.test(topicId)||!requireSession())return;
   bookmark.disabled=true;
