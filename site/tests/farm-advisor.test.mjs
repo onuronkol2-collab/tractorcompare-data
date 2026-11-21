@@ -84,6 +84,30 @@ test("published catalog input is respected, foreign market records excluded",()=
   assert.equal(overseas.some(m=>m.tractor.tractor_id==="tr"),false);
 });
 
+test("personalized candidate shortlist is capped at five published matching-market records",()=>{
+  const many=Array.from({length:9},(_,i)=>({
+    tractor_id:"tr-"+i,slug:"tr-"+i,brand_name:"Fixture",
+    model_name:"Model "+i,variant:null,market:"Turkey",model_year:2026,
+    horsepower:55+i,
+  }));
+  const shortlist=recommendTractors(many,farm,5);
+  assert.equal(shortlist.length,5);
+  assert.equal(new Set(shortlist.map(m=>m.tractor.tractor_id)).size,5);
+  assert.ok(shortlist.every(m=>m.marketFit==="matched"));
+  assert.ok(shortlist.every(m=>m.powerFit==="within"||m.powerFit==="near"));
+  assert.equal(recommendTractors(many.slice(0,3),farm,5).length,3);
+});
+
+test("shortlist rationale labels are present across ten locales without claims of proven equipment fit",()=>{
+  const keys=["whyTitle","whyPowerWithin","whyPowerOutside","whyMarket","whyBudget","compareAction"];
+  for(const locale of LOCALES){
+    for(const key of keys) assert.ok(advisorText(locale,key).trim().length>5,locale+"/"+key);
+  }
+  assert.match(advisorText("tr","whyBudget"),/alt sınırı/);
+  assert.match(advisorText("tr","whyPowerOutside"),/dışında/);
+  assert.match(advisorText("en","whyMarket"),/stock is not confirmed/);
+});
+
 test("all advisor labels exist in all ten supported languages",()=>{
   assert.deepEqual(advisorTranslationIssues(),[]);
   for (const lang of LOCALES) {
