@@ -2,7 +2,7 @@
 > Independent, source-aware information about published agricultural tractor models, technical terms, comparisons and documentation methods. Not a tractor seller or a source of firsthand field-test results.
 
 Website: https://tractorvs.com/
-Language versions: English and Turkish guides; tractor catalogue available in ten languages.
+Language versions: The tractor catalogue and article index have ten language versions. Full-text tractor selection and Başak 2075 BK articles are available in ten languages; four other long technical articles currently have English and Turkish text only.
 Index and canonical URLs: https://tractorvs.com/sitemap-index.xml
 Image sitemap: https://tractorvs.com/image-sitemap.xml
 
@@ -12,8 +12,12 @@ Image sitemap: https://tractorvs.com/image-sitemap.xml
 - [Data methodology](https://tractorvs.com/methodology/): how identity, sources, measurements, photos and missing values are handled.
 - [Veri doğrulama yöntemi](https://tractorvs.com/tr/methodology/): teknik verilerin nasıl kontrol edildiği.
 - [Compare tractors](https://tractorvs.com/compare/): comparison of published model records.
+- [Articles & technical guides](https://tractorvs.com/articles/): verified published editorial articles and their actual language coverage.
+- [Makaleler ve teknik rehberler](https://tractorvs.com/tr/articles/): yalnız gerçekten yayımlanmış içerik bağlantıları.
 
 ## Original technical explanations
+- [How to choose a tractor](https://tractorvs.com/guides/choosing-a-tractor/): original evidence-based selection checklist, with ten true full-text translations.
+- [Başak 2075 BK technical review](https://tractorvs.com/reviews/basak-2075-bk/): manufacturer-sourced model analysis, with ten true full-text translations.
 - [Tractor parts and technical terms](https://tractorvs.com/guides/tractor-technical-terms/): plain-language explanations of parts and measurement pitfalls.
 - [Traktör parçaları ve teknik terimler](https://tractorvs.com/tr/guides/tractor-technical-terms/): Türkçe açık örnekler ve teknik kavramlar.
 - [What is a tractor PTO?](https://tractorvs.com/guides/pto-and-power-take-off/)
