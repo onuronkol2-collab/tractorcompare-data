@@ -1,128 +1,128 @@
-# Traktör Güvenilirlik Sıralaması: 10 Markayı Tek Listede Karşılaştırdık
+# En Az Arıza Yapan Traktör Markası Hangisi? 10 Markanın Güvenilirlik Sıralaması
 
-**TractorVS araştırma yorumu · 21 Kasım 2026**  
-**Veri kaynağı:** Karol Durczak, *Reliability of Agricultural Tractors According to Polish Farmers*, 2020; Polonyalı traktör sahiplerinin eski üretim traktörler hakkındaki değerlendirmeleri.
+**TractorVS | Kaynaklı araştırma, 21 Kasım 2026**
 
-**Kısa cevap:** Tek kaynakta 12 marka yer alıyor. Aşağıdaki **ilk 10 marka**, o araştırmanın **göreli kullanıcı güvenilirlik endeksine** göre yüksekten düşüğe sıralandı. Bu çalışma güncel **2026–2027 satış başına mekanik arıza yüzdesi değildir**.
+Bir traktörün markası güvenilirliğini tek başına belirleyebilir mi? Polonya'da yapılan akademik araştırma, **12 markayı aynı yöntemle karşılaştırarak** bu soruya ölçülebilir fakat sınırlı bir yanıt veriyor. Aşağıda **ilk 10 marka, en yüksek kullanıcı güvenilirlik endeksinden düşüğe** sıralanıyor.
 
-## 10 marka — tek güvenilirlik sıralaması
+**Önemli tarih notu:** Araştırma **2020'de yayımlandı**; çiftçi değerlendirmeleri **2017–2019 döneminde** toplandı. **2026–2027 satış başına mekanik arıza yüzdesi değildir.**
 
-<div class="research-table-scroll" role="region" tabindex="0" aria-label="Polonyalı çiftçilerin 2020 tarihli güvenilirlik araştırmasına göre 10 traktör markasının sıralaması; tablo yatay kaydırılabilir">
+## Tek listede 10 traktör markası
+
+<div class="research-table-scroll" role="region" tabindex="0" aria-label="2020 akademik güvenilirlik endeksinde ilk on traktör markası; tablo yatay kaydırılabilir">
 <table>
-<caption>2020 akademik araştırmasının 12 markalık sıralamasından seçilen ilk 10; yüksek güvenilirlik değerlendirmesinden düşüğe</caption>
-<thead><tr><th scope="col">Sıra</th><th scope="col">Marka</th><th scope="col">Ölçüm</th></tr></thead>
+<caption>Durczak (2020), Şekil 5 — yüksek endeksten düşüğe. Endeks 0 ile 1 arasındadır; arızasızlık yüzdesi değildir.</caption>
+<thead><tr><th scope="col">Sıra</th><th scope="col">Marka</th><th scope="col">Göreli endeks</th></tr></thead>
 <tbody>
 <tr><td>1</td><th scope="row">Valtra</th><td>0,87</td></tr>
 <tr><td>2</td><th scope="row">John Deere</th><td>0,86</td></tr>
 <tr><td>3</td><th scope="row">Fendt</th><td>0,85</td></tr>
-<tr><td>4</td><th scope="row">Claas</th><td>Göreli güvenilirlik endeksi (sıra)</td></tr>
-<tr><td>5</td><th scope="row">Massey Ferguson</th><td>Göreli güvenilirlik endeksi (sıra)</td></tr>
-<tr><td>6</td><th scope="row">New Holland</th><td>Göreli güvenilirlik endeksi (sıra)</td></tr>
-<tr><td>7</td><th scope="row">Case IH</th><td>Göreli güvenilirlik endeksi (sıra)</td></tr>
-<tr><td>8</td><th scope="row">Deutz-Fahr</th><td>Göreli güvenilirlik endeksi (sıra)</td></tr>
-<tr><td>9</td><th scope="row">Zetor</th><td>Göreli güvenilirlik endeksi (sıra)</td></tr>
-<tr><td>10</td><th scope="row">Ursus</th><td>Göreli güvenilirlik endeksi (sıra)</td></tr>
+<tr><td>4</td><th scope="row">Claas</th><td>0,83</td></tr>
+<tr><td>5</td><th scope="row">Massey Ferguson</th><td>—</td></tr>
+<tr><td>6</td><th scope="row">New Holland</th><td>—</td></tr>
+<tr><td>7</td><th scope="row">Case IH</th><td>—</td></tr>
+<tr><td>8</td><th scope="row">Deutz-Fahr</th><td>—</td></tr>
+<tr><td>9</td><th scope="row">Zetor</th><td>—</td></tr>
+<tr><td>10</td><th scope="row">Ursus</th><td>—</td></tr>
 </tbody>
 </table>
 </div>
 
-*İlk üç sıra için çalışmada belirtilen yaklaşık endeks değerleri gösterilmiştir. Diğer markalara kaynakta doğrulayamadığımız kesin sayısal puanları eklemiyoruz. **0,87 endeks, %87 traktör arızasız çalıştı demek değildir.***
+*İlk dört markanın endeks değerleri kaynakta açıkça belirtiliyor. Diğer altı marka için grafikte teyit edemediğimiz hassas sayılar üretmedik. **0,87 puan, traktörlerin %87'si arızalanmadı anlamına gelmiyor.***
 
-## Her markanın bir traktörü ve araştırmadaki yeri
+## Markalara kısa bakış — temsilî traktör fotoğrafları
 
-### 1. Valtra
+### 1. Valtra — G135
 
-![Valtra G135 traktör fotoğrafı; marka için temsili modeldir, araştırmanın incelenen aracı değildir](/images/tractors/valtra-g135-9d4a4ea3-480.jpg)
+![Valtra G135 traktör; araştırma katılımcısına ait olduğu iddia edilmeyen temsili fotoğraf](/images/tractors/valtra-g135-9d4a4ea3-480.jpg)
 
-*Fotoğraf: [MarcelX42 / Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Valtra_G135_Agritechnica_2025_(DSC09509).jpg) · [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/). Görsel, araştırmadaki traktörlerden biri değildir.*
+**Güvenilirlik endeksi: 0,87:** Güvenilirlik endeksinde ilk sırada. Araştırmada motor, şanzıman, hidrolik ve diğer sistemlere ilişkin sahip değerlendirmeleri güçlü.
 
-**Değerlendirme:** Çalışmadaki 11 güvenilirlik ölçütünün çoğunda en yüksek kullanıcı değerlendirmesi.
+*Fotoğraf: [MarcelX42 / Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Valtra_G135_Agritechnica_2025_(DSC09509).jpg), [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/). Model görüntüsü temsildir; araştırmada değerlendirilen traktör değildir.*
 
-### 2. John Deere
+### 2. John Deere — 6R 150
 
-![John Deere 6R 150 traktör fotoğrafı; marka için temsili modeldir, araştırmanın incelenen aracı değildir](/images/tractors/john-deere-6r-150-2c198cee-480.jpg)
+![John Deere 6R 150 traktör; araştırma katılımcısına ait olduğu iddia edilmeyen temsili fotoğraf](/images/tractors/john-deere-6r-150-2c198cee-480.jpg)
 
-*Fotoğraf: [MB-one / Wikimedia Commons](https://commons.wikimedia.org/wiki/File:John_Deere_6R_150,_Agritechnica_2023,_Hanover_(P1140827).jpg) · [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/). Görsel, araştırmadaki traktörlerden biri değildir.*
+**Güvenilirlik endeksi: 0,86:** Valtra'nın hemen ardından geliyor. Güvenilirlik değerlendirmesi yüksek; sonuçlar güncel tüm John Deere modellerine genellenemez.
 
-**Değerlendirme:** Araştırmada Valtra'nın ardından ikinci sırada; model ve üretim yılı farkı önemli.
+*Fotoğraf: [MB-one / Wikimedia Commons](https://commons.wikimedia.org/wiki/File:John_Deere_6R_150%2C_Agritechnica_2023%2C_Hanover_(P1140827).jpg), [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/). Model görüntüsü temsildir; araştırmada değerlendirilen traktör değildir.*
 
-### 3. Fendt
+### 3. Fendt — 724 Vario
 
-![Fendt 724 Vario traktör fotoğrafı; marka için temsili modeldir, araştırmanın incelenen aracı değildir](/images/tractors/fendt-724-vario-01a39bcb-480.jpg)
+![Fendt 724 Vario traktör; araştırma katılımcısına ait olduğu iddia edilmeyen temsili fotoğraf](/images/tractors/fendt-724-vario-01a39bcb-480.jpg)
 
-*Fotoğraf: [AGCO-Fendt / Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Fendt-724-Vario.jpg) · [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/). Görsel, araştırmadaki traktörlerden biri değildir.*
+**Güvenilirlik endeksi: 0,85:** Araştırmadaki üçüncü marka. Eski ve yeni üretim yıllarının bir arada olması, güncel modellerin arıza oranını hesaplamamıza izin vermiyor.
 
-**Değerlendirme:** Alman marka, aynı akademik araştırmada üçüncü sırada.
+*Fotoğraf: [AGCO-Fendt / Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Fendt-724-Vario.jpg), [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/). Model görüntüsü temsildir; araştırmada değerlendirilen traktör değildir.*
 
-### 4. Claas
+### 4. Claas — Axion 870
 
-![Claas Axion 870 traktör fotoğrafı; marka için temsili modeldir, araştırmanın incelenen aracı değildir](/images/tractors/claas-axion-870-1c6e17f1-480.jpg)
+![Claas Axion 870 traktör; araştırma katılımcısına ait olduğu iddia edilmeyen temsili fotoğraf](/images/tractors/claas-axion-870-1c6e17f1-480.jpg)
 
-*Fotoğraf: [JoachimKohler-HB / Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Claas_Axion_870.jpg) · [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/). Görsel, araştırmadaki traktörlerden biri değildir.*
+**Güvenilirlik endeksi: 0,83:** Dördüncü sırada. Endeks değeri yüksek olsa da herhangi bir Claas modelinin arızalanma yüzdesi olarak yorumlanamaz.
 
-**Değerlendirme:** Çalışmadaki üst grubun dördüncü markası; bu fotoğraf test edilen bir araç değildir.
+*Fotoğraf: [JoachimKohler-HB / Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Claas_Axion_870.jpg), [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/). Model görüntüsü temsildir; araştırmada değerlendirilen traktör değildir.*
 
-### 5. Massey Ferguson
+### 5. Massey Ferguson — 5M.95
 
-![Massey Ferguson 5M.95 traktör fotoğrafı; marka için temsili modeldir, araştırmanın incelenen aracı değildir](https://commons.wikimedia.org/wiki/Special:FilePath/Massey_Ferguson_5M.95.jpg?width=480)
+![Massey Ferguson 5M.95 traktör; araştırma katılımcısına ait olduğu iddia edilmeyen temsili fotoğraf](https://commons.wikimedia.org/wiki/Special:FilePath/Massey_Ferguson_5M.95.jpg?width=480)
 
-*Fotoğraf: [Bene Riobó / Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Massey_Ferguson_5M.95.jpg) · [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/). Görsel, araştırmadaki traktörlerden biri değildir.*
+**Sıralama:** Beşinci sırada. Ayrı ve farklı yöntemli 2022 çalışmasında ise birinci çıkması, ölçüm yönteminin önemini gösteriyor.
 
-**Değerlendirme:** Üst-orta sırada; bu sonuç belirli bir güncel MF modeli için arıza yüzdesi değildir.
+*Fotoğraf: [Bene Riobó / Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Massey_Ferguson_5M.95.jpg), [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/). Model görüntüsü temsildir; araştırmada değerlendirilen traktör değildir.*
 
-### 6. New Holland
+### 6. New Holland — T6.180
 
-![New Holland T6.180 traktör fotoğrafı; marka için temsili modeldir, araştırmanın incelenen aracı değildir](/images/tractors/new-holland-t6-180-marcelx42-2025-480.jpg)
+![New Holland T6.180 traktör; araştırma katılımcısına ait olduğu iddia edilmeyen temsili fotoğraf](/images/tractors/new-holland-t6-180-marcelx42-2025-480.jpg)
 
-*Fotoğraf: [MarcelX42 / Wikimedia Commons](https://commons.wikimedia.org/wiki/File:New_Holland_T6.180_Agritechnica_2025_(DSC00717).jpg) · [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/). Görsel, araştırmadaki traktörlerden biri değildir.*
+**Sıralama:** Altıncı sırada. Bu konum, 2026 yılında satılan T6.180 modelinin arıza oranını göstermez.
 
-**Değerlendirme:** Kullanıcı güvenilirlik endeksinde altıncı sırada; güç sınıfı ve saat verileri eşitlenmemiştir.
+*Fotoğraf: [MarcelX42 / Wikimedia Commons](https://commons.wikimedia.org/wiki/File:New_Holland_T6.180_Agritechnica_2025_(DSC00717).jpg), [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/). Model görüntüsü temsildir; araştırmada değerlendirilen traktör değildir.*
 
-### 7. Case IH
+### 7. Case IH — Puma 150
 
-![Case IH Puma 150 traktör fotoğrafı; marka için temsili modeldir, araştırmanın incelenen aracı değildir](/images/tractors/case-ih-puma-150-chris-woodrich-2025-480.jpg)
+![Case IH Puma 150 traktör; araştırma katılımcısına ait olduğu iddia edilmeyen temsili fotoğraf](/images/tractors/case-ih-puma-150-chris-woodrich-2025-480.jpg)
 
-*Fotoğraf: [Chris Woodrich / Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Case_IH_Puma_150_Tractor,_Harrow_Fair,_Harrow,_Ontario,_2025-08-31_01.jpg) · [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/). Görsel, araştırmadaki traktörlerden biri değildir.*
+**Sıralama:** Yedinci sırada. Değerlendirme marka genelinde yapılmış; fotoğraftaki Puma 150'nin arızalandığı iddiası değildir.
 
-**Değerlendirme:** Güvenilirlik puanında yedinci sırada; anketteki tüm traktörlere bu görseldeki model atfedilemez.
+*Fotoğraf: [Chris Woodrich / Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Case_IH_Puma_150_Tractor%2C_Harrow_Fair%2C_Harrow%2C_Ontario%2C_2025-08-31_01.jpg), [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/). Model görüntüsü temsildir; araştırmada değerlendirilen traktör değildir.*
 
-### 8. Deutz-Fahr
+### 8. Deutz-Fahr — 6165 TTV
 
-![Deutz-Fahr 6165 TTV traktör fotoğrafı; marka için temsili modeldir, araştırmanın incelenen aracı değildir](/images/tractors/deutz-fahr-6165-29b10f3c-480.jpg)
+![Deutz-Fahr 6165 TTV traktör; araştırma katılımcısına ait olduğu iddia edilmeyen temsili fotoğraf](/images/tractors/deutz-fahr-6165-29b10f3c-480.jpg)
 
-*Fotoğraf: [Bene Riobó / Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Deutz-Fahr_6165_TTV.jpg) · [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/). Görsel, araştırmadaki traktörlerden biri değildir.*
+**Sıralama:** Sekizinci sırada. Traktör yaşı, bakım geçmişi ve çalışma koşulları markaların endeksini etkileyebilir.
 
-**Değerlendirme:** Kaynakta sekizinci sırada; servis ve eski traktörlerin yaş dağılımı puanlamayı etkileyebilir.
+*Fotoğraf: [Bene Riobó / Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Deutz-Fahr_6165_TTV.jpg), [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/). Model görüntüsü temsildir; araştırmada değerlendirilen traktör değildir.*
 
-### 9. Zetor
+### 9. Zetor — Forterra 140
 
-![Zetor Forterra 140 traktör fotoğrafı; marka için temsili modeldir, araştırmanın incelenen aracı değildir](/images/tractors/zetor-forterra-140-346bcbde-480.jpg)
+![Zetor Forterra 140 traktör; araştırma katılımcısına ait olduğu iddia edilmeyen temsili fotoğraf](/images/tractors/zetor-forterra-140-346bcbde-480.jpg)
 
-*Fotoğraf: [Bene Riobó / Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Zetor_Forterra_140_HSX.jpg) · [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/). Görsel, araştırmadaki traktörlerden biri değildir.*
+**Sıralama:** Dokuzuncu sırada. Özellikle ikinci el karşılaştırmalarında model yılı ve motor saatini dikkate almak gerekir.
 
-**Değerlendirme:** Araştırmada dokuzuncu; bu sıralama güncel 2027 modellerinin arıza kayıtları değildir.
+*Fotoğraf: [Bene Riobó / Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Zetor_Forterra_140_HSX.jpg), [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/). Model görüntüsü temsildir; araştırmada değerlendirilen traktör değildir.*
 
-### 10. Ursus
+### 10. Ursus — 1604
 
-![Ursus 1604 traktör fotoğrafı; marka için temsili modeldir, araştırmanın incelenen aracı değildir](https://commons.wikimedia.org/wiki/Special:FilePath/Ursus_1604_Traktor.jpg?width=480)
+![Ursus 1604 traktör; araştırma katılımcısına ait olduğu iddia edilmeyen temsili fotoğraf](https://commons.wikimedia.org/wiki/Special:FilePath/Ursus_1604_Traktor.jpg?width=480)
 
-*Fotoğraf: [JoachimKohler-HB / Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Ursus_1604_Traktor.jpg) · [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/). Görsel, araştırmadaki traktörlerden biri değildir.*
+**Sıralama:** Onuncu sırada. Araştırmanın tarihsel Polonya traktör filosunu kapsadığı göz önünde tutulmalıdır.
 
-**Değerlendirme:** Tarihsel Polonya traktör filosunda onuncu sırada; bugünkü üretim modelleriyle karıştırılmamalıdır.
+*Fotoğraf: [JoachimKohler-HB / Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Ursus_1604_Traktor.jpg), [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/). Model görüntüsü temsildir; araştırmada değerlendirilen traktör değildir.*
+## Bu sonuçlar gerçekten ne söylüyor?
 
+Araştırma; motor, soğutma, elektrik, aktarma, şanzıman, fren, hidrolik, direksiyon, kuyruk mili, üç nokta askı ve bağlantılar olmak üzere **11 güvenilirlik unsuruna** verilen kullanıcı puanlarını birleştiriyor. Çalışma, yaklaşık **1.100 anketi** değerlendiriyor; veri toplama döneminde **1.350 traktör kullanıcısından** bilgi alınmış. Traktörlerin üretim yılları **1987–2017** aralığına uzanıyor.
 
-## Bu bir arıza yüzdesi mi?
+**Satışa göre gerçek arıza oranı = aynı dönem ve model grubunda arızalanan farklı traktör sayısı ÷ aynı süre izlenen satılmış traktör sayısı × 100.** Akademik endeks, bu sayıları içermediğinden böyle bir yüzdeye dönüştürülemez.
 
-**Hayır.** Akademik çalışma yaklaşık **1.100 çevrimiçi anket** ve **11 traktör güvenilirlik ölçütü** üzerinden sahip görüşlerini sayısallaştırıyor. Traktörlerin üretim dönemleri **1987–2017** aralığına uzanıyor. Üreticilerin gerçek garanti dosyaları veya aynı yıl satılıp aynı süre izlenmiş traktörlerin eksiksiz arıza kayıtları bu sıralamanın paydası değil.
+TractorVS'nin kontrol notu: **2022 tarihli farklı yöntemli ve küçük örneklemli bir akademik çalışmada Massey Ferguson ilk sırada bulundu.** Dolayısıyla 2020 sıralamasını tüm zamanların veya 2026'nın tartışmasız sonucu olarak vermiyoruz.
 
-**Gerçek satış başına arıza oranı (%) = aynı model/yıl grubunda arızalanan farklı traktör sayısı ÷ aynı dönemde aynı süre izlenen toplam satılmış traktör × 100.**
+**Traktörünüz kaç saatte, hangi parçadan arızalandı?** Marka, tam model, üretim yılı, motor saati ve onarım süresini yorumlarda paylaşın. Hiç arıza yaşamadıysanız bunu da belirtin. Tam şasi numarası ve kişisel bilgileri paylaşmayın.
 
-Bu sayılar elimizde bulunmadığı için güvenilirlik endeksini “satış başına yüzde arıza” diye göstermiyoruz. Farklı dönemlerdeki araştırmaları da birleştirip on marka için hayalî oran üretmiyoruz.
+**Araştırma kaynakları**
 
-**2026–2027 için nasıl okunmalı?** Bu sonuçlar geçmiş kullanıcı deneyimlerini gösterir; 2026 veya 2027 model yılı traktörlerinin bugün dünyada en az veya en çok arızalanan markaları olarak sunulamaz. İkinci el alırken marka yanında tam model, üretim yılı, motor saati ve servis geçmişi sorgulanmalı.
+- [Karol Durczak, 2020 — Reliability of Agricultural Tractors According to Polish Farmers](https://doi.org/10.17559/TV-20190819132340) — tek listede kullanılan asıl sıralama, Şekil 5.
+- [Durczak ve Selech, 2022 — The Quantification of Operational Reliability of Agricultural Tractors with the Competing Risks Method](https://doi.org/10.17559/TV-20201118115902) — farklı yöntem ve örneklemden karşılaştırmalı bağlam.
 
-**Sizin deneyiminiz?** Yorumlarda marka, model, üretim yılı, motor saati ve arıza geçmişini paylaşın. Hiç arızalanmayan traktörler de değerlidir. Tam şasi numarası ve kişisel bilgilerinizi yazmayın.
-
-**Akademik kaynak:** [Durczak (2020), *Reliability of Agricultural Tractors According to Polish Farmers*](https://doi.org/10.17559/TV-20190819132340) · [Çalışmanın tam metni ve Şekil 5'teki 12 markalık özgün sıralama](https://hrcak.srce.hr/en/file/361310)
-
-*TractorVS editoryal ilkesi: Bu metin araştırmanın bulgularını yeniden düzenleyen özgün bir Türkçe değerlendirmedir. Fotoğraflar markaların farklı, lisanslı modellerini gösterir; çalışmaya konu olan araçlar değildir. Kaynak yılı, yöntem ve sınırlılıklar gizlenmez.*
+*Editoryal açıklama: TractorVS bu metni araştırmaları karşılaştırarak özgün biçimde hazırlamıştır. Fotoğraflar yalnızca ilgili markaların örnek modellerini gösterir ve her biri kaynak/lisans atfıyla kullanılır. 2027'ye ait gelecekteki arıza sonuçları bilinmemektedir.*
