@@ -1,6 +1,6 @@
 ---
 import SiteLayout from "../layouts/SiteLayout.astro";
-import {localizedPath, LOCALES, type Locale} from "../lib/locales";
+import {localizedPath, LOCALES, BREADCRUMB_LABELS, type Locale} from "../lib/locales";
 import {guideTranslation} from "../lib/tractor-guide-i18n";
 
 interface Props { lang: Locale; }
@@ -164,7 +164,7 @@ const schema={
   availableLocales={LOCALES} structuredData={schema} ogType="article">
   <article class="tractor-guide">
     <div class="container guide-body">
-      <nav class="guide-crumb" aria-label={tr?"İçerik yolu":"Breadcrumb"}>
+      <nav class="guide-crumb" aria-label={BREADCRUMB_LABELS[lang]}>
         <a href={localizedPath(lang,"/")}>TractorVS</a><span aria-hidden="true">/</span><span>{localizedGuide?.breadcrumb ?? (tr?"Traktör seçim rehberi":"Tractor selection guide")}</span>
       </nav>
       <p class="guide-kicker">{copy.category}</p>
@@ -177,7 +177,7 @@ const schema={
           <h2><span aria-hidden="true">{index+1}.</span> {section.title}</h2>
           {section.paragraphs.map(p=><p>{p}</p>)}
           <p class="guide-question">{section.question}</p>
-          <p class="guide-inline-sources">{copy.sourcePrefix}: {section.refs.map((idx)=><a href={sources[idx].url} target="_blank" rel="noopener noreferrer">{tr?sources[idx].tr:sources[idx].en}</a>)}</p>
+          <p class="guide-inline-sources">{copy.sourcePrefix}: {section.refs.map((idx)=><a href={sources[idx].url} lang={tr?"tr":"en"} target="_blank" rel="noopener noreferrer">{tr?sources[idx].tr:sources[idx].en}</a>)}</p>
         </li>)}
       </ol>
       <section class="guide-checklist" aria-labelledby="guide-checklist-heading">
@@ -192,7 +192,7 @@ const schema={
       <section class="guide-sources" aria-labelledby="guide-sources-heading">
         <h2 id="guide-sources-heading">{copy.sourceTitle}</h2>
         <p>{copy.sourceIntro}</p>
-        <ol>{sources.map(s=><li><a href={s.url} target="_blank" rel="noopener noreferrer">{tr?s.tr:s.en}</a></li>)}</ol>
+        <ol>{sources.map(s=><li><a href={s.url} lang={tr?"tr":"en"} target="_blank" rel="noopener noreferrer">{tr?s.tr:s.en}</a></li>)}</ol>
         <p><strong>{copy.limits}</strong></p>
       </section>
       <section class="guide-next" aria-labelledby="guide-next-heading">
