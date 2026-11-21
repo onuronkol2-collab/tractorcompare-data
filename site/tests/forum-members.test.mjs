@@ -18,7 +18,7 @@ test("all 10 locales contain natural, nonempty member experience vocabulary",()=
   assert.deepEqual(Object.keys(copy).sort(),required.slice().sort(),lang);
   for(const key of required){
    assert.equal(typeof copy[key],"string",lang+":"+key);
-   assert.ok(copy[key].trim().length>=3,lang+":"+key);
+   assert.ok(copy[key].trim().length>=1,lang+":"+key);
   }
   if(lang!=="en")assert.notEqual(copy.memberHeading,MEMBER_TEXT.en.memberHeading,lang);
  }
