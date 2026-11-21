@@ -59,3 +59,19 @@ export const CATALOG_SEARCH_TITLES={
   ja:"トラクターのモデルと技術仕様",
   es:"Modelos de tractores y fichas técnicas"
 };
+
+
+/** Visible, accessible filtering feedback. All counts refer only to published
+ * models already present in the SSR catalogue; never suggest hidden drafts. */
+export const CATALOG_FILTER_COPY={
+  en:{shown:"{visible} of {total} published models shown",clear:"Clear search"},
+  tr:{shown:"Yayımlanmış {total} modelin {visible} tanesi gösteriliyor",clear:"Aramayı temizle"},
+  zh:{shown:"已发布的 {total} 款型号中显示 {visible} 款",clear:"清除搜索"},
+  hi:{shown:"{total} प्रकाशित मॉडलों में से {visible} दिखाए जा रहे हैं",clear:"खोज साफ़ करें"},
+  "pt-br":{shown:"Exibindo {visible} de {total} modelos publicados",clear:"Limpar busca"},
+  fr:{shown:"{visible} modèles affichés sur {total} modèles publiés",clear:"Effacer la recherche"},
+  de:{shown:"{visible} von {total} veröffentlichten Modellen angezeigt",clear:"Suche löschen"},
+  ru:{shown:"Показано {visible} из {total} опубликованных моделей",clear:"Очистить поиск"},
+  ja:{shown:"公開済み {total} モデルのうち {visible} 件を表示",clear:"検索をクリア"},
+  es:{shown:"Se muestran {visible} de {total} modelos publicados",clear:"Borrar búsqueda"}
+};
