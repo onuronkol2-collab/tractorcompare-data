@@ -369,5 +369,341 @@ export const LIVE_REVIEWED_SPEC_HEADINGS_20261121: Record<string, Partial<Record
   },
   "PTO Mil Diş SeçEnekleri": {
     "fr": "Options de cannelures de l'arbre de prise de force"
+  },
+  "Ground Clearance Ge Mm": {
+    "pt-br": "Vão livre ao solo GE (mm)",
+    "es": "Despeje al suelo GE (mm)"
+  },
+  "Ground Clearance Mm": {
+    "pt-br": "Vão livre ao solo (mm)",
+    "es": "Despeje al suelo (mm)"
+  },
+  "Ground Clearance Std Mm": {
+    "pt-br": "Vão livre ao solo de série (mm)",
+    "es": "Despeje al suelo de serie (mm)"
+  },
+  "Height At Bonnet": {
+    "pt-br": "Altura até o capô",
+    "es": "Altura hasta el capó"
+  },
+  "Height Mm": {
+    "pt-br": "Altura (mm)",
+    "es": "Altura (mm)"
+  },
+  "Height Rollbar Ge Mm": {
+    "pt-br": "Altura do arco de proteção GE (mm)",
+    "es": "Altura de la barra de protección GE (mm)"
+  },
+  "Height Rollbar Std Mm": {
+    "pt-br": "Altura do arco de proteção de série (mm)",
+    "es": "Altura de la barra de protección de serie (mm)"
+  },
+  "İZin Verilen Azami Toplam AğıRlıK SeçEnekleri": {
+    "pt-br": "Opções de massa total máxima admissível",
+    "es": "Opciones de masa total máxima admisible"
+  },
+  "Length With Ballast Mm": {
+    "pt-br": "Comprimento com lastro (mm)",
+    "es": "Longitud con lastre (mm)"
+  },
+  "Maximum Length Range": {
+    "pt-br": "Faixa de comprimento máximo",
+    "es": "Rango de longitud máxima"
+  },
+  "Min Width Ge Mm": {
+    "pt-br": "Largura mínima GE (mm)",
+    "es": "Anchura mínima GE (mm)"
+  },
+  "Min Width Std Mm": {
+    "pt-br": "Largura mínima de série (mm)",
+    "es": "Anchura mínima de serie (mm)"
+  },
+  "Narrow Cab Availability": {
+    "pt-br": "Disponibilidade de cabine estreita",
+    "es": "Disponibilidad de cabina estrecha"
+  },
+  "ÖN Iz GenişLiğI Aralığı": {
+    "pt-br": "Faixa de bitola dianteira",
+    "es": "Rango de ancho de vía delantero"
+  },
+  "Rear Brake Type": {
+    "pt-br": "Tipo de freio traseiro",
+    "es": "Tipo de freno trasero"
+  },
+  "Rear Track Mm": {
+    "pt-br": "Bitola traseira (mm)",
+    "es": "Ancho de vía trasero (mm)"
+  },
+  "Standard Cab Or ROPS Availability": {
+    "pt-br": "Disponibilidade de cabine ou ROPS de série",
+    "es": "Disponibilidad de cabina o ROPS de serie"
+  },
+  "Tractor Weight Kg": {
+    "pt-br": "Peso do trator (kg)",
+    "es": "Peso del tractor (kg)"
+  },
+  "Transport Length With Front Linkage": {
+    "pt-br": "Comprimento de transporte com engate dianteiro",
+    "es": "Longitud de transporte con enganche delantero"
+  },
+  "Turning Radius M": {
+    "pt-br": "Raio de giro (m)",
+    "es": "Radio de giro (m)"
+  },
+  "Uzunluk (Standart Lastikler)": {
+    "pt-br": "Comprimento (pneus padrão)",
+    "es": "Longitud (neumáticos estándar)"
+  },
+  "Weight Unballasted 4wd Platform Kg": {
+    "pt-br": "Peso sem lastro, plataforma 4WD (kg)",
+    "es": "Peso sin lastre, plataforma 4WD (kg)"
+  },
+  "Width Mm": {
+    "pt-br": "Largura (mm)",
+    "es": "Anchura (mm)"
+  },
+  "YaklaşıK Sevk AğıRlığı öN Aks SüSpansiyonlu": {
+    "pt-br": "Peso aproximado de expedição com suspensão do eixo dianteiro",
+    "es": "Peso aproximado de expedición con suspensión del eje delantero"
+  },
+  "YaklaşıK Sevk AğıRlığı Standart": {
+    "pt-br": "Peso aproximado de expedição de série",
+    "es": "Peso aproximado de expedición estándar"
+  },
+  "Arka çIm LastiğI SeçEneğI": {
+    "pt-br": "Opção de pneu de relva traseiro",
+    "es": "Opción de neumático trasero para césped"
+  },
+  "Arka EndüStriyel Lastik SeçEneğI": {
+    "pt-br": "Opção de pneu industrial traseiro",
+    "es": "Opción de neumático industrial trasero"
+  },
+  "Arka Iz Ayar GenişLiğI (R1)": {
+    "pt-br": "Amplitude de ajuste da bitola traseira (R1)",
+    "es": "Amplitud de ajuste de vía trasera (R1)"
+  },
+  "Arka Iz GenişLiğI Maksimum": {
+    "pt-br": "Bitola traseira máxima",
+    "es": "Ancho máximo de vía trasera"
+  },
+  "Arka Iz GenişLiğI Minimum": {
+    "pt-br": "Bitola traseira mínima",
+    "es": "Ancho mínimo de vía trasera"
+  },
+  "Arka TarıM LastiğI (R1)": {
+    "pt-br": "Pneu agrícola traseiro (R1)",
+    "es": "Neumático agrícola trasero (R1)"
+  },
+  "Canopy Height": {
+    "pt-br": "Altura da cobertura de proteção",
+    "es": "Altura de la cubierta protectora"
+  },
+  "Dingil Mesafesi": {
+    "pt-br": "Distância entre eixos",
+    "es": "Distancia entre ejes"
+  },
+  "DöNüş YarıçApı Frensiz (R1)": {
+    "pt-br": "Raio de giro sem frenagem (R1)",
+    "es": "Radio de giro sin frenado (R1)"
+  },
+  "Drive Layout": {
+    "pt-br": "Configuração de tração",
+    "es": "Configuración de tracción"
+  },
+  "En BüYüK Arka Iz GenişLiğI (R1)": {
+    "pt-br": "Bitola traseira máxima (R1)",
+    "es": "Ancho máximo de vía trasera (R1)"
+  },
+  "En KüçüK Arka Iz GenişLiğI (R1)": {
+    "pt-br": "Bitola traseira mínima (R1)",
+    "es": "Ancho mínimo de vía trasera (R1)"
+  },
+  "Engine Air Filter": {
+    "pt-br": "Filtro de ar do motor",
+    "es": "Filtro de aire del motor"
+  },
+  "Kabin AğıRlığı": {
+    "pt-br": "Peso da cabine",
+    "es": "Peso de la cabina"
+  },
+  "Kabin YüKsekliğI": {
+    "pt-br": "Altura da cabine",
+    "es": "Altura de la cabina"
+  },
+  "Manufacturer Model Weight (Configuration/Loading Unspecified)": {
+    "pt-br": "Peso do modelo informado pelo fabricante (configuração/carga não especificadas)",
+    "es": "Peso del modelo declarado por el fabricante (configuración/carga no especificadas)"
+  },
+  "Manufacturer Operator Station Type": {
+    "pt-br": "Tipo de posto do operador informado pelo fabricante",
+    "es": "Tipo de puesto del operador declarado por el fabricante"
+  },
+  "ÖN Aks Yağı Kapasitesi": {
+    "pt-br": "Capacidade de óleo do eixo dianteiro",
+    "es": "Capacidad de aceite del eje delantero"
+  },
+  "ÖN çIm LastiğI SeçEneğI": {
+    "pt-br": "Opção de pneu de relva dianteiro",
+    "es": "Opción de neumático delantero para césped"
+  },
+  "ÖN EndüStriyel Lastik SeçEneğI": {
+    "pt-br": "Opção de pneu industrial dianteiro",
+    "es": "Opción de neumático industrial delantero"
+  },
+  "ÖN Iz GenişLiğI (R1)": {
+    "pt-br": "Bitola dianteira (R1)",
+    "es": "Ancho de vía delantero (R1)"
+  },
+  "ÖN Iz GenişLiğI Maksimum": {
+    "pt-br": "Bitola dianteira máxima",
+    "es": "Ancho máximo de vía delantera"
+  },
+  "ÖN Iz GenişLiğI Minimum": {
+    "pt-br": "Bitola dianteira mínima",
+    "es": "Ancho mínimo de vía delantera"
+  },
+  "ÖN TarıM LastiğI (R1)": {
+    "pt-br": "Pneu agrícola dianteiro (R1)",
+    "es": "Neumático agrícola delantero (R1)"
+  },
+  "OperatöR KoltuğU": {
+    "pt-br": "Assento do operador",
+    "es": "Asiento del operador"
+  },
+  "OperatöR Tabanı": {
+    "pt-br": "Piso do operador",
+    "es": "Suelo del puesto del operador"
+  },
+  "ROPS AğıRlığı": {
+    "pt-br": "Peso do ROPS",
+    "es": "Peso del ROPS"
+  },
+  "ROPS Yapı AğıRlığı": {
+    "pt-br": "Peso da estrutura ROPS",
+    "es": "Peso de la estructura ROPS"
+  },
+  "ROPS YüKsekliğI": {
+    "pt-br": "Altura do ROPS",
+    "es": "Altura del ROPS"
+  },
+  "ŞAnzıMan Yağı Kapasitesi": {
+    "pt-br": "Capacidade de óleo da transmissão",
+    "es": "Capacidad de aceite de la transmisión"
+  },
+  "SoğUtma SıVıSı Kapasitesi": {
+    "pt-br": "Capacidade de líquido de arrefecimento",
+    "es": "Capacidad del líquido refrigerante"
+  },
+  "Standard-Mode Boost Torque": {
+    "pt-br": "Torque com reforço no modo padrão",
+    "es": "Par con refuerzo en modo estándar"
+  },
+  "Standard-Mode Maximum Torque": {
+    "pt-br": "Torque máximo no modo padrão",
+    "es": "Par máximo en modo estándar"
+  },
+  "Toplam GenişLik": {
+    "pt-br": "Largura total",
+    "es": "Anchura total"
+  },
+  "Toplam Uzunluk": {
+    "pt-br": "Comprimento total",
+    "es": "Longitud total"
+  },
+  "Roll-Bar Weight Maximum": {
+    "pt-br": "Peso máximo do arco de proteção",
+    "es": "Peso máximo de la barra de protección",
+    "fr": "Poids maximal de l'arceau de protection"
+  },
+  "Roll-Bar Weight Minimum": {
+    "pt-br": "Peso mínimo do arco de proteção",
+    "es": "Peso mínimo de la barra de protección",
+    "fr": "Poids minimal de l'arceau de protection"
+  },
+  "Steering Arrangement And Reversible Seat": {
+    "pt-br": "Configuração da direção e assento reversível",
+    "es": "Configuración de la dirección y asiento reversible",
+    "fr": "Configuration de direction et siège réversible"
+  },
+  "Front Tire Ge": {
+    "fr": "Pneu avant GE"
+  },
+  "Front Tire Std": {
+    "fr": "Pneu avant de série"
+  },
+  "Rear Tire Ge": {
+    "fr": "Pneu arrière GE"
+  },
+  "Rear Tire Std": {
+    "fr": "Pneu arrière de série"
+  },
+  "Opsiyonel öN PTO 1000 Motor Devri": {
+    "fr": "Régime moteur pour PDF avant à 1000 en option"
+  },
+  "PTO 1000 IçIn Motor Devri": {
+    "fr": "Régime moteur pour la prise de force à 1000 tr/min"
+  },
+  "PTO 1000E IçIn Motor Devri": {
+    "fr": "Régime moteur pour la prise de force à 1000E"
+  },
+  "PTO 540 IçIn Motor Devri": {
+    "fr": "Régime moteur pour la prise de force à 540 tr/min"
+  },
+  "PTO 540E IçIn Motor Devri": {
+    "fr": "Régime moteur pour la prise de force à 540E"
+  },
+  "Steering Wheel Height Ge Mm": {
+    "fr": "Hauteur du volant GE (mm)"
+  },
+  "Steering Wheel Height Std Mm": {
+    "fr": "Hauteur du volant de série (mm)"
+  },
+  "Adjustable Steering Column": {
+    "fr": "Colonne de direction réglable"
+  },
+  "Arka EndüStriyel Lastik": {
+    "fr": "Pneu industriel arrière"
+  },
+  "Arka PTO çAlışMa Tipi": {
+    "fr": "Mode de fonctionnement de la prise de force arrière"
+  },
+  "Arka PTO Mili": {
+    "fr": "Arbre de prise de force arrière"
+  },
+  "Automatic Four-Wheel Drive": {
+    "fr": "Quatre roues motrices automatiques (4RM)"
+  },
+  "Engine RPM At 540E PTO": {
+    "fr": "Régime moteur pour la prise de force à 540E"
+  },
+  "Four-Wheel Braking": {
+    "fr": "Freinage sur les quatre roues"
+  },
+  "Front PTO Speed": {
+    "fr": "Régime de la prise de force avant"
+  },
+  "Groundspeed PTO": {
+    "fr": "Prise de force proportionnelle à la vitesse d'avancement"
+  },
+  "Independent Steering Pump": {
+    "fr": "Pompe de direction indépendante"
+  },
+  "ÖN EndüStriyel Lastik": {
+    "fr": "Pneu industriel avant"
+  },
+  "Orta PTO çAlışMa Tipi": {
+    "fr": "Mode de fonctionnement de la prise de force centrale"
+  },
+  "Orta PTO Mili": {
+    "fr": "Arbre de prise de force centrale"
+  },
+  "PTO çAlışMa Tipi": {
+    "fr": "Mode de fonctionnement de la prise de force"
+  },
+  "PTO GüCü": {
+    "fr": "Puissance de la prise de force"
+  },
+  "Rear Pto Modes": {
+    "fr": "Modes de la prise de force arrière"
   }
 };
