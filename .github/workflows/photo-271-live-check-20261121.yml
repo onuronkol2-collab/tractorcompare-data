@@ -81,3 +81,35 @@ jobs:
           if(!found)throw Error("Site deployment not yet verified for eight new photos");
           console.log("LIVE_PHOTO_RELEASE_VERIFIED all 8 HTML/credits/CC/480px-JPEG/image-sitemap");
           NODE
+
+      - name: Confirm responsive 960px and fullscreen 1920px photo URLs
+        run: |
+          node --input-type=module <<'NODE'
+          import {readFileSync} from "node:fs";
+          const approved=JSON.parse(readFileSync("site/docs/photo-review-evidence-20261121.json","utf8")).approved;
+          if(approved?.length!==8)throw Error("Missing approved photo registry");
+          const pause=ms=>new Promise(r=>setTimeout(r,ms));
+          const results=[];
+          for(const photo of approved){
+            for(const size of [960,1920]){
+              const url="https://tractorvs.com/images/tractors/"+photo.fileId+"-"+size+".jpg";
+              let response=null,error=null;
+              for(let attempt=0;attempt<2;attempt++){
+                try{
+                  response=await fetch(url,{method:"HEAD",signal:AbortSignal.timeout(20000),
+                    headers:{"User-Agent":"TractorVS/1.0 (read-only high-res gallery QA)"}});
+                  if(response.status===200)break;
+                  error="HTTP "+response.status;
+                }catch(e){error=String(e);}
+                await pause(1000);
+              }
+              const type=response?.headers?.get("content-type")||"";
+              const ok=response?.status===200&&type.startsWith("image/jpeg");
+              results.push({file:photo.fileId,size,status:response?.status||0,type,ok,error:ok?null:error});
+              await pause(300);
+            }
+          }
+          console.log("FULLSCREEN_PHOTO_QA "+JSON.stringify(results));
+          if(results.some(x=>!x.ok))throw Error("One or more reviewed high-resolution photo endpoints failed");
+          console.log("FULLSCREEN_PHOTO_QA_PASSED "+results.length+" sources");
+          NODE
