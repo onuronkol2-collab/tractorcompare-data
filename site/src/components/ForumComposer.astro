@@ -145,6 +145,8 @@ for(const widget of widgets){
  const logout=el<HTMLButtonElement>("[data-forum-logout]");
  const message=el<HTMLElement>("[data-forum-status]");
  const tokenKey="tractorvs_forum_access";
+ const refreshKey="tractorvs_forum_refresh";
+ let activeAuthAttempt=0;
  const header=(token?:string)=>({
   apikey:cfg.key,"Content-Type":"application/json",
   ...(token?{Authorization:"Bearer "+token}:{})
@@ -207,9 +209,15 @@ for(const widget of widgets){
   }catch{if(version===historyVersion)historyStatus.textContent=copy.historyError}
  }
  historyPanel?.addEventListener("toggle",showHistory);
- function saveSession(jwt:string){
+ function saveSession(jwt:string,refresh?:string){
   token=jwt;
-  try{sessionStorage.setItem(tokenKey,jwt)}catch{}
+  try{
+   sessionStorage.setItem(tokenKey,jwt);
+   if(refresh!==undefined){
+    if(refresh)sessionStorage.setItem(refreshKey,refresh);
+    else sessionStorage.removeItem(refreshKey);
+   }
+  }catch{}
  }
  function setLogin(loggedIn:boolean){
   if(historyPanel)historyPanel.hidden=!loggedIn;
@@ -228,32 +236,60 @@ for(const widget of widgets){
   verifyForm?.reset();
   if(logout)logout.hidden=!loggedIn;
  }
- async function verifySession(jwt:string):Promise<boolean>{
+ async function verifySession(jwt:string,refresh?:string):Promise<boolean>{
   if(!jwt)return false;
+  const attempt=++activeAuthAttempt;
+  let access=jwt;
+  let rotatedRefresh=refresh;
   try{
-   const r=await fetch(cfg.url+"/auth/v1/user",{
-    headers:{apikey:cfg.key,Authorization:"Bearer "+jwt},signal:AbortSignal.timeout(12000)
+   const requestUser=()=>fetch(cfg.url+"/auth/v1/user",{
+    headers:{apikey:cfg.key,Authorization:"Bearer "+access},signal:AbortSignal.timeout(12000)
    });
-   if(!r.ok)throw new Error("expired");
-   const data=await r.json();
-   if(typeof data?.id!=="string")throw new Error("invalid");
-   userId=data.id;saveSession(jwt);setLogin(true);restoreDraft();return true;
-  }catch{return false}
+   let response=await requestUser();
+   // Supabase access tokens expire; rotate a valid refresh token before asking
+   // the member to request a new email. Keep tokens within this browser tab.
+   if(response.status===401&&rotatedRefresh){
+    const renewed=await fetch(cfg.url+"/auth/v1/token?grant_type=refresh_token",{
+     method:"POST",headers:header(),body:JSON.stringify({refresh_token:rotatedRefresh}),
+     signal:AbortSignal.timeout(12000)
+    });
+    if(!renewed.ok)throw Error("refresh failed");
+    const next=await renewed.json();
+    if(typeof next.access_token!=="string"||!next.access_token||
+       typeof next.refresh_token!=="string"||!next.refresh_token)throw Error("invalid refresh");
+    access=next.access_token;rotatedRefresh=next.refresh_token;
+    response=await requestUser();
+   }
+   if(!response.ok)throw Error("expired");
+   const data=await response.json();
+   if(typeof data?.id!=="string")throw Error("invalid");
+   if(attempt!==activeAuthAttempt)return false;
+   userId=data.id;saveSession(access,rotatedRefresh);setLogin(true);restoreDraft();return true;
+  }catch{
+   if(attempt===activeAuthAttempt){
+    try{sessionStorage.removeItem(tokenKey);sessionStorage.removeItem(refreshKey)}catch{}
+   }
+   return false;
+  }
  }
  const hash=new URLSearchParams(location.hash.replace(/^#/,""));
  const fromLink=hash.get("access_token");
  if(fromLink){
   history.replaceState(null,"",location.pathname+location.search);
-  verifySession(fromLink).then(ok=>{if(!ok)msg(copy.oldLink); widget.scrollIntoView({block:"start"});});
+  verifySession(fromLink,hash.get("refresh_token")||"").then(ok=>{
+   if(!ok)msg(copy.oldLink);
+   widget.scrollIntoView({block:"start"});
+   if(ok)widget.focus({preventScroll:true});
+  });
  }else if(hash.has("error")||hash.has("error_code")){
   history.replaceState(null,"",location.pathname+location.search);
   msg(copy.oldLink);widget.scrollIntoView({block:"start"});
  }else{
-  try{verifySession(sessionStorage.getItem(tokenKey)||"").then(ok=>{if(!ok)setLogin(false)})}
+  try{verifySession(sessionStorage.getItem(tokenKey)||"",sessionStorage.getItem(refreshKey)||"").then(ok=>{if(!ok)setLogin(false)})}
   catch{setLogin(false)}
  }
  edit?.addEventListener("click",()=>{
-  setLogin(false);msg("");
+  ++activeAuthAttempt;setLogin(false);msg("");
   authForm?.querySelector("input")?.focus();
  });
  authForm?.addEventListener("submit",async ev=>{
@@ -262,6 +298,8 @@ for(const widget of widgets){
   email=input?.value.trim()||"";
   if(!email||email.length>254)return;
   const button=authForm.querySelector<HTMLButtonElement>("button");
+  if(button?.disabled)return;
+  ++activeAuthAttempt;
   if(button)button.disabled=true;msg(copy.loading||"...");
   try{
    const callback=new URL(location.pathname,location.origin).toString();
@@ -283,6 +321,9 @@ for(const widget of widgets){
   ev.preventDefault();
   const code=(verifyForm.elements.namedItem("code") as HTMLInputElement|null)?.value.trim()||"";
   if(!/^[0-9]{6,8}$/.test(code)||!email){msg(copy.codeError);return}
+  const button=verifyForm.querySelector<HTMLButtonElement>('button[type="submit"]');
+  if(button?.disabled)return;
+  if(button)button.disabled=true;
   msg(copy.loading||"...");
   try{
    const res=await fetch(cfg.url+"/auth/v1/verify",{
@@ -292,12 +333,15 @@ for(const widget of widgets){
    if(!res.ok){msg(res.status===429?copy.retryLater:res.status>=500?copy.authRequired:copy.codeError);return}
    const data=await res.json();
    msg("");
-   if(!await verifySession(data.access_token))msg(copy.authRequired);
+   if(!await verifySession(data.access_token,typeof data.refresh_token==="string"?data.refresh_token:""))msg(copy.authRequired);
   }catch{msg(copy.authRequired)}
+  finally{if(button)button.disabled=false}
  });
  logout?.addEventListener("click",()=>{
+  ++activeAuthAttempt;
   try{for(const key of Object.keys(sessionStorage))if(userId&&key.startsWith(draftPrefix()))sessionStorage.removeItem(key)}catch{}
-  const existing=token;token="";try{sessionStorage.removeItem(tokenKey)}catch{}
+  const existing=token;token="";
+  try{sessionStorage.removeItem(tokenKey);sessionStorage.removeItem(refreshKey)}catch{}
   setLogin(false);msg("");
   if(existing)fetch(cfg.url+"/auth/v1/logout",{method:"POST",headers:header(existing)}).catch(()=>{});
  });
