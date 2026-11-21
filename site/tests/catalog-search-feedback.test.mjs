@@ -32,10 +32,14 @@ test("published model links remain server-rendered and the accessible search cou
  assert.doesNotMatch(catalog,/const modelCount = [0-9]+|fakeResults|AI-generated result count/i);
 });
 
-test("search remains same-page client filtering; URLs only drop q on deliberate clear",()=>{
+test("search remains same-page filtering and synchronizes shareable q across language choices",()=>{
  assert.match(catalog,/normalizeTractorQuery\(query\)/);
  assert.match(catalog,/card\.hidden = !match/);
+ assert.match(catalog,/next\.searchParams\.set\("q",query\)/);
  assert.match(catalog,/next\.searchParams\.delete\("q"\)/);
+ assert.match(catalog,/const syncSearchURL = \(raw: string\)/);
+ assert.match(catalog,/\[data-language-choice\]/);
+ assert.match(catalog,/destination\.searchParams\.set\("q",query\)/);
  assert.match(catalog,/history\.replaceState\(history\.state/);
  assert.match(catalog,/new URLSearchParams\(window\.location\.search\)\.get\("q"\)/);
  assert.match(catalog,/if \(noResults\) noResults\.hidden = visible > 0/);
