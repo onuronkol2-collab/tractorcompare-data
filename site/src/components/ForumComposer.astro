@@ -4,7 +4,7 @@ import {MEMBER_TEXT,memberText as mt} from "../lib/member-i18n.ts";
 import {publicForumClientConfig} from "../lib/forum.ts";
 import ForumEditor from "./ForumEditor.astro";
 import {getPublicCatalog} from "../lib/catalog.ts";
-import {LOCALES,LOCALE_NAMES,LOCALE_TAGS,type Locale} from "../lib/locales.ts";
+import {LOCALES,LOCALE_NAMES,LOCALE_TAGS,localizedPath,type Locale} from "../lib/locales.ts";
 interface Props {lang:Locale; mode:"topic"|"reply"; topicId?:string}
 const {lang,mode,topicId}=Astro.props;
 const cfg=publicForumClientConfig() ?? (
