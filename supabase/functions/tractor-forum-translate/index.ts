@@ -116,6 +116,19 @@ async function translate(src:Source,to:string){
 }
 async function work(){
  if(!KEY||!AI||!SECRET)throw Error("Worker credentials unavailable");
+ // A previous Edge timeout can strand a job in processing. Recover it
+ // only after a generous quiet period, with no extra paid call in this step.
+ const stale=new Date(Date.now()-20*60000).toISOString();
+ await db("tc_forum_translation_jobs",{
+  state:"eq.processing",entity_kind:"eq.topic",attempts:"lt.4",started_at:"lt."+stale
+ },{method:"PATCH",headers:{"Content-Type":"application/json","Prefer":"return=minimal"},
+  body:JSON.stringify({state:"queued",next_attempt_at:new Date().toISOString(),
+   last_error:"Previous run interrupted before completion"})});
+ await db("tc_forum_translation_jobs",{
+  state:"eq.processing",entity_kind:"eq.topic",attempts:"gte.4",started_at:"lt."+stale
+ },{method:"PATCH",headers:{"Content-Type":"application/json","Prefer":"return=minimal"},
+  body:JSON.stringify({state:"failed",completed_at:new Date().toISOString(),
+   last_error:"Translation attempts exhausted after interrupted run"})});
  const due:Job[]=await db("tc_forum_translation_jobs",{
   select:"id,entity_kind,entity_id,target_locale,source_hash,attempts",
   state:"eq.queued",next_attempt_at:"lte."+new Date().toISOString(),
