@@ -107,6 +107,22 @@ for(let i=0;i<urls.length;i+=4){
       meta.description.length < (locale==="zh"||locale==="ja" ? 12 : 30))
     error("title-description",p,"Missing or clearly empty title/description");
    if(!meta.h1)error("heading",p,"H1 not found");
+   // Exhaustive crawlable-page checks, not a synthetic Lighthouse score:
+   // every image in the page's visible main content needs an alt attribute
+   // (including alt="" for truly decorative images). Keep license/dialog
+   // overlays outside the main landmark out of this check.
+   const main=body.match(/<main\\b[^>]*>([\\s\\S]*?)<\\/main>/i)?.[1]||null;
+   if(main==null)error("missing-main",p,"Main content landmark missing");
+   else {
+     const visibleImages=tags(main,"img");
+     for(const [i,image] of visibleImages.entries())
+       if(!/\\balt\\s*=\\s*(["'])[^"']*\\1/i.test(image))
+         error("image-alt",p,"Main image "+(i+1)+" lacks alt attribute");
+   }
+   // JSON-LD errors are SEO issues on any page type, not only models.
+   for(const [i,raw] of meta.json.entries())try{
+     JSON.parse(raw);
+   }catch(e){error("jsonld-parse",p,"Script "+(i+1)+": "+String(e));}
    if(meta.lang!==languages[locale])error("html-language",p,"HTML lang "+meta.lang+" expected "+languages[locale]);
    const base=p.replace(/^\/(tr|zh|hi|pt-br|fr|de|ru|ja|es)(?=\/)/,"");
    const alternateMap=new Map(meta.alternates.map(x=>[x.lang,x.url]));
