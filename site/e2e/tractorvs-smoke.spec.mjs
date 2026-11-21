@@ -60,6 +60,22 @@ test("mobile navigation reaches tractor comparison from the menu", async ({ page
   await expect(page).toHaveURL(/\/tr\/compare\/$/);
 });
 
+
+test("catalogue remains crawlable while price hydration covers only source-priced models", async ({ page }) => {
+  await page.goto("/tr/tractors/", { waitUntil: "domcontentloaded" });
+  const cards = page.locator(".tractor-card");
+  const count = await cards.count();
+  test.skip(count === 0, "Only run this regression against a configured published catalogue.");
+  const data = JSON.parse(await page.locator("#catalog-price-payload").textContent() || "{}");
+  expect(data.models.length).toBeLessThan(count);
+  const links = await page.locator(".tractor-card-main[href^='/tr/tractors/']").count();
+  expect(links).toBe(count);
+  await page.locator("#tractor-search").fill("tractor-model-that-does-not-exist-99999");
+  await expect(page.locator("#catalog-no-results")).toBeVisible();
+  await page.locator("#tractor-search").fill("");
+  await expect(page.locator("#catalog-no-results")).toBeHidden();
+});
+
 test("analytics tags are not requested without permission and remain absent after rejection", async ({ page }) => {
   const externalAnalyticsRequests = [];
   page.on("request", (request) => {
