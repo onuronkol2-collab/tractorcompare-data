@@ -618,6 +618,12 @@ export function specLabel(spec: PublicSpec, lang: Locale): string {
     const known = auditedTurkishSourceHeadingInEnglish[sourceName];
     if (known) return known;
   }
+  // EPM describes a distinct power-boost condition. A generic canonical key
+  // must never erase this source-specific measurement qualifier.
+  if (/^maximum engine power with EPM$/i.test(spec.spec_name.trim())) {
+    if (lang === "en") return spec.spec_name.trim();
+    return publishedSpecificationLabel(spec.spec_name,lang) || spec.spec_name.trim();
+  }
   // Translation applies only to known canonical engineering labels, never values.
   const localized = localizedSpecificationName(spec.canonical_key, spec.spec_name, lang);
   if (localized) return localized;
