@@ -206,6 +206,15 @@ const NORMALIZED_TRANSLATIONS=new Map(
 const NORMALIZED_RESIDUAL=new Map(
   Object.entries(RESIDUAL_PUBLIC_SPEC_TERMS).map(([name,translations]) => [normalizeSpecName(name),translations]),
 );
+/**
+ * True only for reviewed, exact original source headings. Use ahead of generic
+ * canonical-key mappings when a source explicitly carries a condition such as
+ * ECE R120, equipment level, weight status or tractor gear variant.
+ */
+export function auditedResidualSpecificationLabel(specName:string,lang:Locale):string|null{
+  if(lang==="en")return null;
+  return NORMALIZED_RESIDUAL.get(normalizeSpecName(specName))?.[lang]||null;
+}
 export function publishedSpecificationLabel(specName:string,lang:Locale):string|null{
   if(lang==="en")return null;
   const normalized=normalizeSpecName(specName);
