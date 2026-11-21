@@ -1,4 +1,5 @@
 import test from "node:test";
+import {readFileSync} from "node:fs";
 import assert from "node:assert/strict";
 import {
   REPO,SNAPSHOT_PATH,validateScope,validateAnon,fingerprintPublicView,
@@ -131,4 +132,18 @@ test("mass-unpublish guard blocks unintended static site rollbacks",async()=>{
  await assert.rejects(runPublicationSync({...base,fetchFn:mock.fetchFn}),/regression blocked/);
  assert.deepEqual(mock.calls,["supabase:GET","github:GET"],
    "A regression must not create a GitHub release commit");
+});
+
+
+test("reviewed publication checkpoint pushes immediately trigger anon-only catalog sync on trusted main",()=>{
+  const workflow=readFileSync(new URL("../.github/workflows/tractorvs-publication-autosync.yml",import.meta.url),"utf8");
+  const push=workflow.slice(workflow.indexOf("  push:"),workflow.indexOf("  pull_request:"));
+  assert.ok(push.includes("branches: [main]"));
+  assert.ok(push.includes('      - "site/docs/publication-checkpoints/**"'));
+  assert.ok(workflow.includes('cron: "17,47 * * * *"'));
+  assert.ok(workflow.includes("github.event_name != 'pull_request'"));
+  assert.ok(workflow.includes("github.repository == 'onuronkol2-collab/tractorcompare-data'"));
+  assert.ok(workflow.includes("github.ref == 'refs/heads/main'"));
+  assert.ok(workflow.includes("TRACTORVS_SUPABASE_ANON_JWT"));
+  assert.doesNotMatch(workflow,/SUPABASE_SERVICE_ROLE|GEMINI_API_KEY|TRACTORVS_QUEUE_SECRET/);
 });
