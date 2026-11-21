@@ -39,7 +39,7 @@ test("every brand navigation translation is complete and avoids unverified manuf
  assert.match(template,/href=\{"#"\+brand\.anchorId\}/);
  assert.match(template,/firstBrandCard\.get\(tractor\.brand_name\)===tractor\.tractor_id/);
  assert.match(template,/<h2>\{tractor\.brand_name\} \{tractor\.model_name\}<\/h2>/);
- assert.match(template,/filterCatalog\("")/);
+ assert.ok(template.includes('filterCatalog("")'));
  assert.match(template,/history\.replaceState/);
  assert.match(template,/data-price-for/);
  assert.match(template,/id="tractor-card-grid"/);
