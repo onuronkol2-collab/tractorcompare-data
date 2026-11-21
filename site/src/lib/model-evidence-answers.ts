@@ -78,6 +78,22 @@ function selectUnambiguous(rows:PublicSpec[],field:Field,brand:string):Candidate
   Number(b.sourceType==="manufacturer")-Number(a.sourceType==="manufacturer") ||
   a.sourceUrl.localeCompare(b.sourceUrl))[0];
 }
+/**
+ * May the model's prominent horsepower summary be described as source-backed?
+ * Use the same evidence, model identity, value and measurement conflict gate
+ * already used for short factual answers. A matching database headline alone
+ * never verifies engine/PTO/maximum power equivalence.
+ */
+export function matchedHeadlinePowerSource(
+ tractor:Pick<TractorRecord,"brand_name"|"horsepower"|"specifications">
+):{value:number;sourceUrl:string;sourceType:"manufacturer"|"independent"}|null{
+ const headline=tractor.horsepower;
+ if(typeof headline!=="number"||!Number.isFinite(headline))return null;
+ const candidate=selectUnambiguous(tractor.specifications,fields[0],tractor.brand_name);
+ if(!candidate||candidate.value!==headline)return null;
+ return {value:candidate.value,sourceUrl:candidate.sourceUrl,sourceType:candidate.sourceType};
+}
+
 const text={
  en:{
   rated:(name:string,v:string,s:string)=>({
