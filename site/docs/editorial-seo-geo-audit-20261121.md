@@ -53,6 +53,10 @@ Resmî kaynaklar:
 - https://tractortestlab.unl.edu/
 - https://www.dlg.org/en/magazin/survey-tests/tractor-model-descriptions-no-standardised-information
 
+### Ek doğruluk düzeltmesi — opsiyonel llms.txt
+
+`/llms.txt` eskiden tüm rehberlerin yalnız TR/EN olduğunu söyleyerek on dilde gerçek tam metni bulunan iki içeriğin kapsamını eksik tanımlıyordu. Dosyanın yalnız yönlendirme amacı olduğu ve Google AI Search için bir sıralama şartı olmadığı özellikle korunarak **gerçek içerik matrisi** belirtildi: 10 dilde arşiv + seçim/2075 BK, diğer dört yazı yalnız TR/EN. Makale hub'larının bağlantıları eklendi. Bu değişikliğe GEO etkisi/ranking getirisi iddiası bağlanmaz.
+
 ## Yayın sonrası ölçülecek iş listesi
 
 1. Yeni kod ana dala girdikten sonra **Cloudflare canlı HTML** ve altı yazının lokalize breadcrumb linkleri/şema değerleri/HTTP 200 doğrulanır.
