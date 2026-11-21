@@ -4,13 +4,22 @@ This runbook is part of the permanent AGENTS.md integration rules.
 
 ## Current design (21 November 2026)
 
-- Canonical site: `https://tractorvs.com`; the production sitemap remains `/sitemap-index.xml`.
+- Canonical site: `https://tractorvs.com`; the production sitemap remains `/sitemap-index.xml`. **One root index is the sole future submission entrypoint** for Google/Bing and includes `/sitemap-N.xml` HTML pages, `/forum-sitemap.xml` and `/image-sitemap.xml` via Astro's native `customSitemaps` option. This is separate from the already-existing successful individual submissions in Webmaster dashboards.
 - Astro generates its default XML sitemap and only permanent, indexable routes.
 - Standalone `/forum-sitemap.xml` includes only moderated SEO-ready topics and `/image-sitemap.xml` includes licensed/trusted eligible imagery.
 - `robots.txt` lists all three; do **not** spam obsolete Google sitemap ping endpoints.
 - Tractors: the public-catalog sync checks the anonymous published RLS view every 30 minutes on a best-effort GitHub Actions schedule.
 - Forum: a separate safe published-content sync checks every 10 minutes; no privately visible or draft content is syndicated.
 - A changed Git snapshot *requests* Cloudflare Workers Builds to publish a new static version. GitHub merge/build alone is not proof of a deployed website.
+
+## Single-submission sitemap integrity: deployment and monitoring
+
+- **Permanent AGENTS.md rule:** every new published sitemap type must be registered in `site/astro.config.mjs` `customSitemaps` AND included in the built `sitemap-index.xml`. Do not invent a new root index or submit each map separately on each release.
+- `site/scripts/verify-unified-sitemap-index.mjs` checks **actual Astro output** (including every generated `sitemap-N.xml` child), forum and image child files, robots declarations and every locale's catalog entry. This runs in both site-build indexable CI and the Cloudflare production release gate; a missing child blocks production.
+- `scripts/tractor-bing-sitemap-coverage.mjs` and its regression suite inspect the **live** root index and all children before the existing IndexNow discovery worker proceeds. Image sitemap page references overlap HTML URLs and must not inflate unique page counts; moderated forum pages are distinct and may be absent when no approved topic exists.
+- Old `/sitemap.xml` redirects to `/sitemap-index.xml`. Leave existing Google/Bing verified sitemap submissions unchanged; the index link automatically exposes all public sitemap types after the new Cloudflare deployment. A `success` status or a `discovered` count is not the number of indexed pages.
+- The index **must never** expose hidden or moderation-pending forum content, unverified translations, unpublished tractor drafts or unlicensed imagery. Ten-language site coverage is a published-only gate.
+- To verify a release: inspect actual `https://tractorvs.com/sitemap-index.xml` and expect child URLs for generated HTML sitemap(s), `forum-sitemap.xml` and `image-sitemap.xml`; confirm each child HTTP 200, valid `urlset`, self canonical for sampled HTML pages and the relevant GSC/Bing crawl observations independently.
 
 ## Automatic IndexNow — fail-closed
 

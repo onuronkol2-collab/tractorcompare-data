@@ -12,6 +12,7 @@ import {readFileSync,readdirSync,existsSync} from "node:fs";
 import {resolve,basename,join} from "node:path";
 import {fileURLToPath} from "node:url";
 import {verifyPublishedSiteInventory} from "./verify-published-site-inventory.mjs";
+import {verifyUnifiedSitemapIndex} from "./verify-unified-sitemap-index.mjs";
 
 const projectRoot=resolve(fileURLToPath(new URL("..",import.meta.url)));
 const expectedOrigin="https://tractorvs.com";
@@ -83,6 +84,9 @@ export function verifyProductionArtifacts({dir=projectRoot,origin=expectedOrigin
  insist(robots.includes("Allow: /")&&!/Disallow:\s*\//.test(robots),"robots.txt blocks search engines.");
  insist(robots.includes(origin+"/sitemap-index.xml"),"robots.txt does not reference production sitemap.");
  insist(sitemap.includes("sitemap-"),"Sitemap index is empty.");
+ // Deployment is blocked if independently generated forum/image maps are not
+ // in the master index. GSC/Bing need only receive the root index in future.
+ verifyUnifiedSitemapIndex({dist,origin});
  // The visible homepage must expose real, language-matched article discovery links.
  // Keep this after the original homepage/robots checks to catch broken localized builds.
  for(const locale of ["en","tr","zh","hi","pt-br","fr","de","ru","ja","es"]){

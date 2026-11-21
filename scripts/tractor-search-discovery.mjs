@@ -34,7 +34,7 @@ export function parseIndex(xml){
   const entries=xmlField(xml,"loc").map(allowUrl);
   if(!entries.length||entries.length>30||new Set(entries).size!==entries.length)
     fail("Sitemap index is missing, duplicated or too large");
-  for(const url of entries)if(!/^\/sitemap-[0-9]+\.xml$/.test(new URL(url).pathname))
+  for(const url of entries)if(!/^\/(?:sitemap-[0-9]+|forum-sitemap|image-sitemap)\.xml$/.test(new URL(url).pathname))
     fail("Unexpected sitemap child file");
   return entries;
 }
@@ -108,11 +108,24 @@ export async function liveSitemap({fetchFn=fetch}={}){
   const key=(await fetchText(KEY_URL)).trim();
   if(key!==KEY)fail("IndexNow ownership key mismatch");
   const children=parseIndex(await fetchText(ORIGIN+"/sitemap-index.xml"));
+  // The submitted root index must cover all approved public sitemap types.
+  if(!children.includes(ORIGIN+"/forum-sitemap.xml")||
+     !children.includes(ORIGIN+"/image-sitemap.xml")||
+     !children.some(url=>/^\/sitemap-[0-9]+\.xml$/.test(new URL(url).pathname)))
+    fail("Root sitemap index must contain HTML, forum and image sitemap files");
   const all=new Map();
   for(const child of children){
-    const urls=parsePageSitemap(await fetchText(child));
+    const xml=await fetchText(child);
+    // Image page references overlap HTML URLs: never send them twice via IndexNow.
+    if(child===ORIGIN+"/image-sitemap.xml")continue;
+    // No approved forum topics yet is a valid empty public forum sitemap.
+    if(child===ORIGIN+"/forum-sitemap.xml"&&!/<url>/i.test(xml)){
+      if(!/<urlset(?:\s|>)/.test(xml))fail("Invalid empty approved forum sitemap");
+      continue;
+    }
+    const urls=parsePageSitemap(xml);
     for(const [url,mod] of urls){
-      if(all.has(url))fail("Duplicate URL across sitemap children");
+      if(all.has(url))fail("Duplicate URL across HTML and forum sitemaps");
       all.set(url,mod);
     }
     if(all.size>MAX_URLS)fail("Sitemap URL cap exceeded");

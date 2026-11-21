@@ -1,0 +1,78 @@
+import {test} from "node:test";
+import assert from "node:assert/strict";
+import {mkdtempSync,writeFileSync,rmSync,unlinkSync,readFileSync} from "node:fs";
+import {tmpdir} from "node:os";
+import {join} from "node:path";
+import {verifyUnifiedSitemapIndex} from "../scripts/verify-unified-sitemap-index.mjs";
+
+const origin="https://tractorvs.com";
+const locales=["","tr/","zh/","hi/","pt-br/","fr/","de/","ru/","ja/","es/"];
+const mapURLs=[
+ origin+"/sitemap-0.xml",
+ origin+"/forum-sitemap.xml",
+ origin+"/image-sitemap.xml",
+];
+const xmlURLSet=urls=>'<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'+
+ urls.map(url=>"<url><loc>"+url+"</loc></url>").join("")+"</urlset>";
+const index=entries=>'<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'+
+ entries.map(url=>"<sitemap><loc>"+url+"</loc></sitemap>").join("")+"</sitemapindex>";
+function fixture(){
+ const dir=mkdtempSync(join(tmpdir(),"tractorvs-master-sitemap-"));
+ const files={
+  "sitemap-index.xml": index(mapURLs),
+  "sitemap-0.xml": xmlURLSet([origin+"/",...locales.map(lang=>origin+"/"+lang+"tractors/")]),
+  "image-sitemap.xml":xmlURLSet([origin+"/tr/tractors/"]),
+  "forum-sitemap.xml":xmlURLSet([origin+"/tr/forum/",origin+"/tr/forum/approved-topic/"]),
+  "robots.txt":"User-agent: *\nAllow: /\n"+["sitemap-index.xml","forum-sitemap.xml","image-sitemap.xml"].map(x=>"Sitemap: "+origin+"/"+x).join("\n"),
+ };
+ for(const [name,body] of Object.entries(files))writeFileSync(join(dir,name),body);
+ return {dir,files,put:(name,value)=>writeFileSync(join(dir,name),value)};
+}
+test("one root sitemap index includes all 10 catalog locales, public image and approved forum",()=>{
+ const f=fixture();
+ try {
+  const report=verifyUnifiedSitemapIndex({dist:f.dir,origin});
+  assert.equal(report.index_children,3);
+  assert.equal(report.html_children,1);
+  assert.equal(report.catalog_locales,10);
+  assert.equal(report.forum_urls,2);
+  assert.equal(report.html_pages,11);
+ }finally{rmSync(f.dir,{recursive:true,force:true})}
+});
+test("missing forum/image in master index is always a hard production failure",()=>{
+ const f=fixture();
+ try{
+  for(const missing of ["forum-sitemap.xml","image-sitemap.xml"]){
+   f.put("sitemap-index.xml",index(mapURLs.filter(url=>!url.endsWith("/"+missing))));
+   assert.throws(()=>verifyUnifiedSitemapIndex({dist:f.dir,origin}),/MASTER SITEMAP BLOCKED/);
+  }
+ }finally{rmSync(f.dir,{recursive:true,force:true})}
+});
+test("missing generated child, missing locale and wrong host fail closed",()=>{
+ const f=fixture();
+ try {
+  unlinkSync(join(f.dir,"image-sitemap.xml"));
+  assert.throws(()=>verifyUnifiedSitemapIndex({dist:f.dir,origin}),/Missing generated file/);
+  f.put("image-sitemap.xml",f.files["image-sitemap.xml"]);
+  f.put("sitemap-0.xml",xmlURLSet([origin+"/",...locales.filter(x=>x!=="ja/").map(lang=>origin+"/"+lang+"tractors/")]));
+  assert.throws(()=>verifyUnifiedSitemapIndex({dist:f.dir,origin}),/Missing indexed catalog locale/);
+  f.put("sitemap-0.xml",f.files["sitemap-0.xml"]);
+  f.put("sitemap-index.xml",index(mapURLs.map(url=>url.replace(origin,"https://wrong.example"))));
+  assert.throws(()=>verifyUnifiedSitemapIndex({dist:f.dir,origin}),/missing/);
+ }finally{rmSync(f.dir,{recursive:true,force:true})}
+});
+test("no approved forum topics produces a valid empty forum child, never drafts",()=>{
+ const f=fixture();
+ try{
+  f.put("forum-sitemap.xml",xmlURLSet([]));
+  assert.equal(verifyUnifiedSitemapIndex({dist:f.dir,origin}).forum_urls,0);
+ }finally{rmSync(f.dir,{recursive:true,force:true})}
+});
+test("Astro native customSitemaps configuration and production release gate remain wired",()=>{
+ const config=readFileSync(new URL("../astro.config.mjs",import.meta.url),"utf8");
+ const gate=readFileSync(new URL("../scripts/production-release-gate.mjs",import.meta.url),"utf8");
+ assert.match(config,/customSitemaps\s*:/);
+ for(const name of ["forum-sitemap.xml","image-sitemap.xml"])assert.ok(config.includes(name));
+ assert.match(gate,/verifyUnifiedSitemapIndex\(\{dist,origin\}\)/);
+ assert.match(config,/forum\(\?:/); // Existing forum exclusion is intentional
+});

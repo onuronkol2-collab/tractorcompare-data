@@ -19,6 +19,15 @@ export default defineConfig({
     format: "directory",
   },
   integrations: indexingEnabled ? [sitemap({
+    // These sitemap documents are built separately; include both in the single
+    // root index so submitting sitemap-index.xml discovers ALL public content.
+    // Keep the forum out of Astro's normal page list: only independently
+    // approved public forum topics belong in the guarded forum sitemap.
+    // @astrojs/sitemap 3.7.5 supports customSitemaps (introduced in 3.5.0).
+    customSitemaps: [
+      new URL('/forum-sitemap.xml',siteUrl).href,
+      new URL('/image-sitemap.xml',siteUrl).href,
+    ],
     // Only permanent HTML pages belong in the sitemap. 404/chooser URLs do not.
     filter: (page) => {
       const pathname = new URL(page).pathname;

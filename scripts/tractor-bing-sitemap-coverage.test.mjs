@@ -19,8 +19,13 @@ const good = () => ({
   robots: "User-agent: *\nAllow: /\n" +
     Object.values(SITEMAPS).map(url => "Sitemap: " + url).join("\n") + "\n",
   index: '<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' +
-    "<sitemap><loc>" + childURL + "</loc></sitemap></sitemapindex>",
-  children: [{url: childURL, xml: xmlURLs([home, ...landingURLs, ...modelURLs])}],
+    [childURL, SITEMAPS.image, SITEMAPS.forum].map(url=>"<sitemap><loc>"+url+"</loc></sitemap>").join("") +
+    "</sitemapindex>",
+  children: [
+    {url: childURL, xml: xmlURLs([home, ...landingURLs, ...modelURLs])},
+    {url: SITEMAPS.image, xml: xmlURLs([modelURLs[0],modelURLs[1]])},
+    {url: SITEMAPS.forum, xml: xmlURLs([ORIGIN + "/tr/forum/",forumURL])},
+  ],
   image: xmlURLs([modelURLs[0], modelURLs[1]]),
   forum: xmlURLs([ORIGIN + "/tr/forum/", forumURL]),
   minimumMainUrls: 20,
@@ -48,7 +53,7 @@ function mockFetch(data, overrides = {}) {
 
 test("Bing index child count is separate from canonical page and image counts", () => {
   const report = evaluateBingSitemapCoverage(good());
-  assert.equal(report.child_sitemap_files, 1);
+  assert.equal(report.child_sitemap_files, 3);
   assert.equal(report.main_page_urls, 21);
   assert.equal(report.localized_model_page_urls, 10);
   assert.equal(report.image_sitemap_page_entries, 2);
@@ -94,10 +99,12 @@ test("missing XML child or removed localized models is a hard regression", () =>
 test("image references outside canonical sitemap are rejected; overlap is not double-counted", () => {
   const orphan = good();
   orphan.image = xmlURLs([ORIGIN + "/tractors/not-a-published-model/"]);
+  orphan.children[1].xml = orphan.image;
   assert.throws(() => evaluateBingSitemapCoverage(orphan), /Image sitemap references a page absent/);
 
   const overlappingForum = good();
   overlappingForum.forum = xmlURLs([home, forumURL]);
+  overlappingForum.children[2].xml = overlappingForum.forum;
   const report = evaluateBingSitemapCoverage(overlappingForum);
   assert.equal(report.forum_pages_already_in_main, 1);
   assert.equal(report.distinct_page_urls_across_main_and_forum, 22);
@@ -127,6 +134,7 @@ test("invalid domain, missing robots registration, tiny sitemap or blocked HTTP 
 test("empty approved forum sitemap remains valid without promoting private drafts", () => {
   const withNoForum = good();
   withNoForum.forum = xmlURLs([]);
+  withNoForum.children[2].xml = withNoForum.forum;
   const report = evaluateBingSitemapCoverage(withNoForum);
   assert.equal(report.forum_sitemap_page_urls, 0);
   assert.equal(report.distinct_page_urls_across_main_and_forum, 21);
