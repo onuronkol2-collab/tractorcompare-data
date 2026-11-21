@@ -76,6 +76,26 @@ test("catalogue remains crawlable while price hydration covers only source-price
   await expect(page.locator("#catalog-no-results")).toBeHidden();
 });
 
+test("published ISEKI TXGS24 power summary links its exact approved source in Turkish and Chinese", async ({ page, browserName }) => {
+  test.skip(browserName !== "chromium", "Source/translation UX is checked on Chromium desktop and mobile.");
+  for(const [path,lang] of [
+    ["/tr/tractors/iseki-txgs24-1d67a7d0/","tr"],
+    ["/zh/tractors/iseki-txgs24-1d67a7d0/","zh-Hans"],
+  ]){
+    const response=await page.goto(path,{waitUntil:"domcontentloaded"});
+    expect(response?.status()).toBe(200);
+    await expect(page.locator("html")).toHaveAttribute("lang",lang);
+    const power=page.locator('.model-summary-grid [data-claim="power"]');
+    await expect(power.locator("strong")).toContainText("23 HP");
+    const link=power.locator("a.model-summary-power-source");
+    await expect(link).toBeVisible();
+    await expect(link).toHaveAttribute("href","https://www.iseki.co.uk/wp-content/uploads/2021/02/Iseki-TXGS24-Range-WEB-2.pdf");
+    await expect(link).toHaveAttribute("rel",/noopener noreferrer/);
+    await expect(page.locator(".model-summary-provenance-note")).toBeVisible();
+    await expect(page.locator('meta[name="description"]')).toHaveAttribute("content",/23 HP/);
+  }
+});
+
 test("analytics tags are not requested without permission and remain absent after rejection", async ({ page }) => {
   const externalAnalyticsRequests = [];
   page.on("request", (request) => {
