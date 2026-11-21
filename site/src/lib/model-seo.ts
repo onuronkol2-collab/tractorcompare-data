@@ -187,7 +187,17 @@ export function modelSeoMetadata(tractor: TractorRecord, lang: Locale) {
     independentCount ? INDEPENDENT_SOURCE_COPY[lang].seoOnlyIndependent : null,
     variantContext && lang === "en" ? copy.note(variantContext.replace(/[.。।]+$/u, "")) : null,
   ].filter((part):part is string=>Boolean(part));
-  return {title,description:segments.join(" ")};
+  const description=segments.join(" ");
+  // The full, source-aware editorial explanation remains visible on the page.
+  // Build the search snippet separately from complete sentences rather than
+  // cutting a technical value, market, or source qualifier mid-word.
+  // 160 is an editorial target, not a Google ranking or display guarantee.
+  const snippetStart=(identity+".").length<=120 ? identity+"." : model+".";
+  let searchDescription=snippetStart;
+  for(const part of segments.slice(1)){
+    if(searchDescription.length+1+part.length<=160)searchDescription+=" "+part;
+  }
+  return {title,description,searchDescription};
 }
 
 /**
