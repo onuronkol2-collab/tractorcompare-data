@@ -1,6 +1,6 @@
 import {test} from "node:test";
 import assert from "node:assert/strict";
-import {mkdtempSync,writeFileSync,rmSync,unlinkSync,readFileSync} from "node:fs";
+import {mkdtempSync,writeFileSync,rmSync,unlinkSync,readFileSync,mkdirSync} from "node:fs";
 import {tmpdir} from "node:os";
 import {join} from "node:path";
 import {verifyUnifiedSitemapIndex} from "../scripts/verify-unified-sitemap-index.mjs";
@@ -26,6 +26,13 @@ function fixture(){
   "robots.txt":"User-agent: *\nAllow: /\n"+["sitemap-index.xml","forum-sitemap.xml","image-sitemap.xml"].map(x=>"Sitemap: "+origin+"/"+x).join("\n"),
  };
  for(const [name,body] of Object.entries(files))writeFileSync(join(dir,name),body);
+ const forumDirs=["tr/forum","tr/forum/approved-topic"];
+ for(const path of forumDirs){
+  mkdirSync(join(dir,path),{recursive:true});
+  const url=origin+"/"+path+"/";
+  writeFileSync(join(dir,path,"index.html"),
+   '<html><head><link rel="canonical" href="'+url+'"><meta name="robots" content="index,follow"></head><body><main>Approved public forum</main></body></html>');
+ }
  return {dir,files,put:(name,value)=>writeFileSync(join(dir,name),value)};
 }
 test("one root sitemap index includes all 10 catalog locales, public image and approved forum",()=>{
@@ -59,6 +66,37 @@ test("missing generated child, missing locale and wrong host fail closed",()=>{
   f.put("sitemap-0.xml",f.files["sitemap-0.xml"]);
   f.put("sitemap-index.xml",index(mapURLs.map(url=>url.replace(origin,"https://wrong.example"))));
   assert.throws(()=>verifyUnifiedSitemapIndex({dist:f.dir,origin}),/missing/);
+ }finally{rmSync(f.dir,{recursive:true,force:true})}
+});
+test("approved forum photo pages must have canonical published HTML and may be image sitemap references",()=>{
+ const f=fixture();
+ try{
+  f.put("image-sitemap.xml",xmlURLSet([origin+"/tr/forum/approved-topic/"]));
+  const report=verifyUnifiedSitemapIndex({dist:f.dir,origin});
+  assert.equal(report.approved_forum_image_pages,1);
+  assert.equal(report.image_page_references,1);
+  f.put("image-sitemap.xml",xmlURLSet([origin+"/tr/forum/private-draft/"]));
+  assert.throws(()=>verifyUnifiedSitemapIndex({dist:f.dir,origin}),/absent from published HTML and approved forum/);
+ }finally{rmSync(f.dir,{recursive:true,force:true})}
+});
+test("draft/offsite/noindex forum pages are blocked before production deploy",()=>{
+ const f=fixture();
+ try{
+  f.put("forum-sitemap.xml",xmlURLSet([origin+"/tr/forum/private-draft/"]));
+  assert.throws(()=>verifyUnifiedSitemapIndex({dist:f.dir,origin}),/was not built/);
+  f.put("forum-sitemap.xml",xmlURLSet(["https://example.net/tr/forum/approved-topic/"]));
+  assert.throws(()=>verifyUnifiedSitemapIndex({dist:f.dir,origin}),/Noncanonical\/offsite/);
+  f.put("forum-sitemap.xml",f.files["forum-sitemap.xml"]);
+  const page=join(f.dir,"tr/forum/approved-topic/index.html");
+  f.put("tr/forum/approved-topic/index.html",readFileSync(page,"utf8").replace("index,follow","noindex,follow"));
+  assert.throws(()=>verifyUnifiedSitemapIndex({dist:f.dir,origin}),/Noindex forum page/);
+ }finally{rmSync(f.dir,{recursive:true,force:true})}
+});
+test("duplicate image sitemap page references fail closed before production",()=>{
+ const f=fixture();
+ try{
+  f.put("image-sitemap.xml",xmlURLSet([origin+"/tr/tractors/",origin+"/tr/tractors/"]));
+  assert.throws(()=>verifyUnifiedSitemapIndex({dist:f.dir,origin}),/Duplicate page in image sitemap/);
  }finally{rmSync(f.dir,{recursive:true,force:true})}
 });
 test("no approved forum topics produces a valid empty forum child, never drafts",()=>{
