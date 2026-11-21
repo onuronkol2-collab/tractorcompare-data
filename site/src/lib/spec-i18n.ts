@@ -1,3 +1,4 @@
+import { publishedSpecificationLabel } from "./published-spec-translations.ts";
 import type { Locale } from "./locales.ts";
 
 /**
@@ -235,6 +236,10 @@ const EXTRA: Record<string,readonly string[]> = {
 const INDEX: Record<string, number> = { zh:0, hi:1, "pt-br":2, fr:3, de:4, ru:5, ja:6, es:7 };
 
 export function localizedSpecificationName(key: string | null, specName: string, lang: Locale): string | null {
+  // One database key serves both generic power and measurements with a source-specific qualifier.
+  if (key === "engine_max_power_kw" && /^maximum engine power (?:without boost|ISO TR 14396)$/i.test(specName.trim())) {
+    return lang === "en" ? specName.trim() : publishedSpecificationLabel(specName,lang);
+  }
   if (lang === "en" || lang === "tr") return null;
   const value = EXTRA[key || ""] ?? TERM[ALIASES[key || ""] || (key || "")] ?? TERM[specName.trim()];
   return value?.[INDEX[lang]] ?? null;
