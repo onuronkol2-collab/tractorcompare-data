@@ -34,7 +34,8 @@ test("each cited institution is actually linked and no fabricated tractor test o
   for(const url of links)assert.ok(guide.includes(url),"Missing source: "+url);
   assert.match(guide,/TractorVS bu traktörleri sahada test ettiğini/);
   assert.match(guide,/has not personally field-tested/);
-  assert.doesNotMatch(guide,/[\'"]@type[\'"]\s*:\s*[\'"](?:AggregateRating|Offer)[\'"]|author:\s*\{|fakeReview/i);
+  assert.doesNotMatch(guide,/[\'"]@type[\'"]\s*:\s*[\'"](?:AggregateRating|Offer|Person)[\'"]|fakeReview/i);
+  assert.match(guide,/author:\s*\{\s*"@type":"Organization",name:"TractorVS"\}/);
   assert.match(guide,/localizedPath\(lang,"\/compare\/"\)/);
   assert.match(guide,/localizedPath\(lang,"\/tractors\/"\)/);
 });
