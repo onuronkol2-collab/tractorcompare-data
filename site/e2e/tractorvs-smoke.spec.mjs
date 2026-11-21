@@ -100,6 +100,46 @@ test("published ISEKI TXGS24 power summary links its exact approved source in Tu
   }
 });
 
+test("model search is reachable from the global header without leaving a discussion first", async ({ page, isMobile }) => {
+  await page.goto("/tr/forum/", { waitUntil: "domcontentloaded" });
+  if (isMobile) {
+    const menu = page.locator("details.mobile-nav");
+    await menu.locator("summary").click();
+    await expect(menu).toHaveAttribute("open", "");
+    await page.locator("#mobile-model-search").fill("Belarus");
+    await menu.locator('button[type="submit"]').click();
+  } else {
+    const menu = page.locator("details.header-search-menu");
+    await menu.locator("summary").click();
+    await expect(page.locator("#header-model-search")).toBeFocused();
+    await page.locator("#header-model-search").fill("Belarus");
+    await menu.locator('button[type="submit"]').click();
+  }
+  await expect(page).toHaveURL(/\/tr\/tractors\/\?q=Belarus$/);
+  await expect(page.locator("h1")).toHaveCount(1);
+});
+
+test("header resources lead to source methods and choice guides, with English fallback clearly marked", async ({ page, isMobile }) => {
+  await page.goto("/de/", { waitUntil: "domcontentloaded" });
+  const menu = isMobile ? page.locator("details.mobile-nav") : page.locator("details.resource-nav-menu");
+  await menu.locator("summary").click();
+  await expect(menu.locator('a[href="/de/guides/choosing-a-tractor/"]')).toBeVisible();
+  await expect(menu.locator('a[href="/guides/tractor-technical-terms/"]')).toContainText("(EN)");
+  await expect(menu.locator('a[href="/methodology/"]')).toContainText("(EN)");
+  await menu.locator('a[href="/de/guides/choosing-a-tractor/"]').click();
+  await expect(page).toHaveURL(/\/de\/guides\/choosing-a-tractor\/$/);
+});
+
+test("native header menus close with Escape and preserve keyboard orientation", async ({ page, isMobile }) => {
+  await page.goto("/tr/", { waitUntil: "domcontentloaded" });
+  const menu = isMobile ? page.locator("details.mobile-nav") : page.locator("details.resource-nav-menu");
+  await menu.locator("summary").click();
+  await expect(menu).toHaveAttribute("open", "");
+  await page.keyboard.press("Escape");
+  await expect(menu).not.toHaveAttribute("open", "");
+  await expect(menu.locator("summary")).toBeFocused();
+});
+
 test("analytics tags are not requested without permission and remain absent after rejection", async ({ page }) => {
   const externalAnalyticsRequests = [];
   page.on("request", (request) => {
