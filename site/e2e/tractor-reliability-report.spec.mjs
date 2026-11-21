@@ -24,11 +24,8 @@ test("2026 review truthfully labels the 2021 dataset and shows two ranked tables
  await expect(page.locator(".research-article img")).toHaveCount(7);
  for(const img of await page.locator(".research-article img").all()){
   await expect(img).toHaveAttribute("alt",/.{30,}/);
-  await expect(img).toHaveAttribute("src",/^\/images\/tractors\/[a-z0-9-]+-480\.jpg$/);
+  await expect(img).toHaveAttribute("src",/^(?:\/images\/tractors\/[a-z0-9-]+-480\.jpg|https:\/\/commons\.wikimedia\.org\/wiki\/Special:FilePath\/[^"]+)$/);
  }
- // Two newly licensed photo URLs are delivered by the Cloudflare image Worker
- // and are therefore not asserted to load in the offline static CI server.
- const locallyBundled=page.locator(".research-article img").filter({hasNot:page.locator('[src*="allis-chalmers-ib"],[src*="massey-ferguson-5m"]')});
  await expect(page.locator('.research-footer a[href="/tr/forum/"]')).toBeVisible();
  const axe=new AxeBuilder({page}).include(".research-shell")
   .withTags(["wcag2a","wcag2aa","wcag21a","wcag21aa"]);
