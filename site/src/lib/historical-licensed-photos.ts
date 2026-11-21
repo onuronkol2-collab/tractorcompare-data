@@ -635,6 +635,39 @@ const candidates=[
     "width": 5974,
     "height": 4480
   },
+  // Wikimedia Commons exact-model originals, photographer and CC license
+  // rechecked 2026-11-21. SHA-256 500px derivative proof is in
+  // site/docs/photo-import-evidence-mccormick-20261121.json.
+  {
+    "brand": "McCormick",
+    "model": "X4.080",
+    "fileId": "mccormick-x4-080-mbone-agritechnica-2023",
+    "path": "3/33/McCormick_X4.080%2C_Agritechnica_2023%2C_Hanover_%28P1140946%29.jpg",
+    "photographer": "MB-one",
+    "license": "CC BY-SA 4.0",
+    "width": 3371,
+    "height": 2697
+  },
+  {
+    "brand": "McCormick",
+    "model": "X8.631 VT-Drive",
+    "fileId": "mccormick-x8-631-vt-drive-marcel-2023",
+    "path": "7/77/McCormick_X8.631_VT-Drive_Agritechnica_2023_%28DSC05857%29.jpg",
+    "photographer": "MarcelX42",
+    "license": "CC BY-SA 4.0",
+    "width": 7008,
+    "height": 3944
+  },
+  {
+    "brand": "Belarus",
+    "model": "952.3",
+    "fileId": "belarus-952-3-gabinho-bucharest-2011",
+    "path": "3/3f/Belarus_952.3_Tractor_in_Bucharest_2011.jpg",
+    "photographer": "Gabinho",
+    "license": "CC BY-SA 3.0",
+    "width": 2592,
+    "height": 1944
+  },
 ] as const;
 function licenseUrl(name:string):string{
   if(name==="CC0")return "https://creativecommons.org/publicdomain/zero/1.0/";

@@ -1,0 +1,65 @@
+{
+  "reviewed": 4,
+  "approved": [
+    {
+      "brand": "McCormick",
+      "model": "X4.080",
+      "fileId": "mccormick-x4-080-mbone-agritechnica-2023",
+      "path": "3/33/McCormick_X4.080%2C_Agritechnica_2023%2C_Hanover_%28P1140946%29.jpg",
+      "photographer": "MB-one",
+      "license": "CC BY-SA 4.0",
+      "width": 3371,
+      "height": 2697,
+      "fileTitle": "File:McCormick X4.080, Agritechnica 2023, Hanover (P1140946).jpg",
+      "authorMetadata": "MB-one",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "originalCommonsUrl": "https://commons.wikimedia.org/wiki/File:McCormick_X4.080,_Agritechnica_2023,_Hanover_(P1140946).jpg",
+      "bytes": 76467,
+      "sha256": "75a56cbfe5e09cadee0157ef9d6d600094eac1ed7090cdae832052991dacd219",
+      "verifiedAt": "2026-11-21T19:40:01.711Z"
+    },
+    {
+      "brand": "McCormick",
+      "model": "X8.631 VT-Drive",
+      "fileId": "mccormick-x8-631-vt-drive-marcel-2023",
+      "path": "7/77/McCormick_X8.631_VT-Drive_Agritechnica_2023_%28DSC05857%29.jpg",
+      "photographer": "MarcelX42",
+      "license": "CC BY-SA 4.0",
+      "width": 7008,
+      "height": 3944,
+      "fileTitle": "File:McCormick X8.631 VT-Drive Agritechnica 2023 (DSC05857).jpg",
+      "authorMetadata": "MarcelX42",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "originalCommonsUrl": "https://commons.wikimedia.org/wiki/File:McCormick_X8.631_VT-Drive_Agritechnica_2023_(DSC05857).jpg",
+      "bytes": 56381,
+      "sha256": "cfa5f2ab31942a8cdf580f09e776cd768a1baa6ba791121364e9a39bcdcfc4bd",
+      "verifiedAt": "2026-11-21T19:40:03.062Z"
+    },
+    {
+      "brand": "Belarus",
+      "model": "952.3",
+      "fileId": "belarus-952-3-gabinho-bucharest-2011",
+      "path": "3/3f/Belarus_952.3_Tractor_in_Bucharest_2011.jpg",
+      "photographer": "Gabinho",
+      "license": "CC BY-SA 3.0",
+      "width": 2592,
+      "height": 1944,
+      "fileTitle": "File:Belarus 952.3 Tractor in Bucharest 2011.jpg",
+      "authorMetadata": "Gabinho",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+      "originalCommonsUrl": "https://commons.wikimedia.org/wiki/File:Belarus_952.3_Tractor_in_Bucharest_2011.jpg",
+      "bytes": 69122,
+      "sha256": "8e43d50506d5406bd06a57c665f5a46671fa34295f3a56b262b9ab20d508a3c9",
+      "verifiedAt": "2026-11-21T19:40:03.551Z"
+    }
+  ],
+  "rejected": [
+    {
+      "brand": "McCormick",
+      "model": "X5.085",
+      "id": "mccormick-x5-085-mbone-agritechnica-2023",
+      "reason": "Error: Expected one unambiguous exact model Commons file, got 0 matching titles: "
+    }
+  ],
+  "policy": "Exact-model Commons files only; no family/variant substitutions; Wikimedia artist/license/real JPEG evidence required"
+}
