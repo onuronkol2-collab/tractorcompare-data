@@ -14,7 +14,7 @@ export function validateReceipt(body){
   !Number.isSafeInteger(body.eligible_drafts)||
   !Number.isSafeInteger(body.trusted_urls))throw Error("Collector receipt failed safety contract.");
  const allowed=new Set(["fetched_html","pdf_pending_parse","redirect_review",
-  "http_error","unsupported_type","too_large","fetch_error"]);
+  "http_error","unsupported_type","too_large","fetch_error","robots_blocked"]);
  let sum=0;
  for(const [name,count] of Object.entries(body.states)){
   if(!allowed.has(name)||!Number.isSafeInteger(count)||count<0)
