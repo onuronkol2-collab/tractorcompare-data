@@ -239,6 +239,15 @@ for(const widget of widgets){
  const el=<T extends HTMLElement>(selector:string)=>widget.querySelector<T>(selector);
  const authForm=el<HTMLFormElement>("[data-forum-email]");
  const passwordForm=el<HTMLFormElement>("[data-forum-password]");
+ const registerForm=el<HTMLFormElement>("[data-forum-register]");
+ const registerArea=el<HTMLElement>("[data-forum-register-area]");
+ const signupConfirm=el<HTMLElement>("[data-signup-confirm]");
+ const signupAddress=el<HTMLElement>("[data-signup-address]");
+ const resendButton=el<HTMLButtonElement>("[data-resend-signup]");
+ const expiredHelp=el<HTMLElement>("[data-forum-expired-help]");
+ const expiredResend=el<HTMLButtonElement>("[data-expired-resend]");
+ const expiredEmail=el<HTMLInputElement>("[name=expired_email]");
+ const emailChoice=el<HTMLDetailsElement>("[data-email-choice]");
  const passwordChoice=el<HTMLDetailsElement>("[data-password-choice]");
  const socialBox=el<HTMLElement>("[data-forum-social]");
  const oauthUnavailable=el<HTMLElement>("[data-oauth-unavailable]");
@@ -297,6 +306,7 @@ for(const widget of widgets){
  let userId="";
  let token="";
  let email="";
+ let signupEmail="";
  const msg=(text:string)=>{if(message)message.textContent=text};
  const draftPrefix=()=>"tractorvs.forum.draft."+userId+".";
  const draftKey=()=>draftPrefix()+cfg.mode+"."+cfg.lang+"."+(cfg.topicId||"");
@@ -372,6 +382,10 @@ for(const widget of widgets){
   }
   if(postForm)postForm.hidden=!loggedIn;
   if(authForm)authForm.hidden=loggedIn;
+  if(registerArea)registerArea.hidden=loggedIn;
+  if(signupConfirm)signupConfirm.hidden=true;
+  if(emailChoice)emailChoice.hidden=loggedIn;
+  if(expiredHelp&&loggedIn)expiredHelp.hidden=true;
   if(passwordChoice)passwordChoice.hidden=loggedIn;
   if(socialBox)socialBox.hidden=loggedIn;
   if(resetForm)resetForm.hidden=true;
@@ -435,7 +449,9 @@ for(const widget of widgets){
  }else if(hash.has("error")||hash.has("error_code")){
   history.replaceState(null,"",location.pathname+location.search);
   const expiredEmail=(hash.get("error_code")||"").startsWith("otp_");
-  msg(expiredEmail?copy.oldLink:(memberCopy.oauthError||copy.oldLink));widget.scrollIntoView({block:"start"});
+  msg(expiredEmail?(memberCopy.invalidLinkHelp||copy.oldLink):(memberCopy.oauthError||copy.oldLink));
+  if(expiredEmail&&expiredHelp)expiredHelp.hidden=false;
+  widget.scrollIntoView({block:"start"});
  }else{
   try{
    const attemptPromise=verifySession(sessionStorage.getItem(tokenKey)||"",sessionStorage.getItem(refreshKey)||"");
@@ -477,6 +493,72 @@ for(const widget of widgets){
  });
 
 
+
+ registerForm?.querySelector<HTMLInputElement>("[data-register-reveal]")?.addEventListener("change",ev=>{
+  const visible=(ev.currentTarget as HTMLInputElement).checked;
+  for(const input of registerForm.querySelectorAll<HTMLInputElement>('input[name="password"],input[name="confirm_password"]'))
+   input.type=visible?"text":"password";
+ });
+ async function resendSignupConfirmation(targetEmail:string,button:HTMLButtonElement|null){
+  if(!targetEmail||targetEmail.length>254)return;
+  if(button?.disabled)return;
+  if(button)button.disabled=true;
+  msg(copy.loading||"...");
+  try{
+   const response=await fetch(cfg.url+"/auth/v1/resend?redirect_to="+encodeURIComponent(callbackUrl()),{
+    method:"POST",headers:header(),
+    body:JSON.stringify({type:"signup",email:targetEmail}),
+    signal:AbortSignal.timeout(15000)});
+   msg(response.status===429?copy.retryLater:
+       response.ok?memberCopy.resendConfirmationSent:memberCopy.authError);
+  }catch{msg(memberCopy.authError)}
+  finally{if(button)button.disabled=false}
+ }
+ resendButton?.addEventListener("click",()=>void resendSignupConfirmation(signupEmail,resendButton));
+ expiredResend?.addEventListener("click",()=>{
+  if(!expiredEmail?.checkValidity()){expiredEmail?.reportValidity();return}
+  const address=expiredEmail?.value.trim()||"";
+  void resendSignupConfirmation(address,expiredResend);
+ });
+ registerForm?.addEventListener("submit",async ev=>{
+  ev.preventDefault();
+  const address=(registerForm.elements.namedItem("email") as HTMLInputElement|null)?.value.trim()||"";
+  const passwordInput=registerForm.elements.namedItem("password") as HTMLInputElement|null;
+  const confirmationInput=registerForm.elements.namedItem("confirm_password") as HTMLInputElement|null;
+  const password=passwordInput?.value||"";
+  if(!address||address.length>254)return;
+  if(password.length<12){msg(memberCopy.passwordShort);passwordInput?.focus();return}
+  if(password!==confirmationInput?.value){msg(memberCopy.passwordMismatch);confirmationInput?.focus();return}
+  const button=registerForm.querySelector<HTMLButtonElement>("[data-register-submit]");
+  if(button?.disabled)return;
+  if(button)button.disabled=true;
+  msg(copy.loading||"...");
+  try{
+   const response=await fetch(cfg.url+"/auth/v1/signup?redirect_to="+encodeURIComponent(callbackUrl()),{
+     method:"POST",headers:header(),
+     body:JSON.stringify({email:address,password}),
+     signal:AbortSignal.timeout(15000)
+   });
+   if(!response.ok){
+    msg(response.status===429?copy.retryLater:memberCopy.authError);
+    return;
+   }
+   const data=await response.json();
+   if(typeof data.access_token==="string"&&data.access_token){
+    if(await verifySession(data.access_token,typeof data.refresh_token==="string"?data.refresh_token:"")){
+     registerForm.reset();msg("");return;
+    }
+    msg(memberCopy.authError);return;
+   }
+   signupEmail=address;
+   if(signupAddress)signupAddress.textContent=address;
+   if(registerArea)registerArea.hidden=true;
+   if(signupConfirm)signupConfirm.hidden=false;
+   msg(memberCopy.signupConfirmHelp);
+   registerForm.reset();
+  }catch{msg(memberCopy.authError)}
+  finally{if(button)button.disabled=false}
+ });
  passwordForm?.querySelector<HTMLInputElement>("[data-password-reveal]")?.addEventListener("change",ev=>{
   const reveal=(ev.currentTarget as HTMLInputElement).checked;
   const input=passwordForm.elements.namedItem("password") as HTMLInputElement|null;
@@ -519,36 +601,32 @@ for(const widget of widgets){
   }catch{msg(memberCopy.authError)}
   finally{if(button)button.disabled=false}
  });
+
  passwordForm?.addEventListener("submit",async ev=>{
   ev.preventDefault();
   const form=passwordForm;
   const address=(form.elements.namedItem("email") as HTMLInputElement|null)?.value.trim()||"";
-  const input=form.elements.namedItem("password") as HTMLInputElement|null;
-  const password=input?.value||"";
-  const submitter=(ev as SubmitEvent).submitter as HTMLButtonElement|null;
-  const signup=submitter?.value==="signup";
+  const password=(form.elements.namedItem("password") as HTMLInputElement|null)?.value||"";
   if(!address||address.length>254||!password)return;
-  if(signup&&password.length<12){msg(memberCopy.passwordShort);input?.focus();return}
-  const buttons=[...form.querySelectorAll<HTMLButtonElement>("button[type=submit]")];
-  if(buttons.some(b=>b.disabled))return;
-  buttons.forEach(b=>b.disabled=true);
+  const button=form.querySelector<HTMLButtonElement>('button[value="signin"]');
+  if(button?.disabled)return;
+  if(button)button.disabled=true;
   msg(copy.loading||"...");
   try{
-   const callback=callbackUrl();
-   const endpoint=signup?"/auth/v1/signup":"/auth/v1/token?grant_type=password";
-   const url=cfg.url+endpoint+(signup?"?redirect_to="+encodeURIComponent(callback):"");
-   const response=await fetch(url,{method:"POST",headers:header(),
-    body:JSON.stringify({email:address,password}),signal:AbortSignal.timeout(15000)});
-   if(!response.ok){msg(response.status===429?copy.retryLater:memberCopy.authError);return}
-   const data=await response.json();
-   if(typeof data.access_token==="string"&&data.access_token){
-    if(!await verifySession(data.access_token,typeof data.refresh_token==="string"?data.refresh_token:"")){
-     msg(memberCopy.authError);
-    }else{form.reset()}
-   }else if(signup){msg(memberCopy.emailConfirm);form.reset()}
-   else msg(memberCopy.authError);
+   const res=await fetch(cfg.url+"/auth/v1/token?grant_type=password",{
+    method:"POST",headers:header(),body:JSON.stringify({email:address,password}),
+    signal:AbortSignal.timeout(15000)});
+   if(!res.ok){msg(res.status===429?copy.retryLater:memberCopy.authError);return}
+   const data=await res.json();
+   if(typeof data.access_token!=="string"||!data.access_token){
+    msg(memberCopy.authError);return;
+   }
+   if(!await verifySession(data.access_token,typeof data.refresh_token==="string"?data.refresh_token:"")){
+    msg(memberCopy.authError);return;
+   }
+   form.reset();msg("");
   }catch{msg(memberCopy.authError)}
-  finally{buttons.forEach(b=>b.disabled=false)}
+  finally{if(button)button.disabled=false}
  });
  for(const button of widget.querySelectorAll<HTMLButtonElement>("[data-forum-oauth]")){
   button.addEventListener("click",()=>{
