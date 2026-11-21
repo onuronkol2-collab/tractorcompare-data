@@ -6,6 +6,23 @@
 
 > **Kısa cevap:** 21 Kasım 2026'da dünya çapında “en çok / en az arızalanan traktör markası” için standartlaştırılmış, model ve üretim yılı eşleştirilmiş satış başına arıza oranları açık olarak doğrulanamadı. Bu nedenle kesin sıralama uydurmadık. İstatistiksel küresel lig yerine **19 kaynaklı model ve model ailesini** ele aldık. Sayı hedef değil: yeni kanıt geldikçe kapsam genişletilebilir.
 
+<span id="ozet" aria-hidden="true"></span>
+
+## 30 saniyede araştırmanın özeti
+
+**En önemli sonuç:** 2026 itibarıyla traktör markalarının dünyadaki gerçek satış başına arıza oranlarını karşılaştırmaya elveren ortak bir veri tabanı bulunamadı. Bu yüzden TractorVS kesin bir “en iyi / en kötü marka” ligi oluşturmuyor.
+
+**Belgelenmiş örnekler:** MF 8S.265 Dyna-7'nin test edilen traktöründe iki önemli şanzıman onarımı bulunurken, Fendt 728 Vario Gen7'nin incelenen örneği 1.800 saati aşan kullanımda plansız servis ziyaretleri yaşadı. Öte yandan New Holland T7.230 AutoCommand'un test örneği 2.920 saatte olumlu değerlendirme aldı. Bunlar **ayrı araçların** testleridir; tüm üretimin arıza oranı değildir.
+
+**Yöntem:** Aynı model/yıl grubundaki arızalanan farklı traktörlerin oranı, 1.000 motor saatindeki arıza olayları ve çalışılamayan süre ayrı değerlendirilmelidir.
+
+**Hızlı okuma:** Aşağıda 19 modele ait kısa bulgular, her birinin özgün test bağlantısı ve tarih sınırları bulunuyor. Dilerseniz doğrudan teknik sorun kayıtlarına, olumlu uzun dönem örneklerine veya sık sorulan sorulara geçebilirsiniz.
+
+<figure class="research-photo">
+<img src="/images/tractors/claas-axion-870-1c6e17f1-480.jpg" alt="Yeşil Claas Axion 870 traktörün dışarıdan görünümü; uzun dönem testinde incelenen modelin temsili fotoğrafı" width="480" height="360" loading="lazy" decoding="async" />
+<figcaption>Claas Axion 870 — model fotoğrafı, test edilen araç değildir. Fotoğraf: <a href="https://commons.wikimedia.org/wiki/File:Claas_Axion_870.jpg">JoachimKohler-HB / Wikimedia Commons</a>, <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>. Sayfa sunumu için görsel optimize edilmiştir.</figcaption>
+</figure>
+
 ## Neden TractorVS bu araştırmayı yapıyor?
 
 Bir üretici çok satıyorsa kamuya açık şikâyetleri de çok olabilir. Tek traktördeki dört servis ziyareti, bin traktörün dördünün arızalandığı anlamına gelmez. Dahası eski bir traktörün 7.000 saatteki senkromeç arızasıyla yeni bir traktörün 400 saatteki şanzıman arızası eşit değerlendirilmemelidir. Bu dosya satış büyüklüğünü, **arızalanan farklı makine sayısını**, **arıza olayı sayısını**, **motor saatini** ve **iş kaybını** bilinçli olarak ayrı tutuyor.
@@ -28,27 +45,35 @@ Aşağıdaki iki bölüm **en kötüden en iyiye bir sıra değildir.** Aynı mo
 
 ## Hızlı karşılaştırma: 19 kayıt
 
-| Model veya aile | Kanıt dönemi | Çalışma saati / örneklem | İlgili kanıt |
-|---|---|---|---|
-| Massey Ferguson 8S.265 Dyna-7 | 2025'te yayımlanan saha testi | 4.400 | Teknik sorun kaydı |
-| Fendt 728 Vario Gen7 | 2026'da yayımlanan saha testi | 1.800+ | Teknik sorun kaydı |
-| Valtra G125 Eco HiTech | Ocak 2026 sayısı | 7.080+ | Teknik sorun kaydı |
-| Claas Axion 870 Cmatic | 2025'te yayımlanan saha testi | 4.900+ | Teknik sorun kaydı |
-| Case IH Optum 270 CVX | 2021/2022 döneminde yayımlanan tarihsel test | 2.700'e yakın | Teknik sorun kaydı |
-| Deutz-Fahr 9340 TTV | 2022/2023 tarihli tarihsel test | 4.500+ | Teknik sorun kaydı |
-| New Holland T6 — eski üretim grubu | 2025 anketi; yaklaşık 2016 üretimi | Model başına toplu motor saati yok | Teknik sorun kaydı |
-| Case IH Maxxum 115–145 — eski üretim grubu | 2025 anketi; yaklaşık 2016 üretimi | Model başına toplu motor saati yok | Teknik sorun kaydı |
-| Fendt 942 Vario Gen6 | 31 Temmuz 2026 | 11.000'e yakın | Uzun dönem / dengeli deneyim |
-| New Holland T7.230 AutoCommand | 3 Temmuz 2026 | 2.920 | Uzun dönem / dengeli deneyim |
-| JCB Fastrac 4220 iCON | 2026 | 2.150 | Uzun dönem / dengeli deneyim |
-| Kubota M7153 Premium | 2025 uzun dönem testi | 2.700+ | Uzun dönem / dengeli deneyim |
-| John Deere 6120M | 2025 uzun dönem testi | 4.657 | Uzun dönem / dengeli deneyim |
-| John Deere 6250R | 2022 tarihli tarihsel test | 3.200+ | Uzun dönem / dengeli deneyim |
-| Valtra N154 e Versu | 2020 tarihli tarihsel test | 1.300+ | Uzun dönem / dengeli deneyim |
-| Claas Axion 810 Cmatic | 2020 tarihli tarihsel test | 1.500+ | Uzun dönem / dengeli deneyim |
-| Deutz-Fahr 6185 TTV | 2024 tarihli uzun dönem testi | 3.140+ | Uzun dönem / dengeli deneyim |
-| Steyr 6145 Profi | 2023 tarihli tarihsel test | Kaynak özeti; saat değeri doğrulaması gerekli | Uzun dönem / dengeli deneyim |
-| Claas Arion 530–550 — eski üretim grubu | 2025 anketi; yaklaşık 2016 üretimi | Model başına toplam saat yok | Uzun dönem / dengeli deneyim |
+<div class="research-table-scroll" role="region" tabindex="0" aria-label="19 model için yayın dönemi, motor saati ve kanıt türünü karşılaştırın; tablo yatay kaydırılabilir">
+<table>
+<caption>TractorVS model kanıt tablosu — sonuçlar arıza yüzdesine göre sıralanmamıştır.</caption>
+<thead><tr><th scope="col">Model veya aile</th><th scope="col">Kanıt dönemi</th><th scope="col">Çalışma saati / örneklem</th><th scope="col">İlgili kanıt</th></tr></thead>
+<tbody>
+<tr><td>Massey Ferguson 8S.265 Dyna-7</td><td>2025'te yayımlanan saha testi</td><td>4.400</td><td>Teknik sorun kaydı</td></tr>
+<tr><td>Fendt 728 Vario Gen7</td><td>2026'da yayımlanan saha testi</td><td>1.800+</td><td>Teknik sorun kaydı</td></tr>
+<tr><td>Valtra G125 Eco HiTech</td><td>Ocak 2026 sayısı</td><td>7.080+</td><td>Teknik sorun kaydı</td></tr>
+<tr><td>Claas Axion 870 Cmatic</td><td>2025'te yayımlanan saha testi</td><td>4.900+</td><td>Teknik sorun kaydı</td></tr>
+<tr><td>Case IH Optum 270 CVX</td><td>2021/2022 döneminde yayımlanan tarihsel test</td><td>2.700'e yakın</td><td>Teknik sorun kaydı</td></tr>
+<tr><td>Deutz-Fahr 9340 TTV</td><td>2022/2023 tarihli tarihsel test</td><td>4.500+</td><td>Teknik sorun kaydı</td></tr>
+<tr><td>New Holland T6 — eski üretim grubu</td><td>2025 anketi; yaklaşık 2016 üretimi</td><td>Model başına toplu motor saati yok</td><td>Teknik sorun kaydı</td></tr>
+<tr><td>Case IH Maxxum 115–145 — eski üretim grubu</td><td>2025 anketi; yaklaşık 2016 üretimi</td><td>Model başına toplu motor saati yok</td><td>Teknik sorun kaydı</td></tr>
+<tr><td>Fendt 942 Vario Gen6</td><td>31 Temmuz 2026</td><td>11.000'e yakın</td><td>Uzun dönem / dengeli deneyim</td></tr>
+<tr><td>New Holland T7.230 AutoCommand</td><td>3 Temmuz 2026</td><td>2.920</td><td>Uzun dönem / dengeli deneyim</td></tr>
+<tr><td>JCB Fastrac 4220 iCON</td><td>2026</td><td>2.150</td><td>Uzun dönem / dengeli deneyim</td></tr>
+<tr><td>Kubota M7153 Premium</td><td>2025 uzun dönem testi</td><td>2.700+</td><td>Uzun dönem / dengeli deneyim</td></tr>
+<tr><td>John Deere 6120M</td><td>2025 uzun dönem testi</td><td>4.657</td><td>Uzun dönem / dengeli deneyim</td></tr>
+<tr><td>John Deere 6250R</td><td>2022 tarihli tarihsel test</td><td>3.200+</td><td>Uzun dönem / dengeli deneyim</td></tr>
+<tr><td>Valtra N154 e Versu</td><td>2020 tarihli tarihsel test</td><td>1.300+</td><td>Uzun dönem / dengeli deneyim</td></tr>
+<tr><td>Claas Axion 810 Cmatic</td><td>2020 tarihli tarihsel test</td><td>1.500+</td><td>Uzun dönem / dengeli deneyim</td></tr>
+<tr><td>Deutz-Fahr 6185 TTV</td><td>2024 tarihli uzun dönem testi</td><td>3.140+</td><td>Uzun dönem / dengeli deneyim</td></tr>
+<tr><td>Steyr 6145 Profi</td><td>2023 tarihli tarihsel test</td><td>Kaynak özeti; saat değeri doğrulaması gerekli</td><td>Uzun dönem / dengeli deneyim</td></tr>
+<tr><td>Claas Arion 530–550 — eski üretim grubu</td><td>2025 anketi; yaklaşık 2016 üretimi</td><td>Model başına toplam saat yok</td><td>Uzun dönem / dengeli deneyim</td></tr>
+</tbody>
+</table>
+</div>
+
+<span id="teknik-sorunlar" aria-hidden="true"></span>
 
 ## I. Somut teknik sorun kayıtları bulunan modeller
 
@@ -92,6 +117,11 @@ Bu bölümdeki makineler için dikkat çeken onarımlar, yaşanan başka olumlu 
 
 ### 7. New Holland T6 — eski üretim grubu
 
+<figure class="research-photo">
+<img src="/images/tractors/new-holland-t6-180-marcelx42-2025-480.jpg" alt="2025 Agritechnica sergisindeki New Holland T6.180 traktör fotoğrafı; 2016 dönemi anketindeki traktörlerden değildir" width="480" height="270" loading="lazy" decoding="async" />
+<figcaption>New Holland T6.180 (2025) — T6 ailesinden bir örnek; eski üretim grubunun arıza incelemesinde kullanılan traktör değildir. Fotoğraf: <a href="https://commons.wikimedia.org/wiki/File:New_Holland_T6.180_Agritechnica_2025_(DSC00717).jpg">MarcelX42 / Wikimedia Commons</a>, <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>. Sayfa sunumu için görsel optimize edilmiştir.</figcaption>
+</figure>
+
 **Kanıt:** 2025 anketi; yaklaşık 2016 üretimi; Model başına toplu motor saati yok çalışma saati veya çok kullanıcılı avrupa anketinin alt grubu. **Bulgular:** Emisyon arıtma sensörleri ve şanzıman sorunları bildirildi. Anket içi arızaların bileşen dağılımı satışa oranlanamaz.
 
 **Sınır:** T6'nin bütün versiyonlarına ve 2026–2027 üretimine uygulanmaz. **[Birincil saha kaynağı](https://www.profi.de/test/schleppertest/umfrage-vierzylinder-traktoren-mit-150-ps-im-vergleich-35798.html)**
@@ -101,6 +131,8 @@ Bu bölümdeki makineler için dikkat çeken onarımlar, yaşanan başka olumlu 
 **Kanıt:** 2025 anketi; yaklaşık 2016 üretimi; Model başına toplu motor saati yok çalışma saati veya çok kullanıcılı avrupa anketinin alt grubu. **Bulgular:** Klima bileşenleri ve egzoz arıtma sensörleriyle ilişkili arıza alanları bildirilmiş; motor gücü ve kullanımına ilişkin olumlu görüşler de var.
 
 **Sınır:** Yeni Maxxum üretiminin gerçek arıza oranı olarak okunamaz. **[Birincil saha kaynağı](https://www.profi.de/test/schleppertest/umfrage-vierzylinder-traktoren-mit-150-ps-im-vergleich-35798.html)**
+
+<span id="uzun-donem" aria-hidden="true"></span>
 
 ## II. Olumlu veya dengeli uzun dönem kullanım kanıtı bulunan modeller
 
@@ -172,6 +204,8 @@ Buradaki “olumlu” ifadesi sıfır arıza demek değildir. Tam iş göremezli
 **Sınır:** Claas örneklemi ankette yaklaşık %6; kesin karşılaştırmalı arıza sıralamasına uygun değil. **[Birincil saha kaynağı](https://www.profi.de/test/schleppertest/umfrage-vierzylinder-traktoren-mit-150-ps-im-vergleich-35798.html)**
 
 
+<span id="marka-degerlendirmesi" aria-hidden="true"></span>
+
 ## III. Marka güvenilirliği: ne söylenebilir, ne söylenemez?
 
 **John Deere:** 6120M ve 6250R'nin test kayıtları olumlu bazı bulgular veriyor; bunlar bütün John Deere traktörlerinin 2026–2027 arıza oranı değildir. **Fendt:** 728 Gen7'de erken servis ziyaretleri, 942 Gen6'da yaklaşık 11.000 saatlik yoğun kullanım görülüyor; ikisini marka ortalamasına çeviremeyiz. **New Holland:** Yeni tarihli T7.230 örneği dengeli; eski T6 anketindeki sensör sorunları ayrı üretim grubu. **Valtra:** N154 ve G125'in farklı yıllardaki uzun dönem kayıtları, “marka iyi/kötü” ifadesinin niçin yetersiz kaldığını gösteriyor.
@@ -211,6 +245,8 @@ Bu yayın **21 Kasım 2026** tarihli olduğu için 2027'nin gelecekte gerçekle�
 5. Fabrika kampanyaları ve teknik servis güncellemeleri.
 6. Arızadan sonra çalışılamayan gün/saat ve yedek makine ihtiyacı.
 7. Garanti kapsamı, parça bulunabilirliği ve yerel servis yanıt süresi.
+
+<span id="sik-sorulanlar" aria-hidden="true"></span>
 
 ## VII. Sık sorulan sorular
 

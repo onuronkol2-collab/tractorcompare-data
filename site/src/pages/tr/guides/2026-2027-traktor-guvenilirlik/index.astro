@@ -1,0 +1,100 @@
+---
+import SiteLayout from "../../../../layouts/SiteLayout.astro";
+import { Content as Research } from "../../../../../docs/forum-2026-2027-on-marka-guvenilirlik.md";
+
+const headline = "2026–2027 Traktör Arıza Araştırması: 100 Traktöre Kaç Şikâyet Düşüyor?";
+const description = "2026–2027 traktör arıza araştırması. 10 marka incelendi: 2021 anketindeki 100 traktör başına sorun sayıları ve güncel veri eksikleri açıkça karşılaştırıldı.";
+const canonicalUrl = new URL(Astro.url.pathname, Astro.site ?? "https://tractorvs.com").toString();
+const schema = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  headline,
+  description,
+  inLanguage: "tr",
+  mainEntityOfPage: canonicalUrl,
+  author: { "@type": "Organization", name: "TractorVS", url: "https://tractorvs.com/" },
+  publisher: { "@type": "Organization", name: "TractorVS", url: "https://tractorvs.com/" },
+  isAccessibleForFree: true,
+  dateModified: "2026-11-21",
+  image: {
+    "@type": "ImageObject",
+    contentUrl: "https://tractorvs.com/images/tractors/kubota-m6-141-4d0694e5-480.jpg",
+    width: 480,
+    height: 270,
+    caption: "Kubota M6-141 marka temsil fotoğrafı; 2021 anketinde incelenen traktör değildir.",
+    creator: { "@type": "Person", name: "MarcelX42" },
+    creditText: "MarcelX42 / Wikimedia Commons",
+    license: "https://creativecommons.org/licenses/by-sa/4.0/",
+    acquireLicensePage: "https://commons.wikimedia.org/wiki/File:Kubota_M6-141_Utility_Agritechnica_2023_(DSC06031).jpg",
+  },
+};
+---
+<SiteLayout lang="tr" title={"2026–2027 Traktör Arıza Araştırması: 100 Traktörde Kaç Şikâyet? | TractorVS"}
+  description={description} structuredData={schema}
+  ogImage="https://tractorvs.com/images/tractors/kubota-m6-141-4d0694e5-480.jpg"
+  availableLocales={["tr"]} indexableLocales={["tr"]}>
+  <section class="research-shell" aria-label="Araştırma raporu">
+    <div class="research-container">
+      <nav class="research-breadcrumb" aria-label="İçerik yolu">
+        <a href="/tr/">TractorVS</a><span aria-hidden="true">/</span>
+        <a href="/tr/forum/">Topluluk</a><span aria-hidden="true">/</span>
+        <span aria-current="page">Güvenilirlik araştırması</span>
+      </nav>
+      <div class="research-kicker">TRACTORVS · 2026–2027 ARAŞTIRMASI · 2021 KULLANICI VERİSİ</div>
+      <div class="research-lede">
+        <strong>10 marka, 100 traktöre düşen sorun sayısı ve veri şeffaflığı</strong>
+        <p>10 marka incelendi. Altı marka için 2021 ABD anketinin sorun/100 traktör verisi mevcut; dört markada aynı ölçüm doğrulanamadı. 2026–2027 satışa göre arıza yüzdesi bulunduğu izlenimi vermiyoruz.</p>
+      </div>
+      <article class="research-article" aria-label={headline}>
+        <Research />
+      </article>
+      <aside class="research-footer" aria-label="Topluluk katılımı">
+        <h2>Kendi traktör deneyiminizi paylaşın</h2>
+        <p>Gerçek motor saatleri, model yılı ve belgelenebilir onarım bilgileriyle araştırmanın gelişmesine katkı sağlayabilirsiniz. Kişisel verileri ve tam şasi numaralarını paylaşmayın.</p>
+        <a href="/tr/forum/">TractorVS forumuna git</a>
+      </aside>
+    </div>
+  </section>
+</SiteLayout>
+
+<style>
+.research-shell{background:#f5f8f3;color:#253b30;min-height:70vh;padding:clamp(20px,4vw,50px) 16px 85px}
+.research-container{max-width:1050px;margin-inline:auto}
+.research-breadcrumb{font-size:13px;display:flex;gap:9px;flex-wrap:wrap;margin-bottom:30px;color:#436a4e}
+.research-shell a{color:#1c613a;text-decoration:underline;text-underline-offset:3px}
+.research-shell a:focus-visible{outline:3px solid #86b989;outline-offset:4px}
+.research-kicker{font-size:11px;font-weight:800;letter-spacing:.11em;color:#3d7450;margin-bottom:14px}
+.research-lede{background:#eaf2e8;border-left:4px solid #357c4d;padding:18px 24px;border-radius:0 14px 14px 0;margin-bottom:26px}
+.research-lede strong{font-size:17px}.research-lede p{font-size:15px;line-height:1.75;margin:7px 0 0}
+.research-article{background:#fff;border:1px solid #dae6d8;border-radius:18px;padding:clamp(20px,4vw,50px);box-shadow:0 6px 30px rgba(17,48,28,.04)}
+.research-article :global(h1){font-size:clamp(26px,3.5vw,40px);line-height:1.2;margin:0 0 24px;color:#1b5534;letter-spacing:-.025em}
+.research-article :global(h2){font-size:clamp(21px,2.5vw,28px);color:#205d3b;line-height:1.3;margin:46px 0 16px;padding-top:8px;border-top:1px solid #dfebdd;scroll-margin-top:100px}
+.research-article :global(h3){font-size:clamp(18px,2vw,22px);color:#2d6040;line-height:1.4;margin:31px 0 12px;scroll-margin-top:100px}
+.research-article :global(p),.research-article :global(li){font-size:clamp(15px,1.65vw,17px);line-height:1.9;overflow-wrap:anywhere}
+.research-article :global(p){margin:0 0 18px}
+.research-article :global(ul),.research-article :global(ol){padding-left:1.5rem;margin:8px 0 21px}
+.research-article :global(li){padding-left:3px;margin-bottom:8px}
+.research-article :global(blockquote){margin:24px 0;padding:14px 21px;border-left:4px solid #57956b;background:#f0f7ef;border-radius:0 10px 10px 0}
+.research-article :global(blockquote p){margin:0;font-weight:550}
+.research-article :global(.research-table-scroll){max-width:100%;overflow-x:auto;overscroll-behavior-inline:contain;margin:20px 0 30px;border-radius:10px}
+.research-article :global(.research-table-scroll:focus-visible){outline:3px solid #378c58;outline-offset:3px}
+.research-article :global(table){width:100%;min-width:650px;border-collapse:collapse;display:table;table-layout:auto;font-size:14px}
+.research-article :global(caption){caption-side:top;text-align:left;font-weight:700;padding:9px 0;color:#3e6347;font-size:13px}
+.research-article :global(th),.research-article :global(td){padding:11px 14px;text-align:left;border:1px solid #dbe7db;vertical-align:top;min-width:125px}
+.research-article :global(th){background:#eaf3e8;font-weight:800;color:#255b38}
+.research-article :global(tr:nth-child(even) td){background:#f8fbf7}
+.research-toc{background:#fff;border:1px solid #d5e5d7;border-radius:13px;margin:0 0 25px;padding:17px 20px}
+.research-toc strong{color:#234e37;font-size:14px}
+.research-toc-links{display:flex;flex-wrap:wrap;gap:9px 15px;margin-top:11px}
+.research-toc-links a{font-size:14px;font-weight:700;color:#285b3a;text-underline-offset:3px}
+.research-article :global([id]){scroll-margin-top:110px}
+.research-article :global(.research-photo){max-width:590px;margin:26px auto 32px;background:#f7faf7;padding:12px;border:1px solid #e0e9df;border-radius:14px}
+.research-article :global(.research-photo img){display:block;width:100%;height:auto;max-width:480px;margin-inline:auto;object-fit:contain;border-radius:9px}
+.research-article :global(.research-photo figcaption){margin:12px 5px 3px;font-size:12px;line-height:1.75;color:#455d49}
+.research-article :global(p > img){display:block;max-width:100%;width:auto;max-height:370px;height:auto;object-fit:contain;border-radius:13px;background:#f5faf4;border:1px solid #e5eee4;margin:18px auto 8px}
+.research-article :global(a){overflow-wrap:anywhere}
+.research-footer{margin-top:28px;background:#e5f1e5;border:1px solid #d1e4d1;padding:clamp(18px,4vw,31px);border-radius:15px}
+.research-footer h2{color:#205a39;font-size:22px;margin:0 0 8px}
+.research-footer p{font-size:15px;line-height:1.8;margin:0 0 13px}
+@media(max-width:600px){.research-article :global(th),.research-article :global(td){padding:9px 10px;min-width:115px}.research-article{border-radius:13px}}
+</style>
