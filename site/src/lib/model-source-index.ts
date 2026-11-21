@@ -69,6 +69,7 @@ export function modelSourceIndex(tractor: Pick<TractorRecord, "brand_name" | "sp
 }
 
 export const MODEL_SOURCE_COPY: Record<Locale, {
+  kicker: string;
   title: string;
   introduction: string;
   official: string;
@@ -78,6 +79,7 @@ export const MODEL_SOURCE_COPY: Record<Locale, {
   caution: string;
 }> = {
   en: {
+    kicker: "SOURCE TRANSPARENCY",
     title: "Documents behind this tractor's specifications",
     introduction: "These links appear in the published technical records for this exact tractor entry. Manufacturer documents and independently reviewed third-party sources are distinguished.",
     official: "Manufacturer document", independent: "Reviewed independent source",
@@ -85,6 +87,7 @@ export const MODEL_SOURCE_COPY: Record<Locale, {
     caution: "A source link does not mean all years, markets, equipment variants or measurement standards are identical. Check the source and the notes next to each figure before comparing tractors.",
   },
   tr: {
+    kicker: "KAYNAK ŞEFFAFLIĞI",
     title: "Bu traktörün teknik veri kaynakları",
     introduction: "Aşağıdaki belgeler, bu traktör kaydında yayımlanan teknik özelliklerle bağlantılıdır. Üretici belgeleri ve incelenmiş bağımsız kaynaklar birbirinden ayrı gösterilir.",
     official: "Üretici belgesi", independent: "İncelenmiş bağımsız kaynak",
@@ -92,6 +95,7 @@ export const MODEL_SOURCE_COPY: Record<Locale, {
     caution: "Kaynak bağlantısı; bütün yılların, pazarların, donanım varyantlarının veya ölçüm standartlarının aynı olduğunu göstermez. Traktörleri karşılaştırmadan önce belgedeki koşulları ve her değerin yanındaki notları inceleyin.",
   },
   zh: {
+    kicker: "来源透明度",
     title: "此拖拉机技术参数的资料来源",
     introduction: "以下链接对应此拖拉机条目已发布的技术参数。制造商文件与经过审核的独立第三方资料分开列出。",
     official: "制造商文件", independent: "已审核的独立资料",
@@ -99,6 +103,7 @@ export const MODEL_SOURCE_COPY: Record<Locale, {
     caution: "有资料链接不代表所有年份、市场、配置版本或测量标准均相同。比较拖拉机前，请核对原始文件及各参数旁的说明。",
   },
   hi: {
+    kicker: "स्रोत पारदर्शिता",
     title: "इस ट्रैक्टर के तकनीकी आँकड़ों के स्रोत",
     introduction: "ये लिंक इसी ट्रैक्टर प्रविष्टि में प्रकाशित तकनीकी विवरणों से जुड़े हैं। निर्माता के दस्तावेज़ और जाँचे गए स्वतंत्र स्रोत अलग-अलग दिखाए गए हैं।",
     official: "निर्माता का दस्तावेज़", independent: "समीक्षित स्वतंत्र स्रोत",
@@ -106,6 +111,7 @@ export const MODEL_SOURCE_COPY: Record<Locale, {
     caution: "स्रोत लिंक होने का अर्थ यह नहीं कि हर वर्ष, बाज़ार, संस्करण या माप मानक एक जैसा है। ट्रैक्टरों की तुलना से पहले मूल दस्तावेज़ और हर आँकड़े के पास की टिप्पणी पढ़ें।",
   },
   "pt-br": {
+    kicker: "TRANSPARÊNCIA DAS FONTES",
     title: "Fontes das especificações deste trator",
     introduction: "Os documentos abaixo estão associados aos dados técnicos publicados para esta configuração. Documentos do fabricante e fontes independentes revisadas são apresentados separadamente.",
     official: "Documento do fabricante", independent: "Fonte independente revisada",
@@ -113,6 +119,7 @@ export const MODEL_SOURCE_COPY: Record<Locale, {
     caution: "Um link não significa que todos os anos, mercados, versões ou padrões de medição sejam iguais. Consulte os documentos e as observações de cada valor antes de comparar tratores.",
   },
   fr: {
+    kicker: "TRANSPARENCE DES SOURCES",
     title: "Sources des caractéristiques de ce tracteur",
     introduction: "Ces documents sont associés aux données techniques publiées pour cette fiche. Les documents constructeur et les sources indépendantes examinées sont distingués.",
     official: "Document du constructeur", independent: "Source indépendante examinée",
@@ -120,6 +127,7 @@ export const MODEL_SOURCE_COPY: Record<Locale, {
     caution: "La présence d'une source ne signifie pas que les années, marchés, versions ou normes de mesure sont identiques. Vérifiez le document et les notes de chaque valeur avant toute comparaison.",
   },
   de: {
+    kicker: "QUELLENTRANSPARENZ",
     title: "Quellen für die technischen Angaben dieses Traktors",
     introduction: "Diese Dokumente sind mit den veröffentlichten technischen Angaben zu genau diesem Datensatz verknüpft. Herstellerunterlagen und geprüfte unabhängige Quellen werden getrennt ausgewiesen.",
     official: "Herstellerdokument", independent: "Geprüfte unabhängige Quelle",
@@ -127,6 +135,7 @@ export const MODEL_SOURCE_COPY: Record<Locale, {
     caution: "Ein Quellenlink bedeutet nicht, dass Baujahre, Märkte, Ausstattungen oder Messnormen übereinstimmen. Prüfen Sie vor Vergleichen das Originaldokument und die Hinweise zum jeweiligen Wert.",
   },
   ru: {
+    kicker: "ПРОЗРАЧНОСТЬ ИСТОЧНИКОВ",
     title: "Источники технических данных этого трактора",
     introduction: "Эти документы связаны с опубликованными характеристиками именно этой записи. Материалы производителя и проверенные независимые источники показаны отдельно.",
     official: "Документ производителя", independent: "Проверенный независимый источник",
@@ -134,6 +143,7 @@ export const MODEL_SOURCE_COPY: Record<Locale, {
     caution: "Наличие ссылки не означает совпадения годов выпуска, рынков, комплектаций или стандартов измерения. Перед сравнением изучите оригинал и примечания к каждому значению.",
   },
   ja: {
+    kicker: "資料の透明性",
     title: "このトラクターの仕様に関する資料",
     introduction: "以下は、この車両データに掲載された技術仕様に結び付く資料です。メーカー文書と確認済みの独立資料を区別して掲載しています。",
     official: "メーカー資料", independent: "確認済みの独立資料",
@@ -141,6 +151,7 @@ export const MODEL_SOURCE_COPY: Record<Locale, {
     caution: "資料へのリンクだけで、年式・市場・装備仕様・測定基準が同一とは限りません。比較前に元資料と各数値の注記を確認してください。",
   },
   es: {
+    kicker: "TRANSPARENCIA DE FUENTES",
     title: "Fuentes de las especificaciones de este tractor",
     introduction: "Estos documentos están vinculados a los datos técnicos publicados de esta ficha. Se distinguen los documentos del fabricante de las fuentes independientes revisadas.",
     official: "Documento del fabricante", independent: "Fuente independiente revisada",
