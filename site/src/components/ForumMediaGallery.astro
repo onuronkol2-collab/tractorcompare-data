@@ -1,0 +1,25 @@
+---
+import type {ForumMedia} from "../lib/forum.ts";
+import {forumMediaImageUrl} from "../lib/forum.ts";
+interface Props {photos:ForumMedia[];contentLanguage?:string}
+const {photos,contentLanguage}=Astro.props;
+---
+{photos.length>0&&<div class="forum-photos" aria-label="Forum photos">
+ {photos.map(photo=><figure class="forum-photo">
+   <a href={forumMediaImageUrl(photo.id)} target="_blank" rel="noopener noreferrer"
+      aria-label={photo.alt_text}>
+    <img src={forumMediaImageUrl(photo.id)} alt={photo.alt_text} lang={contentLanguage}
+     width="1200" height="900" loading="lazy" decoding="async"/>
+   </a>
+   <figcaption lang={contentLanguage}>{photo.alt_text}</figcaption>
+ </figure>)}
+</div>}
+<style>
+ .forum-photos{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,250px),1fr));gap:12px;margin:18px 0}
+ .forum-photo{margin:0;min-width:0;background:#f2f7ee;border:1px solid #c9dec9;border-radius:13px;overflow:hidden}
+ .forum-photo a{display:block}
+ .forum-photo img{display:block;width:100%;height:auto;max-height:360px;aspect-ratio:4/3;object-fit:contain;background:#eaf0e8}
+ .forum-photo figcaption{font-size:13px;line-height:1.5;color:#365e44;padding:9px 12px;overflow-wrap:anywhere}
+ .forum-photo a:focus-visible{outline:3px solid #397b4d;outline-offset:-3px}
+ @media(prefers-reduced-motion:reduce){.forum-photo *{scroll-behavior:auto}}
+</style>
