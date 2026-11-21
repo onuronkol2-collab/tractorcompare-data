@@ -1,7 +1,7 @@
 import type {Locale} from "./locales.ts";
 type Copy={
  name:string;heading:string;intro:string;empty:string;search:string;all:string;
- writingLanguage:string;compose:string;title:string;body:string;category:string;model:string;noModel:string;
+ readOriginal:string;originalLanguage:string;writingLanguage:string;compose:string;title:string;body:string;category:string;model:string;noModel:string;
  consent:string;submit:string;submitReply:string;reply:string;replies:string;
  email:string;sendLink:string;otp:string;verify:string;login:string;logout:string;
  sent:string;pending:string;authRequired:string;signinNote:string;guidelines:string;
@@ -10,6 +10,7 @@ type Copy={
 };
 export const FORUM_TEXT:Record<Locale,Copy>={
  en:{
+ readOriginal:"Read original",originalLanguage:"Original language",
  writingLanguage:"Language of your post",
  name:"Community",heading:"Tractor questions, repairs and owner experiences",
  intro:"Ask about real tractor models, compare experiences and discuss maintenance. New posts are reviewed before appearing publicly.",
@@ -25,6 +26,7 @@ export const FORUM_TEXT:Record<Locale,Copy>={
  noResults:"No discussions match these filters.",back:"All discussions",loading:"Processing…",translated:"Reviewed translation",help:"Need help finding a model? Use the catalogue first."
  },
  tr:{
+ readOriginal:"Özgün metni oku",originalLanguage:"Özgün metnin dili",
  writingLanguage:"Gönderinin dili",
  name:"Topluluk",heading:"Traktör soruları, arızalar ve kullanıcı deneyimleri",
  intro:"Gerçek traktör modellerini sor, deneyimleri karşılaştır ve bakım konularını tartış. Yeni içerikler yayınlanmadan önce incelenir.",
@@ -40,6 +42,7 @@ export const FORUM_TEXT:Record<Locale,Copy>={
  noResults:"Bu filtrelere uygun konu bulunamadı.",back:"Tüm tartışmalar",loading:"İşleniyor…",translated:"Kontrol edilmiş çeviri",help:"Model seçmek için önce traktör kataloğunu kullanabilirsin."
  },
  zh:{
+ readOriginal:"查看原文",originalLanguage:"原文语言",
  writingLanguage:"发帖语言",
  name:"社区",heading:"拖拉机问答、维修与车主经验",intro:"交流真实机型、保养维修及使用经验。新内容经审核后公开。",
  empty:"暂无审核通过的讨论。欢迎提交第一个有价值的问题。",search:"搜索讨论",all:"全部主题",compose:"发表主题",title:"主题标题",body:"详细描述问题或使用经验",
@@ -53,6 +56,7 @@ export const FORUM_TEXT:Record<Locale,Copy>={
  noResults:"没有符合条件的讨论。",back:"所有讨论",loading:"处理中…",translated:"已审核翻译",help:"寻找机型？请先查看拖拉机目录。"
  },
  hi:{
+ readOriginal:"मूल पाठ पढ़ें",originalLanguage:"मूल भाषा",
  writingLanguage:"आपकी पोस्ट की भाषा",
  name:"समुदाय",heading:"ट्रैक्टर सवाल, मरम्मत और मालिकों के अनुभव",intro:"वास्तविक ट्रैक्टर मॉडलों, रखरखाव और खेती के अनुभवों पर चर्चा करें। नई पोस्ट समीक्षा के बाद सार्वजनिक होती हैं।",
  empty:"अभी कोई स्वीकृत चर्चा नहीं है। आप पहला उपयोगी सवाल भेज सकते हैं।",search:"चर्चा खोजें",all:"सभी विषय",compose:"नई चर्चा शुरू करें",title:"विषय का शीर्षक",body:"समस्या या अनुभव विस्तार से लिखें",
@@ -66,6 +70,7 @@ export const FORUM_TEXT:Record<Locale,Copy>={
  noResults:"इस खोज से कोई चर्चा नहीं मिली।",back:"सभी चर्चाएँ",loading:"प्रक्रिया जारी है…",translated:"समीक्षित अनुवाद",help:"मॉडल ढूँढने के लिए पहले ट्रैक्टर सूची देखें।"
  },
  "pt-br":{
+ readOriginal:"Ler o original",originalLanguage:"Idioma original",
  writingLanguage:"Idioma da sua publicação",
  name:"Comunidade",heading:"Dúvidas, manutenção e experiências com tratores",intro:"Converse sobre modelos reais, manutenção e experiências no campo. As novas publicações passam por moderação.",
  empty:"Ainda não há discussões aprovadas. Envie a primeira pergunta útil.",search:"Buscar discussões",all:"Todos os tópicos",compose:"Criar discussão",title:"Título do tópico",body:"Descreva sua dúvida ou experiência",
@@ -80,6 +85,7 @@ export const FORUM_TEXT:Record<Locale,Copy>={
  noResults:"Nenhuma discussão encontrada.",back:"Todas as discussões",loading:"Processando…",translated:"Tradução revisada",help:"Para encontrar um modelo, consulte primeiro o catálogo."
  },
  fr:{
+ readOriginal:"Lire l’original",originalLanguage:"Langue d’origine",
  writingLanguage:"Langue de votre message",
  name:"Communauté",heading:"Questions, pannes et retours d'expérience sur les tracteurs",intro:"Échangez sur les modèles réels, l'entretien et l'utilisation. Les nouveaux messages sont modérés avant publication.",
  empty:"Aucune discussion approuvée pour le moment. Posez la première question utile.",search:"Rechercher",all:"Tous les sujets",compose:"Créer un sujet",title:"Titre du sujet",body:"Décrivez votre question ou votre expérience",
@@ -94,6 +100,7 @@ export const FORUM_TEXT:Record<Locale,Copy>={
  noResults:"Aucune discussion correspondante.",back:"Toutes les discussions",loading:"Traitement…",translated:"Traduction vérifiée",help:"Pour trouver un modèle, consultez d'abord le catalogue."
  },
  de:{
+ readOriginal:"Original lesen",originalLanguage:"Originalsprache",
  writingLanguage:"Sprache deines Beitrags",
  name:"Community",heading:"Traktorfragen, Reparaturen und Erfahrungen",intro:"Tauschen Sie sich über konkrete Modelle, Wartung und Praxiserfahrungen aus. Neue Beiträge werden vor der Veröffentlichung geprüft.",
  empty:"Noch keine freigegebenen Diskussionen. Stellen Sie die erste hilfreiche Frage.",search:"Diskussionen suchen",all:"Alle Themen",compose:"Thema erstellen",title:"Titel",body:"Frage oder Erfahrung beschreiben",
@@ -108,6 +115,7 @@ export const FORUM_TEXT:Record<Locale,Copy>={
  noResults:"Keine passenden Diskussionen.",back:"Alle Diskussionen",loading:"Wird verarbeitet…",translated:"Geprüfte Übersetzung",help:"Ein Modell finden Sie im Traktorkatalog."
  },
  ru:{
+ readOriginal:"Прочитать оригинал",originalLanguage:"Язык оригинала",
  writingLanguage:"Язык сообщения",
  name:"Сообщество",heading:"Вопросы, ремонт и опыт владельцев тракторов",intro:"Обсуждайте реальные модели, обслуживание и работу в поле. Новые сообщения публикуются после модерации.",
  empty:"Одобренных обсуждений пока нет. Задайте первый полезный вопрос.",search:"Поиск обсуждений",all:"Все темы",compose:"Создать тему",title:"Заголовок",body:"Опишите вопрос или свой опыт",
@@ -122,6 +130,7 @@ export const FORUM_TEXT:Record<Locale,Copy>={
  noResults:"Подходящих обсуждений нет.",back:"Все обсуждения",loading:"Обработка…",translated:"Проверенный перевод",help:"Сначала найдите модель в каталоге."
  },
  ja:{
+ readOriginal:"原文を読む",originalLanguage:"原文の言語",
  writingLanguage:"投稿の言語",
  name:"コミュニティ",heading:"トラクターの質問・整備・オーナーの体験談",intro:"実際の機種、整備、使用経験について情報交換できます。新しい投稿は審査後に公開されます。",
  empty:"承認済みの投稿はまだありません。最初の役立つ質問を投稿できます。",search:"投稿を検索",all:"すべての話題",compose:"新しい話題を投稿",title:"話題のタイトル",body:"質問や体験を詳しく書く",
@@ -136,6 +145,7 @@ export const FORUM_TEXT:Record<Locale,Copy>={
  noResults:"条件に合う投稿がありません。",back:"すべての話題",loading:"処理中…",translated:"確認済みの翻訳",help:"機種を探すには、まずトラクター一覧をご覧ください。"
  },
  es:{
+ readOriginal:"Leer el original",originalLanguage:"Idioma original",
  writingLanguage:"Idioma de tu publicación",
  name:"Comunidad",heading:"Preguntas, averías y experiencias con tractores",intro:"Comparte información sobre modelos reales, mantenimiento y trabajo agrícola. Las publicaciones nuevas se moderan antes de aparecer.",
  empty:"Todavía no hay debates aprobados. Puedes enviar la primera pregunta útil.",search:"Buscar debates",all:"Todos los temas",compose:"Crear tema",title:"Título del tema",body:"Describe tu duda o experiencia",
