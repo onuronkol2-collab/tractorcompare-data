@@ -39,7 +39,7 @@ export const REVIEWED_PUBLIC_SPEC_HEADINGS: Record<string, Partial<Record<Locale
   "Standard Rear Tire": {tr:"Standart arka lastik"},
   "Cab Height": {tr:"Kabin yüksekliği",hi:"केबिन की ऊँचाई","pt-br":"Altura da cabine",fr:"Hauteur de cabine",ru:"Высота кабины",es:"Altura de la cabina"},
   "Clutch On Gear Lever": {tr:"Vites kolundaki debriyaj kumandası"},
-  "Maximum Engine Power With EPM": {tr:"EPM etkin azami motor gücü",hi:"EPM के साथ अधिकतम इंजन शक्ति",ru:"Максимальная мощность двигателя с EPM",ja:"EPM作動時のエンジン最高出力"},
+  "Maximum Engine Power With EPM": {tr:"EPM etkin azami motor gücü",zh:"EPM 模式下的发动机最大功率",hi:"EPM के साथ अधिकतम इंजन शक्ति","pt-br":"Potência máxima do motor com EPM",fr:"Puissance maximale du moteur avec EPM",de:"Maximale Motorleistung mit EPM",ru:"Максимальная мощность двигателя с EPM",ja:"EPM作動時のエンジン最高出力",es:"Potencia máxima del motor con EPM"},
   "Minimum Speed": {tr:"Asgari hız"},
   "Minimum Speed With Creeper": {tr:"Sürüngen viteste asgari hız"},
   "Powershift Stages": {tr:"Powershift kademe sayısı"},
