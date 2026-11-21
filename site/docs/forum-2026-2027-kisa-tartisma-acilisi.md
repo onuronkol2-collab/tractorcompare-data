@@ -1,17 +1,20 @@
-# 2026–2027 Traktör Güvenilirliği: Hangi Marka Daha Az Arızalanıyor?
+# 2026–2027 Traktör Güvenilirliği: Hangi Markada Daha Az Sorun Bildirilmiş?
 
-**TractorVS araştırması | 21 Kasım 2026**
+**TractorVS marka karşılaştırması | 21 Kasım 2026**
+**Veri:** ABD'de 2021 yılında yapılan 2.262 çiftçi / 7.755 traktör değerlendirmesi.
 
-Bir traktörün 5.000 saatte sensör değiştirmesiyle 500 saatte şanzıman arızası yaşaması aynı şey mi? Peki çok satılan bir traktörün internette daha fazla şikâyet alması onu daha az güvenilir yapar mı?
+Önce sayılar: Bu araştırma *satışta arızalanan traktör yüzdesini* değil, **100 değerlendirilen traktör başına bildirilen sorun olaylarını** karşılaştırıyor.
 
-**19 model ve model ailesinin** bağımsız saha testlerini, motor saatlerini ve belgelenmiş onarımlarını karşılaştırdık.
+**En az sorun bildirilen 5 marka:** 1. Kubota **76** · 2. Case IH **119** · 3. John Deere **120** · 4. New Holland **126** · 5. Massey Ferguson **135**.
 
-Üç dikkat çekici örnek: İncelenen **Massey Ferguson 8S.265 Dyna-7** traktöründe iki önemli şanzıman onarımı kaydedildi. **Fendt 728 Vario Gen7** örneğinde 1.800 saati aşan kullanımda plansız servis ziyaretleri yaşandı. **New Holland T7.230 AutoCommand** ise 2.920 saatlik testte genel olarak olumlu değerlendirildi.
+**En çok sorun bildirilen 5 marka:** 1. Versatile **164** · 2. Allis-Chalmers **146** · 3. Massey Ferguson **135** · 4. New Holland **126** · 5. John Deere **120**.
 
-Bu örnekler birbirinin eşiti değildir. Aynı modelin üretim yılı, motor saati ve çalışma koşulları farklı olabilir. **Bu nedenle kanıtlanmamış bir “en kötü/en iyi marka” sıralaması üretmedik.**
+**Neden üç marka iki listede de var?** Kaynağın sayısal grafiğinde yalnızca yedi marka bulunuyor. Aynı yedi markanın en düşük ve en yüksek beşlisi doğal olarak örtüşüyor; başka markalar için oran uydurmadık.
 
-**Tam kaynaklı araştırma, 19 modelin karşılaştırma tablosu ve lisanslı traktör fotoğrafları:** https://tractorvs.com/tr/guides/2026-2027-traktor-guvenilirlik/
+Örnek: Kubota'da 100 traktör için **76 sorun olayı**, Versatile'de **164 sorun olayı** bildirilmiş. Bu, Versatile'nin yaklaşık **2,16 kat** daha fazla olay bildirdiği anlamına gelir; 2026–2027 üretimlerinde iki kat arıza riski kanıtlamaz. Allis-Chalmers tarihsel bir markadır.
 
-**Sizin deneyiminiz ne?** Marka, tam model ve yılınızı; toplam motor saatini; yaşanan arızayı ve traktörün kaç gün çalışamadığını yazın. Hiç arıza yapmamış traktörlerin deneyimleri de çok değerli.
+**Fotoğraflı araştırma, yedi markanın kaynak ve oranları:** https://tractorvs.com/tr/guides/2026-2027-traktor-guvenilirlik/
 
-*Veri kesim tarihi: 21 Kasım 2026. 2027 yılına ait gelecekteki arızalar henüz bilinemez. Lütfen kişisel bilgiler veya tam şasi numarası paylaşmayın.*
+**Siz hangi traktörü kullanıyorsunuz?** Model, üretim yılı, motor saati ve onarım geçmişinizi paylaşın. Hiç sorun yaşamadıysanız onu da yazın.
+
+*Kaynak: DTN / Progressive Farmer 2021 Reader Insights. 2026–2027 satış başına doğrulanmış arıza oranları bu verilerden hesaplanamaz. Kişisel bilgilerinizi ve tam şasi numaralarını paylaşmayın.*
