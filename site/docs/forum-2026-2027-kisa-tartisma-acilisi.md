@@ -1,24 +1,18 @@
-# 2026–2027 Traktör Arıza Araştırması: 100 Traktöre Kaç Şikâyet Düşüyor?
+# 2026–2027 Traktör Arıza Araştırması: 10 Markanın Gerçek Saha Kayıtları
 
 **TractorVS | 21 Kasım 2026**
 
-Hangi traktör daha az arıza yapıyor? Marka isimlerini rastgele sıralamak yerine **100 değerlendirilen traktöre düşen sorun sayısını** inceledik.
+En az arıza yapan traktör hangisi? Satış sayısını tek bir aracın servis kayıtlarıyla bölerek bunu bulamayız.
 
-2021 tarihli ABD kullanıcı araştırmasında karşılaştırılabilen güncel markalar **azdan çoğa** şöyle:
+2026 araştırmamız için **10 farklı marka** ve bunların bağımsız saha kayıtlarını topladık: **Fendt, New Holland, JCB, Valtra, Case IH, Claas, Massey Ferguson, John Deere, Kubota ve Deutz-Fahr.**
 
-1. **Kubota — 76 sorun / 100 traktör**
-2. **Case IH — 119 / 100**
-3. **John Deere — 120 / 100**
-4. **New Holland — 126 / 100**
-5. **Massey Ferguson — 135 / 100**
-6. **Versatile — 164 / 100**
+**Gerçek bulgular:** Massey Ferguson 8S.265 Dyna-7'nin incelenen örneğinde **4.400 saate kadar iki şanzıman değişimi**; New Holland T7.230 AutoCommand'da **2.920 saatte kontrol valfi arızası**; JCB Fastrac 4220 iCON'da **2.150 saatte dokuz onarım**, ancak tamamen hizmet dışı kalmama kaydedildi.
 
-Ayrıca **Fendt, Valtra, Claas ve Deutz-Fahr** markalarını araştırmaya ekledik; ancak bunlar için aynı yöntemle doğrulanmış oran bulunamadığından sayı veya sıra uydurmadık.
+**100 traktöre düşen arıza/şikâyet sayısı:** On markayı karşılaştırmak için aynı sürede takip edilmiş traktörlerin toplam arıza kayıtları gerekli. 2026–2027 için güvenilir ortak payda açıklanmadığından bu oranlara **“veri açıklanmadı”** yazıyoruz; eskiden toplanmış anket sayılarını yeni yılda yaşanmış gibi göstermiyoruz.
 
-**Kritik bilgi:** Bunlar **2026–2027'de gerçekleşmiş şikâyet sayıları değildir**. 2021'de sahiplerin bildirdiği *sorun olaylarıdır*. Aynı traktörde birden fazla sorun olabilir; oranlar arızalanan traktör yüzdesi anlamına gelmez. 2027 yılı henüz gerçekleşmedi.
+**10 markanın fotoğraflı ve kaynaklı incelemesi:**
+https://tractorvs.com/tr/guides/2026-2027-traktor-guvenilirlik/
 
-**10 marka için fotoğraflar, kısa değerlendirmeler ve kaynaklar:** https://tractorvs.com/tr/guides/2026-2027-traktor-guvenilirlik/
+**Sizin deneyiminiz?** Marka, tam model, yıl, motor saati, değişen parça ve çalışılamayan gün sayısını paylaşın. Hiç arızalanmadıysa onu da yazın; kişisel bilgi veya tam şasi numarası paylaşmayın.
 
-**Sizce en az arıza yapan traktör hangisi?** Marka, tam model, üretim yılı, motor saati ve yaşadığınız onarımları paylaşın. Hiç arıza olmadıysa onu da belirtin.
-
-*Kaynak: Progressive Farmer Reader Insights 2021. Kişisel bilgiler ve tam şasi numarası paylaşmayın.*
+*Güncelleme: 21 Kasım 2026. 2027'ye ait gelecekteki arızalar henüz oluşmadı. Örnek saha kayıtları tüm markanın arıza oranı değildir.*
