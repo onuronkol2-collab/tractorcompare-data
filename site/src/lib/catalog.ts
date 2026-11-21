@@ -614,7 +614,7 @@ const auditedTurkishSourceHeadingInEnglish: Record<string,string> = {
 };
 export function specLabel(spec: PublicSpec, lang: Locale): string {
   if (lang === "en") {
-    const sourceName = spec.spec_name.trim().replace(/\\s+/g," ").toLocaleLowerCase("tr");
+    const sourceName = spec.spec_name.trim().replace(/\s+/g," ").toLocaleLowerCase("tr");
     const known = auditedTurkishSourceHeadingInEnglish[sourceName];
     if (known) return known;
   }
