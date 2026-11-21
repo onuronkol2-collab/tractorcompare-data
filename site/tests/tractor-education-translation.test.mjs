@@ -39,6 +39,10 @@ test("machine translation is not allowed to publish without complete review",()=
  assert.match(translator,/state:"draft-needs-editorial-review"/);
  assert.match(translator,/reviewed:false/);
  assert.match(translator,/step=kind==="ui"\?1:maxBatch/);
+ // Timed-out jobs must retain completed batches without accepting corrupt drafts.
+ assert.match(translator,/await rename\(tmp,archiveFile\)/);
+ assert.match(translator,/output\.data\[kind\]=result;\s*await saveDraft\(\)/);
+ assert.match(translator,/DROPPED_INVALID_RESUME_ROWS/);
  assert.match(verifier,/requireApproved/);
  assert.match(verifier,/Source changed; all translations must be audited again/);
  for(const c of [enPage,articles]){
@@ -46,4 +50,24 @@ test("machine translation is not allowed to publish without complete review",()=
   assert.match(c,/validation\?\.reviewed!==true/);
   assert.match(c,/throw new Error\("UNPUBLISHED/);
  }
+});
+
+test("translation provider calls require explicit workflow dispatch and approval",()=>{
+ const smoke=readFileSync(new URL("../../../.github/workflows/tractor-education-translation-smoke.yml",import.meta.url),"utf8");
+ const bulk=readFileSync(new URL("../../../.github/workflows/tractorvs-education-translate.yml",import.meta.url),"utf8");
+ for(const workflow of [smoke,bulk]){
+  assert.match(workflow,/workflow_dispatch:/);
+  assert.match(workflow,/authorize_translation:/);
+  assert.match(workflow,/default: false/);
+  assert.match(workflow,/inputs\.authorize_translation == true/);
+  assert.match(workflow,/github\.event_name == 'workflow_dispatch'/);
+  assert.match(workflow,/github\.repository == 'onuronkol2-collab\/tractorcompare-data'/);
+  assert.match(workflow,/github\.ref == 'refs\/heads\/feat\/tractor-encyclopedia-10-language-editorial-20261120'/);
+ }
+ assert.match(smoke,/offline_contract:/);
+ assert.match(smoke,/provider_smoke:/);
+ assert.match(smoke,/needs: offline_contract/);
+ // These commands must appear only in jobs gated by deliberate authorization.
+ assert.match(smoke,/provider_smoke:[\s\S]*?if: >-[\s\S]*?inputs\.authorize_translation == true[\s\S]*?run: node site\/scripts\/test-editorial-translation\.mjs/);
+ assert.match(bulk,/locale_drafts:[\s\S]*?inputs\.authorize_translation == true[\s\S]*?translate-tractor-education\.mjs/);
 });
