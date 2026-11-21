@@ -177,9 +177,11 @@ const areaUnitOptions = [
       </form>
     </div>
   </section>
+
+  <script type="application/json" id="advisor-data" set:html={bundle}></script>
 </SiteLayout>
 
-<script type="application/json" id="advisor-data" set:html={bundle}></script>
+
 <script>
   import {
     COUNTRY_AREA_UNITS, areaToHectares, horsepowerScreening, recommendTractors,
