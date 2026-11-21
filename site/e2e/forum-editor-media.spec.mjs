@@ -59,7 +59,7 @@ test("editor safely formats text, previews emoji, and sends a private moderated 
  expect(posted).toHaveLength(0);
  await form.locator("[data-editor-rights]").check();
  await form.locator('button[type="submit"]').click();
- await expect(page.locator("[data-forum-status]")).toContainText("incelemeye");
+ await expect(page.locator("[data-forum-status]")).toContainText("moderasyona");
  await expect(page.locator("[data-editor-status]")).toContainText("incelemeye");
  expect(posted).toHaveLength(1);
  expect(posted[0].status).toBe("pending");
