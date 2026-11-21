@@ -49,7 +49,7 @@ export function evaluateSource(item){
  // that appeared earlier in a different product tab.
  const modelText=fold(target.model);
  const modelPattern=new RegExp("(?:^|[^\\p{L}\\p{N}])"+
-  modelText.split(" ").map(esc).join("\\\\s+")+
+  modelText.split(" ").map(esc).join("\\s+")+
   "(?=$|[^\\p{L}\\p{N}])","iu");
  const modelMatch=modelPattern.exec(fold(block));
  if(!modelMatch)
