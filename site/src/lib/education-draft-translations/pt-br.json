@@ -5,7 +5,39 @@
   "machineProvider": "Gemini",
   "createdAt": "2026-11-20T21:00:07.559Z",
   "data": {
-    "glossary": {}
+    "glossary": {},
+    "cases": {
+      "more-power-but-slipping": {
+        "title": "Por que até um trator potente pode patinar?",
+        "situation": "Dois tratores têm potência de motor semelhante. Em solo molhado, os pneus de um patinam enquanto o outro continua avançando.",
+        "explanation": "A potência do motor só ajuda quando os pneus conseguem transmiti-la ao solo. As condições e a calibragem dos pneus, a distribuição de peso, o tipo de solo e a tração nas quatro rodas (4WD) fazem diferença. Mais potência, por si só, não garante maior capacidade de tração.",
+        "remember": "A patinagem das rodas, isoladamente, não comprova defeito no motor. Siga as orientações específicas do trator e dos pneus para ajustar o lastro e a pressão de inflação."
+      },
+      "lift-rating-versus-implement": {
+        "title": "Uma capacidade de levante de 3,000 kg serve para qualquer implemento de três toneladas?",
+        "situation": "Dois catálogos indicam capacidade de levante de 3,000 kg. Mesmo assim, o mesmo implemento pesado pode afetar a estabilidade dos tratores de maneiras diferentes.",
+        "explanation": "O ponto de medição importa: nas extremidades dos braços do engate ou a 610 mm atrás delas. Quanto mais distante do trator estiver a carga, maiores podem ser os efeitos da alavanca e sobre a estabilidade. A capacidade de levante, sozinha, não determina o peso seguro do implemento.",
+        "remember": "Verifique em conjunto a massa e o centro de gravidade do implemento, a necessidade de lastro dianteiro e os limites de carga dos eixos."
+      },
+      "economy-pto": {
+        "title": "Por que o modo 540E não é adequado para todo implemento acionado pela tomada de potência?",
+        "situation": "Um trator oferece 540 e 540E. Ambos podem girar o implemento a 540 rpm. Então o modo econômico deve ser sempre escolhido?",
+        "explanation": "Em tratores compatíveis, o 540E pode manter 540 rpm na tomada de potência (TDP) com o motor em rotação mais baixa. Isso pode favorecer tarefas leves, mas talvez não forneça a resposta ou a potência útil de que um implemento sob carga elevada precisa.",
+        "remember": "Consulte os manuais do trator e do implemento para conferir os limites de rotação, potência e segurança. Mantenha distância de eixos giratórios sem proteção."
+      },
+      "hydraulic-flow-vs-pressure": {
+        "title": "Uma pá carregadeira lenta significa baixa pressão hidráulica?",
+        "situation": "Uma carregadeira frontal levanta lentamente, embora o catálogo informe alta pressão hidráulica. O operador se pergunta se o valor está errado.",
+        "explanation": "A vazão indica quanto óleo circula por minuto; a pressão está relacionada à força que um cilindro pode exercer. A velocidade do movimento também depende da vazão disponível e das dimensões do cilindro. Pressão alta, sozinha, não garante movimento rápido.",
+        "remember": "Não diagnostique falhas com base em apenas uma especificação. Nunca procure vazamentos hidráulicos de alta pressão com a mão; siga procedimentos seguros de manutenção."
+      },
+      "hot-engine-not-just-radiator": {
+        "title": "Motor superaquecendo significa sempre radiador com defeito?",
+        "situation": "O marcador de temperatura sobe durante um longo trabalho no campo. É comum suspeitar imediatamente do radiador.",
+        "explanation": "O radiador dissipa calor, mas ventilador, bomba do líquido de arrefecimento, termostato, nível do líquido e fluxo de ar também são importantes. Um único sintoma não identifica qual componente apresentou falha.",
+        "remember": "Siga o procedimento de desligamento seguro indicado pelo fabricante. Nunca abra a tampa do radiador ou a tampa pressurizada do sistema de arrefecimento enquanto estiver quente."
+      }
+    }
   },
   "validation": {
     "requires": [
@@ -19,7 +51,8 @@
     "complete": false
   },
   "summary": {
-    "glossary": 0
+    "glossary": 0,
+    "cases": 5
   },
   "errors": [
     {
@@ -34,5 +67,8 @@
       ],
       "error": "TimeoutError: The operation was aborted due to timeout"
     }
-  ]
+  ],
+  "editorialDraftProvenance": {
+    "cases": "GPT-6-assisted draft translation; not produced by Gemini; independent native-language technical review required"
+  }
 }
