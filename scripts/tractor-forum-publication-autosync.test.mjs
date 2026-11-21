@@ -74,3 +74,13 @@ test("unsafe read rejects incomplete refresh and never sends a commit",async()=>
  await assert.rejects(runForumSync({...base,fetchFn:m.fetchFn}),/HTTP 500/);
  assert.equal(m.calls.filter(c=>c.method==="PUT").length,0);
 });
+
+test("all 1001 localized records are read in five requests",async()=>{
+ const topics=Array.from({length:1001},(_,i)=>({...topic,id:String(i)}));
+ const m=mock({topics});
+ const result=await fingerprintPublicForum({jwt:anon,fetchFn:m.fetchFn});
+ assert.equal(result.public_topics,1001);
+ assert.deepEqual(m.calls.filter(c=>c.url.includes("localized_topics")).map(c=>new URL(c.url).searchParams.get("offset")),["0","250","500","750","1000"]);
+ topics[1000]=topics[0];
+ await assert.rejects(fingerprintPublicForum({jwt:anon,fetchFn:mock({topics}).fetchFn}),/Duplicate/);
+});
