@@ -39,6 +39,10 @@ test("sign in, recover a draft, submit for moderation and check its status",asyn
  async function signIn(){
   await auth.locator("input").fill("tester@example.invalid");
   await auth.locator("button").click();
+  await expect(verify.locator("input")).toBeHidden();
+  await compose.locator("[data-code-option] summary").click();
+  await verify.locator("button").click();
+  await expect(verify.locator("input")).toBeFocused();
   await verify.locator("input").fill("123456");
   await verify.locator("button").click();
   await expect(post).toBeVisible();
@@ -66,13 +70,23 @@ test("sign in, recover a draft, submit for moderation and check its status",asyn
  await expect(post.locator("textarea")).toHaveValue("");
  expect(posted).toHaveLength(1);
  expect(posted[0]).toMatchObject({title,body,status:"pending",locale:"de",translation_consent:false});
- await compose.locator("summary").click();
+ await compose.locator("[data-forum-history] summary").click();
  await expect(compose.locator("[data-history-list]")).toContainText(title+" · İncelemede");
  await post.locator("textarea").fill("Private draft for user A");
  await compose.locator("[data-forum-logout]").click();
  currentUser="user-b";
  await signIn();
  await expect(post.locator("textarea")).toHaveValue("");
- await compose.locator("summary").click();
+ await compose.locator("[data-forum-history] summary").click();
  await expect(compose.locator("[data-history-status]")).toHaveText("Burada henüz gönderin yok.");
+});
+
+test("an email link opens the editor and an expired link offers a fresh start",async({page})=>{
+ await page.route("**/forum-test-api/auth/v1/user",route=>route.fulfill({json:{id:"test-user"}}));
+ await page.goto("/tr/forum/#error=access_denied&error_code=otp_expired");
+ await expect(page.locator("[data-forum-status]")).toContainText("Yeni bir bağlantı iste");
+ await expect(page.locator("[data-forum-email]")).toBeVisible();
+ await page.goto("/tr/forum/?return-test=1#access_token=test-only");
+ await expect(page.locator("[data-forum-post]")).toBeVisible();
+ await expect(page).not.toHaveURL(/access_token/);
 });
