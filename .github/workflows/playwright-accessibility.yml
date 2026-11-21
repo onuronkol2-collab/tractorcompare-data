@@ -1,0 +1,54 @@
+name: TractorVS browser smoke and accessibility baseline
+
+on:
+  pull_request:
+    paths:
+      - ".github/workflows/playwright-accessibility.yml"
+      - ".github/dependabot.yml"
+      - "site/src/**"
+      - "site/e2e/**"
+      - "site/playwright.config.mjs"
+      - "site/package.json"
+      - "package-lock.json"
+  workflow_dispatch:
+  schedule:
+    - cron: "23 5 * * 3"
+
+permissions:
+  contents: read
+
+jobs:
+  browser-smoke:
+    # Read-only, local static build; never exposes secrets to forked PRs.
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    env:
+      CI: "true"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22.23.4"
+          cache: npm
+      - name: Install production build dependencies from lockfile
+        run: npm ci --no-audit --no-fund
+      - name: Install pinned test-only tools without modifying repository lockfile
+        run: npm install --no-save --package-lock=false --ignore-scripts --workspace=tractorvs-site @playwright/test@1.65.1 @axe-core/playwright@4.14.0
+      - name: Install Chromium, Firefox and WebKit for CI
+        run: npx playwright install --with-deps chromium firefox webkit
+      - name: Build inert local TractorVS pages
+        env:
+          PUBLIC_INDEXING_ENABLED: "false"
+        run: npm run build
+      - name: Execute real-browser smoke and axe accessibility baseline
+        run: npx playwright test --config site/playwright.config.mjs
+      - name: Upload diagnostics and axe findings
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: tractorvs-browser-smoke-artifacts
+          path: |
+            site/playwright-report
+            site/test-results
+          if-no-files-found: ignore
+          retention-days: 7
