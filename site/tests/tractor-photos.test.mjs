@@ -14,7 +14,7 @@ const tractor=(brand_name,model_name)=>({
   engine:null,transmission:null,drivetrain:null,weight_kg:null,specifications:[]
 });
 test("only exact matching tractor model identity receives a verified photo",()=>{
-  assert.equal(APPROVED_TRACTOR_PHOTOS.length,73);
+  assert.equal(APPROVED_TRACTOR_PHOTOS.length,76);
   assert.equal(tractorPhotos(tractor("Belarus","82.1")).length,4);
   assert.equal(tractorPhotos(tractor("Belarus","80.1")).length,1);
   assert.equal(tractorPhotos(tractor("Belarus","132N")).length,1);
@@ -132,6 +132,45 @@ test("eight new verified photos preserve signed source ledger and exact model id
     ["Steyr","6280 IMPULS"],["Zetor","6171"],["Belarus","922.3"],
   ])assert.equal(primaryTractorPhoto(tractor(brand,model)),null,
     "Exact model/version protection: "+brand+" "+model);
+});
+
+test("McCormick and Belarus verified images preserve exact source, JPEG SHA-256 and 10-language license SEO",()=>{
+  const evidence=JSON.parse(readFileSync(new URL(
+    "../docs/photo-import-evidence-mccormick-20261121.json",import.meta.url),"utf8"));
+  assert.equal(evidence.approved.length,3);
+  assert.equal(evidence.rejected.length,1);
+  assert.equal(evidence.rejected[0].model,"X5.085");
+  assert.equal(primaryTractorPhoto(tractor("McCormick","X5.085")),null,
+    "No unverified photo for McCormick X5.085");
+  for(const source of evidence.approved){
+    const photos=tractorPhotos(tractor(source.brand,source.model));
+    assert.equal(photos.length,1,"Precisely one approved model image");
+    const photo=photos[0];
+    assert.equal(photo.fileId,source.fileId);
+    assert.equal(photo.photographer,source.photographer);
+    assert.equal(photo.licenseName,source.license);
+    assert.equal(photo.licenseUrl,source.licenseUrl);
+    assert.equal(photo.configurationExact,false);
+    assert.equal(decodeURIComponent(photo.sourcePage),decodeURIComponent(source.originalCommonsUrl));
+    const jpeg=readFileSync(new URL("../public"+photo.thumbUrl,import.meta.url));
+    assert.equal(jpeg.length,source.bytes);
+    assert.equal(jpeg[0],255);assert.equal(jpeg[1],216);assert.equal(jpeg.at(-1),217);
+    assert.equal(createHash("sha256").update(jpeg).digest("hex"),source.sha256);
+    for(const lang of LOCALES){
+      const graph=modelStructuredData(tractor(source.brand,source.model),lang,
+        "https://tractorvs.com/")["@graph"];
+      const image=graph.find(x=>x["@type"]==="ImageObject");
+      assert.ok(image,"ImageObject "+source.brand+" "+source.model+" "+lang);
+      assert.equal(image.creator.name,photo.photographer);
+      assert.equal(image.license,photo.licenseUrl);
+      assert.equal(image.acquireLicensePage,photo.sourcePage);
+    }
+  }
+  for(const [brand,model] of [
+    ["McCormick","X4.085"],["McCormick","X8.631 P6-Drive"],
+    ["McCormick","X5.085"],["Belarus","952.2"],
+  ])assert.equal(primaryTractorPhoto(tractor(brand,model)),null,
+    "Photo must not leak to neighbor model "+brand+" "+model);
 });
 
 test("each approved photograph has a verified model source and re-use license",()=>{
@@ -258,9 +297,9 @@ test("fullscreen viewer, linked credits and public image sitemap use SSR images"
 });
 
 test("historic photo batch is staged with rights and does not create records",()=>{
-  assert.equal(HISTORICAL_LICENSED_PHOTOS.length,62);
+  assert.equal(HISTORICAL_LICENSED_PHOTOS.length,65);
   const all=new Set(HISTORICAL_LICENSED_PHOTOS.map(x=>x.fileId));
-  assert.equal(all.size,62);
+  assert.equal(all.size,65);
   assert.ok(HISTORICAL_LICENSED_PHOTOS.every(x=>x.configurationExact===false));
   assert.ok(!HISTORICAL_LICENSED_PHOTOS.some(x=>["Product","Vehicle"].includes(x.model)));
 });
