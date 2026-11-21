@@ -1,6 +1,8 @@
 import {test,expect} from "@playwright/test";
 
-test("Turkish forum offers password, email OTP and social sign-in without removing the old flow",async({page})=>{
+test("Turkish forum offers password, email OTP and enabled social sign-in without removing the old flow",async({page})=>{
+ await page.route("**/forum-test-api/auth/v1/settings",route=>
+  route.fulfill({json:{external:{google:true,github:true}}}));
  await page.goto("/tr/forum/");
  await expect(page.locator("[data-forum-email]")).toBeVisible();
  await expect(page.locator("[data-forum-password]")).toBeHidden();
@@ -13,6 +15,24 @@ test("Turkish forum offers password, email OTP and social sign-in without removi
  await expect(page.locator("[data-member-form]")).toBeHidden();
 });
 
+test("social buttons stay safely hidden when providers are disabled or configuration is unavailable",async({page})=>{
+ await page.route("**/forum-test-api/auth/v1/settings",route=>
+  route.fulfill({json:{external:{google:false,github:false}}}));
+ await page.goto("/tr/forum/");
+ await expect(page.locator('[data-forum-oauth="google"]')).toBeHidden();
+ await expect(page.locator('[data-forum-oauth="github"]')).toBeHidden();
+ await expect(page.locator("[data-oauth-unavailable]")).toBeVisible();
+ await expect(page.locator("[data-forum-email]")).toBeVisible();
+ await page.reload();
+ await expect(page.locator("[data-oauth-unavailable]")).toBeVisible();
+});
+test("providers are shown independently when only Google is enabled",async({page})=>{
+ await page.route("**/forum-test-api/auth/v1/settings",route=>
+  route.fulfill({json:{external:{google:true,github:false}}}));
+ await page.goto("/tr/forum/");
+ await expect(page.locator('[data-forum-oauth="google"]')).toBeVisible();
+ await expect(page.locator('[data-forum-oauth="github"]')).toBeHidden();
+});
 test("leaderboard is meaningful, opt-in and changes monthly/lifetime sort",async({page})=>{
  await page.route("**/forum-test-api/rest/v1/tc_member_scores?**",async route=>{
   await route.fulfill({status:200,contentType:"application/json",body:JSON.stringify([
