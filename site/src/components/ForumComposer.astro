@@ -468,7 +468,7 @@ for(const widget of widgets){
   const expectedAttempt=activeAuthAttempt;
   attemptPromise.then(ok=>{
    if(expectedAttempt!==activeAuthAttempt)return;
-   if(!ok)msg(copy.oldLink);
+   if(!ok){msg(copy.oldLink);if(authGate)authGate.open=true}
    if(ok&&isRecovery&&resetForm){if(authGate){authGate.hidden=false;authGate.open=true}resetForm.hidden=false;
     resetForm.querySelector<HTMLInputElement>("input")?.focus()}
    if(ok&&!isRecovery&&cfg.mode==="topic"){
@@ -480,6 +480,7 @@ for(const widget of widgets){
   history.replaceState(null,"",location.pathname+location.search);
   const expiredEmail=(hash.get("error_code")||"").startsWith("otp_");
   msg(expiredEmail?(memberCopy.invalidLinkHelp||copy.oldLink):(memberCopy.oauthError||copy.oldLink));
+  if(authGate)authGate.open=true;
   if(expiredEmail&&expiredHelp)expiredHelp.hidden=false;
   widget.scrollIntoView({block:"start"});
  }else{
