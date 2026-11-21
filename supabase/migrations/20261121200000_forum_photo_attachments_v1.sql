@@ -177,9 +177,13 @@ BEGIN
    OR (SELECT reloptions @> ARRAY['security_invoker=true'] FROM pg_class
        WHERE oid='public.tc_forum_public_media'::regclass) IS DISTINCT FROM true THEN
    RAISE EXCEPTION 'Media RLS/invoker missing'; END IF;
+ -- Supabase's managed storage.objects table normally grants INSERT to anon;
+ -- its bucket-specific RLS policies, not the global GRANT, govern actual access.
  IF has_column_privilege('anon','public.tc_forum_media','storage_path','SELECT')
  OR has_column_privilege('authenticated','public.tc_forum_media','status','UPDATE')
- OR has_table_privilege('anon','storage.objects','INSERT') THEN
+ OR EXISTS(SELECT 1 FROM pg_policies WHERE schemaname='storage' AND tablename='objects'
+   AND policyname='tc_forum_media_storage_owner_insert'
+   AND ('anon'=ANY(roles) OR 'public'=ANY(roles))) THEN
   RAISE EXCEPTION 'Media privilege escalation detected'; END IF;
 END $verify$;
 COMMIT;
