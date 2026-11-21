@@ -1,4 +1,5 @@
 import {generateGeminiJson} from "./gemini-provider.ts";
+import {chooseTranslationSegments} from "./translation-segments.ts";
 import {isUntranslatedTurkishTitle,sameNumericFacts,TRANSLATION_RESUME_FIELDS,verifiedReadyTranslation} from "./translation-quality.ts";
 // Private, consent-gated TractorVS forum translator.
 // Only published, opted-in text enters Gemini; never submit user identity or media.
@@ -61,28 +62,6 @@ function check(a:Article,b:Article,to:string){
  if(to==="ja"&&!/[\u3040-\u30ff\u4e00-\u9fff]/.test(b.body))return "Japanese script missing";
  if(to==="hi"&&!/[\u0900-\u097f]/.test(b.body))return "Hindi script missing";
  return null;
-}
-function segments(body:string,max=2200):string[]{
- // Preserve whole Markdown blocks, particularly tables, headings and citations.
- // Never split halfway through a table row or an individual paragraph.
- const normalized=body.replace(/\r\n?/g,"\n");
- const chunks=normalized.split(/(\n{2,})/);
- const work:string[]=[];
- let current="";
- for(let i=0;i<chunks.length;i+=2){
-  const block=(chunks[i]||"")+(chunks[i+1]||"");
-  if(!block)continue;
-  if(block.length>max+300)throw Error("One article block is too long for safe translation");
-  if(current&&current.length+block.length>max){work.push(current);current=block}
-  else current+=block;
- }
- if(current)work.push(current);
- if(work.length>1&&work.at(-1)!.length<160&&
-    work.at(-2)!.length+work.at(-1)!.length<max+300){
-  work[work.length-2]+=work.pop();
- }
- if(!work.length||work.length>8)throw Error("Article segmentation exceeded limits");
- return work;
 }
 async function translateChunk(source:Source,chunk:string,target:string){
  const input={title:source.title,body:chunk};
@@ -150,12 +129,13 @@ async function work(){
     return {processed:0,status:"superseded"};
    }
    if(source.body.length>12000||source.title.length>160)throw Error("Source exceeds safe length");
-   const parts=segments(source.body);
    const savedRows=await db("tc_forum_topic_translations",{
     select:TRANSLATION_RESUME_FIELDS,
     topic_id:"eq."+job.entity_id,locale:"eq."+job.target_locale,limit:"1"
    });
    const existing=savedRows[0] as (Article&{state:string;source_hash:string;qa_notes:string;model:string;reviewed_by_model:string|null;seo_approved:boolean|null})|undefined;
+   const parts=chooseTranslationSegments(source.body,
+    existing?.source_hash===source.source_hash ? existing.qa_notes : null);
    if(existing?.source_hash===source.source_hash&&existing.state==="ready"){
     if(verifiedReadyTranslation(existing,source.source_hash)){
      await patch(job,{state:"done",completed_at:new Date().toISOString(),last_error:null});
