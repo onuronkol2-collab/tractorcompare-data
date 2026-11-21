@@ -10,7 +10,7 @@
 
 PR içindeki dosyalar:
 - `site/playwright.config.mjs`: Chromium, Firefox, WebKit, Pixel 7 mobil görünüm.
-- `site/e2e/tractorvs-smoke.spec.mjs`: on dil rotasını temsilen TR/EN, katalog, karşılaştırma, forum, analitik reddetme/kabul/geri çekme ve axe-core kritik sorunları.
+- `site/e2e/tractorvs-smoke.spec.mjs`: on dilin tamamında ana sayfa erişimi/dil bildirimi, TR/EN temel sayfalar, mobil karşılaştırma menüsü, katalog, karşılaştırma, forum, analitik reddetme/kabul/geri çekme ve axe-core kritik sorunları.
 - `.github/workflows/playwright-accessibility.yml`: site kod PR'larında, haftalık ve elle çalışır. Üretim veritabanına erişim vermez, kullanıcı eylemleri yalnız localhost'ta, dış analitik istekleri bloke edilir. Kod testleri canlı Cloudflare dağıtımı yerine yerel statik Astro çıktısını denetler.
 
 İlk aşamada axe-core **critical** bulguları başarısız kabul edilir; serious/moderate/minor bulgular test çıktısında kayıtlıdır ve sonraki kalite PR'larıyla çözülmelidir. Bu durum tüm WCAG uygunluğunun onaylandığı anlamına gelmez.
