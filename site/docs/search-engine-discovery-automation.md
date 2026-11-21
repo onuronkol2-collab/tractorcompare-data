@@ -31,11 +31,15 @@ Script: `scripts/tractor-search-discovery.mjs`.
 - Subsequent runs compare new URLs or trusted `lastmod` changes against the last successful checkpoint.
 - Every changed page must return 200 (without redirect), correct canonical and no `noindex` before notification.
 - At most 60 changed pages are validated/sent per run; the rest remain pending.
-- Submit to `https://api.indexnow.org/indexnow`, one batch, only after all validations succeed; accept 200 or 202, record 202 as pending verification, never as guaranteed indexing.
+- Submit a validated batch to the shared `https://api.indexnow.org/indexnow` endpoint. It distributes a successful protocol notification to participating engines (including Bing, Yandex, Naver and Seznam). **Do not post individually to all engines.** If the primary returns transient 5xx or a network error, try one alternative official endpoint at a time (`www.bing.com/indexnow`, `yandex.com/indexnow`, `searchadvisor.naver.com/indexnow`), stopping at the first 200 or 202. Never bypass 4xx ownership failures, invalid payloads or 429 throttling. All failures leave the changed URLs pending.
+- A 200 means IndexNow accepted the request, 202 is provisional pending key validation. Neither status proves delivery, crawl or indexing by each individual engine. The report records the actual endpoint used, not invented search-index counts.
 - The checkpoint is retained in GitHub Actions cache only after success; API failures do not mark URL delivery successful.
 - Manual workflow runs default to **dry run**; no submission/commit.
 - Removed pages are intentionally not submitted as 404/410 until an independently audited unpublication path exists.
-- Google does **not** use IndexNow; it discovers URLs using sitemap and links.
+- Google does **not** use IndexNow. Its sitemap is regenerated on published production builds and exposed through `robots.txt` and the previously submitted root index. Google periodically revisits submitted sitemaps; **do not** use deprecated Google ping URLs or claim immediate Google indexing.
+- Yandex, Bing and Naver each can discover the root sitemap through their webmaster dashboards/robots declarations. The IndexNow shared notification is a separate **URL-change hint**, not a repeated sitemap registration. Yandex's sitemap-registration API requires authorized Yandex OAuth access and is unnecessary on each new publish. Naver's specialized crawl-request API is for approved partners and requires separate authorization; a verified Search Advisor site alone does not grant it. Never invent partner tokens or submit unauthenticated API requests.
+- Baidu is not an IndexNow participant according to the reviewed public participant roster. Without a verified Baidu Webmaster account/API credentials, do not claim automatic Baidu submission.
+- In every engine onboarding conversation show all current live sitemap links; recommend the one complete index when supported, then explain if/when an engine needs individual child submissions. Never erase already-valid submissions.
 
 ## Sitemap lastmod provenance — no artificial freshness
 
@@ -57,7 +61,7 @@ Every Monday, the IndexNow workflow records a machine-readable JSON artifact ret
 **Distinct evidence levels:**
 1. Published URL listed in sitemap (observable locally).
 2. URL returns 200/canonical/indexable (verified from public website).
-3. IndexNow endpoint acknowledged a notification (200/202; **not** proof of crawl).
+3. One IndexNow endpoint acknowledged a shared notification (200/202; **not** proof of independent receipts, crawling, or indexing for each engine).
 4. Search engine crawled URL (requires platform crawler logs or Webmaster reports).
 5. Search engine indexed URL (requires Search Console/Webmaster report; never inferred from 1–3).
 
