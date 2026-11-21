@@ -51,6 +51,9 @@ jobs:
       - name: Build through the repository-root entrypoint
         run: npm run build
 
+      - name: Validate inert JSON payload locations in all ten generated language pages
+        run: node site/scripts/verify-document-data-boundaries.mjs
+
       - name: Verify Wrangler Preview configuration and language routes
         run: |
           node --input-type=module -e "import fs from 'node:fs'; for (const p of ['wrangler.jsonc','site/wrangler.jsonc']) { const c = JSON.parse(fs.readFileSync(p, 'utf8')); if (!c.previews || typeof c.previews !== 'object') throw new Error(p + ' is missing previews configuration'); }"
