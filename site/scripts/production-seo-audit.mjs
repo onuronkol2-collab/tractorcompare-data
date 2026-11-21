@@ -64,6 +64,10 @@ const editorialPaths=[
   ...Object.keys(languages).filter(lang=>lang!=="en"&&lang!=="tr")
     .map(lang=>"/"+lang+"/articles/"),
   "/methodology/","/tr/methodology/",
+  // Other four published long-form articles are genuinely bilingual, not ten-language copies.
+  ...["tractor-technical-terms","pto-and-power-take-off",
+    "tractor-hydraulic-lift-explained","tractor-engine-power-and-torque"]
+    .flatMap(slug=>["/guides/"+slug+"/","/tr/guides/"+slug+"/"]),
   ...Object.keys(languages).map(lang=>
     (lang==="en"?"/":"/"+lang+"/")+"guides/choosing-a-tractor/"),
   ...Object.keys(languages).map(lang=>

@@ -97,3 +97,37 @@ test("published full-text selection and Başak articles stay complete in all eig
   }
  }
 });
+
+
+test("the six published articles expose matching, clickable editorial breadcrumbs and accurate schema",async ({page,browserName,isMobile})=>{
+ test.skip(browserName!=="chromium"||isMobile,"all article-source breadcrumbs checked once in Chromium");
+ const entries=[
+  ["/guides/choosing-a-tractor/",".guide-crumb"],
+  ["/guides/tractor-technical-terms/",".glossary-breadcrumbs"],
+  ["/guides/tractor-engine-power-and-torque/",".learn-crumb"],
+  ["/guides/tractor-hydraulic-lift-explained/",".learn-crumb"],
+  ["/guides/pto-and-power-take-off/",".learn-crumb"],
+  ["/reviews/basak-2075-bk/",".review-crumb"]
+ ];
+ for(const prefix of ["","/tr"]){
+  const hub=prefix+"/articles/";
+  for(const [path,crumbSelector] of entries){
+   const target=prefix+path;
+   const response=await page.goto(target,{waitUntil:"domcontentloaded"});
+   expect(response?.status(),target).toBe(200);
+   const crumb=page.locator(crumbSelector);
+   const link=crumb.locator('a[href="'+hub+'"]');
+   await expect(link,target+" contextual editorial link").toHaveCount(1);
+   const raw=await page.locator('script[type="application/ld+json"]').first().textContent();
+   const schema=JSON.parse(raw||"{}");
+   const graph=schema["@graph"]??[schema];
+   const trail=graph.find(node=>node["@type"]==="BreadcrumbList");
+   expect(trail,target+" BreadcrumbList").toBeTruthy();
+   const nodes=trail.itemListElement||[];
+   expect(nodes.some(node=>node.item==="https://tractorvs.com"+hub),target+" structured trail").toBe(true);
+   await link.click();
+   await expect(page).toHaveURL(new RegExp(hub.replaceAll("/","\\/")+"$"));
+   await expect(page.locator(".editorial-card")).toHaveCount(6);
+  }
+ }
+});

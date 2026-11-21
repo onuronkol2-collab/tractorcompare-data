@@ -9,6 +9,7 @@ const guide=getTechnicalDeepDive(slug);
 if(!guide) throw new Error("Missing editorial deep dive "+slug);
 const tr=lang==="tr";
 const hub=localizedPath(lang,"/guides/tractor-technical-terms/");
+const editorialPath=localizedPath(lang,"/articles/");
 const catalog=localizedPath(lang,"/tractors/");
 const compare=localizedPath(lang,"/compare/");
 const permalink=localizedPath(lang,"/guides/"+guide.slug+"/");
@@ -22,6 +23,16 @@ const description=guide.description[lang];
 // Only the standards article received substantive new editorial content.
 const hasPowerStandards = slug === "tractor-engine-power-and-torque";
 const editedOn = hasPowerStandards ? "2026-11-21" : "2026-11-20";
+// These citations are already displayed as clickable sources in the guide.
+// Keep JSON-LD evidence in exact sync with user-visible references.
+const citedDocuments=[
+ "https://tractortestlab.unl.edu/",
+ "https://www.oecd.org/en/topics/tractors.html",
+ ...(hasPowerStandards?[
+  "https://eur-lex.europa.eu/eli/reg/2019/405/oj/eng",
+  "https://www.dlg.org/en/magazin/survey-tests/tractor-model-descriptions-no-standardised-information"
+ ]:[])
+];
 const structuredData={
  "@context":"https://schema.org",
  "@graph":[
@@ -30,14 +41,16 @@ const structuredData={
    author:{"@type":"Organization",name:"TractorVS"},
    publisher:{"@type":"Organization",name:"TractorVS"},
    isAccessibleForFree:true,datePublished:"2026-11-20",dateModified:editedOn,
+   citation:citedDocuments,
    ...(image?{image}:{}),
    about:[{"@type":"Thing",name:"Agricultural tractor"},{"@type":"Thing",name:headline}]},
   {"@type":"WebPage","@id":url+"#webpage",url,name:headline,description,inLanguage:lang,
    mainEntity:{"@id":url+"#article"}},
   {"@type":"BreadcrumbList",itemListElement:[
    {"@type":"ListItem",position:1,name:tr?"Ana sayfa":"Home",item:new URL(localizedPath(lang,"/"),base).toString()},
-   {"@type":"ListItem",position:2,name:tr?"Traktör teknik terimleri":"Tractor technical terms",item:new URL(hub,base).toString()},
-   {"@type":"ListItem",position:3,name:headline,item:url}
+   {"@type":"ListItem",position:2,name:tr?"Makaleler":"Articles",item:new URL(editorialPath,base).toString()},
+   {"@type":"ListItem",position:3,name:tr?"Traktör teknik terimleri":"Tractor technical terms",item:new URL(hub,base).toString()},
+   {"@type":"ListItem",position:4,name:headline,item:url}
   ]}
  ]
 };
@@ -50,6 +63,7 @@ const structuredData={
    <div class="learn-hero-text">
     <nav class="learn-crumb" aria-label={tr?"İçerik yolu":"Breadcrumb"}>
      <a href={localizedPath(lang,"/")}>{tr?"Ana sayfa":"Home"}</a><span>/</span>
+     <a href={editorialPath}>{tr?"Makaleler":"Articles"}</a><span>/</span>
      <a href={hub}>{tr?"Teknik terimler":"Technical terms"}</a><span>/</span>
      <span aria-current="page">{tr?"Detaylı rehber":"In-depth guide"}</span>
     </nav>
