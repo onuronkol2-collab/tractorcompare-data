@@ -52,6 +52,9 @@ GitHub (Actions, CodeQL, Dependabot, Dependency graph, Malware alerts, Secret Pr
 
 ### İzinli forum çevirileri için gerçek işleyici (21 Kasım 2026)
 
+- **Gemini 400 kesin kök neden ve regresyon kapısı (21 Kasım 2026):** Google resmî Gemini 3.8 Flash model rehberine göre `thinkingLevel=MINIMAL` desteklenmez ve HTTP 400 üretir. `gemini-3.8-flash` için `LOW`, `gemini-3.6-flash` için `MINIMAL` kullanılmalı; her sağlayıcı modelinin ayrı JSON `generationConfig` alanı aynı otomatik, sıfır maliyetli testlerle doğrulanmalıdır. Başarısız kullanıcı onaylı çalışma tekrar kendiliğinden başlatılmaz; kullanıcıya log ve kuyruk sonucu açıklanır.
+
+
 - **API ve zaman sınırı:** Forum çevirisinde uzun süre açık kalan Gemini Interactions polling kullanılmaz; Gemini `generateContent` kısa ve sonlu REST istekleriyle yapılır (birincil 28 sn, yedek 22 sn, bağımsız QA aynı sınırlarla). Sağlayıcı `finishReason=STOP` ve geçerli JSON dönmedikçe çeviri başarı sayılmaz. Supabase Edge 150 sn HTTP yanıt sınırı, sabit istek zaman bütçesi, küçük Markdown bölümleri ve gizli checkpoint ile korunur. Bu mimaride yayın öncesi manuel `ONAY` kuralı ve `needs_review` güvenlik kapısı değiştirilemez.
 
 
