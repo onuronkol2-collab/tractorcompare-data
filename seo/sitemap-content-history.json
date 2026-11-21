@@ -10,8 +10,8 @@
       "modified": null
     },
     "https://tractorvs.com/compare/": {
-      "digest": "ab28e700d67e96eec24f0ca9fa3d0938860d16f739757a8ee0468a4e0f3ecc7c",
-      "modified": "2026-11-21T19:20:06.548Z"
+      "digest": "153f9c3c3a690462fce18bb8d2297345c741eeded80516adaa8f299e6597fa9a",
+      "modified": "2026-11-21T19:31:42.862Z"
     },
     "https://tractorvs.com/de/": {
       "digest": "4c7053016243cfbf0785c3fe3c6fab112e4ef37fcfad637dbb66efb4686a5a1e",
@@ -22,8 +22,8 @@
       "modified": null
     },
     "https://tractorvs.com/de/compare/": {
-      "digest": "2d250c2170d116caf7485af12faecf6f7725e74e548d39b101b5dde44d68af82",
-      "modified": "2026-11-21T19:20:06.548Z"
+      "digest": "7c2f2aa989fd9fb1fac40fbb4ff29106e854bffa7cb4e2037e9c40cbeab07cb9",
+      "modified": "2026-11-21T19:31:42.862Z"
     },
     "https://tractorvs.com/de/farm-advisor/": {
       "digest": "5d80ba7174047966ab746de6bc510037067261665a121643fa3ad02ae3107ef5",
@@ -42,8 +42,8 @@
       "modified": null
     },
     "https://tractorvs.com/de/tractors/": {
-      "digest": "9493e862c44e96bb9fa6b49622afe2dcd7b9f0cd743cdb50cbd2949c5b96ebf4",
-      "modified": "2026-11-21T19:18:10.960Z"
+      "digest": "ff366c3335654f9f529edc440adebecc2c64d08f8215baeb770dc36140ba4b8c",
+      "modified": "2026-11-21T19:31:42.862Z"
     },
     "https://tractorvs.com/de/tractors/agrale-4125-0b53e944/": {
       "digest": "da8948617cf25877e9aff3f08945cd40bb9a1845a152f04b500a94f64da687fe",
@@ -918,8 +918,8 @@
       "modified": "2026-11-21T18:59:50.515Z"
     },
     "https://tractorvs.com/de/tractors/steyr-4075-kompakt-19743251/": {
-      "digest": "265b21c4efe36aef0818a3055d326f7c5eb8f19ced0dfaf5b8fb29196af64666",
-      "modified": "2026-11-21T18:59:50.515Z"
+      "digest": "bd2b7bd3256e616e1e9f791ff94a3865d6b35d43ceea490bea7edb64787c8917",
+      "modified": "2026-11-21T19:31:42.862Z"
     },
     "https://tractorvs.com/de/tractors/steyr-4080-plus-5be20b21/": {
       "digest": "f93be39d14da8a5f5345604ff76fcae45705c9e915656fc15ace55983ebbb411",
@@ -934,16 +934,16 @@
       "modified": "2026-11-21T18:59:50.515Z"
     },
     "https://tractorvs.com/de/tractors/steyr-4095-kompakt-5ac93982/": {
-      "digest": "67c8d82c24724afb68b906d763a9d43835123e4c2fb5ee04e1aa888421b7c607",
-      "modified": "2026-11-21T18:59:50.515Z"
+      "digest": "d6c0971f28342da02c3d39c0ffb3f5b6ffc5122a992f673c0db0d5419c8de9aa",
+      "modified": "2026-11-21T19:31:42.862Z"
     },
     "https://tractorvs.com/de/tractors/steyr-4100-plus-6fac2f01/": {
       "digest": "ac613a601f5fd18dad02d20a78c6137c27b2e058a61ed326a4e3fb2b401dfd4d",
       "modified": "2026-11-21T18:59:50.515Z"
     },
     "https://tractorvs.com/de/tractors/steyr-4105-kompakt-129e9d3f/": {
-      "digest": "dd99ffbd1fe61c4495a7c06deb1ddefa61c0a286f00d2267ce9d84bb9ffdd7d4",
-      "modified": "2026-11-21T18:59:50.515Z"
+      "digest": "99859d0fad3926b4ef19a9eb26a240394af3e03b0eed84307c5eadfd808666f7",
+      "modified": "2026-11-21T19:31:42.862Z"
     },
     "https://tractorvs.com/de/tractors/steyr-4110-expert-cvt-50786f46/": {
       "digest": "0a4ea1f68d55582e04c12207cde8f9d701db9d8e422bd589e88c116273fa7796",
@@ -954,8 +954,8 @@
       "modified": "2026-11-21T18:59:50.515Z"
     },
     "https://tractorvs.com/de/tractors/steyr-4115-kompakt-cb89989e/": {
-      "digest": "9a613ad20e841acfc6b3e5624a393bc3d0ba84d56af8a4335b0cc59d214c02c5",
-      "modified": "2026-11-21T18:59:50.515Z"
+      "digest": "92e62ff17f5455d310b9435547be6368a063004b9e24bb9f761fdc417e6d9d3b",
+      "modified": "2026-11-21T19:31:42.862Z"
     },
     "https://tractorvs.com/de/tractors/steyr-4120-expert-cvt-1f1fc617/": {
       "digest": "6f53ed71d8ffa406549c4f91787b0e14e2cd25f22f6ae57dcb4ff59339a7d025",
@@ -966,12 +966,12 @@
       "modified": "2026-11-21T18:59:50.515Z"
     },
     "https://tractorvs.com/de/tractors/steyr-4130-expert-cvt-62317e3d/": {
-      "digest": "f89c7efce054206a2699055eb952eeef2dd092a3863e6fa92e3297ee91153180",
-      "modified": "2026-11-21T18:59:50.515Z"
+      "digest": "29a7285967723d797f123d8a3837740f0898df05cf61b976401b938ab0553656",
+      "modified": "2026-11-21T19:31:42.862Z"
     },
     "https://tractorvs.com/de/tractors/steyr-4140-expert-cvt-59894dfd/": {
-      "digest": "b8e876c0212380757705abdd13aa4bea77b8061043e80e834f75e97a0249d5cf",
-      "modified": "2026-11-21T18:59:50.515Z"
+      "digest": "1533303f9abb313d1fa208d1550583bd07c52c707be8c030be62cc698cfce11d",
+      "modified": "2026-11-21T19:31:42.862Z"
     },
     "https://tractorvs.com/de/tractors/steyr-6170-impuls-9f638dfa/": {
       "digest": "636bec3eb4db81d1bc6936e581a429ef1d1457ca1d53bd3d920702d674aad202",
@@ -1002,8 +1002,8 @@
       "modified": "2026-11-21T18:59:50.515Z"
     },
     "https://tractorvs.com/de/tractors/steyr-6280-absolut-cvt-57b5c94a/": {
-      "digest": "a6f0fdd16e7884fbc0560ac3cc96462128d40ed69529922ae0a449734f3414fd",
-      "modified": "2026-11-21T18:59:50.515Z"
+      "digest": "f33e4a27392258f6ea3b0e4a23704272c7f1c2205958f06437647315060e1938",
+      "modified": "2026-11-21T19:31:42.862Z"
     },
     "https://tractorvs.com/de/tractors/steyr-6290-terrus-cvt-cd705991/": {
       "digest": "33fdf666b704decbed686d53ccbf235fdd6fdd79052c641226e8ace8369610ee",
@@ -1498,8 +1498,8 @@
       "modified": "2026-11-21T19:08:54.066Z"
     },
     "https://tractorvs.com/de/tractors/zetor-6170-6a417237/": {
-      "digest": "cc128db525662ef4c6c13225fd9f15989f966b1902a558deebf45582dfd0f3bf",
-      "modified": "2026-11-21T19:08:54.066Z"
+      "digest": "941c53e4be1bc8a80836803bb28ddb0c72a7424b195e68315ec091c295913f6d",
+      "modified": "2026-11-21T19:31:42.862Z"
     },
     "https://tractorvs.com/de/tractors/zetor-forterra-100-2c6bba1c/": {
       "digest": "b83705fe2c68f27d91e5f43ff65d39cecdec7ee2943343fbbc0bb97b966fec1f",
@@ -1570,8 +1570,8 @@
       "modified": null
     },
     "https://tractorvs.com/es/compare/": {
-      "digest": "977f0dd38afde5724886f6eed94ae73459a27f655037e212dab807bfe9fc4d77",
-      "modified": "2026-11-21T19:20:06.548Z"
+      "digest": "0101affd95c956a72240268d6db72ff0eeaee7c7b3435592cc15439e4f657cec",
+      "modified": "2026-11-21T19:31:42.862Z"
     },
     "https://tractorvs.com/es/farm-advisor/": {
       "digest": "124e7fbfecd3c425431e0b1708b89f15b1718815027c975b864b646a2532bbfe",
@@ -1590,8 +1590,8 @@
       "modified": null
     },
     "https://tractorvs.com/es/tractors/": {
-      "digest": "4c5aa1b408008f0804edbf335ea5431c22f31818f0f1e5f5188fc4127b3370b1",
-      "modified": "2026-11-21T19:18:10.960Z"
+      "digest": "c9bb3f031afb7c64fa9416ae7b8e957edacce051c3f55fb96ce4089d4da4c3e2",
+      "modified": "2026-11-21T19:31:42.862Z"
     },
     "https://tractorvs.com/es/tractors/agrale-4125-0b53e944/": {
       "digest": "68b6b8decdd6f8412a652144083e8f2a36ecccf5a5ac1ccfcd5045b1586dd89b",
@@ -2466,8 +2466,8 @@
       "modified": "2026-11-21T18:59:50.515Z"
     },
     "https://tractorvs.com/es/tractors/steyr-4075-kompakt-19743251/": {
-      "digest": "677cdfcadec3237eee905647d4de04174314202362a7977b8129199b085bda94",
-      "modified": "2026-11-21T18:59:50.515Z"
+      "digest": "55893ab1fe9161edb72323994af4fa33972ea2a08ef6f47818da98bc0d6392d8",
+      "modified": "2026-11-21T19:31:42.862Z"
     },
     "https://tractorvs.com/es/tractors/steyr-4080-plus-5be20b21/": {
       "digest": "3e93a40e59dbe573f3d924cd90a02e90713496697382da55da767cee11738948",
@@ -2482,16 +2482,16 @@
       "modified": "2026-11-21T18:59:50.515Z"
     },
     "https://tractorvs.com/es/tractors/steyr-4095-kompakt-5ac93982/": {
-      "digest": "18e84b1bc6d8d216aa5cc38624e61e886eaf08626d7d9af86ae4a0b4cf232b13",
-      "modified": "2026-11-21T18:59:50.515Z"
+      "digest": "82878baec7074e42f9311815890337ff0e97ec8d45d51a4467e4f7a1b81d43bc",
+      "modified": "2026-11-21T19:31:42.862Z"
     },
     "https://tractorvs.com/es/tractors/steyr-4100-plus-6fac2f01/": {
       "digest": "54b433e09528ec9d1eea15b91913906a4b71d32da1efdc0df1282ee894ce5f22",
       "modified": "2026-11-21T18:59:50.515Z"
     },
     "https://tractorvs.com/es/tractors/steyr-4105-kompakt-129e9d3f/": {
-      "digest": "82c3f5a51cae4734d159153853e740a30a9b8023d213f937fcf5019574c84ef2",
-      "modified": "2026-11-21T18:59:50.515Z"
+      "digest": "9d14ee37ece72415a75c38e9db3eed4393073e0110308d353043e26ed35d4b80",
+      "modified": "2026-11-21T19:31:42.862Z"
     },
     "https://tractorvs.com/es/tractors/steyr-4110-expert-cvt-50786f46/": {
       "digest": "20df60a1d2b660cc2f06a839f93de64fc57c928b0a5366008df21165faa96487",
@@ -2502,8 +2502,8 @@
       "modified": "2026-11-21T18:59:50.515Z"
     },
     "https://tractorvs.com/es/tractors/steyr-4115-kompakt-cb89989e/": {
-      "digest": "aab83cdc44eec3ce3463f7cba58fc97e47255bd94328a025fb49e6b670fb9e22",
-      "modified": "2026-11-21T18:59:50.515Z"
+      "digest": "cf6c16d2d57e8f70db3c594e09e5b6050bf7e29b3c7048a0f2fe3f65f8b0f118",
+      "modified": "2026-11-21T19:31:42.862Z"
     },
     "https://tractorvs.com/es/tractors/steyr-4120-expert-cvt-1f1fc617/": {
       "digest": "fb451ddbb01480e5bc87716d6872d8d982ca0d843b8ef826d005305d9feef62e",
@@ -2514,12 +2514,12 @@
       "modified": "2026-11-21T18:59:50.515Z"
     },
     "https://tractorvs.com/es/tractors/steyr-4130-expert-cvt-62317e3d/": {
-      "digest": "35be9704165087777e65feab08e88ba78be47bb7bfbfd0e113f5154abae45034",
-      "modified": "2026-11-21T19:08:54.066Z"
+      "digest": "b4d2a9808435d460342606877e0f3cedbe580fdccfdb6b0853abbe3ee1d0bcff",
+      "modified": "2026-11-21T19:31:42.862Z"
     },
     "https://tractorvs.com/es/tractors/steyr-4140-expert-cvt-59894dfd/": {
-      "digest": "a0a8dc8ce1f2b7065f4623e5db1efcbdac4e4329d3e0fcebd912d86975a9b43f",
-      "modified": "2026-11-21T19:08:54.066Z"
+      "digest": "c0098109cef86d1ca1c247324038796b09a07d83da85ab8cdb2672fb7ce0246e",
+      "modified": "2026-11-21T19:31:42.862Z"
     },
     "https://tractorvs.com/es/tractors/steyr-6170-impuls-9f638dfa/": {
       "digest": "b7abd1acecc7b2017397b50f5d89c9774e1a12fa323dd4fe9db5f194559db173",
@@ -2550,8 +2550,8 @@
       "modified": "2026-11-21T19:08:54.066Z"
     },
     "https://tractorvs.com/es/tractors/steyr-6280-absolut-cvt-57b5c94a/": {
-      "digest": "ab7a285103fe9e83d5864d87ecbfedf5a8c28c6916956a27ead6e475b9f11da0",
-      "modified": "2026-11-21T19:08:54.066Z"
+      "digest": "862b489420cdfa967115855ecf104bfbbe9d9438f067222480c898a4bd37c01f",
+      "modified": "2026-11-21T19:31:42.862Z"
     },
     "https://tractorvs.com/es/tractors/steyr-6290-terrus-cvt-cd705991/": {
       "digest": "3685db55e8f1933569e3191535337c21eec6d85e60c8620491b52580a894dd1c",
@@ -3046,8 +3046,8 @@
       "modified": "2026-11-21T19:08:54.066Z"
     },
     "https://tractorvs.com/es/tractors/zetor-6170-6a417237/": {
-      "digest": "fe46b4c16cb255489bedfe99cbf3c5a47cb0f5e60ad9f7b0e11c4e0db295139a",
-      "modified": "2026-11-21T19:08:54.066Z"
+      "digest": "058a6666c1e570a2c1bf87602a2864f3f31649a174408b041350be00ef56af42",
+      "modified": "2026-11-21T19:31:42.862Z"
     },
     "https://tractorvs.com/es/tractors/zetor-forterra-100-2c6bba1c/": {
       "digest": "f913eab79a63797683077ed668ef0bb7b2caca1984a9c6da8d140d690f58cc0b",
@@ -3122,8 +3122,8 @@
       "modified": null
     },
     "https://tractorvs.com/fr/compare/": {
-      "digest": "00292c01322ea2cb6f06d8643f1115170f0aef693586cf95b62e51ffc87f7438",
-      "modified": "2026-11-21T19:20:06.548Z"
+      "digest": "e5285aa9c789817378d00e944f1d96744e9d89f5d12b17e286428403704c86bd",
+      "modified": "2026-11-21T19:31:42.862Z"
     },
     "https://tractorvs.com/fr/farm-advisor/": {
       "digest": "d6cdd9df963102940b39a9e1e1675ae3cd88b871bdc74a8835e6c34b3d8cfe95",
@@ -3142,8 +3142,8 @@
       "modified": null
     },
     "https://tractorvs.com/fr/tractors/": {
-      "digest": "b2ff24b71d6891c628852234279081a6fd610422517909c1cba16400873ca04c",
-      "modified": "2026-11-21T19:18:10.960Z"
+      "digest": "2aed39e16d04188a030dced5deb0b1d7dd4a314921869cc10b456b9c099093ef",
+      "modified": "2026-11-21T19:31:42.862Z"
     },
     "https://tractorvs.com/fr/tractors/agrale-4125-0b53e944/": {
       "digest": "e6dd4e1c232709be3413807debcfaaec87347004baf6150794426732dcbc1103",
@@ -4018,8 +4018,8 @@
       "modified": "2026-11-21T18:59:50.515Z"
     },
     "https://tractorvs.com/fr/tractors/steyr-4075-kompakt-19743251/": {
-      "digest": "6f85a296afd1bf2cc2cc0989e91629877b893d5995591315a6f125b1093f4e4c",
-      "modified": "2026-11-21T18:59:50.515Z"
+      "digest": "ad81d8c3a0ab697998b6ef3eb2e8464b1cf43634722baf7fb72dd317c8488d61",
+      "modified": "2026-11-21T19:31:42.862Z"
     },
     "https://tractorvs.com/fr/tractors/steyr-4080-plus-5be20b21/": {
       "digest": "0ea2b5d0291091ad3d310d7a615343f672e8327031712749014aabf6dc65a3e4",
@@ -4034,16 +4034,16 @@
       "modified": "2026-11-21T18:59:50.515Z"
     },
     "https://tractorvs.com/fr/tractors/steyr-4095-kompakt-5ac93982/": {
-      "digest": "3cb1b362ce8d3a096839bc8d03677631c5659eb979479b2e4ac3247db3a280e3",
-      "modified": "2026-11-21T18:59:50.515Z"
+      "digest": "b8e747ee3f945d120bc6bc68ee977cbad1a7611dd4bdc81ee6ef3bd7c8ab76f1",
+      "modified": "2026-11-21T19:31:42.862Z"
     },
     "https://tractorvs.com/fr/tractors/steyr-4100-plus-6fac2f01/": {
       "digest": "77b2988e404725d384615b76f8a78b7a4a34ca8bf883703ca145791b3e9033ea",
       "modified": "2026-11-21T18:59:50.515Z"
     },
     "https://tractorvs.com/fr/tractors/steyr-4105-kompakt-129e9d3f/": {
-      "digest": "dbf9a4f7a1a0ecaa0f1476fb20479cad803cbea96b78b1f7cf23e0f654cb53d1",
-      "modified": "2026-11-21T18:59:50.515Z"
+      "digest": "da2612ab31ade69ad8d624308a90c8abefee524835d586496d86daf996625096",
+      "modified": "2026-11-21T19:31:42.862Z"
     },
     "https://tractorvs.com/fr/tractors/steyr-4110-expert-cvt-50786f46/": {
       "digest": "1664bde6affd855785230ac19db25a9f2a86d1d1e4004bc270f568f8b14f0325",
@@ -4054,8 +4054,8 @@
       "modified": "2026-11-21T18:59:50.515Z"
     },
     "https://tractorvs.com/fr/tractors/steyr-4115-kompakt-cb89989e/": {
-      "digest": "fe7846ba8891066bb7390cbd4de043e1070b2338c2db61e1060572d97941a1e7",
-      "modified": "2026-11-21T18:59:50.515Z"
+      "digest": "0f4cf825b8ecd09585bf0e9746b64528b57b28cf8332d6af5cb8d5b8d665847c",
+      "modified": "2026-11-21T19:31:42.862Z"
     },
     "https://tractorvs.com/fr/tractors/steyr-4120-expert-cvt-1f1fc617/": {
       "digest": "2771efd310e1d790d7d3cee564472d55ae0ab5e5f31ec891f555fcc6476d2810",
@@ -4066,12 +4066,12 @@
       "modified": "2026-11-21T18:59:50.515Z"
     },
     "https://tractorvs.com/fr/tractors/steyr-4130-expert-cvt-62317e3d/": {
-      "digest": "65b487c79f328ef5e5061240dc81248c231796d127e99b076cef5c6f2241ecec",
-      "modified": "2026-11-21T19:08:54.066Z"
+      "digest": "3fca96a91d33d9b234861b80e234dad12e8700cbe5cf0c7fa453ae62e5128df9",
+      "modified": "2026-11-21T19:31:42.862Z"
     },
     "https://tractorvs.com/fr/tractors/steyr-4140-expert-cvt-59894dfd/": {
-      "digest": "3d23df44f4a42e3800d8d7598777325d886dd80adfffb6f4277fa3b85a96a2b7",
-      "modified": "2026-11-21T19:08:54.066Z"
+      "digest": "d162745ca06eeddf94590cfd8dc88fff4ef4a524f2bef666522921520e178ee2",
+      "modified": "2026-11-21T19:31:42.862Z"
     },
     "https://tractorvs.com/fr/tractors/steyr-6170-impuls-9f638dfa/": {
       "digest": "bd3fb91006535ee45cf9ddb3473d85da912f67a3d01baf127a13be3b89e1ac37",
@@ -4102,8 +4102,8 @@
       "modified": "2026-11-21T19:08:54.066Z"
     },
     "https://tractorvs.com/fr/tractors/steyr-6280-absolut-cvt-57b5c94a/": {
-      "digest": "7d34b5794dea5d327a6d0a3ed396d6578cd3b0c0c6452a41de3f42beb861dce3",
-      "modified": "2026-11-21T19:08:54.066Z"
+      "digest": "afc196c9c301ec48f89e961dedd63ee3a7eaf56d50ce19cfa7db32ec8184b37f",
+      "modified": "2026-11-21T19:31:42.862Z"
     },
     "https://tractorvs.com/fr/tractors/steyr-6290-terrus-cvt-cd705991/": {
       "digest": "1b78d2077c176df8242cb1cfff5040bc486fac25b8bf51c6edecdb769d80e262",
@@ -4598,8 +4598,8 @@
       "modified": "2026-11-21T19:08:54.066Z"
     },
     "https://tractorvs.com/fr/tractors/zetor-6170-6a417237/": {
-      "digest": "a3bd1b17c7138f08eb53512e539e0a1a5a9b831c0b53df3578bca636332a074f",
-      "modified": "2026-11-21T19:08:54.066Z"
+      "digest": "42a27c729b687d0c1f91036493ee32378719ba9df441c6b41dec4af9e9d0a252",
+      "modified": "2026-11-21T19:31:42.862Z"
     },
     "https://tractorvs.com/fr/tractors/zetor-forterra-100-2c6bba1c/": {
       "digest": "5e89672c218af7eabae635e6b9147fbf970218534c5a5e3d748c078104e9142b",
@@ -4690,8 +4690,8 @@
       "modified": null
     },
     "https://tractorvs.com/hi/compare/": {
-      "digest": "e5b2ea0cb89903529c1e87830ed745a17eea164b64b4a852b20d8024dff666ee",
-      "modified": "2026-11-21T19:20:06.548Z"
+      "digest": "2c780c2574612949ac880edd85e681c433d460a298e408fe09b1d67b95905ae7",
+      "modified": "2026-11-21T19:31:42.862Z"
     },
     "https://tractorvs.com/hi/farm-advisor/": {
       "digest": "d3be01f35315086197bab09d5f6bdd216c6acaf8594d82371ddaf0c0b9613a4c",
@@ -4710,8 +4710,8 @@
       "modified": null
     },
     "https://tractorvs.com/hi/tractors/": {
-      "digest": "4fd1ace52ddecafa928473c7a18f88bc55ec04b2bf307f7b885e7a6cd4a801ee",
-      "modified": "2026-11-21T19:18:10.960Z"
+      "digest": "2179adba541e7a3e41bfe3c4338c27491ac60cb1d98f6a51e581a9a97dcc2d86",
+      "modified": "2026-11-21T19:31:42.862Z"
     },
     "https://tractorvs.com/hi/tractors/agrale-4125-0b53e944/": {
       "digest": "b19423b2967ef2c5740c8094362038c082186bcda9042561a0d55270b21a721a",
@@ -5586,8 +5586,8 @@
       "modified": "2026-11-21T18:59:50.515Z"
     },
     "https://tractorvs.com/hi/tractors/steyr-4075-kompakt-19743251/": {
-      "digest": "c2cac9cfb1815a9c66769185ec046c107ed5616bebf3e9a099c729f07d6b77c3",
-      "modified": "2026-11-21T18:59:50.515Z"
+      "digest": "7e28e63e5a9819f3cbef6f429125b09284d52d8b7ddf7ec98b2f7570e3325333",
+      "modified": "2026-11-21T19:31:42.862Z"
     },
     "https://tractorvs.com/hi/tractors/steyr-4080-plus-5be20b21/": {
       "digest": "6851e4cd7252f3fc880ded7add8ef1862239440f060e235cf12ebc292c18a360",
@@ -5602,16 +5602,16 @@
       "modified": "2026-11-21T18:59:50.515Z"
     },
     "https://tractorvs.com/hi/tractors/steyr-4095-kompakt-5ac93982/": {
-      "digest": "cf987a5f4bfb57241406ccb9eb94fd9a2f19cf09df8ff21387f8347004b1f355",
-      "modified": "2026-11-21T18:59:50.515Z"
+      "digest": "8e06514c0e6423a6071f166248c9f10b8c823ff04387834f723d512b903aaa3f",
+      "modified": "2026-11-21T19:31:42.862Z"
     },
     "https://tractorvs.com/hi/tractors/steyr-4100-plus-6fac2f01/": {
       "digest": "ce153361cd573a91708abd2ba22e8af9b9b62a1a2969c431eec07755fa03951d",
       "modified": "2026-11-21T18:59:50.515Z"
     },
     "https://tractorvs.com/hi/tractors/steyr-4105-kompakt-129e9d3f/": {
-      "digest": "03936ede6c301d8fe32c1fcb267ef1382a7cf2f40bb556c4bf87fbe7b41befab",
-      "modified": "2026-11-21T18:59:50.515Z"
+      "digest": "fbf9c23cad4589184d85f7d066e74b76bea851db3d0e80fe5857e9b33c59a2cd",
+      "modified": "2026-11-21T19:31:42.862Z"
     },
     "https://tractorvs.com/hi/tractors/steyr-4110-expert-cvt-50786f46/": {
       "digest": "deecedb4434c3bff657d97e0b1d59948f0ebaa59c71bbf9c1c16965f2cb93d67",
@@ -5622,8 +5622,8 @@
       "modified": "2026-11-21T18:59:50.515Z"
     },
     "https://tractorvs.com/hi/tractors/steyr-4115-kompakt-cb89989e/": {
-      "digest": "1b478d1cb9bec42e7f8c4433ca04a442c2fde223b6b45f0a5eca1a397500de21",
-      "modified": "2026-11-21T18:59:50.515Z"
+      "digest": "b7e91dccc187b9f3c83f175cfdb934f9463a84f033d5d33cfa0b0af7bdef34c5",
+      "modified": "2026-11-21T19:31:42.862Z"
     },
     "https://tractorvs.com/hi/tractors/steyr-4120-expert-cvt-1f1fc617/": {
       "digest": "c34974ec5bab7924655f81ee7ed1713797d1e38239099f4ff6cb475b86f210b1",
@@ -5634,12 +5634,12 @@
       "modified": "2026-11-21T18:59:50.515Z"
     },
     "https://tractorvs.com/hi/tractors/steyr-4130-expert-cvt-62317e3d/": {
-      "digest": "8592026cb46fdea8d1e94cbf0e57503a9ddca3db55ec5d1b28fa5cd17fc32b03",
-      "modified": "2026-11-21T18:59:50.515Z"
+      "digest": "26e6a10a9241d7b2286752a2250202ee96bf945cdc95c4c9c6fa94ad3c76c218",
+      "modified": "2026-11-21T19:31:42.862Z"
     },
     "https://tractorvs.com/hi/tractors/steyr-4140-expert-cvt-59894dfd/": {
-      "digest": "b7eb068b9bf76a9cff53e03159984158c17f23939ef3d0dd83f42ab64b25fd92",
-      "modified": "2026-11-21T18:59:50.515Z"
+      "digest": "ea20fa3470df06edb9d28035a3d2b4741ce7dfe84c939928bbee5bce5b4f4cfb",
+      "modified": "2026-11-21T19:31:42.862Z"
     },
     "https://tractorvs.com/hi/tractors/steyr-6170-impuls-9f638dfa/": {
       "digest": "fed4eec41c739f370bce50e2829bb8d4dc53d4dfd5dbfe27cb2d497772dfc2d3",
@@ -5670,8 +5670,8 @@
       "modified": "2026-11-21T18:59:50.515Z"
     },
     "https://tractorvs.com/hi/tractors/steyr-6280-absolut-cvt-57b5c94a/": {
-      "digest": "ec42bf1cc187436ae67a8f01da9cb4d1951fd1b95270b25fdc2408679159e4d8",
-      "modified": "2026-11-21T18:59:50.515Z"
+      "digest": "13a122cc673d13278ba2a62abb99a6ec0031fa30c4c44bc229970286b4cb071f",
+      "modified": "2026-11-21T19:31:42.862Z"
     },
     "https://tractorvs.com/hi/tractors/steyr-6290-terrus-cvt-cd705991/": {
       "digest": "a18cb9060aa2d1c3cdd98363233952a0f1935f35b7899d2bfce679f13bf656e3",
@@ -6166,8 +6166,8 @@
       "modified": null
     },
     "https://tractorvs.com/hi/tractors/zetor-6170-6a417237/": {
-      "digest": "d09d9c01c9fcb090779c4600795f581e1d125951abb45191897871d1d9398357",
-      "modified": null
+      "digest": "52770865f63ab66f483796ee0706f1ec1ad69105cf61d8e82405c5740d30e58c",
+      "modified": "2026-11-21T19:31:42.862Z"
     },
     "https://tractorvs.com/hi/tractors/zetor-forterra-100-2c6bba1c/": {
       "digest": "b43a00d9a09c8e789d6d27d58687415a4e1399981ae38e384b1d4eb3356dd9f4",
@@ -6238,8 +6238,8 @@
       "modified": null
     },
     "https://tractorvs.com/ja/compare/": {
-      "digest": "f01c0181a8ebe27b6ccd89ce79ffa7f9c196499c370e05311b767207b3c7b509",
-      "modified": "2026-11-21T19:20:06.548Z"
+      "digest": "df4207802049fb562e4df47bf4469652fc020f1cb0adc4ab56b5259e2f47650b",
+      "modified": "2026-11-21T19:31:42.862Z"
     },
     "https://tractorvs.com/ja/farm-advisor/": {
       "digest": "3a8a1195b95355cd0ee8a226223b3831078838a5de0e48e6356a9ff6f406282b",
@@ -6258,8 +6258,8 @@
       "modified": null
     },
     "https://tractorvs.com/ja/tractors/": {
-      "digest": "0f0260fd04529a1c6e7717021b03f5761278e535e0aa51aa0077a4962710f99f",
-      "modified": "2026-11-21T19:18:10.960Z"
+      "digest": "4eb5fab7f199caa2a96790c7931573a1ce54cd44bd40b55e8cdf21d61778bacd",
+      "modified": "2026-11-21T19:31:42.862Z"
     },
     "https://tractorvs.com/ja/tractors/agrale-4125-0b53e944/": {
       "digest": "8baa8fa23bd3f2dde57943582d8b0285dff06fbe2a3797909cae085f4d49e610",
@@ -7134,8 +7134,8 @@
       "modified": "2026-11-21T18:59:50.515Z"
     },
     "https://tractorvs.com/ja/tractors/steyr-4075-kompakt-19743251/": {
-      "digest": "5bd8ab5aff94ca1993dde327825e589db1d985b993c763eb1138d94dffba0efe",
-      "modified": "2026-11-21T18:59:50.515Z"
+      "digest": "58173a960c7e783a6c48ad5a3f73f794916ae5e9bab0969dbd55766f11c71be0",
+      "modified": "2026-11-21T19:31:42.862Z"
     },
     "https://tractorvs.com/ja/tractors/steyr-4080-plus-5be20b21/": {
       "digest": "65a55a360b9d4a5119447b5515b4f7c1d62697ba4afc6402a5734aa84438f841",
@@ -7150,16 +7150,16 @@
       "modified": "2026-11-21T18:59:50.515Z"
     },
     "https://tractorvs.com/ja/tractors/steyr-4095-kompakt-5ac93982/": {
-      "digest": "d2249c333d26c3704763ef9c234e1e838f3eefc0616b1cc44a7a1d7e09b20998",
-      "modified": "2026-11-21T18:59:50.515Z"
+      "digest": "b6d20329cb9b184463febe45da9d9e0831f1de97d9951cc09e616bc71d11a4b8",
+      "modified": "2026-11-21T19:31:42.862Z"
     },
     "https://tractorvs.com/ja/tractors/steyr-4100-plus-6fac2f01/": {
       "digest": "546c1de4d4bbd7bb4bd37774d8d58968626f6876ac8e298152301ccb11a78ecc",
       "modified": "2026-11-21T18:59:50.515Z"
     },
     "https://tractorvs.com/ja/tractors/steyr-4105-kompakt-129e9d3f/": {
-      "digest": "59c78c73364a2475c3f21358ff4dc58fe4ed7704928d8d99f03a876f5b0f45a2",
-      "modified": "2026-11-21T18:59:50.515Z"
+      "digest": "cf7d344650479b7ac3f3604295cf6059d08b71c86ec8db6fe9953ec44616c368",
+      "modified": "2026-11-21T19:31:42.862Z"
     },
     "https://tractorvs.com/ja/tractors/steyr-4110-expert-cvt-50786f46/": {
       "digest": "e69cbb4f810795b36d58787ddfe68537972f08d39f501558a1129a7882dc607d",
@@ -7170,8 +7170,8 @@
       "modified": "2026-11-21T18:59:50.515Z"
     },
     "https://tractorvs.com/ja/tractors/steyr-4115-kompakt-cb89989e/": {
-      "digest": "b6fe63c39034edb5ea1ef7aa3b5ad4278e484ab8537f31fb8deaca6d8b990366",
-      "modified": "2026-11-21T18:59:50.515Z"
+      "digest": "37683a78c796ee2c8c398eef083245908c50f84a2e8a49cca12a79cfde74d2cc",
+      "modified": "2026-11-21T19:31:42.862Z"
     },
     "https://tractorvs.com/ja/tractors/steyr-4120-expert-cvt-1f1fc617/": {
       "digest": "667f0f9fb9084d451272edbb7fbaeb5f4abb972eb674b1a28a6bcde6387f2290",
@@ -7182,12 +7182,12 @@
       "modified": "2026-11-21T18:59:50.515Z"
     },
     "https://tractorvs.com/ja/tractors/steyr-4130-expert-cvt-62317e3d/": {
-      "digest": "0e2f0aba8193d7c33fe624cfdcc56131ccf97bc643abcf48bafdd73e2c456d63",
-      "modified": "2026-11-21T18:59:50.515Z"
+      "digest": "1a841899e13710f16895d3ae252b557b48ee3194eb45cd2f56ab1b12c6106cf9",
+      "modified": "2026-11-21T19:31:42.862Z"
     },
     "https://tractorvs.com/ja/tractors/steyr-4140-expert-cvt-59894dfd/": {
-      "digest": "5133cd02115e00a4460817891b7dfa3f7c979e8045866e43f74162f08dc596d1",
-      "modified": "2026-11-21T18:59:50.515Z"
+      "digest": "514a15d96547f6dc5aa31722c264e05d6756d02260ea774c7461376d95332196",
+      "modified": "2026-11-21T19:31:42.862Z"
     },
     "https://tractorvs.com/ja/tractors/steyr-6170-impuls-9f638dfa/": {
       "digest": "5920409b9cf5d0c2e179f3b2a58c7c6d7b0ed7773af20072a4130ff638b86c14",
@@ -7218,8 +7218,8 @@
       "modified": "2026-11-21T19:08:54.066Z"
     },
     "https://tractorvs.com/ja/tractors/steyr-6280-absolut-cvt-57b5c94a/": {
-      "digest": "778e681c4bcf373450c30c4e8cefb6a6172e7eb24886a414d03dc47594d2e17e",
-      "modified": "2026-11-21T19:08:54.066Z"
+      "digest": "13b6baed821bbcf6a0958af058dd9191c3205aca9f0528de1a226216178969d4",
+      "modified": "2026-11-21T19:31:42.862Z"
     },
     "https://tractorvs.com/ja/tractors/steyr-6290-terrus-cvt-cd705991/": {
       "digest": "9c852a3fc895230294e594406c30faa0b7213ba3df451bb366f95f95b3421a86",
@@ -7714,8 +7714,8 @@
       "modified": null
     },
     "https://tractorvs.com/ja/tractors/zetor-6170-6a417237/": {
-      "digest": "ac44b95c200363b156d34327795050fe7d2cee5967ea544efb2571d55a3fe38c",
-      "modified": null
+      "digest": "b96b20e43d306a8e7042cd75df853660a1990d14358418a858b20ab52be48cea",
+      "modified": "2026-11-21T19:31:42.862Z"
     },
     "https://tractorvs.com/ja/tractors/zetor-forterra-100-2c6bba1c/": {
       "digest": "93d5c8fc8ddf801300fb643470c0894f2f8e232bf3739d0a3d61e08e85564543",
@@ -7794,8 +7794,8 @@
       "modified": null
     },
     "https://tractorvs.com/pt-br/compare/": {
-      "digest": "233b57133e56fdb0f90d1d87ef2dc20aa69406392325937a15da7fe02c9da586",
-      "modified": "2026-11-21T19:20:06.548Z"
+      "digest": "fe2e32cdca2998ac18ff73781e0d6f6435d18143b750e69a57f49aed487be514",
+      "modified": "2026-11-21T19:31:42.862Z"
     },
     "https://tractorvs.com/pt-br/farm-advisor/": {
       "digest": "f7740944111a02427f570e7b64fede676e02dbd828aa1cf5de5daf5d1cf1aa82",
@@ -7814,8 +7814,8 @@
       "modified": null
     },
     "https://tractorvs.com/pt-br/tractors/": {
-      "digest": "e23ebb5e84403016a6d504c7ef5e7f563b4b1dbf40a17ca521a264594d716c9e",
-      "modified": "2026-11-21T19:18:10.960Z"
+      "digest": "a62ebad0e2feff11d4da2077e536b01cd54fe1b6f93b5cbb300a48bb95b5e610",
+      "modified": "2026-11-21T19:31:42.862Z"
     },
     "https://tractorvs.com/pt-br/tractors/agrale-4125-0b53e944/": {
       "digest": "edb0893b8fa0e64a13c8134e2107427708725227e580c0ccae4b293c231c81c2",
@@ -8690,8 +8690,8 @@
       "modified": "2026-11-21T18:59:50.515Z"
     },
     "https://tractorvs.com/pt-br/tractors/steyr-4075-kompakt-19743251/": {
-      "digest": "fac106e5bac9cb89fca81d25052e6d8fa22e35fe5af09166c682ce7d974dcdf7",
-      "modified": "2026-11-21T18:59:50.515Z"
+      "digest": "55e72b214af855342588d02b575f21f50e5ef7f0025013ec1ecf2f266f54ae89",
+      "modified": "2026-11-21T19:31:42.862Z"
     },
     "https://tractorvs.com/pt-br/tractors/steyr-4080-plus-5be20b21/": {
       "digest": "0b08812b08cc9c70d9d40424ae78588edc9c8266a29193abcab78586318f2f5e",
@@ -8706,16 +8706,16 @@
       "modified": "2026-11-21T18:59:50.515Z"
     },
     "https://tractorvs.com/pt-br/tractors/steyr-4095-kompakt-5ac93982/": {
-      "digest": "7c2cb8f1e8d9a9e91185a96373c1320271eafcac248482ad519048abea263f6c",
-      "modified": "2026-11-21T18:59:50.515Z"
+      "digest": "bdf4d87d2c853e4038b71180e1c436e1a82e3f137dde9aaa6138edc61a3ec5d6",
+      "modified": "2026-11-21T19:31:42.862Z"
     },
     "https://tractorvs.com/pt-br/tractors/steyr-4100-plus-6fac2f01/": {
       "digest": "2aaef81891c85fe807c7bf6cd88e55e3ddaa2c421cd679ec989234802da5cebd",
       "modified": "2026-11-21T18:59:50.515Z"
     },
     "https://tractorvs.com/pt-br/tractors/steyr-4105-kompakt-129e9d3f/": {
-      "digest": "493984fb600412c719123584424666fbe82132edc985774d7b7051c5cde56053",
-      "modified": "2026-11-21T18:59:50.515Z"
+      "digest": "b4aef8a71de5f1847ecd40f3096722a6927239b0cfbea42e60b98d6d50e9c1ae",
+      "modified": "2026-11-21T19:31:42.862Z"
     },
     "https://tractorvs.com/pt-br/tractors/steyr-4110-expert-cvt-50786f46/": {
       "digest": "b0bf8636cd858e7d4de5a3a3c287cf7f024be1680e236ca889a95b527d3fed42",
@@ -8726,8 +8726,8 @@
       "modified": "2026-11-21T18:59:50.515Z"
     },
     "https://tractorvs.com/pt-br/tractors/steyr-4115-kompakt-cb89989e/": {
-      "digest": "4cb54847a63c894385e5c2883ad6078495e2e67019b03eeec83c802115fffc2b",
-      "modified": "2026-11-21T18:59:50.515Z"
+      "digest": "5efbac13671fe5a6e5773d10dcd6334559cdafe598703f0020444e0ca7db6473",
+      "modified": "2026-11-21T19:31:42.862Z"
     },
     "https://tractorvs.com/pt-br/tractors/steyr-4120-expert-cvt-1f1fc617/": {
       "digest": "da8db38d3cd011b11fd16c191784a9434c7c7c8f0dc1ad1bb6a019d07e9a4dc6",
@@ -8738,12 +8738,12 @@
       "modified": "2026-11-21T18:59:50.515Z"
     },
     "https://tractorvs.com/pt-br/tractors/steyr-4130-expert-cvt-62317e3d/": {
-      "digest": "6737b947a10488fb5a7b66d0df4ca311c2cfb395fa5df224d4b80f0bf040000e",
-      "modified": "2026-11-21T19:08:54.066Z"
+      "digest": "5b8688e876120a52dde0bcf91f56bbf38f9c815f936a6dcf955fcef04b2a3c7e",
+      "modified": "2026-11-21T19:31:42.862Z"
     },
     "https://tractorvs.com/pt-br/tractors/steyr-4140-expert-cvt-59894dfd/": {
-      "digest": "c2ce75f97563543a9359d01292a527e83192674deb502be47b647b374423b1b3",
-      "modified": "2026-11-21T19:08:54.066Z"
+      "digest": "8b1aa81e143aeb124f1021e0d4555a4bf7d754a3cf69eea47168284e68cddc39",
+      "modified": "2026-11-21T19:31:42.862Z"
     },
     "https://tractorvs.com/pt-br/tractors/steyr-6170-impuls-9f638dfa/": {
       "digest": "d7a1905138fd5c32992ed0591f96be4a6c97da2addccc0ed046dd3ac05923dc2",
@@ -8774,8 +8774,8 @@
       "modified": "2026-11-21T19:08:54.066Z"
     },
     "https://tractorvs.com/pt-br/tractors/steyr-6280-absolut-cvt-57b5c94a/": {
-      "digest": "3ee4bac2ea3c28f7ffce4f00baf896df38f2f498a21290d13ca061472c621ab7",
-      "modified": "2026-11-21T19:08:54.066Z"
+      "digest": "80cd9ee492871522d2cc082d1833e3ec3b0f5c59695ca28afa943b2c648d29a2",
+      "modified": "2026-11-21T19:31:42.862Z"
     },
     "https://tractorvs.com/pt-br/tractors/steyr-6290-terrus-cvt-cd705991/": {
       "digest": "8b1c8c9544758b975dc6a43878b8e370f0dce8df94b75df5425c277afa14ffac",
@@ -9270,8 +9270,8 @@
       "modified": "2026-11-21T19:08:54.066Z"
     },
     "https://tractorvs.com/pt-br/tractors/zetor-6170-6a417237/": {
-      "digest": "aab189fa16b0bbba270e3fec1cf3f0657eac6eed0255eaa92f9dee69b9d8da94",
-      "modified": "2026-11-21T19:08:54.066Z"
+      "digest": "3bd109645fe9c82a7a75b37d4bb3952655cd0b2565e10ae334b65fa13435453b",
+      "modified": "2026-11-21T19:31:42.862Z"
     },
     "https://tractorvs.com/pt-br/tractors/zetor-forterra-100-2c6bba1c/": {
       "digest": "c7acd2ae0cc1625bfbf16f5bf755adf31f35bdfbc3359c584c4701d2bc78b5d9",
@@ -9346,8 +9346,8 @@
       "modified": null
     },
     "https://tractorvs.com/ru/compare/": {
-      "digest": "6cff9125970983b4a3368511cbd6a5446b314bde5f9427ef30e79cff1e763c32",
-      "modified": "2026-11-21T19:20:06.548Z"
+      "digest": "4ca4c5e2986ea702dc7e480050b8d339172537c46c0e484cdeedbde67b1804bd",
+      "modified": "2026-11-21T19:31:42.862Z"
     },
     "https://tractorvs.com/ru/farm-advisor/": {
       "digest": "6151b8e813ff8ecb14088c0de9d6030c32503db0b985056516f31dcdb2839ff9",
@@ -9366,8 +9366,8 @@
       "modified": null
     },
     "https://tractorvs.com/ru/tractors/": {
-      "digest": "7444efce274fb21116dcc4de58b879ea5c57368d25678f49e07df53e10330e80",
-      "modified": "2026-11-21T19:18:10.960Z"
+      "digest": "2329d30d7dde3a7a2f56550d40f3797f0d197767090d842d9223ce4164857bc8",
+      "modified": "2026-11-21T19:31:42.862Z"
     },
     "https://tractorvs.com/ru/tractors/agrale-4125-0b53e944/": {
       "digest": "124cba8a17fafb5c0646229db31c836a3744634c22f52a23200e8f8024400c3a",
@@ -10242,8 +10242,8 @@
       "modified": "2026-11-21T18:59:50.515Z"
     },
     "https://tractorvs.com/ru/tractors/steyr-4075-kompakt-19743251/": {
-      "digest": "52df2e9d697553990ad8987d2c35afa6160d3e5e100264d33d43d2ed41440d41",
-      "modified": "2026-11-21T18:59:50.515Z"
+      "digest": "2a93d8bac30dabf1bf8133987be52be9b061402a61e28a2114a8c3561189cbf4",
+      "modified": "2026-11-21T19:31:42.862Z"
     },
     "https://tractorvs.com/ru/tractors/steyr-4080-plus-5be20b21/": {
       "digest": "b5d843690e62ababd81b16b34acec64a13409d7584adddd75ecff1d8e9f1a60b",
@@ -10258,16 +10258,16 @@
       "modified": "2026-11-21T18:59:50.515Z"
     },
     "https://tractorvs.com/ru/tractors/steyr-4095-kompakt-5ac93982/": {
-      "digest": "4d92a11c570297de615f261135528bcd810a685fc45a9e419e4b169358e1b1ff",
-      "modified": "2026-11-21T18:59:50.515Z"
+      "digest": "d8c684ad2f644739e6012b7900bb7196bc524d0eb8ab0114c6c190e51e7f62f7",
+      "modified": "2026-11-21T19:31:42.862Z"
     },
     "https://tractorvs.com/ru/tractors/steyr-4100-plus-6fac2f01/": {
       "digest": "c4c8d266ab4112be088f57a6a2e0c8fe03e635a7472f87724cc3e046eac13822",
       "modified": "2026-11-21T18:59:50.515Z"
     },
     "https://tractorvs.com/ru/tractors/steyr-4105-kompakt-129e9d3f/": {
-      "digest": "d9237431ac5efa07083cf85ba48afd7b8d51d3b3b2050f07d2f8acc487e3fbf5",
-      "modified": "2026-11-21T18:59:50.515Z"
+      "digest": "932e99a29dd473781a62f9c5672db127a67af98a551debd0c74f29f02a92e056",
+      "modified": "2026-11-21T19:31:42.862Z"
     },
     "https://tractorvs.com/ru/tractors/steyr-4110-expert-cvt-50786f46/": {
       "digest": "d41d5fa0e7bc5a930072e4c3b537a8f5de4ac446716adb2714477471687b9b60",
@@ -10278,8 +10278,8 @@
       "modified": "2026-11-21T18:59:50.515Z"
     },
     "https://tractorvs.com/ru/tractors/steyr-4115-kompakt-cb89989e/": {
-      "digest": "a08f16d5f5955a14c2ea03fee3929d6d1c05af5a6302584c6bb577036cc0e759",
-      "modified": "2026-11-21T18:59:50.515Z"
+      "digest": "ab71c330b770584a47feb46bea95d8aea6d2c3dfba40386bd26878bceb683c2d",
+      "modified": "2026-11-21T19:31:42.862Z"
     },
     "https://tractorvs.com/ru/tractors/steyr-4120-expert-cvt-1f1fc617/": {
       "digest": "d4f97a0c8c2a58b10ea5a0807ed8cefe15775186635972eb6cf76ad5a42aa123",
@@ -10290,12 +10290,12 @@
       "modified": "2026-11-21T18:59:50.515Z"
     },
     "https://tractorvs.com/ru/tractors/steyr-4130-expert-cvt-62317e3d/": {
-      "digest": "898d072b4424df1fa178b37a06d281521d0875db3d2aae8d35ccf3f3479649e3",
-      "modified": "2026-11-21T18:59:50.515Z"
+      "digest": "7d09683c4dd29a4097787626f2e4e01dc629520921c825a2062d80707d224d51",
+      "modified": "2026-11-21T19:31:42.862Z"
     },
     "https://tractorvs.com/ru/tractors/steyr-4140-expert-cvt-59894dfd/": {
-      "digest": "ef81ec7ee9e31a2a918ea92809ca72ea04e2f127e2f3a42892b3209ab3ded275",
-      "modified": "2026-11-21T18:59:50.515Z"
+      "digest": "2cbbf19ed49b74b774ef51e5eb28d2bfb03cc932d7551389587fbbfa95526942",
+      "modified": "2026-11-21T19:31:42.862Z"
     },
     "https://tractorvs.com/ru/tractors/steyr-6170-impuls-9f638dfa/": {
       "digest": "819d8e888fa27d26a0036adfb00ea2103d5dd59107bec338273797d675ec38f8",
@@ -10326,8 +10326,8 @@
       "modified": "2026-11-21T18:59:50.515Z"
     },
     "https://tractorvs.com/ru/tractors/steyr-6280-absolut-cvt-57b5c94a/": {
-      "digest": "7436c08abd745e32929227ed57f622a4f0c5047c34d84a090621d04394189ffa",
-      "modified": "2026-11-21T18:59:50.515Z"
+      "digest": "91982c4d38d0685ea384c4ed31d9b5a5b17e98e5d61405e4f1857cd626df595a",
+      "modified": "2026-11-21T19:31:42.862Z"
     },
     "https://tractorvs.com/ru/tractors/steyr-6290-terrus-cvt-cd705991/": {
       "digest": "ca26240ff243d86893d5ee99394723383e222bf14a0d4f9d0d7074b92928652f",
@@ -10822,8 +10822,8 @@
       "modified": null
     },
     "https://tractorvs.com/ru/tractors/zetor-6170-6a417237/": {
-      "digest": "1523d4760f74b92bbca904f4359e45438da80ca9fc2118bc1b8754bfbf9bffb6",
-      "modified": null
+      "digest": "c12c092580cced445b08cdf38f70d0c800a8711814192854b711cc1a615095c6",
+      "modified": "2026-11-21T19:31:42.862Z"
     },
     "https://tractorvs.com/ru/tractors/zetor-forterra-100-2c6bba1c/": {
       "digest": "e102fff6a546b4d2a686645433121f6eaf2a16c4ca356a17f8e430b4725603d3",
@@ -10894,8 +10894,8 @@
       "modified": null
     },
     "https://tractorvs.com/tr/compare/": {
-      "digest": "be495b9dcd1296edfa222482470713636ccb696944c5147d354e6c7727b8555b",
-      "modified": "2026-11-21T19:20:06.548Z"
+      "digest": "3dc60bbd7795d2ae35473d6dea1c7ed18710cbc534d78b870e6a662a98740c58",
+      "modified": "2026-11-21T19:31:42.862Z"
     },
     "https://tractorvs.com/tr/farm-advisor/": {
       "digest": "a4adbdc03bc2ab2929efa74249357d29f129d3a8fba458e6ff3f48292bdf8030",
@@ -10934,8 +10934,8 @@
       "modified": null
     },
     "https://tractorvs.com/tr/tractors/": {
-      "digest": "2664717c0b474594222074b968212063883d62fbe0ce1e5b850d062c30278bdb",
-      "modified": "2026-11-21T19:18:10.960Z"
+      "digest": "1a9cae15dca2d6575bff9d39ba133768e9d845beb8e1602615250db564e445a9",
+      "modified": "2026-11-21T19:31:42.862Z"
     },
     "https://tractorvs.com/tr/tractors/agrale-4125-0b53e944/": {
       "digest": "a9e5993677bc8d5ddf449b29a41bcd99d8ba6b3599ae3b54eba2389fc915225a",
@@ -11810,8 +11810,8 @@
       "modified": "2026-11-21T19:08:54.066Z"
     },
     "https://tractorvs.com/tr/tractors/steyr-4075-kompakt-19743251/": {
-      "digest": "5fd63fa0f9158ef7da580d2e2150b8d9eb396066f68f29d25b43bd6779c0e110",
-      "modified": "2026-11-21T19:08:54.066Z"
+      "digest": "fc6d65a965978d27d5136c84444963f85a6203c6affbab7fd90a844118de13d6",
+      "modified": "2026-11-21T19:31:42.862Z"
     },
     "https://tractorvs.com/tr/tractors/steyr-4080-plus-5be20b21/": {
       "digest": "32c7197953385586adb0fe00bbe7750c122c08ed47d624b4fb0eace682c23446",
@@ -11826,16 +11826,16 @@
       "modified": "2026-11-21T18:59:50.515Z"
     },
     "https://tractorvs.com/tr/tractors/steyr-4095-kompakt-5ac93982/": {
-      "digest": "5fb47c4ead6f8587080b804f4286630917e5f30086b9cfac87365caf0c860856",
-      "modified": "2026-11-21T19:08:54.066Z"
+      "digest": "7d0393f05a394bbd34c5d0200ccc9e962b0f1366ffa3e9757b8b47a7d1228c09",
+      "modified": "2026-11-21T19:31:42.862Z"
     },
     "https://tractorvs.com/tr/tractors/steyr-4100-plus-6fac2f01/": {
       "digest": "7a5528184a19f9b5cfab249f3495d50edd1f574c2558e6ffea166b1a37fff021",
       "modified": "2026-11-21T18:59:50.515Z"
     },
     "https://tractorvs.com/tr/tractors/steyr-4105-kompakt-129e9d3f/": {
-      "digest": "7c050f47583110251080a2cd4a5596cd8c03c5a991d1dc1337e9a87734d225f1",
-      "modified": "2026-11-21T19:08:54.066Z"
+      "digest": "2dab5f6dfc18f62d6e7207e6661c6e7a6d266b66dd25558fd55ea318e96b553a",
+      "modified": "2026-11-21T19:31:42.862Z"
     },
     "https://tractorvs.com/tr/tractors/steyr-4110-expert-cvt-50786f46/": {
       "digest": "eac97a299309688b990326319b0532f8cf4b78810d74e0bb1f4629a97bf971f1",
@@ -11846,8 +11846,8 @@
       "modified": "2026-11-21T18:59:50.515Z"
     },
     "https://tractorvs.com/tr/tractors/steyr-4115-kompakt-cb89989e/": {
-      "digest": "c390cb563ebc52f508fc75860dfbf2ff991c99573d7576dda1c3162764a18ffa",
-      "modified": "2026-11-21T19:08:54.066Z"
+      "digest": "053e6217fd57e6ad176c6f537f35f8089dad805897e89dbbe6f486f5814f4e49",
+      "modified": "2026-11-21T19:31:42.862Z"
     },
     "https://tractorvs.com/tr/tractors/steyr-4120-expert-cvt-1f1fc617/": {
       "digest": "76230d6645fff09da6bfb05bd9482d966c68979842a88901ffe0acb9e6ea9c30",
@@ -11858,12 +11858,12 @@
       "modified": "2026-11-21T18:59:50.515Z"
     },
     "https://tractorvs.com/tr/tractors/steyr-4130-expert-cvt-62317e3d/": {
-      "digest": "f71a7351ff456d6a0e86bb1b4c8a51a2095b073630c6154ceb283206b8eaf82d",
-      "modified": "2026-11-21T19:08:54.066Z"
+      "digest": "c30b25a4fc581cdd5efa92dca920df7b6c083f29ff43e55c0a997868dbaa37d7",
+      "modified": "2026-11-21T19:31:42.862Z"
     },
     "https://tractorvs.com/tr/tractors/steyr-4140-expert-cvt-59894dfd/": {
-      "digest": "b3e978ccb1109c7504fc65081b2b762336550bf48c88dbbac304d4ef310cb668",
-      "modified": "2026-11-21T19:08:54.066Z"
+      "digest": "8594742d9d3a2806f3c145637ab1b24222ea338138d1d9ec0cf5eba670634b6e",
+      "modified": "2026-11-21T19:31:42.862Z"
     },
     "https://tractorvs.com/tr/tractors/steyr-6170-impuls-9f638dfa/": {
       "digest": "3de2ac30595ccf75c94c0a6e2cc10d335010787000b3dc87d72331175c836cae",
@@ -11894,8 +11894,8 @@
       "modified": "2026-11-21T19:08:54.066Z"
     },
     "https://tractorvs.com/tr/tractors/steyr-6280-absolut-cvt-57b5c94a/": {
-      "digest": "3a9619501f4120fe8d9a27e4001059ff26a4c216916cb008db1649431285b35b",
-      "modified": "2026-11-21T19:08:54.066Z"
+      "digest": "2aeac3b56a6fff9ab7909052b5875b61d6661d82f0f10fec965d17318eea7faa",
+      "modified": "2026-11-21T19:31:42.862Z"
     },
     "https://tractorvs.com/tr/tractors/steyr-6290-terrus-cvt-cd705991/": {
       "digest": "9c752ab91b4cf2b46a0a02c7d5fc053fec1aa552f5199def2a6448eda4420102",
@@ -12390,8 +12390,8 @@
       "modified": "2026-11-21T19:08:54.066Z"
     },
     "https://tractorvs.com/tr/tractors/zetor-6170-6a417237/": {
-      "digest": "f188eab22c650923ab9674dff6a70c84a94bf10a21f39f657d3df6628e23a9a2",
-      "modified": "2026-11-21T19:08:54.066Z"
+      "digest": "7343510d6bc8d6fb7a5ca51ab6cc06daa0d0b75f9420c258068d15ba3039ca75",
+      "modified": "2026-11-21T19:31:42.862Z"
     },
     "https://tractorvs.com/tr/tractors/zetor-forterra-100-2c6bba1c/": {
       "digest": "9580dad5636458fb54db851c4e0870413807ec790dcc1f6dd591325edbad9b5a",
@@ -12454,8 +12454,8 @@
       "modified": "2026-11-21T19:08:54.066Z"
     },
     "https://tractorvs.com/tractors/": {
-      "digest": "84c6721d676da53bd9531e02e7541b13608c531d294e6afb15ed3961a2e62d62",
-      "modified": "2026-11-21T19:18:10.960Z"
+      "digest": "69b67db68f5ba6b3dcad681d743e416902ab3aa49cf020ab92fe091fbefac509",
+      "modified": "2026-11-21T19:31:42.862Z"
     },
     "https://tractorvs.com/tractors/agrale-4125-0b53e944/": {
       "digest": "5de348149531ede958cba36a5ad52ba44aa8febf31e506ba50a9c364915b7750",
@@ -13330,8 +13330,8 @@
       "modified": "2026-11-21T18:59:50.515Z"
     },
     "https://tractorvs.com/tractors/steyr-4075-kompakt-19743251/": {
-      "digest": "6155a40d15398b472ead4fba4909b36ca43c08baae0831135a464ba54bc31549",
-      "modified": "2026-11-21T18:59:50.515Z"
+      "digest": "2606508a3d3cd2caab2c7348671042fad5b8848fe307d3162b23f06df3002a68",
+      "modified": "2026-11-21T19:31:42.862Z"
     },
     "https://tractorvs.com/tractors/steyr-4080-plus-5be20b21/": {
       "digest": "67543543ca79ce8b96958eb91a383e0e2de989bbac27b1649d4694c4f3ab26aa",
@@ -13346,16 +13346,16 @@
       "modified": "2026-11-21T18:59:50.515Z"
     },
     "https://tractorvs.com/tractors/steyr-4095-kompakt-5ac93982/": {
-      "digest": "24b16362688d040b2d5d3e0a72b6c630aa77e18d63d695e7d38c0016df2c5283",
-      "modified": "2026-11-21T18:59:50.515Z"
+      "digest": "0e1e41d6765a785942318edc9aa0f466ea565d6180002f7e06c010b77572a6d9",
+      "modified": "2026-11-21T19:31:42.862Z"
     },
     "https://tractorvs.com/tractors/steyr-4100-plus-6fac2f01/": {
       "digest": "bc12f96cb3c2e314c08d87f347ea276f372c54a1dc56bfe8c69bcd25fb138c4d",
       "modified": "2026-11-21T18:59:50.515Z"
     },
     "https://tractorvs.com/tractors/steyr-4105-kompakt-129e9d3f/": {
-      "digest": "e4b6b871edd0a412d27904d7497667604bbf8ab29757e7287ec575c36244bb42",
-      "modified": "2026-11-21T18:59:50.515Z"
+      "digest": "b11d466e0e51a0aa740df2e19f9ce6e75d0879d76aee195a1680e04ae250d862",
+      "modified": "2026-11-21T19:31:42.862Z"
     },
     "https://tractorvs.com/tractors/steyr-4110-expert-cvt-50786f46/": {
       "digest": "a47eef5ff36194011a444f4f4bca2d8f2516a7c472944ad239c05f65eab105b6",
@@ -13366,8 +13366,8 @@
       "modified": "2026-11-21T18:59:50.515Z"
     },
     "https://tractorvs.com/tractors/steyr-4115-kompakt-cb89989e/": {
-      "digest": "9523d6fdd9045f86dbd51588b51493baac311d0b105c4866416b6e2bc305b4b0",
-      "modified": "2026-11-21T18:59:50.515Z"
+      "digest": "2f4dc0d7aeabfd984075285f62ab3e4873efdddc91d2dc9b4d68969fed330315",
+      "modified": "2026-11-21T19:31:42.862Z"
     },
     "https://tractorvs.com/tractors/steyr-4120-expert-cvt-1f1fc617/": {
       "digest": "a22212729a311eef865ffa71bd39c12646cbe625cb38e489f8f236d34264a6bd",
@@ -13378,12 +13378,12 @@
       "modified": "2026-11-21T18:59:50.515Z"
     },
     "https://tractorvs.com/tractors/steyr-4130-expert-cvt-62317e3d/": {
-      "digest": "97b84123b6d443b22ad44f65bffd0ae38739928a0a7c2f47810274f45330342c",
-      "modified": "2026-11-21T18:59:50.515Z"
+      "digest": "b9153745316182aeb8fb965333a2b2aa6d3683eefd66f6fff931d8279ea6b720",
+      "modified": "2026-11-21T19:31:42.862Z"
     },
     "https://tractorvs.com/tractors/steyr-4140-expert-cvt-59894dfd/": {
-      "digest": "f9152e4f9cf632aa2c33597fd002c75ac23860ca3e460883c2575171ab399dd1",
-      "modified": "2026-11-21T18:59:50.515Z"
+      "digest": "a9a5e5f8870bef0c86d20dbe9de748656593aae10d92aa384909f1cb34c36cd6",
+      "modified": "2026-11-21T19:31:42.862Z"
     },
     "https://tractorvs.com/tractors/steyr-6170-impuls-9f638dfa/": {
       "digest": "90127967c2f7d2ebb59ce9a96582734e6ca8fa2512eaefd716185ed0ab77ef90",
@@ -13414,8 +13414,8 @@
       "modified": "2026-11-21T18:59:50.515Z"
     },
     "https://tractorvs.com/tractors/steyr-6280-absolut-cvt-57b5c94a/": {
-      "digest": "e7cd8c888137938ef797f437e2036f3c11864af983fd4a1b45c13655f9b0523a",
-      "modified": "2026-11-21T18:59:50.515Z"
+      "digest": "97cdda97ad0b42c1dbccaa55ff05f37fad522d54af3e51e30fa40780a3e73ffc",
+      "modified": "2026-11-21T19:31:42.862Z"
     },
     "https://tractorvs.com/tractors/steyr-6290-terrus-cvt-cd705991/": {
       "digest": "b5ffc9941e4acd6ccab63bfb3218ba952ed5e9d51ce4536774792f447151e9d1",
@@ -13910,8 +13910,8 @@
       "modified": null
     },
     "https://tractorvs.com/tractors/zetor-6170-6a417237/": {
-      "digest": "5b422724aa5bd47324c8c94beb06ba0b046cd3bc6ff148e7ba1c69a7fa644ab8",
-      "modified": null
+      "digest": "3e59f2d964d2a78059de9f4fd37c063bbc6383425d7377ddc3bdd65b6ddfd834",
+      "modified": "2026-11-21T19:31:42.862Z"
     },
     "https://tractorvs.com/tractors/zetor-forterra-100-2c6bba1c/": {
       "digest": "e8aff45015aabd7596420267144d058fd5946cb969be2590e6f812792ef8ce37",
@@ -13982,8 +13982,8 @@
       "modified": null
     },
     "https://tractorvs.com/zh/compare/": {
-      "digest": "42a8ab8b8fee3ff58fa6866a4a3f842f671807ae4a3af41de9791f6b7c2fd744",
-      "modified": "2026-11-21T19:20:06.548Z"
+      "digest": "807dfbf30f0eb9ec54c1048948b14d8118030d4b2c1b97ce99c53c71193f9fdf",
+      "modified": "2026-11-21T19:31:42.862Z"
     },
     "https://tractorvs.com/zh/farm-advisor/": {
       "digest": "acec226c9dd9511500bef5a955082474f70bfa4cfd663939ecd9f0bf8468b829",
@@ -14002,8 +14002,8 @@
       "modified": null
     },
     "https://tractorvs.com/zh/tractors/": {
-      "digest": "4c57bcfe422798b82d5f5b44a0ba76ea3f7f59ff1f58471931a46a0285eec7ea",
-      "modified": "2026-11-21T19:18:10.960Z"
+      "digest": "795d89ce39706266d10aebbec75ab8d981438a7fef954ec879e2b59dc9c1295e",
+      "modified": "2026-11-21T19:31:42.862Z"
     },
     "https://tractorvs.com/zh/tractors/agrale-4125-0b53e944/": {
       "digest": "06ef33111c39f181b91db4f5221c7d745de902d6f7e772985350a9cff585708f",
@@ -14878,8 +14878,8 @@
       "modified": "2026-11-21T18:59:50.515Z"
     },
     "https://tractorvs.com/zh/tractors/steyr-4075-kompakt-19743251/": {
-      "digest": "91f625b78b8b43dac9d63b3938d1f2462e12275076b7f594070afb4f2d71c442",
-      "modified": "2026-11-21T18:59:50.515Z"
+      "digest": "18d51ae2c46aaf61767242c3276a0eab624a39f635c505b4e6d454ddedd618e8",
+      "modified": "2026-11-21T19:31:42.862Z"
     },
     "https://tractorvs.com/zh/tractors/steyr-4080-plus-5be20b21/": {
       "digest": "1185ca4f904763d9b600b555d093e89a42117281e295e97e44a156d0915aedcc",
@@ -14894,16 +14894,16 @@
       "modified": "2026-11-21T18:59:50.515Z"
     },
     "https://tractorvs.com/zh/tractors/steyr-4095-kompakt-5ac93982/": {
-      "digest": "18260a00460c87a58b01c91d3b3c15bb086c843bc44190937b1c972b17b23797",
-      "modified": "2026-11-21T18:59:50.515Z"
+      "digest": "3607f8da388e78f4899a594042a28f9a85f331eb7d2a7bb56ea228a19a5deb14",
+      "modified": "2026-11-21T19:31:42.862Z"
     },
     "https://tractorvs.com/zh/tractors/steyr-4100-plus-6fac2f01/": {
       "digest": "0ad9ff48173eae47e730bbea2a895b3f6cba3ee01763dda13e65abcf82176f69",
       "modified": "2026-11-21T18:59:50.515Z"
     },
     "https://tractorvs.com/zh/tractors/steyr-4105-kompakt-129e9d3f/": {
-      "digest": "530258a27ffbf4ab7c4f75473df457e2143f8818136a569c2039ecd8063c7467",
-      "modified": "2026-11-21T18:59:50.515Z"
+      "digest": "e7df738a3978e4d146219ff818a469aeb02edfaa5df395e0e839e64ca2546ad6",
+      "modified": "2026-11-21T19:31:42.862Z"
     },
     "https://tractorvs.com/zh/tractors/steyr-4110-expert-cvt-50786f46/": {
       "digest": "83427fd53a6cbe3325abffd1611b74a0a42106180d358461e88e6d7da4ac91bb",
@@ -14914,8 +14914,8 @@
       "modified": "2026-11-21T18:59:50.515Z"
     },
     "https://tractorvs.com/zh/tractors/steyr-4115-kompakt-cb89989e/": {
-      "digest": "05b75c61db780bb20c4b4527902a7745f7dea26dacb43dfc80a6e034de904eae",
-      "modified": "2026-11-21T18:59:50.515Z"
+      "digest": "9e4605789a2f997ecd3630904db2a3aec26591dc490e3290ff8b59f917c4c4fb",
+      "modified": "2026-11-21T19:31:42.862Z"
     },
     "https://tractorvs.com/zh/tractors/steyr-4120-expert-cvt-1f1fc617/": {
       "digest": "5f6f1f0f1fe882863ba53839e3dd7e4a9ed9ac1b7bcdb8219e39cd506aa1dfc0",
@@ -14926,12 +14926,12 @@
       "modified": "2026-11-21T18:59:50.515Z"
     },
     "https://tractorvs.com/zh/tractors/steyr-4130-expert-cvt-62317e3d/": {
-      "digest": "8710047f2bb99025f1b4ede96de896c83f85a960d288e3bf3506002228cd80c8",
-      "modified": "2026-11-21T18:59:50.515Z"
+      "digest": "fd138f454fefd18d48aa7153932eb96651319aae7f3989492d31e410ad6d302c",
+      "modified": "2026-11-21T19:31:42.862Z"
     },
     "https://tractorvs.com/zh/tractors/steyr-4140-expert-cvt-59894dfd/": {
-      "digest": "8943235aa120e24ede0d7ec81e418cb7d85787d6cf62cd6d4f48561985c28548",
-      "modified": "2026-11-21T18:59:50.515Z"
+      "digest": "fee46a1993e05e4ef4f269b1b4fbad1e7d13c8dfa2a828019321efbbf8592183",
+      "modified": "2026-11-21T19:31:42.862Z"
     },
     "https://tractorvs.com/zh/tractors/steyr-6170-impuls-9f638dfa/": {
       "digest": "c7fd285f8a359f16c4ac27698255d2ec01bf9ca9badb6e43f7786b161d7c56be",
@@ -14962,8 +14962,8 @@
       "modified": "2026-11-21T18:59:50.515Z"
     },
     "https://tractorvs.com/zh/tractors/steyr-6280-absolut-cvt-57b5c94a/": {
-      "digest": "54bc5864529704545fbce40b7f1389cfa23bb96e5550a837607dd9b2533b590e",
-      "modified": "2026-11-21T18:59:50.515Z"
+      "digest": "534f3bbd6876897b944f6a416a1043161717fc1353765dc679629fa5a242f605",
+      "modified": "2026-11-21T19:31:42.862Z"
     },
     "https://tractorvs.com/zh/tractors/steyr-6290-terrus-cvt-cd705991/": {
       "digest": "d4d773e8c538e4815e46832b6a7f8d797efa8d6526f52b10fb2ca7f6a24082cf",
@@ -15458,8 +15458,8 @@
       "modified": null
     },
     "https://tractorvs.com/zh/tractors/zetor-6170-6a417237/": {
-      "digest": "fab86f41bff563db9c46332e5dd76bb7c75a938138b21ebbff5d7c27de3ff95e",
-      "modified": null
+      "digest": "81e6f51d0012cdf4bd7ff70354a05c8ef99b1220733a8bfaa0c0efbdab083c66",
+      "modified": "2026-11-21T19:31:42.862Z"
     },
     "https://tractorvs.com/zh/tractors/zetor-forterra-100-2c6bba1c/": {
       "digest": "8b0df18336a69316aa4617dac46614f586d7af4ad4e0f40f6433fcb704ece43e",
