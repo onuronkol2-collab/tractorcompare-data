@@ -16,7 +16,7 @@ function row(overrides={}){
 const path="**/forum-test-api/rest/v1/tc_forum_localized_topics?**";
 test("guests can read newly published public topics before static Cloudflare deployment",async({page})=>{
  await page.route(path,route=>route.fulfill({json:[row()]}));
- await page.goto("/tr/forum/");
+ await page.goto("/tr/forum/?live-forum-test=1");
  const newList=page.locator("[data-forum-live-root]");
  await expect(newList).toBeVisible();
  await expect(newList.locator(".forum-live-topic")).toHaveCount(1);
@@ -38,7 +38,7 @@ test("public view enforces locale and published status, rejecting malformed and 
   row({locale:"en"}),row({body:"short"}),
   row({slug:"../../../admin"}),
  ]}));
- await page.goto("/tr/forum/");
+ await page.goto("/tr/forum/?live-forum-test=1");
  await expect(page.locator("[data-forum-live-grid] article")).toHaveCount(0);
  await expect(page.locator(".community-empty")).toBeVisible();
 });
@@ -46,7 +46,7 @@ test("same-tab successful publication event refreshes public reading without a r
  let rows=[];
  let calls=0;
  await page.route(path,route=>{calls++;return route.fulfill({json:rows})});
- await page.goto("/tr/forum/");
+ await page.goto("/tr/forum/?live-forum-test=1");
  await expect(page.locator(".community-empty")).toBeVisible();
  rows=[row({title:"Anında Okunabilir Gerçek Konu Başlığı"})];
  await page.evaluate(()=>document.dispatchEvent(new Event("tractorvs-forum-topic-saved")));
@@ -56,7 +56,7 @@ test("same-tab successful publication event refreshes public reading without a r
 });
 test("live public view failure retains static fallback and displays an honest notice",async({page})=>{
  await page.route(path,route=>route.fulfill({status:503,json:{message:"outage"}}));
- await page.goto("/tr/forum/");
+ await page.goto("/tr/forum/?live-forum-test=1");
  await expect(page.locator("[data-forum-live-status]")).toContainText("Canlı konu güncellemesi");
  await expect(page.locator(".community-empty")).toBeVisible();
 });
@@ -65,7 +65,7 @@ test("public live view never executes user-supplied HTML or unsafe link protocol
   body:"Kaynak açıklaması <img src=x onerror=alert(1)>; javascript:alert(1) "+
     "ve https://example.com/belge adresinde kaynak. Veri doğrulama tartışması sürmektedir."
  })]}));
- await page.goto("/tr/forum/");
+ await page.goto("/tr/forum/?live-forum-test=1");
  await page.locator(".forum-live-topic summary").click();
  await expect(page.locator(".forum-live-body img")).toHaveCount(0);
  await expect(page.locator(".forum-live-body script")).toHaveCount(0);
