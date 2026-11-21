@@ -18,6 +18,7 @@ import { morePublishedTractors } from "../lib/related-tractors";
 import { modelEvidenceAnswers, matchedHeadlinePowerSource } from "../lib/model-evidence-answers.ts";
 import { HEADLINE_PROVENANCE_COPY } from "../lib/headline-provenance-i18n.ts";
 import {forumText as forumCopy} from "../lib/forum-i18n.ts";
+import {editorialHubTranslation} from "../lib/editorial-hub-i18n.ts";
 interface Props { lang: Locale; tractor: TractorRecord; }
 const { lang, tractor } = Astro.props;
 // Same read-only, published-only catalogue already used by getStaticPaths.
@@ -27,6 +28,8 @@ const hasBasak2075Analysis = tractor.brand_name.toLocaleLowerCase("tr").includes
 const groups = groupSpecifications(tractor.specifications,lang);
 const manufacturerDiscrepancies = [...new Set(tractor.specifications.map((spec) => verificationNotice(spec, lang)).filter((note): note is string => Boolean(note)))];
 const listingUrl = localizedPath(lang,"/tractors/");
+const selectionGuideUrl=localizedPath(lang,"/guides/choosing-a-tractor/");
+const translatedSelection=editorialHubTranslation(lang)?.cards[0];
 const compareUrl = localizedPath(lang,"/compare/") + "?left=" + encodeURIComponent(tractor.tractor_id);
 const { title, description, searchDescription } = modelSeoMetadata(tractor, lang);
 const originalNote = originalVariantNote(tractor);
@@ -110,7 +113,9 @@ const summaryItems = [
       <strong>{forumCopy(lang,"name")} · {forumCopy(lang,"compose")}</strong>
       <span>{forumCopy(lang,"intro")} ↗</span>
     </a>
-    {(lang==="en"||lang==="tr") && <a class="model-spec-glossary-banner" href={localizedPath(lang,"/guides/tractor-technical-terms/")}><strong>{lang==="tr"?"Teknik terimler size ne anlatıyor?":"What do these technical terms mean?"}</strong><span>{lang==="tr"?"Teknik terimleri örneklerle öğrenin; özellik adlarının yanındaki ? bağlantısından doğrudan açıklamaya gidin.":"Understand technical terms with examples; the ? by each linked specification opens its definition."} ↗</span></a>}
+    {(lang==="en"||lang==="tr")
+      ? <a class="model-spec-glossary-banner" href={localizedPath(lang,"/guides/tractor-technical-terms/")}><strong>{lang==="tr"?"Teknik terimler size ne anlatıyor?":"What do these technical terms mean?"}</strong><span>{lang==="tr"?"Teknik terimleri örneklerle öğrenin; özellik adlarının yanındaki ? bağlantısından doğrudan açıklamaya gidin.":"Understand technical terms with examples; the ? by each linked specification opens its definition."} ↗</span></a>
+      : translatedSelection && <a class="model-spec-glossary-banner" href={selectionGuideUrl}><strong>{translatedSelection[0]}</strong><span>{translatedSelection[1]} ↗</span></a>}
     {groups.length>0?<div class="model-spec-groups">{groups.map((group)=>
       <section class="model-spec-group"><h3>{group.label}</h3><div class="model-spec-grid">
         {group.specifications.map((spec)=><article class="model-spec-card">

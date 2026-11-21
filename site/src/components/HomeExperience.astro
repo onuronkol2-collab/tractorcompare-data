@@ -7,6 +7,7 @@ import { homeDiscoveryText as d } from "../lib/home-discovery-ui";
 import { localizedPath, type Locale } from "../lib/locales";
 import { t } from "../lib/ui";
 import { advisorText as tx } from "../lib/advisor-i18n";
+import { editorialHubTranslation } from "../lib/editorial-hub-i18n";
 
 interface Props { lang: Locale; seoTitle?: string; seoDescription?: string }
 const { lang, seoTitle = "TractorVS | " + h(lang,"seoTitle"),
@@ -15,6 +16,25 @@ const catalogue = await getPublicCatalog();
 const catalogUrl = localizedPath(lang, "/tractors/");
 const compareUrl = localizedPath(lang, "/compare/");
 const advisorUrl = localizedPath(lang, "/farm-advisor/");
+const articlesUrl = localizedPath(lang, "/articles/");
+const selectionGuideUrl = localizedPath(lang, "/guides/choosing-a-tractor/");
+const basakReviewUrl = localizedPath(lang, "/reviews/basak-2075-bk/");
+const editorialCopy = editorialHubTranslation(lang);
+const editorialPreview = {
+  heading: editorialCopy?.heading ?? (lang==="tr"?"Traktör makaleleri ve teknik rehberler":"Tractor articles and technical guides"),
+  intro: editorialCopy?.intro ?? (lang==="tr"
+    ?"Traktör seçimi için güç, PTO, hidrolik ve ölçüm koşullarını kaynaklarıyla birlikte anlayın."
+    :"Understand tractor power, PTO, hydraulics and measurement conditions with checkable sources."),
+  browse: editorialCopy?.jump ?? (lang==="tr"?"Makalelere göz at":"Explore articles"),
+  selectionTitle: editorialCopy?.cards[0][0] ?? (lang==="tr"?"Traktör seçerken nelere dikkat edilmeli?":"How to choose a tractor beyond horsepower"),
+  selectionSummary: editorialCopy?.cards[0][1] ?? (lang==="tr"
+    ?"Arazi, ekipman, çekiş, servis ve PTO koşullarını bir karar listesine dönüştürün."
+    :"Compare land, implements, traction, servicing and PTO with a practical checklist."),
+  reviewTitle: editorialCopy?.cards[5][0] ?? (lang==="tr"?"Başak 2075 BK: kaynaklı teknik inceleme":"Başak 2075 BK: source-backed technical review"),
+  reviewSummary: editorialCopy?.cards[5][1] ?? (lang==="tr"
+    ?"Üretici verilerini model ve varyant sınırlarıyla birlikte değerlendirin; saha testi değildir."
+    :"Read manufacturer figures with model and variant limitations; not a field test.")
+};
 const detailBase = localizedPath(lang, "/tractors/");
 const brandCounts = new Map<string,number>();
 for (const tractor of catalogue.tractors) {
@@ -201,6 +221,31 @@ const suggestionPayload = JSON.stringify(catalogue.tractors.map((tractor) => ({
             <span class="home-featured-link">{d(lang,"modelDetails")} <span aria-hidden="true">↗</span></span>
           </a>
         ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="home-editorial" aria-labelledby="home-editorial-title">
+    <div class="container">
+      <div class="home-section-heading home-section-heading--split">
+        <div>
+          <p class="home-section-kicker">{h(lang,"featuresEyebrow")}</p>
+          <h2 id="home-editorial-title">{editorialPreview.heading}</h2>
+          <p>{editorialPreview.intro}</p>
+        </div>
+        <a class="home-outline-link" href={articlesUrl}>{editorialPreview.browse} <span aria-hidden="true">↗</span></a>
+      </div>
+      <div class="home-editorial-grid">
+        <a class="home-editorial-card" href={selectionGuideUrl}>
+          <h3>{editorialPreview.selectionTitle}</h3>
+          <p>{editorialPreview.selectionSummary}</p>
+          <span aria-hidden="true" class="home-editorial-arrow">↗</span>
+        </a>
+        <a class="home-editorial-card" href={basakReviewUrl}>
+          <h3>{editorialPreview.reviewTitle}</h3>
+          <p>{editorialPreview.reviewSummary}</p>
+          <span aria-hidden="true" class="home-editorial-arrow">↗</span>
+        </a>
       </div>
     </div>
   </section>

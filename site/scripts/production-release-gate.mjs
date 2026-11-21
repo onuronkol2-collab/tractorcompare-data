@@ -83,6 +83,19 @@ export function verifyProductionArtifacts({dir=projectRoot,origin=expectedOrigin
  insist(robots.includes("Allow: /")&&!/Disallow:\s*\//.test(robots),"robots.txt blocks search engines.");
  insist(robots.includes(origin+"/sitemap-index.xml"),"robots.txt does not reference production sitemap.");
  insist(sitemap.includes("sitemap-"),"Sitemap index is empty.");
+ // The visible homepage must expose real, language-matched article discovery links.
+ // Keep this after the original homepage/robots checks to catch broken localized builds.
+ for(const locale of ["en","tr","zh","hi","pt-br","fr","de","ru","ja","es"]){
+  const prefix=locale==="en"?"":"/"+locale;
+  const route=locale==="en"?"index.html":locale+"/index.html";
+  const home=readText(join(dist,route));
+  insist(home.includes('class="home-editorial"'),
+    "Homepage missing contextual source-backed article section: "+locale);
+  for(const suffix of ["/articles/","/guides/choosing-a-tractor/","/reviews/basak-2075-bk/"]){
+   insist(home.includes('href="'+prefix+suffix+'"'),
+     "Homepage missing an existing, localized editorial destination: "+locale+" "+suffix);
+  }
+ }
  // Evidence-based editorial archive must not silently disappear during deploy.
  const editorialSitemaps=readdirSync(dist)
   .filter(name=>name.startsWith("sitemap-")&&name.endsWith(".xml")&&name!=="sitemap-index.xml")
