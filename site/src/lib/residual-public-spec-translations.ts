@@ -683,7 +683,8 @@ export const RESIDUAL_PUBLIC_SPEC_TERMS: Record<string, Partial<Record<Locale,st
     "es": "Número total de válvulas del motor"
   },
   "Motor SoğUtma Tipi": {
-    "hi": "इंजन का शीतलन प्रकार"
+    "hi": "इंजन का शीतलन प्रकार",
+    "zh": "发动机冷却方式"
   },
   "Engine Speed At Maximum Power": {
     "zh": "最大功率时的发动机转速",
@@ -816,7 +817,8 @@ export const RESIDUAL_PUBLIC_SPEC_TERMS: Record<string, Partial<Record<Locale,st
     "hi": "निर्माता द्वारा घोषित इंजन शक्ति (kW, परीक्षण मानक निर्दिष्ट नहीं)"
   },
   "Operator Station / Cab": {
-    "ja": "運転席／キャブ"
+    "ja": "運転席／キャブ",
+    "ru": "Рабочее место оператора / кабина"
   },
   "Reverse Gears (12F+12R Gearbox Option)": {
     "ja": "後進段数（12F+12R変速機オプション）"
