@@ -10,6 +10,7 @@ import { COUNTRIES_BY_LOCALE } from "../lib/farm-advisor";
 import { MARKET_COUNTRIES, matchingPrice, formatMarketPriceRange } from "../lib/market-prices";
 import { pricedCatalogModels } from "../lib/catalog-price-payload.ts";
 import { localizedCountryName } from "../lib/country-display";
+import {catalogBrandIndex,BRAND_NAV_COPY} from "../lib/catalog-brand-index.mjs";
 interface Props { lang: Locale; }
 const { lang } = Astro.props;
 
@@ -17,6 +18,10 @@ const catalog = await getPublicCatalog();
 const title = t(lang,"catalogTitle") + " | TractorVS";
 const description = t(lang,"catalogDesc");
 const detailPrefix = localizedPath(lang,"/tractors/");
+const brandIndex=catalogBrandIndex(catalog.tractors);
+const brandNavCopy=BRAND_NAV_COPY[lang];
+const firstBrandCard=new Map(brandIndex.map(b=>[b.name,b.firstTractorId]));
+const brandAnchor=new Map(brandIndex.map(b=>[b.name,b.anchorId]));
 const initialCountry = COUNTRIES_BY_LOCALE[lang] || "US";
 // Unpriced models cannot change their value for any supported country. Keep
 // their server-rendered "price unavailable" text, and only hydrate models with
@@ -51,13 +56,23 @@ const pricePayload = JSON.stringify({
         <input id="tractor-search" type="search" placeholder={t(lang,"searchPlaceholder")} autocomplete="off" />
         <span>{t(lang,"publishedOnly")}</span>
       </div>
+      {brandIndex.length>1&&<nav class="catalog-brand-directory" aria-label={brandNavCopy.heading}>
+        <h2>{brandNavCopy.heading}</h2>
+        <p>{brandNavCopy.intro}</p>
+        <ul>{brandIndex.map(brand=><li>
+          <a href={"#"+brand.anchorId} data-catalog-brand-jump>
+            <span>{brand.name}</span><small>{brand.count} {brandNavCopy.models}</small>
+          </a>
+        </li>)}</ul>
+      </nav>}
       <div class:list={["tractor-card-grid", { "tractor-card-grid--two": catalog.tractors.length === 2 }]} id="tractor-card-grid">
         {catalog.tractors.map((tractor)=><article class="tractor-card"
+          id={firstBrandCard.get(tractor.brand_name)===tractor.tractor_id?brandAnchor.get(tractor.brand_name):undefined}
           data-search={[tractor.brand_name,tractor.model_name,tractor.variant||"",tractor.market||"",tractor.engine||""].join(" ").toLowerCase()}>
           <TractorPhoto tractor={tractor} lang={lang} mode="catalog" />
           <a class="tractor-card-main" href={detailPrefix+tractor.slug+"/"}>
           <div class="tractor-card-top"><span class="tractor-brand">{tractor.brand_name}</span><span class="tractor-card-arrow" aria-hidden="true">↗</span></div>
-          <h2>{tractor.model_name}</h2>
+          <h2>{tractor.brand_name} {tractor.model_name}</h2>
           <div class="tractor-card-meta">
             {tractor.model_year && <span>{tractor.model_year}</span>}
             {tractor.variant && <span title={tractor.variant}>{tractor.variant.split(";")[0].trim()}</span>}
@@ -138,6 +153,17 @@ const pricePayload = JSON.stringify({
     if (noResults) noResults.hidden = visible > 0;
   };
   search?.addEventListener("input", () => filterCatalog(search.value));
+  // Brand anchors must not target a hidden result after filtering.
+  for(const link of document.querySelectorAll<HTMLAnchorElement>("[data-catalog-brand-jump]")){
+    link.addEventListener("click",()=>{
+      if(!search?.value)return;
+      search.value="";
+      filterCatalog("");
+      const next=new URL(location.href);
+      next.searchParams.delete("q");
+      history.replaceState(history.state,"",next.pathname+next.search+next.hash);
+    });
+  }
   // A homepage search or brand chip lands on a real, filtered catalogue.
   // Keep the canonical URL on the clean catalogue path for search engines.
   const requested = new URLSearchParams(window.location.search).get("q")?.trim().slice(0,100);
@@ -149,6 +175,18 @@ const pricePayload = JSON.stringify({
 </script>
 
 <style>
+  .catalog-brand-directory{margin:18px 0 27px;padding:clamp(14px,2.8vw,22px);border:1px solid #c3dbc4;border-radius:16px;background:#f4faf3;scroll-margin-top:5rem}
+  .catalog-brand-directory h2{margin:0 0 7px;font-size:clamp(19px,2.2vw,25px);color:#174c30}
+  .catalog-brand-directory p{margin:0 0 15px;color:#4d6b56;font-size:13px;line-height:1.65;max-width:850px}
+  .catalog-brand-directory ul{display:flex;flex-wrap:wrap;gap:8px;padding:0;margin:0;list-style:none}
+  .catalog-brand-directory li{list-style:none}
+  .catalog-brand-directory a{display:inline-flex;align-items:center;flex-wrap:wrap;gap:8px;min-height:42px;
+    padding:7px 11px;border-radius:12px;background:white;border:1px solid #bbd1bb;color:#245a3a;
+    font-weight:750;font-size:13px;text-decoration:none}
+  .catalog-brand-directory a:hover{border-color:#47895c;background:#e7f3e5}
+  .catalog-brand-directory a:focus-visible{outline:3px solid #438c57;outline-offset:3px}
+  .catalog-brand-directory small{font-size:11px;color:#50755a}
+  .tractor-card[id^="brand-"]{scroll-margin-top:7rem}
   .tractor-card-main { display:flex; flex-direction:column; flex:1; min-width:0; color:inherit; }
   .tractor-card-main:focus-visible { outline:3px solid #438c57; outline-offset:3px; border-radius:8px; }
   .tractor-card .tractor-photo-gallery { margin-bottom:13px; }
