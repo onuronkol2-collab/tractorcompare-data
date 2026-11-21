@@ -1,5 +1,5 @@
 import {generateGeminiJson} from "./gemini-provider.ts";
-import {isUntranslatedTurkishTitle,sameNumericFacts,TRANSLATION_RESUME_FIELDS} from "./translation-quality.ts";
+import {isUntranslatedTurkishTitle,sameNumericFacts,TRANSLATION_RESUME_FIELDS,verifiedReadyTranslation} from "./translation-quality.ts";
 // Private, consent-gated TractorVS forum translator.
 // Only published, opted-in text enters Gemini; never submit user identity or media.
 const ROOT=Deno.env.get("SUPABASE_URL")||"https://aaufxtcvnzgavtlintiv.supabase.co";
@@ -155,10 +155,26 @@ async function work(){
     select:TRANSLATION_RESUME_FIELDS,
     topic_id:"eq."+job.entity_id,locale:"eq."+job.target_locale,limit:"1"
    });
-   const existing=savedRows[0] as (Article&{state:string;source_hash:string;qa_notes:string;model:string;reviewed_by_model:string|null})|undefined;
+   const existing=savedRows[0] as (Article&{state:string;source_hash:string;qa_notes:string;model:string;reviewed_by_model:string|null;seo_approved:boolean|null})|undefined;
    if(existing?.source_hash===source.source_hash&&existing.state==="ready"){
-    await patch(job,{state:"done",completed_at:new Date().toISOString(),last_error:null});
-    return {processed:1,status:"ready",locale:job.target_locale};
+    if(verifiedReadyTranslation(existing,source.source_hash)){
+     await patch(job,{state:"done",completed_at:new Date().toISOString(),last_error:null});
+     return {processed:1,status:"ready",locale:job.target_locale};
+    }
+    // A legacy ready row with seo_approved=false (or no independent reviewer)
+    // is not publication-ready. Quarantine it without modifying its text.
+    const quarantined=await db("tc_forum_topic_translations",{
+     topic_id:"eq."+job.entity_id,locale:"eq."+job.target_locale,
+     source_hash:"eq."+source.source_hash,state:"eq.ready"
+    },{method:"PATCH",headers:{"Content-Type":"application/json",
+     Prefer:"return=representation"},body:JSON.stringify({
+     state:"needs_review",seo_approved:false,
+     qa_notes:"QA_REVIEW_REQUIRED: legacy ready record lacks publication approval"
+    })});
+    if(quarantined.length!==1)throw Error("Legacy translation changed before quarantine");
+    await patch(job,{state:"done",completed_at:new Date().toISOString(),
+     last_error:"QA_REVIEW_REQUIRED: unapproved legacy ready state"});
+    return {processed:1,status:"needs_review",locale:job.target_locale};
    }
    const marker=existing?.source_hash===source.source_hash?
     /^PARTS:(\d+)\/(\d+)$/.exec(existing.qa_notes||""):null;
