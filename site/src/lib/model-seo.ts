@@ -98,6 +98,17 @@ const MODEL_COPY: Record<Locale, {
   }
 };
 
+/**
+ * Concise, genuinely localized technical title nouns. When a full title grows
+ * verbose, drop generic wording first — never cut a brand, model, market,
+ * equipment variant or year with an arbitrary character slice.
+ */
+const CONCISE_SPECS_TITLE:Record<Locale,string>={
+  en:"Specs",tr:"Özellikleri",zh:"技术参数",hi:"तकनीकी विवरण",
+  "pt-br":"Ficha técnica",fr:"Fiche technique",de:"Daten",
+  ru:"Характеристики",ja:"仕様",es:"Ficha técnica"
+};
+
 /** Keep original source/variant notes available without pretending to translate them. */
 export function originalVariantNote(tractor:Pick<TractorRecord,"variant">):string|null {
   return tractor.variant?.split(";").slice(1).join(";").trim() || null;
@@ -112,8 +123,16 @@ export function modelSeoMetadata(tractor: TractorRecord, lang: Locale) {
     variantLabel && variantLabel.length <= 48 ? variantLabel : null,
     marketLabel, tractor.model_year == null ? null : String(tractor.model_year)
   ].filter((part):part is string=>Boolean(part));
-  const title = model + " " + t(lang, "modelSpecsTitle")
-    + (qualifiers.length ? " — " + qualifiers.join(" · ") : "") + " | TractorVS";
+  const identityQualifiers=qualifiers.length ? " — " + qualifiers.join(" · ") : "";
+  const fullTitle=model + " " + t(lang,"modelSpecsTitle") + identityQualifiers + " | TractorVS";
+  // Google has no fixed title-character limit, but repeatedly verbose titles
+  // add noise. Shorten only generic label text; keep the exact full variant,
+  // year and market differentiators even if the result remains over 105 chars.
+  const conciseTitle=model + " " + CONCISE_SPECS_TITLE[lang] + identityQualifiers + " | TractorVS";
+  const identityOnlyTitle=model + identityQualifiers + " | TractorVS";
+  const title=fullTitle.length<=105 ? fullTitle
+    : conciseTitle.length<=105 ? conciseTitle
+    : identityOnlyTitle;
 
   const copy = MODEL_COPY[lang];
   const sourceCount = new Set(tractor.specifications.map(spec =>
