@@ -217,3 +217,34 @@ test("Fendt verified official technical-data source type passes original-domain 
   assert.equal(officialManufacturerSourceUrl(specimen,"Fendt"),specimen.source_url);
   assert.equal(officialManufacturerSourceUrl({...specimen,source_url:"https://api.fendt.com.evil.example/techdata/GB/en/1551551"},"Fendt"),null);
 });
+
+
+test("maker-source links are visible for dated Agrale, ArmaTrac and Sonalika evidence only",()=>{
+  const sources=[
+    ["Agrale","https://www.agrale.com.br/en/detalhes/tratores/tratores-agricolas/trator-525"],
+    ["ArmaTrac","https://armatrac.com/tractor/286/804-fruit-garden-cabin"],
+    ["ArmaTrac","https://armatrac.com/tractor/288/8044-fruit-garden-rops"],
+    ["Sonalika","https://www.sonalika.com/tractor/DI-734-Power-Plus"],
+    ["Sonalika","https://international.sonalika.com/tractors/"],
+  ];
+  for(const [brand,url] of sources){
+    const proof={...official,source_url:url,source_type:"official_product_page",
+      evidence_text:"Original producer-specific model technical specifications independently checked",
+      verified_at:"2026-11-21T06:00:00Z"};
+    assert.equal(specificationEvidenceLevel(proof),"manufacturer_documented",brand);
+    assert.equal(officialManufacturerSourceUrl(proof,brand),url,"real maker link hidden "+brand);
+    assert.equal(officialManufacturerSourceUrl({...proof,verified_at:null},brand),null,"no source date");
+    assert.equal(officialManufacturerSourceUrl({...proof,evidence_text:""},brand),null,"no manufacturer evidence");
+    assert.equal(officialManufacturerSourceUrl({...proof,source_type:"independent_test"},brand),null,"independent source cannot masquerade as maker");
+    for(const bad of [
+      url.replace("https://","http://"),
+      url.replace("https://","https://attacker@"),
+      url.replace("https://","https://").replace(/^(https:\/\/[^/]+)/,"$1.evil.test"),
+    ])assert.equal(officialManufacturerSourceUrl({...proof,source_url:bad},brand),null,"host/HTTPS spoof "+bad);
+  }
+  // Same real manufacturer host must never be accepted under another brand.
+  assert.equal(officialManufacturerSourceUrl({...official,source_url:sources[0][1]},"ArmaTrac"),null);
+  assert.equal(officialManufacturerSourceUrl({...official,source_url:sources[1][1]},"Sonalika"),null);
+  assert.equal(officialManufacturerSourceUrl({...official,source_url:sources[3][1]},"Agrale"),null);
+  assert.equal(officialManufacturerSourceUrl({...official,source_url:"https://sonalika.com.evil.example/tractor/DI-734-Power-Plus"},"Sonalika"),null);
+});
