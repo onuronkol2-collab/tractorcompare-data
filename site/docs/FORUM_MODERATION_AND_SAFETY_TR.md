@@ -26,6 +26,14 @@ Supabase Dashboard > Authentication > URL Configuration sayfasında **Site URL**
 - **Kontrollü kurtarma:** Doğrulanmış canlı yayın uyumsuzluğu varsa yeni bir Cloudflare derlemesi isteyebilir; iki saatten kısa aralıkla tekrar etmez ve 24 saat içinde en fazla iki deneme yapar. Ağ/Supabase denetimi başarısız olduğunda doğrulanmamış veriyi yayımlamaz. Hata kalırsa GitHub issue açık kalır.
 - **SEO ve gerçek teslim:** Başarılı CI, GitHub commit veya Supabase 'published' statüsü tek başına yeterli değildir. Canlı HTML 200, doğru canonical, indexleme yönergesi, bağlantılı forum hub ve sitemap gözlenmeden kullanıcıya 'site yayını tamam' demeyin. Google'da indekslenme ayrıca Google'a bağlıdır.
 
+## Anında kamuya açık konu okuma — statik SEO koruması
+
+- Başarıyla kaydedilen **metin konuları** anon RLS görünümü üzerinden forumun canlı listesinde, kalıcı sayfa derlemesini beklemeden okunabilir. Tam metin ana sayfa üzerinde açılır; kalıcı konu URL'si yokken çalışmayacak bağlantı gösterilmez.
+- Canlı liste yalnız `published` ve anonim görünüme açık verileri okur; güvenli kimlik, kategori, slug, dil doğrulaması ve DOM `textContent` kullanılır. E-posta, gizli metin veya onaysız fotoğraf açılmaz. Kaynak bağlantılarına `ugc nofollow` uygulanır.
+- SEO: Özel konu HTML sayfası, canonical/hreflang ve sitemap normal Astro build sonrası gelir. `noindex` kısa konunun herkese açık okunması hata değildir. Google indekslenmesi garanti edilmez.
+- Supabase kesintisinde statik forum içerikleri korunur, canlı katman durumu dürüstçe bildirilir. Yanıtlar ve fotoğraflar hâlâ kendi statik yayın/moderasyon zincirine bağlıdır; anlık görünürlük sözü verilmez.
+- 10 dakikalık eşitleme, üretim güvenlik testleri ve bağımsız canlı yayın bekçisi korunur.
+
 ## Yeni moderatör prosedürü
 - Metin yayınları doğrudandır; moderatör gerektiğinde sonradan gizler. Yayına alma öncesi onay yalnız fotoğraflar için zorunludur.
 1. Konu içeriğini özgünlük, güvenli bakım tavsiyesi, hassas bilgi ve spam açısından denetleyin.

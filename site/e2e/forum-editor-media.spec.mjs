@@ -59,7 +59,7 @@ test("editor safely formats text, previews emoji, and publishes text while keepi
  expect(posted).toHaveLength(0);
  await form.locator("[data-editor-rights]").check();
  await form.locator('button[type="submit"]').click();
- await expect(page.locator("[data-forum-status]")).toContainText("yayımlandı");
+ await expect(page.locator("[data-forum-status]")).toContainText("kaydedildi");
  await expect(page.locator("[data-editor-status]")).toContainText("fotoğraflar");
  expect(posted).toHaveLength(1);
  expect(posted[0].status).toBe("published");

@@ -5,13 +5,19 @@ import ForumMemberPanel from "./ForumMemberPanel.astro";
 import {forumText as ft,FORUM_CATEGORY_KEYS} from "../lib/forum-i18n.ts";
 import {memberText as mt} from "../lib/member-i18n.ts";
 import {FORUM_STARTER_GUIDES} from "../lib/forum-starter-guides.ts";
-import {publishedForumTopics,forumDate,isIndexableForumTopic} from "../lib/forum.ts";
+import {publishedForumTopics,forumDate,isIndexableForumTopic,publicForumClientConfig} from "../lib/forum.ts";
+import {FORUM_LIVE_TEXT} from "../lib/forum-live-i18n.ts";
 import {forumSeoDescription} from "../lib/forum-format.mjs";
 import {getPublicCatalog} from "../lib/catalog.ts";
 import {localizedPath,type Locale} from "../lib/locales.ts";
 interface Props {lang:Locale}
 const {lang}=Astro.props;
 const starters=FORUM_STARTER_GUIDES[lang];
+const liveConfig=publicForumClientConfig()??(
+ process.env.TRACTORVS_FORUM_BROWSER_TEST==="true"&&process.env.PUBLIC_INDEXING_ENABLED==="false"
+ ?{url:"http://127.0.0.1:4173/forum-test-api",key:"inert-browser-fixture"}:null
+);
+const liveBrowserData=JSON.stringify(liveConfig?{...liveConfig,lang}:null);
 const topics=await publishedForumTopics(lang);
 const catalog=await getPublicCatalog();
 const tractors=new Map(catalog.tractors.map(t=>[t.tractor_id,t]));
@@ -47,6 +53,12 @@ const schema=indexable?{
   <div class="container community-main">
    <section class="community-list" aria-label={ft(lang,"all")}>
     <h2>{ft(lang,"all")}</h2>
+    <div class="community-live-new" data-forum-live-root
+      data-forum-live-config={liveBrowserData} hidden>
+      <h3 data-forum-live-heading>{FORUM_LIVE_TEXT[lang].early}</h3>
+      <p data-forum-live-status role="status" aria-live="polite"></p>
+      <div class="community-topic-grid" data-forum-live-grid hidden></div>
+    </div>
     {topics.length>0?<>
      <div class="community-filters">
       <label>
@@ -62,7 +74,7 @@ const schema=indexable?{
      <div class="community-topic-grid" id="forum-topic-list">
       {topics.map(topic=>{
        const model=topic.tractor_id?tractors.get(topic.tractor_id):undefined;
-       return <article class="community-topic" data-forum-topic
+       return <article class="community-topic" data-forum-topic data-forum-topic-id={topic.topic_id}
          data-forum-search={[topic.title,topic.body,model?.brand_name,model?.model_name].filter(Boolean).join(" ").toLocaleLowerCase()}
          data-forum-topic-category={topic.category}>
          <div class="community-topic-meta">
@@ -127,6 +139,33 @@ const schema=indexable?{
  .community-model a,.community-help a{color:#266b42;text-decoration:underline;font-weight:750}
  .community-empty{padding:22px;border-radius:14px;background:#e5efe1;border:1px solid #c9daca;line-height:1.75}
  .community-help{font-size:14px;margin:18px 0}
+
+ .community-live-new{margin:18px 0 24px}
+ .community-live-new>h3{font-size:clamp(19px,2.2vw,24px);color:#20553b;margin:0 0 15px}
+ .community-live-new>[data-forum-live-status]{font-size:13px;color:#496e56}
+ .community-shell :global(.forum-live-topic){background:#fff;border:1px solid #bdd6bf;border-radius:15px;
+  padding:20px;overflow-wrap:anywhere}
+ .community-shell :global(.forum-live-topic h3){font-size:20px;line-height:1.4;margin:10px 0;color:#1f563a}
+ .community-shell :global(.forum-live-topic p){font-size:14px;line-height:1.72;color:#3d5b48}
+ .community-shell :global(.forum-live-meta){font-size:12px;color:#477759}
+ .community-shell :global(.forum-live-topic details){border-top:1px solid #d3e4d2;padding-top:12px;margin-top:15px}
+ .community-shell :global(.forum-live-topic summary){color:#17583a;text-decoration:underline;
+  font-size:14px;font-weight:800;cursor:pointer;padding:8px 0}
+ .community-shell :global(.forum-live-topic summary:focus-visible){outline:3px solid #83bc8a;outline-offset:2px}
+ .community-shell :global(.forum-live-note){font-size:12px!important;color:#5a745f!important}
+ .community-shell :global(.forum-live-body){max-height:min(80vh,850px);overflow-y:auto;
+  background:#f8fbf7;border:1px solid #dce8db;padding:15px;border-radius:10px}
+ .community-shell :global(.forum-live-body h4){font-size:18px;line-height:1.4;color:#205838;margin:18px 0 8px}
+ .community-shell :global(.forum-live-body h5){font-size:16px;line-height:1.4;color:#205838;margin:16px 0 7px}
+ .community-shell :global(.forum-live-body ul){padding-inline-start:22px}
+ .community-shell :global(.forum-live-body a){overflow-wrap:anywhere;text-decoration:underline;color:#175b3c}
+ .community-shell :global(.forum-live-table){overflow-x:auto;max-width:100%;margin:15px 0}
+ .community-shell :global(.forum-live-table:focus-visible){outline:3px solid #83bc8a}
+ .community-shell :global(.forum-live-table table){border-collapse:collapse;min-width:350px;width:100%;font-size:14px}
+ .community-shell :global(.forum-live-table td),.community-shell :global(.forum-live-table th){
+  padding:9px;border-bottom:1px solid #cfddcf;text-align:start}
+ .community-shell :global(.forum-live-table th){background:#e5f0e5;font-weight:800}
+
  .community-shell [hidden]{display:none!important}
  .community-shell a:focus-visible,.community-shell button:focus-visible,.community-shell input:focus-visible{outline:3px solid #83bc8a;outline-offset:2px}
 .community-starter{margin-top:24px;border-top:1px solid #d4e5d4;padding-top:24px}
@@ -138,15 +177,18 @@ const schema=indexable?{
  .community-starter-card p{font-size:14px;line-height:1.75;color:#4b5e4e;margin:0}
  </style>
 <script>
+ import {initForumLive} from "../lib/forum-live-client.ts";
+ const liveRoot=document.querySelector<HTMLElement>("[data-forum-live-root]");
+ if(liveRoot)initForumLive(liveRoot);
  const input=document.querySelector<HTMLInputElement>("#forum-filter");
- const cards=[...document.querySelectorAll<HTMLElement>("[data-forum-topic]")];
+ const cards=()=>[...document.querySelectorAll<HTMLElement>("[data-forum-topic]")];
  const categoryButtons=[...document.querySelectorAll<HTMLButtonElement>("[data-forum-category]")];
  const noResults=document.querySelector<HTMLElement>("#forum-no-results");
  let selected="all";
  const filter=()=>{
   const q=(input?.value||"").trim().toLocaleLowerCase();
   let count=0;
-  for(const card of cards){
+  for(const card of cards()){
    const visible=(selected==="all"||card.dataset.forumTopicCategory===selected)&&
     (!q||(card.dataset.forumSearch||"").includes(q));
    card.hidden=!visible;
@@ -155,6 +197,7 @@ const schema=indexable?{
   if(noResults)noResults.hidden=count>0;
  };
  input?.addEventListener("input",filter);
+ document.addEventListener("tractorvs-forum-live-updated",filter);
  for(const button of categoryButtons)button.addEventListener("click",()=>{
   selected=button.dataset.forumCategory||"all";
   categoryButtons.forEach(b=>{const active=b===button;b.classList.toggle("is-active",active);b.setAttribute("aria-pressed",String(active))});
