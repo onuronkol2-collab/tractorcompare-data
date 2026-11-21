@@ -30,6 +30,9 @@ const copy = MODEL_SOURCE_COPY[lang];
             <span>{source.hostname} <span aria-hidden="true">↗</span></span>
           </a>
           <small>{source.specificationCount} {copy.linked}</small>
+          {source.latestRecordVerification && <small class="model-source-reviewed">
+            {copy.recordReviewed}: <time datetime={source.latestRecordVerification}>{source.latestRecordVerification}</time>
+          </small>}
         </li>
       ))}
     </ul>
@@ -53,6 +56,8 @@ const copy = MODEL_SOURCE_COPY[lang];
   .model-sources-list a strong { font-size:14px; line-height:1.4; }
   .model-sources-list a span { font-size:12px; line-height:1.5; color:#446550; }
   .model-sources-list small { font-size:11px; color:#526b55; line-height:1.5; }
+  .model-source-reviewed { color:#41654d; font-size:11px; line-height:1.6; }
+  .model-source-reviewed time { font-weight:750; font-variant-numeric:tabular-nums; }
   .model-sources-more { margin:14px 0 0; font-size:13px; color:#395c48; line-height:1.6; }
   .model-sources-caution { margin:19px 0 0; border-top:1px solid #d9e5d6; padding-top:14px; color:#435849; font-size:13px; line-height:1.8; }
   .model-sources a:focus-visible { outline:3px solid #9ac493; outline-offset:3px; border-radius:4px; }
