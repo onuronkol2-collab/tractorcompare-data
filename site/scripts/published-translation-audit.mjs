@@ -105,5 +105,17 @@ if(process.env.TRANSLATION_MAX_TR_OCCURRENCES!==undefined){
     process.exitCode=1;
   }
 }
+// Locale-specific strict gates are enabled only after a complete built-page
+// scan has demonstrated zero identical-to-English source headings.
+if(process.env.TRANSLATION_ZERO_LOCALES?.trim()){
+  const zeroLocales=process.env.TRANSLATION_ZERO_LOCALES.split(",").map(x=>x.trim()).filter(Boolean);
+  for(const locale of zeroLocales){
+    if(locale==="en"||!locales.includes(locale))throw Error("Invalid zero-fallback locale "+locale);
+    if(occurrenceCounts[locale]>0){
+      console.error("TRANSLATION_AUDIT_ZERO_LOCALE_REGRESSION "+JSON.stringify({locale,remaining:occurrenceCounts[locale]}));
+      process.exitCode=1;
+    }
+  }
+}
 if(errors.length)process.exitCode=1;
 if(process.env.TRANSLATION_STRICT==="true" && suspects.length>0)process.exitCode=1;
