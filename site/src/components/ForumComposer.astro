@@ -828,15 +828,13 @@ for(const widget of widgets){
     msg(/^Daily forum (topic|reply) limit reached$/.test(error.message)?copy.limitError:res.status===429?copy.retryLater:copy.postError);
     return;
    }
+   if(cfg.mode==="topic")document.dispatchEvent(new Event("tractorvs-forum-topic-saved"));
    let photoOk=true;
    if(editor?.hasPhotos())photoOk=await editor.commit(postId,cfg.mode);
    try{sessionStorage.removeItem(draftKey())}catch{}
    postForm.reset();editor?.refresh();
    msg(copy.pending);void showHistory();
-   if(cfg.mode==="topic"){
-    document.dispatchEvent(new Event("tractorvs-forum-topic-saved"));
-    void setupPublicationCheck(postId);
-   }
+   if(cfg.mode==="topic")void setupPublicationCheck(postId);
   }catch{msg(copy.postError)}
   finally{if(button)button.disabled=false;if(logout)logout.disabled=false}
  });
