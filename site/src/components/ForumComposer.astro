@@ -252,6 +252,7 @@ for(const widget of widgets){
     else sessionStorage.removeItem(refreshKey);
    }
   }catch{}
+  window.dispatchEvent(new Event("tractorvs-forum-session"));
  }
  function setLogin(loggedIn:boolean){
   if(historyPanel)historyPanel.hidden=!loggedIn;
@@ -271,6 +272,7 @@ for(const widget of widgets){
   if(codeOption)codeOption.open=false;
   verifyForm?.reset();
   if(logout)logout.hidden=!loggedIn;
+  window.dispatchEvent(new Event("tractorvs-forum-session"));
  }
  async function verifySession(jwt:string,refresh?:string):Promise<boolean>{
   if(!jwt)return false;
