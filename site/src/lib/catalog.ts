@@ -615,6 +615,7 @@ export function specificationEvidenceLabel(
  * root is a reviewed code change, not an AI-generated guess.
  */
 const approvedManufacturerHosts: Record<string, string[]> = {
+  "tafe": ["tafetractors.com"],
   "başak traktör": ["basaktraktor.com.tr"],
   "tümosan": ["tumosan.com.tr"],
   "new holland": ["newholland.com.tr", "newholland.com"],
