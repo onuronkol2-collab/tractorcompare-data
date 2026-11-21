@@ -11,7 +11,9 @@ test("Turkish forum offers password, email OTP and enabled social sign-in withou
  await expect(page.locator('[data-forum-oauth="google"]')).toBeVisible();
  await expect(page.locator('[data-forum-oauth="github"]')).toBeVisible();
  await expect(page.locator("[data-community-members]")).toBeVisible();
- await expect(page.locator("[data-member-guest]")).toBeVisible();
+ await expect(page.locator("[data-member-toolbar-avatar]")).toBeVisible();
+ await expect(page.locator("[data-member-guest]")).toBeHidden();
+ await expect(page.locator("[data-member-grid]")).toBeHidden();
  await expect(page.locator("[data-member-form]")).toBeHidden();
 });
 
@@ -64,6 +66,8 @@ test("leaderboard is meaningful, opt-in and changes monthly/lifetime sort",async
   ])});
  });
  await page.goto("/tr/forum/");
+ await page.locator("[data-member-leaders-toggle]").click();
+ await expect(page.locator("[data-member-leaders]")).toBeVisible();
  const rank=page.locator("[data-leaders] li");
  await expect(rank).toHaveCount(2);
  await expect(rank.first()).toContainText("Mehmet");
