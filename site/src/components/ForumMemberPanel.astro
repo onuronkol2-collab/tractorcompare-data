@@ -177,6 +177,15 @@ for(const root of widgets){
  const rankEl=query<HTMLOListElement>("[data-leaders]");
  const empty=query<HTMLElement>("[data-leader-empty]");
  const profileForm=query<HTMLFormElement>("[data-member-form]");
+ const grid=query<HTMLElement>("[data-member-grid]");
+ const leaderSection=query<HTMLElement>("[data-member-leaders]");
+ const ownSection=query<HTMLElement>("[data-member-own]");
+ const leaderToggle=query<HTMLButtonElement>("[data-member-leaders-toggle]");
+ const editToggle=query<HTMLButtonElement>("[data-member-edit]");
+ const activityToggle=query<HTMLButtonElement>("[data-member-activity]");
+ const toolbarAvatar=query<HTMLImageElement>("[data-member-toolbar-avatar]");
+ const toolbarName=query<HTMLElement>("[data-member-toolbar-name]");
+ const toolbarHint=query<HTMLElement>("[data-member-toolbar-hint]");
  const guest=query<HTMLElement>("[data-member-guest]");
  const status=query<HTMLElement>("[data-profile-status]");
  const avatar=query<HTMLImageElement>("[data-member-avatar]");
@@ -195,6 +204,50 @@ for(const root of widgets){
  const dialogJoin=query<HTMLElement>("[data-dialog-join]");
  query<HTMLButtonElement>("[data-dialog-close]")?.addEventListener("click",()=>dialog?.close());
  let ownId="",token="",rankMode:"month"|"all"="month";
+ let editing=false,showActivity=false,showRanks=false,sessionVersion=0;
+ const defaultAvatar="/images/forum-member-default.svg";
+ const starterName="TractorVS Member";
+ function showAvatar(img:HTMLImageElement|null,url:string|null){
+  if(!img)return;
+  img.hidden=false;
+  img.src=url||defaultAvatar;
+  img.onerror=()=>{img.onerror=null;img.src=defaultAvatar};
+ }
+ function setPanels(){
+  const ownOpen=Boolean(ownId)&&(editing||showActivity);
+  if(grid){grid.hidden=!(ownOpen||showRanks);grid.classList.toggle("member-single",!(ownOpen&&showRanks))}
+  if(leaderSection)leaderSection.hidden=!showRanks;
+  if(ownSection)ownSection.hidden=!ownOpen;
+  if(profileForm)profileForm.hidden=!(ownId&&editing);
+  if(bookmarkPanel)bookmarkPanel.hidden=!(ownId&&showActivity);
+  if(followingPanel)followingPanel.hidden=!(ownId&&showActivity);
+  if(editToggle){
+   editToggle.hidden=!ownId;editToggle.setAttribute("aria-expanded",String(editing));
+   editToggle.textContent=editing?txt.closeProfile:txt.editProfile;
+  }
+  if(activityToggle){
+   activityToggle.hidden=!ownId;activityToggle.setAttribute("aria-expanded",String(showActivity));
+   activityToggle.textContent=showActivity?txt.hideActivity:txt.memberActivity;
+  }
+  if(leaderToggle)leaderToggle.setAttribute("aria-expanded",String(showRanks));
+ }
+ leaderToggle?.addEventListener("click",()=>{showRanks=!showRanks;setPanels()});
+ editToggle?.addEventListener("click",()=>{
+  if(!ownId)return;
+  editing=!editing;
+  if(editing)showActivity=false;
+  setPanels();
+  if(editing)profileForm?.querySelector<HTMLInputElement>('input[name="display_name"]')?.focus();
+ });
+ activityToggle?.addEventListener("click",()=>{
+  if(!ownId)return;
+  showActivity=!showActivity;
+  if(showActivity)editing=false;
+  setPanels();
+ });
+ document.querySelectorAll<HTMLAnchorElement>("[data-forum-leaderboard-link]").forEach(link=>{
+  link.addEventListener("click",()=>{showRanks=true;setPanels()});
+ });
  let leaders:Profile[]=[];
  const headers=(auth=false)=>({apikey:cfg.key,Accept:"application/json",
    ...(auth&&token?{Authorization:"Bearer "+token}:{})});
@@ -206,7 +259,7 @@ for(const root of widgets){
  function renderLeaders(){
   if(!rankEl)return;
   rankEl.replaceChildren();
-  const scores=[...leaders].sort((a,b)=>{
+  const scores=[...leaders].filter(p=>Number(p.score_total||0)>0).sort((a,b)=>{
    const left=Number(rankMode==="month"?b.score_30d:b.score_total)||0;
    const right=Number(rankMode==="month"?a.score_30d:a.score_total)||0;
    return left-right||(Number(b.score_total||0)-Number(a.score_total||0))||
@@ -219,7 +272,10 @@ for(const root of widgets){
    const ordinal=document.createElement("span");ordinal.className="member-rank-number";ordinal.textContent="#"+(index+1);
    li.append(ordinal);
    const photo=avatarUrl(p);
-   if(photo){const img=document.createElement("img");img.src=photo;img.alt="";img.loading="lazy";li.append(img)}
+   const img=document.createElement("img");img.src=photo||defaultAvatar;
+   img.alt="";img.loading="lazy";
+   img.onerror=()=>{img.onerror=null;img.src=defaultAvatar};
+   li.append(img);
    const main=document.createElement("span");main.className="member-entry";
    const name=document.createElement("button");name.type="button";
    name.className="member-profile-link";name.textContent=p.display_name||p.handle;
@@ -258,7 +314,7 @@ for(const root of widgets){
  }
  async function loadBookmarks(){
   if(!bookmarkList||!bookmarkPanel)return;
-  bookmarkList.replaceChildren();bookmarkPanel.hidden=!ownId;
+  bookmarkList.replaceChildren();bookmarkPanel.hidden=!(ownId&&showActivity);
   if(!ownId)return;
   try{
    const res=await fetch(cfg.url+"/rest/v1/tc_member_bookmarks?select=topic_id&order=created_at.desc&limit=15",
@@ -284,7 +340,7 @@ for(const root of widgets){
  }
  async function loadFollowed(){
   if(!followingPanel||!followingList)return;
-  followingList.replaceChildren();followingPanel.hidden=!ownId;
+  followingList.replaceChildren();followingPanel.hidden=!(ownId&&showActivity);
   if(!ownId)return;
   if(followingEmpty)followingEmpty.hidden=false;
   try{
@@ -329,14 +385,52 @@ for(const root of widgets){
    if(followingEmpty)followingEmpty.hidden=rows.length>0;
   }catch{if(followingEmpty)followingEmpty.hidden=false}
  }
+
+ // A new member does not need to fill in a profile form. Create a neutral
+ // pseudonymous entry only AFTER Supabase confirms the active user session.
+ // Never copy Google name, email or photo into a public profile automatically.
+ async function ensureNeutralProfile(id:string,existing:Profile|undefined):Promise<Profile>{
+  if(existing)return existing;
+  const neutral:Profile={
+   id,handle:"member_"+id.replace(/-/g,"").slice(0,16),
+   display_name:starterName,bio:"",favorite_brand:"",
+   avatar_path:null,show_leaderboard:true
+  };
+  try{
+   const res=await fetch(cfg.url+"/rest/v1/tc_member_profiles",{
+    method:"POST",
+    headers:{...headers(true),"Content-Type":"application/json",Prefer:"return=representation"},
+    body:JSON.stringify(neutral),
+    signal:AbortSignal.timeout(12000)
+   });
+   if(res.ok){
+    const saved=await res.json() as Profile[];
+    void loadLeaders();
+    return saved[0]||neutral;
+   }
+   // Concurrent login may have created a profile in another tab.
+   if(res.status===409){
+    const retry=await fetch(cfg.url+"/rest/v1/tc_member_profiles?"+
+      new URLSearchParams({select:"id,handle,display_name,bio,avatar_path,favorite_brand,show_leaderboard",
+      id:"eq."+id,limit:"1"}),{
+      headers:headers(true),cache:"no-store",signal:AbortSignal.timeout(12000)});
+    if(retry.ok){const rows=await retry.json() as Profile[];if(rows[0])return rows[0]}
+   }
+  }catch{}
+  // Failing to create the optional public profile must NEVER block posting.
+  return neutral;
+ }
  async function loadSelf(){
+  const version=++sessionVersion;
   try{token=sessionStorage.getItem(tokenKey)||""}catch{token=""}
   ownId="";
   if(!token){
-   if(profileForm)profileForm.hidden=true;
+   editing=false;showActivity=false;
    if(guest)guest.hidden=false;
-   if(bookmarkPanel)bookmarkPanel.hidden=true;
-   if(followingPanel)followingPanel.hidden=true;
+   if(toolbarName)toolbarName.textContent=txt.defaultMemberName;
+   if(toolbarHint)toolbarHint.textContent=txt.signInNotice;
+   showAvatar(avatar,null);showAvatar(toolbarAvatar,null);
+   setPanels();
    return;
   }
   try{
@@ -345,32 +439,49 @@ for(const root of widgets){
    if(!res.ok)throw Error();
    const user=await res.json();
    if(!/^[0-9a-f-]{36}$/i.test(user.id||""))throw Error();
+   if(version!==sessionVersion)return;
    ownId=user.id;
    if(guest)guest.hidden=true;
-   if(profileForm)profileForm.hidden=false;
+   if(toolbarName)toolbarName.textContent=txt.defaultMemberName;
+   if(toolbarHint)toolbarHint.textContent=txt.profileOptional;
+   showAvatar(avatar,null);showAvatar(toolbarAvatar,null);
+   setPanels();
    const profile=await fetch(cfg.url+"/rest/v1/tc_member_profiles?"+
     new URLSearchParams({select:"id,handle,display_name,bio,avatar_path,favorite_brand,show_leaderboard",
      id:"eq."+ownId,limit:"1"}),{headers:headers(true),cache:"no-store",
      signal:AbortSignal.timeout(12000)});
    if(!profile.ok)throw Error();
-   const rows=await profile.json() as Profile[],p=rows[0];
+   const rows=await profile.json() as Profile[];
+   const p=await ensureNeutralProfile(user.id,rows[0]);
+   if(version!==sessionVersion)return;
+   const shownName=p.display_name===starterName?txt.defaultMemberName:p.display_name;
+   if(toolbarName)toolbarName.textContent=shownName||txt.defaultMemberName;
+   if(toolbarHint)toolbarHint.textContent="@"+p.handle;
+   const photo=avatarUrl(p);
+   showAvatar(avatar,photo);showAvatar(toolbarAvatar,photo);
    if(profileForm){
-    for(const key of ["handle","display_name","bio","favorite_brand"]){
-     const field=profileForm.elements.namedItem(key) as HTMLInputElement|null;
-     if(field)field.value=p?String(p[key as keyof Profile]||""):"";
+    for(const fieldName of ["handle","display_name","bio","favorite_brand"]){
+     const field=profileForm.elements.namedItem(fieldName) as HTMLInputElement|null;
+     if(field)field.value=fieldName==="display_name"&&p.display_name===starterName?
+       "":String(p[fieldName as keyof Profile]||"");
     }
     const checked=profileForm.elements.namedItem("show_leaderboard") as HTMLInputElement|null;
-    if(checked)checked.checked=p?p.show_leaderboard:true;
-   }
-   if(avatar){
-    const src=p?avatarUrl(p):null;
-    avatar.hidden=!src;if(src)avatar.src=src+"?v="+Date.now();
+    if(checked)checked.checked=p.show_leaderboard;
    }
    await Promise.all([loadBookmarks(),loadFollowed()]);
   }catch{
-   ownId="";
-   if(profileForm)profileForm.hidden=true;
-   if(guest)guest.hidden=false;
+   if(version!==sessionVersion)return;
+   // Transient profile query failure is not an Auth logout; preserve the
+   // neutral card and never overwrite a verified login with a form requirement.
+   if(ownId){
+    if(toolbarName)toolbarName.textContent=txt.defaultMemberName;
+    if(toolbarHint)toolbarHint.textContent=txt.profileOptional;
+   }else{
+    editing=false;showActivity=false;
+    if(guest)guest.hidden=false;
+    if(toolbarHint)toolbarHint.textContent=txt.signInNotice;
+   }
+   setPanels();
   }
  }
  profileForm?.addEventListener("submit",async event=>{
@@ -420,9 +531,12 @@ for(const root of widgets){
     body:JSON.stringify(body),signal:AbortSignal.timeout(15000)});
    if(!res.ok)throw Error("save_profile");
    if(status)status.textContent=txt.saved;
-   const image=avatar;if(image&&avatar_path){
-    image.hidden=false;image.src=cfg.url+"/storage/v1/object/public/tc-forum-avatars/"+
+   if(toolbarName)toolbarName.textContent=display_name;
+   if(toolbarHint)toolbarHint.textContent="@"+handle;
+   if(avatar_path){
+    const src=cfg.url+"/storage/v1/object/public/tc-forum-avatars/"+
       ownId+"/avatar.webp?v="+Date.now();
+    showAvatar(avatar,src);showAvatar(toolbarAvatar,src);
    }
    await loadLeaders();
   }catch(e){
