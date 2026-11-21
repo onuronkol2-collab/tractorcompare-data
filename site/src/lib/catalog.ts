@@ -516,6 +516,7 @@ const rawSpecNameLabels: Record<string, { en: string; tr: string }> = {
 const specLabels: Record<string, { en: string; tr: string }> = {
   // Publication provenance: do not promote OEM marketing/unspecified standard values to rated power.
   engine_hp_category: {"en":"Manufacturer horsepower category (not measured engine power)","tr":"Üreticinin HP sınıfı (ölçülmüş motor gücü değil)"},
+  manufacturer_engine_torque_range_at_rpm: {"en":"Manufacturer-stated engine torque range (at stated RPM; not a single maximum)","tr":"Üreticinin belirttiği motor tork aralığı (verilen devirde; tek bir azami değer değil)"},
   manufacturer_engine_power_unspecified_standard: {"en":"Manufacturer-stated engine power (test standard not stated)","tr":"Üreticinin belirttiği motor gücü (ölçüm standardı belirtilmemiş)"},
   manufacturer_max_pto_power_unspecified_standard: {"en":"Manufacturer-stated maximum PTO power (test standard not stated)","tr":"Üreticinin belirttiği azami kuyruk mili gücü (ölçüm standardı belirtilmemiş)"},
   manufacturer_f25_rops_weight_unscoped: {"en":"F25 weight with ROPS (gearbox variant unspecified)","tr":"F25 ROPS ağırlığı (şanzıman varyantı belirtilmemiş)"},
