@@ -216,10 +216,13 @@ const labelsPayload = JSON.stringify({
       </div>}
     </div>
   </section>
+
+  <script type="application/json" id="tc-payload" set:html={payload}></script>
+  <script type="application/json" id="tc-i18n" set:html={labelsPayload}></script>
 </SiteLayout>
 
-<script type="application/json" id="tc-payload" set:html={payload}></script>
-<script type="application/json" id="tc-i18n" set:html={labelsPayload}></script>
+
+
 <script>
   import { normalizeTractorQuery } from "../lib/search";
   type Spec = { key:string; label:string; value:string; unit:string|null; context:string|null; rpm:number|null; source:string|null; independent:boolean; notice:string|null };
