@@ -65,7 +65,7 @@ test("all ten locales clearly disclose matched source and unconfirmed summary st
    assert.ok(value.length>15,locale+" should have meaningful "+key);
   }
   assert.notEqual(text.matched,text.unconfirmed,locale);
-  assert.notEqual(text.summaryCaveat,HEADLINE_PROVENANCE_COPY.en.summaryCaveat);
+  if(locale!=="en")assert.notEqual(text.summaryCaveat,HEADLINE_PROVENANCE_COPY.en.summaryCaveat);
  }
  const detail=readFileSync(new URL("../src/components/TractorDetail.astro",import.meta.url),"utf8");
  assert.match(detail,/HEADLINE_PROVENANCE_COPY\[lang\]/);
