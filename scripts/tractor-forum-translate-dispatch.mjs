@@ -27,7 +27,7 @@ export async function runTranslationQueue({jwt,secret,fetchFn=fetch,max=3}){
  const receipts=[];
  for(let i=0;i<max;i++){
   const res=await fetchFn(URL,{method:"POST",headers,body:JSON.stringify({action:"process_topic"}),
-   signal:AbortSignal.timeout(145000)});
+   signal:AbortSignal.timeout(230000)});
   if(!res.ok)throw Error("Private forum translation worker HTTP "+res.status);
   const parsed=await res.json();
   const receipt=validateReceipt(parsed);
