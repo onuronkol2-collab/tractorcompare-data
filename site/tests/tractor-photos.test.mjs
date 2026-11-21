@@ -13,7 +13,7 @@ const tractor=(brand_name,model_name)=>({
   engine:null,transmission:null,drivetrain:null,weight_kg:null,specifications:[]
 });
 test("only exact matching tractor model identity receives a verified photo",()=>{
-  assert.equal(APPROVED_TRACTOR_PHOTOS.length,66);
+  assert.equal(APPROVED_TRACTOR_PHOTOS.length,65);
   assert.equal(tractorPhotos(tractor("Belarus","82.1")).length,4);
   assert.equal(tractorPhotos(tractor("Belarus","80.1")).length,1);
   assert.equal(tractorPhotos(tractor("Belarus","132N")).length,1);
@@ -73,12 +73,10 @@ test("six additional Commons photos match exact published identities and indepen
     "Do not spread a photograph to a different model or version");
 });
 
-test("new CC BY-SA photos preserve four exact Belarus identities, author and reuse terms",()=>{
+test("new CC BY-SA photos preserve three exact Belarus identities, author and reuse terms",()=>{
   const verified=[
     ["892","Ivan2010","CC BY-SA 4.0","Tractor_arando_la_tierra_para_cultivo.jpg"],
     ["892.2","Globetrotter19","CC BY-SA 4.0","Belarus_892.2%2C_2025_Dunapataj.jpg"],
-    ["922.3","Nikolai Bulykin","CC BY-SA 4.0",
-      "%D0%90%D0%BB%D0%BC%D0%B0%D1%82%D1%8B%2C_%D0%91%D0%B5%D0%BB%D0%B0%D1%80%D1%83%D1%81-922.3_%D0%BD%D0%B0_%D0%9A%D1%83%D0%BB%D1%8B%D0%BC%D0%B1%D0%B5%D1%82%D0%BE%D0%B2%D0%B0-%D0%91%D1%80%D1%83%D0%BD%D0%BE_%281%29.jpg"],
     ["952","Fraxinus Croat","CC BY-SA 3.0","Belarus_952.jpg"],
   ];
   for(const [model,artist,license,file] of verified){
@@ -91,7 +89,7 @@ test("new CC BY-SA photos preserve four exact Belarus identities, author and reu
     assert.equal(photo.sourcePage.slice(-file.length),file);
     assert.match(photo.originThumbUrl,/\/500px-/);
   }
-  for(const wrong of ["892.3","922","922.4","952.2","952.4x"])
+  for(const wrong of ["892.3","922","922.3","922.4","952.2","952.4x"])
     assert.equal(primaryTractorPhoto(tractor("Belarus",wrong)),null,
       "Different model or variant must not inherit image: "+wrong);
 });
@@ -220,9 +218,9 @@ test("fullscreen viewer, linked credits and public image sitemap use SSR images"
 });
 
 test("historic photo batch is staged with rights and does not create records",()=>{
-  assert.equal(HISTORICAL_LICENSED_PHOTOS.length,55);
+  assert.equal(HISTORICAL_LICENSED_PHOTOS.length,54);
   const all=new Set(HISTORICAL_LICENSED_PHOTOS.map(x=>x.fileId));
-  assert.equal(all.size,55);
+  assert.equal(all.size,54);
   assert.ok(HISTORICAL_LICENSED_PHOTOS.every(x=>x.configurationExact===false));
   assert.ok(!HISTORICAL_LICENSED_PHOTOS.some(x=>["Product","Vehicle"].includes(x.model)));
 });
