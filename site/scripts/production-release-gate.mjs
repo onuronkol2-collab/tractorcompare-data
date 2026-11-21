@@ -83,6 +83,26 @@ export function verifyProductionArtifacts({dir=projectRoot,origin=expectedOrigin
  insist(robots.includes("Allow: /")&&!/Disallow:\s*\//.test(robots),"robots.txt blocks search engines.");
  insist(robots.includes(origin+"/sitemap-index.xml"),"robots.txt does not reference production sitemap.");
  insist(sitemap.includes("sitemap-"),"Sitemap index is empty.");
+ // Evidence-based editorial archive must not silently disappear during deploy.
+ const editorialSitemaps=readdirSync(dist)
+  .filter(name=>name.startsWith("sitemap-")&&name.endsWith(".xml")&&name!=="sitemap-index.xml")
+  .map(name=>readText(join(dist,name))).join("\n");
+ for(const [route,locale] of [["articles","en"],["tr/articles","tr"]]){
+  const article=readText(join(dist,route,"index.html"));
+  const publicUrl=origin+"/"+route+"/";
+  insist(!/noindex,nofollow|content="noindex/i.test(article),
+    "Editorial hub cannot be noindex: "+route);
+  insist(article.includes('rel="canonical" href="'+publicUrl+'"'),
+    "Editorial hub has wrong canonical: "+route);
+  insist(article.includes('lang="'+locale+'"'),
+    "Editorial hub has wrong language: "+route);
+  insist(article.includes('"CollectionPage"')&&article.includes('"ItemList"'),
+    "Editorial hub missing structured collection data: "+route);
+  insist((article.match(/class="editorial-card"/g)||[]).length>=6,
+    "Editorial hub missing reviewed article links: "+route);
+  insist(editorialSitemaps.includes("<loc>"+publicUrl+"</loc>"),
+    "Editorial hub not included in generated sitemap: "+route);
+ }
  for(const route of ["guides/tractor-technical-terms","tr/guides/tractor-technical-terms",
    "guides/pto-and-power-take-off","tr/guides/pto-and-power-take-off",
    "guides/tractor-hydraulic-lift-explained","tr/guides/tractor-hydraulic-lift-explained",
