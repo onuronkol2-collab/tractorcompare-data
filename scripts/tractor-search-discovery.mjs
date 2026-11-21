@@ -12,6 +12,13 @@ export const ORIGIN="https://tractorvs.com";
 export const KEY="e4b1594b38e2465b9659c00b778571a5";
 export const KEY_URL=ORIGIN+"/"+KEY+".txt";
 export const INDEXNOW_URL="https://api.indexnow.org/indexnow";
+// IndexNow distributes one accepted submission across participating engines.
+// These official endpoints are failovers, NEVER extra sends on success.
+export const INDEXNOW_FALLBACK_URLS=Object.freeze([
+  "https://www.bing.com/indexnow",
+  "https://yandex.com/indexnow",
+  "https://searchadvisor.naver.com/indexnow",
+]);
 const STATE=resolve(fileURLToPath(new URL("../.seo-discovery/state.json",import.meta.url)));
 const REPORT=resolve(fileURLToPath(new URL("../.seo-discovery/report.json",import.meta.url)));
 const MAX_URLS=20000;
@@ -146,15 +153,33 @@ async function validateChangedPages(urls,fetchFn=fetch){
 export async function submitIndexNow(urls,{fetchFn=fetch}={}){
   if(!urls.length)return {status:"no_changes",sent:0};
   if(urls.length>MAX_CHANGED_PER_RUN)fail("Unbounded IndexNow batch");
-  const response=await fetchFn(INDEXNOW_URL,{
-    method:"POST",headers:{"Content-Type":"application/json; charset=utf-8"},
-    body:JSON.stringify({host:"tractorvs.com",key:KEY,keyLocation:KEY_URL,urlList:urls}),
-    signal:AbortSignal.timeout(20000)
-  });
-  if(![200,202].includes(response.status))
-    fail("IndexNow API rejected submission with HTTP "+response.status);
-  return {status:response.status===200?"accepted":"received_pending_key_validation",sent:urls.length,http:response.status};
+  const body=JSON.stringify({host:"tractorvs.com",key:KEY,keyLocation:KEY_URL,urlList:urls});
+  const failures=[];
+  // One successful IndexNow endpoint shares the update with participants.
+  // Stop immediately on success; do not send duplicate requests to each engine.
+  for(const endpoint of [INDEXNOW_URL,...INDEXNOW_FALLBACK_URLS]){
+    let response;
+    try{
+      response=await fetchFn(endpoint,{
+        method:"POST",headers:{"Content-Type":"application/json; charset=utf-8"},
+        body,signal:AbortSignal.timeout(20000)
+      });
+    }catch{
+      failures.push("network_error");
+      continue;
+    }
+    if([200,202].includes(response.status))
+      return {status:response.status===200?"accepted":"received_pending_key_validation",
+        sent:urls.length,http:response.status,endpoint};
+    // Never evade rate limits, invalid submissions, or ownership failures.
+    if(![500,502,503,504].includes(response.status))
+      fail("IndexNow API rejected submission with HTTP "+response.status);
+    failures.push("HTTP_"+response.status);
+  }
+  // Throw before the caller advances the checkpoint. Retrying is safe.
+  fail("All IndexNow endpoints unavailable ("+failures.join(",")+")");
 }
+
 export async function run({fetchFn=fetch,statePath=STATE,reportPath=null,dryRun=false,now=new Date()}={}){
   const current=await liveSitemap({fetchFn});
   // Read-only gate: sitemap is based on a *real* deployed production build.
@@ -165,13 +190,15 @@ export async function run({fetchFn=fetch,statePath=STATE,reportPath=null,dryRun=
   const result={as_of:now.toISOString(),live_urls:current.size,previous_urls:Object.keys(state.urls).length,
     historical_urls_baselined:baseline?current.size:0,
     new_or_modified:count,checked:pending.length,remaining:Math.max(0,count-pending.length),
-    mode:baseline?"baseline_only":dryRun?"dry_run":"notify",indexnow:"not_sent",indexed_urls:"unavailable",
+    mode:baseline?"baseline_only":dryRun?"dry_run":"notify",indexnow:"not_sent",indexnow_endpoint:null,
+    google_discovery:"public_sitemap_and_robots; Google_does_not_use_IndexNow",indexed_urls:"unavailable",
     index_status_reason:"Submission or sitemap inclusion is not proof of indexing"};
   if(pending.length){
     await validateChangedPages(pending,fetchFn);
     if(!dryRun){
       const sent=await submitIndexNow(pending,{fetchFn});
       result.indexnow=sent.status;
+      result.indexnow_endpoint=sent.endpoint;
     }
   }
   if(!dryRun){
@@ -202,7 +229,10 @@ if(process.argv[1]&&resolve(process.argv[1])===fileURLToPath(import.meta.url)){
       "| New/changed vs checkpoint | "+result.new_or_modified+" |\n"+
       "| Verified URLs this run | "+result.checked+" |\n"+
       "| Pending | "+result.remaining+" |\n"+
-      "| IndexNow | "+result.indexnow+" |\n"+
+      "| IndexNow shared-protocol response | "+result.indexnow+" |\n"+
+      "| IndexNow endpoint used | "+(result.indexnow_endpoint||"None") +" |\n"+
+      "| Bing / Yandex / Naver / Seznam | IndexNow participants; individual engine receipt not verified |\n"+
+      "| Google | Sitemap/robots discovery; not an IndexNow participant |\n"+
       "| Indexed in search engines | Not measurable from sitemap/IndexNow; requires webmaster data |\n\n"+
       "Baseline created without bulk submission; new public URLs are validated and sent after deployment.\n");
   }catch(e){console.error(e);process.exitCode=1;}
