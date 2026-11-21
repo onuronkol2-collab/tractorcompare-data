@@ -1,7 +1,8 @@
 import {
  isUntranslatedTurkishTitle,
  sameNumericFacts,
- TRANSLATION_RESUME_FIELDS
+ TRANSLATION_RESUME_FIELDS,
+ verifiedReadyTranslation
 } from "./translation-quality.ts";
 
 function assert(condition:boolean, message:string) {
@@ -48,4 +49,24 @@ Deno.test("untranslated Turkish titles fail quality gate",()=>{
 Deno.test("final checkpoint loads the independent review receipt",()=>{
  assert(TRANSLATION_RESUME_FIELDS.split(",").includes("reviewed_by_model"),
   "finalization requires persisted review model");
+});
+
+Deno.test("legacy ready translations without SEO approval never count as publication ready",()=>{
+ const hash="same-source";
+ const legacy={source_hash:hash,state:"ready",seo_approved:false,reviewed_by_model:"gemini-3.5-flash-lite"};
+ assert(!verifiedReadyTranslation(legacy,hash),"old ready flag alone is insufficient");
+ assert(!verifiedReadyTranslation({...legacy,seo_approved:true,reviewed_by_model:null},hash),
+  "independent reviewer receipt is mandatory");
+ assert(!verifiedReadyTranslation({...legacy,seo_approved:true}, "different-source"),
+  "changed source must invalidate approval");
+ assert(verifiedReadyTranslation({...legacy,seo_approved:true},hash),
+  "source-matched approved reviewer receipt passes");
+ assert(!verifiedReadyTranslation({...legacy,seo_approved:true,state:"needs_review"},hash),
+  "partial or needs-review state cannot count as ready");
+});
+
+Deno.test("resume query includes both publication approval and reviewer receipt",()=>{
+ const columns=TRANSLATION_RESUME_FIELDS.split(",");
+ assert(columns.includes("seo_approved"),"must read SEO publication flag");
+ assert(columns.includes("reviewed_by_model"),"must read independent review evidence");
 });
