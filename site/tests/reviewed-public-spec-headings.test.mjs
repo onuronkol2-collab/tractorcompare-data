@@ -69,3 +69,11 @@ test("2WD/4WD speed qualifiers, tractor lift range and source types stay distinc
   assert.notEqual(tr("Lifting Force Across Full Range"),tr("Maximum Hitch Lifting Force"));
   assert.notEqual(tr("Transmission Gears – Creeper Option"),tr("Transmission Gears – Standard"));
 });
+
+test("even a generic canonical power key cannot remove EPM across ten locales",()=>{
+  for (const locale of LOCALES) {
+    const name=specLabel({...data,canonical_key:"engine_max_power_kw",spec_name:"Maximum Engine Power With EPM"},locale);
+    assert.match(name,/EPM/i,locale+" lost source-specific boost condition");
+    if(locale!=="en")assert.notEqual(name,"Maximum Engine Power With EPM",locale+" has missing EPM translation");
+  }
+});
