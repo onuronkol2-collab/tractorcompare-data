@@ -5,7 +5,7 @@ import ForumMemberPanel from "./ForumMemberPanel.astro";
 import {forumText as ft,FORUM_CATEGORY_KEYS} from "../lib/forum-i18n.ts";
 import {memberText as mt} from "../lib/member-i18n.ts";
 import {FORUM_STARTER_GUIDES} from "../lib/forum-starter-guides.ts";
-import {publishedForumTopics,forumDate} from "../lib/forum.ts";
+import {publishedForumTopics,forumDate,isIndexableForumTopic} from "../lib/forum.ts";
 import {forumSeoDescription} from "../lib/forum-format.mjs";
 import {getPublicCatalog} from "../lib/catalog.ts";
 import {localizedPath,type Locale} from "../lib/locales.ts";
@@ -15,8 +15,8 @@ const starters=FORUM_STARTER_GUIDES[lang];
 const topics=await publishedForumTopics(lang);
 const catalog=await getPublicCatalog();
 const tractors=new Map(catalog.tractors.map(t=>[t.tractor_id,t]));
-const publicCount=topics.filter(x=>x.seo_ready).length;
-const indexable=publicCount>0; // Empty or thin UGC pages must not enter the Google index.
+const publicCount=topics.filter(isIndexableForumTopic).length;
+const indexable=publicCount>0; // Never index a forum hub whose topics all fail the source/quality gate.
 const path=localizedPath(lang,"/forum/");
 const origin=Astro.site||new URL("https://tractorvs.com");
 const schema=indexable?{
