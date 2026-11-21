@@ -37,7 +37,7 @@ function licenceAllowed(meta,record){
   const name=strip(meta.LicenseShortName?.value || meta.UsageTerms?.value || "");
   const url=strip(meta.LicenseUrl?.value || "");
   const expected="https://creativecommons.org/licenses/by-sa/"+record.license.slice(-3)+"/";
-  if(name!==record.license||url.replace(/^http:/,"https:")!==expected)
+  if(name!==record.license||(url.replace(/^http:/,"https:").replace(/\/+$/,"")+"/")!==expected)
     throw Error("Licence mismatch: "+record.id+" "+name+" "+url);
   const artist=strip(meta.Artist?.value||meta.Credit?.value||"");
   if(!artist.toLowerCase().includes(record.artist.toLowerCase()))
