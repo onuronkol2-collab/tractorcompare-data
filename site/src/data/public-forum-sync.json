@@ -1,16 +1,11 @@
 {
-  "fingerprint": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-  "public_topics": 0,
-  "indexable_topics": 0,
+  "fingerprint": "6820d28f3f0471e2f2309fd939ed07823a1d568d5e043662ea10778efa311ecc",
+  "public_topics": 1,
+  "indexable_topics": 1,
   "public_replies": 0,
-  "public_rows": 0,
+  "public_images": 0,
+  "public_rows": 1,
   "source": "anon_public_forum_views",
   "scope": "aaufxtcvnzgavtlintiv",
-  "generated_at": "2026-11-20T21:22:22.782Z",
-  "manual_refresh_request": {
-    "reason": "First original, published, SEO-ready Turkish forum article became visible via anonymous RLS after the last scheduled sync",
-    "public_topic_id": "713ab252-a925-4ab7-b2c8-a30ce5b86706",
-    "requested_at": "2026-11-21T15:15:37Z",
-    "safety": "build trigger only; normal scheduled sync still calculates authoritative fingerprint and owns public_* fields"
-  }
+  "generated_at": "2026-11-21T15:24:55.770Z"
 }
