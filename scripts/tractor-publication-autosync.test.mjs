@@ -3,6 +3,7 @@ import {readFileSync} from "node:fs";
 import assert from "node:assert/strict";
 import {
   REPO,SNAPSHOT_PATH,validateScope,validateAnon,fingerprintPublicView,
+  fingerprintPublicViewWithBoundedRetry,
   runPublicationSync,guardMassUnpublish,
 } from "./tractor-publication-autosync.mjs";
 
@@ -146,4 +147,58 @@ test("reviewed publication checkpoint pushes immediately trigger anon-only catal
   assert.ok(workflow.includes("github.ref == 'refs/heads/main'"));
   assert.ok(workflow.includes("TRACTORVS_SUPABASE_ANON_JWT"));
   assert.doesNotMatch(workflow,/SUPABASE_SERVICE_ROLE|GEMINI_API_KEY|TRACTORVS_QUEUE_SECRET/);
+});
+
+test("one concurrent Supabase publication mid-pagination restarts a fresh public-only hash once",async()=>{
+  const data=Array.from({length:501},(_,i)=>({
+    tractor_id:i<200?"first":"second",model_name:"Maker model "+(i<200?"one":"two"),
+    spec_id:"spec"+i,spec_value:String(i)
+  }));
+  const seen=[];
+  let passes=0;
+  const fetchFn=async(url,init={})=>{
+    assert.equal(init.headers.apikey,jwt);
+    assert.equal(init.headers.Authorization,"Bearer "+jwt);
+    assert.equal(init.headers.Prefer,"count=exact");
+    const offset=Number(new URL(url).searchParams.get("offset"));
+    if(offset===0)passes++;
+    seen.push(offset);
+    const portion=data.slice(offset,offset+500);
+    // First pass: concurrent commit changed reported rows between pages.
+    const reported=passes===1 && offset===500?502:501;
+    return new Response(JSON.stringify(portion),{
+      status:206,headers:{"content-range":offset+"-"+(offset+portion.length-1)+"/"+reported}
+    });
+  };
+  const actual=await fingerprintPublicViewWithBoundedRetry({jwt,fetchFn});
+  assert.equal(passes,2,"at most one fresh full catalogue scan");
+  assert.deepEqual(seen,[0,500,0,500]);
+  assert.equal(actual.public_rows,501);
+  assert.equal(actual.published_models,2);
+  const reference=await fingerprintPublicView({jwt,fetchFn});
+  assert.equal(actual.fingerprint,reference.fingerprint,"do not mix rows from different transactions");
+});
+
+test("a second publication race still fails closed; unauthorized responses are never retried",async()=>{
+  const data=Array.from({length:501},(_,i)=>({
+    tractor_id:"m",model_name:"Tractor",spec_id:"row"+i,spec_value:String(i)
+  }));
+  let requests=0;
+  const raceFn=async(url)=>{
+    requests++;
+    const offset=Number(new URL(url).searchParams.get("offset"));
+    const page=data.slice(offset,offset+500);
+    const total=offset===0?501:502;
+    return new Response(JSON.stringify(page),{
+      status:206,headers:{"content-range":offset+"-"+(offset+page.length-1)+"/"+total}
+    });
+  };
+  await assert.rejects(fingerprintPublicViewWithBoundedRetry({jwt,fetchFn:raceFn}),
+    /Public data changed mid-read/);
+  assert.equal(requests,4,"exactly two complete attempts; no infinite retry");
+
+  let authRequests=0;
+  const denied=async()=>{authRequests++;return new Response("{}",{status:401})};
+  await assert.rejects(fingerprintPublicViewWithBoundedRetry({jwt,fetchFn:denied}),/HTTP 401/);
+  assert.equal(authRequests,1,"a 401 must fail immediately, never retry");
 });
