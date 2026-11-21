@@ -1,4 +1,9 @@
-import {assert,assertEquals,assertRejects} from "jsr:@std/assert@1.0.14";
+import assert from "node:assert/strict";
+// Offline tests: no remote test libraries, secrets or Gemini requests.
+const assertEquals=assert.deepEqual;
+async function assertRejects(fn:()=>Promise<unknown>,_error?:typeof Error,message?:string) {
+ await assert.rejects(fn,message?new RegExp(message):undefined);
+}
 import {generateGeminiJson,requestBody} from "./gemini-provider.ts";
 
 const schema={type:"object",properties:{title:{type:"string"},body:{type:"string"}},required:["title","body"]};
