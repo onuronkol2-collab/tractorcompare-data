@@ -113,7 +113,7 @@ function segments(body:string,max=2200):string[]{
  // Preserve whole Markdown blocks, particularly tables, headings and citations.
  // Never split halfway through a table row or an individual paragraph.
  const normalized=body.replace(/\r\n?/g,"\n");
- const chunks=normalized.split(/(\n{2,})/),out:string[];
+ const chunks=normalized.split(/(\n{2,})/);
  const work:string[]=[];
  let current="";
  for(let i=0;i<chunks.length;i+=2){
@@ -201,7 +201,7 @@ async function work(){
     select:"topic_id,locale,title,body,state,qa_notes,source_hash,model",
     topic_id:"eq."+job.entity_id,locale:"eq."+job.target_locale,limit:"1"
    });
-   const existing=savedRows[0] as (Article&{state:string;source_hash:string;qa_notes:string;model:string})|undefined;
+   const existing=savedRows[0] as (Article&{state:string;source_hash:string;qa_notes:string;model:string;reviewed_by_model:string|null})|undefined;
    if(existing?.source_hash===source.source_hash&&existing.state==="ready"){
     await patch(job,{state:"done",completed_at:new Date().toISOString(),last_error:null});
     return {processed:1,status:"ready",locale:job.target_locale};
