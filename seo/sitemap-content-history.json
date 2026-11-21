@@ -10,8 +10,8 @@
       "modified": null
     },
     "https://tractorvs.com/compare/": {
-      "digest": "638f41399c96b3764f7ff0142867137e725c992595ffcb59e0b8d980c0e05a9c",
-      "modified": null
+      "digest": "ad120f3a2da363e61cd6953af3cefbe6d4c7028b7c88c4c749d7d82681116329",
+      "modified": "2026-11-21T19:18:10.960Z"
     },
     "https://tractorvs.com/de/": {
       "digest": "4c7053016243cfbf0785c3fe3c6fab112e4ef37fcfad637dbb66efb4686a5a1e",
@@ -22,8 +22,8 @@
       "modified": null
     },
     "https://tractorvs.com/de/compare/": {
-      "digest": "d369a11ccc0ac670550f1ff10dfea857a4fae3ca6259ed205d2682fb2a450c84",
-      "modified": "2026-11-21T18:59:50.515Z"
+      "digest": "efac655539f64e5fc1bce0925a2c32d4df96142f54949f30205cf943c6630c48",
+      "modified": "2026-11-21T19:18:10.960Z"
     },
     "https://tractorvs.com/de/farm-advisor/": {
       "digest": "b54bf73ae7ab7f0cd11aa2a202b27e3f6bbf705724897014975f834f5eab0a06",
@@ -42,8 +42,8 @@
       "modified": null
     },
     "https://tractorvs.com/de/tractors/": {
-      "digest": "32a5ed6b281d7b83c909dab1729938cb7d9a8f8b00daf101fa5e8c674809f6d2",
-      "modified": null
+      "digest": "9493e862c44e96bb9fa6b49622afe2dcd7b9f0cd743cdb50cbd2949c5b96ebf4",
+      "modified": "2026-11-21T19:18:10.960Z"
     },
     "https://tractorvs.com/de/tractors/agrale-4125-0b53e944/": {
       "digest": "383068f720ee004756998faea597306fcaeb1091f71424bdef0cc2107b06b385",
@@ -242,12 +242,12 @@
       "modified": null
     },
     "https://tractorvs.com/de/tractors/belarus-892-2-2f9d2a97/": {
-      "digest": "929ca4683a4a8cd6037f133b251c82dddf4caaf548d8997e7459f96df48f85ff",
-      "modified": "2026-11-21T19:08:54.066Z"
+      "digest": "98dd503b6b6ab5a9cbc2359dc5502a446236cb1068272c905be867913f8baba6",
+      "modified": "2026-11-21T19:18:10.960Z"
     },
     "https://tractorvs.com/de/tractors/belarus-892-4a98cb19/": {
-      "digest": "f948cd232c02bb96172d2c892682b4a82376ba68c61e22d481cc706def5c1a14",
-      "modified": "2026-11-21T19:08:54.066Z"
+      "digest": "e985d908b58826fc3ae83084a7e1b4355e4047fcfc6ed4dd3020d4b931ce7bc0",
+      "modified": "2026-11-21T19:18:10.960Z"
     },
     "https://tractorvs.com/de/tractors/belarus-920-2-1e1d7219/": {
       "digest": "04b47a96aa7fce15b3c374f4d1a9ca8ad810b3279df4eb5d3d38979f194e2c43",
@@ -278,8 +278,8 @@
       "modified": "2026-11-21T19:08:54.066Z"
     },
     "https://tractorvs.com/de/tractors/belarus-952-2f38e961/": {
-      "digest": "1bec9e67601554481b33b446c43996b577ece2ebd1adcc6682f5829ef3be6b8e",
-      "modified": "2026-11-21T19:08:54.066Z"
+      "digest": "45b015df35825a900128b64f06339b6dd12ae989856eae41293dac3e3223a653",
+      "modified": "2026-11-21T19:18:10.960Z"
     },
     "https://tractorvs.com/de/tractors/belarus-952-3-be29821d/": {
       "digest": "a9d5cecf73e69ef5264a8a80b3028613e4172ee4047a85d75a72f8d3114a77e0",
@@ -1570,8 +1570,8 @@
       "modified": null
     },
     "https://tractorvs.com/es/compare/": {
-      "digest": "105ee70ae3f6ed53c125c87f74093e572ca0582f4d39ebc29c4bb1803e9c2f31",
-      "modified": "2026-11-21T19:08:54.066Z"
+      "digest": "e46c6ce2fb90aa08d58b0c8c7f384d921004e26497b69712af15ba4258f36faa",
+      "modified": "2026-11-21T19:18:10.960Z"
     },
     "https://tractorvs.com/es/farm-advisor/": {
       "digest": "406dc7bf28f97142d385a14af0156e9462f8c1bf2739fdf19ae18e15ce151ac7",
@@ -1590,8 +1590,8 @@
       "modified": null
     },
     "https://tractorvs.com/es/tractors/": {
-      "digest": "be4f6828348a6e169eb761b03bbe94dbd793f6211d5cbe8f66a2739fc61eae64",
-      "modified": null
+      "digest": "4c5aa1b408008f0804edbf335ea5431c22f31818f0f1e5f5188fc4127b3370b1",
+      "modified": "2026-11-21T19:18:10.960Z"
     },
     "https://tractorvs.com/es/tractors/agrale-4125-0b53e944/": {
       "digest": "88fc58ec7ecd154f05b01afc82eb3c26204a5a65f3f382d480bf3cfcd6d24bd0",
@@ -1790,12 +1790,12 @@
       "modified": null
     },
     "https://tractorvs.com/es/tractors/belarus-892-2-2f9d2a97/": {
-      "digest": "1abcf907f9e1a12161419c3475da24512b20b0a7c1f4eb641e1a8a8f0d7e6864",
-      "modified": "2026-11-21T19:08:54.066Z"
+      "digest": "7cf0b2a3573912e8cfc097761ca8285fb383ac7011f562b0d49cdf59b3ef219a",
+      "modified": "2026-11-21T19:18:10.960Z"
     },
     "https://tractorvs.com/es/tractors/belarus-892-4a98cb19/": {
-      "digest": "80cd07fa6b006c575eccfa27b057c4d872c441120d423d9ddc7888070c06093f",
-      "modified": "2026-11-21T19:08:54.066Z"
+      "digest": "d4feb6affe08a9ff670351e070df42334e3b4d32fde693ee740f9849501e2925",
+      "modified": "2026-11-21T19:18:10.960Z"
     },
     "https://tractorvs.com/es/tractors/belarus-920-2-1e1d7219/": {
       "digest": "3f31af4e38c9f297f19d6c0f003394ac75a65a8d66dbeb2113ef368e97036429",
@@ -1826,8 +1826,8 @@
       "modified": "2026-11-21T19:08:54.066Z"
     },
     "https://tractorvs.com/es/tractors/belarus-952-2f38e961/": {
-      "digest": "c6286cba0bac1bd569d2bcd510976da8de59eba3ab4730c8571bca191948a873",
-      "modified": "2026-11-21T19:08:54.066Z"
+      "digest": "9a01a4f6805af6032cbf6c6a13bad72c6bbc1afaeba4b81c75dfd8ac6087acfb",
+      "modified": "2026-11-21T19:18:10.960Z"
     },
     "https://tractorvs.com/es/tractors/belarus-952-3-be29821d/": {
       "digest": "50453596a9de41770800a235f4e3c67e0c5a11c46ec20b38847acc3ea3bf0475",
@@ -3122,8 +3122,8 @@
       "modified": null
     },
     "https://tractorvs.com/fr/compare/": {
-      "digest": "bf61fc899bc9781cf044c3881e09d03ed1e645f5f2768e532b1d4f47aa9d6d2e",
-      "modified": "2026-11-21T19:08:54.066Z"
+      "digest": "4419187cdc344d1c5896b3019b755e68afde8c0177f09aae3c58b6db96b792e6",
+      "modified": "2026-11-21T19:18:10.960Z"
     },
     "https://tractorvs.com/fr/farm-advisor/": {
       "digest": "04c0cfec26be6acd27f73d77e1223bea49788762c10d12351f0e3c0d8f0a53ab",
@@ -3142,8 +3142,8 @@
       "modified": null
     },
     "https://tractorvs.com/fr/tractors/": {
-      "digest": "2833091f5258f850fbc8dd33f07f1ca92b424d2498272aa5c734e43a2062c385",
-      "modified": null
+      "digest": "b2ff24b71d6891c628852234279081a6fd610422517909c1cba16400873ca04c",
+      "modified": "2026-11-21T19:18:10.960Z"
     },
     "https://tractorvs.com/fr/tractors/agrale-4125-0b53e944/": {
       "digest": "09c34a736d7f6c8bf1d94455adc6f54a7b3bb07e320151ddcdeba44145e4b26d",
@@ -3342,12 +3342,12 @@
       "modified": null
     },
     "https://tractorvs.com/fr/tractors/belarus-892-2-2f9d2a97/": {
-      "digest": "68d4058187a00fedbf24d67be56ef7c5b0a488d42381de0badbdb94244dda087",
-      "modified": "2026-11-21T19:08:54.066Z"
+      "digest": "f6250a2331387cdf686b25e345bd445ea36463d3f4dc14945004606141b2a5c3",
+      "modified": "2026-11-21T19:18:10.960Z"
     },
     "https://tractorvs.com/fr/tractors/belarus-892-4a98cb19/": {
-      "digest": "4e37cef8152a101a0ca3f6d5e53c20c62f466bfe5c1b43cd3a1423e1b7a8620c",
-      "modified": "2026-11-21T19:08:54.066Z"
+      "digest": "01fee8f0a9786971286a0b38b72121024974a76321cbb3959a8ab1769080a8b1",
+      "modified": "2026-11-21T19:18:10.960Z"
     },
     "https://tractorvs.com/fr/tractors/belarus-920-2-1e1d7219/": {
       "digest": "dd1d9bf97e7b46f918e9e51f4d74945c5f4eb357240b0cda75155cea30ac4241",
@@ -3378,8 +3378,8 @@
       "modified": "2026-11-21T19:08:54.066Z"
     },
     "https://tractorvs.com/fr/tractors/belarus-952-2f38e961/": {
-      "digest": "a509efabd9d00ff7a9bad250542706aff8e0c5e0a6aa2fecb087ad2aa58a2d4d",
-      "modified": "2026-11-21T19:08:54.066Z"
+      "digest": "8582121106807bccd726bd1bc88864a1abeb1b565900919b06bf00f9f8f19afc",
+      "modified": "2026-11-21T19:18:10.960Z"
     },
     "https://tractorvs.com/fr/tractors/belarus-952-3-be29821d/": {
       "digest": "bbc838b0978be294795c56419a5eb7c29804a47bb6b2e1d20145f7049c6d4062",
@@ -4690,8 +4690,8 @@
       "modified": null
     },
     "https://tractorvs.com/hi/compare/": {
-      "digest": "9b79fd17b33b2e01f774f6a09910e6f2ef45a75cf3dae5efded8ea209e98ed21",
-      "modified": "2026-11-21T18:59:50.515Z"
+      "digest": "35a2e30c3b882d92a26870cbe34ecb39558b4e63aa634364bff0513c1f1925cc",
+      "modified": "2026-11-21T19:18:10.960Z"
     },
     "https://tractorvs.com/hi/farm-advisor/": {
       "digest": "092807b2200943f7ac2f0bbd715574ad369a1008fef08957742035deef535fc3",
@@ -4710,8 +4710,8 @@
       "modified": null
     },
     "https://tractorvs.com/hi/tractors/": {
-      "digest": "da0156f4aa4956f3fa469ad9e458553900f6237a6723d968228423b972e39485",
-      "modified": null
+      "digest": "4fd1ace52ddecafa928473c7a18f88bc55ec04b2bf307f7b885e7a6cd4a801ee",
+      "modified": "2026-11-21T19:18:10.960Z"
     },
     "https://tractorvs.com/hi/tractors/agrale-4125-0b53e944/": {
       "digest": "e2df6853d489453d6c896735aae87a088aeb25af566264c205cb10ec0f0f8864",
@@ -4910,12 +4910,12 @@
       "modified": null
     },
     "https://tractorvs.com/hi/tractors/belarus-892-2-2f9d2a97/": {
-      "digest": "844cc57b0c2c6f397dac0fe31c72c038b695fa327c05dfbecd78b6112c647d83",
-      "modified": "2026-11-21T19:08:54.066Z"
+      "digest": "b1f1a26c3be517494abbdac39a400123fb6e013457662675f57279354b09dd66",
+      "modified": "2026-11-21T19:18:10.960Z"
     },
     "https://tractorvs.com/hi/tractors/belarus-892-4a98cb19/": {
-      "digest": "ab0fdf7bc0652d01922a95ed63223bb7a462ea97b8ee0b199a1ea59c1ac9ceac",
-      "modified": "2026-11-21T19:08:54.066Z"
+      "digest": "22a5eaf3f34d8393dd5b6c5b7d295b84561da10b3b299d151d123e4a1bf10abc",
+      "modified": "2026-11-21T19:18:10.960Z"
     },
     "https://tractorvs.com/hi/tractors/belarus-920-2-1e1d7219/": {
       "digest": "ac49e9894cc725f72e4965783a02b8f71f924633e530ae210a829af8ef1381b2",
@@ -4946,8 +4946,8 @@
       "modified": "2026-11-21T19:08:54.066Z"
     },
     "https://tractorvs.com/hi/tractors/belarus-952-2f38e961/": {
-      "digest": "59f88a616d9fafeee5e6e3a43bc3c10b6fd957c0e9e06cd9ff31ce013bf9b881",
-      "modified": "2026-11-21T19:08:54.066Z"
+      "digest": "c77e451585786a3403e0dc3deea93cb5bb60aca5f066308874897e8162252bbb",
+      "modified": "2026-11-21T19:18:10.960Z"
     },
     "https://tractorvs.com/hi/tractors/belarus-952-3-be29821d/": {
       "digest": "cfb398dbe91d7207d704fae28259abb36645bc83595fd5e8dccf279650ffd7e5",
@@ -6238,8 +6238,8 @@
       "modified": null
     },
     "https://tractorvs.com/ja/compare/": {
-      "digest": "2730158e077742fec464f8e732c0e71ba52ac593b5b1989a23c398399e627126",
-      "modified": "2026-11-21T18:59:50.515Z"
+      "digest": "82cceb8e29b46a455a0df9ec532c94c8e1cbccea1b8a6cb706f42cf06c27c46e",
+      "modified": "2026-11-21T19:18:10.960Z"
     },
     "https://tractorvs.com/ja/farm-advisor/": {
       "digest": "0b93553e15a4d2d8185bd3e9ad5d62af3df23c5eeafe4d8c3e1c833fef6c3790",
@@ -6258,8 +6258,8 @@
       "modified": null
     },
     "https://tractorvs.com/ja/tractors/": {
-      "digest": "59fb997e5cc46af3875acad81ddca6042c59fb43835ce8c911e8cdb762f78388",
-      "modified": null
+      "digest": "0f0260fd04529a1c6e7717021b03f5761278e535e0aa51aa0077a4962710f99f",
+      "modified": "2026-11-21T19:18:10.960Z"
     },
     "https://tractorvs.com/ja/tractors/agrale-4125-0b53e944/": {
       "digest": "1bc6529fbfbbe4d3e11a931b6e13f574234fa70aee9c09063adde9dd19e67673",
@@ -6458,12 +6458,12 @@
       "modified": null
     },
     "https://tractorvs.com/ja/tractors/belarus-892-2-2f9d2a97/": {
-      "digest": "50cb38b0b574994c33685a6fd5c769ec1286507d12e5b59f0f38e15238765ca4",
-      "modified": "2026-11-21T18:59:50.515Z"
+      "digest": "6187a49e17da16db4f99b14a3d0a5495860fb57421c757e32e42799b8dec5e4d",
+      "modified": "2026-11-21T19:18:10.960Z"
     },
     "https://tractorvs.com/ja/tractors/belarus-892-4a98cb19/": {
-      "digest": "1230a175b61e2f08e6b69ee945d34c7588a9f81216c042fefaa83b579c015ca4",
-      "modified": "2026-11-21T18:59:50.515Z"
+      "digest": "33095ffd0bf7f336b9a31f70d0ee318c34376469251da9be04f1cba229f735ff",
+      "modified": "2026-11-21T19:18:10.960Z"
     },
     "https://tractorvs.com/ja/tractors/belarus-920-2-1e1d7219/": {
       "digest": "995d3726a70d07cb3742aafb67a0a0b98e9917c07a7ca80f2332225576a5ec93",
@@ -6494,8 +6494,8 @@
       "modified": "2026-11-21T18:59:50.515Z"
     },
     "https://tractorvs.com/ja/tractors/belarus-952-2f38e961/": {
-      "digest": "4f0f87d183b1b546412e88ba24d4add65126fbd0afc5ca6587997bf04a740652",
-      "modified": "2026-11-21T18:59:50.515Z"
+      "digest": "b0894d775e98e1b4ca30605ff1e02b334f37dabd44336ca15ecf8fcde7ff8c67",
+      "modified": "2026-11-21T19:18:10.960Z"
     },
     "https://tractorvs.com/ja/tractors/belarus-952-3-be29821d/": {
       "digest": "9de75f4d32df68e97476db6ea3b7e29c9ff1b5b64cd42c2103b9c7e5aa506fc9",
@@ -7794,8 +7794,8 @@
       "modified": null
     },
     "https://tractorvs.com/pt-br/compare/": {
-      "digest": "8964b916ac7bd23d888c67387d0f36ded3bffa0e6b96684f33fed6c090c0ad42",
-      "modified": "2026-11-21T19:08:54.066Z"
+      "digest": "a64b82c99f5215a818669418b66cd168bbce903b51a5479bb85525e93a64e4c5",
+      "modified": "2026-11-21T19:18:10.960Z"
     },
     "https://tractorvs.com/pt-br/farm-advisor/": {
       "digest": "c550a98cb1e07f9dc6cefab3c8af2099ed34330f495871dbed34773e9829f379",
@@ -7814,8 +7814,8 @@
       "modified": null
     },
     "https://tractorvs.com/pt-br/tractors/": {
-      "digest": "89dc03aaf7f1007c66609cd7ae46f9879b3cf93764e190abdb07342382098d71",
-      "modified": null
+      "digest": "e23ebb5e84403016a6d504c7ef5e7f563b4b1dbf40a17ca521a264594d716c9e",
+      "modified": "2026-11-21T19:18:10.960Z"
     },
     "https://tractorvs.com/pt-br/tractors/agrale-4125-0b53e944/": {
       "digest": "aa96f913f3b87f5d09f37315acbdf469c1c8fbb61ae38d628e1b64089f6de332",
@@ -8014,12 +8014,12 @@
       "modified": null
     },
     "https://tractorvs.com/pt-br/tractors/belarus-892-2-2f9d2a97/": {
-      "digest": "36a310a519c341908bdd72b962d22939d3820c1d42edb0ab9ca555b93791ec28",
-      "modified": "2026-11-21T19:08:54.066Z"
+      "digest": "f6a937e28b4c8c99f639d4db8b47a47d23c2926b916e129201296bc5405b4552",
+      "modified": "2026-11-21T19:18:10.960Z"
     },
     "https://tractorvs.com/pt-br/tractors/belarus-892-4a98cb19/": {
-      "digest": "5f26bcc4b3b54978128a4e609eb14365fec289c95e52b8db86a3f2fe35e2b4a6",
-      "modified": "2026-11-21T19:08:54.066Z"
+      "digest": "0ad4b28154ec3a9917a4b8887859440969f2a356343259fb8dd408080f79d307",
+      "modified": "2026-11-21T19:18:10.960Z"
     },
     "https://tractorvs.com/pt-br/tractors/belarus-920-2-1e1d7219/": {
       "digest": "1555b3aa792d35260b34017c2011cc6ea398af46476aeb4384d79022b17556d8",
@@ -8050,8 +8050,8 @@
       "modified": "2026-11-21T19:08:54.066Z"
     },
     "https://tractorvs.com/pt-br/tractors/belarus-952-2f38e961/": {
-      "digest": "d1a822128207f4c87b8ae5e1c87ee35f34a5bd60cdcf2dbdfade324296351f0d",
-      "modified": "2026-11-21T19:08:54.066Z"
+      "digest": "1a14f1725881e4e61679187d179e428dc75fa474a72e3687aab871a3524d63f3",
+      "modified": "2026-11-21T19:18:10.960Z"
     },
     "https://tractorvs.com/pt-br/tractors/belarus-952-3-be29821d/": {
       "digest": "39ced1c8695c88c43e4052d7addafd8708236b76018925e2bbae90f57e3fbb88",
@@ -9346,8 +9346,8 @@
       "modified": null
     },
     "https://tractorvs.com/ru/compare/": {
-      "digest": "e933b559b7b2a54e6317ec5aa6ad7851bbf613c8a3472f39dabf70adf5ffcaa6",
-      "modified": "2026-11-21T19:08:54.066Z"
+      "digest": "9c4fc189d25a0b0e4b887fc3a4c55929f8a7ba814521d356f7ea25c13d8d8cc8",
+      "modified": "2026-11-21T19:18:10.960Z"
     },
     "https://tractorvs.com/ru/farm-advisor/": {
       "digest": "245f02c8d895c7e6f42ced41281d8e3b3eec17b15bda2222a277d7e4025d9119",
@@ -9366,8 +9366,8 @@
       "modified": null
     },
     "https://tractorvs.com/ru/tractors/": {
-      "digest": "4b9f500b68e3e5aaf3d07d921bae6f11b4ccae39360c754160ea755abb8cd159",
-      "modified": null
+      "digest": "7444efce274fb21116dcc4de58b879ea5c57368d25678f49e07df53e10330e80",
+      "modified": "2026-11-21T19:18:10.960Z"
     },
     "https://tractorvs.com/ru/tractors/agrale-4125-0b53e944/": {
       "digest": "ad56cd5defc003050d7169bea9d9de929dc5677c0e3db9a56107d05603c223c0",
@@ -9566,12 +9566,12 @@
       "modified": null
     },
     "https://tractorvs.com/ru/tractors/belarus-892-2-2f9d2a97/": {
-      "digest": "da58007ca8b2b35f74230dec6858a42f76e3c15fe78de3c3e30738af01f23160",
-      "modified": "2026-11-21T19:08:54.066Z"
+      "digest": "bc4eee0292142ba001e5523a496d442962af58579c2fbd1fa292dbb1824dde57",
+      "modified": "2026-11-21T19:18:10.960Z"
     },
     "https://tractorvs.com/ru/tractors/belarus-892-4a98cb19/": {
-      "digest": "1e6cff255c906a2a96e8dd34d886de7e28fe34fe4b0726b769cc8654c463c6d5",
-      "modified": "2026-11-21T19:08:54.066Z"
+      "digest": "818ac1f82a97f04e9fa9c85dce8920648ac251ead72ac90c4fe7415ce9f9fcf3",
+      "modified": "2026-11-21T19:18:10.960Z"
     },
     "https://tractorvs.com/ru/tractors/belarus-920-2-1e1d7219/": {
       "digest": "3cfd75ffb017d1b1eadb85e70733962e525d13d039bdbf965a123d90a7d4dbff",
@@ -9602,8 +9602,8 @@
       "modified": "2026-11-21T19:08:54.066Z"
     },
     "https://tractorvs.com/ru/tractors/belarus-952-2f38e961/": {
-      "digest": "491a4583cbf151332b1e700d81a0745bcbf28186b6a5ca103c03db39da3153e1",
-      "modified": "2026-11-21T19:08:54.066Z"
+      "digest": "6cc8f4feba89aaa590e584cdf3126a211b056d6c529a46d9c86ebb86a1837844",
+      "modified": "2026-11-21T19:18:10.960Z"
     },
     "https://tractorvs.com/ru/tractors/belarus-952-3-be29821d/": {
       "digest": "4dea64b380abe1da956d366a06f28bcbf0496bb9ea3143c59bf6761716590152",
@@ -10894,8 +10894,8 @@
       "modified": null
     },
     "https://tractorvs.com/tr/compare/": {
-      "digest": "c7004eb05db8f2184a8fdc2459a3d12b3eb76b45de767dcaac69ee80a16a46ca",
-      "modified": "2026-11-21T19:08:54.066Z"
+      "digest": "159961d7099b557bf20c9e3ac54daeb7aadc91bdc86a0001a23fa44f3c0c0315",
+      "modified": "2026-11-21T19:18:10.960Z"
     },
     "https://tractorvs.com/tr/farm-advisor/": {
       "digest": "ed0aad9b2d566aac5fce812cdd287bcb4dea486ad8ed0f3c76607dcdd53c871b",
@@ -10934,8 +10934,8 @@
       "modified": null
     },
     "https://tractorvs.com/tr/tractors/": {
-      "digest": "27735cc3b952ec15c5c3ffd521e89d8a33fa7c1fda29f726eaff920964aa545a",
-      "modified": null
+      "digest": "2664717c0b474594222074b968212063883d62fbe0ce1e5b850d062c30278bdb",
+      "modified": "2026-11-21T19:18:10.960Z"
     },
     "https://tractorvs.com/tr/tractors/agrale-4125-0b53e944/": {
       "digest": "0c474a6d1a4540085fda1d89422b9cbf4a1db0e59c399c182b4823f4cb810f5c",
@@ -11134,12 +11134,12 @@
       "modified": null
     },
     "https://tractorvs.com/tr/tractors/belarus-892-2-2f9d2a97/": {
-      "digest": "7c663d2d8caadda467143013a53497c81200df5646d50b38c571b98ca3e0d6e2",
-      "modified": "2026-11-21T19:08:54.066Z"
+      "digest": "4a3f9fbb154e1544ba9dfea6369811c9887826c5d2221ae7dacfdbac08c2fb7f",
+      "modified": "2026-11-21T19:18:10.960Z"
     },
     "https://tractorvs.com/tr/tractors/belarus-892-4a98cb19/": {
-      "digest": "21e36b566b768d48fa4cb377f08b04f5b14c92651a1f80dcead0b12deb4f40e5",
-      "modified": "2026-11-21T19:08:54.066Z"
+      "digest": "0ef984e554d0f2e92632756c4799ed456750be9f0587592853254cd34de66559",
+      "modified": "2026-11-21T19:18:10.960Z"
     },
     "https://tractorvs.com/tr/tractors/belarus-920-2-1e1d7219/": {
       "digest": "9376ca1bec6e9027c96c3db57f535714965491135c74965e5e92c5f19d4f1dd6",
@@ -11170,8 +11170,8 @@
       "modified": "2026-11-21T19:08:54.066Z"
     },
     "https://tractorvs.com/tr/tractors/belarus-952-2f38e961/": {
-      "digest": "0655cdd150d701312987a4f4c5c2186f3e53d4938892edf950fd90f99fe01452",
-      "modified": "2026-11-21T19:08:54.066Z"
+      "digest": "5de1e6308faa88ba7fbbcc2ebb13f8126c3de6f49132052ad76bc347e5d2e6c5",
+      "modified": "2026-11-21T19:18:10.960Z"
     },
     "https://tractorvs.com/tr/tractors/belarus-952-3-be29821d/": {
       "digest": "6ac3d4607e3a3e803fec878c25b89b39f0185fa054b6ec290c7d78b109055ffc",
@@ -12454,8 +12454,8 @@
       "modified": "2026-11-21T19:08:54.066Z"
     },
     "https://tractorvs.com/tractors/": {
-      "digest": "d3630db00996bcdf5133f603644032903faa88c39b90b655b01ccd27e9fe3217",
-      "modified": null
+      "digest": "84c6721d676da53bd9531e02e7541b13608c531d294e6afb15ed3961a2e62d62",
+      "modified": "2026-11-21T19:18:10.960Z"
     },
     "https://tractorvs.com/tractors/agrale-4125-0b53e944/": {
       "digest": "b166f849b97a8f2eeec3c65fad963018c70ce17571bbd4baf9e998a3494c89c3",
@@ -12654,12 +12654,12 @@
       "modified": null
     },
     "https://tractorvs.com/tractors/belarus-892-2-2f9d2a97/": {
-      "digest": "30ca3ffe708104881d0fc4852bf02b152528702790ac64e93750026fabefb0f4",
-      "modified": "2026-11-21T18:59:50.515Z"
+      "digest": "06a334838be7b237c6dfe6d3171ccfa5805c39235502b0ae490212e76430b15c",
+      "modified": "2026-11-21T19:18:10.960Z"
     },
     "https://tractorvs.com/tractors/belarus-892-4a98cb19/": {
-      "digest": "43647042b4aa0f21e663266a3d2963e724ca2be80cf852e8c35e07be7e1066df",
-      "modified": "2026-11-21T18:59:50.515Z"
+      "digest": "a09564741321e90874d990fde310ee3323eab8d49a66a55b4e4bb7e7c61ff612",
+      "modified": "2026-11-21T19:18:10.960Z"
     },
     "https://tractorvs.com/tractors/belarus-920-2-1e1d7219/": {
       "digest": "4a8aceaa513fb41f381c2c9cb6d96a1751e7137ed2f75de07306e887be4d2baa",
@@ -12690,8 +12690,8 @@
       "modified": "2026-11-21T18:59:50.515Z"
     },
     "https://tractorvs.com/tractors/belarus-952-2f38e961/": {
-      "digest": "af9a351915a93907e3a24ebd66adfa7566a82ea9a7795b206ac0b1256694b251",
-      "modified": "2026-11-21T18:59:50.515Z"
+      "digest": "44d41d17b9963cf696fbf894ae43e0365bd6b80a8fce5075aa084683fb484596",
+      "modified": "2026-11-21T19:18:10.960Z"
     },
     "https://tractorvs.com/tractors/belarus-952-3-be29821d/": {
       "digest": "02d5e6232ed770e7fbe5e136af27c7d06a139eb11f36112968017fde2f7a6467",
@@ -13982,8 +13982,8 @@
       "modified": null
     },
     "https://tractorvs.com/zh/compare/": {
-      "digest": "c2501c84586b252c139e34c65ea14831c815ed184bbe2d05d46058a4d1776872",
-      "modified": "2026-11-21T18:59:50.515Z"
+      "digest": "9cc345d63cfa8aa1fbe9c9b3f69aef9fb09ff572472488c2061d348e2a16dfee",
+      "modified": "2026-11-21T19:18:10.960Z"
     },
     "https://tractorvs.com/zh/farm-advisor/": {
       "digest": "6d1cbf2fc0696b73e5468717efea9c3b93a63653f712fd1efe387f578d993039",
@@ -14002,8 +14002,8 @@
       "modified": null
     },
     "https://tractorvs.com/zh/tractors/": {
-      "digest": "fffbfb0b34d8c249340505beae36e3415fdcf6012ef2bafa110a2102e164e911",
-      "modified": null
+      "digest": "4c57bcfe422798b82d5f5b44a0ba76ea3f7f59ff1f58471931a46a0285eec7ea",
+      "modified": "2026-11-21T19:18:10.960Z"
     },
     "https://tractorvs.com/zh/tractors/agrale-4125-0b53e944/": {
       "digest": "03cac6d4ace28aaefb3d7431c5d39d40543e54592565b2ef813671ce937da753",
@@ -14202,12 +14202,12 @@
       "modified": null
     },
     "https://tractorvs.com/zh/tractors/belarus-892-2-2f9d2a97/": {
-      "digest": "3f84679ae60fb4a5affb44fdfd1e401a8c475d937006bbc73dae17d4cf5a2e57",
-      "modified": "2026-11-21T18:59:50.515Z"
+      "digest": "6b79f0b334e08a21eff1ed8cd90652fb188fc9a228afcbe0f890c7efd42c9c4e",
+      "modified": "2026-11-21T19:18:10.960Z"
     },
     "https://tractorvs.com/zh/tractors/belarus-892-4a98cb19/": {
-      "digest": "68248a400b0d2dee7c3476bacd63c122fedb95a5341d917e5e5825a06b633979",
-      "modified": "2026-11-21T18:59:50.515Z"
+      "digest": "c61b9b3579ae3bf6b5be7f5eaaef60bc1a434a350ea9ec2064db1cd1122a5373",
+      "modified": "2026-11-21T19:18:10.960Z"
     },
     "https://tractorvs.com/zh/tractors/belarus-920-2-1e1d7219/": {
       "digest": "4de427dbeb9f3553978870b8df75f5bcaa4f5039196940615c45d5ce85615b6d",
@@ -14238,8 +14238,8 @@
       "modified": "2026-11-21T18:59:50.515Z"
     },
     "https://tractorvs.com/zh/tractors/belarus-952-2f38e961/": {
-      "digest": "7132072e835e409b392bb7a3e8f3fd39142a11acb009c7455fc1b31990395330",
-      "modified": "2026-11-21T18:59:50.515Z"
+      "digest": "0d1cc290d0550cc13346d2358f3101d215ef816e77371f467c07ba5e6ac44432",
+      "modified": "2026-11-21T19:18:10.960Z"
     },
     "https://tractorvs.com/zh/tractors/belarus-952-3-be29821d/": {
       "digest": "e322bcfd57965bd6d06888b35ca393d1a70810dbe3a959eae63b608ff472dc78",
