@@ -722,6 +722,8 @@ const approvedExactManufacturerDocuments: Record<string, string[]> = {
   ],
   "iseki": [
     "https://www.iseki.co.jp/global/cms/upload/pdf/products/tractor/t97_spec.pdf",
+    // Exact original TXGS24 UK/Ireland subsidiary brochure, not entire WordPress media host.
+    "https://www.iseki.co.uk/wp-content/uploads/2021/02/Iseki-TXGS24-Range-WEB-2.pdf",
   ],
   "lamborghini trattori": [
     "https://www.lamborghini-tractors.com/en-eu/all/download/7988_b274e15de8fa324d508dde300f1d3fc8",
