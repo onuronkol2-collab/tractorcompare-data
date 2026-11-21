@@ -15,6 +15,8 @@ on:
       - "site/tests/reviewed-public-spec-headings.test.mjs"
       - "site/src/lib/residual-public-spec-translations.ts"
       - "site/src/lib/live-reviewed-spec-headings-20261121.ts"
+      - "site/src/lib/reviewed-turkish-source-labels-en.ts"
+      - "site/tests/reviewed-turkish-source-labels-en.test.mjs"
       - "site/tests/live-reviewed-spec-headings-20261121.test.mjs"
       - "site/tests/residual-public-spec-translations.test.mjs"
       - "site/tests/published-translation-built-audit.test.mjs"
@@ -77,6 +79,7 @@ jobs:
           TRANSLATION_DIST_ROOT: site/dist
           TRANSLATION_MIN_MODELS: "379"
           TRANSLATION_MAX_TR_OCCURRENCES: "0"
+          TRANSLATION_MAX_EN_SOURCE_OCCURRENCES: "220"
           TRANSLATION_ZERO_LOCALES: "tr,zh,hi,de,ru,ja"
           TRANSLATION_VALIDATE_SEO: "true"
           TRANSLATION_AUDIT_CONCURRENCY: "8"
