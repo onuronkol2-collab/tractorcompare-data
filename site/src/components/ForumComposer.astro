@@ -276,7 +276,10 @@ for(const widget of widgets){
  const fromLink=hash.get("access_token");
  if(fromLink){
   history.replaceState(null,"",location.pathname+location.search);
-  verifySession(fromLink,hash.get("refresh_token")||"").then(ok=>{
+  const attemptPromise=verifySession(fromLink,hash.get("refresh_token")||"");
+  const expectedAttempt=activeAuthAttempt;
+  attemptPromise.then(ok=>{
+   if(expectedAttempt!==activeAuthAttempt)return;
    if(!ok)msg(copy.oldLink);
    widget.scrollIntoView({block:"start"});
    if(ok)widget.focus({preventScroll:true});
@@ -285,11 +288,16 @@ for(const widget of widgets){
   history.replaceState(null,"",location.pathname+location.search);
   msg(copy.oldLink);widget.scrollIntoView({block:"start"});
  }else{
-  try{verifySession(sessionStorage.getItem(tokenKey)||"",sessionStorage.getItem(refreshKey)||"").then(ok=>{if(!ok)setLogin(false)})}
-  catch{setLogin(false)}
+  try{
+   const attemptPromise=verifySession(sessionStorage.getItem(tokenKey)||"",sessionStorage.getItem(refreshKey)||"");
+   const expectedAttempt=activeAuthAttempt;
+   attemptPromise.then(ok=>{if(!ok&&expectedAttempt===activeAuthAttempt)setLogin(false)});
+  }catch{setLogin(false)}
  }
  edit?.addEventListener("click",()=>{
-  ++activeAuthAttempt;setLogin(false);msg("");
+  ++activeAuthAttempt;
+  try{sessionStorage.removeItem(tokenKey);sessionStorage.removeItem(refreshKey)}catch{}
+  setLogin(false);msg("");
   authForm?.querySelector("input")?.focus();
  });
  authForm?.addEventListener("submit",async ev=>{
@@ -299,7 +307,7 @@ for(const widget of widgets){
   if(!email||email.length>254)return;
   const button=authForm.querySelector<HTMLButtonElement>("button");
   if(button?.disabled)return;
-  ++activeAuthAttempt;
+  const requestAttempt=++activeAuthAttempt;
   if(button)button.disabled=true;msg(copy.loading||"...");
   try{
    const callback=new URL(location.pathname,location.origin).toString();
@@ -307,6 +315,7 @@ for(const widget of widgets){
     method:"POST",headers:header(),body:JSON.stringify({email,create_user:true}),
     signal:AbortSignal.timeout(15000)
    });
+   if(requestAttempt!==activeAuthAttempt)return;
    if(!res.ok){msg(res.status===429?copy.retryLater:copy.sendError);return}
    msg("");
    if(sentAddress)sentAddress.textContent=email;
@@ -314,7 +323,7 @@ for(const widget of widgets){
    authForm.hidden=true;
    if(mailStep){mailStep.hidden=false;mailStep.focus()}
 
-  }catch{msg(copy.sendError)}
+  }catch{if(requestAttempt===activeAuthAttempt)msg(copy.sendError)}
   finally{if(button)button.disabled=false}
  });
  verifyForm?.addEventListener("submit",async ev=>{
