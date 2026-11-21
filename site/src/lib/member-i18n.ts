@@ -52,7 +52,7 @@ export const MEMBER_TEXT:Record<Locale,Record<MemberKey,string>> = {
     "loading": "Loading members…",
     "viewProfile": "View profile",
     "close": "Close",
-    "memberSince" | "forgotPassword" | "resetEmailSent" | "resetNewPassword" | "resetSave" | "resetUpdated" | "passwordMismatch" | "showPassword" | "hidePassword": "Member since",
+    "memberSince": "Member since",
     "forgotPassword": "Forgot password?",
     "resetEmailSent": "If this address has an account, a reset link will arrive shortly.",
     "resetNewPassword": "Set a new password",
@@ -612,5 +612,5 @@ export const MEMBER_TEXT:Record<Locale,Record<MemberKey,string>> = {
     "hidePassword": "पासवर्ड छिपाएँ"
   }
 };
-export type MemberKey = "register" | "passwordLogin" | "password" | "passwordHint" | "emailConfirm" | "authError" | "passwordShort" | "google" | "github" | "otherLogin" | "oauthError" | "memberHeading" | "memberIntro" | "myProfile" | "handle" | "displayName" | "bio" | "favoriteBrand" | "avatar" | "save" | "saved" | "profileError" | "uploadError" | "privacy" | "optOut" | "leaderboard" | "month" | "alltime" | "topics" | "replies" | "helpful" | "points" | "rank" | "newcomer" | "contributor" | "mentor" | "noMembers" | "myBookmarks" | "noBookmarks" | "saveTopic" | "removeTopic" | "helpfulButton" | "unhelpfulButton" | "voteLogin" | "voteOwn" | "voteError" | "signInNotice" | "loading" | "viewProfile" | "close" | "memberSince";
+export type MemberKey = "register" | "passwordLogin" | "password" | "passwordHint" | "emailConfirm" | "authError" | "passwordShort" | "google" | "github" | "otherLogin" | "oauthError" | "memberHeading" | "memberIntro" | "myProfile" | "handle" | "displayName" | "bio" | "favoriteBrand" | "avatar" | "save" | "saved" | "profileError" | "uploadError" | "privacy" | "optOut" | "leaderboard" | "month" | "alltime" | "topics" | "replies" | "helpful" | "points" | "rank" | "newcomer" | "contributor" | "mentor" | "noMembers" | "myBookmarks" | "noBookmarks" | "saveTopic" | "removeTopic" | "helpfulButton" | "unhelpfulButton" | "voteLogin" | "voteOwn" | "voteError" | "signInNotice" | "loading" | "viewProfile" | "close" | "memberSince" | "forgotPassword" | "resetEmailSent" | "resetNewPassword" | "resetSave" | "resetUpdated" | "passwordMismatch" | "showPassword" | "hidePassword";
 export const memberText=(lang:Locale,key:MemberKey):string=>MEMBER_TEXT[lang][key];
