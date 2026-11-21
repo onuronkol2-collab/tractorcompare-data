@@ -4,12 +4,16 @@ type Copy={
  readOriginal:string;originalLanguage:string;writingLanguage:string;compose:string;title:string;body:string;category:string;model:string;noModel:string;
  consent:string;submit:string;submitReply:string;reply:string;replies:string;
  email:string;sendLink:string;otp:string;verify:string;login:string;logout:string;
+ sendError:string;codeError:string;postError:string;limitError:string;retryLater:string;draftRestored:string;
+ myPosts:string;statePending:string;statePublished:string;stateRejected:string;stateHidden:string;noPosts:string;historyError:string;
  sent:string;pending:string;authRequired:string;signinNote:string;guidelines:string;
  questions:string;maintenance:string;reviews:string;news:string;comparison:string;general:string;
  noResults:string;back:string;loading:string;translated:string;help:string;
 };
 export const FORUM_TEXT:Record<Locale,Copy>={
  en:{
+ myPosts:"My recent submissions",statePending:"Under review",statePublished:"Published",stateRejected:"Declined",stateHidden:"Hidden",noPosts:"No submissions here yet.",historyError:"Couldn’t load your submissions.",
+ sendError:"Couldn’t send the sign-in email. Check the address and try again.",codeError:"The code is invalid or has expired. Request a new one.",postError:"Couldn’t confirm submission. Your text is still here.",limitError:"You’ve reached the posting limit for the last 24 hours.",retryLater:"Too many attempts. Wait a while and try again.",draftRestored:"Draft restored in this tab.",
  readOriginal:"Read original",originalLanguage:"Original language",
  writingLanguage:"Language of your post",
  name:"Community",heading:"Tractor questions, repairs and owner experiences",
@@ -26,6 +30,8 @@ export const FORUM_TEXT:Record<Locale,Copy>={
  noResults:"No discussions match these filters.",back:"All discussions",loading:"Processing…",translated:"Reviewed translation",help:"Need help finding a model? Use the catalogue first."
  },
  tr:{
+ myPosts:"Son gönderilerim",statePending:"İncelemede",statePublished:"Yayında",stateRejected:"Reddedildi",stateHidden:"Gizlendi",noPosts:"Burada henüz gönderin yok.",historyError:"Gönderilerin yüklenemedi.",
+ sendError:"Giriş e-postası gönderilemedi. Adresi kontrol edip tekrar dene.",codeError:"Kod geçersiz veya süresi dolmuş. Yeni kod iste.",postError:"Gönderim doğrulanamadı. Yazdığın metin formda duruyor.",limitError:"Son 24 saat için gönderi sınırına ulaştın.",retryLater:"Çok fazla deneme yapıldı. Biraz bekleyip tekrar dene.",draftRestored:"Taslağın bu sekmede geri yüklendi.",
  readOriginal:"Özgün metni oku",originalLanguage:"Özgün metnin dili",
  writingLanguage:"Gönderinin dili",
  name:"Topluluk",heading:"Traktör soruları, arızalar ve kullanıcı deneyimleri",
@@ -42,6 +48,8 @@ export const FORUM_TEXT:Record<Locale,Copy>={
  noResults:"Bu filtrelere uygun konu bulunamadı.",back:"Tüm tartışmalar",loading:"İşleniyor…",translated:"Kontrol edilmiş çeviri",help:"Model seçmek için önce traktör kataloğunu kullanabilirsin."
  },
  zh:{
+ myPosts:"我最近提交的内容",statePending:"审核中",statePublished:"已发布",stateRejected:"未通过",stateHidden:"已隐藏",noPosts:"你还没有在这里提交内容。",historyError:"无法加载你提交的内容。",
+ sendError:"登录邮件未能发送。请检查邮箱地址后重试。",codeError:"验证码无效或已过期。请重新获取。",postError:"无法确认是否提交成功。你输入的文字仍在表单中。",limitError:"你已达到过去 24 小时的发帖上限。",retryLater:"尝试次数过多，请稍后再试。",draftRestored:"草稿已在此标签页恢复。",
  readOriginal:"查看原文",originalLanguage:"原文语言",
  writingLanguage:"发帖语言",
  name:"社区",heading:"拖拉机问答、维修与车主经验",intro:"交流真实机型、保养维修及使用经验。新内容经审核后公开。",
@@ -56,6 +64,8 @@ export const FORUM_TEXT:Record<Locale,Copy>={
  noResults:"没有符合条件的讨论。",back:"所有讨论",loading:"处理中…",translated:"已审核翻译",help:"寻找机型？请先查看拖拉机目录。"
  },
  hi:{
+ myPosts:"मेरी हाल की पोस्ट",statePending:"समीक्षा में",statePublished:"प्रकाशित",stateRejected:"अस्वीकृत",stateHidden:"छिपा हुआ",noPosts:"आपने यहाँ अभी कुछ नहीं भेजा है।",historyError:"आपकी पोस्ट लोड नहीं हो सकीं।",
+ sendError:"लॉगिन ईमेल नहीं भेजा जा सका। पता जाँचकर फिर कोशिश करें।",codeError:"कोड गलत है या उसकी अवधि समाप्त हो गई है। नया कोड माँगें।",postError:"पोस्ट भेजे जाने की पुष्टि नहीं हो सकी। आपका लिखा हुआ पाठ अभी फ़ॉर्म में है।",limitError:"आप पिछले 24 घंटों की पोस्ट सीमा तक पहुँच गए हैं।",retryLater:"बहुत अधिक प्रयास हुए हैं। कुछ देर बाद फिर कोशिश करें।",draftRestored:"इस टैब में आपका ड्राफ़्ट फिर से खुल गया है।",
  readOriginal:"मूल पाठ पढ़ें",originalLanguage:"मूल भाषा",
  writingLanguage:"आपकी पोस्ट की भाषा",
  name:"समुदाय",heading:"ट्रैक्टर सवाल, मरम्मत और मालिकों के अनुभव",intro:"वास्तविक ट्रैक्टर मॉडलों, रखरखाव और खेती के अनुभवों पर चर्चा करें। नई पोस्ट समीक्षा के बाद सार्वजनिक होती हैं।",
@@ -70,6 +80,8 @@ export const FORUM_TEXT:Record<Locale,Copy>={
  noResults:"इस खोज से कोई चर्चा नहीं मिली।",back:"सभी चर्चाएँ",loading:"प्रक्रिया जारी है…",translated:"समीक्षित अनुवाद",help:"मॉडल ढूँढने के लिए पहले ट्रैक्टर सूची देखें।"
  },
  "pt-br":{
+ myPosts:"Minhas publicações recentes",statePending:"Em análise",statePublished:"Publicado",stateRejected:"Recusado",stateHidden:"Oculto",noPosts:"Você ainda não enviou nada aqui.",historyError:"Não foi possível carregar suas publicações.",
+ sendError:"Não foi possível enviar o e-mail de acesso. Confira o endereço e tente novamente.",codeError:"O código é inválido ou expirou. Peça um novo código.",postError:"Não foi possível confirmar o envio. Seu texto continua no formulário.",limitError:"Você atingiu o limite de publicações das últimas 24 horas.",retryLater:"Muitas tentativas. Aguarde um pouco antes de tentar novamente.",draftRestored:"Seu rascunho foi recuperado nesta aba.",
  readOriginal:"Ler o original",originalLanguage:"Idioma original",
  writingLanguage:"Idioma da sua publicação",
  name:"Comunidade",heading:"Dúvidas, manutenção e experiências com tratores",intro:"Converse sobre modelos reais, manutenção e experiências no campo. As novas publicações passam por moderação.",
@@ -85,6 +97,8 @@ export const FORUM_TEXT:Record<Locale,Copy>={
  noResults:"Nenhuma discussão encontrada.",back:"Todas as discussões",loading:"Processando…",translated:"Tradução revisada",help:"Para encontrar um modelo, consulte primeiro o catálogo."
  },
  fr:{
+ myPosts:"Mes dernières contributions",statePending:"En cours de vérification",statePublished:"Publié",stateRejected:"Refusé",stateHidden:"Masqué",noPosts:"Vous n’avez encore rien envoyé ici.",historyError:"Impossible de charger vos contributions.",
+ sendError:"Impossible d’envoyer le courriel de connexion. Vérifiez l’adresse et réessayez.",codeError:"Le code est incorrect ou a expiré. Demandez-en un nouveau.",postError:"L’envoi n’a pas pu être confirmé. Votre texte est toujours dans le formulaire.",limitError:"Vous avez atteint la limite de publications sur 24 heures.",retryLater:"Trop de tentatives. Patientez avant de réessayer.",draftRestored:"Votre brouillon a été restauré dans cet onglet.",
  readOriginal:"Lire l’original",originalLanguage:"Langue d’origine",
  writingLanguage:"Langue de votre message",
  name:"Communauté",heading:"Questions, pannes et retours d'expérience sur les tracteurs",intro:"Échangez sur les modèles réels, l'entretien et l'utilisation. Les nouveaux messages sont modérés avant publication.",
@@ -100,6 +114,8 @@ export const FORUM_TEXT:Record<Locale,Copy>={
  noResults:"Aucune discussion correspondante.",back:"Toutes les discussions",loading:"Traitement…",translated:"Traduction vérifiée",help:"Pour trouver un modèle, consultez d'abord le catalogue."
  },
  de:{
+ myPosts:"Meine letzten Beiträge",statePending:"In Prüfung",statePublished:"Veröffentlicht",stateRejected:"Abgelehnt",stateHidden:"Ausgeblendet",noPosts:"Hier hast du noch nichts eingereicht.",historyError:"Deine Beiträge konnten nicht geladen werden.",
+ sendError:"Die Anmelde-E-Mail konnte nicht gesendet werden. Bitte prüfe die Adresse und versuche es erneut.",codeError:"Der Code ist ungültig oder abgelaufen. Fordere einen neuen an.",postError:"Der Versand konnte nicht bestätigt werden. Dein Text steht noch im Formular.",limitError:"Du hast das Beitragslimit für die letzten 24 Stunden erreicht.",retryLater:"Zu viele Versuche. Bitte warte etwas und versuche es erneut.",draftRestored:"Dein Entwurf wurde in diesem Tab wiederhergestellt.",
  readOriginal:"Original lesen",originalLanguage:"Originalsprache",
  writingLanguage:"Sprache deines Beitrags",
  name:"Community",heading:"Traktorfragen, Reparaturen und Erfahrungen",intro:"Tauschen Sie sich über konkrete Modelle, Wartung und Praxiserfahrungen aus. Neue Beiträge werden vor der Veröffentlichung geprüft.",
@@ -115,6 +131,8 @@ export const FORUM_TEXT:Record<Locale,Copy>={
  noResults:"Keine passenden Diskussionen.",back:"Alle Diskussionen",loading:"Wird verarbeitet…",translated:"Geprüfte Übersetzung",help:"Ein Modell finden Sie im Traktorkatalog."
  },
  ru:{
+ myPosts:"Мои последние публикации",statePending:"На проверке",statePublished:"Опубликовано",stateRejected:"Отклонено",stateHidden:"Скрыто",noPosts:"Здесь у вас пока нет публикаций.",historyError:"Не удалось загрузить ваши публикации.",
+ sendError:"Не удалось отправить письмо для входа. Проверьте адрес и попробуйте ещё раз.",codeError:"Код неверен или просрочен. Запросите новый.",postError:"Не удалось подтвердить отправку. Ваш текст остался в форме.",limitError:"Вы достигли лимита публикаций за последние 24 часа.",retryLater:"Слишком много попыток. Немного подождите и попробуйте снова.",draftRestored:"Черновик восстановлен в этой вкладке.",
  readOriginal:"Прочитать оригинал",originalLanguage:"Язык оригинала",
  writingLanguage:"Язык сообщения",
  name:"Сообщество",heading:"Вопросы, ремонт и опыт владельцев тракторов",intro:"Обсуждайте реальные модели, обслуживание и работу в поле. Новые сообщения публикуются после модерации.",
@@ -130,6 +148,8 @@ export const FORUM_TEXT:Record<Locale,Copy>={
  noResults:"Подходящих обсуждений нет.",back:"Все обсуждения",loading:"Обработка…",translated:"Проверенный перевод",help:"Сначала найдите модель в каталоге."
  },
  ja:{
+ myPosts:"最近の投稿履歴",statePending:"審査中",statePublished:"公開済み",stateRejected:"不承認",stateHidden:"非表示",noPosts:"ここにはまだ投稿していません。",historyError:"投稿履歴を読み込めませんでした。",
+ sendError:"ログイン用メールを送信できませんでした。アドレスを確認して、もう一度お試しください。",codeError:"コードが無効か、期限が切れています。新しいコードを取得してください。",postError:"送信を確認できませんでした。入力した文章はフォームに残っています。",limitError:"過去24時間の投稿数が上限に達しました。",retryLater:"試行回数が多すぎます。しばらく待ってからお試しください。",draftRestored:"このタブで下書きを復元しました。",
  readOriginal:"原文を読む",originalLanguage:"原文の言語",
  writingLanguage:"投稿の言語",
  name:"コミュニティ",heading:"トラクターの質問・整備・オーナーの体験談",intro:"実際の機種、整備、使用経験について情報交換できます。新しい投稿は審査後に公開されます。",
@@ -145,6 +165,8 @@ export const FORUM_TEXT:Record<Locale,Copy>={
  noResults:"条件に合う投稿がありません。",back:"すべての話題",loading:"処理中…",translated:"確認済みの翻訳",help:"機種を探すには、まずトラクター一覧をご覧ください。"
  },
  es:{
+ myPosts:"Mis envíos recientes",statePending:"En revisión",statePublished:"Publicado",stateRejected:"Rechazado",stateHidden:"Oculto",noPosts:"Aún no has enviado nada aquí.",historyError:"No se han podido cargar tus envíos.",
+ sendError:"No se pudo enviar el correo de acceso. Comprueba la dirección e inténtalo de nuevo.",codeError:"El código no es válido o ha caducado. Solicita otro.",postError:"No se pudo confirmar el envío. Tu texto sigue en el formulario.",limitError:"Has alcanzado el límite de publicaciones de las últimas 24 horas.",retryLater:"Demasiados intentos. Espera un poco antes de volver a intentarlo.",draftRestored:"Se ha recuperado tu borrador en esta pestaña.",
  readOriginal:"Leer el original",originalLanguage:"Idioma original",
  writingLanguage:"Idioma de tu publicación",
  name:"Comunidad",heading:"Preguntas, averías y experiencias con tractores",intro:"Comparte información sobre modelos reales, mantenimiento y trabajo agrícola. Las publicaciones nuevas se moderan antes de aparecer.",
