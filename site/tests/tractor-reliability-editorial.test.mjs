@@ -8,7 +8,7 @@ const route=read("../src/pages/tr/guides/2026-2027-traktor-guvenilirlik/index.as
 
 test("editorial research has no artificial 5+5 ranking and retains model-level provenance",()=>{
  assert.match(article,/21 Kasım 2026/);
- assert.match(article,/2027'nin gerçekleşmiş uzun dönem arıza kayıtları henüz yok/);
+ assert.match(article,/2027 yılına ait gerçekleşmiş uzun dönem arıza kayıtları henüz yok/);
  const models=[...article.matchAll(/^### \d+\. (.+)$/gm)].map(m=>m[1]);
  assert.ok(models.length>10,"The editorial model count must not be artificially capped at ten");
  assert.equal(new Set(models).size,models.length,"Distinct tractor model entries only");
