@@ -646,6 +646,10 @@ const reviewedLegacyDocuments = new Map([
   ["https://www.yanmar.com/tr/agri/products/tractor/", "product_catalog"],
 ]);
 
+// Distributor copy of STEYR edition 15S0019COMINB (11/2014); the original CDN location is retired.
+const kompaktOriginal = "https://assets.cnhindustrial.com/steyr/assets/Municipality/Products/Tractors/Kompakt%20Series/Brochures/15s0019cominb_steyr_kompakt_bro_low.pdf";
+const kompaktArchive = "https://agroguia.online/wp-content/uploads/2019/10/FOLLETO-KOMPAKT-S.pdf";
+
 export function specificationEvidenceLevel(
   spec: Pick<PublicSpec, "source_url" | "source_type" | "evidence_text" | "verified_at">,
 ): SpecificationEvidenceLevel {
@@ -655,6 +659,7 @@ export function specificationEvidenceLevel(
     && Number.isFinite(Date.parse(spec.verified_at));
 
   if (!sourcePresent || !supportingExcerpt || !checkedAt) return "not_verified";
+  if (spec.source_url === kompaktOriginal && spec.source_type === "manufacturer_specification") return "third_party_reported";
   if (manufacturerSourceTypes.has(spec.source_type || "") ||
       (spec.source_type && reviewedLegacyDocuments.get(spec.source_url || "") === spec.source_type)) return "manufacturer_documented";
   return "third_party_reported";
@@ -725,9 +730,13 @@ const approvedExactManufacturerDocuments: Record<string, string[]> = {
     "https://www.iseki.co.uk/wp-content/uploads/2021/02/Iseki-TXGS24-Range-WEB-2.pdf",
   ],
   "lamborghini trattori": [
+    "https://www.lamborghini-tractors.com/en-eu/tractors/vineyards-orchards-compacts/download/7987_d432d453ca77b6271f17857f0d842cd0",
     "https://www.lamborghini-tractors.com/en-eu/all/download/7988_b274e15de8fa324d508dde300f1d3fc8",
   ],
   "mccormick": [
+    "https://www.mccormick.it/wp-content/uploads/2025/02/MC_TractorRange2025_Brochure_88p_6737432A2_Web_IT.pdf",
+    "https://www.mccormick.it/wp-content/uploads/2025/02/MC_TractorRange2025_Brochure_88p_6737433A2_Web_EN.pdf",
+    "https://www.mccormick.it/wp-content/uploads/2025/03/MC_RP5D-RP5E_X4F_Brochure_44p_6732663A2_web_EN.pdf",
     "https://www.mccormick.it/wp-content/uploads/2021/04/MC_RS57_X5.085_Brochure_2p_6736270A1_HR_EN.pdf",
   ],
   "yanmar": [
@@ -749,10 +758,20 @@ const approvedExactManufacturerDocuments: Record<string, string[]> = {
   // Original STEYR manufacturer brochures hosted on a shared CNH content hub:
   // approve exact documents only, NEVER trust the entire CDN hostname.
   "steyr": [
+    "https://cnhi-p-001-delivery.sitecorecontenthub.cloud/api/public/content/73a2d291ba294a3489494574db262ed8?v=a0856698",
+    "https://cnhi-p-001-delivery.sitecorecontenthub.cloud/api/public/content/f4491a850bdb4fdba24a4c5a2baa11fb?v=362a03d2",
     "https://cnhi-p-001-delivery.sitecorecontenthub.cloud/api/public/content/7eeca058f2bd4fe6892c36fcb39769a1?v=ebff5e26",
     "https://cnhi-p-001-delivery.sitecorecontenthub.cloud/api/public/content/5f70203baa834372905d759fe9fd706f?v=fc8d3927",
   ],
 };
+
+// Each entry is an individual reviewed table on a third-party host.
+const reviewedExternalTables = new Map([
+  ["https://static.agroinform.hu/data/forum/documents/agroinform_20180508221726_belarus_termekcsalad_katalogus_eng.pdf", "independent_catalog"],
+  ["https://netetrade.com/media/mtw-holding-minsk-tractor-works/files/series_500_catalogue.pdf", "independent_catalog"],
+  ["https://www.agromeh.com/en/products/belarus-12213", "web_page"],
+  ["https://belarus-tractor.kz/products/16", "web_page"],
+]);
 
 /**
  * Established independent reference links are published ONLY for evidence-backed
@@ -770,6 +789,8 @@ export function reviewedIndependentSourceUrl(
   if (u.protocol !== "https:" || u.username || u.password || u.port) return null;
   const host = u.hostname.toLowerCase();
   const type = (spec.source_type || "").toLowerCase();
+  if (u.href === kompaktOriginal && type === "manufacturer_specification") return kompaktArchive;
+  if (reviewedExternalTables.get(u.href) === type) return u.href;
   if ((host === "www.tractordata.com" || host === "tractordata.com")
     && ["web_page", "independent_catalog", "technical_database"].includes(type)
     && u.pathname.startsWith("/farm-tractors/") && u.pathname.toLowerCase().endsWith(".html"))
@@ -781,6 +802,8 @@ export function reviewedIndependentSourceUrl(
   if (type === "independent_test" && u.href === "https://dam.agcocorp.com/content/dam/multisite/fendt/marketing/multi-region/documents/marketing-material/testreports/tractors/700-vario-gen7/en/Fendt_724_Vario_Gen7_EN_digital.pdf")
     return "https://www.fendt.com/int/consultation-purchase/test-reports/fendt-700-vario-gen7-tested/";
   if (type === "web_page" && u.href === "https://www.mehanizacija-miler.si/Portals/0/Antonio%20Carraro/Serija%20Panther/RangePanther202572dpiEN.pdf?ver=2025-04-17-113113-483") return u.href;
+  // Historical MTZ technical tables hosted by a distributor.
+  if (type === "product_catalog" && u.href === "https://kocyigit.com.tr/wp-content/uploads/2024/06/Katalog_Belarus_Traktor.pdf") return u.href;
   // Exact, reviewed original Minsk Tractor Works catalogue hosted by a third-party distributor.
   // It is a historical manufacturer-authored document, NOT a current official manufacturer URL.
   // Never allow the mirror's parent folder, other files, alternate domains or query strings.
@@ -799,6 +822,10 @@ export function officialManufacturerSourceUrl(
   if (!raw) return null;
   const url = new URL(raw);
   if (url.protocol !== "https:" || url.username || url.password) return null;
+  // Identical STEYR publication code 23S0001COMINB, 09/2023, at its current OEM download URL.
+  if (brandName.trim().toLowerCase() === "steyr" && url.href === "https://assets.cnhindustrial.com/steyr/assets/Agriculture/Products/Tractors/Absolut%20Series/NEUE%206280%20ABSOLUT%20CVT/Brochures/2023/23s0001-cominb_absolut_p32_low.pdf") {
+    return "https://cnhi-p-001-delivery.sitecorecontenthub.cloud/api/public/content/76a92c3114b14b28a2817ad0977309c9?v=ab84c59d";
+  }
   const approved = approvedManufacturerHosts[brandName.toLocaleLowerCase("tr-TR").trim()] || [];
   if (approved.some((root) =>
     url.hostname === root || url.hostname.endsWith("." + root)
