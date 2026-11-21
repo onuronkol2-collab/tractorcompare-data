@@ -114,6 +114,13 @@ export function verifyProductionArtifacts({dir=projectRoot,origin=expectedOrigin
    "guides/tractor-engine-power-and-torque","tr/guides/tractor-engine-power-and-torque"]){
   const page=readText(join(dist,route,"index.html"));
   insist(!/noindex,nofollow/.test(page),"Guide unexpectedly has noindex: "+route);
+  insist(editorialSitemaps.includes("<loc>"+origin+"/"+route+"/</loc>"),
+    "Published evidence-based guide missing in generated sitemap: "+route);
+  const relatedHub=route.startsWith("tr/")?"/tr/articles/":"/articles/";
+  insist(page.includes('href="'+relatedHub+'"'),
+    "Published guide missing the contextual editorial hub link: "+route);
+  insist(page.includes('"BreadcrumbList"'),
+    "Published guide has no factual BreadcrumbList: "+route);
  }
  const englishGlossary=readText(join(dist,"guides/tractor-technical-terms/index.html"));
  const turkishGlossary=readText(join(dist,"tr/guides/tractor-technical-terms/index.html"));
