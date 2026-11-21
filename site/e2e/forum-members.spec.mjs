@@ -4,6 +4,8 @@ test("Turkish forum offers password, email OTP and enabled social sign-in withou
  await page.route("**/forum-test-api/auth/v1/settings",route=>
   route.fulfill({json:{external:{google:true,github:true}}}));
  await page.goto("/tr/forum/");
+ await expect(page.locator("[data-forum-register]")).toBeHidden();
+ await page.locator("[data-forum-auth-gate] > summary").click();
  await expect(page.locator("[data-forum-register]")).toBeVisible();
  await expect(page.locator("[data-forum-password]")).toBeHidden();
  await page.locator("[data-password-choice] summary").click();
@@ -21,17 +23,20 @@ test("social buttons stay safely hidden when providers are disabled or configura
  await page.route("**/forum-test-api/auth/v1/settings",route=>
   route.fulfill({json:{external:{google:false,github:false}}}));
  await page.goto("/tr/forum/");
+ await page.locator("[data-forum-auth-gate] > summary").click();
  await expect(page.locator('[data-forum-oauth="google"]')).toBeHidden();
  await expect(page.locator('[data-forum-oauth="github"]')).toBeHidden();
  await expect(page.locator("[data-oauth-unavailable]")).toBeVisible();
  await expect(page.locator("[data-forum-register]")).toBeVisible();
  await page.reload();
+ await page.locator("[data-forum-auth-gate] > summary").click();
  await expect(page.locator("[data-oauth-unavailable]")).toBeVisible();
 });
 test("providers are shown independently when only Google is enabled",async({page})=>{
  await page.route("**/forum-test-api/auth/v1/settings",route=>
   route.fulfill({json:{external:{google:true,github:false}}}));
  await page.goto("/tr/forum/");
+ await page.locator("[data-forum-auth-gate] > summary").click();
  await expect(page.locator('[data-forum-oauth="google"]')).toBeVisible();
  await expect(page.locator('[data-forum-oauth="github"]')).toBeHidden();
 });
@@ -98,6 +103,7 @@ test("password sign-in opens forum with default avatar and only optional profile
   return route.fulfill({status:404,contentType:"application/json",body:"{}"});
  });
  await page.goto("/tr/forum/");
+ await page.locator("[data-forum-auth-gate] > summary").click();
  await page.locator("[data-password-choice] summary").click();
  await page.locator("[data-forum-password] input[name=email]").fill("not-public@example.test");
  await page.locator("[data-forum-password] input[name=password]").fill("long-example-password-for-test");

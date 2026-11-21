@@ -39,6 +39,8 @@ test("sign in, recover a draft, submit for moderation and check its status",asyn
  const auth=compose.locator("[data-forum-email]");
  const verify=compose.locator("[data-forum-verify]");
  async function signIn(){
+  if(!(await compose.locator("[data-forum-auth-gate]").evaluate(el=>el.open)))
+   await compose.locator("[data-forum-auth-gate] > summary").click();
   if(!await auth.isVisible())await compose.locator("[data-email-choice] summary").click();
   await auth.locator("input").fill("tester@example.invalid");
   await auth.locator("button").click();
@@ -66,7 +68,7 @@ test("sign in, recover a draft, submit for moderation and check its status",asyn
  await expect(status).toHaveText("Son 24 saat için gönderi sınırına ulaştın.");
  expired=true;
  await post.locator("button").click();
- await expect(compose.locator("[data-forum-register]")).toBeVisible();
+ await expect(compose.locator("[data-forum-auth-gate] > summary")).toBeVisible();
  await signIn();
  await expect(post.locator("textarea")).toHaveValue(body);
  await post.locator("button").click();

@@ -18,6 +18,10 @@ test("an invalid refresh token offers a new email link and hides URL credentials
  await expect(page).not.toHaveURL(/access_token|refresh_token/);
  expect(renewalAttempts).toBe(1);
  await page.reload();
+ // On a normal reload the reader-first forum must keep registration closed.
+ await expect(composer.locator("[data-forum-auth-gate] > summary")).toBeVisible();
+ await expect(composer.locator("[data-forum-register]")).toBeHidden();
+ await composer.locator("[data-forum-auth-gate] > summary").click();
  await expect(composer.locator("[data-forum-register]")).toBeVisible();
  await expect(composer.locator("[data-forum-email]")).toBeHidden();
  await expect(composer.locator("[data-forum-post]")).toBeHidden();

@@ -1,17 +1,21 @@
 import {test,expect} from "@playwright/test";
 
-test("password-first signup is prominently visible before forum topics, with a real confirmation field",async({page})=>{
+test("forum content opens before optional registration and the top signup CTA reveals the form",async({page})=>{
  await page.route("**/forum-test-api/auth/v1/settings",route=>route.fulfill({json:{external:{google:true,github:false}}}));
  await page.goto("/tr/forum/");
  const signup=page.locator("[data-forum-register]");
+ await expect(signup).toBeHidden();
+ await expect(page.locator("[data-forum-auth-gate]")).not.toHaveAttribute("open");
+ await page.locator('a[href="#forum-register-heading"]').click();
  await expect(signup).toBeVisible();
+ await expect(page.locator("[data-forum-auth-gate]")).toHaveAttribute("open");
  await expect(signup.locator('input[name="password"]')).toHaveAttribute("autocomplete","new-password");
  await expect(signup.locator('input[name="confirm_password"]')).toBeVisible();
  await expect(page.locator("[data-forum-password]")).toBeHidden();
  await expect(page.locator("[data-forum-email]")).toBeHidden();
  const first=await page.evaluate(()=>Boolean(
-  document.querySelector("#forum-compose")?.compareDocumentPosition(
-  document.querySelector(".community-list"))&Node.DOCUMENT_POSITION_FOLLOWING));
+  document.querySelector(".community-list")?.compareDocumentPosition(
+  document.querySelector("#forum-compose"))&Node.DOCUMENT_POSITION_FOLLOWING));
  expect(first).toBe(true);
  await expect(page.locator('a[href="#forum-register-heading"]')).toBeVisible();
 });
@@ -30,6 +34,7 @@ test("password signup preserves correct redirect_to, requires matching confirmat
   return route.fulfill({json:{user:{id:"aaaaaaaa-aaaa-4aaa-aaaa-aaaaaaaaaaaa"},session:null}});
  });
  await page.goto("/tr/forum/");
+ await page.locator("[data-forum-auth-gate] > summary").click();
  const register=page.locator("[data-forum-register]");
  await register.locator('input[name="email"]').fill("example@example.test");
  await register.locator('input[name="password"]').fill("a-very-long-secure-test-password");
@@ -57,6 +62,7 @@ test("signup email can be resent without a new user record and without posting e
   return route.fulfill({json:{}});
  });
  await page.goto("/tr/forum/");
+ await page.locator("[data-forum-auth-gate] > summary").click();
  const form=page.locator("[data-forum-register]");
  await form.locator('[name="email"]').fill("sample@example.test");
  await form.locator('[name="password"]').fill("valid-new-password-12345");
@@ -77,6 +83,7 @@ test("OTP login stays available as a secondary choice and has correct redirect",
   return route.fulfill({json:{}});
  });
  await page.goto("/tr/forum/");
+ await page.locator("[data-forum-auth-gate] > summary").click();
  await page.locator("[data-email-choice] summary").click();
  await page.locator("[data-forum-email] input[name=email]").fill("example@example.test");
  await page.locator("[data-forum-email] button[type=submit]").click();
@@ -89,6 +96,7 @@ test("a Supabase expired link landing on the root sends the user to a safe forum
  await expect(page).toHaveURL(/\/tr\/forum\/$/);
  await expect(page.locator("[data-forum-expired-help]")).toBeVisible();
  await expect(page.locator("[data-forum-status]")).toContainText("geçersiz");
+ await expect(page.locator("[data-forum-auth-gate]")).toHaveAttribute("open");
  await expect(page.locator("[data-forum-register]")).toBeVisible();
  await expect(page).not.toHaveURL(/otp_expired/);
 });
@@ -105,8 +113,46 @@ test("disabled OAuth providers show a human-readable notice but password registr
  await page.route("**/forum-test-api/auth/v1/settings",route=>
   route.fulfill({status:401,json:{message:"Unavailable"}}));
  await page.goto("/tr/forum/");
+ await expect(page.locator("[data-forum-register]")).toBeHidden();
+ await page.locator("[data-forum-auth-gate] > summary").click();
  await expect(page.locator("[data-oauth-unavailable]")).toBeVisible();
  await expect(page.locator('[data-forum-oauth="google"]')).toBeDisabled();
  await expect(page.locator('[data-forum-oauth="github"]')).toBeDisabled();
  await expect(page.locator("[data-forum-register]")).toBeVisible();
+});
+
+
+test("eight-character signup works, seven-character passwords stay blocked",async({page})=>{
+ let sent=0;
+ await page.route("**/forum-test-api/auth/v1/signup?**",route=>{
+  sent++;
+  return route.fulfill({json:{user:{id:"aaaaaaaa-aaaa-4aaa-aaaa-aaaaaaaaaaaa"},session:null}});
+ });
+ await page.goto("/tr/forum/#forum-register-heading");
+ const form=page.locator("[data-forum-register]");
+ await expect(form).toBeVisible();
+ await form.locator('input[name="email"]').fill("eight@example.test");
+ await form.locator('input[name="password"]').fill("seven77");
+ await form.locator('input[name="confirm_password"]').fill("seven77");
+ await expect(form.locator('input[name="password"]')).toHaveAttribute("minlength","8");
+ await form.locator('button[type=submit]').click();
+ expect(sent).toBe(0);
+ await form.locator('input[name="password"]').fill("eight888");
+ await form.locator('input[name="confirm_password"]').fill("eight888");
+ await form.locator('button[type=submit]').click();
+ await expect(page.locator("[data-signup-confirm]")).toBeVisible();
+ expect(sent).toBe(1);
+});
+
+test("header signup is reachable on mobile and no guest can compose or reply",async({page})=>{
+ await page.setViewportSize({width:375,height:812});
+ await page.goto("/tr/forum/");
+ const top=page.locator(".header-signup");
+ await expect(top).toBeVisible();
+ await expect(top).toHaveAttribute("href","/tr/forum/#forum-register-heading");
+ await expect(page.locator("[data-forum-post]")).toBeHidden();
+ await expect(page.locator("[data-forum-register]")).toBeHidden();
+ await top.click();
+ await expect(page.locator("[data-forum-register]")).toBeVisible();
+ await expect(page.locator("[data-forum-post]")).toBeHidden();
 });

@@ -36,6 +36,7 @@ test("a new Google/email member gets a private-safe pseudonymous starter profile
   return route.fulfill({status:404,json:{}});
  });
  await page.goto("/tr/forum/");
+ await page.locator("[data-forum-auth-gate] > summary").click();
  await page.locator("[data-password-choice] summary").click();
  await page.locator("[data-forum-password] input[name=email]").fill("never-publish@example.test");
  await page.locator("[data-forum-password] input[name=password]").fill("strong-password-for-fixture");
@@ -61,7 +62,8 @@ test("a guest sees the forum before optional profile tools and default public av
  await expect(page.locator("[data-member-toolbar-avatar]")).toHaveAttribute("src","/images/forum-member-default.svg");
  await expect(page.locator("[data-member-edit]")).toBeHidden();
  await expect(page.locator("[data-member-grid]")).toBeHidden();
- await expect(page.locator("[data-forum-register]")).toBeVisible();
+ await expect(page.locator("[data-forum-register]")).toBeHidden();
+ await expect(page.locator("[data-forum-auth-gate] > summary")).toBeVisible();
  await page.locator("[data-member-leaders-toggle]").click();
  await expect(page.locator("[data-member-leaders]")).toBeVisible();
  await expect(page.locator("[data-member-form]")).toBeHidden();

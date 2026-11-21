@@ -6,6 +6,8 @@ import {LOCALES} from "../src/lib/locales.ts";
 const sql=readFileSync(new URL("../../supabase/migrations/20261121130000_forum_members_profiles_votes_v1.sql",import.meta.url),"utf8");
 const rollback=readFileSync(new URL("../../supabase/rollback/20261121130000_forum_members_profiles_votes_v1_rollback.sql",import.meta.url),"utf8");
 const hub=readFileSync(new URL("../src/components/ForumHub.astro",import.meta.url),"utf8");
+const layout=readFileSync(new URL("../src/layouts/SiteLayout.astro",import.meta.url),"utf8");
+const acl=readFileSync(new URL("../../supabase/migrations/20261121165000_tc_forum_authenticated_insert_acl.sql",import.meta.url),"utf8");
 const auth=readFileSync(new URL("../src/components/ForumComposer.astro",import.meta.url),"utf8");
 const panel=readFileSync(new URL("../src/components/ForumMemberPanel.astro",import.meta.url),"utf8");
 const topic=readFileSync(new URL("../src/components/ForumTopic.astro",import.meta.url),"utf8");
@@ -30,7 +32,8 @@ test("password login and signup preserve existing magic-link and OTP forms",()=>
   'data-forum-logout','verifySession(data.access_token']){
   assert.ok(auth.includes(marker),marker);
  }
- assert.match(auth,/password\.length<12/);
+ assert.match(auth,/password\.length<8/);
+ assert.match(auth,/minlength="8"/);
  assert.doesNotMatch(auth,/localStorage\.setItem\([^)]*(?:password|refresh)/);
  assert.doesNotMatch(auth,/console\.log\([^)]*(?:password|access_token|refresh_token)/);
 });
@@ -103,4 +106,27 @@ test("forum onboarding is optional, branded default avatar has no third-party de
  assert.doesNotMatch(panel,/raw_user_meta_data|user_metadata\.full_name|user_metadata\.avatar_url/);
  assert.ok(hub.indexOf("<ForumComposer lang={lang} mode=\"topic\"/>")<
   hub.indexOf("<ForumMemberPanel lang={lang}/>"));
+});
+
+test("visitors read forum before signup and can only post after a verified session",()=>{
+ assert.ok(hub.indexOf('<section class="community-list"')<hub.indexOf('<ForumComposer lang={lang} mode="topic"/>'));
+ assert.match(auth,/data-forum-auth-gate/);
+ assert.match(auth,/data-guest-readonly/);
+ assert.match(auth,/data-forum-post hidden/);
+ assert.match(auth,/postForm\.hidden=!loggedIn/);
+ assert.match(auth,/revealRegistration\(\)/);
+ assert.match(auth,/window\.addEventListener\("hashchange",revealRegistration\)/);
+ assert.match(layout,/class="header-cta header-signup"/);
+ assert.match(layout,/forumPath\+"#forum-register-heading"/);
+ for(const lang of LOCALES){
+  assert.match(MEMBER_TEXT[lang].passwordHint,/8|八|８|ثمان|अाठ|८|8/);
+  assert.ok(MEMBER_TEXT[lang].guestReadOnly.length>15);
+ }
+});
+test("only authenticated members receive INSERT grants and RLS ownership remains enforced",()=>{
+ assert.match(acl,/GRANT INSERT ON TABLE public\.tc_forum_topics,public\.tc_forum_replies TO authenticated/);
+ assert.match(acl,/REVOKE INSERT ON TABLE public\.tc_forum_topics,public\.tc_forum_replies FROM anon/);
+ assert.match(acl,/Forum RLS is required/);
+ assert.match(acl,/Required pending\/ownership INSERT policies missing/);
+ assert.doesNotMatch(acl,/(UPDATE|DELETE FROM|TRUNCATE|DROP TABLE)\s+public\.tc_forum_(topics|replies)/i);
 });
