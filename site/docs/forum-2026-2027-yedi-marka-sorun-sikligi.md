@@ -19,11 +19,11 @@ Satış başına gerçek arıza yüzdesi ise **aynı model/yıldan satılmış v
 <caption>En az sorun bildirilen beş marka — 2021 ABD traktör kullanıcı anketi</caption>
 <thead><tr><th scope="col">Sıra</th><th scope="col">Marka</th><th scope="col">Sorun/traktör</th><th scope="col">100 traktörde sorun</th></tr></thead>
 <tbody>
-<tr><td>1</td><th scope="row">Kubota</th><td>0,76</td><td>**76**</td></tr>
-<tr><td>2</td><th scope="row">Case IH</th><td>1,19</td><td>**119**</td></tr>
-<tr><td>3</td><th scope="row">John Deere</th><td>1,20</td><td>**120**</td></tr>
-<tr><td>4</td><th scope="row">New Holland</th><td>1,26</td><td>**126**</td></tr>
-<tr><td>5</td><th scope="row">Massey Ferguson</th><td>1,35</td><td>**135**</td></tr>
+<tr><td>1</td><th scope="row">Kubota</th><td>0,76</td><td><strong>76</strong></td></tr>
+<tr><td>2</td><th scope="row">Case IH</th><td>1,19</td><td><strong>119</strong></td></tr>
+<tr><td>3</td><th scope="row">John Deere</th><td>1,20</td><td><strong>120</strong></td></tr>
+<tr><td>4</td><th scope="row">New Holland</th><td>1,26</td><td><strong>126</strong></td></tr>
+<tr><td>5</td><th scope="row">Massey Ferguson</th><td>1,35</td><td><strong>135</strong></td></tr>
 </tbody>
 </table>
 </div>
@@ -35,11 +35,11 @@ Satış başına gerçek arıza yüzdesi ise **aynı model/yıldan satılmış v
 <caption>En çok sorun bildirilen beş marka — 2021 ABD traktör kullanıcı anketi</caption>
 <thead><tr><th scope="col">Sıra</th><th scope="col">Marka</th><th scope="col">Sorun/traktör</th><th scope="col">100 traktörde sorun</th></tr></thead>
 <tbody>
-<tr><td>1</td><th scope="row">Versatile</th><td>1,64</td><td>**164**</td></tr>
-<tr><td>2</td><th scope="row">Allis-Chalmers</th><td>1,46</td><td>**146**</td></tr>
-<tr><td>3</td><th scope="row">Massey Ferguson</th><td>1,35</td><td>**135**</td></tr>
-<tr><td>4</td><th scope="row">New Holland</th><td>1,26</td><td>**126**</td></tr>
-<tr><td>5</td><th scope="row">John Deere</th><td>1,20</td><td>**120**</td></tr>
+<tr><td>1</td><th scope="row">Versatile</th><td>1,64</td><td><strong>164</strong></td></tr>
+<tr><td>2</td><th scope="row">Allis-Chalmers</th><td>1,46</td><td><strong>146</strong></td></tr>
+<tr><td>3</td><th scope="row">Massey Ferguson</th><td>1,35</td><td><strong>135</strong></td></tr>
+<tr><td>4</td><th scope="row">New Holland</th><td>1,26</td><td><strong>126</strong></td></tr>
+<tr><td>5</td><th scope="row">John Deere</th><td>1,20</td><td><strong>120</strong></td></tr>
 </tbody>
 </table>
 </div>
@@ -62,7 +62,7 @@ Anketin marka ortalaması **1,21 sorun/traktör (100 traktörde 121 olay)**. Kub
 
 ### 2. Allis-Chalmers — 146/100 traktör
 
-![Allis-Chalmers marka IB (1949) traktör fotoğrafı; ilgili marka için temsili bir modeldir, anketteki araç değildir](/images/tractors/allis-chalmers-ib-acroterion-2026-480.jpg)
+![Allis-Chalmers marka IB (1949) traktör fotoğrafı; ilgili marka için temsili bir modeldir, anketteki araç değildir](https://commons.wikimedia.org/wiki/Special:FilePath/Allis-Chalmers_IB_tractor_MD3.jpg?width=480)
 
 *Görsel: Allis-Chalmers IB (1949). Fotoğraf: [Acroterion](https://commons.wikimedia.org/wiki/File:Allis-Chalmers_IB_tractor_MD3.jpg), [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/). Fotoğraf, anket kapsamında incelenen traktör değildir; gösterim için optimize edilmiş dosya kullanılır.*
 
@@ -70,7 +70,7 @@ Anketin marka ortalaması **1,21 sorun/traktör (100 traktörde 121 olay)**. Kub
 
 ### 3. Massey Ferguson — 135/100 traktör
 
-![Massey Ferguson marka 5M.95 traktör fotoğrafı; ilgili marka için temsili bir modeldir, anketteki araç değildir](/images/tractors/massey-ferguson-5m-95-bene-riobo-2025-480.jpg)
+![Massey Ferguson marka 5M.95 traktör fotoğrafı; ilgili marka için temsili bir modeldir, anketteki araç değildir](https://commons.wikimedia.org/wiki/Special:FilePath/Massey_Ferguson_5M.95.jpg?width=480)
 
 *Görsel: Massey Ferguson 5M.95. Fotoğraf: [Bene Riobó](https://commons.wikimedia.org/wiki/File:Massey_Ferguson_5M.95.jpg), [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/). Fotoğraf, anket kapsamında incelenen traktör değildir; gösterim için optimize edilmiş dosya kullanılır.*
 
