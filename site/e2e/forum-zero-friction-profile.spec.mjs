@@ -61,7 +61,7 @@ test("a guest sees the forum before optional profile tools and default public av
  await expect(page.locator("[data-member-toolbar-avatar]")).toHaveAttribute("src","/images/forum-member-default.svg");
  await expect(page.locator("[data-member-edit]")).toBeHidden();
  await expect(page.locator("[data-member-grid]")).toBeHidden();
- await expect(page.locator("[data-forum-email]")).toBeVisible();
+ await expect(page.locator("[data-forum-register]")).toBeVisible();
  await page.locator("[data-member-leaders-toggle]").click();
  await expect(page.locator("[data-member-leaders]")).toBeVisible();
  await expect(page.locator("[data-member-form]")).toBeHidden();

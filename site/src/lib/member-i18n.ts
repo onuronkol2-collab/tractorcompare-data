@@ -71,7 +71,16 @@ export const MEMBER_TEXT:Record<Locale,Record<MemberKey,string>> = {
     "closeProfile": "Close profile editor",
     "memberActivity": "Saved and followed discussions",
     "hideActivity": "Hide my activity",
-    "profileOptional": "Your profile is optional. Enjoy the forum and customize it whenever you like."
+    "profileOptional": "Your profile is optional. Enjoy the forum and customize it whenever you like.",
+    "signupHeading": "Join TractorVS",
+    "signupIntro": "Create a password now; verify your email before posting.",
+    "confirmPassword": "Confirm password",
+    "alreadyMember": "Already registered? Sign in",
+    "emailLoginAlternative": "Sign in using a link or email code",
+    "resendConfirmation": "Resend confirmation email",
+    "resendConfirmationSent": "If your account is waiting for confirmation, a new email will be sent.",
+    "signupConfirmHelp": "Your password is saved. Open the confirmation email to activate your account.",
+    "invalidLinkHelp": "This link is invalid or has expired. Request a new email below."
   },
   "tr": {
     "register": "Hesap oluştur",
@@ -143,7 +152,16 @@ export const MEMBER_TEXT:Record<Locale,Record<MemberKey,string>> = {
     "closeProfile": "Düzenlemeyi kapat",
     "memberActivity": "Kaydettiklerim ve takip ettiklerim",
     "hideActivity": "Etkinliklerimi gizle",
-    "profileOptional": "Profilini dilediğin zaman düzenleyebilirsin. Önce forumun keyfini çıkar!"
+    "profileOptional": "Profilini dilediğin zaman düzenleyebilirsin. Önce forumun keyfini çıkar!",
+    "signupHeading": "TractorVS'ye üye ol",
+    "signupIntro": "Şifreni şimdi belirle. E-postanı doğruladıktan sonra foruma katıl.",
+    "confirmPassword": "Şifreyi tekrar yaz",
+    "alreadyMember": "Zaten üye misin? Giriş yap",
+    "emailLoginAlternative": "E-posta bağlantısı veya koduyla giriş",
+    "resendConfirmation": "Doğrulama e-postasını yeniden gönder",
+    "resendConfirmationSent": "Hesabın doğrulama bekliyorsa yeni bir e-posta gönderilecek.",
+    "signupConfirmHelp": "Şifren oluşturuldu. Hesabını etkinleştirmek için e-postandaki bağlantıyı aç.",
+    "invalidLinkHelp": "Bu bağlantı geçersiz veya süresi dolmuş. Aşağıdan yeni bir e-posta iste."
   },
   "de": {
     "register": "Konto erstellen",
@@ -215,7 +233,16 @@ export const MEMBER_TEXT:Record<Locale,Record<MemberKey,string>> = {
     "closeProfile": "Profilbearbeitung schließen",
     "memberActivity": "Gespeicherte und abonnierte Diskussionen",
     "hideActivity": "Meine Aktivitäten ausblenden",
-    "profileOptional": "Dein Profil ist optional. Nutze zuerst das Forum und gestalte es jederzeit nach Wunsch."
+    "profileOptional": "Dein Profil ist optional. Nutze zuerst das Forum und gestalte es jederzeit nach Wunsch.",
+    "signupHeading": "TractorVS beitreten",
+    "signupIntro": "Lege jetzt dein Passwort fest und bestätige deine E-Mail-Adresse, bevor du Beiträge verfasst.",
+    "confirmPassword": "Passwort bestätigen",
+    "alreadyMember": "Bereits registriert? Anmelden",
+    "emailLoginAlternative": "Mit E-Mail-Link oder Code anmelden",
+    "resendConfirmation": "Bestätigungs-E-Mail erneut senden",
+    "resendConfirmationSent": "Wenn dein Konto noch auf Bestätigung wartet, erhältst du eine neue E-Mail.",
+    "signupConfirmHelp": "Dein Passwort ist gespeichert. Bestätige deine E-Mail-Adresse, um dein Konto zu aktivieren.",
+    "invalidLinkHelp": "Der Link ist ungültig oder abgelaufen. Fordere unten eine neue E-Mail an."
   },
   "fr": {
     "register": "Créer un compte",
@@ -287,7 +314,16 @@ export const MEMBER_TEXT:Record<Locale,Record<MemberKey,string>> = {
     "closeProfile": "Fermer l'éditeur",
     "memberActivity": "Discussions enregistrées et suivies",
     "hideActivity": "Masquer mon activité",
-    "profileOptional": "Votre profil est facultatif. Profitez du forum et personnalisez-le quand vous voulez."
+    "profileOptional": "Votre profil est facultatif. Profitez du forum et personnalisez-le quand vous voulez.",
+    "signupHeading": "Rejoindre TractorVS",
+    "signupIntro": "Créez votre mot de passe maintenant, puis confirmez votre adresse e-mail avant de publier.",
+    "confirmPassword": "Confirmer le mot de passe",
+    "alreadyMember": "Déjà inscrit ? Se connecter",
+    "emailLoginAlternative": "Connexion par lien ou code e-mail",
+    "resendConfirmation": "Renvoyer l'e-mail de confirmation",
+    "resendConfirmationSent": "Si votre compte attend une confirmation, un nouvel e-mail vous sera envoyé.",
+    "signupConfirmHelp": "Votre mot de passe est enregistré. Confirmez votre adresse e-mail pour activer le compte.",
+    "invalidLinkHelp": "Ce lien est invalide ou expiré. Demandez un nouvel e-mail ci-dessous."
   },
   "es": {
     "register": "Crear cuenta",
@@ -359,7 +395,16 @@ export const MEMBER_TEXT:Record<Locale,Record<MemberKey,string>> = {
     "closeProfile": "Cerrar edición",
     "memberActivity": "Debates guardados y seguidos",
     "hideActivity": "Ocultar mi actividad",
-    "profileOptional": "Completar tu perfil es opcional. Disfruta del foro y personalízalo cuando quieras."
+    "profileOptional": "Completar tu perfil es opcional. Disfruta del foro y personalízalo cuando quieras.",
+    "signupHeading": "Únete a TractorVS",
+    "signupIntro": "Crea tu contraseña ahora y confirma tu correo antes de publicar.",
+    "confirmPassword": "Confirmar contraseña",
+    "alreadyMember": "¿Ya tienes cuenta? Inicia sesión",
+    "emailLoginAlternative": "Entrar mediante enlace o código por correo",
+    "resendConfirmation": "Reenviar correo de confirmación",
+    "resendConfirmationSent": "Si tu cuenta está pendiente de confirmación, recibirás un nuevo correo.",
+    "signupConfirmHelp": "Tu contraseña se guardó. Confirma tu correo para activar la cuenta.",
+    "invalidLinkHelp": "El enlace no es válido o ha caducado. Solicita otro correo abajo."
   },
   "pt-br": {
     "register": "Criar conta",
@@ -431,7 +476,16 @@ export const MEMBER_TEXT:Record<Locale,Record<MemberKey,string>> = {
     "closeProfile": "Fechar edição",
     "memberActivity": "Discussões salvas e seguidas",
     "hideActivity": "Ocultar minhas atividades",
-    "profileOptional": "Seu perfil é opcional. Aproveite o fórum e personalize quando quiser."
+    "profileOptional": "Seu perfil é opcional. Aproveite o fórum e personalize quando quiser.",
+    "signupHeading": "Participe do TractorVS",
+    "signupIntro": "Crie sua senha agora e confirme seu e-mail antes de publicar.",
+    "confirmPassword": "Confirme a senha",
+    "alreadyMember": "Já tem conta? Entre",
+    "emailLoginAlternative": "Entrar com link ou código por e-mail",
+    "resendConfirmation": "Reenviar e-mail de confirmação",
+    "resendConfirmationSent": "Se sua conta aguarda confirmação, enviaremos um novo e-mail.",
+    "signupConfirmHelp": "Sua senha foi salva. Confirme seu e-mail para ativar a conta.",
+    "invalidLinkHelp": "Este link é inválido ou expirou. Solicite um novo e-mail abaixo."
   },
   "ru": {
     "register": "Создать аккаунт",
@@ -503,7 +557,16 @@ export const MEMBER_TEXT:Record<Locale,Record<MemberKey,string>> = {
     "closeProfile": "Закрыть редактор",
     "memberActivity": "Сохранённые и отслеживаемые обсуждения",
     "hideActivity": "Скрыть мои действия",
-    "profileOptional": "Заполнять профиль необязательно. Пользуйтесь форумом и настройте профиль позже."
+    "profileOptional": "Заполнять профиль необязательно. Пользуйтесь форумом и настройте профиль позже.",
+    "signupHeading": "Присоединиться к TractorVS",
+    "signupIntro": "Создайте пароль сейчас и подтвердите адрес электронной почты перед публикацией.",
+    "confirmPassword": "Повторите пароль",
+    "alreadyMember": "Уже зарегистрированы? Войти",
+    "emailLoginAlternative": "Войти по ссылке или коду из письма",
+    "resendConfirmation": "Отправить письмо подтверждения ещё раз",
+    "resendConfirmationSent": "Если учётная запись ожидает подтверждения, будет отправлено новое письмо.",
+    "signupConfirmHelp": "Пароль сохранён. Подтвердите электронную почту для активации учётной записи.",
+    "invalidLinkHelp": "Ссылка недействительна или устарела. Запросите новое письмо ниже."
   },
   "ja": {
     "register": "アカウントを作成",
@@ -575,7 +638,16 @@ export const MEMBER_TEXT:Record<Locale,Record<MemberKey,string>> = {
     "closeProfile": "編集を閉じる",
     "memberActivity": "保存・フォロー中の議論",
     "hideActivity": "アクティビティを閉じる",
-    "profileOptional": "プロフィールの編集は任意です。先にフォーラムを楽しみ、後から変更できます。"
+    "profileOptional": "プロフィールの編集は任意です。先にフォーラムを楽しみ、後から変更できます。",
+    "signupHeading": "TractorVS に登録",
+    "signupIntro": "まずパスワードを設定し、投稿前にメールアドレスを確認してください。",
+    "confirmPassword": "パスワードを再入力",
+    "alreadyMember": "登録済みですか？ ログイン",
+    "emailLoginAlternative": "メールのリンクまたはコードでログイン",
+    "resendConfirmation": "確認メールを再送信",
+    "resendConfirmationSent": "確認待ちのアカウントには新しいメールが送信されます。",
+    "signupConfirmHelp": "パスワードを設定しました。確認メールのリンクからアカウントを有効にしてください。",
+    "invalidLinkHelp": "リンクが無効か期限切れです。下から新しいメールをリクエストしてください。"
   },
   "zh": {
     "register": "创建账号",
@@ -647,7 +719,16 @@ export const MEMBER_TEXT:Record<Locale,Record<MemberKey,string>> = {
     "closeProfile": "关闭编辑",
     "memberActivity": "已收藏及关注的讨论",
     "hideActivity": "隐藏活动",
-    "profileOptional": "填写资料不是必需的。欢迎先参与论坛，日后随时修改。"
+    "profileOptional": "填写资料不是必需的。欢迎先参与论坛，日后随时修改。",
+    "signupHeading": "加入 TractorVS",
+    "signupIntro": "请先设置密码，再验证电子邮箱，即可参与论坛。",
+    "confirmPassword": "再次输入密码",
+    "alreadyMember": "已有账号？登录",
+    "emailLoginAlternative": "通过邮件链接或验证码登录",
+    "resendConfirmation": "重新发送验证邮件",
+    "resendConfirmationSent": "如果账号仍待验证，我们将发送新的验证邮件。",
+    "signupConfirmHelp": "密码已设置。请打开验证邮件激活账号。",
+    "invalidLinkHelp": "链接无效或已过期。请在下方重新申请邮件。"
   },
   "hi": {
     "register": "खाता बनाएँ",
@@ -719,8 +800,17 @@ export const MEMBER_TEXT:Record<Locale,Record<MemberKey,string>> = {
     "closeProfile": "संपादन बंद करें",
     "memberActivity": "सहेजी और फ़ॉलो की गई चर्चाएँ",
     "hideActivity": "मेरी गतिविधि छिपाएँ",
-    "profileOptional": "प्रोफ़ाइल भरना ज़रूरी नहीं है। पहले फ़ोरम का उपयोग करें, बाद में कभी भी बदलें।"
+    "profileOptional": "प्रोफ़ाइल भरना ज़रूरी नहीं है। पहले फ़ोरम का उपयोग करें, बाद में कभी भी बदलें।",
+    "signupHeading": "TractorVS से जुड़ें",
+    "signupIntro": "अभी पासवर्ड बनाएँ और फ़ोरम पर पोस्ट करने से पहले ईमेल सत्यापित करें।",
+    "confirmPassword": "पासवर्ड फिर लिखें",
+    "alreadyMember": "पहले से सदस्य हैं? लॉग इन करें",
+    "emailLoginAlternative": "ईमेल लिंक या कोड से लॉग इन करें",
+    "resendConfirmation": "पुष्टि ईमेल दोबारा भेजें",
+    "resendConfirmationSent": "यदि आपका खाता पुष्टि की प्रतीक्षा में है, तो नया ईमेल भेजा जाएगा।",
+    "signupConfirmHelp": "पासवर्ड बन गया है। खाता सक्रिय करने के लिए पुष्टि ईमेल खोलें।",
+    "invalidLinkHelp": "यह लिंक अमान्य है या समाप्त हो गया है। नीचे नया ईमेल माँगें।"
   }
 };
-export type MemberKey = "register" | "passwordLogin" | "password" | "passwordHint" | "emailConfirm" | "authError" | "passwordShort" | "google" | "github" | "otherLogin" | "oauthError" | "memberHeading" | "memberIntro" | "myProfile" | "handle" | "displayName" | "bio" | "favoriteBrand" | "avatar" | "save" | "saved" | "profileError" | "uploadError" | "privacy" | "optOut" | "leaderboard" | "month" | "alltime" | "topics" | "replies" | "helpful" | "points" | "rank" | "newcomer" | "contributor" | "mentor" | "noMembers" | "myBookmarks" | "noBookmarks" | "saveTopic" | "removeTopic" | "helpfulButton" | "unhelpfulButton" | "voteLogin" | "voteOwn" | "voteError" | "signInNotice" | "loading" | "viewProfile" | "close" | "memberSince" | "forgotPassword" | "resetEmailSent" | "resetNewPassword" | "resetSave" | "resetUpdated" | "passwordMismatch" | "showPassword" | "hidePassword" | "followTopic" | "unfollowTopic" | "followingTopics" | "noFollowingTopics" | "newReplies" | "defaultMemberName" | "editProfile" | "closeProfile" | "memberActivity" | "hideActivity" | "profileOptional";
+export type MemberKey = "register" | "passwordLogin" | "password" | "passwordHint" | "emailConfirm" | "authError" | "passwordShort" | "google" | "github" | "otherLogin" | "oauthError" | "memberHeading" | "memberIntro" | "myProfile" | "handle" | "displayName" | "bio" | "favoriteBrand" | "avatar" | "save" | "saved" | "profileError" | "uploadError" | "privacy" | "optOut" | "leaderboard" | "month" | "alltime" | "topics" | "replies" | "helpful" | "points" | "rank" | "newcomer" | "contributor" | "mentor" | "noMembers" | "myBookmarks" | "noBookmarks" | "saveTopic" | "removeTopic" | "helpfulButton" | "unhelpfulButton" | "voteLogin" | "voteOwn" | "voteError" | "signInNotice" | "loading" | "viewProfile" | "close" | "memberSince" | "forgotPassword" | "resetEmailSent" | "resetNewPassword" | "resetSave" | "resetUpdated" | "passwordMismatch" | "showPassword" | "hidePassword" | "followTopic" | "unfollowTopic" | "followingTopics" | "noFollowingTopics" | "newReplies" | "defaultMemberName" | "editProfile" | "closeProfile" | "memberActivity" | "hideActivity" | "profileOptional" | "signupHeading" | "signupIntro" | "confirmPassword" | "alreadyMember" | "emailLoginAlternative" | "resendConfirmation" | "resendConfirmationSent" | "signupConfirmHelp" | "invalidLinkHelp";
 export const memberText=(lang:Locale,key:MemberKey):string=>MEMBER_TEXT[lang][key];

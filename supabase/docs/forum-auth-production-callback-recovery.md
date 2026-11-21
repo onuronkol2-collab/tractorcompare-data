@@ -49,3 +49,11 @@ https://tractorvs.com/es/forum/
 
 Resmî belgeler: https://supabase.com/docs/guides/auth/redirect-urls ; https://supabase.com/docs/guides/auth/auth-email-templates ; https://supabase.com/docs/guides/auth/social-login/auth-google ; https://supabase.com/docs/guides/auth/social-login/auth-github
 Bu konuşmadaki bağlı Supabase araçları Auth sağlayıcı gizli anahtarlarını veya Site URL yapılandırmasını güncelleme yetkisi sağlamaz; SQL ile değiştirilemez.
+## Şifreli üye kaydı — 21 Kasım'daki ek düzeltme
+- **Üye ol** artık forumun üstündeki birincil akıştır: e-posta, en az 12 karakterlik parola ve parola tekrarını gönderme aşamasında alır. E-postadaki Sign up / Confirm düğmesine basınca yeni parola oluşturulması beklenmez, yalnız e-posta sahipliği doğrulanır.
+- Giriş yapan üyelerin profili zorunlu değil; nötr varsayılan avatar ve takma ad ile forum kullanılabilir.
+- Google ile giriş sistemi değişmedi; Google hesabı ile oluşturulmuş bir üyeye ayrıca parola tanımlamak gerekirse var olan hesabın parola kurtarma akışını kullan, ikinci kimlik oluşturma.
+- Supabase linki yanlışlıkla Site URL ana sayfasına dönse bile auth fallback kodu access_token veya error_code içeren dönüşü yerelleştirilmiş forum URL'sine yönlendirir. Buna rağmen mail şablonları ve izin verilen URL'ler doğru ayarlanmalıdır.
+- otp_expired: süre aşımı VEYA tek kullanımlık bağlantının daha önce tüketilmiş olması. Bazı e-posta güvenlik tarayıcıları bağlantıyı önceden açabilir. Aynı eski maili tekrar kullanmak yerine yeni doğrulama maili iste. Sık tekrarlanırsa iki aşamalı token-hash doğrulaması araştırılmalıdır; e-posta şablonunu rastgele değiştirerek yayımlama.
+- Canlı kayıt kabulü: yeni, erişilebilir test adresi; e-posta + parola + parola tekrarı → confirm signup maili → ilk kez tıklama → forum oturumu → çıkış/şifreyle giriş → 10 dil URL'si → mail yeniden gönderme limiti.
+- Daha önceden tüketilmiş veya süresi dolmuş maili geriye dönük geçerli hale getiremeyiz.
