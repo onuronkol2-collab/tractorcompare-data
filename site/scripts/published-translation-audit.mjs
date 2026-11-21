@@ -1,5 +1,8 @@
 // Read-only translation regression probe over all 10 published model URLs.
 // It deliberately reports technical headings, NOT source evidence or raw specs.
+import {readFileSync,writeFileSync,existsSync,mkdirSync} from "node:fs";
+import {resolve,dirname} from "node:path";
+const DIST=process.env.TRANSLATION_DIST_ROOT?.trim() ? resolve(process.env.TRANSLATION_DIST_ROOT) : null;
 const BASE="https://tractorvs.com";
 const locales=["en","tr","zh","hi","pt-br","fr","de","ru","ja","es"];
 const unescape=s=>s.replace(/&(?:amp|quot|lt|gt|#(?:x[0-9a-f]+|\d+));/gi,entity=>{
@@ -11,6 +14,14 @@ const unescape=s=>s.replace(/&(?:amp|quot|lt|gt|#(?:x[0-9a-f]+|\d+));/gi,entity=
   return entity;
 }).replace(/<[^>]+>/g,"").replace(/\s+/g," ").trim();
 async function get(path){
+  if(DIST){
+    const url=new URL(path,BASE);
+    if(url.origin!==BASE||url.search||url.hash)throw Error("Noncanonical audit resource "+path);
+    const rel=url.pathname.endsWith("/")?url.pathname.slice(1)+"index.html":url.pathname.slice(1);
+    const filename=resolve(DIST,rel);
+    if(!filename.startsWith(DIST+"/")||!existsSync(filename))throw Error("Built page/sitemap missing: "+path);
+    return readFileSync(filename,"utf8");
+  }
   let last;
   for(let i=0;i<4;i++){
     try{
@@ -70,6 +81,29 @@ for(const locale of locales.slice(1)){
   const list=suspects.filter(s=>s.locale===locale);
   console.log("LANGUAGE_FALLBACK "+JSON.stringify({locale,headings:list.length,occurrences:list.reduce((s,a)=>s+a.count,0),top:list.slice(0,120)}));
 }
-console.log("LANGUAGE_AUDIT_SUMMARY "+JSON.stringify({publishedURLs:urls.length,modelCounts:Object.fromEntries(locales.map(l=>[l,byLocale.get(l).size])),missingHeadingCounts:Object.fromEntries(locales.slice(1).map(l=>[l,suspects.filter(x=>x.locale===l).length])),fetchErrors:errors}));
+const missingHeadingCounts=Object.fromEntries(locales.slice(1).map(l=>[l,suspects.filter(x=>x.locale===l).length]));
+const occurrenceCounts=Object.fromEntries(locales.slice(1).map(l=>[l,suspects.filter(x=>x.locale===l).reduce((sum,x)=>sum+x.count,0)]));
+const modelCounts=Object.fromEntries(locales.map(l=>[l,byLocale.get(l).size]));
+const summary={mode:DIST?"built_preview":"public_live",publishedURLs:urls.length,modelCounts,missingHeadingCounts,occurrenceCounts,fetchErrors:errors};
+console.log("LANGUAGE_AUDIT_SUMMARY "+JSON.stringify(summary));
+// A reusable public-label quality report, never a claim that crawling/SEO ranking is assured.
+if(process.env.TRANSLATION_REPORT_PATH?.trim()){
+  const filename=resolve(process.env.TRANSLATION_REPORT_PATH.trim());
+  mkdirSync(dirname(filename),{recursive:true});
+  writeFileSync(filename,JSON.stringify({summary,remaining:suspects},null,2)+"\n");
+}
+const minModels=Number(process.env.TRANSLATION_MIN_MODELS||"0");
+if(minModels>0&&locales.some(l=>modelCounts[l]<minModels)){
+  console.error("TRANSLATION_AUDIT_FAIL_TOO_FEW_MODELS "+JSON.stringify({minModels,modelCounts}));
+  process.exitCode=1;
+}
+if(process.env.TRANSLATION_MAX_TR_OCCURRENCES!==undefined){
+  const limit=Number(process.env.TRANSLATION_MAX_TR_OCCURRENCES);
+  if(!Number.isInteger(limit)||limit<0)throw Error("Invalid Turkish label threshold");
+  if(occurrenceCounts.tr>limit){
+    console.error("TRANSLATION_AUDIT_FAIL_TURKISH "+JSON.stringify({expectedMax:limit,actual:occurrenceCounts.tr}));
+    process.exitCode=1;
+  }
+}
 if(errors.length)process.exitCode=1;
 if(process.env.TRANSLATION_STRICT==="true" && suspects.length>0)process.exitCode=1;
