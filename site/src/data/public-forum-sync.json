@@ -6,5 +6,11 @@
   "public_rows": 0,
   "source": "anon_public_forum_views",
   "scope": "aaufxtcvnzgavtlintiv",
-  "generated_at": "2026-11-20T21:22:22.782Z"
+  "generated_at": "2026-11-20T21:22:22.782Z",
+  "manual_refresh_request": {
+    "reason": "First original, published, SEO-ready Turkish forum article became visible via anonymous RLS after the last scheduled sync",
+    "public_topic_id": "713ab252-a925-4ab7-b2c8-a30ce5b86706",
+    "requested_at": "2026-11-21T15:15:37Z",
+    "safety": "build trigger only; normal scheduled sync still calculates authoritative fingerprint and owns public_* fields"
+  }
 }
