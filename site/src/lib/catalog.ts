@@ -744,6 +744,10 @@ const approvedExactManufacturerDocuments: Record<string, string[]> = {
   ],
   "agrale": [
     "https://www.agrale.com.br/en/download/112",
+    // Exact Agrale-published Brazilian technical sheets, already linked to
+    // evidence-gated 525/575 Super rows. No whole-host approval or 4125 claim.
+    "https://pdf.agrale.com.br/2019/ficha-tecnica/pt/trator-525-1/319/",
+    "https://pdf.agrale.com.br/2019/ficha-tecnica/en/tractor-agrale-575-super-1/255/",
   ],
   "iseki": [
     "https://www.iseki.co.jp/global/cms/upload/pdf/products/tractor/t97_spec.pdf",
@@ -788,6 +792,10 @@ const approvedExactManufacturerDocuments: Record<string, string[]> = {
 
 // Each entry is an individual reviewed table on a third-party host.
 const reviewedExternalTables = new Map([
+  // An original 2009 Minsk Tractor Works operating manual covering exactly
+  // Belarus 920 and 920.2, served by its regional distributor.
+  // Remains a THIRD-PARTY HOST; never elevate to an OEM domain.
+  ["https://www.mtzequipment.com/sites/default/files/manuals/900-Series%20Manual.pdf", "independent_catalog"],
   ["https://static.agroinform.hu/data/forum/documents/agroinform_20180508221726_belarus_termekcsalad_katalogus_eng.pdf", "independent_catalog"],
   ["https://netetrade.com/media/mtw-holding-minsk-tractor-works/files/series_500_catalogue.pdf", "independent_catalog"],
   ["https://www.agromeh.com/en/products/belarus-12213", "web_page"],
