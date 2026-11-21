@@ -40,18 +40,26 @@ function textFrom(data:any){
   .filter((x:any)=>x?.type==="text").map((x:any)=>String(x.text||"")).join("\n");
 }
 async function modelJSON(prompt:string,schema:any,deadline:number){
- for(const selected of [MODEL,"gemini-3.7-flash"]){
-  const init={model:selected,input:[{type:"text",text:prompt}],store:true,background:false,
+ for(const selected of [MODEL,"gemini-3.7-flash","gemini-3.6-flash"]){
+  const init={model:selected,input:[{type:"text",text:prompt}],store:true,background:true,
    response_format:{type:"text",mime_type:"application/json",schema},
    generation_config:{max_output_tokens:16000,thinking_level:"low"}};
-  const r=await fetch(GEMINI,{method:"POST",headers:{"content-type":"application/json",
-   "x-goog-api-key":AI,"Api-Revision":"2026-05-20"},
-   body:JSON.stringify(init),signal:AbortSignal.timeout(55000)});
+  let r:Response;
+  try{
+   r=await fetch(GEMINI,{method:"POST",headers:{"content-type":"application/json",
+    "x-goog-api-key":AI,"Api-Revision":"2026-05-20"},
+    body:JSON.stringify(init),signal:AbortSignal.timeout(28000)});
+  }catch(error){
+   // Initial request can time out while the provider is congested.
+   // Only retry a bounded approved alternative, never endlessly.
+   if(selected!=="gemini-3.6-flash"&&Date.now()<deadline-25000)continue;
+   throw error;
+  }
   let d=await r.json().catch(()=>({}));
   if(!r.ok||!d.id){
    // A single approved fallback is allowed for temporary model capacity limits.
    // Never retry arbitrary errors, invalid auth, or invalid source data.
-   if(selected===MODEL&&[429,500,502,503,504].includes(r.status)&&Date.now()<deadline-20000){
+   if(selected!=="gemini-3.6-flash"&&[500,502,503,504].includes(r.status)&&Date.now()<deadline-25000){
     console.warn("Primary Gemini capacity unavailable; one approved fallback");
     continue;
    }
@@ -102,7 +110,7 @@ function check(a:Article,b:Article,to:string){
  return null;
 }
 async function translate(src:Source,to:string){
- const deadline=Date.now()+102000;
+ const deadline=Date.now()+118000;
  const instructions=[
   "Translate this complete TractorVS research article from "+src.source_locale+" to "+LANGS[to]+".",
   "Professional agricultural journalism. Translate ALL paragraphs, warnings, headings, FAQs and tables.",
