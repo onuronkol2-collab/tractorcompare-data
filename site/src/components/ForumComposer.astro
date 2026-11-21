@@ -147,7 +147,7 @@ const strings=JSON.stringify({
   <p class="forum-message" data-forum-status role="status" aria-live="polite"></p>
   {mode==="topic"&&<div data-forum-publication-panel class="forum-publication-panel" hidden>
    <button type="button" data-forum-publication-check>{ft(lang,"publicationCheck")}</button>
-   <a data-forum-publication-link hidden rel="noopener noreferrer">{ft(lang,"publicationOpen")}</a>
+   <a data-forum-publication-link href={localizedPath(lang,"/forum/")} hidden rel="noopener noreferrer">{ft(lang,"publicationOpen")}</a>
    <p data-forum-publication-status role="status" aria-live="polite"></p>
   </div>}
   <details data-forum-history hidden>
