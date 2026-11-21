@@ -63,6 +63,7 @@ jobs:
           TRANSLATION_DIST_ROOT: site/dist
           TRANSLATION_MIN_MODELS: "379"
           TRANSLATION_MAX_TR_OCCURRENCES: "0"
+          TRANSLATION_ZERO_LOCALES: "tr,zh,hi,de,ru,ja"
           TRANSLATION_REPORT_PATH: site/.translation-audit/preview.json
           TRANSLATION_STRICT: "false"
         run: node site/scripts/published-translation-audit.mjs
