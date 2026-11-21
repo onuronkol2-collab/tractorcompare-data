@@ -18,7 +18,7 @@
       "bytes": 72288,
       "sha256": "7a609beab4b023e1c93003677e0a0948300199296b4357a5001f6b6b14a4b298",
       "artistVerified": "JoachimKohler-HB",
-      "verifiedAt": "2026-11-21T19:23:45.737Z"
+      "verifiedAt": "2026-11-21T19:24:38.901Z"
     },
     {
       "brand": "Steyr",
@@ -36,7 +36,7 @@
       "bytes": 94579,
       "sha256": "243c7f94cd564dc8a2f016e4b1fd896a9bb0d50e80d69c20de29472ed62e0f27",
       "artistVerified": "JoachimKohler-HB",
-      "verifiedAt": "2026-11-21T19:23:46.419Z"
+      "verifiedAt": "2026-11-21T19:24:39.497Z"
     },
     {
       "brand": "Steyr",
@@ -54,7 +54,25 @@
       "bytes": 61580,
       "sha256": "d84eeefb3768a748bf037db043d110272d55aefcf13090728d0ed3f00dc6d0b7",
       "artistVerified": "GT1976",
-      "verifiedAt": "2026-11-21T19:23:47.797Z"
+      "verifiedAt": "2026-11-21T19:24:40.079Z"
+    },
+    {
+      "brand": "Steyr",
+      "model": "4115 KOMPAKT",
+      "fileId": "steyr-4115-kompakt-joachim-2019",
+      "filename": "Steyr Kompakt 4115.jpg",
+      "photographer": "JoachimKohler-HB",
+      "authorHint": "JoachimKohler",
+      "license": "CC BY-SA 4.0",
+      "width": 4200,
+      "height": 3150,
+      "fileTitle": "File:Steyr Kompakt 4115.jpg",
+      "sourcePage": "https://commons.wikimedia.org/wiki/File:Steyr_Kompakt_4115.jpg",
+      "commonsPath": "9/92/Steyr_Kompakt_4115.jpg",
+      "bytes": 76614,
+      "sha256": "560e9db39bf77caf7883c546ef8680e68377379abe2f64e61f86fdb89105a877",
+      "artistVerified": "JoachimKohler-HB",
+      "verifiedAt": "2026-11-21T19:24:40.627Z"
     },
     {
       "brand": "Steyr",
@@ -72,7 +90,7 @@
       "bytes": 65488,
       "sha256": "950e3d19879d1446466563ca8be3d3be1b8248a6014b0e39c36108d0b7927cef",
       "artistVerified": "MarcelX42",
-      "verifiedAt": "2026-11-21T19:23:48.845Z"
+      "verifiedAt": "2026-11-21T19:24:41.202Z"
     },
     {
       "brand": "Steyr",
@@ -90,7 +108,7 @@
       "bytes": 62234,
       "sha256": "9a32c4c479bda2765a3313ea2e2b3c749b993e233905270e8dd2beecd27c557d",
       "artistVerified": "MarcelX42",
-      "verifiedAt": "2026-11-21T19:23:49.472Z"
+      "verifiedAt": "2026-11-21T19:24:41.730Z"
     },
     {
       "brand": "Steyr",
@@ -108,7 +126,7 @@
       "bytes": 56928,
       "sha256": "9d7a64b36a42a5234a943f1e1c46918103102869a76c6c2451f0085faf10bd81",
       "artistVerified": "MarcelX42",
-      "verifiedAt": "2026-11-21T19:23:50.056Z"
+      "verifiedAt": "2026-11-21T19:24:42.304Z"
     },
     {
       "brand": "Zetor",
@@ -126,7 +144,7 @@
       "bytes": 67493,
       "sha256": "d5c4f6c5dc81b9ad440090dbf381421a6b258e53634d5104c975087bc30d4b21",
       "artistVerified": "MarcelX42",
-      "verifiedAt": "2026-11-21T19:23:51.504Z"
+      "verifiedAt": "2026-11-21T19:24:42.879Z"
     }
   ],
   "rejected": [
@@ -135,12 +153,6 @@
       "brand": "Belarus",
       "model": "922.3",
       "error": "Error: Exact Wikimedia title not found: belarus-922-3-bulykin-almaty-2026"
-    },
-    {
-      "fileId": "steyr-4115-kompakt-joachim-2019",
-      "brand": "Steyr",
-      "model": "4115 KOMPAKT",
-      "error": "Error: Title not an exact model: steyr-4115-kompakt-joachim-2019"
     }
   ]
 }
