@@ -13,7 +13,7 @@ const tractor=(brand_name,model_name)=>({
   engine:null,transmission:null,drivetrain:null,weight_kg:null,specifications:[]
 });
 test("only exact matching tractor model identity receives a verified photo",()=>{
-  assert.equal(APPROVED_TRACTOR_PHOTOS.length,56);
+  assert.equal(APPROVED_TRACTOR_PHOTOS.length,62);
   assert.equal(tractorPhotos(tractor("Belarus","82.1")).length,4);
   assert.equal(tractorPhotos(tractor("Belarus","80.1")).length,1);
   assert.equal(tractorPhotos(tractor("Belarus","132N")).length,1);
@@ -45,6 +45,32 @@ test("new Belarus photographs keep exact model names and rights credit", () => {
   assert.match(photo152.originFullUrl,/Belarus_152_tractor_%28Belagro-2021%29\.jpg$/);
   assert.equal(photo132.configurationExact,false);
   assert.equal(photo152.configurationExact,false);
+});
+
+test("six additional Commons photos match exact published identities and independently recorded rights",()=>{
+  const reviewed=[
+    ["Belarus","1220.4","Dgolnik","CC BY-SA 3.0","Belarus_1220.4.jpg"],
+    ["Belarus","1221.3","Homoatrox","CC BY-SA 3.0","Belarus_MTZ-1221_3_tractor.jpg"],
+    ["Belarus","622","Homoatrox","CC BY-SA 3.0","Belarus_622_tractor.jpg"],
+    ["Belarus","920.2","Homoatrox","CC BY-SA 3.0","Belarus_920.2_tractor.jpg"],
+    ["Belarus","952.4","Homoatrox","CC BY-SA 3.0","Belarus_952.4_tractor.jpg"],
+    ["Steyr","4120 PLUS","MarcelX42","CC BY-SA 4.0","Steyr_4120_Plus_Agritechnica_2023_%28DSC05974%29.jpg"],
+  ];
+  for(const [brand,model,creator,license,sourceFile] of reviewed){
+    const photos=tractorPhotos(tractor(brand,model));
+    assert.equal(photos.length,1,brand+" "+model);
+    const photo=photos[0];
+    assert.equal(photo.photographer,creator);
+    assert.equal(photo.licenseName,license);
+    assert.ok(photo.sourcePage.endsWith(sourceFile),photo.sourcePage);
+    assert.match(photo.originThumbUrl,/\/500px-/);
+    assert.equal(photo.configurationExact,false);
+  }
+  for(const [brand,model] of [
+    ["Belarus","1220.3"],["Belarus","1221.7"],["Belarus","920"],
+    ["Steyr","4120 EXPERT CVT"],["Steyr","4120"],
+  ]) assert.equal(tractorPhotos(tractor(brand,model)).length,0,
+    "Do not spread a photograph to a different model or version");
 });
 
 test("each approved photograph has a verified model source and re-use license",()=>{
@@ -171,9 +197,9 @@ test("fullscreen viewer, linked credits and public image sitemap use SSR images"
 });
 
 test("historic photo batch is staged with rights and does not create records",()=>{
-  assert.equal(HISTORICAL_LICENSED_PHOTOS.length,45);
+  assert.equal(HISTORICAL_LICENSED_PHOTOS.length,51);
   const all=new Set(HISTORICAL_LICENSED_PHOTOS.map(x=>x.fileId));
-  assert.equal(all.size,45);
+  assert.equal(all.size,51);
   assert.ok(HISTORICAL_LICENSED_PHOTOS.every(x=>x.configurationExact===false));
   assert.ok(!HISTORICAL_LICENSED_PHOTOS.some(x=>["Product","Vehicle"].includes(x.model)));
 });
