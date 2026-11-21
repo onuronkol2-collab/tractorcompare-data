@@ -21,9 +21,12 @@ test("only exact matching tractor model identity receives a verified photo",()=>
   assert.equal(tractorPhotos(tractor("New Holland","T5.110")).length,1);
   assert.equal(tractorPhotos(tractor("New Holland","T6.180")).length,1);
   assert.equal(tractorPhotos(tractor("Case IH","Puma 150")).length,1);
-  assert.equal(tractorPhotos(tractor("McCormick","X5.120")).length,1);
-  assert.equal(tractorPhotos(tractor("McCormick","X5.110")).length,1);
-  assert.equal(tractorPhotos(tractor("Landini","5-110")).length,1);
+  assert.equal(tractorPhotos(tractor("McCormick","X5.120")).length,0);
+  assert.equal(tractorPhotos(tractor("McCormick","X5.120 P3-Drive")).length,1);
+  assert.equal(tractorPhotos(tractor("McCormick","X5.110")).length,0);
+  assert.equal(tractorPhotos(tractor("McCormick","X5.110 HC")).length,1);
+  assert.equal(tractorPhotos(tractor("Landini","5-110")).length,0);
+  assert.equal(tractorPhotos(tractor("Landini","5-110 RoboShift")).length,1);
   assert.equal(tractorPhotos(tractor("Fendt","724 Vario")).length,1);
   assert.equal(tractorPhotos(tractor("Valtra","Q265")).length,1);
   assert.equal(tractorPhotos(tractor("Başak Traktör","5120")).length,1);
