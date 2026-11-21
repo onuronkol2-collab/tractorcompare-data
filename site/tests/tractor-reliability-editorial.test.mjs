@@ -40,19 +40,20 @@ test("source chart measurements are retained as incident counts per 100 evaluate
  assert.match(opening,/üç marka iki listede de var/);
 });
 
-test("seven documented, independently credited exact-model illustrative photos",()=>{
- assert.equal((article.match(/^!\[[^\n]+\]\(\/images\/tractors\/[a-z0-9-]+-480\.jpg\)$/gm)||[]).length,7);
- const files=["versatile-nemesis-175-e95b1863","allis-chalmers-ib-acroterion-2026",
- "massey-ferguson-5m-95-bene-riobo-2025","new-holland-t6-180-marcelx42-2025",
- "john-deere-6r-150-2c198cee","case-ih-puma-150-chris-woodrich-2025",
- "kubota-m6-141-4d0694e5"];
- for(const id of files)assert.ok(article.includes(id),"Missing image "+id);
- assert.ok(article.includes("Bene Riobó"));
- assert.ok(article.includes("Acroterion"));
+test("seven independently credited illustrative model photos preserve licensed sources",()=>{
+ assert.equal((article.match(/^!\[[^\n]+\]\((?:\/images\/tractors\/[a-z0-9-]+-480\.jpg|https:\/\/commons\.wikimedia\.org\/wiki\/Special:FilePath\/[^)]+)\)$/gm)||[]).length,7);
+ assert.equal((article.match(/^!\[[^\n]+\]\(\/images\/tractors\//gm)||[]).length,5);
+ assert.equal((article.match(/^!\[[^\n]+\]\(https:\/\/commons\.wikimedia\.org\/wiki\/Special:FilePath\//gm)||[]).length,2);
+ for(const id of ["versatile-nemesis-175-e95b1863","new-holland-t6-180-marcelx42-2025",
+ "john-deere-6r-150-2c198cee","case-ih-puma-150-chris-woodrich-2025","kubota-m6-141-4d0694e5"]){
+  assert.ok(article.includes(id),"Missing approved first-party image "+id);
+ }
+ for(const source of ["Massey_Ferguson_5M.95.jpg","Allis-Chalmers_IB_tractor_MD3.jpg"])assert.ok(article.includes(source));
+ for(const credit of ["Bene Riobó","Acroterion","MarcelX42","Chris Woodrich","MB-one"])assert.ok(article.includes(credit));
  assert.equal((article.match(/CC BY-SA 4\.0/g)||[]).length,7);
  assert.equal((article.match(/anket kapsamında incelenen traktör değildir/g)||[]).length,7);
- assert.ok(library.includes("massey-ferguson-5m-95-bene-riobo-2025"));
- assert.ok(library.includes("allis-chalmers-ib-acroterion-2026"));
+ assert.doesNotMatch(library,/massey-ferguson-5m-95-bene-riobo-2025/);
+ assert.doesNotMatch(library,/allis-chalmers-ib-acroterion-2026/);
 });
 
 test("original Turkish-only canonical article and photograph rights are reflected in layout",()=>{
