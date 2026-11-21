@@ -10,6 +10,9 @@ on:
       - "site/scripts/published-translation-audit.mjs"
       - "site/src/lib/spec-i18n.ts"
       - "site/src/lib/catalog.ts"
+      - "site/src/lib/published-spec-translations.ts"
+      - "site/src/lib/reviewed-public-spec-headings.ts"
+      - "site/tests/reviewed-public-spec-headings.test.mjs"
 permissions:
   contents: read
 jobs:
