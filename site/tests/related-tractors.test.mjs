@@ -44,3 +44,14 @@ test("same brand and market prioritized; missing power is not fabricated", () =>
   assert.equal(morePublishedTractors(current,[current]).length,0);
   assert.equal(morePublishedTractors(current,published,0).length,0);
 });
+
+test("evidence-backed HST and GEAR entries of the exact same LS J27 model cross-link before unrelated models",()=>{
+  const current={...make("ls-j27-hst","LS Tractor","global",27),model_name:"J27",variant:"HST"};
+  const gear={...make("ls-j27-gear","LS Tractor","global",null),model_name:"J27",variant:"GEAR"};
+  const other=make("ls-j24","LS Tractor","global",27);
+  const different=make("brand-j27","Different Brand","global",27);
+  const results=morePublishedTractors(current,[different,other,gear,current],3);
+  assert.deepEqual(results.map(row=>row.slug),["ls-j27-gear","ls-j24","brand-j27"]);
+  assert.equal(results[0].variant,"GEAR");
+  assert.ok(results.every(row=>row.tractor_id!==current.tractor_id));
+});
