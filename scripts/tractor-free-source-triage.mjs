@@ -23,7 +23,7 @@ export function sourceUrl(raw,trustedHosts=[]){
 export function containsPhrase(text,phrase){
  const target=fold(phrase);
  if(!target||target.length>120)return false;
- const p=target.split(" ").map(esc).join("\\s+");
+ const p=target.split(" ").map(esc).join("\s+");
  return new RegExp("(?:^|[^\\p{L}\\p{N}])"+p+"(?=$|[^\\p{L}\\p{N}])","iu").test(fold(text));
 }
 export function evaluateSource(item){
@@ -108,7 +108,7 @@ export function conflictIndexes(candidates,results){
     evidence.key,evidence.unit,evidence.measurementStandard,
   ].map(fold).map(x=>x.toLowerCase());
   const scope=JSON.stringify(identity);
-  const value=fold(evidence.value).replace(/,(?=\\d{1,3}(?:\\D|$))/g,".").toLowerCase();
+  const value=fold(evidence.value).replace(/^(\d+),(\d+)$/,"$1.$2").toLowerCase();
   if(!scopes.has(scope))scopes.set(scope,new Map());
   const byValue=scopes.get(scope);
   if(!byValue.has(value))byValue.set(value,[]);
