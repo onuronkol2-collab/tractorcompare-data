@@ -9,6 +9,7 @@ const guide=getTechnicalDeepDive(slug);
 if(!guide) throw new Error("Missing editorial deep dive "+slug);
 const tr=lang==="tr";
 const hub=localizedPath(lang,"/guides/tractor-technical-terms/");
+const editorialPath=localizedPath(lang,"/articles/");
 const catalog=localizedPath(lang,"/tractors/");
 const compare=localizedPath(lang,"/compare/");
 const permalink=localizedPath(lang,"/guides/"+guide.slug+"/");
@@ -36,8 +37,9 @@ const structuredData={
    mainEntity:{"@id":url+"#article"}},
   {"@type":"BreadcrumbList",itemListElement:[
    {"@type":"ListItem",position:1,name:tr?"Ana sayfa":"Home",item:new URL(localizedPath(lang,"/"),base).toString()},
-   {"@type":"ListItem",position:2,name:tr?"Traktör teknik terimleri":"Tractor technical terms",item:new URL(hub,base).toString()},
-   {"@type":"ListItem",position:3,name:headline,item:url}
+   {"@type":"ListItem",position:2,name:tr?"Makaleler":"Articles",item:new URL(editorialPath,base).toString()},
+   {"@type":"ListItem",position:3,name:tr?"Traktör teknik terimleri":"Tractor technical terms",item:new URL(hub,base).toString()},
+   {"@type":"ListItem",position:4,name:headline,item:url}
   ]}
  ]
 };
@@ -50,6 +52,7 @@ const structuredData={
    <div class="learn-hero-text">
     <nav class="learn-crumb" aria-label={tr?"İçerik yolu":"Breadcrumb"}>
      <a href={localizedPath(lang,"/")}>{tr?"Ana sayfa":"Home"}</a><span>/</span>
+     <a href={editorialPath}>{tr?"Makaleler":"Articles"}</a><span>/</span>
      <a href={hub}>{tr?"Teknik terimler":"Technical terms"}</a><span>/</span>
      <span aria-current="page">{tr?"Detaylı rehber":"In-depth guide"}</span>
     </nav>
