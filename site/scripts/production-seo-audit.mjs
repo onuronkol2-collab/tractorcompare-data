@@ -1,3 +1,4 @@
+import {inspectVisibleMainImages} from "./seo-main-markup.mjs";
 // Read-only production SEO coverage audit. No credentials or writes.
 const BASE = "https://tractorvs.com";
 const languages = {en:"en",tr:"tr",zh:"zh-Hans",hi:"hi","pt-br":"pt-BR",fr:"fr",de:"de",ru:"ru",ja:"ja",es:"es"};
@@ -107,18 +108,12 @@ for(let i=0;i<urls.length;i+=4){
       meta.description.length < (locale==="zh"||locale==="ja" ? 12 : 30))
     error("title-description",p,"Missing or clearly empty title/description");
    if(!meta.h1)error("heading",p,"H1 not found");
-   // Exhaustive crawlable-page checks, not a synthetic Lighthouse score:
-   // every image in the page's visible main content needs an alt attribute
-   // (including alt="" for truly decorative images). Keep license/dialog
-   // overlays outside the main landmark out of this check.
-   const main=body.match(/<main\b[^>]*>([\s\S]*?)<\/main>/i)?.[1]||null;
-   if(main==null)error("missing-main",p,"Main content landmark missing");
-   else {
-     const visibleImages=tags(main,"img");
-     for(const [i,image] of visibleImages.entries())
-       if(!/\balt\s*=\s*(["'])[^"']*\1/i.test(image))
-         error("image-alt",p,"Main image "+(i+1)+" lacks alt attribute");
-   }
+   // Full-sitemap accessibility/SEO integrity is handled by a tested
+   // pure helper; an absent alt differs from a valid decorative alt="".
+   const imageCheck=inspectVisibleMainImages(body);
+   if(!imageCheck.foundMain)error("missing-main",p,"Main content landmark missing");
+   for(const i of imageCheck.missingAlt)
+     error("image-alt",p,"Main image "+i+" lacks alt attribute");
    // JSON-LD errors are SEO issues on any page type, not only models.
    for(const [i,raw] of meta.json.entries())try{
      JSON.parse(raw);
