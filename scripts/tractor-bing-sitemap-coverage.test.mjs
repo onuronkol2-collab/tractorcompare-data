@@ -87,6 +87,7 @@ test("missing XML child or removed localized models is a hard regression", () =>
 
   const missingModels = good();
   missingModels.children[0].xml = xmlURLs([home, ...landingURLs]);
+  missingModels.minimumMainUrls = 1; // Isolate model-detail coverage instead of the aggregate URL floor.
   assert.throws(() => evaluateBingSitemapCoverage(missingModels), /Published model URLs/);
 });
 
