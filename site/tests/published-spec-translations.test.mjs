@@ -164,3 +164,15 @@ test("power, torque, load status, gear ratios, 2WD/4WD and tyre options do not c
   assert.equal(label("rear_pto_speeds","ja"),label("pto_speeds","ja"));
   assert.equal(label("adblue_capacity","pt-br"),label("adblue_tank_capacity","pt-br"));
 });
+
+test("engine power labels retain the recorded standard and boost condition in every locale",async()=>{
+ const {localizedSpecificationName}=await import("../src/lib/spec-i18n.ts");
+ for(const lang of ["en","tr","zh","hi","pt-br","fr","de","ru","ja","es"]){
+  const standard=localizedSpecificationName("engine_max_power_kw","Maximum engine power ISO TR 14396",lang);
+  const unboosted=localizedSpecificationName("engine_max_power_kw","Maximum engine power without boost",lang);
+  assert.match(standard,/14396/);
+  assert.ok(unboosted);
+  assert.notEqual(standard,unboosted);
+  if(lang!=="en")assert.notEqual(unboosted,"Maximum engine power without boost");
+ }
+});
