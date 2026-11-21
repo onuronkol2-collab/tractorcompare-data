@@ -124,8 +124,13 @@ for(const record of records){
    throw Error("JPEG integrity/size validation failed: "+record.fileId);
   const sha256=createHash("sha256").update(body).digest("hex");
   await writeFile(output+"/"+record.fileId+"-480.jpg",body);
+  const original=new URL(i.url);
+  if(original.hostname!=="upload.wikimedia.org"||
+    !/^\/wikipedia\/commons\/[0-9a-f]\/\w{2}\//.test(original.pathname))
+    throw Error("Unapproved origin image path: "+record.fileId);
   const f={...record,fileTitle:p.title,sourcePage:"https://commons.wikimedia.org/wiki/"+
-    encodeURI(p.title.replaceAll(" ","_")),bytes:body.length,sha256,artistVerified:artist,
+    encodeURI(p.title.replaceAll(" ","_")),commonsPath:original.pathname.slice("/wikipedia/commons/".length),
+    bytes:body.length,sha256,artistVerified:artist,
     verifiedAt:new Date().toISOString()};
   successes.push(f);
   console.log("PHOTO_VERIFIED "+JSON.stringify({id:record.fileId,model:record.brand+" "+record.model,
