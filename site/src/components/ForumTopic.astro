@@ -2,7 +2,7 @@
 import SiteLayout from "../layouts/SiteLayout.astro";
 import ForumComposer from "./ForumComposer.astro";
 import {forumText as ft} from "../lib/forum-i18n.ts";
-import {publishedForumReplies,forumDate,type ForumTopic} from "../lib/forum.ts";
+import {allPublicForumTopics,isIndexableForumTopic,publishedForumReplies,forumDate,type ForumTopic} from "../lib/forum.ts";
 import {getPublicCatalog} from "../lib/catalog.ts";
 import {localizedPath,type Locale,LOCALE_TAGS} from "../lib/locales.ts";
 interface Props {lang:Locale;topic:ForumTopic}
@@ -12,8 +12,10 @@ const catalog=(await getPublicCatalog()).tractors;
 const tractor=topic.tractor_id?catalog.find(t=>t.tractor_id===topic.tractor_id):null;
 const forumUrl=localizedPath(lang,"/forum/");
 const publicPath=forumUrl+topic.slug+"/";
-const eligible=Boolean(topic.seo_ready&&topic.status==="published"&&
- topic.body.trim().length>=150&&topic.title.trim().length>=12);
+const versions=(await allPublicForumTopics()).filter(row=>row.topic_id===topic.topic_id);
+const eligible=isIndexableForumTopic(topic);
+const availableLocales=versions.map(row=>row.locale);
+const indexableLocales=versions.filter(isIndexableForumTopic).map(row=>row.locale);
 const origin=Astro.site||new URL("https://tractorvs.com");
 const schema=eligible?{
  "@context":"https://schema.org","@type":"WebPage",url:new URL(publicPath,origin).toString(),
@@ -24,7 +26,7 @@ const schema=eligible?{
 // Never invent author profiles or engagement statistics for rich results.
 ---
 <SiteLayout lang={lang} title={topic.title+" | TractorVS"} description={topic.body.slice(0,190)}
-  indexable={eligible} structuredData={schema} availableLocales={[lang]}>
+  indexable={eligible} structuredData={schema} availableLocales={availableLocales} indexableLocales={indexableLocales}>
  <div class="forum-thread">
   <div class="container">
    <nav class="thread-breadcrumb"><a href={forumUrl}>{ft(lang,"back")}</a> / {ft(lang,topic.category)}</nav>

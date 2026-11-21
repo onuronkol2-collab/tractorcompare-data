@@ -1,6 +1,6 @@
 import type {APIRoute} from "astro";
 import {LOCALES,localizedPath} from "../lib/locales.ts";
-import {publishedForumTopics} from "../lib/forum.ts";
+import {publishedForumTopics,isIndexableForumTopic} from "../lib/forum.ts";
 
 // Supplemental indexable-only forum sitemap. Unlike a raw sitemap of all UGC,
 // this includes no pending posts, hidden tests or thin/disapproved translations.
@@ -12,9 +12,7 @@ export const GET:APIRoute=async ({site})=>{
  const urls:string[]=[];
  if(indexable){
   for(const locale of LOCALES){
-   const visible=(await publishedForumTopics(locale)).filter(x=>
-    x.seo_ready===true&&x.status==="published"&&x.title.trim().length>=12
-    &&x.body.trim().length>=150);
+   const visible=(await publishedForumTopics(locale)).filter(isIndexableForumTopic);
    if(visible.length){
     urls.push('<url><loc>'+escapeXml(new URL(localizedPath(locale,"/forum/"),site).toString())+'</loc></url>');
    }

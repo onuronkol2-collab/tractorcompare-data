@@ -42,9 +42,13 @@ const slugPattern=/^[a-z0-9][a-z0-9-]{10,259}$/;
 export function isSafeForumTopic(v:ForumTopic):boolean {
  return Boolean(v&&validLocale.has(v.locale)&&v.status==="published"&&
   typeof v.slug==="string"&&slugPattern.test(v.slug)&&
-  typeof v.title==="string"&&v.title.trim().length>=12&&v.title.length<=160&&
-  typeof v.body==="string"&&v.body.trim().length>=40&&v.body.length<=12000&&
+  typeof v.title==="string"&&v.title.trim().length>=(v.machine_translated?4:12)&&v.title.length<=(v.machine_translated?240:160)&&
+  typeof v.body==="string"&&v.body.trim().length>=(v.machine_translated?5:40)&&v.body.length<=(v.machine_translated?30000:12000)&&
   typeof v.id==="string"&&/^[a-f0-9-]{36}$/.test(v.id));
+}
+export function isIndexableForumTopic(topic:ForumTopic):boolean {
+ return topic.status==="published" && topic.seo_ready===true &&
+   (topic.machine_translated || (topic.title.trim().length>=12 && topic.body.trim().length>=150));
 }
 export async function allPublicForumTopics():Promise<ForumTopic[]> {
  if(!topicsCache)topicsCache=loadRows<ForumTopic>("tc_forum_localized_topics",
@@ -59,7 +63,7 @@ export async function allPublicForumReplies():Promise<ForumReply[]>{
  if(!repliesCache)repliesCache=loadRows<ForumReply>("tc_forum_localized_replies",
   "id,topic_id,locale,original_locale,created_at,status,body,machine_translated")
   .then(rows=>rows.filter(x=>x&&x.status==="published"&&validLocale.has(x.locale)&&
-    typeof x.body==="string"&&x.body.trim().length>=10&&x.body.length<=6000));
+    typeof x.body==="string"&&x.body.trim().length>=(x.machine_translated?5:10)&&x.body.length<=(x.machine_translated?16000:6000)));
  return repliesCache;
 }
 export async function publishedForumReplies(lang:Locale,topicId:string):Promise<ForumReply[]> {
