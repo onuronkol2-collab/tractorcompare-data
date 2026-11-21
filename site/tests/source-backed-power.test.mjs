@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { sourceBackedHorsepower } from "../src/lib/catalog.ts";
+import { sourceBackedHorsepower, publishedHorsepower } from "../src/lib/catalog.ts";
 
 const supported = {
   canonical_key:"engine_power", spec_name:"Engine power", spec_value:"25.3",
@@ -29,4 +29,16 @@ test("never presents PTO, kW, maximum boost power or unitless values as rated hp
     {...supported,spec_value:"25-30"},
     {...supported,spec_value:"25.3 hp"},
   ]) assert.equal(sourceBackedHorsepower([x]),null);
+});
+
+
+test("published summaries never trust an unverified legacy horsepower header",()=>{
+  assert.equal(publishedHorsepower({horsepower:235,specifications:[]}),null);
+  assert.equal(publishedHorsepower({horsepower:235,specifications:[{...supported,spec_value:"230"}]}),230);
+  assert.equal(publishedHorsepower({horsepower:175,specifications:[{...supported,spec_value:"170"}]}),170);
+  assert.equal(publishedHorsepower({horsepower:75,specifications:[{...supported,evidence_text:null}]}),null);
+  assert.equal(publishedHorsepower({horsepower:null,specifications:[supported]}),25.3);
+  assert.equal(publishedHorsepower({horsepower:235,specifications:[
+    {...supported,spec_value:"230"}, {...supported,spec_value:"235"}
+  ]}),null);
 });
