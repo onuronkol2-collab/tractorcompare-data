@@ -34,7 +34,7 @@ test("all locale counts must match the same published set, no hidden draft expan
  const ok=async(url)=>new Response(fixture(String(url)),{status:200});
  const items=await auditCatalogFootprint({fetchFn:ok});
  assert.equal(items.length,10);
- const count=await auditCatalogFootprint({fetchFn:async(url)=>
-  new Response(fixture(String(url),String(url).includes("/de/")?1:2),{status:200})});
- assert.equal(count.length,10);
+ await assert.rejects(auditCatalogFootprint({fetchFn:async(url)=>
+  new Response(fixture(String(url),String(url).includes("/de/")?1:2),{status:200})}),
+  /counts differ/);
 });
