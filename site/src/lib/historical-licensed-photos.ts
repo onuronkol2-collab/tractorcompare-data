@@ -454,7 +454,71 @@ const candidates=[
     "license": "CC BY-SA 4.0",
     "width": 6164,
     "height": 4627
-  }
+  },
+  // 21 November 2026: exact-model Commons file pages, dimensions,
+  // photographer and compatible CC BY-SA licenses checked individually.
+  // JPEG thumbnails were fetched as official 500px derivatives and
+  // committed into site/public/images/tractors (no speculative imagery).
+  {
+    "brand": "Belarus",
+    "model": "1220.4",
+    "fileId": "belarus-1220-4-dgolnik-2013",
+    "path": "8/8e/Belarus_1220.4.jpg",
+    "photographer": "Dgolnik",
+    "license": "CC BY-SA 3.0",
+    "width": 2048,
+    "height": 1536
+  },
+  {
+    "brand": "Belarus",
+    "model": "1221.3",
+    "fileId": "belarus-1221-3-homoatrox-2019",
+    "path": "6/63/Belarus_MTZ-1221_3_tractor.jpg",
+    "photographer": "Homoatrox",
+    "license": "CC BY-SA 3.0",
+    "width": 2197,
+    "height": 1824
+  },
+  {
+    "brand": "Belarus",
+    "model": "622",
+    "fileId": "belarus-622-homoatrox-2021",
+    "path": "4/48/Belarus_622_tractor.jpg",
+    "photographer": "Homoatrox",
+    "license": "CC BY-SA 3.0",
+    "width": 5393,
+    "height": 3595
+  },
+  {
+    "brand": "Belarus",
+    "model": "920.2",
+    "fileId": "belarus-920-2-homoatrox-2021",
+    "path": "9/93/Belarus_920.2_tractor.jpg",
+    "photographer": "Homoatrox",
+    "license": "CC BY-SA 3.0",
+    "width": 4000,
+    "height": 6000
+  },
+  {
+    "brand": "Belarus",
+    "model": "952.4",
+    "fileId": "belarus-952-4-homoatrox-2021",
+    "path": "8/8c/Belarus_952.4_tractor.jpg",
+    "photographer": "Homoatrox",
+    "license": "CC BY-SA 3.0",
+    "width": 4058,
+    "height": 4000
+  },
+  {
+    "brand": "Steyr",
+    "model": "4120 PLUS",
+    "fileId": "steyr-4120-plus-marcelx42-2023",
+    "path": "0/00/Steyr_4120_Plus_Agritechnica_2023_%28DSC05974%29.jpg",
+    "photographer": "MarcelX42",
+    "license": "CC BY-SA 4.0",
+    "width": 6918,
+    "height": 3893
+  },
 ] as const;
 function licenseUrl(name:string):string{
   if(name==="CC0")return "https://creativecommons.org/publicdomain/zero/1.0/";
