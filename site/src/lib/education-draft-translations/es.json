@@ -5,7 +5,39 @@
   "machineProvider": "Gemini",
   "createdAt": "2026-11-20T21:04:06.899Z",
   "data": {
-    "glossary": {}
+    "glossary": {},
+    "cases": {
+      "more-power-but-slipping": {
+        "title": "¿Por qué patina incluso un tractor potente?",
+        "situation": "Dos tractores tienen una potencia de motor similar. En suelo húmedo, las ruedas de uno patinan mientras el otro sigue avanzando.",
+        "explanation": "La potencia del motor solo resulta útil cuando los neumáticos pueden transmitirla al suelo. Influyen el estado y la presión de los neumáticos, el reparto del peso, las condiciones del terreno y la tracción a las cuatro ruedas (4WD). Más potencia, por sí sola, no garantiza mejor tracción.",
+        "remember": "El patinamiento de las ruedas no demuestra por sí solo una avería del motor. Siga las indicaciones específicas del tractor y de los neumáticos para ajustar el lastre y la presión."
+      },
+      "lift-rating-versus-implement": {
+        "title": "¿Sirve una capacidad de elevación de 3,000 kg para cualquier apero de tres toneladas?",
+        "situation": "Dos folletos indican una capacidad de elevación de 3,000 kg. Sin embargo, el mismo apero pesado puede afectar de manera distinta a la estabilidad de ambos tractores.",
+        "explanation": "Importa dónde se mide la capacidad: en los extremos de los brazos del enganche o a 610 mm por detrás de ellos. Cuanto más lejos queda la carga del tractor, más pueden cambiar la palanca y la estabilidad. La capacidad de elevación por sí sola no determina el peso seguro del apero.",
+        "remember": "Compruebe conjuntamente la masa del apero, su centro de gravedad, el lastre delantero necesario y los límites de carga de los ejes."
+      },
+      "economy-pto": {
+        "title": "¿Por qué no es adecuado el modo 540E para todos los aperos accionados por la TDF?",
+        "situation": "Un tractor dispone de 540 y 540E. Ambos modos pueden hacer girar un apero a 540 rpm; ¿conviene elegir siempre el modo económico?",
+        "explanation": "En los tractores compatibles, 540E permite mantener 540 rpm en la toma de fuerza (TDF) mientras el motor gira a menos revoluciones. Puede ser útil en trabajos ligeros, pero quizá no ofrezca la respuesta ni la potencia útil que requiere un apero sometido a una carga elevada.",
+        "remember": "Consulte los manuales del tractor y del apero para conocer los límites de velocidad, potencia y seguridad. Manténgase alejado de los ejes giratorios sin protección."
+      },
+      "hydraulic-flow-vs-pressure": {
+        "title": "¿Un cargador frontal lento significa que la presión hidráulica es baja?",
+        "situation": "Un cargador frontal se eleva lentamente, aunque el folleto indica una presión hidráulica elevada. El operador se pregunta si la cifra de presión es incorrecta.",
+        "explanation": "El caudal indica cuánto aceite circula por minuto; la presión está relacionada con la fuerza que puede ejercer un cilindro. La velocidad del movimiento depende también del caudal disponible y del tamaño del cilindro. Una presión alta no garantiza por sí sola un movimiento rápido.",
+        "remember": "No diagnostique una avería basándose en una sola especificación. Nunca busque fugas hidráulicas de alta presión con la mano; siga los procedimientos de servicio seguros."
+      },
+      "hot-engine-not-just-radiator": {
+        "title": "¿Un motor que se calienta significa siempre que el radiador está averiado?",
+        "situation": "El indicador de temperatura sube durante un trabajo prolongado en el campo. Es fácil pensar de inmediato que el radiador está fallando.",
+        "explanation": "El radiador disipa el calor, pero también influyen el ventilador, la bomba de refrigerante, el termostato, el nivel de refrigerante y la circulación de aire. Un solo síntoma no permite identificar qué componente ha fallado.",
+        "remember": "Siga el procedimiento de parada segura indicado por el fabricante. Nunca abra el radiador ni el tapón de presión del circuito de refrigeración mientras esté caliente."
+      }
+    }
   },
   "validation": {
     "requires": [
@@ -19,7 +51,8 @@
     "complete": false
   },
   "summary": {
-    "glossary": 0
+    "glossary": 0,
+    "cases": 5
   },
   "errors": [
     {
@@ -34,5 +67,8 @@
       ],
       "error": "TimeoutError: The operation was aborted due to timeout"
     }
-  ]
+  ],
+  "editorialDraftProvenance": {
+    "cases": "GPT-6-assisted draft translation; not produced by Gemini; independent native-language technical review required"
+  }
 }
