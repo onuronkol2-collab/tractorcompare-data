@@ -50,6 +50,14 @@ Bu araçlar Altın Entegrasyon Kuralı'nın parçasıdır. Her görevde ilgili o
 ### Bağlantı örnekleri (2026-11-21, dinamik envanter)
 GitHub (Actions, CodeQL, Dependabot, Dependency graph, Malware alerts, Secret Protection, Push protection, Private vulnerability reporting), Playwright, axe-core, Supabase, Cloudflare Workers, Cloudflare Web Analytics / RUM, ChatGPT otomasyonları, Firecrawl, Microsoft Clarity (Windsor.ai bağlantısı), PostHog, OpenSEO, Google Drive, Google Search Console, GA4 ve Bing Webmaster. **Bu liste sabit değildir**: eklenmiş, kaldırılmış veya bağlantısı değişmiş araçlar için oturumun güncel erişim durumunu kontrol et.
 
+### Forumun uçtan uca yayını için ek kalite kapısı (21 Kasım 2026)
+
+- **Veritabanı statüsü ile gerçek sayfa aynı değildir:** `published` yalnız güvenli Supabase kaydını gösterir; statik Astro/Cloudflare sayfası bir sonraki başarılı eşitleme ve üretim dağıtımını gerektirir. Kullanıcıya yanlış 'siteye anında çıktı' bildirimi verme.
+- Yeni gönderi yaşam döngüsü: kullanıcı kimliği ve RLS → anonim kamu görünümü → 10 dakikada bir best-effort GitHub eşitlemesi → üretim build ve Cloudflare deploy → **gerçek herkese açık URL, hub, canonical, robots ve sitemap doğrulaması**. GitHub cron ve Cloudflare dağıtımı için kesin süre vaat etme.
+- `scripts/tractor-forum-live-visibility-audit.mjs` denetimi 45 dakikayı aşan, `seo_ready` olan gönderilerde farkı hata sayar; yarım saatlik bağımsız workflow tek bir GitHub sorunu açar. Yayınla ilgili başarısızlıklar sessizce 'başarılı' etiketlenmez.
+- Sınırlı otomatik kurtarma yalnız doğrulanmış canlı uyuşmazlıkta GitHub site derlemesini yeniden ister; RLS/moderasyonu aşmaz, 2 saatte 1 / günde 2 denemeyi aşamaz. Başarısız kaynak erişimini veri yayınlama gerekçesi sayma.
+- Forumda bu denetimlerin varlığı 'anlık SEO indeksleme' veya '0 hata' garantisi değildir. İlk onaydan önceki test ve gerçek canlı yayın sonrası denetimi ayrı raporla.
+
 ## Süreklilik ve dürüst sınır
 Bu dosya GitHub deposunda saklanan, değişiklik geçmişi olan **kalıcı proje kaynağıdır**. Asistanın ChatGPT iç belleğine silinemez bir kayıt yazıldığı veya her yeni sohbette bu dosyanın kendiliğinden okunduğu anlamına gelmez. Yeni sohbetlerin aynı ilkeyi uygulaması için bu dosyanın bağlantısını ChatGPT Project Instructions / Proje Talimatları içinde tutmak ve işe başlarken dosyayı okumak en güvenilir yöntemdir.
 
