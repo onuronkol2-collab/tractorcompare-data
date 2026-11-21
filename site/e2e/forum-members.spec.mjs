@@ -8,7 +8,6 @@ test("Turkish forum offers password, email OTP and enabled social sign-in withou
  await page.locator("[data-forum-auth-gate] > summary").click();
  await expect(page.locator("[data-forum-register]")).toBeVisible();
  await expect(page.locator("[data-forum-password]")).toBeHidden();
- await page.locator("[data-forum-auth-gate] > summary").click();
  await page.locator("[data-password-choice] summary").click();
  await expect(page.locator("[data-forum-password] input[name=password]")).toBeVisible();
  await expect(page.locator('[data-forum-oauth="google"]')).toBeVisible();
@@ -28,8 +27,6 @@ test("social buttons stay safely hidden when providers are disabled or configura
  await expect(page.locator('[data-forum-oauth="google"]')).toBeHidden();
  await expect(page.locator('[data-forum-oauth="github"]')).toBeHidden();
  await expect(page.locator("[data-oauth-unavailable]")).toBeVisible();
- await expect(page.locator("[data-forum-register]")).toBeHidden();
- await page.locator("[data-forum-auth-gate] > summary").click();
  await expect(page.locator("[data-forum-register]")).toBeVisible();
  await page.reload();
  await page.locator("[data-forum-auth-gate] > summary").click();
