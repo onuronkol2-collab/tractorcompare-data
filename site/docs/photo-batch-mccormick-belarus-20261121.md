@@ -48,7 +48,7 @@ that unambiguously names X5.085.
   CC license URLs and `ImageObject` records across ten locales.
   The full pre-merge CI and accessible browser tests must pass.
   A GitHub merge alone does not prove deployment or indexing; verify
-  the first-party images, eight new-page references and image-sitemap
+  the three tractor model pages, first-party images and image-sitemap
   on the **actual live site** before reporting success.
 - **No production data mutation:** Supabase SQL/RLS, forum, indexing policies,
   user analytics/consent and source-linked tractor specifications are unchanged.
