@@ -1,0 +1,75 @@
+{
+  "locale": "fr",
+  "sourceHash": "4d660f0e844d820dc0cac2b4dcf57475c48f3e3701f4ca624b57c51a093f568f",
+  "state": "draft-needs-editorial-review",
+  "machineProvider": "Gemini",
+  "createdAt": "2026-11-20T21:01:01.594Z",
+  "data": {
+    "glossary": {},
+    "cases": {
+      "more-power-but-slipping": {
+        "title": "Pourquoi un tracteur puissant patine-t-il malgré tout ?",
+        "situation": "Deux tracteurs ont une puissance moteur comparable. Sur un sol humide, les pneus de l'un patinent tandis que l'autre continue d'avancer.",
+        "explanation": "La puissance du moteur n'est utile que si les pneus peuvent la transmettre au sol. L'état et la pression des pneus, la répartition des masses, la nature du sol et les quatre roues motrices (4WD) jouent tous un rôle. Une puissance plus élevée ne garantit pas, à elle seule, une meilleure motricité.",
+        "remember": "Le patinage des roues ne prouve pas à lui seul une panne du moteur. Respectez les consignes propres au modèle de tracteur et aux pneus pour le lestage et la pression de gonflage."
+      },
+      "lift-rating-versus-implement": {
+        "title": "Une capacité de relevage de 3 000 kg convient-elle à tous les outils de trois tonnes ?",
+        "situation": "Deux brochures indiquent une capacité de relevage de 3 000 kg. Pourtant, le même outil lourd peut modifier différemment la stabilité de ces deux tracteurs.",
+        "explanation": "Le point de mesure compte : aux extrémités des bras d'attelage ou à 610 mm derrière celles-ci. Plus la charge est éloignée du tracteur, plus l'effet de levier et la stabilité peuvent changer. La seule capacité de relevage ne permet pas de déterminer le poids admissible d'un outil en toute sécurité.",
+        "remember": "Vérifiez ensemble la masse de l'outil, la position de son centre de gravité, le lestage avant nécessaire et les limites de charge par essieu."
+      },
+      "economy-pto": {
+        "title": "Pourquoi le mode 540E ne convient-il pas à tous les outils entraînés par la prise de force ?",
+        "situation": "Un tracteur propose les modes 540 et 540E. Tous deux peuvent entraîner un outil à 540 rpm : faut-il toujours choisir le mode économique ?",
+        "explanation": "Sur les tracteurs compatibles, le mode 540E peut maintenir la prise de force à 540 rpm avec un régime moteur plus faible. Cela peut être avantageux pour les travaux légers, mais ce mode peut ne pas fournir la puissance utile ou la réactivité requise par un outil fortement sollicité.",
+        "remember": "Consultez les notices du tracteur et de l'outil pour connaître les limites de régime, de puissance et de sécurité. Ne vous approchez jamais d'un arbre en rotation dépourvu de protection."
+      },
+      "hydraulic-flow-vs-pressure": {
+        "title": "Un chargeur frontal lent indique-t-il une pression hydraulique insuffisante ?",
+        "situation": "Un chargeur frontal monte lentement alors que la brochure indique une pression hydraulique élevée. L'utilisateur se demande si la pression annoncée est erronée.",
+        "explanation": "Le débit correspond à la quantité d'huile qui circule par minute ; la pression est liée à la force qu'un vérin peut exercer. La vitesse de déplacement dépend aussi du débit disponible et de la taille du vérin. Une pression élevée ne garantit pas, à elle seule, un mouvement rapide.",
+        "remember": "Ne posez pas un diagnostic à partir d'une seule caractéristique. Ne cherchez jamais une fuite hydraulique sous haute pression avec la main ; suivez les consignes d'entretien sécurisé."
+      },
+      "hot-engine-not-just-radiator": {
+        "title": "Un moteur qui chauffe signifie-t-il toujours que le radiateur est défectueux ?",
+        "situation": "La jauge de température monte pendant un long travail au champ. On peut aussitôt soupçonner le radiateur.",
+        "explanation": "Le radiateur évacue la chaleur, mais le ventilateur, la pompe à liquide de refroidissement, le thermostat, le niveau de liquide et la circulation de l'air comptent également. Un seul symptôme ne permet pas d'identifier la pièce défaillante.",
+        "remember": "Suivez la procédure d'arrêt sécurisé du constructeur. N'ouvrez jamais à chaud le bouchon du radiateur ni celui d'un circuit de refroidissement sous pression."
+      }
+    }
+  },
+  "validation": {
+    "requires": [
+      "native-language editorial review",
+      "terminology consistency",
+      "safety warning fidelity",
+      "number and unit fidelity",
+      "no English content fallbacks"
+    ],
+    "reviewed": false,
+    "complete": false
+  },
+  "summary": {
+    "glossary": 0,
+    "cases": 5
+  },
+  "errors": [
+    {
+      "kind": "glossary",
+      "start": 0,
+      "ids": [
+        "engine-power",
+        "rated-power",
+        "maximum-power",
+        "torque",
+        "torque-rise"
+      ],
+      "error": "Error: Translation API 502: Gemini request rejected"
+    }
+  ],
+  "editorialDraftProvenance": {
+    "cases": "GPT-6-assisted draft translation; not produced by Gemini; independent native-language technical review required",
+    "number_format": "Locale-specific thousands separator reviewed for 3000 kg; draft remains unapproved and glossary incomplete"
+  }
+}

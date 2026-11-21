@@ -1,0 +1,74 @@
+{
+  "locale": "ja",
+  "sourceHash": "4d660f0e844d820dc0cac2b4dcf57475c48f3e3701f4ca624b57c51a093f568f",
+  "state": "draft-needs-editorial-review",
+  "machineProvider": "Gemini",
+  "createdAt": "2026-11-20T21:03:10.488Z",
+  "data": {
+    "glossary": {},
+    "cases": {
+      "more-power-but-slipping": {
+        "title": "高出力のトラクターでも、なぜタイヤが空転するのでしょうか？",
+        "situation": "2台のトラクターのエンジン出力はほぼ同じです。湿った圃場では、一方のタイヤが空転するのに、もう一方は前進し続けます。",
+        "explanation": "エンジン出力が役立つのは、タイヤがその力を地面に伝えられる場合だけです。タイヤの状態と空気圧、重量配分、土壌条件、四輪駆動（4WD）が関係します。馬力が大きいだけで、けん引力が高くなるとは限りません。",
+        "remember": "タイヤの空転だけでエンジンの故障とは判断できません。バラストと空気圧は、対象のトラクターとタイヤの取扱説明書に従って調整してください。"
+      },
+      "lift-rating-versus-implement": {
+        "title": "揚力が 3,000 kg なら、3トンの作業機をすべて安全に使えますか？",
+        "situation": "2つのカタログに揚力 3,000 kg と記載されています。しかし、同じ重い作業機でも、2台のトラクターの安定性に与える影響は異なる場合があります。",
+        "explanation": "測定位置が重要です。リンク端での値なのか、そこから後方 610 mm の位置での値なのかを確認する必要があります。荷重がトラクターから離れるほど、てこの作用や安定性が変わります。揚力の数値だけでは作業機の安全な重量を判断できません。",
+        "remember": "作業機の質量と重心、必要な前部バラスト、車軸荷重の上限をまとめて確認してください。"
+      },
+      "economy-pto": {
+        "title": "なぜ 540E はすべてのPTO駆動作業機に適しているわけではないのでしょうか？",
+        "situation": "トラクターには 540 と 540E の設定があります。どちらも作業機を 540 rpm で回転させられるなら、常に省燃費モードを選んでよいのでしょうか？",
+        "explanation": "対応するトラクターでは、540E によってエンジン回転数を低く保ちながら、PTO（動力取出軸）を 540 rpm で回せます。軽作業には有利な場合がありますが、大きな負荷のかかる作業機に必要な出力や応答性を十分に得られないことがあります。",
+        "remember": "回転数、必要動力、安全上の制限はトラクターと作業機の取扱説明書で確認してください。保護カバーのない回転軸には絶対に近づかないでください。"
+      },
+      "hydraulic-flow-vs-pressure": {
+        "title": "フロントローダーの動きが遅いのは、油圧が低いためでしょうか？",
+        "situation": "カタログには高い油圧値が記載されているのに、フロントローダーの上昇が遅くなっています。作業者はその圧力値が間違っているのではないかと考えます。",
+        "explanation": "流量は1分間に流れる作動油の量を表し、圧力はシリンダーが発生できる力に関係します。動作速度は利用可能な流量とシリンダーの大きさにも左右されます。圧力が高いだけで動きが速くなるとは限りません。",
+        "remember": "一つの仕様値だけで故障を診断しないでください。高圧の油圧漏れを手で確かめてはいけません。安全な整備手順に従ってください。"
+      },
+      "hot-engine-not-just-radiator": {
+        "title": "エンジンが過熱したら、必ずラジエーターの故障なのでしょうか？",
+        "situation": "長時間の圃場作業中に水温計の表示が上がります。すぐにラジエーターの故障を疑うかもしれません。",
+        "explanation": "ラジエーターは熱を逃がしますが、ファン、冷却水ポンプ、サーモスタット、冷却液の量、空気の流れも重要です。一つの症状だけでは故障した部品を特定できません。",
+        "remember": "メーカーが指定する安全な停止手順に従ってください。高温のラジエーターキャップや冷却系統の圧力キャップを絶対に開けないでください。"
+      }
+    }
+  },
+  "validation": {
+    "requires": [
+      "native-language editorial review",
+      "terminology consistency",
+      "safety warning fidelity",
+      "number and unit fidelity",
+      "no English content fallbacks"
+    ],
+    "reviewed": false,
+    "complete": false
+  },
+  "summary": {
+    "glossary": 0,
+    "cases": 5
+  },
+  "errors": [
+    {
+      "kind": "glossary",
+      "start": 0,
+      "ids": [
+        "engine-power",
+        "rated-power",
+        "maximum-power",
+        "torque",
+        "torque-rise"
+      ],
+      "error": "TimeoutError: The operation was aborted due to timeout"
+    }
+  ],
+  "editorialDraftProvenance": {
+    "cases": "GPT-6-assisted draft translation; not produced by Gemini; independent native-language technical review required"
+  }
+}

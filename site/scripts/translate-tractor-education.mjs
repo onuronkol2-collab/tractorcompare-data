@@ -1,0 +1,158 @@
+/**
+ * Source-aligned machine-assisted editorial translation for all 8 additional
+ * TractorVS locales. Public TR+EN editorial copy remains the source of truth.
+ *
+ * Result files are strictly unapproved DRAFTS. A complete target locale is
+ * not routable or indexable until an independent locale QA gate passes.
+ */
+import {createHash} from "node:crypto";
+import {mkdir,writeFile,readFile,rename} from "node:fs/promises";
+import {resolve} from "node:path";
+import {GLOSSARY_ROWS,GLOSSARY_SECTIONS} from "../src/lib/tractor-glossary.ts";
+import {TRACTOR_PART_ROWS,TRACTOR_PART_SECTIONS} from "../src/lib/tractor-parts.ts";
+import {TECHNICAL_DEEP_DIVES} from "../src/lib/tractor-technical-deep-dives.ts";
+import {TRACTOR_LEARNING_CASES} from "../src/lib/tractor-learning-cases.ts";
+import {EDUCATION_UI_SOURCE} from "../src/lib/tractor-education-ui.ts";
+import {TRACTOR_EDUCATION_TERMINOLOGY} from "../src/lib/tractor-education-terminology.ts";
+
+const target=process.env.EDU_TARGET_LOCALE;
+const langs=["zh","hi","pt-br","fr","de","ru","ja","es"];
+if(!langs.includes(target))throw Error("EDU_TARGET_LOCALE must be one of the eight new locales");
+const key=process.env.TRACTORVS_QUEUE_SECRET;
+const jwt=process.env.TRACTORVS_SUPABASE_ANON_JWT;
+const base="https://aaufxtcvnzgavtlintiv.supabase.co/functions/v1/tractor-editorial-translate";
+if(!key||!jwt||!jwt.includes("."))throw Error("Translation queue secrets missing; no action taken");
+const archiveDir=resolve("site/src/lib/education-draft-translations");
+const version=createHash("sha256").update(JSON.stringify({
+ glossary:GLOSSARY_ROWS,glossarySections:GLOSSARY_SECTIONS,
+ parts:TRACTOR_PART_ROWS,partSections:TRACTOR_PART_SECTIONS,
+ articles:TECHNICAL_DEEP_DIVES, cases:TRACTOR_LEARNING_CASES, ui:EDUCATION_UI_SOURCE, terminology:TRACTOR_EDUCATION_TERMINOLOGY
+})).digest("hex");
+const batches={
+ glossary:GLOSSARY_ROWS.map(r=>({id:r[1],english:{name:r[3],definition:r[5],example:r[7],caution:r[9]},turkish:{name:r[2],definition:r[4],example:r[6],caution:r[8]}})),
+ parts:TRACTOR_PART_ROWS.map(r=>({id:r[1],english:{name:r[3],location:r[5],purpose:r[7],example:r[9],caution:r[11]},turkish:{name:r[2],location:r[4],purpose:r[6],example:r[8],caution:r[10]}})),
+ glossarySections:Object.entries(GLOSSARY_SECTIONS).map(([id,x])=>({id,english:{name:x.en[0],intro:x.en[1]},turkish:{name:x.tr[0],intro:x.tr[1]}})),
+ partSections:Object.entries(TRACTOR_PART_SECTIONS).map(([id,x])=>({id,english:{name:x.en[0],intro:x.en[1]},turkish:{name:x.tr[0],intro:x.tr[1]}})),
+ articleMeta:TECHNICAL_DEEP_DIVES.map(x=>({id:x.slug,english:{title:x.title.en,description:x.description.en,lead:x.lead.en},turkish:{title:x.title.tr,description:x.description.tr,lead:x.lead.tr}})),
+ articleSections:TECHNICAL_DEEP_DIVES.flatMap(x=>x.sections.map(s=>({id:x.slug+"--"+s.anchor,english:{title:s.title.en,p0:s.paragraphs.en[0],p1:s.paragraphs.en[1]},turkish:{title:s.title.tr,p0:s.paragraphs.tr[0],p1:s.paragraphs.tr[1]}}))),
+ cases:TRACTOR_LEARNING_CASES.map(x=>({id:x.id,english:{title:x.title.en,situation:x.situation.en,explanation:x.explanation.en,remember:x.remember.en},turkish:{title:x.title.tr,situation:x.situation.tr,explanation:x.explanation.tr,remember:x.remember.tr}})),
+ ui:EDUCATION_UI_SOURCE.map(x=>({id:x.id,english:x.en,turkish:x.tr}))
+};
+const expected={
+ glossary:96,parts:57,glossarySections:7,partSections:5,articleMeta:3,articleSections:15,cases:5,ui:7
+};
+for(const [kind,items] of Object.entries(batches))
+ if(items.length!==expected[kind])throw Error("Original editorial count changed: "+kind);
+
+const output={locale:target,sourceHash:version,state:"draft-needs-editorial-review",
+ machineProvider:"Gemini",createdAt:new Date().toISOString(),data:{},validation:{
+  requires:["native-language editorial review","terminology consistency","safety warning fidelity","number and unit fidelity","no English content fallbacks"],
+  reviewed:false
+ }};
+const archiveFile=resolve(archiveDir,target+".json");
+// Resume only schema-conformant records. A malformed saved draft must not
+// permanently block the next attempt for that source row.
+function validSavedRow(category,id,fields){
+ const source=batches[category]?.find(row=>row.id===id);
+ if(!source||!fields||typeof fields!=="object"||Array.isArray(fields))return false;
+ const required=Object.keys(source.english);
+ return Object.keys(fields).length===required.length&&required.every(k=>
+  typeof fields[k]==="string"&&fields[k].trim().length>0);
+}
+try{
+ const previous=JSON.parse(await readFile(archiveFile,"utf8"));
+ if(previous?.sourceHash===version&&previous?.locale===target){
+  for(const [category,fields] of Object.entries(previous.data||{})){
+   if(!Object.hasOwn(batches,category)||!fields||typeof fields!=="object"||Array.isArray(fields))continue;
+   const valid=Object.fromEntries(Object.entries(fields).filter(([id,row])=>validSavedRow(category,id,row)));
+   if(Object.keys(valid).length!==Object.keys(fields).length)
+    console.warn("DROPPED_INVALID_RESUME_ROWS "+target+" "+category+" "+(Object.keys(fields).length-Object.keys(valid).length));
+   output.data[category]=valid;
+  }
+  console.log("RESUME_TRANSLATION "+target+" from identical source hash");
+ }
+}catch(err){if(err?.code!=="ENOENT")throw err;}
+const bad=[];
+async function saveDraft(){
+ output.summary=Object.fromEntries(Object.entries(output.data).map(([k,v])=>[k,Object.keys(v).length]));
+ output.errors=bad;
+ output.validation.complete=bad.length===0&&Object.entries(expected).every(([k,n])=>Object.keys(output.data[k]||{}).length===n);
+ await mkdir(archiveDir,{recursive:true});
+ const tmp=archiveFile+".tmp";
+ await writeFile(tmp,JSON.stringify(output,null,2)+"\n","utf8");
+ await rename(tmp,archiveFile);
+}
+// Persist at startup and after every successful batch. If CI hits its
+// 45-minute job limit, already translated valid rows survive via artifacts.
+await saveDraft();
+let calls=0;
+const maxCalls=Number(process.env.EDU_MAX_GEMINI_CALLS||55);
+if(!Number.isSafeInteger(maxCalls)||maxCalls<1||maxCalls>60)throw Error("Invalid Gemini call cap");
+const deadline=Date.now()+85*60*1000;
+
+const delay=ms=>new Promise(r=>setTimeout(r,ms));
+async function post(body){
+ const response=await fetch(base,{method:"POST",headers:{
+  "Authorization":"Bearer "+jwt,"apikey":jwt,
+  "x-queue-secret":key,"Content-Type":"application/json"
+ },body:JSON.stringify(body),signal:AbortSignal.timeout(45000)});
+ const j=await response.json().catch(()=>({}));
+ if(!response.ok)throw Error("Translation API "+response.status+": "+String(j.error||j.reason||"unknown").slice(0,210));
+ return j;
+}
+function checkBatch(request,received){
+ if(!Array.isArray(received)||received.length!==request.length)
+  throw Error("Wrong item count");
+ const map=new Map(received.map(r=>[r.id,r.fields]));
+ for(const row of request){
+  const item=map.get(row.id);
+  if(!item||typeof item!=="object")throw Error("Missing translation "+row.id);
+  const keys=Object.keys(row.english);
+  if(keys.some(k=>typeof item[k]!=="string"||!item[k].trim()))
+   throw Error("Empty translated field: "+row.id);
+  if(Object.keys(item).length!==keys.length)throw Error("Unexpected translation fields: "+row.id);
+ }
+ return map;
+}
+async function translate(items){
+ if(Date.now()>deadline)throw Error("Locale translation time budget exceeded");
+ if(++calls>maxCalls)throw Error("Gemini call cap exceeded for "+target);
+ const started=await post({action:"start",target,records:items,terminology:TRACTOR_EDUCATION_TERMINOLOGY[target]});
+ if(!started.interaction_id)throw Error("Provider did not issue interaction ID");
+ for(let n=0;n<135;n++){
+  await delay(n<4?2000:3000);
+  const poll=await post({action:"poll",target,records:items,interaction_id:started.interaction_id});
+  if(poll.complete===true)return checkBatch(items,poll.records);
+ }
+ throw Error("Provider interaction timed out without output");
+}
+const maxBatch=Number(process.env.EDU_BATCH_SIZE||5);
+if(!Number.isInteger(maxBatch)||maxBatch<1||maxBatch>7)throw Error("Bad batch size");
+for(const [kind,items] of Object.entries(batches)){
+ const result=output.data[kind]||{};
+ // UI groups have different field names: schema-required fields cannot be shared.
+ const step=kind==="ui"?1:maxBatch;
+ for(let pos=0;pos<items.length;pos+=step){
+  const batch=items.slice(pos,pos+step).filter(row=>!result[row.id]);
+  if(!batch.length)continue;
+  try{
+   const returned=await translate(batch);
+   for(const item of batch)result[item.id]=returned.get(item.id);
+   output.data[kind]=result;
+   await saveDraft();
+   console.log("Translation OK "+target+" "+kind+" "+Math.min(pos+step,items.length)+"/"+items.length);
+  }catch(err){
+   bad.push({kind,start:pos,ids:batch.map(x=>x.id),error:String(err).slice(0,190)});
+   console.error("Translation BLOCKED "+target+" "+kind+" "+String(err).slice(0,180));
+   output.data[kind]=result;
+   await saveDraft();
+   // Do not attempt to brute-force quota or safety failures.
+   break;
+  }
+ }
+ output.data[kind]=result;
+ if(bad.length)break;
+}
+await saveDraft();
+console.log("TRANSLATION_DRAFT_SUMMARY "+JSON.stringify({locale:target,complete:output.validation.complete,hash:version,calls,counts:output.summary,failures:bad.length}));
+if(!output.validation.complete)process.exitCode=2;

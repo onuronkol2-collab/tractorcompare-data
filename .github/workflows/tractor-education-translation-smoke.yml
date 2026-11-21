@@ -1,0 +1,54 @@
+name: TractorVS editorial translation smoke test
+# Push checks are OFFLINE only. Provider requests require a deliberate manual opt-in.
+on:
+  push:
+    branches:
+      - feat/tractor-encyclopedia-10-language-editorial-20261120
+    paths:
+      - .github/workflows/tractor-education-translation-smoke.yml
+      - site/scripts/test-editorial-translation.mjs
+      - site/scripts/translate-tractor-education.mjs
+      - site/scripts/verify-education-translation-drafts.mjs
+  workflow_dispatch:
+    inputs:
+      authorize_translation:
+        description: "I checked Gemini quota/cost and authorize exactly one provider smoke test"
+        type: boolean
+        required: true
+        default: false
+permissions:
+  contents: read
+jobs:
+  offline_contract:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22.23.4"
+      - name: Validate translation scripts without network or secrets
+        run: |
+          node --check site/scripts/test-editorial-translation.mjs
+          node --check site/scripts/translate-tractor-education.mjs
+          node --check site/scripts/verify-education-translation-drafts.mjs
+  provider_smoke:
+    # Never call a paid/quota-limited API on push, PR, or default manual dispatch.
+    if: >-
+      github.event_name == 'workflow_dispatch' &&
+      inputs.authorize_translation == true &&
+      github.repository == 'onuronkol2-collab/tractorcompare-data' &&
+      github.ref == 'refs/heads/feat/tractor-encyclopedia-10-language-editorial-20261120'
+    needs: offline_contract
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22.23.4"
+      - name: Run one explicitly authorized source-backed Gemini smoke test
+        env:
+          TRACTORVS_SUPABASE_ANON_JWT: ${{ secrets.TRACTORVS_SUPABASE_ANON_JWT }}
+          TRACTORVS_QUEUE_SECRET: ${{ secrets.TRACTORVS_QUEUE_SECRET }}
+        run: node site/scripts/test-editorial-translation.mjs

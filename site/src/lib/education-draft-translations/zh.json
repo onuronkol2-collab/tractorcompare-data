@@ -1,0 +1,74 @@
+{
+  "locale": "zh",
+  "sourceHash": "4d660f0e844d820dc0cac2b4dcf57475c48f3e3701f4ca624b57c51a093f568f",
+  "state": "draft-needs-editorial-review",
+  "machineProvider": "Gemini",
+  "createdAt": "2026-11-20T20:59:28.792Z",
+  "data": {
+    "glossary": {},
+    "cases": {
+      "more-power-but-slipping": {
+        "title": "为什么动力强劲的拖拉机仍会打滑？",
+        "situation": "两台拖拉机的发动机功率相近。在潮湿的土壤上，一台的轮胎空转，另一台却能继续前进。",
+        "explanation": "只有轮胎能把动力传到地面时，发动机功率才能发挥作用。轮胎状况、胎压、配重分布、土壤条件以及四轮驱动（4WD）都会影响牵引力。马力更大并不一定意味着附着力更好。",
+        "remember": "车轮打滑本身不能证明发动机出现故障。应按照具体拖拉机型号和轮胎的说明调整配重及胎压。"
+      },
+      "lift-rating-versus-implement": {
+        "title": "标称提升能力为 3,000 kg，就能安全使用所有三吨重的农具吗？",
+        "situation": "两份产品手册都标注后悬挂提升能力为 3,000 kg，但同一件重型农具对两台拖拉机稳定性的影响可能不同。",
+        "explanation": "测量位置很重要：是在悬挂连杆末端测量，还是在其后方 610 mm 处测量。载荷离拖拉机越远，杠杆作用和稳定性就越可能发生变化。不能仅凭提升能力判断农具的安全重量。",
+        "remember": "应综合检查农具质量、重心位置、所需前配重以及车轴允许载荷。"
+      },
+      "economy-pto": {
+        "title": "为什么 540E 并不适合所有由动力输出轴驱动的农具？",
+        "situation": "一台拖拉机提供 540 和 540E 两种模式。两者都能让农具以 540 rpm 运转，是否应该始终选用经济模式？",
+        "explanation": "在兼容的拖拉机上，540E 可以让发动机以较低转速运行，同时使动力输出轴（PTO）保持 540 rpm。这可能有利于轻负荷作业，但对于负荷较大的农具，未必能提供所需的有效功率或响应能力。",
+        "remember": "请先查阅拖拉机和农具手册中的转速、功率及安全限制。切勿靠近没有防护罩的旋转传动轴。"
+      },
+      "hydraulic-flow-vs-pressure": {
+        "title": "装载机动作缓慢，就说明液压压力低吗？",
+        "situation": "前装载机举升缓慢，但产品手册标注的液压压力很高。操作人员怀疑标注的压力值是否有误。",
+        "explanation": "流量表示每分钟流动的液压油量；压力则与液压缸能够产生的力有关。动作速度还取决于可用流量和液压缸尺寸。压力高并不一定意味着动作快。",
+        "remember": "不要仅凭一项参数判断故障。绝不要用手检查高压液压油泄漏；应遵循安全维修规程。"
+      },
+      "hot-engine-not-just-radiator": {
+        "title": "发动机温度过高，就一定是散热器故障吗？",
+        "situation": "拖拉机长时间进行田间作业时，温度表读数升高。人们可能立即怀疑散热器损坏。",
+        "explanation": "散热器负责向外散热，但风扇、冷却液泵、节温器、冷却液液位和空气流动也同样重要。单一症状无法确定究竟是哪个部件发生了故障。",
+        "remember": "请遵循制造商规定的安全停机程序。散热器或冷却系统仍然高温、带压时，绝不要打开其压力盖。"
+      }
+    }
+  },
+  "validation": {
+    "requires": [
+      "native-language editorial review",
+      "terminology consistency",
+      "safety warning fidelity",
+      "number and unit fidelity",
+      "no English content fallbacks"
+    ],
+    "reviewed": false,
+    "complete": false
+  },
+  "summary": {
+    "glossary": 0,
+    "cases": 5
+  },
+  "errors": [
+    {
+      "kind": "glossary",
+      "start": 0,
+      "ids": [
+        "engine-power",
+        "rated-power",
+        "maximum-power",
+        "torque",
+        "torque-rise"
+      ],
+      "error": "Error: Translation API 502: Gemini request rejected"
+    }
+  ],
+  "editorialDraftProvenance": {
+    "cases": "GPT-6-assisted draft translation; not produced by Gemini; independent native-language technical review required"
+  }
+}
