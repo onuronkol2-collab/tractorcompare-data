@@ -1,6 +1,17 @@
 // TractorVS OEM source transport. Zero AI/paid calls, no auto-publication.
 // Shared by the private Supabase worker and Node's unit tests.
 export const MAX_PER_RUN=3;
+export const MAX_DRAFT_IDS_PER_LOOKUP=50;
+// PostgREST .in('id', ids) serializes each UUID into the request URL.
+// Keep source-only private draft lookups bounded below intermediary URI limits.
+export function draftIdBatches(ids){
+ if(!Array.isArray(ids))throw Error("invalid_draft_id_list");
+ const result=[];
+ for(let offset=0;offset<ids.length;offset+=MAX_DRAFT_IDS_PER_LOOKUP)
+  result.push(ids.slice(offset,offset+MAX_DRAFT_IDS_PER_LOOKUP));
+ return result;
+}
+
 export const MAX_HTML_BYTES=256000;
 export const MAX_PDF_BYTES=800000;
 export const CACHE_HOURS=24*14;
