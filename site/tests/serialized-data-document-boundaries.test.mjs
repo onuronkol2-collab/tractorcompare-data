@@ -14,7 +14,7 @@ const components={
 for(const [file,ids] of Object.entries(components)){
   test(file+" keeps executable-data JSON inside the page body",()=>{
     const src=readFileSync(new URL("../src/components/"+file,import.meta.url),"utf8");
-    const open=src.indexOf("<SiteLayout ");
+    const open=src.search(/<SiteLayout\b/);
     const close=src.lastIndexOf("</SiteLayout>");
     assert.ok(open>=0 && close>open,"Component needs its document layout");
     const inside=src.slice(open,close);
