@@ -102,7 +102,7 @@ const text={
  en:{
   rated:(name:string,v:string,s:string)=>({
    question:`What verified engine power is reported for ${name}?`,
-   answer:`A reviewed source reports ${v} hp of engine power${s}. This is an engine measurement, not a PTO or drawbar power test. Check the exact model and test conditions in the linked document.`,
+   answer:`A reviewed source reports ${v} hp of engine power${s}. This is an engine measurement, not a PTO or drawbar power test. Check the exact model and test conditions in the linked source.`,
   }),
   pto:(name:string,v:string,s:string)=>({
    question:`What published PTO power is documented for ${name}?`,
@@ -122,13 +122,13 @@ const text={
   }),
   fuel:(name:string,v:string,s:string)=>({
    question:`How large is the documented fuel tank of ${name}?`,
-   answer:`The reviewed document lists a fuel tank capacity of ${v} litres${s}. Tank size does not tell you the tractor's fuel consumption per hour.`,
+   answer:`The reviewed source lists a fuel tank capacity of ${v} litres${s}. Tank size does not tell you the tractor's fuel consumption per hour.`,
   })
  },
  tr:{
   rated:(name:string,v:string,s:string)=>({
    question:`${name} modelinin kaynaklı motor gücü kaç beygir?`,
-   answer:`İncelenen kaynakta motor gücü ${v} HP olarak belirtiliyor${s}. Bu değer kuyruk mili veya tekerleklerde ölçülen güç değildir. Doğru model ve test koşullarını kaynak belgesinden kontrol edin.`,
+   answer:`İncelenen kaynakta motor gücü ${v} HP olarak belirtiliyor${s}. Bu değer kuyruk mili veya tekerleklerde ölçülen güç değildir. Doğru model ve test koşullarını bağlantılı kaynaktan kontrol edin.`,
   }),
   pto:(name:string,v:string,s:string)=>({
    question:`${name} modelinin belgelenmiş kuyruk mili gücü kaç HP?`,
@@ -136,7 +136,7 @@ const text={
   }),
   "engine-displacement":(name:string,v:string,s:string)=>({
    question:`${name} modelinin belgelenmiş motor hacmi kaç litre?`,
-   answer:`İncelenen teknik kaynakta motor hacmi ${v} litre olarak belirtiliyor${s}. Motor hacmi, beygir gücü veya yakıt tüketimi değildir. Varyantı bağlantılı belgeden kontrol edin.`,
+   answer:`İncelenen teknik kaynakta motor hacmi ${v} litre olarak belirtiliyor${s}. Motor hacmi, beygir gücü veya yakıt tüketimi değildir. Varyantı bağlantılı kaynaktan kontrol edin.`,
   }),
   "rear-hitch-lift":(name:string,v:string,s:string)=>({
    question:`${name} modelinin belgelenmiş arka kaldırma kapasitesi kaç kilogram?`,
@@ -148,7 +148,7 @@ const text={
   }),
   fuel:(name:string,v:string,s:string)=>({
    question:`${name} modelinin mazot deposu kaç litre?`,
-   answer:`İncelenen teknik belgede yakıt deposu ${v} litre olarak belirtiliyor${s}. Depo hacmi, traktörün saatte kaç litre yakıt tükettiğini göstermez.`,
+   answer:`İncelenen teknik kaynakta yakıt deposu ${v} litre olarak belirtiliyor${s}. Depo hacmi, traktörün saatte kaç litre yakıt tükettiğini göstermez.`,
   })
  }
 } as const;
