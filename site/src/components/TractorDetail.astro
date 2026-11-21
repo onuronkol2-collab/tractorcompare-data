@@ -98,7 +98,7 @@ const summaryItems = [
         <p>{item.answer}</p>
         <div class="model-answer-links">
           <a href={item.sourceUrl} target="_blank" rel="noopener noreferrer">
-            {lang==="tr"?(item.sourceType==="manufacturer"?"Üretici belgesi":"Bağımsız teknik kaynak"):(item.sourceType==="manufacturer"?"Manufacturer document":"Independent technical source")} ↗
+            {lang==="tr"?(item.sourceType==="manufacturer"?"Üretici kaynağı":"Bağımsız teknik kaynak"):(item.sourceType==="manufacturer"?"Manufacturer source":"Independent technical source")} ↗
           </a>
           {item.guidePath&&<a href={localizedPath(lang,item.guidePath)}>{lang==="tr"?"Terimi açıkla":"Explain the term"} ↗</a>}
         </div>
