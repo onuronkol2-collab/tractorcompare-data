@@ -3,7 +3,7 @@ import assert from "node:assert/strict";
 import {readFileSync} from "node:fs";
 import {runInNewContext} from "node:vm";
 import { LOCALES } from "../src/lib/locales.ts";
-import {ANALYTICS_TEXT, GA4_MEASUREMENT_ID, ANALYTICS_CHOICE_KEY, analyticsText} from "../src/lib/analytics-i18n.ts";
+import {ANALYTICS_TEXT, GA4_MEASUREMENT_ID, CLARITY_PROJECT_ID, ANALYTICS_CHOICE_KEY, analyticsText} from "../src/lib/analytics-i18n.ts";
 
 const read=(file)=>readFileSync(new URL("../"+file,import.meta.url),"utf8");
 const banner=read("src/components/AnalyticsConsent.astro");
@@ -105,4 +105,26 @@ test("gtag queue uses real Arguments records, never rest arrays that can suppres
   assert.equal(context.analyticsWindow.dataLayer[2][0],"config");
   assert.equal(context.analyticsWindow.dataLayer[2][1],"G-PZCNNEY1VN");
   assert.equal(context.analyticsWindow.dataLayer[2][2].send_page_view,true);
+});
+
+test("Clarity project ID and ConsentV2 are gated by renewed, explicit analytics consent",()=>{
+  assert.equal(CLARITY_PROJECT_ID,"zgzm6vovif");
+  assert.equal(ANALYTICS_CHOICE_KEY,"tractorvs_analytics_choice_v2");
+  assert.match(banner,/function loadClarityOnlyAfterConsent\(\)/);
+  assert.match(banner,/https:\/\/www\.clarity\.ms\/tag\//);
+  assert.match(banner,/ad_Storage:\s*"denied"/);
+  assert.match(banner,/analytics_Storage:\s*"granted"/);
+  assert.match(banner,/consentv2/);
+  assert.match(banner,/loadClarityOnlyAfterConsent\(\);/);
+  assert.match(banner,/tractorvs_analytics_choice_v1"\) === "rejected"/);
+  assert.match(banner,/clarityWindow\.clarity\?\.\("consent", false\)/);
+  assert.doesNotMatch(layout,/clarity\.ms\/tag/);
+  assert.match(privacy,/copy\.clarityCollect/);
+  assert.match(privacy,/microsoft\.com\/privacy\/privacystatement/);
+  for (const locale of LOCALES) {
+    const copy=analyticsText(locale);
+    assert.ok(copy.clarityConsent.length>50, locale+" Clarity consent text missing");
+    assert.ok(copy.clarityCollect.length>80, locale+" Clarity privacy description missing");
+    assert.ok(copy.microsoftInfo.length>10, locale+" Microsoft link translation missing");
+  }
 });
