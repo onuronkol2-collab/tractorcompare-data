@@ -1,3 +1,4 @@
+import {inspectVisibleMainImages} from "./seo-main-markup.mjs";
 // Read-only production SEO coverage audit. No credentials or writes.
 const BASE = "https://tractorvs.com";
 const languages = {en:"en",tr:"tr",zh:"zh-Hans",hi:"hi","pt-br":"pt-BR",fr:"fr",de:"de",ru:"ru",ja:"ja",es:"es"};
@@ -107,6 +108,16 @@ for(let i=0;i<urls.length;i+=4){
       meta.description.length < (locale==="zh"||locale==="ja" ? 12 : 30))
     error("title-description",p,"Missing or clearly empty title/description");
    if(!meta.h1)error("heading",p,"H1 not found");
+   // Full-sitemap accessibility/SEO integrity is handled by a tested
+   // pure helper; an absent alt differs from a valid decorative alt="".
+   const imageCheck=inspectVisibleMainImages(body);
+   if(!imageCheck.foundMain)error("missing-main",p,"Main content landmark missing");
+   for(const i of imageCheck.missingAlt)
+     error("image-alt",p,"Main image "+i+" lacks alt attribute");
+   // JSON-LD errors are SEO issues on any page type, not only models.
+   for(const [i,raw] of meta.json.entries())try{
+     JSON.parse(raw);
+   }catch(e){error("jsonld-parse",p,"Script "+(i+1)+": "+String(e));}
    if(meta.lang!==languages[locale])error("html-language",p,"HTML lang "+meta.lang+" expected "+languages[locale]);
    const base=p.replace(/^\/(tr|zh|hi|pt-br|fr|de|ru|ja|es)(?=\/)/,"");
    const alternateMap=new Map(meta.alternates.map(x=>[x.lang,x.url]));

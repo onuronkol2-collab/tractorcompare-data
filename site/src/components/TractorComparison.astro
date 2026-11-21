@@ -121,10 +121,10 @@ const labelsPayload = JSON.stringify({
               data-photo-license-name={initialLeft?.photo?.licenseName}
               aria-label={photoOpenLabel}>
               <img id="tc-left-photo-img" src={initialLeft?.photo?.thumbUrl || undefined}
-                alt={initialLeft?.photo?.alt || ""} width="480" height="320" loading="lazy"/>
+                alt={initialLeft?.photo?.alt || photoText(lang,"pending")} width="480" height="320" loading="lazy"/>
               <span class="tractor-photo-brandmark" aria-hidden="true">tractorvs.com</span>
             </button>
-            <small><a id="tc-left-photo-credit" href={initialLeft?.photo?.sourcePage}
+            <small><a id="tc-left-photo-credit" href={initialLeft?.photo?.sourcePage || localizedPath(lang,"/tractors/")}
               rel="noopener noreferrer" target="_blank">{initialLeft?.photo?.photographer} · {initialLeft?.photo?.licenseName}</a></small>
           </div>
             <a id="tc-left-preview" class="tc-selected-preview" href={initialLeft?.detailsUrl}>
@@ -155,10 +155,10 @@ const labelsPayload = JSON.stringify({
               data-photo-license-name={initialRight?.photo?.licenseName}
               aria-label={photoOpenLabel}>
               <img id="tc-right-photo-img" src={initialRight?.photo?.thumbUrl || undefined}
-                alt={initialRight?.photo?.alt || ""} width="480" height="320" loading="lazy"/>
+                alt={initialRight?.photo?.alt || photoText(lang,"pending")} width="480" height="320" loading="lazy"/>
               <span class="tractor-photo-brandmark" aria-hidden="true">tractorvs.com</span>
             </button>
-            <small><a id="tc-right-photo-credit" href={initialRight?.photo?.sourcePage}
+            <small><a id="tc-right-photo-credit" href={initialRight?.photo?.sourcePage || localizedPath(lang,"/tractors/")}
               rel="noopener noreferrer" target="_blank">{initialRight?.photo?.photographer} · {initialRight?.photo?.licenseName}</a></small>
           </div>
             <a id="tc-right-preview" class="tc-selected-preview" href={initialRight?.detailsUrl}>
