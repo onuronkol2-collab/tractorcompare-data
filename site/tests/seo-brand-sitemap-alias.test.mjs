@@ -2,7 +2,7 @@ import {test} from "node:test";
 import assert from "node:assert/strict";
 import {readFileSync} from "node:fs";
 import worker from "../worker/index.js";
-import {brandAnchorId,catalogBrandIndex,BRAND_NAV_COPY} from "../src/lib/catalog-brand-index.mjs";
+import {brandAnchorId,catalogBrandIndex,BRAND_NAV_COPY,CATALOG_SEARCH_TITLES} from "../src/lib/catalog-brand-index.mjs";
 
 const read=path=>readFileSync(new URL(path,import.meta.url),"utf8");
 const published=[
@@ -29,12 +29,15 @@ test("brand index contains only the supplied published models with collision-saf
 test("every brand navigation translation is complete and avoids unverified manufacturer claims",()=>{
  const locales=["en","tr","zh","hi","pt-br","fr","de","ru","ja","es"];
  assert.deepEqual(Object.keys(BRAND_NAV_COPY),locales);
+ assert.deepEqual(Object.keys(CATALOG_SEARCH_TITLES),locales);
  for(const locale of locales){
   const v=BRAND_NAV_COPY[locale];
   assert.ok(v.heading.length>=6&&v.intro.length>=25&&v.models.length>=2,locale);
+  assert.ok(CATALOG_SEARCH_TITLES[locale].length>=15,locale+" meta title");
  }
  const template=read("src/components/TractorCatalog.astro");
  assert.match(template,/catalogBrandIndex\(catalog\.tractors\)/);
+ assert.ok(template.includes('CATALOG_SEARCH_TITLES[lang] + " | TractorVS"'));
  assert.match(template,/data-catalog-brand-jump/);
  assert.match(template,/href=\{"#"\+brand\.anchorId\}/);
  assert.match(template,/firstBrandCard\.get\(tractor\.brand_name\)===tractor\.tractor_id/);
