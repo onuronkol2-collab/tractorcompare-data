@@ -114,8 +114,8 @@ console.log("TRACTORVS_SEO_CRAWL_SCOPE "+JSON.stringify({
  mode:AUDIT_MODE,crawl_pages:urls.length,total_indexable_pages:unique.size,
  every_nonmodel_page_checked:true,model_sample_per_locale:AUDIT_MODE==="daily"?20:"all"
 }));
-for(let i=0;i<urls.length;i+=4){
- await Promise.all(urls.slice(i,i+4).map(async page=>{
+for(let i=0;i<urls.length;i+=8){
+ await Promise.all(urls.slice(i,i+8).map(async page=>{
   try{
    const u=new URL(page),p=u.pathname;
    if(u.origin!==BASE || u.search || p.includes("/language/") || p.includes("/404")){
