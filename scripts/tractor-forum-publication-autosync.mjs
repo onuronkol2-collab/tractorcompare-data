@@ -18,7 +18,8 @@ const PROJECT="aaufxtcvnzgavtlintiv";
 const API="https://"+PROJECT+".supabase.co/rest/v1";
 const COLLECTIONS=[
  {table:"tc_forum_localized_topics",fields:"id,topic_id,locale,original_locale,slug,category,tractor_id,status,created_at,updated_at,title,body,seo_ready,machine_translated"},
- {table:"tc_forum_localized_replies",fields:"id,topic_id,locale,original_locale,status,created_at,body,machine_translated"}
+ {table:"tc_forum_localized_replies",fields:"id,topic_id,locale,original_locale,status,created_at,body,machine_translated"},
+ {table:"tc_forum_public_media",fields:"id,topic_id,reply_id,position,alt_text,status,locale,created_at"}
 ];
 
 export function validateScope(repo,ref){
@@ -35,18 +36,19 @@ export function validateAnon(jwt){
 export async function fingerprintPublicForum({jwt,fetchFn=fetch}){
  validateAnon(jwt);
  const hash=createHash("sha256");
- let total=0,publicTopics=0,publicReplies=0,indexableTopics=0;
+ let total=0,publicTopics=0,publicReplies=0,publicImages=0,indexableTopics=0;
  for(const {table,fields} of COLLECTIONS){
   const rows=await fetchPublicRows({api:API,table,fields,headers:{apikey:jwt,Authorization:"Bearer "+jwt},fetchFn});
   total+=rows.length;
   if(table==="tc_forum_localized_topics"){
    publicTopics=rows.length;
    indexableTopics=rows.filter(x=>x.seo_ready===true && (x.machine_translated || (x.title?.trim().length>=12 && x.body?.trim().length>=150))).length;
-  }else publicReplies=rows.length;
+  }else if(table==="tc_forum_localized_replies")publicReplies=rows.length;
+  else publicImages=rows.length;
   for(const row of rows)hash.update(JSON.stringify([table,row])+"\n");
  }
  return {fingerprint:hash.digest("hex"),public_topics:publicTopics,
-  indexable_topics:indexableTopics,public_replies:publicReplies,public_rows:total,
+  indexable_topics:indexableTopics,public_replies:publicReplies,public_images:publicImages,public_rows:total,
   source:"anon_public_forum_views",scope:PROJECT};
 }
 async function fetchRevision({token,fetchFn}){
