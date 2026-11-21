@@ -40,6 +40,29 @@ export default {
   async fetch(request, env) {
     const url = new URL(request.url);
     const method = request.method;
+    // Yandex requires HTTP 200 at the exact *.html verification file URL.
+    // Cloudflare's default HTML handling redirects *.html to extensionless paths.
+    // Serve the corresponding uploaded static asset without changing site-wide
+    // HTML canonical URLs or exposing an arbitrary asset proxy.
+    const yandexHtmlProofPaths = new Set([
+      "/yandex_6bf433db24ce4bb4.html",
+      "/yandex_dd55c1f59fb67af2.html",
+    ]);
+    if (yandexHtmlProofPaths.has(url.pathname)) {
+      if (method !== "GET" && method !== "HEAD")
+        return new Response("Method not allowed", {status:405, headers:{"Allow":"GET, HEAD"}});
+      const assetUrl = new URL(url);
+      assetUrl.pathname = url.pathname.slice(0, -".html".length);
+      const proof = await env.ASSETS.fetch(new Request(assetUrl.toString(), {method:"GET"}));
+      if (proof.status !== 200)
+        return new Response("Verification file unavailable", {status:503, headers:{"Cache-Control":"no-store"}});
+      return new Response(method === "HEAD" ? null : proof.body, {status:200, headers:{
+        "Content-Type":"text/html; charset=UTF-8",
+        "Cache-Control":"public, max-age=300",
+        "X-Robots-Tag":"noindex",
+        "X-Content-Type-Options":"nosniff",
+      }});
+    }
     // Permanent alias for the widely submitted /sitemap.xml URL. The
     // generated /sitemap-index.xml remains the sole authoritative index; this
     // redirect automatically includes future multi-file sitemap growth.

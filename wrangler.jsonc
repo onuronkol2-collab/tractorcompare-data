@@ -11,7 +11,9 @@
       "/language/*",
       "/api/visitor-country",
       "/sitemap.xml",
-      "/images/tractors/*"
+      "/images/tractors/*",
+      "/yandex_6bf433db24ce4bb4.html",
+      "/yandex_dd55c1f59fb67af2.html"
     ]
   },
   "observability": {
