@@ -36,6 +36,10 @@ type Field={
 const fields:readonly Field[]=[
  {id:"rated-power",keys:["engine_power","engine_rated_power","rated_engine_power"],unit:"hp",min:5,max:999},
  {id:"pto-power",keys:["pto_power_hp","rear_pto_power_hp"],unit:"hp",min:5,max:999},
+ // Litre / kilogram are not interchangeable with cm³, daN or PTO power.
+ // Optional hitch equipment and measurement points are not normalized away.
+ {id:"engine-displacement",keys:["engine_displacement","engine_displacement_l"],unit:"l",min:0.5,max:35},
+ {id:"rear-hitch-lift",keys:["rear_lift_capacity","rear_lift_capacity_kg","rear_hitch_lift_capacity_kg"],unit:"kg",min:100,max:30000},
  {id:"wheelbase",keys:["wheelbase","wheelbase_mm"],unit:"mm",min:800,max:7000},
  {id:"fuel",keys:["fuel_tank_capacity","fuel_tank_capacity_l"],unit:"l",min:5,max:3000},
 ];
@@ -104,6 +108,22 @@ const text={
    question:`What published PTO power is documented for ${name}?`,
    answer:`A reviewed source reports ${v} hp at the PTO${s}. PTO output should not be confused with rated engine power. Verify the speed and test method before comparing another model.`,
   }),
+  "engine-displacement":(name:string,v:string,s:string)=>({
+   question:`What is the documented engine displacement of ${name}?`,
+   answer:`The reviewed technical source lists an engine displacement of ${v} litres${s}. Displacement is engine volume, not horsepower or fuel consumption. Check the exact variant in the linked source.`,
+  }),
+  "rear-hitch-lift":(name:string,v:string,s:string)=>({
+   question:`What rear hitch lift capacity is documented for ${name}?`,
+   answer:`A reviewed source lists ${v} kg for the rear hitch lift capacity${s}. Capacity depends on the measurement point and fitted equipment; confirm the conditions before comparing tractors.`,
+  }),
+  "engine-displacement":(name:string,v:string,s:string)=>({
+   question:`${name} modelinin belgelenmiş motor hacmi kaç litre?`,
+   answer:`İncelenen teknik kaynakta motor hacmi ${v} litre olarak belirtiliyor${s}. Motor hacmi, beygir gücü veya yakıt tüketimi değildir. Varyantı bağlantılı belgeden kontrol edin.`,
+  }),
+  "rear-hitch-lift":(name:string,v:string,s:string)=>({
+   question:`${name} modelinin belgelenmiş arka kaldırma kapasitesi kaç kilogram?`,
+   answer:`İncelenen kaynak arka askı kaldırma kapasitesini ${v} kg olarak veriyor${s}. Değer ölçüm noktasına ve takılı donanıma bağlı olabilir; modelleri karşılaştırmadan önce koşulları kontrol edin.`,
+  }),
   wheelbase:(name:string,v:string,s:string)=>({
    question:`What is the documented wheelbase of ${name}?`,
    answer:`The reviewed specification gives a wheelbase of ${v} mm${s}. Wheelbase is the distance between front and rear axle centres, not the tractor's overall length.`,
@@ -159,7 +179,7 @@ export function modelEvidenceAnswers(tractor:Pick<TractorRecord,"brand_name"|"mo
      field.id==="pto-power"?"/guides/pto-and-power-take-off/":
      null
   });
-  if(answers.length===3)break;
+  if(answers.length===4)break;
  }
  return answers;
 }
