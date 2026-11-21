@@ -10,9 +10,9 @@ const layout=readFileSync(new URL("../src/layouts/SiteLayout.astro",import.meta.
 const forumLabels=["Tractor forum","Topluluk Forumu","拖拉机论坛","ट्रैक्टर फ़ोरम",
   "Fórum de tratores","Forum des tracteurs","Traktorforum","Форум о тракторах",
   "トラクターフォーラム","Foro de tractores"];
-const advisorLabels=["Find a tractor","Traktör Bul","选拖拉机","ट्रैक्टर खोजें",
-  "Encontrar trator","Trouver un tracteur","Traktor finden","Подобрать трактор",
-  "トラクターを探す","Encontrar tractor"];
+const advisorLabels=["Tractor selection tool","Traktör Seçim Aracı","拖拉机选型工具","ट्रैक्टर चयन उपकरण",
+  "Seletor de tratores","Outil de sélection de tracteur","Traktorauswahl","Подбор трактора",
+  "トラクター選定ツール","Selector de tractores"];
 const searchLabels=["Search","Ara","搜索","खोजें","Pesquisar","Rechercher","Suchen","Найти","検索","Buscar"];
 
 test("ten natural forum names tell visitors that the space contains tractor discussions",()=>{
@@ -25,7 +25,7 @@ test("ten natural forum names tell visitors that the space contains tractor disc
  assert.equal(forumText("tr","name"),"Topluluk Forumu");
 });
 
-test("farm preselection is transparently named Find a tractor rather than implying a human advisor",()=>{
+test("farm preselection is clearly labeled a tractor selection tool without a certified fitment promise",()=>{
  assert.deepEqual(advisorTranslationIssues(),[]);
  for(const [i,lang] of LOCALES.entries()){
   assert.equal(advisorText(lang,"nav"),advisorLabels[i],lang);
