@@ -5,11 +5,11 @@ export const MAX_HTML_BYTES=256000;
 export const MAX_PDF_BYTES=800000;
 export const CACHE_HOURS=24*14;
 export const OEM_HOSTS=Object.freeze({
- "Antonio Carraro":["antoniocarraro.it"],"ArmaTrac":["armatrac.com"],
- "Başak Traktör":["basaktraktor.com.tr"],"Kubota":["ktt.kubota-eu.com"],
- "Sonalika":["sonalika.com"],"Agrale":["agrale.com.br"],
- "CLAAS":["claas.com"],"John Deere":["deere.com","deere.co.uk"],
- "Case IH":["caseih.com","caseih.com.tr"]
+ "Antonio Carraro":["antoniocarraro.it","www.antoniocarraro.it"],"ArmaTrac":["armatrac.com","www.armatrac.com"],
+ "Başak Traktör":["basaktraktor.com.tr","www.basaktraktor.com.tr"],"Kubota":["ktt.kubota-eu.com"],
+ "Sonalika":["sonalika.com","www.sonalika.com"],"Agrale":["agrale.com.br","www.agrale.com.br","pdf.agrale.com.br"],
+ "CLAAS":["claas.com","www.claas.com"],"John Deere":["deere.com","www.deere.com","deere.co.uk","www.deere.co.uk"],
+ "Case IH":["caseih.com","www.caseih.com","caseih.com.tr","www.caseih.com.tr"]
 });
 const clean=x=>String(x??"").normalize("NFKC").trim();
 export function allowedOemUrl(raw,brand){
@@ -21,7 +21,7 @@ export function allowedOemUrl(raw,brand){
  const host=u.hostname.toLowerCase().replace(/\.$/,"");
  if(host==="localhost"||host.endsWith(".localhost")||
    /^[0-9.]+$/.test(host)||host.includes(":"))return null;
- if(!roots.some(root=>host===root||host.endsWith("."+root)))return null;
+ if(!roots.includes(host))return null;
  if(u.pathname.length>900||u.search.length>300)return null;
  u.hash="";
  return u.toString();
@@ -43,6 +43,70 @@ export function scrubMarkup(html){
   nbsp:" ",amp:"&",lt:"<",gt:">",quot:'"',"#39":"'"
  })[p.toLowerCase()]||m);
  return str.replace(/\s+/g," ").trim();
+}
+// Conservative robots.txt evaluation. Unknown/unreachable robots: do NOT crawl.
+// Respect exact UA or wildcard rules; unsupported giant robots files are blocked.
+// Crawl-delay is handled by single-host-per-run scheduling (at least 2 hours).
+export async function robotsAllowed(url,{fetchFn=fetch,timeoutMs=8000,cache=new Map()}={}){
+ const u=new URL(url),root=u.origin, robotsUrl=root+"/robots.txt";
+ let record=cache.get(root);
+ if(!record){
+  try{
+   const res=await fetchFn(robotsUrl,{method:"GET",redirect:"manual",
+    credentials:"omit",headers:{"Accept":"text/plain"},
+    signal:AbortSignal.timeout(timeoutMs)});
+   if(res.status===404)record={ok:true,body:""};
+   else if(res.status!==200)record={ok:false,body:""};
+   else{
+    const length=Number(res.headers.get("content-length"));
+    if(Number.isFinite(length)&&length>64000)record={ok:false,body:""};
+    else{
+     const body=await res.text();
+     record=body.length>64000?{ok:false,body:""}:{ok:true,body};
+    }
+   }
+  }catch{record={ok:false,body:""}}
+  cache.set(root,record);
+ }
+ if(!record.ok)return false;
+ if(!record.body)return true;
+ const groups=[];
+ let group=null,hasRules=false;
+ for(const raw of record.body.replace(/\r/g,"").split("\n")){
+  const line=raw.split("#",1)[0].trim();
+  if(!line)continue;
+  const idx=line.indexOf(":");
+  if(idx<0)continue;
+  const name=line.slice(0,idx).trim().toLowerCase(),value=line.slice(idx+1).trim();
+  if(name==="user-agent"){
+   if(!group||hasRules){group={agents:[],rules:[]};groups.push(group);hasRules=false}
+   group.agents.push(value.toLowerCase());
+   continue;
+  }
+  if(!group)continue;
+  hasRules=true;
+  if(name==="allow"||name==="disallow")group.rules.push({name,path:value});
+  if(name==="crawl-delay"&&group.agents.some(a=>a==="*"||a==="tractorvsresearchbot")){
+   const delay=Number(value);
+   if(!Number.isFinite(delay)||delay>7200)return false;
+  }
+ }
+ const explicit=groups.filter(g=>g.agents.includes("tractorvsresearchbot"));
+ const applicable=explicit.length?explicit:groups.filter(g=>g.agents.includes("*"));
+ const path=u.pathname+u.search;
+ let best=null;
+ for(const g of applicable)for(const rule of g.rules){
+  if(!rule.path)continue; // empty Disallow means allowed
+  const escaped=rule.path.replace(/[.+?^{}()|[\]\\$]/g,"\\export async function readOemDocument(url,{fetchFn=fetch,timeoutMs=12000}={}){")
+   .replace(/\*/g,".*").replace(/\$/g,"$");
+  let match=false;
+  try{match=new RegExp("^"+escaped).test(path)}catch{return false}
+  if(!match)continue;
+  const rank=rule.path.replace(/\*/g,"").length;
+  if(!best||rank>best.rank||(rank===best.rank&&rule.name==="allow"))
+   best={rank,name:rule.name};
+ }
+ return !best||best.name==="allow";
 }
 export async function readOemDocument(url,{fetchFn=fetch,timeoutMs=12000}={}){
  let response;
