@@ -4,7 +4,7 @@ Bu kontrol listesinde depo kökündeki [AGENTS.md](../../AGENTS.md) altın enteg
 
 ## Makale arşivi
 
-- `/articles/` ve `/tr/articles/` gerçek ve daha önce hazırlanmış **altı** teknik içerik için kürasyon girişleridir. Üçüncü dilde gerçekte içerik olmadan sayfa açılmaz. Diğer sekiz dildeki menü, açıkça **(EN)** etiketiyle İngilizce arşive gider.
+- Makale arşivi **10 dilde** yerelleştirilmiş metin ve altı gerçek içerik için kürasyon sunar. Ancak uzun makale gövdesinin çeviri kapsamı ayrıdır: seçim rehberi ve Başak 2075 BK analizi 10 dilde, diğer dört uzun makale yalnız TR/EN sürümündedir. Diğer 8 dildeki arşiv sayfaları bu dört yazı için açıkça İngilizce tam metin etiketi ve gerçek İngilizce URL'si gösterir; olmayan dil URL'si üretmez.
 - Arşive yeni bir yazı, gerçek URL ve tüm yayın kontrolleri tamamlanmadan alınmaz. 2026–2027 arıza araştırması PR #213 ve ansiklopedi PR #127 taslaktır; yalnızca PR var diye arşivde bağlantı oluşturulmaz.
 - Gerçek çalışma saatleri, arıza olayları, kullanıcı şikâyetleri, şikâyet/100 traktör ve en az bir kez arıza yapan araç/100 traktör aynı metrik değildir; örneklem ve gözlem süresi olmadan marka sıralaması yapılmaz.
 - İçerik, doğrulanabilen özgün açıklama ve gerçek kullanıcı yararı üretmelidir. Alıntı, görsel, kaynak tarihleri ve lisans kontrolü yapılır; yapay yazar adı, deneyim ve sahte laboratuvar testi yazılmaz.
