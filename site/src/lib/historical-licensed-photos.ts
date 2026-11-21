@@ -544,16 +544,6 @@ const candidates=[
   },
   {
     "brand": "Belarus",
-    "model": "922.3",
-    "fileId": "belarus-922-3-bulykin-almaty-2026",
-    "path": "9/94/%D0%90%D0%BB%D0%BC%D0%B0%D1%82%D1%8B%2C_%D0%91%D0%B5%D0%BB%D0%B0%D1%80%D1%83%D1%81-922.3_%D0%BD%D0%B0_%D0%9A%D1%83%D0%BB%D1%8B%D0%BC%D0%B1%D0%B5%D1%82%D0%BE%D0%B2%D0%B0-%D0%91%D1%80%D1%83%D0%BD%D0%BE_%281%29.jpg",
-    "photographer": "Nikolai Bulykin",
-    "license": "CC BY-SA 4.0",
-    "width": 5077,
-    "height": 3385
-  },
-  {
-    "brand": "Belarus",
     "model": "952",
     "fileId": "belarus-952-fraxinus-croat-2011",
     "path": "b/b6/Belarus_952.jpg",
