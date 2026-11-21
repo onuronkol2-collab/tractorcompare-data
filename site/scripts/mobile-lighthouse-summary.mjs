@@ -5,7 +5,13 @@ import {readFileSync,writeFileSync,appendFileSync} from "node:fs";
 import {resolve,join} from "node:path";
 import {fileURLToPath} from "node:url";
 
-export const ROUTES=["home","catalog","model","compare"];
+// Template-based weekly Lighthouse sample. The full production sitemap is
+// separately checked by production-seo-audit.mjs; lab scoring every model page
+// would be costly and cannot be reduced to one universal "SEO score".
+export const ROUTES=[
+  "home","catalog","model","compare","advisor","articles","glossary",
+  "selection","review","forum","en-home","zh-home","de-model","ja-guide"
+];
 export const FIELD_URLS={
   home:"https://tractorvs.com/tr/",
   catalog:"https://tractorvs.com/tr/tractors/",
@@ -33,7 +39,12 @@ export function analyzeLighthouse(a,route){
   }));
   const url=a.finalDisplayedUrl||a.finalUrl||null;
   if(url && !/^https:\/\/tractorvs\.com\//.test(url))throw Error("Unexpected Lighthouse redirect outside TractorVS: "+url);
-  return {route,url,scores,vitals,issues,accessibilityFindings,contrastFailures,
+  const seoRefs=new Set(a.categories.seo?.auditRefs?.filter(r=>r.weight>0).map(r=>r.id)||[]);
+  const seoFindings=Object.values(a.audits)
+    .filter(v=>v&&v.score!=null&&v.score<1&&seoRefs.has(v.id))
+    .map(v=>({id:v.id,title:v.title,score:v.score,
+      description:v.description?.slice(0,180)||""}));
+  return {route,url,scores,vitals,issues,accessibilityFindings,contrastFailures,seoFindings,
     mode:"synthetic_lab_mobile",real_user_inp_measured:false};
 }
 
@@ -72,6 +83,14 @@ export function markdownReport(reports,field={}) {
       fmt(r.vitals["largest-contentful-paint"],"ms")+" | "+fmt(r.vitals["cumulative-layout-shift"],"cls")+
       " | "+fmt(r.vitals["total-blocking-time"],"ms")+" |");
   }
+  const below100=reports.filter(r=>r.scores.seo!==100);
+  lines.push("","### SEO Lighthouse checks on indexable representative templates","");
+  if(below100.length){
+    for(const r of below100){
+      const reasons=r.seoFindings.map(f=>f.id+": "+f.title).join("; ");
+      lines.push("- **"+r.route+"**: "+fmt(r.scores.seo)+"/100 — "+(reasons||"missing audit details; investigate report JSON"));
+    }
+  }else lines.push("All "+reports.length+" sampled routes scored 100/100 in this run. This does not certify every sitemap URL or Google indexation.");
   lines.push("","### Real-user CrUX field data (last 28 days, only if Google reports enough visits)","",
     "| URL | Data level | LCP p75 | CLS p75 | INP p75 |","| --- | --- | ---: | ---: | ---: |");
   for(const [key,url] of Object.entries(FIELD_URLS)){
@@ -112,5 +131,12 @@ export async function main(){
   const markdown=markdownReport(reports,field);
   if(process.env.GITHUB_STEP_SUMMARY)appendFileSync(process.env.GITHUB_STEP_SUMMARY,markdown+"\n");
   console.log(markdown);
+  const nonPerfect=reports.filter(r=>r.scores.seo!==100);
+  if(nonPerfect.length){
+    console.error("TRACTORVS_SEO_SCORE_BELOW_TARGET "+JSON.stringify(nonPerfect.map(r=>({
+      route:r.route,url:r.url,seo:r.scores.seo,findings:r.seoFindings
+    }))));
+    process.exitCode=1;
+  }
 }
 if(process.argv[1]&&resolve(process.argv[1])===fileURLToPath(import.meta.url))await main();
