@@ -1,11 +1,10 @@
+import {generateGeminiJson} from "./gemini-provider.ts";
 // Private, consent-gated TractorVS forum translator.
 // Only published, opted-in text enters Gemini; never submit user identity or media.
 const ROOT=Deno.env.get("SUPABASE_URL")||"https://aaufxtcvnzgavtlintiv.supabase.co";
 const KEY=Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")||"";
 const SECRET=Deno.env.get("TC_QUEUE_SECRET")||"";
 const AI=Deno.env.get("GEMINI_API_KEY")||"";
-const GEMINI="https://generativelanguage.googleapis.com/v1beta/interactions";
-const MODEL="gemini-3.8-flash";
 const LANGS:Record<string,string>={
  en:"English",zh:"Simplified Chinese",hi:"Hindi", "pt-br":"Brazilian Portuguese",
  fr:"French",de:"German",ru:"Russian",ja:"Japanese",es:"international Spanish"
@@ -33,65 +32,8 @@ async function patch(job:Job,values:Record<string,unknown>,claim=false){
  },{method:"PATCH",headers:{"Content-Type":"application/json","Prefer":"return=representation"},
   body:JSON.stringify(values)});
 }
-function textFrom(data:any){
- if(typeof data.output_text==="string")return data.output_text;
- return (data.steps||[]).filter((s:any)=>s?.type==="model_output")
-  .flatMap((s:any)=>Array.isArray(s.content)?s.content:[])
-  .filter((x:any)=>x?.type==="text").map((x:any)=>String(x.text||"")).join("\n");
-}
 async function modelJSON(prompt:string,schema:any,deadline:number){
- // Gemini 3.7 Flash is routed to 3.8 by the provider; use a genuinely distinct
- // supported fallback for failed/incomplete 3.8 interactions.
- for(const selected of [MODEL,"gemini-3.6-flash"]){
-  const init={model:selected,input:[{type:"text",text:prompt}],store:true,background:true,
-   response_format:{type:"text",mime_type:"application/json",schema},
-   generation_config:{max_output_tokens:16000,
-    thinking_level:selected==="gemini-3.6-flash"?"minimal":"low"}};
-  let r:Response;
-  try{
-   r=await fetch(GEMINI,{method:"POST",headers:{"content-type":"application/json",
-    "x-goog-api-key":AI,"Api-Revision":"2026-05-20"},
-    body:JSON.stringify(init),signal:AbortSignal.timeout(28000)});
-  }catch(error){
-   // Initial request can time out while the provider is congested.
-   // Only retry a bounded approved alternative, never endlessly.
-   if(selected!=="gemini-3.6-flash"&&Date.now()<deadline-25000)continue;
-   throw error;
-  }
-  let d=await r.json().catch(()=>({}));
-  if(!r.ok||!d.id){
-   // A single approved fallback is allowed for temporary model capacity limits.
-   // Never retry arbitrary errors, invalid auth, or invalid source data.
-   if(selected!=="gemini-3.6-flash"&&[500,502,503,504].includes(r.status)&&Date.now()<deadline-25000){
-    console.warn("Primary Gemini capacity unavailable; one approved fallback");
-    continue;
-   }
-   throw Error("Gemini HTTP "+r.status);
-  }
-  const id=String(d.id);
-  let retryOtherModel=false;
-  while(String(d.status||"").toLowerCase()!=="completed"){
-   const status=String(d.status||"").toLowerCase();
-   if(["failed","cancelled"].includes(status))throw Error("Gemini interaction "+status);
-   if(["incomplete","requires_continuation"].includes(status)){
-    // Not a completed translation. Prefer a different genuine model when
-    // the partial decode cannot safely satisfy our structured response.
-    if(selected===MODEL&&Date.now()<deadline-25000){retryOtherModel=true;break}
-    throw Error("Gemini interaction "+status);
-   }
-   if(Date.now()>deadline)throw Error("Gemini timeout");
-   await new Promise(done=>setTimeout(done,2000));
-   const p=await fetch(GEMINI+"/"+encodeURIComponent(id),{
-    headers:{"x-goog-api-key":AI,"Api-Revision":"2026-05-20"},
-    signal:AbortSignal.timeout(20000)});
-   d=await p.json().catch(()=>({}));
-   if(!p.ok)throw Error("Gemini poll HTTP "+p.status);
-  }
-  if(retryOtherModel)continue;
-  const raw=textFrom(d).trim().replace(/^\x60{3}(?:json)?\s*/i,"").replace(/\x60{3}$/,"").trim();
-  try{return {value:JSON.parse(raw),model:selected}}catch{throw Error("Model returned invalid JSON")}
- }
- throw Error("Approved Gemini models unavailable");
+ return generateGeminiJson({apiKey:AI,prompt,schema,deadline,review:schema===reviewSchema});
 }
 const articleSchema={type:"object",properties:{title:{type:"string"},body:{type:"string"}},
  required:["title","body"]};
