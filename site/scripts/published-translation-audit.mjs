@@ -81,6 +81,18 @@ function inspectSeoHead(html,locale,url){
   if(codes.length!==11||new Set(codes).size!==11 ||
      !codes.includes(expectedHtmlLang[locale])||!codes.includes("x-default"))
     errors.push("Missing or duplicated model hreflang "+url);
+  const slug=url.match(/\/tractors\/([^/]+)\/$/)?.[1];
+  if(slug){
+    for(const [lang,tag] of Object.entries(expectedHtmlLang)){
+      const expected=BASE+"/"+(lang==="en"?"":lang+"/")+"tractors/"+slug+"/";
+      const matching=alts.filter(link=>attr(link,"hreflang")===tag);
+      if(matching.length!==1||attr(matching[0],"href")!==expected)
+        errors.push("Nonreciprocal model hreflang "+url+" -> "+tag);
+    }
+    const defaults=alts.filter(link=>attr(link,"hreflang")==="x-default");
+    if(defaults.length!==1||attr(defaults[0],"href")!==BASE+"/tractors/"+slug+"/")
+      errors.push("Wrong model x-default "+url);
+  }
   const pageH1=[...html.matchAll(/<h1\b[^>]*>([\s\S]*?)<\/h1>/gi)];
   if(pageH1.length!==1||!unescape(pageH1[0][1]))errors.push("Missing/duplicate model H1 "+url);
 }
