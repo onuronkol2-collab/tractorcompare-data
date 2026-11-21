@@ -99,6 +99,7 @@ test("missing XML child or removed localized models is a hard regression", () =>
 test("image references outside canonical sitemap are rejected; overlap is not double-counted", () => {
   const orphan = good();
   orphan.image = xmlURLs([ORIGIN + "/tractors/not-a-published-model/"]);
+  orphan.children[1].xml = orphan.image;
   assert.throws(() => evaluateBingSitemapCoverage(orphan), /Image sitemap references a page absent/);
 
   const overlappingForum = good();
