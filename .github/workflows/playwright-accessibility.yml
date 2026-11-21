@@ -6,6 +6,8 @@ on:
       - ".github/workflows/playwright-accessibility.yml"
       - ".github/dependabot.yml"
       - "site/src/**"
+      - "site/public/_headers"
+      - "site/tests/security-static-headers.test.mjs"
       - "site/e2e/**"
       - "site/scripts/verify-published-site-inventory.mjs"
       - "site/tests/model-discovery.test.mjs"

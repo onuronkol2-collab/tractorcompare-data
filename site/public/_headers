@@ -1,3 +1,10 @@
+# Browser baseline for all public static assets, including documents and pages.
+# No HSTS/CSP here until OAuth, forum uploads, analytics consent and alias hosts
+# have been checked against a strict deployment-specific policy.
+/*
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+
 # Long-term browser caching ONLY for content-hashed Astro JS/CSS/assets.
 # HTML, robots.txt, feeds and other mutable files keep the platform default.
 /_astro/*
