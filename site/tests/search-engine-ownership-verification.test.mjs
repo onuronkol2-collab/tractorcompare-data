@@ -11,6 +11,14 @@ test("Yandex ownership HTML contains the exact requested text and proper documen
   assert.ok(html.includes(`<body>Verification: ${yandexToken}</body>`));
 });
 
+test("Yandex HTTPS property has its own exact proof file", () => {
+  const httpsToken = "dd55c1f59fb67af2";
+  const html = readFileSync(new URL(`../public/yandex_${httpsToken}.html`, import.meta.url), "utf8");
+  assert.ok(html.includes("<html>") && html.includes("</html>"));
+  assert.ok(html.includes(`<body>Verification: ${httpsToken}</body>`));
+  assert.equal(html.match(/<body>/g)?.length, 1);
+});
+
 test("Naver verification tag is static and scoped to the English homepage head", () => {
   const layout = readFileSync(new URL("../src/layouts/SiteLayout.astro", import.meta.url), "utf8");
   const marker = `{lang === "en" && plainPath === "/" && <meta name="naver-site-verification" content="${naverToken}" />}`;
