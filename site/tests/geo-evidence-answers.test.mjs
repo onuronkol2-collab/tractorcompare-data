@@ -121,3 +121,19 @@ test("new GEO answers fail closed for units, conflicting capacities and unsuppor
  ]};
  assert.deepEqual(modelEvidenceAnswers(wrong,"tr"),[]);
 });
+
+test("new GEO fields do not crowd out previously verified wheelbase and fuel answers",()=>{
+ const model={...base,specifications:[
+  spec("engine_rated_power","114","hp"),
+  spec("pto_power_hp","89","hp"),
+  spec("engine_displacement","3.6","L"),
+  spec("rear_lift_capacity_kg","4500","kg"),
+  spec("wheelbase_mm","2355","mm"),
+  spec("fuel_tank_capacity","135","L")
+ ]};
+ const answers=modelEvidenceAnswers(model,"tr");
+ assert.deepEqual(answers.map(x=>x.id),[
+  "rated-power","pto-power","engine-displacement","rear-hitch-lift","wheelbase","fuel"
+ ]);
+ assert.ok(answers.every(x=>x.sourceUrl===source));
+});
