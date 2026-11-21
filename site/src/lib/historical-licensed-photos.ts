@@ -454,7 +454,7 @@ const candidates=[
     "license": "CC BY-SA 4.0",
     "width": 6164,
     "height": 4627
-  }
+  },
   {
     "brand": "Massey Ferguson",
     "model": "5M.95",
