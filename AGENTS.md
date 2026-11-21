@@ -99,6 +99,15 @@ GitHub (Actions, CodeQL, Dependabot, Dependency graph, Malware alerts, Secret Pr
 
 Ek ayrıntı: `site/docs/editorial-quality-gate-20261121.md` ve `site/tests/editorial-hub.test.mjs`.
 
+### Arama motoru keşfi ve IndexNow — doğrulamalı otomasyon (21 Kasım 2026)
+
+- `site/docs/search-engine-discovery-automation.md` tüm teknik yayın ve geri alma protokolünün ayrıntılı kaynağıdır. Görev başında güncel dosyayı kontrol et.
+- Yeni traktör, makale ve gerçekten moderasyon/onaydan geçmiş forum sayfaları için **canlı Cloudflare dağıtımı doğrulanmadan** IndexNow bildirimi yapma. Katalog/sayfa taslaklarını asla URL listesine ekleme.
+- `.github/workflows/tractorvs-search-discovery.yml` 2 saatte bir ve yayın değişikliklerinde canlı sitemap'i, robots yönergelerini, doğrulama anahtarını, HTTP 200/canonical/noindex durumunu denetler. Yalnız yeni veya anlamlı şekilde değişmiş sayfaları, sınırlı batch ile IndexNow'a yollar. İlk çalışmada toplu tarihî gönderim yapmaz. Başarısızlıkta checkpoint'i ilerletmez.
+- `.github/workflows/tractorvs-sitemap-history.yml` gerçek yayımlanmış HTML içeriği üzerinden sayfa bazında kanıtlı güncelleme tarihini takip eder. Eski sayfalara rastgele bugünün tarihini yazma. Değişmeyen sayfanın `lastmod` değeri sabit kalmalı.
+- Haftalık keşif raporunda **sitemap'te görünme, canlı taranabilirlik, IndexNow kabulü, gerçek taranma ve arama indeksine eklenme** birbirinden ayrı tutulur. Bing/Yandex/Naver/Google Webmaster hesabının ölçüm API'si erişilebilir değilse sayısal indeks verisi uydurma.
+- Google IndexNow'a katılmaz, eski sitemap ping yöntemini yeniden etkinleştirme. Geliştirmeler mevcut Cloudflare, RLS, preview noindex, 10 dil, canonical, hreflang, güvenlik ve yayın kapılarına zarar veremez. Önce CI ve test, sonra kontrollü merge, ardından canlı URL denetimi gereklidir.
+
 ## Süreklilik ve dürüst sınır
 Bu dosya GitHub deposunda saklanan, değişiklik geçmişi olan **kalıcı proje kaynağıdır**. Asistanın ChatGPT iç belleğine silinemez bir kayıt yazıldığı veya her yeni sohbette bu dosyanın kendiliğinden okunduğu anlamına gelmez. Yeni sohbetlerin aynı ilkeyi uygulaması için bu dosyanın bağlantısını ChatGPT Project Instructions / Proje Talimatları içinde tutmak ve işe başlarken dosyayı okumak en güvenilir yöntemdir.
 
