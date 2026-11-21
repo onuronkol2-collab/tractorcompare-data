@@ -51,3 +51,16 @@ test("article metadata is explicit and main layout keeps website default",()=>{
    assert.match(source,/TechArticle/,name);
  }
 });
+
+test("production release fails closed if bilingual archives or sitemap entries disappear",()=>{
+ const gate=file("scripts/production-release-gate.mjs");
+ const audit=file("scripts/production-seo-audit.mjs");
+ for(const entry of ['["articles","en"]','["tr/articles","tr"]']){
+   assert.ok(gate.includes(entry),entry);
+ }
+ assert.match(gate,/Editorial hub not included in generated sitemap/);
+ assert.match(gate,/Editorial hub has wrong canonical/);
+ assert.match(gate,/Editorial hub cannot be noindex/);
+ assert.match(audit,/\/"\/articles\/"/);
+ assert.match(audit,/\/"\/tr\/articles\/"/);
+});
