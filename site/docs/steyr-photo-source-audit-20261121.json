@@ -1,0 +1,44 @@
+{
+  "approved": [
+    {
+      "brand": "Steyr",
+      "model": "4085 KOMPAKT",
+      "fileId": "steyr-4085-kompakt-ecotech-commons",
+      "path": "1/16/Steyr_4085_Kompakti_Ecotech.jpg",
+      "photographer": "JoachimKohler-HB",
+      "license": "CC BY-SA 4.0",
+      "width": 4000,
+      "height": 3200,
+      "sourcePage": "https://commons.wikimedia.org/wiki/File:Steyr_4085_Kompakti_Ecotech.jpg",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "originalFilename": "Steyr 4085 Kompakti Ecotech.jpg",
+      "bytes": 72625,
+      "sha256": "c9f8beb4f90659af798cc991a417442b244620229708bdf299ada20abce8ef83",
+      "checkedAt": "2026-11-21T19:53:50.382Z"
+    },
+    {
+      "brand": "Steyr",
+      "model": "6340 TERRUS CVT",
+      "fileId": "steyr-6340-terrus-marcel-2023",
+      "path": "8/8c/Steyr_6340_Terrus_CVT_Agritechnica_2023_%28DSC04861%29.jpg",
+      "photographer": "MarcelX42",
+      "license": "CC BY-SA 4.0",
+      "width": 7008,
+      "height": 3944,
+      "sourcePage": "https://commons.wikimedia.org/wiki/File:Steyr_6340_Terrus_CVT_Agritechnica_2023_(DSC04861).jpg",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "originalFilename": "Steyr 6340 Terrus CVT Agritechnica 2023 (DSC04861).jpg",
+      "bytes": 59029,
+      "sha256": "2b2b6cf5687c13e9f7295d7484fab9c61d640882eab7b2223caeda6a2b937ac4",
+      "checkedAt": "2026-11-21T19:53:51.267Z"
+    }
+  ],
+  "rejected": [
+    {
+      "model": "6240 ABSOLUT CVT",
+      "file": "Steyr Absolut 6240.jpg",
+      "error": "Error: Not a supported Creative Commons license Public domain"
+    }
+  ],
+  "notes": "Third-party images; exact source, author, image/jpeg and CC license. Never infer pictured configuration."
+}
