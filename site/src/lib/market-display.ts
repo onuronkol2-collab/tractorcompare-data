@@ -47,3 +47,29 @@ export function marketDisplayName(market:string|null,locale:Locale):string|null 
   const marketKey = normalized === "türkiye" ? "turkey" : normalized === "uk" ? "united kingdom" : normalized;
   return MARKET[marketKey]?.[locale]||market;
 }
+
+const COUNTRY_CODES = new Map(Object.entries({
+  india: "IN", italy: "IT", "south korea": "KR", finland: "FI",
+  belarus: "BY", austria: "AT", "czech republic": "CZ", japan: "JP",
+  brazil: "BR", türkiye: "TR", turkey: "TR", canada: "CA", uk: "GB",
+  "united kingdom": "GB", germany: "DE",
+}));
+
+export const BRAND_COUNTRY_LABEL: Record<Locale, string> = {
+  en: "Brand origin", tr: "Markanın ülkesi", zh: "品牌来源国", hi: "ब्रांड का मूल देश",
+  "pt-br": "País de origem da marca", fr: "Pays d’origine de la marque",
+  de: "Herkunftsland der Marke", ru: "Страна бренда", ja: "ブランドの発祥国", es: "País de origen de la marca",
+};
+
+const regionNames = new Map<Locale, Intl.DisplayNames>();
+
+export function brandCountryName(country: string, locale: Locale): string {
+  const code = COUNTRY_CODES.get(country.trim().toLowerCase());
+  if (!code) return country;
+  let names = regionNames.get(locale);
+  if (!names) {
+    names = new Intl.DisplayNames([locale], { type: "region" });
+    regionNames.set(locale, names);
+  }
+  return names.of(code) || country;
+}

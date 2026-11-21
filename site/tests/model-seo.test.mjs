@@ -353,3 +353,11 @@ test("concise snippet never invents horsepower when headline evidence conflicts"
   assert.ok(meta.searchDescription.length<=160,locale);
  }
 });
+
+test("brand origin localizes separately from the market and preserves unknown names",async()=>{
+ const {brandCountryName,BRAND_COUNTRY_LABEL}=await import("../src/lib/market-display.ts");
+ assert.equal(brandCountryName("Italy","tr"),"İtalya");
+ assert.equal(brandCountryName("South Korea","de"),"Südkorea");
+ assert.equal(brandCountryName("Unspecified historical record","tr"),"Unspecified historical record");
+ assert.equal(Object.keys(BRAND_COUNTRY_LABEL).length,10);
+});

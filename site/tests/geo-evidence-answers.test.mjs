@@ -148,3 +148,16 @@ test("manufacturer HTML product pages are labelled sources, not presumed documen
  assert.match(index,/official: "Üretici kaynağı"/);
  assert.match(detail,/href=\{item\.sourceUrl\}/);
 });
+
+test("preserve long measurement conditions and distinguish test speeds",()=>{
+ const note="Lift measured at the link ends with the optional assist cylinders fitted, at the specified hydraulic pressure.";
+ const lift=spec("rear_lift_capacity_kg","12000","kg",{measurement_standard:note});
+ const engine=spec("engine_rated_power","114","hp",{rated_rpm:2200});
+ const answers=modelEvidenceAnswers({...base,specifications:[engine,lift]},"tr");
+ assert.equal(answers[0].measurementNote,"2.200 dev/dk");
+ assert.equal(answers[1].measurementNote,note);
+ assert.equal(answers[1].guidePath,"/guides/tractor-hydraulic-lift-explained/");
+ for(const other of [{...engine,rated_rpm:1800},{...engine,spec_value:"110-114"}]){
+   assert.deepEqual(modelEvidenceAnswers({...base,specifications:[engine,other]},"en"),[]);
+ }
+});
