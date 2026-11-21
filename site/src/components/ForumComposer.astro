@@ -76,8 +76,9 @@ const strings=JSON.stringify({
     </form>
     <div class="forum-social" data-forum-social>
       <p>{mt(lang,"otherLogin")}</p>
-      <button type="button" data-forum-oauth="google">{mt(lang,"google")}</button>
-      <button type="button" data-forum-oauth="github">{mt(lang,"github")}</button>
+      <button type="button" data-forum-oauth="google" hidden disabled>{mt(lang,"google")}</button>
+      <button type="button" data-forum-oauth="github" hidden disabled>{mt(lang,"github")}</button>
+      <p class="forum-oauth-notice" data-oauth-unavailable hidden role="status" aria-live="polite">{mt(lang,"oauthError")}</p>
     </div>
     <div data-mail-step hidden tabindex="-1">
      <strong data-sent-address></strong>
@@ -163,6 +164,8 @@ const strings=JSON.stringify({
 .community-composer .forum-social p{width:100%;font-weight:650}
 .community-composer .forum-social button{background:white;color:#235d39;border:1px solid #9dbba5}
 .community-composer .forum-social button:hover{background:#e8f4e7}
+.community-composer .forum-social [hidden]{display:none!important}
+.community-composer .forum-oauth-notice{font-size:13px;line-height:1.55;color:#486751;margin:0}
 .community-composer .forum-password-choice small{font-weight:500;color:#52705d}
 .community-composer .forum-password-reveal{display:flex;align-items:center;gap:9px;font-weight:600}
 .community-composer .forum-password-reveal input{width:17px;height:17px;accent-color:#24643b}
@@ -185,6 +188,8 @@ for(const widget of widgets){
  const passwordForm=el<HTMLFormElement>("[data-forum-password]");
  const passwordChoice=el<HTMLDetailsElement>("[data-password-choice]");
  const socialBox=el<HTMLElement>("[data-forum-social]");
+ const oauthUnavailable=el<HTMLElement>("[data-oauth-unavailable]");
+ const oauthButtons=[...widget.querySelectorAll<HTMLButtonElement>("[data-forum-oauth]")];
  const resetForm=el<HTMLFormElement>("[data-forum-set-password]");
  const mailStep=el<HTMLElement>("[data-mail-step]");
  const codeOption=el<HTMLDetailsElement>("[data-code-option]");
@@ -202,6 +207,37 @@ for(const widget of widgets){
   apikey:cfg.key,"Content-Type":"application/json",
   ...(token?{Authorization:"Bearer "+token}:{})
  });
+ // The forum is static and Supabase's OAuth providers are configured remotely.
+ // Never redirect to /authorize for disabled providers: that endpoint returns a
+ // confusing raw JSON error page, not a usable login or registration screen.
+ async function discoverSocialProviders(){
+  try{
+   const res=await fetch(cfg.url+"/auth/v1/settings",{
+    headers:{apikey:cfg.key,Accept:"application/json"},
+    cache:"no-store",signal:AbortSignal.timeout(10000)
+   });
+   if(!res.ok)throw Error("auth settings unavailable");
+   const settings=await res.json();
+   const available=settings?.external;
+   const allowed=available && typeof available==="object"?available:{};
+   for(const button of oauthButtons){
+    const provider=button.dataset.forumOauth;
+    const enabled=(provider==="google"||provider==="github")&&allowed[provider]===true;
+    button.hidden=!enabled;button.disabled=!enabled;
+   }
+   if(oauthUnavailable)oauthUnavailable.hidden=oauthButtons.some(b=>!b.hidden);
+  }catch{
+   for(const button of oauthButtons){button.hidden=true;button.disabled=true}
+   if(oauthUnavailable)oauthUnavailable.hidden=false;
+  }
+ }
+ // In production always use the canonical HTTPS host even when a visitor uses
+ // an alternate www hostname. Local test pages keep their own callback origin.
+ const callbackUrl=()=>{
+  const origin=/^(?:www\.)?tractorvs\.com$/i.test(location.hostname)?
+    "https://tractorvs.com":location.origin;
+  return new URL(location.pathname,origin).toString();
+ };
  const historyPanel=el<HTMLDetailsElement>("[data-forum-history]");
  const historyList=el<HTMLUListElement>("[data-history-list]");
  const historyStatus=el<HTMLElement>("[data-history-status]");
@@ -370,7 +406,7 @@ for(const widget of widgets){
   const requestAttempt=++activeAuthAttempt;
   if(button)button.disabled=true;msg(copy.loading||"...");
   try{
-   const callback=new URL(location.pathname,location.origin).toString();
+   const callback=callbackUrl();
    const res=await fetch(cfg.url+"/auth/v1/otp?redirect_to="+encodeURIComponent(callback),{
     method:"POST",headers:header(),body:JSON.stringify({email,create_user:true}),
     signal:AbortSignal.timeout(15000)
@@ -403,7 +439,7 @@ for(const widget of widgets){
   if(button?.disabled)return;
   if(button)button.disabled=true;
   try{
-   const redirect=new URL(location.pathname,location.origin).toString();
+   const redirect=callbackUrl();
    const res=await fetch(cfg.url+"/auth/v1/recover?redirect_to="+encodeURIComponent(redirect),{
     method:"POST",headers:header(),body:JSON.stringify({email}),
     signal:AbortSignal.timeout(15000)});
@@ -445,7 +481,7 @@ for(const widget of widgets){
   buttons.forEach(b=>b.disabled=true);
   msg(copy.loading||"...");
   try{
-   const callback=new URL(location.pathname,location.origin).toString();
+   const callback=callbackUrl();
    const endpoint=signup?"/auth/v1/signup":"/auth/v1/token?grant_type=password";
    const url=cfg.url+endpoint+(signup?"?redirect_to="+encodeURIComponent(callback):"");
    const response=await fetch(url,{method:"POST",headers:header(),
@@ -463,14 +499,19 @@ for(const widget of widgets){
  });
  for(const button of widget.querySelectorAll<HTMLButtonElement>("[data-forum-oauth]")){
   button.addEventListener("click",()=>{
+   if(button.hidden||button.disabled){msg(memberCopy.oauthError);return}
    const provider=button.dataset.forumOauth;
    if(provider!=="google"&&provider!=="github")return;
    const authUrl=new URL("/auth/v1/authorize",cfg.url);
    authUrl.searchParams.set("provider",provider);
-   authUrl.searchParams.set("redirect_to",new URL(location.pathname,location.origin).toString());
+   authUrl.searchParams.set("redirect_to",callbackUrl());
+   if(button.hidden||button.disabled){msg(memberCopy.oauthError);return}
    location.assign(authUrl.toString());
   });
  }
+ // Re-evaluate on each page load: enabling Google/GitHub in Supabase Dashboard
+ // makes the corresponding button available without a new site deployment.
+ void discoverSocialProviders();
  verifyForm?.addEventListener("submit",async ev=>{
   ev.preventDefault();
   const code=(verifyForm.elements.namedItem("code") as HTMLInputElement|null)?.value.trim()||"";
