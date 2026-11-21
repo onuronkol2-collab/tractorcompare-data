@@ -17,6 +17,7 @@ export interface EvidenceAnswer {
   sourceUrl:string;
   sourceType:"manufacturer"|"independent";
   guidePath:string|null;
+  measurementNote:string|null;
 }
 type Candidate={
   value:number;
@@ -24,6 +25,7 @@ type Candidate={
   sourceUrl:string;
   sourceType:"manufacturer"|"independent";
   standard:string|null;
+  ratedRpm:number|null;
   key:string;
 };
 type Field={
@@ -55,7 +57,7 @@ function parseValue(spec:PublicSpec,field:Field):number|null {
  if(field.unit==="l"&&unit!=="l"&&unit!=="liter"&&unit!=="litre")return null;
  if(field.unit!== "l"&&unit!==field.unit)return null;
  const raw=spec.spec_value.trim();
- if(!/^\d{1,4}(?:[.,]\d{1,2})?$/.test(raw))return null;
+ if(!/^\d{1,5}(?:[.,]\d{1,2})?$/.test(raw))return null;
  const value=Number(raw.replace(",","."));
  return Number.isFinite(value)&&value>=field.min&&value<=field.max?value:null;
 }
@@ -67,9 +69,13 @@ function selectUnambiguous(rows:PublicSpec[],field:Field,brand:string):Candidate
   if(!spec.verified_at?.trim()||!spec.evidence_text?.trim())continue;
   const source=evidenceSource(spec,brand);
   const value=parseValue(spec,field);
-  if(!source||value===null)continue;
+  if(!source)continue;
+  // A second reviewed range or unit cannot substantiate one exact figure.
+  if(value===null)return null;
   const standard=spec.measurement_standard?.trim()||null;
-  candidates.push({value,unit:field.unit,...source,standard,key});
+  const ratedRpm=spec.rated_rpm??null;
+  if(ratedRpm!==null && (!Number.isFinite(ratedRpm)||ratedRpm<=0))return null;
+  candidates.push({value,unit:field.unit,...source,standard,ratedRpm,key});
  }
  if(!candidates.length)return null;
  // Rated, gross and maximum power measurements can differ. Do not average or
@@ -77,7 +83,7 @@ function selectUnambiguous(rows:PublicSpec[],field:Field,brand:string):Candidate
  const uniqueValues=new Set(candidates.map(c=>c.value));
  const standards=new Set(candidates.map(c=>c.standard?.toLowerCase()||""));
  const keys=new Set(candidates.map(c=>c.key));
- if(uniqueValues.size!==1||standards.size!==1||(field.id==="rated-power"&&keys.size>1))return null;
+ if(uniqueValues.size!==1||standards.size!==1||new Set(candidates.map(c=>c.ratedRpm)).size!==1||(field.id==="rated-power"&&keys.size>1))return null;
  return candidates.sort((a,b)=>
   Number(b.sourceType==="manufacturer")-Number(a.sourceType==="manufacturer") ||
   a.sourceUrl.localeCompare(b.sourceUrl))[0];
@@ -169,14 +175,17 @@ export function modelEvidenceAnswers(tractor:Pick<TractorRecord,"brand_name"|"mo
   if(!found)continue;
   const standard=safeStandard(found.standard);
   const standardSuffix=standard?(lang==="tr"?" (ölçüm bilgisi: "+standard+")":" (reported context: "+standard+")"):"";
+  const rpm=found.ratedRpm===null?null:formatNumber(found.ratedRpm,lang)+(lang==="tr"?" dev/dk":" rpm");
+  const measurementNote=[standard?null:found.standard,rpm].filter(Boolean).join(" · ")||null;
   const v=formatNumber(found.value,lang);
   const phrasing=(text[lang] as Record<string,(n:string,v:string,s:string)=>{question:string;answer:string}>)[field.id==="rated-power"?"rated":field.id==="pto-power"?"pto":field.id];
   const copy=phrasing(name,v,standardSuffix);
   answers.push({
-   id:field.id,question:copy.question,answer:copy.answer,
+   id:field.id,question:copy.question,answer:copy.answer,measurementNote,
    sourceUrl:found.sourceUrl,sourceType:found.sourceType,
    guidePath:field.id==="rated-power"?"/guides/tractor-engine-power-and-torque/":
      field.id==="pto-power"?"/guides/pto-and-power-take-off/":
+     field.id==="rear-hitch-lift"?"/guides/tractor-hydraulic-lift-explained/":
      null
   });
   if(answers.length===6)break;

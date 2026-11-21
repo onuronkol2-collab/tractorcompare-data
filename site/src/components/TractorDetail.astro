@@ -10,7 +10,7 @@ import {INDEPENDENT_SOURCE_COPY} from "../lib/independent-source-i18n.ts";
 import { localizedPath, type Locale } from "../lib/locales";
 import { t } from "../lib/ui";
 import { compareText as cx } from "../lib/compare-ux";
-import { marketDisplayName } from "../lib/market-display";
+import { BRAND_COUNTRY_LABEL, brandCountryName, marketDisplayName } from "../lib/market-display";
 import {hasInternationalSonalikaContext,isSonalikaExportSourceNote,SONALIKA_EXPORT_COPY} from "../lib/sonalika-context-i18n.ts";
 import { modelSeoMetadata, modelStructuredData, originalVariantNote } from "../lib/model-seo";
 import { getPublicCatalog } from "../lib/catalog";
@@ -59,7 +59,7 @@ const summaryItems = [
       {tractor.model_year&&<span>{tractor.model_year}</span>}
       {tractor.variant&&<span title={tractor.variant}>{tractor.variant.split(";")[0].trim()}</span>}
       {tractor.market&&<span>{marketDisplayName(tractor.market,lang)}</span>}
-      {tractor.brand_country&&<span>{tractor.brand_country}</span>}
+      {tractor.brand_country&&<span>{BRAND_COUNTRY_LABEL[lang]} · {brandCountryName(tractor.brand_country,lang)}</span>}
     </div>
     <a class="model-compare-action" href={compareUrl}>
       <span class="model-compare-symbol" aria-hidden="true">⇄</span>
@@ -96,9 +96,10 @@ const summaryItems = [
         <h2 id="model-answers-heading">{lang==="tr"?"Bu traktör hakkında doğrulanabilen bilgiler":"Documented facts about this tractor"}</h2>
         <p>{lang==="tr"?"Buradaki rakamlar yalnızca bağlantılı kanıtı bulunan teknik kayıtlarımızdan alınır. Eksik veya çelişkili bilgiler kesinmiş gibi özetlenmez.":"Only reviewed, source-linked technical entries are summarized here. Missing or conflicting claims are not guessed."}</p>
       </div>
-      <div class="model-answer-grid">{answerItems.map(item=><article class="model-answer-card">
+      <div class="model-answer-grid">{answerItems.map(item=><article class="model-answer-card" id={"answer-" + item.id}>
         <h3>{item.question}</h3>
         <p>{item.answer}</p>
+        {item.measurementNote && <p><strong>{lang==="tr"?"Ölçüm notu":"Measurement note"}</strong> · {item.measurementNote}</p>}
         <div class="model-answer-links">
           <a href={item.sourceUrl} target="_blank" rel="noopener noreferrer">
             {lang==="tr"?(item.sourceType==="manufacturer"?"Üretici kaynağı":"Bağımsız teknik kaynak"):(item.sourceType==="manufacturer"?"Manufacturer source":"Independent technical source")} ↗
