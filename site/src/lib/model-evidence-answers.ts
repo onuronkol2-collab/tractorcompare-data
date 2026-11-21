@@ -179,7 +179,7 @@ export function modelEvidenceAnswers(tractor:Pick<TractorRecord,"brand_name"|"mo
      field.id==="pto-power"?"/guides/pto-and-power-take-off/":
      null
   });
-  if(answers.length===4)break;
+  if(answers.length===6)break;
  }
  return answers;
 }
