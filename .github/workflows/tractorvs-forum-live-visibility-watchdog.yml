@@ -6,6 +6,12 @@ on:
   schedule:
     - cron: "19,49 * * * *"
   workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/tractorvs-forum-live-visibility-watchdog.yml"
+      - "scripts/tractor-forum-live-visibility-audit.mjs"
+      - "scripts/tractor-forum-recover-stale-deployment.mjs"
   pull_request:
     paths:
       - "scripts/tractor-forum-live-visibility-audit.mjs"
