@@ -16,8 +16,7 @@ BEGIN
  IF NOT (SELECT p.prosecdef FROM pg_proc p WHERE p.oid='public.tc_claim_tractor_research_by_id(uuid)'::regprocedure) THEN
    RAISE EXCEPTION 'RPC security-definer contract changed; stop.';
  END IF;
- IF pg_get_functiondef('public.tc_claim_tractor_research_by_id(uuid)'::regprocedure)
-      ~ 'EXISTS[[:space:]]*\\(' THEN
+ IF position('AND EXISTS (' in pg_get_functiondef('public.tc_claim_tractor_research_by_id(uuid)'::regprocedure))>0 THEN
    RAISE EXCEPTION 'Targeted claim function has already changed; review rather than overwrite.';
  END IF;
 END
