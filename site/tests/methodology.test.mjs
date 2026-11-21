@@ -25,7 +25,8 @@ test("generic SiteLayout preserves full 10-locale hreflang by default and scopes
   assert.match(layout,/availableLocales = LOCALES/);
   assert.match(layout,/availableLocales\.map\(\(locale\) => \(\{/);
   assert.match(layout,/const languageChoices = availableLocales\.map/);
-  assert.match(layout,/lang==="tr"\?"\/tr\/methodology\/":"\/methodology\/"/);
+  assert.match(layout,/const methodologyPath = localizedPath\(lang==="tr"\?"tr":"en", "\/methodology\/"\)/);
+  assert.match(layout,/href=\{methodologyPath\}/);
   assert.doesNotThrow(assertCompleteTranslations);
   assert.equal(LOCALES.length,10);
   for(const l of LOCALES) assert.ok(t(l,"methodologyLink").trim().length>5);
