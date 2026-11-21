@@ -71,3 +71,29 @@ test("article hub has no serious or critical axe-core findings",async ({page,bro
   expect(significant,path+" has serious/critical accessibility violations").toEqual([]);
  }
 });
+
+
+test("published full-text selection and Başak articles stay complete in all eight additional languages",async ({page,browserName,isMobile})=>{
+ test.skip(browserName!=="chromium"||isMobile,"full translation parity checked once on desktop Chromium");
+ for(const [lang,langTag] of [
+  ["zh","zh-Hans"],["hi","hi"],["pt-br","pt-BR"],["fr","fr"],
+  ["de","de"],["ru","ru"],["ja","ja"],["es","es"]
+ ]){
+  const guide=await page.goto("/"+lang+"/guides/choosing-a-tractor/",{waitUntil:"domcontentloaded"});
+  expect(guide?.status(),lang+" selection guide").toBe(200);
+  await expect(page.locator("html")).toHaveAttribute("lang",langTag);
+  await expect(page.locator(".guide-steps > li")).toHaveCount(6);
+  await expect(page.locator(".guide-checklist tbody tr")).toHaveCount(5);
+  await expect(page.locator(".guide-crumb")).not.toHaveAttribute("aria-label","Breadcrumb");
+  const review=await page.goto("/"+lang+"/reviews/basak-2075-bk/",{waitUntil:"domcontentloaded"});
+  expect(review?.status(),lang+" Başak review").toBe(200);
+  await expect(page.locator("html")).toHaveAttribute("lang",langTag);
+  await expect(page.locator(".review-prose")).toHaveCount(4);
+  await expect(page.locator(".review-facts tbody tr")).toHaveCount(8);
+  await expect(page.locator(".review-crumb")).not.toHaveAttribute("aria-label","Breadcrumb");
+  await expect(page.locator(".review-next")).not.toHaveAttribute("aria-label","Related pages");
+  for(const value of ["53 kW","72 hp","273 Nm","540E","3000 kg","3080 kg"]){
+   await expect(page.locator(".review-facts")).toContainText(value);
+  }
+ }
+});
