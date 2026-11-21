@@ -1,4 +1,5 @@
 import type { Locale } from "./locales.ts";
+import { REVIEWED_PUBLIC_SPEC_HEADINGS } from "./reviewed-public-spec-headings.ts";
 
 /**
  * Audited against the 170 public tractor detail pages (17 models x 10 languages).
@@ -8,6 +9,8 @@ import type { Locale } from "./locales.ts";
  * Missing languages keep the existing canonical technical glossary.
  */
 export const PUBLISHED_SPEC_TERMS: Record<string, Partial<Record<Locale,string>>> = {
+  // Last reviewed against 379-model live content audit; existing canonical entries still take precedence.
+  ...REVIEWED_PUBLIC_SPEC_HEADINGS,
   "Engine Valves": {"tr": "Motor supap sayısı", "zh": "发动机气门数", "hi": "इंजन में वाल्वों की संख्या", "pt-br": "Número de válvulas do motor", "fr": "Nombre de soupapes du moteur", "de": "Anzahl der Motorventile", "ru": "Количество клапанов двигателя", "ja": "エンジンバルブ数", "es": "Número de válvulas del motor"},
   "Forward / reverse gears": {"tr": "İleri ve geri vites sayısı", "zh": "前进挡和倒挡数量", "hi": "आगे और पीछे के गियरों की संख्या", "pt-br": "Número de marchas à frente e à ré", "fr": "Nombre de rapports avant et arrière", "de": "Anzahl der Vorwärts- und Rückwärtsgänge", "ru": "Число передач переднего и заднего хода", "ja": "前進・後進の段数", "es": "Número de marchas hacia delante y atrás"},
   "Drivetrain": {"tr": "Güç aktarma sistemi", "zh": "动力传动系统", "hi": "ड्राइवट्रेन", "pt-br": "Sistema de transmissão de potência", "fr": "Chaîne cinématique", "de": "Antriebsstrang", "ru": "Силовая передача", "ja": "駆動系", "es": "Tren motriz"},
