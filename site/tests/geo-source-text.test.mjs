@@ -41,7 +41,8 @@ test("TR/EN model fact summaries never assume a cited source URL is a PDF",()=>{
 test("source caveats still warn about variant and measurement conditions",()=>{
  for(const lang of LOCALES){
   const copy=MODEL_SOURCE_COPY[lang];
-  assert.ok(copy.caution.length>55,lang);
-  assert.ok(copy.introduction.length>55,lang);
+  const minLength=["zh","ja"].includes(lang)?30:55;
+  assert.ok(copy.caution.length>minLength,lang);
+  assert.ok(copy.introduction.length>minLength,lang);
  }
 });
