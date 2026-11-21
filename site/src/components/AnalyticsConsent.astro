@@ -8,12 +8,13 @@ const { lang } = Astro.props;
 const c = analyticsText(lang);
 ---
 <aside id="tractorvs-analytics-banner" class="tractorvs-analytics-banner" hidden
-      aria-labelledby="tractorvs-analytics-title" aria-describedby="tractorvs-analytics-description"
+      aria-labelledby="tractorvs-analytics-title" aria-describedby="tractorvs-analytics-description tractorvs-clarity-description tractorvs-cloudflare-description"
       role="region">
   <div class="tractorvs-analytics-copy">
     <strong id="tractorvs-analytics-title">{c.consentTitle}</strong>
     <p id="tractorvs-analytics-description">{c.consentDescription}</p>
-    <p>{c.clarityConsent}</p>
+    <p id="tractorvs-clarity-description">{c.clarityConsent}</p>
+    <p id="tractorvs-cloudflare-description">{c.cloudflareConsent}</p>
     <a class="tractorvs-analytics-link" href={localizedPath(lang,"/privacy/")}>{c.privacyLink}</a>
   </div>
   <div class="tractorvs-analytics-actions">
@@ -22,7 +23,7 @@ const c = analyticsText(lang);
   </div>
 </aside>
 <script>
-  import { ANALYTICS_CHOICE_KEY, GA4_MEASUREMENT_ID, CLARITY_PROJECT_ID } from "../lib/analytics-i18n.ts";
+  import { ANALYTICS_CHOICE_KEY, GA4_MEASUREMENT_ID, CLARITY_PROJECT_ID, CLOUDFLARE_WEB_ANALYTICS_TOKEN } from "../lib/analytics-i18n.ts";
 
   type AnalyticsChoice = "accepted" | "rejected";
   const banner = document.getElementById("tractorvs-analytics-banner");
@@ -42,12 +43,17 @@ const c = analyticsText(lang);
     try {
       const choice = window.localStorage.getItem(ANALYTICS_CHOICE_KEY);
       if (choice === "accepted" || choice === "rejected") return choice;
-      // Preserve previously rejected preferences but require fresh consent
-      // from people who had accepted the old GA4-only disclosure.
+      // v2 consent covered GA4 and Clarity but not Cloudflare RUM. Users
+      // must approve the expanded disclosure anew. Previous refusals stand.
+      const priorChoice = window.localStorage.getItem("tractorvs_analytics_choice_v2");
+      if (priorChoice === "rejected") return "rejected";
+      if (priorChoice === "accepted") {
+        clearAnalyticsFirstPartyCookies();
+        clearClarityFirstPartyCookies();
+        return null;
+      }
       const legacyChoice = window.localStorage.getItem("tractorvs_analytics_choice_v1");
       if (legacyChoice === "accepted") {
-        // Old GA4-only approval does not cover session recordings.
-        // Remove stale identifiers while waiting for renewed permission.
         clearAnalyticsFirstPartyCookies();
         clearClarityFirstPartyCookies();
       }
@@ -111,6 +117,21 @@ const c = analyticsText(lang);
     document.head.appendChild(script);
   }
 
+  // Cloudflare's auto-injection MUST first be switched off in the owner's
+  // dashboard (Manage site > Enable with JS Snippet installation).
+  // This manual beacon is opt-in and uses the existing, publicly visible
+  // Cloudflare site token; it is not loaded before consent.
+  function loadCloudflareOnlyAfterConsent() {
+    if (document.querySelector('script[src*="static.cloudflareinsights.com/beacon.min.js"]')) return;
+    const script = document.createElement("script");
+    script.type = "module";
+    script.async = true;
+    script.dataset.tractorvsCloudflare = "";
+    script.dataset.cfBeacon = JSON.stringify({ token: CLOUDFLARE_WEB_ANALYTICS_TOKEN });
+    script.src = "https://static.cloudflareinsights.com/beacon.min.js";
+    document.head.appendChild(script);
+  }
+
   function clearAnalyticsFirstPartyCookies() {
     // Revocation should not leave the site's known GA first-party identifiers.
     const names = document.cookie.split(";")
@@ -154,6 +175,7 @@ const c = analyticsText(lang);
     if (choice === "accepted") {
       loadAnalyticsOnlyAfterConsent();
       loadClarityOnlyAfterConsent();
+      loadCloudflareOnlyAfterConsent();
     } else {
       // Always remove old identifiers, including those from the previous
       // GA4-only consent flow, even if no current script has loaded.
@@ -162,7 +184,8 @@ const c = analyticsText(lang);
       // A previously loaded tag cannot be un-loaded safely. Deny subsequent
       // measurement and reload with the rejected preference so it stays absent.
       if (document.querySelector("script[data-tractorvs-ga4]") ||
-          document.querySelector("script[data-tractorvs-clarity]")) {
+          document.querySelector("script[data-tractorvs-clarity]") ||
+          document.querySelector("script[data-tractorvs-cloudflare]")) {
         // Immediately revoke Clarity consent before reloading the page.
         clarityWindow.clarity?.("consentv2", {
           ad_Storage: "denied", analytics_Storage: "denied",
@@ -189,6 +212,7 @@ const c = analyticsText(lang);
   if (current === "accepted") {
     loadAnalyticsOnlyAfterConsent();
     loadClarityOnlyAfterConsent();
+    loadCloudflareOnlyAfterConsent();
   } else if (current === null && banner) {
     banner.hidden = false;
   }
