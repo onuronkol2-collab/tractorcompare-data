@@ -76,7 +76,7 @@ test("sign in, recover a draft, publish directly and check its status",async({pa
  expect(posted).toHaveLength(1);
  expect(posted[0]).toMatchObject({title,body,status:"published",locale:"de",translation_consent:false});
  await compose.locator("[data-forum-history] summary").click();
- await expect(compose.locator("[data-history-list]")).toContainText(title+" · İncelemede");
+ await expect(compose.locator("[data-history-list]")).toContainText(title+" · Yayında");
  await post.locator("textarea").fill("Private draft for user A");
  await compose.locator("[data-forum-logout]").click();
  currentUser="user-b";
