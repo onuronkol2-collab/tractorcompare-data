@@ -1,15 +1,22 @@
 ---
 import SiteLayout from "../layouts/SiteLayout.astro";
 import ForumComposer from "./ForumComposer.astro";
+import ForumRichText from "./ForumRichText.astro";
+import ForumMediaGallery from "./ForumMediaGallery.astro";
 import {forumText as ft} from "../lib/forum-i18n.ts";
 import {memberText as mt,MEMBER_TEXT} from "../lib/member-i18n.ts";
 import {publicForumClientConfig} from "../lib/forum.ts";
-import {allPublicForumTopics,isIndexableForumTopic,allPublicForumReplies,forumThreadReplies,forumDate,type ForumTopic} from "../lib/forum.ts";
+import {allPublicForumTopics,isIndexableForumTopic,allPublicForumReplies,allPublicForumMedia,forumMediaImageUrl,forumThreadReplies,forumDate,type ForumTopic} from "../lib/forum.ts";
 import {getPublicCatalog} from "../lib/catalog.ts";
 import {localizedPath,type Locale,LOCALE_TAGS,LOCALE_NAMES} from "../lib/locales.ts";
 interface Props {lang:Locale;topic:ForumTopic}
 const {lang,topic}=Astro.props;
 const replies=forumThreadReplies(await allPublicForumReplies(),lang,topic.topic_id);
+const approvedMedia=await allPublicForumMedia();
+const topicMedia=approvedMedia.filter(photo=>photo.topic_id===topic.topic_id)
+ .sort((a,b)=>a.position-b.position);
+const replyMedia=(id:string)=>approvedMedia.filter(photo=>photo.reply_id===id)
+ .sort((a,b)=>a.position-b.position);
 const catalog=(await getPublicCatalog()).tractors;
 const tractor=topic.tractor_id?catalog.find(t=>t.tractor_id===topic.tractor_id):null;
 const forumUrl=localizedPath(lang,"/forum/");
@@ -28,6 +35,9 @@ const origin=Astro.site||new URL("https://tractorvs.com");
 const schema=eligible?{
  "@context":"https://schema.org","@type":"WebPage",url:new URL(publicPath,origin).toString(),
  name:topic.title,description:topic.body.slice(0,200),inLanguage:LOCALE_TAGS[lang],
+ ...(topicMedia.length?{image:topicMedia.map(photo=>({
+  "@type":"ImageObject",contentUrl:forumMediaImageUrl(photo.id),caption:photo.alt_text
+ }))}:{}),
  isAccessibleForFree:true,isPartOf:{"@type":"CollectionPage",url:new URL(forumUrl,origin).toString()}
 }:null;
 // No real author identity is present in the public projection.
@@ -45,7 +55,8 @@ const schema=eligible?{
      {topic.machine_translated&&<span>{ft(lang,"translated")}</span>}
     </div>
     <h1>{topic.title}</h1>
-    <div class="forum-body">{topic.body.split(/\n\s*\n/).filter(Boolean).map(p=><p>{p}</p>)}</div>
+    <div class="forum-body"><ForumRichText body={topic.body}/></div>
+    <ForumMediaGallery photos={topicMedia} contentLanguage={LOCALE_TAGS[topic.original_locale]}/>
     {originalTopic&&<a class="original-link" href={localizedPath(originalTopic.locale,"/forum/"+originalTopic.slug+"/")} hreflang={LOCALE_TAGS[originalTopic.locale]}>
      {ft(lang,"readOriginal")} · <bdi lang={LOCALE_TAGS[originalTopic.locale]}>{LOCALE_NAMES[originalTopic.locale]}</bdi>
     </a>}
@@ -69,14 +80,15 @@ const schema=eligible?{
        {reply.machine_translated&&<span>{ft(lang,"translated")}</span>}
       </div>
       {reply.locale!==lang&&<p class="reply-language">{ft(lang,"originalLanguage")} · <bdi lang={LOCALE_TAGS[reply.locale]}>{LOCALE_NAMES[reply.locale]}</bdi></p>}
-      <div lang={LOCALE_TAGS[reply.locale]}>{reply.body.split(/\n\s*\n/).filter(Boolean).map(p=><p>{p}</p>)}</div>
+      <div lang={LOCALE_TAGS[reply.locale]}><ForumRichText body={reply.body}/></div>
+      <ForumMediaGallery photos={replyMedia(reply.id)} contentLanguage={LOCALE_TAGS[reply.original_locale]}/>
       <div class="forum-helpful" data-helpful-reply data-reply-id={reply.id}>
        <button type="button" data-helpful-toggle aria-pressed="false">{mt(lang,"helpfulButton")}</button>
        <span data-helpful-count aria-live="polite">0</span>
       </div>
       {reply.machine_translated&&<details class="reply-original">
        <summary>{ft(lang,"readOriginal")} · <bdi lang={LOCALE_TAGS[original.locale]}>{LOCALE_NAMES[original.locale]}</bdi></summary>
-       <div lang={LOCALE_TAGS[original.locale]}>{original.body.split(/\n\s*\n/).filter(Boolean).map(p=><p>{p}</p>)}</div>
+       <div lang={LOCALE_TAGS[original.locale]}><ForumRichText body={original.body}/></div>
       </details>}
     </article>)}
    </section>
