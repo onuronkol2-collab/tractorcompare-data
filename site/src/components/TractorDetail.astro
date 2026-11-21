@@ -15,7 +15,8 @@ import {hasInternationalSonalikaContext,isSonalikaExportSourceNote,SONALIKA_EXPO
 import { modelSeoMetadata, modelStructuredData, originalVariantNote } from "../lib/model-seo";
 import { getPublicCatalog } from "../lib/catalog";
 import { morePublishedTractors } from "../lib/related-tractors";
-import { modelEvidenceAnswers } from "../lib/model-evidence-answers.ts";
+import { modelEvidenceAnswers, matchedHeadlinePowerSource } from "../lib/model-evidence-answers.ts";
+import { HEADLINE_PROVENANCE_COPY } from "../lib/headline-provenance-i18n.ts";
 import {forumText as forumCopy} from "../lib/forum-i18n.ts";
 interface Props { lang: Locale; tractor: TractorRecord; }
 const { lang, tractor } = Astro.props;
@@ -35,11 +36,13 @@ const structuredData = import.meta.env.PUBLIC_INDEXING_ENABLED === "true" && Ast
   ? modelStructuredData(tractor, lang, Astro.site.toString()) : null;
 const isSonalikaExport = hasInternationalSonalikaContext(tractor);
 const sonalikaCopy = SONALIKA_EXPORT_COPY[lang];
+const powerProvenance=matchedHeadlinePowerSource(tractor);
+const sourceCopy=HEADLINE_PROVENANCE_COPY[lang];
 const summaryItems = [
-  {label:isSonalikaExport ? sonalikaCopy.hpLabel : t(lang,"power"),value:tractor.horsepower!=null?tractor.horsepower+" HP":null},
-  {label:t(lang,"engine"),value:tractor.engine},
-  {label:t(lang,"transmission"),value:tractor.transmission},
-  {label:t(lang,"weight"),value:tractor.weight_kg!=null?tractor.weight_kg+" kg":null},
+  {key:"power",label:isSonalikaExport ? sonalikaCopy.hpLabel : t(lang,"power"),value:tractor.horsepower!=null?tractor.horsepower+" HP":null},
+  {key:"engine",label:t(lang,"engine"),value:tractor.engine},
+  {key:"transmission",label:t(lang,"transmission"),value:tractor.transmission},
+  {key:"weight",label:t(lang,"weight"),value:tractor.weight_kg!=null?tractor.weight_kg+" kg":null},
 ].filter((item)=>item.value);
 ---
 <SiteLayout lang={lang} title={title} description={description} structuredData={structuredData} ogImage={cover && Astro.site ? new URL(cover.displayUrl,Astro.site).toString() : null}>
@@ -61,8 +64,17 @@ const summaryItems = [
       <span class="model-compare-arrow" aria-hidden="true">↗</span>
     </a>
     <TractorPhoto tractor={tractor} lang={lang} mode="hero" />
-    {summaryItems.length>0&&<div class="model-summary-grid">{summaryItems.map((item)=>
-      <div><small>{item.label}</small><strong>{item.value}</strong></div>)}</div>}
+    {summaryItems.length>0&&<>
+      <div class="model-summary-grid">{summaryItems.map((item)=>
+        <div data-claim={item.key}><small>{item.label}</small><strong>{item.value}</strong>
+          {item.key==="power"&&!isSonalikaExport && (
+            powerProvenance
+              ? <a class="model-summary-power-source" href={powerProvenance.sourceUrl} target="_blank" rel="noopener noreferrer">{sourceCopy.matched} <span aria-hidden="true">↗</span></a>
+              : <span class="model-summary-power-review">{sourceCopy.unconfirmed}</span>
+          )}
+        </div>)}</div>
+      <p class="model-summary-provenance-note">{sourceCopy.summaryCaveat}</p>
+    </>}
   </div></section>
   <TractorMarketPrice lang={lang} tractor={tractor} />
   <section class="model-spec-section"><div class="container">
@@ -144,6 +156,13 @@ const summaryItems = [
 </SiteLayout>
 
 <style>
+ .model-summary-provenance-note { max-width:860px; margin:10px 0 0; color:#dce8d7; font-size:12px; line-height:1.7; }
+ .model-summary-power-source, .model-summary-power-review { display:block; margin-top:8px; font-size:12px; line-height:1.55; font-weight:650; overflow-wrap:anywhere; }
+ .model-summary-power-source { color:#d9f4c7; text-underline-offset:3px; }
+ .model-summary-power-source:hover { color:#fff; }
+ .model-summary-power-source:focus-visible { outline:3px solid #b7df91; outline-offset:3px; border-radius:3px; }
+ .model-summary-power-review { color:#e4e5d1; }
+
  .model-forum-discussion{display:flex;flex-wrap:wrap;align-items:center;gap:6px 17px;margin:17px 0 22px;padding:17px 19px;background:#f2f8f7;border:1px solid #bcd5cf;border-radius:13px;color:#245b49;text-decoration:none}
  .model-forum-discussion strong{font-size:15px;font-weight:900}
  .model-forum-discussion span{font-size:13px;line-height:1.6}

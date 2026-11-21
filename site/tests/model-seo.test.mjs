@@ -17,6 +17,14 @@ const tractor = {
     evidence_text:"Manufacturer model table",verified_at:"2026-11-18T12:00:00Z",
     source_publisher:"McCormick",source_url:"https://www.mccormick-tractors.com/catalog.pdf",
     source_type:"manufacturer_specification",source_accessed_at:null,spec_source_priority:100,
+  },{
+    spec_id:"rated",spec_name:"Rated engine power",spec_value:"114",unit:"hp",
+    canonical_key:"engine_rated_power",comparison_class:"engine",
+    measurement_standard:"ECE R120",rated_rpm:2200,
+    evidence_text:"Exact McCormick X5.120 source row gives 114 hp rated engine power at 2200 rpm",
+    verified_at:"2026-11-18T12:00:00Z",
+    source_publisher:"McCormick",source_url:"https://www.mccormick-tractors.com/catalog.pdf",
+    source_type:"manufacturer_specification",source_accessed_at:null,spec_source_priority:100,
   }],
 };
 
@@ -109,6 +117,25 @@ test("all ten locales have meaningful source-aware, nonempty descriptions", () =
     },locale).description;
     assert.notEqual(a.description,withoutSource,`Source claims must change in ${locale}`);
     assert.ok(withoutSource.length > 75);
+  }
+});
+
+test("SEO never advertises unsupported or conflicting horsepower in any of the ten languages",()=>{
+  const locales=["en","tr","zh","hi","pt-br","fr","de","ru","ja","es"];
+  const conflicting={...tractor,specifications:[
+    ...tractor.specifications,
+    {...tractor.specifications[1],spec_id:"conflict",spec_value:"120"},
+  ]};
+  const unverified={...tractor,specifications:tractor.specifications.filter(x=>x.canonical_key!=="engine_rated_power")};
+  const differentPower={...tractor,horsepower:120};
+  for(const lang of locales){
+    assert.match(modelSeoMetadata(tractor,lang).description,/114 HP/);
+    for(const row of [unverified,conflicting,differentPower]){
+      const meta=modelSeoMetadata(row,lang);
+      assert.ok(!/114 HP|120 HP/.test(meta.description),lang+" unsupported engine output not allowed in search meta");
+      assert.match(meta.title,/McCormick X5\.120/);
+      assert.ok(meta.description.length>40,lang+" should keep useful technical context");
+    }
   }
 });
 
