@@ -11,14 +11,15 @@ function response(rows,offset){
  return new Response(JSON.stringify(part),{status:code,
   headers:{"content-range":String(offset)+"-"+String(offset+part.length-1)+"/"+rows.length}});
 }
-function mock({topics=[],replies=[],old=null,fail=false}={}){
+function mock({topics=[],replies=[],media=[],old=null,fail=false}={}){
  const calls=[];
  const fetchFn=async (address,opts={})=>{
   const url=new URL(address);
   calls.push({url:url.toString(),method:opts.method||"GET",body:opts.body});
   if(url.hostname.endsWith(".supabase.co")){
    if(fail)return new Response(JSON.stringify({error:"DB unavailable"}),{status:500});
-   const rows=url.pathname.endsWith("tc_forum_localized_topics")?topics:replies;
+   const rows=url.pathname.endsWith("tc_forum_localized_topics")?topics:
+    url.pathname.endsWith("tc_forum_public_media")?media:replies;
    return response(rows,Number(url.searchParams.get("offset")||0));
   }
   if(url.hostname==="api.github.com"){
@@ -44,8 +45,9 @@ test("empty, moderated forum state is a valid read without exposing hidden recor
  const result=await fingerprintPublicForum({jwt:anon,fetchFn:m.fetchFn});
  assert.equal(result.public_topics,0);
  assert.equal(result.public_replies,0);
+ assert.equal(result.public_images,0);
  assert.match(result.fingerprint,/^[a-f0-9]{64}$/);
- assert.equal(m.calls.filter(c=>c.url.includes("supabase.co")).length,2);
+ assert.equal(m.calls.filter(c=>c.url.includes("supabase.co")).length,3);
 });
 test("initial empty state requests one revision only, never writes Supabase",async()=>{
  const a=mock(),res=await runForumSync({...base,fetchFn:a.fetchFn});
@@ -83,4 +85,17 @@ test("all 1001 localized records are read in five requests",async()=>{
  assert.deepEqual(m.calls.filter(c=>c.url.includes("localized_topics")).map(c=>new URL(c.url).searchParams.get("offset")),["0","250","500","750","1000"]);
  topics[1000]=topics[0];
  await assert.rejects(fingerprintPublicForum({jwt:anon,fetchFn:mock({topics}).fetchFn}),/Duplicate/);
+});
+
+test("independently approved public photos trigger a new static build without private storage access",async()=>{
+ const approved={id:"3f478dcc-476f-4b1c-8c6b-11a94087749d",topic_id:topic.topic_id,reply_id:null,
+  position:1,alt_text:"My tractor hydraulic pump on a workbench",locale:"und",status:"published",created_at:"2026-11-21"};
+ const before=await fingerprintPublicForum({jwt:anon,fetchFn:mock({topics:[topic]}).fetchFn});
+ const after=await fingerprintPublicForum({jwt:anon,fetchFn:mock({topics:[topic],media:[approved]}).fetchFn});
+ assert.notEqual(before.fingerprint,after.fingerprint);
+ assert.equal(after.public_images,1);
+ const m=mock({topics:[topic],media:[approved],old:before});
+ const result=await runForumSync({...base,fetchFn:m.fetchFn});
+ assert.equal(result.committed,true);
+ assert.ok(m.calls.every(c=>!c.url.includes("/storage/")&&!c.url.includes("service_role")));
 });

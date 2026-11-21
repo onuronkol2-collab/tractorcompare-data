@@ -1,0 +1,94 @@
+---
+import {FORUM_EDITOR_COPY} from "../lib/forum-editor-i18n.ts";
+import type {Locale} from "../lib/locales.ts";
+interface Props {lang:Locale}
+const {lang}=Astro.props;
+const labels=FORUM_EDITOR_COPY[lang];
+const emoji=["🚜","🌾","🛠️","⚙️","🔧","💬","✅","❓","📷","👨‍🌾","👩‍🌾","🌱","🚜","👍","⚠️","😊","😂","🎉","❤️","🔋"];
+---
+<div class="forum-editor" data-forum-editor data-editor-copy={JSON.stringify(labels)}>
+ <div class="forum-editor-top">
+  <div class="forum-editor-toolbar" role="toolbar" aria-label={labels.toolbar}>
+   <button type="button" data-editor-format="bold" aria-label={labels.bold} title={labels.bold}><strong>B</strong></button>
+   <button type="button" data-editor-format="italic" aria-label={labels.italic} title={labels.italic}><em>I</em></button>
+   <button type="button" data-editor-format="list" aria-label={labels.list} title={labels.list}>☷</button>
+   <button type="button" data-editor-format="quote" aria-label={labels.quote} title={labels.quote}>❞</button>
+   <button type="button" data-editor-format="code" aria-label={labels.code} title={labels.code}>{"</>"}</button>
+   <details class="forum-emoji">
+    <summary aria-label={labels.emoji} title={labels.emoji}>😊</summary>
+    <div class="forum-emoji-grid" aria-label={labels.emoji}>
+     {emoji.filter((value,index)=>emoji.indexOf(value)===index).map(face=>
+      <button type="button" data-editor-emoji={face} aria-label={labels.emoji+" "+face}>{face}</button>
+     )}
+    </div>
+   </details>
+   <button type="button" data-editor-add-photos aria-label={labels.photos} title={labels.photos}>📷 <span>{labels.photos}</span></button>
+   <button type="button" data-editor-preview aria-pressed="false" title={labels.preview}>👁 <span>{labels.preview}</span></button>
+  </div>
+  <div data-editor-count class="forum-editor-count" aria-live="off"></div>
+ </div>
+ <div data-editor-preview-panel hidden>
+  <strong class="preview-heading">{labels.previewTitle}</strong>
+  <div data-editor-preview-content class="forum-editor-preview-content">{labels.noPreview}</div>
+ </div>
+ <input type="file" accept="image/jpeg,image/png,image/webp" multiple data-editor-files hidden aria-label={labels.photos}/>
+ <div class="forum-editor-photos">
+  <p class="forum-editor-hint">{labels.photoHint}</p>
+  <ul class="forum-editor-photo-list" data-editor-photo-list></ul>
+  <label class="forum-editor-rights" data-editor-photo-rights hidden>
+   <input type="checkbox" data-editor-rights/> <span>{labels.photoRights}</span>
+  </label>
+  <p class="forum-editor-privacy">{labels.photoPrivacy}</p>
+  <button type="button" data-editor-retry hidden>{labels.retryPhotos}</button>
+  <p role="status" aria-live="polite" data-editor-status class="forum-editor-status"></p>
+ </div>
+</div>
+<style>
+ .forum-editor{margin-top:-5px;display:grid;gap:12px;min-width:0}
+ .forum-editor-top{display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px;align-items:center}
+ .forum-editor-toolbar{display:flex;flex-wrap:wrap;gap:6px;align-items:center;background:#e8f2e8;
+  border:1px solid #b8d2b9;border-radius:12px;padding:7px}
+ .forum-editor-toolbar button,.forum-editor-toolbar summary{display:inline-flex;min-height:43px;min-width:43px;
+  padding:8px 11px;border-radius:8px;border:1px solid transparent;align-items:center;justify-content:center;
+  background:#fff;color:#245738;font:inherit;font-weight:700;cursor:pointer;gap:5px}
+ .forum-editor-toolbar button:hover,.forum-editor-toolbar summary:hover{background:#d5edd9}
+ .forum-editor-toolbar button[aria-pressed=true]{background:#265e3d;color:white}
+ .forum-editor-toolbar button:focus-visible,.forum-editor-toolbar summary:focus-visible{outline:3px solid #83bc8a;outline-offset:2px}
+ .forum-editor-toolbar details{margin:0;position:relative}
+ .forum-editor-toolbar summary{list-style:none}
+ .forum-editor-toolbar summary::-webkit-details-marker{display:none}
+ .forum-emoji-grid{position:absolute;top:calc(100% + 9px);inset-inline-start:0;z-index:9;width:min(330px,90vw);
+  background:white;border:1px solid #b8d2b9;border-radius:12px;box-shadow:0 12px 26px #183c2428;
+  padding:10px;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:4px}
+ .forum-emoji-grid button{font-size:21px;min-width:0}
+ .forum-editor-count{font-size:12px;color:#4b6a54;font-variant-numeric:tabular-nums}
+ .forum-editor-hint,.forum-editor-privacy{font-size:12px;color:#53725d;line-height:1.55;margin:0}
+ .forum-editor-photo-list{margin:0;padding:0;list-style:none;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,245px),1fr));gap:10px}
+ .forum-editor-photo-list li{list-style:none;display:grid;gap:7px;padding:10px;
+  background:#fff;border:1px solid #b9d2bc;border-radius:11px;min-width:0}
+ .forum-editor-photo-list img{max-width:100%;width:100%;aspect-ratio:4/3;object-fit:contain;border-radius:7px;
+  background:#edf5eb}
+ .forum-editor-photo-list label{font-size:13px}
+ .forum-editor-photo-list input{min-width:0}
+ .forum-editor-photo-list button{background:#f4e7e4;color:#733526;border:1px solid #e0b8ae}
+ .forum-editor-photo-list small{font-size:11px;color:#4e6957;overflow-wrap:anywhere}
+ .forum-editor-rights{display:flex!important;flex-direction:row!important;align-items:flex-start;
+  gap:10px!important;font-weight:500!important;font-size:13px!important}
+ .forum-editor-rights[hidden]{display:none!important}
+ .forum-editor-rights input{width:18px;height:18px;flex:none;accent-color:#27633f;margin-top:2px}
+ .forum-editor-preview-content{padding:15px;border:1px solid #b8d3ba;background:white;border-radius:11px;
+  min-height:80px;font-size:15px;line-height:1.75;overflow-wrap:anywhere}
+ .forum-editor-preview-content p{white-space:pre-wrap;margin:0 0 12px}
+ .forum-editor-preview-content ul{margin:0 0 12px;padding-inline-start:1.5em}
+ .forum-editor-preview-content blockquote{margin:10px 0;padding:9px 14px;background:#eaf3e9;
+  border-inline-start:3px solid #83b68a;border-radius:4px}
+ .forum-editor-preview-content code{font-family:ui-monospace,monospace;background:#e4efe6;
+  padding:1px 4px;border-radius:4px;white-space:pre-wrap}
+ .preview-heading{display:block;margin-bottom:8px;color:#215b38}
+ .forum-editor-status{font-size:13px;color:#2d6440;font-weight:650;overflow-wrap:anywhere;min-height:1em}
+ @media(max-width:520px){
+  .forum-editor-toolbar{width:100%;justify-content:flex-start}
+  .forum-editor-toolbar button span{font-size:12px}
+ }
+ @media(prefers-reduced-motion:reduce){.forum-editor *{scroll-behavior:auto}}
+</style>

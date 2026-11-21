@@ -6,12 +6,17 @@ export interface ForumTopic {
  tractor_id:string|null;title:string;body:string;status:string;
  created_at:string;updated_at:string;seo_ready:boolean;machine_translated:boolean;
 }
+export interface ForumMedia {
+ id:string;topic_id:string|null;reply_id:string|null;position:number;
+ alt_text:string;status:string;locale:string;created_at:string;
+}
 export interface ForumReply {
  id:string;topic_id:string;locale:Locale;original_locale:Locale;
  status:string;body:string;created_at:string;machine_translated:boolean;
 }
 let topicsCache:Promise<ForumTopic[]>|undefined;
 let repliesCache:Promise<ForumReply[]>|undefined;
+let mediaCache:Promise<ForumMedia[]>|undefined;
 function config() {
  const site=process.env.SITE_URL||"";
  if(site!=="https://tractorvs.com"||process.env.PUBLIC_INDEXING_ENABLED!=="true")return null;
@@ -62,6 +67,21 @@ export async function allPublicForumReplies():Promise<ForumReply[]>{
   .then(rows=>rows.filter(x=>x&&x.status==="published"&&validLocale.has(x.locale)&&
     typeof x.body==="string"&&x.body.trim().length>=(x.machine_translated?5:10)&&x.body.length<=(x.machine_translated?16000:6000)));
  return repliesCache;
+}
+export async function allPublicForumMedia():Promise<ForumMedia[]>{
+ if(!mediaCache)mediaCache=loadRows<ForumMedia>("tc_forum_public_media",
+  "id,topic_id,reply_id,position,alt_text,status,locale,created_at")
+  .then(rows=>rows.filter(row=>row.status==="published"&&
+    /^[0-9a-f]{8}-[0-9a-f-]{27}$/.test(row.id)&&
+    typeof row.alt_text==="string"&&row.alt_text.trim().length>=10&&row.alt_text.length<=160&&
+    Number.isInteger(row.position)&&row.position>=1&&row.position<=3&&
+    (row.topic_id===null)!==(row.reply_id===null)));
+ return mediaCache;
+}
+export function forumMediaImageUrl(id:string):string{
+ if(!/^[0-9a-f]{8}-[0-9a-f-]{27}$/.test(id))throw Error("Invalid forum media ID");
+ const cfg=config();
+ return (cfg?.url||"https://aaufxtcvnzgavtlintiv.supabase.co")+"/functions/v1/forum-media?id="+encodeURIComponent(id);
 }
 export function forumThreadReplies(rows:ForumReply[],lang:Locale,topicId:string) {
  const originals=new Map<string,ForumReply>();

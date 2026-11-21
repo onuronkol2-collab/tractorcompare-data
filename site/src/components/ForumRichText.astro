@@ -1,0 +1,34 @@
+---
+import {forumBlocks} from "../lib/forum-format.mjs";
+interface Props {body:string}
+const {body}=Astro.props;
+const blocks=forumBlocks(body);
+---
+<div class="forum-rich-text">
+ {blocks.map(block=>
+   block.type==="list"?
+    <ul>{block.items.map(parts=>
+      <li>{parts.map(part=>part.type==="bold"?<strong>{part.text}</strong>:
+        part.type==="italic"?<em>{part.text}</em>:
+        part.type==="code"?<code>{part.text}</code>:part.text)}</li>)}</ul>:
+   block.type==="quote"?
+    <blockquote>{block.items[0].map(part=>part.type==="bold"?<strong>{part.text}</strong>:
+       part.type==="italic"?<em>{part.text}</em>:
+       part.type==="code"?<code>{part.text}</code>:part.text)}</blockquote>:
+    <p>{block.items[0].map(part=>part.type==="bold"?<strong>{part.text}</strong>:
+      part.type==="italic"?<em>{part.text}</em>:
+      part.type==="code"?<code>{part.text}</code>:part.text)}</p>
+ )}
+</div>
+<style>
+ .forum-rich-text{overflow-wrap:anywhere}
+ .forum-rich-text :global(p),.forum-rich-text :global(li),.forum-rich-text :global(blockquote){
+  font-size:clamp(15px,1.8vw,17px);line-height:1.85;white-space:pre-wrap;
+ }
+ .forum-rich-text :global(p){margin:0 0 16px}
+ .forum-rich-text :global(ul){padding-inline-start:1.6em;margin:0 0 16px;list-style:disc}
+ .forum-rich-text :global(li){margin:4px 0}
+ .forum-rich-text :global(blockquote){margin:12px 0 20px;padding:10px 16px;border-inline-start:4px solid #8ebc9a;background:#f4f8f3;border-radius:6px}
+ .forum-rich-text :global(code){font:0.9em/1.5 ui-monospace,SFMono-Regular,Consolas,monospace;
+  background:#e6eee8;border-radius:4px;padding:2px 5px;white-space:break-spaces}
+</style>
