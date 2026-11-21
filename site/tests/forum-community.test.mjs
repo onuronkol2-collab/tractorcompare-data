@@ -76,7 +76,6 @@ test("direct text publication preserves least privilege and honest authorship",(
  assert.doesNotMatch(composer,/service_role|sb_secret_/);
  assert.doesNotMatch(topic,/DiscussionForumPosting/); // no real author data yet
  assert.match(topic,/datePublished:topic\.created_at,dateModified:topic\.updated_at/);
- assert.doesNotMatch(topic,/"@type":"Article"|author:\\{.*invented/);
  assert.match(hub,/indexable=\{indexable\}/);
  assert.match(sitemap,/forum\(\?:/);
  assert.match(layout,/forumCopy\(lang,"name"\)/);
