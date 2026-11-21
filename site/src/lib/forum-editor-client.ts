@@ -119,8 +119,8 @@ export function initForumEditor(
   if(textarea.value.length-chosen.length+replacement.length>textarea.maxLength)return;
   textarea.setRangeText(replacement,start,end,"select");
   textarea.focus();
-  const selection=start+before.length;
-  textarea.setSelectionRange(selection,selection+chosen.length);
+  const cursor=start+(chosen?replacement.length:before.length);
+  textarea.setSelectionRange(cursor,cursor);
   textarea.dispatchEvent(new Event("input",{bubbles:true}));
  }
  for(const button of root.querySelectorAll<HTMLButtonElement>("[data-editor-format]")){
