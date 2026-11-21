@@ -30,6 +30,13 @@ This runbook is part of the permanent AGENTS.md integration rules.
 - **Do not equate:** master index children, image references, unique canonical URLs, sampled HTTP successes, IndexNow accepted, Google-discovered URLs or Google-indexed URLs. They are distinct measurements. A full sitemap has no direct bearing on guaranteed search rankings.
 - Avoid writing user credentials, provider API keys or new screenshots to public CI artifacts; never trigger paid AI translation or mass URL submission from this SEO crawler.
 
+## Licensed image and approved forum media health (21 November 2026)
+
+- The separate free `image-seo-live-audit.yml` checks live JPEG assets, photo rights/attribution metadata, and the standalone image XML under the single root sitemap. Its image reference validation reuses the already-published HTML/forum URL inventory: duplicates of the same licensed tractor photograph across ten languages count as one asset, not ten broken images.
+- Public tractor JPG files must be served at `/images/tractors/<identity>-960.jpg` and `-1920.jpg` with valid JPEG media type/magic bytes. Approved forum media may be a JPEG/PNG/WEBP on the project's documented `/functions/v1/forum-media?id=<uuid>` gateway **only when its forum topic page is on the moderated sitemap**; all other remote image origins or hidden/unapproved forum pages are rejected.
+- Brief Cloudflare 500/502/503/504 responses are retried at most five times with bounded increasing delays; a persistent 5xx, rate-limited 429, missing 404 or corrupt image is reported as failure. Do not evade limits through another host. The verifier remains credential-free and read-only.
+- Checking a public endpoint's binary magic bytes is **not evidence of copyright clearance**; the separate author/Commons license and model identity checks stay mandatory. The weekly report should distinguish network health, actual photo coverage, Google image discovery and image indexing.
+
 ## Automatic IndexNow — fail-closed
 
 Workflow: `.github/workflows/tractorvs-search-discovery.yml`.

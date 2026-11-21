@@ -1,0 +1,59 @@
+import {test} from "node:test";
+import assert from "node:assert/strict";
+import {classifyPublicImageSitemap,PUBLIC_FORUM_MEDIA_ENDPOINT} from "../scripts/image-seo-asset-boundaries.mjs";
+import {fetchPublicImageAsset,publicImageMimeOk} from "../scripts/image-seo-http.mjs";
+const root="https://tractorvs.com";
+const model=root+"/tr/tractors/exact-model-123/";
+const forum=root+"/tr/forum/reviewed-topic/";
+const privateTopic=root+"/tr/forum/pending-topic/";
+const photo=root+"/images/tractors/exact-model-123-1920.jpg";
+const forumMedia=PUBLIC_FORUM_MEDIA_ENDPOINT+"?id=550e8400-e29b-41d4-a716-446655440000";
+const imageXml=(entries)=>'<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">'+
+ entries.map(([page,imgs])=>'<url><loc>'+page+'</loc>'+imgs.map(u=>'<image:image><image:loc>'+u.replace(/&/g,"&amp;")+'</image:loc></image:image>').join("")+'</url>').join("")+'</urlset>';
+const lists=()=>({htmlPages:new Set([model]),forumPages:new Set([forum])});
+
+test("first-party model JPEG and approved forum gateway media both appear in the same SEO image sitemap",()=>{
+ const result=classifyPublicImageSitemap(imageXml([[model,[photo]],[forum,[forumMedia]]]),lists());
+ assert.equal(result.models.size,1);
+ assert.equal(result.models.has("exact-model-123"),true);
+ assert.equal(result.forumAssets.size,1);
+ assert.equal(result.forumAssets.has(forumMedia),true);
+ assert.equal(result.pages.size,2);
+ assert.equal(result.imageReferences,2);
+});
+test("private forum photo, foreign project photo and noncanonical page are blocked",()=>{
+ assert.throws(()=>classifyPublicImageSitemap(imageXml([[privateTopic,[forumMedia]]]),lists()),/unpublished\/unapproved/);
+ assert.throws(()=>classifyPublicImageSitemap(imageXml([[forum,[forumMedia.replace("aaufxtcvnzgavtlintiv","unknownexampleproject")]]]),lists()),/unapproved forum image/);
+ assert.throws(()=>classifyPublicImageSitemap(imageXml([[forum,[forumMedia.replace("550e8400-e29b-41d4-a716-446655440000","invalid")]]]),lists()),/unapproved forum image/);
+ assert.throws(()=>classifyPublicImageSitemap(imageXml([[model,["https://other-domain.example/photo.jpg"]]]),lists()),/unapproved forum image/);
+ assert.throws(()=>classifyPublicImageSitemap(imageXml([[model+"?sort=1",[photo]]]),lists()),/Noncanonical image sitemap page/);
+});
+test("model photos cannot masquerade as forum photo, and duplicate page or image entries are rejected",()=>{
+ assert.throws(()=>classifyPublicImageSitemap(imageXml([[forum,[photo]]]),lists()),/Tractor photo listed outside/);
+ assert.throws(()=>classifyPublicImageSitemap(imageXml([[model,[photo]],[model,[photo]]]),lists()),/Duplicate image sitemap page/);
+ assert.throws(()=>classifyPublicImageSitemap(imageXml([[model,[photo,photo]]]),lists()),/Duplicate image URL/);
+});
+test("bounded transient 502/503 retries succeed, but persistent 502 and 429 do not disappear",async()=>{
+ const image=new Uint8Array(1200);image.set([255,216,255]);
+ const fetchFn=async()=>{const status=[502,503,200][call++];return new Response(status===200?image:"transient",{status,headers:{"content-type":status===200?"image/jpeg":"text/plain"}})};
+ let call=0;const waits=[],retries=[];
+ const result=await fetchPublicImageAsset(photo,{fetchFn,sleep:async ms=>{waits.push(ms)},onRetry:z=>retries.push(z)});
+ assert.equal(result.r.status,200);assert.equal(result.attemptsUsed,3);
+ assert.deepEqual(waits,[500,1000]);
+ assert.equal(retries.length,2);
+ assert.equal(publicImageMimeOk(result.r.headers.get("content-type"),result.bytes),true);
+ let failedCalls=0;
+ const fail=await fetchPublicImageAsset(photo,{fetchFn:async()=>{failedCalls++;return new Response("bad",{status:502})},sleep:async()=>{},attempts:5});
+ assert.equal(fail.r.status,502);assert.equal(failedCalls,5);
+ let rateCalls=0;
+ const rate=await fetchPublicImageAsset(photo,{fetchFn:async()=>{rateCalls++;return new Response("too many",{status:429})},sleep:async()=>{}});
+ assert.equal(rate.r.status,429);assert.equal(rateCalls,1);
+});
+test("JPEG PNG and WEBP magic bytes must match trusted media MIME",()=>{
+ const jpg=new Uint8Array(1100);jpg.set([255,216,255]);assert.ok(publicImageMimeOk("image/jpeg",jpg));
+ const png=new Uint8Array(1100);png.set([137,80,78,71,13,10,26,10]);assert.ok(publicImageMimeOk("image/png",png));
+ const webp=new Uint8Array(1100);webp.set([82,73,70,70],0);webp.set([87,69,66,80],8);assert.ok(publicImageMimeOk("image/webp",webp));
+ assert.equal(publicImageMimeOk("text/html",jpg),false);
+ assert.equal(publicImageMimeOk("image/jpeg",png),false);
+ assert.equal(publicImageMimeOk("image/png",new Uint8Array(20)),false);
+});
