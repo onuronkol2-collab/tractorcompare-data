@@ -60,6 +60,9 @@ test("first live run establishes checkpoint and does not flood IndexNow",async()
    const mocker=mock();
    const result=await run({fetchFn:mocker.fetchFn,statePath});
    assert.equal(result.mode,"baseline_only");
+   assert.equal(result.historical_urls_baselined,2);
+   assert.equal(result.new_or_modified,0);
+   assert.equal(result.remaining,0);
    assert.equal(result.indexnow,"not_sent");
    assert.equal(JSON.parse(readFileSync(statePath,"utf8")).urls[home],null);
    assert.equal(mocker.requests.some(r=>r.url===INDEXNOW_URL),false);
