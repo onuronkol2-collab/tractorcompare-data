@@ -23,7 +23,7 @@ export function sourceUrl(raw,trustedHosts=[]){
 export function containsPhrase(text,phrase){
  const target=fold(phrase);
  if(!target||target.length>120)return false;
- const p=target.split(" ").map(esc).join("\s+");
+ const p=target.split(" ").map(esc).join("\\s+");
  return new RegExp("(?:^|[^\\p{L}\\p{N}])"+p+"(?=$|[^\\p{L}\\p{N}])","iu").test(fold(text));
 }
 export function evaluateSource(item){
