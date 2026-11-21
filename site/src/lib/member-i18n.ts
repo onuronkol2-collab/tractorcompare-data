@@ -52,7 +52,15 @@ export const MEMBER_TEXT:Record<Locale,Record<MemberKey,string>> = {
     "loading": "Loading members…",
     "viewProfile": "View profile",
     "close": "Close",
-    "memberSince": "Member since"
+    "memberSince" | "forgotPassword" | "resetEmailSent" | "resetNewPassword" | "resetSave" | "resetUpdated" | "passwordMismatch" | "showPassword" | "hidePassword": "Member since",
+    "forgotPassword": "Forgot password?",
+    "resetEmailSent": "If this address has an account, a reset link will arrive shortly.",
+    "resetNewPassword": "Set a new password",
+    "resetSave": "Save new password",
+    "resetUpdated": "Password updated. You are signed in.",
+    "passwordMismatch": "Passwords do not match.",
+    "showPassword": "Show password",
+    "hidePassword": "Hide password"
   },
   "tr": {
     "register": "Hesap oluştur",
@@ -105,7 +113,15 @@ export const MEMBER_TEXT:Record<Locale,Record<MemberKey,string>> = {
     "loading": "Üyeler yükleniyor…",
     "viewProfile": "Profili görüntüle",
     "close": "Kapat",
-    "memberSince": "Üyelik tarihi"
+    "memberSince": "Üyelik tarihi",
+    "forgotPassword": "Şifremi unuttum",
+    "resetEmailSent": "Bu adres kayıtlıysa şifre yenileme bağlantısı kısa süre içinde gelecek.",
+    "resetNewPassword": "Yeni şifre belirle",
+    "resetSave": "Yeni şifreyi kaydet",
+    "resetUpdated": "Şifren güncellendi. Giriş yaptın.",
+    "passwordMismatch": "Şifreler eşleşmiyor.",
+    "showPassword": "Şifreyi göster",
+    "hidePassword": "Şifreyi gizle"
   },
   "de": {
     "register": "Konto erstellen",
@@ -158,7 +174,15 @@ export const MEMBER_TEXT:Record<Locale,Record<MemberKey,string>> = {
     "loading": "Mitglieder werden geladen…",
     "viewProfile": "Profil ansehen",
     "close": "Schließen",
-    "memberSince": "Mitglied seit"
+    "memberSince": "Mitglied seit",
+    "forgotPassword": "Passwort vergessen?",
+    "resetEmailSent": "Falls ein Konto für diese Adresse besteht, erhalten Sie einen Link zum Zurücksetzen.",
+    "resetNewPassword": "Neues Passwort festlegen",
+    "resetSave": "Neues Passwort speichern",
+    "resetUpdated": "Passwort geändert. Sie sind angemeldet.",
+    "passwordMismatch": "Die Passwörter stimmen nicht überein.",
+    "showPassword": "Passwort anzeigen",
+    "hidePassword": "Passwort verbergen"
   },
   "fr": {
     "register": "Créer un compte",
@@ -211,7 +235,15 @@ export const MEMBER_TEXT:Record<Locale,Record<MemberKey,string>> = {
     "loading": "Chargement des membres…",
     "viewProfile": "Voir le profil",
     "close": "Fermer",
-    "memberSince": "Membre depuis"
+    "memberSince": "Membre depuis",
+    "forgotPassword": "Mot de passe oublié ?",
+    "resetEmailSent": "Si cette adresse possède un compte, vous recevrez un lien de réinitialisation.",
+    "resetNewPassword": "Définir un nouveau mot de passe",
+    "resetSave": "Enregistrer le nouveau mot de passe",
+    "resetUpdated": "Mot de passe modifié. Vous êtes connecté.",
+    "passwordMismatch": "Les mots de passe ne correspondent pas.",
+    "showPassword": "Afficher le mot de passe",
+    "hidePassword": "Masquer le mot de passe"
   },
   "es": {
     "register": "Crear cuenta",
@@ -264,7 +296,15 @@ export const MEMBER_TEXT:Record<Locale,Record<MemberKey,string>> = {
     "loading": "Cargando miembros…",
     "viewProfile": "Ver perfil",
     "close": "Cerrar",
-    "memberSince": "Miembro desde"
+    "memberSince": "Miembro desde",
+    "forgotPassword": "¿Olvidaste tu contraseña?",
+    "resetEmailSent": "Si el correo tiene una cuenta, recibirás un enlace para restablecerla.",
+    "resetNewPassword": "Establecer nueva contraseña",
+    "resetSave": "Guardar nueva contraseña",
+    "resetUpdated": "Contraseña actualizada. Has iniciado sesión.",
+    "passwordMismatch": "Las contraseñas no coinciden.",
+    "showPassword": "Mostrar contraseña",
+    "hidePassword": "Ocultar contraseña"
   },
   "pt-br": {
     "register": "Criar conta",
@@ -317,7 +357,15 @@ export const MEMBER_TEXT:Record<Locale,Record<MemberKey,string>> = {
     "loading": "Carregando membros…",
     "viewProfile": "Ver perfil",
     "close": "Fechar",
-    "memberSince": "Membro desde"
+    "memberSince": "Membro desde",
+    "forgotPassword": "Esqueceu a senha?",
+    "resetEmailSent": "Se o e-mail estiver cadastrado, você receberá um link para redefinir a senha.",
+    "resetNewPassword": "Definir nova senha",
+    "resetSave": "Salvar nova senha",
+    "resetUpdated": "Senha atualizada. Você entrou na conta.",
+    "passwordMismatch": "As senhas não coincidem.",
+    "showPassword": "Mostrar senha",
+    "hidePassword": "Ocultar senha"
   },
   "ru": {
     "register": "Создать аккаунт",
@@ -370,7 +418,15 @@ export const MEMBER_TEXT:Record<Locale,Record<MemberKey,string>> = {
     "loading": "Загрузка участников…",
     "viewProfile": "Посмотреть профиль",
     "close": "Закрыть",
-    "memberSince": "Участник с"
+    "memberSince": "Участник с",
+    "forgotPassword": "Забыли пароль?",
+    "resetEmailSent": "Если этот адрес зарегистрирован, придёт письмо со ссылкой для сброса.",
+    "resetNewPassword": "Задать новый пароль",
+    "resetSave": "Сохранить пароль",
+    "resetUpdated": "Пароль обновлён. Вы вошли в аккаунт.",
+    "passwordMismatch": "Пароли не совпадают.",
+    "showPassword": "Показать пароль",
+    "hidePassword": "Скрыть пароль"
   },
   "ja": {
     "register": "アカウントを作成",
@@ -423,7 +479,15 @@ export const MEMBER_TEXT:Record<Locale,Record<MemberKey,string>> = {
     "loading": "メンバーを読み込み中…",
     "viewProfile": "プロフィールを見る",
     "close": "閉じる",
-    "memberSince": "参加日"
+    "memberSince": "参加日",
+    "forgotPassword": "パスワードを忘れた場合",
+    "resetEmailSent": "登録済みのメールアドレスであれば再設定用リンクが届きます。",
+    "resetNewPassword": "新しいパスワードを設定",
+    "resetSave": "新しいパスワードを保存",
+    "resetUpdated": "パスワードを更新し、ログインしました。",
+    "passwordMismatch": "パスワードが一致しません。",
+    "showPassword": "パスワードを表示",
+    "hidePassword": "パスワードを非表示"
   },
   "zh": {
     "register": "创建账号",
@@ -476,7 +540,15 @@ export const MEMBER_TEXT:Record<Locale,Record<MemberKey,string>> = {
     "loading": "正在加载成员…",
     "viewProfile": "查看资料",
     "close": "关闭",
-    "memberSince": "加入时间"
+    "memberSince": "加入时间",
+    "forgotPassword": "忘记密码？",
+    "resetEmailSent": "如果该邮箱已注册，你将收到重设密码的邮件。",
+    "resetNewPassword": "设置新密码",
+    "resetSave": "保存新密码",
+    "resetUpdated": "密码已更新，已登录。",
+    "passwordMismatch": "两次输入的密码不一致。",
+    "showPassword": "显示密码",
+    "hidePassword": "隐藏密码"
   },
   "hi": {
     "register": "खाता बनाएँ",
@@ -529,7 +601,15 @@ export const MEMBER_TEXT:Record<Locale,Record<MemberKey,string>> = {
     "loading": "सदस्य लोड हो रहे हैं…",
     "viewProfile": "प्रोफ़ाइल देखें",
     "close": "बंद करें",
-    "memberSince": "सदस्य बने"
+    "memberSince": "सदस्य बने",
+    "forgotPassword": "पासवर्ड भूल गए?",
+    "resetEmailSent": "यदि यह ईमेल पंजीकृत है, तो रीसेट लिंक भेजा जाएगा।",
+    "resetNewPassword": "नया पासवर्ड बनाएँ",
+    "resetSave": "नया पासवर्ड सहेजें",
+    "resetUpdated": "पासवर्ड बदल गया। आप लॉग इन हैं।",
+    "passwordMismatch": "दोनों पासवर्ड मेल नहीं खाते।",
+    "showPassword": "पासवर्ड दिखाएँ",
+    "hidePassword": "पासवर्ड छिपाएँ"
   }
 };
 export type MemberKey = "register" | "passwordLogin" | "password" | "passwordHint" | "emailConfirm" | "authError" | "passwordShort" | "google" | "github" | "otherLogin" | "oauthError" | "memberHeading" | "memberIntro" | "myProfile" | "handle" | "displayName" | "bio" | "favoriteBrand" | "avatar" | "save" | "saved" | "profileError" | "uploadError" | "privacy" | "optOut" | "leaderboard" | "month" | "alltime" | "topics" | "replies" | "helpful" | "points" | "rank" | "newcomer" | "contributor" | "mentor" | "noMembers" | "myBookmarks" | "noBookmarks" | "saveTopic" | "removeTopic" | "helpfulButton" | "unhelpfulButton" | "voteLogin" | "voteOwn" | "voteError" | "signInNotice" | "loading" | "viewProfile" | "close" | "memberSince";
