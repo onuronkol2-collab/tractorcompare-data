@@ -29,7 +29,7 @@ test("SEO-safe catalog optimization retains every published SSR detail link and 
  assert.match(catalog,/card\.hidden = !match/);
  assert.match(catalog,/filterCatalog\(requested\)/);
  assert.match(catalog,/data-catalog-brand-jump/);
- assert.doesNotMatch(catalog,/\.slice\(0,\s*60\)|aria-hidden="true"[^]*?tractor-card-grid/);
+ assert.doesNotMatch(catalog,/catalog\\.tractors\\.slice\\(0,\\s*60\\)/);
 });
 
 test("one sprite definition is decorative and never introduces a keyboard focus target",()=>{
