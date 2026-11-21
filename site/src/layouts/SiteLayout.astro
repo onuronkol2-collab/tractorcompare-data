@@ -36,12 +36,12 @@ const catalogPath = localizedPath(lang, "/tractors/");
 const comparePath = localizedPath(lang, "/compare/");
 const advisorPath = localizedPath(lang, "/farm-advisor/");
 const forumPath = localizedPath(lang, "/forum/");
-const articlesPath = localizedPath(lang==="tr"?"tr":"en", "/articles/");
-// Do not imply translations exist: eight other locales link explicitly to English.
+const articlesPath = localizedPath(lang, "/articles/");
+// The editorial index is now genuinely localized in all 10 supported languages.
 const editorialLabel: Record<Locale,string> = {
-  en:"Articles",tr:"Makaleler",zh:"文章 (EN)",hi:"लेख (EN)",
-  "pt-br":"Artigos (EN)",fr:"Articles (EN)",de:"Artikel (EN)",
-  ru:"Статьи (EN)",ja:"記事 (EN)",es:"Artículos (EN)"
+  en:"Articles",tr:"Makaleler",zh:"文章",hi:"लेख",
+  "pt-br":"Artigos",fr:"Articles",de:"Artikel",
+  ru:"Статьи",ja:"記事",es:"Artículos"
 };
 const canonicalUrl = indexingEnabled
   ? new URL(Astro.url.pathname, Astro.site!).toString()
