@@ -14,23 +14,35 @@ Satış başına gerçek arıza yüzdesi ise **aynı model/yıldan satılmış v
 
 ## En az sorun bildirilen 5 marka
 
-| Sıra | Marka | Bir traktörde ortalama sorun | 100 traktör başına olay |
-|:---:|---|---:|---:|
-| 1 | Kubota | 0,76 | **76** |
-| 2 | Case IH | 1,19 | **119** |
-| 3 | John Deere | 1,20 | **120** |
-| 4 | New Holland | 1,26 | **126** |
-| 5 | Massey Ferguson | 1,35 | **135** |
+<div class="research-table-scroll" role="region" tabindex="0" aria-label="En az sorun bildirilen beş marka; tablo mobilde yatay kaydırılabilir">
+<table>
+<caption>En az sorun bildirilen beş marka — 2021 ABD traktör kullanıcı anketi</caption>
+<thead><tr><th scope="col">Sıra</th><th scope="col">Marka</th><th scope="col">Sorun/traktör</th><th scope="col">100 traktörde sorun</th></tr></thead>
+<tbody>
+<tr><td>1</td><th scope="row">Kubota</th><td>0,76</td><td>**76**</td></tr>
+<tr><td>2</td><th scope="row">Case IH</th><td>1,19</td><td>**119**</td></tr>
+<tr><td>3</td><th scope="row">John Deere</th><td>1,20</td><td>**120**</td></tr>
+<tr><td>4</td><th scope="row">New Holland</th><td>1,26</td><td>**126**</td></tr>
+<tr><td>5</td><th scope="row">Massey Ferguson</th><td>1,35</td><td>**135**</td></tr>
+</tbody>
+</table>
+</div>
 
 ## En çok sorun bildirilen 5 marka
 
-| Sıra | Marka | Bir traktörde ortalama sorun | 100 traktör başına olay |
-|:---:|---|---:|---:|
-| 1 | Versatile | 1,64 | **164** |
-| 2 | Allis-Chalmers | 1,46 | **146** |
-| 3 | Massey Ferguson | 1,35 | **135** |
-| 4 | New Holland | 1,26 | **126** |
-| 5 | John Deere | 1,20 | **120** |
+<div class="research-table-scroll" role="region" tabindex="0" aria-label="En çok sorun bildirilen beş marka; tablo mobilde yatay kaydırılabilir">
+<table>
+<caption>En çok sorun bildirilen beş marka — 2021 ABD traktör kullanıcı anketi</caption>
+<thead><tr><th scope="col">Sıra</th><th scope="col">Marka</th><th scope="col">Sorun/traktör</th><th scope="col">100 traktörde sorun</th></tr></thead>
+<tbody>
+<tr><td>1</td><th scope="row">Versatile</th><td>1,64</td><td>**164**</td></tr>
+<tr><td>2</td><th scope="row">Allis-Chalmers</th><td>1,46</td><td>**146**</td></tr>
+<tr><td>3</td><th scope="row">Massey Ferguson</th><td>1,35</td><td>**135**</td></tr>
+<tr><td>4</td><th scope="row">New Holland</th><td>1,26</td><td>**126**</td></tr>
+<tr><td>5</td><th scope="row">John Deere</th><td>1,20</td><td>**120**</td></tr>
+</tbody>
+</table>
+</div>
 
 **Önemli:** Kaynağın sayısal grafiğinde yalnızca **yedi marka** olduğundan iki beşli grubun **üç markası ortak**. Bu matematiksel bir sonuçtur; on farklı marka varmış gibi sahte ölçüm eklemedik. Özellikle Allis-Chalmers tarihsel bir markadır. Bu liste tüm 2026 traktör üreticilerinin dünya sıralaması değildir.
 
