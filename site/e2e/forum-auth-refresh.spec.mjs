@@ -22,7 +22,7 @@ test("a temporary session expiry restores the forum editor",async({page})=>{
  await expect(section.locator("[data-forum-post]")).toBeVisible();
  expect(renewals).toBe(1);
  await section.locator("[data-forum-logout]").click();
- await expect(section.locator("[data-forum-email]")).toBeVisible();
+ await expect(section.locator("[data-forum-register]")).toBeVisible();
  await page.reload();
- await expect(section.locator("[data-forum-email]")).toBeVisible();
+ await expect(section.locator("[data-forum-register]")).toBeVisible();
 });
