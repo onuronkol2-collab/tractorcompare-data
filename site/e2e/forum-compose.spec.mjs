@@ -23,6 +23,10 @@ test("sign in, recover a draft, publish directly and check its status",async({pa
   expect(url.pathname).toBe("/forum-test-api/rest/v1/tc_forum_topics");
   expect(request.headers().authorization).toBe("Bearer mock-session");
   if(request.method()==="GET"){
+   if(url.searchParams.has("id")){
+    const id=url.searchParams.get("id")?.replace(/^eq\./,"");
+    return route.fulfill({json:posted.filter(row=>row.user===currentUser&&row.id===id)});
+   }
    expect(url.searchParams.get("author_id")).toBe("eq."+currentUser);
    return route.fulfill({json:posted.filter(row=>row.user===currentUser)});
   }
@@ -75,6 +79,9 @@ test("sign in, recover a draft, publish directly and check its status",async({pa
  await expect(post.locator("textarea")).toHaveValue("");
  expect(posted).toHaveLength(1);
  expect(posted[0]).toMatchObject({title,body,status:"published",locale:"de",translation_consent:false});
+ await expect(compose.locator("[data-forum-publication-panel]")).toBeVisible();
+ await expect(compose.locator("[data-forum-publication-status]")).toContainText("henüz");
+ await expect(compose.locator("[data-forum-publication-link]")).toBeHidden();
  await compose.locator("[data-forum-history] summary").click();
  await expect(compose.locator("[data-history-list]")).toContainText(title+" · Yayında");
  await post.locator("textarea").fill("Private draft for user A");
