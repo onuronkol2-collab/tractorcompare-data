@@ -30,7 +30,9 @@ const props={apiKey:"inert-test-key",prompt:"Translate one TractorVS section",sc
 Deno.test("generateContent request uses minimal thinking and bounded JSON output",()=>{
  const body=requestBody("Türkçe metin",schema);
  assertEquals(body.generationConfig.responseMimeType,"application/json");
- assertEquals(body.generationConfig.thinkingConfig.thinkingLevel,"MINIMAL");
+ assertEquals(body.generationConfig.thinkingConfig.thinkingLevel,"LOW");
+ assertEquals(requestBody("Türkçe metin",schema,false,"gemini-3.6-flash").generationConfig.thinkingConfig.thinkingLevel,"MINIMAL");
+ assert(!("temperature" in body.generationConfig));
  assertEquals(body.generationConfig.maxOutputTokens,4608);
  assertEquals(requestBody("Quality audit",schema,true).generationConfig.maxOutputTokens,1024);
  assertRejects(async()=>requestBody("x".repeat(14001),schema),Error,"Invalid bounded");
@@ -46,7 +48,7 @@ Deno.test("success uses one synchronous generateContent call without polling",as
  assertEquals(m.calls[0].init.method,"POST");
  const sent=JSON.parse(String(m.calls[0].init.body));
  assertEquals(sent.generationConfig.responseMimeType,"application/json");
- assertEquals(sent.generationConfig.thinkingConfig.thinkingLevel,"MINIMAL");
+ assertEquals(sent.generationConfig.thinkingConfig.thinkingLevel,"LOW");
  assertEquals(sent.contents[0].parts[0].text,props.prompt);
  assertEquals((m.calls[0].init.headers as Record<string,string>)["x-goog-api-key"],props.apiKey);
 });
@@ -57,6 +59,8 @@ Deno.test("temporary Gemini capacity failure falls back at most once",async()=>{
  assertEquals(out.model,"gemini-3.6-flash");
  assertEquals(m.calls.length,2);
  assert(m.calls[1].url.includes("gemini-3.6-flash:generateContent"));
+ const fallbackBody=JSON.parse(String(m.calls[1].init.body));
+ assertEquals(fallbackBody.generationConfig.thinkingConfig.thinkingLevel,"MINIMAL");
 });
 
 Deno.test("MAX_TOKENS output is never accepted or published",async()=>{

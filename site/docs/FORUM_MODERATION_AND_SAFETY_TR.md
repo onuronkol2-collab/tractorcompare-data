@@ -28,6 +28,9 @@ Supabase Dashboard > Authentication > URL Configuration sayfasında **Site URL**
 
 ## İsteğe bağlı çok dilli forum çevirileri — işleme ve kalite güvenliği
 
+- **Doğrulanan HTTP 400 nedeni:** İlk manuel GitHub çeviri denemesinin `Gemini provider HTTP 400` yanıtı, 3.8 Flash'a yanlış `thinkingLevel=MINIMAL` gönderilmesiyle açıklanıyor. Model 3.8 için `LOW` ve 3.6 için `MINIMAL` kullanılmalı; konfigürasyon model bazında ve sıfır ücretli testlerle denetlenmeli. Gerçek kuyruk yalnız manuel `onay=ONAY` ile başlar.
+
+
 - **21 Kasım 2026 kök neden onarımı:** Gemini Interactions uzun polling ile çeviri+ikinci kalite çağrısı, Supabase Edge 150 saniyelik istek sınırını aşabilecek biçimde tasarlanmıştı. Bu yerine kısa `generateContent` REST istekleri, `MINIMAL` düşünme, sınırlandırılmış token bütçesi ve yalnız bir yedek model denemesi kullanılır. Yanıt `STOP` değilse veya JSON doğrulanmazsa yayına çıkmaz. Gerçek model ve çeviri başarıları yeniden doğrulanmalıdır; API sözleşmesi testleri tek başına yayını kanıtlamaz.
 
 
