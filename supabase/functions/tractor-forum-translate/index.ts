@@ -40,56 +40,56 @@ function textFrom(data:any){
   .filter((x:any)=>x?.type==="text").map((x:any)=>String(x.text||"")).join("\n");
 }
 async function modelJSON(prompt:string,schema:any,deadline:number){
- // Gemini 3.7 Flash is routed to 3.8 by the provider; use a genuinely distinct
- // supported fallback for failed/incomplete 3.8 interactions.
+ // Gemini Interactions was repeatedly 503/incomplete/timeout even for a
+ // 2.2K-character section. Use the documented synchronous generateContent
+ // JSON-schema endpoint with a truly independent capacity fallback.
  for(const selected of [MODEL,"gemini-3.6-flash"]){
-  const init={model:selected,input:[{type:"text",text:prompt}],store:true,background:true,
-   response_format:{type:"text",mime_type:"application/json",schema},
-   generation_config:{max_output_tokens:16000,
-    thinking_level:selected==="gemini-3.6-flash"?"minimal":"low"}};
-  let r:Response;
+  const remaining=deadline-Date.now()-4000;
+  const timeout=Math.min(selected===MODEL?52000:65000,remaining);
+  if(timeout<4000)throw Error("Gemini deadline exhausted");
+  const payload={
+   contents:[{role:"user",parts:[{text:prompt}]}],
+   generationConfig:{
+    responseMimeType:"application/json",
+    responseJsonSchema:schema,
+    maxOutputTokens:16000,
+    thinkingConfig:{thinkingLevel:selected===MODEL?"LOW":"MINIMAL"}
+   }
+  };
+  let res:Response;
   try{
-   r=await fetch(GEMINI,{method:"POST",headers:{"content-type":"application/json",
-    "x-goog-api-key":AI,"Api-Revision":"2026-05-20"},
-    body:JSON.stringify(init),signal:AbortSignal.timeout(28000)});
+   res=await fetch(
+    "https://generativelanguage.googleapis.com/v1beta/models/"+
+    encodeURIComponent(selected)+":generateContent",{
+     method:"POST",headers:{"content-type":"application/json","x-goog-api-key":AI},
+     body:JSON.stringify(payload),signal:AbortSignal.timeout(timeout)
+    }
+   );
   }catch(error){
-   // Initial request can time out while the provider is congested.
-   // Only retry a bounded approved alternative, never endlessly.
-   if(selected!=="gemini-3.6-flash"&&Date.now()<deadline-25000)continue;
+   if(selected===MODEL&&Date.now()<deadline-20000)continue;
    throw error;
   }
-  let d=await r.json().catch(()=>({}));
-  if(!r.ok||!d.id){
-   // A single approved fallback is allowed for temporary model capacity limits.
-   // Never retry arbitrary errors, invalid auth, or invalid source data.
-   if(selected!=="gemini-3.6-flash"&&[500,502,503,504].includes(r.status)&&Date.now()<deadline-25000){
-    console.warn("Primary Gemini capacity unavailable; one approved fallback");
-    continue;
-   }
-   throw Error("Gemini HTTP "+r.status);
+  const response=await res.json().catch(()=>({}));
+  if(!res.ok){
+   if(selected===MODEL&&[500,502,503,504].includes(res.status)&&Date.now()<deadline-20000)continue;
+   throw Error("Gemini generateContent HTTP "+res.status);
   }
-  const id=String(d.id);
-  let retryOtherModel=false;
-  while(String(d.status||"").toLowerCase()!=="completed"){
-   const status=String(d.status||"").toLowerCase();
-   if(["failed","cancelled"].includes(status))throw Error("Gemini interaction "+status);
-   if(["incomplete","requires_continuation"].includes(status)){
-    // Not a completed translation. Prefer a different genuine model when
-    // the partial decode cannot safely satisfy our structured response.
-    if(selected===MODEL&&Date.now()<deadline-25000){retryOtherModel=true;break}
-    throw Error("Gemini interaction "+status);
-   }
-   if(Date.now()>deadline)throw Error("Gemini timeout");
-   await new Promise(done=>setTimeout(done,2000));
-   const p=await fetch(GEMINI+"/"+encodeURIComponent(id),{
-    headers:{"x-goog-api-key":AI,"Api-Revision":"2026-05-20"},
-    signal:AbortSignal.timeout(20000)});
-   d=await p.json().catch(()=>({}));
-   if(!p.ok)throw Error("Gemini poll HTTP "+p.status);
+  const candidate=response?.candidates?.[0];
+  const reason=String(candidate?.finishReason||"");
+  if(reason!=="STOP"){
+   // Safety blocks and refusals must never be bypassed.
+   if(selected===MODEL&&reason==="MAX_TOKENS"&&Date.now()<deadline-20000)continue;
+   throw Error("Gemini generation did not finish safely: "+reason.slice(0,32));
   }
-  if(retryOtherModel)continue;
-  const raw=textFrom(d).trim().replace(/^\x60{3}(?:json)?\s*/i,"").replace(/\x60{3}$/,"").trim();
-  try{return {value:JSON.parse(raw),model:selected}}catch{throw Error("Model returned invalid JSON")}
+  const raw=(Array.isArray(candidate?.content?.parts)?candidate.content.parts:[])
+   .filter((part:any)=>part?.thought!==true&&typeof part?.text==="string")
+   .map((part:any)=>part.text).join("").trim();
+  if(!raw)throw Error("Gemini returned empty structured content");
+  let value:any;
+  try{value=JSON.parse(raw)}catch{throw Error("Gemini returned invalid structured JSON")}
+  if(!value||typeof value!=="object"||Array.isArray(value))
+   throw Error("Gemini structured JSON must be an object");
+  return {value,model:selected};
  }
  throw Error("Approved Gemini models unavailable");
 }
