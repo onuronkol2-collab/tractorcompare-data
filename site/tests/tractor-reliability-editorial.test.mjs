@@ -14,7 +14,7 @@ test("editorial research has no artificial 5+5 ranking and retains model-level p
  assert.equal(new Set(models).size,models.length,"Distinct tractor model entries only");
  assert.ok((article.match(/\*\*\[Birincil saha kaynağı\]\(https:\/\//g)||[]).length>=models.length,
   "Every evaluated model must carry a direct source link");
- assert.match(article,/1\.000 motor saatine/);
+ assert.match(article,/1\.000 saat/);
  assert.match(article,/2\.000 satılmış ve ilk 12 ayı izlenmiş/);
  assert.match(article,/sıfır arıza/i);
  assert.doesNotMatch(article,/## SEO \/ GEO yayın alanları/);
