@@ -230,14 +230,17 @@ const suggestionPayload = JSON.stringify(catalogue.tractors.map((tractor) => ({
       <a class="button button-light" href={catalogUrl}>{h(lang,"heroCta")} <span aria-hidden="true">↗</span></a>
     </div>
   </section>
-</SiteLayout>
 
-
-<script type="application/json" id="home-suggestions-data" set:html={suggestionPayload}></script>
-<script type="application/json" id="home-suggestions-i18n" set:html={JSON.stringify({
+  <script type="application/json" id="home-suggestions-data" set:html={suggestionPayload}></script>
+  <script type="application/json" id="home-suggestions-i18n" set:html={JSON.stringify({
   heading: d(lang,"suggestionsHeading"), noResults: d(lang,"suggestionsNone"),
   results: d(lang,"suggestionsCount"), specs: t(lang,"specifications"),
 }).replace(/</g,"\\u003c")}></script>
+</SiteLayout>
+
+
+
+
 <script>
   import { findTractorSuggestions } from "../lib/search";
   import type { TractorSuggestion } from "../lib/search";
