@@ -18,6 +18,7 @@ test("sign in, recover a draft, submit for moderation and check its status",asyn
    return route.fulfill({json:{access_token:"mock-session"}});
   }
   if(url.pathname.endsWith("/auth/v1/logout"))return route.fulfill({status:204});
+  if(["/forum-test-api/rest/v1/tc_member_scores","/forum-test-api/rest/v1/tc_member_profiles","/forum-test-api/rest/v1/tc_member_bookmarks"].includes(url.pathname))return route.fulfill({json:[]});
   expect(url.pathname).toBe("/forum-test-api/rest/v1/tc_forum_topics");
   expect(request.headers().authorization).toBe("Bearer mock-session");
   if(request.method()==="GET"){
