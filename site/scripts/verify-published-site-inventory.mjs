@@ -111,7 +111,7 @@ export function verifyPublishedSiteInventory({
     check(sitemapLocs.has(url),"Published "+locale+" model is missing from sitemap: "+url);
   const catalogueHtml=read(join(dist,prefix+"tractors/index.html"));
   const catalogueLinks=new Set([...catalogueHtml.matchAll(
-    /<a\\b[^>]*class="tractor-card-main"[^>]*href="([^"]+)"[^>]*>/g
+    /<a\b[^>]*class="tractor-card-main"[^>]*href="([^"]+)"[^>]*>/g
   )].map(match=>match[1]));
   for(const slug of slugs){
    const html=read(join(dist,prefix+"tractors",slug,"index.html"));
