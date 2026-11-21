@@ -49,24 +49,49 @@ export default {
         const thumbnail = await env.ASSETS.fetch(request);
         if (thumbnail.ok && thumbnail.headers.get("Content-Type")?.startsWith("image/jpeg")) return thumbnail;
       }
-      try{
-        const origin=await fetch(upstream,{
-          method:"GET",redirect:"follow",signal:AbortSignal.timeout(20000),
-          headers:{"User-Agent":"TractorVS image gallery (+https://tractorvs.com/)"},
-          cf:{cacheEverything:true,cacheTtl:604800}
-        });
-        if(!origin.ok||!(origin.headers.get("content-type")||"").toLowerCase().startsWith("image/jpeg"))
-          return new Response("Photo source unavailable",{status:502,headers:{"Cache-Control":"no-store"}});
-        return new Response(method==="HEAD"?null:origin.body,{
-          status:200,headers:{
-            "Content-Type":"image/jpeg",
-            "Cache-Control":"public, max-age=86400, s-maxage=604800",
-            "X-Content-Type-Options":"nosniff"
-          }
-        });
-      }catch{
-        return new Response("Photo source unavailable",{status:502,headers:{"Cache-Control":"no-store"}});
+      // Commons thumbnails can be temporarily unavailable at 1920px even
+      // when the same, approved image is available at 960px. Never redirect
+      // to an unreviewed image or another model; the fallback goes through
+      // the exact same fixed photo-ID / resolution allowlist.
+      const isFullSize=url.pathname.endsWith("-1920.jpg");
+      const loadPhoto=async(source,timeoutMs)=>{
+        try{
+          const origin=await fetch(source,{
+            method:"GET",redirect:"follow",signal:AbortSignal.timeout(timeoutMs),
+            headers:{"User-Agent":"TractorVS image gallery (+https://tractorvs.com/)"},
+            cf:{cacheEverything:true,cacheTtl:604800}
+          });
+          return origin.ok &&
+            (origin.headers.get("content-type")||"").toLowerCase().startsWith("image/jpeg")
+              ? origin : null;
+        }catch{return null;}
+      };
+      let source=await loadPhoto(upstream,isFullSize?12000:20000);
+      let isFallback=false;
+      if(!source&&isFullSize){
+        // The only alternative is the 960px version of this *same*
+        // vetted Commons file. Re-check the allowlist instead of editing
+        // the external URL or guessing another model photo.
+        const fallbackPath=url.pathname.replace(/-1920\.jpg$/,"-960.jpg");
+        const fallback=resolveApprovedPhotoSource(fallbackPath);
+        if(fallback){
+          source=await loadPhoto(fallback,12000);
+          isFallback=Boolean(source);
+        }
       }
+      if(!source)
+        return new Response("Photo source unavailable",{status:502,headers:{"Cache-Control":"no-store"}});
+      return new Response(method==="HEAD"?null:source.body,{
+        status:200,headers:{
+          "Content-Type":"image/jpeg",
+          // A temporary 960px fallback must be retried soon rather than
+          // being cached at the high-resolution URL for a whole week.
+          "Cache-Control":isFallback?"public, max-age=600, s-maxage=1800"
+            :"public, max-age=86400, s-maxage=604800",
+          "X-Content-Type-Options":"nosniff",
+          ...(isFallback?{"X-TractorVS-Image-Fallback":"960"}:{})
+        }
+      });
     }
     if (url.pathname === "/api/visitor-country") {
       if (method !== "GET" && method !== "HEAD") {
