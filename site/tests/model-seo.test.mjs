@@ -237,3 +237,64 @@ test("short model SEO titles keep their natural localized specification noun",()
  assert.match(x.title,/\b(specifications|technical|Specs)\b/i);
  assert.ok(x.title.length<=105);
 });
+
+
+test("actual OEM source-note SEO titles are concise without losing model, drive, Stage V, engine or locale",()=>{
+  const cases=[
+    {brand_name:"Lamborghini Trattori",model_name:"Spire V 80 Target",
+      variant:"Spire S/V Target / Stage V 2025 brochure",
+      market:"Europe (manufacturer Stage V 04/2025)",identity:"Stage V"},
+    {brand_name:"Lamborghini Trattori",model_name:"Spire S 80 Target",
+      variant:"Spire S/V Target / Stage V 2025 brochure",
+      market:"Europe (manufacturer Stage V 04/2025)",identity:"Stage V"},
+    {brand_name:"Swaraj",model_name:"Target 625 2WD",
+      variant:"Target India / exact 2WD or 4WD configuration",
+      market:"India (Swaraj Target manufacturer data)",identity:"2WD"},
+    {brand_name:"Swaraj",model_name:"Target 625 4WD",
+      variant:"Target India / exact 2WD or 4WD configuration",
+      market:"India (Swaraj Target manufacturer data)",identity:"4WD"},
+    {brand_name:"Swaraj",model_name:"Target 630 4WD",
+      variant:"Target India / exact 2WD or 4WD configuration",
+      market:"India (Swaraj Target manufacturer data)",identity:"4WD"},
+    {brand_name:"Belarus",model_name:"112N-01",
+      variant:"Honda GX390 · historical manufacturer catalogue",
+      market:"Unspecified (historical catalogue)",identity:"Honda GX390"},
+    {brand_name:"Belarus",model_name:"132N",
+      variant:"Honda GX390 · historical manufacturer catalogue",
+      market:"Unspecified (historical catalogue)",identity:"Honda GX390"},
+    {brand_name:"Belarus",model_name:"152",
+      variant:"Honda GX390 · historical manufacturer catalogue",
+      market:"Unspecified (historical catalogue)",identity:"Honda GX390"}
+  ];
+  for(const row of cases){
+    for(const locale of ["en","tr","zh","hi","pt-br","fr","de","ru","ja","es"]){
+      const model={...tractor,...row,model_year:null,horsepower:null};
+      const meta=modelSeoMetadata(model,locale);
+      assert.ok(meta.title.includes(row.brand_name+" "+row.model_name),locale+" lost exact model");
+      assert.ok(meta.title.includes(row.identity),locale+" lost technical variant qualifier");
+      assert.ok(meta.title.length<=105,
+        locale+" "+row.model_name+" verbose title: "+meta.title.length+" chars "+meta.title);
+      assert.ok(!meta.title.includes("brochure"),"editorial bibliography not title");
+      assert.ok(!meta.title.includes("Swaraj Target manufacturer data"),"source citation not title");
+      const subject=modelStructuredData(model,locale,"https://tractorvs.example")["@graph"][2];
+      assert.equal(subject.disambiguatingDescription,row.variant+" · "+row.market,
+        "full original source identity stays in structured data: "+locale+" "+row.model_name);
+    }
+  }
+  const swaraj2=modelSeoMetadata({...tractor,...cases[2]},"en");
+  const swaraj4=modelSeoMetadata({...tractor,...cases[3]},"en");
+  assert.notEqual(swaraj2.title,swaraj4.title,"two and four wheel drive must never collapse");
+  const stageS=modelSeoMetadata({...tractor,...cases[1]},"en");
+  const stageV=modelSeoMetadata({...tractor,...cases[0]},"en");
+  assert.notEqual(stageS.title,stageV.title,"real Spire variants must never collapse");
+});
+
+test("unknown long variants and markets are not silently shortened as if they were source-only",()=>{
+  const model={...tractor,brand_name:"Swaraj",model_name:"Target 625 4WD",
+    variant:"Target India / exact 2WD or 4WD configuration with differential",
+    market:"India (Swaraj Target manufacturer data)"};
+  const title=modelSeoMetadata(model,"en").title;
+  assert.ok(title.includes("configuration with differential"),"unverified variant text was discarded");
+  const marketDifferent=modelSeoMetadata({...model,market:"India (separate regional release)"},"en");
+  assert.notEqual(title,marketDifferent.title,"non-matching market must remain distinct");
+});
