@@ -102,7 +102,6 @@ const openGraphLocale: Record<Locale, string> = {
     <meta name="theme-color" content="#101a16" />
     <meta name="description" content={description} />
     <meta name="robots" content={indexingEnabled ? "index,follow,max-image-preview:large" : "noindex,nofollow"} />
-    {lang === "en" && plainPath === "/" && <meta name="naver-site-verification" content="535d563d03c60d4bdb37882e3454c53c2423a121" />}
     <title>{title}</title>
     {structuredJson && <script type="application/ld+json" set:html={structuredJson} />}
     {canonicalUrl && <link rel="canonical" href={canonicalUrl} />}
