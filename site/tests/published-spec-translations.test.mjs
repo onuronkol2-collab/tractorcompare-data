@@ -138,7 +138,9 @@ test("frequent published canonical fields have correctly scoped labels in all te
     assert.notEqual(turkish.toLowerCase(),english.toLowerCase(),"Turkish English fallback "+key);
     for(const lang of LOCALES){
       const value=specLabel(source,lang);
-      assert.ok(value && value.trim().length>=3,lang+" missing "+key);
+      // A fully correct CJK label may use two characters (e.g. Chinese 空调, air conditioning).
+      const minLength=(lang==="zh"||lang==="ja")?2:3;
+      assert.ok(value && value.trim().length>=minLength,lang+" missing "+key);
       if(lang!=="en")assert.notEqual(value.toLowerCase(),english.toLowerCase(),lang+" English fallback "+key);
     }
   }
