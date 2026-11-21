@@ -38,6 +38,9 @@ const strings=JSON.stringify({
  data-forum-config={browserConfig} data-forum-messages={strings} data-member-messages={memberMessages}>
  <h2>{mode==="topic"?ft(lang,"compose"):ft(lang,"reply")}</h2>
  {cfg ? <>
+  <p class="forum-guest-note" data-guest-readonly>{mt(lang,"guestReadOnly")}</p>
+  <details class="forum-auth-gate" data-forum-auth-gate>
+   <summary data-forum-gate-summary>{mt(lang,"guestPostGate")}</summary>
   <div class="forum-auth">
     <section class="forum-register" data-forum-register-area aria-labelledby="forum-register-heading">
       <h3 id="forum-register-heading">{mt(lang,"signupHeading")}</h3>
@@ -49,12 +52,12 @@ const strings=JSON.stringify({
         </label>
         <label>{mt(lang,"password")}
           <input name="password" type="password" autocomplete="new-password"
-           minlength="12" maxlength="128" required/>
+           minlength="8" maxlength="128" required/>
           <small>{mt(lang,"passwordHint")}</small>
         </label>
         <label>{mt(lang,"confirmPassword")}
           <input name="confirm_password" type="password" autocomplete="new-password"
-           minlength="12" maxlength="128" required/>
+           minlength="8" maxlength="128" required/>
         </label>
         <label class="forum-password-reveal">
           <input type="checkbox" data-register-reveal/> {mt(lang,"showPassword")}
@@ -109,9 +112,9 @@ const strings=JSON.stringify({
     <form data-forum-set-password hidden>
       <p>{mt(lang,"resetNewPassword")}</p>
       <label>{mt(lang,"password")} <input type="password" name="new_password"
-        autocomplete="new-password" required minlength="12"/></label>
+        autocomplete="new-password" required minlength="8"/></label>
       <label>{mt(lang,"password")} <input type="password" name="confirm_password"
-        autocomplete="new-password" required minlength="12"/></label>
+        autocomplete="new-password" required minlength="8"/></label>
       <button type="submit">{mt(lang,"resetSave")}</button>
     </form>
     <div class="forum-social" data-forum-social>
@@ -136,6 +139,7 @@ const strings=JSON.stringify({
     </div>
     <button type="button" data-forum-logout hidden>{ft(lang,"logout")}</button>
   </div>
+  </details>
   <p class="forum-message" data-forum-status role="status" aria-live="polite"></p>
   <details data-forum-history hidden>
    <summary>{ft(lang,"myPosts")}</summary><p data-history-status role="status"></p><ul data-history-list></ul>
@@ -179,6 +183,14 @@ const strings=JSON.stringify({
 .community-composer{margin:34px 0;border:1px solid #b9d8bf;padding:clamp(16px,3vw,28px);border-radius:17px;background:#f3faf1;color:#264a33}
 .community-composer{scroll-margin-top:6rem}
 .community-composer details{margin:16px 0}
+.community-composer .forum-auth-gate{border:1px solid #a9caae;border-radius:13px;background:#fff;overflow:visible}
+.community-composer .forum-auth-gate>summary{display:flex;align-items:center;min-height:52px;
+ padding:12px 15px;font-size:15px;font-weight:800;line-height:1.5;color:#245e3b;
+ cursor:pointer}
+.community-composer .forum-auth-gate[open]>summary{border-bottom:1px solid #d3e6d0}
+.community-composer .forum-auth-gate>.forum-auth{padding:16px}
+.community-composer .forum-guest-note{line-height:1.7;font-size:14px;margin:8px 0 14px;color:#4a6850}
+.community-composer .forum-auth-gate>summary:focus-visible{outline:3px solid #83bc8a;outline-offset:2px}
 .community-composer summary{cursor:pointer;color:#245e3b;padding:10px 0}
 .community-composer li{overflow-wrap:anywhere}
 .forum-auth p{margin:0 0 12px;line-height:1.6}
@@ -238,6 +250,8 @@ for(const widget of widgets){
  const memberCopy=JSON.parse(widget.dataset.memberMessages||"{}") as Record<string,string>;
  const el=<T extends HTMLElement>(selector:string)=>widget.querySelector<T>(selector);
  const authForm=el<HTMLFormElement>("[data-forum-email]");
+ const authGate=el<HTMLDetailsElement>("[data-forum-auth-gate]");
+ const guestNote=el<HTMLElement>("[data-guest-readonly]");
  const passwordForm=el<HTMLFormElement>("[data-forum-password]");
  const registerForm=el<HTMLFormElement>("[data-forum-register]");
  const registerArea=el<HTMLElement>("[data-forum-register-area]");
@@ -381,6 +395,8 @@ for(const widget of widgets){
    postForm?.reset();
   }
   if(postForm)postForm.hidden=!loggedIn;
+  if(guestNote)guestNote.hidden=loggedIn;
+  if(authGate){authGate.hidden=loggedIn;if(loggedIn)authGate.open=false}
   if(authForm)authForm.hidden=loggedIn;
   if(registerArea)registerArea.hidden=loggedIn;
   if(signupConfirm)signupConfirm.hidden=true;
@@ -431,6 +447,17 @@ for(const widget of widgets){
    return false;
   }
  }
+ // Open the account form only when a person explicitly selects "Sign up".
+ // Hash links work across all ten static language routes; reading is never gated.
+ function revealRegistration(){
+  if(location.hash!=="#forum-register-heading"&&location.hash!=="#forum-signin")return;
+  if(!authGate||authGate.hidden)return;
+  authGate.open=true;
+  if(location.hash==="#forum-signin"&&passwordChoice)passwordChoice.open=true;
+  requestAnimationFrame(()=>document.querySelector(location.hash)?.scrollIntoView({block:"start"}));
+ }
+ window.addEventListener("hashchange",revealRegistration);
+ revealRegistration();
  const hash=new URLSearchParams(location.hash.replace(/^#/,""));
  const fromLink=hash.get("access_token");
  const isRecovery=hash.get("type")==="recovery";
@@ -441,10 +468,12 @@ for(const widget of widgets){
   attemptPromise.then(ok=>{
    if(expectedAttempt!==activeAuthAttempt)return;
    if(!ok)msg(copy.oldLink);
-   if(ok&&isRecovery&&resetForm){resetForm.hidden=false;
+   if(ok&&isRecovery&&resetForm){if(authGate){authGate.hidden=false;authGate.open=true}resetForm.hidden=false;
     resetForm.querySelector<HTMLInputElement>("input")?.focus()}
-   widget.scrollIntoView({block:"start"});
-   if(ok)widget.focus({preventScroll:true});
+   if(ok&&!isRecovery&&cfg.mode==="topic"){
+    document.querySelector(".community-list")?.scrollIntoView({block:"start"});
+   }else widget.scrollIntoView({block:"start"});
+   if(ok&&!isRecovery)widget.focus({preventScroll:true});
   });
  }else if(hash.has("error")||hash.has("error_code")){
   history.replaceState(null,"",location.pathname+location.search);
@@ -527,7 +556,7 @@ for(const widget of widgets){
   const confirmationInput=registerForm.elements.namedItem("confirm_password") as HTMLInputElement|null;
   const password=passwordInput?.value||"";
   if(!address||address.length>254)return;
-  if(password.length<12){msg(memberCopy.passwordShort);passwordInput?.focus();return}
+  if(password.length<8){msg(memberCopy.passwordShort);passwordInput?.focus();return}
   if(password!==confirmationInput?.value){msg(memberCopy.passwordMismatch);confirmationInput?.focus();return}
   const button=registerForm.querySelector<HTMLButtonElement>("[data-register-submit]");
   if(button?.disabled)return;
@@ -540,7 +569,10 @@ for(const widget of widgets){
      signal:AbortSignal.timeout(15000)
    });
    if(!response.ok){
-    msg(response.status===429?copy.retryLater:memberCopy.authError);
+    const error=await response.json().catch(()=>({})) as {code?:string;message?:string};
+    const weak=error.code==="weak_password"||/password.*(short|length|character|weak|secure)/i.test(error.message||"");
+    msg(response.status===429?copy.retryLater:
+      weak?memberCopy.passwordProviderPolicy:memberCopy.authError);
     return;
    }
    const data=await response.json();
@@ -587,7 +619,7 @@ for(const widget of widgets){
   if(!token)return;
   const password=(resetForm.elements.namedItem("new_password") as HTMLInputElement|null)?.value||"";
   const confirm=(resetForm.elements.namedItem("confirm_password") as HTMLInputElement|null)?.value||"";
-  if(password.length<12){msg(memberCopy.passwordShort);return}
+  if(password.length<8){msg(memberCopy.passwordShort);return}
   if(password!==confirm){msg(memberCopy.passwordMismatch);return}
   const button=resetForm.querySelector<HTMLButtonElement>('button[type="submit"]');
   if(button?.disabled)return;
