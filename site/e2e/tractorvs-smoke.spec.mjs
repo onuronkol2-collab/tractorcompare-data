@@ -101,6 +101,7 @@ test("published ISEKI TXGS24 power summary links its exact approved source in Tu
 });
 
 test("model search is reachable from the global header without leaving a discussion first", async ({ page, isMobile }) => {
+  if (!isMobile) await page.setViewportSize({width:1440,height:900});
   await page.goto("/tr/forum/", { waitUntil: "domcontentloaded" });
   if (isMobile) {
     const menu = page.locator("details.mobile-nav");
@@ -120,6 +121,7 @@ test("model search is reachable from the global header without leaving a discuss
 });
 
 test("header resources lead to source methods and choice guides, with English fallback clearly marked", async ({ page, isMobile }) => {
+  if (!isMobile) await page.setViewportSize({width:1440,height:900});
   await page.goto("/de/", { waitUntil: "domcontentloaded" });
   const menu = isMobile ? page.locator("details.mobile-nav") : page.locator("details.resource-nav-menu");
   await menu.locator("summary").click();
@@ -131,6 +133,7 @@ test("header resources lead to source methods and choice guides, with English fa
 });
 
 test("native header menus close with Escape and preserve keyboard orientation", async ({ page, isMobile }) => {
+  if (!isMobile) await page.setViewportSize({width:1440,height:900});
   await page.goto("/tr/", { waitUntil: "domcontentloaded" });
   const menu = isMobile ? page.locator("details.mobile-nav") : page.locator("details.resource-nav-menu");
   await menu.locator("summary").click();
@@ -138,6 +141,27 @@ test("native header menus close with Escape and preserve keyboard orientation", 
   await page.keyboard.press("Escape");
   await expect(menu).not.toHaveAttribute("open", "");
   await expect(menu.locator("summary")).toBeFocused();
+});
+
+test("compact and wide headers fit their viewport without clipping navigation controls", async ({ page }) => {
+  for (const width of [360,390,768,1024,1280,1440]) {
+    await page.setViewportSize({width,height:900});
+    await page.goto("/tr/", {waitUntil:"domcontentloaded"});
+    const shape = await page.locator(".header-inner").evaluate((el) => ({
+      scrollWidth:el.scrollWidth,clientWidth:el.clientWidth,
+      left:el.getBoundingClientRect().left,right:el.getBoundingClientRect().right,
+    }));
+    expect(shape.scrollWidth-shape.clientWidth, "Header overflow at "+width).toBeLessThanOrEqual(2);
+    expect(shape.left, "Header left edge at "+width).toBeGreaterThanOrEqual(-1);
+    expect(shape.right, "Header right edge at "+width).toBeLessThanOrEqual(width+1);
+    const compact=page.locator("details.mobile-nav");
+    if (width<=1280) {
+      await expect(compact).toBeVisible();
+      await expect(page.locator("details.header-search-menu")).toBeHidden();
+    } else {
+      await expect(page.locator("details.header-search-menu")).toBeVisible();
+    }
+  }
 });
 
 test("analytics tags are not requested without permission and remain absent after rejection", async ({ page }) => {
