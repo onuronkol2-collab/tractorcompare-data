@@ -85,6 +85,24 @@ export async function fingerprintPublicView({ jwt, fetchFn = fetch, maxRows = MA
   }
   throw new Error("Reached public-catalogue safety limit.");
 }
+/**
+ * A concurrent published-model transaction can change PostgREST's total while
+ * we read a paginated public view. Discard that partial hash and restart once
+ * from offset=0, with fresh hash and model identities. A second unstable pass
+ * still fails closed; HTTP auth/permission failures NEVER trigger retries.
+ */
+export async function fingerprintPublicViewWithBoundedRetry(args) {
+  try {
+    return await fingerprintPublicView(args);
+  } catch (error) {
+    if (!(error instanceof Error) ||
+        error.message !== "Public data changed mid-read; safe retry at next schedule.") {
+      throw error;
+    }
+    return fingerprintPublicView(args);
+  }
+}
+
 export async function getRecordedSnapshot({token,fetchFn=fetch}) {
   if(!token)throw new Error("Missing GitHub token.");
   const response=await fetchFn("https://api.github.com/repos/"+REPO+"/contents/"+SNAPSHOT_PATH+"?ref=main",{
@@ -114,7 +132,7 @@ export function guardMassUnpublish(previous,current){
 
 export async function runPublicationSync({repo,ref,jwt,token,fetchFn=fetch,dryRun=false,now=new Date()}) {
   validateScope(repo,ref);
-  const latest=await fingerprintPublicView({jwt,fetchFn});
+  const latest=await fingerprintPublicViewWithBoundedRetry({jwt,fetchFn});
   const stored=await getRecordedSnapshot({token,fetchFn});
   if(stored.record?.fingerprint===latest.fingerprint) {
     return {changed:false,committed:false,reason:"public_catalogue_unchanged",...latest};
