@@ -684,6 +684,10 @@ export function specificationEvidenceLabel(
  * root is a reviewed code change, not an AI-generated guess.
  */
 const approvedManufacturerHosts: Record<string, string[]> = {
+  // These exact official producer domains have existing RLS-evidenced model sources.
+  // Publisher identity + dated evidence are still required; this never licenses media reuse.
+  "agrale": ["www.agrale.com.br"],
+  "armatrac": ["armatrac.com"],
   "tafe": ["tafetractors.com"],
   "başak traktör": ["basaktraktor.com.tr"],
   "tümosan": ["tumosan.com.tr"],
@@ -700,7 +704,7 @@ const approvedManufacturerHosts: Record<string, string[]> = {
   "steyr": ["steyr-traktoren.com"],
   "mahindra": ["mahindratractor.com"],
   "antonio carraro": ["antoniocarraro.it"],
-  "sonalika": ["international.sonalika.com"],
+  "sonalika": ["international.sonalika.com", "www.sonalika.com"],
   "yanmar": ["yanmar.com"],
   "swaraj": ["swarajtractors.com"],
   "kioti": ["kioti.com", "kioti-uk.com"],
