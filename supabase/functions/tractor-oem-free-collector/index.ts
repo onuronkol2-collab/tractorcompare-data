@@ -4,7 +4,7 @@
 // Only a short excerpt and SHA-256 are persisted, never whole copyrighted docs.
 import {createClient} from "npm:@supabase/supabase-js@2";
 import {
- allowedOemUrl,readOemDocument,validModelMention,aggregateResults,
+ allowedOemUrl,readOemDocument,robotsAllowed,validModelMention,aggregateResults,
  MAX_PER_RUN,CACHE_HOURS
 } from "./policy.mjs";
 
@@ -95,10 +95,19 @@ async function collect(){
   const item=cacheMap.get(x.source_url);
   return !item||!item.next_check_at||Date.parse(item.next_check_at)<=now;
  });
- const picked=remaining.slice(0,MAX_PER_RUN);
- const updates=[];
+ // At most one source from each OEM hostname per run; remain courteous.
+ const picked=[],usedHosts=new Set();
+ for(const item of remaining){
+  if(picked.length>=MAX_PER_RUN)break;
+  if(usedHosts.has(item.source_host))continue;
+  usedHosts.add(item.source_host);picked.push(item);
+ }
+ const updates=[],robotsCache=new Map();
  for(const entry of picked){
-  const doc=await readOemDocument(entry.source_url);
+  const permitted=await robotsAllowed(entry.source_url,{cache:robotsCache});
+  const doc=permitted?await readOemDocument(entry.source_url):
+   {status:"robots_blocked",http_status:null,media_type:null,
+    content_bytes:null,content_sha256:null,excerpt:null};
   // Mention is merely a discovery hint, not technical identity evidence.
   const mentions=doc.status==="fetched_html" &&
    entry.associated_models.some(m=>validModelMention(doc.excerpt,m));
