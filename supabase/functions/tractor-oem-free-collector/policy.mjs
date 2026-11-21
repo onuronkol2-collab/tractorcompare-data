@@ -32,7 +32,14 @@ export function validModelMention(text,model){
  const escape=x=>x.replace(/[.*+?^{}()|[\]\\$]/g,"\\$&");
  const query=target.split(/\s+/).map(escape).join("\\s+");
  const matcher=new RegExp("(?:^|[^\\p{L}\\p{N}])"+query+"(?=$|[^\\p{L}\\p{N}])","iu");
- return matcher.test(clean(text));
+ const cleanText=clean(text);
+ const match=matcher.exec(cleanText);
+ if(!match)return false;
+ // A short alphanumeric suffix may be another tractor variant,
+ // e.g. TIGRE 3800 F must not imply an exact TIGRE 3800 match.
+ const after=cleanText.slice(match.index+match[0].length).trimStart();
+ if(/^(?:[A-Z]{1,3}|[0-9]{1,3})(?:\\s|$)/i.test(after))return false;
+ return true;
 }
 export function scrubMarkup(html){
  let str=String(html).replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi," ")
