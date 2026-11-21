@@ -1,6 +1,17 @@
 // TractorVS OEM source transport. Zero AI/paid calls, no auto-publication.
 // Shared by the private Supabase worker and Node's unit tests.
 export const MAX_PER_RUN=3;
+
+const SAFE_QUERY_STAGES=new Set(["queue_read","draft_read","brand_read","spec_read","source_read","cache_read","cache_write"]);
+// Only fixed stage names, HTTP status and a conservative SQL/PostgREST code
+// may reach CI logs. NEVER print exception messages, URLs, UUIDs or headers.
+export function safeCollectorQueryFailure(scope,httpStatus,error){
+ const stage=SAFE_QUERY_STAGES.has(scope)?scope:"unknown";
+ const http=Number.isSafeInteger(httpStatus)&&httpStatus>=400&&httpStatus<=599?httpStatus:0;
+ const raw=typeof error?.code==="string"?error.code:"";
+ const code=/^[A-Z0-9_]{3,16}$/.test(raw)?raw:"unknown";
+ return {stage,http,code};
+}
 export const MAX_DRAFT_IDS_PER_LOOKUP=50;
 // PostgREST .in('id', ids) serializes each UUID into the request URL.
 // Keep source-only private draft lookups bounded below intermediary URI limits.
