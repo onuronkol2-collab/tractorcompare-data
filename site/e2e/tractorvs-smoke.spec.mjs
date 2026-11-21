@@ -36,6 +36,30 @@ test("catalogue, comparison and forum routes expose a main landmark", async ({ p
   }
 });
 
+test("ten localized home pages are reachable and declare their language", async ({ page }) => {
+  const locales = [
+    ["/", "en"], ["/tr/", "tr"], ["/de/", "de"], ["/fr/", "fr"],
+    ["/es/", "es"], ["/ru/", "ru"], ["/hi/", "hi"], ["/ja/", "ja"],
+    ["/zh/", "zh-Hans"], ["/pt-br/", "pt-BR"],
+  ];
+  for (const [path, lang] of locales) {
+    const response = await page.goto(path, { waitUntil: "domcontentloaded" });
+    expect(response?.status(), "Locale HTTP status: " + path).toBe(200);
+    await expect(page.locator("html")).toHaveAttribute("lang", lang);
+  }
+});
+
+test("mobile navigation reaches tractor comparison from the menu", async ({ page, isMobile }) => {
+  test.skip(!isMobile, "Mobile-only navigation interaction");
+  await page.goto("/tr/", { waitUntil: "domcontentloaded" });
+  const menu = page.locator("details.mobile-nav");
+  await menu.locator("summary").click();
+  const compareLink = menu.locator('a[href="/tr/compare/"]');
+  await expect(compareLink).toBeVisible();
+  await compareLink.click();
+  await expect(page).toHaveURL(/\/tr\/compare\/$/);
+});
+
 test("analytics tags are not requested without permission and remain absent after rejection", async ({ page }) => {
   const externalAnalyticsRequests = [];
   page.on("request", (request) => {
