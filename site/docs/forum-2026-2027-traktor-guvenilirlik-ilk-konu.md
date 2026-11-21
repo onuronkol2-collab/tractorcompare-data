@@ -16,6 +16,11 @@
 
 **Hızlı okuma:** Aşağıda 19 modele ait kısa bulgular, her birinin özgün test bağlantısı ve tarih sınırları bulunuyor. Dilerseniz doğrudan teknik sorun kayıtlarına, olumlu uzun dönem örneklerine veya sık sorulan sorulara geçebilirsiniz.
 
+<figure class="research-photo">
+<img src="/images/tractors/claas-axion-870-1c6e17f1-480.jpg" alt="Yeşil Claas Axion 870 traktörün dışarıdan görünümü; uzun dönem testinde incelenen modelin temsili fotoğrafı" width="480" height="360" loading="lazy" decoding="async" />
+<figcaption>Claas Axion 870 — model fotoğrafı, test edilen araç değildir. Fotoğraf: <a href="https://commons.wikimedia.org/wiki/File:Claas_Axion_870.jpg">JoachimKohler-HB / Wikimedia Commons</a>, <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>. Sayfa sunumu için görsel optimize edilmiştir.</figcaption>
+</figure>
+
 ## Neden TractorVS bu araştırmayı yapıyor?
 
 Bir üretici çok satıyorsa kamuya açık şikâyetleri de çok olabilir. Tek traktördeki dört servis ziyareti, bin traktörün dördünün arızalandığı anlamına gelmez. Dahası eski bir traktörün 7.000 saatteki senkromeç arızasıyla yeni bir traktörün 400 saatteki şanzıman arızası eşit değerlendirilmemelidir. Bu dosya satış büyüklüğünü, **arızalanan farklı makine sayısını**, **arıza olayı sayısını**, **motor saatini** ve **iş kaybını** bilinçli olarak ayrı tutuyor.
@@ -69,11 +74,6 @@ Aşağıdaki iki bölüm **en kötüden en iyiye bir sıra değildir.** Aynı mo
 ## I. Somut teknik sorun kayıtları bulunan modeller
 
 Bu bölümdeki makineler için dikkat çeken onarımlar, yaşanan başka olumlu sonuçları silmez. “İlk 8 en fazla arızalanan” anlamı taşımaz.
-
-<figure class="research-photo">
-<img src="/images/tractors/claas-axion-870-1c6e17f1-480.jpg" alt="Yeşil Claas Axion 870 traktörün dışarıdan görünümü; uzun dönem testinde incelenen modelin temsili fotoğrafı" width="480" height="360" loading="lazy" decoding="async" />
-<figcaption>Claas Axion 870 — model fotoğrafı, test edilen araç değildir. Fotoğraf: <a href="https://commons.wikimedia.org/wiki/File:Claas_Axion_870.jpg">JoachimKohler-HB / Wikimedia Commons</a>, <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>. Sayfa sunumu için görsel optimize edilmiştir.</figcaption>
-</figure>
 
 ### 1. Massey Ferguson 8S.265 Dyna-7
 
