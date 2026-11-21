@@ -1,3 +1,4 @@
+import {fetchPublicRows} from "./forum-public-rows.mjs";
 import type {Locale} from "./locales.ts";
 export interface ForumTopic {
  id:string;topic_id:string;locale:Locale;original_locale:Locale;slug:string;
@@ -28,14 +29,10 @@ export function publicForumClientConfig() {return config();}
 async function loadRows<T>(table:string,select:string):Promise<T[]> {
  const cfg=config();
  if(!cfg)return [];
- const path="/rest/v1/"+table+"?select="+encodeURIComponent(select)+"&order=created_at.desc&limit=1000";
  const headers:Record<string,string>={"apikey":cfg.key,"Accept":"application/json"};
  if(cfg.key.split(".").length===3)headers.Authorization="Bearer "+cfg.key;
- const response=await fetch(cfg.url+path,{headers,signal:AbortSignal.timeout(16000)});
- if(!response.ok)throw new Error("Public forum API request failed ("+response.status+"), refusing an incomplete production build.");
- const rows=await response.json();
- if(!Array.isArray(rows))throw new Error("Public forum API did not return a list.");
- return rows as T[];
+ const rows=await fetchPublicRows({api:cfg.url+"/rest/v1",table,fields:select,headers});
+ return rows.sort((a:{created_at:string},b:{created_at:string})=>b.created_at.localeCompare(a.created_at)) as T[];
 }
 const validLocale=new Set(["en","tr","zh","hi","pt-br","fr","de","ru","ja","es"]);
 const slugPattern=/^[a-z0-9][a-z0-9-]{10,259}$/;

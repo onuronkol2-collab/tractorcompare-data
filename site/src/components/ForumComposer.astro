@@ -2,7 +2,7 @@
 import {forumText as ft,FORUM_CATEGORY_KEYS} from "../lib/forum-i18n.ts";
 import {publicForumClientConfig} from "../lib/forum.ts";
 import {getPublicCatalog} from "../lib/catalog.ts";
-import type {Locale} from "../lib/locales.ts";
+import {LOCALES,LOCALE_NAMES,LOCALE_TAGS,type Locale} from "../lib/locales.ts";
 interface Props {lang:Locale; mode:"topic"|"reply"; topicId?:string}
 const {lang,mode,topicId}=Astro.props;
 const cfg=publicForumClientConfig();
@@ -51,6 +51,11 @@ const strings=JSON.stringify({
       </select>
      </label>
     </>}
+    <label>{ft(lang,"writingLanguage")}
+      <select name="source_locale" required>
+       {LOCALES.map(locale=><option value={locale} lang={LOCALE_TAGS[locale]} selected={locale===lang}>{LOCALE_NAMES[locale]}</option>)}
+      </select>
+    </label>
     <label>{mode==="topic"?ft(lang,"body"):ft(lang,"reply")}
       <textarea name="body" required minlength={mode==="topic"?40:10}
        maxlength={mode==="topic"?12000:6000} rows={mode==="topic"?7:4}></textarea>
@@ -83,6 +88,7 @@ const strings=JSON.stringify({
 .community-composer [hidden]{display:none!important}
 </style>
 <script>
+import {isLocale} from "../lib/locales.ts";
 type FormContainer=HTMLElement & {dataset:DOMStringMap};
 const widgets=document.querySelectorAll<FormContainer>("[data-forum-composer]");
 for(const widget of widgets){
@@ -183,6 +189,8 @@ for(const widget of widgets){
   if(!token){msg(copy.authRequired||"Sign in required");return}
   const form=new FormData(postForm);
   const body=String(form.get("body")||"").trim();
+  const sourceLocale=String(form.get("source_locale")||"");
+  if(!isLocale(sourceLocale))return;
   const consent=form.get("translation_consent")!==null;
   const row:Record<string,unknown>={body,translation_consent:consent,status:"pending"};
   let table="tc_forum_replies";
@@ -194,10 +202,10 @@ for(const widget of widgets){
    const prefix=title.normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase()
     .replace(/[^a-z0-9]+/g,"-").replace(/^-+|-+$/g,"").slice(0,85)||"tractor-topic";
    Object.assign(row,{id,title,slug:prefix+"-"+id.replace(/-/g,""),category:String(form.get("category")||"questions"),
-    locale:cfg.lang,tractor_id:form.get("tractor_id")||null});
+    locale:sourceLocale,tractor_id:form.get("tractor_id")||null});
   }else{
    if(!cfg.topicId||body.length<10||body.length>6000)return;
-   row.topic_id=cfg.topicId;row.source_locale=cfg.lang;
+   row.topic_id=cfg.topicId;row.source_locale=sourceLocale;
   }
   const button=postForm.querySelector<HTMLButtonElement>('button[type="submit"]');
   if(button)button.disabled=true;msg(copy.loading||"...");

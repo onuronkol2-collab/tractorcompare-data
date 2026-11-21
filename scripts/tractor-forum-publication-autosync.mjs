@@ -6,6 +6,7 @@
  * requests a new static Cloudflare build. Hiding a harmful post changes the
  * fingerprint too, so moderation removal is not blocked by a count floor.
  */
+import {fetchPublicRows} from "../site/src/lib/forum-public-rows.mjs";
 import {createHash} from "node:crypto";
 import {appendFileSync} from "node:fs";
 import {fileURLToPath} from "node:url";
@@ -15,7 +16,6 @@ export const REPO="onuronkol2-collab/tractorcompare-data";
 export const REVISION_PATH="site/src/data/public-forum-sync.json";
 const PROJECT="aaufxtcvnzgavtlintiv";
 const API="https://"+PROJECT+".supabase.co/rest/v1";
-const MAX_ROWS=3000,PAGE=250;
 const COLLECTIONS=[
  {table:"tc_forum_localized_topics",fields:"id,topic_id,locale,original_locale,slug,category,tractor_id,status,created_at,updated_at,title,body,seo_ready,machine_translated"},
  {table:"tc_forum_localized_replies",fields:"id,topic_id,locale,original_locale,status,created_at,body,machine_translated"}
@@ -32,53 +32,16 @@ export function validateAnon(jwt){
   if(payload.role!=="anon")throw Error("Only anon JWT is allowed, never service_role.");
  }catch(err){throw Error("Non-anonymous or invalid JWT (forum sync blocked)");}
 }
-async function fetchPublicRows({table,fields,jwt,fetchFn}){
- const results=[];
- let total=null;
- for(let offset=0;offset<=MAX_ROWS;offset+=PAGE){
-  const url=new URL(API+"/"+table);
-  url.searchParams.set("select",fields);
-  url.searchParams.set("order","id.asc,locale.asc");
-  url.searchParams.set("offset",String(offset));
-  url.searchParams.set("limit",String(PAGE));
-  const res=await fetchFn(url.toString(),{
-   headers:{apikey:jwt,Authorization:"Bearer "+jwt,Prefer:"count=exact",Accept:"application/json"},
-   signal:AbortSignal.timeout(25000)
-  });
-  if(res.status!==200&&res.status!==206)
-   throw Error("Forum public view failed with HTTP "+res.status+" ("+table+")");
-  const range=String(res.headers.get("content-range")||"");
-  const data=await res.json();
-  if(!Array.isArray(data))throw Error("Invalid forum view payload");
-  // PostgREST uses */0 when the view has no rows on some releases.
-  if(total===null&&data.length===0&&/^\*\/0$|^0-0\/0$/.test(range))
-   return [];
-  const match=range.match(/^(\d+)-(\d+)\/(\d+)$/);
-  if(!match)throw Error("PostgREST exact count missing for "+table+": "+range);
-  const start=Number(match[1]),end=Number(match[2]),count=Number(match[3]);
-  if(count>MAX_ROWS||count<1||!Number.isSafeInteger(count))
-   throw Error("Unbounded or invalid forum view count");
-  if(total===null)total=count;
-  if(total!==count||start!==offset||end!==offset+data.length-1)
-   throw Error("Forum view changed while paginating; retry next interval.");
-  if(data.some(row=>!row||typeof row.id!=="string"||typeof row.locale!=="string"||row.status!=="published"))
-   throw Error("Unapproved row in public forum view; abort.");
-  results.push(...data);
-  if(results.length===count)return results;
-  if(data.length!==PAGE)throw Error("Forum pagination truncated");
- }
- throw Error("Forum public view exceeds safe cap");
-}
 export async function fingerprintPublicForum({jwt,fetchFn=fetch}){
  validateAnon(jwt);
  const hash=createHash("sha256");
  let total=0,publicTopics=0,publicReplies=0,indexableTopics=0;
  for(const {table,fields} of COLLECTIONS){
-  const rows=await fetchPublicRows({table,fields,jwt,fetchFn});
+  const rows=await fetchPublicRows({api:API,table,fields,headers:{apikey:jwt,Authorization:"Bearer "+jwt},fetchFn});
   total+=rows.length;
   if(table==="tc_forum_localized_topics"){
    publicTopics=rows.length;
-   indexableTopics=rows.filter(x=>x.seo_ready===true && x.body?.trim().length>=150).length;
+   indexableTopics=rows.filter(x=>x.seo_ready===true && (x.machine_translated || (x.title?.trim().length>=12 && x.body?.trim().length>=150))).length;
   }else publicReplies=rows.length;
   for(const row of rows)hash.update(JSON.stringify([table,row])+"\n");
  }
