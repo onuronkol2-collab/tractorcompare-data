@@ -4,6 +4,7 @@ on:
     branches: [feat/licensed-photo-batch-5-20261121]
     paths:
       - ".github/workflows/photo-source-once-20261121.yml"
+      - ".github/scripts/fetch-licensed-thumbnails-once-20261121.mjs"
 permissions:
   contents: write
 concurrency:
