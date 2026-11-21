@@ -54,7 +54,7 @@ GitHub (Actions, CodeQL, Dependabot, Dependency graph, Malware alerts, Secret Pr
 
 - **Veritabanı statüsü ile gerçek sayfa aynı değildir:** `published` yalnız güvenli Supabase kaydını gösterir; statik Astro/Cloudflare sayfası bir sonraki başarılı eşitleme ve üretim dağıtımını gerektirir. Kullanıcıya yanlış 'siteye anında çıktı' bildirimi verme.
 - Yeni gönderi yaşam döngüsü: kullanıcı kimliği ve RLS → anonim kamu görünümü → 10 dakikada bir best-effort GitHub eşitlemesi → üretim build ve Cloudflare deploy → **gerçek herkese açık URL, hub, canonical, robots ve sitemap doğrulaması**. GitHub cron ve Cloudflare dağıtımı için kesin süre vaat etme.
-- `scripts/tractor-forum-live-visibility-audit.mjs` denetimi 45 dakikayı aşan, `seo_ready` olan gönderilerde farkı hata sayar; yarım saatlik bağımsız workflow tek bir GitHub sorunu açar. Yayınla ilgili başarısızlıklar sessizce 'başarılı' etiketlenmez.
+- `scripts/tractor-forum-live-visibility-audit.mjs` denetimi 45 dakikayı aşan bütün yayımlanmış kısa/uzun konular, yanıtlar ve onaylı fotoğraflarda görünürlük farkını hata sayar; yalnız `seo_ready` konular için sitemap/index beklentisi uygular; yarım saatlik bağımsız workflow tek bir GitHub sorunu açar. Yayınla ilgili başarısızlıklar sessizce 'başarılı' etiketlenmez.
 - Sınırlı otomatik kurtarma yalnız doğrulanmış canlı uyuşmazlıkta GitHub site derlemesini yeniden ister; RLS/moderasyonu aşmaz, 2 saatte 1 / günde 2 denemeyi aşamaz. Başarısız kaynak erişimini veri yayınlama gerekçesi sayma.
 - Forumda bu denetimlerin varlığı 'anlık SEO indeksleme' veya '0 hata' garantisi değildir. İlk onaydan önceki test ve gerçek canlı yayın sonrası denetimi ayrı raporla.
 
