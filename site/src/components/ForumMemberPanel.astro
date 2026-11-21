@@ -17,8 +17,25 @@ const copy=JSON.stringify(MEMBER_TEXT[lang]);
   <h2>{mt(lang,"memberHeading")}</h2>
   <p>{mt(lang,"memberIntro")}</p>
  </header>
- <div class="member-grid">
-  <section class="member-leaders" aria-label={mt(lang,"leaderboard")}>
+ <div class="member-toolbar" data-member-toolbar>
+  <img class="member-toolbar-avatar" data-member-toolbar-avatar
+   src="/images/forum-member-default.svg" width="60" height="60" alt="" loading="lazy"/>
+  <div class="member-toolbar-identity">
+   <strong data-member-toolbar-name>{mt(lang,"defaultMemberName")}</strong>
+   <small data-member-toolbar-hint>{mt(lang,"profileOptional")}</small>
+  </div>
+  <div class="member-toolbar-buttons">
+   <button type="button" data-member-edit hidden aria-expanded="false"
+    aria-controls="forum-member-editor">{mt(lang,"editProfile")}</button>
+   <button type="button" data-member-activity hidden aria-expanded="false"
+    aria-controls="forum-member-editor">{mt(lang,"memberActivity")}</button>
+   <button type="button" data-member-leaders-toggle aria-expanded="false"
+    aria-controls="forum-member-leaders">{mt(lang,"leaderboard")}</button>
+  </div>
+ </div>
+ <div class="member-grid" data-member-grid hidden>
+  <section class="member-leaders" id="forum-member-leaders"
+    data-member-leaders hidden aria-label={mt(lang,"leaderboard")}>
    <header class="member-section-head">
     <h3>{mt(lang,"leaderboard")}</h3>
     <div class="leaderboard-modes" role="group" aria-label={mt(lang,"leaderboard")}>
@@ -29,12 +46,14 @@ const copy=JSON.stringify(MEMBER_TEXT[lang]);
    <ol data-leaders aria-live="polite"></ol>
    <p data-leader-empty>{mt(lang,"loading")}</p>
   </section>
-  <section class="member-own" aria-label={mt(lang,"myProfile")}>
+  <section class="member-own" id="forum-member-editor"
+    data-member-own hidden aria-label={mt(lang,"myProfile")}>
    <h3>{mt(lang,"myProfile")}</h3>
    <p data-member-guest>{mt(lang,"signInNotice")}</p>
    <form data-member-form hidden>
      <div class="avatar-line">
-      <img data-member-avatar width="72" height="72" alt="" hidden/>
+      <img data-member-avatar width="72" height="72"
+        src="/images/forum-member-default.svg" alt="" loading="lazy"/>
       <label>{mt(lang,"avatar")}
        <input name="avatar" type="file" accept="image/png,image/jpeg,image/webp" />
       </label>
@@ -76,6 +95,26 @@ const copy=JSON.stringify(MEMBER_TEXT[lang]);
 .member-community{margin:30px 0;border-top:2px solid #cfe0cb;padding-top:28px;color:#244b34}
 .member-intro h2{font-size:clamp(23px,2.7vw,30px);margin:0 0 9px;color:#174d2d}
 .member-intro p{line-height:1.7;max-width:720px;color:#526b57}
+.member-toolbar{display:flex;align-items:center;flex-wrap:wrap;gap:14px;
+ background:#fff;border:1px solid #cee1ce;border-radius:15px;padding:14px 16px;margin-top:18px}
+.member-toolbar-avatar{height:60px;width:60px;flex:0 0 60px;border-radius:50%;
+ object-fit:cover;background:#245c3c;border:2px solid #d2e7cd}
+.member-toolbar-identity{display:grid;min-width:150px;flex:1;gap:4px}
+.member-toolbar-identity strong{font-weight:800;color:#194c2e;font-size:16px;overflow-wrap:anywhere}
+.member-toolbar-identity small{color:#5b715e;font-size:12px;line-height:1.55}
+.member-toolbar-buttons{display:flex;flex-wrap:wrap;gap:9px;align-items:center}
+.member-toolbar-buttons button{font:inherit;font-size:13px;font-weight:750;
+ padding:10px 12px;min-height:42px;background:#eff7ee;color:#235b39;
+ border:1px solid #adcbaf;border-radius:10px;cursor:pointer}
+.member-toolbar-buttons button[aria-expanded="true"]{background:#27643e;color:#fff}
+.member-grid.member-single{grid-template-columns:minmax(0,1fr);max-width:850px}
+.member-community [data-member-grid][hidden],.member-community [data-member-own][hidden],
+.member-community [data-member-leaders][hidden]{display:none!important}
+@media(max-width:540px){
+.member-toolbar-buttons{width:100%}
+.member-toolbar-buttons button{flex:1 1 auto}
+.member-toolbar-avatar{width:52px;height:52px;flex-basis:52px}
+}
 .member-grid{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(280px,.9fr);gap:18px;margin-top:22px}
 .member-leaders,.member-own{background:white;border:1px solid #cee1ce;border-radius:16px;padding:clamp(16px,3vw,25px);min-width:0}
 .member-section-head{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px}
