@@ -137,11 +137,12 @@ const schema={
     <ol class="editorial-grid">{articles.map(entry=><li>
       <article class="editorial-card">
        <p class="editorial-kicker">{copy.guideLabel}</p>
-       <h3><a href={entryHref(entry)}>{titleFor(entry)}</a></h3>
+       <h3><a href={entryHref(entry)} hreflang={LOCALE_TAGS[destinationLanguage(entry)]}>{titleFor(entry)}</a></h3>
        <p>{summaryFor(entry)}</p>
        {englishOnly(entry)&&<p class="editorial-language-note" lang={lang}>{localized?.englishOriginal}</p>}
        <div class="editorial-card-footer"><time datetime={entry.checked}>{copy.checked}: {entry.checked}</time>
-        <a href={entryHref(entry)} aria-label={titleFor(entry)+" — "+copy.read}>{copy.read} <span aria-hidden="true">↗</span></a></div>
+        <a href={entryHref(entry)} hreflang={LOCALE_TAGS[destinationLanguage(entry)]}
+          aria-label={titleFor(entry)+" — "+copy.read+(englishOnly(entry)?" — "+localized?.englishOriginal:"")}>{copy.read} <span aria-hidden="true">↗</span></a></div>
       </article>
     </li>)}</ol>
    </section>
@@ -153,11 +154,12 @@ const schema={
     <ol class="editorial-grid">{reviews.map(entry=><li>
       <article class="editorial-card">
        <p class="editorial-kicker">{copy.reviewLabel}</p>
-       <h3><a href={entryHref(entry)}>{titleFor(entry)}</a></h3>
+       <h3><a href={entryHref(entry)} hreflang={LOCALE_TAGS[destinationLanguage(entry)]}>{titleFor(entry)}</a></h3>
        <p>{summaryFor(entry)}</p>
        {englishOnly(entry)&&<p class="editorial-language-note" lang={lang}>{localized?.englishOriginal}</p>}
        <div class="editorial-card-footer"><time datetime={entry.checked}>{copy.checked}: {entry.checked}</time>
-        <a href={entryHref(entry)} aria-label={titleFor(entry)+" — "+copy.read}>{copy.read} <span aria-hidden="true">↗</span></a></div>
+        <a href={entryHref(entry)} hreflang={LOCALE_TAGS[destinationLanguage(entry)]}
+          aria-label={titleFor(entry)+" — "+copy.read+(englishOnly(entry)?" — "+localized?.englishOriginal:"")}>{copy.read} <span aria-hidden="true">↗</span></a></div>
       </article>
     </li>)}</ol>
    </section>
