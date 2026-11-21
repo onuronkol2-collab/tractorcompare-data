@@ -2,11 +2,13 @@
 import SiteLayout from "../layouts/SiteLayout.astro";
 import ForumComposer from "./ForumComposer.astro";
 import {forumText as ft,FORUM_CATEGORY_KEYS} from "../lib/forum-i18n.ts";
+import {FORUM_STARTER_GUIDES} from "../lib/forum-starter-guides.ts";
 import {publishedForumTopics,forumDate} from "../lib/forum.ts";
 import {getPublicCatalog} from "../lib/catalog.ts";
 import {localizedPath,type Locale} from "../lib/locales.ts";
 interface Props {lang:Locale}
 const {lang}=Astro.props;
+const starters=FORUM_STARTER_GUIDES[lang];
 const topics=await publishedForumTopics(lang);
 const catalog=await getPublicCatalog();
 const tractors=new Map(catalog.tractors.map(t=>[t.tractor_id,t]));
@@ -69,7 +71,19 @@ const schema=indexable?{
       })}
      </div>
      <p id="forum-no-results" hidden role="status">{ft(lang,"noResults")}</p>
-    </>:<p class="community-empty">{ft(lang,"empty")}</p>}
+    </>:<>
+      <p class="community-empty">{ft(lang,"empty")}</p>
+      <section class="community-starter" aria-labelledby="forum-starter-heading">
+        <h3 id="forum-starter-heading">{starters.heading}</h3>
+        <p class="community-starter-intro">{starters.intro}</p>
+        <div class="community-starter-grid">
+          {starters.items.map((item)=><article class="community-starter-card">
+            <h4>{item.title}</h4>
+            <p>{item.detail}</p>
+          </article>)}
+        </div>
+      </section>
+    </>}
    </section>
    <ForumComposer lang={lang} mode="topic"/>
    <p class="community-help"><a href={localizedPath(lang,"/tractors/")}>{ft(lang,"help")} ↗</a></p>
@@ -103,7 +117,14 @@ const schema=indexable?{
  .community-help{font-size:14px;margin:18px 0}
  .community-shell [hidden]{display:none!important}
  .community-shell a:focus-visible,.community-shell button:focus-visible,.community-shell input:focus-visible{outline:3px solid #83bc8a;outline-offset:2px}
-</style>
+.community-starter{margin-top:24px;border-top:1px solid #d4e5d4;padding-top:24px}
+ .community-starter h3{font-size:clamp(19px,2.2vw,25px);line-height:1.35;color:#174b2b}
+ .community-starter-intro{max-width:780px;margin:10px 0 19px;color:#4b5e4e;line-height:1.72}
+ .community-starter-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:13px}
+ .community-starter-card{background:#fff;border:1px solid #c9daca;border-radius:14px;padding:18px;overflow-wrap:anywhere}
+ .community-starter-card h4{color:#20553b;font-size:16px;line-height:1.4;margin:0 0 10px}
+ .community-starter-card p{font-size:14px;line-height:1.75;color:#4b5e4e;margin:0}
+ </style>
 <script>
  const input=document.querySelector<HTMLInputElement>("#forum-filter");
  const cards=[...document.querySelectorAll<HTMLElement>("[data-forum-topic]")];
