@@ -1,0 +1,59 @@
+name: TractorVS consented forum translations
+
+# A checked box creates queue jobs; this workflow actually processes them.
+# Never use a service-role key in GitHub. Supabase holds private privileges.
+on:
+  pull_request:
+    paths:
+      - ".github/workflows/tractorvs-forum-translation.yml"
+      - "scripts/tractor-forum-translate-dispatch.mjs"
+      - "scripts/tractor-forum-translate-dispatch.test.mjs"
+      - "supabase/functions/tractor-forum-translate/**"
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/tractorvs-forum-translation.yml"
+      - "scripts/tractor-forum-translate-dispatch.mjs"
+      - "supabase/functions/tractor-forum-translate/**"
+  schedule:
+    - cron: "9,29,49 * * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+concurrency:
+  group: tractorvs-private-forum-translation
+  cancel-in-progress: false
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22.23.4"
+      - name: Test permission boundaries, jobs and receipts
+        run: node --test scripts/tractor-forum-translate-dispatch.test.mjs
+      - uses: denoland/setup-deno@v2
+        with:
+          deno-version: v2.x
+      - name: Typecheck private worker without secrets or paid API calls
+        run: deno check --no-config supabase/functions/tractor-forum-translate/index.ts
+
+  process:
+    if: github.event_name != 'pull_request' && github.repository == 'onuronkol2-collab/tractorcompare-data' && github.ref == 'refs/heads/main'
+    needs: check
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22.23.4"
+      - name: Process up to three published, opted-in topic translations
+        env:
+          TRACTORVS_SUPABASE_ANON_JWT: ${{ secrets.TRACTORVS_SUPABASE_ANON_JWT }}
+          TRACTORVS_QUEUE_SECRET: ${{ secrets.TRACTORVS_QUEUE_SECRET }}
+        run: node scripts/tractor-forum-translate-dispatch.mjs

@@ -50,6 +50,14 @@ Bu araçlar Altın Entegrasyon Kuralı'nın parçasıdır. Her görevde ilgili o
 ### Bağlantı örnekleri (2026-11-21, dinamik envanter)
 GitHub (Actions, CodeQL, Dependabot, Dependency graph, Malware alerts, Secret Protection, Push protection, Private vulnerability reporting), Playwright, axe-core, Supabase, Cloudflare Workers, Cloudflare Web Analytics / RUM, ChatGPT otomasyonları, Firecrawl, Microsoft Clarity (Windsor.ai bağlantısı), PostHog, OpenSEO, Google Drive, Google Search Console, GA4 ve Bing Webmaster. **Bu liste sabit değildir**: eklenmiş, kaldırılmış veya bağlantısı değişmiş araçlar için oturumun güncel erişim durumunu kontrol et.
 
+### İzinli forum çevirileri için gerçek işleyici (21 Kasım 2026)
+
+- Kullanıcının makalede çeviri kutucuğunu seçmesi yalnızca 9 dil için `tc_forum_translation_jobs` kuyruğu oluşturur; otomatik çevrildiği veya başka dilde yayımlandığı anlamına gelmez.
+- Sunucu tarafı `tractor-forum-translate` Edge Function, anonim JWT + özel kuyruk sırrıyla GitHub Actions içinden çağrılır. Servis rolü ve Gemini API anahtarı yalnız Supabase Edge ortamında kalır. İzin vermemiş kullanıcı, gizli konu, değişmiş kaynak metin ve özel medya Gemini'ye gönderilmez.
+- Kaynağı `published`, `translation_consent=true` ve güncel source_hash ile doğrulayan, retry/idempotency ve denetlenebilir job statüsü olan sınırlı işleyici kullan. Kaynak iptal/değişikliklerinde `superseded` yapılır; sessizce uydurma çeviri yayımlanmaz.
+- Diller: en, zh, hi, pt-br, fr, de, ru, ja, es. Her dilde tamamlanmış içerik için sayı, ölçüm, marka, araştırma kapsamı, kaynak URL, tam tablo/başlık yapısı ve ikinci bağımsız Gemini kalite incelemesi gerekir. Kusurlu çıktılar `needs_review`, SEO dışı ve görünmez kalır.
+- Statik dil sayfaları yalnız hazır, kaynak özetiyle eşleşen ve QA onaylı `ready` çevirilerin ardından normal Cloudflare eşitlemesiyle üretilir. GitHub schedule gecikebilir; 9 dilin anında yayımlanmasını vaat etme.
+
 ### Yeni gönderiler için canlı okuma katmanı (21 Kasım 2026)
 
 - Mevcut statik Astro HTML sayfaları, canonical/hreflang, sitemap ve SEO kalitesi **aynen korunur**. ForumHub içindeki ek istemci katmanı yalnız anonim RLS korumalı `tc_forum_localized_topics` görünümünden henüz Cloudflare build'ine girmemiş konuları ziyaretçilere gösterir.
