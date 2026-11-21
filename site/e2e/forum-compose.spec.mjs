@@ -5,6 +5,7 @@ test("sign in, recover a draft, publish directly and check its status",async({pa
  let expired=false;
  let limited=true;
  let articleLive=false;
+ let articleNoindex=false;
  let verifiedCode="";
  let currentUser="user-a";
  await page.route("**/*",async route=>{
@@ -15,7 +16,7 @@ test("sign in, recover a draft, publish directly and check its status",async({pa
    if(!articleLive)return route.fulfill({status:404,body:"Not yet deployed"});
    const canonical=url.toString();
    return route.fulfill({status:200,contentType:"text/html",
-    body:'<html><head><link rel="canonical" href="'+canonical+'"><meta name="robots" content="index,follow,max-image-preview:large"></head><body><h1>Tractor Topic</h1></body></html>'});
+    body:'<html><head><link rel="canonical" href="'+canonical+'"><meta name="robots" content="'+(articleNoindex?"noindex,nofollow":"index,follow,max-image-preview:large")+'"></head><body><h1>Tractor Topic</h1></body></html>'});
   }
   if(!url.pathname.startsWith("/forum-test-api/"))return route.continue();
   if(url.pathname.endsWith("/auth/v1/user"))return route.fulfill({json:{id:currentUser}});
@@ -90,6 +91,10 @@ test("sign in, recover a draft, publish directly and check its status",async({pa
  await expect(compose.locator("[data-forum-publication-status]")).toContainText("henüz");
  await expect(compose.locator("[data-forum-publication-link]")).toBeHidden();
  articleLive=true;
+ await compose.locator("[data-forum-publication-check]").click();
+ await expect(compose.locator("[data-forum-publication-link]")).toBeVisible();
+ await expect(compose.locator("[data-forum-publication-status]")).toContainText("herkese açık");
+ articleNoindex=true;
  await compose.locator("[data-forum-publication-check]").click();
  await expect(compose.locator("[data-forum-publication-link]")).toBeVisible();
  await expect(compose.locator("[data-forum-publication-status]")).toContainText("herkese açık");
