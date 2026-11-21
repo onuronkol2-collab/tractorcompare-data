@@ -1,5 +1,6 @@
 import type { Locale } from "./locales.ts";
 import { REVIEWED_PUBLIC_SPEC_HEADINGS } from "./reviewed-public-spec-headings.ts";
+import { RESIDUAL_PUBLIC_SPEC_TERMS } from "./residual-public-spec-translations.ts";
 
 /**
  * Audited against the 170 public tractor detail pages (17 models x 10 languages).
@@ -202,12 +203,21 @@ function normalizeSpecName(name:string): string {
 const NORMALIZED_TRANSLATIONS=new Map(
   Object.entries(PUBLISHED_SPEC_TERMS).map(([name,translations]) => [normalizeSpecName(name),translations]),
 );
+const NORMALIZED_RESIDUAL=new Map(
+  Object.entries(RESIDUAL_PUBLIC_SPEC_TERMS).map(([name,translations]) => [normalizeSpecName(name),translations]),
+);
 export function publishedSpecificationLabel(specName:string,lang:Locale):string|null{
   if(lang==="en")return null;
-  return NORMALIZED_TRANSLATIONS.get(normalizeSpecName(specName))?.[lang]||null;
+  const normalized=normalizeSpecName(specName);
+  return NORMALIZED_TRANSLATIONS.get(normalized)?.[lang]
+    || NORMALIZED_RESIDUAL.get(normalized)?.[lang]
+    || null;
 }
 export function validatePublishedSpecTranslations():void {
-  for (const [name,entries] of Object.entries(PUBLISHED_SPEC_TERMS)){
+  for (const [name,entries] of [
+    ...Object.entries(PUBLISHED_SPEC_TERMS),
+    ...Object.entries(RESIDUAL_PUBLIC_SPEC_TERMS),
+  ]){
     if (!name.trim() || !Object.keys(entries).length) throw new Error("Missing term "+name);
     for (const [locale,text] of Object.entries(entries)){
       if (!text.trim() || locale==="en" || text.trim().toLowerCase()===name.toLowerCase())
