@@ -17,7 +17,7 @@ permissions:
 jobs:
   mobile_lighthouse:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 25
     steps:
       - uses: actions/checkout@v4
       - name: Check Chrome and Node
@@ -26,16 +26,26 @@ jobs:
           command -v google-chrome || command -v chromium || true
       - name: Test mobile Lighthouse summary parsing and field/ lab transparency
         run: node --test site/tests/mobile-lighthouse-summary.test.mjs
-      - name: Measure representative Turkish pages with mobile Lighthouse
+      - name: Measure indexable site templates and sampled languages with mobile Lighthouse
         run: |
           set -euo pipefail
           mkdir -p /tmp/tractorvs-lighthouse
-          for route in home catalog model compare; do
+          for route in home catalog model compare advisor articles glossary selection review forum en-home zh-home de-model ja-guide; do
             case "$route" in
               home) url="https://tractorvs.com/tr/" ;;
               catalog) url="https://tractorvs.com/tr/tractors/" ;;
               model) url="https://tractorvs.com/tr/tractors/belarus-80-1-ca3d18f9/" ;;
               compare) url="https://tractorvs.com/tr/compare/" ;;
+              advisor) url="https://tractorvs.com/tr/farm-advisor/" ;;
+              articles) url="https://tractorvs.com/tr/articles/" ;;
+              glossary) url="https://tractorvs.com/guides/tractor-technical-terms/" ;;
+              selection) url="https://tractorvs.com/tr/guides/choosing-a-tractor/" ;;
+              review) url="https://tractorvs.com/tr/reviews/basak-2075-bk/" ;;
+              forum) url="https://tractorvs.com/tr/forum/" ;;
+              en-home) url="https://tractorvs.com/" ;;
+              zh-home) url="https://tractorvs.com/zh/" ;;
+              de-model) url="https://tractorvs.com/de/tractors/antonio-carraro-tigre-3800-fc5f6f1d/" ;;
+              ja-guide) url="https://tractorvs.com/ja/guides/choosing-a-tractor/" ;;
             esac
             echo "Auditing $route $url"
             npx --yes lighthouse@12.8.2 "$url" \
