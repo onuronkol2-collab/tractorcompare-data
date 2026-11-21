@@ -3,6 +3,7 @@ import SiteLayout from "../layouts/SiteLayout.astro";
 import { localizedPath, type Locale } from "../lib/locales";
 import { getPublicCatalog } from "../lib/catalog";
 import { advisorText as tx } from "../lib/advisor-i18n";
+import { extractAdvisorFacts } from "../lib/advisor-evidence";
 import { t } from "../lib/ui";
 import {
   COUNTRY_AREA_UNITS, COUNTRIES_BY_LOCALE, FARM_IMPLEMENT_TYPES,
@@ -19,6 +20,7 @@ const published = catalog.tractors.map((tractor) => ({
   brand_name:tractor.brand_name, model_name:tractor.model_name,
   variant:tractor.variant, market:tractor.market,
   model_year:tractor.model_year, horsepower:tractor.horsepower,
+  facts:extractAdvisorFacts(tractor),
 }));
 const bundle = JSON.stringify({ published, lang }).replace(/</g,"\\u003c");
 const heading = tx(lang,"heading");
@@ -194,6 +196,7 @@ const areaUnitOptions = [
   import { COUNTRY_CURRENCIES, MARKET_COUNTRIES, formatMarketPriceRange } from "../lib/market-prices";
   import type { MarketCountry } from "../lib/market-prices";
   import { advisorText } from "../lib/advisor-i18n";
+  import { selectAdvisorFacts } from "../lib/advisor-evidence";
   import type { Locale } from "../lib/locales";
 
   const dataNode = document.getElementById("advisor-data");
@@ -396,6 +399,33 @@ const areaUnitOptions = [
           reasons.appendChild(reasonsList);
           card.appendChild(reasons);
 
+          // The linked specifications are documented facts, NOT equipment
+          // compatibility certifications or scoring signals.
+          const verifiedFacts=selectAdvisorFacts(match.tractor.facts||[],input);
+          if(verifiedFacts.length) {
+            const evidence=document.createElement("section");
+            evidence.className="advisor-card-evidence";
+            evidence.setAttribute("aria-label",t("factTitle"));
+            evidence.appendChild(node("h4",t("factTitle")));
+            const evidenceList=document.createElement("ul");
+            for(const fact of verifiedFacts) {
+              const item=document.createElement("li");
+              item.appendChild(node("span",t(("fact_"+fact.kind) as "fact_pto")+": "+fact.value+(fact.unit?" "+fact.unit:"")));
+              const source=document.createElement("a");
+              // Originating URLs are already restricted to reviewed HTTPS
+              // manufacturer/independent source allowlists in the build.
+              source.href=fact.sourceUrl;
+              source.rel="noopener noreferrer";
+              source.target="_blank";
+              source.textContent=t("factSource")+" ("+t(fact.provenance==="manufacturer"?"factManufacturer":"factIndependent")+") ↗";
+              item.appendChild(source);
+              evidenceList.appendChild(item);
+            }
+            evidence.appendChild(evidenceList);
+            evidence.appendChild(node("p",t("factCaution")));
+            card.appendChild(evidence);
+          }
+
           if(match.marketFit==="unknown") {
             card.appendChild(node("p",t("marketUnknown"),"advisor-market-note"));
           }
@@ -570,6 +600,14 @@ const areaUnitOptions = [
   .advisor-card-reasons ul{margin:0;padding-left:20px;color:#465d4c;
     font-size:13px;line-height:1.65}
   .advisor-card-reasons li+li{margin-top:5px}
+  .advisor-card-evidence {grid-column:1/-1;border:1px solid #dfe9dd;
+    border-radius:10px;padding:14px 15px;background:#fbfdf9;min-width:0}
+  .advisor-card-evidence h4{font-size:14px;line-height:1.5;margin:0 0 9px;color:#294d36}
+  .advisor-card-evidence ul{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+  .advisor-card-evidence li{display:flex;justify-content:space-between;
+    flex-wrap:wrap;gap:4px 12px;font-size:13px;line-height:1.5;color:#354e3e}
+  .advisor-card-evidence a{color:#235f3b;text-decoration:underline;overflow-wrap:anywhere}
+  .advisor-card-evidence p{margin:12px 0 0;color:#627566;font-size:11px;line-height:1.65}
   .advisor-market-note {grid-column:1/-1;color:#927037;background:#fff9ee;border-radius:8px;
     margin:0;padding:10px 12px;font-size:11px;line-height:1.6}
   .advisor-card-footer{grid-column:1/-1;display:flex;justify-content:space-between;align-items:center;
