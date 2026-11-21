@@ -44,12 +44,21 @@ export function evaluateSource(item){
  const block=String(evidence.modelTechnicalBlock??"");
  if(!block.trim()||block.length>1600)
   return {state:"needs_source",reason:"missing_bounded_technical_block",warnings};
- if(!containsPhrase(block,target.model))
+ // Technical facts must FOLLOW the exact model identifier in the same short
+ // source excerpt. A navigation link to another model cannot prove a value
+ // that appeared earlier in a different product tab.
+ const modelText=fold(target.model);
+ const modelPattern=new RegExp("(?:^|[^\\p{L}\\p{N}])"+
+  modelText.split(" ").map(esc).join("\\\\s+")+
+  "(?=$|[^\\p{L}\\p{N}])","iu");
+ const modelMatch=modelPattern.exec(fold(block));
+ if(!modelMatch)
   return {state:"needs_identity",reason:"model_absent_from_evidence_block",warnings};
- if(!containsPhrase(block,evidence.label||evidence.key)||
-    !containsPhrase(block,evidence.value)||
-    (evidence.unit&&!containsPhrase(block,evidence.unit)))
-  return {state:"needs_evidence",reason:"value_label_or_unit_missing",warnings};
+ const localFacts=fold(block).slice(modelMatch.index+modelMatch[0].length,modelMatch.index+modelMatch[0].length+700);
+ if(!containsPhrase(localFacts,evidence.label||evidence.key)||
+    !containsPhrase(localFacts,evidence.value)||
+    (evidence.unit&&!containsPhrase(localFacts,evidence.unit)))
+  return {state:"needs_evidence",reason:"value_label_or_unit_missing_after_model",warnings};
  const variant=fold(target.variant);
  if(variant&&!/^(catalog listing|source review|unspecified|unknown|standard review)/i.test(variant)){
   if(!containsPhrase(block,variant))
@@ -85,17 +94,47 @@ export function groupFetches(candidates){
  }
  return groups;
 }
+// Compare only independently source-reviewed candidates in the same
+// brand/model/variant/market/year/spec/unit/standard scope. Different
+// manufacturer's pages are NOT merged into a single market identity.
+// A discrepancy is flagged for review, never resolved by majority vote.
+export function conflictIndexes(candidates,results){
+ const scopes=new Map();
+ candidates.forEach((item,index)=>{
+  if(results[index].state!=="review_candidate")return;
+  const {target={},evidence={}}=item;
+  const identity=[
+    target.brand,target.model,target.variant,target.market,target.modelYear,
+    evidence.key,evidence.unit,evidence.measurementStandard,
+  ].map(fold).map(x=>x.toLowerCase());
+  const scope=JSON.stringify(identity);
+  const value=fold(evidence.value).replace(/,(?=\\d{1,3}(?:\\D|$))/g,".").toLowerCase();
+  if(!scopes.has(scope))scopes.set(scope,new Map());
+  const byValue=scopes.get(scope);
+  if(!byValue.has(value))byValue.set(value,[]);
+  byValue.get(value).push(index);
+ });
+ const conflicts=new Set();
+ for(const byValue of scopes.values()){
+  if(byValue.size<2)continue;
+  for(const list of byValue.values())for(const i of list)conflicts.add(i);
+ }
+ return conflicts;
+}
 export function aggregateTriage(candidates){
  if(!Array.isArray(candidates)||candidates.length>1000)throw Error("Bounded candidate array required.");
  const outcomes={};
  let warnings=0;
- for(const item of candidates){
-  const result=evaluateSource(item);
-  outcomes[result.state]=(outcomes[result.state]||0)+1;
+ const results=candidates.map(evaluateSource);
+ const conflicting=conflictIndexes(candidates,results);
+ results.forEach((result,index)=>{
+  const state=conflicting.has(index)?"conflict_review":result.state;
+  outcomes[state]=(outcomes[state]||0)+1;
   warnings+=result.warnings.length;
- }
+ });
  return {records:candidates.length,unique_trusted_documents:groupFetches(candidates).size,
-  outcomes,review_warnings:warnings,published:0,db_changes:0,paid_ai_calls:0};
+  outcomes,review_warnings:warnings,cross_source_conflicts:conflicting.size,
+  published:0,db_changes:0,paid_ai_calls:0};
 }
 async function main(){
  let input="";
