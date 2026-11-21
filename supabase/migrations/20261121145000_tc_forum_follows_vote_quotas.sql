@@ -22,7 +22,9 @@ CREATE POLICY tc_follow_owner_insert ON public.tc_member_topic_follows
   EXISTS(SELECT 1 FROM public.tc_forum_topics t WHERE t.id=topic_id AND t.status='published'));
 CREATE POLICY tc_follow_owner_update ON public.tc_member_topic_follows
  FOR UPDATE TO authenticated USING(member_id=(select auth.uid()))
- WITH CHECK(member_id=(select auth.uid()) AND last_seen_at<=now()+interval '1 minute');
+ WITH CHECK(member_id=(select auth.uid()) AND last_seen_at<=now()+interval '1 minute'
+  AND EXISTS(SELECT 1 FROM public.tc_forum_topics t
+   WHERE t.id=topic_id AND t.status='published'));
 CREATE POLICY tc_follow_owner_delete ON public.tc_member_topic_follows
  FOR DELETE TO authenticated USING(member_id=(select auth.uid()));
 
