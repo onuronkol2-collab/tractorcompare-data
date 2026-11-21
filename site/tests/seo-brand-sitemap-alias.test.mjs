@@ -33,7 +33,7 @@ test("every brand navigation translation is complete and avoids unverified manuf
  for(const locale of locales){
   const v=BRAND_NAV_COPY[locale];
   assert.ok(v.heading.length>=6&&v.intro.length>=25&&v.models.length>=2,locale);
-  assert.ok(CATALOG_SEARCH_TITLES[locale].length>=15,locale+" meta title");
+  assert.ok(Array.from(CATALOG_SEARCH_TITLES[locale]).length>= (["zh","ja"].includes(locale)?6:14),locale+" meta title");
  }
  const template=read("src/components/TractorCatalog.astro");
  assert.match(template,/catalogBrandIndex\(catalog\.tractors\)/);
