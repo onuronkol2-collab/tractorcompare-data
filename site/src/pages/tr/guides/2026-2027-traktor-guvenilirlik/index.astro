@@ -1,9 +1,9 @@
 ---
 import SiteLayout from "../../../../layouts/SiteLayout.astro";
-import { Content as Research } from "../../../../../docs/forum-2026-2027-yedi-marka-sorun-sikligi.md";
+import { Content as Research } from "../../../../../docs/forum-2026-2027-on-marka-guvenilirlik.md";
 
-const headline = "2026–2027 Traktör Marka Güvenilirliği: En Az ve En Çok Sorun Bildirilen 5 Marka";
-const description = "2026–2027 traktör alıcıları için 2021 anketinden kaynaklı marka karşılaştırması: Kubota, John Deere, Versatile ve diğer markalarda 100 traktör başına sorun sayısı.";
+const headline = "Traktör Güvenilirlik Sıralaması: 10 Markayı Tek Listede Karşılaştırdık";
+const description = "Valtra, John Deere, Fendt, Claas ve diğer 6 markanın tek güvenilirlik sıralaması. 2020 akademik araştırmasının yöntemi ve sınırlılıklarıyla TractorVS analizi.";
 const canonicalUrl = new URL(Astro.url.pathname, Astro.site ?? "https://tractorvs.com").toString();
 const schema = {
   "@context": "https://schema.org",
@@ -18,20 +18,20 @@ const schema = {
   dateModified: "2026-11-21",
   image: {
     "@type": "ImageObject",
-    contentUrl: "https://tractorvs.com/images/tractors/kubota-m6-141-4d0694e5-480.jpg",
+    contentUrl: "https://tractorvs.com/images/tractors/valtra-g135-9d4a4ea3-480.jpg",
     width: 480,
     height: 270,
-    caption: "Kubota M6-141 marka temsil fotoğrafı; 2021 kullanıcı anketindeki traktör değildir.",
+    caption: "Valtra G135 marka temsil fotoğrafı; araştırmadaki traktörlerden biri değildir.",
     creator: { "@type": "Person", name: "MarcelX42" },
     creditText: "MarcelX42 / Wikimedia Commons",
     license: "https://creativecommons.org/licenses/by-sa/4.0/",
-    acquireLicensePage: "https://commons.wikimedia.org/wiki/File:Kubota_M6-141_Utility_Agritechnica_2023_(DSC06031).jpg",
+    acquireLicensePage: "https://commons.wikimedia.org/wiki/File:Valtra_G135_Agritechnica_2025_(DSC09509).jpg",
   },
 };
 ---
-<SiteLayout lang="tr" title={"2026–2027 Traktör Marka Arızaları: 7 Markanın Karşılaştırması | TractorVS"}
+<SiteLayout lang="tr" title={"Traktör Güvenilirlik Sıralaması: 10 Markanın Akademik Analizi | TractorVS"}
   description={description} structuredData={schema}
-  ogImage="https://tractorvs.com/images/tractors/kubota-m6-141-4d0694e5-480.jpg"
+  ogImage="https://tractorvs.com/images/tractors/valtra-g135-9d4a4ea3-480.jpg"
   availableLocales={["tr"]} indexableLocales={["tr"]}>
   <section class="research-shell" aria-label="Araştırma raporu">
     <div class="research-container">
@@ -40,10 +40,10 @@ const schema = {
         <a href="/tr/forum/">Topluluk</a><span aria-hidden="true">/</span>
         <span aria-current="page">Güvenilirlik araştırması</span>
       </nav>
-      <div class="research-kicker">TRACTORVS · ABD 2021 ANKETİ · 21 KASIM 2026 DEĞERLENDİRMESİ</div>
+      <div class="research-kicker">TRACTORVS · POLONYA 2020 AKADEMİK ÇALIŞMASI · 21 KASIM 2026 DEĞERLENDİRMESİ</div>
       <div class="research-lede">
-        <strong>7 marka, 2 gerçek karşılaştırma listesi</strong>
-        <p>2021 tarihli bağımsız kullanıcı anketindeki yedi markanın 100 traktör başına bildirilen sorun olaylarını gösteriyoruz. 5 düşük ve 5 yüksek marka listelerinde üç marka tekrar eder; 2026–2027 satış/arıza yüzdeleri uydurulmaz.</p>
+        <strong>10 benzersiz traktör markası, tek akademik sıralama</strong>
+        <p>12 markalık 2020 akademik çalışmasının ilk 10 markasını tek listede gösteriyoruz. Bu, geçmiş sahip değerlendirmelerine dayalı göreli güvenilirlik sıralamasıdır; 2026–2027 satış başına arızalanma oranı değildir.</p>
       </div>
       <article class="research-article" aria-label={headline}>
         <Research />
