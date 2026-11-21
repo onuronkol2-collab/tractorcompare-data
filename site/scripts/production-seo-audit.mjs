@@ -1,8 +1,10 @@
 import {inspectVisibleMainImages} from "./seo-main-markup.mjs";
+import {parseProductionSitemapInventory,selectProductionSeoPages} from "./production-sitemap-inventory.mjs";
 // Read-only production SEO coverage audit. No credentials or writes.
 const BASE = "https://tractorvs.com";
 const languages = {en:"en",tr:"tr",zh:"zh-Hans",hi:"hi","pt-br":"pt-BR",fr:"fr",de:"de",ru:"ru",ja:"ja",es:"es"};
-const problems=[], warnings=[], allPages=[];
+const problems=[], warnings=[];
+const AUDIT_MODE=process.env.TRACTORVS_SEO_AUDIT_MODE==="full"?"full":"daily";
 const error=(code,page,why)=>{problems.push({code,page,why});console.error("SEO_ERROR "+JSON.stringify({code,page,why}));};
 const warn=(code,page,why)=>{warnings.push({code,page,why});};
 const matches=(txt,re)=>[...txt.matchAll(re)].map(m=>m[1]);
@@ -52,14 +54,31 @@ const idx=await fetchPage("/sitemap-index.xml");
 if(idx.response.status!==200)error("sitemap-index","/sitemap-index.xml","HTTP "+idx.response.status);
 const siteMaps=xmlLocs(idx.body);
 if(!siteMaps.length)error("sitemap-empty","/sitemap-index.xml","No sitemap loc entries");
+const childXml=new Map();
 for(const loc of siteMaps){
  try{
   const r=await fetchPage(loc);
-  if(r.response.status!==200)error("sitemap-child",loc,"HTTP "+r.response.status);
-  allPages.push(...xmlLocs(r.body));
+  if(r.response.status!==200){error("sitemap-child",loc,"HTTP "+r.response.status);continue;}
+  childXml.set(loc,r.body);
  }catch(e){error("sitemap-fetch",loc,String(e));}
 }
-const unique=new Set(allPages);
+// A sitemap index enumerates FILES. The main HTML and approved forum URLsets
+// enumerate pages. The image URLset references pages already listed there.
+// Treating 640 image references as 640 duplicate pages was a false alarm.
+let inventory;
+try{inventory=parseProductionSitemapInventory({indexXml:idx.body,children:childXml});}
+catch(e){
+ error("sitemap-inventory","/sitemap-index.xml",String(e?.message||e));
+ process.exit(1); // Never make 3,882 page requests after a broken public inventory.
+}
+const unique=inventory.pages;
+console.log("TRACTORVS_SEO_INVENTORY "+JSON.stringify({
+ sitemap_files:inventory.indexChildren,html_pages:inventory.htmlPages.size,
+ approved_forum_pages:inventory.forumPages.size,image_page_references:inventory.imagePages.size,
+ image_references_already_in_html:inventory.imagePagesAlreadyInHtml,
+ approved_forum_image_pages:inventory.imagePagesInForumOnly,
+ distinct_indexable_pages:unique.size,exact_model_count_per_locale:inventory.modelsPerLocale,
+}));
 const editorialPaths=[
   "/articles/","/tr/articles/",
   ...Object.keys(languages).filter(lang=>lang!=="en"&&lang!=="tr")
@@ -80,12 +99,21 @@ for(const path of absentEditorial)
     "Publicly authored editorial page not yet found in fetched production sitemap; verify deployment and CDN cache");
 console.log("TRACTORVS_EDITORIAL_SITEMAP "+
   JSON.stringify({expected:editorialPaths.length,listed:editorialPaths.length-absentEditorial.length,absent:absentEditorial}));
-if(unique.size!==allPages.length)error("duplicate-sitemap-url","/sitemap-index.xml",
-  (allPages.length-unique.size)+" duplicate URLs");
+// Duplicates within an HTML/forum/image child are rejected by the typed inventory helper.
 const modelByLocale=Object.fromEntries(Object.keys(languages).map(k=>[k,new Set()]));
 let valid=0, modelPages=0, modelSample=[], fetchFailures=0;
 const titlesByLocale=new Map();
-const urls=[...unique];
+// All 3,882 URLs are verified in the source sitemap daily. To keep the
+// daily audit within GitHub time/network budgets, HTTP/canonical/hreflang
+// checks cover EVERY non-model page plus a rotating, equal-sized sample
+// of models in each language. The Sunday run uses mode=full.
+const urls=selectProductionSeoPages(inventory,{
+ mode:AUDIT_MODE,day:Math.floor(Date.now()/86_400_000),samplePerLocale:20
+});
+console.log("TRACTORVS_SEO_CRAWL_SCOPE "+JSON.stringify({
+ mode:AUDIT_MODE,crawl_pages:urls.length,total_indexable_pages:unique.size,
+ every_nonmodel_page_checked:true,model_sample_per_locale:AUDIT_MODE==="daily"?20:"all"
+}));
 for(let i=0;i<urls.length;i+=4){
  await Promise.all(urls.slice(i,i+4).map(async page=>{
   try{
@@ -180,8 +208,11 @@ if(fetchFailures===0){
   if(modelByLocale.en.size<17)error("missing-models","/tractors/","Fewer than 17 published model URLs in sitemap");
 }
 const report={
-  site:BASE,sitemaps:siteMaps.length,sitemapUrls:unique.size,checkedPages:valid,
-  modelPages,modelsPerLocale:Object.fromEntries(Object.entries(modelByLocale).map(([k,v])=>[k,v.size])),
+  site:BASE,mode:AUDIT_MODE,sitemaps:siteMaps.length,sitemapUrls:unique.size,
+  htmlPages:inventory.htmlPages.size,forumPages:inventory.forumPages.size,
+  imagePageReferences:inventory.imagePages.size,
+  checkedPages:valid,modelPages,modelsPerLocale:Object.fromEntries(Object.entries(modelByLocale).map(([k,v])=>[k,v.size])),
+  fullPublishedModelsPerLocale:inventory.modelsPerLocale,
   errors:problems.length,warnings:warnings.length,
 };
 console.log("TRACTORVS_SEO_AUDIT_REPORT "+JSON.stringify(report));
