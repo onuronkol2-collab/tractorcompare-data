@@ -28,6 +28,9 @@ Supabase Dashboard > Authentication > URL Configuration sayfasında **Site URL**
 
 ## İsteğe bağlı çok dilli forum çevirileri — işleme ve kalite güvenliği
 
+- Uzun makaleler tek Gemini etkileşiminde kapasite/timeout sorununa yol açabilir; bu nedenle bölümlere ayırma ve devam edebilir özel checkpoint (`qa_notes=PARTS:N/T`) kullanılır. Her başarılı parça `needs_review`, `seo_approved=false` durumunda kalır. Tam 9 dilin her biri için son denetimler ve `ready` sonucunu ayrı doğrulayın; onaylanmamış parçaları ve yarım makaleyi webde göstermeyin.
+
+
 - Kullanıcının çeviri kutusu `translation_consent=true` tutar ve dokuz hedef dil için iş kuyruğu üretir; tek başına çeviri veya canlı yayın oluşturmaz.
 - Özel `tractor-forum-translate` Edge Function, `tractorvs-forum-translation.yml` tarafından zamanlanmış olarak çağrılır. Worker yalnız `published`, izinli ve değişmemiş kaynak sürümünü alır. Bir çalışmada en fazla 3 metin işi ele alınır; yeniden denemeler kontrollüdür.
 - Gemini'ye yazar e-postası, kimlik bilgisi, hesap profili veya onaysız fotoğraf verilmez. Metin, yalnız kullanıcının açık çeviri izni kapsamında işlenir.
