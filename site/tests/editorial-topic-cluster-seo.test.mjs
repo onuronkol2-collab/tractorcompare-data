@@ -63,3 +63,14 @@ test("GEO citation schema repeats exactly the real source links already visible 
  assert.doesNotMatch(dive,/FAQPage|AggregateRating|fabricatedReviews/);
  assert.match(dive,/dateModified:editedOn/);
 });
+
+test("optional crawler navigation truthfully states what is and is not translated",()=>{
+ const llms=readFileSync(new URL("../public/llms.txt",import.meta.url),"utf8");
+ assert.match(llms,/article index have ten language versions/);
+ assert.match(llms,/four other long technical articles currently have English and Turkish text only/);
+ assert.match(llms,/https:\/\/tractorvs\.com\/articles\//);
+ assert.match(llms,/https:\/\/tractorvs\.com\/tr\/articles\//);
+ assert.match(llms,/https:\/\/tractorvs\.com\/guides\/choosing-a-tractor\//);
+ assert.match(llms,/https:\/\/tractorvs\.com\/reviews\/basak-2075-bk\//);
+ assert.match(llms,/optional navigation aid/);
+});
