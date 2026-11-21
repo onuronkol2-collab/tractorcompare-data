@@ -148,8 +148,9 @@ export async function run({fetchFn=fetch,statePath=STATE,reportPath=null,dryRun=
   const baseline=!existsSync(statePath);
   const state=baseline?{version:1,urls:{}}:validSavedState(JSON.parse(readFileSync(statePath,"utf8")));
   const pending=baseline?[]:changedUrls(state.urls,current);
-  const count=baseline?current.size:changedUrls(state.urls,current,MAX_URLS).length;
+  const count=baseline?0:changedUrls(state.urls,current,MAX_URLS).length;
   const result={as_of:now.toISOString(),live_urls:current.size,previous_urls:Object.keys(state.urls).length,
+    historical_urls_baselined:baseline?current.size:0,
     new_or_modified:count,checked:pending.length,remaining:Math.max(0,count-pending.length),
     mode:baseline?"baseline_only":dryRun?"dry_run":"notify",indexnow:"not_sent",indexed_urls:"unavailable",
     index_status_reason:"Submission or sitemap inclusion is not proof of indexing"};
