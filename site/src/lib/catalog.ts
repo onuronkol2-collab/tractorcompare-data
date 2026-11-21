@@ -229,6 +229,18 @@ export function sourceBackedHorsepower(
     ? values[0] : null;
 }
 
+/**
+ * Published HP must be supported by the model's visible, evidence-verified specs.
+ * The legacy header may be absent, unsourced, a marketing model number, or a
+ * different power standard. Never silently equate rated and boost figures.
+ * This display-only guard does not modify the original database field.
+ */
+export function publishedHorsepower(
+  tractor: Pick<TractorRecord, "horsepower" | "specifications">
+): number | null {
+  return sourceBackedHorsepower(tractor.specifications);
+}
+
 function getPublicApiKey(): { key: string; isLegacyJwt: boolean } {
   const key = (
     process.env.SUPABASE_PUBLISHABLE_KEY
@@ -450,7 +462,9 @@ async function loadPublicCatalog(): Promise<PublicCatalog> {
     const specifications = deduplicateSpecs(tractor.specifications);
     return {
       ...tractor,
-      horsepower: tractor.horsepower ?? sourceBackedHorsepower(specifications),
+      // The historical headline field may encode a model designation or boosted power.
+      // Only an exact, source-backed published HP measurement can appear in summaries.
+      horsepower: publishedHorsepower({ ...tractor, specifications }),
       specifications,
     };
   }).sort((a, b) =>
