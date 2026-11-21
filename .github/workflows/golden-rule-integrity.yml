@@ -22,3 +22,6 @@ jobs:
 
       - name: Verify permanent agent policy files and references
         run: node scripts/verify-golden-rule.mjs
+
+      - name: Verify safe forum RLS policy consolidation (offline, no database writes)
+        run: node --test scripts/forum-rls-policy-performance.test.mjs
