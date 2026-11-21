@@ -83,7 +83,7 @@ jobs:
         run: node scripts/tractor-research-batch.mjs
       - name: Upload restart-safe progress receipt
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: tractorvs-research-progress
           path: tractor-research-progress.json
