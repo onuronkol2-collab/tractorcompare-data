@@ -6,6 +6,7 @@ import {LOCALES,BREADCRUMB_LABELS,RELATED_PAGES_LABELS} from "../src/lib/locales
 
 const read=(path)=>readFileSync(new URL("../src/"+path,import.meta.url),"utf8");
 const LANGS=LOCALES.filter(lang=>!["tr","en"].includes(lang));
+const minChars=(locale,latin,compact)=>["zh","ja"].includes(locale)?compact:latin;
 
 /**
  * The two existing long-form translation sources are JSON-shaped TS literals.
@@ -58,13 +59,13 @@ test("every translated selection guide retains all sections, explanations, quest
    assert.ok(section.title.trim().length>4,locale+" chapter title");
    assert.ok(section.question.trim().length>20,locale+" question");
    assert.equal(section.paragraphs.length,2,locale+" paragraphs "+index);
-   for(const paragraph of section.paragraphs)assert.ok(paragraph.trim().length>70,locale+" paragraph unexpectedly short");
+   for(const paragraph of section.paragraphs)assert.ok(paragraph.trim().length>minChars(locale,70,35),locale+" paragraph unexpectedly short");
    assert.deepEqual(section.refs,expectedRefs[index],locale+" sources "+index);
   });
   assert.equal(source.headers.length,3,locale+" comparison column count");
   assert.equal(source.rows.length,5,locale+" comparison row count");
   source.rows.forEach(row=>assert.equal(row.length,3,locale+" comparison values"));
-  assert.ok(source.noTest.trim().length>60&&source.limits.trim().length>50,locale+" evidence limits");
+  assert.ok(source.noTest.trim().length>minChars(locale,60,30)&&source.limits.trim().length>minChars(locale,50,18),locale+" evidence limits");
  }
 });
 
@@ -80,12 +81,12 @@ test("each Başak technical review preserves claims, safety limits, table rows a
   assert.equal(r.sectionParagraphs.length,4,locale+" paragraph groups");
   for(const section of r.sectionParagraphs){
    assert.equal(section.length,2,locale+" source paragraph parity");
-   for(const paragraph of section)assert.ok(paragraph.trim().length>80,locale+" missing paragraph");
+   for(const paragraph of section)assert.ok(paragraph.trim().length>minChars(locale,80,40),locale+" missing paragraph");
   }
   const body=JSON.stringify(r.sectionParagraphs);
   for(const num of expected)assert.ok(body.includes(num),locale+" missing technical number "+num);
-  assert.ok(r.disclaimer.trim().length>55,locale+" field-test disclosure missing");
-  assert.ok(r.variantNote.trim().length>20,locale+" variant caution missing");
+  assert.ok(r.disclaimer.trim().length>minChars(locale,55,30),locale+" field-test disclosure missing");
+  assert.ok(r.variantNote.trim().length>minChars(locale,20,12),locale+" variant caution missing");
  }
  const sharedTable=read("components/Basak2075Review.astro");
  assert.match(sharedTable,/53 kW \/ 72 hp @ 2500 rpm/);
