@@ -3,7 +3,7 @@ import assert from "node:assert/strict";
 import {mkdtempSync,rmSync,readFileSync} from "node:fs";
 import {tmpdir} from "node:os";
 import {join} from "node:path";
-import {parseIndex,parsePageSitemap,changedUrls,validatePage,submitIndexNow,run,ORIGIN,KEY,KEY_URL,INDEXNOW_URL} from "./tractor-search-discovery.mjs";
+import {parseIndex,parsePageSitemap,changedUrls,validatePage,submitIndexNow,run,ORIGIN,KEY,KEY_URL,INDEXNOW_URL,INDEXNOW_FALLBACK_URLS} from "./tractor-search-discovery.mjs";
 
 const home=ORIGIN+"/";
 const model=ORIGIN+"/tractors/sample-test/";
@@ -136,5 +136,55 @@ test("image sitemap duplicates do not add to public notifications",async()=>{
   const result=await run({fetchFn:withImage,statePath:checkpoint});
   assert.equal(result.historical_urls_baselined,2,"Image duplicates must not inflate page coverage");
   assert.equal(result.indexnow,"not_sent");
+ }finally{rmSync(dir,{recursive:true,force:true});}
+});
+
+test("transient shared IndexNow outage fails over once and preserves identical validated payload",async()=>{
+ const requests=[];
+ const fetchFn=async(url,options)=>{
+  requests.push({url,options});
+  return new Response("",{status:url===INDEXNOW_URL?503:200});
+ };
+ const result=await submitIndexNow([added],{fetchFn});
+ assert.equal(result.status,"accepted");
+ assert.equal(result.endpoint,INDEXNOW_FALLBACK_URLS[0]);
+ assert.deepEqual(requests.map(x=>x.url),[INDEXNOW_URL,INDEXNOW_FALLBACK_URLS[0]]);
+ assert.equal(requests[0].options.body,requests[1].options.body);
+ assert.deepEqual(JSON.parse(requests[0].options.body).urlList,[added]);
+});
+test("a shared IndexNow HTTP 202 is acknowledged provisionally without duplicate sends",async()=>{
+ const attempts=[];
+ const result=await submitIndexNow([added],{fetchFn:async(url)=>{
+  attempts.push(url);return new Response("",{status:202});
+ }});
+ assert.equal(result.status,"received_pending_key_validation");
+ assert.equal(result.endpoint,INDEXNOW_URL);
+ assert.deepEqual(attempts,[INDEXNOW_URL]);
+});
+test("HTTP 429, ownership and invalid-payload 4xx must not fail over to another engine",async()=>{
+ for(const status of [400,403,422,429]){
+  const attempts=[];
+  await assert.rejects(()=>submitIndexNow([added],{fetchFn:async(url)=>{
+   attempts.push(url);return new Response("",{status});
+  }}),new RegExp(String(status)));
+  assert.deepEqual(attempts,[INDEXNOW_URL]);
+ }
+});
+test("all transient IndexNow endpoints failing preserves pending notification checkpoint",async()=>{
+ const dir=mkdtempSync(join(tmpdir(),"tractorvs-seo-failover-"));
+ try{
+  const statePath=join(dir,"state.json");
+  await run({fetchFn:mock().fetchFn,statePath});
+  const network=mock({pages:[home,model,added]});
+  const apiCalls=[];
+  const failover=async(url,options)=>{
+   if([INDEXNOW_URL,...INDEXNOW_FALLBACK_URLS].includes(url)){
+    apiCalls.push(url);return new Response("",{status:503});
+   }
+   return network.fetchFn(url,options);
+  };
+  await assert.rejects(()=>run({fetchFn:failover,statePath}),/All IndexNow endpoints unavailable/);
+  assert.equal(apiCalls.length,4);
+  assert.equal(Object.hasOwn(JSON.parse(readFileSync(statePath,"utf8")).urls,added),false);
  }finally{rmSync(dir,{recursive:true,force:true});}
 });
