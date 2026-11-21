@@ -1,6 +1,6 @@
 import {test,expect} from "@playwright/test";
 
-test("sign in, recover a draft, submit for moderation and check its status",async({page})=>{
+test("sign in, recover a draft, publish directly and check its status",async({page})=>{
  const posted=[];
  let expired=false;
  let limited=true;
@@ -74,9 +74,9 @@ test("sign in, recover a draft, submit for moderation and check its status",asyn
  await post.locator('button[type="submit"]').click();
  await expect(post.locator("textarea")).toHaveValue("");
  expect(posted).toHaveLength(1);
- expect(posted[0]).toMatchObject({title,body,status:"pending",locale:"de",translation_consent:false});
+ expect(posted[0]).toMatchObject({title,body,status:"published",locale:"de",translation_consent:false});
  await compose.locator("[data-forum-history] summary").click();
- await expect(compose.locator("[data-history-list]")).toContainText(title+" · İncelemede");
+ await expect(compose.locator("[data-history-list]")).toContainText(title+" · Yayında");
  await post.locator("textarea").fill("Private draft for user A");
  await compose.locator("[data-forum-logout]").click();
  currentUser="user-b";

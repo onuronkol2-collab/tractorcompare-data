@@ -54,3 +54,40 @@ test("photos remain private and require two-stage moderation, a reservation and 
  assert.match(topic,/ForumMediaGallery/);
  assert.match(topic,/ForumRichText/);
 });
+
+
+test("safe forum markup supports source citations, responsive tables and real headings",()=>{
+ const sample=[
+  "## 2026 Bayi memnuniyeti",
+  "",
+  "| Marka | Puan |",
+  "|---|---|",
+  "| Same | **13,7** |",
+  "| CLAAS | 13,1 |",
+  "",
+  "Kaynak: https://www.climmar.com/news."
+ ].join("\n");
+ const blocks=forumBlocks(sample);
+ assert.deepEqual(blocks.map(x=>x.type),["heading","table","paragraph"]);
+ assert.equal(blocks[0].level,2);
+ assert.equal(blocks[1].header.length,2);
+ assert.equal(blocks[1].rows.length,2);
+ assert.equal(blocks[1].rows[0][1][0].type,"bold");
+ assert.equal(blocks[2].items[0][1].type,"url");
+ assert.equal(forumInline("javascript:alert(1)")[0].type,"text");
+ assert.equal(forumInline("https://user:secret@example.com")[0].type,"text");
+ const html=read("../src/components/ForumRichText.astro");
+ const inline=read("../src/components/ForumInline.astro");
+ const preview=read("../src/lib/forum-editor-client.ts");
+ assert.match(html,/scope="col"/);
+ assert.match(html,/overflow-x:auto/);
+ assert.match(inline,/ugc nofollow noopener noreferrer/);
+ assert.doesNotMatch(html+inline+preview,/innerHTML|set:html|dangerouslySetInnerHTML/);
+});
+
+test("SEO descriptions are readable rather than literal Markdown fragments",async()=>{
+ const {forumSeoDescription}=await import("../src/lib/forum-format.mjs");
+ const description=forumSeoDescription("## 2026 Results\n\n**Same** 13,7 puan aldı.");
+ assert.match(description,/Same 13,7 puan aldı/);
+ assert.doesNotMatch(description,/\*\*|##/);
+});

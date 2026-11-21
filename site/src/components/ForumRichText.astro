@@ -1,34 +1,59 @@
 ---
 import {forumBlocks} from "../lib/forum-format.mjs";
-interface Props {body:string}
-const {body}=Astro.props;
+import ForumInline from "./ForumInline.astro";
+import type {Locale} from "../lib/locales.ts";
+interface Props {body:string;lang?:Locale}
+const {body,lang="en"}=Astro.props;
 const blocks=forumBlocks(body);
+const labels:Record<string,string>={
+ en:"Scrollable data table",tr:"Kaydırılabilir veri tablosu",
+ zh:"可滚动的数据表",hi:"स्क्रॉल करने योग्य डेटा तालिका",
+ "pt-br":"Tabela de dados rolável",fr:"Tableau de données défilant",
+ de:"Scrollbare Datentabelle",ru:"Прокручиваемая таблица данных",
+ ja:"スクロール可能なデータ表",es:"Tabla de datos desplazable"
+};
 ---
 <div class="forum-rich-text">
  {blocks.map(block=>
-   block.type==="list"?
-    <ul>{block.items.map(parts=>
-      <li>{parts.map(part=>part.type==="bold"?<strong>{part.text}</strong>:
-        part.type==="italic"?<em>{part.text}</em>:
-        part.type==="code"?<code>{part.text}</code>:part.text)}</li>)}</ul>:
-   block.type==="quote"?
-    <blockquote>{block.items[0].map(part=>part.type==="bold"?<strong>{part.text}</strong>:
-       part.type==="italic"?<em>{part.text}</em>:
-       part.type==="code"?<code>{part.text}</code>:part.text)}</blockquote>:
-    <p>{block.items[0].map(part=>part.type==="bold"?<strong>{part.text}</strong>:
-      part.type==="italic"?<em>{part.text}</em>:
-      part.type==="code"?<code>{part.text}</code>:part.text)}</p>
+  block.type==="table"?
+   <div class="forum-table-wrap" tabindex="0" role="region" aria-label={labels[lang]}>
+    <table>
+     <thead><tr>{block.header.map(parts=><th scope="col"><ForumInline parts={parts}/></th>)}</tr></thead>
+     <tbody>{block.rows.map(row=><tr>{row.map(parts=><td><ForumInline parts={parts}/></td>)}</tr>)}</tbody>
+    </table>
+   </div>:
+  block.type==="heading"?
+   (block.level===2?<h2><ForumInline parts={block.items[0]}/></h2>:
+    block.level===3?<h3><ForumInline parts={block.items[0]}/></h3>:
+     <h4><ForumInline parts={block.items[0]}/></h4>):
+  block.type==="list"?
+   <ul>{block.items.map(parts=><li><ForumInline parts={parts}/></li>)}</ul>:
+  block.type==="quote"?
+   <blockquote><ForumInline parts={block.items[0]}/></blockquote>:
+   <p><ForumInline parts={block.items[0]}/></p>
  )}
 </div>
 <style>
- .forum-rich-text{overflow-wrap:anywhere}
+ .forum-rich-text{overflow-wrap:anywhere;min-width:0}
  .forum-rich-text :global(p),.forum-rich-text :global(li),.forum-rich-text :global(blockquote){
   font-size:clamp(15px,1.8vw,17px);line-height:1.85;white-space:pre-wrap;
  }
  .forum-rich-text :global(p){margin:0 0 16px}
  .forum-rich-text :global(ul){padding-inline-start:1.6em;margin:0 0 16px;list-style:disc}
  .forum-rich-text :global(li){margin:4px 0}
+ .forum-rich-text :global(h2){font-size:clamp(20px,2.7vw,27px);line-height:1.35;margin:26px 0 13px;color:#1f5637}
+ .forum-rich-text :global(h3){font-size:clamp(18px,2.2vw,23px);line-height:1.4;margin:22px 0 11px;color:#205838}
+ .forum-rich-text :global(h4){font-size:clamp(16px,2vw,20px);line-height:1.4;margin:19px 0 9px;color:#22563a}
  .forum-rich-text :global(blockquote){margin:12px 0 20px;padding:10px 16px;border-inline-start:4px solid #8ebc9a;background:#f4f8f3;border-radius:6px}
  .forum-rich-text :global(code){font:0.9em/1.5 ui-monospace,SFMono-Regular,Consolas,monospace;
   background:#e6eee8;border-radius:4px;padding:2px 5px;white-space:break-spaces}
+ .forum-rich-text :global(a){color:#185d40;text-decoration:underline;text-underline-offset:3px;overflow-wrap:anywhere}
+ .forum-rich-text :global(a:focus-visible){outline:3px solid #8cb78a;outline-offset:3px}
+ .forum-table-wrap{max-width:100%;overflow-x:auto;margin:18px 0 23px;border:1px solid #c9dac6;border-radius:10px}
+ .forum-table-wrap:focus-visible{outline:3px solid #8cb78a;outline-offset:3px}
+ .forum-table-wrap table{border-collapse:collapse;min-width:520px;width:100%;font-size:clamp(13px,1.5vw,16px);line-height:1.5}
+ .forum-table-wrap :global(th),.forum-table-wrap :global(td){padding:10px 13px;text-align:start;border-bottom:1px solid #dce8da;vertical-align:top;overflow-wrap:anywhere}
+ .forum-table-wrap :global(th){background:#eaf3e9;color:#194b30;font-weight:800}
+ .forum-table-wrap :global(tr:last-child td){border-bottom:0}
+ .forum-table-wrap :global(tbody tr:nth-child(even)){background:#f6faf5}
 </style>

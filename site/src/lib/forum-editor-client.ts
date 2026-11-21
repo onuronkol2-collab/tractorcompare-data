@@ -85,10 +85,14 @@ export function initForumEditor(
  }
  const drawSegments=(parts:{type:string;text:string}[],into:HTMLElement)=>{
   for(const piece of parts){
-   const el=piece.type==="bold"?make("strong"):piece.type==="italic"?make("em"):
-    piece.type==="code"?make("code"):document.createTextNode("");
-   if(el.nodeType===3){el.textContent=piece.text;into.appendChild(el);}
-   else{el.textContent=piece.text;into.appendChild(el);}
+   if(piece.type==="url"){
+    const anchor=make("a");anchor.href=piece.text;
+    anchor.rel="ugc nofollow noopener noreferrer";anchor.target="_blank";
+    anchor.textContent=piece.text;into.appendChild(anchor);
+   }else if(piece.type==="bold"||piece.type==="italic"||piece.type==="code"){
+    const el=make(piece.type==="bold"?"strong":piece.type==="italic"?"em":"code");
+    el.textContent=piece.text;into.appendChild(el);
+   }else into.appendChild(document.createTextNode(piece.text));
   }
  };
  function drawPreview(){
@@ -97,7 +101,20 @@ export function initForumEditor(
   const blocks=forumBlocks(textarea.value);
   if(!blocks.length){previewBody.textContent=copy.noPreview;return}
   for(const block of blocks){
-   const holder=make(block.type==="list"?"ul":block.type==="quote"?"blockquote":"p");
+   if(block.type==="table"){
+    const wrap=make("div");wrap.className="forum-editor-preview-table";
+    wrap.tabIndex=0;const table=make("table"),thead=make("thead"),tr=make("tr"),tbody=make("tbody");
+    for(const parts of block.header){const th=make("th");th.scope="col";drawSegments(parts,th);tr.append(th)}
+    thead.append(tr);
+    for(const row of block.rows){
+     const rowEl=make("tr");
+     for(const parts of row){const td=make("td");drawSegments(parts,td);rowEl.append(td)}
+     tbody.append(rowEl);
+    }
+    table.append(thead,tbody);wrap.append(table);previewBody.append(wrap);continue;
+   }
+   const holder=make(block.type==="list"?"ul":block.type==="quote"?"blockquote":
+    block.type==="heading"?(block.level===2?"h2":block.level===3?"h3":"h4"):"p");
    for(const item of block.items){
     const into=block.type==="list"?make("li"):holder;
     drawSegments(item,into);

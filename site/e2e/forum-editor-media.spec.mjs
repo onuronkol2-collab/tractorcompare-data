@@ -2,7 +2,7 @@ import {test,expect} from "@playwright/test";
 
 // Real-browser, inert local fixtures. No production credentials, accounts,
 // storage objects or public forum posts are created by this test.
-test("editor safely formats text, previews emoji, and sends a private moderated photo",async({page})=>{
+test("editor safely formats text, previews emoji, and publishes text while keeping photos private",async({page})=>{
  const currentUser="12a15413-78d6-4dae-a719-5ccf887284b0";
  const posted=[],reserved=[],stored=[];
  const errors=[];
@@ -59,10 +59,10 @@ test("editor safely formats text, previews emoji, and sends a private moderated 
  expect(posted).toHaveLength(0);
  await form.locator("[data-editor-rights]").check();
  await form.locator('button[type="submit"]').click();
- await expect(page.locator("[data-forum-status]")).toContainText("moderasyona");
- await expect(page.locator("[data-editor-status]")).toContainText("incelemeye");
+ await expect(page.locator("[data-forum-status]")).toContainText("yayımlandı");
+ await expect(page.locator("[data-editor-status]")).toContainText("fotoğraflar");
  expect(posted).toHaveLength(1);
- expect(posted[0].status).toBe("pending");
+ expect(posted[0].status).toBe("published");
  expect(posted[0].id).toMatch(/^[0-9a-f-]{36}$/);
  expect(reserved).toHaveLength(1);
  expect(reserved[0]).toMatchObject({topic_id:posted[0].id,position:1,license_confirmed:true});

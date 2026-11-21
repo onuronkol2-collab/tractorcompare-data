@@ -1,0 +1,10 @@
+---
+interface Part {type:string;text:string}
+interface Props {parts:Part[]}
+const {parts}=Astro.props;
+---
+{parts.map(part=>part.type==="bold"?<strong>{part.text}</strong>:
+ part.type==="italic"?<em>{part.text}</em>:
+ part.type==="code"?<code>{part.text}</code>:
+ part.type==="url"?<a href={part.text} rel="ugc nofollow noopener noreferrer" target="_blank">{part.text}</a>:
+ part.text)}

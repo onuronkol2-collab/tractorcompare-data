@@ -731,7 +731,7 @@ for(const widget of widgets){
   if(!isLocale(sourceLocale))return;
   const consent=form.get("translation_consent")!==null;
   const postId=crypto.randomUUID();
-  const row:Record<string,unknown>={id:postId,body,translation_consent:consent,status:"pending"};
+  const row:Record<string,unknown>={id:postId,body,translation_consent:consent,status:"published"};
   let table="tc_forum_replies";
   if(cfg.mode==="topic"){
    table="tc_forum_topics";

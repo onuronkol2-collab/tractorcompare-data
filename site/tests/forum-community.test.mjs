@@ -33,14 +33,14 @@ test("only explicitly published, safe-slug public forum topics may become static
  assert.equal(isIndexableForumTopic({...ja,seo_ready:false}),false);
  assert.equal(isIndexableForumTopic(row),false);
 });
-test("moderated posting never exposes service-role keys, publishes immediately, or forges authorship",()=>{
+test("direct text publication preserves least privilege and honest authorship",()=>{
  const composer=text("../src/components/ForumComposer.astro");
  const data=text("../src/lib/forum.ts");
  const topic=text("../src/components/ForumTopic.astro");
  const layout=text("../src/layouts/SiteLayout.astro");
  const sitemap=text("../astro.config.mjs");
  const hub=text("../src/components/ForumHub.astro");
- assert.match(composer,/status:"pending"/);
+ assert.match(composer,/status:"published"/);
  assert.match(composer,/create_user:true/);
  assert.match(composer,/sessionStorage/);
  assert.match(composer,/translation_consent/);
