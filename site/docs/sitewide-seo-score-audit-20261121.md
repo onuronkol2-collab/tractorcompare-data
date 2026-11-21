@@ -34,6 +34,33 @@ Güncel canlı spot-check kapsamı: EN/TR/ZH ana sayfalar; EN/TR katalog, karş�
 3. **Gerçek kaynak olmadan kaynak linki uydurmamak:** Paylaşılan fotoğraf lightbox artık HTML'e href'siz iki `<a>` koymuyor. İzinli fotoğraf düğmesine basılıp kaynak ve lisans HTTPS/HTTP URL'si doğrulandığında bağlantıyı JavaScript oluşturuyor. Karşılaştırmada fotoğrafı olmayan gizli panellerin `href` alanı varsa gerçek katalog sayfasına döner; fotoğraf varsa gerçek kaynak URL'si korunur. Asıl kullanıcı lisans bağlantısı ve modal davranışı aynıdır.
 4. **Regresyon testleri:** Görsel `alt` için gerçek HTML fixture'ları (dekoratif boş `alt` dahil), test edilen gerçek kaynak URL'si olmadan modal linki olmaması, karşılaştırmadaki görünmeyen panel fallback'i, 14 rota ve SEO altında kalan Lighthouse audit kimliklerinin doğru işlenmesi.
 
+## Tam sitemap ve ilk ücretsiz 14-şablon Lighthouse sonucu
+
+**GitHub PR kalite koşusu:** `mobile_lighthouse` iş akışı (`job 136928507213`) 14 indekslenebilir gerçek sayfayı Lighthouse v12.8.2 mobil simülasyonuyla ölçtü. **14/14 SEO = 100 ve 14/14 alt SEO audit bulgusu = 0**; bu tüm üretim URL'lerinin ayrı ayrı ölçüldüğü anlamına gelmez.
+
+| Temsilî sayfa | Lighthouse SEO | Performans | Erişilebilirlik |
+|---|---:|---:|---:|
+| TR ana sayfa | 100 | 99 | 100 |
+| TR katalog | 100 | 98 | 100 |
+| TR Belarus model | 100 | 95 | 100 |
+| TR karşılaştırma | 100 | 99 | 100 |
+| TR traktör asistanı | 100 | 99 | 100 |
+| TR makaleler | 100 | 100 | 100 |
+| EN teknik sözlük | 100 | 95 | 100 |
+| TR seçim rehberi | 100 | 100 | 100 |
+| TR Başak incelemesi | 100 | 100 | **96** |
+| TR forum | 100 | 98 | 100 |
+| EN ana sayfa | 100 | 99 | 100 |
+| ZH ana sayfa | 100 | 99 | 100 |
+| DE Antonio Carraro model | 100 | 96 | 100 |
+| JA seçim rehberi | 100 | 100 | 100 |
+
+Başak incelemesinde **SEO 100 ama erişilebilirlik 96**: Lighthouse `review-overline` etiketinde ön plan `#438253`, arkaplan `#f7faf5` ve **4.37:1 kontrast** ölçtü. Gerçek yeni teknik kaynak uydurmadan bu açık-zemin etiketi `#315f3d` yapıldı. Sonraki ölçüm canlı dağıtımdan sonra doğrulanacak.
+
+**Tam sitemap dry-run** (`inspect` job `136928506290`): canlı `3880/3880` URL HTTP, yapı, model kimliği ve dil tutarlılığı kontrolünden geçti; `3790` model detay URL'si (`379` marka-model kaydı × 10 dil), `40/40` editoryal URL sitemap'te. **Tek yeni hata grubu:** her on dilde iki karşılaştırma boş resim önizlemesinin `alt` özniteliğinin denetim tarafından eksik sayılması (**20 kayıt**). Canlı HTML'de `alt=""` görülmesi nedeniyle bunun bilinçli dekoratif boş alt ile gerçek eksik arasındaki farkı kesinleştirmeden “20 bozuk resim” denmemeli. Yeni model önizlemesi artık, gerçek fotoğraf olmadığında, her dilde `photoText(lang,"pending")` açıklamasını kullanıyor; tam canlı audit merged-main deploy sonrasında tekrar çalışacak.
+
+**PR/production ayrımı:** `inspect` iş akışı bir PR'da yalnız o anda canlı eski HTML'i denetlediği için, henüz yayımlanmamış düzeltmenin yokluğunu beklenmedik test hatası yapmamak adına tam **3.880-URL strict live audit** PR öncesi yerine main merge/schedule/manuel koşusunda çalışır. PR'daki Node/Playwright/Astro/CodeQL üretim paketi testleri açık ve aktiftir. Ana dala alınan kodun canlıya ulaşması ve bütün alt denetimlerden geçmesi ayrıca raporlanır.
+
 ## Sonuç sınırları / yayın ve geri alma
 
 - Güvenli yayın için GitHub Node, Astro, Cloudflare üretim, CodeQL, Playwright Chromium/Firefox/WebKit ve mobil/axe-core, canlı sitemap audit ve haftalık mobil Lighthouse testlerinin sonuçları ayrı kontrol edilir.
