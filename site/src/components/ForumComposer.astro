@@ -292,6 +292,56 @@ for(const widget of widgets){
  const postForm=el<HTMLFormElement>("[data-forum-post]");
  const logout=el<HTMLButtonElement>("[data-forum-logout]");
  const message=el<HTMLElement>("[data-forum-status]");
+ const publicationPanel=el<HTMLElement>("[data-forum-publication-panel]");
+ const publicationButton=el<HTMLButtonElement>("[data-forum-publication-check]");
+ const publicationLink=el<HTMLAnchorElement>("[data-forum-publication-link]");
+ const publicationStatus=el<HTMLElement>("[data-forum-publication-status]");
+ let lastPublicHref="";
+ async function verifyPublicPage(){
+  if(!lastPublicHref)return;
+  if(publicationButton)publicationButton.disabled=true;
+  if(publicationStatus)publicationStatus.textContent=copy.publicationChecking;
+  try{
+   const response=await fetch(lastPublicHref,{method:"GET",cache:"no-store",
+    signal:AbortSignal.timeout(12000)});
+   const html=response.ok&&(response.headers.get("content-type")||"").includes("text/html")
+    ?await response.text():"";
+   const correctCanonical=html.includes('href="'+lastPublicHref+'"') &&
+    /<link\b[^>]*rel="canonical"/i.test(html);
+   const indexed=/<meta\b[^>]*name="robots"[^>]*content="index,follow/i.test(html);
+   if(correctCanonical&&indexed){
+    if(publicationLink){publicationLink.href=lastPublicHref;publicationLink.hidden=false}
+    if(publicationStatus)publicationStatus.textContent=copy.publicationLive;
+   }else{
+    if(publicationLink)publicationLink.hidden=true;
+    if(publicationStatus)publicationStatus.textContent=copy.publicationWaiting;
+   }
+  }catch{
+   if(publicationLink)publicationLink.hidden=true;
+   if(publicationStatus)publicationStatus.textContent=copy.publicationWaiting;
+  }finally{if(publicationButton)publicationButton.disabled=false}
+ }
+ publicationButton?.addEventListener("click",()=>void verifyPublicPage());
+ async function setupPublicationCheck(postId:string){
+  if(cfg.mode!=="topic")return;
+  try{
+   const params=new URLSearchParams({select:"id,slug,locale,status",id:"eq."+postId,limit:"1"});
+   const result=await fetch(cfg.url+"/rest/v1/tc_forum_topics?"+params,{
+    headers:header(token),cache:"no-store",signal:AbortSignal.timeout(12000)});
+   if(!result.ok)return;
+   const rows=await result.json();
+   const saved=Array.isArray(rows)?rows[0]:null;
+   if(saved?.status!=="published"||typeof saved.slug!=="string"||
+    !/^[a-z0-9][a-z0-9-]{10,259}$/.test(saved.slug)||!isLocale(saved.locale))return;
+   const origin=/^(?:www\.)?tractorvs\.com$/i.test(location.hostname) ?
+    "https://tractorvs.com":location.origin;
+   lastPublicHref=new URL((saved.locale==="en"?"":"/"+saved.locale)+"/forum/"+saved.slug+"/",origin).toString();
+   if(publicationPanel)publicationPanel.hidden=false;
+   if(publicationStatus)publicationStatus.textContent=copy.publicationWaiting;
+   void verifyPublicPage();
+  }catch{/* Post already saved. Do not automatically submit again. */}
+ }
+
  const tokenKey="tractorvs_forum_access";
  const refreshKey="tractorvs_forum_refresh";
  let activeAuthAttempt=0;
@@ -737,6 +787,9 @@ for(const widget of widgets){
     return;
    }
   }
+  if(publicationPanel)publicationPanel.hidden=true;
+  if(publicationLink)publicationLink.hidden=true;
+  lastPublicHref="";
   const form=new FormData(postForm);
   const body=String(form.get("body")||"").trim();
   const sourceLocale=String(form.get("source_locale")||"");
@@ -777,6 +830,7 @@ for(const widget of widgets){
    try{sessionStorage.removeItem(draftKey())}catch{}
    postForm.reset();editor?.refresh();
    msg(copy.pending);void showHistory();
+   if(cfg.mode==="topic")void setupPublicationCheck(postId);
   }catch{msg(copy.postError)}
   finally{if(button)button.disabled=false;if(logout)logout.disabled=false}
  });
