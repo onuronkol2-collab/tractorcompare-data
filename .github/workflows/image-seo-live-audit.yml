@@ -4,11 +4,19 @@ on:
     paths:
       - ".github/workflows/image-seo-live-audit.yml"
       - "site/scripts/image-seo-live-audit.mjs"
+      - "site/scripts/image-seo-asset-boundaries.mjs"
+      - "site/scripts/image-seo-http.mjs"
+      - "site/scripts/production-sitemap-inventory.mjs"
+      - "site/tests/image-seo-live-audit.test.mjs"
   push:
     branches: [main]
     paths:
       - ".github/workflows/image-seo-live-audit.yml"
       - "site/scripts/image-seo-live-audit.mjs"
+      - "site/scripts/image-seo-asset-boundaries.mjs"
+      - "site/scripts/image-seo-http.mjs"
+      - "site/scripts/production-sitemap-inventory.mjs"
+      - "site/tests/image-seo-live-audit.test.mjs"
   workflow_dispatch:
   schedule:
     - cron: "30 6 * * 1"
@@ -23,5 +31,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: "22.23.4"
+      - name: Test bounded image retries and moderated forum media URL boundaries (offline)
+        run: node --test site/tests/image-seo-live-audit.test.mjs
       - name: Verify first party public JPEGs, photo attribution and image sitemap
         run: node site/scripts/image-seo-live-audit.mjs
