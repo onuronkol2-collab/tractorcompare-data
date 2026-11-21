@@ -128,3 +128,26 @@ test("Clarity project ID and ConsentV2 are gated by renewed, explicit analytics 
     assert.ok(copy.microsoftInfo.length>10, locale+" Microsoft link translation missing");
   }
 });
+
+test("previous GA-only approval cannot silently load Clarity and old cookies are cleared",()=>{
+  assert.match(banner,/const legacyChoice = window\.localStorage\.getItem\("tractorvs_analytics_choice_v1"\)/);
+  assert.match(banner,/if \(legacyChoice === "accepted"\) \{[\s\S]*?clearAnalyticsFirstPartyCookies\(\);[\s\S]*?clearClarityFirstPartyCookies\(\);/);
+  assert.match(banner,/return legacyChoice === "rejected" \? "rejected" : null/);
+  assert.match(banner,/function clearClarityFirstPartyCookies\(\)/);
+  assert.match(banner,/\^_cl\(\?:ck\|sk\)\$/);
+  assert.match(banner,/clearAnalyticsFirstPartyCookies\(\);\s*clearClarityFirstPartyCookies\(\);\s*\/\/ A previously loaded tag/);
+  assert.doesNotMatch(layout,/<script[^>]+clarity\.ms/);
+});
+
+test("Clarity consent is queued before tag insertion, and rejected analytics is not loaded",()=>{
+  const start=banner.indexOf("function loadClarityOnlyAfterConsent()");
+  const end=banner.indexOf("function clearAnalyticsFirstPartyCookies()",start);
+  const code=banner.slice(start,end);
+  const signal=code.indexOf('clarityWindow.clarity("consentv2"');
+  const request=code.indexOf('document.head.appendChild(script)');
+  assert.ok(signal>0 && request>signal,"Explicit Clarity consent must be sent before script insertion");
+  assert.match(code,/ad_Storage:\s*"denied"/);
+  assert.match(code,/analytics_Storage:\s*"granted"/);
+  assert.match(banner,/if \(current === "accepted"\) \{\s*loadAnalyticsOnlyAfterConsent\(\);\s*loadClarityOnlyAfterConsent\(\);/);
+  assert.match(banner,/else if \(current === null && banner\) \{\s*banner.hidden = false;/);
+});
