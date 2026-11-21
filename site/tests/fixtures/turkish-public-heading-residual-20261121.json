@@ -1,0 +1,590 @@
+{
+  "source": "GitHub full public page audit on 2026-11-21 (job 136954574267)",
+  "modelsPerLocale": 379,
+  "localizedPageUrls": 3790,
+  "distinctHeadings": 80,
+  "occurrences": 101,
+  "terms": [
+    {
+      "english": "Clutch",
+      "count": 2,
+      "exampleSlugs": [
+        "sonalika-tiger-di-50-67d959b0",
+        "sonalika-tiger-di-55-iii-9486ecf8"
+      ]
+    },
+    {
+      "english": "Clutch (Exact Listed Mahabali RX 2WD/4WD Trims)",
+      "count": 2,
+      "exampleSlugs": [
+        "sonalika-mahabali-rx-42-p-a0e16b7d",
+        "sonalika-mahabali-rx-42-p-dd65e38b"
+      ]
+    },
+    {
+      "english": "Cylinder Bore",
+      "count": 2,
+      "exampleSlugs": [
+        "belarus-920-2-1e1d7219",
+        "belarus-920-21e79b33"
+      ]
+    },
+    {
+      "english": "Engine Cooling",
+      "count": 2,
+      "exampleSlugs": [
+        "belarus-920-2-1e1d7219",
+        "belarus-920-21e79b33"
+      ]
+    },
+    {
+      "english": "Four-Wheel-Drive Engagement",
+      "count": 2,
+      "exampleSlugs": [
+        "swaraj-target-625-4wd-9b41aee0",
+        "swaraj-target-630-4wd-8f46478f"
+      ]
+    },
+    {
+      "english": "Front Agricultural Tires",
+      "count": 2,
+      "exampleSlugs": [
+        "tym-t3035-6f214ac1",
+        "tym-t3035-6f214ac1"
+      ]
+    },
+    {
+      "english": "Front Tire Size",
+      "count": 2,
+      "exampleSlugs": [
+        "ls-tractor-j27-19685234",
+        "ls-tractor-j27-e424cd0c"
+      ]
+    },
+    {
+      "english": "Gear Count",
+      "count": 2,
+      "exampleSlugs": [
+        "tym-t3035-6f214ac1",
+        "tym-t3035-6f214ac1"
+      ]
+    },
+    {
+      "english": "Hydrostatic Transmission Ranges",
+      "count": 2,
+      "exampleSlugs": [
+        "ls-tractor-mt122-72df0cf1",
+        "ls-tractor-mt125-6fa9177e"
+      ]
+    },
+    {
+      "english": "Max Speed",
+      "count": 2,
+      "exampleSlugs": [
+        "zetor-proxima-c0d8fcfe",
+        "zetor-proxima-cf11aa07"
+      ]
+    },
+    {
+      "english": "Maximum Speed (Brochure, Tyre-Dependent) - Mechanical",
+      "count": 2,
+      "exampleSlugs": [
+        "lamborghini-trattori-spire-s-80-target-f9a68e93",
+        "lamborghini-trattori-spire-v-80-target-5139abf5"
+      ]
+    },
+    {
+      "english": "Maximum Speed (Brochure, Tyre-Dependent) - Powershuttle",
+      "count": 2,
+      "exampleSlugs": [
+        "lamborghini-trattori-spire-s-80-target-f9a68e93",
+        "lamborghini-trattori-spire-v-80-target-5139abf5"
+      ]
+    },
+    {
+      "english": "Number Of Speeds - 5 Gears Transmission - Mechanical Shuttle",
+      "count": 2,
+      "exampleSlugs": [
+        "lamborghini-trattori-spire-s-80-target-f9a68e93",
+        "lamborghini-trattori-spire-v-80-target-5139abf5"
+      ]
+    },
+    {
+      "english": "Number Of Speeds - 5 Gears Transmission - Powershuttle",
+      "count": 2,
+      "exampleSlugs": [
+        "lamborghini-trattori-spire-s-80-target-f9a68e93",
+        "lamborghini-trattori-spire-v-80-target-5139abf5"
+      ]
+    },
+    {
+      "english": "Operating Weight With ROPS",
+      "count": 2,
+      "exampleSlugs": [
+        "tym-t3035-6f214ac1",
+        "tym-t3035-6f214ac1"
+      ]
+    },
+    {
+      "english": "Piston Stroke",
+      "count": 2,
+      "exampleSlugs": [
+        "belarus-920-2-1e1d7219",
+        "belarus-920-21e79b33"
+      ]
+    },
+    {
+      "english": "Rear Agricultural Tires",
+      "count": 2,
+      "exampleSlugs": [
+        "tym-t3035-6f214ac1",
+        "tym-t3035-6f214ac1"
+      ]
+    },
+    {
+      "english": "Robotic Transmission Ranges",
+      "count": 2,
+      "exampleSlugs": [
+        "antonio-carraro-tony-8900-sr-0ebc6c93",
+        "antonio-carraro-tony-8900-tr-d8be07cc"
+      ]
+    },
+    {
+      "english": "Total Admissible Load",
+      "count": 2,
+      "exampleSlugs": [
+        "lamborghini-trattori-spire-s-80-target-f9a68e93",
+        "lamborghini-trattori-spire-v-80-target-5139abf5"
+      ]
+    },
+    {
+      "english": "Tractor Weight",
+      "count": 2,
+      "exampleSlugs": [
+        "ls-tractor-j27-19685234",
+        "ls-tractor-j27-e424cd0c"
+      ]
+    },
+    {
+      "english": "Weight With Cab",
+      "count": 2,
+      "exampleSlugs": [
+        "antonio-carraro-mach-2-r-f0ee0c8c",
+        "tym-t6130-7597d8a9"
+      ]
+    },
+    {
+      "english": "Agrotechnical Clearance Under Front Axle",
+      "count": 1,
+      "exampleSlugs": [
+        "belarus-152-c759bfc7"
+      ]
+    },
+    {
+      "english": "Agrotechnical Clearance Under Rear Wheel Tubes",
+      "count": 1,
+      "exampleSlugs": [
+        "belarus-152-c759bfc7"
+      ]
+    },
+    {
+      "english": "Available Transmission Options",
+      "count": 1,
+      "exampleSlugs": [
+        "massey-ferguson-5s-125-69fc9aa9"
+      ]
+    },
+    {
+      "english": "Clutch Configuration",
+      "count": 1,
+      "exampleSlugs": [
+        "swaraj-735-fe-7c7b069f"
+      ]
+    },
+    {
+      "english": "Clutch Standard",
+      "count": 1,
+      "exampleSlugs": [
+        "mccormick-x5-085-d050e1f3"
+      ]
+    },
+    {
+      "english": "Creeper Gearbox Option",
+      "count": 1,
+      "exampleSlugs": [
+        "mccormick-x5-085-d050e1f3"
+      ]
+    },
+    {
+      "english": "Driven Wheels",
+      "count": 1,
+      "exampleSlugs": [
+        "iseki-txgs24-1d67a7d0"
+      ]
+    },
+    {
+      "english": "Engine Maker",
+      "count": 1,
+      "exampleSlugs": [
+        "agrale-7215-5d2edc98"
+      ]
+    },
+    {
+      "english": "Engine Rpm At Stated Power",
+      "count": 1,
+      "exampleSlugs": [
+        "agrale-4233-e3ed3f24"
+      ]
+    },
+    {
+      "english": "F36CHN HST Transmission Ranges",
+      "count": 1,
+      "exampleSlugs": [
+        "tym-t3035-82e4ebaa"
+      ]
+    },
+    {
+      "english": "F36CN Mechanical Gear Configuration",
+      "count": 1,
+      "exampleSlugs": [
+        "tym-t3035-82e4ebaa"
+      ]
+    },
+    {
+      "english": "Forward Speed Range",
+      "count": 1,
+      "exampleSlugs": [
+        "swaraj-717-2f52ab4b"
+      ]
+    },
+    {
+      "english": "Forward/Reverse Gear Options",
+      "count": 1,
+      "exampleSlugs": [
+        "lamborghini-trattori-spire-f-80-target-0c8f654d"
+      ]
+    },
+    {
+      "english": "Front Diff Lock Type",
+      "count": 1,
+      "exampleSlugs": [
+        "tumosan-8095-163f043b"
+      ]
+    },
+    {
+      "english": "Front Tire (Main Configuration)",
+      "count": 1,
+      "exampleSlugs": [
+        "belarus-152-c759bfc7"
+      ]
+    },
+    {
+      "english": "Front Tyre Size",
+      "count": 1,
+      "exampleSlugs": [
+        "lamborghini-trattori-spire-f-80-target-0c8f654d"
+      ]
+    },
+    {
+      "english": "Front Wheel Track",
+      "count": 1,
+      "exampleSlugs": [
+        "swaraj-717-2f52ab4b"
+      ]
+    },
+    {
+      "english": "Height To ROPS Arc Top",
+      "count": 1,
+      "exampleSlugs": [
+        "belarus-152-c759bfc7"
+      ]
+    },
+    {
+      "english": "HST Transmission Ranges",
+      "count": 1,
+      "exampleSlugs": [
+        "tym-t3039-4172470a"
+      ]
+    },
+    {
+      "english": "Hydraulic Flow",
+      "count": 1,
+      "exampleSlugs": [
+        "belarus-1221-3-6ed6e4a3"
+      ]
+    },
+    {
+      "english": "Hydraulic Oil Reservoir",
+      "count": 1,
+      "exampleSlugs": [
+        "belarus-1221-3-6ed6e4a3"
+      ]
+    },
+    {
+      "english": "Hydraulic System Maximum Pressure",
+      "count": 1,
+      "exampleSlugs": [
+        "belarus-1025-2-0c77919f"
+      ]
+    },
+    {
+      "english": "Hydraulic Tank Capacity",
+      "count": 1,
+      "exampleSlugs": [
+        "belarus-1025-2-0c77919f"
+      ]
+    },
+    {
+      "english": "Hydrostatic Range Modes",
+      "count": 1,
+      "exampleSlugs": [
+        "antonio-carraro-panther-26-h-48e8caec"
+      ]
+    },
+    {
+      "english": "Manufacturer Engine Power (Metric Hp)",
+      "count": 1,
+      "exampleSlugs": [
+        "agrale-7215-5d2edc98"
+      ]
+    },
+    {
+      "english": "Manufacturer Rated Power",
+      "count": 1,
+      "exampleSlugs": [
+        "agrale-4233-e3ed3f24"
+      ]
+    },
+    {
+      "english": "Manufacturer Selectable Automatic Ranges (SIM)",
+      "count": 1,
+      "exampleSlugs": [
+        "antonio-carraro-tony-8900-trg-7fa6422c"
+      ]
+    },
+    {
+      "english": "Manufacturer Stated Power",
+      "count": 1,
+      "exampleSlugs": [
+        "agrale-4233-e3ed3f24"
+      ]
+    },
+    {
+      "english": "Manufacturer-Stated Road Homologation Speed",
+      "count": 1,
+      "exampleSlugs": [
+        "antonio-carraro-mach-2-r-f0ee0c8c"
+      ]
+    },
+    {
+      "english": "Manufacturer-Stated Tractor Weight",
+      "count": 1,
+      "exampleSlugs": [
+        "antonio-carraro-tigre-3800-f-3872ab21"
+      ]
+    },
+    {
+      "english": "Max Speed Variants",
+      "count": 1,
+      "exampleSlugs": [
+        "zetor-proxima-e715524e"
+      ]
+    },
+    {
+      "english": "Maximum Road Speed (ECO, Tyre Dependent)",
+      "count": 1,
+      "exampleSlugs": [
+        "lamborghini-trattori-spire-f-80-target-0c8f654d"
+      ]
+    },
+    {
+      "english": "Operating Weight (Brochure Configuration)",
+      "count": 1,
+      "exampleSlugs": [
+        "belarus-152-c759bfc7"
+      ]
+    },
+    {
+      "english": "Operating Weight Without Ballast",
+      "count": 1,
+      "exampleSlugs": [
+        "belarus-922-3-1cd53d1a"
+      ]
+    },
+    {
+      "english": "Overall Width Between Rear Wheels",
+      "count": 1,
+      "exampleSlugs": [
+        "belarus-152-c759bfc7"
+      ]
+    },
+    {
+      "english": "Rear 3-Point Draft/Implement Depth Control",
+      "count": 1,
+      "exampleSlugs": [
+        "tym-t3035-82e4ebaa"
+      ]
+    },
+    {
+      "english": "Rear Diff Lock Type",
+      "count": 1,
+      "exampleSlugs": [
+        "tumosan-8095-163f043b"
+      ]
+    },
+    {
+      "english": "Rear Remote Valve Sets",
+      "count": 1,
+      "exampleSlugs": [
+        "tym-t3035-82e4ebaa"
+      ]
+    },
+    {
+      "english": "Rear Tire (Main Configuration)",
+      "count": 1,
+      "exampleSlugs": [
+        "belarus-152-c759bfc7"
+      ]
+    },
+    {
+      "english": "Rear Tyre Size",
+      "count": 1,
+      "exampleSlugs": [
+        "lamborghini-trattori-spire-f-80-target-0c8f654d"
+      ]
+    },
+    {
+      "english": "Reverse Speeds",
+      "count": 1,
+      "exampleSlugs": [
+        "swaraj-717-2f52ab4b"
+      ]
+    },
+    {
+      "english": "Road Clearance (Main Tyre Configuration)",
+      "count": 1,
+      "exampleSlugs": [
+        "belarus-152-c759bfc7"
+      ]
+    },
+    {
+      "english": "Speed Range Forward",
+      "count": 1,
+      "exampleSlugs": [
+        "fendt-724-vario-191d10b4"
+      ]
+    },
+    {
+      "english": "Speed Range Reverse",
+      "count": 1,
+      "exampleSlugs": [
+        "fendt-724-vario-191d10b4"
+      ]
+    },
+    {
+      "english": "Standard Clutch",
+      "count": 1,
+      "exampleSlugs": [
+        "swaraj-717-2f52ab4b"
+      ]
+    },
+    {
+      "english": "Standard Front Tire Size",
+      "count": 1,
+      "exampleSlugs": [
+        "agrale-575-super-d3f67001"
+      ]
+    },
+    {
+      "english": "Standard Rear Tire Size",
+      "count": 1,
+      "exampleSlugs": [
+        "agrale-575-super-d3f67001"
+      ]
+    },
+    {
+      "english": "Synchro-Shuttle Gear Configuration",
+      "count": 1,
+      "exampleSlugs": [
+        "tym-t3039-4172470a"
+      ]
+    },
+    {
+      "english": "Synchronised Gear Shifting",
+      "count": 1,
+      "exampleSlugs": [
+        "swaraj-target-630-4wd-8f46478f"
+      ]
+    },
+    {
+      "english": "Transmission Configuration",
+      "count": 1,
+      "exampleSlugs": [
+        "basak-traktor-5120-01590869"
+      ]
+    },
+    {
+      "english": "Transmission Gears",
+      "count": 1,
+      "exampleSlugs": [
+        "belarus-1025-2-0c77919f"
+      ]
+    },
+    {
+      "english": "Transmission Option Hilo",
+      "count": 1,
+      "exampleSlugs": [
+        "mccormick-x5-085-d050e1f3"
+      ]
+    },
+    {
+      "english": "Transmission Option Hml",
+      "count": 1,
+      "exampleSlugs": [
+        "mccormick-x5-085-d050e1f3"
+      ]
+    },
+    {
+      "english": "Transmission Shuttle Type",
+      "count": 1,
+      "exampleSlugs": [
+        "massey-ferguson-4708-standard-5727a834"
+      ]
+    },
+    {
+      "english": "Weight With Roll Bar",
+      "count": 1,
+      "exampleSlugs": [
+        "antonio-carraro-mach-2-r-f0ee0c8c"
+      ]
+    },
+    {
+      "english": "With Front Tyre",
+      "count": 1,
+      "exampleSlugs": [
+        "lamborghini-trattori-spire-s-80-target-f9a68e93"
+      ]
+    },
+    {
+      "english": "With Front Tyre Size",
+      "count": 1,
+      "exampleSlugs": [
+        "lamborghini-trattori-spire-v-80-target-5139abf5"
+      ]
+    },
+    {
+      "english": "With Rear Tyre",
+      "count": 1,
+      "exampleSlugs": [
+        "lamborghini-trattori-spire-s-80-target-f9a68e93"
+      ]
+    },
+    {
+      "english": "With Rear Tyre Size",
+      "count": 1,
+      "exampleSlugs": [
+        "lamborghini-trattori-spire-v-80-target-5139abf5"
+      ]
+    }
+  ]
+}
