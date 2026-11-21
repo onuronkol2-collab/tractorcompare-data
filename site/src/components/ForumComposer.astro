@@ -308,8 +308,11 @@ for(const widget of widgets){
     ?await response.text():"";
    const correctCanonical=html.includes('href="'+lastPublicHref+'"') &&
     /<link\b[^>]*rel="canonical"/i.test(html);
-   const indexed=/<meta\b[^>]*name="robots"[^>]*content="index,follow/i.test(html);
-   if(correctCanonical&&indexed){
+   // A short but publicly readable topic is intentionally noindex for SEO.
+   // Public delivery requires a real canonical article, not Google eligibility.
+   const topicHeading=/<h1\b[^>]*>/i.test(html);
+   const publicDirective=/<meta\b[^>]*name="robots"[^>]*content="(?:index,follow|noindex,nofollow)/i.test(html);
+   if(correctCanonical&&topicHeading&&publicDirective){
     if(publicationLink){publicationLink.href=lastPublicHref;publicationLink.hidden=false}
     if(publicationStatus)publicationStatus.textContent=copy.publicationLive;
    }else{
