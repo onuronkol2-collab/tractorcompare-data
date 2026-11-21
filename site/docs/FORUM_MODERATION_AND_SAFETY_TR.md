@@ -28,11 +28,13 @@ Supabase Dashboard > Authentication > URL Configuration sayfasında **Site URL**
 
 ## İsteğe bağlı çok dilli forum çevirileri — işleme ve kalite güvenliği
 
+**Kullanıcı kontrolü:** Çeviri kuyruklarını oluşturan veriler korunur; yeni kullanıcı onayı olmadan arka planda AI çevirisi çalıştırılmaz. Otomatik zamanlayıcıyı tekrar açmak ayrı bir açık kullanıcı talebi gerektirir.
+
 - Uzun makaleler tek Gemini etkileşiminde kapasite/timeout sorununa yol açabilir; bu nedenle bölümlere ayırma ve devam edebilir özel checkpoint (`qa_notes=PARTS:N/T`) kullanılır. Her başarılı parça `needs_review`, `seo_approved=false` durumunda kalır. Tam 9 dilin her biri için son denetimler ve `ready` sonucunu ayrı doğrulayın; onaylanmamış parçaları ve yarım makaleyi webde göstermeyin.
 
 
 - Kullanıcının çeviri kutusu `translation_consent=true` tutar ve dokuz hedef dil için iş kuyruğu üretir; tek başına çeviri veya canlı yayın oluşturmaz.
-- Özel `tractor-forum-translate` Edge Function, `tractorvs-forum-translation.yml` tarafından zamanlanmış olarak çağrılır. Worker yalnız `published`, izinli ve değişmemiş kaynak sürümünü alır. Bir çalışmada en fazla 3 metin işi ele alınır; yeniden denemeler kontrollüdür.
+- Özel `tractor-forum-translate` Edge Function yalnız GitHub `tractorvs-forum-translation.yml` manuel çalıştırma ekranında `onay=ONAY` girildiğinde çağrılır; zamanlanmış veya `push` tetiklemesi kullanıcı talebiyle kapalıdır. ChatGPT sohbetini durdurmak GitHub'ı doğrudan durduramadığından, bu güvenlik sınırı manuel onayla sağlanır. Worker yalnız `published`, izinli ve değişmemiş kaynak sürümünü alır. Bir çalışmada en fazla 3 metin işi ele alınır; yeniden denemeler kontrollüdür.
 - Gemini'ye yazar e-postası, kimlik bilgisi, hesap profili veya onaysız fotoğraf verilmez. Metin, yalnız kullanıcının açık çeviri izni kapsamında işlenir.
 - Her sonuçta tarih, sayılar, firma adları, teknik birimler, araştırma metodolojisi, tablolar ve kaynak bağlantıları korunur; bağımsız model QA ikinci aşamadır. Herhangi bir hata `needs_review` olarak kaydedilir ve SEO/onay olmadan dil sayfasında görünmez.
 - Çeviri yayımlanmadan önce `tc_forum_topic_translations.state=ready` ve `seo_approved` uygun olmalı; veritabanı `tc_forum_localized_topics` view ile doğrulanmalı, ardından Cloudflare dil sayfası ve sitemap/robots/canonical gerçek canlı kontrolden geçmelidir.
