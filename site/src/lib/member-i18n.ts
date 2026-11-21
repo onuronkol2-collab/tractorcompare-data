@@ -49,7 +49,10 @@ export const MEMBER_TEXT:Record<Locale,Record<MemberKey,string>> = {
     "voteOwn": "You cannot vote on your own reply.",
     "voteError": "Could not update your vote.",
     "signInNotice": "Sign in above to edit your profile or save discussions.",
-    "loading": "Loading members…"
+    "loading": "Loading members…",
+    "viewProfile": "View profile",
+    "close": "Close",
+    "memberSince": "Member since"
   },
   "tr": {
     "register": "Hesap oluştur",
@@ -99,7 +102,10 @@ export const MEMBER_TEXT:Record<Locale,Record<MemberKey,string>> = {
     "voteOwn": "Kendi yanıtına oy veremezsin.",
     "voteError": "Oy güncellenemedi.",
     "signInNotice": "Profilini düzenlemek veya konuları kaydetmek için yukarıdan giriş yap.",
-    "loading": "Üyeler yükleniyor…"
+    "loading": "Üyeler yükleniyor…",
+    "viewProfile": "Profili görüntüle",
+    "close": "Kapat",
+    "memberSince": "Üyelik tarihi"
   },
   "de": {
     "register": "Konto erstellen",
@@ -149,7 +155,10 @@ export const MEMBER_TEXT:Record<Locale,Record<MemberKey,string>> = {
     "voteOwn": "Du kannst deine eigene Antwort nicht bewerten.",
     "voteError": "Stimme konnte nicht geändert werden.",
     "signInNotice": "Zum Bearbeiten des Profils oder Speichern von Themen anmelden.",
-    "loading": "Mitglieder werden geladen…"
+    "loading": "Mitglieder werden geladen…",
+    "viewProfile": "Profil ansehen",
+    "close": "Schließen",
+    "memberSince": "Mitglied seit"
   },
   "fr": {
     "register": "Créer un compte",
@@ -199,7 +208,10 @@ export const MEMBER_TEXT:Record<Locale,Record<MemberKey,string>> = {
     "voteOwn": "Vous ne pouvez pas voter pour votre réponse.",
     "voteError": "Impossible de modifier le vote.",
     "signInNotice": "Connectez-vous pour modifier le profil ou enregistrer des discussions.",
-    "loading": "Chargement des membres…"
+    "loading": "Chargement des membres…",
+    "viewProfile": "Voir le profil",
+    "close": "Fermer",
+    "memberSince": "Membre depuis"
   },
   "es": {
     "register": "Crear cuenta",
@@ -249,7 +261,10 @@ export const MEMBER_TEXT:Record<Locale,Record<MemberKey,string>> = {
     "voteOwn": "No puedes votar tu propia respuesta.",
     "voteError": "No se pudo cambiar el voto.",
     "signInNotice": "Inicia sesión para editar tu perfil y guardar debates.",
-    "loading": "Cargando miembros…"
+    "loading": "Cargando miembros…",
+    "viewProfile": "Ver perfil",
+    "close": "Cerrar",
+    "memberSince": "Miembro desde"
   },
   "pt-br": {
     "register": "Criar conta",
@@ -299,7 +314,10 @@ export const MEMBER_TEXT:Record<Locale,Record<MemberKey,string>> = {
     "voteOwn": "Você não pode votar na própria resposta.",
     "voteError": "Não foi possível atualizar o voto.",
     "signInNotice": "Entre para editar seu perfil e salvar discussões.",
-    "loading": "Carregando membros…"
+    "loading": "Carregando membros…",
+    "viewProfile": "Ver perfil",
+    "close": "Fechar",
+    "memberSince": "Membro desde"
   },
   "ru": {
     "register": "Создать аккаунт",
@@ -349,7 +367,10 @@ export const MEMBER_TEXT:Record<Locale,Record<MemberKey,string>> = {
     "voteOwn": "Нельзя оценивать собственный ответ.",
     "voteError": "Не удалось изменить оценку.",
     "signInNotice": "Войдите, чтобы редактировать профиль и сохранять темы.",
-    "loading": "Загрузка участников…"
+    "loading": "Загрузка участников…",
+    "viewProfile": "Посмотреть профиль",
+    "close": "Закрыть",
+    "memberSince": "Участник с"
   },
   "ja": {
     "register": "アカウントを作成",
@@ -399,7 +420,10 @@ export const MEMBER_TEXT:Record<Locale,Record<MemberKey,string>> = {
     "voteOwn": "自分の返信には投票できません。",
     "voteError": "投票を更新できませんでした。",
     "signInNotice": "プロフィール編集や議論の保存にはログインしてください。",
-    "loading": "メンバーを読み込み中…"
+    "loading": "メンバーを読み込み中…",
+    "viewProfile": "プロフィールを見る",
+    "close": "閉じる",
+    "memberSince": "参加日"
   },
   "zh": {
     "register": "创建账号",
@@ -449,7 +473,10 @@ export const MEMBER_TEXT:Record<Locale,Record<MemberKey,string>> = {
     "voteOwn": "不能给自己的回复投票。",
     "voteError": "投票更新失败。",
     "signInNotice": "登录后可编辑资料和收藏讨论。",
-    "loading": "正在加载成员…"
+    "loading": "正在加载成员…",
+    "viewProfile": "查看资料",
+    "close": "关闭",
+    "memberSince": "加入时间"
   },
   "hi": {
     "register": "खाता बनाएँ",
@@ -499,8 +526,11 @@ export const MEMBER_TEXT:Record<Locale,Record<MemberKey,string>> = {
     "voteOwn": "अपने उत्तर पर वोट नहीं दे सकते।",
     "voteError": "वोट अपडेट नहीं हो सका।",
     "signInNotice": "प्रोफ़ाइल बदलने और चर्चा सहेजने के लिए लॉग इन करें।",
-    "loading": "सदस्य लोड हो रहे हैं…"
+    "loading": "सदस्य लोड हो रहे हैं…",
+    "viewProfile": "प्रोफ़ाइल देखें",
+    "close": "बंद करें",
+    "memberSince": "सदस्य बने"
   }
 };
-export type MemberKey = "register" | "passwordLogin" | "password" | "passwordHint" | "emailConfirm" | "authError" | "passwordShort" | "google" | "github" | "otherLogin" | "oauthError" | "memberHeading" | "memberIntro" | "myProfile" | "handle" | "displayName" | "bio" | "favoriteBrand" | "avatar" | "save" | "saved" | "profileError" | "uploadError" | "privacy" | "optOut" | "leaderboard" | "month" | "alltime" | "topics" | "replies" | "helpful" | "points" | "rank" | "newcomer" | "contributor" | "mentor" | "noMembers" | "myBookmarks" | "noBookmarks" | "saveTopic" | "removeTopic" | "helpfulButton" | "unhelpfulButton" | "voteLogin" | "voteOwn" | "voteError" | "signInNotice" | "loading";
+export type MemberKey = "register" | "passwordLogin" | "password" | "passwordHint" | "emailConfirm" | "authError" | "passwordShort" | "google" | "github" | "otherLogin" | "oauthError" | "memberHeading" | "memberIntro" | "myProfile" | "handle" | "displayName" | "bio" | "favoriteBrand" | "avatar" | "save" | "saved" | "profileError" | "uploadError" | "privacy" | "optOut" | "leaderboard" | "month" | "alltime" | "topics" | "replies" | "helpful" | "points" | "rank" | "newcomer" | "contributor" | "mentor" | "noMembers" | "myBookmarks" | "noBookmarks" | "saveTopic" | "removeTopic" | "helpfulButton" | "unhelpfulButton" | "voteLogin" | "voteOwn" | "voteError" | "signInNotice" | "loading" | "viewProfile" | "close" | "memberSince";
 export const memberText=(lang:Locale,key:MemberKey):string=>MEMBER_TEXT[lang][key];
