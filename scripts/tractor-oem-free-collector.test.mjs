@@ -3,7 +3,8 @@ import assert from "node:assert/strict";
 import {readFileSync} from "node:fs";
 import {
  allowedOemUrl,validModelMention,scrubMarkup,readOemDocument,robotsAllowed,
- MAX_HTML_BYTES,MAX_PDF_BYTES,MAX_PER_RUN,aggregateResults
+ MAX_HTML_BYTES,MAX_PDF_BYTES,MAX_PER_RUN,aggregateResults,
+ MAX_DRAFT_IDS_PER_LOOKUP,draftIdBatches
 } from "../supabase/functions/tractor-oem-free-collector/policy.mjs";
 import {validateReceipt,runFreeCollector} from "./tractor-oem-free-dispatch.mjs";
 
@@ -146,4 +147,26 @@ test("additional original manufacturer hosts remain exact and brand-scoped",()=>
   ["Kioti","https://www.kioti.eu.evil.invalid/"],
   ["Belarus","https://www.agromeh.com/products/belarus"]
  ])assert.equal(allowedOemUrl(url,brand),null,brand);
+});
+
+test("406 queued UUIDs use bounded, lossless PostgREST draft-only batches",()=>{
+ const ids=Array.from({length:406},(_,i)=>
+  "00000000-0000-4000-8000-"+i.toString(16).padStart(12,"0"));
+ const original=ids.slice();
+ const groups=draftIdBatches(ids);
+ assert.equal(MAX_DRAFT_IDS_PER_LOOKUP,50);
+ assert.equal(groups.length,9);
+ assert.ok(groups.every(group=>group.length>=1&&group.length<=50));
+ assert.deepEqual(groups.flat(),ids);
+ assert.deepEqual(ids,original);
+ assert.deepEqual(draftIdBatches([]),[]);
+ assert.throws(()=>draftIdBatches(null),/invalid_draft_id_list/);
+ // A 406-UUID URL filter is ~15KB; each serialized batch stays small.
+ assert.ok(groups.every(group=>group.join(",").length<2100));
+ const edge=readFileSync(new URL("../supabase/functions/tractor-oem-free-collector/index.ts",import.meta.url),"utf8");
+ assert.match(edge,/for\(const batch of draftIdBatches\(ids\)\)/);
+ assert.match(edge,/\.in\("id",batch\)/);
+ assert.match(edge,/\.eq\("status","draft"\)/);
+ assert.match(edge,/if\(tractors\.length>250\)throw Error\("draft_scan_cap"\)/);
+ assert.doesNotMatch(edge,/\.in\("id",ids\)/);
 });
