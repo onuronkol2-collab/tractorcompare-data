@@ -32,6 +32,30 @@ test("long-form research page uses Astro's precompiled Markdown renderer, not un
  assert.doesNotMatch(route,/set:html=|innerHTML|service_role|sb_secret_/);
 });
 
+
+test("two approved illustrative tractor photos retain exact identification and legal attribution",()=>{
+ const photos=[...article.matchAll(/<img src="([^"]+)"/g)].map(m=>m[1]);
+ assert.equal(photos.length,2,"Editorial report has two vetted, nondecorative pictures");
+ for(const src of photos){
+  assert.match(src,/^\/images\/tractors\/[a-z0-9-]+-480\.jpg$/);
+  assert.ok(article.includes("CC BY-SA 4.0"),"Credits and license must be shown");
+ }
+ assert.match(article,/Claas Axion 870 — model fotoğrafı, test edilen araç değildir/);
+ assert.match(article,/New Holland T6\.180 \(2025\).*2016|T6 ailesinden bir örnek/);
+ assert.match(article,/JoachimKohler-HB/);
+ assert.match(article,/MarcelX42/);
+});
+
+test("keyboard-scrollable evidence table retains all 19 models as true HTML table rows",()=>{
+ assert.match(article,/research-table-scroll" role="region" tabindex="0"/);
+ assert.match(article,/<caption>TractorVS model kanıt tablosu/);
+ assert.equal((article.match(/<tr><td>/g)||[]).length,19);
+ assert.match(route,/\.research-table-scroll/);
+ assert.match(route,/\.research-photo/);
+ assert.match(route,/"@type": "ImageObject"/);
+ assert.match(route,/İlgilendiğiniz bölüme geçin/);
+});
+
 test("forum remains moderated and keeps its security-based posting limit",()=>{
  const forum=read("../src/components/ForumComposer.astro");
  const forumRows=read("../src/lib/forum.ts");
