@@ -10,8 +10,13 @@ test.beforeEach(async ({page})=>{
  });
 });
 
-test("EN and TR article hubs expose real linked articles in server-rendered HTML",async ({page})=>{
- for(const [path,lang] of [["/articles/","en"],["/tr/articles/","tr"]]){
+test("ten authentic article hubs expose six real sources and correct language tags",async ({page})=>{
+ for(const [path,lang] of [
+  ["/articles/","en"],["/tr/articles/","tr"],["/zh/articles/","zh-Hans"],
+  ["/hi/articles/","hi"],["/pt-br/articles/","pt-BR"],
+  ["/fr/articles/","fr"],["/de/articles/","de"],["/ru/articles/","ru"],
+  ["/ja/articles/","ja"],["/es/articles/","es"]
+ ]){
   const response=await page.goto(path,{waitUntil:"domcontentloaded"});
   expect(response?.status(),path).toBe(200);
   await expect(page.locator("html")).toHaveAttribute("lang",lang);
@@ -24,11 +29,19 @@ test("EN and TR article hubs expose real linked articles in server-rendered HTML
   const jsonld=await page.locator('script[type="application/ld+json"]').textContent();
   expect(jsonld).toContain("CollectionPage");
   expect(jsonld).toContain("ItemList");
-  const expectedPrefix=lang==="tr"?"/tr":"";
-  for(const link of await page.locator(".editorial-card h3 a").all()){
-   const href=await link.getAttribute("href");
-   expect(href).toMatch(new RegExp("^"+expectedPrefix+"/(?:guides|reviews)/"));
+  const activeLocale=path.split("/").filter(Boolean)[0]==="articles"?"en":path.split("/")[1];
+  const links=await page.locator(".editorial-card h3 a").evaluateAll(list=>list.map(x=>x.getAttribute("href")));
+  expect(links).toHaveLength(6);
+  for(const href of links){
+   expect(href).toMatch(/^\/(?:tr\/|zh\/|hi\/|pt-br\/|fr\/|de\/|ru\/|ja\/|es\/)?(?:guides|reviews)\//);
    expect(href).not.toContain("2026-2027-traktor-guvenilirlik");
+  }
+  if(!["en","tr"].includes(activeLocale)){
+   expect(links.filter(href=>href.startsWith("/"+activeLocale+"/"))).toHaveLength(2);
+   expect(links.filter(href=>!href.startsWith("/"+activeLocale+"/"))).toHaveLength(4);
+   await expect(page.locator(".editorial-language-note")).toHaveCount(4);
+  }else{
+   await expect(page.locator(".editorial-language-note")).toHaveCount(0);
   }
  }
 });
@@ -43,7 +56,7 @@ test("article hub is reachable from mobile navigation",async ({page,isMobile})=>
 
 test("article hub has no serious or critical axe-core findings",async ({page,browserName},testInfo)=>{
  test.skip(browserName!=="chromium","axe checked on desktop and mobile Chromium");
- for(const path of ["/articles/","/tr/articles/"]){
+ for(const path of ["/articles/","/tr/articles/","/zh/articles/","/ja/articles/"]){
   await page.goto(path,{waitUntil:"domcontentloaded"});
   const report=await new AxeBuilder({page})
    .withTags(["wcag2a","wcag2aa","wcag21a","wcag21aa","wcag22aa"])
@@ -51,7 +64,7 @@ test("article hub has no serious or critical axe-core findings",async ({page,bro
   const findings=report.violations.map(x=>({
    id:x.id,impact:x.impact,target:x.nodes.map(n=>n.target),help:x.help
   }));
-  await testInfo.attach("editorial-axe-"+(path.startsWith("/tr")?"tr":"en"),{
+  await testInfo.attach("editorial-axe-"+(path.split("/")[1]||"en"),{
    body:Buffer.from(JSON.stringify(findings,null,2)),contentType:"application/json"
   });
   const significant=report.violations.filter(x=>["serious","critical"].includes(x.impact));

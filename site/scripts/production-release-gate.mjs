@@ -87,7 +87,12 @@ export function verifyProductionArtifacts({dir=projectRoot,origin=expectedOrigin
  const editorialSitemaps=readdirSync(dist)
   .filter(name=>name.startsWith("sitemap-")&&name.endsWith(".xml")&&name!=="sitemap-index.xml")
   .map(name=>readText(join(dist,name))).join("\n");
- for(const [route,locale] of [["articles","en"],["tr/articles","tr"]]){
+ for(const [route,locale] of [
+  ["articles","en"],["tr/articles","tr"],["zh/articles","zh-Hans"],
+  ["hi/articles","hi"],["pt-br/articles","pt-BR"],["fr/articles","fr"],
+  ["de/articles","de"],["ru/articles","ru"],["ja/articles","ja"],
+  ["es/articles","es"]
+ ]){
   const article=readText(join(dist,route,"index.html"));
   const publicUrl=origin+"/"+route+"/";
   insist(!/noindex,nofollow|content="noindex/i.test(article),

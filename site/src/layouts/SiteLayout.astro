@@ -36,7 +36,7 @@ const catalogPath = localizedPath(lang, "/tractors/");
 const comparePath = localizedPath(lang, "/compare/");
 const advisorPath = localizedPath(lang, "/farm-advisor/");
 const forumPath = localizedPath(lang, "/forum/");
-const articlesPath = localizedPath(lang==="tr"?"tr":"en", "/articles/");
+const articlesPath = localizedPath(lang, "/articles/");
 const guidePath = localizedPath(lang, "/guides/choosing-a-tractor/");
 const glossaryPath = localizedPath(lang==="tr"?"tr":"en", "/guides/tractor-technical-terms/");
 const methodologyPath = localizedPath(lang==="tr"?"tr":"en", "/methodology/");
@@ -47,11 +47,11 @@ const section = plainPath.startsWith("/tractors/") ? "catalog" :
   plainPath.startsWith("/articles/") ? "articles" :
   plainPath.startsWith("/guides/") || plainPath.startsWith("/methodology/") ? "resources" :
   plainPath === "/" ? "home" : "";
-// Do not imply translations exist: eight other locales link explicitly to English.
+// Editorial index is truly localized; linked long-form articles may still be English.
 const editorialLabel: Record<Locale,string> = {
-  en:"Articles",tr:"Makaleler",zh:"文章 (EN)",hi:"लेख (EN)",
-  "pt-br":"Artigos (EN)",fr:"Articles (EN)",de:"Artikel (EN)",
-  ru:"Статьи (EN)",ja:"記事 (EN)",es:"Artículos (EN)"
+  en:"Articles",tr:"Makaleler",zh:"文章",hi:"लेख",
+  "pt-br":"Artigos",fr:"Articles",de:"Artikel",
+  ru:"Статьи",ja:"記事",es:"Artículos"
 };
 const canonicalUrl = indexingEnabled
   ? new URL(Astro.url.pathname, Astro.site!).toString()

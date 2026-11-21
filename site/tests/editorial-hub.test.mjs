@@ -7,19 +7,24 @@ import {fileURLToPath} from "node:url";
 const root=resolve(dirname(fileURLToPath(import.meta.url)),"..");
 const file=(p)=>readFileSync(resolve(root,p),"utf8");
 
-test("article hub only creates genuine TR/EN editorial routes",()=>{
- const en="src/pages/articles/index.astro";
- const tr="src/pages/tr/articles/index.astro";
- assert.ok(existsSync(resolve(root,en)));
- assert.ok(existsSync(resolve(root,tr)));
- assert.match(file(en),/lang="en"/);
- assert.match(file(tr),/lang="tr"/);
+test("editorial index has authentic localized routes and hreflang in all ten languages",()=>{
+ for(const [path,lang] of [
+  ["src/pages/articles/index.astro","en"],
+  ["src/pages/tr/articles/index.astro","tr"]
+ ]){
+  assert.ok(existsSync(resolve(root,path)),path);
+  assert.match(file(path),new RegExp('lang="'+lang+'"'));
+ }
+ const route=file("src/pages/[locale]/articles/index.astro");
+ assert.match(route,/NEW_LOCALES\.map/);
+ assert.match(route,/<EditorialHub lang=\{locale\}/);
  const hub=file("src/components/EditorialHub.astro");
- assert.match(hub,/availableLocales=\{\["en","tr"\]\}/);
- assert.match(hub,/indexableLocales=\{\["en","tr"\]\}/);
+ assert.match(hub,/availableLocales=\{LOCALES\}/);
+ assert.match(hub,/indexableLocales=\{LOCALES\}/);
+ assert.match(hub,/inLanguage:LOCALE_TAGS\[lang\]/);
  assert.doesNotMatch(hub,/2026-2027-traktor-guvenilirlik/);
 });
-test("editorial index only lists existing articles in both supported languages",()=>{
+test("editorial index only links to languages where full article content exists",()=>{
  const hub=file("src/components/EditorialHub.astro");
  for(const slug of [
   "guides/choosing-a-tractor","guides/tractor-technical-terms",
@@ -35,6 +40,20 @@ test("editorial index only lists existing articles in both supported languages",
  assert.match(hub,/CollectionPage/);
  assert.match(hub,/ItemList/);
  assert.match(hub,/BreadcrumbList/);
+ assert.match(hub,/destinationLanguage/);
+ assert.match(hub,/englishOnly/);
+ assert.match(hub,/entryHref\(entry\)/);
+ assert.match(hub,/englishOriginal/);
+ assert.match(hub,/methodologyHref/);
+});
+test("eight new languages have complete original index translations, not English filler",()=>{
+ const source=file("src/lib/editorial-hub-i18n.ts");
+ for(const lang of ["zh","hi","pt-br","fr","de","ru","ja","es"]){
+  assert.ok(source.includes('"'+lang+'":')||source.includes(' '+lang+':'),lang);
+ }
+ assert.match(source,/cards:readonly/);
+ assert.match(source,/englishOriginal:string/);
+ assert.match(source,/rules:readonly/);
 });
 test("article metadata is explicit and main layout keeps website default",()=>{
  const layout=file("src/layouts/SiteLayout.astro");
@@ -55,8 +74,9 @@ test("article metadata is explicit and main layout keeps website default",()=>{
 test("production release fails closed if bilingual archives or sitemap entries disappear",()=>{
  const gate=file("scripts/production-release-gate.mjs");
  const audit=file("scripts/production-seo-audit.mjs");
- for(const entry of ['["articles","en"]','["tr/articles","tr"]']){
-   assert.ok(gate.includes(entry),entry);
+ for(const lang of ["articles","tr/articles","zh/articles","hi/articles","pt-br/articles",
+ "fr/articles","de/articles","ru/articles","ja/articles","es/articles"]){
+  assert.ok(gate.includes('"'+lang+'"'),lang);
  }
  assert.match(gate,/Editorial hub not included in generated sitemap/);
  assert.match(gate,/Editorial hub has wrong canonical/);
