@@ -40,10 +40,13 @@ function textFrom(data:any){
   .filter((x:any)=>x?.type==="text").map((x:any)=>String(x.text||"")).join("\n");
 }
 async function modelJSON(prompt:string,schema:any,deadline:number){
- for(const selected of [MODEL,"gemini-3.7-flash","gemini-3.6-flash"]){
+ // Gemini 3.7 Flash is routed to 3.8 by the provider; use a genuinely distinct
+ // supported fallback for failed/incomplete 3.8 interactions.
+ for(const selected of [MODEL,"gemini-3.6-flash"]){
   const init={model:selected,input:[{type:"text",text:prompt}],store:true,background:true,
    response_format:{type:"text",mime_type:"application/json",schema},
-   generation_config:{max_output_tokens:16000,thinking_level:"low"}};
+   generation_config:{max_output_tokens:16000,
+    thinking_level:selected==="gemini-3.6-flash"?"minimal":"low"}};
   let r:Response;
   try{
    r=await fetch(GEMINI,{method:"POST",headers:{"content-type":"application/json",
@@ -66,9 +69,16 @@ async function modelJSON(prompt:string,schema:any,deadline:number){
    throw Error("Gemini HTTP "+r.status);
   }
   const id=String(d.id);
+  let retryOtherModel=false;
   while(String(d.status||"").toLowerCase()!=="completed"){
-   if(["failed","cancelled","incomplete"].includes(String(d.status||"").toLowerCase()))
-    throw Error("Gemini incomplete");
+   const status=String(d.status||"").toLowerCase();
+   if(["failed","cancelled"].includes(status))throw Error("Gemini interaction "+status);
+   if(["incomplete","requires_continuation"].includes(status)){
+    // Not a completed translation. Prefer a different genuine model when
+    // the partial decode cannot safely satisfy our structured response.
+    if(selected===MODEL&&Date.now()<deadline-25000){retryOtherModel=true;break}
+    throw Error("Gemini interaction "+status);
+   }
    if(Date.now()>deadline)throw Error("Gemini timeout");
    await new Promise(done=>setTimeout(done,2000));
    const p=await fetch(GEMINI+"/"+encodeURIComponent(id),{
@@ -77,6 +87,7 @@ async function modelJSON(prompt:string,schema:any,deadline:number){
    d=await p.json().catch(()=>({}));
    if(!p.ok)throw Error("Gemini poll HTTP "+p.status);
   }
+  if(retryOtherModel)continue;
   const raw=textFrom(d).trim().replace(/^\x60{3}(?:json)?\s*/i,"").replace(/\x60{3}$/,"").trim();
   try{return {value:JSON.parse(raw),model:selected}}catch{throw Error("Model returned invalid JSON")}
  }
