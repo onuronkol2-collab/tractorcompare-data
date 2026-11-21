@@ -39,6 +39,7 @@ test("sign in, recover a draft, submit for moderation and check its status",asyn
  const auth=compose.locator("[data-forum-email]");
  const verify=compose.locator("[data-forum-verify]");
  async function signIn(){
+  if(!await auth.isVisible())await compose.locator("[data-email-choice] summary").click();
   await auth.locator("input").fill("tester@example.invalid");
   await auth.locator("button").click();
   await expect(verify.locator("input")).toBeHidden();
@@ -65,7 +66,7 @@ test("sign in, recover a draft, submit for moderation and check its status",asyn
  await expect(status).toHaveText("Son 24 saat için gönderi sınırına ulaştın.");
  expired=true;
  await post.locator("button").click();
- await expect(auth).toBeVisible();
+ await expect(compose.locator("[data-forum-register]")).toBeVisible();
  await signIn();
  await expect(post.locator("textarea")).toHaveValue(body);
  await post.locator("button").click();
@@ -86,8 +87,9 @@ test("sign in, recover a draft, submit for moderation and check its status",asyn
 test("an email link opens the editor and an expired link offers a fresh start",async({page})=>{
  await page.route("**/forum-test-api/auth/v1/user",route=>route.fulfill({json:{id:"test-user"}}));
  await page.goto("/tr/forum/#error=access_denied&error_code=otp_expired");
- await expect(page.locator("[data-forum-status]")).toContainText("Yeni bir bağlantı iste");
- await expect(page.locator("[data-forum-email]")).toBeVisible();
+ await expect(page.locator("[data-forum-status]")).toContainText("geçersiz");
+ await expect(page.locator("[data-forum-expired-help]")).toBeVisible();
+ await expect(page.locator("[data-forum-register]")).toBeVisible();
  await page.goto("/tr/forum/?return-test=1#access_token=test-only");
  await expect(page.locator("[data-forum-post]")).toBeVisible();
  await expect(page).not.toHaveURL(/access_token/);
