@@ -44,7 +44,6 @@ const schema=indexable?{
    </div>
   </header>
   <div class="container community-main">
-   <ForumComposer lang={lang} mode="topic"/>
    <section class="community-list" aria-label={ft(lang,"all")}>
     <h2>{ft(lang,"all")}</h2>
     {topics.length>0?<>
@@ -93,6 +92,7 @@ const schema=indexable?{
       </section>
     </>}
    </section>
+   <ForumComposer lang={lang} mode="topic"/>
    <ForumMemberPanel lang={lang}/>
    <p class="community-help"><a href={localizedPath(lang,"/tractors/")}>{ft(lang,"help")} ↗</a></p>
   </div>
