@@ -76,7 +76,8 @@ export const RESIDUAL_PUBLIC_SPEC_TERMS: Record<string, Partial<Record<Locale,st
     "tr": "Piston strok uzunluğu",
     "pt-br": "Curso do pistão",
     "fr": "Course du piston",
-    "es": "Carrera del pistón"
+    "es": "Carrera del pistón",
+    "ru": "Ход поршня"
   },
   "Rear Agricultural Tires": {
     "tr": "Arka tarım lastikleri",
@@ -105,21 +106,26 @@ export const RESIDUAL_PUBLIC_SPEC_TERMS: Record<string, Partial<Record<Locale,st
     "es": "Peso del tractor",
     "zh": "拖拉机重量",
     "ru": "Масса трактора",
-    "ja": "トラクター重量"
+    "ja": "トラクター重量",
+    "hi": "ट्रैक्टर का वज़न"
   },
   "Weight With Cab": {
     "tr": "Kabinli ağırlık",
     "pt-br": "Peso com cabine",
     "fr": "Poids avec cabine",
-    "es": "Peso con cabina"
+    "es": "Peso con cabina",
+    "hi": "कैब सहित वज़न",
+    "ru": "Масса с кабиной"
   },
   "Agrotechnical Clearance Under Front Axle": {
     "tr": "Ön aks altındaki tarımsal yerden açıklık",
-    "ru": "Агротехнический просвет под передним мостом"
+    "ru": "Агротехнический просвет под передним мостом",
+    "hi": "आगे के एक्सल के नीचे कृषि कार्य के लिए जमीन से ऊँचाई"
   },
   "Agrotechnical Clearance Under Rear Wheel Tubes": {
     "tr": "Arka tekerlek boruları altındaki tarımsal yerden açıklık",
-    "ru": "Агротехнический просвет под трубами задних колёс"
+    "ru": "Агротехнический просвет под трубами задних колёс",
+    "hi": "पिछले पहियों के ट्यूबों के नीचे कृषि कार्य के लिए जमीन से ऊँचाई"
   },
   "Available Transmission Options": {
     "tr": "Mevcut şanzıman seçenekleri",
@@ -153,7 +159,8 @@ export const RESIDUAL_PUBLIC_SPEC_TERMS: Record<string, Partial<Record<Locale,st
     "de": "Motordrehzahl bei angegebener Leistung",
     "zh": "标称功率下的发动机转速",
     "ru": "Обороты двигателя при заявленной мощности",
-    "ja": "公表出力時のエンジン回転数"
+    "ja": "公表出力時のエンジン回転数",
+    "hi": "घोषित शक्ति पर इंजन की गति (rpm)"
   },
   "F36CHN HST Transmission Ranges": {
     "tr": "F36CHN HST şanzıman hız aralıkları"
@@ -175,7 +182,9 @@ export const RESIDUAL_PUBLIC_SPEC_TERMS: Record<string, Partial<Record<Locale,st
     "ru": "Тип блокировки переднего дифференциала"
   },
   "Front Tire (Main Configuration)": {
-    "tr": "Ön lastik (ana yapılandırma)"
+    "tr": "Ön lastik (ana yapılandırma)",
+    "hi": "आगे का टायर (मुख्य विन्यास)",
+    "ru": "Передняя шина (основная комплектация)"
   },
   "Front Tyre Size": {
     "tr": "Ön lastik ölçüsü",
@@ -184,10 +193,14 @@ export const RESIDUAL_PUBLIC_SPEC_TERMS: Record<string, Partial<Record<Locale,st
     "es": "Medida del neumático delantero"
   },
   "Front Wheel Track": {
-    "tr": "Ön tekerlek iz genişliği"
+    "tr": "Ön tekerlek iz genişliği",
+    "hi": "आगे के पहियों का ट्रैक",
+    "ru": "Колея передних колёс"
   },
   "Height To ROPS Arc Top": {
-    "tr": "ROPS kemerinin üst noktasına kadar yükseklik"
+    "tr": "ROPS kemerinin üst noktasına kadar yükseklik",
+    "hi": "ROPS सुरक्षा चाप के शीर्ष तक ऊँचाई",
+    "ru": "Высота до верхней точки дуги ROPS"
   },
   "HST Transmission Ranges": {
     "tr": "HST şanzıman hız aralıkları"
@@ -230,7 +243,8 @@ export const RESIDUAL_PUBLIC_SPEC_TERMS: Record<string, Partial<Record<Locale,st
     "es": "Potencia del motor declarada por el fabricante (CV métricos)",
     "zh": "制造商公布的发动机功率（公制马力）",
     "ru": "Мощность двигателя по данным производителя (метрические л. с.)",
-    "ja": "メーカー公表のエンジン出力（メートル馬力）"
+    "ja": "メーカー公表のエンジン出力（メートル馬力）",
+    "hi": "निर्माता के अनुसार इंजन शक्ति (मीट्रिक अश्वशक्ति)"
   },
   "Manufacturer Rated Power": {
     "tr": "Üreticinin belirttiği nominal güç",
@@ -264,7 +278,9 @@ export const RESIDUAL_PUBLIC_SPEC_TERMS: Record<string, Partial<Record<Locale,st
     "es": "Velocidad de homologación en carretera declarada por el fabricante"
   },
   "Manufacturer-Stated Tractor Weight": {
-    "tr": "Üreticinin bildirdiği traktör ağırlığı"
+    "tr": "Üreticinin bildirdiği traktör ağırlığı",
+    "hi": "निर्माता द्वारा घोषित ट्रैक्टर का वज़न",
+    "ru": "Масса трактора по данным производителя"
   },
   "Max Speed Variants": {
     "tr": "Azami hız varyantları"
@@ -273,13 +289,18 @@ export const RESIDUAL_PUBLIC_SPEC_TERMS: Record<string, Partial<Record<Locale,st
     "tr": "Azami yol hızı (ECO, lastiğe bağlı)"
   },
   "Operating Weight (Brochure Configuration)": {
-    "tr": "Çalışma ağırlığı (broşürdeki yapılandırma)"
+    "tr": "Çalışma ağırlığı (broşürdeki yapılandırma)",
+    "hi": "परिचालन वज़न (ब्रोशर में दिया गया विन्यास)",
+    "ru": "Эксплуатационная масса (комплектация в брошюре)"
   },
   "Operating Weight Without Ballast": {
-    "tr": "Balastsız çalışma ağırlığı"
+    "tr": "Balastsız çalışma ağırlığı",
+    "hi": "बैलास्ट के बिना परिचालन वज़न"
   },
   "Overall Width Between Rear Wheels": {
-    "tr": "Arka tekerlekler arasındaki toplam genişlik"
+    "tr": "Arka tekerlekler arasındaki toplam genişlik",
+    "hi": "पिछले पहियों के बीच कुल चौड़ाई",
+    "ru": "Общая ширина между задними колёсами"
   },
   "Rear 3-Point Draft/Implement Depth Control": {
     "tr": "Arka üç nokta askı sisteminde çeki kuvveti/ekipman derinliği kontrolü",
@@ -288,13 +309,16 @@ export const RESIDUAL_PUBLIC_SPEC_TERMS: Record<string, Partial<Record<Locale,st
     "es": "Control de esfuerzo/profundidad del implemento en el enganche trasero de tres puntos"
   },
   "Rear Diff Lock Type": {
-    "tr": "Arka diferansiyel kilidi tipi"
+    "tr": "Arka diferansiyel kilidi tipi",
+    "ru": "Тип блокировки заднего дифференциала"
   },
   "Rear Remote Valve Sets": {
     "tr": "Arka hidrolik kumanda valfi grupları"
   },
   "Rear Tire (Main Configuration)": {
-    "tr": "Arka lastik (ana yapılandırma)"
+    "tr": "Arka lastik (ana yapılandırma)",
+    "hi": "पीछे का टायर (मुख्य विन्यास)",
+    "ru": "Задняя шина (основная комплектация)"
   },
   "Rear Tyre Size": {
     "tr": "Arka lastik ölçüsü",
@@ -306,7 +330,9 @@ export const RESIDUAL_PUBLIC_SPEC_TERMS: Record<string, Partial<Record<Locale,st
     "tr": "Geri vites hızları"
   },
   "Road Clearance (Main Tyre Configuration)": {
-    "tr": "Yerden açıklık (ana lastik yapılandırması)"
+    "tr": "Yerden açıklık (ana lastik yapılandırması)",
+    "hi": "सड़क से जमीन की ऊँचाई (मुख्य टायर विन्यास)",
+    "ru": "Дорожный просвет (основная комплектация шин)"
   },
   "Speed Range Forward": {
     "tr": "İleri hareket hız aralığı"
@@ -348,7 +374,9 @@ export const RESIDUAL_PUBLIC_SPEC_TERMS: Record<string, Partial<Record<Locale,st
     "tr": "Şanzıman ileri-geri yön değiştirme tipi"
   },
   "Weight With Roll Bar": {
-    "tr": "Devrilme koruma barıyla ağırlık"
+    "tr": "Devrilme koruma barıyla ağırlık",
+    "hi": "रोल बार के साथ वज़न",
+    "ru": "Масса с защитной дугой"
   },
   "With Front Tyre": {
     "tr": "Ön lastikle"
@@ -367,7 +395,9 @@ export const RESIDUAL_PUBLIC_SPEC_TERMS: Record<string, Partial<Record<Locale,st
     "fr": "Limite de plage de masse ROPS/cabine indiqué par le constructeur (état de charge non précisé)",
     "es": "Límite del rango de peso ROPS/cabina indicado por el fabricante (condición de carga no especificada)",
     "de": "Herstellerangabe zum Gewichtsbereich von ROPS/Kabine (Beladungszustand nicht angegeben)",
-    "zh": "制造商公布的 ROPS/驾驶室重量范围界限（载荷状态未注明）"
+    "zh": "制造商公布的 ROPS/驾驶室重量范围界限（载荷状态未注明）",
+    "hi": "निर्माता की ROPS/कैब वज़न-सीमा (भार की स्थिति निर्दिष्ट नहीं)",
+    "ru": "Указанная производителем граница диапазона массы с ROPS/кабиной (нагрузка не указана)"
   },
   "Powershift Multiplier Stages": {
     "pt-br": "Número de estágios do multiplicador Powershift",
@@ -551,7 +581,8 @@ export const RESIDUAL_PUBLIC_SPEC_TERMS: Record<string, Partial<Record<Locale,st
     "pt-br": "Peso sem lastro",
     "fr": "Poids sans lest",
     "es": "Peso sin lastre",
-    "ru": "Масса без балласта"
+    "ru": "Масса без балласта",
+    "hi": "बैलास्ट के बिना वज़न"
   },
   "Crop Clearance": {
     "pt-br": "Vão livre para culturas",
@@ -773,10 +804,13 @@ export const RESIDUAL_PUBLIC_SPEC_TERMS: Record<string, Partial<Record<Locale,st
     "ja": "駆動方式の構成"
   },
   "Engine Speed At Listed Power": {
-    "ja": "記載出力時のエンジン回転数"
+    "ja": "記載出力時のエンジン回転数",
+    "hi": "सूचीबद्ध शक्ति पर इंजन की गति",
+    "ru": "Частота вращения двигателя при указанной мощности"
   },
   "Manufacturer-Stated Engine Power (KW, Test Standard Unspecified)": {
-    "ja": "メーカー公表エンジン出力（kW、試験規格未記載）"
+    "ja": "メーカー公表エンジン出力（kW、試験規格未記載）",
+    "hi": "निर्माता द्वारा घोषित इंजन शक्ति (kW, परीक्षण मानक निर्दिष्ट नहीं)"
   },
   "Operator Station / Cab": {
     "ja": "運転席／キャブ"
@@ -821,7 +855,8 @@ export const RESIDUAL_PUBLIC_SPEC_TERMS: Record<string, Partial<Record<Locale,st
     "ru": "Четырёхстоечная кабина"
   },
   "Front Track Width": {
-    "ru": "Ширина передней колеи"
+    "ru": "Ширина передней колеи",
+    "hi": "आगे के पहियों की ट्रैक चौड़ाई"
   },
   "Fuel Tank With Additional Tank, No Front Lift/PTO": {
     "ru": "Топливный бак с дополнительным баком (без передней навески/ВОМ)"
@@ -836,12 +871,35 @@ export const RESIDUAL_PUBLIC_SPEC_TERMS: Record<string, Partial<Record<Locale,st
     "ru": "Тип рабочего места оператора по данным производителя"
   },
   "Operating Weight With Ballast": {
-    "ru": "Эксплуатационная масса с балластом"
+    "ru": "Эксплуатационная масса с балластом",
+    "hi": "बैलास्ट सहित परिचालन वज़न"
   },
   "Air Cleaner": {
     "ru": "Воздушный фильтр"
   },
   "Engine Max Torque Rpm": {
     "ru": "Обороты двигателя при максимальном крутящем моменте"
+  },
+  "Rear Hitch Lift Capacity At Linkage Axis": {
+    "zh": "后悬挂系统在连杆轴线处的提升能力",
+    "ru": "Грузоподъёмность задней навески на оси крепления тяг"
+  },
+  "Total Height Of Driver'S Cab With Standard Tyres With Fendt Guide": {
+    "zh": "安装标准轮胎和 Fendt Guide 时驾驶室总高度"
+  },
+  "Total Height Of Driver'S Cab With Standard Tyres Without Fendt Guide": {
+    "zh": "安装标准轮胎但不配 Fendt Guide 时驾驶室总高度"
+  },
+  "One-Piece Fully Opening Hood": {
+    "hi": "पूरी तरह खुलने वाला एक-टुकड़ा इंजन बोनट"
+  },
+  "Operator Cup Holder": {
+    "hi": "ऑपरेटर के लिए कप होल्डर"
+  },
+  "ROPS Folded Height": {
+    "hi": "मुड़े हुए ROPS की ऊँचाई"
+  },
+  "Electrohydraulic 4WD And Differential Lock Engagement": {
+    "ru": "Электрогидравлическое включение 4WD и блокировки дифференциала"
   }
 };
