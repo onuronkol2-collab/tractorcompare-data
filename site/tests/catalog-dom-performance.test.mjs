@@ -37,3 +37,14 @@ test("one sprite definition is decorative and never introduces a keyboard focus 
  assert.match(photo,/<use href="#tractorvs-catalog-photo-symbol" \/>/);
  assert.doesNotMatch(catalog,/content-visibility:\s*hidden|display:\s*none\s*;\s*\/\*\s*all models/);
 });
+
+test("published-only mobile search caches normalized card text and avoids redundant DOM writes",()=>{
+ // A growing SSR catalogue must not normalize hundreds of strings per keystroke.
+ assert.match(catalog,/const cardSearchKeys = cards\.map\(card => normalizeTractorQuery\(card\.dataset\.search \|\| ""\)\)/);
+ assert.match(catalog,/const match = cardSearchKeys\[i\]\.includes\(normalized\)/);
+ assert.match(catalog,/if \(card\.hidden !== !match\) card\.hidden = !match/);
+ assert.doesNotMatch(catalog,/const match = normalizeTractorQuery\(card\.dataset\.search/);
+ assert.match(catalog,/for \(let i = 0; i < cards\.length; i\+\+\)/);
+ assert.match(catalog,/if \(match\) visible\+\+/);
+ assert.match(catalog,/catalog\.tractors\.map\(\(tractor\)=>/);
+});
