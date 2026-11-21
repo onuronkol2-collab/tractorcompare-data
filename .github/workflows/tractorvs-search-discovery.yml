@@ -5,6 +5,15 @@ on:
   schedule:
     - cron: "31 */2 * * *"
     - cron: "11 6 * * 1"
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/tractorvs-search-discovery.yml"
+      - "scripts/tractor-search-discovery.mjs"
+      - "scripts/tractor-search-discovery.test.mjs"
+      - "site/src/data/public-catalog-sync.json"
+      - "site/src/data/public-forum-sync.json"
+      - "site/src/data/sitemap-lastmod.json"
   workflow_dispatch:
     inputs:
       dry_run:
@@ -65,6 +74,14 @@ jobs:
         with:
           path: .seo-discovery/state.json
           key: tractorvs-search-discovery-v1-${{ github.run_id }}-${{ github.run_attempt }}
+      - name: Publish machine-readable weekly discovery evidence
+        if: ${{ github.event.schedule == '11 6 * * 1' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: tractorvs-weekly-search-discovery-${{ github.run_id }}
+          path: .seo-discovery/report.json
+          if-no-files-found: error
+          retention-days: 30
       - name: Document coverage boundary
         if: always()
         run: |
