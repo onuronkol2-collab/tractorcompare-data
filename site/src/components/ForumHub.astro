@@ -38,6 +38,10 @@ const schema=indexable?{
       <a class="compose-link community-link-alt" href="#forum-register-heading">{mt(lang,"register")}</a>
       <a class="compose-link community-link-alt" data-forum-leaderboard-link href="#forum-members">{mt(lang,"leaderboard")}</a>
     </div>
+    {lang==="tr" && <p class="community-research-feature">
+      <a href="/tr/guides/2026-2027-traktor-guvenilirlik/">2026–2027 Traktör Güvenilirlik Araştırması: 19 kaynaklı model incelemesi</a>
+      <span> · Bağımsız saha testleri, onarım kayıtları ve açık yöntem</span>
+    </p>}
     <div class="community-guide">
      <span>{ft(lang,"guidelines")}</span>
     </div>
@@ -107,6 +111,9 @@ const schema=indexable?{
  .compose-link{display:inline-block;background:#e7f6de;color:#183e27;border-radius:9px;padding:12px 18px;font-weight:700}
  .community-hero-links{display:flex;align-items:center;flex-wrap:wrap;gap:11px}
  .community-link-alt{background:transparent;border:1px solid #b9dfb6;color:#e7f6de}
+ .community-research-feature{max-width:750px;margin:20px 0 0!important;background:#e7f6de;border:1px solid #b8deba;border-radius:12px;padding:14px 17px;color:#214a33!important;font-size:14px!important;line-height:1.75}
+ .community-research-feature a{color:#155532;font-weight:800;text-decoration:underline;text-underline-offset:3px}
+ .community-research-feature span{color:#335840}
  .community-guide{max-width:730px;margin-top:22px;border-left:3px solid #aad39b;padding:9px 15px;background:#ffffff10;font-size:13px;line-height:1.8}
  .community-main{padding-top:37px;padding-bottom:72px}
  .community-list h2{font-size:clamp(22px,2.5vw,29px);color:#174b2b}
