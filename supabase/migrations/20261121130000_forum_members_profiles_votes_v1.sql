@@ -154,8 +154,7 @@ WITH topics AS (
  GROUP BY r.author_id
 ), helpful AS (
  SELECT r.author_id,
- coalesce(sum(least(v.helpful_count,10)),0)::int helpful_points_count,
- coalesce(sum(least(v.helpful_count,10)) FILTER (WHERE v.updated_at>=now()-interval '30 days'),0)::int month_helpful
+ coalesce(sum(least(v.helpful_count,10)),0)::int helpful_points_count
  FROM public.tc_forum_reply_helpful_totals v
  JOIN public.tc_forum_replies r ON r.id=v.reply_id
  JOIN public.tc_forum_topics t ON t.id=r.topic_id
@@ -169,12 +168,14 @@ SELECT p.id,p.handle,p.display_name,p.bio,p.avatar_path,p.favorite_brand,
  coalesce(h.helpful_points_count,0) helpful_votes,
  (3*coalesce(t.topic_count,0)+2*coalesce(r.reply_count,0)+
   2*coalesce(h.helpful_points_count,0))::int score_total,
- (3*coalesce(t.month_topics,0)+2*coalesce(r.month_replies,0)+
-  2*coalesce(h.month_helpful,0))::int score_30d
+ -- Recent activity score intentionally counts ONLY contributions dated in the
+ -- last 30 days; a new vote must not back-date old helpful votes into this period.
+ (3*coalesce(t.month_topics,0)+2*coalesce(r.month_replies,0))::int score_30d
 FROM public.tc_member_profiles p
 LEFT JOIN topics t ON t.author_id=p.id
 LEFT JOIN replies r ON r.author_id=p.id
-LEFT JOIN helpful h ON h.author_id=p.id;
+LEFT JOIN helpful h ON h.author_id=p.id
+WHERE p.show_leaderboard=true OR p.id=(select auth.uid());
 REVOKE ALL ON public.tc_member_scores FROM PUBLIC,anon,authenticated;
 GRANT SELECT ON public.tc_member_scores TO anon,authenticated;
 
