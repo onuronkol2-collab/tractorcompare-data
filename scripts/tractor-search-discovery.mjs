@@ -13,6 +13,7 @@ export const KEY="e4b1594b38e2465b9659c00b778571a5";
 export const KEY_URL=ORIGIN+"/"+KEY+".txt";
 export const INDEXNOW_URL="https://api.indexnow.org/indexnow";
 const STATE=resolve(fileURLToPath(new URL("../.seo-discovery/state.json",import.meta.url)));
+const REPORT=resolve(fileURLToPath(new URL("../.seo-discovery/report.json",import.meta.url)));
 const MAX_URLS=20000;
 const MAX_CHANGED_PER_RUN=60;
 
@@ -53,7 +54,8 @@ export function parsePageSitemap(xml){
     if(mods.length===1){
       const d=Date.parse(mods[0]);
       if(!Number.isFinite(d)||d>Date.now()+86400000)fail("Invalid/future lastmod");
-      lastmod=new Date(d).toISOString().slice(0,10);
+      // Preserve trustworthy timestamps (including same-day content changes).
+      lastmod=/^\d{4}-\d\d-\d\d$/.test(mods[0])?mods[0]:new Date(d).toISOString();
     }
     items.set(href,lastmod);
   }
@@ -75,7 +77,8 @@ function validSavedState(state){
   if(Object.keys(state.urls).length>MAX_URLS)fail("Checkpoint too large");
   for(const [url,mod] of Object.entries(state.urls)){
     allowUrl(url);
-    if(mod!==null && !/^\d{4}-\d\d-\d\d$/.test(mod))fail("Invalid checkpoint date");
+    if(mod!==null && (!/^\d{4}-\d\d-\d\d(?:T\d\d:\d\d:\d\d\.\d{3}Z)?$/.test(mod)||!Number.isFinite(Date.parse(mod))))
+      fail("Invalid checkpoint date");
   }
   return state;
 }
@@ -139,7 +142,7 @@ export async function submitIndexNow(urls,{fetchFn=fetch}={}){
     fail("IndexNow API rejected submission with HTTP "+response.status);
   return {status:response.status===200?"accepted":"received_pending_key_validation",sent:urls.length,http:response.status};
 }
-export async function run({fetchFn=fetch,statePath=STATE,dryRun=false,now=new Date()}={}){
+export async function run({fetchFn=fetch,statePath=STATE,reportPath=null,dryRun=false,now=new Date()}={}){
   const current=await liveSitemap({fetchFn});
   // Read-only gate: sitemap is based on a *real* deployed production build.
   const baseline=!existsSync(statePath);
@@ -168,11 +171,15 @@ export async function run({fetchFn=fetch,statePath=STATE,dryRun=false,now=new Da
     mkdirSync(dirname(statePath),{recursive:true});
     writeFileSync(statePath,JSON.stringify(state)+"\n");
   }
+  if(reportPath){
+    mkdirSync(dirname(reportPath),{recursive:true});
+    writeFileSync(reportPath,JSON.stringify(result,null,2)+"\n");
+  }
   return result;
 }
 if(process.argv[1]&&resolve(process.argv[1])===fileURLToPath(import.meta.url)){
   try{
-    const result=await run({dryRun:process.env.TRACTORVS_SEO_DRY_RUN==="true"});
+    const result=await run({dryRun:process.env.TRACTORVS_SEO_DRY_RUN==="true",reportPath:REPORT});
     console.log("TRACTORVS_SEARCH_DISCOVERY "+JSON.stringify(result));
     if(process.env.GITHUB_STEP_SUMMARY)appendFileSync(process.env.GITHUB_STEP_SUMMARY,
       "## TractorVS public search discovery\n\n"+
