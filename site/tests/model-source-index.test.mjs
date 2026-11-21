@@ -1,7 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
-import { modelSourceIndex, MODEL_SOURCE_COPY } from "../src/lib/model-source-index.ts";
+import { modelSourceIndex, MODEL_SOURCE_COPY, verifiedRecordDate } from "../src/lib/model-source-index.ts";
 import { LOCALES } from "../src/lib/locales.ts";
 import { pricedCatalogModels } from "../src/lib/catalog-price-payload.ts";
 import { MARKET_COUNTRIES, matchingPrice } from "../src/lib/market-prices.ts";
@@ -97,4 +97,27 @@ test("catalogue client payload includes only tractors with real curated market p
   assert.match(component,/models:\s*pricedCatalogModels\(catalog\.tractors\)/);
   assert.match(component,/catalog\.tractors\.map\(\(tractor\)=>/); // crawlable SSR card links are retained
   assert.match(component,/data-price-for=\{tractor\.tractor_id\}/);
+});
+
+test("source-linked verification dates are calendar-validated and never mistaken for document publication dates",()=>{
+ assert.equal(verifiedRecordDate("2026-11-20T10:00:00Z"),"2026-11-20");
+ assert.equal(verifiedRecordDate("2026-11-20T13:00:00+03:00"),"2026-11-20");
+ for (const raw of ["",null,"garbage","2026-02-30T10:00:00Z","3026-11-20T10:00:00Z","2026-11-20","2026-11-20T25:00:00Z"]) {
+  assert.equal(verifiedRecordDate(raw),null,String(raw));
+ }
+ const first=spec("first",official,"manufacturer_specification");
+ const second=spec("second",official,"manufacturer_specification");
+ second.verified_at="2026-11-19T08:00:00Z";
+ const item=modelSourceIndex(model([first,second])).documents[0];
+ assert.equal(item.latestRecordVerification,"2026-11-20");
+ const missing=modelSourceIndex(model([spec("missing",official,"manufacturer_specification")]));
+ assert.ok(missing.documents[0].latestRecordVerification);
+});
+
+test("source verification dates are visibly rendered only when linked and published",()=>{
+ const sourceView=readFileSync(new URL("../src/components/ModelSourceIndex.astro",import.meta.url),"utf8");
+ assert.match(sourceView,/source\.latestRecordVerification/);
+ assert.match(sourceView,/<time datetime=\{source\.latestRecordVerification\}>/);
+ assert.match(sourceView,/copy\.recordReviewed/);
+ for(const locale of LOCALES)assert.ok(MODEL_SOURCE_COPY[locale].recordReviewed.length>=8);
 });
