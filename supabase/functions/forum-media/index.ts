@@ -66,9 +66,15 @@ Deno.serve(async request=>{
   });
   if(!data.ok)return missing();
   const blob=await data.arrayBuffer();
-  if(!blob.byteLength||blob.byteLength>400000)return missing();
-  // File extension, upload MIME restriction, and browser re-encoding are all
-  // enforced before moderation. Never reflect storage's Content-Type.
+  if(blob.byteLength<12||blob.byteLength>400000)return missing();
+  // Uploaded MIME metadata can be forged by a malicious client. Independently
+  // verify RIFF....WEBP signature before serving the bytes to public users.
+  const signature=new Uint8Array(blob,0,12);
+  if(signature[0]!==0x52||signature[1]!==0x49||signature[2]!==0x46||signature[3]!==0x46||
+     signature[8]!==0x57||signature[9]!==0x45||signature[10]!==0x42||signature[11]!==0x50)
+    return missing();
+  // Browser re-encoding and the strict storage upload MIME restriction are
+  // independent checks; never trust storage's Content-Type on the response.
   return new Response(blob,{status:200,headers:{
    "Content-Type":"image/webp","Content-Length":String(blob.byteLength),
    "Content-Disposition":'inline; filename="forum-'+id+'.webp"',
