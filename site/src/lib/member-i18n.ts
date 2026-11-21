@@ -65,7 +65,13 @@ export const MEMBER_TEXT:Record<Locale,Record<MemberKey,string>> = {
     "unfollowTopic": "Unfollow",
     "followingTopics": "Discussions I follow",
     "noFollowingTopics": "No followed discussions yet.",
-    "newReplies": "new replies"
+    "newReplies": "new replies",
+    "defaultMemberName": "Community member",
+    "editProfile": "Edit my profile",
+    "closeProfile": "Close profile editor",
+    "memberActivity": "Saved and followed discussions",
+    "hideActivity": "Hide my activity",
+    "profileOptional": "Your profile is optional. Enjoy the forum and customize it whenever you like."
   },
   "tr": {
     "register": "Hesap oluştur",
@@ -131,7 +137,13 @@ export const MEMBER_TEXT:Record<Locale,Record<MemberKey,string>> = {
     "unfollowTopic": "Takibi bırak",
     "followingTopics": "Takip ettiğim tartışmalar",
     "noFollowingTopics": "Henüz takip ettiğin tartışma yok.",
-    "newReplies": "yeni yanıt"
+    "newReplies": "yeni yanıt",
+    "defaultMemberName": "Topluluk üyesi",
+    "editProfile": "Profilimi düzenle",
+    "closeProfile": "Düzenlemeyi kapat",
+    "memberActivity": "Kaydettiklerim ve takip ettiklerim",
+    "hideActivity": "Etkinliklerimi gizle",
+    "profileOptional": "Profilini dilediğin zaman düzenleyebilirsin. Önce forumun keyfini çıkar!"
   },
   "de": {
     "register": "Konto erstellen",
@@ -197,7 +209,13 @@ export const MEMBER_TEXT:Record<Locale,Record<MemberKey,string>> = {
     "unfollowTopic": "Nicht mehr folgen",
     "followingTopics": "Diskussionen, denen ich folge",
     "noFollowingTopics": "Noch keine Diskussionen abonniert.",
-    "newReplies": "neue Antworten"
+    "newReplies": "neue Antworten",
+    "defaultMemberName": "Community-Mitglied",
+    "editProfile": "Mein Profil bearbeiten",
+    "closeProfile": "Profilbearbeitung schließen",
+    "memberActivity": "Gespeicherte und abonnierte Diskussionen",
+    "hideActivity": "Meine Aktivitäten ausblenden",
+    "profileOptional": "Dein Profil ist optional. Nutze zuerst das Forum und gestalte es jederzeit nach Wunsch."
   },
   "fr": {
     "register": "Créer un compte",
@@ -263,7 +281,13 @@ export const MEMBER_TEXT:Record<Locale,Record<MemberKey,string>> = {
     "unfollowTopic": "Ne plus suivre",
     "followingTopics": "Discussions suivies",
     "noFollowingTopics": "Vous ne suivez aucune discussion.",
-    "newReplies": "nouvelles réponses"
+    "newReplies": "nouvelles réponses",
+    "defaultMemberName": "Membre de la communauté",
+    "editProfile": "Modifier mon profil",
+    "closeProfile": "Fermer l'éditeur",
+    "memberActivity": "Discussions enregistrées et suivies",
+    "hideActivity": "Masquer mon activité",
+    "profileOptional": "Votre profil est facultatif. Profitez du forum et personnalisez-le quand vous voulez."
   },
   "es": {
     "register": "Crear cuenta",
@@ -329,7 +353,13 @@ export const MEMBER_TEXT:Record<Locale,Record<MemberKey,string>> = {
     "unfollowTopic": "Dejar de seguir",
     "followingTopics": "Debates que sigo",
     "noFollowingTopics": "Todavía no sigues ningún debate.",
-    "newReplies": "respuestas nuevas"
+    "newReplies": "respuestas nuevas",
+    "defaultMemberName": "Miembro de la comunidad",
+    "editProfile": "Editar mi perfil",
+    "closeProfile": "Cerrar edición",
+    "memberActivity": "Debates guardados y seguidos",
+    "hideActivity": "Ocultar mi actividad",
+    "profileOptional": "Completar tu perfil es opcional. Disfruta del foro y personalízalo cuando quieras."
   },
   "pt-br": {
     "register": "Criar conta",
@@ -395,7 +425,13 @@ export const MEMBER_TEXT:Record<Locale,Record<MemberKey,string>> = {
     "unfollowTopic": "Deixar de seguir",
     "followingTopics": "Discussões que sigo",
     "noFollowingTopics": "Você ainda não segue discussões.",
-    "newReplies": "novas respostas"
+    "newReplies": "novas respostas",
+    "defaultMemberName": "Membro da comunidade",
+    "editProfile": "Editar meu perfil",
+    "closeProfile": "Fechar edição",
+    "memberActivity": "Discussões salvas e seguidas",
+    "hideActivity": "Ocultar minhas atividades",
+    "profileOptional": "Seu perfil é opcional. Aproveite o fórum e personalize quando quiser."
   },
   "ru": {
     "register": "Создать аккаунт",
@@ -461,7 +497,13 @@ export const MEMBER_TEXT:Record<Locale,Record<MemberKey,string>> = {
     "unfollowTopic": "Отписаться",
     "followingTopics": "Отслеживаемые обсуждения",
     "noFollowingTopics": "Вы пока не отслеживаете обсуждения.",
-    "newReplies": "новых ответов"
+    "newReplies": "новых ответов",
+    "defaultMemberName": "Участник сообщества",
+    "editProfile": "Редактировать профиль",
+    "closeProfile": "Закрыть редактор",
+    "memberActivity": "Сохранённые и отслеживаемые обсуждения",
+    "hideActivity": "Скрыть мои действия",
+    "profileOptional": "Заполнять профиль необязательно. Пользуйтесь форумом и настройте профиль позже."
   },
   "ja": {
     "register": "アカウントを作成",
@@ -527,7 +569,13 @@ export const MEMBER_TEXT:Record<Locale,Record<MemberKey,string>> = {
     "unfollowTopic": "フォロー解除",
     "followingTopics": "フォロー中の議論",
     "noFollowingTopics": "フォロー中の議論はありません。",
-    "newReplies": "件の新しい返信"
+    "newReplies": "件の新しい返信",
+    "defaultMemberName": "コミュニティメンバー",
+    "editProfile": "プロフィールを編集",
+    "closeProfile": "編集を閉じる",
+    "memberActivity": "保存・フォロー中の議論",
+    "hideActivity": "アクティビティを閉じる",
+    "profileOptional": "プロフィールの編集は任意です。先にフォーラムを楽しみ、後から変更できます。"
   },
   "zh": {
     "register": "创建账号",
@@ -593,7 +641,13 @@ export const MEMBER_TEXT:Record<Locale,Record<MemberKey,string>> = {
     "unfollowTopic": "取消关注",
     "followingTopics": "我关注的讨论",
     "noFollowingTopics": "暂未关注任何讨论。",
-    "newReplies": "条新回复"
+    "newReplies": "条新回复",
+    "defaultMemberName": "社区成员",
+    "editProfile": "编辑我的资料",
+    "closeProfile": "关闭编辑",
+    "memberActivity": "已收藏及关注的讨论",
+    "hideActivity": "隐藏活动",
+    "profileOptional": "填写资料不是必需的。欢迎先参与论坛，日后随时修改。"
   },
   "hi": {
     "register": "खाता बनाएँ",
@@ -659,8 +713,14 @@ export const MEMBER_TEXT:Record<Locale,Record<MemberKey,string>> = {
     "unfollowTopic": "फ़ॉलो हटाएँ",
     "followingTopics": "मेरी फ़ॉलो की गई चर्चाएँ",
     "noFollowingTopics": "अभी कोई चर्चा फ़ॉलो नहीं की है।",
-    "newReplies": "नए उत्तर"
+    "newReplies": "नए उत्तर",
+    "defaultMemberName": "समुदाय सदस्य",
+    "editProfile": "मेरी प्रोफ़ाइल बदलें",
+    "closeProfile": "संपादन बंद करें",
+    "memberActivity": "सहेजी और फ़ॉलो की गई चर्चाएँ",
+    "hideActivity": "मेरी गतिविधि छिपाएँ",
+    "profileOptional": "प्रोफ़ाइल भरना ज़रूरी नहीं है। पहले फ़ोरम का उपयोग करें, बाद में कभी भी बदलें।"
   }
 };
-export type MemberKey = "register" | "passwordLogin" | "password" | "passwordHint" | "emailConfirm" | "authError" | "passwordShort" | "google" | "github" | "otherLogin" | "oauthError" | "memberHeading" | "memberIntro" | "myProfile" | "handle" | "displayName" | "bio" | "favoriteBrand" | "avatar" | "save" | "saved" | "profileError" | "uploadError" | "privacy" | "optOut" | "leaderboard" | "month" | "alltime" | "topics" | "replies" | "helpful" | "points" | "rank" | "newcomer" | "contributor" | "mentor" | "noMembers" | "myBookmarks" | "noBookmarks" | "saveTopic" | "removeTopic" | "helpfulButton" | "unhelpfulButton" | "voteLogin" | "voteOwn" | "voteError" | "signInNotice" | "loading" | "viewProfile" | "close" | "memberSince" | "forgotPassword" | "resetEmailSent" | "resetNewPassword" | "resetSave" | "resetUpdated" | "passwordMismatch" | "showPassword" | "hidePassword" | "followTopic" | "unfollowTopic" | "followingTopics" | "noFollowingTopics" | "newReplies";
+export type MemberKey = "register" | "passwordLogin" | "password" | "passwordHint" | "emailConfirm" | "authError" | "passwordShort" | "google" | "github" | "otherLogin" | "oauthError" | "memberHeading" | "memberIntro" | "myProfile" | "handle" | "displayName" | "bio" | "favoriteBrand" | "avatar" | "save" | "saved" | "profileError" | "uploadError" | "privacy" | "optOut" | "leaderboard" | "month" | "alltime" | "topics" | "replies" | "helpful" | "points" | "rank" | "newcomer" | "contributor" | "mentor" | "noMembers" | "myBookmarks" | "noBookmarks" | "saveTopic" | "removeTopic" | "helpfulButton" | "unhelpfulButton" | "voteLogin" | "voteOwn" | "voteError" | "signInNotice" | "loading" | "viewProfile" | "close" | "memberSince" | "forgotPassword" | "resetEmailSent" | "resetNewPassword" | "resetSave" | "resetUpdated" | "passwordMismatch" | "showPassword" | "hidePassword" | "followTopic" | "unfollowTopic" | "followingTopics" | "noFollowingTopics" | "newReplies" | "defaultMemberName" | "editProfile" | "closeProfile" | "memberActivity" | "hideActivity" | "profileOptional";
 export const memberText=(lang:Locale,key:MemberKey):string=>MEMBER_TEXT[lang][key];

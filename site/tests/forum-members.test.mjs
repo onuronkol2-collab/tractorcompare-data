@@ -87,3 +87,20 @@ test("rollback refuses data loss once any member or image exists",()=>{
  assert.doesNotMatch(sql,/\bUPDATE public\.tc_forum_topics\b/i);
  assert.doesNotMatch(sql,/\bUPDATE public\.tc_forum_replies\b/i);
 });
+
+test("forum onboarding is optional, branded default avatar has no third-party dependencies",()=>{
+ const asset=readFileSync(new URL("../public/images/forum-member-default.svg",import.meta.url),"utf8");
+ assert.match(asset,/<svg xmlns="http:\/\/www\.w3\.org\/2000\/svg"/);
+ assert.doesNotMatch(asset,/<script|<image|<foreignObject|(?:xlink:)?href=/i);
+ assert.match(panel,/data-member-edit hidden aria-expanded="false"/);
+ assert.match(panel,/data-member-grid hidden/);
+ assert.match(panel,/profileForm\)profileForm\.hidden=!\(ownId&&editing\)/);
+ assert.match(panel,/defaultAvatar="\/images\/forum-member-default\.svg"/);
+ assert.match(panel,/async function ensureNeutralProfile/);
+ assert.match(panel,/handle:"member_"\+id\.replace/);
+ assert.match(panel,/display_name:starterName/);
+ assert.match(panel,/show_leaderboard:true/);
+ assert.doesNotMatch(panel,/raw_user_meta_data|user_metadata\.full_name|user_metadata\.avatar_url/);
+ assert.ok(hub.indexOf("<ForumComposer lang={lang} mode=\"topic\"/>")<
+  hub.indexOf("<ForumMemberPanel lang={lang}/>"));
+});
