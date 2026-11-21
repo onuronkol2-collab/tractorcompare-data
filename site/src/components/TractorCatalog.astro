@@ -10,12 +10,12 @@ import { COUNTRIES_BY_LOCALE } from "../lib/farm-advisor";
 import { MARKET_COUNTRIES, matchingPrice, formatMarketPriceRange } from "../lib/market-prices";
 import { pricedCatalogModels } from "../lib/catalog-price-payload.ts";
 import { localizedCountryName } from "../lib/country-display";
-import {catalogBrandIndex,BRAND_NAV_COPY} from "../lib/catalog-brand-index.mjs";
+import {catalogBrandIndex,BRAND_NAV_COPY,CATALOG_SEARCH_TITLES} from "../lib/catalog-brand-index.mjs";
 interface Props { lang: Locale; }
 const { lang } = Astro.props;
 
 const catalog = await getPublicCatalog();
-const title = t(lang,"catalogTitle") + " | TractorVS";
+const title = CATALOG_SEARCH_TITLES[lang] + " | TractorVS";
 const description = t(lang,"catalogDesc");
 const detailPrefix = localizedPath(lang,"/tractors/");
 const brandIndex=catalogBrandIndex(catalog.tractors);
