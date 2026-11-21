@@ -14,7 +14,7 @@ const tractor=(brand_name,model_name)=>({
   engine:null,transmission:null,drivetrain:null,weight_kg:null,specifications:[]
 });
 test("only exact matching tractor model identity receives a verified photo",()=>{
-  assert.equal(APPROVED_TRACTOR_PHOTOS.length,76);
+  assert.equal(APPROVED_TRACTOR_PHOTOS.length,78);
   assert.equal(tractorPhotos(tractor("Belarus","82.1")).length,4);
   assert.equal(tractorPhotos(tractor("Belarus","80.1")).length,1);
   assert.equal(tractorPhotos(tractor("Belarus","132N")).length,1);
@@ -173,6 +173,41 @@ test("McCormick and Belarus verified images preserve exact source, JPEG SHA-256 
     "Photo must not leak to neighbor model "+brand+" "+model);
 });
 
+test("Steyr image batch is exact-model, provenance-linked and SHA-256 checked across locales",()=>{
+  const evidence=JSON.parse(readFileSync(new URL("../docs/steyr-photo-source-audit-20261121.json",import.meta.url),"utf8"));
+  assert.equal(evidence.approved.length,2);
+  assert.equal(evidence.rejected.length,1);
+  assert.equal(evidence.rejected[0].model,"6240 ABSOLUT CVT");
+  assert.equal(primaryTractorPhoto(tractor("Steyr","6240 ABSOLUT CVT")),null,
+    "Ambiguous source license must not be published");
+  for(const entry of evidence.approved){
+    const images=tractorPhotos(tractor(entry.brand,entry.model));
+    assert.equal(images.length,1,entry.brand+" "+entry.model);
+    const photo=images[0];
+    assert.equal(photo.fileId,entry.fileId);
+    assert.equal(photo.photographer,entry.photographer);
+    assert.equal(photo.licenseName,entry.license);
+    assert.equal(photo.licenseUrl,entry.licenseUrl);
+    assert.equal(photo.configurationExact,false);
+    const expectedSource="https://commons.wikimedia.org/wiki/File:"+entry.path.split("/").at(-1);
+    assert.equal(photo.sourcePage,expectedSource);
+    const bytes=readFileSync(new URL("../public"+photo.thumbUrl,import.meta.url));
+    assert.equal(bytes.length,entry.bytes);
+    assert.equal(createHash("sha256").update(bytes).digest("hex"),entry.sha256);
+    for(const lang of LOCALES){
+      const image=modelStructuredData(tractor(entry.brand,entry.model),lang,
+        "https://tractorvs.com/")["@graph"].find(x=>x["@type"]==="ImageObject");
+      assert.ok(image,"ImageObject rights missing "+entry.model+" "+lang);
+      assert.equal(image.creator.name,photo.photographer);
+      assert.equal(image.acquireLicensePage,photo.sourcePage);
+      assert.equal(image.license,photo.licenseUrl);
+    }
+  }
+  for(const model of ["4085 KOMPAKT S","4080 KOMPAKT","6340 TERRUS","6240 ABSOLUT CVT"])
+    assert.equal(primaryTractorPhoto(tractor("Steyr",model)),null,
+      "Do not leak approved photo to unrelated model "+model);
+});
+
 test("each approved photograph has a verified model source and re-use license",()=>{
   const ids=new Set();
   for(const image of APPROVED_TRACTOR_PHOTOS){
@@ -297,9 +332,9 @@ test("fullscreen viewer, linked credits and public image sitemap use SSR images"
 });
 
 test("historic photo batch is staged with rights and does not create records",()=>{
-  assert.equal(HISTORICAL_LICENSED_PHOTOS.length,65);
+  assert.equal(HISTORICAL_LICENSED_PHOTOS.length,67);
   const all=new Set(HISTORICAL_LICENSED_PHOTOS.map(x=>x.fileId));
-  assert.equal(all.size,65);
+  assert.equal(all.size,67);
   assert.ok(HISTORICAL_LICENSED_PHOTOS.every(x=>x.configurationExact===false));
   assert.ok(!HISTORICAL_LICENSED_PHOTOS.some(x=>["Product","Vehicle"].includes(x.model)));
 });
