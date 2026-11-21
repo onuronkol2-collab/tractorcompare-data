@@ -4,6 +4,8 @@ on:
   pull_request:
     paths:
       - ".github/workflows/mobile-performance-audit.yml"
+      - "site/scripts/mobile-lighthouse-summary.mjs"
+      - "site/tests/mobile-lighthouse-summary.test.mjs"
   workflow_dispatch:
   # Free weekly mobile baseline, Monday 07:37 Europe/Istanbul (04:37 UTC).
   schedule:
@@ -17,10 +19,13 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
+      - uses: actions/checkout@v4
       - name: Check Chrome and Node
         run: |
           node --version
           command -v google-chrome || command -v chromium || true
+      - name: Test mobile Lighthouse summary parsing and field/ lab transparency
+        run: node --test site/tests/mobile-lighthouse-summary.test.mjs
       - name: Measure representative Turkish pages with mobile Lighthouse
         run: |
           set -euo pipefail
@@ -41,30 +46,8 @@ jobs:
               --output=json --output-path="/tmp/tractorvs-lighthouse/$route.json" \
               --quiet
           done
-          node --input-type=module <<'NODE'
-          import fs from "node:fs";
-          for (const route of ["home","catalog","model","compare"]) {
-            const a=JSON.parse(fs.readFileSync("/tmp/tractorvs-lighthouse/"+route+".json","utf8"));
-            const scores=Object.fromEntries(
-              ["performance","accessibility","best-practices","seo"].map(k=>[k,Math.round((a.categories[k]?.score??0)*100)]));
-            const ids=["first-contentful-paint","largest-contentful-paint","total-blocking-time","cumulative-layout-shift","speed-index","server-response-time"];
-            const vitals=Object.fromEntries(ids.map(k=>[k,a.audits[k]?.numericValue??null]));
-            const issues=Object.values(a.audits).filter(v=>v.score!==null&&v.score!==undefined&&v.score<0.9 && v.details?.type==="opportunity")
-              .sort((a,b)=>(b.details?.overallSavingsMs||0)-(a.details?.overallSavingsMs||0))
-              .slice(0,8)
-              .map(o=>({id:o.id,title:o.title,savings_ms:o.details?.overallSavingsMs||0}));
-            const accessibilityFindings=Object.values(a.audits)
-              .filter(v=>v.score!==null&&v.score!==undefined&&v.score<1&&
-                a.categories.accessibility.auditRefs.some(r=>r.id===v.id&&r.weight>0))
-              .map(v=>({id:v.id,title:v.title,score:v.score,description:v.description?.slice(0,180)||""}));
-            const contrastFailures=(a.audits["color-contrast"]?.details?.items || []).slice(0,30).map(i=>({
-              selector:i.node?.selector,html:i.node?.snippet?.slice(0,180),
-              explanation:i.node?.explanation?.slice(0,160),
-              summary:i.node?.failureSummary?.slice(0,180)
-            }));
-            console.log("TRACTORVS_MOBILE_BASELINE "+JSON.stringify({route,url:a.finalDisplayedUrl||a.finalUrl,scores,vitals,issues,accessibilityFindings,contrastFailures}));
-          }
-          NODE
+          node site/scripts/mobile-lighthouse-summary.mjs
+
       - name: Upload diagnostic Lighthouse JSON
         if: always()
         uses: actions/upload-artifact@v4
