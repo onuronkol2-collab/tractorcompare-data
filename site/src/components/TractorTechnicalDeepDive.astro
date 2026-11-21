@@ -19,6 +19,9 @@ const image=hero?new URL(hero.displayUrl,base).toString():undefined;
 const other=TECHNICAL_DEEP_DIVES.filter(x=>x.slug!==slug);
 const headline=guide.title[lang];
 const description=guide.description[lang];
+// Only the standards article received substantive new editorial content.
+const hasPowerStandards = slug === "tractor-engine-power-and-torque";
+const editedOn = hasPowerStandards ? "2026-11-21" : "2026-11-20";
 const structuredData={
  "@context":"https://schema.org",
  "@graph":[
@@ -26,7 +29,7 @@ const structuredData={
    inLanguage:lang,mainEntityOfPage:{"@id":url+"#webpage"},
    author:{"@type":"Organization",name:"TractorVS"},
    publisher:{"@type":"Organization",name:"TractorVS"},
-   isAccessibleForFree:true,datePublished:"2026-11-20",dateModified:"2026-11-20",
+   isAccessibleForFree:true,datePublished:"2026-11-20",dateModified:editedOn,
    ...(image?{image}:{}),
    about:[{"@type":"Thing",name:"Agricultural tractor"},{"@type":"Thing",name:headline}]},
   {"@type":"WebPage","@id":url+"#webpage",url,name:headline,description,inLanguage:lang,
@@ -105,8 +108,12 @@ const structuredData={
       <ul>
        <li><a href="https://tractortestlab.unl.edu/" target="_blank" rel="noopener noreferrer">{tr?"Nebraska Traktör Test Laboratuvarı":"Nebraska Tractor Test Laboratory"} ↗</a></li>
        <li><a href="https://www.oecd.org/en/topics/tractors.html" target="_blank" rel="noopener noreferrer">{tr?"OECD traktör test kodları":"OECD tractor testing codes"} ↗</a></li>
+       {hasPowerStandards && <>
+        <li><a href="https://eur-lex.europa.eu/eli/reg/2019/405/oj/eng" target="_blank" rel="noopener noreferrer">{tr?"UN/ECE R120 — resmî motor gücü ölçüm düzenlemesi":"UN/ECE R120 — official engine power measurement regulation"} ↗</a></li>
+        <li><a href="https://www.dlg.org/en/magazin/survey-tests/tractor-model-descriptions-no-standardised-information" target="_blank" rel="noopener noreferrer">{tr?"DLG test merkezi — traktör güç beyanları neden farklı?":"DLG Test Centre — why tractor power claims differ"} ↗</a></li>
+       </>}
       </ul>
-      <small>{tr?"Editoryal kontrol: 20 Kasım 2026":"Editorial review: 20 November 2026"}</small>
+      <small>{tr ? ("Editoryal kontrol: " + (hasPowerStandards ? "21 Kasım 2026" : "20 Kasım 2026")) : ("Editorial review: " + (hasPowerStandards ? "21 November 2026" : "20 November 2026"))}</small>
      </section>
     </div>
    </div>
