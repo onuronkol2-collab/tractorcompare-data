@@ -19,8 +19,11 @@ test("EN and TR article hubs expose real linked articles in server-rendered HTML
   await expect(page.locator("h1")).toHaveCount(1);
   await expect(page.locator(".editorial-card")).toHaveCount(6);
   await expect(page.locator(".editorial-card h3 a")).toHaveCount(6);
-  await expect(page.locator('script[type="application/ld+json"]')).toContainText("CollectionPage");
-  await expect(page.locator('script[type="application/ld+json"]')).toContainText("ItemList");
+  // JSON-LD is a script: Playwright toContainText reads rendered innerText,
+  // which is empty for scripts even when the JSON is present in the HTML.
+  const jsonld=await page.locator('script[type="application/ld+json"]').textContent();
+  expect(jsonld).toContain("CollectionPage");
+  expect(jsonld).toContain("ItemList");
   const expectedPrefix=lang==="tr"?"/tr":"";
   for(const link of await page.locator(".editorial-card h3 a").all()){
    const href=await link.getAttribute("href");
