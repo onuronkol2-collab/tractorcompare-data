@@ -20,7 +20,11 @@ Supabase Dashboard > Authentication > URL Configuration sayfasında **Site URL**
 - Başlık/URL, metin, kategori, yayım günü ve model bağlantısı dil bağlamıyla sunulur. Yapılmamış saha testleri, sahte puan, `DiscussionForumPosting` yazar/etkileşim JSON-LD'si eklenmez.
 - Gelecekte doğrulanmış, kullanıcı onaylı yazar bilgisi eklenirse uygun JSON-LD ayrıca denetlenebilir.
 - Forum URL'leri ana sitemap dışında tutulur. `seo_ready=true` ve yeterli özgün içeriğe sahip yayımlanmış konular `/forum-sitemap.xml` içerisinde sunulur. Kamuya açık bir postun indekslenmesi otomatik değildir; kalite ve içerik denetimi sürdürülmelidir.
-- Moderasyon verisi Cloudflare'a anlık olarak gitmez: statik sayfaların yeniden build edilmesi gerekir. Anon-view-only `tractor-forum-publication-autosync.mjs` yaklaşık yarım saatlik zamanlanmış kontrolünde yayımlanmış içerik fingerprint'i değişirse ana dala minimal kaynak güncellemesi yazar; sonra normal güvenli Cloudflare build tetiklenir. Başarılı CI **Google indeks garantisi değildir**.
+- **Kayıt ve görünürlük farklıdır:** Supabase 'published' yazıların veritabanında yayımlandığı anlamına gelir. Cloudflare üzerindeki statik HTML konularının oluşması otomatik eşitleme ve güvenli üretim dağıtımına bağlıdır. Kullanıcıya veritabanı kaydı ile canlı sayfanın iki ayrı durum olduğu açıkça gösterilir.
+- Ücretsiz anon-only `tractor-forum-publication-autosync.mjs` artık yoğun saatler dışında **yaklaşık her 10 dakikada bir** kaynağı kontrol etmeyi dener. GitHub zamanlanmış işler gecikebilir veya atlanabilir; süre garantisi vermeyin. Fingerprint değişince ana dala yalnız public revision commit'i yazar, hiçbir içeriği onaylamaz veya service role kullanmaz.
+- **Bağımsız yayın bekçisi:** `tractorvs-forum-live-visibility-watchdog.yml` yaklaşık yarım saatte bir Supabase'in anonim görünür bütün konuları, yanıtları ve onaylanmış fotoğraflarıyla gerçek forum listesi, konu HTML'si, canonical/robots ve forum sitemap'ini karşılaştırır. Kısa konular canlıda okunabilmeli ama `seo_ready` değilse sitemap'e girmemelidir. Yeni gönderilere 45 dakikalık dağıtım toleransı tanır. Hatalı veya silinmiş/gizlenmiş sayfa sitemap'te kalırsa hata üretir ve tek bir açık GitHub sorunu oluşturur.
+- **Kontrollü kurtarma:** Doğrulanmış canlı yayın uyumsuzluğu varsa yeni bir Cloudflare derlemesi isteyebilir; iki saatten kısa aralıkla tekrar etmez ve 24 saat içinde en fazla iki deneme yapar. Ağ/Supabase denetimi başarısız olduğunda doğrulanmamış veriyi yayımlamaz. Hata kalırsa GitHub issue açık kalır.
+- **SEO ve gerçek teslim:** Başarılı CI, GitHub commit veya Supabase 'published' statüsü tek başına yeterli değildir. Canlı HTML 200, doğru canonical, indexleme yönergesi, bağlantılı forum hub ve sitemap gözlenmeden kullanıcıya 'site yayını tamam' demeyin. Google'da indekslenme ayrıca Google'a bağlıdır.
 
 ## Yeni moderatör prosedürü
 - Metin yayınları doğrudandır; moderatör gerektiğinde sonradan gizler. Yayına alma öncesi onay yalnız fotoğraflar için zorunludur.
@@ -34,4 +38,13 @@ Supabase Dashboard > Authentication > URL Configuration sayfasında **Site URL**
 - Supabase `authenticated` için kısıtlı `INSERT` mevcut; `anon` yazma yok; kullanıcılar statüyü güncelleyemez.
 - Önceki sürümde gerçek kullanıcı JWT bağlamında bir *pending* gönderinin `BEGIN … ROLLBACK` içinde kaydedilebildiği test edildi; işlem geri alındı, hiçbir test konusu canlıya taşınmadı.
 - RLS `UPDATE` için kullanıcı politikası yok. Yeni sürümde doğrulanmış üyelerin yazılı içerikleri `INSERT` sırasında doğrudan yayımlanabilir; fotoğraf onayı ayrı kalır.
-- Forumun mevcut tek sahte Gemini demo konusunun durumu `hidden`, gerçek yayımlanmış konu ve yanıt sayısı **0**.
+- Yapay Gemini deneme konusu `hidden` tutulur. 21 Kasım 2026'da gerçek ilk araştırma konusu yayımlandı ve canlı site/sitemap üzerinden doğrulandı. Güncel konu sayısı her görevde yeniden sorgulanmalıdır.
+
+
+## Forum yayın aksaklığı kurtarma adımları (21 Kasım 2026)
+
+1. Önce Supabase `tc_forum_localized_topics` anonim görünümünde gerçek gönderinin durumunu, `seo_ready` alanını, slug'ını ve saatini **salt okunur** olarak doğrulayın. Özel e-posta veya üye bilgilerini raporlamayın.
+2. Gerçek `https://tractorvs.com/<dil>/forum/<slug>/` sayfasını, ilgili dil forum listesini ve `/forum-sitemap.xml` dosyasını kontrol edin. Boş forum ana sayfası, DB kaydının kayıp olduğunu tek başına göstermez.
+3. Eşitleme işini GitHub Actions → **TractorVS published forum static content refresh** üzerinden `workflow_dispatch` ve `dry_run=false` ile güvenli biçimde başlatın. Bu yalnız anonim kamu verisini okur; içeriği manuel olarak yayımlamaz.
+4. GitHub Actions derlemesi ve **Workers Builds: tractorvs-site** sonucunu ayrı kontrol edin. Üretim Cloudflare dağıtımı tamamlanmadan 'canlıda' demeyin. 45 dakikayı aşan görünmezlik için watchdog sorunu ve sınırlı kurtarma bilgisine bakın.
+5. Güvenlik/SEO önceliği: Gizli/retli kayıtları açmayın, RLS'yi kapatmayın, sahte konular üretmeyin, Google indeksini garanti etmeyin. Otomatik kurtarma günlük limitine ulaşırsa önce yapılandırma hatasını düzeltin.

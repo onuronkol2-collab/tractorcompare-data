@@ -7,7 +7,8 @@ type Copy={
  email:string;sendLink:string;otp:string;verify:string;login:string;logout:string;
  sendError:string;codeError:string;postError:string;limitError:string;retryLater:string;draftRestored:string;
  myPosts:string;statePending:string;statePublished:string;stateRejected:string;stateHidden:string;noPosts:string;historyError:string;
- sent:string;pending:string;authRequired:string;signinNote:string;guidelines:string;
+ sent:string;pending:string;authRequired:string;signinNote:string;
+ publicationCheck:string;publicationChecking:string;publicationWaiting:string;publicationLive:string;publicationOpen:string;guidelines:string;
  questions:string;maintenance:string;reviews:string;news:string;comparison:string;general:string;
  noResults:string;back:string;loading:string;translated:string;help:string;
 };
@@ -26,6 +27,7 @@ export const FORUM_TEXT:Record<Locale,Copy>={
  submit:"Create topic",submitReply:"Post reply",reply:"Write a helpful reply",replies:"Replies",
  email:"Your email address",sendLink:"Send sign-in email",otp:"Email verification code (if supplied)",verify:"Verify code",login:"Sign in to post",logout:"Sign out",
  sent:"Email sent. Open its sign-in link or enter the code if your message contains one.",pending:"Your post was published in the community database. It will appear on site pages after the next update; photos are reviewed separately.",
+ publicationCheck:"Check the public page",publicationChecking:"Checking the live website…",publicationWaiting:"Your post is saved, but the public page has not appeared yet. The site refresh runs automatically.",publicationLive:"The topic page is now accessible to everyone.",publicationOpen:"Open the topic",
  authRequired:"Please sign in using your email before submitting.",signinNote:"Email sign-in depends on your mail provider and allowed redirect settings.",
  guidelines:"Share original experiences. No advertising, personal contact details, unsupported safety claims or copied specifications.",
  questions:"Questions",maintenance:"Maintenance & repairs",reviews:"Owner experiences",news:"Industry news",comparison:"Comparisons",general:"General",
@@ -45,6 +47,7 @@ export const FORUM_TEXT:Record<Locale,Copy>={
  submit:"Konu aç",submitReply:"Yanıt gönder",reply:"Faydalı bir yanıt yaz",replies:"Yanıtlar",
  email:"E-posta adresin",sendLink:"Giriş bağlantısı gönder",otp:"E-postadaki doğrulama kodu (varsa)",verify:"Kodu doğrula",login:"Yazmak için giriş yap",logout:"Çıkış yap",
  sent:"E-posta gönderildi. Giriş bağlantısına tıkla veya e-postada kod varsa gir.",pending:"Gönderin yayımlandı. Konu veya yanıtın site sayfalarında görünmesi sonraki güncellemeyi gerektirir; fotoğraflar ayrıca incelenir.",
+ publicationCheck:"Canlı konu sayfasını kontrol et",publicationChecking:"Canlı site kontrol ediliyor…",publicationWaiting:"Konu kaydedildi ancak herkese açık sayfa henüz oluşmadı. Site otomatik güncellenir; yeniden gönderme.",publicationLive:"Konu sayfası artık herkese açık ve görüntülenebiliyor.",publicationOpen:"Konuyu aç",
  authRequired:"Göndermeden önce e-posta ile giriş yapmalısın.",signinNote:"E-posta girişi için sağlayıcı ve izin verilen yönlendirme adresleri doğru ayarlanmalıdır.",
  guidelines:"Özgün deneyimlerini paylaş. Reklam, kişisel iletişim bilgileri, kanıtsız güvenlik iddiaları ve kopya teknik tablolar gönderme.",
  questions:"Sorular",maintenance:"Bakım ve arızalar",reviews:"Kullanıcı deneyimleri",news:"Sektör haberleri",comparison:"Karşılaştırmalar",general:"Genel",
@@ -62,6 +65,7 @@ export const FORUM_TEXT:Record<Locale,Copy>={
  consent:"我自愿同意使用人工智能将帖子翻译成其他语言；不同意也可以参与。",submit:"发布话题",submitReply:"发布回复",reply:"撰写有帮助的回复",replies:"回复",
  email:"电子邮箱",sendLink:"发送登录邮件",otp:"邮件验证码（如有）",verify:"验证代码",login:"登录后发帖",logout:"退出登录",
  sent:"邮件已发送。请点击登录链接，或输入邮件中的验证码。",pending:"帖子已发布到社区数据库，网站将在下次更新后显示；照片仍需单独审核。",
+ publicationCheck:"检查公开页面",publicationChecking:"正在检查网站…",publicationWaiting:"帖子已保存，但公开页面尚未生成。网站会自动更新，请勿重复发布。",publicationLive:"主题现已公开可访问。",publicationOpen:"打开主题",
  authRequired:"请先使用邮箱登录。",signinNote:"邮箱登录需要正确的邮件服务与回调网址设置。",
  guidelines:"分享真实经验，不发布广告、个人联系方式、未经证实的安全建议或复制的技术资料。",
  questions:"问题",maintenance:"保养与维修",reviews:"车主经验",news:"行业新闻",comparison:"机型比较",general:"综合讨论",
@@ -79,6 +83,7 @@ export const FORUM_TEXT:Record<Locale,Copy>={
  consent:"मैं अपनी पोस्ट का अन्य भाषाओं में वैकल्पिक AI अनुवाद स्वीकार करता/करती हूँ। भाग लेने के लिए यह ज़रूरी नहीं है।",submit:"विषय प्रकाशित करें",submitReply:"उत्तर प्रकाशित करें",reply:"उपयोगी उत्तर लिखें",replies:"उत्तर",
  email:"ईमेल पता",sendLink:"लॉगिन ईमेल भेजें",otp:"ईमेल सत्यापन कोड (यदि मिला हो)",verify:"कोड सत्यापित करें",login:"पोस्ट करने के लिए लॉगिन करें",logout:"लॉग आउट",
  sent:"ईमेल भेज दिया गया। लॉगिन लिंक खोलें या संदेश में मिला कोड भरें।",pending:"पोस्ट समुदाय में प्रकाशित हो गई है। अगली साइट अपडेट के बाद दिखाई देगी; फ़ोटो की अलग समीक्षा होगी।",
+ publicationCheck:"सार्वजनिक पेज जाँचें",publicationChecking:"लाइव वेबसाइट जाँची जा रही है…",publicationWaiting:"पोस्ट सहेजी गई है, लेकिन सार्वजनिक पेज अभी तैयार नहीं है। साइट स्वतः अपडेट होगी; फिर से पोस्ट न करें।",publicationLive:"विषय पेज अब सार्वजनिक रूप से उपलब्ध है।",publicationOpen:"विषय खोलें",
  authRequired:"भेजने से पहले ईमेल से लॉगिन करें।",signinNote:"ईमेल लॉगिन के लिए मेल सेवा और अनुमत रीडायरेक्ट सेटिंग सही होनी चाहिए।",
  guidelines:"अपने वास्तविक अनुभव साझा करें। विज्ञापन, निजी संपर्क जानकारी, बिना प्रमाण की सुरक्षा सलाह या कॉपी किए गए विनिर्देश न डालें।",
  questions:"सवाल",maintenance:"रखरखाव और मरम्मत",reviews:"मालिकों के अनुभव",news:"उद्योग समाचार",comparison:"तुलना",general:"सामान्य चर्चा",
@@ -97,6 +102,7 @@ export const FORUM_TEXT:Record<Locale,Copy>={
  submit:"Criar tópico",submitReply:"Publicar resposta",reply:"Escreva uma resposta útil",replies:"Respostas",
  email:"Seu e-mail",sendLink:"Enviar link de acesso",otp:"Código recebido por e-mail (se houver)",verify:"Validar código",login:"Entre para publicar",logout:"Sair",
  sent:"E-mail enviado. Abra o link de acesso ou digite o código recebido.",pending:"Publicação registrada. Ela aparecerá no site após a próxima atualização; fotos passam por revisão separada.",
+ publicationCheck:"Verificar página pública",publicationChecking:"Verificando o site…",publicationWaiting:"Publicação salva, mas a página pública ainda não está pronta. O site será atualizado automaticamente; não publique novamente.",publicationLive:"A página do tópico já está acessível a todos.",publicationOpen:"Abrir tópico",
  authRequired:"Entre com seu e-mail antes de enviar.",signinNote:"O acesso por e-mail depende do provedor e dos redirecionamentos permitidos.",
  guidelines:"Compartilhe experiências reais. Não publique publicidade, contatos pessoais, recomendações de segurança sem provas nem tabelas copiadas.",
  questions:"Perguntas",maintenance:"Manutenção e consertos",reviews:"Experiências de proprietários",news:"Notícias do setor",comparison:"Comparações",general:"Geral",
@@ -115,6 +121,7 @@ export const FORUM_TEXT:Record<Locale,Copy>={
  submit:"Créer le sujet",submitReply:"Publier la réponse",reply:"Rédiger une réponse utile",replies:"Réponses",
  email:"Adresse e-mail",sendLink:"Envoyer un lien de connexion",otp:"Code reçu par e-mail (si fourni)",verify:"Vérifier le code",login:"Se connecter pour publier",logout:"Se déconnecter",
  sent:"E-mail envoyé. Ouvrez le lien ou saisissez le code reçu.",pending:"Publication enregistrée. Elle apparaîtra sur le site après sa prochaine mise à jour ; les photos sont examinées séparément.",
+ publicationCheck:"Vérifier la page publique",publicationChecking:"Vérification du site…",publicationWaiting:"Le texte est enregistré, mais la page publique n'est pas encore disponible. Le site sera mis à jour automatiquement ; ne republiez pas.",publicationLive:"La page du sujet est maintenant accessible à tous.",publicationOpen:"Ouvrir le sujet",
  authRequired:"Connectez-vous par e-mail avant d'envoyer.",signinNote:"La connexion par e-mail nécessite un fournisseur et des redirections autorisées.",
  guidelines:"Partagez des expériences authentiques. Pas de publicité, de coordonnées personnelles, de conseils de sécurité non étayés ni de fiches copiées.",
  questions:"Questions",maintenance:"Entretien et réparations",reviews:"Avis des propriétaires",news:"Actualités du secteur",comparison:"Comparaisons",general:"Général",
@@ -133,6 +140,7 @@ export const FORUM_TEXT:Record<Locale,Copy>={
  submit:"Thema veröffentlichen",submitReply:"Antwort veröffentlichen",reply:"Hilfreiche Antwort schreiben",replies:"Antworten",
  email:"E-Mail-Adresse",sendLink:"Anmeldelink senden",otp:"E-Mail-Code (falls vorhanden)",verify:"Code prüfen",login:"Zum Schreiben anmelden",logout:"Abmelden",
  sent:"E-Mail gesendet. Öffnen Sie den Anmeldelink oder geben Sie den Code ein.",pending:"Beitrag veröffentlicht. Er erscheint nach der nächsten Website-Aktualisierung; Fotos werden gesondert geprüft.",
+ publicationCheck:"Öffentliche Seite prüfen",publicationChecking:"Live-Website wird geprüft…",publicationWaiting:"Beitrag gespeichert, aber die öffentliche Seite ist noch nicht bereit. Die Website wird automatisch aktualisiert; nicht erneut senden.",publicationLive:"Die Themenseite ist jetzt öffentlich erreichbar.",publicationOpen:"Thema öffnen",
  authRequired:"Bitte melden Sie sich zuerst per E-Mail an.",signinNote:"E-Mail-Anmeldung setzt einen korrekt konfigurierten Anbieter und erlaubte Weiterleitungen voraus.",
  guidelines:"Nur echte Erfahrungen. Keine Werbung, privaten Kontaktdaten, unbelegten Sicherheitstipps oder kopierten Datenblätter.",
  questions:"Fragen",maintenance:"Wartung und Reparatur",reviews:"Erfahrungsberichte",news:"Branchenmeldungen",comparison:"Vergleiche",general:"Allgemein",
@@ -151,6 +159,7 @@ export const FORUM_TEXT:Record<Locale,Copy>={
  submit:"Создать тему",submitReply:"Опубликовать ответ",reply:"Написать полезный ответ",replies:"Ответы",
  email:"Электронная почта",sendLink:"Отправить ссылку для входа",otp:"Код из письма (если есть)",verify:"Проверить код",login:"Войти для публикации",logout:"Выйти",
  sent:"Письмо отправлено. Перейдите по ссылке или введите код из письма.",pending:"Сообщение опубликовано. На сайте оно появится после следующего обновления; фото проверяются отдельно.",
+ publicationCheck:"Проверить публичную страницу",publicationChecking:"Проверяем сайт…",publicationWaiting:"Публикация сохранена, но публичная страница ещё не появилась. Сайт обновляется автоматически; не отправляйте пост повторно.",publicationLive:"Страница темы теперь доступна всем.",publicationOpen:"Открыть тему",
  authRequired:"Для отправки войдите через электронную почту.",signinNote:"Для входа нужны настроенная почта и разрешённые адреса перенаправления.",
  guidelines:"Делитесь реальным опытом. Без рекламы, личных контактов, непроверенных советов по безопасности и скопированных таблиц.",
  questions:"Вопросы",maintenance:"Обслуживание и ремонт",reviews:"Опыт владельцев",news:"Новости отрасли",comparison:"Сравнения",general:"Общие темы",
@@ -169,6 +178,7 @@ export const FORUM_TEXT:Record<Locale,Copy>={
  submit:"トピックを公開",submitReply:"返信を投稿",reply:"役立つ返信を書く",replies:"返信",
  email:"メールアドレス",sendLink:"ログインメールを送信",otp:"メールの確認コード（ある場合）",verify:"コードを確認",login:"投稿するにはログイン",logout:"ログアウト",
  sent:"メールを送信しました。ログインリンクを開くか、記載されたコードを入力してください。",pending:"投稿を公開しました。サイトの次回更新後に表示されます。写真は別途審査されます。",
+ publicationCheck:"公開ページを確認",publicationChecking:"公開サイトを確認中…",publicationWaiting:"投稿は保存されましたが、公開ページはまだありません。サイトは自動更新されます。再投稿しないでください。",publicationLive:"トピックページが公開されました。",publicationOpen:"トピックを開く",
  authRequired:"先にメールでログインしてください。",signinNote:"メールログインには、メール設定と許可されたリダイレクト先の設定が必要です。",
  guidelines:"実際の経験を共有してください。広告、個人の連絡先、根拠のない安全助言、コピーした仕様表は投稿しないでください。",
  questions:"質問",maintenance:"整備と修理",reviews:"オーナー体験談",news:"業界ニュース",comparison:"比較",general:"全般",
@@ -187,6 +197,7 @@ export const FORUM_TEXT:Record<Locale,Copy>={
  submit:"Crear tema",submitReply:"Publicar respuesta",reply:"Escribe una respuesta útil",replies:"Respuestas",
  email:"Correo electrónico",sendLink:"Enviar enlace de acceso",otp:"Código de correo (si se recibió)",verify:"Verificar código",login:"Inicia sesión para publicar",logout:"Cerrar sesión",
  sent:"Correo enviado. Abre el enlace o introduce el código recibido.",pending:"Publicación registrada. Aparecerá en el sitio tras la próxima actualización; las fotos se revisan por separado.",
+ publicationCheck:"Comprobar página pública",publicationChecking:"Comprobando el sitio…",publicationWaiting:"La publicación está guardada, pero la página pública aún no aparece. El sitio se actualizará automáticamente; no la publiques otra vez.",publicationLive:"La página del tema ya es pública.",publicationOpen:"Abrir tema",
  authRequired:"Inicia sesión con tu correo antes de enviar.",signinNote:"El acceso por correo requiere configurar el proveedor y las URL de redirección permitidas.",
  guidelines:"Comparte experiencias reales. Sin publicidad, datos de contacto personales, consejos de seguridad sin fundamento ni fichas técnicas copiadas.",
  questions:"Preguntas",maintenance:"Mantenimiento y averías",reviews:"Experiencias de propietarios",news:"Noticias del sector",comparison:"Comparativas",general:"General",

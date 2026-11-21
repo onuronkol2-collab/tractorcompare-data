@@ -1,0 +1,96 @@
+name: TractorVS live forum publication watchdog
+
+on:
+  # Schedules are best-effort. This independent watchdog detects failed sync,
+  # Cloudflare delivery, missing sitemap entries and hidden-post leakage.
+  schedule:
+    - cron: "19,49 * * * *"
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/tractorvs-forum-live-visibility-watchdog.yml"
+      - "scripts/tractor-forum-live-visibility-audit.mjs"
+      - "scripts/tractor-forum-recover-stale-deployment.mjs"
+  pull_request:
+    paths:
+      - "scripts/tractor-forum-live-visibility-audit.mjs"
+      - "scripts/tractor-forum-live-visibility-audit.test.mjs"
+      - "scripts/tractor-forum-recover-stale-deployment.mjs"
+      - "scripts/tractor-forum-recover-stale-deployment.test.mjs"
+      - ".github/workflows/tractorvs-forum-live-visibility-watchdog.yml"
+
+concurrency:
+  group: tractorvs-forum-live-watchdog
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22.23.4"
+      - name: Prove missing and removed forum content is detected
+        run: node --test scripts/tractor-forum-live-visibility-audit.test.mjs scripts/tractor-forum-recover-stale-deployment.test.mjs
+
+  live:
+    if: github.event_name != 'pull_request' && github.repository == 'onuronkol2-collab/tractorcompare-data' && github.ref == 'refs/heads/main'
+    needs: tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 7
+    permissions:
+      contents: write
+      issues: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22.23.4"
+      - name: Compare public Supabase rows with deployed HTML, forum hub and sitemap
+        id: verify
+        continue-on-error: true
+        env:
+          TRACTORVS_SUPABASE_ANON_JWT: ${{ secrets.TRACTORVS_SUPABASE_ANON_JWT }}
+        run: node scripts/tractor-forum-live-visibility-audit.mjs
+      - name: Request at most two bounded recovery builds per day for proven drift
+        if: steps.verify.outcome == 'failure' && steps.verify.outputs.audited == 'true'
+        continue-on-error: true
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: node scripts/tractor-forum-recover-stale-deployment.mjs
+      - name: Open one persistent issue when publication is stale
+        if: steps.verify.outcome == 'failure'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          ACTION_URL: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          set -euo pipefail
+          TITLE="[ForumDelivery] Live forum publishing is behind public database"
+          EXISTING=$(gh issue list --state open --limit 100 --json number,title --jq ".[] | select(.title == \"$TITLE\") | .number" | head -n 1)
+          if [ -z "$EXISTING" ]; then
+            gh issue create --title "$TITLE" --body "Forum publication watchdog detected a failure. Read-only audit: $ACTION_URL. Verify public topics, sitemap and Cloudflare Builds; rerun the anon-only sync. Do not bypass RLS or publish private posts."
+          fi
+      - name: Close watchdog issue after confirmed recovery
+        if: steps.verify.outcome == 'success'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          set -euo pipefail
+          TITLE="[ForumDelivery] Live forum publishing is behind public database"
+          EXISTING=$(gh issue list --state open --limit 100 --json number,title --jq ".[] | select(.title == \"$TITLE\") | .number" | head -n 1)
+          if [ -n "$EXISTING" ]; then
+            gh issue close "$EXISTING" --comment "Public forum pages, canonicals and sitemap passed the read-only visibility audit."
+          fi
+      - name: Fail visibly when live validation failed
+        if: steps.verify.outcome == 'failure'
+        run: |
+          echo "::error::Forum database/public website divergence detected. Review the persistent issue."
+          exit 1

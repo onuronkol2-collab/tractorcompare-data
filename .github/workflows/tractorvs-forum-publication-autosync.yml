@@ -1,9 +1,11 @@
-name: TractorVS moderated forum static content refresh
+name: TractorVS published forum static content refresh
 # Read only actual approved public posts from RLS-protected Supabase views.
 # Never read pending posts, service-role credentials or private user data.
 on:
+  # GitHub schedules are best effort and can be delayed; avoid hour boundaries.
+  # Recheck public RLS views every ten minutes (cheap when unchanged).
   schedule:
-    - cron: "12,42 * * * *"
+    - cron: "7,17,27,37,47,57 * * * *"
   push:
     branches: [main]
     paths:
@@ -21,7 +23,7 @@ on:
         required: true
         default: true
 concurrency:
-  group: tractorvs-moderated-forum-revision
+  group: tractorvs-published-forum-revision
   cancel-in-progress: false
 permissions:
   contents: read
