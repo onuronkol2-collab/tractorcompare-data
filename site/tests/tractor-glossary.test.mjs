@@ -77,8 +77,10 @@ test("glossary is discoverable on public model specification and global footer",
  assert.match(detail,/glossaryAnchorForKey\(spec\.canonical_key\)/);
  assert.match(detail,/class="model-spec-glossary-link"/);
  assert.match(detail,/model-spec-glossary-banner/);
- assert.match(layout,/Traktör parçaları ve teknik terimler/);
- assert.match(layout,/Tractor parts & technical terms/);
+ assert.match(layout,/href=\{glossaryPath\}/);
+ assert.match(layout,/t\(lang,"navTechnicalTerms"\)/);
+ assert.match(readFileSync(new URL("../src/lib/ui.ts",import.meta.url),"utf8"),/Traktör parçaları ve teknik terimler/);
+ assert.match(readFileSync(new URL("../src/lib/ui.ts",import.meta.url),"utf8"),/Tractor parts & technical terms/);
  assert.match(component,/https:\/\/www\.oecd\.org\/en\/topics\/tractors\.html/);
  assert.match(component,/https:\/\/tractortestlab\.unl\.edu\//);
 });
