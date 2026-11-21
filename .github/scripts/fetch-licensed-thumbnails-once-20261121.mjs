@@ -11,8 +11,6 @@ const records=[
     artist:"Ivan2010",license:"CC BY-SA 4.0",width:2654,height:1880},
   {filename:"Belarus_892.2,_2025_Dunapataj.jpg",id:"belarus-892-2-globetrotter19-2025",
     artist:"Globetrotter19",license:"CC BY-SA 4.0",width:2592,height:1944},
-  {filename:"Алматы,_Беларус-922.3_на_Кулымбетова-Бруно_(1).jpg",id:"belarus-922-3-bulykin-almaty-2026",
-    artist:"Nikolai Bulykin",license:"CC BY-SA 4.0",width:5077,height:3385},
   {filename:"Belarus_952.jpg",id:"belarus-952-fraxinus-croat-2011",
     artist:"Fraxinus Croat",license:"CC BY-SA 3.0",width:2048,height:1536},
 ];
