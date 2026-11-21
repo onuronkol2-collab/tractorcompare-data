@@ -28,7 +28,7 @@ const groups = groupSpecifications(tractor.specifications,lang);
 const manufacturerDiscrepancies = [...new Set(tractor.specifications.map((spec) => verificationNotice(spec, lang)).filter((note): note is string => Boolean(note)))];
 const listingUrl = localizedPath(lang,"/tractors/");
 const compareUrl = localizedPath(lang,"/compare/") + "?left=" + encodeURIComponent(tractor.tractor_id);
-const { title, description } = modelSeoMetadata(tractor, lang);
+const { title, description, searchDescription } = modelSeoMetadata(tractor, lang);
 const originalNote = originalVariantNote(tractor);
 const answerItems=(lang==="tr"||lang==="en")?modelEvidenceAnswers(tractor,lang):[];
 const cover=primaryTractorPhoto(tractor);
@@ -45,7 +45,7 @@ const summaryItems = [
   {key:"weight",label:t(lang,"weight"),value:tractor.weight_kg!=null?tractor.weight_kg+" kg":null},
 ].filter((item)=>item.value);
 ---
-<SiteLayout lang={lang} title={title} description={description} structuredData={structuredData} ogImage={cover && Astro.site ? new URL(cover.displayUrl,Astro.site).toString() : null}>
+<SiteLayout lang={lang} title={title} description={searchDescription} structuredData={structuredData} ogImage={cover && Astro.site ? new URL(cover.displayUrl,Astro.site).toString() : null}>
   <section class="model-hero"><div class="container">
     <a class="catalog-breadcrumb" href={listingUrl}>← {t(lang,"allTractors")}</a>
     <p class="eyebrow"><span class="eyebrow-mark"></span>{t(lang,"modelEyebrow")}</p>
