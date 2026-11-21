@@ -116,7 +116,7 @@ test("Clarity project ID and ConsentV2 are gated by renewed, explicit analytics 
   assert.match(banner,/analytics_Storage:\s*"granted"/);
   assert.match(banner,/consentv2/);
   assert.match(banner,/loadClarityOnlyAfterConsent\(\);/);
-  assert.match(banner,/tractorvs_analytics_choice_v1"\) === "rejected"/);
+  assert.match(banner,/return legacyChoice === "rejected" \? "rejected" : null/);
   assert.match(banner,/clarityWindow\.clarity\?\.\("consent", false\)/);
   assert.doesNotMatch(layout,/clarity\.ms\/tag/);
   assert.match(privacy,/copy\.clarityCollect/);
