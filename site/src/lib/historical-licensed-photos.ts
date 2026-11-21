@@ -519,6 +519,49 @@ const candidates=[
     "width": 6918,
     "height": 3893
   },
+  // 21 November 2026: exact published-model Commons photographs;
+  // static 500px thumbnail content is produced only after the one-time
+  // Wikimedia licence/artist/dimensions download gate has succeeded.
+  {
+    "brand": "Belarus",
+    "model": "892",
+    "fileId": "belarus-892-ivan2010-2013",
+    "path": "a/a7/Tractor_arando_la_tierra_para_cultivo.jpg",
+    "photographer": "Ivan2010",
+    "license": "CC BY-SA 4.0",
+    "width": 2654,
+    "height": 1880
+  },
+  {
+    "brand": "Belarus",
+    "model": "892.2",
+    "fileId": "belarus-892-2-globetrotter19-2025",
+    "path": "c/c6/Belarus_892.2%2C_2025_Dunapataj.jpg",
+    "photographer": "Globetrotter19",
+    "license": "CC BY-SA 4.0",
+    "width": 2592,
+    "height": 1944
+  },
+  {
+    "brand": "Belarus",
+    "model": "922.3",
+    "fileId": "belarus-922-3-bulykin-almaty-2026",
+    "path": "9/94/%D0%90%D0%BB%D0%BC%D0%B0%D1%82%D1%8B%2C_%D0%91%D0%B5%D0%BB%D0%B0%D1%80%D1%83%D1%81-922.3_%D0%BD%D0%B0_%D0%9A%D1%83%D0%BB%D1%8B%D0%BC%D0%B1%D0%B5%D1%82%D0%BE%D0%B2%D0%B0-%D0%91%D1%80%D1%83%D0%BD%D0%BE_%281%29.jpg",
+    "photographer": "Nikolai Bulykin",
+    "license": "CC BY-SA 4.0",
+    "width": 5077,
+    "height": 3385
+  },
+  {
+    "brand": "Belarus",
+    "model": "952",
+    "fileId": "belarus-952-fraxinus-croat-2011",
+    "path": "b/b6/Belarus_952.jpg",
+    "photographer": "Fraxinus Croat",
+    "license": "CC BY-SA 3.0",
+    "width": 2048,
+    "height": 1536
+  },
 ] as const;
 function licenseUrl(name:string):string{
   if(name==="CC0")return "https://creativecommons.org/publicdomain/zero/1.0/";
