@@ -668,6 +668,28 @@ const candidates=[
     "width": 2592,
     "height": 1944
   },
+  // 2026-11-21: exact Commons source, artist, rights and real JPEG verified.
+  // Approval ledger: site/docs/steyr-photo-source-audit-20261121.json.
+  {
+    "brand": "Steyr",
+    "model": "4085 KOMPAKT",
+    "fileId": "steyr-4085-kompakt-ecotech-commons",
+    "path": "1/16/Steyr_4085_Kompakti_Ecotech.jpg",
+    "photographer": "JoachimKohler-HB",
+    "license": "CC BY-SA 4.0",
+    "width": 4000,
+    "height": 3200
+  },
+  {
+    "brand": "Steyr",
+    "model": "6340 TERRUS CVT",
+    "fileId": "steyr-6340-terrus-marcel-2023",
+    "path": "8/8c/Steyr_6340_Terrus_CVT_Agritechnica_2023_%28DSC04861%29.jpg",
+    "photographer": "MarcelX42",
+    "license": "CC BY-SA 4.0",
+    "width": 7008,
+    "height": 3944
+  },
 ] as const;
 function licenseUrl(name:string):string{
   if(name==="CC0")return "https://creativecommons.org/publicdomain/zero/1.0/";
