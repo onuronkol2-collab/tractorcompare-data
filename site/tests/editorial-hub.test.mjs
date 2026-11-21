@@ -61,6 +61,6 @@ test("production release fails closed if bilingual archives or sitemap entries d
  assert.match(gate,/Editorial hub not included in generated sitemap/);
  assert.match(gate,/Editorial hub has wrong canonical/);
  assert.match(gate,/Editorial hub cannot be noindex/);
- assert.match(audit,/\/"\/articles\/"/);
- assert.match(audit,/\/"\/tr\/articles\/"/);
+ assert.ok(audit.includes('"/articles/"'));
+ assert.ok(audit.includes('"/tr/articles/"'));
 });
