@@ -26,6 +26,15 @@ Supabase Dashboard > Authentication > URL Configuration sayfasında **Site URL**
 - **Kontrollü kurtarma:** Doğrulanmış canlı yayın uyumsuzluğu varsa yeni bir Cloudflare derlemesi isteyebilir; iki saatten kısa aralıkla tekrar etmez ve 24 saat içinde en fazla iki deneme yapar. Ağ/Supabase denetimi başarısız olduğunda doğrulanmamış veriyi yayımlamaz. Hata kalırsa GitHub issue açık kalır.
 - **SEO ve gerçek teslim:** Başarılı CI, GitHub commit veya Supabase 'published' statüsü tek başına yeterli değildir. Canlı HTML 200, doğru canonical, indexleme yönergesi, bağlantılı forum hub ve sitemap gözlenmeden kullanıcıya 'site yayını tamam' demeyin. Google'da indekslenme ayrıca Google'a bağlıdır.
 
+## İsteğe bağlı çok dilli forum çevirileri — işleme ve kalite güvenliği
+
+- Kullanıcının çeviri kutusu `translation_consent=true` tutar ve dokuz hedef dil için iş kuyruğu üretir; tek başına çeviri veya canlı yayın oluşturmaz.
+- Özel `tractor-forum-translate` Edge Function, `tractorvs-forum-translation.yml` tarafından zamanlanmış olarak çağrılır. Worker yalnız `published`, izinli ve değişmemiş kaynak sürümünü alır. Bir çalışmada en fazla 3 metin işi ele alınır; yeniden denemeler kontrollüdür.
+- Gemini'ye yazar e-postası, kimlik bilgisi, hesap profili veya onaysız fotoğraf verilmez. Metin, yalnız kullanıcının açık çeviri izni kapsamında işlenir.
+- Her sonuçta tarih, sayılar, firma adları, teknik birimler, araştırma metodolojisi, tablolar ve kaynak bağlantıları korunur; bağımsız model QA ikinci aşamadır. Herhangi bir hata `needs_review` olarak kaydedilir ve SEO/onay olmadan dil sayfasında görünmez.
+- Çeviri yayımlanmadan önce `tc_forum_topic_translations.state=ready` ve `seo_approved` uygun olmalı; veritabanı `tc_forum_localized_topics` view ile doğrulanmalı, ardından Cloudflare dil sayfası ve sitemap/robots/canonical gerçek canlı kontrolden geçmelidir.
+- Çeviri işi hata verirse tekrar yayınlamak yerine kuyruk, `attempts`, `last_error`, Edge Function ve GitHub Actions durumunu inceleyin. Başarısız/kısmi çeviriyi onaylıymış gibi sunmayın.
+
 ## Anında kamuya açık konu okuma — statik SEO koruması
 
 - Başarıyla kaydedilen **metin konuları** anon RLS görünümü üzerinden forumun canlı listesinde, kalıcı sayfa derlemesini beklemeden okunabilir. Tam metin ana sayfa üzerinde açılır; kalıcı konu URL'si yokken çalışmayacak bağlantı gösterilmez.
