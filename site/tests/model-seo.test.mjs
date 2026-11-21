@@ -325,3 +325,31 @@ test("unknown long variants and markets are not silently shortened as if they we
   const marketDifferent=modelSeoMetadata({...model,market:"India (separate regional release)"},"en");
   assert.notEqual(title,marketDifferent.title,"non-matching market must remain distinct");
 });
+
+test("model snippet remains concise while full source context stays visible in ten languages",()=>{
+ const locales=["en","tr","zh","hi","pt-br","fr","de","ru","ja","es"];
+ const longModel={...tractor,brand_name:"Antonio Carraro",model_name:"TONY 8700 V",
+  variant:"Europe Stage V / 8700 V model only / hybrid mechanical-hydrostatic; original technical catalogue note",
+  market:"Europe",model_year:2025};
+ for(const locale of locales){
+  const meta=modelSeoMetadata(longModel,locale);
+  assert.ok(meta.description.length>=meta.searchDescription.length);
+  assert.ok(meta.searchDescription.length<=160,locale+" snippet exceeds editorial cap");
+  assert.ok(meta.searchDescription.includes("Antonio Carraro TONY 8700 V"),locale);
+  assert.ok(meta.description.includes("original technical catalogue note") || locale!=="en");
+  assert.ok(!meta.searchDescription.endsWith("…")&&!meta.searchDescription.endsWith("..."));
+  assert.ok(!meta.searchDescription.includes("undefined"));
+ }
+ const detail=readFileSync(new URL("../src/components/TractorDetail.astro",import.meta.url),"utf8");
+ assert.match(detail,/description=\{searchDescription\}/);
+ assert.match(detail,/model-hero-description">\{description\}/);
+});
+
+test("concise snippet never invents horsepower when headline evidence conflicts",()=>{
+ const inconsistent={...tractor,horsepower:135};
+ for(const locale of ["en","tr","zh","hi","pt-br","fr","de","ru","ja","es"]){
+  const meta=modelSeoMetadata(inconsistent,locale);
+  assert.ok(!/135 HP/.test(meta.searchDescription),locale);
+  assert.ok(meta.searchDescription.length<=160,locale);
+ }
+});
