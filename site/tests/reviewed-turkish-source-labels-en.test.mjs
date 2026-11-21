@@ -32,6 +32,14 @@ test("measurement and technical qualifiers remain visible",()=>{
  assert.match(en("Opsiyonel öN PTO 1000 Motor Devri"),/Optional/i);
  assert.match(en("YaklaşıK Sevk AğıRlığı öN Aks SüSpansiyonlu"),/Approximate/i);
 });
+test("legacy English title-casing of Turkish i/I does not hide reviewed labels",()=>{
+ const raw=sourceSpec("Kabin iç hacmi");
+ const before=structuredClone(raw);
+ assert.equal(specLabel(raw,"en"),"Cab interior volume");
+ assert.deepEqual(raw,before);
+ const mixed=sourceSpec("Arka lastik ölçüsü");
+ assert.equal(specLabel(mixed,"en"),"Rear tyre size");
+});
 test("unknown manufacturer-specific source headings are not translated by guessing",()=>{
  const source=sourceSpec("Unknown OEM-specific phrase with unverified meaning");
  assert.equal(specLabel(source,"en"),"Unknown OEM-Specific Phrase With Unverified Meaning");
