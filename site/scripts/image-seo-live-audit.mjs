@@ -1,4 +1,5 @@
 // Credential-free check of TractorVS public Google Images prerequisites.
+import {imageLicenseMetadataIssues} from "./image-license-jsonld-check.mjs";
 const origin="https://tractorvs.com";
 const errors=[];
 function fail(message){errors.push(message);console.error("IMAGE_ERROR "+message)}
@@ -50,6 +51,26 @@ try{
  console.log("TRACTOR_IMAGE_DETAIL "+JSON.stringify({http:r.status,hasImage:html.includes("/images/tractors/"),imageObject:html.includes("ImageObject"),hasAttribution:html.includes("Homoatrox")}));
  if(r.status!==200||!html.includes("ImageObject")||!html.includes("Homoatrox"))
    fail("Belarus 82.1 model page missing photo, license or ImageObject");
+ const rights=imageLicenseMetadataIssues(html);
+ console.log("TRACTOR_IMAGE_RIGHTS "+JSON.stringify({sample:"Belarus 82.1",...rights}));
+ for(const issue of rights.issues)fail("Belarus 82.1 ImageObject "+issue);
 }catch(e){fail("Model detail "+String(e));}
+// Independently sample the two real Search Console warning examples:
+// a CC BY-SA photograph and a CC0 public-domain dedication. The metadata
+// must describe the same image-specific Commons file in each language.
+const rightsSamples=[
+ {path:"/zh/tractors/valtra-g135-1a85eb12/",label:"Valtra G135 (CC BY-SA 4.0)"},
+ {path:"/zh/tractors/valtra-f105-1f000c28/",label:"Valtra F105 (CC0)"},
+];
+for(const {path,label} of rightsSamples){
+ try{
+  const {r,bytes}=await get(origin+path);
+  const html=new TextDecoder().decode(bytes);
+  const rights=imageLicenseMetadataIssues(html);
+  console.log("TRACTOR_IMAGE_RIGHTS "+JSON.stringify({sample:label,http:r.status,...rights}));
+  if(r.status!==200)fail(label+" page HTTP "+r.status);
+  for(const issue of rights.issues)fail(label+" ImageObject "+issue);
+ }catch(e){fail(label+" metadata fetch "+String(e));}
+}
 console.log("TRACTOR_IMAGE_AUDIT_SUMMARY "+JSON.stringify({checked:checked.size,errors:errors.length}));
 if(errors.length)process.exitCode=1;
