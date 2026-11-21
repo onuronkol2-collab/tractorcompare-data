@@ -127,3 +127,18 @@ test("deep language SEO audit accepts fully reciprocal self-canonical ten-langua
     assert.deepEqual(JSON.parse(readFileSync(report,"utf8")).summary.fetchErrors,[]);
   }finally{rmSync(f.tmp,{recursive:true,force:true});}
 });
+
+test("English source language leakage is reported separately from cross-language fallback",()=>{
+ const f=fixture();
+ try{
+  const path=join(f.dist,"tractors/quality-sample/index.html");
+  writeFileSync(path,'<html><main><h4>ŞAnzıMan Tipi</h4></main></html>');
+  const {result,report}=audit(f,{TRANSLATION_MAX_EN_SOURCE_OCCURRENCES:"0"});
+  assert.notEqual(result.status,0);
+  assert.match(result.stderr,/TRANSLATION_AUDIT_ENGLISH_SOURCE_LEAKAGE/);
+  const content=JSON.parse(readFileSync(report,"utf8"));
+  assert.equal(content.summary.englishSourceOccurrences,1);
+  assert.equal(content.summary.englishSourceHeadings,1);
+  assert.equal(content.englishSourceLanguageLeakage[0].englishSourceLabel,"ŞAnzıMan Tipi");
+ }finally{rmSync(f.tmp,{recursive:true,force:true});}
+});

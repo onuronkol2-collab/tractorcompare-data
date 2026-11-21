@@ -125,6 +125,24 @@ for(const locale of locales.slice(1)){
   for(const slug of targetSlugs)if(!baseSlugs.has(slug))errors.push("Orphan localized model "+locale+" "+slug);
 }
 const english=byLocale.get("en");
+// English pages can inherit source Turkish terms and bypass an English-based
+// cross-locale fallback comparison. Report separately, with exact slug evidence.
+const sourceLanguageLeakage=new Map();
+for(const [slug] of english.entries()){
+  for(const label of rows.get("en|"+slug)||[]){
+    if(!/[ÇĞİÖŞÜçğıöşü]/u.test(label))continue;
+    const item=sourceLanguageLeakage.get(label)||{englishSourceLabel:label,count:0,slugs:[]};
+    item.count++;
+    if(item.slugs.length<3)item.slugs.push(slug);
+    sourceLanguageLeakage.set(label,item);
+  }
+}
+const englishLeakage=[...sourceLanguageLeakage.values()].sort((a,b)=>b.count-a.count||a.englishSourceLabel.localeCompare(b.englishSourceLabel));
+console.log("ENGLISH_SOURCE_LANGUAGE_LEAKAGE "+JSON.stringify({
+  distinctHeadings:englishLeakage.length,
+  occurrences:englishLeakage.reduce((n,x)=>n+x.count,0),
+  top:englishLeakage.slice(0,120)
+}));
 for(const [slug] of english.entries()){
   const enLabels=rows.get("en|"+slug)||[];
   for(const locale of locales.slice(1)){
@@ -152,18 +170,28 @@ for(const locale of locales.slice(1)){
 const missingHeadingCounts=Object.fromEntries(locales.slice(1).map(l=>[l,suspects.filter(x=>x.locale===l).length]));
 const occurrenceCounts=Object.fromEntries(locales.slice(1).map(l=>[l,suspects.filter(x=>x.locale===l).reduce((sum,x)=>sum+x.count,0)]));
 const modelCounts=Object.fromEntries(locales.map(l=>[l,byLocale.get(l).size]));
-const summary={mode:DIST?"built_preview":"public_live",publishedURLs:urls.length,modelCounts,missingHeadingCounts,occurrenceCounts,seoMetadataChecked:verifyMetadata,fetchErrors:errors};
+const summary={mode:DIST?"built_preview":"public_live",publishedURLs:urls.length,modelCounts,missingHeadingCounts,occurrenceCounts,englishSourceHeadings:englishLeakage.length,englishSourceOccurrences:englishLeakage.reduce((n,x)=>n+x.count,0),seoMetadataChecked:verifyMetadata,fetchErrors:errors};
 console.log("LANGUAGE_AUDIT_SUMMARY "+JSON.stringify(summary));
 // A reusable public-label quality report, never a claim that crawling/SEO ranking is assured.
 if(process.env.TRANSLATION_REPORT_PATH?.trim()){
   const filename=resolve(process.env.TRANSLATION_REPORT_PATH.trim());
   mkdirSync(dirname(filename),{recursive:true});
-  writeFileSync(filename,JSON.stringify({summary,remaining:suspects},null,2)+"\n");
+  writeFileSync(filename,JSON.stringify({summary,remaining:suspects,englishSourceLanguageLeakage:englishLeakage},null,2)+"\n");
 }
 const minModels=Number(process.env.TRANSLATION_MIN_MODELS||"0");
 if(minModels>0&&locales.some(l=>modelCounts[l]<minModels)){
   console.error("TRANSLATION_AUDIT_FAIL_TOO_FEW_MODELS "+JSON.stringify({minModels,modelCounts}));
   process.exitCode=1;
+}
+if(process.env.TRANSLATION_MAX_EN_SOURCE_OCCURRENCES!==undefined){
+  const limit=Number(process.env.TRANSLATION_MAX_EN_SOURCE_OCCURRENCES);
+  if(!Number.isInteger(limit)||limit<0)throw Error("Invalid English source leakage threshold");
+  if(summary.englishSourceOccurrences>limit){
+    console.error("TRANSLATION_AUDIT_ENGLISH_SOURCE_LEAKAGE "+JSON.stringify({
+      expectedMax:limit,actual:summary.englishSourceOccurrences
+    }));
+    process.exitCode=1;
+  }
 }
 if(process.env.TRANSLATION_MAX_TR_OCCURRENCES!==undefined){
   const limit=Number(process.env.TRANSLATION_MAX_TR_OCCURRENCES);
