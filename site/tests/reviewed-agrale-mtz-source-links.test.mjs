@@ -29,9 +29,13 @@ test("Agrale 525 and 575 Super show only their two reviewed, exact manufacturer 
     assert.equal(officialManufacturerSourceUrl({...entry,source_url:url+"?tracking=1"},"Agrale"),null);
     assert.equal(officialManufacturerSourceUrl({...entry,source_url:url.replace("pdf.agrale.com.br","pdf.agrale.com.br.evil.example")},"Agrale"),null);
   }
-  // Source page could not be independently inspected during this review;
-  // do not enlarge the host allowlist or approve the unrelated 4125 path.
-  assert.equal(officialManufacturerSourceUrl(src(agrale4125),"Agrale"),null);
+  // Agrale itself publishes an exact 4125 sheet (YD390T 25 cv,
+  // NBR ISO 1585; 7 forward/3 reverse). Do not conflate it with 4125 Cargo.
+  assert.equal(officialManufacturerSourceUrl(src(agrale4125),"Agrale"),agrale4125);
+  assert.equal(officialManufacturerSourceUrl(src(agrale4125),"Other brand"),null);
+  assert.equal(officialManufacturerSourceUrl(src(agrale4125.replace("/330/","/999/")),"Agrale"),null);
+  assert.equal(officialManufacturerSourceUrl({...src(agrale4125),verified_at:null},"Agrale"),null);
+  assert.equal(officialManufacturerSourceUrl({...src(agrale4125),evidence_text:""},"Agrale"),null);
 });
 
 test("Belarus 920 and 920.2 cite distributor-hosted original MTZ manual as third-party, never manufacturer",()=>{
