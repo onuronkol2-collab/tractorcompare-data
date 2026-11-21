@@ -16,7 +16,7 @@ on:
       - "scripts/tractor-forum-translate-dispatch.mjs"
       - "supabase/functions/tractor-forum-translate/**"
   schedule:
-    - cron: "9,29,49 * * * *"
+    - cron: "9,19,29,39,49,59 * * * *"
   workflow_dispatch:
 
 permissions:
