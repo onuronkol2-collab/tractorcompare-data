@@ -4,7 +4,7 @@ import {readFileSync} from "node:fs";
 import worker from "../worker/index.js";
 import {brandAnchorId,catalogBrandIndex,BRAND_NAV_COPY,CATALOG_SEARCH_TITLES} from "../src/lib/catalog-brand-index.mjs";
 
-const read=path=>readFileSync(new URL(path,import.meta.url),"utf8");
+const read=path=>readFileSync(new URL("../"+path,import.meta.url),"utf8");
 const published=[
  {tractor_id:"a",slug:"basak-2075-bk-a",brand_name:"Başak Traktör",model_name:"2075 BK"},
  {tractor_id:"b",slug:"john-deere-5075e-b",brand_name:"John Deere",model_name:"5075E"},
