@@ -68,3 +68,13 @@ test("pre-deployment audit blocks missing localized model pages",()=>{
     assert.match(result.stderr,/Built page\/sitemap missing/);
   }finally{rmSync(f.tmp,{recursive:true,force:true});}
 });
+
+test("complete-locale QA gate catches Chinese regressions even if Turkish is clean",()=>{
+  const f=fixture();
+  try{
+    const {result}=audit(f,{TRANSLATION_ZERO_LOCALES:"tr,zh"});
+    assert.equal(result.status,1,result.stdout+" "+result.stderr);
+    assert.match(result.stderr,/TRANSLATION_AUDIT_ZERO_LOCALE_REGRESSION/);
+    assert.match(result.stderr,/"locale":"zh"/);
+  }finally{rmSync(f.tmp,{recursive:true,force:true});}
+});
