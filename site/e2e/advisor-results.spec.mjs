@@ -18,7 +18,7 @@ test("advisor shows five transparent recommendations and links to comparison", a
       horsepower: 50 + i,
     }));
     const fixture = JSON.stringify({ published: models, lang: "tr" }).replace(/</g, "\\u003c");
-    const pattern = /(<script\\b[^>]*\\bid="advisor-data"[^>]*>)[\\s\\S]*?(<\\/script>)/;
+    const pattern = /(<script\b[^>]*\bid="advisor-data"[^>]*>)[\s\S]*?(<\/script>)/;
     if (!pattern.test(source)) throw new Error("Advisor data was not serialized as expected");
     await route.fulfill({ response, body: source.replace(pattern, (_match, open, close) => open + fixture + close) });
   });
@@ -34,6 +34,6 @@ test("advisor shows five transparent recommendations and links to comparison", a
   await expect(cards.first().locator(".advisor-card-reasons")).toContainText("Bu model neden listede?");
   await expect(cards.first().locator(".advisor-card-reasons")).toContainText("Kayıtlı motor gücü");
   await expect(cards.first().locator(".advisor-card-reasons")).toContainText("Katalogdaki pazar bilgisi");
-  await expect(cards.first().locator(".advisor-view-model")).toHaveAttribute("href", /^\\/tr\\/tractors\\//);
-  await expect(cards.first().locator(".advisor-compare-model")).toHaveAttribute("href", /\\/tr\\/compare\\/\\?left=advisor-fixture-/);
+  await expect(cards.first().locator(".advisor-view-model")).toHaveAttribute("href", /^\/tr\/tractors\//);
+  await expect(cards.first().locator(".advisor-compare-model")).toHaveAttribute("href", /\/tr\/compare\/\?left=advisor-fixture-/);
 });
