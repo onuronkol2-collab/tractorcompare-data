@@ -111,12 +111,12 @@ for(let i=0;i<urls.length;i+=4){
    // every image in the page's visible main content needs an alt attribute
    // (including alt="" for truly decorative images). Keep license/dialog
    // overlays outside the main landmark out of this check.
-   const main=body.match(/<main\\b[^>]*>([\\s\\S]*?)<\\/main>/i)?.[1]||null;
+   const main=body.match(/<main\b[^>]*>([\s\S]*?)<\/main>/i)?.[1]||null;
    if(main==null)error("missing-main",p,"Main content landmark missing");
    else {
      const visibleImages=tags(main,"img");
      for(const [i,image] of visibleImages.entries())
-       if(!/\\balt\\s*=\\s*(["'])[^"']*\\1/i.test(image))
+       if(!/\balt\s*=\s*(["'])[^"']*\1/i.test(image))
          error("image-alt",p,"Main image "+(i+1)+" lacks alt attribute");
    }
    // JSON-LD errors are SEO issues on any page type, not only models.
