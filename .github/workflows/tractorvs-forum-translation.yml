@@ -39,6 +39,8 @@ jobs:
           deno-version: v2.x
       - name: Typecheck private worker without secrets or paid API calls
         run: deno check --no-config supabase/functions/tractor-forum-translate/index.ts
+      - name: Run isolated Gemini REST provider contract tests (no API or charge)
+        run: deno test --no-config --allow-none supabase/functions/tractor-forum-translate/gemini-provider.test.ts
 
   process:
     if: github.event_name == 'workflow_dispatch' && inputs.onay == 'ONAY' && github.repository == 'onuronkol2-collab/tractorcompare-data' && github.ref == 'refs/heads/main'
