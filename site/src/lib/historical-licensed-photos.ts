@@ -519,6 +519,39 @@ const candidates=[
     "width": 6918,
     "height": 3893
   },
+  // 21 November 2026: exact published-model Commons photographs;
+  // static 500px thumbnail content is produced only after the one-time
+  // Wikimedia licence/artist/dimensions download gate has succeeded.
+  {
+    "brand": "Belarus",
+    "model": "892",
+    "fileId": "belarus-892-ivan2010-2013",
+    "path": "a/a7/Tractor_arando_la_tierra_para_cultivo.jpg",
+    "photographer": "Ivan2010",
+    "license": "CC BY-SA 4.0",
+    "width": 2654,
+    "height": 1880
+  },
+  {
+    "brand": "Belarus",
+    "model": "892.2",
+    "fileId": "belarus-892-2-globetrotter19-2025",
+    "path": "c/c6/Belarus_892.2%2C_2025_Dunapataj.jpg",
+    "photographer": "Globetrotter19",
+    "license": "CC BY-SA 4.0",
+    "width": 2592,
+    "height": 1944
+  },
+  {
+    "brand": "Belarus",
+    "model": "952",
+    "fileId": "belarus-952-fraxinus-croat-2011",
+    "path": "b/b6/Belarus_952.jpg",
+    "photographer": "Fraxinus Croat",
+    "license": "CC BY-SA 3.0",
+    "width": 2048,
+    "height": 1536
+  },
 ] as const;
 function licenseUrl(name:string):string{
   if(name==="CC0")return "https://creativecommons.org/publicdomain/zero/1.0/";
