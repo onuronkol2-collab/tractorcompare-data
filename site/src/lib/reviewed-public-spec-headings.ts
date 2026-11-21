@@ -87,4 +87,7 @@ export const REVIEWED_PUBLIC_SPEC_HEADINGS: Record<string, Partial<Record<Locale
   "Standard Cab Or ROPS Availability": {tr:"Standart kabin veya ROPS seçeneğinin bulunması",ru:"Наличие стандартной кабины или ROPS",ja:"標準キャブまたはROPS仕様の設定有無"},
   "Manufacturer Operator Station Type": {tr:"Üreticiye göre operatör mahalli tipi",zh:"制造商标注的驾驶位类型",de:"Herstellerangabe zur Fahrerplatz-Ausführung",ja:"メーカー公表の運転席仕様"},
   "YakıT Deposu": {tr:"Yakıt deposu",de:"Kraftstofftank"},
+  "Debriyaj Tipi": {tr:"Debriyaj tipi",zh:"离合器类型",hi:"क्लच का प्रकार","pt-br":"Tipo de embreagem",fr:"Type d’embrayage",de:"Kupplungstyp",ru:"Тип сцепления",ja:"クラッチの種類",es:"Tipo de embrague"},
+  "Ana Debriyaj": {tr:"Ana debriyaj",zh:"主离合器",hi:"मुख्य क्लच","pt-br":"Embreagem principal",fr:"Embrayage principal",de:"Hauptkupplung",ru:"Главное сцепление",ja:"主クラッチ",es:"Embrague principal"},
+  "Ana Vites Tipi": {tr:"Ana vites tipi","pt-br":"Tipo de marcha principal",fr:"Type de rapport principal",es:"Tipo de marcha principal"},
 };
