@@ -5,7 +5,7 @@
 import {createClient} from "npm:@supabase/supabase-js@2";
 import {
  allowedOemUrl,readOemDocument,robotsAllowed,validModelMention,aggregateResults,
- MAX_PER_RUN,CACHE_HOURS
+ MAX_PER_RUN,CACHE_HOURS,draftIdBatches
 } from "./policy.mjs";
 
 const url=Deno.env.get("SUPABASE_URL")||"";
@@ -46,10 +46,17 @@ async function collect(){
  const ids=[...new Set(eligible.map(q=>q.tractor_id))];
  if(!ids.length)return {eligible_drafts:0,trusted_urls:0,cache_hits:0,
   ...aggregateResults([])};
- const tractors=await checked(db.from("tractors")
-  .select("id,brand_id,model_name,status").in("id",ids).eq("status","draft").limit(251),
-  "draft_read");
- if(tractors.length>250)throw Error("draft_scan_cap");
+ // Never submit hundreds of UUIDs in one PostgREST GET query: long URLs
+ // can fail upstream even when service-role SELECT and RLS are correct.
+ // Published and archived models remain excluded by the exact draft filter.
+ const tractors=[];
+ for(const batch of draftIdBatches(ids)){
+  const rows=await checked(db.from("tractors")
+   .select("id,brand_id,model_name,status").in("id",batch)
+   .eq("status","draft").limit(251),"draft_read");
+  tractors.push(...rows);
+  if(tractors.length>250)throw Error("draft_scan_cap");
+ }
  const drafts=new Map(tractors.map(t=>[t.id,t]));
  if(!drafts.size)return {eligible_drafts:0,trusted_urls:0,cache_hits:0,...aggregateResults([])};
  const brands=await checked(db.from("brands").select("id,name")
