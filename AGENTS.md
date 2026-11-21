@@ -58,6 +58,19 @@ GitHub (Actions, CodeQL, Dependabot, Dependency graph, Malware alerts, Secret Pr
 - Sınırlı otomatik kurtarma yalnız doğrulanmış canlı uyuşmazlıkta GitHub site derlemesini yeniden ister; RLS/moderasyonu aşmaz, 2 saatte 1 / günde 2 denemeyi aşamaz. Başarısız kaynak erişimini veri yayınlama gerekçesi sayma.
 - Forumda bu denetimlerin varlığı 'anlık SEO indeksleme' veya '0 hata' garantisi değildir. İlk onaydan önceki test ve gerçek canlı yayın sonrası denetimi ayrı raporla.
 
+### Makale ve rehber yayınında ALTIN editoryal kural (21 Kasım 2026)
+
+**SEO + GEO + özgünlük + kanıt = tek kalite kapısı.** Bu ölçütler birbiriyle çatıştığında asla doğruluktan ödün verilmez. Arama motoru veya yapay zekâ cevaplarında daha çok görünürlük beklentisi, yanlış bilgi, hayalî uzmanlık veya kanıtsız oran yayımlamak için gerekçe değildir.
+
+- **Önce soru, sonra belge:** Her makale gerçek kullanıcının belirli bir sorusuna kendi açıklamasıyla yanıt verir. Üretici beyanı, bağımsız laboratuvar testi, kullanıcı beyanı ve editoryal yorum ayrı etiketlenir; sayısal iddianın kaynağı doğrudan erişilebilir olur. Kaynakların güncelliği, model-yıl-pazar-varyant ve ölçüm standardı özellikle korunur.
+- **Gerçek yazar ve yöntem:** Yalnız gerçekten yapılan analiz ve doğrulamalar anlatılır. Gerçekte yazan kurum TractorVS ise uygun kurumsal yazarlık gösterilir; sahte uzman, sahiplik, saha testi, kullanıcı deneyimi, alıntı, puan ve fiyat oluşturulmaz. Kaynak ve kontrol tarihi görünür olmalı; sadece içerik değişmişse `dateModified` değiştirilmelidir.
+- **Sayı ve kıyas şeffaflığı:** Arıza oranı, garanti sıklığı, tüketim, güvenilirlik veya performans sıralaması için aynı ölçüm tanımı, dönem ve örneklem doğrulanmadan yüzdenin yanında **100 traktöre düşen şikâyet** gibi ayrı metrikler birbirine karıştırılmaz. Boş veriye sahte değer eklenmez.
+- **Arşiv ve dil doğruluğu:** `/articles/` ve `/tr/articles/` yalnız gerçekten yayımlanmış ve URL'si doğrulanmış içerikleri listeler. Taslak PR'lar, forum onayı bekleyen yazılar veya eksik dil çevirileri arşive ve sitemap'e alınmaz. Diğer dilde gerçek makale yoksa dil varmış gibi işaretleme (hreflang/translated content) yapılmaz.
+- **Google ve GEO uyumu:** Tarayıcı tarafından görülebilen, giriş gerektirmeyen, semantik HTML; doğru `title`, H1, özgün meta açıklaması, `canonical`, `hreflang`, sitemap, robots, iç bağlantılar ve görünür içeriğe bire bir uyan `Article` / `TechArticle`, `CollectionPage`, `ItemList`, `BreadcrumbList` kullanılır. Gereksiz anahtar kelime yığını, şişirilmiş sayfa, sahte SSS/puan, sözde GEO hilesi veya izinsiz görsel uygulanmaz.
+- **Yayın ve geri alma:** Önce ayrı PR; Node + Astro build, CodeQL, Playwright (Chromium/Firefox/WebKit/mobil), axe-core, yayın paketindeki iki arşiv sayfası, canonical/index/sitemap kontrolleri başarılı olmalı. Ardından gerçek HTTP 200, indekslenebilirlik ve Search Console'da mevcut durum ayrıca ölçülmeli. Kodun merge edilmiş olması **canlı dağıtım veya Google indekslenmesi değildir**. Sorunlarda ilgili commit geri alınabilir; çalışan katalog/forum/Supabase RLS özellikleri bozulmaz.
+
+Ek ayrıntı: `site/docs/editorial-quality-gate-20261121.md` ve `site/tests/editorial-hub.test.mjs`.
+
 ## Süreklilik ve dürüst sınır
 Bu dosya GitHub deposunda saklanan, değişiklik geçmişi olan **kalıcı proje kaynağıdır**. Asistanın ChatGPT iç belleğine silinemez bir kayıt yazıldığı veya her yeni sohbette bu dosyanın kendiliğinden okunduğu anlamına gelmez. Yeni sohbetlerin aynı ilkeyi uygulaması için bu dosyanın bağlantısını ChatGPT Project Instructions / Proje Talimatları içinde tutmak ve işe başlarken dosyayı okumak en güvenilir yöntemdir.
 
