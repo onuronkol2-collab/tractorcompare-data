@@ -21,6 +21,15 @@ This runbook is part of the permanent AGENTS.md integration rules.
 - The index **must never** expose hidden or moderation-pending forum content, unverified translations, unpublished tractor drafts or unlicensed imagery. Ten-language site coverage is a published-only gate.
 - To verify a release: inspect actual `https://tractorvs.com/sitemap-index.xml` and expect child URLs for generated HTML sitemap(s), `forum-sitemap.xml` and `image-sitemap.xml`; confirm each child HTTP 200, valid `urlset`, self canonical for sampled HTML pages and the relevant GSC/Bing crawl observations independently.
 
+## Daily versus weekly full production SEO crawler (21 November 2026)
+
+- This crawler is independent of the 2-hour IndexNow discovery worker. The production sitemap root must list `sitemap-N.xml` (all published canonical HTML pages), `forum-sitemap.xml` (only approved forum hubs and articles), and `image-sitemap.xml` (image references tied to eligible HTML/forum URLs).
+- `site/scripts/production-sitemap-inventory.mjs` classifies the three XML content types. **Image references may overlap** HTML pages or approved forum topic pages. This is normal and must not be mistaken for duplicate crawlable URLs; duplicates *inside* one sitemap or orphans outside both canonical page sets are blocked.
+- `.github/workflows/live-website-audit.yml` runs daily (06:00 UTC) with a **rotating 20 model URLs per locale + every non-model page**, while validating the **entire** sitemap index/child coverage and 10-language model slug parity. It runs weekly Sunday (07:00 UTC) in **full** mode, reading and checking every distinct HTML or approved forum page's status, canonical, hreflang, HTML language, visible content and JSON-LD. Both modes fail on missing pages, rate limiting and invalid XML; the daily sample is not evidence that every URL was fetched successfully that day.
+- Daily rotation is deterministic and model-slug sorted, so the full cohort is covered by subsequent daily samples independently of weekly checks. `site/tests/production-sitemap-inventory.test.mjs` proves source subtype separation, index requirements, rejected hidden forum/offsite pages, ten-language parity and rotating sampling.
+- **Do not equate:** master index children, image references, unique canonical URLs, sampled HTTP successes, IndexNow accepted, Google-discovered URLs or Google-indexed URLs. They are distinct measurements. A full sitemap has no direct bearing on guaranteed search rankings.
+- Avoid writing user credentials, provider API keys or new screenshots to public CI artifacts; never trigger paid AI translation or mass URL submission from this SEO crawler.
+
 ## Automatic IndexNow — fail-closed
 
 Workflow: `.github/workflows/tractorvs-search-discovery.yml`.
