@@ -4,7 +4,7 @@ name: TractorVS evidence-based sitemap lastmod ledger
 # with a build timestamp. First run records content hashes without dates.
 on:
   schedule:
-    - cron: "13 4 * * *"
+    - cron: "13 */6 * * *"
   workflow_dispatch:
     inputs:
       dry_run:
@@ -90,12 +90,35 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          AUDITED_BASE="$(git rev-parse HEAD)"
           git add site/src/data/sitemap-lastmod.json seo/sitemap-content-history.json
           if git diff --cached --quiet; then
             echo "No content modification or baseline change; no commit."
           else
             git commit -m "chore(seo): update content-verified sitemap lastmod ledger"
-            git push origin HEAD:main
+            # Other independent TractorVS publishing jobs can push to main
+            # while this build runs. Retry fast-forward safely; NEVER force-push
+            # or rebase stale content over a changed published site.
+            for attempt in 1 2 3; do
+              git fetch origin main
+              if git diff --name-only "$AUDITED_BASE" origin/main |
+                grep -Eq '^(site/src/|site/astro.config.mjs|site/public/)'; then
+                echo "::error::Public-site input changed during sitemap audit; refusing to record stale lastmod. A scheduled run will rebuild from the new source."
+                exit 1
+              fi
+              if ! git rebase origin/main; then
+                git rebase --abort || true
+                echo "::error::Concurrent SEO history edit conflicted; no force push."
+                exit 1
+              fi
+              if git push origin HEAD:main; then
+                echo "Audited sitemap history committed successfully."
+                exit 0
+              fi
+              sleep $((attempt * 2))
+            done
+            echo "::error::Main branch moved repeatedly; keeping original production content safe."
+            exit 1
           fi
       - name: Evidence note
         if: always()
