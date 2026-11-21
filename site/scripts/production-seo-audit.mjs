@@ -60,6 +60,7 @@ for(const loc of siteMaps){
 }
 const unique=new Set(allPages);
 const editorialPaths=[
+  "/articles/","/tr/articles/",
   "/methodology/","/tr/methodology/",
   ...Object.keys(languages).map(lang=>
     (lang==="en"?"/":"/"+lang+"/")+"guides/choosing-a-tractor/"),

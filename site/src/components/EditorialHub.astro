@@ -1,0 +1,196 @@
+---
+import SiteLayout from "../layouts/SiteLayout.astro";
+import {localizedPath} from "../lib/locales.ts";
+interface Props {lang:"en"|"tr"}
+const {lang}=Astro.props;
+const tr=lang==="tr";
+const root=Astro.site||new URL("https://tractorvs.com");
+const pagePath=localizedPath(lang,"/articles/");
+const pageUrl=new URL(pagePath,root).toString();
+
+const texts=tr ? {
+  title:"Traktör Makaleleri ve Teknik Rehberler | TractorVS",
+  description:"Kaynaklı traktör makaleleri: teknik terimler, güç, PTO, hidrolik, seçim ve model analizi. Kanıtları ve açıklamaların sınırlarını inceleyin.",
+  eyebrow:"KAYNAKLI BİLGİ • TRACTORVS",
+  heading:"Traktör makaleleri ve teknik rehberler",
+  intro:"Doğru traktör seçimi, yalnızca katalogda yüksek görünen sayıları yan yana koymak değildir. Bu kütüphanede üretici beyanı, bağımsız ölçüm ve teknik yorumu birbirinden ayırarak pratik sorularınıza yanıt veriyoruz.",
+  home:"Ana sayfa",hub:"Makaleler",jump:"Makalelere git",methods:"Veri doğrulama yöntemimiz",
+  trust:"Makaleleri nasıl hazırlıyoruz?",
+  rules:[
+    ["Kaynakları açık tutuyoruz","Kaynak gösterilen ölçüm ve üretici belgeleri kontrol edilebilir; teknik yorumla belgeyi birbirine karıştırmıyoruz."],
+    ["Sahte saha testi yapmıyoruz","Belgelerle hazırlanan bir model incelemesini, uzun dönem kullanıcı deneyimi veya bağımsız traktör testi olarak sunmuyoruz."],
+    ["Veri yoksa oran uydurmuyoruz","Markaları aynı örneklem ve sürede izleyen veri olmadan arıza/100 traktör, tüketim ve dayanıklılık sıralaması üretmiyoruz."]
+  ],
+  guides:"Teknik rehberler",review:"Kaynaklı model incelemesi",
+  guidesIntro:"Ölçümün ne anlama geldiğini, ekipmana uyumu ve farklı standartları öğrenin.",
+  reviewIntro:"Tam model ve varyant üzerinden üretici belgesine dayalı analiz.",
+  reviewLabel:"BELGE İNCELEMESİ • SAHA TESTİ DEĞİL",
+  guideLabel:"TEKNİK REHBER",checked:"Son editoryal kontrol",read:"Yazıyı oku",
+  disclaimer:"Doğrulanmamış araştırmalar ve yayın bekleyen taslaklar bu listede yer almaz. Google'da indekslenme veya sıralama garantisi verilmez.",
+  next:"Öğrendiklerinizi modeller üzerinde uygulayın",compare:"Traktör karşılaştır",catalog:"Traktör kataloğu"
+}:{
+  title:"Tractor Articles and Technical Guides | TractorVS",
+  description:"Source-backed tractor articles about power, PTO, hydraulics, terminology, selecting a tractor and model-specific document analysis.",
+  eyebrow:"EVIDENCE-BASED READING • TRACTORVS",
+  heading:"Tractor articles and technical guides",
+  intro:"Choosing a tractor is more than comparing the biggest numbers in brochures. These articles distinguish manufacturer claims, independent measurements and technical interpretation, so you can make more informed decisions.",
+  home:"Home",hub:"Articles",jump:"Browse articles",methods:"How we verify data",
+  trust:"How we prepare these articles",
+  rules:[
+    ["Sources you can check","Original measurements and manufacturer documents are linked where relevant. We keep our interpretation separate from the source material."],
+    ["No made-up field experience","A document-based model review is not presented as an owner's long-term experience or an independent field trial."],
+    ["No fabricated percentages","Without comparable samples and observation periods, we do not invent faults-per-100-tractors or brand reliability rankings."]
+  ],
+  guides:"Technical guides",review:"Source-backed model analysis",
+  guidesIntro:"Learn what a measurement means and when two specifications can actually be compared.",
+  reviewIntro:"A document-based assessment of the exact model and variant.",
+  reviewLabel:"DOCUMENT REVIEW • NOT A FIELD TEST",
+  guideLabel:"TECHNICAL GUIDE",checked:"Editorial last checked",read:"Read article",
+  disclaimer:"Unverified research and unpublished drafts are excluded. Search indexing and ranking are not guaranteed.",
+  next:"Put what you learned to work",compare:"Compare tractors",catalog:"Tractor catalogue"
+};
+const entries=[
+ {type:"guide",path:"/guides/choosing-a-tractor/",checked:"2026-11-19",
+  title:{tr:"Traktör seçerken nelere dikkat edilmeli?",en:"How to choose a tractor beyond horsepower"},
+  summary:{tr:"Arazi, ekipman, çekiş, servis ve PTO koşullarını pratik bir karar listesine dönüştürün.",en:"Build a practical decision checklist for land, implements, traction, servicing and PTO."}},
+ {type:"guide",path:"/guides/tractor-technical-terms/",checked:"2026-11-20",
+  title:{tr:"Traktör parçaları ve teknik terimler",en:"Tractor parts and technical terms"},
+  summary:{tr:"Motor, şanzıman, hidrolik ve diğer parçaları sade örneklerle öğrenin.",en:"Learn the role of engines, transmissions, hydraulics and tractor components."}},
+ {type:"guide",path:"/guides/tractor-engine-power-and-torque/",checked:"2026-11-21",
+  title:{tr:"Motor gücü, tork ve ölçüm standartları",en:"Engine power, torque and testing standards"},
+  summary:{tr:"Motor, PTO ve çeki gücünün neden aynı rakam gibi yorumlanamayacağını anlayın.",en:"Understand why engine, PTO and drawbar power are different measurements."}},
+ {type:"guide",path:"/guides/tractor-hydraulic-lift-explained/",checked:"2026-11-20",
+  title:{tr:"Hidrolik kaldırma kapasitesi nasıl okunur?",en:"Understanding hydraulic lift capacity"},
+  summary:{tr:"Pompa debisi, bağlantı noktası ve kaldırma kapasitesi arasındaki farkları inceleyin.",en:"Distinguish pump flow, lift rating and where the force is measured."}},
+ {type:"guide",path:"/guides/pto-and-power-take-off/",checked:"2026-11-20",
+  title:{tr:"Kuyruk mili (PTO) ne işe yarar?",en:"How tractor PTO works"},
+  summary:{tr:"PTO hızı, güç, bağlantı ve ekipman güvenliği kavramlarını ayırın.",en:"Learn about PTO speed, power, connections and implement safety."}},
+ {type:"review",path:"/reviews/basak-2075-bk/",checked:"2026-11-19",
+  title:{tr:"Başak 2075 BK: kaynaklı teknik inceleme",en:"Başak 2075 BK: source-backed technical review"},
+  summary:{tr:"Üretici broşüründeki verileri varyant ve ölçüm sınırlamalarıyla değerlendirin.",en:"Examine manufacturer figures with their exact variant and measurement limits."}}
+] as const;
+const articles=entries.filter(x=>x.type==="guide");
+const reviews=entries.filter(x=>x.type==="review");
+const urlFor=(path:string)=>new URL(localizedPath(lang,path),root).toString();
+const schema={
+ "@context":"https://schema.org",
+ "@graph":[
+  {"@type":"CollectionPage","@id":pageUrl+"#webpage",url:pageUrl,name:texts.heading,
+    description:texts.description,inLanguage:lang,mainEntity:{"@id":pageUrl+"#list"}},
+  {"@type":"ItemList","@id":pageUrl+"#list",numberOfItems:entries.length,
+    itemListElement:entries.map((entry,i)=>({
+      "@type":"ListItem",position:i+1,url:urlFor(entry.path),name:entry.title[lang]
+    }))},
+  {"@type":"BreadcrumbList",itemListElement:[
+    {"@type":"ListItem",position:1,name:texts.home,item:urlFor("/")},
+    {"@type":"ListItem",position:2,name:texts.hub,item:pageUrl}
+  ]}
+ ]
+};
+---
+<SiteLayout lang={lang} title={texts.title} description={texts.description}
+ structuredData={schema} availableLocales={["en","tr"]} indexableLocales={["en","tr"]}>
+ <div class="editorial-hub">
+  <header class="editorial-hero">
+   <div class="container">
+    <nav class="editorial-crumb" aria-label={tr?"İçerik yolu":"Breadcrumb"}>
+     <a href={localizedPath(lang,"/")}>{texts.home}</a><span aria-hidden="true">/</span>
+     <span aria-current="page">{texts.hub}</span>
+    </nav>
+    <p class="editorial-eyebrow">{texts.eyebrow}</p>
+    <h1>{texts.heading}</h1>
+    <p class="editorial-intro">{texts.intro}</p>
+    <a class="editorial-start" href="#rehberler">{texts.jump} <span aria-hidden="true">↓</span></a>
+   </div>
+  </header>
+  <div class="container editorial-body">
+   <section class="editorial-trust" aria-labelledby="editorial-trust-heading">
+    <h2 id="editorial-trust-heading">{texts.trust}</h2>
+    <div class="editorial-rules">
+     {texts.rules.map((rule,i)=><div>
+       <span aria-hidden="true">{String(i+1).padStart(2,"0")}</span>
+       <h3>{rule[0]}</h3><p>{rule[1]}</p>
+     </div>)}
+    </div>
+    <a href={localizedPath(lang,"/methodology/")}>{texts.methods} ↗</a>
+   </section>
+   <section class="editorial-section" id="rehberler" aria-labelledby="editorial-guide-title">
+    <div class="editorial-section-title">
+     <div><h2 id="editorial-guide-title">{texts.guides}</h2><p>{texts.guidesIntro}</p></div>
+     <span>{String(articles.length).padStart(2,"0")}</span>
+    </div>
+    <ol class="editorial-grid">{articles.map(entry=><li>
+      <article class="editorial-card">
+       <p class="editorial-kicker">{texts.guideLabel}</p>
+       <h3><a href={localizedPath(lang,entry.path)}>{entry.title[lang]}</a></h3>
+       <p>{entry.summary[lang]}</p>
+       <div class="editorial-card-footer"><time datetime={entry.checked}>{texts.checked}: {entry.checked}</time>
+        <a href={localizedPath(lang,entry.path)} aria-label={entry.title[lang]+" — "+texts.read}>{texts.read} <span aria-hidden="true">↗</span></a></div>
+      </article>
+    </li>)}</ol>
+   </section>
+   <section class="editorial-section" id="incelemeler" aria-labelledby="editorial-review-title">
+    <div class="editorial-section-title">
+     <div><h2 id="editorial-review-title">{texts.review}</h2><p>{texts.reviewIntro}</p></div>
+     <span>{String(reviews.length).padStart(2,"0")}</span>
+    </div>
+    <ol class="editorial-grid">{reviews.map(entry=><li>
+      <article class="editorial-card">
+       <p class="editorial-kicker">{texts.reviewLabel}</p>
+       <h3><a href={localizedPath(lang,entry.path)}>{entry.title[lang]}</a></h3>
+       <p>{entry.summary[lang]}</p>
+       <div class="editorial-card-footer"><time datetime={entry.checked}>{texts.checked}: {entry.checked}</time>
+        <a href={localizedPath(lang,entry.path)} aria-label={entry.title[lang]+" — "+texts.read}>{texts.read} <span aria-hidden="true">↗</span></a></div>
+      </article>
+    </li>)}</ol>
+   </section>
+   <p class="editorial-disclaimer">{texts.disclaimer}</p>
+   <aside class="editorial-cta">
+    <h2>{texts.next}</h2><div>
+     <a href={localizedPath(lang,"/compare/")}>{texts.compare} ↗</a>
+     <a href={localizedPath(lang,"/tractors/")}>{texts.catalog} ↗</a>
+    </div>
+   </aside>
+  </div>
+ </div>
+</SiteLayout>
+<style>
+ .editorial-hub{color:#1c3225;background:#f5f7f2}
+ .editorial-hero{background:radial-gradient(circle at 85% 5%,#255038,transparent 38%),#10241a;color:#eff8ef;padding:55px 0 85px}
+ .editorial-crumb{display:flex;align-items:center;gap:10px;font-size:13px;color:#c6d9c2;margin-bottom:46px}
+ .editorial-crumb a,.editorial-trust>a{text-decoration:underline;text-underline-offset:4px}
+ .editorial-eyebrow,.editorial-kicker{letter-spacing:.1em;font-size:11px;font-weight:850;color:#b7df91}
+ .editorial-hero h1{max-width:800px;font-size:clamp(36px,5.5vw,65px);line-height:1.1;letter-spacing:-.04em;margin:15px 0}
+ .editorial-intro{max-width:765px;color:#c9d9c9;line-height:1.85;font-size:clamp(16px,2vw,19px)}
+ .editorial-start{display:inline-flex;align-items:center;gap:18px;background:#b7df91;color:#12311c;border-radius:9px;padding:13px 19px;margin-top:22px;font-size:14px;font-weight:800}
+ .editorial-body{padding:58px 0 85px}
+ .editorial-trust{border:1px solid #d6e4d3;background:#fff;border-radius:17px;padding:clamp(20px,4vw,35px)}
+ .editorial-trust h2{font-size:clamp(23px,2.8vw,34px);margin:0 0 25px}
+ .editorial-rules{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:28px;margin-bottom:20px}
+ .editorial-rules span{color:#38764b;font-weight:850}
+ .editorial-rules h3{font-size:18px;line-height:1.4;margin:8px 0}
+ .editorial-rules p{font-size:14px;line-height:1.8;color:#4a6253;margin:0}
+ .editorial-trust>a{color:#286a40;font-weight:750;font-size:14px}
+ .editorial-section{margin-top:70px;scroll-margin-top:20px}
+ .editorial-section-title{display:flex;gap:20px;align-items:start;justify-content:space-between;margin-bottom:25px}
+ .editorial-section-title h2{font-size:clamp(27px,3.2vw,39px);margin:0 0 9px;line-height:1.2}
+ .editorial-section-title p{color:#526857;font-size:15px;margin:0;line-height:1.7}
+ .editorial-section-title>span{color:#356342;font-size:30px;font-weight:850}
+ .editorial-grid{list-style:none;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:17px;padding:0;margin:0}
+ .editorial-grid>li{min-width:0}
+ .editorial-card{display:flex;flex-direction:column;gap:12px;height:100%;padding:clamp(20px,3vw,29px);background:#fff;border:1px solid #dce6d8;border-radius:14px}
+ .editorial-kicker{color:#397c4a;margin:0}
+ .editorial-card h3{margin:0;font-size:clamp(20px,2.2vw,25px);line-height:1.35}
+ .editorial-card h3 a{text-decoration:underline;text-decoration-color:#c4d7c2;text-underline-offset:4px}
+ .editorial-card>p:not(.editorial-kicker){margin:0;color:#4e6553;line-height:1.75;font-size:15px}
+ .editorial-card-footer{border-top:1px solid #e0e9de;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;padding-top:16px;margin-top:auto}
+ .editorial-card-footer time{color:#5b7060;font-size:12px}
+ .editorial-card-footer a{color:#236539;font-size:14px;font-weight:800}
+ .editorial-disclaimer{color:#4c6453;font-size:14px;line-height:1.8;margin:44px 0 23px}
+ .editorial-cta{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:25px;padding:30px;background:#1b3c2a;border-radius:15px;color:#fff}
+ .editorial-cta h2{font-size:24px;line-height:1.3;margin:0}
+ .editorial-cta>div{display:flex;gap:12px;flex-wrap:wrap}
+ .editorial-cta a{border:1px solid #9bcf86;border-radius:8px;padding:11px 14px;font-weight:800;font-size:13px}
+ .editorial-hub a:focus-visible{outline:3px solid #64ad60;outline-offset:4px}
+ @media(max-width:750px){.editorial-grid,.editorial-rules{grid-template-columns:1fr}.editorial-hero{padding-bottom:55px}.editorial-body{padding-top:28px}.editorial-section{margin-top:50px}}
+</style>

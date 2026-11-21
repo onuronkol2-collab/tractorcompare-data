@@ -138,8 +138,30 @@ const copy=localizedGuide ?? baseCopy;
 const pageDate=new Intl.DateTimeFormat(lang==="zh"?"zh-CN":lang==="pt-br"?"pt-BR":lang,{
   day:"numeric",month:"long",year:"numeric",timeZone:"UTC"
 }).format(new Date("2026-11-19T00:00:00Z"));
+const pageUrl=new URL(localizedPath(lang,"/guides/choosing-a-tractor/"),Astro.site||"https://tractorvs.com").toString();
+const langTag=lang==="zh"?"zh-Hans":lang==="pt-br"?"pt-BR":lang;
+const schema={
+ "@context":"https://schema.org",
+ "@graph":[
+  {"@type":"TechArticle","@id":pageUrl+"#article",headline:copy.h1,
+    description:copy.meta,url:pageUrl,inLanguage:langTag,
+    datePublished:"2026-11-19",dateModified:"2026-11-19",isAccessibleForFree:true,
+    author:{"@type":"Organization",name:"TractorVS"},
+    publisher:{"@type":"Organization",name:"TractorVS"},
+    mainEntityOfPage:{"@id":pageUrl+"#webpage"},citation:sources.map(source=>source.url)},
+  {"@type":"WebPage","@id":pageUrl+"#webpage",url:pageUrl,
+    name:copy.h1,description:copy.meta,inLanguage:langTag,
+    mainEntity:{"@id":pageUrl+"#article"}},
+  {"@type":"BreadcrumbList",itemListElement:[
+    {"@type":"ListItem",position:1,name:"TractorVS",
+      item:new URL(localizedPath(lang,"/"),Astro.site||"https://tractorvs.com").toString()},
+    {"@type":"ListItem",position:2,name:copy.h1,item:pageUrl}
+  ]}
+ ]
+};
 ---
-<SiteLayout lang={lang} title={copy.title} description={copy.meta} availableLocales={LOCALES}>
+<SiteLayout lang={lang} title={copy.title} description={copy.meta}
+  availableLocales={LOCALES} structuredData={schema} ogType="article">
   <article class="tractor-guide">
     <div class="container guide-body">
       <nav class="guide-crumb" aria-label={tr?"İçerik yolu":"Breadcrumb"}>

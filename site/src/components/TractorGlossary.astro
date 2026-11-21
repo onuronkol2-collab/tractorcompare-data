@@ -69,7 +69,7 @@ const queryTerms=(term:(typeof GLOSSARY_TERMS)[number])=>
  [term.name.tr,term.name.en,term.definition.tr,term.definition.en].join(" ").toLowerCase();
 ---
 <SiteLayout lang={lang} title={title} description={description} structuredData={structuredData}
-  ogImage={publicImage} availableLocales={["en","tr"]}>
+  ogImage={publicImage} ogType="article" availableLocales={["en","tr"]}>
  <article class="glossary-page">
   <header class="glossary-hero">
    <div class="container glossary-hero-grid">
