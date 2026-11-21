@@ -1,0 +1,199 @@
+{
+  "title": "TractorVS 2026–2027 tractor reliability editorial evidence register",
+  "research_cutoff": "2026-11-21",
+  "publication_status": "editorial_draft",
+  "warning": "Single-machine and historic survey records are not comparable 2026-2027 brand failure rates; no ranking.",
+  "record_count": 19,
+  "records": [
+    {
+      "model": "Massey Ferguson 8S.265 Dyna-7",
+      "group": "technical",
+      "publication_period": "2025'te yayımlanan saha testi",
+      "usage_or_sample": "",
+      "reported_findings": "Aynı traktörde iki önemli şanzıman arızası ve değişimi bildirilmiş; motor ve sürüş özellikleri beğenilmiş.",
+      "limitations": "Başlangıç üretimindeki Dyna-7 tasarım güncellemeleri sonraki yıllarda dikkate alınmalı; bütün 8S serisi için oran değildir.",
+      "source_url": "https://www.profi.de/test/schleppertest/langzeittest-massey-ferguson-8s265-dyna-7-4400-stunden-im-einsatz-40237.html",
+      "measurement": "not_a_sales_adjusted_failure_rate"
+    },
+    {
+      "model": "Fendt 728 Vario Gen7",
+      "group": "technical",
+      "publication_period": "2026'da yayımlanan saha testi",
+      "usage_or_sample": "",
+      "reported_findings": "En az dört plansız servis ziyareti; sızıntı, kaldırma ve süspansiyon bileşenleri ile ekran/elektronik sorunları. Motor-şanzıman uyumu ve sürüş olumlu.",
+      "limitations": "2025 Almanya tescilleri bu testteki tek makinenin arıza paydası değildir.",
+      "source_url": "https://www.profi.de/test/langzeit-test/alles-fendtastisch-oder-20029034.html",
+      "measurement": "not_a_sales_adjusted_failure_rate"
+    },
+    {
+      "model": "Valtra G125 Eco HiTech",
+      "group": "technical",
+      "publication_period": "Ocak 2026 sayısı",
+      "usage_or_sample": "",
+      "reported_findings": "Vites kumanda anahtarları, devir sensörü kaynaklı yürüyüş kaybı, son 100 saatte senkromeç onarımı ve DPF/DEF işlemleri raporlanmış. İşletme genel performanstan memnun.",
+      "limitations": "Yüksek kullanım saati ve tek araç, seri geneli hakkında satış başına oran üretmez.",
+      "source_url": "https://www.profi.co.uk/test-centre/valtra-g125-hitech-does-the-g-hit-the-spot/",
+      "measurement": "not_a_sales_adjusted_failure_rate"
+    },
+    {
+      "model": "Claas Axion 870 Cmatic",
+      "group": "technical",
+      "publication_period": "2025'te yayımlanan saha testi",
+      "usage_or_sample": "",
+      "reported_findings": "1.925 saatte arka hidrolik hattı patlaması; 607 ve 1.605 saatte arka aks keçe onarımları; emisyon sensörü ve küçük bileşen kayıtları. Çekiş ve tüketim beğenilmiş.",
+      "limitations": "Ağır iş yükü ve ek ekipmanların etkisi ayrıştırılamaz.",
+      "source_url": "https://www.profi.co.uk/test-centre/claas-axion-870-cmatic-5000-hours-of-hard-labour/",
+      "measurement": "not_a_sales_adjusted_failure_rate"
+    },
+    {
+      "model": "Case IH Optum 270 CVX",
+      "group": "technical",
+      "publication_period": "2021/2022 döneminde yayımlanan tarihsel test",
+      "usage_or_sample": "",
+      "reported_findings": "Yaklaşık 2.670 saatte otomatik kademe geçişi sorunu, akümülatör ve şanzıman çıkış sensörü müdahalesi; test sonunda sorunun tekrarladığı kaydedilmiş. Tam iş göremezlik yok.",
+      "limitations": "2019'da teslim edilen test traktörüne aittir; sonraki üretime genellenemez.",
+      "source_url": "https://www.profi.de/test/langzeit-test/langzeittest-case-ih-optum-270-cvx-startschwierigkeiten-ueberwunden-12646301.html",
+      "measurement": "not_a_sales_adjusted_failure_rate"
+    },
+    {
+      "model": "Deutz-Fahr 9340 TTV",
+      "group": "technical",
+      "publication_period": "2022/2023 tarihli tarihsel test",
+      "usage_or_sample": "",
+      "reported_findings": "Elektrikli park freni, ön aks süspansiyon sızıntısı ve monitör arızası kaydedilmiş. Motor, hidrolik ve genel performans olumlu; ücretli tek büyük servis son dönemde olmuş.",
+      "limitations": "Onarım maliyetinin garantiyle karşılanması arıza yaşanmadığı anlamına gelmez.",
+      "source_url": "https://www.profi.de/test/langzeit-test/langzeittest-deutz-fahr-9340ttv-wie-lauft-der-lauinger-29572.html",
+      "measurement": "not_a_sales_adjusted_failure_rate"
+    },
+    {
+      "model": "New Holland T6 — eski üretim grubu",
+      "group": "technical",
+      "publication_period": "2025 anketi",
+      "usage_or_sample": "yaklaşık 2016 üretimi; Model başına toplu motor saati yok çalışma saati veya çok kullanıcılı avrupa anketinin alt grubu",
+      "reported_findings": "Emisyon arıtma sensörleri ve şanzıman sorunları bildirildi. Anket içi arızaların bileşen dağılımı satışa oranlanamaz.",
+      "limitations": "T6'nin bütün versiyonlarına ve 2026–2027 üretimine uygulanmaz.",
+      "source_url": "https://www.profi.de/test/schleppertest/umfrage-vierzylinder-traktoren-mit-150-ps-im-vergleich-35798.html",
+      "measurement": "not_a_sales_adjusted_failure_rate"
+    },
+    {
+      "model": "Case IH Maxxum 115–145 — eski üretim grubu",
+      "group": "technical",
+      "publication_period": "2025 anketi",
+      "usage_or_sample": "yaklaşık 2016 üretimi; Model başına toplu motor saati yok çalışma saati veya çok kullanıcılı avrupa anketinin alt grubu",
+      "reported_findings": "Klima bileşenleri ve egzoz arıtma sensörleriyle ilişkili arıza alanları bildirilmiş; motor gücü ve kullanımına ilişkin olumlu görüşler de var.",
+      "limitations": "Yeni Maxxum üretiminin gerçek arıza oranı olarak okunamaz.",
+      "source_url": "https://www.profi.de/test/schleppertest/umfrage-vierzylinder-traktoren-mit-150-ps-im-vergleich-35798.html",
+      "measurement": "not_a_sales_adjusted_failure_rate"
+    },
+    {
+      "model": "Fendt 942 Vario Gen6",
+      "group": "balanced",
+      "publication_period": "31 Temmuz 2026",
+      "usage_or_sample": "",
+      "reported_findings": "Yedi yıllık yoğun çalışmada motor-aktarma konusundaki deneyim genel olarak olumlu; buna rağmen turbo değişimi, kumanda kolu, tekrar eden kamera/klima onarımları ve başka servis kayıtları mevcut.",
+      "limitations": "11.000 saate ulaşmak tek başına sıfır arıza veya bütün Fendt modelleri için güvenilirlik oranı değildir.",
+      "source_url": "https://www.profi.co.uk/test-centre/fendt-942-vario-gen6-onto-a-winner-here-trig/",
+      "measurement": "not_a_sales_adjusted_failure_rate"
+    },
+    {
+      "model": "New Holland T7.230 AutoCommand",
+      "group": "balanced",
+      "publication_period": "3 Temmuz 2026",
+      "usage_or_sample": "",
+      "reported_findings": "Büyük bir arıza olmadan kullanılan örnek; en önemli arıza hidrolik kontrol valfi, ayrıca hortum bağlantısı ve kapı menteşesi gibi küçük işlemler var. Şanzıman olumlu.",
+      "limitations": "Tek testte büyük arıza görülmemesi seri geneli için arızasızlık kanıtı değildir.",
+      "source_url": "https://www.profi.co.uk/test-centre/new-holland-t7-230-autocommand-long-wheelbase-long-life/",
+      "measurement": "not_a_sales_adjusted_failure_rate"
+    },
+    {
+      "model": "JCB Fastrac 4220 iCON",
+      "group": "balanced",
+      "publication_period": "2026",
+      "usage_or_sample": "",
+      "reported_findings": "Hiç tam iş göremezlik yaşanmadığı halde dokuz onarım kaydı var: joystick, klima, elektronik ve fren iyileştirmeleri dahil.",
+      "limitations": "Tam iş göremezlik yok ≠ sıfır arıza. Kullanıcıya ödenmemiş garanti maliyeti gerçek onarım maliyetinin sıfır olduğu anlamına gelmez.",
+      "source_url": "https://www.profi.de/test/langzeit-test/jcb-fastrac-4220-icon-wie-auf-schienen-20026224.html",
+      "measurement": "not_a_sales_adjusted_failure_rate"
+    },
+    {
+      "model": "Kubota M7153 Premium",
+      "group": "balanced",
+      "publication_period": "2025 uzun dönem testi",
+      "usage_or_sample": "",
+      "reported_findings": "Tam iş göremezlik yaşanmamış; AdBlue enjektörü, elektrik bağlantıları ve akü gibi onarımlar kaydedilmiş.",
+      "limitations": "Bu örnekteki olumlu iş sürekliliği diğer Kubota serilerine genellenemez.",
+      "source_url": "https://www.profi.de/test/langzeit-test/traktor-kubota-m-7153-premium-solides-arbeitspferd-32887.html",
+      "measurement": "not_a_sales_adjusted_failure_rate"
+    },
+    {
+      "model": "John Deere 6120M",
+      "group": "balanced",
+      "publication_period": "2025 uzun dönem testi",
+      "usage_or_sample": "",
+      "reported_findings": "Motor ve genel kullanım olumlu değerlendirilmiş, hidrolik pompa başta olmak üzere bazı onarımlar yapılmış.",
+      "limitations": "Sıfır arıza değil; belirli işletme ve üretim yılına ait deneyim.",
+      "source_url": "https://www.profi.de/test/langzeit-test/john-deere-6120m-treuer-knecht-32796.html",
+      "measurement": "not_a_sales_adjusted_failure_rate"
+    },
+    {
+      "model": "John Deere 6250R",
+      "group": "balanced",
+      "publication_period": "2022 tarihli tarihsel test",
+      "usage_or_sample": "",
+      "reported_findings": "Şanzımanda kayıtlı onarım olmadan çalışma; 3.117 saatte visko fan onarımı, küçük hidrolik ve elektronik işlemler mevcut.",
+      "limitations": "2022'de yayımlanan tarihsel testtir; 2027 üretiminin ölçümü değildir.",
+      "source_url": "https://www.profi.de/test/langzeit-test/langzeittest-john-deere-6250r-top-zuverlassigkeit-nur-kleinkram-nervt-29348.html",
+      "measurement": "not_a_sales_adjusted_failure_rate"
+    },
+    {
+      "model": "Valtra N154 e Versu",
+      "group": "balanced",
+      "publication_period": "2020 tarihli tarihsel test",
+      "usage_or_sample": "",
+      "reported_findings": "Motor ve emisyon arıtmasında arıza bildirilmemiş; ekran değişimi, küçük kontrol bileşenleri ve yazılım güncellemeleri var.",
+      "limitations": "Düşük saatli tek araç örneği; G125 ile aynı model değildir.",
+      "source_url": "https://www.profi.de/test/langzeit-test/langzeittest-valtra-n-154-e-versu-fast-nix-kaputt-12007711.html",
+      "measurement": "not_a_sales_adjusted_failure_rate"
+    },
+    {
+      "model": "Claas Axion 810 Cmatic",
+      "group": "balanced",
+      "publication_period": "2020 tarihli tarihsel test",
+      "usage_or_sample": "",
+      "reported_findings": "Tam iş göremezlik raporlanmamış; yaklaşık 700 saatte şanzıman solenoid valfi, ayrıca kayış ve kontrol kablosu güncellemeleri bildirilmiş.",
+      "limitations": "Axion 870 ile karıştırılmamalı; farklı yıl ve güç sınıfı.",
+      "source_url": "https://www.profi.de/test/langzeit-test/claas-axion-810-cmatic-mit-dem-laeuft-s-12055814.html",
+      "measurement": "not_a_sales_adjusted_failure_rate"
+    },
+    {
+      "model": "Deutz-Fahr 6185 TTV",
+      "group": "balanced",
+      "publication_period": "2024 tarihli uzun dönem testi",
+      "usage_or_sample": "",
+      "reported_findings": "Motor ve şanzıman tarafı iyi; elektrikli park freni tekrar eden sorun alanı, kabin hava süspansiyonu da onarılmış. Sahipler genel olarak memnun.",
+      "limitations": "Tam arızasız değil, dengeli saha sonucu.",
+      "source_url": "https://www.profi.de/test/langzeit-test/deutz-fahr-6185-ttv-ziemlich-zufrieden-b-32413.html",
+      "measurement": "not_a_sales_adjusted_failure_rate"
+    },
+    {
+      "model": "Steyr 6145 Profi",
+      "group": "balanced",
+      "publication_period": "2023 tarihli tarihsel test",
+      "usage_or_sample": "Kaynak özeti; saat değeri doğrulaması gerekli çalışma saati veya tek traktör / uzun dönem",
+      "reported_findings": "profi uzun dönem testinde motor, tüketim ve kullanım değerlendirmesi olumlu; sensör onarımı da mevcut.",
+      "limitations": "Ayrıntılı saat değeri kontrol edilmediğinden yanlış sayı vermiyoruz.",
+      "source_url": "https://www.profi.de/test/schleppertest/langzeittest-steyr-6145-profi-verlasslicher-profi-30974.html",
+      "measurement": "not_a_sales_adjusted_failure_rate"
+    },
+    {
+      "model": "Claas Arion 530–550 — eski üretim grubu",
+      "group": "balanced",
+      "publication_period": "2025 anketi",
+      "usage_or_sample": "yaklaşık 2016 üretimi; Model başına toplam saat yok çalışma saati veya çok kullanıcılı avrupa anketinin küçük alt grubu",
+      "reported_findings": "Sahiplik ve sürüş deneyimleri olumlu; motor soğutma ve elektronik sistemlerde de sorun bildirilmiş.",
+      "limitations": "Claas örneklemi ankette yaklaşık %6; kesin karşılaştırmalı arıza sıralamasına uygun değil.",
+      "source_url": "https://www.profi.de/test/schleppertest/umfrage-vierzylinder-traktoren-mit-150-ps-im-vergleich-35798.html",
+      "measurement": "not_a_sales_adjusted_failure_rate"
+    }
+  ]
+}
