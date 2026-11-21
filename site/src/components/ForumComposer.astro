@@ -101,7 +101,7 @@ const strings=JSON.stringify({
     <div class="forum-expired-help" data-forum-expired-help hidden>
       <p>{mt(lang,"invalidLinkHelp")}</p>
       <label>{ft(lang,"email")}
-        <input type="email" name="expired_email" autocomplete="email"
+        <input type="email" name="expired_email" required autocomplete="email"
           placeholder="name@example.com" maxlength="254"/>
       </label>
       <button type="button" data-expired-resend>{mt(lang,"resendConfirmation")}</button>
