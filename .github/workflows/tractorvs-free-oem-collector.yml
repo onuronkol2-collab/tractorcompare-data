@@ -1,0 +1,55 @@
+name: TractorVS FREE OEM manufacturer collector
+
+# 3 documents per run, max one URL per OEM host, 14-day private cache.
+# Independent from the existing PAID Gemini research queue runner.
+on:
+  pull_request:
+    paths:
+      - ".github/workflows/tractorvs-free-oem-collector.yml"
+      - "scripts/tractor-oem-free-collector.test.mjs"
+      - "scripts/tractor-oem-free-dispatch.mjs"
+      - "supabase/functions/tractor-oem-free-collector/**"
+      - "supabase/migrations/20261121124500_tractorvs_oem_document_cache.sql"
+      - "supabase/rollback/20261121124500_tractorvs_oem_document_cache_rollback.sql"
+      - "supabase/verification/verify_oem_document_cache.sql"
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/tractorvs-free-oem-collector.yml"
+  schedule:
+    - cron: '17 */2 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+concurrency:
+  group: tractorvs-free-oem-collector
+  cancel-in-progress: false
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Verify official hosts, robots, size caps, privacy and safe fetching
+        run: node --test scripts/tractor-oem-free-collector.test.mjs scripts/tractor-free-source-triage.test.mjs
+
+  collect:
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main' && github.repository == 'onuronkol2-collab/tractorcompare-data'
+    needs: test
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Fetch up to 3 official manufacturer source documents privately
+        env:
+          TRACTORVS_SUPABASE_ANON_JWT: ${{ secrets.TRACTORVS_SUPABASE_ANON_JWT }}
+          TRACTORVS_QUEUE_SECRET: ${{ secrets.TRACTORVS_QUEUE_SECRET }}
+        run: node scripts/tractor-oem-free-dispatch.mjs
