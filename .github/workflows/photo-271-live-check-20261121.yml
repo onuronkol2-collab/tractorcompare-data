@@ -1,0 +1,83 @@
+name: TractorVS one-time photo 271 read-only live verification
+on:
+  push:
+    branches: [audit/photo-271-live-20261121]
+    paths: [".github/workflows/photo-271-live-check-20261121.yml"]
+permissions:
+  contents: read
+jobs:
+  verify_live_photo_release:
+    if: github.repository == 'onuronkol2-collab/tractorcompare-data'
+    runs-on: ubuntu-latest
+    timeout-minutes: 9
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22.23.4"
+      - name: Check live model HTML, image rights, first-party JPEGs and image sitemap
+        run: |
+          node --input-type=module <<'NODE'
+          import {readFileSync} from "node:fs";
+          const evidence=JSON.parse(readFileSync("site/docs/photo-review-evidence-20261121.json","utf8"));
+          if(evidence.approved?.length!==8)throw Error("Expected eight source verified photos");
+          const ids=new Map([
+            ["Steyr|4075 KOMPAKT","19743251"],["Steyr|4095 KOMPAKT","5ac93982"],
+            ["Steyr|4105 KOMPAKT","129e9d3f"],["Steyr|4115 KOMPAKT","cb89989e"],
+            ["Steyr|4130 EXPERT CVT","62317e3d"],["Steyr|4140 EXPERT CVT","59894dfd"],
+            ["Steyr|6280 ABSOLUT CVT","57b5c94a"],["Zetor|6170","6a417237"]
+          ]);
+          const slug=s=>s.normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase()
+            .replace(/ı/g,"i").replace(/ğ/g,"g").replace(/ş/g,"s")
+            .replace(/ç/g,"c").replace(/ö/g,"o").replace(/ü/g,"u")
+            .replace(/[^a-z0-9]+/g,"-").replace(/^-+|-+$/g,"");
+          const pause=ms=>new Promise(resolve=>setTimeout(resolve,ms));
+          async function get(url){
+            const r=await fetch(url,{signal:AbortSignal.timeout(22000),
+              headers:{"User-Agent":"TractorVS/1.0 (read-only post-release photo verification)"}});
+            return r;
+          }
+          let found=false;
+          for(let attempt=1;attempt<=5;attempt++){
+            const results=[];
+            let sitemap=null;
+            try{
+              const r=await get("https://tractorvs.com/image-sitemap.xml");
+              sitemap=r.ok?await r.text():null;
+            }catch(e){console.log("IMAGE_SITEMAP_PENDING "+String(e));}
+            for(const photo of evidence.approved){
+              const id=ids.get(photo.brand+"|"+photo.model);
+              if(!id)throw Error("Missing grounded published tractor id "+photo.fileId);
+              const url="https://tractorvs.com/tr/tractors/"+
+                slug(photo.brand+"-"+photo.model)+"-"+id+"/";
+              const out={model:photo.brand+" "+photo.model,url,status:0,thumb:0,html:false,
+                license:false,author:false,sitemap:Boolean(sitemap?.includes(photo.fileId))};
+              try{
+                const page=await get(url);
+                out.status=page.status;
+                if(page.ok){
+                  const html=await page.text();
+                  out.html=html.includes(photo.fileId);
+                  out.author=html.includes(photo.photographer);
+                  out.license=html.includes("creativecommons.org/licenses/by-sa/4.0/");
+                }
+                const img=await get("https://tractorvs.com/images/tractors/"+photo.fileId+"-480.jpg");
+                out.thumb=img.status;
+                if(img.ok){
+                  const b=new Uint8Array(await img.arrayBuffer());
+                  out.jpeg=b.length>=9000 && b[0]===255 && b[1]===216 && b[2]===255 &&
+                    b.at(-2)===255 && b.at(-1)===217 &&
+                    (img.headers.get("content-type")||"").startsWith("image/jpeg");
+                }
+              }catch(e){out.error=String(e).slice(0,150);}
+              results.push(out);
+            }
+            const passed=results.filter(x=>x.status===200&&x.thumb===200&&x.html&&
+              x.author&&x.license&&x.jpeg&&x.sitemap);
+            console.log("LIVE_PHOTO_AUDIT "+JSON.stringify({attempt,passed:passed.length,total:results.length,results}));
+            if(passed.length===8){found=true;break;}
+            if(attempt<5)await pause(25000);
+          }
+          if(!found)throw Error("Site deployment not yet verified for eight new photos");
+          console.log("LIVE_PHOTO_RELEASE_VERIFIED all 8 HTML/credits/CC/480px-JPEG/image-sitemap");
+          NODE
