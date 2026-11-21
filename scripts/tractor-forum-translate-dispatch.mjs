@@ -5,14 +5,14 @@ import {resolve} from "node:path";
 import {appendFileSync} from "node:fs";
 import {assertAnonJwt} from "./tractor-research-batch.mjs";
 const URL="https://aaufxtcvnzgavtlintiv.supabase.co/functions/v1/tractor-forum-translate";
-const ACCEPTED=new Set(["ready","needs_review","retry","failed","superseded","queue_empty"]);
+const ACCEPTED=new Set(["ready","needs_review","partial","retry","failed","superseded","queue_empty"]);
 export function validateReceipt(x){
  if(!x||x.success!==true||!ACCEPTED.has(x.status)||
   !Number.isSafeInteger(x.processed)||x.processed<0||x.processed>1)
   throw Error("Forum translation worker receipt invalid.");
- if(x.processed===1&&x.status!=="ready"&&x.status!=="needs_review")
+ if(x.processed===1&&!["ready","needs_review","partial"].includes(x.status))
   throw Error("Unexpected completed translation state.");
- if(["ready","needs_review"].includes(x.status)&&
+ if(["ready","needs_review","partial"].includes(x.status)&&
   !["en","zh","hi","pt-br","fr","de","ru","ja","es"].includes(x.locale))
   throw Error("Unexpected translated locale.");
  return {status:x.status,processed:x.processed,
