@@ -86,7 +86,7 @@ export function initForumLive(root:HTMLElement):void{
  let call=0;
  async function refresh(showPending=false){
   const current=++call;
-  if(showPending)status.textContent=text.pending;
+  if(showPending){root.hidden=false;status.textContent=text.pending;}
   const query=new URLSearchParams({
    select:"id,topic_id,locale,original_locale,slug,category,status,created_at,title,body,machine_translated",
    locale:"eq."+cfg!.lang,status:"eq.published",order:"created_at.desc",limit:"60"
