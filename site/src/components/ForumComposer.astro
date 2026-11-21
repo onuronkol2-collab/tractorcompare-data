@@ -5,17 +5,33 @@ import {getPublicCatalog} from "../lib/catalog.ts";
 import {LOCALES,LOCALE_NAMES,LOCALE_TAGS,type Locale} from "../lib/locales.ts";
 interface Props {lang:Locale; mode:"topic"|"reply"; topicId?:string}
 const {lang,mode,topicId}=Astro.props;
-const cfg=publicForumClientConfig();
+const cfg=publicForumClientConfig() ?? (
+ process.env.TRACTORVS_FORUM_BROWSER_TEST==="true" && process.env.PUBLIC_INDEXING_ENABLED==="false"
+ ? {url:"http://127.0.0.1:4173/forum-test-api",key:"inert-browser-fixture"} : null
+);
 const catalogue=mode==="topic" ? (await getPublicCatalog()).tractors : [];
 const choices=[...catalogue].sort((a,b)=>
  a.brand_name.localeCompare(b.brand_name)||a.model_name.localeCompare(b.model_name));
 const browserConfig=JSON.stringify(cfg?{url:cfg.url,key:cfg.key,lang,mode,topicId:topicId||null}:null);
 const strings=JSON.stringify({
  pending:ft(lang,"pending"),sent:ft(lang,"sent"),authRequired:ft(lang,"authRequired"),
+ sendError:ft(lang,"sendError"),
+ codeError:ft(lang,"codeError"),
+ postError:ft(lang,"postError"),
+ limitError:ft(lang,"limitError"),
+ retryLater:ft(lang,"retryLater"),
+ draftRestored:ft(lang,"draftRestored"),
+ myPosts:ft(lang,"myPosts"),
+ statePending:ft(lang,"statePending"),
+ statePublished:ft(lang,"statePublished"),
+ stateRejected:ft(lang,"stateRejected"),
+ stateHidden:ft(lang,"stateHidden"),
+ noPosts:ft(lang,"noPosts"),
+ historyError:ft(lang,"historyError"),
  loading:ft(lang,"loading"),signinNote:ft(lang,"signinNote")
 });
 ---
-<section class="community-composer" data-forum-composer
+<section id="forum-compose" tabindex="-1" class="community-composer" data-forum-composer
  data-forum-config={browserConfig} data-forum-messages={strings}>
  <h2>{mode==="topic"?ft(lang,"compose"):ft(lang,"reply")}</h2>
  {cfg ? <>
@@ -34,6 +50,9 @@ const strings=JSON.stringify({
     </form>
     <button type="button" data-forum-logout hidden>{ft(lang,"logout")}</button>
   </div>
+  <details data-forum-history hidden>
+   <summary>{ft(lang,"myPosts")}</summary><p data-history-status role="status"></p><ul data-history-list></ul>
+  </details>
   <form data-forum-post hidden>
     {mode==="topic"&&<>
      <label>{ft(lang,"title")}
@@ -72,6 +91,10 @@ const strings=JSON.stringify({
 </section>
 <style>
 .community-composer{margin:34px 0;border:1px solid #b9d8bf;padding:clamp(16px,3vw,28px);border-radius:17px;background:#f3faf1;color:#264a33}
+.community-composer{scroll-margin-top:6rem}
+.community-composer details{margin:16px 0}
+.community-composer summary{cursor:pointer;color:#245e3b;padding:10px 0}
+.community-composer li{overflow-wrap:anywhere}
 .community-composer h2{font-size:clamp(20px,2.5vw,26px);color:#195232;margin:0 0 17px}
 .community-composer form{display:grid;gap:13px;margin:0 0 18px}
 .community-composer label{display:grid;gap:8px;font-size:14px;font-weight:750;color:#2a5237}
@@ -107,14 +130,78 @@ for(const widget of widgets){
   apikey:cfg.key,"Content-Type":"application/json",
   ...(token?{Authorization:"Bearer "+token}:{})
  });
+ const historyPanel=el<HTMLDetailsElement>("[data-forum-history]");
+ const historyList=el<HTMLUListElement>("[data-history-list]");
+ const historyStatus=el<HTMLElement>("[data-history-status]");
+ let userId="";
  let token="";
  let email="";
  const msg=(text:string)=>{if(message)message.textContent=text};
+ const draftPrefix=()=>"tractorvs.forum.draft."+userId+".";
+ const draftKey=()=>draftPrefix()+cfg.mode+"."+cfg.lang+"."+(cfg.topicId||"");
+ const draftNames=["title","body","category","source_locale","tractor_id"];
+ function saveDraft(){
+  if(!postForm||!userId)return;
+  try{
+   const fields=new FormData(postForm);
+   const draft=Object.fromEntries(draftNames.map(name=>[name,String(fields.get(name)||"")]));
+   if(draft.title||draft.body)sessionStorage.setItem(draftKey(),JSON.stringify(draft));
+   else sessionStorage.removeItem(draftKey());
+  }catch{}
+ }
+ function restoreDraft(){
+  if(!postForm||!userId)return;
+  try{
+   const raw=sessionStorage.getItem(draftKey());
+   if(!raw)return;
+   const draft=JSON.parse(raw);
+   for(const name of draftNames){
+    const input=postForm.elements.namedItem(name);
+    if(input && "value" in input && typeof draft[name]==="string")input.value=draft[name];
+   }
+   msg(copy.draftRestored);
+  }catch{}
+ }
+ postForm?.addEventListener("input",saveDraft);
+ postForm?.addEventListener("change",saveDraft);
+ let historyVersion=0;
+ async function showHistory(){
+  const version=++historyVersion;
+  if(!historyPanel?.open||!userId||!token||!historyStatus||!historyList)return;
+  const topic=cfg.mode==="topic";
+  const params=new URLSearchParams({select:topic?"title,status":"body,status",author_id:"eq."+userId,order:"created_at.desc,id.desc",limit:"10"});
+  if(!topic)params.set("topic_id","eq."+cfg.topicId);
+  historyStatus.textContent=copy.loading;
+  historyList.replaceChildren();
+  try{
+   const res=await fetch(cfg.url+"/rest/v1/"+(topic?"tc_forum_topics":"tc_forum_replies")+"?"+params,{headers:header(token),cache:"no-store",signal:AbortSignal.timeout(12000)});
+   if(!res.ok)throw Error();
+   const rows=await res.json();
+   if(version!==historyVersion)return;
+   const states:Record<string,string>={pending:copy.statePending,published:copy.statePublished,rejected:copy.stateRejected,hidden:copy.stateHidden};
+   for(const row of rows){
+    const item=document.createElement("li");
+    item.textContent=String(topic?row.title:row.body).slice(0,160)+" · "+(states[row.status]||"—");
+    historyList.append(item);
+   }
+   historyStatus.textContent=rows.length?"":copy.noPosts;
+  }catch{if(version===historyVersion)historyStatus.textContent=copy.historyError}
+ }
+ historyPanel?.addEventListener("toggle",showHistory);
  function saveSession(jwt:string){
   token=jwt;
   try{sessionStorage.setItem(tokenKey,jwt)}catch{}
  }
  function setLogin(loggedIn:boolean){
+  if(historyPanel)historyPanel.hidden=!loggedIn;
+  if(!loggedIn){
+   ++historyVersion;
+   if(historyPanel)historyPanel.open=false;
+   historyList?.replaceChildren();
+   if(historyStatus)historyStatus.textContent="";
+   userId="";token="";
+   postForm?.reset();
+  }
   if(postForm)postForm.hidden=!loggedIn;
   if(authForm)authForm.hidden=loggedIn;
   if(verifyForm)verifyForm.hidden=true;
@@ -129,7 +216,7 @@ for(const widget of widgets){
    if(!r.ok)throw new Error("expired");
    const data=await r.json();
    if(typeof data?.id!=="string")throw new Error("invalid");
-   saveSession(jwt);setLogin(true);return true;
+   userId=data.id;saveSession(jwt);setLogin(true);restoreDraft();return true;
   }catch{return false}
  }
  const hash=new URLSearchParams(location.hash.replace(/^#/,""));
@@ -154,29 +241,30 @@ for(const widget of widgets){
     method:"POST",headers:header(),body:JSON.stringify({email,create_user:true}),
     signal:AbortSignal.timeout(15000)
    });
-   if(!res.ok)throw new Error("Email sign-in unavailable ("+res.status+")");
+   if(!res.ok){msg(res.status===429?copy.retryLater:copy.sendError);return}
    msg(copy.sent||"Email sent");
    if(verifyForm)verifyForm.hidden=false;
-  }catch(e){msg((e as Error).message+" · "+(copy.signinNote||""))}
+  }catch{msg(copy.sendError)}
   finally{if(button)button.disabled=false}
  });
  verifyForm?.addEventListener("submit",async ev=>{
   ev.preventDefault();
   const code=(verifyForm.elements.namedItem("code") as HTMLInputElement|null)?.value.trim()||"";
-  if(!/^[0-9]{6,8}$/.test(code)||!email){msg(copy.authRequired||"Sign in required");return}
+  if(!/^[0-9]{6,8}$/.test(code)||!email){msg(copy.codeError);return}
   msg(copy.loading||"...");
   try{
    const res=await fetch(cfg.url+"/auth/v1/verify",{
     method:"POST",headers:header(),body:JSON.stringify({email,token:code,type:"email"}),
     signal:AbortSignal.timeout(15000)
    });
-   if(!res.ok)throw new Error("Email code rejected ("+res.status+")");
+   if(!res.ok){msg(res.status===429?copy.retryLater:copy.codeError);return}
    const data=await res.json();
-   if(!await verifySession(data.access_token))throw new Error("Could not establish a session.");
    msg("");
-  }catch(e){msg((e as Error).message)}
+   if(!await verifySession(data.access_token))msg(copy.authRequired);
+  }catch{msg(copy.codeError)}
  });
  logout?.addEventListener("click",()=>{
+  try{for(const key of Object.keys(sessionStorage))if(userId&&key.startsWith(draftPrefix()))sessionStorage.removeItem(key)}catch{}
   const existing=token;token="";try{sessionStorage.removeItem(tokenKey)}catch{}
   setLogin(false);msg("");
   if(existing)fetch(cfg.url+"/auth/v1/logout",{method:"POST",headers:header(existing)}).catch(()=>{});
@@ -187,6 +275,15 @@ for(const widget of widgets){
  postForm?.addEventListener("submit",async ev=>{
   ev.preventDefault();
   if(!token){msg(copy.authRequired||"Sign in required");return}
+  for(const field of postForm.querySelectorAll<HTMLInputElement|HTMLTextAreaElement>('input[name="title"],textarea[name="body"]')){
+   field.value=field.value.trim();
+   const count=Array.from(field.value).length;
+   if(count<field.minLength||count>field.maxLength){
+    field.focus();
+    msg(field.labels?.[0]?.textContent?.trim()+" ("+field.minLength+"–"+field.maxLength+")");
+    return;
+   }
+  }
   const form=new FormData(postForm);
   const body=String(form.get("body")||"").trim();
   const sourceLocale=String(form.get("source_locale")||"");
@@ -197,29 +294,34 @@ for(const widget of widgets){
   if(cfg.mode==="topic"){
    table="tc_forum_topics";
    const title=String(form.get("title")||"").trim();
-   if(title.length<12||title.length>160||body.length<40||body.length>12000){msg(copy.authRequired||"Invalid content length");return}
    const id=crypto.randomUUID();
    const prefix=title.normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase()
     .replace(/[^a-z0-9]+/g,"-").replace(/^-+|-+$/g,"").slice(0,85)||"tractor-topic";
    Object.assign(row,{id,title,slug:prefix+"-"+id.replace(/-/g,""),category:String(form.get("category")||"questions"),
     locale:sourceLocale,tractor_id:form.get("tractor_id")||null});
   }else{
-   if(!cfg.topicId||body.length<10||body.length>6000)return;
+   if(!cfg.topicId)return;
    row.topic_id=cfg.topicId;row.source_locale=sourceLocale;
   }
   const button=postForm.querySelector<HTMLButtonElement>('button[type="submit"]');
-  if(button)button.disabled=true;msg(copy.loading||"...");
+  if(button?.disabled)return;
+  if(button)button.disabled=true;
+  if(logout)logout.disabled=true;
+  msg(copy.loading);
   try{
    const res=await fetch(cfg.url+"/rest/v1/"+table,{method:"POST",
     headers:{...header(token),Prefer:"return=minimal"},
     body:JSON.stringify(row),signal:AbortSignal.timeout(18000)});
    if(!res.ok){
-    if(res.status===401||res.status===403){setLogin(false);throw new Error(copy.authRequired||"Sign in again")}
-    throw new Error("Submission unavailable ("+res.status+"). Check daily limits, field length and moderator settings.");
+    if(res.status===401){saveDraft();try{sessionStorage.removeItem(tokenKey)}catch{}setLogin(false);msg(copy.authRequired);return}
+    const error=await res.json().catch(()=>({}));
+    msg(/^Daily forum (topic|reply) limit reached$/.test(error.message)?copy.limitError:res.status===429?copy.retryLater:copy.postError);
+    return;
    }
-   postForm.reset();msg(copy.pending||"Submitted for review");
-  }catch(e){msg((e as Error).message)}
-  finally{if(button)button.disabled=false}
+   try{sessionStorage.removeItem(draftKey())}catch{}
+   postForm.reset();msg(copy.pending);void showHistory();
+  }catch{msg(copy.postError)}
+  finally{if(button)button.disabled=false;if(logout)logout.disabled=false}
  });
 }
 </script>

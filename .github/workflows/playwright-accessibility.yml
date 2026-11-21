@@ -39,6 +39,7 @@ jobs:
       - name: Build inert local TractorVS pages
         env:
           PUBLIC_INDEXING_ENABLED: "false"
+          TRACTORVS_FORUM_BROWSER_TEST: "true"
         run: npm run build
       - name: Execute real-browser smoke and axe accessibility baseline
         run: npx playwright test --config site/playwright.config.mjs
