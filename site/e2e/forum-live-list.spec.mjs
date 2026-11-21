@@ -20,7 +20,7 @@ test("guests can read newly published public topics before static Cloudflare dep
  const newList=page.locator("[data-forum-live-root]");
  await expect(newList).toBeVisible();
  await expect(newList.locator(".forum-live-topic")).toHaveCount(1);
- await expect(newList.locator("h3")).toContainText("Yeni Traktör Deneyimi");
+ await expect(newList.locator(".forum-live-topic h3")).toContainText("Yeni Traktör Deneyimi");
  await expect(page.locator(".community-empty")).toBeHidden();
  const details=newList.locator("details");
  await details.locator("summary").click();
