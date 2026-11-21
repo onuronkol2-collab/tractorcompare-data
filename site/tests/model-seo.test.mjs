@@ -213,3 +213,27 @@ test("manufacturer product-page citations are described as sources, not necessar
     assert.ok(!noSource.description.includes(sentence), `Unsupported manufacturer claim in ${locale}`);
   }
 });
+
+test("very long exact-variant model titles shed only generic boilerplate and preserve identity",()=>{
+  const heavy={...tractor,brand_name:"Lamborghini Trattori",model_name:"Spire V 80 Target",
+    variant:"Stage V tractor configuration option",market:"Unspecified (historical catalogue)",model_year:2025};
+  const locales=["en","tr","zh","hi","pt-br","fr","de","ru","ja","es"];
+  for(const locale of locales){
+    const x=modelSeoMetadata(heavy,locale);
+    assert.ok(x.title.startsWith("Lamborghini Trattori Spire V 80 Target"),locale);
+    assert.ok(x.title.includes("Stage V tractor configuration option"),locale);
+    assert.ok(x.title.includes("2025"),locale);
+    assert.ok(x.title.endsWith(" | TractorVS"),locale);
+    assert.ok(!x.title.includes("…")&&!x.title.includes("..."),locale);
+    assert.ok(x.description.includes("Stage V tractor configuration option"),locale);
+    const alternate=modelSeoMetadata({...heavy,variant:"Different Stage V configuration"},locale);
+    assert.notEqual(x.title,alternate.title,locale+" keep variant distinction");
+    assert.ok(x.title.length<165,locale+" avoid unbounded generic SEO wording");
+  }
+});
+test("short model SEO titles keep their natural localized specification noun",()=>{
+ const x=modelSeoMetadata({...tractor,variant:null,market:"global",model_year:null},"en");
+ assert.match(x.title,/McCormick X5.120/);
+ assert.match(x.title,/\b(specifications|technical|Specs)\b/i);
+ assert.ok(x.title.length<=105);
+});
