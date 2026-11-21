@@ -116,14 +116,6 @@ const text={
    question:`What rear hitch lift capacity is documented for ${name}?`,
    answer:`A reviewed source lists ${v} kg for the rear hitch lift capacity${s}. Capacity depends on the measurement point and fitted equipment; confirm the conditions before comparing tractors.`,
   }),
-  "engine-displacement":(name:string,v:string,s:string)=>({
-   question:`${name} modelinin belgelenmiş motor hacmi kaç litre?`,
-   answer:`İncelenen teknik kaynakta motor hacmi ${v} litre olarak belirtiliyor${s}. Motor hacmi, beygir gücü veya yakıt tüketimi değildir. Varyantı bağlantılı belgeden kontrol edin.`,
-  }),
-  "rear-hitch-lift":(name:string,v:string,s:string)=>({
-   question:`${name} modelinin belgelenmiş arka kaldırma kapasitesi kaç kilogram?`,
-   answer:`İncelenen kaynak arka askı kaldırma kapasitesini ${v} kg olarak veriyor${s}. Değer ölçüm noktasına ve takılı donanıma bağlı olabilir; modelleri karşılaştırmadan önce koşulları kontrol edin.`,
-  }),
   wheelbase:(name:string,v:string,s:string)=>({
    question:`What is the documented wheelbase of ${name}?`,
    answer:`The reviewed specification gives a wheelbase of ${v} mm${s}. Wheelbase is the distance between front and rear axle centres, not the tractor's overall length.`,
@@ -141,6 +133,14 @@ const text={
   pto:(name:string,v:string,s:string)=>({
    question:`${name} modelinin belgelenmiş kuyruk mili gücü kaç HP?`,
    answer:`İncelenen kaynak kuyruk mili gücünü ${v} HP olarak veriyor${s}. Bu sayı motor beygiriyle aynı şey değildir. Başka traktörle karşılaştırırken PTO devrini ve ölçüm yöntemini kontrol edin.`,
+  }),
+  "engine-displacement":(name:string,v:string,s:string)=>({
+   question:`${name} modelinin belgelenmiş motor hacmi kaç litre?`,
+   answer:`İncelenen teknik kaynakta motor hacmi ${v} litre olarak belirtiliyor${s}. Motor hacmi, beygir gücü veya yakıt tüketimi değildir. Varyantı bağlantılı belgeden kontrol edin.`,
+  }),
+  "rear-hitch-lift":(name:string,v:string,s:string)=>({
+   question:`${name} modelinin belgelenmiş arka kaldırma kapasitesi kaç kilogram?`,
+   answer:`İncelenen kaynak arka askı kaldırma kapasitesini ${v} kg olarak veriyor${s}. Değer ölçüm noktasına ve takılı donanıma bağlı olabilir; modelleri karşılaştırmadan önce koşulları kontrol edin.`,
   }),
   wheelbase:(name:string,v:string,s:string)=>({
    question:`${name} modelinin dingil mesafesi kaç milimetre?`,
