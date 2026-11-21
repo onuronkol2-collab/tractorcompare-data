@@ -3,7 +3,7 @@ import assert from "node:assert/strict";
 import {readFileSync} from "node:fs";
 import {FORUM_TEXT,FORUM_CATEGORY_KEYS} from "../src/lib/forum-i18n.ts";
 import {FORUM_STARTER_GUIDES} from "../src/lib/forum-starter-guides.ts";
-import {forumThreadReplies,isSafeForumTopic,isIndexableForumTopic} from "../src/lib/forum.ts";
+import {forumThreadReplies,isSafeForumTopic,isIndexableForumTopic,hasExternalForumNewsSource} from "../src/lib/forum.ts";
 const text=path=>readFileSync(new URL(path,import.meta.url),"utf8");
 test("all ten forum locales have complete original UI, categories and consent semantics",()=>{
  const locales=["en","tr","zh","hi","pt-br","fr","de","ru","ja","es"];
@@ -32,6 +32,31 @@ test("only explicitly published, safe-slug public forum topics may become static
  assert.equal(isIndexableForumTopic(ja),true);
  assert.equal(isIndexableForumTopic({...ja,seo_ready:false}),false);
  assert.equal(isIndexableForumTopic(row),false);
+});
+test("editorially moderated news requires an external HTTPS/HTTP citation before search indexing",()=>{
+ const base={
+  id:"9058289c-16e0-43f9-b5d5-fd9cc03037f2",topic_id:"9058289c-16e0-43f9-b5d5-fd9cc03037f2",
+  locale:"tr",original_locale:"tr",slug:"2026-dealer-satisfaction-9058289c16e043f9b5d5fd9cc03037f2",
+  category:"news",tractor_id:null,title:"2026 bayi memnuniyeti sıralaması",
+  body:"2026 bayi memnuniyeti araştırması hakkında ayrıntılı ve kaynak gerektiren analiz. ".repeat(4),
+  status:"published",created_at:"2026-11-21",updated_at:"2026-11-21",
+  seo_ready:true,machine_translated:false
+ };
+ assert.equal(isSafeForumTopic(base),true);
+ assert.equal(hasExternalForumNewsSource(base.body),false);
+ assert.equal(isIndexableForumTopic(base),false, "sourceless news must not be indexed");
+ assert.equal(isIndexableForumTopic({...base,body:base.body+"https://tractorvs.com/tr/methodology/"}),false);
+ assert.equal(isIndexableForumTopic({...base,body:base.body+"https://sub.tractorvs.com/report"}),false);
+ assert.equal(isIndexableForumTopic({...base,body:base.body+"javascript:alert(1)"}),false);
+ const sourced={...base,body:base.body+"Kaynak: https://www.climmar.com/news/climmar-presents-dealer-satisfaction-index-at-eima"};
+ assert.equal(isIndexableForumTopic(sourced),true, "source-linked approved news remains indexable");
+ assert.equal(isIndexableForumTopic({...sourced,seo_ready:false}),false);
+ assert.equal(isIndexableForumTopic({...sourced,status:"hidden"}),false);
+ assert.equal(isIndexableForumTopic({...base,category:"questions"}),true, "ordinary firsthand questions do not require citations");
+ const hub=text("../src/components/ForumHub.astro");
+ const sitemap=text("../src/pages/forum-sitemap.xml.ts");
+ assert.match(hub,/topics\\.filter\\(isIndexableForumTopic\\)/);
+ assert.match(sitemap,/filter\\(isIndexableForumTopic\\)/);
 });
 test("direct text publication preserves least privilege and honest authorship",()=>{
  const composer=text("../src/components/ForumComposer.astro");
