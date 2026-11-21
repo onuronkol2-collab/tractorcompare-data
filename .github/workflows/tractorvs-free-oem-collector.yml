@@ -16,6 +16,8 @@ on:
     branches: [main]
     paths:
       - ".github/workflows/tractorvs-free-oem-collector.yml"
+      - "supabase/functions/tractor-oem-free-collector/**"
+      - "scripts/tractor-oem-free-dispatch.mjs"
   schedule:
     - cron: '17 */2 * * *'
   workflow_dispatch:

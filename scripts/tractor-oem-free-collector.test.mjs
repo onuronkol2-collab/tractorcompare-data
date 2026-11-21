@@ -127,3 +127,23 @@ test("source collector cannot change model, spec or research queue states",()=>{
  const res=aggregateResults([{status:"fetched_html"},{status:"pdf_pending_parse"}]);
  assert.equal(res.paid_ai_calls,0);assert.equal(res.published,0);
 });
+
+test("additional original manufacturer hosts remain exact and brand-scoped",()=>{
+ const accepted=[
+  ["SAME","https://www.same-tractors.com/en-gb/tractors"],
+  ["Iseki","https://www.iseki.co.jp/global/english/products/tractor/"],
+  ["Lamborghini Trattori","https://www.lamborghini-tractors.com/en-eu/tractors/full-range"],
+  ["Mahindra","https://www.mahindratractor.com/tractors"],
+  ["Steyr","https://www.steyr-traktoren.com/en/agriculture/products/tractors"],
+  ["Zetor","https://www.zetor.com/file/ZET2024_Leaflet_PORTFOLIO_EN.pdf"],
+  ["Fendt","https://dam.agcocorp.com/content/dam/multisite/fendt/brochures/one.pdf"],
+  ["Case IH","https://assets.cnhindustrial.com/caseih/NAFTA/tractors/brochure.pdf"]
+ ];
+ for(const [brand,url] of accepted)assert.equal(allowedOemUrl(url,brand),url,brand);
+ for(const [brand,url] of [
+  ["Fendt","https://dam.agcocorp.com/content/dam/multisite/massey-ferguson/brochure.pdf"],
+  ["Case IH","https://assets.cnhindustrial.com/newholland/tractors/brochure.pdf"],
+  ["Kioti","https://www.kioti.eu.evil.invalid/"],
+  ["Belarus","https://www.agromeh.com/products/belarus"]
+ ])assert.equal(allowedOemUrl(url,brand),null,brand);
+});
