@@ -1,0 +1,34 @@
+name: TractorVS one-time verified photo acquisition
+on:
+  push:
+    branches: [feat/licensed-photo-batch-5-20261121]
+    paths:
+      - ".github/workflows/photo-source-once-20261121.yml"
+permissions:
+  contents: write
+concurrency:
+  group: tractorvs-one-time-photos-20261121
+  cancel-in-progress: false
+jobs:
+  download_only_exact_reviewed_jpegs:
+    if: github.repository == 'onuronkol2-collab/tractorcompare-data' && github.ref == 'refs/heads/feat/licensed-photo-batch-5-20261121'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22.23.4"
+      - name: Verify Wikimedia exact file identity, author, CC licence and JPEG bytes
+        run: node .github/scripts/fetch-licensed-thumbnails-once-20261121.mjs
+      - name: Commit binary thumbnails only onto this feature branch
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add site/public/images/tractors/
+          if git diff --cached --quiet; then
+            echo "::error::Missing expected licensed thumbnail additions"
+            exit 1
+          fi
+          git commit -m "assets(photos): four source-checked Commons JPEG thumbnails"
+          git push origin HEAD:refs/heads/feat/licensed-photo-batch-5-20261121
