@@ -9,15 +9,13 @@ on:
       - "scripts/tractor-forum-translate-dispatch.mjs"
       - "scripts/tractor-forum-translate-dispatch.test.mjs"
       - "supabase/functions/tractor-forum-translate/**"
-  push:
-    branches: [main]
-    paths:
-      - ".github/workflows/tractorvs-forum-translation.yml"
-      - "scripts/tractor-forum-translate-dispatch.mjs"
-      - "supabase/functions/tractor-forum-translate/**"
-  schedule:
-    - cron: "9,19,29,39,49,59 * * * *"
+  # No schedule or push translation calls. User deliberately chooses when work runs.
   workflow_dispatch:
+    inputs:
+      onay:
+        description: "Gerçek çeviriyi başlatmak için ONAY yazın"
+        required: true
+        type: string
 
 permissions:
   contents: read
@@ -43,7 +41,7 @@ jobs:
         run: deno check --no-config supabase/functions/tractor-forum-translate/index.ts
 
   process:
-    if: github.event_name != 'pull_request' && github.repository == 'onuronkol2-collab/tractorcompare-data' && github.ref == 'refs/heads/main'
+    if: github.event_name == 'workflow_dispatch' && inputs.onay == 'ONAY' && github.repository == 'onuronkol2-collab/tractorcompare-data' && github.ref == 'refs/heads/main'
     needs: check
     runs-on: ubuntu-latest
     timeout-minutes: 14
