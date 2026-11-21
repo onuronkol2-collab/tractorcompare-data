@@ -91,3 +91,49 @@ test("visible model answers and public sources are part of server-rendered HTML 
  assert.match(html,/availableLocales|lang==="tr"\|\|lang==="en"/);
  assert.doesNotMatch(html,/\"@type\":\"FAQPage\"/);
 });
+
+test("source-backed engine displacement and rear hitch lift add useful, qualified AI answers",()=>{
+ const model={...base,specifications:[
+  spec("engine_displacement","3.6","L"),
+  spec("rear_lift_capacity_kg","4500","kg",{measurement_standard:"with assistor rams"})
+ ]};
+ const en=modelEvidenceAnswers(model,"en");
+ const tr=modelEvidenceAnswers(model,"tr");
+ assert.deepEqual(en.map(a=>a.id),["engine-displacement","rear-hitch-lift"]);
+ assert.deepEqual(tr.map(a=>a.id),["engine-displacement","rear-hitch-lift"]);
+ assert.match(en[0].answer,/3.6 litres/);
+ assert.match(tr[1].answer,/4.500 kg/);
+ assert.match(en[1].answer,/measurement point and fitted equipment/);
+ assert.ok(en.every(a=>a.sourceUrl===source&&a.sourceType==="manufacturer"));
+});
+
+test("new GEO answers fail closed for units, conflicting capacities and unsupported documents",()=>{
+ const model={...base,specifications:[
+  spec("engine_displacement","3600","cc"),
+  spec("rear_lift_capacity_kg","4500","kg"),
+  spec("rear_lift_capacity_kg","5500","kg",{spec_id:"conflicting"}),
+  spec("hydraulic_lift_capacity","4000","kg",{source_url:null})
+ ]};
+ assert.deepEqual(modelEvidenceAnswers(model,"en"),[]);
+ const wrong={...base,specifications:[
+  spec("engine_displacement","3.6","kW"),
+  spec("rear_lift_capacity_kg","4500","daN")
+ ]};
+ assert.deepEqual(modelEvidenceAnswers(wrong,"tr"),[]);
+});
+
+test("new GEO fields do not crowd out previously verified wheelbase and fuel answers",()=>{
+ const model={...base,specifications:[
+  spec("engine_rated_power","114","hp"),
+  spec("pto_power_hp","89","hp"),
+  spec("engine_displacement","3.6","L"),
+  spec("rear_lift_capacity_kg","4500","kg"),
+  spec("wheelbase_mm","2355","mm"),
+  spec("fuel_tank_capacity","135","L")
+ ]};
+ const answers=modelEvidenceAnswers(model,"tr");
+ assert.deepEqual(answers.map(x=>x.id),[
+  "rated-power","pto-power","engine-displacement","rear-hitch-lift","wheelbase","fuel"
+ ]);
+ assert.ok(answers.every(x=>x.sourceUrl===source));
+});
