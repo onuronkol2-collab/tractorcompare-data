@@ -16,7 +16,7 @@ on:
       - "scripts/tractor-forum-translate-dispatch.mjs"
       - "supabase/functions/tractor-forum-translate/**"
   schedule:
-    - cron: "9,29,49 * * * *"
+    - cron: "9,19,29,39,49,59 * * * *"
   workflow_dispatch:
 
 permissions:
@@ -46,7 +46,7 @@ jobs:
     if: github.event_name != 'pull_request' && github.repository == 'onuronkol2-collab/tractorcompare-data' && github.ref == 'refs/heads/main'
     needs: check
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 14
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4

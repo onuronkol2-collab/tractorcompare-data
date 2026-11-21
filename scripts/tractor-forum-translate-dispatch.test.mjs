@@ -34,6 +34,18 @@ test("rejects malformed receipts and unexpected target languages",()=>{
  assert.throws(()=>validateReceipt({success:true,processed:5,status:"ready",locale:"en"}),/invalid/);
  assert.throws(()=>validateReceipt({success:true,processed:1,status:"queue_empty"}),/Unexpected/);
 });
+test("partial private checkpoint is accepted but never reported as a published translation",async()=>{
+ const receipts=[];
+ let n=0;
+ const fetchFn=async()=>{
+  n++;
+  return new Response(JSON.stringify({success:true,processed:1,status:"partial",locale:"ja"}),{status:200});
+ };
+ receipts.push(...await runTranslationQueue({jwt:anon,secret:"secret",max:3,fetchFn}));
+ assert.equal(n,3);
+ assert.deepEqual(receipts.map(r=>r.status),["partial","partial","partial"]);
+ assert.throws(()=>validateReceipt({success:true,processed:1,status:"partial",locale:"tr"}),/Unexpected/);
+});
 test("never attempts more than three translations per scheduled run",async()=>{
  let n=0;const fn=async()=>{n++;return new Response(JSON.stringify({success:true,processed:1,status:"ready",locale:"fr"}))};
  await runTranslationQueue({jwt:anon,secret:"x",max:3,fetchFn:fn});

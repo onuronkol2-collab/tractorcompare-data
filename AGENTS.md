@@ -52,6 +52,9 @@ GitHub (Actions, CodeQL, Dependabot, Dependency graph, Malware alerts, Secret Pr
 
 ### İzinli forum çevirileri için gerçek işleyici (21 Kasım 2026)
 
+- **Uzun forum makalelerinde** satır ve Markdown tablo bütünlüğünü koruyan küçük parçalara ayrılmış işleme tercih et. Her bölüm ayrı çeviri ve bağımsız QA'dan sonra yalnız `needs_review` / `seo_approved=false` özel kayıtta `PARTS:N/T` ilerleme işaretiyle saklanır. Tam metin ve son yerel sayı/marka/URL karşılaştırması ile DB fact/language QA başarılı olunca `ready` olabilir. Kısmi çeviri asla indekslenmez veya yayımlanmaz; sorun olursa kaynak metin ve tamamlanan bölümler kaybolmadan devam edilir.
+
+
 - Kullanıcının makalede çeviri kutucuğunu seçmesi yalnızca 9 dil için `tc_forum_translation_jobs` kuyruğu oluşturur; otomatik çevrildiği veya başka dilde yayımlandığı anlamına gelmez.
 - Sunucu tarafı `tractor-forum-translate` Edge Function, anonim JWT + özel kuyruk sırrıyla GitHub Actions içinden çağrılır. Servis rolü ve Gemini API anahtarı yalnız Supabase Edge ortamında kalır. İzin vermemiş kullanıcı, gizli konu, değişmiş kaynak metin ve özel medya Gemini'ye gönderilmez.
 - Kaynağı `published`, `translation_consent=true` ve güncel source_hash ile doğrulayan, retry/idempotency ve denetlenebilir job statüsü olan sınırlı işleyici kullan. Kaynak iptal/değişikliklerinde `superseded` yapılır; sessizce uydurma çeviri yayımlanmaz.
