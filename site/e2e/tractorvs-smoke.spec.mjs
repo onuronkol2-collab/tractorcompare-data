@@ -102,6 +102,8 @@ test("axe-core first pass: no critical accessibility violations on the home page
     id: violation.id,
     impact: violation.impact,
     nodes: violation.nodes.length,
+    targets: violation.nodes.map((node) => node.target),
+    failingHtml: violation.nodes.map((node) => node.html.slice(0, 350)),
     help: violation.help,
   }));
   await testInfo.attach("axe-violations", {
