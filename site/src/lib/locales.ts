@@ -9,6 +9,17 @@ export const LOCALE_NAMES: Record<Locale,string> = {
   ru: "Русский", ja: "日本語", es: "Español",
 };
 
+/** Accessible navigation labels used on long-form articles in each actual language. */
+export const BREADCRUMB_LABELS:Record<Locale,string> = {
+ en:"Breadcrumb",tr:"İçerik yolu",zh:"导航路径",hi:"नेविगेशन क्रम",
+ "pt-br":"Caminho de navegação",fr:"Fil d’Ariane",de:"Navigationspfad",
+ ru:"Навигационная цепочка",ja:"ページ階層",es:"Ruta de navegación"
+};
+export const RELATED_PAGES_LABELS:Record<Locale,string> = {
+ en:"Related pages",tr:"İlgili sayfalar",zh:"相关页面",hi:"संबंधित पृष्ठ",
+ "pt-br":"Páginas relacionadas",fr:"Pages associées",de:"Verwandte Seiten",
+ ru:"Связанные страницы",ja:"関連ページ",es:"Páginas relacionadas"
+};
 export const LOCALE_TAGS: Record<Locale,string> = {
   en: "en", tr: "tr", zh: "zh-Hans", hi: "hi", "pt-br": "pt-BR",
   fr: "fr", de: "de", ru: "ru", ja: "ja", es: "es",
