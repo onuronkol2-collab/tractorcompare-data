@@ -2,6 +2,7 @@
 import {forumText as ft,FORUM_CATEGORY_KEYS} from "../lib/forum-i18n.ts";
 import {MEMBER_TEXT,memberText as mt} from "../lib/member-i18n.ts";
 import {publicForumClientConfig} from "../lib/forum.ts";
+import ForumEditor from "./ForumEditor.astro";
 import {getPublicCatalog} from "../lib/catalog.ts";
 import {LOCALES,LOCALE_NAMES,LOCALE_TAGS,type Locale} from "../lib/locales.ts";
 interface Props {lang:Locale; mode:"topic"|"reply"; topicId?:string}
@@ -170,6 +171,7 @@ const strings=JSON.stringify({
       <textarea name="body" required minlength={mode==="topic"?40:10}
        maxlength={mode==="topic"?12000:6000} rows={mode==="topic"?7:4}></textarea>
     </label>
+    <ForumEditor lang={lang}/>
     <label class="forum-checkbox">
       <input type="checkbox" name="translation_consent"/>
       <span>{ft(lang,"consent")}</span>
@@ -241,6 +243,7 @@ const strings=JSON.stringify({
 </style>
 <script>
 import {isLocale} from "../lib/locales.ts";
+import {initForumEditor} from "../lib/forum-editor-client.ts";
 type FormContainer=HTMLElement & {dataset:DOMStringMap};
 const widgets=document.querySelectorAll<FormContainer>("[data-forum-composer]");
 for(const widget of widgets){
@@ -323,6 +326,7 @@ for(const widget of widgets){
  let email="";
  let signupEmail="";
  const msg=(text:string)=>{if(message)message.textContent=text};
+ const editor=initForumEditor(widget,{url:cfg.url,key:cfg.key},()=>token,()=>userId,msg);
  const draftPrefix=()=>"tractorvs.forum.draft."+userId+".";
  const draftKey=()=>draftPrefix()+cfg.mode+"."+cfg.lang+"."+(cfg.topicId||"");
  const draftNames=["title","body","category","source_locale","tractor_id"];
@@ -393,7 +397,7 @@ for(const widget of widgets){
    historyList?.replaceChildren();
    if(historyStatus)historyStatus.textContent="";
    userId="";token="";
-   postForm?.reset();
+   postForm?.reset();editor?.clear();
   }
   if(postForm)postForm.hidden=!loggedIn;
   if(guestNote)guestNote.hidden=loggedIn;
@@ -711,6 +715,7 @@ for(const widget of widgets){
  postForm?.addEventListener("submit",async ev=>{
   ev.preventDefault();
   if(!token){msg(copy.authRequired||"Sign in required");return}
+  if(editor&&!editor.valid())return;
   for(const field of postForm.querySelectorAll<HTMLInputElement|HTMLTextAreaElement>('input[name="title"],textarea[name="body"]')){
    field.value=field.value.trim();
    const count=Array.from(field.value).length;
@@ -725,12 +730,13 @@ for(const widget of widgets){
   const sourceLocale=String(form.get("source_locale")||"");
   if(!isLocale(sourceLocale))return;
   const consent=form.get("translation_consent")!==null;
-  const row:Record<string,unknown>={body,translation_consent:consent,status:"pending"};
+  const postId=crypto.randomUUID();
+  const row:Record<string,unknown>={id:postId,body,translation_consent:consent,status:"pending"};
   let table="tc_forum_replies";
   if(cfg.mode==="topic"){
    table="tc_forum_topics";
    const title=String(form.get("title")||"").trim();
-   const id=crypto.randomUUID();
+   const id=postId;
    const prefix=title.normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase()
     .replace(/[^a-z0-9]+/g,"-").replace(/^-+|-+$/g,"").slice(0,85)||"tractor-topic";
    Object.assign(row,{id,title,slug:prefix+"-"+id.replace(/-/g,""),category:String(form.get("category")||"questions"),
@@ -754,8 +760,11 @@ for(const widget of widgets){
     msg(/^Daily forum (topic|reply) limit reached$/.test(error.message)?copy.limitError:res.status===429?copy.retryLater:copy.postError);
     return;
    }
+   let photoOk=true;
+   if(editor?.hasPhotos())photoOk=await editor.commit(postId,cfg.mode);
    try{sessionStorage.removeItem(draftKey())}catch{}
-   postForm.reset();msg(copy.pending);void showHistory();
+   postForm.reset();editor?.refresh();
+   msg(copy.pending);void showHistory();
   }catch{msg(copy.postError)}
   finally{if(button)button.disabled=false;if(logout)logout.disabled=false}
  });
