@@ -14,8 +14,8 @@
         "remember": "El patinamiento de las ruedas no demuestra por sí solo una avería del motor. Siga las indicaciones específicas del tractor y de los neumáticos para ajustar el lastre y la presión."
       },
       "lift-rating-versus-implement": {
-        "title": "¿Sirve una capacidad de elevación de 3,000 kg para cualquier apero de tres toneladas?",
-        "situation": "Dos folletos indican una capacidad de elevación de 3,000 kg. Sin embargo, el mismo apero pesado puede afectar de manera distinta a la estabilidad de ambos tractores.",
+        "title": "¿Sirve una capacidad de elevación de 3000 kg para cualquier apero de tres toneladas?",
+        "situation": "Dos folletos indican una capacidad de elevación de 3000 kg. Sin embargo, el mismo apero pesado puede afectar de manera distinta a la estabilidad de ambos tractores.",
         "explanation": "Importa dónde se mide la capacidad: en los extremos de los brazos del enganche o a 610 mm por detrás de ellos. Cuanto más lejos queda la carga del tractor, más pueden cambiar la palanca y la estabilidad. La capacidad de elevación por sí sola no determina el peso seguro del apero.",
         "remember": "Compruebe conjuntamente la masa del apero, su centro de gravedad, el lastre delantero necesario y los límites de carga de los ejes."
       },
@@ -69,6 +69,7 @@
     }
   ],
   "editorialDraftProvenance": {
-    "cases": "GPT-6-assisted draft translation; not produced by Gemini; independent native-language technical review required"
+    "cases": "GPT-6-assisted draft translation; not produced by Gemini; independent native-language technical review required",
+    "number_format": "Locale-specific thousands separator reviewed for 3000 kg; draft remains unapproved and glossary incomplete"
   }
 }

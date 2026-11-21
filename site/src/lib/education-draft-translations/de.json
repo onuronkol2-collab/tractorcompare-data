@@ -14,8 +14,8 @@
         "remember": "Durchdrehende Räder beweisen für sich genommen keinen Motorschaden. Richten Sie Ballastierung und Reifendruck nach den Vorgaben für das genaue Traktor- und Reifenmodell aus."
       },
       "lift-rating-versus-implement": {
-        "title": "Eignet sich eine Hubkraft von 3,000 kg für jedes drei Tonnen schwere Anbaugerät?",
-        "situation": "In zwei Prospekten steht eine Hubkraft von 3,000 kg. Dennoch kann dasselbe schwere Anbaugerät die Standfestigkeit der beiden Traktoren unterschiedlich beeinflussen.",
+        "title": "Eignet sich eine Hubkraft von 3.000 kg für jedes drei Tonnen schwere Anbaugerät?",
+        "situation": "In zwei Prospekten steht eine Hubkraft von 3.000 kg. Dennoch kann dasselbe schwere Anbaugerät die Standfestigkeit der beiden Traktoren unterschiedlich beeinflussen.",
         "explanation": "Entscheidend ist der Messpunkt: an den Unterlenkerenden oder 610 mm dahinter. Je weiter die Last hinter dem Traktor liegt, desto stärker können sich Hebelwirkung und Standsicherheit verändern. Die Hubkraft allein bestimmt nicht das sichere Gewicht eines Anbaugeräts.",
         "remember": "Prüfen Sie gemeinsam das Gewicht und den Schwerpunkt des Anbaugeräts, die erforderliche Frontballastierung und die zulässigen Achslasten."
       },
@@ -69,6 +69,7 @@
     }
   ],
   "editorialDraftProvenance": {
-    "cases": "GPT-6-assisted draft translation; not produced by Gemini; independent native-language technical review required"
+    "cases": "GPT-6-assisted draft translation; not produced by Gemini; independent native-language technical review required",
+    "number_format": "Locale-specific thousands separator reviewed for 3000 kg; draft remains unapproved and glossary incomplete"
   }
 }

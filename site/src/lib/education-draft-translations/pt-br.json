@@ -14,8 +14,8 @@
         "remember": "A patinagem das rodas, isoladamente, não comprova defeito no motor. Siga as orientações específicas do trator e dos pneus para ajustar o lastro e a pressão de inflação."
       },
       "lift-rating-versus-implement": {
-        "title": "Uma capacidade de levante de 3,000 kg serve para qualquer implemento de três toneladas?",
-        "situation": "Dois catálogos indicam capacidade de levante de 3,000 kg. Mesmo assim, o mesmo implemento pesado pode afetar a estabilidade dos tratores de maneiras diferentes.",
+        "title": "Uma capacidade de levante de 3.000 kg serve para qualquer implemento de três toneladas?",
+        "situation": "Dois catálogos indicam capacidade de levante de 3.000 kg. Mesmo assim, o mesmo implemento pesado pode afetar a estabilidade dos tratores de maneiras diferentes.",
         "explanation": "O ponto de medição importa: nas extremidades dos braços do engate ou a 610 mm atrás delas. Quanto mais distante do trator estiver a carga, maiores podem ser os efeitos da alavanca e sobre a estabilidade. A capacidade de levante, sozinha, não determina o peso seguro do implemento.",
         "remember": "Verifique em conjunto a massa e o centro de gravidade do implemento, a necessidade de lastro dianteiro e os limites de carga dos eixos."
       },
@@ -69,6 +69,7 @@
     }
   ],
   "editorialDraftProvenance": {
-    "cases": "GPT-6-assisted draft translation; not produced by Gemini; independent native-language technical review required"
+    "cases": "GPT-6-assisted draft translation; not produced by Gemini; independent native-language technical review required",
+    "number_format": "Locale-specific thousands separator reviewed for 3000 kg; draft remains unapproved and glossary incomplete"
   }
 }

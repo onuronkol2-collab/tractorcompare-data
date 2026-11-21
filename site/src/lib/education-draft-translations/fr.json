@@ -14,8 +14,8 @@
         "remember": "Le patinage des roues ne prouve pas à lui seul une panne du moteur. Respectez les consignes propres au modèle de tracteur et aux pneus pour le lestage et la pression de gonflage."
       },
       "lift-rating-versus-implement": {
-        "title": "Une capacité de relevage de 3,000 kg convient-elle à tous les outils de trois tonnes ?",
-        "situation": "Deux brochures indiquent une capacité de relevage de 3,000 kg. Pourtant, le même outil lourd peut modifier différemment la stabilité de ces deux tracteurs.",
+        "title": "Une capacité de relevage de 3 000 kg convient-elle à tous les outils de trois tonnes ?",
+        "situation": "Deux brochures indiquent une capacité de relevage de 3 000 kg. Pourtant, le même outil lourd peut modifier différemment la stabilité de ces deux tracteurs.",
         "explanation": "Le point de mesure compte : aux extrémités des bras d'attelage ou à 610 mm derrière celles-ci. Plus la charge est éloignée du tracteur, plus l'effet de levier et la stabilité peuvent changer. La seule capacité de relevage ne permet pas de déterminer le poids admissible d'un outil en toute sécurité.",
         "remember": "Vérifiez ensemble la masse de l'outil, la position de son centre de gravité, le lestage avant nécessaire et les limites de charge par essieu."
       },
@@ -69,6 +69,7 @@
     }
   ],
   "editorialDraftProvenance": {
-    "cases": "GPT-6-assisted draft translation; not produced by Gemini; independent native-language technical review required"
+    "cases": "GPT-6-assisted draft translation; not produced by Gemini; independent native-language technical review required",
+    "number_format": "Locale-specific thousands separator reviewed for 3000 kg; draft remains unapproved and glossary incomplete"
   }
 }
