@@ -28,6 +28,9 @@ Supabase Dashboard > Authentication > URL Configuration sayfasında **Site URL**
 
 ## İsteğe bağlı çok dilli forum çevirileri — işleme ve kalite güvenliği
 
+- **21 Kasım 2026 kök neden onarımı:** Gemini Interactions uzun polling ile çeviri+ikinci kalite çağrısı, Supabase Edge 150 saniyelik istek sınırını aşabilecek biçimde tasarlanmıştı. Bu yerine kısa `generateContent` REST istekleri, `MINIMAL` düşünme, sınırlandırılmış token bütçesi ve yalnız bir yedek model denemesi kullanılır. Yanıt `STOP` değilse veya JSON doğrulanmazsa yayına çıkmaz. Gerçek model ve çeviri başarıları yeniden doğrulanmalıdır; API sözleşmesi testleri tek başına yayını kanıtlamaz.
+
+
 **Kullanıcı kontrolü:** Çeviri kuyruklarını oluşturan veriler korunur; yeni kullanıcı onayı olmadan arka planda AI çevirisi çalıştırılmaz. Otomatik zamanlayıcıyı tekrar açmak ayrı bir açık kullanıcı talebi gerektirir.
 
 - Uzun makaleler tek Gemini etkileşiminde kapasite/timeout sorununa yol açabilir; bu nedenle bölümlere ayırma ve devam edebilir özel checkpoint (`qa_notes=PARTS:N/T`) kullanılır. Her başarılı parça `needs_review`, `seo_approved=false` durumunda kalır. Tam 9 dilin her biri için son denetimler ve `ready` sonucunu ayrı doğrulayın; onaylanmamış parçaları ve yarım makaleyi webde göstermeyin.
