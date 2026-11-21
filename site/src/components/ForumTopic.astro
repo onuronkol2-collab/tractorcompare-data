@@ -2,6 +2,8 @@
 import SiteLayout from "../layouts/SiteLayout.astro";
 import ForumComposer from "./ForumComposer.astro";
 import {forumText as ft} from "../lib/forum-i18n.ts";
+import {memberText as mt,MEMBER_TEXT} from "../lib/member-i18n.ts";
+import {publicForumClientConfig} from "../lib/forum.ts";
 import {allPublicForumTopics,isIndexableForumTopic,allPublicForumReplies,forumThreadReplies,forumDate,type ForumTopic} from "../lib/forum.ts";
 import {getPublicCatalog} from "../lib/catalog.ts";
 import {localizedPath,type Locale,LOCALE_TAGS,LOCALE_NAMES} from "../lib/locales.ts";
@@ -15,6 +17,11 @@ const publicPath=forumUrl+topic.slug+"/";
 const versions=(await allPublicForumTopics()).filter(row=>row.topic_id===topic.topic_id);
 const originalTopic=topic.machine_translated?versions.find(row=>!row.machine_translated&&row.locale===topic.original_locale):null;
 const eligible=isIndexableForumTopic(topic);
+const engagementCfg=publicForumClientConfig()??(
+ process.env.TRACTORVS_FORUM_BROWSER_TEST==="true"&&process.env.PUBLIC_INDEXING_ENABLED==="false"
+ ? {url:"http://127.0.0.1:4173/forum-test-api",key:"inert-browser-fixture"}:null);
+const engagementConfig=JSON.stringify(engagementCfg);
+const engagementCopy=JSON.stringify(MEMBER_TEXT[lang]);
 const availableLocales=versions.map(row=>row.locale);
 const indexableLocales=versions.filter(isIndexableForumTopic).map(row=>row.locale);
 const origin=Astro.site||new URL("https://tractorvs.com");
@@ -46,6 +53,12 @@ const schema=eligible?{
      <a href={localizedPath(lang,"/tractors/"+tractor.slug+"/")}>{tractor.brand_name} {tractor.model_name}</a>
     </p>}
    </article>
+   <div class="forum-thread-actions" data-thread-engagement
+       data-thread-id={topic.topic_id} data-thread-config={engagementConfig}
+       data-thread-copy={engagementCopy}>
+      <button type="button" data-bookmark-toggle aria-pressed="false">{mt(lang,"saveTopic")}</button>
+      <span data-engagement-status role="status" aria-live="polite"></span>
+   </div>
    <section class="forum-replies" aria-labelledby="forum-replies-heading">
     <h2 id="forum-replies-heading">{ft(lang,"replies")} ({replies.length})</h2>
     {replies.map(({reply,original},i)=><article class="forum-reply" id={"reply-"+reply.id}>
@@ -56,6 +69,10 @@ const schema=eligible?{
       </div>
       {reply.locale!==lang&&<p class="reply-language">{ft(lang,"originalLanguage")} · <bdi lang={LOCALE_TAGS[reply.locale]}>{LOCALE_NAMES[reply.locale]}</bdi></p>}
       <div lang={LOCALE_TAGS[reply.locale]}>{reply.body.split(/\n\s*\n/).filter(Boolean).map(p=><p>{p}</p>)}</div>
+      <div class="forum-helpful" data-helpful-reply data-reply-id={reply.id}>
+       <button type="button" data-helpful-toggle aria-pressed="false">{mt(lang,"helpfulButton")}</button>
+       <span data-helpful-count aria-live="polite">0</span>
+      </div>
       {reply.machine_translated&&<details class="reply-original">
        <summary>{ft(lang,"readOriginal")} · <bdi lang={LOCALE_TAGS[original.locale]}>{LOCALE_NAMES[original.locale]}</bdi></summary>
        <div lang={LOCALE_TAGS[original.locale]}>{original.body.split(/\n\s*\n/).filter(Boolean).map(p=><p>{p}</p>)}</div>
@@ -85,4 +102,128 @@ const schema=eligible?{
 .forum-reply{scroll-margin-top:6rem}
 .forum-back{margin:24px 0}
 .forum-thread a:focus-visible{outline:3px solid #8cb78a;outline-offset:3px}
+
+.forum-thread-actions,.forum-helpful{display:flex;align-items:center;gap:12px;margin-top:17px;flex-wrap:wrap}
+.forum-thread-actions button,.forum-helpful button{border:1px solid #aac9ad;border-radius:10px;background:#eef6ea;color:#21593b;font:inherit;font-weight:750;padding:9px 13px;cursor:pointer;min-height:42px}
+.forum-thread-actions button[aria-pressed="true"],.forum-helpful button[aria-pressed="true"]{background:#235d3a;color:#fff}
+.forum-thread-actions button:disabled,.forum-helpful button:disabled{opacity:.55}
+.forum-thread-actions button:focus-visible,.forum-helpful button:focus-visible{outline:3px solid #8cb78a;outline-offset:3px}
+[data-engagement-status]{color:#4e7557;font-size:13px}
 </style>
+
+<script>
+const community=document.querySelector<HTMLElement>("[data-thread-engagement]");
+if(community){
+ const cfg=JSON.parse(community.dataset.threadConfig||"null") as {url:string;key:string}|null;
+ const labels=JSON.parse(community.dataset.threadCopy||"{}") as Record<string,string>;
+ const topicId=community.dataset.threadId||"";
+ const key="tractorvs_forum_access";
+ const uuid=/^[0-9a-f-]{36}$/i;
+ const getToken=()=>{try{return sessionStorage.getItem(key)||""}catch{return ""}};
+ const creds=(token="")=>({apikey:cfg?.key||"",Accept:"application/json",
+  ...(token?{Authorization:"Bearer "+token}:{})});
+ const status=community.querySelector<HTMLElement>("[data-engagement-status]");
+ const bookmark=community.querySelector<HTMLButtonElement>("[data-bookmark-toggle]");
+ const buttons=[...document.querySelectorAll<HTMLElement>("[data-helpful-reply]")]
+  .filter(el=>uuid.test(el.dataset.replyId||""));
+ let ownId="",isBookmarked=false;
+ const voted=new Set<string>();
+ const say=(s:string)=>{if(status)status.textContent=s};
+ function showBookmark(){
+  if(bookmark){bookmark.setAttribute("aria-pressed",String(isBookmarked));
+   bookmark.textContent=isBookmarked?labels.removeTopic:labels.saveTopic}
+ }
+ function showVoted(){
+  buttons.forEach(item=>{
+   const btn=item.querySelector<HTMLButtonElement>("[data-helpful-toggle]");
+   const on=voted.has(item.dataset.replyId||"");
+   if(btn){btn.setAttribute("aria-pressed",String(on));
+    btn.textContent=on?labels.unhelpfulButton:labels.helpfulButton}
+  });
+ }
+ const api=async (path:string,token="",init:RequestInit={})=>{
+  if(!cfg)throw Error();
+  const response=await fetch(cfg.url+path,{
+   ...init,headers:{...creds(token),...init.headers},cache:"no-store",
+   signal:AbortSignal.timeout(12000)});
+  if(!response.ok)throw Error(String(response.status));
+  if(response.status===204)return null;
+  const text=await response.text();return text?JSON.parse(text):null;
+ };
+ async function counts(){
+  const ids=buttons.map(el=>el.dataset.replyId).filter(Boolean) as string[];
+  if(!ids.length||!cfg)return;
+  try{
+   const p=new URLSearchParams({select:"reply_id,helpful_count",
+    reply_id:"in.("+ids.join(",")+")"});
+   const rows=await api("/rest/v1/tc_forum_reply_helpful_totals?"+p) as
+    {reply_id:string;helpful_count:number}[];
+   const counts=new Map(rows.map(row=>[row.reply_id,row.helpful_count]));
+   for(const element of buttons){
+    const count=element.querySelector<HTMLElement>("[data-helpful-count]");
+    if(count)count.textContent=String(counts.get(element.dataset.replyId||"")||0);
+   }
+  }catch{}
+ }
+ async function sync(){
+  ownId="";voted.clear();isBookmarked=false;showVoted();showBookmark();
+  const token=getToken();
+  if(!token||!cfg)return;
+  try{
+   const u=await api("/auth/v1/user",token) as {id:string};
+   if(!uuid.test(u.id||""))return;
+   ownId=u.id;
+   const p=new URLSearchParams({select:"topic_id",topic_id:"eq."+topicId,limit:"1"});
+   const saved=await api("/rest/v1/tc_member_bookmarks?"+p,token) as {topic_id:string}[];
+   isBookmarked=saved.length>0;showBookmark();
+   const ids=buttons.map(el=>el.dataset.replyId).filter(Boolean) as string[];
+   if(ids.length){
+    const query=new URLSearchParams({select:"reply_id",reply_id:"in.("+ids.join(",")+")"});
+    const rows=await api("/rest/v1/tc_forum_helpful_votes?"+query,token) as {reply_id:string}[];
+    rows.forEach(row=>voted.add(row.reply_id));showVoted();
+   }
+  }catch{ownId=""}
+ }
+ function requireSession(){
+  if(ownId)return true;
+  say(labels.voteLogin);
+  document.querySelector("#forum-compose")?.scrollIntoView({block:"start"});
+  return false;
+ }
+ bookmark?.addEventListener("click",async()=>{
+  if(!cfg||!uuid.test(topicId)||!requireSession())return;
+  bookmark.disabled=true;
+  try{
+   const url="/rest/v1/tc_member_bookmarks"+
+    (isBookmarked?"?topic_id=eq."+topicId+"&member_id=eq."+ownId:"");
+   await api(url,getToken(),isBookmarked?{method:"DELETE"}:{
+    method:"POST",headers:{"Content-Type":"application/json","Prefer":"return=minimal"},
+    body:JSON.stringify({topic_id:topicId})});
+   isBookmarked=!isBookmarked;showBookmark();say("");
+  }catch{say(labels.voteError)}
+  finally{bookmark.disabled=false}
+ });
+ for(const element of buttons){
+  const button=element.querySelector<HTMLButtonElement>("[data-helpful-toggle]");
+  button?.addEventListener("click",async()=>{
+   if(!cfg||!requireSession())return;
+   const id=element.dataset.replyId||"";
+   if(!uuid.test(id))return;
+   button.disabled=true;
+   try{
+    const remove=voted.has(id);
+    const url="/rest/v1/tc_forum_helpful_votes"+
+     (remove?"?reply_id=eq."+id+"&voter_id=eq."+ownId:"");
+    await api(url,getToken(),remove?{method:"DELETE"}:{
+     method:"POST",headers:{"Content-Type":"application/json","Prefer":"return=minimal"},
+     body:JSON.stringify({reply_id:id})});
+    if(remove)voted.delete(id);else voted.add(id);
+    showVoted();void counts();say("");
+   }catch{say(labels.voteError)}
+   finally{button.disabled=false}
+  });
+ }
+ window.addEventListener("tractorvs-forum-session",()=>void sync());
+ void counts();void sync();
+}
+</script>
