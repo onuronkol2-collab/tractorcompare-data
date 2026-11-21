@@ -11,7 +11,7 @@ test("sign in, recover a draft, publish directly and check its status",async({pa
   const request=route.request();
   const url=new URL(request.url());
   if(url.hostname!=="127.0.0.1")return route.abort();
-  if(url.pathname.startsWith("/de/forum/") && url.pathname.includes("hidrolik-basinci")){
+  if(url.pathname.startsWith("/de/forum/")){
    if(!articleLive)return route.fulfill({status:404,body:"Not yet deployed"});
    const canonical=url.toString();
    return route.fulfill({status:200,contentType:"text/html",
