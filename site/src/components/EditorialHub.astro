@@ -1,7 +1,8 @@
 ---
 import SiteLayout from "../layouts/SiteLayout.astro";
-import {localizedPath} from "../lib/locales.ts";
-interface Props {lang:"en"|"tr"}
+import {localizedPath,LOCALES,LOCALE_TAGS,type Locale} from "../lib/locales.ts";
+import {editorialHubTranslation} from "../lib/editorial-hub-i18n.ts";
+interface Props {lang:Locale}
 const {lang}=Astro.props;
 const tr=lang==="tr";
 const root=Astro.site||new URL("https://tractorvs.com");
@@ -49,6 +50,8 @@ const texts=tr ? {
   disclaimer:"Unverified research and unpublished drafts are excluded. Search indexing and ranking are not guaranteed.",
   next:"Put what you learned to work",compare:"Compare tractors",catalog:"Tractor catalogue"
 };
+const localized=editorialHubTranslation(lang);
+const copy=localized??texts;
 const entries=[
  {type:"guide",path:"/guides/choosing-a-tractor/",checked:"2026-11-19",
   title:{tr:"Traktör seçerken nelere dikkat edilmeli?",en:"How to choose a tractor beyond horsepower"},
@@ -69,86 +72,100 @@ const entries=[
   title:{tr:"Başak 2075 BK: kaynaklı teknik inceleme",en:"Başak 2075 BK: source-backed technical review"},
   summary:{tr:"Üretici broşüründeki verileri varyant ve ölçüm sınırlamalarıyla değerlendirin.",en:"Examine manufacturer figures with their exact variant and measurement limits."}}
 ] as const;
+const titleFor=(entry:(typeof entries)[number])=>
+ localized?.cards[entries.indexOf(entry)]?.[0]??entry.title[lang==="tr"?"tr":"en"];
+const summaryFor=(entry:(typeof entries)[number])=>
+ localized?.cards[entries.indexOf(entry)]?.[1]??entry.summary[lang==="tr"?"tr":"en"];
+// Full localized bodies exist only for selection and Başak 2075 BK.
+const destinationLanguage=(entry:(typeof entries)[number]):Locale=>
+ (lang==="tr"||lang==="en"||entry.path==="/guides/choosing-a-tractor/"||entry.path==="/reviews/basak-2075-bk/")
+  ? lang : "en";
+const entryHref=(entry:(typeof entries)[number])=>localizedPath(destinationLanguage(entry),entry.path);
+const englishOnly=(entry:(typeof entries)[number])=>
+ lang!=="en"&&destinationLanguage(entry)==="en";
+const methodologyHref=localizedPath(lang==="tr"?"tr":"en","/methodology/");
 const articles=entries.filter(x=>x.type==="guide");
 const reviews=entries.filter(x=>x.type==="review");
 const urlFor=(path:string)=>new URL(localizedPath(lang,path),root).toString();
 const schema={
  "@context":"https://schema.org",
  "@graph":[
-  {"@type":"CollectionPage","@id":pageUrl+"#webpage",url:pageUrl,name:texts.heading,
-    description:texts.description,inLanguage:lang,mainEntity:{"@id":pageUrl+"#list"}},
+  {"@type":"CollectionPage","@id":pageUrl+"#webpage",url:pageUrl,name:copy.heading,
+    description:copy.description,inLanguage:LOCALE_TAGS[lang],mainEntity:{"@id":pageUrl+"#list"}},
   {"@type":"ItemList","@id":pageUrl+"#list",numberOfItems:entries.length,
     itemListElement:entries.map((entry,i)=>({
-      "@type":"ListItem",position:i+1,url:urlFor(entry.path),name:entry.title[lang]
+      "@type":"ListItem",position:i+1,url:new URL(entryHref(entry),root).toString(),name:titleFor(entry)
     }))},
   {"@type":"BreadcrumbList",itemListElement:[
-    {"@type":"ListItem",position:1,name:texts.home,item:urlFor("/")},
-    {"@type":"ListItem",position:2,name:texts.hub,item:pageUrl}
+    {"@type":"ListItem",position:1,name:copy.home,item:urlFor("/")},
+    {"@type":"ListItem",position:2,name:copy.hub,item:pageUrl}
   ]}
  ]
 };
 ---
-<SiteLayout lang={lang} title={texts.title} description={texts.description}
- structuredData={schema} availableLocales={["en","tr"]} indexableLocales={["en","tr"]}>
+<SiteLayout lang={lang} title={copy.title} description={copy.description}
+ structuredData={schema} availableLocales={LOCALES} indexableLocales={LOCALES}>
  <div class="editorial-hub">
   <header class="editorial-hero">
    <div class="container">
-    <nav class="editorial-crumb" aria-label={tr?"İçerik yolu":"Breadcrumb"}>
-     <a href={localizedPath(lang,"/")}>{texts.home}</a><span aria-hidden="true">/</span>
-     <span aria-current="page">{texts.hub}</span>
+    <nav class="editorial-crumb" aria-label={localized?.breadcrumb??(tr?"İçerik yolu":"Breadcrumb")}>
+     <a href={localizedPath(lang,"/")}>{copy.home}</a><span aria-hidden="true">/</span>
+     <span aria-current="page">{copy.hub}</span>
     </nav>
-    <p class="editorial-eyebrow">{texts.eyebrow}</p>
-    <h1>{texts.heading}</h1>
-    <p class="editorial-intro">{texts.intro}</p>
-    <a class="editorial-start" href="#rehberler">{texts.jump} <span aria-hidden="true">↓</span></a>
+    <p class="editorial-eyebrow">{copy.eyebrow}</p>
+    <h1>{copy.heading}</h1>
+    <p class="editorial-intro">{copy.intro}</p>
+    <a class="editorial-start" href="#rehberler">{copy.jump} <span aria-hidden="true">↓</span></a>
    </div>
   </header>
   <div class="container editorial-body">
    <section class="editorial-trust" aria-labelledby="editorial-trust-heading">
-    <h2 id="editorial-trust-heading">{texts.trust}</h2>
+    <h2 id="editorial-trust-heading">{copy.trust}</h2>
     <div class="editorial-rules">
-     {texts.rules.map((rule,i)=><div>
+     {copy.rules.map((rule,i)=><div>
        <span aria-hidden="true">{String(i+1).padStart(2,"0")}</span>
        <h3>{rule[0]}</h3><p>{rule[1]}</p>
      </div>)}
     </div>
-    <a href={localizedPath(lang,"/methodology/")}>{texts.methods} ↗</a>
+    <a href={methodologyHref}>{copy.methods}{lang!=="en"&&lang!=="tr"?" (EN)":""} ↗</a>
    </section>
    <section class="editorial-section" id="rehberler" aria-labelledby="editorial-guide-title">
     <div class="editorial-section-title">
-     <div><h2 id="editorial-guide-title">{texts.guides}</h2><p>{texts.guidesIntro}</p></div>
+     <div><h2 id="editorial-guide-title">{copy.guides}</h2><p>{copy.guidesIntro}</p></div>
      <span>{String(articles.length).padStart(2,"0")}</span>
     </div>
     <ol class="editorial-grid">{articles.map(entry=><li>
       <article class="editorial-card">
-       <p class="editorial-kicker">{texts.guideLabel}</p>
-       <h3><a href={localizedPath(lang,entry.path)}>{entry.title[lang]}</a></h3>
-       <p>{entry.summary[lang]}</p>
-       <div class="editorial-card-footer"><time datetime={entry.checked}>{texts.checked}: {entry.checked}</time>
-        <a href={localizedPath(lang,entry.path)} aria-label={entry.title[lang]+" — "+texts.read}>{texts.read} <span aria-hidden="true">↗</span></a></div>
+       <p class="editorial-kicker">{copy.guideLabel}</p>
+       <h3><a href={entryHref(entry)}>{titleFor(entry)}</a></h3>
+       <p>{summaryFor(entry)}</p>
+       {englishOnly(entry)&&<p class="editorial-language-note" lang={lang}>{localized?.englishOriginal}</p>}
+       <div class="editorial-card-footer"><time datetime={entry.checked}>{copy.checked}: {entry.checked}</time>
+        <a href={entryHref(entry)} aria-label={titleFor(entry)+" — "+copy.read}>{copy.read} <span aria-hidden="true">↗</span></a></div>
       </article>
     </li>)}</ol>
    </section>
    <section class="editorial-section" id="incelemeler" aria-labelledby="editorial-review-title">
     <div class="editorial-section-title">
-     <div><h2 id="editorial-review-title">{texts.review}</h2><p>{texts.reviewIntro}</p></div>
+     <div><h2 id="editorial-review-title">{copy.review}</h2><p>{copy.reviewIntro}</p></div>
      <span>{String(reviews.length).padStart(2,"0")}</span>
     </div>
     <ol class="editorial-grid">{reviews.map(entry=><li>
       <article class="editorial-card">
-       <p class="editorial-kicker">{texts.reviewLabel}</p>
-       <h3><a href={localizedPath(lang,entry.path)}>{entry.title[lang]}</a></h3>
-       <p>{entry.summary[lang]}</p>
-       <div class="editorial-card-footer"><time datetime={entry.checked}>{texts.checked}: {entry.checked}</time>
-        <a href={localizedPath(lang,entry.path)} aria-label={entry.title[lang]+" — "+texts.read}>{texts.read} <span aria-hidden="true">↗</span></a></div>
+       <p class="editorial-kicker">{copy.reviewLabel}</p>
+       <h3><a href={entryHref(entry)}>{titleFor(entry)}</a></h3>
+       <p>{summaryFor(entry)}</p>
+       {englishOnly(entry)&&<p class="editorial-language-note" lang={lang}>{localized?.englishOriginal}</p>}
+       <div class="editorial-card-footer"><time datetime={entry.checked}>{copy.checked}: {entry.checked}</time>
+        <a href={entryHref(entry)} aria-label={titleFor(entry)+" — "+copy.read}>{copy.read} <span aria-hidden="true">↗</span></a></div>
       </article>
     </li>)}</ol>
    </section>
-   <p class="editorial-disclaimer">{texts.disclaimer}</p>
+   <p class="editorial-disclaimer">{copy.disclaimer}</p>
    <aside class="editorial-cta">
-    <h2>{texts.next}</h2><div>
-     <a href={localizedPath(lang,"/compare/")}>{texts.compare} ↗</a>
-     <a href={localizedPath(lang,"/tractors/")}>{texts.catalog} ↗</a>
+    <h2>{copy.next}</h2><div>
+     <a href={localizedPath(lang,"/compare/")}>{copy.compare} ↗</a>
+     <a href={localizedPath(lang,"/tractors/")}>{copy.catalog} ↗</a>
     </div>
    </aside>
   </div>
@@ -185,6 +202,7 @@ const schema={
  .editorial-card>p:not(.editorial-kicker){margin:0;color:#4e6553;line-height:1.75;font-size:15px}
  .editorial-card-footer{border-top:1px solid #e0e9de;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;padding-top:16px;margin-top:auto}
  .editorial-card-footer time{color:#5b7060;font-size:12px}
+ .editorial-card .editorial-language-note{font-size:12px;color:#345741;background:#eaf2e7;border-radius:6px;padding:8px 10px;font-weight:800;align-self:flex-start}
  .editorial-card-footer a{color:#236539;font-size:14px;font-weight:800}
  .editorial-disclaimer{color:#4c6453;font-size:14px;line-height:1.8;margin:44px 0 23px}
  .editorial-cta{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:25px;padding:30px;background:#1b3c2a;border-radius:15px;color:#fff}
