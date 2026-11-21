@@ -70,7 +70,9 @@ const openGraphLocale: Record<Locale, string> = {
         if(!payload.has("access_token")&&!payload.has("error_code")&&!payload.has("error"))return;
         const locale=(navigator.language||"en").toLowerCase();
         const supported=["tr","zh","hi","pt-br","fr","de","ru","ja","es"];
-        const match=supported.find(code=>locale===code||locale.startsWith(code+"-"));
+        const pathLocale=location.pathname.split("/").filter(Boolean)[0];
+        const match=supported.includes(pathLocale)?pathLocale:
+          supported.find(code=>locale===code||locale.startsWith(code+"-"));
         const target=match?"/"+match+"/forum/":"/forum/";
         // Never send the fragment to any external origin, never persist tokens.
         history.replaceState(null,"",location.pathname+location.search);
