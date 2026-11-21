@@ -60,7 +60,12 @@ export const MEMBER_TEXT:Record<Locale,Record<MemberKey,string>> = {
     "resetUpdated": "Password updated. You are signed in.",
     "passwordMismatch": "Passwords do not match.",
     "showPassword": "Show password",
-    "hidePassword": "Hide password"
+    "hidePassword": "Hide password",
+    "followTopic": "Follow discussion",
+    "unfollowTopic": "Unfollow",
+    "followingTopics": "Discussions I follow",
+    "noFollowingTopics": "No followed discussions yet.",
+    "newReplies": "new replies"
   },
   "tr": {
     "register": "Hesap oluştur",
@@ -121,7 +126,12 @@ export const MEMBER_TEXT:Record<Locale,Record<MemberKey,string>> = {
     "resetUpdated": "Şifren güncellendi. Giriş yaptın.",
     "passwordMismatch": "Şifreler eşleşmiyor.",
     "showPassword": "Şifreyi göster",
-    "hidePassword": "Şifreyi gizle"
+    "hidePassword": "Şifreyi gizle",
+    "followTopic": "Tartışmayı takip et",
+    "unfollowTopic": "Takibi bırak",
+    "followingTopics": "Takip ettiğim tartışmalar",
+    "noFollowingTopics": "Henüz takip ettiğin tartışma yok.",
+    "newReplies": "yeni yanıt"
   },
   "de": {
     "register": "Konto erstellen",
@@ -182,7 +192,12 @@ export const MEMBER_TEXT:Record<Locale,Record<MemberKey,string>> = {
     "resetUpdated": "Passwort geändert. Sie sind angemeldet.",
     "passwordMismatch": "Die Passwörter stimmen nicht überein.",
     "showPassword": "Passwort anzeigen",
-    "hidePassword": "Passwort verbergen"
+    "hidePassword": "Passwort verbergen",
+    "followTopic": "Diskussion folgen",
+    "unfollowTopic": "Nicht mehr folgen",
+    "followingTopics": "Diskussionen, denen ich folge",
+    "noFollowingTopics": "Noch keine Diskussionen abonniert.",
+    "newReplies": "neue Antworten"
   },
   "fr": {
     "register": "Créer un compte",
@@ -243,7 +258,12 @@ export const MEMBER_TEXT:Record<Locale,Record<MemberKey,string>> = {
     "resetUpdated": "Mot de passe modifié. Vous êtes connecté.",
     "passwordMismatch": "Les mots de passe ne correspondent pas.",
     "showPassword": "Afficher le mot de passe",
-    "hidePassword": "Masquer le mot de passe"
+    "hidePassword": "Masquer le mot de passe",
+    "followTopic": "Suivre la discussion",
+    "unfollowTopic": "Ne plus suivre",
+    "followingTopics": "Discussions suivies",
+    "noFollowingTopics": "Vous ne suivez aucune discussion.",
+    "newReplies": "nouvelles réponses"
   },
   "es": {
     "register": "Crear cuenta",
@@ -304,7 +324,12 @@ export const MEMBER_TEXT:Record<Locale,Record<MemberKey,string>> = {
     "resetUpdated": "Contraseña actualizada. Has iniciado sesión.",
     "passwordMismatch": "Las contraseñas no coinciden.",
     "showPassword": "Mostrar contraseña",
-    "hidePassword": "Ocultar contraseña"
+    "hidePassword": "Ocultar contraseña",
+    "followTopic": "Seguir debate",
+    "unfollowTopic": "Dejar de seguir",
+    "followingTopics": "Debates que sigo",
+    "noFollowingTopics": "Todavía no sigues ningún debate.",
+    "newReplies": "respuestas nuevas"
   },
   "pt-br": {
     "register": "Criar conta",
@@ -365,7 +390,12 @@ export const MEMBER_TEXT:Record<Locale,Record<MemberKey,string>> = {
     "resetUpdated": "Senha atualizada. Você entrou na conta.",
     "passwordMismatch": "As senhas não coincidem.",
     "showPassword": "Mostrar senha",
-    "hidePassword": "Ocultar senha"
+    "hidePassword": "Ocultar senha",
+    "followTopic": "Seguir discussão",
+    "unfollowTopic": "Deixar de seguir",
+    "followingTopics": "Discussões que sigo",
+    "noFollowingTopics": "Você ainda não segue discussões.",
+    "newReplies": "novas respostas"
   },
   "ru": {
     "register": "Создать аккаунт",
@@ -426,7 +456,12 @@ export const MEMBER_TEXT:Record<Locale,Record<MemberKey,string>> = {
     "resetUpdated": "Пароль обновлён. Вы вошли в аккаунт.",
     "passwordMismatch": "Пароли не совпадают.",
     "showPassword": "Показать пароль",
-    "hidePassword": "Скрыть пароль"
+    "hidePassword": "Скрыть пароль",
+    "followTopic": "Подписаться на обсуждение",
+    "unfollowTopic": "Отписаться",
+    "followingTopics": "Отслеживаемые обсуждения",
+    "noFollowingTopics": "Вы пока не отслеживаете обсуждения.",
+    "newReplies": "новых ответов"
   },
   "ja": {
     "register": "アカウントを作成",
@@ -487,7 +522,12 @@ export const MEMBER_TEXT:Record<Locale,Record<MemberKey,string>> = {
     "resetUpdated": "パスワードを更新し、ログインしました。",
     "passwordMismatch": "パスワードが一致しません。",
     "showPassword": "パスワードを表示",
-    "hidePassword": "パスワードを非表示"
+    "hidePassword": "パスワードを非表示",
+    "followTopic": "議論をフォロー",
+    "unfollowTopic": "フォロー解除",
+    "followingTopics": "フォロー中の議論",
+    "noFollowingTopics": "フォロー中の議論はありません。",
+    "newReplies": "件の新しい返信"
   },
   "zh": {
     "register": "创建账号",
@@ -548,7 +588,12 @@ export const MEMBER_TEXT:Record<Locale,Record<MemberKey,string>> = {
     "resetUpdated": "密码已更新，已登录。",
     "passwordMismatch": "两次输入的密码不一致。",
     "showPassword": "显示密码",
-    "hidePassword": "隐藏密码"
+    "hidePassword": "隐藏密码",
+    "followTopic": "关注讨论",
+    "unfollowTopic": "取消关注",
+    "followingTopics": "我关注的讨论",
+    "noFollowingTopics": "暂未关注任何讨论。",
+    "newReplies": "条新回复"
   },
   "hi": {
     "register": "खाता बनाएँ",
@@ -609,8 +654,13 @@ export const MEMBER_TEXT:Record<Locale,Record<MemberKey,string>> = {
     "resetUpdated": "पासवर्ड बदल गया। आप लॉग इन हैं।",
     "passwordMismatch": "दोनों पासवर्ड मेल नहीं खाते।",
     "showPassword": "पासवर्ड दिखाएँ",
-    "hidePassword": "पासवर्ड छिपाएँ"
+    "hidePassword": "पासवर्ड छिपाएँ",
+    "followTopic": "चर्चा फ़ॉलो करें",
+    "unfollowTopic": "फ़ॉलो हटाएँ",
+    "followingTopics": "मेरी फ़ॉलो की गई चर्चाएँ",
+    "noFollowingTopics": "अभी कोई चर्चा फ़ॉलो नहीं की है।",
+    "newReplies": "नए उत्तर"
   }
 };
-export type MemberKey = "register" | "passwordLogin" | "password" | "passwordHint" | "emailConfirm" | "authError" | "passwordShort" | "google" | "github" | "otherLogin" | "oauthError" | "memberHeading" | "memberIntro" | "myProfile" | "handle" | "displayName" | "bio" | "favoriteBrand" | "avatar" | "save" | "saved" | "profileError" | "uploadError" | "privacy" | "optOut" | "leaderboard" | "month" | "alltime" | "topics" | "replies" | "helpful" | "points" | "rank" | "newcomer" | "contributor" | "mentor" | "noMembers" | "myBookmarks" | "noBookmarks" | "saveTopic" | "removeTopic" | "helpfulButton" | "unhelpfulButton" | "voteLogin" | "voteOwn" | "voteError" | "signInNotice" | "loading" | "viewProfile" | "close" | "memberSince" | "forgotPassword" | "resetEmailSent" | "resetNewPassword" | "resetSave" | "resetUpdated" | "passwordMismatch" | "showPassword" | "hidePassword";
+export type MemberKey = "register" | "passwordLogin" | "password" | "passwordHint" | "emailConfirm" | "authError" | "passwordShort" | "google" | "github" | "otherLogin" | "oauthError" | "memberHeading" | "memberIntro" | "myProfile" | "handle" | "displayName" | "bio" | "favoriteBrand" | "avatar" | "save" | "saved" | "profileError" | "uploadError" | "privacy" | "optOut" | "leaderboard" | "month" | "alltime" | "topics" | "replies" | "helpful" | "points" | "rank" | "newcomer" | "contributor" | "mentor" | "noMembers" | "myBookmarks" | "noBookmarks" | "saveTopic" | "removeTopic" | "helpfulButton" | "unhelpfulButton" | "voteLogin" | "voteOwn" | "voteError" | "signInNotice" | "loading" | "viewProfile" | "close" | "memberSince" | "forgotPassword" | "resetEmailSent" | "resetNewPassword" | "resetSave" | "resetUpdated" | "passwordMismatch" | "showPassword" | "hidePassword" | "followTopic" | "unfollowTopic" | "followingTopics" | "noFollowingTopics" | "newReplies";
 export const memberText=(lang:Locale,key:MemberKey):string=>MEMBER_TEXT[lang][key];
