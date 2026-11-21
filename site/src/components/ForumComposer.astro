@@ -137,9 +137,9 @@ const strings=JSON.stringify({
      </details>
      <button class="edit-email" type="button" data-edit-email>{ft(lang,"editEmail")}</button>
     </div>
-    <button type="button" data-forum-logout hidden>{ft(lang,"logout")}</button>
   </div>
   </details>
+  <button class="forum-logout" type="button" data-forum-logout hidden>{ft(lang,"logout")}</button>
   <p class="forum-message" data-forum-status role="status" aria-live="polite"></p>
   <details data-forum-history hidden>
    <summary>{ft(lang,"myPosts")}</summary><p data-history-status role="status"></p><ul data-history-list></ul>
@@ -191,6 +191,7 @@ const strings=JSON.stringify({
 .community-composer .forum-auth-gate>.forum-auth{padding:16px}
 .community-composer .forum-guest-note{line-height:1.7;font-size:14px;margin:8px 0 14px;color:#4a6850}
 .community-composer .forum-auth-gate>summary:focus-visible{outline:3px solid #83bc8a;outline-offset:2px}
+.community-composer .forum-logout{background:#e3f0e3;color:#235e3b;border:1px solid #a9caae;margin-top:12px}
 .community-composer summary{cursor:pointer;color:#245e3b;padding:10px 0}
 .community-composer li{overflow-wrap:anywhere}
 .forum-auth p{margin:0 0 12px;line-height:1.6}
