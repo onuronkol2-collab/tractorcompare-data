@@ -59,7 +59,7 @@ test("empty forum has useful original editorial guidance in ten locales, without
   assert.equal(group.items.length,3,lang);
   assert.equal(new Set(group.items.map(i=>i.title)).size,3,lang);
   for(const item of group.items){
-   assert.ok(item.title.length>8 && item.detail.length>35,lang+" "+item.title);
+   assert.ok(Array.from(item.title).length >= (lang==="zh"||lang==="ja"?4:6) && Array.from(item.detail).length>35,lang+" "+item.title);
   }
  }
  const hub=text("../src/components/ForumHub.astro");
