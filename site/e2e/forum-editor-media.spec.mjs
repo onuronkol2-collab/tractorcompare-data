@@ -43,6 +43,7 @@ test("editor safely formats text, previews emoji, and sends a private moderated 
  await body.fill("Yağ ısındıktan sonra kaldırma sistemi yavaşlıyor ve basınç düşüyor.");
  await body.selectText();
  await form.locator('[data-editor-format="bold"]').click();
+ await form.locator(".forum-emoji summary").click();
  await form.locator('[data-editor-emoji="🚜"]').click();
  await form.locator("[data-editor-preview]").click();
  await expect(form.locator("[data-editor-preview-content] strong")).toContainText("Yağ ısındıktan");
