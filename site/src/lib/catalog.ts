@@ -646,6 +646,10 @@ const reviewedLegacyDocuments = new Map([
   ["https://www.yanmar.com/tr/agri/products/tractor/", "product_catalog"],
 ]);
 
+// Distributor copy of STEYR edition 15S0019COMINB (11/2014); the original CDN location is retired.
+const kompaktOriginal = "https://assets.cnhindustrial.com/steyr/assets/Municipality/Products/Tractors/Kompakt%20Series/Brochures/15s0019cominb_steyr_kompakt_bro_low.pdf";
+const kompaktArchive = "https://agroguia.online/wp-content/uploads/2019/10/FOLLETO-KOMPAKT-S.pdf";
+
 export function specificationEvidenceLevel(
   spec: Pick<PublicSpec, "source_url" | "source_type" | "evidence_text" | "verified_at">,
 ): SpecificationEvidenceLevel {
@@ -655,6 +659,7 @@ export function specificationEvidenceLevel(
     && Number.isFinite(Date.parse(spec.verified_at));
 
   if (!sourcePresent || !supportingExcerpt || !checkedAt) return "not_verified";
+  if (spec.source_url === kompaktOriginal && spec.source_type === "manufacturer_specification") return "third_party_reported";
   if (manufacturerSourceTypes.has(spec.source_type || "") ||
       (spec.source_type && reviewedLegacyDocuments.get(spec.source_url || "") === spec.source_type)) return "manufacturer_documented";
   return "third_party_reported";
@@ -725,6 +730,7 @@ const approvedExactManufacturerDocuments: Record<string, string[]> = {
     "https://www.iseki.co.uk/wp-content/uploads/2021/02/Iseki-TXGS24-Range-WEB-2.pdf",
   ],
   "lamborghini trattori": [
+    "https://www.lamborghini-tractors.com/en-eu/tractors/vineyards-orchards-compacts/download/7987_d432d453ca77b6271f17857f0d842cd0",
     "https://www.lamborghini-tractors.com/en-eu/all/download/7988_b274e15de8fa324d508dde300f1d3fc8",
   ],
   "mccormick": [
@@ -759,6 +765,14 @@ const approvedExactManufacturerDocuments: Record<string, string[]> = {
   ],
 };
 
+// Each entry is an individual reviewed table on a third-party host.
+const reviewedExternalTables = new Map([
+  ["https://static.agroinform.hu/data/forum/documents/agroinform_20180508221726_belarus_termekcsalad_katalogus_eng.pdf", "independent_catalog"],
+  ["https://netetrade.com/media/mtw-holding-minsk-tractor-works/files/series_500_catalogue.pdf", "independent_catalog"],
+  ["https://www.agromeh.com/en/products/belarus-12213", "web_page"],
+  ["https://belarus-tractor.kz/products/16", "web_page"],
+]);
+
 /**
  * Established independent reference links are published ONLY for evidence-backed
  * fields from an explicitly reviewed specialist hostname. The external source
@@ -775,6 +789,8 @@ export function reviewedIndependentSourceUrl(
   if (u.protocol !== "https:" || u.username || u.password || u.port) return null;
   const host = u.hostname.toLowerCase();
   const type = (spec.source_type || "").toLowerCase();
+  if (u.href === kompaktOriginal && type === "manufacturer_specification") return kompaktArchive;
+  if (reviewedExternalTables.get(u.href) === type) return u.href;
   if ((host === "www.tractordata.com" || host === "tractordata.com")
     && ["web_page", "independent_catalog", "technical_database"].includes(type)
     && u.pathname.startsWith("/farm-tractors/") && u.pathname.toLowerCase().endsWith(".html"))
@@ -806,6 +822,10 @@ export function officialManufacturerSourceUrl(
   if (!raw) return null;
   const url = new URL(raw);
   if (url.protocol !== "https:" || url.username || url.password) return null;
+  // Identical STEYR publication code 23S0001COMINB, 09/2023, at its current OEM download URL.
+  if (brandName.trim().toLowerCase() === "steyr" && url.href === "https://assets.cnhindustrial.com/steyr/assets/Agriculture/Products/Tractors/Absolut%20Series/NEUE%206280%20ABSOLUT%20CVT/Brochures/2023/23s0001-cominb_absolut_p32_low.pdf") {
+    return "https://cnhi-p-001-delivery.sitecorecontenthub.cloud/api/public/content/76a92c3114b14b28a2817ad0977309c9?v=ab84c59d";
+  }
   const approved = approvedManufacturerHosts[brandName.toLocaleLowerCase("tr-TR").trim()] || [];
   if (approved.some((root) =>
     url.hostname === root || url.hostname.endsWith("." + root)

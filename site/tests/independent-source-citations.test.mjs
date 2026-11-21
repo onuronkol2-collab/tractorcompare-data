@@ -116,3 +116,13 @@ test("the distributor-hosted Belarus catalogue stays attributed to a third-party
  assert.equal(reviewedIndependentSourceUrl({...row,source_url:url+"?other"}),null);
  assert.equal(reviewedIndependentSourceUrl({...row,evidence_text:null}),null);
 });
+
+test("archived STEYR editions link to their reviewed copy with the correct host attribution",()=>{
+ const kompakt={...ref,source_url:"https://assets.cnhindustrial.com/steyr/assets/Municipality/Products/Tractors/Kompakt%20Series/Brochures/15s0019cominb_steyr_kompakt_bro_low.pdf",source_type:"manufacturer_specification"};
+ const absolut={...kompakt,source_url:"https://assets.cnhindustrial.com/steyr/assets/Agriculture/Products/Tractors/Absolut%20Series/NEUE%206280%20ABSOLUT%20CVT/Brochures/2023/23s0001-cominb_absolut_p32_low.pdf"};
+ assert.equal(officialManufacturerSourceUrl(kompakt,"Steyr"),null);
+ assert.equal(reviewedIndependentSourceUrl(kompakt),"https://agroguia.online/wp-content/uploads/2019/10/FOLLETO-KOMPAKT-S.pdf");
+ assert.equal(officialManufacturerSourceUrl(absolut,"Steyr"),"https://cnhi-p-001-delivery.sitecorecontenthub.cloud/api/public/content/76a92c3114b14b28a2817ad0977309c9?v=ab84c59d");
+ assert.equal(officialManufacturerSourceUrl(absolut,"Belarus"),null);
+ assert.equal(reviewedIndependentSourceUrl({...kompakt,verified_at:null}),null);
+});
