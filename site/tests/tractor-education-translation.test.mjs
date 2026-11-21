@@ -53,8 +53,8 @@ test("machine translation is not allowed to publish without complete review",()=
 });
 
 test("translation provider calls require explicit workflow dispatch and approval",()=>{
- const smoke=readFileSync(new URL("../../../.github/workflows/tractor-education-translation-smoke.yml",import.meta.url),"utf8");
- const bulk=readFileSync(new URL("../../../.github/workflows/tractorvs-education-translate.yml",import.meta.url),"utf8");
+ const smoke=readFileSync(new URL("../../.github/workflows/tractor-education-translation-smoke.yml",import.meta.url),"utf8");
+ const bulk=readFileSync(new URL("../../.github/workflows/tractorvs-education-translate.yml",import.meta.url),"utf8");
  for(const workflow of [smoke,bulk]){
   assert.match(workflow,/workflow_dispatch:/);
   assert.match(workflow,/authorize_translation:/);
