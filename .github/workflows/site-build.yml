@@ -94,6 +94,7 @@ jobs:
         run: |
           npm run build
           test -f site/dist/sitemap-index.xml
+          node site/scripts/verify-unified-sitemap-index.mjs
           node site/scripts/verify-tractor-glossary-build.mjs indexable
           node site/scripts/verify-geo-build.mjs indexable
           grep -q '^Allow: /$' site/dist/robots.txt
