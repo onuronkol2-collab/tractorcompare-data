@@ -454,7 +454,7 @@ const candidates=[
     "license": "CC BY-SA 4.0",
     "width": 6164,
     "height": 4627
-  }
+  },
   // 21 November 2026: exact-model Commons file pages, dimensions,
   // photographer and compatible CC BY-SA licenses checked individually.
   // JPEG thumbnails were fetched as official 500px derivatives and
