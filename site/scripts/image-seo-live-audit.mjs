@@ -1,49 +1,68 @@
 // Credential-free check of TractorVS public Google Images prerequisites.
 import {imageLicenseMetadataIssues} from "./image-license-jsonld-check.mjs";
+import {parseProductionSitemapInventory} from "./production-sitemap-inventory.mjs";
+import {classifyPublicImageSitemap} from "./image-seo-asset-boundaries.mjs";
+import {fetchPublicImageAsset,publicImageMimeOk} from "./image-seo-http.mjs";
 const origin="https://tractorvs.com";
 const errors=[];
 function fail(message){errors.push(message);console.error("IMAGE_ERROR "+message)}
-async function get(url,attempts=3){
-  let last;
-  for(let i=0;i<attempts;i++){
-    try{
-      const r=await fetch(url,{signal:AbortSignal.timeout(22000),redirect:"follow"});
-      const bytes=new Uint8Array(await r.arrayBuffer());
-      if([429,502,503,504].includes(r.status)&&i<attempts-1){
-        last=new Error("Transient "+r.status+" "+url);
-      }else return {r,bytes};
-    }catch(e){last=e;}
-    if(i<attempts-1)await new Promise(res=>setTimeout(res,(i+1)*500));
-  }
-  throw last||new Error("Missing HTTP response");
+async function get(url){
+ return fetchPublicImageAsset(url,{
+  onRetry:({attempt,status,error})=>console.warn(
+   "IMAGE_TRANSIENT_RETRY "+JSON.stringify({attempt,status:status??null,error:error??null})
+  ),
+ });
 }
-const sitemapUrl=origin+"/image-sitemap.xml";
-const checked=new Set();
+const sitemapIndexUrl=origin+"/sitemap-index.xml";
+const checked=new Set(),forumMediaAssets=new Set();
 try{
- const {r,bytes}=await get(sitemapUrl);
- const xml=new TextDecoder().decode(bytes);
- const urls=[...xml.matchAll(/<image:loc>([^<]+)<\/image:loc>/g)].map(m=>m[1].replaceAll("&amp;","&"));
- console.log("TRACTOR_IMAGE_SITEMAP "+JSON.stringify({http:r.status,count:urls.length,first:urls[0]}));
- if(!r.ok||!xml.includes('xmlns:image=')||urls.length<1)
-   fail("Invalid/empty image sitemap "+r.status);
- for(const url of urls){
-   if(!url.startsWith(origin+"/images/tractors/")){fail("Image sitemap includes external media "+url);continue;}
-   const m=/\/images\/tractors\/([a-z0-9-]+)-1920\.jpg$/.exec(url);
-   if(!m){fail("Invalid image-sitemap photo URL "+url);continue;}
-   checked.add(m[1]);
+ const master=await get(sitemapIndexUrl);
+ if(master.r.status!==200)throw Error("Master sitemap HTTP "+master.r.status);
+ const indexXml=new TextDecoder().decode(master.bytes);
+ const files=[...indexXml.matchAll(/<sitemap>\s*<loc>([^<]+)<\/loc>/g)].map(m=>m[1]);
+ if(!files.length||files.length>30)throw Error("Root sitemap has no approved child files");
+ const children=new Map();
+ for(const file of files){
+  const response=await get(file);
+  if(response.r.status!==200)throw Error("Sitemap child HTTP "+response.r.status+": "+file);
+  children.set(file,new TextDecoder().decode(response.bytes));
  }
-}catch(e){fail("Image sitemap fetch "+String(e));}
+ const inventory=parseProductionSitemapInventory({indexXml,children});
+ const imageXml=children.get(origin+"/image-sitemap.xml");
+ const images=classifyPublicImageSitemap(imageXml,{
+  htmlPages:inventory.htmlPages,forumPages:inventory.forumPages
+ });
+ for(const name of images.models)checked.add(name);
+ for(const url of images.forumAssets)forumMediaAssets.add(url);
+ console.log("TRACTOR_IMAGE_SITEMAP "+JSON.stringify({
+  html_pages:inventory.htmlPages.size,approved_forum_pages:inventory.forumPages.size,
+  image_pages:images.pages.size,image_references:images.imageReferences,
+  distinct_tractor_photo_files:checked.size,approved_forum_media:forumMediaAssets.size
+ }));
+}catch(e){fail("Image sitemap approval/integrity "+String(e));}
 for(const name of checked){
  for(const size of [960,1920]){
    const url=origin+"/images/tractors/"+name+"-"+size+".jpg";
    try{
      const {r,bytes}=await get(url);
-     const jpeg=bytes.length>1000&&bytes[0]===255&&bytes[1]===216&&bytes[2]===255;
-     console.log("TRACTOR_IMAGE "+JSON.stringify({url,status:r.status,type:r.headers.get("content-type"),bytes:bytes.length,jpeg}));
-     if(!r.ok||!jpeg||!(r.headers.get("content-type")||"").includes("image/jpeg"))
+     const mime=r.headers.get("content-type");
+     const jpeg=String(mime||"").startsWith("image/jpeg")&&publicImageMimeOk(mime,bytes);
+     console.log("TRACTOR_IMAGE "+JSON.stringify({url,status:r.status,type:mime,bytes:bytes.length,jpeg}));
+     if(!r.ok||!jpeg)
        fail("Bad first-party photograph "+name+" status="+r.status);
    }catch(e){fail("Fetch "+name+" "+String(e));}
  }
+}
+for(const url of forumMediaAssets){
+ try{
+  const {r,bytes}=await get(url);
+  const mime=r.headers.get("content-type");
+  const valid=r.ok&&publicImageMimeOk(mime,bytes);
+  console.log("TRACTOR_FORUM_IMAGE "+JSON.stringify({
+   image_status:r.status,media_type:mime,bytes:bytes.length,valid
+  }));
+  if(!valid)fail("Approved forum photo unavailable or invalid media response "+r.status);
+ }catch(e){fail("Approved forum media fetch "+String(e));}
 }
 try{
  const {r,bytes}=await get(origin+"/tr/tractors/belarus-82-1-940a988a/");
@@ -72,5 +91,5 @@ for(const {path,label} of rightsSamples){
   for(const issue of rights.issues)fail(label+" ImageObject "+issue);
  }catch(e){fail(label+" metadata fetch "+String(e));}
 }
-console.log("TRACTOR_IMAGE_AUDIT_SUMMARY "+JSON.stringify({checked:checked.size,errors:errors.length}));
+console.log("TRACTOR_IMAGE_AUDIT_SUMMARY "+JSON.stringify({checked_tractor_photos:checked.size,checked_approved_forum_media:forumMediaAssets.size,errors:errors.length}));
 if(errors.length)process.exitCode=1;
