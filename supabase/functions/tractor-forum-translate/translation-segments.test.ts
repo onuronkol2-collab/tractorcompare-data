@@ -6,8 +6,7 @@ Deno.test("fresh long articles use smaller chunks without dropping markdown bloc
  const fresh=chooseTranslationSegments(article,null);
  const legacy=markdownTranslationSegments(article,2200);
  assert(fresh.length<=8 && fresh.length>=legacy.length,"eight bounded chunks maximum");
- assert(fresh.map(x=>x.trim()).join("\n\n")===article,
-  "every source character preserved except trailing separator normalization");
+ assert(fresh.join("")===article,"every source character and separator preserved exactly");
  for(const item of fresh)assert(item.length<=1900,"small bounded chunk");
 });
 Deno.test("nonzero old checkpoints retain exact original grouping and QA receipt",()=>{
