@@ -71,3 +71,30 @@ test("generic engine torque is never falsely labeled maximum in English or Turki
   assert.equal(specLabel(maxRPM,"tr"),"Azami torkta motor devri");
   for(const lang of LOCALES)assert.doesNotMatch(specLabel(generic,lang),/^maximum torque$|^azami tork$/i);
 });
+
+test("ten locales distinguish manufacturer marketing HP categories, unrated power and unscoped weights",()=>{
+  const keys=[
+    ["engine_hp_category","Manufacturer horsepower category (not measured engine power)"],
+    ["manufacturer_engine_power_unspecified_standard","Manufacturer-stated engine power (test standard not stated)"],
+    ["manufacturer_max_pto_power_unspecified_standard","Manufacturer-stated maximum PTO power (test standard not stated)"],
+    ["manufacturer_f25_rops_weight_unscoped","F25 weight with ROPS (gearbox variant unspecified)"],
+    ["weight_unspecified","Weight (load condition unspecified)"],
+    ["transmission_configuration","Transmission configuration"]
+  ];
+  for(const [key,english] of keys){
+    for(const locale of LOCALES){
+      const actual=specLabel({canonical_key:key,spec_name:english},locale);
+      assert.ok(actual && actual.trim().length>3,locale+" missing "+key);
+      if(locale!=="en")assert.notEqual(actual.toLowerCase(),english.toLowerCase(),locale+" fallback "+key);
+    }
+  }
+  for(const locale of LOCALES){
+    const category=specLabel({canonical_key:"engine_hp_category",spec_name:"Manufacturer horsepower category"},locale);
+    const rated=specLabel({canonical_key:"engine_rated_power",spec_name:"Rated engine power"},locale);
+    const stated=specLabel({canonical_key:"manufacturer_engine_power_unspecified_standard",spec_name:"Manufacturer-stated engine power"},locale);
+    const maxPto=specLabel({canonical_key:"manufacturer_max_pto_power_unspecified_standard",spec_name:"Maximum PTO power"},locale);
+    assert.notEqual(category,rated,"HP category is not verified rated power: "+locale);
+    assert.notEqual(stated,rated,"Unstandardized claimed engine power is not rated power: "+locale);
+    assert.notEqual(maxPto,stated,"PTO is not engine power: "+locale);
+  }
+});
