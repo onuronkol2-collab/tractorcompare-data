@@ -10,8 +10,8 @@
       "modified": null
     },
     "https://tractorvs.com/compare/": {
-      "digest": "ad120f3a2da363e61cd6953af3cefbe6d4c7028b7c88c4c749d7d82681116329",
-      "modified": "2026-11-21T19:18:10.960Z"
+      "digest": "ab28e700d67e96eec24f0ca9fa3d0938860d16f739757a8ee0468a4e0f3ecc7c",
+      "modified": "2026-11-21T19:20:06.548Z"
     },
     "https://tractorvs.com/de/": {
       "digest": "4c7053016243cfbf0785c3fe3c6fab112e4ef37fcfad637dbb66efb4686a5a1e",
@@ -22,12 +22,12 @@
       "modified": null
     },
     "https://tractorvs.com/de/compare/": {
-      "digest": "efac655539f64e5fc1bce0925a2c32d4df96142f54949f30205cf943c6630c48",
-      "modified": "2026-11-21T19:18:10.960Z"
+      "digest": "2d250c2170d116caf7485af12faecf6f7725e74e548d39b101b5dde44d68af82",
+      "modified": "2026-11-21T19:20:06.548Z"
     },
     "https://tractorvs.com/de/farm-advisor/": {
-      "digest": "b54bf73ae7ab7f0cd11aa2a202b27e3f6bbf705724897014975f834f5eab0a06",
-      "modified": "2026-11-21T18:59:50.515Z"
+      "digest": "5d80ba7174047966ab746de6bc510037067261665a121643fa3ad02ae3107ef5",
+      "modified": "2026-11-21T19:20:06.548Z"
     },
     "https://tractorvs.com/de/guides/choosing-a-tractor/": {
       "digest": "c8ea301bd2c46ef21fac33682f71778a0de07284c20e596e834b6d29e3aa34d3",
@@ -46,8 +46,8 @@
       "modified": "2026-11-21T19:18:10.960Z"
     },
     "https://tractorvs.com/de/tractors/agrale-4125-0b53e944/": {
-      "digest": "383068f720ee004756998faea597306fcaeb1091f71424bdef0cc2107b06b385",
-      "modified": "2026-11-21T18:59:50.515Z"
+      "digest": "da8948617cf25877e9aff3f08945cd40bb9a1845a152f04b500a94f64da687fe",
+      "modified": "2026-11-21T19:20:06.548Z"
     },
     "https://tractorvs.com/de/tractors/agrale-4125-cargo-66781999/": {
       "digest": "0f21f4a0baacf46432c9eb3b0f8a725bbd280840ec53137f871abc9f397622c1",
@@ -62,16 +62,16 @@
       "modified": null
     },
     "https://tractorvs.com/de/tractors/agrale-525-fb5e66a6/": {
-      "digest": "ceb537e94c34a390e8b30479e1941a182de0d01bdf751bef647eb8507d7880b3",
-      "modified": "2026-11-21T18:59:50.515Z"
+      "digest": "c9fa068173cf4e3a128b9c96ffafaf7dd70c5d918e40d79426cc791c4f22c17c",
+      "modified": "2026-11-21T19:20:06.548Z"
     },
     "https://tractorvs.com/de/tractors/agrale-575-compact-5a960051/": {
       "digest": "490d66132942ab70ea8f7ad1dd92459c333569263462e573e04739bd8b89aae6",
       "modified": null
     },
     "https://tractorvs.com/de/tractors/agrale-575-super-d3f67001/": {
-      "digest": "08d28d350d12badfbdaf67d125a0a4e904024eeef2ac45cb5843bb2e922cc089",
-      "modified": null
+      "digest": "c24c6b567a2f32de0a4ea0eb4ec865e4f8232d03758513cba60d4a2ad2a70022",
+      "modified": "2026-11-21T19:20:06.548Z"
     },
     "https://tractorvs.com/de/tractors/agrale-6185-6294988c/": {
       "digest": "b6db512eff26f732389cfd9e754dc0041d8d2a50bc55dc57cf0a97148ea68adb",
@@ -250,12 +250,12 @@
       "modified": "2026-11-21T19:18:10.960Z"
     },
     "https://tractorvs.com/de/tractors/belarus-920-2-1e1d7219/": {
-      "digest": "04b47a96aa7fce15b3c374f4d1a9ca8ad810b3279df4eb5d3d38979f194e2c43",
-      "modified": "2026-11-21T19:08:54.066Z"
+      "digest": "815d0eb6f5da8e6458e969001f44b141a60446c335df7181c68601ba70d84f08",
+      "modified": "2026-11-21T19:20:06.548Z"
     },
     "https://tractorvs.com/de/tractors/belarus-920-21e79b33/": {
-      "digest": "235dfd0b8c61a0a5cb53e9585d8bf374462ba287383dbd3c8048099f80c403ce",
-      "modified": "2026-11-21T19:08:54.066Z"
+      "digest": "ed8028152ec46de529bdfe351edbea04c6ba4a5c8ee00a69330e3d8bfcd531ec",
+      "modified": "2026-11-21T19:20:06.548Z"
     },
     "https://tractorvs.com/de/tractors/belarus-922-3-1cd53d1a/": {
       "digest": "0d65408d86d519c93b0e9b0be6941952ec890d1c786c200110491b064af445ce",
@@ -1570,12 +1570,12 @@
       "modified": null
     },
     "https://tractorvs.com/es/compare/": {
-      "digest": "e46c6ce2fb90aa08d58b0c8c7f384d921004e26497b69712af15ba4258f36faa",
-      "modified": "2026-11-21T19:18:10.960Z"
+      "digest": "977f0dd38afde5724886f6eed94ae73459a27f655037e212dab807bfe9fc4d77",
+      "modified": "2026-11-21T19:20:06.548Z"
     },
     "https://tractorvs.com/es/farm-advisor/": {
-      "digest": "406dc7bf28f97142d385a14af0156e9462f8c1bf2739fdf19ae18e15ce151ac7",
-      "modified": "2026-11-21T18:59:50.515Z"
+      "digest": "124e7fbfecd3c425431e0b1708b89f15b1718815027c975b864b646a2532bbfe",
+      "modified": "2026-11-21T19:20:06.548Z"
     },
     "https://tractorvs.com/es/guides/choosing-a-tractor/": {
       "digest": "83859d82793178eb557e52b3f46dd563fcf28d894b2e8aacff2c9174c51b75a0",
@@ -1594,8 +1594,8 @@
       "modified": "2026-11-21T19:18:10.960Z"
     },
     "https://tractorvs.com/es/tractors/agrale-4125-0b53e944/": {
-      "digest": "88fc58ec7ecd154f05b01afc82eb3c26204a5a65f3f382d480bf3cfcd6d24bd0",
-      "modified": "2026-11-21T19:08:54.066Z"
+      "digest": "68b6b8decdd6f8412a652144083e8f2a36ecccf5a5ac1ccfcd5045b1586dd89b",
+      "modified": "2026-11-21T19:20:06.548Z"
     },
     "https://tractorvs.com/es/tractors/agrale-4125-cargo-66781999/": {
       "digest": "2f25059181ee99ded7950e97eff358508f93318c5e09ec12d90841b35e1a5196",
@@ -1610,16 +1610,16 @@
       "modified": null
     },
     "https://tractorvs.com/es/tractors/agrale-525-fb5e66a6/": {
-      "digest": "ca7e32af7cbdfbc935df6326b12a865aca0714a718997ec8ed2418b8e93bf5e7",
-      "modified": "2026-11-21T19:08:54.066Z"
+      "digest": "be0b1e3920c408ed019de9e76e3731c4f1ac0866008f5bbdd01301f18724d1ec",
+      "modified": "2026-11-21T19:20:06.548Z"
     },
     "https://tractorvs.com/es/tractors/agrale-575-compact-5a960051/": {
       "digest": "6d349e4f75080bae6c70f964cbaded748c4515af4c73541d48206746881f3ec4",
       "modified": "2026-11-21T19:08:54.066Z"
     },
     "https://tractorvs.com/es/tractors/agrale-575-super-d3f67001/": {
-      "digest": "51c9b6c03eaf90ce708af6b1ba3b810380b8209a88834d9580682e05336fd871",
-      "modified": "2026-11-21T19:08:54.066Z"
+      "digest": "ca13dedb06f1884806aa3dc24a9fe62ae68e313a2421559e9cf76c2174417cb5",
+      "modified": "2026-11-21T19:20:06.548Z"
     },
     "https://tractorvs.com/es/tractors/agrale-6185-6294988c/": {
       "digest": "d3025250d4a39dd8a11c7c94497ed37ac7f0c5f4bc4f16ae7cfe31d61861260a",
@@ -1798,12 +1798,12 @@
       "modified": "2026-11-21T19:18:10.960Z"
     },
     "https://tractorvs.com/es/tractors/belarus-920-2-1e1d7219/": {
-      "digest": "3f31af4e38c9f297f19d6c0f003394ac75a65a8d66dbeb2113ef368e97036429",
-      "modified": "2026-11-21T18:59:50.515Z"
+      "digest": "d617e130c4d53d8d0160c9af5e64d9e8a6ee4586d1ebe081f4172b76aabccb45",
+      "modified": "2026-11-21T19:20:06.548Z"
     },
     "https://tractorvs.com/es/tractors/belarus-920-21e79b33/": {
-      "digest": "b7e8f633bd6503e320ddc2bc65e0098533458682950d418dad248fb353d7d28d",
-      "modified": "2026-11-21T18:59:50.515Z"
+      "digest": "b67c4b36ed7d82a9170a51e67f95cd377e261633c149ad0e3006bf0b4bb09b4e",
+      "modified": "2026-11-21T19:20:06.548Z"
     },
     "https://tractorvs.com/es/tractors/belarus-922-3-1cd53d1a/": {
       "digest": "108af5c48d70f83a5e23a2a3c02ce24d3feed2da279b8ca37f649771cc275fc1",
@@ -3110,8 +3110,8 @@
       "modified": null
     },
     "https://tractorvs.com/farm-advisor/": {
-      "digest": "cbb76059f4005b11c81c9aef0cc7fa791f12efda2715b8b61cd6c3d8cd03539c",
-      "modified": "2026-11-21T18:59:50.515Z"
+      "digest": "5d739ad301e342b35357e5166e3ccfe95fd1d45c5f71fe305550da607b895039",
+      "modified": "2026-11-21T19:20:06.548Z"
     },
     "https://tractorvs.com/fr/": {
       "digest": "d859062fd3f1e05de8d4048e7af4257b48a384f3bf28ff40a1a24a682807ebbc",
@@ -3122,12 +3122,12 @@
       "modified": null
     },
     "https://tractorvs.com/fr/compare/": {
-      "digest": "4419187cdc344d1c5896b3019b755e68afde8c0177f09aae3c58b6db96b792e6",
-      "modified": "2026-11-21T19:18:10.960Z"
+      "digest": "00292c01322ea2cb6f06d8643f1115170f0aef693586cf95b62e51ffc87f7438",
+      "modified": "2026-11-21T19:20:06.548Z"
     },
     "https://tractorvs.com/fr/farm-advisor/": {
-      "digest": "04c0cfec26be6acd27f73d77e1223bea49788762c10d12351f0e3c0d8f0a53ab",
-      "modified": "2026-11-21T18:59:50.515Z"
+      "digest": "d6cdd9df963102940b39a9e1e1675ae3cd88b871bdc74a8835e6c34b3d8cfe95",
+      "modified": "2026-11-21T19:20:06.548Z"
     },
     "https://tractorvs.com/fr/guides/choosing-a-tractor/": {
       "digest": "1987d4557bcce2475611807bdb15ed40c9edb2b8d1f012afb1aba2cadb526b26",
@@ -3146,8 +3146,8 @@
       "modified": "2026-11-21T19:18:10.960Z"
     },
     "https://tractorvs.com/fr/tractors/agrale-4125-0b53e944/": {
-      "digest": "09c34a736d7f6c8bf1d94455adc6f54a7b3bb07e320151ddcdeba44145e4b26d",
-      "modified": "2026-11-21T19:08:54.066Z"
+      "digest": "e6dd4e1c232709be3413807debcfaaec87347004baf6150794426732dcbc1103",
+      "modified": "2026-11-21T19:20:06.548Z"
     },
     "https://tractorvs.com/fr/tractors/agrale-4125-cargo-66781999/": {
       "digest": "779ee095fdcd47b706e4818f8527ba498aeb9a8146f219d0bdff0a9758d4b11e",
@@ -3162,16 +3162,16 @@
       "modified": null
     },
     "https://tractorvs.com/fr/tractors/agrale-525-fb5e66a6/": {
-      "digest": "970f45d130ce65a5fbe10c228e21edfcdfaf925fe36ef4eacfd3567ea177d2bc",
-      "modified": "2026-11-21T19:08:54.066Z"
+      "digest": "e2dc7656c1f9c310fc9b879ae293d964baa801c56f4f453316ee2e0ca1a2c31f",
+      "modified": "2026-11-21T19:20:06.548Z"
     },
     "https://tractorvs.com/fr/tractors/agrale-575-compact-5a960051/": {
       "digest": "eeeb537b2cb547c4cc2ba416fab7510c93de52a9e17327882280307c9b29aac1",
       "modified": "2026-11-21T19:08:54.066Z"
     },
     "https://tractorvs.com/fr/tractors/agrale-575-super-d3f67001/": {
-      "digest": "eafcc62387273f856c6edf51c7cd533dab8efb6cba6251627ea23acaa42cdd8c",
-      "modified": "2026-11-21T19:08:54.066Z"
+      "digest": "dcc1a688903523ceb022ca357d776891f687be3f217cc1e1d26250ee5621dc0a",
+      "modified": "2026-11-21T19:20:06.548Z"
     },
     "https://tractorvs.com/fr/tractors/agrale-6185-6294988c/": {
       "digest": "f7568daa66a67fc9d5a072c2fdf284fd707b033159dec23f695c552ff2e0ee87",
@@ -3350,12 +3350,12 @@
       "modified": "2026-11-21T19:18:10.960Z"
     },
     "https://tractorvs.com/fr/tractors/belarus-920-2-1e1d7219/": {
-      "digest": "dd1d9bf97e7b46f918e9e51f4d74945c5f4eb357240b0cda75155cea30ac4241",
-      "modified": "2026-11-21T18:59:50.515Z"
+      "digest": "ee4e18835f5422abbb61bb0687070e2422b741b99580284b18209fcbdf4a0525",
+      "modified": "2026-11-21T19:20:06.548Z"
     },
     "https://tractorvs.com/fr/tractors/belarus-920-21e79b33/": {
-      "digest": "e42c176ddfc0e67a4bcf322f0fbea4bb2869722195b59b722f990d369beb2e83",
-      "modified": "2026-11-21T18:59:50.515Z"
+      "digest": "50809fee7b79ff5e498137fa99fb3b6bcd9388b98da45fd5521c7bf9217cbc70",
+      "modified": "2026-11-21T19:20:06.548Z"
     },
     "https://tractorvs.com/fr/tractors/belarus-922-3-1cd53d1a/": {
       "digest": "ceaab1fd93b4f6f2f8e7de6b417781b52e58fa444638cb77b1d489c177a173d4",
@@ -4690,12 +4690,12 @@
       "modified": null
     },
     "https://tractorvs.com/hi/compare/": {
-      "digest": "35a2e30c3b882d92a26870cbe34ecb39558b4e63aa634364bff0513c1f1925cc",
-      "modified": "2026-11-21T19:18:10.960Z"
+      "digest": "e5b2ea0cb89903529c1e87830ed745a17eea164b64b4a852b20d8024dff666ee",
+      "modified": "2026-11-21T19:20:06.548Z"
     },
     "https://tractorvs.com/hi/farm-advisor/": {
-      "digest": "092807b2200943f7ac2f0bbd715574ad369a1008fef08957742035deef535fc3",
-      "modified": "2026-11-21T18:59:50.515Z"
+      "digest": "d3be01f35315086197bab09d5f6bdd216c6acaf8594d82371ddaf0c0b9613a4c",
+      "modified": "2026-11-21T19:20:06.548Z"
     },
     "https://tractorvs.com/hi/guides/choosing-a-tractor/": {
       "digest": "9d8ebe3b95cf39da8872a454842935b91531f4823bf75eb5a9d325cdc6913c1a",
@@ -4714,8 +4714,8 @@
       "modified": "2026-11-21T19:18:10.960Z"
     },
     "https://tractorvs.com/hi/tractors/agrale-4125-0b53e944/": {
-      "digest": "e2df6853d489453d6c896735aae87a088aeb25af566264c205cb10ec0f0f8864",
-      "modified": "2026-11-21T18:59:50.515Z"
+      "digest": "b19423b2967ef2c5740c8094362038c082186bcda9042561a0d55270b21a721a",
+      "modified": "2026-11-21T19:20:06.548Z"
     },
     "https://tractorvs.com/hi/tractors/agrale-4125-cargo-66781999/": {
       "digest": "73baa113f0f48fa1708329623a595fda0c398d8f099192b0944907ac90784ef8",
@@ -4730,16 +4730,16 @@
       "modified": null
     },
     "https://tractorvs.com/hi/tractors/agrale-525-fb5e66a6/": {
-      "digest": "1121945ede07280d84e3adc8372186e554620b0512e25dc3d224723504f0dbda",
-      "modified": "2026-11-21T18:59:50.515Z"
+      "digest": "a4789f098d5dd42dc3e64ec871ad6ee1cef43b859ede0c9362c3e8d0bab34d70",
+      "modified": "2026-11-21T19:20:06.548Z"
     },
     "https://tractorvs.com/hi/tractors/agrale-575-compact-5a960051/": {
       "digest": "0f8ccd7402a944381c3c06b7d84fe33637a96b7e34fae5d9dad208c8813df950",
       "modified": null
     },
     "https://tractorvs.com/hi/tractors/agrale-575-super-d3f67001/": {
-      "digest": "0e9783aa7815f379470d9fcfb8501aa0baeab502636de7916e8e9a99136b619f",
-      "modified": null
+      "digest": "665448930e19241d7dc498c9dce04ffff552b7606b092e28cfeffa05ea0c5234",
+      "modified": "2026-11-21T19:20:06.548Z"
     },
     "https://tractorvs.com/hi/tractors/agrale-6185-6294988c/": {
       "digest": "886d60f8b22f5fc58a3057fbdb2fb891149eb8ddad9d7e103a6b016de5be86d9",
@@ -4918,12 +4918,12 @@
       "modified": "2026-11-21T19:18:10.960Z"
     },
     "https://tractorvs.com/hi/tractors/belarus-920-2-1e1d7219/": {
-      "digest": "ac49e9894cc725f72e4965783a02b8f71f924633e530ae210a829af8ef1381b2",
-      "modified": "2026-11-21T18:59:50.515Z"
+      "digest": "31903df28b2b379d9f3457328c52c91a846ff24418d05290a94c20562bb6e3ae",
+      "modified": "2026-11-21T19:20:06.548Z"
     },
     "https://tractorvs.com/hi/tractors/belarus-920-21e79b33/": {
-      "digest": "79013185d37e0dea7eaec98eccbd146071e6148feab79c5daf178d41d43bd3e2",
-      "modified": "2026-11-21T18:59:50.515Z"
+      "digest": "06c8ea705fab7adbbf2f185debe57d9088a1a28df946ef7eeadb34dda3c8bbfb",
+      "modified": "2026-11-21T19:20:06.548Z"
     },
     "https://tractorvs.com/hi/tractors/belarus-922-3-1cd53d1a/": {
       "digest": "d81cf9b31e6caa682a42df54038940b6c9d05e71cf6d3e9a8dd925432579dc7b",
@@ -6238,12 +6238,12 @@
       "modified": null
     },
     "https://tractorvs.com/ja/compare/": {
-      "digest": "82cceb8e29b46a455a0df9ec532c94c8e1cbccea1b8a6cb706f42cf06c27c46e",
-      "modified": "2026-11-21T19:18:10.960Z"
+      "digest": "f01c0181a8ebe27b6ccd89ce79ffa7f9c196499c370e05311b767207b3c7b509",
+      "modified": "2026-11-21T19:20:06.548Z"
     },
     "https://tractorvs.com/ja/farm-advisor/": {
-      "digest": "0b93553e15a4d2d8185bd3e9ad5d62af3df23c5eeafe4d8c3e1c833fef6c3790",
-      "modified": "2026-11-21T18:59:50.515Z"
+      "digest": "3a8a1195b95355cd0ee8a226223b3831078838a5de0e48e6356a9ff6f406282b",
+      "modified": "2026-11-21T19:20:06.548Z"
     },
     "https://tractorvs.com/ja/guides/choosing-a-tractor/": {
       "digest": "92603cba27a17df62328686578313da48544956129744b81c6321cc0973ce5d3",
@@ -6262,8 +6262,8 @@
       "modified": "2026-11-21T19:18:10.960Z"
     },
     "https://tractorvs.com/ja/tractors/agrale-4125-0b53e944/": {
-      "digest": "1bc6529fbfbbe4d3e11a931b6e13f574234fa70aee9c09063adde9dd19e67673",
-      "modified": "2026-11-21T18:59:50.515Z"
+      "digest": "8baa8fa23bd3f2dde57943582d8b0285dff06fbe2a3797909cae085f4d49e610",
+      "modified": "2026-11-21T19:20:06.548Z"
     },
     "https://tractorvs.com/ja/tractors/agrale-4125-cargo-66781999/": {
       "digest": "36d0b213f5480ddbbcc7fb1413f053a151f7087ffc1d668a9dd9297c41330861",
@@ -6278,16 +6278,16 @@
       "modified": null
     },
     "https://tractorvs.com/ja/tractors/agrale-525-fb5e66a6/": {
-      "digest": "b28f1e842182537553b2a4cb5c6a860f5451f421220370130916a3f1cf6d4c86",
-      "modified": "2026-11-21T18:59:50.515Z"
+      "digest": "7c4576f0f99fdaa1ab3dd76aa2a6cba380d549db5f29b2a56c066ed8d651df84",
+      "modified": "2026-11-21T19:20:06.548Z"
     },
     "https://tractorvs.com/ja/tractors/agrale-575-compact-5a960051/": {
       "digest": "0790efc2a28ba17e333a36af04539bb84f7e10b3d862a79e7878c205bdf75ad0",
       "modified": null
     },
     "https://tractorvs.com/ja/tractors/agrale-575-super-d3f67001/": {
-      "digest": "caafafa74bee19d88117530cc9c91f35ab2feae8c42012c16ec7bde4da9abe28",
-      "modified": null
+      "digest": "5bbe6958f7fb88133c8a1988d88d8092dcc1a09b4efcdad63c4b51c9740df4fc",
+      "modified": "2026-11-21T19:20:06.548Z"
     },
     "https://tractorvs.com/ja/tractors/agrale-6185-6294988c/": {
       "digest": "76ace75906c8a64cc62e50c4f5c1c354178b29cae78dc02cafb748561e111612",
@@ -6466,12 +6466,12 @@
       "modified": "2026-11-21T19:18:10.960Z"
     },
     "https://tractorvs.com/ja/tractors/belarus-920-2-1e1d7219/": {
-      "digest": "995d3726a70d07cb3742aafb67a0a0b98e9917c07a7ca80f2332225576a5ec93",
-      "modified": "2026-11-21T18:59:50.515Z"
+      "digest": "d94d94c63e3e8ebabca773c53f54e47cb832aa333f9b6db8b559b51d92e9ea28",
+      "modified": "2026-11-21T19:20:06.548Z"
     },
     "https://tractorvs.com/ja/tractors/belarus-920-21e79b33/": {
-      "digest": "78c213ed2baa06f27de58a0290868b4332e550c7ad11aef0c8115c266af174ed",
-      "modified": "2026-11-21T18:59:50.515Z"
+      "digest": "3d1cfdf8513f82f328e181851152f3949157d212e1723433947d27c62189e028",
+      "modified": "2026-11-21T19:20:06.548Z"
     },
     "https://tractorvs.com/ja/tractors/belarus-922-3-1cd53d1a/": {
       "digest": "93e38f3e8d7b09c86528056a05feb17899c2b4b0f28351064aada86902620274",
@@ -7794,12 +7794,12 @@
       "modified": null
     },
     "https://tractorvs.com/pt-br/compare/": {
-      "digest": "a64b82c99f5215a818669418b66cd168bbce903b51a5479bb85525e93a64e4c5",
-      "modified": "2026-11-21T19:18:10.960Z"
+      "digest": "233b57133e56fdb0f90d1d87ef2dc20aa69406392325937a15da7fe02c9da586",
+      "modified": "2026-11-21T19:20:06.548Z"
     },
     "https://tractorvs.com/pt-br/farm-advisor/": {
-      "digest": "c550a98cb1e07f9dc6cefab3c8af2099ed34330f495871dbed34773e9829f379",
-      "modified": "2026-11-21T18:59:50.515Z"
+      "digest": "f7740944111a02427f570e7b64fede676e02dbd828aa1cf5de5daf5d1cf1aa82",
+      "modified": "2026-11-21T19:20:06.548Z"
     },
     "https://tractorvs.com/pt-br/guides/choosing-a-tractor/": {
       "digest": "292a6c126543b389136cd1f987c28e398372171cde6d8fcc684023334c0d0893",
@@ -7818,8 +7818,8 @@
       "modified": "2026-11-21T19:18:10.960Z"
     },
     "https://tractorvs.com/pt-br/tractors/agrale-4125-0b53e944/": {
-      "digest": "aa96f913f3b87f5d09f37315acbdf469c1c8fbb61ae38d628e1b64089f6de332",
-      "modified": "2026-11-21T19:08:54.066Z"
+      "digest": "edb0893b8fa0e64a13c8134e2107427708725227e580c0ccae4b293c231c81c2",
+      "modified": "2026-11-21T19:20:06.548Z"
     },
     "https://tractorvs.com/pt-br/tractors/agrale-4125-cargo-66781999/": {
       "digest": "f5106b192665d8dc69d0836430502f93a77bece8b2dede7294fa1928d2f74f96",
@@ -7834,16 +7834,16 @@
       "modified": null
     },
     "https://tractorvs.com/pt-br/tractors/agrale-525-fb5e66a6/": {
-      "digest": "4c8b054ee728a769f6ae58741752b1f5c96ca51cf550f4bd3b96c2272855377d",
-      "modified": "2026-11-21T19:08:54.066Z"
+      "digest": "e29342e4f79c152631679651599f967214319bd4c23d01f76425af5af2ecade0",
+      "modified": "2026-11-21T19:20:06.548Z"
     },
     "https://tractorvs.com/pt-br/tractors/agrale-575-compact-5a960051/": {
       "digest": "1528e2b28ccbccfbfa7dd189f251e513f5114b7c614fc4dc3a6c91ca8622d3bb",
       "modified": "2026-11-21T19:08:54.066Z"
     },
     "https://tractorvs.com/pt-br/tractors/agrale-575-super-d3f67001/": {
-      "digest": "36d6065faa8c22deee4a40817db13456847f7f7a53487fc0bb9aff9bdc8bfb6f",
-      "modified": "2026-11-21T19:08:54.066Z"
+      "digest": "0a558b531281ac68e2f2e7c34f13fd36eb70d3ad12e6e3961141ffa7b0574824",
+      "modified": "2026-11-21T19:20:06.548Z"
     },
     "https://tractorvs.com/pt-br/tractors/agrale-6185-6294988c/": {
       "digest": "1c25bd9df29fec73b5fbe8ffbf14f330ec5f26b5f60781b1841f0ca232ae5c5f",
@@ -8022,12 +8022,12 @@
       "modified": "2026-11-21T19:18:10.960Z"
     },
     "https://tractorvs.com/pt-br/tractors/belarus-920-2-1e1d7219/": {
-      "digest": "1555b3aa792d35260b34017c2011cc6ea398af46476aeb4384d79022b17556d8",
-      "modified": "2026-11-21T18:59:50.515Z"
+      "digest": "8b512a57a1e919d77df5feb886c89629989fff158b703cbfec153d22e9f10af3",
+      "modified": "2026-11-21T19:20:06.548Z"
     },
     "https://tractorvs.com/pt-br/tractors/belarus-920-21e79b33/": {
-      "digest": "5d15bc0f89360523d8cd1e6748ed9e329f437024bff25578d7a4c9df5800f93e",
-      "modified": "2026-11-21T18:59:50.515Z"
+      "digest": "b82abcf3527e3f5f533bb55f1646b2d538edb7d068766fcafa85032d431d79d7",
+      "modified": "2026-11-21T19:20:06.548Z"
     },
     "https://tractorvs.com/pt-br/tractors/belarus-922-3-1cd53d1a/": {
       "digest": "b47840ef34fa7c215072dd7378fc283dc4485d920847a3c193c1fc9a4b477f68",
@@ -9346,12 +9346,12 @@
       "modified": null
     },
     "https://tractorvs.com/ru/compare/": {
-      "digest": "9c4fc189d25a0b0e4b887fc3a4c55929f8a7ba814521d356f7ea25c13d8d8cc8",
-      "modified": "2026-11-21T19:18:10.960Z"
+      "digest": "6cff9125970983b4a3368511cbd6a5446b314bde5f9427ef30e79cff1e763c32",
+      "modified": "2026-11-21T19:20:06.548Z"
     },
     "https://tractorvs.com/ru/farm-advisor/": {
-      "digest": "245f02c8d895c7e6f42ced41281d8e3b3eec17b15bda2222a277d7e4025d9119",
-      "modified": "2026-11-21T18:59:50.515Z"
+      "digest": "6151b8e813ff8ecb14088c0de9d6030c32503db0b985056516f31dcdb2839ff9",
+      "modified": "2026-11-21T19:20:06.548Z"
     },
     "https://tractorvs.com/ru/guides/choosing-a-tractor/": {
       "digest": "fc7f908cee35c26b64f4c2e748fe0f317a70a554928a5793dade6dd9d163d857",
@@ -9370,8 +9370,8 @@
       "modified": "2026-11-21T19:18:10.960Z"
     },
     "https://tractorvs.com/ru/tractors/agrale-4125-0b53e944/": {
-      "digest": "ad56cd5defc003050d7169bea9d9de929dc5677c0e3db9a56107d05603c223c0",
-      "modified": "2026-11-21T19:08:54.066Z"
+      "digest": "124cba8a17fafb5c0646229db31c836a3744634c22f52a23200e8f8024400c3a",
+      "modified": "2026-11-21T19:20:06.548Z"
     },
     "https://tractorvs.com/ru/tractors/agrale-4125-cargo-66781999/": {
       "digest": "7bc41bcddca65f1c28cc3a7dbbdcaff052404b221298510684fa35738ae08b45",
@@ -9386,16 +9386,16 @@
       "modified": null
     },
     "https://tractorvs.com/ru/tractors/agrale-525-fb5e66a6/": {
-      "digest": "a7af0fd2824df666f0596dcfe66090779bd552bc403c437c9a8b73ab5e20b61c",
-      "modified": "2026-11-21T19:08:54.066Z"
+      "digest": "6c1e7bb6f51a74c3b1d18736344d6003c56446c2bed05bba0d02eb2b8f0bff39",
+      "modified": "2026-11-21T19:20:06.548Z"
     },
     "https://tractorvs.com/ru/tractors/agrale-575-compact-5a960051/": {
       "digest": "fef83acee816ac13c01eced7a1c2910f401316a11ffd0ee980a96d0c745a244d",
       "modified": "2026-11-21T19:08:54.066Z"
     },
     "https://tractorvs.com/ru/tractors/agrale-575-super-d3f67001/": {
-      "digest": "fbc4b68a8a41183f5b062209fe8c7299f0aa80aa8d33d5e9abd4c418f5064b1d",
-      "modified": "2026-11-21T19:08:54.066Z"
+      "digest": "51fa5cedddcc6b9c6ab50705f7a1ed040369f742e8f1f9490b0b6b93abe7bb71",
+      "modified": "2026-11-21T19:20:06.548Z"
     },
     "https://tractorvs.com/ru/tractors/agrale-6185-6294988c/": {
       "digest": "97c29c47d58e9383bff8c80e3722238a010e26dd653b5194cf80f184fe6807e6",
@@ -9574,12 +9574,12 @@
       "modified": "2026-11-21T19:18:10.960Z"
     },
     "https://tractorvs.com/ru/tractors/belarus-920-2-1e1d7219/": {
-      "digest": "3cfd75ffb017d1b1eadb85e70733962e525d13d039bdbf965a123d90a7d4dbff",
-      "modified": "2026-11-21T18:59:50.515Z"
+      "digest": "c3b97b133b790cbf737e7447f763efa84429e7bc164d74f496d1e23a110d53d6",
+      "modified": "2026-11-21T19:20:06.548Z"
     },
     "https://tractorvs.com/ru/tractors/belarus-920-21e79b33/": {
-      "digest": "5b222b015ca16045103d253386a5138593734471b944bd954d26114b53c8e53f",
-      "modified": "2026-11-21T18:59:50.515Z"
+      "digest": "6a6c159fa8221768833fb8a47839820df63b4166e485b8f54e56d82f97a7c47c",
+      "modified": "2026-11-21T19:20:06.548Z"
     },
     "https://tractorvs.com/ru/tractors/belarus-922-3-1cd53d1a/": {
       "digest": "94d60cd3a139f6ac925a9e485182ce2e5bf2cc92c070e45f36ab789a8a6afc87",
@@ -10894,12 +10894,12 @@
       "modified": null
     },
     "https://tractorvs.com/tr/compare/": {
-      "digest": "159961d7099b557bf20c9e3ac54daeb7aadc91bdc86a0001a23fa44f3c0c0315",
-      "modified": "2026-11-21T19:18:10.960Z"
+      "digest": "be495b9dcd1296edfa222482470713636ccb696944c5147d354e6c7727b8555b",
+      "modified": "2026-11-21T19:20:06.548Z"
     },
     "https://tractorvs.com/tr/farm-advisor/": {
-      "digest": "ed0aad9b2d566aac5fce812cdd287bcb4dea486ad8ed0f3c76607dcdd53c871b",
-      "modified": "2026-11-21T18:59:50.515Z"
+      "digest": "a4adbdc03bc2ab2929efa74249357d29f129d3a8fba458e6ff3f48292bdf8030",
+      "modified": "2026-11-21T19:20:06.548Z"
     },
     "https://tractorvs.com/tr/guides/choosing-a-tractor/": {
       "digest": "60cce5fa9d1392d15abdf62568bd38eb23d757e0640d27a3ae52b0850d15ef46",
@@ -10938,8 +10938,8 @@
       "modified": "2026-11-21T19:18:10.960Z"
     },
     "https://tractorvs.com/tr/tractors/agrale-4125-0b53e944/": {
-      "digest": "0c474a6d1a4540085fda1d89422b9cbf4a1db0e59c399c182b4823f4cb810f5c",
-      "modified": "2026-11-21T19:08:54.066Z"
+      "digest": "a9e5993677bc8d5ddf449b29a41bcd99d8ba6b3599ae3b54eba2389fc915225a",
+      "modified": "2026-11-21T19:20:06.548Z"
     },
     "https://tractorvs.com/tr/tractors/agrale-4125-cargo-66781999/": {
       "digest": "be151f3114555d468061e3711f2466f8c4e8a835ee4afa5bc06cdf1dedb2b739",
@@ -10954,16 +10954,16 @@
       "modified": null
     },
     "https://tractorvs.com/tr/tractors/agrale-525-fb5e66a6/": {
-      "digest": "3b8caea9520cf89f4980dbc83465bee95d5a7a0244bd02b6cb0ba1ade1fed1fc",
-      "modified": "2026-11-21T19:08:54.066Z"
+      "digest": "b3f5eff1bf0dac8ae633df649f9ea0c74293a6de3f80ebd2fbd487ad3405ef42",
+      "modified": "2026-11-21T19:20:06.548Z"
     },
     "https://tractorvs.com/tr/tractors/agrale-575-compact-5a960051/": {
       "digest": "3e2511b27cf6a8d80714bdee961fda45c6faa48c07fe7120f5dcb65145270cc2",
       "modified": "2026-11-21T19:08:54.066Z"
     },
     "https://tractorvs.com/tr/tractors/agrale-575-super-d3f67001/": {
-      "digest": "9fe89688ab48335e15fe24f0c82e471a1b468e8137821969e048dbcdb17b58b8",
-      "modified": "2026-11-21T19:08:54.066Z"
+      "digest": "88e4948d345ad5c15aac2756ba39c8938f36f3f93c898c4e584bbb3b19615cf6",
+      "modified": "2026-11-21T19:20:06.548Z"
     },
     "https://tractorvs.com/tr/tractors/agrale-6185-6294988c/": {
       "digest": "328c259eefb3684ac48c6933b8dda86ad28a7dfb01ebd3d2ad362a1a9944a61c",
@@ -11142,12 +11142,12 @@
       "modified": "2026-11-21T19:18:10.960Z"
     },
     "https://tractorvs.com/tr/tractors/belarus-920-2-1e1d7219/": {
-      "digest": "9376ca1bec6e9027c96c3db57f535714965491135c74965e5e92c5f19d4f1dd6",
-      "modified": "2026-11-21T19:08:54.066Z"
+      "digest": "ea74ec6db4dbf267422d2a0fd2d6358e35a347cf45573a9ecacf22bc1dd6e250",
+      "modified": "2026-11-21T19:20:06.548Z"
     },
     "https://tractorvs.com/tr/tractors/belarus-920-21e79b33/": {
-      "digest": "278ad8ba7b217cd7fef8fc118c5b10a62cdb80d3063ee9c550abe50457458549",
-      "modified": "2026-11-21T19:08:54.066Z"
+      "digest": "f9cf09482a957f9893a621d4786010fa33ef1f2152cb99b94b75c8d529c6c308",
+      "modified": "2026-11-21T19:20:06.548Z"
     },
     "https://tractorvs.com/tr/tractors/belarus-922-3-1cd53d1a/": {
       "digest": "f8575fe4a0cbba3ca9cca80ee10ed6af2cff37b8f0521e06a19b4184b2236a82",
@@ -12458,8 +12458,8 @@
       "modified": "2026-11-21T19:18:10.960Z"
     },
     "https://tractorvs.com/tractors/agrale-4125-0b53e944/": {
-      "digest": "b166f849b97a8f2eeec3c65fad963018c70ce17571bbd4baf9e998a3494c89c3",
-      "modified": null
+      "digest": "5de348149531ede958cba36a5ad52ba44aa8febf31e506ba50a9c364915b7750",
+      "modified": "2026-11-21T19:20:06.548Z"
     },
     "https://tractorvs.com/tractors/agrale-4125-cargo-66781999/": {
       "digest": "f5e1434a0e12486beb13274381d31fd27dfb505d2e669c4b89316fe1d5c3d032",
@@ -12474,16 +12474,16 @@
       "modified": null
     },
     "https://tractorvs.com/tractors/agrale-525-fb5e66a6/": {
-      "digest": "b73bf0ef3aafd0e4888eb719a89fd2d3d4cb3faf8944bf0b9fa4b2df296547fe",
-      "modified": null
+      "digest": "7614f7f1b2a4ad4d7ba34d81d26c253878fb9bde7dd089f2a7680c4e30eaeee4",
+      "modified": "2026-11-21T19:20:06.548Z"
     },
     "https://tractorvs.com/tractors/agrale-575-compact-5a960051/": {
       "digest": "442d1deb0bcd041f2c3aea1517009a87b68fee0be350dd611570ddda104e2f44",
       "modified": null
     },
     "https://tractorvs.com/tractors/agrale-575-super-d3f67001/": {
-      "digest": "81f92fb7bb47e023e039472139bcd295b1a5e9ed2be70369b9d44ab91ac6e2c2",
-      "modified": null
+      "digest": "f4bd47ab163576726bfc67293aa21d856853bf80842b4643b72a019d952eb76f",
+      "modified": "2026-11-21T19:20:06.548Z"
     },
     "https://tractorvs.com/tractors/agrale-6185-6294988c/": {
       "digest": "8cc32c27beab97f75a6b693cc2a69dec249f6850d371d7f65d4debb5bd3d0fdd",
@@ -12662,12 +12662,12 @@
       "modified": "2026-11-21T19:18:10.960Z"
     },
     "https://tractorvs.com/tractors/belarus-920-2-1e1d7219/": {
-      "digest": "4a8aceaa513fb41f381c2c9cb6d96a1751e7137ed2f75de07306e887be4d2baa",
-      "modified": null
+      "digest": "fcf75f27753af8dba68affafb4f0c1d53a732fd692c7446248ff40c259ad0fe4",
+      "modified": "2026-11-21T19:20:06.548Z"
     },
     "https://tractorvs.com/tractors/belarus-920-21e79b33/": {
-      "digest": "dd6b741936957e2bb22f5e2dd15137a4ffa812b1b17802c7c90f8b7a0b75edbf",
-      "modified": null
+      "digest": "fa2ed890e225e5f78be4fbd5c4a89fb2201a4dd91e46c55f0e48e8aad543f5ce",
+      "modified": "2026-11-21T19:20:06.548Z"
     },
     "https://tractorvs.com/tractors/belarus-922-3-1cd53d1a/": {
       "digest": "e329d96df4272597bc407142c063a7f1d56eb4c1f52df515d05868b21c863f6b",
@@ -13982,12 +13982,12 @@
       "modified": null
     },
     "https://tractorvs.com/zh/compare/": {
-      "digest": "9cc345d63cfa8aa1fbe9c9b3f69aef9fb09ff572472488c2061d348e2a16dfee",
-      "modified": "2026-11-21T19:18:10.960Z"
+      "digest": "42a8ab8b8fee3ff58fa6866a4a3f842f671807ae4a3af41de9791f6b7c2fd744",
+      "modified": "2026-11-21T19:20:06.548Z"
     },
     "https://tractorvs.com/zh/farm-advisor/": {
-      "digest": "6d1cbf2fc0696b73e5468717efea9c3b93a63653f712fd1efe387f578d993039",
-      "modified": "2026-11-21T18:59:50.515Z"
+      "digest": "acec226c9dd9511500bef5a955082474f70bfa4cfd663939ecd9f0bf8468b829",
+      "modified": "2026-11-21T19:20:06.548Z"
     },
     "https://tractorvs.com/zh/guides/choosing-a-tractor/": {
       "digest": "07e5cd9042d6ba1bb63189632e1ec8bdcc4d8e176cd9cc13364bebc4d29af11a",
@@ -14006,8 +14006,8 @@
       "modified": "2026-11-21T19:18:10.960Z"
     },
     "https://tractorvs.com/zh/tractors/agrale-4125-0b53e944/": {
-      "digest": "03cac6d4ace28aaefb3d7431c5d39d40543e54592565b2ef813671ce937da753",
-      "modified": "2026-11-21T18:59:50.515Z"
+      "digest": "06ef33111c39f181b91db4f5221c7d745de902d6f7e772985350a9cff585708f",
+      "modified": "2026-11-21T19:20:06.548Z"
     },
     "https://tractorvs.com/zh/tractors/agrale-4125-cargo-66781999/": {
       "digest": "1c27ffdd54b77cd7de0695f7cde8d88c1b5af7a48ede6c9811313e7661ae8534",
@@ -14022,16 +14022,16 @@
       "modified": null
     },
     "https://tractorvs.com/zh/tractors/agrale-525-fb5e66a6/": {
-      "digest": "04c78bf47232d5608168e848e05262465b676714dba2e3ac9c66490bf3ac92ac",
-      "modified": "2026-11-21T18:59:50.515Z"
+      "digest": "cc0598c849807b5d71180ee3700c4af6cab11babcdd1473b08ff64daa7540406",
+      "modified": "2026-11-21T19:20:06.548Z"
     },
     "https://tractorvs.com/zh/tractors/agrale-575-compact-5a960051/": {
       "digest": "0e0567593ca86f17661b36711faf9d37b7ae2c133b425ef9dfc6c48afc7a9d8a",
       "modified": null
     },
     "https://tractorvs.com/zh/tractors/agrale-575-super-d3f67001/": {
-      "digest": "a90330574f016bf0fe310b7dbde9c122c9f8701d9fc4244a9c9ab29ba3901918",
-      "modified": null
+      "digest": "fb4bcccb4882254d35760b8dfb14d7a32f2e7189c222e26dd893062f1d472fd3",
+      "modified": "2026-11-21T19:20:06.548Z"
     },
     "https://tractorvs.com/zh/tractors/agrale-6185-6294988c/": {
       "digest": "d375676622a7d98f9f314e6057ace57f1c708741c17f59529bcf3f48379dcd7f",
@@ -14210,12 +14210,12 @@
       "modified": "2026-11-21T19:18:10.960Z"
     },
     "https://tractorvs.com/zh/tractors/belarus-920-2-1e1d7219/": {
-      "digest": "4de427dbeb9f3553978870b8df75f5bcaa4f5039196940615c45d5ce85615b6d",
-      "modified": "2026-11-21T18:59:50.515Z"
+      "digest": "fdd22415abf20bdd0c154e25ceb6661e3fc014c1965001e95d065d43730bbf70",
+      "modified": "2026-11-21T19:20:06.548Z"
     },
     "https://tractorvs.com/zh/tractors/belarus-920-21e79b33/": {
-      "digest": "b48a76fb549db8c93a7e7f8dcbc120c69e6e7e5f314b62ce864d76d6baae27a6",
-      "modified": "2026-11-21T18:59:50.515Z"
+      "digest": "b9895a417463f7566541ca3c507b1e35dad19b5b93347398b2541e12d8c556a2",
+      "modified": "2026-11-21T19:20:06.548Z"
     },
     "https://tractorvs.com/zh/tractors/belarus-922-3-1cd53d1a/": {
       "digest": "93bc492a8dea69ce3a2adc6043961aa921b258208c8f74876ccacaa7bd6da06f",
