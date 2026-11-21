@@ -13,6 +13,10 @@ on:
       - "site/src/lib/published-spec-translations.ts"
       - "site/src/lib/reviewed-public-spec-headings.ts"
       - "site/tests/reviewed-public-spec-headings.test.mjs"
+      - "site/src/lib/residual-public-spec-translations.ts"
+      - "site/tests/residual-public-spec-translations.test.mjs"
+      - "site/tests/published-translation-built-audit.test.mjs"
+      - "site/tests/fixtures/turkish-public-heading-residual-20261121.json"
 permissions:
   contents: read
 jobs:
@@ -28,3 +32,46 @@ jobs:
         env:
           TRANSLATION_STRICT: ${{ github.event_name == 'schedule' && 'true' || 'false' }}
         run: node site/scripts/published-translation-audit.mjs
+
+  preview_translations:
+    # Production-valued static HTML test runs on the PR only; never deploys.
+    # Inspect the generated site, not the pre-change live site.
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22.23.4"
+      - name: Install pinned dependencies
+        run: npm ci --no-audit --no-fund
+      - name: Run exact-source technical terminology and audit tests
+        run: npm run test --workspace=tractorvs-site
+      - name: Build the exact evidence-gated public catalogue without deploying
+        working-directory: site
+        env:
+          SITE_URL: https://tractorvs.com
+          PUBLIC_INDEXING_ENABLED: "true"
+          WORKERS_CI_BRANCH: main
+          SUPABASE_URL: https://aaufxtcvnzgavtlintiv.supabase.co
+          SUPABASE_ANON_KEY: ${{ secrets.TRACTORVS_SUPABASE_ANON_JWT }}
+          MIN_PUBLIC_TRACTOR_PAGES: "100"
+        run: npm run build:production
+      - name: Require all published languages and zero Turkish residual from PREVIEW HTML
+        env:
+          TRANSLATION_DIST_ROOT: site/dist
+          TRANSLATION_MIN_MODELS: "379"
+          TRANSLATION_MAX_TR_OCCURRENCES: "0"
+          TRANSLATION_ZERO_LOCALES: "tr,zh,hi,de,ru,ja"
+          TRANSLATION_REPORT_PATH: site/.translation-audit/preview.json
+          TRANSLATION_STRICT: "false"
+        run: node site/scripts/published-translation-audit.mjs
+      - name: Preserve full per-locale residual evidence for the next reviewed batch
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: tractorvs-predeploy-technical-translation-coverage
+          path: site/.translation-audit/preview.json
+          if-no-files-found: ignore
+          retention-days: 14
