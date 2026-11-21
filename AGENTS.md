@@ -52,6 +52,9 @@ GitHub (Actions, CodeQL, Dependabot, Dependency graph, Malware alerts, Secret Pr
 
 ### İzinli forum çevirileri için gerçek işleyici (21 Kasım 2026)
 
+- **API ve zaman sınırı:** Forum çevirisinde uzun süre açık kalan Gemini Interactions polling kullanılmaz; Gemini `generateContent` kısa ve sonlu REST istekleriyle yapılır (birincil 28 sn, yedek 22 sn, bağımsız QA aynı sınırlarla). Sağlayıcı `finishReason=STOP` ve geçerli JSON dönmedikçe çeviri başarı sayılmaz. Supabase Edge 150 sn HTTP yanıt sınırı, sabit istek zaman bütçesi, küçük Markdown bölümleri ve gizli checkpoint ile korunur. Bu mimaride yayın öncesi manuel `ONAY` kuralı ve `needs_review` güvenlik kapısı değiştirilemez.
+
+
 - **Kullanıcı kontrolü — 21 Kasım 2026:** GitHub `.github/workflows/tractorvs-forum-translation.yml` iş akışının otomatik `schedule` ve `push` tetiklemeleri kullanıcı talebiyle kapatıldı. Çeviri sağlayıcısına ücretli veya uzun süren istekler, yalnız kullanıcı tarafından **manuel `workflow_dispatch` ve `onay=ONAY`** ile açıkça başlatılabilir. `pull_request` testleri ücretsiz doğrulama amaçlıdır; çeviri kuyruğunu işlemez. Yeni bir otomatik çeviri takvimi veya işleme tetiklemesi kullanıcıdan ayrıca açık izin almadan eklenemez. **ChatGPT sohbetindeki Durdur düğmesi harici GitHub işlerini otomatik durdurmaz**; otomasyonları bu düğmeye bağlıymış gibi anlatma.
 
 
