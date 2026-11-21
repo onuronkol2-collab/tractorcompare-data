@@ -9,7 +9,7 @@ CREATE TABLE IF NOT EXISTS public.tc_oem_document_cache(
  source_host text NOT NULL CHECK(length(source_host) BETWEEN 3 AND 255),
  status text NOT NULL CHECK(status IN(
    'fetched_html','pdf_pending_parse','redirect_review','http_error',
-   'unsupported_type','too_large','fetch_error'
+   'unsupported_type','too_large','fetch_error','robots_blocked'
  )),
  http_status integer NULL CHECK(http_status BETWEEN 100 AND 599),
  media_type text NULL CHECK(length(media_type)<=100),
