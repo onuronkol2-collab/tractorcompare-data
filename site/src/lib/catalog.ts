@@ -744,8 +744,9 @@ const approvedExactManufacturerDocuments: Record<string, string[]> = {
   ],
   "agrale": [
     "https://www.agrale.com.br/en/download/112",
-    // Exact Agrale-published Brazilian technical sheets, already linked to
-    // evidence-gated 525/575 Super rows. No whole-host approval or 4125 claim.
+    // Exact Agrale-published Brazilian sheets, individually confirmed by model
+    // identity and manufacturer technical content. No whole-host approval.
+    "https://pdf.agrale.com.br/2019/ficha-tecnica/pt/trator-4125-1/330/",
     "https://pdf.agrale.com.br/2019/ficha-tecnica/pt/trator-525-1/319/",
     "https://pdf.agrale.com.br/2019/ficha-tecnica/en/tractor-agrale-575-super-1/255/",
   ],
