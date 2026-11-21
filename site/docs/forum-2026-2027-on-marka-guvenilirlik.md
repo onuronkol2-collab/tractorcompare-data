@@ -10,7 +10,7 @@
 
 <div class="research-table-scroll" role="region" tabindex="0" aria-label="2026–2027 için güncel doğrulama durumu ve 2021 tarihsel anketindeki 100 traktöre düşen sorunlar; tablo yatay kaydırılabilir">
 <table>
-<caption>Yalnızca sayısı bulunan ilk altı marka, **2021'de bildirilen sorun sıklığına göre azdan çoğa** sıralanmıştır. Kalan dört marka sıralanmamıştır.</caption>
+<caption>Yalnızca sayısı bulunan ilk altı marka, 2021'de bildirilen sorun sıklığına göre azdan çoğa sıralanmıştır. Kalan dört marka sıralanmamıştır.</caption>
 <thead><tr><th scope="col">Tarihsel sıra</th><th scope="col">Traktör markası</th><th scope="col">100 traktörde sorun</th><th scope="col">Veri yılı</th></tr></thead>
 <tbody>
 <tr><td>1</td><th scope="row">Kubota</th><td><strong>76</strong></td><td>2021</td></tr>
