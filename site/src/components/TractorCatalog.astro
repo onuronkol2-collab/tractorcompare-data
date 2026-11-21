@@ -8,6 +8,7 @@ import { marketDisplayName } from "../lib/market-display";
 import { advisorText as tx } from "../lib/advisor-i18n";
 import { COUNTRIES_BY_LOCALE } from "../lib/farm-advisor";
 import { MARKET_COUNTRIES, matchingPrice, formatMarketPriceRange } from "../lib/market-prices";
+import { pricedCatalogModels } from "../lib/catalog-price-payload.ts";
 import { localizedCountryName } from "../lib/country-display";
 interface Props { lang: Locale; }
 const { lang } = Astro.props;
@@ -17,11 +18,12 @@ const title = t(lang,"catalogTitle") + " | TractorVS";
 const description = t(lang,"catalogDesc");
 const detailPrefix = localizedPath(lang,"/tractors/");
 const initialCountry = COUNTRIES_BY_LOCALE[lang] || "US";
-const pricePayload = JSON.stringify({lang,models:catalog.tractors.map((tractor)=>({
-  tractor_id:tractor.tractor_id,brand_name:tractor.brand_name,
-  model_name:tractor.model_name,variant:tractor.variant,
-  market:tractor.market,model_year:tractor.model_year
-}))}).replace(/</g,"\\u003c");
+// Unpriced models cannot change their value for any supported country. Keep
+// their server-rendered "price unavailable" text, and only hydrate models with
+// actual, evidence-backed market prices. All model links remain crawlable HTML.
+const pricePayload = JSON.stringify({
+  lang, models: pricedCatalogModels(catalog.tractors),
+}).replace(/</g,"\\u003c");
 ---
 <SiteLayout lang={lang} title={title} description={description}>
   <section class="catalog-hero"><div class="container">
