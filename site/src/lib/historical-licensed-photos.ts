@@ -552,6 +552,89 @@ const candidates=[
     "width": 2048,
     "height": 1536
   },
+  // 2026-11-21: Eight exact-model Commons photographs independently checked
+  // by one-time Wikimedia API + JPEG integrity gate. Each local 480px JPEG
+  // and original file-specific CC BY-SA 4.0 attribution is preserved.
+  {
+    "brand": "Steyr",
+    "model": "4075 KOMPAKT",
+    "fileId": "steyr-4075-kompakt-joachim-2018",
+    "path": "2/26/Steyr_4075_Kompakt.jpg",
+    "photographer": "JoachimKohlerBremen",
+    "license": "CC BY-SA 4.0",
+    "width": 4200,
+    "height": 2800
+  },
+  {
+    "brand": "Steyr",
+    "model": "4095 KOMPAKT",
+    "fileId": "steyr-4095-kompakt-joachim-2019",
+    "path": "0/09/Steyr_4095_Kompakt_mit_Kuhn_BRP28_Mulch-_und_H%C3%A4ckselger%C3%A4t.jpg",
+    "photographer": "JoachimKohler-HB",
+    "license": "CC BY-SA 4.0",
+    "width": 4200,
+    "height": 3150
+  },
+  {
+    "brand": "Steyr",
+    "model": "4105 KOMPAKT",
+    "fileId": "steyr-4105-kompakt-gt1976-2018",
+    "path": "8/82/2018-06-28_%28801%29_Steyr_4105_Kompakt_in_Kirchberg_an_der_Pielach.jpg",
+    "photographer": "GT1976",
+    "license": "CC BY-SA 4.0",
+    "width": 4000,
+    "height": 3000
+  },
+  {
+    "brand": "Steyr",
+    "model": "4115 KOMPAKT",
+    "fileId": "steyr-4115-kompakt-joachim-2019",
+    "path": "9/92/Steyr_Kompakt_4115.jpg",
+    "photographer": "JoachimKohler-HB",
+    "license": "CC BY-SA 4.0",
+    "width": 4200,
+    "height": 3150
+  },
+  {
+    "brand": "Steyr",
+    "model": "4130 EXPERT CVT",
+    "fileId": "steyr-4130-expert-cvt-marcel-2024",
+    "path": "4/41/Steyr_4130_Expert_CVT_agra_2024_%28DSC01621%29.jpg",
+    "photographer": "MarcelX42",
+    "license": "CC BY-SA 4.0",
+    "width": 6642,
+    "height": 3738
+  },
+  {
+    "brand": "Steyr",
+    "model": "4140 EXPERT CVT",
+    "fileId": "steyr-4140-expert-cvt-marcel-2023",
+    "path": "d/d9/Steyr_4140_Expert_CVT_Agritechnica_2023_%28DSC05407%29.jpg",
+    "photographer": "MarcelX42",
+    "license": "CC BY-SA 4.0",
+    "width": 7008,
+    "height": 3944
+  },
+  {
+    "brand": "Steyr",
+    "model": "6280 ABSOLUT CVT",
+    "fileId": "steyr-6280-absolut-cvt-marcel-2024",
+    "path": "d/d7/Steyr_6280_Absolut_CVT_agra_2024_%28DSC02603%29.jpg",
+    "photographer": "MarcelX42",
+    "license": "CC BY-SA 4.0",
+    "width": 7008,
+    "height": 3944
+  },
+  {
+    "brand": "Zetor",
+    "model": "6170",
+    "fileId": "zetor-6170-marcel-agritechnica-2025",
+    "path": "0/0d/Zetor_6170_Agritechnica_2025_%28DSC05468%29.jpg",
+    "photographer": "MarcelX42",
+    "license": "CC BY-SA 4.0",
+    "width": 5974,
+    "height": 4480
+  },
 ] as const;
 function licenseUrl(name:string):string{
   if(name==="CC0")return "https://creativecommons.org/publicdomain/zero/1.0/";
