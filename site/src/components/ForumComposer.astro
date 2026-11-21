@@ -152,7 +152,7 @@ const strings=JSON.stringify({
      </label>
      <label>{ft(lang,"category")}
       <select name="category" required>
-       {FORUM_CATEGORY_KEYS.map(key=><option value={key}>{ft(lang,key)}</option>)}
+       {FORUM_CATEGORY_KEYS.map(key=><option value={key} selected={key==="questions"}>{ft(lang,key)}</option>)}
       </select>
      </label>
      <label>{ft(lang,"model")}
