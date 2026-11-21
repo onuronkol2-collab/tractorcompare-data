@@ -123,9 +123,9 @@ export const RESIDUAL_PUBLIC_SPEC_TERMS: Record<string, Partial<Record<Locale,st
     "hi": "आगे के एक्सल के नीचे कृषि कार्य के लिए जमीन से ऊँचाई"
   },
   "Agrotechnical Clearance Under Rear Wheel Tubes": {
-    "tr": "Arka tekerlek boruları altındaki tarımsal yerden açıklık",
-    "ru": "Агротехнический просвет под трубами задних колёс",
-    "hi": "पिछले पहियों के ट्यूबों के नीचे कृषि कार्य के लिए जमीन से ऊँचाई"
+    "tr": "Arka tekerlek kovanlarının altındaki tarımsal yerden açıklık",
+    "ru": "Агротехнический просвет под рукавами задних колёс",
+    "hi": "पिछले पहियों की एक्सल स्लीव के नीचे कृषि कार्य हेतु जमीन से ऊँचाई"
   },
   "Available Transmission Options": {
     "tr": "Mevcut şanzıman seçenekleri",
