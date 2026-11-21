@@ -1,6 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import {readFileSync} from "node:fs";
+import {createHash} from "node:crypto";
 import {LOCALES} from "../src/lib/locales.ts";
 import {APPROVED_TRACTOR_PHOTOS,tractorPhotos,primaryTractorPhoto,photoText,tractorPhotoAlt,resolveApprovedPhotoSource} from "../src/lib/tractor-photos.ts";
 import {modelStructuredData} from "../src/lib/model-seo.ts";
@@ -13,7 +14,7 @@ const tractor=(brand_name,model_name)=>({
   engine:null,transmission:null,drivetrain:null,weight_kg:null,specifications:[]
 });
 test("only exact matching tractor model identity receives a verified photo",()=>{
-  assert.equal(APPROVED_TRACTOR_PHOTOS.length,65);
+  assert.equal(APPROVED_TRACTOR_PHOTOS.length,73);
   assert.equal(tractorPhotos(tractor("Belarus","82.1")).length,4);
   assert.equal(tractorPhotos(tractor("Belarus","80.1")).length,1);
   assert.equal(tractorPhotos(tractor("Belarus","132N")).length,1);
@@ -92,6 +93,45 @@ test("new CC BY-SA photos preserve three exact Belarus identities, author and re
   for(const wrong of ["892.3","922","922.3","922.4","952.2","952.4x"])
     assert.equal(primaryTractorPhoto(tractor("Belarus",wrong)),null,
       "Different model or variant must not inherit image: "+wrong);
+});
+
+test("eight new verified photos preserve signed source ledger and exact model identity",()=>{
+  const evidence=JSON.parse(readFileSync(new URL("../docs/photo-review-evidence-20261121.json",import.meta.url),"utf8"));
+  assert.equal(evidence.approved.length,8);
+  assert.equal(evidence.rejected.length,1);
+  assert.equal(evidence.rejected[0].fileId,"belarus-922-3-bulykin-almaty-2026",
+    "Identity-ambiguous Belarus 922.3 photo must not be published");
+  for(const source of evidence.approved){
+    const photos=tractorPhotos(tractor(source.brand,source.model));
+    assert.equal(photos.length,1,source.brand+" "+source.model);
+    const p=photos[0];
+    assert.equal(p.fileId,source.fileId);
+    assert.equal(p.photographer,source.photographer);
+    assert.equal(p.licenseName,source.license);
+    assert.equal(p.configurationExact,false);
+    assert.match(p.sourcePage,/^https:\/\/commons\.wikimedia\.org\/wiki\/File:/);
+    assert.equal(decodeURIComponent(p.sourcePage.slice(p.sourcePage.lastIndexOf("/")+1)),
+      decodeURIComponent("File:"+source.commonsPath.split("/").at(-1)));
+    const bytes=readFileSync(new URL("../public"+p.thumbUrl,import.meta.url));
+    assert.equal(bytes.length,source.bytes,"Documented JPEG size "+source.fileId);
+    assert.equal(createHash("sha256").update(bytes).digest("hex"),source.sha256,
+      "Downloaded approved source JPEG hash "+source.fileId);
+    for(const locale of LOCALES){
+      const image=modelStructuredData(tractor(source.brand,source.model),locale,
+        "https://tractorvs.com/")["@graph"].find(x=>x["@type"]==="ImageObject");
+      assert.ok(image,"Licensing metadata "+source.fileId+" "+locale);
+      assert.equal(image.creator.name,p.photographer);
+      assert.equal(image.acquireLicensePage,p.sourcePage);
+      assert.equal(image.license,p.licenseUrl);
+    }
+  }
+  // An unrelated version must never inherit a nearby-series thumbnail.
+  for(const [brand,model] of [
+    ["Steyr","4075 KOMPAKT S"],["Steyr","4105 PLUS"],
+    ["Steyr","4130 EXPERT"],["Steyr","4140 PLUS"],
+    ["Steyr","6280 IMPULS"],["Zetor","6171"],["Belarus","922.3"],
+  ])assert.equal(primaryTractorPhoto(tractor(brand,model)),null,
+    "Exact model/version protection: "+brand+" "+model);
 });
 
 test("each approved photograph has a verified model source and re-use license",()=>{
@@ -218,9 +258,9 @@ test("fullscreen viewer, linked credits and public image sitemap use SSR images"
 });
 
 test("historic photo batch is staged with rights and does not create records",()=>{
-  assert.equal(HISTORICAL_LICENSED_PHOTOS.length,54);
+  assert.equal(HISTORICAL_LICENSED_PHOTOS.length,62);
   const all=new Set(HISTORICAL_LICENSED_PHOTOS.map(x=>x.fileId));
-  assert.equal(all.size,54);
+  assert.equal(all.size,62);
   assert.ok(HISTORICAL_LICENSED_PHOTOS.every(x=>x.configurationExact===false));
   assert.ok(!HISTORICAL_LICENSED_PHOTOS.some(x=>["Product","Vehicle"].includes(x.model)));
 });
