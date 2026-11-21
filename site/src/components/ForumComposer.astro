@@ -16,6 +16,7 @@ const browserConfig=JSON.stringify(cfg?{url:cfg.url,key:cfg.key,lang,mode,topicI
 const strings=JSON.stringify({
  pending:ft(lang,"pending"),sent:ft(lang,"sent"),authRequired:ft(lang,"authRequired"),
  sendError:ft(lang,"sendError"),
+ oldLink:ft(lang,"oldLink"),
  codeError:ft(lang,"codeError"),
  postError:ft(lang,"postError"),
  limitError:ft(lang,"limitError"),
@@ -37,19 +38,29 @@ const strings=JSON.stringify({
  {cfg ? <>
   <div class="forum-auth">
     <form data-forum-email autocomplete="on">
+      <p>{ft(lang,"joinHelp")}</p>
       <label>{ft(lang,"email")}
        <input type="email" name="email" required autocomplete="email" maxlength="254" placeholder="name@example.com"/>
       </label>
       <button type="submit">{ft(lang,"sendLink")}</button>
     </form>
-    <form data-forum-verify hidden>
+    <div data-mail-step hidden tabindex="-1">
+     <strong data-sent-address></strong>
+     <p>{ft(lang,"checkMail")}</p>
+     <a data-open-gmail hidden href="https://mail.google.com/mail/" target="_blank" rel="noopener noreferrer">{ft(lang,"openGmail")}</a>
+     <details data-code-option><summary>{ft(lang,"useCode")}</summary>
+    <form data-forum-verify>
       <label>{ft(lang,"otp")}
-        <input type="text" name="code" inputmode="numeric" pattern="[0-9]{6,8}" maxlength="8" minlength="6" autocomplete="one-time-code"/>
+        <input type="text" name="code" required inputmode="numeric" pattern="[0-9]{6,8}" maxlength="8" minlength="6" autocomplete="one-time-code"/>
       </label>
       <button type="submit">{ft(lang,"verify")}</button>
     </form>
+     </details>
+     <button class="edit-email" type="button" data-edit-email>{ft(lang,"editEmail")}</button>
+    </div>
     <button type="button" data-forum-logout hidden>{ft(lang,"logout")}</button>
   </div>
+  <p class="forum-message" data-forum-status role="status" aria-live="polite"></p>
   <details data-forum-history hidden>
    <summary>{ft(lang,"myPosts")}</summary><p data-history-status role="status"></p><ul data-history-list></ul>
   </details>
@@ -86,7 +97,6 @@ const strings=JSON.stringify({
     <button type="submit">{mode==="topic"?ft(lang,"submit"):ft(lang,"submitReply")}</button>
   </form>
   <p class="forum-guidelines">{ft(lang,"guidelines")}</p>
-  <p class="forum-message" data-forum-status role="status" aria-live="polite"></p>
  </> : <p>{ft(lang,"signinNote")}</p>}
 </section>
 <style>
@@ -95,6 +105,10 @@ const strings=JSON.stringify({
 .community-composer details{margin:16px 0}
 .community-composer summary{cursor:pointer;color:#245e3b;padding:10px 0}
 .community-composer li{overflow-wrap:anywhere}
+.forum-auth p{margin:0 0 12px;line-height:1.6}
+[data-sent-address]{display:block;overflow-wrap:anywhere;margin-bottom:8px}
+[data-open-gmail]{color:#245e3b;text-decoration:underline;font-weight:700}
+.community-composer .edit-email{background:transparent;color:#245e3b;text-decoration:underline;padding-inline:0}
 .community-composer h2{font-size:clamp(20px,2.5vw,26px);color:#195232;margin:0 0 17px}
 .community-composer form{display:grid;gap:13px;margin:0 0 18px}
 .community-composer label{display:grid;gap:8px;font-size:14px;font-weight:750;color:#2a5237}
@@ -121,6 +135,11 @@ for(const widget of widgets){
  const copy=JSON.parse(widget.dataset.forumMessages||"{}") as Record<string,string>;
  const el=<T extends HTMLElement>(selector:string)=>widget.querySelector<T>(selector);
  const authForm=el<HTMLFormElement>("[data-forum-email]");
+ const mailStep=el<HTMLElement>("[data-mail-step]");
+ const codeOption=el<HTMLDetailsElement>("[data-code-option]");
+ const sentAddress=el<HTMLElement>("[data-sent-address]");
+ const gmail=el<HTMLAnchorElement>("[data-open-gmail]");
+ const edit=el<HTMLButtonElement>("[data-edit-email]");
  const verifyForm=el<HTMLFormElement>("[data-forum-verify]");
  const postForm=el<HTMLFormElement>("[data-forum-post]");
  const logout=el<HTMLButtonElement>("[data-forum-logout]");
@@ -204,7 +223,9 @@ for(const widget of widgets){
   }
   if(postForm)postForm.hidden=!loggedIn;
   if(authForm)authForm.hidden=loggedIn;
-  if(verifyForm)verifyForm.hidden=true;
+  if(mailStep)mailStep.hidden=true;
+  if(codeOption)codeOption.open=false;
+  verifyForm?.reset();
   if(logout)logout.hidden=!loggedIn;
  }
  async function verifySession(jwt:string):Promise<boolean>{
@@ -223,11 +244,18 @@ for(const widget of widgets){
  const fromLink=hash.get("access_token");
  if(fromLink){
   history.replaceState(null,"",location.pathname+location.search);
-  verifySession(fromLink).then(ok=>{if(!ok)msg(copy.authRequired||"Sign in required")});
+  verifySession(fromLink).then(ok=>{if(!ok)msg(copy.oldLink); widget.scrollIntoView({block:"start"});});
+ }else if(hash.has("error")||hash.has("error_code")){
+  history.replaceState(null,"",location.pathname+location.search);
+  msg(copy.oldLink);widget.scrollIntoView({block:"start"});
  }else{
   try{verifySession(sessionStorage.getItem(tokenKey)||"").then(ok=>{if(!ok)setLogin(false)})}
   catch{setLogin(false)}
  }
+ edit?.addEventListener("click",()=>{
+  setLogin(false);msg("");
+  authForm?.querySelector("input")?.focus();
+ });
  authForm?.addEventListener("submit",async ev=>{
   ev.preventDefault();
   const input=authForm.elements.namedItem("email") as HTMLInputElement|null;
@@ -242,8 +270,12 @@ for(const widget of widgets){
     signal:AbortSignal.timeout(15000)
    });
    if(!res.ok){msg(res.status===429?copy.retryLater:copy.sendError);return}
-   msg(copy.sent||"Email sent");
-   if(verifyForm)verifyForm.hidden=false;
+   msg("");
+   if(sentAddress)sentAddress.textContent=email;
+   if(gmail)gmail.hidden=!/@(gmail|googlemail)\.com$/i.test(email);
+   authForm.hidden=true;
+   if(mailStep){mailStep.hidden=false;mailStep.focus()}
+
   }catch{msg(copy.sendError)}
   finally{if(button)button.disabled=false}
  });
@@ -257,11 +289,11 @@ for(const widget of widgets){
     method:"POST",headers:header(),body:JSON.stringify({email,token:code,type:"email"}),
     signal:AbortSignal.timeout(15000)
    });
-   if(!res.ok){msg(res.status===429?copy.retryLater:copy.codeError);return}
+   if(!res.ok){msg(res.status===429?copy.retryLater:res.status>=500?copy.authRequired:copy.codeError);return}
    const data=await res.json();
    msg("");
    if(!await verifySession(data.access_token))msg(copy.authRequired);
-  }catch{msg(copy.codeError)}
+  }catch{msg(copy.authRequired)}
  });
  logout?.addEventListener("click",()=>{
   try{for(const key of Object.keys(sessionStorage))if(userId&&key.startsWith(draftPrefix()))sessionStorage.removeItem(key)}catch{}

@@ -3,6 +3,7 @@ type Copy={
  name:string;heading:string;intro:string;empty:string;search:string;all:string;
  readOriginal:string;originalLanguage:string;writingLanguage:string;compose:string;title:string;body:string;category:string;model:string;noModel:string;
  consent:string;submit:string;submitReply:string;reply:string;replies:string;
+ joinHelp:string;checkMail:string;useCode:string;editEmail:string;openGmail:string;oldLink:string;
  email:string;sendLink:string;otp:string;verify:string;login:string;logout:string;
  sendError:string;codeError:string;postError:string;limitError:string;retryLater:string;draftRestored:string;
  myPosts:string;statePending:string;statePublished:string;stateRejected:string;stateHidden:string;noPosts:string;historyError:string;
@@ -12,6 +13,7 @@ type Copy={
 };
 export const FORUM_TEXT:Record<Locale,Copy>={
  en:{
+ joinHelp:"Join or sign in with your email. No password needed.",checkMail:"Open the link in the latest email to return to the forum and start writing. If it’s missing, check your spam folder.",useCode:"My email contains a numeric code",editEmail:"Change email or request a new link",openGmail:"Open Gmail",oldLink:"This link could not sign you in. Request a new link and open the most recent email.",
  myPosts:"My recent submissions",statePending:"Under review",statePublished:"Published",stateRejected:"Declined",stateHidden:"Hidden",noPosts:"No submissions here yet.",historyError:"Couldn’t load your submissions.",
  sendError:"Couldn’t send the sign-in email. Check the address and try again.",codeError:"The code is invalid or has expired. Request a new one.",postError:"Couldn’t confirm submission. Your text is still here.",limitError:"You’ve reached the posting limit for the last 24 hours.",retryLater:"Too many attempts. Wait a while and try again.",draftRestored:"Draft restored in this tab.",
  readOriginal:"Read original",originalLanguage:"Original language",
@@ -30,6 +32,7 @@ export const FORUM_TEXT:Record<Locale,Copy>={
  noResults:"No discussions match these filters.",back:"All discussions",loading:"Processing…",translated:"Reviewed translation",help:"Need help finding a model? Use the catalogue first."
  },
  tr:{
+ joinHelp:"E-postanla üye ol veya giriş yap. Şifre gerekmez.",checkMail:"Son e-postadaki bağlantıya dokun. Forum açıldığında yazmaya başlayabilirsin. E-postayı göremiyorsan spam klasörünü kontrol et.",useCode:"E-postamda sayısal kod var",editEmail:"Adresi değiştir veya yeni bağlantı iste",openGmail:"Gmail’i aç",oldLink:"Bu bağlantıyla giriş yapılamadı. Yeni bir bağlantı iste ve en son gelen e-postayı aç.",
  myPosts:"Son gönderilerim",statePending:"İncelemede",statePublished:"Yayında",stateRejected:"Reddedildi",stateHidden:"Gizlendi",noPosts:"Burada henüz gönderin yok.",historyError:"Gönderilerin yüklenemedi.",
  sendError:"Giriş e-postası gönderilemedi. Adresi kontrol edip tekrar dene.",codeError:"Kod geçersiz veya süresi dolmuş. Yeni kod iste.",postError:"Gönderim doğrulanamadı. Yazdığın metin formda duruyor.",limitError:"Son 24 saat için gönderi sınırına ulaştın.",retryLater:"Çok fazla deneme yapıldı. Biraz bekleyip tekrar dene.",draftRestored:"Taslağın bu sekmede geri yüklendi.",
  readOriginal:"Özgün metni oku",originalLanguage:"Özgün metnin dili",
@@ -48,6 +51,7 @@ export const FORUM_TEXT:Record<Locale,Copy>={
  noResults:"Bu filtrelere uygun konu bulunamadı.",back:"Tüm tartışmalar",loading:"İşleniyor…",translated:"Kontrol edilmiş çeviri",help:"Model seçmek için önce traktör kataloğunu kullanabilirsin."
  },
  zh:{
+ joinHelp:"使用邮箱注册或登录，无需密码。",checkMail:"点击最新一封邮件中的链接，即可返回论坛发帖。如果没看到邮件，请检查垃圾邮件文件夹。",useCode:"我的邮件中有数字验证码",editEmail:"更改邮箱或索取新链接",openGmail:"打开 Gmail",oldLink:"此链接未能完成登录。请重新获取链接并打开最新的邮件。",
  myPosts:"我最近提交的内容",statePending:"审核中",statePublished:"已发布",stateRejected:"未通过",stateHidden:"已隐藏",noPosts:"你还没有在这里提交内容。",historyError:"无法加载你提交的内容。",
  sendError:"登录邮件未能发送。请检查邮箱地址后重试。",codeError:"验证码无效或已过期。请重新获取。",postError:"无法确认是否提交成功。你输入的文字仍在表单中。",limitError:"你已达到过去 24 小时的发帖上限。",retryLater:"尝试次数过多，请稍后再试。",draftRestored:"草稿已在此标签页恢复。",
  readOriginal:"查看原文",originalLanguage:"原文语言",
@@ -64,6 +68,7 @@ export const FORUM_TEXT:Record<Locale,Copy>={
  noResults:"没有符合条件的讨论。",back:"所有讨论",loading:"处理中…",translated:"已审核翻译",help:"寻找机型？请先查看拖拉机目录。"
  },
  hi:{
+ joinHelp:"अपने ईमेल से खाता बनाएँ या लॉगिन करें। पासवर्ड की ज़रूरत नहीं है।",checkMail:"फ़ोरम पर लौटकर लिखने के लिए सबसे नए ईमेल का लिंक खोलें। ईमेल न मिले तो स्पैम फ़ोल्डर देखें।",useCode:"मेरे ईमेल में अंकों वाला कोड है",editEmail:"ईमेल पता बदलें या नया लिंक माँगें",openGmail:"Gmail खोलें",oldLink:"इस लिंक से लॉगिन नहीं हो सका। नया लिंक माँगें और सबसे नया ईमेल खोलें।",
  myPosts:"मेरी हाल की पोस्ट",statePending:"समीक्षा में",statePublished:"प्रकाशित",stateRejected:"अस्वीकृत",stateHidden:"छिपा हुआ",noPosts:"आपने यहाँ अभी कुछ नहीं भेजा है।",historyError:"आपकी पोस्ट लोड नहीं हो सकीं।",
  sendError:"लॉगिन ईमेल नहीं भेजा जा सका। पता जाँचकर फिर कोशिश करें।",codeError:"कोड गलत है या उसकी अवधि समाप्त हो गई है। नया कोड माँगें।",postError:"पोस्ट भेजे जाने की पुष्टि नहीं हो सकी। आपका लिखा हुआ पाठ अभी फ़ॉर्म में है।",limitError:"आप पिछले 24 घंटों की पोस्ट सीमा तक पहुँच गए हैं।",retryLater:"बहुत अधिक प्रयास हुए हैं। कुछ देर बाद फिर कोशिश करें।",draftRestored:"इस टैब में आपका ड्राफ़्ट फिर से खुल गया है।",
  readOriginal:"मूल पाठ पढ़ें",originalLanguage:"मूल भाषा",
@@ -80,6 +85,7 @@ export const FORUM_TEXT:Record<Locale,Copy>={
  noResults:"इस खोज से कोई चर्चा नहीं मिली।",back:"सभी चर्चाएँ",loading:"प्रक्रिया जारी है…",translated:"समीक्षित अनुवाद",help:"मॉडल ढूँढने के लिए पहले ट्रैक्टर सूची देखें।"
  },
  "pt-br":{
+ joinHelp:"Cadastre-se ou entre com seu e-mail, sem senha.",checkMail:"Abra o link do e-mail mais recente para voltar ao fórum e começar a escrever. Se não encontrar a mensagem, confira a pasta de spam.",useCode:"Meu e-mail contém um código numérico",editEmail:"Alterar e-mail ou solicitar outro link",openGmail:"Abrir o Gmail",oldLink:"Não foi possível entrar com esse link. Solicite outro e abra o e-mail mais recente.",
  myPosts:"Minhas publicações recentes",statePending:"Em análise",statePublished:"Publicado",stateRejected:"Recusado",stateHidden:"Oculto",noPosts:"Você ainda não enviou nada aqui.",historyError:"Não foi possível carregar suas publicações.",
  sendError:"Não foi possível enviar o e-mail de acesso. Confira o endereço e tente novamente.",codeError:"O código é inválido ou expirou. Peça um novo código.",postError:"Não foi possível confirmar o envio. Seu texto continua no formulário.",limitError:"Você atingiu o limite de publicações das últimas 24 horas.",retryLater:"Muitas tentativas. Aguarde um pouco antes de tentar novamente.",draftRestored:"Seu rascunho foi recuperado nesta aba.",
  readOriginal:"Ler o original",originalLanguage:"Idioma original",
@@ -97,6 +103,7 @@ export const FORUM_TEXT:Record<Locale,Copy>={
  noResults:"Nenhuma discussão encontrada.",back:"Todas as discussões",loading:"Processando…",translated:"Tradução revisada",help:"Para encontrar um modelo, consulte primeiro o catálogo."
  },
  fr:{
+ joinHelp:"Inscrivez-vous ou connectez-vous avec votre adresse e-mail, sans mot de passe.",checkMail:"Ouvrez le lien du dernier e-mail pour revenir au forum et commencer à écrire. Vérifiez aussi les courriers indésirables.",useCode:"Mon e-mail contient un code numérique",editEmail:"Changer d’adresse ou demander un nouveau lien",openGmail:"Ouvrir Gmail",oldLink:"Ce lien n’a pas permis de vous connecter. Demandez un nouveau lien et ouvrez le dernier e-mail reçu.",
  myPosts:"Mes dernières contributions",statePending:"En cours de vérification",statePublished:"Publié",stateRejected:"Refusé",stateHidden:"Masqué",noPosts:"Vous n’avez encore rien envoyé ici.",historyError:"Impossible de charger vos contributions.",
  sendError:"Impossible d’envoyer le courriel de connexion. Vérifiez l’adresse et réessayez.",codeError:"Le code est incorrect ou a expiré. Demandez-en un nouveau.",postError:"L’envoi n’a pas pu être confirmé. Votre texte est toujours dans le formulaire.",limitError:"Vous avez atteint la limite de publications sur 24 heures.",retryLater:"Trop de tentatives. Patientez avant de réessayer.",draftRestored:"Votre brouillon a été restauré dans cet onglet.",
  readOriginal:"Lire l’original",originalLanguage:"Langue d’origine",
@@ -114,6 +121,7 @@ export const FORUM_TEXT:Record<Locale,Copy>={
  noResults:"Aucune discussion correspondante.",back:"Toutes les discussions",loading:"Traitement…",translated:"Traduction vérifiée",help:"Pour trouver un modèle, consultez d'abord le catalogue."
  },
  de:{
+ joinHelp:"Mit deiner E-Mail-Adresse registrieren oder anmelden. Du brauchst kein Passwort.",checkMail:"Öffne den Link in der neuesten E-Mail. Danach kannst du im Forum schreiben. Schau auch im Spamordner nach.",useCode:"Meine E-Mail enthält einen Zahlencode",editEmail:"Adresse ändern oder neuen Link anfordern",openGmail:"Gmail öffnen",oldLink:"Die Anmeldung mit diesem Link ist fehlgeschlagen. Fordere einen neuen Link an und öffne die neueste E-Mail.",
  myPosts:"Meine letzten Beiträge",statePending:"In Prüfung",statePublished:"Veröffentlicht",stateRejected:"Abgelehnt",stateHidden:"Ausgeblendet",noPosts:"Hier hast du noch nichts eingereicht.",historyError:"Deine Beiträge konnten nicht geladen werden.",
  sendError:"Die Anmelde-E-Mail konnte nicht gesendet werden. Bitte prüfe die Adresse und versuche es erneut.",codeError:"Der Code ist ungültig oder abgelaufen. Fordere einen neuen an.",postError:"Der Versand konnte nicht bestätigt werden. Dein Text steht noch im Formular.",limitError:"Du hast das Beitragslimit für die letzten 24 Stunden erreicht.",retryLater:"Zu viele Versuche. Bitte warte etwas und versuche es erneut.",draftRestored:"Dein Entwurf wurde in diesem Tab wiederhergestellt.",
  readOriginal:"Original lesen",originalLanguage:"Originalsprache",
@@ -131,6 +139,7 @@ export const FORUM_TEXT:Record<Locale,Copy>={
  noResults:"Keine passenden Diskussionen.",back:"Alle Diskussionen",loading:"Wird verarbeitet…",translated:"Geprüfte Übersetzung",help:"Ein Modell finden Sie im Traktorkatalog."
  },
  ru:{
+ joinHelp:"Зарегистрируйтесь или войдите по электронной почте. Пароль не нужен.",checkMail:"Перейдите по ссылке из последнего письма, чтобы вернуться на форум и начать писать. Если письма нет, проверьте папку «Спам».",useCode:"В моём письме есть цифровой код",editEmail:"Изменить адрес или запросить новую ссылку",openGmail:"Открыть Gmail",oldLink:"Войти по этой ссылке не удалось. Запросите новую ссылку и откройте последнее письмо.",
  myPosts:"Мои последние публикации",statePending:"На проверке",statePublished:"Опубликовано",stateRejected:"Отклонено",stateHidden:"Скрыто",noPosts:"Здесь у вас пока нет публикаций.",historyError:"Не удалось загрузить ваши публикации.",
  sendError:"Не удалось отправить письмо для входа. Проверьте адрес и попробуйте ещё раз.",codeError:"Код неверен или просрочен. Запросите новый.",postError:"Не удалось подтвердить отправку. Ваш текст остался в форме.",limitError:"Вы достигли лимита публикаций за последние 24 часа.",retryLater:"Слишком много попыток. Немного подождите и попробуйте снова.",draftRestored:"Черновик восстановлен в этой вкладке.",
  readOriginal:"Прочитать оригинал",originalLanguage:"Язык оригинала",
@@ -148,6 +157,7 @@ export const FORUM_TEXT:Record<Locale,Copy>={
  noResults:"Подходящих обсуждений нет.",back:"Все обсуждения",loading:"Обработка…",translated:"Проверенный перевод",help:"Сначала найдите модель в каталоге."
  },
  ja:{
+ joinHelp:"メールアドレスで登録またはログインできます。パスワードは不要です。",checkMail:"最新のメールにあるリンクを開くと、フォーラムに戻って投稿できます。届いていない場合は迷惑メールフォルダも確認してください。",useCode:"メールに数字のコードが記載されている",editEmail:"メールアドレスを変更する・新しいリンクを受け取る",openGmail:"Gmail を開く",oldLink:"このリンクではログインできませんでした。新しいリンクをリクエストし、最新のメールを開いてください。",
  myPosts:"最近の投稿履歴",statePending:"審査中",statePublished:"公開済み",stateRejected:"不承認",stateHidden:"非表示",noPosts:"ここにはまだ投稿していません。",historyError:"投稿履歴を読み込めませんでした。",
  sendError:"ログイン用メールを送信できませんでした。アドレスを確認して、もう一度お試しください。",codeError:"コードが無効か、期限が切れています。新しいコードを取得してください。",postError:"送信を確認できませんでした。入力した文章はフォームに残っています。",limitError:"過去24時間の投稿数が上限に達しました。",retryLater:"試行回数が多すぎます。しばらく待ってからお試しください。",draftRestored:"このタブで下書きを復元しました。",
  readOriginal:"原文を読む",originalLanguage:"原文の言語",
@@ -165,6 +175,7 @@ export const FORUM_TEXT:Record<Locale,Copy>={
  noResults:"条件に合う投稿がありません。",back:"すべての話題",loading:"処理中…",translated:"確認済みの翻訳",help:"機種を探すには、まずトラクター一覧をご覧ください。"
  },
  es:{
+ joinHelp:"Regístrate o inicia sesión con tu correo, sin contraseña.",checkMail:"Abre el enlace del último correo para volver al foro y empezar a escribir. Si no lo ves, revisa la carpeta de spam.",useCode:"Mi correo incluye un código numérico",editEmail:"Cambiar el correo o solicitar otro enlace",openGmail:"Abrir Gmail",oldLink:"No se pudo iniciar sesión con este enlace. Solicita otro y abre el correo más reciente.",
  myPosts:"Mis envíos recientes",statePending:"En revisión",statePublished:"Publicado",stateRejected:"Rechazado",stateHidden:"Oculto",noPosts:"Aún no has enviado nada aquí.",historyError:"No se han podido cargar tus envíos.",
  sendError:"No se pudo enviar el correo de acceso. Comprueba la dirección e inténtalo de nuevo.",codeError:"El código no es válido o ha caducado. Solicita otro.",postError:"No se pudo confirmar el envío. Tu texto sigue en el formulario.",limitError:"Has alcanzado el límite de publicaciones de las últimas 24 horas.",retryLater:"Demasiados intentos. Espera un poco antes de volver a intentarlo.",draftRestored:"Se ha recuperado tu borrador en esta pestaña.",
  readOriginal:"Leer el original",originalLanguage:"Idioma original",
