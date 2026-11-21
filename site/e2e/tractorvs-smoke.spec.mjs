@@ -111,6 +111,7 @@ test("axe-core first pass: no critical accessibility violations on the home page
     contentType: "application/json",
   });
   console.log("TractorVS axe findings: " + JSON.stringify(summary));
-  const critical = report.violations.filter((violation) => violation.impact === "critical");
-  expect(critical, "Critical axe violations are a build blocker; other severities are reported for remediation.").toEqual([]);
+  const significant = report.violations.filter((violation) =>
+    violation.impact === "critical" || violation.impact === "serious");
+  expect(significant, "Serious and critical accessibility violations block the quality check.").toEqual([]);
 });
