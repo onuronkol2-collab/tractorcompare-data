@@ -65,11 +65,21 @@ const pricePayload = JSON.stringify({
           </a>
         </li>)}</ul>
       </nav>}
+      {/** A single decorative silhouette powers all catalog photo placeholders.
+             Keep photo absence explicit; do not generate or reuse a different tractor's image. */}
+      <svg class="catalog-photo-sprite" viewBox="0 0 120 70" aria-hidden="true" focusable="false">
+        <symbol id="tractorvs-catalog-photo-symbol" viewBox="0 0 120 70">
+          <path d="M20 44h18l9-21h29l12 21h11v8H20v-8Z" stroke="currentColor" stroke-width="3" stroke-linejoin="round"/>
+          <path d="M52 25v19h30L73 25H52Z" stroke="currentColor" stroke-width="2"/>
+          <circle cx="41" cy="53" r="13" stroke="currentColor" stroke-width="3"/>
+          <circle cx="89" cy="53" r="9" stroke="currentColor" stroke-width="3"/>
+        </symbol>
+      </svg>
       <div class:list={["tractor-card-grid", { "tractor-card-grid--two": catalog.tractors.length === 2 }]} id="tractor-card-grid">
         {catalog.tractors.map((tractor)=><article class="tractor-card"
           id={firstBrandCard.get(tractor.brand_name)===tractor.tractor_id?brandAnchor.get(tractor.brand_name):undefined}
           data-search={[tractor.brand_name,tractor.model_name,tractor.variant||"",tractor.market||"",tractor.engine||""].join(" ").toLowerCase()}>
-          <TractorPhoto tractor={tractor} lang={lang} mode="catalog" />
+          <TractorPhoto tractor={tractor} lang={lang} mode="catalog" sprite />
           <a class="tractor-card-main" href={detailPrefix+tractor.slug+"/"}>
           <div class="tractor-card-top"><span class="tractor-brand">{tractor.brand_name}</span><span class="tractor-card-arrow" aria-hidden="true">↗</span></div>
           <h2>{tractor.brand_name} {tractor.model_name}</h2>
@@ -175,6 +185,7 @@ const pricePayload = JSON.stringify({
 </script>
 
 <style>
+  .catalog-photo-sprite { position:absolute; width:0; height:0; overflow:hidden; pointer-events:none; }
   .catalog-brand-directory{margin:18px 0 27px;padding:clamp(14px,2.8vw,22px);border:1px solid #c3dbc4;border-radius:16px;background:#f4faf3;scroll-margin-top:5rem}
   .catalog-brand-directory h2{margin:0 0 7px;font-size:clamp(19px,2.2vw,25px);color:#174c30}
   .catalog-brand-directory p{margin:0 0 15px;color:#4d6b56;font-size:13px;line-height:1.65;max-width:850px}
