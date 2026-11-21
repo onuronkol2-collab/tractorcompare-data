@@ -66,7 +66,7 @@ const summaryItems = [
     <TractorPhoto tractor={tractor} lang={lang} mode="hero" />
     {summaryItems.length>0&&<>
       <div class="model-summary-grid">{summaryItems.map((item)=>
-        <div><small>{item.label}</small><strong>{item.value}</strong>
+        <div data-claim={item.key}><small>{item.label}</small><strong>{item.value}</strong>
           {item.key==="power"&&!isSonalikaExport && (
             powerProvenance
               ? <a class="model-summary-power-source" href={powerProvenance.sourceUrl} target="_blank" rel="noopener noreferrer">{sourceCopy.matched} <span aria-hidden="true">↗</span></a>
