@@ -22,13 +22,16 @@ export const RESIDUAL_PUBLIC_SPEC_TERMS: Record<string, Partial<Record<Locale,st
     "tr": "Silindir çapı",
     "pt-br": "Diâmetro do cilindro",
     "fr": "Alésage du cylindre",
-    "es": "Diámetro del cilindro"
+    "es": "Diámetro del cilindro",
+    "ru": "Диаметр цилиндра"
   },
   "Engine Cooling": {
     "tr": "Motor soğutma sistemi",
     "pt-br": "Arrefecimento do motor",
     "fr": "Refroidissement du moteur",
-    "es": "Refrigeración del motor"
+    "es": "Refrigeración del motor",
+    "hi": "इंजन शीतलन",
+    "ru": "Охлаждение двигателя"
   },
   "Four-Wheel-Drive Engagement": {
     "tr": "Dört çekerin (4WD) devreye alınması"
@@ -85,19 +88,24 @@ export const RESIDUAL_PUBLIC_SPEC_TERMS: Record<string, Partial<Record<Locale,st
     "tr": "Robotize şanzıman hız aralıkları",
     "pt-br": "Gamas da transmissão robotizada",
     "fr": "Gammes de la transmission robotisée",
-    "es": "Gamas de la transmisión robotizada"
+    "es": "Gamas de la transmisión robotizada",
+    "ja": "ロボット式変速機のレンジ"
   },
   "Total Admissible Load": {
     "tr": "İzin verilen toplam yük",
     "pt-br": "Carga total admissível",
     "fr": "Charge totale admissible",
-    "es": "Carga total admisible"
+    "es": "Carga total admisible",
+    "ru": "Максимально допустимая нагрузка"
   },
   "Tractor Weight": {
     "tr": "Traktör ağırlığı",
     "pt-br": "Peso do trator",
     "fr": "Masse du tracteur",
-    "es": "Peso del tractor"
+    "es": "Peso del tractor",
+    "zh": "拖拉机重量",
+    "ru": "Масса трактора",
+    "ja": "トラクター重量"
   },
   "Weight With Cab": {
     "tr": "Kabinli ağırlık",
@@ -106,10 +114,12 @@ export const RESIDUAL_PUBLIC_SPEC_TERMS: Record<string, Partial<Record<Locale,st
     "es": "Peso con cabina"
   },
   "Agrotechnical Clearance Under Front Axle": {
-    "tr": "Ön aks altındaki tarımsal yerden açıklık"
+    "tr": "Ön aks altındaki tarımsal yerden açıklık",
+    "ru": "Агротехнический просвет под передним мостом"
   },
   "Agrotechnical Clearance Under Rear Wheel Tubes": {
-    "tr": "Arka tekerlek boruları altındaki tarımsal yerden açıklık"
+    "tr": "Arka tekerlek boruları altındaki tarımsal yerden açıklık",
+    "ru": "Агротехнический просвет под трубами задних колёс"
   },
   "Available Transmission Options": {
     "tr": "Mevcut şanzıman seçenekleri",
@@ -139,7 +149,11 @@ export const RESIDUAL_PUBLIC_SPEC_TERMS: Record<string, Partial<Record<Locale,st
     "tr": "Bildirilen motor gücündeki devir (dev/dak)",
     "pt-br": "Rotação do motor na potência declarada (rpm)",
     "fr": "Régime moteur à la puissance indiquée (tr/min)",
-    "es": "Régimen del motor a la potencia declarada (rpm)"
+    "es": "Régimen del motor a la potencia declarada (rpm)",
+    "de": "Motordrehzahl bei angegebener Leistung",
+    "zh": "标称功率下的发动机转速",
+    "ru": "Обороты двигателя при заявленной мощности",
+    "ja": "公表出力時のエンジン回転数"
   },
   "F36CHN HST Transmission Ranges": {
     "tr": "F36CHN HST şanzıman hız aralıkları"
@@ -157,7 +171,8 @@ export const RESIDUAL_PUBLIC_SPEC_TERMS: Record<string, Partial<Record<Locale,st
     "tr": "İleri/geri vites seçenekleri"
   },
   "Front Diff Lock Type": {
-    "tr": "Ön diferansiyel kilidi tipi"
+    "tr": "Ön diferansiyel kilidi tipi",
+    "ru": "Тип блокировки переднего дифференциала"
   },
   "Front Tire (Main Configuration)": {
     "tr": "Ön lastik (ana yapılandırma)"
@@ -205,28 +220,42 @@ export const RESIDUAL_PUBLIC_SPEC_TERMS: Record<string, Partial<Record<Locale,st
     "tr": "Hidrostatik hız aralığı modları",
     "pt-br": "Modos de faixa da transmissão hidrostática",
     "fr": "Modes de gammes hydrostatiques",
-    "es": "Modos de gamas hidrostáticas"
+    "es": "Modos de gamas hidrostáticas",
+    "ja": "静油圧式変速機のレンジモード"
   },
   "Manufacturer Engine Power (Metric Hp)": {
     "tr": "Üreticinin bildirdiği motor gücü (metrik bg)",
     "pt-br": "Potência do motor declarada pelo fabricante (ch métricos)",
     "fr": "Puissance moteur annoncée par le constructeur (ch métriques)",
-    "es": "Potencia del motor declarada por el fabricante (CV métricos)"
+    "es": "Potencia del motor declarada por el fabricante (CV métricos)",
+    "zh": "制造商公布的发动机功率（公制马力）",
+    "ru": "Мощность двигателя по данным производителя (метрические л. с.)",
+    "ja": "メーカー公表のエンジン出力（メートル馬力）"
   },
   "Manufacturer Rated Power": {
     "tr": "Üreticinin belirttiği nominal güç",
     "pt-br": "Potência nominal indicada pelo fabricante",
     "fr": "Puissance nominale déclarée par le constructeur",
-    "es": "Potencia nominal declarada por el fabricante"
+    "es": "Potencia nominal declarada por el fabricante",
+    "de": "Herstellerangabe zur Nennleistung",
+    "zh": "制造商公布的额定功率",
+    "hi": "निर्माता की घोषित रेटेड शक्ति",
+    "ru": "Номинальная мощность по данным производителя",
+    "ja": "メーカー公表の定格出力"
   },
   "Manufacturer Selectable Automatic Ranges (SIM)": {
-    "tr": "Üreticinin seçilebilir otomatik hız aralıkları (SIM)"
+    "tr": "Üreticinin seçilebilir otomatik hız aralıkları (SIM)",
+    "ja": "メーカー設定の自動レンジ（SIM）"
   },
   "Manufacturer Stated Power": {
     "tr": "Üreticinin bildirdiği güç",
     "pt-br": "Potência declarada pelo fabricante",
     "fr": "Puissance indiquée par le constructeur",
-    "es": "Potencia declarada por el fabricante"
+    "es": "Potencia declarada por el fabricante",
+    "zh": "制造商宣称的功率",
+    "hi": "निर्माता द्वारा बताई गई शक्ति",
+    "ru": "Мощность, заявленная производителем",
+    "ja": "メーカー公表出力"
   },
   "Manufacturer-Stated Road Homologation Speed": {
     "tr": "Üreticinin bildirdiği yol homologasyon hızı",
@@ -336,7 +365,9 @@ export const RESIDUAL_PUBLIC_SPEC_TERMS: Record<string, Partial<Record<Locale,st
   "Manufacturer ROPS/Cabin Weight Range Boundary, Load Status Unspecified": {
     "pt-br": "Limite da faixa de peso ROPS/cabine indicado pelo fabricante (condição de carga não informada)",
     "fr": "Limite de plage de masse ROPS/cabine indiqué par le constructeur (état de charge non précisé)",
-    "es": "Límite del rango de peso ROPS/cabina indicado por el fabricante (condición de carga no especificada)"
+    "es": "Límite del rango de peso ROPS/cabina indicado por el fabricante (condición de carga no especificada)",
+    "de": "Herstellerangabe zum Gewichtsbereich von ROPS/Kabine (Beladungszustand nicht angegeben)",
+    "zh": "制造商公布的 ROPS/驾驶室重量范围界限（载荷状态未注明）"
   },
   "Powershift Multiplier Stages": {
     "pt-br": "Número de estágios do multiplicador Powershift",
@@ -349,7 +380,9 @@ export const RESIDUAL_PUBLIC_SPEC_TERMS: Record<string, Partial<Record<Locale,st
   "Maximum Forward Speed": {
     "pt-br": "Velocidade máxima em marcha à frente",
     "fr": "Vitesse maximale en marche avant",
-    "es": "Velocidad máxima de avance"
+    "es": "Velocidad máxima de avance",
+    "ru": "Максимальная скорость движения вперёд",
+    "ja": "最高前進速度"
   },
   "Track Frame Roller Count": {
     "pt-br": "Número de roletes do chassi de esteiras",
@@ -364,17 +397,23 @@ export const RESIDUAL_PUBLIC_SPEC_TERMS: Record<string, Partial<Record<Locale,st
   "Maximum Reverse Speed": {
     "pt-br": "Velocidade máxima em marcha à ré",
     "fr": "Vitesse maximale en marche arrière",
-    "es": "Velocidad máxima de retroceso"
+    "es": "Velocidad máxima de retroceso",
+    "ru": "Максимальная скорость заднего хода",
+    "ja": "最高後進速度"
   },
   "Minimum Forward Speed": {
     "pt-br": "Velocidade mínima em marcha à frente",
     "fr": "Vitesse minimale en marche avant",
-    "es": "Velocidad mínima de avance"
+    "es": "Velocidad mínima de avance",
+    "ru": "Минимальная скорость движения вперёд",
+    "ja": "最低前進速度"
   },
   "Minimum Reverse Speed": {
     "pt-br": "Velocidade mínima em marcha à ré",
     "fr": "Vitesse minimale en marche arrière",
-    "es": "Velocidad mínima de retroceso"
+    "es": "Velocidad mínima de retroceso",
+    "ru": "Минимальная скорость заднего хода",
+    "ja": "最低後進速度"
   },
   "Length Without Front Linkage": {
     "pt-br": "Comprimento sem engate frontal",
@@ -384,7 +423,8 @@ export const RESIDUAL_PUBLIC_SPEC_TERMS: Record<string, Partial<Record<Locale,st
   "Maker ROPS/Cab Weight Bound (Equipment-Dependent)": {
     "pt-br": "Limite de peso ROPS/cabine declarado pelo fabricante (dependente do equipamento)",
     "fr": "Limite de masse ROPS/cabine indiqué par le constructeur (selon l’équipement)",
-    "es": "Límite de peso ROPS/cabina declarado por el fabricante (según equipamiento)"
+    "es": "Límite de peso ROPS/cabina declarado por el fabricante (según equipamiento)",
+    "de": "Herstellerangabe zur Gewichtsgrenze von ROPS/Kabine (ausstattungsabhängig)"
   },
   "Standart şAnzıMan": {
     "pt-br": "Transmissão de série",
@@ -394,7 +434,11 @@ export const RESIDUAL_PUBLIC_SPEC_TERMS: Record<string, Partial<Record<Locale,st
   "Weight (Kg)": {
     "pt-br": "Peso (kg)",
     "fr": "Poids (kg)",
-    "es": "Peso (kg)"
+    "es": "Peso (kg)",
+    "zh": "重量（kg）",
+    "hi": "वज़न (किग्रा)",
+    "ru": "Масса (кг)",
+    "ja": "重量（kg）"
   },
   "Width Between Rear Axle Shaft Ends": {
     "pt-br": "Largura entre as extremidades dos semieixos traseiros",
@@ -444,7 +488,12 @@ export const RESIDUAL_PUBLIC_SPEC_TERMS: Record<string, Partial<Record<Locale,st
   "Weight With ROPS": {
     "pt-br": "Peso com estrutura ROPS",
     "fr": "Poids avec structure ROPS",
-    "es": "Peso con estructura ROPS"
+    "es": "Peso con estructura ROPS",
+    "zh": "配备 ROPS 防翻滚结构时的重量",
+    "hi": "ROPS के साथ वज़न",
+    "de": "Gewicht mit ROPS",
+    "ru": "Масса с конструкцией ROPS",
+    "ja": "ROPS装備時重量"
   },
   "Width Max Mm": {
     "pt-br": "Largura máxima (mm)",
@@ -479,7 +528,8 @@ export const RESIDUAL_PUBLIC_SPEC_TERMS: Record<string, Partial<Record<Locale,st
   "Steering Layout": {
     "pt-br": "Configuração da direção",
     "fr": "Configuration de la direction",
-    "es": "Configuración de la dirección"
+    "es": "Configuración de la dirección",
+    "de": "Anordnung der Lenkung"
   },
   "Steering Max Angle Deg": {
     "pt-br": "Ângulo máximo de esterçamento (°)",
@@ -489,7 +539,8 @@ export const RESIDUAL_PUBLIC_SPEC_TERMS: Record<string, Partial<Record<Locale,st
   "Steering System": {
     "pt-br": "Sistema de direção",
     "fr": "Système de direction",
-    "es": "Sistema de dirección"
+    "es": "Sistema de dirección",
+    "de": "Lenksystem"
   },
   "Rear PTO Shaft": {
     "pt-br": "Eixo da TDP traseira",
@@ -499,7 +550,8 @@ export const RESIDUAL_PUBLIC_SPEC_TERMS: Record<string, Partial<Record<Locale,st
   "Weight Without Ballast": {
     "pt-br": "Peso sem lastro",
     "fr": "Poids sans lest",
-    "es": "Peso sin lastre"
+    "es": "Peso sin lastre",
+    "ru": "Масса без балласта"
   },
   "Crop Clearance": {
     "pt-br": "Vão livre para culturas",
@@ -524,6 +576,272 @@ export const RESIDUAL_PUBLIC_SPEC_TERMS: Record<string, Partial<Record<Locale,st
   "Transmission Control": {
     "pt-br": "Comando da transmissão",
     "fr": "Commande de la transmission",
-    "es": "Control de la transmisión"
+    "es": "Control de la transmisión",
+    "hi": "ट्रांसमिशन का नियंत्रण",
+    "ru": "Управление трансмиссией",
+    "ja": "変速機の操作方式"
+  },
+  "Azami Motor GüCü (ECE R120, CV)": {
+    "zh": "发动机最大功率 (ECE R120, cv)",
+    "hi": "अधिकतम इंजन शक्ति (ECE R120, cv)",
+    "pt-br": "Potência máxima do motor (ECE R120, cv)",
+    "fr": "Puissance moteur maximale (ECE R120, cv)",
+    "de": "Maximale Motorleistung (ECE R120, cv)",
+    "ru": "Максимальная мощность двигателя (ECE R120, cv)",
+    "ja": "エンジン最高出力（ECE R120、cv）",
+    "es": "Potencia máxima del motor (ECE R120, cv)"
+  },
+  "Azami Motor GüCü (ECE R120, KW)": {
+    "zh": "发动机最大功率 (ECE R120, kW)",
+    "hi": "अधिकतम इंजन शक्ति (ECE R120, kW)",
+    "pt-br": "Potência máxima do motor (ECE R120, kW)",
+    "fr": "Puissance moteur maximale (ECE R120, kW)",
+    "de": "Maximale Motorleistung (ECE R120, kW)",
+    "ru": "Максимальная мощность двигателя (ECE R120, кВт)",
+    "ja": "エンジン最高出力（ECE R120、kW）",
+    "es": "Potencia máxima del motor (ECE R120, kW)"
+  },
+  "Nominal Motor GüCü (ECE R120, CV)": {
+    "zh": "发动机额定功率 (ECE R120, cv)",
+    "hi": "इंजन की रेटेड शक्ति (ECE R120, cv)",
+    "pt-br": "Potência nominal do motor (ECE R120, cv)",
+    "fr": "Puissance nominale du moteur (ECE R120, cv)",
+    "de": "Motor-Nennleistung (ECE R120, cv)",
+    "ru": "Номинальная мощность двигателя (ECE R120, cv)",
+    "ja": "エンジン定格出力（ECE R120、cv）",
+    "es": "Potencia nominal del motor (ECE R120, cv)"
+  },
+  "Nominal Motor GüCü (ECE R120, KW)": {
+    "zh": "发动机额定功率 (ECE R120, kW)",
+    "hi": "इंजन की रेटेड शक्ति (ECE R120, kW)",
+    "pt-br": "Potência nominal do motor (ECE R120, kW)",
+    "fr": "Puissance nominale du moteur (ECE R120, kW)",
+    "de": "Motor-Nennleistung (ECE R120, kW)",
+    "ru": "Номинальная мощность двигателя (ECE R120, кВт)",
+    "ja": "エンジン定格出力（ECE R120、kW）",
+    "es": "Potencia nominal del motor (ECE R120, kW)"
+  },
+  "Azami Tork Devri": {
+    "zh": "最大扭矩对应的发动机转速",
+    "hi": "अधिकतम टॉर्क पर इंजन की गति",
+    "pt-br": "Rotação do motor no torque máximo",
+    "fr": "Régime moteur au couple maximal",
+    "de": "Motordrehzahl bei maximalem Drehmoment",
+    "ru": "Частота вращения при максимальном крутящем моменте",
+    "ja": "最大トルク時のエンジン回転数",
+    "es": "Régimen del motor al par máximo"
+  },
+  "OECD Tork Artışı": {
+    "zh": "OECD 规定的扭矩增幅",
+    "hi": "OECD के अनुसार टॉर्क वृद्धि",
+    "pt-br": "Aumento de torque segundo a OECD",
+    "fr": "Augmentation du couple selon l’OCDE",
+    "de": "Drehmomentanstieg nach OECD",
+    "ru": "Прирост крутящего момента по OECD",
+    "ja": "OECD基準によるトルク上昇",
+    "es": "Aumento del par según la OCDE"
+  },
+  "Toplam Motor Supabı": {
+    "zh": "发动机气门总数",
+    "hi": "इंजन वाल्वों की कुल संख्या",
+    "pt-br": "Número total de válvulas do motor",
+    "fr": "Nombre total de soupapes du moteur",
+    "de": "Gesamtzahl der Motorventile",
+    "ru": "Общее количество клапанов двигателя",
+    "ja": "エンジンバルブ総数",
+    "es": "Número total de válvulas del motor"
+  },
+  "Motor SoğUtma Tipi": {
+    "hi": "इंजन का शीतलन प्रकार"
+  },
+  "Engine Speed At Maximum Power": {
+    "zh": "最大功率时的发动机转速",
+    "hi": "अधिकतम शक्ति पर इंजन की गति",
+    "pt-br": "Rotação do motor na potência máxima",
+    "fr": "Régime moteur à la puissance maximale",
+    "de": "Motordrehzahl bei Höchstleistung",
+    "ru": "Частота вращения двигателя при максимальной мощности",
+    "ja": "最高出力時のエンジン回転数",
+    "es": "Régimen del motor a potencia máxima"
+  },
+  "Engine Speed At Max Power": {
+    "zh": "最大功率时的发动机转速",
+    "hi": "अधिकतम शक्ति पर इंजन की गति",
+    "de": "Motordrehzahl bei Höchstleistung",
+    "ru": "Частота вращения двигателя при максимальной мощности",
+    "ja": "最高出力時のエンジン回転数"
+  },
+  "Max / Rated Power (HP)": {
+    "hi": "अधिकतम / रेटेड शक्ति (HP)",
+    "pt-br": "Potência máxima / nominal (HP)",
+    "fr": "Puissance maximale / nominale (HP)",
+    "de": "Maximal- / Nennleistung (HP)",
+    "ru": "Максимальная / номинальная мощность (HP)",
+    "ja": "最高／定格出力（HP）",
+    "es": "Potencia máxima / nominal (HP)"
+  },
+  "Max / Rated Power (KW)": {
+    "hi": "अधिकतम / रेटेड शक्ति (kW)",
+    "pt-br": "Potência máxima / nominal (kW)",
+    "fr": "Puissance maximale / nominale (kW)",
+    "de": "Maximal- / Nennleistung (kW)",
+    "ru": "Максимальная / номинальная мощность (кВт)",
+    "ja": "最高／定格出力（kW）",
+    "es": "Potencia máxima / nominal (kW)"
+  },
+  "Specific Fuel Consumption At Operating Power": {
+    "hi": "संचालन शक्ति पर विशिष्ट ईंधन खपत",
+    "ru": "Удельный расход топлива при рабочей мощности"
+  },
+  "Engine Air Filter": {
+    "hi": "इंजन एयर फ़िल्टर"
+  },
+  "Engine Bore Mm": {
+    "hi": "इंजन सिलेंडर का बोर (मिमी)"
+  },
+  "Engine Compression Ratio": {
+    "hi": "इंजन का संपीड़न अनुपात"
+  },
+  "Engine Max Power Cv Iso": {
+    "hi": "ISO के अनुसार इंजन की अधिकतम शक्ति (cv)"
+  },
+  "Engine Max Power Kw Iso": {
+    "hi": "ISO के अनुसार इंजन की अधिकतम शक्ति (kW)"
+  },
+  "Engine Rpm At Max Torque": {
+    "hi": "अधिकतम टॉर्क पर इंजन की गति (rpm)"
+  },
+  "Engine Stroke Mm": {
+    "hi": "इंजन पिस्टन स्ट्रोक (मिमी)"
+  },
+  "Minimum Turning Radius": {
+    "hi": "न्यूनतम मोड़ त्रिज्या",
+    "ru": "Минимальный радиус поворота",
+    "ja": "最小旋回半径"
+  },
+  "Specific Fuel Consumption": {
+    "hi": "विशिष्ट ईंधन खपत",
+    "ru": "Удельный расход топлива"
+  },
+  "Transmission Gears – Basic Mechanical Shuttle": {
+    "hi": "बेसिक मैकेनिकल शटल के साथ ट्रांसमिशन गियर"
+  },
+  "Transmission Gears – Power Shuttle Option": {
+    "hi": "पावर शटल विकल्प के साथ ट्रांसमिशन गियर"
+  },
+  "Transmission Gears – Splitter Option": {
+    "hi": "स्प्लिटर विकल्प के साथ ट्रांसमिशन गियर"
+  },
+  "Agrotechnical Ground Clearance": {
+    "hi": "कृषि कार्य के लिए जमीन से ऊँचाई",
+    "ru": "Агротехнический дорожный просвет"
+  },
+  "Azami Motor Devri": {
+    "hi": "इंजन की अधिकतम गति (rpm)"
+  },
+  "BrüT Motor GüCü (Metrik PS)": {
+    "hi": "सकल इंजन शक्ति (मीट्रिक PS)"
+  },
+  "Canopy Height": {
+    "hi": "कैनोपी की ऊँचाई",
+    "ru": "Высота навеса"
+  },
+  "Engine Dual-Element Air Cleaner": {
+    "hi": "इंजन का दो-तत्व वाला एयर क्लीनर"
+  },
+  "Engine Rpm For Stated Power": {
+    "hi": "बताई गई शक्ति पर इंजन की गति (rpm)",
+    "ru": "Обороты двигателя при заявленной мощности",
+    "ja": "公表出力時のエンジン回転数"
+  },
+  "Large-Volume Diesel Water Separator": {
+    "hi": "बड़ी क्षमता वाला डीज़ल जल विभाजक"
+  },
+  "Motor Hacmi (In³)": {
+    "hi": "इंजन का विस्थापन (घन इंच)"
+  },
+  "Motor SoğUtma": {
+    "hi": "इंजन शीतलन",
+    "ru": "Охлаждение двигателя"
+  },
+  "Net Motor GüCü (Metrik PS)": {
+    "hi": "शुद्ध इंजन शक्ति (मीट्रिक PS)"
+  },
+  "Drive Layout": {
+    "zh": "驱动系统布局",
+    "ru": "Схема привода",
+    "ja": "駆動方式の構成"
+  },
+  "Engine Speed At Listed Power": {
+    "ja": "記載出力時のエンジン回転数"
+  },
+  "Manufacturer-Stated Engine Power (KW, Test Standard Unspecified)": {
+    "ja": "メーカー公表エンジン出力（kW、試験規格未記載）"
+  },
+  "Operator Station / Cab": {
+    "ja": "運転席／キャブ"
+  },
+  "Reverse Gears (12F+12R Gearbox Option)": {
+    "ja": "後進段数（12F+12R変速機オプション）"
+  },
+  "Fuel Capacity – Large Tank Option": {
+    "de": "Kraftstoffvolumen – großer Tank als Option"
+  },
+  "Full-Range Lifting Force": {
+    "de": "Hubkraft über den gesamten Hubbereich"
+  },
+  "Maximum Lift Force": {
+    "de": "Maximale Hubkraft"
+  },
+  "Fuel Tank (Auxiliary)": {
+    "de": "Kraftstofftank (Zusatztank)"
+  },
+  "Fuel Tank (Lit)": {
+    "de": "Kraftstofftank (Liter)"
+  },
+  "Manufacturer Cab/ROPS Weight Boundary (Load Condition Unstated)": {
+    "de": "Herstellerangabe zur Gewichtsgrenze von Kabine/ROPS (Beladungszustand nicht angegeben)"
+  },
+  "Mid Pto Speed Rpm": {
+    "de": "Drehzahl der mittleren Zapfwelle (U/min)"
+  },
+  "Steering Angle Max Degrees": {
+    "de": "Maximaler Lenkwinkel (°)"
+  },
+  "Front Axle Capacity": {
+    "ru": "Допустимая нагрузка на передний мост"
+  },
+  "Height At Bonnet": {
+    "ru": "Высота по капоту"
+  },
+  "Rear Lift Capacity At 24 Inches Behind Link Ends": {
+    "ru": "Грузоподъёмность задней навески на расстоянии 24 дюйма за концами тяг"
+  },
+  "Four-Post Cab": {
+    "ru": "Четырёхстоечная кабина"
+  },
+  "Front Track Width": {
+    "ru": "Ширина передней колеи"
+  },
+  "Fuel Tank With Additional Tank, No Front Lift/PTO": {
+    "ru": "Топливный бак с дополнительным баком (без передней навески/ВОМ)"
+  },
+  "Fuel Tank Without Front Lift/PTO": {
+    "ru": "Топливный бак без передней навески/ВОМ"
+  },
+  "Halogen Working Lights": {
+    "ru": "Галогенные рабочие фары"
+  },
+  "Manufacturer Operator Station Type": {
+    "ru": "Тип рабочего места оператора по данным производителя"
+  },
+  "Operating Weight With Ballast": {
+    "ru": "Эксплуатационная масса с балластом"
+  },
+  "Air Cleaner": {
+    "ru": "Воздушный фильтр"
+  },
+  "Engine Max Torque Rpm": {
+    "ru": "Обороты двигателя при максимальном крутящем моменте"
   }
 };
