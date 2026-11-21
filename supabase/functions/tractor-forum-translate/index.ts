@@ -190,31 +190,85 @@ async function work(){
     return {processed:0,status:"superseded"};
    }
    if(source.body.length>12000||source.title.length>160)throw Error("Source exceeds safe length");
-   const result=await translate(source,job.target_locale);
-   const latest=(await db("tc_forum_translation_sources",{
-    select:"source_hash",entity_kind:"eq.topic",entity_id:"eq."+job.entity_id,limit:"1"
-   }))[0] as {source_hash:string}|undefined;
-   if(!latest||latest.source_hash!==source.source_hash){
-    await patch(job,{state:"superseded",completed_at:new Date().toISOString(),
-     last_error:"Consent or source changed during translation"});
-    return {processed:0,status:"superseded"};
+   const parts=segments(source.body);
+   const savedRows=await db("tc_forum_topic_translations",{
+    select:"topic_id,locale,title,body,state,qa_notes,source_hash,model",
+    topic_id:"eq."+job.entity_id,locale:"eq."+job.target_locale,limit:"1"
+   });
+   const existing=savedRows[0] as (Article&{state:string;source_hash:string;qa_notes:string;model:string})|undefined;
+   if(existing?.source_hash===source.source_hash&&existing.state==="ready"){
+    await patch(job,{state:"done",completed_at:new Date().toISOString(),last_error:null});
+    return {processed:1,status:"ready",locale:job.target_locale};
    }
-   const ready=!result.issue;
-   const saved=await db("tc_forum_topic_translations",{
-    on_conflict:"topic_id,locale",select:"locale,state,seo_approved"
+   const marker=existing?.source_hash===source.source_hash?
+    /^PARTS:(\d+)\/(\d+)$/.exec(existing.qa_notes||""):null;
+   if(existing?.state==="needs_review"&&existing?.source_hash===source.source_hash&&!marker){
+    await patch(job,{state:"done",completed_at:new Date().toISOString(),
+     last_error:"QA_REVIEW_REQUIRED"});
+    return {processed:1,status:"needs_review",locale:job.target_locale};
+   }
+   const index=marker&&Number(marker[2])===parts.length?Number(marker[1]):0;
+   const upsert=async(data:Record<string,unknown>)=>db("tc_forum_topic_translations",{
+    on_conflict:"topic_id,locale",select:"topic_id,locale,state,seo_approved"
    },{method:"POST",headers:{"Content-Type":"application/json",
     Prefer:"resolution=merge-duplicates,return=representation"},body:JSON.stringify({
-    topic_id:job.entity_id,locale:job.target_locale,title:result.tr.title,
-    body:result.tr.body,source_hash:source.source_hash,
-    state:ready?"ready":"needs_review",seo_approved:ready,provider:"Google Gemini",
-    model:result.model,reviewed_by_model:result.reviewed?result.reviewer:null,
-    qa_notes:ready?"Independent model review and local structural/number/source checks passed":
-     String(result.issue).slice(0,220),translated_at:new Date().toISOString()
+    topic_id:job.entity_id,locale:job.target_locale,source_hash:source.source_hash,
+    provider:"Google Gemini",translated_at:new Date().toISOString(),...data
    })});
-   const approved=saved[0]?.state==="ready"&&saved[0]?.seo_approved===true;
+   const confirmSource=async()=>{
+    const rows=await db("tc_forum_translation_sources",{
+     select:"source_hash",entity_kind:"eq.topic",entity_id:"eq."+job.entity_id,limit:"1"
+    });
+    if(rows[0]?.source_hash!==source.source_hash){
+     await patch(job,{state:"superseded",completed_at:new Date().toISOString(),
+      last_error:"Consent or source changed during translation"});
+     return false;
+    }
+    return true;
+   };
+   if(index<parts.length){
+    const part=await translateChunk(source,parts[index],job.target_locale);
+    if(part.issue){
+     await patch(job,{state:"done",completed_at:new Date().toISOString(),
+      last_error:"QA_REVIEW_REQUIRED: "+part.issue.slice(0,105)});
+     return {processed:0,status:"needs_review",locale:job.target_locale};
+    }
+    if(!await confirmSource())return {processed:0,status:"superseded"};
+    const full=index===0?part.article.body:existing!.body+"\n"+part.article.body;
+    const title=index===0?part.article.title:existing!.title;
+    await upsert({title,body:full,state:"needs_review",seo_approved:false,
+     reviewed_by_model:null,model:index===0?part.model:existing!.model,
+     qa_notes:"PARTS:"+(index+1)+"/"+parts.length});
+    // This is partial PRIVATE work, not an approved public translation.
+    // Reset only the consecutive failure counter after a successful segment.
+    await patch(job,{state:"queued",attempts:0,
+     next_attempt_at:new Date().toISOString(),started_at:null,
+     completed_at:null,last_error:null});
+    return {processed:1,status:"partial",locale:job.target_locale};
+   }
+   if(index!==parts.length||!existing)throw Error("Invalid private segment checkpoint");
+   const full={title:existing.title,body:existing.body};
+   const localIssue=check(source,full,job.target_locale);
+   if(localIssue){
+    await upsert({title:full.title,body:full.body,state:"needs_review",seo_approved:false,
+     model:existing.model,reviewed_by_model:null,
+     qa_notes:"Full article QA: "+localIssue});
+    await patch(job,{state:"done",completed_at:new Date().toISOString(),
+     last_error:"QA_REVIEW_REQUIRED"});
+    return {processed:1,status:"needs_review",locale:job.target_locale};
+   }
+   const review=await reviewComplete(source,full,job.target_locale);
+   if(!await confirmSource())return {processed:0,status:"superseded"};
+   const approved=review.approved;
+   const saved=await upsert({title:full.title,body:full.body,
+    state:approved?"ready":"needs_review",seo_approved:approved,
+    model:existing.model,reviewed_by_model:review.reviewer,
+    qa_notes:approved?"Independent full-article translation QA passed":
+     "Independent reviewer: "+review.notes});
+   const published=saved[0]?.state==="ready"&&saved[0]?.seo_approved===true;
    await patch(job,{state:"done",completed_at:new Date().toISOString(),
-    last_error:approved?null:"QA_REVIEW_REQUIRED"});
-   return {processed:1,status:approved?"ready":"needs_review",locale:job.target_locale};
+    last_error:published?null:"QA_REVIEW_REQUIRED"});
+   return {processed:1,status:published?"ready":"needs_review",locale:job.target_locale};
   }catch(e){
    const failed=attempts>=4;
    await patch(job,{state:failed?"failed":"queued",
