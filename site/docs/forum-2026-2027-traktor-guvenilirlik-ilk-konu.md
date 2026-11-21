@@ -38,7 +38,7 @@ profi'nin 4.400 çalışma saatini aşan uzun dönem haberinde, incelenen MF 8S.
 
 ### 3. Valtra G125 Eco HiTech — 7.080 saatlik yoğun saha kullanımı
 
-profi'nin 2026'da erişime açılan uzun dönem incelemesi bir Valtra G125 Eco'nun dört yılda 7.080 saati aştığını ve işletmenin genel performanstan memnun kaldığını gösteriyor. Bu kayıt, yüksek kullanım saatine ilişkin değerlendirme için önemlidir; ayrıntılı onarım çizelgesi abonelik kapsamında olduğu için açık sürümde görülemeyen tek tek arızaları burada kesinleştirmiyoruz.
+profi'nin 19 Aralık 2025 tarihli, Ocak 2026 sayısına ait uzun dönem incelemesi, bir Valtra G125 Eco'nun dört yılda 7.080 saati aştığını ve işletmenin genel performanstan memnun kaldığını gösteriyor. Açık kaynak metninde vites değiştirme kumanda anahtarlarında tekrarlayan sorunlar, motor devri sensörü arızasına bağlı yürüyüş kaybı ve testin son 100 saatindeki şanzıman senkromeç onarımı bildiriliyor. Bu kayıt tek bir traktöre aittir; tüm G125 modellerinin arıza oranını göstermez.
 
 **Kanıt türü:** Tek traktörün uzun dönem testi; ayrıntılı kayıtlar için erişim sınırlı. **Kaynak:** https://www.profi.co.uk/test-centre/valtra-g125-hitech-does-the-g-hit-the-spot/
 
