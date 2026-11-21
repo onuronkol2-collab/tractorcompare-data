@@ -92,11 +92,59 @@ test("ImageObject includes rights and never introduces Product rich result eligi
   assert.equal(page.primaryImageOfPage["@id"],image["@id"]);
   assert.equal(image.creditText,"Homoatrox · CC BY-SA 3.0");
   assert.match(image.license,/creativecommons\.org/);
+  assert.equal(image.acquireLicensePage,primaryTractorPhoto(tractor("Belarus","82.1")).sourcePage);
+  assert.match(image.acquireLicensePage,/^https:\/\/commons\.wikimedia\.org\/wiki\/File:/);
+  assert.equal(image.url,undefined,"Commons file description is a licensing page, not the original image URL");
+  assert.equal(image.copyrightNotice,undefined,
+    "Do not invent a copyright-holder claim from a photographer credit or CC0 attribution");
   assert.match(image.caption,/Belarus 82\.1/);
   assert.ok(!parts.some(x=>["Vehicle","Product"].includes(x["@type"])));
   assert.ok(!modelStructuredData(tractor("Belarus","80.0"),"tr","https://tractorvs.com/")["@graph"]
     .some(x=>x["@type"]==="ImageObject"));
 });
+test("Google ImageObject licensing is model-specific across all approved Commons photographs and ten locales",()=>{
+  const seen=new Set();
+  for (const record of APPROVED_TRACTOR_PHOTOS) {
+    assert.match(record.sourcePage,/^https:\/\/commons\.wikimedia\.org\/wiki\/File:/);
+    assert.match(record.licenseUrl,/^https:\/\/creativecommons\.org\//);
+    const key=record.brand+"::"+record.model;
+    if(seen.has(key))continue;
+    seen.add(key);
+    const item=tractor(record.brand,record.model);
+    const photo=primaryTractorPhoto(item);
+    assert.ok(photo,"Approved photo must resolve to an exact real model: "+key);
+    for(const locale of LOCALES){
+      const page=modelStructuredData(item,locale,"https://tractorvs.com/");
+      const image=page["@graph"].find(x=>x["@type"]==="ImageObject");
+      assert.ok(image,"Missing licensed ImageObject for "+key+" "+locale);
+      assert.equal(image.acquireLicensePage,photo.sourcePage,"Image-specific Commons File page "+key+" "+locale);
+      assert.equal(image.license,photo.licenseUrl,"Real image license "+key+" "+locale);
+      assert.equal(image.creator.name,photo.photographer);
+      assert.equal(image.contentUrl,"https://tractorvs.com"+photo.fullUrl);
+      assert.equal(image.copyrightNotice,undefined,
+        "No unverified ownership notices, including for CC0 photos");
+      assert.ok(!page["@graph"].some(x=>x["@type"]==="Product"||x["@type"]==="Vehicle"));
+    }
+  }
+  assert.ok(seen.size>30,"Substantive catalogue photo coverage required");
+});
+
+test("known Search Console examples link to the exact photo reuse conditions, including CC0",()=>{
+  for(const [brand,model] of [
+    ["Valtra","G135"],["Valtra","F105"],["Valtra","N135"],
+    ["Versatile","Nemesis 175"],["Versatile","Nemesis 255"]
+  ]){
+    const item=tractor(brand,model);
+    const photo=primaryTractorPhoto(item);
+    assert.ok(photo,"Search Console example must have a verified photo: "+brand+" "+model);
+    const graph=modelStructuredData(item,"zh","https://tractorvs.com/")["@graph"];
+    const image=graph.find(x=>x["@type"]==="ImageObject");
+    assert.equal(image.acquireLicensePage,photo.sourcePage);
+    assert.equal(image.license,photo.licenseUrl);
+    if(model==="F105")assert.equal(photo.licenseName,"CC0");
+  }
+});
+
 test("fullscreen viewer, linked credits and public image sitemap use SSR images",()=>{
   const gallery=file("components/TractorPhoto.astro"),
     lightbox=file("components/PhotoLightbox.astro"),
