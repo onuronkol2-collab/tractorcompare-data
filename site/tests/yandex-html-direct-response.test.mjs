@@ -9,7 +9,7 @@ const proofs = [
 ];
 
 test("both Worker configurations route exact Yandex HTML proof URLs first, with no global HTML routing change", () => {
-  for (const path of ["../wrangler.jsonc", "../site/wrangler.jsonc"]) {
+  for (const path of ["../../wrangler.jsonc", "../wrangler.jsonc"]) {
     const config = JSON.parse(readFileSync(new URL(path, import.meta.url), "utf8"));
     assert.equal(config.assets.html_handling, undefined);
     for (const [token] of proofs)
