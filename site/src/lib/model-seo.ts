@@ -253,10 +253,15 @@ export function modelStructuredData(tractor: TractorRecord, lang: Locale, siteUr
     thumbnailUrl:new URL(image.displayUrl,siteUrl).toString(),
     caption:tractorPhotoAlt(tractor,lang),
     creator:{"@type":"Person",name:image.photographer},
-    copyrightNotice:"© "+image.photographer,
+    // The photographer is credited but has not been independently proven to be
+    // the current copyright holder; never manufacture a copyright notice.
+    // This matters especially for approved CC0 photographs.
     creditText:image.photographer+" · "+image.licenseName,
     license:image.licenseUrl,
-    url:image.sourcePage,
+    // Commons' specific File: page identifies this image and explains the
+    // author's licensing/reuse conditions. A generic CC license deed is not
+    // the image-specific acquisition/information page.
+    acquireLicensePage:image.sourcePage,
   });
   return {"@context":"https://schema.org","@graph":graph};
 }
