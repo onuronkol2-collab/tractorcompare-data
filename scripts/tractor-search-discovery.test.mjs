@@ -39,6 +39,15 @@ test("only newly published URLs or trustworthy changed lastmod are queued",()=>{
  const current=new Map([[home,null],[model,"2026-11-19"],[added,null]]);
  assert.deepEqual(changedUrls(prev,current),[model,added]);
 });
+test("same-day trustworthy lastmod timestamps trigger a new notification",()=>{
+ const today="2026-11-21T13:00:00.000Z",later="2026-11-21T17:00:00.000Z";
+ const xml='<urlset><url><loc>'+home+'</loc><lastmod>'+later+'</lastmod></url></urlset>';
+ const entries=parsePageSitemap(xml);
+ assert.equal(entries.get(home),later);
+ assert.deepEqual(changedUrls({[home]:today},entries),[home]);
+ assert.deepEqual(changedUrls({[home]:later},entries),[]);
+});
+
 test("indexable URL must have matching canonical and main landmark",()=>{
  assert.equal(validatePage(body(home),home),true);
  assert.throws(()=>validatePage('<meta name="robots" content="noindex">'+body(home),home));
