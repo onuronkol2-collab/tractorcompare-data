@@ -3,6 +3,7 @@ import SiteLayout from "../layouts/SiteLayout.astro";
 import ForumComposer from "./ForumComposer.astro";
 import ForumMemberPanel from "./ForumMemberPanel.astro";
 import {forumText as ft,FORUM_CATEGORY_KEYS} from "../lib/forum-i18n.ts";
+import {memberText as mt} from "../lib/member-i18n.ts";
 import {FORUM_STARTER_GUIDES} from "../lib/forum-starter-guides.ts";
 import {publishedForumTopics,forumDate} from "../lib/forum.ts";
 import {getPublicCatalog} from "../lib/catalog.ts";
@@ -32,7 +33,10 @@ const schema=indexable?{
     <p class="community-kicker">TRACTORVS · {ft(lang,"name")}</p>
     <h1>{ft(lang,"heading")}</h1>
     <p>{ft(lang,"intro")}</p>
-    <a class="compose-link" href="#forum-compose">{ft(lang,"compose")}</a>
+    <div class="community-hero-links">
+      <a class="compose-link" href="#forum-compose">{ft(lang,"compose")}</a>
+      <a class="compose-link community-link-alt" href="#forum-members">{mt(lang,"leaderboard")}</a>
+    </div>
     <div class="community-guide">
      <span>{ft(lang,"guidelines")}</span>
     </div>
@@ -100,6 +104,8 @@ const schema=indexable?{
  .community-hero h1{max-width:850px;font-size:clamp(31px,4.4vw,52px);line-height:1.13;margin:0 0 16px}
  .community-hero p:not(.community-kicker){max-width:730px;line-height:1.75;font-size:16px;color:#d9ecdc}
  .compose-link{display:inline-block;background:#e7f6de;color:#183e27;border-radius:9px;padding:12px 18px;font-weight:700}
+ .community-hero-links{display:flex;align-items:center;flex-wrap:wrap;gap:11px}
+ .community-link-alt{background:transparent;border:1px solid #b9dfb6;color:#e7f6de}
  .community-guide{max-width:730px;margin-top:22px;border-left:3px solid #aad39b;padding:9px 15px;background:#ffffff10;font-size:13px;line-height:1.8}
  .community-main{padding-top:37px;padding-bottom:72px}
  .community-list h2{font-size:clamp(22px,2.5vw,29px);color:#174b2b}
