@@ -44,8 +44,14 @@ const c = analyticsText(lang);
       if (choice === "accepted" || choice === "rejected") return choice;
       // Preserve previously rejected preferences but require fresh consent
       // from people who had accepted the old GA4-only disclosure.
-      return window.localStorage.getItem("tractorvs_analytics_choice_v1") === "rejected"
-        ? "rejected" : null;
+      const legacyChoice = window.localStorage.getItem("tractorvs_analytics_choice_v1");
+      if (legacyChoice === "accepted") {
+        // Old GA4-only approval does not cover session recordings.
+        // Remove stale identifiers while waiting for renewed permission.
+        clearAnalyticsFirstPartyCookies();
+        clearClarityFirstPartyCookies();
+      }
+      return legacyChoice === "rejected" ? "rejected" : null;
     } catch {
       return null; // Fail closed when storage is unavailable.
     }
@@ -121,6 +127,23 @@ const c = analyticsText(lang);
     }
   }
 
+  function clearClarityFirstPartyCookies() {
+    // The Consent API handles revocation; remove known first-party
+    // identifiers as defense in depth, including after legacy consent.
+    const names = document.cookie.split(";")
+      .map((part) => part.trim().split("=")[0])
+      .filter((name) => /^_cl(?:ck|sk)$/.test(name));
+    for (const name of names) {
+      const encoded = encodeURIComponent(name);
+      document.cookie = encoded + "=; Max-Age=0; Path=/; SameSite=Lax";
+      if (window.location.hostname === "tractorvs.com" ||
+          window.location.hostname.endsWith(".tractorvs.com")) {
+        document.cookie = encoded
+          + "=; Max-Age=0; Path=/; Domain=.tractorvs.com; SameSite=Lax";
+      }
+    }
+  }
+
   function choose(choice: AnalyticsChoice) {
     try {
       window.localStorage.setItem(ANALYTICS_CHOICE_KEY, choice);
@@ -132,6 +155,10 @@ const c = analyticsText(lang);
       loadAnalyticsOnlyAfterConsent();
       loadClarityOnlyAfterConsent();
     } else {
+      // Always remove old identifiers, including those from the previous
+      // GA4-only consent flow, even if no current script has loaded.
+      clearAnalyticsFirstPartyCookies();
+      clearClarityFirstPartyCookies();
       // A previously loaded tag cannot be un-loaded safely. Deny subsequent
       // measurement and reload with the rejected preference so it stays absent.
       if (document.querySelector("script[data-tractorvs-ga4]") ||
@@ -147,7 +174,6 @@ const c = analyticsText(lang);
           ad_user_data: "denied",
           ad_personalization: "denied",
         });
-        clearAnalyticsFirstPartyCookies();
         window.location.reload();
       }
     }
