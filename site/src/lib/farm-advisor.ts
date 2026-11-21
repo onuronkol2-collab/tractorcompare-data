@@ -4,6 +4,7 @@
  * hydraulics, drawbar, ballast, tyre width, slope safety and local support.
  */
 import type { TractorRecord } from "./catalog.ts";
+import type { AdvisorFact } from "./advisor-evidence.ts";
 import { matchingPrice, MARKET_COUNTRIES, type MarketCountry } from "./market-prices.ts";
 
 export type AreaUnit = "m2" | "dekar" | "hectare" | "acre" | "mu" | "tan";
@@ -146,7 +147,7 @@ function marketCompatibility(market: string | null, country: MarketCountry): "ma
   return "excluded";
 }
 
-export type AdvisorTractor = Pick<TractorRecord, "tractor_id" | "slug" | "brand_name" | "model_name" | "variant" | "market" | "model_year" | "horsepower">;
+export type AdvisorTractor = Pick<TractorRecord, "tractor_id" | "slug" | "brand_name" | "model_name" | "variant" | "market" | "model_year" | "horsepower"> & { facts?: AdvisorFact[] };
 export interface FarmMatch {
   tractor: AdvisorTractor;
   score: number;
