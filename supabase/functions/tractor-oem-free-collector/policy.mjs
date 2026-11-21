@@ -9,7 +9,22 @@ export const OEM_HOSTS=Object.freeze({
  "Başak Traktör":["basaktraktor.com.tr","www.basaktraktor.com.tr"],"Kubota":["ktt.kubota-eu.com"],
  "Sonalika":["sonalika.com","www.sonalika.com"],"Agrale":["agrale.com.br","www.agrale.com.br","pdf.agrale.com.br"],
  "CLAAS":["claas.com","www.claas.com"],"John Deere":["deere.com","www.deere.com","deere.co.uk","www.deere.co.uk"],
- "Case IH":["caseih.com","www.caseih.com","caseih.com.tr","www.caseih.com.tr"]
+ "Case IH":["caseih.com","www.caseih.com","caseih.com.tr","www.caseih.com.tr","assets.cnhindustrial.com"],
+ "Fendt":["dam.agcocorp.com"],
+ "Iseki":["www.iseki.co.jp"],
+ "Kioti":["www.kioti.eu"],
+ "Lamborghini Trattori":["www.lamborghini-tractors.com"],
+ "Landini":["www.landini.it"],
+ "LS Tractor":["www.lstractor.com"],
+ "Mahindra":["www.mahindratractor.com"],
+ "Massey Ferguson":["www.masseyferguson.com"],
+ "McCormick":["mccormick-tractors.com"],
+ "New Holland":["www.newholland.com.tr"],
+ "SAME":["www.same-tractors.com"],
+ "Steyr":["www.steyr-traktoren.com"],
+ "Swaraj":["www.swarajtractors.com"],
+ "Versatile":["www.versatile-ag.com"],
+ "Zetor":["www.zetor.com"]
 });
 const clean=x=>String(x??"").normalize("NFKC").trim();
 export function allowedOemUrl(raw,brand){
@@ -22,6 +37,11 @@ export function allowedOemUrl(raw,brand){
  if(host==="localhost"||host.endsWith(".localhost")||
    /^[0-9.]+$/.test(host)||host.includes(":"))return null;
  if(!roots.includes(host))return null;
+ // Parent-company DAMs contain other brands; trust only matching brand path.
+ if(brand==="Fendt"&&host==="dam.agcocorp.com"&&
+   !u.pathname.toLowerCase().startsWith("/content/dam/multisite/fendt/"))return null;
+ if(brand==="Case IH"&&host==="assets.cnhindustrial.com"&&
+   !u.pathname.toLowerCase().startsWith("/caseih/"))return null;
  if(u.pathname.length>900||u.search.length>300)return null;
  u.hash="";
  return u.toString();
