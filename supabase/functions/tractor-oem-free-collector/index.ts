@@ -5,7 +5,7 @@
 import {createClient} from "npm:@supabase/supabase-js@2";
 import {
  allowedOemUrl,readOemDocument,robotsAllowed,validModelMention,aggregateResults,
- MAX_PER_RUN,CACHE_HOURS,draftIdBatches
+ MAX_PER_RUN,CACHE_HOURS,draftIdBatches,safeCollectorQueryFailure
 } from "./policy.mjs";
 
 const url=Deno.env.get("SUPABASE_URL")||"";
@@ -25,8 +25,14 @@ function equalSecret(one,two){
  return diff===0;
 }
 async function checked(query,scope){
- const {data,error}=await query;
- if(error)throw Error(scope);
+ const {data,error,status}=await query;
+ if(error){
+  // Fixed stage/HTTP/code only; do not print private drafts, source URLs,
+  // query strings, JWTs, Supabase error.message, details or hints.
+  console.error("tractor OEM private query:",JSON.stringify(
+   safeCollectorQueryFailure(scope,status,error)));
+  throw Error(scope);
+ }
  return data||[];
 }
 function batches(list,n){
