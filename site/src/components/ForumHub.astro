@@ -1,6 +1,7 @@
 ---
 import SiteLayout from "../layouts/SiteLayout.astro";
 import ForumComposer from "./ForumComposer.astro";
+import ForumMemberPanel from "./ForumMemberPanel.astro";
 import {forumText as ft,FORUM_CATEGORY_KEYS} from "../lib/forum-i18n.ts";
 import {FORUM_STARTER_GUIDES} from "../lib/forum-starter-guides.ts";
 import {publishedForumTopics,forumDate} from "../lib/forum.ts";
@@ -86,6 +87,7 @@ const schema=indexable?{
       </section>
     </>}
    </section>
+   <ForumMemberPanel lang={lang}/>
    <ForumComposer lang={lang} mode="topic"/>
    <p class="community-help"><a href={localizedPath(lang,"/tractors/")}>{ft(lang,"help")} ↗</a></p>
   </div>
