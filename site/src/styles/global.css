@@ -489,3 +489,18 @@ button, input { font: inherit; }
 }
 .footer-analytics-settings:hover { color: var(--green-bright); }
 .footer-analytics-settings:focus-visible { outline: 3px solid var(--orange); outline-offset: 4px; }
+
+/* Accessible registration CTA remains available on narrow phones. */
+.header-cta.header-signup{white-space:nowrap;min-height:44px}
+@media(max-width:720px){
+ .header-cta.header-signup{display:inline-flex;justify-content:center;gap:5px;padding:9px 10px;font-size:12px}
+ .header-actions{gap:7px}
+ .locale-menu > summary{max-width:74px;overflow:hidden;text-overflow:ellipsis}
+}
+@media(max-width:390px){
+ .brand-words small{display:none}
+ .header-cta.header-signup{padding:9px 8px;font-size:11px}
+ .header-inner{gap:7px}
+ .header-actions{gap:5px}
+ .locale-menu > summary{max-width:62px}
+}
