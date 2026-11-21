@@ -120,14 +120,14 @@ test("model search is reachable from the global header without leaving a discuss
   await expect(page.locator("h1")).toHaveCount(1);
 });
 
-test("forum and tractor selection tool have accurate menu names without changing routes", async ({ page, isMobile }) => {
+test("forum and concise tractor selection have accurate menu names without changing routes", async ({ page, isMobile }) => {
   if (!isMobile) await page.setViewportSize({width:1440,height:900});
   const examples=[
-    {lang:"tr",path:"/tr/",forum:"Topluluk Forumu",finder:"Traktör Seçim Aracı",search:"Ara"},
-    {lang:"en",path:"/",forum:"Tractor forum",finder:"Tractor selection tool",search:"Search"},
+    {lang:"tr",path:"/tr/",forum:"Topluluk Forumu",finder:"Traktör Seçimi",search:"Ara"},
+    {lang:"en",path:"/",forum:"Tractor forum",finder:"Tractor selection",search:"Search"},
     {lang:"de",path:"/de/",forum:"Traktorforum",finder:"Traktorauswahl",search:"Suchen"},
-    {lang:"es",path:"/es/",forum:"Foro de tractores",finder:"Selector de tractores",search:"Buscar"},
-    {lang:"ja",path:"/ja/",forum:"トラクターフォーラム",finder:"トラクター選定ツール",search:"検索"},
+    {lang:"es",path:"/es/",forum:"Foro de tractores",finder:"Elegir tractor",search:"Buscar"},
+    {lang:"ja",path:"/ja/",forum:"トラクターフォーラム",finder:"トラクター選び",search:"検索"},
   ];
   for(const item of examples){
     await page.goto(item.path,{waitUntil:"domcontentloaded"});
