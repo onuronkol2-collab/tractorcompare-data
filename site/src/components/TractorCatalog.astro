@@ -10,7 +10,7 @@ import { COUNTRIES_BY_LOCALE } from "../lib/farm-advisor";
 import { MARKET_COUNTRIES, matchingPrice, formatMarketPriceRange } from "../lib/market-prices";
 import { pricedCatalogModels } from "../lib/catalog-price-payload.ts";
 import { localizedCountryName } from "../lib/country-display";
-import {catalogBrandIndex,BRAND_NAV_COPY,CATALOG_SEARCH_TITLES} from "../lib/catalog-brand-index.mjs";
+import {catalogBrandIndex,BRAND_NAV_COPY,CATALOG_SEARCH_TITLES,CATALOG_FILTER_COPY} from "../lib/catalog-brand-index.mjs";
 interface Props { lang: Locale; }
 const { lang } = Astro.props;
 
@@ -20,6 +20,7 @@ const description = t(lang,"catalogDesc");
 const detailPrefix = localizedPath(lang,"/tractors/");
 const brandIndex=catalogBrandIndex(catalog.tractors);
 const brandNavCopy=BRAND_NAV_COPY[lang];
+const filterCopy=CATALOG_FILTER_COPY[lang];
 const firstBrandCard=new Map(brandIndex.map(b=>[b.name,b.firstTractorId]));
 const brandAnchor=new Map(brandIndex.map(b=>[b.name,b.anchorId]));
 const initialCountry = COUNTRIES_BY_LOCALE[lang] || "US";
@@ -53,8 +54,16 @@ const pricePayload = JSON.stringify({
       </div>
       <div class="catalog-toolbar">
         <label for="tractor-search">{t(lang,"findTractor")}</label>
-        <input id="tractor-search" type="search" placeholder={t(lang,"searchPlaceholder")} autocomplete="off" />
+        <input id="tractor-search" type="search" placeholder={t(lang,"searchPlaceholder")}
+          aria-controls="tractor-card-grid" autocomplete="off" maxlength="100" />
         <span>{t(lang,"publishedOnly")}</span>
+        <div class="catalog-search-feedback">
+          <span id="catalog-visible-count" role="status" aria-live="polite"
+            data-count-template={filterCopy.shown}>
+            {filterCopy.shown.replace("{visible}",String(catalog.tractors.length)).replace("{total}",String(catalog.tractors.length))}
+          </span>
+          <button id="catalog-search-clear" type="button" hidden>{filterCopy.clear}</button>
+        </div>
       </div>
       {brandIndex.length>1&&<nav class="catalog-brand-directory" aria-label={brandNavCopy.heading}>
         <h2>{brandNavCopy.heading}</h2>
@@ -152,6 +161,8 @@ const pricePayload = JSON.stringify({
   const search = document.querySelector<HTMLInputElement>("#tractor-search");
   const cards = Array.from(document.querySelectorAll<HTMLElement>(".tractor-card"));
   const noResults = document.querySelector<HTMLElement>("#catalog-no-results");
+  const visibleCount = document.querySelector<HTMLElement>("#catalog-visible-count");
+  const clearSearch = document.querySelector<HTMLButtonElement>("#catalog-search-clear");
   const filterCatalog = (query: string) => {
     const normalized = normalizeTractorQuery(query);
     let visible = 0;
@@ -161,17 +172,30 @@ const pricePayload = JSON.stringify({
       if (match) visible++;
     }
     if (noResults) noResults.hidden = visible > 0;
+    if (visibleCount) visibleCount.textContent=(visibleCount.dataset.countTemplate||"")
+      .replace("{visible}",String(visible)).replace("{total}",String(cards.length));
+    if (clearSearch) clearSearch.hidden = !normalized;
   };
   search?.addEventListener("input", () => filterCatalog(search.value));
+  const clearQueryFromURL = () => {
+    const next=new URL(location.href);
+    next.searchParams.delete("q");
+    history.replaceState(history.state,"",next.pathname+next.search+next.hash);
+  };
+  clearSearch?.addEventListener("click", () => {
+    if (!search) return;
+    search.value="";
+    filterCatalog("");
+    clearQueryFromURL();
+    search.focus();
+  });
   // Brand anchors must not target a hidden result after filtering.
   for(const link of document.querySelectorAll<HTMLAnchorElement>("[data-catalog-brand-jump]")){
     link.addEventListener("click",()=>{
       if(!search?.value)return;
       search.value="";
       filterCatalog("");
-      const next=new URL(location.href);
-      next.searchParams.delete("q");
-      history.replaceState(history.state,"",next.pathname+next.search+next.hash);
+      clearQueryFromURL();
     });
   }
   // A homepage search or brand chip lands on a real, filtered catalogue.
@@ -185,6 +209,13 @@ const pricePayload = JSON.stringify({
 </script>
 
 <style>
+  .catalog-search-feedback {grid-column:1/-1;display:flex;align-items:center;flex-wrap:wrap;gap:11px;
+    min-height:32px;color:#355c42;font-size:13px;font-weight:700}
+  .catalog-search-feedback button {border:1px solid #a6c5ab;border-radius:8px;min-height:36px;
+    background:#fff;color:#1e5838;padding:6px 12px;font-size:13px;font-weight:800;cursor:pointer}
+  .catalog-search-feedback button:hover {background:#e7f3e5;border-color:#4b9361}
+  .catalog-search-feedback button:focus-visible {outline:3px solid #458353;outline-offset:3px}
+  .catalog-search-feedback button[hidden] {display:none}
   .catalog-photo-sprite { position:absolute; width:0; height:0; overflow:hidden; pointer-events:none; }
   .catalog-brand-directory{margin:18px 0 27px;padding:clamp(14px,2.8vw,22px);border:1px solid #c3dbc4;border-radius:16px;background:#f4faf3;scroll-margin-top:5rem}
   .catalog-brand-directory h2{margin:0 0 7px;font-size:clamp(19px,2.2vw,25px);color:#174c30}
