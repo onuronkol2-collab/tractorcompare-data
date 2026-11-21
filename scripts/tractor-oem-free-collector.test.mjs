@@ -4,7 +4,7 @@ import {readFileSync} from "node:fs";
 import {
  allowedOemUrl,validModelMention,scrubMarkup,readOemDocument,robotsAllowed,
  MAX_HTML_BYTES,MAX_PDF_BYTES,MAX_PER_RUN,aggregateResults,
- MAX_DRAFT_IDS_PER_LOOKUP,draftIdBatches
+ MAX_DRAFT_IDS_PER_LOOKUP,draftIdBatches,safeCollectorQueryFailure
 } from "../supabase/functions/tractor-oem-free-collector/policy.mjs";
 import {validateReceipt,runFreeCollector} from "./tractor-oem-free-dispatch.mjs";
 
@@ -169,4 +169,21 @@ test("406 queued UUIDs use bounded, lossless PostgREST draft-only batches",()=>{
  assert.match(edge,/\.eq\("status","draft"\)/);
  assert.match(edge,/if\(tractors\.length>250\)throw Error\("draft_scan_cap"\)/);
  assert.doesNotMatch(edge,/\.in\("id",ids\)/);
+});
+
+test("private OEM failure diagnostics cannot log draft identifiers or secret values",()=>{
+ const error={code:"PGRST100",message:"PRIVATE DRAFT NAME secret-token https://internal.invalid",
+  details:"secret-key",hint:"private-url"};
+ assert.deepEqual(safeCollectorQueryFailure("draft_read",414,error),
+  {stage:"draft_read",http:414,code:"PGRST100"});
+ assert.deepEqual(safeCollectorQueryFailure("draft_read",504,{code:"57014"}),
+  {stage:"draft_read",http:504,code:"57014"});
+ assert.deepEqual(safeCollectorQueryFailure("private-uuid",0,{code:"private-token"}),
+  {stage:"unknown",http:0,code:"unknown"});
+ const serialized=JSON.stringify(safeCollectorQueryFailure("draft_read",403,error));
+ for(const dangerous of ["PRIVATE","secret","internal.invalid","private-url","PRIVATE DRAFT NAME"])
+  assert.ok(!serialized.includes(dangerous),dangerous);
+ const edge=readFileSync(new URL("../supabase/functions/tractor-oem-free-collector/index.ts",import.meta.url),"utf8");
+ assert.match(edge,/safeCollectorQueryFailure\(scope,status,error\)/);
+ assert.doesNotMatch(edge,/console\.error\([^\n]*(?:error\.message|error\.details|source_url|queueSecret)/);
 });
