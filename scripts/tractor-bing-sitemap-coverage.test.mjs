@@ -2,7 +2,7 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import {
   SITEMAPS, evaluateBingSitemapCoverage, checkBingSitemapCoverage,
-  bingCoverageMarkdown,
+  verifyAfterDeployment, bingCoverageMarkdown,
 } from "./tractor-bing-sitemap-coverage.mjs";
 import {ORIGIN} from "./tractor-search-discovery.mjs";
 
@@ -138,4 +138,36 @@ test("empty approved forum sitemap remains valid without promoting private draft
   const report = evaluateBingSitemapCoverage(withNoForum);
   assert.equal(report.forum_sitemap_page_urls, 0);
   assert.equal(report.distinct_page_urls_across_main_and_forum, 21);
+});
+
+test("main push waits for Cloudflare only on known old-root index, then fully validates",async()=>{
+ let count=0,waits=0;
+ const expected={main_page_urls:3880};
+ const result=await verifyAfterDeployment({
+  check:async()=>{count++;if(count<3)throw Error("[TractorVS sitemap coverage] Sitemap index is missing main, image or forum child file");return expected;},
+  sleep:async(ms)=>{assert.equal(ms,50);waits++;},
+  delayMs:50,maxAttempts:4,
+ });
+ assert.equal(result,expected);assert.equal(count,3);assert.equal(waits,2);
+});
+test("actual broken root remains a hard failure after a finite deployment grace",async()=>{
+ let calls=0,waits=0;
+ await assert.rejects(verifyAfterDeployment({
+  check:async()=>{calls++;throw Error("Sitemap index is missing main, image or forum child file");},
+  sleep:async()=>{waits++;},maxAttempts:4,delayMs:0,
+ }),/missing main, image or forum/);
+ assert.equal(calls,4);assert.equal(waits,3);
+});
+test("unrelated 404, broken robots and invalid XML never get a retry or pass",async()=>{
+ for(const problem of ["Sitemap or robots HTTP 404","Missing localized crawlable catalog landing","Image sitemap references a page absent"]){
+  let calls=0,waits=0;
+  await assert.rejects(verifyAfterDeployment({
+   check:async()=>{calls++;throw Error(problem)},
+   sleep:async()=>{waits++;},maxAttempts:4,delayMs:0
+  }),new RegExp(problem.replace(/[.*+?^${}()|[\]\\]/g,"\\$&")));
+  assert.equal(calls,1);assert.equal(waits,0);
+ }
+});
+test("retry budget cannot become unbounded",async()=>{
+ await assert.rejects(verifyAfterDeployment({maxAttempts:7}),/Invalid sitemap verification attempt limit/);
 });

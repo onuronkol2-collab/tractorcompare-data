@@ -129,6 +129,34 @@ export async function checkBingSitemapCoverage({fetchFn = fetch, minimumMainUrls
   });
 }
 
+/**
+ * A main push can arrive before Cloudflare publishes the new static bundle.
+ * Retry ONLY the known old-index signal; never bypass live coverage gates,
+ * write a search-engine notification, or treat an unrelated 404 as success.
+ * Scheduled checks fail immediately. Tests inject check/sleep, so no network.
+ */
+export async function verifyAfterDeployment({
+  check = () => checkBingSitemapCoverage(),
+  sleep = ms => new Promise(resolve => setTimeout(resolve, ms)),
+  maxAttempts = 6,
+  delayMs = 30_000,
+  onRetry = () => {},
+} = {}) {
+  if (!Number.isInteger(maxAttempts) || maxAttempts < 1 || maxAttempts > 6)
+    throw Error("Invalid sitemap verification attempt limit");
+  for (let attempt = 1; attempt <= maxAttempts; attempt++) {
+    try { return await check(); }
+    catch (error) {
+      const knownDeploymentRace = String(error?.message || error)
+        .includes("Sitemap index is missing main, image or forum child file");
+      if (!knownDeploymentRace || attempt === maxAttempts) throw error;
+      onRetry(attempt, maxAttempts, error);
+      await sleep(delayMs);
+    }
+  }
+  throw Error("Unreachable sitemap verification state");
+}
+
 export function bingCoverageMarkdown(report) {
   return [
     "## TractorVS Google/Bing unified sitemap coverage — LIVE XML, not indexing",
@@ -151,7 +179,14 @@ export function bingCoverageMarkdown(report) {
 
 if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
   try {
-    const report = await checkBingSitemapCoverage();
+    const report = process.env.GITHUB_EVENT_NAME === "push"
+      ? await verifyAfterDeployment({
+          onRetry: (attempt, max, error) => console.warn(
+            "TRACTORVS_SITEMAP_DEPLOY_GRACE " + attempt + "/" + max +
+            ": awaiting Cloudflare publish; will never bypass verification: " + String(error.message)
+          ),
+        })
+      : await checkBingSitemapCoverage();
     const path = resolve(".seo-discovery/bing-sitemap-coverage.json");
     mkdirSync(dirname(path), {recursive: true});
     writeFileSync(path, JSON.stringify({as_of: new Date().toISOString(), ...report}, null, 2) + "\n", "utf8");
