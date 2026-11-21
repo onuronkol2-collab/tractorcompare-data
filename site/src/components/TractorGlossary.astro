@@ -12,6 +12,7 @@ const {lang}=Astro.props;
 const tr=lang==="tr";
 const sectionList=Object.entries(GLOSSARY_SECTIONS).map(([key,label])=>({key,label:label[lang]}));
 const pagePath=localizedPath(lang,"/guides/tractor-technical-terms/");
+const editorialPath=localizedPath(lang,"/articles/");
 const catalogPath=localizedPath(lang,"/tractors/");
 const comparePath=localizedPath(lang,"/compare/");
 const selectionPath=localizedPath(lang,"/guides/choosing-a-tractor/");
@@ -51,7 +52,8 @@ const structuredData={
    "@type":"BreadcrumbList",
    "itemListElement":[
     {"@type":"ListItem","position":1,"name":tr?"Ana sayfa":"Home","item":new URL(localizedPath(lang,"/"),site).toString()},
-    {"@type":"ListItem","position":2,"name":tr?"Traktör teknik terimleri":"Tractor technical terms","item":pageUrl}
+    {"@type":"ListItem","position":2,"name":tr?"Makaleler":"Articles","item":new URL(editorialPath,site).toString()},
+    {"@type":"ListItem","position":3,"name":tr?"Traktör teknik terimleri":"Tractor technical terms","item":pageUrl}
    ]
   },
   ...(hero?[{
@@ -76,6 +78,8 @@ const queryTerms=(term:(typeof GLOSSARY_TERMS)[number])=>
     <div class="glossary-hero-content">
      <nav class="glossary-breadcrumbs" aria-label={tr?"İçerik yolu":"Breadcrumb"}>
       <a href={localizedPath(lang,"/")}>{tr?"Ana sayfa":"Home"}</a>
+      <span aria-hidden="true">/</span>
+      <a href={editorialPath}>{tr?"Makaleler":"Articles"}</a>
       <span aria-hidden="true">/</span>
       <span aria-current="page">{tr?"Teknik terimler":"Technical terms"}</span>
      </nav>
