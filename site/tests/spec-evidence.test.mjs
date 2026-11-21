@@ -217,3 +217,42 @@ test("Fendt verified official technical-data source type passes original-domain 
   assert.equal(officialManufacturerSourceUrl(specimen,"Fendt"),specimen.source_url);
   assert.equal(officialManufacturerSourceUrl({...specimen,source_url:"https://api.fendt.com.evil.example/techdata/GB/en/1551551"},"Fendt"),null);
 });
+
+test("producer-owned Agrale, ArmaTrac and Sonalika sources restore citations without relaxing evidence gates",()=>{
+  const entries=[
+    ["Agrale","https://www.agrale.com.br/en/detalhes/tratores/tratores-agricolas/trator-525"],
+    ["ArmaTrac","https://armatrac.com/tractor/286/804-fruit-garden-cabin"],
+    ["Sonalika","https://www.sonalika.com/tractor/DI-734-Power-Plus"],
+    ["Sonalika","https://international.sonalika.com/tractors/"],
+  ];
+  for(const [brand,url] of entries){
+    const row={...official,source_url:url,source_type:"official_product_page",
+      evidence_text:"Source document contains the matching manufacturer model specification",
+      verified_at:"2026-11-21T06:00:00Z"};
+    assert.equal(officialManufacturerSourceUrl(row,brand),url);
+    for(const invalid of [
+      {...row,source_url:url.replace("https://","http://")},
+      {...row,source_url:url.replace(/^(https:\/\/[^/]+)/,"$1.evil.example")},
+      {...row,verified_at:null},
+      {...row,evidence_text:""},
+      {...row,source_type:"independent_test"},
+    ]) assert.equal(officialManufacturerSourceUrl(invalid,brand),null,brand);
+  }
+  assert.equal(officialManufacturerSourceUrl({...official,source_url:entries[0][1]},"ArmaTrac"),null);
+  assert.equal(officialManufacturerSourceUrl({...official,source_url:entries[1][1]},"Sonalika"),null);
+});
+
+test("ISEKI UK subsidiary PDF is approved only at its exact reviewed document URL",()=>{
+  const exact="https://www.iseki.co.uk/wp-content/uploads/2021/02/Iseki-TXGS24-Range-WEB-2.pdf";
+  const sample={...official,source_url:exact,source_type:"manufacturer_specification",
+    evidence_text:"ISEKI TXGS24 manufacturer-authored range table with exact model identity",
+    verified_at:"2026-11-21T06:00:00Z"};
+  assert.equal(officialManufacturerSourceUrl(sample,"Iseki"),exact);
+  for(const bad of [
+    exact.replace("https://","http://"),
+    exact.replace("Iseki-TXGS24-Range-WEB-2.pdf","other-tractor.pdf"),
+    exact.replace("www.iseki.co.uk","www.iseki.co.uk.evil.example"),
+  ]) assert.equal(officialManufacturerSourceUrl({...sample,source_url:bad},"Iseki"),null);
+  assert.equal(officialManufacturerSourceUrl({...sample,evidence_text:null},"Iseki"),null);
+  assert.equal(officialManufacturerSourceUrl({...sample,source_type:"independent_test"},"Iseki"),null);
+});

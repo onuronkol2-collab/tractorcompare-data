@@ -684,6 +684,9 @@ export function specificationEvidenceLabel(
  * root is a reviewed code change, not an AI-generated guess.
  */
 const approvedManufacturerHosts: Record<string, string[]> = {
+  // Official sites checked independently; all evidence and exact-source checks remain required.
+  "agrale": ["www.agrale.com.br"],
+  "armatrac": ["armatrac.com"],
   "tafe": ["tafetractors.com"],
   "başak traktör": ["basaktraktor.com.tr"],
   "tümosan": ["tumosan.com.tr"],
@@ -700,7 +703,7 @@ const approvedManufacturerHosts: Record<string, string[]> = {
   "steyr": ["steyr-traktoren.com"],
   "mahindra": ["mahindratractor.com"],
   "antonio carraro": ["antoniocarraro.it"],
-  "sonalika": ["international.sonalika.com"],
+  "sonalika": ["international.sonalika.com", "www.sonalika.com"],
   "yanmar": ["yanmar.com"],
   "swaraj": ["swarajtractors.com"],
   "kioti": ["kioti.com", "kioti-uk.com"],
@@ -718,6 +721,8 @@ const approvedExactManufacturerDocuments: Record<string, string[]> = {
   ],
   "iseki": [
     "https://www.iseki.co.jp/global/cms/upload/pdf/products/tractor/t97_spec.pdf",
+    // Exact ISEKI UK & Ireland TXGS24 range brochure (not arbitrary shared WordPress uploads).
+    "https://www.iseki.co.uk/wp-content/uploads/2021/02/Iseki-TXGS24-Range-WEB-2.pdf",
   ],
   "lamborghini trattori": [
     "https://www.lamborghini-tractors.com/en-eu/all/download/7988_b274e15de8fa324d508dde300f1d3fc8",

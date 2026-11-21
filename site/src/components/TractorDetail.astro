@@ -1,6 +1,7 @@
 ---
 import SiteLayout from "../layouts/SiteLayout.astro";
 import TractorMarketPrice from "./TractorMarketPrice.astro";
+import ModelSourceIndex from "./ModelSourceIndex.astro";
 import TractorPhoto from "./TractorPhoto.astro";
 import {primaryTractorPhoto} from "../lib/tractor-photos";
 import {glossaryAnchorForKey} from "../lib/tractor-glossary.ts";
@@ -113,6 +114,7 @@ const summaryItems = [
         </article>)}
       </div></section>)}</div>
     : <div class="catalog-empty"><h2>{t(lang,"noModelSpecs")}</h2></div>}
+    <ModelSourceIndex tractor={tractor} lang={lang} />
     <div class="model-bottom-actions">
       <a class="button button-primary" href={compareUrl}>{cx(lang,"cta")} <span aria-hidden="true">⇄</span></a>
       <a class="button button-secondary" href={listingUrl}>{t(lang,"backToCatalog")} <span aria-hidden="true">↗</span></a>

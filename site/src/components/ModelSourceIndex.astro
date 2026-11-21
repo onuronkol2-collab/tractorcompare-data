@@ -1,0 +1,59 @@
+---
+import type { Locale } from "../lib/locales.ts";
+import type { TractorRecord } from "../lib/catalog.ts";
+import { modelSourceIndex, MODEL_SOURCE_COPY } from "../lib/model-source-index.ts";
+
+interface Props { tractor: TractorRecord; lang: Locale; }
+const { tractor, lang } = Astro.props;
+const sources = modelSourceIndex(tractor);
+const copy = MODEL_SOURCE_COPY[lang];
+---
+{sources.documents.length > 0 && (
+  <section class="model-sources" aria-labelledby="model-source-index-title">
+    <div class="model-sources-heading">
+      <div>
+        <p class="model-sources-kicker">TRACTORVS · {copy.kicker}</p>
+        <h2 id="model-source-index-title">{copy.title}</h2>
+        <p>{copy.introduction}</p>
+      </div>
+      <div class="model-sources-count" aria-label={sources.linkedSpecifications + " " + copy.linked}>
+        <strong>{sources.linkedSpecifications}</strong>
+        <span>{copy.linked}</span>
+      </div>
+    </div>
+    <ul class="model-sources-list">
+      {sources.documents.map((source) => (
+        <li>
+          <span class="model-source-type">{source.kind === "manufacturer" ? copy.official : copy.independent}</span>
+          <a href={source.url} target="_blank" rel="noopener noreferrer">
+            <strong>{source.publisher}</strong>
+            <span>{source.hostname} <span aria-hidden="true">↗</span></span>
+          </a>
+          <small>{source.specificationCount} {copy.linked}</small>
+        </li>
+      ))}
+    </ul>
+    {sources.remainingDocuments > 0 && <p class="model-sources-more">{copy.more}</p>}
+    <p class="model-sources-caution">{copy.caution}</p>
+  </section>
+)}
+<style>
+  .model-sources { margin:40px 0 28px; padding:clamp(18px,3vw,29px); background:#f5f8f2; border:1px solid #c9ddc8; border-radius:17px; }
+  .model-sources-heading { display:flex; align-items:start; justify-content:space-between; flex-wrap:wrap; gap:18px; }
+  .model-sources-kicker { color:#3b7854; font-size:11px; font-weight:850; letter-spacing:.1em; margin:0 0 8px; }
+  .model-sources h2 { color:#164c32; font-size:clamp(20px,2.5vw,28px); line-height:1.3; margin:0 0 11px; }
+  .model-sources-heading p:not(.model-sources-kicker) { margin:0 0 18px; max-width:780px; font-size:14px; line-height:1.8; color:#385544; }
+  .model-sources-count { display:flex; flex-direction:column; gap:3px; padding:10px 14px; min-width:108px; background:white; border:1px solid #d7e5d4; border-radius:12px; }
+  .model-sources-count strong { font-size:26px; color:#185435; line-height:1.2; }
+  .model-sources-count span { font-size:11px; color:#476b50; line-height:1.5; }
+  .model-sources-list { list-style:none; padding:0; margin:0; display:grid; gap:11px; grid-template-columns:repeat(auto-fit,minmax(min(100%,270px),1fr)); }
+  .model-sources-list li { background:#fff; border:1px solid #dce8d7; border-radius:12px; padding:14px 16px; min-width:0; display:flex; flex-direction:column; gap:7px; }
+  .model-source-type { font-size:11px; font-weight:800; color:#2b6d48; }
+  .model-sources-list a { display:flex; flex-direction:column; gap:3px; color:#174f37; overflow-wrap:anywhere; text-underline-offset:3px; }
+  .model-sources-list a strong { font-size:14px; line-height:1.4; }
+  .model-sources-list a span { font-size:12px; line-height:1.5; color:#446550; }
+  .model-sources-list small { font-size:11px; color:#526b55; line-height:1.5; }
+  .model-sources-more { margin:14px 0 0; font-size:13px; color:#395c48; line-height:1.6; }
+  .model-sources-caution { margin:19px 0 0; border-top:1px solid #d9e5d6; padding-top:14px; color:#435849; font-size:13px; line-height:1.8; }
+  .model-sources a:focus-visible { outline:3px solid #9ac493; outline-offset:3px; border-radius:4px; }
+</style>
