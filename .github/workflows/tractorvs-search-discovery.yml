@@ -1,0 +1,73 @@
+name: TractorVS verified search discovery, IndexNow and weekly evidence report
+
+# No automatic publication or translation: only checks already-public URLs.
+on:
+  schedule:
+    - cron: "31 */2 * * *"
+    - cron: "11 6 * * 1"
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "Read-only audit; do not send IndexNow or save discovery checkpoint"
+        type: boolean
+        default: true
+        required: true
+  pull_request:
+    paths:
+      - "scripts/tractor-search-discovery.mjs"
+      - "scripts/tractor-search-discovery.test.mjs"
+      - ".github/workflows/tractorvs-search-discovery.yml"
+
+permissions:
+  contents: read
+concurrency:
+  group: tractorvs-search-discovery-main
+  cancel-in-progress: false
+
+jobs:
+  regression:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22.23.4"
+      - name: Check sitemap boundaries, live-gated notifications, noindex and dedupe
+        run: node --test scripts/tractor-search-discovery.test.mjs
+
+  live_discovery:
+    needs: regression
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22.23.4"
+      - name: Recover most recent successful public sitemap notification checkpoint
+        uses: actions/cache/restore@v4
+        with:
+          path: .seo-discovery/state.json
+          key: tractorvs-search-discovery-v1-${{ github.run_id }}-${{ github.run_attempt }}
+          restore-keys: |
+            tractorvs-search-discovery-v1-
+      - name: Audit only LIVE deploy, verify changed URLs, notify IndexNow, summarize evidence
+        env:
+          TRACTORVS_SEO_DRY_RUN: ${{ github.event_name == 'workflow_dispatch' && inputs.dry_run == true }}
+        run: node scripts/tractor-search-discovery.mjs
+      - name: Save checkpoint only after validation and successful IndexNow response
+        if: ${{ !(github.event_name == 'workflow_dispatch' && inputs.dry_run == true) }}
+        uses: actions/cache/save@v4
+        with:
+          path: .seo-discovery/state.json
+          key: tractorvs-search-discovery-v1-${{ github.run_id }}-${{ github.run_attempt }}
+      - name: Document coverage boundary
+        if: always()
+        run: |
+          echo "" >> "$GITHUB_STEP_SUMMARY"
+          echo "Search engine URL discovery, an IndexNow 200/202, and sitemap counts DO NOT prove crawling, ranking or indexing." >> "$GITHUB_STEP_SUMMARY"
+          echo "Use Google Search Console, Bing Webmaster, Yandex Webmaster and Naver Search Advisor to verify actual index status." >> "$GITHUB_STEP_SUMMARY"
