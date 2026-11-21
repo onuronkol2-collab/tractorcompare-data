@@ -16,17 +16,17 @@ const MODELS = ["gemini-3.8-flash", "gemini-3.6-flash"] as const;
 const TIMEOUTS_MS = [28000, 22000] as const;
 const TRANSIENT = new Set([429, 500, 502, 503, 504]);
 
-export function requestBody(prompt: string, schema: Record<string, unknown>, review=false) {
+export function requestBody(prompt: string, schema: Record<string, unknown>, review=false, model:string="gemini-3.8-flash") {
+ if (!MODELS.includes(model as typeof MODELS[number])) throw Error("Unapproved Gemini model");
  if (typeof prompt !== "string" || !prompt.trim() || prompt.length > 14000)
   throw Error("Invalid bounded Gemini prompt");
  return {
   contents: [{role: "user", parts: [{text: prompt}]}],
   generationConfig: {
-   temperature: 0.1,
    maxOutputTokens: review ? 1024 : 4608,
    responseMimeType: "application/json",
    responseJsonSchema: schema,
-   thinkingConfig: {thinkingLevel: "MINIMAL"}
+   thinkingConfig: {thinkingLevel: model==="gemini-3.8-flash" ? "LOW" : "MINIMAL"}
   }
  };
 }
@@ -39,11 +39,12 @@ export async function generateGeminiJson({
  deadline?:number;review?:boolean;fetchFn?:Fetcher
 }): Promise<GeminiJsonResult> {
  if (!apiKey) throw Error("Gemini provider credentials unavailable");
- const body = JSON.stringify(requestBody(prompt, schema, review));
+
  for (let i=0;i<MODELS.length;i++) {
   const remaining = deadline-Date.now()-4000;
   if (remaining < 6000) throw Error("Gemini request budget exhausted");
   const timeout = Math.min(remaining, TIMEOUTS_MS[i]);
+  const body = JSON.stringify(requestBody(prompt, schema, review, MODELS[i]));
   let response: Response;
   try {
    response = await fetchFn(API+MODELS[i]+":generateContent", {
