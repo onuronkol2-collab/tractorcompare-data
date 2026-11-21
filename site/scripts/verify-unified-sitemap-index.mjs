@@ -55,12 +55,41 @@ export function verifyUnifiedSitemapIndex({dist=resolve(fileURLToPath(new URL(".
  for(const [type,xml] of [["image",image],["forum",forum]]){
   insist(/<urlset(?:\s|>)/.test(xml),"Missing/invalid "+type+" XML child");
  }
- // Forum is intentionally excluded from generic public pages: only the
- // independent verified sitemap may list approved public topics.
- const forumURLs=[...forum.matchAll(/<url>\s*<loc>([^<]+)<\/loc>/g)].map(m=>m[1]);
- for(const u of forumURLs)insist(/^https:\/\/[^<]+\/forum\//.test(u),"Non-forum URL in moderated forum sitemap");
+ const pageUrls=(xml)=>[...xml.matchAll(/<url>\s*<loc>([^<]+)<\/loc>/g)]
+  .map(m=>m[1].replaceAll("&amp;","&"));
+ // Forum is intentionally excluded from the generic HTML sitemap. The forum
+ // XML must contain only actually built, indexable and canonical forum pages.
+ const forumURLs=pageUrls(forum);
+ const approvedForum=new Set();
+ for(const u of forumURLs){
+  let parsed;
+  try{parsed=new URL(u)}catch{insist(false,"Invalid moderated forum URL "+u)}
+  insist(parsed.origin===origin && !parsed.search && !parsed.hash &&
+    /^\/(?:(?:tr|zh|hi|pt-br|fr|de|ru|ja|es)\/)?forum\/(?:[a-z0-9-]+\/)?$/.test(parsed.pathname),
+    "Noncanonical/offsite URL in moderated forum sitemap: "+u);
+  insist(!approvedForum.has(u),"Duplicate approved forum page: "+u);
+  approvedForum.add(u);
+  const file=join(dist,parsed.pathname.slice(1),"index.html");
+  insist(existsSync(file),"Moderated forum sitemap page was not built: "+u);
+  const html=readFileSync(file,"utf8");
+  insist(html.includes('rel="canonical" href="'+u+'"'),
+    "Moderated forum sitemap page lacks self-canonical: "+u);
+  insist(!/<meta\b[^>]*name=["']robots["'][^>]*content=["'][^"']*noindex/i.test(html),
+    "Noindex forum page found in public sitemap: "+u);
+ }
+ const imageURLs=pageUrls(image);
+ const seenImagePages=new Set();
+ let approvedForumImages=0;
+ for(const u of imageURLs){
+  insist(!seenImagePages.has(u),"Duplicate page in image sitemap: "+u);
+  seenImagePages.add(u);
+  insist(htmlURLs.has(u)||approvedForum.has(u),
+    "Image page absent from published HTML and approved forum sitemap: "+u);
+  if(!htmlURLs.has(u))approvedForumImages++;
+ }
  return {index_children:actual.length,html_children:normalChildren.length,html_pages:totalHTML,
-  catalog_locales:10,image_map_present:true,forum_map_present:true,forum_urls:forumURLs.length};
+  catalog_locales:10,image_map_present:true,forum_map_present:true,forum_urls:forumURLs.length,
+  image_page_references:imageURLs.length,approved_forum_image_pages:approvedForumImages};
 }
 if(process.argv[1]&&resolve(process.argv[1])===fileURLToPath(import.meta.url)){
  try{
