@@ -54,12 +54,25 @@ export function evaluateBingSitemapCoverage({
   const childUrls = parseIndex(index);
   if (!children || !Array.isArray(children) || children.length !== childUrls.length)
     fail("Sitemap index child count is different from fetched child files");
+  if (!childUrls.includes(SITEMAPS.image) || !childUrls.includes(SITEMAPS.forum) ||
+      !childUrls.some(url => /^\/sitemap-[0-9]+\.xml$/.test(new URL(url).pathname)))
+    fail("Sitemap index is missing main, image or forum child file");
   const main = new Map();
   for (let i = 0; i < childUrls.length; i++) {
     if (children[i]?.url !== childUrls[i]) fail("Child sitemap URL mismatch");
+    // Image and forum sitemaps are linked by the master index, but excluded
+    // from the ordinary HTML page tally to prevent double-counting.
+    if (childUrls[i] === SITEMAPS.image) {
+      if (children[i].xml !== image) fail("Image child differs from public image sitemap");
+      continue;
+    }
+    if (childUrls[i] === SITEMAPS.forum) {
+      if (children[i].xml !== forum) fail("Forum child differs from public forum sitemap");
+      continue;
+    }
     const pages = parsePageSitemap(children[i].xml);
     for (const [url, lastmod] of pages) {
-      if (main.has(url)) fail("Duplicate page across child sitemaps");
+      if (main.has(url)) fail("Duplicate page across HTML child sitemaps");
       main.set(url, lastmod);
     }
   }
@@ -118,7 +131,7 @@ export async function checkBingSitemapCoverage({fetchFn = fetch, minimumMainUrls
 
 export function bingCoverageMarkdown(report) {
   return [
-    "## TractorVS Bing sitemap coverage — LIVE XML, not Bing indexing",
+    "## TractorVS Google/Bing unified sitemap coverage — LIVE XML, not indexing",
     "",
     "| Measured signal | Value |",
     "| --- | ---: |",
