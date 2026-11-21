@@ -95,6 +95,16 @@
 .home-featured-link { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-top: auto; padding-top: 22px; color: #24583b; font-size: 14px; font-weight: 800; }
 .home-featured-link span { font-size: 20px; }
 
+.home-editorial { padding: 75px 0 86px; background: #f0f5ed; border-top: 1px solid #dbe7d5; }
+.home-editorial .home-section-heading { margin-bottom: 25px; }
+.home-editorial-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 18px; }
+.home-editorial-card { position: relative; display: flex; flex-direction: column; gap: 12px; min-width: 0; min-height: 164px; padding: 26px 62px 28px 27px; border: 1px solid #cddfc8; border-radius: 16px; background: #fff; color: #1e432d; text-decoration: none; }
+.home-editorial-card:hover { border-color: #589263; background: #fafcf8; }
+.home-editorial-card:focus-visible { outline: 3px solid #488f58; outline-offset: 3px; }
+.home-editorial-card h3 { margin: 0; font-size: clamp(18px,2vw,23px); line-height: 1.3; letter-spacing: -.02em; }
+.home-editorial-card p { margin: 0; color: #51695a; font-size: 14px; line-height: 1.75; }
+.home-editorial-arrow { position: absolute; top: 27px; right: 26px; font-size: 23px; color: #2c6540; }
+
 .home-evidence { background: #eaf0e8; padding: 92px 0; }
 .home-evidence-layout { display: grid; grid-template-columns: 1.1fr .9fr; align-items: center; gap: clamp(32px,6vw,92px); }
 .home-evidence h2 { max-width: 720px; }
@@ -121,6 +131,7 @@
   .home-action-card { min-height: 0; }
   .home-featured-grid { grid-template-columns: repeat(2,minmax(0,1fr)); }
   .home-evidence-layout { grid-template-columns: 1fr; }
+  .home-editorial-grid { grid-template-columns: 1fr; }
 }
 @media (max-width:620px) {
   .home-hero { padding: 45px 0 58px; }
@@ -131,7 +142,8 @@
   .home-search-row button { width: 100%; justify-content: center; }
   .home-tractor-art { min-height: 180px; }
   .home-preview-stats strong { font-size: 25px; }
-  .home-choices,.home-models,.home-evidence { padding: 60px 0; }
+  .home-choices,.home-models,.home-editorial,.home-evidence { padding: 60px 0; }
+  .home-editorial-card { min-height: 0; padding: 22px 52px 22px 22px; }
   .home-section-heading--split { align-items: start; flex-direction: column; }
   .home-outline-link { white-space: normal; }
   .home-featured-grid { grid-template-columns: 1fr; }
