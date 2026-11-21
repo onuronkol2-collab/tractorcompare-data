@@ -58,8 +58,15 @@ for(const record of records){
     throw Error("Wikimedia dimensions/mime mismatch "+record.id);
   licenceAllowed(info.extmetadata||{},record);
   const thumb=info.thumburl;
-  if(typeof thumb!=="string"||!thumb.startsWith("https://upload.wikimedia.org/wikipedia/commons/thumb/"))
-    throw Error("Unapproved thumb host "+record.id+" "+String(thumb));
+  if(typeof thumb!=="string")throw Error("Missing Commons thumbnail URL "+record.id);
+  const imageOrigin=new URL(thumb);
+  // Commons API now returns thumb.wikimedia.org with harmless tracking
+  // parameters, while older images may use upload.wikimedia.org. Both are
+  // Wikimedia-controlled; do not accept arbitrary redirect or upload hosts.
+  if(imageOrigin.protocol!=="https:"||
+    !["thumb.wikimedia.org","upload.wikimedia.org"].includes(imageOrigin.hostname)||
+    !imageOrigin.pathname.startsWith("/wikipedia/commons/thumb/"))
+    throw Error("Unapproved thumb host/path "+record.id);
   if(info.thumbwidth!==500)throw Error("Thumbnail not 500px: "+record.id+": "+info.thumbwidth);
   const {body,mime}=await get(thumb);
   if(!/^image\/jpeg/i.test(mime)||body.length<9000||body.length>2500000||
