@@ -454,27 +454,7 @@ const candidates=[
     "license": "CC BY-SA 4.0",
     "width": 6164,
     "height": 4627
-  },
-  {
-    "brand": "Massey Ferguson",
-    "model": "5M.95",
-    "fileId": "massey-ferguson-5m-95-bene-riobo-2025",
-    "path": "e/ee/Massey_Ferguson_5M.95.jpg",
-    "photographer": "Bene Riobó",
-    "license": "CC BY-SA 4.0",
-    "width": 3650,
-    "height": 5475
-  },
-  {
-    "brand": "Allis-Chalmers",
-    "model": "IB",
-    "fileId": "allis-chalmers-ib-acroterion-2026",
-    "path": "5/54/Allis-Chalmers_IB_tractor_MD3.jpg",
-    "photographer": "Acroterion",
-    "license": "CC BY-SA 4.0",
-    "width": 5664,
-    "height": 5120
-  },
+  }
 ] as const;
 function licenseUrl(name:string):string{
   if(name==="CC0")return "https://creativecommons.org/publicdomain/zero/1.0/";
