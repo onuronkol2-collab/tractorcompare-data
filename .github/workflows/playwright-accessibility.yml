@@ -44,7 +44,7 @@ jobs:
         run: npx playwright test --config site/playwright.config.mjs
       - name: Upload diagnostics and axe findings
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: tractorvs-browser-smoke-artifacts
           path: |
