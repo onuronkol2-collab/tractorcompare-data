@@ -98,3 +98,30 @@ test("ten locales distinguish manufacturer marketing HP categories, unrated powe
     assert.notEqual(maxPto,stated,"PTO is not engine power: "+locale);
   }
 });
+
+
+test("all seven released marketing and ECE power evidence labels are localized in ten languages",()=>{
+  const sourceNames=["Manufacturer power class (not rated engine output)","Maximum manufacturer engine power","Manufacturer power category (not rated engine HP)","Maximum ECE R120 power (rounded, HP)","Manufacturer power class (not exact rated HP)","Series advertised maximum (rounded; not model-specific)","YT3 marketing maximum power class (HP)"];
+  for(const name of sourceNames){
+    assert.ok(PUBLISHED_SPEC_TERMS[name],"missing exact source label "+name);
+    assert.equal(publishedSpecificationLabel(name,"en"),null,"English already authoritative");
+    for(const locale of LOCALES){
+      const actual=specLabel({canonical_key:null,spec_name:name},locale);
+      assert.ok(actual?.trim(),locale+" empty "+name);
+      if(locale!=="en"){
+        const translated=publishedSpecificationLabel(name,locale);
+        assert.equal(actual,translated,locale+" fallback mismatch for "+name);
+        assert.notEqual(actual.toLowerCase(),name.toLowerCase(),locale+" left English fallback");
+      }
+    }
+  }
+  for(const locale of LOCALES){
+    const series=specLabel({canonical_key:null,spec_name:"Series advertised maximum (rounded; not model-specific)"},locale);
+    const standard=specLabel({canonical_key:null,spec_name:"Maximum ECE R120 power (rounded, HP)"},locale);
+    const generic=specLabel({canonical_key:null,spec_name:"Maximum manufacturer engine power"},locale);
+    assert.notEqual(series,standard,"series-wide marketing is not ECE R120: "+locale);
+    assert.notEqual(series,generic,"series-wide claim is not exact OEM model power: "+locale);
+    assert.ok(standard.includes("ECE R120"),"ECE standard must be retained: "+locale);
+  }
+  assert.doesNotThrow(validatePublishedSpecTranslations);
+});
