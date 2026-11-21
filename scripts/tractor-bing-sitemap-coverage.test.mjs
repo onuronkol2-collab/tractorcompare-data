@@ -66,6 +66,38 @@ test("Bing index child count is separate from canonical page and image counts", 
   assert.match(summary, /NOT proof of indexing/);
 });
 
+test("all ten locale model slug sets must exactly match, even if aggregate minimum passes", () => {
+ const english=ORIGIN+"/tractors/exact-model-123/";
+ const de=ORIGIN+"/de/tractors/exact-model-123/";
+ const incomplete=good();
+ incomplete.children[0].xml=xmlURLs([home,...landingURLs,...modelURLs.filter(url=>url!==de)]);
+ incomplete.minimumMainUrls=1;
+ incomplete.minimumModelUrls=1;
+ assert.throws(()=>evaluateBingSitemapCoverage(incomplete),/Localized model slug coverage mismatch: de/);
+ const replaced=good();
+ replaced.children[0].xml=xmlURLs([home,...landingURLs,...modelURLs.map(url=>
+  url===de?ORIGIN+"/de/tractors/incorrect-model-999/":url)]);
+ assert.throws(()=>evaluateBingSitemapCoverage(replaced),/Localized model slug coverage mismatch: de/);
+ const valid=evaluateBingSitemapCoverage(good());
+ assert.equal(valid.models_per_locale,1);
+ assert.equal(valid.exact_model_slug_parity,true);
+ assert.equal(valid.localized_model_page_urls,10);
+});
+test("approved forum photos are valid image sitemap pages; unapproved forum photos are rejected",()=>{
+ const approved=good();
+ approved.image=xmlURLs([modelURLs[0],forumURL]);
+ approved.children[1].xml=approved.image;
+ const report=evaluateBingSitemapCoverage(approved);
+ assert.equal(report.image_sitemap_page_entries,2);
+ assert.equal(report.image_pages_already_in_main,1);
+ assert.equal(report.image_pages_in_approved_forum_only,1);
+ assert.equal(report.distinct_page_urls_across_main_and_forum,23);
+ const unapproved=good();
+ unapproved.image=xmlURLs([ORIGIN+"/tr/forum/private-unreviewed-topic/"]);
+ unapproved.children[1].xml=unapproved.image;
+ assert.throws(()=>evaluateBingSitemapCoverage(unapproved),/absent from approved HTML\/forum sitemaps/);
+});
+
 test("live check reads only public GET URLs and never submits IndexNow or Bing URLs", async () => {
   const data = good();
   const mock = mockFetch(data);
