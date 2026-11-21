@@ -345,7 +345,8 @@ for(const widget of widgets){
   });
  }else if(hash.has("error")||hash.has("error_code")){
   history.replaceState(null,"",location.pathname+location.search);
-  msg(memberCopy.oauthError||copy.oldLink);widget.scrollIntoView({block:"start"});
+  const expiredEmail=(hash.get("error_code")||"").startsWith("otp_");
+  msg(expiredEmail?copy.oldLink:(memberCopy.oauthError||copy.oldLink));widget.scrollIntoView({block:"start"});
  }else{
   try{
    const attemptPromise=verifySession(sessionStorage.getItem(tokenKey)||"",sessionStorage.getItem(refreshKey)||"");
