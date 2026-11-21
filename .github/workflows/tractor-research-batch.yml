@@ -14,6 +14,9 @@ on:
       - "scripts/tractor-research-watchdog.mjs"
       - "scripts/tractor-research-watchdog.test.mjs"
       - "scripts/tractor-targeted-claim-guard.test.mjs"
+      - "scripts/tractor-free-source-triage.mjs"
+      - "scripts/tractor-free-source-triage.test.mjs"
+      - "supabase/docs/free-first-source-triage.md"
       - "supabase/migrations/20261121093000_tractorvs_targeted_research_draft_guard.sql"
       - "supabase/rollback/20261121093000_tractorvs_targeted_research_draft_guard_rollback.sql"
       - "supabase/verification/preflight_targeted_research_draft_guard.sql"
@@ -58,7 +61,7 @@ jobs:
         with:
           node-version: "22"
       - name: Test queue caps, authentication and failure handling
-        run: node --test scripts/tractor-research-batch.test.mjs scripts/tractor-research-continuation.test.mjs scripts/tractor-research-budget.test.mjs scripts/tractor-research-watchdog.test.mjs scripts/tractor-targeted-claim-guard.test.mjs
+        run: node --test scripts/tractor-research-batch.test.mjs scripts/tractor-research-continuation.test.mjs scripts/tractor-research-budget.test.mjs scripts/tractor-research-watchdog.test.mjs scripts/tractor-targeted-claim-guard.test.mjs scripts/tractor-free-source-triage.test.mjs
 
   process:
     if: github.event_name == 'workflow_dispatch'
