@@ -1,11 +1,14 @@
 name: TractorVS eight-language educational translation (private drafts)
 on:
-  push:
-    branches:
-      - feat/tractor-encyclopedia-10-language-editorial-20261120
-    paths:
-      - ".github/workflows/tractorvs-education-translate.yml"
+  # Do not spend provider quota merely because the branch or workflow changes.
+  # A reviewer must explicitly enable any API calls for each manual run.
   workflow_dispatch:
+    inputs:
+      authorize_translation:
+        description: "I checked the provider quota/cost and authorize this bounded translation run"
+        required: true
+        type: boolean
+        default: false
 permissions:
   contents: read
 concurrency:
@@ -14,6 +17,7 @@ concurrency:
 
 jobs:
   translation_source:
+    if: github.event_name == 'workflow_dispatch' && inputs.authorize_translation == true
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
@@ -29,7 +33,7 @@ jobs:
     needs: translation_source
     # This workflow is intentionally limited to the owner-managed feature branch.
     # A fork PR never receives the translation secrets.
-    if: github.repository == 'onuronkol2-collab/tractorcompare-data' && github.ref == 'refs/heads/feat/tractor-encyclopedia-10-language-editorial-20261120'
+    if: github.event_name == 'workflow_dispatch' && inputs.authorize_translation == true && github.repository == 'onuronkol2-collab/tractorcompare-data' && github.ref == 'refs/heads/feat/tractor-encyclopedia-10-language-editorial-20261120'
     runs-on: ubuntu-latest
     timeout-minutes: 45
     strategy:
@@ -61,7 +65,7 @@ jobs:
 
   gather_drafts:
     needs: [translation_source,locale_drafts]
-    if: always() && needs.translation_source.result == 'success'
+    if: always() && github.event_name == 'workflow_dispatch' && inputs.authorize_translation == true && needs.translation_source.result == 'success'
     runs-on: ubuntu-latest
     timeout-minutes: 12
     permissions:
