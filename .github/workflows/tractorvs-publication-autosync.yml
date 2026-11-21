@@ -6,10 +6,13 @@ name: TractorVS zero-paid published catalog sync
 on:
   schedule:
     - cron: "17,47 * * * *"
+  # After an audited publication PR merges into trusted main, refresh immediately.
+  # The scheduled 30-minute check remains as a fallback for non-PR database edits.
   push:
     branches: [main]
     paths:
       - ".github/workflows/tractorvs-publication-autosync.yml"
+      - "site/docs/publication-checkpoints/**"
   pull_request:
     paths:
       - ".github/workflows/tractorvs-publication-autosync.yml"
