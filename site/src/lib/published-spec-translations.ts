@@ -1,6 +1,7 @@
 import type { Locale } from "./locales.ts";
 import { REVIEWED_PUBLIC_SPEC_HEADINGS } from "./reviewed-public-spec-headings.ts";
 import { RESIDUAL_PUBLIC_SPEC_TERMS } from "./residual-public-spec-translations.ts";
+import { LIVE_REVIEWED_SPEC_HEADINGS_20261121 } from "./live-reviewed-spec-headings-20261121.ts";
 
 /**
  * Release-reviewed labels: an early 17-model proof, followed by the current
@@ -207,6 +208,9 @@ const NORMALIZED_TRANSLATIONS=new Map(
 const NORMALIZED_RESIDUAL=new Map(
   Object.entries(RESIDUAL_PUBLIC_SPEC_TERMS).map(([name,translations]) => [normalizeSpecName(name),translations]),
 );
+const NORMALIZED_LIVE_REVIEWED=new Map(
+  Object.entries(LIVE_REVIEWED_SPEC_HEADINGS_20261121).map(([name,translations]) => [normalizeSpecName(name),translations]),
+);
 /**
  * True only for reviewed, exact original source headings. Use ahead of generic
  * canonical-key mappings when a source explicitly carries a condition such as
@@ -214,19 +218,22 @@ const NORMALIZED_RESIDUAL=new Map(
  */
 export function auditedResidualSpecificationLabel(specName:string,lang:Locale):string|null{
   if(lang==="en")return null;
-  return NORMALIZED_RESIDUAL.get(normalizeSpecName(specName))?.[lang]||null;
+  const key=normalizeSpecName(specName);
+  return NORMALIZED_RESIDUAL.get(key)?.[lang] || NORMALIZED_LIVE_REVIEWED.get(key)?.[lang] || null;
 }
 export function publishedSpecificationLabel(specName:string,lang:Locale):string|null{
   if(lang==="en")return null;
   const normalized=normalizeSpecName(specName);
   return NORMALIZED_TRANSLATIONS.get(normalized)?.[lang]
     || NORMALIZED_RESIDUAL.get(normalized)?.[lang]
+    || NORMALIZED_LIVE_REVIEWED.get(normalized)?.[lang]
     || null;
 }
 export function validatePublishedSpecTranslations():void {
   for (const [name,entries] of [
     ...Object.entries(PUBLISHED_SPEC_TERMS),
     ...Object.entries(RESIDUAL_PUBLIC_SPEC_TERMS),
+    ...Object.entries(LIVE_REVIEWED_SPEC_HEADINGS_20261121),
   ]){
     if (!name.trim() || !Object.keys(entries).length) throw new Error("Missing term "+name);
     for (const [locale,text] of Object.entries(entries)){
