@@ -90,3 +90,37 @@ test("an email link opens the editor and an expired link offers a fresh start",a
  await expect(page.locator("[data-forum-post]")).toBeVisible();
  await expect(page).not.toHaveURL(/access_token/);
 });
+
+
+test("an expired session refreshes once and retains the forum editor",async({page})=>{
+ let renewals=0;
+ await page.route("**/forum-test-api/auth/v1/**",async route=>{
+  const request=route.request();
+  const url=new URL(request.url());
+  if(url.pathname.endsWith("/auth/v1/user")){
+   if(request.headers().authorization==="Bearer expired-access")
+    return route.fulfill({status:401,json:{message:"JWT expired"}});
+   return route.fulfill({json:{id:"renewed-user"}});
+  }
+  if(url.pathname.endsWith("/auth/v1/token")){
+   expect(url.searchParams.get("grant_type")).toBe("refresh_token");
+   expect(request.postDataJSON()).toEqual({refresh_token:"test-refresh"});
+   renewals++;
+   return route.fulfill({json:{access_token:"renewed-access",refresh_token:"new-test-refresh"}});
+  }
+  if(url.pathname.endsWith("/auth/v1/logout"))return route.fulfill({status:204});
+  return route.abort();
+ });
+ await page.goto("/tr/forum/#access_token=expired-access&refresh_token=test-refresh");
+ const compose=page.locator("#forum-compose");
+ await expect(compose.locator("[data-forum-post]")).toBeVisible();
+ await expect(page).not.toHaveURL(/access_token|refresh_token/);
+ expect(renewals).toBe(1);
+ await page.reload();
+ await expect(compose.locator("[data-forum-post]")).toBeVisible();
+ expect(renewals).toBe(1);
+ await compose.locator("[data-forum-logout]").click();
+ await expect(compose.locator("[data-forum-email]")).toBeVisible();
+ await page.reload();
+ await expect(compose.locator("[data-forum-email]")).toBeVisible();
+});
