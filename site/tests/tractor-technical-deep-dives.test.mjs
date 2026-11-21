@@ -54,6 +54,7 @@ test("deep-dive articles use existing approved licensed images and honest SEO sc
  assert.match(component,/\"@type\":\"WebPage\"/);
  assert.doesNotMatch(component,/\"@type\":\"FAQPage\"/);
  assert.match(component,/localizedPath\(lang,"\/guides\/tractor-technical-terms\/"\)/);
- assert.match(layout,/Traktör parçaları ve teknik terimler/);
+ assert.match(layout,/href=\{glossaryPath\}/);
+ assert.match(readFileSync(new URL("../src/lib/ui.ts",import.meta.url),"utf8"),/Traktör parçaları ve teknik terimler/);
  assert.doesNotMatch(component,/fake review|AggregateRating|Offers|Product/i);
 });

@@ -69,7 +69,8 @@ test("guide is discoverable in all ten locales without fake EN fallbacks",()=>{
   for(const lang of LOCALES){
     assert.ok(t(lang,"guideLink").trim().length>=4,lang+" guide link");
   }
-  assert.match(layout,/localizedPath\(lang,"\/guides\/choosing-a-tractor\/"\)/);
+  assert.match(layout,/const guidePath = localizedPath\(lang, "\/guides\/choosing-a-tractor\/"\)/);
+  assert.match(layout,/href=\{guidePath\}/);
   assert.match(read("components/TractorSelectionGuide.astro"),/availableLocales=\{LOCALES\}/);
   assert.match(methodology,/href=\{tr\?"\/tr\/guides\/choosing-a-tractor\/":"\/guides\/choosing-a-tractor\/"\}/);
 });

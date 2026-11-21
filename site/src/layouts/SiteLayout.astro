@@ -37,7 +37,17 @@ const comparePath = localizedPath(lang, "/compare/");
 const advisorPath = localizedPath(lang, "/farm-advisor/");
 const forumPath = localizedPath(lang, "/forum/");
 const articlesPath = localizedPath(lang, "/articles/");
-// The editorial index is now genuinely localized in all 10 supported languages.
+const guidePath = localizedPath(lang, "/guides/choosing-a-tractor/");
+const glossaryPath = localizedPath(lang==="tr"?"tr":"en", "/guides/tractor-technical-terms/");
+const methodologyPath = localizedPath(lang==="tr"?"tr":"en", "/methodology/");
+const section = plainPath.startsWith("/tractors/") ? "catalog" :
+  plainPath.startsWith("/compare/") ? "compare" :
+  plainPath.startsWith("/farm-advisor/") ? "advisor" :
+  plainPath.startsWith("/forum/") ? "forum" :
+  plainPath.startsWith("/articles/") ? "articles" :
+  plainPath.startsWith("/guides/") || plainPath.startsWith("/methodology/") ? "resources" :
+  plainPath === "/" ? "home" : "";
+// Editorial index is truly localized; linked long-form articles may still be English.
 const editorialLabel: Record<Locale,string> = {
   en:"Articles",tr:"Makaleler",zh:"文章",hi:"लेख",
   "pt-br":"Artigos",fr:"Articles",de:"Artikel",
@@ -137,17 +147,38 @@ const openGraphLocale: Record<Locale, string> = {
         </a>
 
         <nav class="desktop-nav" aria-label={t(lang,"navMain")}>
-          <a href={homePath + "#platform"}>{t(lang,"navPlatform")}</a>
-          <a href={catalogPath}>{t(lang,"navCatalog")}</a>
-          <a href={comparePath}>{t(lang,"navCompare")}</a>
-          <a href={advisorPath}>{tx(lang,"nav")}</a>
-          <a href={forumPath}>{forumCopy(lang,"name")}</a>
-          <a href={homePath + "#data"}>{t(lang,"navData")}</a>
-          <a href={articlesPath}>{editorialLabel[lang]}</a>
+          <a href={catalogPath} class:list={{"is-current-section":section==="catalog"}} aria-current={plainPath==="/tractors/"?"page":undefined}>{t(lang,"navCatalog")}</a>
+          <a href={comparePath} class:list={{"is-current-section":section==="compare"}} aria-current={plainPath==="/compare/"?"page":undefined}>{t(lang,"navCompare")}</a>
+          <a href={advisorPath} class:list={{"is-current-section":section==="advisor"}} aria-current={plainPath==="/farm-advisor/"?"page":undefined}>{tx(lang,"nav")}</a>
+          <a href={forumPath} class:list={{"is-current-section":section==="forum"}} aria-current={plainPath==="/forum/"?"page":undefined}>{forumCopy(lang,"name")}</a>
+          <a href={articlesPath} class:list={{"is-current-section":section==="articles"}} aria-current={plainPath==="/articles/"?"page":undefined}>{editorialLabel[lang]}</a>
+          <details class="resource-nav-menu" data-site-disclosure>
+            <summary class:list={{"is-current-section":section==="resources"}}>{t(lang,"navResources")} <span aria-hidden="true">▾</span></summary>
+            <div class="resource-nav-links">
+              <a href={guidePath}>{t(lang,"guideLink")}</a>
+              <a href={glossaryPath}>{t(lang,"navTechnicalTerms")}{lang!=="tr"&&lang!=="en"?" (EN)":""}</a>
+              <a href={methodologyPath}>{t(lang,"methodologyLink")}{lang!=="tr"&&lang!=="en"?" (EN)":""}</a>
+              <a href={homePath+"#data"}>{t(lang,"navData")}</a>
+              <a href={homePath+"#approach"}>{t(lang,"navApproach")}</a>
+            </div>
+          </details>
         </nav>
 
         <div class="header-actions">
-          <details class="locale-menu">
+          <details class="header-search-menu" data-site-disclosure>
+            <summary aria-label={t(lang,"findTractor")} title={t(lang,"findTractor")}>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true" focusable="false"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m15.5 15.5 5 5"/></svg>
+            </summary>
+            <form class="header-search-form" action={catalogPath} method="get" role="search">
+              <label for="header-model-search">{t(lang,"findTractor")}</label>
+              <div class="header-search-row">
+                <input id="header-model-search" name="q" type="search" maxlength="100"
+                  placeholder={t(lang,"searchPlaceholder")} autocomplete="off" />
+                <button type="submit">{t(lang,"navExplore")}</button>
+              </div>
+            </form>
+          </details>
+          <details class="locale-menu" data-site-disclosure>
             <summary class="language-switch" aria-label={LOCALE_NAMES[lang] + " — " + t(lang,"selectLanguage")}>
               <span class="language-dot"></span>{LOCALE_NAMES[lang]} <span aria-hidden="true">▾</span>
             </summary>
@@ -159,20 +190,32 @@ const openGraphLocale: Record<Locale, string> = {
               )}
             </div>
           </details>
-          <details class="mobile-nav">
+          <details class="mobile-nav" data-site-disclosure>
             <summary aria-label={t(lang,"navMain")} title={t(lang,"navMain")}>
               <span class="mobile-menu-bars" aria-hidden="true"><span></span><span></span><span></span></span>
             </summary>
             <nav class="mobile-nav-links" aria-label={t(lang,"navMain")}>
-              <a href={homePath}>{t(lang,"navPlatform")}</a>
-              <a href={catalogPath}>{t(lang,"navCatalog")}</a>
-              <a href={comparePath}>{t(lang,"navCompare")}</a>
-              <a href={advisorPath}>{tx(lang,"nav")}</a>
-              <a href={forumPath}>{forumCopy(lang,"name")}</a>
-              <a href={articlesPath}>{editorialLabel[lang]}</a>
+              <form class="mobile-menu-search" action={catalogPath} method="get" role="search">
+                <label for="mobile-model-search">{t(lang,"findTractor")}</label>
+                <div class="mobile-menu-search-row">
+                  <input id="mobile-model-search" name="q" type="search" maxlength="100"
+                    placeholder={t(lang,"searchPlaceholder")} autocomplete="off" />
+                  <button type="submit" aria-label={t(lang,"navExplore")}>{t(lang,"navExplore")}</button>
+                </div>
+              </form>
+              <a href={homePath} aria-current={plainPath==="/"?"page":undefined}>{t(lang,"navHome")}</a>
+              <a href={catalogPath} aria-current={plainPath==="/tractors/"?"page":undefined}>{t(lang,"navCatalog")}</a>
+              <a href={comparePath} aria-current={plainPath==="/compare/"?"page":undefined}>{t(lang,"navCompare")}</a>
+              <a href={advisorPath} aria-current={plainPath==="/farm-advisor/"?"page":undefined}>{tx(lang,"nav")}</a>
+              <a href={forumPath} aria-current={plainPath==="/forum/"?"page":undefined}>{forumCopy(lang,"name")}</a>
+              <a href={articlesPath} aria-current={plainPath==="/articles/"?"page":undefined}>{editorialLabel[lang]}</a>
               <a href={forumPath+"#forum-register-heading"}>{memberCopy(lang,"register")}</a>
-              <a href={homePath + "#data"}>{t(lang,"navData")}</a>
-              <a href={homePath + "#approach"}>{t(lang,"navApproach")}</a>
+              <div class="mobile-nav-group-label">{t(lang,"navResources")}</div>
+              <a href={guidePath}>{t(lang,"guideLink")}</a>
+              <a href={glossaryPath}>{t(lang,"navTechnicalTerms")}{lang!=="tr"&&lang!=="en"?" (EN)":""}</a>
+              <a href={methodologyPath}>{t(lang,"methodologyLink")}{lang!=="tr"&&lang!=="en"?" (EN)":""}</a>
+              <a href={homePath+"#data"}>{t(lang,"navData")}</a>
+              <a href={homePath+"#approach"}>{t(lang,"navApproach")}</a>
             </nav>
           </details>
           <a class="header-cta header-signup" href={forumPath+"#forum-register-heading"} data-header-signup>
@@ -209,9 +252,9 @@ const openGraphLocale: Record<Locale, string> = {
           </p>
         </div>
         <div class="footer-links">
-          <a href={localizedPath(lang,"/guides/choosing-a-tractor/")}>{t(lang,"guideLink")}</a>
-          <a href={localizedPath(lang==="tr"?"tr":"en","/guides/tractor-technical-terms/")}>{lang==="tr"?"Traktör parçaları ve teknik terimler":"Tractor parts & technical terms"}{lang!=="tr"&&lang!=="en"?" (EN)":""}</a>
-          <a href={lang==="tr"?"/tr/methodology/":"/methodology/"}>{t(lang,"methodologyLink")}{lang==="en"||lang==="tr"?"":" (EN)"}</a>
+          <a href={guidePath}>{t(lang,"guideLink")}</a>
+          <a href={glossaryPath}>{t(lang,"navTechnicalTerms")}{lang!=="tr"&&lang!=="en"?" (EN)":""}</a>
+          <a href={methodologyPath}>{t(lang,"methodologyLink")}{lang!=="tr"&&lang!=="en"?" (EN)":""}</a>
           <a href={homePath + "#platform"}>{t(lang,"navPlatform")}</a>
           <a href={catalogPath}>{t(lang,"navCatalog")}</a>
           <a href={comparePath}>{t(lang,"navCompare")}</a>
@@ -243,4 +286,30 @@ const openGraphLocale: Record<Locale, string> = {
     destination.search = window.location.search;
     link.href = destination.pathname + destination.search;
   }
+
+  // Native <details> works without JavaScript; these small enhancements make
+  // search, resources and language panels predictable for touch and keyboards.
+  const disclosures = [...document.querySelectorAll<HTMLDetailsElement>(".site-header details[data-site-disclosure]")];
+  for (const disclosure of disclosures) {
+    disclosure.addEventListener("toggle", () => {
+      if (!disclosure.open) return;
+      for (const other of disclosures) if (other !== disclosure) other.open = false;
+      if (disclosure.classList.contains("header-search-menu"))
+        disclosure.querySelector<HTMLInputElement>('input[name="q"]')?.focus();
+    });
+  }
+  document.addEventListener("keydown", (event) => {
+    if (event.key !== "Escape") return;
+    const active = disclosures.find((item) => item.open);
+    if (!active) return;
+    if (active.contains(document.activeElement))
+      active.querySelector<HTMLElement>("summary")?.focus();
+    active.open = false;
+  });
+  document.addEventListener("pointerdown", (event) => {
+    const target = event.target;
+    if (!(target instanceof Node)) return;
+    for (const item of disclosures)
+      if (item.open && !item.contains(target)) item.open = false;
+  });
 </script>
