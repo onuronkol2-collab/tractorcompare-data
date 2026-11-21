@@ -112,7 +112,7 @@ export const MODEL_SOURCE_COPY: Record<Locale, {
     introduction: "Aşağıdaki kaynak bağlantıları, bu traktör kaydında yayımlanan teknik özelliklerle ilişkilidir. Üretici kaynakları ve incelenmiş bağımsız kaynaklar birbirinden ayrı gösterilir.",
     official: "Üretici kaynağı", independent: "İncelenmiş bağımsız kaynak",
     linked: "teknik kayıtla bağlantılı", recordReviewed: "Bağlı teknik kaydın son doğrulaması", more: "Diğer kaynak bağlantıları yukarıdaki ilgili teknik özelliklerin yanında bulunur.",
-    caution: "Kaynak bağlantısı; bütün yılların, pazarların, donanım varyantlarının veya ölçüm standartlarının aynı olduğunu göstermez. Traktörleri karşılaştırmadan önce belgedeki koşulları ve her değerin yanındaki notları inceleyin.",
+    caution: "Kaynak bağlantısı; bütün yılların, pazarların, donanım varyantlarının veya ölçüm standartlarının aynı olduğunu göstermez. Traktörleri karşılaştırmadan önce kaynaktaki koşulları ve her değerin yanındaki notları inceleyin.",
   },
   zh: {
     kicker: "来源透明度",
@@ -120,7 +120,7 @@ export const MODEL_SOURCE_COPY: Record<Locale, {
     introduction: "以下链接对应此拖拉机条目已发布的技术参数。制造商来源与经过审核的独立第三方来源分开列出。",
     official: "制造商来源", independent: "已审核的独立资料",
     linked: "项技术记录引用", recordReviewed: "关联技术记录的最近核验日期", more: "其他资料链接列在上方相应技术参数旁。",
-    caution: "有资料链接不代表所有年份、市场、配置版本或测量标准均相同。比较拖拉机前，请核对原始文件及各参数旁的说明。",
+    caution: "有资料链接不代表所有年份、市场、配置版本或测量标准均相同。比较拖拉机前，请核对原始来源及各参数旁的说明。",
   },
   hi: {
     kicker: "स्रोत पारदर्शिता",
@@ -128,7 +128,7 @@ export const MODEL_SOURCE_COPY: Record<Locale, {
     introduction: "ये लिंक इसी ट्रैक्टर प्रविष्टि में प्रकाशित तकनीकी विवरणों से जुड़े हैं। निर्माता के स्रोत और जाँचे गए स्वतंत्र स्रोत अलग-अलग दिखाए गए हैं।",
     official: "निर्माता स्रोत", independent: "समीक्षित स्वतंत्र स्रोत",
     linked: "तकनीकी विवरणों से संबद्ध", recordReviewed: "संबद्ध तकनीकी रिकॉर्ड की अंतिम जाँच", more: "अन्य स्रोत लिंक ऊपर संबंधित तकनीकी विवरणों के साथ दिए गए हैं।",
-    caution: "स्रोत लिंक होने का अर्थ यह नहीं कि हर वर्ष, बाज़ार, संस्करण या माप मानक एक जैसा है। ट्रैक्टरों की तुलना से पहले मूल दस्तावेज़ और हर आँकड़े के पास की टिप्पणी पढ़ें।",
+    caution: "स्रोत लिंक होने का अर्थ यह नहीं कि हर वर्ष, बाज़ार, संस्करण या माप मानक एक जैसा है। ट्रैक्टरों की तुलना से पहले मूल स्रोत और हर आँकड़े के पास की टिप्पणी पढ़ें।",
   },
   "pt-br": {
     kicker: "TRANSPARÊNCIA DAS FONTES",
@@ -136,7 +136,7 @@ export const MODEL_SOURCE_COPY: Record<Locale, {
     introduction: "Os links abaixo estão associados aos dados técnicos publicados para esta configuração. Fontes do fabricante e fontes independentes revisadas são apresentadas separadamente.",
     official: "Fonte do fabricante", independent: "Fonte independente revisada",
     linked: "registros técnicos vinculados", recordReviewed: "Última verificação de registro vinculado", more: "Outras fontes aparecem junto às respectivas especificações acima.",
-    caution: "Um link não significa que todos os anos, mercados, versões ou padrões de medição sejam iguais. Consulte os documentos e as observações de cada valor antes de comparar tratores.",
+    caution: "Um link não significa que todos os anos, mercados, versões ou padrões de medição sejam iguais. Consulte as fontes e as observações de cada valor antes de comparar tratores.",
   },
   fr: {
     kicker: "TRANSPARENCE DES SOURCES",
@@ -144,7 +144,7 @@ export const MODEL_SOURCE_COPY: Record<Locale, {
     introduction: "Ces liens renvoient aux données techniques publiées pour cette fiche. Les sources du constructeur et les sources indépendantes examinées sont distinguées.",
     official: "Source du constructeur", independent: "Source indépendante examinée",
     linked: "caractéristiques liées", recordReviewed: "Dernière vérification d'une donnée liée", more: "Les autres liens figurent à côté des caractéristiques correspondantes ci-dessus.",
-    caution: "La présence d'une source ne signifie pas que les années, marchés, versions ou normes de mesure sont identiques. Vérifiez le document et les notes de chaque valeur avant toute comparaison.",
+    caution: "La présence d'une source ne signifie pas que les années, marchés, versions ou normes de mesure sont identiques. Vérifiez la source et les notes de chaque valeur avant toute comparaison.",
   },
   de: {
     kicker: "QUELLENTRANSPARENZ",
@@ -152,7 +152,7 @@ export const MODEL_SOURCE_COPY: Record<Locale, {
     introduction: "Diese Links sind mit den veröffentlichten technischen Angaben dieses Traktordatensatzes verknüpft. Herstellerquellen und geprüfte unabhängige Quellen werden getrennt ausgewiesen.",
     official: "Herstellerquelle", independent: "Geprüfte unabhängige Quelle",
     linked: "verknüpfte technische Angaben", recordReviewed: "Letzte Prüfung einer verknüpften Angabe", more: "Weitere Quellen stehen oben direkt neben den betreffenden technischen Angaben.",
-    caution: "Ein Quellenlink bedeutet nicht, dass Baujahre, Märkte, Ausstattungen oder Messnormen übereinstimmen. Prüfen Sie vor Vergleichen das Originaldokument und die Hinweise zum jeweiligen Wert.",
+    caution: "Ein Quellenlink bedeutet nicht, dass Baujahre, Märkte, Ausstattungen oder Messnormen übereinstimmen. Prüfen Sie vor Vergleichen die Originalquelle und die Hinweise zum jeweiligen Wert.",
   },
   ru: {
     kicker: "ПРОЗРАЧНОСТЬ ИСТОЧНИКОВ",
@@ -176,6 +176,6 @@ export const MODEL_SOURCE_COPY: Record<Locale, {
     introduction: "Estos enlaces están vinculados a los datos técnicos publicados de esta ficha. Se distinguen las fuentes del fabricante de las fuentes independientes revisadas.",
     official: "Fuente del fabricante", independent: "Fuente independiente revisada",
     linked: "datos técnicos vinculados", recordReviewed: "Última verificación del dato vinculado", more: "Las demás fuentes se encuentran junto a las especificaciones correspondientes, más arriba.",
-    caution: "Tener una fuente no implica que coincidan todos los años, mercados, variantes o normas de medición. Comprueba el documento original y las notas de cada valor antes de comparar tractores.",
+    caution: "Tener una fuente no implica que coincidan todos los años, mercados, variantes o normas de medición. Comprueba la fuente original y las notas de cada valor antes de comparar tractores.",
   },
 };
