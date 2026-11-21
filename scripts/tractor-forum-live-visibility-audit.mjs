@@ -97,6 +97,7 @@ if(process.argv[1]&&resolve(process.argv[1])===fileURLToPath(import.meta.url)){
  const results=await auditForumVisibility({jwt:process.env.TRACTORVS_SUPABASE_ANON_JWT});
  const message=JSON.stringify(results);
  console.log("TRACTORVS_FORUM_VISIBILITY "+message);
+ if(process.env.GITHUB_OUTPUT)appendFileSync(process.env.GITHUB_OUTPUT,"audited=true\n");
  if(process.env.GITHUB_STEP_SUMMARY)
   appendFileSync(process.env.GITHUB_STEP_SUMMARY,"## Live forum publishing audit\n\n"+
    (results.ok?"PASS":"FAIL")+" — "+results.checked+" mature topics checked, "+
