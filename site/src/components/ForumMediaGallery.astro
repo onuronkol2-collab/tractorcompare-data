@@ -1,10 +1,13 @@
 ---
 import type {ForumMedia} from "../lib/forum.ts";
+import type {Locale} from "../lib/locales.ts";
+import {FORUM_EDITOR_COPY} from "../lib/forum-editor-i18n.ts";
 import {forumMediaImageUrl} from "../lib/forum.ts";
-interface Props {photos:ForumMedia[];contentLanguage?:string}
-const {photos,contentLanguage}=Astro.props;
+interface Props {photos:ForumMedia[];contentLanguage?:string;lang:Locale}
+const {photos,contentLanguage,lang}=Astro.props;
+const photoLabel=FORUM_EDITOR_COPY[lang].photos;
 ---
-{photos.length>0&&<div class="forum-photos" aria-label="Forum photos">
+{photos.length>0&&<div class="forum-photos" aria-label={photoLabel}>
  {photos.map(photo=><figure class="forum-photo">
    <a href={forumMediaImageUrl(photo.id)} target="_blank" rel="noopener noreferrer"
       aria-label={photo.alt_text}>
