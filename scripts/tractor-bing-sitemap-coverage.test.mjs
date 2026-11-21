@@ -70,7 +70,8 @@ test("all ten locale model slug sets must exactly match, even if aggregate minim
  const english=ORIGIN+"/tractors/exact-model-123/";
  const de=ORIGIN+"/de/tractors/exact-model-123/";
  const incomplete=good();
- incomplete.children[0].xml=xmlURLs([home,...landingURLs,...modelURLs.filter(url=>url!==de)]);
+ const secondModels=prefixes.map(prefix=>ORIGIN+"/"+prefix+"tractors/other-model-567/");
+ incomplete.children[0].xml=xmlURLs([home,...landingURLs,...modelURLs.filter(url=>url!==de),...secondModels]);
  incomplete.minimumMainUrls=1;
  incomplete.minimumModelUrls=1;
  assert.throws(()=>evaluateBingSitemapCoverage(incomplete),/Localized model slug coverage mismatch: de/);
