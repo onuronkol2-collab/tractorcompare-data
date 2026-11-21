@@ -104,10 +104,11 @@ export async function robotsAllowed(url,{fetchFn=fetch,timeoutMs=8000,cache=new 
  let best=null;
  for(const g of applicable)for(const rule of g.rules){
   if(!rule.path)continue; // empty Disallow means allowed
-  const escaped=rule.path.replace(/[.+?^{}()|[\]\\$]/g,"\\export async function readOemDocument(url,{fetchFn=fetch,timeoutMs=12000}={}){")
-   .replace(/\*/g,".*").replace(/\$/g,"$");
+  const anchored=rule.path.endsWith("$");
+  const core=anchored?rule.path.slice(0,-1):rule.path;
+  const escaped=core.replace(/[.+?^{}()|[\]\\$]/g,"\\$&").replace(/\*/g,".*");
   let match=false;
-  try{match=new RegExp("^"+escaped).test(path)}catch{return false}
+  try{match=new RegExp("^"+escaped+(anchored?"$":"")).test(path)}catch{return false}
   if(!match)continue;
   const rank=rule.path.replace(/\*/g,"").length;
   if(!best||rank>best.rank||(rank===best.rank&&rule.name==="allow"))
