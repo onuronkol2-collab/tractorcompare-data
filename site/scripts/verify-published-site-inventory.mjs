@@ -24,6 +24,39 @@ function modelPaths(directory){
   .map(entry=>entry.name).sort();
 }
 
+// HTML hreflang must be reciprocal, and catalogue discovery must not depend
+// on JavaScript. Model URLs stay stable across languages by design.
+export const PUBLIC_LOCALE_TAGS={
+ en:"en",tr:"tr",zh:"zh-Hans",hi:"hi","pt-br":"pt-BR",
+ fr:"fr",de:"de",ru:"ru",ja:"ja",es:"es",
+};
+const modelPath=(locale,slug)=>
+ "/"+(locale==="en"?"":locale+"/")+"tractors/"+slug+"/";
+
+/** Validate every published model URL before a production deployment. */
+export function verifyModelDiscoveryMarkup({
+ html,catalogLinks,slug,locale,origin="https://tractorvs.com"
+}){
+ check(PUBLIC_LOCALES.includes(locale),"Unsupported model locale: "+locale);
+ const path=modelPath(locale,slug);
+ const url=origin+path;
+ check(catalogLinks.has(path),"Missing server-rendered catalogue link to "+path);
+ check(html.includes('rel="canonical" href="'+url+'"'),
+   "Missing or wrong model canonical: "+url);
+ check(html.includes('name="robots" content="index,follow'),
+   "Published model is not explicitly indexable: "+url);
+ check(!/<meta[^>]*name="robots"[^>]*content="[^"]*noindex/i.test(html),
+   "Published model has noindex: "+url);
+ for(const [alternateLocale,tag] of Object.entries(PUBLIC_LOCALE_TAGS)){
+  const alternate=origin+modelPath(alternateLocale,slug);
+  check(html.includes('hreflang="'+tag+'" href="'+alternate+'"'),
+    "Missing reciprocal hreflang "+tag+" for "+url);
+ }
+ check(html.includes('hreflang="x-default" href="'+origin+modelPath("en",slug)+'"'),
+   "Missing x-default to English source model page: "+url);
+ return true;
+}
+
 export function safePublishedModelFloor(snapshot,configuredMinimum=100){
  check(Number.isSafeInteger(configuredMinimum)&&configuredMinimum>=1,
   "MIN_PUBLIC_TRACTOR_PAGES must be a positive integer");
@@ -76,12 +109,14 @@ export function verifyPublishedSiteInventory({
     check(expectedModelUrls.has(url),"Unexpected "+locale+" model URL in sitemap: "+url);
   for(const url of expectedModelUrls)
     check(sitemapLocs.has(url),"Published "+locale+" model is missing from sitemap: "+url);
-  const sampleUrl=origin+"/"+prefix+"tractors/"+slugs[0]+"/";
-  const sampleHtml=read(join(dist,prefix+"tractors",slugs[0],"index.html"));
-  check(sampleHtml.includes('rel="canonical" href="'+sampleUrl+'"'),
-    "Wrong "+locale+" model canonical on "+sampleUrl);
-  check(!/content="noindex/i.test(sampleHtml),
-    "Indexing unexpectedly disabled for "+sampleUrl);
+  const catalogueHtml=read(join(dist,prefix+"tractors/index.html"));
+  const catalogueLinks=new Set([...catalogueHtml.matchAll(
+    /<a\b[^>]*class="tractor-card-main"[^>]*href="([^"]+)"[^>]*>/g
+  )].map(match=>match[1]));
+  for(const slug of slugs){
+   const html=read(join(dist,prefix+"tractors",slug,"index.html"));
+   verifyModelDiscoveryMarkup({html,catalogLinks:catalogueLinks,slug,locale,origin});
+  }
   matchingLocales[locale]=slugs.length;
  }
  return {baseline:snapshot.published_models,protectedFloor:floor,models:modelSlugs.length,localeModels:matchingLocales};
