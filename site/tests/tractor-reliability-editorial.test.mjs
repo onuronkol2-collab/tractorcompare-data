@@ -6,49 +6,52 @@ const article=read("../../site/docs/forum-2026-2027-on-marka-guvenilirlik.md");
 const opening=read("../../site/docs/forum-2026-2027-kisa-tartisma-acilisi.md");
 const route=read("../src/pages/tr/guides/2026-2027-traktor-guvenilirlik/index.astro");
 const hub=read("../src/components/ForumHub.astro");
-const ranks=["Valtra","John Deere","Fendt","Claas","Massey Ferguson","New Holland","Case IH","Deutz-Fahr","Zetor","Ursus"];
-test("ten unique brands come from one historical academic source in one ranked list",()=>{
-  const rows=[...article.matchAll(/<tr><td>(\d+)<\/td><th scope="row">([^<]+)<\/th>/g)];
-  assert.equal(rows.length,10);
-  for(let i=0;i<10;i++){assert.equal(Number(rows[i][1]),i+1);assert.equal(rows[i][2],ranks[i]);}
-  assert.equal(new Set(rows.map(r=>r[2])).size,10);
-  assert.match(article,/Karol Durczak/);
-  assert.match(article,/2020/);
-  assert.match(article,/1\.100 çevrimiçi anket/);
-  assert.match(article,/1987–2017/);
-  assert.match(article,/11 traktör güvenilirlik ölçütü/);
-  assert.match(article,/satış başına mekanik arıza yüzdesi değildir/i);
-  assert.match(article,/0,87/);
-  assert.match(article,/0,86/);
-  assert.match(article,/0,85/);
-  assert.match(article,/https:\/\/doi\.org\/10\.17559\/TV-20190819132340/);
-  assert.match(opening,/10 Marka, Tek Liste/);
-  assert.ok(!opening.includes("En çok sorun bildirilen 5 marka"));
+const brands=["Kubota","Case IH","John Deere","New Holland","Massey Ferguson","Versatile","Fendt","Valtra","Claas","Deutz-Fahr"];
+const events=[76,119,120,126,135,164];
+test("2026-27 report visibly distinguishes its historical 2021 samples",()=>{
+ assert.match(article,/2026–2027 Traktör Arıza Araştırması/);
+ assert.match(article,/Sayıların veri yılı:\*\* 2021 ABD/);
+ assert.match(article,/2026–2027 yılına ait şikâyet oranları değildir/);
+ assert.match(article,/2\.262 katılımcı ve 7\.755 traktör/);
+ assert.match(article,/tek traktörde birden çok şikâyet/);
+ assert.match(article,/2027'de gelecekte yaşanacak arızalar henüz bilinemez/);
+ assert.match(article,/satışa göre gerçek arıza yüzdesi/i);
 });
-test("every brand has an attributed photo distinct from academic participants",()=>{
-  const photoLines=[...article.matchAll(/^!\[[^\n]+\]\((.+)\)$/gm)];
-  assert.equal(photoLines.length,10);
-  for(const p of photoLines){
-    assert.match(p[1],/^\/images\/tractors\/|^https:\/\/commons\.wikimedia\.org\/wiki\/Special:FilePath\//);
-  }
-  assert.equal((article.match(/Fotoğraf: \[/g)||[]).length,10);
-  assert.equal((article.match(/CC BY-SA 4\.0/g)||[]).length,10);
-  assert.equal((article.match(/araştırmadaki traktörlerden biri değildir/g)||[]).length,10);
+test("10 unique modern brands; only six numeric measurements from a shared survey",()=>{
+ const rows=[...article.matchAll(/<tr><td>(\d+|—)<\/td><th scope="row">([^<]+)<\/th><td>(.+?)<\/td><td>(.+?)<\/td><\/tr>/g)];
+ assert.equal(rows.length,10);
+ for(let i=0;i<brands.length;i++){
+  assert.equal(rows[i][2],brands[i]);
+  assert.equal(rows[i][1],i<6?String(i+1):"—");
+  if(i<6){assert.equal(rows[i][3],'<strong>'+events[i]+'</strong>');assert.equal(rows[i][4],"2021");}
+  else{assert.equal(rows[i][3],"Doğrulanmış oran yok");assert.equal(rows[i][4],"—");}
+ }
+ assert.equal(new Set(rows.map(r=>r[2])).size,10);
+ assert.equal((article.match(/role="region" tabindex="0"/g)||[]).length,1);
+ assert.match(article,/Allis-Chalmers/);
 });
-test("rendered article remains single Turkish canonical, accessible, and forum-safe",()=>{
-  assert.match(route,/Content as Research.*on-marka-guvenilirlik\.md/);
-  assert.match(route,/<Research\s*\/>/);
-  assert.match(route,/availableLocales=\{\["tr"\]\}/);
-  assert.match(route,/indexableLocales=\{\["tr"\]\}/);
-  assert.match(route,/"@type": "Article"/);
-  assert.match(route,/"@type": "ImageObject"/);
-  assert.match(route,/\.research-table-scroll/);
-  assert.match(hub,/Traktör Güvenilirlik Sıralaması: 10 Marka, Tek Liste/);
-  assert.doesNotMatch(route,/set:html=|innerHTML|service_role|sb_secret_/);
+test("one photo of each brand has a license attribution; model != sampled tractor",()=>{
+ assert.equal((article.match(/^!\[/gm)||[]).length,10);
+ assert.equal((article.match(/CC BY-SA 4\.0/g)||[]).length,10);
+ assert.equal((article.match(/Fotoğraf anket katılımcısına ait değildir/g)||[]).length,10);
+ assert.match(article,/Valtra_G135_Agritechnica_2025/);
+ assert.match(article,/Massey_Ferguson_5M\.95/);
 });
-test("moderation and authenticated forum limits remain untouched",()=>{
-  const forum=read("../src/components/ForumComposer.astro");
-  const rows=read("../src/lib/forum.ts");
-  assert.match(forum,/status:"pending"/);
-  assert.match(rows,/status==="published"/);
+test("single Turkish canonical article and original forum opening",()=>{
+ assert.match(route,/Content as Research.*on-marka-guvenilirlik\.md/);
+ assert.match(route,/<Research\s*\/>/);
+ assert.match(route,/availableLocales=\{\["tr"\]\}/);
+ assert.match(route,/indexableLocales=\{\["tr"\]\}/);
+ assert.match(route,/"@type": "Article"/);
+ assert.match(route,/\.research-table-scroll/);
+ assert.match(hub,/100 Traktöre Kaç Şikâyet/);
+ assert.match(opening,/2026–2027 Traktör Arıza Araştırması/);
+ assert.match(opening,/100 değerlendirilen traktöre düşen sorun sayısını/);
+ assert.doesNotMatch(route,/set:html=|innerHTML|service_role|sb_secret_/);
+});
+test("forum RLS-compatible moderation and auth limits remain untouched",()=>{
+ const forum=read("../src/components/ForumComposer.astro");
+ const rows=read("../src/lib/forum.ts");
+ assert.match(forum,/status:"pending"/);
+ assert.match(rows,/status==="published"/);
 });
