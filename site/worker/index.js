@@ -40,6 +40,17 @@ export default {
   async fetch(request, env) {
     const url = new URL(request.url);
     const method = request.method;
+    // Permanent alias for the widely submitted /sitemap.xml URL. The
+    // generated /sitemap-index.xml remains the sole authoritative index; this
+    // redirect automatically includes future multi-file sitemap growth.
+    if(url.pathname==="/sitemap.xml"){
+      if(method!=="GET"&&method!=="HEAD")
+        return new Response("Method not allowed",{status:405,headers:{"Allow":"GET, HEAD"}});
+      return new Response(null,{status:308,headers:{
+        "Location":new URL("/sitemap-index.xml",url.origin).toString(),
+        "Cache-Control":"public, max-age=86400"
+      }});
+    }
     if(url.pathname.startsWith("/images/tractors/")){
       if(method!=="GET"&&method!=="HEAD")return new Response("Method not allowed",{status:405});
       // Only the fixed approved-photo allowlist can be fetched. No arbitrary URL input.
