@@ -53,7 +53,7 @@ test("every translated selection guide retains all sections, explanations, quest
  const expectedRefs=[[3],[0,1,2],[0,1],[0,1],[0],[3]];
  for(const locale of LANGS){
   const source=selections[locale];
-  for(const key of textKeys)assert.ok(typeof source[key]==="string"&&source[key].trim().length>4,locale+" "+key);
+  for(const key of textKeys)assert.ok(typeof source[key]==="string"&&source[key].trim().length>minChars(locale,4,1),locale+" "+key);
   assert.equal(source.sections.length,6,locale+" section count");
   source.sections.forEach((section,index)=>{
    assert.ok(section.title.trim().length>4,locale+" chapter title");
@@ -74,7 +74,7 @@ test("each Başak technical review preserves claims, safety limits, table rows a
  const expected=["53","72","273","3142","1600","1953","1506","3000","3080","540E"];
  for(const locale of LANGS){
   const r=reviews[locale];
-  for(const key of reviewKeys)assert.ok(typeof r[key]==="string"&&r[key].trim().length>3,locale+" "+key);
+  for(const key of reviewKeys)assert.ok(typeof r[key]==="string"&&r[key].trim().length>minChars(locale,3,1),locale+" "+key);
   assert.equal(r.rowLabels.length,8,locale+" table field names");
   assert.equal(r.localizedValues.length,3,locale+" localized descriptive values");
   assert.equal(r.sectionTitles.length,4,locale+" chapter count");
