@@ -1,0 +1,347 @@
+---
+import {memberText as mt,MEMBER_TEXT} from "../lib/member-i18n.ts";
+import {publicForumClientConfig} from "../lib/forum.ts";
+import {localizedPath,type Locale} from "../lib/locales.ts";
+interface Props{lang:Locale}
+const {lang}=Astro.props;
+const cfg=publicForumClientConfig() ?? (
+ process.env.TRACTORVS_FORUM_BROWSER_TEST==="true" && process.env.PUBLIC_INDEXING_ENABLED==="false"
+ ? {url:"http://127.0.0.1:4173/forum-test-api",key:"inert-browser-fixture"}:null
+);
+const publicConfig=JSON.stringify(cfg);
+const copy=JSON.stringify(MEMBER_TEXT[lang]);
+---
+<section id="forum-members" class="member-community" data-community-members
+ data-member-config={publicConfig} data-member-copy={copy} data-member-lang={lang}>
+ <header class="member-intro">
+  <h2>{mt(lang,"memberHeading")}</h2>
+  <p>{mt(lang,"memberIntro")}</p>
+ </header>
+ <div class="member-grid">
+  <section class="member-leaders" aria-label={mt(lang,"leaderboard")}>
+   <header class="member-section-head">
+    <h3>{mt(lang,"leaderboard")}</h3>
+    <div class="leaderboard-modes" role="group" aria-label={mt(lang,"leaderboard")}>
+      <button type="button" data-rank-mode="month" aria-pressed="true">{mt(lang,"month")}</button>
+      <button type="button" data-rank-mode="all" aria-pressed="false">{mt(lang,"alltime")}</button>
+    </div>
+   </header>
+   <ol data-leaders aria-live="polite"></ol>
+   <p data-leader-empty>{mt(lang,"loading")}</p>
+  </section>
+  <section class="member-own" aria-label={mt(lang,"myProfile")}>
+   <h3>{mt(lang,"myProfile")}</h3>
+   <p data-member-guest>{mt(lang,"signInNotice")}</p>
+   <form data-member-form hidden>
+     <div class="avatar-line">
+      <img data-member-avatar width="72" height="72" alt="" hidden/>
+      <label>{mt(lang,"avatar")}
+       <input name="avatar" type="file" accept="image/png,image/jpeg,image/webp" />
+      </label>
+     </div>
+     <label>{mt(lang,"handle")} <input name="handle" required
+       autocomplete="nickname" minlength="3" maxlength="24" pattern="[a-z][a-z0-9_]{2,23}" /></label>
+     <label>{mt(lang,"displayName")} <input name="display_name" required maxlength="40" minlength="2" /></label>
+     <label>{mt(lang,"bio")} <textarea name="bio" maxlength="160" rows="3"></textarea></label>
+     <label>{mt(lang,"favoriteBrand")} <input name="favorite_brand" maxlength="50"/></label>
+     <label class="member-check"><input type="checkbox" name="show_leaderboard" checked/>
+      {mt(lang,"optOut")}</label>
+     <p class="member-note">{mt(lang,"privacy")}</p>
+     <button type="submit">{mt(lang,"save")}</button>
+     <p data-profile-status role="status" aria-live="polite"></p>
+   </form>
+   <div data-member-bookmarks hidden>
+    <h4>{mt(lang,"myBookmarks")}</h4><ul data-bookmark-list></ul>
+    <p data-bookmark-empty>{mt(lang,"noBookmarks")}</p>
+   </div>
+  </section>
+ </div>
+ <dialog data-member-dialog aria-label={mt(lang,"viewProfile")}>
+   <div class="member-dialog-top">
+     <h3 data-dialog-name></h3>
+     <button type="button" data-dialog-close>{mt(lang,"close")}</button>
+   </div>
+   <p data-dialog-handle></p>
+   <p data-dialog-bio></p>
+   <p data-dialog-brand></p>
+   <p data-dialog-contribution></p>
+   <p data-dialog-join></p>
+ </dialog>
+</section>
+<style>
+.member-community{margin:30px 0;border-top:2px solid #cfe0cb;padding-top:28px;color:#244b34}
+.member-intro h2{font-size:clamp(23px,2.7vw,30px);margin:0 0 9px;color:#174d2d}
+.member-intro p{line-height:1.7;max-width:720px;color:#526b57}
+.member-grid{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(280px,.9fr);gap:18px;margin-top:22px}
+.member-leaders,.member-own{background:white;border:1px solid #cee1ce;border-radius:16px;padding:clamp(16px,3vw,25px);min-width:0}
+.member-section-head{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px}
+.member-section-head h3,.member-own h3{margin:0 0 13px;color:#194c2e;font-size:21px}
+.leaderboard-modes{display:flex;flex-wrap:wrap;gap:8px}
+.leaderboard-modes button{border:1px solid #c0d5c2;border-radius:24px;background:white;color:#265b37;padding:8px 11px;cursor:pointer}
+.leaderboard-modes button[aria-pressed="true"]{background:#225b38;color:white}
+.member-leaders ol{list-style:none;margin:14px 0 0;padding:0}
+.member-leaders li{display:flex;align-items:center;gap:12px;border-top:1px solid #e2eee0;padding:12px 0}
+.member-leaders li img{width:38px;height:38px;object-fit:cover;border-radius:50%}
+.member-rank-number{min-width:25px;font-weight:800;color:#2d6841}
+.member-entry{min-width:0;flex:1}
+.member-entry strong{display:block;overflow-wrap:anywhere;color:#1d482d}
+.member-entry small{color:#58705f}
+.member-score{font-weight:800;color:#225e3c;font-variant-numeric:tabular-nums}
+.member-own form{display:grid;gap:11px}
+.member-own label{font-weight:650;font-size:14px;display:grid;gap:6px}
+.member-own input:not([type="checkbox"]),.member-own textarea{padding:10px 11px;font:inherit;min-height:42px;border-radius:9px;border:1px solid #aac5ae;background:#fff;color:#253e2d;width:100%}
+.member-own textarea{resize:vertical}
+.member-own .member-check{display:flex;align-items:center;gap:10px;line-height:1.6}
+.member-own .member-check input{width:17px;height:17px;accent-color:#28663c}
+.member-note{font-size:12px;line-height:1.5;color:#526a59}
+.member-own button[type="submit"]{border:none;background:#286b42;color:white;padding:12px 16px;border-radius:9px;font:inherit;font-weight:750;cursor:pointer}
+.member-own button:disabled{opacity:.55;cursor:wait}
+.avatar-line{display:flex;gap:15px;align-items:center}
+.avatar-line img{border-radius:50%;object-fit:cover;border:1px solid #bdd5c3}
+.member-own h4{margin:18px 0 8px;color:#1e5136}
+.member-own li{line-height:1.7;overflow-wrap:anywhere}
+.member-own a{color:#215d39;text-decoration:underline}
+.member-leaders .member-profile-link{color:#215c39;font:inherit;font-weight:750;
+ text-decoration:underline;text-underline-offset:3px;background:transparent;border:0;
+ cursor:pointer;padding:0;text-align:left;overflow-wrap:anywhere}
+.member-community dialog{border:1px solid #bad2ba;border-radius:18px;max-width:min(94vw,540px);
+ background:#fff;color:#244b34;box-shadow:0 15px 60px #163c2670;padding:22px 25px}
+.member-community dialog::backdrop{background:#081d1499}
+.member-dialog-top{display:flex;justify-content:space-between;gap:18px;align-items:center}
+.member-dialog-top h3{margin:0;color:#245b39;font-size:22px;overflow-wrap:anywhere}
+.member-dialog-top button{border:1px solid #abc7ae;border-radius:9px;background:#f0f8ed;color:#245b39;padding:10px 12px;cursor:pointer}
+.member-community dialog p{overflow-wrap:anywhere;line-height:1.8;margin-bottom:8px}
+.member-profile-link:focus-visible,.member-dialog-top button:focus-visible{outline:3px solid #75b385;outline-offset:2px}
+.member-community [hidden]{display:none!important}
+.member-community button:focus-visible,.member-community input:focus-visible,
+.member-community textarea:focus-visible{outline:3px solid #75b385;outline-offset:2px}
+@media(max-width:780px){.member-grid{grid-template-columns:1fr}}
+</style>
+<script>
+type Profile={id:string;handle:string;display_name:string;bio:string;avatar_path:string|null;favorite_brand:string;created_at?:string;show_leaderboard:boolean;
+ score_total?:number;score_30d?:number;topic_count?:number;reply_count?:number;helpful_votes?:number};
+const tokenKey="tractorvs_forum_access";
+const widgets=document.querySelectorAll<HTMLElement>("[data-community-members]");
+for(const root of widgets){
+ const cfg=JSON.parse(root.dataset.memberConfig||"null") as {url:string;key:string}|null;
+ if(!cfg)continue;
+ const txt=JSON.parse(root.dataset.memberCopy||"{}") as Record<string,string>;
+ const lang=root.dataset.memberLang||"en";
+ const query=<T extends Element>(sel:string)=>root.querySelector<T>(sel);
+ const rankEl=query<HTMLOListElement>("[data-leaders]");
+ const empty=query<HTMLElement>("[data-leader-empty]");
+ const profileForm=query<HTMLFormElement>("[data-member-form]");
+ const guest=query<HTMLElement>("[data-member-guest]");
+ const status=query<HTMLElement>("[data-profile-status]");
+ const avatar=query<HTMLImageElement>("[data-member-avatar]");
+ const bookmarkPanel=query<HTMLElement>("[data-member-bookmarks]");
+ const bookmarkList=query<HTMLUListElement>("[data-bookmark-list]");
+ const bookmarkEmpty=query<HTMLElement>("[data-bookmark-empty]");
+ const dialog=query<HTMLDialogElement>("[data-member-dialog]");
+ const dialogName=query<HTMLElement>("[data-dialog-name]");
+ const dialogHandle=query<HTMLElement>("[data-dialog-handle]");
+ const dialogBio=query<HTMLElement>("[data-dialog-bio]");
+ const dialogBrand=query<HTMLElement>("[data-dialog-brand]");
+ const dialogContribution=query<HTMLElement>("[data-dialog-contribution]");
+ const dialogJoin=query<HTMLElement>("[data-dialog-join]");
+ query<HTMLButtonElement>("[data-dialog-close]")?.addEventListener("click",()=>dialog?.close());
+ let ownId="",token="",rankMode:"month"|"all"="month";
+ let leaders:Profile[]=[];
+ const headers=(auth=false)=>({apikey:cfg.key,Accept:"application/json",
+   ...(auth&&token?{Authorization:"Bearer "+token}:{})});
+ const avatarUrl=(p:Profile):string|null=>{
+  if(!p.avatar_path||p.avatar_path!==p.id+"/avatar.webp")return null;
+  return cfg.url+"/storage/v1/object/public/tc-forum-avatars/"+
+   encodeURIComponent(p.id)+"/avatar.webp";
+ };
+ function renderLeaders(){
+  if(!rankEl)return;
+  rankEl.replaceChildren();
+  const scores=[...leaders].sort((a,b)=>{
+   const left=Number(rankMode==="month"?b.score_30d:b.score_total)||0;
+   const right=Number(rankMode==="month"?a.score_30d:a.score_total)||0;
+   return left-right||(Number(b.score_total||0)-Number(a.score_total||0))||
+    a.handle.localeCompare(b.handle);
+  }).slice(0,15);
+  if(empty)empty.hidden=scores.length>0;
+  if(empty&&!scores.length)empty.textContent=txt.noMembers;
+  for(const [index,p] of scores.entries()){
+   const li=document.createElement("li");
+   const ordinal=document.createElement("span");ordinal.className="member-rank-number";ordinal.textContent="#"+(index+1);
+   li.append(ordinal);
+   const photo=avatarUrl(p);
+   if(photo){const img=document.createElement("img");img.src=photo;img.alt="";img.loading="lazy";li.append(img)}
+   const main=document.createElement("span");main.className="member-entry";
+   const name=document.createElement("button");name.type="button";
+   name.className="member-profile-link";name.textContent=p.display_name||p.handle;
+   name.setAttribute("aria-label",txt.viewProfile+": "+(p.display_name||p.handle));
+   name.addEventListener("click",()=>{
+    if(!dialog)return;
+    if(dialogName)dialogName.textContent=p.display_name||p.handle;
+    if(dialogHandle)dialogHandle.textContent="@"+p.handle;
+    if(dialogBio)dialogBio.textContent=p.bio||"";
+    if(dialogBrand)dialogBrand.textContent=p.favorite_brand?txt.favoriteBrand+": "+p.favorite_brand:"";
+    if(dialogContribution)dialogContribution.textContent=
+      txt.topics+": "+String(p.topic_count||0)+" · "+txt.replies+": "+String(p.reply_count||0)+
+      " · "+txt.helpful+": "+String(p.helpful_votes||0)+" · "+txt.points+": "+String(p.score_total||0);
+    if(dialogJoin)dialogJoin.textContent=p.created_at?
+      txt.memberSince+": "+new Date(p.created_at).toLocaleDateString(lang):"";
+    dialog.showModal();
+   });
+   const minor=document.createElement("small");
+   const badge=(p.score_total||0)>=150?txt.mentor:(p.score_total||0)>=25?txt.contributor:txt.newcomer;
+   minor.textContent="@"+p.handle+" · "+badge;
+   main.append(name,minor);li.append(main);
+   const score=document.createElement("span");score.className="member-score";
+   score.textContent=String(rankMode==="month"?p.score_30d||0:p.score_total||0)+" "+txt.points;
+   li.append(score);rankEl.append(li);
+  }
+ }
+ async function loadLeaders(){
+  try{
+   const params=new URLSearchParams({select:"id,handle,display_name,bio,favorite_brand,avatar_path,created_at,show_leaderboard,score_total,score_30d,topic_count,reply_count,helpful_votes",
+    show_leaderboard:"eq.true",order:"score_30d.desc,score_total.desc",limit:"60"});
+   const res=await fetch(cfg.url+"/rest/v1/tc_member_scores?"+params,{headers:headers(),cache:"no-store",
+    signal:AbortSignal.timeout(12000)});
+   if(!res.ok)throw Error();
+   leaders=await res.json();renderLeaders();
+  }catch{if(empty)empty.textContent=txt.noMembers}
+ }
+ async function loadBookmarks(){
+  if(!bookmarkList||!bookmarkPanel)return;
+  bookmarkList.replaceChildren();bookmarkPanel.hidden=!ownId;
+  if(!ownId)return;
+  try{
+   const res=await fetch(cfg.url+"/rest/v1/tc_member_bookmarks?select=topic_id&order=created_at.desc&limit=15",
+    {headers:headers(true),cache:"no-store",signal:AbortSignal.timeout(12000)});
+   if(!res.ok)throw Error();
+   const saved=await res.json() as {topic_id:string}[];
+   const ids=saved.map(x=>x.topic_id).filter(x=>/^[a-f0-9-]{36}$/.test(x));
+   if(!ids.length){if(bookmarkEmpty)bookmarkEmpty.hidden=false;return}
+   const path=new URLSearchParams({select:"id,title,slug,locale",status:"eq.published",
+     id:"in.("+ids.join(",")+")"});
+   const topics=await fetch(cfg.url+"/rest/v1/tc_forum_topics?"+path,
+    {headers:headers(true),cache:"no-store",signal:AbortSignal.timeout(12000)});
+   if(!topics.ok)throw Error();
+   const rows=await topics.json() as {id:string;title:string;slug:string;locale:string}[];
+   for(const p of rows){
+    const li=document.createElement("li"),link=document.createElement("a");
+    const prefix=p.locale==="en"?"":"/"+p.locale;
+    link.href=prefix+"/forum/"+encodeURIComponent(p.slug)+"/";
+    link.textContent=p.title;li.append(link);bookmarkList.append(li);
+   }
+   if(bookmarkEmpty)bookmarkEmpty.hidden=rows.length>0;
+  }catch{if(bookmarkEmpty)bookmarkEmpty.hidden=false}
+ }
+ async function loadSelf(){
+  try{token=sessionStorage.getItem(tokenKey)||""}catch{token=""}
+  ownId="";
+  if(!token){
+   if(profileForm)profileForm.hidden=true;
+   if(guest)guest.hidden=false;
+   if(bookmarkPanel)bookmarkPanel.hidden=true;
+   return;
+  }
+  try{
+   const res=await fetch(cfg.url+"/auth/v1/user",{headers:headers(true),cache:"no-store",
+    signal:AbortSignal.timeout(12000)});
+   if(!res.ok)throw Error();
+   const user=await res.json();
+   if(!/^[0-9a-f-]{36}$/i.test(user.id||""))throw Error();
+   ownId=user.id;
+   if(guest)guest.hidden=true;
+   if(profileForm)profileForm.hidden=false;
+   const profile=await fetch(cfg.url+"/rest/v1/tc_member_profiles?"+
+    new URLSearchParams({select:"id,handle,display_name,bio,avatar_path,favorite_brand,show_leaderboard",
+     id:"eq."+ownId,limit:"1"}),{headers:headers(true),cache:"no-store",
+     signal:AbortSignal.timeout(12000)});
+   if(!profile.ok)throw Error();
+   const rows=await profile.json() as Profile[],p=rows[0];
+   if(profileForm){
+    for(const key of ["handle","display_name","bio","favorite_brand"]){
+     const field=profileForm.elements.namedItem(key) as HTMLInputElement|null;
+     if(field)field.value=p?String(p[key as keyof Profile]||""):"";
+    }
+    const checked=profileForm.elements.namedItem("show_leaderboard") as HTMLInputElement|null;
+    if(checked)checked.checked=p?p.show_leaderboard:true;
+   }
+   if(avatar){
+    const src=p?avatarUrl(p):null;
+    avatar.hidden=!src;if(src)avatar.src=src+"?v="+Date.now();
+   }
+   await loadBookmarks();
+  }catch{
+   ownId="";
+   if(profileForm)profileForm.hidden=true;
+   if(guest)guest.hidden=false;
+  }
+ }
+ profileForm?.addEventListener("submit",async event=>{
+  event.preventDefault();
+  if(!ownId||!token)return;
+  const submit=profileForm.querySelector<HTMLButtonElement>('button[type="submit"]');
+  if(submit?.disabled)return;
+  const get=(name:string)=>String((profileForm.elements.namedItem(name) as HTMLInputElement|null)?.value||"").trim();
+  const handle=get("handle").toLowerCase(),display_name=get("display_name");
+  if(!/^[a-z][a-z0-9_]{2,23}$/.test(handle)||display_name.length<2||display_name.length>40){
+   if(status)status.textContent=txt.profileError;return;
+  }
+  if(submit)submit.disabled=true;
+  if(status)status.textContent=txt.loading;
+  try{
+   let avatar_path:string|null=null;
+   const file=(profileForm.elements.namedItem("avatar") as HTMLInputElement|null)?.files?.[0];
+   if(file){
+    if(!["image/jpeg","image/png","image/webp"].includes(file.type)||file.size>5_000_000)
+     throw Error("invalid_image");
+    // Browser-side 256x256 WebP conversion strips EXIF/GPS metadata.
+    const image=await createImageBitmap(file);
+    const canvas=document.createElement("canvas");
+    canvas.width=256;canvas.height=256;
+    const context=canvas.getContext("2d");
+    if(!context)throw Error("invalid_image");
+    const side=Math.min(image.width,image.height);
+    context.drawImage(image,(image.width-side)/2,(image.height-side)/2,side,side,0,0,256,256);
+    image.close();
+    const blob=await new Promise<Blob|null>(resolve=>canvas.toBlob(resolve,"image/webp",.82));
+    if(!blob||blob.type!=="image/webp"||blob.size>350_000)throw Error("invalid_image");
+    const path=ownId+"/avatar.webp";
+    const upload=await fetch(cfg.url+"/storage/v1/object/tc-forum-avatars/"+path,{
+     method:"POST",headers:{apikey:cfg.key,Authorization:"Bearer "+token,
+      "Content-Type":"image/webp","x-upsert":"true","cache-control":"3600"},
+     body:blob,signal:AbortSignal.timeout(20000)});
+    if(!upload.ok)throw Error("invalid_image");
+    avatar_path=path;
+   }
+   const show_leaderboard=Boolean((profileForm.elements.namedItem("show_leaderboard") as HTMLInputElement|null)?.checked);
+   const body={id:ownId,handle,display_name,bio:get("bio"),
+    favorite_brand:get("favorite_brand"),show_leaderboard,
+    ...(avatar_path?{avatar_path}:{})};
+   const res=await fetch(cfg.url+"/rest/v1/tc_member_profiles?on_conflict=id",{
+    method:"POST",headers:{...headers(true),"Content-Type":"application/json",
+     Prefer:"resolution=merge-duplicates,return=representation"},
+    body:JSON.stringify(body),signal:AbortSignal.timeout(15000)});
+   if(!res.ok)throw Error("save_profile");
+   if(status)status.textContent=txt.saved;
+   const image=avatar;if(image&&avatar_path){
+    image.hidden=false;image.src=cfg.url+"/storage/v1/object/public/tc-forum-avatars/"+
+      ownId+"/avatar.webp?v="+Date.now();
+   }
+   await loadLeaders();
+  }catch(e){
+   if(status)status.textContent=e instanceof Error&&e.message==="invalid_image"?txt.uploadError:txt.profileError;
+  }finally{if(submit)submit.disabled=false}
+ });
+ for(const button of root.querySelectorAll<HTMLButtonElement>("[data-rank-mode]")){
+  button.addEventListener("click",()=>{
+   rankMode=button.dataset.rankMode==="all"?"all":"month";
+   root.querySelectorAll<HTMLButtonElement>("[data-rank-mode]").forEach(b=>
+    b.setAttribute("aria-pressed",String(b===button)));
+   renderLeaders();
+  });
+ }
+ window.addEventListener("tractorvs-forum-session",()=>void loadSelf());
+ window.addEventListener("storage",()=>void loadSelf());
+ void loadLeaders();void loadSelf();
+}
+</script>

@@ -1,5 +1,6 @@
 ---
 import {forumText as ft,FORUM_CATEGORY_KEYS} from "../lib/forum-i18n.ts";
+import {MEMBER_TEXT,memberText as mt} from "../lib/member-i18n.ts";
 import {publicForumClientConfig} from "../lib/forum.ts";
 import {getPublicCatalog} from "../lib/catalog.ts";
 import {LOCALES,LOCALE_NAMES,LOCALE_TAGS,type Locale} from "../lib/locales.ts";
@@ -13,6 +14,7 @@ const catalogue=mode==="topic" ? (await getPublicCatalog()).tractors : [];
 const choices=[...catalogue].sort((a,b)=>
  a.brand_name.localeCompare(b.brand_name)||a.model_name.localeCompare(b.model_name));
 const browserConfig=JSON.stringify(cfg?{url:cfg.url,key:cfg.key,lang,mode,topicId:topicId||null}:null);
+const memberMessages=JSON.stringify(MEMBER_TEXT[lang]);
 const strings=JSON.stringify({
  pending:ft(lang,"pending"),sent:ft(lang,"sent"),authRequired:ft(lang,"authRequired"),
  sendError:ft(lang,"sendError"),
@@ -33,7 +35,7 @@ const strings=JSON.stringify({
 });
 ---
 <section id="forum-compose" tabindex="-1" class="community-composer" data-forum-composer
- data-forum-config={browserConfig} data-forum-messages={strings}>
+ data-forum-config={browserConfig} data-forum-messages={strings} data-member-messages={memberMessages}>
  <h2>{mode==="topic"?ft(lang,"compose"):ft(lang,"reply")}</h2>
  {cfg ? <>
   <div class="forum-auth">
@@ -44,6 +46,39 @@ const strings=JSON.stringify({
       </label>
       <button type="submit">{ft(lang,"sendLink")}</button>
     </form>
+    <details data-password-choice class="forum-password-choice">
+      <summary>{mt(lang,"passwordLogin")} / {mt(lang,"register")}</summary>
+      <form data-forum-password>
+        <label>{ft(lang,"email")}
+         <input type="email" name="email" maxlength="254" autocomplete="email" placeholder="name@example.com" required/>
+        </label>
+        <label>{mt(lang,"password")}
+         <input type="password" name="password" autocomplete="current-password" required/>
+         <small>{mt(lang,"passwordHint")}</small>
+        </label>
+        <label class="forum-password-reveal">
+         <input type="checkbox" data-password-reveal/> {mt(lang,"showPassword")}
+        </label>
+        <div class="forum-auth-buttons">
+         <button type="submit" value="signin" name="operation">{mt(lang,"passwordLogin")}</button>
+         <button type="submit" value="signup" name="operation">{mt(lang,"register")}</button>
+         <button type="button" data-password-reset>{mt(lang,"forgotPassword")}</button>
+        </div>
+      </form>
+    </details>
+    <form data-forum-set-password hidden>
+      <p>{mt(lang,"resetNewPassword")}</p>
+      <label>{mt(lang,"password")} <input type="password" name="new_password"
+        autocomplete="new-password" required minlength="12"/></label>
+      <label>{mt(lang,"password")} <input type="password" name="confirm_password"
+        autocomplete="new-password" required minlength="12"/></label>
+      <button type="submit">{mt(lang,"resetSave")}</button>
+    </form>
+    <div class="forum-social" data-forum-social>
+      <p>{mt(lang,"otherLogin")}</p>
+      <button type="button" data-forum-oauth="google">{mt(lang,"google")}</button>
+      <button type="button" data-forum-oauth="github">{mt(lang,"github")}</button>
+    </div>
     <div data-mail-step hidden tabindex="-1">
      <strong data-sent-address></strong>
      <p>{ft(lang,"checkMail")}</p>
@@ -122,6 +157,17 @@ const strings=JSON.stringify({
 .community-composer .forum-checkbox input{margin-top:4px;flex:none;width:17px;height:17px;accent-color:#22673c}
 .forum-guidelines{color:#516859;font-size:13px;line-height:1.65}
 .forum-message{font-size:14px;line-height:1.6;overflow-wrap:anywhere;font-weight:700;color:#25553b}
+.community-composer .forum-auth-buttons{display:flex;flex-wrap:wrap;gap:10px}
+.community-composer .forum-password-choice{margin:10px 0}
+.community-composer .forum-social{border-top:1px solid #bfd5be;padding-top:13px;display:flex;align-items:center;flex-wrap:wrap;gap:10px}
+.community-composer .forum-social p{width:100%;font-weight:650}
+.community-composer .forum-social button{background:white;color:#235d39;border:1px solid #9dbba5}
+.community-composer .forum-social button:hover{background:#e8f4e7}
+.community-composer .forum-password-choice small{font-weight:500;color:#52705d}
+.community-composer .forum-password-reveal{display:flex;align-items:center;gap:9px;font-weight:600}
+.community-composer .forum-password-reveal input{width:17px;height:17px;accent-color:#24643b}
+.community-composer .forum-auth-buttons button[data-password-reset]{background:transparent;color:#23603b;
+ text-decoration:underline;padding:10px 0}
 .community-composer [hidden]{display:none!important}
 </style>
 <script>
@@ -133,8 +179,13 @@ for(const widget of widgets){
    {url:string;key:string;lang:string;mode:"topic"|"reply";topicId:string|null}|null;
  if(!cfg)continue;
  const copy=JSON.parse(widget.dataset.forumMessages||"{}") as Record<string,string>;
+ const memberCopy=JSON.parse(widget.dataset.memberMessages||"{}") as Record<string,string>;
  const el=<T extends HTMLElement>(selector:string)=>widget.querySelector<T>(selector);
  const authForm=el<HTMLFormElement>("[data-forum-email]");
+ const passwordForm=el<HTMLFormElement>("[data-forum-password]");
+ const passwordChoice=el<HTMLDetailsElement>("[data-password-choice]");
+ const socialBox=el<HTMLElement>("[data-forum-social]");
+ const resetForm=el<HTMLFormElement>("[data-forum-set-password]");
  const mailStep=el<HTMLElement>("[data-mail-step]");
  const codeOption=el<HTMLDetailsElement>("[data-code-option]");
  const sentAddress=el<HTMLElement>("[data-sent-address]");
@@ -218,6 +269,7 @@ for(const widget of widgets){
     else sessionStorage.removeItem(refreshKey);
    }
   }catch{}
+  window.dispatchEvent(new Event("tractorvs-forum-session"));
  }
  function setLogin(loggedIn:boolean){
   if(historyPanel)historyPanel.hidden=!loggedIn;
@@ -231,10 +283,14 @@ for(const widget of widgets){
   }
   if(postForm)postForm.hidden=!loggedIn;
   if(authForm)authForm.hidden=loggedIn;
+  if(passwordChoice)passwordChoice.hidden=loggedIn;
+  if(socialBox)socialBox.hidden=loggedIn;
+  if(resetForm)resetForm.hidden=true;
   if(mailStep)mailStep.hidden=true;
   if(codeOption)codeOption.open=false;
   verifyForm?.reset();
   if(logout)logout.hidden=!loggedIn;
+  window.dispatchEvent(new Event("tractorvs-forum-session"));
  }
  async function verifySession(jwt:string,refresh?:string):Promise<boolean>{
   if(!jwt)return false;
@@ -274,6 +330,7 @@ for(const widget of widgets){
  }
  const hash=new URLSearchParams(location.hash.replace(/^#/,""));
  const fromLink=hash.get("access_token");
+ const isRecovery=hash.get("type")==="recovery";
  if(fromLink){
   history.replaceState(null,"",location.pathname+location.search);
   const attemptPromise=verifySession(fromLink,hash.get("refresh_token")||"");
@@ -281,12 +338,15 @@ for(const widget of widgets){
   attemptPromise.then(ok=>{
    if(expectedAttempt!==activeAuthAttempt)return;
    if(!ok)msg(copy.oldLink);
+   if(ok&&isRecovery&&resetForm){resetForm.hidden=false;
+    resetForm.querySelector<HTMLInputElement>("input")?.focus()}
    widget.scrollIntoView({block:"start"});
    if(ok)widget.focus({preventScroll:true});
   });
  }else if(hash.has("error")||hash.has("error_code")){
   history.replaceState(null,"",location.pathname+location.search);
-  msg(copy.oldLink);widget.scrollIntoView({block:"start"});
+  const expiredEmail=(hash.get("error_code")||"").startsWith("otp_");
+  msg(expiredEmail?copy.oldLink:(memberCopy.oauthError||copy.oldLink));widget.scrollIntoView({block:"start"});
  }else{
   try{
    const attemptPromise=verifySession(sessionStorage.getItem(tokenKey)||"",sessionStorage.getItem(refreshKey)||"");
@@ -326,6 +386,91 @@ for(const widget of widgets){
   }catch{if(requestAttempt===activeAuthAttempt)msg(copy.sendError)}
   finally{if(button)button.disabled=false}
  });
+
+
+ passwordForm?.querySelector<HTMLInputElement>("[data-password-reveal]")?.addEventListener("change",ev=>{
+  const reveal=(ev.currentTarget as HTMLInputElement).checked;
+  const input=passwordForm.elements.namedItem("password") as HTMLInputElement|null;
+  if(input)input.type=reveal?"text":"password";
+ });
+ passwordForm?.querySelector<HTMLButtonElement>("[data-password-reset]")?.addEventListener("click",async()=>{
+  if(!cfg)return;
+  const email=(passwordForm.elements.namedItem("email") as HTMLInputElement|null)?.value.trim()||"";
+  if(!email||!passwordForm.querySelector<HTMLInputElement>("input[name=email]")?.checkValidity()){
+   passwordForm.querySelector<HTMLInputElement>("input[name=email]")?.reportValidity();return;
+  }
+  const button=passwordForm.querySelector<HTMLButtonElement>("[data-password-reset]");
+  if(button?.disabled)return;
+  if(button)button.disabled=true;
+  try{
+   const redirect=new URL(location.pathname,location.origin).toString();
+   const res=await fetch(cfg.url+"/auth/v1/recover?redirect_to="+encodeURIComponent(redirect),{
+    method:"POST",headers:header(),body:JSON.stringify({email}),
+    signal:AbortSignal.timeout(15000)});
+   msg(res.status===429?copy.retryLater:res.ok?memberCopy.resetEmailSent:memberCopy.authError);
+  }catch{msg(memberCopy.authError)}
+  finally{if(button)button.disabled=false}
+ });
+ resetForm?.addEventListener("submit",async ev=>{
+  ev.preventDefault();
+  if(!token)return;
+  const password=(resetForm.elements.namedItem("new_password") as HTMLInputElement|null)?.value||"";
+  const confirm=(resetForm.elements.namedItem("confirm_password") as HTMLInputElement|null)?.value||"";
+  if(password.length<12){msg(memberCopy.passwordShort);return}
+  if(password!==confirm){msg(memberCopy.passwordMismatch);return}
+  const button=resetForm.querySelector<HTMLButtonElement>('button[type="submit"]');
+  if(button?.disabled)return;
+  if(button)button.disabled=true;
+  try{
+   const res=await fetch(cfg.url+"/auth/v1/user",{
+    method:"PUT",headers:header(token),body:JSON.stringify({password}),
+    signal:AbortSignal.timeout(15000)});
+   if(res.ok){msg(memberCopy.resetUpdated);resetForm.reset();resetForm.hidden=true}
+   else msg(memberCopy.authError);
+  }catch{msg(memberCopy.authError)}
+  finally{if(button)button.disabled=false}
+ });
+ passwordForm?.addEventListener("submit",async ev=>{
+  ev.preventDefault();
+  const form=passwordForm;
+  const address=(form.elements.namedItem("email") as HTMLInputElement|null)?.value.trim()||"";
+  const input=form.elements.namedItem("password") as HTMLInputElement|null;
+  const password=input?.value||"";
+  const submitter=(ev as SubmitEvent).submitter as HTMLButtonElement|null;
+  const signup=submitter?.value==="signup";
+  if(!address||address.length>254||!password)return;
+  if(signup&&password.length<12){msg(memberCopy.passwordShort);input?.focus();return}
+  const buttons=[...form.querySelectorAll<HTMLButtonElement>("button[type=submit]")];
+  if(buttons.some(b=>b.disabled))return;
+  buttons.forEach(b=>b.disabled=true);
+  msg(copy.loading||"...");
+  try{
+   const callback=new URL(location.pathname,location.origin).toString();
+   const endpoint=signup?"/auth/v1/signup":"/auth/v1/token?grant_type=password";
+   const url=cfg.url+endpoint+(signup?"?redirect_to="+encodeURIComponent(callback):"");
+   const response=await fetch(url,{method:"POST",headers:header(),
+    body:JSON.stringify({email:address,password}),signal:AbortSignal.timeout(15000)});
+   if(!response.ok){msg(response.status===429?copy.retryLater:memberCopy.authError);return}
+   const data=await response.json();
+   if(typeof data.access_token==="string"&&data.access_token){
+    if(!await verifySession(data.access_token,typeof data.refresh_token==="string"?data.refresh_token:"")){
+     msg(memberCopy.authError);
+    }else{form.reset()}
+   }else if(signup){msg(memberCopy.emailConfirm);form.reset()}
+   else msg(memberCopy.authError);
+  }catch{msg(memberCopy.authError)}
+  finally{buttons.forEach(b=>b.disabled=false)}
+ });
+ for(const button of widget.querySelectorAll<HTMLButtonElement>("[data-forum-oauth]")){
+  button.addEventListener("click",()=>{
+   const provider=button.dataset.forumOauth;
+   if(provider!=="google"&&provider!=="github")return;
+   const authUrl=new URL("/auth/v1/authorize",cfg.url);
+   authUrl.searchParams.set("provider",provider);
+   authUrl.searchParams.set("redirect_to",new URL(location.pathname,location.origin).toString());
+   location.assign(authUrl.toString());
+  });
+ }
  verifyForm?.addEventListener("submit",async ev=>{
   ev.preventDefault();
   const code=(verifyForm.elements.namedItem("code") as HTMLInputElement|null)?.value.trim()||"";
