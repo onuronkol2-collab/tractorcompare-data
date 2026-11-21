@@ -514,6 +514,13 @@ const rawSpecNameLabels: Record<string, { en: string; tr: string }> = {
 };
 
 const specLabels: Record<string, { en: string; tr: string }> = {
+  // Publication provenance: do not promote OEM marketing/unspecified standard values to rated power.
+  engine_hp_category: {"en":"Manufacturer horsepower category (not measured engine power)","tr":"Üreticinin HP sınıfı (ölçülmüş motor gücü değil)"},
+  manufacturer_engine_power_unspecified_standard: {"en":"Manufacturer-stated engine power (test standard not stated)","tr":"Üreticinin belirttiği motor gücü (ölçüm standardı belirtilmemiş)"},
+  manufacturer_max_pto_power_unspecified_standard: {"en":"Manufacturer-stated maximum PTO power (test standard not stated)","tr":"Üreticinin belirttiği azami kuyruk mili gücü (ölçüm standardı belirtilmemiş)"},
+  manufacturer_f25_rops_weight_unscoped: {"en":"F25 weight with ROPS (gearbox variant unspecified)","tr":"F25 ROPS ağırlığı (şanzıman varyantı belirtilmemiş)"},
+  weight_unspecified: {"en":"Weight (load condition unspecified)","tr":"Ağırlık (yük durumu belirtilmemiş)"},
+  transmission_configuration: {"en":"Transmission configuration","tr":"Şanzıman düzeni"},
   adblue_tank_capacity: { en: "AdBlue tank capacity", tr: "AdBlue deposu kapasitesi" },
   engine_aspiration: { en: "Aspiration", tr: "Motor besleme sistemi" },
   cooling_system: { en: "Cooling system", tr: "Soğutma sistemi" },
