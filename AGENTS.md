@@ -52,6 +52,9 @@ GitHub (Actions, CodeQL, Dependabot, Dependency graph, Malware alerts, Secret Pr
 
 ### İzinli forum çevirileri için gerçek işleyici (21 Kasım 2026)
 
+- **Kullanıcı kontrolü — 21 Kasım 2026:** GitHub `.github/workflows/tractorvs-forum-translation.yml` iş akışının otomatik `schedule` ve `push` tetiklemeleri kullanıcı talebiyle kapatıldı. Çeviri sağlayıcısına ücretli veya uzun süren istekler, yalnız kullanıcı tarafından **manuel `workflow_dispatch` ve `onay=ONAY`** ile açıkça başlatılabilir. `pull_request` testleri ücretsiz doğrulama amaçlıdır; çeviri kuyruğunu işlemez. Yeni bir otomatik çeviri takvimi veya işleme tetiklemesi kullanıcıdan ayrıca açık izin almadan eklenemez. **ChatGPT sohbetindeki Durdur düğmesi harici GitHub işlerini otomatik durdurmaz**; otomasyonları bu düğmeye bağlıymış gibi anlatma.
+
+
 - **Uzun forum makalelerinde** satır ve Markdown tablo bütünlüğünü koruyan küçük parçalara ayrılmış işleme tercih et. Her bölüm ayrı çeviri ve bağımsız QA'dan sonra yalnız `needs_review` / `seo_approved=false` özel kayıtta `PARTS:N/T` ilerleme işaretiyle saklanır. Tam metin ve son yerel sayı/marka/URL karşılaştırması ile DB fact/language QA başarılı olunca `ready` olabilir. Kısmi çeviri asla indekslenmez veya yayımlanmaz; sorun olursa kaynak metin ve tamamlanan bölümler kaybolmadan devam edilir.
 
 
@@ -59,7 +62,7 @@ GitHub (Actions, CodeQL, Dependabot, Dependency graph, Malware alerts, Secret Pr
 - Sunucu tarafı `tractor-forum-translate` Edge Function, anonim JWT + özel kuyruk sırrıyla GitHub Actions içinden çağrılır. Servis rolü ve Gemini API anahtarı yalnız Supabase Edge ortamında kalır. İzin vermemiş kullanıcı, gizli konu, değişmiş kaynak metin ve özel medya Gemini'ye gönderilmez.
 - Kaynağı `published`, `translation_consent=true` ve güncel source_hash ile doğrulayan, retry/idempotency ve denetlenebilir job statüsü olan sınırlı işleyici kullan. Kaynak iptal/değişikliklerinde `superseded` yapılır; sessizce uydurma çeviri yayımlanmaz.
 - Diller: en, zh, hi, pt-br, fr, de, ru, ja, es. Her dilde tamamlanmış içerik için sayı, ölçüm, marka, araştırma kapsamı, kaynak URL, tam tablo/başlık yapısı ve ikinci bağımsız Gemini kalite incelemesi gerekir. Kusurlu çıktılar `needs_review`, SEO dışı ve görünmez kalır.
-- Statik dil sayfaları yalnız hazır, kaynak özetiyle eşleşen ve QA onaylı `ready` çevirilerin ardından normal Cloudflare eşitlemesiyle üretilir. GitHub schedule gecikebilir; 9 dilin anında yayımlanmasını vaat etme.
+- Statik dil sayfaları yalnız hazır, kaynak özetiyle eşleşen ve QA onaylı `ready` çevirilerin ardından normal Cloudflare eşitlemesiyle üretilir. GitHub çeviri işleme takvimi kapalıdır; yalnız kullanıcı açıkça başlatır. Dokuz dilin kendiliğinden veya anında yayımlanacağını söyleme.
 
 ### Yeni gönderiler için canlı okuma katmanı (21 Kasım 2026)
 
