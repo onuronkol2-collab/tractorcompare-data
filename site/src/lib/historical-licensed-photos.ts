@@ -434,6 +434,26 @@ const candidates=[
     "license": "CC BY-SA 4.0",
     "width": 4200,
     "height": 2800
+  },
+  {
+    "brand": "Steyr",
+    "model": "6200 IMPULS",
+    "fileId": "steyr-6200-impuls-2025",
+    "path": "6/6c/Steyr_6200_Impuls_CVT_Agritechnica_2025_%28DSC03498%29.jpg",
+    "photographer": "MarcelX42",
+    "license": "CC BY-SA 4.0",
+    "width": 5946,
+    "height": 4459
+  },
+  {
+    "brand": "Steyr",
+    "model": "6440 CERVUS CVT",
+    "fileId": "steyr-6440-cervus-cvt-2025",
+    "path": "2/23/Steyr_6440_Cervus_CVT_Agritechnica_2025_%28DSC04360%29.jpg",
+    "photographer": "MarcelX42",
+    "license": "CC BY-SA 4.0",
+    "width": 6164,
+    "height": 4627
   }
 ] as const;
 function licenseUrl(name:string):string{
