@@ -317,6 +317,25 @@ export const TECHNICAL_DEEP_DIVES = [
         }
       },
       {
+        "anchor": "olcum-standartlari",
+        "title": {
+          "tr": "ISO 14396, UN/ECE R120 ve OECD Code 2: aynı güç ölçümü mü?",
+          "en": "ISO 14396, UN/ECE R120 and OECD Code 2: which power is measured?"
+        },
+        "paragraphs": {
+          "tr": [
+            "Bir üretici katalogunda ISO 14396 veya UN/ECE R120 ifadesini görmeniz, gücün belirli bir motor test yöntemine göre beyan edildiğini anlatır. Bu bilgi motor gücüne ilişkindir; aynı sayıyı doğrudan traktörün kuyruk milinde (PTO) veya çekiş noktasında kullanabileceğiniz güç olarak yorumlamayın. Standart adını, motor devrini ve nominal/azami güç ayrımını birlikte okuyun.",
+            "OECD Code 2 farklı bir soruya yanıt verir: Traktörün performansı, belirlenmiş deney koşullarında kuyruk mili, çeki demiri ve mevcut hidrolik çıkışlar gibi noktalardan ölçülür. Bu nedenle OECD raporundaki PTO veya çeki gücü ile üreticinin motor gücü beyanı aynı ölçüm değildir. Örneğin 100 HP motor gücü ile 100 HP PTO gücünü tek bir sütunda eşdeğer kabul etmeyin.",
+            "Bir karşılaştırma yapmadan önce beş bilgiyi kontrol edin: tam model ve varyant, ülke/pazar ve emisyon sürümü, ölçüm standardı, güç değeri için belirtilen motor devri, ek gücün (boost) hangi koşullarda etkin olduğu. Bağımsız bir OECD raporu varsa test edilen traktörün lastik, donanım ve motor sürümüyle aradığınız modelin gerçekten eşleştiğini doğrulayın. Eksik bilgi varsa sonuç 'doğrudan karşılaştırılamaz' olmalıdır."
+          ],
+          "en": [
+            "A brochure mentioning ISO 14396 or UN/ECE R120 is describing an engine-output declaration measured under a defined engine test procedure. It is not automatically the power available at the tractor's PTO shaft or drawbar. Read the standard, engine speed and rated-versus-maximum qualification together before comparing advertised horsepower.",
+            "OECD Code 2 answers a different question by testing the tractor's performance under specified procedures. Its published summaries may include PTO power and fuel consumption, drawbar performance and available hydraulic output. A maker's engine claim is therefore not interchangeable with an OECD PTO or drawbar test value. Even identical numerical horsepower figures are not equivalent unless the measured output and procedure are the same.",
+            "Before deciding, check five details: exact model/variant, country and emissions version, measurement standard, rpm associated with the power figure, and when any temporary boost becomes available. If an independent test is cited, verify the tested tractor's equipment and engine version against the one you are buying. An unavailable test basis should be labelled 'not directly comparable', not silently assumed."
+          ]
+        }
+      },
+      {
         "anchor": "katalog-karsilastirma",
         "title": {
           "tr": "İki traktörün gücünü güvenilir biçimde karşılaştırın",

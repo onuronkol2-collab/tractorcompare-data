@@ -63,9 +63,9 @@ test("technical terms and three deep-dive Turkish chapters are rewritten in ever
  assert.equal(TECHNICAL_DEEP_DIVES.length,3);
  for(const guide of TECHNICAL_DEEP_DIVES){
   assert.ok(guide.lead.tr.length>200);
-  assert.equal(guide.sections.length,5);
+  assert.equal(guide.sections.length,guide.slug==="tractor-engine-power-and-torque"?6:5);
   for(const section of guide.sections){
-    assert.equal(section.paragraphs.tr.length,2);
+    assert.equal(section.paragraphs.tr.length,section.anchor==="olcum-standartlari"?3:2);
     assert.ok(section.paragraphs.tr.every(p=>p.length>85));
   }
  }

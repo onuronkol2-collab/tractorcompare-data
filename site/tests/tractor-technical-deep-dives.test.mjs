@@ -15,14 +15,14 @@ test("three original deep-dive chapters include substantive bilingual educationa
   assert.match(article.slug,/^[a-z0-9]+(?:-[a-z0-9]+)*$/);
   assert.ok(!slugs.has(article.slug));slugs.add(article.slug);
   assert.equal(getTechnicalDeepDive(article.slug),article);
-  assert.equal(article.sections.length,5);
+  assert.equal(article.sections.length,article.slug==="tractor-engine-power-and-torque"?6:5);
   assert.equal(article.glossary.length,5);
   const ids=new Set();
   for(const section of article.sections){
    assert.ok(!ids.has(section.anchor),section.anchor);ids.add(section.anchor);
    for(const locale of ["en","tr"]){
     assert.ok(section.title[locale].length>12);
-    assert.equal(section.paragraphs[locale].length,2);
+    assert.equal(section.paragraphs[locale].length,section.anchor==="olcum-standartlari"?3:2);
     for(const paragraph of section.paragraphs[locale])assert.ok(paragraph.length>85,
      article.slug+" "+locale+" needs substantive paragraphs");
    }
