@@ -16,6 +16,17 @@ const schema = {
   publisher: { "@type": "Organization", name: "TractorVS", url: "https://tractorvs.com/" },
   isAccessibleForFree: true,
   dateModified: "2026-11-21",
+  image: {
+    "@type": "ImageObject",
+    contentUrl: "https://tractorvs.com/images/tractors/claas-axion-870-1c6e17f1-480.jpg",
+    width: 480,
+    height: 360,
+    caption: "Claas Axion 870 modelini gösteren temsili fotoğraf; saha testindeki traktör değildir.",
+    creator: { "@type": "Person", name: "JoachimKohler-HB" },
+    creditText: "JoachimKohler-HB / Wikimedia Commons",
+    license: "https://creativecommons.org/licenses/by-sa/4.0/",
+    acquireLicensePage: "https://commons.wikimedia.org/wiki/File:Claas_Axion_870.jpg",
+  },
 };
 ---
 <SiteLayout lang="tr" title={"2026–2027 Traktör Arıza ve Güvenilirlik Araştırması | TractorVS"}
@@ -33,6 +44,16 @@ const schema = {
         <strong>Kanıt düzeyleri ayrıştırılmış araştırma</strong>
         <p>Bağımsız uzun dönem testleri, tarihsel kullanıcı anketleri ve 2026 pazar verileri. Kaynaklar doğrudan bağlantılıdır; küresel satış başına arıza oranı bulunmadığında veri uydurulmaz.</p>
       </div>
+      <nav class="research-toc" aria-label="Araştırmada hızlı gezinme">
+        <strong>İlgilendiğiniz bölüme geçin</strong>
+        <div class="research-toc-links">
+          <a href="#ozet">30 saniyelik sonuç</a>
+          <a href="#teknik-sorunlar">Teknik sorun kayıtları</a>
+          <a href="#uzun-donem">Olumlu saha deneyimleri</a>
+          <a href="#marka-degerlendirmesi">Marka karşılaştırması</a>
+          <a href="#sik-sorulanlar">Sık sorulan sorular</a>
+        </div>
+      </nav>
       <article class="research-article" aria-label={headline}>
         <Research />
       </article>
@@ -64,10 +85,21 @@ const schema = {
 .research-article :global(li){padding-left:3px;margin-bottom:8px}
 .research-article :global(blockquote){margin:24px 0;padding:14px 21px;border-left:4px solid #57956b;background:#f0f7ef;border-radius:0 10px 10px 0}
 .research-article :global(blockquote p){margin:0;font-weight:550}
-.research-article :global(table){width:100%;border-collapse:collapse;display:block;overflow-x:auto;white-space:normal;font-size:14px;margin:19px 0 27px}
+.research-article :global(.research-table-scroll){max-width:100%;overflow-x:auto;overscroll-behavior-inline:contain;margin:20px 0 30px;border-radius:10px}
+.research-article :global(.research-table-scroll:focus-visible){outline:3px solid #378c58;outline-offset:3px}
+.research-article :global(table){width:100%;min-width:650px;border-collapse:collapse;display:table;table-layout:auto;font-size:14px}
+.research-article :global(caption){caption-side:top;text-align:left;font-weight:700;padding:9px 0;color:#3e6347;font-size:13px}
 .research-article :global(th),.research-article :global(td){padding:11px 14px;text-align:left;border:1px solid #dbe7db;vertical-align:top;min-width:125px}
 .research-article :global(th){background:#eaf3e8;font-weight:800;color:#255b38}
 .research-article :global(tr:nth-child(even) td){background:#f8fbf7}
+.research-toc{background:#fff;border:1px solid #d5e5d7;border-radius:13px;margin:0 0 25px;padding:17px 20px}
+.research-toc strong{color:#234e37;font-size:14px}
+.research-toc-links{display:flex;flex-wrap:wrap;gap:9px 15px;margin-top:11px}
+.research-toc-links a{font-size:14px;font-weight:700;color:#285b3a;text-underline-offset:3px}
+.research-article :global([id]){scroll-margin-top:110px}
+.research-article :global(.research-photo){max-width:590px;margin:26px auto 32px;background:#f7faf7;padding:12px;border:1px solid #e0e9df;border-radius:14px}
+.research-article :global(.research-photo img){display:block;width:100%;height:auto;max-width:480px;margin-inline:auto;object-fit:contain;border-radius:9px}
+.research-article :global(.research-photo figcaption){margin:12px 5px 3px;font-size:12px;line-height:1.75;color:#455d49}
 .research-article :global(a){overflow-wrap:anywhere}
 .research-footer{margin-top:28px;background:#e5f1e5;border:1px solid #d1e4d1;padding:clamp(18px,4vw,31px);border-radius:15px}
 .research-footer h2{color:#205a39;font-size:22px;margin:0 0 8px}
