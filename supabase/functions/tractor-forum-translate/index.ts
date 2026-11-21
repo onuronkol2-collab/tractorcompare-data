@@ -235,9 +235,20 @@ async function work(){
    if(index<parts.length){
     const part=await translateChunk(source,parts[index],job.target_locale);
     if(part.issue){
+     if(!await confirmSource())return {processed:0,status:"superseded"};
+     // A reviewer needs the exact rejected draft; this row is always PRIVATE.
+     // No bad segment may enter ready state or trigger public localization.
+     if(typeof part.article.title==="string"&&part.article.title.trim().length>=4&&
+        typeof part.article.body==="string"&&part.article.body.trim().length>=5){
+      await upsert({title:index===0?part.article.title:existing?.title||part.article.title,
+       body:index===0?part.article.body:(existing?.body||"")+"\n"+part.article.body,
+       state:"needs_review",seo_approved:false,reviewed_by_model:part.reviewer,
+       model:index===0?part.model:existing?.model||part.model,
+       qa_notes:"QA_REVIEW_REQUIRED: segment "+(index+1)+" "+part.issue.slice(0,135)});
+     }
      await patch(job,{state:"done",completed_at:new Date().toISOString(),
       last_error:"QA_REVIEW_REQUIRED: "+part.issue.slice(0,105)});
-     return {processed:0,status:"needs_review",locale:job.target_locale};
+     return {processed:1,status:"needs_review",locale:job.target_locale};
     }
     if(!await confirmSource())return {processed:0,status:"superseded"};
     const full=index===0?part.article.body:existing!.body+"\n"+part.article.body;
