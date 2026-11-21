@@ -602,7 +602,22 @@ const specLabels: Record<string, { en: string; tr: string }> = {
   wheelbase: { en: "Wheelbase", tr: "Dingil mesafesi" },
 };
 
+// A few historical source records have Turkish technical headings even in the
+// English public feed. Only these exact audited source labels may be normalized
+// for display; raw source/evidence text, key, values and units stay untouched.
+const auditedTurkishSourceHeadingInEnglish: Record<string,string> = {
+  "debriyaj tipi": "Clutch type",
+  "ana debriyaj": "Main clutch",
+  "ana vites tipi": "Main gear type",
+  "çekiş sistemi": "Drive system",
+  "yakıt deposu": "Fuel tank",
+};
 export function specLabel(spec: PublicSpec, lang: Locale): string {
+  if (lang === "en") {
+    const sourceName = spec.spec_name.trim().replace(/\\s+/g," ").toLocaleLowerCase("tr");
+    const known = auditedTurkishSourceHeadingInEnglish[sourceName];
+    if (known) return known;
+  }
   // Translation applies only to known canonical engineering labels, never values.
   const localized = localizedSpecificationName(spec.canonical_key, spec.spec_name, lang);
   if (localized) return localized;
