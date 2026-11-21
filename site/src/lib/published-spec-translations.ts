@@ -3,7 +3,8 @@ import { REVIEWED_PUBLIC_SPEC_HEADINGS } from "./reviewed-public-spec-headings.t
 import { RESIDUAL_PUBLIC_SPEC_TERMS } from "./residual-public-spec-translations.ts";
 
 /**
- * Audited against the 170 public tractor detail pages (17 models x 10 languages).
+ * Release-reviewed labels: an early 17-model proof, followed by the current
+ * 379-model × 10-locale full static/public audit (2026-11-21).
  * Match the source's display name exactly after whitespace/case/underscore normalization.
  * These translations are ONLY for headings, never raw technical values, standards,
  * OEM variant names, measurements, manufacturer excerpts or model identities.
