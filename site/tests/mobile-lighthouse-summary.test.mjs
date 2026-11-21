@@ -1,5 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
+import {readFileSync} from "node:fs";
 import {analyzeLighthouse,interpretCrux,markdownReport,FIELD_THRESHOLDS} from "../scripts/mobile-lighthouse-summary.mjs";
 
 const sample={
@@ -8,7 +9,7 @@ const sample={
     performance:{score:0.78},
     accessibility:{score:0.95,auditRefs:[{id:"color-contrast",weight:1}]},
     "best-practices":{score:1},
-    seo:{score:0.98},
+    seo:{score:0.92,auditRefs:[{id:"is-crawlable",weight:1}]},
   },
   audits:{
     "largest-contentful-paint":{numericValue:3400},
@@ -17,6 +18,7 @@ const sample={
     "first-contentful-paint":{numericValue:1200},
     "color-contrast":{id:"color-contrast",score:0.4,title:"Contrast",details:{items:[]}},
     "unused-javascript":{id:"unused-javascript",score:0.3,title:"Unused JavaScript",details:{type:"opportunity",overallSavingsMs:250}},
+    "is-crawlable":{id:"is-crawlable",score:0,title:"Links are crawlable",description:"Missing href on visible anchors."},
   },
 };
 test("Lighthouse report is explicitly synthetic, retains field INP as unknown",()=>{
@@ -28,6 +30,8 @@ test("Lighthouse report is explicitly synthetic, retains field INP as unknown",(
  assert.equal(report.vitals["cumulative-layout-shift"],0.06);
  assert.equal(report.issues[0].id,"unused-javascript");
  assert.equal(report.accessibilityFindings[0].id,"color-contrast");
+ assert.equal(report.scores.seo,92);
+ assert.equal(report.seoFindings[0].id,"is-crawlable");
  assert.throws(()=>analyzeLighthouse(sample,"attacker"),/Unrecognized/);
  assert.throws(()=>analyzeLighthouse({...sample,finalUrl:"https://malicious.example"},"home"),/Unexpected Lighthouse redirect/);
 });
@@ -59,4 +63,20 @@ test("CI markdown labels CrUX data absence as unavailable, never 0 or a passing 
  assert.match(report,/Unavailable/);
  assert.match(report,/N\/A is never a pass or zero/);
  assert.doesNotMatch(report,/INP p75 \| 0 /);
+});
+
+
+test("the sampled templates include the whole public experience and each added route is supported",()=>{
+ const routes=["home","catalog","model","compare","advisor","articles","glossary",
+   "selection","review","forum","en-home","zh-home","de-model","ja-guide"];
+ const text=readFileSync(new URL("../scripts/mobile-lighthouse-summary.mjs",import.meta.url),"utf8");
+ for(const route of routes)assert.ok(text.includes('"'+route+'"'),route);
+ const normal=analyzeLighthouse({...sample,categories:{...sample.categories,seo:{score:1,auditRefs:[]}}},"forum");
+ assert.equal(normal.scores.seo,100);
+ assert.deepEqual(normal.seoFindings,[]);
+ const markdown=markdownReport([normal],{});
+ assert.match(markdown,/scored 100\/100 in this run/);
+ const fail=markdownReport([analyzeLighthouse(sample,"advisor")],{});
+ assert.match(fail,/is-crawlable: Links are crawlable/);
+ assert.match(fail,/\*\*advisor\*\*: 92\/100/);
 });
