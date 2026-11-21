@@ -6,6 +6,7 @@ import ForumMediaGallery from "./ForumMediaGallery.astro";
 import {forumText as ft} from "../lib/forum-i18n.ts";
 import {memberText as mt,MEMBER_TEXT} from "../lib/member-i18n.ts";
 import {publicForumClientConfig} from "../lib/forum.ts";
+import {forumSeoDescription} from "../lib/forum-format.mjs";
 import {allPublicForumTopics,isIndexableForumTopic,allPublicForumReplies,allPublicForumMedia,forumMediaImageUrl,forumThreadReplies,forumDate,type ForumTopic} from "../lib/forum.ts";
 import {getPublicCatalog} from "../lib/catalog.ts";
 import {localizedPath,type Locale,LOCALE_TAGS,LOCALE_NAMES} from "../lib/locales.ts";
@@ -24,6 +25,7 @@ const publicPath=forumUrl+topic.slug+"/";
 const versions=(await allPublicForumTopics()).filter(row=>row.topic_id===topic.topic_id);
 const originalTopic=topic.machine_translated?versions.find(row=>!row.machine_translated&&row.locale===topic.original_locale):null;
 const eligible=isIndexableForumTopic(topic);
+const seoDescription=forumSeoDescription(topic.body);
 const engagementCfg=publicForumClientConfig()??(
  process.env.TRACTORVS_FORUM_BROWSER_TEST==="true"&&process.env.PUBLIC_INDEXING_ENABLED==="false"
  ? {url:"http://127.0.0.1:4173/forum-test-api",key:"inert-browser-fixture"}:null);
@@ -34,7 +36,7 @@ const indexableLocales=versions.filter(isIndexableForumTopic).map(row=>row.local
 const origin=Astro.site||new URL("https://tractorvs.com");
 const schema=eligible?{
  "@context":"https://schema.org","@type":"WebPage",url:new URL(publicPath,origin).toString(),
- name:topic.title,description:topic.body.slice(0,200),inLanguage:LOCALE_TAGS[lang],
+ name:topic.title,description:seoDescription,inLanguage:LOCALE_TAGS[lang],
  ...(topicMedia.length?{image:topicMedia.map(photo=>({
   "@type":"ImageObject",contentUrl:forumMediaImageUrl(photo.id),caption:photo.alt_text
  }))}:{}),
@@ -43,7 +45,7 @@ const schema=eligible?{
 // No real author identity is present in the public projection.
 // Never invent author profiles or engagement statistics for rich results.
 ---
-<SiteLayout lang={lang} title={topic.title+" | TractorVS"} description={topic.body.slice(0,190)}
+<SiteLayout lang={lang} title={topic.title+" | TractorVS"} description={seoDescription}
   indexable={eligible} structuredData={schema} availableLocales={availableLocales} indexableLocales={indexableLocales}>
  <div class="forum-thread">
   <div class="container">
@@ -55,7 +57,7 @@ const schema=eligible?{
      {topic.machine_translated&&<span>{ft(lang,"translated")}</span>}
     </div>
     <h1>{topic.title}</h1>
-    <div class="forum-body"><ForumRichText body={topic.body}/></div>
+    <div class="forum-body"><ForumRichText body={topic.body} lang={lang}/></div>
     <ForumMediaGallery lang={lang} photos={topicMedia} contentLanguage={LOCALE_TAGS[topic.original_locale]}/>
     {originalTopic&&<a class="original-link" href={localizedPath(originalTopic.locale,"/forum/"+originalTopic.slug+"/")} hreflang={LOCALE_TAGS[originalTopic.locale]}>
      {ft(lang,"readOriginal")} · <bdi lang={LOCALE_TAGS[originalTopic.locale]}>{LOCALE_NAMES[originalTopic.locale]}</bdi>
@@ -80,7 +82,7 @@ const schema=eligible?{
        {reply.machine_translated&&<span>{ft(lang,"translated")}</span>}
       </div>
       {reply.locale!==lang&&<p class="reply-language">{ft(lang,"originalLanguage")} · <bdi lang={LOCALE_TAGS[reply.locale]}>{LOCALE_NAMES[reply.locale]}</bdi></p>}
-      <div lang={LOCALE_TAGS[reply.locale]}><ForumRichText body={reply.body}/></div>
+      <div lang={LOCALE_TAGS[reply.locale]}><ForumRichText body={reply.body} lang={reply.locale}/></div>
       <ForumMediaGallery lang={lang} photos={replyMedia(reply.id)} contentLanguage={LOCALE_TAGS[reply.original_locale]}/>
       <div class="forum-helpful" data-helpful-reply data-reply-id={reply.id}>
        <button type="button" data-helpful-toggle aria-pressed="false">{mt(lang,"helpfulButton")}</button>
@@ -88,7 +90,7 @@ const schema=eligible?{
       </div>
       {reply.machine_translated&&<details class="reply-original">
        <summary>{ft(lang,"readOriginal")} · <bdi lang={LOCALE_TAGS[original.locale]}>{LOCALE_NAMES[original.locale]}</bdi></summary>
-       <div lang={LOCALE_TAGS[original.locale]}><ForumRichText body={original.body}/></div>
+       <div lang={LOCALE_TAGS[original.locale]}><ForumRichText body={original.body} lang={original.locale}/></div>
       </details>}
     </article>)}
    </section>
