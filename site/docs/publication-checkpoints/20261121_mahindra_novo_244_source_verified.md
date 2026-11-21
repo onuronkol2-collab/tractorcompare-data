@@ -1,0 +1,34 @@
+# TractorVS Mahindra NOVO / JIVO official source release (21 Nov 2026)
+
+## Production checkpoint and effects
+- Verified Supabase after guarded atomic commit: **244 published**, **224 draft**, **10 archived** tractors; **6268 source-linked publicly visible technical specifications**.
+- Previously **237/6180**. This batch adds **7 full manufacturer-model pages, 88 trustworthy public specifications**. Original records securely snapshotted: batch `20261121_mahindra_novo6_jivo365_v1` with **7 original tractor rows + 94 original specification rows = 101 private JSONB before-state snapshots** in `tc_backup.tractor_publication_patches`.
+- Changed existing model status/variant/market and corrected individual model-specific records. No model-year assumptions, no unstandardized HP values promoted to numeric headline horsepower, no private media or forum publishing, no RLS/GRANT/Auth changes.
+
+| Tractor UUID | Exact manufacturer model/variant | OEM source | Source-evidenced technical specs |
+|---|---|---|---:|
+| `471d7ad4-6073-4405-a0f4-e90f71cbbccb` | JIVO 365 DI **4WD**, India, 8F×8R, 9.5×20 rear tyres (different from separately titled Puddling Special) | https://www.mahindratractor.com/tractors/mahindra-jivo-365-di-4wd-tractor-puddling-special | 13 |
+| `585b5da9-5f49-415e-99e4-fd75468fc960` | NOVO 605 DI **4WD V1**, 15F×15R; source tech table also has family "Both" drivetrain | https://www.mahindratractor.com/tractors/arjun-novo-605-di-i | 13 |
+| `f6267c8d-21e1-4b11-9550-bbdfe5936f3e` | NOVO 605 DI **PS 4WD V1**, 15F×15R; model header specifically 4WD, range table 2WD/4WD | https://www.mahindratractor.com/tractors/novo-605-di-ps-4wd | 13 |
+| `872e7a07-8321-4565-88ff-1d25970fa784` | NOVO 605 DI **PS V1**, 2WD title/description, 15F×3R with optional 15F×15R, source range table also lists 4WD | https://www.mahindratractor.com/tractors/novo-605-di-ps-vi | 13 |
+| `9658df33-8bbc-4dad-909d-9adbefda69f3` | NOVO 605 DI **V1**, 15F×3R, 2WD or 4WD family: exact drivetrain not scoped | https://www.mahindratractor.com/tractors/novo-605-di-ps | 11 |
+| `b51998b3-8174-4ecd-9abd-08fafac9ae4a` | NOVO 655 DI **PP V1**, 2WD source introduction, 15F×15R; source tech lists 2WD/4WD family | https://www.mahindratractor.com/tractors/novo-655-di-pp-v1 | 13 |
+| `e434867e-5125-48f4-9fee-f27f179d9bfc` | NOVO 755 DI **PP 4WD V1**, 15F×15R, creeper optional | https://www.mahindratractor.com/tractors/novo-755-di-pp-4wd-v1 | 12 |
+
+### Repairs and evidence safety
+- **NOVO 605 DI PS V1** and **PS 4WD V1** original unsourced **236 Nm** maximum torque corrected to **214 Nm**, the exact OEM Technical Specifications figure. Distinct **NOVO 605 DI V1 (not PS)** preserves its model's **228 Nm**; **655 PP** preserves **289 Nm**, **755 PP 4WD** preserves **336 Nm**, and JIVO365 retains **118 Nm**.
+- NOVO 655 and 755 legacy `pto_speeds=MSPTO` were not useful numeric speeds. Official exact model specification distinguishes **540 rpm**, **540E economy PTO mode** and **reverse PTO mode** with no independent numeric reverse shaft speed; corrected the field and attached manufacturer source annotations. NOVO 605 PS 4WD/PS V1 general `540, 540E` also expanded to clarify that reverse mode does **not** imply a second RPM measurement.
+- **NOVO 755 PP 4WD** official exact product specification lists **2900kg lift**, but the **same page** special feature copy says **2200kg**. No lift record was created or exposed for 755. Requires manufacturer edition/implement/attachment measurement clarification. Its OEM page headings and 4WD-specific equipment support 4WD despite shared family Drive Type 2WD/4WD in tabular line.
+- The JIVO365 exact [product page](https://www.mahindratractor.com/tractors/mahindra-jivo-365-di-4wd-tractor-puddling-special) says **9.5×20** tyre while another Mahindra "JIVO 365 DI 4WD Puddling Special" [page](https://www.mahindratractor.com/tractors/mahindra-jivo-365-di-4wd-puddling-special) lists **12.4×24**. Two public model/page configurations are *not collapsed*; this record explicitly scopes the 9.5×20 product table. URL slug containing "puddling-special" is legacy and alone does not prove identical configuration. No Puddling Special 12.4×24 new variant was invented.
+- Manufacturer FAQ/promo power figures across NOVO model pages sometimes conflict (e.g. same PS 4WD body mentions 41.6kW and 36.3kW). **No exact tested engine rated horsepower or model year inferred**. All seven old `engine_power_range` entries from generic product catalog are kept but marked `verified_at=NULL`, out of public verified view. Only explicitly manufacturer-backed model-specific specs were released.
+- Exact 2WD/4WD trim identity uses dedicated heading and model-description context, while range technical table sometimes lists "Both." The one NOVO 605 DI 4WD record previously lacking a drive spec received a *provenance-annotated* `drive_configuration=4WD`, explaining the family table qualification. NOVO 605 DI V1 retains NULL drivetrain because the exact trim cannot be scoped unambiguously.
+- Source measurements for hydraulic lifting lack a known measured rear-link location, so `measurement_standard` notes that comparability limitation. Tyre options are not treated as simultaneously fitted standard equipment.
+
+### Security and release sequence
+Each item passed exact-id/brand/model/draft/variant/market/unknown year/unknown rated hp/source record ID+URL/source row count/unique key/old critical OEM value preconditions and current published duplicate collision guard. **Before-state snapshots were written before any changes**. One PostgreSQL transaction committed all seven; independent post-commit queries confirmed 88 source-gated public technical rows, 101 private backup rows, view `security_invoker=true, security_barrier=true`, and `anon` had no SELECT on `tractorvs_image_candidates`.
+
+**GitHub/Cloudflare is a separate deploy step**: the trusted-main `site/docs/publication-checkpoints/**` merge triggers existing zero-paid, anon-safe public catalog fingerprint revision from 237/6180 to **244/6268**. Check resulting GitHub snapshot, CI, Cloudflare HTTP and ten-locale canonical/hreflang/sitemap smoke before claiming live production. Google Search Console index coverage is not derived from sitemap XML or deprecated sitemap indexed field.
+
+Other open work: **224 drafts**, multiple Agrale 540 XT OEM edition conflict, Antonio Carraro exact variant evidence, 8-language encyclopedia draft PR #127, rights/identity for images, real Google Page Indexing, mobile CWV field measurements and authentic moderated forum.
+
+The audit SQL is read-only: `supabase/verification/20261121_mahindra_novo_244_publication_audit.sql`. Manual recovery must review downstream forum/SEO/compare URLs and only restore exact original JSONB snapshots after operator review, never run blanket destructive scripts.
