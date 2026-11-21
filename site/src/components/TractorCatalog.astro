@@ -176,12 +176,26 @@ const pricePayload = JSON.stringify({
       .replace("{visible}",String(visible)).replace("{total}",String(cards.length));
     if (clearSearch) clearSearch.hidden = !normalized;
   };
-  search?.addEventListener("input", () => filterCatalog(search.value));
-  const clearQueryFromURL = () => {
+  // Keep refresh/share and locale switching aligned with the user's current
+  // filter. Canonical SEO stays on the clean published catalogue URL.
+  const syncSearchURL = (raw: string) => {
+    const query = raw.trim().slice(0,100);
     const next=new URL(location.href);
-    next.searchParams.delete("q");
+    if(query) next.searchParams.set("q",query);
+    else next.searchParams.delete("q");
     history.replaceState(history.state,"",next.pathname+next.search+next.hash);
+    for(const link of document.querySelectorAll<HTMLAnchorElement>("[data-language-choice]")){
+      const destination=new URL(link.href);
+      if(query) destination.searchParams.set("q",query);
+      else destination.searchParams.delete("q");
+      link.href=destination.pathname+destination.search+destination.hash;
+    }
   };
+  search?.addEventListener("input", () => {
+    filterCatalog(search.value);
+    syncSearchURL(search.value);
+  });
+  const clearQueryFromURL = () => syncSearchURL("");
   clearSearch?.addEventListener("click", () => {
     if (!search) return;
     search.value="";
