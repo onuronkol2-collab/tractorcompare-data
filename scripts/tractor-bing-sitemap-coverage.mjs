@@ -83,27 +83,49 @@ export function evaluateBingSitemapCoverage({
   const modelPages = [...main.keys()].filter(url => modelUrlPattern.test(new URL(url).pathname));
   if (modelPages.length < minimumModelUrls)
     fail("Published model URLs fell below safe coverage floor");
+  // Compare *identical published model slugs* in every locale, rather than
+  // merely checking at least one model per language. A partial language
+  // deployment otherwise passes the aggregate minimum of 1,000 pages.
+  const modelsByLocale = new Map();
   for (const locale of REQUIRED_CATALOG_LOCALES) {
-    const url = ORIGIN + "/" + locale + "tractors/";
-    if (!main.has(url)) fail("Missing localized crawlable catalog landing: " + url);
-    if (!modelPages.some(page => new URL(page).pathname.startsWith("/" + locale + "tractors/")))
-      fail("Missing localized model detail URLs for " + (locale || "en"));
+    const root = ORIGIN + "/" + locale + "tractors/";
+    if (!main.has(root)) fail("Missing localized crawlable catalog landing: " + root);
+    const slugs = new Set(modelPages.filter(page => page.startsWith(root))
+      .map(page => page.slice(root.length)));
+    if (!slugs.size) fail("Missing localized model detail URLs for " + (locale || "en"));
+    modelsByLocale.set(locale || "en", slugs);
+  }
+  const english = modelsByLocale.get("en");
+  for (const [locale, models] of modelsByLocale) {
+    if (models.size !== english.size ||
+        [...english].some(slug => !models.has(slug))) {
+      fail("Localized model slug coverage mismatch: " + locale +
+        " has " + models.size + " versus English " + english.size);
+    }
   }
 
   const imagePages = optionalPageSitemap(image, "image");
   const forumPages = optionalPageSitemap(forum, "forum");
-  // Every image page is already a canonical site page. An orphan image page
-  // is a real sitemap discrepancy; image entries are NOT unique extra pages.
-  for (const url of imagePages.keys())
-    if (!main.has(url)) fail("Image sitemap references a page absent from main sitemap: " + url);
   const union = new Set([...main.keys(), ...forumPages.keys()]);
+  // Approved forum images live on moderated forum pages excluded from Astro's
+  // HTML sitemap. Do not reject them as orphans; require membership in EITHER
+  // the published HTML map or the separately quality-gated forum sitemap.
+  for (const url of imagePages.keys())
+    if (!union.has(url))
+      fail("Image sitemap references a page absent from approved HTML/forum sitemaps: " + url);
+  const imagesInMain = [...imagePages.keys()].filter(url => main.has(url)).length;
+  const imagesInForumOnly = [...imagePages.keys()].filter(url =>
+    forumPages.has(url) && !main.has(url)).length;
   return {
     child_sitemap_files: childUrls.length,
     main_page_urls: main.size,
     localized_model_page_urls: modelPages.length,
     catalog_locales: REQUIRED_CATALOG_LOCALES.length,
+    models_per_locale: english.size,
+    exact_model_slug_parity: true,
     image_sitemap_page_entries: imagePages.size,
-    image_pages_already_in_main: imagePages.size,
+    image_pages_already_in_main: imagesInMain,
+    image_pages_in_approved_forum_only: imagesInForumOnly,
     forum_sitemap_page_urls: forumPages.size,
     forum_pages_already_in_main: [...forumPages.keys()].filter(url => main.has(url)).length,
     distinct_page_urls_across_main_and_forum: union.size,
@@ -166,11 +188,15 @@ export function bingCoverageMarkdown(report) {
     "| Sitemap index child FILES (not pages) | " + report.child_sitemap_files + " |",
     "| Canonical HTML PAGE URLs in main child sitemaps | " + report.main_page_urls + " |",
     "| Model detail PAGE URLs across 10 languages | " + report.localized_model_page_urls + " |",
-    "| Image sitemap page references (already in main) | " + report.image_sitemap_page_entries + " |",
+    "| Exact model slug parity across all 10 languages | " + report.exact_model_slug_parity + " |",
+    "| Models per locale | " + report.models_per_locale + " |",
+    "| Image sitemap page references | " + report.image_sitemap_page_entries + " |",
+    "| Image page references already in main HTML | " + report.image_pages_already_in_main + " |",
+    "| Image pages on approved forum only | " + report.image_pages_in_approved_forum_only + " |",
     "| Forum-only and other forum sitemap references | " + report.forum_sitemap_page_urls + " |",
     "| Distinct PAGE URLs (main + forum, deduplicated) | " + report.distinct_page_urls_across_main_and_forum + " |",
     "",
-    "Image sitemap references overlap with the main sitemap and must not be added to a unique-page total.",
+    "Image sitemap references must resolve to an approved HTML page OR a moderated forum page, and must never be added twice to a unique-page total.",
     "Bing Webmaster Tools submission/processing and indexing are **separate facts**. The index's child-file count cannot be interpreted as the number of pages Bing discovered.",
     "Actual Bing indexing requires Bing Webmaster URL Inspection; a valid sitemap and IndexNow receipt are NOT proof of indexing.",
     "",
