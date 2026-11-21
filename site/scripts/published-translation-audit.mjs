@@ -68,12 +68,12 @@ const verifyMetadata=process.env.TRANSLATION_VALIDATE_SEO==="true";
 const expectedHtmlLang={en:"en",tr:"tr",zh:"zh-Hans",hi:"hi","pt-br":"pt-BR",fr:"fr",de:"de",ru:"ru",ja:"ja",es:"es"};
 const attr=(tag,key)=>tag.match(new RegExp("\\b"+key+"=[\\\"']([^\\\"']+)[\\\"']","i"))?.[1]||null;
 function inspectSeoHead(html,locale,url){
-  const docLang=attr(html.match(/<html\\b[^>]*>/i)?.[0]||"","lang");
+  const docLang=attr(html.match(/<html\b[^>]*>/i)?.[0]||"","lang");
   if(docLang!==expectedHtmlLang[locale])errors.push("Incorrect HTML language "+url+" "+docLang);
-  if(/<meta\\b[^>]*name=["']robots["'][^>]*noindex/i.test(html)||
-     /<meta\\b[^>]*content=["'][^"']*noindex[^"']*["'][^>]*name=["']robots["']/i.test(html))
+  if(/<meta\b[^>]*name=["']robots["'][^>]*noindex/i.test(html)||
+     /<meta\b[^>]*content=["'][^"']*noindex[^"']*["'][^>]*name=["']robots["']/i.test(html))
     errors.push("Published model unexpectedly noindex "+url);
-  const links=[...html.matchAll(/<link\\b[^>]*>/gi)].map(x=>x[0]);
+  const links=[...html.matchAll(/<link\b[^>]*>/gi)].map(x=>x[0]);
   const canon=links.filter(x=>attr(x,"rel")==="canonical");
   if(canon.length!==1||attr(canon[0],"href")!==url)errors.push("Wrong self-canonical "+url);
   const alts=links.filter(x=>attr(x,"rel")==="alternate"&&attr(x,"hreflang"));
@@ -81,7 +81,7 @@ function inspectSeoHead(html,locale,url){
   if(codes.length!==11||new Set(codes).size!==11 ||
      !codes.includes(expectedHtmlLang[locale])||!codes.includes("x-default"))
     errors.push("Missing or duplicated model hreflang "+url);
-  const pageH1=[...html.matchAll(/<h1\\b[^>]*>([\\s\\S]*?)<\\/h1>/gi)];
+  const pageH1=[...html.matchAll(/<h1\b[^>]*>([\s\S]*?)<\/h1>/gi)];
   if(pageH1.length!==1||!unescape(pageH1[0][1]))errors.push("Missing/duplicate model H1 "+url);
 }
 const jobs=locales.flatMap(locale=>[...byLocale.get(locale)].map(([slug,url])=>({locale,slug,url})));
@@ -93,7 +93,7 @@ async function worker(){
     const {locale,slug,url}=jobs[cursor++];
     try{
       const html=await get(url);
-      const labels=[...html.matchAll(/<h4\\b[^>]*>([\\s\\S]*?)<\\/h4>/gi)].map(m=>normalizeHeading(m[1]));
+      const labels=[...html.matchAll(/<h4\b[^>]*>([\s\S]*?)<\/h4>/gi)].map(m=>normalizeHeading(m[1]));
       rows.set(locale+"|"+slug,labels);
       if(!labels.length)errors.push("No labels "+url);
       if(verifyMetadata)inspectSeoHead(html,locale,url);
