@@ -78,6 +78,8 @@ const openGraphLocale: Record<Locale, string> = {
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    {/* Seznam Webmaster ownership: serve on root and redirected locale homepages only. */}
+    {plainPath==="/" && indexingEnabled && <meta name="seznam-wmt" content="j3zomI2WVcqwWkKadjNc1pXonj4g8L7O" />}
     {plainPath==="/" && <script is:inline>
       // Supabase's Site URL fallback can land on a locale homepage when a
       // confirmation/magic-link callback is not on the redirect allowlist.
