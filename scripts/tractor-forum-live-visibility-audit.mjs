@@ -80,6 +80,8 @@ export async function auditForumVisibility({
     errors.push("Topic is missing visible H1: "+canonical);
    if(indexableTopic(topic)&&!/<meta\b[^>]*name="robots"[^>]*content="index,follow/i.test(page.body))
     errors.push("Indexable topic has missing indexing directive: "+canonical);
+   if(!indexableTopic(topic)&&!/<meta\b[^>]*name="robots"[^>]*content="noindex/i.test(page.body))
+    errors.push("Thin topic incorrectly lacks noindex directive: "+canonical);
    pages.set(canonical,page.body);
    return page.body;
   }catch(err){
