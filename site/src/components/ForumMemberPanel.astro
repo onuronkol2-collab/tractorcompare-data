@@ -54,6 +54,10 @@ const copy=JSON.stringify(MEMBER_TEXT[lang]);
     <h4>{mt(lang,"myBookmarks")}</h4><ul data-bookmark-list></ul>
     <p data-bookmark-empty>{mt(lang,"noBookmarks")}</p>
    </div>
+   <div data-member-follows hidden>
+    <h4>{mt(lang,"followingTopics")}</h4><ul data-followed-list></ul>
+    <p data-followed-empty>{mt(lang,"noFollowingTopics")}</p>
+   </div>
   </section>
  </div>
  <dialog data-member-dialog aria-label={mt(lang,"viewProfile")}>
@@ -100,6 +104,9 @@ const copy=JSON.stringify(MEMBER_TEXT[lang]);
 .avatar-line img{border-radius:50%;object-fit:cover;border:1px solid #bdd5c3}
 .member-own h4{margin:18px 0 8px;color:#1e5136}
 .member-own li{line-height:1.7;overflow-wrap:anywhere}
+.member-own [data-followed-list] li{margin:9px 0;padding:8px 0;border-top:1px solid #deeadb}
+.member-own .unread-count{display:inline-block;border-radius:14px;background:#e4f4e1;
+ color:#245d3c;font-weight:750;font-size:12px;padding:3px 8px;margin-left:9px}
 .member-own a{color:#215d39;text-decoration:underline}
 .member-leaders .member-profile-link{color:#215c39;font:inherit;font-weight:750;
  text-decoration:underline;text-underline-offset:3px;background:transparent;border:0;
@@ -137,6 +144,9 @@ for(const root of widgets){
  const bookmarkPanel=query<HTMLElement>("[data-member-bookmarks]");
  const bookmarkList=query<HTMLUListElement>("[data-bookmark-list]");
  const bookmarkEmpty=query<HTMLElement>("[data-bookmark-empty]");
+ const followingPanel=query<HTMLElement>("[data-member-follows]");
+ const followingList=query<HTMLUListElement>("[data-followed-list]");
+ const followingEmpty=query<HTMLElement>("[data-followed-empty]");
  const dialog=query<HTMLDialogElement>("[data-member-dialog]");
  const dialogName=query<HTMLElement>("[data-dialog-name]");
  const dialogHandle=query<HTMLElement>("[data-dialog-handle]");
@@ -233,6 +243,53 @@ for(const root of widgets){
    if(bookmarkEmpty)bookmarkEmpty.hidden=rows.length>0;
   }catch{if(bookmarkEmpty)bookmarkEmpty.hidden=false}
  }
+ async function loadFollowed(){
+  if(!followingPanel||!followingList)return;
+  followingList.replaceChildren();followingPanel.hidden=!ownId;
+  if(!ownId)return;
+  if(followingEmpty)followingEmpty.hidden=false;
+  try{
+   const source=await fetch(cfg.url+"/rest/v1/tc_member_topic_follows?"+
+    new URLSearchParams({select:"topic_id,last_seen_at",order:"created_at.desc",limit:"15"}),{
+      headers:headers(true),cache:"no-store",signal:AbortSignal.timeout(12000)});
+   if(!source.ok)throw Error();
+   const followed=await source.json() as {topic_id:string;last_seen_at:string}[];
+   const ids=followed.map(f=>f.topic_id).filter(id=>/^[a-f0-9-]{36}$/i.test(id));
+   if(!ids.length)return;
+   const url="/rest/v1/tc_forum_topics?"+new URLSearchParams({
+    select:"id,title,slug,locale",status:"eq.published",id:"in.("+ids.join(",")+")"});
+   const topics=await fetch(cfg.url+url,{headers:headers(true),cache:"no-store",
+    signal:AbortSignal.timeout(12000)});
+   if(!topics.ok)throw Error();
+   const rows=await topics.json() as {id:string;title:string;slug:string;locale:string}[];
+   const cutoff=followed.reduce((old,rec)=>rec.last_seen_at<old?rec.last_seen_at:old,
+    new Date().toISOString());
+   const replyRes=await fetch(cfg.url+"/rest/v1/tc_forum_replies?"+
+    new URLSearchParams({select:"topic_id,created_at,author_id",status:"eq.published",
+      topic_id:"in.("+ids.join(",")+")",created_at:"gt."+cutoff,limit:"500"}),{
+      headers:headers(true),cache:"no-store",signal:AbortSignal.timeout(12000)});
+   const replies=replyRes.ok?await replyRes.json() as
+    {topic_id:string;created_at:string;author_id:string}[]:[];
+   const dates=new Map(followed.map(rec=>[rec.topic_id,rec.last_seen_at]));
+   for(const topic of rows){
+    const li=document.createElement("li"),link=document.createElement("a");
+    const prefix=topic.locale==="en"?"":"/"+topic.locale;
+    link.href=prefix+"/forum/"+encodeURIComponent(topic.slug)+"/";
+    link.textContent=topic.title;li.append(link);
+    const since=dates.get(topic.id)||"";
+    const count=replies.filter(reply=>reply.topic_id===topic.id &&
+     reply.created_at>since && reply.author_id!==ownId).length;
+    if(count){
+      const badge=document.createElement("span");
+      badge.className="unread-count";
+      badge.textContent=count+" "+txt.newReplies;
+      li.append(badge);
+    }
+    followingList.append(li);
+   }
+   if(followingEmpty)followingEmpty.hidden=rows.length>0;
+  }catch{if(followingEmpty)followingEmpty.hidden=false}
+ }
  async function loadSelf(){
   try{token=sessionStorage.getItem(tokenKey)||""}catch{token=""}
   ownId="";
@@ -240,6 +297,7 @@ for(const root of widgets){
    if(profileForm)profileForm.hidden=true;
    if(guest)guest.hidden=false;
    if(bookmarkPanel)bookmarkPanel.hidden=true;
+   if(followingPanel)followingPanel.hidden=true;
    return;
   }
   try{
@@ -269,7 +327,7 @@ for(const root of widgets){
     const src=p?avatarUrl(p):null;
     avatar.hidden=!src;if(src)avatar.src=src+"?v="+Date.now();
    }
-   await loadBookmarks();
+   await Promise.all([loadBookmarks(),loadFollowed()]);
   }catch{
    ownId="";
    if(profileForm)profileForm.hidden=true;
