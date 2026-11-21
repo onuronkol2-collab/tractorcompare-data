@@ -1,20 +1,30 @@
-# 2026–2027 Traktör Güvenilirliği: Hangi Markada Daha Az Sorun Bildirilmiş?
+# Traktör Güvenilirlik Sıralaması: 10 Marka, Tek Liste
 
-**TractorVS marka karşılaştırması | 21 Kasım 2026**
-**Veri:** ABD'de 2021 yılında yapılan 2.262 çiftçi / 7.755 traktör değerlendirmesi.
+**TractorVS Araştırması | 21 Kasım 2026**
 
-Önce sayılar: Bu araştırma *satışta arızalanan traktör yüzdesini* değil, **100 değerlendirilen traktör başına bildirilen sorun olaylarını** karşılaştırıyor.
+“En az arıza yapan traktör markası hangisi?” sorusuna cevap ararken farklı tarihlerden şikâyet ve satış sayılarını bölmek yanıltıcı olabilir.
 
-**En az sorun bildirilen 5 marka:** 1. Kubota **76** · 2. Case IH **119** · 3. John Deere **120** · 4. New Holland **126** · 5. Massey Ferguson **135**.
+**Tek listede on marka:** Polonyalı çiftçilerin değerlendirmelerini inceleyen 2020 tarihli akademik araştırmanın 12 markalık güvenilirlik listesinden ilk 10'u aldık.
 
-**En çok sorun bildirilen 5 marka:** 1. Versatile **164** · 2. Allis-Chalmers **146** · 3. Massey Ferguson **135** · 4. New Holland **126** · 5. John Deere **120**.
+**En yüksek kullanıcı güvenilirlik endeksinden düşüğe:**
 
-**Neden üç marka iki listede de var?** Kaynağın sayısal grafiğinde yalnızca yedi marka bulunuyor. Aynı yedi markanın en düşük ve en yüksek beşlisi doğal olarak örtüşüyor; başka markalar için oran uydurmadık.
+1. **Valtra**
+2. **John Deere**
+3. **Fendt**
+4. **Claas**
+5. **Massey Ferguson**
+6. **New Holland**
+7. **Case IH**
+8. **Deutz-Fahr**
+9. **Zetor**
+10. **Ursus**
 
-Örnek: Kubota'da 100 traktör için **76 sorun olayı**, Versatile'de **164 sorun olayı** bildirilmiş. Bu, Versatile'nin yaklaşık **2,16 kat** daha fazla olay bildirdiği anlamına gelir; 2026–2027 üretimlerinde iki kat arıza riski kanıtlamaz. Allis-Chalmers tarihsel bir markadır.
+**Rakamların anlamı:** Valtra'nın raporlanan göreli güvenilirlik endeksi yaklaşık 0,87; John Deere 0,86; Fendt 0,85. **Bunlar arızalanmayan traktör yüzdesi değildir.** Değerlendirme, eski üretim traktörlerin sahip görüşlerine dayanıyor. 2026–2027 model yılı için satış başına doğrulanmış arıza oranı vermiyor.
 
-**Fotoğraflı araştırma, yedi markanın kaynak ve oranları:** https://tractorvs.com/tr/guides/2026-2027-traktor-guvenilirlik/
+**10 markanın fotoğraflı, kaynaklı araştırması:** https://tractorvs.com/tr/guides/2026-2027-traktor-guvenilirlik/
 
-**Siz hangi traktörü kullanıyorsunuz?** Model, üretim yılı, motor saati ve onarım geçmişinizi paylaşın. Hiç sorun yaşamadıysanız onu da yazın.
+**Sizin traktörünüz ne kadar güvenilir?** Marka, tam model, yıl, motor saati, yaşadığınız arızalar ve serviste geçen süreyi paylaşın. Hiç arıza olmadıysa onu da belirtin.
 
-*Kaynak: DTN / Progressive Farmer 2021 Reader Insights. 2026–2027 satış başına doğrulanmış arıza oranları bu verilerden hesaplanamaz. Kişisel bilgilerinizi ve tam şasi numaralarını paylaşmayın.*
+**Kaynak:** Karol Durczak (2020), *Reliability of Agricultural Tractors According to Polish Farmers* — https://doi.org/10.17559/TV-20190819132340
+
+*Veri yılı 2020 ve öncesi; değerlendirme tarihi 21 Kasım 2026. Bu liste küresel 2026–2027 satış başına arıza sıralaması değildir. Kişisel bilgileri ve tam şasi numarasını paylaşmayın.*
