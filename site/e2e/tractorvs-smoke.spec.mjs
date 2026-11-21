@@ -120,6 +120,32 @@ test("model search is reachable from the global header without leaving a discuss
   await expect(page.locator("h1")).toHaveCount(1);
 });
 
+test("forum and tractor finder have understandable menu names without changing routes", async ({ page, isMobile }) => {
+  if (!isMobile) await page.setViewportSize({width:1440,height:900});
+  const examples=[
+    {lang:"tr",path:"/tr/",forum:"Topluluk Forumu",finder:"Traktör Bul",search:"Ara"},
+    {lang:"en",path:"/",forum:"Tractor forum",finder:"Find a tractor",search:"Search"},
+    {lang:"de",path:"/de/",forum:"Traktorforum",finder:"Traktor finden",search:"Suchen"},
+    {lang:"es",path:"/es/",forum:"Foro de tractores",finder:"Encontrar tractor",search:"Buscar"},
+    {lang:"ja",path:"/ja/",forum:"トラクターフォーラム",finder:"トラクターを探す",search:"検索"},
+  ];
+  for(const item of examples){
+    await page.goto(item.path,{waitUntil:"domcontentloaded"});
+    const prefix=item.lang==="en"?"/":"/"+item.lang+"/";
+    const nav=isMobile?page.locator(".mobile-nav-links"):page.locator(".desktop-nav");
+    if(isMobile)await page.locator("details.mobile-nav > summary").click();
+    await expect(nav.locator('a[href="'+prefix+'forum/"]')).toHaveText(item.forum);
+    await expect(nav.locator('a[href="'+prefix+'farm-advisor/"]')).toHaveText(item.finder);
+    if(isMobile){
+      await expect(page.locator(".mobile-menu-search button")).toHaveText(item.search);
+    }else{
+      const menu=page.locator("details.header-search-menu");
+      await menu.locator("summary").click();
+      await expect(menu.locator('button[type="submit"]')).toHaveText(item.search);
+    }
+  }
+});
+
 test("header resources lead to source methods and choice guides, with English fallback clearly marked", async ({ page, isMobile }) => {
   if (!isMobile) await page.setViewportSize({width:1440,height:900});
   await page.goto("/de/", { waitUntil: "domcontentloaded" });

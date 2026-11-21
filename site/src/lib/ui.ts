@@ -21,6 +21,7 @@ export const UI = {
   navData: ["Data principles","Veri ilkeleri","数据原则","डेटा संबंधी सिद्धांत","Princípios dos dados","Principes des données","Datengrundsätze","Принципы работы с данными","データの原則","Principios de los datos"],
   navApproach: ["Our approach","Yaklaşımımız","我们的方法","हमारा दृष्टिकोण","Nossa abordagem","Notre démarche","Unser Ansatz","Наш подход","私たちの方針","Nuestro enfoque"],
   navExplore: ["Explore","Keşfet","浏览","देखें","Explorar","Explorer","Entdecken","Изучить","探す","Explorar"],
+  navSearch: ["Search","Ara","搜索","खोजें","Pesquisar","Rechercher","Suchen","Найти","検索","Buscar"],
   navMain: ["Main navigation","Ana gezinme","主导航","मुख्य नेविगेशन","Navegação principal","Navigation principale","Hauptnavigation","Основная навигация","メインナビゲーション","Navegación principal"],
   selectLanguage: ["Language","Dil","语言","भाषा","Idioma","Langue","Sprache","Язык","言語","Idioma"],
   footerNote: ["Clearer information about agricultural machinery.","Tarım makineleri hakkında daha anlaşılır bilgi.","让农业机械信息更清晰。","कृषि मशीनरी की स्पष्ट जानकारी।","Informações mais claras sobre máquinas agrícolas.","Des informations plus claires sur le matériel agricole.","Landtechnik verständlich erklärt.","Понятная информация о сельхозтехнике.","農業機械の情報を、より分かりやすく。","Información más clara sobre maquinaria agrícola."],
