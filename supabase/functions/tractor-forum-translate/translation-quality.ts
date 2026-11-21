@@ -7,7 +7,7 @@ const MONTHS: ReadonlyArray<readonly [string, number]> = [
 ];
 
 export const TRANSLATION_RESUME_FIELDS =
- "topic_id,locale,title,body,state,qa_notes,source_hash,model,reviewed_by_model";
+ "topic_id,locale,title,body,state,qa_notes,source_hash,model,reviewed_by_model,seo_approved";
 
 function numberTokens(text:string): string[] {
  return [...text.matchAll(/(?<![A-Za-z])\d+(?:[.,]\d+)*/g)]
@@ -40,4 +40,21 @@ export function sameNumericFacts(source:string, translated:string, locale:string
 export function isUntranslatedTurkishTitle(sourceTitle:string,translatedTitle:string):boolean {
  return sourceTitle.trim()===translatedTitle.trim() &&
   /[çğıöşüÇĞİÖŞÜ]/u.test(sourceTitle);
+}
+
+/**
+ * A historically imported translation may have state=ready but no SEO approval.
+ * Never equate the worker receipt with public publication eligibility.
+ * The reviewer receipt is compulsory even when older records say "ready".
+ */
+export function verifiedReadyTranslation(
+ existing:{
+  source_hash?:string; state?:string; seo_approved?:boolean|null;
+  reviewed_by_model?:string|null
+ }|null|undefined,
+ sourceHash:string
+):boolean {
+ return !!existing && !!sourceHash && existing.source_hash===sourceHash &&
+  existing.state==="ready" && existing.seo_approved===true &&
+  typeof existing.reviewed_by_model==="string" && existing.reviewed_by_model.trim().length>0;
 }
