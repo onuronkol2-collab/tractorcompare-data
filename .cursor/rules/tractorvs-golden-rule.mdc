@@ -1,0 +1,14 @@
+---
+description: TractorVS golden integration rule and quality requirements for every repository task
+alwaysApply: true
+---
+
+# TractorVS / TractorCompare AI
+
+Start each repository task by reading the root `AGENTS.md`. Its **ALTIN KURAL** governs all work.
+
+Discover and validate all relevant available connectors, plugins, MCP apps, AI, APIs and tooling; combine them safely for maximum evidence-based quality, SEO, speed and usefulness. Check current permissions and budgets before calls. Keep GitHub PR/CI, Supabase RLS, official OEM evidence, exact tractor model variants, licenses, multilingual quality, KVKK/GDPR consent and performance requirements intact.
+
+Don't assume an installed connector is already wired to the website. Don't publish unverified claims. Clearly distinguish inspected, changed, tested, deployed and pending work.
+
+Treat root `AGENTS.md` as authoritative; do not duplicate its full content here.
