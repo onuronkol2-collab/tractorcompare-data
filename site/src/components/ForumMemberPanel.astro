@@ -127,11 +127,12 @@ for(const root of widgets){
  function renderLeaders(){
   if(!rankEl)return;
   rankEl.replaceChildren();
-  const scores=[...leaders].sort((a,b)=>
-   ((rankMode==="month"?b.score_30d:a.score_total)!-
-     (rankMode==="month"?a.score_30d:b.score_total))||
-    Number(b.score_total||0)-Number(a.score_total||0)||
-    a.handle.localeCompare(b.handle)).slice(0,15);
+  const scores=[...leaders].sort((a,b)=>{
+   const left=Number(rankMode==="month"?b.score_30d:b.score_total)||0;
+   const right=Number(rankMode==="month"?a.score_30d:a.score_total)||0;
+   return left-right||(Number(b.score_total||0)-Number(a.score_total||0))||
+    a.handle.localeCompare(b.handle);
+  }).slice(0,15);
   if(empty)empty.hidden=scores.length>0;
   if(empty&&!scores.length)empty.textContent=txt.noMembers;
   for(const [index,p] of scores.entries()){
