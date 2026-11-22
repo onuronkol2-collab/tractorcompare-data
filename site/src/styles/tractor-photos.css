@@ -2,6 +2,7 @@
 .tractor-photo-gallery--hero{max-width:900px;margin:20px 0 0}
 .tractor-photo-frame{margin:0;min-width:0;overflow:hidden;border-radius:17px;background:#19271f}
 .tractor-photo-button{position:relative;display:block;width:100%;margin:0;padding:0;border:0;background:#eaf1e8;cursor:zoom-in;overflow:hidden;border-radius:15px;aspect-ratio:4/3}
+.tractor-photo-button picture{display:block;width:100%;height:100%}
 .tractor-photo-button img{width:100%;height:100%;object-fit:contain;display:block;transition:transform .2s ease}
 .tractor-photo-button:hover img{transform:scale(1.012)}
 .tractor-photo-button:focus-visible{outline:3px solid #b7df91;outline-offset:-3px}
@@ -13,6 +14,7 @@
 .tractor-photo-short-credit{padding:5px 10px;font-size:11px;color:#d0ddd0;line-height:1.35}
 .tractor-photo-short-credit a{color:inherit;text-decoration:underline;display:inline-flex;align-items:center;min-height:28px;line-height:1.4;padding:2px 0}
 .tractor-photo-short-credit a:focus-visible{outline:2px solid #d0ead3;outline-offset:2px}
+.tractor-photo-short-credit small{display:block;font-size:10px;line-height:1.4;color:#c7dcc7}
 .tractor-photo-gallery--catalog .tractor-photo-button,.tractor-photo-gallery--compare .tractor-photo-button{aspect-ratio:16/10}
 .tractor-photo-gallery--catalog .tractor-photo-frame{border-radius:12px}
 .tractor-photo-gallery--catalog .tractor-photo-brandmark{font-size:11px;bottom:9px;right:9px}

@@ -1,5 +1,6 @@
 import { isLocale, localizedPath, unlocalizedPath } from "../src/lib/locales.ts";
 import {resolveApprovedPhotoSource} from "../src/lib/tractor-photos.ts";
+import {approvedLocalMobileAsset} from "../src/lib/approved-mobile-photo-assets.mjs";
 
 const cookieName = "tractorvs_locale";
 const oneYear = 60 * 60 * 24 * 365;
@@ -77,6 +78,26 @@ export default {
     }
     if(url.pathname.startsWith("/images/tractors/")){
       if(method!=="GET"&&method!=="HEAD")return new Response("Method not allowed",{status:405});
+      // These six pre-verified, sha-pinned JPEG/WebP assets live in Cloudflare
+      // static ASSETS, never on Wikimedia's direct (unsupported) 720px route.
+      // Require the exact allowlisted file ID/extension, 200 and true MIME.
+      const localMobile=approvedLocalMobileAsset(url.pathname);
+      if(localMobile){
+        const asset=await env.ASSETS.fetch(request);
+        if(!asset.ok||!asset.headers.get("Content-Type")?.toLowerCase()
+          .startsWith(localMobile.mime)){
+          return new Response("Verified local photo unavailable",{
+            status:502,headers:{"Cache-Control":"no-store"}});
+        }
+        return new Response(method==="HEAD"?null:asset.body,{
+          status:200,headers:{
+            "Content-Type":localMobile.mime,
+            "Cache-Control":"public, max-age=86400, s-maxage=604800",
+            "X-Content-Type-Options":"nosniff"
+          }
+        });
+      }
+      // All previous photo paths and same-file high-resolution fallbacks stay unchanged.
       // Only the fixed approved-photo allowlist can be fetched. No arbitrary URL input.
       const upstream=resolveApprovedPhotoSource(url.pathname);
       if(!upstream)return new Response("Photo not found",{status:404});

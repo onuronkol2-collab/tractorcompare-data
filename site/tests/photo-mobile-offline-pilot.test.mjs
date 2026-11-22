@@ -39,7 +39,7 @@ test("pilot fails closed when a licensed photo identity, source or author is mis
     /missing\/duplicated/);
   assert.throws(()=>selectRightsReviewedPilot([...validated,original]),/missing\/duplicated/);
 });
-test("offline optimizer cannot publish or change the public photo component",()=>{
+test("offline optimizer cannot deploy and optional published sources retain JPEG and fullscreen fallbacks",()=>{
   const optimizer=readFileSync(new URL("../scripts/photo-mobile-offline-pilot.py",import.meta.url),"utf8");
   const ui=readFileSync(new URL("../src/components/TractorPhoto.astro",import.meta.url),"utf8");
   assert.match(optimizer,/publishAllowed/);
@@ -48,6 +48,9 @@ test("offline optimizer cannot publish or change the public photo component",()=
   assert.match(optimizer,/Image\.Resampling\.LANCZOS/);
   assert.match(optimizer,/ATTRIBUTION\.md/);
   assert.match(optimizer,/sha256/);
-  assert.match(ui,/srcset=\{photo\.thumbUrl\+" 480w, "\+photo\.displayUrl\+" 960w"\}/);
-  assert.doesNotMatch(ui,/720w|\.webp/);
+  assert.match(ui,/srcset=\{photo\.thumbUrl\+" 480w, "\+\(mobile\?mobile\.jpegUrl/);
+  assert.match(ui,/photo\.displayUrl\+" 960w"/);
+  assert.match(ui,/\{mobile && <source type="image\/webp"/);
+  assert.match(ui,/data-photo-url=\{photo\.fullUrl\}/);
+  assert.match(ui,/data-photo-license=\{photo\.licenseUrl\}/);
 });
