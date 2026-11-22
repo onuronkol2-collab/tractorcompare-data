@@ -172,7 +172,7 @@ test("McCormick and Belarus verified images preserve exact source, JPEG SHA-256 
   }
   for(const [brand,model] of [
     ["McCormick","X4.085"],["McCormick","X8.631 P6-Drive"],
-    ["McCormick","X5.085"],["Belarus","952.2"],
+    ["McCormick","X5.086"],["Belarus","952.2"],
   ])assert.equal(primaryTractorPhoto(tractor(brand,model)),null,
     "Photo must not leak to neighbor model "+brand+" "+model);
 });
