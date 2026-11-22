@@ -1,7 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import {readFileSync} from "node:fs";
-import {requiresConditionCaution} from "../src/lib/compare-conditions.ts";
+import {requiresConditionCaution,requiresTransmissionCaution} from "../src/lib/compare-conditions.ts";
 import {LOCALES} from "../src/lib/locales.ts";
 import {compareText} from "../src/lib/compare-ux.ts";
 
@@ -92,4 +92,62 @@ test("initial HTML and interactive comparison use the same caution function and 
   assert.match(css,/\.tc-section \.tc-table \.tc-condition-caution/);
   assert.match(css,/overflow-wrap:anywhere/);
   assert.match(css,/grid-template-columns:repeat\(2,minmax\(0,1fr\)\)/);
+});
+
+test("manufacturer-documented MF and TYM transmission choices warn without editing source data",()=>{
+  const cases=[
+    ["forward_gears", [row(16,"Dyna-4",null),row(24,"Dyna-6",null)]],
+    ["reverse_gears", [row(16,"Dyna-4",null),row(24,"Dyna-6",null)]],
+    ["transmission_gear_configuration", [row("2-Range","HST transmission",null),row("F6 x R2","SS mechanical transmission",null)]],
+    ["transmission_gear_configuration", [row("3-Range","F36HN HST transmission",null),row("F12 x R12","F36RN mechanical transmission",null)]],
+    ["transmission_gear_configuration", [row("3-range","HST transmission",null),row("F12 x R12","SS manual transmission",null)]],
+    ["transmission_gear_configuration", [row("3-range","HST transmission",null),row("F8 x R8","SS manual transmission",null)]],
+  ];
+  for(const [key,records] of cases){
+    const frozen=JSON.stringify(records);
+    assert.equal(requiresTransmissionCaution(key,records,[]),true,key);
+    assert.equal(requiresTransmissionCaution(key,[records[0]],[records[1]]),true,key);
+    assert.equal(JSON.stringify(records),frozen,"published source rows must not change");
+    assert.ok(records.every(item=>item.source==="https://manufacturer.example/spec"));
+  }
+});
+
+test("transmission warnings avoid unrelated attributes and unsupported variant claims",()=>{
+  assert.equal(requiresTransmissionCaution("forward_gears",[row(16,null)],[row(24,null)]),false);
+  assert.equal(requiresTransmissionCaution("forward_gears",[row(16,"Dyna-4")],[row(16,"dyna-4")]),false);
+  assert.equal(requiresTransmissionCaution("transmission_gear_configuration",[row("3-Range","HST")],[]),false);
+  assert.equal(requiresTransmissionCaution("engine_max_power",[row(125,"Dyna-4")],[row(100,"Dyna-6")]),false);
+  assert.equal(requiresTransmissionCaution("rear_lift_capacity",[row(2000,"HST")],[row(2500,"SS manual")]),false);
+  assert.equal(requiresConditionCaution("forward_gears",[row(16,"Dyna-4")],[row(24,"Dyna-6")]),false);
+});
+
+test("manufacturer transmission note is specific and available for all ten languages",()=>{
+  const messages=new Set();
+  const sourceTerms={en:/manufacturer source/,tr:/üretici kaynağını/,zh:/制造商来源/,hi:/निर्माता स्रोत/,"pt-br":/fonte do fabricante/,fr:/source du constructeur/,de:/Herstellerquelle/,ru:/источник производителя/,ja:/メーカー資料/,es:/fuente del fabricante/};
+  for(const lang of LOCALES){
+    const message=compareText(lang,"transmissionCaution");
+    assert.ok(message.length>25,lang);
+    assert.match(message,sourceTerms[lang],lang);
+    messages.add(message);
+  }
+  assert.equal(messages.size,10);
+  const component=readFileSync(new URL("../src/components/TractorComparison.astro",import.meta.url),"utf8");
+  assert.match(component,/requiresTransmissionCaution\(row\.key,row\.left,row\.right\)/);
+  assert.match(component,/requiresTransmissionCaution\(key,find\(left,key\),find\(right,key\)\)/);
+  assert.match(component,/transmissionCaution: cx\(lang,"transmissionCaution"\)/);
+  assert.match(component,/l10n\.transmissionCaution/);
+  assert.match(component,/const visible=commonOnly\?shared:keys/);
+  assert.match(component,/role="note"/);
+});
+
+test("offline Playwright cannot accidentally include production-only browser tests",()=>{
+  const local=readFileSync(new URL("../playwright.config.mjs",import.meta.url),"utf8");
+  const production=readFileSync(new URL("../playwright.live.config.mjs",import.meta.url),"utf8");
+  const liveSuite=readFileSync(new URL("../e2e/tractorvs-live-compare.spec.mjs",import.meta.url),"utf8");
+  assert.match(local,/testIgnore:\s*\["\*\*\/tractorvs-live-compare\.spec\.mjs"\]/);
+  assert.match(local,/127\.0\.0\.1:4173/);
+  assert.match(production,/testMatch:\s*"tractorvs-live-compare\.spec\.mjs"/);
+  assert.match(production,/baseURL:\s*"https:\/\/tractorvs\.com"/);
+  assert.doesNotMatch(production,/webServer\s*:/);
+  assert.match(liveSuite,/comparison-data\/tr\//);
 });
