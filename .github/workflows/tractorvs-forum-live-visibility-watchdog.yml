@@ -16,10 +16,13 @@ on:
       - ".github/workflows/tractorvs-forum-live-visibility-watchdog.yml"
       - "scripts/tractor-forum-live-visibility-audit.mjs"
       - "scripts/tractor-forum-recover-stale-deployment.mjs"
+      - "scripts/tractor-forum-live-ui-smoke.mjs"
   pull_request:
     paths:
+      - "scripts/tractor-forum-live-ui-smoke.mjs"
       - "scripts/tractor-forum-live-visibility-audit.mjs"
       - "scripts/tractor-forum-live-visibility-audit.test.mjs"
+      - "scripts/tractor-forum-live-ui-smoke.test.mjs"
       - "scripts/tractor-forum-recover-stale-deployment.mjs"
       - "scripts/tractor-forum-recover-stale-deployment.test.mjs"
       - ".github/workflows/tractorvs-forum-live-visibility-watchdog.yml"
@@ -41,7 +44,7 @@ jobs:
         with:
           node-version: "22.23.4"
       - name: Prove missing and removed forum content is detected
-        run: node --test scripts/tractor-forum-live-visibility-audit.test.mjs scripts/tractor-forum-recover-stale-deployment.test.mjs
+        run: node --test scripts/tractor-forum-live-visibility-audit.test.mjs scripts/tractor-forum-recover-stale-deployment.test.mjs scripts/tractor-forum-live-ui-smoke.test.mjs
 
   live:
     if: github.event_name != 'pull_request' && github.repository == 'onuronkol2-collab/tractorcompare-data' && github.ref == 'refs/heads/main'
@@ -62,6 +65,11 @@ jobs:
         env:
           TRACTORVS_SUPABASE_ANON_JWT: ${{ secrets.TRACTORVS_SUPABASE_ANON_JWT }}
         run: node scripts/tractor-forum-live-visibility-audit.mjs
+      - name: Check the actual ten-locale forum layout and private profile defaults
+        id: verify_ui
+        if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+        continue-on-error: true
+        run: node scripts/tractor-forum-live-ui-smoke.mjs
       - name: Request at most two bounded recovery builds per day for proven drift
         if: steps.verify.outcome == 'failure' && steps.verify.outputs.audited == 'true'
         continue-on-error: true
@@ -69,7 +77,7 @@ jobs:
           GITHUB_TOKEN: ${{ github.token }}
         run: node scripts/tractor-forum-recover-stale-deployment.mjs
       - name: Open one persistent issue when publication is stale
-        if: steps.verify.outcome == 'failure'
+        if: steps.verify.outcome == 'failure' || steps.verify_ui.outcome == 'failure'
         env:
           GH_TOKEN: ${{ github.token }}
           GH_REPO: ${{ github.repository }}
@@ -79,10 +87,10 @@ jobs:
           TITLE="[ForumDelivery] Live forum publishing is behind public database"
           EXISTING=$(gh issue list --state open --limit 100 --json number,title --jq ".[] | select(.title == \"$TITLE\") | .number" | head -n 1)
           if [ -z "$EXISTING" ]; then
-            gh issue create --title "$TITLE" --body "Forum publication watchdog detected a failure. Read-only audit: $ACTION_URL. Verify public topics, sitemap and Cloudflare Builds; rerun the anon-only sync. Do not bypass RLS or publish private posts."
+            gh issue create --title "$TITLE" --body "Forum live watchdog detected a failure. Read-only audit: $ACTION_URL. Verify public topics, sitemap, ten-locale forum UI and opt-in privacy checkbox. Check Cloudflare Builds and Supabase RLS. Never bypass privacy or publish private posts."
           fi
       - name: Close watchdog issue after confirmed recovery
-        if: steps.verify.outcome == 'success'
+        if: steps.verify.outcome == 'success' && (steps.verify_ui.outcome == 'success' || steps.verify_ui.outcome == 'skipped')
         env:
           GH_TOKEN: ${{ github.token }}
           GH_REPO: ${{ github.repository }}
@@ -94,7 +102,7 @@ jobs:
             gh issue close "$EXISTING" --comment "Public forum pages, canonicals and sitemap passed the read-only visibility audit."
           fi
       - name: Fail visibly when live validation failed
-        if: steps.verify.outcome == 'failure'
+        if: steps.verify.outcome == 'failure' || steps.verify_ui.outcome == 'failure'
         run: |
           echo "::error::Forum database/public website divergence detected. Review the persistent issue."
           exit 1
