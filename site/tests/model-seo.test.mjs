@@ -556,3 +556,20 @@ test("reviewed manufacturer families strip only bibliography from headings in te
     market:"Europe / UK 2025 manufacturer brochure",model_year:null},"en").title);
  assert.notEqual(variants[0],variants[1],"distinct Valtra T235 transmissions must not collapse");
 });
+
+
+test("Chinese SEO preview explains verified OEM sources without losing original model identity",()=>{
+  const item={...tractor,brand_name:"Antonio Carraro",model_name:"TONY 8700 V",
+    variant:null,market:null,model_year:null,horsepower:null};
+  const {title,searchDescription,description}=modelSeoMetadata(item,"zh");
+  assert.match(title,/Antonio Carraro TONY 8700 V/);
+  assert.match(searchDescription,/已核实的制造商资料来源链接/);
+  assert.match(searchDescription,/核对技术参数与车型/);
+  assert.ok(searchDescription.length>=70 && searchDescription.length<=160,
+    "Chinese indexed preview should be useful but not padded or truncated");
+  assert.ok(description.includes(searchDescription.slice(0,20)));
+  const unverified={...item,specifications:[]};
+  const noSources=modelSeoMetadata(unverified,"zh");
+  assert.doesNotMatch(noSources.searchDescription,/已核实的制造商资料来源链接/);
+  assert.match(noSources.searchDescription,/暂无已发布/);
+});
