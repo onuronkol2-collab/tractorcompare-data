@@ -15,8 +15,39 @@ import {join,relative,resolve} from "node:path";
 import {fileURLToPath} from "node:url";
 
 const IMG=/<img\b(?:[^>"']|"[^"]*"|'[^']*')*>/gi;
-const ALT=/\s+alt\s*=\s*(?:"([^"]*)"|'([^']*)'|([^\s"'=<>]+))/i;
-const SRC=/\s+src\s*=\s*(?:"([^"]*)"|'([^']*)'|([^\s"'=<>]+))/i;
+
+// Parse attribute names, not substrings of quoted values. For example,
+// <img title="missing alt=foo"> has NO alt attribute and must fail the gate.
+function imageAttribute(tag,target){
+  let i=4; // after "<img"
+  while(i<tag.length){
+    while(i<tag.length&&(/[\s/]/.test(tag[i])))i++;
+    if(i>=tag.length||tag[i]===">")break;
+    const start=i;
+    while(i<tag.length&&!/[\s=/>]/.test(tag[i]))i++;
+    if(i===start){i++;continue;}
+    const name=tag.slice(start,i).toLowerCase();
+    while(i<tag.length&&/\s/.test(tag[i]))i++;
+    let value=null;
+    if(tag[i]==="="){
+      i++;
+      while(i<tag.length&&/\s/.test(tag[i]))i++;
+      if(tag[i]==='"'||tag[i]==="'"){
+        const quote=tag[i++];
+        const begin=i;
+        while(i<tag.length&&tag[i]!==quote)i++;
+        value=tag.slice(begin,i);
+        if(tag[i]===quote)i++;
+      }else{
+        const begin=i;
+        while(i<tag.length&&!/[\s>]/.test(tag[i]))i++;
+        value=tag.slice(begin,i);
+      }
+    }
+    if(name===target)return {value};
+  }
+  return null;
+}
 
 export function inspectDocumentImageAlts(html){
   // JavaScript literals such as "<img src='sample'>" are not HTML images.
@@ -27,11 +58,11 @@ export function inspectDocumentImageAlts(html){
   for(const match of markup.matchAll(IMG)){
     const tag=match[0];
     images++;
-    const alt=tag.match(ALT);
-    if(!alt){
-      const src=tag.match(SRC);
-      missingAlt.push({index:images,src:(src?.[1]??src?.[2]??src?.[3]??"").slice(0,180)});
-    }else if((alt[1]??alt[2]??alt[3]??"")===""){
+    const alt=imageAttribute(tag,"alt");
+    if(!alt||alt.value===null){
+      const src=imageAttribute(tag,"src");
+      missingAlt.push({index:images,src:(src?.value||"").slice(0,180)});
+    }else if(alt.value===""){
       emptyAlt++;
     }else{
       nonemptyAlt++;
