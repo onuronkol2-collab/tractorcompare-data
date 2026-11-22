@@ -1,0 +1,13 @@
+---
+import BrandDiscovery from "../../../components/BrandDiscovery.astro";
+import {getPublicCatalog} from "../../../lib/catalog";
+import {listedBrandCollections} from "../../../lib/brand-discovery-pilot.mjs";
+export async function getStaticPaths(){
+  const catalog=await getPublicCatalog();
+  return listedBrandCollections(catalog.tractors).map(({name,slug,models})=>({
+    params:{slug},props:{pilot:{name,slug},models}
+  }));
+}
+const {pilot,models}=Astro.props;
+---
+<BrandDiscovery lang="tr" pilot={pilot} models={models} />
