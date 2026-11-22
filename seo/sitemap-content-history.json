@@ -6,8 +6,8 @@
       "modified": "2026-11-22T15:29:03.380Z"
     },
     "https://tractorvs.com/articles/": {
-      "digest": "fde5f9d32b3a05d05965a3c7ee1afeddf92d6bf8bc630648231f7e654c4143b0",
-      "modified": "2026-11-22T14:21:43.651Z"
+      "digest": "786225d81653487c29bd7be72a730dfbf4dd7800df33f672b421f12717a7d29a",
+      "modified": "2026-11-22T16:33:31.612Z"
     },
     "https://tractorvs.com/brands/mccormick/": {
       "digest": "1597c7455366c1354a16dd5d186ff781ce03141822bf25a743caa310ecde7f69",
@@ -18,8 +18,12 @@
       "modified": "2026-11-22T08:02:35.845Z"
     },
     "https://tractorvs.com/compare/": {
-      "digest": "a3a0ed141badc90d453953c9461cd814b1f5c6b3c0c8717b9ce8df0ff5f8f57b",
-      "modified": "2026-11-22T15:54:04.892Z"
+      "digest": "175f6a4e82198be24f0d357d8bbcb097c6f7397acb7baa34c8e7fef43c786309",
+      "modified": "2026-11-22T16:33:31.612Z"
+    },
+    "https://tractorvs.com/compare/deutz-fahr-5090-d-gs-vs-5100-d-gs/": {
+      "digest": "52e029185eddc00de0825c5ff15e10991f6a3636635ae2c62375f9df34e109c4",
+      "modified": "2026-11-22T16:33:31.612Z"
     },
     "https://tractorvs.com/de/": {
       "digest": "54fd240617012847eec424dd2fa2953a9916e4df15816d449f454c9a35ca5af7",
@@ -11150,8 +11154,8 @@
       "modified": "2026-11-22T15:29:03.380Z"
     },
     "https://tractorvs.com/tr/articles/": {
-      "digest": "f1cddee82b133de7049d24312c62379af3bf5f2cabf91349366491a52400b493",
-      "modified": "2026-11-22T14:21:43.651Z"
+      "digest": "1c5bbdce8e9666495d3e49c81913fa14d085efbac687c49b77af5cf04564ce65",
+      "modified": "2026-11-22T16:33:31.612Z"
     },
     "https://tractorvs.com/tr/brands/mccormick/": {
       "digest": "94782de011b240a5c928fb7791bf8f3f4ae07e726522d0ebbf785794ab323e58",
@@ -11162,8 +11166,12 @@
       "modified": "2026-11-22T08:02:35.845Z"
     },
     "https://tractorvs.com/tr/compare/": {
-      "digest": "c84893d8fa7a0c2f8173934fc5dc2dc32bb39a24abf347b6eed532a0fd3eb613",
-      "modified": "2026-11-22T15:54:04.892Z"
+      "digest": "9aea19e79932aedd2422cb7032ce59cd40e0f4a0608f4853a6ad383b1c919b63",
+      "modified": "2026-11-22T16:33:31.612Z"
+    },
+    "https://tractorvs.com/tr/compare/deutz-fahr-5090-d-gs-vs-5100-d-gs/": {
+      "digest": "d2f52b331965c94d1f2dc2b55db37a3c22f303a152bddd818417198fb3b29862",
+      "modified": "2026-11-22T16:33:31.612Z"
     },
     "https://tractorvs.com/tr/farm-advisor/": {
       "digest": "a84b62b372e654aee19ce03d22d443555d2cddba0d12068243936752ae7dc60d",
@@ -11470,12 +11478,12 @@
       "modified": "2026-11-22T08:45:12.138Z"
     },
     "https://tractorvs.com/tr/tractors/deutz-fahr-5090-d-8cfb4aa9/": {
-      "digest": "179d6cddc58440b34924d05891343d5a67b10fc7ce5f10012b8bde7f402aabe2",
-      "modified": "2026-11-22T15:49:54.478Z"
+      "digest": "c3231532bc17af0b8f6e42b373f56525f0c402ab6660bd141a923f78336d4395",
+      "modified": "2026-11-22T16:33:31.612Z"
     },
     "https://tractorvs.com/tr/tractors/deutz-fahr-5100-d-e443a07b/": {
-      "digest": "cca84af6d7087bbc44d3266980c1a8e1234c76ca1b006529d8006820b04bd017",
-      "modified": "2026-11-22T15:49:54.478Z"
+      "digest": "57fd1b34403ec1cef8abe5210cda6527910bca1337c3dd4dedc4c11202ae9d9c",
+      "modified": "2026-11-22T16:33:31.612Z"
     },
     "https://tractorvs.com/tr/tractors/fendt-724-vario-191d10b4/": {
       "digest": "99e8641b9211e418e68e98c66c0f73b80f59b5b30f78f466b494300058a6b676",
@@ -13026,12 +13034,12 @@
       "modified": "2026-11-22T15:49:54.478Z"
     },
     "https://tractorvs.com/tractors/deutz-fahr-5090-d-8cfb4aa9/": {
-      "digest": "d3fc7ac17cf75960b11286e3d82d3a49bf013719e4956f735912973168eeb828",
-      "modified": "2026-11-22T15:49:54.478Z"
+      "digest": "9e1da1ea165bd3d2515fa57eaddfc4a89b7fe9e907138816d7984c9ba0066fc3",
+      "modified": "2026-11-22T16:33:31.612Z"
     },
     "https://tractorvs.com/tractors/deutz-fahr-5100-d-e443a07b/": {
-      "digest": "ab2d25db940fdb84d2b4226a6d2405900b1ab5a681fc432aefba5be206310592",
-      "modified": "2026-11-22T15:49:54.478Z"
+      "digest": "782e3a2fed5b930ae3635bf56965930d488dec4a63832457470031b8983173be",
+      "modified": "2026-11-22T16:33:31.612Z"
     },
     "https://tractorvs.com/tractors/fendt-724-vario-191d10b4/": {
       "digest": "3c9c3cae71f3d5b7119327a7eba7e73ed4e33219a7bb320e0467de1828dc0c4d",
