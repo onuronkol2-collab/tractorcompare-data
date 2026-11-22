@@ -33,7 +33,7 @@ test("updated guide cites approved primary test standards and trusted independen
   assert.doesNotMatch(article,/AggregateRating|offers:|"@type":"Product"/);
 });
 
-test("non-power educational guides retain their original wording and 20 November review date",()=>{
+test("only genuinely edited educational guides advance their review date without fictional claims",()=>{
   const other=TECHNICAL_DEEP_DIVES.filter(x=>x.slug!=="tractor-engine-power-and-torque");
   assert.ok(other.length>0);
   for(const guide of other){
