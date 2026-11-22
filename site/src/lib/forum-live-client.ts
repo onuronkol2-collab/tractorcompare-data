@@ -7,6 +7,7 @@
  * raw innerHTML, dynamic scripts or speculative permanent links.
  */
 import {forumBlocks,forumSeoDescription} from "./forum-format.mjs";
+import {forumSearchText} from "./forum-search.mjs";
 import type {Locale} from "./locales.ts";
 import {FORUM_LIVE_TEXT} from "./forum-live-i18n.ts";
 
@@ -114,7 +115,7 @@ export function initForumLive(root:HTMLElement):void{
     const article=make("article");article.className="community-topic forum-live-topic";
     article.dataset.forumTopic="";article.dataset.forumTopicId=row.topic_id;
     article.dataset.forumTopicCategory=row.category;
-    article.dataset.forumSearch=(row.title+" "+row.body).toLocaleLowerCase();
+    article.dataset.forumSearch=forumSearchText(row.title+" "+row.body,cfg!.lang);
     const meta=make("p");meta.className="forum-live-meta";
     const time=make("time");time.dateTime=row.created_at;
     time.textContent=new Intl.DateTimeFormat(cfg!.lang==="zh"?"zh-CN":cfg!.lang==="pt-br"?"pt-BR":cfg!.lang,{
