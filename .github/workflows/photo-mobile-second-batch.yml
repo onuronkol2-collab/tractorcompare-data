@@ -4,6 +4,7 @@ on:
     paths:
       - "site/scripts/photo-mobile-second-batch.mjs"
       - "site/scripts/photo-mobile-second-batch.py"
+      - "site/scripts/photo-mobile-second-batch-public-coverage.mjs"
       - "site/tests/photo-mobile-second-batch.test.mjs"
       - ".github/workflows/photo-mobile-second-batch.yml"
 permissions:
@@ -28,6 +29,8 @@ jobs:
         run: python -m pip install --disable-pip-version-check --no-cache-dir Pillow==11.3.0
       - name: Verify 18 rights-reviewed source identities and no publishing permissions
         run: node --experimental-strip-types --test site/tests/photo-mobile-second-batch.test.mjs
+      - name: Verify all 18 reviewed photos appear on the CURRENT public image sitemap
+        run: node --experimental-strip-types site/scripts/photo-mobile-second-batch-public-coverage.mjs
       - name: Generate explicit hard-pinned 18-photo read-only manifest
         run: |
           mkdir -p /tmp/tractorvs-batch18
