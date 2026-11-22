@@ -36,5 +36,5 @@ jobs:
           done
       - name: Verify model, license, JPEG integrity and ten-language metadata
         run: node --experimental-strip-types --test site/tests/tractor-photos.test.mjs
-      - name: Verify six exact Commons origin renditions before release
+      - name: Verify staged SHA-256 ledger, nine first-party JPEGs and exact source provenance
         run: node --experimental-strip-types site/scripts/verify-licensed-photos-20261122.mjs
