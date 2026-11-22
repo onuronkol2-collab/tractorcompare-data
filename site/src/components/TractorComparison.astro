@@ -2,6 +2,7 @@
 import SiteLayout from "../layouts/SiteLayout.astro";
 import { getPublicCatalog } from "../lib/catalog";
 import { comparisonSpecs } from "../lib/comparison-specs";
+import { requiresConditionCaution } from "../lib/compare-conditions";
 import { INDEPENDENT_SOURCE_COPY } from "../lib/independent-source-i18n";
 import { localizedPath, type Locale } from "../lib/locales";
 import { t } from "../lib/ui";
@@ -62,6 +63,7 @@ const labelsPayload = JSON.stringify({
   independent: INDEPENDENT_SOURCE_COPY[lang].label,
   loadError: cx(lang,"loadError"),
   context: t(lang,"condition"),
+  conditionCaution: cx(lang,"conditionCaution"),
   search: cx(lang,"searchModel"),
   noResults: cx(lang,"noResults"),
   results: cx(lang,"results"),
@@ -194,7 +196,7 @@ const labelsPayload = JSON.stringify({
             </tr></thead>
             <tbody id="tc-rows" role="rowgroup">
               {initialRows.map((row) => <tr role="row">
-                <th scope="row" role="rowheader">{row.label}</th>
+                <th scope="row" role="rowheader">{row.label}{requiresConditionCaution(row.key,row.left,row.right) && <small class="tc-condition-caution" role="note">{cx(lang,"conditionCaution")}</small>}</th>
                 {[row.left, row.right].map((items,index) => <td role="cell">
                   <span class="tc-cell-model" aria-hidden="true">{index===0?initialLeft?.title:initialRight?.title}</span>
                   {items.length ? items.map((spec) => <div class="tc-entry">
@@ -225,6 +227,7 @@ const labelsPayload = JSON.stringify({
 
 <script>
   import { normalizeTractorQuery } from "../lib/search";
+  import { requiresConditionCaution } from "../lib/compare-conditions";
   type Spec = { key:string; label:string; value:string; unit:string|null; context:string|null; rpm:number|null; source:string|null; independent:boolean; notice:string|null };
   type Model = { id:string; title:string; dataUrl:string;
     variant:string|null; power:number|null; specsCount:number;
@@ -238,7 +241,7 @@ const labelsPayload = JSON.stringify({
     const models=JSON.parse(dataNode.textContent||"[]") as Model[];
     const lang=document.documentElement.lang;
     const l10n=JSON.parse(document.querySelector("#tc-i18n")?.textContent||"{}") as {
-      missing:string;source:string;independent:string;loadError:string;context:string;search:string;noResults:string;
+      missing:string;source:string;independent:string;loadError:string;context:string;conditionCaution:string;search:string;noResults:string;
       results:string;selected:string;exploreModel:string;shared:string;
       summary:string;noShared:string;specs:string;
     };
@@ -365,7 +368,11 @@ const labelsPayload = JSON.stringify({
       for(const key of visible){
         const row=document.createElement("tr");row.setAttribute("role","row");
         const th=document.createElement("th");
-        th.setAttribute("role","rowheader");th.scope="row";th.textContent=label(key);row.appendChild(th);
+        th.setAttribute("role","rowheader");th.scope="row";th.textContent=label(key);
+        if(requiresConditionCaution(key,find(left,key),find(right,key))){
+          addText(th,"small",l10n.conditionCaution,"tc-condition-caution").setAttribute("role","note");
+        }
+        row.appendChild(th);
         for(const model of [left,right]){
           const td=document.createElement("td");td.setAttribute("role","cell");
           addText(td,"span",model.title,"tc-cell-model").setAttribute("aria-hidden","true");
