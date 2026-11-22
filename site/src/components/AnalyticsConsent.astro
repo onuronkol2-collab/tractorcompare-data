@@ -8,14 +8,22 @@ const { lang } = Astro.props;
 const c = analyticsText(lang);
 ---
 <aside id="tractorvs-analytics-banner" class="tractorvs-analytics-banner" hidden
-      aria-labelledby="tractorvs-analytics-title" aria-describedby="tractorvs-analytics-description tractorvs-clarity-description tractorvs-cloudflare-description"
+      aria-labelledby="tractorvs-analytics-title" aria-describedby="tractorvs-analytics-summary"
       role="region">
   <div class="tractorvs-analytics-copy">
-    <strong id="tractorvs-analytics-title">{c.consentTitle}</strong>
-    <p id="tractorvs-analytics-description">{c.consentDescription}</p>
-    <p id="tractorvs-clarity-description">{c.clarityConsent}</p>
-    <p id="tractorvs-cloudflare-description">{c.cloudflareConsent}</p>
-    <a class="tractorvs-analytics-link" href={localizedPath(lang,"/privacy/")}>{c.privacyLink}</a>
+    <div class="tractorvs-analytics-heading">
+      <strong id="tractorvs-analytics-title">{c.consentTitle}</strong>
+      <a class="tractorvs-analytics-link" href={localizedPath(lang,"/privacy/")}>{c.privacyLink}</a>
+    </div>
+    <p id="tractorvs-analytics-summary">{c.consentCompact}</p>
+    <details class="tractorvs-analytics-more">
+      <summary>{c.consentDetails}</summary>
+      <div class="tractorvs-analytics-disclosures">
+        <p id="tractorvs-analytics-description">{c.consentDescription}</p>
+        <p id="tractorvs-clarity-description">{c.clarityConsent}</p>
+        <p id="tractorvs-cloudflare-description">{c.cloudflareConsent}</p>
+      </div>
+    </details>
   </div>
   <div class="tractorvs-analytics-actions">
     <button type="button" id="tractorvs-analytics-reject">{c.reject}</button>
@@ -218,49 +226,106 @@ const c = analyticsText(lang);
   }
 </script>
 <style>
+  /* Compact, unobtrusive consent card. Disclosure and tracking rules stay intact. */
   .tractorvs-analytics-banner {
     position: fixed;
     z-index: 1000;
-    bottom: 18px;
-    left: max(18px, env(safe-area-inset-left));
-    right: max(18px, env(safe-area-inset-right));
-    width: min(760px, calc(100% - 36px));
-    margin-inline: auto;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 20px;
-    border: 1px solid #a8c3ac;
-    border-radius: 16px;
-    box-shadow: 0 14px 45px #101a1633;
-    padding: 18px 20px;
+    right: max(14px, env(safe-area-inset-right));
+    bottom: max(14px, env(safe-area-inset-bottom));
+    left: auto;
+    width: min(470px, calc(100vw - 32px));
+    max-height: min(74dvh, 690px);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    display: grid;
+    gap: 11px;
+    border: 1px solid #b9cdbb;
+    border-radius: 14px;
+    box-shadow: 0 9px 32px rgba(15, 37, 24, .18);
+    padding: 14px 16px;
     background: #fff;
-    color: #17211c;
-    font-size: 13px;
-    line-height: 1.6;
+    color: #17271d;
+    font-size: 12.5px;
+    line-height: 1.5;
   }
   .tractorvs-analytics-banner[hidden] { display: none; }
-  .tractorvs-analytics-copy { min-width: 0; flex: 1; }
-  .tractorvs-analytics-copy strong { font-size: 15px; }
-  .tractorvs-analytics-copy p { margin: 6px 0; }
-  .tractorvs-analytics-link { text-decoration: underline; text-underline-offset: 3px; color: #205938; font-weight: 650; }
-  .tractorvs-analytics-actions { display: flex; flex-direction: column; gap: 9px; flex-shrink: 0; }
+  .tractorvs-analytics-copy { min-width: 0; }
+  .tractorvs-analytics-heading {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 5px 12px;
+  }
+  .tractorvs-analytics-heading strong {
+    font-size: 14px;
+    font-weight: 800;
+    line-height: 1.35;
+    color: #173f29;
+  }
+  .tractorvs-analytics-link {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    color: #205938;
+    font-size: 11.5px;
+    font-weight: 750;
+  }
+  .tractorvs-analytics-copy > p { margin: 8px 0 4px; color: #354a3c; }
+  .tractorvs-analytics-more { margin-top: 5px; }
+  .tractorvs-analytics-more summary {
+    display: list-item;
+    width: fit-content;
+    cursor: pointer;
+    color: #205938;
+    font-size: 12px;
+    font-weight: 750;
+  }
+  .tractorvs-analytics-more[open] summary { margin-bottom: 10px; }
+  .tractorvs-analytics-disclosures {
+    padding: 5px 0 1px;
+    border-top: 1px solid #e0e9e0;
+    color: #445b4a;
+  }
+  .tractorvs-analytics-disclosures p { margin: 8px 0; }
+  .tractorvs-analytics-actions { display: flex; gap: 8px; }
   .tractorvs-analytics-actions button {
+    min-height: 44px;
+    min-width: 0;
+    flex: 1;
     border: 1px solid #285b40;
-    border-radius: 10px;
-    padding: 10px 14px;
-    min-width: 132px;
+    border-radius: 9px;
+    padding: 9px 11px;
     cursor: pointer;
     background: #fff;
     color: #194d31;
+    font: inherit;
     font-size: 12px;
-    font-weight: 700;
+    font-weight: 750;
+    line-height: 1.3;
   }
-  .tractorvs-analytics-actions #tractorvs-analytics-accept { background: #285b40; color: #fff; }
-  .tractorvs-analytics-banner :is(button,a):focus-visible { outline: 3px solid #e2a35b; outline-offset: 3px; }
+  .tractorvs-analytics-actions #tractorvs-analytics-accept {
+    background: #285b40;
+    color: #fff;
+  }
+  .tractorvs-analytics-actions button:hover { background: #e9f4e7; }
+  .tractorvs-analytics-actions #tractorvs-analytics-accept:hover { background: #1b4930; }
+  .tractorvs-analytics-banner :is(button,a,summary):focus-visible {
+    outline: 3px solid #e2a35b;
+    outline-offset: 3px;
+  }
   @media (max-width: 640px) {
-    .tractorvs-analytics-banner { flex-direction: column; align-items: stretch; gap: 12px; bottom: 8px; padding: 14px; }
-    .tractorvs-analytics-actions { flex-direction: row; }
-    .tractorvs-analytics-actions button { flex: 1; min-width: 0; }
+    .tractorvs-analytics-banner {
+      right: max(8px, env(safe-area-inset-right));
+      left: max(8px, env(safe-area-inset-left));
+      bottom: max(8px, env(safe-area-inset-bottom));
+      width: auto;
+      max-height: 75dvh;
+      padding: 12px 13px;
+      gap: 9px;
+      font-size: 12px;
+    }
+    .tractorvs-analytics-heading strong { font-size: 13.5px; }
+    .tractorvs-analytics-actions button { min-height: 44px; }
   }
 </style>
+
