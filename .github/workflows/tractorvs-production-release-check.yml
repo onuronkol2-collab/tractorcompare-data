@@ -42,6 +42,7 @@ jobs:
             echo "::error::Read-only TRACTORVS_SUPABASE_ANON_JWT secret missing"; exit 1
           fi
           npm run build:production
+          node scripts/verify-brand-discovery-pilot.mjs
       - name: Test Worker bundling without deploying
         working-directory: site
         run: npx wrangler deploy --dry-run --outdir ../.wrangler-production-audit

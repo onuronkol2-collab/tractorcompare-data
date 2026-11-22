@@ -1,0 +1,139 @@
+---
+import SiteLayout from "../layouts/SiteLayout.astro";
+import {localizedPath, type Locale} from "../lib/locales";
+import {marketDisplayName} from "../lib/market-display";
+import {verifiedModelSources} from "../lib/brand-discovery-pilot.mjs";
+import type {TractorRecord} from "../lib/catalog";
+
+interface Pilot {name:string; slug:string;}
+interface Props { lang:Locale; pilot:Pilot; models:TractorRecord[] }
+const {lang,pilot,models}=Astro.props;
+const turkish=lang==="tr";
+const name=pilot.name;
+const origin=Astro.site||new URL("https://tractorvs.com");
+const pagePath=localizedPath(lang,"/brands/"+pilot.slug+"/");
+const modelPrefix=localizedPath(lang,"/tractors/");
+const title=turkish?name+" traktör modelleri ve teknik veriler | TractorVS":name+" tractor models & specifications | TractorVS";
+const description=turkish
+  ? name+" markasının TractorVS'de yayımlanan "+models.length+" traktör kaydını teknik özellik, model varyantı ve doğrulanabilir kaynaklarıyla inceleyin."
+  : "Browse "+models.length+" published "+name+" tractor records on TractorVS. Compare documented specifications, model variants and evidence links.";
+const copy=turkish
+  ? {
+      crumb:"İçerik yolu",home:"Ana sayfa",catalog:"Traktörler",heading:"traktör modelleri ve teknik özellikleri",
+      overline:"YAYIMLANMIŞ VE KAYNAKLI MODEL KATALOĞU",
+      scope:"Bu liste yalnızca TractorVS'de yayımlanan kayıtları kapsar; üreticinin tüm modelleri veya güncel satış kataloğu değildir.",
+      count:"Yayımlanmış kayıt",sources:"Kaynak bağlantısı bulunan kayıt",specs:"Teknik özellik kaydı",
+      context:name==="McCormick"
+        ?"Benzer model adları farklı pazar, varyant veya aktarma seçeneklerini temsil edebilir. Karşılaştırmadan önce her kaydın ayrıntılı teknik ölçümünü ve kaynaklarını inceleyin."
+        :"Motor gücü, PTO gücü ve çekiş gücü farklı ölçümlerdir. Bu Valtra kayıtlarında mevcutsa kaynaklı motor gücü gösterilir; eksik ölçümler tahmin edilmez.",
+      models:"Yayımlanmış modeller",open:"Modeli ve tüm kaynaklarını incele",power:"Motor gücü",year:"Belirtilen model yılı",
+      market:"Pazar",specCount:"teknik özellik",evidence:"Doğrulama kaynağı",unknown:"Kaynaklı özet güç değeri yok",
+      methodology:"Veri doğrulama yöntemimiz",compare:"Traktörleri karşılaştır",disclaimer:"Eksik yıl, varyant veya teknik alanlar bilinmiyorsa boş bırakılır. Üreticiye ait olmayan bağımsız bir bilgi platformudur."
+    }
+  : {
+      crumb:"Breadcrumb",home:"Home",catalog:"Tractors",heading:"tractor models and technical specifications",
+      overline:"PUBLISHED MODELS WITH SOURCE LINKS",
+      scope:"This list covers records published by TractorVS, not every model the manufacturer has produced or currently sells.",
+      count:"Published records",sources:"Records with evidence links",specs:"Technical data entries",
+      context:name==="McCormick"
+        ?"Similar model names may represent different markets, variants or transmissions. Check each model’s individual technical measurements and sources before comparing."
+        :"Engine power, PTO power and drawbar power describe different measurements. These Valtra records display source-backed engine power when available; missing measurements are never guessed.",
+      models:"Published models",open:"Inspect model and all sources",power:"Engine power",year:"Specified model year",
+      market:"Market",specCount:"technical entries",evidence:"Evidence source",unknown:"No verified summary power available",
+      methodology:"Our data methodology",compare:"Compare tractors",disclaimer:"Unknown years, variants and technical facts stay unfilled. TractorVS is independent and is not the manufacturer."
+    };
+const sourceById=new Map(models.map(model=>[model.tractor_id,verifiedModelSources(model)]));
+const sourcedCount=models.filter(model=>(sourceById.get(model.tractor_id)||[]).length>0).length;
+const countSpecs=models.reduce((sum,model)=>sum+model.specifications.length,0);
+const schema={
+ "@context":"https://schema.org","@type":"CollectionPage",
+ name:title,description,url:new URL(pagePath,origin).href,
+ inLanguage:turkish?"tr":"en",
+ mainEntity:{"@type":"ItemList",numberOfItems:models.length,
+  itemListElement:models.map((model,index)=>({
+   "@type":"ListItem",position:index+1,name:name+" "+model.model_name,
+   url:new URL(modelPrefix+model.slug+"/",origin).href
+  }))}
+};
+---
+<SiteLayout lang={lang} title={title} description={description}
+  structuredData={schema} availableLocales={["en","tr"]} indexableLocales={["en","tr"]}>
+  <section class="brand-discovery container" aria-labelledby="brand-heading">
+    <nav class="brand-breadcrumbs" aria-label={copy.crumb}>
+      <a href={localizedPath(lang,"/")}>{copy.home}</a><span aria-hidden="true">/</span>
+      <a href={localizedPath(lang,"/tractors/")}>{copy.catalog}</a><span aria-hidden="true">/</span>
+      <span aria-current="page">{name}</span>
+    </nav>
+    <header class="brand-heading">
+      <p class="brand-eyebrow">{copy.overline}</p>
+      <h1 id="brand-heading">{name} {copy.heading}</h1>
+      <p>{description}</p>
+      <p>{copy.scope}</p>
+      <p>{copy.context}</p>
+    </header>
+    <dl class="brand-facts">
+      <div><dt>{copy.count}</dt><dd>{models.length}</dd></div>
+      <div><dt>{copy.sources}</dt><dd>{sourcedCount}</dd></div>
+      <div><dt>{copy.specs}</dt><dd>{countSpecs}</dd></div>
+    </dl>
+    <div class="brand-tools">
+      <a href={localizedPath(lang,"/compare/")}>{copy.compare}</a>
+      <a href={localizedPath(lang,"/methodology/")}>{copy.methodology}</a>
+    </div>
+    <section aria-labelledby="brand-model-heading">
+      <h2 id="brand-model-heading">{copy.models}</h2>
+      <ul class="brand-model-grid">
+        {models.map(model=><li>
+          <article class="brand-model">
+            <h3><a href={modelPrefix+model.slug+"/"}>{name} {model.model_name}</a></h3>
+            {model.variant&&<p class="brand-variant">{model.variant.split(";")[0].trim()}</p>}
+            <dl>
+              {model.horsepower!=null && <div><dt>{copy.power}</dt><dd>{model.horsepower} HP</dd></div>}
+              {model.model_year && <div><dt>{copy.year}</dt><dd>{model.model_year}</dd></div>}
+              {model.market && <div><dt>{copy.market}</dt><dd>{marketDisplayName(model.market,lang)}</dd></div>}
+            </dl>
+            {model.horsepower==null && <p class="brand-unknown">{copy.unknown}</p>}
+            <p class="brand-spec-count">{model.specifications.length} {copy.specCount}</p>
+            <div class="brand-model-links">
+              <a class="model-detail-link" href={modelPrefix+model.slug+"/"}>{copy.open}</a>
+              {(sourceById.get(model.tractor_id)||[]).slice(0,1).map(source=>
+                <a href={source.url} target="_blank" rel="noopener noreferrer">
+                  {copy.evidence}{source.publisher?" — "+source.publisher:""} <span aria-hidden="true">↗</span>
+                </a>)}
+            </div>
+          </article>
+        </li>)}
+      </ul>
+    </section>
+    <p class="brand-disclaimer">{copy.disclaimer}</p>
+  </section>
+</SiteLayout>
+<style>
+.brand-discovery{padding-top:clamp(24px,5vw,56px);padding-bottom:72px}
+.brand-breadcrumbs{display:flex;flex-wrap:wrap;gap:8px;align-items:center;font-size:13px;margin-bottom:26px;color:#355a42}
+.brand-breadcrumbs a{text-decoration:underline;text-underline-offset:3px}
+.brand-breadcrumbs a:focus-visible,.brand-tools a:focus-visible,.brand-model a:focus-visible{outline:3px solid #256e40;outline-offset:4px;border-radius:4px}
+.brand-heading{max-width:850px}
+.brand-eyebrow{font-size:12px;font-weight:800;letter-spacing:.11em;color:#37774a}
+.brand-heading h1{font-size:clamp(27px,4.4vw,49px);line-height:1.15;letter-spacing:-.035em;margin:14px 0}
+.brand-heading p{font-size:clamp(15px,1.7vw,18px);line-height:1.7;color:#345742}
+.brand-facts{display:flex;flex-wrap:wrap;gap:14px;margin:28px 0}
+.brand-facts div{flex:1 1 170px;border:1px solid #c8ddce;background:#f5faf4;border-radius:14px;padding:18px}
+.brand-facts dt{font-size:12px;color:#41674e;font-weight:700;line-height:1.5}
+.brand-facts dd{font-size:25px;font-weight:900;margin:8px 0 0;color:#17472a}
+.brand-tools{display:flex;gap:12px;flex-wrap:wrap;margin:20px 0 40px}
+.brand-tools a{display:inline-flex;min-height:44px;align-items:center;padding:9px 16px;border:1px solid #2b7544;border-radius:10px;color:#14562d;font-weight:800;text-decoration:none}
+.brand-model-grid{list-style:none;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,270px),1fr));gap:15px;margin:0;padding:0}
+.brand-model-grid>li{list-style:none}
+.brand-model{display:flex;flex-direction:column;gap:10px;height:100%;border:1px solid #d0dfd1;border-radius:14px;background:#fff;padding:18px}
+.brand-model h3{font-size:clamp(17px,2vw,20px);line-height:1.35;margin:0;color:#174e31}
+.brand-model h3 a{text-decoration:underline;text-decoration-color:#93b69a;text-underline-offset:4px}
+.brand-model dl{margin:0;display:flex;flex-direction:column;gap:6px}
+.brand-model dl div{display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px}
+.brand-model dt{font-size:13px;color:#58725c}.brand-model dd{font-size:13px;font-weight:800;margin:0}
+.brand-variant,.brand-spec-count,.brand-unknown{font-size:13px;color:#47644d;margin:0;line-height:1.5}
+.brand-model-links{display:flex;flex-direction:column;gap:10px;margin-top:auto;padding-top:8px}
+.brand-model-links a{font-size:13px;line-height:1.5;overflow-wrap:anywhere}
+.model-detail-link{font-weight:800}
+.brand-disclaimer{margin-top:28px;font-size:13px;line-height:1.7;color:#486452}
+</style>
