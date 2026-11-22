@@ -1,6 +1,8 @@
 name: TractorVS published forum static content refresh
 # Read only actual approved public posts from RLS-protected Supabase views.
 # Never read pending posts, service-role credentials or private user data.
+# DE release audit (22 Nov 2026): refresh the now-approved third public locale;
+# runtime logic, secrets and permissions remain unchanged.
 # 22 Nov 2026 release audit: after separately approving the EN forum translation,
 # this workflow may refresh its already-public fingerprint; it never grants approval.
 on:
