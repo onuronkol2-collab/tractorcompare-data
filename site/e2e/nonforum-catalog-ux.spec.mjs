@@ -25,8 +25,8 @@ test("source-backed catalogue is an accessible filterable research grid, not an 
   await page.locator("#catalog-facet-sort").selectOption("powerAsc");
   expect(new URL(page.url()).searchParams.get("sort")).toBe("powerAsc");
   const sorted=await visible.evaluateAll(nodes=>nodes.map(n=>({
-    order:Number(n.style.order),power:n.getAttribute("data-power")
-  })).sort((a,b)=>a.order-b.order));
+    power:n.getAttribute("data-power")
+  })));
   const verified=sorted.filter(x=>x.power!==""&&Number.isFinite(Number(x.power))).map(x=>Number(x.power));
   expect(verified).toEqual([...verified].sort((a,b)=>a-b));
   await page.locator("#catalog-facet-year").selectOption("recent");
