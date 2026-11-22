@@ -1,0 +1,38 @@
+name: TractorVS anonymous forum and private-data RLS boundary
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "17 4 * * 1"
+  push:
+    branches: [main]
+    paths:
+      - "site/scripts/forum-anon-boundary-audit.mjs"
+      - "site/tests/forum-anon-boundary-audit.test.mjs"
+      - ".github/workflows/forum-anon-boundary-monitor.yml"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: tractorvs-public-anon-rls-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  verify_public_boundaries:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22.23.4"
+      - name: Test boundary logic without network access
+        run: node --test site/tests/forum-anon-boundary-audit.test.mjs
+      - name: Live read-only anonymous access test
+        env:
+          TRACTORVS_SUPABASE_ANON_JWT: ${{ secrets.TRACTORVS_SUPABASE_ANON_JWT }}
+        run: |
+          if [ -z "$TRACTORVS_SUPABASE_ANON_JWT" ]; then
+            echo "::error::Existing public anonymous credential unavailable"; exit 1
+          fi
+          node site/scripts/forum-anon-boundary-audit.mjs
