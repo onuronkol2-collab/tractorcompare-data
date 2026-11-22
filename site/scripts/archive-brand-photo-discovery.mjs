@@ -6,6 +6,10 @@ import {requireCommonsQueryResponse} from "./photo-source-response.mjs";
  */
 import {readFile,writeFile} from "node:fs/promises";
 const rows=JSON.parse(await readFile("photo-discovery-report/archived-tractor-models.json","utf8"));
+const publishedRows=JSON.parse(await readFile("photo-discovery-report/published-model-inventory.json","utf8"));
+if(!Array.isArray(rows)||!rows.length||!Array.isArray(publishedRows)||!publishedRows.length||
+   publishedRows.some(x=>x.error||!x.brand||!x.model))
+  throw Error("Cannot run Commons brand research with incomplete source/public inventories");
 const norm=s=>String(s||"").normalize("NFKD").replace(/[\u0300-\u036f]/g,"")
   .toLowerCase().replace(/\u0131/g,"i").replace(/[^a-z0-9]+/g,"");
 const strip=s=>String(s||"").replace(/<[^>]*>/g," ").replace(/&amp;/g,"&").trim();
@@ -36,18 +40,24 @@ async function query(params){
   }
   throw last;
 }
-const unique=new Map();
-for(const r of rows){
-  const key=norm(r.brand)+"|"+norm(r.model);
-  if(!unique.has(key))unique.set(key,{brand:r.brand,model:r.model});
-}
+// Combine frozen historical identities with fresh public model identities
+// before querying Commons. This preserves ALL live models without extra API
+// calls for each variant. The historical 405-model report remains separate.
+const key=r=>norm(r.brand)+"|"+norm(r.model);
+const historical=new Map();
+const publicModels=new Map();
+for(const r of rows)if(r?.brand&&r?.model&&!historical.has(key(r)))
+  historical.set(key(r),{brand:r.brand,model:r.model});
+for(const r of publishedRows)if(!publicModels.has(key(r)))
+  publicModels.set(key(r),{brand:r.brand,model:r.model});
+const unique=new Map([...historical,...publicModels]);
 const byBrand=new Map();
 for(const r of unique.values()){
   if(!byBrand.has(r.brand))byBrand.set(r.brand,[]);
   byBrand.get(r.brand).push(r);
 }
 
-const results=[],errors=[];
+const results=[],publicResults=[],errors=[];
 for(const [brand,models] of byBrand){
   const fileTitles=new Set();
   for(const term of aliases[brand]||[brand]){
@@ -82,7 +92,8 @@ for(const [brand,models] of byBrand){
   for(const model of models){
     const photos=media.filter(v=>matchesPhotoFileModel(brand,model.model,v.fileTitle)).slice(0,6);
     if(photos.length)coverage++;
-    results.push({...model,photos});
+    if(historical.has(key(model)))results.push({...model,photos});
+    if(publicModels.has(key(model)))publicResults.push({...model,photos});
   }
   console.log("ARCHIVE_BRAND_DISCOVERY "+JSON.stringify({
     brand,models:models.length,matchingFileTitles:titles.length,
@@ -95,8 +106,15 @@ const report={snapshotDate:"2026-11-14",modelCount:results.length,
   warning:"Candidates only. No photographer has endorsed TractorVS; no draft is published.",
   models:results};
 await writeFile("photo-discovery-report/archived-image-candidates.json",JSON.stringify(report,null,2));
+await writeFile("photo-discovery-report/public-image-candidates.json",JSON.stringify({
+  inventorySource:"live verified published sitemap, same-run Wikimedia brand queries",
+  modelCount:publicResults.length,errorCount:errors.length,errors,
+  warning:"Non-exhaustive title-based discovery; photos require identity and rights review before any publication.",
+  models:publicResults
+},null,2));
 console.log("ARCHIVE_IMAGE_DISCOVERY_SUMMARY "+JSON.stringify({
   brands:byBrand.size,uniqueModels:results.length,
+  publicUniqueModels:publicResults.length,publicModelsWithCandidates:publicResults.filter(x=>x.photos.length).length,
   modelsWithLicensedTitleCandidates:covered,errors:errors.length
 }));
 // Preserve the report for diagnosis, but incomplete research is never success.
