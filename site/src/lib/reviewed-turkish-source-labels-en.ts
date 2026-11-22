@@ -123,7 +123,7 @@ export const REVIEWED_TURKISH_SOURCE_LABELS_EN = {
   "4WD Toplam YüKseklik (Kabinsiz)": "Overall height without cab (4WD)",
   "4WD TraktöR AğıRlığı": "Tractor weight (4WD)",
   "4WD Yerden AçıKlıK": "Ground clearance (4WD)",
-  "Akü SoğUk Marş AkıMı": "Battery cold-cranking current"
+  "Akü SoğUk Marş AkıMı": "Battery cold-cranking current",
   // Source-language leakage recorded against published EN model HTML, 2026-11-22.
   // Exact legacy source headings only; technical values, units and provenance stay immutable.
   "Alt BağLantı Kolları": "Lower link arms",
