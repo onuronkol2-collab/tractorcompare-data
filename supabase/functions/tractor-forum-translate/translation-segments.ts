@@ -69,8 +69,9 @@ export function nextTranslationCheckpoint(body:string,previousNotes:string|null|
   return "PARTS:"+completed+"/"+segments.length;
  // For new work, choose the exact grouping rather than storing only a
  // segment count; a count alone cannot prove boundaries on the next run.
- const smaller=markdownTranslationSegments(body,1600);
- const size:SegmentSize=segments.length===smaller.length&&
-   segments.every((part,i)=>part===smaller[i])?1600:2200;
+ let smaller:string[]|null=null;
+ try{smaller=markdownTranslationSegments(body,1600)}catch{ /* 2200 fallback */ }
+ const size:SegmentSize=smaller&&segments.length===smaller.length&&
+   segments.every((part,i)=>part===smaller![i])?1600:2200;
  return "PARTS2:"+completed+"/"+segments.length+"@"+size;
 }
