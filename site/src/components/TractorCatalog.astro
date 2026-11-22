@@ -145,7 +145,7 @@ const pricePayload = JSON.stringify({
   import { matchingPrice, formatMarketPriceRange, MARKET_COUNTRIES } from "../lib/market-prices";
   import type { MarketCountry } from "../lib/market-prices";
   import { advisorText } from "../lib/advisor-i18n";
-  import { normalizeTractorQuery } from "../lib/search";
+  import { matchesTractorTerms, normalizeTractorQuery } from "../lib/search";
   import type { Locale } from "../lib/locales";
   const dataNode=document.getElementById("catalog-price-payload");
   const countryControl=document.querySelector<HTMLSelectElement>("#catalog-price-country");
@@ -183,10 +183,11 @@ const pricePayload = JSON.stringify({
   const clearSearch = document.querySelector<HTMLButtonElement>("#catalog-search-clear");
   const filterCatalog = (query: string) => {
     const normalized = normalizeTractorQuery(query);
+    const terms = normalized.split(/\s+/).filter(Boolean);
     let visible = 0;
     for (let i = 0; i < cards.length; i++) {
       const card = cards[i];
-      const match = cardSearchKeys[i].includes(normalized);
+      const match = matchesTractorTerms(cardSearchKeys[i], terms);
       // Avoid invalidating styles/layout for unaffected cards on each input.
       if (card.hidden !== !match) card.hidden = !match;
       if (match) visible++;

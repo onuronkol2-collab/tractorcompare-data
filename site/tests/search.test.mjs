@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import {normalizeTractorQuery} from "../src/lib/search.ts";
+import {matchesTractorTerms, normalizeTractorQuery} from "../src/lib/search.ts";
 test("Turkish and accented model searches find their official spellings",()=>{
   for(const [term,target] of [
     ["Basak","Başak"],["BAŞAK","Başak"],["TUMOSAN","Tümosan"],
@@ -39,4 +39,15 @@ test("empty and absent models return no phantom suggestions",()=>{
   assert.deepEqual(findTractorSuggestions(sample,""),[]);
   assert.deepEqual(findTractorSuggestions(sample,"    "),[]);
   assert.deepEqual(findTractorSuggestions(sample,"Fendt 9999"),[]);
+});
+
+test("catalog and home suggestions match separated model and variant terms in any order", () => {
+  const model = {brand:"Agrale", model:"4125", variant:"Cargo", year:null, horsepower:null, specs:0, url:"/tractors/ag/"};
+  const key = normalizeTractorQuery([model.brand,model.model,model.variant].join(" "));
+  for (const [query, expected] of [["4125   Agrale",true], ["Agrale Cargo",true], ["Agrale 9999",false]]) {
+    const terms = normalizeTractorQuery(query).split(/\s+/);
+    assert.equal(matchesTractorTerms(key,terms),expected);
+    assert.equal(findTractorSuggestions([model],query).length,Number(expected));
+  }
+  assert.ok(matchesTractorTerms(key,[]));
 });
