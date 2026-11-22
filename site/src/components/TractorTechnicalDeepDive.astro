@@ -1,6 +1,6 @@
 ---
 import SiteLayout from "../layouts/SiteLayout.astro";
-import {APPROVED_TRACTOR_PHOTOS} from "../lib/tractor-photos.ts";
+import {guidePhotos} from "../lib/editorial-photos.ts";
 import {TECHNICAL_DEEP_DIVES,getTechnicalDeepDive,type TechnicalDeepDiveSlug} from "../lib/tractor-technical-deep-dives.ts";
 import {GLOSSARY_TERMS} from "../lib/tractor-glossary.ts";
 import {localizedPath} from "../lib/locales.ts";
@@ -16,7 +16,7 @@ const compare=localizedPath(lang,"/compare/");
 const permalink=localizedPath(lang,"/guides/"+guide.slug+"/");
 const base=Astro.site ?? new URL("https://tractorvs.com");
 const url=new URL(permalink,base).toString();
-const hero=APPROVED_TRACTOR_PHOTOS.find(p=>p.brand===guide.heroPhoto.brand&&p.model===guide.heroPhoto.model);
+const hero=guidePhotos.get(slug);
 const image=hero?new URL(hero.displayUrl,base).toString():undefined;
 const other=TECHNICAL_DEEP_DIVES.filter(x=>x.slug!==slug);
 const relatedTerms=guide.glossary.map(id=>{

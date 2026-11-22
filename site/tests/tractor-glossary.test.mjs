@@ -64,7 +64,7 @@ test("new indexable routes are human-translated TR and EN, not ten duplicated En
 });
 
 test("photo display uses approved licensed first-party library and open-in-lightbox controls",()=>{
- assert.match(component,/APPROVED_TRACTOR_PHOTOS/);
+ assert.match(component,/editorial-photos\.ts/);
  assert.match(component,/photo\.licenseUrl/);
  assert.match(component,/data-photo-license=/);
  assert.match(component,/data-tractor-photo/);

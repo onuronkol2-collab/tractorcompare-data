@@ -20,7 +20,7 @@ export const GET:APIRoute=async ({site})=>{
     const url=new URL(localizedPath(locale,"/forum/"+topic.slug+"/"),site).toString();
     const lastmod=Date.parse(topic.updated_at);
     urls.push('<url><loc>'+escapeXml(url)+'</loc>'+
-      (Number.isFinite(lastmod)?'<lastmod>'+new Date(lastmod).toISOString().slice(0,10)+'</lastmod>':"")+
+      (Number.isFinite(lastmod)&&lastmod<=Date.now()?'<lastmod>'+new Date(lastmod).toISOString().slice(0,10)+'</lastmod>':"")+
       '</url>');
    }
   }

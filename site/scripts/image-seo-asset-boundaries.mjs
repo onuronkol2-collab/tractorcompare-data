@@ -6,6 +6,8 @@
  * the forum sitemap approval gate; arbitrary Supabase or third-party URLs are
  * never trusted. This module does not approve image ownership or licenses.
  */
+import {editorialImagePages} from "../src/lib/editorial-photos.ts";
+
 export const TRACTORVS_ORIGIN="https://tractorvs.com";
 export const PUBLIC_FORUM_MEDIA_ENDPOINT=
   "https://aaufxtcvnzgavtlintiv.supabase.co/functions/v1/forum-media";
@@ -41,8 +43,10 @@ export function classifyPublicImageSitemap(xml,{htmlPages,forumPages}){
    uniqueImages.add(imageUrl);
    imageReferences++;
    if(imageUrl.startsWith(TRACTORVS_ORIGIN+"/images/tractors/")){
-    if(!htmlPages.has(page)||!/^\/(?:tr\/|zh\/|hi\/|pt-br\/|fr\/|de\/|ru\/|ja\/|es\/)?tractors\/[^/]+\/$/.test(new URL(page).pathname))
-     invalid("Tractor photo listed outside an approved model page "+page);
+    const path=new URL(page).pathname;
+    const approvedEditorial=editorialImagePages.get(path)?.some(photo=>new URL(photo.fullUrl,TRACTORVS_ORIGIN).href===imageUrl);
+    if(!htmlPages.has(page)||(!approvedEditorial&&!/^\/(?:tr\/|zh\/|hi\/|pt-br\/|fr\/|de\/|ru\/|ja\/|es\/)?tractors\/[^/]+\/$/.test(path)))
+     invalid("Tractor photo listed outside an approved model or matching guide page "+page);
     const match=/^https:\/\/tractorvs\.com\/images\/tractors\/([a-z0-9-]+)-1920\.jpg$/.exec(imageUrl);
     if(!match)invalid("Invalid first-party tractor JPEG URL "+imageUrl);
     models.add(match[1]);
