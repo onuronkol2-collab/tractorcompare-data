@@ -1,6 +1,7 @@
 import {matchesPhotoFileModel} from "./photo-model-identity.mjs";
 import {allowedPhotoReuseLicense} from "./photo-license-check.mjs";
 import {fetchCommonsJson,CommonsCooldownError} from "./photo-commons-http.mjs";
+import {mergePhotoResearchModels,photoResearchKey} from "./photo-research-model-union.mjs";
 /** Bulk archive research; brand-level Commons searches avoid 405 API requests.
  * All results are candidates only. They NEVER publish to TractorVS.
  */
@@ -38,17 +39,9 @@ async function query(params){
     throw e;
   }
 }
-// Combine frozen historical identities with fresh public model identities
-// before querying Commons. This preserves ALL live models without extra API
-// calls for each variant. The historical 405-model report remains separate.
-const key=r=>norm(r.brand)+"|"+norm(r.model);
-const historical=new Map();
-const publicModels=new Map();
-for(const r of rows)if(r?.brand&&r?.model&&!historical.has(key(r)))
-  historical.set(key(r),{brand:r.brand,model:r.model});
-for(const r of publishedRows)if(!publicModels.has(key(r)))
-  publicModels.set(key(r),{brand:r.brand,model:r.model});
-const unique=new Map([...historical,...publicModels]);
+// A current model missing from the historical snapshot still participates.
+const {historical,publicModels,unique}=mergePhotoResearchModels(rows,publishedRows);
+const key=photoResearchKey;
 const byBrand=new Map();
 for(const r of unique.values()){
   if(!byBrand.has(r.brand))byBrand.set(r.brand,[]);
