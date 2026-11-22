@@ -40,6 +40,8 @@ test("public view enforces locale and published status, rejecting malformed and 
  ]}));
  await page.goto("/tr/forum/?live-forum-test=1");
  await expect(page.locator("[data-forum-live-grid] article")).toHaveCount(0);
+ await expect(page.locator("[data-forum-filters]")).toBeHidden();
+ await expect(page.locator("#forum-no-results")).toBeHidden();
  await expect(page.locator(".community-empty")).toBeVisible();
 });
 test("same-tab successful publication event refreshes public reading without a reload",async({page})=>{
