@@ -23,11 +23,16 @@ export function validateBatchReceipt(data){
   if(typeof row.translated_preview!=="string"||row.translated_preview.trim().length<4||
      row.translated_preview.length>400||/[\u0000-\u001f\u007f]/u.test(row.translated_preview)||
      typeof row.numeric_facts_preserved!=="boolean"||
+     typeof row.physical_units_preserved!=="boolean"||
+     typeof row.technical_terms_present!=="boolean"||
      !(row.target_script_detected===null||typeof row.target_script_detected==="boolean"))
    throw Error("Cloudflare batch receipt invalid");
   return {
    locale:row.locale,status:"ok",translation:row.translated_preview,
-   numericFactsPreserved:row.numeric_facts_preserved,scriptDetected:row.target_script_detected
+   numericFactsPreserved:row.numeric_facts_preserved,
+   physicalUnitsPreserved:row.physical_units_preserved,
+   technicalTermsPresent:row.technical_terms_present,
+   scriptDetected:row.target_script_detected
   };
  });
  if(data.completed!==(
@@ -61,17 +66,20 @@ if(process.argv[1]&&resolve(process.argv[1])===fileURLToPath(import.meta.url)){
    const rows=r.results.map(x=>"| "+x.locale+" | "+x.status+" | "+
     (x.status==="ok"?safe(x.translation):safe(x.error))+" | "+
     (x.status==="ok"?x.numericFactsPreserved:"-")+" | "+
+    (x.status==="ok"?x.physicalUnitsPreserved:"-")+" | "+
+    (x.status==="ok"?x.technicalTermsPresent:"-")+" | "+
     (x.status==="ok"?x.scriptDetected:"-")+" |").join("\n");
    appendFileSync(process.env.GITHUB_STEP_SUMMARY,
     "# TractorVS: one nine-language synthetic translation trial\n\n"+
     "One fixed non-user sentence, max nine model calls; never reads or writes forum data.\n\n"+
-    "| Locale | Status | Machine translation | Numbers preserved | Target script |\n"+
-    "| --- | --- | --- | --- | --- |\n"+rows+"\n\n"+
+    "| Locale | Status | Machine translation | Numbers | Units | Tractor/hydraulic terms | Target script |\n"+
+    "| --- | --- | --- | --- | --- | --- | --- |\n"+rows+"\n\n"+
     "Calls attempted: "+r.requestCount+"/9. Completed: "+r.completed+
     ". Full linguistic quality not established; nothing published.\n");
   }
   if(!r.completed||r.results.some(x=>x.status!=="ok"||
-    !x.numericFactsPreserved||x.scriptDetected===false))process.exitCode=1;
+    !x.numericFactsPreserved||!x.physicalUnitsPreserved||
+    !x.technicalTermsPresent||x.scriptDetected===false))process.exitCode=1;
  }catch(error){
   console.error("Cloudflare synthetic batch failed safely: "+
    String(error?.message||"unavailable").slice(0,120));
