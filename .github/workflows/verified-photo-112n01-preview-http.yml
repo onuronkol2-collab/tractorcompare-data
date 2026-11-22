@@ -1,0 +1,25 @@
+name: Belarus 112N-01 licensed JPEG SHA preview gate
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
+    paths:
+      - "site/public/images/tractors/belarus-112n-01-homoatrox-belagro-2021-*.jpg"
+      - "site/scripts/verify-112n01-photo-http.mjs"
+      - "site/docs/photo-evidence-belarus-112n01-20261122.json"
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  verify:
+    if: github.repository == 'onuronkol2-collab/tractorcompare-data'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22.23.4"
+      - name: Check all three first-party preview JPEG hashes against Wikimedia source evidence
+        env:
+          PHOTO_ORIGIN: https://photos-belarus-112n01-licensed-20261122-tractorvs-site.onuronkol2.workers.dev
+        run: node site/scripts/verify-112n01-photo-http.mjs
