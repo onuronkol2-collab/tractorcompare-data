@@ -215,7 +215,7 @@ export async function proveBatch15Live({fetchFn=fetch,origin=LIVE_ORIGIN,
    for(const pagePath of editorialPages.get(item.fileId)){
      const response=await get(fetchFn,origin+pagePath,"text/html");
      if(response.status!==200||
-       !/text\\/html/.test(response.headers.get("content-type")||""))
+       !/text\/html/.test(response.headers.get("content-type")||""))
        throw Error("Live EN/TR glossary HTTP failed "+pagePath);
      const inspect=checkLiveModelPage(await response.text(),item,pagePath);
      if(!inspect.ok)throw Error("Editorial glossary CC/SEO/WebP regression "+
