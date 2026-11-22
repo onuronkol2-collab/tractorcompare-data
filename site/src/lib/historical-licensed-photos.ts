@@ -839,6 +839,12 @@ const candidates=[
   {"brand":"McCormick","model":"X5.085","fileId":"mccormick-x5-085-mbone-2023","path":"b/b2/McCormick%2C_Agritechnica_2023%2C_Hanover_%28P1140949%29.jpg","photographer":"MB-one","license":"CC BY-SA 4.0","width":3161,"height":3951},
   {"brand":"TYM","model":"T6115","fileId":"tym-t6115-t115-marcelx42-2025","path":"0/01/TYM_T115_Agritechnica_2025_%28DSC04612%29.jpg","photographer":"MarcelX42","license":"CC BY-SA 4.0","width":6139,"height":4093},
   {"brand":"TYM","model":"T2025P","fileId":"tym-t2025p-t25-marcelx42-2025","path":"0/0b/TYM_T25_Agritechnica_2025_%28DSC04615%29.jpg","photographer":"MarcelX42","license":"CC BY-SA 4.0","width":6011,"height":4508},
+  // 2026-11-22: three Commons-own-work CC BY-SA 4.0 TYM F50CHN views.
+  // EXACT tractor UUID; NEVER show on F50 or F50CN with same T3048 name.
+  // Genuine 9 JPEGs and source SHA in photo-import-evidence-tym-f50chn-wave3-20261122.json.
+  {"brand":"TYM","model":"T3048","tractorId":"458be7b8-f6b8-4319-b264-dc6c7cc36ae7","fileId":"tym-t3048-f50chn-55-marcelx42-2025","path":"c/c2/TYM_F50Chn_Agritechnica_2025_%28DSC04655%29.jpg","photographer":"MarcelX42","license":"CC BY-SA 4.0","width":5904,"height":4428},
+  {"brand":"TYM","model":"T3048","tractorId":"458be7b8-f6b8-4319-b264-dc6c7cc36ae7","fileId":"tym-t3048-f50chn-57-marcelx42-2025","path":"2/27/TYM_F50Chn_Agritechnica_2025_%28DSC04657%29.jpg","photographer":"MarcelX42","license":"CC BY-SA 4.0","width":5897,"height":4423},
+  {"brand":"TYM","model":"T3048","tractorId":"458be7b8-f6b8-4319-b264-dc6c7cc36ae7","fileId":"tym-t3048-f50chn-73-marcelx42-2025","path":"6/60/TYM_F50Chn_Agritechnica_2025_%28DSC04673%29.jpg","photographer":"MarcelX42","license":"CC BY-SA 4.0","width":5962,"height":4472},
 ] as const;
 function licenseUrl(name:string):string{
   if(name==="CC0")return "https://creativecommons.org/publicdomain/zero/1.0/";
@@ -850,6 +856,7 @@ export const HISTORICAL_LICENSED_PHOTOS=candidates.map(p=>{
   const filename=p.path.split("/").at(-1)!;
   return {
     brand:p.brand,model:p.model,fileId:p.fileId,
+    ...("tractorId" in p && typeof p.tractorId==="string" ? {tractorId:p.tractorId} : {}),
     thumbUrl:W+"thumb/"+p.path+"/480px-"+filename,
     displayUrl:W+"thumb/"+p.path+"/960px-"+filename,
     fullUrl:W+p.path,
