@@ -14,7 +14,7 @@ const tractor=(brand_name,model_name)=>({
   engine:null,transmission:null,drivetrain:null,weight_kg:null,specifications:[]
 });
 test("only exact matching tractor model identity receives a verified photo",()=>{
-  assert.equal(APPROVED_TRACTOR_PHOTOS.length,101);
+  assert.equal(APPROVED_TRACTOR_PHOTOS.length,99);
   assert.equal(tractorPhotos(tractor("Belarus","82.1")).length,4);
   assert.equal(tractorPhotos(tractor("Belarus","80.1")).length,1);
   assert.equal(tractorPhotos(tractor("Belarus","132N")).length,1);
@@ -629,9 +629,9 @@ test("source-backed copyright notices cover approved Google warning images in al
   "tym-t5075-t78-marcelx42-2023"
  ]);
  const newFourTym=new Set([
-   "tym-t2025p-t25-front-marcelx42-2025",
+   "tym-t2025p-t25-marcelx42-2025",
    "tym-t2025p-t25-rear-marcelx42-2025",
-   "tym-t6115-t115-front-marcelx42-2025",
+   "tym-t6115-t115-marcelx42-2025",
    "tym-t6115-t115-rear-marcelx42-2025"
  ]);
  const expected=new Set([...originalThree,...reviewedTwenty,...exactTym,...newFourTym,"belarus-132n-picture30-2011"]);
@@ -797,89 +797,114 @@ test("Three visibly verified TYM 2500L, 6225C and T78 Commons photos publish sol
 });
 
 
-test("Two exact international TYM tractor galleries publish four independent CC photos with twelve SHA256-verified JPEGs and ten-locale canonical rights",()=>{
+
+
+test("Two exact international TYM tractor galleries add two unique rear photographs, reuse historical fronts, and verify 6 new + 6 existing JPEG hashes across ten locales",()=>{
   const curated=JSON.parse(readFileSync(new URL("../docs/photo-curated-tym-t25-t115-four-20261122.json",import.meta.url),"utf8"));
-  const ledger=JSON.parse(readFileSync(new URL("../docs/photo-import-evidence-tym-t25-t115-four-20261122.json",import.meta.url),"utf8"));
+  const newLedger=JSON.parse(readFileSync(new URL("../docs/photo-import-evidence-tym-t25-t115-four-20261122.json",import.meta.url),"utf8"));
+  const originalLedger=JSON.parse(readFileSync(new URL("../docs/photo-import-evidence-mccormick-tym-wave2-20261122.json",import.meta.url),"utf8"));
   const review=JSON.parse(readFileSync(new URL("../docs/photo-release-evidence-tym-t25-t115-four-20261122.json",import.meta.url),"utf8"));
-  assert.equal(curated.photos.length,4);
-  assert.equal(ledger.images.length,4);
-  assert.equal(review.images.length,4);
+  assert.equal(curated.photos.length,4,"Four independently reviewed sources");
+  assert.equal(newLedger.images.length,4,"Stage ledger retains all four source proofs");
+  assert.equal(review.images.length,4,"All original source images inspected");
   assert.equal(review.visualReviewCompleted,true);
-  assert.equal(ledger.reviewRequired,true);
-  assert.equal(ledger.publicationCount,0,"Original staging ledger cannot pre-approve anything");
-  assert.deepEqual(new Set(curated.photos.map(x=>x.model)),new Set(["T2025P","T6115"]));
+  assert.equal(newLedger.reviewRequired,true);
+  assert.equal(newLedger.publicationCount,0);
+  const publishedFront=new Map([
+    ["tym-t2025p-t25-front-marcelx42-2025","tym-t2025p-t25-marcelx42-2025"],
+    ["tym-t6115-t115-front-marcelx42-2025","tym-t6115-t115-marcelx42-2025"]
+  ]);
   assert.equal(new Set(curated.photos.map(x=>x.id)).size,4);
   const modelIds={
     T2025P:"622ddce0-f3a8-48ad-8ec6-45ca936dba6f",
     T6115:"80fd42a2-3059-40bb-a0e1-511ae6100213"
   };
+  let reusedOrigins=0,addedSources=0,checkedJpegs=0;
   for(const row of curated.photos){
     assert.equal(row.uuid,modelIds[row.model]);
     assert.equal(row.photographer,"MarcelX42");
     assert.equal(row.licenseName,"CC BY-SA 4.0");
     assert.equal(row.licenseUrl,"https://creativecommons.org/licenses/by-sa/4.0/");
-    assert.equal(row.livePublish,false,"This source document remains prior research, not an approval switch");
+    assert.equal(row.livePublish,false);
     assert.equal(row.regionalOptionConfirmed,false);
-    const evidence=review.images.find(x=>x.fileId===row.id);
-    assert.ok(evidence?.visualConfirmed,"Physical source must have manual visual approval: "+row.id);
-    assert.equal(evidence.tractorId,row.uuid);
-    const model=tractor("TYM",row.model);
-    model.tractor_id=row.uuid;
-    const gallery=tractorPhotos(model);
-    assert.equal(gallery.length,2,"Front and rear angles must share only exact UUID "+row.uuid);
-    const photo=gallery.find(x=>x.fileId===row.id);
-    assert.ok(photo,"Gallery photo missing "+row.id);
-    assert.equal(photo.tractorId,row.uuid);
-    assert.equal(photo.sourcePage,row.sourcePage);
-    assert.equal(photo.copyrightOwner,"MarcelX42");
-    assert.equal(photo.copyrightClaimUrl,row.sourcePage);
-    assert.equal(photo.copyrightEvidence,"commons-own-work-self-license");
-    assert.equal(photo.photographer,"MarcelX42");
-    assert.equal(photo.licenseName,"CC BY-SA 4.0");
-    assert.equal(photo.licenseUrl,row.licenseUrl);
-    assert.equal(photo.configurationExact,false);
-    const source=ledger.images.find(x=>x.fileId===row.id);
-    assert.ok(source);
-    assert.equal(source.photographer,photo.photographer);
-    assert.equal(source.license,photo.licenseName);
-    assert.equal(source.sourcePage.replaceAll("%28","(").replaceAll("%29",")"),photo.sourcePage);
-    assert.equal(source.derivatives.length,3);
-    assert.deepEqual(new Set(source.derivatives.map(x=>x.width)),new Set([480,960,1920]));
-    for(const item of source.derivatives){
-      const url="/images/tractors/"+item.file;
-      assert.ok([photo.thumbUrl,photo.displayUrl,photo.fullUrl].includes(url));
-      const bytes=readFileSync(new URL("../public"+url,import.meta.url));
-      assert.equal(bytes.length,item.bytes);
-      assert.equal(createHash("sha256").update(bytes).digest("hex"),item.sha256);
+    const visual=review.images.find(x=>x.fileId===row.id);
+    assert.ok(visual?.visualConfirmed);
+    assert.equal(visual.tractorId,row.uuid);
+    const record=tractor("TYM",row.model);
+    record.tractor_id=row.uuid;
+    const gallery=tractorPhotos(record);
+    assert.equal(gallery.length,2,"One existing front photo + one new rear angle per exact UUID");
+    const photoId=publishedFront.get(row.id)||row.id;
+    const picture=gallery.find(x=>x.fileId===photoId);
+    assert.ok(picture,"Missing approved individual gallery angle "+photoId);
+    assert.equal(picture.tractorId,row.uuid);
+    assert.equal(picture.copyrightOwner,"MarcelX42");
+    assert.equal(picture.copyrightEvidence,"commons-own-work-self-license");
+    assert.equal(picture.photographer,"MarcelX42");
+    assert.equal(picture.licenseName,"CC BY-SA 4.0");
+    assert.equal(picture.licenseUrl,row.licenseUrl);
+    assert.equal(picture.configurationExact,false);
+    const canonicalUrl=x=>x.replaceAll("%28","(").replaceAll("%29",")");
+    assert.equal(canonicalUrl(picture.sourcePage),canonicalUrl(row.sourcePage));
+    assert.equal(canonicalUrl(picture.copyrightClaimUrl),canonicalUrl(row.sourcePage));
+    const staged=newLedger.images.find(x=>x.fileId===row.id);
+    assert.ok(staged,"Four new batch files must each have original source hash proof");
+    const historical=originalLedger.images.find(x=>x.fileId===photoId);
+    const imageSource=historical||staged;
+    assert.equal(imageSource.photographer,"MarcelX42");
+    assert.equal(imageSource.license,"CC BY-SA 4.0");
+    assert.equal(canonicalUrl(imageSource.sourcePage),canonicalUrl(row.sourcePage));
+    assert.equal(imageSource.derivatives.length,3);
+    assert.deepEqual(new Set(imageSource.derivatives.map(x=>x.width)),new Set([480,960,1920]));
+    for(const item of imageSource.derivatives){
+      const imageUrl="/images/tractors/"+item.file;
+      assert.ok([picture.thumbUrl,picture.displayUrl,picture.fullUrl].includes(imageUrl));
+      const bytes=readFileSync(new URL("../public"+imageUrl,import.meta.url));
+      assert.equal(bytes.length,item.bytes,item.file);
+      assert.equal(createHash("sha256").update(bytes).digest("hex"),item.sha256,item.file);
       assert.equal(bytes.readUInt16BE(0),0xffd8);
       assert.equal(bytes.readUInt16BE(bytes.length-2),0xffd9);
+      checkedJpegs++;
+    }
+    if(historical){
+      reusedOrigins++;
+      assert.equal(staged.originSha256,historical.originSha256,
+        "Duplicate origins must be identical, rather than indexed twice");
+      assert.deepEqual(staged.derivatives.map(x=>x.sha256),historical.derivatives.map(x=>x.sha256));
+      assert.equal(picture.fileId,photoId);
+    }else{
+      addedSources++;
+      assert.equal(picture.fileId,row.id);
     }
   }
+  assert.equal(reusedOrigins,2);
+  assert.equal(addedSources,2);
+  assert.equal(checkedJpegs,12,"Six existing front and six truly new rear JPEGs checked");
   for(const [modelName,id] of Object.entries(modelIds)){
     const record=tractor("TYM",modelName);
     record.tractor_id=id;
     const gallery=tractorPhotos(record);
     assert.equal(gallery.length,2);
-    const primary=gallery[0];
+    assert.ok(gallery[0].fileId.endsWith("-marcelx42-2025"));
+    assert.ok(gallery[1].fileId.endsWith("-rear-marcelx42-2025"));
+    const main=gallery[0];
     for(const locale of LOCALES){
       const graph=modelStructuredData(record,locale,"https://tractorvs.com/")["@graph"];
       const image=graph.find(x=>x["@type"]==="ImageObject");
-      assert.ok(image,modelName+" requires one primary ImageObject in "+locale);
+      assert.ok(image,"ImageObject is required in "+locale);
       assert.equal(image.creator.name,"MarcelX42");
       assert.equal(image.copyrightNotice,"MarcelX42");
       assert.equal(image.license,"https://creativecommons.org/licenses/by-sa/4.0/");
-      assert.equal(image.acquireLicensePage,primary.sourcePage);
-      assert.ok(image.contentUrl.endsWith(primary.fullUrl));
-      assert.ok(image.thumbnailUrl.endsWith(primary.displayUrl));
+      assert.equal(image.acquireLicensePage,main.sourcePage);
+      assert.ok(image.contentUrl.endsWith(main.fullUrl));
+      assert.ok(image.thumbnailUrl.endsWith(main.displayUrl));
       assert.equal(graph.find(x=>x["@type"]==="WebPage").primaryImageOfPage["@id"],image["@id"]);
     }
-    const wrong=tractor("TYM",modelName);
-    wrong.tractor_id="00000000-0000-4000-8000-000000000000";
-    assert.equal(tractorPhotos(wrong).length,0,"No global edition or wrong UUID may inherit the photos");
-    assert.equal(modelStructuredData(wrong,"en","https://tractorvs.com/")["@graph"].some(x=>x["@type"]==="ImageObject"),false);
+    const unrelated=tractor("TYM",modelName);
+    unrelated.tractor_id="00000000-0000-4000-8000-000000000000";
+    assert.equal(tractorPhotos(unrelated).length,0,"Never leak either image to an unapproved regional variant");
+    assert.equal(modelStructuredData(unrelated,"en","https://tractorvs.com/")["@graph"].some(x=>x["@type"]==="ImageObject"),false);
+    const withoutId=tractor("TYM",modelName);
+    assert.equal(tractorPhotos(withoutId).length,0,"Model-only display must not claim international trim");
   }
-  assert.equal(tractorPhotos(tractor("TYM","T2025P")).length,0,
-    "A model-family-only record cannot claim international T25 images without UUID");
-  assert.equal(tractorPhotos(tractor("TYM","T6115")).length,0,
-    "A model-family-only record cannot claim international T115 images without UUID");
 });
