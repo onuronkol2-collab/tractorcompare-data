@@ -73,7 +73,8 @@ async function translateChunk(source:Source,chunk:string,target:string){
  const input={title:source.title,body:chunk};
  if(SELECTED_PROVIDER==="azure"){
   const translated=await translateAzureArticle({
-   title:source.title,body:chunk,target,apiKey:AZURE_KEY,region:AZURE_REGION
+   title:source.title,body:chunk,target,sourceLocale:source.source_locale,
+   apiKey:AZURE_KEY,region:AZURE_REGION
   });
   return {article:translated.value,issue:check(input,translated.value,target),
    model:translated.model,reviewer:null};
