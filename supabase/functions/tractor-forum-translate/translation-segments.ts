@@ -34,8 +34,8 @@ export function markdownTranslationSegments(body:string,max=2200):string[] {
 type SegmentSize = 1600|2200;
 export function translationCheckpoint(notes:string|null|undefined):
  {completed:number;total:number;size:SegmentSize|null;legacy:boolean}|null {
- const old=/^PARTS:(\\d+)\\/(\\d+)$/.exec(notes||"");
- const v2=/^PARTS2:(\\d+)\\/(\\d+)@(1600|2200)$/.exec(notes||"");
+ const old=/^PARTS:(\d+)\/(\d+)$/.exec(notes||"");
+ const v2=/^PARTS2:(\d+)\/(\d+)@(1600|2200)$/.exec(notes||"");
  if(!old&&!v2)return null;
  const completed=Number((old||v2)![1]),total=Number((old||v2)![2]);
  if(!Number.isSafeInteger(completed)||!Number.isSafeInteger(total)||
