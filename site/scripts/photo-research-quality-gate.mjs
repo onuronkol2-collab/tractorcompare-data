@@ -3,7 +3,9 @@ import {readFileSync} from "node:fs";
 import {resolve} from "node:path";
 import {fileURLToPath} from "node:url";
 
-export function validatePhotoResearchReports(archive,live) {
+export function validatePhotoResearchReports(archive,live,{
+  minArchiveModels=1,minPublicPages=1,minModelSearches=1
+}={}) {
   const errors=[];
   const validCount=(n)=>Number.isSafeInteger(n)&&n>=0;
   if(!archive||!validCount(archive.modelCount)||archive.modelCount<1||
@@ -22,7 +24,19 @@ export function validatePhotoResearchReports(archive,live) {
   if(validCount(live?.publicModelPages)&&validCount(live?.modelSearches)&&
      live.modelSearches>live.publicModelPages)
     errors.push("Research model count exceeds fetched public model pages");
-  if(live?.runStatus==="partial")errors.push("Research report declares partial coverage");
+  // Fail closed if a future refactor drops the status field or invents a new
+  // unreviewed status. "partial" is not the only non-complete state.
+  if(live?.runStatus!=="complete")
+    errors.push("Research report must explicitly declare complete status");
+  // Preserve a conservative historical inventory floor: on 22 Nov 2026 the
+  // archive had 405 models and the public catalogue had 386 models.
+  // A suddenly truncated index must not be reported as 100% success.
+  if(validCount(archive?.modelCount)&&archive.modelCount<minArchiveModels)
+    errors.push("Archive inventory below verified safety floor "+minArchiveModels);
+  if(validCount(live?.publicModelPages)&&live.publicModelPages<minPublicPages)
+    errors.push("Published model pages below verified safety floor "+minPublicPages);
+  if(validCount(live?.modelSearches)&&live.modelSearches<minModelSearches)
+    errors.push("Published model searches below verified safety floor "+minModelSearches);
   return {ok:errors.length===0,errors,
     archiveModels:archive?.modelCount||0,
     publicPages:live?.publicModelPages||0,
@@ -34,7 +48,11 @@ if(process.argv[1]&&resolve(process.argv[1])===fileURLToPath(import.meta.url)){
     const folder=resolve(process.argv[2]||"photo-discovery-report");
     const archive=JSON.parse(readFileSync(folder+"/archived-image-candidates.json","utf8"));
     const live=JSON.parse(readFileSync(folder+"/report.json","utf8"));
-    const result=validatePhotoResearchReports(archive,live);
+    // These floors detect accidental mass catalogue truncation; amend only
+    // after a verified, reviewed change in the published model inventory.
+    const result=validatePhotoResearchReports(archive,live,{
+      minArchiveModels:300,minPublicPages:300,minModelSearches:300
+    });
     console.log("TRACTORVS_PHOTO_RESEARCH_QUALITY "+JSON.stringify(result));
     if(!result.ok)process.exitCode=1;
   }catch(error){
