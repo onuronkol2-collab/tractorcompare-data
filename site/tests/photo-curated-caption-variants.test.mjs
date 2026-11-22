@@ -44,9 +44,10 @@ test("TYM T3048 F50CHN research is pinned to the exact published tractor UUID",(
   assert.match(f50.target.variantGuard,/F50CHN/);
   assert.equal(f50.review.status,"variant_specific_code_change_required_binary_pending");
   assert.equal(f50.review.publicationAllowed,false);
-  // Current production photo lookup is name-based, so adding a photo record
-  // for T3048 here would leak it into neighboring variants. Hold the image.
-  assert.match(approvedSource,/norm\(photo\.model\)===norm\(tractor\.model_name\)/);
+  // New resolver is strict on tractor UUID, but without independently
+  // reviewed JPEG/source proof this candidate remains unpublished.
+  assert.ok(!approvedSource.includes(f50.fileId));
+  assert.match(approvedSource,/photo\.tractorId===tractor\.tractor_id/);
 });
 
 test("near-model or contested rights leads remain explicitly quarantined",()=>{
