@@ -81,8 +81,8 @@ Deno.test("Cloudflare REST request and response preserve technical Markdown anch
   assert.equal((call.options.headers as Record<string,string>).Authorization,"Bearer "+apiToken);
   assert.ok(!call.url.includes(apiToken),"token must never enter URL");
   assert.ok(!JSON.stringify(call.request).includes(apiToken),"token must never enter article request");
-  assert.ok(!JSON.stringify(call.request).includes("https://example.org/source"),
-    "source URLs must not be sent as translatable prose spans");
+  assert.doesNotMatch(call.request.text,/https?:\/\/\S+/u,
+    "no external URL must be included in translatable prose spans");
  }
 });
 Deno.test("nine forum target locales and non-Turkish sources map to documented ISO codes",async()=>{
