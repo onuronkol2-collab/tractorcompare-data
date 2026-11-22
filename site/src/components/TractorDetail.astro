@@ -135,7 +135,7 @@ const summaryItems = [
         {group.specifications.map((spec)=><article class="model-spec-card" data-spec-id={spec.spec_id}>
           <div class="model-spec-top"><h4>{specLabel(spec,lang)}</h4>{(lang==="tr"||lang==="en")&&glossaryAnchorForKey(spec.canonical_key)&&<a class="model-spec-glossary-link" href={localizedPath(lang,"/guides/tractor-technical-terms/")+"#"+glossaryAnchorForKey(spec.canonical_key)} title={lang==="tr"?"Bu teknik terim ne işe yarar?":"What does this technical term mean?"} aria-label={lang==="tr"?specLabel(spec,lang)+" açıklaması": "Learn about "+specLabel(spec,lang)}>?</a>}{spec.rated_rpm!=null&&<span>{spec.rated_rpm} rpm</span>}</div>
           <p class="model-spec-value">{spec.spec_value}{spec.unit?" "+spec.unit:""}</p>
-          {spec.measurement_standard&&!isSonalikaExportSourceNote(spec.measurement_standard)&&<p class="model-spec-note">{spec.measurement_standard}</p>}
+          {spec.measurement_standard && !(isUnresolvedComparisonSpec(tractor,spec) && spec.canonical_key==="overall_length_with_front_ballast_mm") && !isSonalikaExportSourceNote(spec.measurement_standard) && <p class="model-spec-note">{spec.measurement_standard}</p>}
           {officialManufacturerSourceUrl(spec,tractor.brand_name) && <div class="model-spec-source">
             <a href={officialManufacturerSourceUrl(spec,tractor.brand_name)!} target="_blank" rel="noopener noreferrer">{t(lang,"manufacturerSource")} ↗</a>
           </div>}
