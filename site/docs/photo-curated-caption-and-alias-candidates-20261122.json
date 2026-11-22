@@ -214,6 +214,35 @@
         "variantScoped": true,
         "publicationAllowed": false
       }
+    },
+    {
+      "fileId": "tym-t4049-t495sh-marcelx42-2025",
+      "target": {
+        "tractor_id": "1e6d82f3-7a8a-4c3e-8aca-44f0e63f257d",
+        "brand": "TYM",
+        "model": "T4049",
+        "variantGuard": "T495 / Series 4 · International",
+        "pageUrl": "https://tractorvs.com/tractors/tym-t4049-1e6d82f3/"
+      },
+      "source": {
+        "fileUrl": "https://commons.wikimedia.org/wiki/File:TYM_T495SH_Agritechnica_2025_(DSC04665).jpg",
+        "depictedModelText": "TYM T495SH with front loader at Agritechnica 2025",
+        "creator": "MarcelX42",
+        "license": "CC BY-SA 4.0",
+        "ownWorkDeclared": true
+      },
+      "evidence": {
+        "method": "Commons file page self-license and exact T495SH caption. Manufacturer names T4049 (T495) but has not established SH transmission/configuration identity.",
+        "exactModel": false,
+        "manufacturerAliasUrl": "https://tym.world/en/products/tractors/series-4/t495"
+      },
+      "review": {
+        "status": "transmission_variant_clarification_required",
+        "reason": "T495SH may be a specific hydrostatic configuration while the published generic T4049/T495 model variant is unspecified; do not assert equivalence.",
+        "binaryVerified": false,
+        "variantScoped": true,
+        "publicationAllowed": false
+      }
     }
   ]
 }
