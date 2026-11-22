@@ -759,6 +759,14 @@ const candidates=[
     "width": 7008,
     "height": 3944
   },
+  // Six exact published-model CC BY-SA 4.0 image identities; 22 November 2026.
+  // See SHA-256 source ledgers; derivatives are resized from Commons originals.
+  {"brand":"Belarus","model":"510","fileId":"belarus-510-homoatrox-open-day-2017","path":"1/19/Belarus_510_%28open_day_2017%29_1.jpg","photographer":"Homoatrox","license":"CC BY-SA 4.0","width":2484,"height":2748},
+  {"brand":"Belarus","model":"922.3","fileId":"belarus-922-3-bulykin-almaty-2026","path":"4/45/%D0%90%D0%BB%D0%BC%D0%B0%D1%82%D1%8B%2C_%D0%91%D0%B5%D0%BB%D0%B0%D1%80%D1%83%D1%81-922.3_%D0%BD%D0%B0_%D0%9A%D1%83%D0%BB%D1%8B%D0%BC%D0%B1%D0%B5%D1%82%D0%BE%D0%B2%D0%B0-%D0%91%D1%80%D1%83%D0%BD%D0%BE.jpg","photographer":"Nikolai Bulykin","license":"CC BY-SA 4.0","width":5077,"height":3385},
+  {"brand":"McCormick","model":"X4.085 TM","fileId":"mccormick-x4-085-tm-marcelx42-2023","path":"f/fb/McCormick_X4.085_TM_Agritechnica_2023_%28DSC05776%29.jpg","photographer":"MarcelX42","license":"CC BY-SA 4.0","width":7008,"height":3944},
+  {"brand":"McCormick","model":"X6.414 P6-Drive","fileId":"mccormick-x6-414-p6-drive-marcelx42-2023","path":"5/55/McCormick_X6.414_P6-Drive_Agritechnica_2023_%28DSC04843%29.jpg","photographer":"MarcelX42","license":"CC BY-SA 4.0","width":7008,"height":3944},
+  {"brand":"McCormick","model":"X7.618 VT-Drive","fileId":"mccormick-x7-618-vt-drive-marcelx42-2023","path":"5/50/McCormick_X7.618_VT-Drive_Agritechnica_2023_%28DSC05850%29.jpg","photographer":"MarcelX42","license":"CC BY-SA 4.0","width":7008,"height":3944},
+  {"brand":"McCormick","model":"X7.624 VT-Drive","fileId":"mccormick-x7-624-vt-drive-marcelx42-2023","path":"a/aa/McCormick_X7.624_VT-Drive_Agritechnica_2023_%28DSC05875%29.jpg","photographer":"MarcelX42","license":"CC BY-SA 4.0","width":7008,"height":3944},
 ] as const;
 function licenseUrl(name:string):string{
   if(name==="CC0")return "https://creativecommons.org/publicdomain/zero/1.0/";
