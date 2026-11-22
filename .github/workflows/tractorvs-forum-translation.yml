@@ -13,9 +13,14 @@ on:
   workflow_dispatch:
     inputs:
       onay:
-        description: "ONAY: forum kuyruğu; KONTROL: salt-okunur; TEST: yalnız bir sentetik Cloudflare isteği (ücretsiz koşullara bağlı)"
+        description: "Varsayılan KONTROL ücretsizdir; ONAY ayrıca Supabase kuyruk kilidi açılmadan işlem yapmaz; TEST bir sentetik çağrı"
         required: true
-        type: string
+        type: choice
+        default: KONTROL
+        options:
+          - KONTROL
+          - TEST
+          - ONAY
 
 permissions:
   contents: read
