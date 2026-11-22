@@ -1,0 +1,53 @@
+name: TractorVS live comparison interaction QA
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - "site/src/lib/compare-conditions.ts"
+      - "site/src/lib/compare-ux.ts"
+      - "site/src/components/TractorComparison.astro"
+      - "site/e2e/tractorvs-live-compare.spec.mjs"
+      - "site/playwright.live.config.mjs"
+      - ".github/workflows/tractorvs-compare-live-browser-qa.yml"
+  schedule:
+    - cron: "19 5 * * 1"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: tractorvs-live-compare-qa
+  cancel-in-progress: false
+
+jobs:
+  production-browser:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      CI: "true"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22.23.4"
+          cache: npm
+      - name: Install locked project and pinned browser QA tools
+        run: |
+          npm ci --no-audit --no-fund
+          npm install --no-save --package-lock=false --ignore-scripts @playwright/test@1.65.1
+      - name: Install desktop and mobile browser engines
+        run: npx playwright install --with-deps chromium firefox webkit
+      - name: Check the actual public TractorVS interaction and citations
+        run: npx playwright test --config site/playwright.live.config.mjs
+      - name: Upload screenshots and traces on failure
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: tractorvs-live-compare-browser-evidence
+          path: |
+            site/playwright-live-report
+            site/test-results-live
+          if-no-files-found: ignore
+          retention-days: 7
