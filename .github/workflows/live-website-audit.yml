@@ -6,6 +6,8 @@ on:
       - ".github/workflows/live-website-audit.yml"
       - "site/scripts/live-website-audit.mjs"
       - "site/scripts/production-seo-audit.mjs"
+      - "site/scripts/seo-html-attributes.mjs"
+      - "site/tests/seo-html-attributes.test.mjs"
       - "site/scripts/production-sitemap-inventory.mjs"
       - "site/tests/production-sitemap-inventory.test.mjs"
       - "site/scripts/seo-main-markup.mjs"
@@ -35,8 +37,8 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: "22.23.4"
-      - name: Test sitemap type boundaries and deterministic daily/weekly sampling
-        run: node --test site/tests/production-sitemap-inventory.test.mjs
+      - name: Test sitemap boundaries and real HTML meta-attribute parsing
+        run: node --test site/tests/production-sitemap-inventory.test.mjs site/tests/seo-html-attributes.test.mjs
       - name: Inspect workers.dev preview
         env:
           TRACTORVS_AUDIT_ORIGIN: https://tractorvs-site.onuronkol2.workers.dev

@@ -1,6 +1,7 @@
 import {inspectVisibleMainImages} from "./seo-main-markup.mjs";
 import {inspectDocumentImageAlts,inspectUndocumentedEmptyImageAlts} from "./verify-sitewide-image-alts.mjs";
 import {hasBibliographicTitleLeak} from "./verify-sitewide-seo-titles.mjs";
+import {readOpeningTagAttribute} from "./seo-html-attributes.mjs";
 import {parseProductionSitemapInventory,selectProductionSeoPages} from "./production-sitemap-inventory.mjs";
 // Read-only production SEO coverage audit. No credentials or writes.
 const BASE = "https://tractorvs.com";
@@ -31,7 +32,7 @@ async function fetchPage(url) {
   throw lastFailure || Error("Unexpected HTTP retry failure");
 }
 const xmlLocs=s=>matches(s,/<loc>([^<]+)<\/loc>/g).map(x=>x.replaceAll("&amp;","&"));
-const attr=(html,name)=>html.match(new RegExp("\\b"+name+"=['\"]([^'\"]+)['\"]","i"))?.[1]||null;
+const attr=(html,name)=>readOpeningTagAttribute(html,name);
 const tags=(html,name)=>[...html.matchAll(new RegExp("<"+name+"\\b[^>]*>","gi"))].map(m=>m[0]);
 function metadata(html){
  const links=tags(html,"link"), metas=tags(html,"meta");
