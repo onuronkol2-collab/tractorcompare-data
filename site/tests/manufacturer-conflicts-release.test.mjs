@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import {auditConflictHtml} from "../scripts/verify-manufacturer-conflicts.mjs";
+import {auditConflictHtml,auditConflictComparisonJson} from "../scripts/verify-manufacturer-conflicts.mjs";
 const issue={markers:["1331","1642"],urls:["https://maker.test/it","https://maker.test/en"]};
 const html='<aside role="note" class="model-source-conflict-banner"><p>Italian 1.331 cc; English 1.642 cc</p><a href="https://maker.test/it">Italian</a><a href="https://maker.test/en">English</a></aside>';
 test("actual source-linked OEM warning passes",()=>{assert.equal(auditConflictHtml(html,issue),true)});
@@ -27,4 +27,21 @@ test("Başak 4WD source disagreement is fail-closed for both OEM links and both 
   example.replace(case4wd.urls[1],"https://untrusted.example/unsupported"),
   example.replace("model-source-conflict-banner","not-conflict")
  ])assert.equal(auditConflictHtml(broken,case4wd),false);
+});
+
+test("static comparison release gate rejects disputed length, missing warning and broken JSON",()=>{
+ const conflict={markers:["3830","3930"],disputedKeys:["overall_length","overall_length_with_front_ballast_mm"]};
+ const good=[
+  {key:"wheelbase",value:"2205",unit:"mm",notice:"Başak 2075 BK 4WD: 3.830 mm ve 3.930 mm kaynakları çelişiyor."},
+  {key:"rear_lift_capacity",value:"3000",unit:"kg",notice:null}
+ ];
+ assert.equal(auditConflictComparisonJson(good,conflict),true);
+ for(const bad of [
+  [{key:"overall_length_with_front_ballast_mm",value:"3930" },...good],
+  [{key:"overall_length",value:"3830" },...good],
+  good.map(row=>({...row,notice:null})),
+  good.map(row=>({...row,notice:"Kaynak farkı var, ama rakam yok."})),
+  good.filter(row=>row.key!=="wheelbase"),
+  {rows:good},null,[],undefined
+ ])assert.equal(auditConflictComparisonJson(bad,conflict),false);
 });
