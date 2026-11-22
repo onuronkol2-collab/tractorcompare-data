@@ -139,3 +139,15 @@ test("manufacturer transmission note is specific and available for all ten langu
   assert.match(component,/const visible=commonOnly\?shared:keys/);
   assert.match(component,/role="note"/);
 });
+
+test("offline Playwright cannot accidentally include production-only browser tests",()=>{
+  const local=readFileSync(new URL("../playwright.config.mjs",import.meta.url),"utf8");
+  const production=readFileSync(new URL("../playwright.live.config.mjs",import.meta.url),"utf8");
+  const liveSuite=readFileSync(new URL("../e2e/tractorvs-live-compare.spec.mjs",import.meta.url),"utf8");
+  assert.match(local,/testIgnore:\s*\["\*\*\/tractorvs-live-compare\.spec\.mjs"\]/);
+  assert.match(local,/127\.0\.0\.1:4173/);
+  assert.match(production,/testMatch:\s*"tractorvs-live-compare\.spec\.mjs"/);
+  assert.match(production,/baseURL:\s*"https:\/\/tractorvs\.com"/);
+  assert.doesNotMatch(production,/webServer\s*:/);
+  assert.match(liveSuite,/comparison-data\/tr\//);
+});
