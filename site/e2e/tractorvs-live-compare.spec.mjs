@@ -37,15 +37,23 @@ test("live initial warning survives native selection, common-data filter and swa
   const wheelbase=page.locator("#tc-rows tr").filter({has:page.locator("th").filter({hasText:"Dingil mesafesi"})});
   await expect(wheelbase.locator(".tc-condition-caution")).toContainText("kaynak notlarını");
   await expect(wheelbase.locator("td a[href^='https://']")).not.toHaveCount(0);
+  const transmission=page.locator("#tc-rows tr").filter({
+    has:page.locator("th .tc-condition-caution").filter({hasText:"Şanzıman seçenekleri"})
+  });
+  await expect(transmission).toHaveCount(1);
+  await expect(transmission.locator("td a[href^='https://']")).not.toHaveCount(0);
 
   await page.locator("#tc-shared").click();
   await expect(page.locator("#tc-shared")).toHaveAttribute("aria-pressed","true");
   await expect(wheelbase.locator(".tc-condition-caution")).toContainText("kaynak notlarını");
+  await expect(transmission.locator(".tc-condition-caution")).toContainText("üretici kaynağını");
   await page.locator("#tc-swap").click();
   await expect.poll(()=>new URL(page.url()).searchParams.get("left")).toBe(TYM_T475);
   await expect.poll(()=>new URL(page.url()).searchParams.get("right")).toBe(TYM_F36);
   await expect(wheelbase.locator(".tc-condition-caution")).toContainText("kaynak notlarını");
+  await expect(transmission.locator(".tc-condition-caution")).toContainText("üretici kaynağını");
   await expect(wheelbase.locator("td a[href^='https://']")).not.toHaveCount(0);
+  await expect(transmission.locator("td a[href^='https://']")).not.toHaveCount(0);
 });
 
 test("live MF 5S.125 and TYM option rows carry separate source-based transmission cautions",async({page})=>{
