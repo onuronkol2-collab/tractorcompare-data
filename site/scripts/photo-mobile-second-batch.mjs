@@ -4,7 +4,7 @@
  * Keep this independent of the existing 3-photo production pilot.
  */
 import {APPROVED_TRACTOR_PHOTOS,isSupportedCommonsPhotoOrigin} from "../src/lib/tractor-photos.ts";
-import {approvedMobilePhotoFormats} from "../src/lib/approved-mobile-photo-assets.mjs";
+import {MOBILE_PILOT_IDS} from "../src/lib/approved-mobile-photo-assets.mjs";
 import {writeFileSync} from "node:fs";
 import {resolve} from "node:path";
 import {fileURLToPath} from "node:url";
@@ -34,8 +34,11 @@ export function selectReviewedSecondBatch(approved=APPROVED_TRACTOR_PHOTOS){
  if(BATCH_FILE_IDS.length!==18||new Set(BATCH_FILE_IDS).size!==18)
    throw Error("Second batch must contain exactly eighteen unique pinned IDs");
  const selected=BATCH_FILE_IDS.map(fileId=>{
-   if(approvedMobilePhotoFormats(fileId))
-     throw Error("Already-optimized image cannot be staged twice: "+fileId);
+   // Existing 3-photo pilot must never be inadvertently reselected.
+   // A published second-batch ID may still be revalidated for provenance;
+   // binary staging itself refuses all file overwrites.
+   if(MOBILE_PILOT_IDS.includes(fileId))
+     throw Error("Original pilot photo cannot enter second-batch selector: "+fileId);
    const matches=approved.filter(p=>p.fileId===fileId);
    if(matches.length!==1)throw Error("Missing/duplicate reviewed photo: "+fileId);
    const p=matches[0];
