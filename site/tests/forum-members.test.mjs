@@ -102,7 +102,7 @@ test("forum onboarding is optional, branded default avatar has no third-party de
  assert.match(panel,/async function ensureNeutralProfile/);
  assert.match(panel,/handle:"member_"\+id\.replace/);
  assert.match(panel,/display_name:starterName/);
- assert.match(panel,/show_leaderboard:true/);
+ assert.match(panel,/show_leaderboard:false/);
  assert.doesNotMatch(panel,/raw_user_meta_data|user_metadata\.full_name|user_metadata\.avatar_url/);
  assert.ok(hub.indexOf("<ForumComposer lang={lang} mode=\"topic\"/>")<
   hub.indexOf("<ForumMemberPanel lang={lang}/>"));

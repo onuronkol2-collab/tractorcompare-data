@@ -63,7 +63,7 @@ const copy=JSON.stringify(MEMBER_TEXT[lang]);
      <label>{mt(lang,"displayName")} <input name="display_name" required maxlength="40" minlength="2" /></label>
      <label>{mt(lang,"bio")} <textarea name="bio" maxlength="160" rows="3"></textarea></label>
      <label>{mt(lang,"favoriteBrand")} <input name="favorite_brand" maxlength="50"/></label>
-     <label class="member-check"><input type="checkbox" name="show_leaderboard" checked/>
+     <label class="member-check"><input type="checkbox" name="show_leaderboard"/>
       {mt(lang,"showPublicProfile")}</label>
      <p class="member-note">{mt(lang,"privacy")}</p>
      <button type="submit">{mt(lang,"save")}</button>
@@ -529,7 +529,7 @@ for(const root of widgets){
   const neutral:Profile={
    id,handle:"member_"+id.replace(/-/g,"").slice(0,16),
    display_name:starterName,bio:"",favorite_brand:"",
-   avatar_path:null,show_leaderboard:true
+   avatar_path:null,show_leaderboard:false
   };
   try{
    const res=await fetch(cfg.url+"/rest/v1/tc_member_profiles",{
