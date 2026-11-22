@@ -64,9 +64,35 @@ const labelMap=new Map();
 const errors=[];
 const normalizeHeading=str=>unescape(str).replace(/[’‘]/g,"'").trim();
 const rows=new Map();
+const identityRows=new Map();
+const identitySkippedPages=[];
+const requireSpecIdentities=process.env.TRANSLATION_REQUIRE_SPEC_IDENTITIES==="true";
 const verifyMetadata=process.env.TRANSLATION_VALIDATE_SEO==="true";
 const expectedHtmlLang={en:"en",tr:"tr",zh:"zh-Hans",hi:"hi","pt-br":"pt-BR",fr:"fr",de:"de",ru:"ru",ja:"ja",es:"es"};
 const attr=(tag,key)=>tag.match(new RegExp("\\b"+key+"=[\\\"']([^\\\"']+)[\\\"']","i"))?.[1]||null;
+
+/**
+ * Published specification IDs are stable across locale-specific grouping and
+ * sorting. A heading's *position* is not: comparing h4 arrays by index can
+ * silently miss untranslated English on genuine Turkish/French/Spanish pages.
+ * Return null for old live releases / legacy test HTML lacking keyed cards.
+ */
+function readSpecIdentityLabels(html,expectedLabels){
+  const result=new Map();
+  let cards=0;
+  for(const match of html.matchAll(/<article\b([^>]*)>([\s\S]*?)<\/article>/gi)){
+    const tag="<article"+match[1]+">";
+    const classes=attr(tag,"class")?.split(/\s+/)||[];
+    if(!classes.includes("model-spec-card"))continue;
+    cards++;
+    const id=attr(tag,"data-spec-id");
+    const headings=[...match[2].matchAll(/<h4\b[^>]*>([\s\S]*?)<\/h4>/gi)];
+    if(!id||result.has(id)||headings.length!==1)return null;
+    result.set(id,normalizeHeading(headings[0][1]));
+  }
+  return cards===expectedLabels&&cards>0?result:null;
+}
+
 function inspectSeoHead(html,locale,url){
   const docLang=attr(html.match(/<html\b[^>]*>/i)?.[0]||"","lang");
   if(docLang!==expectedHtmlLang[locale])errors.push("Incorrect HTML language "+url+" "+docLang);
@@ -107,6 +133,12 @@ async function worker(){
       const html=await get(url);
       const labels=[...html.matchAll(/<h4\b[^>]*>([\s\S]*?)<\/h4>/gi)].map(m=>normalizeHeading(m[1]));
       rows.set(locale+"|"+slug,labels);
+      const keyed=readSpecIdentityLabels(html,labels.length);
+      if(keyed)identityRows.set(locale+"|"+slug,keyed);
+      else {
+        identitySkippedPages.push(url);
+        if(requireSpecIdentities)errors.push("Missing durable model spec identity "+url);
+      }
       if(!labels.length)errors.push("No labels "+url);
       if(verifyMetadata)inspectSeoHead(html,locale,url);
     }catch(e){
@@ -167,16 +199,65 @@ for(const locale of locales.slice(1)){
   const list=suspects.filter(s=>s.locale===locale);
   console.log("LANGUAGE_FALLBACK "+JSON.stringify({locale,headings:list.length,occurrences:list.reduce((s,a)=>s+a.count,0),top:list.slice(0,120)}));
 }
+
+/**
+ * Exhaustive, order-independent *observation*, not a blanket assertion that
+ * every shared label is an error: source trademarks and unit abbreviations
+ * can legitimately stay identical. Review exact source IDs before translating.
+ */
+const identityMap=new Map();
+let identityComparedPairs=0;
+let identitySkippedPairs=0;
+for(const [slug] of english){
+  const enSpecs=identityRows.get("en|"+slug);
+  for(const locale of locales.slice(1)){
+    const localSpecs=identityRows.get(locale+"|"+slug);
+    if(!enSpecs||!localSpecs){identitySkippedPairs++;continue;}
+    identityComparedPairs++;
+    for(const [id,enLabel] of enSpecs){
+      if(!localSpecs.has(id)){
+        errors.push("Localized model missing published spec identity "+locale+" "+slug+" "+id);
+        continue;
+      }
+      const localizedLabel=localSpecs.get(id);
+      if(enLabel!==localizedLabel||!/[a-z]/i.test(enLabel))continue;
+      const key=locale+"|"+enLabel;
+      const item=identityMap.get(key)||{locale,english:enLabel,count:0,slugs:[]};
+      item.count++;
+      if(item.slugs.length<3)item.slugs.push(slug);
+      identityMap.set(key,item);
+    }
+    for(const id of localSpecs.keys())
+      if(!enSpecs.has(id))
+        errors.push("Localized model has unpaired published spec identity "+locale+" "+slug+" "+id);
+  }
+}
+const identityRemaining=[...identityMap.values()]
+  .sort((a,b)=>b.count-a.count||a.locale.localeCompare(b.locale)||a.english.localeCompare(b.english));
+const identityHeadingCounts=Object.fromEntries(locales.slice(1).map(locale=>[
+  locale,identityRemaining.filter(item=>item.locale===locale).length
+]));
+const identityOccurrenceCounts=Object.fromEntries(locales.slice(1).map(locale=>[
+  locale,identityRemaining.filter(item=>item.locale===locale).reduce((n,item)=>n+item.count,0)
+]));
+const identitySummary={
+  comparedPairs:identityComparedPairs,skippedPairs:identitySkippedPairs,
+  pagesWithStableIds:identityRows.size,pagesWithoutStableIds:identitySkippedPages.length,
+  identicalHeadingCounts:identityHeadingCounts,
+  identicalOccurrenceCounts:identityOccurrenceCounts
+};
+console.log("LANGUAGE_IDENTITY_AUDIT "+JSON.stringify(identitySummary));
+
 const missingHeadingCounts=Object.fromEntries(locales.slice(1).map(l=>[l,suspects.filter(x=>x.locale===l).length]));
 const occurrenceCounts=Object.fromEntries(locales.slice(1).map(l=>[l,suspects.filter(x=>x.locale===l).reduce((sum,x)=>sum+x.count,0)]));
 const modelCounts=Object.fromEntries(locales.map(l=>[l,byLocale.get(l).size]));
-const summary={mode:DIST?"built_preview":"public_live",publishedURLs:urls.length,modelCounts,missingHeadingCounts,occurrenceCounts,englishSourceHeadings:englishLeakage.length,englishSourceOccurrences:englishLeakage.reduce((n,x)=>n+x.count,0),seoMetadataChecked:verifyMetadata,fetchErrors:errors};
+const summary={mode:DIST?"built_preview":"public_live",publishedURLs:urls.length,modelCounts,missingHeadingCounts,occurrenceCounts,identity:identitySummary,englishSourceHeadings:englishLeakage.length,englishSourceOccurrences:englishLeakage.reduce((n,x)=>n+x.count,0),seoMetadataChecked:verifyMetadata,fetchErrors:errors};
 console.log("LANGUAGE_AUDIT_SUMMARY "+JSON.stringify(summary));
 // A reusable public-label quality report, never a claim that crawling/SEO ranking is assured.
 if(process.env.TRANSLATION_REPORT_PATH?.trim()){
   const filename=resolve(process.env.TRANSLATION_REPORT_PATH.trim());
   mkdirSync(dirname(filename),{recursive:true});
-  writeFileSync(filename,JSON.stringify({summary,remaining:suspects,englishSourceLanguageLeakage:englishLeakage},null,2)+"\n");
+  writeFileSync(filename,JSON.stringify({summary,remaining:suspects,identityRemaining,identitySkippedPages:identitySkippedPages.slice(0,30),englishSourceLanguageLeakage:englishLeakage},null,2)+"\n");
 }
 const minModels=Number(process.env.TRANSLATION_MIN_MODELS||"0");
 if(minModels>0&&locales.some(l=>modelCounts[l]<minModels)){

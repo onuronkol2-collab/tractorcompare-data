@@ -142,3 +142,48 @@ test("English source language leakage is reported separately from cross-language
   assert.equal(content.englishSourceLanguageLeakage[0].englishSourceLabel,"ŞAnzıMan Tipi");
  }finally{rmSync(f.tmp,{recursive:true,force:true});}
 });
+
+
+test("order-independent spec ID audit catches untranslated Turkish hidden by localized card sorting",()=>{
+  const f=fixture();
+  try{
+    for(const lang of locales){
+      const filename=join(f.dist,(lang==="en"?"":lang+"/")+"tractors/quality-sample/index.html");
+      const cards=lang==="en"
+        ? '<article class="model-spec-card" data-spec-id="spec-a"><h4>Unballasted Weight</h4></article>'+
+          '<article class="model-spec-card" data-spec-id="spec-b"><h4>Manufacturer Stated Power</h4></article>'
+        : lang==="tr"
+        ? '<article class="model-spec-card" data-spec-id="spec-b"><h4>Üreticinin bildirdiği güç</h4></article>'+
+          '<article class="model-spec-card" data-spec-id="spec-a"><h4>Unballasted Weight</h4></article>'
+        : '<article class="model-spec-card" data-spec-id="spec-b"><h4>Local power heading</h4></article>'+
+          '<article class="model-spec-card" data-spec-id="spec-a"><h4>Unballasted Weight</h4></article>';
+      writeFileSync(filename,'<html><body><main>'+cards+'</main></body></html>');
+    }
+    const {result,report}=audit(f,{TRANSLATION_REQUIRE_SPEC_IDENTITIES:"true"});
+    assert.equal(result.status,0,result.stdout+" "+result.stderr);
+    const summary=JSON.parse(readFileSync(report,"utf8")).summary;
+    assert.equal(summary.occurrenceCounts.tr,0,"old positional comparison misses the reordered English term");
+    assert.equal(summary.identity.identicalOccurrenceCounts.tr,1,"stable source ID detects the English heading");
+    assert.equal(summary.identity.comparedPairs,9);
+    assert.equal(summary.identity.pagesWithStableIds,10);
+    assert.equal(summary.identity.pagesWithoutStableIds,0);
+  }finally{rmSync(f.tmp,{recursive:true,force:true});}
+});
+
+test("strict production preview cannot claim identity coverage when model spec cards have no durable key",()=>{
+  const f=fixture();
+  try{
+    const {result,report}=audit(f,{TRANSLATION_REQUIRE_SPEC_IDENTITIES:"true"});
+    assert.notEqual(result.status,0);
+    assert.match(result.stderr,/error|^$/i);
+    const summary=JSON.parse(readFileSync(report,"utf8")).summary;
+    assert.equal(summary.identity.pagesWithStableIds,0);
+    assert.equal(summary.identity.pagesWithoutStableIds,10);
+    assert.ok(summary.fetchErrors.some(message=>message.includes("Missing durable model spec identity")));
+  }finally{rmSync(f.tmp,{recursive:true,force:true});}
+});
+
+test("all real rendered technical spec cards expose the public source-spec identity",()=>{
+  const component=readFileSync(new URL("../src/components/TractorDetail.astro",import.meta.url),"utf8");
+  assert.match(component,/class="model-spec-card" data-spec-id=\{spec\.spec_id\}/);
+});
