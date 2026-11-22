@@ -114,3 +114,25 @@ Deno.test("plain Markdown cannot exceed preapproved request size",async()=>{
   title:"Valid title",body:"a".repeat(5001),target:"en",apiKey:secret,region:"westeurope"
  }),/safe limits/);
 });
+
+
+Deno.test("a French forum source must never be mislabeled Turkish in Azure requests",async()=>{
+ let requests=0;
+ const fetchFn=async(input:RequestInfo|URL,options:RequestInit)=>{
+  requests++;
+  const url=new URL(String(input));
+  assert.equal(url.searchParams.get("from"),"fr");
+  assert.equal(url.searchParams.get("to"),"en");
+  const sent=JSON.parse(String(options.body)) as Array<{text:string}>;
+  return new Response(JSON.stringify(sent.map(x=>({
+   translations:[{to:"en",text:x.text+" translated"}]
+  }))),{status:200});
+ };
+ await translateAzureArticle({title:"Titre du tracteur",body:"Vitesse du tracteur",
+  target:"en",sourceLocale:"fr",apiKey:secret,region:"westeurope",fetchFn:fetchFn as typeof fetch});
+ assert.equal(requests,1);
+ await assert.rejects(translateAzureArticle({title:"Titre du tracteur",body:"Vitesse du tracteur",
+  target:"fr",sourceLocale:"fr",apiKey:secret,region:"westeurope",
+  fetchFn:fetchFn as typeof fetch}),/Unsupported Azure language pair/);
+ assert.equal(requests,1,"identical source-target pair makes no external call");
+});
