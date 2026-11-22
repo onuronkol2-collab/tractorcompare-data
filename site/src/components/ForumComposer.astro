@@ -46,6 +46,11 @@ const strings=JSON.stringify({
   <details class="forum-auth-gate" data-forum-auth-gate>
    <summary data-forum-gate-summary>{mt(lang,"guestPostGate")}</summary>
   <div class="forum-auth">
+    <label class="forum-remember">
+      <input type="checkbox" data-forum-remember checked/>
+      <span><strong>{mt(lang,"rememberMe")}</strong>
+        <small>{mt(lang,"rememberWarning")}</small></span>
+    </label>
     <section class="forum-register" data-forum-register-area aria-labelledby="forum-register-heading">
       <h3 id="forum-register-heading">{mt(lang,"signupHeading")}</h3>
       <p>{mt(lang,"signupIntro")}</p>
@@ -249,6 +254,12 @@ const strings=JSON.stringify({
 
 .community-composer .forum-password-reveal{display:flex;align-items:center;gap:9px;font-weight:600}
 .community-composer .forum-password-reveal input{width:17px;height:17px;accent-color:#24643b}
+.community-composer .forum-remember{display:flex;flex-direction:row;align-items:flex-start;gap:10px;
+ padding:12px 14px;margin:0 0 16px;background:#f3f9f1;border:1px solid #c9dfc7;
+ border-radius:10px;font-size:14px;line-height:1.5;color:#204f33;cursor:pointer}
+.community-composer .forum-remember input{width:19px;height:19px;margin:3px 0 0;flex:none;accent-color:#24643b}
+.community-composer .forum-remember span{display:grid;gap:2px}
+.community-composer .forum-remember small{color:#476a52;font-size:12px;font-weight:450}
 .community-composer .forum-auth-buttons button[data-password-reset]{background:transparent;color:#23603b;
  text-decoration:underline;padding:10px 0}
 .community-composer [hidden]{display:none!important}
@@ -256,6 +267,8 @@ const strings=JSON.stringify({
 <script>
 import {isLocale} from "../lib/locales.ts";
 import {initForumEditor} from "../lib/forum-editor-client.ts";
+import {FORUM_SESSION_KEY,readForumSession,rememberForumSession,clearForumSession,isForumRemembered}
+ from "../lib/forum-session-store.mjs";
 type FormContainer=HTMLElement & {dataset:DOMStringMap};
 const widgets=document.querySelectorAll<FormContainer>("[data-forum-composer]");
 for(const widget of widgets){
@@ -345,8 +358,7 @@ for(const widget of widgets){
   }catch{/* Post already saved. Do not automatically submit again. */}
  }
 
- const tokenKey="tractorvs_forum_access";
- const refreshKey="tractorvs_forum_refresh";
+ const rememberControl=el<HTMLInputElement>("[data-forum-remember]");
  let activeAuthAttempt=0;
  const header=(token?:string)=>({
   apikey:cfg.key,"Content-Type":"application/json",
@@ -445,13 +457,9 @@ for(const widget of widgets){
  historyPanel?.addEventListener("toggle",showHistory);
  function saveSession(jwt:string,refresh?:string){
   token=jwt;
-  try{
-   sessionStorage.setItem(tokenKey,jwt);
-   if(refresh!==undefined){
-    if(refresh)sessionStorage.setItem(refreshKey,refresh);
-    else sessionStorage.removeItem(refreshKey);
-   }
-  }catch{}
+  const existing=readForumSession();
+  const nextRefresh=refresh===undefined?(existing?.refresh||""):refresh;
+  rememberForumSession(jwt,nextRefresh,rememberControl?.checked??isForumRemembered());
   window.dispatchEvent(new Event("tractorvs-forum-session"));
  }
  function setLogin(loggedIn:boolean){
@@ -492,7 +500,7 @@ for(const widget of widgets){
    });
    let response=await requestUser();
    // Supabase access tokens expire; rotate a valid refresh token before asking
-   // the member to request a new email. Keep tokens within this browser tab.
+   // the member to request a new email. Remembered sessions remain bounded.
    if(response.status===401&&rotatedRefresh){
     const renewed=await fetch(cfg.url+"/auth/v1/token?grant_type=refresh_token",{
      method:"POST",headers:header(),body:JSON.stringify({refresh_token:rotatedRefresh}),
@@ -510,10 +518,10 @@ for(const widget of widgets){
    if(typeof data?.id!=="string")throw Error("invalid");
    if(attempt!==activeAuthAttempt)return false;
    userId=data.id;saveSession(access,rotatedRefresh);setLogin(true);restoreDraft();return true;
-  }catch{
-   if(attempt===activeAuthAttempt){
-    try{sessionStorage.removeItem(tokenKey);sessionStorage.removeItem(refreshKey)}catch{}
-   }
+  }catch(error){
+   if(attempt===activeAuthAttempt&&error instanceof Error&&
+    ["expired","invalid","refresh failed","invalid refresh"].includes(error.message))
+    clearForumSession();
    return false;
   }
  }
@@ -566,14 +574,27 @@ for(const widget of widgets){
   widget.scrollIntoView({block:"start"});
  }else{
   try{
-   const attemptPromise=verifySession(sessionStorage.getItem(tokenKey)||"",sessionStorage.getItem(refreshKey)||"");
+   const saved=readForumSession();
+   if(rememberControl)rememberControl.checked=saved?.remember??true;
+   const attemptPromise=verifySession(saved?.access||"",saved?.refresh||"");
    const expectedAttempt=activeAuthAttempt;
    attemptPromise.then(ok=>{if(!ok&&expectedAttempt===activeAuthAttempt)setLogin(false)});
   }catch{setLogin(false)}
  }
+ window.addEventListener("storage",event=>{
+  if(event.key!==FORUM_SESSION_KEY)return;
+  ++activeAuthAttempt;
+  if(!event.newValue){
+   clearForumSession({persistent:false});
+   setLogin(false);
+  }else{
+   const otherTab=readForumSession();
+   if(otherTab)void verifySession(otherTab.access,otherTab.refresh);
+  }
+ });
  edit?.addEventListener("click",()=>{
   ++activeAuthAttempt;
-  try{sessionStorage.removeItem(tokenKey);sessionStorage.removeItem(refreshKey)}catch{}
+  clearForumSession();
   setLogin(false);msg("");
   authForm?.querySelector("input")?.focus();
  });
@@ -782,7 +803,7 @@ for(const widget of widgets){
   ++activeAuthAttempt;
   try{for(const key of Object.keys(sessionStorage))if(userId&&key.startsWith(draftPrefix()))sessionStorage.removeItem(key)}catch{}
   const existing=token;token="";
-  try{sessionStorage.removeItem(tokenKey);sessionStorage.removeItem(refreshKey)}catch{}
+  clearForumSession();
   setLogin(false);msg("");
   if(existing)fetch(cfg.url+"/auth/v1/logout",{method:"POST",headers:header(existing)}).catch(()=>{});
  });
@@ -835,7 +856,7 @@ for(const widget of widgets){
     headers:{...header(token),Prefer:"return=minimal"},
     body:JSON.stringify(row),signal:AbortSignal.timeout(18000)});
    if(!res.ok){
-    if(res.status===401){saveDraft();try{sessionStorage.removeItem(tokenKey)}catch{}setLogin(false);msg(copy.authRequired);return}
+    if(res.status===401){saveDraft();clearForumSession();setLogin(false);msg(copy.authRequired);return}
     const error=await res.json().catch(()=>({}));
     msg(/^Daily forum (topic|reply) limit reached$/.test(error.message)?copy.limitError:res.status===429?copy.retryLater:copy.postError);
     return;
