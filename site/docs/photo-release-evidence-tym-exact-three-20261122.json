@@ -32,5 +32,16 @@
       "visualObservation": "Red cab-equipped TYM T78 tractor; white T78 model lettering on hood is clearly visible.",
       "altTextIntent": "TYM T5075 (T78) tractor photographed at Agritechnica 2023, model-identical illustration."
     }
-  ]
+  ],
+  "previewDnsGate": {
+    "previousFailedReviewBranch": "photo/20261122-tym-2500l-6225c-t78-verified-jpegs",
+    "previousPreviewDnsLabelLength": 64,
+    "dnsLabelMaximumLength": 63,
+    "solution": "Use the same release files on a short GitHub PR branch; no production bypass",
+    "releaseBranch": "photo/tym3-20261122",
+    "previewDnsLabel": "photo-tym3-20261122-tractorvs-site",
+    "previewDnsLabelLength": 34,
+    "checkedOn": "2026-11-22",
+    "previewVerified": false
+  }
 }
