@@ -850,6 +850,7 @@ export const HISTORICAL_LICENSED_PHOTOS=candidates.map(p=>{
   const filename=p.path.split("/").at(-1)!;
   return {
     brand:p.brand,model:p.model,fileId:p.fileId,
+    ...("tractorId" in p && typeof p.tractorId==="string" ? {tractorId:p.tractorId} : {}),
     thumbUrl:W+"thumb/"+p.path+"/480px-"+filename,
     displayUrl:W+"thumb/"+p.path+"/960px-"+filename,
     fullUrl:W+p.path,

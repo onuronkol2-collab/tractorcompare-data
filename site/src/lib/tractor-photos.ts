@@ -5,6 +5,9 @@ import {HISTORICAL_LICENSED_PHOTOS} from "./historical-licensed-photos.ts";
 /* Rights are NOT transferred by adding a TractorVS label. */
 export interface TractorPhoto {
   brand:string; model:string; fileId:string;
+  // Explicitly bind variant-sensitive photos to one published tractor UUID.
+  // Omitted for historic model-level photographs.
+  tractorId?:string;
   thumbUrl:string; displayUrl:string; fullUrl:string;
   width:number; height:number; sourcePage:string;
   photographer:string; licenseName:string; licenseUrl:string;
@@ -172,9 +175,20 @@ function norm(value:string):string{
   return value.normalize("NFKD").replace(/[\u0300-\u036f]/g,"")
     .toLowerCase().replace(/ı/g,"i").replace(/[^a-z0-9]+/g,"");
 }
-export function tractorPhotos(tractor:Pick<TractorRecord,"brand_name"|"model_name">):TractorPhoto[]{
-  return APPROVED_TRACTOR_PHOTOS.filter(photo =>
-    norm(photo.brand)===norm(tractor.brand_name)&&norm(photo.model)===norm(tractor.model_name));
+type TractorPhotoLookup=Pick<TractorRecord,"brand_name"|"model_name">&Partial<Pick<TractorRecord,"tractor_id">>;
+/** A model-level photo may illustrate the named model, but a variant-scoped
+ * photo must NEVER appear on other models with an identical display name. */
+export function photoMatchesTractor(
+  photo:Pick<TractorPhoto,"brand"|"model"|"tractorId">,
+  tractor:TractorPhotoLookup
+):boolean{
+  if(norm(photo.brand)!==norm(tractor.brand_name)||
+     norm(photo.model)!==norm(tractor.model_name))return false;
+  if(photo.tractorId)return photo.tractorId===tractor.tractor_id;
+  return true;
+}
+export function tractorPhotos(tractor:TractorPhotoLookup):TractorPhoto[]{
+  return APPROVED_TRACTOR_PHOTOS.filter(photo=>photoMatchesTractor(photo,tractor));
 }
 export function primaryTractorPhoto(tractor:Pick<TractorRecord,"brand_name"|"model_name">):TractorPhoto|null{
   return tractorPhotos(tractor)[0]||null;
