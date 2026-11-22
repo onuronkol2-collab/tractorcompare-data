@@ -124,10 +124,10 @@ test("Chinese sentences end cleanly without whitespace and forum cards keep prio
  const meta=forumSeoDescription(chinese,45);
  assert.equal(meta,"液压提升能力以说明书和测试工况为准。");
  const preview="## Tractor Forum\n\n**Brand** tests 13,7 points. "+"Manufacturer note about safety ".repeat(20);
- const clean=preview.replace(/^\\s{0,3}#{1,4}\\s+/gm,"")
-  .replace(/(?:\\*\\*|\\x60|(?<!\\*)\\*(?!\\*)|[|])/g,"")
-  .replace(/^\\s*[-•>]\\s+/gm,"").replace(/\\s+/g," ").trim();
- const previousCard=clean.slice(0,230).replace(/\\s+\\S*$/u,"").trimEnd()||clean.slice(0,230);
+ const clean=preview.replace(/^\s{0,3}#{1,4}\s+/gm,"")
+  .replace(/(?:\*\*|\x60|(?<!\*)\*(?!\*)|[|])/g,"")
+  .replace(/^\s*[-•>]\s+/gm,"").replace(/\s+/g," ").trim();
+ const previousCard=clean.slice(0,230).replace(/\s+\S*$/u,"").trimEnd()||clean.slice(0,230);
  assert.equal(forumCardExcerpt(preview,230),previousCard);
- assert.match(read("../src/components/ForumHub.astro"),/forumCardExcerpt\\(topic\\.body,230\\)/);
+ assert.match(read("../src/components/ForumHub.astro"),/forumCardExcerpt\(topic\.body,230\)/);
 });
