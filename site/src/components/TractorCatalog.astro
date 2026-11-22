@@ -146,6 +146,7 @@ const pricePayload = JSON.stringify({
   import type { MarketCountry } from "../lib/market-prices";
   import { advisorText } from "../lib/advisor-i18n";
   import { normalizeTractorQuery } from "../lib/search";
+  import { countryAwareCatalogUrl } from "../lib/catalog-country-url.mjs";
   import type { Locale } from "../lib/locales";
   const dataNode=document.getElementById("catalog-price-payload");
   const countryControl=document.querySelector<HTMLSelectElement>("#catalog-price-country");
@@ -165,7 +166,25 @@ const pricePayload = JSON.stringify({
           : advisorText(data.lang,"priceUnknown");
       }
     };
-    countryControl.addEventListener("change",()=>{manuallySelected=true;refresh(countryControl.value as MarketCountry);});
+    // Explicitly chosen countries survive a language change or shared URL.
+    // Keep automatic geolocation out of the URL: only visitor-initiated
+    // preferences are persisted, without cookies or tracking.
+    const allowedCountries=MARKET_COUNTRIES as readonly string[];
+    const fromUrl=new URLSearchParams(window.location.search).get("country");
+    if(fromUrl && allowedCountries.includes(fromUrl)){
+      manuallySelected=true;
+      refresh(fromUrl as MarketCountry);
+    }
+    countryControl.addEventListener("change",()=>{
+      const selected=countryControl.value;
+      if(!allowedCountries.includes(selected))return;
+      manuallySelected=true;
+      refresh(selected as MarketCountry);
+      const next=countryAwareCatalogUrl(window.location.href,selected,[...allowedCountries]);
+      history.replaceState(history.state,"",next);
+      for(const link of document.querySelectorAll<HTMLAnchorElement>("[data-language-choice]"))
+        link.href=countryAwareCatalogUrl(link.href,selected,[...allowedCountries]);
+    });
     fetch("/api/visitor-country",{credentials:"same-origin",cache:"no-store"})
       .then(r=>r.ok?r.json():null)
       .then((geo:{country?:string}|null)=>{
