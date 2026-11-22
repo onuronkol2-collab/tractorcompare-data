@@ -12,7 +12,17 @@ import {fileURLToPath} from "node:url";
 const titleTag=/<title\b[^>]*>([\s\S]*?)<\/title\s*>/gi;
 const h1Tag=/<h1\b[^>]*>([\s\S]*?)<\/h1\s*>/i;
 const locales=new Set(["tr","zh","hi","pt-br","fr","de","ru","ja","es"]);
-const clean=s=>s.replace(/<[^>]*>/g,"").replace(/\s+/g," ").trim();
+// Audit browser-visible text, not HTML source byte length: "&amp;" is one
+// displayed character, and encoded punctuation must not inflate Bing reports.
+const unescapeText=s=>s.replace(/&(?:amp|lt|gt|quot|apos|nbsp|#(?:x[0-9a-f]+|[0-9]+));/gi,entity=>{
+  const named={amp:"&",lt:"<",gt:">",quot:'"',apos:"'",nbsp:" "};
+  const name=entity.slice(1,-1).toLowerCase();
+  if(Object.hasOwn(named,name))return named[name];
+  const code=name.startsWith("#x")
+    ?Number.parseInt(name.slice(2),16):name==="#39"?39:Number.parseInt(name.slice(1),10);
+  try{return String.fromCodePoint(code);}catch{return entity;}
+});
+const clean=s=>unescapeText(s.replace(/<[^>]*>/g,"")).replace(/\s+/g," ").trim();
 
 export function inspectSeoTitle(html,file="index.html"){
   // Search-engine ownership challenge files are not editorial pages. Their
