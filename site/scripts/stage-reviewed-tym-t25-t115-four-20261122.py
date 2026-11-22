@@ -33,5 +33,8 @@ core.SOURCES = (
      "https://commons.wikimedia.org/wiki/File:TYM_T115_Agritechnica_2025_%28DSC04663%29.jpg"),
 )
 
+# Explicitly opt in to four exact source files; core default remains three.
+core.EXPECTED_BATCH_COUNT = 4
+
 if __name__ == "__main__":
     core.main()
