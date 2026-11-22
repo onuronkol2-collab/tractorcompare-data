@@ -2,8 +2,8 @@
   "version": 1,
   "pages": {
     "https://tractorvs.com/": {
-      "digest": "c2cde8169e1ca8049de2077cb4fac705a4ea517b7fe0938ca17dcfec393eb6a1",
-      "modified": "2026-11-22T06:23:39.537Z"
+      "digest": "91c4496ac0aa6fb9f14e6b638a5d697002ce9246886fc0e763deaa2120975a4d",
+      "modified": "2026-11-22T09:01:41.689Z"
     },
     "https://tractorvs.com/articles/": {
       "digest": "6882e5ebc48632bf6cf8dd2c398e850b87bdadf552332ab0aa1f38742dcb1ecf",
@@ -90,8 +90,8 @@
       "modified": null
     },
     "https://tractorvs.com/de/tractors/antonio-carraro-mach-2-r-f0ee0c8c/": {
-      "digest": "0ae569d3e134e64876cedc2f4f4857e60675647729807096626c26ecebe458eb",
-      "modified": "2026-11-22T04:59:19.699Z"
+      "digest": "35abb4a3c4b85419d1b57b9c0490a9ebd33ec41d848f6840073b1af9ea025535",
+      "modified": "2026-11-22T09:01:41.689Z"
     },
     "https://tractorvs.com/de/tractors/antonio-carraro-mach-4-r-f267b552/": {
       "digest": "c16fd5700c872915c37af877f1c79645d708928780e636c7889cc0fb4f0b11f0",
@@ -122,8 +122,8 @@
       "modified": "2026-11-22T04:59:19.699Z"
     },
     "https://tractorvs.com/de/tractors/antonio-carraro-tigre-3800-f-3872ab21/": {
-      "digest": "63adb1dfbd8f3eee2f2a462d937a6bebbdaaba0fbc734629c528b4815a1e50b9",
-      "modified": "2026-11-22T04:59:19.699Z"
+      "digest": "60bd6705dc3900e2e05ac3f95c57ccf2c83496827095b669c5f4db9d51029437",
+      "modified": "2026-11-22T09:01:41.689Z"
     },
     "https://tractorvs.com/de/tractors/antonio-carraro-tigre-3800-fc5f6f1d/": {
       "digest": "d3845263e158276999cefda8bcaad72cbf0b24603d1a0e51387043d6cb596166",
@@ -910,8 +910,8 @@
       "modified": "2026-11-22T05:19:46.825Z"
     },
     "https://tractorvs.com/de/tractors/sonalika-gt-22-4wd-63dd7323/": {
-      "digest": "f80b411210d2c6f08ba3d5a3bc0fe8dc1f6ae8a2e958f148a720bf04d8217eef",
-      "modified": "2026-11-22T05:19:46.825Z"
+      "digest": "ff51fe363d986bd128d65e6365dbc4953dc30ba5aede74efff401749c9759fb0",
+      "modified": "2026-11-22T09:01:41.689Z"
     },
     "https://tractorvs.com/de/tractors/sonalika-mahabali-rx-42-p-a0e16b7d/": {
       "digest": "83cce0646daac0047a43c300f432621f2d954e14d20c0b5568eca356dc563234",
@@ -1674,8 +1674,8 @@
       "modified": "2026-11-21T19:47:11.499Z"
     },
     "https://tractorvs.com/es/tractors/antonio-carraro-mach-2-r-f0ee0c8c/": {
-      "digest": "f89f7393f0e3195539251094500aaacead111333915807ea673e3ff7f50d93cf",
-      "modified": "2026-11-22T04:59:19.699Z"
+      "digest": "80d191eab73a345eeeef7d6f655dc290f67fff3f6771f8363d3e20096b5657b3",
+      "modified": "2026-11-22T09:01:41.689Z"
     },
     "https://tractorvs.com/es/tractors/antonio-carraro-mach-4-r-f267b552/": {
       "digest": "feff9015fa3f05afa3be076bdab1090321805c0697a32ec292b09abe8ad15ca9",
@@ -1706,8 +1706,8 @@
       "modified": "2026-11-22T04:59:19.699Z"
     },
     "https://tractorvs.com/es/tractors/antonio-carraro-tigre-3800-f-3872ab21/": {
-      "digest": "97d8b448e0b19efac621577b0c246c9d86714cfe9e42932d7fd69453fd3b90a1",
-      "modified": "2026-11-22T04:59:19.699Z"
+      "digest": "e7b6e08edbcf9993b4264594c36d0da6f2084e5d31761b4feb6f04f656cf9535",
+      "modified": "2026-11-22T09:01:41.689Z"
     },
     "https://tractorvs.com/es/tractors/antonio-carraro-tigre-3800-fc5f6f1d/": {
       "digest": "d004a20320fe4ec17918c362183117ebe6ca2894355259cadb9e27de614809c0",
@@ -2494,8 +2494,8 @@
       "modified": "2026-11-22T05:19:46.825Z"
     },
     "https://tractorvs.com/es/tractors/sonalika-gt-22-4wd-63dd7323/": {
-      "digest": "efbf99d2864d03ffd28d83898692e69f74616104ed95b20401e62870744bc23c",
-      "modified": "2026-11-22T05:19:46.825Z"
+      "digest": "0d1fb26f6cc9d229d61411e006f3908f9048d5b3b22d362f3bd5426ed7e6736f",
+      "modified": "2026-11-22T09:01:41.689Z"
     },
     "https://tractorvs.com/es/tractors/sonalika-mahabali-rx-42-p-a0e16b7d/": {
       "digest": "17582ca35de71bff984599cbbb2fb3455294cb124345314f0e75f7136274d0bb",
@@ -3262,8 +3262,8 @@
       "modified": "2026-11-21T19:47:11.499Z"
     },
     "https://tractorvs.com/fr/tractors/antonio-carraro-mach-2-r-f0ee0c8c/": {
-      "digest": "07e5572cab7a6f594fc05431bc9bb4cfdcdfc5692b187c4eede60ba9c1fb0e26",
-      "modified": "2026-11-22T04:59:19.699Z"
+      "digest": "c259e0bc19bf8c864a57c2a092de134c2745f9bcae4e8cc7c3eedd6c751434c2",
+      "modified": "2026-11-22T09:01:41.689Z"
     },
     "https://tractorvs.com/fr/tractors/antonio-carraro-mach-4-r-f267b552/": {
       "digest": "59395982121d58a5eb8b6037c23d9ef3c0d3d307c1bee2fab7305fc66c366811",
@@ -3294,8 +3294,8 @@
       "modified": "2026-11-22T04:59:19.699Z"
     },
     "https://tractorvs.com/fr/tractors/antonio-carraro-tigre-3800-f-3872ab21/": {
-      "digest": "bf8a0ea58bd4b1c367019237d360f2a8dec5086cb2b1529ccb30b5cb9ea3dcb6",
-      "modified": "2026-11-22T04:59:19.699Z"
+      "digest": "cf8903f4598e3cca21e4b4d617da5bbb8774560f84ae091253ef0bba65811304",
+      "modified": "2026-11-22T09:01:41.689Z"
     },
     "https://tractorvs.com/fr/tractors/antonio-carraro-tigre-3800-fc5f6f1d/": {
       "digest": "c812ff0ae9402da4f3954a7eb2bf122539b2611b3d5cc4a9c1d7bb77ab37049a",
@@ -4082,8 +4082,8 @@
       "modified": "2026-11-22T05:19:46.825Z"
     },
     "https://tractorvs.com/fr/tractors/sonalika-gt-22-4wd-63dd7323/": {
-      "digest": "2317022b14ddc2bd139d1f791299b081b1a4bf0a0ee53b9033b7f653f1bd143f",
-      "modified": "2026-11-22T05:19:46.825Z"
+      "digest": "c022bbc44316afb253874b2da299eb5f310f288ad481309f02e56a1964b9ecaa",
+      "modified": "2026-11-22T09:01:41.689Z"
     },
     "https://tractorvs.com/fr/tractors/sonalika-mahabali-rx-42-p-a0e16b7d/": {
       "digest": "29bca2b27fe07487415a40f9b65a20cdb0b444f5bfae18270d4b746e0b2f3a80",
@@ -4866,8 +4866,8 @@
       "modified": "2026-11-21T19:47:11.499Z"
     },
     "https://tractorvs.com/hi/tractors/antonio-carraro-mach-2-r-f0ee0c8c/": {
-      "digest": "32b284efed99d6cb54074d78aa8ef9eb600104aa512f9bff1eada9421da8592f",
-      "modified": "2026-11-22T04:59:19.699Z"
+      "digest": "bbc882a63c5a23c34cd4dc14efd5b6ce5f84e036b83ff9b0a5573492798b1715",
+      "modified": "2026-11-22T09:01:41.689Z"
     },
     "https://tractorvs.com/hi/tractors/antonio-carraro-mach-4-r-f267b552/": {
       "digest": "9f7ffe32b0ab1bc824de4354c6a4acb95a536216e37ea881aeb9bc506922fe0c",
@@ -4898,8 +4898,8 @@
       "modified": "2026-11-21T19:47:11.499Z"
     },
     "https://tractorvs.com/hi/tractors/antonio-carraro-tigre-3800-f-3872ab21/": {
-      "digest": "71b326f33a029c20d7e4964e511081d49443479d219c16e698d926d12cd33b2a",
-      "modified": "2026-11-22T04:59:19.699Z"
+      "digest": "7b8a89416306d4e56da706d2bd27568f3e5d819439c2e461d7affbfc48b7aba1",
+      "modified": "2026-11-22T09:01:41.689Z"
     },
     "https://tractorvs.com/hi/tractors/antonio-carraro-tigre-3800-fc5f6f1d/": {
       "digest": "d0ec5a25cab970ea144fbb4f1f51592b7505e1fdf7ef5bfbba02e3fc24dce60b",
@@ -5686,8 +5686,8 @@
       "modified": "2026-11-22T05:19:46.825Z"
     },
     "https://tractorvs.com/hi/tractors/sonalika-gt-22-4wd-63dd7323/": {
-      "digest": "59aec94f96d8eed2b0bd5f292068910f372ba46247feb7dcfc563bb310f0511b",
-      "modified": "2026-11-22T05:19:46.825Z"
+      "digest": "6fdf245ef05cc1e57e61a365a3cba11c5526311be5fe02d9b88205721ff0059a",
+      "modified": "2026-11-22T09:01:41.689Z"
     },
     "https://tractorvs.com/hi/tractors/sonalika-mahabali-rx-42-p-a0e16b7d/": {
       "digest": "dacb69bef1eaa98e76f947eb90d67b709ca231660bdf0a2fcd92ae6ac2ea9057",
@@ -6450,8 +6450,8 @@
       "modified": "2026-11-21T19:47:11.499Z"
     },
     "https://tractorvs.com/ja/tractors/antonio-carraro-mach-2-r-f0ee0c8c/": {
-      "digest": "3702de52aff40401126e32cbf83b1e2cb64565077ff7ecc5b7576eedbad37c5e",
-      "modified": "2026-11-21T19:47:11.499Z"
+      "digest": "41a582dc2245a6ff0856a4adb11e3636eb127bd8e6c90916f675fab28958a91f",
+      "modified": "2026-11-22T09:01:41.689Z"
     },
     "https://tractorvs.com/ja/tractors/antonio-carraro-mach-4-r-f267b552/": {
       "digest": "e3aed15189e056ce53a241bbe39461f9af9274029ff4bf6b95fb597e7e7e998f",
@@ -6482,8 +6482,8 @@
       "modified": null
     },
     "https://tractorvs.com/ja/tractors/antonio-carraro-tigre-3800-f-3872ab21/": {
-      "digest": "1c0f7caba9684767cdd50a006f1dceb2d89c85c0d77e3da919908b1d7e90e6ef",
-      "modified": null
+      "digest": "605d4c0ecfb75c8aa1924c8977c972891c689fa57041903f59b03c57cce0ffe4",
+      "modified": "2026-11-22T09:01:41.689Z"
     },
     "https://tractorvs.com/ja/tractors/antonio-carraro-tigre-3800-fc5f6f1d/": {
       "digest": "df771020df3813750a14fe0092f2eddf93ccaf9b454da44842944a23dab89541",
@@ -7270,8 +7270,8 @@
       "modified": "2026-11-22T05:19:46.825Z"
     },
     "https://tractorvs.com/ja/tractors/sonalika-gt-22-4wd-63dd7323/": {
-      "digest": "88c57937fa558dea2e1b60a1fff2a333b8897b9bf5458d7fbdac71bae742fd90",
-      "modified": "2026-11-22T05:19:46.825Z"
+      "digest": "1a8c2add236f8d73bbf57e83a8463412dc1deae1a30a29d605e9a77022d27ce4",
+      "modified": "2026-11-22T09:01:41.689Z"
     },
     "https://tractorvs.com/ja/tractors/sonalika-mahabali-rx-42-p-a0e16b7d/": {
       "digest": "d521a7b784e8a9cf31b1f7826a3b387447e69604d4b0d266362fdaae7daae2dc",
@@ -8042,8 +8042,8 @@
       "modified": "2026-11-21T19:47:11.499Z"
     },
     "https://tractorvs.com/pt-br/tractors/antonio-carraro-mach-2-r-f0ee0c8c/": {
-      "digest": "6b0b93c4e7aaec7cae9307666f925e1041587306a0f4bdf4a943a48b8854dc46",
-      "modified": "2026-11-22T04:59:19.699Z"
+      "digest": "224955cca728849af447a1240068837bbb71928e91f86dedfd215360cdbb3b95",
+      "modified": "2026-11-22T09:01:41.689Z"
     },
     "https://tractorvs.com/pt-br/tractors/antonio-carraro-mach-4-r-f267b552/": {
       "digest": "baa66ef34bfed1b700c9f83d2d9184bac889710ea908679838a308a7db12e78f",
@@ -8074,8 +8074,8 @@
       "modified": "2026-11-22T04:59:19.699Z"
     },
     "https://tractorvs.com/pt-br/tractors/antonio-carraro-tigre-3800-f-3872ab21/": {
-      "digest": "1cd7b43cbb7549240516052f2133498a9e3a6bc98ed1b9cbddbfac5471300cf7",
-      "modified": "2026-11-22T04:59:19.699Z"
+      "digest": "a9134a86f5b229f5a9c94a9cc8f5c4b7294374562d8895cb9e5c8c8a622d80ca",
+      "modified": "2026-11-22T09:01:41.689Z"
     },
     "https://tractorvs.com/pt-br/tractors/antonio-carraro-tigre-3800-fc5f6f1d/": {
       "digest": "c7c147031c598afc921f98622f6b5134124e43351db6a732a937df726c2b169f",
@@ -8862,8 +8862,8 @@
       "modified": "2026-11-22T05:19:46.825Z"
     },
     "https://tractorvs.com/pt-br/tractors/sonalika-gt-22-4wd-63dd7323/": {
-      "digest": "625293f0c2b0896911357579b349766ca447c0fc55e388f7e40620699b60705e",
-      "modified": "2026-11-22T05:19:46.825Z"
+      "digest": "aff98d054e28eb96710c72a36a389a806dd3325a9b1b44d1404ffe0074f501f3",
+      "modified": "2026-11-22T09:01:41.689Z"
     },
     "https://tractorvs.com/pt-br/tractors/sonalika-mahabali-rx-42-p-a0e16b7d/": {
       "digest": "13c67ff0c84903acbc79db1e408294e53f564a73696373e75652d60195081cf3",
@@ -9630,8 +9630,8 @@
       "modified": "2026-11-22T04:59:19.699Z"
     },
     "https://tractorvs.com/ru/tractors/antonio-carraro-mach-2-r-f0ee0c8c/": {
-      "digest": "000995e37eb27dc62ada912098357b92e7a72e19768de5c9eddbfd8d5dddf887",
-      "modified": "2026-11-22T04:59:19.699Z"
+      "digest": "76c27311412e4e27e856ff4c9188b2b0af21e4e2d092d49d80be9dcb906de6bf",
+      "modified": "2026-11-22T09:01:41.689Z"
     },
     "https://tractorvs.com/ru/tractors/antonio-carraro-mach-4-r-f267b552/": {
       "digest": "19eb37bac45608c445c6c6bd8e6f463a8a3c5ff6e8a3be17f46b15bfcd043303",
@@ -9662,8 +9662,8 @@
       "modified": "2026-11-22T04:59:19.699Z"
     },
     "https://tractorvs.com/ru/tractors/antonio-carraro-tigre-3800-f-3872ab21/": {
-      "digest": "ec4330feede8cba74c2d5a115bd2da8f69456f3ffc08fab18a2e474dd7b2d3d3",
-      "modified": "2026-11-22T04:59:19.699Z"
+      "digest": "1c6d4013ad669a9c2e9506434f799b0eb54bdcd1db48d6fb66c8c5de5efc0b78",
+      "modified": "2026-11-22T09:01:41.689Z"
     },
     "https://tractorvs.com/ru/tractors/antonio-carraro-tigre-3800-fc5f6f1d/": {
       "digest": "efc03a774003b9e1889e384f11d24bb267d0c30a282182dcf635e988e2db254a",
@@ -10450,8 +10450,8 @@
       "modified": "2026-11-22T05:19:46.825Z"
     },
     "https://tractorvs.com/ru/tractors/sonalika-gt-22-4wd-63dd7323/": {
-      "digest": "44e45bbd78da8b5800a7bae2c82a1c473ff8f2c9503ff172c5e4e86bf5f901df",
-      "modified": "2026-11-22T05:19:46.825Z"
+      "digest": "45e114d6f83e026c7247fb58f598b13de7b44cb863f119645ba816005474cb25",
+      "modified": "2026-11-22T09:01:41.689Z"
     },
     "https://tractorvs.com/ru/tractors/sonalika-mahabali-rx-42-p-a0e16b7d/": {
       "digest": "5750081540e1cfc78a6cc5b13359b0e177e541a231b2ac952803b6105cc54df6",
@@ -11146,8 +11146,8 @@
       "modified": "2026-11-22T04:59:19.699Z"
     },
     "https://tractorvs.com/tr/": {
-      "digest": "25115fa4f89199afecf7c5e5544b8af61b9fa0b4df41c6c4c43d0cc1f72e55d5",
-      "modified": "2026-11-22T06:23:39.537Z"
+      "digest": "3d3e896e3169f1ea7c87366a9568925c351e11c82acbc54837595f36814f2fc6",
+      "modified": "2026-11-22T09:01:41.689Z"
     },
     "https://tractorvs.com/tr/articles/": {
       "digest": "0b2ff2f6dd89a40db518b347cd052f0cab5c4dd4b2a60e199cdacc7ed9b94676",
@@ -11242,8 +11242,8 @@
       "modified": "2026-11-21T19:47:11.499Z"
     },
     "https://tractorvs.com/tr/tractors/antonio-carraro-mach-2-r-f0ee0c8c/": {
-      "digest": "3a447cdba593a62901a887a12175992b1d6bae1b7e334fa688b60ea620b99671",
-      "modified": "2026-11-22T04:59:19.699Z"
+      "digest": "1f610cb8d4c6adb287d81efa5cc7b7a76b4f5d9a3768edf87597d53e5f3bcbd1",
+      "modified": "2026-11-22T09:01:41.689Z"
     },
     "https://tractorvs.com/tr/tractors/antonio-carraro-mach-4-r-f267b552/": {
       "digest": "008e812723d545273a1cbb2d34727adfb227e853cb43a8f7db240f7a08879ee9",
@@ -11274,8 +11274,8 @@
       "modified": "2026-11-22T04:59:19.699Z"
     },
     "https://tractorvs.com/tr/tractors/antonio-carraro-tigre-3800-f-3872ab21/": {
-      "digest": "d1654dbbce93d6dab956ffff967ae304bbeca46e645af7d01fd856b7d01ecd53",
-      "modified": "2026-11-22T04:59:19.699Z"
+      "digest": "eb62973fc88a64a5aca5ba8ae71169941a2dd4ed501e4ababe08f4bd723534ba",
+      "modified": "2026-11-22T09:01:41.689Z"
     },
     "https://tractorvs.com/tr/tractors/antonio-carraro-tigre-3800-fc5f6f1d/": {
       "digest": "383020cdb851a037c977ed00edec7a611e8b045db59b8830537c959c1308cb21",
@@ -12062,8 +12062,8 @@
       "modified": "2026-11-22T05:19:46.825Z"
     },
     "https://tractorvs.com/tr/tractors/sonalika-gt-22-4wd-63dd7323/": {
-      "digest": "82f8f942145e7470f9cb4a4c34361bc27ac257774e603adbd61fb2c7ed8b56e2",
-      "modified": "2026-11-22T05:19:46.825Z"
+      "digest": "bb211b61aabb53c5a1134d72fd759171ceb9c5ebf717937a0e7e0e2e67705cda",
+      "modified": "2026-11-22T09:01:41.689Z"
     },
     "https://tractorvs.com/tr/tractors/sonalika-mahabali-rx-42-p-a0e16b7d/": {
       "digest": "e1870cf269449a12a1185d9468334ba83fc4538c04c8d6deab35485344db7a44",
@@ -12798,8 +12798,8 @@
       "modified": null
     },
     "https://tractorvs.com/tractors/antonio-carraro-mach-2-r-f0ee0c8c/": {
-      "digest": "e089ce2909c5e64ccab642b67fc55ab804f05850ff29f13c1ddbd8d5830cfd90",
-      "modified": "2026-11-22T04:59:19.699Z"
+      "digest": "340ed3f532296913ed0ccccb694acff966ef0488aed2dccc9d26f1de82aeedf9",
+      "modified": "2026-11-22T09:01:41.689Z"
     },
     "https://tractorvs.com/tractors/antonio-carraro-mach-4-r-f267b552/": {
       "digest": "9ac3cb7c58f40a78e40d59c2c75ac98beb2cdecff7d34b3f6f1a218cbf89403c",
@@ -12830,8 +12830,8 @@
       "modified": "2026-11-22T04:59:19.699Z"
     },
     "https://tractorvs.com/tractors/antonio-carraro-tigre-3800-f-3872ab21/": {
-      "digest": "12f48c33b93572c6ab0ba83ed32aa8a4277508d586530751faa326a01ae2535e",
-      "modified": "2026-11-22T04:59:19.699Z"
+      "digest": "2964ee36c6c90535e32c70ab518617b5c6165df9b7894c58e2a3bf860763b94c",
+      "modified": "2026-11-22T09:01:41.689Z"
     },
     "https://tractorvs.com/tractors/antonio-carraro-tigre-3800-fc5f6f1d/": {
       "digest": "0679e44938f4b6f87b90faa382247b7a7a6440797db80e31ce61cba4f5ee5d77",
@@ -13618,8 +13618,8 @@
       "modified": "2026-11-22T05:19:46.825Z"
     },
     "https://tractorvs.com/tractors/sonalika-gt-22-4wd-63dd7323/": {
-      "digest": "be46bbd9697cfd44483910d2a5139b6b74c66207983ff52d8f761d4e2cb76bc1",
-      "modified": "2026-11-22T05:19:46.825Z"
+      "digest": "b1e99de01f7d8d70511153a6420ac02010abc1eb0696513fb88234f6696ad6a6",
+      "modified": "2026-11-22T09:01:41.689Z"
     },
     "https://tractorvs.com/tractors/sonalika-mahabali-rx-42-p-a0e16b7d/": {
       "digest": "9bc96d1c6d5bb5ba86f83c746e54ae099a84d2dcc5176ae5b6428ca6cf136118",
@@ -14382,8 +14382,8 @@
       "modified": "2026-11-21T19:47:11.499Z"
     },
     "https://tractorvs.com/zh/tractors/antonio-carraro-mach-2-r-f0ee0c8c/": {
-      "digest": "0bbbf8c298c5c91744091a811487d762e34f6d87eb5fbf8867b27afcdab6c16d",
-      "modified": null
+      "digest": "3f167bc65785e00e4653bfcd63734020378073977b7639abd7fab651fbfc36dc",
+      "modified": "2026-11-22T09:01:41.689Z"
     },
     "https://tractorvs.com/zh/tractors/antonio-carraro-mach-4-r-f267b552/": {
       "digest": "b21ae549bf56fa69f337ad89c4cb75e12b9a629c3179eaac26cef4ef08640787",
@@ -14414,8 +14414,8 @@
       "modified": "2026-11-21T19:47:11.499Z"
     },
     "https://tractorvs.com/zh/tractors/antonio-carraro-tigre-3800-f-3872ab21/": {
-      "digest": "82abcc9fbeb4a0b87480806cc7c1fc0eb97e1fdd283e6ad3823dfbd183438a2a",
-      "modified": null
+      "digest": "48ffb4ffdaa735fe96ec41c25f0da6fcd3b3128c676e8939dac5133e12a5b5ea",
+      "modified": "2026-11-22T09:01:41.689Z"
     },
     "https://tractorvs.com/zh/tractors/antonio-carraro-tigre-3800-fc5f6f1d/": {
       "digest": "c581ff9d06c39cd8f63a419135fec677daf52decb65783685dad19fc264128da",
@@ -15202,8 +15202,8 @@
       "modified": "2026-11-22T05:19:46.825Z"
     },
     "https://tractorvs.com/zh/tractors/sonalika-gt-22-4wd-63dd7323/": {
-      "digest": "1a5f9366dfec3052d695ea6b45cd69299159c66bbc09f7650c46feb2f6d02581",
-      "modified": "2026-11-22T05:19:46.825Z"
+      "digest": "808fd7af11d7237409d6ebe4c8f6409018dfc415a8241c72840ed8eec1c543ac",
+      "modified": "2026-11-22T09:01:41.689Z"
     },
     "https://tractorvs.com/zh/tractors/sonalika-mahabali-rx-42-p-a0e16b7d/": {
       "digest": "11bbcc397c0176d7cc42d313ef503f8e9c512108acd781e89b4402a92db288d9",
