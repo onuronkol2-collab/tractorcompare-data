@@ -3,6 +3,8 @@
  * One GET per approved file; never bypass 429, HTML, or missing image bytes.
  */
 import {APPROVED_TRACTOR_PHOTOS,resolveApprovedPhotoSource} from "../src/lib/tractor-photos.ts";
+import {fileURLToPath} from "node:url";
+import {resolve} from "node:path";
 
 export async function auditMobilePhoto720({fetchFn=fetch}={}){
   const photos=APPROVED_TRACTOR_PHOTOS.filter(photo=>photo.mediumUrl);
@@ -39,7 +41,7 @@ export async function auditMobilePhoto720({fetchFn=fetch}={}){
   }
   return result;
 }
-if(import.meta.url===new URL("file://"+process.argv[1]).href){
+if(process.argv[1]&&resolve(process.argv[1])===fileURLToPath(import.meta.url)){
   try{const rows=await auditMobilePhoto720();
     for(const row of rows)console.log("TRACTORVS_720_SOURCE_PROOF "+JSON.stringify(row));
     console.log("TRACTORVS_720_SOURCE_SUMMARY "+JSON.stringify({checked:rows.length,errors:0}));
