@@ -3,7 +3,7 @@
 -- Run after a new source revision only when source hash is revalidated.
 DO $qa$
 DECLARE
- topic_id constant uuid := '713ab252-a925-4ab7-b2c8-a30ce5b86706';
+ target_topic constant uuid := '713ab252-a925-4ab7-b2c8-a30ce5b86706';
  expected_hash constant text := '0102e8edcd864b285733fb30cad4d8f1';
  source_row record; draft record;
  n integer; source_links text[]; translated_links text[];
@@ -14,16 +14,16 @@ BEGIN
  FROM public.tc_forum_topics t
  JOIN public.tc_forum_translation_sources s
  ON s.entity_id=t.id AND s.entity_kind='topic'
- WHERE t.id=topic_id AND t.locale='tr' AND t.status='published'
+ WHERE t.id=target_topic AND t.locale='tr' AND t.status='published'
  AND t.translation_consent IS TRUE AND s.source_hash=expected_hash
  AND md5(t.title||chr(31)||t.body)=s.source_hash;
  IF NOT FOUND THEN RAISE EXCEPTION 'STOP: Source changed or consent unavailable'; END IF;
 
  SELECT count(*) INTO n FROM public.tc_forum_topic_translations
- WHERE topic_id=topic_id AND locale IN ('es','fr','hi','ja','pt-br','ru','zh');
+ WHERE topic_id=target_topic AND locale IN ('es','fr','hi','ja','pt-br','ru','zh');
  IF n<>7 THEN RAISE EXCEPTION 'STOP: expected exactly seven target drafts, found %',n; END IF;
  SELECT count(*) INTO n FROM public.tc_forum_topic_translations
- WHERE topic_id=topic_id AND locale IN ('en','de')
+ WHERE topic_id=target_topic AND locale IN ('en','de')
  AND state='ready' AND seo_approved=true;
  IF n<>2 THEN RAISE EXCEPTION 'STOP: EN/DE release state differs'; END IF;
 
@@ -47,7 +47,7 @@ BEGIN
 
  FOR draft IN SELECT locale,title,body,source_hash,state,seo_approved,reviewed_by_model
    FROM public.tc_forum_topic_translations
-   WHERE topic_id=topic_id AND locale IN ('es','fr','hi','ja','pt-br','ru','zh')
+   WHERE topic_id=target_topic AND locale IN ('es','fr','hi','ja','pt-br','ru','zh')
    ORDER BY locale
  LOOP
   IF draft.source_hash IS DISTINCT FROM expected_hash
@@ -98,7 +98,7 @@ BEGIN
    OR position('Yanmar' in draft.body)=0 OR position('TYM' in draft.body)=0
   THEN RAISE EXCEPTION 'STOP: unsafe markup or award identity in %',draft.locale; END IF;
  END LOOP;
- IF (SELECT count(*) FROM public.tc_forum_localized_topics WHERE topic_id=topic_id)<>3
+ IF (SELECT count(*) FROM public.tc_forum_localized_topics WHERE topic_id=target_topic)<>3
  THEN RAISE EXCEPTION 'STOP: unexpected public forum locale count'; END IF;
 END $qa$;
 
