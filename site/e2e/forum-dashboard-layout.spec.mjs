@@ -26,7 +26,9 @@ test("real public-only topics survive redesign, navigation and honest extra tabs
  await expect(views.locator('[data-forum-view="popular"]')).toHaveAttribute("aria-pressed","true");
  await expect(live).toHaveCount(2);
  await views.locator('[data-forum-view="unanswered"]').click();
- await expect(live).toHaveCount(2);
+ // Live-only topics do not yet have a verified reply count. Never falsely label them unanswered.
+ await expect(live.first()).toBeHidden();
+ await expect(live.last()).toBeHidden();
  await views.locator('[data-forum-view="events"]').click();
  await expect(page.locator('[data-forum-special="events"]')).toBeVisible();
  await expect(page.locator('[data-forum-special="events"]')).toContainText("Henüz");
