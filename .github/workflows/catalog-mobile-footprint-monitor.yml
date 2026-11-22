@@ -1,0 +1,39 @@
+name: TractorVS catalog SSR reachability and mobile HTML budget
+
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - "site/src/components/TractorCatalog.astro"
+      - "site/scripts/catalog-mobile-html-baseline.mjs"
+      - "site/tests/catalog-mobile-html-baseline.test.mjs"
+      - ".github/workflows/catalog-mobile-footprint-monitor.yml"
+  push:
+    branches: [main]
+    paths:
+      - "site/src/components/TractorCatalog.astro"
+      - "site/scripts/catalog-mobile-html-baseline.mjs"
+      - ".github/workflows/catalog-mobile-footprint-monitor.yml"
+  schedule:
+    - cron: "47 5 * * 2"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: tractorvs-catalog-footprint-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  published-catalog-reachability:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22.23.4"
+      - name: Unit test source HTML and canonical safeguards
+        run: node --test site/tests/catalog-mobile-html-baseline.test.mjs
+      - name: Audit 10 public catalogue HTML pages and crawlable model link parity
+        run: node site/scripts/catalog-mobile-html-baseline.mjs
