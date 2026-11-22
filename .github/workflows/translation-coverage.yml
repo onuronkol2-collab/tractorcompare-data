@@ -17,6 +17,8 @@ on:
       - "site/src/lib/live-reviewed-spec-headings-20261121.ts"
       - "site/src/lib/reviewed-turkish-source-labels-en.ts"
       - "site/tests/reviewed-turkish-source-labels-en.test.mjs"
+      - "site/tests/english-source-leakage-20261122.test.mjs"
+      - "site/tests/fixtures/english-source-leakage-20261122.json"
       - "site/tests/live-reviewed-spec-headings-20261121.test.mjs"
       - "site/tests/residual-public-spec-translations.test.mjs"
       - "site/tests/published-translation-built-audit.test.mjs"
@@ -74,12 +76,12 @@ jobs:
           SUPABASE_ANON_KEY: ${{ secrets.TRACTORVS_SUPABASE_ANON_JWT }}
           MIN_PUBLIC_TRACTOR_PAGES: "100"
         run: npm run build:production
-      - name: Require all published languages and zero Turkish residual from PREVIEW HTML
+      - name: Block Turkish fallback and English Turkish-source leakage in 388-model PREVIEW HTML
         env:
           TRANSLATION_DIST_ROOT: site/dist
           TRANSLATION_MIN_MODELS: "379"
           TRANSLATION_MAX_TR_OCCURRENCES: "0"
-          TRANSLATION_MAX_EN_SOURCE_OCCURRENCES: "220"
+          TRANSLATION_MAX_EN_SOURCE_OCCURRENCES: "0"
           TRANSLATION_ZERO_LOCALES: "tr,zh,hi,de,ru,ja"
           TRANSLATION_VALIDATE_SEO: "true"
           TRANSLATION_AUDIT_CONCURRENCY: "8"
