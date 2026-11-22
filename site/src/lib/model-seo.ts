@@ -138,9 +138,21 @@ export function modelSeoMetadata(tractor: TractorRecord, lang: Locale) {
     && rawVariant === "Honda GX390 · historical manufacturer catalogue"
     && rawMarket === "Unspecified (historical catalogue)";
 
+  // Two exact source-note cases verified against published public records:
+  // the brochure/measurement wording is NOT an equipment trim. Retain the
+  // verbatim variant in the visible record and disambiguatingDescription.
+  const isAgraleCargoSourceNote = tractor.brand_name === "Agrale"
+    && tractor.model_name === "4125 Cargo"
+    && rawVariant === "Brazil / Cargo / NBR ISO 1585 25 cv at 2400rpm"
+    && rawMarket === "Brazil";
+  const isSpireFSourceNote = tractor.brand_name === "Lamborghini Trattori"
+    && tractor.model_name === "Spire F 80 Target"
+    && rawVariant === "Stage V / F 80 model / OEM brochure 04-2025"
+    && rawMarket === "Europe";
   const variantLabel = isSwarajTarget ? null
-    : isLamborghiniStageV ? "Stage V"
+    : isLamborghiniStageV || isSpireFSourceNote ? "Stage V"
     : isHistoricalBelarus ? "Honda GX390"
+    : isAgraleCargoSourceNote ? null
     : rawVariant;
   const marketLabel = !rawMarket || rawMarket.toLowerCase() === "global" ? null
     : isSwarajTarget ? marketDisplayName("India",lang)
@@ -158,11 +170,19 @@ export function modelSeoMetadata(tractor: TractorRecord, lang: Locale) {
   // technical noun; never cut an identifying value just to satisfy a tool.
   const conciseTitle=model + " " + CONCISE_SPECS_TITLE[lang] + identityQualifiers + " | TractorVS";
   const identityOnlyTitle=model + identityQualifiers + " | TractorVS";
+  // Preserve already-correct <=60-character titles byte-for-byte. On pages
+  // whose true identity still exceeds the audit threshold, shed optional
+  // site-name boilerplate BEFORE removing any technical identity qualifier.
+  // The site identity remains present in og:site_name and on-page branding.
+  const conciseWithoutSiteName=model + " " + CONCISE_SPECS_TITLE[lang] + identityQualifiers;
+  const identityWithoutSiteName=model + identityQualifiers;
   const title=fullTitle.length<=60 ? fullTitle
     : conciseTitle.length<=60 ? conciseTitle
     : identityOnlyTitle.length<=60 ? identityOnlyTitle
-    : conciseTitle.length<=105 ? conciseTitle
-    : identityOnlyTitle;
+    : conciseWithoutSiteName.length<=60 ? conciseWithoutSiteName
+    : identityWithoutSiteName.length<=60 ? identityWithoutSiteName
+    : conciseWithoutSiteName.length<=105 ? conciseWithoutSiteName
+    : identityWithoutSiteName;
 
   const copy = MODEL_COPY[lang];
   const sourceCount = new Set(tractor.specifications.map(spec =>
