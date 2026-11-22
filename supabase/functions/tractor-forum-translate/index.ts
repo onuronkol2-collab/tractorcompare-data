@@ -1,5 +1,6 @@
 import {generateGeminiJson} from "./gemini-provider.ts";
 import {translateAzureArticle} from "./azure-translator.ts";
+import {translateCloudflareArticle} from "./cloudflare-m2m100.ts";
 import {chooseTranslationSegments,translationCheckpoint,nextTranslationCheckpoint} from "./translation-segments.ts";
 import {isUntranslatedTurkishTitle,sameNumericFacts,TRANSLATION_RESUME_FIELDS,verifiedReadyTranslation} from "./translation-quality.ts";
 // Private, consent-gated TractorVS forum translator.
@@ -10,9 +11,15 @@ const SECRET=Deno.env.get("TC_QUEUE_SECRET")||"";
 const AI=Deno.env.get("GEMINI_API_KEY")||"";
 const AZURE_KEY=Deno.env.get("AZURE_TRANSLATOR_KEY")||"";
 const AZURE_REGION=Deno.env.get("AZURE_TRANSLATOR_REGION")||"";
-// Azure pilot fails closed when not configured: never silently call Gemini.
-const SELECTED_PROVIDER=Deno.env.get("TC_TRANSLATION_PROVIDER")||"azure";
-const ACTIVE_PROVIDER=SELECTED_PROVIDER==="azure"?"Microsoft Azure Translator":"Google Gemini";
+const CF_ACCOUNT_ID=Deno.env.get("CLOUDFLARE_AI_ACCOUNT_ID")||"";
+const CF_TOKEN=Deno.env.get("CLOUDFLARE_AI_API_TOKEN")||"";
+const CF_PILOT_ENABLED=Deno.env.get("CLOUDFLARE_AI_TRANSLATION_ENABLED")==="true";
+const CF_FREE_VERIFIED=Deno.env.get("CLOUDFLARE_AI_FREE_PLAN_VERIFIED")==="true";
+// Default Cloudflare pilot is DISABLED until actual account is checked;
+// do not fall back silently to Azure or Gemini.
+const SELECTED_PROVIDER=Deno.env.get("TC_TRANSLATION_PROVIDER")||"cloudflare";
+const ACTIVE_PROVIDER=SELECTED_PROVIDER==="cloudflare"?"Cloudflare Workers AI M2M100":
+ SELECTED_PROVIDER==="azure"?"Microsoft Azure Translator":"Google Gemini";
 const LANGS:Record<string,string>={
  en:"English",zh:"Simplified Chinese",hi:"Hindi", "pt-br":"Brazilian Portuguese",
  fr:"French",de:"German",ru:"Russian",ja:"Japanese",es:"international Spanish"
@@ -71,6 +78,16 @@ function check(a:Article,b:Article,to:string){
 }
 async function translateChunk(source:Source,chunk:string,target:string){
  const input={title:source.title,body:chunk};
+ if(SELECTED_PROVIDER==="cloudflare"){
+  const translated=await translateCloudflareArticle({
+   title:source.title,body:chunk,target,sourceLocale:source.source_locale,
+   accountId:CF_ACCOUNT_ID,apiToken:CF_TOKEN,
+   enabled:CF_PILOT_ENABLED,freePlanVerified:CF_FREE_VERIFIED
+  });
+  // A successful M2M100 API response is not a native linguistic review.
+  return {article:translated.value,issue:check(input,translated.value,target),
+   model:translated.model,reviewer:null};
+ }
  if(SELECTED_PROVIDER==="azure"){
   const translated=await translateAzureArticle({
    title:source.title,body:chunk,target,sourceLocale:source.source_locale,
@@ -108,8 +125,16 @@ async function translateChunk(source:Source,chunk:string,target:string){
 }
 async function work(){
  if(!KEY||!SECRET)throw Error("Worker credentials unavailable");
- if(!["azure","gemini"].includes(SELECTED_PROVIDER))
+ if(!["cloudflare","azure","gemini"].includes(SELECTED_PROVIDER))
   throw Error("Unapproved forum translation provider");
+ if(SELECTED_PROVIDER==="cloudflare"){
+  // This check is BEFORE recovering/claiming jobs or making any network
+  // requests. Updating repository code is not permission to spend.
+  if(!CF_PILOT_ENABLED||!CF_FREE_VERIFIED)
+   throw Error("Cloudflare M2M100 disabled until free-plan review");
+  if(!/^[a-f0-9]{32}$/i.test(CF_ACCOUNT_ID)||!CF_TOKEN)
+   throw Error("Cloudflare M2M100 private credentials unavailable");
+ }
  if(SELECTED_PROVIDER==="azure"&&(!AZURE_KEY||!AZURE_REGION))
   throw Error("Azure Translator credentials unavailable");
  if(SELECTED_PROVIDER==="gemini"&&!AI)
@@ -255,13 +280,16 @@ async function work(){
    // comparison above. Do not re-send the 9K article to the provider.
    if(!await confirmSource())return {processed:0,status:"superseded"};
    if(!existing.reviewed_by_model){
-    if(SELECTED_PROVIDER!=="azure")throw Error("Missing independent translation reviewer");
+    if(SELECTED_PROVIDER!=="azure"&&SELECTED_PROVIDER!=="cloudflare")
+     throw Error("Missing independent translation reviewer");
+    const label=SELECTED_PROVIDER==="cloudflare"?"CLOUDFLARE_M2M100_TRANSLATION_COMPLETE":
+     "AZURE_TRANSLATION_COMPLETE";
     await upsert({title:full.title,body:full.body,
      state:"needs_review",seo_approved:false,reviewed_by_model:null,
      model:existing.model,
-     qa_notes:"AZURE_TRANSLATION_COMPLETE: independent native-language review required"});
+     qa_notes:label+": independent native-language review required"});
     await patch(job,{state:"done",completed_at:new Date().toISOString(),
-     last_error:"INDEPENDENT_REVIEW_REQUIRED: Azure machine translation completed"});
+     last_error:"INDEPENDENT_REVIEW_REQUIRED: machine translation completed"});
     return {processed:1,status:"needs_review",locale:job.target_locale};
    }
    const saved=await upsert({title:full.title,body:full.body,
