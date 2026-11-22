@@ -32,6 +32,9 @@ SOURCES = (
      "Raf24~commonswiki", "CC BY-SA 4.0",
      "https://commons.wikimedia.org/wiki/File:Zetor_Proxima%2C_WAW.jpg"),
 )
+# Default source set is exactly three; wrappers may explicitly opt into four.
+# This is an integrity limit, not a best-effort count.
+EXPECTED_BATCH_COUNT = 3
 MAX_SOURCE_BYTES = 7_000_000
 Image.MAX_IMAGE_PIXELS = 40_000_000
 
@@ -84,6 +87,12 @@ def main():
     if "site/public" in target.as_posix() or target == Path.cwd():
         raise RuntimeError("Refusing to write into production or repository root")
     target.mkdir(parents=True, exist_ok=True)
+    if EXPECTED_BATCH_COUNT not in (3, 4):
+        raise RuntimeError("Unsupported reviewed photograph batch size")
+    if len(SOURCES) != EXPECTED_BATCH_COUNT:
+        raise RuntimeError("Reviewed photograph source count does not match declared batch")
+    if len({source[0] for source in SOURCES}) != EXPECTED_BATCH_COUNT:
+        raise RuntimeError("Duplicate reviewed photograph identity")
     results = []
     for file_id, url, creator, license_name, source_page in SOURCES:
         raw, original = fetch_verified_jpeg(file_id, url)
@@ -114,13 +123,17 @@ def main():
             {"fileId": file_id, "originBytes": len(raw),
              "derivatives": len(derivatives)}, separators=(",", ":")), flush=True)
         time.sleep(0.9)
-    if len(results) != 3 or any(len(x["derivatives"]) != 3 for x in results):
+    if len(results) != EXPECTED_BATCH_COUNT or any(len(x["derivatives"]) != 3 for x in results):
         raise RuntimeError("Incomplete reviewed photograph set")
     ledger = target / "sha256-ledger.json"
     ledger.write_text(json.dumps({
         "reviewRequired": True, "publicationCount": 0, "images": results
     }, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-    print("TRACTORVS_NINE_JPEGS_STAGED_FOR_REVIEW_ONLY", flush=True)
+    print(
+        "TRACTORVS_NINE_JPEGS_STAGED_FOR_REVIEW_ONLY" if EXPECTED_BATCH_COUNT == 3
+        else "TRACTORVS_TWELVE_JPEGS_STAGED_FOR_REVIEW_ONLY",
+        flush=True,
+    )
 
 
 if __name__ == "__main__":

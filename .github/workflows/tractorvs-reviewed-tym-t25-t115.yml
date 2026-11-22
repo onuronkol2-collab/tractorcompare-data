@@ -3,7 +3,10 @@ on:
   workflow_dispatch:
   push:
     branches: [main]
-    paths: [".github/workflows/tractorvs-reviewed-tym-t25-t115.yml"]
+    paths:
+      - ".github/workflows/tractorvs-reviewed-tym-t25-t115.yml"
+      - "site/scripts/stage-reviewed-commons-20261122.py"
+      - "site/scripts/stage-reviewed-tym-t25-t115-four-20261122.py"
 permissions:
   contents: write
 concurrency:
