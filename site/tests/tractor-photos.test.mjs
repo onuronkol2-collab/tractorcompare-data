@@ -14,7 +14,7 @@ const tractor=(brand_name,model_name)=>({
   engine:null,transmission:null,drivetrain:null,weight_kg:null,specifications:[]
 });
 test("only exact matching tractor model identity receives a verified photo",()=>{
-  assert.equal(APPROVED_TRACTOR_PHOTOS.length,80);
+  assert.equal(APPROVED_TRACTOR_PHOTOS.length,83);
   assert.equal(tractorPhotos(tractor("Belarus","82.1")).length,4);
   assert.equal(tractorPhotos(tractor("Belarus","80.1")).length,1);
   assert.equal(tractorPhotos(tractor("Belarus","132N")).length,1);
@@ -371,10 +371,42 @@ test("fullscreen viewer, linked credits and public image sitemap use SSR images"
   assert.match(robots,/image-sitemap\.xml/);
 });
 
+test("Belarus 451, 572 and 923.4 Commons source JPG and ten-locale license evidence",()=>{
+  const evidence=JSON.parse(readFileSync(new URL("../docs/photo-evidence-belarus-451-572-9234-20261122.json",import.meta.url),"utf8"));
+  assert.equal(evidence.sources.length,3);
+  assert.equal(evidence.importProof?.length,3,"Importer must record source integrity before release");
+  for(const source of evidence.sources){
+    const photo=primaryTractorPhoto(tractor(source.brand,source.model));
+    assert.ok(photo,"Exact model photo: "+source.model);
+    assert.equal(photo.fileId,source.fileId);
+    assert.equal(photo.photographer,source.photographer);
+    assert.equal(photo.licenseName,"CC BY-SA 4.0");
+    assert.equal(photo.configurationExact,false);
+    const proof=evidence.sha256?.[source.fileId];
+    assert.ok(proof,"Missing SHA evidence: "+source.fileId);
+    for(const size of [480,960,1920]){
+      const p=new URL("../public/images/tractors/"+source.fileId+"-"+size+".jpg",import.meta.url);
+      const binary=readFileSync(p);
+      assert.equal(binary.length,proof[size].bytes);
+      assert.equal(createHash("sha256").update(binary).digest("hex"),proof[size].sha256);
+      assert.equal(binary[0],255); assert.equal(binary[1],216); assert.equal(binary.at(-1),217);
+    }
+    for(const locale of LOCALES){
+      const image=modelStructuredData(tractor(source.brand,source.model),locale,"https://tractorvs.com/")["@graph"].find(x=>x["@type"]==="ImageObject");
+      assert.ok(image);
+      assert.equal(image.creator.name,source.photographer);
+      assert.equal(image.license,source.licenseUrl);
+      assert.equal(image.acquireLicensePage,source.sourcePage);
+    }
+  }
+  for(const wrong of ["451.1","572.1","923.3","923.7"])
+    assert.equal(primaryTractorPhoto(tractor("Belarus",wrong)),null,"No series-wide photo inheritance");
+});
+
 test("historic photo batch is staged with rights and does not create records",()=>{
-  assert.equal(HISTORICAL_LICENSED_PHOTOS.length,69);
+  assert.equal(HISTORICAL_LICENSED_PHOTOS.length,72);
   const all=new Set(HISTORICAL_LICENSED_PHOTOS.map(x=>x.fileId));
-  assert.equal(all.size,69);
+  assert.equal(all.size,72);
   assert.ok(HISTORICAL_LICENSED_PHOTOS.every(x=>x.configurationExact===false));
   assert.ok(!HISTORICAL_LICENSED_PHOTOS.some(x=>["Product","Vehicle"].includes(x.model)));
 });
