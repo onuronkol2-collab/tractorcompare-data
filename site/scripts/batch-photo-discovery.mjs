@@ -2,6 +2,7 @@ import {matchesPhotoFileModel} from "./photo-model-identity.mjs";
 import {allowedPhotoReuseLicense} from "./photo-license-check.mjs";
 import {fetchIndexedSitemapPages} from "./photo-sitemap-fetch.mjs";
 import {requireCommonsQueryResponse} from "./photo-source-response.mjs";
+import {normalizePrivatePhotoResearchRows} from "./photo-private-inventory.mjs";
 /**
  * One-pass, read-only catalogue image discovery.
  * Pulls public LIVE model inventory from the current published sitemap;
@@ -144,9 +145,9 @@ async function main(){
   let privateRecords=[];
   if(source){
     const input=JSON.parse(await readFile(source,"utf8"));
-    if(!Array.isArray(input))throw Error("Private inventory must be a JSON array");
-    privateRecords=input.filter(x=>x?.brand&&x?.model).map(x=>({
-      ...x,status:x.status==="published"?"published":"draft",pageUrl:null}));
+    // A private export is research-only, even if its source row says published.
+    // Only live, canonical sitemap pages are authorized for public artifacts.
+    privateRecords=normalizePrivatePhotoResearchRows(input);
   }
   if(privateRecords.length && (!PRIVATE_OUTPUT || PRIVATE_OUTPUT===OUTPUT || PRIVATE_OUTPUT.startsWith(OUTPUT+"/"))) {
     throw Error("Draft research requires a separate, non-artifact TRACTOR_IMAGE_PRIVATE_REPORT_DIR");

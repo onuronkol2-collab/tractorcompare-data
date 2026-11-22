@@ -15,6 +15,7 @@ on:
       - "site/scripts/batch-photo-discovery.mjs"
       - "site/scripts/photo-sitemap-fetch.mjs"
       - "site/scripts/photo-source-response.mjs"
+      - "site/scripts/photo-private-inventory.mjs"
       - "site/scripts/photo-research-quality-gate.mjs"
       - "site/scripts/extract-archived-tractor-inventory.py"
       - "site/scripts/archive-brand-photo-discovery.mjs"
@@ -26,7 +27,9 @@ permissions:
   contents: read
 
 concurrency:
-  group: tractorvs-all-model-photo-research
+  # Pull-request tests must not queue behind the long daily live research.
+  # Main pushes, schedules and manual runs remain in one research lane.
+  group: ${{ github.event_name == 'pull_request' && github.ref || 'tractorvs-all-model-photo-research' }}
   cancel-in-progress: false
 
 jobs:
