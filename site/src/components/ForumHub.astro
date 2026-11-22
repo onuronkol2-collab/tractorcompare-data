@@ -171,6 +171,12 @@ const schema=indexable?{
         </div>
       </section>
     </>}
+    <section class="forum-special-view" data-forum-special="browse" hidden aria-labelledby="forum-browse-title">
+      <span class="forum-special-icon" aria-hidden="true">◉</span>
+      <h3 id="forum-browse-title" data-forum-browse-title>{dashboard.popular}</h3>
+      <p data-forum-browse-body>{dashboard.popularNote}</p>
+      <a href="#forum-compose">{dashboard.joinLink}</a>
+    </section>
     <section class="forum-special-view" data-forum-special="following" hidden aria-labelledby="forum-following-title">
       <span class="forum-special-icon" aria-hidden="true">◇</span>
       <h3 id="forum-following-title">{dashboard.followingHeading}</h3>
@@ -592,6 +598,9 @@ const schema=indexable?{
  const clear=document.querySelector<HTMLButtonElement>("[data-forum-clear]");
  const viewHint=document.querySelector<HTMLElement>("[data-forum-view-hint]");
  const followingPanel=document.querySelector<HTMLElement>('[data-forum-special="following"]');
+ const browsePanel=document.querySelector<HTMLElement>('[data-forum-special="browse"]');
+ const browseTitle=document.querySelector<HTMLElement>("[data-forum-browse-title]");
+ const browseBody=document.querySelector<HTMLElement>("[data-forum-browse-body]");
  const eventsPanel=document.querySelector<HTMLElement>('[data-forum-special="events"]');
  const followStatus=document.querySelector<HTMLElement>("[data-forum-following-status]");
  const topicList=document.querySelector<HTMLElement>("#forum-topic-list");
@@ -699,6 +708,11 @@ const schema=indexable?{
     button.setAttribute("aria-pressed",String(active));
    }
    markCategories();
+   const browseEmpty=(view==="popular"||view==="unanswered")&&count===0;
+   if(browsePanel)browsePanel.hidden=!browseEmpty;
+   if(browseTitle&&browseEmpty)browseTitle.textContent=view==="popular"?copy.popular:copy.unanswered;
+   if(browseBody&&browseEmpty)browseBody.textContent=view==="popular"?copy.popularNote:copy.noUnanswered;
+   if(noResults&&browseEmpty)noResults.hidden=true;
    if(followStatus&&view==="following"){
     followStatus.textContent=followState==="ready"?
       (count>0?copy.followingBody:copy.followEmpty):
