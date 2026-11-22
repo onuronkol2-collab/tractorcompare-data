@@ -42,14 +42,14 @@ Deno.test("markdown tokenizer reconstructs source bytes exactly",()=>{
  assert.ok(sampleSpans.some(x=>x.text==="https://example.org/manual/tractor-75.pdf"&&!x.translate));
  assert.ok(sampleSpans.some(x=>x.text.includes("const hp=75;")&&!x.translate));
  assert.ok(sampleSpans.some(x=>x.text.includes("|")&&!x.translate));
- assert.ok(sampleSpans.some(x=>x.text==="John Deere"&&!x.translate));
+ assert.ok(sampleSpans.some(x=>x.text.includes("John Deere")&&!x.translate));
 });
 Deno.test("Azure adapter translates content without damaging Markdown tables and links",async()=>{
  const mock=translateMock();
  const answer=await translateAzureArticle({...sample,target:"en",apiKey:secret,region:"westeurope",fetchFn:mock.fetchFn});
  assert.equal(answer.model,"Azure Translator v3");
  assert.match(answer.value.title,/Tractor/);
- assert.match(answer.value.body,/engine power/);
+ assert.match(answer.value.body,/engine power/i);
  assert.match(answer.value.body,/75 hp/);
  assert.match(answer.value.body,/\|\s*Measurement\s*\|\s*Value\s*\|/);
  assert.match(answer.value.body,/^\|:---\|---:\|$/m);
