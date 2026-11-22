@@ -65,7 +65,9 @@ const alternatives = indexingEnabled
 const languageChoices = availableLocales.map((locale) => ({
   lang: locale,
   label: LOCALE_NAMES[locale],
-  url: localizedPath(locale, plainPath),
+  // Keep a direct comparison deep-link functional even before hydration.
+  // Canonical and hreflang metadata above intentionally remain query-free.
+  url: localizedPath(locale, plainPath) + (plainPath === "/compare/" ? Astro.url.search : ""),
 }));
 const openGraphLocale: Record<Locale, string> = {
   en:"en_US", tr:"tr_TR", zh:"zh_CN", hi:"hi_IN", "pt-br":"pt_BR",
@@ -279,14 +281,26 @@ const openGraphLocale: Record<Locale, string> = {
   </body>
 </html>
 <script>
-  // Keep selected comparison query parameters when switching language.
-  for (const link of document.querySelectorAll<HTMLAnchorElement>("[data-language-choice]")) {
-    const code = link.dataset.languageCode;
-    if (!code) continue;
-    const destination = new URL(link.href);
-    // Preserve model selections on direct canonical locale links.
-    destination.search = window.location.search;
-    link.href = destination.pathname + destination.search;
+  // The comparison updates the URL with history.replaceState() after model
+  // changes. Language links must track the CURRENT selection, not the selection
+  // at initial page load. The custom event also supports future client routes.
+  const languageLinks = [...document.querySelectorAll<HTMLAnchorElement>("[data-language-choice]")];
+  const syncLanguageLinks = () => {
+    const search = window.location.search;
+    for (const link of languageLinks) {
+      if (!link.dataset.languageCode) continue;
+      const destination = new URL(link.href, window.location.origin);
+      destination.search = search;
+      link.href = destination.pathname + destination.search;
+    }
+  };
+  syncLanguageLinks();
+  window.addEventListener("tractorvs:route-state-changed", syncLanguageLinks);
+  // Also refresh on direct interaction, including new-tab and keyboard usage,
+  // if some other client component changes history without emitting the event.
+  for (const link of languageLinks) {
+    for (const eventName of ["pointerdown", "focus", "contextmenu", "click", "auxclick"])
+      link.addEventListener(eventName, syncLanguageLinks);
   }
 
   // Native <details> works without JavaScript; these small enhancements make
