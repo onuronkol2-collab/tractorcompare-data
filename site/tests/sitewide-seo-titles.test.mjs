@@ -72,3 +72,11 @@ test("Yandex ownership HTML without a title is not a real content page",()=>{
  assert.equal(inspectSeoTitle(source,"yandex_6bf433db24ce4bb4.html"),null);
  assert.ok(inspectSeoTitle(source,"published-article.html").errors.includes("missing-or-duplicate-title"));
 });
+
+test("HTML entities are measured as displayed characters, not escape sequences",()=>{
+ const item=inspectSeoTitle(doc("Massey &amp; Ferguson &#39;2026&#39; Specs",
+   "<h1>Massey &amp; Ferguson</h1>"),"tr/tractors/mf/index.html");
+ assert.equal(item.title,"Massey & Ferguson '2026' Specs");
+ assert.equal(item.length,item.title.length);
+ assert.deepEqual(item.errors,[]);
+});
