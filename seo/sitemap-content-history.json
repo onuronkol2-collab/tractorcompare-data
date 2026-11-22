@@ -12774,8 +12774,8 @@
       "modified": null
     },
     "https://tractorvs.com/tractors/agrale-5105-3601ec83/": {
-      "digest": "08206a112874e546eeed0334487655f679b1c6028b61de14eff4babb30a6cca3",
-      "modified": null
+      "digest": "bdf8cdbc141a6174da1c6754de1f7171175772938bb3548c35bd04930cb62bec",
+      "modified": "2026-11-22T08:49:15.798Z"
     },
     "https://tractorvs.com/tractors/agrale-525-fb5e66a6/": {
       "digest": "7614f7f1b2a4ad4d7ba34d81d26c253878fb9bde7dd089f2a7680c4e30eaeee4",
@@ -13038,8 +13038,8 @@
       "modified": "2026-11-22T05:19:46.825Z"
     },
     "https://tractorvs.com/tractors/iseki-t97-series-3e6886c4/": {
-      "digest": "850827b57f64dba19bbd9c8bd25bc40d4c0c02cde5bb9ba7d1959e564b73f05c",
-      "modified": "2026-11-22T05:19:46.825Z"
+      "digest": "e2c75f48f976a1464cf6eb1c28fbe7ca1b847186c4e279ebe98672ee246685b9",
+      "modified": "2026-11-22T08:49:15.798Z"
     },
     "https://tractorvs.com/tractors/iseki-txgs24-1d67a7d0/": {
       "digest": "8674bca8d6499bfc621035a21382557f23c83bb72d776978d8d1ce96b74c7d7c",
@@ -13370,8 +13370,8 @@
       "modified": "2026-11-22T05:19:46.825Z"
     },
     "https://tractorvs.com/tractors/mccormick-x5-085-d050e1f3/": {
-      "digest": "50b858aebfdaf134a5b6df272e0ed05b829b9fd338d807b64feff555d71b640b",
-      "modified": "2026-11-22T06:30:53.630Z"
+      "digest": "2028322f1c95be4ba2d4a7239d1f736fb4d85adb6c9f293e6e76d835f250acab",
+      "modified": "2026-11-22T08:49:15.798Z"
     },
     "https://tractorvs.com/tractors/mccormick-x5-100-5b7dfe47/": {
       "digest": "8f81b1a1176f198eb09e1775c56cbd15f3403b8487c2b89cb97e5471ea6c310f",
@@ -13794,8 +13794,8 @@
       "modified": "2026-11-22T04:59:19.699Z"
     },
     "https://tractorvs.com/tractors/swaraj-735-fe-7c7b069f/": {
-      "digest": "938448834089836480879ab64bcd29473443d58b6ddb7fa426f54e597e960da8",
-      "modified": "2026-11-21T19:08:54.066Z"
+      "digest": "3c78c3a708cfe0aded90c8c17687b06b457cf01a70b462d1a68eb1cc4b6d158b",
+      "modified": "2026-11-22T08:49:15.798Z"
     },
     "https://tractorvs.com/tractors/swaraj-735-xt-e6ab3418/": {
       "digest": "c2c331c64e1fda84e3be711e58f519255b96f8fc346d7712c475583232dac7d4",
@@ -13838,16 +13838,16 @@
       "modified": "2026-11-22T04:59:19.699Z"
     },
     "https://tractorvs.com/tractors/swaraj-855-fe-protek-e52027b9/": {
-      "digest": "c0a5874eaa58334d2cc6e291145a20875e0b3da3a883e1b618e38189db1080af",
-      "modified": "2026-11-22T05:19:46.825Z"
+      "digest": "37d13267834587d895adc365fb65c1b5f36c39cd7d1299cc741948531a123b2e",
+      "modified": "2026-11-22T08:49:15.798Z"
     },
     "https://tractorvs.com/tractors/swaraj-963-fe-2faa7d5f/": {
       "digest": "e80c97cf14101529062665f5f62bf59e88bfb0fe3b146ad74a1b0ebbac643505",
       "modified": "2026-11-21T21:14:44.894Z"
     },
     "https://tractorvs.com/tractors/swaraj-969-fe-7a0f16a0/": {
-      "digest": "dc80a5a01948aeb42d7fe5e3ce6b66a08a0a92b6ceaa4e8726b352a325c0316b",
-      "modified": "2026-11-21T21:14:44.894Z"
+      "digest": "e61ca2a2054fe00623ac4b6953043e6e455c4216d1280e1d4ff2f7419bb28665",
+      "modified": "2026-11-22T08:49:15.798Z"
     },
     "https://tractorvs.com/tractors/swaraj-target-625-2wd-26592bdf/": {
       "digest": "fbc568a8225de91cd7d176925bcba1f7fc33644f4e27111a738b9ad2732197ed",
@@ -14190,40 +14190,40 @@
       "modified": "2026-11-22T04:59:19.699Z"
     },
     "https://tractorvs.com/tractors/versatile-nemesis-235-45fa2840/": {
-      "digest": "970ea610b5bdc920aeb9f070abff671acf959436c9f13aa3cc936846a1ea189a",
-      "modified": "2026-11-22T04:59:19.699Z"
+      "digest": "384ce508fbe23154776cf1c7794294ebc33fbdf3a492f177f15038283d6813dc",
+      "modified": "2026-11-22T08:49:15.798Z"
     },
     "https://tractorvs.com/tractors/versatile-nemesis-255-6850ed5b/": {
-      "digest": "aaa9b544c4993e76de7082f3881e04f54014792f0c3c407d120a4d2d330cf59d",
-      "modified": "2026-11-22T04:59:19.699Z"
+      "digest": "23d25fa66f902069a6f2f3c53f397a56da7fa8c7f7e1ef0aca942b9e1930e09d",
+      "modified": "2026-11-22T08:49:15.798Z"
     },
     "https://tractorvs.com/tractors/yanmar-sa222-9d801b0b/": {
-      "digest": "17a3cd1c6b47342561a9ba72cf3bd1c82d85e283c5e11f97969fba36fb2f48ce",
-      "modified": "2026-11-21T21:14:44.894Z"
+      "digest": "afdfec19645733fbc992a95c9191275e67c0fe2a72b6383cb53f30e183297c75",
+      "modified": "2026-11-22T08:49:15.798Z"
     },
     "https://tractorvs.com/tractors/yanmar-sa424-52fc7a2c/": {
-      "digest": "644ff2bfd1339d94860d32b8b797bee9fa275c709d7ed9a1183e7503122f7f92",
-      "modified": "2026-11-21T21:14:44.894Z"
+      "digest": "4d0d0f5192a587bbf677a0dcd3367cecfbbfda4be7a7e0a27db24c3691c4b2bd",
+      "modified": "2026-11-22T08:49:15.798Z"
     },
     "https://tractorvs.com/tractors/yanmar-ym347-493cf706/": {
-      "digest": "63e6a4817645178f8a2b7bcee48a0a37223db9434e29302c6b43d42947704091",
-      "modified": "2026-11-22T05:19:46.825Z"
+      "digest": "1e2a6d6df5ec0598a70d036020bfd639da6f6adb1e688a54bf235e197154d8e1",
+      "modified": "2026-11-22T08:49:15.798Z"
     },
     "https://tractorvs.com/tractors/yanmar-ym359-116d05e9/": {
-      "digest": "636d1060161e5fea489179729b19b029b1918a4955cb4fcf7df58c56fff11dc5",
-      "modified": "2026-11-22T05:19:46.825Z"
+      "digest": "eacf828e461aeeb82af42614c79c603e45f6ec837991906efe4e838a04c9884c",
+      "modified": "2026-11-22T08:49:15.798Z"
     },
     "https://tractorvs.com/tractors/yanmar-yt235-e262ca40/": {
-      "digest": "5a00f4c870b33558952df575bf0561a1784da44ffd8ca3f15064ba174e7c1829",
-      "modified": "2026-11-21T21:14:44.894Z"
+      "digest": "c2e2a6fc17ca7a3ea5c4e7947a603eaf26da65f9bcb182a6a5acbdf7c06325b9",
+      "modified": "2026-11-22T08:49:15.798Z"
     },
     "https://tractorvs.com/tractors/yanmar-yt347-723d6303/": {
-      "digest": "243c957ade971ec12d2ac76bced29568b55fe959038035d70e79edfbb1c69b7a",
-      "modified": "2026-11-22T06:30:53.630Z"
+      "digest": "2c32748592ff4f765dd90baf3b2201257f9b8f4171ed9a009bab2d8a1d861e02",
+      "modified": "2026-11-22T08:49:15.798Z"
     },
     "https://tractorvs.com/tractors/yanmar-yt359-a61cb039/": {
-      "digest": "9d62378590b77662fe186a35b254c68b75c9774d4a2c779f3bac910935cb35fd",
-      "modified": "2026-11-22T06:30:53.630Z"
+      "digest": "4f58a1e7311de699f13364f5d77ce5a1920229fd4736984bfcdd61869b04f19a",
+      "modified": "2026-11-22T08:49:15.798Z"
     },
     "https://tractorvs.com/tractors/zetor-5100-03752cb7/": {
       "digest": "4ba51dc766f011a2267684f36720b87d43ff182df7dccc5f927f1471d2edb85f",
