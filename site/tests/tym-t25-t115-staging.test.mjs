@@ -5,6 +5,7 @@ import {readFileSync} from "node:fs";
 const src=(p)=>readFileSync(new URL(p,import.meta.url),"utf8");
 const manifest=JSON.parse(src("../docs/photo-curated-tym-t25-t115-four-20261122.json"));
 const stage=src("../scripts/stage-reviewed-tym-t25-t115-four-20261122.py");
+const core=src("../scripts/stage-reviewed-commons-20261122.py");
 
 test("TYM exact global aliases and four independent photographer-owned CC sources",()=>{
   assert.equal(manifest.newPhotoCandidates,4);
@@ -46,4 +47,15 @@ test("Four-source staging remains review-only without fast retry or production w
   assert.equal((stage.match(/https:\/\/thumb\.wikimedia\.org\/wikipedia\/commons\/thumb\//g)||[]).length,4);
   assert.match(stage,/core\.main\(\)/);
   assert.doesNotMatch(stage,/supabase|gh pr merge|wrangler deploy|approvedToPublish\s*=\s*True/);
+});
+
+test("Unchanged core defaults to three; exact four-source TYM wrapper must opt in and stay fail-closed",()=>{
+  assert.match(core,/EXPECTED_BATCH_COUNT = 3/);
+  assert.match(core,/len\(SOURCES\) != EXPECTED_BATCH_COUNT/);
+  assert.match(core,/len\(results\) != EXPECTED_BATCH_COUNT/);
+  assert.match(core,/Duplicate reviewed photograph identity/);
+  assert.match(core,/SUPPORTED|Unsupported reviewed photograph batch size/);
+  assert.match(stage,/core\.EXPECTED_BATCH_COUNT = 4/);
+  assert.match(stage,/core\.main\(\)/);
+  assert.equal((stage.match(/\b"MarcelX42", "CC BY-SA 4\.0"/g)||[]).length,4);
 });
