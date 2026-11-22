@@ -74,7 +74,7 @@ async function main(){
     const relative=original.pathname.split("/wikipedia/commons/")[1];
     if(!relative||!relative.includes("/"))throw Error("Wrong Commons original path "+source.fileId);
     const filename=relative.split("/").at(-1);
-    if(decodeURIComponent(filename)!==source.originalFilename)throw Error("Filename mismatch "+source.fileId);
+    if(norm(decodeURIComponent(filename))!==norm(source.originalFilename))throw Error("Filename mismatch "+source.fileId);
     const digests={};
     for(const [local,commons] of SIZES){
       const url="https://upload.wikimedia.org/wikipedia/commons/thumb/"+relative+"/"+commons+"px-"+filename;
