@@ -1,0 +1,168 @@
+/* TractorVS forum readability pass (Nov 2026).
+   Intentional global CSS, limited strictly to the forum pages under #main.
+   Long locale labels wrap; no tracker, schema, URLs, content or consent changes. */
+#main .community-shell .forum-view-button{font-size:clamp(14px,1.05vw,15px);line-height:1.45;min-height:48px}
+#main .community-shell .forum-view-description{font-size:14px;line-height:1.7}
+#main .community-shell .forum-category-link{font-size:14px;line-height:1.45;min-height:46px}
+#main .community-shell .forum-category-number{font-size:13px}
+#main .community-shell .forum-language-card strong{font-size:14px;line-height:1.5}
+#main .community-shell .forum-language-card p{font-size:13px;line-height:1.65}
+#main .community-shell .community-section-header h2{font-size:clamp(17px,1.6vw,21px);line-height:1.4}
+#main .community-shell .community-filters label{font-size:14px;line-height:1.5}
+#main .community-shell .community-filters input{font-size:16px;min-height:46px}
+#main .community-shell .community-tabs button{font-size:14px;line-height:1.4;min-height:44px}
+#main .community-shell .community-topic h3{font-size:clamp(16px,1.45vw,19px);line-height:1.45}
+#main .community-shell .community-topic-content>p{font-size:14px;line-height:1.7}
+#main .community-shell .community-topic-meta{font-size:13px;line-height:1.5}
+#main .community-shell .community-topic .community-topic-replies,
+#main .community-shell .community-topic .community-topic-activity{font-size:13px;line-height:1.45}
+#main .community-shell .community-topic .community-topic-mobile-label{font-size:12px;line-height:1.45}
+#main .community-shell .community-topic .community-model a{font-size:13px}
+#main .community-shell .community-topic small{font-size:13px}
+#main .community-shell .forum-live-new>[data-forum-live-status]{font-size:14px}
+#main .community-shell .forum-live-topic h3{font-size:17px;line-height:1.45}
+#main .community-shell .forum-live-topic p{font-size:15px;line-height:1.7}
+#main .community-shell .forum-live-meta,
+#main .community-shell .forum-live-note{font-size:13px!important;line-height:1.55}
+#main .community-shell .forum-live-body p,
+#main .community-shell .forum-live-body li{font-size:16px;line-height:1.75}
+#main .community-shell .forum-live-table table{font-size:15px}
+#main .community-shell .forum-side-title{font-size:17px;line-height:1.4}
+#main .community-shell .forum-side-panel>p{font-size:14px;line-height:1.7}
+#main .community-shell .forum-stats-grid span{font-size:12px;line-height:1.5}
+#main .community-shell .forum-side-tags button{font-size:13px;line-height:1.4;min-height:44px}
+#main .community-shell .forum-side-link,
+#main .community-shell .forum-side-cta{font-size:14px;line-height:1.45;min-height:44px}
+#main .community-shell .forum-special-view p{font-size:15px;line-height:1.75}
+#main .community-shell .forum-special-view a{font-size:14px}
+#main .community-shell .community-starter-intro,
+#main .community-shell .community-starter-card p{font-size:15px;line-height:1.7}
+#main .community-shell .community-starter-card h4{font-size:17px}
+#main .community-shell .community-help{font-size:15px}
+/* Existing member, login and editor flows stay in their own components.
+   Only presentation sizes are increased; interactive selectors are untouched. */
+#main .community-shell .member-intro p,
+#main .community-shell .member-recent>p{font-size:15px;line-height:1.7}
+#main .community-shell .member-toolbar-identity small,
+#main .community-shell .member-recent .member-entry small{font-size:13.5px;line-height:1.6}
+#main .community-shell .member-recent .member-entry strong{font-size:15px;line-height:1.5}
+#main .community-shell .member-toolbar-buttons button,
+#main .community-shell .member-retry{font-size:14px;line-height:1.45;min-height:44px}
+#main .community-shell .member-note,
+#main .community-shell .member-own .member-check,
+#main .community-shell .member-own label{font-size:14px;line-height:1.6}
+#main .community-shell .community-composer label,
+#main .community-shell .community-composer .forum-checkbox,
+#main .community-shell .community-composer .forum-remember small{font-size:14px;line-height:1.6}
+#main .community-shell .community-composer .forum-auth-gate>summary{font-size:15px;line-height:1.5}
+#main .community-shell .community-composer .forum-guest-note,
+#main .community-shell .community-composer .forum-register p,
+#main .community-shell .community-composer .forum-guidelines,
+#main .community-shell .community-composer .forum-message,
+#main .community-shell .community-composer .forum-social p{font-size:14px;line-height:1.7}
+#main .community-shell .community-composer input,
+#main .community-shell .community-composer textarea,
+#main .community-shell .community-composer select{font-size:16px}
+#main .community-shell .community-composer .forum-auth-buttons button,
+#main .community-shell .community-composer [data-forum-post],
+#main .community-shell .community-composer [data-forum-send-link]{font-size:14px}
+#main .community-shell .forum-editor-hint,
+#main .community-shell .forum-editor-privacy,
+#main .community-shell .forum-editor-count,
+#main .community-shell .forum-editor-status{font-size:13.5px;line-height:1.65}
+/* Reading pages: familiar forum layout, distinct way home and accessible
+   content navigation for long, source-grounded publications. */
+#main .forum-thread .thread-breadcrumb{font-size:14px;line-height:1.5;gap:10px;align-items:center;flex-wrap:wrap}
+#main .forum-thread .forum-home-button{display:inline-flex;align-items:center;gap:10px;
+ padding:11px 16px;min-height:46px;border:1px solid #b9d4b5;border-radius:11px;
+ background:#e6f3df;color:#18472e;text-decoration:none;font-size:15px;font-weight:850;
+ line-height:1.4;overflow-wrap:anywhere;box-shadow:0 2px 7px rgba(17,55,32,.05)}
+#main .forum-thread .forum-home-button:hover{background:#d6ebcb;border-color:#8eb988}
+#main .forum-thread .forum-home-icon{display:inline-flex;align-items:center;justify-content:center;
+ font-size:20px;line-height:1;flex:none}
+#main .forum-thread .thread-breadcrumb-current{font-size:14px;color:#405d48;font-weight:750}
+#main .forum-thread .thread-breadcrumb-separator{color:#6b7e6f}
+#main .forum-thread .forum-first-post h1{font-size:clamp(29px,3.5vw,43px);
+ line-height:1.22;max-width:32ch;overflow-wrap:anywhere;text-wrap:balance}
+#main .forum-thread .thread-meta,
+#main .forum-thread .reply-meta{font-size:14px;line-height:1.5}
+#main .forum-thread .thread-meta span:first-child{font-size:13px}
+#main .forum-thread .forum-rich-text p,
+#main .forum-thread .forum-rich-text li,
+#main .forum-thread .forum-rich-text blockquote{font-size:clamp(16.5px,1.65vw,18px);
+ line-height:1.85;color:#314b3b}
+#main .forum-thread .forum-rich-text h2{font-size:clamp(22px,2.6vw,29px)}
+#main .forum-thread .forum-rich-text h3{font-size:clamp(19px,2.2vw,25px)}
+#main .forum-thread .forum-rich-text h4{font-size:clamp(17px,1.8vw,21px)}
+#main .forum-thread .forum-rich-text h2,
+#main .forum-thread .forum-rich-text h3,
+#main .forum-thread .forum-rich-text h4{scroll-margin-top:90px}
+#main .forum-thread .forum-table-hint{font-size:14px;line-height:1.55;color:#315c40}
+#main .forum-thread .forum-table-wrap table{font-size:15px;line-height:1.6}
+#main .forum-thread .forum-table-wrap th,
+#main .forum-thread .forum-table-wrap td{padding:12px 14px}
+#main .forum-thread .forum-thread-counters,
+#main .forum-thread [data-engagement-status]{font-size:14px;line-height:1.6}
+#main .forum-thread .forum-thread-actions button,
+#main .forum-thread .forum-helpful button{font-size:14px;line-height:1.5;min-height:46px}
+#main .forum-thread .forum-replies h2{scroll-margin-top:90px}
+#main .forum-thread .forum-tractor{font-size:14px}
+#main .forum-thread .reply-meta a{min-height:44px;padding:10px 12px}
+#main .forum-thread .reply-original summary{min-height:44px;padding:12px 0}
+#main .forum-thread .community-composer label,
+#main .forum-thread .community-composer .forum-checkbox,
+#main .forum-thread .community-composer .forum-remember small{font-size:14px;line-height:1.6}
+#main .forum-thread .community-composer .forum-auth-gate>summary{font-size:15px;line-height:1.5}
+#main .forum-thread .community-composer .forum-guest-note,
+#main .forum-thread .community-composer .forum-guidelines,
+#main .forum-thread .community-composer .forum-message{font-size:14px;line-height:1.7}
+#main .forum-thread .community-composer input,
+#main .forum-thread .community-composer select,
+#main .forum-thread .community-composer textarea{font-size:16px}
+#main .forum-thread .forum-editor-hint,
+#main .forum-thread .forum-editor-privacy,
+#main .forum-thread .forum-editor-count{font-size:13.5px;line-height:1.65}
+
+#main .forum-thread .reply-language,
+#main .forum-thread .reply-original summary{font-size:14px;line-height:1.65}
+#main .forum-thread .forum-back{margin:25px 0}
+#main .forum-thread .forum-topic-navigation{margin:-10px 0 21px;display:flex;flex-wrap:wrap;gap:10px}
+#main .forum-thread .forum-jump-replies{display:inline-flex;gap:9px;align-items:center;
+ min-height:44px;padding:9px 14px;border:1px solid #cfe0cd;border-radius:10px;
+ background:#f5faf2;color:#1c5d3a;font-size:14px;font-weight:800;text-decoration:none}
+#main .forum-thread .forum-jump-replies:hover{background:#e9f4e5}
+#main .forum-thread .forum-topic-toc{margin:0 0 26px;padding:14px 17px;
+ border:1px solid #d5e6d1;border-radius:12px;background:#f7fbf5}
+#main .forum-thread .forum-topic-toc summary{font-size:16px;font-weight:850;
+ color:#215e3b;line-height:1.5;cursor:pointer;min-height:30px}
+#main .forum-thread .forum-topic-toc-count{display:inline-flex;align-items:center;
+ justify-content:center;min-width:26px;min-height:26px;margin-inline-start:10px;
+ border-radius:50%;background:#deedd7;color:#215435;font-size:13px}
+#main .forum-thread .forum-topic-toc nav{margin:12px 0 0}
+#main .forum-thread .forum-topic-toc ol{margin:0;padding-inline-start:25px;
+ display:grid;gap:7px}
+#main .forum-thread .forum-topic-toc li{font-size:14px;line-height:1.55}
+#main .forum-thread .forum-topic-toc li a{color:#1d6240}
+#main .forum-thread .forum-home-button:focus-visible,
+#main .forum-thread .forum-jump-replies:focus-visible,
+#main .forum-thread .forum-topic-toc summary:focus-visible,
+#main .forum-thread .forum-topic-toc a:focus-visible{outline:3px solid #72a96e;outline-offset:3px}
+@media(max-width:720px){
+ #main .community-shell .community-topic h3{font-size:17px;line-height:1.45}
+ #main .community-shell .community-topic-content>p{font-size:14px}
+ #main .community-shell .forum-view-button{font-size:14px}
+ #main .community-shell .community-topic .community-topic-replies,
+ #main .community-shell .community-topic .community-topic-activity{font-size:12.5px}
+ #main .forum-thread .forum-first-post{padding:clamp(19px,5vw,28px)}
+ #main .forum-thread .forum-first-post h1{font-size:clamp(27px,6vw,35px);max-width:none}
+ #main .forum-thread .thread-breadcrumb{gap:7px;margin-bottom:18px}
+ #main .forum-thread .forum-home-button{min-height:46px;padding:10px 13px;font-size:14px}
+ #main .forum-thread .forum-rich-text p,
+ #main .forum-thread .forum-rich-text li,
+ #main .forum-thread .forum-rich-text blockquote{font-size:17px;line-height:1.8}
+ #main .forum-thread .forum-table-wrap table{font-size:15px}
+}
+@media(prefers-reduced-motion:reduce){
+ #main .forum-thread .forum-jump-replies,
+ #main .forum-thread .forum-home-button{transition:none}
+}
