@@ -77,10 +77,17 @@ export function significantContentDigest(html,url){
   // other attributes or visible HTML). Historic hashes were made before this
   // attribute existed; preserving their inputs avoids fictitious mass lastmod.
   const normalize=s=>s.replace(/\s+/g," ").trim();
-  const significantMain=normalize(main).replace(
-    /(<article\s+class="model-spec-card")\s+data-spec-id="[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"(?=>)/gi,
-    "$1"
-  );
+  // Astro scoped CSS can append a data-astro-cid-* attribute after this ID,
+  // so the identity marker is not necessarily the final attribute before '>'.
+  // Strip exactly ONE well-formed marker from ONLY the audited spec-card tag,
+  // preserving unrelated source, accessibility, CSS and visible attributes.
+  const significantMain=normalize(main).replace(/<article\b[^>]*>/gi,tag=>{
+    const classValue=tag.match(/(?:^|\s)class=(["'])(.*?)\1/i)?.[2]||"";
+    if(!classValue.split(/\s+/).includes("model-spec-card"))return tag;
+    const idAttribute=/\s+data-spec-id="[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"(?=\s|\/?>)/gi;
+    if([...tag.matchAll(idAttribute)].length!==1)return tag;
+    return tag.replace(idAttribute,"");
+  });
   return createHash("sha256").update([normalize(title),normalize(desc),significantMain].join("\n")).digest("hex");
 }
 export function deriveHistory({pages,previous,now=new Date(),minPages=100}){
