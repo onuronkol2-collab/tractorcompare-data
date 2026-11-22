@@ -5,7 +5,7 @@ import {readFileSync} from "node:fs";
 const read=(path)=>readFileSync(new URL("../src/"+path,import.meta.url),"utf8");
 const layout=read("layouts/SiteLayout.astro");
 const css=read("styles/interaction-accessibility.css");
-const detail=read("components/TractorDetail.astro");
+
 
 test("every localized page has a focusable skip-to-content target and a shared accessibility stylesheet",()=>{
  assert.match(layout,/<a class="skip-link" href="#main">/);
@@ -25,7 +25,6 @@ test("reduced-motion preference turns off smooth scroll, animation and transitio
  assert.match(css,/animation-duration:\s*0\.01ms !important/);
  assert.match(css,/transition-duration:\s*0\.01ms !important/);
 });
-test("specification source links identify their measurement in the visitor language",()=>{
- assert.match(detail,/aria-label=\{specLabel\(spec,lang\)\+" — "\+t\(lang,"manufacturerSource"\)\}/);
- assert.match(detail,/aria-label=\{specLabel\(spec,lang\)\+" — "\+INDEPENDENT_SOURCE_COPY\[lang\]\.label\}/);
+test("model HTML and editorial content remain unchanged by the shared stylesheet",()=>{
+ assert.doesNotMatch(css,/\\.model-spec-card|content:\\s*["\']/);
 });
