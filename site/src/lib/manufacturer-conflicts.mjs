@@ -96,7 +96,7 @@ export function hasUnresolvedTigreDisplacement(model) {
 export function hasUnresolvedBasak4wdLength(model) {
  const variant=String(model?.variant??"").trim();
  return sameModel(model,"Başak Traktör","2075 BK") &&
-   /^4WD(?:$|[;\\s/])/.test(variant) && model?.model_year==null &&
+   /^4WD(?:$|[;\s/])/.test(variant) && model?.model_year==null &&
    (model?.market==null||String(model.market).toLowerCase()==="global");
 }
 
@@ -120,7 +120,7 @@ export function modelSourceDiscrepancies(model,lang="en") {
 
 /**
  * Raw source-specific claims remain available in model details with clear
- * provenance, but contradictory engine volumes cannot become side-by-side
+ * provenance, but unresolved dimensions and engine volumes cannot become side-by-side
  * comparable measurements or AI short-answer claims.
  */
 export function isUnresolvedComparisonSpec(model,spec) {
