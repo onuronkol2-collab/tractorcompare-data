@@ -63,7 +63,9 @@
 #main .community-shell .community-composer input,
 #main .community-shell .community-composer textarea,
 #main .community-shell .community-composer select{font-size:16px}
-#main .community-shell .community-composer button{font-size:14px}
+#main .community-shell .community-composer .forum-auth-buttons button,
+#main .community-shell .community-composer [data-forum-post],
+#main .community-shell .community-composer [data-forum-send-link]{font-size:14px}
 #main .community-shell .forum-editor-hint,
 #main .community-shell .forum-editor-privacy,
 #main .community-shell .forum-editor-count,
