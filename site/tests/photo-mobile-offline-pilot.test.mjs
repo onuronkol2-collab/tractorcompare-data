@@ -48,9 +48,9 @@ test("offline optimizer cannot deploy and optional published sources retain JPEG
   assert.match(optimizer,/Image\.Resampling\.LANCZOS/);
   assert.match(optimizer,/ATTRIBUTION\.md/);
   assert.match(optimizer,/sha256/);
-  assert.match(ui,/srcset=\\{photo\\.thumbUrl\\+" 480w, "\\+\\(mobile\\?mobile\\.jpegUrl/);
-  assert.match(ui,/photo\\.displayUrl\\+" 960w"/);
-  assert.match(ui,/\\{mobile && <source type="image\\/webp"/);
-  assert.match(ui,/data-photo-url=\\{photo\\.fullUrl\\}/);
-  assert.match(ui,/data-photo-license=\\{photo\\.licenseUrl\\}/);
+  assert.match(ui,/srcset=\{photo\.thumbUrl\+" 480w, "\+\(mobile\?mobile\.jpegUrl/);
+  assert.match(ui,/photo\.displayUrl\+" 960w"/);
+  assert.match(ui,/\{mobile && <source type="image\/webp"/);
+  assert.match(ui,/data-photo-url=\{photo\.fullUrl\}/);
+  assert.match(ui,/data-photo-license=\{photo\.licenseUrl\}/);
 });
