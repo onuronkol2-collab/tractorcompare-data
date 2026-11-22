@@ -10,10 +10,10 @@ test("evidence library search keeps all published article links in SSR HTML and 
   await expect(page.locator("#editorial-query")).toBeVisible();
   await page.locator("#editorial-query").fill("unfindable-tractor-article-987654321");
   await expect(page.locator("#editorial-no-results")).toBeVisible();
-  await expect(cards.filter({visible:true})).toHaveCount(0);
+  await expect(page.locator("[data-editorial-card]:visible")).toHaveCount(0);
   await page.locator("#editorial-clear").click();
   await expect(page.locator("#editorial-no-results")).toBeHidden();
-  await expect(cards.filter({visible:true})).toHaveCount(total);
+  await expect(page.locator("[data-editorial-card]:visible")).toHaveCount(total);
   expect(await page.locator("[data-editorial-card] h3 a[href]").count()).toBe(originalLinks);
   await expect(page.locator('link[rel="canonical"]')).toHaveAttribute("href","https://tractorvs.com/tr/articles/");
 });
@@ -46,7 +46,7 @@ test("featured tractor cards use independent photo controls and real detail link
   } else {
     await expect(first.locator(".tractor-photo-placeholder")).toBeVisible();
   }
-  await expect(first.locator("a")).not.toContainText(/Satın al|Teklif al|Buy now|Checkout/i);
+  expect(await first.textContent()).not.toMatch(/Satın al|Teklif al|Buy now|Checkout/i);
 });
 
 test("published model details provide technical category jumps sourced from actual sections",async({page})=>{
