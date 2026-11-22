@@ -80,13 +80,26 @@ try{
 const rightsSamples=[
  {path:"/zh/tractors/valtra-g135-1a85eb12/",label:"Valtra G135 (CC BY-SA 4.0)"},
  {path:"/zh/tractors/valtra-f105-1f000c28/",label:"Valtra F105 (CC0)"},
+ // Exact Search Console "validation cannot continue" examples; do not
+ // demand post-deploy markup during the pre-deploy PR/main-push checks.
+ {path:"/zh/tractors/valtra-q305-5c3743cd/",label:"Valtra Q305 (copyrightNotice)",owner:"MarcelX42",image:"valtra-q305-d4c20807"},
+ {path:"/zh/tractors/mccormick-x5-110-hc-c5111bb6/",label:"McCormick X5.110 HC (copyrightNotice)",owner:"MarcelX42",image:"mccormick-x5-110-hc-marcelx42-2023"},
+ {path:"/zh/tractors/steyr-4075-kompakt-19743251/",label:"Steyr 4075 Kompakt (copyrightNotice)",owner:"JoachimKohlerBremen",image:"steyr-4075-kompakt-joachim-2018"},
 ];
-for(const {path,label} of rightsSamples){
+const postDeployMode=process.env.GITHUB_EVENT_NAME==="schedule" ||
+  process.env.GITHUB_EVENT_NAME==="workflow_dispatch";
+for(const {path,label,owner,image} of rightsSamples){
  try{
   const {r,bytes}=await get(origin+path);
   const html=new TextDecoder().decode(bytes);
-  const rights=imageLicenseMetadataIssues(html);
-  console.log("TRACTOR_IMAGE_RIGHTS "+JSON.stringify({sample:label,http:r.status,...rights}));
+  const rights=imageLicenseMetadataIssues(html,{
+    expectedCopyrightOwner:postDeployMode&&owner ? owner : null
+  });
+  console.log("TRACTOR_IMAGE_RIGHTS "+JSON.stringify({
+    sample:label,http:r.status,postDeployMode,...rights
+  }));
+  if(image && !String(rights.contentUrl||"").endsWith("/"+image+"-1920.jpg"))
+    fail(label+" has mismatched image identity or license metadata");
   if(r.status!==200)fail(label+" page HTTP "+r.status);
   for(const issue of rights.issues)fail(label+" ImageObject "+issue);
  }catch(e){fail(label+" metadata fetch "+String(e));}

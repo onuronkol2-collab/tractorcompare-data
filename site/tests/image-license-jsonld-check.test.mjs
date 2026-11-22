@@ -49,3 +49,17 @@ test("rejects invalid or absent Google ImageObject data",()=>{
   assert.match(inspect("<html></html>").issues.join(" "),/exactly one/);
   assert.match(inspect(html({...photo,license:"https://creativecommons.org/licenses/by-nc/4.0/"})).issues.join(" "),/unapproved/);
 });
+
+
+test("verified same-author Commons copyright claim passes the Google ImageObject validator",()=>{
+ const withNotice={...photo,creator:{"@type":"Person",name:"MarcelX42"},
+   copyrightNotice:"MarcelX42"};
+ const result=inspect(html(withNotice),{expectedCopyrightOwner:"MarcelX42"});
+ assert.deepEqual(result.issues,[]);
+ assert.equal(result.copyrightNotice,"MarcelX42");
+ assert.match(inspect(html(photo),{expectedCopyrightOwner:"MarcelX42"}).issues.join(" "),/copyrightNotice/);
+ assert.match(inspect(html({...withNotice,copyrightNotice:"TractorVS"})).issues.join(" "),/ownership/);
+ assert.match(inspect(html({...withNotice,copyrightNotice:"© MarcelX42"})).issues.join(" "),/ownership/);
+ const cc0={...withNotice,license:"https://creativecommons.org/publicdomain/zero/1.0/"};
+ assert.match(inspect(html(cc0)).issues.join(" "),/ownership/);
+});

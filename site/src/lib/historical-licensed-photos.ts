@@ -71,6 +71,9 @@ const candidates=[
     "fileId": "valtra-q305-d4c20807",
     "path": "6/60/Valtra_Q305_Agritechnica_2025_%28DSC04493%29.jpg",
     "photographer": "MarcelX42",
+    "copyrightOwner": "MarcelX42",
+    "copyrightClaimUrl": "https://commons.wikimedia.org/wiki/File:Valtra_Q305_Agritechnica_2025_%28DSC04493%29.jpg",
+    "copyrightEvidence": "commons-own-work-self-license",
     "license": "CC BY-SA 4.0",
     "width": 6148,
     "height": 4611
@@ -561,6 +564,9 @@ const candidates=[
     "fileId": "steyr-4075-kompakt-joachim-2018",
     "path": "2/26/Steyr_4075_Kompakt.jpg",
     "photographer": "JoachimKohlerBremen",
+    "copyrightOwner": "JoachimKohlerBremen",
+    "copyrightClaimUrl": "https://commons.wikimedia.org/wiki/File:Steyr_4075_Kompakt.jpg",
+    "copyrightEvidence": "commons-own-work-self-license",
     "license": "CC BY-SA 4.0",
     "width": 4200,
     "height": 2800
@@ -707,6 +713,10 @@ export const HISTORICAL_LICENSED_PHOTOS=candidates.map(p=>{
     width:p.width,height:p.height,
     sourcePage:"https://commons.wikimedia.org/wiki/File:"+filename,
     photographer:p.photographer,licenseName:p.license,licenseUrl:licenseUrl(p.license),
+    ...("copyrightOwner" in p && "copyrightClaimUrl" in p && "copyrightEvidence" in p
+      ? {copyrightOwner:p.copyrightOwner,
+         copyrightClaimUrl:p.copyrightClaimUrl,
+         copyrightEvidence:p.copyrightEvidence} : {}),
     configurationExact:false
   };
 });
