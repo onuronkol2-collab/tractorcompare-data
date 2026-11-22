@@ -3,7 +3,7 @@ import assert from "node:assert/strict";
 import {mkdtempSync,mkdirSync,writeFileSync,rmSync} from "node:fs";
 import {tmpdir} from "node:os";
 import {join} from "node:path";
-import {auditBuiltImageAlts,inspectDocumentImageAlts}
+import {auditBuiltImageAlts,inspectDocumentImageAlts,inspectUndocumentedEmptyImageAlts}
   from "../scripts/verify-sitewide-image-alts.mjs";
 
 test("inspect every document image, not only images inside <main>",()=>{
@@ -90,4 +90,32 @@ test("ignore nested fake image markup without incomplete sanitization",()=>{
     images:2,nonemptyAlt:0,emptyAlt:1,
     missingAlt:[{index:2,src:"/actual-missing.jpg"}]
   });
+});
+
+test("blank alt is allowed only for documented decoration and dormant lightbox",()=>{
+ const html='<img src="/images/forum-member-default.svg" alt="">'
+  +'<dialog><img id="tractor-photo-dialog-img" alt=""></dialog>'
+  +'<img src="/decoration.svg" aria-hidden="true" alt="">'
+  +'<img src="/another-decoration.png" role="presentation" alt="">'
+  +'<img src="/real-tractor.jpg" alt="">'
+  +'<img srcset="/real-tractor-480.jpg 480w" alt="">'
+  +'<img alt="">';
+ assert.deepEqual(inspectUndocumentedEmptyImageAlts(html),[
+  {index:5,src:"/real-tractor.jpg",id:""},
+  {index:6,src:"",id:""},
+  {index:7,src:"",id:""}
+ ]);
+});
+
+test("new actual photographs cannot silently inherit empty-alt placeholders",()=>{
+ const root=mkdtempSync(join(tmpdir(),"tractorvs-blank-alt-"));
+ try{
+   writeFileSync(join(root,"index.html"),
+     '<html><img src="/photos/tr-2026.jpg" alt=""></html>');
+   const report=auditBuiltImageAlts(root);
+   assert.equal(report.missingAlt.length,0);
+   assert.deepEqual(report.undocumentedEmptyAlt,[
+      {file:"index.html",index:1,src:"/photos/tr-2026.jpg",id:""}
+   ]);
+ }finally{rmSync(root,{recursive:true,force:true});}
 });
