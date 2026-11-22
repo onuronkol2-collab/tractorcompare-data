@@ -36,3 +36,25 @@ test("narrow-screen catalogue and homepage avoid horizontal overflow",async({pag
  await page.goto("/tr/tractors/");
  expect(await pixels(page.locator(".catalog-intro"))).toBeGreaterThanOrEqual(16);
 });
+
+
+test("Turkish editorial hub exposes readable evidence-first cards and dates",async({page})=>{
+ const response=await page.goto("/tr/articles/",{waitUntil:"domcontentloaded"});
+ expect(response?.status()).toBe(200);
+ await expect(page.locator('link[rel="canonical"]')).toHaveAttribute("href","https://tractorvs.com/tr/articles/");
+ await expect(page.locator(".editorial-card").first()).toBeVisible();
+ expect(await pixels(page.locator(".editorial-card > p:not(.editorial-kicker)").first())).toBeGreaterThanOrEqual(16);
+ expect(await pixels(page.locator(".editorial-card-footer time").first())).toBeGreaterThanOrEqual(14);
+ expect(await noOverflow(page)).toBe(true);
+});
+
+test("readability selectors support ten published language routes without changing the content index",async({page})=>{
+ for(const locale of ["tr","de","fr","pt-br","ru","ja","zh","es","hi","en"]){
+  const url=locale==="en"?"/articles/":"/"+locale+"/articles/";
+  const response=await page.goto(url,{waitUntil:"domcontentloaded"});
+  expect(response?.status(),url).toBe(200);
+  await expect(page.locator("main h1"),url).toHaveCount(1);
+  expect(await pixels(page.locator(".editorial-card-footer time").first()),url).toBeGreaterThanOrEqual(14);
+  expect(await noOverflow(page),url).toBe(true);
+ }
+});
