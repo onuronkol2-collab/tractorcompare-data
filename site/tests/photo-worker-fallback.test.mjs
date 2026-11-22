@@ -2,6 +2,7 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import worker from "../worker/index.js";
 import {resolveApprovedPhotoSource} from "../src/lib/tractor-photos.ts";
+import {approvedLocalMobileAsset,MOBILE_PILOT_IDS} from "../src/lib/approved-mobile-photo-assets.mjs";
 
 const fileId="valtra-n135-beef7a3c";
 const path=(size)=>"/images/tractors/"+fileId+"-"+size+".jpg";
@@ -108,4 +109,44 @@ test("HEAD response from fallback keeps status and diagnostic header without a b
     assert.equal(r.headers.get("X-TractorVS-Image-Fallback"),"960");
     assert.equal(await r.text(),"");
   });
+});
+
+test("three local 720px JPEG/WebP assets use static ASSETS with correct MIME, never Wikimedia",async()=>{
+  const fileId=MOBILE_PILOT_IDS[0];
+  const requests=[],outside=[];
+  const localEnv={ASSETS:{fetch:async request=>{
+    requests.push(new URL(request.url).pathname);
+    const data=approvedLocalMobileAsset(new URL(request.url).pathname);
+    return new Response(new Uint8Array([255,216,255,217]),
+      {status:200,headers:{"Content-Type":data.mime}});
+  }}};
+  await withFetch(async url=>{outside.push(String(url));throw Error("No upstream permitted");},async()=>{
+    for(const extension of ["jpg","webp"]){
+      const path="/images/tractors/"+fileId+"-720."+extension;
+      const r=await worker.fetch(new Request("https://tractorvs.com"+path),localEnv);
+      assert.equal(r.status,200);
+      assert.equal(r.headers.get("Content-Type"),extension==="jpg"?"image/jpeg":"image/webp");
+      assert.match(r.headers.get("Cache-Control"),/s-maxage=604800/);
+      assert.equal(r.headers.get("X-Content-Type-Options"),"nosniff");
+      const head=await worker.fetch(new Request("https://tractorvs.com"+path,{method:"HEAD"}),localEnv);
+      assert.equal(head.status,200);
+      assert.equal(await head.text(),"");
+    }
+  });
+  assert.equal(requests.length,4);
+  assert.deepEqual(outside,[]);
+});
+test("missing or incorrect local MIME fails closed, with no upstream or model swapping",async()=>{
+ const path="/images/tractors/"+MOBILE_PILOT_IDS[0]+"-720.webp";
+ const noAsset={ASSETS:{fetch:async()=>new Response("missing",{status:404})}};
+ const wrongMime={ASSETS:{fetch:async()=>new Response("html",{status:200,headers:{"Content-Type":"text/html"}})}};
+ await withFetch(async()=>{throw Error("Do not call Commons");},async()=>{
+   for(const environment of [noAsset,wrongMime]){
+     const r=await worker.fetch(new Request("https://tractorvs.com"+path),environment);
+     assert.equal(r.status,502);
+     assert.equal(r.headers.get("Cache-Control"),"no-store");
+   }
+   const post=await worker.fetch(new Request("https://tractorvs.com"+path,{method:"POST"}),noAsset);
+   assert.equal(post.status,405);
+ });
 });
