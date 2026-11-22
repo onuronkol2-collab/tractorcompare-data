@@ -9,6 +9,11 @@ export interface TractorPhoto {
   width:number; height:number; sourcePage:string;
   photographer:string; licenseName:string; licenseUrl:string;
   configurationExact:boolean;
+  // A holder notice is emitted ONLY after the exact Commons File page
+  // independently attests Own work + self-applied license (not merely attribution).
+  copyrightOwner?:string;
+  copyrightClaimUrl?:string;
+  copyrightEvidence?:"commons-own-work-self-license";
   originThumbUrl:string; originDisplayUrl:string; originFullUrl:string;
 }
 const W="https://upload.wikimedia.org/wikipedia/commons/";
@@ -104,6 +109,9 @@ const ORIGINAL_PHOTO_ORIGINS:readonly Omit<TractorPhoto,"originThumbUrl"|"origin
     fullUrl:W+"c/c2/McCormick_X5.110_HC_Agritechnica_2023_%28DSC06793%29.jpg",
     width:7008,height:3944,photographer:"MarcelX42",
     sourcePage:"https://commons.wikimedia.org/wiki/File:McCormick_X5.110_HC_Agritechnica_2023_(DSC06793).jpg",
+    copyrightOwner:"MarcelX42",
+    copyrightClaimUrl:"https://commons.wikimedia.org/wiki/File:McCormick_X5.110_HC_Agritechnica_2023_(DSC06793).jpg",
+    copyrightEvidence:"commons-own-work-self-license",
     licenseName:"CC BY-SA 4.0",licenseUrl:"https://creativecommons.org/licenses/by-sa/4.0/",
     configurationExact:false
   },
