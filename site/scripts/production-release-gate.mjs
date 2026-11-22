@@ -168,6 +168,9 @@ export function verifyProductionArtifacts({dir=projectRoot,origin=expectedOrigin
  insist(imageAlt.missingAlt.length===0,
    "Missing image alt attributes on "+imageAlt.missingAlt.length+" built images: "+
    JSON.stringify(imageAlt.missingAlt.slice(0,8)));
+ insist(imageAlt.undocumentedEmptyAlt.length===0,
+   "Blank image alt without decorative context or dynamic-photo explanation: "+
+   JSON.stringify(imageAlt.undocumentedEmptyAlt.slice(0,8)));
  // Full-build title integrity catches a new locale/model accidentally losing
  // its real identity even when the sitemap and generic title test still pass.
  // 60 characters is advisory, NOT a hard Google limit: report it, never
