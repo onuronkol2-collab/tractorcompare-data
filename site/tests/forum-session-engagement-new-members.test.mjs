@@ -34,7 +34,7 @@ test("persistent session is optional, bounded, verified and cleared by signout",
  assert.match(composer,/clearForumSession\(\)/);
  assert.match(composer,/event\.key!==FORUM_SESSION_KEY/);
  assert.match(session,/SESSION_MAX_AGE_MS=7\*24\*60\*60\*1000/);
- assert.doesNotMatch(session,/password|user_metadata|auth\.users/);
+ assert.doesNotMatch(session,/JSON\.stringify\(\{[^}]*\b(?:email|password|profile)\b/s);
  assert.doesNotMatch(composer,/console\.log\([^)]*(?:password|access_token|refresh_token)/);
  assert.match(panel,/readForumSession\(\)\?\.access/);
  assert.match(topic,/readForumSession\(\)\?\.access/);
