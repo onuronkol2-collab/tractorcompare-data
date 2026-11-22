@@ -22,6 +22,7 @@ test("all five tabs are functional, use explicit labels and do not fabricate act
   assert.match(hub,new RegExp('"'+name+'"'));
   assert.match(hub,/data-forum-view=\{key\}/);
  }
+ assert.match(hub,/data-forum-special="browse"/);
  assert.match(hub,/data-forum-special="following"/);
  assert.match(hub,/data-forum-special="events"/);
  assert.match(hub,/data-forum-dashboard-copy/);
