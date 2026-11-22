@@ -33,18 +33,30 @@ jobs:
         run: |
           python -m py_compile site/scripts/photo-mobile-third-wave.py
           python site/scripts/photo-mobile-offline-pilot.py --self-test
+      - name: Determine QA lifecycle and verify SHA of already-staged assets
+        id: lifecycle
+        run: |
+          if [[ -f site/public/images/tractors/belarus-152-homoatrox-2021-720.webp ]]; then
+            echo "released=true" >> "$GITHUB_OUTPUT"
+            node --experimental-strip-types --test site/tests/photo-mobile-third-wave-assets.test.mjs
+            echo "Third-wave assets already staged; no repeat Commons or 960px source downloads."
+          else
+            echo "released=false" >> "$GITHUB_OUTPUT"
+          fi
       - name: Prove exactly twelve live public identities from one canonical sitemap request
+        if: steps.lifecycle.outputs.released == 'false'
         run: |
           mkdir -p /tmp/tractorvs-third-wave
           node --experimental-strip-types site/scripts/photo-mobile-third-wave.mjs \
             /tmp/tractorvs-third-wave/manifest.json
       - name: Create only non-published 720px JPEG and WebP, with SHA, PSNR, credits
+        if: steps.lifecycle.outputs.released == 'false'
         run: |
           python site/scripts/photo-mobile-third-wave.py \
             --input /tmp/tractorvs-third-wave/manifest.json \
             --output /tmp/tractorvs-third-wave/review-only
       - name: Upload images and original CC attribution for separate later review
-        if: success()
+        if: success() && steps.lifecycle.outputs.released == 'false'
         uses: actions/upload-artifact@v4
         with:
           name: tractorvs-third-wave-twelve-licensed-photo-QA-only

@@ -1,0 +1,355 @@
+{
+  "schema": "tractorvs-third-wave-12-live-approved-photo-assets-sha-v1",
+  "sourceActionsRun": 45034166209,
+  "sourceArtifactId": 14758679323,
+  "sourceCommit": "f3d409307330b954938e206696adc78c60ee6a11",
+  "publishApproved": false,
+  "recordCount": 12,
+  "derivativeCount": 24,
+  "total": {
+    "checked": 12,
+    "derivatives": 24,
+    "published": 0,
+    "sourceJpegBytes": 2481129,
+    "optimizedWebpBytes": 958608,
+    "estimatedByteReductionPercent": 61.4
+  },
+  "records": [
+    {
+      "fileId": "belarus-152-homoatrox-2021",
+      "sourceBytes": 336061,
+      "originalSha256": "f863405900c3070a67375fa8f6563b361a4e014d652ff440493de84ff23524eb",
+      "derivatives": [
+        {
+          "format": "jpeg",
+          "file": "belarus-152-homoatrox-2021-720.jpg",
+          "width": 720,
+          "height": 590,
+          "bytes": 182983,
+          "sha256": "ade9cf545fd9913536159d1842499185e8e13965b7c30cd678fcec2b6a8264df",
+          "psnrDb": 32.18,
+          "estimatedReductionPercent": 45.6
+        },
+        {
+          "format": "webp",
+          "file": "belarus-152-homoatrox-2021-720.webp",
+          "width": 720,
+          "height": 590,
+          "bytes": 141844,
+          "sha256": "61a36730f02d5da6f587d086929e55a06a16ec50450164a306d698cb4417ad09",
+          "psnrDb": 33.14,
+          "estimatedReductionPercent": 57.8
+        }
+      ],
+      "publishApproved": false
+    },
+    {
+      "fileId": "belarus-922-3-bulykin-almaty-2026",
+      "sourceBytes": 210668,
+      "originalSha256": "4a8b1f30f68616edf766a7f3881f7297bd2c4b0c089ed610c2a801052eac5f59",
+      "derivatives": [
+        {
+          "format": "jpeg",
+          "file": "belarus-922-3-bulykin-almaty-2026-720.jpg",
+          "width": 720,
+          "height": 480,
+          "bytes": 108807,
+          "sha256": "7b7d6e485ba268139947da64324c3551406667d710ef5f7fe5ce62b717e07878",
+          "psnrDb": 33.48,
+          "estimatedReductionPercent": 48.4
+        },
+        {
+          "format": "webp",
+          "file": "belarus-922-3-bulykin-almaty-2026-720.webp",
+          "width": 720,
+          "height": 480,
+          "bytes": 77676,
+          "sha256": "266249dc55620c149da42417645e22f0c044afe4cb53b3525cbb5ec0cbe4c777",
+          "psnrDb": 33.57,
+          "estimatedReductionPercent": 63.1
+        }
+      ],
+      "publishApproved": false
+    },
+    {
+      "fileId": "mahindra-jivo-245-di-d2fc00a0",
+      "sourceBytes": 157454,
+      "originalSha256": "827d0f21c463f980f6bbb2c422e88d0247b4b29e889ae18bb7dfc1c569189fcc",
+      "derivatives": [
+        {
+          "format": "jpeg",
+          "file": "mahindra-jivo-245-di-d2fc00a0-720.jpg",
+          "width": 720,
+          "height": 404,
+          "bytes": 90318,
+          "sha256": "2014e38f038ac745f8274f9b7516a88fea057ca78c23a8d1e66f7f17e5799a0e",
+          "psnrDb": 34.63,
+          "estimatedReductionPercent": 42.6
+        },
+        {
+          "format": "webp",
+          "file": "mahindra-jivo-245-di-d2fc00a0-720.webp",
+          "width": 720,
+          "height": 404,
+          "bytes": 57896,
+          "sha256": "41bdad0c6f9a35393fc5ce3430a96f15a83a94d01bd56497a9202727b4a24569",
+          "psnrDb": 34.39,
+          "estimatedReductionPercent": 63.2
+        }
+      ],
+      "publishApproved": false
+    },
+    {
+      "fileId": "mccormick-x4-080-mbone-agritechnica-2023",
+      "sourceBytes": 215455,
+      "originalSha256": "f6d0579d6fd13368fd38a786fd3c7cde4bc4545bbc5a651341f78f358ed1da96",
+      "derivatives": [
+        {
+          "format": "jpeg",
+          "file": "mccormick-x4-080-mbone-agritechnica-2023-720.jpg",
+          "width": 720,
+          "height": 576,
+          "bytes": 125193,
+          "sha256": "cc8f62850414c3c7a6ed5a00e708a32db41b54a0f6bfbb63b27f988fc6bc99f2",
+          "psnrDb": 34.78,
+          "estimatedReductionPercent": 41.9
+        },
+        {
+          "format": "webp",
+          "file": "mccormick-x4-080-mbone-agritechnica-2023-720.webp",
+          "width": 720,
+          "height": 576,
+          "bytes": 79978,
+          "sha256": "475e8d04463e9125c470f6f5c064d80fba6416eb05219813304a0d3ad09f1421",
+          "psnrDb": 34.49,
+          "estimatedReductionPercent": 62.9
+        }
+      ],
+      "publishApproved": false
+    },
+    {
+      "fileId": "mccormick-x8-631-vt-drive-marcel-2023",
+      "sourceBytes": 163249,
+      "originalSha256": "95f2ffb9b41afedc423f83be8f53b1d9ad8be927a30a6d02111a04b472fc82e2",
+      "derivatives": [
+        {
+          "format": "jpeg",
+          "file": "mccormick-x8-631-vt-drive-marcel-2023-720.jpg",
+          "width": 720,
+          "height": 405,
+          "bytes": 92995,
+          "sha256": "04ce399a5dbbec75974a6a4a0c847a74f8c02b75546d77958400e361f42e4a71",
+          "psnrDb": 34.54,
+          "estimatedReductionPercent": 43
+        },
+        {
+          "format": "webp",
+          "file": "mccormick-x8-631-vt-drive-marcel-2023-720.webp",
+          "width": 720,
+          "height": 405,
+          "bytes": 60818,
+          "sha256": "131b2938e018c4a32d42d76771b39b2d582f4e21233c16a2f59e84f36981b224",
+          "psnrDb": 35.04,
+          "estimatedReductionPercent": 62.7
+        }
+      ],
+      "publishApproved": false
+    },
+    {
+      "fileId": "steyr-6200-impuls-2025",
+      "sourceBytes": 172277,
+      "originalSha256": "9c02dde418cedda371f3f958f89c28fbc5cbc66d5b3df119b02fd683624e6041",
+      "derivatives": [
+        {
+          "format": "jpeg",
+          "file": "steyr-6200-impuls-2025-720.jpg",
+          "width": 720,
+          "height": 540,
+          "bytes": 101293,
+          "sha256": "20964b19c8df44a1d4b4d2ae97eabf06449ddeb5dc108aa4f2a01d9456f444a2",
+          "psnrDb": 36.06,
+          "estimatedReductionPercent": 41.2
+        },
+        {
+          "format": "webp",
+          "file": "steyr-6200-impuls-2025-720.webp",
+          "width": 720,
+          "height": 540,
+          "bytes": 61200,
+          "sha256": "15791d1e8e799bd8a79e61b1c0c16dc26b5d66ec380432eef85133ec1065ccf4",
+          "psnrDb": 36.4,
+          "estimatedReductionPercent": 64.5
+        }
+      ],
+      "publishApproved": false
+    },
+    {
+      "fileId": "steyr-6340-terrus-marcel-2023",
+      "sourceBytes": 174231,
+      "originalSha256": "4e3a616ab9d902636ec51cb6781c0305950f2c038b4515a6f1de00904f3231a2",
+      "derivatives": [
+        {
+          "format": "jpeg",
+          "file": "steyr-6340-terrus-marcel-2023-720.jpg",
+          "width": 720,
+          "height": 405,
+          "bytes": 97622,
+          "sha256": "e6861e9fa4e2986458706158e087fd251a3892ac85cc6bb90db13f873c3e39af",
+          "psnrDb": 34.16,
+          "estimatedReductionPercent": 44
+        },
+        {
+          "format": "webp",
+          "file": "steyr-6340-terrus-marcel-2023-720.webp",
+          "width": 720,
+          "height": 405,
+          "bytes": 68276,
+          "sha256": "2f8dc7994a217d824c715868bf6667fa2fdbd0a3894923b2c1e04e7e13b35229",
+          "psnrDb": 34.99,
+          "estimatedReductionPercent": 60.8
+        }
+      ],
+      "publishApproved": false
+    },
+    {
+      "fileId": "tafe-6028-m-826b548b",
+      "sourceBytes": 167968,
+      "originalSha256": "d3f18fe41d69dc21a219d1fc08ac424b21d7ed1f4b0d59afcae23efa83b84c73",
+      "derivatives": [
+        {
+          "format": "jpeg",
+          "file": "tafe-6028-m-826b548b-720.jpg",
+          "width": 720,
+          "height": 405,
+          "bytes": 95845,
+          "sha256": "7ceb30f8a3e72fb00033e5241f13941788dac71add53226d00ed2634e74245b5",
+          "psnrDb": 34.39,
+          "estimatedReductionPercent": 42.9
+        },
+        {
+          "format": "webp",
+          "file": "tafe-6028-m-826b548b-720.webp",
+          "width": 720,
+          "height": 405,
+          "bytes": 65660,
+          "sha256": "5400bcc9f1df481d9b6d79e5a0121e5f3cb59a43cd4557acc65400e48e86c489",
+          "psnrDb": 34.4,
+          "estimatedReductionPercent": 60.9
+        }
+      ],
+      "publishApproved": false
+    },
+    {
+      "fileId": "valtra-n135-beef7a3c",
+      "sourceBytes": 229379,
+      "originalSha256": "04a2039fa612b2fb6f3e97b7b7f55a64254657c51a753cd80bc090514fc1548e",
+      "derivatives": [
+        {
+          "format": "jpeg",
+          "file": "valtra-n135-beef7a3c-720.jpg",
+          "width": 720,
+          "height": 480,
+          "bytes": 121891,
+          "sha256": "fcb653597d2b2d1ce14da01065eb6d1a11bdd841fe988366aff332b273547726",
+          "psnrDb": 33.19,
+          "estimatedReductionPercent": 46.9
+        },
+        {
+          "format": "webp",
+          "file": "valtra-n135-beef7a3c-720.webp",
+          "width": 720,
+          "height": 480,
+          "bytes": 88930,
+          "sha256": "bbf3a5205aa3748d27a0c6d94dc4afcd1777a68e1f5dc4b2d9f9c03625624bf2",
+          "psnrDb": 33.98,
+          "estimatedReductionPercent": 61.2
+        }
+      ],
+      "publishApproved": false
+    },
+    {
+      "fileId": "valtra-t215-88d0ab88",
+      "sourceBytes": 210232,
+      "originalSha256": "a500bc0df88828ed2a78bc3ee3666a6b0cc1d8fba65b8dfa424e8bba7ebf4fdd",
+      "derivatives": [
+        {
+          "format": "jpeg",
+          "file": "valtra-t215-88d0ab88-720.jpg",
+          "width": 720,
+          "height": 405,
+          "bytes": 115623,
+          "sha256": "5658ec4ccd9453c0303ee30f9870cc1d9bd50550b147851436a3d8e5cf3fdc32",
+          "psnrDb": 32.75,
+          "estimatedReductionPercent": 45
+        },
+        {
+          "format": "webp",
+          "file": "valtra-t215-88d0ab88-720.webp",
+          "width": 720,
+          "height": 405,
+          "bytes": 84128,
+          "sha256": "1c4ca9d9cd5556a718aece6309b214dea9e1641f901bc1605c064e02021f57b1",
+          "psnrDb": 33.09,
+          "estimatedReductionPercent": 60
+        }
+      ],
+      "publishApproved": false
+    },
+    {
+      "fileId": "versatile-nemesis-175-e95b1863",
+      "sourceBytes": 252919,
+      "originalSha256": "8e76cba04671625b51c54c6051ed51b7c442f0b7edd179eb9ce578a1b7b40c88",
+      "derivatives": [
+        {
+          "format": "jpeg",
+          "file": "versatile-nemesis-175-e95b1863-720.jpg",
+          "width": 720,
+          "height": 541,
+          "bytes": 142038,
+          "sha256": "eee7612d41e87093af5fd5e12f8d8a3c4ec2b1f0eadb8e792067001206374298",
+          "psnrDb": 33.44,
+          "estimatedReductionPercent": 43.8
+        },
+        {
+          "format": "webp",
+          "file": "versatile-nemesis-175-e95b1863-720.webp",
+          "width": 720,
+          "height": 541,
+          "bytes": 101476,
+          "sha256": "d190ad73214e19535841e410becf55b7f74d89e06dabf6b12403b9cafdf351e2",
+          "psnrDb": 33.48,
+          "estimatedReductionPercent": 59.9
+        }
+      ],
+      "publishApproved": false
+    },
+    {
+      "fileId": "zetor-6170-marcel-agritechnica-2025",
+      "sourceBytes": 191236,
+      "originalSha256": "0cda52c53ee5bd8dce9913e2168c5279db1557434e05ba7d662056b034302adf",
+      "derivatives": [
+        {
+          "format": "jpeg",
+          "file": "zetor-6170-marcel-agritechnica-2025-720.jpg",
+          "width": 720,
+          "height": 540,
+          "bytes": 110968,
+          "sha256": "eb5ee8572f792d01911b277db5e46c7a8f380a7a4d12e51d317e09afa936476a",
+          "psnrDb": 35.37,
+          "estimatedReductionPercent": 42
+        },
+        {
+          "format": "webp",
+          "file": "zetor-6170-marcel-agritechnica-2025-720.webp",
+          "width": 720,
+          "height": 540,
+          "bytes": 70726,
+          "sha256": "20ed2f181251087f4de03da4d5815051b4110b88ad415ef1a3e884cd9d049206",
+          "psnrDb": 35.18,
+          "estimatedReductionPercent": 63
+        }
+      ],
+      "publishApproved": false
+    }
+  ]
+}

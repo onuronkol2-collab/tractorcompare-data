@@ -1,7 +1,7 @@
 /**
- * Existing 3 + 15 additional local, SHA-pinned, CC BY-SA 3.0/4.0 mobile derivatives. Never proxy these
+ * Existing 3 + 15 + 12 additional local, SHA-pinned, CC BY-SA 3.0/4.0 mobile derivatives. Never proxy these
  * through Commons: they were independently resized offline from the exact
- * eighteen exact licensed first-party 960px JPEGs.
+ * thirty exact licensed first-party 960px JPEGs.
  *
  * Every referenced binary's exact SHA and dimensions are enforced by
  * photo-mobile-local-assets.test.mjs using the reviewed evidence ledger.
@@ -34,7 +34,25 @@ export const PUBLIC_BATCH15_IDS=Object.freeze([
  "yanmar-sa222-b0cb8c8c",
  "fendt-724-vario-01a39bcb"
 ]);
-const ALLOWED=new Set([...PILOT_IDS,...PUBLIC_BATCH15_IDS]);
+/** Third-wave release: twelve existing public model sources with exact source
+ * SHA, CC BY-SA rights proof and 24 offline JPEG/WebP derivative SHA ledgers.
+ * None of the three unpublished-photo holds is included.
+ */
+export const PUBLIC_THIRD_WAVE12_IDS=Object.freeze([
+  "belarus-152-homoatrox-2021",
+  "belarus-922-3-bulykin-almaty-2026",
+  "mahindra-jivo-245-di-d2fc00a0",
+  "mccormick-x4-080-mbone-agritechnica-2023",
+  "mccormick-x8-631-vt-drive-marcel-2023",
+  "steyr-6200-impuls-2025",
+  "steyr-6340-terrus-marcel-2023",
+  "tafe-6028-m-826b548b",
+  "valtra-n135-beef7a3c",
+  "valtra-t215-88d0ab88",
+  "versatile-nemesis-175-e95b1863",
+  "zetor-6170-marcel-agritechnica-2025"
+]);
+const ALLOWED=new Set([...PILOT_IDS,...PUBLIC_BATCH15_IDS,...PUBLIC_THIRD_WAVE12_IDS]);
 export function approvedMobilePhotoFormats(fileId){
   if(!ALLOWED.has(fileId))return null;
   const prefix="/images/tractors/"+fileId+"-720";
