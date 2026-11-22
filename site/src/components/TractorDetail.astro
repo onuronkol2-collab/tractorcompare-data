@@ -15,6 +15,7 @@ import {hasInternationalSonalikaContext,isSonalikaExportSourceNote,SONALIKA_EXPO
 import { modelSeoMetadata, modelStructuredData, originalVariantNote } from "../lib/model-seo";
 import { getPublicCatalog } from "../lib/catalog";
 import { morePublishedTractors } from "../lib/related-tractors";
+import {DEUTZ_5D_GS_PILOT} from "../lib/deutz-5d-editorial.ts";
 import {modelSourceDiscrepancies, isUnresolvedComparisonSpec} from "../lib/manufacturer-conflicts.mjs";
 import { modelEvidenceAnswers, matchedHeadlinePowerSource } from "../lib/model-evidence-answers.ts";
 import { HEADLINE_PROVENANCE_COPY } from "../lib/headline-provenance-i18n.ts";
@@ -33,6 +34,8 @@ const unresolvedManufacturerConflicts=modelSourceDiscrepancies(tractor,lang);
 const safeEvidenceTractor={...tractor,specifications:tractor.specifications.filter(spec=>!isUnresolvedComparisonSpec(tractor,spec))};
 const listingUrl = localizedPath(lang,"/tractors/");
 const selectionGuideUrl=localizedPath(lang,"/guides/choosing-a-tractor/");
+const hasReviewedDeutzComparison=(lang==="tr"||lang==="en") &&
+ (tractor.tractor_id===DEUTZ_5D_GS_PILOT.leftId||tractor.tractor_id===DEUTZ_5D_GS_PILOT.rightId);
 const translatedSelection=editorialHubTranslation(lang)?.cards[0];
 const compareUrl = localizedPath(lang,"/compare/") + "?left=" + encodeURIComponent(tractor.tractor_id);
 const { title, description, searchDescription } = modelSeoMetadata(tractor, lang);
@@ -163,6 +166,14 @@ const summaryItems = [
           </a>
         </li>)}
       </ul>
+    </div>
+  </section>}
+  {hasReviewedDeutzComparison && <section class="model-technical-analysis-link" aria-label={lang==="tr"?"Aynı kaynaktan model karşılaştırması":"Same-source model comparison"}>
+    <div class="container">
+      <a href={localizedPath(lang,DEUTZ_5D_GS_PILOT.path)}>
+        {lang==="tr"?"Deutz-Fahr 5090 D GS ve 5100 D GS: kaynaklı teknik farklar":"Deutz-Fahr 5090 D GS vs 5100 D GS: source-backed differences"}
+        <span aria-hidden="true">↗</span>
+      </a>
     </div>
   </section>}
   {hasBasak2075Analysis && <section class="model-technical-analysis-link" aria-label={t(lang,"reviewedModelAnalysis")}>
