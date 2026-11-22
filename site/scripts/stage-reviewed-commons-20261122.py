@@ -2,8 +2,10 @@
 """Prepare SHA-verifiable first-party JPEGs for three reviewed Commons files.
 
 Manual staging only: never changes live files, commits, approvals or Supabase.
-A single 1920px request per exact Commons file avoids six redundant origin
-requests. HTTP 429/503 fails closed; it is not worked around or retried here.
+Use only one documented Commons File-page thumbnail host (thumb.wikimedia.org)
+and one 1920px request per exact source. This is Wikimedia's public image
+URL, not a proxy or a fallback for 429. HTTP 429/503 stops the entire batch;
+never rotate hosts, retry rapidly or ignore Retry-After.
 """
 import argparse
 import hashlib
@@ -18,15 +20,15 @@ from PIL import Image, ImageOps
 
 SOURCES = (
     ("steyr-6240-absolut-blonder1984-2022",
-     "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d7/Steyr_Absolut_6240.jpg/1920px-Steyr_Absolut_6240.jpg",
+     "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d7/Steyr_Absolut_6240.jpg/1920px-Steyr_Absolut_6240.jpg",
      "Blonder1984", "CC BY 4.0",
      "https://commons.wikimedia.org/wiki/File:Steyr_Absolut_6240.jpg"),
     ("zetor-proxima-jj7777-2021",
-     "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4c/ZETOR_PROXIMA.jpg/1920px-ZETOR_PROXIMA.jpg",
+     "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/4c/ZETOR_PROXIMA.jpg/1920px-ZETOR_PROXIMA.jpg",
      "JJ7777", "CC BY-SA 4.0",
      "https://commons.wikimedia.org/wiki/File:ZETOR_PROXIMA.jpg"),
     ("zetor-proxima-raf24-warsaw-2019",
-     "https://upload.wikimedia.org/wikipedia/commons/thumb/8/81/Zetor_Proxima%2C_WAW.jpg/1920px-Zetor_Proxima%2C_WAW.jpg",
+     "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/81/Zetor_Proxima%2C_WAW.jpg/1920px-Zetor_Proxima%2C_WAW.jpg",
      "Raf24~commonswiki", "CC BY-SA 4.0",
      "https://commons.wikimedia.org/wiki/File:Zetor_Proxima%2C_WAW.jpg"),
 )
