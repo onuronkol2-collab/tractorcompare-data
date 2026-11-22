@@ -45,6 +45,7 @@ test("newest members use existing published opt-in RLS view only",()=>{
  assert.match(panel,/tc_member_scores/);
  assert.match(panel,/show_leaderboard:"eq.true",order:"created_at.desc"/);
  assert.match(panel,/p\.show_leaderboard===true/);
+ assert.match(panel,/p\.display_name!==starterName/);
  assert.match(panel,/rows\.filter/);
  assert.doesNotMatch(panel,/\/rest\/v1\/auth\.users|raw_user_meta_data/);
  assert.doesNotMatch(panel,/localStorage\.setItem/);
