@@ -31,6 +31,9 @@ const candidates=[
     "fileId": "valtra-q265-65863feb",
     "path": "8/89/Valtra_Q265_agra_2024_%28DSC03934%29.jpg",
     "photographer": "MarcelX42",
+    "copyrightOwner": "MarcelX42",
+    "copyrightClaimUrl": "https://commons.wikimedia.org/wiki/File:Valtra_Q265_agra_2024_%28DSC03934%29.jpg",
+    "copyrightEvidence": "commons-own-work-self-license",
     "license": "CC BY-SA 4.0",
     "width": 6852,
     "height": 3856
@@ -41,6 +44,9 @@ const candidates=[
     "fileId": "valtra-g135-9d4a4ea3",
     "path": "1/11/Valtra_G135_Agritechnica_2025_%28DSC09509%29.jpg",
     "photographer": "MarcelX42",
+    "copyrightOwner": "MarcelX42",
+    "copyrightClaimUrl": "https://commons.wikimedia.org/wiki/File:Valtra_G135_Agritechnica_2025_%28DSC09509%29.jpg",
+    "copyrightEvidence": "commons-own-work-self-license",
     "license": "CC BY-SA 4.0",
     "width": 5993,
     "height": 4495
@@ -61,6 +67,9 @@ const candidates=[
     "fileId": "valtra-q245-2d50312e",
     "path": "5/5e/Valtra_Q245_Agritechnica_2025_%28DSC05243%29.jpg",
     "photographer": "MarcelX42",
+    "copyrightOwner": "MarcelX42",
+    "copyrightClaimUrl": "https://commons.wikimedia.org/wiki/File:Valtra_Q245_Agritechnica_2025_%28DSC05243%29.jpg",
+    "copyrightEvidence": "commons-own-work-self-license",
     "license": "CC BY-SA 4.0",
     "width": 6224,
     "height": 3501
@@ -84,6 +93,9 @@ const candidates=[
     "fileId": "valtra-t215-88d0ab88",
     "path": "9/94/Valtra_T215_DLG-Feldtage_2026_%28DSC06544%29.jpg",
     "photographer": "MarcelX42",
+    "copyrightOwner": "MarcelX42",
+    "copyrightClaimUrl": "https://commons.wikimedia.org/wiki/File:Valtra_T215_DLG-Feldtage_2026_%28DSC06544%29.jpg",
+    "copyrightEvidence": "commons-own-work-self-license",
     "license": "CC BY-SA 4.0",
     "width": 6912,
     "height": 3888
@@ -104,6 +116,9 @@ const candidates=[
     "fileId": "valtra-a85-af39c01a",
     "path": "e/e1/Valtra_A85_Traktor.jpg",
     "photographer": "JoachimKohler-HB",
+    "copyrightOwner": "JoachimKohler-HB",
+    "copyrightClaimUrl": "https://commons.wikimedia.org/wiki/File:Valtra_A85_Traktor.jpg",
+    "copyrightEvidence": "commons-own-work-self-license",
     "license": "CC BY-SA 4.0",
     "width": 4000,
     "height": 3000
@@ -124,6 +139,9 @@ const candidates=[
     "fileId": "valtra-t255-622d182c",
     "path": "c/ca/Valtra_T255_01.jpg",
     "photographer": "Bene Riobó",
+    "copyrightOwner": "Bene Riobó",
+    "copyrightClaimUrl": "https://commons.wikimedia.org/wiki/File:Valtra_T255_01.jpg",
+    "copyrightEvidence": "commons-own-work-self-license",
     "license": "CC BY-SA 4.0",
     "width": 6000,
     "height": 4000
@@ -134,6 +152,9 @@ const candidates=[
     "fileId": "valtra-n175-e4277f5d",
     "path": "4/4a/Valtra_N175_Agritechnica_2023_%28DSC04032%29.jpg",
     "photographer": "MarcelX42",
+    "copyrightOwner": "MarcelX42",
+    "copyrightClaimUrl": "https://commons.wikimedia.org/wiki/File:Valtra_N175_Agritechnica_2023_%28DSC04032%29.jpg",
+    "copyrightEvidence": "commons-own-work-self-license",
     "license": "CC BY-SA 4.0",
     "width": 7008,
     "height": 3944
@@ -144,6 +165,9 @@ const candidates=[
     "fileId": "valtra-a75-f99b4394",
     "path": "7/76/Valtra_A75-4.jpg",
     "photographer": "Bene Riobó",
+    "copyrightOwner": "Bene Riobó",
+    "copyrightClaimUrl": "https://commons.wikimedia.org/wiki/File:Valtra_A75-4.jpg",
+    "copyrightEvidence": "commons-own-work-self-license",
     "license": "CC BY-SA 4.0",
     "width": 6000,
     "height": 4000
@@ -154,6 +178,9 @@ const candidates=[
     "fileId": "valtra-n135-beef7a3c",
     "path": "7/7e/Valtra_N135_en_Roma.jpg",
     "photographer": "Bene Riobó",
+    "copyrightOwner": "Bene Riobó",
+    "copyrightClaimUrl": "https://commons.wikimedia.org/wiki/File:Valtra_N135_en_Roma.jpg",
+    "copyrightEvidence": "commons-own-work-self-license",
     "license": "CC BY-SA 4.0",
     "width": 5265,
     "height": 3510
@@ -164,6 +191,9 @@ const candidates=[
     "fileId": "valtra-a105-cd63351d",
     "path": "9/91/Valtra_A105.jpg",
     "photographer": "Bene Riobó",
+    "copyrightOwner": "Bene Riobó",
+    "copyrightClaimUrl": "https://commons.wikimedia.org/wiki/File:Valtra_A105.jpg",
+    "copyrightEvidence": "commons-own-work-self-license",
     "license": "CC BY-SA 4.0",
     "width": 6000,
     "height": 4000
@@ -204,6 +234,9 @@ const candidates=[
     "fileId": "antonio-carraro-tony-8700-v-3a40790b",
     "path": "6/6a/Antonio_Carraro_TONY_8700V_%282022%29.jpg",
     "photographer": "Ubraxa",
+    "copyrightOwner": "Ubraxa",
+    "copyrightClaimUrl": "https://commons.wikimedia.org/wiki/File:Antonio_Carraro_TONY_8700V_%282022%29.jpg",
+    "copyrightEvidence": "commons-own-work-self-license",
     "license": "CC BY-SA 4.0",
     "width": 3648,
     "height": 2736
@@ -234,6 +267,9 @@ const candidates=[
     "fileId": "tafe-7515-cab-37863e86",
     "path": "4/42/TAFE_7515_Cab_Agritechnica_2023_%28DSC03680%29.jpg",
     "photographer": "MarcelX42",
+    "copyrightOwner": "MarcelX42",
+    "copyrightClaimUrl": "https://commons.wikimedia.org/wiki/File:TAFE_7515_Cab_Agritechnica_2023_%28DSC03680%29.jpg",
+    "copyrightEvidence": "commons-own-work-self-license",
     "license": "CC BY-SA 4.0",
     "width": 7008,
     "height": 3944
@@ -244,6 +280,9 @@ const candidates=[
     "fileId": "tafe-6028-m-826b548b",
     "path": "d/d3/TAFE_6028M_agra_2024_%28DSC01244%29.jpg",
     "photographer": "MarcelX42",
+    "copyrightOwner": "MarcelX42",
+    "copyrightClaimUrl": "https://commons.wikimedia.org/wiki/File:TAFE_6028M_agra_2024_%28DSC01244%29.jpg",
+    "copyrightEvidence": "commons-own-work-self-license",
     "license": "CC BY-SA 4.0",
     "width": 6900,
     "height": 3883
@@ -254,6 +293,9 @@ const candidates=[
     "fileId": "tafe-7515-d8c32d69",
     "path": "5/50/Tafe_7515%2C_Agritechnica_2023%2C_Hanover_%28P1160312%29.jpg",
     "photographer": "MB-one",
+    "copyrightOwner": "MB-one",
+    "copyrightClaimUrl": "https://commons.wikimedia.org/wiki/File:Tafe_7515%2C_Agritechnica_2023%2C_Hanover_%28P1160312%29.jpg",
+    "copyrightEvidence": "commons-own-work-self-license",
     "license": "CC BY-SA 4.0",
     "width": 4608,
     "height": 3456
@@ -264,6 +306,9 @@ const candidates=[
     "fileId": "tafe-240-s-c45f9eaf",
     "path": "0/0c/TAFE_240S_agra_2026_%28DSC2787%29.jpg",
     "photographer": "MarcelX42",
+    "copyrightOwner": "MarcelX42",
+    "copyrightClaimUrl": "https://commons.wikimedia.org/wiki/File:TAFE_240S_agra_2026_%28DSC2787%29.jpg",
+    "copyrightEvidence": "commons-own-work-self-license",
     "license": "CC BY-SA 4.0",
     "width": 6229,
     "height": 4672
@@ -274,6 +319,9 @@ const candidates=[
     "fileId": "zetor-forterra-140-346bcbde",
     "path": "2/2e/Zetor_Forterra_140_HSX.jpg",
     "photographer": "Bene Riobó",
+    "copyrightOwner": "Bene Riobó",
+    "copyrightClaimUrl": "https://commons.wikimedia.org/wiki/File:Zetor_Forterra_140_HSX.jpg",
+    "copyrightEvidence": "commons-own-work-self-license",
     "license": "CC BY-SA 4.0",
     "width": 4200,
     "height": 2800
@@ -284,6 +332,9 @@ const candidates=[
     "fileId": "zetor-forterra-110-536b7625",
     "path": "4/48/Zetor_Forterra_110_HSX_%28Leipzig_2023%29.jpg",
     "photographer": "Manataworf",
+    "copyrightOwner": "Manataworf",
+    "copyrightClaimUrl": "https://commons.wikimedia.org/wiki/File:Zetor_Forterra_110_HSX_%28Leipzig_2023%29.jpg",
+    "copyrightEvidence": "commons-own-work-self-license",
     "license": "CC BY-SA 4.0",
     "width": 4888,
     "height": 3888
@@ -294,6 +345,9 @@ const candidates=[
     "fileId": "versatile-nemesis-255-be32337e",
     "path": "9/9e/Versatile_Nemesis_255_CVT_Agritechnica_2025_%28DSC08750%29.jpg",
     "photographer": "MarcelX42",
+    "copyrightOwner": "MarcelX42",
+    "copyrightClaimUrl": "https://commons.wikimedia.org/wiki/File:Versatile_Nemesis_255_CVT_Agritechnica_2025_%28DSC08750%29.jpg",
+    "copyrightEvidence": "commons-own-work-self-license",
     "license": "CC BY-SA 4.0",
     "width": 6224,
     "height": 4672
@@ -304,6 +358,9 @@ const candidates=[
     "fileId": "versatile-nemesis-175-e95b1863",
     "path": "2/2f/Versatile_Nemesis_175_Agritechnica_2025_%28DSC00300%29.jpg",
     "photographer": "MarcelX42",
+    "copyrightOwner": "MarcelX42",
+    "copyrightClaimUrl": "https://commons.wikimedia.org/wiki/File:Versatile_Nemesis_175_Agritechnica_2025_%28DSC00300%29.jpg",
+    "copyrightEvidence": "commons-own-work-self-license",
     "license": "CC BY-SA 4.0",
     "width": 6224,
     "height": 4672
@@ -354,6 +411,9 @@ const candidates=[
     "fileId": "fendt-724-vario-01a39bcb",
     "path": "3/3f/Fendt-724-Vario.jpg",
     "photographer": "AGCO-Fendt",
+    "copyrightOwner": "AGCO-Fendt",
+    "copyrightClaimUrl": "https://commons.wikimedia.org/wiki/File:Fendt-724-Vario.jpg",
+    "copyrightEvidence": "commons-own-work-self-license",
     "license": "CC BY-SA 4.0",
     "width": 2464,
     "height": 1640
