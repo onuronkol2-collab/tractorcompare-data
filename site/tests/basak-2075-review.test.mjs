@@ -79,6 +79,29 @@ test("all eight newly authored review locales contain full evidence-bounded tech
   assert.doesNotMatch(detail,/reviewedModelAnalysis"\)\}\{lang==="en"/);
 });
 
+test("all ten Başak review locales use the manufacturer's maximum engine power label, not rated power",()=>{
+ const expected={
+  ru:"Максимальная мощность двигателя (по данным изготовителя)",
+  ja:"最大エンジン出力（メーカー公表値）",
+  es:"Potencia máxima del motor (dato del fabricante)",
+  "pt-br":"Potência máxima do motor (declarada pelo fabricante)",
+  fr:"Puissance maximale du moteur (donnée constructeur)",
+  de:"Maximale Motorleistung (Herstellerangabe)",
+  zh:"最大发动机功率（制造商数据）",
+  hi:"अधिकतम इंजन शक्ति (निर्माता के अनुसार)"
+ };
+ assert.match(article,/Azami motor gücü \(üretici beyanı\)/);
+ assert.match(article,/Maximum engine power \(manufacturer-stated\)/);
+ assert.doesNotMatch(article,/Nominal ve azami motor gücü|Rated and maximum engine power/);
+ for(const locale of NEW_LOCALES){
+  const item=reviewedLanguage(locale);
+  assert.equal(item.rowLabels[1],expected[locale],locale+" power type must match manufacturer max-power heading");
+ }
+ assert.match(article,/53 kW \/ 72 hp @ 2500 rpm/);
+ assert.match(article,/localized\?\.rowLabels\[i\]/);
+ assert.match(article,/citation:\[manufacturerUrl,brochureUrl,cabinUrl,twoWheelUrl,btManufacturerUrl\]/);
+});
+
 test("manufacturer-backed BK 4WD vs BT comparison is accessible across ten languages",()=>{
   assert.deepEqual(Object.keys(BASAK_VARIANT_COMPARISON_COPY).sort(),[...LOCALES].sort());
   const checks=["72 HP @ 2500 rpm","273 Nm @ 1600 rpm","16 F / 8 R",
