@@ -649,7 +649,7 @@ const schema=indexable?{
    for(const card of items){
     const inCategory=selected==="all"||card.dataset.forumTopicCategory===selected;
     const inSearch=!q||(card.dataset.forumSearch||"").includes(q);
-    const inView=view==="unanswered"?replyCount(card)===0:
+    const inView=view==="unanswered"?card.hasAttribute("data-forum-reply-count")&&replyCount(card)===0:
       view==="following"?followed.has(card.dataset.forumTopicId||""):
       view==="events"?false:true;
     const visible=visibleList&&inCategory&&inSearch&&inView;
