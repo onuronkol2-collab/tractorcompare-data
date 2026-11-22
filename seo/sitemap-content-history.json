@@ -2,32 +2,32 @@
   "version": 1,
   "pages": {
     "https://tractorvs.com/": {
-      "digest": "ef24a95592f4c0e3d65c3e6bd4a7f3d7a22241345be51f7d8db95fdbbb7e72c4",
-      "modified": "2026-11-22T01:10:30.580Z"
+      "digest": "c2cde8169e1ca8049de2077cb4fac705a4ea517b7fe0938ca17dcfec393eb6a1",
+      "modified": "2026-11-22T06:23:39.537Z"
     },
     "https://tractorvs.com/articles/": {
       "digest": "6882e5ebc48632bf6cf8dd2c398e850b87bdadf552332ab0aa1f38742dcb1ecf",
       "modified": null
     },
     "https://tractorvs.com/compare/": {
-      "digest": "ce99a89492366726227bf6e0bedb5a2588e22b47cd79a3d583b1b650925b9989",
-      "modified": "2026-11-22T01:10:30.580Z"
+      "digest": "003539305befa26e9d9b18174a6b98a3af51fa3abc55029c90dd3a86e8706101",
+      "modified": "2026-11-22T06:23:39.537Z"
     },
     "https://tractorvs.com/de/": {
-      "digest": "050b969bf313f09ea580fd901d51dbca7c8a6ec9cf9e66ad5ff9d30f53e5c126",
-      "modified": "2026-11-22T01:10:30.580Z"
+      "digest": "3bb732ba1a9f396b81f0498bd172bb39ecc8ce6d55801191e7486b295df80d74",
+      "modified": "2026-11-22T06:23:39.537Z"
     },
     "https://tractorvs.com/de/articles/": {
       "digest": "53e419514c8e8302407f747780f7af357ab809089846138bafd71c10f5dd04cc",
       "modified": null
     },
     "https://tractorvs.com/de/compare/": {
-      "digest": "0d36e7f6b65c019e6105176fda5a897a5bc4a92677de28c9d4b8a67bd880319d",
-      "modified": "2026-11-22T01:10:30.580Z"
+      "digest": "42f6b65da5cb4c5f012e82cd8ea54912c4c8d32384fff1cebd180d8c37c34b9a",
+      "modified": "2026-11-22T06:23:39.537Z"
     },
     "https://tractorvs.com/de/farm-advisor/": {
-      "digest": "ae990add846d83560a8a366f1764de2f05794b731e2d37f85824068ffcd459c8",
-      "modified": "2026-11-22T01:10:30.580Z"
+      "digest": "b13861ff743dcf5f96b413e6873cc8278aabf58a3c7fbeb26f05436900697e4f",
+      "modified": "2026-11-22T06:23:39.537Z"
     },
     "https://tractorvs.com/de/guides/choosing-a-tractor/": {
       "digest": "c8ea301bd2c46ef21fac33682f71778a0de07284c20e596e834b6d29e3aa34d3",
@@ -42,8 +42,8 @@
       "modified": null
     },
     "https://tractorvs.com/de/tractors/": {
-      "digest": "78c4b6e4ba63f1fa0797b6d3b69fd18e15227b0ac85515de295a66eaa0da0e82",
-      "modified": "2026-11-22T04:21:12.293Z"
+      "digest": "c8a99cb3e5f69423fa43d0d22f6be0f9f884ed0845a7e64cbd64c905ef007ae6",
+      "modified": "2026-11-22T06:23:39.537Z"
     },
     "https://tractorvs.com/de/tractors/agrale-4125-0b53e944/": {
       "digest": "32366e1df6154f04604255bcb6156d1828a47b1b02ef00cb2a1e2b65e857e7f8",
@@ -1510,8 +1510,16 @@
       "modified": "2026-11-22T05:19:46.825Z"
     },
     "https://tractorvs.com/de/tractors/zetor-5100-03752cb7/": {
-      "digest": "65b972cc641ba25bb59c205645f7a094ab922624813e15befb7f0c4bc1830091",
-      "modified": "2026-11-21T19:08:54.066Z"
+      "digest": "1c4742b9a504156b9d26ae18bfab58c143faba00388554f91e384118ae178cf0",
+      "modified": "2026-11-22T06:23:39.537Z"
+    },
+    "https://tractorvs.com/de/tractors/zetor-5115-71ba22c9/": {
+      "digest": "2eec629111073fe1cd0c9f96578b6719a30ef8249631df44893c1daf2c71f7a7",
+      "modified": "2026-11-22T06:23:39.537Z"
+    },
+    "https://tractorvs.com/de/tractors/zetor-5125-a5b0ed7f/": {
+      "digest": "5970b26f54eeed21441d567975ba96a5c6fbc5535aca64456b9176fce44a00ee",
+      "modified": "2026-11-22T06:23:39.537Z"
     },
     "https://tractorvs.com/de/tractors/zetor-6130-a2e441c8/": {
       "digest": "2dc8836592c24d3d7532555b3048234ca870d47ddbaf1b9e6b56a30587bcd739",
@@ -1574,8 +1582,8 @@
       "modified": "2026-11-22T04:59:19.699Z"
     },
     "https://tractorvs.com/de/tractors/zetor-major-755e44bc/": {
-      "digest": "a1fbaac4cb090e3ca218892bef63b538d2ab09dafb674614a3b028be4d69dd26",
-      "modified": null
+      "digest": "fa5e9c47e1d8a3052ed6d1d78f4cc198978a1e8a7bb0907262e84018342e230f",
+      "modified": "2026-11-22T06:23:39.537Z"
     },
     "https://tractorvs.com/de/tractors/zetor-proxima-c0d8fcfe/": {
       "digest": "346a1402c8d69958bec6b8334b607aa5ed639e39c45ef8c01ed836dae73ace19",
@@ -1590,20 +1598,20 @@
       "modified": "2026-11-21T19:47:11.499Z"
     },
     "https://tractorvs.com/es/": {
-      "digest": "b97917501170d98d14dd6825a9a7c7dab29b06ae2455b0360a62fc2ad819402f",
-      "modified": "2026-11-22T01:10:30.580Z"
+      "digest": "c28d748319fe0475ca30b63b5ca06eecb392c25078255d109e12985ef02983be",
+      "modified": "2026-11-22T06:23:39.537Z"
     },
     "https://tractorvs.com/es/articles/": {
       "digest": "ef4bb39d3d1f26bed9618890c8c6b84b46e66cf1f955bd0fa9fa4af6060060da",
       "modified": null
     },
     "https://tractorvs.com/es/compare/": {
-      "digest": "a6c987c4c31d2c57aa4648dad5e47dc5c1c376590686c3fbc7eb7168a5b8cf1b",
-      "modified": "2026-11-22T01:10:30.580Z"
+      "digest": "e0f4094e1972c7d3064245d1ef5d0eaa933dc8ce2f9eaf69fdfe9aeaebbdf370",
+      "modified": "2026-11-22T06:23:39.537Z"
     },
     "https://tractorvs.com/es/farm-advisor/": {
-      "digest": "79d00352dba76d984084af3450b7af65503b772c52590c05f5943b263b12f685",
-      "modified": "2026-11-22T01:10:30.580Z"
+      "digest": "844efa344057998b0a92aeb706bff2247e283543b1fedff3dc54d14a26055c64",
+      "modified": "2026-11-22T06:23:39.537Z"
     },
     "https://tractorvs.com/es/guides/choosing-a-tractor/": {
       "digest": "83859d82793178eb557e52b3f46dd563fcf28d894b2e8aacff2c9174c51b75a0",
@@ -1618,8 +1626,8 @@
       "modified": null
     },
     "https://tractorvs.com/es/tractors/": {
-      "digest": "0e0d9bff9064bb14b035f6dad02107e3bcb3f961fd31ae7e01f805aba07e0870",
-      "modified": "2026-11-22T04:21:12.293Z"
+      "digest": "4b07aa0777c772850f1c1eac7e2a279991518afcfb7241eab2575b9fd842072b",
+      "modified": "2026-11-22T06:23:39.537Z"
     },
     "https://tractorvs.com/es/tractors/agrale-4125-0b53e944/": {
       "digest": "09b82587c02d7b807ad405f4a96f95918f280c963f4260a93bfeb7d92ebf2337",
@@ -3086,8 +3094,16 @@
       "modified": "2026-11-22T05:19:46.825Z"
     },
     "https://tractorvs.com/es/tractors/zetor-5100-03752cb7/": {
-      "digest": "609b9a69efa1d80972681c166b262d437f52548d39c54ef5e23ed2478f3f269f",
-      "modified": "2026-11-22T04:59:19.699Z"
+      "digest": "e9cdb555a300946d654b8a6bed7823de036be55dc09a4d37848d3679bc9e572b",
+      "modified": "2026-11-22T06:23:39.537Z"
+    },
+    "https://tractorvs.com/es/tractors/zetor-5115-71ba22c9/": {
+      "digest": "e62fba73822a8b90fc6dd61198a8e365dc63421cfcb01781cba357f910af8449",
+      "modified": "2026-11-22T06:23:39.537Z"
+    },
+    "https://tractorvs.com/es/tractors/zetor-5125-a5b0ed7f/": {
+      "digest": "fb735b0be8ee80f008e4e7dcd6fba38a4c6368dfa69915bdb276152fe232e96d",
+      "modified": "2026-11-22T06:23:39.537Z"
     },
     "https://tractorvs.com/es/tractors/zetor-6130-a2e441c8/": {
       "digest": "b6f47a49f96d551404e9c86fc79e9669096baa3b7c14babf0fe043cca238b1cf",
@@ -3150,8 +3166,8 @@
       "modified": "2026-11-22T04:59:19.699Z"
     },
     "https://tractorvs.com/es/tractors/zetor-major-755e44bc/": {
-      "digest": "959aaac338096b8efcaae8d577b4efb736ea78bf449c11db7a2f103ee078e345",
-      "modified": "2026-11-22T04:59:19.699Z"
+      "digest": "094dde5b22866aa57051e7fc53253cd723b81adfdcccf36f84ef7a5c287968f3",
+      "modified": "2026-11-22T06:23:39.537Z"
     },
     "https://tractorvs.com/es/tractors/zetor-proxima-c0d8fcfe/": {
       "digest": "bfa677e9974dc86fe1b40b84c31032d73e5928fa2cfda212cc56865a84bb716b",
@@ -3166,24 +3182,24 @@
       "modified": "2026-11-22T04:59:19.699Z"
     },
     "https://tractorvs.com/farm-advisor/": {
-      "digest": "8c11b9d105cce737354e264fb77ef91205ce6cfdde2e137a7643518f352664e4",
-      "modified": "2026-11-22T01:10:30.580Z"
+      "digest": "ff46918f4b631f74eeb0fe04c2a5f84fba9a70d1885cc827ec4da24740e22648",
+      "modified": "2026-11-22T06:23:39.537Z"
     },
     "https://tractorvs.com/fr/": {
-      "digest": "1608f2ee19223e79ed1531ede0aabee580902a0afe1d873190cfdad2d94c1b1e",
-      "modified": "2026-11-22T01:10:30.580Z"
+      "digest": "e6d855ffa847dbdb81dba0ae6ace9414ba9c01267bb84927658c7e1208da5829",
+      "modified": "2026-11-22T06:23:39.537Z"
     },
     "https://tractorvs.com/fr/articles/": {
       "digest": "161911b8122786cce02b5e13d34b3fb48feb9aff7eb9a5d8db2211ca2bd5ec2a",
       "modified": null
     },
     "https://tractorvs.com/fr/compare/": {
-      "digest": "213acd0ac0f0461cf9348e7d00dbfac159f53e4239f038e19a965ad07d6082c5",
-      "modified": "2026-11-22T01:10:30.580Z"
+      "digest": "99f11c0f97500705bc88afaddcfa9df1f8dde582eac48e3daa23463135cd0f60",
+      "modified": "2026-11-22T06:23:39.537Z"
     },
     "https://tractorvs.com/fr/farm-advisor/": {
-      "digest": "0fb275e0696f322eb20cacb00df257747279427373ef093f6bfb7871b2f307f6",
-      "modified": "2026-11-22T01:10:30.580Z"
+      "digest": "3f9f10f3c5e6bd7cd7e6348563f7afc6b927a041caeea17419b5addd14446f43",
+      "modified": "2026-11-22T06:23:39.537Z"
     },
     "https://tractorvs.com/fr/guides/choosing-a-tractor/": {
       "digest": "1987d4557bcce2475611807bdb15ed40c9edb2b8d1f012afb1aba2cadb526b26",
@@ -3198,8 +3214,8 @@
       "modified": null
     },
     "https://tractorvs.com/fr/tractors/": {
-      "digest": "57e1a463f50cdf3bd3965ce6b90fb1c0cade6ddb59a29abe1c0a0f948ff9d1f9",
-      "modified": "2026-11-22T04:21:12.293Z"
+      "digest": "bcd390cc594039f18a7a3b824c23d60ac6d562da623b1cacbeec041c93ad3fe6",
+      "modified": "2026-11-22T06:23:39.537Z"
     },
     "https://tractorvs.com/fr/tractors/agrale-4125-0b53e944/": {
       "digest": "c3c0fa87f1203833b2a9ddd00aa139d8c89f32f119811d3b813c75cc73fe950f",
@@ -4666,8 +4682,16 @@
       "modified": "2026-11-22T05:19:46.825Z"
     },
     "https://tractorvs.com/fr/tractors/zetor-5100-03752cb7/": {
-      "digest": "217aadf1618c6d5b4f9985645ab53dcc010f1b87b0e8d44fa92c0c043523329f",
-      "modified": "2026-11-22T04:59:19.699Z"
+      "digest": "ee4d613a9f6d7ac41eab8a0fa23a7d0d7f52bb2cb54061ec6aa8f1d0d697f7a1",
+      "modified": "2026-11-22T06:23:39.537Z"
+    },
+    "https://tractorvs.com/fr/tractors/zetor-5115-71ba22c9/": {
+      "digest": "bde2486806d9a328035e18dcc67808c699917b352fde0c53f054cb3b100ceba0",
+      "modified": "2026-11-22T06:23:39.537Z"
+    },
+    "https://tractorvs.com/fr/tractors/zetor-5125-a5b0ed7f/": {
+      "digest": "5101ac6d5fcf456131c1f2296bb5108e169d17aba2b8cbafe2a6e1aecfb6a159",
+      "modified": "2026-11-22T06:23:39.537Z"
     },
     "https://tractorvs.com/fr/tractors/zetor-6130-a2e441c8/": {
       "digest": "2901a2434a12b13b8beb63430e90f5af82496639a05d42208c739ab3e2413c12",
@@ -4730,8 +4754,8 @@
       "modified": "2026-11-22T04:59:19.699Z"
     },
     "https://tractorvs.com/fr/tractors/zetor-major-755e44bc/": {
-      "digest": "7d72289635719d0c264776915d956755cae1a2e67d65e471aadef484be3c4b4c",
-      "modified": "2026-11-22T04:59:19.699Z"
+      "digest": "98d7778c7fbd34e5a292c84f71033449bb9edf9697af38a1dbb17ba1ed6e37d3",
+      "modified": "2026-11-22T06:23:39.537Z"
     },
     "https://tractorvs.com/fr/tractors/zetor-proxima-c0d8fcfe/": {
       "digest": "508a066258c31f90a5e4ecb1192f540445f540f6aa2cc926811888a46bba4ac9",
@@ -4766,20 +4790,20 @@
       "modified": "2026-11-22T04:34:40.918Z"
     },
     "https://tractorvs.com/hi/": {
-      "digest": "3919475f89ceb733f27e1a6399273b3d3e1286ff92376dbfe8ed4e72da0a9dad",
-      "modified": "2026-11-22T01:10:30.580Z"
+      "digest": "cc58ae7b6367c4cc2d2df28e923c2aa108911012db83f08eae105e14e77b096b",
+      "modified": "2026-11-22T06:23:39.537Z"
     },
     "https://tractorvs.com/hi/articles/": {
       "digest": "8966477c4f7c70b55a81b716a8fbb95d12c6420f1f99f503c024f8ea0ac1b016",
       "modified": null
     },
     "https://tractorvs.com/hi/compare/": {
-      "digest": "fe457a9f91e52731fe7e575fbbc16a83196ae185fb3b9a27098b3df43745bd8d",
-      "modified": "2026-11-22T01:10:30.580Z"
+      "digest": "62f04dca1d1e1961b3f31387a74d2e4d53d69b34e239026e82d726506b86f856",
+      "modified": "2026-11-22T06:23:39.537Z"
     },
     "https://tractorvs.com/hi/farm-advisor/": {
-      "digest": "d47e316c36011fe24f96c7b79efb7e2e3584822c988c72453a2fe497f18af786",
-      "modified": "2026-11-22T01:10:30.580Z"
+      "digest": "a0b5b994955a70eb8b47c7356b8858fc48f92c0ff7ca316b2f92c6e5b7cf0682",
+      "modified": "2026-11-22T06:23:39.537Z"
     },
     "https://tractorvs.com/hi/guides/choosing-a-tractor/": {
       "digest": "9d8ebe3b95cf39da8872a454842935b91531f4823bf75eb5a9d325cdc6913c1a",
@@ -4794,8 +4818,8 @@
       "modified": null
     },
     "https://tractorvs.com/hi/tractors/": {
-      "digest": "63a3353dcf473613dab07e0229adf4e43ee8ee9c7e088df74ac79e8486b0c032",
-      "modified": "2026-11-22T04:21:12.293Z"
+      "digest": "76e58870a43fcb57eac095fb4272e790ae8dbce9b21df8fda519d1ddcc8836cf",
+      "modified": "2026-11-22T06:23:39.537Z"
     },
     "https://tractorvs.com/hi/tractors/agrale-4125-0b53e944/": {
       "digest": "89d390984132129c6705ac5f42d0a35f6d3e519fbf19cc0d8b6d848cd95ec5cb",
@@ -6262,8 +6286,16 @@
       "modified": "2026-11-22T05:19:46.825Z"
     },
     "https://tractorvs.com/hi/tractors/zetor-5100-03752cb7/": {
-      "digest": "4923df3a64649ad1736ea343457e5e8b3b4ac7950fd98c581ce2e9ea29a0af90",
-      "modified": null
+      "digest": "5e634b21814cdeff53f0d311d49990313f86a6db0018d6e1c2f1e2919732ccad",
+      "modified": "2026-11-22T06:23:39.537Z"
+    },
+    "https://tractorvs.com/hi/tractors/zetor-5115-71ba22c9/": {
+      "digest": "7e0815d64ca164d558b75048ad6514dd797f411ed3ec9021870751f0a8cfb8c5",
+      "modified": "2026-11-22T06:23:39.537Z"
+    },
+    "https://tractorvs.com/hi/tractors/zetor-5125-a5b0ed7f/": {
+      "digest": "e3b0a2d6ab7bfb32a8aafee573520e362c3e410d65109e2c9f80ca15f17ab9a9",
+      "modified": "2026-11-22T06:23:39.537Z"
     },
     "https://tractorvs.com/hi/tractors/zetor-6130-a2e441c8/": {
       "digest": "619b51cebb9f25355a8ab17bd61f444dd72d124c7f8ee3c149375a4fedf617b0",
@@ -6326,8 +6358,8 @@
       "modified": "2026-11-22T04:59:19.699Z"
     },
     "https://tractorvs.com/hi/tractors/zetor-major-755e44bc/": {
-      "digest": "26a90761e6c2f748f19d3c6147994dc4f6783646617515c9487d529270304efb",
-      "modified": null
+      "digest": "b27adcd0a00a11e4f187f3a7a04bff8f8a7efcbc532b00deeccec1762a774d45",
+      "modified": "2026-11-22T06:23:39.537Z"
     },
     "https://tractorvs.com/hi/tractors/zetor-proxima-c0d8fcfe/": {
       "digest": "0b4d6134a694e5a9374e8dffc04319424fd314bb99ae91f86e4b31546156d8f0",
@@ -6342,20 +6374,20 @@
       "modified": null
     },
     "https://tractorvs.com/ja/": {
-      "digest": "a1ec5c910025d4cbf10827a4db5467665c63ba1ebe4bcb5333e08602812c8c92",
-      "modified": "2026-11-22T01:10:30.580Z"
+      "digest": "2f25bf0e285b9f2b3d3ad813603cbd3be072b3d495a362cc7fcba21ac139fabc",
+      "modified": "2026-11-22T06:23:39.537Z"
     },
     "https://tractorvs.com/ja/articles/": {
       "digest": "42c67f3bdaeb70ac622b1ca2ed9c52f7a6dd6cb347e39f0cd93cf0cff3e75c99",
       "modified": null
     },
     "https://tractorvs.com/ja/compare/": {
-      "digest": "73643e6a3e5e11703048aca1a2a13376820d9785a02620dbf44bb27ab61d68b8",
-      "modified": "2026-11-22T01:10:30.580Z"
+      "digest": "0d756c852e17507f4c3b0d01f05fc5254dfceb2a7d493652b8bd39ca6314895c",
+      "modified": "2026-11-22T06:23:39.537Z"
     },
     "https://tractorvs.com/ja/farm-advisor/": {
-      "digest": "96f571d5e042d3c1df28b1d4af0b1431c82bd206a9ff4104f61e8f6fc3676c05",
-      "modified": "2026-11-22T01:10:30.580Z"
+      "digest": "6f0acfaf081aa9f2c39ae40f9b59b7739e65346b415a4f6ea810ec3214450883",
+      "modified": "2026-11-22T06:23:39.537Z"
     },
     "https://tractorvs.com/ja/guides/choosing-a-tractor/": {
       "digest": "92603cba27a17df62328686578313da48544956129744b81c6321cc0973ce5d3",
@@ -6370,8 +6402,8 @@
       "modified": null
     },
     "https://tractorvs.com/ja/tractors/": {
-      "digest": "eee9743f776c47ea1b108a90b7f25f2a8dac5312016cf0f909f90f999b369b4f",
-      "modified": "2026-11-22T04:21:12.293Z"
+      "digest": "beb955578153a00eca19ea0ae7fb46af6625eb81de26ca144d81f26d1c30c0c2",
+      "modified": "2026-11-22T06:23:39.537Z"
     },
     "https://tractorvs.com/ja/tractors/agrale-4125-0b53e944/": {
       "digest": "4d0e45acacbeeb3c521ccff6fdb73475c3d2a6b25b8314d917e1fba5cfd09492",
@@ -7838,8 +7870,16 @@
       "modified": "2026-11-22T05:19:46.825Z"
     },
     "https://tractorvs.com/ja/tractors/zetor-5100-03752cb7/": {
-      "digest": "78199847757db380afad3acf37f3be7504c44cac89d425787fc27ef6d94b927d",
-      "modified": null
+      "digest": "3b02d2d174713043b91ff150ea62d4bfa8708aee2ea678c112b69ce189a72154",
+      "modified": "2026-11-22T06:23:39.537Z"
+    },
+    "https://tractorvs.com/ja/tractors/zetor-5115-71ba22c9/": {
+      "digest": "7e42ad25842873596865759959049e89b9fd496f190dfe002977b4fd52f7319b",
+      "modified": "2026-11-22T06:23:39.537Z"
+    },
+    "https://tractorvs.com/ja/tractors/zetor-5125-a5b0ed7f/": {
+      "digest": "9d6acb84ae6e3fc8d79392b8468afaf3263bc5ec8c402e55c5e696efe6a4b4e5",
+      "modified": "2026-11-22T06:23:39.537Z"
     },
     "https://tractorvs.com/ja/tractors/zetor-6130-a2e441c8/": {
       "digest": "f754e1289a1eb7149fa158bd442e0e668d45b00f2d5b3b6bbfab29b02ce42778",
@@ -7902,8 +7942,8 @@
       "modified": null
     },
     "https://tractorvs.com/ja/tractors/zetor-major-755e44bc/": {
-      "digest": "eecc3cc047f483a90fbbeb7670ec9dc5980f461a9f614a5293ad5d4f09187759",
-      "modified": null
+      "digest": "da30d8869058fabbb98d982f921ce97c060484af25cf05aaff407900b045d1dd",
+      "modified": "2026-11-22T06:23:39.537Z"
     },
     "https://tractorvs.com/ja/tractors/zetor-proxima-c0d8fcfe/": {
       "digest": "4847bafb5ab3c9a7a5e7935199b8dadc44d0222cc73a1bb6d7e54f091a761ea1",
@@ -7926,20 +7966,20 @@
       "modified": null
     },
     "https://tractorvs.com/pt-br/": {
-      "digest": "29e5c442775f1e65da44783b80281484902050bc2df7eecc62d4cdf30babd9a0",
-      "modified": "2026-11-22T01:10:30.580Z"
+      "digest": "1f337e2c6dce229b5506ec434d7e75c3a3e16b0223964a979d31da29757ca783",
+      "modified": "2026-11-22T06:23:39.537Z"
     },
     "https://tractorvs.com/pt-br/articles/": {
       "digest": "90542fcb27edf2f8f636803824ebab758e32ef8f991c367613382ab2f45e49a5",
       "modified": null
     },
     "https://tractorvs.com/pt-br/compare/": {
-      "digest": "6888f5ae949563c70e0b44f13e569c8bf7261167dce77a76647c94608348e767",
-      "modified": "2026-11-22T01:10:30.580Z"
+      "digest": "7b6147d04de4a223024fcf4bd67dc7324d7052ecdb9e1324e782265cfbdaa505",
+      "modified": "2026-11-22T06:23:39.537Z"
     },
     "https://tractorvs.com/pt-br/farm-advisor/": {
-      "digest": "aa137502996b8c05693f3e324ef2cb18c99669a8bdf2c330cfdbda692e695248",
-      "modified": "2026-11-22T01:10:30.580Z"
+      "digest": "88650f3e64bea75375a37a4ed6c878a91926c25949d7434e05197284a2e849dc",
+      "modified": "2026-11-22T06:23:39.537Z"
     },
     "https://tractorvs.com/pt-br/guides/choosing-a-tractor/": {
       "digest": "292a6c126543b389136cd1f987c28e398372171cde6d8fcc684023334c0d0893",
@@ -7954,8 +7994,8 @@
       "modified": null
     },
     "https://tractorvs.com/pt-br/tractors/": {
-      "digest": "1884909ca69017f83506e284ca74a9406550f2f4bb725b5621a0423cc9588e4a",
-      "modified": "2026-11-22T04:21:12.293Z"
+      "digest": "b52bd8dfca1a5f0436fcc7f0aa176fc1311c00f1a8e24bdbdd0d14116da33462",
+      "modified": "2026-11-22T06:23:39.537Z"
     },
     "https://tractorvs.com/pt-br/tractors/agrale-4125-0b53e944/": {
       "digest": "e5c8d39f408608dc6a8a09ecfa0571853acddde107e7a1ee3e2dfaa81c5f2393",
@@ -9422,8 +9462,16 @@
       "modified": "2026-11-22T05:19:46.825Z"
     },
     "https://tractorvs.com/pt-br/tractors/zetor-5100-03752cb7/": {
-      "digest": "9d75c888f41d7be7b6e007a53acdd5ad6f905de4eb234b846cc0d573d6897f4d",
-      "modified": "2026-11-22T04:59:19.699Z"
+      "digest": "a83082687e686445490dff6349d8e5ab8043703b87d4bba8652413710ccdd9e8",
+      "modified": "2026-11-22T06:23:39.537Z"
+    },
+    "https://tractorvs.com/pt-br/tractors/zetor-5115-71ba22c9/": {
+      "digest": "40d4607fa64f9f2082ce32fe189f297233a08065593d1776031451bf0847d368",
+      "modified": "2026-11-22T06:23:39.537Z"
+    },
+    "https://tractorvs.com/pt-br/tractors/zetor-5125-a5b0ed7f/": {
+      "digest": "f408f06510b2c3730975781e990c06dac90ba3ae82c4ae0b3f131c9a599f63e1",
+      "modified": "2026-11-22T06:23:39.537Z"
     },
     "https://tractorvs.com/pt-br/tractors/zetor-6130-a2e441c8/": {
       "digest": "2a6aefd231172588b16535e8c4048877d58a409a825a88b0218841fa4e94656a",
@@ -9486,8 +9534,8 @@
       "modified": "2026-11-22T04:59:19.699Z"
     },
     "https://tractorvs.com/pt-br/tractors/zetor-major-755e44bc/": {
-      "digest": "b239382ffa39d9084a64b7c19a82c6a027369f335fa0299d2764fef19ca62f97",
-      "modified": "2026-11-22T04:59:19.699Z"
+      "digest": "7aaedc4fed26e7b12bb0178c6425a9e545c7786848fe05066dd7d20e182ae382",
+      "modified": "2026-11-22T06:23:39.537Z"
     },
     "https://tractorvs.com/pt-br/tractors/zetor-proxima-c0d8fcfe/": {
       "digest": "aeb791eeb78784d58da559d5540dc1bd981c602d4f2788514b809e6139d97503",
@@ -9506,20 +9554,20 @@
       "modified": null
     },
     "https://tractorvs.com/ru/": {
-      "digest": "e63b826163b5b9336b18b4319cbbdc93b48f982880b8d5d27f750b1a98532b5c",
-      "modified": "2026-11-22T01:10:30.580Z"
+      "digest": "1fc51891a934f3480577b4cc8144ed9e87d8639833a838830bf06dc78a6a3e6a",
+      "modified": "2026-11-22T06:23:39.537Z"
     },
     "https://tractorvs.com/ru/articles/": {
       "digest": "c94152b508910f941c46893748fb66564950efbb1cb77f04aed4f8a570878464",
       "modified": null
     },
     "https://tractorvs.com/ru/compare/": {
-      "digest": "663c4b29eaec68e74d2b4cbdbacf452b4e5da1fb3b34e32030f48d71d4575366",
-      "modified": "2026-11-22T01:10:30.580Z"
+      "digest": "60df509b8eb9c14e8c7f768a033e28187b816b3fb830a8ea20120b037beac55b",
+      "modified": "2026-11-22T06:23:39.537Z"
     },
     "https://tractorvs.com/ru/farm-advisor/": {
-      "digest": "8f96a3663849b58c6e65a27bbe57bbf22cab09a55ea603644293e13c67e6810d",
-      "modified": "2026-11-22T01:10:30.580Z"
+      "digest": "eecbaceca024d6e9e00178cd92233d90721e382dba7f5dc72b269fa1c1b4dd46",
+      "modified": "2026-11-22T06:23:39.537Z"
     },
     "https://tractorvs.com/ru/guides/choosing-a-tractor/": {
       "digest": "fc7f908cee35c26b64f4c2e748fe0f317a70a554928a5793dade6dd9d163d857",
@@ -9534,8 +9582,8 @@
       "modified": null
     },
     "https://tractorvs.com/ru/tractors/": {
-      "digest": "d8294468f1472b0e814d53f3a09ebd2e5f9925d09bb82ba2de2604f0f63fe14b",
-      "modified": "2026-11-22T04:21:12.293Z"
+      "digest": "1fb990fe25e19f77f5a972211579a5aea417474c8bc80eec7609e74ba8309827",
+      "modified": "2026-11-22T06:23:39.537Z"
     },
     "https://tractorvs.com/ru/tractors/agrale-4125-0b53e944/": {
       "digest": "a743211ff921d260a622929d99a49654ddf88289776922ae4c70310ed030ae99",
@@ -11002,8 +11050,16 @@
       "modified": "2026-11-22T05:19:46.825Z"
     },
     "https://tractorvs.com/ru/tractors/zetor-5100-03752cb7/": {
-      "digest": "c3248daa059029d656929f81a8db74003abbc148f22f8df11e1768b1625a6311",
-      "modified": "2026-11-22T04:59:19.699Z"
+      "digest": "d6545c65816583d8f92347b745d8c846788b8aa5a49a54fd56b48dcd66dd6157",
+      "modified": "2026-11-22T06:23:39.537Z"
+    },
+    "https://tractorvs.com/ru/tractors/zetor-5115-71ba22c9/": {
+      "digest": "6827fcd4c0964fbb2ce633cc95ef665fc2178b1435aa66d712e42b5cffe6367e",
+      "modified": "2026-11-22T06:23:39.537Z"
+    },
+    "https://tractorvs.com/ru/tractors/zetor-5125-a5b0ed7f/": {
+      "digest": "c98214885c22f95f7f063fcb16cd49e4dbeaeddc56d3bc464779183dee18b6a8",
+      "modified": "2026-11-22T06:23:39.537Z"
     },
     "https://tractorvs.com/ru/tractors/zetor-6130-a2e441c8/": {
       "digest": "04cdcbac49524f695b7aac797d806319f51ab420474bffee7cbaeaa2f38bb9f5",
@@ -11066,8 +11122,8 @@
       "modified": "2026-11-22T04:59:19.699Z"
     },
     "https://tractorvs.com/ru/tractors/zetor-major-755e44bc/": {
-      "digest": "5d73052ba8ed89eb05ba0b2d1c361694ea507730b94063882c3349e5708055be",
-      "modified": "2026-11-22T04:59:19.699Z"
+      "digest": "c967fcfbe5093d65deb294ddbfd78191c0255bd212c4d4bd3175a6dbff9549dc",
+      "modified": "2026-11-22T06:23:39.537Z"
     },
     "https://tractorvs.com/ru/tractors/zetor-proxima-c0d8fcfe/": {
       "digest": "e269990d7a27c088e1137d0b179741feac29318f5b8831ef254ccc6091fcf507",
@@ -11082,20 +11138,20 @@
       "modified": "2026-11-22T04:59:19.699Z"
     },
     "https://tractorvs.com/tr/": {
-      "digest": "b03fe4af4341c7b3063fd457ccb89f5935dfed7c4b79248168c018c17d45a03f",
-      "modified": "2026-11-22T01:10:30.580Z"
+      "digest": "25115fa4f89199afecf7c5e5544b8af61b9fa0b4df41c6c4c43d0cc1f72e55d5",
+      "modified": "2026-11-22T06:23:39.537Z"
     },
     "https://tractorvs.com/tr/articles/": {
       "digest": "0b2ff2f6dd89a40db518b347cd052f0cab5c4dd4b2a60e199cdacc7ed9b94676",
       "modified": null
     },
     "https://tractorvs.com/tr/compare/": {
-      "digest": "7feea9b333d31f4b1f8b66f29389ce001f5d0198725883ef5fa92b3ba68dc2e3",
-      "modified": "2026-11-22T01:10:30.580Z"
+      "digest": "c225c13edda74498a226430a6d0377fa81c87dd076a1862126ae895d677dc969",
+      "modified": "2026-11-22T06:23:39.537Z"
     },
     "https://tractorvs.com/tr/farm-advisor/": {
-      "digest": "b725cc6e880c8febb73dc3996584b6f49b4309c7353f57e5292ee201af27bdda",
-      "modified": "2026-11-22T01:10:30.580Z"
+      "digest": "a84b62b372e654aee19ce03d22d443555d2cddba0d12068243936752ae7dc60d",
+      "modified": "2026-11-22T06:23:39.537Z"
     },
     "https://tractorvs.com/tr/guides/choosing-a-tractor/": {
       "digest": "60cce5fa9d1392d15abdf62568bd38eb23d757e0640d27a3ae52b0850d15ef46",
@@ -11130,8 +11186,8 @@
       "modified": null
     },
     "https://tractorvs.com/tr/tractors/": {
-      "digest": "0e4a487496bdb140c6d8765840c8cda4b89350f3587b8dd5cae2b95e050134a7",
-      "modified": "2026-11-22T04:21:12.293Z"
+      "digest": "cc640e37460cad1795e66002bd38352016df7832096bd376e7427b439567a744",
+      "modified": "2026-11-22T06:23:39.537Z"
     },
     "https://tractorvs.com/tr/tractors/agrale-4125-0b53e944/": {
       "digest": "568db277ad3e970f9135067de5224019aef2a2b45b9b0b57d527593165500ddf",
@@ -12598,8 +12654,16 @@
       "modified": "2026-11-22T05:19:46.825Z"
     },
     "https://tractorvs.com/tr/tractors/zetor-5100-03752cb7/": {
-      "digest": "77f788c0ab023f6f56bf7365ae691daf44bb10aa428c02a6207001e4ce301f1d",
-      "modified": "2026-11-22T04:59:19.699Z"
+      "digest": "879e078663a46b9b646bd677e3a1fc02e271ebb9be6331b3466a392fdd228779",
+      "modified": "2026-11-22T06:23:39.537Z"
+    },
+    "https://tractorvs.com/tr/tractors/zetor-5115-71ba22c9/": {
+      "digest": "f0a6567dabc5a646d21fe0ba2c6a33919c2b37224998315986d0cee2e572473e",
+      "modified": "2026-11-22T06:23:39.537Z"
+    },
+    "https://tractorvs.com/tr/tractors/zetor-5125-a5b0ed7f/": {
+      "digest": "27086c3e9805b6fb3ea018cb2dce43b69aed2582e5109e47942b80c94a0a49a2",
+      "modified": "2026-11-22T06:23:39.537Z"
     },
     "https://tractorvs.com/tr/tractors/zetor-6130-a2e441c8/": {
       "digest": "1afff63b59c6f0d6262a4cc86b26c8a2647eee151ca23cff8a352184758fa807",
@@ -12662,8 +12726,8 @@
       "modified": "2026-11-22T04:59:19.699Z"
     },
     "https://tractorvs.com/tr/tractors/zetor-major-755e44bc/": {
-      "digest": "f0e49004650b4d12bf7eedda6350bbd97f1d5b62103e61a879b0392c31c9a4a4",
-      "modified": "2026-11-21T19:47:11.499Z"
+      "digest": "12ab11b411019079be105f1939376374f399bc61de9cec11b7302d0a0f5e3a5f",
+      "modified": "2026-11-22T06:23:39.537Z"
     },
     "https://tractorvs.com/tr/tractors/zetor-proxima-c0d8fcfe/": {
       "digest": "829adec6475383b721cf179681f42ef27a81e2f460fb906e0c0a65750bc40296",
@@ -12678,8 +12742,8 @@
       "modified": "2026-11-21T19:47:11.499Z"
     },
     "https://tractorvs.com/tractors/": {
-      "digest": "a7d3559fd62251f4e52bdac0d1841dc3e0fd8e39e64992d20ad207e43e721981",
-      "modified": "2026-11-22T04:21:12.293Z"
+      "digest": "1b0c1283b43418bfcadfe43721d80867088e6d2ec5e9340638019e0dfa4f6732",
+      "modified": "2026-11-22T06:23:39.537Z"
     },
     "https://tractorvs.com/tractors/agrale-4125-0b53e944/": {
       "digest": "5de348149531ede958cba36a5ad52ba44aa8febf31e506ba50a9c364915b7750",
@@ -14146,8 +14210,16 @@
       "modified": "2026-11-22T05:19:46.825Z"
     },
     "https://tractorvs.com/tractors/zetor-5100-03752cb7/": {
-      "digest": "0e5adb6931e54bdd0f1d4affe31621f0193a1225ca2145994e159fef5f630a4f",
-      "modified": "2026-11-22T04:59:19.699Z"
+      "digest": "4ba51dc766f011a2267684f36720b87d43ff182df7dccc5f927f1471d2edb85f",
+      "modified": "2026-11-22T06:23:39.537Z"
+    },
+    "https://tractorvs.com/tractors/zetor-5115-71ba22c9/": {
+      "digest": "0a73ae28dd851c107608015eb82f7d80ed2eb5de31f384ae596eba1bdb989c05",
+      "modified": "2026-11-22T06:23:39.537Z"
+    },
+    "https://tractorvs.com/tractors/zetor-5125-a5b0ed7f/": {
+      "digest": "29662d0e395377c8d01d17d6a274e0dbda6767d9ccd33a07c13a71b1e8bcbdea",
+      "modified": "2026-11-22T06:23:39.537Z"
     },
     "https://tractorvs.com/tractors/zetor-6130-a2e441c8/": {
       "digest": "76b833847e2f01387cf2d4b4c8fc7857642209a0c193eab593f0f9866067492d",
@@ -14210,8 +14282,8 @@
       "modified": "2026-11-22T04:59:19.699Z"
     },
     "https://tractorvs.com/tractors/zetor-major-755e44bc/": {
-      "digest": "62468a0ca39251c4148c41f20c8c2bc069aff755ec8e0e65d33a66252a018471",
-      "modified": "2026-11-22T04:59:19.699Z"
+      "digest": "73475e19d966084f85d1c637fb7175390c22afbe740030ae44d2d78e00b5629d",
+      "modified": "2026-11-22T06:23:39.537Z"
     },
     "https://tractorvs.com/tractors/zetor-proxima-c0d8fcfe/": {
       "digest": "f0c25b4951f36fc47a83b707c38b26c41279d584e405d0a9dabdc83d77e9e519",
@@ -14226,20 +14298,20 @@
       "modified": "2026-11-22T04:59:19.699Z"
     },
     "https://tractorvs.com/zh/": {
-      "digest": "bbe3f3bdd343bd04197f3f671349424ed4aeeeeb21aeba101950cffb6cd9ad7b",
-      "modified": "2026-11-22T01:10:30.580Z"
+      "digest": "8c7497597156a499836335528fbec85a5e3ec5ba85ea15fab8590fd2bfc23823",
+      "modified": "2026-11-22T06:23:39.537Z"
     },
     "https://tractorvs.com/zh/articles/": {
       "digest": "02824916702f610345d764f52474c0676736c634f3ad18816e436b0865246d74",
       "modified": null
     },
     "https://tractorvs.com/zh/compare/": {
-      "digest": "3bcedcdeee0a6922017be2af0403af1db5617bc2480b03ea2578cd4a3be1fe74",
-      "modified": "2026-11-22T01:10:30.580Z"
+      "digest": "4cf0301fd9c925b3fdc456be474817408c53ef2891f250edb949dd4812921666",
+      "modified": "2026-11-22T06:23:39.537Z"
     },
     "https://tractorvs.com/zh/farm-advisor/": {
-      "digest": "5a29d0543ae990be3f22dfefcf852ab467bb25cdcee170c2c3656a43f50bef99",
-      "modified": "2026-11-22T01:10:30.580Z"
+      "digest": "e805869cda955f32dd0b731ede3203e689f2f16572511bce73f9852f34cc03ce",
+      "modified": "2026-11-22T06:23:39.537Z"
     },
     "https://tractorvs.com/zh/guides/choosing-a-tractor/": {
       "digest": "07e5cd9042d6ba1bb63189632e1ec8bdcc4d8e176cd9cc13364bebc4d29af11a",
@@ -14254,8 +14326,8 @@
       "modified": null
     },
     "https://tractorvs.com/zh/tractors/": {
-      "digest": "0cafe54df06269d34af9dfe4ea8e0a5d203f57e603c41b00edf4c0584e06acdf",
-      "modified": "2026-11-22T04:21:12.293Z"
+      "digest": "0620ba3b4ca66965b10e65cb785e2cda3b6d35f50b70000c05be83836cefffd6",
+      "modified": "2026-11-22T06:23:39.537Z"
     },
     "https://tractorvs.com/zh/tractors/agrale-4125-0b53e944/": {
       "digest": "f2ec4c794b07f97f4377c767a1c061eee41a99562967e8fc5e4c798c68e27a7f",
@@ -15722,8 +15794,16 @@
       "modified": "2026-11-22T05:19:46.825Z"
     },
     "https://tractorvs.com/zh/tractors/zetor-5100-03752cb7/": {
-      "digest": "7be77ac91ec0ff479410c17cde07c9b0d7b53c847f312cd149a7108315c4697e",
-      "modified": null
+      "digest": "ea414576bea7e5dd9a53ecc4577cfbf2cfa90cb39c99567368aa0a253740ab05",
+      "modified": "2026-11-22T06:23:39.537Z"
+    },
+    "https://tractorvs.com/zh/tractors/zetor-5115-71ba22c9/": {
+      "digest": "85920088f221459121067bac3bb123c7239bf7a46882eea261643a7247e91f5b",
+      "modified": "2026-11-22T06:23:39.537Z"
+    },
+    "https://tractorvs.com/zh/tractors/zetor-5125-a5b0ed7f/": {
+      "digest": "5b29f092c8eafc1b5210b77554ce7892e34631649bb5741b74d2f1e8e2b46df3",
+      "modified": "2026-11-22T06:23:39.537Z"
     },
     "https://tractorvs.com/zh/tractors/zetor-6130-a2e441c8/": {
       "digest": "b85a593869716bc6acfebde31a69714a032dd8200982980360ae03974d964f57",
@@ -15786,8 +15866,8 @@
       "modified": null
     },
     "https://tractorvs.com/zh/tractors/zetor-major-755e44bc/": {
-      "digest": "bbf27933430c312abf7e04af9e7d42b39292177158c4b0d18052929d2f2c39a4",
-      "modified": null
+      "digest": "2318d38e218b195463344dac157dbdc04a468f5e2ed9e6cae758ebd21087feab",
+      "modified": "2026-11-22T06:23:39.537Z"
     },
     "https://tractorvs.com/zh/tractors/zetor-proxima-c0d8fcfe/": {
       "digest": "1a8a81922568c58128e06d2176a8a6322cc7fac7f0f2985b62f6790ed92d2f79",
