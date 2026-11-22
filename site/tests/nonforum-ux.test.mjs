@@ -34,15 +34,21 @@ test("homepage uses reviewed, licensed photography with valid link semantics",()
   assert.match(css,/\.home-featured-card \.tractor-photo-gallery img/);
 });
 
-test("model technical navigation is generated only from real published groups",()=>{
+test("technical shortcuts are progressive enhancement; SSR manufacturer specification HTML stays unchanged",()=>{
   const detail=file("components/TractorDetail.astro");
-  assert.match(detail,/groups\.length>1&&<nav class="model-spec-toc"/);
-  assert.match(detail,/groups\.map\(\(group,index\)=><a href=\{"#model-spec-group-"\+\(index\+1\)\}>\{group.label\}<\/a>\)/);
-  assert.match(detail,/groups\.map\(\(group,index\)=>/);
-  assert.match(detail,/id=\{"model-spec-group-"\+\(index\+1\)\}/);
-  assert.match(detail,/scroll-margin-top:7rem/);
-  assert.match(detail,/focus-visible/);
+  const stylesheet=file("styles/model-research-toc.css");
+  assert.match(detail,/import "\.\.\/styles\/model-research-toc\.css"/);
+  assert.match(detail,/const sections=\[\.\.\.document\.querySelectorAll<HTMLElement>\("\.model-spec-section \.model-spec-group"\)\]/);
+  assert.match(detail,/const id="model-spec-group-"\+\(index\+1\)/);
+  assert.match(detail,/container\.insertBefore\(nav,list\)/);
+  assert.match(detail,/link\.textContent=heading/);
+  assert.doesNotMatch(detail,/groups\.length>1&&<nav class="model-spec-toc"/,
+    "No bulk SSR model-body modification merely to add a navigation shortcut");
+  assert.match(detail,/groups\.length>0\?<div class="model-spec-groups">\{groups\.map\(\(group\)=>/);
+  assert.match(detail,/<section class="model-spec-group"><h3>\{group\.label\}<\/h3>/);
   assert.match(detail,/<ModelSourceIndex tractor=/);
+  assert.match(stylesheet,/\.model-spec-toc a:focus-visible/);
+  assert.match(stylesheet,/\.model-spec-group\[id\]\{scroll-margin-top:7rem\}/);
 });
 
 test("farm advisor keeps its existing evidence rules and gains three accessible step links",()=>{
