@@ -54,7 +54,7 @@ export async function auditSearchConsoleCandidates({fetchJson=fetchCommonsJson}=
  const json=await fetchJson(url.toString());
  if(!Array.isArray(json?.query?.pages))throw Error("Commons API returned no pages");
  const rows=photos.map((p,i)=>{
-   const page=json.query.pages.find(x=>normTitle(x.title)===normTitle("File:"+titles[i]));
+   const page=json.query.pages.find(x=>normTitle(x.title)===normTitle(titles[i]));
    if(!page||page.missing)throw Error("Commons file absent "+p.fileId);
    const wikitext=page.revisions?.[0]?.slots?.main?.content??
      page.revisions?.[0]?.slots?.main?.["*"]??page.revisions?.[0]?.["*"];
