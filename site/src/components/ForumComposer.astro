@@ -353,6 +353,12 @@ const strings=JSON.stringify({
  .community-composer{padding:17px;border-radius:15px}
  .community-composer h2{font-size:21px}
  .community-composer .forum-auth-gate>.forum-auth{padding:13px}
+ /* Avoid iOS focus zoom while preserving ten-language posting and sign-in. */
+ .community-composer input:not([type="checkbox"]),.community-composer select,
+ .community-composer textarea{font-size:16px}
+ .community-composer label{font-size:14px}
+ .community-composer .forum-auth-gate>summary{font-size:15px}
+ .community-composer button{font-size:14px}
 }
 @media(prefers-reduced-motion:reduce){
  .community-composer button{transition:none}
