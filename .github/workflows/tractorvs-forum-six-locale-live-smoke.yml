@@ -1,0 +1,32 @@
+name: TractorVS six-locale production forum SEO smoke
+
+on:
+  pull_request:
+    paths:
+      - "scripts/tractor-forum-six-locale-live-smoke.mjs"
+      - "scripts/tractor-forum-six-locale-live-smoke.test.mjs"
+      - ".github/workflows/tractorvs-forum-six-locale-live-smoke.yml"
+  push:
+    branches: [main]
+    paths:
+      - "scripts/tractor-forum-six-locale-live-smoke.mjs"
+      - "scripts/tractor-forum-six-locale-live-smoke.test.mjs"
+      - ".github/workflows/tractorvs-forum-six-locale-live-smoke.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  live_verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 7
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22.23.4"
+      - name: Prove missing sitemap URLs and wrong reciprocal hreflang cause failure
+        run: node --test scripts/tractor-forum-six-locale-live-smoke.test.mjs
+      - name: Verify live tractorvs.com HTML, robots, six locale canonicals, hreflang, forum sitemap
+        run: node scripts/tractor-forum-six-locale-live-smoke.mjs
