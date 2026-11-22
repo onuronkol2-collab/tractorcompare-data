@@ -2,6 +2,9 @@
 import SiteLayout from "../layouts/SiteLayout.astro";
 import ForumComposer from "./ForumComposer.astro";
 import ForumRichText from "./ForumRichText.astro";
+import {forumBlocks} from "../lib/forum-format.mjs";
+import {FORUM_THREAD_NAV_TEXT} from "../lib/forum-thread-nav-i18n.ts";
+import "../styles/forum-readable.css";
 import ForumMediaGallery from "./ForumMediaGallery.astro";
 import {forumText as ft} from "../lib/forum-i18n.ts";
 import {memberText as mt,MEMBER_TEXT} from "../lib/member-i18n.ts";
@@ -21,6 +24,13 @@ const replyMedia=(id:string)=>approvedMedia.filter(photo=>photo.reply_id===id)
 const catalog=(await getPublicCatalog()).tractors;
 const tractor=topic.tractor_id?catalog.find(t=>t.tractor_id===topic.tractor_id):null;
 const forumUrl=localizedPath(lang,"/forum/");
+const threadNav=FORUM_THREAD_NAV_TEXT[lang];
+// The table of contents comes solely from this published post's real H2 headings.
+const headingLinks=forumBlocks(topic.body).flatMap((block,index)=>
+ block.type==="heading"&&block.level===2
+  ? [{id:"topic-heading-"+index,label:block.items[0].map(part=>part.text).join("").trim()}]
+  : []);
+const showContents=headingLinks.length>=3;
 const publicPath=forumUrl+topic.slug+"/";
 const versions=(await allPublicForumTopics()).filter(row=>row.topic_id===topic.topic_id);
 const originalTopic=topic.machine_translated?versions.find(row=>!row.machine_translated&&row.locale===topic.original_locale):null;
@@ -50,7 +60,11 @@ const schema=eligible?{
   indexable={eligible} structuredData={schema} availableLocales={availableLocales} indexableLocales={indexableLocales}>
  <div class="forum-thread">
   <div class="container">
-   <nav class="thread-breadcrumb"><a href={forumUrl}>{ft(lang,"back")}</a> / {ft(lang,topic.category)}</nav>
+   <nav class="thread-breadcrumb" aria-label={threadNav.navigation}>
+    <a href={forumUrl} class="forum-home-button"><span class="forum-home-icon" aria-hidden="true">←</span><span>{threadNav.home}</span></a>
+    <span class="thread-breadcrumb-separator" aria-hidden="true">/</span>
+    <span class="thread-breadcrumb-current">{ft(lang,topic.category)}</span>
+   </nav>
    <article class="forum-first-post">
     <div class="thread-meta">
      <span>{ft(lang,topic.category)}</span>
@@ -58,7 +72,16 @@ const schema=eligible?{
      {topic.machine_translated&&<span>{ft(lang,"translated")}</span>}
     </div>
     <h1>{topic.title}</h1>
-    <div class="forum-body"><ForumRichText body={topic.body} lang={lang}/></div>
+    <div class="forum-topic-navigation">
+      <a class="forum-jump-replies" href="#forum-replies-heading">{threadNav.replies}<span aria-hidden="true">↓</span></a>
+    </div>
+    {showContents&&<details class="forum-topic-toc">
+      <summary>{threadNav.onThisPage} <span class="forum-topic-toc-count" aria-hidden="true">{headingLinks.length}</span></summary>
+      <nav aria-label={threadNav.onThisPage}>
+        <ol>{headingLinks.map(item=><li><a href={"#"+item.id}>{item.label}</a></li>)}</ol>
+      </nav>
+    </details>}
+    <div class="forum-body"><ForumRichText body={topic.body} lang={lang} headingPrefix="topic-heading"/></div>
     <ForumMediaGallery lang={lang} photos={topicMedia} contentLanguage={LOCALE_TAGS[topic.original_locale]}/>
     {originalTopic&&<a class="original-link" href={localizedPath(originalTopic.locale,"/forum/"+originalTopic.slug+"/")} hreflang={LOCALE_TAGS[originalTopic.locale]}>
      {ft(lang,"readOriginal")} · <bdi lang={LOCALE_TAGS[originalTopic.locale]}>{LOCALE_NAMES[originalTopic.locale]}</bdi>
@@ -101,7 +124,9 @@ const schema=eligible?{
     </article>)}
    </section>
    <ForumComposer lang={lang} mode="reply" topicId={topic.topic_id}/>
-   <nav class="forum-back"><a href={forumUrl}>{ft(lang,"back")} ↗</a></nav>
+   <nav class="forum-back" aria-label={threadNav.navigation}>
+    <a href={forumUrl} class="forum-home-button"><span class="forum-home-icon" aria-hidden="true">←</span><span>{threadNav.home}</span></a>
+   </nav>
   </div>
  </div>
 </SiteLayout>
