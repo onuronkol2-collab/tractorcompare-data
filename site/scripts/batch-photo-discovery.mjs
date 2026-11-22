@@ -2,6 +2,7 @@ import {matchesPhotoFileModel} from "./photo-model-identity.mjs";
 import {allowedPhotoReuseLicense} from "./photo-license-check.mjs";
 import {fetchIndexedSitemapPages} from "./photo-sitemap-fetch.mjs";
 import {requireCommonsQueryResponse} from "./photo-source-response.mjs";
+import {createCommonsRateLimitGuard} from "./photo-commons-throttle.mjs";
 import {normalizePrivatePhotoResearchRows} from "./photo-private-inventory.mjs";
 /**
  * One-pass, read-only catalogue image discovery.
@@ -24,21 +25,30 @@ const PRIVATE_OUTPUT=process.env.TRACTOR_IMAGE_PRIVATE_REPORT_DIR?resolve(proces
 const USER_AGENT="TractorVS/1.0 (tractorvs.com; public photo license research)";
 const REQUEST_LIMIT=4;
 const COMMONS_BATCH=1;
+const commonsRateLimit=createCommonsRateLimitGuard();
 const delay=ms=>new Promise(r=>setTimeout(r,ms));
 const stripTags=s=>String(s||"").replace(/<[^>]*>/g,"").replace(/&amp;/g,"&").replace(/&quot;/g,'"').trim();
 const norm=s=>String(s||"").normalize("NFKD").replace(/[\u0300-\u036f]/g,"").toLowerCase()
   .replace(/\u0131/g,"i").replace(/[^a-z0-9]+/g,"");
 async function get(url,asJson=false){
+  const commons=new URL(url).hostname==="commons.wikimedia.org";
   let last;
   for(let i=0;i<3;i++){
+    // Respect Commons Retry-After; do not multiply an already throttled request.
+    if(commons)commonsRateLimit.beforeRequest();
     try{
       const response=await fetch(url,{signal:AbortSignal.timeout(22000),
         headers:{"User-Agent":USER_AGENT,Accept:asJson?"application/json":"text/html,application/xml"}});
+      if(commons)commonsRateLimit.checkResponse(response);
       if(!response.ok)throw Error("HTTP "+response.status+" "+url);
       if(asJson && !/application\/(?:[a-z0-9.+-]*\+)?json(?:;|$)/i.test(response.headers.get("content-type")||""))
         throw Error("Research API returned non-JSON response for "+new URL(url).origin);
       return asJson?await response.json():await response.text();
-    }catch(e){last=e;if(i<2)await delay((i+1)*550);}
+    }catch(e){
+      if(e?.code==="COMMONS_RATE_LIMIT")throw e;
+      last=e;
+      if(i<2)await delay((i+1)*550);
+    }
   }
   throw last;
 }
@@ -173,6 +183,15 @@ async function main(){
     optionalDraftRows:privateRecords.length,uniqueModelSearches:entries.length}));
   const reviewed=[];
   for(let start=0;start<entries.length;start+=COMMONS_BATCH){
+    if(commonsRateLimit.isPaused()){
+      // No further Commons traffic this run. Preserve full inventory and explicit
+      // errors so the final quality gate cannot report unresearched models as clear.
+      const pending=entries.slice(start).map(entry=>({...entry,
+        error:"Commons HTTP 429: lookup deferred after source rate limit",candidates:[]}));
+      reviewed.push(...pending);
+      console.warn("IMAGE_DISCOVERY_RATE_LIMITED "+JSON.stringify({deferredModels:pending.length}));
+      break;
+    }
     await delay(1400);
     const result=await Promise.all(entries.slice(start,start+COMMONS_BATCH).map(async entry=>{
       try{return {...entry,...await commonsCandidates(entry)};}
