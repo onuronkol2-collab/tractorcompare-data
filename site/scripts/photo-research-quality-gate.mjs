@@ -2,6 +2,7 @@
 import {readFileSync} from "node:fs";
 import {resolve} from "node:path";
 import {fileURLToPath} from "node:url";
+import {verifyExactPublishedPhotoCoverage} from "./photo-exact-coverage-gate.mjs";
 
 export function validatePhotoResearchReports(archive,live,{
   minArchiveModels=1,minPublicPages=1,minModelSearches=1
@@ -50,9 +51,18 @@ if(process.argv[1]&&resolve(process.argv[1])===fileURLToPath(import.meta.url)){
     const live=JSON.parse(readFileSync(folder+"/report.json","utf8"));
     // These floors detect accidental mass catalogue truncation; amend only
     // after a verified, reviewed change in the published model inventory.
-    const result=validatePhotoResearchReports(archive,live,{
+    const inventory=JSON.parse(readFileSync(folder+"/published-model-inventory.json","utf8"));
+    const publicCandidates=JSON.parse(readFileSync(folder+"/public-image-candidates.json","utf8"));
+    const basic=validatePhotoResearchReports(archive,live,{
       minArchiveModels:300,minPublicPages:300,minModelSearches:300
     });
+    const coverage=verifyExactPublishedPhotoCoverage(inventory,publicCandidates,live);
+    const result={ok:basic.ok&&coverage.ok,
+      errors:[...basic.errors,...coverage.errors],
+      archiveModels:basic.archiveModels,publicPages:basic.publicPages,
+      modelSearches:basic.modelSearches,verifiedModelIds:coverage.modelIds,
+      verifiedPublicPageRows:coverage.publicPageRows,
+      verifiedPublicBrandModels:coverage.brandModelPairs};
     console.log("TRACTORVS_PHOTO_RESEARCH_QUALITY "+JSON.stringify(result));
     if(!result.ok)process.exitCode=1;
   }catch(error){
