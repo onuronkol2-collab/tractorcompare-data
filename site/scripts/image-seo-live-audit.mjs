@@ -1,6 +1,6 @@
 // Credential-free check of TractorVS public Google Images prerequisites.
 import {imageLicenseMetadataIssues} from "./image-license-jsonld-check.mjs";
-import {copyrightZhSitemapPages} from "./image-copyright-live-cases.mjs";
+import {copyrightZhSitemapPages,strictCopyrightAuditMode} from "./image-copyright-live-cases.mjs";
 import {APPROVED_TRACTOR_PHOTOS} from "../src/lib/tractor-photos.ts";
 import {parseProductionSitemapInventory} from "./production-sitemap-inventory.mjs";
 import {classifyPublicImageSitemap} from "./image-seo-asset-boundaries.mjs";
@@ -90,8 +90,13 @@ const rightsSamples=[
  {path:"/zh/tractors/mccormick-x5-110-hc-c5111bb6/",label:"McCormick X5.110 HC (copyrightNotice)",owner:"MarcelX42",image:"mccormick-x5-110-hc-marcelx42-2023"},
  {path:"/zh/tractors/steyr-4075-kompakt-19743251/",label:"Steyr 4075 Kompakt (copyrightNotice)",owner:"JoachimKohlerBremen",image:"steyr-4075-kompakt-joachim-2018"},
 ];
-const postDeployMode=process.env.GITHUB_EVENT_NAME==="schedule" ||
-  process.env.GITHUB_EVENT_NAME==="workflow_dispatch";
+// A push's first attempt may run before Cloudflare deploy. A deliberately
+// re-run main job after the Cloudflare success status must be strict.
+const postDeployMode=strictCopyrightAuditMode({
+ eventName:process.env.GITHUB_EVENT_NAME,
+ ref:process.env.GITHUB_REF,
+ runAttempt:process.env.GITHUB_RUN_ATTEMPT
+});
 for(const {path,label,owner,image,unclaimed,expectedLicense} of rightsSamples){
  try{
   const {r,bytes}=await get(origin+path);

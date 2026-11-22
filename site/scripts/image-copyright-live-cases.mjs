@@ -28,3 +28,16 @@ export function copyrightZhSitemapPages(xml,approvedPhotos){
  }
  return result;
 }
+
+/**
+ * Full copyright validation on the scheduled/manual audit, AND whenever the
+ * main-branch push audit is deliberately re-run after Cloudflare deployment.
+ * An initial push can race production deployment and must remain a smoke test.
+ * Re-running a PR must never be mistaken for deployed main.
+ */
+export function strictCopyrightAuditMode({eventName,ref,runAttempt}){
+  if(eventName==="schedule"||eventName==="workflow_dispatch")return true;
+  if(eventName!=="push"||ref!=="refs/heads/main")return false;
+  const attempt=String(runAttempt??"");
+  return /^[1-9][0-9]*$/.test(attempt)&&Number(attempt)>1;
+}
