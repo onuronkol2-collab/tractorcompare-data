@@ -70,9 +70,10 @@ const pricePayload = JSON.stringify({
           <button id="catalog-search-clear" type="button" hidden>{filterCopy.clear}</button>
         </div>
       </div>
-      <div class="catalog-facet-panel" id="catalog-facet-panel" hidden aria-label={facetsCopy.filters}>
+      <div class="catalog-discovery-layout">
+      <aside class="catalog-facet-panel" id="catalog-facet-panel" hidden aria-label={facetsCopy.filters}>
         <div class="catalog-facet-heading">
-          <strong>{facetsCopy.filters}</strong>
+          <h2>{facetsCopy.filters}</h2>
           <button id="catalog-reset-facets" type="button">{facetsCopy.reset}</button>
         </div>
         <div class="catalog-facet-fields">
@@ -107,7 +108,8 @@ const pricePayload = JSON.stringify({
             </select>
           </label>
         </div>
-      </div>
+      </aside>
+      <div class="catalog-results-panel">
       {brandIndex.length>1&&<nav class="catalog-brand-directory" aria-label={brandNavCopy.heading}>
         <details>
         <summary><strong>{brandNavCopy.heading}</strong><span>{brandIndex.length}</span></summary>
@@ -169,6 +171,8 @@ const pricePayload = JSON.stringify({
         </article>)}
       </div>
       <p class="catalog-no-results" id="catalog-no-results" role="status" hidden>{t(lang,"noMatches")}</p>
+      </div>
+      </div>
     </> : <div class="catalog-empty">
       <span class="catalog-empty-mark">01 / DATA</span>
       <h2>{catalog.configured
@@ -338,16 +342,19 @@ const pricePayload = JSON.stringify({
 </script>
 
 <style>
-  .catalog-facet-panel{border:1px solid #bbd5bd;border-radius:16px;padding:clamp(15px,2.4vw,22px);margin:0 0 18px;background:linear-gradient(130deg,#f0f7ed,#fff);box-shadow:0 7px 30px #163d2710}
+  .catalog-discovery-layout{display:grid;grid-template-columns:minmax(225px,270px) minmax(0,1fr);gap:clamp(14px,2vw,24px);align-items:start}
+  .catalog-results-panel{min-width:0}
+  .catalog-results-panel :global(.tractor-card-grid){grid-template-columns:repeat(auto-fill,minmax(min(100%,245px),1fr));gap:clamp(12px,2vw,20px)}
+  .catalog-facet-panel{position:sticky;top:90px;align-self:start;border:1px solid #bbd5bd;border-radius:16px;padding:clamp(15px,2.4vw,22px);margin:0 0 18px;background:linear-gradient(130deg,#f0f7ed,#fff);box-shadow:0 7px 30px #163d2710}
   .catalog-facet-panel[hidden],.catalog-facet-heading button[hidden]{display:none!important}
   .catalog-facet-heading{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:14px}
-  .catalog-facet-heading strong{font-size:clamp(17px,2vw,21px);color:#194c31}
+  .catalog-facet-heading h2{margin:0;font-size:clamp(17px,2vw,21px);color:#194c31}
   .catalog-facet-heading button{min-height:44px;border:1px solid #769e7c;color:#194e32;background:white;border-radius:9px;padding:8px 14px;font:inherit;font-size:14px;font-weight:750;cursor:pointer}
-  .catalog-facet-fields{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+  .catalog-facet-fields{display:grid;grid-template-columns:minmax(0,1fr);gap:13px}
   .catalog-facet-fields label{display:grid;gap:7px;font-size:14px;font-weight:750;color:#274e36;min-width:0}
   .catalog-facet-fields select{width:100%;min-width:0;height:48px;padding:9px 10px;border:1px solid #afc8b3;border-radius:9px;background:#fff;color:#173e29;font:inherit;font-weight:600}
   .catalog-facet-panel :is(button,select):focus-visible{outline:3px solid #438c57;outline-offset:3px}
-  @media(max-width:900px){.catalog-facet-fields{grid-template-columns:repeat(2,minmax(0,1fr))}}
+  @media(max-width:940px){.catalog-discovery-layout{grid-template-columns:minmax(0,1fr)}.catalog-facet-panel{position:static}.catalog-facet-fields{grid-template-columns:repeat(2,minmax(0,1fr))}}
   @media(max-width:490px){.catalog-facet-fields{grid-template-columns:1fr}.catalog-facet-heading{align-items:flex-start}}
   .catalog-search-feedback {grid-column:1/-1;display:flex;align-items:center;flex-wrap:wrap;gap:11px;
     min-height:32px;color:#355c42;font-size:13px;font-weight:700}
