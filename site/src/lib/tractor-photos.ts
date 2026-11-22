@@ -17,6 +17,22 @@ export interface TractorPhoto {
   originThumbUrl:string; originDisplayUrl:string; originFullUrl:string;
 }
 const W="https://upload.wikimedia.org/wikipedia/commons/";
+// Since 2026 Wikimedia's direct thumbnail origin only accepts fixed widths.
+// Arbitrary 640/720/800px paths return HTTP 400, not a resized JPEG.
+// Avoid image SEO regressions by rejecting an unsupported upstream before
+// the Worker fetches it; full original URLs stay explicitly allowed.
+export const COMMONS_THUMBNAIL_STEPS=new Set([20,40,60,120,250,330,500,960,1280,1920,3840]);
+export function isSupportedCommonsPhotoOrigin(source:string):boolean{
+  let url:URL;
+  try{url=new URL(source);}catch{return false;}
+  if(url.protocol!=="https:"||url.hostname!=="upload.wikimedia.org"||
+     url.username||url.password||url.search||url.hash||
+     !url.pathname.startsWith("/wikipedia/commons/"))return false;
+  if(!url.pathname.startsWith("/wikipedia/commons/thumb/"))return true;
+  const match=/\/(\d+)px-[^/]+$/.exec(url.pathname);
+  return Boolean(match&&COMMONS_THUMBNAIL_STEPS.has(Number(match[1])));
+}
+
 /* Photographer Homoatrox, own work, CC BY-SA 3.0, Belagro 2019. */
 const ORIGINAL_PHOTO_ORIGINS:readonly Omit<TractorPhoto,"originThumbUrl"|"originDisplayUrl"|"originFullUrl">[]=[
   {brand:"Belarus",model:"82.1",fileId:"belarus-82-1-homoatrox-2019",
@@ -146,8 +162,11 @@ export function resolveApprovedPhotoSource(pathname:string):string|null {
   const m=/^\/images\/tractors\/([a-z0-9-]+)-(480|960|1920)\.jpg$/.exec(pathname);
   if(!m)return null;
   const photo=APPROVED_TRACTOR_PHOTOS.find(item=>item.fileId===m[1]);
-  return photo ? m[2]==="480" ? photo.originThumbUrl
+  const origin=photo ? m[2]==="480" ? photo.originThumbUrl
     : m[2]==="960" ? photo.originDisplayUrl : photo.originFullUrl : null;
+  // Refuse unrecognized domains, invalid Commons paths and non-standard
+  // Wikimedia thumbnail widths. Never fall back to another tractor image.
+  return origin&&isSupportedCommonsPhotoOrigin(origin)?origin:null;
 }
 function norm(value:string):string{
   return value.normalize("NFKD").replace(/[\u0300-\u036f]/g,"")
