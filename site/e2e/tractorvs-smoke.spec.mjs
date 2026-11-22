@@ -278,3 +278,36 @@ test("axe-core first pass: no critical accessibility violations on the home page
     violation.impact === "critical" || violation.impact === "serious");
   expect(significant, "Serious and critical accessibility violations block the quality check.").toEqual([]);
 });
+
+test("Başak 2075 BK 4WD 100 mm OEM length dispute is visible with both sources and absent from comparison data",async({page,request})=>{
+ const tractorId="9ef236be-0d91-4c87-af3d-8c0cf33f08a1";
+ const modelSlug="basak-traktor-2075-bk-9ef236be";
+ const first=await page.goto("/tr/tractors/"+modelSlug+"/",{waitUntil:"domcontentloaded"});
+ test.skip(first?.status()===404,"Offline preview without published Supabase catalogue; production artifact gate checks all ten model pages.");
+ expect(first?.status()).toBe(200);
+ for(const locale of ["tr","en","de"]){
+  const prefix=locale==="en"?"/":"/"+locale+"/";
+  const response=await page.goto(prefix+"tractors/"+modelSlug+"/",{waitUntil:"domcontentloaded"});
+  expect(response?.status()).toBe(200);
+  const warning=page.locator(".model-source-conflict-banner");
+  await expect(warning).toHaveCount(1);
+  await expect(warning).toContainText(/3[., ]?830/);
+  await expect(warning).toContainText(/3[., ]?930/);
+  await expect(warning.locator('a[href="https://basaktraktor.com.tr/urunler/traktorler/tarla-traktorleri/2075-bk"]')).toHaveCount(1);
+  await expect(warning.locator('a[href="https://admin.basaktraktor.com.tr/upload/7c743eaf-5228-4ae7-94d7-25df6a13e778-2075%20BK%204WD.pdf"]')).toHaveCount(1);
+  const lengthCard=page.locator('.model-spec-card').filter({hasText:"3930 mm"});
+  await expect(lengthCard).toHaveCount(1);
+  // Keep the source-backed record visible, but never show the outdated claim
+  // that the two OEM pages used different weight-inclusion descriptions.
+  await expect(lengthCard.locator(".model-spec-note")).toHaveCount(0);
+ }
+ for(const lang of ["en","tr","zh","hi","pt-br","fr","de","ru","ja","es"]){
+  const data=await request.get("/comparison-data/"+lang+"/"+tractorId+".json");
+  expect(data.status(),"comparison data HTTP "+lang).toBe(200);
+  const rows=await data.json();
+  expect(rows.some(row=>["overall_length","overall_length_with_front_ballast_mm"].includes(row.key)),"disputed dimension must not be comparable "+lang).toBe(false);
+  expect(rows.some(row=>String(row.value)==="3830"||String(row.value)==="3930"),"disputed value must not leak "+lang).toBe(false);
+  expect(rows.some(row=>row.notice&&/3[., ]?830/.test(row.notice)&&/3[., ]?930/.test(row.notice)),"localized warning must survive "+lang).toBe(true);
+  expect(rows.some(row=>row.key==="wheelbase"),"unrelated measurements remain "+lang).toBe(true);
+ }
+});
