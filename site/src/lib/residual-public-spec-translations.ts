@@ -1334,4 +1334,8 @@ export const RESIDUAL_PUBLIC_SPEC_TERMS: Record<string, Partial<Record<Locale,st
     "fr": "Voie avant (mm)",
     "es": "Ancho de vía delantero (mm)"
   }
+  "4WD Engagement Control": { "tr": "4WD devreye alma kumandası" },
+  "Forward/Reverse Shuttle Control": { "tr": "İleri/geri yön değiştirme kumandası" },
+  "Front Differential Lock / Limited Slip": { "tr": "Ön diferansiyel kilidi / sınırlı kaymalı diferansiyel" },
+  "Rear Differential Lock Actuation": { "tr": "Arka diferansiyel kilidini devreye alma kumandası" },
 };
