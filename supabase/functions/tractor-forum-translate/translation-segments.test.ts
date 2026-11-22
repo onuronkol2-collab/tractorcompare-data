@@ -44,20 +44,20 @@ Deno.test("new 1600-character checkpoints resume EXACT same blocks across repeat
     "resume must not replace 1600-character segmentation with 2200-character segmentation");
   const saved2=nextTranslationCheckpoint(article,saved,2);
   assert(saved2==="PARTS2:2/"+original.length+"@1600","subsequent accepted chunk remains versioned");
-  assert(JSON.stringify(chooseTranslationSegments(article,saved2))===JSON.stringify(original));
+  assert(JSON.stringify(chooseTranslationSegments(article,saved2))===JSON.stringify(original),"Checkpoint expectation must hold");
 });
 Deno.test("old 2200-character checkpoints keep original boundaries with no cross-version data loss",()=>{
   const original=markdownTranslationSegments(article,2200);
   const notes="PARTS:1/"+original.length;
-  assert(JSON.stringify(chooseTranslationSegments(article,notes))===JSON.stringify(original));
-  assert(nextTranslationCheckpoint(article,notes,2)==="PARTS:2/"+original.length);
+  assert(JSON.stringify(chooseTranslationSegments(article,notes))===JSON.stringify(original),"Checkpoint expectation must hold");
+  assert(nextTranslationCheckpoint(article,notes,2)==="PARTS:2/"+original.length,"Checkpoint expectation must hold");
 });
 Deno.test("zero accepted sections may safely use new chunk scheme on a legacy private draft",()=>{
   const old=markdownTranslationSegments(article,2200);
   const newSegments=chooseTranslationSegments(article,"PARTS:0/"+old.length);
-  assert(JSON.stringify(newSegments)===JSON.stringify(chooseTranslationSegments(article,null)));
+  assert(JSON.stringify(newSegments)===JSON.stringify(chooseTranslationSegments(article,null)),"Checkpoint expectation must hold");
   assert(nextTranslationCheckpoint(article,"PARTS:0/"+old.length,1)
-    ==="PARTS2:1/"+newSegments.length+"@1600");
+    ==="PARTS2:1/"+newSegments.length+"@1600","Checkpoint expectation must hold");
 });
 Deno.test("explicit 2200 fallback checkpoints resume when long markdown blocks exceed 1600",()=>{
   const hardBlock="## Tractor specification\n"+"Verified engineering qualifier ".repeat(67);
@@ -67,7 +67,7 @@ Deno.test("explicit 2200 fallback checkpoints resume when long markdown blocks e
   assert(groups.length>=1,"fallback must return groups");
   const saved=nextTranslationCheckpoint(text,null,1);
   assert(saved.endsWith("@2200"),"saved chunk method must reflect actual 2200 fallback");
-  assert(JSON.stringify(chooseTranslationSegments(text,saved))===JSON.stringify(groups));
+  assert(JSON.stringify(chooseTranslationSegments(text,saved))===JSON.stringify(groups),"Checkpoint expectation must hold");
 });
 Deno.test("changed body, forged checkpoint size or out-of-range progress must fail closed",()=>{
   const fresh=chooseTranslationSegments(article,null);
