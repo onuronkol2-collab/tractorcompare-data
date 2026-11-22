@@ -35,7 +35,7 @@ export function collectImageOptimizationCandidates(lhr){
       let url;
       try{url=new URL(item.url);}catch{continue;}
       if(url.origin!=="https://tractorvs.com"||!url.pathname.startsWith("/images/")||
-         !/\\.(?:jpe?g|png|webp|avif)$/i.test(url.pathname))continue;
+         !/\.(?:jpe?g|png|webp|avif)$/i.test(url.pathname))continue;
       const waste=numeric(item.wastedBytes);
       if(waste===null||waste<=0)continue;
       const key=url.origin+url.pathname;
