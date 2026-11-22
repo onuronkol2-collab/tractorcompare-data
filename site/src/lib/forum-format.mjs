@@ -98,12 +98,51 @@ export function forumBlocks(source) {
  return blocks.map(block=>block.type==="table"?block:
   ({...block,items:block.lines.map(forumInline)}));
 }
-/** Metadata must be plain prose, not literal Markdown headings or delimiters. */
-export function forumSeoDescription(body,max=175) {
- const clean=String(body??"").replace(/^\s{0,3}#{1,4}\s+/gm,"")
+/** Metadata must be plain prose, not literal Markdown headings or delimiters.
+ * Prefer an accurate complete sentence over an arbitrarily cut factual claim.
+ * 160 characters is an editorial target, NOT a Google hard limit.
+ */
+function plainForumExcerpt(body){
+ return String(body??"").replace(/^\s{0,3}#{1,4}\s+/gm,"")
   .replace(/(?:\*\*|\x60|(?<!\*)\*(?!\*)|[|])/g,"")
   .replace(/^\s*[-•>]\s+/gm,"")
   .replace(/\s+/g," ").trim();
+}
+// Forum card previews are visible editorial text. Preserve their existing
+// 230-character behavior independently of search-engine meta descriptions.
+export function forumCardExcerpt(body,max=230){
+ const clean=plainForumExcerpt(body);
  if(clean.length<=max)return clean;
  return clean.slice(0,max).replace(/\s+\S*$/u,"").trimEnd()||clean.slice(0,max);
+}
+export function forumSeoDescription(body,max=160) {
+ const clean=plainForumExcerpt(body);
+ if(clean.length<=max)return clean;
+ // A punctuation boundary is only safe when it actually ends a sentence.
+ // European decimal dots and URL query marks stay inside their tokens.
+ const stops=/[.!?](?=\s|$)|[。！？]/gu;
+ const sentences=[];
+ let start=0;
+ for(const match of clean.matchAll(stops)){
+  const end=(match.index??0)+match[0].length;
+  const segment=clean.slice(start,end).trim();
+  if(segment)sentences.push(segment);
+  start=end;
+  if(sentences.length>=6)break;
+ }
+ // If an opening question is too generic and a subsequent fully written
+ // sentence fits the budget, use that factual sentence from the actual post.
+ // Never synthesize an unsupported claim or combine incomplete fragments.
+ const first=sentences[0]||"";
+ const second=sentences[1]||"";
+ const completeThreshold=Math.min(45,Math.floor(max*0.4));
+ if(/[?？]$/u.test(first)&&second.length>=completeThreshold&&second.length<=max)
+  return second;
+ if(first.length>=completeThreshold&&first.length<=max)return first;
+ // For unusually long unpunctuated posts, signal intentional shortening
+ // with an ellipsis rather than ending at an arbitrary brand/measurement.
+ const prefix=Array.from(clean).slice(0,Math.max(1,max-1)).join("");
+ const boundary=prefix.lastIndexOf(" ");
+ const safe=boundary>Math.floor(max*0.6)?prefix.slice(0,boundary).trimEnd():prefix.trimEnd();
+ return safe+"…";
 }

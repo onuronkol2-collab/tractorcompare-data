@@ -91,3 +91,43 @@ test("SEO descriptions are readable rather than literal Markdown fragments",asyn
  assert.match(description,/Same 13,7 puan aldı/);
  assert.doesNotMatch(description,/\*\*|##/);
 });
+
+test("2026 dealer-satisfaction news SEO excerpt ends on a sourced complete sentence",async()=>{
+ const {forumSeoDescription}=await import("../src/lib/forum-format.mjs");
+ const original="2026 yılında traktör bayilerinin üreticilere verdiği en yüksek memnuniyet puanları hangi markalara ait?\n\n"+
+  "Avrupa'da Same 13,7 puanla ilk sıraya yerleşirken Deutz-Fahr ve CLAAS onu takip etti. "+
+  "Hindistan'da Swaraj, Kuzey Amerika'da ise Yanmar kendi araştırma kategorilerinin liderleri oldu.";
+ const meta=forumSeoDescription(original);
+ assert.equal(meta,"Avrupa'da Same 13,7 puanla ilk sıraya yerleşirken Deutz-Fahr ve CLAAS onu takip etti.");
+ assert.ok(meta.length<=160);
+ assert.match(meta,/[.!?。！？]$/u);
+ assert.ok(original.includes(meta),"meta cannot invent content not present in the topic");
+});
+
+test("forum SEO excerpt preserves decimal measurements and marks incomplete fallback",async()=>{
+ const {forumSeoDescription}=await import("../src/lib/forum-format.mjs");
+ const body=("The model delivers 13.7 kW under tested conditions and was checked against sources. ")+
+  "Additional context about the testing method follows in the original post. ".repeat(5);
+ const meta=forumSeoDescription(body,100);
+ assert.equal(meta,"The model delivers 13.7 kW under tested conditions and was checked against sources.");
+ assert.ok(!meta.endsWith("13."));
+ const unpunctuated="uninterrupted factual note with a very long manufacturer catalogue explanation ".repeat(8);
+ const fallback=forumSeoDescription(unpunctuated,120);
+ assert.ok(fallback.length<=120);
+ assert.ok(fallback.endsWith("…"));
+ assert.ok(unpunctuated.startsWith(fallback.slice(0,-1)));
+});
+
+test("Chinese sentences end cleanly without whitespace and forum cards keep prior excerpt",async()=>{
+ const {forumSeoDescription,forumCardExcerpt}=await import("../src/lib/forum-format.mjs");
+ const chinese="液压提升能力以说明书和测试工况为准。不同市场的版本可能采用不同的提升器配置，需要对照产品编号确认。"+"请以官方数据核实具体参数。".repeat(5);
+ const meta=forumSeoDescription(chinese,45);
+ assert.equal(meta,"液压提升能力以说明书和测试工况为准。");
+ const preview="## Tractor Forum\n\n**Brand** tests 13,7 points. "+"Manufacturer note about safety ".repeat(20);
+ const clean=preview.replace(/^\s{0,3}#{1,4}\s+/gm,"")
+  .replace(/(?:\*\*|\x60|(?<!\*)\*(?!\*)|[|])/g,"")
+  .replace(/^\s*[-•>]\s+/gm,"").replace(/\s+/g," ").trim();
+ const previousCard=clean.slice(0,230).replace(/\s+\S*$/u,"").trimEnd()||clean.slice(0,230);
+ assert.equal(forumCardExcerpt(preview,230),previousCard);
+ assert.match(read("../src/components/ForumHub.astro"),/forumCardExcerpt\(topic\.body,230\)/);
+});
