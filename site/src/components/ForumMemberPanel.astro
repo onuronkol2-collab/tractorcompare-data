@@ -466,7 +466,7 @@ for(const root of widgets){
    });
    if(res.ok){
     const saved=await res.json() as Profile[];
-    void loadLeaders();
+    void Promise.all([loadLeaders(),loadRecentMembers()]);
     return saved[0]||neutral;
    }
    // Concurrent login may have created a profile in another tab.
@@ -599,7 +599,7 @@ for(const root of widgets){
       ownId+"/avatar.webp?v="+Date.now();
     showAvatar(avatar,src);showAvatar(toolbarAvatar,src);
    }
-   await loadLeaders();
+   await Promise.all([loadLeaders(),loadRecentMembers()]);
   }catch(e){
    if(status)status.textContent=e instanceof Error&&e.message==="invalid_image"?txt.uploadError:txt.profileError;
   }finally{if(submit)submit.disabled=false}
