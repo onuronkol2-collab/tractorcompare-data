@@ -103,22 +103,22 @@ export function findPublicModelPages(xml,records=expectedLiveBatch15().records.f
 export function findPublicEditorialPages(xml,records=expectedLiveBatch15().records.filter(
  record=>editorialSet.has(record.fileId))){
  if(typeof xml!=="string"||xml.length>2_000_000||
-    !/<urlset\\b/.test(xml)||!/<image:loc>/.test(xml))
+    !/<urlset\b/.test(xml)||!/<image:loc>/.test(xml))
    throw Error("Missing or malformed editorial image sitemap");
  if(records.length!==2||!records.every(r=>editorialSet.has(r.fileId))||
     new Set(records.map(r=>r.fileId)).size!==2)
    throw Error("Exactly two verified glossary showcase sources expected");
  const map=new Map(records.map(r=>[r.fileId,new Set()]));
- for(const entry of xml.matchAll(/<url>([\\s\\S]*?)<\\/url>/g)){
+ for(const entry of xml.matchAll(/<url>([\s\S]*?)<\/url>/g)){
    const body=entry[1];
-   const raw=/<loc>\\s*([^<]+)<\\/loc>/.exec(body)?.[1]?.replaceAll("&amp;","&");
+   const raw=/<loc>\s*([^<]+)<\/loc>/.exec(body)?.[1]?.replaceAll("&amp;","&");
    if(!raw)continue;
    let url;
    try{url=new URL(raw);}catch{throw Error("Malformed editorial page URL");}
    if(url.origin!==LIVE_ORIGIN||url.search||url.hash)
      throw Error("Noncanonical editorial sitemap page URL");
    if(!EDITORIAL_GLOSSARY_PAGES.includes(url.pathname))continue;
-   const images=new Set([...body.matchAll(/<image:loc>\\s*([^<]+)<\\/image:loc>/g)]
+   const images=new Set([...body.matchAll(/<image:loc>\s*([^<]+)<\/image:loc>/g)]
      .map(m=>m[1].replaceAll("&amp;","&")));
    for(const record of records){
      const full=LIVE_ORIGIN+"/images/tractors/"+record.fileId+"-1920.jpg";
