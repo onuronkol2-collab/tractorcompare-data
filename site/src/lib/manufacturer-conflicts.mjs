@@ -68,15 +68,16 @@ function sameModel(model,brand,name) {
  return model?.brand_name===brand&&model?.model_name===name;
 }
 
-/** Two independently visible, *different* OEM claims for the same product. */
+/**
+ * Exact model identity is the source-dispute gate, not the availability of
+ * disputed rows in the PUBLIC catalogue. Supabase's approved public view
+ * already filters these uncertain engine-volume claims. The user-facing
+ * warning must survive that safety filter and cite BOTH reviewed OEM pages.
+ * A newly verified model variant can later be separated explicitly.
+ */
 export function hasUnresolvedTigreDisplacement(model) {
- if(!sameModel(model,"Antonio Carraro","TIGRE 3800 F"))return false;
- const specs=actualSpecs(model);
- return specs.some(s=>s.canonical_key==="engine_displacement_cc" &&
-     String(s.spec_value).trim()==="1331" && s.source_url===TIGRE_ITALIAN)
-   && specs.some(s=>s.canonical_key==="engine_description" &&
-     /\b1642\s*cc\b/i.test(String(s.spec_value)) &&
-     s.source_url===TIGRE_ENGLISH);
+ return sameModel(model,"Antonio Carraro","TIGRE 3800 F") &&
+   (!model.variant || /stage\s*v/i.test(String(model.variant)));
 }
 
 export function modelSourceDiscrepancies(model,lang="en") {
