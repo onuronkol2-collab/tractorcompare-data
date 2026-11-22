@@ -5,6 +5,7 @@ import {tmpdir} from "node:os";
 import {join} from "node:path";
 import {fileURLToPath} from "node:url";
 import {spawnSync} from "node:child_process";
+import {verifyExactPublishedPhotoCoverage} from "../scripts/photo-exact-coverage-gate.mjs";
 
 test("real research scripts share one offline Commons brand scan and include newly published model",{
   timeout:90000
@@ -40,6 +41,8 @@ test("real research scripts share one offline Commons brand scan and include new
     assert.equal(archived.modelCount,2,"historical count must not be rewritten");
     assert.equal(publicCandidates.modelCount,3,"newly published Zetor PROXIMA must be included");
     assert.equal(report.runStatus,"complete");
+    const exact=verifyExactPublishedPhotoCoverage(preflight,publicCandidates,report);
+    assert.equal(exact.ok,true,JSON.stringify(exact.errors));
     assert.equal(report.publicModelPages,3);
     assert.equal(report.modelSearches,3);
     assert.equal(report.models.length,3);
