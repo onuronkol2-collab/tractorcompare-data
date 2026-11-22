@@ -37,6 +37,47 @@ export function sameNumericFacts(source:string, translated:string, locale:string
  return expected.sort().join("|")===actual.sort().join("|");
 }
 
+/**
+ * Strict, offline safeguards for the ONE fixed synthetic tractor sentence.
+ * Numerical equality alone accepted hp -> PS/ch/cv and semantic hallucinations.
+ * This is not general machine translation certification, nor a publication gate.
+ * Unambiguous orthographic forms (e.g. Hindi एचपी and kilogram spellings) are
+ * allowed; metric horsepower is NOT silently equated to mechanical hp.
+ */
+export function samePhysicalUnitFacts(source:string, translated:string):boolean {
+ const unitPattern=/(?<![\p{L}\p{N}])(\d+(?:[.,]\d+)*)\s*(hp|kg|kw|ps|ch|cv|马力|公斤|एचपी|किलोग्राम|キログラム|кг)(?![\p{L}\p{M}])/giu;
+ const normalizeUnit=(unit:string):string=>{
+  const u=unit.toLowerCase();
+  if(["公斤","किलोग्राम","キログラム","кг"].includes(u))return "kg";
+  if(u==="एचपी")return "hp";
+  return u;
+ };
+ const facts=(input:string)=>[...input.normalize("NFKC").matchAll(unitPattern)]
+  .map(m=>m[1].replaceAll(",",".")+" "+normalizeUnit(m[2])).sort();
+ return JSON.stringify(facts(source))===JSON.stringify(facts(translated))&&facts(source).length>0;
+}
+
+/**
+ * Conservative, language-specific glossary for the fixed source mentioning
+ * BOTH a tractor and hydraulic lifting. False negatives remain possible;
+ * a true result never substitutes for an independent human language review.
+ */
+export function syntheticTractorTerminologyPresent(locale:string, text:string):boolean {
+ const terms:Record<string,readonly [RegExp,RegExp]>={
+  en:[/\btractor\b/i,/\bhydraulic/i],
+  zh:[/拖拉机/u,/液压/u],
+  hi:[/ट्रैक्टर/u,/हाइड्रोलिक/u],
+  "pt-br":[/\btrator\b/i,/hidráulic/iu],
+  fr:[/tracteur/iu,/hydrauliqu/iu],
+  de:[/traktor/iu,/hydraul/iu],
+  ru:[/трактор/iu,/гидравл/iu],
+  ja:[/トラクター/u,/油圧/u],
+  es:[/tractor/iu,/hidráulic/iu]
+ };
+ const required=terms[locale];
+ return !!required&&required.every(re=>re.test(text));
+}
+
 export function isUntranslatedTurkishTitle(sourceTitle:string,translatedTitle:string):boolean {
  return sourceTitle.trim()===translatedTitle.trim() &&
   /[çğıöşüÇĞİÖŞÜ]/u.test(sourceTitle);
