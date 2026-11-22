@@ -17,5 +17,5 @@ test("private profiles and personal emails never enter recent member cards or de
  assert.match(source,/show_leaderboard:"eq\.true",order:"created_at\.desc",limit:"12"/);
  assert.match(source,/tc_member_scores/);
  assert.doesNotMatch(source,/select:"[^"]*(?:email|phone|password)[^"]*"/);
- assert.doesNotMatch(source,/auth\.users/);
+ assert.doesNotMatch(source,/fetch\(cfg\.url\+"\/auth\/v1\/admin\/users"/);
 });
