@@ -68,6 +68,15 @@ function calendarFactsEqual(source,target,locale){
  }
  return same(srcDays,targetDays)&&same(srcRanges,targetRanges);
 }
+/**
+ * For French/Russian editorial display, 2 045, 2 045 and 2 045 all denote
+ * the same grouped integer as the Turkish source 2.045. Only target display
+ * text is normalized for numeric checks, never the source or URLs.
+ */
+function normalizeGroupedThousands(value,locale){
+ if(locale!=="fr"&&locale!=="ru")return value;
+ return value.replace(/(\d{1,3})[ \u00a0\u202f](\d{3})(?!\d)/gu,"$1.$2");
+}
 function urlTokens(value) {
  return [...value.matchAll(/https:\/\/[^\s<>"'\])}]+/g)]
   .map(m=>m[0].replace(/[.,;!?]+$/,"")).sort();
@@ -142,10 +151,10 @@ export function auditManualForumTranslation({
   errors.push("suspicious_length");
  if(sourceTitle.trim()===targetTitle.trim())errors.push("untranslated_title");
  const orig=sourceTitle+"\n"+sourceBody,translation=targetTitle+"\n"+targetBody;
- if(!numericFactsEqual(orig,translation,locale))errors.push("numeric_facts_changed");
+ if(!numericFactsEqual(orig,normalizeGroupedThousands(translation,locale),locale))errors.push("numeric_facts_changed");
  if(!calendarFactsEqual(orig,translation,locale))errors.push("calendar_facts_changed");
  if(!same(urlTokens(orig),urlTokens(translation)))errors.push("urls_changed");
- if(!same(unitFacts(orig),unitFacts(translation)))errors.push("numeric_units_changed");
+ if(!same(unitFacts(orig),unitFacts(normalizeGroupedThousands(translation,locale))))errors.push("numeric_units_changed");
  if(!same(headingTokens(sourceBody),headingTokens(targetBody)))errors.push("heading_structure_changed");
  if(!same(tableShape(sourceBody),tableShape(targetBody)))errors.push("table_shape_changed");
  if(!same(normalizedScorePairs(sourceBody),normalizedScorePairs(targetBody)))errors.push("brand_rank_score_mapping_changed");
