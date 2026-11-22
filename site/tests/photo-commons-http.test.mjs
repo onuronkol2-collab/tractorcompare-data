@@ -36,9 +36,28 @@ test("503 without Retry-After waits at least 5s and limits retries",async()=>{
  assert.equal(attempts,3);
  assert.deepEqual(waits,[5000,10000]);
 });
-test("HTTP-200 logical Commons API error remains a failure",async()=>{
+test("HTTP-200 logical Commons rate-limit error must fail as cooldown",async()=>{
  await assert.rejects(fetchCommonsJson("https://commons.wikimedia.org/w/api.php",{
   fetchImpl:async()=>response(200,null,{error:{code:"ratelimited"}}),
   sleep:async()=>{}
- }),/ratelimited/);
+ }),CommonsCooldownError);
+});
+
+test("logical HTTP-200 ratelimited error uses cooldown and stops source requests",async()=>{
+ let calls=0;
+ const waits=[];
+ await assert.rejects(fetchCommonsJson("https://commons.wikimedia.org/w/api.php",{
+  fetchImpl:async()=>{calls++;return response(200,null,{error:{code:"ratelimited"}});},
+  sleep:async ms=>waits.push(ms)
+ }),CommonsCooldownError);
+ assert.equal(calls,3);
+ assert.deepEqual(waits,[5000,10000]);
+});
+test("logical maxlag respects Retry-After and stops without overwhelming wiki",async()=>{
+ let calls=0;
+ await assert.rejects(fetchCommonsJson("https://commons.wikimedia.org/w/api.php",{
+  fetchImpl:async()=>{calls++;return response(200,"300",{error:{code:"maxlag"}});},
+  sleep:async()=>{throw Error("Must not circumvent long Retry-After");}
+ }),CommonsCooldownError);
+ assert.equal(calls,1);
 });
