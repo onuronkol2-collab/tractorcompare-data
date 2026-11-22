@@ -107,7 +107,7 @@ const MODEL_COPY: Record<Locale, {
 const CONCISE_SPECS_TITLE:Record<Locale,string>={
   en:"Specs",tr:"Özellikleri",zh:"技术参数",hi:"तकनीकी विवरण",
   "pt-br":"Ficha técnica",fr:"Fiche technique",de:"Daten",
-  ru:"Характеристики",ja:"仕様",es:"Ficha técnica"
+  ru:"Характеристики",ja:"仕様",es:"Datos técnicos"
 };
 
 /** Keep original source/variant notes available without pretending to translate them. */
@@ -285,12 +285,16 @@ export function modelSeoMetadata(tractor: TractorRecord, lang: Locale) {
   // The site identity remains present in og:site_name and on-page branding.
   const conciseWithoutSiteName=model + " " + CONCISE_SPECS_TITLE[lang] + identityQualifiers;
   const identityWithoutSiteName=model + identityQualifiers;
+  // Localized technical intent is more useful than repeating the same
+  // language-neutral model identity across several different hreflang pages.
+  // A 60-character SEO-auditor threshold is advisory: remove the optional
+  // site suffix before dropping real localized wording. Keep all original
+  // model, equipment, market, and year qualifiers intact.
   const title=fullTitle.length<=60 ? fullTitle
     : conciseTitle.length<=60 ? conciseTitle
-    : identityOnlyTitle.length<=60 ? identityOnlyTitle
-    : conciseWithoutSiteName.length<=60 ? conciseWithoutSiteName
-    : identityWithoutSiteName.length<=60 ? identityWithoutSiteName
     : conciseWithoutSiteName.length<=105 ? conciseWithoutSiteName
+    : identityOnlyTitle.length<=60 ? identityOnlyTitle
+    : identityWithoutSiteName.length<=60 ? identityWithoutSiteName
     : identityWithoutSiteName;
 
   const copy = MODEL_COPY[lang];
