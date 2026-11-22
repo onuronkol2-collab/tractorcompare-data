@@ -1,4 +1,5 @@
 import {test} from "node:test";
+import {readFileSync} from "node:fs";
 import assert from "node:assert/strict";
 import {buildMode} from "../scripts/cloudflare-build.mjs";
 import {resolve} from "node:path";
@@ -49,4 +50,18 @@ test("Cloudflare non-production branches always get noindex preview build mode",
  assert.equal(buildMode(undefined),"production");
  assert.equal(buildMode("feat/review"),"preview");
  assert.equal(buildMode("staging"),"preview");
+});
+
+
+test("production and site Wrangler observability keep equal bounded log sampling",()=>{
+  const rate=0.1;
+  const root=resolve(site,"..");
+  for(const configPath of [resolve(root,"wrangler.jsonc"),resolve(site,"wrangler.jsonc")]){
+    const config=JSON.parse(readFileSync(configPath,"utf8"));
+    assert.equal(config.name,"tractorvs-site");
+    assert.equal(config.observability.enabled,true,
+      "preserve debugging instead of disabling observability");
+    assert.equal(config.observability.head_sampling_rate,rate,
+      "do not silently revert to 100% Worker log ingestion");
+  }
 });
