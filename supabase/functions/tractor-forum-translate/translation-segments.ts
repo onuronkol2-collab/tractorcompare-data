@@ -23,22 +23,54 @@ export function markdownTranslationSegments(body:string,max=2200):string[] {
  return work;
 }
 
-/** A nonzero saved checkpoint MUST always retain its original segmentation.
- * The old chunks cannot be re-grouped without corrupting a translated article.
+/**
+ * Versioned resume markers prevent freshly translated 1600-char segments
+ * being incorrectly resumed at the legacy 2200-char boundaries.
+ *
+ * Legacy PARTS:N/T with N>0 was written by the old 2200-char worker and
+ * must retain those boundaries. PARTS:0/T has no accepted sections.
+ * New checkpoints use PARTS2:N/T@1600 or PARTS2:N/T@2200.
  */
-export function chooseTranslationSegments(body:string,qaNotes:string|null|undefined):string[]{
- const marker=/^PARTS:(\d+)\/(\d+)$/.exec(qaNotes||"");
- if(marker && Number(marker[1])>0){
-  const legacy=markdownTranslationSegments(body,2200);
-  if(legacy.length!==Number(marker[2]) ||
-     Number(marker[1])>legacy.length)throw Error("Translation checkpoint segmentation changed");
-  return legacy;
- }
- // The original 2200-character policy is a strict fallback for dense articles
- // where 1600 characters would generate >8 parts or break a complete block.
+type SegmentSize = 1600|2200;
+export function translationCheckpoint(notes:string|null|undefined):
+ {completed:number;total:number;size:SegmentSize|null;legacy:boolean}|null {
+ const old=/^PARTS:(\\d+)\\/(\\d+)$/.exec(notes||"");
+ const v2=/^PARTS2:(\\d+)\\/(\\d+)@(1600|2200)$/.exec(notes||"");
+ if(!old&&!v2)return null;
+ const completed=Number((old||v2)![1]),total=Number((old||v2)![2]);
+ if(!Number.isSafeInteger(completed)||!Number.isSafeInteger(total)||
+    total<1||total>8||completed<0||completed>total)
+   throw Error("Invalid translation checkpoint range");
+ return {completed,total,size:v2?Number(v2[3]) as SegmentSize:null,legacy:!!old};
+}
+function freshSegments(body:string):string[]{
  try{return markdownTranslationSegments(body,1600);}
  catch(error){
   if(!(error instanceof Error)||!/(segmentation exceeded limits|block is too long)/.test(error.message))throw error;
   return markdownTranslationSegments(body,2200);
  }
+}
+export function chooseTranslationSegments(body:string,qaNotes:string|null|undefined):string[]{
+ const checkpoint=translationCheckpoint(qaNotes);
+ if(!checkpoint||checkpoint.completed===0&&checkpoint.legacy)
+   return freshSegments(body);
+ const parts=markdownTranslationSegments(body,checkpoint.size||2200);
+ if(parts.length!==checkpoint.total)
+   throw Error("Translation checkpoint segmentation changed");
+ return parts;
+}
+export function nextTranslationCheckpoint(body:string,previousNotes:string|null|undefined,completed:number):string{
+ const previous=translationCheckpoint(previousNotes);
+ const segments=chooseTranslationSegments(body,previousNotes);
+ if(!Number.isInteger(completed)||completed<1||completed>segments.length)
+  throw Error("Invalid completed translation segment index");
+ // Keep true legacy >0 checkpoints in their historical 2200-char scheme.
+ if(previous?.legacy&&previous.completed>0)
+  return "PARTS:"+completed+"/"+segments.length;
+ // For new work, choose the exact grouping rather than storing only a
+ // segment count; a count alone cannot prove boundaries on the next run.
+ const smaller=markdownTranslationSegments(body,1600);
+ const size:SegmentSize=segments.length===smaller.length&&
+   segments.every((part,i)=>part===smaller[i])?1600:2200;
+ return "PARTS2:"+completed+"/"+segments.length+"@"+size;
 }
