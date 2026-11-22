@@ -2,6 +2,8 @@
 import SiteLayout from "../layouts/SiteLayout.astro";
 import {localizedPath} from "../lib/locales.ts";
 import {glossaryHero as hero,glossaryShowcase as showcase} from "../lib/editorial-photos.ts";
+import {approvedMobilePhotoFormats} from "../lib/approved-mobile-photo-assets.mjs";
+import {photoText} from "../lib/tractor-photos.ts";
 import {GLOSSARY_TERMS,GLOSSARY_SECTIONS,type GlossaryLanguage} from "../lib/tractor-glossary.ts";
 import {TRACTOR_PARTS,GLOSSARY_TO_PART} from "../lib/tractor-parts.ts";
 import TractorParts from "./TractorParts.astro";
@@ -10,6 +12,8 @@ import TractorLearningCases from "./TractorLearningCases.astro";
 interface Props {lang:GlossaryLanguage}
 const {lang}=Astro.props;
 const tr=lang==="tr";
+const heroMobile=hero?approvedMobilePhotoFormats(hero.fileId):null;
+const galleryPhotos=showcase.map(photo=>({photo,mobile:approvedMobilePhotoFormats(photo.fileId)}));
 const sectionList=Object.entries(GLOSSARY_SECTIONS).map(([key,label])=>({key,label:label[lang]}));
 const pagePath=localizedPath(lang,"/guides/tractor-technical-terms/");
 const editorialPath=localizedPath(lang,"/articles/");
@@ -102,17 +106,24 @@ const queryTerms=(term:(typeof GLOSSARY_TERMS)[number])=>
         data-photo-credit={hero.photographer} data-photo-source={hero.sourcePage}
         data-photo-license={hero.licenseUrl} data-photo-license-name={hero.licenseName}
         aria-label={tr?"Fotoğrafı tam ekranda aç":"Open full-size tractor photograph"}>
-       <img src={hero.displayUrl} srcset={hero.thumbUrl+" 480w, "+hero.displayUrl+" 960w"}
-        sizes="(max-width: 840px) 100vw, 540px" width={hero.width} height={hero.height}
-        alt={tr?"New Holland T5.110 traktörün dış görünümü; teknik terimler için genel örnek":
-          "New Holland T5.110 tractor exterior, general example for understanding technical terms"}
-        decoding="async" loading="eager" fetchpriority="high"/>
+       <picture>
+        {heroMobile&&<source type="image/webp"
+          media="(max-width:760px) and (max-resolution:2dppx)"
+          srcset={heroMobile.webpUrl+" 720w"} sizes="(max-width: 840px) 100vw, 540px"/>}
+        <img src={hero.displayUrl}
+          srcset={hero.thumbUrl+" 480w, "+(heroMobile?heroMobile.jpegUrl+" 720w, ":"")+hero.displayUrl+" 960w"}
+          sizes="(max-width: 840px) 100vw, 540px" width={hero.width} height={hero.height}
+          alt={tr?"New Holland T5.110 traktörün dış görünümü; teknik terimler için genel örnek":
+            "New Holland T5.110 tractor exterior, general example for understanding technical terms"}
+          decoding="async" loading="eager" fetchpriority="high"/>
+       </picture>
        <span class="glossary-zoom" aria-hidden="true">⤢</span>
       </button>
       <figcaption>
        {tr?"Konuya örnek traktör fotoğrafı; tüm anlatılan parçaları göstermez.":"Illustrative tractor photograph; it does not show every discussed component."}
        <a href={hero.sourcePage} target="_blank" rel="noopener noreferrer">{hero.photographer}</a> ·
        <a href={hero.licenseUrl} target="_blank" rel="noopener noreferrer">{hero.licenseName}</a>
+       {heroMobile&&<small class="glossary-photo-adaptation">{photoText(lang,"resizedDerivative")}</small>}
       </figcaption>
     </figure>}
    </div>
@@ -226,20 +237,27 @@ const queryTerms=(term:(typeof GLOSSARY_TERMS)[number])=>
         "These photographs come from TractorVS's license-reviewed library. They are general tractor views, not cutaway images or diagrams proving an internal component's exact shape."}</p>
     </div>
     <div class="glossary-gallery-grid">
-      {showcase.map(photo=><figure>
+      {galleryPhotos.map(({photo,mobile})=><figure>
         <button type="button" data-tractor-photo data-photo-url={photo.fullUrl}
          data-photo-label={photo.brand+" "+photo.model}
          data-photo-credit={photo.photographer} data-photo-source={photo.sourcePage}
          data-photo-license={photo.licenseUrl} data-photo-license-name={photo.licenseName}
          aria-label={(tr?"Fotoğrafı büyüt: ":"View photo: ")+photo.brand+" "+photo.model}>
-         <img src={photo.thumbUrl} srcset={photo.thumbUrl+" 480w, "+photo.displayUrl+" 960w"}
-          sizes="(max-width:700px) 100vw, 470px" width={photo.width} height={photo.height}
-          loading="lazy" decoding="async" alt={(tr?"Traktör genel görünümü: ":"Tractor exterior: ")+photo.brand+" "+photo.model}/>
+         <picture>
+          {mobile&&<source type="image/webp"
+            media="(max-width:760px) and (max-resolution:2dppx)"
+            srcset={mobile.webpUrl+" 720w"} sizes="(max-width:700px) 100vw, 470px"/>}
+          <img src={photo.thumbUrl}
+            srcset={photo.thumbUrl+" 480w, "+(mobile?mobile.jpegUrl+" 720w, ":"")+photo.displayUrl+" 960w"}
+            sizes="(max-width:700px) 100vw, 470px" width={photo.width} height={photo.height}
+            loading="lazy" decoding="async" alt={(tr?"Traktör genel görünümü: ":"Tractor exterior: ")+photo.brand+" "+photo.model}/>
+         </picture>
          <span class="glossary-zoom" aria-hidden="true">⤢</span>
         </button>
         <figcaption><strong>{photo.brand} {photo.model}</strong>
           <span><a href={photo.sourcePage} target="_blank" rel="noopener noreferrer">{photo.photographer}</a>
           · <a href={photo.licenseUrl} target="_blank" rel="noopener noreferrer">{photo.licenseName}</a></span>
+          {mobile&&<small class="glossary-photo-adaptation">{photoText(lang,"resizedDerivative")}</small>}
         </figcaption>
       </figure>)}
     </div>
@@ -325,7 +343,9 @@ const queryTerms=(term:(typeof GLOSSARY_TERMS)[number])=>
  .glossary-secondary-cta{border:1px solid #96ba96;color:#f6fcf0;}
  .glossary-cover{margin:0;padding:10px;background:#213a2b;border:1px solid #4e6c55;border-radius:22px;box-shadow:0 24px 70px #0004;}
  .glossary-cover button,.glossary-gallery figure button{position:relative;display:block;width:100%;padding:0;border:0;cursor:zoom-in;background:#183322;overflow:hidden;border-radius:14px;}
+ .glossary-cover picture,.glossary-gallery picture{display:block;width:100%;}
  .glossary-cover img,.glossary-gallery img{display:block;width:100%;height:auto;aspect-ratio:4/3;object-fit:cover;}
+ .glossary-photo-adaptation{display:block;margin-top:4px;font-size:11px;line-height:1.5;color:inherit;opacity:.88;}
  .glossary-zoom{position:absolute;right:13px;bottom:13px;font-size:24px;background:#15251de8;border-radius:9px;color:white;padding:5px 9px;}
  .glossary-cover figcaption{font-size:11px;line-height:1.6;color:#d7e2d8;padding:11px 4px 3px;}
  .glossary-cover figcaption a,.glossary-gallery figcaption a{text-decoration:underline;text-underline-offset:2px;}
