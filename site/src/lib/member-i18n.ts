@@ -2,6 +2,7 @@ import type {Locale} from "./locales.ts";
 // Carefully authored member and gamification UI strings for all 10 supported locales.
 export const MEMBER_TEXT:Record<Locale,Record<MemberKey,string>> = {
   "en": {
+    "showPublicProfile": "Show my profile in public member lists and rankings",
     "rememberMe": "Keep me signed in for 7 days",
     "rememberWarning": "Only on your own device. Uncheck on shared computers.",
     "topicLike": "Like discussion",
@@ -96,6 +97,7 @@ export const MEMBER_TEXT:Record<Locale,Record<MemberKey,string>> = {
     "passwordProviderPolicy": "The password must meet your account provider’s security requirements. Try a stronger password."
   },
   "tr": {
+    "showPublicProfile": "Profilimi herkese açık üye listelerinde ve sıralamalarda göster",
     "rememberMe": "7 gün oturumumu açık tut",
     "rememberWarning": "Yalnızca kendi cihazında kullan. Ortak bilgisayarda işareti kaldır.",
     "topicLike": "Konuyu beğen",
@@ -190,6 +192,7 @@ export const MEMBER_TEXT:Record<Locale,Record<MemberKey,string>> = {
     "passwordProviderPolicy": "Şifren sunucunun güvenlik koşullarını karşılamıyor. Daha güçlü bir şifre dene."
   },
   "de": {
+    "showPublicProfile": "Mein Profil in öffentlichen Mitgliederlisten und Ranglisten anzeigen",
     "rememberMe": "7 Tage angemeldet bleiben",
     "rememberWarning": "Nur auf deinem eigenen Gerät. Auf gemeinsam genutzten Geräten abwählen.",
     "topicLike": "Diskussion gefällt mir",
@@ -284,6 +287,7 @@ export const MEMBER_TEXT:Record<Locale,Record<MemberKey,string>> = {
     "passwordProviderPolicy": "Das Passwort erfüllt die Sicherheitsanforderungen nicht. Bitte wähle ein stärkeres."
   },
   "fr": {
+    "showPublicProfile": "Afficher mon profil dans les listes et classements publics",
     "rememberMe": "Rester connecté pendant 7 jours",
     "rememberWarning": "Uniquement sur votre appareil. Décochez sur un ordinateur partagé.",
     "topicLike": "Aimer la discussion",
@@ -378,6 +382,7 @@ export const MEMBER_TEXT:Record<Locale,Record<MemberKey,string>> = {
     "passwordProviderPolicy": "Le mot de passe ne respecte pas les exigences de sécurité. Choisissez-en un plus sûr."
   },
   "es": {
+    "showPublicProfile": "Mostrar mi perfil en listas y clasificaciones públicas",
     "rememberMe": "Mantener sesión iniciada 7 días",
     "rememberWarning": "Solo en tu propio dispositivo. Desactívalo en equipos compartidos.",
     "topicLike": "Me gusta esta discusión",
@@ -472,6 +477,7 @@ export const MEMBER_TEXT:Record<Locale,Record<MemberKey,string>> = {
     "passwordProviderPolicy": "La contraseña no cumple los requisitos de seguridad. Elige una más segura."
   },
   "pt-br": {
+    "showPublicProfile": "Exibir meu perfil em listas públicas de membros e classificações",
     "rememberMe": "Manter conectado por 7 dias",
     "rememberWarning": "Use apenas em seu dispositivo. Desmarque em computadores compartilhados.",
     "topicLike": "Curtir discussão",
@@ -566,6 +572,7 @@ export const MEMBER_TEXT:Record<Locale,Record<MemberKey,string>> = {
     "passwordProviderPolicy": "A senha não atende aos requisitos de segurança. Escolha uma senha mais forte."
   },
   "ru": {
+    "showPublicProfile": "Показывать мой профиль в публичных списках и рейтингах",
     "rememberMe": "Оставаться в системе 7 дней",
     "rememberWarning": "Только на личном устройстве. На общем компьютере снимите галочку.",
     "topicLike": "Нравится тема",
@@ -660,6 +667,7 @@ export const MEMBER_TEXT:Record<Locale,Record<MemberKey,string>> = {
     "passwordProviderPolicy": "Пароль не соответствует требованиям безопасности. Выберите более надёжный."
   },
   "ja": {
+    "showPublicProfile": "公開会員一覧とランキングにプロフィールを表示",
     "rememberMe": "7日間ログイン状態を保持",
     "rememberWarning": "自分専用の端末でのみ使用。共有端末ではチェックを外してください。",
     "topicLike": "この話題にいいね",
@@ -754,6 +762,7 @@ export const MEMBER_TEXT:Record<Locale,Record<MemberKey,string>> = {
     "passwordProviderPolicy": "パスワードがセキュリティ要件を満たしていません。より強いパスワードに変更してください。"
   },
   "zh": {
+    "showPublicProfile": "在公开会员列表和排行榜中显示我的资料",
     "rememberMe": "保持登录 7 天",
     "rememberWarning": "仅在自己的设备上使用。公共设备请取消勾选。",
     "topicLike": "喜欢此话题",
@@ -848,6 +857,7 @@ export const MEMBER_TEXT:Record<Locale,Record<MemberKey,string>> = {
     "passwordProviderPolicy": "密码不符合安全要求，请选择更安全的密码。"
   },
   "hi": {
+    "showPublicProfile": "मेरी प्रोफ़ाइल सार्वजनिक सदस्य सूची और रैंकिंग में दिखाएँ",
     "rememberMe": "मुझे 7 दिनों तक लॉग इन रखें",
     "rememberWarning": "केवल अपने डिवाइस पर चुनें। साझा कंप्यूटर पर इसे बंद रखें।",
     "topicLike": "चर्चा पसंद करें",
@@ -942,5 +952,5 @@ export const MEMBER_TEXT:Record<Locale,Record<MemberKey,string>> = {
     "passwordProviderPolicy": "पासवर्ड सुरक्षा शर्तें पूरी नहीं करता। कृपया मज़बूत पासवर्ड चुनें।"
   }
 };
-export type MemberKey = "rememberMe" | "rememberWarning" | "topicLike" | "topicUnlike" | "topicLikes" | "memberReads" | "recentMembers" | "recentMembersIntro" | "noRecentMembers" | "readsDetail" | "register" | "passwordLogin" | "password" | "passwordHint" | "emailConfirm" | "authError" | "passwordShort" | "google" | "github" | "otherLogin" | "oauthError" | "memberHeading" | "memberIntro" | "myProfile" | "handle" | "displayName" | "bio" | "favoriteBrand" | "avatar" | "save" | "saved" | "profileError" | "uploadError" | "privacy" | "optOut" | "leaderboard" | "month" | "alltime" | "topics" | "replies" | "helpful" | "points" | "rank" | "newcomer" | "contributor" | "mentor" | "noMembers" | "myBookmarks" | "noBookmarks" | "saveTopic" | "removeTopic" | "helpfulButton" | "unhelpfulButton" | "voteLogin" | "voteOwn" | "voteError" | "signInNotice" | "loading" | "viewProfile" | "close" | "memberSince" | "forgotPassword" | "resetEmailSent" | "resetNewPassword" | "resetSave" | "resetUpdated" | "passwordMismatch" | "showPassword" | "hidePassword" | "followTopic" | "unfollowTopic" | "followingTopics" | "noFollowingTopics" | "newReplies" | "defaultMemberName" | "editProfile" | "closeProfile" | "memberActivity" | "hideActivity" | "profileOptional" | "signupHeading" | "signupIntro" | "confirmPassword" | "alreadyMember" | "emailLoginAlternative" | "resendConfirmation" | "resendConfirmationSent" | "signupConfirmHelp" | "invalidLinkHelp" | "guestReadOnly" | "guestPostGate" | "passwordProviderPolicy";
+export type MemberKey = "showPublicProfile" | "rememberMe" | "rememberWarning" | "topicLike" | "topicUnlike" | "topicLikes" | "memberReads" | "recentMembers" | "recentMembersIntro" | "noRecentMembers" | "readsDetail" | "register" | "passwordLogin" | "password" | "passwordHint" | "emailConfirm" | "authError" | "passwordShort" | "google" | "github" | "otherLogin" | "oauthError" | "memberHeading" | "memberIntro" | "myProfile" | "handle" | "displayName" | "bio" | "favoriteBrand" | "avatar" | "save" | "saved" | "profileError" | "uploadError" | "privacy" | "optOut" | "leaderboard" | "month" | "alltime" | "topics" | "replies" | "helpful" | "points" | "rank" | "newcomer" | "contributor" | "mentor" | "noMembers" | "myBookmarks" | "noBookmarks" | "saveTopic" | "removeTopic" | "helpfulButton" | "unhelpfulButton" | "voteLogin" | "voteOwn" | "voteError" | "signInNotice" | "loading" | "viewProfile" | "close" | "memberSince" | "forgotPassword" | "resetEmailSent" | "resetNewPassword" | "resetSave" | "resetUpdated" | "passwordMismatch" | "showPassword" | "hidePassword" | "followTopic" | "unfollowTopic" | "followingTopics" | "noFollowingTopics" | "newReplies" | "defaultMemberName" | "editProfile" | "closeProfile" | "memberActivity" | "hideActivity" | "profileOptional" | "signupHeading" | "signupIntro" | "confirmPassword" | "alreadyMember" | "emailLoginAlternative" | "resendConfirmation" | "resendConfirmationSent" | "signupConfirmHelp" | "invalidLinkHelp" | "guestReadOnly" | "guestPostGate" | "passwordProviderPolicy";
 export const memberText=(lang:Locale,key:MemberKey):string=>MEMBER_TEXT[lang][key];
