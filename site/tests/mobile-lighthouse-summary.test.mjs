@@ -1,7 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import {readFileSync} from "node:fs";
-import {analyzeLighthouse,interpretCrux,markdownReport,FIELD_THRESHOLDS} from "../scripts/mobile-lighthouse-summary.mjs";
+import {analyzeLighthouse,collectImageOptimizationCandidates,interpretCrux,markdownReport,FIELD_THRESHOLDS} from "../scripts/mobile-lighthouse-summary.mjs";
 
 const sample={
   finalUrl:"https://tractorvs.com/tr/",
@@ -79,4 +79,40 @@ test("the sampled templates include the whole public experience and each added r
  const fail=markdownReport([analyzeLighthouse(sample,"advisor")],{});
  assert.match(fail,/is-crawlable: Links are crawlable/);
  assert.match(fail,/\*\*advisor\*\*: 92\/100/);
+});
+
+
+test("image performance candidates are first-party, query-free and never double-count Lighthouse audits",()=>{
+ const first="https://tractorvs.com/images/tractors/belarus-80-1-nikolai-960.jpg";
+ const lhr={audits:{
+  "modern-image-formats":{details:{items:[
+   {url:first+"?v=stale",wastedBytes:180000},
+   {url:"https://other.example/images/tractors/copy.jpg",wastedBytes:900000},
+   {url:"https://tractorvs.com/internal/secret.json",wastedBytes:900000},
+  ]}},
+  "uses-responsive-images":{details:{items:[
+   {url:first,wastedBytes:270000},
+   {url:"https://tractorvs.com/images/tractors/unknown.jpg",wastedBytes:-1},
+  ]}},
+ }};
+ const items=collectImageOptimizationCandidates(lhr);
+ assert.equal(items.length,1);
+ assert.equal(items[0].url,first,"do not retain query tokens or emit off-site images");
+ assert.equal(items[0].estimatedMaxWasteBytes,270000,"overlapping audit estimates cannot add up");
+ assert.deepEqual(items[0].flags,["modern-image-formats","uses-responsive-images"]);
+ const report=analyzeLighthouse({...sample,audits:{...sample.audits,...lhr.audits}},"model");
+ assert.deepEqual(report.imageCandidates,items);
+ const md=markdownReport([report,report],{});
+ assert.match(md,/First-party image optimization candidates/);
+ assert.match(md,/laboratory estimates only/);
+ assert.match(md,/belarus-80-1-nikolai-960\\.jpg/);
+ assert.match(md,/264 KiB/);
+ assert.doesNotMatch(md,/stale|other\\.example|internal\\/secret/);
+ assert.doesNotMatch(md,/527 KiB/);
+});
+
+test("no image itemization never implies photos are already optimized",()=>{
+ assert.deepEqual(collectImageOptimizationCandidates({audits:{}}),[]);
+ const md=markdownReport([analyzeLighthouse(sample,"home")],{});
+ assert.match(md,/does not prove all photographs are optimally sized/);
 });
