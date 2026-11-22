@@ -1,5 +1,6 @@
 ---
 import SiteLayout from "../layouts/SiteLayout.astro";
+import TractorPhoto from "./TractorPhoto.astro";
 import "../styles/home-experience.css";
 import { getPublicCatalog } from "../lib/catalog";
 import { homeText as h } from "../lib/home-ui";
@@ -220,16 +221,21 @@ const suggestionPayload = JSON.stringify(catalogue.tractors.map((tractor) => ({
       )}
       <div class="home-featured-grid">
         {featured.map((tractor) => (
-          <a class="home-featured-card" href={detailBase + tractor.slug + "/"}>
-            <span class="home-featured-brand">{tractor.brand_name}</span>
-            <h3>{tractor.model_name}</h3>
-            {tractor.variant && <p class="home-featured-variant">{tractor.variant}</p>}
-            <div class="home-featured-facts">
-              {tractor.horsepower != null && <span><strong>{tractor.horsepower} HP</strong>{t(lang,"power")}</span>}
-              <span><strong>{tractor.specifications.length}</strong>{t(lang,"specifications")}</span>
-            </div>
-            <span class="home-featured-link">{d(lang,"modelDetails")} <span aria-hidden="true">↗</span></span>
-          </a>
+          <article class="home-featured-card">
+            {/** Actual licensed tractor imagery with full-screen view and
+                 visible photographer/license credits; never an AI-made model photo. */}
+            <TractorPhoto tractor={tractor} lang={lang} mode="catalog" />
+            <a class="home-featured-main" href={detailBase + tractor.slug + "/"}>
+              <span class="home-featured-brand">{tractor.brand_name}</span>
+              <h3>{tractor.model_name}</h3>
+              {tractor.variant && <p class="home-featured-variant">{tractor.variant}</p>}
+              <div class="home-featured-facts">
+                {tractor.horsepower != null && <span><strong>{tractor.horsepower} HP</strong>{t(lang,"power")}</span>}
+                <span><strong>{tractor.specifications.length}</strong>{t(lang,"specifications")}</span>
+              </div>
+              <span class="home-featured-link">{d(lang,"modelDetails")} <span aria-hidden="true">↗</span></span>
+            </a>
+          </article>
         ))}
       </div>
     </div>
