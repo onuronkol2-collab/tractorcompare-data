@@ -145,6 +145,9 @@ test("Astro CSS attribute after source ID cannot create fictitious sitemap chang
   assert.notEqual(significantContentDigest(withQaId.replace("ECE R120","ISO 14396"),b),baseline);
   assert.notEqual(significantContentDigest(withQaId.replace(id,"untrusted-id"),b),baseline,
     "malformed source identity cannot be silently removed");
+  assert.notEqual(significantContentDigest(withQaId.replace('data-spec-id="'+id+'"',
+    'data-spec-id="'+id+'" data-spec-id="'+id+'"'),b),baseline,
+    "duplicate source identity markers must remain visible to the content integrity hash");
   assert.notEqual(significantContentDigest(withQaId.replace("data-astro-cid-abc123","data-astro-cid-changed"),b),baseline,
     "all other attributes remain part of the provenance digest");
 
