@@ -4,6 +4,7 @@ import {readFileSync} from "node:fs";
 import {BATCH_FILE_IDS,selectReviewedSecondBatch} from "../scripts/photo-mobile-second-batch.mjs";
 import {APPROVED_TRACTOR_PHOTOS} from "../src/lib/tractor-photos.ts";
 import {MOBILE_PILOT_IDS,approvedMobilePhotoFormats} from "../src/lib/approved-mobile-photo-assets.mjs";
+import {evaluateLiveImageSitemap,PUBLICATION_HOLD_IDS} from "../scripts/photo-mobile-second-batch-public-coverage.mjs";
 
 test("second batch selects 18 distinct licensed and already-approved images, excluding published 3",()=>{
  const manifest=selectReviewedSecondBatch();
@@ -58,4 +59,30 @@ test("bulk QA workflow has no publishing, GitHub write token or arbitrary source
  for(const forbidden of ["wrangler deploy","git push","supabase db","contents: write","workflow_dispatch:"]){
    assert.doesNotMatch(workflow,new RegExp(forbidden));
  }
+});
+
+test("only fifteen real public image sitemap photos are eligible; three staged IDs are held",()=>{
+ const items=selectReviewedSecondBatch().selected;
+ const publicPhotos=items.filter(p=>!PUBLICATION_HOLD_IDS.includes(p.fileId));
+ assert.equal(publicPhotos.length,15);
+ const xml='<?xml version="1.0"?><urlset xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">'+
+   publicPhotos.map(photo=>{
+     const original=APPROVED_TRACTOR_PHOTOS.find(x=>x.fileId===photo.fileId);
+     return '<url><loc>https://tractorvs.com/tr/tractors/example/</loc><image:image>'+
+       '<image:loc>https://tractorvs.com'+original.fullUrl+'</image:loc>'+
+       '</image:image></url>';
+   }).join('')+'</urlset>';
+ const report=evaluateLiveImageSitemap(xml);
+ assert.equal(report.ok,true);
+ assert.equal(report.checked,18);
+ assert.equal(report.publiclyVisible,15);
+ assert.equal(report.eligibleForRelease.length,15);
+ assert.equal(report.missing.length,3);
+ assert.deepEqual(report.holdIds,PUBLICATION_HOLD_IDS);
+ assert.deepEqual(report.missing.map(p=>p.fileId).sort(),[...PUBLICATION_HOLD_IDS].sort());
+ const corrupted=xml.replace(publicPhotos[0].fileId+'-1920.jpg',"unknown-1920.jpg");
+ const bad=evaluateLiveImageSitemap(corrupted);
+ assert.equal(bad.ok,false,"Previously published source must not vanish silently");
+ assert.equal(bad.unexpectedMissing.length,1);
+ assert.ok(!report.eligibleForRelease.some(id=>PUBLICATION_HOLD_IDS.includes(id)));
 });
