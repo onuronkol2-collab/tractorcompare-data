@@ -58,6 +58,11 @@ const areaUnitOptions = [
     <div class="container advisor-layout">
       <section id="advisor-results" class="advisor-results" aria-live="polite" aria-atomic="false" hidden></section>
 
+      <nav class="advisor-step-jumps" aria-label={heading} data-research-advisor="steps">
+        <a href="#advisor-land-title"><span aria-hidden="true">01</span>{tx(lang,"stepLand")}</a>
+        <a href="#advisor-equipment-title"><span aria-hidden="true">02</span>{tx(lang,"stepEquipment")}</a>
+        <a href="#advisor-more-title"><span aria-hidden="true">03</span>{tx(lang,"stepDetails")}</a>
+      </nav>
       <form id="farm-advisor-form" class="advisor-form">
         <section class="advisor-step" aria-labelledby="advisor-land-title">
           <div class="advisor-step-head">
@@ -137,7 +142,7 @@ const areaUnitOptions = [
             <summary>
               <span class="advisor-step-number" aria-hidden="true">03</span>
               <span class="advisor-more-label">
-                <strong>{tx(lang,"stepDetails")}</strong>
+                <strong id="advisor-more-title">{tx(lang,"stepDetails")}</strong>
                 <small>{tx(lang,"stepDetailsHint")}</small>
               </span>
               <span class="advisor-more-chevron" aria-hidden="true">⌄</span>
@@ -508,6 +513,14 @@ const areaUnitOptions = [
 </script>
 
 <style is:global>
+  /* Scoped to the advisor; no global menu or forum style changes. */
+  .advisor-step-jumps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-bottom:17px}
+  .advisor-step-jumps a{display:flex;align-items:center;gap:12px;min-width:0;min-height:56px;padding:12px 15px;border-radius:12px;border:1px solid #bad5bf;background:#f7fbf5;color:#204c32;text-decoration:none;font-size:14px;font-weight:780;line-height:1.4}
+  .advisor-step-jumps a span{display:grid;place-items:center;flex:0 0 30px;height:30px;border-radius:9px;background:#e2efdf;color:#295b3a;font-size:12px;font-weight:900}
+  .advisor-step-jumps a:hover{background:#e8f3e6;border-color:#729a79}
+  .advisor-step-jumps a:focus-visible{outline:3px solid #3c874f;outline-offset:2px}
+  .advisor-step-head [id],#advisor-more-title{scroll-margin-top:6rem}
+  @media(max-width:650px){.advisor-step-jumps{grid-template-columns:1fr}.advisor-step-jumps a{min-height:48px}}
   .advisor-hero {
     padding:58px 0 62px;
     background:linear-gradient(120deg,#0e2018 0%,#193b2a 100%);

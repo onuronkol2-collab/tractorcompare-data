@@ -133,8 +133,12 @@ const summaryItems = [
     {(lang==="en"||lang==="tr")
       ? <a class="model-spec-glossary-banner" href={localizedPath(lang,"/guides/tractor-technical-terms/")}><strong>{lang==="tr"?"Teknik terimler size ne anlatıyor?":"What do these technical terms mean?"}</strong><span>{lang==="tr"?"Teknik terimleri örneklerle öğrenin; özellik adlarının yanındaki ? bağlantısından doğrudan açıklamaya gidin.":"Understand technical terms with examples; the ? by each linked specification opens its definition."} ↗</span></a>
       : translatedSelection && <a class="model-spec-glossary-banner" href={selectionGuideUrl}><strong>{translatedSelection[0]}</strong><span>{translatedSelection[1]} ↗</span></a>}
-    {groups.length>0?<div class="model-spec-groups">{groups.map((group)=>
-      <section class="model-spec-group"><h3>{group.label}</h3><div class="model-spec-grid">
+    {groups.length>1&&<nav class="model-spec-toc" aria-label={t(lang,"technicalSpecs")}>
+      <strong>{t(lang,"technicalSpecs")}</strong>
+      <div>{groups.map((group,index)=><a href={"#model-spec-group-"+(index+1)}>{group.label}</a>)}</div>
+    </nav>}
+    {groups.length>0?<div class="model-spec-groups">{groups.map((group,index)=>
+      <section class="model-spec-group" id={"model-spec-group-"+(index+1)}><h3>{group.label}</h3><div class="model-spec-grid">
         {group.specifications.map((spec)=><article class="model-spec-card" data-spec-id={spec.spec_id}>
           <div class="model-spec-top"><h4>{specLabel(spec,lang)}</h4>{(lang==="tr"||lang==="en")&&glossaryAnchorForKey(spec.canonical_key)&&<a class="model-spec-glossary-link" href={localizedPath(lang,"/guides/tractor-technical-terms/")+"#"+glossaryAnchorForKey(spec.canonical_key)} title={lang==="tr"?"Bu teknik terim ne işe yarar?":"What does this technical term mean?"} aria-label={lang==="tr"?specLabel(spec,lang)+" açıklaması": "Learn about "+specLabel(spec,lang)}>?</a>}{spec.rated_rpm!=null&&<span>{spec.rated_rpm} rpm</span>}</div>
           <p class="model-spec-value">{spec.spec_value}{spec.unit?" "+spec.unit:""}</p>
@@ -186,6 +190,16 @@ const summaryItems = [
 </SiteLayout>
 
 <style>
+  /* Real specification headings are the only navigation destinations. */
+  .model-spec-toc{display:grid;gap:13px;padding:clamp(16px,2.4vw,22px);margin:20px 0 30px;border:1px solid #c6ddc6;border-radius:15px;background:linear-gradient(110deg,#f3f9f0,#fff);scroll-margin-top:6rem}
+  .model-spec-toc>strong{font-size:clamp(16px,2vw,20px);color:#204f34}
+  .model-spec-toc>div{display:flex;flex-wrap:wrap;gap:8px}
+  .model-spec-toc a{display:inline-flex;align-items:center;min-height:44px;padding:8px 12px;border:1px solid #b4d0b6;border-radius:9px;background:white;color:#1e5837;font-size:14px;font-weight:750;text-decoration:none;overflow-wrap:anywhere}
+  .model-spec-toc a:hover{background:#e8f3e5;border-color:#6d9f73}
+  .model-spec-toc a:focus-visible{outline:3px solid #3c874f;outline-offset:3px}
+  .model-spec-group[id]{scroll-margin-top:7rem}
+  @media(max-width:600px){.model-spec-toc>div{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}.model-spec-toc a{justify-content:center;text-align:center}}
+  @media(max-width:375px){.model-spec-toc>div{grid-template-columns:1fr}}
  .model-summary-provenance-note { max-width:860px; margin:10px 0 0; color:#dce8d7; font-size:12px; line-height:1.7; }
  .model-summary-power-source, .model-summary-power-review { display:block; margin-top:8px; font-size:12px; line-height:1.55; font-weight:650; overflow-wrap:anywhere; }
  .model-summary-power-source { color:#d9f4c7; text-underline-offset:3px; }
