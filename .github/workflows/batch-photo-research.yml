@@ -16,6 +16,7 @@ on:
       - "site/scripts/photo-sitemap-fetch.mjs"
       - "site/scripts/photo-source-response.mjs"
       - "site/scripts/photo-private-inventory.mjs"
+      - "site/scripts/photo-archive-candidate-index.mjs"
       - "site/scripts/photo-research-quality-gate.mjs"
       - "site/scripts/extract-archived-tractor-inventory.py"
       - "site/scripts/archive-brand-photo-discovery.mjs"
@@ -55,13 +56,19 @@ jobs:
           node-version: "22.23.4"
       - name: Export only model identities from historical tractor archive
         run: python site/scripts/extract-archived-tractor-inventory.py
-      # Both searches always run independently; neither failure is hidden by
-      # continue-on-error because the final quality gate checks both outcomes.
-      - name: Search licensed image candidates for ALL archived brands and models
+      # Acquire live public model identities ONCE. The next step combines this
+      # inventory with archival models in brand-batched Commons queries.
+      - name: Snapshot public published model identity from live sitemap
+        id: inventory
+        continue-on-error: true
+        run: node site/scripts/batch-photo-discovery.mjs --inventory-only
+      # Preserve the archives and stage outcomes even when a source fails.
+      # The final quality gate must still fail on any incomplete research.
+      - name: Search licensed candidates for archived AND current models by brand
         id: archive
         continue-on-error: true
         run: node site/scripts/archive-brand-photo-discovery.mjs
-      - name: Independently recheck all CURRENT published model pages
+      - name: Cross-check ALL published models against same-run Commons brand evidence
         id: published
         continue-on-error: true
         run: node site/scripts/batch-photo-discovery.mjs
@@ -75,11 +82,14 @@ jobs:
       - name: Fail closed unless both stages and research report are complete
         if: always()
         env:
+          INVENTORY_OUTCOME: ${{ steps.inventory.outcome }}
           ARCHIVE_OUTCOME: ${{ steps.archive.outcome }}
           PUBLISHED_OUTCOME: ${{ steps.published.outcome }}
         run: |
+          echo "Live inventory outcome: $INVENTORY_OUTCOME"
           echo "Archive research outcome: $ARCHIVE_OUTCOME"
           echo "Published model research outcome: $PUBLISHED_OUTCOME"
           node site/scripts/photo-research-quality-gate.mjs
+          test "$INVENTORY_OUTCOME" = "success"
           test "$ARCHIVE_OUTCOME" = "success"
           test "$PUBLISHED_OUTCOME" = "success"
