@@ -27,7 +27,9 @@ permissions:
   contents: read
 
 concurrency:
-  group: tractorvs-all-model-photo-research
+  # Pull-request tests must not queue behind the long daily live research.
+  # Main pushes, schedules and manual runs remain in one research lane.
+  group: ${{ github.event_name == 'pull_request' && github.ref || 'production' }}-tractorvs-photo
   cancel-in-progress: false
 
 jobs:
