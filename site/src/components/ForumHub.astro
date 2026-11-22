@@ -617,7 +617,7 @@ const schema=indexable?{
  };
  const sortPublicRows=()=>{
   // Rankings are derived ONLY from real published reply counts. No synthetic
-  // views, activity, author identity, likes, or aggregateRating are generated.
+  // views, activity, author identity, likes, or rating data are generated.
   for(const grid of document.querySelectorAll<HTMLElement>(".community-topic-grid")){
    const rows=[...grid.querySelectorAll<HTMLElement>(":scope > [data-forum-topic]")];
    rows.sort((a,b)=>view==="popular"
