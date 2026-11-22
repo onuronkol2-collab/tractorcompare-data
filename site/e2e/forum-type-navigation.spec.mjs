@@ -11,7 +11,7 @@ test("forum dashboard typography is readable on desktop, preserving key actions"
  expect(await font(page.locator(".forum-view-button").first())).toBeGreaterThanOrEqual(14);
  expect(await font(page.locator(".forum-side-panel>p").first())).toBeGreaterThanOrEqual(14);
  expect(await font(page.locator(".member-toolbar-identity small").first())).toBeGreaterThanOrEqual(13.5);
- await expect(page.locator(".community-sidebar #forum-compose")).toBeVisible();
+ await expect(page.locator(".community-primary-column #forum-compose")).toBeVisible();
  await expect(page.locator(".member-community")).toBeVisible();
  const dom=await page.evaluate(()=>({viewport:innerWidth,scroll:document.documentElement.scrollWidth}));
  expect(dom.scroll).toBeLessThanOrEqual(dom.viewport+2);
