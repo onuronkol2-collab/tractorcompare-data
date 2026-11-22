@@ -76,7 +76,9 @@ Deno.test("changed body, forged checkpoint size or out-of-range progress must fa
     let rejected=false;try{chooseTranslationSegments(article,altered)}catch{rejected=true;}
     // Invalid syntax is not a private progress marker, and must NEVER be
     // mistaken by the worker for a verified, resumable checkpoint.
-    assert(translationCheckpoint(altered)===null||rejected,
+    let parsed=false;
+    try{parsed=translationCheckpoint(altered)!==null;}catch{rejected=true;}
+    assert(!parsed||rejected,
       "invalid or out-of-range progress cannot be trusted");
   }
   let rejected=false;
