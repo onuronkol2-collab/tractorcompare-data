@@ -73,3 +73,46 @@ test("public live view never executes user-supplied HTML or unsafe link protocol
  await expect(page.locator('.forum-live-body a[href^="javascript:"]')).toHaveCount(0);
  await expect(page.locator('.forum-live-body a[href="https://example.com/belge"]')).toHaveAttribute("rel",/ugc nofollow/);
 });
+
+test("forum categories and search respond to clicks for new public topics",async({page})=>{
+ const maintenance=row({
+  id:"8f8118b4-5773-4dc6-826d-174d7a732cbb",
+  topic_id:"7a6625c2-0375-4ab3-a29b-5f18a58cda31",
+  slug:"2026-bakim-deneyimi-7a6625c203754ab3a29b5f18a58cda31",
+  category:"maintenance",
+  title:"2026 Traktör Motor Bakımı ve Servis Deneyimleri",
+  body:"Traktörde motor bakımı, filtre değişimi ve dönemlik servis kayıtları hakkında kendi gözlemlerim."
+ });
+ await page.route(path,route=>route.fulfill({json:[row(),maintenance]}));
+ await page.goto("/tr/forum/?live-forum-test=1");
+ const cards=page.locator("[data-forum-live-grid] [data-forum-topic]");
+ const news=cards.locator('[data-forum-topic-category="news"]');
+ const upkeep=cards.locator('[data-forum-topic-category="maintenance"]');
+ await expect(cards).toHaveCount(2);
+ await expect(news).toBeVisible();
+ await expect(upkeep).toBeVisible();
+
+ const maintenanceTab=page.locator('[data-forum-category="maintenance"]');
+ await maintenanceTab.click();
+ await expect(maintenanceTab).toHaveAttribute("aria-pressed","true");
+ await expect(upkeep).toBeVisible();
+ await expect(news).toBeHidden();
+
+ const search=page.locator("#forum-filter");
+ await search.fill("kelime-olmayan-arama-12345");
+ await expect(upkeep).toBeHidden();
+ await expect(page.locator("#forum-no-results")).toBeVisible();
+
+ await search.fill("motor");
+ await expect(upkeep).toBeVisible();
+ await expect(news).toBeHidden();
+ await expect(page.locator("#forum-no-results")).toBeHidden();
+
+ await search.fill("");
+ const all=page.locator('[data-forum-category="all"]');
+ await all.click();
+ await expect(all).toHaveAttribute("aria-pressed","true");
+ await expect(maintenanceTab).toHaveAttribute("aria-pressed","false");
+ await expect(news).toBeVisible();
+ await expect(upkeep).toBeVisible();
+});
