@@ -14,7 +14,7 @@ const tractor=(brand_name,model_name)=>({
   engine:null,transmission:null,drivetrain:null,weight_kg:null,specifications:[]
 });
 test("only exact matching tractor model identity receives a verified photo",()=>{
-  assert.equal(APPROVED_TRACTOR_PHOTOS.length,94);
+  assert.equal(APPROVED_TRACTOR_PHOTOS.length,97);
   assert.equal(tractorPhotos(tractor("Belarus","82.1")).length,4);
   assert.equal(tractorPhotos(tractor("Belarus","80.1")).length,1);
   assert.equal(tractorPhotos(tractor("Belarus","132N")).length,1);
@@ -571,10 +571,65 @@ test("McCormick X5.085 and TYM T6115/T2025P have exact licensed files, source pr
    assert.equal(tractorPhotos(tractor(b,m)).length,0,"Unapproved adjacent variant "+b+" "+m);
 });
 
+test("three independent TYM F50CHN Commons photographs are SHA-verified and UUID-specific in 10 locales",()=>{
+ const UUID="458be7b8-f6b8-4319-b264-dc6c7cc36ae7";
+ const ledger=JSON.parse(readFileSync(new URL("../docs/photo-import-evidence-tym-f50chn-wave3-20261122.json",import.meta.url),"utf8"));
+ assert.equal(ledger.reviewRequired,true);
+ assert.equal(ledger.publicationCount,0,"Staging ledger is historic source proof, not automatic publish authority");
+ assert.equal(ledger.images.length,3);
+ const proper={...tractor("TYM","T3048"),tractor_id:UUID,variant:"F50CHN / F50C cab / 3-range HST"};
+ const pictures=tractorPhotos(proper);
+ assert.deepEqual(pictures.map(x=>x.fileId),[
+  "tym-t3048-f50chn-55-marcelx42-2025",
+  "tym-t3048-f50chn-57-marcelx42-2025",
+  "tym-t3048-f50chn-73-marcelx42-2025"
+ ]);
+ for(const p of pictures){
+   assert.equal(p.tractorId,UUID);
+   assert.equal(p.photographer,"MarcelX42");
+   assert.equal(p.licenseName,"CC BY-SA 4.0");
+   assert.equal(p.configurationExact,false,"Photograph cannot assert registered engine configuration");
+   const proof=ledger.images.find(e=>e.fileId===p.fileId);
+   assert.ok(proof,"Source SHA ledger must match "+p.fileId);
+   assert.equal(proof.license,p.licenseName);
+   assert.equal(proof.photographer,p.photographer);
+   assert.equal(decodeURIComponent(proof.sourcePage),decodeURIComponent(p.sourcePage));
+   assert.match(proof.origin,/^https:\/\/thumb\.wikimedia\.org\/wikipedia\/commons\/thumb\//);
+   assert.match(proof.originSha256,/^[0-9a-f]{64}$/);
+   assert.equal(proof.approvedToPublish,false);
+   assert.deepEqual(proof.derivatives.map(e=>e.width).sort((a,b)=>a-b),[480,960,1920]);
+   for(const d of proof.derivatives){
+      const bytes=readFileSync(new URL("../public/images/tractors/"+d.file,import.meta.url));
+      assert.equal(d.file,p.fileId+"-"+d.width+".jpg");
+      assert.equal(bytes.length,d.bytes);
+      assert.equal(bytes.subarray(0,3).toString("hex"),"ffd8ff");
+      assert.equal(bytes.subarray(-2).toString("hex"),"ffd9");
+      assert.equal(createHash("sha256").update(bytes).digest("hex"),d.sha256);
+   }
+   for(const lang of LOCALES){
+     const graph=modelStructuredData(proper,lang,"https://tractorvs.com/")["@graph"];
+     const photo=graph.find(x=>x["@type"]==="ImageObject");
+     assert.ok(photo,lang+" "+p.fileId);
+     // Model structured data uses primary gallery image (first of 3);
+     // only the primary can represent the unique ImageObject per locale.
+     assert.equal(photo.license,pictures[0].licenseUrl);
+     assert.equal(photo.creator.name,pictures[0].photographer);
+     assert.equal(decodeURIComponent(photo.acquireLicensePage),decodeURIComponent(pictures[0].sourcePage));
+   }
+ }
+ for(const id of [
+   "e5dd1074-88ae-4293-8748-19c57de60088",
+   "5d1360a7-1494-44b9-9728-93de291ab082",
+   "12d51778-7e30-46ac-9428-ce672a4bf4a0"
+ ])assert.equal(tractorPhotos({...proper,tractor_id:id}).length,0,"Wrong T3048 variant cannot receive F50CHN image");
+ assert.equal(tractorPhotos(tractor("TYM","T3048")).length,0,"ID-less T3048 must not see F50CHN image");
+ assert.equal(tractorPhotos(tractor("TYM","T6130")).length,0,"Neighbor TYM series must not inherit F50CHN");
+});
+
 test("historic photo batch is staged with rights and does not create records",()=>{
-  assert.equal(HISTORICAL_LICENSED_PHOTOS.length,83);
+  assert.equal(HISTORICAL_LICENSED_PHOTOS.length,86);
   const all=new Set(HISTORICAL_LICENSED_PHOTOS.map(x=>x.fileId));
-  assert.equal(all.size,83);
+  assert.equal(all.size,86);
   assert.ok(HISTORICAL_LICENSED_PHOTOS.every(x=>x.configurationExact===false));
   assert.ok(!HISTORICAL_LICENSED_PHOTOS.some(x=>["Product","Vehicle"].includes(x.model)));
 });
