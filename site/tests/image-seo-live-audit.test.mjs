@@ -124,7 +124,7 @@ test("missing locale, only CC0, and noncanonical photo URLs fail multilingual ri
    {fileId:"public-domain",sourcePage:"https://commons.wikimedia.org/wiki/File:PD.jpg"}];
  const sitemap=imageXml([
   [root+"/tr/tractors/only-cc0/",[root+"/images/tractors/public-domain-1920.jpg"]],
-  [root+"/en/tractors/good/",[root+"/images/tractors/photo-ok-1920.jpg"]]
+  [root+"/tractors/good/",[root+"/images/tractors/photo-ok-1920.jpg"]]
  ]);
  assert.throws(()=>copyrightLocaleSitemapSamples(sitemap,rights,["en","tr"]),/tr/);
  assert.deepEqual(copyrightLocaleSitemapSamples(sitemap,rights,["en"])[0].fileId,"photo-ok");
