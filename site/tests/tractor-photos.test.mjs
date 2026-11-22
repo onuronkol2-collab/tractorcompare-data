@@ -3,7 +3,7 @@ import assert from "node:assert/strict";
 import {readFileSync} from "node:fs";
 import {createHash} from "node:crypto";
 import {LOCALES} from "../src/lib/locales.ts";
-import {APPROVED_TRACTOR_PHOTOS,tractorPhotos,primaryTractorPhoto,photoText,tractorPhotoAlt,resolveApprovedPhotoSource} from "../src/lib/tractor-photos.ts";
+import {APPROVED_TRACTOR_PHOTOS,tractorPhotos,primaryTractorPhoto,photoText,tractorPhotoAlt,resolveApprovedPhotoSource,isSupportedCommonsPhotoOrigin,COMMONS_THUMBNAIL_STEPS} from "../src/lib/tractor-photos.ts";
 import {modelStructuredData} from "../src/lib/model-seo.ts";
 import {HISTORICAL_LICENSED_PHOTOS} from "../src/lib/historical-licensed-photos.ts";
 const file=p=>readFileSync(new URL("../src/"+p,import.meta.url),"utf8");
@@ -577,4 +577,41 @@ test("source-backed copyright notices cover approved Google warning images in al
      "Do not invent copyright ownership for "+brand+" "+model+" "+locale);
   }
  }
+});
+
+test("2026 Commons direct URLs use only supported fixed thumbnail widths",()=>{
+  assert.deepEqual([...COMMONS_THUMBNAIL_STEPS].sort((a,b)=>a-b),
+    [20,40,60,120,250,330,500,960,1280,1920,3840]);
+  let checked=0;
+  for(const photo of APPROVED_TRACTOR_PHOTOS){
+    for(const [size,origin] of [
+      [480,photo.originThumbUrl],[960,photo.originDisplayUrl],
+      [1920,photo.originFullUrl]
+    ]){
+      assert.ok(isSupportedCommonsPhotoOrigin(origin),
+        photo.fileId+" "+size+" must not silently return HTTP 400");
+      assert.equal(resolveApprovedPhotoSource("/images/tractors/"+photo.fileId+"-"+size+".jpg"),origin);
+      checked++;
+    }
+    for(const unsupportedSize of [640,720,800]){
+      assert.equal(resolveApprovedPhotoSource(
+        "/images/tractors/"+photo.fileId+"-"+unsupportedSize+".jpg"),null);
+    }
+  }
+  assert.ok(checked>=150,"Must cover the whole approved photo catalogue");
+});
+test("Wikimedia-only upstream guard rejects arbitrary resize steps and offsite assets",()=>{
+  const stem="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Example.jpg/";
+  for(const invalid of [
+    stem+"640px-Example.jpg",stem+"720px-Example.jpg",stem+"800px-Example.jpg",
+    "https://evil.example/wikipedia/commons/thumb/5/53/Example.jpg/960px-Example.jpg",
+    "http://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Example.jpg/960px-Example.jpg",
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Example.jpg/720px-Example.jpg?bypass=1",
+    "javascript:alert(1)","not a url"
+  ])assert.equal(isSupportedCommonsPhotoOrigin(invalid),false,invalid);
+  assert.equal(isSupportedCommonsPhotoOrigin(stem+"500px-Example.jpg"),true);
+  assert.equal(isSupportedCommonsPhotoOrigin(stem+"960px-Example.jpg"),true);
+  assert.equal(isSupportedCommonsPhotoOrigin(stem+"1920px-Example.jpg"),true);
+  assert.equal(isSupportedCommonsPhotoOrigin(
+    "https://upload.wikimedia.org/wikipedia/commons/5/53/Example.jpg"),true);
 });
