@@ -1,4 +1,6 @@
 name: TractorVS live forum publication watchdog
+# 22 Nov 2026 German release check: independently verify three approved locales
+# against real Cloudflare HTML and sitemap; no change to audit logic or access.
 
 on:
   # 22 Nov 2026 EN-first release audit: verify the newly approved public EN page
