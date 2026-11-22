@@ -1,0 +1,11 @@
+/* Source-only model research navigation. Loaded as an external asset;
+   no extra SSR text, source edits or synthetic sitemap content changes. */
+.model-spec-toc{display:grid;gap:13px;padding:clamp(16px,2.4vw,22px);margin:20px 0 30px;border:1px solid #c6ddc6;border-radius:15px;background:linear-gradient(110deg,#f3f9f0,#fff);scroll-margin-top:6rem}
+.model-spec-toc>strong{font-size:clamp(16px,2vw,20px);color:#204f34}
+.model-spec-toc>div{display:flex;flex-wrap:wrap;gap:8px}
+.model-spec-toc a{display:inline-flex;align-items:center;min-height:44px;padding:8px 12px;border:1px solid #b4d0b6;border-radius:9px;background:white;color:#1e5837;font-size:14px;font-weight:750;text-decoration:none;overflow-wrap:anywhere}
+.model-spec-toc a:hover{background:#e8f3e5;border-color:#6d9f73}
+.model-spec-toc a:focus-visible{outline:3px solid #3c874f;outline-offset:3px}
+.model-spec-group[id]{scroll-margin-top:7rem}
+@media(max-width:600px){.model-spec-toc>div{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}.model-spec-toc a{justify-content:center;text-align:center}}
+@media(max-width:375px){.model-spec-toc>div{grid-template-columns:1fr}}
