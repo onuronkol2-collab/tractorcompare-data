@@ -66,7 +66,10 @@ BEGIN
    FROM regexp_matches(trg.body,'(https://[^[:space:]]+)','g') m;
    IF target_urls IS DISTINCT FROM src_urls
    THEN RAISE EXCEPTION 'Source URLs changed in %',trg.locale;END IF;
-   IF trg.locale IN ('fr','zh','ja') THEN
+   IF trg.locale IN ('fr','ru') THEN
+     IF public.tc_forum_locale_grouping_facts_equal(src.body,trg.body,trg.locale) IS NOT TRUE
+     THEN RAISE EXCEPTION 'Localized grouped number/calendar facts differ in %',trg.locale;END IF;
+   ELSIF trg.locale IN ('zh','ja') THEN
      IF public.tc_forum_contextual_facts_equal(src.body,trg.body,trg.locale) IS NOT TRUE
      THEN RAISE EXCEPTION 'Calendar facts differ in %',trg.locale;END IF;
    ELSE
