@@ -47,7 +47,7 @@ jobs:
           r = json.loads((root / "sha256-ledger.json").read_text())
           assert r["reviewRequired"] is True and r["publicationCount"] == 0
           ids = {
-              "tym-t3048-f50chn-55-marcelx42-2025": "MB-one",
+              "tym-t3048-f50chn-55-marcelx42-2025": "MarcelX42",
               "tym-t3048-f50chn-57-marcelx42-2025": "MarcelX42",
               "tym-t3048-f50chn-73-marcelx42-2025": "MarcelX42",
           }
