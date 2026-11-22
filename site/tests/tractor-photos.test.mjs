@@ -381,8 +381,8 @@ test("source-backed copyright notices cover approved Google warning images in al
   "valtra-t215-88d0ab88","valtra-a105-cd63351d",
   "valtra-a85-af39c01a","valtra-a75-f99b4394"
  ]);
- const expected=new Set([...originalThree,...reviewedTwenty]);
- assert.equal(expected.size,23);
+ const expected=new Set([...originalThree,...reviewedTwenty,"belarus-132n-picture30-2011"]);
+ assert.equal(expected.size,24);
  const actual=APPROVED_TRACTOR_PHOTOS.filter(p=>p.copyrightOwner);
  assert.deepEqual(new Set(actual.map(p=>p.fileId)),expected,
    "Unexpected ownership claims must undergo separate review before publication");
@@ -390,7 +390,7 @@ test("source-backed copyright notices cover approved Google warning images in al
   assert.equal(photo.photographer,photo.copyrightOwner);
   assert.equal(photo.copyrightClaimUrl,photo.sourcePage);
   assert.equal(photo.copyrightEvidence,"commons-own-work-self-license");
-  assert.equal(photo.licenseName,"CC BY-SA 4.0");
+  assert.equal(photo.licenseName,photo.fileId==="belarus-132n-picture30-2011"?"CC BY-SA 3.0":"CC BY-SA 4.0");
   const record=tractor(photo.brand,photo.model);
   const main=primaryTractorPhoto(record);
   assert.equal(main.fileId,photo.fileId);
@@ -406,7 +406,7 @@ test("source-backed copyright notices cover approved Google warning images in al
  }
  // Two unproved source types and one CC0 dedicaton remain deliberately unclaimed.
  for(const [brand,model] of [
-  ["Swaraj","735 FE"],["Belarus","132N"],["Valtra","F105"]
+  ["Swaraj","735 FE"],["Valtra","F105"]
  ]){
   const item=tractor(brand,model),photo=primaryTractorPhoto(item);
   assert.ok(photo);
