@@ -275,12 +275,12 @@ const pricePayload = JSON.stringify({
      keep existing behavior. Estimated block sizes are only layout fallbacks;
      no SEO pages, filtering data, or model details are discarded. */
   @supports (content-visibility: auto) {
-    .tractor-card-grid--large > .tractor-card {
+    :global(.tractor-card-grid--large > .tractor-card) {
       content-visibility: auto;
       contain-intrinsic-block-size: auto 410px;
     }
     @media (max-width:680px) {
-      .tractor-card-grid--large > .tractor-card {
+      :global(.tractor-card-grid--large > .tractor-card) {
         contain-intrinsic-block-size: auto 520px;
       }
     }
