@@ -8,6 +8,7 @@ import { localizedPath, type Locale } from "../lib/locales";
 import { t } from "../lib/ui";
 import { compareText as cx } from "../lib/compare-ux";
 import {primaryTractorPhoto,tractorPhotoAlt,photoText} from "../lib/tractor-photos";
+import {curatedDeutz5DPair,DEUTZ_5D_GS_PILOT} from "../lib/deutz-5d-editorial.ts";
 import "../styles/compare-experience.css";
 
 interface Props { lang: Locale; }
@@ -31,6 +32,7 @@ const models = catalog.tractors.map((tractor, index) => ({
   })(),
   specs: index < 2 ? comparisonSpecs(tractor, lang) : undefined,
 }));
+const editorialPilotAvailable=(lang==="en"||lang==="tr")&&Boolean(curatedDeutz5DPair(catalog.tractors));
 const initialLeft = models[0];
 const initialRight = models[1];
 const photoOpenLabel=photoText(lang,"open");
@@ -101,6 +103,12 @@ const labelsPayload = JSON.stringify({
           <span class="tc-step-number">01</span>
           <div><h2>{cx(lang,"step")}</h2><p>{cx(lang,"stepIntro")}</p></div>
         </div>
+        {editorialPilotAvailable && <aside class="tc-note" aria-label={lang==="tr"?"Kaynaklı örnek karşılaştırma":"Source-backed comparison example"}>
+          {lang==="tr"?"Kaynaklı örnek: Deutz-Fahr 5090 D GS ile 5100 D GS için aynı üretici belgesine dayalı özgün analiz.":"Evidence-based example: an original same-brochure Deutz-Fahr 5090 D GS versus 5100 D GS analysis."}
+          {" "}<a href={localizedPath(lang,DEUTZ_5D_GS_PILOT.path)}>
+            {lang==="tr"?"Model farklarını ve ölçüm sınırlarını oku":"Read verified differences and measurement limits"} ↗
+          </a>
+        </aside>}
         <div class="tc-picker" id="tc-picker">
           <div class="tc-picker-side">
             <label for="tc-left-search">{t(lang,"firstTractor")}</label>
