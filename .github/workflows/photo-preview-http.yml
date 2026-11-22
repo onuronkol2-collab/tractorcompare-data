@@ -1,0 +1,70 @@
+name: Photo PR preview JPEG gate
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
+    paths:
+      - "site/public/images/tractors/**"
+      - "site/src/lib/historical-licensed-photos.ts"
+      - ".github/workflows/photo-preview-http.yml"
+permissions:
+  contents: read
+concurrency:
+  group: photo-preview-jpeg-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+jobs:
+  preview_jpeg:
+    if: github.repository == 'onuronkol2-collab/tractorcompare-data'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Verify all changed first-party JPEGs are deployed at Cloudflare preview
+        shell: bash
+        env:
+          SOURCE_BRANCH: ${{ github.head_ref }}
+          BASE_BRANCH: ${{ github.base_ref }}
+        run: |
+          set -euo pipefail
+          branch_slug="$(printf '%s' "$SOURCE_BRANCH" | tr '[:upper:]' '[:lower:]' | sed 's|/|-|g; s|[^a-z0-9-]|-|g')"
+          [[ "$branch_slug" =~ ^[a-z0-9][a-z0-9-]+$ ]] || { echo "Invalid preview branch slug"; exit 1; }
+          origin="https://${branch_slug}-tractorvs-site.onuronkol2.workers.dev"
+          git fetch origin "$BASE_BRANCH" --depth=1
+          mapfile -t assets < <(git diff --name-only "origin/$BASE_BRANCH" HEAD -- site/public/images/tractors | grep -E '\.(jpg|jpeg)$' || true)
+          if (("${#assets[@]}" == 0)); then
+            echo "No changed JPEG assets to verify."
+            exit 0
+          fi
+          echo "Checking ${#assets[@]} changed first-party JPEG assets against Cloudflare preview"
+          tmp="$(mktemp)"
+          trap 'rm -f "$tmp"' EXIT
+          for path in "${assets[@]}"; do
+            [[ "$path" =~ ^site/public/images/tractors/[a-z0-9-]+\.jpe?g$ ]] || { echo "Unsafe or unrecognized path: $path"; exit 1; }
+            asset_path="${path#site/public}"
+            url="$origin$asset_path"
+            ready=0
+            for attempt in {1..18}; do
+              result="$(curl -sSL -o "$tmp" -w '%{http_code}|%{content_type}' --max-time 18 "$url")" || result="000|"
+              status="${result%%|*}"
+              mime="${result#*|}"
+              if [[ "$status" == 200 ]]; then
+                [[ "$mime" == image/jpeg* ]] || { echo "Bad MIME $mime at $asset_path"; exit 1; }
+                [[ "$(file --brief --mime-type "$tmp")" == "image/jpeg" ]] || { echo "Body is not JPEG: $asset_path"; exit 1; }
+                [[ "$(wc -c < "$tmp")" -ge 10000 ]] || { echo "JPEG unexpectedly small: $asset_path"; exit 1; }
+                echo "OK $asset_path HTTP 200 $mime bytes=$(wc -c < "$tmp") sha256=$(sha256sum "$tmp" | cut -d' ' -f1)"
+                ready=1
+                break
+              fi
+              if [[ "$status" == 429 || "$status" == 401 || "$status" == 403 ]]; then
+                echo "Non-retryable preview HTTP $status for $asset_path"
+                exit 1
+              fi
+              if (( attempt == 18 )); then
+                echo "Preview did not return HTTP 200 for $asset_path, last HTTP $status"
+                exit 1
+              fi
+              sleep 8
+            done
+            [[ "$ready" == 1 ]] || exit 1
+          done
