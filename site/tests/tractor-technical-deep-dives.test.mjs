@@ -58,3 +58,28 @@ test("deep-dive articles use existing approved licensed images and honest SEO sc
  assert.match(readFileSync(new URL("../src/lib/ui.ts",import.meta.url),"utf8"),/Traktör parçaları ve teknik terimler/);
  assert.doesNotMatch(component,/fake review|AggregateRating|Offers|Product/i);
 });
+
+test("PTO and hydraulic articles preserve safety meaning in both languages with visible official citations",()=>{
+ const pto=TECHNICAL_DEEP_DIVES.find(x=>x.slug==="pto-and-power-take-off");
+ const hydraulic=TECHNICAL_DEEP_DIVES.find(x=>x.slug==="tractor-hydraulic-lift-explained");
+ assert.ok(pto&&hydraulic);
+ const ptoTurkish=pto.sections.flatMap(x=>x.paragraphs.tr).join(" ");
+ const ptoEnglish=pto.sections.flatMap(x=>x.paragraphs.en).join(" ");
+ assert.match(ptoTurkish,/motor kapalıyken ve tüm hareket durduğunda/);
+ assert.match(ptoEnglish,/parking brake, disengage power, stop the engine, remove the key/);
+ const hydTurkish=hydraulic.sections.flatMap(x=>x.paragraphs.tr).join(" ");
+ const hydEnglish=hydraulic.sections.flatMap(x=>x.paragraphs.en).join(" ");
+ assert.match(hydTurkish,/kaçakları elle aramayın/);
+ assert.match(hydEnglish,/release stored pressure safely/);
+ assert.match(hydEnglish,/Never feel for a pressurized hydraulic leak with bare hands/);
+ for(const url of [
+  "https://www.hse.gov.uk/agriculture/topics/machinery/fluid.htm",
+  "https://www.hse.gov.uk/agriculture/topics/machinery/safe-use-1.htm"
+ ]){
+  assert.equal(component.split(url).length-1,2,"HSE source must be in exact visible/citation parity: "+url);
+ }
+ assert.match(component,/hasHydraulicSafety = slug === "tractor-hydraulic-lift-explained"/);
+ assert.match(component,/hasPtoSafety = slug === "pto-and-power-take-off"/);
+ assert.match(component,/const hasEditorialUpdate = hasPowerStandards \|\| hasHydraulicSafety \|\| hasPtoSafety/);
+ assert.match(component,/dateModified:editedOn/);
+});

@@ -105,7 +105,7 @@ export const TECHNICAL_DEEP_DIVES = [
           ],
           "en": [
             "Write down the implement's permitted PTO speeds and power requirement. Then compare verified tractor PTO power, selectable speed modes, spline geometry and coupling dimensions. An unlisted feature is unknown—not automatically present.",
-            "Finally consider hitch category, implement mass and any required hydraulic couplers. PTO compatibility is only part of the overall machine match. Never operate an unguarded rotating shaft."
+            "Finally consider hitch category, implement mass and any required hydraulic couplers. PTO compatibility is only part of the overall machine match. Never operate an unguarded rotating shaft. Before making or adjusting a PTO connection, follow the tractor and implement manuals: apply the parking brake, disengage power, stop the engine, remove the key and wait until every moving part has stopped."
           ]
         }
       }
@@ -223,7 +223,7 @@ export const TECHNICAL_DEEP_DIVES = [
           ],
           "en": [
             "Record implement mass, how far its centre of gravity extends rearward, hitch category, remote outlets and front ballast needs. Check tractor axle limits and the actual implement manual.",
-            "If two brochures omit the lift measurement point, the honest comparison is 'not directly comparable' rather than a confident winner."
+            "If two brochures omit the lift measurement point, the honest comparison is 'not directly comparable' rather than a confident winner. Before hydraulic maintenance or hose connections, follow the manufacturer's procedure to release stored pressure safely. Never feel for a pressurized hydraulic leak with bare hands: high-pressure fluid can penetrate skin and cause serious injury."
           ]
         }
       }

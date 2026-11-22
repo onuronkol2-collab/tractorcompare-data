@@ -54,7 +54,9 @@ test("GEO citation schema repeats exactly the real source links already visible 
   "https://eur-lex.europa.eu/eli/reg/2019/405/oj/eng",
   "https://www.dlg.org/en/magazin/survey-tests/tractor-model-descriptions-no-standardised-information",
   "https://www.nist.gov/pml/special-publication-811/nist-guide-si-appendix-b-conversion-factors/nist-guide-si-appendix-b9",
-  "https://admin.basaktraktor.com.tr/upload/4c2bf423-d9a1-4ffc-aa6b-1f0188c313aa-2075%20BK.pdf"
+  "https://admin.basaktraktor.com.tr/upload/4c2bf423-d9a1-4ffc-aa6b-1f0188c313aa-2075%20BK.pdf",
+  "https://www.hse.gov.uk/agriculture/topics/machinery/fluid.htm",
+  "https://www.hse.gov.uk/agriculture/topics/machinery/safe-use-1.htm"
  ];
  for(const url of expected){
   const count=dive.split(url).length-1;
@@ -90,7 +92,7 @@ test("sourced manufacturer hp notation is not silently equated with metric PS",(
  assert.match(article,/71\.1 mechanical hp/);
  assert.match(article,/Do not silently treat the maker/);
  assert.match(article,/üreticinin ‘hp’ etiketini/);
- assert.match(component,/hasPowerStandards \? "2026-11-22" : "2026-11-20"/);
+ assert.match(component,/hasEditorialUpdate \? "2026-11-22" : "2026-11-20"/);
  assert.match(component,/22 Kasım 2026/);
  assert.match(component,/22 November 2026/);
  assert.match(component,/hasPowerStandards\?\[/);

@@ -244,3 +244,27 @@ test("wide guide and review tables remain keyboard-scrollable and labeled at 390
   }
  }
 });
+
+test("official PTO and hydraulic safety sources are scoped to the right published bilingual guides",async({page})=>{
+ const examples=[
+  {slug:"pto-and-power-take-off",source:"https://www.hse.gov.uk/agriculture/topics/machinery/safe-use-1.htm",other:"https://www.hse.gov.uk/agriculture/topics/machinery/fluid.htm",tr:"motor kapalıyken",en:"stop the engine, remove the key"},
+  {slug:"tractor-hydraulic-lift-explained",source:"https://www.hse.gov.uk/agriculture/topics/machinery/fluid.htm",other:"https://www.hse.gov.uk/agriculture/topics/machinery/safe-use-1.htm",tr:"kaçakları elle aramayın",en:"Never feel for a pressurized hydraulic leak"}
+ ];
+ for(const locale of ["","tr/"]){
+  for(const check of examples){
+   const route="/"+locale+"guides/"+check.slug+"/";
+   const response=await page.goto(route,{waitUntil:"domcontentloaded"});
+   expect(response?.status(),route).toBe(200);
+   await expect(page.locator('.learn-further a[href="'+check.source+'"]')).toHaveCount(1);
+   await expect(page.locator('.learn-further a[href="'+check.other+'"]')).toHaveCount(0);
+   await expect(page.locator(".learn-chapter").last()).toContainText(locale==="tr/"?check.tr:check.en);
+   const schema=(await page.locator('script[type="application/ld+json"]').textContent())||"";
+   expect(schema,route+" TechArticle citation").toContain(check.source);
+   expect(schema,route+" article modified date").toContain("2026-11-22");
+   expect(schema,route+" wrong cross-article citation").not.toContain(check.other);
+  }
+  await page.goto("/"+locale+"guides/tractor-engine-power-and-torque/",{waitUntil:"domcontentloaded"});
+  await expect(page.locator('.learn-further a[href*="hse.gov.uk"]')).toHaveCount(0);
+  await expect(page.locator('.learn-further a[href*="nist.gov"]')).toHaveCount(1);
+ }
+});
