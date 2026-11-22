@@ -79,7 +79,7 @@ export function auditManualForumTranslation({
  }
  if(errors.length)return {pass:false,errors};
  if(targetTitle.length<12||targetTitle.length>240)errors.push("invalid_title_length");
- const minLengthRatio=locale==="zh"||locale==="ja"?.24:.45;
+ const minLengthRatio=(locale==="zh"||locale==="ja") ? 0.24 : 0.45;
  if(targetBody.length<sourceBody.length*minLengthRatio||targetBody.length>sourceBody.length*2.7)
   errors.push("suspicious_length");
  if(sourceTitle.trim()===targetTitle.trim())errors.push("untranslated_title");
