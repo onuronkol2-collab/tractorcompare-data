@@ -84,7 +84,7 @@ const schema=indexable?{
         <span class="community-section-eyebrow">{ft(lang,"name")}</span>
         <h2>{ft(lang,"all")}</h2>
       </div>
-      <span class="community-topic-count" aria-label={ft(lang,"all")+": "+topics.length}>{topics.length}</span>
+      <span class="community-section-rule" aria-hidden="true"></span>
     </div>
     <div class="community-live-new" data-forum-live-root
       data-forum-live-config={liveBrowserData} hidden>
@@ -281,9 +281,7 @@ const schema=indexable?{
  line-height:1.4;letter-spacing:.15em;text-transform:uppercase;margin-bottom:8px}
 .community-list .community-section-header h2{margin:0;font-size:clamp(23px,2.7vw,32px);
  letter-spacing:-.04em;line-height:1.15;font-weight:850;color:#173d29}
-.community-topic-count{display:inline-grid;place-items:center;min-width:39px;height:39px;
- padding:0 11px;border-radius:12px;border:1px solid #d5e2d4;background:#fff;
- color:#24583a;font:800 14px var(--sans)}
+.community-section-rule{display:block;width:38px;height:3px;border-radius:3px;background:#b7df91;margin-bottom:7px;flex:none}
 .community-filters{padding:15px;margin:0 0 15px;border:1px solid var(--forum-line);
  background:#fff;border-radius:16px;box-shadow:0 4px 15px rgba(23,49,35,.025)}
 .community-filters label{max-width:none;gap:8px;font-size:12px;color:#41624f}
@@ -349,6 +347,7 @@ const schema=indexable?{
  .community-hero-panel{padding:19px}
  .community-hero .compose-link{flex:1 1 auto}
  .community-hero .community-hero-copy>p:not(.community-kicker){margin-bottom:23px}
+ .community-hero-panel{display:none}
  .community-panel-categories{gap:7px}
  .community-panel-categories span{font-size:11px}
  .community-main{padding-top:24px}
