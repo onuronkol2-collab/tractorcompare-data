@@ -250,7 +250,7 @@ test("very long exact-variant model titles shed only generic boilerplate and pre
     assert.ok(x.title.startsWith("Lamborghini Trattori Spire V 80 Target"),locale);
     assert.ok(x.title.includes("Stage V tractor configuration option"),locale);
     assert.ok(x.title.includes("2025"),locale);
-    assert.ok(x.title.endsWith(" | TractorVS"),locale);
+    assert.ok(x.title.includes(heavy.brand_name+" "+heavy.model_name),locale+" core identity missing");
     assert.ok(!x.title.includes("…")&&!x.title.includes("..."),locale);
     assert.ok(x.description.includes("Stage V tractor configuration option"),locale);
     const alternate=modelSeoMetadata({...heavy,variant:"Different Stage V configuration"},locale);
@@ -386,6 +386,49 @@ test("unavoidable long identities are not truncated to pass an arbitrary SEO thr
     assert.ok(meta.title.includes("Stage V tractor configuration option"),locale);
     assert.ok(meta.title.includes("2025"),locale);
     assert.ok(!meta.title.includes("…"),locale);
-    assert.ok(meta.title.endsWith(" | TractorVS"),locale);
+    assert.ok(meta.title.length<=105 || meta.title.includes("Stage V tractor configuration option"),locale);
+  }
+});
+
+test("do not touch any already-short SEO title when removing long-title boilerplate",()=>{
+  const model={...tractor,brand_name:"Belarus",model_name:"922.4",
+    variant:"MTW 922 / Stage IIIa",market:"global",model_year:null};
+  for(const locale of ["en","tr","zh","hi","pt-br","fr","de","ru","ja","es"]){
+    const title=modelSeoMetadata(model,locale).title;
+    assert.ok(title.endsWith(" | TractorVS"),"existing short titles retain site suffix: "+locale);
+    assert.ok(title.length<=60,locale);
+  }
+});
+
+test("long model titles drop only optional site boilerplate and preserve identity",()=>{
+  const model={...tractor,brand_name:"TYM",model_name:"T3035",
+    variant:"F36 / Series 3",market:"International",model_year:null};
+  for(const locale of ["en","tr","zh","hi","pt-br","fr","de","ru","ja","es"]){
+    const title=modelSeoMetadata(model,locale).title;
+    assert.ok(title.length<=60,locale+" source-aware title should fit: "+title);
+    assert.ok(title.includes("TYM T3035"),locale);
+    assert.ok(title.includes("F36 / Series 3"),locale+" lost real variant");
+    assert.ok(!title.includes("…"),locale);
+    const alternate=modelSeoMetadata({...model,variant:"F36 / Series 4"},locale).title;
+    assert.notEqual(title,alternate,locale+" should not collapse different variants");
+  }
+});
+
+test("verified source-note prose is not part of model title, stays in body and structured data",()=>{
+  const examples=[
+    {brand_name:"Agrale",model_name:"4125 Cargo",variant:"Brazil / Cargo / NBR ISO 1585 25 cv at 2400rpm",market:"Brazil"},
+    {brand_name:"Lamborghini Trattori",model_name:"Spire F 80 Target",variant:"Stage V / F 80 model / OEM brochure 04-2025",market:"Europe"}
+  ];
+  for(const item of examples){
+    for(const locale of ["en","tr","zh","hi","pt-br","fr","de","ru","ja","es"]){
+      const model={...tractor,...item,model_year:null};
+      const meta=modelSeoMetadata(model,locale);
+      assert.ok(meta.title.includes(item.brand_name+" "+item.model_name),locale);
+      assert.doesNotMatch(meta.title,/NBR ISO 1585|OEM brochure/,locale);
+      assert.ok(meta.title.length<=60,locale+" concise source-note title: "+meta.title);
+      assert.ok(meta.description.includes("Cargo") || meta.description.includes("Stage V"),locale);
+      const original=modelStructuredData(model,locale,"https://tractorvs.example")["@graph"][2].disambiguatingDescription;
+      assert.ok(original.includes(item.variant),locale+" full note stays in structured data");
+    }
   }
 });
