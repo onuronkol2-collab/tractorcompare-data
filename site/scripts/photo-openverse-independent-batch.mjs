@@ -69,7 +69,8 @@ export async function researchIndependentSources(records,{fetchFn=fetch,approved
   note:"Aggregator matches are untrusted leads, never photo publication approvals."};
  for(const item of selection.selected){
   const u=new URL(API);
-  u.searchParams.set("q",'"'+item.brand+" "+item.model+'" tractor');
+  // Broad discoverability with a separate exact title-only model gate below.
+  u.searchParams.set("q",item.brand+" "+item.model+" tractor");
   u.searchParams.set("source","flickr,europeana");
   u.searchParams.set("license","by,by-sa,cc0");
   u.searchParams.set("page_size","7");
