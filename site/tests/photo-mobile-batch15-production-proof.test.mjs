@@ -28,7 +28,7 @@ test("all 15 real public model page URLs map only the original 1920 license-appr
  const map=findPublicModelPages(xml);
  assert.equal(map.size,15);
  for(const record of records){
-   assert.equal(map.get(record.fileId),pageMap.get(record.fileId));
+   assert.deepEqual(map.get(record.fileId),[pageMap.get(record.fileId)]);
    assert.deepEqual(checkLiveModelPage(mockPage(record),record,pageMap.get(record.fileId)),
      {ok:true,errors:[]});
    const bad=mockPage(record).replace(record.photographer,"Unknown");
@@ -66,4 +66,42 @@ test("real production verifier rejects counterfeit 200 MIME/hash, missing rights
  await assert.rejects(proveBatch15Live({fetchFn:async()=>new Response(
    "<html>200 but bogus</html>",{status:200,headers:{"Content-Type":"text/html"}}),
    maxFirstAttempts:1,pause:async()=>{}}),/MIME mismatch/);
+});
+
+test("one licensed photo may appear on multiple PUBLIC variants; verify EVERY canonical and credit",async()=>{
+ const photo=records[0];
+ const variant="/tr/tractors/"+photo.fileId+"-variant-b/";
+ const extra='<url><loc>'+LIVE_ORIGIN+variant+'</loc><image:image><image:loc>'+
+   LIVE_ORIGIN+'/images/tractors/'+photo.fileId+'-1920.jpg</image:loc></image:image></url>';
+ const duplicated=xml.replace('</urlset>',extra+'</urlset>');
+ const found=findPublicModelPages(duplicated);
+ assert.equal(found.size,15,"One repeated image must not become a fabricated sixteenth photo");
+ assert.deepEqual(found.get(photo.fileId),
+   [pageMap.get(photo.fileId),variant].sort());
+ const requests=[];
+ const fake=async(url,opts)=>{
+   requests.push(url);
+   const path=new URL(url).pathname;
+   if(path==="/image-sitemap.xml")
+     return new Response(duplicated,{status:200,headers:{"Content-Type":"application/xml"}});
+   if(path===variant){
+     const html=mockPage(photo).replaceAll(
+       LIVE_ORIGIN+pageMap.get(photo.fileId),LIVE_ORIGIN+variant);
+     return new Response(html,{status:200,headers:{"Content-Type":"text/html"}});
+   }
+   const item=records.find(r=>pageMap.get(r.fileId)===path);
+   if(item)return new Response(mockPage(item),{status:200,
+     headers:{"Content-Type":"text/html"}});
+   if(held.some(id=>path.includes(id+"-720.")))
+     return new Response("Blocked unpublished photo",{status:404});
+   const bytes=readFileSync(new URL("../public"+path,import.meta.url));
+   return new Response(bytes,{status:200,headers:{"Content-Type":
+     path.endsWith(".jpg")?"image/jpeg":"image/webp"}});
+ };
+ const result=await proveBatch15Live({fetchFn:fake,maxFirstAttempts:1,pause:async()=>{}});
+ assert.equal(result.uniquePhotoSources,15);
+ assert.equal(result.publicModelPages,16);
+ assert.equal(result.images,30);
+ assert.equal(result.held404,6);
+ assert.equal(requests.length,53);
 });
