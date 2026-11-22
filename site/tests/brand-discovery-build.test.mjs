@@ -32,6 +32,12 @@ test("real, crawlable, canonical published models and source links pass",()=>{
   assert.equal(r.externalSources,12);
  }
 });
+test("Astro-scoped HTML attributes do not hide real published model links",()=>{
+ const html=fixture().replaceAll('<h3><a href=', '<h3 data-astro-cid="abc"><a data-astro-cid="abc" href=');
+ const result=auditPilotHtml(html,{slug:"valtra",prefix:""});
+ assert.equal(result.passed,true);
+ assert.equal(result.modelLinks,12);
+});
 test("missing models, wrong origin and untranslated hreflang fail closed",()=>{
  for(const options of [{n:9},{badCanonical:true},{extraLang:true},{missingSource:true}]){
   const r=auditPilotHtml(fixture(options),{slug:"valtra",prefix:""});
