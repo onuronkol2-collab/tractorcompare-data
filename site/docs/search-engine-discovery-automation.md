@@ -69,6 +69,7 @@ Source files: `seo/sitemap-content-history.json` and `site/src/data/sitemap-last
 - Reject missing pages, incorrect canonical, accidental `noindex`, duplicate/noncanonical URLs, unexplained mass disappearance and implausible bulk changes.
 - Repository checkpoints are committed only after production build gates and a second verification build.
 - Dates are observations of verified content change, not arbitrary build timestamps, and never proof of external indexing.
+- **Astro scoped-attribute regression guard (22 November 2026):** Translation QA adds an invisible `data-spec-id` UUID to each `article.model-spec-card`. Astro may emit a further `data-astro-cid-*` style attribute before or after it. Sitemap content hashes ignore **only one valid QA UUID on that exact spec card**, irrespective of attribute order, while retaining every other attribute, visible technical value, measurement standard, title and source evidence. This preserves old verified page dates without falsely marking thousands of unchanged pages as fresh; genuine changes and the broad-change fail-closed gate remain active. Regression tests must include both Astro attribute orders and invalid/duplicate identity markers.
 
 ## Weekly evidence and real indexing
 
