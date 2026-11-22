@@ -2,6 +2,10 @@
 export const TECHNICAL_DEEP_DIVES = [
   {
     "slug": "pto-and-power-take-off",
+    "comparisonNote": {
+      "tr": "Biçme makinesinin kılavuzunda 540 dev/dk yazıyorsa önce traktörün kuyruk milinde bu devri sağlayıp sağlamadığına bakın. Sonra mil bağlantısını ve ekipmanın istediği PTO gücünü kontrol edin. Katalogdaki motor gücü tek başına bu iki soruyu yanıtlamaz.",
+      "en": "If a mower calls for 540 rpm, first check that the tractor can deliver that speed at the PTO shaft. Then match the shaft connection and the mower’s PTO power requirement. Engine horsepower alone answers neither question."
+    },
     "group": "pto",
     "heroPhoto": {
       "brand": "New Holland",
@@ -116,6 +120,10 @@ export const TECHNICAL_DEEP_DIVES = [
   },
   {
     "slug": "tractor-hydraulic-lift-explained",
+    "comparisonNote": {
+      "tr": "İki traktörün kaldırma kapasitesini karşılaştırırken kilogram değerinin nerede ölçüldüğünü bulun. Askı kollarının ucunda verilen kapasite ile kolların gerisinde ölçülen kapasiteyi aynı sütunda sıralamak yanıltıcıdır.",
+      "en": "Before comparing two lift ratings, find where each load was measured. A rating at the link ends and one measured behind them describe different loading conditions, even when both are given in kilograms."
+    },
     "group": "hydraulics",
     "heroPhoto": {
       "brand": "Case IH",
@@ -230,6 +238,10 @@ export const TECHNICAL_DEEP_DIVES = [
   },
   {
     "slug": "tractor-engine-power-and-torque",
+    "comparisonNote": {
+      "tr": "İki katalogda da 100 hp görürseniz sayıların yanındaki tanımları okuyun. Biri azami motor gücünü, diğeri nominal gücü bildiriyorsa aynı çalışma noktasını karşılaştırmıyorsunuz. Ekipman kuyruk milinden güç alıyorsa ayrıca PTO çıkışındaki ölçümü arayın.",
+      "en": "When two brochures both say 100 hp, read the label beside each figure. Maximum engine power on one sheet and rated power on the other describe different operating points. For a PTO-driven implement, look for a separate measurement at the shaft."
+    },
     "group": "engine",
     "heroPhoto": {
       "brand": "McCormick",

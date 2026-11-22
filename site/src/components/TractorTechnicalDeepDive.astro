@@ -2,6 +2,7 @@
 import SiteLayout from "../layouts/SiteLayout.astro";
 import {APPROVED_TRACTOR_PHOTOS} from "../lib/tractor-photos.ts";
 import {TECHNICAL_DEEP_DIVES,getTechnicalDeepDive,type TechnicalDeepDiveSlug} from "../lib/tractor-technical-deep-dives.ts";
+import {GLOSSARY_TERMS} from "../lib/tractor-glossary.ts";
 import {localizedPath} from "../lib/locales.ts";
 interface Props {lang:"en"|"tr"; slug:TechnicalDeepDiveSlug}
 const {lang,slug}=Astro.props;
@@ -18,6 +19,11 @@ const url=new URL(permalink,base).toString();
 const hero=APPROVED_TRACTOR_PHOTOS.find(p=>p.brand===guide.heroPhoto.brand&&p.model===guide.heroPhoto.model);
 const image=hero?new URL(hero.displayUrl,base).toString():undefined;
 const other=TECHNICAL_DEEP_DIVES.filter(x=>x.slug!==slug);
+const relatedTerms=guide.glossary.map(id=>{
+ const term=GLOSSARY_TERMS.find(entry=>entry.id===id);
+ if(!term) throw new Error("Unknown glossary term "+id+" in "+slug);
+ return term;
+});
 const headline=guide.title[lang];
 const description=guide.description[lang];
 // Only the standards article received substantive new editorial content.
@@ -103,7 +109,7 @@ const structuredData={
     <div class="learn-body">
      <aside class="learn-keypoint">
       <strong>{tr?"DOĞRU KARŞILAŞTIRMANIN KURALI":"THE FAIR-COMPARISON RULE"}</strong>
-      <p>{tr?"Aynı terimin farklı üretici kataloglarında başka ölçüm noktası, sürüm veya standartla açıklanabileceğini unutmayın. Bir sayının yanında bu koşullar yoksa onu kesin sonuç gibi sunmayın.":"The same label may refer to a different test point, configuration or standard across manufacturer brochures. Do not treat a number without those details as a conclusive ranking."}</p>
+      <p>{guide.comparisonNote[lang]}</p>
      </aside>
      {guide.sections.map((section,i)=><section class="learn-chapter" id={section.anchor}>
        <p class="learn-chapter-index">{String(i+1).padStart(2,"0")} / {String(guide.sections.length).padStart(2,"0")}</p>
@@ -114,7 +120,7 @@ const structuredData={
       <p class="learn-eyebrow">{tr?"DERİNE İNİN":"GO DEEPER"}</p>
       <h2 id="learn-terms-heading">{tr?"Bu yazıdaki terimlerin tek tek açıklamaları":"Individual definitions from this guide"}</h2>
       <p>{tr?"Her terimin açıklamasını, kullanım örneğini ve karşılaştırma uyarısını ana teknik sözlükte okuyabilirsiniz.":"Each entry in the main glossary includes a definition, practical example and comparison caution."}</p>
-      <div>{guide.glossary.map(id=><a href={hub+"#"+id}>#{id.replaceAll("-"," ")} ↗</a>)}</div>
+      <div>{relatedTerms.map(term=><a href={hub+"#"+term.id}>{term.name[lang]} ↗</a>)}</div>
      </section>
      <section class="learn-further" aria-labelledby="learn-further-heading">
       <h2 id="learn-further-heading">{tr?"Kaynağı nasıl doğrularız?":"How to verify a specification"}</h2>
