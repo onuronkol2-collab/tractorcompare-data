@@ -1,4 +1,4 @@
-name: TractorVS consented forum translations
+name: TractorVS forum translation status (manual-only, no provider calls)
 
 # A checked box creates queue jobs; this workflow actually processes them.
 # Never use a service-role key in GitHub. Supabase holds private privileges.
@@ -11,19 +11,16 @@ on:
       - "scripts/tractor-forum-cloudflare-smoke*.mjs"
       - "scripts/tractor-forum-cloudflare-batch*.mjs"
       - "supabase/functions/tractor-forum-translate/**"
-  # No schedule or push translation calls. User deliberately chooses when work runs.
+  # No schedule or push translation calls. No provider or queue process jobs.
   workflow_dispatch:
     inputs:
       onay:
-        description: "KONTROL ücretsiz; TEST tek cümle; TOPLU_TEST 9 dile 9 sentetik istek; ONAY gerçek kuyruk kilidi kapalı"
+        description: "Yalnızca ücretsiz ve salt-okunur kuyruk kontrolü; çeviri API çağrıları kapalı"
         required: true
         type: choice
         default: KONTROL
         options:
           - KONTROL
-          - TEST
-          - TOPLU_TEST
-          - ONAY
 
 permissions:
   contents: read
@@ -47,7 +44,7 @@ jobs:
           deno-version: v2.x
       - name: Typecheck private worker without secrets or paid API calls
         run: deno check --no-config supabase/functions/tractor-forum-translate/index.ts
-      - name: Run isolated Cloudflare, Azure and Gemini provider contract tests (no external calls or charges)
+      - name: Run offline legacy provider contract regressions (no external calls)
         run: deno test --no-config supabase/functions/tractor-forum-translate/gemini-provider.test.ts supabase/functions/tractor-forum-translate/translation-quality.test.ts supabase/functions/tractor-forum-translate/translation-segments.test.ts supabase/functions/tractor-forum-translate/azure-translator.test.ts supabase/functions/tractor-forum-translate/cloudflare-m2m100.test.ts supabase/functions/tractor-forum-translate/cloudflare-smoke.test.ts supabase/functions/tractor-forum-translate/cloudflare-batch.test.ts supabase/functions/tractor-forum-translate/queue-control.test.ts
 
   status:
@@ -67,53 +64,3 @@ jobs:
           TRACTORVS_QUEUE_SECRET: ${{ secrets.TRACTORVS_QUEUE_SECRET }}
           TRACTORVS_TRANSLATION_STATUS_ONLY: "true"
         run: node scripts/tractor-forum-translate-dispatch.mjs
-  synthetic_test:
-    # Exactly one synthetic provider request; cannot read/claim real forum jobs.
-    # Never runs automatically or on PRs, and never calls Gemini/Azure.
-    if: github.event_name == 'workflow_dispatch' && inputs.onay == 'TEST' && github.repository == 'onuronkol2-collab/tractorcompare-data' && github.ref == 'refs/heads/main'
-    needs: check
-    runs-on: ubuntu-latest
-    timeout-minutes: 3
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: "22.23.4"
-      - name: Call exactly one synthetic Cloudflare M2M100 sentence
-        env:
-          TRACTORVS_SUPABASE_ANON_JWT: ${{ secrets.TRACTORVS_SUPABASE_ANON_JWT }}
-          TRACTORVS_QUEUE_SECRET: ${{ secrets.TRACTORVS_QUEUE_SECRET }}
-        run: node scripts/tractor-forum-cloudflare-smoke.mjs
-  process:
-    if: github.event_name == 'workflow_dispatch' && inputs.onay == 'ONAY' && github.repository == 'onuronkol2-collab/tractorcompare-data' && github.ref == 'refs/heads/main'
-    needs: check
-    runs-on: ubuntu-latest
-    timeout-minutes: 14
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: "22.23.4"
-      - name: Process up to three published, opted-in topic translations
-        env:
-          TRACTORVS_SUPABASE_ANON_JWT: ${{ secrets.TRACTORVS_SUPABASE_ANON_JWT }}
-          TRACTORVS_QUEUE_SECRET: ${{ secrets.TRACTORVS_QUEUE_SECRET }}
-        run: node scripts/tractor-forum-translate-dispatch.mjs
-
-  synthetic_batch_test:
-    # One explicit TOPLU_TEST dispatch, nine short sentences to separate target
-    # languages. No queue read/claim, no retries, and no publication.
-    if: github.event_name == 'workflow_dispatch' && inputs.onay == 'TOPLU_TEST' && github.repository == 'onuronkol2-collab/tractorcompare-data' && github.ref == 'refs/heads/main'
-    needs: check
-    runs-on: ubuntu-latest
-    timeout-minutes: 4
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: "22.23.4"
-      - name: Translate one fixed Turkish sentence into nine locales and verify numbers/scripts
-        env:
-          TRACTORVS_SUPABASE_ANON_JWT: ${{ secrets.TRACTORVS_SUPABASE_ANON_JWT }}
-          TRACTORVS_QUEUE_SECRET: ${{ secrets.TRACTORVS_QUEUE_SECRET }}
-        run: node scripts/tractor-forum-cloudflare-batch.mjs
