@@ -4,6 +4,7 @@ on:
     paths:
       - ".github/workflows/image-seo-live-audit.yml"
       - "site/scripts/image-seo-live-audit.mjs"
+      - "site/scripts/image-copyright-live-cases.mjs"
       - "site/scripts/image-seo-asset-boundaries.mjs"
       - "site/scripts/image-seo-http.mjs"
       - "site/scripts/production-sitemap-inventory.mjs"
@@ -21,6 +22,7 @@ on:
     paths:
       - ".github/workflows/image-seo-live-audit.yml"
       - "site/scripts/image-seo-live-audit.mjs"
+      - "site/scripts/image-copyright-live-cases.mjs"
       - "site/scripts/image-seo-asset-boundaries.mjs"
       - "site/scripts/image-seo-http.mjs"
       - "site/scripts/production-sitemap-inventory.mjs"
