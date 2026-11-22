@@ -4,6 +4,7 @@ import {getPublicCatalog} from "../lib/catalog";
 import {localizedPath,LOCALES,BREADCRUMB_LABELS,RELATED_PAGES_LABELS,type Locale} from "../lib/locales";
 import {reviewedLanguage} from "../lib/basak-2075-review-i18n";
 import {editorialHubTranslation} from "../lib/editorial-hub-i18n";
+import {BASAK_VARIANT_COMPARISON_COPY} from "../lib/basak-2075-comparison-i18n";
 interface Props { lang:Locale }
 const {lang}=Astro.props;
 const tr=lang==="tr";
@@ -15,6 +16,9 @@ const manufacturerUrl=tr
 const brochureUrl="https://admin.basaktraktor.com.tr/upload/4c2bf423-d9a1-4ffc-aa6b-1f0188c313aa-2075%20BK.pdf";
 const cabinUrl="https://basaktraktor.com.tr/urunler/traktorler/tarla-traktorleri/2075-bk-kabin";
 const twoWheelUrl="https://basaktraktor.com.tr/urunler/traktorler/tarla-traktorleri/2075-bk-2-wd";
+const btManufacturerUrl=lang==="tr"
+  ?"https://basaktraktor.com.tr/urunler/traktorler/tarla-traktorleri/2075-bt"
+  :"https://basaktraktor.com.tr/en/products/tractors/field-tractors/2075-bt";
 const catalog=(await getPublicCatalog()).tractors;
 const publicModel=catalog.find(t=>
  t.brand_name.toLocaleLowerCase("tr").includes("başak") &&
@@ -22,6 +26,15 @@ const publicModel=catalog.find(t=>
  (t.variant?.toLocaleLowerCase("en").includes("4wd") ?? false)) ??
  catalog.find(t=>t.brand_name.toLocaleLowerCase("tr").includes("başak") &&
  t.model_name.trim().toLocaleLowerCase("tr")==="2075 bk");
+const publicBtModel=catalog.find(t=>t.brand_name.toLocaleLowerCase("tr").includes("başak") && t.model_name.trim().toLocaleLowerCase("tr")==="2075 bt");
+const variantCopy=BASAK_VARIANT_COMPARISON_COPY[lang];
+const variantRows=[
+  {bk:"72 HP @ 2500 rpm",bt:"72 HP @ 2500 rpm"},
+  {bk:"273 Nm @ 1600 rpm",bt:"273 Nm @ 1600 rpm"},
+  {bk:"16 F / 8 R",bt:"16 F / 8 R"},
+  {bk:"2205 mm",bt:"2120 mm"},
+  {bk:"3080 kg",bt:"3515 kg"},
+] as const;
 const baseDescription=tr
   ?"Başak 2075 BK teknik veri analizi: üretici belgesinde belirtilen 72 hp, 273 Nm, 16+8 şanzıman ve 540/540E kuyruk mili. Varyant ve kanıt sınırları."
   :"Başak 2075 BK technical document analysis: manufacturer-stated 72 hp, 273 Nm, 16+8 gears and 540/540E PTO, with variant and evidence limits.";
@@ -101,11 +114,11 @@ const schema={
   {"@type":"TechArticle","@id":pageUrl+"#article",
     headline:localized?.h1 ?? (tr?"Başak 2075 BK: teknik özelliklerin kaynaklı incelemesi":"Başak 2075 BK: a source-backed technical analysis"),
     description,url:pageUrl,inLanguage:langTag,isAccessibleForFree:true,
-    datePublished:"2026-11-19",dateModified:"2026-11-19",
+    datePublished:"2026-11-19",dateModified:"2026-11-22",
     author:{"@type":"Organization",name:"TractorVS"},
     publisher:{"@type":"Organization",name:"TractorVS"},
     mainEntityOfPage:{"@id":pageUrl+"#webpage"},
-    citation:[manufacturerUrl,brochureUrl,cabinUrl,twoWheelUrl],
+    citation:[manufacturerUrl,brochureUrl,cabinUrl,twoWheelUrl,btManufacturerUrl],
     about:{"@type":"Thing",name:"Başak 2075 BK manufacturer specifications"}},
   {"@type":"WebPage","@id":pageUrl+"#webpage",url:pageUrl,
     name:title,description,inLanguage:langTag,mainEntity:{"@id":pageUrl+"#article"}},
@@ -152,6 +165,31 @@ const schema={
         <p class="review-source-line">{localized?.tableSource ?? (tr?"Tablo kaynağı:":"Table source:")} <a href={brochureUrl} target="_blank" rel="noopener noreferrer">{localized?.pdfSource ?? (tr?"Başak 2075 BK resmî teknik broşürü":"Başak 2075 BK official brochure")}</a>.
           {localized?.variantNote ?? (tr?"Değerler model yılı, pazar veya opsiyonlara göre değişebilir.":"Actual equipment may differ by year, market and options.")}</p>
       </section>
+      <section class="review-variant-comparison" aria-labelledby="basak-bk-bt-comparison-title">
+        <h2 id="basak-bk-bt-comparison-title">{variantCopy.heading}</h2>
+        <p class="review-comparison-intro">{variantCopy.lead}</p>
+        <table>
+          <caption class="review-comparison-caption">{variantCopy.checked}</caption>
+          <thead><tr>
+            <th scope="col">{variantCopy.metric}</th>
+            <th scope="col">{variantCopy.bk}</th>
+            <th scope="col">{variantCopy.bt}</th>
+          </tr></thead>
+          <tbody>{variantRows.map((row,i)=><tr>
+            <th scope="row">{variantCopy.labels[i]}</th>
+            <td><span class="review-comparison-cell-model" aria-hidden="true">{variantCopy.bk}</span>{row.bk}</td>
+            <td><span class="review-comparison-cell-model" aria-hidden="true">{variantCopy.bt}</span>{row.bt}</td>
+          </tr>)}</tbody>
+        </table>
+        <p class="review-comparison-caveat">{variantCopy.note}</p>
+        <p class="review-comparison-caveat">{variantCopy.twoWheel}</p>
+        <p class="review-comparison-sources"><strong>{variantCopy.sources}:</strong>
+          <a href={manufacturerUrl} target="_blank" rel="noopener noreferrer">Başak 2075 BK ↗</a>
+          <a href={btManufacturerUrl} target="_blank" rel="noopener noreferrer">Başak 2075 BT ↗</a>
+          <a href={twoWheelUrl} target="_blank" rel="noopener noreferrer">Başak 2075 BK 2WD ↗</a>
+        </p>
+        {publicBtModel && <p class="review-bt-model-link"><a href={localizedPath(lang,"/tractors/"+publicBtModel.slug+"/")}>{variantCopy.viewBt} ↗</a></p>}
+      </section>
       {sections.map(section=><section class="review-prose">
         <h2>{section.h}</h2>
         {section.p.map(text=><p>{text}</p>)}
@@ -163,6 +201,7 @@ const schema={
       </section>
       <nav class="review-next" aria-label={RELATED_PAGES_LABELS[lang]}>
         {publicModel && <a href={localizedPath(lang,"/tractors/"+publicModel.slug+"/")}>{localized?.modelPage ?? (tr?"TractorVS model sayfası":"TractorVS model details")}</a>}
+        {publicBtModel && <a href={localizedPath(lang,"/tractors/"+publicBtModel.slug+"/")}>Başak 2075 BT</a>}
         <a href={localizedPath(lang,"/guides/choosing-a-tractor/")}>{localized?.selectionGuide ?? (tr?"Traktör seçim rehberi":"Tractor selection guide")}</a>
         <a href={localizedPath(lang,"/tractors/")}>{localized?.catalog ?? (tr?"Tüm modeller":"All models")}</a>
       </nav>
@@ -181,6 +220,29 @@ const schema={
   .review-disclosure{background:#e5efe1;border-left:4px solid #3b804d;padding:15px 18px;border-radius:4px;font-size:14px;line-height:1.75}
   .review-page h2{font-size:clamp(22px,2.6vw,28px);line-height:1.25;margin:0 0 17px;color:#1f422b}
   .review-facts,.review-prose{padding:27px 0;border-bottom:1px solid #d6e4d3}
+  .review-variant-comparison{margin:30px 0;padding:clamp(17px,3vw,25px);background:#eef6eb;border:1px solid #bed6bd;border-radius:16px;}
+  .review-variant-comparison h2{margin:0 0 12px}
+  .review-comparison-intro{font-size:15px;line-height:1.8;margin:0 0 19px}
+  .review-variant-comparison table{width:100%;border-collapse:collapse;table-layout:fixed;font-size:14px;line-height:1.5;}
+  .review-variant-comparison th,.review-variant-comparison td{padding:13px 12px;vertical-align:top;text-align:left;border:1px solid #c9dec8;overflow-wrap:anywhere}
+  .review-variant-comparison thead{background:#dcebd9}
+  .review-variant-comparison tbody th{font-weight:800;color:#235336}
+  .review-variant-comparison tbody td{background:white;font-variant-numeric:tabular-nums}
+  .review-comparison-caption{caption-side:bottom;text-align:left;padding-top:10px;color:#46614d;font-size:12px;line-height:1.6}
+  .review-comparison-cell-model{display:none}
+  .review-comparison-caveat{font-size:14px;line-height:1.75;margin:19px 0 0}
+  .review-comparison-sources{display:flex;flex-wrap:wrap;gap:8px 15px;align-items:center;margin:19px 0 0;font-size:13px;line-height:1.7}
+  .review-bt-model-link{margin:16px 0 0;font-size:14px;font-weight:800}
+  .review-variant-comparison a:focus-visible{outline:3px solid #519961;outline-offset:3px}
+  @media(max-width:690px){
+    .review-variant-comparison table,.review-variant-comparison tbody{display:block;width:100%}
+    .review-variant-comparison thead{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+    .review-variant-comparison tbody tr{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));margin:0 0 12px;border:1px solid #c9dec8;border-radius:9px;overflow:hidden}
+    .review-variant-comparison tbody th{grid-column:1/-1;background:#dcebd9}
+    .review-variant-comparison th,.review-variant-comparison td{border:0;min-width:0;padding:12px}
+    .review-variant-comparison tbody td+td{border-inline-start:1px solid #c9dec8}
+    .review-comparison-cell-model{display:block;margin-bottom:7px;font-weight:750;font-size:12px;color:#335d40}
+  }
   .review-prose p,.review-references p{font-size:16px;line-height:1.85;margin:0 0 16px}
   .review-table-scroll{overflow:auto}
   .review-facts table{width:100%;border-collapse:collapse;min-width:510px;font-size:14px;line-height:1.55}
