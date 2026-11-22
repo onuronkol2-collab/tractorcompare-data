@@ -14,7 +14,7 @@ const tractor=(brand_name,model_name)=>({
   engine:null,transmission:null,drivetrain:null,weight_kg:null,specifications:[]
 });
 test("only exact matching tractor model identity receives a verified photo",()=>{
-  assert.equal(APPROVED_TRACTOR_PHOTOS.length,91);
+  assert.equal(APPROVED_TRACTOR_PHOTOS.length,94);
   assert.equal(tractorPhotos(tractor("Belarus","82.1")).length,4);
   assert.equal(tractorPhotos(tractor("Belarus","80.1")).length,1);
   assert.equal(tractorPhotos(tractor("Belarus","132N")).length,1);
@@ -140,8 +140,12 @@ test("McCormick and Belarus verified images preserve exact source, JPEG SHA-256 
   assert.equal(evidence.approved.length,3);
   assert.equal(evidence.rejected.length,1);
   assert.equal(evidence.rejected[0].model,"X5.085");
-  assert.equal(primaryTractorPhoto(tractor("McCormick","X5.085")),null,
-    "No unverified photo for McCormick X5.085");
+  // The 21 November rejection was a *different*, title-only candidate.
+  // A new 22 November photograph passed independent source and JPEG SHA proof.
+  // Preserve the old rejection as historical evidence, never publish its ID.
+  assert.equal(APPROVED_TRACTOR_PHOTOS.some(p=>p.fileId===evidence.rejected[0].id),false);
+  assert.equal(primaryTractorPhoto(tractor("McCormick","X5.085"))?.fileId,
+    "mccormick-x5-085-mbone-2023");
   for(const source of evidence.approved){
     const photos=tractorPhotos(tractor(source.brand,source.model));
     assert.equal(photos.length,1,"Precisely one approved model image");
@@ -168,7 +172,7 @@ test("McCormick and Belarus verified images preserve exact source, JPEG SHA-256 
   }
   for(const [brand,model] of [
     ["McCormick","X4.085"],["McCormick","X8.631 P6-Drive"],
-    ["McCormick","X5.085"],["Belarus","952.2"],
+    ["McCormick","X5.086"],["Belarus","952.2"],
   ])assert.equal(primaryTractorPhoto(tractor(brand,model)),null,
     "Photo must not leak to neighbor model "+brand+" "+model);
 });
@@ -517,10 +521,60 @@ test("2026-11-22 independently self-licensed Commons gallery retains exact Steyr
     assert.equal(tractorPhotos(tractor(brand,model)).length,0,"Must not invent a pictured adjacent model "+brand+" "+model);
 });
 
+test("McCormick X5.085 and TYM T6115/T2025P have exact licensed files, source proof, and ten-language metadata",()=>{
+ const ledger=JSON.parse(readFileSync(new URL("../docs/photo-import-evidence-mccormick-tym-wave2-20261122.json",import.meta.url),"utf8"));
+ assert.equal(ledger.reviewRequired,true);
+ assert.equal(ledger.publicationCount,0,"Staging ledger must never self-authorize publication");
+ const models=[
+  ["McCormick","X5.085","mccormick-x5-085-mbone-2023","MB-one"],
+  ["TYM","T6115","tym-t6115-t115-marcelx42-2025","MarcelX42"],
+  ["TYM","T2025P","tym-t2025p-t25-marcelx42-2025","MarcelX42"]
+ ];
+ assert.equal(ledger.images.length,models.length);
+ for(const [brand,model,id,creator] of models){
+  const list=tractorPhotos(tractor(brand,model));
+  assert.equal(list.length,1,"Only one reviewed primary photo for "+brand+" "+model);
+  const p=list[0],e=ledger.images.find(x=>x.fileId===id);
+  assert.ok(e);
+  assert.equal(p.fileId,id);
+  assert.equal(p.photographer,creator);
+  assert.equal(p.licenseName,"CC BY-SA 4.0");
+  assert.equal(p.configurationExact,false);
+  assert.equal(e.approvedToPublish,false);
+  assert.equal(e.photographer,creator);
+  assert.equal(e.license,"CC BY-SA 4.0");
+  assert.equal(e.sourcePage,p.sourcePage);
+  assert.equal(new URL(e.origin).hostname,"thumb.wikimedia.org");
+  assert.equal(e.derivatives.length,3);
+  for(const size of [480,960,1920]){
+   const d=e.derivatives.find(x=>x.width===size);
+   assert.ok(d);
+   assert.equal(d.file,id+"-"+size+".jpg");
+   const bytes=readFileSync(new URL("../public/images/tractors/"+d.file,import.meta.url));
+   assert.equal(bytes.length,d.bytes);
+   assert.equal(createHash("sha256").update(bytes).digest("hex"),d.sha256);
+   assert.equal(bytes.subarray(0,3).toString("hex"),"ffd8ff");
+   assert.equal(bytes.subarray(-2).toString("hex"),"ffd9");
+  }
+  assert.equal(resolveApprovedPhotoSource(p.thumbUrl),p.originThumbUrl);
+  assert.equal(resolveApprovedPhotoSource(p.displayUrl),p.originDisplayUrl);
+  for(const locale of LOCALES){
+   const object=modelStructuredData(tractor(brand,model),locale,"https://tractorvs.com/")["@graph"].find(x=>x["@type"]==="ImageObject");
+   assert.ok(object,"ImageObject for "+brand+" "+model+" "+locale);
+   assert.equal(object.license,p.licenseUrl);
+   assert.equal(object.creator.name,creator);
+   assert.equal(decodeURIComponent(object.acquireLicensePage),decodeURIComponent(p.sourcePage));
+   assert.equal(object.contentUrl,"https://tractorvs.com"+p.fullUrl);
+  }
+ }
+ for(const [b,m] of [["TYM","T6130"],["TYM","T3048"],["TYM","T4049"],["McCormick","X5.080"]])
+   assert.equal(tractorPhotos(tractor(b,m)).length,0,"Unapproved adjacent variant "+b+" "+m);
+});
+
 test("historic photo batch is staged with rights and does not create records",()=>{
-  assert.equal(HISTORICAL_LICENSED_PHOTOS.length,80);
+  assert.equal(HISTORICAL_LICENSED_PHOTOS.length,83);
   const all=new Set(HISTORICAL_LICENSED_PHOTOS.map(x=>x.fileId));
-  assert.equal(all.size,80);
+  assert.equal(all.size,83);
   assert.ok(HISTORICAL_LICENSED_PHOTOS.every(x=>x.configurationExact===false));
   assert.ok(!HISTORICAL_LICENSED_PHOTOS.some(x=>["Product","Vehicle"].includes(x.model)));
 });

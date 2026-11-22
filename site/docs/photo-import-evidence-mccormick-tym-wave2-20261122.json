@@ -1,0 +1,105 @@
+{
+  "reviewRequired": true,
+  "publicationCount": 0,
+  "images": [
+    {
+      "fileId": "mccormick-x5-085-mbone-2023",
+      "photographer": "MB-one",
+      "license": "CC BY-SA 4.0",
+      "sourcePage": "https://commons.wikimedia.org/wiki/File:McCormick%2C_Agritechnica_2023%2C_Hanover_%28P1140949%29.jpg",
+      "origin": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b2/McCormick%2C_Agritechnica_2023%2C_Hanover_%28P1140949%29.jpg/1920px-McCormick%2C_Agritechnica_2023%2C_Hanover_%28P1140949%29.jpg",
+      "originSha256": "ae671811501dce83bbfa387370537e276d37d0f7c6ac99c180c61d177384facb",
+      "originBytes": 845420,
+      "derivatives": [
+        {
+          "file": "mccormick-x5-085-mbone-2023-480.jpg",
+          "width": 480,
+          "height": 600,
+          "bytes": 75148,
+          "sha256": "395c45121e56a76bb4a0cb46edb6d98f8d8382baf1374bfb5f8486cf9c6304b6"
+        },
+        {
+          "file": "mccormick-x5-085-mbone-2023-960.jpg",
+          "width": 960,
+          "height": 1200,
+          "bytes": 245836,
+          "sha256": "15dfc025ead6212efc6aad187d0f6528eb9276caf2ea3b58a4436286cc4b5a19"
+        },
+        {
+          "file": "mccormick-x5-085-mbone-2023-1920.jpg",
+          "width": 1920,
+          "height": 2400,
+          "bytes": 805633,
+          "sha256": "2f90ce3ceee9524e9e6d7a283a9ed1aa85af4dcb93bb55f075aebe777672a440"
+        }
+      ],
+      "approvedToPublish": false
+    },
+    {
+      "fileId": "tym-t6115-t115-marcelx42-2025",
+      "photographer": "MarcelX42",
+      "license": "CC BY-SA 4.0",
+      "sourcePage": "https://commons.wikimedia.org/wiki/File:TYM_T115_Agritechnica_2025_%28DSC04612%29.jpg",
+      "origin": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/01/TYM_T115_Agritechnica_2025_%28DSC04612%29.jpg/1920px-TYM_T115_Agritechnica_2025_%28DSC04612%29.jpg",
+      "originSha256": "a7cbd5a393efa8a61045f365353c118530ede2691fad9a6b28c9fe2b496296ee",
+      "originBytes": 505280,
+      "derivatives": [
+        {
+          "file": "tym-t6115-t115-marcelx42-2025-480.jpg",
+          "width": 480,
+          "height": 320,
+          "bytes": 44486,
+          "sha256": "794096bc79a9799c34f442ff5f07e5ec57fb8d33f02e8b9ed3331414fd749d96"
+        },
+        {
+          "file": "tym-t6115-t115-marcelx42-2025-960.jpg",
+          "width": 960,
+          "height": 640,
+          "bytes": 144060,
+          "sha256": "876d209e0ef02cdc61f7c563a4d90afd842bbcdbe422761655fb0144e643a233"
+        },
+        {
+          "file": "tym-t6115-t115-marcelx42-2025-1920.jpg",
+          "width": 1920,
+          "height": 1280,
+          "bytes": 482630,
+          "sha256": "0ece70d738771fd4da42a63d0138850d00e99cf4adf61c618a21fd79b8009b91"
+        }
+      ],
+      "approvedToPublish": false
+    },
+    {
+      "fileId": "tym-t2025p-t25-marcelx42-2025",
+      "photographer": "MarcelX42",
+      "license": "CC BY-SA 4.0",
+      "sourcePage": "https://commons.wikimedia.org/wiki/File:TYM_T25_Agritechnica_2025_%28DSC04615%29.jpg",
+      "origin": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/0b/TYM_T25_Agritechnica_2025_%28DSC04615%29.jpg/1920px-TYM_T25_Agritechnica_2025_%28DSC04615%29.jpg",
+      "originSha256": "32a399d689bc28f95bd858888356b5784cd79a6952c27cb43081f675faacc08b",
+      "originBytes": 597398,
+      "derivatives": [
+        {
+          "file": "tym-t2025p-t25-marcelx42-2025-480.jpg",
+          "width": 480,
+          "height": 360,
+          "bytes": 47306,
+          "sha256": "a2a2164878723a380b613bfce3d379c2a934be03f574dee6ea05510ef8ae8619"
+        },
+        {
+          "file": "tym-t2025p-t25-marcelx42-2025-960.jpg",
+          "width": 960,
+          "height": 720,
+          "bytes": 157179,
+          "sha256": "21f20f2a0be1805b69e364d511ea5cf373836c4b27aeda75e317f05606e587b8"
+        },
+        {
+          "file": "tym-t2025p-t25-marcelx42-2025-1920.jpg",
+          "width": 1920,
+          "height": 1440,
+          "bytes": 569825,
+          "sha256": "6529618781ccfef1bca7f22629432e5e4a25037e33c8b36d964874d4590e505f"
+        }
+      ],
+      "approvedToPublish": false
+    }
+  ]
+}
