@@ -59,7 +59,16 @@ export async function auditSearchConsoleCandidates({fetchJson=fetchCommonsJson}=
    const wikitext=page.revisions?.[0]?.slots?.main?.content??
      page.revisions?.[0]?.slots?.main?.["*"]??page.revisions?.[0]?.["*"];
    if(typeof wikitext!=="string")throw Error("Commons file wikitext absent "+p.fileId);
-   return inspectCommonsCandidate(wikitext,p);
+   const review=inspectCommonsCandidate(wikitext,p);
+   if(["belarus-132n-picture30-2011","swaraj-735-fe-0269bdfd"].includes(p.fileId)){
+     const licenseTemplates=[...wikitext.matchAll(/\{\{[^\r\n}]{0,180}\}\}/g)]
+       .map(x=>x[0]).filter(x=>/cc-by|gfdl|self|copyright|license|flickr/i.test(x)).slice(0,15);
+     const firstDescription=String(wikitext).slice(0,1200);
+     console.log("TRACTOR_COPYRIGHT_HARD_CASE "+JSON.stringify({
+        fileId:p.fileId,licenseTemplates,description:firstDescription
+     }));
+   }
+   return review;
  });
  for(const row of rows)console.log("TRACTOR_COPYRIGHT_RESEARCH "+JSON.stringify(row));
  console.log("TRACTOR_COPYRIGHT_RESEARCH_SUMMARY "+JSON.stringify({
