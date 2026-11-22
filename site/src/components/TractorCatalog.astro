@@ -251,10 +251,16 @@ const pricePayload = JSON.stringify({
     year:card.dataset.year||null,name:card.dataset.name||""
   }));
   const sortCards=()=>{
+    const grid=document.querySelector<HTMLElement>("#tractor-card-grid");
+    if(!grid)return;
     const order=facetState().sort;
-    if(order==="brand"){for(const row of rows)row.card.style.removeProperty("order");return;}
-    const sorted=[...rows].sort((a,b)=>compareCatalogueRows(a,b,order)||a.index-b.index);
-    sorted.forEach((row,index)=>{row.card.style.order=String(index);});
+    const sorted=order==="brand"?rows:[...rows].sort((a,b)=>compareCatalogueRows(a,b,order)||a.index-b.index);
+    // Reorder the actual cards, not just CSS order. Reading, keyboard and
+    // visual order must agree for assistive technologies. All original
+    // server-rendered model links and published records remain in the DOM.
+    const fragment=document.createDocumentFragment();
+    for(const row of sorted)fragment.appendChild(row.card);
+    grid.appendChild(fragment);
   };
   const filterCatalog = (query: string) => {
     const normalized = normalizeTractorQuery(query);
