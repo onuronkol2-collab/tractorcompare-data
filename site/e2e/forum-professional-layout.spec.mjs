@@ -11,7 +11,7 @@ test("professional forum workspace is responsive and keeps all essential actions
    await expect(shell.locator(".community-hero-panel")).toBeHidden();
   else
    await expect(shell.locator(".community-hero-panel")).toBeVisible();
-  await expect(shell.locator(".community-sidebar #forum-compose")).toBeVisible();
+  await expect(shell.locator(".community-primary-column #forum-compose")).toBeVisible();
   await expect(shell.locator(".member-community")).toBeVisible();
   await expect(shell.locator(".member-recent")).toBeVisible();
   await expect(shell.locator('[data-forum-auth-gate] > summary')).toBeVisible();
@@ -19,18 +19,23 @@ test("professional forum workspace is responsive and keeps all essential actions
   const measured=await page.evaluate(()=>{
    const section=document.querySelector(".community-list").getBoundingClientRect();
    const sidebar=document.querySelector(".community-sidebar").getBoundingClientRect();
+   const composer=document.querySelector("#forum-compose").getBoundingClientRect();
    const hero=document.querySelector(".community-hero-panel").getBoundingClientRect();
    return {scrollWidth:document.documentElement.scrollWidth,viewport:innerWidth,
     section:{right:section.right,bottom:section.bottom},
     sidebar:{left:sidebar.left,top:sidebar.top,right:sidebar.right},
+    composer:{left:composer.left,right:composer.right,bottom:composer.bottom,width:composer.width},
     heroRight:hero.right};
   });
   expect(measured.scrollWidth).toBeLessThanOrEqual(measured.viewport+2);
   expect(measured.heroRight).toBeLessThanOrEqual(measured.viewport+1);
   if(measured.viewport>=961){
    expect(measured.sidebar.left).toBeGreaterThan(measured.section.right-2);
+   expect(measured.composer.left).toBeGreaterThanOrEqual(0);
+   expect(measured.composer.right).toBeLessThanOrEqual(measured.sidebar.left+2);
+   expect(measured.composer.width).toBeGreaterThan(400);
   }else{
-   expect(measured.sidebar.top).toBeGreaterThanOrEqual(measured.section.bottom-3);
+   expect(measured.sidebar.top).toBeGreaterThanOrEqual(measured.composer.bottom-3);
   }
  }
 });
