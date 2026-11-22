@@ -142,7 +142,41 @@ const ORIGINAL_PHOTO_ORIGINS:readonly Omit<TractorPhoto,"originThumbUrl"|"origin
     sourcePage:"https://commons.wikimedia.org/wiki/File:%D0%9A%D0%BE%D1%81%D0%BC%D0%BE%D1%81%2C_%D0%9C%D0%A2%D0%97-80.1_%D0%BD%D0%B0_%D0%96%D0%B5%D0%BB%D1%82%D0%BE%D0%BA%D1%81%D0%B0%D0%BD%D0%B5.jpg",
     licenseName:"CC BY-SA 4.0",licenseUrl:"https://creativecommons.org/licenses/by-sa/4.0/",
     configurationExact:false
-  }
+  },
+  // Independently licensed Commons own-work 2023 show photos; exact published UUID only.
+  {brand:"TYM",model:"T2026",tractorId:"1aa3a3d6-822b-4346-9d13-b6c0d99bdb1e",
+    fileId:"tym-t2026-2500l-marcelx42-2023",
+    thumbUrl:W+"thumb/8/88/TYM_2500L_Agritechnica_2023_%28DSC05265%29.jpg/480px-TYM_2500L_Agritechnica_2023_%28DSC05265%29.jpg",
+    displayUrl:W+"thumb/8/88/TYM_2500L_Agritechnica_2023_%28DSC05265%29.jpg/960px-TYM_2500L_Agritechnica_2023_%28DSC05265%29.jpg",
+    fullUrl:W+"8/88/TYM_2500L_Agritechnica_2023_%28DSC05265%29.jpg",
+    width:7008,height:3944,photographer:"MarcelX42",
+    sourcePage:"https://commons.wikimedia.org/wiki/File:TYM_2500L_Agritechnica_2023_(DSC05265).jpg",
+    copyrightOwner:"MarcelX42",copyrightClaimUrl:"https://commons.wikimedia.org/wiki/File:TYM_2500L_Agritechnica_2023_(DSC05265).jpg",
+    copyrightEvidence:"commons-own-work-self-license",
+    licenseName:"CC BY-SA 4.0",licenseUrl:"https://creativecommons.org/licenses/by-sa/4.0/",
+    configurationExact:false},
+  {brand:"TYM",model:"T4058",tractorId:"840269b7-e7c3-4e57-80db-56a55e9fbf46",
+    fileId:"tym-t4058-6225c-marcelx42-2023",
+    thumbUrl:W+"thumb/e/ea/TYM_6225C_Agritechnica_2023_%28DSC03508%29.jpg/480px-TYM_6225C_Agritechnica_2023_%28DSC03508%29.jpg",
+    displayUrl:W+"thumb/e/ea/TYM_6225C_Agritechnica_2023_%28DSC03508%29.jpg/960px-TYM_6225C_Agritechnica_2023_%28DSC03508%29.jpg",
+    fullUrl:W+"e/ea/TYM_6225C_Agritechnica_2023_%28DSC03508%29.jpg",
+    width:6545,height:3683,photographer:"MarcelX42",
+    sourcePage:"https://commons.wikimedia.org/wiki/File:TYM_6225C_Agritechnica_2023_(DSC03508).jpg",
+    copyrightOwner:"MarcelX42",copyrightClaimUrl:"https://commons.wikimedia.org/wiki/File:TYM_6225C_Agritechnica_2023_(DSC03508).jpg",
+    copyrightEvidence:"commons-own-work-self-license",
+    licenseName:"CC BY-SA 4.0",licenseUrl:"https://creativecommons.org/licenses/by-sa/4.0/",
+    configurationExact:false},
+  {brand:"TYM",model:"T5075",tractorId:"d12085d4-5bdf-4017-85f5-7071a6d72e6f",
+    fileId:"tym-t5075-t78-marcelx42-2023",
+    thumbUrl:W+"thumb/5/5b/TYM_T78_Agritechnica_2023_%28DSC03605%29.jpg/480px-TYM_T78_Agritechnica_2023_%28DSC03605%29.jpg",
+    displayUrl:W+"thumb/5/5b/TYM_T78_Agritechnica_2023_%28DSC03605%29.jpg/960px-TYM_T78_Agritechnica_2023_%28DSC03605%29.jpg",
+    fullUrl:W+"5/5b/TYM_T78_Agritechnica_2023_%28DSC03605%29.jpg",
+    width:7008,height:3944,photographer:"MarcelX42",
+    sourcePage:"https://commons.wikimedia.org/wiki/File:TYM_T78_Agritechnica_2023_(DSC03605).jpg",
+    copyrightOwner:"MarcelX42",copyrightClaimUrl:"https://commons.wikimedia.org/wiki/File:TYM_T78_Agritechnica_2023_(DSC03605).jpg",
+    copyrightEvidence:"commons-own-work-self-license",
+    licenseName:"CC BY-SA 4.0",licenseUrl:"https://creativecommons.org/licenses/by-sa/4.0/",
+    configurationExact:false}
 ];
 /** Curated historical archive candidates are staged in code; they reach public pages
  * ONLY if an exact brand/model is found in the published Supabase public catalogue.
