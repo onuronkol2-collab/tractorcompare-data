@@ -1,0 +1,219 @@
+{
+  "schemaVersion": 1,
+  "checkedOn": "2026-11-22",
+  "purpose": "Curated public photo-file leads from Commons File captions/categories + manufacturer alias pages; NEVER automatically published.",
+  "publicationCount": 0,
+  "publicAssetCount": 0,
+  "sourceMediaDownloaded": false,
+  "allowAutomaticApproval": false,
+  "researchScope": {
+    "sitemapPublishedModels": 388,
+    "sitemapRows": 462,
+    "previousCommonsTitleMatches": 113,
+    "previousDistinctMatchedBrandModels": 43,
+    "previousOpenverseQueries": 12,
+    "previousOpenverseLeads": 0,
+    "notExhaustive": true
+  },
+  "candidates": [
+    {
+      "fileId": "mccormick-x5-085-mbone-2023",
+      "target": {
+        "tractor_id": "d050e1f3-666a-41ab-bc4d-ec3e218586cf",
+        "brand": "McCormick",
+        "model": "X5.085",
+        "variantGuard": "Stage V X5.085",
+        "pageUrl": "https://tractorvs.com/tractors/mccormick-x5-085-d050e1f3/"
+      },
+      "source": {
+        "fileUrl": "https://commons.wikimedia.org/wiki/File:McCormick,_Agritechnica_2023,_Hanover_(P1140949).jpg",
+        "depictedModelText": "McCormick X5.085 tractor with front loader at Agritechnica 2023",
+        "creator": "MB-one",
+        "license": "CC BY-SA 4.0",
+        "ownWorkDeclared": true
+      },
+      "evidence": {
+        "method": "Commons file caption (not filename) + stated author self-license",
+        "exactModel": true,
+        "manufacturerAliasUrl": null
+      },
+      "review": {
+        "status": "rights_and_model_page_reviewed_binary_pending",
+        "binaryVerified": false,
+        "variantScoped": true,
+        "publicationAllowed": false
+      }
+    },
+    {
+      "fileId": "tym-t6115-t115-marcelx42-2025",
+      "target": {
+        "tractor_id": "80fd42a2-3059-40bb-a0e1-511ae6100213",
+        "brand": "TYM",
+        "model": "T6115",
+        "variantGuard": "T115 / Series 6",
+        "pageUrl": "https://tractorvs.com/tractors/tym-t6115-80fd42a2/"
+      },
+      "source": {
+        "fileUrl": "https://commons.wikimedia.org/wiki/File:TYM_T115_Agritechnica_2025_(DSC04612).jpg",
+        "depictedModelText": "TYM T115 photographed at Agritechnica 2025",
+        "creator": "MarcelX42",
+        "license": "CC BY-SA 4.0",
+        "ownWorkDeclared": true
+      },
+      "evidence": {
+        "method": "manufacturer model alias: T6115 (T115)",
+        "exactModel": true,
+        "manufacturerAliasUrl": "https://tym.world/en/products/tractors/series-6/t115-intl"
+      },
+      "review": {
+        "status": "rights_and_model_page_reviewed_binary_pending",
+        "binaryVerified": false,
+        "variantScoped": true,
+        "publicationAllowed": false
+      }
+    },
+    {
+      "fileId": "tym-t2025p-t25-marcelx42-2025",
+      "target": {
+        "tractor_id": "622ddce0-f3a8-48ad-8ec6-45ca936dba6f",
+        "brand": "TYM",
+        "model": "T2025P",
+        "variantGuard": "T25 / Series 2",
+        "pageUrl": "https://tractorvs.com/tractors/tym-t2025p-622ddce0/"
+      },
+      "source": {
+        "fileUrl": "https://commons.wikimedia.org/wiki/File:TYM_T25_Agritechnica_2025_(DSC04615).jpg",
+        "depictedModelText": "TYM T25 photographed at Agritechnica 2025",
+        "creator": "MarcelX42",
+        "license": "CC BY-SA 4.0",
+        "ownWorkDeclared": true
+      },
+      "evidence": {
+        "method": "manufacturer model alias: T2025P (T25)",
+        "exactModel": true,
+        "manufacturerAliasUrl": "https://tym.world/en/products/tractors/series-2/t25-intl"
+      },
+      "review": {
+        "status": "rights_and_model_page_reviewed_binary_pending",
+        "binaryVerified": false,
+        "variantScoped": true,
+        "publicationAllowed": false
+      }
+    },
+    {
+      "fileId": "tym-t3048-f50chn-marcelx42-2025",
+      "target": {
+        "tractor_id": "458be7b8-f6b8-4319-b264-dc6c7cc36ae7",
+        "brand": "TYM",
+        "model": "T3048",
+        "variantGuard": "F50CHN / F50C cab / 3-range HST",
+        "pageUrl": "https://tractorvs.com/tractors/tym-t3048-458be7b8/"
+      },
+      "source": {
+        "fileUrl": "https://commons.wikimedia.org/wiki/File:TYM_F50Chn_Agritechnica_2025_(DSC04655).jpg",
+        "depictedModelText": "TYM F50Chn photographed at Agritechnica 2025",
+        "creator": "MarcelX42",
+        "license": "CC BY-SA 4.0",
+        "ownWorkDeclared": true
+      },
+      "evidence": {
+        "method": "manufacturer's T3048 (F50CHN) variant alias; MUST be scoped by tractor_id not just brand/model",
+        "exactModel": true,
+        "manufacturerAliasUrl": "https://tym.world/en/products/tractors/series-3/f50c"
+      },
+      "review": {
+        "status": "variant_specific_code_change_required_binary_pending",
+        "binaryVerified": false,
+        "variantScoped": true,
+        "publicationAllowed": false
+      }
+    },
+    {
+      "fileId": "sonalika-di30-baagban-tagooty-2024",
+      "target": {
+        "tractor_id": "ad248a3c-d9af-45f9-9aff-93c54d2f45e8",
+        "brand": "Sonalika",
+        "model": "DI 30 Baagban",
+        "variantGuard": "India 2WD / orchard",
+        "pageUrl": "https://tractorvs.com/tractors/sonalika-di-30-baagban-ad248a3c/"
+      },
+      "source": {
+        "fileUrl": "https://commons.wikimedia.org/wiki/File:Sonalika_Baagban_DI-30Rx_Tractor_Left_Front_Coorg_Feb24_A7C_09555.jpg",
+        "depictedModelText": "Sonalika DI-30Rx Baagban",
+        "creator": "Timothy A. Gonsalves (Tagooty)",
+        "license": "CC BY-SA 4.0",
+        "ownWorkDeclared": true
+      },
+      "evidence": {
+        "method": "Commons File page includes explicit request to contact before commercial use despite CC BY-SA self-license; model trim requires manual reconciliation",
+        "exactModel": false,
+        "manufacturerAliasUrl": null
+      },
+      "review": {
+        "status": "rights_and_trim_clarification_required",
+        "reason": "Author's separate commercial contact request conflicts with low-risk reuse preference; no commercial-use authorization inferred beyond license, and DI-30Rx vs generic DI30 requires trim review",
+        "binaryVerified": false,
+        "variantScoped": true,
+        "publicationAllowed": false
+      }
+    },
+    {
+      "fileId": "tym-t6130-t130-mbone-2023",
+      "target": {
+        "tractor_id": "7597d8a9-1ab9-40c4-a08d-bb808abe9988",
+        "brand": "TYM",
+        "model": "T6130",
+        "variantGuard": "Series 6",
+        "pageUrl": "https://tractorvs.com/tractors/tym-t6130-7597d8a9/"
+      },
+      "source": {
+        "fileUrl": "https://commons.wikimedia.org/wiki/File:TYM_Series_6,_Agritechnica_2023,_Hanover_(P1160323).jpg",
+        "depictedModelText": "TYM T130 photographed at Agritechnica 2023",
+        "creator": "MB-one",
+        "license": "CC BY-SA 4.0",
+        "ownWorkDeclared": true
+      },
+      "evidence": {
+        "method": "Manufacturer says T6130 shares platform DNA with T130 but does not establish photographed unit is T6130",
+        "exactModel": false,
+        "manufacturerAliasUrl": "https://tym.world/en/about/latest-news/2025-new-series-lineup"
+      },
+      "review": {
+        "status": "model_mismatch_hold",
+        "reason": "Do not represent a photographed T130 as an exact T6130",
+        "binaryVerified": false,
+        "variantScoped": true,
+        "publicationAllowed": false
+      }
+    },
+    {
+      "fileId": "zetor-major-hs80-marcelx42-2017",
+      "target": {
+        "tractor_id": "755e44bc-8043-4d41-9e08-f40e818ac00b",
+        "brand": "Zetor",
+        "model": "MAJOR",
+        "variantGuard": "CL 80",
+        "pageUrl": "https://tractorvs.com/tractors/zetor-major-755e44bc/"
+      },
+      "source": {
+        "fileUrl": "https://commons.wikimedia.org/wiki/File:Zetor_Major_HS_80_Agritechnica_2017_-_Front_and_left_side.jpg",
+        "depictedModelText": "Zetor Major HS 80",
+        "creator": "MarcelX42",
+        "license": "CC BY-SA 4.0",
+        "ownWorkDeclared": true
+      },
+      "evidence": {
+        "method": "Same family but photographed HS80 is not registered CL80 variant",
+        "exactModel": false,
+        "manufacturerAliasUrl": null
+      },
+      "review": {
+        "status": "model_mismatch_hold",
+        "reason": "Do not treat HS 80 as CL 80",
+        "binaryVerified": false,
+        "variantScoped": true,
+        "publicationAllowed": false
+      }
+    }
+  ]
+}
