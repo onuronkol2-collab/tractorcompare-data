@@ -101,9 +101,23 @@ export default {
       // Only the fixed approved-photo allowlist can be fetched. No arbitrary URL input.
       const upstream=resolveApprovedPhotoSource(url.pathname);
       if(!upstream)return new Response("Photo not found",{status:404});
-      if (url.pathname.endsWith("-480.jpg")) {
-        const thumbnail = await env.ASSETS.fetch(request);
-        if (thumbnail.ok && thumbnail.headers.get("Content-Type")?.startsWith("image/jpeg")) return thumbnail;
+      // Prefer already license-checked first-party media at ALL three
+      // supported sizes. This avoids repeat Wikimedia 429s and serves the
+      // genuine SHA-pinned optimized JPEGs checked into the release.
+      // The exact model/fileId allowlist has already been verified above.
+      // A missing, non-JPEG or unavailable local file keeps the existing
+      // same-file Commons fallback, never a different tractor image.
+      const localPhoto = await env.ASSETS.fetch(request);
+      if(localPhoto.ok && localPhoto.headers.get("Content-Type")?.toLowerCase()
+        .startsWith("image/jpeg")){
+        return new Response(method==="HEAD"?null:localPhoto.body,{
+          status:200,headers:{
+            "Content-Type":"image/jpeg",
+            "Cache-Control":"public, max-age=86400, s-maxage=604800",
+            "X-Content-Type-Options":"nosniff",
+            "X-TractorVS-Image-Source":"local"
+          }
+        });
       }
       // Commons thumbnails can be temporarily unavailable at 1920px even
       // when the same, approved image is available at 960px. Never redirect
