@@ -10,7 +10,64 @@ import {readdirSync,readFileSync} from "node:fs";
 import {join,relative,resolve} from "node:path";
 import {fileURLToPath} from "node:url";
 
-const tagPattern=type=>new RegExp("<"+type+"\\b(?:[^\"'>]|\"[^\"]*\"|'[^']*')*>","gi");
+/**
+ * Scan actual opening tags without rewriting HTML. A regex strip of comments
+ * and <script>...</script> can join separate fragments into a NEW <meta> or
+ * <link> tag and make the SEO audit believe it existed in the source.
+ *
+ * The input is generated static HTML, not a browser sanitizer. Never execute,
+ * echo into HTML, or mutate any source content; skip comments and rawtext
+ * nodes in place, respecting quoted attributes and their embedded '>' signs.
+ */
+function scanHeadTags(head){
+  const links=[],metas=[];
+  let cursor=0;
+  while(cursor<head.length){
+    const start=head.indexOf("<",cursor);
+    if(start<0)break;
+    if(head.startsWith("<!--",start)){
+      const close=head.indexOf("-->",start+4);
+      if(close<0)break;
+      cursor=close+3;
+      continue;
+    }
+    const match=/^<(\/?)([a-z][a-z0-9:-]*)/i.exec(head.slice(start));
+    if(!match){cursor=start+1;continue;}
+    const afterName=start+match[0].length;
+    if(afterName>=head.length||!/[\\s/>]/.test(head[afterName])){
+      cursor=afterName;
+      continue;
+    }
+    let quote="";
+    let end=-1;
+    for(let position=afterName;position<head.length;position++){
+      const character=head[position];
+      if(quote){
+        if(character===quote)quote="";
+      }else if(character==='"'||character==="'"){
+        quote=character;
+      }else if(character===">"){
+        end=position;
+        break;
+      }
+    }
+    if(end<0)break;
+    cursor=end+1;
+    if(match[1])continue; // closing tag
+    const name=match[2].toLowerCase();
+    const tag=head.slice(start,cursor);
+    if(name==="link")links.push(tag);
+    else if(name==="meta")metas.push(tag);
+    if(name==="script"||name==="style"){
+      // HTML rawtext: apparent tags inside script/style are not DOM tags.
+      const closing=new RegExp("</"+name+"(?=[\\s>])[^>]*>","gi");
+      closing.lastIndex=cursor;
+      if(!closing.exec(head))break;
+      cursor=closing.lastIndex;
+    }
+  }
+  return {links,metas};
+}
 const attribute=(tag,name)=>{
   const expression=new RegExp("(?:^|\\s)"+name+"\\s*=\\s*(?:\"([^\"]*)\"|'([^']*)'|([^\\s/>]+))","i");
   const found=tag.match(expression);
@@ -30,11 +87,9 @@ export function inspectMetaDescription(html,file="index.html"){
   if(!/<html\b/i.test(html))return null;
   const head=html.match(/<head\b[^>]*>([\s\S]*?)<\/head\s*>/i)?.[1];
   if(!head)return null;
-  // Embedded JS or comments can contain literal "<meta ...>" strings.
-  const visibleHead=head.replace(/<!--[\s\S]*?-->|<(script|style)\b[^>]*>[\s\S]*?<\/\1\s*>/gi,"");
-  const links=[...visibleHead.matchAll(tagPattern("link"))].map(match=>match[0]);
+  // Inspect source tags directly: do not strip markup into newly joined tags.
+  const {links,metas}=scanHeadTags(head);
   const canonical=links.some(tag=>(attribute(tag,"rel")||"").toLowerCase().split(/\s+/).includes("canonical"));
-  const metas=[...visibleHead.matchAll(tagPattern("meta"))].map(match=>match[0]);
   const noindex=metas.some(tag=>(attribute(tag,"name")||"").toLowerCase()==="robots"
     && /\bnoindex\b/i.test(attribute(tag,"content")||""));
   // Only canonical, indexable pages are actionable. Other production gates
