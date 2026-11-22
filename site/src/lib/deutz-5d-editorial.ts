@@ -67,6 +67,37 @@ function strictNumber(s:string):number|null{
  if(!/^\d+(?:\.\d{1,3})?$/.test(s))return null;
  const n=Number(s);return Number.isFinite(n)?n:null;
 }
+/**
+ * Build-only safe diagnostics. Reports public identities and names of failed
+ * technical gates, never secret keys, full evidence excerpts or private rows.
+ */
+export function deutz5DPairReadiness(tractors:readonly TractorRecord[]){
+ const left=tractors.find(m=>m.tractor_id===DEUTZ_5D_GS_PILOT.leftId);
+ const right=tractors.find(m=>m.tractor_id===DEUTZ_5D_GS_PILOT.rightId);
+ const problems:string[]=[];
+ for(const [name,model,id,modelName] of [
+  ["left",left,DEUTZ_5D_GS_PILOT.leftId,"5090 D"],
+  ["right",right,DEUTZ_5D_GS_PILOT.rightId,"5100 D"]
+ ] as const){
+  if(!sameVariantModel(model,id,modelName)){problems.push(name+":identity");continue}
+  for(const field of fields){
+   if(!specFor(model,field)){
+    const count=model.specifications.filter(s=>s.canonical_key===field.key).length;
+    problems.push(name+":"+field.key+":"+count);
+   }
+  }
+ }
+ if(left&&right){
+  for(const field of fields){
+   const a=specFor(left,field),b=specFor(right,field);
+   if(a&&b&&a.measurement_standard!==b.measurement_standard)
+    problems.push("standard:"+field.key);
+  }
+ }
+ return {publishedModels:tractors.length,leftFound:Boolean(left),rightFound:Boolean(right),
+  leftSpecifications:left?.specifications.length||0,rightSpecifications:right?.specifications.length||0,
+  failedGates:problems};
+}
 export function curatedDeutz5DPair(tractors:readonly TractorRecord[]):CuratedPair|null{
  const left=tractors.find(m=>m.tractor_id===DEUTZ_5D_GS_PILOT.leftId);
  const right=tractors.find(m=>m.tractor_id===DEUTZ_5D_GS_PILOT.rightId);
