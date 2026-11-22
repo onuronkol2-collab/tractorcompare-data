@@ -1,6 +1,6 @@
 import {matchesPhotoFileModel} from "./photo-model-identity.mjs";
 import {allowedPhotoReuseLicense} from "./photo-license-check.mjs";
-import {requireCommonsQueryResponse} from "./photo-source-response.mjs";
+import {fetchCommonsJson,CommonsCooldownError} from "./photo-commons-http.mjs";
 /** Bulk archive research; brand-level Commons searches avoid 405 API requests.
  * All results are candidates only. They NEVER publish to TractorVS.
  */
@@ -20,25 +20,23 @@ const aliases={
   "Lamborghini Trattori":["Lamborghini"]
 };
 
+// Once Commons asks us to stop (429/503 cooldown), do not hammer other
+// brands with new requests; preserve partial reports and fail the final gate.
+let commonsPaused=null;
 async function query(params){
+  if(commonsPaused)throw commonsPaused;
   const url=new URL("https://commons.wikimedia.org/w/api.php");
   url.searchParams.set("action","query");
   url.searchParams.set("format","json");
   url.searchParams.set("formatversion","2");
+  url.searchParams.set("maxlag","5");
   for(const [k,v] of Object.entries(params))url.searchParams.set(k,String(v));
-  let last;
-  for(let i=0;i<4;i++){
-    await wait(i?i*3000:1450);
-    try{
-      const response=await fetch(url,{
-        headers:{"User-Agent":"TractorVS rights-cleared photo inventory (https://tractorvs.com/)","Accept":"application/json"},
-        signal:AbortSignal.timeout(30000)
-      });
-      if(!response.ok)throw Error("Commons HTTP "+response.status);
-      return requireCommonsQueryResponse(await response.json());
-    }catch(e){last=e;}
+  await wait(1450);
+  try{return await fetchCommonsJson(url,{sleep:wait});}
+  catch(e){
+    if(e instanceof CommonsCooldownError)commonsPaused=e;
+    throw e;
   }
-  throw last;
 }
 // Combine frozen historical identities with fresh public model identities
 // before querying Commons. This preserves ALL live models without extra API
