@@ -49,3 +49,28 @@ test("Unicode source author, hyphenated corporate account and literal author-fie
    "Mention outside the author field cannot prove ownership "+name);
  }
 });
+
+test("Belarus 132N original ru.wikipedia uploader signed the nested CC BY-SA 3.0 self-license",()=>{
+ const p={...base,fileId:"belarus-132n-picture30-2011",
+   photographer:"Picture30",copyrightOwner:"Picture30",
+   sourcePage:"https://commons.wikimedia.org/wiki/File:Belarus-132N.jpg",
+   copyrightClaimUrl:"https://commons.wikimedia.org/wiki/File:Belarus-132N.jpg",
+   licenseName:"CC BY-SA 3.0",
+   licenseUrl:"https://creativecommons.org/licenses/by-sa/3.0/"};
+ const wikiText=[
+  "{{Information",
+  "|Source=Собственная работа, ''{{own}}''",
+  "|Author={{user at project|Picture30|wikipedia|ru}}",
+  "}}",
+  "{{self|author={{user at project|Picture30|wikipedia|ru}}|GFDL|CC-BY-SA-3.0|migration = redundant}}"
+ ].join("\n");
+ assert.equal(reviewCommonsCopyrightWikitext(wikiText,p).verified,true);
+ for(const modified of [
+  wikiText.replace("CC-BY-SA-3.0","CC-BY-SA-4.0"),
+  wikiText.replace("Picture30","AnotherUploader"),
+  wikiText.replace("{{own}}","{{not-own}}"),
+  wikiText.replace("wikipedia|ru","wikipedia|en")
+ ])assert.equal(reviewCommonsCopyrightWikitext(modified,p).verified,false);
+ assert.equal(reviewCommonsCopyrightWikitext(wikiText,{...p,fileId:"unreviewed"}).verified,false,
+   "Legacy template exception cannot silently extend to other images");
+});
