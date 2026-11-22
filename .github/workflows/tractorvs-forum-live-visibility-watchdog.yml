@@ -19,6 +19,7 @@ on:
       - "scripts/tractor-forum-live-ui-smoke.mjs"
   pull_request:
     paths:
+      - "scripts/tractor-forum-live-ui-smoke.mjs"
       - "scripts/tractor-forum-live-visibility-audit.mjs"
       - "scripts/tractor-forum-live-visibility-audit.test.mjs"
       - "scripts/tractor-forum-live-ui-smoke.test.mjs"
@@ -101,7 +102,7 @@ jobs:
             gh issue close "$EXISTING" --comment "Public forum pages, canonicals and sitemap passed the read-only visibility audit."
           fi
       - name: Fail visibly when live validation failed
-        if: steps.verify.outcome == 'failure'
+        if: steps.verify.outcome == 'failure' || steps.verify_ui.outcome == 'failure'
         run: |
           echo "::error::Forum database/public website divergence detected. Review the persistent issue."
           exit 1
