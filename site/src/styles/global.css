@@ -747,3 +747,42 @@ button, input { font: inherit; }
   line-height: 1.7;
   overflow-wrap: anywhere;
 }
+
+
+/* Technical learning content and image attribution are essential text,
+   not decoration. Keep original copyright text and all evidence links. */
+#main :is(.learn-cover figcaption, .glossary-cover figcaption,
+          .glossary-gallery figcaption span, .tractor-photo-short-credit,
+          .tractor-photo-short-credit small, .tractor-photo-caption small) {
+  font-size: 13px;
+  line-height: 1.6;
+  overflow-wrap: anywhere;
+}
+#main .tractor-photo-caption { font-size: 14px; line-height: 1.65; }
+#main :is(.learn-toc a, .learn-keypoint strong, .learn-related-terms > div a,
+          .learn-more-grid small, .parts-stats span, .parts-flow > p,
+          .parts-flow-item li, .parts-flow-item p, .parts-jump a,
+          .parts-group-heading p, .parts-source-note p,
+          .glossary-search-box label, .glossary-search-box #glossary-search-status,
+          .glossary-quick-nav a, .glossary-group-head p, .glossary-see-part,
+          .glossary-example p, .glossary-caution p,
+          .glossary-deepdives-grid p, .glossary-sources li a span) {
+  font-size: 14px;
+  line-height: 1.65;
+  overflow-wrap: anywhere;
+}
+#main :is(.glossary-meaning strong, .glossary-example strong,
+          .glossary-caution strong, .parts-flow-number, .part-card strong,
+          .learn-chapter-index, .learn-more-grid span) {
+  font-size: 12px;
+  line-height: 1.5;
+}
+#main :is(.home-search-note, .home-preview-label,
+          .home-spotlight small, .home-preview-stats span,
+          .home-featured-variant, .home-featured-facts span,
+          .home-search-option-brand) {
+  font-size: 14px;
+  line-height: 1.65;
+  overflow-wrap: anywhere;
+}
+#main .home-brand-row a { font-size: 14px; min-height: 44px; }
