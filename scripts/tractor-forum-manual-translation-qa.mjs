@@ -61,9 +61,15 @@ function scriptPresent(locale,value){
 }
 function unitFacts(value){
  const out=[];
- for(const match of value.matchAll(/(\d+(?:[.,]\d+)*)\s*(hp|kw|kg|km\/h|rpm|t|%|PS|ch|cv)\b/gi)){
+ // The source can spell the same percentage "%2,6" (Turkish) while a
+ // target language correctly spells it "2.6%" (English/Hindi), or "2,6 %".
+ // Normalise the POSITION of the percent sign, never the number itself.
+ for(const match of value.matchAll(/(?:%\s*(\d+(?:[.,]\d+)*)|(\d+(?:[.,]\d+)*)\s*%)/g)){
+  out.push((match[1]||match[2]).replaceAll(",",".")+" %");
+ }
+ for(const match of value.matchAll(/(\d+(?:[.,]\d+)*)\s*(hp|kw|kg|km\/h|rpm|t|PS|ch|cv)\b/gi)){
   const quantity=match[1].replaceAll(",",".");
-  // Significant unit-sensitive metrics must not change silently.
+  // Distinguish mechanical units; e.g., 75 hp -> 75 PS is not identical.
   out.push(quantity+" "+match[2].toLowerCase());
  }
  return out.sort();
