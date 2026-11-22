@@ -6,6 +6,8 @@ on:
       - ".github/workflows/edge-canonical-monitor.yml"
       - "site/scripts/edge-canonical-audit.mjs"
       - "site/tests/edge-canonical-audit.test.mjs"
+      - "site/scripts/edge-live-redirect-proof.mjs"
+      - "site/tests/edge-live-redirect-proof.test.mjs"
       - "docs/SEO_CANONICAL_EDGE_RUNBOOK_TR.md"
   workflow_dispatch:
   # Free public read-only probe after the daily site SEO monitor.
@@ -28,8 +30,17 @@ jobs:
       - name: Unit test 301/308 redirect and canonical verification
         run: node --test site/tests/edge-canonical-audit.test.mjs
       - name: Inspect production HTTP, HTTPS and optional www redirects
-        # Initial monitoring mode: report public Cloudflare settings rather
-        # than block unrelated PRs before the owner completes DNS/SSL changes.
+        # Cloudflare owner configured and independently verified 301 HTTPS/www,
+        # so fail closed on future redirect/canonical regressions.
         env:
-          TRACTORVS_EDGE_CANONICAL_STRICT: "false"
+          TRACTORVS_EDGE_CANONICAL_STRICT: "true"
         run: node site/scripts/edge-canonical-audit.mjs
+      - name: Verify exact public 301 chains, all locale homepages and query preservation
+        run: |
+          node --test site/tests/edge-live-redirect-proof.test.mjs
+          node site/scripts/edge-live-redirect-proof.mjs
+      - name: Verify TLS 1.2 and TLS 1.3 accepted by Cloudflare edge
+        run: |
+          curl --fail --silent --show-error --max-time 15 --output /dev/null --tlsv1.2 --tls-max 1.2 https://tractorvs.com/
+          curl --fail --silent --show-error --max-time 15 --output /dev/null --tlsv1.3 --tls-max 1.3 https://tractorvs.com/
+
