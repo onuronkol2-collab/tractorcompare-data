@@ -73,3 +73,113 @@ test("live MF 5S.125 and TYM option rows carry separate source-based transmissio
   // A transmission caution is different from a measurement-condition caution.
   await expect(flaggedRow.locator(".tc-condition-caution")).not.toContainText("Ölçüm koşulları");
 });
+
+
+/**
+ * Production locale regressions: the Turkish flow above passed in #415.
+ * Re-run the same public visitor interaction in every other supported locale,
+ * across Chromium, Firefox, WebKit and mobile Chromium. Source labels are
+ * checked against human-readable expectations rather than trusting the
+ * site's own translation JSON as its only oracle.
+ *
+ * The tests never authenticate, submit data, accept analytics, write to the
+ * database or require a paid crawler.
+ */
+const OTHER_LOCALES = [
+  {code:"en", html:"en", condition:"Measurement conditions or configurations differ",
+    transmission:"Transmission options differ", shared:"Both have data", search:"Search brand or model"},
+  {code:"zh", html:"zh-Hans", condition:"测量条件或配置不同",
+    transmission:"变速箱配置不同", shared:"两者都有数据", search:"搜索品牌或型号"},
+  {code:"hi", html:"hi", condition:"माप की स्थितियाँ या विन्यास अलग हैं",
+    transmission:"ट्रांसमिशन विकल्प अलग हैं", shared:"दोनों के उपलब्ध डेटा", search:"ब्रांड या मॉडल खोजें"},
+  {code:"pt-br", html:"pt-BR", condition:"As condições de medição ou as configurações diferem",
+    transmission:"As opções de transmissão diferem", shared:"Com dados nos dois", search:"Buscar marca ou modelo"},
+  {code:"fr", html:"fr", condition:"Les conditions de mesure ou configurations diffèrent",
+    transmission:"Les options de transmission diffèrent", shared:"Données des deux", search:"Rechercher une marque ou un modèle"},
+  {code:"de", html:"de", condition:"Messbedingungen oder Ausstattungen unterscheiden",
+    transmission:"Die Getriebeoptionen unterscheiden", shared:"Daten für beide", search:"Marke oder Modell suchen"},
+  {code:"ru", html:"ru", condition:"Условия измерения или комплектации отличаются",
+    transmission:"Варианты трансмиссии различаются", shared:"Есть данные у обоих", search:"Поиск марки или модели"},
+  {code:"ja", html:"ja", condition:"測定条件や仕様が異なる",
+    transmission:"変速機の仕様が異なる", shared:"両方にデータあり", search:"メーカーや型式を検索"},
+  {code:"es", html:"es", condition:"Las condiciones de medición o configuraciones difieren",
+    transmission:"Las opciones de transmisión difieren", shared:"Datos en ambos", search:"Buscar marca o modelo"},
+];
+
+// Keep this independent of the actual warning implementation: if the page
+// silently falls back to English or shows the wrong language, the test fails.
+for (const language of OTHER_LOCALES) {
+  test("live "+language.code+" comparison preserves localized source cautions across real interactions", async({page,request})=>{
+    test.setTimeout(90_000);
+    const prefix=language.code==="en"?"/":"/"+language.code+"/";
+    const path=prefix+"compare/";
+    const json=await request.get("/comparison-data/"+language.code+"/"+TYM_F36+".json");
+    expect(json.status(),language.code+" publicly served comparison JSON").toBe(200);
+    const response=await page.goto(path+"?left="+ISEKI+"&right="+NEW_HOLLAND,{waitUntil:"domcontentloaded"});
+    expect(response?.status(),language.code+" comparison page").toBe(200);
+    await expect(page.locator("html")).toHaveAttribute("lang",language.html);
+    await expect(page.locator('link[rel="canonical"]')).toHaveAttribute("href","https://tractorvs.com"+path);
+    await expect(page.locator('link[rel="alternate"][hreflang="'+language.html+'"]'))
+      .toHaveAttribute("href","https://tractorvs.com"+path);
+
+    const l10n=JSON.parse(await page.locator("#tc-i18n").textContent());
+    expect(l10n.conditionCaution,language.code+" measurement wording").toContain(language.condition);
+    expect(l10n.transmissionCaution,language.code+" gearbox wording").toContain(language.transmission);
+    expect(l10n.search,language.code+" search wording").toBe(language.search);
+    await expect(page.locator("#tc-shared")).toHaveText(language.shared);
+    await expect(page.locator("#tc-left-search")).toHaveAttribute("placeholder",language.search);
+
+    // Test server-rendered source caveat BEFORE changing models.
+    const firstCondition=page.locator("#tc-rows tr").filter({
+      has:page.locator("th .tc-condition-caution").filter({hasText:language.condition})
+    }).first();
+    await expect(firstCondition).toBeVisible();
+    await expect(firstCondition.locator("th [role='note']")).toBeVisible();
+    await expect(firstCondition.locator("td a[href^='https://']")).not.toHaveCount(0);
+
+    // Test the actual visitor-facing combobox; not the hidden native <select>.
+    await chooseTractor(page,"left","T3035");
+    await chooseTractor(page,"right","T3047");
+    await expect.poll(()=>new URL(page.url()).searchParams.get("left")).toBe(TYM_F36);
+    await expect.poll(()=>new URL(page.url()).searchParams.get("right")).toBe(TYM_T475);
+    await expect(page.locator("#tc-left-link")).toContainText("T3035");
+    await expect(page.locator("#tc-right-link")).toContainText("T3047");
+
+    const sourceRows=()=>page.locator("#tc-rows tr").filter({
+      has:page.locator("th .tc-condition-caution").filter({hasText:language.transmission})
+    });
+    await expect(sourceRows()).toHaveCount(1);
+    const transmission=sourceRows().first();
+    await expect(transmission.locator("th [role='note']")).toContainText(language.transmission);
+    await expect(transmission).toContainText(/3-[Rr]ange/);
+    await expect(transmission).toContainText("F12 x R12");
+    const sources=async()=>transmission.locator("td a[href^='https://']")
+      .evaluateAll(nodes=>nodes.map(node=>node.getAttribute("href")).sort());
+    const beforeSwap=await sources();
+    expect(beforeSwap.length,language.code+" original manufacturer links").toBeGreaterThan(0);
+    expect(beforeSwap.some(href=>href.includes("tym.world")),language.code+" approved OEM citation").toBe(true);
+
+    // Filtering must not hide shared gearbox options or their source notes.
+    await page.locator("#tc-shared").click();
+    await expect(page.locator("#tc-shared")).toHaveAttribute("aria-pressed","true");
+    await expect(sourceRows()).toHaveCount(1);
+    await expect(transmission.locator("th [role='note']")).toContainText(language.transmission);
+
+    // Swapping preserves the actual data, not merely the translated sentence.
+    await page.locator("#tc-swap").click();
+    await expect.poll(()=>new URL(page.url()).searchParams.get("left")).toBe(TYM_T475);
+    await expect.poll(()=>new URL(page.url()).searchParams.get("right")).toBe(TYM_F36);
+    await expect(page.locator("#tc-left-link")).toContainText("T3047");
+    await expect(page.locator("#tc-right-link")).toContainText("T3035");
+    await expect(sourceRows()).toHaveCount(1);
+    expect(await sources(),language.code+" source URLs after swapping").toEqual(beforeSwap);
+
+    // A reload must restore chosen models, rather than stale first-load table.
+    await page.reload({waitUntil:"domcontentloaded"});
+    await expect(page.locator("#tc-left-link")).toContainText("T3047");
+    await expect(page.locator("#tc-right-link")).toContainText("T3035");
+    await expect(sourceRows()).toHaveCount(1);
+    expect(await sources(),language.code+" source URLs after reload").toEqual(beforeSwap);
+    expect((await page.locator("#tc-load-error").textContent())?.trim()||"").toBe("");
+  });
+}
