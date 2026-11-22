@@ -520,11 +520,23 @@ for(const widget of widgets){
  // Open the account form only when a person explicitly selects "Sign up".
  // Hash links work across all ten static language routes; reading is never gated.
  function revealRegistration(){
-  if(location.hash!=="#forum-register-heading"&&location.hash!=="#forum-signin")return;
   if(!authGate||authGate.hidden)return;
+  // A guest choosing "compose" should see the account step immediately,
+  // rather than land at a closed panel with no visible posting action.
+  if(location.hash==="#forum-compose"){
+   authGate.open=true;
+   return;
+  }
+  if(location.hash!=="#forum-register-heading"&&location.hash!=="#forum-signin")return;
   authGate.open=true;
   if(location.hash==="#forum-signin"&&passwordChoice)passwordChoice.open=true;
   requestAnimationFrame(()=>document.querySelector(location.hash)?.scrollIntoView({block:"start"}));
+ }
+ // Clicking the same fragment again does not trigger a hashchange event.
+ for(const anchor of document.querySelectorAll<HTMLAnchorElement>('a[href="#forum-compose"]')){
+  anchor.addEventListener("click",()=>{
+   if(authGate&&!authGate.hidden)authGate.open=true;
+  });
  }
  window.addEventListener("hashchange",revealRegistration);
  revealRegistration();
