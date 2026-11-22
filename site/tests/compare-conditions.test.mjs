@@ -189,7 +189,7 @@ test("live comparison locale links keep the latest selected IDs without modifyin
   assert.match(layout,/url: localizedPath\(locale, plainPath\) \+ \(plainPath === "\/compare\/" \? Astro\.url\.search : ""\)/);
   assert.match(layout,/data-language-sync="selection"/);
   assert.match(layout,/window\.addEventListener\("tractorvs:route-state-changed", syncLanguageLinks\)/);
-  assert.match(layout,/destination\.search = search/);
+  assert.match(layout,/destination\.search = window\.location\.search/);
   assert.match(layout,/link\.href = destination\.pathname \+ destination\.search/);
   assert.match(layout,/link\.addEventListener\(eventName, syncLanguageLinks\)/);
   assert.match(compare,/window\.history\.replaceState\(null,"",url\.pathname\+url\.search\)/);
