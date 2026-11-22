@@ -8,8 +8,8 @@ const sourceSpec=(name)=>({spec_name:name,canonical_key:"unknown_source_specific
  verified_at:"2026-11-21T19:00:00Z",source_url:"https://example.org/tractor.pdf",
  evidence_text:"Manufacturer source text"});
 
-test("all 120 source-verified Turkish headings display in English without changing original source",()=>{
- assert.equal(Object.keys(TERMS).length,120);
+test("all 229 source-verified Turkish headings display in English without changing original source",()=>{
+ assert.equal(Object.keys(TERMS).length,229);
  const seen=new Set();
  for(const [label,english] of Object.entries(TERMS)){
   const key=label.trim().replace(/\s+/g," ").toLocaleLowerCase("tr");
