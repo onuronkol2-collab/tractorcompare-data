@@ -294,8 +294,8 @@ for(const language of [{code:"tr",html:"tr"},...OTHER_LOCALES]){
     await page.locator("#catalog-facet-sort").selectOption("powerAsc");
     expect(new URL(page.url()).searchParams.get("sort")).toBe("powerAsc");
     const ranked=await visible.evaluateAll(nodes=>nodes.map(x=>({
-      order:Number(x.style.order), power:x.getAttribute("data-power")
-    })).sort((a,b)=>a.order-b.order));
+      power:x.getAttribute("data-power")
+    })));
     const powers=ranked.filter(x=>x.power!==""&&Number.isFinite(Number(x.power)))
       .map(x=>Number(x.power));
     expect(powers).toEqual([...powers].sort((a,b)=>a-b));
