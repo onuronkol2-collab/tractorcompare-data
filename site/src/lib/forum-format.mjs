@@ -102,11 +102,21 @@ export function forumBlocks(source) {
  * Prefer an accurate complete sentence over an arbitrarily cut factual claim.
  * 160 characters is an editorial target, NOT a Google hard limit.
  */
-export function forumSeoDescription(body,max=160) {
- const clean=String(body??"").replace(/^\s{0,3}#{1,4}\s+/gm,"")
+function plainForumExcerpt(body){
+ return String(body??"").replace(/^\s{0,3}#{1,4}\s+/gm,"")
   .replace(/(?:\*\*|\x60|(?<!\*)\*(?!\*)|[|])/g,"")
   .replace(/^\s*[-•>]\s+/gm,"")
   .replace(/\s+/g," ").trim();
+}
+// Forum card previews are visible editorial text. Preserve their existing
+// 230-character behavior independently of search-engine meta descriptions.
+export function forumCardExcerpt(body,max=230){
+ const clean=plainForumExcerpt(body);
+ if(clean.length<=max)return clean;
+ return clean.slice(0,max).replace(/\s+\S*$/u,"").trimEnd()||clean.slice(0,max);
+}
+export function forumSeoDescription(body,max=160) {
+ const clean=plainForumExcerpt(body);
  if(clean.length<=max)return clean;
  // A punctuation boundary is only safe when it actually ends a sentence.
  // European decimal dots and URL query marks stay inside their tokens.
