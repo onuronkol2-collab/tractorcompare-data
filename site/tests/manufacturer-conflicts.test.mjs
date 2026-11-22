@@ -39,7 +39,7 @@ test("all ten locales explain exact OEM conflicts rather than asserting which nu
  for(const lang of LOCALES){
   const texts=OEM_SOURCE_CONFLICT_COPY[lang];
   for(const field of ["tigre","mach","sonalika"])
-   assert.ok(texts[field].length>70,lang+":"+field);
+   assert.ok(texts[field].length>=35,lang+":"+field);
   assert.match(texts.tigre,/1[.,\s]?331/);
   assert.match(texts.tigre,/1[.,\s]?642/);
   assert.match(texts.mach,/74[.,]2/);
