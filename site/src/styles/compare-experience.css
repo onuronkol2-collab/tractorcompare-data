@@ -99,7 +99,7 @@
 .tc-filters button { min-height: 44px; padding: 9px 13px; border: 0; border-radius: 8px; background: transparent; color: #355640; font-size: 14px; font-weight: 760; cursor: pointer; }
 .tc-filters button[aria-pressed="true"] { background: #285b40; color: white; }
 .tc-filters button:focus-visible { outline: 3px solid #54965d; outline-offset: 2px; }
-.tc-swipe-hint { font-size: 13px; color: #53665a; margin: 0 0 12px; }
+.tc-cell-model {display:none}
 .tc-no-shared { padding: 15px; border-radius: 10px; background: #fef9ec; border: 1px solid #ead9b0; color: #685021; font-size: 14px; line-height: 1.7; }
 .tc-no-shared[hidden] { display: none; }
 .tc-section .tc-table-wrap { border: 1px solid #d5e4d1; border-radius: 17px; box-shadow: 0 10px 35px #1c382117; }
@@ -120,10 +120,16 @@
 @media(max-width:690px) {
   .tc-section .tc-picker { grid-template-columns: minmax(0,1fr); }
   .tc-section .tc-swap { margin: 0 auto; transform: rotate(90deg); }
-  .tc-section .tc-table { min-width: 630px; }
-  .tc-section .tc-table thead th { padding: 14px; }
-  .tc-section .tc-table tbody th { position: sticky; left: 0; z-index: 1; min-width: 205px; }
-  .tc-section .tc-table thead th:first-child { position: sticky; left: 0; z-index: 2; }
+  .tc-section .tc-table-wrap { border:0; box-shadow:none; background:transparent; }
+  .tc-section .tc-table { display:block; min-width:0; }
+  .tc-section .tc-table :is(thead,tbody) { display:grid; gap:10px; }
+  .tc-section .tc-table tr { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); border:1px solid #ccddcf; border-radius:12px; overflow:hidden; }
+  .tc-section .tc-table th, .tc-section .tc-table td { min-width:0; padding:12px; }
+  .tc-section .tc-table thead { margin-bottom:10px; }
+  .tc-section .tc-table thead th { position:static; }
+  .tc-section .tc-table thead th:first-child,.tc-section .tc-table tbody th { grid-column:1/-1; width:auto; }
+  .tc-section .tc-table td+td { border-inline-start:1px solid #dce7da; }
+  .tc-cell-model {display:block;margin-bottom:8px;font-size:13px;font-weight:750;color:#285637}
   .tc-section .tc-picker-results { max-height: 260px; }
   .tc-section .tc-table-bar { gap: 14px; }
 }

@@ -536,6 +536,7 @@ const rawSpecNameLabels: Record<string, { en: string; tr: string }> = {
 };
 
 const specLabels: Record<string, { en: string; tr: string }> = {
+  alternator_current: { en: "Alternator current", tr: "Alternatör akımı" },
   // Measured-frequency public canonical keys, translation-safe and measurement-aware.
   engine_max_torque: {"en":"Maximum engine torque","tr":"Azami motor torku"},
   service_interval_hours: {"en":"Service interval (hours)","tr":"Bakım aralığı (saat)"},

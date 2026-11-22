@@ -179,24 +179,24 @@ const labelsPayload = JSON.stringify({
             <button type="button" id="tc-shared" aria-pressed="false">{cx(lang,"shared")}</button>
           </div>
         </div>
-        <p class="tc-swipe-hint">{cx(lang,"swipe")}</p>
         <p id="tc-no-shared" class="tc-no-shared" role="status" hidden>{cx(lang,"noShared")}</p>
         <p class="tc-note">{t(lang,"comparisonCaveat")}</p>
         <aside id="tc-data-warning" class="tc-data-warning" role="note" hidden={initialNotices.length === 0}>
           {initialNotices.map((notice)=><p>{notice}</p>)}
         </aside>
         <div class="tc-table-wrap">
-          <table class="tc-table">
+          <table class="tc-table" role="table">
             <caption class="tc-sr-only">{t(lang,"compareHeading")}</caption>
-            <thead><tr>
-              <th scope="col">{t(lang,"specification")}</th>
-              <th scope="col"><a id="tc-left-link" href={initialLeft?.detailsUrl}>{initialLeft?.title}</a></th>
-              <th scope="col"><a id="tc-right-link" href={initialRight?.detailsUrl}>{initialRight?.title}</a></th>
+            <thead role="rowgroup"><tr role="row">
+              <th scope="col" role="columnheader">{t(lang,"specification")}</th>
+              <th scope="col" role="columnheader"><a id="tc-left-link" href={initialLeft?.detailsUrl}>{initialLeft?.title}</a></th>
+              <th scope="col" role="columnheader"><a id="tc-right-link" href={initialRight?.detailsUrl}>{initialRight?.title}</a></th>
             </tr></thead>
-            <tbody id="tc-rows">
-              {initialRows.map((row) => <tr>
-                <th scope="row">{row.label}</th>
-                {[row.left, row.right].map((items) => <td>
+            <tbody id="tc-rows" role="rowgroup">
+              {initialRows.map((row) => <tr role="row">
+                <th scope="row" role="rowheader">{row.label}</th>
+                {[row.left, row.right].map((items,index) => <td role="cell">
+                  <span class="tc-cell-model" aria-hidden="true">{index===0?initialLeft?.title:initialRight?.title}</span>
                   {items.length ? items.map((spec) => <div class="tc-entry">
                     <strong>{spec.value}{spec.unit ? " " + spec.unit : ""}</strong>
                     {spec.context && <small>{t(lang,"condition")}: {spec.context}</small>}
@@ -363,11 +363,13 @@ const labelsPayload = JSON.stringify({
       const visible=commonOnly?shared:keys;
       const fragment=document.createDocumentFragment();
       for(const key of visible){
-        const row=document.createElement("tr");
+        const row=document.createElement("tr");row.setAttribute("role","row");
         const th=document.createElement("th");
-        th.scope="row";th.textContent=label(key);row.appendChild(th);
+        th.setAttribute("role","rowheader");th.scope="row";th.textContent=label(key);row.appendChild(th);
         for(const model of [left,right]){
-          const td=document.createElement("td");renderCell(td,find(model,key));row.appendChild(td);
+          const td=document.createElement("td");td.setAttribute("role","cell");
+          addText(td,"span",model.title,"tc-cell-model").setAttribute("aria-hidden","true");
+          renderCell(td,find(model,key));row.appendChild(td);
         }
         fragment.appendChild(row);
       }
