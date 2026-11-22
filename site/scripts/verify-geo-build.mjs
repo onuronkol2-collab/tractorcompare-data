@@ -28,7 +28,8 @@ if(mode==="indexable"){
  assert.doesNotMatch(robots,/User-agent: OAI-SearchBot\nAllow: \//);
 }
 const template=readFileSync("site/src/components/TractorDetail.astro","utf8");
-assert.match(template,/modelEvidenceAnswers\(tractor,lang\)/);
+assert.match(template,/modelEvidenceAnswers\(safeEvidenceTractor,lang\)/);
+assert.match(template,/specifications:tractor\.specifications\.filter\(spec=>!isUnresolvedComparisonSpec\(tractor,spec\)\)/);
 assert.match(template,/model-answer-card/);
 const modelLogic=readFileSync("site/src/lib/model-evidence-answers.ts","utf8");
 assert.match(modelLogic,/spec\.verified_at/);

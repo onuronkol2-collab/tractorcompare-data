@@ -83,7 +83,8 @@ test("Model schema citations match real reviewed source URLs, not invented offer
 });
 test("visible model answers and public sources are part of server-rendered HTML template",()=>{
  const html=readFileSync(new URL("../src/components/TractorDetail.astro",import.meta.url),"utf8");
- assert.match(html,/modelEvidenceAnswers\(tractor,lang\)/);
+ assert.match(html,/modelEvidenceAnswers\(safeEvidenceTractor,lang\)/);
+ assert.match(html,/specifications:tractor\.specifications\.filter\(spec=>!isUnresolvedComparisonSpec\(tractor,spec\)\)/);
  assert.match(html,/class="model-evidence-answers"/);
  assert.match(html,/item\.question/);
  assert.match(html,/item\.answer/);

@@ -48,6 +48,7 @@ jobs:
           fi
           npm run build:production
           node scripts/verify-brand-discovery-pilot.mjs
+          node scripts/verify-manufacturer-conflicts.mjs
       - name: Test Worker bundling without deploying
         working-directory: site
         run: npx wrangler deploy --dry-run --outdir ../.wrangler-production-audit
