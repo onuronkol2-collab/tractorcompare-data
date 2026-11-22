@@ -2,8 +2,8 @@
   "version": 1,
   "pages": {
     "https://tractorvs.com/": {
-      "digest": "b2f880494b80e8ecca1ffcc1b417cb258ef59bc9cfa9f9b3ccf269bde6b3db89",
-      "modified": "2026-11-22T15:29:03.380Z"
+      "digest": "7d211bb4c6b7f3936272681ba0eb898b235e9785ba132be7b0210f65a50ad526",
+      "modified": "2026-11-22T17:20:12.066Z"
     },
     "https://tractorvs.com/articles/": {
       "digest": "786225d81653487c29bd7be72a730dfbf4dd7800df33f672b421f12717a7d29a",
@@ -18,24 +18,24 @@
       "modified": "2026-11-22T08:02:35.845Z"
     },
     "https://tractorvs.com/compare/": {
-      "digest": "49f3f2dc630619fb3637a877cee944518dee60cf925fe9da3f94fc91ccc6ded0",
-      "modified": "2026-11-22T16:45:33.158Z"
+      "digest": "3c9c4bf3284b3ef29c3fd5cd6a9609df7049a621ee1dcb90db3eeb00cadeb2e4",
+      "modified": "2026-11-22T17:20:12.066Z"
     },
     "https://tractorvs.com/compare/deutz-fahr-5090-d-gs-vs-5100-d-gs/": {
       "digest": "52e029185eddc00de0825c5ff15e10991f6a3636635ae2c62375f9df34e109c4",
       "modified": "2026-11-22T16:33:31.612Z"
     },
     "https://tractorvs.com/de/": {
-      "digest": "54fd240617012847eec424dd2fa2953a9916e4df15816d449f454c9a35ca5af7",
-      "modified": "2026-11-22T09:48:10.487Z"
+      "digest": "5830392cd6875a718a7ed1415f2ea9ab26763b837d50446eb10b781fd94316ba",
+      "modified": "2026-11-22T17:20:12.066Z"
     },
     "https://tractorvs.com/de/articles/": {
       "digest": "d0370818bf4213dbb776221f68f0dfe389c5914e46bc213c12781bb807440fc4",
       "modified": "2026-11-22T14:21:43.651Z"
     },
     "https://tractorvs.com/de/compare/": {
-      "digest": "efadb598f438aafb890fcfef2e319dc1f0575748b00c971c5f8122f0cf776b1c",
-      "modified": "2026-11-22T16:45:33.158Z"
+      "digest": "071c795616d8e3f0d78b821a3e1a5b2d3a12fdf88efd04827a9d559588513a3c",
+      "modified": "2026-11-22T17:20:12.066Z"
     },
     "https://tractorvs.com/de/farm-advisor/": {
       "digest": "b13861ff743dcf5f96b413e6873cc8278aabf58a3c7fbeb26f05436900697e4f",
@@ -54,8 +54,8 @@
       "modified": "2026-11-22T15:13:41.997Z"
     },
     "https://tractorvs.com/de/tractors/": {
-      "digest": "986f45fdde2bcd115b9247a75b633e3c15377d8edec2e823405d9c979b48d190",
-      "modified": "2026-11-22T14:57:57.751Z"
+      "digest": "75f34048df0a8f054fda2cd0f7eb8a61345dddcba29239ca82a98484d1a8e674",
+      "modified": "2026-11-22T17:20:12.066Z"
     },
     "https://tractorvs.com/de/tractors/agrale-4125-0b53e944/": {
       "digest": "32366e1df6154f04604255bcb6156d1828a47b1b02ef00cb2a1e2b65e857e7f8",
@@ -66,8 +66,8 @@
       "modified": "2026-11-22T05:19:46.825Z"
     },
     "https://tractorvs.com/de/tractors/agrale-4233-e3ed3f24/": {
-      "digest": "c8af92d96969d8f73549f1a47d004514e32495f86452d854c105d9a64ebd39d5",
-      "modified": "2026-11-21T19:47:11.499Z"
+      "digest": "bab29337c5ff8f852ec6b121ede6c6a8f08eaac887a43b4a166c1156b706243c",
+      "modified": "2026-11-22T17:20:12.066Z"
     },
     "https://tractorvs.com/de/tractors/agrale-5105-3601ec83/": {
       "digest": "6bfa4a1dd6d09cf256d55d8fe6cbc2f018da4c8441117683506385b53f279f79",
@@ -438,20 +438,20 @@
       "modified": "2026-11-22T05:19:46.825Z"
     },
     "https://tractorvs.com/de/tractors/mahindra-arjun-555-di-2c1a6638/": {
-      "digest": "82fa4a2d8d2907a4c3e215fb02c46a5d7b8bc077053f9a2f9cff240e01cb9358",
-      "modified": null
+      "digest": "1f88f790f2644cd137d862bc46016132ceeced7bca7d3bdc5b4e5f408dc2e169",
+      "modified": "2026-11-22T17:20:12.066Z"
     },
     "https://tractorvs.com/de/tractors/mahindra-arjun-605-di-i-bee5e88f/": {
-      "digest": "fcff7d216d4a436851c4626ff4f8b8463a7b3d3598bf2d3ae0e5d8d7996305b2",
-      "modified": "2026-11-22T04:59:19.699Z"
+      "digest": "174f0b33a680e4918080b234ef614e902a9d23c5b3f6cada4b4eab451d00e9a1",
+      "modified": "2026-11-22T17:20:12.066Z"
     },
     "https://tractorvs.com/de/tractors/mahindra-arjun-605-di-ms-739db984/": {
-      "digest": "fb5bd36a4157fba3c6524d98559e444082cd2b27675d5041059b30e984736b6a",
-      "modified": "2026-11-22T04:59:19.699Z"
+      "digest": "31d215f43670bc20b033c4b194a944cc329621ec7507f2caf85bf52764d6ba3b",
+      "modified": "2026-11-22T17:20:12.066Z"
     },
     "https://tractorvs.com/de/tractors/mahindra-arjun-605-di-ms-v1-163dbb9b/": {
-      "digest": "aa91c92b531bdf6557056a2c362e6f5fbf9df6d91b503d17dd1376cbda8c8fce",
-      "modified": "2026-11-22T04:59:19.699Z"
+      "digest": "d7842e2fb934effbe66e25f47f0178eaba4722926dbcabf725556bfaafaf6f69",
+      "modified": "2026-11-22T17:20:12.066Z"
     },
     "https://tractorvs.com/de/tractors/mahindra-jivo-225-di-4wd-34f40738/": {
       "digest": "06efe375696c915f878703ca567e8d8d8bdb566862b789d7e76004ab55932a13",
@@ -1610,16 +1610,16 @@
       "modified": "2026-11-21T19:47:11.499Z"
     },
     "https://tractorvs.com/es/": {
-      "digest": "34b66e952f378aa938012b51b36ad1f7f13268f5ec6e654b1383be5ac713366b",
-      "modified": "2026-11-22T09:48:10.487Z"
+      "digest": "6164911e0b270459e9dd18ab801caf04fab11e82e4509c03212369830979140f",
+      "modified": "2026-11-22T17:20:12.066Z"
     },
     "https://tractorvs.com/es/articles/": {
       "digest": "2fde7b197cc48f48e536e607fa1e4b6b0fa6450dfd23e23e8959475c90c036fc",
       "modified": "2026-11-22T14:21:43.651Z"
     },
     "https://tractorvs.com/es/compare/": {
-      "digest": "28dd1e88fc2a308a7ef42046dca5460f14a6481cf40a966db7eb02fd2f0b8c07",
-      "modified": "2026-11-22T16:45:33.158Z"
+      "digest": "249b440cdce00afcb2b73dc8499e813f8c871f4e755452e32d0c9f9b5159dcd2",
+      "modified": "2026-11-22T17:20:12.066Z"
     },
     "https://tractorvs.com/es/farm-advisor/": {
       "digest": "844efa344057998b0a92aeb706bff2247e283543b1fedff3dc54d14a26055c64",
@@ -1638,8 +1638,8 @@
       "modified": "2026-11-22T15:13:41.997Z"
     },
     "https://tractorvs.com/es/tractors/": {
-      "digest": "41cf5b6e38193d986261f59ae18480579ce910d533dffd51f1224574a62388db",
-      "modified": "2026-11-22T14:57:57.751Z"
+      "digest": "727a30a508e5f532d23dd9e4c2891b81e2d7baecf88844f0b8de14f6ca00e0ac",
+      "modified": "2026-11-22T17:20:12.066Z"
     },
     "https://tractorvs.com/es/tractors/agrale-4125-0b53e944/": {
       "digest": "6e72187d478e42d64a088eac4ea90be38a22c86b83d7841c5dd36695f8e1e4d5",
@@ -1650,8 +1650,8 @@
       "modified": "2026-11-22T15:49:54.478Z"
     },
     "https://tractorvs.com/es/tractors/agrale-4233-e3ed3f24/": {
-      "digest": "425b8899155070e160cce9f63b94debaaab821012d21312122b70923cbdf7213",
-      "modified": "2026-11-22T11:49:57.072Z"
+      "digest": "15a0744573f0fffe6ec68728a4074d73f6c441ea52b719069185e7cd56067d62",
+      "modified": "2026-11-22T17:20:12.066Z"
     },
     "https://tractorvs.com/es/tractors/agrale-5105-3601ec83/": {
       "digest": "5f39ca4fdca5cb1a74739feeb30b0add4f15d95151a20772f2579b46b771b61e",
@@ -2022,20 +2022,20 @@
       "modified": "2026-11-22T15:49:54.478Z"
     },
     "https://tractorvs.com/es/tractors/mahindra-arjun-555-di-2c1a6638/": {
-      "digest": "61654897b38d4eedc6b13bcc2648187682acbaf3e54a46f41d0b1a7b8b389856",
-      "modified": "2026-11-22T15:49:54.478Z"
+      "digest": "5d23deab8736dfdd4ed3accd1e27fb571f51f302fd5a864dc27be2ec99136b9a",
+      "modified": "2026-11-22T17:20:12.066Z"
     },
     "https://tractorvs.com/es/tractors/mahindra-arjun-605-di-i-bee5e88f/": {
-      "digest": "508e4979d4b746d47e4e3ba2c5b3b98fdaec416defe4bf1baa27234bca1bda4f",
-      "modified": "2026-11-22T15:49:54.478Z"
+      "digest": "0939ea9eca0dfeb1959ea3811b79fb995da95961afba125558c1924ea337a09e",
+      "modified": "2026-11-22T17:20:12.066Z"
     },
     "https://tractorvs.com/es/tractors/mahindra-arjun-605-di-ms-739db984/": {
-      "digest": "51445508ad4fc524fb51c65205d963d1ceec3272b4babfe0af18e9d1d19eb9b5",
-      "modified": "2026-11-22T15:49:54.478Z"
+      "digest": "00e9ef2f222fcf80f77e2e3c8c972a49501c8686e0dc8c87147f2e8495a71e96",
+      "modified": "2026-11-22T17:20:12.066Z"
     },
     "https://tractorvs.com/es/tractors/mahindra-arjun-605-di-ms-v1-163dbb9b/": {
-      "digest": "6ca38dc249d731d3f4e054adeb186cb0dc9cf60604ee01132328fdb763845c06",
-      "modified": "2026-11-22T15:49:54.478Z"
+      "digest": "0144708e17604b19d4b8b1837f6e22b9ab72bbde95b53deb969fe1aa68e1eefd",
+      "modified": "2026-11-22T17:20:12.066Z"
     },
     "https://tractorvs.com/es/tractors/mahindra-jivo-225-di-4wd-34f40738/": {
       "digest": "b77fa6d71af9a61e981da8519d15f2d9b46bbafd5e18a1a5e871f09f1c03bf90",
@@ -3198,16 +3198,16 @@
       "modified": "2026-11-22T06:23:39.537Z"
     },
     "https://tractorvs.com/fr/": {
-      "digest": "86372d2cae2dbeb4bfc58e1b1c40e4ab996ea4ed48cc9748ebe383ea1526e7d5",
-      "modified": "2026-11-22T09:48:10.487Z"
+      "digest": "8fe84f465916dff5a2ded88466a611a6366c13fcf0815235974e9859dea370f7",
+      "modified": "2026-11-22T17:20:12.066Z"
     },
     "https://tractorvs.com/fr/articles/": {
       "digest": "0f90d9dd211e07ed1d204ad52161dd861d4525c25aa25592d18bb53b6d7eb5d8",
       "modified": "2026-11-22T14:21:43.651Z"
     },
     "https://tractorvs.com/fr/compare/": {
-      "digest": "92bffb25cbc59262502586e41ddad52609e9f1ef7da6e7bef76b10b23826d526",
-      "modified": "2026-11-22T16:45:33.158Z"
+      "digest": "32c62a11a026af767176f50a458b3897d067af98463b4b0d410ec3b4d81b1616",
+      "modified": "2026-11-22T17:20:12.066Z"
     },
     "https://tractorvs.com/fr/farm-advisor/": {
       "digest": "3f9f10f3c5e6bd7cd7e6348563f7afc6b927a041caeea17419b5addd14446f43",
@@ -3226,8 +3226,8 @@
       "modified": "2026-11-22T15:13:41.997Z"
     },
     "https://tractorvs.com/fr/tractors/": {
-      "digest": "35030267165a91c2f8e7e8cdc609388a4ccb63451387f56b8ffb7eb9478c44d1",
-      "modified": "2026-11-22T14:57:57.751Z"
+      "digest": "c4610b9843502869815c133fb1f7d22bada03ab1bc3bddf60e17fa0a7aa08de4",
+      "modified": "2026-11-22T17:20:12.066Z"
     },
     "https://tractorvs.com/fr/tractors/agrale-4125-0b53e944/": {
       "digest": "b2f88db3e8539cb6e089c35b63a6adb969706f68db99ac8fe7129d13fcc64d56",
@@ -3238,8 +3238,8 @@
       "modified": "2026-11-22T11:49:57.072Z"
     },
     "https://tractorvs.com/fr/tractors/agrale-4233-e3ed3f24/": {
-      "digest": "71813e35939e0499fb1f7e5611ae26493f5d37063b5e889768d10cf76e53571f",
-      "modified": "2026-11-22T11:49:57.072Z"
+      "digest": "b6bf127cb62ca51979a9a3d82860298379f19f0582614cd71188c83b94feee38",
+      "modified": "2026-11-22T17:20:12.066Z"
     },
     "https://tractorvs.com/fr/tractors/agrale-5105-3601ec83/": {
       "digest": "197cfd66c67ea64e7863912d2c60dbbb5d55fabf20eb23ceff24a9fbdc5da60a",
@@ -3610,20 +3610,20 @@
       "modified": "2026-11-22T05:19:46.825Z"
     },
     "https://tractorvs.com/fr/tractors/mahindra-arjun-555-di-2c1a6638/": {
-      "digest": "2e8478dde4295b12950f7525a9f497a5dcd97a1778b4e807206fe5f8a8228208",
-      "modified": "2026-11-22T04:59:19.699Z"
+      "digest": "156f2b55bbfe06f17c82caab83f200f272b1f62d6fa8a0728c05cb2aebb2a8d3",
+      "modified": "2026-11-22T17:20:12.066Z"
     },
     "https://tractorvs.com/fr/tractors/mahindra-arjun-605-di-i-bee5e88f/": {
-      "digest": "c236dc6ce7d0e1940cb705ed47ab7d099dc68a4b362bd92d78b6b9697df2de29",
-      "modified": "2026-11-22T04:59:19.699Z"
+      "digest": "82be91f3d80ba1d0fdec22827549f0db6a7d96a5e220392e7c27f8e9466f8726",
+      "modified": "2026-11-22T17:20:12.066Z"
     },
     "https://tractorvs.com/fr/tractors/mahindra-arjun-605-di-ms-739db984/": {
-      "digest": "bba95cdb4b51cd9c7ad9ce73e10892154de8204d597c1bfb01f7f073f35a2e3a",
-      "modified": "2026-11-22T04:59:19.699Z"
+      "digest": "5427bf10c11dce302fea618ce522cb67a66edd45eb394c64807c44bb18483acc",
+      "modified": "2026-11-22T17:20:12.066Z"
     },
     "https://tractorvs.com/fr/tractors/mahindra-arjun-605-di-ms-v1-163dbb9b/": {
-      "digest": "4386affacfccfee9bc16163dc1a7456b3c8bf4f608c1b5c9a76012da011f532d",
-      "modified": "2026-11-22T15:49:54.478Z"
+      "digest": "01c77bfb4cfe92edde710fc3b98187d0247cd6d8369e094454cceb129c96b8af",
+      "modified": "2026-11-22T17:20:12.066Z"
     },
     "https://tractorvs.com/fr/tractors/mahindra-jivo-225-di-4wd-34f40738/": {
       "digest": "b1b1f4fd0b7c55148088445a4efc5c85d7b4906b22c5bbd4b0582768a437290d",
@@ -4802,16 +4802,16 @@
       "modified": "2026-11-22T14:27:00.768Z"
     },
     "https://tractorvs.com/hi/": {
-      "digest": "31944fe1bcb5aadcac7bcc7be31d33379f19ce88060faf73a4e1d4c7649e0468",
-      "modified": "2026-11-22T09:48:10.487Z"
+      "digest": "943b36c62ec339e91a68d20181bf51c606cd68f69c9691f419d2d3df71d67fcc",
+      "modified": "2026-11-22T17:20:12.066Z"
     },
     "https://tractorvs.com/hi/articles/": {
       "digest": "2181d0a70828b0531ae370483392b25f478e062b04722cb45725cf9eab3a2545",
       "modified": "2026-11-22T14:21:43.651Z"
     },
     "https://tractorvs.com/hi/compare/": {
-      "digest": "1db9bee9382fc6f0c49c0fa5efd75e4175e6af771ac955659640463b0c19d109",
-      "modified": "2026-11-22T16:45:33.158Z"
+      "digest": "8b9f3d4a33a953b2a3806cdd445fd4731901de50668fb192aa14055fab7d9465",
+      "modified": "2026-11-22T17:20:12.066Z"
     },
     "https://tractorvs.com/hi/farm-advisor/": {
       "digest": "a0b5b994955a70eb8b47c7356b8858fc48f92c0ff7ca316b2f92c6e5b7cf0682",
@@ -4830,8 +4830,8 @@
       "modified": "2026-11-22T15:13:41.997Z"
     },
     "https://tractorvs.com/hi/tractors/": {
-      "digest": "b2bb0d335fb220cd1cf5a65aa78a8aa8b7fa5188b2eced07d445f5cc10969bd1",
-      "modified": "2026-11-22T14:57:57.751Z"
+      "digest": "14597dffe588536c61e6b7795d49b7d94c8fd4daa4c53689c8f0815371d54c1e",
+      "modified": "2026-11-22T17:20:12.066Z"
     },
     "https://tractorvs.com/hi/tractors/agrale-4125-0b53e944/": {
       "digest": "89d390984132129c6705ac5f42d0a35f6d3e519fbf19cc0d8b6d848cd95ec5cb",
@@ -4842,8 +4842,8 @@
       "modified": "2026-11-22T05:19:46.825Z"
     },
     "https://tractorvs.com/hi/tractors/agrale-4233-e3ed3f24/": {
-      "digest": "3e6f70c67600b388cbdba498f8412219906a658dd89cf03534a670be77acd1b0",
-      "modified": "2026-11-21T19:47:11.499Z"
+      "digest": "e8d7c57343c251b98394d28bc7b695d0ad5c8683ffce32c2ec8600b1169fc933",
+      "modified": "2026-11-22T17:20:12.066Z"
     },
     "https://tractorvs.com/hi/tractors/agrale-5105-3601ec83/": {
       "digest": "ff36e72f4a25fce1da64a3eb4ff72d7ed570525f7de5630a957e23f789d8b359",
@@ -5214,20 +5214,20 @@
       "modified": "2026-11-22T05:19:46.825Z"
     },
     "https://tractorvs.com/hi/tractors/mahindra-arjun-555-di-2c1a6638/": {
-      "digest": "d339947711b890cfb1502d388bb8869f1ea06a7437acf6d2ecfb00170898bd98",
-      "modified": null
+      "digest": "bc45bf51dc2a68662c452fa1dab0ce3c96c50a905d7f78f3300f63af9371005d",
+      "modified": "2026-11-22T17:20:12.066Z"
     },
     "https://tractorvs.com/hi/tractors/mahindra-arjun-605-di-i-bee5e88f/": {
-      "digest": "4d9d4f5523546cfe7c4fd8a7f820b52303eb8407e0f2d2606866451c87d389cf",
-      "modified": null
+      "digest": "2c15bb49e16f96542d221df18ea261a2574e3943a6e2b89e45365e557fd398cc",
+      "modified": "2026-11-22T17:20:12.066Z"
     },
     "https://tractorvs.com/hi/tractors/mahindra-arjun-605-di-ms-739db984/": {
-      "digest": "2b1694c9c50456309d426cfa22c8ea780e21d05946fa8f6c3bcaf4b382892e74",
-      "modified": null
+      "digest": "4a77e9d956cbea026bc0f4571ef6a5b5badb363b4927a8cb8e971d9eeebcc25c",
+      "modified": "2026-11-22T17:20:12.066Z"
     },
     "https://tractorvs.com/hi/tractors/mahindra-arjun-605-di-ms-v1-163dbb9b/": {
-      "digest": "d76f1bd45058c02e1ed349ef7adb88cf7b068668ba34e5743a7bca99778c8048",
-      "modified": null
+      "digest": "3b76e77a3d35be3f7f1b04c68edd8a87fd24b25aefd295b2a467da08b8c55a4d",
+      "modified": "2026-11-22T17:20:12.066Z"
     },
     "https://tractorvs.com/hi/tractors/mahindra-jivo-225-di-4wd-34f40738/": {
       "digest": "e9c313a79e37da172cdb316c772b659f5ac0dc91b936be3cc39f187a0cf01788",
@@ -6386,16 +6386,16 @@
       "modified": null
     },
     "https://tractorvs.com/ja/": {
-      "digest": "35c8703458a36a8afbd09bc84cc9dbaac452a06bc33137f89e08391bf7429ec2",
-      "modified": "2026-11-22T09:48:10.487Z"
+      "digest": "454645035589418f563167c9f3315337b8dfba0bd70fe82a96b994cc44f02ba9",
+      "modified": "2026-11-22T17:20:12.066Z"
     },
     "https://tractorvs.com/ja/articles/": {
       "digest": "dc9311c8639ec9e7aed6244d2c1e8764d4fd4b03c9ec834a638bc7ca4824c03b",
       "modified": "2026-11-22T14:21:43.651Z"
     },
     "https://tractorvs.com/ja/compare/": {
-      "digest": "05ca5a20e26a710061f83a22ef4e31c0fc4c8deb1fe2146f00e5c02e309e08f1",
-      "modified": "2026-11-22T16:45:33.158Z"
+      "digest": "20de6ee3eff9e8ba11456a6ac7507c7a48a2323c466e7e804b85ae0007457f69",
+      "modified": "2026-11-22T17:20:12.066Z"
     },
     "https://tractorvs.com/ja/farm-advisor/": {
       "digest": "6f0acfaf081aa9f2c39ae40f9b59b7739e65346b415a4f6ea810ec3214450883",
@@ -6414,8 +6414,8 @@
       "modified": "2026-11-22T15:13:41.997Z"
     },
     "https://tractorvs.com/ja/tractors/": {
-      "digest": "7ab7c8d4ba9e6f4618d9213bc17d488b83cd52c60c3d2a40d44cbe7b9da93eaf",
-      "modified": "2026-11-22T14:57:57.751Z"
+      "digest": "6246328f02c6e3879618b22f46392d1723b65424f7514a0c5f1dc8b8c13b8cb5",
+      "modified": "2026-11-22T17:20:12.066Z"
     },
     "https://tractorvs.com/ja/tractors/agrale-4125-0b53e944/": {
       "digest": "4d0e45acacbeeb3c521ccff6fdb73475c3d2a6b25b8314d917e1fba5cfd09492",
@@ -6426,8 +6426,8 @@
       "modified": "2026-11-22T05:19:46.825Z"
     },
     "https://tractorvs.com/ja/tractors/agrale-4233-e3ed3f24/": {
-      "digest": "eebceed352878fac5d624181b5b5d439bff6e71efc25585c384d3ad6bce5456d",
-      "modified": "2026-11-21T19:47:11.499Z"
+      "digest": "ea1fedc7570f6a61134886384c5cd4f1dd36eb5d4ddfa5e0757e79133f731eba",
+      "modified": "2026-11-22T17:20:12.066Z"
     },
     "https://tractorvs.com/ja/tractors/agrale-5105-3601ec83/": {
       "digest": "06522fad269f583eaa07910787d3207aa1a293138682401dc3b3de108efb851c",
@@ -6798,20 +6798,20 @@
       "modified": "2026-11-22T05:19:46.825Z"
     },
     "https://tractorvs.com/ja/tractors/mahindra-arjun-555-di-2c1a6638/": {
-      "digest": "37b62a4bdd7ba031bd8be55ceab85d00e6cad6a723a30c867060d3d19cd1eba3",
-      "modified": null
+      "digest": "d72f517c73a36dac41e0d25c37f448387dddf06bed7efb7438bac0cdf2d59e6d",
+      "modified": "2026-11-22T17:20:12.066Z"
     },
     "https://tractorvs.com/ja/tractors/mahindra-arjun-605-di-i-bee5e88f/": {
-      "digest": "342ee0f5c8939c8b7a04f475cf4a083cba1d35725ddcdcea3ab5c095e5238421",
-      "modified": null
+      "digest": "d7739d139dbfa20afea17dcb3505d2f3052273e99bc1bdbf05a48a97cd4e0321",
+      "modified": "2026-11-22T17:20:12.066Z"
     },
     "https://tractorvs.com/ja/tractors/mahindra-arjun-605-di-ms-739db984/": {
-      "digest": "a34bc867d94bf7f61f1af3739fa3c7e06aac7d88cd0544938a7635b52da91d7c",
-      "modified": null
+      "digest": "65da7a752d952116ae0e017976aae6bc5f2fc999d550093198d1bc79fb41c233",
+      "modified": "2026-11-22T17:20:12.066Z"
     },
     "https://tractorvs.com/ja/tractors/mahindra-arjun-605-di-ms-v1-163dbb9b/": {
-      "digest": "4cc1d8579b58c6a6885f3d1e2c9389a00e09701b4aad096b7e7069a51105a79e",
-      "modified": null
+      "digest": "39b9f8c2cb17cb9575f28aea4fdd550f13544177f11deb49d059a42a203a29cc",
+      "modified": "2026-11-22T17:20:12.066Z"
     },
     "https://tractorvs.com/ja/tractors/mahindra-jivo-225-di-4wd-34f40738/": {
       "digest": "859080ac9bbf750b7fe6019592f7f81b2a1c933297343f5710318ed8cd479c88",
@@ -7978,16 +7978,16 @@
       "modified": null
     },
     "https://tractorvs.com/pt-br/": {
-      "digest": "8ce8f3a3b1ae9904769c6e515ed9c5cead03e3fd0962fb81bda7cbfbb569d944",
-      "modified": "2026-11-22T09:48:10.487Z"
+      "digest": "8aed30774deee0ee3e618e13280759008c5f27cff88e5c32fa0e73ff7285e397",
+      "modified": "2026-11-22T17:20:12.066Z"
     },
     "https://tractorvs.com/pt-br/articles/": {
       "digest": "c1c45e52aa543bfa23fd54b2f0aa250f83a1e89b9d020a9459a06fabdd56f9ce",
       "modified": "2026-11-22T14:21:43.651Z"
     },
     "https://tractorvs.com/pt-br/compare/": {
-      "digest": "e742b0fb9c91a62c3683899791a4bbac98f9bdbd93d0efce4b819f5017975d75",
-      "modified": "2026-11-22T16:45:33.158Z"
+      "digest": "1debe9f4ca311ff71661594691d3448367b0235793528ae526674513d80fc888",
+      "modified": "2026-11-22T17:20:12.066Z"
     },
     "https://tractorvs.com/pt-br/farm-advisor/": {
       "digest": "88650f3e64bea75375a37a4ed6c878a91926c25949d7434e05197284a2e849dc",
@@ -8006,8 +8006,8 @@
       "modified": "2026-11-22T15:13:41.997Z"
     },
     "https://tractorvs.com/pt-br/tractors/": {
-      "digest": "40682b5576310b57d14e975853ded8a9ca1b82c76eafe2a6aa3601c2e24386b9",
-      "modified": "2026-11-22T14:57:57.751Z"
+      "digest": "62eeac00c06fe5111d79742635a11621ab69129aa03c94f4b51b80a435570c86",
+      "modified": "2026-11-22T17:20:12.066Z"
     },
     "https://tractorvs.com/pt-br/tractors/agrale-4125-0b53e944/": {
       "digest": "5ff1db9f68277bc1544ae51e8b7ab7c0afe49949c5d51c67791975fb0426a0f4",
@@ -8018,8 +8018,8 @@
       "modified": "2026-11-22T11:49:57.072Z"
     },
     "https://tractorvs.com/pt-br/tractors/agrale-4233-e3ed3f24/": {
-      "digest": "f3b7ef8d498672e7687c82bbd585fce9d29809fc701d0dd1e75000eaa4b4229c",
-      "modified": "2026-11-22T11:49:57.072Z"
+      "digest": "989fc15c5267a26c118994d15ee460a899752e584ad98ba0b5bfdf2722a5c60e",
+      "modified": "2026-11-22T17:20:12.066Z"
     },
     "https://tractorvs.com/pt-br/tractors/agrale-5105-3601ec83/": {
       "digest": "81fce44347f290afa4f069e6ed9f0ed12eec7ec8234ee94cf915f7030f67899a",
@@ -8390,20 +8390,20 @@
       "modified": "2026-11-22T05:19:46.825Z"
     },
     "https://tractorvs.com/pt-br/tractors/mahindra-arjun-555-di-2c1a6638/": {
-      "digest": "703a795e761aa5224e4618b1551d39c1c35ac3e8850ecf6820ded7a9e5b56515",
-      "modified": "2026-11-22T04:59:19.699Z"
+      "digest": "5241289b845b43e132e0c55f54d5a2a4b6934c2cc294d5b34609f73335605482",
+      "modified": "2026-11-22T17:20:12.066Z"
     },
     "https://tractorvs.com/pt-br/tractors/mahindra-arjun-605-di-i-bee5e88f/": {
-      "digest": "ee01228635ae4181fd5f0fb1a7e8805e3f0905681d5ea422746bc883e1042b06",
-      "modified": "2026-11-22T04:59:19.699Z"
+      "digest": "5a5e57fba2cf7ceb30e69eb30faeb74b33e8db4a72d478c36de3b716c9b03e5d",
+      "modified": "2026-11-22T17:20:12.066Z"
     },
     "https://tractorvs.com/pt-br/tractors/mahindra-arjun-605-di-ms-739db984/": {
-      "digest": "e2495ef9a530fc70611a68035d5e36d571b2f9b552da3a02a5ee73a16cf093ec",
-      "modified": "2026-11-22T04:59:19.699Z"
+      "digest": "5b628b4755608d80b7ea9a4cc544c88563d080ce1aef88defeb7660a690b8d36",
+      "modified": "2026-11-22T17:20:12.066Z"
     },
     "https://tractorvs.com/pt-br/tractors/mahindra-arjun-605-di-ms-v1-163dbb9b/": {
-      "digest": "00d407c667a431ba0eaa2ca461a3b38c4f2028ef5fba31f15d8b87325a782373",
-      "modified": "2026-11-22T15:49:54.478Z"
+      "digest": "6adbdbb69bd819fb818abd42b372cfd2d30f14e991850979de134702379f6b40",
+      "modified": "2026-11-22T17:20:12.066Z"
     },
     "https://tractorvs.com/pt-br/tractors/mahindra-jivo-225-di-4wd-34f40738/": {
       "digest": "c08f3fbe6e4e074ae9b6f52fa5a9eefbad54e4b0e5c3500f50b9faa303e7e0ab",
@@ -9566,16 +9566,16 @@
       "modified": "2026-11-22T15:13:41.997Z"
     },
     "https://tractorvs.com/ru/": {
-      "digest": "2ce033a07a0de4e59b7e99118e2d82ffc3ce2c1afd658cf4a8bfd1e03414614e",
-      "modified": "2026-11-22T09:48:10.487Z"
+      "digest": "1f956d5b08f121c761da051b06d6d10a222ccebc5db52ec4784093ae17412368",
+      "modified": "2026-11-22T17:20:12.066Z"
     },
     "https://tractorvs.com/ru/articles/": {
       "digest": "28c8e179f13e235ab3802a7ace157d9f536ae237b3f7efef8648ee4c3d1fd174",
       "modified": "2026-11-22T14:21:43.651Z"
     },
     "https://tractorvs.com/ru/compare/": {
-      "digest": "404555173ecf6debbe56e6459d39418762ae4704c569e597dec5410fd64dda19",
-      "modified": "2026-11-22T16:45:33.158Z"
+      "digest": "01677dfde89a16101ab4a415ca14529e853aea4e4c8dba52411e54b340278d6c",
+      "modified": "2026-11-22T17:20:12.066Z"
     },
     "https://tractorvs.com/ru/farm-advisor/": {
       "digest": "eecbaceca024d6e9e00178cd92233d90721e382dba7f5dc72b269fa1c1b4dd46",
@@ -9594,8 +9594,8 @@
       "modified": "2026-11-22T15:13:41.997Z"
     },
     "https://tractorvs.com/ru/tractors/": {
-      "digest": "e1593e3f01715cd49eba0b65d5eabe3b330cce6784dedad6bd6c804e00029641",
-      "modified": "2026-11-22T14:57:57.751Z"
+      "digest": "c6239259eb91f839ba4613d22b38d518735465aa49f6775d89623ef7a71bb8c4",
+      "modified": "2026-11-22T17:20:12.066Z"
     },
     "https://tractorvs.com/ru/tractors/agrale-4125-0b53e944/": {
       "digest": "a743211ff921d260a622929d99a49654ddf88289776922ae4c70310ed030ae99",
@@ -9606,8 +9606,8 @@
       "modified": "2026-11-22T05:19:46.825Z"
     },
     "https://tractorvs.com/ru/tractors/agrale-4233-e3ed3f24/": {
-      "digest": "94b7ecb5dbb7eecd7cc855c451197a97ddb572088da91cdcf8b89991ad96eec5",
-      "modified": "2026-11-22T04:59:19.699Z"
+      "digest": "4de906c4d422197ec24257b1cccc01b1fe153a7162ca8473c46bddab6131397a",
+      "modified": "2026-11-22T17:20:12.066Z"
     },
     "https://tractorvs.com/ru/tractors/agrale-5105-3601ec83/": {
       "digest": "d8eddbc0a77743db4ea9ac2fbfb7cbdbd431c5055b292f3b522ef9e3d06c2cd8",
@@ -9978,20 +9978,20 @@
       "modified": "2026-11-22T05:19:46.825Z"
     },
     "https://tractorvs.com/ru/tractors/mahindra-arjun-555-di-2c1a6638/": {
-      "digest": "b33f2941cf153b40a75eb838cf472cb4b167fbae75efec997578cc2645cd9335",
-      "modified": "2026-11-22T04:59:19.699Z"
+      "digest": "d33c58a5c6058ef54c356952953b832db7f036e7921a7a28d9aba0bfd2dc4c3f",
+      "modified": "2026-11-22T17:20:12.066Z"
     },
     "https://tractorvs.com/ru/tractors/mahindra-arjun-605-di-i-bee5e88f/": {
-      "digest": "2a6c74796b43ab256edf242884b617a3fa6af730cf7de4005233e0e780983bd4",
-      "modified": "2026-11-22T04:59:19.699Z"
+      "digest": "8cafdaaeea3cb79a7f7a0c860e52e689f328cf3b2e7da6cdfe7952014a055f79",
+      "modified": "2026-11-22T17:20:12.066Z"
     },
     "https://tractorvs.com/ru/tractors/mahindra-arjun-605-di-ms-739db984/": {
-      "digest": "86b0431ccd7efc1709d874cd4cc956816a7458b77a97f4cac26fce6f0b0afa9f",
-      "modified": "2026-11-22T04:59:19.699Z"
+      "digest": "ef7a59e9fc2c92c10c1804cc0a81878ddc949ea23fed68157364709ab0d251a3",
+      "modified": "2026-11-22T17:20:12.066Z"
     },
     "https://tractorvs.com/ru/tractors/mahindra-arjun-605-di-ms-v1-163dbb9b/": {
-      "digest": "d48ef08df279a21c9c2bd4ed125c005dd7b9f5657a5a5b020b299c3cae316355",
-      "modified": "2026-11-22T15:49:54.478Z"
+      "digest": "d4fffd2bbe4161448a801d5fb7818bcd9dad52dae52aa5d324f65d2e8cf5b8a6",
+      "modified": "2026-11-22T17:20:12.066Z"
     },
     "https://tractorvs.com/ru/tractors/mahindra-jivo-225-di-4wd-34f40738/": {
       "digest": "b0f008dd0a7abfc07699056fe67ee2bafe0670b466be995ba92c37da01468b27",
@@ -11150,8 +11150,8 @@
       "modified": "2026-11-22T04:59:19.699Z"
     },
     "https://tractorvs.com/tr/": {
-      "digest": "8680018cc8c851fbc7fad17e0c63771cf5b6a7fd3ca30953fa2747d6ce82679a",
-      "modified": "2026-11-22T15:29:03.380Z"
+      "digest": "0353d6eab74bc5d3333bad1564c32db71239532a060da810c524e2424246f0dd",
+      "modified": "2026-11-22T17:20:12.066Z"
     },
     "https://tractorvs.com/tr/articles/": {
       "digest": "1c5bbdce8e9666495d3e49c81913fa14d085efbac687c49b77af5cf04564ce65",
@@ -11166,8 +11166,8 @@
       "modified": "2026-11-22T08:02:35.845Z"
     },
     "https://tractorvs.com/tr/compare/": {
-      "digest": "f45bfa3e3eefdbe6deaef530b9a849e1f1070440f8e13c588bdcc67211a2420b",
-      "modified": "2026-11-22T16:45:33.158Z"
+      "digest": "e434a3abdd68fbbfc36e56830e778737567cc923ddbb7c13af6ad8d0d152292a",
+      "modified": "2026-11-22T17:20:12.066Z"
     },
     "https://tractorvs.com/tr/compare/deutz-fahr-5090-d-gs-vs-5100-d-gs/": {
       "digest": "d2f52b331965c94d1f2dc2b55db37a3c22f303a152bddd818417198fb3b29862",
@@ -11210,8 +11210,8 @@
       "modified": "2026-11-22T15:13:41.997Z"
     },
     "https://tractorvs.com/tr/tractors/": {
-      "digest": "99942e33feff21240776eaa5c3b843202a35ec2cb7e837f3aa7a932277645e52",
-      "modified": "2026-11-22T14:57:57.751Z"
+      "digest": "57c68751d264a9082e5bb8cb53af8b2f6bf5f181bfbee615eef5f29a9ae0827c",
+      "modified": "2026-11-22T17:20:12.066Z"
     },
     "https://tractorvs.com/tr/tractors/agrale-4125-0b53e944/": {
       "digest": "b877aec9c77214e168c69ab239caf1ba006d9c27f2ab18fec9179791bc08112d",
@@ -11222,8 +11222,8 @@
       "modified": "2026-11-22T09:17:23.521Z"
     },
     "https://tractorvs.com/tr/tractors/agrale-4233-e3ed3f24/": {
-      "digest": "62c98a04c281117c8b6d525e2245dad8306d4972485e1f2517ef79537fac2d05",
-      "modified": "2026-11-21T19:47:11.499Z"
+      "digest": "87f45f5aee652cceabbf097f52dff8385901c2f2956f5fa55b62d2cea09f7cf2",
+      "modified": "2026-11-22T17:20:12.066Z"
     },
     "https://tractorvs.com/tr/tractors/agrale-5105-3601ec83/": {
       "digest": "9d34b9be982d88b0b7295d78c6a448229044bffb520b2f46e92d47cd1ed58672",
@@ -11594,20 +11594,20 @@
       "modified": "2026-11-22T05:19:46.825Z"
     },
     "https://tractorvs.com/tr/tractors/mahindra-arjun-555-di-2c1a6638/": {
-      "digest": "545dacfa75a78828641c20f2807d406403ee143fa46fceefa95d87876ec7edf9",
-      "modified": "2026-11-22T04:59:19.699Z"
+      "digest": "3cd340261a4dc5e7b5c071fd357498b230c884645a6ab93aab5e445e40f46a25",
+      "modified": "2026-11-22T17:20:12.066Z"
     },
     "https://tractorvs.com/tr/tractors/mahindra-arjun-605-di-i-bee5e88f/": {
-      "digest": "80d32ff3f23cb129171e7e6ae6eb7fd21ca611167b9069c2f3c81836489109e9",
-      "modified": "2026-11-22T04:59:19.699Z"
+      "digest": "4a68af191620f62bec8074a703523d6abfa0e88d3a3ad187b13ddac9c9e55abb",
+      "modified": "2026-11-22T17:20:12.066Z"
     },
     "https://tractorvs.com/tr/tractors/mahindra-arjun-605-di-ms-739db984/": {
-      "digest": "342dfbba0f9a97987e6707f39fcee234ec4cc51f45ec2984dcfa4163d871aefe",
-      "modified": "2026-11-22T04:59:19.699Z"
+      "digest": "1ca7c2f8e07fb32731e6efad3cb8df13a681c356356a44cbc982bff19cbc6f7b",
+      "modified": "2026-11-22T17:20:12.066Z"
     },
     "https://tractorvs.com/tr/tractors/mahindra-arjun-605-di-ms-v1-163dbb9b/": {
-      "digest": "ee707aa816fadedcc3c9a9f2d74dc7f8a1ab760dfa2ecd5a8dfb9b9b7675c471",
-      "modified": "2026-11-22T15:49:54.478Z"
+      "digest": "9651ed52b37bfe605f72d76f6d4245f8f3577e8ee6318d8418e6e3b039d23a9c",
+      "modified": "2026-11-22T17:20:12.066Z"
     },
     "https://tractorvs.com/tr/tractors/mahindra-jivo-225-di-4wd-34f40738/": {
       "digest": "fda774a4a7b87ac9dacd256c464dac0b9b54e788a3977ac6bd10a894e3187518",
@@ -12766,8 +12766,8 @@
       "modified": "2026-11-21T19:47:11.499Z"
     },
     "https://tractorvs.com/tractors/": {
-      "digest": "1dc6f681d92dd0ebb208cd3a4d4da86ff00e53a78c02d9cdcc1ff640cdd7972c",
-      "modified": "2026-11-22T14:57:57.751Z"
+      "digest": "6cd94a1a8af094eed2d88ba931f27e4b35389cedcc3148aa74226098c88d677a",
+      "modified": "2026-11-22T17:20:12.066Z"
     },
     "https://tractorvs.com/tractors/agrale-4125-0b53e944/": {
       "digest": "7cb5388368ca5cebb9b7f9b51467ed0cde27248e0c1689c41cd6c15909d42679",
@@ -12778,8 +12778,8 @@
       "modified": "2026-11-22T09:17:23.521Z"
     },
     "https://tractorvs.com/tractors/agrale-4233-e3ed3f24/": {
-      "digest": "adb60a1eb7d4d5739ad3eb638cb50f6d208cc468da8c67d6401f67c815c5e98d",
-      "modified": null
+      "digest": "4988e93951ee6ecdf5f405eba51da2200ea202a8d375f05c57d35f417ec842c0",
+      "modified": "2026-11-22T17:20:12.066Z"
     },
     "https://tractorvs.com/tractors/agrale-5105-3601ec83/": {
       "digest": "55d75fc8c833b4c2ad358eb135424357f7ced6fe94b0bbb180fbb7e5988a0e2f",
@@ -13150,20 +13150,20 @@
       "modified": "2026-11-22T05:19:46.825Z"
     },
     "https://tractorvs.com/tractors/mahindra-arjun-555-di-2c1a6638/": {
-      "digest": "e189adf5a9fa5586931362fd092c2543e2c0c37ac26131e722045154f36bac20",
-      "modified": "2026-11-22T11:49:57.072Z"
+      "digest": "a77698a0de590fadc7bdf26dcb205defd7dbe5b2f0c1059ad424c97e8f9d42cd",
+      "modified": "2026-11-22T17:20:12.066Z"
     },
     "https://tractorvs.com/tractors/mahindra-arjun-605-di-i-bee5e88f/": {
-      "digest": "e49b72bef30b7342371acb5b32e1b294906e0fa31334d8ed738d1d75cc0c33fb",
-      "modified": "2026-11-22T11:49:57.072Z"
+      "digest": "be7a96f0883959758b74d3f482f8656e7d4db1bb8bb522fcc1d573925cb8317a",
+      "modified": "2026-11-22T17:20:12.066Z"
     },
     "https://tractorvs.com/tractors/mahindra-arjun-605-di-ms-739db984/": {
-      "digest": "3fc022c18ed8414c83bcbcf7d3eee6839aec1765a1ed051c7e83d0ae1a002c75",
-      "modified": "2026-11-22T11:49:57.072Z"
+      "digest": "9ae52b7d1af7f484cd98ddacb6f8dd2f100ca93b1c4ab993fbb66b7e61963728",
+      "modified": "2026-11-22T17:20:12.066Z"
     },
     "https://tractorvs.com/tractors/mahindra-arjun-605-di-ms-v1-163dbb9b/": {
-      "digest": "46319a08cc0c467faaba558c85e9587c8d13e9bde578cbc9fd582e1e43a8980b",
-      "modified": "2026-11-22T11:49:57.072Z"
+      "digest": "3d34b34888473c6b29e23361b7acc2716ddf57e69db99a1844426be3e833b0db",
+      "modified": "2026-11-22T17:20:12.066Z"
     },
     "https://tractorvs.com/tractors/mahindra-jivo-225-di-4wd-34f40738/": {
       "digest": "97fdba7159aac6daf553de86f641b7a9d4117cf52169a6f38672d5d8578cbb84",
@@ -14322,16 +14322,16 @@
       "modified": "2026-11-22T04:59:19.699Z"
     },
     "https://tractorvs.com/zh/": {
-      "digest": "9ba291a6e0ef1da285abb174aec89be9e59ce82cdc53cd08cb1bbadc0cfaf871",
-      "modified": "2026-11-22T09:48:10.487Z"
+      "digest": "9ebe32f23c64f7dc2069d0ca74323d71c66c15f66fc3c5c86b6da8289662ad66",
+      "modified": "2026-11-22T17:20:12.066Z"
     },
     "https://tractorvs.com/zh/articles/": {
       "digest": "ff6f2dca5e4cd71a619df8bf3263e453b767f8d43bee5e0c59151bd212b84216",
       "modified": "2026-11-22T14:21:43.651Z"
     },
     "https://tractorvs.com/zh/compare/": {
-      "digest": "a976d22d476ea119050408a4074b384577cd9e1cebd40610183ed3e0ceb634f8",
-      "modified": "2026-11-22T16:45:33.158Z"
+      "digest": "7cd6b482b24b9a3fa3d88a898784e7595b18dedc8390fb0e1351c2f8395e1dc8",
+      "modified": "2026-11-22T17:20:12.066Z"
     },
     "https://tractorvs.com/zh/farm-advisor/": {
       "digest": "e805869cda955f32dd0b731ede3203e689f2f16572511bce73f9852f34cc03ce",
@@ -14350,8 +14350,8 @@
       "modified": "2026-11-22T15:13:41.997Z"
     },
     "https://tractorvs.com/zh/tractors/": {
-      "digest": "c151ec69f147e759bf4030e47b98b16d4216f1223f6d3181beeb6fce6f3c312c",
-      "modified": "2026-11-22T14:57:57.751Z"
+      "digest": "ac8bfab8f5308e24bd4b8b0295c9fde9f626f99807863d8a77a7abb1e488d95b",
+      "modified": "2026-11-22T17:20:12.066Z"
     },
     "https://tractorvs.com/zh/tractors/agrale-4125-0b53e944/": {
       "digest": "e6ab843089d45ba67da807eceb735737086451a3597de35ae307039fd8c1c4e7",
@@ -14362,8 +14362,8 @@
       "modified": "2026-11-22T09:58:15.078Z"
     },
     "https://tractorvs.com/zh/tractors/agrale-4233-e3ed3f24/": {
-      "digest": "9792555d9543324f82fbdaa4020348eba5fc9fbdf36e0e6199e52e13f48ac27d",
-      "modified": "2026-11-22T09:58:15.078Z"
+      "digest": "02c17aab879717c93d1d510e50321f695c64ee3a07ae81cf6fbc96a9d274c59c",
+      "modified": "2026-11-22T17:20:12.066Z"
     },
     "https://tractorvs.com/zh/tractors/agrale-5105-3601ec83/": {
       "digest": "663951028371e440b64147d300b72013e58b3e5e9f3c30712894cb0c43bc9121",
@@ -14734,20 +14734,20 @@
       "modified": "2026-11-22T09:58:15.078Z"
     },
     "https://tractorvs.com/zh/tractors/mahindra-arjun-555-di-2c1a6638/": {
-      "digest": "63c992cd98d5a0acafa4b6cf040469dc3f1145bd1e7f131ac897945237795e47",
-      "modified": "2026-11-22T09:58:15.078Z"
+      "digest": "2aba20e61ce53cd06cfd0c597573ac9c3dcf4fb554e7825e9ffb99c2b750196a",
+      "modified": "2026-11-22T17:20:12.066Z"
     },
     "https://tractorvs.com/zh/tractors/mahindra-arjun-605-di-i-bee5e88f/": {
-      "digest": "6ec2a9755a84d5fd320ef38415f3c2418e4160cd1774399f52ad889070b9e7b1",
-      "modified": "2026-11-22T09:58:15.078Z"
+      "digest": "b8cfc9da834d2fb8cdea974c7ce83cb6dabef29e57245d555568037868a53e4d",
+      "modified": "2026-11-22T17:20:12.066Z"
     },
     "https://tractorvs.com/zh/tractors/mahindra-arjun-605-di-ms-739db984/": {
-      "digest": "4bdbc5ee2195addda373b93c8f4744b40eac57f9af6cbe88d6f5a9fd2a7bc71c",
-      "modified": "2026-11-22T09:58:15.078Z"
+      "digest": "fa2ba525729d7c350706f1c79d37fd8243be16e50e8ce6e14b743a11cb154cf8",
+      "modified": "2026-11-22T17:20:12.066Z"
     },
     "https://tractorvs.com/zh/tractors/mahindra-arjun-605-di-ms-v1-163dbb9b/": {
-      "digest": "0b28631dfb5143c0dddb756853fa9cad5ea7876bd2a6a10f187d05e025dcebaf",
-      "modified": "2026-11-22T09:58:15.078Z"
+      "digest": "c3df2684893c004e982e140ebdabd4266ace4f38c006eb31518fde73a2c0f874",
+      "modified": "2026-11-22T17:20:12.066Z"
     },
     "https://tractorvs.com/zh/tractors/mahindra-jivo-225-di-4wd-34f40738/": {
       "digest": "1cf9e6a93dc0351fcb8ffa94d01e41ecf57354881915d32b4127376eb5d37cae",
