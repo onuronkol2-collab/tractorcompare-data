@@ -18,6 +18,8 @@ const compareUrl = localizedPath(lang, "/compare/");
 const advisorUrl = localizedPath(lang, "/farm-advisor/");
 const articlesUrl = localizedPath(lang, "/articles/");
 const selectionGuideUrl = localizedPath(lang, "/guides/choosing-a-tractor/");
+// These two editorial language editions are actually published; never invent an untranslated route.
+const glossaryUrl = (lang==="tr" || lang==="en") ? localizedPath(lang, "/guides/tractor-technical-terms/") : null;
 const basakReviewUrl = localizedPath(lang, "/reviews/basak-2075-bk/");
 const editorialCopy = editorialHubTranslation(lang);
 const editorialPreview = {
@@ -247,6 +249,15 @@ const suggestionPayload = JSON.stringify(catalogue.tractors.map((tractor) => ({
           <span aria-hidden="true" class="home-editorial-arrow">↗</span>
         </a>
       </div>
+      {glossaryUrl && <div class="home-editorial-resource">
+        <p>{lang==="tr"
+          ?"Traktör teknik tablosunda PTO, tork veya hidrolik bir terimi mi açıklamak istiyorsunuz?"
+          :"Need a plain-language explanation of PTO, torque or hydraulic measurements?"}</p>
+        <a class="home-outline-link" href={glossaryUrl}>
+          {lang==="tr"?"Traktör teknik terimleri ve parçaları":"Tractor technical terms and parts"}
+          <span aria-hidden="true">↗</span>
+        </a>
+      </div>}
     </div>
   </section>
 
