@@ -147,3 +147,19 @@ test("editorial glossary actually uses approved mobile WebP with JPEG fallback a
  assert.match(source,/approvedPhoto\("Case IH","Puma 150"\)/);
  assert.match(source,/approvedPhoto\("McCormick","X5\.120 P3-Drive"\)/);
 });
+
+test("Astro SSR picture attributes are valid semantic picture markup; fake text is not",()=>{
+ const record=editorial[0];
+ const path=EDITORIAL_GLOSSARY_PAGES[0];
+ const canonical=fakeEditorialPage(path);
+ const astro=canonical.replaceAll("<picture>","<picture data-astro-cid=\"scoped-123\" class=\"glossary-gallery-photo\">");
+ assert.equal(checkLiveModelPage(astro,record,path).ok,true,
+   "Astro appends scoped attributes; do not reject the actual semantic picture");
+ const missing=canonical.replaceAll("<picture>","<div>").replaceAll("</picture>","</div>");
+ const result=checkLiveModelPage(missing,record,path);
+ assert.equal(result.ok,false);
+ assert.ok(result.errors.includes("missing picture element"));
+ const pseudo=missing.replace("<body>","<body><script>const x=\"<picture-not-valid>\";</script>");
+ assert.equal(checkLiveModelPage(pseudo,record,path).ok,false,
+   "A fake picture-like script token must not satisfy the markup proof");
+});

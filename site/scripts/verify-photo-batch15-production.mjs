@@ -140,7 +140,8 @@ export function checkLiveModelPage(html,record,pagePath){
    errors.push("canonical");
  if(/<meta\b[^>]*name=["']robots["'][^>]*noindex/i.test(html))
    errors.push("unexpected noindex");
- for(const expected of ["<picture>","image/webp",
+ if(!/<picture(?:\s[^>]*)?>/i.test(html))errors.push("missing picture element");
+ for(const expected of ["image/webp",
     record.fileId+"-720.jpg",record.fileId+"-720.webp",
     record.fileId+"-1920.jpg",record.photographer,record.licenseUrl,
     "data-photo-url"])
