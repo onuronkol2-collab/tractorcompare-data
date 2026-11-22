@@ -1,0 +1,39 @@
+name: TractorVS public CC photo mobile optimization shortlist (read-only)
+on:
+  pull_request:
+    paths:
+      - "site/scripts/photo-public-unoptimized-candidates.mjs"
+      - "site/tests/photo-public-unoptimized-candidates.test.mjs"
+      - ".github/workflows/public-photo-mobile-candidate-report.yml"
+  workflow_dispatch:
+  # One free/canonical sitemap GET per week, no Wikimedia/API scraping.
+  schedule:
+    - cron: "23 5 * * 1"
+permissions:
+  contents: read
+concurrency:
+  group: tractorvs-public-mobile-photo-shortlist-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+jobs:
+  candidates:
+    name: Verify published-photo eligibility without publishing any images
+    runs-on: ubuntu-latest
+    timeout-minutes: 7
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22.23.4"
+      - name: Fail-closed unit tests for canonical model, locale, rights and hold gates
+        run: node --experimental-strip-types --test site/tests/photo-public-unoptimized-candidates.test.mjs
+      - name: Read exact live public image sitemap once, report eligible unoptimized IDs
+        env:
+          TRACTORVS_MOBILE_CANDIDATE_REPORT: /tmp/tractorvs-public-unoptimized-candidates.json
+        run: node --experimental-strip-types site/scripts/photo-public-unoptimized-candidates.mjs
+      - name: Save only public model/license shortlist, never download or publish images
+        uses: actions/upload-artifact@v4
+        with:
+          name: tractorvs-public-licensed-mobile-image-candidates
+          path: /tmp/tractorvs-public-unoptimized-candidates.json
+          if-no-files-found: error
+          retention-days: 7
