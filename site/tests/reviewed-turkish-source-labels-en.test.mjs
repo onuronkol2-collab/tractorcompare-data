@@ -44,3 +44,30 @@ test("unknown manufacturer-specific source headings are not translated by guessi
  const source=sourceSpec("Unknown OEM-specific phrase with unverified meaning");
  assert.equal(specLabel(source,"en"),"Unknown OEM-Specific Phrase With Unverified Meaning");
 });
+
+
+test("eight live-observed ASCII Turkish technical headings no longer leak into English",()=>{
+  // Each exact label occurs in the 22-Nov source-identity audit of 388 models.
+  // Absence of Turkish diacritics must never be taken as proof of English.
+  const verified={
+    "Nominal Motor Devri":"Rated engine speed",
+    "Direksiyon Tipi":"Steering type",
+    "Fren Sistemi":"Brake system",
+    "Fren Tipi":"Brake type",
+    "Direksiyon Sistemi":"Steering system",
+    "Piston Stroku":"Piston stroke",
+    "PTO Tipi":"PTO type",
+    "Hava Filtresi":"Air filter",
+  };
+  assert.equal(Object.keys(verified).length,8);
+  for(const [source,english] of Object.entries(verified)){
+    assert.ok(!/[ÇĞİÖŞÜçğıöşü]/u.test(source),"ASCII-only leakage case");
+    const item=sourceSpec(source),before=structuredClone(item);
+    assert.equal(specLabel(item,"en"),english,source+" exact reviewed English display");
+    assert.deepEqual(item,before,"do not rewrite verified OEM measurement/source");
+    assert.notEqual(specLabel(item,"tr"),english,"do not replace native Turkish text");
+  }
+  const unknown=sourceSpec("A different unreviewed ASCII manufacturer notation");
+  assert.equal(specLabel(unknown,"en"),"A Different Unreviewed ASCII Manufacturer Notation",
+    "never guess unrelated or model-specific source terminology");
+});
