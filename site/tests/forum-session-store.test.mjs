@@ -6,9 +6,11 @@ import {FORUM_SESSION_KEY,FORUM_ACCESS_KEY,FORUM_REFRESH_KEY,SESSION_MAX_AGE_MS,
 
 function mockStorage(){
  const items=new Map();
+ let writes=0;
  return {
+  get writes(){return writes},
   getItem(key){return items.has(key)?items.get(key):null},
-  setItem(key,val){items.set(key,String(val))},
+  setItem(key,val){writes++;items.set(key,String(val))},
   removeItem(key){items.delete(key)},
   clear(){items.clear()},
   get length(){return items.size}
@@ -63,4 +65,18 @@ test("refresh replaces the durable access and refresh pair, never adds user data
  assert.equal(stored.access,"new-access");
  assert.equal(stored.refresh,"new-refresh");
  assert.ok(stored.until>Date.now());
+});
+
+test("two open tabs never re-write an unchanged remembered token and amplify auth calls",()=>{
+ const {localStorage,sessionStorage}=setup();
+ rememberForumSession("access","refresh",true);
+ const writes=localStorage.writes;
+ sessionStorage.clear();
+ for(let i=0;i<10;i++){
+  const saved=readForumSession();
+  rememberForumSession(saved.access,saved.refresh,saved.remember);
+ }
+ assert.equal(localStorage.writes,writes,"No re-verification writes should be broadcast to sibling tabs");
+ rememberForumSession("rotated","rotated-refresh",true);
+ assert.equal(localStorage.writes,writes+1,"Only an actual rotated session is broadcast");
 });
