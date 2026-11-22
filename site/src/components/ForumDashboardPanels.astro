@@ -14,7 +14,7 @@ const categories=FORUM_CATEGORY_KEYS.map(key=>({key,count:topics.filter(t=>t.cat
  <section class="forum-side-panel forum-side-stats">
   <h2 class="forum-side-title">{copy.stats}</h2>
   <div class="forum-stats-grid">
-   <div><strong>{num(topics.length)}</strong><span>{copy.liveTopics}</span></div>
+   <div><strong data-forum-published-topic-total>{num(topics.length)}</strong><span>{copy.liveTopics}</span></div>
    <div><strong>{num(replyCount)}</strong><span>{copy.liveReplies}</span></div>
    <div><strong>10</strong><span>{copy.languages}</span></div>
   </div>
