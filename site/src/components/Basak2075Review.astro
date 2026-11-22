@@ -151,7 +151,7 @@ const schema={
         :"This is not a field test or an owner's review. All numeric values below are manufacturer-stated specifications from Başak's technical document, not independent performance measurements.")}</p>
       <section class="review-facts" aria-labelledby="facts-heading">
         <h2 id="facts-heading">{localized?.figures ?? (tr?"Üretici belgesindeki teknik veriler":"Figures in the manufacturer's specification")}</h2>
-        <div class="review-table-scroll"><table>
+        <div class="review-table-scroll" role="region" tabindex="0" aria-labelledby="facts-heading"><table>
           <thead><tr><th scope="col">{localized?.label ?? (tr?"Ölçüm / özellik":"Measurement / specification")}</th>
             <th scope="col">{localized?.value ?? (tr?"Üretici değeri":"Manufacturer's figure")}</th></tr></thead>
           <tbody>{rows.map((row,i)=><tr>
@@ -244,7 +244,8 @@ const schema={
     .review-comparison-cell-model{display:block;margin-bottom:7px;font-weight:750;font-size:12px;color:#335d40}
   }
   .review-prose p,.review-references p{font-size:16px;line-height:1.85;margin:0 0 16px}
-  .review-table-scroll{overflow:auto}
+  .review-table-scroll{overflow:auto;overscroll-behavior-inline:contain}
+  .review-table-scroll:focus-visible{outline:3px solid #39784a;outline-offset:3px;border-radius:4px}
   .review-facts table{width:100%;border-collapse:collapse;min-width:510px;font-size:14px;line-height:1.55}
   .review-facts th,.review-facts td{padding:13px 16px;border-bottom:1px solid #d0e0cc;text-align:left;vertical-align:top}
   .review-facts thead{background:#e7efe3}
