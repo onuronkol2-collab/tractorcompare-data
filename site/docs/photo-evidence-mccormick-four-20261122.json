@@ -1,0 +1,66 @@
+{
+  "reviewedAt": "2026-11-22",
+  "policy": "Published exact McCormick model identity only. Archive discovery 44995174183 provides candidates; live Commons source identity, author and license must be revalidated before importing.",
+  "originalBinaryHttpVerified": false,
+  "jpegContentVerified": false,
+  "firstPartyProxyHttpVerified": false,
+  "releaseStatus": "Research candidate; source and JPEG verification pending",
+  "sources": [
+    {
+      "brand": "McCormick",
+      "model": "X4.085 TM",
+      "fileId": "mccormick-x4-085-tm-marcelx42-2023",
+      "sourcePage": "https://commons.wikimedia.org/wiki/File:McCormick_X4.085_TM_Agritechnica_2023_(DSC05776).jpg",
+      "originalFilename": "McCormick X4.085 TM Agritechnica 2023 (DSC05776).jpg",
+      "photographer": "MarcelX42",
+      "licenseName": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "width": 7008,
+      "height": 3944,
+      "modelIdentityEvidence": "Wikimedia exact model-labelled original photograph, batch candidate archive; do not claim model year or chassis configuration",
+      "variantExact": false
+    },
+    {
+      "brand": "McCormick",
+      "model": "X6.414 P6-Drive",
+      "fileId": "mccormick-x6-414-p6-drive-marcelx42-2023",
+      "sourcePage": "https://commons.wikimedia.org/wiki/File:McCormick_X6.414_P6-Drive_Agritechnica_2023_(DSC04843).jpg",
+      "originalFilename": "McCormick X6.414 P6-Drive Agritechnica 2023 (DSC04843).jpg",
+      "photographer": "MarcelX42",
+      "licenseName": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "width": 7008,
+      "height": 3944,
+      "modelIdentityEvidence": "Wikimedia exact model-labelled original photograph, batch candidate archive; do not claim model year or chassis configuration",
+      "variantExact": false
+    },
+    {
+      "brand": "McCormick",
+      "model": "X7.618 VT-Drive",
+      "fileId": "mccormick-x7-618-vt-drive-marcelx42-2023",
+      "sourcePage": "https://commons.wikimedia.org/wiki/File:McCormick_X7.618_VT-Drive_Agritechnica_2023_(DSC05850).jpg",
+      "originalFilename": "McCormick X7.618 VT-Drive Agritechnica 2023 (DSC05850).jpg",
+      "photographer": "MarcelX42",
+      "licenseName": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "width": 7008,
+      "height": 3944,
+      "modelIdentityEvidence": "Wikimedia exact model-labelled original photograph, batch candidate archive; do not claim model year or chassis configuration",
+      "variantExact": false
+    },
+    {
+      "brand": "McCormick",
+      "model": "X7.624 VT-Drive",
+      "fileId": "mccormick-x7-624-vt-drive-marcelx42-2023",
+      "sourcePage": "https://commons.wikimedia.org/wiki/File:McCormick_X7.624_VT-Drive_Agritechnica_2023_(DSC05875).jpg",
+      "originalFilename": "McCormick X7.624 VT-Drive Agritechnica 2023 (DSC05875).jpg",
+      "photographer": "MarcelX42",
+      "licenseName": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "width": 7008,
+      "height": 3944,
+      "modelIdentityEvidence": "Wikimedia exact model-labelled original photograph, batch candidate archive; do not claim model year or chassis configuration",
+      "variantExact": false
+    }
+  ]
+}
