@@ -7,7 +7,10 @@ test("professional forum workspace is responsive and keeps all essential actions
   const shell=page.locator(".community-shell");
   await expect(shell).toBeVisible();
   await expect(shell.locator("h1")).toHaveCount(1);
-  await expect(shell.locator(".community-hero-panel")).toBeVisible();
+  if((page.viewportSize()?.width||0)<=640)
+   await expect(shell.locator(".community-hero-panel")).toBeHidden();
+  else
+   await expect(shell.locator(".community-hero-panel")).toBeVisible();
   await expect(shell.locator(".community-sidebar #forum-compose")).toBeVisible();
   await expect(shell.locator(".member-community")).toBeVisible();
   await expect(shell.locator(".member-recent")).toBeVisible();
