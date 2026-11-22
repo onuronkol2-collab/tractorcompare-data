@@ -625,3 +625,88 @@ button, input { font: inherit; }
     width:min(400px,calc(100% - 24px));
   }
 }
+
+
+/* 2026-11-22 — Evidence-based readable content pass.
+   Only the site's informative labels, explanations and source notes are
+   enlarged. Decorative microtype, published copy, SEO URLs, forum's separate
+   readable stylesheet, layout geometry and analytics consent are untouched.
+   Keep language-dependent text wrapping and 200% text zoom viable. */
+#main :is(.section-summary, .data-copy > p:not(.eyebrow), .approach-copy p,
+          .feature-card > p:last-of-type, .catalog-empty p, .model-spec-heading > p) {
+  font-size: clamp(15px, 1.25vw, 17px);
+  line-height: 1.75;
+  overflow-wrap: break-word;
+}
+#main :is(.hero-lede, .catalog-intro) {
+  font-size: clamp(16px, 1.35vw, 18px);
+  line-height: 1.7;
+}
+#main :is(.hero-assurance, .panel-foot p, .principle-list li,
+          .roadmap-strip strong, .catalog-no-results) {
+  font-size: 14px;
+  line-height: 1.65;
+}
+#main :is(.hero-footnote, .roadmap-strip small, .panel-kicker,
+          .spec-number, .spec-state) {
+  font-size: 12px;
+  line-height: 1.6;
+  overflow-wrap: anywhere;
+}
+#main .spec-name { font-size: 14px; line-height: 1.55; }
+#main .model-spec-top h4 { font-size: 15px; line-height: 1.55; }
+#main .model-spec-top > span { font-size: 12px; color: #53665a; line-height: 1.5; }
+#main :is(.model-spec-note, .model-spec-card blockquote) {
+  font-size: 14px;
+  line-height: 1.7;
+  overflow-wrap: anywhere;
+}
+#main .model-spec-source a {
+  font-size: 14px;
+  line-height: 1.6;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  overflow-wrap: anywhere;
+}
+#main :is(.model-spec-source small, .model-spec-source > span) {
+  font-size: 13px;
+  line-height: 1.55;
+  color: #4b6353;
+  overflow-wrap: anywhere;
+}
+#main :is(.tractor-card-footer, .tractor-price-summary,
+          .catalog-toolbar > span) {
+  font-size: 14px;
+  line-height: 1.6;
+  overflow-wrap: anywhere;
+}
+#main :is(.catalog-facet-fields label, .catalog-brand-directory a,
+          .catalog-search-feedback, .catalog-brand-directory p) {
+  font-size: 15px;
+  line-height: 1.55;
+  overflow-wrap: anywhere;
+}
+#main :is(.catalog-brand-directory small, .catalog-brand-directory summary span) {
+  font-size: 13px;
+  line-height: 1.5;
+}
+#main :is(.tc-result-main small, .tc-selected-preview small,
+          .tc-selected-preview em, .tc-preview-photo > small,
+          .tc-entry small, .tc-cell-model) {
+  font-size: 14px;
+  line-height: 1.6;
+  overflow-wrap: anywhere;
+}
+#main :is(.tc-workspace-intro p, .tc-table-bar p, .tc-note,
+          .tc-data-warning, .tc-condition-caution) {
+  font-size: 15px;
+  line-height: 1.65;
+  overflow-wrap: anywhere;
+}
+@media (max-width: 720px) {
+  #main :is(.hero-assurance, .section-summary, .feature-card > p:last-of-type,
+            .model-spec-heading > p, .catalog-intro) { font-size: 16px; }
+  #main .model-summary-grid > div { min-width: 0; }
+  #main .spec-row { min-width: 0; }
+  #main :is(.model-spec-card, .model-spec-top, .catalog-results-panel) { min-width: 0; }
+}
