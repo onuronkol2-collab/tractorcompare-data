@@ -32,3 +32,13 @@ test("mobile text and narrow translated values remain reflowable",()=>{
  assert.match(section,/min-width:\s*0/);
  assert.match(section,/font-size:\s*16px/);
 });
+
+
+test("technical learning, picture credits and linked manufacturer sources stay readable",()=>{
+ for(const key of [".learn-cover figcaption",".tractor-photo-short-credit small",
+   ".glossary-sources li a span",".parts-source-note p",".home-featured-variant"])
+  assert.ok(section.includes(key),key);
+ const guide=readFileSync(new URL("../src/components/TractorSelectionGuide.astro",import.meta.url),"utf8");
+ assert.match(guide,/\.guide-steps \.guide-inline-sources\{font-size:14px/);
+ assert.doesNotMatch(guide,/\.guide-inline-sources\{font-size:12px!important/);
+});
