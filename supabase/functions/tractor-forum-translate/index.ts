@@ -1,6 +1,7 @@
 import {generateGeminiJson} from "./gemini-provider.ts";
 import {translateAzureArticle} from "./azure-translator.ts";
 import {translateCloudflareArticle} from "./cloudflare-m2m100.ts";
+import {runCloudflareSyntheticSmoke} from "./cloudflare-smoke.ts";
 import {chooseTranslationSegments,translationCheckpoint,nextTranslationCheckpoint} from "./translation-segments.ts";
 import {isUntranslatedTurkishTitle,sameNumericFacts,TRANSLATION_RESUME_FIELDS,verifiedReadyTranslation} from "./translation-quality.ts";
 // Private, consent-gated TractorVS forum translator.
@@ -315,7 +316,25 @@ Deno.serve(async(req)=>{
  if(req.method!=="POST")return reply(405,{error:"POST required"});
  if(!equal(req.headers.get("x-queue-secret")||"",SECRET))return reply(401,{error:"Unauthorized"});
  let input:any;try{input=await req.json()}catch{return reply(400,{error:"Invalid JSON"})}
- if(input?.action!=="process_topic"&&input?.action!=="status")return reply(400,{error:"Unknown action"});
+ if(input?.action!=="process_topic"&&input?.action!=="status"&&input?.action!=="test_cloudflare_synthetic")return reply(400,{error:"Unknown action"});
+ // Dedicated synthetic-only mode: never read or mutate source, queue or forum.
+ // Exactly one Cloudflare M2M100 request, with explicit double locks.
+ if(input.action==="test_cloudflare_synthetic"){
+  if(SELECTED_PROVIDER!=="cloudflare"||!CF_PILOT_ENABLED||!CF_FREE_VERIFIED)
+   return reply(412,{success:false,error:"Cloudflare free-only test is not enabled"});
+  try{
+   const result=await runCloudflareSyntheticSmoke({
+    accountId:CF_ACCOUNT_ID,apiToken:CF_TOKEN,
+    enabled:CF_PILOT_ENABLED,freePlanVerified:CF_FREE_VERIFIED
+   });
+   return reply(200,{success:true,kind:"synthetic_only",...result});
+  }catch(error){
+   const safe=error instanceof Error?error.message:"unavailable";
+   const code=/^Cloudflare (synthetic check|AI private credentials unavailable)/.test(safe)?
+    safe:"Cloudflare synthetic check unavailable";
+   return reply(503,{success:false,error:code.slice(0,100)});
+  }
+ }
  if(input.action==="status"){
   try{
    const rows=await db("tc_forum_translation_jobs",{
