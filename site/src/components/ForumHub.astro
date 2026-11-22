@@ -61,7 +61,7 @@ const schema=indexable?{
 ---
 <SiteLayout lang={lang} title={ft(lang,"heading")+" | TractorVS"}
  description={ft(lang,"intro")} indexable={indexable} indexableLocales={indexableLocales} structuredData={schema}>
- <div class="community-shell">
+ <div class="community-shell" data-forum-dashboard-copy={JSON.stringify(dashboard)}>
   <header class="community-hero">
    <div class="container community-hero-inner">
     <div class="community-hero-copy">
@@ -574,51 +574,173 @@ const schema=indexable?{
 <script>
  import {initForumLive} from "../lib/forum-live-client.ts";
  import {forumSearchText} from "../lib/forum-search.mjs";
+ import {readForumSession} from "../lib/forum-session-store.mjs";
+ const shell=document.querySelector<HTMLElement>("[data-forum-dashboard-copy]");
+ const copy=JSON.parse(shell?.dataset.forumDashboardCopy||"{}") as Record<string,string>;
  const liveRoot=document.querySelector<HTMLElement>("[data-forum-live-root]");
  if(liveRoot)initForumLive(liveRoot);
  const input=document.querySelector<HTMLInputElement>("#forum-filter");
  const cards=()=>[...document.querySelectorAll<HTMLElement>("[data-forum-topic]")];
  const categoryButtons=[...document.querySelectorAll<HTMLButtonElement>("[data-forum-category]")];
+ const railButtons=[...document.querySelectorAll<HTMLButtonElement>("[data-forum-rail-category]")];
+ const tagButtons=[...document.querySelectorAll<HTMLButtonElement>("[data-forum-tag-category]")];
+ const allCategoryButtons=[...categoryButtons,...railButtons,...tagButtons];
+ const viewButtons=[...document.querySelectorAll<HTMLButtonElement>("[data-forum-view]")];
  const noResults=document.querySelector<HTMLElement>("#forum-no-results");
  const filters=document.querySelector<HTMLElement>("[data-forum-filters]");
  const countLabel=document.querySelector<HTMLElement>("[data-forum-match-count]");
  const clear=document.querySelector<HTMLButtonElement>("[data-forum-clear]");
+ const viewHint=document.querySelector<HTMLElement>("[data-forum-view-hint]");
+ const followingPanel=document.querySelector<HTMLElement>('[data-forum-special="following"]');
+ const eventsPanel=document.querySelector<HTMLElement>('[data-forum-special="events"]');
+ const followStatus=document.querySelector<HTMLElement>("[data-forum-following-status]");
+ const topicList=document.querySelector<HTMLElement>("#forum-topic-list");
+ const empty=document.querySelector<HTMLElement>(".community-empty");
+ const starter=document.querySelector<HTMLElement>(".community-starter");
+ const heading=document.querySelector<HTMLElement>(".community-section-header");
+ const isView=(v:string)=>["latest","popular","unanswered","following","events"].includes(v);
  let selected="all";
- const filter=()=>{
-  const q=forumSearchText((input?.value||"").trim(),document.documentElement.lang.toLowerCase()==="pt-br"?"pt-br":document.documentElement.lang.slice(0,2));
-  const items=cards();
-  const hasTopics=items.length>0;
-  if(filters)filters.hidden=!hasTopics;
-  let count=0;
-  for(const card of items){
-   const visible=(selected==="all"||card.dataset.forumTopicCategory===selected)&&
-    (!q||(card.dataset.forumSearch||"").includes(q));
-   card.hidden=!visible;
-   if(visible)count++;
-  }
-  if(noResults)noResults.hidden=!hasTopics||count>0;
-  const active=Boolean(q)||selected!=="all";
-  if(countLabel){
-   countLabel.hidden=!hasTopics||!active;
-   if(hasTopics&&active)countLabel.textContent=String(count)+" "+(filters?.dataset.matchingLabel||"");
-  }
-  if(clear)clear.hidden=!hasTopics||!active;
+ let view=isView(new URLSearchParams(location.search).get("view")||"")?
+   (new URLSearchParams(location.search).get("view")||"latest"):"latest";
+ let followed=new Set<string>(),followState:"guest"|"loading"|"ready"|"error"="guest";
+ let followRequest=0;
+ const lang=document.documentElement.lang.toLowerCase()==="pt-br"?"pt-br":document.documentElement.lang.slice(0,2);
+ const replyCount=(el:HTMLElement)=>Math.max(0,Number(el.dataset.forumReplyCount||0)||0);
+ const publishedAt=(el:HTMLElement)=>Date.parse(el.dataset.forumPublishedAt||"")||0;
+ const markCategories=()=>{
+   for(const button of allCategoryButtons){
+    const active=(button.dataset.forumCategory||
+     button.dataset.forumRailCategory||button.dataset.forumTagCategory)==selected;
+    button.classList.toggle("is-active",active);
+    button.setAttribute("aria-pressed",String(active));
+   }
  };
+ const sortPublicRows=()=>{
+  // Rankings are derived ONLY from real published reply counts. No synthetic
+  // views, activity, author identity, likes, or aggregateRating are generated.
+  for(const grid of document.querySelectorAll<HTMLElement>(".community-topic-grid")){
+   const rows=[...grid.querySelectorAll<HTMLElement>(":scope > [data-forum-topic]")];
+   rows.sort((a,b)=>view==="popular"
+    ?replyCount(b)-replyCount(a)||publishedAt(b)-publishedAt(a)
+    :publishedAt(b)-publishedAt(a));
+   for(const row of rows)grid.append(row);
+  }
+ };
+ const filter=()=>{
+   const q=forumSearchText((input?.value||"").trim(),lang);
+   const items=cards(),hasTopics=items.length>0;
+   const canList=view!=="events"&&(view!=="following"||followState==="ready");
+   const visibleList=canList&&hasTopics;
+   if(filters)filters.hidden=!visibleList;
+   if(followingPanel)followingPanel.hidden=view!=="following";
+   if(eventsPanel)eventsPanel.hidden=view!=="events";
+   if(heading)heading.hidden=view==="events";
+   if(topicList)topicList.hidden=!canList;
+   if(empty)empty.hidden=view!=="latest"||hasTopics;
+   if(starter)starter.hidden=view!=="latest"||hasTopics;
+   if(liveRoot){
+    // The live-topic client owns its initial loading state; this view gate
+    // only hides it for non-topic and anonymous-following modes.
+    const hasLiveCards=Boolean(liveRoot.querySelector("[data-forum-topic]"));
+    if(!canList)liveRoot.hidden=true;
+    else if(hasLiveCards)liveRoot.hidden=false;
+   }
+   let count=0;
+   for(const card of items){
+    const inCategory=selected==="all"||card.dataset.forumTopicCategory===selected;
+    const inSearch=!q||(card.dataset.forumSearch||"").includes(q);
+    const inView=view==="unanswered"?replyCount(card)===0:
+      view==="following"?followed.has(card.dataset.forumTopicId||""):
+      view==="events"?false:true;
+    const visible=visibleList&&inCategory&&inSearch&&inView;
+    card.hidden=!visible;
+    if(visible)count++;
+   }
+   const allFiltered=Boolean(q)||selected!=="all";
+   if(noResults){
+    noResults.hidden=!canList||!hasTopics||count>0;
+    if(!noResults.hidden)noResults.textContent=view==="unanswered"&&!allFiltered?
+      (copy.noUnanswered||noResults.textContent):
+      (copy.noMatch||noResults.textContent);
+   }
+   if(countLabel){
+    countLabel.hidden=!visibleList||!allFiltered;
+    if(!countLabel.hidden)countLabel.textContent=String(count)+" "+(filters?.dataset.matchingLabel||"");
+   }
+   if(clear)clear.hidden=!visibleList||!allFiltered;
+   if(viewHint)viewHint.textContent=copy[view+"Hint"]||"";
+   for(const button of viewButtons){
+    const active=button.dataset.forumView===view;
+    button.classList.toggle("is-active",active);
+    button.setAttribute("aria-pressed",String(active));
+   }
+   markCategories();
+   if(followStatus&&view==="following"){
+    followStatus.textContent=followState==="ready"?
+      (count>0?copy.followingBody:copy.followEmpty):
+      followState==="error"?copy.followError:copy.followingBody;
+   }
+   if(canList)sortPublicRows();
+ };
+ async function loadFollowing(){
+  const version=++followRequest;
+  const session=readForumSession();
+  const cfg=JSON.parse(liveRoot?.dataset.forumLiveConfig||"null") as {url:string;key:string}|null;
+  if(!session?.access||!cfg){followState="guest";followed.clear();filter();return;}
+  followState="loading";followed.clear();filter();
+  try{
+   const params=new URLSearchParams({select:"topic_id",limit:"200"});
+   const response=await fetch(cfg.url+"/rest/v1/tc_member_topic_follows?"+params,{
+    headers:{"apikey":cfg.key,"Accept":"application/json",
+     Authorization:"Bearer "+session.access},cache:"no-store",
+    signal:AbortSignal.timeout(12000)
+   });
+   if(!response.ok)throw Error("follow service unavailable");
+   const rows=await response.json();
+   if(version!==followRequest)return;
+   if(!Array.isArray(rows))throw Error("invalid follow response");
+   followed=new Set(rows.map(x=>String(x?.topic_id||""))
+    .filter(x=>/^[a-f0-9-]{36}$/i.test(x)));
+   followState="ready";
+  }catch{
+   if(version!==followRequest)return;
+   followed.clear();followState="error";
+  }
+  filter();
+ }
+ function openView(next:string){
+  if(!isView(next))return;
+  view=next;
+  filter();
+  if(view==="following")void loadFollowing();
+ }
  clear?.addEventListener("click",()=>{
   if(input)input.value="";
   selected="all";
-  categoryButtons.forEach(button=>{
-   const active=button.dataset.forumCategory==="all";
-   button.classList.toggle("is-active",active);
-   button.setAttribute("aria-pressed",String(active));
-  });
-  filter();input?.focus();
+  markCategories();filter();input?.focus();
  });
  input?.addEventListener("input",filter);
  document.addEventListener("tractorvs-forum-live-updated",filter);
- for(const button of categoryButtons)button.addEventListener("click",()=>{
-  selected=button.dataset.forumCategory||"all";
-  categoryButtons.forEach(b=>{const active=b===button;b.classList.toggle("is-active",active);b.setAttribute("aria-pressed",String(active))});
-  filter();
+ for(const button of allCategoryButtons)button.addEventListener("click",()=>{
+  selected=button.dataset.forumCategory||button.dataset.forumRailCategory||
+   button.dataset.forumTagCategory||"all";
+  // Keep topic category and view separate; don't replace a selected view
+  // with an unrelated page or silently lose the visitor's search.
+  if(view==="events")view="latest";
+  markCategories();filter();
+  if(button.hasAttribute("data-forum-tag-category"))
+   document.querySelector(".community-list")?.scrollIntoView({block:"start",behavior:"smooth"});
  });
+ for(const button of viewButtons)button.addEventListener("click",()=>
+  openView(button.dataset.forumView||"latest"));
+ for(const button of document.querySelectorAll<HTMLButtonElement>("[data-forum-go-view]"))
+  button.addEventListener("click",()=>{
+   openView(button.dataset.forumGoView||"latest");
+   document.querySelector("#forum-dashboard-tabs")?.scrollIntoView({block:"start",behavior:"smooth"});
+  });
+ window.addEventListener("tractorvs-forum-session",()=>{
+  if(view==="following")void loadFollowing();
+ });
+ markCategories();filter();
+ if(view==="following")void loadFollowing();
 </script>
