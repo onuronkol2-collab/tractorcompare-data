@@ -11,6 +11,9 @@ const candidates=[
     "fileId": "belarus-132n-picture30-2011",
     "path": "c/c9/Belarus-132N.jpg",
     "photographer": "Picture30",
+    "copyrightOwner": "Picture30",
+    "copyrightClaimUrl": "https://commons.wikimedia.org/wiki/File:Belarus-132N.jpg",
+    "copyrightEvidence": "commons-own-work-self-license",
     "license": "CC BY-SA 3.0",
     "width": 3072,
     "height": 2304
