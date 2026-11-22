@@ -49,9 +49,14 @@ export function rememberForumSession(access,refresh,remember=false){
  const durable=storage("localStorage");
  try{
   if(remember&&nonemptyToken(refresh)){
-   durable?.setItem(FORUM_SESSION_KEY,JSON.stringify({
-    v:2,access,refresh,until:Date.now()+SESSION_MAX_AGE_MS
-   }));
+   const current=parseSaved(durable?.getItem(FORUM_SESSION_KEY));
+   // Do not write identical tokens on every /auth/v1/user success: in
+   // multiple open tabs, a storage event would otherwise trigger another
+   // verification + write in the sibling tab, creating a feedback loop.
+   if(current?.access!==access||current?.refresh!==refresh)
+    durable?.setItem(FORUM_SESSION_KEY,JSON.stringify({
+     v:2,access,refresh,until:Date.now()+SESSION_MAX_AGE_MS
+    }));
   }else durable?.removeItem(FORUM_SESSION_KEY);
  }catch{}
  return true;
