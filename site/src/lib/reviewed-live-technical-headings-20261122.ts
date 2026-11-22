@@ -448,5 +448,215 @@ export const REVIEWED_LIVE_TECHNICAL_HEADINGS_20261122:Record<string, Partial<Re
     "pt-br": "Comprimento total com F-ROPS e transmissão mecânica",
     "fr": "Longueur hors tout avec F-ROPS et transmission mécanique",
     "es": "Longitud total con F-ROPS y transmisión mecánica"
+  },
+  "Field-Traction Boost Power": {
+    "pt-br": "Potência com reforço de tração em campo",
+    "es": "Potencia con aumento para tracción en campo"
+  },
+  "Transmission Multiplier": {
+    "pt-br": "Multiplicador de marchas da transmissão",
+    "fr": "Multiplicateur des rapports de transmission"
+  },
+  "Brake Front Auto 4wd": {
+    "pt-br": "Freio dianteiro automático (4WD)",
+    "es": "Freno delantero automático (4WD)"
+  },
+  "Cab Height Without Beacon Mm": {
+    "pt-br": "Altura da cabine sem giroflex (mm)",
+    "es": "Altura de la cabina sin luz giratoria (mm)"
+  },
+  "Eco-Mode Maximum Boost Power": {
+    "pt-br": "Potência máxima com reforço em modo Eco",
+    "es": "Potencia máxima con aumento en modo Eco"
+  },
+  "Eco-Mode Maximum Boost Torque": {
+    "pt-br": "Torque máximo com reforço em modo Eco",
+    "es": "Par máximo con aumento en modo Eco"
+  },
+  "Eco-Mode Maximum Power": {
+    "pt-br": "Potência máxima em modo Eco",
+    "es": "Potencia máxima en modo Eco"
+  },
+  "Eco-Mode Maximum Torque": {
+    "pt-br": "Torque máximo em modo Eco",
+    "es": "Par máximo en modo Eco"
+  },
+  "Engine Max Torque Rpm": {
+    "pt-br": "Rotação do motor no torque máximo (rpm)",
+    "es": "Régimen del motor al par máximo (rpm)"
+  },
+  "Engine Rpm At Pto 540": {
+    "pt-br": "Rotação do motor para TDP a 540 rpm",
+    "es": "Régimen del motor para TDF a 540 rpm"
+  },
+  "Engine Rpm At Pto 540e": {
+    "pt-br": "Rotação do motor para TDP a 540E rpm",
+    "es": "Régimen del motor para TDF a 540E rpm"
+  },
+  "Field-Traction Boost Limit": {
+    "pt-br": "Limite do reforço de potência para tração em campo",
+    "es": "Límite del aumento de potencia para tracción en campo"
+  },
+  "Independent Suspended Front Axle": {
+    "pt-br": "Eixo dianteiro com suspensão independente",
+    "es": "Eje delantero con suspensión independiente"
+  },
+  "Manufacturer Selectable Automatic Ranges (SIM)": {
+    "pt-br": "Faixas automáticas selecionáveis pelo fabricante (SIM)",
+    "fr": "Gammes automatiques sélectionnables par le constructeur (SIM)",
+    "es": "Gamas automáticas seleccionables por el fabricante (SIM)"
+  },
+  "Manufacturer Weight With Cab (Load Condition Unstated)": {
+    "pt-br": "Peso com cabine segundo o fabricante (condição de carga não informada)",
+    "es": "Peso con cabina según el fabricante (condición de carga no indicada)"
+  },
+  "Manufacturer Weight With ROPS (Load Condition Unstated)": {
+    "pt-br": "Peso com ROPS segundo o fabricante (condição de carga não informada)",
+    "es": "Peso con ROPS según el fabricante (condición de carga no indicada)"
+  },
+  "Max Length With Front Weights": {
+    "pt-br": "Comprimento máximo com pesos dianteiros",
+    "es": "Longitud máxima con contrapesos delanteros"
+  },
+  "Maximum Length With Front Weights": {
+    "fr": "Longueur maximale avec masses avant"
+  },
+  "Optional Front Differential Lock": {
+    "pt-br": "Bloqueio opcional do diferencial dianteiro",
+    "es": "Bloqueo opcional del diferencial delantero"
+  },
+  "Rear PTO Power (Gear)": {
+    "pt-br": "Potência da TDP traseira (transmissão mecânica)"
+  },
+  "Rear PTO Power (HST)": {
+    "pt-br": "Potência da TDP traseira (transmissão HST)"
+  },
+  "Road Max Speed Legal Kmh": {
+    "pt-br": "Velocidade máxima legal em estrada (km/h)",
+    "es": "Velocidad máxima legal en carretera (km/h)"
+  },
+  "Spray Saver Switch": {
+    "pt-br": "Interruptor Spray Saver",
+    "fr": "Interrupteur Spray Saver",
+    "es": "Interruptor Spray Saver"
+  },
+  "Total Height Of Driver'S Cab With Standard Tyres With Fendt Guide": {
+    "pt-br": "Altura total da cabine com pneus padrão e Fendt Guide",
+    "fr": "Hauteur totale de la cabine avec pneus de série et Fendt Guide",
+    "es": "Altura total de la cabina con neumáticos estándar y Fendt Guide"
+  },
+  "Total Height Of Driver'S Cab With Standard Tyres Without Fendt Guide": {
+    "pt-br": "Altura total da cabine com pneus padrão, sem Fendt Guide",
+    "fr": "Hauteur totale de la cabine avec pneus de série, sans Fendt Guide",
+    "es": "Altura total de la cabina con neumáticos estándar, sin Fendt Guide"
+  },
+  "Transmission Option Hilo": {
+    "pt-br": "Opção de transmissão HiLo",
+    "fr": "Option de transmission HiLo",
+    "es": "Opción de transmisión HiLo"
+  },
+  "Transmission Option Hml": {
+    "pt-br": "Opção de transmissão HML",
+    "fr": "Option de transmission HML",
+    "es": "Opción de transmisión HML"
+  },
+  "Weight Standard Average Kg": {
+    "pt-br": "Peso médio padrão (kg)",
+    "es": "Peso medio estándar (kg)"
+  },
+  "Weight With Cab / F36CHN HST": {
+    "pt-br": "Peso com cabine / transmissão F36CHN HST",
+    "fr": "Masse avec cabine / transmission F36CHN HST",
+    "es": "Peso con cabina / transmisión F36CHN HST"
+  },
+  "Weight With Cab / F36CN Mechanical": {
+    "pt-br": "Peso com cabine / transmissão mecânica F36CN",
+    "fr": "Masse avec cabine / transmission mécanique F36CN",
+    "es": "Peso con cabina / transmisión mecánica F36CN"
+  },
+  "Engine Rpm At Mid PTO Speed": {
+    "fr": "Régime moteur à la vitesse de la prise de force centrale"
+  },
+  "Engine Rpm At Rear PTO Speed": {
+    "fr": "Régime moteur à la vitesse de la prise de force arrière"
+  },
+  "Foot Brake Control": {
+    "fr": "Commande du frein au pied"
+  },
+  "Front Ballast Arrangement": {
+    "fr": "Disposition des masses avant"
+  },
+  "Front Pto Optional Speed": {
+    "fr": "Vitesse optionnelle de la prise de force avant"
+  },
+  "Front Track Maximum": {
+    "fr": "Voie avant maximale"
+  },
+  "Front Track Minimum": {
+    "fr": "Voie avant minimale"
+  },
+  "Maximum Front Tyre Size": {
+    "fr": "Dimension maximale des pneus avant"
+  },
+  "Maximum Rear Tyre Size": {
+    "fr": "Dimension maximale des pneus arrière"
+  },
+  "Mid PTO Shaft": {
+    "fr": "Arbre de prise de force centrale"
+  },
+  "Mid PTO Speed": {
+    "fr": "Régime de la prise de force centrale"
+  },
+  "Optional Front PTO Clutch": {
+    "fr": "Embrayage de la prise de force avant en option"
+  },
+  "Parking Brake Control": {
+    "fr": "Commande du frein de stationnement"
+  },
+  "PTO Clutch Actuation": {
+    "fr": "Commande d’embrayage de la prise de force"
+  },
+  "PTO Drive Type": {
+    "fr": "Type d’entraînement de la prise de force"
+  },
+  "Rear Ballast Arrangement": {
+    "fr": "Disposition des masses arrière"
+  },
+  "Rear PTO Control": {
+    "fr": "Commande de la prise de force arrière"
+  },
+  "Rear Pto Option Speeds": {
+    "fr": "Régimes optionnels de la prise de force arrière"
+  },
+  "Rear Pto Optional Engagement": {
+    "fr": "Enclenchement optionnel de la prise de force arrière"
+  },
+  "Rear PTO Speed": {
+    "fr": "Régime de la prise de force arrière"
+  },
+  "Rear Pto Standard Engagement": {
+    "fr": "Enclenchement de série de la prise de force arrière"
+  },
+  "Rear PTO Type": {
+    "fr": "Type de prise de force arrière"
+  },
+  "Rear Track Maximum": {
+    "fr": "Voie arrière maximale"
+  },
+  "Rear Track Minimum": {
+    "fr": "Voie arrière minimale"
+  },
+  "ROPS Type": {
+    "fr": "Type de structure ROPS"
+  },
+  "Steering Angle Max Degrees": {
+    "fr": "Angle de braquage maximal (degrés)"
+  },
+  "Total Length Including Front Weights": {
+    "fr": "Longueur totale avec masses avant"
+  },
+  "Wheelbase F-ROPS Mechanical": {
+    "fr": "Empattement avec F-ROPS et transmission mécanique",
+    "es": "Distancia entre ejes con F-ROPS y transmisión mecánica"
   }
 };
