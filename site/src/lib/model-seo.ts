@@ -402,9 +402,15 @@ export function modelStructuredData(tractor: TractorRecord, lang: Locale, siteUr
     thumbnailUrl:new URL(image.displayUrl,siteUrl).toString(),
     caption:tractorPhotoAlt(tractor,lang),
     creator:{"@type":"Person",name:image.photographer},
-    // The photographer is credited but has not been independently proven to be
-    // the current copyright holder; never manufacture a copyright notice.
-    // This matters especially for approved CC0 photographs.
+    // A photo author is NOT automatically the current copyright owner.
+    // Include the owner only for a matched, source-specific Own-work + self-license
+    // attestation verified by the copyright proof gate; never assert © TractorVS.
+    // CC0 dedicators receive no fabricated copyright ownership claim.
+    ...(image.copyrightEvidence==="commons-own-work-self-license"
+      && image.copyrightOwner && image.copyrightOwner===image.photographer
+      && image.copyrightClaimUrl===image.sourcePage
+      && image.licenseName!=="CC0"
+      ? {copyrightNotice:image.copyrightOwner}: {}),
     creditText:image.photographer+" · "+image.licenseName,
     license:image.licenseUrl,
     // Commons' specific File: page identifies this image and explains the
