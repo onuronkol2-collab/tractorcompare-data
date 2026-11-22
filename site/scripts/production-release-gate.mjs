@@ -194,7 +194,8 @@ export function verifyProductionArtifacts({dir=projectRoot,origin=expectedOrigin
    imageAltPages:imageAlt.htmlPages,imageAltImages:imageAlt.images,
    decorativeOrPendingImageAlts:imageAlt.emptyAlt,
    titlePages:titleAudit.htmlDocuments,titleOver60:titleAudit.over60,
-   titleOver105:titleAudit.over105,duplicateModelTitles:titleAudit.duplicates.length};
+   titleOver105:titleAudit.over105,duplicateModelTitles:titleAudit.duplicates.length,
+   bibliographyTitleCandidates:titleAudit.bibliographyTitles};
 }
 
 export function preflight(env=process.env){
