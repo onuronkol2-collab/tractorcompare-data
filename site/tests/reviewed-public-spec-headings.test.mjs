@@ -77,3 +77,35 @@ test("even a generic canonical power key cannot remove EPM across ten locales",(
     if(locale!=="en")assert.notEqual(name,"Maximum Engine Power With EPM",locale+" has missing EPM translation");
   }
 });
+
+
+test("2026-11-22 built-preview Turkish residuals: ten exact labels keep all source values and qualifiers",()=>{
+  const reviewed=new Map([
+    ["Clutch And Gearbox Architecture","Debriyaj ve şanzımanın yapısı"],
+    ["ComfortClutch Hand-Clutch Function","ComfortClutch el kumandalı debriyaj işlevi"],
+    ["PowerShuttle","PowerShuttle ileri/geri yön değiştirme sistemi"],
+    ["Stop & Go Clutchless Stop-Start","Stop & Go debriyajsız dur-kalk işlevi"],
+    ["Maximum Road Speed (ECO)","Azami yol hızı (ECO)"],
+    ["Mechanical Shuttle","Mekanik ileri/geri yön değiştirici"],
+    ["Transmission Speed Configuration","Şanzıman hız kademesi düzeni"],
+    ["Overall Width (Minimum–Maximum)","Toplam genişlik (asgari–azami)"],
+    ["Tractor Weight With Cab, Without Additional Ballast","Ek balastsız kabinli traktör ağırlığı"],
+    ["Transmission Multiplier","Şanzıman kademe çarpanı"],
+  ]);
+  assert.equal(reviewed.size,10);
+  for(const [english,turkish] of reviewed){
+    assert.equal(REVIEWED_PUBLIC_SPEC_HEADINGS[english]?.tr,turkish,english);
+    assert.equal(publishedSpecificationLabel(english,"tr"),turkish,english);
+    const spec={...data,spec_name:english,measurement_standard:"as cited by OEM",
+      equipment_variant:"source configuration",model_year:2026};
+    const before=structuredClone(spec);
+    assert.equal(specLabel(spec,"tr"),turkish,english);
+    assert.deepEqual(spec,before,english+" source details must not be translated or mutated");
+  }
+  assert.match(publishedSpecificationLabel("Maximum Road Speed (ECO)","tr"),/ECO/);
+  assert.match(publishedSpecificationLabel("PowerShuttle","tr"),/PowerShuttle/);
+  assert.match(publishedSpecificationLabel("Stop & Go Clutchless Stop-Start","tr"),/Stop & Go/);
+  assert.match(publishedSpecificationLabel("ComfortClutch Hand-Clutch Function","tr"),/ComfortClutch/);
+  assert.notEqual(publishedSpecificationLabel("Mechanical Shuttle","tr"),
+    publishedSpecificationLabel("PowerShuttle","tr"));
+});
