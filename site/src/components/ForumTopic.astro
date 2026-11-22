@@ -128,6 +128,7 @@ const schema=eligible?{
 </style>
 
 <script>
+import {readForumSession} from "../lib/forum-session-store.mjs";
 const community=document.querySelector<HTMLElement>("[data-thread-engagement]");
 if(community){
  const cfg=JSON.parse(community.dataset.threadConfig||"null") as {url:string;key:string}|null;
@@ -135,7 +136,7 @@ if(community){
  const topicId=community.dataset.threadId||"";
  const key="tractorvs_forum_access";
  const uuid=/^[0-9a-f-]{36}$/i;
- const getToken=()=>{try{return sessionStorage.getItem(key)||""}catch{return ""}};
+ const getToken=()=>readForumSession()?.access||"";
  const creds=(token="")=>({apikey:cfg?.key||"",Accept:"application/json",
   ...(token?{Authorization:"Bearer "+token}:{})});
  const status=community.querySelector<HTMLElement>("[data-engagement-status]");
