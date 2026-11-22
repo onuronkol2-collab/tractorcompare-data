@@ -37,9 +37,13 @@ test("title matcher rejects historical nontractor and model-variant false positi
     ["New Holland","T5.110","File:New Holland T5.1100 tractor.jpg"]
   ])assert.equal(matches(brand,model,file),false,brand+" "+model+": "+file);
 });
-test("published and archival research pipelines share the title model matcher",()=>{
-  for(const file of ["batch-photo-discovery.mjs","archive-brand-photo-discovery.mjs"]){
-    const contents=readFileSync(new URL("../scripts/"+file,import.meta.url),"utf8");
-    assert.match(contents,/matchesPhotoFileModel/);
-  }
+test("archival and published model pipelines use the SAME conservative title matcher",()=>{
+  const archive=readFileSync(new URL("../scripts/archive-brand-photo-discovery.mjs",import.meta.url),"utf8");
+  const index=readFileSync(new URL("../scripts/photo-archive-candidate-index.mjs",import.meta.url),"utf8");
+  const published=readFileSync(new URL("../scripts/batch-photo-discovery.mjs",import.meta.url),"utf8");
+  assert.match(archive,/import\s+\{matchesPhotoFileModel\}\s+from\s+"\.\/photo-model-identity\.mjs"/);
+  assert.match(archive,/matchesPhotoFileModel\(/);
+  assert.match(index,/import\s+\{matchesPhotoFileModel\}\s+from\s+"\.\/photo-model-identity\.mjs"/);
+  assert.match(index,/matchesPhotoFileModel\(/);
+  assert.match(published,/archiveCandidatesForModel\(archiveIndex,entry\)/);
 });
