@@ -37,6 +37,37 @@ function numericFactsEqual(source,translated,locale){
  }
  return JSON.stringify(expected)===JSON.stringify(actual.sort());
 }
+const FR_MONTHS=["janvier","février","mars","avril","mai","juin",
+ "juillet","août","septembre","octobre","novembre","décembre"];
+const TR_MONTH_RE="(ocak|şubat|mart|nisan|mayıs|haziran|temmuz|ağustos|eylül|ekim|kasım|aralık)";
+const FR_MONTH_RE="(janvier|février|mars|avril|mai|juin|juillet|août|septembre|octobre|novembre|décembre)";
+function pad2(s){return String(s).padStart(2,"0");}
+function calendarFactsEqual(source,target,locale){
+ if(!["fr","zh","ja"].includes(locale))return true;
+ const srcDays=[...source.matchAll(new RegExp(
+  "(\\d{1,2})\\s+"+TR_MONTH_RE+"\\s+(\\d{4})","giu"))]
+  .map(m=>m[3]+"-"+pad2(MONTHS.findIndex(([name])=>name===m[2].toLocaleLowerCase("tr-TR"))+1)+"-"+pad2(m[1])).sort();
+ const srcRanges=[...source.matchAll(new RegExp(
+  TR_MONTH_RE+"\\s*[–-]\\s*"+TR_MONTH_RE+"\\s+(\\d{4})","giu"))]
+  .map(m=>m[3]+"-"+pad2(MONTHS.findIndex(([name])=>name===m[1].toLocaleLowerCase("tr-TR"))+1)+
+   "-"+pad2(MONTHS.findIndex(([name])=>name===m[2].toLocaleLowerCase("tr-TR"))+1)).sort();
+ let targetDays=[],targetRanges=[];
+ if(locale==="fr"){
+  targetDays=[...target.matchAll(new RegExp(
+   "(\\d{1,2})(?:er)?\\s+"+FR_MONTH_RE+"\\s+(\\d{4})","giu"))]
+   .map(m=>m[3]+"-"+pad2(FR_MONTHS.indexOf(m[2].toLowerCase())+1)+"-"+pad2(m[1])).sort();
+  targetRanges=[...target.matchAll(new RegExp(
+   FR_MONTH_RE+"\\s+et\\s+"+FR_MONTH_RE+"\\s+(\\d{4})","giu"))]
+   .map(m=>m[3]+"-"+pad2(FR_MONTHS.indexOf(m[1].toLowerCase())+1)+
+    "-"+pad2(FR_MONTHS.indexOf(m[2].toLowerCase())+1)).sort();
+ }else{
+  targetDays=[...target.matchAll(/(\d{4})年(\d{1,2})月(\d{1,2})日/g)]
+   .map(m=>m[1]+"-"+pad2(m[2])+"-"+pad2(m[3])).sort();
+  targetRanges=[...target.matchAll(/(\d{4})年(\d{1,2})月(?:至|から)(\d{1,2})月/g)]
+   .map(m=>m[1]+"-"+pad2(m[2])+"-"+pad2(m[3])).sort();
+ }
+ return same(srcDays,targetDays)&&same(srcRanges,targetRanges);
+}
 function urlTokens(value) {
  return [...value.matchAll(/https:\/\/[^\s<>"'\])}]+/g)]
   .map(m=>m[0].replace(/[.,;!?]+$/,"")).sort();
@@ -91,6 +122,7 @@ export function auditManualForumTranslation({
  if(sourceTitle.trim()===targetTitle.trim())errors.push("untranslated_title");
  const orig=sourceTitle+"\n"+sourceBody,translation=targetTitle+"\n"+targetBody;
  if(!numericFactsEqual(orig,translation,locale))errors.push("numeric_facts_changed");
+ if(!calendarFactsEqual(orig,translation,locale))errors.push("calendar_facts_changed");
  if(!same(urlTokens(orig),urlTokens(translation)))errors.push("urls_changed");
  if(!same(unitFacts(orig),unitFacts(translation)))errors.push("numeric_units_changed");
  if(!same(headingTokens(sourceBody),headingTokens(targetBody)))errors.push("heading_structure_changed");
