@@ -782,6 +782,39 @@ const candidates=[
     "width": 5077,
     "height": 3385
   },
+  // 22 Nov 2026 batch 2: Commons own-work CC BY-SA, exact published model.
+  // Photo never proves recorded engine/power/market/variant configuration.
+  // Real first-party JPEGs/attribution must pass CI prior to release.
+  {
+    "brand": "Belarus",
+    "model": "451",
+    "fileId": "belarus-451-homoatrox-open-day-2017",
+    "path": "8/8c/Belarus_451_%28open_day_2017%29_1.jpg",
+    "photographer": "Homoatrox",
+    "license": "CC BY-SA 4.0",
+    "width": 1480,
+    "height": 2216
+  },
+  {
+    "brand": "Belarus",
+    "model": "572",
+    "fileId": "belarus-572-bronzedrache-2022",
+    "path": "7/72/Belazs_MTZ_572.jpg",
+    "photographer": "BronzeDrache",
+    "license": "CC BY-SA 4.0",
+    "width": 2000,
+    "height": 1500
+  },
+  {
+    "brand": "Belarus",
+    "model": "923.4",
+    "fileId": "belarus-923-4-homoatrox-open-day-2017",
+    "path": "f/fc/Belarus_923.4_%28open_day_2017%29_1.jpg",
+    "photographer": "Homoatrox",
+    "license": "CC BY-SA 4.0",
+    "width": 3024,
+    "height": 2760
+  },
 ] as const;
 function licenseUrl(name:string):string{
   if(name==="CC0")return "https://creativecommons.org/publicdomain/zero/1.0/";
