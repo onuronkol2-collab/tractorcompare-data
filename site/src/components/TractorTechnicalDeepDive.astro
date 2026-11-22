@@ -31,7 +31,7 @@ const description=guide.description[lang];
 // Update a page's date only when its actual content or visible source register changes.
 const hasPowerStandards = slug === "tractor-engine-power-and-torque";
 // Real application example: publish only when both exact model identities and
-// the common manufacturer evidence still pass the production comparison gate.
+// the common manufacturer evidence still pass the reviewed comparison gate.
 const powerCase=hasPowerStandards
  ?curatedDeutz5DPair((await getPublicCatalog()).tractors):null;
 const powerCaseRows=powerCase?[
