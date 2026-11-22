@@ -151,3 +151,31 @@ test("offline Playwright cannot accidentally include production-only browser tes
   assert.doesNotMatch(production,/webServer\s*:/);
   assert.match(liveSuite,/comparison-data\/tr\//);
 });
+
+
+test("live comparison browser QA covers all nine non-Turkish locales with real interactions and SEO guards",()=>{
+  const source=readFileSync(new URL("../e2e/tractorvs-live-compare.spec.mjs",import.meta.url),"utf8");
+  const codes=[...source.matchAll(/\{code:"([a-z-]+)", html:/g)].map(match=>match[1]);
+  assert.deepEqual([...codes].sort(),LOCALES.filter(lang=>lang!=="tr").sort(),
+    "Every non-Turkish locale must have exactly one source-backed live browser scenario");
+  for(const contract of [
+    'toHaveAttribute("lang",language.html)',
+    'link[rel="canonical"]',
+    'hreflang',
+    'l10n.transmissionCaution',
+    'l10n.conditionCaution',
+    'await chooseTractor(page,"left","T3035")',
+    'await chooseTractor(page,"right","T3047")',
+    'await page.locator("#tc-shared").click()',
+    'await page.locator("#tc-swap").click()',
+    'await page.reload(',
+    'beforeSwap',
+    'await sources()'
+  ]) assert.ok(source.includes(contract),"Live nine-locale browser QA missing: "+contract);
+  const workflow=readFileSync(new URL("../../.github/workflows/tractorvs-compare-live-browser-qa.yml",import.meta.url),"utf8");
+  assert.match(workflow,/site\/e2e\/tractorvs-live-compare\.spec\.mjs/);
+  assert.match(workflow,/npx playwright test --config site\/playwright\.live\.config\.mjs/);
+  const config=readFileSync(new URL("../playwright.live.config.mjs",import.meta.url),"utf8");
+  for(const engine of ["chromium","firefox","webkit","mobile-chromium"])
+    assert.ok(config.includes('name:"'+engine+'"'),"Missing supported browser: "+engine);
+});

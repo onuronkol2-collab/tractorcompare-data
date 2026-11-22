@@ -1,6 +1,12 @@
 name: TractorVS live comparison interaction QA
 
 on:
+  # Test-only PRs can safely validate the currently deployed public site.
+  # This does NOT verify deployment of prospective source changes.
+  pull_request:
+    paths:
+      - "site/e2e/tractorvs-live-compare.spec.mjs"
+      - ".github/workflows/tractorvs-compare-live-browser-qa.yml"
   workflow_dispatch:
   push:
     branches: [main]
