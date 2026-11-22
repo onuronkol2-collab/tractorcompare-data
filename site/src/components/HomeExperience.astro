@@ -15,7 +15,7 @@ const { lang, seoTitle = "TractorVS | " + h(lang,"seoTitle"),
   seoDescription = h(lang,"seoDesc") } = Astro.props;
 const catalogue = await getPublicCatalog();
 // Google currently knows both locale homepages but not this reviewed comparison.
-// The link also gives readers a real, exact-variant model task; no fake locale
+// The link also gives readers a real, exact-variant model task; no invented locale
 // editions, synthetic pair data or claims of an independent tractor test.
 const reviewedGsPair=(lang==="tr"||lang==="en")
   ?curatedDeutz5DPair(catalogue.tractors):null;
