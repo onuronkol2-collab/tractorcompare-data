@@ -92,3 +92,49 @@ test("last audited Chinese and Russian labels are exact, source-scoped and no lo
   assert.equal(specLabel({...exampleSpec("Motor soğutma tipi"),canonical_key:"engine_cooling"},"zh"),"发动机冷却方式");
   assert.equal(specLabel({...exampleSpec("Operator station / cab"),canonical_key:"cab_type"},"ru"),"Рабочее место оператора / кабина");
 });
+
+
+test("source-specific PT-BR, French and Spanish technical headings retain exact meaning",()=>{
+  const reviewed={
+    "Clutch Configuration":["Configuração da embreagem","Configuration de l’embrayage","Configuración del embrague"],
+    "Creeper Gearbox Option":["Opção de caixa de velocidades super-redutora","Option de boîte de vitesses à rapports rampants","Opción de caja de cambios superreductora"],
+    "Driven Wheels":["Rodas motrizes","Roues motrices","Ruedas motrices"],
+    "Engine Maker":["Fabricante do motor","Fabricant du moteur","Fabricante del motor"],
+    "Forward/Reverse Gear Options":["Opções de marchas à frente e à ré","Options de rapports avant et arrière","Opciones de marchas de avance y retroceso"],
+    "Gear Count":["Número de marchas","Nombre de rapports","Número de marchas"],
+    "Hydrostatic Transmission Ranges":["Faixas da transmissão hidrostática","Gammes de la transmission hydrostatique","Gamas de la transmisión hidrostática"],
+    "Max Speed":["Velocidade máxima","Vitesse maximale","Velocidad máxima"],
+    "Rear Remote Valve Sets":["Conjuntos de distribuidores hidráulicos traseiros","Ensembles de distributeurs hydrauliques arrière","Conjuntos de distribuidores hidráulicos traseros"],
+    "Standard Front Tire Size":["Dimensão padrão do pneu dianteiro","Dimension standard du pneu avant","Medida estándar del neumático delantero"],
+    "Standard Rear Tire Size":["Dimensão padrão do pneu traseiro","Dimension standard du pneu arrière","Medida estándar del neumático trasero"],
+    "Transmission Gears":["Marchas da transmissão","Rapports de transmission","Marchas de la transmisión"],
+    "Transmission Shuttle Type":["Tipo de inversor de marcha da transmissão","Type d’inverseur de marche de la transmission","Tipo de inversor de marcha de la transmisión"],
+    "Four-Wheel-Drive Engagement":["Acionamento da tração nas quatro rodas (4WD)","Enclenchement de la transmission intégrale (4WD)","Activación de la tracción a las cuatro ruedas (4WD)"],
+  };
+  const locales=["pt-br","fr","es"];
+  assert.equal(Object.keys(reviewed).length,14);
+  for(const [source,values] of Object.entries(reviewed)){
+    assert.equal(values.length,3);
+    for(let i=0;i<locales.length;i++){
+      const locale=locales[i];
+      const spec=exampleSpec(source);
+      const untouched=structuredClone(spec);
+      assert.equal(publishedSpecificationLabel(source,locale),values[i],source+" "+locale);
+      assert.equal(specLabel(spec,locale),values[i],source+" "+locale);
+      assert.deepEqual(spec,untouched,"source measurements and evidence never change");
+    }
+  }
+  for(const locale of locales){
+    assert.notEqual(
+      publishedSpecificationLabel("Standard Front Tire Size",locale),
+      publishedSpecificationLabel("Standard Rear Tire Size",locale),
+      locale+" front and rear variants must remain distinguishable"
+    );
+    assert.match(publishedSpecificationLabel("Four-Wheel-Drive Engagement",locale),/4WD/,
+      locale+" drivetrain qualification must not disappear");
+    assert.notEqual(
+      publishedSpecificationLabel("Max Speed",locale),
+      publishedSpecificationLabel("Minimum Forward Speed",locale),
+      locale+" minimum and maximum speed cannot be conflated");
+  }
+});
