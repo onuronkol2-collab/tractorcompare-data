@@ -79,3 +79,46 @@ test("percent placement is localized without changing the measured value",()=>{
   targetBody:target.targetBody.replace("75 hp","75 PS"),locale:"en"});
  assert.ok(wrongUnit.errors.includes("numeric_units_changed"),JSON.stringify(wrongUnit.errors));
 });
+
+test("French date ordinal and month are checked as a full calendar date",()=>{
+ const source={
+  sourceTitle:"2026 Bayi Memnuniyeti",
+  sourceBody:"## Tarihler\n\n1 Eylül 2026 tarihinde duyuruldu. Nisan–Mayıs 2026 aralığı."
+ };
+ const good={
+  targetTitle:"Satisfaction des concessionnaires en 2026",
+  targetBody:"## Dates\n\nAnnoncé le 1er septembre 2026. Entre avril et mai 2026.",
+  locale:"fr"
+ };
+ assert.ok(!auditManualForumTranslation({...source,...good}).errors.includes("calendar_facts_changed"));
+ for(const replacement of ["1er octobre 2026","2 septembre 2026","1er septembre 2027"]){
+  const bad=auditManualForumTranslation({...source,...good,
+   targetBody:good.targetBody.replace("1er septembre 2026",replacement)});
+  assert.ok(bad.errors.includes("calendar_facts_changed"),replacement);
+ }
+ const badRange=auditManualForumTranslation({...source,...good,
+  targetBody:good.targetBody.replace("avril et mai 2026","avril et juin 2026")});
+ assert.ok(badRange.errors.includes("calendar_facts_changed"));
+});
+test("Chinese/Japanese calendars accept natural date notation but not invented days/months",()=>{
+ const source={
+  sourceTitle:"2026 Bayi Memnuniyeti",
+  sourceBody:"## Tarihler\n\n10 Kasım 2026 açıklandı. Nisan–Mayıs 2026 aralığı."
+ };
+ for(const [locale,targetTitle,targetBody,wrongDate,wrongRange] of [
+  ["zh","2026年经销商满意度","## 日期\n\n2026年11月10日公布。2026年4月至5月调查。",
+   "2026年12月10日","2026年4月至6月"],
+  ["ja","2026年販売店満足度","## 日程\n\n2026年11月10日に公表。2026年4月から5月に調査。",
+   "2026年11月11日","2026年4月から6月"]
+ ]){
+  const baseTest={...source,locale,targetTitle,targetBody};
+  const good=auditManualForumTranslation(baseTest);
+  assert.ok(!good.errors.includes("calendar_facts_changed"),JSON.stringify(good.errors));
+  const badDate=auditManualForumTranslation({...baseTest,
+   targetBody:targetBody.replace("2026年11月10日",wrongDate)});
+  assert.ok(badDate.errors.includes("calendar_facts_changed"),locale);
+  const badRange=auditManualForumTranslation({...baseTest,
+   targetBody:targetBody.replace(locale==="zh"?"2026年4月至5月":"2026年4月から5月",wrongRange)});
+  assert.ok(badRange.errors.includes("calendar_facts_changed"),locale);
+ }
+});
