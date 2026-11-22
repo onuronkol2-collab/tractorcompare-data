@@ -2,11 +2,11 @@
   "reviewedAt": "2026-11-22",
   "licensePageMetadataReviewed": true,
   "sourcePagesReviewed": true,
-  "originalBinaryHttpVerified": false,
-  "jpegContentVerified": false,
+  "originalBinaryHttpVerified": true,
+  "jpegContentVerified": true,
   "firstPartyProxyHttpVerified": false,
   "policy": "Exact published Belarus 112N-01 identity only. Manufacturer catalog prints 112H-01 heading but 112N-01 body; Cyrillic capital Н transliterates N. No cross-model photo assignment, no image without rights and HTTP proof.",
-  "releaseStatus": "Source candidate; require live Commons metadata, real JPEG derivatives, build, image license, ten-language checks and first-party HTTP before publishing.",
+  "releaseStatus": "PR JPEG assets staged, requires CI, first-party HTTP and release approval",
   "sources": [
     {
       "brand": "Belarus",
@@ -21,7 +21,56 @@
       "height": 4385,
       "variantExact": false,
       "modelIdentityEvidence": "Manufacturer catalogue https://kocyigit.com.tr/wp-content/uploads/2024/06/Katalog_Belarus_Traktor.pdf identifies BELARUS 112H-01 in heading and 112N-01 in body; Commons file title specifies same model. Photograph cannot establish engine/trim/year for site record.",
-      "usageModificationNote": "Resized derivatives from original; credit Homoatrox and CC BY-SA 3.0 with share-alike for adapted image."
+      "usageModificationNote": "Resized derivatives from original; credit Homoatrox and CC BY-SA 3.0 with share-alike for adapted image.",
+      "sourceImageUrl": "https://upload.wikimedia.org/wikipedia/commons/1/1b/Belarus_112H-01_tractor_%28Belagro-2021%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+    }
+  ],
+  "sha256": {
+    "belarus-112n-01-homoatrox-belagro-2021": {
+      "480": {
+        "bytes": 147547,
+        "sha256": "39524f32a6c2136e61299249e2aa450e581550c3d1ba0297f01354f39804aaf0",
+        "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Belarus_112H-01_tractor_%28Belagro-2021%29.jpg/500px-Belarus_112H-01_tractor_%28Belagro-2021%29.jpg"
+      },
+      "960": {
+        "bytes": 455728,
+        "sha256": "04caf1a9f2f530f179a9dc927649e33df2ee7578f24afcbf276c8ffa77749ca4",
+        "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Belarus_112H-01_tractor_%28Belagro-2021%29.jpg/960px-Belarus_112H-01_tractor_%28Belagro-2021%29.jpg"
+      },
+      "1920": {
+        "bytes": 1512333,
+        "sha256": "125850ce356c0229ce76ca1bcd0c2f52b917fa4d0b683bb57912f38d829fb450",
+        "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Belarus_112H-01_tractor_%28Belagro-2021%29.jpg/1920px-Belarus_112H-01_tractor_%28Belagro-2021%29.jpg"
+      }
+    }
+  },
+  "importProof": [
+    {
+      "fileId": "belarus-112n-01-homoatrox-belagro-2021",
+      "commonsSourceUrl": "https://upload.wikimedia.org/wikipedia/commons/1/1b/Belarus_112H-01_tractor_%28Belagro-2021%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+      "sourcePage": "https://commons.wikimedia.org/wiki/File:Belarus_112H-01_tractor_(Belagro-2021).jpg",
+      "photographer": "Homoatrox",
+      "license": "CC BY-SA 3.0",
+      "artistVerified": "Homoatrox",
+      "originalWidth": 3201,
+      "originalHeight": 4385,
+      "derivatives": {
+        "480": {
+          "bytes": 147547,
+          "sha256": "39524f32a6c2136e61299249e2aa450e581550c3d1ba0297f01354f39804aaf0",
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Belarus_112H-01_tractor_%28Belagro-2021%29.jpg/500px-Belarus_112H-01_tractor_%28Belagro-2021%29.jpg"
+        },
+        "960": {
+          "bytes": 455728,
+          "sha256": "04caf1a9f2f530f179a9dc927649e33df2ee7578f24afcbf276c8ffa77749ca4",
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Belarus_112H-01_tractor_%28Belagro-2021%29.jpg/960px-Belarus_112H-01_tractor_%28Belagro-2021%29.jpg"
+        },
+        "1920": {
+          "bytes": 1512333,
+          "sha256": "125850ce356c0229ce76ca1bcd0c2f52b917fa4d0b683bb57912f38d829fb450",
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Belarus_112H-01_tractor_%28Belagro-2021%29.jpg/1920px-Belarus_112H-01_tractor_%28Belagro-2021%29.jpg"
+        }
+      }
     }
   ]
 }
