@@ -837,8 +837,8 @@ const candidates=[
   // site/docs/photo-import-evidence-mccormick-tym-wave2-20261122.json.
   // TYM alias names checked against manufacturer; configurationExact=false.
   {"brand":"McCormick","model":"X5.085","fileId":"mccormick-x5-085-mbone-2023","path":"b/b2/McCormick%2C_Agritechnica_2023%2C_Hanover_%28P1140949%29.jpg","photographer":"MB-one","license":"CC BY-SA 4.0","width":3161,"height":3951},
-  {"brand":"TYM","model":"T6115","fileId":"tym-t6115-t115-marcelx42-2025","path":"0/01/TYM_T115_Agritechnica_2025_%28DSC04612%29.jpg","photographer":"MarcelX42","license":"CC BY-SA 4.0","width":6139,"height":4093},
-  {"brand":"TYM","model":"T2025P","fileId":"tym-t2025p-t25-marcelx42-2025","path":"0/0b/TYM_T25_Agritechnica_2025_%28DSC04615%29.jpg","photographer":"MarcelX42","license":"CC BY-SA 4.0","width":6011,"height":4508},
+  {"brand":"TYM","model":"T6115","tractorId":"80fd42a2-3059-40bb-a0e1-511ae6100213","fileId":"tym-t6115-t115-marcelx42-2025","path":"0/01/TYM_T115_Agritechnica_2025_%28DSC04612%29.jpg","photographer":"MarcelX42","license":"CC BY-SA 4.0","width":6139,"height":4093,"copyrightOwner":"MarcelX42","copyrightClaimUrl":"https://commons.wikimedia.org/wiki/File:TYM_T115_Agritechnica_2025_%28DSC04612%29.jpg","copyrightEvidence":"commons-own-work-self-license"},
+  {"brand":"TYM","model":"T2025P","tractorId":"622ddce0-f3a8-48ad-8ec6-45ca936dba6f","fileId":"tym-t2025p-t25-marcelx42-2025","path":"0/0b/TYM_T25_Agritechnica_2025_%28DSC04615%29.jpg","photographer":"MarcelX42","license":"CC BY-SA 4.0","width":6011,"height":4508,"copyrightOwner":"MarcelX42","copyrightClaimUrl":"https://commons.wikimedia.org/wiki/File:TYM_T25_Agritechnica_2025_%28DSC04615%29.jpg","copyrightEvidence":"commons-own-work-self-license"},
 ] as const;
 function licenseUrl(name:string):string{
   if(name==="CC0")return "https://creativecommons.org/publicdomain/zero/1.0/";
