@@ -8,6 +8,18 @@ const TYM_F36="6f214ac1-0415-4433-98c9-5307aed48d9c";
 const TYM_T475="8f3833e6-7eea-4a5c-a7eb-caa01b065cd5";
 const tractorUrl=(left,right)=>"/tr/compare/?left="+left+"&right="+right;
 
+// Use the visible searchable combobox a visitor actually operates. Native
+// selects are hidden after hydration and would not prove public interaction.
+async function chooseTractor(page,side,searchTerm){
+  const input=page.locator("#tc-"+side+"-search");
+  await expect(input).toBeVisible();
+  await input.fill(searchTerm);
+  const match=page.locator("#tc-"+side+"-results button.tc-result")
+    .filter({hasText:searchTerm}).first();
+  await expect(match).toBeVisible();
+  await match.click();
+}
+
 test("live initial warning survives native selection, common-data filter and swap",async({page,request})=>{
   const isekiData=await request.get("/comparison-data/tr/"+ISEKI+".json");
   expect(isekiData.status(),"public source JSON must be published").toBe(200);
@@ -17,9 +29,9 @@ test("live initial warning survives native selection, common-data filter and swa
   await expect(lift.locator(".tc-condition-caution")).toContainText("kaynak notlarını");
   await expect(lift.locator("td a[href^='https://']")).not.toHaveCount(0);
 
-  // Exercise actual browser event handlers, not only the server-generated HTML.
-  await page.locator("#tc-left").selectOption(TYM_F36);
-  await page.locator("#tc-right").selectOption(TYM_T475);
+  // Exercise actual visitor-facing combobox controls, not only server-generated HTML.
+  await chooseTractor(page,"left","T3035");
+  await chooseTractor(page,"right","T3047");
   await expect.poll(()=>new URL(page.url()).searchParams.get("left")).toBe(TYM_F36);
   await expect.poll(()=>new URL(page.url()).searchParams.get("right")).toBe(TYM_T475);
   const wheelbase=page.locator("#tc-rows tr").filter({has:page.locator("th").filter({hasText:"Dingil mesafesi"})});
@@ -42,8 +54,8 @@ test("live MF 5S.125 and TYM option rows carry separate source-based transmissio
   const mfOption=page.locator("#tc-left option").filter({hasText:/5S\.125/}).first();
   const mfId=await mfOption.getAttribute("value");
   expect(mfId,"published MF 5S.125 model required for evidence-backed QA").toBeTruthy();
-  await page.locator("#tc-left").selectOption(mfId);
-  await page.locator("#tc-right").selectOption(TYM_T475);
+  await chooseTractor(page,"left","5S.125");
+  await chooseTractor(page,"right","T3047");
   await expect.poll(()=>new URL(page.url()).searchParams.get("left")).toBe(mfId);
   await expect.poll(()=>new URL(page.url()).searchParams.get("right")).toBe(TYM_T475);
   const warnings=page.locator("#tc-rows th .tc-condition-caution").filter({hasText:"Şanzıman seçenekleri"});
