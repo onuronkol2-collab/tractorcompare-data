@@ -41,11 +41,12 @@ test("offscreen model cards retain discoverable links, scroll targets, and keybo
   const state=await cards.nth(80).evaluate(card=>{
     const styles=getComputedStyle(card);
     return {supported:CSS.supports("content-visibility","auto"),
-      visibility:styles.contentVisibility,placeholder:styles.containIntrinsicBlockSize};
+      visibility:styles.contentVisibility,placeholder:styles.containIntrinsicBlockSize,
+      intrinsicSupported:CSS.supports("contain-intrinsic-block-size","auto 410px")};
   });
   if(state.supported){
     expect(state.visibility).toBe("auto");
-    expect(state.placeholder).toMatch(/^auto /);
+    if(state.intrinsicSupported)expect(state.placeholder).toMatch(/^auto /);
   }
 
   const last=cards.last();
