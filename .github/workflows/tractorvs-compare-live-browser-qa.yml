@@ -14,6 +14,8 @@ on:
       - "site/src/lib/compare-conditions.ts"
       - "site/src/lib/compare-ux.ts"
       - "site/src/components/TractorComparison.astro"
+      - "site/src/components/TractorCatalog.astro"
+      - "site/src/lib/catalog-facets.mjs"
       - "site/src/layouts/SiteLayout.astro"
       - "site/e2e/tractorvs-live-compare.spec.mjs"
       - "site/playwright.live.config.mjs"
@@ -51,14 +53,17 @@ jobs:
             if curl --max-time 20 --silent --show-error --fail --location \
                 -o /tmp/tractorvs-compare-live.html https://tractorvs.com/tr/compare/ &&
               grep -Fq 'Şanzıman seçenekleri' /tmp/tractorvs-compare-live.html &&
-              grep -Fq 'data-language-sync="selection"' /tmp/tractorvs-compare-live.html; then
+              grep -Fq 'data-language-sync="selection"' /tmp/tractorvs-compare-live.html &&
+              curl --max-time 20 --silent --show-error --fail --location \
+                -o /tmp/tractorvs-catalog-live.html https://tractorvs.com/tr/tractors/ &&
+              grep -Fq 'data-research-facets="published"' /tmp/tractorvs-catalog-live.html; then
               matched=1
               break
             fi
             sleep 20
           done
           if [ "$matched" != 1 ]; then
-            echo "::error::Cloudflare production has not exposed the new transmission notice after the bounded verification window. No live test result can be claimed."
+            echo "::error::Cloudflare production has not exposed the required comparison and research-catalogue markers after the bounded verification window. No live test result can be claimed."
             exit 1
           fi
       - name: Install locked project and pinned browser QA tools

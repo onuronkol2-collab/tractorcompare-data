@@ -33,6 +33,7 @@ const models = catalog.tractors.map((tractor, index) => ({
   specs: index < 2 ? comparisonSpecs(tractor, lang) : undefined,
 }));
 const editorialPilotAvailable=(lang==="en"||lang==="tr")&&Boolean(curatedDeutz5DPair(catalog.tractors));
+const initiallySharedOnly=Astro.url.searchParams.get("view")==="shared";
 const initialLeft = models[0];
 const initialRight = models[1];
 const photoOpenLabel=photoText(lang,"open");
@@ -47,7 +48,7 @@ const initialKeys = [...new Set([
     || initialRight?.specs.find((spec) => spec.key === b)?.label || b;
   return leftLabel.localeCompare(rightLabel, lang);
 });
-const initialRows = initialKeys.map((key) => ({
+const initialRows = (initiallySharedOnly ? initialKeys.filter(key=>(initialLeft?.specs.some(s=>s.key===key)&&initialRight?.specs.some(s=>s.key===key))) : initialKeys).map((key) => ({
   key,
   label: initialLeft?.specs.find((spec) => spec.key === key)?.label
     || initialRight?.specs.find((spec) => spec.key === key)?.label || key,
@@ -186,8 +187,8 @@ const labelsPayload = JSON.stringify({
             </div>
           </div>
           <div class="tc-filters" role="group" aria-label={cx(lang,"tableIntro")}>
-            <button type="button" id="tc-all" aria-pressed="true">{cx(lang,"all")}</button>
-            <button type="button" id="tc-shared" aria-pressed="false">{cx(lang,"shared")}</button>
+            <button type="button" id="tc-all" aria-pressed={String(!initiallySharedOnly)}>{cx(lang,"all")}</button>
+            <button type="button" id="tc-shared" aria-pressed={String(initiallySharedOnly)}>{cx(lang,"shared")}</button>
           </div>
         </div>
         <p id="tc-no-shared" class="tc-no-shared" role="status" hidden>{cx(lang,"noShared")}</p>
@@ -258,7 +259,7 @@ const labelsPayload = JSON.stringify({
     const params=new URLSearchParams(window.location.search);
     if(params.get("left")&&byId(params.get("left")!))leftSelect.value=params.get("left")!;
     if(params.get("right")&&byId(params.get("right")!))rightSelect.value=params.get("right")!;
-    let commonOnly=false;
+    let commonOnly=params.get("view")==="shared";
     let changedSide:"left"|"right"="left";
 
     function addText(parent:Element,tag:string,text:string,css?:string){
@@ -407,6 +408,8 @@ const labelsPayload = JSON.stringify({
       }
       const url=new URL(window.location.href);
       url.searchParams.set("left",left.id);url.searchParams.set("right",right.id);
+      if(commonOnly)url.searchParams.set("view","shared");
+      else url.searchParams.delete("view");
       window.history.replaceState(null,"",url.pathname+url.search);
       // Let shared navigation refresh locale destinations after each selection.
       window.dispatchEvent(new Event("tractorvs:route-state-changed"));
@@ -494,6 +497,10 @@ const labelsPayload = JSON.stringify({
     });
     const all=document.querySelector<HTMLButtonElement>("#tc-all");
     const shared=document.querySelector<HTMLButtonElement>("#tc-shared");
+    // Static HTML cannot know visitor query parameters at build time. Hydrate
+    // the accessible pressed state from the actual view=shared deep link.
+    all?.setAttribute("aria-pressed",String(!commonOnly));
+    shared?.setAttribute("aria-pressed",String(commonOnly));
     function setFilter(sharedOnly:boolean){
       commonOnly=sharedOnly;
       all?.setAttribute("aria-pressed",String(!sharedOnly));
