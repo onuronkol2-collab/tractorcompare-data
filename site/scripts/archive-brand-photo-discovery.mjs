@@ -98,3 +98,5 @@ console.log("ARCHIVE_IMAGE_DISCOVERY_SUMMARY "+JSON.stringify({
   brands:byBrand.size,uniqueModels:results.length,
   modelsWithLicensedTitleCandidates:covered,errors:errors.length
 }));
+// Preserve the report for diagnosis, but incomplete research is never success.
+if(errors.length)process.exitCode=1;
