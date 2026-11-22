@@ -1,0 +1,40 @@
+name: TractorVS new Commons exact-photo origin QA
+on:
+  pull_request:
+    paths:
+      - "site/src/lib/historical-licensed-photos.ts"
+      - "site/tests/tractor-photos.test.mjs"
+      - "site/scripts/verify-licensed-photos-20261122.mjs"
+      - ".github/workflows/tractorvs-20261122-photo-origin-qa.yml"
+permissions:
+  contents: read
+jobs:
+  exact_licensed_origins:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22.23.4"
+      - name: Check source validator syntax without network
+        run: node --check site/scripts/verify-licensed-photos-20261122.mjs
+      # New media must already be imported and committed separately after
+      # manual review of the default-branch staging workflow's SHA artifact.
+      # Do not consume Wikimedia quota on PR commits missing approved files.
+      - name: Fail closed if any of nine first-party JPEGs is not checked in
+        run: |
+          set -euo pipefail
+          for id in steyr-6240-absolut-blonder1984-2022 zetor-proxima-jj7777-2021 zetor-proxima-raf24-warsaw-2019; do
+            for size in 480 960 1920; do
+              path="site/public/images/tractors/${id}-${size}.jpg"
+              if [ ! -s "$path" ]; then
+                echo "::error::Missing reviewed JPEG $path; source and SHA proof required before publication"
+                exit 1
+              fi
+            done
+          done
+      - name: Verify model, license, JPEG integrity and ten-language metadata
+        run: node --experimental-strip-types --test site/tests/tractor-photos.test.mjs
+      - name: Verify staged SHA-256 ledger, nine first-party JPEGs and exact source provenance
+        run: node --experimental-strip-types site/scripts/verify-licensed-photos-20261122.mjs

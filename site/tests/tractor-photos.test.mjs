@@ -14,7 +14,7 @@ const tractor=(brand_name,model_name)=>({
   engine:null,transmission:null,drivetrain:null,weight_kg:null,specifications:[]
 });
 test("only exact matching tractor model identity receives a verified photo",()=>{
-  assert.equal(APPROVED_TRACTOR_PHOTOS.length,88);
+  assert.equal(APPROVED_TRACTOR_PHOTOS.length,91);
   assert.equal(tractorPhotos(tractor("Belarus","82.1")).length,4);
   assert.equal(tractorPhotos(tractor("Belarus","80.1")).length,1);
   assert.equal(tractorPhotos(tractor("Belarus","132N")).length,1);
@@ -178,8 +178,12 @@ test("Steyr image batch is exact-model, provenance-linked and SHA-256 checked ac
   assert.equal(evidence.approved.length,2);
   assert.equal(evidence.rejected.length,1);
   assert.equal(evidence.rejected[0].model,"6240 ABSOLUT CVT");
-  assert.equal(primaryTractorPhoto(tractor("Steyr","6240 ABSOLUT CVT")),null,
-    "Ambiguous source license must not be published");
+  // 2026-11-22: the former automated parser only saw the PD dedication;
+  // the same exact File page also explicitly offers CC BY 4.0 and own-work evidence.
+  const newLicensed6240=primaryTractorPhoto(tractor("Steyr","6240 ABSOLUT CVT"));
+  assert.equal(newLicensed6240?.fileId,"steyr-6240-absolut-blonder1984-2022");
+  assert.equal(newLicensed6240?.photographer,"Blonder1984");
+  assert.equal(newLicensed6240?.licenseName,"CC BY 4.0");
   for(const entry of evidence.approved){
     const images=tractorPhotos(tractor(entry.brand,entry.model));
     assert.equal(images.length,1,entry.brand+" "+entry.model);
@@ -203,7 +207,7 @@ test("Steyr image batch is exact-model, provenance-linked and SHA-256 checked ac
       assert.equal(image.license,photo.licenseUrl);
     }
   }
-  for(const model of ["4085 KOMPAKT S","4080 KOMPAKT","6340 TERRUS","6240 ABSOLUT CVT"])
+  for(const model of ["4085 KOMPAKT S","4080 KOMPAKT","6340 TERRUS","6240 CVT"])
     assert.equal(primaryTractorPhoto(tractor("Steyr",model)),null,
       "Do not leak approved photo to unrelated model "+model);
 });
@@ -490,10 +494,33 @@ test("Belarus 112N-01 own-work Commons photo has exact historical model alias pr
     assert.equal(primaryTractorPhoto(tractor("Belarus",incorrect))?.fileId===source.fileId,false,"Photo must not leak to "+incorrect);
 });
 
+test("2026-11-22 independently self-licensed Commons gallery retains exact Steyr and Zetor identities",()=>{
+  const cases=[
+    ["Steyr","6240 ABSOLUT CVT",["steyr-6240-absolut-blonder1984-2022"],["Blonder1984"],["CC BY 4.0"]],
+    ["Zetor","PROXIMA",["zetor-proxima-jj7777-2021","zetor-proxima-raf24-warsaw-2019"],["JJ7777","Raf24~commonswiki"],["CC BY-SA 4.0","CC BY-SA 4.0"]]
+  ];
+  for(const [brand,model,ids,artists,licenses] of cases){
+    const photos=tractorPhotos(tractor(brand,model));
+    assert.deepEqual(photos.map(x=>x.fileId),ids);
+    assert.deepEqual(photos.map(x=>x.photographer),artists);
+    assert.deepEqual(photos.map(x=>x.licenseName),licenses);
+    for(const photo of photos){
+      assert.equal(photo.configurationExact,false);
+      assert.match(photo.originThumbUrl,/\/500px-/);
+      assert.match(photo.originDisplayUrl,/\/960px-/);
+      assert.match(photo.sourcePage,/^https:\/\/commons\.wikimedia\.org\/wiki\/File:/);
+      assert.equal(resolveApprovedPhotoSource(photo.thumbUrl),photo.originThumbUrl);
+      assert.equal(resolveApprovedPhotoSource(photo.displayUrl),photo.originDisplayUrl);
+    }
+  }
+  for(const [brand,model] of [["Steyr","6240 CVT"],["Steyr","6220 ABSOLUT CVT"],["Zetor","FORTERRA 130"],["Zetor","PROXIMA POWER 120"]])
+    assert.equal(tractorPhotos(tractor(brand,model)).length,0,"Must not invent a pictured adjacent model "+brand+" "+model);
+});
+
 test("historic photo batch is staged with rights and does not create records",()=>{
-  assert.equal(HISTORICAL_LICENSED_PHOTOS.length,77);
+  assert.equal(HISTORICAL_LICENSED_PHOTOS.length,80);
   const all=new Set(HISTORICAL_LICENSED_PHOTOS.map(x=>x.fileId));
-  assert.equal(all.size,77);
+  assert.equal(all.size,80);
   assert.ok(HISTORICAL_LICENSED_PHOTOS.every(x=>x.configurationExact===false));
   assert.ok(!HISTORICAL_LICENSED_PHOTOS.some(x=>["Product","Vehicle"].includes(x.model)));
 });
