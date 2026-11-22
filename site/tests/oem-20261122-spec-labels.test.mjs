@@ -17,7 +17,7 @@ test("all nine exact OEM source-qualified headings have nine nonempty language l
    assert.ok(translated.length>3,heading+" too short "+locale);
    assert.notEqual(translated,heading,"English source heading must be localized");
   }
-  assert.equal(oem20261122SpecLabel(heading,"en"),null);
+  assert.equal(oem20261122SpecLabel(heading,"en"),heading,"English OEM qualifier must remain exact");
  }
 });
 test("raw numbers, OEM names and unreviewed headings never get altered",()=>{
