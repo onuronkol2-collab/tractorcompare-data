@@ -2,12 +2,12 @@
   "version": 1,
   "pages": {
     "https://tractorvs.com/": {
-      "digest": "7d211bb4c6b7f3936272681ba0eb898b235e9785ba132be7b0210f65a50ad526",
-      "modified": "2026-11-22T17:20:12.066Z"
+      "digest": "daefd8702a27cedc14c1e7f5d5b1c8bda2aa73394df51e7786647eff3893dbe5",
+      "modified": "2026-11-22T18:22:02.402Z"
     },
     "https://tractorvs.com/articles/": {
-      "digest": "786225d81653487c29bd7be72a730dfbf4dd7800df33f672b421f12717a7d29a",
-      "modified": "2026-11-22T16:33:31.612Z"
+      "digest": "f4d32f5ffc67b88681b1b5561e8db5d02e2e3359a514dbf30934b26641bbed54",
+      "modified": "2026-11-22T18:22:02.402Z"
     },
     "https://tractorvs.com/brands/mccormick/": {
       "digest": "1597c7455366c1354a16dd5d186ff781ce03141822bf25a743caa310ecde7f69",
@@ -26,20 +26,20 @@
       "modified": "2026-11-22T16:33:31.612Z"
     },
     "https://tractorvs.com/de/": {
-      "digest": "5830392cd6875a718a7ed1415f2ea9ab26763b837d50446eb10b781fd94316ba",
-      "modified": "2026-11-22T17:20:12.066Z"
+      "digest": "cff6e50697f1feae873c756a2db61cbef8fa012a0e3fd16ebcdbbfeda9c3ae32",
+      "modified": "2026-11-22T18:22:02.402Z"
     },
     "https://tractorvs.com/de/articles/": {
-      "digest": "d0370818bf4213dbb776221f68f0dfe389c5914e46bc213c12781bb807440fc4",
-      "modified": "2026-11-22T14:21:43.651Z"
+      "digest": "e8e5821b7a9a45bf22f1f98c341eb6c77b42f895c99c960f2e7ec29c22d8d083",
+      "modified": "2026-11-22T18:22:02.402Z"
     },
     "https://tractorvs.com/de/compare/": {
       "digest": "071c795616d8e3f0d78b821a3e1a5b2d3a12fdf88efd04827a9d559588513a3c",
       "modified": "2026-11-22T17:20:12.066Z"
     },
     "https://tractorvs.com/de/farm-advisor/": {
-      "digest": "b13861ff743dcf5f96b413e6873cc8278aabf58a3c7fbeb26f05436900697e4f",
-      "modified": "2026-11-22T06:23:39.537Z"
+      "digest": "12e03f4d01f6f92fb9ae0842499b8e8d62ba2c460f2c30fc87979b037ac0c6bd",
+      "modified": "2026-11-22T18:22:02.402Z"
     },
     "https://tractorvs.com/de/guides/choosing-a-tractor/": {
       "digest": "690156b1adec284fe12f219df526061b8ef077cfb3299d44d2d883a874faa4b2",
@@ -54,8 +54,8 @@
       "modified": "2026-11-22T15:13:41.997Z"
     },
     "https://tractorvs.com/de/tractors/": {
-      "digest": "15680a0691af40fcb390d5178c55e39a4fed9e882c37a6da03af2f2f582979e8",
-      "modified": "2026-11-22T18:06:24.055Z"
+      "digest": "4c77046a2a7427a1fe33d606e499a913fbb8e73976316fd719be2029ece83588",
+      "modified": "2026-11-22T18:22:02.402Z"
     },
     "https://tractorvs.com/de/tractors/agrale-4125-0b53e944/": {
       "digest": "32366e1df6154f04604255bcb6156d1828a47b1b02ef00cb2a1e2b65e857e7f8",
@@ -1610,20 +1610,20 @@
       "modified": "2026-11-21T19:47:11.499Z"
     },
     "https://tractorvs.com/es/": {
-      "digest": "6164911e0b270459e9dd18ab801caf04fab11e82e4509c03212369830979140f",
-      "modified": "2026-11-22T17:20:12.066Z"
+      "digest": "713f2bdacd80770edb858864c1d54876486774be95271a5f417ceaba440c66fe",
+      "modified": "2026-11-22T18:22:02.402Z"
     },
     "https://tractorvs.com/es/articles/": {
-      "digest": "2fde7b197cc48f48e536e607fa1e4b6b0fa6450dfd23e23e8959475c90c036fc",
-      "modified": "2026-11-22T14:21:43.651Z"
+      "digest": "0145e305b596770e50c433fa8685671159ccaabc3aafdfd8d7f2806ca6eb3e36",
+      "modified": "2026-11-22T18:22:02.402Z"
     },
     "https://tractorvs.com/es/compare/": {
       "digest": "249b440cdce00afcb2b73dc8499e813f8c871f4e755452e32d0c9f9b5159dcd2",
       "modified": "2026-11-22T17:20:12.066Z"
     },
     "https://tractorvs.com/es/farm-advisor/": {
-      "digest": "844efa344057998b0a92aeb706bff2247e283543b1fedff3dc54d14a26055c64",
-      "modified": "2026-11-22T06:23:39.537Z"
+      "digest": "fc1d287c3292c1544fee7c9f55c93eba6323821d4dbfb0cd6e023402402ee939",
+      "modified": "2026-11-22T18:22:02.402Z"
     },
     "https://tractorvs.com/es/guides/choosing-a-tractor/": {
       "digest": "b66967a2f9efca29073e9d9aa4ebed44b281cff4773b37eeeb47e915ac5315cc",
@@ -1638,8 +1638,8 @@
       "modified": "2026-11-22T15:13:41.997Z"
     },
     "https://tractorvs.com/es/tractors/": {
-      "digest": "95e1fdff3d7cf28b6fd7e9020a81774324ff5f629460c24eb55ba11c63cb5c48",
-      "modified": "2026-11-22T18:06:24.055Z"
+      "digest": "4ae12b0f24548871ccabb7f5548c8cdc440ad8b7a5beb15ffd775ea10dadd26e",
+      "modified": "2026-11-22T18:22:02.402Z"
     },
     "https://tractorvs.com/es/tractors/agrale-4125-0b53e944/": {
       "digest": "6e72187d478e42d64a088eac4ea90be38a22c86b83d7841c5dd36695f8e1e4d5",
@@ -3194,24 +3194,24 @@
       "modified": "2026-11-22T15:49:54.478Z"
     },
     "https://tractorvs.com/farm-advisor/": {
-      "digest": "ff46918f4b631f74eeb0fe04c2a5f84fba9a70d1885cc827ec4da24740e22648",
-      "modified": "2026-11-22T06:23:39.537Z"
+      "digest": "300808591e823680a80270a517fda6921050d243e8c33b36f21103b306970ab4",
+      "modified": "2026-11-22T18:22:02.402Z"
     },
     "https://tractorvs.com/fr/": {
-      "digest": "8fe84f465916dff5a2ded88466a611a6366c13fcf0815235974e9859dea370f7",
-      "modified": "2026-11-22T17:20:12.066Z"
+      "digest": "4fa57767a05a15fd944ddd8bd44b05dc888fb51b30e6861490a893eb02e4a332",
+      "modified": "2026-11-22T18:22:02.402Z"
     },
     "https://tractorvs.com/fr/articles/": {
-      "digest": "0f90d9dd211e07ed1d204ad52161dd861d4525c25aa25592d18bb53b6d7eb5d8",
-      "modified": "2026-11-22T14:21:43.651Z"
+      "digest": "b87ad5ef98462bf555f36d462ca40ec0376d8fea5d643ae23f7a7bbbcdec3330",
+      "modified": "2026-11-22T18:22:02.402Z"
     },
     "https://tractorvs.com/fr/compare/": {
       "digest": "32c62a11a026af767176f50a458b3897d067af98463b4b0d410ec3b4d81b1616",
       "modified": "2026-11-22T17:20:12.066Z"
     },
     "https://tractorvs.com/fr/farm-advisor/": {
-      "digest": "3f9f10f3c5e6bd7cd7e6348563f7afc6b927a041caeea17419b5addd14446f43",
-      "modified": "2026-11-22T06:23:39.537Z"
+      "digest": "ce1f46c0be5309cb17be8bc4fe165abb790aab0f0e9a75a917b10126f576eb12",
+      "modified": "2026-11-22T18:22:02.402Z"
     },
     "https://tractorvs.com/fr/guides/choosing-a-tractor/": {
       "digest": "2bcb6691fcc7b4bdda29dcedd7f1c8d8c168edbac67b6658963fae67ff074a2f",
@@ -3226,8 +3226,8 @@
       "modified": "2026-11-22T15:13:41.997Z"
     },
     "https://tractorvs.com/fr/tractors/": {
-      "digest": "dfc94936b8c628e34dad9015c31094eda48294ec5864b77300b5d4c6e7ba3d38",
-      "modified": "2026-11-22T18:06:24.055Z"
+      "digest": "d7a51706d73ee7bb43a5bb3e74091c00043414c096759836000114a653562424",
+      "modified": "2026-11-22T18:22:02.402Z"
     },
     "https://tractorvs.com/fr/tractors/agrale-4125-0b53e944/": {
       "digest": "b2f88db3e8539cb6e089c35b63a6adb969706f68db99ac8fe7129d13fcc64d56",
@@ -4802,20 +4802,20 @@
       "modified": "2026-11-22T14:27:00.768Z"
     },
     "https://tractorvs.com/hi/": {
-      "digest": "943b36c62ec339e91a68d20181bf51c606cd68f69c9691f419d2d3df71d67fcc",
-      "modified": "2026-11-22T17:20:12.066Z"
+      "digest": "1029e864b425800bf326402ac6efe962f1edfc5c0b2e9fd3a4ff371ba1e03afc",
+      "modified": "2026-11-22T18:22:02.402Z"
     },
     "https://tractorvs.com/hi/articles/": {
-      "digest": "2181d0a70828b0531ae370483392b25f478e062b04722cb45725cf9eab3a2545",
-      "modified": "2026-11-22T14:21:43.651Z"
+      "digest": "3ef252be723e22cbd42f479762ff15210b935675304ca03b43cf5cc9c06c3def",
+      "modified": "2026-11-22T18:22:02.402Z"
     },
     "https://tractorvs.com/hi/compare/": {
       "digest": "8b9f3d4a33a953b2a3806cdd445fd4731901de50668fb192aa14055fab7d9465",
       "modified": "2026-11-22T17:20:12.066Z"
     },
     "https://tractorvs.com/hi/farm-advisor/": {
-      "digest": "a0b5b994955a70eb8b47c7356b8858fc48f92c0ff7ca316b2f92c6e5b7cf0682",
-      "modified": "2026-11-22T06:23:39.537Z"
+      "digest": "f78d1f1c8ae19fa8ea0d4cd24624e0903443a6810ce382f7d6026389e9f29a5d",
+      "modified": "2026-11-22T18:22:02.402Z"
     },
     "https://tractorvs.com/hi/guides/choosing-a-tractor/": {
       "digest": "c913f0a36c9dbe8d1de8b0c3f4d4c00bb85efdb8fd9de226c7f768740e9ed195",
@@ -4830,8 +4830,8 @@
       "modified": "2026-11-22T15:13:41.997Z"
     },
     "https://tractorvs.com/hi/tractors/": {
-      "digest": "94ff39c013a5ccde1e252454a9465b0effe92c0a1ce9dc8197fc538e8f0be2a3",
-      "modified": "2026-11-22T18:06:24.055Z"
+      "digest": "59f8d72b17d20c88d3d0f863fbc2418880d437178d32342a3e13393405d9a01a",
+      "modified": "2026-11-22T18:22:02.402Z"
     },
     "https://tractorvs.com/hi/tractors/agrale-4125-0b53e944/": {
       "digest": "89d390984132129c6705ac5f42d0a35f6d3e519fbf19cc0d8b6d848cd95ec5cb",
@@ -6386,20 +6386,20 @@
       "modified": null
     },
     "https://tractorvs.com/ja/": {
-      "digest": "454645035589418f563167c9f3315337b8dfba0bd70fe82a96b994cc44f02ba9",
-      "modified": "2026-11-22T17:20:12.066Z"
+      "digest": "4ab16027a29f780a9dcd81a6560cf3a24f07a16393707f68bcf2b559203053b1",
+      "modified": "2026-11-22T18:22:02.402Z"
     },
     "https://tractorvs.com/ja/articles/": {
-      "digest": "dc9311c8639ec9e7aed6244d2c1e8764d4fd4b03c9ec834a638bc7ca4824c03b",
-      "modified": "2026-11-22T14:21:43.651Z"
+      "digest": "867884ed17f13bd46d0ef1d231a61aa757cff00bfcdd1e840fddcf43663f141a",
+      "modified": "2026-11-22T18:22:02.402Z"
     },
     "https://tractorvs.com/ja/compare/": {
       "digest": "20de6ee3eff9e8ba11456a6ac7507c7a48a2323c466e7e804b85ae0007457f69",
       "modified": "2026-11-22T17:20:12.066Z"
     },
     "https://tractorvs.com/ja/farm-advisor/": {
-      "digest": "6f0acfaf081aa9f2c39ae40f9b59b7739e65346b415a4f6ea810ec3214450883",
-      "modified": "2026-11-22T06:23:39.537Z"
+      "digest": "a16d6838495ba8cbdc449794e41e2f973b29354d47ae270a1340a7cac5a9012e",
+      "modified": "2026-11-22T18:22:02.402Z"
     },
     "https://tractorvs.com/ja/guides/choosing-a-tractor/": {
       "digest": "8d6dcc961ec504eb5bb5de3dce6c06ede93151cd832f5c762043d50e2dd362d0",
@@ -6414,8 +6414,8 @@
       "modified": "2026-11-22T15:13:41.997Z"
     },
     "https://tractorvs.com/ja/tractors/": {
-      "digest": "a637c93bacb3d1d182a379292d2eb70adf2938e5f2bfc0885e8f6f4bd6a24267",
-      "modified": "2026-11-22T18:06:24.055Z"
+      "digest": "62143b81808305c3c8f58a4a0aa9a1a27438f746f945025b225fa253aa4d58b3",
+      "modified": "2026-11-22T18:22:02.402Z"
     },
     "https://tractorvs.com/ja/tractors/agrale-4125-0b53e944/": {
       "digest": "4d0e45acacbeeb3c521ccff6fdb73475c3d2a6b25b8314d917e1fba5cfd09492",
@@ -7978,20 +7978,20 @@
       "modified": null
     },
     "https://tractorvs.com/pt-br/": {
-      "digest": "8aed30774deee0ee3e618e13280759008c5f27cff88e5c32fa0e73ff7285e397",
-      "modified": "2026-11-22T17:20:12.066Z"
+      "digest": "79e9331b0c70b46071f05ac6366665022487312e76814ae5a08c22b16bf3d4ba",
+      "modified": "2026-11-22T18:22:02.402Z"
     },
     "https://tractorvs.com/pt-br/articles/": {
-      "digest": "c1c45e52aa543bfa23fd54b2f0aa250f83a1e89b9d020a9459a06fabdd56f9ce",
-      "modified": "2026-11-22T14:21:43.651Z"
+      "digest": "117be662005262991fb353875c1cf33ccb9e7a46960f3f88b43118fb9ecdf59d",
+      "modified": "2026-11-22T18:22:02.402Z"
     },
     "https://tractorvs.com/pt-br/compare/": {
       "digest": "1debe9f4ca311ff71661594691d3448367b0235793528ae526674513d80fc888",
       "modified": "2026-11-22T17:20:12.066Z"
     },
     "https://tractorvs.com/pt-br/farm-advisor/": {
-      "digest": "88650f3e64bea75375a37a4ed6c878a91926c25949d7434e05197284a2e849dc",
-      "modified": "2026-11-22T06:23:39.537Z"
+      "digest": "0b68c76b0c0c20cfb0e54e96d1dc0857a8707f83f994d603dae28a9f1fc5acbe",
+      "modified": "2026-11-22T18:22:02.402Z"
     },
     "https://tractorvs.com/pt-br/guides/choosing-a-tractor/": {
       "digest": "f87875ed0244ab5360899cf89bf54fcbe4d11392025eb54545b556643b0d275b",
@@ -8006,8 +8006,8 @@
       "modified": "2026-11-22T15:13:41.997Z"
     },
     "https://tractorvs.com/pt-br/tractors/": {
-      "digest": "64ed1a9cc4923dc3c876bef3fc0eb86e0c70d4a92b5ba8aa150d22573ad80d69",
-      "modified": "2026-11-22T18:06:24.055Z"
+      "digest": "ce03721be8e89b7c4f5ca94abc18c620e2594649a7d0843d860113028e804659",
+      "modified": "2026-11-22T18:22:02.402Z"
     },
     "https://tractorvs.com/pt-br/tractors/agrale-4125-0b53e944/": {
       "digest": "5ff1db9f68277bc1544ae51e8b7ab7c0afe49949c5d51c67791975fb0426a0f4",
@@ -9566,20 +9566,20 @@
       "modified": "2026-11-22T15:13:41.997Z"
     },
     "https://tractorvs.com/ru/": {
-      "digest": "1f956d5b08f121c761da051b06d6d10a222ccebc5db52ec4784093ae17412368",
-      "modified": "2026-11-22T17:20:12.066Z"
+      "digest": "8647ab96687fc35dc26cbf1d583812b517698d43f7301d856bb2f846c17d228a",
+      "modified": "2026-11-22T18:22:02.402Z"
     },
     "https://tractorvs.com/ru/articles/": {
-      "digest": "28c8e179f13e235ab3802a7ace157d9f536ae237b3f7efef8648ee4c3d1fd174",
-      "modified": "2026-11-22T14:21:43.651Z"
+      "digest": "af26b8678163822452934ec1c7cb7f12884df875f898bbe76e1654f6e04d4e1a",
+      "modified": "2026-11-22T18:22:02.402Z"
     },
     "https://tractorvs.com/ru/compare/": {
       "digest": "01677dfde89a16101ab4a415ca14529e853aea4e4c8dba52411e54b340278d6c",
       "modified": "2026-11-22T17:20:12.066Z"
     },
     "https://tractorvs.com/ru/farm-advisor/": {
-      "digest": "eecbaceca024d6e9e00178cd92233d90721e382dba7f5dc72b269fa1c1b4dd46",
-      "modified": "2026-11-22T06:23:39.537Z"
+      "digest": "baa41900f3b5a30e6f5f6a63ba95f2e76da226b95fb1e6f6c0c81ddf269f123b",
+      "modified": "2026-11-22T18:22:02.402Z"
     },
     "https://tractorvs.com/ru/guides/choosing-a-tractor/": {
       "digest": "d98cc050028a7158fecf1a69f64cfaa33be5717070281c7a716fd60810983c43",
@@ -9594,8 +9594,8 @@
       "modified": "2026-11-22T15:13:41.997Z"
     },
     "https://tractorvs.com/ru/tractors/": {
-      "digest": "35e464a03963842e88c095113e61835de995934c97f04b930a2ab6e2210f96bb",
-      "modified": "2026-11-22T18:06:24.055Z"
+      "digest": "34a878ea04cca6d3fd8d197b3bfefb15b4282e9ef7c6734c10c4885a981c70f5",
+      "modified": "2026-11-22T18:22:02.402Z"
     },
     "https://tractorvs.com/ru/tractors/agrale-4125-0b53e944/": {
       "digest": "a743211ff921d260a622929d99a49654ddf88289776922ae4c70310ed030ae99",
@@ -11150,12 +11150,12 @@
       "modified": "2026-11-22T04:59:19.699Z"
     },
     "https://tractorvs.com/tr/": {
-      "digest": "0353d6eab74bc5d3333bad1564c32db71239532a060da810c524e2424246f0dd",
-      "modified": "2026-11-22T17:20:12.066Z"
+      "digest": "17fa213e0fa97cb34423036fa3c71e28a95aa1688239c0cdf2ecce944b8349c7",
+      "modified": "2026-11-22T18:22:02.402Z"
     },
     "https://tractorvs.com/tr/articles/": {
-      "digest": "1c5bbdce8e9666495d3e49c81913fa14d085efbac687c49b77af5cf04564ce65",
-      "modified": "2026-11-22T16:33:31.612Z"
+      "digest": "24af9028de2a49e800978e946a31767a57ff1ac80c98a17fb919a12f2339d53e",
+      "modified": "2026-11-22T18:22:02.402Z"
     },
     "https://tractorvs.com/tr/brands/mccormick/": {
       "digest": "94782de011b240a5c928fb7791bf8f3f4ae07e726522d0ebbf785794ab323e58",
@@ -11174,8 +11174,8 @@
       "modified": "2026-11-22T16:33:31.612Z"
     },
     "https://tractorvs.com/tr/farm-advisor/": {
-      "digest": "a84b62b372e654aee19ce03d22d443555d2cddba0d12068243936752ae7dc60d",
-      "modified": "2026-11-22T06:23:39.537Z"
+      "digest": "62ee57ecf2f524b7b48ca2aacda0152e68eee1b60c78883f10c32f078c49d235",
+      "modified": "2026-11-22T18:22:02.402Z"
     },
     "https://tractorvs.com/tr/guides/choosing-a-tractor/": {
       "digest": "1add30ac1c9c6ae96fcd30180033deda65f446cb1595117819dfe2651d6b025a",
@@ -11210,8 +11210,8 @@
       "modified": "2026-11-22T15:13:41.997Z"
     },
     "https://tractorvs.com/tr/tractors/": {
-      "digest": "011bc808cb61f18f866fd57e663eab9d46deb73db7dc15dd8ab132f813abb4b4",
-      "modified": "2026-11-22T18:06:24.055Z"
+      "digest": "f35a5ba6ea3de0069d780ed04dcfd784e00fb507f72f95cdcdbebe78e4950021",
+      "modified": "2026-11-22T18:22:02.402Z"
     },
     "https://tractorvs.com/tr/tractors/agrale-4125-0b53e944/": {
       "digest": "b877aec9c77214e168c69ab239caf1ba006d9c27f2ab18fec9179791bc08112d",
@@ -12766,8 +12766,8 @@
       "modified": "2026-11-21T19:47:11.499Z"
     },
     "https://tractorvs.com/tractors/": {
-      "digest": "5531239e3f46f41882fda440177a76494af20a719d57ddc4cd052edc91e2d229",
-      "modified": "2026-11-22T18:06:24.055Z"
+      "digest": "05efde72eaa994bf591e0bacd588500499bb3f656d50ad49746f5a74074d38b7",
+      "modified": "2026-11-22T18:22:02.402Z"
     },
     "https://tractorvs.com/tractors/agrale-4125-0b53e944/": {
       "digest": "7cb5388368ca5cebb9b7f9b51467ed0cde27248e0c1689c41cd6c15909d42679",
@@ -14322,20 +14322,20 @@
       "modified": "2026-11-22T04:59:19.699Z"
     },
     "https://tractorvs.com/zh/": {
-      "digest": "9ebe32f23c64f7dc2069d0ca74323d71c66c15f66fc3c5c86b6da8289662ad66",
-      "modified": "2026-11-22T17:20:12.066Z"
+      "digest": "f417ffd32fea4ba224671ed85e4051d5f9b5b35f3621dcad663a354bed492b6a",
+      "modified": "2026-11-22T18:22:02.402Z"
     },
     "https://tractorvs.com/zh/articles/": {
-      "digest": "ff6f2dca5e4cd71a619df8bf3263e453b767f8d43bee5e0c59151bd212b84216",
-      "modified": "2026-11-22T14:21:43.651Z"
+      "digest": "879a0a248b1d60f80189181df4af6d71c0f128b026d802b831dc37f5508ce1ab",
+      "modified": "2026-11-22T18:22:02.402Z"
     },
     "https://tractorvs.com/zh/compare/": {
       "digest": "7cd6b482b24b9a3fa3d88a898784e7595b18dedc8390fb0e1351c2f8395e1dc8",
       "modified": "2026-11-22T17:20:12.066Z"
     },
     "https://tractorvs.com/zh/farm-advisor/": {
-      "digest": "e805869cda955f32dd0b731ede3203e689f2f16572511bce73f9852f34cc03ce",
-      "modified": "2026-11-22T06:23:39.537Z"
+      "digest": "13610730c97908c20dc50dcf486b0ae93b9db8bac897e5a7a8e2503e2ab11cff",
+      "modified": "2026-11-22T18:22:02.402Z"
     },
     "https://tractorvs.com/zh/guides/choosing-a-tractor/": {
       "digest": "a2a597a6514f7d38fe74e2cac20096e4049c3c8e9f8227676767414a56e808bf",
@@ -14350,8 +14350,8 @@
       "modified": "2026-11-22T15:13:41.997Z"
     },
     "https://tractorvs.com/zh/tractors/": {
-      "digest": "51da7d7bb9dc5cdbe0a8938cb01dba06cb69a1c9015acdf443e2ee17965039e1",
-      "modified": "2026-11-22T18:06:24.055Z"
+      "digest": "db17521b120864406f2657e09a3579238a4969f4e8b497f9d7c7e8dcfa2dc065",
+      "modified": "2026-11-22T18:22:02.402Z"
     },
     "https://tractorvs.com/zh/tractors/agrale-4125-0b53e944/": {
       "digest": "e6ab843089d45ba67da807eceb735737086451a3597de35ae307039fd8c1c4e7",
