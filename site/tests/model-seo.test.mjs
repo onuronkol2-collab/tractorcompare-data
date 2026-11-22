@@ -535,7 +535,8 @@ test("reviewed manufacturer families strip only bibliography from headings in te
   ["Zetor","6130","6 Series / Stage V · manufacturer table","International (Stage V specification)",["Stage V"]],
   ["Yanmar","YT359","YT3 i-HMT; ROPS and CAB configurations","Turkey (manufacturer YT3 model table)",["YT3 i-HMT"]],
   ["Mahindra","JIVO 225 DI 4WD","India 4WD / 8F x 4R / manufacturer configuration","India",["4WD","8F x 4R"]],
-  ["Mahindra","YUVRAJ 215 NXT","India 2WD / 6F x 3R / manufacturer configuration","India",["2WD","6F x 3R"]]
+  ["Mahindra","YUVRAJ 215 NXT","India 2WD / 6F x 3R / manufacturer configuration","India",["2WD","6F x 3R"]],
+  ["Mahindra","JIVO 305 DI 4WD","India 4WD / 8F x 4R / manufacturer specification; PTO source conflict","India",["4WD","8F x 4R"]]
  ];
  for(const [brand_name,model_name,variant,market,fragments] of rows){
   for(const locale of ["en","tr","zh","hi","pt-br","fr","de","ru","ja","es"]){
