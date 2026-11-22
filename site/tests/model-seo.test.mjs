@@ -467,3 +467,92 @@ test("unknown Deutz equipment variants are never silently classified as the know
   assert.ok(title.includes("special power shuttle"));
   assert.ok(title.includes("Deutz-Fahr 5065 D"));
 });
+
+test("seven exactly verified brochure-note rows have concise, honest titles in every locale",()=>{
+ const rows=[
+  {brand_name:"McCormick",model_name:"X5.085",
+   variant:"Stage V X5.085 / 09-2023 brochure",
+   market:"Europe / Turkey (manufacturer 09/2023)",identity:["Stage V"],notTitle:["brochure","manufacturer 09/2023"]},
+  {brand_name:"Steyr",model_name:"6440 CERVUS CVT",
+   variant:"CERVUS CVT",market:"International (STEYR 2025 brochure)",
+   identity:["CERVUS CVT"],notTitle:["STEYR 2025 brochure"]},
+  {brand_name:"Valtra",model_name:"T215",
+   variant:"T Series",market:"Europe / UK 2025 manufacturer brochure",
+   identity:["T Series"],notTitle:["2025 manufacturer brochure"]},
+  {brand_name:"Yanmar",model_name:"YT347",
+   variant:"YT3 i-HMT; ROPS and CAB configurations",
+   market:"Turkey (manufacturer YT3 model table)",identity:["YT3 i-HMT"],
+   notTitle:["manufacturer YT3 model table"]},
+  {brand_name:"Mahindra",model_name:"JIVO 225 DI",
+   variant:"India 2WD / 8F x 4R / manufacturer configuration",market:"India",
+   identity:["2WD","8F x 4R"],notTitle:["manufacturer configuration"]},
+  {brand_name:"Mahindra",model_name:"JIVO 245 DI",
+   variant:"India 4WD / 8F x 4R / exact JIVO 245 DI",market:"India",
+   identity:["4WD","8F x 4R"],notTitle:["exact JIVO"]},
+  {brand_name:"Sonalika",model_name:"Tiger DI 55 III",
+   variant:"India / Tiger DI 55 III original / 12F×3R",market:"India",
+   identity:["12F×3R"],notTitle:["original /"]}
+ ];
+ for(const row of rows){
+  for(const locale of ["en","tr","zh","hi","pt-br","fr","de","ru","ja","es"]){
+   const model={...tractor,...row,model_year:null,horsepower:null};
+   const title=modelSeoMetadata(model,locale).title;
+   assert.ok(title.includes(row.brand_name+" "+row.model_name),locale+" core model lost: "+title);
+   for(const fragment of row.identity)
+    assert.ok(title.includes(fragment),locale+" real equipment lost: "+title);
+   for(const phrase of row.notTitle)
+    assert.ok(!title.includes(phrase),locale+" bibliography leaked: "+title);
+   assert.ok(title.length<=105,locale+" source-note title still verbose: "+title);
+   const full=modelStructuredData(model,locale,"https://tractorvs.example")["@graph"][2].disambiguatingDescription;
+   assert.ok(full.includes(row.variant),locale+" source record variant must stay intact");
+   assert.ok(full.includes(row.market),locale+" real market and provenance stay in JSON-LD");
+  }
+ }
+});
+
+test("brochure-note cleanup does not generalize to an unreviewed variant or market",()=>{
+ const altered={...tractor,brand_name:"McCormick",model_name:"X5.085",
+  variant:"Stage V X5.085 / 09-2024 brochure",market:"Europe / Turkey (manufacturer 09/2023)",
+  model_year:null};
+ const title=modelSeoMetadata(altered,"en").title;
+ assert.ok(title.includes("09-2024 brochure"),"the unexpected raw variant must not be silently shortened");
+});
+
+test("reviewed manufacturer families strip only bibliography from headings in ten languages",()=>{
+ const rows=[
+  ["Valtra","A105","A Series Gen5 Stage V / HiTech 4","International (2025 brochure)",["Stage V","HiTech 4"]],
+  ["Valtra","F75","F Series","Europe / UK 2025 manufacturer brochure",["F Series"]],
+  ["Valtra","G125e","G Series ECO","Europe / UK 2025 manufacturer brochure",["G Series ECO"]],
+  ["Valtra","N155e","N Series EcoPower","Europe / UK 2025 manufacturer brochure",["EcoPower"]],
+  ["Valtra","Q245","Q Series","Europe / UK 2025 manufacturer brochure",["Q Series"]],
+  ["Valtra","S416","S Series","Europe / Valtra 2025–26 manufacturer documents",["S Series"]],
+  ["Valtra","T235","T Series Direct","Europe / UK 2025 manufacturer brochure",["Direct"]],
+  ["Valtra","T235","T Series HiTech/Active/Versu","Europe / UK 2025 manufacturer brochure",["HiTech/Active/Versu"]],
+  ["Steyr","6360 CERVUS CVT","CERVUS CVT","International (STEYR 2025 brochure)",["CERVUS CVT"]],
+  ["Steyr","6170 IMPULS","IMPULS","International (2026 manufacturer brochure)",["IMPULS"]],
+  ["SAME","DORADO NATURAL 100.4","Stage IIIA / 2019 brochure","Europe",["Stage IIIA"]],
+  ["Landini","2-050","Serie 2 / Tier 3 / 2017 brochure","Italy",["Serie 2","Tier 3"]],
+  ["Zetor","6130","6 Series / Stage V · manufacturer table","International (Stage V specification)",["Stage V"]],
+  ["Yanmar","YT359","YT3 i-HMT; ROPS and CAB configurations","Turkey (manufacturer YT3 model table)",["YT3 i-HMT"]],
+  ["Mahindra","JIVO 225 DI 4WD","India 4WD / 8F x 4R / manufacturer configuration","India",["4WD","8F x 4R"]],
+  ["Mahindra","YUVRAJ 215 NXT","India 2WD / 6F x 3R / manufacturer configuration","India",["2WD","6F x 3R"]],
+  ["Mahindra","JIVO 305 DI 4WD","India 4WD / 8F x 4R / manufacturer specification; PTO source conflict","India",["4WD","8F x 4R"]]
+ ];
+ for(const [brand_name,model_name,variant,market,fragments] of rows){
+  for(const locale of ["en","tr","zh","hi","pt-br","fr","de","ru","ja","es"]){
+   const record={...tractor,brand_name,model_name,variant,market,model_year:null,horsepower:null};
+   const title=modelSeoMetadata(record,locale).title;
+   assert.ok(title.includes(brand_name+" "+model_name),locale+" core identity missing: "+title);
+   for(const word of fragments)
+    assert.ok(title.includes(word),locale+" real equipment lost: "+title);
+   assert.doesNotMatch(title,/brochure|manufacturer (?:table|documents)/i,locale+" source wording in title");
+   assert.ok(title.length<=105,locale+" unexpectedly long reviewed title: "+title);
+   const schema=modelStructuredData(record,locale,"https://tractorvs.example")["@graph"][2].disambiguatingDescription;
+   assert.ok(schema.includes(variant)&&schema.includes(market),locale+" original source and market must remain available");
+  }
+ }
+ const variants=["T Series Direct","T Series HiTech/Active/Versu"].map(variant=>
+  modelSeoMetadata({...tractor,brand_name:"Valtra",model_name:"T235",variant,
+    market:"Europe / UK 2025 manufacturer brochure",model_year:null},"en").title);
+ assert.notEqual(variants[0],variants[1],"distinct Valtra T235 transmissions must not collapse");
+});

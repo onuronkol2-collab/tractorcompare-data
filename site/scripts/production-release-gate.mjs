@@ -182,6 +182,12 @@ export function verifyProductionArtifacts({dir=projectRoot,origin=expectedOrigin
  insist(titleAudit.duplicates.length===0,
    "Different published model/variant URLs share an identical localized title: "+
    JSON.stringify(titleAudit.duplicates.slice(0,8)));
+ // The 2026-11-22 production audit reached zero real model titles that
+ // leak manufacturer brochure/source-table notes. Future source-note variants
+ // require explicit editorial verification, not silent keyword truncation.
+ insist(titleAudit.bibliographyTitles===0,
+   "Unreviewed manufacturer bibliography text leaked into model SEO titles: "+
+   JSON.stringify(titleAudit.bibliographyExamples.slice(0,8)));
  console.log("TRACTORVS_PRODUCTION_TITLE_AUDIT "+JSON.stringify({
    htmlDocuments:titleAudit.htmlDocuments,modelPages:titleAudit.modelPages,
    over60:titleAudit.over60,over105:titleAudit.over105,over160:titleAudit.over160,
@@ -194,7 +200,8 @@ export function verifyProductionArtifacts({dir=projectRoot,origin=expectedOrigin
    imageAltPages:imageAlt.htmlPages,imageAltImages:imageAlt.images,
    decorativeOrPendingImageAlts:imageAlt.emptyAlt,
    titlePages:titleAudit.htmlDocuments,titleOver60:titleAudit.over60,
-   titleOver105:titleAudit.over105,duplicateModelTitles:titleAudit.duplicates.length};
+   titleOver105:titleAudit.over105,duplicateModelTitles:titleAudit.duplicates.length,
+   bibliographyTitleCandidates:titleAudit.bibliographyTitles};
 }
 
 export function preflight(env=process.env){

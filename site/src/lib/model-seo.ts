@@ -160,15 +160,112 @@ export function modelSeoMetadata(tractor: TractorRecord, lang: Locale) {
       || rawVariant === "5D Series (non-GS) / Stage V (Türkiye 2025 manufacturer brochure)");
   const deutzIdentityLabel = rawVariant?.startsWith("5D Series GS")
     ? "5D GS · Stage V" : "5D non-GS · Stage V";
+  // Exact, published source-note rows checked against Supabase on 2026-11-22.
+  // Keep the complete variant/market unmodified in the catalogue and JSON-LD.
+  // These display-only labels remove bibliography prose from search titles;
+  // real equipment differences (2WD/4WD, gearing, Stage V, i-HMT, region)
+  // must remain visible. Unknown or later-edited strings use raw identity.
+  const reviewedSourceNotes =
+    tractor.brand_name === "McCormick" && tractor.model_name === "X5.085"
+      && rawVariant === "Stage V X5.085 / 09-2023 brochure"
+      && rawMarket === "Europe / Turkey (manufacturer 09/2023)"
+      ? {variant:"Stage V",markets:["Europe","Turkey"]}
+    : tractor.brand_name === "Steyr" && tractor.model_name === "6440 CERVUS CVT"
+      && rawVariant === "CERVUS CVT"
+      && rawMarket === "International (STEYR 2025 brochure)"
+      ? {variant:null,markets:["International"]}
+    : tractor.brand_name === "Valtra" && tractor.model_name === "T215"
+      && rawVariant === "T Series"
+      && rawMarket === "Europe / UK 2025 manufacturer brochure"
+      ? {variant:"T Series",markets:["Europe","UK"]}
+    : tractor.brand_name === "Yanmar" && tractor.model_name === "YT347"
+      && rawVariant === "YT3 i-HMT"
+      && rawMarket === "Turkey (manufacturer YT3 model table)"
+      ? {variant:"YT3 i-HMT",markets:["Turkey"]}
+    : tractor.brand_name === "Mahindra" && tractor.model_name === "JIVO 225 DI"
+      && rawVariant === "India 2WD / 8F x 4R / manufacturer configuration"
+      && rawMarket === "India"
+      ? {variant:"2WD / 8F x 4R",markets:["India"]}
+    : tractor.brand_name === "Mahindra" && tractor.model_name === "JIVO 245 DI"
+      && rawVariant === "India 4WD / 8F x 4R / exact JIVO 245 DI"
+      && rawMarket === "India"
+      ? {variant:"4WD / 8F x 4R",markets:["India"]}
+    : tractor.brand_name === "Sonalika" && tractor.model_name === "Tiger DI 55 III"
+      && rawVariant === "India / Tiger DI 55 III original / 12F×3R"
+      && rawMarket === "India"
+      ? {variant:"12F×3R",markets:["India"]}
+    // Same source-note pattern applies to a verified, bounded manufacturer
+    // family. The names and original notes below were read from the published
+    // catalog, and different equipment variants remain separate.
+    : tractor.brand_name === "Valtra"
+      && /^(?:F\d+|G\d+e?|N\d+e?|Q\d+|S\d+|T\d+e?)$/.test(tractor.model_name)
+      && rawMarket === "Europe / UK 2025 manufacturer brochure"
+      ? {variant:rawVariant,markets:["Europe","UK"]}
+    : tractor.brand_name === "Valtra"
+      && /^A(?:75|85|95|105|115)$/.test(tractor.model_name)
+      && rawMarket === "International (2025 brochure)"
+      ? {variant:rawVariant,markets:["International"]}
+    : tractor.brand_name === "Valtra" && tractor.model_name === "S416"
+      && rawMarket === "Europe / Valtra 2025–26 manufacturer documents"
+      && rawVariant === "S Series"
+      ? {variant:"S Series",markets:["Europe"]}
+    : tractor.brand_name === "Steyr"
+      && /^6(?:360|390|440) CERVUS CVT$/.test(tractor.model_name)
+      && rawVariant === "CERVUS CVT"
+      && rawMarket === "International (STEYR 2025 brochure)"
+      ? {variant:null,markets:["International"]}
+    : tractor.brand_name === "Steyr"
+      && /^6(?:170|180|200) IMPULS$/.test(tractor.model_name)
+      && rawVariant === "IMPULS"
+      && rawMarket === "International (2026 manufacturer brochure)"
+      ? {variant:null,markets:["International"]}
+    : tractor.brand_name === "SAME"
+      && /^DORADO NATURAL /.test(tractor.model_name)
+      && rawVariant === "Stage IIIA / 2019 brochure"
+      && rawMarket === "Europe"
+      ? {variant:"Stage IIIA",markets:["Europe"]}
+    : tractor.brand_name === "Landini"
+      && /^2-0(?:45|50|60)$/.test(tractor.model_name)
+      && rawVariant === "Serie 2 / Tier 3 / 2017 brochure"
+      && rawMarket === "Italy"
+      ? {variant:"Serie 2 · Tier 3",markets:["Italy"]}
+    : tractor.brand_name === "Zetor"
+      && /^61(?:30|40|50|70)$/.test(tractor.model_name)
+      && rawVariant === "6 Series / Stage V · manufacturer table"
+      && rawMarket === "International (Stage V specification)"
+      ? {variant:"6 Series · Stage V",markets:["International"]}
+    : tractor.brand_name === "Yanmar" && tractor.model_name === "YT359"
+      && rawVariant === "YT3 i-HMT"
+      && rawMarket === "Turkey (manufacturer YT3 model table)"
+      ? {variant:"YT3 i-HMT",markets:["Turkey"]}
+    : tractor.brand_name === "Mahindra"
+      && tractor.model_name === "JIVO 225 DI 4WD"
+      && rawVariant === "India 4WD / 8F x 4R / manufacturer configuration"
+      && rawMarket === "India"
+      ? {variant:"4WD / 8F x 4R",markets:["India"]}
+    : tractor.brand_name === "Mahindra"
+      && tractor.model_name === "YUVRAJ 215 NXT"
+      && rawVariant === "India 2WD / 6F x 3R / manufacturer configuration"
+      && rawMarket === "India"
+      ? {variant:"2WD / 6F x 3R",markets:["India"]}
+    : tractor.brand_name === "Mahindra"
+      && tractor.model_name === "JIVO 305 DI 4WD"
+      && rawVariant === "India 4WD / 8F x 4R / manufacturer specification"
+      && rawMarket === "India"
+      ? {variant:"4WD / 8F x 4R",markets:["India"]}
+    : null;
   const variantLabel = isSwarajTarget ? null
     : isLamborghiniStageV || isSpireFSourceNote ? "Stage V"
     : isHistoricalBelarus ? "Honda GX390"
     : isAgraleCargoSourceNote ? null
     : isDeutz5DSourceVariant ? deutzIdentityLabel
+    : reviewedSourceNotes ? reviewedSourceNotes.variant
     : rawVariant;
   const marketLabel = !rawMarket || rawMarket.toLowerCase() === "global" ? null
     : isSwarajTarget ? marketDisplayName("India",lang)
     : isLamborghiniStageV ? marketDisplayName("Europe",lang)
+    : reviewedSourceNotes
+      ? reviewedSourceNotes.markets.map(region=>marketDisplayName(region,lang)).join(" / ")
     : marketDisplayName(rawMarket, lang);
   const qualifiers = [
     variantLabel && variantLabel.length <= 48 ? variantLabel : null,

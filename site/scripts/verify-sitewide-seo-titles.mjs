@@ -24,6 +24,12 @@ const unescapeText=s=>s.replace(/&(?:amp|lt|gt|quot|apos|nbsp|#(?:x[0-9a-f]+|[0-
 });
 const clean=s=>unescapeText(s.replace(/<[^>]*>/g,"")).replace(/\s+/g," ").trim();
 
+// Bibliographic data is valuable on the page, but is generally poor title
+// copy. Warn on English source/provenance leaked into published model headings;
+// it is NOT a reason to automatically truncate unknown technical variants.
+export const hasBibliographicTitleLeak=title=>
+  /\b(?:brochure|manufacturer\s+(?:data|model|configuration|specification)|OEM\s+PDF|official\s+PDF)\b/i.test(title);
+
 export function inspectSeoTitle(html,file="index.html"){
   // Search-engine ownership challenge files are not editorial pages. Their
   // verification bytes must remain untouched (even if they contain <html>).
@@ -52,7 +58,7 @@ export function auditBuiltSeoTitles(dir){
   const root=resolve(dir);
   const summary={
     htmlDocuments:0,modelPages:0,over60:0,over105:0,over160:0,
-    byLocale:{},errors:[],duplicates:[],longExamples:[]
+    byLocale:{},errors:[],duplicates:[],longExamples:[],bibliographyExamples:[],bibliographyTitles:0
   };
   const modelTitles=new Map();
   function walk(directory){
@@ -73,6 +79,11 @@ export function auditBuiltSeoTitles(dir){
           group.over60++;
           if(summary.longExamples.length<30)
             summary.longExamples.push({file,length:page.length,title:page.title.slice(0,180)});
+        }
+        if(page.isModel&&hasBibliographicTitleLeak(page.title)){
+          summary.bibliographyTitles++;
+          if(summary.bibliographyExamples.length<25)
+            summary.bibliographyExamples.push({file,title:page.title.slice(0,180)});
         }
         if(page.length>105){summary.over105++;group.over105++;}
         if(page.length>160){summary.over160++;group.over160++;}
@@ -97,12 +108,13 @@ if(process.argv[1]&&resolve(process.argv[1])===fileURLToPath(import.meta.url)){
   try{
     const dir=resolve(process.argv[2]||"site/dist");
     const report=auditBuiltSeoTitles(dir);
-    const {htmlDocuments,modelPages,over60,over105,over160,byLocale,errors,duplicates,longExamples}=report;
+    const {htmlDocuments,modelPages,over60,over105,over160,byLocale,errors,duplicates,longExamples,bibliographyTitles,bibliographyExamples}=report;
     console.log("TRACTORVS_SITEWIDE_TITLE_QA "+JSON.stringify({
       htmlDocuments,modelPages,over60,over105,over160,
-      modelTitleDuplicates:duplicates.length,structuralErrors:errors.length,byLocale
+      modelTitleDuplicates:duplicates.length,sourceNoteTitleCandidates:bibliographyTitles,structuralErrors:errors.length,byLocale
     }));
     if(longExamples.length)console.log("TITLE_QA_SAMPLES "+JSON.stringify(longExamples.slice(0,16)));
+    if(bibliographyExamples.length)console.log("TITLE_QA_SOURCE_NOTE_REVIEW "+JSON.stringify(bibliographyExamples.slice(0,16)));
     if(duplicates.length)console.warn("TITLE_QA_DUPLICATE_MODELS "+JSON.stringify(duplicates.slice(0,20)));
     if(errors.length){
       console.error("TITLE_QA_ERRORS "+JSON.stringify(errors.slice(0,30)));
