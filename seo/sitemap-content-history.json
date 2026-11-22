@@ -2,32 +2,32 @@
   "version": 1,
   "pages": {
     "https://tractorvs.com/": {
-      "digest": "77192b5313f6889e110f1c7776f2178dfd2e29404ea2de1387f10032e79d2fb9",
-      "modified": null
+      "digest": "ef24a95592f4c0e3d65c3e6bd4a7f3d7a22241345be51f7d8db95fdbbb7e72c4",
+      "modified": "2026-11-22T01:10:30.580Z"
     },
     "https://tractorvs.com/articles/": {
       "digest": "6882e5ebc48632bf6cf8dd2c398e850b87bdadf552332ab0aa1f38742dcb1ecf",
       "modified": null
     },
     "https://tractorvs.com/compare/": {
-      "digest": "81dbb96bea23b9ab6ff1f43d64413a99f323b08c09057782d8204b6bf8e64090",
-      "modified": "2026-11-21T20:00:01.884Z"
+      "digest": "ce99a89492366726227bf6e0bedb5a2588e22b47cd79a3d583b1b650925b9989",
+      "modified": "2026-11-22T01:10:30.580Z"
     },
     "https://tractorvs.com/de/": {
-      "digest": "4c7053016243cfbf0785c3fe3c6fab112e4ef37fcfad637dbb66efb4686a5a1e",
-      "modified": null
+      "digest": "050b969bf313f09ea580fd901d51dbca7c8a6ec9cf9e66ad5ff9d30f53e5c126",
+      "modified": "2026-11-22T01:10:30.580Z"
     },
     "https://tractorvs.com/de/articles/": {
       "digest": "53e419514c8e8302407f747780f7af357ab809089846138bafd71c10f5dd04cc",
       "modified": null
     },
     "https://tractorvs.com/de/compare/": {
-      "digest": "a2634f7debbb9b0457a04ff8e7c1fc365dc21060a239874ba31753fc491fc968",
-      "modified": "2026-11-21T20:00:01.884Z"
+      "digest": "0d36e7f6b65c019e6105176fda5a897a5bc4a92677de28c9d4b8a67bd880319d",
+      "modified": "2026-11-22T01:10:30.580Z"
     },
     "https://tractorvs.com/de/farm-advisor/": {
-      "digest": "5d80ba7174047966ab746de6bc510037067261665a121643fa3ad02ae3107ef5",
-      "modified": "2026-11-21T19:20:06.548Z"
+      "digest": "ae990add846d83560a8a366f1764de2f05794b731e2d37f85824068ffcd459c8",
+      "modified": "2026-11-22T01:10:30.580Z"
     },
     "https://tractorvs.com/de/guides/choosing-a-tractor/": {
       "digest": "c8ea301bd2c46ef21fac33682f71778a0de07284c20e596e834b6d29e3aa34d3",
@@ -42,8 +42,8 @@
       "modified": null
     },
     "https://tractorvs.com/de/tractors/": {
-      "digest": "1e466cb9ee8e6a04b8114588c4010710d584e208f6161859ac3b2697063d73d5",
-      "modified": "2026-11-21T20:00:01.884Z"
+      "digest": "e230f7167b031d435c42c2a217584b1d8742f41bfe96c842f6491fc8e75cebf6",
+      "modified": "2026-11-22T01:10:30.580Z"
     },
     "https://tractorvs.com/de/tractors/agrale-4125-0b53e944/": {
       "digest": "32366e1df6154f04604255bcb6156d1828a47b1b02ef00cb2a1e2b65e857e7f8",
@@ -158,8 +158,8 @@
       "modified": null
     },
     "https://tractorvs.com/de/tractors/basak-traktor-2075-bt-ddb654b6/": {
-      "digest": "29a45793f03c74e838f2b7dfca01d060e95cc6a1bc899483f002c44fec4390b0",
-      "modified": null
+      "digest": "5b047eb205488df291da85f658896e592d2cb44db7f15a1917716043ace34446",
+      "modified": "2026-11-22T01:10:30.580Z"
     },
     "https://tractorvs.com/de/tractors/basak-traktor-5120-01590869/": {
       "digest": "48a61531893cdb7de740ecd33f3e6cdeb4958598c8fa62853a8f703b1b4e10fd",
@@ -288,6 +288,34 @@
     "https://tractorvs.com/de/tractors/belarus-952-4-55df9fc2/": {
       "digest": "e4025fcbc0f00d62e3a1ef4768d542a7304d24be61339586e54db100308fa460",
       "modified": "2026-11-21T18:59:50.515Z"
+    },
+    "https://tractorvs.com/de/tractors/deutz-fahr-5055-d-22e0e7be/": {
+      "digest": "67d9dd5470287ff7f3b05a6d2b27889187eb47863bd450dd1c3df0b30f82e89b",
+      "modified": "2026-11-22T01:10:30.580Z"
+    },
+    "https://tractorvs.com/de/tractors/deutz-fahr-5065-d-41809bc2/": {
+      "digest": "2b7d7db7c144b5c6f9ac30915ae59ab5013a9cf1cc0cde7325614fcaec44cbe5",
+      "modified": "2026-11-22T01:10:30.580Z"
+    },
+    "https://tractorvs.com/de/tractors/deutz-fahr-5065-d-df764799/": {
+      "digest": "06dd47979dec95618d0bece3e89ccbd2c64899403a26ff7d04512bad9e4e3583",
+      "modified": "2026-11-22T01:10:30.580Z"
+    },
+    "https://tractorvs.com/de/tractors/deutz-fahr-5075-d-cee8a4e1/": {
+      "digest": "45880c94eb9eec88ed437f30aedddc5ab6d58d862448a41bdd2f5f70021f5cac",
+      "modified": "2026-11-22T01:10:30.580Z"
+    },
+    "https://tractorvs.com/de/tractors/deutz-fahr-5075-d-db31dce1/": {
+      "digest": "33eb4741661aea34f9cb20271459f2441be13889ffe3c65349e3360fde6e795b",
+      "modified": "2026-11-22T01:10:30.580Z"
+    },
+    "https://tractorvs.com/de/tractors/deutz-fahr-5090-d-8cfb4aa9/": {
+      "digest": "e946cd199c9d8bdbcdd269ad6aed8a969f11986bca8fcb360e2ff22a19d2b2aa",
+      "modified": "2026-11-22T01:10:30.580Z"
+    },
+    "https://tractorvs.com/de/tractors/deutz-fahr-5100-d-e443a07b/": {
+      "digest": "7364fc8722ab34d59993756a75a15973f371974dadb1f709f8835cbde8560e50",
+      "modified": "2026-11-22T01:10:30.580Z"
     },
     "https://tractorvs.com/de/tractors/fendt-724-vario-191d10b4/": {
       "digest": "a0a5342b2ed2b8da8b6dcb7293c64368b3bdd0ea30df39da49765424a7ac1c38",
@@ -502,8 +530,8 @@
       "modified": null
     },
     "https://tractorvs.com/de/tractors/massey-ferguson-4708-standard-5727a834/": {
-      "digest": "21dbdd83565179114be3c74e38aac7b59ddcf9875b65a46bb6b65d5e5227a2a1",
-      "modified": null
+      "digest": "3b1c01ddf1334f147f72bcb18222fce59cdd405d6ef8ea84c888885d7c956178",
+      "modified": "2026-11-22T01:10:30.580Z"
     },
     "https://tractorvs.com/de/tractors/massey-ferguson-5s-125-69fc9aa9/": {
       "digest": "05f0dd53d9691e1befeb00f9571dd0831e69c645ceeeacb243b187200e5900eb",
@@ -750,8 +778,8 @@
       "modified": null
     },
     "https://tractorvs.com/de/tractors/new-holland-td5-90-a31d36a5/": {
-      "digest": "06462d21cedaf6a4fb2af37a28b4120bff07f008c779a598e0aad4238ef7ff3f",
-      "modified": null
+      "digest": "d36dbab91a08a4cb99535cb30b8636bc96cf6b948b6a55bb8a556858b13e40a0",
+      "modified": "2026-11-22T01:10:30.580Z"
     },
     "https://tractorvs.com/de/tractors/same-dorado-natural-100-4-e49cead8/": {
       "digest": "b231e994a9f8961256fe82add02a4af263fa0f1cde3229ef056548c5039c7923",
@@ -1182,8 +1210,8 @@
       "modified": null
     },
     "https://tractorvs.com/de/tractors/tumosan-8095-163f043b/": {
-      "digest": "3e67edf228bccfde96d624557fd31d10df13c54b9b43127a4b77f84d83ded10c",
-      "modified": null
+      "digest": "8ee7ef7a00d6666414c2d01debf6356900aeb1016aeb72b7eab0b434f4f1a004",
+      "modified": "2026-11-22T01:10:30.580Z"
     },
     "https://tractorvs.com/de/tractors/tym-t1019-462f610a/": {
       "digest": "9562f2f78d8a5d05020d87161253928729fd6db5a51009d338d20d0e999414fe",
@@ -1562,20 +1590,20 @@
       "modified": "2026-11-21T19:47:11.499Z"
     },
     "https://tractorvs.com/es/": {
-      "digest": "303e2990a69bbe78686498db61d32e113c1326bc68672cd0d801860fbe843542",
-      "modified": null
+      "digest": "b97917501170d98d14dd6825a9a7c7dab29b06ae2455b0360a62fc2ad819402f",
+      "modified": "2026-11-22T01:10:30.580Z"
     },
     "https://tractorvs.com/es/articles/": {
       "digest": "ef4bb39d3d1f26bed9618890c8c6b84b46e66cf1f955bd0fa9fa4af6060060da",
       "modified": null
     },
     "https://tractorvs.com/es/compare/": {
-      "digest": "c6174084db0fe2ee3dc73039036055f50dc04fe9211bba0f7cd6e3bc7eca11dd",
-      "modified": "2026-11-21T20:00:01.884Z"
+      "digest": "a6c987c4c31d2c57aa4648dad5e47dc5c1c376590686c3fbc7eb7168a5b8cf1b",
+      "modified": "2026-11-22T01:10:30.580Z"
     },
     "https://tractorvs.com/es/farm-advisor/": {
-      "digest": "124e7fbfecd3c425431e0b1708b89f15b1718815027c975b864b646a2532bbfe",
-      "modified": "2026-11-21T19:20:06.548Z"
+      "digest": "79d00352dba76d984084af3450b7af65503b772c52590c05f5943b263b12f685",
+      "modified": "2026-11-22T01:10:30.580Z"
     },
     "https://tractorvs.com/es/guides/choosing-a-tractor/": {
       "digest": "83859d82793178eb557e52b3f46dd563fcf28d894b2e8aacff2c9174c51b75a0",
@@ -1590,8 +1618,8 @@
       "modified": null
     },
     "https://tractorvs.com/es/tractors/": {
-      "digest": "cf1b27094697b7d3ddf74cb1ea8f861fa7ffc8c1e44c7881072da9de0a8e3d14",
-      "modified": "2026-11-21T20:00:01.884Z"
+      "digest": "5d906f11bccd69768944a76dfea6b95613aa65cf47422526f1c1758ec68e4100",
+      "modified": "2026-11-22T01:10:30.580Z"
     },
     "https://tractorvs.com/es/tractors/agrale-4125-0b53e944/": {
       "digest": "09b82587c02d7b807ad405f4a96f95918f280c963f4260a93bfeb7d92ebf2337",
@@ -1706,8 +1734,8 @@
       "modified": "2026-11-21T19:47:11.499Z"
     },
     "https://tractorvs.com/es/tractors/basak-traktor-2075-bt-ddb654b6/": {
-      "digest": "4ab484a45e75aff0effda12b9baf918ca91320c1055024d13fe97e0b4cb03f18",
-      "modified": null
+      "digest": "0c01cac2b0466ffe836c99465f0b0759dee0077bdafc257aec075bfa2379ad98",
+      "modified": "2026-11-22T01:10:30.580Z"
     },
     "https://tractorvs.com/es/tractors/basak-traktor-5120-01590869/": {
       "digest": "58f56ffdb76587d513b162845b046ca30bfda103a3ff92a1acdef36ec0ef47e5",
@@ -1836,6 +1864,34 @@
     "https://tractorvs.com/es/tractors/belarus-952-4-55df9fc2/": {
       "digest": "b900455571745a0f07babc3ce186a15271f8665b27fd22cc98658fa662edba65",
       "modified": "2026-11-21T19:47:11.499Z"
+    },
+    "https://tractorvs.com/es/tractors/deutz-fahr-5055-d-22e0e7be/": {
+      "digest": "96e5f534207b979817612ac09ad4a5a82522fa260903f5be0d1203dc8e0102cf",
+      "modified": "2026-11-22T01:10:30.580Z"
+    },
+    "https://tractorvs.com/es/tractors/deutz-fahr-5065-d-41809bc2/": {
+      "digest": "835c3cbb9dcd4b239a6d5ce52d2145affb9162573c91e17a1776fdaa5363e707",
+      "modified": "2026-11-22T01:10:30.580Z"
+    },
+    "https://tractorvs.com/es/tractors/deutz-fahr-5065-d-df764799/": {
+      "digest": "e5b4e1f851ee780ec1cdb6f0d4872f4cb50fe5ba475ad0d0676dec5da2040f2e",
+      "modified": "2026-11-22T01:10:30.580Z"
+    },
+    "https://tractorvs.com/es/tractors/deutz-fahr-5075-d-cee8a4e1/": {
+      "digest": "182956f7be006b7b5d2ac47a49bcf4ee6408c3591776c9cf71b377785e42d0a7",
+      "modified": "2026-11-22T01:10:30.580Z"
+    },
+    "https://tractorvs.com/es/tractors/deutz-fahr-5075-d-db31dce1/": {
+      "digest": "fbf19009d8a473584307d564a873142c0faaf2969ffc850d76430fc78da926ba",
+      "modified": "2026-11-22T01:10:30.580Z"
+    },
+    "https://tractorvs.com/es/tractors/deutz-fahr-5090-d-8cfb4aa9/": {
+      "digest": "5bc9b36438636c986a25d4453a132ccec3d523959b16622eb6b11a99a6f6cf63",
+      "modified": "2026-11-22T01:10:30.580Z"
+    },
+    "https://tractorvs.com/es/tractors/deutz-fahr-5100-d-e443a07b/": {
+      "digest": "2ce3c7c0088b0ba9e1d48aecc3459fa38ac5ead94322b08180a7384c058759e1",
+      "modified": "2026-11-22T01:10:30.580Z"
     },
     "https://tractorvs.com/es/tractors/fendt-724-vario-191d10b4/": {
       "digest": "7717d8301d78d4ef64fbf977f8ff5a68ad121eb5bb3095a4743031522472002c",
@@ -2050,8 +2106,8 @@
       "modified": null
     },
     "https://tractorvs.com/es/tractors/massey-ferguson-4708-standard-5727a834/": {
-      "digest": "29404a3238ce5e6d5f43a1e311d08e2c17faa50ec4a8224e33555b13b72997ce",
-      "modified": null
+      "digest": "1ad54a809a41c19e32c4b9a295d654b69f6848d08854177a5986022e0326a68d",
+      "modified": "2026-11-22T01:10:30.580Z"
     },
     "https://tractorvs.com/es/tractors/massey-ferguson-5s-125-69fc9aa9/": {
       "digest": "6c0c698ee1c39f9ee0fa3ed512375d5dd5a73956f92e5fd64883437cdfd0f7e5",
@@ -2298,8 +2354,8 @@
       "modified": null
     },
     "https://tractorvs.com/es/tractors/new-holland-td5-90-a31d36a5/": {
-      "digest": "e485dd6af342a727b135033083d7536a6fa2d1feed9b57412c26058c0e256fb6",
-      "modified": null
+      "digest": "0333206c957930924a89a9918144aed94ccf3f9134234cb08473b3c091906dd1",
+      "modified": "2026-11-22T01:10:30.580Z"
     },
     "https://tractorvs.com/es/tractors/same-dorado-natural-100-4-e49cead8/": {
       "digest": "bfb468ee74341f8dde95d92d4b72395a884ef04632760bcc9e12a67dc57d815c",
@@ -2730,8 +2786,8 @@
       "modified": "2026-11-21T19:08:54.066Z"
     },
     "https://tractorvs.com/es/tractors/tumosan-8095-163f043b/": {
-      "digest": "46fef4afb67666831df47b99c4eac413511bd08fa3b391e7e2552ed089b72adc",
-      "modified": null
+      "digest": "d86b190852eb5ee8a022875be15ab474f6903c03e6e937dca164c59ae3be624c",
+      "modified": "2026-11-22T01:10:30.580Z"
     },
     "https://tractorvs.com/es/tractors/tym-t1019-462f610a/": {
       "digest": "dbf4ccbfdf69f654e9957912478a35fa53c8d8090207e27cbdc2991f408d7ae8",
@@ -3110,24 +3166,24 @@
       "modified": "2026-11-21T21:02:04.777Z"
     },
     "https://tractorvs.com/farm-advisor/": {
-      "digest": "5d739ad301e342b35357e5166e3ccfe95fd1d45c5f71fe305550da607b895039",
-      "modified": "2026-11-21T19:20:06.548Z"
+      "digest": "8c11b9d105cce737354e264fb77ef91205ce6cfdde2e137a7643518f352664e4",
+      "modified": "2026-11-22T01:10:30.580Z"
     },
     "https://tractorvs.com/fr/": {
-      "digest": "d859062fd3f1e05de8d4048e7af4257b48a384f3bf28ff40a1a24a682807ebbc",
-      "modified": null
+      "digest": "1608f2ee19223e79ed1531ede0aabee580902a0afe1d873190cfdad2d94c1b1e",
+      "modified": "2026-11-22T01:10:30.580Z"
     },
     "https://tractorvs.com/fr/articles/": {
       "digest": "161911b8122786cce02b5e13d34b3fb48feb9aff7eb9a5d8db2211ca2bd5ec2a",
       "modified": null
     },
     "https://tractorvs.com/fr/compare/": {
-      "digest": "fc48cb7d70f4132cb6beb1650b58b5577e546e069f5b69e18257400b15dbc4eb",
-      "modified": "2026-11-21T20:00:01.884Z"
+      "digest": "213acd0ac0f0461cf9348e7d00dbfac159f53e4239f038e19a965ad07d6082c5",
+      "modified": "2026-11-22T01:10:30.580Z"
     },
     "https://tractorvs.com/fr/farm-advisor/": {
-      "digest": "d6cdd9df963102940b39a9e1e1675ae3cd88b871bdc74a8835e6c34b3d8cfe95",
-      "modified": "2026-11-21T19:20:06.548Z"
+      "digest": "0fb275e0696f322eb20cacb00df257747279427373ef093f6bfb7871b2f307f6",
+      "modified": "2026-11-22T01:10:30.580Z"
     },
     "https://tractorvs.com/fr/guides/choosing-a-tractor/": {
       "digest": "1987d4557bcce2475611807bdb15ed40c9edb2b8d1f012afb1aba2cadb526b26",
@@ -3142,8 +3198,8 @@
       "modified": null
     },
     "https://tractorvs.com/fr/tractors/": {
-      "digest": "889c50b75625d0c1196f5d8222b920409664cc4a76985fd1caa5c5b3343d7138",
-      "modified": "2026-11-21T20:00:01.884Z"
+      "digest": "6dd0c8f55cf5fb0e9b20635a66018ecedc857cc177405ef2a9f6e3fb388d0fef",
+      "modified": "2026-11-22T01:10:30.580Z"
     },
     "https://tractorvs.com/fr/tractors/agrale-4125-0b53e944/": {
       "digest": "c3c0fa87f1203833b2a9ddd00aa139d8c89f32f119811d3b813c75cc73fe950f",
@@ -3258,8 +3314,8 @@
       "modified": "2026-11-21T19:47:11.499Z"
     },
     "https://tractorvs.com/fr/tractors/basak-traktor-2075-bt-ddb654b6/": {
-      "digest": "d12b30b84cac63972c0f1d8eafff0bc8d94e70061c0c71d89ba6066df736b1df",
-      "modified": null
+      "digest": "d1a838b7cb67a4c2669c30d821df87e47b3bd8ad08adf24d77869c5c5f0dbd1a",
+      "modified": "2026-11-22T01:10:30.580Z"
     },
     "https://tractorvs.com/fr/tractors/basak-traktor-5120-01590869/": {
       "digest": "f91a9646f86ae824b4c4bc77ec8aeed101d291d0c2a31e839baf5e5d03cb0493",
@@ -3388,6 +3444,34 @@
     "https://tractorvs.com/fr/tractors/belarus-952-4-55df9fc2/": {
       "digest": "588b4388ec83dea3f2ad917d249da6d871ccb6e119aa77e38f8909c199345d87",
       "modified": "2026-11-21T19:47:11.499Z"
+    },
+    "https://tractorvs.com/fr/tractors/deutz-fahr-5055-d-22e0e7be/": {
+      "digest": "778ca050cfe632c5826b16d13f94e9ec4e5453dbb94f3ded925b19934243ff8c",
+      "modified": "2026-11-22T01:10:30.580Z"
+    },
+    "https://tractorvs.com/fr/tractors/deutz-fahr-5065-d-41809bc2/": {
+      "digest": "1f1271235a372bab5b4ea40cb762cec62a31a4ce180d6a19b15e5d3ad4edaece",
+      "modified": "2026-11-22T01:10:30.580Z"
+    },
+    "https://tractorvs.com/fr/tractors/deutz-fahr-5065-d-df764799/": {
+      "digest": "82a42a83b2d0fb026c9fa71a3ffc60458ab794543ef50498257abfe3514f91f1",
+      "modified": "2026-11-22T01:10:30.580Z"
+    },
+    "https://tractorvs.com/fr/tractors/deutz-fahr-5075-d-cee8a4e1/": {
+      "digest": "3f124033f228516de6a3044cce2a11b4a98f1474e7ad8cfd05c7383df7b339d6",
+      "modified": "2026-11-22T01:10:30.580Z"
+    },
+    "https://tractorvs.com/fr/tractors/deutz-fahr-5075-d-db31dce1/": {
+      "digest": "d05a7fd07f1c78c26875a81715dadd467d1495b6dc9558c02a205646b714ad3c",
+      "modified": "2026-11-22T01:10:30.580Z"
+    },
+    "https://tractorvs.com/fr/tractors/deutz-fahr-5090-d-8cfb4aa9/": {
+      "digest": "ebaedb2ed5b1203797dfb45c33ad6e01689db0cb09ac3c6f13271225bb43591c",
+      "modified": "2026-11-22T01:10:30.580Z"
+    },
+    "https://tractorvs.com/fr/tractors/deutz-fahr-5100-d-e443a07b/": {
+      "digest": "baddbe922731507453d76e48f98388b888137ec6196b35d1f4da4e72da904ed1",
+      "modified": "2026-11-22T01:10:30.580Z"
     },
     "https://tractorvs.com/fr/tractors/fendt-724-vario-191d10b4/": {
       "digest": "401d3fcedf1d06b78e75481af9a387fa2b3be773507f684ceae18a6dfe0cf2e7",
@@ -3602,8 +3686,8 @@
       "modified": null
     },
     "https://tractorvs.com/fr/tractors/massey-ferguson-4708-standard-5727a834/": {
-      "digest": "36da9909d68aa039c47a60e08b0bd20c6972ad62bc136e795b3a3c1c95170353",
-      "modified": null
+      "digest": "3c02eb23650338b07b21b0debac8dbf1df507f99a051788789fc02aeffb9434a",
+      "modified": "2026-11-22T01:10:30.580Z"
     },
     "https://tractorvs.com/fr/tractors/massey-ferguson-5s-125-69fc9aa9/": {
       "digest": "85bcce78d2b6b7dfc610e6ebe19750ed85c9778420ea3475dc4d04896a6ae3d9",
@@ -3850,8 +3934,8 @@
       "modified": null
     },
     "https://tractorvs.com/fr/tractors/new-holland-td5-90-a31d36a5/": {
-      "digest": "1ae22c333945a81351dd5e2976c02b17443954e78f163b02d3a0795bce9063ba",
-      "modified": null
+      "digest": "f6289b476708f4ea20f379f0ce4a08f41edcd850650d0c958d1497a556471643",
+      "modified": "2026-11-22T01:10:30.580Z"
     },
     "https://tractorvs.com/fr/tractors/same-dorado-natural-100-4-e49cead8/": {
       "digest": "b0c5dd3290f683fe79fcfb2144ec9b2042a542b1d76838016cecf1707116661b",
@@ -4282,8 +4366,8 @@
       "modified": "2026-11-21T19:08:54.066Z"
     },
     "https://tractorvs.com/fr/tractors/tumosan-8095-163f043b/": {
-      "digest": "8684b8cd7538a12faad0fd82ba44db4358fe5e90ed53a366d8d9e96a5ef5994a",
-      "modified": null
+      "digest": "846a6bafb80e4ff58903cf2fe5eda50cf88f0ff18bb38650101e832ee5272264",
+      "modified": "2026-11-22T01:10:30.580Z"
     },
     "https://tractorvs.com/fr/tractors/tym-t1019-462f610a/": {
       "digest": "b8b0aadc8bb23118e0e82f949893e6f085bb58043b175905baa1e7c94e481c00",
@@ -4682,20 +4766,20 @@
       "modified": null
     },
     "https://tractorvs.com/hi/": {
-      "digest": "bb70de67369256bb8afa7d29b57198641dc2cb6f8880b2a49f3f6efbd6610efd",
-      "modified": null
+      "digest": "3919475f89ceb733f27e1a6399273b3d3e1286ff92376dbfe8ed4e72da0a9dad",
+      "modified": "2026-11-22T01:10:30.580Z"
     },
     "https://tractorvs.com/hi/articles/": {
       "digest": "8966477c4f7c70b55a81b716a8fbb95d12c6420f1f99f503c024f8ea0ac1b016",
       "modified": null
     },
     "https://tractorvs.com/hi/compare/": {
-      "digest": "06869e4ca109ec1e2c1f13c6247912aba8db3b599b18fcda18fe32b1e1961839",
-      "modified": "2026-11-21T20:00:01.884Z"
+      "digest": "fe457a9f91e52731fe7e575fbbc16a83196ae185fb3b9a27098b3df43745bd8d",
+      "modified": "2026-11-22T01:10:30.580Z"
     },
     "https://tractorvs.com/hi/farm-advisor/": {
-      "digest": "d3be01f35315086197bab09d5f6bdd216c6acaf8594d82371ddaf0c0b9613a4c",
-      "modified": "2026-11-21T19:20:06.548Z"
+      "digest": "d47e316c36011fe24f96c7b79efb7e2e3584822c988c72453a2fe497f18af786",
+      "modified": "2026-11-22T01:10:30.580Z"
     },
     "https://tractorvs.com/hi/guides/choosing-a-tractor/": {
       "digest": "9d8ebe3b95cf39da8872a454842935b91531f4823bf75eb5a9d325cdc6913c1a",
@@ -4710,8 +4794,8 @@
       "modified": null
     },
     "https://tractorvs.com/hi/tractors/": {
-      "digest": "5c9015ab4ddac4d7b24f6fbd05a1f2dea0b51c6398a9184a59efef5c2535f91e",
-      "modified": "2026-11-21T20:00:01.884Z"
+      "digest": "71f09c7e2e91a9b05db1a20850a3405bc490f0468b2de03ac39819167751b4a3",
+      "modified": "2026-11-22T01:10:30.580Z"
     },
     "https://tractorvs.com/hi/tractors/agrale-4125-0b53e944/": {
       "digest": "89d390984132129c6705ac5f42d0a35f6d3e519fbf19cc0d8b6d848cd95ec5cb",
@@ -4826,8 +4910,8 @@
       "modified": "2026-11-21T19:47:11.499Z"
     },
     "https://tractorvs.com/hi/tractors/basak-traktor-2075-bt-ddb654b6/": {
-      "digest": "77e2d6ea7d39998ea2044f6b1e15c271c6bef5d656167ad16817ac3ff5b414a4",
-      "modified": null
+      "digest": "d08c8aa829ead98292a7a3599fcd1a7ef1f8f121bfd0532fceecfacf3b08b5b8",
+      "modified": "2026-11-22T01:10:30.580Z"
     },
     "https://tractorvs.com/hi/tractors/basak-traktor-5120-01590869/": {
       "digest": "50507c8f79157f3a2ed63b03d74fc3d21a1991a79fccbebd398c2f6237a3dd3e",
@@ -4956,6 +5040,34 @@
     "https://tractorvs.com/hi/tractors/belarus-952-4-55df9fc2/": {
       "digest": "ba4e26710deff864588a7aa7a476d543868edd35c3e5509315d7fcdea8a166a7",
       "modified": "2026-11-21T19:08:54.066Z"
+    },
+    "https://tractorvs.com/hi/tractors/deutz-fahr-5055-d-22e0e7be/": {
+      "digest": "523eeb588d4a1db646f52aca595036025bf2a804a354e202ca8477149be7c288",
+      "modified": "2026-11-22T01:10:30.580Z"
+    },
+    "https://tractorvs.com/hi/tractors/deutz-fahr-5065-d-41809bc2/": {
+      "digest": "b6832920c53a22af9a2854da522884ba7411685eab690da812193d207a5a7d31",
+      "modified": "2026-11-22T01:10:30.580Z"
+    },
+    "https://tractorvs.com/hi/tractors/deutz-fahr-5065-d-df764799/": {
+      "digest": "8123b51dd139ec7533f086e12ab7e14a6b687a631548cfd64ccff99e10d14098",
+      "modified": "2026-11-22T01:10:30.580Z"
+    },
+    "https://tractorvs.com/hi/tractors/deutz-fahr-5075-d-cee8a4e1/": {
+      "digest": "4204a1cfad7d255918595e6fd991b5386f056c0a6fc2bc75a18d2b189dad6fe0",
+      "modified": "2026-11-22T01:10:30.580Z"
+    },
+    "https://tractorvs.com/hi/tractors/deutz-fahr-5075-d-db31dce1/": {
+      "digest": "5dafb8df20440800350bb802b8952d261e9b7f91170610db4a12ade8799783a7",
+      "modified": "2026-11-22T01:10:30.580Z"
+    },
+    "https://tractorvs.com/hi/tractors/deutz-fahr-5090-d-8cfb4aa9/": {
+      "digest": "c6a0c02806818ac5912a118adc73cd1db3880f2e61a276d5390745cbefb62948",
+      "modified": "2026-11-22T01:10:30.580Z"
+    },
+    "https://tractorvs.com/hi/tractors/deutz-fahr-5100-d-e443a07b/": {
+      "digest": "a58f60724eeaef7a0377a5aeef4932be38321479fd406d62d27b75f646252924",
+      "modified": "2026-11-22T01:10:30.580Z"
     },
     "https://tractorvs.com/hi/tractors/fendt-724-vario-191d10b4/": {
       "digest": "a4ae2c2990bae0a66b34002556f3df0ff489f7b4c8a72bf7f8ab97bdfa75eab9",
@@ -5170,8 +5282,8 @@
       "modified": null
     },
     "https://tractorvs.com/hi/tractors/massey-ferguson-4708-standard-5727a834/": {
-      "digest": "e9aec4ff939b1f8d681c2864a9e11dbd46274251b26febfefcf7248a29286d50",
-      "modified": null
+      "digest": "a302b25d08eaef5f39d709c12cb6735d168887bbec7e862c08b35e1524cb19b0",
+      "modified": "2026-11-22T01:10:30.580Z"
     },
     "https://tractorvs.com/hi/tractors/massey-ferguson-5s-125-69fc9aa9/": {
       "digest": "e93ce15d840900125abb6c1fbf187bbd9c18a8c042020d23afce8c2ea62510a3",
@@ -5418,8 +5530,8 @@
       "modified": null
     },
     "https://tractorvs.com/hi/tractors/new-holland-td5-90-a31d36a5/": {
-      "digest": "ed03e1b15d53c143e77bac0b726fa257437750eff323339ebbdf0208da25c736",
-      "modified": null
+      "digest": "2c7f688ecce18deae6cde791441d525796864f9b0ec6bdb3d08cae7dff63500e",
+      "modified": "2026-11-22T01:10:30.580Z"
     },
     "https://tractorvs.com/hi/tractors/same-dorado-natural-100-4-e49cead8/": {
       "digest": "19f44efbe5be9d4b8aa548a631983d3f6ba8ae03981505c12f6f6a896e795e0c",
@@ -5850,8 +5962,8 @@
       "modified": null
     },
     "https://tractorvs.com/hi/tractors/tumosan-8095-163f043b/": {
-      "digest": "3380bf4b634c15298998bc7c99f024caa07db09303e0cd8d11a300f07b2fd564",
-      "modified": null
+      "digest": "8d9307b3a342fd1b868900bc35ffef485abae0ebaa979c23cb97fb3c16c916be",
+      "modified": "2026-11-22T01:10:30.580Z"
     },
     "https://tractorvs.com/hi/tractors/tym-t1019-462f610a/": {
       "digest": "69c17b1ed7cac2f23a24f097bc66caefdbc9056bb53e55cc64df910cf95dbdee",
@@ -6230,20 +6342,20 @@
       "modified": null
     },
     "https://tractorvs.com/ja/": {
-      "digest": "7977645b163d2ceeefebad726a1f334c7934062f156fd4d977942cfc0c0c14cf",
-      "modified": null
+      "digest": "a1ec5c910025d4cbf10827a4db5467665c63ba1ebe4bcb5333e08602812c8c92",
+      "modified": "2026-11-22T01:10:30.580Z"
     },
     "https://tractorvs.com/ja/articles/": {
       "digest": "42c67f3bdaeb70ac622b1ca2ed9c52f7a6dd6cb347e39f0cd93cf0cff3e75c99",
       "modified": null
     },
     "https://tractorvs.com/ja/compare/": {
-      "digest": "74adfecaf00a0f5447bd35f1b28da9e7b13cacbfa970e7ba94fdb142eab4f926",
-      "modified": "2026-11-21T20:00:01.884Z"
+      "digest": "73643e6a3e5e11703048aca1a2a13376820d9785a02620dbf44bb27ab61d68b8",
+      "modified": "2026-11-22T01:10:30.580Z"
     },
     "https://tractorvs.com/ja/farm-advisor/": {
-      "digest": "3a8a1195b95355cd0ee8a226223b3831078838a5de0e48e6356a9ff6f406282b",
-      "modified": "2026-11-21T19:20:06.548Z"
+      "digest": "96f571d5e042d3c1df28b1d4af0b1431c82bd206a9ff4104f61e8f6fc3676c05",
+      "modified": "2026-11-22T01:10:30.580Z"
     },
     "https://tractorvs.com/ja/guides/choosing-a-tractor/": {
       "digest": "92603cba27a17df62328686578313da48544956129744b81c6321cc0973ce5d3",
@@ -6258,8 +6370,8 @@
       "modified": null
     },
     "https://tractorvs.com/ja/tractors/": {
-      "digest": "b98a425c874ef451b3f19196ff3c8c587ed2bd0999cf762a57560716f0a40808",
-      "modified": "2026-11-21T20:00:01.884Z"
+      "digest": "1fb359cd0809f80d158b213d20587652db74bcb85f9cce1a9a2d3b783ad14abd",
+      "modified": "2026-11-22T01:10:30.580Z"
     },
     "https://tractorvs.com/ja/tractors/agrale-4125-0b53e944/": {
       "digest": "4d0e45acacbeeb3c521ccff6fdb73475c3d2a6b25b8314d917e1fba5cfd09492",
@@ -6374,8 +6486,8 @@
       "modified": "2026-11-21T19:47:11.499Z"
     },
     "https://tractorvs.com/ja/tractors/basak-traktor-2075-bt-ddb654b6/": {
-      "digest": "a0bf7a1d0a61e62826efe07ff3971a263a0810faa9b19d91177bbcc4620d1643",
-      "modified": null
+      "digest": "4c9daa5651c862f8b4a749ce3e11d79b2e7b436a438d43d113ec6b8d8354202f",
+      "modified": "2026-11-22T01:10:30.580Z"
     },
     "https://tractorvs.com/ja/tractors/basak-traktor-5120-01590869/": {
       "digest": "5637cb27ac5b34f1766e87512f650d05139c165e328ea02aecad9844a5c855b6",
@@ -6504,6 +6616,34 @@
     "https://tractorvs.com/ja/tractors/belarus-952-4-55df9fc2/": {
       "digest": "5295a49be005a10c1add5c5bc193e7de8bc13691377746fcfd89406c14af706c",
       "modified": "2026-11-21T18:59:50.515Z"
+    },
+    "https://tractorvs.com/ja/tractors/deutz-fahr-5055-d-22e0e7be/": {
+      "digest": "b2c53ed33479e0ab8054469af2de082322461cc4b46104de9e44b2d2a99f40d8",
+      "modified": "2026-11-22T01:10:30.580Z"
+    },
+    "https://tractorvs.com/ja/tractors/deutz-fahr-5065-d-41809bc2/": {
+      "digest": "3b5bfc74ba70a9aebc75df54669ea6fa00fec8a49c9bcaa8dfa89c1932b3258b",
+      "modified": "2026-11-22T01:10:30.580Z"
+    },
+    "https://tractorvs.com/ja/tractors/deutz-fahr-5065-d-df764799/": {
+      "digest": "f3ed7c5e2e050709fadcbebe06a84e22f1377e477eb81b75c0a112127a0b5f59",
+      "modified": "2026-11-22T01:10:30.580Z"
+    },
+    "https://tractorvs.com/ja/tractors/deutz-fahr-5075-d-cee8a4e1/": {
+      "digest": "e9db1d31d06c10a0e9b41c7b7688acc0f997057057af4b51e33bf864767d14a4",
+      "modified": "2026-11-22T01:10:30.580Z"
+    },
+    "https://tractorvs.com/ja/tractors/deutz-fahr-5075-d-db31dce1/": {
+      "digest": "2ad7630cd22250993fc6d07324069636c1d18541e43f7503ce83d09d1e80049f",
+      "modified": "2026-11-22T01:10:30.580Z"
+    },
+    "https://tractorvs.com/ja/tractors/deutz-fahr-5090-d-8cfb4aa9/": {
+      "digest": "cda8d42a628051c2b056426e73f968f4a4dc2072db57c9c73077a5cbc36de38a",
+      "modified": "2026-11-22T01:10:30.580Z"
+    },
+    "https://tractorvs.com/ja/tractors/deutz-fahr-5100-d-e443a07b/": {
+      "digest": "bad0ae6e9fde414992e95f665e6bb8e01cfe075aa993e512b88b5522eff3ea10",
+      "modified": "2026-11-22T01:10:30.580Z"
     },
     "https://tractorvs.com/ja/tractors/fendt-724-vario-191d10b4/": {
       "digest": "9bbabbed3a325000c103a5c43728f5aaedd2f39ed175ba89bb369d179da9e1fa",
@@ -6718,8 +6858,8 @@
       "modified": null
     },
     "https://tractorvs.com/ja/tractors/massey-ferguson-4708-standard-5727a834/": {
-      "digest": "35546bd76570b7acdaf51eb29083769eec03730ed7ce9d06d8f4a979b49f1432",
-      "modified": null
+      "digest": "7d1f5ca2e534a8cdc062594d6e3afcc131a48d2383392d79b9564df934ceef5b",
+      "modified": "2026-11-22T01:10:30.580Z"
     },
     "https://tractorvs.com/ja/tractors/massey-ferguson-5s-125-69fc9aa9/": {
       "digest": "5a22051d7d0d7794437921d57b8d35232ac3edb47671f71b55f7602f7be25feb",
@@ -6966,8 +7106,8 @@
       "modified": null
     },
     "https://tractorvs.com/ja/tractors/new-holland-td5-90-a31d36a5/": {
-      "digest": "0593064cbfabd7b6fc290033885ceaeca5fd3fc3fc6108abb6eb0b5dcba34e1c",
-      "modified": null
+      "digest": "005394bfbbab352a01899da7f9cd5927870081971019166fd1b3061531dfd69b",
+      "modified": "2026-11-22T01:10:30.580Z"
     },
     "https://tractorvs.com/ja/tractors/same-dorado-natural-100-4-e49cead8/": {
       "digest": "e756e9f47bff17ff4dfa0e1efab35bb83b975503aa70b558864e0cc9920b05c0",
@@ -7398,8 +7538,8 @@
       "modified": null
     },
     "https://tractorvs.com/ja/tractors/tumosan-8095-163f043b/": {
-      "digest": "abf308cb0d2e0a0d95e5950756e8dc0c9ab6bc60df715efaf8b82b395c94755c",
-      "modified": null
+      "digest": "bfd7743999eb06f4d9f7fbc9494a288ee1841b6f0e6f73e313423ce399bcb790",
+      "modified": "2026-11-22T01:10:30.580Z"
     },
     "https://tractorvs.com/ja/tractors/tym-t1019-462f610a/": {
       "digest": "797e5ba0d82569c15dc56ff72dbf3d25c87aba1329a99467b6286a7e206c7dff",
@@ -7786,20 +7926,20 @@
       "modified": null
     },
     "https://tractorvs.com/pt-br/": {
-      "digest": "4b67c3f50c74ad8fe0ec1b524ffc3500e7475ef1783a6a834a5233b1b6c188ec",
-      "modified": null
+      "digest": "29e5c442775f1e65da44783b80281484902050bc2df7eecc62d4cdf30babd9a0",
+      "modified": "2026-11-22T01:10:30.580Z"
     },
     "https://tractorvs.com/pt-br/articles/": {
       "digest": "90542fcb27edf2f8f636803824ebab758e32ef8f991c367613382ab2f45e49a5",
       "modified": null
     },
     "https://tractorvs.com/pt-br/compare/": {
-      "digest": "921a1e9f9eedbbeb6dba87ad2e454fd03a01414178476c9e4fdc6d2c3abfbefe",
-      "modified": "2026-11-21T20:00:01.884Z"
+      "digest": "6888f5ae949563c70e0b44f13e569c8bf7261167dce77a76647c94608348e767",
+      "modified": "2026-11-22T01:10:30.580Z"
     },
     "https://tractorvs.com/pt-br/farm-advisor/": {
-      "digest": "f7740944111a02427f570e7b64fede676e02dbd828aa1cf5de5daf5d1cf1aa82",
-      "modified": "2026-11-21T19:20:06.548Z"
+      "digest": "aa137502996b8c05693f3e324ef2cb18c99669a8bdf2c330cfdbda692e695248",
+      "modified": "2026-11-22T01:10:30.580Z"
     },
     "https://tractorvs.com/pt-br/guides/choosing-a-tractor/": {
       "digest": "292a6c126543b389136cd1f987c28e398372171cde6d8fcc684023334c0d0893",
@@ -7814,8 +7954,8 @@
       "modified": null
     },
     "https://tractorvs.com/pt-br/tractors/": {
-      "digest": "6ca6c20d93f29279bb8744bb58606d81fb64f2fd9eaacf51b5de90d0ebc07d1d",
-      "modified": "2026-11-21T20:00:01.884Z"
+      "digest": "afdef6245510294c40ca3d63a6f0a632406cd9ff228583d6afe17a5a200a643f",
+      "modified": "2026-11-22T01:10:30.580Z"
     },
     "https://tractorvs.com/pt-br/tractors/agrale-4125-0b53e944/": {
       "digest": "e5c8d39f408608dc6a8a09ecfa0571853acddde107e7a1ee3e2dfaa81c5f2393",
@@ -7930,8 +8070,8 @@
       "modified": "2026-11-21T19:47:11.499Z"
     },
     "https://tractorvs.com/pt-br/tractors/basak-traktor-2075-bt-ddb654b6/": {
-      "digest": "564df0e625b1bd1f128c2349f3ed6b0a1d884be8b84371cfc40b059a8238357d",
-      "modified": null
+      "digest": "eb271c1962a0104f3cb62bb4bfb61a7f68dd03585d8b4d43bad192f2f7fac533",
+      "modified": "2026-11-22T01:10:30.580Z"
     },
     "https://tractorvs.com/pt-br/tractors/basak-traktor-5120-01590869/": {
       "digest": "fefb9d5e1bc7d06dc24bcb569168b53c64f2a6f45706b1d3f0abafa18970c90f",
@@ -8060,6 +8200,34 @@
     "https://tractorvs.com/pt-br/tractors/belarus-952-4-55df9fc2/": {
       "digest": "5b8a42743ff025073a109c2906c71f2f415e4c79ea3b8b39437cbcfdb6d8a122",
       "modified": "2026-11-21T19:47:11.499Z"
+    },
+    "https://tractorvs.com/pt-br/tractors/deutz-fahr-5055-d-22e0e7be/": {
+      "digest": "0b3e7d74f1597c95aba93a16310e597a886ee29d2558e95cd1eb8c5d906137ff",
+      "modified": "2026-11-22T01:10:30.580Z"
+    },
+    "https://tractorvs.com/pt-br/tractors/deutz-fahr-5065-d-41809bc2/": {
+      "digest": "f5da87fae865c10601a8ad99315b5e07fbb70e0b0c4665fd2b24f372a096f088",
+      "modified": "2026-11-22T01:10:30.580Z"
+    },
+    "https://tractorvs.com/pt-br/tractors/deutz-fahr-5065-d-df764799/": {
+      "digest": "1c6615a0080ffb1ec8d9f39dfaaf8e682e9ba6c9896125ebd68680afc142a603",
+      "modified": "2026-11-22T01:10:30.580Z"
+    },
+    "https://tractorvs.com/pt-br/tractors/deutz-fahr-5075-d-cee8a4e1/": {
+      "digest": "e7b2055e514cfa57f9c8612dc90ff0f2f08274704170d807a7e7306d37b1deb0",
+      "modified": "2026-11-22T01:10:30.580Z"
+    },
+    "https://tractorvs.com/pt-br/tractors/deutz-fahr-5075-d-db31dce1/": {
+      "digest": "1708d713b12a4d978eed16f81a340ddefe7e9cacabad532ffc3e2428645918b5",
+      "modified": "2026-11-22T01:10:30.580Z"
+    },
+    "https://tractorvs.com/pt-br/tractors/deutz-fahr-5090-d-8cfb4aa9/": {
+      "digest": "3c8a8a121b09f8313ba9790499aaa2253904f319b2bce562a1694470ec668419",
+      "modified": "2026-11-22T01:10:30.580Z"
+    },
+    "https://tractorvs.com/pt-br/tractors/deutz-fahr-5100-d-e443a07b/": {
+      "digest": "8e61f9ebb9470ca2c566023f89c60bcf6e34a48abec4c4fe6466547c87e767dc",
+      "modified": "2026-11-22T01:10:30.580Z"
     },
     "https://tractorvs.com/pt-br/tractors/fendt-724-vario-191d10b4/": {
       "digest": "c2c2e5d773f4aca649dc5d322c929390b0adb20b48f402aca625809f41c8f4be",
@@ -8274,8 +8442,8 @@
       "modified": null
     },
     "https://tractorvs.com/pt-br/tractors/massey-ferguson-4708-standard-5727a834/": {
-      "digest": "130b9af7331f2600fba0ae77d788f4b27a02d1670a024b176068aa8100885b62",
-      "modified": null
+      "digest": "8e85e72a2a923ea24dee6397d4bc9662c3f57c32aa6a15bc7dfd409a6bd0e00b",
+      "modified": "2026-11-22T01:10:30.580Z"
     },
     "https://tractorvs.com/pt-br/tractors/massey-ferguson-5s-125-69fc9aa9/": {
       "digest": "d32816686b09f6540ac510f57460b78f6d01183a2b1943e374ce90af34126923",
@@ -8522,8 +8690,8 @@
       "modified": null
     },
     "https://tractorvs.com/pt-br/tractors/new-holland-td5-90-a31d36a5/": {
-      "digest": "e8e6136b445bc4d8f65a4775d71c6bb4d4d2d8787e8b4717c498a83aa3970fcd",
-      "modified": null
+      "digest": "3dbd23ceb9f6f324e210c4130b4f773ffe6b0b0fa68d4244775ec7f18ca40792",
+      "modified": "2026-11-22T01:10:30.580Z"
     },
     "https://tractorvs.com/pt-br/tractors/same-dorado-natural-100-4-e49cead8/": {
       "digest": "040dfaee3d81d388360e9f6383370d2767717087eddb32c109638a6e455e7fdb",
@@ -8954,8 +9122,8 @@
       "modified": "2026-11-21T19:08:54.066Z"
     },
     "https://tractorvs.com/pt-br/tractors/tumosan-8095-163f043b/": {
-      "digest": "5b8916fbe77ec2b826204fc48ffbe71eb91b4a02da9b57244960bb516d3f9bc0",
-      "modified": null
+      "digest": "4472fd6a7df4239ae8d2f08a2140e23bcf12ec794ba84d95c572d9a62d6e829b",
+      "modified": "2026-11-22T01:10:30.580Z"
     },
     "https://tractorvs.com/pt-br/tractors/tym-t1019-462f610a/": {
       "digest": "a77152f0d3da9ee2e7ec955ae573535d9bf06e1be98fc565c043b46cf89cb5ee",
@@ -9338,20 +9506,20 @@
       "modified": null
     },
     "https://tractorvs.com/ru/": {
-      "digest": "136d4d10d2aa6a1e8ebfc2d300791f80b9b5f008b3310bd96203318f5888e892",
-      "modified": null
+      "digest": "e63b826163b5b9336b18b4319cbbdc93b48f982880b8d5d27f750b1a98532b5c",
+      "modified": "2026-11-22T01:10:30.580Z"
     },
     "https://tractorvs.com/ru/articles/": {
       "digest": "c94152b508910f941c46893748fb66564950efbb1cb77f04aed4f8a570878464",
       "modified": null
     },
     "https://tractorvs.com/ru/compare/": {
-      "digest": "202344361c4aab691054e958a23233cd9d4a07673b24a76d7af98e16f88e5183",
-      "modified": "2026-11-21T20:00:01.884Z"
+      "digest": "663c4b29eaec68e74d2b4cbdbacf452b4e5da1fb3b34e32030f48d71d4575366",
+      "modified": "2026-11-22T01:10:30.580Z"
     },
     "https://tractorvs.com/ru/farm-advisor/": {
-      "digest": "6151b8e813ff8ecb14088c0de9d6030c32503db0b985056516f31dcdb2839ff9",
-      "modified": "2026-11-21T19:20:06.548Z"
+      "digest": "8f96a3663849b58c6e65a27bbe57bbf22cab09a55ea603644293e13c67e6810d",
+      "modified": "2026-11-22T01:10:30.580Z"
     },
     "https://tractorvs.com/ru/guides/choosing-a-tractor/": {
       "digest": "fc7f908cee35c26b64f4c2e748fe0f317a70a554928a5793dade6dd9d163d857",
@@ -9366,8 +9534,8 @@
       "modified": null
     },
     "https://tractorvs.com/ru/tractors/": {
-      "digest": "bc3addd1e7ec737c702a952ecf7ba75e73cfa2353f9e985d99fec757aac65138",
-      "modified": "2026-11-21T20:00:01.884Z"
+      "digest": "ed5a599a74f01e12133b8a6df646d6ae0c6179e01d9d91761baaf3dcda03593b",
+      "modified": "2026-11-22T01:10:30.580Z"
     },
     "https://tractorvs.com/ru/tractors/agrale-4125-0b53e944/": {
       "digest": "3091c15716e251bc6dbd9e7a97c4c7a804102e5e3cc3377119e082b66f638467",
@@ -9482,8 +9650,8 @@
       "modified": "2026-11-21T19:47:11.499Z"
     },
     "https://tractorvs.com/ru/tractors/basak-traktor-2075-bt-ddb654b6/": {
-      "digest": "72527743d857fec5cf374b13244480bff9506a1edcbe877b22d9d7403e54e256",
-      "modified": null
+      "digest": "c4b315ed9578ee2660a17bc63e15e752fe9959eef0758980e2f4ab62ce205de5",
+      "modified": "2026-11-22T01:10:30.580Z"
     },
     "https://tractorvs.com/ru/tractors/basak-traktor-5120-01590869/": {
       "digest": "1aeb20a6a8eb098e0c4988ed60559000f74a021a21d1093c9eb448c8dd2348a4",
@@ -9612,6 +9780,34 @@
     "https://tractorvs.com/ru/tractors/belarus-952-4-55df9fc2/": {
       "digest": "4b1dee6121a85ed9f2d30700dbb1539042d894498a625f7052df3baf87eedca4",
       "modified": "2026-11-21T19:08:54.066Z"
+    },
+    "https://tractorvs.com/ru/tractors/deutz-fahr-5055-d-22e0e7be/": {
+      "digest": "75641bc154b3df1aafece5023927c77ad6e4786aab3024c8afcd784b003035dc",
+      "modified": "2026-11-22T01:10:30.580Z"
+    },
+    "https://tractorvs.com/ru/tractors/deutz-fahr-5065-d-41809bc2/": {
+      "digest": "b07e877226cc36b30428bd566b4acab137221b3de7684603f4a08ec3cf89c0b7",
+      "modified": "2026-11-22T01:10:30.580Z"
+    },
+    "https://tractorvs.com/ru/tractors/deutz-fahr-5065-d-df764799/": {
+      "digest": "c23632cf3dd1aa0e7da47e02d903a31f3abd1345b4ea19a22762d3fc7abe47b4",
+      "modified": "2026-11-22T01:10:30.580Z"
+    },
+    "https://tractorvs.com/ru/tractors/deutz-fahr-5075-d-cee8a4e1/": {
+      "digest": "f1a5df22a86fb839f7fd093f25ae02f73bd7a2d2f167a1b5e64134f6f8fc7bfc",
+      "modified": "2026-11-22T01:10:30.580Z"
+    },
+    "https://tractorvs.com/ru/tractors/deutz-fahr-5075-d-db31dce1/": {
+      "digest": "b0b31168e2ca4a01c951f81aa9ae6c497cc8d330a7f39c1c0df5023b1d10e614",
+      "modified": "2026-11-22T01:10:30.580Z"
+    },
+    "https://tractorvs.com/ru/tractors/deutz-fahr-5090-d-8cfb4aa9/": {
+      "digest": "e4c46fac91b26929f440c24eb17bd849e4296649c8a5c8390567b89c7341bcca",
+      "modified": "2026-11-22T01:10:30.580Z"
+    },
+    "https://tractorvs.com/ru/tractors/deutz-fahr-5100-d-e443a07b/": {
+      "digest": "d8e94eda546d324d4cdc8a153941dcf1b942d65c5a69105d8624e5e266edbfc6",
+      "modified": "2026-11-22T01:10:30.580Z"
     },
     "https://tractorvs.com/ru/tractors/fendt-724-vario-191d10b4/": {
       "digest": "88b50e05a8fe0823db5420ffee6e73e620dc57ee378bed6d39c04de8dbb58674",
@@ -9826,8 +10022,8 @@
       "modified": null
     },
     "https://tractorvs.com/ru/tractors/massey-ferguson-4708-standard-5727a834/": {
-      "digest": "79511a826cd2824b7dc940585b95c3359a060b690c5710648eaad0f20b7fe3fa",
-      "modified": null
+      "digest": "3f42c9be198e0f4337f865e75eee8541ff774d97f1e9bd9cdbf99eea2d34b8a4",
+      "modified": "2026-11-22T01:10:30.580Z"
     },
     "https://tractorvs.com/ru/tractors/massey-ferguson-5s-125-69fc9aa9/": {
       "digest": "649072f9eeb2be56a2151c76c40ba5198a30eb492076ed88c943cf36a49145de",
@@ -10074,8 +10270,8 @@
       "modified": null
     },
     "https://tractorvs.com/ru/tractors/new-holland-td5-90-a31d36a5/": {
-      "digest": "91605ec9145ffbb70b83832e41be31deaa7b661643007934a2dfd1a8193ba594",
-      "modified": null
+      "digest": "01665aeaee7f8321f76d69b4c0d3ad6e7d2d6cc1837af97121cd57650f3b137a",
+      "modified": "2026-11-22T01:10:30.580Z"
     },
     "https://tractorvs.com/ru/tractors/same-dorado-natural-100-4-e49cead8/": {
       "digest": "3b45d173f0da3102734ce902a7ba20445a6f73dbb55338c25fb1e93ec81ed207",
@@ -10506,8 +10702,8 @@
       "modified": null
     },
     "https://tractorvs.com/ru/tractors/tumosan-8095-163f043b/": {
-      "digest": "f98755ac23ace54e2768f88e143d44e068daa20177b3d82d27e23766a01eba20",
-      "modified": "2026-11-21T19:47:11.499Z"
+      "digest": "96fe35bab354dd4ddc941a07d5834204fa7a6eb4f56090c9df7f72847def8cb7",
+      "modified": "2026-11-22T01:10:30.580Z"
     },
     "https://tractorvs.com/ru/tractors/tym-t1019-462f610a/": {
       "digest": "f1352efc3209a43039c1916e336d82cbb3213edf2d46f8aea0e03f510f5793a1",
@@ -10886,20 +11082,20 @@
       "modified": null
     },
     "https://tractorvs.com/tr/": {
-      "digest": "042cc504d0c4112da169283ed775d8be86545c2881c24e0e81290922c5a2a019",
-      "modified": null
+      "digest": "b03fe4af4341c7b3063fd457ccb89f5935dfed7c4b79248168c018c17d45a03f",
+      "modified": "2026-11-22T01:10:30.580Z"
     },
     "https://tractorvs.com/tr/articles/": {
       "digest": "0b2ff2f6dd89a40db518b347cd052f0cab5c4dd4b2a60e199cdacc7ed9b94676",
       "modified": null
     },
     "https://tractorvs.com/tr/compare/": {
-      "digest": "c0dcae3847aa36e8e9e9427cfd19afe4c99c0785686f186c825c8da36e92e43c",
-      "modified": "2026-11-21T20:00:01.884Z"
+      "digest": "7feea9b333d31f4b1f8b66f29389ce001f5d0198725883ef5fa92b3ba68dc2e3",
+      "modified": "2026-11-22T01:10:30.580Z"
     },
     "https://tractorvs.com/tr/farm-advisor/": {
-      "digest": "a4adbdc03bc2ab2929efa74249357d29f129d3a8fba458e6ff3f48292bdf8030",
-      "modified": "2026-11-21T19:20:06.548Z"
+      "digest": "b725cc6e880c8febb73dc3996584b6f49b4309c7353f57e5292ee201af27bdda",
+      "modified": "2026-11-22T01:10:30.580Z"
     },
     "https://tractorvs.com/tr/guides/choosing-a-tractor/": {
       "digest": "60cce5fa9d1392d15abdf62568bd38eb23d757e0640d27a3ae52b0850d15ef46",
@@ -10934,8 +11130,8 @@
       "modified": null
     },
     "https://tractorvs.com/tr/tractors/": {
-      "digest": "bed02b4d30f86a13a8882562201f65ad99c5f9799c604ef0889b0da4a914789e",
-      "modified": "2026-11-21T20:00:01.884Z"
+      "digest": "3c3cc8b95e885ab5e5f880075c62ef84df27c5857b1d0e62dfcf40a0068291ce",
+      "modified": "2026-11-22T01:10:30.580Z"
     },
     "https://tractorvs.com/tr/tractors/agrale-4125-0b53e944/": {
       "digest": "568db277ad3e970f9135067de5224019aef2a2b45b9b0b57d527593165500ddf",
@@ -11050,8 +11246,8 @@
       "modified": "2026-11-21T19:47:11.499Z"
     },
     "https://tractorvs.com/tr/tractors/basak-traktor-2075-bt-ddb654b6/": {
-      "digest": "712dbe97b83fac34f81000a6a8d72cbc19493d8927c0b3c8120bb756c9245197",
-      "modified": null
+      "digest": "82ef20186b8af59bb78acb5f699db99017b307fe751b6f76b22276721c3ef8da",
+      "modified": "2026-11-22T01:10:30.580Z"
     },
     "https://tractorvs.com/tr/tractors/basak-traktor-5120-01590869/": {
       "digest": "216e7549901e21a268fcec52ee43cd8bd81dcda403b362f4205cc96da0c4192a",
@@ -11180,6 +11376,34 @@
     "https://tractorvs.com/tr/tractors/belarus-952-4-55df9fc2/": {
       "digest": "06ca9b8d32a7aeddc37d51a8bd03ecc71cc3d5c436c3d3287d70cfef89365a1d",
       "modified": "2026-11-21T19:08:54.066Z"
+    },
+    "https://tractorvs.com/tr/tractors/deutz-fahr-5055-d-22e0e7be/": {
+      "digest": "d1cb31eb1932b0d79b898c13b1677675bebbab3c6203c2977ddd5269240f0c81",
+      "modified": "2026-11-22T01:10:30.580Z"
+    },
+    "https://tractorvs.com/tr/tractors/deutz-fahr-5065-d-41809bc2/": {
+      "digest": "1f388bda1a6562dd425c60dc6143f9581829cc5b8e007d71bd192186c6ca8d5a",
+      "modified": "2026-11-22T01:10:30.580Z"
+    },
+    "https://tractorvs.com/tr/tractors/deutz-fahr-5065-d-df764799/": {
+      "digest": "1662b6da02e65bb4855eba6e672f736a1e1bb46d30207828b3658863ed315f67",
+      "modified": "2026-11-22T01:10:30.580Z"
+    },
+    "https://tractorvs.com/tr/tractors/deutz-fahr-5075-d-cee8a4e1/": {
+      "digest": "7d90163994c29d6ace0b648125ebf5a4b211299f4d67c5e4cf43d842badb1da6",
+      "modified": "2026-11-22T01:10:30.580Z"
+    },
+    "https://tractorvs.com/tr/tractors/deutz-fahr-5075-d-db31dce1/": {
+      "digest": "8fecc92cc68a12ea6ddc3b187d3a702104424b17fcc029ac230eeaae8499d140",
+      "modified": "2026-11-22T01:10:30.580Z"
+    },
+    "https://tractorvs.com/tr/tractors/deutz-fahr-5090-d-8cfb4aa9/": {
+      "digest": "7329c553b5a6c9f0c8249484d2343eebe06742627edb8a218f90e29df9d15a90",
+      "modified": "2026-11-22T01:10:30.580Z"
+    },
+    "https://tractorvs.com/tr/tractors/deutz-fahr-5100-d-e443a07b/": {
+      "digest": "3d06a79fa924d8a33681a7787b8b777703fd933853d63fc75c85f0c2ea020a41",
+      "modified": "2026-11-22T01:10:30.580Z"
     },
     "https://tractorvs.com/tr/tractors/fendt-724-vario-191d10b4/": {
       "digest": "f6da1b7698293944cc766c1a0a03f0d4a2951fde0810dc838665cc4237495131",
@@ -11394,8 +11618,8 @@
       "modified": "2026-11-21T19:08:54.066Z"
     },
     "https://tractorvs.com/tr/tractors/massey-ferguson-4708-standard-5727a834/": {
-      "digest": "d33e40a09b37e52a5c54a585eaf377918762fad5ccbd5ae096c36edbec7ea86f",
-      "modified": "2026-11-21T19:47:11.499Z"
+      "digest": "1ddf93e17aa544298e9d95ed5848fb04f830e23239a4503aeb93183316d5dd48",
+      "modified": "2026-11-22T01:10:30.580Z"
     },
     "https://tractorvs.com/tr/tractors/massey-ferguson-5s-125-69fc9aa9/": {
       "digest": "f294cd7a5368262b5c04629ad8e230ae3dc6a3188f16587b869883a813110d78",
@@ -11642,8 +11866,8 @@
       "modified": null
     },
     "https://tractorvs.com/tr/tractors/new-holland-td5-90-a31d36a5/": {
-      "digest": "a7dde8d2b41e53309e70c47cc9599ded6e2d306d6c19f7b4641ef0bc3f5d3ac2",
-      "modified": "2026-11-21T19:08:54.066Z"
+      "digest": "0fa3d30749aaac94dcedc2b70d3a9eca20aa91b052c04b67f80b71f75cbb3186",
+      "modified": "2026-11-22T01:10:30.580Z"
     },
     "https://tractorvs.com/tr/tractors/same-dorado-natural-100-4-e49cead8/": {
       "digest": "2ecb4835a7d328470a87dff5e5a22926cb84e7b956b76f6ee0e151b31f825016",
@@ -12074,8 +12298,8 @@
       "modified": "2026-11-21T19:08:54.066Z"
     },
     "https://tractorvs.com/tr/tractors/tumosan-8095-163f043b/": {
-      "digest": "4f38d44c77a8e49260e88189ec9a69cf1b2db4b89018e1e81e7d721059cf341f",
-      "modified": "2026-11-21T19:47:11.499Z"
+      "digest": "4d77ce4d902c8119fbc63350e09a2b1af117c5e8fabb0ff9f595ce07c1e63343",
+      "modified": "2026-11-22T01:10:30.580Z"
     },
     "https://tractorvs.com/tr/tractors/tym-t1019-462f610a/": {
       "digest": "de205a7973a908d8c835246da12094d2deeadb035fc430cb99372c8565ab5d68",
@@ -12454,8 +12678,8 @@
       "modified": "2026-11-21T19:47:11.499Z"
     },
     "https://tractorvs.com/tractors/": {
-      "digest": "4c5ac56e9a959f0d6a72996cf6411bd8be19a892e7ee205d2a59170439f981b1",
-      "modified": "2026-11-21T20:00:01.884Z"
+      "digest": "6237669bcd261ec5ef63f88a8900b871b9de7cefceb88e6aa4a3b95e8f145d54",
+      "modified": "2026-11-22T01:10:30.580Z"
     },
     "https://tractorvs.com/tractors/agrale-4125-0b53e944/": {
       "digest": "5de348149531ede958cba36a5ad52ba44aa8febf31e506ba50a9c364915b7750",
@@ -12570,8 +12794,8 @@
       "modified": null
     },
     "https://tractorvs.com/tractors/basak-traktor-2075-bt-ddb654b6/": {
-      "digest": "15048e4b91a32b950f442208270aba66372259c823d959b23cce782e6312d9c0",
-      "modified": null
+      "digest": "025c17358be71c4e8e536df67d049b1923609b6b6cdbcb27786b9d1eddb357f9",
+      "modified": "2026-11-22T01:10:30.580Z"
     },
     "https://tractorvs.com/tractors/basak-traktor-5120-01590869/": {
       "digest": "e82d10467d851716d3ac9a0783ba35dd0391a1a5fe6eb873e7e040f2a2be12e6",
@@ -12700,6 +12924,34 @@
     "https://tractorvs.com/tractors/belarus-952-4-55df9fc2/": {
       "digest": "d59bed386524100a9080006c07394b88c1fe3b83bdb776c802e5754c18e7244c",
       "modified": "2026-11-21T18:59:50.515Z"
+    },
+    "https://tractorvs.com/tractors/deutz-fahr-5055-d-22e0e7be/": {
+      "digest": "7ad3cf8dc8d43215691357aeff655a90017222f08ee2ddb4690cc9938d5b9b3c",
+      "modified": "2026-11-22T01:10:30.580Z"
+    },
+    "https://tractorvs.com/tractors/deutz-fahr-5065-d-41809bc2/": {
+      "digest": "a0706a00c9a7ac2f2ef6bc3d5c3295b1742f59ed28b22ee432581f008de42947",
+      "modified": "2026-11-22T01:10:30.580Z"
+    },
+    "https://tractorvs.com/tractors/deutz-fahr-5065-d-df764799/": {
+      "digest": "47ec4bd4a91ba6b19ccdbea7dcb3c2501c99cb05a2cf0bebfe77e3328db74d6d",
+      "modified": "2026-11-22T01:10:30.580Z"
+    },
+    "https://tractorvs.com/tractors/deutz-fahr-5075-d-cee8a4e1/": {
+      "digest": "f7e9190f89df4009bf2b31e9b967e0bfece76097e3124091e66cdadb86b4dff2",
+      "modified": "2026-11-22T01:10:30.580Z"
+    },
+    "https://tractorvs.com/tractors/deutz-fahr-5075-d-db31dce1/": {
+      "digest": "cfbc224cf2ae401e9a8c88b4d0a29ee3abd425478592a2dcc0916b68143e61ee",
+      "modified": "2026-11-22T01:10:30.580Z"
+    },
+    "https://tractorvs.com/tractors/deutz-fahr-5090-d-8cfb4aa9/": {
+      "digest": "4240b2e73968f690ede29c8ebab5cac9b3f38d9aedb5706cecc8388015715552",
+      "modified": "2026-11-22T01:10:30.580Z"
+    },
+    "https://tractorvs.com/tractors/deutz-fahr-5100-d-e443a07b/": {
+      "digest": "ed78c38d80602d0930e86cc6ab2e151b7a81ecbd74b608ede89d97edd945cd36",
+      "modified": "2026-11-22T01:10:30.580Z"
     },
     "https://tractorvs.com/tractors/fendt-724-vario-191d10b4/": {
       "digest": "36a455cad2ca85a36d777ab06e25a66864dfe3d31ab95e32cfedf424d92c02ba",
@@ -12914,8 +13166,8 @@
       "modified": "2026-11-21T21:14:44.894Z"
     },
     "https://tractorvs.com/tractors/massey-ferguson-4708-standard-5727a834/": {
-      "digest": "5bf9e53f8efeb7db8220d5bed7f96e5b75be2d44fcaa8ddfabecbf9e618e0e09",
-      "modified": null
+      "digest": "f2b274c7af9392a96111d7b0128f64e3189f0dded38c1702aa59531c8903d268",
+      "modified": "2026-11-22T01:10:30.580Z"
     },
     "https://tractorvs.com/tractors/massey-ferguson-5s-125-69fc9aa9/": {
       "digest": "0ef07c98289b006ba24385ca4059691a3026ea81184f1dd4b0bf93a242fa918c",
@@ -13162,8 +13414,8 @@
       "modified": null
     },
     "https://tractorvs.com/tractors/new-holland-td5-90-a31d36a5/": {
-      "digest": "e057b95e800f5058be9334baeee09958bc57b0dd7957f8ec682f1665f92b3b2e",
-      "modified": null
+      "digest": "925082ff916a45d4eb17f8e8a71f607c69d05e2fc08a1d2d1ead5980819967e8",
+      "modified": "2026-11-22T01:10:30.580Z"
     },
     "https://tractorvs.com/tractors/same-dorado-natural-100-4-e49cead8/": {
       "digest": "65cadeebfb590c1d0a9faba115772bd6d62f33efae81099e1930c2a5532d7869",
@@ -13594,8 +13846,8 @@
       "modified": "2026-11-21T21:14:44.894Z"
     },
     "https://tractorvs.com/tractors/tumosan-8095-163f043b/": {
-      "digest": "4feb3884b2ad4dc9c298d35163e39a7b817d2fcf29e63c89af0247214f0b1dc5",
-      "modified": null
+      "digest": "3e4ba4cdc1f3f1eafcdc9c12ff7fd3cca3489c99b69d8db51dc99e6f61897c00",
+      "modified": "2026-11-22T01:10:30.580Z"
     },
     "https://tractorvs.com/tractors/tym-t1019-462f610a/": {
       "digest": "f4079e86df2e1f0b337e911c349da5d0da72c7466e50019eef2b82ac2548003b",
@@ -13974,20 +14226,20 @@
       "modified": null
     },
     "https://tractorvs.com/zh/": {
-      "digest": "2f964455301c8219db75e2e9d20b7ef0d7ae0a50c21f1976bb9e500524f3e0b3",
-      "modified": null
+      "digest": "bbe3f3bdd343bd04197f3f671349424ed4aeeeeb21aeba101950cffb6cd9ad7b",
+      "modified": "2026-11-22T01:10:30.580Z"
     },
     "https://tractorvs.com/zh/articles/": {
       "digest": "02824916702f610345d764f52474c0676736c634f3ad18816e436b0865246d74",
       "modified": null
     },
     "https://tractorvs.com/zh/compare/": {
-      "digest": "71bab9262d66db83be86b81d987465f9ffaabcafe0abbbb4e9c4595ced889e62",
-      "modified": "2026-11-21T20:00:01.884Z"
+      "digest": "3bcedcdeee0a6922017be2af0403af1db5617bc2480b03ea2578cd4a3be1fe74",
+      "modified": "2026-11-22T01:10:30.580Z"
     },
     "https://tractorvs.com/zh/farm-advisor/": {
-      "digest": "acec226c9dd9511500bef5a955082474f70bfa4cfd663939ecd9f0bf8468b829",
-      "modified": "2026-11-21T19:20:06.548Z"
+      "digest": "5a29d0543ae990be3f22dfefcf852ab467bb25cdcee170c2c3656a43f50bef99",
+      "modified": "2026-11-22T01:10:30.580Z"
     },
     "https://tractorvs.com/zh/guides/choosing-a-tractor/": {
       "digest": "07e5cd9042d6ba1bb63189632e1ec8bdcc4d8e176cd9cc13364bebc4d29af11a",
@@ -14002,8 +14254,8 @@
       "modified": null
     },
     "https://tractorvs.com/zh/tractors/": {
-      "digest": "220738e3ff30a0e78d360d0ed0efdbc174e5e3c58610a53ae063f317ffcc0d90",
-      "modified": "2026-11-21T20:00:01.884Z"
+      "digest": "c38fc7cb80aae30ab7e9536c3fa2b493be2984f59ca7bc6ace1d97fd992e4380",
+      "modified": "2026-11-22T01:10:30.580Z"
     },
     "https://tractorvs.com/zh/tractors/agrale-4125-0b53e944/": {
       "digest": "f2ec4c794b07f97f4377c767a1c061eee41a99562967e8fc5e4c798c68e27a7f",
@@ -14118,8 +14370,8 @@
       "modified": "2026-11-21T19:47:11.499Z"
     },
     "https://tractorvs.com/zh/tractors/basak-traktor-2075-bt-ddb654b6/": {
-      "digest": "b39cbb0a3c46e4e1faa33a05213b9e42b8cc2295d5bd2d935d9758de6e75a2bd",
-      "modified": null
+      "digest": "5b25170519758fa2c964f99b272f2b77139d44062f3fe623f5448f2113dea3b1",
+      "modified": "2026-11-22T01:10:30.580Z"
     },
     "https://tractorvs.com/zh/tractors/basak-traktor-5120-01590869/": {
       "digest": "6d7d5d1b17178cfbc8a8095266c46f1bb4adbd3043525f2aad9cda2d0543d423",
@@ -14248,6 +14500,34 @@
     "https://tractorvs.com/zh/tractors/belarus-952-4-55df9fc2/": {
       "digest": "a7e933814ab6630a44a84f11ea12d823842f57a350360b362f64521cf1f8534c",
       "modified": "2026-11-21T18:59:50.515Z"
+    },
+    "https://tractorvs.com/zh/tractors/deutz-fahr-5055-d-22e0e7be/": {
+      "digest": "02109140645142a8bdb395fd0c6dc802affd97dfdf7cb98f6cbab75b705eb102",
+      "modified": "2026-11-22T01:10:30.580Z"
+    },
+    "https://tractorvs.com/zh/tractors/deutz-fahr-5065-d-41809bc2/": {
+      "digest": "2aa864212c3d606ee6b49532afeec31734ea39da6142fad4b41e5219d8bd7ade",
+      "modified": "2026-11-22T01:10:30.580Z"
+    },
+    "https://tractorvs.com/zh/tractors/deutz-fahr-5065-d-df764799/": {
+      "digest": "7aedfd7e0f99eb645f075338e8ca046f1a177d8c46f71273ec101c53356025ff",
+      "modified": "2026-11-22T01:10:30.580Z"
+    },
+    "https://tractorvs.com/zh/tractors/deutz-fahr-5075-d-cee8a4e1/": {
+      "digest": "97174f04b07ca5c9a04a1711285dcaf19b761709744572e4345aa22287b1d4a4",
+      "modified": "2026-11-22T01:10:30.580Z"
+    },
+    "https://tractorvs.com/zh/tractors/deutz-fahr-5075-d-db31dce1/": {
+      "digest": "5844556345f9dcbaecbb6f0b71f48fb23ccb226db5343057fd480292a0ac18e2",
+      "modified": "2026-11-22T01:10:30.580Z"
+    },
+    "https://tractorvs.com/zh/tractors/deutz-fahr-5090-d-8cfb4aa9/": {
+      "digest": "bae8b8fd2ded34f95b3981bb8ed955eda9a7c275940c201eefac2eb7a015e0e7",
+      "modified": "2026-11-22T01:10:30.580Z"
+    },
+    "https://tractorvs.com/zh/tractors/deutz-fahr-5100-d-e443a07b/": {
+      "digest": "d1ccded92c30fc5e818e2beb33e96af3aaefbb7c01aa7791ccc17bc340b30f13",
+      "modified": "2026-11-22T01:10:30.580Z"
     },
     "https://tractorvs.com/zh/tractors/fendt-724-vario-191d10b4/": {
       "digest": "071710fadd2763c05c67f45f8ab91119469580cb948a23e0c6f64ae6f2c3588d",
@@ -14462,8 +14742,8 @@
       "modified": null
     },
     "https://tractorvs.com/zh/tractors/massey-ferguson-4708-standard-5727a834/": {
-      "digest": "9ed9f372b408b66ef2445cf7ffb6f7dcba418808fc52c3e8a26b84f92004d2be",
-      "modified": null
+      "digest": "513b87c0f28d4fc3be26cca3c6c6697dcd8abfd6f1ff8aa49d6adda7f60361ed",
+      "modified": "2026-11-22T01:10:30.580Z"
     },
     "https://tractorvs.com/zh/tractors/massey-ferguson-5s-125-69fc9aa9/": {
       "digest": "e79b72e8cc8e04ca41d49481a9817bc0d99922c6f05b3c289879ecc6e938742a",
@@ -14710,8 +14990,8 @@
       "modified": null
     },
     "https://tractorvs.com/zh/tractors/new-holland-td5-90-a31d36a5/": {
-      "digest": "670d88f5fa7818e6d9540642bdef3c4c151d84689b9ba81c6f878348b90487ba",
-      "modified": null
+      "digest": "b8c40672c430481a639e77a3c84176a2dcd4868be68ad91d68da5dd4258bd47c",
+      "modified": "2026-11-22T01:10:30.580Z"
     },
     "https://tractorvs.com/zh/tractors/same-dorado-natural-100-4-e49cead8/": {
       "digest": "12a0592434f974f0f73acee5038329d5c5315d6a1f165fbe87941f6ad8ee578f",
@@ -15142,8 +15422,8 @@
       "modified": null
     },
     "https://tractorvs.com/zh/tractors/tumosan-8095-163f043b/": {
-      "digest": "8bc9138f9f5aba292f4267f0bef2237b300af12660e7f688d43c59ac5aa76bcb",
-      "modified": null
+      "digest": "92d218c7736ca40417f06495c55c61bc1be67302a5c466039971895f960f224b",
+      "modified": "2026-11-22T01:10:30.580Z"
     },
     "https://tractorvs.com/zh/tractors/tym-t1019-462f610a/": {
       "digest": "4f8861804526689971fad2f2af528d32766578f342ffe2aba1054d0a3c7b4b1a",
