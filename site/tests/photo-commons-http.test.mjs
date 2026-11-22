@@ -36,11 +36,11 @@ test("503 without Retry-After waits at least 5s and limits retries",async()=>{
  assert.equal(attempts,3);
  assert.deepEqual(waits,[5000,10000]);
 });
-test("HTTP-200 logical Commons API error remains a failure",async()=>{
+test("HTTP-200 logical Commons rate-limit error must fail as cooldown",async()=>{
  await assert.rejects(fetchCommonsJson("https://commons.wikimedia.org/w/api.php",{
   fetchImpl:async()=>response(200,null,{error:{code:"ratelimited"}}),
   sleep:async()=>{}
- }),/ratelimited/);
+ }),CommonsCooldownError);
 });
 
 test("logical HTTP-200 ratelimited error uses cooldown and stops source requests",async()=>{
