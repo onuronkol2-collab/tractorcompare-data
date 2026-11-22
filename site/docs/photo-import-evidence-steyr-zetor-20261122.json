@@ -1,0 +1,105 @@
+{
+  "reviewRequired": true,
+  "publicationCount": 0,
+  "images": [
+    {
+      "fileId": "steyr-6240-absolut-blonder1984-2022",
+      "photographer": "Blonder1984",
+      "license": "CC BY 4.0",
+      "sourcePage": "https://commons.wikimedia.org/wiki/File:Steyr_Absolut_6240.jpg",
+      "origin": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d7/Steyr_Absolut_6240.jpg/1920px-Steyr_Absolut_6240.jpg",
+      "originSha256": "5c7aa7ab2fc79e07cd7e59f0d88af3d6016a0c9c03816c9bfa2534c6cd95db94",
+      "originBytes": 765475,
+      "derivatives": [
+        {
+          "file": "steyr-6240-absolut-blonder1984-2022-480.jpg",
+          "width": 480,
+          "height": 360,
+          "bytes": 45389,
+          "sha256": "7ec92a3f95ddfcd7d3cef576ae0064a512cf2e3e2cb6576b908b7c1d824f2b32"
+        },
+        {
+          "file": "steyr-6240-absolut-blonder1984-2022-960.jpg",
+          "width": 960,
+          "height": 720,
+          "bytes": 178980,
+          "sha256": "6be448c64b483a7795c2dbb30fa957f52b9565a192af9b49e14810d7a97d0933"
+        },
+        {
+          "file": "steyr-6240-absolut-blonder1984-2022-1920.jpg",
+          "width": 1920,
+          "height": 1440,
+          "bytes": 724162,
+          "sha256": "5bf5484646f7de3737e5f5ed4d4df475dca845954567b999ca20f9d2febb570c"
+        }
+      ],
+      "approvedToPublish": false
+    },
+    {
+      "fileId": "zetor-proxima-jj7777-2021",
+      "photographer": "JJ7777",
+      "license": "CC BY-SA 4.0",
+      "sourcePage": "https://commons.wikimedia.org/wiki/File:ZETOR_PROXIMA.jpg",
+      "origin": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/4c/ZETOR_PROXIMA.jpg/1920px-ZETOR_PROXIMA.jpg",
+      "originSha256": "8f25935ebbf8b8469b1dc1bd0515c37b4cdb70eb8777ba5e69e37f300ed3989d",
+      "originBytes": 571737,
+      "derivatives": [
+        {
+          "file": "zetor-proxima-jj7777-2021-480.jpg",
+          "width": 480,
+          "height": 270,
+          "bytes": 38296,
+          "sha256": "7f9fd031cac1a5e188c12485fc5e6709bb902d9ac8912c78028a61e42abe7f74"
+        },
+        {
+          "file": "zetor-proxima-jj7777-2021-960.jpg",
+          "width": 960,
+          "height": 541,
+          "bytes": 146082,
+          "sha256": "7f914a558c013e210dd130e2a194aa71117791d86c3bcb8585c68ddde71c9daa"
+        },
+        {
+          "file": "zetor-proxima-jj7777-2021-1920.jpg",
+          "width": 1920,
+          "height": 1082,
+          "bytes": 535401,
+          "sha256": "fdd7a7cae562cc7e0aba10f2911816cfba5f49696b120ce3f8bc1e957a21c272"
+        }
+      ],
+      "approvedToPublish": false
+    },
+    {
+      "fileId": "zetor-proxima-raf24-warsaw-2019",
+      "photographer": "Raf24~commonswiki",
+      "license": "CC BY-SA 4.0",
+      "sourcePage": "https://commons.wikimedia.org/wiki/File:Zetor_Proxima%2C_WAW.jpg",
+      "origin": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/81/Zetor_Proxima%2C_WAW.jpg/1920px-Zetor_Proxima%2C_WAW.jpg",
+      "originSha256": "175e4e98d41385757f05f183771589699f2b05e50565c8045dd8eade6a62cd4c",
+      "originBytes": 713231,
+      "derivatives": [
+        {
+          "file": "zetor-proxima-raf24-warsaw-2019-480.jpg",
+          "width": 480,
+          "height": 360,
+          "bytes": 39310,
+          "sha256": "6e086a17d3d41f93cd9bcec0dab47e2c1ddfbd97f8d9db106e10236e50a5d3ca"
+        },
+        {
+          "file": "zetor-proxima-raf24-warsaw-2019-960.jpg",
+          "width": 960,
+          "height": 720,
+          "bytes": 162780,
+          "sha256": "602c0f60db5b30a3d634f80510db10d18042f42af4bcc3f05724da06b1f6121a"
+        },
+        {
+          "file": "zetor-proxima-raf24-warsaw-2019-1920.jpg",
+          "width": 1920,
+          "height": 1440,
+          "bytes": 676069,
+          "sha256": "14779e90ac7d0b176c4f38f6f960151a0dac7fa899e70cddb376bd41059c4407"
+        }
+      ],
+      "approvedToPublish": false
+    }
+  ]
+}
