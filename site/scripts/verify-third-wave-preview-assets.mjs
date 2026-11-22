@@ -10,7 +10,7 @@ import {fileURLToPath} from "node:url";
 
 const proof=JSON.parse(readFileSync(new URL(
   "../docs/photo-mobile-third-wave-assets-evidence.json",import.meta.url),"utf8"));
-export const THIRD_WAVE_PREVIEW="https://perf-third-wave-12-public-720-live-release-20261122-tractorvs-site.onuronkol2.workers.dev";
+export const THIRD_WAVE_PREVIEW="https://perf-photo-wave3-20261122-tractorvs-site.onuronkol2.workers.dev";
 export function exactThirdWaveAssets(ledger=proof){
  if(ledger.schema!=="tractorvs-third-wave-12-live-approved-photo-assets-sha-v1"||
     ledger.recordCount!==12||ledger.derivativeCount!==24||
