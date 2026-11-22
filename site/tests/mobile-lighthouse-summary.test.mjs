@@ -105,9 +105,9 @@ test("image performance candidates are first-party, query-free and never double-
  const md=markdownReport([report,report],{});
  assert.match(md,/First-party image optimization candidates/);
  assert.match(md,/laboratory estimates only/);
- assert.match(md,/belarus-80-1-nikolai-960\\.jpg/);
+ assert.match(md,/belarus-80-1-nikolai-960\.jpg/);
  assert.match(md,/264 KiB/);
- assert.doesNotMatch(md,/stale|other\\.example|internal\\/secret/);
+ assert.doesNotMatch(md,/stale|other\.example|internal\/secret/);
  assert.doesNotMatch(md,/527 KiB/);
 });
 
