@@ -23,7 +23,7 @@ This runbook is part of the permanent AGENTS.md integration rules.
 
 ## Daily versus weekly full production SEO crawler (21 November 2026)
 
-- This crawler is independent of the 2-hour IndexNow discovery worker. The production sitemap root must list `sitemap-N.xml` (all published canonical HTML pages), `forum-sitemap.xml` (only approved forum hubs and articles), and `image-sitemap.xml` (image references tied to eligible HTML/forum URLs).
+- This crawler is independent of the hourly IndexNow discovery worker. The production sitemap root must list `sitemap-N.xml` (all published canonical HTML pages), `forum-sitemap.xml` (only approved forum hubs and articles), and `image-sitemap.xml` (image references tied to eligible HTML/forum URLs).
 - `site/scripts/production-sitemap-inventory.mjs` classifies the three XML content types. **Image references may overlap** HTML pages or approved forum topic pages. This is normal and must not be mistaken for duplicate crawlable URLs; duplicates *inside* one sitemap or orphans outside both canonical page sets are blocked.
 - `.github/workflows/live-website-audit.yml` runs daily (06:00 UTC) with a **rotating 20 model URLs per locale + every non-model page**, while validating the **entire** sitemap index/child coverage and 10-language model slug parity. It runs weekly Sunday (07:00 UTC) in **full** mode, reading and checking every distinct HTML or approved forum page's status, canonical, hreflang, HTML language, visible content and JSON-LD. Both modes fail on missing pages, rate limiting and invalid XML; the daily sample is not evidence that every URL was fetched successfully that day.
 - Daily rotation is deterministic and model-slug sorted, so the full cohort is covered by subsequent daily samples independently of weekly checks. `site/tests/production-sitemap-inventory.test.mjs` proves source subtype separation, index requirements, rejected hidden forum/offsite pages, ten-language parity and rotating sampling.
@@ -37,7 +37,7 @@ This runbook is part of the permanent AGENTS.md integration rules.
 - Brief Cloudflare 500/502/503/504 responses are retried at most five times with bounded increasing delays; a persistent 5xx, rate-limited 429, missing 404 or corrupt image is reported as failure. Do not evade limits through another host. The verifier remains credential-free and read-only.
 - Checking a public endpoint's binary magic bytes is **not evidence of copyright clearance**; the separate author/Commons license and model identity checks stay mandatory. The weekly report should distinguish network health, actual photo coverage, Google image discovery and image indexing.
 
-## Automatic IndexNow — fail-closed
+## Automatic IndexNow — fail-closed (22 November 2026 checked against live API, official protocol)
 
 Workflow: `.github/workflows/tractorvs-search-discovery.yml`.
 Script: `scripts/tractor-search-discovery.mjs`.
@@ -46,10 +46,10 @@ Script: `scripts/tractor-search-discovery.mjs`.
 - Initial run creates a baseline of the already-published URLs without sending all historical pages.
 - Subsequent runs compare new URLs or trusted `lastmod` changes against the last successful checkpoint.
 - Every changed page must return 200 (without redirect), correct canonical and no `noindex` before notification.
-- At most 60 changed pages are validated/sent per run; the rest remain pending.
+- At most **120 genuinely new or content-modified public pages** are verified and submitted per hourly run (`31 * * * *`, UTC); the remaining queue persists across runs. This is a safe, bounded throughput improvement over the former 60 pages every two hours; no historic unchanged sitemap bulk ping or shortcut around canonical, noindex and ownership checks.
 - Submit a validated batch to the shared `https://api.indexnow.org/indexnow` endpoint. It distributes a successful protocol notification to participating engines (including Bing, Yandex, Naver and Seznam). **Do not post individually to all engines.** If the primary returns transient 5xx or a network error, try one alternative official endpoint at a time (`www.bing.com/indexnow`, `yandex.com/indexnow`, `searchadvisor.naver.com/indexnow`), stopping at the first 200 or 202. Never bypass 4xx ownership failures, invalid payloads or 429 throttling. All failures leave the changed URLs pending.
 - A 200 means IndexNow accepted the request, 202 is provisional pending key validation. Neither status proves delivery, crawl or indexing by each individual engine. The report records the actual endpoint used, not invented search-index counts.
-- The checkpoint is retained in GitHub Actions cache only after success; API failures do not mark URL delivery successful.
+- The checkpoint is retained in GitHub Actions cache only after an acknowledged shared API response and successful live validation. HTTP 202 is recorded separately as **provisional receipt, pending key verification**; it never proves engine-specific acceptance. HTTP 400/403/422/429 and all failed fallback attempts fail closed without advancing or losing queued changes. An explicit JSON failure report is retained even when the main job fails. The hourly workflow also archives its small status/coverage evidence for seven days; the weekly evidence remains separate.
 - Manual workflow runs default to **dry run**; no submission/commit.
 - Removed pages are intentionally not submitted as 404/410 until an independently audited unpublication path exists.
 - Google does **not** use IndexNow. Its sitemap is regenerated on published production builds and exposed through `robots.txt` and the previously submitted root index. Google periodically revisits submitted sitemaps; **do not** use deprecated Google ping URLs or claim immediate Google indexing.
@@ -72,7 +72,7 @@ Source files: `seo/sitemap-content-history.json` and `site/src/data/sitemap-last
 
 ## Weekly evidence and real indexing
 
-Every Monday, the IndexNow workflow records a machine-readable JSON artifact retained for 30 days and writes a GitHub Actions summary; 2-hour checks also write summaries.
+Every Monday, the IndexNow workflow records a machine-readable JSON artifact retained for 30 days and writes a GitHub Actions summary; hourly checks also write summaries.
 
 **Distinct evidence levels:**
 1. Published URL listed in sitemap (observable locally).
