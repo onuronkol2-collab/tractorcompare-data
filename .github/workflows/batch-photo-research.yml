@@ -13,6 +13,8 @@ on:
     paths:
       - ".github/workflows/batch-photo-research.yml"
       - "site/scripts/batch-photo-discovery.mjs"
+      - "site/scripts/photo-sitemap-fetch.mjs"
+      - "site/scripts/photo-research-quality-gate.mjs"
       - "site/scripts/extract-archived-tractor-inventory.py"
       - "site/scripts/archive-brand-photo-discovery.mjs"
       - "site/scripts/photo-model-identity.mjs"
@@ -49,9 +51,15 @@ jobs:
           node-version: "22.23.4"
       - name: Export only model identities from historical tractor archive
         run: python site/scripts/extract-archived-tractor-inventory.py
+      # Both searches always run independently; neither failure is hidden by
+      # continue-on-error because the final quality gate checks both outcomes.
       - name: Search licensed image candidates for ALL archived brands and models
+        id: archive
+        continue-on-error: true
         run: node site/scripts/archive-brand-photo-discovery.mjs
       - name: Independently recheck all CURRENT published model pages
+        id: published
+        continue-on-error: true
         run: node site/scripts/batch-photo-discovery.mjs
       - name: Archive copyright and identity research without publishing drafts
         if: always()
@@ -60,3 +68,14 @@ jobs:
           name: tractorvs-all-model-photo-research
           path: photo-discovery-report
           retention-days: 30
+      - name: Fail closed unless both stages and research report are complete
+        if: always()
+        env:
+          ARCHIVE_OUTCOME: ${{ steps.archive.outcome }}
+          PUBLISHED_OUTCOME: ${{ steps.published.outcome }}
+        run: |
+          echo "Archive research outcome: $ARCHIVE_OUTCOME"
+          echo "Published model research outcome: $PUBLISHED_OUTCOME"
+          node site/scripts/photo-research-quality-gate.mjs
+          test "$ARCHIVE_OUTCOME" = "success"
+          test "$PUBLISHED_OUTCOME" = "success"
