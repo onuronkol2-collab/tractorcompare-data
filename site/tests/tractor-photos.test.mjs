@@ -751,7 +751,7 @@ test("Three visibly verified TYM 2500L, 6225C and T78 Commons photos publish sol
       const image=graph.find(node=>node["@type"]==="ImageObject");
       assert.ok(image,"ImageObject is required in "+locale+" for "+row.model);
       assert.equal(image.creator.name,p.photographer);
-      assert.equal(image.copyrightHolder.name,p.photographer);
+      assert.equal(image.copyrightNotice,p.photographer);
       assert.equal(image.license,p.licenseUrl);
       assert.equal(image.acquireLicensePage,p.sourcePage);
       assert.ok(image.contentUrl.endsWith(p.fullUrl));
