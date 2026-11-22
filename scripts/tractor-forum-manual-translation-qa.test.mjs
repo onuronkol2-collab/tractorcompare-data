@@ -122,3 +122,21 @@ test("Chinese/Japanese calendars accept natural date notation but not invented d
   assert.ok(badRange.errors.includes("calendar_facts_changed"),locale);
  }
 });
+
+test("same numbers with swapped scores between brands must never be considered publish-safe",()=>{
+ const sourceTitle="2026 Traktör Bayi Memnuniyeti";
+ const targetTitle="2026 Tractor Dealer Satisfaction";
+ const sourceBody="## Sıralama\n\n| Sıra | Marka | Puan |\n|---|---|---|\n| 🥇 1 | Same | **13,7** |\n| 🥈 2 | Deutz-Fahr | **13,2** |\n\n- Sıralama bayi memnuniyetine dayanır.";
+ const validBody="## Ranking\n\n| Rank | Brand | Score |\n|---|---|---|\n| 🥇 1 | Same | **13.7** |\n| 🥈 2 | Deutz-Fahr | **13.2** |\n\n- Ranking reflects dealer satisfaction.";
+ const cfg={sourceTitle,targetTitle,sourceBody,locale:"en"};
+ const ok=auditManualForumTranslation({...cfg,targetBody:validBody});
+ assert.ok(!ok.errors.includes("brand_rank_score_mapping_changed"),JSON.stringify(ok));
+ const swapped=validBody.replace("Same | **13.7**","Same | **13.2**")
+  .replace("Deutz-Fahr | **13.2**","Deutz-Fahr | **13.7**");
+ const bad=auditManualForumTranslation({...cfg,targetBody:swapped});
+ assert.ok(!bad.errors.includes("numeric_facts_changed"),"global numeric bag check misses swaps");
+ assert.ok(bad.errors.includes("brand_rank_score_mapping_changed"),JSON.stringify(bad));
+ const swappedRank=validBody.replace("🥇 1 | Same","🥇 2 | Same");
+ const badRank=auditManualForumTranslation({...cfg,targetBody:swappedRank});
+ assert.ok(badRank.errors.includes("brand_rank_score_mapping_changed"),JSON.stringify(badRank));
+});
