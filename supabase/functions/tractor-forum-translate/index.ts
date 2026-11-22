@@ -2,6 +2,7 @@ import {generateGeminiJson} from "./gemini-provider.ts";
 import {translateAzureArticle} from "./azure-translator.ts";
 import {translateCloudflareArticle} from "./cloudflare-m2m100.ts";
 import {runCloudflareSyntheticSmoke} from "./cloudflare-smoke.ts";
+import {runCloudflareSyntheticBatch} from "./cloudflare-batch.ts";
 import {isForumQueueProcessingEnabled} from "./queue-control.ts";
 import {chooseTranslationSegments,translationCheckpoint,nextTranslationCheckpoint} from "./translation-segments.ts";
 import {isUntranslatedTurkishTitle,sameNumericFacts,TRANSLATION_RESUME_FIELDS,verifiedReadyTranslation} from "./translation-quality.ts";
@@ -317,7 +318,7 @@ Deno.serve(async(req)=>{
  if(req.method!=="POST")return reply(405,{error:"POST required"});
  if(!equal(req.headers.get("x-queue-secret")||"",SECRET))return reply(401,{error:"Unauthorized"});
  let input:any;try{input=await req.json()}catch{return reply(400,{error:"Invalid JSON"})}
- if(input?.action!=="process_topic"&&input?.action!=="status"&&input?.action!=="test_cloudflare_synthetic")return reply(400,{error:"Unknown action"});
+ if(input?.action!=="process_topic"&&input?.action!=="status"&&input?.action!=="test_cloudflare_synthetic"&&input?.action!=="test_cloudflare_batch")return reply(400,{error:"Unknown action"});
  // Safety stop after an accidental ONAY invocation. Never claim jobs unless a
  // separate administrative Supabase secret explicitly authorizes queue processing.
  if(input.action==="process_topic" && !isForumQueueProcessingEnabled(Deno.env.get("TC_FORUM_QUEUE_PROCESSING_ENABLED")))
@@ -338,6 +339,21 @@ Deno.serve(async(req)=>{
    const code=/^Cloudflare (synthetic check|AI private credentials unavailable)/.test(safe)?
     safe:"Cloudflare synthetic check unavailable";
    return reply(503,{success:false,error:code.slice(0,100)});
+  }
+ }
+ if(input.action==="test_cloudflare_batch"){
+  // Explicit, manual-only nine-language non-user sentence; separate from real queue.
+  // No data reads/writes, no automatic schedule, max nine Cloudflare requests.
+  if(SELECTED_PROVIDER!=="cloudflare"||!CF_PILOT_ENABLED||!CF_FREE_VERIFIED)
+   return reply(412,{success:false,error:"Cloudflare free-only batch is not enabled"});
+  try{
+   const result=await runCloudflareSyntheticBatch({
+    accountId:CF_ACCOUNT_ID,apiToken:CF_TOKEN,
+    enabled:CF_PILOT_ENABLED,freePlanVerified:CF_FREE_VERIFIED
+   });
+   return reply(200,{success:true,kind:"synthetic_batch_only",...result});
+  }catch{
+   return reply(503,{success:false,error:"Cloudflare synthetic batch unavailable"});
   }
  }
  if(input.action==="status"){
