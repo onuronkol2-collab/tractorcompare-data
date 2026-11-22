@@ -452,7 +452,7 @@ test("Belarus 451, 572 and 923.4 Commons source JPG and ten-locale license evide
 test("historic photo batch is staged with rights and does not create records",()=>{
   assert.equal(HISTORICAL_LICENSED_PHOTOS.length,76);
   const all=new Set(HISTORICAL_LICENSED_PHOTOS.map(x=>x.fileId));
-  assert.equal(all.size,72);
+  assert.equal(all.size,76);
   assert.ok(HISTORICAL_LICENSED_PHOTOS.every(x=>x.configurationExact===false));
   assert.ok(!HISTORICAL_LICENSED_PHOTOS.some(x=>["Product","Vehicle"].includes(x.model)));
 });
