@@ -102,7 +102,7 @@ const OTHER_LOCALES = [
     transmission:"Варианты трансмиссии различаются", shared:"Есть данные у обоих", search:"Поиск марки или модели"},
   {code:"ja", html:"ja", condition:"測定条件や仕様が異なる",
     transmission:"変速機の仕様が異なる", shared:"両方にデータあり", search:"メーカーや型式を検索"},
-  {code:"es", html:"es", condition:"Las condiciones de medición o configuraciones difieren",
+  {code:"es", html:"es", condition:"Las condiciones de medición o las configuraciones difieren",
     transmission:"Las opciones de transmisión difieren", shared:"Datos en ambos", search:"Buscar marca o modelo"},
 ];
 
