@@ -100,6 +100,8 @@ export async function main(){
  console.log("TRACTORVS_OPENVERSE_READONLY "+JSON.stringify({status:result.status,queries:result.queries_sent,
  missingUniquePairs:result.missing_unique_pairs,candidateCount:result.candidates.length,
  providers:result.scopes,publicationCount:0,rateLimited:result.rate_limited}));
- // Important: API quota failures are recorded and isolated from existing Commons QA.
+ // API quota/source failures remain an explicit failure in this independent
+ // research lane. The Commons gate stays separate; never label partial as complete.
+ if(result.status!=="complete")process.exitCode=1;
 }
 if(process.argv[1]&&resolve(process.argv[1])===fileURLToPath(import.meta.url))await main();
