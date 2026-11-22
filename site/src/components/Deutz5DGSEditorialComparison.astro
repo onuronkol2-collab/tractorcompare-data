@@ -2,7 +2,7 @@
 import SiteLayout from "../layouts/SiteLayout.astro";
 import {getPublicCatalog} from "../lib/catalog.ts";
 import {localizedPath,type Locale} from "../lib/locales.ts";
-import {DEUTZ_5D_GS_PILOT,curatedDeutz5DPair} from "../lib/deutz-5d-editorial.ts";
+import {DEUTZ_5D_GS_PILOT,curatedDeutz5DPair,deutz5DPairReadiness} from "../lib/deutz-5d-editorial.ts";
 interface Props {lang:"tr"|"en"}
 const {lang}=Astro.props;
 const tr=lang==="tr";
@@ -11,7 +11,7 @@ const pair=curatedDeutz5DPair(catalog.tractors);
 // A public release must never ship an empty or speculative pilot after a
 // source, market, variant or public-row change. Inert previews remain noindex.
 if(import.meta.env.PUBLIC_INDEXING_ENABLED==="true"&&Astro.site&&!pair){
- throw Error("[TractorVS editorial evidence gate] 5D GS pilot lacked exact, sourced matching public rows");
+ throw Error("[TractorVS editorial evidence gate] "+JSON.stringify(deutz5DPairReadiness(catalog.tractors)));
 }
 const path=localizedPath(lang,DEUTZ_5D_GS_PILOT.path);
 const comparePath=localizedPath(lang,"/compare/");
