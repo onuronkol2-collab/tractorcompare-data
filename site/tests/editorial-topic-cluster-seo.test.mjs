@@ -92,7 +92,7 @@ test("sourced manufacturer hp notation is not silently equated with metric PS",(
  assert.match(article,/71\.1 mechanical hp/);
  assert.match(article,/Do not silently treat the maker/);
  assert.match(article,/üreticinin ‘hp’ etiketini/);
- assert.match(component,/hasPowerStandards \? "2026-11-22" : "2026-11-20"/);
+ assert.match(component,/hasEditorialUpdate \? "2026-11-22" : "2026-11-20"/);
  assert.match(component,/22 Kasım 2026/);
  assert.match(component,/22 November 2026/);
  assert.match(component,/hasPowerStandards\?\[/);
