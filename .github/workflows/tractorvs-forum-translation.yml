@@ -45,7 +45,7 @@ jobs:
       - name: Typecheck private worker without secrets or paid API calls
         run: deno check --no-config supabase/functions/tractor-forum-translate/index.ts
       - name: Run isolated Cloudflare, Azure and Gemini provider contract tests (no external calls or charges)
-        run: deno test --no-config supabase/functions/tractor-forum-translate/gemini-provider.test.ts supabase/functions/tractor-forum-translate/translation-quality.test.ts supabase/functions/tractor-forum-translate/translation-segments.test.ts supabase/functions/tractor-forum-translate/azure-translator.test.ts supabase/functions/tractor-forum-translate/cloudflare-m2m100.test.ts supabase/functions/tractor-forum-translate/cloudflare-smoke.test.ts
+        run: deno test --no-config supabase/functions/tractor-forum-translate/gemini-provider.test.ts supabase/functions/tractor-forum-translate/translation-quality.test.ts supabase/functions/tractor-forum-translate/translation-segments.test.ts supabase/functions/tractor-forum-translate/azure-translator.test.ts supabase/functions/tractor-forum-translate/cloudflare-m2m100.test.ts supabase/functions/tractor-forum-translate/cloudflare-smoke.test.ts supabase/functions/tractor-forum-translate/queue-control.test.ts
 
   status:
     # KONTROL never calls Gemini; only reports private queue counters.
