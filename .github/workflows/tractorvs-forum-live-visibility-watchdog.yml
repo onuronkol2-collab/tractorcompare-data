@@ -1,7 +1,9 @@
 name: TractorVS live forum publication watchdog
 
 on:
-  # Schedules are best-effort. This independent watchdog detects failed sync,
+  # 22 Nov 2026 EN-first release audit: verify the newly approved public EN page
+# and its indexed sitemap after the public fingerprint sync (two locale rows).
+# Schedules are best-effort. This independent watchdog detects failed sync,
   # Cloudflare delivery, missing sitemap entries and hidden-post leakage.
   schedule:
     - cron: "19,49 * * * *"
