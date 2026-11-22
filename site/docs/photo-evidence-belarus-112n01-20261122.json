@@ -1,0 +1,27 @@
+{
+  "reviewedAt": "2026-11-22",
+  "licensePageMetadataReviewed": true,
+  "sourcePagesReviewed": true,
+  "originalBinaryHttpVerified": false,
+  "jpegContentVerified": false,
+  "firstPartyProxyHttpVerified": false,
+  "policy": "Exact published Belarus 112N-01 identity only. Manufacturer catalog prints 112H-01 heading but 112N-01 body; Cyrillic capital Н transliterates N. No cross-model photo assignment, no image without rights and HTTP proof.",
+  "releaseStatus": "Source candidate; require live Commons metadata, real JPEG derivatives, build, image license, ten-language checks and first-party HTTP before publishing.",
+  "sources": [
+    {
+      "brand": "Belarus",
+      "model": "112N-01",
+      "fileId": "belarus-112n-01-homoatrox-belagro-2021",
+      "originalFilename": "Belarus 112H-01 tractor (Belagro-2021).jpg",
+      "sourcePage": "https://commons.wikimedia.org/wiki/File:Belarus_112H-01_tractor_(Belagro-2021).jpg",
+      "photographer": "Homoatrox",
+      "licenseName": "CC BY-SA 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+      "width": 3201,
+      "height": 4385,
+      "variantExact": false,
+      "modelIdentityEvidence": "Manufacturer catalogue https://kocyigit.com.tr/wp-content/uploads/2024/06/Katalog_Belarus_Traktor.pdf identifies BELARUS 112H-01 in heading and 112N-01 in body; Commons file title specifies same model. Photograph cannot establish engine/trim/year for site record.",
+      "usageModificationNote": "Resized derivatives from original; credit Homoatrox and CC BY-SA 3.0 with share-alike for adapted image."
+    }
+  ]
+}
