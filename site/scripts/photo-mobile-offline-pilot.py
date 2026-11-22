@@ -189,11 +189,11 @@ def run(manifest: dict, folder: Path, source_loader=fetch_jpeg) -> list[dict]:
 
 def self_test() -> None:
     photo = Image.new("RGB", (960, 600))
-    # Structured variation makes quality and bandwidth assertions meaningful.
+    # Smooth, photographic-like gradient validates the pixel pipeline without\n    # abusing high-frequency modulo noise unlike real tractor photographs.
     pixels = photo.load()
     for y in range(600):
         for x in range(960):
-            pixels[x, y] = ((x*7+y*3) % 256, (x+y*5) % 256, (x*2+y*9) % 256)
+            pixels[x, y] = (int(30+150*x/960), int(35+160*y/600), int(50+100*(x+y)/1560))
     buffer = BytesIO()
     photo.save(buffer, "JPEG", quality=93)
     item = {
