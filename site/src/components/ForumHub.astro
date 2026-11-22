@@ -461,6 +461,8 @@ const schema=indexable?{
 .community-list,.community-sidebar{min-width:0}
 .community-sidebar{display:grid;gap:16px}
 .community-sidebar :global(.community-composer){margin:0;box-shadow:0 8px 26px rgba(12,42,24,.04)}
+/* Emoji picker is anchored to the right-edge sidebar, never beyond viewport. */
+.community-sidebar :global(.forum-emoji-grid){inset-inline-start:auto;inset-inline-end:0;max-width:min(330px,calc(100vw - 52px))}
 .forum-view-tabs{display:flex;align-items:stretch;gap:5px;padding:7px;
  background:#fff;border:1px solid #dee9dc;border-radius:14px;
  box-shadow:0 5px 18px rgba(19,48,29,.025);min-width:0}
