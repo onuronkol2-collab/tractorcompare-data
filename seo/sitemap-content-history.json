@@ -66,8 +66,8 @@
       "modified": "2026-11-22T05:19:46.825Z"
     },
     "https://tractorvs.com/de/tractors/agrale-4233-e3ed3f24/": {
-      "digest": "bab29337c5ff8f852ec6b121ede6c6a8f08eaac887a43b4a166c1156b706243c",
-      "modified": "2026-11-22T17:20:12.066Z"
+      "digest": "5e3f0cdbeeda42e6983754f6506a631f26a48a4e692225455928774a48557f2c",
+      "modified": "2026-11-22T17:26:34.896Z"
     },
     "https://tractorvs.com/de/tractors/agrale-5105-3601ec83/": {
       "digest": "6bfa4a1dd6d09cf256d55d8fe6cbc2f018da4c8441117683506385b53f279f79",
@@ -130,8 +130,8 @@
       "modified": "2026-11-22T09:01:41.689Z"
     },
     "https://tractorvs.com/de/tractors/antonio-carraro-tigre-3800-fc5f6f1d/": {
-      "digest": "92509d3fb60ec915a52d53362ce9820ab26e88746257740fca3affa4a2786c62",
-      "modified": "2026-11-22T12:57:29.705Z"
+      "digest": "276bf31c58b268b0859f185e482bfed9beaacbab5936e0d73a0a274acc7843dd",
+      "modified": "2026-11-22T17:26:34.896Z"
     },
     "https://tractorvs.com/de/tractors/antonio-carraro-tony-8700-v-057ddf74/": {
       "digest": "29592ea1f3e6e541f3b2acb5a9441f6dddad514ad32ff697a84b30746ae316e1",
@@ -438,20 +438,20 @@
       "modified": "2026-11-22T05:19:46.825Z"
     },
     "https://tractorvs.com/de/tractors/mahindra-arjun-555-di-2c1a6638/": {
-      "digest": "1f88f790f2644cd137d862bc46016132ceeced7bca7d3bdc5b4e5f408dc2e169",
-      "modified": "2026-11-22T17:20:12.066Z"
+      "digest": "d5e7de5560ff6b9133eb15381aeefc68dc8f1f25ba97cdfbfe9c57364104a7bd",
+      "modified": "2026-11-22T17:26:34.896Z"
     },
     "https://tractorvs.com/de/tractors/mahindra-arjun-605-di-i-bee5e88f/": {
-      "digest": "174f0b33a680e4918080b234ef614e902a9d23c5b3f6cada4b4eab451d00e9a1",
-      "modified": "2026-11-22T17:20:12.066Z"
+      "digest": "3dfeb6f91206b0cafd54901b634fa4ac13240dea805dce478905a8157e481bdf",
+      "modified": "2026-11-22T17:26:34.896Z"
     },
     "https://tractorvs.com/de/tractors/mahindra-arjun-605-di-ms-739db984/": {
-      "digest": "31d215f43670bc20b033c4b194a944cc329621ec7507f2caf85bf52764d6ba3b",
-      "modified": "2026-11-22T17:20:12.066Z"
+      "digest": "756d99ea8884ced4ab02139e7fc2fc05cbb6f6792b5a45530d0aacfd3fe86a34",
+      "modified": "2026-11-22T17:26:34.896Z"
     },
     "https://tractorvs.com/de/tractors/mahindra-arjun-605-di-ms-v1-163dbb9b/": {
-      "digest": "d7842e2fb934effbe66e25f47f0178eaba4722926dbcabf725556bfaafaf6f69",
-      "modified": "2026-11-22T17:20:12.066Z"
+      "digest": "a8e2e88cfd0b8c83169d196de3fcc2e0052ce59740c583d1f183191e11bcb92c",
+      "modified": "2026-11-22T17:26:34.896Z"
     },
     "https://tractorvs.com/de/tractors/mahindra-jivo-225-di-4wd-34f40738/": {
       "digest": "06efe375696c915f878703ca567e8d8d8bdb566862b789d7e76004ab55932a13",
@@ -882,24 +882,24 @@
       "modified": "2026-11-21T19:47:11.499Z"
     },
     "https://tractorvs.com/de/tractors/sonalika-di-30-baagban-ad248a3c/": {
-      "digest": "984339abbee5bbb4d3f2ab7b042076829ed472be1b644f0968890eb823f6b840",
-      "modified": "2026-11-22T05:19:46.825Z"
+      "digest": "fc03ae829db4d52df4aabdf91d64f3028abe5004751f084316a8b94262f4d740",
+      "modified": "2026-11-22T17:26:34.896Z"
     },
     "https://tractorvs.com/de/tractors/sonalika-di-35-596c8706/": {
-      "digest": "c29dce4389a1a0b975673a2559637c24a1656a70674ece825254882d2ceef6cc",
-      "modified": "2026-11-22T05:19:46.825Z"
+      "digest": "7c876e9272413dd249fc4a6cf38861a428283f1f389fae06c2d90ce58a283da9",
+      "modified": "2026-11-22T17:26:34.896Z"
     },
     "https://tractorvs.com/de/tractors/sonalika-di-42-p-2d79ca05/": {
-      "digest": "7248a7214d6345b0bbfdcedcd4d20e8e270e7a8d11062a78ea9a24f2d3ff6982",
-      "modified": null
+      "digest": "becd6ab7729bedcd17e62e3005ff477c50978395d60126de97841d19271a7f52",
+      "modified": "2026-11-22T17:26:34.896Z"
     },
     "https://tractorvs.com/de/tractors/sonalika-di-734-d5d14815/": {
-      "digest": "cfa1c1d04b566089642049d7ca23ce4c27cfc2f93fbf001aedc40ef736ad25e4",
-      "modified": null
+      "digest": "f8b6c6a7baf21ca5568145c02598f1e35c98d827ef984753c643017d09259795",
+      "modified": "2026-11-22T17:26:34.896Z"
     },
     "https://tractorvs.com/de/tractors/sonalika-di-734-power-plus-fb435078/": {
-      "digest": "878b0ba0ac737361c446a364008a7ec93f246ebaec9c007fb4e526520a11d349",
-      "modified": "2026-11-22T04:59:19.699Z"
+      "digest": "f931fddeb2c4718e764d8ca9b990a23358ab690f7b003f1dd5035377d07e23f9",
+      "modified": "2026-11-22T17:26:34.896Z"
     },
     "https://tractorvs.com/de/tractors/sonalika-di-740-iii-3a46f879/": {
       "digest": "a08962ac4e28f830de01e56619063790d20015cffe37972ba48d7afdeb20d805",
@@ -910,12 +910,12 @@
       "modified": "2026-11-22T05:19:46.825Z"
     },
     "https://tractorvs.com/de/tractors/sonalika-gt-20-15fca0db/": {
-      "digest": "d4408387c8646d4f3721ec26634107f654e4acc5d04d82fb616e351f098cd5a5",
-      "modified": "2026-11-22T05:19:46.825Z"
+      "digest": "8ef034de3fde3c5e527b6f79127439dd298ee0931906871ff7ff3f63e93cdf43",
+      "modified": "2026-11-22T17:26:34.896Z"
     },
     "https://tractorvs.com/de/tractors/sonalika-gt-22-4wd-63dd7323/": {
-      "digest": "ff51fe363d986bd128d65e6365dbc4953dc30ba5aede74efff401749c9759fb0",
-      "modified": "2026-11-22T09:01:41.689Z"
+      "digest": "7058bca7fcdfaaa39ba1d31cf676ff996be4d888784f85b4f12c284a7ff0e80d",
+      "modified": "2026-11-22T17:26:34.896Z"
     },
     "https://tractorvs.com/de/tractors/sonalika-mahabali-rx-42-p-a0e16b7d/": {
       "digest": "83cce0646daac0047a43c300f432621f2d954e14d20c0b5568eca356dc563234",
@@ -930,12 +930,12 @@
       "modified": "2026-11-21T19:47:11.499Z"
     },
     "https://tractorvs.com/de/tractors/sonalika-tiger-di-30-821bd689/": {
-      "digest": "cee9a902275b5401ef1b3bd1bc5bbebd818651b93e332ed65bbe1e2f1840ce95",
-      "modified": "2026-11-22T05:19:46.825Z"
+      "digest": "7444cd416629de9cf62928ae2bb277c6c7aea1fc09efeba99854f4adbc9b8b20",
+      "modified": "2026-11-22T17:26:34.896Z"
     },
     "https://tractorvs.com/de/tractors/sonalika-tiger-di-42-pp-4wd-793fe40e/": {
-      "digest": "24f5684be6166922b7d5e056b0cc592e9b94ea5cb10677cdd9ef4e2a5c6c5817",
-      "modified": "2026-11-22T05:19:46.825Z"
+      "digest": "10cf58178342f4f9c878d0fc5f129f15946f5d5ccd57586939659a992ecfeb53",
+      "modified": "2026-11-22T17:26:34.896Z"
     },
     "https://tractorvs.com/de/tractors/sonalika-tiger-di-50-67d959b0/": {
       "digest": "8b688402c169765688fa6bc2aed7aad6abca25fbf858df5ba4aad923cfa123df",
@@ -1146,16 +1146,16 @@
       "modified": null
     },
     "https://tractorvs.com/de/tractors/swaraj-target-625-2wd-26592bdf/": {
-      "digest": "bedb532f3e482b6a519703da302e20d93d1f775c64f24d59155e189c2fc0d327",
-      "modified": null
+      "digest": "ede9dcd031aa9b5ee8f3630c253914f2d69033183ca999e9dab7cb1acc496463",
+      "modified": "2026-11-22T17:26:34.896Z"
     },
     "https://tractorvs.com/de/tractors/swaraj-target-625-4wd-9b41aee0/": {
-      "digest": "c39eed8de9855f9ba642225fb6339f747ceaf92d654a9d4566159962c50b8d43",
-      "modified": null
+      "digest": "8bab315918969e996d85fc6d6800394ab6e684f63604038d6979812b725e9b78",
+      "modified": "2026-11-22T17:26:34.896Z"
     },
     "https://tractorvs.com/de/tractors/swaraj-target-630-4wd-8f46478f/": {
-      "digest": "e23463fecfe11b9b3988291f56af1ffa90b9e11d587f3c449943d79e27e07877",
-      "modified": null
+      "digest": "065eec6a3705b4d73a1f7ed621daf000d442870cbdd70a5fea741f3e11839e12",
+      "modified": "2026-11-22T17:26:34.896Z"
     },
     "https://tractorvs.com/de/tractors/tafe-240-s-b6b226a4/": {
       "digest": "49ba18602442411f8e3c47feb33c3b6fe364f9756187057dc4f3e7cece29a317",
@@ -1650,8 +1650,8 @@
       "modified": "2026-11-22T15:49:54.478Z"
     },
     "https://tractorvs.com/es/tractors/agrale-4233-e3ed3f24/": {
-      "digest": "15a0744573f0fffe6ec68728a4074d73f6c441ea52b719069185e7cd56067d62",
-      "modified": "2026-11-22T17:20:12.066Z"
+      "digest": "c01edad6939afd484cfcbe6c5e9805fc754737504fa42267bd931895c90f8bb3",
+      "modified": "2026-11-22T17:26:34.896Z"
     },
     "https://tractorvs.com/es/tractors/agrale-5105-3601ec83/": {
       "digest": "5f39ca4fdca5cb1a74739feeb30b0add4f15d95151a20772f2579b46b771b61e",
@@ -1714,8 +1714,8 @@
       "modified": "2026-11-22T15:49:54.478Z"
     },
     "https://tractorvs.com/es/tractors/antonio-carraro-tigre-3800-fc5f6f1d/": {
-      "digest": "f59a1e8a677249e1079b5d10194552ac84fa40b363f12446f0a5263dc52388b1",
-      "modified": "2026-11-22T15:49:54.478Z"
+      "digest": "2c57d44620a74e6f6fc8896f6ebbca5deb8d35df6d6fb67fa50ef5b84cf2ca46",
+      "modified": "2026-11-22T17:26:34.896Z"
     },
     "https://tractorvs.com/es/tractors/antonio-carraro-tony-8700-v-057ddf74/": {
       "digest": "4e44e298e994cf8357ba2dd4559a5a227cfd5a42477519487488762590ad037f",
@@ -1838,20 +1838,20 @@
       "modified": "2026-11-22T15:49:54.478Z"
     },
     "https://tractorvs.com/es/tractors/belarus-892-2-2f9d2a97/": {
-      "digest": "72fe83e05fb36956abd558dcdee2f1c58c8917ce2bff028635fa9408ce681439",
-      "modified": "2026-11-22T12:57:29.705Z"
+      "digest": "2d7259c876c66d566b3ea5eee1ccfeadcf8d9feb630802aa47c854e1453331fc",
+      "modified": "2026-11-22T17:26:34.896Z"
     },
     "https://tractorvs.com/es/tractors/belarus-892-4a98cb19/": {
-      "digest": "9a008babda84fd013c5f216ae79a51852e0a7a4668301e1409ab14046dc3d192",
-      "modified": "2026-11-22T12:57:29.705Z"
+      "digest": "ab9d290e76c9d91b4f9da0a144edf8f155e60e45cbec9daa842e723a18f9c58f",
+      "modified": "2026-11-22T17:26:34.896Z"
     },
     "https://tractorvs.com/es/tractors/belarus-920-2-1e1d7219/": {
-      "digest": "b696d081e7a7c3ab91ef5e7c42890925a7d0dd91a4363b67c473db9d2e3320db",
-      "modified": "2026-11-22T12:57:29.705Z"
+      "digest": "a3d72c5823b05d1449bca876df5f533cf00a1f30ee2f2664d13adf9e397c1f0b",
+      "modified": "2026-11-22T17:26:34.896Z"
     },
     "https://tractorvs.com/es/tractors/belarus-920-21e79b33/": {
-      "digest": "7ce4b15a0ab95a81bd23bb7030f5ea2818d0b6888567d806673a9d375063586d",
-      "modified": "2026-11-22T15:49:54.478Z"
+      "digest": "61c1c46a7747c01e803569ae85d2f111a21835fb76dba7bae71b4f906f610df8",
+      "modified": "2026-11-22T17:26:34.896Z"
     },
     "https://tractorvs.com/es/tractors/belarus-922-3-1cd53d1a/": {
       "digest": "762a50ed21155b0b898d1c22f2e148f6a76c079ac874887c9aaecfc19606d654",
@@ -1870,12 +1870,12 @@
       "modified": "2026-11-22T15:49:54.478Z"
     },
     "https://tractorvs.com/es/tractors/belarus-952-2-c0c639e1/": {
-      "digest": "b933df03a2ead0a1b4705abb5c0e671a3a54c2fead997778978421c85a957aae",
-      "modified": "2026-11-22T11:49:57.072Z"
+      "digest": "2b00dbfeb2812f7b79e78d9f89e55b965c3f8ab5cd377a202c555100b183b27e",
+      "modified": "2026-11-22T17:26:34.896Z"
     },
     "https://tractorvs.com/es/tractors/belarus-952-2f38e961/": {
-      "digest": "79ff3df6937a4d0cd25cfc096d56880cf598b41fb0100aa6639284b6324f240d",
-      "modified": "2026-11-22T12:57:29.705Z"
+      "digest": "e3a4cd46b214e7054694b81283e4b6abeb8d34beaf7c13aa63f1e87d35f9c204",
+      "modified": "2026-11-22T17:26:34.896Z"
     },
     "https://tractorvs.com/es/tractors/belarus-952-3-be29821d/": {
       "digest": "5fdbc31a19f36a6a82824764647022ac84d20b41b6d7682d84ea1fb8429b8aec",
@@ -2022,20 +2022,20 @@
       "modified": "2026-11-22T15:49:54.478Z"
     },
     "https://tractorvs.com/es/tractors/mahindra-arjun-555-di-2c1a6638/": {
-      "digest": "5d23deab8736dfdd4ed3accd1e27fb571f51f302fd5a864dc27be2ec99136b9a",
-      "modified": "2026-11-22T17:20:12.066Z"
+      "digest": "99dc8800508c8120e01054686afddf0efe77f632e10815dc67fd6de2465b83e9",
+      "modified": "2026-11-22T17:26:34.896Z"
     },
     "https://tractorvs.com/es/tractors/mahindra-arjun-605-di-i-bee5e88f/": {
-      "digest": "0939ea9eca0dfeb1959ea3811b79fb995da95961afba125558c1924ea337a09e",
-      "modified": "2026-11-22T17:20:12.066Z"
+      "digest": "c78b7eef24bc348ecbfc05d92dcb11e045943a37225189df8458c575371a0bee",
+      "modified": "2026-11-22T17:26:34.896Z"
     },
     "https://tractorvs.com/es/tractors/mahindra-arjun-605-di-ms-739db984/": {
-      "digest": "00e9ef2f222fcf80f77e2e3c8c972a49501c8686e0dc8c87147f2e8495a71e96",
-      "modified": "2026-11-22T17:20:12.066Z"
+      "digest": "f98311a2963746465634a279f4a677b0462ad2009ed1e0126789c342f47a095e",
+      "modified": "2026-11-22T17:26:34.896Z"
     },
     "https://tractorvs.com/es/tractors/mahindra-arjun-605-di-ms-v1-163dbb9b/": {
-      "digest": "0144708e17604b19d4b8b1837f6e22b9ab72bbde95b53deb969fe1aa68e1eefd",
-      "modified": "2026-11-22T17:20:12.066Z"
+      "digest": "6e4dbb4405f6892e7bee351857f86ceee4463a9f688d4a37e9f829084ea4df79",
+      "modified": "2026-11-22T17:26:34.896Z"
     },
     "https://tractorvs.com/es/tractors/mahindra-jivo-225-di-4wd-34f40738/": {
       "digest": "b77fa6d71af9a61e981da8519d15f2d9b46bbafd5e18a1a5e871f09f1c03bf90",
@@ -2466,24 +2466,24 @@
       "modified": "2026-11-21T19:47:11.499Z"
     },
     "https://tractorvs.com/es/tractors/sonalika-di-30-baagban-ad248a3c/": {
-      "digest": "1b3031f38ba123ed680a15df914a1be6b774b700eb8595314ee7a1f9130bfa13",
-      "modified": "2026-11-22T15:49:54.478Z"
+      "digest": "58b787a7a6bb70ee9b69088f81b3410096e80bf43a232d908e7679eda9fd4c0f",
+      "modified": "2026-11-22T17:26:34.896Z"
     },
     "https://tractorvs.com/es/tractors/sonalika-di-35-596c8706/": {
-      "digest": "c4528a5989da3972fe45e2707c2ac111fc99a8cd9260d9efadc9531e39cf099f",
-      "modified": "2026-11-22T15:49:54.478Z"
+      "digest": "f5bcd3f58065a192c1a214e6ee21dbd0bb2a69909e266cad244d420abdb33286",
+      "modified": "2026-11-22T17:26:34.896Z"
     },
     "https://tractorvs.com/es/tractors/sonalika-di-42-p-2d79ca05/": {
-      "digest": "13ea45c3538f4911a8d52bcb89a2c5ea682d5c39f1419ebc468205218dcc4fb7",
-      "modified": "2026-11-22T15:49:54.478Z"
+      "digest": "fe1952abc1d07adcc9772a66d19564dc9565ebb0c76e984ff331cf97d9e5090c",
+      "modified": "2026-11-22T17:26:34.896Z"
     },
     "https://tractorvs.com/es/tractors/sonalika-di-734-d5d14815/": {
-      "digest": "950f7b54dfec229d8cc5260935a81729998c7c25b59342646ed7d48f36807419",
-      "modified": "2026-11-22T15:49:54.478Z"
+      "digest": "4d3b07ae7332b762cac81e3be08f4ac22f8689df4e286dabf38c1f165802b7e2",
+      "modified": "2026-11-22T17:26:34.896Z"
     },
     "https://tractorvs.com/es/tractors/sonalika-di-734-power-plus-fb435078/": {
-      "digest": "2df1590a70512cf2b15cd85bfbbe6c26014808fede477bc3ead910d989b33263",
-      "modified": "2026-11-22T15:49:54.478Z"
+      "digest": "baad3d3883bfaa65a30f2e1413bbc8ebc41b3a1866409366c0276c5e8b6c8967",
+      "modified": "2026-11-22T17:26:34.896Z"
     },
     "https://tractorvs.com/es/tractors/sonalika-di-740-iii-3a46f879/": {
       "digest": "ba4ecfd37cef7e2aeb65a0a1773d466ccc2eaaf7aa7fe496df75de0c589bc701",
@@ -2494,12 +2494,12 @@
       "modified": "2026-11-22T15:49:54.478Z"
     },
     "https://tractorvs.com/es/tractors/sonalika-gt-20-15fca0db/": {
-      "digest": "0adcbb6af93cfead20ffb683a59eec82ddb1854485b9208ff573cdf64f0583c7",
-      "modified": "2026-11-22T15:49:54.478Z"
+      "digest": "a23cda8be949f90fb5cad9027fd6d8707bfa7652d8fbd078a7dcbb511b38b2ec",
+      "modified": "2026-11-22T17:26:34.896Z"
     },
     "https://tractorvs.com/es/tractors/sonalika-gt-22-4wd-63dd7323/": {
-      "digest": "4924bcea5153dc73edecb09f4e8514ef8bbf0ab0da9706998611b00619b15915",
-      "modified": "2026-11-22T11:49:57.072Z"
+      "digest": "4290ab98763779e15246b5865ad8ab2ae8c42243263728b95eb6535672a1e3fc",
+      "modified": "2026-11-22T17:26:34.896Z"
     },
     "https://tractorvs.com/es/tractors/sonalika-mahabali-rx-42-p-a0e16b7d/": {
       "digest": "a52f03a4e7419f20d2adb6c657a259ff5236af30066e76632f840658111e4dfb",
@@ -2514,12 +2514,12 @@
       "modified": "2026-11-22T11:49:57.072Z"
     },
     "https://tractorvs.com/es/tractors/sonalika-tiger-di-30-821bd689/": {
-      "digest": "f368b7cecff297be790c9de3fb2bd4ab52894f9c72f06816780f78c11cdd0be4",
-      "modified": "2026-11-22T15:49:54.478Z"
+      "digest": "e8060bb5f3fd76edd941b1baf4fd44ea172430bcb32384b1a2eae3de3361cb59",
+      "modified": "2026-11-22T17:26:34.896Z"
     },
     "https://tractorvs.com/es/tractors/sonalika-tiger-di-42-pp-4wd-793fe40e/": {
-      "digest": "6fce48538db3b9c0b21428e180d857f528228ceb41b97f7212a48eb113024233",
-      "modified": "2026-11-22T15:49:54.478Z"
+      "digest": "9d01f9b610b9e6720d7712270970fd9dbbf036ce4f35f2a9f0ccd6c233063d11",
+      "modified": "2026-11-22T17:26:34.896Z"
     },
     "https://tractorvs.com/es/tractors/sonalika-tiger-di-50-67d959b0/": {
       "digest": "fa825eecf707b34fa13cadbbf40dbe2bce939a6fc5eaf9ffdb79ced53bada78e",
@@ -2674,8 +2674,8 @@
       "modified": "2026-11-22T15:49:54.478Z"
     },
     "https://tractorvs.com/es/tractors/swaraj-735-fe-7c7b069f/": {
-      "digest": "aa57bb2dd0104a0279fff02ce8a87e2a88fbcff023a4d10a71d68da266b52810",
-      "modified": "2026-11-22T12:57:29.705Z"
+      "digest": "b95d15887cf21c04ee60d1e4cd145a3d8c2f0879a5c17ea6a6e3ff7ec99bf0bd",
+      "modified": "2026-11-22T17:26:34.896Z"
     },
     "https://tractorvs.com/es/tractors/swaraj-735-xt-e6ab3418/": {
       "digest": "4323dbf0a8112bff9da9f1c6b670e3350ea66d0e7ad525707b212effd58e4cdf",
@@ -2730,16 +2730,16 @@
       "modified": "2026-11-21T21:02:04.777Z"
     },
     "https://tractorvs.com/es/tractors/swaraj-target-625-2wd-26592bdf/": {
-      "digest": "ab7e334fecc9691403d92c72258c03b7b1e562151d8b8855e49063858882524d",
-      "modified": "2026-11-22T15:49:54.478Z"
+      "digest": "2c102af076be460f004da70d2f867fea44e22969b90388cd4c46d4dc310c3611",
+      "modified": "2026-11-22T17:26:34.896Z"
     },
     "https://tractorvs.com/es/tractors/swaraj-target-625-4wd-9b41aee0/": {
-      "digest": "16773c643e73de004d043ac89cc3d1eac1c65b8caedf221af5e32fe2989ab367",
-      "modified": "2026-11-22T15:49:54.478Z"
+      "digest": "4f070ba8e9078a082fba1556ac9b82924d3709e94849838c9f40452a6fa81fcd",
+      "modified": "2026-11-22T17:26:34.896Z"
     },
     "https://tractorvs.com/es/tractors/swaraj-target-630-4wd-8f46478f/": {
-      "digest": "0369a0b9b67741ea386b9b5a3e4d15ff3478a5acd2196ae70b526c8e8138f34b",
-      "modified": "2026-11-22T15:49:54.478Z"
+      "digest": "a4e4323b25254904a80f2fdf1bd7c833caae91fc747f60659419051a14575d92",
+      "modified": "2026-11-22T17:26:34.896Z"
     },
     "https://tractorvs.com/es/tractors/tafe-240-s-b6b226a4/": {
       "digest": "0d046910b6791c6ca8a8c87523fa037496aebae873230b0fcad120826f8b3085",
@@ -3238,8 +3238,8 @@
       "modified": "2026-11-22T11:49:57.072Z"
     },
     "https://tractorvs.com/fr/tractors/agrale-4233-e3ed3f24/": {
-      "digest": "b6bf127cb62ca51979a9a3d82860298379f19f0582614cd71188c83b94feee38",
-      "modified": "2026-11-22T17:20:12.066Z"
+      "digest": "104e7ad0fc9844fa61db61552428437453be4529e031dbeffa038d99c0b78598",
+      "modified": "2026-11-22T17:26:34.896Z"
     },
     "https://tractorvs.com/fr/tractors/agrale-5105-3601ec83/": {
       "digest": "197cfd66c67ea64e7863912d2c60dbbb5d55fabf20eb23ceff24a9fbdc5da60a",
@@ -3302,8 +3302,8 @@
       "modified": "2026-11-22T15:49:54.478Z"
     },
     "https://tractorvs.com/fr/tractors/antonio-carraro-tigre-3800-fc5f6f1d/": {
-      "digest": "d956f1fa66398fe8473365aca96ebed713e55672f5d77daee67ae6a342684170",
-      "modified": "2026-11-22T15:49:54.478Z"
+      "digest": "cf4820a3cca637d86cc068a7519ec2939c7a69e0de663059f1a5f1afd7a59d93",
+      "modified": "2026-11-22T17:26:34.896Z"
     },
     "https://tractorvs.com/fr/tractors/antonio-carraro-tony-8700-v-057ddf74/": {
       "digest": "dbd767873b2e7c57e53e2fe1441a537827cbe50038a457570a7d5a7e36351719",
@@ -3426,20 +3426,20 @@
       "modified": "2026-11-22T15:49:54.478Z"
     },
     "https://tractorvs.com/fr/tractors/belarus-892-2-2f9d2a97/": {
-      "digest": "9197092aa5b1da8c7990b30f51dea746ee12b4ab9cbda7a7d72986e0ce98f381",
-      "modified": "2026-11-22T12:57:29.705Z"
+      "digest": "03821a99511ac82f67b68f573fa9b7c1ea8422082028fac2c264cbd23493b41c",
+      "modified": "2026-11-22T17:26:34.896Z"
     },
     "https://tractorvs.com/fr/tractors/belarus-892-4a98cb19/": {
-      "digest": "27c015214a365a9bfc8ccf3e03f1a03711daa6fa785d99323ff88beed3a7ac28",
-      "modified": "2026-11-22T12:57:29.705Z"
+      "digest": "e3dd92de7d49083efbcaa6d2183acfe3c97029df249d46985953f88165ed0e95",
+      "modified": "2026-11-22T17:26:34.896Z"
     },
     "https://tractorvs.com/fr/tractors/belarus-920-2-1e1d7219/": {
-      "digest": "0c7ae63778d243e2534f4cb95b1e91ff56781570acdcb509adc44fabb5f4360f",
-      "modified": "2026-11-22T12:57:29.705Z"
+      "digest": "148fe9b5b1ab9273657403013d0b48784edb03e64c7ef8d973b8ffa64b82bf13",
+      "modified": "2026-11-22T17:26:34.896Z"
     },
     "https://tractorvs.com/fr/tractors/belarus-920-21e79b33/": {
-      "digest": "ddaa965dec7852803e7063b41a7f2c805bad3ad9600398b36c495e8740fa501e",
-      "modified": "2026-11-22T15:49:54.478Z"
+      "digest": "9277d6542cdf02c0808abcf751649ce4df4f219ac3a70acb3ce4546b9e425373",
+      "modified": "2026-11-22T17:26:34.896Z"
     },
     "https://tractorvs.com/fr/tractors/belarus-922-3-1cd53d1a/": {
       "digest": "670b88c3e30bfa998afcf360ad2e48e59cdd4075195c60f5addafbbf329a154d",
@@ -3458,12 +3458,12 @@
       "modified": "2026-11-22T15:49:54.478Z"
     },
     "https://tractorvs.com/fr/tractors/belarus-952-2-c0c639e1/": {
-      "digest": "de492316c4872dae888f30fbd57d424ab47ca8b9c07559153658aa3a2b2e63ff",
-      "modified": "2026-11-22T11:49:57.072Z"
+      "digest": "86456ca45b2168b31b1dee64e61045f772be327821fd62ef757b601caa47aac1",
+      "modified": "2026-11-22T17:26:34.896Z"
     },
     "https://tractorvs.com/fr/tractors/belarus-952-2f38e961/": {
-      "digest": "8a8bee34a895b6d29d8c77b1b8fb222170a876cba1617d428aa9a93d4d95cfec",
-      "modified": "2026-11-22T12:57:29.705Z"
+      "digest": "969a02b5a57dcfc0e027905e8b65787f3b6d5fa64741feddcdca33cc99fde2e0",
+      "modified": "2026-11-22T17:26:34.896Z"
     },
     "https://tractorvs.com/fr/tractors/belarus-952-3-be29821d/": {
       "digest": "d5b1f8fa1f4e528cfa5f4f591e5c1d8788658b85220b9474bb624ac46bb8ead9",
@@ -3610,20 +3610,20 @@
       "modified": "2026-11-22T05:19:46.825Z"
     },
     "https://tractorvs.com/fr/tractors/mahindra-arjun-555-di-2c1a6638/": {
-      "digest": "156f2b55bbfe06f17c82caab83f200f272b1f62d6fa8a0728c05cb2aebb2a8d3",
-      "modified": "2026-11-22T17:20:12.066Z"
+      "digest": "0d5922682062a5963ba564474eb187aebdc1915957262611910992f3033f5626",
+      "modified": "2026-11-22T17:26:34.896Z"
     },
     "https://tractorvs.com/fr/tractors/mahindra-arjun-605-di-i-bee5e88f/": {
-      "digest": "82be91f3d80ba1d0fdec22827549f0db6a7d96a5e220392e7c27f8e9466f8726",
-      "modified": "2026-11-22T17:20:12.066Z"
+      "digest": "6a7e61ef4b41e235c28bb760c4d67a01457e0c3737394999b9a3c2140f5d48e5",
+      "modified": "2026-11-22T17:26:34.896Z"
     },
     "https://tractorvs.com/fr/tractors/mahindra-arjun-605-di-ms-739db984/": {
-      "digest": "5427bf10c11dce302fea618ce522cb67a66edd45eb394c64807c44bb18483acc",
-      "modified": "2026-11-22T17:20:12.066Z"
+      "digest": "a6463d49dd334b4976ac3483c8c54977635f6f7fc1b4814ff0853c33646287d6",
+      "modified": "2026-11-22T17:26:34.896Z"
     },
     "https://tractorvs.com/fr/tractors/mahindra-arjun-605-di-ms-v1-163dbb9b/": {
-      "digest": "01c77bfb4cfe92edde710fc3b98187d0247cd6d8369e094454cceb129c96b8af",
-      "modified": "2026-11-22T17:20:12.066Z"
+      "digest": "d57037374d9569aabe826d193d8edf69d38c378d011561a13745d0da0070c470",
+      "modified": "2026-11-22T17:26:34.896Z"
     },
     "https://tractorvs.com/fr/tractors/mahindra-jivo-225-di-4wd-34f40738/": {
       "digest": "b1b1f4fd0b7c55148088445a4efc5c85d7b4906b22c5bbd4b0582768a437290d",
@@ -4054,24 +4054,24 @@
       "modified": "2026-11-21T19:47:11.499Z"
     },
     "https://tractorvs.com/fr/tractors/sonalika-di-30-baagban-ad248a3c/": {
-      "digest": "2de6484f3313cf2353f3b6b3c0057c0ef3bd1f8ce2125b9b3ba4d04b38184d41",
-      "modified": "2026-11-22T11:49:57.072Z"
+      "digest": "22d4aea7ce3fcda9460f14e67bd7efece890ae200e26d618704375ec3aac2fa7",
+      "modified": "2026-11-22T17:26:34.896Z"
     },
     "https://tractorvs.com/fr/tractors/sonalika-di-35-596c8706/": {
-      "digest": "00e06bd79f076f1b4554e8950b0594d1f55b225a5366d6f20dfa7bc8555cf7aa",
-      "modified": "2026-11-22T11:49:57.072Z"
+      "digest": "7c37659b90a4f2bfb20712e5fd4a1d6f457c97ba62283ffbda71d450f55011c0",
+      "modified": "2026-11-22T17:26:34.896Z"
     },
     "https://tractorvs.com/fr/tractors/sonalika-di-42-p-2d79ca05/": {
-      "digest": "66ffc9c0130a93e18babde40e09101f206e581d38e1bb55ca864e3f498832654",
-      "modified": "2026-11-22T11:49:57.072Z"
+      "digest": "c79367686d924156bb87c55278358f6bc8a8d2b3dc4ea997106402ee07be74b4",
+      "modified": "2026-11-22T17:26:34.896Z"
     },
     "https://tractorvs.com/fr/tractors/sonalika-di-734-d5d14815/": {
-      "digest": "e768bc744b645ffdb39d21ea23c5acf1032cf6ef591860124694197647aea6c3",
-      "modified": "2026-11-22T11:49:57.072Z"
+      "digest": "bd2425c188b9e8a85d3e3a96faa45dbd51a0876547f09d1bfeada912ffbdcb92",
+      "modified": "2026-11-22T17:26:34.896Z"
     },
     "https://tractorvs.com/fr/tractors/sonalika-di-734-power-plus-fb435078/": {
-      "digest": "535952e9fe50b3bc626646ba79d83a1d90af36bfc689aaff4c8522c6fd8212d5",
-      "modified": "2026-11-22T15:49:54.478Z"
+      "digest": "7304ed32a291358179f92ee656dd68b4cdff64bb303b473c4a8062ac6850e1d6",
+      "modified": "2026-11-22T17:26:34.896Z"
     },
     "https://tractorvs.com/fr/tractors/sonalika-di-740-iii-3a46f879/": {
       "digest": "5aa2ee363bdc4c8b7529c211bb3dc5fb896bbe77e1744f3f0fc3c7b11b7aead8",
@@ -4082,12 +4082,12 @@
       "modified": "2026-11-22T11:49:57.072Z"
     },
     "https://tractorvs.com/fr/tractors/sonalika-gt-20-15fca0db/": {
-      "digest": "03613e53e2f5dc2c9c164ce73c61d14caefc1effda93db0c7d180d83297dd883",
-      "modified": "2026-11-22T11:49:57.072Z"
+      "digest": "8d9e8e2d7bb008195116169e7b93fe305ee2e846f8595af6819eb710ef73af92",
+      "modified": "2026-11-22T17:26:34.896Z"
     },
     "https://tractorvs.com/fr/tractors/sonalika-gt-22-4wd-63dd7323/": {
-      "digest": "53d6d7818712453c951ae67b857b264f8847c9c9bc319e57322e8960a3739e3d",
-      "modified": "2026-11-22T11:49:57.072Z"
+      "digest": "6fdbd74a229e4bc39835f9164a3990aa055930ef35de7f2415dd2f1853d11951",
+      "modified": "2026-11-22T17:26:34.896Z"
     },
     "https://tractorvs.com/fr/tractors/sonalika-mahabali-rx-42-p-a0e16b7d/": {
       "digest": "e1f901693f21b68916b254befdd2b155e582fe0f44deffa4726cf7d86dfe7718",
@@ -4102,12 +4102,12 @@
       "modified": "2026-11-22T11:49:57.072Z"
     },
     "https://tractorvs.com/fr/tractors/sonalika-tiger-di-30-821bd689/": {
-      "digest": "04cc43f4b718231cd7d2c8caf67dd5b9a0c70bc506c60377865e0582bdd0c345",
-      "modified": "2026-11-22T11:49:57.072Z"
+      "digest": "088b37bfd7c8fb539e3a0faefea19139dc3530507c7f9093d7cf256d89acd1f0",
+      "modified": "2026-11-22T17:26:34.896Z"
     },
     "https://tractorvs.com/fr/tractors/sonalika-tiger-di-42-pp-4wd-793fe40e/": {
-      "digest": "09aea571edd7e4ed90e9f14ac70ea0b861d05252e1aeb6cab64032cbe83e47d8",
-      "modified": "2026-11-22T11:49:57.072Z"
+      "digest": "6f43e6e52e2ff2521cf38c5d3356fbf8a9ac6d3a76f5b402296a272a1baa8d02",
+      "modified": "2026-11-22T17:26:34.896Z"
     },
     "https://tractorvs.com/fr/tractors/sonalika-tiger-di-50-67d959b0/": {
       "digest": "dc4ab2b3b937339d37f8a716dd5540670a3004794935ac3a2192bd0a98b91c64",
@@ -4262,8 +4262,8 @@
       "modified": "2026-11-22T04:59:19.699Z"
     },
     "https://tractorvs.com/fr/tractors/swaraj-735-fe-7c7b069f/": {
-      "digest": "0896417a940cb2ea6ca2999f8c68ddac51c2cefcc0508c36ef06ce39a90dbd3d",
-      "modified": "2026-11-22T12:57:29.705Z"
+      "digest": "88535c8a18959538e0ce4937a0b2f295a7d0b65676469999e03b37c64304ca00",
+      "modified": "2026-11-22T17:26:34.896Z"
     },
     "https://tractorvs.com/fr/tractors/swaraj-735-xt-e6ab3418/": {
       "digest": "b7d719987005a457fad9b08ae46d76ec87f189bb8d154ee4fbc150821f6f33fe",
@@ -4318,16 +4318,16 @@
       "modified": "2026-11-21T21:02:04.777Z"
     },
     "https://tractorvs.com/fr/tractors/swaraj-target-625-2wd-26592bdf/": {
-      "digest": "c2b1f38decb97bf89ea481db9d251eb3f5357daabcf3b3eda7348c2c758398ca",
-      "modified": "2026-11-22T11:49:57.072Z"
+      "digest": "e58993227654a0b86a794345cfb3cd961aba523aa4dc7dd02bcad2eee961c363",
+      "modified": "2026-11-22T17:26:34.896Z"
     },
     "https://tractorvs.com/fr/tractors/swaraj-target-625-4wd-9b41aee0/": {
-      "digest": "d4ae693bc5f9608fd5478ca22ba87ed8bc864b0f2ef7555d3c0ae4a2563f686a",
-      "modified": "2026-11-22T11:49:57.072Z"
+      "digest": "91b0d256450bb4c0d41cf707e2193232301cd8657f258938a50fbdc2294e5f6c",
+      "modified": "2026-11-22T17:26:34.896Z"
     },
     "https://tractorvs.com/fr/tractors/swaraj-target-630-4wd-8f46478f/": {
-      "digest": "172dc954c19e9853a15defa9c6a11a9eb01df36bf5d2749ec9271d42d5689a6f",
-      "modified": "2026-11-22T11:49:57.072Z"
+      "digest": "044b4481190489303d6be2164c317c320d080e4b4fe6ba25d28bbb1ec437f63c",
+      "modified": "2026-11-22T17:26:34.896Z"
     },
     "https://tractorvs.com/fr/tractors/tafe-240-s-b6b226a4/": {
       "digest": "158b8c7c19de3f010805aee9d9c224aa48dea8cd2c19a5921bb897e6f07d54eb",
@@ -4842,8 +4842,8 @@
       "modified": "2026-11-22T05:19:46.825Z"
     },
     "https://tractorvs.com/hi/tractors/agrale-4233-e3ed3f24/": {
-      "digest": "e8d7c57343c251b98394d28bc7b695d0ad5c8683ffce32c2ec8600b1169fc933",
-      "modified": "2026-11-22T17:20:12.066Z"
+      "digest": "bfded3e44bba59b5d765d92ba74fb9ca854f28e6b4af69a4db817f80abf6538c",
+      "modified": "2026-11-22T17:26:34.896Z"
     },
     "https://tractorvs.com/hi/tractors/agrale-5105-3601ec83/": {
       "digest": "ff36e72f4a25fce1da64a3eb4ff72d7ed570525f7de5630a957e23f789d8b359",
@@ -4906,8 +4906,8 @@
       "modified": "2026-11-22T15:49:54.478Z"
     },
     "https://tractorvs.com/hi/tractors/antonio-carraro-tigre-3800-fc5f6f1d/": {
-      "digest": "86e1c2fc981d382d4af6fa8b39f6ea06eea103e3222bade75c75fbed5ef49e86",
-      "modified": "2026-11-22T15:49:54.478Z"
+      "digest": "c5c7131d895c0037c7709dde8d4f9958933d1e2c512d136670c9a3738b1644e6",
+      "modified": "2026-11-22T17:26:34.896Z"
     },
     "https://tractorvs.com/hi/tractors/antonio-carraro-tony-8700-v-057ddf74/": {
       "digest": "3c043cd30c49129aaf5909c0128af4fbcf89661f25c0ed6719994beefa907af3",
@@ -5030,20 +5030,20 @@
       "modified": "2026-11-22T13:56:24.699Z"
     },
     "https://tractorvs.com/hi/tractors/belarus-892-2-2f9d2a97/": {
-      "digest": "428d61ce3f6614b87d6359edb786e06fb3cbc9e583d472fe943264c8eadb2a59",
-      "modified": "2026-11-22T12:57:29.705Z"
+      "digest": "523cd8a32eb88a107aa34bb13b65ec8bb9902681f23ed30681f97a9db0f29113",
+      "modified": "2026-11-22T17:26:34.896Z"
     },
     "https://tractorvs.com/hi/tractors/belarus-892-4a98cb19/": {
-      "digest": "1f2e00159c83f663a7d8433e7fe33fcfb47ba5731dc24589c5fed9b915950425",
-      "modified": "2026-11-22T15:49:54.478Z"
+      "digest": "66e5be94536707938409518c8fe9f5bfb6fe2139b2e848bbc79cbd11687356da",
+      "modified": "2026-11-22T17:26:34.896Z"
     },
     "https://tractorvs.com/hi/tractors/belarus-920-2-1e1d7219/": {
-      "digest": "b028850efcda54541368b3b70e05f921b568d35449a172d426c556ae4e9cf736",
-      "modified": "2026-11-22T15:49:54.478Z"
+      "digest": "42e6ff99d7c6ce563ad861ac8bb4786163a4a5577dd7be8bb020fe1a42684d00",
+      "modified": "2026-11-22T17:26:34.896Z"
     },
     "https://tractorvs.com/hi/tractors/belarus-920-21e79b33/": {
-      "digest": "e4c3e7a419a636a2384343e0efe9f22ef8e256b07f031f884e43d6714f4aaa88",
-      "modified": "2026-11-22T15:49:54.478Z"
+      "digest": "9d7bfe1663b169a438667c679f5e15cd025af9763711716cefb5096d9ca02941",
+      "modified": "2026-11-22T17:26:34.896Z"
     },
     "https://tractorvs.com/hi/tractors/belarus-922-3-1cd53d1a/": {
       "digest": "e7ea7ca8081a0d95fb6f307caad29f6ffad9c3a83b4a0618f7191510266ac892",
@@ -5062,12 +5062,12 @@
       "modified": "2026-11-22T15:49:54.478Z"
     },
     "https://tractorvs.com/hi/tractors/belarus-952-2-c0c639e1/": {
-      "digest": "1fc3e91785a941876f9cedf9c9a825c9f80b8d562f26214022d219283e6e6f19",
-      "modified": "2026-11-22T05:19:46.825Z"
+      "digest": "119fc21f6f39634c03f5ffec3c61f457e36cd0858077cce3c47bfae0d7795bcc",
+      "modified": "2026-11-22T17:26:34.896Z"
     },
     "https://tractorvs.com/hi/tractors/belarus-952-2f38e961/": {
-      "digest": "b3d7011f8ce1d970b6c2341b90f92b73ef157e7fb214a43e944deb520efb147a",
-      "modified": "2026-11-22T15:49:54.478Z"
+      "digest": "e25a84a4d68d00c8deaa694c25421bfef7a4ba4e95a7461fe6dde7b1e7eb9506",
+      "modified": "2026-11-22T17:26:34.896Z"
     },
     "https://tractorvs.com/hi/tractors/belarus-952-3-be29821d/": {
       "digest": "01659cb2fc94e28806077a26a12d3107fd41b8ac2f8770f78bc90e6068a56743",
@@ -5214,20 +5214,20 @@
       "modified": "2026-11-22T05:19:46.825Z"
     },
     "https://tractorvs.com/hi/tractors/mahindra-arjun-555-di-2c1a6638/": {
-      "digest": "bc45bf51dc2a68662c452fa1dab0ce3c96c50a905d7f78f3300f63af9371005d",
-      "modified": "2026-11-22T17:20:12.066Z"
+      "digest": "91a5f572e91e5b9746878a66cdc66e51dd1fe382e38b8e651a09b049c7dbd92f",
+      "modified": "2026-11-22T17:26:34.896Z"
     },
     "https://tractorvs.com/hi/tractors/mahindra-arjun-605-di-i-bee5e88f/": {
-      "digest": "2c15bb49e16f96542d221df18ea261a2574e3943a6e2b89e45365e557fd398cc",
-      "modified": "2026-11-22T17:20:12.066Z"
+      "digest": "8ec89a66409e8f6700edd09fc98de69deedd2c139510e17b6c8d8368e977414f",
+      "modified": "2026-11-22T17:26:34.896Z"
     },
     "https://tractorvs.com/hi/tractors/mahindra-arjun-605-di-ms-739db984/": {
-      "digest": "4a77e9d956cbea026bc0f4571ef6a5b5badb363b4927a8cb8e971d9eeebcc25c",
-      "modified": "2026-11-22T17:20:12.066Z"
+      "digest": "41f209d9cb47b0fef35787cc00d5b7faf943ed27681b2cd3dad489c66e8729d6",
+      "modified": "2026-11-22T17:26:34.896Z"
     },
     "https://tractorvs.com/hi/tractors/mahindra-arjun-605-di-ms-v1-163dbb9b/": {
-      "digest": "3b76e77a3d35be3f7f1b04c68edd8a87fd24b25aefd295b2a467da08b8c55a4d",
-      "modified": "2026-11-22T17:20:12.066Z"
+      "digest": "ef15aaae64a974a9285f950b2c82e2e14627b2cf7e104dda45ede8e2da28fcb1",
+      "modified": "2026-11-22T17:26:34.896Z"
     },
     "https://tractorvs.com/hi/tractors/mahindra-jivo-225-di-4wd-34f40738/": {
       "digest": "e9c313a79e37da172cdb316c772b659f5ac0dc91b936be3cc39f187a0cf01788",
@@ -5658,24 +5658,24 @@
       "modified": "2026-11-21T19:47:11.499Z"
     },
     "https://tractorvs.com/hi/tractors/sonalika-di-30-baagban-ad248a3c/": {
-      "digest": "e375bfe63b9118c6e7981303bbc048b930040779bae93d70ad6edc2ef53c5448",
-      "modified": "2026-11-22T05:19:46.825Z"
+      "digest": "31208673e54fec5c9be76baf4bbdf3cc3d777cd25a6d8b1984b71b322ee8c767",
+      "modified": "2026-11-22T17:26:34.896Z"
     },
     "https://tractorvs.com/hi/tractors/sonalika-di-35-596c8706/": {
-      "digest": "f3f88ad315c29689a2b32ddf3dca6857b251bfa0c20cdbf352f5821824c1ae1d",
-      "modified": "2026-11-22T05:19:46.825Z"
+      "digest": "a06c6c1158fdd4b89c199cf2f644aba50cb34b091a187c7d213170ae599d2b04",
+      "modified": "2026-11-22T17:26:34.896Z"
     },
     "https://tractorvs.com/hi/tractors/sonalika-di-42-p-2d79ca05/": {
-      "digest": "7c9b4a4fb6a307f2afa3a7beb19649a61a1993f8144760b0839b86bcdf49dd17",
-      "modified": null
+      "digest": "65fc326ad423612da54adf3b3f6df258d974fe7cc67adae5e69e411a6b623063",
+      "modified": "2026-11-22T17:26:34.896Z"
     },
     "https://tractorvs.com/hi/tractors/sonalika-di-734-d5d14815/": {
-      "digest": "aa432c2754f674ed45bcceaa036b51afb5aecb059391714ec298f571c077df9b",
-      "modified": null
+      "digest": "e906e7c10f3ca0e3295ebea0799c6eca7ea4274a33f9b53c6f3d035c20bd4286",
+      "modified": "2026-11-22T17:26:34.896Z"
     },
     "https://tractorvs.com/hi/tractors/sonalika-di-734-power-plus-fb435078/": {
-      "digest": "48d2f4a94ffd70c5440ec5310135450c92fba924503e61cf2609bce3e89a6d23",
-      "modified": null
+      "digest": "12ab67ec040d1806e62b2fbc2aa6c7d7f7c37a8744def41a5e365f1179c8d3c2",
+      "modified": "2026-11-22T17:26:34.896Z"
     },
     "https://tractorvs.com/hi/tractors/sonalika-di-740-iii-3a46f879/": {
       "digest": "13c8614a3a7bddcf66039fe1960498330540e5fb07a0f16006e26d715f8c3e5d",
@@ -5686,12 +5686,12 @@
       "modified": "2026-11-22T05:19:46.825Z"
     },
     "https://tractorvs.com/hi/tractors/sonalika-gt-20-15fca0db/": {
-      "digest": "490044be33f1ce1514a516a7a8a42399ea9199a62572435ccb5559f0d73ecc22",
-      "modified": "2026-11-22T05:19:46.825Z"
+      "digest": "8087f147da1ca5cd7d186347b0cca1cdc65c46f7140b5b1b280516f77607b0a7",
+      "modified": "2026-11-22T17:26:34.896Z"
     },
     "https://tractorvs.com/hi/tractors/sonalika-gt-22-4wd-63dd7323/": {
-      "digest": "6fdf245ef05cc1e57e61a365a3cba11c5526311be5fe02d9b88205721ff0059a",
-      "modified": "2026-11-22T09:01:41.689Z"
+      "digest": "1769a54b116ef13d4579522471c38de4d048627cdc2051b3464698733c770eed",
+      "modified": "2026-11-22T17:26:34.896Z"
     },
     "https://tractorvs.com/hi/tractors/sonalika-mahabali-rx-42-p-a0e16b7d/": {
       "digest": "dacb69bef1eaa98e76f947eb90d67b709ca231660bdf0a2fcd92ae6ac2ea9057",
@@ -5706,12 +5706,12 @@
       "modified": null
     },
     "https://tractorvs.com/hi/tractors/sonalika-tiger-di-30-821bd689/": {
-      "digest": "7fc0a64873a69da89e5902eb7d72bcc5777e3723146eca1a1c178b538772e8ae",
-      "modified": "2026-11-22T05:19:46.825Z"
+      "digest": "614cf0e27e3707590ac2915a9391f09943d264d75c053d5da35ac0c6f4c813f7",
+      "modified": "2026-11-22T17:26:34.896Z"
     },
     "https://tractorvs.com/hi/tractors/sonalika-tiger-di-42-pp-4wd-793fe40e/": {
-      "digest": "6b101a0e6935bd39ab435903aa670c6f25b613f154ccdc53e66d751c5315bfc8",
-      "modified": "2026-11-22T05:19:46.825Z"
+      "digest": "71ebbcf391d2ee64d8216c15493562a46bdc02bb0dda29320daf8a760f94753a",
+      "modified": "2026-11-22T17:26:34.896Z"
     },
     "https://tractorvs.com/hi/tractors/sonalika-tiger-di-50-67d959b0/": {
       "digest": "dcf270ae89d10fe00847cf4008ea6f1da9a07ce86ce82ac3595e5b448681f160",
@@ -5866,8 +5866,8 @@
       "modified": "2026-11-21T19:47:11.499Z"
     },
     "https://tractorvs.com/hi/tractors/swaraj-735-fe-7c7b069f/": {
-      "digest": "9c8f13812cdffe963b5da70e7fbbbbcd6adb2a09eda9659f9446ebd0e66f4bb4",
-      "modified": "2026-11-22T12:57:29.705Z"
+      "digest": "7a5dfb5124a6e741eb97de01a7569bf0097aebdb1ea6c409e5224993fbcb8734",
+      "modified": "2026-11-22T17:26:34.896Z"
     },
     "https://tractorvs.com/hi/tractors/swaraj-735-xt-e6ab3418/": {
       "digest": "ef9de0ed9e898f4c3252d37e35f59190cb3a6fbb0bd833a8287e7c7dac17311c",
@@ -5922,16 +5922,16 @@
       "modified": "2026-11-21T19:47:11.499Z"
     },
     "https://tractorvs.com/hi/tractors/swaraj-target-625-2wd-26592bdf/": {
-      "digest": "75c59df93c8340af9b60be5cc801c94f4b76808024a8d810c5675cfee8d5bcf0",
-      "modified": "2026-11-21T19:47:11.499Z"
+      "digest": "bafab604102db0885f858b0be73d3a125b87ed497ff156a701c22ae2411549e4",
+      "modified": "2026-11-22T17:26:34.896Z"
     },
     "https://tractorvs.com/hi/tractors/swaraj-target-625-4wd-9b41aee0/": {
-      "digest": "582502283ac397aaa60f66f90781cab97ca5401b63088e1322d1a49fac707423",
-      "modified": "2026-11-21T19:47:11.499Z"
+      "digest": "96da6f50def4430e8e695593262b23f5305dbba90b30e40fec055357869c7d7a",
+      "modified": "2026-11-22T17:26:34.896Z"
     },
     "https://tractorvs.com/hi/tractors/swaraj-target-630-4wd-8f46478f/": {
-      "digest": "e0f637e599ef457ffb2ab2e8a903ac06d470f1865c98831b6ff08e140af96598",
-      "modified": "2026-11-21T19:47:11.499Z"
+      "digest": "079d9dc725678a68b0e873f069bf9bf05bdadf68dc5ccfc68f1c9b40c0a3cc21",
+      "modified": "2026-11-22T17:26:34.896Z"
     },
     "https://tractorvs.com/hi/tractors/tafe-240-s-b6b226a4/": {
       "digest": "47f0c209589ade569f17994e977d3a063852b547deb64723338f4ba05ab74094",
@@ -6426,8 +6426,8 @@
       "modified": "2026-11-22T05:19:46.825Z"
     },
     "https://tractorvs.com/ja/tractors/agrale-4233-e3ed3f24/": {
-      "digest": "ea1fedc7570f6a61134886384c5cd4f1dd36eb5d4ddfa5e0757e79133f731eba",
-      "modified": "2026-11-22T17:20:12.066Z"
+      "digest": "85d7824d197f67aff9fe2ef34be8b4bc1fce35e32a8eaf59965592bcad099276",
+      "modified": "2026-11-22T17:26:34.896Z"
     },
     "https://tractorvs.com/ja/tractors/agrale-5105-3601ec83/": {
       "digest": "06522fad269f583eaa07910787d3207aa1a293138682401dc3b3de108efb851c",
@@ -6490,8 +6490,8 @@
       "modified": "2026-11-22T09:01:41.689Z"
     },
     "https://tractorvs.com/ja/tractors/antonio-carraro-tigre-3800-fc5f6f1d/": {
-      "digest": "a65156a93e9ad5cafc86abc5ed04529dfb6cde9ef069ea9b143bafe613122aa9",
-      "modified": "2026-11-22T12:57:29.705Z"
+      "digest": "1268be62bd6a64d9094e8e472433d0aa883a2a979e92ba6670ac2ba5154b7a7a",
+      "modified": "2026-11-22T17:26:34.896Z"
     },
     "https://tractorvs.com/ja/tractors/antonio-carraro-tony-8700-v-057ddf74/": {
       "digest": "61f7dfef25574ab336023a3a72872c04b937e718159bca2f9383440db4c6898f",
@@ -6614,20 +6614,20 @@
       "modified": "2026-11-22T13:56:24.699Z"
     },
     "https://tractorvs.com/ja/tractors/belarus-892-2-2f9d2a97/": {
-      "digest": "17af01ecbf052e80257d36d53bbca4aad417a32e8562e775f561ef47277cbea9",
-      "modified": "2026-11-22T12:57:29.705Z"
+      "digest": "4676ff1b53554b65252c1535358c99130de5c42e46996fbc275b914e834bc7db",
+      "modified": "2026-11-22T17:26:34.896Z"
     },
     "https://tractorvs.com/ja/tractors/belarus-892-4a98cb19/": {
-      "digest": "4c0a3ca9701e10178035cb6b7e9a7fd9b8a2aa73f3cf12ffdda5370ccd00ba29",
-      "modified": "2026-11-22T15:49:54.478Z"
+      "digest": "3909b2ef1c8e13e49a5423a306608b7a429a38fb9cb3a9795082e0b5ee7211be",
+      "modified": "2026-11-22T17:26:34.896Z"
     },
     "https://tractorvs.com/ja/tractors/belarus-920-2-1e1d7219/": {
-      "digest": "959b4bfb24a9393887470f5837a75e4b4d3d7089d9f71102822f0751aba2cf82",
-      "modified": "2026-11-22T15:49:54.478Z"
+      "digest": "e30e058ea4324777099cab41681a21d59f7c8953ed576751d2de3f2a2ebcba52",
+      "modified": "2026-11-22T17:26:34.896Z"
     },
     "https://tractorvs.com/ja/tractors/belarus-920-21e79b33/": {
-      "digest": "f39a87acaa319f166ad0badf79e67800a606189dea0e8aea703aee74214e622c",
-      "modified": "2026-11-22T04:59:19.699Z"
+      "digest": "9a62991cdc347d53841b9eec94433e842ab4ec732742691f5f353726f00c8591",
+      "modified": "2026-11-22T17:26:34.896Z"
     },
     "https://tractorvs.com/ja/tractors/belarus-922-3-1cd53d1a/": {
       "digest": "3cfd9f24fe3f911e8895966f17795dd8c7c619cae7ed79524f5eef97423abc99",
@@ -6646,12 +6646,12 @@
       "modified": "2026-11-22T12:57:29.705Z"
     },
     "https://tractorvs.com/ja/tractors/belarus-952-2-c0c639e1/": {
-      "digest": "cfd494b20baa753223f44cc1be443de51e24874c6f065e18d1e2f9961760e272",
-      "modified": "2026-11-22T05:19:46.825Z"
+      "digest": "0b64ae8b57cc869bd1d83c3a79c690f83a3050e3dbdc7f344982a6a59a8a308c",
+      "modified": "2026-11-22T17:26:34.896Z"
     },
     "https://tractorvs.com/ja/tractors/belarus-952-2f38e961/": {
-      "digest": "0843c9d620ad84bd813e2dafcbf09f3b93e6cd478b83edb6772e7458c4009548",
-      "modified": "2026-11-22T15:49:54.478Z"
+      "digest": "f16e1ff95d5c2ba2ab25cc064febcc2aa63ac4fbd91230ea9177ee7e5b640497",
+      "modified": "2026-11-22T17:26:34.896Z"
     },
     "https://tractorvs.com/ja/tractors/belarus-952-3-be29821d/": {
       "digest": "6d619d59ae93026db38de6d23e752ec31cac9dbd1cf1a819b443599f815764c1",
@@ -6798,20 +6798,20 @@
       "modified": "2026-11-22T05:19:46.825Z"
     },
     "https://tractorvs.com/ja/tractors/mahindra-arjun-555-di-2c1a6638/": {
-      "digest": "d72f517c73a36dac41e0d25c37f448387dddf06bed7efb7438bac0cdf2d59e6d",
-      "modified": "2026-11-22T17:20:12.066Z"
+      "digest": "e0c7ad74bc51052bd5817b42532d786e2915fb86e6e31a2ed6dfefc8994a7886",
+      "modified": "2026-11-22T17:26:34.896Z"
     },
     "https://tractorvs.com/ja/tractors/mahindra-arjun-605-di-i-bee5e88f/": {
-      "digest": "d7739d139dbfa20afea17dcb3505d2f3052273e99bc1bdbf05a48a97cd4e0321",
-      "modified": "2026-11-22T17:20:12.066Z"
+      "digest": "bc274c60b8ba05adb0671a5ef18d954f1bf7caf3244df4113dc985eee8197df9",
+      "modified": "2026-11-22T17:26:34.896Z"
     },
     "https://tractorvs.com/ja/tractors/mahindra-arjun-605-di-ms-739db984/": {
-      "digest": "65da7a752d952116ae0e017976aae6bc5f2fc999d550093198d1bc79fb41c233",
-      "modified": "2026-11-22T17:20:12.066Z"
+      "digest": "440289061cbfb3aef5c6ff8a5e9a0d99d2284febc25fab4c557d47b330a6e54f",
+      "modified": "2026-11-22T17:26:34.896Z"
     },
     "https://tractorvs.com/ja/tractors/mahindra-arjun-605-di-ms-v1-163dbb9b/": {
-      "digest": "39b9f8c2cb17cb9575f28aea4fdd550f13544177f11deb49d059a42a203a29cc",
-      "modified": "2026-11-22T17:20:12.066Z"
+      "digest": "a027fe64bfd2c21a2d6e060a499d51905642ab53f2be440945e5fcecd095b284",
+      "modified": "2026-11-22T17:26:34.896Z"
     },
     "https://tractorvs.com/ja/tractors/mahindra-jivo-225-di-4wd-34f40738/": {
       "digest": "859080ac9bbf750b7fe6019592f7f81b2a1c933297343f5710318ed8cd479c88",
@@ -7242,24 +7242,24 @@
       "modified": "2026-11-21T19:47:11.499Z"
     },
     "https://tractorvs.com/ja/tractors/sonalika-di-30-baagban-ad248a3c/": {
-      "digest": "84cfc7b2ee684248a62fda79c407a16939005df3e47714d27131dea0faddd091",
-      "modified": "2026-11-22T05:19:46.825Z"
+      "digest": "e11e6d590b17565e1483bd7c4336d5b995df4aaa07876f0417c6c8186670eb61",
+      "modified": "2026-11-22T17:26:34.896Z"
     },
     "https://tractorvs.com/ja/tractors/sonalika-di-35-596c8706/": {
-      "digest": "12580bc5083317d22b69e2119066c5ca9c16d37cb3319929dd874b67b7385868",
-      "modified": "2026-11-22T05:19:46.825Z"
+      "digest": "a39721dd0a08fc27e2c7486fb49832d092a7116787f35b10e03347d28b95945e",
+      "modified": "2026-11-22T17:26:34.896Z"
     },
     "https://tractorvs.com/ja/tractors/sonalika-di-42-p-2d79ca05/": {
-      "digest": "746e40e1777d3b5f57b4273f013706bf52f0a01a1d1d75be3ec8b4d1b9dcc316",
-      "modified": null
+      "digest": "e444189c6f46002d3b44e241bcb5939fe36afa618781e320ac9f5481c7d6506d",
+      "modified": "2026-11-22T17:26:34.896Z"
     },
     "https://tractorvs.com/ja/tractors/sonalika-di-734-d5d14815/": {
-      "digest": "f3e94b0fbdfe51d997267fae8f92356e177b13c76bd192d241cfa27c21ccec72",
-      "modified": null
+      "digest": "fed8104f6fc442328b2a3e844dcd7b38a179282e6f388752a0d42eaec68d32f9",
+      "modified": "2026-11-22T17:26:34.896Z"
     },
     "https://tractorvs.com/ja/tractors/sonalika-di-734-power-plus-fb435078/": {
-      "digest": "e671db6552179c656a2904de0789aff22173d27f2707873c39125aaf1736662a",
-      "modified": null
+      "digest": "8e98e62db0dc5cf1e42cc219739b71eca772e015296d2aaa22d74700ab6b66db",
+      "modified": "2026-11-22T17:26:34.896Z"
     },
     "https://tractorvs.com/ja/tractors/sonalika-di-740-iii-3a46f879/": {
       "digest": "5eed1d12fbf2c924a347c69ac47c5e0020311dcbc1b0fe72ecf02965c0754fb4",
@@ -7270,12 +7270,12 @@
       "modified": "2026-11-22T05:19:46.825Z"
     },
     "https://tractorvs.com/ja/tractors/sonalika-gt-20-15fca0db/": {
-      "digest": "dd4145921c35930846e879f3b68c4c461eb1f81b3ed7ef31ed948bce0e406d42",
-      "modified": "2026-11-22T05:19:46.825Z"
+      "digest": "1d8343e12ef92d7935d2406363db82aa05b9285a03d44bee29d3b579c01d8dfd",
+      "modified": "2026-11-22T17:26:34.896Z"
     },
     "https://tractorvs.com/ja/tractors/sonalika-gt-22-4wd-63dd7323/": {
-      "digest": "1a8c2add236f8d73bbf57e83a8463412dc1deae1a30a29d605e9a77022d27ce4",
-      "modified": "2026-11-22T09:01:41.689Z"
+      "digest": "aeaacb4a814e806e5a86eeb491b2f2b29c82d1191957e111bf27985cac592d79",
+      "modified": "2026-11-22T17:26:34.896Z"
     },
     "https://tractorvs.com/ja/tractors/sonalika-mahabali-rx-42-p-a0e16b7d/": {
       "digest": "d521a7b784e8a9cf31b1f7826a3b387447e69604d4b0d266362fdaae7daae2dc",
@@ -7290,12 +7290,12 @@
       "modified": null
     },
     "https://tractorvs.com/ja/tractors/sonalika-tiger-di-30-821bd689/": {
-      "digest": "a6d77ee1082a85c2a7d08759a2d31ed6ee8e51f24ba70b38f6be3ec9e31b7f90",
-      "modified": "2026-11-22T05:19:46.825Z"
+      "digest": "cce64ae24fb638aeda7fb118af101b7dcee097d117eecbc1f8d67e4c713fe31d",
+      "modified": "2026-11-22T17:26:34.896Z"
     },
     "https://tractorvs.com/ja/tractors/sonalika-tiger-di-42-pp-4wd-793fe40e/": {
-      "digest": "72942a0fc432c0688ad07b9a4c313f18e52da63908f3831e0b8f9c8fad98d7fe",
-      "modified": "2026-11-22T05:19:46.825Z"
+      "digest": "1b7515127b568ecb4af19183758ee477b8eab8758ba0f7b61a9442a87d39de3d",
+      "modified": "2026-11-22T17:26:34.896Z"
     },
     "https://tractorvs.com/ja/tractors/sonalika-tiger-di-50-67d959b0/": {
       "digest": "02cce4d65914f4d1cd33e87520fe32b3eb7fc4b39fc32b6105cdb06daeb360d8",
@@ -7450,8 +7450,8 @@
       "modified": null
     },
     "https://tractorvs.com/ja/tractors/swaraj-735-fe-7c7b069f/": {
-      "digest": "200be054a31b10a1eafe65ee896064d21b638f4e6f8ce229ea5a13cb488f5db6",
-      "modified": "2026-11-22T12:57:29.705Z"
+      "digest": "208f70762843945efcb83f934daebf3b69f1947dab9e17afc0d1a99df4c9f8c6",
+      "modified": "2026-11-22T17:26:34.896Z"
     },
     "https://tractorvs.com/ja/tractors/swaraj-735-xt-e6ab3418/": {
       "digest": "1f03b5138259ba38cf567fcb915a4d3a4ff5b181d660f2ade389fb1789457247",
@@ -7506,16 +7506,16 @@
       "modified": null
     },
     "https://tractorvs.com/ja/tractors/swaraj-target-625-2wd-26592bdf/": {
-      "digest": "77e0bd62afb65240148b502a4261b5aff60d55f4527beb1aad5343acd7b842e8",
-      "modified": null
+      "digest": "5a4afde96493e3253d28d980de1223dbad8274fdad8d6bd9d67905cc9225c5d5",
+      "modified": "2026-11-22T17:26:34.896Z"
     },
     "https://tractorvs.com/ja/tractors/swaraj-target-625-4wd-9b41aee0/": {
-      "digest": "6fc58d851dda4a90afa1753b7fb06880466e3e468e6e7578c30accce00cbf9ae",
-      "modified": null
+      "digest": "a4a90939b32e21d54a0a596ddc0aa6e9fb0c324716e3422e091dbd726d6d8af7",
+      "modified": "2026-11-22T17:26:34.896Z"
     },
     "https://tractorvs.com/ja/tractors/swaraj-target-630-4wd-8f46478f/": {
-      "digest": "3d23f35b16f6aea9496d813efdec592ead71d84eb6e5a3c72125e95f8f697847",
-      "modified": null
+      "digest": "f9d37ce2d3c2c2ae3c205aac61ffdbe541da782eef13f5acd3fb1a4887ed0588",
+      "modified": "2026-11-22T17:26:34.896Z"
     },
     "https://tractorvs.com/ja/tractors/tafe-240-s-b6b226a4/": {
       "digest": "49d3c1320505f86ecf55ee683c6653b40c46294b24df0c8e1add37a9f65d254c",
@@ -8018,8 +8018,8 @@
       "modified": "2026-11-22T11:49:57.072Z"
     },
     "https://tractorvs.com/pt-br/tractors/agrale-4233-e3ed3f24/": {
-      "digest": "989fc15c5267a26c118994d15ee460a899752e584ad98ba0b5bfdf2722a5c60e",
-      "modified": "2026-11-22T17:20:12.066Z"
+      "digest": "d14b844c858516d60666cc352c00fd34df1f210720bc2f8852fd4f5459e543df",
+      "modified": "2026-11-22T17:26:34.896Z"
     },
     "https://tractorvs.com/pt-br/tractors/agrale-5105-3601ec83/": {
       "digest": "81fce44347f290afa4f069e6ed9f0ed12eec7ec8234ee94cf915f7030f67899a",
@@ -8082,8 +8082,8 @@
       "modified": "2026-11-22T15:49:54.478Z"
     },
     "https://tractorvs.com/pt-br/tractors/antonio-carraro-tigre-3800-fc5f6f1d/": {
-      "digest": "b2e66c1e74de5fa5fd6a628ed2de389ef7f161597f333d41ab0b17694a1c826d",
-      "modified": "2026-11-22T15:49:54.478Z"
+      "digest": "ad56b8a56a3b7386f15cf4f4df6ee66535e0c72037333621e9334ae283cb18be",
+      "modified": "2026-11-22T17:26:34.896Z"
     },
     "https://tractorvs.com/pt-br/tractors/antonio-carraro-tony-8700-v-057ddf74/": {
       "digest": "3438910d15d847ad0c980d0957613ee529df0547f2cb3145e0286c587c900a06",
@@ -8206,20 +8206,20 @@
       "modified": "2026-11-22T13:56:24.699Z"
     },
     "https://tractorvs.com/pt-br/tractors/belarus-892-2-2f9d2a97/": {
-      "digest": "08c0ca8f21b7eb88ab125ed6960424951e8369e081fca43a21070831546cc6a5",
-      "modified": "2026-11-22T12:57:29.705Z"
+      "digest": "ce100508e96bb3c06df261a2c6abdf50be37090cdaf519c5e6c7914f972c1e41",
+      "modified": "2026-11-22T17:26:34.896Z"
     },
     "https://tractorvs.com/pt-br/tractors/belarus-892-4a98cb19/": {
-      "digest": "574f4146c23b099090c49fe1bbe67d26af6e211ce2aa4b079208d6c4e81411af",
-      "modified": "2026-11-22T15:49:54.478Z"
+      "digest": "196445c13a114b1963ca2c4369997fd4c6104674b554fe5aaa9e78a73f728897",
+      "modified": "2026-11-22T17:26:34.896Z"
     },
     "https://tractorvs.com/pt-br/tractors/belarus-920-2-1e1d7219/": {
-      "digest": "bd29a39fbb1cad82a8acd74c09146d57148adbdc3961db2af4742a48925ed84b",
-      "modified": "2026-11-22T12:57:29.705Z"
+      "digest": "8bcabd4de4498878e0cfaf8f6928a5cbbbf2795fc558a7ed0e34cd16b01cb18e",
+      "modified": "2026-11-22T17:26:34.896Z"
     },
     "https://tractorvs.com/pt-br/tractors/belarus-920-21e79b33/": {
-      "digest": "b5b2f788a74946f373b15076503bf4194da00f6ffd78b0bab3b3119da0ff900f",
-      "modified": "2026-11-22T15:49:54.478Z"
+      "digest": "26618a3277dbf1e2026c6766143368895633d16ee45b73c86679c99de163bd55",
+      "modified": "2026-11-22T17:26:34.896Z"
     },
     "https://tractorvs.com/pt-br/tractors/belarus-922-3-1cd53d1a/": {
       "digest": "0b3f3bd26ac0170ff2785d7381c21a9a530dd0ac532d2485f1762656ff209823",
@@ -8238,12 +8238,12 @@
       "modified": "2026-11-22T15:49:54.478Z"
     },
     "https://tractorvs.com/pt-br/tractors/belarus-952-2-c0c639e1/": {
-      "digest": "3cd131303f5c1a4acd42b415922a8694f1d79d71078caabf192de1eb11140ed2",
-      "modified": "2026-11-22T11:49:57.072Z"
+      "digest": "1b720caa9eed13c536c24a5339abb9dc348094fa69ccfdfe7ac79eb4cd526882",
+      "modified": "2026-11-22T17:26:34.896Z"
     },
     "https://tractorvs.com/pt-br/tractors/belarus-952-2f38e961/": {
-      "digest": "009114d535860bf15242a5edb28d945ce55e309c3ef4ad4c9d053d02f99c05e9",
-      "modified": "2026-11-22T15:49:54.478Z"
+      "digest": "b7bb07abe89788ba69b0ebec889a14b938bc7e29d835038d5b9dce868f3df859",
+      "modified": "2026-11-22T17:26:34.896Z"
     },
     "https://tractorvs.com/pt-br/tractors/belarus-952-3-be29821d/": {
       "digest": "9b4997262e7f68528d50b3a1b2e6e0bdf40f6b0c38a9876c13632a3bb4be60ff",
@@ -8390,20 +8390,20 @@
       "modified": "2026-11-22T05:19:46.825Z"
     },
     "https://tractorvs.com/pt-br/tractors/mahindra-arjun-555-di-2c1a6638/": {
-      "digest": "5241289b845b43e132e0c55f54d5a2a4b6934c2cc294d5b34609f73335605482",
-      "modified": "2026-11-22T17:20:12.066Z"
+      "digest": "efa8cffd4d79ad1ba169b1240b54533abe966aae00b94016c433ae81aa66c2a2",
+      "modified": "2026-11-22T17:26:34.896Z"
     },
     "https://tractorvs.com/pt-br/tractors/mahindra-arjun-605-di-i-bee5e88f/": {
-      "digest": "5a5e57fba2cf7ceb30e69eb30faeb74b33e8db4a72d478c36de3b716c9b03e5d",
-      "modified": "2026-11-22T17:20:12.066Z"
+      "digest": "e941fa3c5dc8a9d3be9e201557a8c6e184f32494faffb734cc9d0fe6d8379117",
+      "modified": "2026-11-22T17:26:34.896Z"
     },
     "https://tractorvs.com/pt-br/tractors/mahindra-arjun-605-di-ms-739db984/": {
-      "digest": "5b628b4755608d80b7ea9a4cc544c88563d080ce1aef88defeb7660a690b8d36",
-      "modified": "2026-11-22T17:20:12.066Z"
+      "digest": "26289dccdf1ff44ed53664ac3eed9277ffaaf068965ab35ee4b5ae4b1114c375",
+      "modified": "2026-11-22T17:26:34.896Z"
     },
     "https://tractorvs.com/pt-br/tractors/mahindra-arjun-605-di-ms-v1-163dbb9b/": {
-      "digest": "6adbdbb69bd819fb818abd42b372cfd2d30f14e991850979de134702379f6b40",
-      "modified": "2026-11-22T17:20:12.066Z"
+      "digest": "48d570fe31d098996ac69d005a2adb6f7c976609c341a15963299998b609e016",
+      "modified": "2026-11-22T17:26:34.896Z"
     },
     "https://tractorvs.com/pt-br/tractors/mahindra-jivo-225-di-4wd-34f40738/": {
       "digest": "c08f3fbe6e4e074ae9b6f52fa5a9eefbad54e4b0e5c3500f50b9faa303e7e0ab",
@@ -8834,24 +8834,24 @@
       "modified": "2026-11-21T19:47:11.499Z"
     },
     "https://tractorvs.com/pt-br/tractors/sonalika-di-30-baagban-ad248a3c/": {
-      "digest": "832152ccf1262a0baecbaf5a89b48cfd93a10d03420b985b5d0d760cdfa008c0",
-      "modified": "2026-11-22T11:49:57.072Z"
+      "digest": "2a1b7c0ec09d21b6858fb76cc62b9d55396ea358fcd9905ef75488489fca8846",
+      "modified": "2026-11-22T17:26:34.896Z"
     },
     "https://tractorvs.com/pt-br/tractors/sonalika-di-35-596c8706/": {
-      "digest": "5c182832bcf8ea612843107076bbaef1b0b38484434499eb621306100131f54c",
-      "modified": "2026-11-22T11:49:57.072Z"
+      "digest": "4a0d9f46899973a0446567f21dd4c10d2b8315361fe908c6e13a17246111c91d",
+      "modified": "2026-11-22T17:26:34.896Z"
     },
     "https://tractorvs.com/pt-br/tractors/sonalika-di-42-p-2d79ca05/": {
-      "digest": "9c2c705c5db47bac82b06660a1202949bd677bc5afad7f57d03d228d796e64fb",
-      "modified": "2026-11-22T11:49:57.072Z"
+      "digest": "bc17c3951e05805ad760389e14deb81883431331c7f377824c63da6858262726",
+      "modified": "2026-11-22T17:26:34.896Z"
     },
     "https://tractorvs.com/pt-br/tractors/sonalika-di-734-d5d14815/": {
-      "digest": "ea6b2eb190356d5cb70414577f8197da83531b7d94d20034f172ef9ba09145ba",
-      "modified": "2026-11-22T11:49:57.072Z"
+      "digest": "2894e9742c40b1b33dacc1a46c38a8aa6a173429687239eda944abf13042ded9",
+      "modified": "2026-11-22T17:26:34.896Z"
     },
     "https://tractorvs.com/pt-br/tractors/sonalika-di-734-power-plus-fb435078/": {
-      "digest": "ef476df264496a1be38be75c0d3d20ae463da72dcf4c1eb181ffb8f6d2ed2328",
-      "modified": "2026-11-22T11:49:57.072Z"
+      "digest": "8901dc4c8420aebca845ffd51ffa1663d1736f69c0047a46353955e919e2c85d",
+      "modified": "2026-11-22T17:26:34.896Z"
     },
     "https://tractorvs.com/pt-br/tractors/sonalika-di-740-iii-3a46f879/": {
       "digest": "f60ca93f9ae3f6ce159c374e125804eda2e9a0a55631749bd44ca14cb0aeadab",
@@ -8862,12 +8862,12 @@
       "modified": "2026-11-22T11:49:57.072Z"
     },
     "https://tractorvs.com/pt-br/tractors/sonalika-gt-20-15fca0db/": {
-      "digest": "59fb2bb0a52544639bc5091fc56fb0f32e486c7ef5978d8a78bb2331a5987c68",
-      "modified": "2026-11-22T11:49:57.072Z"
+      "digest": "72701ea262bc1c8d7bb99a36d63476fce46cde4ccf6d9ab78b2c3aeed72f2d20",
+      "modified": "2026-11-22T17:26:34.896Z"
     },
     "https://tractorvs.com/pt-br/tractors/sonalika-gt-22-4wd-63dd7323/": {
-      "digest": "1dc7f239ea44ef9442d5411c256e89dfff3478740b259029f80b16a666cdf7ad",
-      "modified": "2026-11-22T11:49:57.072Z"
+      "digest": "ae78e65e572219ffa832f5285705fe0997eab63e524e73ae57949cb34bdeec47",
+      "modified": "2026-11-22T17:26:34.896Z"
     },
     "https://tractorvs.com/pt-br/tractors/sonalika-mahabali-rx-42-p-a0e16b7d/": {
       "digest": "b4cca1f2617bb51988d8e9e17d5920c0ca6d7c39726768a02baaaf5dc3ca965f",
@@ -8882,12 +8882,12 @@
       "modified": "2026-11-22T11:49:57.072Z"
     },
     "https://tractorvs.com/pt-br/tractors/sonalika-tiger-di-30-821bd689/": {
-      "digest": "1a15e621152160bf5be2e0f76f06364db6db8753f3f500488074e22378265c91",
-      "modified": "2026-11-22T11:49:57.072Z"
+      "digest": "5a3fb2d58383b1515c3e4482edb1f504d82ee726e75bf7d0f016c3e7b228464e",
+      "modified": "2026-11-22T17:26:34.896Z"
     },
     "https://tractorvs.com/pt-br/tractors/sonalika-tiger-di-42-pp-4wd-793fe40e/": {
-      "digest": "47194599543e610ab1bf784a4838189f116cff86fb0f251ca6d412638afbac1a",
-      "modified": "2026-11-22T11:49:57.072Z"
+      "digest": "c3e3d846d9b736baa7f17f6cd2cfc62d7a8f8f3e200aabc31f657ffb848ffb94",
+      "modified": "2026-11-22T17:26:34.896Z"
     },
     "https://tractorvs.com/pt-br/tractors/sonalika-tiger-di-50-67d959b0/": {
       "digest": "2589ee41e1d3c30c65071fb05aa3dd7a419ebfcaa5b89ec2808ab68699dcf05d",
@@ -9042,8 +9042,8 @@
       "modified": "2026-11-22T04:59:19.699Z"
     },
     "https://tractorvs.com/pt-br/tractors/swaraj-735-fe-7c7b069f/": {
-      "digest": "a211c799a771442e8f4682818297f0e4d967f7332e76aca9314f32fc26b9060a",
-      "modified": "2026-11-22T12:57:29.705Z"
+      "digest": "468bf40eab718f761ca73b932ab654b7d84cf6aaab62f7a28f2790828f9e7c41",
+      "modified": "2026-11-22T17:26:34.896Z"
     },
     "https://tractorvs.com/pt-br/tractors/swaraj-735-xt-e6ab3418/": {
       "digest": "d4f5732e924d1938cd553b62a8f47e55c7f6c76595849ab6f373009bab0f398e",
@@ -9098,16 +9098,16 @@
       "modified": "2026-11-21T21:02:04.777Z"
     },
     "https://tractorvs.com/pt-br/tractors/swaraj-target-625-2wd-26592bdf/": {
-      "digest": "db42a7f97fe39dfbc8c1bf5fa8316d0ad843e93699ac6f16f1edc0a0755fc3f2",
-      "modified": "2026-11-22T11:49:57.072Z"
+      "digest": "1387d36ec00ea10d0fdad7d9dc041508909cbdd65d52d848531777db0ebfe8ab",
+      "modified": "2026-11-22T17:26:34.896Z"
     },
     "https://tractorvs.com/pt-br/tractors/swaraj-target-625-4wd-9b41aee0/": {
-      "digest": "bd0ac3ad5cc26ea06754f384e4aeb13d5d936ce706e9f993282db5c4550d5cce",
-      "modified": "2026-11-22T11:49:57.072Z"
+      "digest": "89e36ca1da293023ec29cf09e6864ebbbf7d3450d26633bec6a518eefb3f6091",
+      "modified": "2026-11-22T17:26:34.896Z"
     },
     "https://tractorvs.com/pt-br/tractors/swaraj-target-630-4wd-8f46478f/": {
-      "digest": "e9391513694b9847d5f6558042d90a08bf6a6cd9477a4156462358f44a81484e",
-      "modified": "2026-11-22T11:49:57.072Z"
+      "digest": "86377f3d29445e00adac7a6ed12d4c46e52ea39676fa35a62fd6d3a628b1d1c4",
+      "modified": "2026-11-22T17:26:34.896Z"
     },
     "https://tractorvs.com/pt-br/tractors/tafe-240-s-b6b226a4/": {
       "digest": "1d8d42685240af93256e5f7d0d9a274581755b7d08fce69333f335fc558c6c81",
@@ -9606,8 +9606,8 @@
       "modified": "2026-11-22T05:19:46.825Z"
     },
     "https://tractorvs.com/ru/tractors/agrale-4233-e3ed3f24/": {
-      "digest": "4de906c4d422197ec24257b1cccc01b1fe153a7162ca8473c46bddab6131397a",
-      "modified": "2026-11-22T17:20:12.066Z"
+      "digest": "fc318be2793d718827504eb51925dc98c2d0826c9d7cda643f810481070c4363",
+      "modified": "2026-11-22T17:26:34.896Z"
     },
     "https://tractorvs.com/ru/tractors/agrale-5105-3601ec83/": {
       "digest": "d8eddbc0a77743db4ea9ac2fbfb7cbdbd431c5055b292f3b522ef9e3d06c2cd8",
@@ -9670,8 +9670,8 @@
       "modified": "2026-11-22T15:49:54.478Z"
     },
     "https://tractorvs.com/ru/tractors/antonio-carraro-tigre-3800-fc5f6f1d/": {
-      "digest": "43d95aa126758d49c545c9e58f86f925e130fb4f2d265b9cba51462e4ea34f1a",
-      "modified": "2026-11-22T15:49:54.478Z"
+      "digest": "200e4befc93a2bd3ea6d7dfbec9ff17b128bff7f9018f77a9af2d23535ec6095",
+      "modified": "2026-11-22T17:26:34.896Z"
     },
     "https://tractorvs.com/ru/tractors/antonio-carraro-tony-8700-v-057ddf74/": {
       "digest": "b9e2d46f1a82231e5eb612e2ad394a09a12ce6fb2ddec14987293da9b96f9b6b",
@@ -9794,20 +9794,20 @@
       "modified": "2026-11-22T15:49:54.478Z"
     },
     "https://tractorvs.com/ru/tractors/belarus-892-2-2f9d2a97/": {
-      "digest": "8b18c4c693ad75a6c1cc0e2807c930c14c9815a81b855a7087fd5d03f43d7cfc",
-      "modified": "2026-11-22T12:57:29.705Z"
+      "digest": "2aad5ae04aeb53861e7e192195b7a651516adc02ec52db67fb82db3b765b7550",
+      "modified": "2026-11-22T17:26:34.896Z"
     },
     "https://tractorvs.com/ru/tractors/belarus-892-4a98cb19/": {
-      "digest": "f1e801609c9a8e103f14d1ae26ba2fa84fbe9938cc65cb272d5d081c088635e1",
-      "modified": "2026-11-22T12:57:29.705Z"
+      "digest": "9d7b291c55c4a00fcb0ab241cc3b0a1b422cbc15e35e61044c8eb4b6f9536439",
+      "modified": "2026-11-22T17:26:34.896Z"
     },
     "https://tractorvs.com/ru/tractors/belarus-920-2-1e1d7219/": {
-      "digest": "aa04b4f5df6091e23be9a7826cb84f9b1a1428c2a5e8a9b36da3f6216b3173dc",
-      "modified": "2026-11-22T12:57:29.705Z"
+      "digest": "7ff950d84066d559d7c0662dd218eac6f9ba0a0698028d531dfd226059aa25f3",
+      "modified": "2026-11-22T17:26:34.896Z"
     },
     "https://tractorvs.com/ru/tractors/belarus-920-21e79b33/": {
-      "digest": "f60a52ed643c0b8636ef1f8fccdc261f80eb4bff5d0dc010db980f6367757f0a",
-      "modified": "2026-11-22T15:49:54.478Z"
+      "digest": "62cfdf07ac37b2ca2e4288e12f03059cb99346be00c79a89f4ade07bfbe3e3b9",
+      "modified": "2026-11-22T17:26:34.896Z"
     },
     "https://tractorvs.com/ru/tractors/belarus-922-3-1cd53d1a/": {
       "digest": "ce9908afd465c97690c26c779ca748b9c5d6d69a5e64c30447248aae107ebc31",
@@ -9826,12 +9826,12 @@
       "modified": "2026-11-22T15:49:54.478Z"
     },
     "https://tractorvs.com/ru/tractors/belarus-952-2-c0c639e1/": {
-      "digest": "125316b724ccd1cb1a1c90e4c62aef8f692357e2b4bc86481742989b26271c38",
-      "modified": "2026-11-22T05:19:46.825Z"
+      "digest": "54fffbf7f53e020d9dd2e659809b3d0ae62c5492f4c52c03abf23bf173468100",
+      "modified": "2026-11-22T17:26:34.896Z"
     },
     "https://tractorvs.com/ru/tractors/belarus-952-2f38e961/": {
-      "digest": "48475ccd84ba6ad0dd1e6a2933124df2c3b54e166410392f9eded20c136003c0",
-      "modified": "2026-11-22T12:57:29.705Z"
+      "digest": "4d600d92fcd1539be8061dac34cdad33b3465cead4750a7f9096926508c0e70d",
+      "modified": "2026-11-22T17:26:34.896Z"
     },
     "https://tractorvs.com/ru/tractors/belarus-952-3-be29821d/": {
       "digest": "49dc0e51213928fca60c99b3ddd2366cc763ae111454a5feb2516875d54557bb",
@@ -9978,20 +9978,20 @@
       "modified": "2026-11-22T05:19:46.825Z"
     },
     "https://tractorvs.com/ru/tractors/mahindra-arjun-555-di-2c1a6638/": {
-      "digest": "d33c58a5c6058ef54c356952953b832db7f036e7921a7a28d9aba0bfd2dc4c3f",
-      "modified": "2026-11-22T17:20:12.066Z"
+      "digest": "55a73693e8ede46541f1f47d4f0c2170e9ac9f5d46536475539d214e742b2a19",
+      "modified": "2026-11-22T17:26:34.896Z"
     },
     "https://tractorvs.com/ru/tractors/mahindra-arjun-605-di-i-bee5e88f/": {
-      "digest": "8cafdaaeea3cb79a7f7a0c860e52e689f328cf3b2e7da6cdfe7952014a055f79",
-      "modified": "2026-11-22T17:20:12.066Z"
+      "digest": "4e19251a99d0658eb8ece64d79a521d63207461caf4b360359ea1475a5843ad7",
+      "modified": "2026-11-22T17:26:34.896Z"
     },
     "https://tractorvs.com/ru/tractors/mahindra-arjun-605-di-ms-739db984/": {
-      "digest": "ef7a59e9fc2c92c10c1804cc0a81878ddc949ea23fed68157364709ab0d251a3",
-      "modified": "2026-11-22T17:20:12.066Z"
+      "digest": "71f8e5ce682a4f54d2822774d907360ea1874c8f7525f47b31f990317c2b38d1",
+      "modified": "2026-11-22T17:26:34.896Z"
     },
     "https://tractorvs.com/ru/tractors/mahindra-arjun-605-di-ms-v1-163dbb9b/": {
-      "digest": "d4fffd2bbe4161448a801d5fb7818bcd9dad52dae52aa5d324f65d2e8cf5b8a6",
-      "modified": "2026-11-22T17:20:12.066Z"
+      "digest": "7fbb47c625ad8f3a68349c85aa35c94c5c81844231d6cb96511c7cb4aeb9fecf",
+      "modified": "2026-11-22T17:26:34.896Z"
     },
     "https://tractorvs.com/ru/tractors/mahindra-jivo-225-di-4wd-34f40738/": {
       "digest": "b0f008dd0a7abfc07699056fe67ee2bafe0670b466be995ba92c37da01468b27",
@@ -10422,24 +10422,24 @@
       "modified": "2026-11-21T19:47:11.499Z"
     },
     "https://tractorvs.com/ru/tractors/sonalika-di-30-baagban-ad248a3c/": {
-      "digest": "d9f4b98752a2816ba55af07ac14518ef8c6554cd24b4751edb480fdb5bd37874",
-      "modified": "2026-11-22T05:19:46.825Z"
+      "digest": "dea2083adda124e353d0bb711c18ce0d8655ae6df63dce6c4317748869266dea",
+      "modified": "2026-11-22T17:26:34.896Z"
     },
     "https://tractorvs.com/ru/tractors/sonalika-di-35-596c8706/": {
-      "digest": "09374c67ddec64717dc5441cfe7aec6e5c4ebb428b55219f0a70d7dc0120afc5",
-      "modified": "2026-11-22T05:19:46.825Z"
+      "digest": "4f3b447e179038338b658d9c9a28daacdf330cf780a04345550638d8d09cfcb3",
+      "modified": "2026-11-22T17:26:34.896Z"
     },
     "https://tractorvs.com/ru/tractors/sonalika-di-42-p-2d79ca05/": {
-      "digest": "5a5c4686e2f108cdf9d60c25a75ea6a1a329b2ce4734e226972738a6df7ba633",
-      "modified": "2026-11-22T04:59:19.699Z"
+      "digest": "4c837f17bd7fabf99904968263e5e401791cf979a4af6efb31139fc6510581d4",
+      "modified": "2026-11-22T17:26:34.896Z"
     },
     "https://tractorvs.com/ru/tractors/sonalika-di-734-d5d14815/": {
-      "digest": "85ed2622b7382dcba1267633488082cc3f48e6e39753ad18cf6460d3b6370cc9",
-      "modified": "2026-11-22T04:59:19.699Z"
+      "digest": "34bd50377153ea11dc65c01635afe89f356e89bc0cabc60e1ef6542e49502079",
+      "modified": "2026-11-22T17:26:34.896Z"
     },
     "https://tractorvs.com/ru/tractors/sonalika-di-734-power-plus-fb435078/": {
-      "digest": "a1789562dcaacac11fb99dac3b149fd7aa9fffd8f013e90ca92d552ff6847ff1",
-      "modified": "2026-11-22T15:49:54.478Z"
+      "digest": "3fec3a978c2bd80da7275fa09e83c042b329c9552c720c968be89da9d3e8653d",
+      "modified": "2026-11-22T17:26:34.896Z"
     },
     "https://tractorvs.com/ru/tractors/sonalika-di-740-iii-3a46f879/": {
       "digest": "8787814a7ddb74f592ffb484f106bc1c6d1841e6473f2d5838582ef3cccdf4ab",
@@ -10450,12 +10450,12 @@
       "modified": "2026-11-22T05:19:46.825Z"
     },
     "https://tractorvs.com/ru/tractors/sonalika-gt-20-15fca0db/": {
-      "digest": "497e9222da78bf7d1e185ad46e8772b4a6561d2fc56003f71141104664bb928f",
-      "modified": "2026-11-22T05:19:46.825Z"
+      "digest": "b9ee8ec4bbd737728f0d075c22b91161ce4daec77f37fd566a81550c30cd1060",
+      "modified": "2026-11-22T17:26:34.896Z"
     },
     "https://tractorvs.com/ru/tractors/sonalika-gt-22-4wd-63dd7323/": {
-      "digest": "45e114d6f83e026c7247fb58f598b13de7b44cb863f119645ba816005474cb25",
-      "modified": "2026-11-22T09:01:41.689Z"
+      "digest": "04b3d754ded81897a9d2423995a27bdfe20797a22296572f06b411222143f665",
+      "modified": "2026-11-22T17:26:34.896Z"
     },
     "https://tractorvs.com/ru/tractors/sonalika-mahabali-rx-42-p-a0e16b7d/": {
       "digest": "5750081540e1cfc78a6cc5b13359b0e177e541a231b2ac952803b6105cc54df6",
@@ -10470,12 +10470,12 @@
       "modified": "2026-11-22T04:59:19.699Z"
     },
     "https://tractorvs.com/ru/tractors/sonalika-tiger-di-30-821bd689/": {
-      "digest": "b29177191c4310c852ed0d53e6a4c239d5d37dce6ab60d4a3444ae8e870f628f",
-      "modified": "2026-11-22T05:19:46.825Z"
+      "digest": "585f2454c60bc8eadff442c7983e09f7980b98e16c21eec2aacf3176a06dcf88",
+      "modified": "2026-11-22T17:26:34.896Z"
     },
     "https://tractorvs.com/ru/tractors/sonalika-tiger-di-42-pp-4wd-793fe40e/": {
-      "digest": "1a5b6949b252e8a8f0f9d0c13c2003ccc84320778c1755208b3add14875b8687",
-      "modified": "2026-11-22T05:19:46.825Z"
+      "digest": "b6680164a4e69860d38376c1e28c055d81d27a7465ff7ff8182753b025ac0a83",
+      "modified": "2026-11-22T17:26:34.896Z"
     },
     "https://tractorvs.com/ru/tractors/sonalika-tiger-di-50-67d959b0/": {
       "digest": "0a4c34b9da1fc0d2012f88f1760305ed654d7ce68a186c61602ba48d9df02539",
@@ -10630,8 +10630,8 @@
       "modified": "2026-11-22T04:59:19.699Z"
     },
     "https://tractorvs.com/ru/tractors/swaraj-735-fe-7c7b069f/": {
-      "digest": "cde37c836a184754da4c68c41bcdc214cb6452c863905fee7214aaa493ac83a9",
-      "modified": "2026-11-22T12:57:29.705Z"
+      "digest": "90c09557c4b08c5dedeb425dbef31290c88e729278c3a407d480c7f2fa87db6b",
+      "modified": "2026-11-22T17:26:34.896Z"
     },
     "https://tractorvs.com/ru/tractors/swaraj-735-xt-e6ab3418/": {
       "digest": "dd7e828a3f06599cced1bc6a42db6ae76efac93da9ec06ead97483a7c363ff82",
@@ -10686,16 +10686,16 @@
       "modified": "2026-11-21T19:47:11.499Z"
     },
     "https://tractorvs.com/ru/tractors/swaraj-target-625-2wd-26592bdf/": {
-      "digest": "b1e0768813d3d5cab20ad48fe580318684eae2d45369b6273e19c8b4c39fa305",
-      "modified": "2026-11-22T04:59:19.699Z"
+      "digest": "c17c2d91e2e24dd3d8b79d8200a49a25463d335e3c817cf30c856c698f89a2b0",
+      "modified": "2026-11-22T17:26:34.896Z"
     },
     "https://tractorvs.com/ru/tractors/swaraj-target-625-4wd-9b41aee0/": {
-      "digest": "a32c355449aaf0baf6037b27603cb83c74a2e8747f0fe972361f9c54e2693122",
-      "modified": "2026-11-22T04:59:19.699Z"
+      "digest": "ec06713145ef5268fc976005976e335a62ff46369da0bcc14f1640df767a4c37",
+      "modified": "2026-11-22T17:26:34.896Z"
     },
     "https://tractorvs.com/ru/tractors/swaraj-target-630-4wd-8f46478f/": {
-      "digest": "20c9b1bc83d59ecb15900f5cdceded0ae1d13f4a21d45bf44f897c6620be24ac",
-      "modified": "2026-11-22T04:59:19.699Z"
+      "digest": "c6474321835af7416634b06d3ddf91b579048098ebfb6c81f19b56d3bf1be8a8",
+      "modified": "2026-11-22T17:26:34.896Z"
     },
     "https://tractorvs.com/ru/tractors/tafe-240-s-b6b226a4/": {
       "digest": "16a866bcafb5d5fa3858575270626f37b63552cb3722f3d4872e43c5466b3d25",
@@ -11222,8 +11222,8 @@
       "modified": "2026-11-22T09:17:23.521Z"
     },
     "https://tractorvs.com/tr/tractors/agrale-4233-e3ed3f24/": {
-      "digest": "87f45f5aee652cceabbf097f52dff8385901c2f2956f5fa55b62d2cea09f7cf2",
-      "modified": "2026-11-22T17:20:12.066Z"
+      "digest": "d6636ded666b254a5bbfbd2598a21eeba8a51a770a1749793411996ad3d7344a",
+      "modified": "2026-11-22T17:26:34.896Z"
     },
     "https://tractorvs.com/tr/tractors/agrale-5105-3601ec83/": {
       "digest": "9d34b9be982d88b0b7295d78c6a448229044bffb520b2f46e92d47cd1ed58672",
@@ -11286,8 +11286,8 @@
       "modified": "2026-11-22T15:49:54.478Z"
     },
     "https://tractorvs.com/tr/tractors/antonio-carraro-tigre-3800-fc5f6f1d/": {
-      "digest": "860f2b569d2d6bcde3d235f5407f30fbe630248c806a3ef9df335a1b986860e0",
-      "modified": "2026-11-22T12:57:29.705Z"
+      "digest": "6fcca153dc652bc1aff78ac47eaa312c1c74b616660354e9a33aa847b5087f17",
+      "modified": "2026-11-22T17:26:34.896Z"
     },
     "https://tractorvs.com/tr/tractors/antonio-carraro-tony-8700-v-057ddf74/": {
       "digest": "4934f28cd8530651cc1c788931a31fa67cca25bbefc02cd6aa57ae28484ca234",
@@ -11594,20 +11594,20 @@
       "modified": "2026-11-22T05:19:46.825Z"
     },
     "https://tractorvs.com/tr/tractors/mahindra-arjun-555-di-2c1a6638/": {
-      "digest": "3cd340261a4dc5e7b5c071fd357498b230c884645a6ab93aab5e445e40f46a25",
-      "modified": "2026-11-22T17:20:12.066Z"
+      "digest": "8e9d49babc4c43ec184905472eeb77726d4bdba2d73262ac83c61b72ff70e87a",
+      "modified": "2026-11-22T17:26:34.896Z"
     },
     "https://tractorvs.com/tr/tractors/mahindra-arjun-605-di-i-bee5e88f/": {
-      "digest": "4a68af191620f62bec8074a703523d6abfa0e88d3a3ad187b13ddac9c9e55abb",
-      "modified": "2026-11-22T17:20:12.066Z"
+      "digest": "0fea4310398541d2ca3e0add740432589fb493cc8e13f2d2ea7be1a87d5b4e5b",
+      "modified": "2026-11-22T17:26:34.896Z"
     },
     "https://tractorvs.com/tr/tractors/mahindra-arjun-605-di-ms-739db984/": {
-      "digest": "1ca7c2f8e07fb32731e6efad3cb8df13a681c356356a44cbc982bff19cbc6f7b",
-      "modified": "2026-11-22T17:20:12.066Z"
+      "digest": "3df135677ba3960f887a80d0c38181440a6f2898be91f9944bce0212e90b22a3",
+      "modified": "2026-11-22T17:26:34.896Z"
     },
     "https://tractorvs.com/tr/tractors/mahindra-arjun-605-di-ms-v1-163dbb9b/": {
-      "digest": "9651ed52b37bfe605f72d76f6d4245f8f3577e8ee6318d8418e6e3b039d23a9c",
-      "modified": "2026-11-22T17:20:12.066Z"
+      "digest": "6b14ffb4d83b0f823338695d475c93c87f02755f44e433875c072487a2269303",
+      "modified": "2026-11-22T17:26:34.896Z"
     },
     "https://tractorvs.com/tr/tractors/mahindra-jivo-225-di-4wd-34f40738/": {
       "digest": "fda774a4a7b87ac9dacd256c464dac0b9b54e788a3977ac6bd10a894e3187518",
@@ -14362,8 +14362,8 @@
       "modified": "2026-11-22T09:58:15.078Z"
     },
     "https://tractorvs.com/zh/tractors/agrale-4233-e3ed3f24/": {
-      "digest": "02c17aab879717c93d1d510e50321f695c64ee3a07ae81cf6fbc96a9d274c59c",
-      "modified": "2026-11-22T17:20:12.066Z"
+      "digest": "21f189d851fbbc91c398bbeb63df589beea693f76967aab9597045ab2fcda9eb",
+      "modified": "2026-11-22T17:26:34.896Z"
     },
     "https://tractorvs.com/zh/tractors/agrale-5105-3601ec83/": {
       "digest": "663951028371e440b64147d300b72013e58b3e5e9f3c30712894cb0c43bc9121",
@@ -14426,8 +14426,8 @@
       "modified": "2026-11-22T09:58:15.078Z"
     },
     "https://tractorvs.com/zh/tractors/antonio-carraro-tigre-3800-fc5f6f1d/": {
-      "digest": "d3d258aa5a6f96d9b2c17848477372e0dcd153b103fd66c4028c84e6fdd1ba51",
-      "modified": "2026-11-22T12:57:29.705Z"
+      "digest": "a09faf7b91450cacf2b80031ebe9cfa1d562ed47fe2b6774338f671bb6a9e531",
+      "modified": "2026-11-22T17:26:34.896Z"
     },
     "https://tractorvs.com/zh/tractors/antonio-carraro-tony-8700-v-057ddf74/": {
       "digest": "02476b8ff36f347f2947582554d16ca9d276024450dbb518eae421e37a7e857b",
@@ -14550,20 +14550,20 @@
       "modified": "2026-11-22T13:56:24.699Z"
     },
     "https://tractorvs.com/zh/tractors/belarus-892-2-2f9d2a97/": {
-      "digest": "39fc6553a164d18eaef4e6ab747c91b6290b4fb05bc5736403e95c0f63d8d733",
-      "modified": "2026-11-22T12:57:29.705Z"
+      "digest": "1d67ba9a38cf923c2a10973614e52d9c778dcba403305e7a653dbc1fb79b1e64",
+      "modified": "2026-11-22T17:26:34.896Z"
     },
     "https://tractorvs.com/zh/tractors/belarus-892-4a98cb19/": {
-      "digest": "edc05586ae5ed0240642b7a28190c77c678c5df1ecc6377e8392a4b6f96a2bf0",
-      "modified": "2026-11-22T15:49:54.478Z"
+      "digest": "f61a6e2351e5afb05baf42985c071d6625d8cf3122763d0e91e3cd5408cd4ad3",
+      "modified": "2026-11-22T17:26:34.896Z"
     },
     "https://tractorvs.com/zh/tractors/belarus-920-2-1e1d7219/": {
-      "digest": "bbfc966534b9005286d4037fbdba6b542d7b330cd2f237e905ac7c9878408396",
-      "modified": "2026-11-22T15:49:54.478Z"
+      "digest": "f31ef8da043a06625605d5db32588c6caa79119f32f474560bb7b1c2ea377062",
+      "modified": "2026-11-22T17:26:34.896Z"
     },
     "https://tractorvs.com/zh/tractors/belarus-920-21e79b33/": {
-      "digest": "1493e40017a6fedbd7f499debca3f782f91ed269729be1c556fe4393bb1a531b",
-      "modified": "2026-11-22T15:49:54.478Z"
+      "digest": "17ff4fd5172860ed98217a0a01814a50af83d12154ed872ebd263b7cf2b48022",
+      "modified": "2026-11-22T17:26:34.896Z"
     },
     "https://tractorvs.com/zh/tractors/belarus-922-3-1cd53d1a/": {
       "digest": "e1651a618fb147484cf48c2ebc9a85f8b9c6d67fcb41dc6978dbf9a446d85e92",
@@ -14582,12 +14582,12 @@
       "modified": "2026-11-22T12:57:29.705Z"
     },
     "https://tractorvs.com/zh/tractors/belarus-952-2-c0c639e1/": {
-      "digest": "bc8b8dea707be2ca4af7095df622c51c58a3c0947f89a14267c273fdd73ac355",
-      "modified": "2026-11-22T05:19:46.825Z"
+      "digest": "7b5213af88d40dae40a669b8063df8d6ed435ab8530a62c10bba64c5fd484123",
+      "modified": "2026-11-22T17:26:34.896Z"
     },
     "https://tractorvs.com/zh/tractors/belarus-952-2f38e961/": {
-      "digest": "2f9d4f4b1224dfdc2079838ca1cf5605aebb6b3e27f61f67d75b4102778f6ffc",
-      "modified": "2026-11-22T15:49:54.478Z"
+      "digest": "3b9049afce5a38a58909d786253d67b8202e9110abff6674a4f94f49b58c95bd",
+      "modified": "2026-11-22T17:26:34.896Z"
     },
     "https://tractorvs.com/zh/tractors/belarus-952-3-be29821d/": {
       "digest": "b983db3e77d372c56bd1d5a963d2755d6a0bd833c9379389880952c1bf50db1d",
@@ -14734,20 +14734,20 @@
       "modified": "2026-11-22T09:58:15.078Z"
     },
     "https://tractorvs.com/zh/tractors/mahindra-arjun-555-di-2c1a6638/": {
-      "digest": "2aba20e61ce53cd06cfd0c597573ac9c3dcf4fb554e7825e9ffb99c2b750196a",
-      "modified": "2026-11-22T17:20:12.066Z"
+      "digest": "6e798bd6546040acc65956f30864933dede80d341571db583747232937eb3298",
+      "modified": "2026-11-22T17:26:34.896Z"
     },
     "https://tractorvs.com/zh/tractors/mahindra-arjun-605-di-i-bee5e88f/": {
-      "digest": "b8cfc9da834d2fb8cdea974c7ce83cb6dabef29e57245d555568037868a53e4d",
-      "modified": "2026-11-22T17:20:12.066Z"
+      "digest": "8dae3a4a99ac6a999aa965923fc2005fc949fad4b9798c090c434e7ea9189a72",
+      "modified": "2026-11-22T17:26:34.896Z"
     },
     "https://tractorvs.com/zh/tractors/mahindra-arjun-605-di-ms-739db984/": {
-      "digest": "fa2ba525729d7c350706f1c79d37fd8243be16e50e8ce6e14b743a11cb154cf8",
-      "modified": "2026-11-22T17:20:12.066Z"
+      "digest": "98de6a26494df55ea33b334c09a1235a773c4a7f19292b1acab214d2717c2b27",
+      "modified": "2026-11-22T17:26:34.896Z"
     },
     "https://tractorvs.com/zh/tractors/mahindra-arjun-605-di-ms-v1-163dbb9b/": {
-      "digest": "c3df2684893c004e982e140ebdabd4266ace4f38c006eb31518fde73a2c0f874",
-      "modified": "2026-11-22T17:20:12.066Z"
+      "digest": "e2557f4ea047aa5fb4fc15dc0f82edc91f56d64d4f099fc7ad81b34faea4fd2e",
+      "modified": "2026-11-22T17:26:34.896Z"
     },
     "https://tractorvs.com/zh/tractors/mahindra-jivo-225-di-4wd-34f40738/": {
       "digest": "1cf9e6a93dc0351fcb8ffa94d01e41ecf57354881915d32b4127376eb5d37cae",
@@ -15178,24 +15178,24 @@
       "modified": "2026-11-22T09:58:15.078Z"
     },
     "https://tractorvs.com/zh/tractors/sonalika-di-30-baagban-ad248a3c/": {
-      "digest": "38bb5ecdcb23d6d689c16ef322399a94cbc0bd70ed3c74c73cad90e8727256b4",
-      "modified": "2026-11-22T09:58:15.078Z"
+      "digest": "a7a2ee23d6032301f656f8548a6696a2a1d83b2ac774e4e2653132da81817d38",
+      "modified": "2026-11-22T17:26:34.896Z"
     },
     "https://tractorvs.com/zh/tractors/sonalika-di-35-596c8706/": {
-      "digest": "ed9adb7699ff1094217241aa62c3f2efffd060b17d4ee70ec7e1a0ad85e8e975",
-      "modified": "2026-11-22T09:58:15.078Z"
+      "digest": "46bc1f0eb96c33c2527119171a79e42c1e553c780d7587af917a8b65525e6b42",
+      "modified": "2026-11-22T17:26:34.896Z"
     },
     "https://tractorvs.com/zh/tractors/sonalika-di-42-p-2d79ca05/": {
-      "digest": "2157a3d437da00d4d2d1e9d4d5fe160158741c64f23d6bdb713de940fd445637",
-      "modified": "2026-11-22T09:58:15.078Z"
+      "digest": "909857e7cacf1fecb6d9839b2089ed65917eedcdea5a57ad7a1b428176056eb9",
+      "modified": "2026-11-22T17:26:34.896Z"
     },
     "https://tractorvs.com/zh/tractors/sonalika-di-734-d5d14815/": {
-      "digest": "c345e8725c716483cc92bd53de105b2292d9b3bb1a621b099ff249784d5345ab",
-      "modified": "2026-11-22T09:58:15.078Z"
+      "digest": "2f75cde526b2b12c4ac123c69a9a261f70854e70644c128ef8fc331d0e825474",
+      "modified": "2026-11-22T17:26:34.896Z"
     },
     "https://tractorvs.com/zh/tractors/sonalika-di-734-power-plus-fb435078/": {
-      "digest": "69757a5244cac4c0838f29623c8691e9cc6a04a4a568ee1d5390be66dfee0e8b",
-      "modified": "2026-11-22T09:58:15.078Z"
+      "digest": "d42b500c17ed04ef10684725a8411ad66a168eadb1a314def20b99e552b0002a",
+      "modified": "2026-11-22T17:26:34.896Z"
     },
     "https://tractorvs.com/zh/tractors/sonalika-di-740-iii-3a46f879/": {
       "digest": "4595bc5e32691097a4ac9cb80f573fd7dea9418ab535d51f0eb88206b864ca4f",
@@ -15206,12 +15206,12 @@
       "modified": "2026-11-22T09:58:15.078Z"
     },
     "https://tractorvs.com/zh/tractors/sonalika-gt-20-15fca0db/": {
-      "digest": "04bf71476814fb069bd9c747e152370a3b61a07ff258c62e7a96102b89455bf0",
-      "modified": "2026-11-22T09:58:15.078Z"
+      "digest": "8244ce13f78a51fe2219c80b079130eae767d0f18106c36f1d5ce5088d3e9c03",
+      "modified": "2026-11-22T17:26:34.896Z"
     },
     "https://tractorvs.com/zh/tractors/sonalika-gt-22-4wd-63dd7323/": {
-      "digest": "e517144c03fb7cda35062749b11a7f2c008b41ef2b71f0713e687e9777aa1f36",
-      "modified": "2026-11-22T09:58:15.078Z"
+      "digest": "85a00bb0765bb58397c4758c6a0732ec7f52ffe4bd02cdd31a34427154e2eb6c",
+      "modified": "2026-11-22T17:26:34.896Z"
     },
     "https://tractorvs.com/zh/tractors/sonalika-mahabali-rx-42-p-a0e16b7d/": {
       "digest": "5a7978ac6950afe5591d4491b716f687d2648057cb1639c8697bec3e04fc2069",
@@ -15226,12 +15226,12 @@
       "modified": "2026-11-22T09:58:15.078Z"
     },
     "https://tractorvs.com/zh/tractors/sonalika-tiger-di-30-821bd689/": {
-      "digest": "57a026e439c6eb1a3b0dbc4a96cdbd59cdd872978ae2d4fc50e18998800fdecb",
-      "modified": "2026-11-22T09:58:15.078Z"
+      "digest": "09430b929f6b194d952c01db4f0a8f77dc35500c240c4ae2442e33e11703a8a2",
+      "modified": "2026-11-22T17:26:34.896Z"
     },
     "https://tractorvs.com/zh/tractors/sonalika-tiger-di-42-pp-4wd-793fe40e/": {
-      "digest": "b43e056355ce17fe808a022ccacd2fa09c1b3b7ccad8b5c16dd4652adbc19327",
-      "modified": "2026-11-22T09:58:15.078Z"
+      "digest": "f8290477f218bc796cb19425c1f7fd05726d0bb7605931698e64157bd37183fb",
+      "modified": "2026-11-22T17:26:34.896Z"
     },
     "https://tractorvs.com/zh/tractors/sonalika-tiger-di-50-67d959b0/": {
       "digest": "838f97cbd5fea8001bf47ba7097b0a0efe14653e2be13c7fdc970de1fc72c9e6",
@@ -15386,8 +15386,8 @@
       "modified": "2026-11-22T09:58:15.078Z"
     },
     "https://tractorvs.com/zh/tractors/swaraj-735-fe-7c7b069f/": {
-      "digest": "574a6901873f916fbc7d3a9e83f7eae8504bf07d46f354492e89e4b918898775",
-      "modified": "2026-11-22T12:57:29.705Z"
+      "digest": "69f010693ad7e4c8ec174785da307c2546e485985d38fa6ac378a9fbb8bac283",
+      "modified": "2026-11-22T17:26:34.896Z"
     },
     "https://tractorvs.com/zh/tractors/swaraj-735-xt-e6ab3418/": {
       "digest": "b88e1b4e38a24bfac5ee1c6ab3c53a48eae1efeba783a33df74259a0a59b6637",
@@ -15442,16 +15442,16 @@
       "modified": "2026-11-22T09:58:15.078Z"
     },
     "https://tractorvs.com/zh/tractors/swaraj-target-625-2wd-26592bdf/": {
-      "digest": "9d3f5ed80152c417f063db05cb100e3c7b4ff628ae8ad5de24fef059ccb5b559",
-      "modified": "2026-11-22T09:58:15.078Z"
+      "digest": "6f0dcf67ac42fa3d6d16aa100d082c16159cd2f368be7517906056bb1d10ae90",
+      "modified": "2026-11-22T17:26:34.896Z"
     },
     "https://tractorvs.com/zh/tractors/swaraj-target-625-4wd-9b41aee0/": {
-      "digest": "3bc836628f059834e1a911dce33572273c4ff80b5ab71ec2f08ade00b36147ee",
-      "modified": "2026-11-22T09:58:15.078Z"
+      "digest": "cc0d04e40485b079c573ec0161a9917e765abb766c0a7cd498edc5cc203b33b1",
+      "modified": "2026-11-22T17:26:34.896Z"
     },
     "https://tractorvs.com/zh/tractors/swaraj-target-630-4wd-8f46478f/": {
-      "digest": "0b67d427cd616d39bd90293977c3ee0053bb6d8ba50ebb3a8907952ea017f44e",
-      "modified": "2026-11-22T09:58:15.078Z"
+      "digest": "7cd5043fd278a7d1009cfd71b905fd1e9cf03ad9486f0d109765eb5e10f0b0c7",
+      "modified": "2026-11-22T17:26:34.896Z"
     },
     "https://tractorvs.com/zh/tractors/tafe-240-s-b6b226a4/": {
       "digest": "1d8a94a4b02cbfd5d7e9934ad6ca0a36d70296877f1a5fc2cbd6c04b2fedc33f",
