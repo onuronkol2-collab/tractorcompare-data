@@ -46,6 +46,44 @@ jobs:
       - name: Test evidence-only lastmod change detection and fail-closed policies
         run: node --test scripts/tractor-sitemap-history.test.mjs
 
+  preview_reconcile:
+    # A source-only PR can pass unit tests but still change thousands of
+    # generated HTML hashes. Validate the REAL read-only production preview
+    # before merge; never write provenance dates back from PR runners.
+    needs: tests
+    if: >-
+      github.event_name == 'pull_request' &&
+      github.event.pull_request.head.repo.full_name == github.repository &&
+      github.event.pull_request.user.login != 'dependabot[bot]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22.23.4"
+      - name: Install pinned Astro production dependencies
+        working-directory: site
+        run: npm ci --no-audit --no-fund
+      - name: Build actual published catalogue without deploying or publishing drafts
+        working-directory: site
+        env:
+          SITE_URL: https://tractorvs.com
+          PUBLIC_INDEXING_ENABLED: "true"
+          WORKERS_CI_BRANCH: main
+          SUPABASE_URL: https://aaufxtcvnzgavtlintiv.supabase.co
+          SUPABASE_ANON_KEY: ${{ secrets.TRACTORVS_SUPABASE_ANON_JWT }}
+          MIN_PUBLIC_TRACTOR_PAGES: "100"
+        run: npm run build:production
+      - name: Block false mass lastmod and verify actual rendered changes
+        run: node scripts/tractor-sitemap-history.mjs
+      - name: Prove this PR never committed generated sitemap timestamps
+        run: |
+          git diff --exit-code -- seo/sitemap-content-history.json site/src/data/sitemap-lastmod.json &&
+          echo "No provenance history changed in the PR branch or GitHub repository."
+
   build_and_reconcile:
     needs: tests
     if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
