@@ -92,8 +92,8 @@ for(const [brand,models] of byBrand){
   for(const model of models){
     const photos=media.filter(v=>matchesPhotoFileModel(brand,model.model,v.fileTitle)).slice(0,6);
     if(photos.length)coverage++;
-    if(historical.has(key(model)))results.push({...model,photos});
-    if(publicModels.has(key(model)))publicResults.push({...model,photos});
+    if(historical.has(key(model)))results.push({...historical.get(key(model)),photos});
+    if(publicModels.has(key(model)))publicResults.push({...publicModels.get(key(model)),photos});
   }
   console.log("ARCHIVE_BRAND_DISCOVERY "+JSON.stringify({
     brand,models:models.length,matchingFileTitles:titles.length,
