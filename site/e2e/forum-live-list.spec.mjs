@@ -86,8 +86,8 @@ test("forum categories and search respond to clicks for new public topics",async
  await page.route(path,route=>route.fulfill({json:[row(),maintenance]}));
  await page.goto("/tr/forum/?live-forum-test=1");
  const cards=page.locator("[data-forum-live-grid] [data-forum-topic]");
- const news=cards.locator('[data-forum-topic-category="news"]');
- const upkeep=cards.locator('[data-forum-topic-category="maintenance"]');
+ const news=page.locator('[data-forum-live-grid] [data-forum-topic][data-forum-topic-category="news"]');
+ const upkeep=page.locator('[data-forum-live-grid] [data-forum-topic][data-forum-topic-category="maintenance"]');
  await expect(cards).toHaveCount(2);
  await expect(news).toBeVisible();
  await expect(upkeep).toBeVisible();
