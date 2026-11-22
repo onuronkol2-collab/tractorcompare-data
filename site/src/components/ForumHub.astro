@@ -2,10 +2,13 @@
 import SiteLayout from "../layouts/SiteLayout.astro";
 import ForumComposer from "./ForumComposer.astro";
 import ForumMemberPanel from "./ForumMemberPanel.astro";
+import ForumDashboardRail from "./ForumDashboardRail.astro";
+import ForumDashboardPanels from "./ForumDashboardPanels.astro";
+import {FORUM_DASHBOARD_TEXT} from "../lib/forum-dashboard-i18n.ts";
 import {forumText as ft,FORUM_CATEGORY_KEYS} from "../lib/forum-i18n.ts";
 import {memberText as mt} from "../lib/member-i18n.ts";
 import {FORUM_STARTER_GUIDES} from "../lib/forum-starter-guides.ts";
-import {allPublicForumTopics,forumDate,isIndexableForumTopic,publicForumClientConfig} from "../lib/forum.ts";
+import {allPublicForumTopics,allPublicForumReplies,forumDate,isIndexableForumTopic,publicForumClientConfig} from "../lib/forum.ts";
 import {approvedForumHubLocales} from "../lib/forum-hub-locales.mjs";
 import {FORUM_LIVE_TEXT} from "../lib/forum-live-i18n.ts";
 import {forumCardExcerpt} from "../lib/forum-format.mjs";
@@ -22,6 +25,16 @@ const liveConfig=publicForumClientConfig()??(
 const liveBrowserData=JSON.stringify(liveConfig?{...liveConfig,lang}:null);
 const publicTopics=await allPublicForumTopics();
 const topics=publicTopics.filter(topic=>topic.locale===lang);
+const dashboard=FORUM_DASHBOARD_TEXT[lang];
+// Count approved original replies once. Translations must not inflate engagement.
+const replies=await allPublicForumReplies();
+const ownedTopicIds=new Set(topics.map(t=>t.topic_id));
+const replyCounts=new Map<string,number>();
+for(const r of replies){
+ if(r.machine_translated||r.locale!==r.original_locale||!ownedTopicIds.has(r.topic_id))continue;
+ replyCounts.set(r.topic_id,(replyCounts.get(r.topic_id)||0)+1);
+}
+const visibleReplyCount=[...replyCounts.values()].reduce((a,b)=>a+b,0);
 // Link only to other forum hubs with at least one independently approved
 // indexed topic. Empty forums are deliberately noindex and must not appear
 // as reciprocal hreflang alternates.
@@ -62,6 +75,7 @@ const schema=indexable?{
     </div>
     </div>
     <aside class="community-hero-panel" aria-label={ft(lang,"category")}>
+      <img class="community-hero-tractor" src="/images/forum-tractor-scene.svg" width="1000" height="350" alt="" decoding="async"/>
       <div class="community-panel-head">
         <span class="community-panel-mark" aria-hidden="true">T/V</span>
         <span>{ft(lang,"name")}</span>
@@ -79,7 +93,17 @@ const schema=indexable?{
   </header>
   <div class="container community-main">
    <div class="community-content-grid">
+   <ForumDashboardRail lang={lang} topics={topics}/>
    <section class="community-list" aria-label={ft(lang,"all")}>
+    <nav class="forum-view-tabs" id="forum-dashboard-tabs" aria-label={dashboard.topics}>
+     {(["latest","popular","unanswered","following","events"] as const).map((key,index)=>
+      <button type="button" data-forum-view={key} aria-pressed={index===0?"true":"false"}
+        class:list={["forum-view-button",index===0&&"is-active"]}>
+       <span class="forum-view-icon" aria-hidden="true">{({latest:"◷",popular:"♨",unanswered:"◉",following:"◇",events:"▤"} as const)[key]}</span>
+       <span>{dashboard[key]}</span>
+      </button>)}
+    </nav>
+    <p class="forum-view-description" data-forum-view-hint>{dashboard.latestHint}</p>
     <div class="community-section-header">
       <div>
         <span class="community-section-eyebrow">{ft(lang,"name")}</span>
@@ -108,13 +132,15 @@ const schema=indexable?{
        <button class="community-filter-clear" type="button" data-forum-clear hidden>{ft(lang,"clearFilters")}</button>
       </div>
      </div>
-    {topics.length>0?<div class="community-topic-grid" id="forum-topic-list">
+    {topics.length>0?<div class="community-topic-grid" id="forum-topic-list" role="list">
       {topics.map(topic=>{
        const model=topic.tractor_id?tractors.get(topic.tractor_id):undefined;
-       return <article class="community-topic" data-forum-topic data-forum-topic-id={topic.topic_id}
+       return <article class="community-topic" role="listitem" data-forum-topic data-forum-topic-id={topic.topic_id}
+         data-forum-reply-count={replyCounts.get(topic.topic_id)||0} data-forum-published-at={topic.created_at}
          data-forum-search={forumSearchText([topic.title,topic.body,model?.brand_name,model?.model_name].filter(Boolean).join(" "),lang)}
          data-forum-topic-category={topic.category}>
-         <div class="community-topic-meta">
+         <span class="community-topic-avatar" aria-hidden="true">{topic.title.trim().slice(0,1).toLocaleUpperCase(lang==="pt-br"?"pt-BR":lang)}</span>
+         <div class="community-topic-content"><div class="community-topic-meta">
           <span>{ft(lang,topic.category)}</span>
           <time datetime={topic.created_at}>{forumDate(topic.created_at,lang)}</time>
          </div>
@@ -124,6 +150,12 @@ const schema=indexable?{
           <a href={localizedPath(lang,"/tractors/"+model.slug+"/")}>{model.brand_name} {model.model_name}</a>
          </p>}
          {topic.machine_translated&&<small>{ft(lang,"translated")}</small>}
+         </div>
+         <span class="community-topic-replies" aria-label={dashboard.replies+": "+String(replyCounts.get(topic.topic_id)||0)}>
+          <span class="community-topic-mobile-label">{dashboard.replies}</span>{replyCounts.get(topic.topic_id)||0}
+         </span>
+         <span class="community-topic-activity"><span class="community-topic-mobile-label">{dashboard.activity}</span>
+          <time datetime={topic.created_at}>{forumDate(topic.created_at,lang)}</time></span>
         </article>;
       })}
      </div>:<>
@@ -139,9 +171,23 @@ const schema=indexable?{
         </div>
       </section>
     </>}
+    <section class="forum-special-view" data-forum-special="following" hidden aria-labelledby="forum-following-title">
+      <span class="forum-special-icon" aria-hidden="true">◇</span>
+      <h3 id="forum-following-title">{dashboard.followingHeading}</h3>
+      <p data-forum-following-status role="status" aria-live="polite">{dashboard.followingBody}</p>
+      <a href="#forum-compose">{dashboard.followingCta}</a>
+    </section>
+    <section class="forum-special-view" data-forum-special="events" hidden aria-labelledby="forum-events-title">
+      <span class="forum-special-icon" aria-hidden="true">▤</span>
+      <h3 id="forum-events-title">{dashboard.eventsHeading}</h3>
+      <p>{dashboard.eventsBody}</p>
+      <p class="forum-event-ideas">{dashboard.eventIdeas}</p>
+      <a href="#forum-compose">{dashboard.eventsCta}</a>
+    </section>
     <p id="forum-no-results" hidden role="status">{ft(lang,"noResults")}</p>
    </section>
    <aside class="community-sidebar" aria-label={ft(lang,"compose")}>
+     <ForumDashboardPanels lang={lang} topics={topics} replyCount={visibleReplyCount}/>
      <ForumComposer lang={lang} mode="topic"/>
    </aside>
    </div>
