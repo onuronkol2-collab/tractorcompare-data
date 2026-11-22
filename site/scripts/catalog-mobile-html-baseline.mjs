@@ -3,6 +3,8 @@
  * No anonymous database calls, private drafts, paid APIs, or IndexNow writes.
  */
 import {appendFileSync} from "node:fs";
+import {createHash} from "node:crypto";
+import {gzipSync,brotliCompressSync,constants} from "node:zlib";
 import {fileURLToPath} from "node:url";
 import {resolve} from "node:path";
 export const ORIGIN="https://tractorvs.com";
@@ -22,9 +24,24 @@ export function inspectCatalogHTML(html,url){
  if(links.some(x=>!x.startsWith(expected)||!/^\/[^?#]+\/$/.test(x)))
   throw Error("Noncanonical or Javascript model detail link: "+pathname);
  if(new Set(links).size!==links.length)throw Error("Duplicate SSR model link: "+pathname);
- const bodyBytes=Buffer.byteLength(html,"utf8");
- return {url,html_bytes:bodyBytes,html_kb:Math.round(bodyBytes/102.4)/10,card_count:cards,
-   model_links:links.length,mode:"live_html_uncompressed_not_field_CWV"};
+ // Ten-language matching COUNTS are insufficient: different models may be omitted.
+ // Hash each locale's complete sorted public slug set without logging all URLs.
+ const slugs=links.map(link=>link.slice(expected.length,-1));
+ if(slugs.some(slug=>!slug||slug.includes("/")))
+  throw Error("Invalid SSR model slug: "+pathname);
+ const modelSetDigest=createHash("sha256").update(slugs.sort().join("\n")).digest("hex");
+ const sourceBytes=Buffer.from(html,"utf8");
+ const bodyBytes=sourceBytes.length;
+ // Local codec estimates, NOT observed network transfer, Lighthouse, or field CWV.
+ const gzipEstimate=gzipSync(sourceBytes,{level:6}).length;
+ const brotliEstimate=brotliCompressSync(sourceBytes,{
+  params:{[constants.BROTLI_PARAM_QUALITY]:4}
+ }).length;
+ return {url,html_bytes:bodyBytes,html_kb:Math.round(bodyBytes/102.4)/10,
+   gzip_estimate_bytes:gzipEstimate,brotli_estimate_bytes:brotliEstimate,
+   bytes_per_card:Math.round(bodyBytes/cards),card_count:cards,
+   model_links:links.length,model_set_sha256:modelSetDigest,
+   mode:"live_html_with_local_compression_estimates_not_wire_or_field_CWV"};
 }
 export async function auditCatalogFootprint({fetchFn=fetch}={}){
  const items=[];
@@ -38,16 +55,24 @@ export async function auditCatalogFootprint({fetchFn=fetch}={}){
  }
  const counts=new Set(items.map(x=>x.card_count));
  if(counts.size!==1)throw Error("Live published model counts differ by locale");
+ const modelSets=new Set(items.map(x=>x.model_set_sha256));
+ if(modelSets.size!==1)throw Error("Live published model identities differ by locale despite equal counts");
  return items;
 }
 export function reportCatalogFootprint(items){
  return ["### TractorVS catalogue HTML and link footprint — live read-only",
-  "HTML bytes shown are **uncompressed document bytes**, not wire transfer, field LCP, INP or CLS.",
-  "Do not remove any SSR model links or enable pagination before verified global search, self-canonical page URLs and ten-locale coverage.",
-  "| Locale catalogue | HTML KiB | SSR cards | Crawlable model links |",
-  "| --- | ---: | ---: | ---: |",
-  ...items.map(x=>"| "+new URL(x.url).pathname+" | "+x.html_kb+" | "+x.card_count+" | "+x.model_links+" |"),""].join("\n");
+  "HTML bytes are decoded source bytes. Gzip/Brotli figures are **local codec estimates**, NOT measured network transfer, Cloudflare headers, LCP, INP, CLS or browser memory.",
+  "All ten catalogues must contain the **same exact published slug set**, not merely the same number of cards. SHA-256 is calculated from sorted model slugs.",
+  "Do not remove SSR model links or enable pagination before verified global search, self-canonical page URLs and ten-locale coverage.",
+  "| Locale catalogue | HTML KiB | Gzip est. KiB | Brotli est. KiB | Bytes/card | SSR cards | Model links | Model-set SHA-256 prefix |",
+  "| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |",
+  ...items.map(x=>"| "+new URL(x.url).pathname+" | "+x.html_kb+" | "+
+   (x.gzip_estimate_bytes/1024).toFixed(1)+" | "+
+   (x.brotli_estimate_bytes/1024).toFixed(1)+" | "+
+   x.bytes_per_card+" | "+x.card_count+" | "+x.model_links+
+   " | "+x.model_set_sha256.slice(0,12)+" |"),""].join("\n");
 }
+
 if(process.argv[1]&&resolve(process.argv[1])===fileURLToPath(import.meta.url)){
  try{
   const result=await auditCatalogFootprint();
