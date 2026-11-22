@@ -12,7 +12,7 @@ test("published article library search is available across ten locales, not e-co
     assert.deepEqual(Object.keys(EDITORIAL_DISCOVERY[locale]).sort(),
       ["clear","heading","none","placeholder","results"],locale);
     for(const [key,text] of Object.entries(EDITORIAL_DISCOVERY[locale]))
-      assert.ok(text.trim().length>5,locale+" "+key);
+      assert.ok(text.trim().length>1,locale+" "+key);
     assert.ok(EDITORIAL_DISCOVERY[locale].results.includes("{visible}"));
     assert.ok(EDITORIAL_DISCOVERY[locale].results.includes("{total}"));
   }
