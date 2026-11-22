@@ -362,10 +362,13 @@ test("Google ImageObject licensing is model-specific across all approved Commons
   for (const record of APPROVED_TRACTOR_PHOTOS) {
     assert.match(record.sourcePage,/^https:\/\/commons\.wikimedia\.org\/wiki\/File:/);
     assert.match(record.licenseUrl,/^https:\/\/creativecommons\.org\//);
-    const key=record.brand+"::"+record.model;
+    // Variant-specific photos must be tested against the EXACT published
+    // tractor UUID, not the generic brand/model fixture ID.
+    const key=record.brand+"::"+record.model+(record.tractorId?"::"+record.tractorId:"");
     if(seen.has(key))continue;
     seen.add(key);
-    const item=tractor(record.brand,record.model);
+    const item={...tractor(record.brand,record.model),
+      ...(record.tractorId?{tractor_id:record.tractorId}:{})};
     const photo=primaryTractorPhoto(item);
     assert.ok(photo,"Approved photo must resolve to an exact real model: "+key);
     for(const locale of LOCALES){
