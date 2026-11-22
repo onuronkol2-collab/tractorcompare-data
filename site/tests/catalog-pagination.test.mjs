@@ -142,3 +142,21 @@ test("HTTP 416 and malformed row range are not retried or normalized away",async
   assert.equal(calls,1);
  } finally{globalThis.fetch=original;}
 });
+
+test("new retry attempt's HTTP error remains fatal after discarding changed-count rows",async()=>{
+ const original=globalThis.fetch;
+ const calls=[];
+ globalThis.fetch=async input=>{
+  const offset=Number(new URL(input).searchParams.get("offset"));
+  calls.push(offset);
+  if(calls.length===3)return new Response("[]",{status:416});
+  const rows=offset===0?Array.from({length:500},(_,i)=>({row:i})):[];
+  return new Response(JSON.stringify(rows),{status:200,headers:{
+   "content-range":offset===0?"0-499/620":"*/620","content-type":"application/json"
+  }});
+ };
+ try {
+  await assert.rejects(fetchPublicRowsWithCountDriftRetry(endpoint,"sb_publishable_test",false),/HTTP 416 at offset 0/);
+  assert.deepEqual(calls,[0,500,0],"no partial rows or third retry after the new attempt fails");
+ } finally{globalThis.fetch=original;}
+});
