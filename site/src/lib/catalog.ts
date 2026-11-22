@@ -370,6 +370,29 @@ export async function fetchPublicRows(endpoint: URL, apiKey: string, isLegacyJwt
   throw new Error("The public catalogue reached the 50,000-row build limit; no partial site was generated.");
 }
 
+/**
+ * Database editors can publish an already-reviewed spec while PostgREST is
+ * paging through the public view. Re-read the ENTIRE result once if (and only
+ * if) its reported row count moved; never reuse rows from the failed attempt.
+ * Persistent count drift and all other data / network errors remain hard
+ * build failures. No writes, elevated keys, guessed values or partial pages.
+ */
+export async function fetchPublicRowsWithCountDriftRetry(
+  endpoint:URL, apiKey:string, isLegacyJwt:boolean
+):Promise<unknown[]>{
+  try {
+    return await fetchPublicRows(endpoint,apiKey,isLegacyJwt);
+  } catch (error) {
+    if (!(error instanceof Error) ||
+        error.message!=="Supabase public catalogue count changed during the build; retry a new build.")
+      throw error;
+    console.warn("[TractorVS] Published catalogue count changed between pages; restarting the complete read once.");
+    // The failed call's rows were scoped to fetchPublicRows and discarded.
+    // A second mismatch still throws, blocking the build rather than hiding it.
+    return await fetchPublicRows(endpoint,apiKey,isLegacyJwt);
+  }
+}
+
 async function loadPublicCatalog(): Promise<PublicCatalog> {
   const rawUrl = (process.env.SUPABASE_URL || "").trim();
   const rawKey = (
@@ -406,7 +429,7 @@ async function loadPublicCatalog(): Promise<PublicCatalog> {
   ].join(","));
   endpoint.searchParams.set("order", "brand_name.asc,model_name.asc,tractor_id.asc,spec_id.asc");
 
-  const payload = await fetchPublicRows(endpoint, apiKey.key, apiKey.isLegacyJwt);
+  const payload = await fetchPublicRowsWithCountDriftRetry(endpoint, apiKey.key, apiKey.isLegacyJwt);
   const groups = new Map<string, TractorRecord>();
 
   for (const rawRow of payload) {
