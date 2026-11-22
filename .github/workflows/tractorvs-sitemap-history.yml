@@ -46,6 +46,45 @@ jobs:
       - name: Test evidence-only lastmod change detection and fail-closed policies
         run: node --test scripts/tractor-sitemap-history.test.mjs
 
+  preview_reconcile:
+    # Reproduce production HTML and the persisted sitemap hash checkpoint on
+    # trusted pull requests, BEFORE merging. Local writes are never committed
+    # or pushed from this job, and untrusted forks receive no DB secret.
+    needs: tests
+    if: >-
+      github.event_name == 'pull_request' &&
+      github.event.pull_request.head.repo.full_name == github.repository &&
+      github.event.pull_request.user.login != 'dependabot[bot]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22.23.4"
+      - name: Install pinned Astro production dependencies
+        working-directory: site
+        run: npm ci --no-audit --no-fund
+      - name: Build actual published catalogue without deployment
+        working-directory: site
+        env:
+          SITE_URL: https://tractorvs.com
+          PUBLIC_INDEXING_ENABLED: "true"
+          WORKERS_CI_BRANCH: main
+          SUPABASE_URL: https://aaufxtcvnzgavtlintiv.supabase.co
+          SUPABASE_ANON_KEY: ${{ secrets.TRACTORVS_SUPABASE_ANON_JWT }}
+          MIN_PUBLIC_TRACTOR_PAGES: "100"
+        run: npm run build:production
+      - name: Validate unchanged lastmod plus genuine significant HTML changes
+        run: node scripts/tractor-sitemap-history.mjs
+      - name: Keep PR preview read-only
+        run: |
+          test "${GITHUB_EVENT_NAME}" = "pull_request"
+          test "${GITHUB_REF}" != "refs/heads/main"
+          echo "Provenance writes exist only in this ephemeral runner; no commit or push is configured."
+
   build_and_reconcile:
     needs: tests
     if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
