@@ -626,9 +626,33 @@ const schema=indexable?{
    for(const row of rows)grid.append(row);
   }
  };
+ const updatePublicCounts=()=>{
+  // Include newly approved live-only topics exactly once; dedupe rows between
+  // the published static build and the public live feed.
+  const seen=new Set<string>(),byCategory=new Map<string,number>();
+  let total=0;
+  for(const [index,card] of cards().entries()){
+   const id=card.dataset.forumTopicId||"page-topic-"+index;
+   if(seen.has(id))continue;
+   seen.add(id);total++;
+   const category=card.dataset.forumTopicCategory||"";
+   byCategory.set(category,(byCategory.get(category)||0)+1);
+  }
+  const format=(n:number)=>n.toLocaleString(lang==="pt-br"?"pt-BR":lang);
+  const totalEl=document.querySelector<HTMLElement>("[data-forum-published-topic-total]");
+  if(totalEl)totalEl.textContent=format(total);
+  for(const el of document.querySelectorAll<HTMLElement>("[data-forum-category-count]")){
+   const key=el.dataset.forumCategoryCount||"";
+   el.textContent=format(key==="all"?total:(byCategory.get(key)||0));
+  }
+  for(const el of document.querySelectorAll<HTMLElement>("[data-forum-tag-count]")){
+   el.textContent="("+format(byCategory.get(el.dataset.forumTagCount||"")||0)+")";
+  }
+ };
  const filter=()=>{
    const q=forumSearchText((input?.value||"").trim(),lang);
    const items=cards(),hasTopics=items.length>0;
+   updatePublicCounts();
    const canList=view!=="events"&&(view!=="following"||followState==="ready");
    const visibleList=canList&&hasTopics;
    if(filters)filters.hidden=!visibleList;
