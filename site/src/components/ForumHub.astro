@@ -114,7 +114,7 @@ const schema=indexable?{
           <time datetime={topic.created_at}>{forumDate(topic.created_at,lang)}</time>
          </div>
          <h3><a href={path+topic.slug+"/"}>{topic.title}<span class="community-topic-arrow" aria-hidden="true">↗</span></a></h3>
-         <p>{forumCardExcerpt(topic.body,160)}</p>
+         <p>{forumCardExcerpt(topic.body,230)}</p>
          {model&&<p class="community-model">
           <a href={localizedPath(lang,"/tractors/"+model.slug+"/")}>{model.brand_name} {model.model_name}</a>
          </p>}
@@ -313,6 +313,8 @@ const schema=indexable?{
 .community-topic h3 a:hover{text-decoration:underline;text-underline-offset:4px}
 .community-topic-arrow{font-size:16px;color:#3d8158;font-weight:850;flex:none}
 .community-topic p{font-size:13.5px;line-height:1.75;margin:0 0 8px;color:#607267}
+.community-topic>p:not(.community-model){display:-webkit-box;-webkit-box-orient:vertical;
+ -webkit-line-clamp:3;overflow:hidden;max-width:75ch}
 .community-topic .community-model{margin-top:13px;padding-top:12px;border-top:1px solid #ecf0eb}
 .community-model a{font-size:12px;font-weight:800;color:#236342}
 .community-empty{border:1px dashed #bfcebf;border-radius:14px;padding:22px 24px;
