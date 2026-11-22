@@ -43,6 +43,8 @@ const indexableLocales=approvedForumHubLocales(publicTopics,LOCALES,isIndexableF
 const catalog=await getPublicCatalog();
 const tractors=new Map(catalog.tractors.map(t=>[t.tractor_id,t]));
 const indexedTopics=topics.filter(isIndexableForumTopic);
+// Reuse only real published topics when a visitor's chosen filter has no matches.
+const suggestedTopics=[...topics].sort((a,b)=>Date.parse(b.created_at)-Date.parse(a.created_at)).slice(0,3);
 const publicCount=indexedTopics.length;
 const indexable=publicCount>0; // Never index a forum hub whose topics all fail the source/quality gate.
 const path=localizedPath(lang,"/forum/");
@@ -192,6 +194,18 @@ const schema=indexable?{
       <a href="#forum-compose">{dashboard.eventsCta}</a>
     </section>
     <p id="forum-no-results" hidden role="status">{ft(lang,"noResults")}</p>
+    <section class="forum-empty-help" data-forum-empty-help hidden aria-label={dashboard.latest}>
+      <div class="forum-empty-help-top">
+        <h3>{dashboard.latest}</h3>
+        <button type="button" data-forum-show-all>{ft(lang,"all")}</button>
+      </div>
+      {suggestedTopics.length>0&&<ul class="forum-empty-suggestions">
+        {suggestedTopics.map(item=><li>
+          <a href={path+item.slug+"/"}>{item.title}</a>
+          <span>{ft(lang,item.category)}</span>
+        </li>)}
+      </ul>}
+    </section>
    </section>
    <aside class="community-sidebar" aria-label={ft(lang,"compose")}>
      <ForumDashboardPanels lang={lang} topics={topics} replyCount={visibleReplyCount}/>
@@ -596,6 +610,8 @@ const schema=indexable?{
  const allCategoryButtons=[...categoryButtons,...railButtons,...tagButtons];
  const viewButtons=[...document.querySelectorAll<HTMLButtonElement>("[data-forum-view]")];
  const noResults=document.querySelector<HTMLElement>("#forum-no-results");
+ const emptyHelp=document.querySelector<HTMLElement>("[data-forum-empty-help]");
+ const emptyReset=document.querySelector<HTMLButtonElement>("[data-forum-show-all]");
  const filters=document.querySelector<HTMLElement>("[data-forum-filters]");
  const countLabel=document.querySelector<HTMLElement>("[data-forum-match-count]");
  const clear=document.querySelector<HTMLButtonElement>("[data-forum-clear]");
@@ -693,6 +709,9 @@ const schema=indexable?{
     if(visible)count++;
    }
    const allFiltered=Boolean(q)||selected!=="all";
+   // Respect deliberate category choices; never silently clear a zero-result filter.
+   // Instead offer a visible route back to the real published discussions.
+   if(emptyHelp)emptyHelp.hidden=!(view==="latest"&&canList&&hasTopics&&count===0&&allFiltered);
    if(noResults){
     noResults.hidden=!canList||!hasTopics||count>0;
     if(!noResults.hidden)noResults.textContent=view==="unanswered"&&!allFiltered?
@@ -755,10 +774,16 @@ const schema=indexable?{
   filter();
   if(view==="following")void loadFollowing();
  }
- clear?.addEventListener("click",()=>{
+ const resetFilters=()=>{
   if(input)input.value="";
   selected="all";
   markCategories();filter();input?.focus();
+ };
+ clear?.addEventListener("click",resetFilters);
+ emptyReset?.addEventListener("click",()=>{
+  // Only an explicit action restores all topics and the latest view.
+  view="latest";
+  resetFilters();
  });
  input?.addEventListener("input",filter);
  document.addEventListener("tractorvs-forum-live-updated",filter);
