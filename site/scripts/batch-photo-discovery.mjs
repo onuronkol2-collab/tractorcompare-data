@@ -1,5 +1,6 @@
 import {matchesPhotoFileModel} from "./photo-model-identity.mjs";
 import {allowedPhotoReuseLicense} from "./photo-license-check.mjs";
+import {fetchIndexedSitemapPages} from "./photo-sitemap-fetch.mjs";
 /**
  * One-pass, read-only catalogue image discovery.
  * Pulls public LIVE model inventory from the current published sitemap;
@@ -37,12 +38,9 @@ async function get(url,asJson=false){
   }
   throw last;
 }
-function xmlLocs(doc){return [...doc.matchAll(/<loc>([^<]+)<\/loc>/g)]
-  .map(m=>m[1].replaceAll("&amp;","&"));}
 async function publicInventory(){
   const index=await get(new URL("/sitemap-index.xml",ORIGIN));
-  const sitemaps=xmlLocs(index);if(!sitemaps.length)throw Error("No sitemap index children");
-  const pages=(await Promise.all(sitemaps.map(get))).flatMap(xmlLocs);
+  const pages=await fetchIndexedSitemapPages(index,get);
   const detail=pages.filter(link=>/^\/tractors\/[^/]+\/$/.test(new URL(link).pathname));
   const results=[];
   for(let i=0;i<detail.length;i+=REQUEST_LIMIT){
