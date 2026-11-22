@@ -175,3 +175,43 @@ test("localized tractor model pages offer a genuinely translated technical learn
   await expect(page.locator("html")).toHaveAttribute("lang",locale==="zh"?"zh-Hans":"de");
  }
 });
+
+test("article archive offers accessible direct links to guides and model review",async({page})=>{
+ for(const path of ["/articles/","/tr/articles/","/de/articles/"]){
+  const response=await page.goto(path,{waitUntil:"domcontentloaded"});
+  expect(response?.status(),path).toBe(200);
+  const links=page.locator(".editorial-jumps");
+  await expect(links).toHaveCount(1);
+  const guides=links.locator('a[href="#rehberler"]');
+  const review=links.locator('a[href="#incelemeler"]');
+  await expect(guides).toBeVisible();
+  await expect(review).toBeVisible();
+  await expect(page.locator(".editorial-card")).toHaveCount(6);
+  await expect(page.locator(".editorial-card-footer a")).toHaveCount(6);
+  await review.click();
+  await expect(page).toHaveURL(/#incelemeler$/);
+  await expect(page.locator("#incelemeler")).toBeInViewport();
+  await guides.focus();
+  await expect(guides).toBeFocused();
+  await page.keyboard.press("Enter");
+  await expect(page).toHaveURL(/#rehberler$/);
+  await expect(page.locator("#rehberler")).toBeInViewport();
+ }
+});
+
+test("editorial links have mobile touch targets without altering translation fallback",async({page})=>{
+ await page.setViewportSize({width:390,height:844});
+ await page.goto("/de/articles/",{waitUntil:"domcontentloaded"});
+ await expect(page.locator('.editorial-card h3 a[href="/de/guides/choosing-a-tractor/"]')).toHaveCount(1);
+ await expect(page.locator('.editorial-card h3 a[href="/guides/tractor-engine-power-and-torque/"]')).toHaveAttribute("hreflang","en");
+ await expect(page.locator('.editorial-card h3 a[href="/de/reviews/basak-2075-bk/"]')).toHaveCount(1);
+ await expect(page.locator(".editorial-language-note")).toHaveCount(4);
+ for(const control of await page.locator(".editorial-jumps a,.editorial-card-footer a").all()){
+  const box=await control.boundingBox();
+  expect(box?.height??0,"Touch target height").toBeGreaterThanOrEqual(44);
+ }
+ const width=await page.evaluate(()=>document.documentElement.scrollWidth);
+ expect(width,"Article hub horizontal overflow").toBeLessThanOrEqual(392);
+ await page.locator('.editorial-jumps a[href="#incelemeler"]').click();
+ await expect(page.locator("#incelemeler")).toBeInViewport();
+});
