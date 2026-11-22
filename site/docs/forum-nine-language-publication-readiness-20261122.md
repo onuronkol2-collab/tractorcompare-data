@@ -15,7 +15,7 @@
    - [CLIMMAR duyurusu (10 Kasım 2026)](https://www.climmar.com/news/climmar-presents-dealer-satisfaction-index-at-eima) ve [Mechaman (18 Kasım 2026)](https://www.mechaman.nl/artikel/20261118/trekkerdealers-minder-tevreden-over-fabrikanten-john-deere-enige-stijger/): 13,7 / 13,2 / 13,1 gibi Avrupa marka puanları; 10 katılımcı ülke ile sekiz ülke/561 yanıt açıklamaları ayrı tutuluyor.
    - [Rushlane FADA DSS 2026](https://www.rushlane.com/indias-largest-auto-brands-arent-no-1-in-dealer-satisfaction-fada-study-12554950.html): Swaraj 788 puan; 2.045 geçerli yanıt **tüm araç segmentlerinden**, sadece traktörlerden değil.
    - [NAEDA 2026 ödül duyurusu](https://www.equipmentdealermagazine.com/naeda-announces-2026-dealers-choice-and-gold-level-award-winners/): Yanmar `Dealer's Choice`, TYM `Gold Level`; ödüller gerçek traktör mekanik arıza istatistikleri anlamına gelmiyor.
-5. `public.tc_forum_contextual_facts_equal` Fransızca `1er` ve Çince/Japonca `年/月/日` yerelleştirmelerini tarih bağlamına göre kontrol ediyor. Sadece `source_locale=tr` ve `fr/zh/ja` için çalışıyor; diğer diller eski sıkı kontrolde.
+5. `public.tc_forum_contextual_facts_equal` Fransızca `1er` ve Çince/Japonca `年/月/日` yerelleştirmelerini tarih bağlamına göre kontrol ediyor. Yalnız `source_locale=tr` için hedef `fr/ru` dillerinde `tc_forum_locale_grouping_facts_equal` ile yerel binlik ayraç; hedef `zh/ja` dillerinde `tc_forum_contextual_facts_equal` ile takvim; diğer hedef dillerde eski sıkı sayı kontrolü kullanılıyor. Yanlış gün/ay/yıl, puan ve fiziksel birimler reddediliyor.
 6. Negatif testlerde değiştirilmiş gün/ay/yıl, tarih aralığı, araştırma puanı ve fiziksel birim reddediliyor. Yeni `scripts/tractor-forum-manual-translation-qa.mjs` marka-rank-puanı birlikte doğruluyor. Aynı sayıların iki markaya yanlış atanması artık hata.
 7. Supabase'de `seo_approved=false`, `state=needs_review`, `reviewed_by_model=NULL` olan dokuz çeviri **gizli**. Anonim ziyaretçiler yalnız Türkçe konuyu görüyor. Edge v21 sadece kontrol modu, otomatik ücretli çeviri sağlayıcısı yok.
 8. Site `tc_forum_localized_topics` görünümünde tüm on dil için aynı kaynak slug'ı kullanıyor. `ForumTopic` bileşeni canonical, hreflang, özgün kaynak bağlantısı ve SEO dışı bırakma durumlarını `SiteLayout` üzerinden işliyor. `forum-sitemap.xml` sadece `seo_ready` konuları içeriyor. Yeni sayfalar ancak daha sonraki **onaylı public snapshot + statik build** ile oluşturulabilir.
@@ -54,3 +54,9 @@ Başarılı sonuç, dokuz markanın skorlarını satır satır ve dört URL'yi d
 ## Maliyet ve geri dönüş
 
 Hiçbir ücretli Azure / Cloudflare M2M100 / Gemini / DeepL çeviri isteği başlatılmadı. Supabase ve statik site için mevcut maliyet güvenliği korunuyor. Gizli `needs_review` satırları, kaynak metin ve mevcut `published` Türkçe içerik değiştirilmeden kalır. Site yayını için herhangi bir manuel yeni PR bu kontrolleri tekrar çalıştırmalıdır.
+
+### Ek dil düzeltmeleri — 22 Kasım 2026
+
+Dokuz gizli taslakta Türkçe `%10` ve `%2,6` biçimleri hedef dilde uygun yüzde konumuna dönüştürüldü. Fransızcada `2 045`, `1 745`, `1 000` için dar bölünmez boşluk; Rusçada `2 045`, `1 745`, `1 000` için bölünmez boşluk kullanıldı. Hintçede iki ek cümle doğal dilbilgisiyle düzeltildi. Binlik ve yüzde düzeltmelerinin hiçbiri kaynak puan, anket yanıt sayısı veya URL değiştirmedi; Supabase gerçek taslaklar üzerinde sayısal denetim geçti.
+
+Bağımsız dış dil denetimi için erişilen tarayıcı aracı ücretsiz kotadan dolayı işlemi başlatamadı. Para harcanmadı ve bu olay editoryal onay gibi kaydedilmedi. [Yerelleştirme ve denetim raporu](./forum-locale-typography-and-independent-review-20261122.md).
