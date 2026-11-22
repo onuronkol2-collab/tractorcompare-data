@@ -11,6 +11,7 @@ const TARGETS:Record<string,string>={
  en:"en",zh:"zh-Hans",hi:"hi","pt-br":"pt",fr:"fr",de:"de",
  ru:"ru",ja:"ja",es:"es"
 };
+const SOURCES:Record<string,string>={...TARGETS,tr:"tr"};
 const BRANDS=[
  "Massey Ferguson","New Holland","John Deere","Deutz-Fahr","Case IH",
  "CLAAS","Fendt","Kubota","Tümosan","Başak","Swaraj","Yanmar",
@@ -73,14 +74,14 @@ export function markdownSpans(source:string):Part[]{
  return parts;
 }
 export async function translateAzureArticle({
- title,body,target,apiKey,region,fetchFn=fetch,timeoutMs=26000
+ title,body,target,sourceLocale="tr",apiKey,region,fetchFn=fetch,timeoutMs=26000
 }:{
- title:string;body:string;target:string;apiKey:string;region:string;
+ title:string;body:string;target:string;sourceLocale?:string;apiKey:string;region:string;
  fetchFn?:Fetcher;timeoutMs?:number
 }):Promise<{value:{title:string;body:string};model:string}>{
  if(!apiKey||!region)throw Error("Azure Translator credentials unavailable");
- const to=TARGETS[target];
- if(!to)throw Error("Unsupported Azure language");
+ const to=TARGETS[target],from=SOURCES[sourceLocale];
+ if(!to||!from||to===from)throw Error("Unsupported Azure language pair");
  if(!title.trim()||title.length>240||!body.trim()||body.length>5000)
   throw Error("Azure input outside safe limits");
  const titleParts=markdownSpans(title),bodyParts=markdownSpans(body);
@@ -100,7 +101,7 @@ export async function translateAzureArticle({
  if(batch.length)batches.push(batch);
  if(!batches.length||batches.length>3)
   throw Error("Azure section exceeds bounded request count");
- const url=API+"?api-version=3.0&from=tr&to="+encodeURIComponent(to)+"&textType=plain";
+ const url=API+"?api-version=3.0&from="+encodeURIComponent(from)+"&to="+encodeURIComponent(to)+"&textType=plain";
  const began=Date.now();
  for(const chunk of batches){
   const remaining=timeoutMs-(Date.now()-began);
