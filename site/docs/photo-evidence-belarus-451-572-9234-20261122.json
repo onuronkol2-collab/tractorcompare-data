@@ -1,0 +1,57 @@
+{
+  "reviewedAt": "2026-11-22",
+  "policy": "Only published exact model identity; variant and engine cannot be inferred from a photo. CC BY-SA credits and JPEG HTTP+SHA required. Research candidate until CI and first-party checks complete.",
+  "sourcePagesReviewed": true,
+  "licensePageMetadataReviewed": true,
+  "originalBinaryHttpVerified": false,
+  "firstPartyProxyHttpVerified": false,
+  "jpegContentVerified": false,
+  "releaseStatus": "Review candidate only - no JPEGs downloaded, no publication",
+  "sources": [
+    {
+      "brand": "Belarus",
+      "model": "451",
+      "fileId": "belarus-451-homoatrox-open-day-2017",
+      "sourcePage": "https://commons.wikimedia.org/wiki/File:Belarus_451_(open_day_2017)_1.jpg",
+      "originalFilename": "Belarus 451 (open day 2017) 1.jpg",
+      "photographer": "Homoatrox",
+      "licenseName": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "width": 1480,
+      "height": 2216,
+      "sourceImageUrl": "https://upload.wikimedia.org/wikipedia/commons/8/8c/Belarus_451_%28open_day_2017%29_1.jpg",
+      "modelIdentityEvidence": "Commons own-work file description identifies exact Belarus 451; no evidence of engine option LDW2204 or registered market.",
+      "variantExact": false
+    },
+    {
+      "brand": "Belarus",
+      "model": "572",
+      "fileId": "belarus-572-bronzedrache-2022",
+      "sourcePage": "https://commons.wikimedia.org/wiki/File:Belazs_MTZ_572.jpg",
+      "originalFilename": "Belazs MTZ 572.jpg",
+      "photographer": "BronzeDrache",
+      "licenseName": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "width": 2000,
+      "height": 1500,
+      "sourceImageUrl": "https://upload.wikimedia.org/wikipedia/commons/7/72/Belazs_MTZ_572.jpg",
+      "modelIdentityEvidence": "Commons author self-identifies Belazs/Belarus MTZ 572 in title/description; D-242 and 4WD variant not independently certified.",
+      "variantExact": false
+    },
+    {
+      "brand": "Belarus",
+      "model": "923.4",
+      "fileId": "belarus-923-4-homoatrox-open-day-2017",
+      "sourcePage": "https://commons.wikimedia.org/wiki/File:Belarus_923.4_(open_day_2017)_1.jpg",
+      "originalFilename": "Belarus 923.4 (open day 2017) 1.jpg",
+      "photographer": "Homoatrox",
+      "licenseName": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "width": 3024,
+      "height": 2760,
+      "sourceImageUrl": "https://upload.wikimedia.org/wikipedia/commons/f/fc/Belarus_923.4_%28open_day_2017%29_1.jpg",
+      "modelIdentityEvidence": "Commons own-work file description directly identifies Belarus 923.4 factory open day; Stage IIIa version unverified.",
+      "variantExact": false
+    }
+  ]
+}
