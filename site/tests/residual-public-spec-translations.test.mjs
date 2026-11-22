@@ -154,3 +154,42 @@ test("live 388-model Turkish predeploy audit exact source headings have safe tra
   assert.match(publishedSpecificationLabel("4WD Engagement Control","tr"),/4WD/);
   assert.match(publishedSpecificationLabel("Front Differential Lock / Limited Slip","tr"),/sınırlı kaymalı/);
 });
+
+
+test("twelve frequent verified source headings have distinct, native PT-BR / FR / ES display text",()=>{
+  // The keyed 388x10 build report dated 22-Nov-2026 ties these source names
+  // to published technical spec identities. No power/pressure/hitch values
+  // or underlying manufacturer claims may be rewritten.
+  const sourceToLocales={
+    "Hydraulic System Capacity":["Capacidade do sistema hidráulico","Capacité du système hydraulique","Capacidad del sistema hidráulico"],
+    "Rear Hitch Control":["Controle do engate traseiro","Commande de l’attelage arrière","Control del enganche trasero"],
+    "Lift Capacity At Suspension Point":["Capacidade de elevação no ponto de suspensão","Capacité de relevage au point de suspension","Capacidad de elevación en el punto de suspensión"],
+    "Engine Max/Rated Power ECE R120":["Potência máxima/nominal do motor (ECE R120)","Puissance moteur maximale/nominale (ECE R120)","Potencia máxima/nominal del motor (ECE R120)"],
+    "Engine Max/Rated Power ECE R120 (Hp)":["Potência máxima/nominal do motor (ECE R120, hp)","Puissance moteur maximale/nominale (ECE R120, hp)","Potencia máxima/nominal del motor (ECE R120, hp)"],
+    "Hydraulic Remote Control":["Controle hidráulico remoto","Commande hydraulique à distance","Control hidráulico remoto"],
+    "Lifting Force Across Full Range":["Força de elevação ao longo de toda a faixa","Force de relevage sur toute la plage","Fuerza de elevación en todo el rango"],
+    "Maximum Hitch Lifting Force":["Força máxima de elevação do engate","Force de relevage maximale de l’attelage","Fuerza máxima de elevación del enganche"],
+    "Engine Cylinders":["Cilindros do motor","Cylindres du moteur","Cilindros del motor"],
+    "Rated Engine Speed":["Rotação nominal do motor","Régime nominal du moteur","Régimen nominal del motor"],
+    "Hydraulic Working Pressure":["Pressão de trabalho do sistema hidráulico","Pression de service hydraulique","Presión de trabajo del sistema hidráulico"],
+    "Maximum Hydraulic Operating Pressure":["Pressão hidráulica máxima de operação","Pression hydraulique maximale de service","Presión hidráulica máxima de funcionamiento"],
+  };
+  assert.equal(Object.keys(sourceToLocales).length,12);
+  const locales=["pt-br","fr","es"];
+  for(const [source,translations] of Object.entries(sourceToLocales)){
+    for(let i=0;i<locales.length;i++){
+      const locale=locales[i],original=exampleSpec(source),before=structuredClone(original);
+      assert.equal(publishedSpecificationLabel(source,locale),translations[i],source+" "+locale);
+      assert.equal(specLabel(original,locale),translations[i],"actual published label must use reviewed source text");
+      assert.deepEqual(original,before,"never alter source measurement, provenance or unit");
+    }
+  }
+  for(const locale of locales){
+    const translated=k=>publishedSpecificationLabel(k,locale);
+    assert.match(translated("Engine Max/Rated Power ECE R120"),/ECE R120/);
+    assert.match(translated("Engine Max/Rated Power ECE R120 (Hp)"),/ECE R120/);
+    assert.notEqual(translated("Engine Max/Rated Power ECE R120"),translated("Engine Max/Rated Power ECE R120 (Hp)"));
+    assert.notEqual(translated("Lift Capacity At Suspension Point"),translated("Maximum Hitch Lifting Force"));
+    assert.notEqual(translated("Hydraulic Working Pressure"),translated("Maximum Hydraulic Operating Pressure"));
+  }
+});

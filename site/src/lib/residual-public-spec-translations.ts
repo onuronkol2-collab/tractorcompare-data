@@ -1338,4 +1338,64 @@ export const RESIDUAL_PUBLIC_SPEC_TERMS: Record<string, Partial<Record<Locale,st
   "Forward/Reverse Shuttle Control": { "tr": "İleri/geri yön değiştirme kumandası" },
   "Front Differential Lock / Limited Slip": { "tr": "Ön diferansiyel kilidi / sınırlı kaymalı diferansiyel" },
   "Rear Differential Lock Actuation": { "tr": "Arka diferansiyel kilidini devreye alma kumandası" },
+  "Hydraulic System Capacity": {
+    "pt-br": "Capacidade do sistema hidráulico",
+    "fr": "Capacité du système hydraulique",
+    "es": "Capacidad del sistema hidráulico"
+  },
+  "Rear Hitch Control": {
+    "pt-br": "Controle do engate traseiro",
+    "fr": "Commande de l’attelage arrière",
+    "es": "Control del enganche trasero"
+  },
+  "Lift Capacity At Suspension Point": {
+    "pt-br": "Capacidade de elevação no ponto de suspensão",
+    "fr": "Capacité de relevage au point de suspension",
+    "es": "Capacidad de elevación en el punto de suspensión"
+  },
+  "Engine Max/Rated Power ECE R120": {
+    "pt-br": "Potência máxima/nominal do motor (ECE R120)",
+    "fr": "Puissance moteur maximale/nominale (ECE R120)",
+    "es": "Potencia máxima/nominal del motor (ECE R120)"
+  },
+  "Engine Max/Rated Power ECE R120 (Hp)": {
+    "pt-br": "Potência máxima/nominal do motor (ECE R120, hp)",
+    "fr": "Puissance moteur maximale/nominale (ECE R120, hp)",
+    "es": "Potencia máxima/nominal del motor (ECE R120, hp)"
+  },
+  "Hydraulic Remote Control": {
+    "pt-br": "Controle hidráulico remoto",
+    "fr": "Commande hydraulique à distance",
+    "es": "Control hidráulico remoto"
+  },
+  "Lifting Force Across Full Range": {
+    "pt-br": "Força de elevação ao longo de toda a faixa",
+    "fr": "Force de relevage sur toute la plage",
+    "es": "Fuerza de elevación en todo el rango"
+  },
+  "Maximum Hitch Lifting Force": {
+    "pt-br": "Força máxima de elevação do engate",
+    "fr": "Force de relevage maximale de l’attelage",
+    "es": "Fuerza máxima de elevación del enganche"
+  },
+  "Engine Cylinders": {
+    "pt-br": "Cilindros do motor",
+    "fr": "Cylindres du moteur",
+    "es": "Cilindros del motor"
+  },
+  "Rated Engine Speed": {
+    "pt-br": "Rotação nominal do motor",
+    "fr": "Régime nominal du moteur",
+    "es": "Régimen nominal del motor"
+  },
+  "Hydraulic Working Pressure": {
+    "pt-br": "Pressão de trabalho do sistema hidráulico",
+    "fr": "Pression de service hydraulique",
+    "es": "Presión de trabajo del sistema hidráulico"
+  },
+  "Maximum Hydraulic Operating Pressure": {
+    "pt-br": "Pressão hidráulica máxima de operação",
+    "fr": "Pression hydraulique maximale de service",
+    "es": "Presión hidráulica máxima de funcionamiento"
+  },
 };
