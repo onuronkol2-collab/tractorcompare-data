@@ -101,6 +101,7 @@ jobs:
           npm run build
           node site/scripts/verify-sitewide-image-alts.mjs site/dist
           node site/scripts/verify-sitewide-seo-titles.mjs site/dist
+          node site/scripts/verify-sitewide-meta-descriptions.mjs site/dist
           test -f site/dist/sitemap-index.xml
           node site/scripts/verify-unified-sitemap-index.mjs
           node site/scripts/verify-tractor-glossary-build.mjs indexable

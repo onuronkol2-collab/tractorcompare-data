@@ -15,6 +15,7 @@ import {verifyPublishedSiteInventory} from "./verify-published-site-inventory.mj
 import {verifyUnifiedSitemapIndex} from "./verify-unified-sitemap-index.mjs";
 import {auditBuiltImageAlts} from "./verify-sitewide-image-alts.mjs";
 import {auditBuiltSeoTitles} from "./verify-sitewide-seo-titles.mjs";
+import {auditBuiltMetaDescriptions} from "./verify-sitewide-meta-descriptions.mjs";
 
 const projectRoot=resolve(fileURLToPath(new URL("..",import.meta.url)));
 const expectedOrigin="https://tractorvs.com";
@@ -182,6 +183,18 @@ export function verifyProductionArtifacts({dir=projectRoot,origin=expectedOrigin
  insist(titleAudit.duplicates.length===0,
    "Different published model/variant URLs share an identical localized title: "+
    JSON.stringify(titleAudit.duplicates.slice(0,8)));
+ // Every canonical, indexable HTML page must have exactly one nonblank meta
+ // description. Long descriptions are editorial advisories, not ranking errors.
+ // Noindex previews / ownership pages are intentionally outside this check.
+ const metaAudit=auditBuiltMetaDescriptions(dist);
+ insist(metaAudit.errors.length===0,
+   "Missing, empty or duplicate descriptions on "+metaAudit.errors.length+
+   " indexable pages: "+JSON.stringify(metaAudit.errors.slice(0,8)));
+ console.log("TRACTORVS_PRODUCTION_META_AUDIT "+JSON.stringify({
+   htmlDocuments:metaAudit.htmlDocuments,indexablePages:metaAudit.indexablePages,
+   over160:metaAudit.over160,structuralErrors:metaAudit.errors.length,
+   byLocale:metaAudit.byLocale
+ }));
  // The 2026-11-22 production audit reached zero real model titles that
  // leak manufacturer brochure/source-table notes. Future source-note variants
  // require explicit editorial verification, not silent keyword truncation.
@@ -201,7 +214,8 @@ export function verifyProductionArtifacts({dir=projectRoot,origin=expectedOrigin
    decorativeOrPendingImageAlts:imageAlt.emptyAlt,
    titlePages:titleAudit.htmlDocuments,titleOver60:titleAudit.over60,
    titleOver105:titleAudit.over105,duplicateModelTitles:titleAudit.duplicates.length,
-   bibliographyTitleCandidates:titleAudit.bibliographyTitles};
+   bibliographyTitleCandidates:titleAudit.bibliographyTitles,
+   metaIndexablePages:metaAudit.indexablePages,metaOver160:metaAudit.over160};
 }
 
 export function preflight(env=process.env){
