@@ -9,7 +9,7 @@ const member=txt("../src/components/ForumMemberPanel.astro");
 const editor=txt("../src/components/ForumEditor.astro");
 
 test("professional responsive forum keeps published indexable topics and native links",()=>{
- assert.match(hub,/class="community-hero-inner"/);
+ assert.match(hub,/class="container community-hero-inner"/);
  assert.match(hub,/class="community-content-grid"/);
  assert.match(hub,/class="community-sidebar"/);
  assert.match(hub,/class="community-topic-grid" id="forum-topic-list"/);
