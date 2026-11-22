@@ -40,6 +40,8 @@ export function reviewCommonsCopyrightWikitext(wikitext,photo){
       &&(pos===0||!(/[\p{L}\p{N}]/u).test(haystack[pos-1]))
       &&(pos+needle.length===haystack.length||!(/[\p{L}\p{N}]/u).test(haystack[pos+needle.length])));
   });
+  const originalUploaderAuthor=photo.fileId!=="belarus-132n-picture30-2011" ||
+    /\|\s*author\s*=\s*\{\{\s*user at project\s*\|\s*Picture30\s*\|\s*wikipedia\s*\|\s*ru\s*\}\}/i.test(body);
   const sourceUrlSame=photo.copyrightClaimUrl===photo.sourcePage
     && /^https:\/\/commons\.wikimedia\.org\/wiki\/File:[^?#]+$/.test(photo.sourcePage);
   const hasApprovedLicense=photo.licenseUrl==="https://creativecommons.org/licenses/by-sa/4.0/" ||
@@ -47,8 +49,8 @@ export function reviewCommonsCopyrightWikitext(wikitext,photo){
       photo.licenseUrl==="https://creativecommons.org/licenses/by-sa/3.0/");
   const claimIsAuthor=photo.photographer===author;
   return {fileId:photo.fileId,owner:author,sourceUrl:photo.sourcePage,
-    ownWork,ownLicense,authorPresent,sourceUrlSame,hasApprovedLicense,claimIsAuthor,
-    verified:ownWork&&ownLicense&&authorPresent&&sourceUrlSame&&hasApprovedLicense&&claimIsAuthor};
+    ownWork,ownLicense,authorPresent,originalUploaderAuthor,sourceUrlSame,hasApprovedLicense,claimIsAuthor,
+    verified:ownWork&&ownLicense&&authorPresent&&originalUploaderAuthor&&sourceUrlSame&&hasApprovedLicense&&claimIsAuthor};
 }
 
 export async function verifyCommonsCopyrightClaims({fetchJson=fetchCommonsJson}={}){
