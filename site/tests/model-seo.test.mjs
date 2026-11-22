@@ -361,3 +361,31 @@ test("brand origin localizes separately from the market and preserves unknown na
  assert.equal(brandCountryName("Unspecified historical record","tr"),"Unspecified historical record");
  assert.equal(Object.keys(BRAND_COUNTRY_LABEL).length,10);
 });
+
+test("SEO audit titles fit 60 characters when complete identity fits, in all ten locales",()=>{
+  const model={...tractor,brand_name:"Antonio Carraro",model_name:"TIGRE 3800",
+    variant:"Stage V",market:"Europe",model_year:null};
+  for(const locale of ["en","tr","zh","hi","pt-br","fr","de","ru","ja","es"]){
+    const meta=modelSeoMetadata(model,locale);
+    assert.ok(meta.title.length<=60,locale+" safe title still too long: "+meta.title);
+    assert.ok(meta.title.includes("Antonio Carraro TIGRE 3800"),locale);
+    assert.ok(meta.title.includes("Stage V"),locale+" variant lost");
+    assert.ok(meta.title.endsWith(" | TractorVS"),locale);
+    assert.notEqual(meta.title,
+      modelSeoMetadata({...model,market:"Turkey"},locale).title,
+      locale+" regional identities must stay distinct");
+  }
+});
+
+test("unavoidable long identities are not truncated to pass an arbitrary SEO threshold",()=>{
+  const model={...tractor,brand_name:"Lamborghini Trattori",model_name:"Spire V 80 Target",
+    variant:"Stage V tractor configuration option",market:"Europe",model_year:2025};
+  for(const locale of ["en","tr","zh","hi","pt-br","fr","de","ru","ja","es"]){
+    const meta=modelSeoMetadata(model,locale);
+    assert.ok(meta.title.includes("Lamborghini Trattori Spire V 80 Target"),locale);
+    assert.ok(meta.title.includes("Stage V tractor configuration option"),locale);
+    assert.ok(meta.title.includes("2025"),locale);
+    assert.ok(!meta.title.includes("…"),locale);
+    assert.ok(meta.title.endsWith(" | TractorVS"),locale);
+  }
+});
