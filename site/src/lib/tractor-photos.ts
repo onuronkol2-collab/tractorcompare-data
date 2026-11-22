@@ -177,18 +177,13 @@ const ORIGINAL_PHOTO_ORIGINS:readonly Omit<TractorPhoto,"originThumbUrl"|"origin
     copyrightEvidence:"commons-own-work-self-license",
     licenseName:"CC BY-SA 4.0",licenseUrl:"https://creativecommons.org/licenses/by-sa/4.0/",
     configurationExact:false},
-  // Four first-hand 2025 Agritechnica model-specific CC BY-SA photographs. International published UUID ONLY.
-  {brand:"TYM",model:"T2025P",tractorId:"622ddce0-f3a8-48ad-8ec6-45ca936dba6f",
-    fileId:"tym-t2025p-t25-front-marcelx42-2025",
-    thumbUrl:W+"thumb/0/0b/TYM_T25_Agritechnica_2025_%28DSC04615%29.jpg/480px-TYM_T25_Agritechnica_2025_%28DSC04615%29.jpg",
-    displayUrl:W+"thumb/0/0b/TYM_T25_Agritechnica_2025_%28DSC04615%29.jpg/960px-TYM_T25_Agritechnica_2025_%28DSC04615%29.jpg",
-    fullUrl:W+"0/0b/TYM_T25_Agritechnica_2025_%28DSC04615%29.jpg",
-    width:6011,height:4508,photographer:"MarcelX42",
-    sourcePage:"https://commons.wikimedia.org/wiki/File:TYM_T25_Agritechnica_2025_(DSC04615).jpg",
-    copyrightOwner:"MarcelX42",copyrightClaimUrl:"https://commons.wikimedia.org/wiki/File:TYM_T25_Agritechnica_2025_(DSC04615).jpg",
-    copyrightEvidence:"commons-own-work-self-license",
-    licenseName:"CC BY-SA 4.0",licenseUrl:"https://creativecommons.org/licenses/by-sa/4.0/",
-    configurationExact:false},
+
+];
+
+/** New licensed secondary angles only. The first-angle source files are
+ * already in HISTORICAL_LICENSED_PHOTOS with identical sha256 bytes; do not
+ * duplicate them under different IDs or change the existing primary image. */
+const ADDITIONAL_GALLERY_VIEWS:readonly Omit<TractorPhoto,"originThumbUrl"|"originDisplayUrl"|"originFullUrl">[]=[
   {brand:"TYM",model:"T2025P",tractorId:"622ddce0-f3a8-48ad-8ec6-45ca936dba6f",
     fileId:"tym-t2025p-t25-rear-marcelx42-2025",
     thumbUrl:W+"thumb/d/d7/TYM_T25_Agritechnica_2025_%28DSC04675%29.jpg/480px-TYM_T25_Agritechnica_2025_%28DSC04675%29.jpg",
@@ -197,17 +192,6 @@ const ORIGINAL_PHOTO_ORIGINS:readonly Omit<TractorPhoto,"originThumbUrl"|"origin
     width:5944,height:4458,photographer:"MarcelX42",
     sourcePage:"https://commons.wikimedia.org/wiki/File:TYM_T25_Agritechnica_2025_(DSC04675).jpg",
     copyrightOwner:"MarcelX42",copyrightClaimUrl:"https://commons.wikimedia.org/wiki/File:TYM_T25_Agritechnica_2025_(DSC04675).jpg",
-    copyrightEvidence:"commons-own-work-self-license",
-    licenseName:"CC BY-SA 4.0",licenseUrl:"https://creativecommons.org/licenses/by-sa/4.0/",
-    configurationExact:false},
-  {brand:"TYM",model:"T6115",tractorId:"80fd42a2-3059-40bb-a0e1-511ae6100213",
-    fileId:"tym-t6115-t115-front-marcelx42-2025",
-    thumbUrl:W+"thumb/0/01/TYM_T115_Agritechnica_2025_%28DSC04612%29.jpg/480px-TYM_T115_Agritechnica_2025_%28DSC04612%29.jpg",
-    displayUrl:W+"thumb/0/01/TYM_T115_Agritechnica_2025_%28DSC04612%29.jpg/960px-TYM_T115_Agritechnica_2025_%28DSC04612%29.jpg",
-    fullUrl:W+"0/01/TYM_T115_Agritechnica_2025_%28DSC04612%29.jpg",
-    width:6139,height:4093,photographer:"MarcelX42",
-    sourcePage:"https://commons.wikimedia.org/wiki/File:TYM_T115_Agritechnica_2025_(DSC04612).jpg",
-    copyrightOwner:"MarcelX42",copyrightClaimUrl:"https://commons.wikimedia.org/wiki/File:TYM_T115_Agritechnica_2025_(DSC04612).jpg",
     copyrightEvidence:"commons-own-work-self-license",
     licenseName:"CC BY-SA 4.0",licenseUrl:"https://creativecommons.org/licenses/by-sa/4.0/",
     configurationExact:false},
@@ -223,12 +207,14 @@ const ORIGINAL_PHOTO_ORIGINS:readonly Omit<TractorPhoto,"originThumbUrl"|"origin
     licenseName:"CC BY-SA 4.0",licenseUrl:"https://creativecommons.org/licenses/by-sa/4.0/",
     configurationExact:false}
 ];
+
 /** Curated historical archive candidates are staged in code; they reach public pages
  * ONLY if an exact brand/model is found in the published Supabase public catalogue.
  * Displayed model variant warning remains mandatory for each photo. */
 const PHOTO_ORIGINS:readonly Omit<TractorPhoto,"originThumbUrl"|"originDisplayUrl"|"originFullUrl">[]=[
   ...ORIGINAL_PHOTO_ORIGINS,
-  ...HISTORICAL_LICENSED_PHOTOS
+  ...HISTORICAL_LICENSED_PHOTOS,
+  ...ADDITIONAL_GALLERY_VIEWS
 ];
 /** Stable, first-party indexable image URLs; a fixed Worker allowlist proxies only approved photos. */
 export const APPROVED_TRACTOR_PHOTOS:readonly TractorPhoto[]=PHOTO_ORIGINS.map(source=>({
