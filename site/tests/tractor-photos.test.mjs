@@ -14,7 +14,7 @@ const tractor=(brand_name,model_name)=>({
   engine:null,transmission:null,drivetrain:null,weight_kg:null,specifications:[]
 });
 test("only exact matching tractor model identity receives a verified photo",()=>{
-  assert.equal(APPROVED_TRACTOR_PHOTOS.length,78);
+  assert.equal(APPROVED_TRACTOR_PHOTOS.length,80);
   assert.equal(tractorPhotos(tractor("Belarus","82.1")).length,4);
   assert.equal(tractorPhotos(tractor("Belarus","80.1")).length,1);
   assert.equal(tractorPhotos(tractor("Belarus","132N")).length,1);
@@ -90,7 +90,7 @@ test("new CC BY-SA photos preserve three exact Belarus identities, author and re
     assert.equal(photo.sourcePage.slice(-file.length),file);
     assert.match(photo.originThumbUrl,/\/500px-/);
   }
-  for(const wrong of ["892.3","922","922.3","922.4","952.2","952.4x"])
+  for(const wrong of ["892.3","922","922.4","952.2","952.4x"])
     assert.equal(primaryTractorPhoto(tractor("Belarus",wrong)),null,
       "Different model or variant must not inherit image: "+wrong);
 });
@@ -100,7 +100,7 @@ test("eight new verified photos preserve signed source ledger and exact model id
   assert.equal(evidence.approved.length,8);
   assert.equal(evidence.rejected.length,1);
   assert.equal(evidence.rejected[0].fileId,"belarus-922-3-bulykin-almaty-2026",
-    "Identity-ambiguous Belarus 922.3 photo must not be published");
+    "Historical failed Commons-title lookup stays recorded; later distinct source verification is separate");
   for(const source of evidence.approved){
     const photos=tractorPhotos(tractor(source.brand,source.model));
     assert.equal(photos.length,1,source.brand+" "+source.model);
@@ -129,7 +129,7 @@ test("eight new verified photos preserve signed source ledger and exact model id
   for(const [brand,model] of [
     ["Steyr","4075 KOMPAKT S"],["Steyr","4105 PLUS"],
     ["Steyr","4130 EXPERT"],["Steyr","4140 PLUS"],
-    ["Steyr","6280 IMPULS"],["Zetor","6171"],["Belarus","922.3"],
+    ["Steyr","6280 IMPULS"],["Zetor","6171"],
   ])assert.equal(primaryTractorPhoto(tractor(brand,model)),null,
     "Exact model/version protection: "+brand+" "+model);
 });
@@ -206,6 +206,46 @@ test("Steyr image batch is exact-model, provenance-linked and SHA-256 checked ac
   for(const model of ["4085 KOMPAKT S","4080 KOMPAKT","6340 TERRUS","6240 ABSOLUT CVT"])
     assert.equal(primaryTractorPhoto(tractor("Steyr",model)),null,
       "Do not leak approved photo to unrelated model "+model);
+});
+
+test("two newly sourced Belarus JPEGs are real, provenance-hashed, model exact, and localized",()=>{
+  const ledger=JSON.parse(readFileSync(new URL("../docs/photo-evidence-belarus-510-9223-20261122.json",import.meta.url),"utf8"));
+  assert.equal(ledger.sources.length,2);
+  assert.equal(ledger.importProof?.length,2,"Import workflow must verify image bytes before publication");
+  assert.equal(ledger.originalBinaryHttpVerified,true);
+  assert.equal(ledger.jpegContentVerified,true);
+  for(const record of ledger.sources){
+    const matches=tractorPhotos(tractor(record.brand,record.model));
+    assert.equal(matches.length,1,record.fileId);
+    const photo=matches[0];
+    assert.equal(photo.fileId,record.fileId);
+    assert.equal(photo.photographer,record.photographer);
+    assert.equal(photo.licenseName,"CC BY-SA 4.0");
+    assert.equal(photo.configurationExact,false);
+    const proof=ledger.importProof.find(p=>p.fileId===record.fileId);
+    assert.ok(proof,record.fileId);
+    assert.equal(proof.photographer,record.photographer);
+    for(const size of [480,960,1920]){
+      const data=readFileSync(new URL("../public/images/tractors/"+record.fileId+"-"+size+".jpg",import.meta.url));
+      assert.equal(data[0],255);assert.equal(data[1],216);assert.equal(data[2],255);
+      assert.equal(data.at(-2),255);assert.equal(data.at(-1),217);
+      assert.ok(data.length>9000);
+      assert.equal(data.length,proof.derivatives[size].bytes);
+      assert.equal(createHash("sha256").update(data).digest("hex"),proof.derivatives[size].sha256);
+    }
+    for(const locale of LOCALES){
+      const image=modelStructuredData(tractor(record.brand,record.model),locale,"https://tractorvs.com/")
+        ["@graph"].find(x=>x["@type"]==="ImageObject");
+      assert.ok(image,"Model-specific image rights in locale "+locale);
+      assert.equal(image.creator.name,record.photographer);
+      assert.equal(image.license,record.licenseUrl);
+      assert.equal(image.acquireLicensePage,photo.sourcePage);
+    }
+  }
+  for(const model of ["510/512","922.4"]){
+    assert.equal(primaryTractorPhoto(tractor("Belarus",model)),null,
+      "Do not transfer a model's photograph to its adjacent variant");
+  }
 });
 
 test("each approved photograph has a verified model source and re-use license",()=>{
