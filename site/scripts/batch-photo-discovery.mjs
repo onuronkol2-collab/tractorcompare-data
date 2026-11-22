@@ -22,7 +22,7 @@ import {manufacturerPhotoAlias,matchesManufacturerPhotoAlias} from "./photo-mode
 const ORIGIN=process.env.TRACTORVS_URL||"https://tractorvs.com";
 const OUTPUT=resolve(process.env.TRACTOR_IMAGE_REPORT_DIR||"./photo-discovery-report");
 const PRIVATE_OUTPUT=process.env.TRACTOR_IMAGE_PRIVATE_REPORT_DIR?resolve(process.env.TRACTOR_IMAGE_PRIVATE_REPORT_DIR):null;
-const USER_AGENT="TractorVS/1.0 (tractorvs.com; public photo license research)";
+const USER_AGENT="TractorVS-PhotoResearch/1.1 (https://tractorvs.com/; public image license research)";
 const REQUEST_LIMIT=4;
 const COMMONS_BATCH=1;
 const commonsRateLimit=createCommonsRateLimitGuard();
