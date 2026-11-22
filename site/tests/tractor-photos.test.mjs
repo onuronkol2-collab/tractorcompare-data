@@ -508,7 +508,7 @@ test("2026-11-22 independently self-licensed Commons gallery retains exact Steyr
       assert.equal(photo.configurationExact,false);
       assert.match(photo.originThumbUrl,/\/500px-/);
       assert.match(photo.originDisplayUrl,/\/960px-/);
-      assert.match(photo.sourcePage,/^https:\/\/commons.wikimedia.org\/wiki\/File:/);
+      assert.match(photo.sourcePage,/^https:\/\/commons\.wikimedia\.org\/wiki\/File:/);
       assert.equal(resolveApprovedPhotoSource(photo.thumbUrl),photo.originThumbUrl);
       assert.equal(resolveApprovedPhotoSource(photo.displayUrl),photo.originDisplayUrl);
     }
