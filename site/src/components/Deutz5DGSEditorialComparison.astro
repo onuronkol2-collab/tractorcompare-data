@@ -1,0 +1,228 @@
+---
+import SiteLayout from "./SiteLayout.astro";
+import {getPublicCatalog} from "../lib/catalog.ts";
+import {localizedPath,type Locale} from "../lib/locales.ts";
+import {DEUTZ_5D_GS_PILOT,curatedDeutz5DPair} from "../lib/deutz-5d-editorial.ts";
+interface Props {lang:"tr"|"en"}
+const {lang}=Astro.props;
+const tr=lang==="tr";
+const catalog=await getPublicCatalog();
+const pair=curatedDeutz5DPair(catalog.tractors);
+// A public release must never ship an empty or speculative pilot after a
+// source, market, variant or public-row change. Inert previews remain noindex.
+if(import.meta.env.PUBLIC_INDEXING_ENABLED==="true"&&Astro.site&&!pair){
+ throw Error("[TractorVS editorial evidence gate] 5D GS pilot lacked exact, sourced matching public rows");
+}
+const path=localizedPath(lang,DEUTZ_5D_GS_PILOT.path);
+const comparePath=localizedPath(lang,"/compare/");
+const fullUrl=new URL(path,Astro.site||"https://tractorvs.com").toString();
+const title=tr
+ ?"Deutz-Fahr 5090 D GS ve 5100 D GS: Teknik Farklar | TractorVS"
+ :"Deutz-Fahr 5090 D GS vs 5100 D GS: Source-Based Comparison";
+const description=tr
+ ?"Deutz-Fahr 5090 D GS ile 5100 D GS motor gücü, tork, PTO ve hidrolik değerlerini aynı Türkiye üretici belgesinden, ölçüm sınırlarıyla karşılaştırın."
+ :"Compare Deutz-Fahr 5090 D GS and 5100 D GS engine power, torque, PTO and hydraulics using the same verified Turkish manufacturer specification.";
+const breadcrumb=pair?{
+ "@context":"https://schema.org","@type":"BreadcrumbList",
+ itemListElement:[
+  {"@type":"ListItem",position:1,name:tr?"Ana sayfa":"Home",item:new URL(localizedPath(lang,"/"),Astro.site!).toString()},
+  {"@type":"ListItem",position:2,name:tr?"Traktör karşılaştırma":"Compare tractors",item:new URL(comparePath,Astro.site!).toString()},
+  {"@type":"ListItem",position:3,name:tr?"5090 D GS ve 5100 D GS":"5090 D GS vs 5100 D GS",item:fullUrl}
+ ]}:null;
+const modelUrl=(slug:string)=>localizedPath(lang,"/tractors/"+slug+"/");
+const interactive=pair?comparePath+"?left="+encodeURIComponent(pair.left.tractor_id)+
+ "&right="+encodeURIComponent(pair.right.tractor_id):comparePath;
+const display=(value:string,unit:string|null)=>tr&&/^\d+\.\d{3}$/.test(value)
+ ?value.replace(".",",")+(unit?" "+unit:"")
+ :value+(unit?" "+unit:"");
+const showNote=(key:string)=>key==="rear_lift_capacity"||key==="operating_weight_cab"||key==="hydraulic_main_flow";
+const comparisonLabels=tr?{
+ eyebrow:"AYNI ÜRETİCİ BROŞÜRÜ • TÜRKİYE • STAGE V / GS",
+ heading:"Deutz-Fahr 5090 D GS mi, 5100 D GS mi?",
+ intro:"İki farklı model numarasını rastgele kataloglarla değil, üreticinin aynı 5D Serisi GS teknik tablosundaki iki sütunuyla karşılaştırıyoruz. Bu bir saha testi veya satın alma sıralaması değildir.",
+ difference:"Doğrulanan temel farklar",
+ power:"Üreticinin ECE R120 nominal motor gücü",
+ torque:"Üreticinin maksimum motor torku",
+ more:"5100 D GS modelinde daha yüksek",
+ compared:"Kaynaklı teknik özellikler",
+ spec:"Üretici teknik değeri",
+ shared:"Aynı",
+ differs:"Farklı",
+ doc:"DEUTZ-FAHR Türkiye: 5D Serisi GS / Faz V — orijinal teknik tablo (PDF, s. 15)",
+ note:"Kritik ölçüm ayrımı: nominal motor gücü, azami motor gücü ve PTO çıkış gücü aynı ölçüm değildir. PDF bu iki modelin PTO hızlarını verir; burada PTO çıkış beygiri hesaplamıyoruz.",
+ same:"Aynı olan değerler ne anlatıyor?",
+ sameText:"Her iki konfigürasyon için üretici 2,887 litre motor hacmi, 56 L/dak hidrolik pompa debisi, 540/540E PTO seçenekleri ve 2100 mm dingil mesafesi belirtir. Aynı tabloya göre kabinli, ek ağırlıksız kütle 3450 kg'dır. Bu eşleşmeler, iki traktörün her işte aynı çekiş veya tüketimi sağlayacağını kanıtlamaz.",
+ hitch:"Arka kaldırma kapasitesindeki 3500 kg değerinin hangi ölçüm noktasında belirlendiği broşürde yazmıyor. Traktörün kaldırabileceği gerçek ekipman ağırlığını tek bu sayıyla belirlemeyin.",
+ choice:"Hangi kullanıcı için hangi soru önemli?",
+ questions:[
+  "Ekipmanınızın güce ihtiyacı PTO'da mı, motorun nominal değerinde mi? Üretici burada PTO çıkış gücünü ölçmüyor.",
+  "Çekiş, yakıt tüketimi ve işletme maliyeti için aynı koşullarda bağımsız test var mı? Bu broşürden üstünlük sonucu çıkarılamaz.",
+  "Bayinin teklif ettiği traktör tam olarak 5D GS / Stage V, Türkiye pazarı konfigürasyonu mu? LS veya başka ülke/model yılı değerlerini karıştırmayın.",
+  "Bağlantı geometrisi, ekipman ağırlığı, lastikler, garanti ve güncel fiyatı aynı konfigürasyon için teyit ettiniz mi?"
+ ],
+ decision:"Karar özeti",
+ decisionText:"5100 D GS'nin aynı ECE R120 koşullarındaki nominal motor gücü ve azami torku daha yüksek. Bunun karşılığında saha yakıt tüketiminin, maliyetin veya gerçek çekişin ne kadar değiştiğini bu kaynaktan bilmiyoruz. Karar, kullanılacak ekipman ve doğrulanmış güncel tekliflerle verilmelidir.",
+ method:"Kaynak, kapsam ve güven sınırları",
+ methodText:"Rakamlar yalnızca yayımlanmış ve kanıtı işaretlenmiş iki ayrı TractorVS model kaydından, tam model kimliği (5090 D / 5100 D), GS donanım, Stage V ve Türkiye pazarı eşleşmesiyle alınmıştır. Kaynak veya ölçüm bağlamı değişirse sayfa güvenlik kapısı yayını engeller. Belgede geçen 2025, broşür bağlamıdır; iki traktörün model yılı olarak belirtilmemiştir.",
+ openModels:"Model kayıtlarını inceleyin",
+ openTool:"Bu iki traktörü etkileşimli tabloda açın",
+ articles:"Teknik rehberler",
+ unavailable:"Bu karşılaştırma yalnız doğrulanmış kamuya açık teknik verilerle yayımlanır. Şu an kaynak veya varyant eşleşmesi yeniden kontrol ediliyor.",
+}:{eyebrow:"ONE MANUFACTURER BROCHURE • TÜRKIYE • STAGE V / GS",
+ heading:"Deutz-Fahr 5090 D GS vs 5100 D GS: what really changes?",
+ intro:"This comparison uses the two model columns of the same manufacturer's 5D GS technical table, not unrelated brochures or market editions. It is neither a field test nor a best-buy ranking.",
+ difference:"Verified key differences",
+ power:"ECE R120 rated engine power",
+ torque:"Manufacturer-stated peak engine torque",
+ more:"Higher on the 5100 D GS",
+ compared:"Source-linked technical specifications",
+ spec:"Manufacturer specification",
+ shared:"Shared",
+ differs:"Different",
+ doc:"DEUTZ-FAHR Türkiye: 5D GS Series / Stage V — original technical table (PDF, p. 15)",
+ note:"Measurement warning: rated engine power, maximum engine power and PTO shaft output are different measurements. This brochure lists PTO speed modes but does not give measured PTO output horsepower for these two models.",
+ same:"What the shared values do—and do not—mean",
+ sameText:"The same table reports a 2.887-litre engine, 56 L/min hydraulic pump flow, 540/540E PTO choices and a 2100 mm wheelbase for both versions. The stated cab-equipped mass without ballast is 3450 kg. Matching catalogue dimensions do not establish identical real-world traction or fuel use.",
+ hitch:"The brochure does not specify the point at which its 3500 kg rear-lift rating is measured. Do not use that single number to declare that a particular implement can be safely lifted.",
+ choice:"What should you check before choosing?",
+ questions:[
+  "Does your implement require a particular PTO output, rather than rated engine horsepower? This brochure does not measure PTO output power.",
+  "Do you have controlled independent tests for draft force, consumption or running costs? These manufacturer figures alone cannot rank them.",
+  "Is the dealer's tractor the exact Türkiye-market 5D GS Stage V version? Do not substitute LS, another market or an assumed model year.",
+  "Have you verified hitch geometry, implement mass, tyres, warranty and local price for the same exact equipment package?"
+ ],
+ decision:"Evidence-based conclusion",
+ decisionText:"The 5100 D GS has higher rated engine power and peak torque under the matching manufacturer conditions. The document cannot tell us how much actual field fuel use, cost or traction will differ. Select against the intended implement and a verified current equipment offer.",
+ method:"Source, scope and limitations",
+ methodText:"Every value is read from two independently verified, public TractorVS model rows with a matching 5090 D / 5100 D identity, GS equipment, Stage V and Türkiye market. A source or measurement conflict blocks production rather than publishing a guess. The year 2025 describes the source brochure context; it is not a claimed model year for either tractor.",
+ openModels:"Review individual model records",
+ openTool:"Open these exact models in the interactive comparison",
+ articles:"Technical guides",
+ unavailable:"This comparison publishes only if the exact public source and equipment records are verified. Source or variant identity is being checked."
+};
+---
+<SiteLayout lang={lang} title={title} description={description} structuredData={breadcrumb}
+  ogType="article" indexable={Boolean(pair)}
+  indexableLocales={["en","tr"]} availableLocales={["en","tr"]}>
+  <div class="e5-wrap">
+    <nav aria-label={tr?"İçerik yolu":"Breadcrumb"} class="e5-crumb">
+      <a href={localizedPath(lang,"/")}>{tr?"Ana sayfa":"Home"}</a>
+      <span aria-hidden="true">/</span><a href={comparePath}>{tr?"Karşılaştırma":"Compare"}</a>
+      <span aria-hidden="true">/</span><span>5090 D GS / 5100 D GS</span>
+    </nav>
+    <header class="e5-hero">
+      <span class="e5-eyebrow">{comparisonLabels.eyebrow}</span>
+      <h1>{comparisonLabels.heading}</h1>
+      <p>{comparisonLabels.intro}</p>
+      <div class="e5-actions">
+        <a href={interactive}>{comparisonLabels.openTool} <span aria-hidden="true">↗</span></a>
+        <a href={localizedPath(lang,"/articles/")}>{comparisonLabels.articles} <span aria-hidden="true">↗</span></a>
+      </div>
+    </header>
+    {pair ? <>
+      <section aria-labelledby="e5-difference">
+        <h2 id="e5-difference">{comparisonLabels.difference}</h2>
+        <div class="e5-facts">
+          <article>
+            <h3>{comparisonLabels.power}</h3>
+            <p><strong>{display(pair.rows[0].left,"HP")}</strong> <span aria-hidden="true">→</span> <strong>{display(pair.rows[0].right,"HP")}</strong></p>
+            <small>+{pair.ratedDelta} HP · {comparisonLabels.more}</small>
+          </article>
+          <article>
+            <h3>{comparisonLabels.torque}</h3>
+            <p><strong>{display(pair.rows[2].left,"Nm")}</strong> <span aria-hidden="true">→</span> <strong>{display(pair.rows[2].right,"Nm")}</strong></p>
+            <small>+{pair.torqueDelta} Nm · {comparisonLabels.more}</small>
+          </article>
+        </div>
+      </section>
+      <section aria-labelledby="e5-specs">
+        <h2 id="e5-specs">{comparisonLabels.compared}</h2>
+        <p class="e5-note">{comparisonLabels.note}</p>
+        <div class="e5-table-scroll" role="region" tabindex="0" aria-label={comparisonLabels.compared}>
+          <table class="e5-table">
+            <caption>{comparisonLabels.compared} — 5D GS / Stage V / Türkiye</caption>
+            <thead><tr>
+              <th scope="col">{comparisonLabels.spec}</th>
+              <th scope="col">5090 D GS</th>
+              <th scope="col">5100 D GS</th>
+              <th scope="col">{tr?"Karşılaştırma":"Comparison"}</th>
+            </tr></thead>
+            <tbody>{pair.rows.map(row=><tr>
+              <th scope="row">{tr?row.labelTr:row.labelEn}</th>
+              <td>{display(row.left,row.unit)}</td>
+              <td>{display(row.right,row.unit)}</td>
+              <td>{row.same?comparisonLabels.shared:comparisonLabels.differs}</td>
+            </tr>)}</tbody>
+          </table>
+        </div>
+        <p class="e5-note">{comparisonLabels.hitch}</p>
+        <p class="e5-source"><a href={pair.source} target="_blank" rel="noopener noreferrer">
+          {comparisonLabels.doc} <span aria-hidden="true">↗</span></a></p>
+      </section>
+      <section aria-labelledby="e5-shared">
+        <h2 id="e5-shared">{comparisonLabels.same}</h2>
+        <p>{comparisonLabels.sameText}</p>
+      </section>
+      <section aria-labelledby="e5-choice">
+        <h2 id="e5-choice">{comparisonLabels.choice}</h2>
+        <ul>{comparisonLabels.questions.map(q=><li>{q}</li>)}</ul>
+      </section>
+      <section aria-labelledby="e5-conclusion" class="e5-conclusion">
+        <h2 id="e5-conclusion">{comparisonLabels.decision}</h2>
+        <p>{comparisonLabels.decisionText}</p>
+      </section>
+      <section aria-labelledby="e5-method">
+        <h2 id="e5-method">{comparisonLabels.method}</h2>
+        <p>{comparisonLabels.methodText}</p>
+        <p class="e5-source"><a href={pair.source} target="_blank" rel="noopener noreferrer">
+          {comparisonLabels.doc} <span aria-hidden="true">↗</span></a></p>
+      </section>
+      <nav class="e5-related" aria-label={comparisonLabels.openModels}>
+        <h2>{comparisonLabels.openModels}</h2>
+        <div>
+          <a href={modelUrl(pair.left.slug)}>Deutz-Fahr 5090 D GS <span aria-hidden="true">↗</span></a>
+          <a href={modelUrl(pair.right.slug)}>Deutz-Fahr 5100 D GS <span aria-hidden="true">↗</span></a>
+          <a href={interactive}>{comparisonLabels.openTool} <span aria-hidden="true">↗</span></a>
+        </div>
+      </nav>
+    </> : <section class="e5-unavailable"><p>{comparisonLabels.unavailable}</p></section>}
+  </div>
+</SiteLayout>
+
+<style>
+ .e5-wrap{max-width:1050px;margin:0 auto;padding:22px 20px 80px;color:#203427}
+ .e5-crumb{display:flex;flex-wrap:wrap;align-items:center;gap:10px;font-size:13px;margin:0 0 22px;color:#48634c}
+ .e5-crumb a{color:#24613b;text-decoration:underline}
+ .e5-hero{padding:clamp(24px,4vw,48px);border-radius:20px;background:linear-gradient(135deg,#123826,#235239);color:#fff;margin-bottom:34px}
+ .e5-eyebrow{display:block;font-weight:750;font-size:11px;letter-spacing:.13em;color:#c4e3bc;margin-bottom:16px}
+ .e5-hero h1{font-size:clamp(27px,3.4vw,43px);line-height:1.2;margin:0 0 18px;max-width:850px}
+ .e5-hero p{max-width:820px;color:#e1eddf;line-height:1.75;margin:0}
+ .e5-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:24px}
+ .e5-actions a{border:1px solid #d3e6bf;border-radius:9px;padding:10px 15px;color:#fff;font-weight:750;text-decoration:none}
+ .e5-actions a:first-child{color:#143824;background:#d3e6bf}
+ .e5-wrap section{margin:32px 0}
+ .e5-wrap h2{font-size:clamp(21px,2.5vw,28px);margin:0 0 15px;color:#1c4f32;line-height:1.3}
+ .e5-wrap p,.e5-wrap li{line-height:1.76}
+ .e5-facts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+ .e5-facts article{padding:23px;border-radius:14px;background:#f3f8f0;border:1px solid #ccdfc8}
+ .e5-facts h3{font-size:15px;margin:0 0 14px}
+ .e5-facts p{display:flex;align-items:center;gap:14px;flex-wrap:wrap;font-size:clamp(18px,2.2vw,25px);margin:0 0 9px}
+ .e5-facts small{font-size:13px;color:#335f3c}
+ .e5-note{background:#f8faf7;border-left:4px solid #387b50;padding:15px 19px;font-size:14px}
+ .e5-table-scroll{overflow-x:auto;border:1px solid #d9e2d8;border-radius:13px}
+ .e5-table{width:100%;border-collapse:collapse;min-width:680px;font-size:14px}
+ .e5-table caption{padding:13px;text-align:left;font-weight:700;background:#f3f8f0;color:#31533b}
+ .e5-table th,.e5-table td{text-align:left;padding:13px 12px;border-bottom:1px solid #dce6db;vertical-align:top}
+ .e5-table thead{background:#eaf2e8}
+ .e5-table tbody th{font-weight:700}
+ .e5-table tbody tr:nth-child(even){background:#f9fbf8}
+ .e5-table tbody td:nth-child(2),.e5-table tbody td:nth-child(3){font-weight:750}
+ .e5-source a,.e5-related a{color:#225e3c;text-decoration:underline;text-underline-offset:3px;font-weight:700;overflow-wrap:anywhere}
+ .e5-conclusion{padding:26px;background:#f0f7e9;border-radius:14px}
+ .e5-related{border-top:1px solid #d4dfd4;margin-top:38px;padding-top:26px}
+ .e5-related>div{display:flex;gap:15px;flex-wrap:wrap}
+ .e5-related a{border:1px solid #bdd3be;border-radius:10px;padding:11px 15px}
+ .e5-unavailable{border:1px solid #bfceb9;border-radius:12px;padding:20px}
+ .e5-wrap a:focus-visible,.e5-table-scroll:focus-visible{outline:3px solid #6aa774;outline-offset:3px}
+ @media(max-width:640px){.e5-facts{grid-template-columns:1fr}.e5-wrap{padding:15px 14px 58px}.e5-hero{border-radius:13px}.e5-table th,.e5-table td{padding:12px 9px}}
+</style>
