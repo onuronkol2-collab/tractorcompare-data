@@ -613,6 +613,16 @@ const auditedTurkishSourceHeadingInEnglish: Record<string,string> = {
   "ana vites tipi": "Main gear type",
   "çekiş sistemi": "Drive system",
   "yakıt deposu": "Fuel tank",
+  // Source-observed ASCII-only Turkish labels were invisible to the older
+  // Turkish-diacritic leak detector. Scope these to exact reviewed headings.
+  "nominal motor devri": "Rated engine speed",
+  "direksiyon tipi": "Steering type",
+  "fren sistemi": "Brake system",
+  "fren tipi": "Brake type",
+  "direksiyon sistemi": "Steering system",
+  "piston stroku": "Piston stroke",
+  "pto tipi": "PTO type",
+  "hava filtresi": "Air filter",
 };
 // Exact-source translations are deliberately limited to headings actually
 // measured on published English pages. Unknown source text remains intact.
