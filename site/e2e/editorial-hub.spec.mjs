@@ -215,3 +215,32 @@ test("editorial links have mobile touch targets without altering translation fal
  await page.locator('.editorial-jumps a[href="#incelemeler"]').click();
  await expect(page.locator("#incelemeler")).toBeInViewport();
 });
+
+test("wide guide and review tables remain keyboard-scrollable and labeled at 390px",async({page})=>{
+ await page.setViewportSize({width:390,height:844});
+ for(const locale of ["tr","ja"]){
+  for(const kind of ["guide","review"]){
+   const route=kind==="guide"?"/guides/choosing-a-tractor/":"/reviews/basak-2075-bk/";
+   const response=await page.goto("/"+locale+route,{waitUntil:"domcontentloaded"});
+   expect(response?.status(),locale+route).toBe(200);
+   const region=page.locator(kind==="guide"?".guide-table-scroll":".review-table-scroll");
+   const heading=page.locator(kind==="guide"?"#guide-checklist-heading":"#facts-heading");
+   const label=(await heading.textContent()||"").trim();
+   await expect(region).toHaveAttribute("role","region");
+   await expect(region).toHaveAttribute("tabindex","0");
+   await expect(region).toHaveAccessibleName(label);
+   const before=await region.evaluate(el=>({
+    width:el.clientWidth,contentWidth:el.scrollWidth,left:el.scrollLeft
+   }));
+   expect(before.contentWidth,locale+" "+kind+" table requires a scroll container").toBeGreaterThan(before.width);
+   await region.focus();
+   await expect(region).toBeFocused();
+   await page.keyboard.press("ArrowRight");
+   await expect.poll(()=>region.evaluate(el=>el.scrollLeft),{
+    message:locale+" "+kind+" horizontal table must respond to keyboard ArrowRight"
+   }).toBeGreaterThan(before.left);
+   const pageWidth=await page.evaluate(()=>document.documentElement.scrollWidth);
+   expect(pageWidth,locale+" "+kind+" should not overflow whole page").toBeLessThanOrEqual(392);
+  }
+ }
+});
