@@ -1,0 +1,99 @@
+name: TractorVS four TYM T25 T115 own-work JPEG review staging
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: [".github/workflows/tractorvs-reviewed-tym-t25-t115.yml"]
+permissions:
+  contents: write
+concurrency:
+  group: tractorvs-reviewed-tym-t25-t115-four-20261122
+  cancel-in-progress: false
+jobs:
+  stage_only_no_publication:
+    if: "github.event_name == 'workflow_dispatch' || startsWith(github.event.head_commit.message, 'ci(photo): one-time stage TYM T25 T115 four sources')"
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22.23.4"
+      - name: Install one pinned JPEG decoder
+        run: python -m pip install --quiet 'Pillow==11.3.0'
+      - name: Verify distinct source identity, rights and staging-only construction
+        run: |
+          python -m py_compile site/scripts/stage-reviewed-commons-20261122.py site/scripts/stage-reviewed-tym-t25-t115-four-20261122.py
+          node --test site/tests/tym-t25-t115-staging.test.mjs
+      - name: Fetch four first-hand CC files and create twelve resized JPEGs with SHA ledger
+        run: python site/scripts/stage-reviewed-tym-t25-t115-four-20261122.py --output-dir ./tym-t25-t115-four-review
+      - name: Independently verify nine fields per image and actual JPEG buffers
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import hashlib,json
+          from PIL import Image
+          root=Path("tym-t25-t115-four-review")
+          source=json.loads(Path("site/docs/photo-curated-tym-t25-t115-four-20261122.json").read_text())
+          ledger=json.loads((root/"sha256-ledger.json").read_text())
+          expected={x["id"]:x for x in source["photos"]}
+          assert len(expected)==4 and source["publishedPhotos"]==0
+          assert ledger["reviewRequired"] is True and ledger["publicationCount"]==0
+          assert len(ledger["images"])==4
+          assert {x["fileId"] for x in ledger["images"]}==set(expected)
+          for item in ledger["images"]:
+              p=expected[item["fileId"]]
+              assert item["photographer"]==p["photographer"]=="MarcelX42"
+              assert item["license"]==p["licenseName"]=="CC BY-SA 4.0"
+              assert item["sourcePage"].replace("%28","(").replace("%29",")")==p["sourcePage"]
+              assert p["storage"] in item["origin"]
+              assert item["approvedToPublish"] is False
+              assert len(item["originSha256"])==64 and item["originBytes"]>=10000
+              assert len(item["derivatives"])==3
+              assert {d["width"] for d in item["derivatives"]}=={480,960,1920}
+              for d in item["derivatives"]:
+                  path=root/d["file"]
+                  assert path.parent==root
+                  data=path.read_bytes()
+                  assert len(data)==d["bytes"] and len(data)>10000
+                  assert hashlib.sha256(data).hexdigest()==d["sha256"]
+                  assert data[:3]==bytes.fromhex("ffd8ff") and data[-2:]==bytes.fromhex("ffd9")
+                  with Image.open(path) as img:
+                      img.load()
+                      assert img.format=="JPEG" and img.size==(d["width"],d["height"])
+          print("TRACTORVS_TYM_4_INDEPENDENT_SOURCE_12_JPEG_REVIEW_ONLY_SHA_OK")
+          PY
+      - name: Preserve review-only evidence and JPEGs
+        uses: actions/upload-artifact@v4
+        with:
+          name: tractorvs-tym-t25-t115-four-commons-jpegs-review-only
+          path: tym-t25-t115-four-review/
+          if-no-files-found: error
+          retention-days: 30
+      - name: Write all twelve binaries to isolated review branch without publishing
+        run: |
+          set -euo pipefail
+          BRANCH="photo/tym25-115-verified-jpegs"
+          if git ls-remote --exit-code --heads origin "$BRANCH"; then
+            echo "::error::Existing review branch must be reconciled manually; no overwrite"
+            exit 1
+          fi
+          git switch -c "$BRANCH"
+          mkdir -p site/public/images/tractors site/docs
+          for id in tym-t2025p-t25-front-marcelx42-2025 tym-t2025p-t25-rear-marcelx42-2025 tym-t6115-t115-front-marcelx42-2025 tym-t6115-t115-rear-marcelx42-2025; do
+            for width in 480 960 1920; do
+              install -m 0644 "tym-t25-t115-four-review/${id}-${width}.jpg" "site/public/images/tractors/${id}-${width}.jpg"
+              git add "site/public/images/tractors/${id}-${width}.jpg"
+            done
+          done
+          install -m 0644 tym-t25-t115-four-review/sha256-ledger.json site/docs/photo-import-evidence-tym-t25-t115-four-20261122.json
+          git add site/docs/photo-import-evidence-tym-t25-t115-four-20261122.json
+          test "$(git diff --cached --name-only | wc -l)" -eq 13
+          git -c user.name="github-actions[bot]" -c user.email="41898282+github-actions[bot]@users.noreply.github.com" commit -m "ci(photo): stage four exact T25 and T115 CC review JPEG originals"
+          git push origin "HEAD:refs/heads/$BRANCH"
+          echo "REVIEW ONLY — no gallery, production deployment or Supabase mutation"
