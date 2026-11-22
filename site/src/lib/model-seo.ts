@@ -152,12 +152,15 @@ export function modelSeoMetadata(tractor: TractorRecord, lang: Locale) {
   ].filter((part):part is string=>Boolean(part));
   const identityQualifiers=qualifiers.length ? " — " + qualifiers.join(" · ") : "";
   const fullTitle=model + " " + t(lang,"modelSpecsTitle") + identityQualifiers + " | TractorVS";
-  // Google has no fixed title-character limit, but repeatedly verbose titles
-  // add noise. Shorten only generic label text; keep the exact full variant,
-  // year and market differentiators even if the result remains over 105 chars.
+  // 60 characters is an audit-tool guidance value, not a Google hard limit.
+  // Prefer a shorter title only when ALL real model/variant/market/year
+  // qualifiers survive untouched. Otherwise prefer the localized concise
+  // technical noun; never cut an identifying value just to satisfy a tool.
   const conciseTitle=model + " " + CONCISE_SPECS_TITLE[lang] + identityQualifiers + " | TractorVS";
   const identityOnlyTitle=model + identityQualifiers + " | TractorVS";
-  const title=fullTitle.length<=105 ? fullTitle
+  const title=fullTitle.length<=60 ? fullTitle
+    : conciseTitle.length<=60 ? conciseTitle
+    : identityOnlyTitle.length<=60 ? identityOnlyTitle
     : conciseTitle.length<=105 ? conciseTitle
     : identityOnlyTitle;
 
