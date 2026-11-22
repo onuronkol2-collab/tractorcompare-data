@@ -140,8 +140,12 @@ test("McCormick and Belarus verified images preserve exact source, JPEG SHA-256 
   assert.equal(evidence.approved.length,3);
   assert.equal(evidence.rejected.length,1);
   assert.equal(evidence.rejected[0].model,"X5.085");
-  assert.equal(primaryTractorPhoto(tractor("McCormick","X5.085")),null,
-    "No unverified photo for McCormick X5.085");
+  // The 21 November rejection was a *different*, title-only candidate.
+  // A new 22 November photograph passed independent source and JPEG SHA proof.
+  // Preserve the old rejection as historical evidence, never publish its ID.
+  assert.equal(APPROVED_TRACTOR_PHOTOS.some(p=>p.fileId===evidence.rejected[0].id),false);
+  assert.equal(primaryTractorPhoto(tractor("McCormick","X5.085"))?.fileId,
+    "mccormick-x5-085-mbone-2023");
   for(const source of evidence.approved){
     const photos=tractorPhotos(tractor(source.brand,source.model));
     assert.equal(photos.length,1,"Precisely one approved model image");
@@ -570,7 +574,7 @@ test("McCormick X5.085 and TYM T6115/T2025P have exact licensed files, source pr
 test("historic photo batch is staged with rights and does not create records",()=>{
   assert.equal(HISTORICAL_LICENSED_PHOTOS.length,83);
   const all=new Set(HISTORICAL_LICENSED_PHOTOS.map(x=>x.fileId));
-  assert.equal(all.size,80);
+  assert.equal(all.size,83);
   assert.ok(HISTORICAL_LICENSED_PHOTOS.every(x=>x.configurationExact===false));
   assert.ok(!HISTORICAL_LICENSED_PHOTOS.some(x=>["Product","Vehicle"].includes(x.model)));
 });
