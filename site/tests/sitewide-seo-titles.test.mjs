@@ -66,3 +66,9 @@ test("empty build never appears as a successful title audit",()=>{
  try{assert.throws(()=>auditBuiltSeoTitles(root),/No HTML documents/);}
  finally{rmSync(root,{recursive:true,force:true});}
 });
+
+test("Yandex ownership HTML without a title is not a real content page",()=>{
+ const source='<html><head><meta charset="utf-8"></head><body>Verification: 6bf433db24ce4bb4</body></html>';
+ assert.equal(inspectSeoTitle(source,"yandex_6bf433db24ce4bb4.html"),null);
+ assert.ok(inspectSeoTitle(source,"published-article.html").errors.includes("missing-or-duplicate-title"));
+});
