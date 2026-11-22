@@ -18,8 +18,8 @@
       "modified": "2026-11-22T08:02:35.845Z"
     },
     "https://tractorvs.com/compare/": {
-      "digest": "ece356fdad998f753b95161f0fbf693c2e7221b960ed1e2a57049fb550912eb0",
-      "modified": "2026-11-22T11:00:22.777Z"
+      "digest": "de15dac68ab3f6e7c239465c678a47d40ae75c36941e866433574277cd162232",
+      "modified": "2026-11-22T11:20:03.700Z"
     },
     "https://tractorvs.com/de/": {
       "digest": "54fd240617012847eec424dd2fa2953a9916e4df15816d449f454c9a35ca5af7",
@@ -30,8 +30,8 @@
       "modified": null
     },
     "https://tractorvs.com/de/compare/": {
-      "digest": "c40da6cdb10e0f13c40a80594c3ab344c83207a3fee40f9bc442bbcf949eb8f0",
-      "modified": "2026-11-22T11:00:22.777Z"
+      "digest": "7ed9935e48494809147612ca03b4bcb620d4a6322e5ee9d356fdb6931384fe49",
+      "modified": "2026-11-22T11:20:03.700Z"
     },
     "https://tractorvs.com/de/farm-advisor/": {
       "digest": "b13861ff743dcf5f96b413e6873cc8278aabf58a3c7fbeb26f05436900697e4f",
@@ -50,8 +50,8 @@
       "modified": "2026-11-22T09:48:10.487Z"
     },
     "https://tractorvs.com/de/tractors/": {
-      "digest": "233eccd9ae84675458d81ee33d8dd5daa5ea71b5b56dfad6d0216333022b0238",
-      "modified": "2026-11-22T11:00:22.777Z"
+      "digest": "b310403b7b431c859639bfeea699fdace1845c9c3615a37138805a6a29c56e88",
+      "modified": "2026-11-22T11:20:03.700Z"
     },
     "https://tractorvs.com/de/tractors/agrale-4125-0b53e944/": {
       "digest": "32366e1df6154f04604255bcb6156d1828a47b1b02ef00cb2a1e2b65e857e7f8",
@@ -594,8 +594,8 @@
       "modified": "2026-11-22T05:19:46.825Z"
     },
     "https://tractorvs.com/de/tractors/mccormick-x4-085-tm-2e498a4b/": {
-      "digest": "599d81b23036c5acc7c363e0a9bfa3e881c8c131ee574444d00616ba43737d6a",
-      "modified": "2026-11-22T05:19:46.825Z"
+      "digest": "566cfd1b6ed5da938c220b185d44bd6c342ed7b352d5bf66a2b2f72b1b8fb074",
+      "modified": "2026-11-22T11:20:03.700Z"
     },
     "https://tractorvs.com/de/tractors/mccormick-x4-090-f-cab-0afc2832/": {
       "digest": "98a470139f14872e6d2a9f9b8dac8c16eaa26ff7e8f3c2dc7c13a8c4756a5fc6",
@@ -698,8 +698,8 @@
       "modified": "2026-11-22T05:19:46.825Z"
     },
     "https://tractorvs.com/de/tractors/mccormick-x6-414-p6-drive-223a867d/": {
-      "digest": "01309fdb160a685d3c21562d3feb3299adebc1d81a653f2f55edab8e3602a9d5",
-      "modified": "2026-11-22T05:19:46.825Z"
+      "digest": "0979716b10658f48f8a3e3f4a15115cc9d6a1be9e52c482bd07ed9843bf1f6e1",
+      "modified": "2026-11-22T11:20:03.700Z"
     },
     "https://tractorvs.com/de/tractors/mccormick-x6-415-p6-drive-5f2a733f/": {
       "digest": "85e67aae98d1923cc64c7696bd70728854267431abde94ae297f65777c6b6f6b",
@@ -750,8 +750,8 @@
       "modified": "2026-11-22T05:19:46.825Z"
     },
     "https://tractorvs.com/de/tractors/mccormick-x7-618-vt-drive-1f48d229/": {
-      "digest": "a9a24e08d0e19c5e9275a3a303d8efb5d71417bb090dc3b71cbebf81dc8fb934",
-      "modified": "2026-11-22T05:19:46.825Z"
+      "digest": "0071592fca2527748a721733d9213c49fe4b2bb628f049afddb953c5fee0508d",
+      "modified": "2026-11-22T11:20:03.700Z"
     },
     "https://tractorvs.com/de/tractors/mccormick-x7-620-p6-drive-02992792/": {
       "digest": "da2109b5ba5ff65d6b5468cca5a3ebed84ec2770e0a0dee1859d352aa44c7ead",
@@ -770,8 +770,8 @@
       "modified": "2026-11-22T05:19:46.825Z"
     },
     "https://tractorvs.com/de/tractors/mccormick-x7-624-vt-drive-30986b41/": {
-      "digest": "cb893878265e916bf2a32f9175e62095d438698a4a6a92fc55810b79d49787b7",
-      "modified": "2026-11-22T05:19:46.825Z"
+      "digest": "70c707f88f69169f7d665c12e820be17ec95d04572831759d04a45934ca36301",
+      "modified": "2026-11-22T11:20:03.700Z"
     },
     "https://tractorvs.com/de/tractors/mccormick-x8-627-vt-drive-1ac6b86e/": {
       "digest": "97f2d1f00ab5f924b6eb7d9de6f3fe3f74dc0dadbd6dd952153a129b784877cc",
@@ -1614,8 +1614,8 @@
       "modified": null
     },
     "https://tractorvs.com/es/compare/": {
-      "digest": "e682da5373401375ad1ed4c683a4425fb6129c764b2ea8cf3f46feb781cf6d2c",
-      "modified": "2026-11-22T11:00:22.777Z"
+      "digest": "40f2e23f86c66f687aaa438e70a9192bb937a3f5b0f29b96409be96109f433ce",
+      "modified": "2026-11-22T11:20:03.700Z"
     },
     "https://tractorvs.com/es/farm-advisor/": {
       "digest": "844efa344057998b0a92aeb706bff2247e283543b1fedff3dc54d14a26055c64",
@@ -1634,8 +1634,8 @@
       "modified": "2026-11-22T09:48:10.487Z"
     },
     "https://tractorvs.com/es/tractors/": {
-      "digest": "c9015df247537a44797903421b77dc190c84de9de17170eef2e3a00e7e7bdc0e",
-      "modified": "2026-11-22T11:00:22.777Z"
+      "digest": "dbdeb32c27f31b20985b0aaa777709bd142128e8d608f30f3480e34318a34357",
+      "modified": "2026-11-22T11:20:03.700Z"
     },
     "https://tractorvs.com/es/tractors/agrale-4125-0b53e944/": {
       "digest": "09b82587c02d7b807ad405f4a96f95918f280c963f4260a93bfeb7d92ebf2337",
@@ -2178,8 +2178,8 @@
       "modified": "2026-11-22T05:19:46.825Z"
     },
     "https://tractorvs.com/es/tractors/mccormick-x4-085-tm-2e498a4b/": {
-      "digest": "5b3777b7d03853c488ae7b393240e101014f79a47bf289bbb72be7f48ac4faa8",
-      "modified": "2026-11-22T05:19:46.825Z"
+      "digest": "73b517b75d5759c1f6517ca60dee738a4abd5e4ae1c94a39a8bcc623cb65c76f",
+      "modified": "2026-11-22T11:20:03.700Z"
     },
     "https://tractorvs.com/es/tractors/mccormick-x4-090-f-cab-0afc2832/": {
       "digest": "11ecc9ba0de804416ed6e5764af5369491b247260ef2d9a5270ce862d4c93c70",
@@ -2282,8 +2282,8 @@
       "modified": "2026-11-22T05:19:46.825Z"
     },
     "https://tractorvs.com/es/tractors/mccormick-x6-414-p6-drive-223a867d/": {
-      "digest": "63994c039b16d21a4c0657160864a2e9d66f868040d44bc14a765c3eea08895a",
-      "modified": "2026-11-22T05:19:46.825Z"
+      "digest": "afa664cb88fc38f29732c383d3e31d6c71c0d02a0905ecd7f6a7c17de16239e2",
+      "modified": "2026-11-22T11:20:03.700Z"
     },
     "https://tractorvs.com/es/tractors/mccormick-x6-415-p6-drive-5f2a733f/": {
       "digest": "bf42310872034fc50cc658530c2848ee8ef6bf7548c384443b299d30c93eb1ec",
@@ -2334,8 +2334,8 @@
       "modified": "2026-11-22T05:19:46.825Z"
     },
     "https://tractorvs.com/es/tractors/mccormick-x7-618-vt-drive-1f48d229/": {
-      "digest": "50437e274cbc095f47ef3b6d91326823571c9989968739a439274513295eec98",
-      "modified": "2026-11-22T05:19:46.825Z"
+      "digest": "68809a4f6c0f7fc9d3e1ef121190942c924e74be5a3c6a2046bf56c5fe8f1bc7",
+      "modified": "2026-11-22T11:20:03.700Z"
     },
     "https://tractorvs.com/es/tractors/mccormick-x7-620-p6-drive-02992792/": {
       "digest": "f76ea30d73ba3e1f6edd6f2b66b9ac31cf4552fcdf0eeb8f832cf61a1563e847",
@@ -2354,8 +2354,8 @@
       "modified": "2026-11-22T05:19:46.825Z"
     },
     "https://tractorvs.com/es/tractors/mccormick-x7-624-vt-drive-30986b41/": {
-      "digest": "fd52ed95069d2b6c4ef867e83113571c9c2886eef890e0ba7003292747e973f4",
-      "modified": "2026-11-22T05:19:46.825Z"
+      "digest": "673bd8a4f222f28148f6f478949beeccf20c23f34efd8721a7f7e43fcde056fb",
+      "modified": "2026-11-22T11:20:03.700Z"
     },
     "https://tractorvs.com/es/tractors/mccormick-x8-627-vt-drive-1ac6b86e/": {
       "digest": "30561125ee380209d61e80f35782f379bfbcc543ea752c45d430973fcc9aef21",
@@ -3202,8 +3202,8 @@
       "modified": null
     },
     "https://tractorvs.com/fr/compare/": {
-      "digest": "d3dd97fa01d7f651fcdf5836c158cbac3b9db4957a5095095ddd279598e10156",
-      "modified": "2026-11-22T11:00:22.777Z"
+      "digest": "e2e4fc5a9c036c576b9db2648635c215b31015ded66b1d0c2ff7c27eb5294fd4",
+      "modified": "2026-11-22T11:20:03.700Z"
     },
     "https://tractorvs.com/fr/farm-advisor/": {
       "digest": "3f9f10f3c5e6bd7cd7e6348563f7afc6b927a041caeea17419b5addd14446f43",
@@ -3222,8 +3222,8 @@
       "modified": "2026-11-22T09:48:10.487Z"
     },
     "https://tractorvs.com/fr/tractors/": {
-      "digest": "37078cd001694d18458d50c66519945bcb0e7780b589c4dabbef104d30403db1",
-      "modified": "2026-11-22T11:00:22.777Z"
+      "digest": "33d737f742748e8b29eec207a31a9d5e9b11b23f35ebeeec173a9b5710c95a53",
+      "modified": "2026-11-22T11:20:03.700Z"
     },
     "https://tractorvs.com/fr/tractors/agrale-4125-0b53e944/": {
       "digest": "c3c0fa87f1203833b2a9ddd00aa139d8c89f32f119811d3b813c75cc73fe950f",
@@ -3766,8 +3766,8 @@
       "modified": "2026-11-22T05:19:46.825Z"
     },
     "https://tractorvs.com/fr/tractors/mccormick-x4-085-tm-2e498a4b/": {
-      "digest": "b71c21992da8478e8eeb3f4a9abf4d1d8d29551c3d3b4ab8625f3e7496138137",
-      "modified": "2026-11-22T05:19:46.825Z"
+      "digest": "3b2d46780433b9d6c1f99d540a439e57f36f56b3b2c4ef4a57d733dd4bad5e94",
+      "modified": "2026-11-22T11:20:03.700Z"
     },
     "https://tractorvs.com/fr/tractors/mccormick-x4-090-f-cab-0afc2832/": {
       "digest": "7290d4cdfb6dc15098c9fe42ed13bed91724f0d12b149b2092e5571e1c94791d",
@@ -3870,8 +3870,8 @@
       "modified": "2026-11-22T05:19:46.825Z"
     },
     "https://tractorvs.com/fr/tractors/mccormick-x6-414-p6-drive-223a867d/": {
-      "digest": "b870cb70c8e07e57b1b7015e089228aa8a9e32189b10867487c737ec9e304fea",
-      "modified": "2026-11-22T05:19:46.825Z"
+      "digest": "eaf913b213efd98039be5c7c39f7f7cadab6a0ddc7c986ac9f725c6258989fbf",
+      "modified": "2026-11-22T11:20:03.700Z"
     },
     "https://tractorvs.com/fr/tractors/mccormick-x6-415-p6-drive-5f2a733f/": {
       "digest": "91e91147e8f39b5f9130c5efd2018aea6839fe5881613077a2e0b1edd51fe9ef",
@@ -3922,8 +3922,8 @@
       "modified": "2026-11-22T05:19:46.825Z"
     },
     "https://tractorvs.com/fr/tractors/mccormick-x7-618-vt-drive-1f48d229/": {
-      "digest": "39523ada8b4d41ccf07e504bb3dc5618769b1a92ad84913fe241164c57b77a96",
-      "modified": "2026-11-22T05:19:46.825Z"
+      "digest": "5ff601487b2dfc95a6fbde594c6938d71fc77845dc446a2dbc607cd276608e1a",
+      "modified": "2026-11-22T11:20:03.700Z"
     },
     "https://tractorvs.com/fr/tractors/mccormick-x7-620-p6-drive-02992792/": {
       "digest": "552d95ff9fdd15111fcf6ce3d612146c6749cd2fc205b73004cc47d6f2a09bed",
@@ -3942,8 +3942,8 @@
       "modified": "2026-11-22T05:19:46.825Z"
     },
     "https://tractorvs.com/fr/tractors/mccormick-x7-624-vt-drive-30986b41/": {
-      "digest": "1666bae977b473aca35a39863d6ad01e9c79f05a21b67787aef31b9be1850f4d",
-      "modified": "2026-11-22T05:19:46.825Z"
+      "digest": "12f65140a07f8e2277f47019ac57128478ccb9cedc50e1ac5e7d2984e7709296",
+      "modified": "2026-11-22T11:20:03.700Z"
     },
     "https://tractorvs.com/fr/tractors/mccormick-x8-627-vt-drive-1ac6b86e/": {
       "digest": "eae8bf2b11a7b21362f344afdc6895a932a29e9c7553363f10b3a4b122014bcb",
@@ -4806,8 +4806,8 @@
       "modified": null
     },
     "https://tractorvs.com/hi/compare/": {
-      "digest": "1249ff025403ebf00fea786fbea7556e770586e6d5116e81de995a9ca9d3e781",
-      "modified": "2026-11-22T11:00:22.777Z"
+      "digest": "409ffb363eb9d8c97f7ef94c030a3cd80eccba3aa799c5eb50b50940e7ca9b7c",
+      "modified": "2026-11-22T11:20:03.700Z"
     },
     "https://tractorvs.com/hi/farm-advisor/": {
       "digest": "a0b5b994955a70eb8b47c7356b8858fc48f92c0ff7ca316b2f92c6e5b7cf0682",
@@ -4826,8 +4826,8 @@
       "modified": "2026-11-22T09:48:10.487Z"
     },
     "https://tractorvs.com/hi/tractors/": {
-      "digest": "2b50d9a5f27d1cade5d87f223615d420a28066a5747a1190a49bcd4a4c52d207",
-      "modified": "2026-11-22T11:00:22.777Z"
+      "digest": "2d2a945dd901bd784a0d48a718c2eb0d72a8fca43de62b86004ea04bb9d90a3f",
+      "modified": "2026-11-22T11:20:03.700Z"
     },
     "https://tractorvs.com/hi/tractors/agrale-4125-0b53e944/": {
       "digest": "89d390984132129c6705ac5f42d0a35f6d3e519fbf19cc0d8b6d848cd95ec5cb",
@@ -5370,8 +5370,8 @@
       "modified": "2026-11-22T05:19:46.825Z"
     },
     "https://tractorvs.com/hi/tractors/mccormick-x4-085-tm-2e498a4b/": {
-      "digest": "076f09c3a85992bedb2d7cb472000203cbb1755002e2a6aee4a76176654155cc",
-      "modified": "2026-11-22T05:19:46.825Z"
+      "digest": "ea2086cbc38afabab2b2ef3196fdbb37c0bbd51268ad50833c5700fba64c6b5d",
+      "modified": "2026-11-22T11:20:03.700Z"
     },
     "https://tractorvs.com/hi/tractors/mccormick-x4-090-f-cab-0afc2832/": {
       "digest": "33a8add70ae799288925565ee33351ec5fa432ce40def519fd3807621619ca8d",
@@ -5474,8 +5474,8 @@
       "modified": "2026-11-22T05:19:46.825Z"
     },
     "https://tractorvs.com/hi/tractors/mccormick-x6-414-p6-drive-223a867d/": {
-      "digest": "cff351264d486f3471eb70f639ed49cae116b9507ccfefb6bad41a99a6f01bb6",
-      "modified": "2026-11-22T05:19:46.825Z"
+      "digest": "4d1e1259041fd920ff119459248cbd32212a6e5be6899c378bb987d80ab467e8",
+      "modified": "2026-11-22T11:20:03.700Z"
     },
     "https://tractorvs.com/hi/tractors/mccormick-x6-415-p6-drive-5f2a733f/": {
       "digest": "3b3822261604c25880aa693cfaac8898daea119f003c13175ee67a2dc91725e7",
@@ -5526,8 +5526,8 @@
       "modified": "2026-11-22T05:19:46.825Z"
     },
     "https://tractorvs.com/hi/tractors/mccormick-x7-618-vt-drive-1f48d229/": {
-      "digest": "15f68e1f72fdc6c6bad4919bfd5988dd596af5826217974aaf38fcf4eb443cfe",
-      "modified": "2026-11-22T05:19:46.825Z"
+      "digest": "22e8d7f1354c07b1865e6fdb66bcb95cf6fbd03e3c8c7ae71660d62b3fe77b8f",
+      "modified": "2026-11-22T11:20:03.700Z"
     },
     "https://tractorvs.com/hi/tractors/mccormick-x7-620-p6-drive-02992792/": {
       "digest": "708e4084612bbcfa42434d203f4aa2fc0706e472f11a2ce6f6ca82001fe08fe6",
@@ -5546,8 +5546,8 @@
       "modified": "2026-11-22T05:19:46.825Z"
     },
     "https://tractorvs.com/hi/tractors/mccormick-x7-624-vt-drive-30986b41/": {
-      "digest": "12932276f5c4404d389881121a4d2a7fd5936a84023056ca13945f1fe61612db",
-      "modified": "2026-11-22T05:19:46.825Z"
+      "digest": "7a8c62d600f7ba8c05aff072e647e60ae28ab42773fe3fe16bb9fc1d5eebd8e8",
+      "modified": "2026-11-22T11:20:03.700Z"
     },
     "https://tractorvs.com/hi/tractors/mccormick-x8-627-vt-drive-1ac6b86e/": {
       "digest": "ea546d4dee5ff86c63c6389ab4edc053f95e0d309cdc86e2725171ac152f7179",
@@ -6390,8 +6390,8 @@
       "modified": null
     },
     "https://tractorvs.com/ja/compare/": {
-      "digest": "01de8a11247acba7ebdd142e3ff97ddffd6b53df13065dbbd4b0c393df30633e",
-      "modified": "2026-11-22T11:00:22.777Z"
+      "digest": "7d9d3e0193a65594675ee786fd98e4e08c0a79a0d59895224812cd87403c6d2e",
+      "modified": "2026-11-22T11:20:03.700Z"
     },
     "https://tractorvs.com/ja/farm-advisor/": {
       "digest": "6f0acfaf081aa9f2c39ae40f9b59b7739e65346b415a4f6ea810ec3214450883",
@@ -6410,8 +6410,8 @@
       "modified": "2026-11-22T09:48:10.487Z"
     },
     "https://tractorvs.com/ja/tractors/": {
-      "digest": "91268f61afa0d12e798659b7cc0146388f26f1ac0d6ff7f354b3a5b5f4a6b5e1",
-      "modified": "2026-11-22T11:00:22.777Z"
+      "digest": "f7ea481990d0de057119115fff3254b1a1e94bb544c78c680d35192543f4c874",
+      "modified": "2026-11-22T11:20:03.700Z"
     },
     "https://tractorvs.com/ja/tractors/agrale-4125-0b53e944/": {
       "digest": "4d0e45acacbeeb3c521ccff6fdb73475c3d2a6b25b8314d917e1fba5cfd09492",
@@ -6954,8 +6954,8 @@
       "modified": "2026-11-22T05:19:46.825Z"
     },
     "https://tractorvs.com/ja/tractors/mccormick-x4-085-tm-2e498a4b/": {
-      "digest": "54d23f7f7a3d575266a07edb65fa4abb2de9040427dab1cd1d78a45253e493a3",
-      "modified": "2026-11-22T05:19:46.825Z"
+      "digest": "1f74321ce6b31edb4c09907aea355c601e27f86d412ce726ee7c74978f51bdb9",
+      "modified": "2026-11-22T11:20:03.700Z"
     },
     "https://tractorvs.com/ja/tractors/mccormick-x4-090-f-cab-0afc2832/": {
       "digest": "d8485a279eacd599c66fad8c520dd305da754b60cdeb147939dc869b7600addf",
@@ -7058,8 +7058,8 @@
       "modified": "2026-11-22T05:19:46.825Z"
     },
     "https://tractorvs.com/ja/tractors/mccormick-x6-414-p6-drive-223a867d/": {
-      "digest": "8bc0fd5d97ca60acb4e3a1d92c55bd05176343219774b9f8ee598f1240c366ed",
-      "modified": "2026-11-22T05:19:46.825Z"
+      "digest": "7e56ef3c2415c64707eed4541c8d0c49974dd3a05f2a261fbefc70a4c18a63ff",
+      "modified": "2026-11-22T11:20:03.700Z"
     },
     "https://tractorvs.com/ja/tractors/mccormick-x6-415-p6-drive-5f2a733f/": {
       "digest": "0fd33a485669d1fe4b1ab0439c8d02ee4cac71f3c51a00ef42a2b54d9bb1f221",
@@ -7110,8 +7110,8 @@
       "modified": "2026-11-22T05:19:46.825Z"
     },
     "https://tractorvs.com/ja/tractors/mccormick-x7-618-vt-drive-1f48d229/": {
-      "digest": "c3c9cf191add504526f91044537a38b67a117f7e2f06f3cb0107645c10fc0b80",
-      "modified": "2026-11-22T05:19:46.825Z"
+      "digest": "c9da8b15efadacb9754e9c39a5d60fe21c531d4b4c1cf57fe4fba9a8502c88e5",
+      "modified": "2026-11-22T11:20:03.700Z"
     },
     "https://tractorvs.com/ja/tractors/mccormick-x7-620-p6-drive-02992792/": {
       "digest": "cbc590517ff275f06a911b05265d3e0956bb75631b85cfc265a59fd189dd033c",
@@ -7130,8 +7130,8 @@
       "modified": "2026-11-22T05:19:46.825Z"
     },
     "https://tractorvs.com/ja/tractors/mccormick-x7-624-vt-drive-30986b41/": {
-      "digest": "68ddc152ddacd00f6f5518e0a7393f164b48edb1a6609c18ae4bba46a57796d8",
-      "modified": "2026-11-22T05:19:46.825Z"
+      "digest": "d4b9d91bc93ad009f33a2d0d34cc49aa1d50b7fed1af956760386ad7a4e4df83",
+      "modified": "2026-11-22T11:20:03.700Z"
     },
     "https://tractorvs.com/ja/tractors/mccormick-x8-627-vt-drive-1ac6b86e/": {
       "digest": "2a591c1ac0365adb10b3258357d929439845568b47824fc125d667bf3e86aa27",
@@ -7982,8 +7982,8 @@
       "modified": null
     },
     "https://tractorvs.com/pt-br/compare/": {
-      "digest": "f21dd684fbc209acd87b36c0c153a221ee2cca5779112acddc40e1cf049120d7",
-      "modified": "2026-11-22T11:00:22.777Z"
+      "digest": "7789a130d484444ff1d804b591aa83a389a0e6c41d87fc9c2f4b4a90bcdf2469",
+      "modified": "2026-11-22T11:20:03.700Z"
     },
     "https://tractorvs.com/pt-br/farm-advisor/": {
       "digest": "88650f3e64bea75375a37a4ed6c878a91926c25949d7434e05197284a2e849dc",
@@ -8002,8 +8002,8 @@
       "modified": "2026-11-22T09:48:10.487Z"
     },
     "https://tractorvs.com/pt-br/tractors/": {
-      "digest": "5ed248b048ef80376fd8124d9c35e22706e00b46a8b62abfef69171532686e56",
-      "modified": "2026-11-22T11:00:22.777Z"
+      "digest": "5b97ec92970bab8688b9af9dad5c7d6cc1e88c808e1012bb1bd922afe39303c0",
+      "modified": "2026-11-22T11:20:03.700Z"
     },
     "https://tractorvs.com/pt-br/tractors/agrale-4125-0b53e944/": {
       "digest": "e5c8d39f408608dc6a8a09ecfa0571853acddde107e7a1ee3e2dfaa81c5f2393",
@@ -8546,8 +8546,8 @@
       "modified": "2026-11-22T05:19:46.825Z"
     },
     "https://tractorvs.com/pt-br/tractors/mccormick-x4-085-tm-2e498a4b/": {
-      "digest": "411688835ff3a22b23065844309bbe9bcf95b51f2de7b7f7d3635f6ddc0efd55",
-      "modified": "2026-11-22T05:19:46.825Z"
+      "digest": "cb38a0c87bb0ab15a28346133e0d2332fb7362ebc0613f057ce4c874b5c8e536",
+      "modified": "2026-11-22T11:20:03.700Z"
     },
     "https://tractorvs.com/pt-br/tractors/mccormick-x4-090-f-cab-0afc2832/": {
       "digest": "c4956bb65dae7073191f3c8a928327d32e9f5d2e7758908b2b76f653230b391f",
@@ -8650,8 +8650,8 @@
       "modified": "2026-11-22T05:19:46.825Z"
     },
     "https://tractorvs.com/pt-br/tractors/mccormick-x6-414-p6-drive-223a867d/": {
-      "digest": "a36d9a006bbec55d4d6547991dbf3d8c950abcc25fac98429b687d873cfa365a",
-      "modified": "2026-11-22T05:19:46.825Z"
+      "digest": "b80c75884ff54e707f39c0ea3f4b87b0f24aafa520f99dcef9a84d6c4aee3e4a",
+      "modified": "2026-11-22T11:20:03.700Z"
     },
     "https://tractorvs.com/pt-br/tractors/mccormick-x6-415-p6-drive-5f2a733f/": {
       "digest": "029bad6eda54140181194b87bbc63a9a75ca1126bda560718ab9f4c9da15a18a",
@@ -8702,8 +8702,8 @@
       "modified": "2026-11-22T05:19:46.825Z"
     },
     "https://tractorvs.com/pt-br/tractors/mccormick-x7-618-vt-drive-1f48d229/": {
-      "digest": "1280b9a9c20dff7aa447478d3ef2be0ac00d7e9f8ceb2f39c6d06ae1fabebb39",
-      "modified": "2026-11-22T05:19:46.825Z"
+      "digest": "8db90fd8e8c87dfc9c37ab679d169d5de044ea207cda1e614a48cc3d02ebbc86",
+      "modified": "2026-11-22T11:20:03.700Z"
     },
     "https://tractorvs.com/pt-br/tractors/mccormick-x7-620-p6-drive-02992792/": {
       "digest": "ca78011b7075749a9a31dc61126bca94417cfd83a0333c57749de4bbf5806196",
@@ -8722,8 +8722,8 @@
       "modified": "2026-11-22T05:19:46.825Z"
     },
     "https://tractorvs.com/pt-br/tractors/mccormick-x7-624-vt-drive-30986b41/": {
-      "digest": "3c472b581d61c17e9192bb8069606121e4e470f4be024ac595e00d8f3d062c56",
-      "modified": "2026-11-22T05:19:46.825Z"
+      "digest": "8f085d42f0bd86f05464f47a3fcbabbfb5f1a7a8985684a091368bab32da7db6",
+      "modified": "2026-11-22T11:20:03.700Z"
     },
     "https://tractorvs.com/pt-br/tractors/mccormick-x8-627-vt-drive-1ac6b86e/": {
       "digest": "ffaa01403356c042bc85123ce496c2765227f0124678119c6c8ef6d17fd7f2e4",
@@ -9570,8 +9570,8 @@
       "modified": null
     },
     "https://tractorvs.com/ru/compare/": {
-      "digest": "be5059e091675414864a8518bb00190eeba3a637b3a5a4e79e504c13e045dbfe",
-      "modified": "2026-11-22T11:00:22.777Z"
+      "digest": "edc2cdffeb1def08b5c7a3f301c964cd190153a3b21edbb9191cbfd7240a3ff6",
+      "modified": "2026-11-22T11:20:03.700Z"
     },
     "https://tractorvs.com/ru/farm-advisor/": {
       "digest": "eecbaceca024d6e9e00178cd92233d90721e382dba7f5dc72b269fa1c1b4dd46",
@@ -9590,8 +9590,8 @@
       "modified": "2026-11-22T09:48:10.487Z"
     },
     "https://tractorvs.com/ru/tractors/": {
-      "digest": "ce3aa280532eb3532b433ffa4675ea3ab2ad23d8bfd264c947aecde782279341",
-      "modified": "2026-11-22T11:00:22.777Z"
+      "digest": "8e5b911a35476f5984cd7e568950d1d1cdbf43d03e6fc991bf26db09f9dc0262",
+      "modified": "2026-11-22T11:20:03.700Z"
     },
     "https://tractorvs.com/ru/tractors/agrale-4125-0b53e944/": {
       "digest": "a743211ff921d260a622929d99a49654ddf88289776922ae4c70310ed030ae99",
@@ -10134,8 +10134,8 @@
       "modified": "2026-11-22T05:19:46.825Z"
     },
     "https://tractorvs.com/ru/tractors/mccormick-x4-085-tm-2e498a4b/": {
-      "digest": "9a711649c549938e763e3f226f11afe13794bae2dd61efe0b21136a840badc39",
-      "modified": "2026-11-22T05:19:46.825Z"
+      "digest": "335046650b4d0dae6f3ae6cccfd5c121904a0bcf0d5b166ebc82395f1fa66630",
+      "modified": "2026-11-22T11:20:03.700Z"
     },
     "https://tractorvs.com/ru/tractors/mccormick-x4-090-f-cab-0afc2832/": {
       "digest": "89fe63f373d7354b11e7b2cefeddc7e155119ea4d6108b3308447502434c6136",
@@ -10238,8 +10238,8 @@
       "modified": "2026-11-22T05:19:46.825Z"
     },
     "https://tractorvs.com/ru/tractors/mccormick-x6-414-p6-drive-223a867d/": {
-      "digest": "32d6af15bc29b20127c3ad1bf27823b20aa90df78482dd7297742f1261d8492a",
-      "modified": "2026-11-22T05:19:46.825Z"
+      "digest": "0cf94d6621e20ed39da47a058925b7e49a1b8367b00164cc13293132825eeb76",
+      "modified": "2026-11-22T11:20:03.700Z"
     },
     "https://tractorvs.com/ru/tractors/mccormick-x6-415-p6-drive-5f2a733f/": {
       "digest": "60989689f4acca21373ec9db2f3f82b70f2a0c0491a374f893c48cbe4d06c904",
@@ -10290,8 +10290,8 @@
       "modified": "2026-11-22T05:19:46.825Z"
     },
     "https://tractorvs.com/ru/tractors/mccormick-x7-618-vt-drive-1f48d229/": {
-      "digest": "8c519dd25f87adbb77fa0b8458e776f4f74e8cf448e39eb02f07b674748c3117",
-      "modified": "2026-11-22T05:19:46.825Z"
+      "digest": "911492c09f34da6a3e81c41b11d8e861791abfd67eef24ca7d5b135febdbb9e4",
+      "modified": "2026-11-22T11:20:03.700Z"
     },
     "https://tractorvs.com/ru/tractors/mccormick-x7-620-p6-drive-02992792/": {
       "digest": "234fd52c2836425268c312dc7619304d9649efe711f5fb16fe3527ecd4c82cbe",
@@ -10310,8 +10310,8 @@
       "modified": "2026-11-22T05:19:46.825Z"
     },
     "https://tractorvs.com/ru/tractors/mccormick-x7-624-vt-drive-30986b41/": {
-      "digest": "24f79d2f7f83d3fb22d3f9e4ade82f61c33879a2bc010c3a148c98b80d135038",
-      "modified": "2026-11-22T05:19:46.825Z"
+      "digest": "a20cb47dc67064b185447764aca5282d8d2b2694e59089dc429c7507521eff86",
+      "modified": "2026-11-22T11:20:03.700Z"
     },
     "https://tractorvs.com/ru/tractors/mccormick-x8-627-vt-drive-1ac6b86e/": {
       "digest": "1050a1d5cbad8ff95f7f0f8d2721dcc6af9971a8bb043879df99a51a223164fc",
@@ -11162,8 +11162,8 @@
       "modified": "2026-11-22T08:02:35.845Z"
     },
     "https://tractorvs.com/tr/compare/": {
-      "digest": "588b3a5dc7ad0a6a78a7d6c4735126d981f95502a4833f333a5198ccaeeaf98f",
-      "modified": "2026-11-22T11:00:22.777Z"
+      "digest": "fda9d9f023fa2a0a4914bf6e7a71615bc52b4d300853d6ebc3677575972a0546",
+      "modified": "2026-11-22T11:20:03.700Z"
     },
     "https://tractorvs.com/tr/farm-advisor/": {
       "digest": "a84b62b372e654aee19ce03d22d443555d2cddba0d12068243936752ae7dc60d",
@@ -11202,8 +11202,8 @@
       "modified": "2026-11-22T09:48:10.487Z"
     },
     "https://tractorvs.com/tr/tractors/": {
-      "digest": "36c36489d88e17e5aebdccdc4bfe25dd068d618c3b5dfa09254d2f5d7c88f82f",
-      "modified": "2026-11-22T11:00:22.777Z"
+      "digest": "665e3ba41d90a5cccb1d5c731c1fccc1c0ec5dc54f98d8ccc89fd6486b277afc",
+      "modified": "2026-11-22T11:20:03.700Z"
     },
     "https://tractorvs.com/tr/tractors/agrale-4125-0b53e944/": {
       "digest": "b877aec9c77214e168c69ab239caf1ba006d9c27f2ab18fec9179791bc08112d",
@@ -11746,8 +11746,8 @@
       "modified": "2026-11-22T05:19:46.825Z"
     },
     "https://tractorvs.com/tr/tractors/mccormick-x4-085-tm-2e498a4b/": {
-      "digest": "20f6b5af4331d22187832540476a422bbb5951703dde4bebcf31cbad92e9bf07",
-      "modified": "2026-11-22T05:19:46.825Z"
+      "digest": "9715bf110a26e0f5e34958a5bb5889f8b507e224c98e614e408e7272b13fa4a1",
+      "modified": "2026-11-22T11:20:03.700Z"
     },
     "https://tractorvs.com/tr/tractors/mccormick-x4-090-f-cab-0afc2832/": {
       "digest": "cebd1176c28fd7fd3ebfa1148b675d31cf63e64d2862fe7fb5e26fe86d83806f",
@@ -11850,8 +11850,8 @@
       "modified": "2026-11-22T05:19:46.825Z"
     },
     "https://tractorvs.com/tr/tractors/mccormick-x6-414-p6-drive-223a867d/": {
-      "digest": "9d457e8804495c377ba7f6dea45ef0470990898a9e036339ad7f13edb06b8a01",
-      "modified": "2026-11-22T05:19:46.825Z"
+      "digest": "5c3b3b25ee2143863c15726fa1da6b20c389fc7dce9a188a8b162d7c04924317",
+      "modified": "2026-11-22T11:20:03.700Z"
     },
     "https://tractorvs.com/tr/tractors/mccormick-x6-415-p6-drive-5f2a733f/": {
       "digest": "0b083dc74b73e27dcb9b7a7f5d2090c4a925654b1a0864bce410168deb53545f",
@@ -11902,8 +11902,8 @@
       "modified": "2026-11-22T05:19:46.825Z"
     },
     "https://tractorvs.com/tr/tractors/mccormick-x7-618-vt-drive-1f48d229/": {
-      "digest": "7b5ed4d5ea8dbb0957995dbe7e7cc94f9ae51fc1ebf5529f2463fddcd6c3fe90",
-      "modified": "2026-11-22T05:19:46.825Z"
+      "digest": "613fe9306a10c987bb94e7e5638912fa2d4e15f1947654a0c0d8093bc8a01139",
+      "modified": "2026-11-22T11:20:03.700Z"
     },
     "https://tractorvs.com/tr/tractors/mccormick-x7-620-p6-drive-02992792/": {
       "digest": "cb9f371f8384a5cbbed8f5929ad0c4baf1bf47d704c4f85aa72adc796bbbbff9",
@@ -11922,8 +11922,8 @@
       "modified": "2026-11-22T05:19:46.825Z"
     },
     "https://tractorvs.com/tr/tractors/mccormick-x7-624-vt-drive-30986b41/": {
-      "digest": "706b4327deec2a61e97e79bfc073e5d2bea81f5eed7cb61c0196359d39832c4d",
-      "modified": "2026-11-22T05:19:46.825Z"
+      "digest": "bc69fa3c555324b2e79f1e63ac7a58294d01883ee6a321b8ddd085bafe854499",
+      "modified": "2026-11-22T11:20:03.700Z"
     },
     "https://tractorvs.com/tr/tractors/mccormick-x8-627-vt-drive-1ac6b86e/": {
       "digest": "fe8c41800ab4e16f5829d68eaca7d7c01edf27e7c7b87da0e85e97db1613a015",
@@ -12758,8 +12758,8 @@
       "modified": "2026-11-21T19:47:11.499Z"
     },
     "https://tractorvs.com/tractors/": {
-      "digest": "29abd575c064d2c9349f47983a0e3836e7362f6644aac5509a600d4bce212bff",
-      "modified": "2026-11-22T11:00:22.777Z"
+      "digest": "025be9d49069b4e1a4d1384d70c29a71aebf7e155a0bb70afdb78afe1801abcf",
+      "modified": "2026-11-22T11:20:03.700Z"
     },
     "https://tractorvs.com/tractors/agrale-4125-0b53e944/": {
       "digest": "7cb5388368ca5cebb9b7f9b51467ed0cde27248e0c1689c41cd6c15909d42679",
@@ -13302,8 +13302,8 @@
       "modified": "2026-11-22T05:19:46.825Z"
     },
     "https://tractorvs.com/tractors/mccormick-x4-085-tm-2e498a4b/": {
-      "digest": "af5d1411d4455beaed68004f33891a38ec87fa77621d90c574c5982b5ea6314d",
-      "modified": "2026-11-22T05:19:46.825Z"
+      "digest": "4fef70e6e6c75da839d51cb6e5d54f1fcc85f969a46b5430a425ab15f06ffe7e",
+      "modified": "2026-11-22T11:20:03.700Z"
     },
     "https://tractorvs.com/tractors/mccormick-x4-090-f-cab-0afc2832/": {
       "digest": "05720fec4709fe663105c1785a86c560e913f6d2af84d9072c524f11468ec015",
@@ -13406,8 +13406,8 @@
       "modified": "2026-11-22T05:19:46.825Z"
     },
     "https://tractorvs.com/tractors/mccormick-x6-414-p6-drive-223a867d/": {
-      "digest": "49e279e1a2ab041d1a65e382e0caab5a57c27b69341676b27f48b03381f112d4",
-      "modified": "2026-11-22T05:19:46.825Z"
+      "digest": "3be3a4896537ed1c43ddd7d880b0e782b83a635e4e8c9874acb07aba0d6ef41d",
+      "modified": "2026-11-22T11:20:03.700Z"
     },
     "https://tractorvs.com/tractors/mccormick-x6-415-p6-drive-5f2a733f/": {
       "digest": "10567c58de5e87ab3c7f4317f10713048b85ffb0d2d556663f8364ef13790f73",
@@ -13458,8 +13458,8 @@
       "modified": "2026-11-22T05:19:46.825Z"
     },
     "https://tractorvs.com/tractors/mccormick-x7-618-vt-drive-1f48d229/": {
-      "digest": "37822e2039a0ea215d8cd12e246d8e0e80e8bd278f7be275651af6693f230d2d",
-      "modified": "2026-11-22T05:19:46.825Z"
+      "digest": "de5a664fd23f1b2498e3513b803a580419c19135282c955ed0002f58b59c12fe",
+      "modified": "2026-11-22T11:20:03.700Z"
     },
     "https://tractorvs.com/tractors/mccormick-x7-620-p6-drive-02992792/": {
       "digest": "434c3ce55972a8c0c33ccaf6e437157f1d5354f8a56a25e08c6bad4120c0a846",
@@ -13478,8 +13478,8 @@
       "modified": "2026-11-22T05:19:46.825Z"
     },
     "https://tractorvs.com/tractors/mccormick-x7-624-vt-drive-30986b41/": {
-      "digest": "f1a49f3544eaebfb4e0ccac9a00bc1f16b3a52dda1e51a75013f11b6eb8f5cf8",
-      "modified": "2026-11-22T05:19:46.825Z"
+      "digest": "c0dc6761a865ca43d4137aff8f8c0daa6639bdeac05b7166082f789a6c72bc2a",
+      "modified": "2026-11-22T11:20:03.700Z"
     },
     "https://tractorvs.com/tractors/mccormick-x8-627-vt-drive-1ac6b86e/": {
       "digest": "3fdd0cb9571bfecc0b99efba3d45d613a737c0a3aec1b1a1ad5109c7ff5bb742",
@@ -14322,8 +14322,8 @@
       "modified": null
     },
     "https://tractorvs.com/zh/compare/": {
-      "digest": "2b5b82c8afe81a573077f7974f98acbbbfe8f9df7f9905a9062992bf12bc5eaa",
-      "modified": "2026-11-22T11:00:22.777Z"
+      "digest": "d15dc3a706b32c236399598d1e11e36c8307e071b2ba340fe6bcf37b8ce93a61",
+      "modified": "2026-11-22T11:20:03.700Z"
     },
     "https://tractorvs.com/zh/farm-advisor/": {
       "digest": "e805869cda955f32dd0b731ede3203e689f2f16572511bce73f9852f34cc03ce",
@@ -14342,8 +14342,8 @@
       "modified": "2026-11-22T09:48:10.487Z"
     },
     "https://tractorvs.com/zh/tractors/": {
-      "digest": "becf109d64553c2817eb926762106eb875712d9c04fc9b2e1e69d6a18053431c",
-      "modified": "2026-11-22T11:00:22.777Z"
+      "digest": "9de30d11fd56c1928550c8d71bf6ff2a031badb54c3f972f871843056e794a2a",
+      "modified": "2026-11-22T11:20:03.700Z"
     },
     "https://tractorvs.com/zh/tractors/agrale-4125-0b53e944/": {
       "digest": "e6ab843089d45ba67da807eceb735737086451a3597de35ae307039fd8c1c4e7",
@@ -14886,8 +14886,8 @@
       "modified": "2026-11-22T09:58:15.078Z"
     },
     "https://tractorvs.com/zh/tractors/mccormick-x4-085-tm-2e498a4b/": {
-      "digest": "33a2293e6a55e45037d19421d687d66a22e77fb2e2a4e9a26d84b207c5b45440",
-      "modified": "2026-11-22T09:58:15.078Z"
+      "digest": "b5407a9dacf5f88342255049498defb1b7d922b964129d2466cd3cb5d3fada69",
+      "modified": "2026-11-22T11:20:03.700Z"
     },
     "https://tractorvs.com/zh/tractors/mccormick-x4-090-f-cab-0afc2832/": {
       "digest": "26750c5bf0981bbb0d50e5974c3eba8f6694eea48d1513966a75a6a517588cb8",
@@ -14990,8 +14990,8 @@
       "modified": "2026-11-22T09:58:15.078Z"
     },
     "https://tractorvs.com/zh/tractors/mccormick-x6-414-p6-drive-223a867d/": {
-      "digest": "5bbd66ff3625079a9be08174351ef16b5a31ff602070659c190574b6357d166d",
-      "modified": "2026-11-22T09:58:15.078Z"
+      "digest": "a5a84f7c69f04dc43437959f49cfdf07c1c0a60d1654d2ec619ea709db42d12d",
+      "modified": "2026-11-22T11:20:03.700Z"
     },
     "https://tractorvs.com/zh/tractors/mccormick-x6-415-p6-drive-5f2a733f/": {
       "digest": "14b5fdf14d2f8739546c735dc1dbaa48dab804cc604be9f66b07bd970f6cea04",
@@ -15042,8 +15042,8 @@
       "modified": "2026-11-22T09:58:15.078Z"
     },
     "https://tractorvs.com/zh/tractors/mccormick-x7-618-vt-drive-1f48d229/": {
-      "digest": "ade4e148caccf19a37429c58125c252723ad79e7f0b9176fb38fa58e796d6e13",
-      "modified": "2026-11-22T09:58:15.078Z"
+      "digest": "00102d861d644fd271c6383ad4b933fcb97cd94eed716fdbc9fe5626c62a5478",
+      "modified": "2026-11-22T11:20:03.700Z"
     },
     "https://tractorvs.com/zh/tractors/mccormick-x7-620-p6-drive-02992792/": {
       "digest": "4cd0d12ccd28dc3d7e9b556c3fd564935d45e5f4b98a26611f33c18763255121",
@@ -15062,8 +15062,8 @@
       "modified": "2026-11-22T09:58:15.078Z"
     },
     "https://tractorvs.com/zh/tractors/mccormick-x7-624-vt-drive-30986b41/": {
-      "digest": "9d0e52997f601d0eaf74274e41172fd5524f417f731ca93671781612a07c087f",
-      "modified": "2026-11-22T09:58:15.078Z"
+      "digest": "2a668a19ee2535a2c754e92b78e1faaf22a681c391a5dc9fe262a314e6939563",
+      "modified": "2026-11-22T11:20:03.700Z"
     },
     "https://tractorvs.com/zh/tractors/mccormick-x8-627-vt-drive-1ac6b86e/": {
       "digest": "ddf7521338463ebb37866103939ebbe4422ea7b750ef4ff3d883ed6a9c6c41bd",
