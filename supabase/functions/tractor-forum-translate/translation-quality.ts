@@ -7,7 +7,7 @@ const MONTHS: ReadonlyArray<readonly [string, number]> = [
 ];
 
 export const TRANSLATION_RESUME_FIELDS =
- "topic_id,locale,title,body,state,qa_notes,source_hash,model,reviewed_by_model,seo_approved";
+ "topic_id,locale,title,body,state,qa_notes,source_hash,provider,model,reviewed_by_model,seo_approved";
 
 function numberTokens(text:string): string[] {
  return [...text.matchAll(/(?<![A-Za-z])\d+(?:[.,]\d+)*/g)]
