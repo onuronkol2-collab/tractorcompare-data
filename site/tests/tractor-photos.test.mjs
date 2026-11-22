@@ -14,7 +14,7 @@ const tractor=(brand_name,model_name)=>({
   engine:null,transmission:null,drivetrain:null,weight_kg:null,specifications:[]
 });
 test("only exact matching tractor model identity receives a verified photo",()=>{
-  assert.equal(APPROVED_TRACTOR_PHOTOS.length,94);
+  assert.equal(APPROVED_TRACTOR_PHOTOS.length,97);
   assert.equal(tractorPhotos(tractor("Belarus","82.1")).length,4);
   assert.equal(tractorPhotos(tractor("Belarus","80.1")).length,1);
   assert.equal(tractorPhotos(tractor("Belarus","132N")).length,1);
@@ -695,4 +695,85 @@ test("Wikimedia-only upstream guard rejects arbitrary resize steps and offsite a
   assert.equal(isSupportedCommonsPhotoOrigin(stem+"1920px-Example.jpg"),true);
   assert.equal(isSupportedCommonsPhotoOrigin(
     "https://upload.wikimedia.org/wikipedia/commons/5/53/Example.jpg"),true);
+});
+
+
+test("Three visibly verified TYM 2500L, 6225C and T78 Commons photos publish solely on their exact variant IDs with ten-locale image rights",()=>{
+  const documentation=JSON.parse(readFileSync(new URL("../docs/photo-curated-tym-exact-three-20261122.json",import.meta.url),"utf8"));
+  const integrity=JSON.parse(readFileSync(new URL("../docs/photo-import-evidence-tym-exact-three-20261122.json",import.meta.url),"utf8"));
+  const approved=JSON.parse(readFileSync(new URL("../docs/photo-release-evidence-tym-exact-three-20261122.json",import.meta.url),"utf8"));
+  assert.equal(documentation.photos.length,3);
+  assert.equal(integrity.images.length,3);
+  assert.equal(approved.photos.length,3);
+  assert.equal(approved.visualReviewCompleted,true);
+  assert.equal(new Set(documentation.photos.map(x=>x.tractorId)).size,3);
+  const matched=new Set();
+  for(const row of documentation.photos){
+    const relevant=tractor("TYM",row.model);
+    relevant.tractor_id=row.tractorId;
+    relevant.variant=row.variant;
+    const photos=tractorPhotos(relevant);
+    assert.equal(photos.length,1,"Exactly one source photo for the model-specific published UUID "+row.tractorId);
+    const p=photos[0];
+    assert.equal(p.tractorId,row.tractorId);
+    assert.equal(p.fileId,row.fileId);
+    assert.equal(p.sourcePage,row.sourcePage);
+    assert.equal(p.photographer,row.photographer);
+    assert.equal(p.copyrightOwner,row.photographer);
+    assert.equal(p.copyrightClaimUrl,row.sourcePage);
+    assert.equal(p.copyrightEvidence,"commons-own-work-self-license");
+    assert.equal(p.configurationExact,false,"A showroom photo must not assert precise equipment trim");
+    assert.equal(p.licenseName,"CC BY-SA 4.0");
+    assert.equal(p.licenseUrl,row.licenseUrl);
+    const audit=approved.photos.find(x=>x.fileId===p.fileId);
+    assert.ok(audit?.modelBadgeVisible,"Manual image review must see the exact physical model badge");
+    assert.equal(audit.tractorId,p.tractorId);
+    assert.equal(audit.photographer,p.photographer);
+    const stage=integrity.images.find(x=>x.fileId===p.fileId);
+    assert.ok(stage);
+    assert.equal(stage.photographer,p.photographer);
+    assert.equal(stage.license,p.licenseName);
+    assert.equal(stage.derivatives.length,3);
+    for(const d of stage.derivatives){
+      assert.ok([480,960,1920].includes(d.width));
+      const filename="/images/tractors/"+d.file;
+      assert.ok([p.thumbUrl,p.displayUrl,p.fullUrl].includes(filename));
+      const bytes=readFileSync(new URL("../public"+filename,import.meta.url));
+      assert.equal(bytes.length,d.bytes,filename);
+      assert.equal(createHash("sha256").update(bytes).digest("hex"),d.sha256,filename);
+      assert.equal(bytes[0],0xff);
+      assert.equal(bytes[1],0xd8);
+      assert.equal(bytes[bytes.length-2],0xff);
+      assert.equal(bytes[bytes.length-1],0xd9);
+    }
+    for(const locale of LOCALES){
+      const graph=modelStructuredData(relevant,locale,"https://tractorvs.com/")["@graph"];
+      const image=graph.find(node=>node["@type"]==="ImageObject");
+      assert.ok(image,"ImageObject is required in "+locale+" for "+row.model);
+      assert.equal(image.creator.name,p.photographer);
+      assert.equal(image.copyrightHolder.name,p.photographer);
+      assert.equal(image.license,p.licenseUrl);
+      assert.equal(image.acquireLicensePage,p.sourcePage);
+      assert.ok(image.contentUrl.endsWith(p.fullUrl));
+      assert.ok(image.thumbnailUrl.endsWith(p.displayUrl));
+      assert.equal(graph.find(node=>node["@type"]==="WebPage").primaryImageOfPage["@id"],image["@id"]);
+    }
+    matched.add(p.fileId);
+  }
+  assert.equal(matched.size,3);
+  // Do not add photos to the wrong existing variant, even when the family model_name is shared.
+  for(const [model,otherId] of [
+    ["T2026","37c62cc5-b235-41a6-a2f0-4a1260cf4884"],
+    ["T2026","d8bd757c-17ae-4e98-9a50-1670b2574185"],
+    ["T4058","82fbcc0b-d0b2-4fa2-940b-f8404c384840"],
+    ["T4058","3e3c6766-5760-47d5-bcac-10a53bf8ccd2"],
+    ["T4058","70765008-bf4c-42be-aadf-570d1f65c7e9"],
+    ["T5075","1a2b3c4d-1234-5678-90ab-abcdef012345"],
+  ]){
+    const candidate=tractor("TYM",model);
+    candidate.tractor_id=otherId;
+    assert.equal(tractorPhotos(candidate).length,0,"No mismatch should show a photo: "+model+" "+otherId);
+    const graph=modelStructuredData(candidate,"en","https://tractorvs.com/")["@graph"];
+    assert.equal(graph.some(node=>node["@type"]==="ImageObject"),false);
+  }
 });
