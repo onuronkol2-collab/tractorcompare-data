@@ -96,3 +96,36 @@ test("missing one child, duplicate child, unexpected child or malformed XML fail
   assert.throws(()=>extractPublishedUrls(ctx.dist),/Missing generated urlset/);
  }finally{rmSync(ctx.root,{recursive:true,force:true});}
 });
+
+
+test("translation QA spec identity attributes never change significant content hashes",()=>{
+  const original=sample(b,'<article class="model-spec-card"><h4>Engine rated power</h4><p>95 HP · ECE R120</p></article>');
+  const id="a02c4df2-c719-5a26-abb2-6195cb8e23e5";
+  const annotated=original.replace('class="model-spec-card"','class="model-spec-card" data-spec-id="'+id+'"');
+  const initial=significantContentDigest(original,b);
+  assert.equal(significantContentDigest(annotated,b),initial,
+    "A nonvisible and valid QA spec identity cannot manufacture a new sitemap lastmod");
+  assert.notEqual(significantContentDigest(annotated.replace("95 HP","105 HP"),b),initial,
+    "Changing a real manufacturer value MUST change the content digest");
+  assert.notEqual(significantContentDigest(annotated.replace("Engine rated power","Engine maximum power"),b),initial,
+    "Changing a meaningful technical heading MUST change the content digest");
+  assert.notEqual(significantContentDigest(annotated.replace("ECE R120","ISO 14396"),b),initial,
+    "Changing technical measurement evidence MUST change the content digest");
+  assert.notEqual(significantContentDigest(annotated.replace(id,"not-a-real-spec-id"),b),initial,
+    "Unverified source identifiers cannot be silently ignored");
+  assert.notEqual(significantContentDigest(annotated.replace('class="model-spec-card"','class="unrelated-card"'),b),initial,
+    "Identity normalization is limited to the real spec-card class");
+  assert.notEqual(significantContentDigest(annotated.replace(
+    'data-spec-id="'+id+'"','data-spec-id="'+id+'" data-source="changed"'
+  ),b),initial,"Other attributes are not exempt");
+});
+
+test("mass visible technical content changes still stop sitemap lastmod reconciliation",()=>{
+  const previous={version:1,pages:{}},pages=[];
+  for(let n=0;n<120;n++){
+    const url=ORIGIN+"/tr/tractors/audited-model-"+n+"/";
+    previous.pages[url]={digest:hash("original "+n),modified:null};
+    pages.push([url,hash("different visible technical content "+n)]);
+  }
+  assert.throws(()=>deriveHistory({pages,previous,now:date2,minPages:100}),/Unusually broad rendered content changes/);
+});
