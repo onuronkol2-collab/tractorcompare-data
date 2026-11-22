@@ -116,6 +116,6 @@ test("original citations and actual translation scope remain honest",()=>{
  assert.match(choose,/guideTranslation\(lang\)/);
  assert.match(review,/reviewedLanguage\(lang\)/);
  assert.match(choose,/sources\.map/);
- assert.match(review,/citation:\[manufacturerUrl,brochureUrl,cabinUrl,twoWheelUrl\]/);
+ assert.match(review,/citation:\[manufacturerUrl,brochureUrl,cabinUrl,twoWheelUrl,btManufacturerUrl\]/);
  assert.match(deepDive,/availableLocales=\{\["en","tr"\]\}/);
 });
