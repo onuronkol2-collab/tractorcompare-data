@@ -41,7 +41,7 @@ export function reviewCommonsCopyrightWikitext(wikitext,photo){
       &&(pos+needle.length===haystack.length||!(/[\p{L}\p{N}]/u).test(haystack[pos+needle.length])));
   });
   const originalUploaderAuthor=photo.fileId!=="belarus-132n-picture30-2011" ||
-    /\|\s*author\s*=\s*\{\{\s*user at project\s*\|\s*Picture30\s*\|\s*wikipedia\s*\|\s*ru\s*\}\}/i.test(body);
+    /(?:^|\n)\s*\|\s*author\s*=\s*\{\{\s*user at project\s*\|\s*Picture30\s*\|\s*wikipedia\s*\|\s*ru\s*\}\}/i.test(body);
   const sourceUrlSame=photo.copyrightClaimUrl===photo.sourcePage
     && /^https:\/\/commons\.wikimedia\.org\/wiki\/File:[^?#]+$/.test(photo.sourcePage);
   const hasApprovedLicense=photo.licenseUrl==="https://creativecommons.org/licenses/by-sa/4.0/" ||
