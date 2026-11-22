@@ -59,25 +59,25 @@ test("all six first-party static images match exact expected bytes, SHA and MIME
  }
  assert.equal(verified,6);
 });
-test("unguarded arbitrary 720 formats and other approved model files stay inaccessible",()=>{
+test("unguarded arbitrary 720 formats and held unpublished model files stay inaccessible",()=>{
  for(const path of [
   "/images/tractors/unknown-720.jpg",
   "/images/tractors/unknown-720.webp",
-  "/images/tractors/valtra-n135-beef7a3c-720.jpg",
-  "/images/tractors/valtra-n135-beef7a3c-720.webp",
+  "/images/tractors/kubota-m5-112-c3be6b9d-720.jpg",
+  "/images/tractors/kubota-m5-112-c3be6b9d-720.webp",
   "/images/tractors/belarus-80-1-nikolai-bulykin-kosmos-2026-640.webp",
   "/images/tractors/belarus-80-1-nikolai-bulykin-kosmos-2026-720.avif",
   "/images/tractors/../admin/720.jpg",
  ]){
   assert.equal(approvedLocalMobileAsset(path),null,path);
  }
- assert.equal(approvedMobilePhotoFormats("valtra-n135-beef7a3c"),null);
+ assert.equal(approvedMobilePhotoFormats("kubota-m5-112-c3be6b9d"),null);
  assert.match(worker,/approvedLocalMobileAsset\(url\.pathname\)/);
  assert.match(worker,/env\.ASSETS\.fetch\(request\)/);
  assert.match(worker,/localMobile\.mime/);
  assert.match(worker,/resolveApprovedPhotoSource\(url\.pathname\)/);
 });
-test("picture uses only 3 local 720px WebPs on mobile <=2x, retains crawlable JPEG and fullscreen",()=>{
+test("picture uses allowlisted local 720px WebP only on mobile <=2x, retains crawlable JPEG and fullscreen",()=>{
  assert.match(component,/<picture>/);
  assert.match(component,/type="image\/webp"/);
  assert.match(component,/max-resolution:2dppx/);
