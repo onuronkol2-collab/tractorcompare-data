@@ -668,7 +668,7 @@ const schema=indexable?{
     if(!countLabel.hidden)countLabel.textContent=String(count)+" "+(filters?.dataset.matchingLabel||"");
    }
    if(clear)clear.hidden=!visibleList||!allFiltered;
-   if(viewHint)viewHint.textContent=copy[view+"Hint"]||"";
+   if(viewHint)viewHint.textContent=view==="popular"?copy.popularNote:(copy[view+"Hint"]||"");
    for(const button of viewButtons){
     const active=button.dataset.forumView===view;
     button.classList.toggle("is-active",active);
