@@ -12,6 +12,7 @@ on:
       - "site/src/lib/historical-licensed-photos.ts"
       - "site/src/lib/model-seo.ts"
       - "site/scripts/photo-copyright-source-proof.mjs"
+      - "site/scripts/photo-copyright-candidate-audit.mjs"
       - "site/scripts/image-license-jsonld-check.mjs"
       - "site/tests/photo-copyright-source-proof.test.mjs"
       - "site/tests/image-license-jsonld-check.test.mjs"
@@ -28,6 +29,7 @@ on:
       - "site/src/lib/historical-licensed-photos.ts"
       - "site/src/lib/model-seo.ts"
       - "site/scripts/photo-copyright-source-proof.mjs"
+      - "site/scripts/photo-copyright-candidate-audit.mjs"
       - "site/scripts/image-license-jsonld-check.mjs"
       - "site/tests/photo-copyright-source-proof.test.mjs"
       - "site/tests/image-license-jsonld-check.test.mjs"
@@ -49,6 +51,8 @@ jobs:
         run: node --test site/tests/image-seo-live-audit.test.mjs
       - name: Regression test source-specific copyright proofs (no network)
         run: node --experimental-strip-types --test site/tests/photo-copyright-source-proof.test.mjs site/tests/image-license-jsonld-check.test.mjs
+      - name: Read-only Commons audit of remaining Search Console copyright examples
+        run: node --experimental-strip-types site/scripts/photo-copyright-candidate-audit.mjs
       - name: Confirm Wikimedia uploader asserted Own work AND self-issued license for each emitted copyrightNotice
         run: node --experimental-strip-types site/scripts/photo-copyright-source-proof.mjs
       - name: Verify first party public JPEGs, photo attribution and image sitemap
