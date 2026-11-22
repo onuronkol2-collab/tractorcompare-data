@@ -107,7 +107,7 @@ const MODEL_COPY: Record<Locale, {
 const CONCISE_SPECS_TITLE:Record<Locale,string>={
   en:"Specs",tr:"Özellikleri",zh:"技术参数",hi:"तकनीकी विवरण",
   "pt-br":"Ficha técnica",fr:"Fiche technique",de:"Daten",
-  ru:"Характеристики",ja:"仕様",es:"Ficha técnica"
+  ru:"Характеристики",ja:"仕様",es:"Datos técnicos"
 };
 
 /** Keep original source/variant notes available without pretending to translate them. */
@@ -278,17 +278,20 @@ export function modelSeoMetadata(tractor: TractorRecord, lang: Locale) {
   // qualifiers survive untouched. Otherwise prefer the localized concise
   // technical noun; never cut an identifying value just to satisfy a tool.
   const conciseTitle=model + " " + CONCISE_SPECS_TITLE[lang] + identityQualifiers + " | TractorVS";
+  // Preserve already-short, genuinely localized titles byte-for-byte.
+  // When the generic identity-only title would be shared by several language
+  // editions, prefer a short locale-specific technical noun over the optional
+  // site-name suffix *if it fits naturally* within the audit target.
+  // For longer identities, retain the concise previous fallback instead of
+  // making hundreds of titles needlessly verbose. Sixty characters is an
+  // advisory SEO-tool threshold, not a Google indexing rule.
   const identityOnlyTitle=model + identityQualifiers + " | TractorVS";
-  // Preserve already-correct <=60-character titles byte-for-byte. On pages
-  // whose true identity still exceeds the audit threshold, shed optional
-  // site-name boilerplate BEFORE removing any technical identity qualifier.
-  // The site identity remains present in og:site_name and on-page branding.
   const conciseWithoutSiteName=model + " " + CONCISE_SPECS_TITLE[lang] + identityQualifiers;
   const identityWithoutSiteName=model + identityQualifiers;
   const title=fullTitle.length<=60 ? fullTitle
     : conciseTitle.length<=60 ? conciseTitle
-    : identityOnlyTitle.length<=60 ? identityOnlyTitle
     : conciseWithoutSiteName.length<=60 ? conciseWithoutSiteName
+    : identityOnlyTitle.length<=60 ? identityOnlyTitle
     : identityWithoutSiteName.length<=60 ? identityWithoutSiteName
     : conciseWithoutSiteName.length<=105 ? conciseWithoutSiteName
     : identityWithoutSiteName;
