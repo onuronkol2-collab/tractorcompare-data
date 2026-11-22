@@ -82,7 +82,8 @@ try{
 // must describe the same image-specific Commons file in each language.
 const rightsSamples=[
  {path:"/zh/tractors/valtra-g135-1a85eb12/",label:"Valtra G135 (CC BY-SA 4.0)"},
- {path:"/zh/tractors/valtra-f105-1f000c28/",label:"Valtra F105 (CC0)"},
+ {path:"/zh/tractors/valtra-f105-1f000c28/",label:"Valtra F105 (CC0)",image:"valtra-f105-80828837",unclaimed:true,expectedLicense:"https://creativecommons.org/publicdomain/zero/1.0/"},
+ {path:"/zh/tractors/swaraj-735-fe-7c7b069f/",label:"Swaraj 735 FE (Flickr-licensed; rights unproven)",image:"swaraj-735-fe-0269bdfd",unclaimed:true,expectedLicense:"https://creativecommons.org/licenses/by/2.0/"},
  // Exact Search Console "validation cannot continue" examples; do not
  // demand post-deploy markup during the pre-deploy PR/main-push checks.
  {path:"/zh/tractors/valtra-q305-5c3743cd/",label:"Valtra Q305 (copyrightNotice)",owner:"MarcelX42",image:"valtra-q305-d4c20807"},
@@ -91,16 +92,19 @@ const rightsSamples=[
 ];
 const postDeployMode=process.env.GITHUB_EVENT_NAME==="schedule" ||
   process.env.GITHUB_EVENT_NAME==="workflow_dispatch";
-for(const {path,label,owner,image} of rightsSamples){
+for(const {path,label,owner,image,unclaimed,expectedLicense} of rightsSamples){
  try{
   const {r,bytes}=await get(origin+path);
   const html=new TextDecoder().decode(bytes);
   const rights=imageLicenseMetadataIssues(html,{
-    expectedCopyrightOwner:postDeployMode&&owner ? owner : null
+    expectedCopyrightOwner:postDeployMode&&owner ? owner : null,
+    prohibitCopyrightNotice:Boolean(unclaimed)
   });
   console.log("TRACTOR_IMAGE_RIGHTS "+JSON.stringify({
     sample:label,http:r.status,postDeployMode,...rights
   }));
+  if(expectedLicense && rights.license!==expectedLicense)
+    fail(label+" changed the source-specific CC license");
   if(image && !String(rights.contentUrl||"").endsWith("/"+image+"-1920.jpg"))
     fail(label+" has mismatched image identity or license metadata");
   if(r.status!==200)fail(label+" page HTTP "+r.status);
