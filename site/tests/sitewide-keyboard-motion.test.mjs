@@ -26,5 +26,5 @@ test("reduced-motion preference turns off smooth scroll, animation and transitio
  assert.match(css,/transition-duration:\s*0\.01ms !important/);
 });
 test("model HTML and editorial content remain unchanged by the shared stylesheet",()=>{
- assert.doesNotMatch(css,/\\.model-spec-card|content:\\s*["\']/);
+ assert.ok(!css.includes(".model-spec-card") && !css.includes("content:"));
 });
