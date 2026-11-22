@@ -190,6 +190,38 @@ test("compact and wide headers fit their viewport without clipping navigation co
   }
 });
 
+test("ten-language Başak comparison preserves source evidence and fits a 390px screen", async ({ page, browserName }) => {
+  await page.setViewportSize({ width:390, height:844 });
+  for (const locale of ["tr","en","ja"]) {
+    const path=locale==="en"?"/reviews/basak-2075-bk/":"/"+locale+"/reviews/basak-2075-bk/";
+    const response=await page.goto(path,{waitUntil:"domcontentloaded"});
+    expect(response?.status(),"Review route "+path).toBe(200);
+    const section=page.locator(".review-variant-comparison");
+    await expect(section).toBeVisible();
+    await expect(section.locator("tbody tr")).toHaveCount(5);
+    await expect(section.locator("tbody tr").nth(3)).toContainText("2205 mm");
+    await expect(section.locator("tbody tr").nth(3)).toContainText("2120 mm");
+    await expect(section.locator("tbody tr").nth(4)).toContainText("3080 kg");
+    await expect(section.locator("tbody tr").nth(4)).toContainText("3515 kg");
+    await expect(section.locator('a[href*="2075-bt"]')).toHaveCount(2);
+    await expect(section.locator('a[href*="2075-bk-2-wd"]')).toHaveCount(1);
+    const edges=await section.evaluate(el=>{
+      const rect=el.getBoundingClientRect();
+      return {left:rect.left,right:rect.right,viewport:window.innerWidth,docWidth:document.documentElement.scrollWidth};
+    });
+    expect(edges.left,"Comparison left overflow in "+locale).toBeGreaterThanOrEqual(-1);
+    expect(edges.right,"Comparison right overflow in "+locale).toBeLessThanOrEqual(edges.viewport+1);
+    expect(edges.docWidth,"Page horizontal overflow in "+locale).toBeLessThanOrEqual(edges.viewport+2);
+  }
+  if(browserName==="chromium"){
+    const violations=(await new AxeBuilder({page})
+      .include(".review-variant-comparison")
+      .withTags(["wcag2a","wcag2aa","wcag21aa","wcag22aa"])
+      .analyze()).violations.filter(v=>v.impact==="critical"||v.impact==="serious");
+    expect(violations,"Serious accessibility violations in comparison evidence section").toEqual([]);
+  }
+});
+
 test("analytics tags are not requested without permission and remain absent after rejection", async ({ page }) => {
   const externalAnalyticsRequests = [];
   page.on("request", (request) => {
