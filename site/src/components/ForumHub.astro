@@ -72,8 +72,7 @@ const schema=indexable?{
       <p data-forum-live-status role="status" aria-live="polite"></p>
       <div class="community-topic-grid" data-forum-live-grid hidden></div>
     </div>
-    {topics.length>0?<>
-     <div class="community-filters">
+     <div class="community-filters" data-forum-filters hidden={topics.length===0}>
       <label>
        <span>{ft(lang,"search")}</span>
        <input type="search" id="forum-filter" autocomplete="off" placeholder={ft(lang,"search")}/>
@@ -84,7 +83,7 @@ const schema=indexable?{
         <button type="button" data-forum-category={key} aria-pressed="false">{ft(lang,key)}</button>)}
       </div>
      </div>
-     <div class="community-topic-grid" id="forum-topic-list">
+    {topics.length>0?<div class="community-topic-grid" id="forum-topic-list">
       {topics.map(topic=>{
        const model=topic.tractor_id?tractors.get(topic.tractor_id):undefined;
        return <article class="community-topic" data-forum-topic data-forum-topic-id={topic.topic_id}
@@ -102,9 +101,7 @@ const schema=indexable?{
          {topic.machine_translated&&<small>{ft(lang,"translated")}</small>}
         </article>;
       })}
-     </div>
-     <p id="forum-no-results" hidden role="status">{ft(lang,"noResults")}</p>
-    </>:<>
+     </div>:<>
       <p class="community-empty">{ft(lang,"empty")}</p>
       <section class="community-starter" aria-labelledby="forum-starter-heading">
         <h3 id="forum-starter-heading">{starters.heading}</h3>
@@ -117,6 +114,7 @@ const schema=indexable?{
         </div>
       </section>
     </>}
+    <p id="forum-no-results" hidden role="status">{ft(lang,"noResults")}</p>
    </section>
    <ForumComposer lang={lang} mode="topic"/>
    <ForumMemberPanel lang={lang}/>
@@ -197,17 +195,21 @@ const schema=indexable?{
  const cards=()=>[...document.querySelectorAll<HTMLElement>("[data-forum-topic]")];
  const categoryButtons=[...document.querySelectorAll<HTMLButtonElement>("[data-forum-category]")];
  const noResults=document.querySelector<HTMLElement>("#forum-no-results");
+ const filters=document.querySelector<HTMLElement>("[data-forum-filters]");
  let selected="all";
  const filter=()=>{
   const q=(input?.value||"").trim().toLocaleLowerCase();
+  const items=cards();
+  const hasTopics=items.length>0;
+  if(filters)filters.hidden=!hasTopics;
   let count=0;
-  for(const card of cards()){
+  for(const card of items){
    const visible=(selected==="all"||card.dataset.forumTopicCategory===selected)&&
     (!q||(card.dataset.forumSearch||"").includes(q));
    card.hidden=!visible;
    if(visible)count++;
   }
-  if(noResults)noResults.hidden=count>0;
+  if(noResults)noResults.hidden=!hasTopics||count>0;
  };
  input?.addEventListener("input",filter);
  document.addEventListener("tractorvs-forum-live-updated",filter);
