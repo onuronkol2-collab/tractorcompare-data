@@ -111,6 +111,8 @@
 .tc-section .tc-table tbody tr:nth-child(2n) td { background: #fafcf9; }
 .tc-section .tc-entry strong { font-size: clamp(17px,1.8vw,20px); font-weight: 830; color: #1c3023; }
 .tc-section .tc-entry small { font-size: 13px; color: #52665a; }
+/* Row-level warning only when published, source-specific measurement conditions differ. */
+.tc-section .tc-table .tc-condition-caution { display:block; margin-top:9px; padding:7px 9px; border-inline-start:3px solid #a47829; border-radius:4px; background:#fff7e8; color:#4c3a1b; font-size:12px; line-height:1.55; font-weight:650; overflow-wrap:anywhere; }
 .tc-section .tc-data-warning { font-size: 13px; line-height: 1.7; }
 .tc-sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
 @media(max-width:860px) {
