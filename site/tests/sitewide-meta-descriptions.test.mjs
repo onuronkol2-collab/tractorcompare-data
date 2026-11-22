@@ -68,3 +68,42 @@ test("whole site counts all HTML but checks only canonical indexable pages",()=>
     assert.equal(report.byLocale.tr.pages,1);
   }finally{rmSync(root,{recursive:true,force:true});}
 });
+
+test("script-fragment removal must never synthesize a fake meta description",()=>{
+  // The old strip regex joined <met + a into a new real-looking <meta>.
+  const forged='<met<script>ignored</script>a name="description" content="Fake SEO metadata">';
+  const item=inspectMetaDescription(page(forged));
+  assert.deepEqual(item.errors,["missing-or-duplicate-description"]);
+  const real=inspectMetaDescription(page(forged+
+    '<meta name="description" content="Real manufacturer description">'));
+  assert.deepEqual(real.errors,[]);
+  assert.equal(real.description,"Real manufacturer description");
+});
+
+test("script-fragment removal must never synthesize a fake canonical link",()=>{
+  const html='<html><head>'+
+    '<lin<script>ignored</script>k rel="canonical" href="https://tractorvs.com/">' +
+    '<meta name="description" content="False positive if fragments get joined">'+
+    '</head><body></body></html>';
+  assert.equal(inspectMetaDescription(html),null);
+});
+
+test("comments, raw text, quoted tag characters and case variations preserve exact tags",()=>{
+  const html='<html><HEAD>'+
+    '<!--<link rel="canonical" href="https://attacker.invalid/"><meta name="description" content="fake">-->'+
+    '<STYLE>.foo:before{content:"<meta name=description content=hidden>"}</STYLE>'+
+    '<SCRIPT>const x = "<meta name=description content=bogus>";</SCRIPT>'+
+    '<LINK title="a > b" rel="canonical" href="https://tractorvs.com/">'+
+    '<META title="a > b" name="description" content="Verified &amp; sourced">'+
+    '</HEAD><body></body></html>';
+  const item=inspectMetaDescription(html);
+  assert.deepEqual(item?.errors,[]);
+  assert.equal(item.description,"Verified & sourced");
+});
+
+test("unclosed script does not let a following fake description pass inspection",()=>{
+  const html='<html><head><link rel="canonical" href="https://tractorvs.com/">'+
+    '<script>const x = "not closed"; <meta name="description" content="unreachable">'+
+    '</head><body></body></html>';
+  assert.deepEqual(inspectMetaDescription(html).errors,["missing-or-duplicate-description"]);
+});
