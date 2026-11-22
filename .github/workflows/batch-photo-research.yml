@@ -20,6 +20,7 @@ on:
       - "site/scripts/photo-commons-http.mjs"
       - "site/scripts/photo-research-model-union.mjs"
       - "site/scripts/photo-research-quality-gate.mjs"
+      - "site/scripts/photo-exact-coverage-gate.mjs"
       - "site/scripts/extract-archived-tractor-inventory.py"
       - "site/scripts/archive-brand-photo-discovery.mjs"
       - "site/scripts/photo-model-identity.mjs"
