@@ -506,6 +506,9 @@ for(const widget of widgets){
      method:"POST",headers:header(),body:JSON.stringify({refresh_token:rotatedRefresh}),
      signal:AbortSignal.timeout(12000)
     });
+    // A second tab may have rotated this one-time refresh token already.
+    // Do not clear its successful shared session on a 400/401 race; the
+    // storage event will provide the new verified token.
     if(!renewed.ok)throw Error("refresh failed");
     const next=await renewed.json();
     if(typeof next.access_token!=="string"||!next.access_token||
@@ -520,7 +523,7 @@ for(const widget of widgets){
    userId=data.id;saveSession(access,rotatedRefresh);setLogin(true);restoreDraft();return true;
   }catch(error){
    if(attempt===activeAuthAttempt&&error instanceof Error&&
-    ["expired","invalid","refresh failed","invalid refresh"].includes(error.message))
+    ["expired","invalid","invalid refresh"].includes(error.message))
     clearForumSession();
    return false;
   }
