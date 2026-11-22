@@ -129,3 +129,33 @@ test("mass visible technical content changes still stop sitemap lastmod reconcil
   }
   assert.throws(()=>deriveHistory({pages,previous,now:date2,minPages:100}),/Unusually broad rendered content changes/);
 });
+
+test("Astro CSS attribute after source ID cannot create fictitious sitemap changes",()=>{
+  // Actual Astro component has scoped styles, which can inject a trailing
+  // data-astro-cid-* attribute after author-supplied data-spec-id.
+  const id="a02c4df2-c719-5a26-abb2-6195cb8e23e5";
+  const card='<article class="model-spec-card" data-astro-cid-abc123=""><h4>Rated engine power</h4><p>95 HP · ECE R120</p></article>';
+  const oldHtml=sample(b,card);
+  const withQaId=sample(b,card.replace('class="model-spec-card"',
+    'class="model-spec-card" data-spec-id="'+id+'"'));
+  const baseline=significantContentDigest(oldHtml,b);
+  assert.equal(significantContentDigest(withQaId,b),baseline,
+    "QA marker before scoped Astro CSS attribute must be ignored");
+  assert.notEqual(significantContentDigest(withQaId.replace("95 HP","105 HP"),b),baseline);
+  assert.notEqual(significantContentDigest(withQaId.replace("ECE R120","ISO 14396"),b),baseline);
+  assert.notEqual(significantContentDigest(withQaId.replace(id,"untrusted-id"),b),baseline,
+    "malformed source identity cannot be silently removed");
+  assert.notEqual(significantContentDigest(withQaId.replace("data-astro-cid-abc123","data-astro-cid-changed"),b),baseline,
+    "all other attributes remain part of the provenance digest");
+
+  // The marker may also appear after a scoped CSS attribute: order is not a
+  // measure of editorial significance. A non-spec article is NOT exempt.
+  const ordered=sample(b,'<article data-astro-cid-abc123="" class="model-spec-card"><h4>Power</h4></article>');
+  assert.equal(significantContentDigest(ordered,b),
+    significantContentDigest(ordered.replace('class="model-spec-card"',
+      'class="model-spec-card" data-spec-id="'+id+'"'),b));
+  const unrelated=sample(b,'<article class="other-card" data-astro-cid-abc123=""><h4>Power</h4></article>');
+  assert.notEqual(significantContentDigest(unrelated,b),
+    significantContentDigest(unrelated.replace('class="other-card"',
+      'class="other-card" data-spec-id="'+id+'"'),b));
+});
