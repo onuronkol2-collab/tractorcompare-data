@@ -18,7 +18,7 @@ const categories=[{key:"all",label:ft(lang,"all")},...FORUM_CATEGORY_KEYS.map(ke
     data-forum-rail-category={cat.key} aria-pressed={cat.key==="all"?"true":"false"}>
     <span class="forum-category-icon" aria-hidden="true">{icon[cat.key]}</span>
     <span class="forum-category-title">{cat.label}</span>
-    <span class="forum-category-number">{count.toLocaleString(lang==="pt-br"?"pt-BR":lang)}</span>
+    <span class="forum-category-number" data-forum-category-count={cat.key}>{count.toLocaleString(lang==="pt-br"?"pt-BR":lang)}</span>
    </button>;
  })}
  </nav>
