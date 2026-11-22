@@ -166,3 +166,53 @@
  #main .forum-thread .forum-jump-replies,
  #main .forum-thread .forum-home-button{transition:none}
 }
+
+
+/* Zero-match UX: keep deliberate filters, but do not leave visitors at an empty
+   screen when other real, published discussions are available. */
+#main .community-shell .forum-empty-help{
+ margin:14px 0 24px;padding:clamp(18px,2.2vw,24px);
+ border:1px solid #cbdcc7;border-radius:15px;background:#fff;
+ box-shadow:0 6px 20px rgba(17,54,30,.04)
+}
+#main .community-shell .forum-empty-help-top{
+ display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px
+}
+#main .community-shell .forum-empty-help h3{
+ margin:0;color:#174b2e;font-size:clamp(17px,1.7vw,20px);line-height:1.4
+}
+#main .community-shell .forum-empty-help button{
+ display:inline-flex;align-items:center;justify-content:center;
+ min-height:46px;padding:10px 17px;background:#245e3d;color:#fff;
+ border:1px solid #245e3d;border-radius:10px;font:inherit;
+ font-size:15px;font-weight:800;line-height:1.4;cursor:pointer
+}
+#main .community-shell .forum-empty-help button:hover{background:#17462e}
+#main .community-shell .forum-empty-help button:focus-visible,
+#main .community-shell .forum-empty-suggestions a:focus-visible{
+ outline:3px solid #72a96e;outline-offset:3px
+}
+#main .community-shell .forum-empty-suggestions{
+ display:grid;gap:0;list-style:none;padding:0;margin:15px 0 0;
+ border-top:1px solid #e2ebe0
+}
+#main .community-shell .forum-empty-suggestions li{
+ display:flex;align-items:flex-start;justify-content:space-between;
+ gap:10px;padding:13px 0;border-bottom:1px solid #e6eee4;
+ flex-wrap:wrap
+}
+#main .community-shell .forum-empty-suggestions a{
+ color:#1e593a;font-size:16px;line-height:1.5;font-weight:750;
+ overflow-wrap:anywhere;text-underline-offset:3px
+}
+#main .community-shell .forum-empty-suggestions span{
+ font-size:13px;line-height:1.5;color:#4d6955
+}
+#main .community-shell #forum-no-results{
+ font-size:16px;line-height:1.7;color:#315940;
+ margin:16px 0 0
+}
+@media(max-width:720px){
+ #main .community-shell .forum-empty-help-top{align-items:stretch}
+ #main .community-shell .forum-empty-help button{width:100%}
+}
