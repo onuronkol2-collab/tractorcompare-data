@@ -4,7 +4,7 @@ import {readFileSync} from "node:fs";
 import {LOCALES} from "../src/lib/locales.ts";
 import {comparisonSpecs} from "../src/lib/comparison-specs.ts";
 import {OEM_SOURCE_CONFLICT_COPY,modelSourceDiscrepancies,hasUnresolvedTigreDisplacement,
- isUnresolvedComparisonSpec} from "../src/lib/manufacturer-conflicts.mjs";
+ isUnresolvedComparisonSpec,hasUnresolvedBasak4wdLength} from "../src/lib/manufacturer-conflicts.mjs";
 
 const IT="https://www.antoniocarraro.it/it/catalogo/tigre-3800-f";
 const EN="https://www.antoniocarraro.it/en/catalogue/tigre-3800-f";
@@ -99,4 +99,59 @@ test("detail pages show a prominent evidence-linked banner and short answers omi
  assert.match(detail,/isUnresolvedComparisonSpec\(tractor,spec\)/);
  const comp=readFileSync(new URL("../src/lib/comparison-specs.ts",import.meta.url),"utf8");
  assert.match(comp,/filter\(spec => !isUnresolvedComparisonSpec\(tractor,spec\)\)/);
+});
+
+const BASAK_PRODUCT="https://basaktraktor.com.tr/urunler/traktorler/tarla-traktorleri/2075-bk";
+const BASAK_PDF="https://admin.basaktraktor.com.tr/upload/7c743eaf-5228-4ae7-94d7-25df6a13e778-2075%20BK%204WD.pdf";
+const basak=tractor("2075 BK","Başak Traktör",[
+ spec("overall_length","3830",BASAK_PRODUCT,"mm"),
+ spec("overall_length_with_front_ballast_mm","3930",BASAK_PDF,"mm"),
+ spec("wheelbase","2205",BASAK_PDF,"mm"),
+ spec("rear_lift_capacity","3000",BASAK_PDF,"kg")
+],{variant:"4WD",model_year:null,market:"global",tractor_id:"9ef236be-0d91-4c87-af3d-8c0cf33f08a1"});
+
+test("Başak 2075 BK 4WD unresolved 100 mm overall-length discrepancy is explicit in all ten locales",()=>{
+ assert.equal(hasUnresolvedBasak4wdLength(basak),true);
+ for(const lang of LOCALES){
+  const copy=OEM_SOURCE_CONFLICT_COPY[lang].basakLength;
+  assert.ok(copy.length>70,lang+" requires clear full context");
+  assert.match(copy,/3[., ]?830/);
+  assert.match(copy,/3[., ]?930/);
+  assert.match(copy,/4WD/);
+  const conflicts=modelSourceDiscrepancies(basak,lang);
+  assert.equal(conflicts.length,1,lang);
+  assert.deepEqual(conflicts[0].sourceUrls,[BASAK_PRODUCT,BASAK_PDF],lang);
+  assert.equal(conflicts[0].id,"basak-2075-bk-4wd-overall-length");
+ }
+});
+
+test("disputed Başak lengths are not comparable; legitimate specs and a warning survive",()=>{
+ const safe=comparisonSpecs(basak,"tr");
+ assert.ok(safe.length>=2);
+ assert.equal(safe.some(s=>s.value==="3930"||s.value==="3830"),false);
+ assert.equal(safe.some(s=>["overall_length","overall_length_with_front_ballast_mm"].includes(s.key)),false);
+ assert.ok(safe.some(s=>s.key==="wheelbase"&&s.value==="2205"));
+ assert.ok(safe.some(s=>s.key==="rear_lift_capacity"&&s.value==="3000"));
+ assert.ok(safe.some(s=>s.notice?.includes("3.930")&&s.notice?.includes("3.830")));
+ assert.equal(isUnresolvedComparisonSpec(basak,basak.specifications[0]),true);
+ assert.equal(isUnresolvedComparisonSpec(basak,basak.specifications[1]),true);
+ assert.equal(isUnresolvedComparisonSpec(basak,basak.specifications[2]),false);
+ // Raw official values and citations remain intact on the model detail; no destructive data mutation.
+ assert.equal(basak.specifications[1].spec_value,"3930");
+ assert.equal(basak.specifications[1].source_url,BASAK_PDF);
+});
+
+test("Başak length warning never contaminates 2WD, other years, different markets or unrelated models",()=>{
+ for(const model of [
+  {...basak,variant:"2WD"},
+  {...basak,model_year:2026},
+  {...basak,market:"Europe"},
+  {...basak,model_name:"2075 BT"},
+  {...basak,brand_name:"Other Brand"},
+  {...basak,variant:"4WD Special 2027",model_year:2027}
+ ]){
+  assert.equal(hasUnresolvedBasak4wdLength(model),false,JSON.stringify([model.brand_name,model.model_name,model.variant,model.model_year]));
+  assert.deepEqual(modelSourceDiscrepancies(model,"en"),[]);
+  assert.ok(comparisonSpecs(model,"en").some(s=>s.value==="3930"));
+ }
 });
