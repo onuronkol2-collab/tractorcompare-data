@@ -1,0 +1,30 @@
+name: TractorVS real production 720px WebP/JPEG photo release proof
+on:
+  push:
+    branches: [main]
+    paths:
+      - "site/public/images/tractors/*-720.jpg"
+      - "site/public/images/tractors/*-720.webp"
+      - "site/src/components/TractorPhoto.astro"
+      - "site/scripts/verify-mobile-production-assets.mjs"
+      - ".github/workflows/photo-mobile-production-release-proof.yml"
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: tractorvs-720-production-read-only
+  cancel-in-progress: true
+jobs:
+  live-proof:
+    name: Verify six actual production images + two credited model pages (no deploy)
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22.23.4"
+      - name: Test fail-closed release interpretation with offline fixtures
+        run: node --experimental-strip-types --test site/tests/photo-mobile-production-proof.test.mjs
+      - name: Check real HTTPS production photo SHA and two published HTML pages
+        run: node site/scripts/verify-mobile-production-assets.mjs
