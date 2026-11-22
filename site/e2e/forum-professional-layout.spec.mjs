@@ -52,3 +52,21 @@ test("forum navigation, sign-in and category controls remain keyboard and pointe
  await expect(leaderboard).toHaveAttribute("aria-expanded","false");
  await expect(page.locator("[data-member-leaders]")).toBeHidden();
 });
+
+test("emoji picker stays inside viewport on mobile and desktop after verified sign-in",async({page})=>{
+ await page.route("**/forum-test-api/auth/v1/user",route=>
+  route.fulfill({json:{id:"aaaaaaaa-aaaa-4aaa-aaaa-aaaaaaaaaaaa"}}));
+ await page.goto("/tr/forum/#access_token=layout-fixture-access&refresh_token=layout-fixture-refresh");
+ await expect(page.locator("#forum-compose [data-forum-post]")).toBeVisible();
+ const dropdown=page.locator("#forum-compose .forum-emoji");
+ await dropdown.locator("summary").click();
+ await expect(dropdown.locator(".forum-emoji-grid")).toBeVisible();
+ const r=await page.evaluate(()=>{
+  const picker=document.querySelector("#forum-compose .forum-emoji-grid").getBoundingClientRect();
+  return {left:picker.left,right:picker.right,viewport:innerWidth,
+   documentWidth:document.documentElement.scrollWidth};
+ });
+ expect(r.left).toBeGreaterThanOrEqual(-1);
+ expect(r.right).toBeLessThanOrEqual(r.viewport+1);
+ expect(r.documentWidth).toBeLessThanOrEqual(r.viewport+2);
+});
