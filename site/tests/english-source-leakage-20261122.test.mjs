@@ -3,6 +3,7 @@ import assert from "node:assert/strict";
 import {readFileSync} from "node:fs";
 import {specLabel} from "../src/lib/catalog.ts";
 import {REVIEWED_TURKISH_SOURCE_LABELS_EN as TERMS} from "../src/lib/reviewed-turkish-source-labels-en.ts";
+import {REVIEWED_PUBLIC_SPEC_HEADINGS} from "../src/lib/reviewed-public-spec-headings.ts";
 
 const fixture=JSON.parse(readFileSync(new URL("./fixtures/english-source-leakage-20261122.json",import.meta.url),"utf8"));
 const normalize=x=>x.trim().replace(/\s+/g," ").toLocaleLowerCase("tr").replaceAll("ı","i");
@@ -54,4 +55,31 @@ test("unknown OEM headings are never machine guessed or recased into false measu
  const record=fakeSpec(source);
  assert.equal(specLabel(record,"en"),"Unknown OEM Model-Specific Hydraulic Measurement");
  assert.equal(record.spec_name,source);
+});
+
+test("combined English and Turkish review lanes never overwrite each other",()=>{
+ const reviewed=[
+  "Clutch And Gearbox Architecture",
+  "ComfortClutch Hand-Clutch Function",
+  "PowerShuttle",
+  "Stop & Go Clutchless Stop-Start",
+  "Maximum Road Speed (ECO)",
+  "Mechanical Shuttle",
+  "Transmission Speed Configuration",
+  "Overall Width (Minimum–Maximum)",
+  "Tractor Weight With Cab, Without Additional Ballast",
+  "Transmission Multiplier"
+ ];
+ assert.equal(reviewed.length,10);
+ for(const original of reviewed){
+  const spec=fakeSpec(original);
+  const before=structuredClone(spec);
+  const tr=specLabel(spec,"tr");
+  assert.equal(tr,REVIEWED_PUBLIC_SPEC_HEADINGS[original]?.tr,
+    "Missing published Turkish display-only technical correction: "+original);
+  assert.notEqual(tr,original);
+  assert.deepEqual(spec,before);
+ }
+ assert.equal(specLabel(fakeSpec("YakıT Cinsi"),"en"),"Fuel type");
+ assert.equal(specLabel(fakeSpec("BrüT Motor GüCü"),"en"),"Gross engine power");
 });
