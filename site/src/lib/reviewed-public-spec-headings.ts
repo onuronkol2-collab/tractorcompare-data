@@ -6,6 +6,18 @@ import type { Locale } from "./locales.ts";
  * No invented "rated", "measured" or model-specific performance qualifiers.
  */
 export const REVIEWED_PUBLIC_SPEC_HEADINGS: Record<string, Partial<Record<Locale,string>>> = {
+  // Reviewed 2026-11-22 built-preview: ten precise English source labels / 34 Turkish appearances.
+  // Display labels only; original model, source, values, units, configuration unchanged.
+  "Clutch And Gearbox Architecture": {tr:"Debriyaj ve şanzımanın yapısı"},
+  "ComfortClutch Hand-Clutch Function": {tr:"ComfortClutch el kumandalı debriyaj işlevi"},
+  "PowerShuttle": {tr:"PowerShuttle ileri/geri yön değiştirme sistemi"},
+  "Stop & Go Clutchless Stop-Start": {tr:"Stop & Go debriyajsız dur-kalk işlevi"},
+  "Maximum Road Speed (ECO)": {tr:"Azami yol hızı (ECO)"},
+  "Mechanical Shuttle": {tr:"Mekanik ileri/geri yön değiştirici"},
+  "Transmission Speed Configuration": {tr:"Şanzıman hız kademesi düzeni"},
+  "Overall Width (Minimum–Maximum)": {tr:"Toplam genişlik (asgari–azami)"},
+  "Tractor Weight With Cab, Without Additional Ballast": {tr:"Ek balastsız kabinli traktör ağırlığı"},
+  "Transmission Multiplier": {tr:"Şanzıman kademe çarpanı"},
   "Gearbox": {tr:"Şanzıman",zh:"变速箱",hi:"गियरबॉक्स","pt-br":"Caixa de câmbio",fr:"Boîte de vitesses",de:"Getriebe",ru:"Коробка передач",ja:"変速機",es:"Caja de cambios"},
   "Clutch Actuation": {tr:"Debriyajın kumanda biçimi","pt-br":"Acionamento da embreagem",fr:"Commande de l’embrayage",ru:"Привод сцепления",es:"Accionamiento del embrague"},
   "Hydraulic Gear Pump Flow": {tr:"Dişli tip hidrolik pompanın debisi"},
