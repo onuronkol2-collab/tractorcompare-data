@@ -259,10 +259,11 @@ const pricePayload = JSON.stringify({
   const filterCatalog = (query: string) => {
     const normalized = normalizeTractorQuery(query);
     const terms = normalized.split(/\s+/).filter(Boolean);
+    const state=facetState();
     let visible = 0;
     for (let i = 0; i < cards.length; i++) {
       const card = cards[i];
-      const match = matchesTractorTerms(cardSearchKeys[i], terms) && matchesCatalogueFacet(rows[i],facetState());
+      const match = matchesTractorTerms(cardSearchKeys[i], terms) && matchesCatalogueFacet(rows[i],state);
       // Avoid invalidating styles/layout for unaffected cards on each input.
       if (card.hidden !== !match) card.hidden = !match;
       if (match) visible++;
@@ -271,7 +272,6 @@ const pricePayload = JSON.stringify({
     if (visibleCount) visibleCount.textContent=(visibleCount.dataset.countTemplate||"")
       .replace("{visible}",String(visible)).replace("{total}",String(cards.length));
     if (clearSearch) clearSearch.hidden = !normalized;
-    sortCards();
     if(facetReset)facetReset.hidden=!facetState().brand&&!facetState().power&&!facetState().year&&facetState().sort==="brand"&&!normalized;
   };
   // Keep refresh/share and locale switching aligned with the user's current
@@ -312,7 +312,7 @@ const pricePayload = JSON.stringify({
   });
   const clearQueryFromURL = () => syncSearchURL("");
   for(const control of [brandFacet,powerFacet,yearFacet,sortFacet]) {
-    control?.addEventListener("change",()=>{filterCatalog(search?.value||"");syncSearchURL(search?.value||"");});
+    control?.addEventListener("change",()=>{if(control===sortFacet)sortCards();filterCatalog(search?.value||"");syncSearchURL(search?.value||"");});
   }
   facetReset?.addEventListener("click",()=>{
     if(brandFacet)brandFacet.value="";
@@ -320,7 +320,7 @@ const pricePayload = JSON.stringify({
     if(yearFacet)yearFacet.value="";
     if(sortFacet)sortFacet.value="brand";
     if(search)search.value="";
-    filterCatalog("");syncSearchURL("");
+    sortCards();filterCatalog("");syncSearchURL("");
     search?.focus();
   });
   clearSearch?.addEventListener("click", () => {
@@ -338,13 +338,14 @@ const pricePayload = JSON.stringify({
       if(powerFacet)powerFacet.value="";
       if(yearFacet)yearFacet.value="";
       if(sortFacet)sortFacet.value="brand";
-      filterCatalog("");
+      sortCards();filterCatalog("");
       clearQueryFromURL();
     });
   }
   // A homepage search or brand chip lands on a real, filtered catalogue.
   // Keep the canonical URL on the clean catalogue path for search engines.
   const requested = new URLSearchParams(window.location.search).get("q")?.trim().slice(0,100);
+  sortCards();
   if (search && requested) {
     search.value = requested;
     filterCatalog(requested);
