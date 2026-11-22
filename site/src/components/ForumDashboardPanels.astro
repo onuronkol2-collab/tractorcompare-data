@@ -24,7 +24,7 @@ const categories=FORUM_CATEGORY_KEYS.map(key=>({key,count:topics.filter(t=>t.cat
   <p>{copy.discoverBody}</p>
   <div class="forum-side-tags">
    {categories.map(cat=><button type="button" data-forum-tag-category={cat.key}
-     aria-pressed="false">#{ft(lang,cat.key)} <span>({num(cat.count)})</span></button>)}
+     aria-pressed="false">#{ft(lang,cat.key)} <span data-forum-tag-count={cat.key}>({num(cat.count)})</span></button>)}
   </div>
  </section>
  <section class="forum-side-panel">
