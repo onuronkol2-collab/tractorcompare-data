@@ -93,10 +93,20 @@ const schema={
  "@graph":[
   {"@type":"CollectionPage","@id":pageUrl+"#webpage",url:pageUrl,name:copy.heading,
     description:copy.description,inLanguage:LOCALE_TAGS[lang],mainEntity:{"@id":pageUrl+"#list"}},
-  {"@type":"ItemList","@id":pageUrl+"#list",numberOfItems:entries.length,
-    itemListElement:entries.map((entry,i)=>({
-      "@type":"ListItem",position:i+1,url:new URL(entryHref(entry),root).toString(),name:titleFor(entry)
-    }))},
+  {"@type":"ItemList","@id":pageUrl+"#list",
+    numberOfItems:entries.length+((lang==="tr"||lang==="en")?1:0),
+    itemListElement:[
+      ...entries.map((entry,i)=>({
+        "@type":"ListItem",position:i+1,url:new URL(entryHref(entry),root).toString(),name:titleFor(entry)
+      })),
+      ...(lang==="tr"||lang==="en" ? [{
+        "@type":"ListItem",position:entries.length+1,
+        url:new URL(localizedPath(lang,DEUTZ_5D_GS_PILOT.path),root).toString(),
+        name:lang==="tr"
+         ?"Deutz-Fahr 5090 D GS ve 5100 D GS: kaynaklı teknik farklar"
+         :"Deutz-Fahr 5090 D GS vs 5100 D GS: verified technical differences"
+      }] : [])
+    ]},
   {"@type":"BreadcrumbList",itemListElement:[
     {"@type":"ListItem",position:1,name:copy.home,item:urlFor("/")},
     {"@type":"ListItem",position:2,name:copy.hub,item:pageUrl}
