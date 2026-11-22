@@ -1,4 +1,5 @@
 import {generateGeminiJson} from "./gemini-provider.ts";
+import {translateAzureArticle} from "./azure-translator.ts";
 import {chooseTranslationSegments,translationCheckpoint,nextTranslationCheckpoint} from "./translation-segments.ts";
 import {isUntranslatedTurkishTitle,sameNumericFacts,TRANSLATION_RESUME_FIELDS,verifiedReadyTranslation} from "./translation-quality.ts";
 // Private, consent-gated TractorVS forum translator.
@@ -7,6 +8,11 @@ const ROOT=Deno.env.get("SUPABASE_URL")||"https://aaufxtcvnzgavtlintiv.supabase.
 const KEY=Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")||"";
 const SECRET=Deno.env.get("TC_QUEUE_SECRET")||"";
 const AI=Deno.env.get("GEMINI_API_KEY")||"";
+const AZURE_KEY=Deno.env.get("AZURE_TRANSLATOR_KEY")||"";
+const AZURE_REGION=Deno.env.get("AZURE_TRANSLATOR_REGION")||"";
+const SELECTED_PROVIDER=Deno.env.get("TC_TRANSLATION_PROVIDER")||
+ (AZURE_KEY&&AZURE_REGION?"azure":"gemini");
+const ACTIVE_PROVIDER=SELECTED_PROVIDER==="azure"?"Microsoft Azure Translator":"Google Gemini";
 const LANGS:Record<string,string>={
  en:"English",zh:"Simplified Chinese",hi:"Hindi", "pt-br":"Brazilian Portuguese",
  fr:"French",de:"German",ru:"Russian",ja:"Japanese",es:"international Spanish"
@@ -65,6 +71,13 @@ function check(a:Article,b:Article,to:string){
 }
 async function translateChunk(source:Source,chunk:string,target:string){
  const input={title:source.title,body:chunk};
+ if(SELECTED_PROVIDER==="azure"){
+  const translated=await translateAzureArticle({
+   title:source.title,body:chunk,target,apiKey:AZURE_KEY,region:AZURE_REGION
+  });
+  return {article:translated.value,issue:check(input,translated.value,target),
+   model:translated.model,reviewer:null};
+ }
  const prompt=[
   "Translate this TractorVS Turkish research ARTICLE SECTION into "+LANGS[target]+".",
   "This is one of several sections of the SAME article. Preserve its headings, tables, lists, warnings and source links.",
@@ -93,7 +106,13 @@ async function translateChunk(source:Source,chunk:string,target:string){
   model:generated.model,reviewer:review.model};
 }
 async function work(){
- if(!KEY||!AI||!SECRET)throw Error("Worker credentials unavailable");
+ if(!KEY||!SECRET)throw Error("Worker credentials unavailable");
+ if(!["azure","gemini"].includes(SELECTED_PROVIDER))
+  throw Error("Unapproved forum translation provider");
+ if(SELECTED_PROVIDER==="azure"&&(!AZURE_KEY||!AZURE_REGION))
+  throw Error("Azure Translator credentials unavailable");
+ if(SELECTED_PROVIDER==="gemini"&&!AI)
+  throw Error("Gemini provider credentials unavailable");
  // A previous Edge timeout can strand a job in processing. Recover it
  // only after a generous quiet period, with no extra paid call in this step.
  const stale=new Date(Date.now()-20*60000).toISOString();
@@ -133,7 +152,7 @@ async function work(){
     select:TRANSLATION_RESUME_FIELDS,
     topic_id:"eq."+job.entity_id,locale:"eq."+job.target_locale,limit:"1"
    });
-   const existing=savedRows[0] as (Article&{state:string;source_hash:string;qa_notes:string;model:string;reviewed_by_model:string|null;seo_approved:boolean|null})|undefined;
+   const existing=savedRows[0] as (Article&{state:string;source_hash:string;qa_notes:string;model:string;provider:string;reviewed_by_model:string|null;seo_approved:boolean|null})|undefined;
    const parts=chooseTranslationSegments(source.body,
     existing?.source_hash===source.source_hash ? existing.qa_notes : null);
    if(existing?.source_hash===source.source_hash&&existing.state==="ready"){
@@ -164,12 +183,17 @@ async function work(){
     return {processed:1,status:"needs_review",locale:job.target_locale};
    }
    const index=marker&&marker.total===parts.length?marker.completed:0;
+   if(index>0&&existing?.provider&&existing.provider!==ACTIVE_PROVIDER){
+    await patch(job,{state:"done",completed_at:new Date().toISOString(),
+     last_error:"PROVIDER_REVIEW_REQUIRED: previous partial translation uses another provider"});
+    return {processed:1,status:"needs_review",locale:job.target_locale};
+   }
    const upsert=async(data:Record<string,unknown>)=>db("tc_forum_topic_translations",{
     on_conflict:"topic_id,locale",select:"topic_id,locale,state,seo_approved"
    },{method:"POST",headers:{"Content-Type":"application/json",
     Prefer:"resolution=merge-duplicates,return=representation"},body:JSON.stringify({
     topic_id:job.entity_id,locale:job.target_locale,source_hash:source.source_hash,
-    provider:"Google Gemini",translated_at:new Date().toISOString(),...data
+    provider:ACTIVE_PROVIDER,translated_at:new Date().toISOString(),...data
    })});
    const confirmSource=async()=>{
     const rows=await db("tc_forum_translation_sources",{
@@ -229,7 +253,16 @@ async function work(){
    // The full assembled article also passed the final structural/factual
    // comparison above. Do not re-send the 9K article to the provider.
    if(!await confirmSource())return {processed:0,status:"superseded"};
-   if(!existing.reviewed_by_model)throw Error("Missing last independent section review");
+   if(!existing.reviewed_by_model){
+    if(SELECTED_PROVIDER!=="azure")throw Error("Missing independent translation reviewer");
+    await upsert({title:full.title,body:full.body,
+     state:"needs_review",seo_approved:false,reviewed_by_model:null,
+     model:existing.model,
+     qa_notes:"AZURE_TRANSLATION_COMPLETE: independent native-language review required"});
+    await patch(job,{state:"done",completed_at:new Date().toISOString(),
+     last_error:"INDEPENDENT_REVIEW_REQUIRED: Azure machine translation completed"});
+    return {processed:1,status:"needs_review",locale:job.target_locale};
+   }
    const saved=await upsert({title:full.title,body:full.body,
     state:"ready",seo_approved:true,
     model:existing.model,reviewed_by_model:existing.reviewed_by_model,
