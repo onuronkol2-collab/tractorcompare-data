@@ -832,6 +832,13 @@ const candidates=[
   // https://commons.wikimedia.org/wiki/File:Zetor_Proxima%2C_WAW.jpg
   // Raf24~commonswiki own work, CC BY-SA 4.0; second independently attributed view.
   {"brand":"Zetor","model":"PROXIMA","fileId":"zetor-proxima-raf24-warsaw-2019","path":"8/81/Zetor_Proxima%2C_WAW.jpg","photographer":"Raf24~commonswiki","license":"CC BY-SA 4.0","width":4096,"height":3072},
+  // 22 November 2026: exact-model Commons photo author/source licenses;
+  // 480/960/1920 first-party SHA-256 JPEGs in proof ledger
+  // site/docs/photo-import-evidence-mccormick-tym-wave2-20261122.json.
+  // TYM alias names checked against manufacturer; configurationExact=false.
+  {"brand":"McCormick","model":"X5.085","fileId":"mccormick-x5-085-mbone-2023","path":"b/b2/McCormick%2C_Agritechnica_2023%2C_Hanover_%28P1140949%29.jpg","photographer":"MB-one","license":"CC BY-SA 4.0","width":3161,"height":3951},
+  {"brand":"TYM","model":"T6115","fileId":"tym-t6115-t115-marcelx42-2025","path":"0/01/TYM_T115_Agritechnica_2025_%28DSC04612%29.jpg","photographer":"MarcelX42","license":"CC BY-SA 4.0","width":6139,"height":4093},
+  {"brand":"TYM","model":"T2025P","fileId":"tym-t2025p-t25-marcelx42-2025","path":"0/0b/TYM_T25_Agritechnica_2025_%28DSC04615%29.jpg","photographer":"MarcelX42","license":"CC BY-SA 4.0","width":6011,"height":4508},
 ] as const;
 function licenseUrl(name:string):string{
   if(name==="CC0")return "https://creativecommons.org/publicdomain/zero/1.0/";
