@@ -2,8 +2,8 @@
   "version": 1,
   "pages": {
     "https://tractorvs.com/": {
-      "digest": "ff1c165ddda52d8f8db52876a090d796b70ce9abb4a64d7599b50e6584c5d1bf",
-      "modified": "2026-11-22T09:48:10.487Z"
+      "digest": "b2f880494b80e8ecca1ffcc1b417cb258ef59bc9cfa9f9b3ccf269bde6b3db89",
+      "modified": "2026-11-22T15:29:03.380Z"
     },
     "https://tractorvs.com/articles/": {
       "digest": "fde5f9d32b3a05d05965a3c7ee1afeddf92d6bf8bc630648231f7e654c4143b0",
@@ -11146,8 +11146,8 @@
       "modified": "2026-11-22T04:59:19.699Z"
     },
     "https://tractorvs.com/tr/": {
-      "digest": "07282688ff683d294fc2f5dd7b8a56fca3889dfcc9dac55adf99435fb8330575",
-      "modified": "2026-11-22T09:48:10.487Z"
+      "digest": "8680018cc8c851fbc7fad17e0c63771cf5b6a7fd3ca30953fa2747d6ce82679a",
+      "modified": "2026-11-22T15:29:03.380Z"
     },
     "https://tractorvs.com/tr/articles/": {
       "digest": "f1cddee82b133de7049d24312c62379af3bf5f2cabf91349366491a52400b493",
