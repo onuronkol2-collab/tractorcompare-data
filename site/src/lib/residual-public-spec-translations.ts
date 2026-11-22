@@ -49,7 +49,10 @@ export const RESIDUAL_PUBLIC_SPEC_TERMS: Record<string, Partial<Record<Locale,st
     "es": "Medida del neumático delantero"
   },
   "Gear Count": {
-    "tr": "Vites sayısı"
+    "tr": "Vites sayısı",
+    "pt-br": "Número de marchas",
+    "fr": "Nombre de rapports",
+    "es": "Número de marchas"
   },
   "Hydrostatic Transmission Ranges": {
     "tr": "Hidrostatik şanzıman hız aralıkları"
@@ -134,7 +137,10 @@ export const RESIDUAL_PUBLIC_SPEC_TERMS: Record<string, Partial<Record<Locale,st
     "es": "Opciones de transmisión disponibles"
   },
   "Clutch Configuration": {
-    "tr": "Debriyaj düzeni"
+    "tr": "Debriyaj düzeni",
+    "pt-br": "Configuração da embreagem",
+    "fr": "Configuration de l’embrayage",
+    "es": "Configuración del embrague"
   },
   "Clutch Standard": {
     "tr": "Standart debriyaj",
@@ -143,13 +149,22 @@ export const RESIDUAL_PUBLIC_SPEC_TERMS: Record<string, Partial<Record<Locale,st
     "es": "Embrague de serie"
   },
   "Creeper Gearbox Option": {
-    "tr": "Sürüngen vitesli şanzıman seçeneği"
+    "tr": "Sürüngen vitesli şanzıman seçeneği",
+    "pt-br": "Opção de caixa de velocidades super-redutora",
+    "fr": "Option de boîte de vitesses à rapports rampants",
+    "es": "Opción de caja de cambios superreductora"
   },
   "Driven Wheels": {
-    "tr": "Tahrik edilen tekerlekler"
+    "tr": "Tahrik edilen tekerlekler",
+    "pt-br": "Rodas motrizes",
+    "fr": "Roues motrices",
+    "es": "Ruedas motrices"
   },
   "Engine Maker": {
-    "tr": "Motor üreticisi"
+    "tr": "Motor üreticisi",
+    "pt-br": "Fabricante do motor",
+    "fr": "Fabricant du moteur",
+    "es": "Fabricante del motor"
   },
   "Engine Rpm At Stated Power": {
     "tr": "Bildirilen motor gücündeki devir (dev/dak)",
@@ -175,7 +190,10 @@ export const RESIDUAL_PUBLIC_SPEC_TERMS: Record<string, Partial<Record<Locale,st
     "es": "Rango de velocidades de avance"
   },
   "Forward/Reverse Gear Options": {
-    "tr": "İleri/geri vites seçenekleri"
+    "tr": "İleri/geri vites seçenekleri",
+    "pt-br": "Opções de marchas à frente e à ré",
+    "fr": "Options de rapports avant et arrière",
+    "es": "Opciones de marchas de avance y retroceso"
   },
   "Front Diff Lock Type": {
     "tr": "Ön diferansiyel kilidi tipi",
@@ -313,7 +331,10 @@ export const RESIDUAL_PUBLIC_SPEC_TERMS: Record<string, Partial<Record<Locale,st
     "ru": "Тип блокировки заднего дифференциала"
   },
   "Rear Remote Valve Sets": {
-    "tr": "Arka hidrolik kumanda valfi grupları"
+    "tr": "Arka hidrolik kumanda valfi grupları",
+    "pt-br": "Conjuntos de distribuidores hidráulicos traseiros",
+    "fr": "Ensembles de distributeurs hydrauliques arrière",
+    "es": "Conjuntos de distribuidores hidráulicos traseros"
   },
   "Rear Tire (Main Configuration)": {
     "tr": "Arka lastik (ana yapılandırma)",
@@ -344,10 +365,16 @@ export const RESIDUAL_PUBLIC_SPEC_TERMS: Record<string, Partial<Record<Locale,st
     "tr": "Standart debriyaj"
   },
   "Standard Front Tire Size": {
-    "tr": "Standart ön lastik ölçüsü"
+    "tr": "Standart ön lastik ölçüsü",
+    "pt-br": "Dimensão padrão do pneu dianteiro",
+    "fr": "Dimension standard du pneu avant",
+    "es": "Medida estándar del neumático delantero"
   },
   "Standard Rear Tire Size": {
-    "tr": "Standart arka lastik ölçüsü"
+    "tr": "Standart arka lastik ölçüsü",
+    "pt-br": "Dimensão padrão do pneu traseiro",
+    "fr": "Dimension standard du pneu arrière",
+    "es": "Medida estándar del neumático trasero"
   },
   "Synchro-Shuttle Gear Configuration": {
     "tr": "Synchro-Shuttle vites düzeni",
@@ -362,7 +389,10 @@ export const RESIDUAL_PUBLIC_SPEC_TERMS: Record<string, Partial<Record<Locale,st
     "tr": "Şanzıman yapılandırması"
   },
   "Transmission Gears": {
-    "tr": "Şanzıman vitesleri"
+    "tr": "Şanzıman vitesleri",
+    "pt-br": "Marchas da transmissão",
+    "fr": "Rapports de transmission",
+    "es": "Marchas de la transmisión"
   },
   "Transmission Option Hilo": {
     "tr": "HiLo şanzıman seçeneği"
@@ -371,7 +401,10 @@ export const RESIDUAL_PUBLIC_SPEC_TERMS: Record<string, Partial<Record<Locale,st
     "tr": "HML şanzıman seçeneği"
   },
   "Transmission Shuttle Type": {
-    "tr": "Şanzıman ileri-geri yön değiştirme tipi"
+    "tr": "Şanzıman ileri-geri yön değiştirme tipi",
+    "pt-br": "Tipo de inversor de marcha da transmissão",
+    "fr": "Type d’inverseur de marche de la transmission",
+    "es": "Tipo de inversor de marcha de la transmisión"
   },
   "Weight With Roll Bar": {
     "tr": "Devrilme koruma barıyla ağırlık",
@@ -1300,5 +1333,9 @@ export const RESIDUAL_PUBLIC_SPEC_TERMS: Record<string, Partial<Record<Locale,st
     "pt-br": "Bitola dianteira (mm)",
     "fr": "Voie avant (mm)",
     "es": "Ancho de vía delantero (mm)"
-  }
+  },
+  "4WD Engagement Control": { "tr": "4WD devreye alma kumandası" },
+  "Forward/Reverse Shuttle Control": { "tr": "İleri/geri yön değiştirme kumandası" },
+  "Front Differential Lock / Limited Slip": { "tr": "Ön diferansiyel kilidi / sınırlı kaymalı diferansiyel" },
+  "Rear Differential Lock Actuation": { "tr": "Arka diferansiyel kilidini devreye alma kumandası" },
 };

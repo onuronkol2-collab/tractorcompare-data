@@ -92,3 +92,65 @@ test("last audited Chinese and Russian labels are exact, source-scoped and no lo
   assert.equal(specLabel({...exampleSpec("Motor soğutma tipi"),canonical_key:"engine_cooling"},"zh"),"发动机冷却方式");
   assert.equal(specLabel({...exampleSpec("Operator station / cab"),canonical_key:"cab_type"},"ru"),"Рабочее место оператора / кабина");
 });
+
+
+test("source-specific PT-BR, French and Spanish technical headings retain exact meaning",()=>{
+  const reviewed={
+    "Clutch Configuration":["Configuração da embreagem","Configuration de l’embrayage","Configuración del embrague"],
+    "Creeper Gearbox Option":["Opção de caixa de velocidades super-redutora","Option de boîte de vitesses à rapports rampants","Opción de caja de cambios superreductora"],
+    "Driven Wheels":["Rodas motrizes","Roues motrices","Ruedas motrices"],
+    "Engine Maker":["Fabricante do motor","Fabricant du moteur","Fabricante del motor"],
+    "Forward/Reverse Gear Options":["Opções de marchas à frente e à ré","Options de rapports avant et arrière","Opciones de marchas de avance y retroceso"],
+    "Gear Count":["Número de marchas","Nombre de rapports","Número de marchas"],
+    "Rear Remote Valve Sets":["Conjuntos de distribuidores hidráulicos traseiros","Ensembles de distributeurs hydrauliques arrière","Conjuntos de distribuidores hidráulicos traseros"],
+    "Standard Front Tire Size":["Dimensão padrão do pneu dianteiro","Dimension standard du pneu avant","Medida estándar del neumático delantero"],
+    "Standard Rear Tire Size":["Dimensão padrão do pneu traseiro","Dimension standard du pneu arrière","Medida estándar del neumático trasero"],
+    "Transmission Gears":["Marchas da transmissão","Rapports de transmission","Marchas de la transmisión"],
+    "Transmission Shuttle Type":["Tipo de inversor de marcha da transmissão","Type d’inverseur de marche de la transmission","Tipo de inversor de marcha de la transmisión"],
+  };
+  const locales=["pt-br","fr","es"];
+  assert.equal(Object.keys(reviewed).length,11);
+  for(const [source,values] of Object.entries(reviewed)){
+    assert.equal(values.length,3);
+    for(let i=0;i<locales.length;i++){
+      const locale=locales[i];
+      const spec=exampleSpec(source);
+      const untouched=structuredClone(spec);
+      assert.equal(publishedSpecificationLabel(source,locale),values[i],source+" "+locale);
+      assert.equal(specLabel(spec,locale),values[i],source+" "+locale);
+      assert.deepEqual(spec,untouched,"source measurements and evidence never change");
+    }
+  }
+  for(const locale of locales){
+    assert.notEqual(
+      publishedSpecificationLabel("Standard Front Tire Size",locale),
+      publishedSpecificationLabel("Standard Rear Tire Size",locale),
+      locale+" front and rear variants must remain distinguishable"
+    );
+    assert.match(publishedSpecificationLabel("Four-Wheel-Drive Engagement",locale),/4WD|4RM/,
+      locale+" drivetrain qualification must not disappear");
+    assert.notEqual(
+      publishedSpecificationLabel("Max Speed",locale),
+      publishedSpecificationLabel("Minimum Forward Speed",locale),
+      locale+" minimum and maximum speed cannot be conflated");
+  }
+});
+
+
+test("live 388-model Turkish predeploy audit exact source headings have safe translations",()=>{
+  const cases={
+    "4WD Engagement Control":"4WD devreye alma kumandası",
+    "Forward/Reverse Shuttle Control":"İleri/geri yön değiştirme kumandası",
+    "Front Differential Lock / Limited Slip":"Ön diferansiyel kilidi / sınırlı kaymalı diferansiyel",
+    "Rear Differential Lock Actuation":"Arka diferansiyel kilidini devreye alma kumandası"
+  };
+  assert.equal(Object.keys(cases).length,4);
+  for(const [source,label] of Object.entries(cases)){
+    const spec=exampleSpec(source),original=structuredClone(spec);
+    assert.equal(publishedSpecificationLabel(source,"tr"),label,source);
+    assert.equal(specLabel(spec,"tr"),label,source);
+    assert.deepEqual(spec,original,source+" must never mutate source evidence");
+  }
+  assert.match(publishedSpecificationLabel("4WD Engagement Control","tr"),/4WD/);
+  assert.match(publishedSpecificationLabel("Front Differential Lock / Limited Slip","tr"),/sınırlı kaymalı/);
+});
