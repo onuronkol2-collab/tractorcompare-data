@@ -15,7 +15,7 @@ export function auditPilotHtml(html,{slug,prefix}){
   const path="/"+prefix+"brands/"+slug+"/";
   const origin=BASE+path;
   const models=[...html.matchAll(/<article\b[^>]*class="brand-model"[^>]*>/g)].length;
-  const hrefs=[...html.matchAll(/<h3><a href="([^"]+)"/g)].map(x=>x[1]);
+  const hrefs=[...html.matchAll(/<h3\b[^>]*>\s*<a\b[^>]*\bhref="([^"]+)"/g)].map(x=>x[1]);
   const unique=new Set(hrefs);
   const expectedDetailPrefix="/"+prefix+"tractors/";
   const canonical=(html.match(/<link rel="canonical" href="([^"]+)"/)||[])[1]||null;
