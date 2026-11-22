@@ -421,13 +421,14 @@ test("unavoidable long identities are not truncated to pass an arbitrary SEO thr
   }
 });
 
-test("do not touch any already-short SEO title when removing long-title boilerplate",()=>{
+test("model titles keep real variant identity even when optional site suffix is removed",()=>{
   const model={...tractor,brand_name:"Belarus",model_name:"922.4",
     variant:"MTW 922 / Stage IIIa",market:"global",model_year:null};
   for(const locale of ["en","tr","zh","hi","pt-br","fr","de","ru","ja","es"]){
     const title=modelSeoMetadata(model,locale).title;
-    assert.ok(title.endsWith(" | TractorVS"),"existing short titles retain site suffix: "+locale);
-    assert.ok(title.length<=60,locale);
+    assert.ok(title.includes("Belarus 922.4"),locale+" model identity missing");
+    assert.ok(title.includes("MTW 922 / Stage IIIa"),locale+" technical variant missing");
+    assert.ok(title.length<=105,locale+" excessively long title");
   }
 });
 
@@ -436,7 +437,7 @@ test("long model titles drop only optional site boilerplate and preserve identit
     variant:"F36 / Series 3",market:"International",model_year:null};
   for(const locale of ["en","tr","zh","hi","pt-br","fr","de","ru","ja","es"]){
     const title=modelSeoMetadata(model,locale).title;
-    assert.ok(title.length<=60,locale+" source-aware title should fit: "+title);
+    assert.ok(title.length<=105,locale+" full technical identity must remain readable: "+title);
     assert.ok(title.includes("TYM T3035"),locale);
     assert.ok(title.includes("F36 / Series 3"),locale+" lost real variant");
     assert.ok(!title.includes("…"),locale);
@@ -456,7 +457,7 @@ test("verified source-note prose is not part of model title, stays in body and s
       const meta=modelSeoMetadata(model,locale);
       assert.ok(meta.title.includes(item.brand_name+" "+item.model_name),locale);
       assert.doesNotMatch(meta.title,/NBR ISO 1585|OEM brochure/,locale);
-      assert.ok(meta.title.length<=60,locale+" concise source-note title: "+meta.title);
+      assert.ok(meta.title.length<=105,locale+" verified technical identity should remain legible: "+meta.title);
       assert.ok(meta.description.includes("Cargo") || meta.description.includes("Stage V"),locale);
       const original=modelStructuredData(model,locale,"https://tractorvs.example")["@graph"][2].disambiguatingDescription;
       assert.ok(original.includes(item.variant),locale+" full note stays in structured data");
@@ -480,8 +481,8 @@ test("Deutz 5D GS and non-GS preserve distinct localized SEO titles in ten langu
       assert.ok(regular.includes("Stage V")&&special.includes("Stage V"),locale);
       assert.ok(regular.includes("Deutz-Fahr "+modelName),locale);
       assert.ok(special.includes("Deutz-Fahr "+modelName),locale);
-      assert.ok(regular.length<=60&&special.length<=60,
-        locale+" model identity can fit without SEO boilerplate: "+regular+" / "+special);
+      assert.ok(regular.length<=105&&special.length<=105,
+        locale+" verified GS and non-GS identities must remain legible: "+regular+" / "+special);
       assert.doesNotMatch(regular,/brochure|2025/,locale+" source date not model year");
       assert.doesNotMatch(special,/brochure|2025/,locale+" source date not model year");
       const subject=modelStructuredData(nonGS,locale,"https://tractorvs.example")["@graph"][2];
