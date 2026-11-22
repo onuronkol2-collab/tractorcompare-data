@@ -2,6 +2,7 @@ import {test} from "node:test";
 import assert from "node:assert/strict";
 import {classifyPublicImageSitemap,PUBLIC_FORUM_MEDIA_ENDPOINT} from "../scripts/image-seo-asset-boundaries.mjs";
 import {fetchPublicImageAsset,publicImageMimeOk} from "../scripts/image-seo-http.mjs";
+import {copyrightZhSitemapPages} from "../scripts/image-copyright-live-cases.mjs";
 const root="https://tractorvs.com";
 const model=root+"/tr/tractors/exact-model-123/";
 const forum=root+"/tr/forum/reviewed-topic/";
@@ -68,4 +69,19 @@ test("editorial references must match the approved photograph for that exact gui
   assert.equal(classifyPublicImageSitemap(imageXml([[page,urls]]),inventory).imageReferences,photos.length);
   assert.throws(()=>classifyPublicImageSitemap(imageXml([[page,["https://tractorvs.com/images/tractors/wrong-1920.jpg"]]]),inventory),/outside/);
  }
+});
+
+test("Google copyright audit lists all Chinese pages sharing a rights-cleared photo",()=>{
+ const rights=[{fileId:"photo-a",copyrightOwner:"VerifiedPerson",sourcePage:"https://commons.wikimedia.org/wiki/File:A.jpg"},
+  {fileId:"photo-cc0",copyrightOwner:undefined,sourcePage:"https://commons.wikimedia.org/wiki/File:B.jpg"}];
+ const xml=imageXml([
+  [root+"/zh/tractors/model-a/",[root+"/images/tractors/photo-a-1920.jpg"]],
+  [root+"/zh/tractors/model-a-variant/",[root+"/images/tractors/photo-a-1920.jpg"]],
+  [root+"/en/tractors/model-a/",[root+"/images/tractors/photo-a-1920.jpg"]],
+  [root+"/zh/tractors/model-b/",[root+"/images/tractors/photo-cc0-1920.jpg"]]
+ ]);
+ const pages=copyrightZhSitemapPages(xml,rights);
+ assert.equal(pages.length,2);
+ assert.deepEqual(pages.map(v=>v.path),["/zh/tractors/model-a/","/zh/tractors/model-a-variant/"]);
+ assert.ok(pages.every(p=>p.owner==="VerifiedPerson"&&p.fileId==="photo-a"));
 });
