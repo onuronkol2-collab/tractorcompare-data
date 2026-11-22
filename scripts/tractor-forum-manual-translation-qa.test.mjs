@@ -140,3 +140,19 @@ test("same numbers with swapped scores between brands must never be considered p
  const badRank=auditManualForumTranslation({...cfg,targetBody:swappedRank});
  assert.ok(badRank.errors.includes("brand_rank_score_mapping_changed"),JSON.stringify(badRank));
 });
+
+test("French and Russian native thousand grouping keeps magnitude, rejects changed digits",()=>{
+ const cfg={sourceTitle:"2026 Traktör Bayi Memnuniyeti",
+  sourceBody:"## Örneklem\n\n2.045 yanıt ve 1.745 kişi, 1.000 puan; 75 hp; %10 fark."};
+ for(const [locale,title,body] of [
+  ["fr","Satisfaction des concessionnaires en 2026","## Échantillon\n\n2 045 réponses et 1 745 personnes, 1 000 points ; 75 hp ; une différence de 10 %."],
+  ["ru","Удовлетворённость дилеров в 2026 году","## Выборка\n\n2 045 ответов и 1 745 человек, 1 000 баллов; 75 hp; разница 10 %."]
+ ]){
+  const good=auditManualForumTranslation({...cfg,locale,targetTitle:title,targetBody:body});
+  assert.ok(!good.errors.includes("numeric_facts_changed"),JSON.stringify(good.errors));
+  assert.ok(!good.errors.includes("numeric_units_changed"),JSON.stringify(good.errors));
+  const corrupted=auditManualForumTranslation({...cfg,locale,targetTitle:title,
+   targetBody:body.replace(/2[ \u00a0\u202f]045/u,"2 046")});
+  assert.ok(corrupted.errors.includes("numeric_facts_changed"),JSON.stringify(corrupted.errors));
+ }
+});
