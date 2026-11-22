@@ -690,29 +690,6 @@ const candidates=[
     "width": 7008,
     "height": 3944
   },
-  // 2026-11-22: Wikimedia Commons exact-model source, author and CC BY-SA 4.0
-  // metadata reviewed. No variant-specific equivalence claimed.
-  // Binary/JPEG and first-party proxy validation remain PR release gates.
-  {
-    "brand": "Belarus",
-    "model": "510",
-    "fileId": "belarus-510-homoatrox-open-day-2017",
-    "path": "1/19/Belarus_510_%28open_day_2017%29_1.jpg",
-    "photographer": "Homoatrox",
-    "license": "CC BY-SA 4.0",
-    "width": 2484,
-    "height": 2748
-  },
-  {
-    "brand": "Belarus",
-    "model": "922.3",
-    "fileId": "belarus-922-3-bulykin-almaty-2026",
-    "path": "9/94/%D0%90%D0%BB%D0%BC%D0%B0%D1%82%D1%8B%2C_%D0%91%D0%B5%D0%BB%D0%B0%D1%80%D1%83%D1%81-922.3_%D0%BD%D0%B0_%D0%9A%D1%83%D0%BB%D1%8B%D0%BC%D0%B1%D0%B5%D1%82%D0%BE%D0%B2%D0%B0-%D0%91%D1%80%D1%83%D0%BD%D0%BE_%281%29.jpg",
-    "photographer": "Nikolai Bulykin",
-    "license": "CC BY-SA 4.0",
-    "width": 5077,
-    "height": 3385
-  },
 ] as const;
 function licenseUrl(name:string):string{
   if(name==="CC0")return "https://creativecommons.org/publicdomain/zero/1.0/";
