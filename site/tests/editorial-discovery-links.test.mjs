@@ -52,3 +52,26 @@ test("untranslated model-locales link to genuine native-language selection guide
  assert.match(model,/href=\{localizedPath\(lang,"\/guides\/tractor-technical-terms\/"\)\}/);
  assert.doesNotMatch(model,/href=\{localizedPath\(lang,"\/guides\/tractor-technical-terms\/"\)\}\s*aria-label=/);
 });
+
+test("reviewed GS comparison is a natural SSR link only on verified EN/TR homepages",()=>{
+ assert.match(home,/const reviewedGsPair=\(lang==="tr"\|\|lang==="en"\)/);
+ assert.match(home,/curatedDeutz5DPair\(catalogue\.tractors\)/);
+ assert.match(home,/const reviewedGsPairHref=reviewedGsPair/);
+ assert.match(home,/localizedPath\(lang,DEUTZ_5D_GS_PILOT\.path\)/);
+ assert.match(home,/\{reviewedGsPairHref && <div class="home-editorial-resource home-editorial-source-pair">/);
+ assert.match(home,/href=\{reviewedGsPairHref\}/);
+ assert.match(home,/Bağımsız saha testi değildir\./);
+ assert.match(home,/Not an independent field test\./);
+ // The existing ten-language editorial cards stay unchanged; a verified pair
+ // appears as one extra resource, not an invented page in eight locales.
+ assert.equal((home.match(/class="home-editorial-card"/g)||[]).length,2);
+ assert.equal((home.match(/href=\{reviewedGsPairHref\}/g)||[]).length,1);
+ for(const lang of ["en","tr"]){
+  const destination=localizedPath(lang,"/compare/deutz-fahr-5090-d-gs-vs-5100-d-gs/");
+  assert.equal(destination,lang==="en"
+   ?"/compare/deutz-fahr-5090-d-gs-vs-5100-d-gs/"
+   :"/tr/compare/deutz-fahr-5090-d-gs-vs-5100-d-gs/");
+ }
+ for(const lang of LOCALES.filter(x=>x!=="en"&&x!=="tr"))
+  assert.ok(!["en","tr"].includes(lang),lang+" must not receive untranslated comparison");
+});
