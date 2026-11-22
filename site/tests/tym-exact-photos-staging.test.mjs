@@ -56,7 +56,7 @@ test("Staging job cannot publish source or re-try around Commons throttling",()=
   assert.match(workflow,/cancel-in-progress: false/);
   assert.match(workflow,/approvedToPublish/);
   assert.match(workflow,/reviewRequired/);
-  assert.match(workflow,/SHA/);
+  assert.match(workflow,/sha256/);
   assert.match(workflow,/git ls-remote --exit-code --heads/);
   assert.match(workflow,/REVIEW ONLY/);
   assert.doesNotMatch(workflow,/gh pr merge|supabase db push|wrangler deploy/);
