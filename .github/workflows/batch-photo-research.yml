@@ -1,7 +1,7 @@
 name: TractorVS batch photo research
 on:
   workflow_dispatch:
-  # Daily at 07:15 Europe/Istanbul (04:15 UTC): historical + all public models.
+  # Daily 07:15 Europe/Istanbul: one shared Commons brand discovery for historical + all live models.
   schedule:
     - cron: "15 4 * * *"
   # Runs once after this schedule change is merged; CI checks PRs separately.
@@ -17,6 +17,8 @@ on:
       - "site/scripts/photo-source-response.mjs"
       - "site/scripts/photo-private-inventory.mjs"
       - "site/scripts/photo-archive-candidate-index.mjs"
+      - "site/scripts/photo-commons-http.mjs"
+      - "site/scripts/photo-research-model-union.mjs"
       - "site/scripts/photo-research-quality-gate.mjs"
       - "site/scripts/extract-archived-tractor-inventory.py"
       - "site/scripts/archive-brand-photo-discovery.mjs"
