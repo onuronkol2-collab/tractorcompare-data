@@ -1,0 +1,52 @@
+name: TractorVS offline licensed mobile photo QA (no deploy)
+on:
+  pull_request:
+    paths:
+      - "site/scripts/photo-mobile-offline-pilot.mjs"
+      - "site/scripts/photo-mobile-offline-pilot.py"
+      - "site/tests/photo-mobile-offline-pilot.test.mjs"
+      - "site/src/lib/tractor-photos.ts"
+      - "site/src/lib/historical-licensed-photos.ts"
+      - ".github/workflows/photo-mobile-offline-pilot.yml"
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: tractorvs-offline-photo-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+jobs:
+  offline-pilot:
+    name: 3 CC-licensed photos, JPEG/WebP QA artifact only
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22.23.4"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install pinned free image converter in isolated CI
+        run: python -m pip install --disable-pip-version-check --no-cache-dir Pillow==11.3.0
+      - name: Check exact rights/identity gate without contacting Wikimedia
+        run: node --experimental-strip-types --test site/tests/photo-mobile-offline-pilot.test.mjs
+      - name: Test pixel conversion and visual quality without network
+        run: python site/scripts/photo-mobile-offline-pilot.py --self-test
+      - name: Resolve only existing public approved 960px JPEGs
+        run: |
+          mkdir -p /tmp/tractorvs-mobile-photo-pilot
+          node --experimental-strip-types site/scripts/photo-mobile-offline-pilot.mjs /tmp/tractorvs-mobile-photo-pilot/approved-input.json
+      - name: Generate only 3 offline 720px JPEG+WebP QA derivatives
+        run: |
+          python site/scripts/photo-mobile-offline-pilot.py \
+            --input /tmp/tractorvs-mobile-photo-pilot/approved-input.json \
+            --output /tmp/tractorvs-mobile-photo-pilot/output
+      - name: Store candidates with Commons attribution, never deploy or commit files
+        if: success()
+        uses: actions/upload-artifact@v4
+        with:
+          name: tractorvs-offline-photo-720-reviewed-candidates
+          path: /tmp/tractorvs-mobile-photo-pilot/output/
+          retention-days: 7
+          if-no-files-found: error
