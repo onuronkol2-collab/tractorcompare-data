@@ -8,7 +8,7 @@ import {FORUM_STARTER_GUIDES} from "../lib/forum-starter-guides.ts";
 import {allPublicForumTopics,forumDate,isIndexableForumTopic,publicForumClientConfig} from "../lib/forum.ts";
 import {approvedForumHubLocales} from "../lib/forum-hub-locales.mjs";
 import {FORUM_LIVE_TEXT} from "../lib/forum-live-i18n.ts";
-import {forumSeoDescription} from "../lib/forum-format.mjs";
+import {forumCardExcerpt} from "../lib/forum-format.mjs";
 import {getPublicCatalog} from "../lib/catalog.ts";
 import {localizedPath,LOCALES,LOCALE_TAGS,type Locale} from "../lib/locales.ts";
 interface Props {lang:Locale}
@@ -95,7 +95,7 @@ const schema=indexable?{
           <time datetime={topic.created_at}>{forumDate(topic.created_at,lang)}</time>
          </div>
          <h3><a href={path+topic.slug+"/"}>{topic.title}</a></h3>
-         <p>{forumSeoDescription(topic.body,230)}</p>
+         <p>{forumCardExcerpt(topic.body,230)}</p>
          {model&&<p class="community-model">
           <a href={localizedPath(lang,"/tractors/"+model.slug+"/")}>{model.brand_name} {model.model_name}</a>
          </p>}
