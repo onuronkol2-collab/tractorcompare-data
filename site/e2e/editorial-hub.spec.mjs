@@ -10,7 +10,7 @@ test.beforeEach(async ({page})=>{
  });
 });
 
-test("ten authentic article hubs expose six real sources and correct language tags",async ({page})=>{
+test("ten authentic article hubs expose only real source-backed pages with correct language tags",async ({page})=>{
  for(const [path,lang] of [
   ["/articles/","en"],["/tr/articles/","tr"],["/zh/articles/","zh-Hans"],
   ["/hi/articles/","hi"],["/pt-br/articles/","pt-BR"],
@@ -22,18 +22,28 @@ test("ten authentic article hubs expose six real sources and correct language ta
   await expect(page.locator("html")).toHaveAttribute("lang",lang);
   await expect(page.locator("main#main")).toHaveCount(1);
   await expect(page.locator("h1")).toHaveCount(1);
-  await expect(page.locator(".editorial-card")).toHaveCount(6);
-  await expect(page.locator(".editorial-card h3 a")).toHaveCount(6);
+  const activeLocale=path.split("/").filter(Boolean)[0]==="articles"?"en":path.split("/")[1];
+  const reviewedPilot=["en","tr"].includes(activeLocale);
+  const expectedCount=reviewedPilot?7:6;
+  await expect(page.locator(".editorial-card")).toHaveCount(expectedCount);
+  await expect(page.locator(".editorial-card h3 a")).toHaveCount(expectedCount);
   // JSON-LD is a script: Playwright toContainText reads rendered innerText,
   // which is empty for scripts even when the JSON is present in the HTML.
   const jsonld=await page.locator('script[type="application/ld+json"]').textContent();
   expect(jsonld).toContain("CollectionPage");
   expect(jsonld).toContain("ItemList");
-  const activeLocale=path.split("/").filter(Boolean)[0]==="articles"?"en":path.split("/")[1];
-  const links=await page.locator(".editorial-card h3 a").evaluateAll(list=>list.map(x=>x.getAttribute("href")));
-  expect(links).toHaveLength(6);
+  const schema=JSON.parse(jsonld||"{}");
+  const list=schema["@graph"]?.find(x=>x["@type"]==="ItemList");
+  expect(list?.numberOfItems,path+" structured article count").toBe(expectedCount);
+  expect(list?.itemListElement).toHaveLength(expectedCount);
+  const links=await page.locator(".editorial-card h3 a").evaluateAll(els=>els.map(x=>x.getAttribute("href")));
+  expect(links).toHaveLength(expectedCount);
+  const pilotPath=(activeLocale==="tr"?"/tr":"")+"/compare/deutz-fahr-5090-d-gs-vs-5100-d-gs/";
+  expect(links.includes(pilotPath),path+" reviewed pilot only in actual-language editions").toBe(reviewedPilot);
+  if(reviewedPilot)
+   expect(list.itemListElement.some(item=>item.url==="https://tractorvs.com"+pilotPath)).toBe(true);
   for(const href of links){
-   expect(href).toMatch(/^\/(?:tr\/|zh\/|hi\/|pt-br\/|fr\/|de\/|ru\/|ja\/|es\/)?(?:guides|reviews)\//);
+   expect(href).toMatch(/^\/(?:tr\/|zh\/|hi\/|pt-br\/|fr\/|de\/|ru\/|ja\/|es\/)?(?:guides|reviews|compare)\//);
    expect(href).not.toContain("2026-2027-traktor-guvenilirlik");
   }
   if(!["en","tr"].includes(activeLocale)){
@@ -127,7 +137,7 @@ test("the six published articles expose matching, clickable editorial breadcrumb
    expect(nodes.some(node=>node.item==="https://tractorvs.com"+hub),target+" structured trail").toBe(true);
    await link.click();
    await expect(page).toHaveURL(new RegExp(hub.replaceAll("/","\\/")+"$"));
-   await expect(page.locator(".editorial-card")).toHaveCount(6);
+   await expect(page.locator(".editorial-card")).toHaveCount(7);
   }
  }
 });
@@ -151,7 +161,7 @@ test("all ten homepages offer real native-language editorial links in visible co
   // The inert CI preview intentionally disables public indexing, so it has
   // no canonical tag. Canonical is checked in the production bundle gate.
   await hub.click();
-  await expect(page.locator(".editorial-card")).toHaveCount(6);
+  await expect(page.locator(".editorial-card")).toHaveCount(["en","tr"].includes(locale)?7:6);
  }
 });
 
@@ -186,8 +196,9 @@ test("article archive offers accessible direct links to guides and model review"
   const review=links.locator('a[href="#incelemeler"]');
   await expect(guides).toBeVisible();
   await expect(review).toBeVisible();
-  await expect(page.locator(".editorial-card")).toHaveCount(6);
-  await expect(page.locator(".editorial-card-footer a")).toHaveCount(6);
+  const count=path==="/de/articles/"?6:7;
+  await expect(page.locator(".editorial-card")).toHaveCount(count);
+  await expect(page.locator(".editorial-card-footer a")).toHaveCount(count);
   await review.click();
   await expect(page).toHaveURL(/#incelemeler$/);
   await expect(page.locator("#incelemeler")).toBeInViewport();

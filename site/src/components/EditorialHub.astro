@@ -2,6 +2,7 @@
 import SiteLayout from "../layouts/SiteLayout.astro";
 import {localizedPath,LOCALES,LOCALE_TAGS,type Locale} from "../lib/locales.ts";
 import {editorialHubTranslation} from "../lib/editorial-hub-i18n.ts";
+import {DEUTZ_5D_GS_PILOT} from "../lib/deutz-5d-editorial.ts";
 interface Props {lang:Locale}
 const {lang}=Astro.props;
 const tr=lang==="tr";
@@ -92,10 +93,20 @@ const schema={
  "@graph":[
   {"@type":"CollectionPage","@id":pageUrl+"#webpage",url:pageUrl,name:copy.heading,
     description:copy.description,inLanguage:LOCALE_TAGS[lang],mainEntity:{"@id":pageUrl+"#list"}},
-  {"@type":"ItemList","@id":pageUrl+"#list",numberOfItems:entries.length,
-    itemListElement:entries.map((entry,i)=>({
-      "@type":"ListItem",position:i+1,url:new URL(entryHref(entry),root).toString(),name:titleFor(entry)
-    }))},
+  {"@type":"ItemList","@id":pageUrl+"#list",
+    numberOfItems:entries.length+((lang==="tr"||lang==="en")?1:0),
+    itemListElement:[
+      ...entries.map((entry,i)=>({
+        "@type":"ListItem",position:i+1,url:new URL(entryHref(entry),root).toString(),name:titleFor(entry)
+      })),
+      ...(lang==="tr"||lang==="en" ? [{
+        "@type":"ListItem",position:entries.length+1,
+        url:new URL(localizedPath(lang,DEUTZ_5D_GS_PILOT.path),root).toString(),
+        name:lang==="tr"
+         ?"Deutz-Fahr 5090 D GS ve 5100 D GS: kaynaklı teknik farklar"
+         :"Deutz-Fahr 5090 D GS vs 5100 D GS: verified technical differences"
+      }] : [])
+    ]},
   {"@type":"BreadcrumbList",itemListElement:[
     {"@type":"ListItem",position:1,name:copy.home,item:urlFor("/")},
     {"@type":"ListItem",position:2,name:copy.hub,item:pageUrl}
@@ -152,7 +163,7 @@ const schema={
    <section class="editorial-section" id="incelemeler" aria-labelledby="editorial-review-title">
     <div class="editorial-section-title">
      <div><h2 id="editorial-review-title">{copy.review}</h2><p>{copy.reviewIntro}</p></div>
-     <span>{String(reviews.length).padStart(2,"0")}</span>
+     <span>{String(reviews.length+((lang==="tr"||lang==="en")?1:0)).padStart(2,"0")}</span>
     </div>
     <ol class="editorial-grid">{reviews.map(entry=><li>
       <article class="editorial-card">
@@ -164,7 +175,20 @@ const schema={
         <a href={entryHref(entry)} hreflang={LOCALE_TAGS[destinationLanguage(entry)]}
           aria-label={titleFor(entry)+" — "+copy.read+(englishOnly(entry)?" — "+localized?.englishOriginal:"")}>{copy.read} <span aria-hidden="true">↗</span></a></div>
       </article>
-    </li>)}</ol>
+    </li>)}
+    {(lang==="tr"||lang==="en")&&<li>
+      <article class="editorial-card">
+        <p class="editorial-kicker">{tr?"AYNI RESMÎ BELGEDEN MODEL KARŞILAŞTIRMASI":"EXACT-MODEL MANUFACTURER DOCUMENT COMPARISON"}</p>
+        <h3><a href={localizedPath(lang,DEUTZ_5D_GS_PILOT.path)} hreflang={LOCALE_TAGS[lang]}>
+          {tr?"Deutz-Fahr 5090 D GS ve 5100 D GS: kaynaklı teknik farklar":"Deutz-Fahr 5090 D GS vs 5100 D GS: verified technical differences"}</a></h3>
+        <p>{tr
+          ?"Aynı Türkiye Stage V / GS belgesinde nominal motor gücü, tork, PTO ve hidrolik verileri. Uyuşmayan varyantlar ve belirsiz ölçümler birleştirilmez."
+          :"A side-by-side reading of rated power, torque, PTO and hydraulic figures from the same Türkiye-market GS Stage V brochure; no assumed field-test results."}</p>
+        <div class="editorial-card-footer"><time datetime="2026-11-22">{copy.checked}: 2026-11-22</time>
+          <a href={localizedPath(lang,DEUTZ_5D_GS_PILOT.path)} hreflang={LOCALE_TAGS[lang]}>{copy.read} <span aria-hidden="true">↗</span></a>
+        </div>
+      </article>
+    </li>}</ol>
    </section>
    <p class="editorial-disclaimer">{copy.disclaimer}</p>
    <aside class="editorial-cta">
