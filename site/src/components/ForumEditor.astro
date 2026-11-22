@@ -101,4 +101,40 @@ const emoji=["🚜","🌾","🛠️","⚙️","🔧","💬","✅","❓","📷","
   .forum-editor-toolbar button span{font-size:12px}
  }
  @media(prefers-reduced-motion:reduce){.forum-editor *{scroll-behavior:auto}}
+
+/* Lightweight professional editor; buttons retain their existing actions. */
+.forum-editor{gap:12px;margin-top:-2px;min-width:0}
+.forum-editor-top{align-items:flex-start;gap:9px}
+.forum-editor-toolbar{display:flex;flex-wrap:wrap;gap:5px;
+ padding:6px;border:1px solid #dce8da;border-radius:12px;
+ background:#f5f8f3;min-width:0}
+.forum-editor-toolbar button,.forum-editor-toolbar summary{
+ min-height:43px;min-width:43px;border:1px solid #e1e9e0;
+ border-radius:8px;background:#fff;color:#2b5c40;font-weight:850;
+ padding:9px;transition:background .15s ease,border-color .15s ease}
+.forum-editor-toolbar button:hover,.forum-editor-toolbar summary:hover{
+ border-color:#b9d5b4;background:#ebf4e7}
+.forum-editor-toolbar button[aria-pressed=true]{background:#225c3b;
+ border-color:#225c3b;color:#fff}
+.forum-editor-count{font-size:11px;color:#718273;line-height:1.5;
+ margin-top:10px;font-variant-numeric:tabular-nums}
+.forum-editor-preview-content{border-color:#d8e6d6;border-radius:12px;
+ background:#fbfdfb;color:#274331;line-height:1.8}
+.forum-editor-photos{border-top:1px solid #edf0e9;padding-top:12px}
+.forum-editor-hint,.forum-editor-privacy{font-size:11px;color:#718072;
+ line-height:1.7}
+.forum-emoji-grid{border:1px solid #d8e4d6;border-radius:13px;
+ box-shadow:0 18px 35px rgba(13,42,23,.17);max-width:min(330px,calc(100vw - 52px))}
+.forum-editor-photo-list li{border-color:#dbe7d8;border-radius:12px;
+ background:#fff}
+.forum-editor-toolbar button:focus-visible,.forum-editor-toolbar summary:focus-visible{
+ outline:3px solid #89bb85;outline-offset:3px}
+@media(max-width:540px){
+ .forum-editor-toolbar{max-width:100%;gap:4px}
+ .forum-editor-toolbar button,.forum-editor-toolbar summary{min-width:43px;min-height:43px}
+ .forum-editor-toolbar button span{font-size:11px}
+}
+@media(prefers-reduced-motion:reduce){
+ .forum-editor-toolbar button,.forum-editor-toolbar summary{transition:none}
+}
 </style>
