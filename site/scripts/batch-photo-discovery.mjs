@@ -1,7 +1,5 @@
-import {matchesPhotoFileModel} from "./photo-model-identity.mjs";
-import {allowedPhotoReuseLicense} from "./photo-license-check.mjs";
 import {fetchIndexedSitemapPages} from "./photo-sitemap-fetch.mjs";
-import {requireCommonsQueryResponse} from "./photo-source-response.mjs";
+import {indexArchivePhotoCandidates,archiveCandidatesForModel} from "./photo-archive-candidate-index.mjs";
 import {normalizePrivatePhotoResearchRows} from "./photo-private-inventory.mjs";
 /**
  * One-pass, read-only catalogue image discovery.
@@ -16,14 +14,12 @@ import {normalizePrivatePhotoResearchRows} from "./photo-private-inventory.mjs";
  */
 import {writeFile,readFile,mkdir} from "node:fs/promises";
 import {resolve} from "node:path";
-import {manufacturerPhotoAlias,matchesManufacturerPhotoAlias} from "./photo-model-aliases.mjs";
 
 const ORIGIN=process.env.TRACTORVS_URL||"https://tractorvs.com";
 const OUTPUT=resolve(process.env.TRACTOR_IMAGE_REPORT_DIR||"./photo-discovery-report");
 const PRIVATE_OUTPUT=process.env.TRACTOR_IMAGE_PRIVATE_REPORT_DIR?resolve(process.env.TRACTOR_IMAGE_PRIVATE_REPORT_DIR):null;
 const USER_AGENT="TractorVS/1.0 (tractorvs.com; public photo license research)";
 const REQUEST_LIMIT=4;
-const COMMONS_BATCH=1;
 const delay=ms=>new Promise(r=>setTimeout(r,ms));
 const stripTags=s=>String(s||"").replace(/<[^>]*>/g,"").replace(/&amp;/g,"&").replace(/&quot;/g,'"').trim();
 const norm=s=>String(s||"").normalize("NFKD").replace(/[\u0300-\u036f]/g,"").toLowerCase()
@@ -44,7 +40,6 @@ async function get(url,asJson=false){
 }
 // Positional wrappers: Array.map must never turn an index into a JSON flag.
 const getText=url=>get(url,false);
-const getJson=url=>get(url,true);
 async function publicInventory(){
   const index=await getText(new URL("/sitemap-index.xml",ORIGIN));
   const pages=await fetchIndexedSitemapPages(index,getText,{origin:ORIGIN});
@@ -90,54 +85,6 @@ function splitBrandModel(name){
 }
 
 
-async function commonsCandidates(record){
-  // Search the source model and only manufacturer-confirmed aliases.
-  // Alias candidates still require human review: title and CC metadata are NOT
-  // enough to prove exact model, configuration and licensing provenance.
-  const alias=manufacturerPhotoAlias(record.brand,record.model);
-  const searches=[record.brand+" "+record.model];
-  if(alias)searches.push(record.brand+" "+alias);
-  const found=new Map();
-  for(const q of searches){
-    const url=new URL("https://commons.wikimedia.org/w/api.php");
-    url.searchParams.set("action","query");
-    url.searchParams.set("format","json");
-    url.searchParams.set("formatversion","2");
-    url.searchParams.set("generator","search");
-    url.searchParams.set("gsrsearch","intitle:"+q);
-    url.searchParams.set("gsrnamespace","6");
-    url.searchParams.set("gsrlimit","15");
-    url.searchParams.set("prop","imageinfo");
-    url.searchParams.set("iiprop","url|size|mime|extmetadata");
-    url.searchParams.set("iiurlwidth","960");
-    const body=requireCommonsQueryResponse(await getJson(url.toString()));
-    for(const page of Array.isArray(body.query?.pages)?body.query.pages:[]){
-      if(page.title)found.set(page.title,page);
-    }
-    if(q!==searches.at(-1))await delay(1250);
-  }
-  const pages=[...found.values()];
-  const results=pages.map(page=>{
-    const info=page.imageinfo?.[0]||{};
-    const meta=info.extmetadata||{};
-    const text=(key)=>stripTags(meta[key]?.value||"");
-    const license=text("LicenseShortName")||text("UsageTerms");
-    const licenseUrl=text("LicenseUrl");
-    const artist=text("Artist")||text("Credit");
-    const matching=matchesPhotoFileModel(record.brand,record.model,page.title||"") ||
-      matchesManufacturerPhotoAlias(record.brand,record.model,page.title||"");
-    const permitted=allowedPhotoReuseLicense(license,licenseUrl);
-    return {fileTitle:page.title,url:info.url||null,
-      thumbnail:info.thumburl||null,
-      descriptionUrl:info.descriptionurl||null,
-      mime:info.mime||null,width:info.width||null,height:info.height||null,
-      photographer:artist?.slice(0,250),license,licenseUrl,
-      modelTextMatch:matching,reuseLicensePermitted:permitted,
-      reviewStatus:matching&&permitted&&artist&&info.url?"human_review_required":"unverified"};
-  }).filter(x=>x.modelTextMatch || x.reuseLicensePermitted).slice(0,12);
-  results.sort((a,b)=>Number(b.modelTextMatch&&b.reuseLicensePermitted)-Number(a.modelTextMatch&&a.reuseLicensePermitted));
-  return {search:searches.join(" | "),matches:results.length,candidates:results};
-}
 async function main(){
   await mkdir(OUTPUT,{recursive:true});
   const publicRecords=await publicInventory();
@@ -171,21 +118,19 @@ async function main(){
   console.log("IMAGE_INVENTORY "+JSON.stringify({publicModelPages:publicRecords.length,
     publicModelErrors:publicRecords.filter(x=>x.error).length,
     optionalDraftRows:privateRecords.length,uniqueModelSearches:entries.length}));
-  const reviewed=[];
-  for(let start=0;start<entries.length;start+=COMMONS_BATCH){
-    await delay(1400);
-    const result=await Promise.all(entries.slice(start,start+COMMONS_BATCH).map(async entry=>{
-      try{return {...entry,...await commonsCandidates(entry)};}
-      catch(e){return {...entry,error:String(e),candidates:[]};}
-    }));
-    reviewed.push(...result);
-    for(const entry of result.filter(x=>x.status==="published")){
-      const shortlist=entry.candidates.filter(x=>x.modelTextMatch&&x.reuseLicensePermitted);
-      console.log("IMAGE_DISCOVERY "+JSON.stringify({brand:entry.brand,model:entry.model,
-        status:entry.status,rightsClearedTitleCandidates:shortlist.length,
-        file:shortlist[0]?.fileTitle||null,license:shortlist[0]?.license||null,
-        error:entry.error||null}));
-    }
+  // Read-only published catalogue cross-check against this run's *independently*
+  // collected Commons brand research. Do NOT repeat 388 individual Commons API
+  // searches: 2026 rate limiting made 210 of them return HTTP 429.
+  const archive=JSON.parse(await readFile(OUTPUT+"/archived-image-candidates.json","utf8"));
+  const archiveIndex=indexArchivePhotoCandidates(archive);
+  const reviewed=entries.map(entry=>({...entry,
+    ...archiveCandidatesForModel(archiveIndex,entry)}));
+  for(const entry of reviewed.filter(x=>x.status==="published")){
+    const shortlist=entry.candidates.filter(x=>x.modelTextMatch&&x.reuseLicensePermitted);
+    console.log("IMAGE_DISCOVERY "+JSON.stringify({brand:entry.brand,model:entry.model,
+      status:entry.status,rightsClearedTitleCandidates:shortlist.length,
+      file:shortlist[0]?.fileTitle||null,license:shortlist[0]?.license||null,
+      error:null,method:"same-run Wikimedia brand evidence; no per-model API query"}));
   }
   const publicReviewed=reviewed.filter(x=>x.status==="published");
   const draftReviewed=reviewed.filter(x=>x.status!=="published");
@@ -195,7 +140,8 @@ async function main(){
   }
   const report={generatedAt:new Date().toISOString(),
     runStatus: publicRecords.some(x=>x.error)||reviewed.some(x=>x.error)?"partial":"complete",note:
-    "Candidate discovery only. Photos are NOT published, uploaded, licensed by TractorVS, or identity-reviewed.",
+    "Same-run Wikimedia brand-title candidate reuse only; NOT exhaustive per-model Commons searching. Photos are NOT published, uploaded, licensed by TractorVS, or identity-reviewed.",
+    researchMethod:"published pages cross-checked against same-run archival brand candidate evidence",
     publicModelPages:publicRecords.length,optionalPrivateRecords:privateRecords.length,
     modelSearches:publicReviewed.length,models:publicReviewed};
   await writeFile(OUTPUT+"/report.json",JSON.stringify(report,null,2));
@@ -205,7 +151,7 @@ async function main(){
       .map(v=>'"'+String(v).replaceAll('"','""')+'"').join(",")).join("\n")+"\n");
   const candidates=reviewed.reduce((n,r)=>n+r.candidates.filter(c=>c.modelTextMatch&&c.reuseLicensePermitted).length,0);
   const failed=reviewed.filter(r=>r.error).length;
-  console.log("IMAGE_DISCOVERY_SUMMARY "+JSON.stringify({modelSearches:reviewed.length,
+  console.log("IMAGE_DISCOVERY_SUMMARY "+JSON.stringify({researchMethod:"same-run-brand-evidence",modelSearches:reviewed.length,
     rightsClearedTitleCandidates:candidates,searchFailures:failed,output:OUTPUT}));
   if(!publicReviewed.length||publicRecords.some(x=>x.error)||failed>0)process.exitCode=1;
 }
