@@ -22,7 +22,7 @@ test("three original deep-dive chapters include substantive bilingual educationa
    assert.ok(!ids.has(section.anchor),section.anchor);ids.add(section.anchor);
    for(const locale of ["en","tr"]){
     assert.ok(section.title[locale].length>12);
-    assert.equal(section.paragraphs[locale].length,section.anchor==="olcum-standartlari"?3:2);
+    assert.equal(section.paragraphs[locale].length,["olcum-standartlari","hp-ps-kw"].includes(section.anchor)?3:2);
     for(const paragraph of section.paragraphs[locale])assert.ok(paragraph.length>85,
      article.slug+" "+locale+" needs substantive paragraphs");
    }
