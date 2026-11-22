@@ -15,8 +15,14 @@ export function reviewCommonsCopyrightWikitext(wikitext,photo){
   const body=String(wikitext||"");
   // Require a user-uploaded self-license declaration AND Own work, not
   // merely a matching attribution string from someone else's file.
-  const ownWork=/(?:\|\s*source\s*=\s*(?:\{\{\s*own\b|own work)|\{\{\s*own\s*\}\})/i.test(body);
-  const ownLicense=/\{\{\s*self\s*\|[^\n}]{0,160}\bcc-by-sa-4\.0\b/i.test(body);
+  const ownWork=/(?:\|\s*source\s*=\s*(?:\{\{\s*own\b|own work)|\{\{\s*own\s*\}\})/i.test(body) ||
+    /\|\s*source\s*=\s*[^\r\n]{0,180}\{\{\s*own\s*\}\}/i.test(body);
+  // One legacy ru.wikipedia -> Commons transfer embeds the self-license after
+  // a nested author template. Require the precise uploader, project and terms.
+  const originalUploaderSelf=photo.fileId==="belarus-132n-picture30-2011" &&
+    /\{\{\s*self\s*\|\s*author\s*=\s*\{\{\s*user at project\s*\|\s*Picture30\s*\|\s*wikipedia\s*\|\s*ru\s*\}\}\s*\|\s*GFDL\s*\|\s*CC-BY-SA-3\.0\b/i.test(body);
+  const ownLicense=/\{\{\s*self\s*\|[^\n}]{0,160}\bcc-by-sa-4\.0\b/i.test(body) ||
+    originalUploaderSelf;
   const author=String(photo.copyrightOwner||"");
   const authorAliases=photo.fileId==="steyr-4075-kompakt-joachim-2018"
     ? ["JoachimKohlerBremen","JoachimKohler-HB"]
@@ -36,7 +42,9 @@ export function reviewCommonsCopyrightWikitext(wikitext,photo){
   });
   const sourceUrlSame=photo.copyrightClaimUrl===photo.sourcePage
     && /^https:\/\/commons\.wikimedia\.org\/wiki\/File:[^?#]+$/.test(photo.sourcePage);
-  const hasApprovedLicense=photo.licenseUrl==="https://creativecommons.org/licenses/by-sa/4.0/";
+  const hasApprovedLicense=photo.licenseUrl==="https://creativecommons.org/licenses/by-sa/4.0/" ||
+    (originalUploaderSelf && photo.licenseName==="CC BY-SA 3.0" &&
+      photo.licenseUrl==="https://creativecommons.org/licenses/by-sa/3.0/");
   const claimIsAuthor=photo.photographer===author;
   return {fileId:photo.fileId,owner:author,sourceUrl:photo.sourcePage,
     ownWork,ownLicense,authorPresent,sourceUrlSame,hasApprovedLicense,claimIsAuthor,
