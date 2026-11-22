@@ -68,3 +68,13 @@ test("empty site build is not silently reported as clean",()=>{
   try{assert.throws(()=>auditBuiltImageAlts(root),/no built HTML files/);}
   finally{rmSync(root,{recursive:true,force:true});}
 });
+
+test("a quoted title mentioning alt= is not a real alt attribute",()=>{
+  const html='<img title="This picture needs alt=better" src="/bad.jpg">'
+    +'<img title="A > inside an attribute" src="/ok.jpg" alt="Actual photo">'
+    +'<img data-alt="fake" alt=Genuine src="/other.jpg">';
+  assert.deepEqual(inspectDocumentImageAlts(html),{
+    images:3,nonemptyAlt:2,emptyAlt:0,
+    missingAlt:[{index:1,src:"/bad.jpg"}]
+  });
+});
