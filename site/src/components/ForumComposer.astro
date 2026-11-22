@@ -159,27 +159,29 @@ const strings=JSON.stringify({
    <summary>{ft(lang,"myPosts")}</summary><p data-history-status role="status"></p><ul data-history-list></ul>
   </details>
   <form data-forum-post hidden>
-    {mode==="topic"&&<>
-     <label>{ft(lang,"title")}
+    {mode==="topic"&&<label>{ft(lang,"title")}
       <input type="text" name="title" minlength="12" maxlength="160" required/>
-     </label>
-     <label>{ft(lang,"category")}
-      <select name="category" required>
-       {FORUM_CATEGORY_KEYS.map(key=><option value={key} selected={key==="questions"}>{ft(lang,key)}</option>)}
-      </select>
-     </label>
-     <label>{ft(lang,"model")}
-      <select name="tractor_id" data-forum-tractor>
-       <option value="">{ft(lang,"noModel")}</option>
-       {choices.map(t=><option value={t.tractor_id}>{t.brand_name} {t.model_name}{t.variant?" · "+t.variant:""}</option>)}
-      </select>
-     </label>
-    </>}
-    <label>{ft(lang,"writingLanguage")}
+    </label>}
+    <div class="forum-post-details-grid">
+     {mode==="topic"&&<>
+      <label>{ft(lang,"category")}
+       <select name="category" required>
+        {FORUM_CATEGORY_KEYS.map(key=><option value={key} selected={key==="questions"}>{ft(lang,key)}</option>)}
+       </select>
+      </label>
+      <label>{ft(lang,"model")}
+       <select name="tractor_id" data-forum-tractor>
+        <option value="">{ft(lang,"noModel")}</option>
+        {choices.map(t=><option value={t.tractor_id}>{t.brand_name} {t.model_name}{t.variant?" · "+t.variant:""}</option>)}
+       </select>
+      </label>
+     </>}
+     <label>{ft(lang,"writingLanguage")}
       <select name="source_locale" required>
        {LOCALES.map(locale=><option value={locale} lang={LOCALE_TAGS[locale]} selected={locale===lang}>{LOCALE_NAMES[locale]}</option>)}
       </select>
-    </label>
+     </label>
+    </div>
     <label>{mode==="topic"?ft(lang,"body"):ft(lang,"reply")}
       <textarea name="body" required minlength={mode==="topic"?40:10}
        maxlength={mode==="topic"?12000:6000} rows={mode==="topic"?7:4}></textarea>
@@ -354,6 +356,12 @@ const strings=JSON.stringify({
  .community-composer h2{font-size:21px}
  .community-composer .forum-auth-gate>.forum-auth{padding:13px}
 }
+.community-composer .forum-post-details-grid{
+ display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,255px),1fr));
+ gap:13px;align-items:start;min-width:0
+}
+.community-composer .forum-post-details-grid>label{min-width:0}
+.community-composer .forum-post-details-grid select{width:100%;max-width:100%}
 @media(prefers-reduced-motion:reduce){
  .community-composer button{transition:none}
 }
