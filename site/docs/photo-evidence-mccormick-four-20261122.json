@@ -18,7 +18,8 @@
       "width": 7008,
       "height": 3944,
       "modelIdentityEvidence": "Wikimedia exact model-labelled original photograph, batch candidate archive; do not claim model year or chassis configuration",
-      "variantExact": false
+      "variantExact": false,
+      "sourceImageUrl": "https://upload.wikimedia.org/wikipedia/commons/f/fb/McCormick_X4.085_TM_Agritechnica_2023_%28DSC05776%29.jpg"
     },
     {
       "brand": "McCormick",
@@ -32,7 +33,8 @@
       "width": 7008,
       "height": 3944,
       "modelIdentityEvidence": "Wikimedia exact model-labelled original photograph, batch candidate archive; do not claim model year or chassis configuration",
-      "variantExact": false
+      "variantExact": false,
+      "sourceImageUrl": "https://upload.wikimedia.org/wikipedia/commons/5/55/McCormick_X6.414_P6-Drive_Agritechnica_2023_%28DSC04843%29.jpg"
     },
     {
       "brand": "McCormick",
@@ -46,7 +48,8 @@
       "width": 7008,
       "height": 3944,
       "modelIdentityEvidence": "Wikimedia exact model-labelled original photograph, batch candidate archive; do not claim model year or chassis configuration",
-      "variantExact": false
+      "variantExact": false,
+      "sourceImageUrl": "https://upload.wikimedia.org/wikipedia/commons/5/50/McCormick_X7.618_VT-Drive_Agritechnica_2023_%28DSC05850%29.jpg"
     },
     {
       "brand": "McCormick",
@@ -60,7 +63,8 @@
       "width": 7008,
       "height": 3944,
       "modelIdentityEvidence": "Wikimedia exact model-labelled original photograph, batch candidate archive; do not claim model year or chassis configuration",
-      "variantExact": false
+      "variantExact": false,
+      "sourceImageUrl": "https://upload.wikimedia.org/wikipedia/commons/a/aa/McCormick_X7.624_VT-Drive_Agritechnica_2023_%28DSC05875%29.jpg"
     }
   ]
 }
