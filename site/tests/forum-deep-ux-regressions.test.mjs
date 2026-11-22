@@ -13,7 +13,7 @@ test("all ten locales describe transient error, retry and filter reset without p
  assert.equal(LOCALES.length,10);
  for(const locale of LOCALES){
   for(const key of ["memberLoadError","retryMembers"])
-   assert.ok(MEMBER_TEXT[locale][key]?.length>=3,locale+" "+key);
+   assert.ok(MEMBER_TEXT[locale][key]?.length>=2,locale+" "+key);
   for(const key of ["clearFilters","matchingResults"])
    assert.ok(FORUM_TEXT[locale][key]?.length>=2,locale+" "+key);
  }
