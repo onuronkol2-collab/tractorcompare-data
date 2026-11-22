@@ -3,7 +3,7 @@
   "sourceOfTruth": "site/docs/photo-curated-tym-t25-t115-four-20261122.json",
   "sourceIntegrityLedger": "site/docs/photo-import-evidence-tym-t25-t115-four-20261122.json",
   "visualReviewCompleted": true,
-  "publicationApprovalBasis": "4 separate Wikimedia Commons File pages explicitly state uploader MarcelX42, Own work and author self-issued CC BY-SA 4.0. All four real 480px hash-derived JPEGs decoded and visually inspected. Two exact T25 and two exact T115 images are the same named physical global model as the official TYM global alias; actual event photographed 2025, not current brochure or 2026 model year. All derivatives were produced with strict origin SHA and Pillow, and only international published Supabase UUIDs are eligible. A photo does not certify a precise drivetrain, tire, loader, gearbox or market trim.",
+  "publicationApprovalBasis": "4 separate Wikimedia Commons File pages explicitly state uploader MarcelX42, Own work and author self-issued CC BY-SA 4.0. All four real 480px hash-derived JPEGs decoded and visually inspected. Two exact T25 and two exact T115 images are the same named physical global model as the official TYM global alias; actual event photographed 2025, not current brochure or 2026 model year. All derivatives were produced with strict origin SHA and Pillow, and only international published Supabase UUIDs are eligible. A photo does not certify a precise drivetrain, tire, loader, gearbox or market trim. Source deduplication: four originally reviewed source files include two photographs already released under historical IDs. Only two new rear-angle JPEG sets (six derivative files) are newly released; the two existing fronts are reused with stronger UUID-scoped rights metadata.",
   "photographer": "MarcelX42",
   "license": "CC BY-SA 4.0",
   "releaseReviewRequiredAfterMerge": [
@@ -51,5 +51,26 @@
       "description": "Rear-left three-quarter view of same-model red cab TYM T115 at Agritechnica 2025; photographed equipment not used as technical measurements.",
       "perspective": "rear"
     }
-  ]
+  ],
+  "deduplicationAudit": {
+    "discoveredOn": "2026-11-22",
+    "issue": "The first-angle Commons files in this 4-source review batch are already published under historical first-party IDs with matching byte-for-byte SHA256 records. Duplicate filenames/new catalogue IDs would create duplicate gallery images and more media weight.",
+    "existingFrontFileIds": [
+      "tym-t2025p-t25-marcelx42-2025",
+      "tym-t6115-t115-marcelx42-2025"
+    ],
+    "newDistinctRearFileIds": [
+      "tym-t2025p-t25-rear-marcelx42-2025",
+      "tym-t6115-t115-rear-marcelx42-2025"
+    ],
+    "reindexedDuplicateFronts": 0,
+    "removedRedundantStagedJPEGs": 6,
+    "newlyPublishedJPEGCount": 6,
+    "existingFrontJPEGCount": 6,
+    "finalGalleryAnglesPerModel": 2,
+    "newIndependentPhotoViews": 2,
+    "allFourSourcesReviewRetained": true,
+    "copyrightUpgrade": "Existing front photo historical entries now use exact published international UUID and independently verified creator self-license / copyright ownership, with no publication on other regional variants.",
+    "seoUpgrade": "Existing front remains the canonical ImageObject. Added rear angle retains independent author, source, CC BY-SA 4.0 and caption; image documents cannot be duplicated in index."
+  }
 }
