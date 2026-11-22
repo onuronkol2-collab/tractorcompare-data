@@ -1,10 +1,10 @@
 {
   "reviewedAt": "2026-11-22",
   "policy": "Published exact McCormick model identity only. Archive discovery 44995174183 provides candidates; live Commons source identity, author and license must be revalidated before importing.",
-  "originalBinaryHttpVerified": false,
-  "jpegContentVerified": false,
+  "originalBinaryHttpVerified": true,
+  "jpegContentVerified": true,
   "firstPartyProxyHttpVerified": false,
-  "releaseStatus": "Research candidate; source and JPEG verification pending",
+  "releaseStatus": "PR JPEG assets staged, requires CI, first-party HTTP and release approval",
   "sources": [
     {
       "brand": "McCormick",
@@ -65,6 +65,186 @@
       "modelIdentityEvidence": "Wikimedia exact model-labelled original photograph, batch candidate archive; do not claim model year or chassis configuration",
       "variantExact": false,
       "sourceImageUrl": "https://upload.wikimedia.org/wikipedia/commons/a/aa/McCormick_X7.624_VT-Drive_Agritechnica_2023_%28DSC05875%29.jpg"
+    }
+  ],
+  "sha256": {
+    "mccormick-x4-085-tm-marcelx42-2023": {
+      "480": {
+        "bytes": 43795,
+        "sha256": "44301780610bac929d13a5f3d6735de85a47656576accf2842c712e84b530ef2",
+        "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fb/McCormick_X4.085_TM_Agritechnica_2023_%28DSC05776%29.jpg/500px-McCormick_X4.085_TM_Agritechnica_2023_%28DSC05776%29.jpg"
+      },
+      "960": {
+        "bytes": 125694,
+        "sha256": "89ee2cc596a8aa73171f44e92b19f67bbe1fea5e358e8544275348a01eb8d66c",
+        "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fb/McCormick_X4.085_TM_Agritechnica_2023_%28DSC05776%29.jpg/960px-McCormick_X4.085_TM_Agritechnica_2023_%28DSC05776%29.jpg"
+      },
+      "1920": {
+        "bytes": 379363,
+        "sha256": "5fe2e2444dc405a28b63dd2ab038862b76828128e7b0a30154fd03f5a75d19cd",
+        "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fb/McCormick_X4.085_TM_Agritechnica_2023_%28DSC05776%29.jpg/1920px-McCormick_X4.085_TM_Agritechnica_2023_%28DSC05776%29.jpg"
+      }
+    },
+    "mccormick-x6-414-p6-drive-marcelx42-2023": {
+      "480": {
+        "bytes": 63060,
+        "sha256": "62c6daac92c0f7d68e57de0939997578112f97b66ee05868c3d790cab591bdc9",
+        "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/55/McCormick_X6.414_P6-Drive_Agritechnica_2023_%28DSC04843%29.jpg/500px-McCormick_X6.414_P6-Drive_Agritechnica_2023_%28DSC04843%29.jpg"
+      },
+      "960": {
+        "bytes": 195990,
+        "sha256": "c1f4e510609bb9aa771d83aac1bc1a8dc9670c0bed230887b840062c628572b0",
+        "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/55/McCormick_X6.414_P6-Drive_Agritechnica_2023_%28DSC04843%29.jpg/960px-McCormick_X6.414_P6-Drive_Agritechnica_2023_%28DSC04843%29.jpg"
+      },
+      "1920": {
+        "bytes": 627767,
+        "sha256": "178b2ca9837367d428d377a2ec4a78332f41edb77605a9cab2a4398e6972bb15",
+        "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/55/McCormick_X6.414_P6-Drive_Agritechnica_2023_%28DSC04843%29.jpg/1920px-McCormick_X6.414_P6-Drive_Agritechnica_2023_%28DSC04843%29.jpg"
+      }
+    },
+    "mccormick-x7-618-vt-drive-marcelx42-2023": {
+      "480": {
+        "bytes": 52799,
+        "sha256": "dd67ca45339893584e06abb4b266ab31df5a94a9bca1c1324648018ff7654161",
+        "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/50/McCormick_X7.618_VT-Drive_Agritechnica_2023_%28DSC05850%29.jpg/500px-McCormick_X7.618_VT-Drive_Agritechnica_2023_%28DSC05850%29.jpg"
+      },
+      "960": {
+        "bytes": 154620,
+        "sha256": "47bc37bbf40c7eef7bc010c7249776dada55fdc032444d9fb93aae797c8d24a9",
+        "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/50/McCormick_X7.618_VT-Drive_Agritechnica_2023_%28DSC05850%29.jpg/960px-McCormick_X7.618_VT-Drive_Agritechnica_2023_%28DSC05850%29.jpg"
+      },
+      "1920": {
+        "bytes": 459286,
+        "sha256": "02d6ced30e31e481e3eff9262689c6ffee6ba8ae75e162504632fe61e6bb27df",
+        "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/50/McCormick_X7.618_VT-Drive_Agritechnica_2023_%28DSC05850%29.jpg/1920px-McCormick_X7.618_VT-Drive_Agritechnica_2023_%28DSC05850%29.jpg"
+      }
+    },
+    "mccormick-x7-624-vt-drive-marcelx42-2023": {
+      "480": {
+        "bytes": 62258,
+        "sha256": "9319e3a5f88d21e26cf6278b21de1d9a394f7fb289fa254c0709409155c65a04",
+        "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/aa/McCormick_X7.624_VT-Drive_Agritechnica_2023_%28DSC05875%29.jpg/500px-McCormick_X7.624_VT-Drive_Agritechnica_2023_%28DSC05875%29.jpg"
+      },
+      "960": {
+        "bytes": 190779,
+        "sha256": "85c7c5d77c95e2ceead22da1255be1e427989bff85cbc313574db5f503800f2d",
+        "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/aa/McCormick_X7.624_VT-Drive_Agritechnica_2023_%28DSC05875%29.jpg/960px-McCormick_X7.624_VT-Drive_Agritechnica_2023_%28DSC05875%29.jpg"
+      },
+      "1920": {
+        "bytes": 609998,
+        "sha256": "23141df9d92fee2625dac3352cf78bf542f03e40dab637963e552136dc95b1d5",
+        "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/aa/McCormick_X7.624_VT-Drive_Agritechnica_2023_%28DSC05875%29.jpg/1920px-McCormick_X7.624_VT-Drive_Agritechnica_2023_%28DSC05875%29.jpg"
+      }
+    }
+  },
+  "importProof": [
+    {
+      "fileId": "mccormick-x4-085-tm-marcelx42-2023",
+      "commonsSourceUrl": "https://upload.wikimedia.org/wikipedia/commons/f/fb/McCormick_X4.085_TM_Agritechnica_2023_%28DSC05776%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+      "sourcePage": "https://commons.wikimedia.org/wiki/File:McCormick_X4.085_TM_Agritechnica_2023_(DSC05776).jpg",
+      "photographer": "MarcelX42",
+      "license": "CC BY-SA 4.0",
+      "artistVerified": "MarcelX42",
+      "originalWidth": 7008,
+      "originalHeight": 3944,
+      "derivatives": {
+        "480": {
+          "bytes": 43795,
+          "sha256": "44301780610bac929d13a5f3d6735de85a47656576accf2842c712e84b530ef2",
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fb/McCormick_X4.085_TM_Agritechnica_2023_%28DSC05776%29.jpg/500px-McCormick_X4.085_TM_Agritechnica_2023_%28DSC05776%29.jpg"
+        },
+        "960": {
+          "bytes": 125694,
+          "sha256": "89ee2cc596a8aa73171f44e92b19f67bbe1fea5e358e8544275348a01eb8d66c",
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fb/McCormick_X4.085_TM_Agritechnica_2023_%28DSC05776%29.jpg/960px-McCormick_X4.085_TM_Agritechnica_2023_%28DSC05776%29.jpg"
+        },
+        "1920": {
+          "bytes": 379363,
+          "sha256": "5fe2e2444dc405a28b63dd2ab038862b76828128e7b0a30154fd03f5a75d19cd",
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fb/McCormick_X4.085_TM_Agritechnica_2023_%28DSC05776%29.jpg/1920px-McCormick_X4.085_TM_Agritechnica_2023_%28DSC05776%29.jpg"
+        }
+      }
+    },
+    {
+      "fileId": "mccormick-x6-414-p6-drive-marcelx42-2023",
+      "commonsSourceUrl": "https://upload.wikimedia.org/wikipedia/commons/5/55/McCormick_X6.414_P6-Drive_Agritechnica_2023_%28DSC04843%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+      "sourcePage": "https://commons.wikimedia.org/wiki/File:McCormick_X6.414_P6-Drive_Agritechnica_2023_(DSC04843).jpg",
+      "photographer": "MarcelX42",
+      "license": "CC BY-SA 4.0",
+      "artistVerified": "MarcelX42",
+      "originalWidth": 7008,
+      "originalHeight": 3944,
+      "derivatives": {
+        "480": {
+          "bytes": 63060,
+          "sha256": "62c6daac92c0f7d68e57de0939997578112f97b66ee05868c3d790cab591bdc9",
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/55/McCormick_X6.414_P6-Drive_Agritechnica_2023_%28DSC04843%29.jpg/500px-McCormick_X6.414_P6-Drive_Agritechnica_2023_%28DSC04843%29.jpg"
+        },
+        "960": {
+          "bytes": 195990,
+          "sha256": "c1f4e510609bb9aa771d83aac1bc1a8dc9670c0bed230887b840062c628572b0",
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/55/McCormick_X6.414_P6-Drive_Agritechnica_2023_%28DSC04843%29.jpg/960px-McCormick_X6.414_P6-Drive_Agritechnica_2023_%28DSC04843%29.jpg"
+        },
+        "1920": {
+          "bytes": 627767,
+          "sha256": "178b2ca9837367d428d377a2ec4a78332f41edb77605a9cab2a4398e6972bb15",
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/55/McCormick_X6.414_P6-Drive_Agritechnica_2023_%28DSC04843%29.jpg/1920px-McCormick_X6.414_P6-Drive_Agritechnica_2023_%28DSC04843%29.jpg"
+        }
+      }
+    },
+    {
+      "fileId": "mccormick-x7-618-vt-drive-marcelx42-2023",
+      "commonsSourceUrl": "https://upload.wikimedia.org/wikipedia/commons/5/50/McCormick_X7.618_VT-Drive_Agritechnica_2023_%28DSC05850%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+      "sourcePage": "https://commons.wikimedia.org/wiki/File:McCormick_X7.618_VT-Drive_Agritechnica_2023_(DSC05850).jpg",
+      "photographer": "MarcelX42",
+      "license": "CC BY-SA 4.0",
+      "artistVerified": "MarcelX42",
+      "originalWidth": 7008,
+      "originalHeight": 3944,
+      "derivatives": {
+        "480": {
+          "bytes": 52799,
+          "sha256": "dd67ca45339893584e06abb4b266ab31df5a94a9bca1c1324648018ff7654161",
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/50/McCormick_X7.618_VT-Drive_Agritechnica_2023_%28DSC05850%29.jpg/500px-McCormick_X7.618_VT-Drive_Agritechnica_2023_%28DSC05850%29.jpg"
+        },
+        "960": {
+          "bytes": 154620,
+          "sha256": "47bc37bbf40c7eef7bc010c7249776dada55fdc032444d9fb93aae797c8d24a9",
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/50/McCormick_X7.618_VT-Drive_Agritechnica_2023_%28DSC05850%29.jpg/960px-McCormick_X7.618_VT-Drive_Agritechnica_2023_%28DSC05850%29.jpg"
+        },
+        "1920": {
+          "bytes": 459286,
+          "sha256": "02d6ced30e31e481e3eff9262689c6ffee6ba8ae75e162504632fe61e6bb27df",
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/50/McCormick_X7.618_VT-Drive_Agritechnica_2023_%28DSC05850%29.jpg/1920px-McCormick_X7.618_VT-Drive_Agritechnica_2023_%28DSC05850%29.jpg"
+        }
+      }
+    },
+    {
+      "fileId": "mccormick-x7-624-vt-drive-marcelx42-2023",
+      "commonsSourceUrl": "https://upload.wikimedia.org/wikipedia/commons/a/aa/McCormick_X7.624_VT-Drive_Agritechnica_2023_%28DSC05875%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+      "sourcePage": "https://commons.wikimedia.org/wiki/File:McCormick_X7.624_VT-Drive_Agritechnica_2023_(DSC05875).jpg",
+      "photographer": "MarcelX42",
+      "license": "CC BY-SA 4.0",
+      "artistVerified": "MarcelX42",
+      "originalWidth": 7008,
+      "originalHeight": 3944,
+      "derivatives": {
+        "480": {
+          "bytes": 62258,
+          "sha256": "9319e3a5f88d21e26cf6278b21de1d9a394f7fb289fa254c0709409155c65a04",
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/aa/McCormick_X7.624_VT-Drive_Agritechnica_2023_%28DSC05875%29.jpg/500px-McCormick_X7.624_VT-Drive_Agritechnica_2023_%28DSC05875%29.jpg"
+        },
+        "960": {
+          "bytes": 190779,
+          "sha256": "85c7c5d77c95e2ceead22da1255be1e427989bff85cbc313574db5f503800f2d",
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/aa/McCormick_X7.624_VT-Drive_Agritechnica_2023_%28DSC05875%29.jpg/960px-McCormick_X7.624_VT-Drive_Agritechnica_2023_%28DSC05875%29.jpg"
+        },
+        "1920": {
+          "bytes": 609998,
+          "sha256": "23141df9d92fee2625dac3352cf78bf542f03e40dab637963e552136dc95b1d5",
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/aa/McCormick_X7.624_VT-Drive_Agritechnica_2023_%28DSC05875%29.jpg/1920px-McCormick_X7.624_VT-Drive_Agritechnica_2023_%28DSC05875%29.jpg"
+        }
+      }
     }
   ]
 }
