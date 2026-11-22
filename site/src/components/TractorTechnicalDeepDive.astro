@@ -4,6 +4,8 @@ import {guidePhotos} from "../lib/editorial-photos.ts";
 import {TECHNICAL_DEEP_DIVES,getTechnicalDeepDive,type TechnicalDeepDiveSlug} from "../lib/tractor-technical-deep-dives.ts";
 import {GLOSSARY_TERMS} from "../lib/tractor-glossary.ts";
 import {localizedPath} from "../lib/locales.ts";
+import {getPublicCatalog} from "../lib/catalog.ts";
+import {DEUTZ_5D_GS_PILOT,curatedDeutz5DPair} from "../lib/deutz-5d-editorial.ts";
 interface Props {lang:"en"|"tr"; slug:TechnicalDeepDiveSlug}
 const {lang,slug}=Astro.props;
 const guide=getTechnicalDeepDive(slug);
@@ -28,6 +30,19 @@ const headline=guide.title[lang];
 const description=guide.description[lang];
 // Update a page's date only when its actual content or visible source register changes.
 const hasPowerStandards = slug === "tractor-engine-power-and-torque";
+// Real application example: publish only when both exact model identities and
+// the common manufacturer evidence still pass the production comparison gate.
+const powerCase=hasPowerStandards
+ ?curatedDeutz5DPair((await getPublicCatalog()).tractors):null;
+const powerCaseRows=powerCase?[
+ {key:"engine_rated_power",tr:"Nominal motor gücü (ECE R120)",en:"Rated engine power (ECE R120)"},
+ {key:"engine_max_power",tr:"Azami motor gücü (ECE R120)",en:"Maximum engine power (ECE R120)"},
+ {key:"engine_torque",tr:"Azami motor torku",en:"Peak engine torque"},
+].map(f=>({
+ label:tr?f.tr:f.en,
+ row:powerCase.rows.find(r=>r.key===f.key),
+})).filter(item=>Boolean(item.row)):[];
+
 const hasHydraulicSafety = slug === "tractor-hydraulic-lift-explained";
 const hasPtoSafety = slug === "pto-and-power-take-off";
 const hasEditorialUpdate = hasPowerStandards || hasHydraulicSafety || hasPtoSafety;
@@ -37,6 +52,7 @@ const editedOn = hasEditorialUpdate ? "2026-11-22" : "2026-11-20";
 const citedDocuments=[
  "https://tractortestlab.unl.edu/",
  "https://www.oecd.org/en/topics/tractors.html",
+ ...(powerCase?[DEUTZ_5D_GS_PILOT.source]:[]),
  ...(hasPowerStandards?[
   "https://eur-lex.europa.eu/eli/reg/2019/405/oj/eng",
   "https://www.dlg.org/en/magazin/survey-tests/tractor-model-descriptions-no-standardised-information",
@@ -123,6 +139,37 @@ const structuredData={
        <h2>{section.title[lang]}</h2>
        {section.paragraphs[lang].map(paragraph=><p>{paragraph}</p>)}
      </section>)}
+     {powerCase && <section class="learn-chapter learn-source-case" aria-labelledby="learn-source-case-heading">
+       <p class="learn-chapter-index">{tr?"KAYNAKLI GERÇEK MODEL ÖRNEĞİ":"SOURCE-BASED REAL MODEL EXAMPLE"}</p>
+       <h2 id="learn-source-case-heading">{tr
+         ?"Nominal motor gücü, azami güç ve tork: iki GS traktörünün belgelenmiş farkları"
+         :"Rated power, maximum power and torque: two documented GS configurations"}</h2>
+       <p>{tr
+         ?"DEUTZ-FAHR Türkiye'nin aynı 5D GS / Stage V tablosunda iki traktör için ayrı nominal motor gücü, maksimum motor gücü ve azami tork değerleri bulunuyor. Bu sayılar farklı fiziksel ölçümler olduğu için birbirinin yerine kullanılamaz. Her iki modelin belgedeki kimliğini ve ölçüm koşulunu koruduk."
+         :"The same DEUTZ-FAHR Türkiye 5D GS / Stage V table gives distinct rated engine power, maximum engine power and peak torque figures for two tractors. These are different physical measurements, not interchangeable labels. Their exact equipment and market identities are preserved."}</p>
+       <div class="learn-source-case-table" role="region" tabindex="0" aria-label={tr?"Kaynaklı Deutz-Fahr motor verileri":"Source-verified Deutz-Fahr engine figures"}>
+         <table>
+           <caption>{tr?"Üretici teknik broşürü: GS / Stage V / Türkiye":"Manufacturer technical brochure: GS / Stage V / Türkiye"}</caption>
+           <thead><tr><th scope="col">{tr?"Ölçüm":"Measurement"}</th><th scope="col">5090 D GS</th><th scope="col">5100 D GS</th></tr></thead>
+           <tbody>{powerCaseRows.map(item=><tr>
+             <th scope="row">{item.label}</th>
+             <td>{item.row?.left} {item.row?.unit}</td>
+             <td>{item.row?.right} {item.row?.unit}</td>
+           </tr>)}</tbody>
+         </table>
+       </div>
+       <p>{tr
+         ?"Bu tablo üretici beyanlarını yan yana koyar. Aynı koşullarda yapılmış bağımsız PTO veya çeki gücü testi, yakıt tüketimi ya da dayanıklılık ölçümü değildir."
+         :"The table compares manufacturer specifications. It is not an independent, like-for-like PTO or drawbar power test, fuel-consumption trial or durability measurement."}</p>
+       <div class="learn-source-case-links">
+         <a href={localizedPath(lang,DEUTZ_5D_GS_PILOT.path)}>{tr
+           ?"Deutz-Fahr 5090 D GS ve 5100 D GS kaynaklı karşılaştırmasını incele"
+           :"Explore the verified Deutz-Fahr 5090 D GS vs 5100 D GS comparison"} ↗</a>
+         <a href={powerCase.source} target="_blank" rel="noopener noreferrer">{tr
+           ?"DEUTZ-FAHR Türkiye orijinal teknik tablo (PDF)"
+           :"DEUTZ-FAHR Türkiye original specification table (PDF)"} ↗</a>
+       </div>
+     </section>}
      <section class="learn-related-terms" aria-labelledby="learn-terms-heading">
       <p class="learn-eyebrow">{tr?"DERİNE İNİN":"GO DEEPER"}</p>
       <h2 id="learn-terms-heading">{tr?"Bu yazıdaki terimlerin tek tek açıklamaları":"Individual definitions from this guide"}</h2>
@@ -194,6 +241,17 @@ const structuredData={
  .learn-chapter-index{color:#4e8656;font-weight:900;font-size:12px;letter-spacing:.12em;margin:0 0 12px}
  .learn-chapter h2,.learn-related-terms h2,.learn-further h2{font-size:clamp(24px,2.55vw,34px);line-height:1.22;letter-spacing:-.025em;margin:0 0 17px;color:#1c4a2f}
  .learn-chapter p:not(.learn-chapter-index),.learn-related-terms p,.learn-further p{line-height:1.91;font-size:16px;color:#3d5845;margin:0 0 17px}
+ .learn-source-case{border:1px solid #c9dec5;background:#fff;border-radius:16px;padding:clamp(18px,3vw,30px)}
+ .learn-source-case-table{overflow-x:auto;border-radius:11px;border:1px solid #ccd9cb;margin:20px 0}
+ .learn-source-case-table table{width:100%;border-collapse:collapse;min-width:480px;font-size:14px}
+ .learn-source-case-table caption{padding:12px;text-align:left;background:#edf5e9;color:#254e32;font-weight:700}
+ .learn-source-case-table th,.learn-source-case-table td{padding:12px;text-align:left;border-bottom:1px solid #dbe6d9;vertical-align:top}
+ .learn-source-case-table thead{background:#e6f1e4}
+ .learn-source-case-table tbody th{font-weight:750}
+ .learn-source-case-table td{font-weight:800;white-space:nowrap}
+ .learn-source-case-links{display:flex;gap:12px;flex-wrap:wrap;margin-top:16px}
+ .learn-source-case-links a{font-size:14px;font-weight:800;color:#205a39;text-decoration:underline;text-underline-offset:3px;overflow-wrap:anywhere}
+ .learn-source-case-table:focus-visible{outline:3px solid #86b66e;outline-offset:3px}
  .learn-related-terms{padding:36px 0}.learn-related-terms>div{display:flex;flex-wrap:wrap;gap:9px}
  .learn-related-terms>div a{border:1px solid #c3d9c2;border-radius:999px;background:white;color:#265d36;padding:10px 13px;font-weight:800;font-size:13px}
  .learn-further{background:white;border:1px solid #d3dfd2;border-radius:18px;padding:26px;margin-bottom:48px}
