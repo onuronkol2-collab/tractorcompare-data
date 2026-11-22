@@ -52,9 +52,14 @@ jobs:
           retention-days: 14
 
   preview_translations:
-    # Production-valued static HTML test runs on the PR only; never deploys.
+    # Protected Supabase read-only build key is not exposed to Dependabot/forks.
+    # Those PRs are not trusted to run the secret-dependent production preview;
+    # the independent secretless site build and tests remain required.
     # Inspect the generated site, not the pre-change live site.
-    if: github.event_name == 'pull_request'
+    if: >-
+      github.event_name == 'pull_request' &&
+      github.event.pull_request.head.repo.full_name == github.repository &&
+      github.event.pull_request.user.login != 'dependabot[bot]'
     runs-on: ubuntu-latest
     timeout-minutes: 30
     steps:
