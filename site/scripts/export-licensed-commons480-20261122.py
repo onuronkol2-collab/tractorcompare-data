@@ -1,47 +1,125 @@
 #!/usr/bin/env python3
-"""Export exact self-licensed Commons 480px public thumbnails for review.
+"""Prepare SHA-verifiable first-party JPEGs for three reviewed Commons files.
 
-Print public JPEG bytes as bounded base64 log segments, without write tokens.
-GitHub app stores SHA-pinned blobs only after separate review.
+Manual staging only: never changes live files, commits, approvals or Supabase.
+A single 1920px request per exact Commons file avoids six redundant origin
+requests. HTTP 429/503 fails closed; it is not worked around or retried here.
 """
-import base64, hashlib, io, math, time, urllib.request
-from PIL import Image
+import argparse
+import hashlib
+import io
+import json
+from pathlib import Path
+import time
+import urllib.error
+import urllib.request
+
+from PIL import Image, ImageOps
 
 SOURCES = (
- ("steyr-6240-absolut-blonder1984-2022", "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d7/Steyr_Absolut_6240.jpg/500px-Steyr_Absolut_6240.jpg"),
- ("zetor-proxima-jj7777-2021", "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4c/ZETOR_PROXIMA.jpg/500px-ZETOR_PROXIMA.jpg"),
- ("zetor-proxima-raf24-warsaw-2019", "https://upload.wikimedia.org/wikipedia/commons/thumb/8/81/Zetor_Proxima%2C_WAW.jpg/500px-Zetor_Proxima%2C_WAW.jpg"),
+    ("steyr-6240-absolut-blonder1984-2022",
+     "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d7/Steyr_Absolut_6240.jpg/1920px-Steyr_Absolut_6240.jpg",
+     "Blonder1984", "CC BY 4.0",
+     "https://commons.wikimedia.org/wiki/File:Steyr_Absolut_6240.jpg"),
+    ("zetor-proxima-jj7777-2021",
+     "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4c/ZETOR_PROXIMA.jpg/1920px-ZETOR_PROXIMA.jpg",
+     "JJ7777", "CC BY-SA 4.0",
+     "https://commons.wikimedia.org/wiki/File:ZETOR_PROXIMA.jpg"),
+    ("zetor-proxima-raf24-warsaw-2019",
+     "https://upload.wikimedia.org/wikipedia/commons/thumb/8/81/Zetor_Proxima%2C_WAW.jpg/1920px-Zetor_Proxima%2C_WAW.jpg",
+     "Raf24~commonswiki", "CC BY-SA 4.0",
+     "https://commons.wikimedia.org/wiki/File:Zetor_Proxima%2C_WAW.jpg"),
 )
+MAX_SOURCE_BYTES = 7_000_000
+Image.MAX_IMAGE_PIXELS = 40_000_000
 
-for file_id, source in SOURCES:
-    request = urllib.request.Request(source, headers={
-        "User-Agent": "TractorVS-ApprovedCommonsMediaQA/1.0 (copyright-review)",
-        "Accept": "image/jpeg"
+
+def sha256(data):
+    return hashlib.sha256(data).hexdigest()
+
+
+def fetch_verified_jpeg(file_id, url):
+    request = urllib.request.Request(url, headers={
+        "User-Agent": "TractorVS-LicensedPhotoStaging/1.0 (https://tractorvs.com/contact)",
+        "Accept": "image/jpeg",
     })
-    with urllib.request.urlopen(request, timeout=25) as response:
-        media_type = response.headers.get("Content-Type", "").lower()
-        raw = response.read(2_000_001)
-        if response.status != 200 or "image/jpeg" not in media_type or len(raw) > 2_000_000 or raw[:3] != b"\xff\xd8\xff":
-            raise RuntimeError(f"Unsupported source media for {file_id}")
+    try:
+        with urllib.request.urlopen(request, timeout=25) as response:
+            # This is an allowlisted exact URL, but do not follow CDN redirects
+            # to unrelated hosts or accept a different image content type.
+            if response.geturl() != url or response.status != 200:
+                raise RuntimeError(f"{file_id}: redirected or unsuccessful source")
+            if "image/jpeg" not in response.headers.get("Content-Type", "").lower():
+                raise RuntimeError(f"{file_id}: non-JPEG source")
+            raw = response.read(MAX_SOURCE_BYTES + 1)
+    except urllib.error.HTTPError as error:
+        retry_after = error.headers.get("Retry-After", "") if error.headers else ""
+        raise RuntimeError(
+            f"{file_id}: upstream HTTP {error.code}; retry-after={retry_after[:32]}; "
+            "no automatic retry or fallback"
+        ) from error
+    if not (10_000 < len(raw) <= MAX_SOURCE_BYTES and
+            raw[:3] == b"\\xff\\xd8\\xff" and raw[-2:] == b"\\xff\\xd9"):
+        raise RuntimeError(f"{file_id}: invalid JPEG bytes, size or termination")
     with Image.open(io.BytesIO(raw)) as image:
         image.load()
-        if image.format != "JPEG" or image.width < 480:
-            raise RuntimeError(f"Invalid original dimensions or format for {file_id}")
-        out = image.convert("RGB")
-        width = 480
-        height = round(image.height * width / image.width)
-        out = out.resize((width, height), Image.Resampling.LANCZOS)
-        buffer = io.BytesIO()
-        out.save(buffer, "JPEG", quality=84, optimize=True, progressive=True)
-        data = buffer.getvalue()
-    if not (3000 < len(data) < 1_000_000 and data[:3] == b"\xff\xd8\xff"):
-        raise RuntimeError(f"Corrupt output {file_id}")
-    sha = hashlib.sha256(data).hexdigest()
-    encoded = base64.b64encode(data).decode("ascii")
-    stride = 15000
-    parts = math.ceil(len(encoded) / stride)
-    print(f"TRACTORVS_JPEG_READY::{file_id}::{len(data)}::{width}::{height}::{sha}", flush=True)
-    for i in range(parts):
-        print(f"TRACTORVS_JPEG_B64::{file_id}::{i}::{parts}::{encoded[i*stride:(i+1)*stride]}", flush=True)
-    time.sleep(.9)
-print("TRACTORVS_THREE_LICENSED_JPEGS_PREPARED", flush=True)
+        if image.format != "JPEG":
+            raise RuntimeError(f"{file_id}: decoder rejected JPEG")
+        clean = ImageOps.exif_transpose(image).convert("RGB")
+    if clean.width < 1920 or clean.height < 100:
+        raise RuntimeError(f"{file_id}: unexpected source dimensions")
+    return raw, clean
+
+
+def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--output-dir", required=True,
+                        help="Temporary staging folder; never a production path")
+    args = parser.parse_args()
+    target = Path(args.output_dir).resolve()
+    # Refuse to overwrite source-controlled website assets. Humans must
+    # inspect the artifact and commit approved binaries in a separate step.
+    if "site/public" in target.as_posix() or target == Path.cwd():
+        raise RuntimeError("Refusing to write into production or repository root")
+    target.mkdir(parents=True, exist_ok=True)
+    results = []
+    for file_id, url, creator, license_name, source_page in SOURCES:
+        raw, original = fetch_verified_jpeg(file_id, url)
+        derivatives = []
+        for width in (480, 960, 1920):
+            image = original if width == original.width else original.resize(
+                (width, round(original.height * width / original.width)),
+                Image.Resampling.LANCZOS)
+            buffer = io.BytesIO()
+            image.save(buffer, "JPEG", quality=86, optimize=True, progressive=True)
+            data = buffer.getvalue()
+            if len(data) < 3000 or data[:3] != b"\\xff\\xd8\\xff" or data[-2:] != b"\\xff\\xd9":
+                raise RuntimeError(f"{file_id}: invalid {width}px derivative")
+            filename = f"{file_id}-{width}.jpg"
+            (target / filename).write_bytes(data)
+            derivatives.append({
+                "file": filename, "width": image.width, "height": image.height,
+                "bytes": len(data), "sha256": sha256(data),
+            })
+        results.append({
+            "fileId": file_id, "photographer": creator,
+            "license": license_name, "sourcePage": source_page,
+            "origin": url, "originSha256": sha256(raw),
+            "originBytes": len(raw), "derivatives": derivatives,
+            "approvedToPublish": False,
+        })
+        print("TRACTORVS_REVIEWED_JPEG_STAGED " + json.dumps(
+            {"fileId": file_id, "originBytes": len(raw),
+             "derivatives": len(derivatives)}, separators=(",", ":")), flush=True)
+        time.sleep(0.9)
+    if len(results) != 3 or any(len(x["derivatives"]) != 3 for x in results):
+        raise RuntimeError("Incomplete reviewed photograph set")
+    ledger = target / "sha256-ledger.json"
+    ledger.write_text(json.dumps({
+        "reviewRequired": True, "publicationCount": 0, "images": results
+    }, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    print("TRACTORVS_NINE_JPEGS_STAGED_FOR_REVIEW_ONLY", flush=True)
+
+
+if __name__ == "__main__":
+    main()
