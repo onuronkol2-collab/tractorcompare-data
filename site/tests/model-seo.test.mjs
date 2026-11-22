@@ -432,3 +432,38 @@ test("verified source-note prose is not part of model title, stays in body and s
     }
   }
 });
+
+test("Deutz 5D GS and non-GS preserve distinct localized SEO titles in ten languages",()=>{
+  for(const modelName of ["5065 D","5075 D"]){
+    const nonGS={...tractor,brand_name:"Deutz-Fahr",model_name:modelName,
+      variant:"5D Series (non-GS) / Stage V (Türkiye 2025 manufacturer brochure)",
+      market:"Türkiye",model_year:null};
+    const gs={...nonGS,
+      variant:"5D Series GS / Stage V (Türkiye 2025 manufacturer brochure)"};
+    for(const locale of ["en","tr","zh","hi","pt-br","fr","de","ru","ja","es"]){
+      const regular=modelSeoMetadata(nonGS,locale).title;
+      const special=modelSeoMetadata(gs,locale).title;
+      assert.notEqual(regular,special,locale+" "+modelName+" GS collision");
+      assert.ok(regular.includes("5D non-GS"),locale+" non-GS lost");
+      assert.ok(special.includes("5D GS"),locale+" GS lost");
+      assert.ok(regular.includes("Stage V")&&special.includes("Stage V"),locale);
+      assert.ok(regular.includes("Deutz-Fahr "+modelName),locale);
+      assert.ok(special.includes("Deutz-Fahr "+modelName),locale);
+      assert.ok(regular.length<=60&&special.length<=60,
+        locale+" model identity can fit without SEO boilerplate: "+regular+" / "+special);
+      assert.doesNotMatch(regular,/brochure|2025/,locale+" source date not model year");
+      assert.doesNotMatch(special,/brochure|2025/,locale+" source date not model year");
+      const subject=modelStructuredData(nonGS,locale,"https://tractorvs.example")["@graph"][2];
+      assert.ok(subject.disambiguatingDescription.includes(nonGS.variant),
+        locale+" raw source note must remain available");
+    }
+  }
+});
+
+test("unknown Deutz equipment variants are never silently classified as the known 5D source case",()=>{
+  const unknown={...tractor,brand_name:"Deutz-Fahr",model_name:"5065 D",
+    variant:"5D Series GS / Stage V special power shuttle",market:"Türkiye",model_year:null};
+  const title=modelSeoMetadata(unknown,"en").title;
+  assert.ok(title.includes("special power shuttle"));
+  assert.ok(title.includes("Deutz-Fahr 5065 D"));
+});
