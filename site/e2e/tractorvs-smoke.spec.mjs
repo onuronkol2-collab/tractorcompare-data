@@ -203,7 +203,8 @@ test("ten-language Başak comparison preserves source evidence and fits a 390px 
     await expect(section.locator("tbody tr").nth(3)).toContainText("2120 mm");
     await expect(section.locator("tbody tr").nth(4)).toContainText("3080 kg");
     await expect(section.locator("tbody tr").nth(4)).toContainText("3515 kg");
-    await expect(section.locator('a[href*="2075-bt"]')).toHaveCount(2);
+    await expect(section.locator('a[href^="https://basaktraktor.com.tr/"][href*="2075-bt"]')).toHaveCount(1);
+    // Inert preview builds omit the published catalog; production conditionally adds the local model link.
     await expect(section.locator('a[href*="2075-bk-2-wd"]')).toHaveCount(1);
     const edges=await section.evaluate(el=>{
       const rect=el.getBoundingClientRect();
