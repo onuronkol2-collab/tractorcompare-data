@@ -820,6 +820,8 @@ const candidates=[
   {"brand":"McCormick","model":"X6.414 P6-Drive","fileId":"mccormick-x6-414-p6-drive-marcelx42-2023","path":"5/55/McCormick_X6.414_P6-Drive_Agritechnica_2023_%28DSC04843%29.jpg","photographer":"MarcelX42","license":"CC BY-SA 4.0","width":7008,"height":3944},
   {"brand":"McCormick","model":"X7.618 VT-Drive","fileId":"mccormick-x7-618-vt-drive-marcelx42-2023","path":"5/50/McCormick_X7.618_VT-Drive_Agritechnica_2023_%28DSC05850%29.jpg","photographer":"MarcelX42","license":"CC BY-SA 4.0","width":7008,"height":3944},
   {"brand":"McCormick","model":"X7.624 VT-Drive","fileId":"mccormick-x7-624-vt-drive-marcelx42-2023","path":"a/aa/McCormick_X7.624_VT-Drive_Agritechnica_2023_%28DSC05875%29.jpg","photographer":"MarcelX42","license":"CC BY-SA 4.0","width":7008,"height":3944},
+  // 2026-11-22: manufacturer 112H-01 heading refers to 112N-01 in body; Commons own-work CC BY-SA 3.0.
+  {"brand":"Belarus","model":"112N-01","fileId":"belarus-112n-01-homoatrox-belagro-2021","path":"1/1b/Belarus_112H-01_tractor_%28Belagro-2021%29.jpg","photographer":"Homoatrox","license":"CC BY-SA 3.0","width":3201,"height":4385},
 ] as const;
 function licenseUrl(name:string):string{
   if(name==="CC0")return "https://creativecommons.org/publicdomain/zero/1.0/";

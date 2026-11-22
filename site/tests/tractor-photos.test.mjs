@@ -14,7 +14,7 @@ const tractor=(brand_name,model_name)=>({
   engine:null,transmission:null,drivetrain:null,weight_kg:null,specifications:[]
 });
 test("only exact matching tractor model identity receives a verified photo",()=>{
-  assert.equal(APPROVED_TRACTOR_PHOTOS.length,87);
+  assert.equal(APPROVED_TRACTOR_PHOTOS.length,88);
   assert.equal(tractorPhotos(tractor("Belarus","82.1")).length,4);
   assert.equal(tractorPhotos(tractor("Belarus","80.1")).length,1);
   assert.equal(tractorPhotos(tractor("Belarus","132N")).length,1);
@@ -449,10 +449,51 @@ test("Belarus 451, 572 and 923.4 Commons source JPG and ten-locale license evide
     assert.equal(primaryTractorPhoto(tractor("Belarus",wrong)),null,"No series-wide photo inheritance");
 });
 
+
+test("Belarus 112N-01 own-work Commons photo has exact historical model alias proof, three SHA-256 JPEGs and ten-locale reuse metadata",()=>{
+  const ledger=JSON.parse(readFileSync(new URL("../docs/photo-evidence-belarus-112n01-20261122.json",import.meta.url),"utf8"));
+  assert.equal(ledger.sources.length,1);
+  assert.equal(ledger.originalBinaryHttpVerified,true);
+  assert.equal(ledger.jpegContentVerified,true);
+  assert.equal(ledger.importProof.length,1);
+  const source=ledger.sources[0],proof=ledger.importProof[0];
+  assert.equal(source.brand,"Belarus"); assert.equal(source.model,"112N-01");
+  assert.equal(source.photographer,"Homoatrox");
+  assert.equal(source.licenseName,"CC BY-SA 3.0");
+  assert.equal(source.variantExact,false);
+  assert.match(source.modelIdentityEvidence,/112H-01.*112N-01/);
+  const item=tractor("Belarus","112N-01");
+  const p=primaryTractorPhoto(item);
+  assert.ok(p); assert.equal(p.fileId,source.fileId);
+  assert.equal(p.photographer,source.photographer);
+  assert.equal(p.licenseName,source.licenseName);
+  assert.equal(p.licenseUrl,source.licenseUrl);
+  assert.equal(p.configurationExact,false);
+  assert.equal(decodeURIComponent(p.sourcePage),decodeURIComponent(source.sourcePage));
+  for(const size of [480,960,1920]){
+    const bytes=readFileSync(new URL("../public/images/tractors/"+source.fileId+"-"+size+".jpg",import.meta.url));
+    assert.equal(bytes.readUInt16BE(0),0xffd8);
+    assert.equal(bytes.readUInt16BE(bytes.length-2),0xffd9);
+    assert.equal(bytes.length,proof.derivatives[size].bytes);
+    assert.equal(createHash("sha256").update(bytes).digest("hex"),proof.derivatives[size].sha256);
+  }
+  for(const lang of LOCALES){
+    const image=modelStructuredData(item,lang,"https://tractorvs.com/")["@graph"].find(x=>x["@type"]==="ImageObject");
+    assert.ok(image,"ImageObject in "+lang);
+    assert.equal(image.creator.name,"Homoatrox");
+    assert.equal(image.license,source.licenseUrl);
+    assert.equal(decodeURIComponent(image.acquireLicensePage),decodeURIComponent(p.sourcePage));
+    assert.equal(image.copyrightNotice,undefined,"A photo author is not automatically a legally proven copyright owner");
+    assert.equal(image.contentUrl,"https://tractorvs.com"+p.fullUrl);
+  }
+  for(const incorrect of ["112H-01","112N","112N-02","132N"])
+    assert.equal(primaryTractorPhoto(tractor("Belarus",incorrect))?.fileId===source.fileId,false,"Photo must not leak to "+incorrect);
+});
+
 test("historic photo batch is staged with rights and does not create records",()=>{
-  assert.equal(HISTORICAL_LICENSED_PHOTOS.length,76);
+  assert.equal(HISTORICAL_LICENSED_PHOTOS.length,77);
   const all=new Set(HISTORICAL_LICENSED_PHOTOS.map(x=>x.fileId));
-  assert.equal(all.size,76);
+  assert.equal(all.size,77);
   assert.ok(HISTORICAL_LICENSED_PHOTOS.every(x=>x.configurationExact===false));
   assert.ok(!HISTORICAL_LICENSED_PHOTOS.some(x=>["Product","Vehicle"].includes(x.model)));
 });

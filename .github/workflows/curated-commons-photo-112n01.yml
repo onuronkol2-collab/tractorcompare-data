@@ -1,0 +1,40 @@
+name: Verified Belarus 112N-01 independent licensed photo import
+on:
+  push:
+    branches:
+      - photos/belarus-112n01-licensed-20261122
+    paths:
+      - ".github/workflows/curated-commons-photo-import.yml"
+      - "site/scripts/import-curated-commons-photo-112n01.mjs"
+      - "site/docs/photo-evidence-belarus-112n01-20261122.json"
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: tractorvs-curated-112n01-photo-import
+  cancel-in-progress: false
+jobs:
+  import_candidate_photos:
+    if: github.repository == 'onuronkol2-collab/tractorcompare-data' && github.ref == 'refs/heads/photos/belarus-112n01-licensed-20261122'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22.23.4"
+      - name: Verify Commons source identity and license; import three JPEG derivatives atomically
+        run: node site/scripts/import-curated-commons-photo-112n01.mjs
+      - name: Commit only source-reviewed JPEGs and their measured hashes back to candidate branch
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add site/public/images/tractors site/docs/photo-evidence-belarus-112n01-20261122.json
+          if git diff --cached --quiet; then
+            echo "No new candidate assets or evidence changes"
+          else
+            git commit -m "Stage verified CC BY-SA Belarus 112N-01 JPEG sizes and SHA256 evidence"
+            git push origin HEAD:photos/belarus-112n01-licensed-20261122
+          fi
