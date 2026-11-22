@@ -15,6 +15,7 @@ on:
       - "site/scripts/batch-photo-discovery.mjs"
       - "site/scripts/photo-sitemap-fetch.mjs"
       - "site/scripts/photo-source-response.mjs"
+      - "site/scripts/photo-private-inventory.mjs"
       - "site/scripts/photo-research-quality-gate.mjs"
       - "site/scripts/extract-archived-tractor-inventory.py"
       - "site/scripts/archive-brand-photo-discovery.mjs"
