@@ -1,0 +1,23 @@
+name: TractorVS new Commons exact-photo origin QA
+on:
+  pull_request:
+    paths:
+      - "site/src/lib/historical-licensed-photos.ts"
+      - "site/scripts/verify-licensed-photos-20261122.mjs"
+      - ".github/workflows/tractorvs-20261122-photo-origin-qa.yml"
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  exact_licensed_origins:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22.23.4"
+      - name: Verify new exact-model licensing, image source, and 10-locale metadata
+        run: node --experimental-strip-types --test site/tests/tractor-photos.test.mjs
+      - name: Fetch and inspect exact six new Commons JPEG thumbnails before allowing release
+        run: node --experimental-strip-types site/scripts/verify-licensed-photos-20261122.mjs
