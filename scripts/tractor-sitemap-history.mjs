@@ -77,10 +77,15 @@ export function significantContentDigest(html,url){
   // other attributes or visible HTML). Historic hashes were made before this
   // attribute existed; preserving their inputs avoids fictitious mass lastmod.
   const normalize=s=>s.replace(/\s+/g," ").trim();
-  const significantMain=normalize(main).replace(
-    /(<article\s+class="model-spec-card")\s+data-spec-id="[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"(?=>)/gi,
-    "$1"
-  );
+  const significantMain=normalize(main).replace(/<article\b[^>]*>/gi,tag=>{
+    // Astro can add its own scoped CSS attributes between "class" and
+    // "data-spec-id"; never assume these attributes are adjacent.
+    if(!/\bclass="[^"]*\bmodel-spec-card\b[^"]*"/.test(tag))return tag;
+    return tag.replace(
+      /\sdata-spec-id="[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"/i,
+      ""
+    );
+  });
   return createHash("sha256").update([normalize(title),normalize(desc),significantMain].join("\n")).digest("hex");
 }
 export function deriveHistory({pages,previous,now=new Date(),minPages=100}){
