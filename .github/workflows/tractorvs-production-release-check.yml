@@ -18,8 +18,14 @@ permissions:
 
 jobs:
   verify_production:
-    # Never run secrets on untrusted forks; no Cloudflare credentials or write access.
-    if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository
+    # GitHub withholds Actions secrets from Dependabot PRs (even same-repo PRs).
+    # Never grant protected build credentials to Dependabot/forks. Such PRs use
+    # site-build.yml's secretless preview and contract checks instead; this
+    # secret-dependent production check is SKIPPED, not treated as a passed build.
+    if: >-
+      github.event_name != 'pull_request' ||
+      (github.event.pull_request.head.repo.full_name == github.repository &&
+       github.event.pull_request.user.login != 'dependabot[bot]')
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
