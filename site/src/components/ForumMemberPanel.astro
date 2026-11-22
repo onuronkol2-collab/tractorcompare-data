@@ -181,6 +181,79 @@ const copy=JSON.stringify(MEMBER_TEXT[lang]);
 .member-community button:focus-visible,.member-community input:focus-visible,
 .member-community textarea:focus-visible{outline:3px solid #75b385;outline-offset:2px}
 @media(max-width:780px){.member-grid{grid-template-columns:1fr}}
+
+/* Community identity: one clear profile summary, accessible opt-in discovery. */
+.member-community{margin:38px 0 0;padding:33px 0 0;border-top:1px solid #dae6dc;
+ color:#1c3b2b;min-width:0}
+.member-intro{margin:0 0 21px}
+.member-intro h2{font-size:clamp(22px,2.5vw,29px);letter-spacing:-.04em;
+ line-height:1.2;color:#183d2a;margin:0 0 8px;font-weight:850}
+.member-intro p{font-size:13.5px;line-height:1.75;color:#647467;max-width:720px;
+ margin:0}
+.member-toolbar{display:flex;gap:17px;align-items:center;
+ padding:clamp(17px,2vw,23px);margin:0;
+ border:1px solid #dfe8dd;border-radius:18px;background:
+ linear-gradient(115deg,#fff 0%,#fff 65%,#f4f8f2 100%);
+ box-shadow:0 7px 26px rgba(18,50,31,.035)}
+.member-toolbar-avatar{width:58px;height:58px;flex-basis:58px;
+ border:2px solid #dce9d5;background:#245c3c}
+.member-toolbar-identity{gap:5px}
+.member-toolbar-identity strong{font-size:16px;font-weight:850;color:#1c4430;
+ line-height:1.35}
+.member-toolbar-identity small{color:#526655;font-size:12px;line-height:1.6}
+.member-toolbar-buttons{gap:8px}
+.member-toolbar-buttons button{min-height:44px;padding:10px 14px;
+ font-size:12px;font-weight:800;border:1px solid #d5e3d3;background:#f6f9f4;
+ color:#24583d;border-radius:10px}
+.member-toolbar-buttons button:hover{background:#e8f2e4}
+.member-toolbar-buttons button[aria-expanded="true"]{background:#1f583b;
+ border-color:#1f583b;color:#fff}
+.member-grid{margin-top:16px;gap:15px}
+.member-leaders,.member-own{padding:clamp(17px,2.5vw,26px);border-color:#dfe8dd;
+ border-radius:17px;box-shadow:0 7px 24px rgba(23,50,32,.026)}
+.member-section-head h3,.member-own h3{font-size:20px;letter-spacing:-.03em;
+ color:#1d4630}
+.leaderboard-modes button{font:800 12px var(--sans);min-height:43px;
+ padding:9px 13px;border-radius:9px;border-color:#d8e5d5}
+.member-leaders li{padding:15px 0;border-top:1px solid #eef1ec}
+.member-score{color:#265f40;font-variant-numeric:tabular-nums}
+.member-own form{gap:13px}
+.member-own label{font-size:12px;color:#3c604a}
+.member-own input:not([type="checkbox"]),.member-own textarea{
+ border-color:#d2dfd2;border-radius:10px;padding:11px 13px;
+ background:#fbfdfb;min-height:46px;font-size:14px}
+.member-own .member-check{font-size:12px;line-height:1.55}
+.member-own button[type="submit"]{min-height:45px;border-radius:10px;
+ background:#1f583b}
+.member-own button[type="submit"]:hover{background:#163f2a}
+.member-recent{margin-top:16px;padding:clamp(17px,2.5vw,25px);
+ border:1px solid #e0e8dd;border-radius:18px;background:#fff;
+ box-shadow:0 7px 23px rgba(22,50,29,.028)}
+.member-recent h3{font-size:clamp(19px,2.1vw,23px);letter-spacing:-.035em;
+ margin:0 0 7px;color:#1b432e;font-weight:850}
+.member-recent>p{font-size:12.5px;color:#526655;margin:0 0 16px;line-height:1.7}
+.member-recent ol{grid-template-columns:repeat(auto-fill,minmax(min(100%,225px),1fr));gap:10px}
+.member-recent li{padding:13px;border:1px solid #e0e9dc;border-radius:12px;
+ background:#f9fbf8;min-width:0}
+.member-recent li:hover{border-color:#bad9b0}
+.member-recent img{width:43px;height:43px}
+.member-recent .member-entry strong{font-size:13px;line-height:1.4;color:#1d4530}
+.member-recent .member-entry small{color:#526958;font-size:11px;line-height:1.6;
+ overflow-wrap:anywhere}
+.member-community dialog{border-color:#d9e6d6;border-radius:18px;
+ box-shadow:0 30px 90px rgba(7,29,14,.28)}
+.member-community button:focus-visible,.member-community input:focus-visible,
+.member-community textarea:focus-visible{outline:3px solid #88b88a;outline-offset:3px}
+@media(max-width:640px){
+ .member-community{margin-top:30px;padding-top:28px}
+ .member-toolbar{gap:12px;padding:15px}
+ .member-toolbar-avatar{width:48px;height:48px;flex-basis:48px}
+ .member-toolbar-identity{min-width:0}
+ .member-toolbar-buttons{width:100%;display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}
+ .member-toolbar-buttons button{min-width:0;white-space:normal}
+ .member-recent{padding:17px}
+ .member-recent ol{grid-template-columns:1fr}
+}
 </style>
 <script>
 import {readForumSession} from "../lib/forum-session-store.mjs";

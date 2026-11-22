@@ -49,7 +49,8 @@ const schema=indexable?{
  description={ft(lang,"intro")} indexable={indexable} indexableLocales={indexableLocales} structuredData={schema}>
  <div class="community-shell">
   <header class="community-hero">
-   <div class="container">
+   <div class="container community-hero-inner">
+    <div class="community-hero-copy">
     <p class="community-kicker">TRACTORVS · {ft(lang,"name")}</p>
     <h1>{ft(lang,"heading")}</h1>
     <p>{ft(lang,"intro")}</p>
@@ -58,14 +59,33 @@ const schema=indexable?{
       <a class="compose-link community-link-alt" href="#forum-register-heading">{mt(lang,"register")}</a>
       <a class="compose-link community-link-alt" data-forum-leaderboard-link href="#forum-members">{mt(lang,"leaderboard")}</a>
     </div>
-    <div class="community-guide">
-     <span>{ft(lang,"guidelines")}</span>
     </div>
+    <aside class="community-hero-panel" aria-label={ft(lang,"category")}>
+      <div class="community-panel-head">
+        <span class="community-panel-mark" aria-hidden="true">T/V</span>
+        <span>{ft(lang,"name")}</span>
+      </div>
+      <span class="community-panel-label">{ft(lang,"category")}</span>
+      <div class="community-panel-categories">
+        <span>{ft(lang,"questions")}</span>
+        <span>{ft(lang,"maintenance")}</span>
+        <span>{ft(lang,"comparison")}</span>
+        <span>{ft(lang,"reviews")}</span>
+      </div>
+      <p class="community-panel-note">{ft(lang,"guidelines")}</p>
+    </aside>
    </div>
   </header>
   <div class="container community-main">
+   <div class="community-content-grid">
    <section class="community-list" aria-label={ft(lang,"all")}>
-    <h2>{ft(lang,"all")}</h2>
+    <div class="community-section-header">
+      <div>
+        <span class="community-section-eyebrow">{ft(lang,"name")}</span>
+        <h2>{ft(lang,"all")}</h2>
+      </div>
+      <span class="community-section-rule" aria-hidden="true"></span>
+    </div>
     <div class="community-live-new" data-forum-live-root
       data-forum-live-config={liveBrowserData} hidden>
       <h3 data-forum-live-heading>{FORUM_LIVE_TEXT[lang].early}</h3>
@@ -93,7 +113,7 @@ const schema=indexable?{
           <span>{ft(lang,topic.category)}</span>
           <time datetime={topic.created_at}>{forumDate(topic.created_at,lang)}</time>
          </div>
-         <h3><a href={path+topic.slug+"/"}>{topic.title}</a></h3>
+         <h3><a href={path+topic.slug+"/"}>{topic.title}<span class="community-topic-arrow" aria-hidden="true">↗</span></a></h3>
          <p>{forumCardExcerpt(topic.body,230)}</p>
          {model&&<p class="community-model">
           <a href={localizedPath(lang,"/tractors/"+model.slug+"/")}>{model.brand_name} {model.model_name}</a>
@@ -116,7 +136,10 @@ const schema=indexable?{
     </>}
     <p id="forum-no-results" hidden role="status">{ft(lang,"noResults")}</p>
    </section>
-   <ForumComposer lang={lang} mode="topic"/>
+   <aside class="community-sidebar" aria-label={ft(lang,"compose")}>
+     <ForumComposer lang={lang} mode="topic"/>
+   </aside>
+   </div>
    <ForumMemberPanel lang={lang}/>
    <p class="community-help"><a href={localizedPath(lang,"/tractors/")}>{ft(lang,"help")} ↗</a></p>
   </div>
@@ -186,7 +209,162 @@ const schema=indexable?{
  .community-starter-card{background:#fff;border:1px solid #c9daca;border-radius:14px;padding:18px;overflow-wrap:anywhere}
  .community-starter-card h4{color:#20553b;font-size:16px;line-height:1.4;margin:0 0 10px}
  .community-starter-card p{font-size:14px;line-height:1.75;color:#4b5e4e;margin:0}
- </style>
+ 
+/* Forum workspace — calibrated to the existing TractorVS dark header and Manrope type.
+   Real published discussions stay server-rendered; interactive selectors are untouched. */
+.community-shell{
+ --forum-ink:#193126;--forum-muted:#566a5e;--forum-line:#e0e7df;
+ --forum-soft:#f3f7f1;--forum-accent:#b7df91;
+ background:#f5f7f4;color:var(--forum-ink);
+}
+.community-hero{
+ position:relative;isolation:isolate;overflow:hidden;
+ padding:clamp(46px,6.3vw,86px) 0 clamp(46px,5vw,70px);
+ background:radial-gradient(ellipse at 92% 10%,rgba(183,223,145,.16),transparent 40%),
+  linear-gradient(115deg,#0c1d15 0%,#143424 58%,#24513b 100%);
+}
+.community-hero::before{
+ content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;opacity:.3;
+ background-image:linear-gradient(rgba(209,235,197,.075) 1px,transparent 1px),
+  linear-gradient(90deg,rgba(209,235,197,.075) 1px,transparent 1px);
+ background-size:56px 56px;
+ mask-image:linear-gradient(90deg,transparent 10%,#000 85%);
+}
+.community-hero-inner{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(260px,.65fr);
+ align-items:center;gap:clamp(28px,5vw,78px);position:relative;z-index:1}
+.community-hero-copy{min-width:0}
+.community-hero .community-kicker{display:flex;align-items:center;gap:12px;
+ text-transform:uppercase;letter-spacing:.17em;font-size:11px;font-weight:800;margin:0 0 20px;
+ color:#c3e4aa}
+.community-kicker::before{content:"";width:24px;height:2px;background:var(--forum-accent);flex:none}
+.community-hero h1{max-width:730px;margin:0 0 22px;font-size:clamp(33px,4.3vw,56px);
+ letter-spacing:-.045em;line-height:1.12;font-weight:800;text-wrap:balance;color:#f6fbf3}
+.community-hero-copy>p:not(.community-kicker){max-width:660px;font-size:clamp(15px,1.6vw,17px);
+ line-height:1.8;color:#c2d5c5;margin:0 0 28px}
+.community-hero-links{display:flex;align-items:center;flex-wrap:wrap;gap:10px}
+.community-hero .compose-link{display:inline-flex;align-items:center;justify-content:center;
+ min-height:47px;padding:12px 18px;border-radius:11px;line-height:1.3;
+ font-weight:800;font-size:13px;text-align:center;background:#b7df91;color:#102519;
+ box-shadow:0 6px 18px rgba(4,20,12,.16);transition:background .15s ease,transform .15s ease}
+.community-hero .compose-link:hover{background:#d2efa9;transform:translateY(-1px)}
+.community-hero .community-link-alt{border:1px solid rgba(227,245,215,.35);
+ color:#e9f5e6;background:rgba(255,255,255,.055);box-shadow:none}
+.community-hero .community-link-alt:hover{background:rgba(255,255,255,.13)}
+.community-hero-panel{min-width:0;padding:clamp(20px,2.3vw,29px);
+ border:1px solid rgba(215,238,203,.22);border-radius:22px;
+ background:linear-gradient(145deg,rgba(255,255,255,.095),rgba(255,255,255,.03));
+ box-shadow:0 24px 56px rgba(0,0,0,.12);backdrop-filter:blur(4px)}
+.community-panel-head{display:flex;align-items:center;gap:11px;color:#f1f8ee;
+ font-size:13px;font-weight:750;line-height:1.4}
+.community-panel-mark{display:grid;place-items:center;flex:none;width:39px;height:39px;
+ border:1px solid #93bc83;border-radius:12px;background:rgba(183,223,145,.13);
+ color:#d4eebb;font-size:12px;font-weight:900;letter-spacing:-.04em}
+.community-panel-label{display:block;margin:26px 0 12px;font-size:11px;font-weight:800;
+ letter-spacing:.11em;text-transform:uppercase;color:#a8c6aa}
+.community-panel-categories{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+.community-panel-categories span{display:flex;align-items:center;gap:9px;min-height:45px;
+ padding:10px 11px;border:1px solid rgba(217,237,207,.14);border-radius:10px;
+ color:#eaf5e8;background:rgba(255,255,255,.055);font-size:12px;
+ font-weight:700;line-height:1.4;overflow-wrap:anywhere}
+.community-panel-categories span::before{content:"";flex:none;width:6px;height:6px;
+ border-radius:2px;background:#b7df91;transform:rotate(45deg)}
+.community-hero .community-hero-panel .community-panel-note{margin:20px 0 0;
+ padding-top:17px;border-top:1px solid rgba(214,233,208,.18);font-size:12px;
+ line-height:1.7;color:#b9d2bc}
+.community-main{padding-top:clamp(26px,4vw,47px);padding-bottom:75px}
+.community-content-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(280px,330px);
+ gap:clamp(20px,2.5vw,32px);align-items:start}
+.community-list,.community-sidebar{min-width:0}
+.community-section-header{display:flex;align-items:flex-end;justify-content:space-between;
+ gap:15px;margin:0 0 21px}
+.community-section-eyebrow{display:block;color:#425749;font-weight:850;font-size:10px;
+ line-height:1.4;letter-spacing:.15em;text-transform:uppercase;margin-bottom:8px}
+.community-list .community-section-header h2{margin:0;font-size:clamp(23px,2.7vw,32px);
+ letter-spacing:-.04em;line-height:1.15;font-weight:850;color:#173d29}
+.community-section-rule{display:block;width:38px;height:3px;border-radius:3px;background:#b7df91;margin-bottom:7px;flex:none}
+.community-filters{padding:15px;margin:0 0 15px;border:1px solid var(--forum-line);
+ background:#fff;border-radius:16px;box-shadow:0 4px 15px rgba(23,49,35,.025)}
+.community-filters label{max-width:none;gap:8px;font-size:12px;color:#41624f}
+.community-filters input{width:100%;min-height:46px;font-size:14px;color:#173b27;
+ border:1px solid #d5dfd5;background:#f9fbf8;border-radius:11px;padding:12px 14px}
+.community-filters input::placeholder{color:#526b5a;opacity:1}
+.community-tabs{display:flex;gap:7px;margin:14px 0 0;flex-wrap:wrap}
+.community-tabs button{min-height:44px;padding:10px 13px;border:1px solid #e0e9df;
+ border-radius:9px;background:#f6f8f5;color:#466253;font-size:12px;font-weight:750;
+ transition:background .15s ease}
+.community-tabs button:hover{background:#eaf2e7}
+.community-tabs button.is-active{background:#1e5436;color:#fff;border-color:#1e5436}
+.community-topic-grid{display:grid;grid-template-columns:minmax(0,1fr);gap:12px}
+.community-topic{padding:clamp(18px,2.4vw,26px);border:1px solid var(--forum-line);
+ border-radius:17px;background:#fff;box-shadow:0 5px 23px rgba(18,43,28,.028);
+ transition:box-shadow .18s ease,border-color .18s ease,transform .18s ease}
+.community-topic:hover{border-color:#bdd8b6;box-shadow:0 11px 30px rgba(26,58,33,.085);
+ transform:translateY(-2px)}
+.community-topic-meta{justify-content:flex-start;align-items:center;
+ gap:8px 13px;font-size:11px;color:#526b5a}
+.community-topic-meta span:first-child{display:inline-flex;align-items:center;
+ padding:6px 10px;border-radius:7px;background:#e9f2e5;color:#235b3b;
+ font-weight:800;line-height:1.2}
+.community-topic-meta time{font-variant-numeric:tabular-nums}
+.community-topic h3{margin:16px 0 9px;font-size:clamp(17px,1.9vw,21px);
+ line-height:1.4;letter-spacing:-.02em;font-weight:800;color:#183b2b}
+.community-topic h3 a{display:inline-flex;align-items:baseline;gap:10px;
+ text-decoration:none;text-decoration-color:transparent;overflow-wrap:anywhere}
+.community-topic h3 a:hover{text-decoration:underline;text-underline-offset:4px}
+.community-topic-arrow{font-size:16px;color:#3d8158;font-weight:850;flex:none}
+.community-topic p{font-size:13.5px;line-height:1.75;margin:0 0 8px;color:#607267}
+.community-topic>p:not(.community-model){display:-webkit-box;-webkit-box-orient:vertical;
+ -webkit-line-clamp:3;overflow:hidden;max-width:75ch}
+.community-topic .community-model{margin-top:13px;padding-top:12px;border-top:1px solid #ecf0eb}
+.community-model a{font-size:12px;font-weight:800;color:#236342}
+.community-empty{border:1px dashed #bfcebf;border-radius:14px;padding:22px 24px;
+ background:#fff;color:#526859;font-size:14px;line-height:1.7}
+.community-starter{border-top:0;padding-top:15px;margin-top:0}
+.community-starter h3{font-size:19px;letter-spacing:-.025em}
+.community-starter-intro{font-size:13.5px;line-height:1.7}
+.community-starter-grid{grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr));gap:10px}
+.community-starter-card{border-color:var(--forum-line);border-radius:13px;padding:17px;
+ box-shadow:0 4px 15px rgba(18,43,28,.025)}
+.community-starter-card h4{font-size:14px;font-weight:850}
+.community-starter-card p{font-size:12.5px}
+.community-live-new{margin:0 0 18px}
+.community-shell :global(.forum-live-topic){padding:clamp(18px,2vw,25px);
+ border:1px solid var(--forum-line);box-shadow:0 5px 23px rgba(18,43,28,.028);
+ border-radius:17px}
+.community-shell :global(.forum-live-topic h3){font-size:clamp(17px,1.9vw,21px);
+ font-weight:800;letter-spacing:-.02em}
+.community-shell :global(.forum-live-meta){font-size:11px;color:#526b5a}
+.community-sidebar :global(.community-composer){margin:0;min-width:0}
+.community-help{padding-top:16px;border-top:1px solid var(--forum-line);font-size:13px}
+.community-shell a:focus-visible,.community-shell button:focus-visible,
+.community-shell input:focus-visible{outline:3px solid #80b97e;outline-offset:3px}
+@media(max-width:960px){
+ .community-hero-inner{grid-template-columns:minmax(0,1fr)}
+ .community-hero-panel{max-width:650px}
+ .community-content-grid{grid-template-columns:minmax(0,1fr)}
+ .community-sidebar{max-width:700px;width:100%}
+}
+@media(max-width:640px){
+ .community-hero{padding:38px 0 42px}
+ .community-hero-panel{padding:19px}
+ .community-hero .compose-link{flex:1 1 auto}
+ .community-hero .community-hero-copy>p:not(.community-kicker){margin-bottom:23px}
+ .community-hero-panel{display:none}
+ .community-panel-categories{gap:7px}
+ .community-panel-categories span{font-size:11px}
+ .community-main{padding-top:24px}
+ .community-filters{padding:13px}
+ .community-tabs{flex-wrap:nowrap;overflow-x:auto;overscroll-behavior-inline:contain;
+  padding-bottom:6px;scroll-snap-type:x proximity;-webkit-overflow-scrolling:touch}
+ .community-tabs button{flex:none;scroll-snap-align:start;white-space:nowrap}
+ .community-topic{padding:19px}
+ .community-topic h3{font-size:18px}
+}
+@media(prefers-reduced-motion:reduce){
+ .community-topic,.community-hero .compose-link{transition:none}
+ .community-topic:hover,.community-hero .compose-link:hover{transform:none}
+}
+</style>
 <script>
  import {initForumLive} from "../lib/forum-live-client.ts";
  const liveRoot=document.querySelector<HTMLElement>("[data-forum-live-root]");
