@@ -107,6 +107,22 @@
 #main .forum-thread .forum-helpful button{font-size:14px;line-height:1.5;min-height:46px}
 #main .forum-thread .forum-replies h2{scroll-margin-top:90px}
 #main .forum-thread .forum-tractor{font-size:14px}
+#main .forum-thread .reply-meta a{min-height:44px;padding:10px 12px}
+#main .forum-thread .reply-original summary{min-height:44px;padding:12px 0}
+#main .forum-thread .community-composer label,
+#main .forum-thread .community-composer .forum-checkbox,
+#main .forum-thread .community-composer .forum-remember small{font-size:14px;line-height:1.6}
+#main .forum-thread .community-composer .forum-auth-gate>summary{font-size:15px;line-height:1.5}
+#main .forum-thread .community-composer .forum-guest-note,
+#main .forum-thread .community-composer .forum-guidelines,
+#main .forum-thread .community-composer .forum-message{font-size:14px;line-height:1.7}
+#main .forum-thread .community-composer input,
+#main .forum-thread .community-composer select,
+#main .forum-thread .community-composer textarea{font-size:16px}
+#main .forum-thread .forum-editor-hint,
+#main .forum-thread .forum-editor-privacy,
+#main .forum-thread .forum-editor-count{font-size:13.5px;line-height:1.65}
+
 #main .forum-thread .reply-language,
 #main .forum-thread .reply-original summary{font-size:14px;line-height:1.65}
 #main .forum-thread .forum-back{margin:25px 0}
