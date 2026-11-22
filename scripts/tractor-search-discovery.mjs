@@ -241,5 +241,19 @@ if(process.argv[1]&&resolve(process.argv[1])===fileURLToPath(import.meta.url)){
       "| Google | Sitemap/robots discovery; not an IndexNow participant |\n"+
       "| Indexed in search engines | Not measurable from sitemap/IndexNow; requires webmaster data |\n\n"+
       "Baseline created without bulk submission; new public URLs are validated and sent after deployment.\n");
-  }catch(e){console.error(e);process.exitCode=1;}
+  }catch(e){
+    // A failed live sitemap / canonical / API request is never a successful
+    // submission. Preserve a machine-readable failure record for CI artifacts
+    // without writing or advancing the notification checkpoint.
+    const error=String(e?.message||e).slice(0,600);
+    console.error("TRACTORVS_SEARCH_DISCOVERY_FAILED "+JSON.stringify({error}));
+    try{
+      mkdirSync(dirname(REPORT),{recursive:true});
+      writeFileSync(REPORT,JSON.stringify({
+        as_of:new Date().toISOString(),ok:false,mode:"failed",
+        indexnow:"not_accepted_or_not_attempted",checkpoint_advanced:false,error
+      },null,2)+"\n");
+    }catch(writeError){console.error("Failed to persist SEO failure evidence: "+String(writeError));}
+    process.exitCode=1;
+  }
 }
