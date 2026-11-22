@@ -41,7 +41,7 @@ test("one sprite definition is decorative and never introduces a keyboard focus 
 test("published-only mobile search caches normalized card text and avoids redundant DOM writes",()=>{
  // A growing SSR catalogue must not normalize hundreds of strings per keystroke.
  assert.match(catalog,/const cardSearchKeys = cards\.map\(card => normalizeTractorQuery\(card\.dataset\.search \|\| ""\)\)/);
- assert.match(catalog,/const match = cardSearchKeys\[i\]\.includes\(normalized\)/);
+ assert.match(catalog,/const match = matchesTractorTerms\(cardSearchKeys\[i\], terms\)/);
  assert.match(catalog,/if \(card\.hidden !== !match\) card\.hidden = !match/);
  assert.doesNotMatch(catalog,/const match = normalizeTractorQuery\(card\.dataset\.search/);
  assert.match(catalog,/for \(let i = 0; i < cards\.length; i\+\+\)/);

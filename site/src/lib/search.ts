@@ -11,6 +11,11 @@ export function normalizeTractorQuery(value: string): string {
 }
 
 
+/** Match each normalized search term in the same published model record. */
+export function matchesTractorTerms(searchKey: string, terms: readonly string[]): boolean {
+  return terms.every(term => searchKey.includes(term));
+}
+
 /** Published-only home autocomplete. The original catalog names remain unchanged. */
 export interface TractorSuggestion {
   brand: string;
@@ -33,7 +38,7 @@ export function findTractorSuggestions(
     const model = normalizeTractorQuery(item.model);
     const fullName = brand + " " + model;
     const target = fullName + " " + normalizeTractorQuery(item.variant || "");
-    if (!parts.every(part => target.includes(part))) continue;
+    if (!matchesTractorTerms(target, parts)) continue;
     const rank = fullName === q ? 0 : model === q ? 1
       : fullName.startsWith(q) ? 2 : model.startsWith(q) ? 3
       : brand.startsWith(q) ? 4 : fullName.includes(q) ? 5 : 6;
