@@ -65,7 +65,7 @@ test("likes cannot be forged, topics must be published, counts expose no member 
  assert.match(sql,/GRANT SELECT,INSERT ON public\.tc_forum_topic_member_reads TO authenticated/);
  assert.doesNotMatch(sql,/GRANT .* ON public\.tc_forum_topic_member_reads TO anon/);
  assert.doesNotMatch(sql,/\bUPDATE public\.tc_forum_topics\b/);
- assert.match(verify,/Topic engagement RLS missing/);
+ assert.match(verify,/Engagement RLS missing/);
  assert.match(rollback,/refusing destructive rollback/);
 });
 test("forum topic renders sourced published article without fake SEO interaction stats",()=>{
