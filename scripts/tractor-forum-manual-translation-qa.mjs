@@ -80,6 +80,27 @@ function tableShape(value){
   x=>(x.match(/\|/g)||[]).length
  );
 }
+/**
+ * Bind EACH score to its actual tractor brand and rank (rather than merely
+ * comparing a sorted bag of numbers). Never allow a score swap to pass.
+ * Checks all markdown result tables with 3 cells and a leading numeric rank.
+ */
+function normalizedScorePairs(value){
+ const rows=[];
+ for(const line of value.split("\n")){
+  const l=line.trim();
+  if(!l.startsWith("|")||!l.endsWith("|"))continue;
+  const cells=l.split("|").slice(1,-1).map(v=>v.trim().replace(/\*\*/g,""));
+  if(cells.length!==3)continue;
+  const rank=cells[0].match(/(?:^|\s)(\d{1,2})\s*$/u);
+  const score=cells[2].match(/^(\d{1,3})[.,](\d{1,3})$/u);
+  if(!rank||!score)continue;
+  const brand=cells[1].replace(/\s+/g," ").trim();
+  if(!/^[\p{L}\p{N}\p{M}\s'&.()-]+$/u.test(brand)||brand.length>75)continue;
+  rows.push(rank[1]+":"+brand+":"+score[1]+"."+score[2]);
+ }
+ return rows.sort();
+}
 function bulletCount(value){
  return (value.match(/^\s*[-*+]\s+\S/gm)||[]).length;
 }
@@ -127,6 +148,7 @@ export function auditManualForumTranslation({
  if(!same(unitFacts(orig),unitFacts(translation)))errors.push("numeric_units_changed");
  if(!same(headingTokens(sourceBody),headingTokens(targetBody)))errors.push("heading_structure_changed");
  if(!same(tableShape(sourceBody),tableShape(targetBody)))errors.push("table_shape_changed");
+ if(!same(normalizedScorePairs(sourceBody),normalizedScorePairs(targetBody)))errors.push("brand_rank_score_mapping_changed");
  if(bulletCount(sourceBody)!==bulletCount(targetBody))errors.push("list_structure_changed");
  for(const name of BRANDS){
   if(orig.includes(name)&&!translation.includes(name))errors.push("brand_missing:"+name);
