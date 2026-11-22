@@ -5,7 +5,8 @@
  */
 export function imageLicenseMetadataIssues(html, {
   siteOrigin = "https://tractorvs.com",
-  expectedCopyrightOwner = null
+  expectedCopyrightOwner = null,
+  prohibitCopyrightNotice = false
 } = {}) {
   const issues = [];
   const photoObjects = [];
@@ -51,6 +52,8 @@ export function imageLicenseMetadataIssues(html, {
   }
   if (expectedCopyrightOwner!==null && photo.copyrightNotice!==expectedCopyrightOwner)
     issues.push("Verified copyrightNotice missing or incorrect for source photograph");
+  if (prohibitCopyrightNotice && photo.copyrightNotice!==undefined)
+    issues.push("Unverified or CC0 photograph must not carry a copyrightNotice");
   if (typeof photo.url === "string" && photo.url.startsWith("https://commons.wikimedia.org/wiki/File:"))
     issues.push("Commons description page incorrectly declared as ImageObject.url instead of acquireLicensePage");
   return {
