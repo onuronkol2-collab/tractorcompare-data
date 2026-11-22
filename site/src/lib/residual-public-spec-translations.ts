@@ -34,10 +34,7 @@ export const RESIDUAL_PUBLIC_SPEC_TERMS: Record<string, Partial<Record<Locale,st
     "ru": "Охлаждение двигателя"
   },
   "Four-Wheel-Drive Engagement": {
-    "tr": "Dört çekerin (4WD) devreye alınması",
-    "pt-br": "Acionamento da tração nas quatro rodas (4WD)",
-    "fr": "Enclenchement de la transmission intégrale (4WD)",
-    "es": "Activación de la tracción a las cuatro ruedas (4WD)"
+    "tr": "Dört çekerin (4WD) devreye alınması"
   },
   "Front Agricultural Tires": {
     "tr": "Ön tarım lastikleri",
@@ -58,16 +55,10 @@ export const RESIDUAL_PUBLIC_SPEC_TERMS: Record<string, Partial<Record<Locale,st
     "es": "Número de marchas"
   },
   "Hydrostatic Transmission Ranges": {
-    "tr": "Hidrostatik şanzıman hız aralıkları",
-    "pt-br": "Faixas da transmissão hidrostática",
-    "fr": "Gammes de la transmission hydrostatique",
-    "es": "Gamas de la transmisión hidrostática"
+    "tr": "Hidrostatik şanzıman hız aralıkları"
   },
   "Max Speed": {
-    "tr": "Azami hız",
-    "pt-br": "Velocidade máxima",
-    "fr": "Vitesse maximale",
-    "es": "Velocidad máxima"
+    "tr": "Azami hız"
   },
   "Maximum Speed (Brochure, Tyre-Dependent) - Mechanical": {
     "tr": "Azami hız (broşüre göre, lastiğe bağlı) – mekanik"
