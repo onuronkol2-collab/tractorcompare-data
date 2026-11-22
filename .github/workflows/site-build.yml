@@ -54,6 +54,9 @@ jobs:
       - name: Verify image alt on every preview HTML page, including forums and all ten locales
         run: node site/scripts/verify-sitewide-image-alts.mjs site/dist
 
+      - name: Verify all preview HTML titles and exact model identities across ten locales
+        run: node site/scripts/verify-sitewide-seo-titles.mjs site/dist
+
       - name: Validate inert JSON payload locations in all ten generated language pages
         run: node site/scripts/verify-document-data-boundaries.mjs
 
@@ -97,6 +100,7 @@ jobs:
         run: |
           npm run build
           node site/scripts/verify-sitewide-image-alts.mjs site/dist
+          node site/scripts/verify-sitewide-seo-titles.mjs site/dist
           test -f site/dist/sitemap-index.xml
           node site/scripts/verify-unified-sitemap-index.mjs
           node site/scripts/verify-tractor-glossary-build.mjs indexable
