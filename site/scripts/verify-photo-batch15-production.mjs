@@ -67,15 +67,20 @@ export function findPublicModelPages(xml,records=expectedLiveBatch15().records){
    for(const record of records){
      const full=LIVE_ORIGIN+"/images/tractors/"+record.fileId+"-1920.jpg";
      if(images.includes(full)){
-       if(match.has(record.fileId)&&match.get(record.fileId)!==url.pathname)
-         throw Error("Same licensed file has inconsistent public model pages");
-       match.set(record.fileId,url.pathname);
+       // One legitimately licensed photograph may be reused on multiple
+       // PUBLISHED configuration/variant pages. Prove EVERY canonical page,
+       // not only the first or incorrectly reject shared-license sources.
+       if(!match.has(record.fileId))match.set(record.fileId,new Set());
+       match.get(record.fileId).add(url.pathname);
      }
    }
  }
  if(match.size!==records.length)
    throw Error("Public model-page sitemap missing "+records.filter(x=>!match.has(x.fileId))
       .map(x=>x.fileId).join(","));
+ // Values are sorted arrays of ALL actually published variant URLs for each
+ // unique rights-reviewed image. Dedupe identical URL occurrences.
+ for(const [fileId,paths] of match)match.set(fileId,[...paths].sort());
  return match;
 }
 export function checkLiveModelPage(html,record,pagePath){
@@ -137,16 +142,18 @@ export async function proveBatch15Live({fetchFn=fetch,origin=LIVE_ORIGIN,
  const pages=findPublicModelPages(await sitemap.text(),records);
  let pageCount=0;
  for(const item of records){
-   const pagePath=pages.get(item.fileId);
-   const res=await get(fetchFn,origin+pagePath,"text/html");
-   if(res.status!==200||!/text\/html/.test(res.headers.get("content-type")||""))
-     throw Error("Live model HTML not available "+pagePath);
-   const inspect=checkLiveModelPage(await res.text(),item,pagePath);
-   if(!inspect.ok)throw Error("Model page CC/SEO/photo regression "+
-     item.fileId+": "+inspect.errors.join(","));
-   pageCount++;
-   console.log("TRACTORVS_BATCH15_LIVE_MODEL "+
-     JSON.stringify({fileId:item.fileId,path:pagePath,canonical:true,rightsVisible:true}));
+   const variantPaths=pages.get(item.fileId);
+   for(const pagePath of variantPaths){
+     const res=await get(fetchFn,origin+pagePath,"text/html");
+     if(res.status!==200||!/text\/html/.test(res.headers.get("content-type")||""))
+       throw Error("Live model HTML not available "+pagePath);
+     const inspect=checkLiveModelPage(await res.text(),item,pagePath);
+     if(!inspect.ok)throw Error("Model page CC/SEO/photo regression "+
+       item.fileId+" "+pagePath+": "+inspect.errors.join(","));
+     pageCount++;
+     console.log("TRACTORVS_BATCH15_LIVE_MODEL "+
+       JSON.stringify({fileId:item.fileId,path:pagePath,canonical:true,rightsVisible:true}));
+   }
  }
  let excludedUrls=0;
  for(const heldId of held){
@@ -157,7 +164,7 @@ export async function proveBatch15Live({fetchFn=fetch,origin=LIVE_ORIGIN,
      excludedUrls++;
    }
  }
- const summary={images:images.length,publicModelPages:pageCount,held404:excludedUrls,
+ const summary={images:images.length,uniquePhotoSources:records.length,publicModelPages:pageCount,held404:excludedUrls,
    failed:0,origin:LIVE_ORIGIN,provenance:"real-cloudflare-http-sha-canonical-cc-not-merge-only"};
  console.log("TRACTORVS_BATCH15_LIVE_SUMMARY "+JSON.stringify(summary));
  return summary;
