@@ -119,3 +119,29 @@ test("an email link opens the editor and an expired link offers a fresh start",a
  await expect(page.locator("[data-forum-post]")).toBeVisible();
  await expect(page).not.toHaveURL(/access_token/);
 });
+
+test("guest compose link reveals the login gate on click and direct link",async({page})=>{
+  await page.goto("/tr/forum/",{waitUntil:"domcontentloaded"});
+  const composer=page.locator("#forum-compose");
+  const gate=composer.locator("[data-forum-auth-gate]");
+  const post=composer.locator("[data-forum-post]");
+  await expect(gate).toBeVisible();
+  await expect(gate).not.toHaveAttribute("open","");
+  await expect(post).toBeHidden();
+
+  await page.locator('a[href="#forum-compose"]').first().click();
+  await expect(page).toHaveURL(/#forum-compose$/);
+  await expect(gate).toHaveAttribute("open","");
+  await expect(composer.locator("[data-forum-register]")).toBeVisible();
+  await expect(post).toBeHidden();
+
+  // Repeated selection of an unchanged fragment must also reveal the gate.
+  await gate.locator(":scope > summary").click();
+  await expect(gate).not.toHaveAttribute("open","");
+  await page.locator('a[href="#forum-compose"]').first().click();
+  await expect(gate).toHaveAttribute("open","");
+
+  await page.reload({waitUntil:"domcontentloaded"});
+  await expect(gate).toHaveAttribute("open","");
+  await expect(post).toBeHidden();
+});
