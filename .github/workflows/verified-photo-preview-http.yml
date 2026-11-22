@@ -1,0 +1,25 @@
+name: TractorVS candidate first-party photo HTTP SHA integrity
+on:
+  push:
+    branches:
+      - photos/verified-six-models-integrated-20261122
+    paths:
+      - ".github/workflows/verified-photo-preview-http.yml"
+      - "site/scripts/verify-six-photo-http.mjs"
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  verify_preview_jpegs:
+    if: github.ref == 'refs/heads/photos/verified-six-models-integrated-20261122'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22.23.4"
+      - name: Prove real preview JPEGs, Content-Type and SHA256 against source license ledger
+        env:
+          PHOTO_ORIGIN: https://photos-verified-six-models-integrated-20261122-tractorvs-site.onuronkol2.workers.dev
+        run: node site/scripts/verify-six-photo-http.mjs

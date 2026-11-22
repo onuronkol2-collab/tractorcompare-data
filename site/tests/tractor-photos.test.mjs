@@ -14,7 +14,7 @@ const tractor=(brand_name,model_name)=>({
   engine:null,transmission:null,drivetrain:null,weight_kg:null,specifications:[]
 });
 test("only exact matching tractor model identity receives a verified photo",()=>{
-  assert.equal(APPROVED_TRACTOR_PHOTOS.length,83);
+  assert.equal(APPROVED_TRACTOR_PHOTOS.length,87);
   assert.equal(tractorPhotos(tractor("Belarus","82.1")).length,4);
   assert.equal(tractorPhotos(tractor("Belarus","80.1")).length,1);
   assert.equal(tractorPhotos(tractor("Belarus","132N")).length,1);
@@ -248,6 +248,52 @@ test("two newly sourced Belarus JPEGs are real, provenance-hashed, model exact, 
   }
 });
 
+test("six CC BY-SA photos: exact models, author, 18 integrity hashes and 10 locale credits",()=>{
+  let count=0;
+  for(const name of ["photo-evidence-belarus-510-9223-20261122.json","photo-evidence-mccormick-four-20261122.json"]){
+    const ledger=JSON.parse(readFileSync(new URL("../docs/"+name,import.meta.url),"utf8"));
+    assert.equal(ledger.jpegContentVerified,true);
+    assert.equal(ledger.originalBinaryHttpVerified,true);
+    assert.equal(ledger.importProof.length,ledger.sources.length);
+    for(const item of ledger.sources){
+      count++;
+      const data=tractorPhotos(tractor(item.brand,item.model));
+      assert.equal(data.length,1);
+      const actual=data[0];
+      assert.equal(actual.fileId,item.fileId);
+      assert.equal(actual.photographer,item.photographer);
+      assert.equal(actual.licenseName,item.licenseName);
+      assert.equal(actual.configurationExact,false);
+      assert.equal(decodeURIComponent(actual.sourcePage).replaceAll("_"," "),
+                   decodeURIComponent(item.sourcePage).replaceAll("_"," "));
+      const proof=ledger.importProof.find(p=>p.fileId===item.fileId);
+      assert.ok(proof);
+      for(const size of [480,960,1920]){
+        const jpeg=readFileSync(new URL("../public/images/tractors/"+item.fileId+"-"+size+".jpg",import.meta.url));
+        assert.ok(jpeg.length>9000);assert.equal(jpeg.readUInt16BE(0),0xffd8);
+        assert.equal(jpeg.readUInt16BE(jpeg.length-2),0xffd9);
+        assert.equal(jpeg.length,proof.derivatives[size].bytes);
+        assert.equal(createHash("sha256").update(jpeg).digest("hex"),proof.derivatives[size].sha256);
+      }
+      for(const locale of LOCALES){
+        const img=modelStructuredData(tractor(item.brand,item.model),locale,
+          "https://tractorvs.com/")["@graph"].find(x=>x["@type"]==="ImageObject");
+        assert.ok(img);
+        assert.equal(img.creator.name,item.photographer);
+        assert.equal(img.license,item.licenseUrl);
+        assert.equal(img.acquireLicensePage,actual.sourcePage);
+        assert.equal(img.copyrightNotice,undefined);
+      }
+    }
+  }
+  assert.equal(count,6);
+  for(const [brand,model] of [
+    ["Belarus","922.4"],["Belarus","510/512"],
+    ["McCormick","X4.085 TF"],["McCormick","X6.413 P6-Drive"],
+    ["McCormick","X7.618 P6-Drive"],["McCormick","X7.624 P6-Drive"]
+  ])assert.equal(primaryTractorPhoto(tractor(brand,model)),null);
+});
+
 test("each approved photograph has a verified model source and re-use license",()=>{
   const ids=new Set();
   for(const image of APPROVED_TRACTOR_PHOTOS){
@@ -404,9 +450,9 @@ test("Belarus 451, 572 and 923.4 Commons source JPG and ten-locale license evide
 });
 
 test("historic photo batch is staged with rights and does not create records",()=>{
-  assert.equal(HISTORICAL_LICENSED_PHOTOS.length,72);
+  assert.equal(HISTORICAL_LICENSED_PHOTOS.length,76);
   const all=new Set(HISTORICAL_LICENSED_PHOTOS.map(x=>x.fileId));
-  assert.equal(all.size,72);
+  assert.equal(all.size,76);
   assert.ok(HISTORICAL_LICENSED_PHOTOS.every(x=>x.configurationExact===false));
   assert.ok(!HISTORICAL_LICENSED_PHOTOS.some(x=>["Product","Vehicle"].includes(x.model)));
 });

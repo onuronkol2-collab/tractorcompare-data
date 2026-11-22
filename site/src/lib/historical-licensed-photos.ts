@@ -815,6 +815,11 @@ const candidates=[
     "width": 3024,
     "height": 2760
   },
+  // 22 Nov 2026: exact-model CC BY-SA McCormick photos; hashes in photo-evidence-mccormick-four-20261122.json.
+  {"brand":"McCormick","model":"X4.085 TM","fileId":"mccormick-x4-085-tm-marcelx42-2023","path":"f/fb/McCormick_X4.085_TM_Agritechnica_2023_%28DSC05776%29.jpg","photographer":"MarcelX42","license":"CC BY-SA 4.0","width":7008,"height":3944},
+  {"brand":"McCormick","model":"X6.414 P6-Drive","fileId":"mccormick-x6-414-p6-drive-marcelx42-2023","path":"5/55/McCormick_X6.414_P6-Drive_Agritechnica_2023_%28DSC04843%29.jpg","photographer":"MarcelX42","license":"CC BY-SA 4.0","width":7008,"height":3944},
+  {"brand":"McCormick","model":"X7.618 VT-Drive","fileId":"mccormick-x7-618-vt-drive-marcelx42-2023","path":"5/50/McCormick_X7.618_VT-Drive_Agritechnica_2023_%28DSC05850%29.jpg","photographer":"MarcelX42","license":"CC BY-SA 4.0","width":7008,"height":3944},
+  {"brand":"McCormick","model":"X7.624 VT-Drive","fileId":"mccormick-x7-624-vt-drive-marcelx42-2023","path":"a/aa/McCormick_X7.624_VT-Drive_Agritechnica_2023_%28DSC05875%29.jpg","photographer":"MarcelX42","license":"CC BY-SA 4.0","width":7008,"height":3944},
 ] as const;
 function licenseUrl(name:string):string{
   if(name==="CC0")return "https://creativecommons.org/publicdomain/zero/1.0/";
