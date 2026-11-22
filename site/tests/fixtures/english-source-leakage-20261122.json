@@ -1,0 +1,851 @@
+{
+  "auditDate": "2026-11-22",
+  "sourceRunId": 45001923618,
+  "priorDistinct": 110,
+  "priorOccurrences": 183,
+  "labels": [
+    {
+      "source": "Alt BağLantı Kolları",
+      "occurrences": 2,
+      "exampleSlugs": [
+        "yanmar-ym347-493cf706",
+        "yanmar-ym359-116d05e9"
+      ]
+    },
+    {
+      "source": "AlternatöR AkıMı",
+      "occurrences": 2,
+      "exampleSlugs": [
+        "yanmar-yt347-723d6303",
+        "yanmar-yt359-a61cb039"
+      ]
+    },
+    {
+      "source": "Arka Askı KaldıRma (24 Inç Geride)",
+      "occurrences": 2,
+      "exampleSlugs": [
+        "yanmar-sa222-9d801b0b",
+        "yanmar-sa424-52fc7a2c"
+      ]
+    },
+    {
+      "source": "Arka Askı KaldıRma (BağLantı Noktası)",
+      "occurrences": 2,
+      "exampleSlugs": [
+        "yanmar-sa222-9d801b0b",
+        "yanmar-sa424-52fc7a2c"
+      ]
+    },
+    {
+      "source": "Arka Askı Kategorisi",
+      "occurrences": 2,
+      "exampleSlugs": [
+        "yanmar-ym347-493cf706",
+        "yanmar-ym359-116d05e9"
+      ]
+    },
+    {
+      "source": "Arka Askı Konum Kontrolü",
+      "occurrences": 2,
+      "exampleSlugs": [
+        "yanmar-yt347-723d6303",
+        "yanmar-yt359-a61cb039"
+      ]
+    },
+    {
+      "source": "Arka çIm LastiğI SeçEneğI",
+      "occurrences": 2,
+      "exampleSlugs": [
+        "yanmar-ym347-493cf706",
+        "yanmar-ym359-116d05e9"
+      ]
+    },
+    {
+      "source": "Arka EndüStriyel LastiğI (R4)",
+      "occurrences": 2,
+      "exampleSlugs": [
+        "yanmar-yt347-723d6303",
+        "yanmar-yt359-a61cb039"
+      ]
+    },
+    {
+      "source": "Arka EndüStriyel Lastik",
+      "occurrences": 2,
+      "exampleSlugs": [
+        "yanmar-sa222-9d801b0b",
+        "yanmar-sa424-52fc7a2c"
+      ]
+    },
+    {
+      "source": "Arka EndüStriyel Lastik SeçEneğI",
+      "occurrences": 2,
+      "exampleSlugs": [
+        "yanmar-ym347-493cf706",
+        "yanmar-ym359-116d05e9"
+      ]
+    },
+    {
+      "source": "Arka Iz Ayar GenişLiğI (R1)",
+      "occurrences": 2,
+      "exampleSlugs": [
+        "yanmar-ym347-493cf706",
+        "yanmar-ym359-116d05e9"
+      ]
+    },
+    {
+      "source": "Arka Iz GenişLiğI Maksimum",
+      "occurrences": 2,
+      "exampleSlugs": [
+        "yanmar-yt347-723d6303",
+        "yanmar-yt359-a61cb039"
+      ]
+    },
+    {
+      "source": "Arka Iz GenişLiğI Minimum",
+      "occurrences": 2,
+      "exampleSlugs": [
+        "yanmar-yt347-723d6303",
+        "yanmar-yt359-a61cb039"
+      ]
+    },
+    {
+      "source": "Arka KaldıRma (24 In Geride)",
+      "occurrences": 2,
+      "exampleSlugs": [
+        "yanmar-ym347-493cf706",
+        "yanmar-ym359-116d05e9"
+      ]
+    },
+    {
+      "source": "Arka KaldıRma (Alt Kol UçLarıNda)",
+      "occurrences": 2,
+      "exampleSlugs": [
+        "yanmar-ym347-493cf706",
+        "yanmar-ym359-116d05e9"
+      ]
+    },
+    {
+      "source": "Arka PTO çAlışMa Tipi",
+      "occurrences": 2,
+      "exampleSlugs": [
+        "yanmar-sa222-9d801b0b",
+        "yanmar-sa424-52fc7a2c"
+      ]
+    },
+    {
+      "source": "Asgari DöNüş YarıçApı",
+      "occurrences": 2,
+      "exampleSlugs": [
+        "yanmar-sa222-9d801b0b",
+        "yanmar-sa424-52fc7a2c"
+      ]
+    },
+    {
+      "source": "Azami Seyir HıZı (R1)",
+      "occurrences": 2,
+      "exampleSlugs": [
+        "yanmar-ym347-493cf706",
+        "yanmar-ym359-116d05e9"
+      ]
+    },
+    {
+      "source": "Boş AğıRlıK (YakıTsıZ/BalastsıZ)",
+      "occurrences": 2,
+      "exampleSlugs": [
+        "versatile-nemesis-235-45fa2840",
+        "versatile-nemesis-255-6850ed5b"
+      ]
+    },
+    {
+      "source": "BrüT Motor GüCü",
+      "occurrences": 2,
+      "exampleSlugs": [
+        "yanmar-yt347-723d6303",
+        "yanmar-yt359-a61cb039"
+      ]
+    },
+    {
+      "source": "BrüT Motor GüCü (Metrik PS)",
+      "occurrences": 2,
+      "exampleSlugs": [
+        "yanmar-yt347-723d6303",
+        "yanmar-yt359-a61cb039"
+      ]
+    },
+    {
+      "source": "Debriyaj TüRü",
+      "occurrences": 2,
+      "exampleSlugs": [
+        "yanmar-yt347-723d6303",
+        "yanmar-yt359-a61cb039"
+      ]
+    },
+    {
+      "source": "Direksiyon HidroliğI Debisi",
+      "occurrences": 2,
+      "exampleSlugs": [
+        "yanmar-ym347-493cf706",
+        "yanmar-ym359-116d05e9"
+      ]
+    },
+    {
+      "source": "DöNüş YarıçApı Frensiz (R1)",
+      "occurrences": 2,
+      "exampleSlugs": [
+        "yanmar-ym347-493cf706",
+        "yanmar-ym359-116d05e9"
+      ]
+    },
+    {
+      "source": "Ekipman HidroliğI Debisi",
+      "occurrences": 2,
+      "exampleSlugs": [
+        "yanmar-ym347-493cf706",
+        "yanmar-ym359-116d05e9"
+      ]
+    },
+    {
+      "source": "En BüYüK Arka Iz GenişLiğI (R1)",
+      "occurrences": 2,
+      "exampleSlugs": [
+        "yanmar-ym347-493cf706",
+        "yanmar-ym359-116d05e9"
+      ]
+    },
+    {
+      "source": "En DüşüK SüRüş HıZı",
+      "occurrences": 2,
+      "exampleSlugs": [
+        "yanmar-yt347-723d6303",
+        "yanmar-yt359-a61cb039"
+      ]
+    },
+    {
+      "source": "En KüçüK Arka Iz GenişLiğI (R1)",
+      "occurrences": 2,
+      "exampleSlugs": [
+        "yanmar-ym347-493cf706",
+        "yanmar-ym359-116d05e9"
+      ]
+    },
+    {
+      "source": "En YüKsek SüRüş HıZı",
+      "occurrences": 2,
+      "exampleSlugs": [
+        "yanmar-yt347-723d6303",
+        "yanmar-yt359-a61cb039"
+      ]
+    },
+    {
+      "source": "Fren TüRü",
+      "occurrences": 2,
+      "exampleSlugs": [
+        "yanmar-yt347-723d6303",
+        "yanmar-yt359-a61cb039"
+      ]
+    },
+    {
+      "source": "Hidrolik Sistem BasıNcı",
+      "occurrences": 2,
+      "exampleSlugs": [
+        "yanmar-sa222-9d801b0b",
+        "yanmar-sa424-52fc7a2c"
+      ]
+    },
+    {
+      "source": "Kabin AğıRlığı",
+      "occurrences": 2,
+      "exampleSlugs": [
+        "yanmar-yt347-723d6303",
+        "yanmar-yt359-a61cb039"
+      ]
+    },
+    {
+      "source": "Kabin YüKsekliğI",
+      "occurrences": 2,
+      "exampleSlugs": [
+        "yanmar-yt347-723d6303",
+        "yanmar-yt359-a61cb039"
+      ]
+    },
+    {
+      "source": "Kabinli AğıRlıK",
+      "occurrences": 2,
+      "exampleSlugs": [
+        "yanmar-sa222-9d801b0b",
+        "yanmar-sa424-52fc7a2c"
+      ]
+    },
+    {
+      "source": "Kabinli GenişLik",
+      "occurrences": 2,
+      "exampleSlugs": [
+        "yanmar-sa222-9d801b0b",
+        "yanmar-sa424-52fc7a2c"
+      ]
+    },
+    {
+      "source": "Kabinli YüKseklik",
+      "occurrences": 2,
+      "exampleSlugs": [
+        "yanmar-sa222-9d801b0b",
+        "yanmar-sa424-52fc7a2c"
+      ]
+    },
+    {
+      "source": "KaldıRma Kapasitesi",
+      "occurrences": 2,
+      "exampleSlugs": [
+        "yanmar-yt347-723d6303",
+        "yanmar-yt359-a61cb039"
+      ]
+    },
+    {
+      "source": "Katlanmış ROPS YüKsekliğI",
+      "occurrences": 2,
+      "exampleSlugs": [
+        "yanmar-sa222-9d801b0b",
+        "yanmar-sa424-52fc7a2c"
+      ]
+    },
+    {
+      "source": "Kuyruk Mili GüCü",
+      "occurrences": 2,
+      "exampleSlugs": [
+        "yanmar-sa222-9d801b0b",
+        "yanmar-sa424-52fc7a2c"
+      ]
+    },
+    {
+      "source": "Motor Markası Ve Modeli",
+      "occurrences": 2,
+      "exampleSlugs": [
+        "agrale-5105-3601ec83",
+        "mccormick-x5-085-d050e1f3"
+      ]
+    },
+    {
+      "source": "Motor SoğUtma Tipi",
+      "occurrences": 2,
+      "exampleSlugs": [
+        "yanmar-sa222-9d801b0b",
+        "yanmar-sa424-52fc7a2c"
+      ]
+    },
+    {
+      "source": "Motor Yağı Kapasitesi",
+      "occurrences": 2,
+      "exampleSlugs": [
+        "yanmar-sa222-9d801b0b",
+        "yanmar-sa424-52fc7a2c"
+      ]
+    },
+    {
+      "source": "Motor YakıTı",
+      "occurrences": 2,
+      "exampleSlugs": [
+        "yanmar-sa222-9d801b0b",
+        "yanmar-sa424-52fc7a2c"
+      ]
+    },
+    {
+      "source": "Net Motor GüCü",
+      "occurrences": 2,
+      "exampleSlugs": [
+        "yanmar-yt347-723d6303",
+        "yanmar-yt359-a61cb039"
+      ]
+    },
+    {
+      "source": "Net Motor GüCü (Metrik PS)",
+      "occurrences": 2,
+      "exampleSlugs": [
+        "yanmar-yt347-723d6303",
+        "yanmar-yt359-a61cb039"
+      ]
+    },
+    {
+      "source": "ÖN Aks Yağı Kapasitesi",
+      "occurrences": 2,
+      "exampleSlugs": [
+        "yanmar-sa222-9d801b0b",
+        "yanmar-sa424-52fc7a2c"
+      ]
+    },
+    {
+      "source": "ÖN çIm LastiğI SeçEneğI",
+      "occurrences": 2,
+      "exampleSlugs": [
+        "yanmar-ym347-493cf706",
+        "yanmar-ym359-116d05e9"
+      ]
+    },
+    {
+      "source": "ÖN EndüStriyel LastiğI (R4)",
+      "occurrences": 2,
+      "exampleSlugs": [
+        "yanmar-yt347-723d6303",
+        "yanmar-yt359-a61cb039"
+      ]
+    },
+    {
+      "source": "ÖN EndüStriyel Lastik",
+      "occurrences": 2,
+      "exampleSlugs": [
+        "yanmar-sa222-9d801b0b",
+        "yanmar-sa424-52fc7a2c"
+      ]
+    },
+    {
+      "source": "ÖN EndüStriyel Lastik SeçEneğI",
+      "occurrences": 2,
+      "exampleSlugs": [
+        "yanmar-ym347-493cf706",
+        "yanmar-ym359-116d05e9"
+      ]
+    },
+    {
+      "source": "ÖN Iz GenişLiğI (R1)",
+      "occurrences": 2,
+      "exampleSlugs": [
+        "yanmar-ym347-493cf706",
+        "yanmar-ym359-116d05e9"
+      ]
+    },
+    {
+      "source": "ÖN Iz GenişLiğI Maksimum",
+      "occurrences": 2,
+      "exampleSlugs": [
+        "yanmar-yt347-723d6303",
+        "yanmar-yt359-a61cb039"
+      ]
+    },
+    {
+      "source": "ÖN Iz GenişLiğI Minimum",
+      "occurrences": 2,
+      "exampleSlugs": [
+        "yanmar-yt347-723d6303",
+        "yanmar-yt359-a61cb039"
+      ]
+    },
+    {
+      "source": "ÖN PTO Opsiyonu",
+      "occurrences": 2,
+      "exampleSlugs": [
+        "yanmar-yt347-723d6303",
+        "yanmar-yt359-a61cb039"
+      ]
+    },
+    {
+      "source": "OperatöR KoltuğU",
+      "occurrences": 2,
+      "exampleSlugs": [
+        "yanmar-ym347-493cf706",
+        "yanmar-ym359-116d05e9"
+      ]
+    },
+    {
+      "source": "OperatöR Tabanı",
+      "occurrences": 2,
+      "exampleSlugs": [
+        "yanmar-ym347-493cf706",
+        "yanmar-ym359-116d05e9"
+      ]
+    },
+    {
+      "source": "Opsiyonel Arka Hidrolik çıKış",
+      "occurrences": 2,
+      "exampleSlugs": [
+        "yanmar-ym347-493cf706",
+        "yanmar-ym359-116d05e9"
+      ]
+    },
+    {
+      "source": "Orta PTO çAlışMa Tipi",
+      "occurrences": 2,
+      "exampleSlugs": [
+        "yanmar-sa222-9d801b0b",
+        "yanmar-sa424-52fc7a2c"
+      ]
+    },
+    {
+      "source": "PTO çAlışMa Tipi",
+      "occurrences": 2,
+      "exampleSlugs": [
+        "yanmar-ym347-493cf706",
+        "yanmar-ym359-116d05e9"
+      ]
+    },
+    {
+      "source": "PTO GüCü",
+      "occurrences": 2,
+      "exampleSlugs": [
+        "yanmar-ym347-493cf706",
+        "yanmar-ym359-116d05e9"
+      ]
+    },
+    {
+      "source": "ROPS öN Iz GenişLiğI",
+      "occurrences": 2,
+      "exampleSlugs": [
+        "yanmar-sa222-9d801b0b",
+        "yanmar-sa424-52fc7a2c"
+      ]
+    },
+    {
+      "source": "ROPS Toplam YüKseklik",
+      "occurrences": 2,
+      "exampleSlugs": [
+        "yanmar-sa222-9d801b0b",
+        "yanmar-sa424-52fc7a2c"
+      ]
+    },
+    {
+      "source": "ROPS Yapı AğıRlığı",
+      "occurrences": 2,
+      "exampleSlugs": [
+        "yanmar-ym347-493cf706",
+        "yanmar-ym359-116d05e9"
+      ]
+    },
+    {
+      "source": "ROPS YüKsekliğI",
+      "occurrences": 2,
+      "exampleSlugs": [
+        "yanmar-yt347-723d6303",
+        "yanmar-yt359-a61cb039"
+      ]
+    },
+    {
+      "source": "ŞAnzıMan Kademe SayıSı",
+      "occurrences": 2,
+      "exampleSlugs": [
+        "yanmar-yt347-723d6303",
+        "yanmar-yt359-a61cb039"
+      ]
+    },
+    {
+      "source": "ŞAnzıMan Vites SeçEnekleri",
+      "occurrences": 2,
+      "exampleSlugs": [
+        "swaraj-855-fe-protek-e52027b9",
+        "swaraj-969-fe-7a0f16a0"
+      ]
+    },
+    {
+      "source": "ŞAnzıMan Yağı Kapasitesi",
+      "occurrences": 2,
+      "exampleSlugs": [
+        "yanmar-sa222-9d801b0b",
+        "yanmar-sa424-52fc7a2c"
+      ]
+    },
+    {
+      "source": "SoğUtma SıVıSı Kapasitesi",
+      "occurrences": 2,
+      "exampleSlugs": [
+        "yanmar-sa222-9d801b0b",
+        "yanmar-sa424-52fc7a2c"
+      ]
+    },
+    {
+      "source": "Standart Arka Hidrolik çıKış",
+      "occurrences": 2,
+      "exampleSlugs": [
+        "yanmar-ym347-493cf706",
+        "yanmar-ym359-116d05e9"
+      ]
+    },
+    {
+      "source": "Toplam GenişLik ROPS",
+      "occurrences": 2,
+      "exampleSlugs": [
+        "yanmar-sa222-9d801b0b",
+        "yanmar-sa424-52fc7a2c"
+      ]
+    },
+    {
+      "source": "Toplam Uzunluk ROPS (Askı DâHil)",
+      "occurrences": 2,
+      "exampleSlugs": [
+        "yanmar-sa222-9d801b0b",
+        "yanmar-sa424-52fc7a2c"
+      ]
+    },
+    {
+      "source": "Üç Nokta BağLantı SıNıFı",
+      "occurrences": 2,
+      "exampleSlugs": [
+        "yanmar-yt347-723d6303",
+        "yanmar-yt359-a61cb039"
+      ]
+    },
+    {
+      "source": "YakıT Cinsi",
+      "occurrences": 2,
+      "exampleSlugs": [
+        "yanmar-ym347-493cf706",
+        "yanmar-ym359-116d05e9"
+      ]
+    },
+    {
+      "source": "2WD öN Lastik",
+      "occurrences": 1,
+      "exampleSlugs": [
+        "swaraj-855-fe-protek-e52027b9"
+      ]
+    },
+    {
+      "source": "4WD Dingil Mesafesi SeçEnekleri",
+      "occurrences": 1,
+      "exampleSlugs": [
+        "swaraj-855-fe-protek-e52027b9"
+      ]
+    },
+    {
+      "source": "4WD öN Lastik SeçEnekleri",
+      "occurrences": 1,
+      "exampleSlugs": [
+        "swaraj-855-fe-protek-e52027b9"
+      ]
+    },
+    {
+      "source": "Arka Aks RedüKsiyon Tipi",
+      "occurrences": 1,
+      "exampleSlugs": [
+        "swaraj-855-fe-protek-e52027b9"
+      ]
+    },
+    {
+      "source": "Arka EndüStriyel LastiğI",
+      "occurrences": 1,
+      "exampleSlugs": [
+        "yanmar-yt235-e262ca40"
+      ]
+    },
+    {
+      "source": "Arka PTO BağıMsıZ",
+      "occurrences": 1,
+      "exampleSlugs": [
+        "yanmar-yt235-e262ca40"
+      ]
+    },
+    {
+      "source": "Arka PTO şAftı",
+      "occurrences": 1,
+      "exampleSlugs": [
+        "yanmar-yt235-e262ca40"
+      ]
+    },
+    {
+      "source": "Arka TarıM LastiğI",
+      "occurrences": 1,
+      "exampleSlugs": [
+        "yanmar-yt235-e262ca40"
+      ]
+    },
+    {
+      "source": "Asgari Yerden YüKseklik (R3)",
+      "occurrences": 1,
+      "exampleSlugs": [
+        "yanmar-ym359-116d05e9"
+      ]
+    },
+    {
+      "source": "ÇAlışMa AğıRlığı Kabinli",
+      "occurrences": 1,
+      "exampleSlugs": [
+        "agrale-5105-3601ec83"
+      ]
+    },
+    {
+      "source": "ÇAlışMa AğıRlığı Kabinsiz",
+      "occurrences": 1,
+      "exampleSlugs": [
+        "agrale-5105-3601ec83"
+      ]
+    },
+    {
+      "source": "Forward DüşüK Kademe Azami HıZ",
+      "occurrences": 1,
+      "exampleSlugs": [
+        "yanmar-sa424-52fc7a2c"
+      ]
+    },
+    {
+      "source": "Forward YüKsek Kademe Azami HıZ",
+      "occurrences": 1,
+      "exampleSlugs": [
+        "yanmar-sa424-52fc7a2c"
+      ]
+    },
+    {
+      "source": "GöVde GenişLiğI",
+      "occurrences": 1,
+      "exampleSlugs": [
+        "yanmar-yt235-e262ca40"
+      ]
+    },
+    {
+      "source": "Güç Aralığı (üRetici SıNıFlandıRması)",
+      "occurrences": 1,
+      "exampleSlugs": [
+        "swaraj-735-fe-7c7b069f"
+      ]
+    },
+    {
+      "source": "Kabin (Q) AğıRlıK",
+      "occurrences": 1,
+      "exampleSlugs": [
+        "yanmar-yt235-e262ca40"
+      ]
+    },
+    {
+      "source": "Kabin (Q) Arka Iz GenişLiğI",
+      "occurrences": 1,
+      "exampleSlugs": [
+        "yanmar-yt235-e262ca40"
+      ]
+    },
+    {
+      "source": "Kabin (Q) ÖN Iz GenişLiğI",
+      "occurrences": 1,
+      "exampleSlugs": [
+        "yanmar-yt235-e262ca40"
+      ]
+    },
+    {
+      "source": "Kabin (Q) PTO GüCü",
+      "occurrences": 1,
+      "exampleSlugs": [
+        "yanmar-yt235-e262ca40"
+      ]
+    },
+    {
+      "source": "Kabin (Q) YüKseklik",
+      "occurrences": 1,
+      "exampleSlugs": [
+        "yanmar-yt235-e262ca40"
+      ]
+    },
+    {
+      "source": "Maksimum Geri HıZ",
+      "occurrences": 1,
+      "exampleSlugs": [
+        "yanmar-sa222-9d801b0b"
+      ]
+    },
+    {
+      "source": "Maksimum Ileri HıZ",
+      "occurrences": 1,
+      "exampleSlugs": [
+        "yanmar-sa222-9d801b0b"
+      ]
+    },
+    {
+      "source": "ÖN EndüStriyel LastiğI",
+      "occurrences": 1,
+      "exampleSlugs": [
+        "yanmar-yt235-e262ca40"
+      ]
+    },
+    {
+      "source": "ÖN TarıM LastiğI",
+      "occurrences": 1,
+      "exampleSlugs": [
+        "yanmar-yt235-e262ca40"
+      ]
+    },
+    {
+      "source": "Orta PTO BağıMsıZ",
+      "occurrences": 1,
+      "exampleSlugs": [
+        "yanmar-yt235-e262ca40"
+      ]
+    },
+    {
+      "source": "Orta PTO şAftı",
+      "occurrences": 1,
+      "exampleSlugs": [
+        "yanmar-yt235-e262ca40"
+      ]
+    },
+    {
+      "source": "PTO Devri IçIn Motor Devri",
+      "occurrences": 1,
+      "exampleSlugs": [
+        "yanmar-yt235-e262ca40"
+      ]
+    },
+    {
+      "source": "Reverse DüşüK Kademe Azami HıZ",
+      "occurrences": 1,
+      "exampleSlugs": [
+        "yanmar-sa424-52fc7a2c"
+      ]
+    },
+    {
+      "source": "Reverse YüKsek Kademe Azami HıZ",
+      "occurrences": 1,
+      "exampleSlugs": [
+        "yanmar-sa424-52fc7a2c"
+      ]
+    },
+    {
+      "source": "ROPS AğıRlıK",
+      "occurrences": 1,
+      "exampleSlugs": [
+        "yanmar-yt235-e262ca40"
+      ]
+    },
+    {
+      "source": "ROPS ÖN Iz GenişLiğI",
+      "occurrences": 1,
+      "exampleSlugs": [
+        "yanmar-yt235-e262ca40"
+      ]
+    },
+    {
+      "source": "ROPS PTO GüCü",
+      "occurrences": 1,
+      "exampleSlugs": [
+        "yanmar-yt235-e262ca40"
+      ]
+    },
+    {
+      "source": "ROPS Ve Kabinli Toplam AğıRlıK Aralığı",
+      "occurrences": 1,
+      "exampleSlugs": [
+        "yanmar-yt235-e262ca40"
+      ]
+    },
+    {
+      "source": "ROPS YüKseklik",
+      "occurrences": 1,
+      "exampleSlugs": [
+        "yanmar-yt235-e262ca40"
+      ]
+    },
+    {
+      "source": "Standart Vites SeçEneğI",
+      "occurrences": 1,
+      "exampleSlugs": [
+        "mccormick-x5-085-d050e1f3"
+      ]
+    },
+    {
+      "source": "Uzunluk (Askı DâHil)",
+      "occurrences": 1,
+      "exampleSlugs": [
+        "yanmar-yt235-e262ca40"
+      ]
+    },
+    {
+      "source": "Vites SayıSı",
+      "occurrences": 1,
+      "exampleSlugs": [
+        "iseki-t97-series-3e6886c4"
+      ]
+    }
+  ]
+}
