@@ -79,10 +79,11 @@ jobs:
         run: npm run build:production
       - name: Block false mass lastmod and verify actual rendered changes
         run: node scripts/tractor-sitemap-history.mjs
-      - name: Prove this PR never committed generated sitemap timestamps
+      - name: Confirm preview remains read-only and out of main
         run: |
-          git diff --exit-code -- seo/sitemap-content-history.json site/src/data/sitemap-lastmod.json &&
-          echo "No provenance history changed in the PR branch or GitHub repository."
+          test "${GITHUB_EVENT_NAME}" = "pull_request"
+          test "${GITHUB_REF}" != "refs/heads/main"
+          echo "Preview generated local provenance only; no git commit or push is configured."
 
   build_and_reconcile:
     needs: tests
