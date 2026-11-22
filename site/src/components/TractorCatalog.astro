@@ -94,7 +94,7 @@ const pricePayload = JSON.stringify({
         </symbol>
       </svg>
       <form id="catalog-compare" action={localizedPath(lang,"/compare/")} method="get" hidden></form>
-      <div class:list={["tractor-card-grid", { "tractor-card-grid--two": catalog.tractors.length === 2 }]} id="tractor-card-grid">
+      <div class:list={["tractor-card-grid", { "tractor-card-grid--two": catalog.tractors.length === 2, "tractor-card-grid--large": catalog.tractors.length >= 100 }]} id="tractor-card-grid">
         {catalog.tractors.map((tractor)=><article class="tractor-card"
           id={firstBrandCard.get(tractor.brand_name)===tractor.tractor_id?brandAnchor.get(tractor.brand_name):undefined}
           data-search={[tractor.brand_name,tractor.model_name,tractor.variant||"",tractor.market||"",tractor.engine||""].join(" ").toLowerCase()}>
@@ -269,6 +269,22 @@ const pricePayload = JSON.stringify({
   .catalog-brand-directory a:hover{border-color:#47895c;background:#e7f3e5}
   .catalog-brand-directory a:focus-visible{outline:3px solid #438c57;outline-offset:3px}
   .catalog-brand-directory small{font-size:11px;color:#50755a}
+  /* Large published catalogs retain every server-rendered, indexable model
+     link. Browsers with content-visibility support may skip painting/layout
+     offscreen cards without removing them from the HTML or DOM. Other browsers
+     keep existing behavior. Estimated block sizes are only layout fallbacks;
+     no SEO pages, filtering data, or model details are discarded. */
+  @supports (content-visibility: auto) {
+    .tractor-card-grid--large > .tractor-card {
+      content-visibility: auto;
+      contain-intrinsic-block-size: auto 410px;
+    }
+    @media (max-width:680px) {
+      .tractor-card-grid--large > .tractor-card {
+        contain-intrinsic-block-size: auto 520px;
+      }
+    }
+  }
   .tractor-card[id^="brand-"]{scroll-margin-top:7rem}
   .tractor-card-main { display:flex; flex-direction:column; flex:1; min-width:0; color:inherit; }
   .tractor-card-main:focus-visible { outline:3px solid #438c57; outline-offset:3px; border-radius:8px; }
