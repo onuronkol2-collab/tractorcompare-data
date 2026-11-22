@@ -34,10 +34,13 @@ test("rejects NC, ND, contradictory or absent metadata, external redirects and f
     ["CC BY 4.0","https://creativecommons.org/licenses/by/4.0/extra/"]
   ])assert.equal(allowed(label,url),false,label+" "+url);
 });
-test("both Commons discovery scripts must use the shared gate, never a looser independent predicate",()=>{
-  for(const path of ["scripts/batch-photo-discovery.mjs","scripts/archive-brand-photo-discovery.mjs"]){
-    const src=readFileSync(new URL("../"+path,import.meta.url).pathname,"utf8");
-    assert.match(src,/import\s+\{allowedPhotoReuseLicense\}\s+from\s+"\.\/photo-license-check\.mjs"/);
-    assert.match(src,/allowedPhotoReuseLicense\(license,licenseUrl\)/);
-  }
+test("both brand source and published candidate reuse share the conservative licence gate",()=>{
+  const archive=readFileSync(new URL("../scripts/archive-brand-photo-discovery.mjs",import.meta.url),"utf8");
+  const candidateIndex=readFileSync(new URL("../scripts/photo-archive-candidate-index.mjs",import.meta.url),"utf8");
+  const published=readFileSync(new URL("../scripts/batch-photo-discovery.mjs",import.meta.url),"utf8");
+  assert.match(archive,/import\s+\{allowedPhotoReuseLicense\}\s+from\s+"\.\/photo-license-check\.mjs"/);
+  assert.match(archive,/allowedPhotoReuseLicense\(license,licenseUrl\)/);
+  assert.match(candidateIndex,/import\s+\{allowedPhotoReuseLicense\}\s+from\s+"\.\/photo-license-check\.mjs"/);
+  assert.match(candidateIndex,/allowedPhotoReuseLicense\(p\.license,p\.licenseUrl\)/);
+  assert.match(published,/archiveCandidatesForModel\(archiveIndex,entry\)/);
 });
