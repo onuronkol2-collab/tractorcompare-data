@@ -290,7 +290,20 @@ const pricePayload = JSON.stringify({
       else next.searchParams.delete(key);
     }
     history.replaceState(history.state,"",next.pathname+next.search+next.hash);
-    // SiteLayout synchronizes every locale destination after this event.
+    // Preserve the original catalogue search-language contract while also
+    // carrying the new research facets to every locale destination.
+    for(const link of document.querySelectorAll<HTMLAnchorElement>("[data-language-choice]")){
+      const destination=new URL(link.href);
+      if(query) destination.searchParams.set("q",query);
+      else destination.searchParams.delete("q");
+      for(const key of ["brand","power","year","sort"]){
+        const value=next.searchParams.get(key);
+        if(value) destination.searchParams.set(key,value);
+        else destination.searchParams.delete(key);
+      }
+      link.href=destination.pathname+destination.search+destination.hash;
+    }
+    // Shared navigation handles other dynamic route state consistently.
     window.dispatchEvent(new Event("tractorvs:route-state-changed"));
   };
   search?.addEventListener("input", () => {
