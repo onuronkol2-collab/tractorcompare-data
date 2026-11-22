@@ -269,11 +269,13 @@ export const TECHNICAL_DEEP_DIVES = [
         "paragraphs": {
           "tr": [
             "HP, PS ve kW aynı şeyi, yani gücü anlatmak için kullanılan farklı ölçü birimleridir. Tıpkı metre ve santimetrenin uzunluğu farklı sayılarla göstermesi gibi düşünün. Yaklaşık olarak 1 kW, 1,341 HP veya 1,360 PS eder. Bu yüzden farklı birimle yazılmış rakamları doğrudan yarıştırmayın.",
-            "Örneğin 75 kW yazan bir motor yaklaşık 100,6 HP veya 102 PS değerindedir. Burada motor değişmedi, yalnızca sayı başka bir birime çevrildi. Ancak güç birimini eşitlemek yetmez: İki değerin de nominal mi, azami mi olduğuna ve hangi standartla ölçüldüğüne bakmalısınız."
+            "Örneğin 75 kW yazan bir motor yaklaşık 100,6 HP veya 102 PS değerindedir. Burada motor değişmedi, yalnızca sayı başka bir birime çevrildi. Ancak güç birimini eşitlemek yetmez: İki değerin de nominal mi, azami mi olduğuna ve hangi standartla ölçüldüğüne bakmalısınız.",
+            "Gerçek bir üretici örneği: Başak 2075 BK resmî broşüründe 53 kW / 72 hp motor gücü yazıyor. NIST birim katsayılarına göre 53 kW yaklaşık 72,1 metrik PS, ancak 71,1 mekanik hp eder. Bu nedenle üreticinin ‘hp’ etiketini hangi beygir tanımında kullandığını ayrıca teyit etmeden bu iki birimi aynıymış gibi yorumlamayın. Broşürdeki 53 kW ile 72 hp ifadelerini üretici beyanı olarak aynen koruyun; bunlardan bağımsız PTO gücü veya standart bilgisi türetmeyin."
           ],
           "en": [
             "Mechanical hp, metric PS and kilowatts measure power but have different unit sizes. Approximately 1 kW equals 1.341 mechanical hp or 1.360 PS. Compare values in a shared unit before drawing conclusions.",
-            "For example, 75 kW is approximately 100.6 hp or 102.0 PS. Converting units does not make rated power and maximum power comparable unless their test basis also matches."
+            "For example, 75 kW is approximately 100.6 hp or 102.0 PS. Converting units does not make rated power and maximum power comparable unless their test basis also matches.",
+            "A real manufacturer example: Başak's official 2075 BK brochure states engine power as 53 kW / 72 hp. Under NIST unit factors, 53 kW is approximately 72.1 metric PS but 71.1 mechanical hp. Do not silently treat the maker's ‘hp’ label as either horsepower definition without checking the unit convention. Preserve both original manufacturer figures as reported; they are not an independent PTO power result or proof of a particular test standard."
           ]
         }
       },
