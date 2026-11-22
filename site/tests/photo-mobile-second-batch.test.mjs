@@ -16,7 +16,12 @@ test("second batch selects 18 distinct licensed and already-approved images, exc
  assert.equal(new Set(manifest.selected.map(x=>x.fileId)).size,18);
  for(const photo of manifest.selected){
    assert.equal(MOBILE_PILOT_IDS.includes(photo.fileId),false);
-   assert.equal(approvedMobilePhotoFormats(photo.fileId),null);
+   if(PUBLICATION_HOLD_IDS.includes(photo.fileId))
+     assert.equal(approvedMobilePhotoFormats(photo.fileId),null,
+       "Unpublished model cannot have a public 720px photo route");
+   else
+     assert.ok(approvedMobilePhotoFormats(photo.fileId),
+       "Existing public second-batch photo must have local JPEG/WebP routes");
    assert.match(photo.firstParty960,/^https:\/\/tractorvs\.com\/images\/tractors\/[a-z0-9-]+-960\.jpg$/);
    assert.match(photo.originDisplayUrl,/\/960px-/);
    assert.ok(["CC BY-SA 3.0","CC BY-SA 4.0"].includes(photo.licenseName));
