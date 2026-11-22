@@ -1,57 +1,104 @@
 name: TractorVS licensed Commons JPEG review staging
 on:
   workflow_dispatch:
+  # One-time release intent; ordinary workflow edits cannot retrigger.
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/tractorvs-reviewed-commons-media-staging.yml"
 permissions:
-  contents: read
+  contents: write
 concurrency:
   group: tractorvs-reviewed-commons-media-staging
   cancel-in-progress: false
 jobs:
   generate_unpublished_review_artifact:
+    if: github.event_name == 'workflow_dispatch' || startsWith(github.event.head_commit.message, 'ci(photo): one-time stage reviewed Steyr Zetor JPEGs')
     runs-on: ubuntu-latest
-    timeout-minutes: 8
+    timeout-minutes: 12
     steps:
       - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22.23.4"
       - name: Check generator syntax without network
         run: python -m py_compile site/scripts/stage-reviewed-commons-20261122.py
       - name: Install pinned JPEG decoder
         run: python -m pip install --quiet 'Pillow==11.3.0'
-      - name: Fetch exactly three reviewed Commons images without automatic 429 retries
+      - name: Fetch exactly three reviewed official Commons thumbnails without retries
         run: python site/scripts/stage-reviewed-commons-20261122.py --output-dir ./photo-derivatives-review
-      - name: Verify nine JPEG derivatives and SHA-256 hashes before packaging
+      - name: Verify nine actual JPEGs and SHA-256 ledger
         run: |
           python - <<'PY'
-          import hashlib
-          import json
+          import hashlib, json
           from pathlib import Path
           from PIL import Image
-          folder = Path("photo-derivatives-review")
-          ledger = json.loads((folder / "sha256-ledger.json").read_text())
-          assert ledger["reviewRequired"] is True
-          assert ledger["publicationCount"] == 0
-          assert len(ledger["images"]) == 3
-          for item in ledger["images"]:
-              assert len(item["derivatives"]) == 3
-              assert {d["width"] for d in item["derivatives"]} == {480, 960, 1920}
-              for d in item["derivatives"]:
-                  f = folder / d["file"]
-                  assert f.parent == folder
-                  raw = f.read_bytes()
+          root = Path("photo-derivatives-review")
+          report = json.loads((root / "sha256-ledger.json").read_text())
+          assert report["reviewRequired"] is True and report["publicationCount"] == 0
+          ids = {
+              "steyr-6240-absolut-blonder1984-2022",
+              "zetor-proxima-jj7777-2021",
+              "zetor-proxima-raf24-warsaw-2019",
+          }
+          assert {x["fileId"] for x in report["images"]} == ids
+          for image in report["images"]:
+              assert image["approvedToPublish"] is False
+              assert image["origin"].startswith("https://thumb.wikimedia.org/wikipedia/commons/thumb/")
+              assert len(image["originSha256"]) == 64
+              assert {d["width"] for d in image["derivatives"]} == {480, 960, 1920}
+              for d in image["derivatives"]:
+                  assert d["file"] == image["fileId"] + "-" + str(d["width"]) + ".jpg"
+                  p = root / d["file"]
+                  assert p.parent == root
+                  raw = p.read_bytes()
                   assert len(raw) == d["bytes"]
                   assert hashlib.sha256(raw).hexdigest() == d["sha256"]
-                  with Image.open(f) as im:
+                  assert raw[:3] == bytes.fromhex("ffd8ff") and raw[-2:] == bytes.fromhex("ffd9")
+                  with Image.open(p) as im:
                       im.load()
                       assert im.format == "JPEG"
                       assert (im.width, im.height) == (d["width"], d["height"])
-          print("TRACTORVS_REVIEW_ONLY_NINE_JPEGS_SHA256_OK")
+          print("TRACTORVS_NINE_REAL_JPEGS_SHA256_READY_FOR_DRAFT_PR")
           PY
-      - name: Upload nonpublishing evidence and JPEGs for independent review
+      - name: Preserve reviewed source evidence and JPEGs as unapproved artifact
         uses: actions/upload-artifact@v4
         with:
           name: tractorvs-steyr-zetor-licensed-jpegs-review-only
           path: photo-derivatives-review/
           if-no-files-found: error
           retention-days: 30
+      - name: Attach ONLY verified media to draft PR 445, never merge or publish
+        env:
+          RELEASE_BRANCH: photo/20261122-commons-steyr6240-zetorproxima
+          EXPECTED_HEAD: "4032ff6b3ec1e600dec78da0b7c623d81227c8a2"
+        run: |
+          set -euo pipefail
+          git fetch --no-tags origin "refs/heads/${RELEASE_BRANCH}:refs/remotes/origin/${RELEASE_BRANCH}"
+          observed="$(git rev-parse "refs/remotes/origin/${RELEASE_BRANCH}")"
+          if [[ "$observed" != "$EXPECTED_HEAD" ]]; then
+            echo "::error::Draft PR #445 changed since source review; refusing blind mutation."
+            exit 1
+          fi
+          git switch -c photo-reviewed-release "refs/remotes/origin/${RELEASE_BRANCH}"
+          install -d site/public/images/tractors site/docs
+          for id in steyr-6240-absolut-blonder1984-2022 zetor-proxima-jj7777-2021 zetor-proxima-raf24-warsaw-2019; do
+            for size in 480 960 1920; do
+              install -m 0644 "photo-derivatives-review/${id}-${size}.jpg" "site/public/images/tractors/${id}-${size}.jpg"
+              git add "site/public/images/tractors/${id}-${size}.jpg"
+            done
+          done
+          install -m 0644 photo-derivatives-review/sha256-ledger.json site/docs/photo-import-evidence-steyr-zetor-20261122.json
+          git add site/docs/photo-import-evidence-steyr-zetor-20261122.json
+          node --experimental-strip-types --test site/tests/tractor-photos.test.mjs
+          node --experimental-strip-types site/scripts/verify-licensed-photos-20261122.mjs
+          staged="$(git diff --cached --name-only | wc -l)"
+          test "$staged" -eq 10
+          git -c user.email="41898282+github-actions[bot]@users.noreply.github.com" -c user.name="github-actions[bot]" commit -m "feat(photo): stage SHA-verified Steyr/Zetor JPEGs in PR for review"
+          git push origin "HEAD:refs/heads/${RELEASE_BRANCH}"
+          echo "Verified files attached to existing DRAFT PR #445; no merge or production deploy."
