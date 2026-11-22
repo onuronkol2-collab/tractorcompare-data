@@ -74,7 +74,7 @@ test("catalogue stays a crawlable technical reference, even with a two-column re
     'class="catalog-discovery-layout"','class="catalog-results-panel"',
     'id="catalog-facet-brand"','id="catalog-facet-power"',
     'id="catalog-facet-year"','id="catalog-facet-sort"',
-    "matchesCatalogueFacet(rows[i],facetState())",
+    "matchesCatalogueFacet(rows[i],state)",
     'catalog.tractors.map((tractor)=><article',
     'href={detailPrefix+tractor.slug+"/"}',
     '<TractorPhoto tractor={tractor} lang={lang} mode="catalog" sprite />',
