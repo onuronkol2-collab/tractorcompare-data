@@ -13,6 +13,18 @@ import {PUBLIC_IMAGE_SITEMAP,PUBLICATION_HOLD_IDS}
   from "./photo-mobile-second-batch-public-coverage.mjs";
 
 export const LIVE_ORIGIN="https://tractorvs.com";
+/** These two licensed images appear on the public editorial technical glossary,
+ * not a published tractor model page. Demand real attribution for BOTH languages.
+ */
+export const EDITORIAL_SHOWCASE_IDS=Object.freeze([
+  "case-ih-puma-150-chris-woodrich-2025",
+  "mccormick-x5-120-marcelx42-2023"
+]);
+export const EDITORIAL_GLOSSARY_PAGES=Object.freeze([
+  "/guides/tractor-technical-terms/",
+  "/tr/guides/tractor-technical-terms/"
+]);
+const editorialSet=new Set(EDITORIAL_SHOWCASE_IDS);
 const evidence=JSON.parse(readFileSync(
   new URL("../docs/photo-mobile-batch15-evidence.json",import.meta.url),"utf8"));
 
@@ -48,7 +60,8 @@ export function expectedLiveBatch15(input=evidence){
  }
  return {files,records:input.records,held:PUBLICATION_HOLD_IDS};
 }
-export function findPublicModelPages(xml,records=expectedLiveBatch15().records){
+export function findPublicModelPages(xml,records=expectedLiveBatch15().records.filter(
+ record=>!editorialSet.has(record.fileId))){
  if(typeof xml!=="string"||xml.length>2_000_000||
    !/<urlset\b/.test(xml)||!/<image:loc>/.test(xml))
    throw Error("Missing or malformed live image sitemap");
@@ -82,6 +95,43 @@ export function findPublicModelPages(xml,records=expectedLiveBatch15().records){
  // unique rights-reviewed image. Dedupe identical URL occurrences.
  for(const [fileId,paths] of match)match.set(fileId,[...paths].sort());
  return match;
+}
+/** A two-language editorial photo is genuinely public even without its own
+ * tractor catalogue page. Requiring a model page would falsely block it.
+ * Exact File IDs and the 2 published glossary routes are enforced.
+ */
+export function findPublicEditorialPages(xml,records=expectedLiveBatch15().records.filter(
+ record=>editorialSet.has(record.fileId))){
+ if(typeof xml!=="string"||xml.length>2_000_000||
+    !/<urlset\b/.test(xml)||!/<image:loc>/.test(xml))
+   throw Error("Missing or malformed editorial image sitemap");
+ if(records.length!==2||!records.every(r=>editorialSet.has(r.fileId))||
+    new Set(records.map(r=>r.fileId)).size!==2)
+   throw Error("Exactly two verified glossary showcase sources expected");
+ const map=new Map(records.map(r=>[r.fileId,new Set()]));
+ for(const entry of xml.matchAll(/<url>([\s\S]*?)<\/url>/g)){
+   const body=entry[1];
+   const raw=/<loc>\s*([^<]+)<\/loc>/.exec(body)?.[1]?.replaceAll("&amp;","&");
+   if(!raw)continue;
+   let url;
+   try{url=new URL(raw);}catch{throw Error("Malformed editorial page URL");}
+   if(url.origin!==LIVE_ORIGIN||url.search||url.hash)
+     throw Error("Noncanonical editorial sitemap page URL");
+   if(!EDITORIAL_GLOSSARY_PAGES.includes(url.pathname))continue;
+   const images=new Set([...body.matchAll(/<image:loc>\s*([^<]+)<\/image:loc>/g)]
+     .map(m=>m[1].replaceAll("&amp;","&")));
+   for(const record of records){
+     const full=LIVE_ORIGIN+"/images/tractors/"+record.fileId+"-1920.jpg";
+     if(images.has(full))map.get(record.fileId).add(url.pathname);
+   }
+ }
+ for(const [fileId,seen] of map){
+   if(seen.size!==EDITORIAL_GLOSSARY_PAGES.length||
+      !EDITORIAL_GLOSSARY_PAGES.every(path=>seen.has(path)))
+      throw Error("Missing published EN/TR glossary photo "+fileId);
+   map.set(fileId,[...seen].sort());
+ }
+ return map;
 }
 export function checkLiveModelPage(html,record,pagePath){
  const errors=[];
@@ -139,9 +189,15 @@ export async function proveBatch15Live({fetchFn=fetch,origin=LIVE_ORIGIN,
  const sitemap=await get(fetchFn,PUBLIC_IMAGE_SITEMAP,"application/xml");
  if(sitemap.status!==200||!/(?:xml)/.test(sitemap.headers.get("content-type")||""))
    throw Error("Live image sitemap unavailable");
- const pages=findPublicModelPages(await sitemap.text(),records);
- let pageCount=0;
- for(const item of records){
+ const xml=await sitemap.text();
+ const modelRecords=records.filter(item=>!editorialSet.has(item.fileId));
+ const editorialRecords=records.filter(item=>editorialSet.has(item.fileId));
+ if(modelRecords.length!==13||editorialRecords.length!==2)
+   throw Error("Wrong public model/editorial photo source split");
+ const pages=findPublicModelPages(xml,modelRecords);
+ const editorialPages=findPublicEditorialPages(xml,editorialRecords);
+ let pageCount=0,editorialPageCount=0;
+ for(const item of modelRecords){
    const variantPaths=pages.get(item.fileId);
    for(const pagePath of variantPaths){
      const res=await get(fetchFn,origin+pagePath,"text/html");
@@ -155,6 +211,20 @@ export async function proveBatch15Live({fetchFn=fetch,origin=LIVE_ORIGIN,
        JSON.stringify({fileId:item.fileId,path:pagePath,canonical:true,rightsVisible:true}));
    }
  }
+ for(const item of editorialRecords){
+   for(const pagePath of editorialPages.get(item.fileId)){
+     const response=await get(fetchFn,origin+pagePath,"text/html");
+     if(response.status!==200||
+       !/text\/html/.test(response.headers.get("content-type")||""))
+       throw Error("Live EN/TR glossary HTTP failed "+pagePath);
+     const inspect=checkLiveModelPage(await response.text(),item,pagePath);
+     if(!inspect.ok)throw Error("Editorial glossary CC/SEO/WebP regression "+
+       item.fileId+" "+pagePath+": "+inspect.errors.join(","));
+     editorialPageCount++;
+     console.log("TRACTORVS_BATCH15_LIVE_EDITORIAL "+
+       JSON.stringify({fileId:item.fileId,path:pagePath,canonical:true,rightsVisible:true}));
+   }
+ }
  let excludedUrls=0;
  for(const heldId of held){
    for(const ext of ["jpg","webp"]){
@@ -164,7 +234,9 @@ export async function proveBatch15Live({fetchFn=fetch,origin=LIVE_ORIGIN,
      excludedUrls++;
    }
  }
- const summary={images:images.length,uniquePhotoSources:records.length,publicModelPages:pageCount,held404:excludedUrls,
+ const summary={images:images.length,uniquePhotoSources:records.length,modelPhotoSources:modelRecords.length,
+   editorialPhotoSources:editorialRecords.length,publicModelPages:pageCount,
+   editorialPageChecks:editorialPageCount,held404:excludedUrls,
    failed:0,origin:LIVE_ORIGIN,provenance:"real-cloudflare-http-sha-canonical-cc-not-merge-only"};
  console.log("TRACTORVS_BATCH15_LIVE_SUMMARY "+JSON.stringify(summary));
  return summary;
