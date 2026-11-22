@@ -20,7 +20,9 @@ function fixture(){
  const dir=mkdtempSync(join(tmpdir(),"tractorvs-master-sitemap-"));
  const files={
   "sitemap-index.xml": index(mapURLs),
-  "sitemap-0.xml": xmlURLSet([origin+"/",...locales.map(lang=>origin+"/"+lang+"tractors/")]),
+  "sitemap-0.xml": xmlURLSet(locales.flatMap(lang=>[
+   origin+"/"+lang,origin+"/"+lang+"articles/",origin+"/"+lang+"tractors/"
+  ])),
   "image-sitemap.xml":xmlURLSet([origin+"/tr/tractors/"]),
   "forum-sitemap.xml":xmlURLSet([origin+"/tr/forum/",origin+"/tr/forum/approved-topic/"]),
   "robots.txt":"User-agent: *\nAllow: /\n"+["sitemap-index.xml","forum-sitemap.xml","image-sitemap.xml"].map(x=>"Sitemap: "+origin+"/"+x).join("\n"),
@@ -35,7 +37,7 @@ function fixture(){
  }
  return {dir,files,put:(name,value)=>writeFileSync(join(dir,name),value)};
 }
-test("one root sitemap index includes all 10 catalog locales, public image and approved forum",()=>{
+test("one root sitemap index includes 10 home, article and catalog locales plus image and approved forum",()=>{
  const f=fixture();
  try {
   const report=verifyUnifiedSitemapIndex({dist:f.dir,origin});
@@ -43,7 +45,7 @@ test("one root sitemap index includes all 10 catalog locales, public image and a
   assert.equal(report.html_children,1);
   assert.equal(report.catalog_locales,10);
   assert.equal(report.forum_urls,2);
-  assert.equal(report.html_pages,11);
+  assert.equal(report.html_pages,30);
  }finally{rmSync(f.dir,{recursive:true,force:true})}
 });
 test("missing forum/image in master index is always a hard production failure",()=>{
@@ -61,11 +63,32 @@ test("missing generated child, missing locale and wrong host fail closed",()=>{
   unlinkSync(join(f.dir,"image-sitemap.xml"));
   assert.throws(()=>verifyUnifiedSitemapIndex({dist:f.dir,origin}),/Missing generated file/);
   f.put("image-sitemap.xml",f.files["image-sitemap.xml"]);
-  f.put("sitemap-0.xml",xmlURLSet([origin+"/",...locales.filter(x=>x!=="ja/").map(lang=>origin+"/"+lang+"tractors/")]));
+  f.put("sitemap-0.xml",xmlURLSet(locales.flatMap(lang=>[
+   origin+"/"+lang,origin+"/"+lang+"articles/",origin+"/"+lang+"tractors/"
+  ]).filter(url=>url!==origin+"/ja/tractors/")));
   assert.throws(()=>verifyUnifiedSitemapIndex({dist:f.dir,origin}),/Missing indexed catalog locale/);
   f.put("sitemap-0.xml",f.files["sitemap-0.xml"]);
   f.put("sitemap-index.xml",index(mapURLs.map(url=>url.replace(origin,"https://wrong.example"))));
   assert.throws(()=>verifyUnifiedSitemapIndex({dist:f.dir,origin}),/missing/);
+ }finally{rmSync(f.dir,{recursive:true,force:true})}
+});
+test("missing published homepage or editorial hub in any locale blocks the release",()=>{
+ const f=fixture();
+ try{
+  const full=locales.flatMap(lang=>[
+   origin+"/"+lang,origin+"/"+lang+"articles/",origin+"/"+lang+"tractors/"
+  ]);
+  for(const lang of locales){
+   for(const [suffix,label] of [["","home"],["articles/","editorial hub"]]){
+    const omitted=origin+"/"+lang+suffix;
+    f.put("sitemap-0.xml",xmlURLSet(full.filter(url=>url!==omitted)));
+    assert.throws(()=>verifyUnifiedSitemapIndex({dist:f.dir,origin}),
+     new RegExp("Missing indexed "+label+" locale "+(lang||"en")),
+     "missing sitemap entry must stop deployment: "+omitted);
+   }
+  }
+  f.put("sitemap-0.xml",f.files["sitemap-0.xml"]);
+  assert.equal(verifyUnifiedSitemapIndex({dist:f.dir,origin}).html_pages,30);
  }finally{rmSync(f.dir,{recursive:true,force:true})}
 });
 test("approved forum photo pages must have canonical published HTML and may be image sitemap references",()=>{
