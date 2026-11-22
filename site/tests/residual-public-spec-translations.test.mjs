@@ -135,3 +135,22 @@ test("source-specific PT-BR, French and Spanish technical headings retain exact 
       locale+" minimum and maximum speed cannot be conflated");
   }
 });
+
+
+test("live 388-model Turkish predeploy audit exact source headings have safe translations",()=>{
+  const cases={
+    "4WD Engagement Control":"4WD devreye alma kumandası",
+    "Forward/Reverse Shuttle Control":"İleri/geri yön değiştirme kumandası",
+    "Front Differential Lock / Limited Slip":"Ön diferansiyel kilidi / sınırlı kaymalı diferansiyel",
+    "Rear Differential Lock Actuation":"Arka diferansiyel kilidini devreye alma kumandası"
+  };
+  assert.equal(Object.keys(cases).length,4);
+  for(const [source,label] of Object.entries(cases)){
+    const spec=exampleSpec(source),original=structuredClone(spec);
+    assert.equal(publishedSpecificationLabel(source,"tr"),label,source);
+    assert.equal(specLabel(spec,"tr"),label,source);
+    assert.deepEqual(spec,original,source+" must never mutate source evidence");
+  }
+  assert.match(publishedSpecificationLabel("4WD Engagement Control","tr"),/4WD/);
+  assert.match(publishedSpecificationLabel("Front Differential Lock / Limited Slip","tr"),/sınırlı kaymalı/);
+});
