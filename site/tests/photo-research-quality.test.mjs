@@ -23,3 +23,27 @@ test("missing inventory, missing records, or private/draft model fail closed",()
   assert.equal(validatePhotoResearchReports(archive(),null).ok,false);
   assert.equal(validatePhotoResearchReports(null,live()).ok,false);
 });
+
+test("missing, unknown, and partial report status never count as complete",()=>{
+  for(const status of [undefined,null,"partial","unknown",""]) {
+    const l=live();
+    if(status===undefined)delete l.runStatus;else l.runStatus=status;
+    assert.equal(validatePhotoResearchReports(archive(),l).ok,false,"Status: "+String(status));
+  }
+});
+test("CLI safety floors detect accidentally truncated source and public catalogues",()=>{
+  const floors={minArchiveModels:300,minPublicPages:300,minModelSearches:300};
+  const report=validatePhotoResearchReports(archive(),live(),floors);
+  assert.equal(report.ok,false);
+  assert.ok(report.errors.some(x=>x.includes("Archive inventory below")));
+  assert.ok(report.errors.some(x=>x.includes("Published model pages below")));
+  assert.ok(report.errors.some(x=>x.includes("Published model searches below")));
+  const a=archive(),l=live();
+  a.modelCount=405;a.models=Array.from({length:405},(_,n)=>({brand:"Test",model:"Archive "+n}));
+  l.publicModelPages=386;l.modelSearches=386;
+  l.models=Array.from({length:386},(_,n)=>({
+    brand:"Test",model:"Published "+n,status:"published",
+    publicPages:["https://tractorvs.com/tractors/model-"+n+"/"]
+  }));
+  assert.equal(validatePhotoResearchReports(a,l,floors).ok,true);
+});
