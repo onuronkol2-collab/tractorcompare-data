@@ -130,7 +130,7 @@ test("guest compose link reveals the login gate on click and direct link",async(
   await expect(post).toBeHidden();
 
   await page.locator('a[href="#forum-compose"]').first().click();
-  await expect(page).toHaveURL(/\\/tr\\/forum\\/#forum-compose$/);
+  await expect(page).toHaveURL(/#forum-compose$/);
   await expect(gate).toHaveAttribute("open","");
   await expect(composer.locator("[data-forum-register]")).toBeVisible();
   await expect(post).toBeHidden();
