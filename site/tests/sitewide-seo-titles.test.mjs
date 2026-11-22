@@ -3,7 +3,7 @@ import assert from "node:assert/strict";
 import {mkdtempSync,mkdirSync,writeFileSync,rmSync} from "node:fs";
 import {tmpdir} from "node:os";
 import {join} from "node:path";
-import {inspectSeoTitle,auditBuiltSeoTitles} from "../scripts/verify-sitewide-seo-titles.mjs";
+import {inspectSeoTitle,auditBuiltSeoTitles,hasBibliographicTitleLeak} from "../scripts/verify-sitewide-seo-titles.mjs";
 
 const doc=(title,main)=>'<!doctype html><html lang="en"><head><title>'
   +title+'</title></head><body>'+main+'</body></html>';
@@ -79,4 +79,20 @@ test("HTML entities are measured as displayed characters, not escape sequences",
  assert.equal(item.title,"Massey & Ferguson '2026' Specs");
  assert.equal(item.length,item.title.length);
  assert.deepEqual(item.errors,[]);
+});
+
+test("source bibliographies in model titles are flagged even when <=60 characters",()=>{
+ assert.equal(hasBibliographicTitleLeak("Landini 2-050 — Serie 2 / Tier 3 / 2017 brochure"),true);
+ assert.equal(hasBibliographicTitleLeak("Steyr 6440 CERVUS CVT — International"),false);
+ assert.equal(hasBibliographicTitleLeak("Yanmar YT347 — YT3 i-HMT · Turkey"),false);
+ const root=mkdtempSync(join(tmpdir(),"tractorvs-note-title-"));
+ try{
+  mkdirSync(join(root,"tractors","landini"),{recursive:true});
+  writeFileSync(join(root,"tractors","landini","index.html"),
+   doc("Landini 2-050 — 2017 brochure","<h1>Landini 2-050</h1>"));
+  const report=auditBuiltSeoTitles(root);
+  assert.equal(report.errors.length,0);
+  assert.equal(report.bibliographyTitles,1);
+  assert.equal(report.bibliographyExamples[0].file,"tractors/landini/index.html");
+ }finally{rmSync(root,{recursive:true,force:true});}
 });
