@@ -25,7 +25,8 @@ const { lang, tractor } = Astro.props;
 // Same read-only, published-only catalogue already used by getStaticPaths.
 const moreModels = morePublishedTractors(tractor,(await getPublicCatalog()).tractors);
 const hasBasak2075Analysis = tractor.brand_name.toLocaleLowerCase("tr").includes("başak") &&
-  tractor.model_name.trim().toLocaleLowerCase("tr")==="2075 bk";
+  (tractor.model_name.trim().toLocaleLowerCase("tr")==="2075 bk" ||
+   tractor.model_name.trim().toLocaleLowerCase("tr")==="2075 bt");
 const groups = groupSpecifications(tractor.specifications,lang);
 const manufacturerDiscrepancies = [...new Set(tractor.specifications.map((spec) => verificationNotice(spec, lang)).filter((note): note is string => Boolean(note)))];
 const unresolvedManufacturerConflicts=modelSourceDiscrepancies(tractor,lang);
