@@ -278,15 +278,21 @@ export function modelSeoMetadata(tractor: TractorRecord, lang: Locale) {
   // qualifiers survive untouched. Otherwise prefer the localized concise
   // technical noun; never cut an identifying value just to satisfy a tool.
   const conciseTitle=model + " " + CONCISE_SPECS_TITLE[lang] + identityQualifiers + " | TractorVS";
-  // Preserve already-correct <=60-character titles byte-for-byte. Otherwise
-  // shed optional site-name boilerplate before losing the localized technical
-  // noun. That noun differentiates language versions of the same model, while
-  // the exact brand, model, variant, market and year are never truncated.
-  // A 60-character SEO-auditor threshold is advisory, not Google's hard limit.
+  // Preserve already-short, genuinely localized titles byte-for-byte.
+  // When the generic identity-only title would be shared by several language
+  // editions, prefer a short locale-specific technical noun over the optional
+  // site-name suffix *if it fits naturally* within the audit target.
+  // For longer identities, retain the concise previous fallback instead of
+  // making hundreds of titles needlessly verbose. Sixty characters is an
+  // advisory SEO-tool threshold, not a Google indexing rule.
+  const identityOnlyTitle=model + identityQualifiers + " | TractorVS";
   const conciseWithoutSiteName=model + " " + CONCISE_SPECS_TITLE[lang] + identityQualifiers;
   const identityWithoutSiteName=model + identityQualifiers;
   const title=fullTitle.length<=60 ? fullTitle
     : conciseTitle.length<=60 ? conciseTitle
+    : conciseWithoutSiteName.length<=60 ? conciseWithoutSiteName
+    : identityOnlyTitle.length<=60 ? identityOnlyTitle
+    : identityWithoutSiteName.length<=60 ? identityWithoutSiteName
     : conciseWithoutSiteName.length<=105 ? conciseWithoutSiteName
     : identityWithoutSiteName;
 
