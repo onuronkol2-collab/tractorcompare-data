@@ -59,7 +59,7 @@ def fetch_verified_jpeg(file_id, url):
             "no automatic retry or fallback"
         ) from error
     if not (10_000 < len(raw) <= MAX_SOURCE_BYTES and
-            raw[:3] == b"\\xff\\xd8\\xff" and raw[-2:] == b"\\xff\\xd9"):
+            raw[:3] == b"\xff\xd8\xff" and raw[-2:] == b"\xff\xd9"):
         raise RuntimeError(f"{file_id}: invalid JPEG bytes, size or termination")
     with Image.open(io.BytesIO(raw)) as image:
         image.load()
@@ -93,7 +93,7 @@ def main():
             buffer = io.BytesIO()
             image.save(buffer, "JPEG", quality=86, optimize=True, progressive=True)
             data = buffer.getvalue()
-            if len(data) < 3000 or data[:3] != b"\\xff\\xd8\\xff" or data[-2:] != b"\\xff\\xd9":
+            if len(data) < 3000 or data[:3] != b"\xff\xd8\xff" or data[-2:] != b"\xff\xd9":
                 raise RuntimeError(f"{file_id}: invalid {width}px derivative")
             filename = f"{file_id}-{width}.jpg"
             (target / filename).write_bytes(data)
