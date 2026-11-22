@@ -37,7 +37,7 @@ const MODEL_COPY: Record<Locale, {
     specs:n=>`已收录 ${n} 项技术参数。`,
     empty:"此型号暂无已发布的技术参数。",
     power:hp=>`发动机功率：${hp} HP。`,
-    withSources:"已提供经核实的制造商来源链接。",
+    withSources:"本页提供已核实的制造商资料来源链接，便于读者核对技术参数与车型。",
     withoutSources:"此型号目前没有已核实的制造商资料链接。",
     note:value=>`配置说明：${value}。`
   },
