@@ -1,6 +1,7 @@
 import { REVIEWED_TURKISH_SOURCE_LABELS_EN } from "./reviewed-turkish-source-labels-en.ts";
 import type { Locale } from "./locales.ts";
 import { localizedCategoryName, localizedSpecificationName } from "./spec-i18n.ts";
+import { oem20261122SpecLabel } from "./oem-20261122-spec-labels.ts";
 import { publishedSpecificationLabel, auditedResidualSpecificationLabel } from "./published-spec-translations.ts";
 
 export interface PublicSpec {
@@ -637,6 +638,9 @@ const REVIEWED_SOURCE_EN_LOOKUP=new Map(
   ])
 );
 export function specLabel(spec: PublicSpec, lang: Locale): string {
+  // Exact source-qualified labels must not lose optional and OEM context.
+  const sourceHeading=oem20261122SpecLabel(spec.spec_name,lang);
+  if(sourceHeading)return sourceHeading;
   if (lang === "en") {
     const sourceName = spec.spec_name.trim().replace(/\s+/g," ").toLocaleLowerCase("tr");
     const known = auditedTurkishSourceHeadingInEnglish[sourceName] || REVIEWED_SOURCE_EN_LOOKUP.get(reviewedEnglishSourceKey(spec.spec_name));
