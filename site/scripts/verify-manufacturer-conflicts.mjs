@@ -35,8 +35,8 @@ export function auditConflictComparisonJson(rows,issue){
  if(!Array.isArray(rows)||!issue?.disputedKeys||!issue?.markers)return false;
  if(rows.some(row=>issue.disputedKeys.includes(row?.key)))return false;
  const notes=rows.map(row=>typeof row?.notice==="string"?row.notice:"").join(" ");
- const normalized=notes.replace(/[.,\\s]/g,"");
- if(!issue.markers.every(marker=>normalized.includes(String(marker).replace(/[.,\\s]/g,""))))return false;
+ const normalized=notes.replace(/[.,\s]/g,"");
+ if(!issue.markers.every(marker=>normalized.includes(String(marker).replace(/[.,\s]/g,""))))return false;
  // Other independently measured dimensions still need to reach comparisons.
  return rows.some(row=>row?.key==="wheelbase"&&String(row?.value||"").trim());
 }
