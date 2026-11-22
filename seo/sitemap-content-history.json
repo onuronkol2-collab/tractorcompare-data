@@ -2,8 +2,8 @@
   "version": 1,
   "pages": {
     "https://tractorvs.com/": {
-      "digest": "d70adfc2e3877268024977cef83439155e5a8cd65ca0be5e319f4fb226933375",
-      "modified": "2026-11-22T19:02:34.272Z"
+      "digest": "d068cca696160f90db0a08b641d65d9fd96700081a8b1e43d15332befe90c184",
+      "modified": "2026-11-22T19:41:07.247Z"
     },
     "https://tractorvs.com/articles/": {
       "digest": "f4d32f5ffc67b88681b1b5561e8db5d02e2e3359a514dbf30934b26641bbed54",
@@ -18,24 +18,24 @@
       "modified": "2026-11-22T08:02:35.845Z"
     },
     "https://tractorvs.com/compare/": {
-      "digest": "8fb2ca46f3d0155df01956594f8f1ed16668ea8832a359e1a915b391e2eb19ab",
-      "modified": "2026-11-22T19:02:34.272Z"
+      "digest": "6652edeb9fc403960d7f525028a443b8e77cf16e1fb1ba0cbf2aab82d8d1b5f3",
+      "modified": "2026-11-22T19:41:07.247Z"
     },
     "https://tractorvs.com/compare/deutz-fahr-5090-d-gs-vs-5100-d-gs/": {
       "digest": "52e029185eddc00de0825c5ff15e10991f6a3636635ae2c62375f9df34e109c4",
       "modified": "2026-11-22T16:33:31.612Z"
     },
     "https://tractorvs.com/de/": {
-      "digest": "08571c1c2e2eb64e894df02885ad936230e6c4a033800e522dc69c4006c81a46",
-      "modified": "2026-11-22T19:02:34.272Z"
+      "digest": "aa161bc4ededb8c6d620289d70464d8880e60471ba5f74248d3d7b67cd356ebe",
+      "modified": "2026-11-22T19:41:07.247Z"
     },
     "https://tractorvs.com/de/articles/": {
       "digest": "e8e5821b7a9a45bf22f1f98c341eb6c77b42f895c99c960f2e7ec29c22d8d083",
       "modified": "2026-11-22T18:22:02.402Z"
     },
     "https://tractorvs.com/de/compare/": {
-      "digest": "aa91c64bf6beb7ee3050d2bc0f1aac73bf5e2c7db03347ca1b580b2148d9d852",
-      "modified": "2026-11-22T19:02:34.272Z"
+      "digest": "37647cd1bbe078e8d9152afc7db9d76f32a0f3d66fdc94d825077aad9d92f8aa",
+      "modified": "2026-11-22T19:41:07.247Z"
     },
     "https://tractorvs.com/de/farm-advisor/": {
       "digest": "12e03f4d01f6f92fb9ae0842499b8e8d62ba2c460f2c30fc87979b037ac0c6bd",
@@ -54,8 +54,8 @@
       "modified": "2026-11-22T15:13:41.997Z"
     },
     "https://tractorvs.com/de/tractors/": {
-      "digest": "7fb6c728281279e7932c594bd8f43af124c6574bba0f18daebf89e21bb1801b2",
-      "modified": "2026-11-22T19:02:34.272Z"
+      "digest": "5596682286e8e19e07e85fa050729dc7fea7e6d98c7dbbb2bc0ee1fe24c695ee",
+      "modified": "2026-11-22T19:41:07.247Z"
     },
     "https://tractorvs.com/de/tractors/agrale-4125-0b53e944/": {
       "digest": "32366e1df6154f04604255bcb6156d1828a47b1b02ef00cb2a1e2b65e857e7f8",
@@ -1246,8 +1246,8 @@
       "modified": "2026-11-22T19:02:34.272Z"
     },
     "https://tractorvs.com/de/tractors/tym-t2026-1aa3a3d6/": {
-      "digest": "50c7c9fafd4dbd1444fc821124f00f5a8b5b9ac4466193c53d354e10e9c5dc06",
-      "modified": "2026-11-22T05:19:46.825Z"
+      "digest": "66bbdc44854f262f30fc2101fd40a9f755c0a51c20d81d5521a0920859289ec6",
+      "modified": "2026-11-22T19:41:07.247Z"
     },
     "https://tractorvs.com/de/tractors/tym-t2026-37c62cc5/": {
       "digest": "e1009780c445373f7688da46bfaeebb0ccf75e703d80d6f459ff52b9be707db3",
@@ -1318,16 +1318,16 @@
       "modified": "2026-11-22T05:19:46.825Z"
     },
     "https://tractorvs.com/de/tractors/tym-t4058-840269b7/": {
-      "digest": "e297585dfdf3c49e6c2c76c6e8418c4da27abbab6df223ca4c731f8746d9dac1",
-      "modified": "2026-11-22T05:19:46.825Z"
+      "digest": "5b5171d9a3494a1e00110a438be0d5b9d582f152aa398634fc7bf6fc58a37351",
+      "modified": "2026-11-22T19:41:07.247Z"
     },
     "https://tractorvs.com/de/tractors/tym-t5068-3156002b/": {
       "digest": "066a0323eab1e8162ddd41c7e86b1307d3772bae3ef31c25394c616050471a7c",
       "modified": "2026-11-22T05:19:46.825Z"
     },
     "https://tractorvs.com/de/tractors/tym-t5075-d12085d4/": {
-      "digest": "bcab3e9822bd6e4f639774edaf8a8cd32e59e5c00d8c90ea1d9f5f18505546f0",
-      "modified": "2026-11-22T05:19:46.825Z"
+      "digest": "c226e1594a8f64f4f5afcfd960c2ddc633e4bd53403f91f18357219a35723d02",
+      "modified": "2026-11-22T19:41:07.247Z"
     },
     "https://tractorvs.com/de/tractors/tym-t6115-80fd42a2/": {
       "digest": "cf4625b6ea53a9216b987227932391f39ee170ecbf43278b7725bf4a97430adf",
@@ -1610,16 +1610,16 @@
       "modified": "2026-11-22T18:49:27.463Z"
     },
     "https://tractorvs.com/es/": {
-      "digest": "a63f05aa0d39cf8cd7389e3a2a43cbc099fa8f88ab88b8ec336cc63e704aa58b",
-      "modified": "2026-11-22T19:02:34.272Z"
+      "digest": "ec2b7abdad8b7b05a0dc9287ab83034ad841277b79d82d6427df094f7b2e11b6",
+      "modified": "2026-11-22T19:41:07.247Z"
     },
     "https://tractorvs.com/es/articles/": {
       "digest": "0145e305b596770e50c433fa8685671159ccaabc3aafdfd8d7f2806ca6eb3e36",
       "modified": "2026-11-22T18:22:02.402Z"
     },
     "https://tractorvs.com/es/compare/": {
-      "digest": "d61640a00724e631443d63b5b62e0c14c54144cb5692822f183f68c99d7d716e",
-      "modified": "2026-11-22T19:02:34.272Z"
+      "digest": "0e5fcc16b7779568590180e1380169aa4b519d5c2efef47f42a5237ebb38e793",
+      "modified": "2026-11-22T19:41:07.247Z"
     },
     "https://tractorvs.com/es/farm-advisor/": {
       "digest": "fc1d287c3292c1544fee7c9f55c93eba6323821d4dbfb0cd6e023402402ee939",
@@ -1638,8 +1638,8 @@
       "modified": "2026-11-22T15:13:41.997Z"
     },
     "https://tractorvs.com/es/tractors/": {
-      "digest": "388bc6e96d998da832cdc4a569119fc00ab5fa70996fee44119688affe3b7870",
-      "modified": "2026-11-22T19:02:34.272Z"
+      "digest": "cd0c10608150ef65210daef9d352d764793593f66716124abcfd399e201cad5e",
+      "modified": "2026-11-22T19:41:07.247Z"
     },
     "https://tractorvs.com/es/tractors/agrale-4125-0b53e944/": {
       "digest": "6e72187d478e42d64a088eac4ea90be38a22c86b83d7841c5dd36695f8e1e4d5",
@@ -2830,8 +2830,8 @@
       "modified": "2026-11-22T19:02:34.272Z"
     },
     "https://tractorvs.com/es/tractors/tym-t2026-1aa3a3d6/": {
-      "digest": "bc890c93e73e5f3a8bea6774bd52986eb27a46de34a63634b981e87d154cfe67",
-      "modified": "2026-11-22T15:49:54.478Z"
+      "digest": "d8cbba1735d0f1ceb159d349dc9306bc8549ae86ef4bde6434317d677587d704",
+      "modified": "2026-11-22T19:41:07.247Z"
     },
     "https://tractorvs.com/es/tractors/tym-t2026-37c62cc5/": {
       "digest": "cc3e28a0cccb396e729d18e507b384578663977dee4974e8acf6a6a1a2be0643",
@@ -2902,16 +2902,16 @@
       "modified": "2026-11-22T15:49:54.478Z"
     },
     "https://tractorvs.com/es/tractors/tym-t4058-840269b7/": {
-      "digest": "acc2a8869f6f4e9e8f9a251dce972b4786df1a5e958a3301805dddd9d4ad6c6a",
-      "modified": "2026-11-22T05:19:46.825Z"
+      "digest": "98cbbf837a30e277f73d1c2e40c29dd47de8d97c7cd9c9992403c4b2f1034a81",
+      "modified": "2026-11-22T19:41:07.247Z"
     },
     "https://tractorvs.com/es/tractors/tym-t5068-3156002b/": {
       "digest": "10ae8ac1b679a67cf7e1b62c9389c624984ed76896bf2f1b00e8715a8a983601",
       "modified": "2026-11-22T15:49:54.478Z"
     },
     "https://tractorvs.com/es/tractors/tym-t5075-d12085d4/": {
-      "digest": "13ebade628858e0ffb1a67f67a1b26412ddd13c67429f856ce113709b798b96f",
-      "modified": "2026-11-22T05:19:46.825Z"
+      "digest": "5e12c504b2f32b607c21778446f602913cda3487a9f1a7b7803a8b9fd77b2953",
+      "modified": "2026-11-22T19:41:07.247Z"
     },
     "https://tractorvs.com/es/tractors/tym-t6115-80fd42a2/": {
       "digest": "a310864fce41aed3a23eb7881746f0237054fcf9f83dc7697574800315af3de2",
@@ -3198,16 +3198,16 @@
       "modified": "2026-11-22T18:22:02.402Z"
     },
     "https://tractorvs.com/fr/": {
-      "digest": "e3b3b6e51cf8924ef751b9a30bfe6276eda73a8bf93f0c702c3fe7599405073f",
-      "modified": "2026-11-22T19:02:34.272Z"
+      "digest": "304611d397d0b953f087594a6c105b1cf35898c12f0c40255a5607624ff903b5",
+      "modified": "2026-11-22T19:41:07.247Z"
     },
     "https://tractorvs.com/fr/articles/": {
       "digest": "b87ad5ef98462bf555f36d462ca40ec0376d8fea5d643ae23f7a7bbbcdec3330",
       "modified": "2026-11-22T18:22:02.402Z"
     },
     "https://tractorvs.com/fr/compare/": {
-      "digest": "2e9e7a77e938cd944f2f861334122510c9f553bcf89f0a2cede55a786b4a377b",
-      "modified": "2026-11-22T19:02:34.272Z"
+      "digest": "0b7ecd3f262405e7189f2493a92fa6a83663c7765f801de94277d61bbf372597",
+      "modified": "2026-11-22T19:41:07.247Z"
     },
     "https://tractorvs.com/fr/farm-advisor/": {
       "digest": "ce1f46c0be5309cb17be8bc4fe165abb790aab0f0e9a75a917b10126f576eb12",
@@ -3226,8 +3226,8 @@
       "modified": "2026-11-22T15:13:41.997Z"
     },
     "https://tractorvs.com/fr/tractors/": {
-      "digest": "60c25ce3938e2151022e9a88af97fb803bd8d628bd771fbccd664a45497b812c",
-      "modified": "2026-11-22T19:02:34.272Z"
+      "digest": "577577dc1f0298178fc09cb3a856712a782a3777a56cea7884a941368d7bd2a3",
+      "modified": "2026-11-22T19:41:07.247Z"
     },
     "https://tractorvs.com/fr/tractors/agrale-4125-0b53e944/": {
       "digest": "b2f88db3e8539cb6e089c35b63a6adb969706f68db99ac8fe7129d13fcc64d56",
@@ -4418,8 +4418,8 @@
       "modified": "2026-11-22T19:02:34.272Z"
     },
     "https://tractorvs.com/fr/tractors/tym-t2026-1aa3a3d6/": {
-      "digest": "e8e2ef5b239d5f4198eedfb06cc77a00bbdc8bc6a2c457dc219fad8ff7ae1d3e",
-      "modified": "2026-11-22T05:19:46.825Z"
+      "digest": "731e439a5481ea1f2fe3be6b4a8ecca6a8bdb1cbe9ecc3e81be62e0540863e91",
+      "modified": "2026-11-22T19:41:07.247Z"
     },
     "https://tractorvs.com/fr/tractors/tym-t2026-37c62cc5/": {
       "digest": "36b497c56dfaf0b0b55a6df94aa6e2266ccf592ae0f86137db16be8fe4dd6585",
@@ -4490,16 +4490,16 @@
       "modified": "2026-11-22T05:19:46.825Z"
     },
     "https://tractorvs.com/fr/tractors/tym-t4058-840269b7/": {
-      "digest": "50e01ee812d50138324bbc0d7aeea16017b4b2ecb1e067bda083b9941e30bc66",
-      "modified": "2026-11-22T05:19:46.825Z"
+      "digest": "cb34c598d47e14e0167162353f3d4e4c8ea4078564d12426784f3d7c567c2b9d",
+      "modified": "2026-11-22T19:41:07.247Z"
     },
     "https://tractorvs.com/fr/tractors/tym-t5068-3156002b/": {
       "digest": "a60c9e3f167380d06e62e3408455342b1de44a93928901a69e45aabe77b459ea",
       "modified": "2026-11-22T05:19:46.825Z"
     },
     "https://tractorvs.com/fr/tractors/tym-t5075-d12085d4/": {
-      "digest": "900924a31a180b6f22fb0eaa3b03a58c9e5f37ada09b15d1f31056bbfadd1e85",
-      "modified": "2026-11-22T05:19:46.825Z"
+      "digest": "ed927037331494932f30f8a32fcbd825689f3305fe88a92ca1791b3d1f1f574f",
+      "modified": "2026-11-22T19:41:07.247Z"
     },
     "https://tractorvs.com/fr/tractors/tym-t6115-80fd42a2/": {
       "digest": "8bae59c825081ea120a7b1334450d677b7253e9a54b8b53a7206a2ed0ec5634d",
@@ -4802,16 +4802,16 @@
       "modified": "2026-11-22T14:27:00.768Z"
     },
     "https://tractorvs.com/hi/": {
-      "digest": "67fa0bc621b33c718e2b304489771c4852dab362d096da35dcaea5622d5b6988",
-      "modified": "2026-11-22T19:02:34.272Z"
+      "digest": "4061167631e5d850cd6faf465a9b0af3e6b7249b689ce1d61a755bc22a6e97b2",
+      "modified": "2026-11-22T19:41:07.247Z"
     },
     "https://tractorvs.com/hi/articles/": {
       "digest": "3ef252be723e22cbd42f479762ff15210b935675304ca03b43cf5cc9c06c3def",
       "modified": "2026-11-22T18:22:02.402Z"
     },
     "https://tractorvs.com/hi/compare/": {
-      "digest": "8eafc130084bb70744b31d2c9484a058fa86465bb15c02149765b23fd4a46021",
-      "modified": "2026-11-22T19:02:34.272Z"
+      "digest": "a852068b353899dfc4709e8f63ce171683661054351ce4bbf17b3cc627d22f31",
+      "modified": "2026-11-22T19:41:07.247Z"
     },
     "https://tractorvs.com/hi/farm-advisor/": {
       "digest": "f78d1f1c8ae19fa8ea0d4cd24624e0903443a6810ce382f7d6026389e9f29a5d",
@@ -4830,8 +4830,8 @@
       "modified": "2026-11-22T15:13:41.997Z"
     },
     "https://tractorvs.com/hi/tractors/": {
-      "digest": "d7d9f1fe167891382bf736a27bbbb4497ec58e141237bf079ecca3b82437536e",
-      "modified": "2026-11-22T19:02:34.272Z"
+      "digest": "51212d9bca406e1e198ec2a026cf06584c1e55b6c8e467f4477ac29d48a5e884",
+      "modified": "2026-11-22T19:41:07.247Z"
     },
     "https://tractorvs.com/hi/tractors/agrale-4125-0b53e944/": {
       "digest": "89d390984132129c6705ac5f42d0a35f6d3e519fbf19cc0d8b6d848cd95ec5cb",
@@ -6022,8 +6022,8 @@
       "modified": "2026-11-22T19:02:34.272Z"
     },
     "https://tractorvs.com/hi/tractors/tym-t2026-1aa3a3d6/": {
-      "digest": "bf244a5cfd74a981eff4be1efdea0a275b366dcc96aac4c835761c6daad84138",
-      "modified": "2026-11-22T05:19:46.825Z"
+      "digest": "bf34d297df94733820852cc43adf060d06b9e6e086e587829533c036ce4f5186",
+      "modified": "2026-11-22T19:41:07.247Z"
     },
     "https://tractorvs.com/hi/tractors/tym-t2026-37c62cc5/": {
       "digest": "ceb28f453916ddff7ddfd6e2c54f6a7ea7b0467d4a97c92ef864b11493253508",
@@ -6094,16 +6094,16 @@
       "modified": "2026-11-22T05:19:46.825Z"
     },
     "https://tractorvs.com/hi/tractors/tym-t4058-840269b7/": {
-      "digest": "3200dee2f08d224488e7266a5df737956cd1118e2984c4e2c5d03219ef4526e8",
-      "modified": "2026-11-22T05:19:46.825Z"
+      "digest": "b682c55179f5426f8560a3280021445add7aa3cefd1a27198b064dc6b9ed49e2",
+      "modified": "2026-11-22T19:41:07.247Z"
     },
     "https://tractorvs.com/hi/tractors/tym-t5068-3156002b/": {
       "digest": "a60332ba9f7d896a9e9e30944b462a7c9332df3bc55c3eb0508aae66a52a74f9",
       "modified": "2026-11-22T05:19:46.825Z"
     },
     "https://tractorvs.com/hi/tractors/tym-t5075-d12085d4/": {
-      "digest": "3accd7c055c3c15e8e3d3f4abc88c7eb64c133f4a71f44fafd78d6e743e6d166",
-      "modified": "2026-11-22T05:19:46.825Z"
+      "digest": "f025799ca14b7752262acc4301e0b8fc9ec4edbaefee40720b42f49dc1459fe5",
+      "modified": "2026-11-22T19:41:07.247Z"
     },
     "https://tractorvs.com/hi/tractors/tym-t6115-80fd42a2/": {
       "digest": "4cc27844c5ff3c83fd3af0d34b44ee8009c9202d250126c534966dd493e49b88",
@@ -6386,16 +6386,16 @@
       "modified": "2026-11-22T18:49:27.463Z"
     },
     "https://tractorvs.com/ja/": {
-      "digest": "2d053a427e52274ee99a0cadf941f08b77f615d6c275347d4c6474e864e45203",
-      "modified": "2026-11-22T19:02:34.272Z"
+      "digest": "2e123cde2e339e9b6dea4bb8146e5fc32fe8f341de4077a10505d2b59b75f3ad",
+      "modified": "2026-11-22T19:41:07.247Z"
     },
     "https://tractorvs.com/ja/articles/": {
       "digest": "867884ed17f13bd46d0ef1d231a61aa757cff00bfcdd1e840fddcf43663f141a",
       "modified": "2026-11-22T18:22:02.402Z"
     },
     "https://tractorvs.com/ja/compare/": {
-      "digest": "d59a6c7f4196a1131c09b901a4dc55441add327d8706213c915a4084e2643ee2",
-      "modified": "2026-11-22T19:02:34.272Z"
+      "digest": "eacf6a6b0fb0cab50676f196f9a96d11c1389007d16697eb0503420696c6fdf1",
+      "modified": "2026-11-22T19:41:07.247Z"
     },
     "https://tractorvs.com/ja/farm-advisor/": {
       "digest": "a16d6838495ba8cbdc449794e41e2f973b29354d47ae270a1340a7cac5a9012e",
@@ -6414,8 +6414,8 @@
       "modified": "2026-11-22T15:13:41.997Z"
     },
     "https://tractorvs.com/ja/tractors/": {
-      "digest": "8aa93556ff2d4dc5a4aaefd8066b8007c95ca756837b2e6b1940a755ebe3d18f",
-      "modified": "2026-11-22T19:02:34.272Z"
+      "digest": "67d50fb21303bc2fa0e6074686a32a10ee3d402717ec6e41e2fa09e0ef040629",
+      "modified": "2026-11-22T19:41:07.247Z"
     },
     "https://tractorvs.com/ja/tractors/agrale-4125-0b53e944/": {
       "digest": "4d0e45acacbeeb3c521ccff6fdb73475c3d2a6b25b8314d917e1fba5cfd09492",
@@ -7606,8 +7606,8 @@
       "modified": "2026-11-22T19:02:34.272Z"
     },
     "https://tractorvs.com/ja/tractors/tym-t2026-1aa3a3d6/": {
-      "digest": "3943c008555d0f3583696a7b1f31ba7d4bb3b5b3e345ef9b69f466ca91490f63",
-      "modified": "2026-11-22T05:19:46.825Z"
+      "digest": "ce3bcdf8150eb27bc31d9d23f199ea4993e1ea1f7c2ea12f52e0499ab7360940",
+      "modified": "2026-11-22T19:41:07.247Z"
     },
     "https://tractorvs.com/ja/tractors/tym-t2026-37c62cc5/": {
       "digest": "a69b2feaa9a55aa5e90ff895dcc087a5cd341e5a0768c73d74071f27963d6d8d",
@@ -7678,16 +7678,16 @@
       "modified": "2026-11-22T15:49:54.478Z"
     },
     "https://tractorvs.com/ja/tractors/tym-t4058-840269b7/": {
-      "digest": "35d294420aafd9a86159f25056c2de0cdac1efe4cab3d796c9e5d3a51aab35d5",
-      "modified": "2026-11-22T04:59:19.699Z"
+      "digest": "9d589d030ccb8a6c42a935f078f34cec247ced6200e40704e1520ae28b4237eb",
+      "modified": "2026-11-22T19:41:07.247Z"
     },
     "https://tractorvs.com/ja/tractors/tym-t5068-3156002b/": {
       "digest": "070fa2966ccfbac06ee5d632ddb0bd387b9d5a1af41f5e976e0e5ec3c90fbae0",
       "modified": "2026-11-22T05:19:46.825Z"
     },
     "https://tractorvs.com/ja/tractors/tym-t5075-d12085d4/": {
-      "digest": "693956fadc4a86fcf94978974212d82a1ca87266e0b30e6f82f0a76c47f5ca6b",
-      "modified": null
+      "digest": "298d8c36430e40655dcb837e8f7b0261f1c38231375a7a0df87ad79e8fb87b30",
+      "modified": "2026-11-22T19:41:07.247Z"
     },
     "https://tractorvs.com/ja/tractors/tym-t6115-80fd42a2/": {
       "digest": "8ea2863c3cd5731670a6257205f6b1f0d0b322c1f2d93302a42da80c921ce38f",
@@ -7978,16 +7978,16 @@
       "modified": null
     },
     "https://tractorvs.com/pt-br/": {
-      "digest": "41ed5a2cbcb776ec11802fcfcaea062289fc39e9880c367c268b489aa5b8d710",
-      "modified": "2026-11-22T19:02:34.272Z"
+      "digest": "c52cde3b6909c7f5965f52b8382fcf661016f367ed6de7c112cbb7a3fee305bc",
+      "modified": "2026-11-22T19:41:07.247Z"
     },
     "https://tractorvs.com/pt-br/articles/": {
       "digest": "117be662005262991fb353875c1cf33ccb9e7a46960f3f88b43118fb9ecdf59d",
       "modified": "2026-11-22T18:22:02.402Z"
     },
     "https://tractorvs.com/pt-br/compare/": {
-      "digest": "adf91361e0d676dfc5d818bb5d1cfda6fe1d5d9b19892bbe9bfee0e36f7c5164",
-      "modified": "2026-11-22T19:02:34.272Z"
+      "digest": "94b510e4d223adc04275ae51fb0c6e3aa874a794456a6b3020c57b65bf85c7d8",
+      "modified": "2026-11-22T19:41:07.247Z"
     },
     "https://tractorvs.com/pt-br/farm-advisor/": {
       "digest": "0b68c76b0c0c20cfb0e54e96d1dc0857a8707f83f994d603dae28a9f1fc5acbe",
@@ -8006,8 +8006,8 @@
       "modified": "2026-11-22T15:13:41.997Z"
     },
     "https://tractorvs.com/pt-br/tractors/": {
-      "digest": "8af2acf3c50917c07546b4ba966d9f5dd8798c50394e9b184c565f0fab0255a2",
-      "modified": "2026-11-22T19:02:34.272Z"
+      "digest": "a43d5b3f76848d6b20d207968619d08837ce12a4037f98e17906dc0d53e01e9f",
+      "modified": "2026-11-22T19:41:07.247Z"
     },
     "https://tractorvs.com/pt-br/tractors/agrale-4125-0b53e944/": {
       "digest": "5ff1db9f68277bc1544ae51e8b7ab7c0afe49949c5d51c67791975fb0426a0f4",
@@ -9198,8 +9198,8 @@
       "modified": "2026-11-22T19:02:34.272Z"
     },
     "https://tractorvs.com/pt-br/tractors/tym-t2026-1aa3a3d6/": {
-      "digest": "1d56bc21043734bfdbc51f3ffac1a2af17dffc32b394f90c4c6dc7c231d99ff2",
-      "modified": "2026-11-22T05:19:46.825Z"
+      "digest": "8e0eca813c90b748847e30be444071ec67da6a37df73868ca25594d3dc67f8a3",
+      "modified": "2026-11-22T19:41:07.247Z"
     },
     "https://tractorvs.com/pt-br/tractors/tym-t2026-37c62cc5/": {
       "digest": "5fa2070c2f4ad9915b7b4c613b3cd24258619d5fd1a1bdae95145c93d0d1752c",
@@ -9270,16 +9270,16 @@
       "modified": "2026-11-22T05:19:46.825Z"
     },
     "https://tractorvs.com/pt-br/tractors/tym-t4058-840269b7/": {
-      "digest": "a77b31e2f95bfdeec54adf335c677541fa7b3d906a9e67349465cdae082ba7f3",
-      "modified": "2026-11-22T05:19:46.825Z"
+      "digest": "d655341d6d3c30cf1b660fe3dec4826879bb04b624417be1897eb618c3dfe3d2",
+      "modified": "2026-11-22T19:41:07.247Z"
     },
     "https://tractorvs.com/pt-br/tractors/tym-t5068-3156002b/": {
       "digest": "bc8d7c7169c2887e138849a57401cc376eac396592f0f26dd7ea8786a34a1889",
       "modified": "2026-11-22T05:19:46.825Z"
     },
     "https://tractorvs.com/pt-br/tractors/tym-t5075-d12085d4/": {
-      "digest": "3c49889ba8223ebb5f319360e96bdfd04829167bcc3b99c92cfabb4b4d66504b",
-      "modified": "2026-11-22T05:19:46.825Z"
+      "digest": "8e51ff4e1edba7954c1b1fe5bff5181f3d7b6c22ae5f17f63f8bed27dd6f55c8",
+      "modified": "2026-11-22T19:41:07.247Z"
     },
     "https://tractorvs.com/pt-br/tractors/tym-t6115-80fd42a2/": {
       "digest": "23fbc0796b1ecaec3731ae750417a0647dfa5c0c0058bd4ac6d6051e7eeebb0a",
@@ -9566,16 +9566,16 @@
       "modified": "2026-11-22T15:13:41.997Z"
     },
     "https://tractorvs.com/ru/": {
-      "digest": "ebe515039ab30e26539eadcafb3b2dfa428352191141127f03cdafe418338e3a",
-      "modified": "2026-11-22T19:02:34.272Z"
+      "digest": "0c4556247e7713791b6f4f241a2984e5c449104b9ed11597454ae9d1593ba30c",
+      "modified": "2026-11-22T19:41:07.247Z"
     },
     "https://tractorvs.com/ru/articles/": {
       "digest": "af26b8678163822452934ec1c7cb7f12884df875f898bbe76e1654f6e04d4e1a",
       "modified": "2026-11-22T18:22:02.402Z"
     },
     "https://tractorvs.com/ru/compare/": {
-      "digest": "b6cd7798862e292a50ba47413f2c6719a5ca9dd186ab2f79f8532d2cda071cf3",
-      "modified": "2026-11-22T19:02:34.272Z"
+      "digest": "e4222173c2fc22a71f4a9e6f4728e4903dc1927f071f11d664ee8986020712ba",
+      "modified": "2026-11-22T19:41:07.247Z"
     },
     "https://tractorvs.com/ru/farm-advisor/": {
       "digest": "baa41900f3b5a30e6f5f6a63ba95f2e76da226b95fb1e6f6c0c81ddf269f123b",
@@ -9594,8 +9594,8 @@
       "modified": "2026-11-22T15:13:41.997Z"
     },
     "https://tractorvs.com/ru/tractors/": {
-      "digest": "504811661f1f166e762f1d509c89d3e1add4e1f5a23a2c592ce9a5cccd00374e",
-      "modified": "2026-11-22T19:02:34.272Z"
+      "digest": "1e826a406ecf1f799d8905046792ff0bd4f9b29da105e19ac92072ac01ee1d9f",
+      "modified": "2026-11-22T19:41:07.247Z"
     },
     "https://tractorvs.com/ru/tractors/agrale-4125-0b53e944/": {
       "digest": "a743211ff921d260a622929d99a49654ddf88289776922ae4c70310ed030ae99",
@@ -10786,8 +10786,8 @@
       "modified": "2026-11-22T19:02:34.272Z"
     },
     "https://tractorvs.com/ru/tractors/tym-t2026-1aa3a3d6/": {
-      "digest": "f3bafadea9e27fab00bb518e3efebe10f8d090774fd32bd680fc344dd1840f26",
-      "modified": "2026-11-22T05:19:46.825Z"
+      "digest": "9a30a0863476a4d754882bc57118e2de795a287ad56db753f0e38c6569063139",
+      "modified": "2026-11-22T19:41:07.247Z"
     },
     "https://tractorvs.com/ru/tractors/tym-t2026-37c62cc5/": {
       "digest": "7c2ab9b0b6b7aa5d8112283bf51bf9c54200a78869a630a8a44a83b094f14df5",
@@ -10858,16 +10858,16 @@
       "modified": "2026-11-22T05:19:46.825Z"
     },
     "https://tractorvs.com/ru/tractors/tym-t4058-840269b7/": {
-      "digest": "de5852cf9897cfe4031ef4c092507c2a0a86b298ceb4f7382e3c0f7f7ec3b5be",
-      "modified": "2026-11-22T05:19:46.825Z"
+      "digest": "32c7a88ffd6e9ce0707bf787a31f47c2d9e203f4b6760d1d5c8aa4ecb6091a1f",
+      "modified": "2026-11-22T19:41:07.247Z"
     },
     "https://tractorvs.com/ru/tractors/tym-t5068-3156002b/": {
       "digest": "e82f96c007b00c7351b470eecd3887001ae640c8fb0bb62b8f747aa7b7a6bc03",
       "modified": "2026-11-22T05:19:46.825Z"
     },
     "https://tractorvs.com/ru/tractors/tym-t5075-d12085d4/": {
-      "digest": "2c4ebfcfe7e8cce152ca4898024460465cd7e8b9f6801e5028a6e19ef676b19f",
-      "modified": "2026-11-22T05:19:46.825Z"
+      "digest": "7db85923898a9da8a16522eb44fd2d89e7bc9dbc27fa3d1b2ca1fdc721223f19",
+      "modified": "2026-11-22T19:41:07.247Z"
     },
     "https://tractorvs.com/ru/tractors/tym-t6115-80fd42a2/": {
       "digest": "f0e131749c8b7e5719ae172d4b95b875202d80fe1b9620039056b4d459c7b540",
@@ -11150,8 +11150,8 @@
       "modified": "2026-11-22T18:49:27.463Z"
     },
     "https://tractorvs.com/tr/": {
-      "digest": "e4abe7eacc07ac94f27c952f95b62018dbe262cd8ff91d5a0c2391cffc8bc451",
-      "modified": "2026-11-22T19:02:34.272Z"
+      "digest": "a422aa61c3394e4894aa6e7e5c12b34d25444ecadee77fd2f01fb08b5a26d049",
+      "modified": "2026-11-22T19:41:07.247Z"
     },
     "https://tractorvs.com/tr/articles/": {
       "digest": "24af9028de2a49e800978e946a31767a57ff1ac80c98a17fb919a12f2339d53e",
@@ -11166,8 +11166,8 @@
       "modified": "2026-11-22T08:02:35.845Z"
     },
     "https://tractorvs.com/tr/compare/": {
-      "digest": "22315c6ca138e1f7e4842fe22e6ce2a2e1bee05f2e99f73ea39ab2c9b8746e08",
-      "modified": "2026-11-22T19:02:34.272Z"
+      "digest": "1c258aff54639742eef9e09f131a4a50481b9e848d00f63c5b7813a4b0bbfd6c",
+      "modified": "2026-11-22T19:41:07.247Z"
     },
     "https://tractorvs.com/tr/compare/deutz-fahr-5090-d-gs-vs-5100-d-gs/": {
       "digest": "d2f52b331965c94d1f2dc2b55db37a3c22f303a152bddd818417198fb3b29862",
@@ -11210,8 +11210,8 @@
       "modified": "2026-11-22T15:13:41.997Z"
     },
     "https://tractorvs.com/tr/tractors/": {
-      "digest": "57d9d833a36baf6034bfdff9bc46a01a2bb0b46f3d9b666b6a0d1528a466f7d3",
-      "modified": "2026-11-22T19:02:34.272Z"
+      "digest": "8d8db608ff59d271e9003d8e16285680d3aac5526d6b06a033191c47ec745ac5",
+      "modified": "2026-11-22T19:41:07.247Z"
     },
     "https://tractorvs.com/tr/tractors/agrale-4125-0b53e944/": {
       "digest": "b877aec9c77214e168c69ab239caf1ba006d9c27f2ab18fec9179791bc08112d",
@@ -12402,8 +12402,8 @@
       "modified": "2026-11-22T19:02:34.272Z"
     },
     "https://tractorvs.com/tr/tractors/tym-t2026-1aa3a3d6/": {
-      "digest": "d7bc49527eb2ba5ef328318f754d157128be1fa40c1c42efa8a29c2a31abe359",
-      "modified": "2026-11-22T05:19:46.825Z"
+      "digest": "da6d0a0c1b72dfc18f14158e1aee2a085836dd6cd6826db98728a75004ccf867",
+      "modified": "2026-11-22T19:41:07.247Z"
     },
     "https://tractorvs.com/tr/tractors/tym-t2026-37c62cc5/": {
       "digest": "9272c5823255549d5b8c905b1797fbdeb7e15312d27e95e0ae1d1ee4843c03b0",
@@ -12474,16 +12474,16 @@
       "modified": "2026-11-22T05:19:46.825Z"
     },
     "https://tractorvs.com/tr/tractors/tym-t4058-840269b7/": {
-      "digest": "8932a7a80fe0d86497b0553525d9523ddfa6302c3ce1becc67158adcc726adfa",
-      "modified": "2026-11-22T05:19:46.825Z"
+      "digest": "4bdd8fdd3cf6aab235e8cbd86328660ae4643543d5920a0de607bb7152849f65",
+      "modified": "2026-11-22T19:41:07.247Z"
     },
     "https://tractorvs.com/tr/tractors/tym-t5068-3156002b/": {
       "digest": "a2b5b91c0a49a6ba3f3107513a7350997f488cb7c2e095a222ea5c4aa9af54e9",
       "modified": "2026-11-22T05:19:46.825Z"
     },
     "https://tractorvs.com/tr/tractors/tym-t5075-d12085d4/": {
-      "digest": "52878afa1af4af7522fc0ba902aafa5850d42c5f8bd7ed2afe92aa29d45dfb3a",
-      "modified": "2026-11-22T05:19:46.825Z"
+      "digest": "372c0c7e74266743fbe226f49c3fe23cd6b65b7029c0677ce2268a7a6bfc893d",
+      "modified": "2026-11-22T19:41:07.247Z"
     },
     "https://tractorvs.com/tr/tractors/tym-t6115-80fd42a2/": {
       "digest": "1f48712823e5d9403e3bc814896468ba01ec180072abc3c6d87bac723d2ae163",
@@ -12766,8 +12766,8 @@
       "modified": "2026-11-22T18:49:27.463Z"
     },
     "https://tractorvs.com/tractors/": {
-      "digest": "89c8724726986c26a08a9ab396d66fbe75060adafe17798d1457779281f67380",
-      "modified": "2026-11-22T19:02:34.272Z"
+      "digest": "44e8896e0b2c3965584ac96bd165fe039d1cd2ddef77900a803243f3340179d6",
+      "modified": "2026-11-22T19:41:07.247Z"
     },
     "https://tractorvs.com/tractors/agrale-4125-0b53e944/": {
       "digest": "7cb5388368ca5cebb9b7f9b51467ed0cde27248e0c1689c41cd6c15909d42679",
@@ -13958,8 +13958,8 @@
       "modified": "2026-11-22T19:02:34.272Z"
     },
     "https://tractorvs.com/tractors/tym-t2026-1aa3a3d6/": {
-      "digest": "36b3046acf06ae3970fc8b62e3a7de605283dbdb60375087dbbc53463db00e78",
-      "modified": "2026-11-22T05:19:46.825Z"
+      "digest": "3fe57013774030337709198489b5ac0b85aadb5fe9940b3b986396ab0466857b",
+      "modified": "2026-11-22T19:41:07.247Z"
     },
     "https://tractorvs.com/tractors/tym-t2026-37c62cc5/": {
       "digest": "9d4976daf3944fe9492079533c4c8c90ef27b51957d01bb3b262bc0bfb257972",
@@ -14030,16 +14030,16 @@
       "modified": "2026-11-22T05:19:46.825Z"
     },
     "https://tractorvs.com/tractors/tym-t4058-840269b7/": {
-      "digest": "c1e41e3de698596447daa58e5035a5273ae0eed06f52e5a2b13f2c11dcc07d25",
-      "modified": "2026-11-22T05:19:46.825Z"
+      "digest": "b2c3c42125494922f2331074573e4f647354216a8dadc051e3a5e68a2d1345a8",
+      "modified": "2026-11-22T19:41:07.247Z"
     },
     "https://tractorvs.com/tractors/tym-t5068-3156002b/": {
       "digest": "16a19dc1cf81d612c15d205569631f6eb8e65a048e9126e2ec8f6486463851cb",
       "modified": "2026-11-22T05:19:46.825Z"
     },
     "https://tractorvs.com/tractors/tym-t5075-d12085d4/": {
-      "digest": "a47d98bb3c17916585440938ad4a98535853896716adeec882d10a70b9e31db7",
-      "modified": "2026-11-22T05:19:46.825Z"
+      "digest": "cc6dc1036274f9750c6e4b283ace51dc85543dd289a77f7339854d673cc117da",
+      "modified": "2026-11-22T19:41:07.247Z"
     },
     "https://tractorvs.com/tractors/tym-t6115-80fd42a2/": {
       "digest": "c6a170bf3dd277d9a802d1979879418ebc5e1a66b147a7b1848b13848cbb468e",
@@ -14322,16 +14322,16 @@
       "modified": "2026-11-22T18:49:27.463Z"
     },
     "https://tractorvs.com/zh/": {
-      "digest": "603de39c62b4b862d176945f7dd6b8f424057c555037fd5210eb677d0ee6a936",
-      "modified": "2026-11-22T19:02:34.272Z"
+      "digest": "290693d1eccdf784e8b6a502352686855e8a36513aa47d8604be44f63a223716",
+      "modified": "2026-11-22T19:41:07.247Z"
     },
     "https://tractorvs.com/zh/articles/": {
       "digest": "879a0a248b1d60f80189181df4af6d71c0f128b026d802b831dc37f5508ce1ab",
       "modified": "2026-11-22T18:22:02.402Z"
     },
     "https://tractorvs.com/zh/compare/": {
-      "digest": "d41c0b5b6ca317a95811709b3b8c0c789681f363f5bf25ffdb30dc5c7cfe94e5",
-      "modified": "2026-11-22T19:02:34.272Z"
+      "digest": "04896ef661d5165b5cc6aff149321a2e4288a6d19eb918370cd13c570e9fab15",
+      "modified": "2026-11-22T19:41:07.247Z"
     },
     "https://tractorvs.com/zh/farm-advisor/": {
       "digest": "13610730c97908c20dc50dcf486b0ae93b9db8bac897e5a7a8e2503e2ab11cff",
@@ -14350,8 +14350,8 @@
       "modified": "2026-11-22T15:13:41.997Z"
     },
     "https://tractorvs.com/zh/tractors/": {
-      "digest": "048d583c1514ea95aed215e3ee07c603323d0c0a6d5c29a1b6ee666e7d3e1d0a",
-      "modified": "2026-11-22T19:02:34.272Z"
+      "digest": "528911e4c2103b3670498be1fe282bfbb6bed163e22050801231ef76133c9c6b",
+      "modified": "2026-11-22T19:41:07.247Z"
     },
     "https://tractorvs.com/zh/tractors/agrale-4125-0b53e944/": {
       "digest": "e6ab843089d45ba67da807eceb735737086451a3597de35ae307039fd8c1c4e7",
@@ -15542,8 +15542,8 @@
       "modified": "2026-11-22T19:02:34.272Z"
     },
     "https://tractorvs.com/zh/tractors/tym-t2026-1aa3a3d6/": {
-      "digest": "f282bfba52e95c46b0c77bd4b31e9e95006c98e26a05c7fbee3080edf46bc722",
-      "modified": "2026-11-22T09:58:15.078Z"
+      "digest": "16fb2041c23feefb533ad188dbe8fd3a7f59234af5bf8fb558c0a207f6820c09",
+      "modified": "2026-11-22T19:41:07.247Z"
     },
     "https://tractorvs.com/zh/tractors/tym-t2026-37c62cc5/": {
       "digest": "303481b79231fa2a696bf0581493fecf006db13ae123c2cebd065514b3b0020c",
@@ -15614,16 +15614,16 @@
       "modified": "2026-11-22T15:49:54.478Z"
     },
     "https://tractorvs.com/zh/tractors/tym-t4058-840269b7/": {
-      "digest": "691d42d7f5e6fa134903ffcd76dbb462f8a3d7497fefdc32022bb61b5f1d6324",
-      "modified": "2026-11-22T15:49:54.478Z"
+      "digest": "32ea194e248b9cadedec9c20ecf67d52a9acc4d003985068d78efa3a78c83615",
+      "modified": "2026-11-22T19:41:07.247Z"
     },
     "https://tractorvs.com/zh/tractors/tym-t5068-3156002b/": {
       "digest": "b70b2c98cc6a79ae9576a5ca6bea7c502a7c5857e0676f6f28b2d0952d76fc83",
       "modified": "2026-11-22T09:58:15.078Z"
     },
     "https://tractorvs.com/zh/tractors/tym-t5075-d12085d4/": {
-      "digest": "dcfa1f02bd26782ce30a18a3c5fcadee129668329969c544d527f6486276f55c",
-      "modified": "2026-11-22T09:58:15.078Z"
+      "digest": "73c18bb86b4a741ba52e3ab859bd9d353f16307420c27e844a94b997322fb982",
+      "modified": "2026-11-22T19:41:07.247Z"
     },
     "https://tractorvs.com/zh/tractors/tym-t6115-80fd42a2/": {
       "digest": "43c7c2b77174003107d9b90437715847692b9a904d16d2cff280117a580d23e9",
