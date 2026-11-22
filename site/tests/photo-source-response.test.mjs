@@ -5,6 +5,7 @@ test("Commons successful file search and valid no-result response remain allowed
   const a={batchcomplete:true,query:{pages:[{title:"File:Tractor.jpg"}]}};
   assert.equal(requireCommonsQueryResponse(a),a);
   assert.deepEqual(requireCommonsQueryResponse({batchcomplete:true}),{batchcomplete:true});
+  assert.throws(()=>requireCommonsQueryResponse({}),/lacks query completion evidence/);
 });
 test("Commons API logical HTTP 200 error cannot look like zero image candidates",()=>{
   assert.throws(()=>requireCommonsQueryResponse({error:{code:"ratelimited",info:"Retry later"}}),/ratelimited/);
