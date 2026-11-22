@@ -13,7 +13,7 @@ on:
   workflow_dispatch:
     inputs:
       onay:
-        description: "Gerçek çeviriyi başlatmak için ONAY yazın"
+        description: "Gerçek ücretli çeviri için ONAY; ücretsiz kuyruk durumu için KONTROL yazın"
         required: true
         type: string
 
@@ -42,6 +42,23 @@ jobs:
       - name: Run isolated Gemini REST provider contract tests (no API or charge)
         run: deno test --no-config supabase/functions/tractor-forum-translate/gemini-provider.test.ts supabase/functions/tractor-forum-translate/translation-quality.test.ts supabase/functions/tractor-forum-translate/translation-segments.test.ts
 
+  status:
+    # KONTROL never calls Gemini; only reports private queue counters.
+    if: github.event_name == 'workflow_dispatch' && inputs.onay == 'KONTROL' && github.repository == 'onuronkol2-collab/tractorcompare-data' && github.ref == 'refs/heads/main'
+    needs: check
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22.23.4"
+      - name: Read-only authenticated forum queue status; zero paid calls
+        env:
+          TRACTORVS_SUPABASE_ANON_JWT: ${{ secrets.TRACTORVS_SUPABASE_ANON_JWT }}
+          TRACTORVS_QUEUE_SECRET: ${{ secrets.TRACTORVS_QUEUE_SECRET }}
+          TRACTORVS_TRANSLATION_STATUS_ONLY: "true"
+        run: node scripts/tractor-forum-translate-dispatch.mjs
   process:
     if: github.event_name == 'workflow_dispatch' && inputs.onay == 'ONAY' && github.repository == 'onuronkol2-collab/tractorcompare-data' && github.ref == 'refs/heads/main'
     needs: check

@@ -40,18 +40,54 @@ export async function runTranslationQueue({jwt,secret,fetchFn=fetch,max=3}){
  }
  return receipts;
 }
+
+/**
+ * A KONTROL run is strict read-only and makes ZERO Gemini/translation calls.
+ * Counts are public-content job metadata only; no subject/body/secret/PII.
+ */
+export function validateQueueStatus(payload){
+ if(payload?.success!==true||!payload.states||typeof payload.states!=="object"||
+  Array.isArray(payload.states))throw Error("Forum queue status receipt invalid.");
+ const normalized={};
+ for(const [state,count] of Object.entries(payload.states)){
+  if(!["queued","processing","done","failed","superseded"].includes(state)||
+   !Number.isSafeInteger(count)||count<0||count>500000)
+   throw Error("Forum queue status counters invalid.");
+  normalized[state]=count;
+ }
+ return normalized;
+}
+export async function readTranslationQueueStatus({jwt,secret,fetchFn=fetch}){
+ if(!jwt||!secret)throw Error("Missing translation GitHub Actions secrets.");
+ assertAnonJwt(jwt);
+ const headers={"content-type":"application/json","apikey":jwt,
+  "Authorization":"Bearer "+jwt,"x-queue-secret":secret};
+ const response=await fetchFn(URL,{method:"POST",headers,
+  body:JSON.stringify({action:"status"}),signal:AbortSignal.timeout(20000)});
+ if(!response.ok)throw Error("Forum queue status HTTP "+response.status);
+ return validateQueueStatus(await response.json());
+}
+
 if(process.argv[1]&&resolve(process.argv[1])===fileURLToPath(import.meta.url)){
  try{
-  const result=await runTranslationQueue({
-   jwt:process.env.TRACTORVS_SUPABASE_ANON_JWT,
-   secret:process.env.TRACTORVS_QUEUE_SECRET
-  });
-  console.log("Forum translation batch "+JSON.stringify(result));
-  const summary="# Forum opt-in translation worker\n\n"+
-   result.map(r=>"- "+r.status+(r.locale?" ("+r.locale+")":"")).join("\n")+
-   "\n\nOnly consented public topics are processed. Needs-review content is not public.\n";
-  if(process.env.GITHUB_STEP_SUMMARY)appendFileSync(process.env.GITHUB_STEP_SUMMARY,summary);
-  if(result.some(x=>x.status==="failed"||x.status==="retry"))process.exitCode=1;
+  const jwt=process.env.TRACTORVS_SUPABASE_ANON_JWT;
+  const secret=process.env.TRACTORVS_QUEUE_SECRET;
+  if(process.env.TRACTORVS_TRANSLATION_STATUS_ONLY==="true"){
+   const states=await readTranslationQueueStatus({jwt,secret});
+   console.log("Forum translation queue status "+JSON.stringify(states));
+   const summary="# Forum translation queue status (read-only)\n\n"+
+    Object.entries(states).map(([state,count])=>"- "+state+": "+count).join("\n")+
+    "\n\nNo translated text was generated, sent to Gemini or published.\n";
+   if(process.env.GITHUB_STEP_SUMMARY)appendFileSync(process.env.GITHUB_STEP_SUMMARY,summary);
+  }else{
+   const result=await runTranslationQueue({jwt,secret});
+   console.log("Forum translation batch "+JSON.stringify(result));
+   const summary="# Forum opt-in translation worker\n\n"+
+    result.map(r=>"- "+r.status+(r.locale?" ("+r.locale+")":"")).join("\n")+
+    "\n\nOnly consented public topics are processed. Needs-review content is not public.\n";
+   if(process.env.GITHUB_STEP_SUMMARY)appendFileSync(process.env.GITHUB_STEP_SUMMARY,summary);
+   if(result.some(x=>x.status==="failed"||x.status==="retry"))process.exitCode=1;
+  }
  }catch(err){
   console.error("Forum translation queue failed safely: "+String(err?.message||"unknown").slice(0,140));
   process.exitCode=1;

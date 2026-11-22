@@ -1,5 +1,5 @@
 import {generateGeminiJson} from "./gemini-provider.ts";
-import {chooseTranslationSegments} from "./translation-segments.ts";
+import {chooseTranslationSegments,translationCheckpoint,nextTranslationCheckpoint} from "./translation-segments.ts";
 import {isUntranslatedTurkishTitle,sameNumericFacts,TRANSLATION_RESUME_FIELDS,verifiedReadyTranslation} from "./translation-quality.ts";
 // Private, consent-gated TractorVS forum translator.
 // Only published, opted-in text enters Gemini; never submit user identity or media.
@@ -157,13 +157,13 @@ async function work(){
     return {processed:1,status:"needs_review",locale:job.target_locale};
    }
    const marker=existing?.source_hash===source.source_hash?
-    /^PARTS:(\d+)\/(\d+)$/.exec(existing.qa_notes||""):null;
+    translationCheckpoint(existing.qa_notes):null;
    if(existing?.state==="needs_review"&&existing?.source_hash===source.source_hash&&!marker){
     await patch(job,{state:"done",completed_at:new Date().toISOString(),
      last_error:"QA_REVIEW_REQUIRED"});
     return {processed:1,status:"needs_review",locale:job.target_locale};
    }
-   const index=marker&&Number(marker[2])===parts.length?Number(marker[1]):0;
+   const index=marker&&marker.total===parts.length?marker.completed:0;
    const upsert=async(data:Record<string,unknown>)=>db("tc_forum_topic_translations",{
     on_conflict:"topic_id,locale",select:"topic_id,locale,state,seo_approved"
    },{method:"POST",headers:{"Content-Type":"application/json",
@@ -205,7 +205,8 @@ async function work(){
     const title=index===0?part.article.title:existing!.title;
     await upsert({title,body:full,state:"needs_review",seo_approved:false,
      reviewed_by_model:part.reviewer,model:index===0?part.model:existing!.model,
-     qa_notes:"PARTS:"+(index+1)+"/"+parts.length});
+     qa_notes:nextTranslationCheckpoint(source.body,
+     existing?.source_hash===source.source_hash?existing.qa_notes:null,index+1)});
     // This is partial PRIVATE work, not an approved public translation.
     // Reset only the consecutive failure counter after a successful segment.
     await patch(job,{state:"queued",attempts:0,

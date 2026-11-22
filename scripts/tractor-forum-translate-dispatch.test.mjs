@@ -1,6 +1,6 @@
 import {test} from "node:test";
 import assert from "node:assert/strict";
-import {runTranslationQueue,validateReceipt} from "./tractor-forum-translate-dispatch.mjs";
+import {runTranslationQueue,validateReceipt,readTranslationQueueStatus,validateQueueStatus} from "./tractor-forum-translate-dispatch.mjs";
 const anon="a."+Buffer.from(JSON.stringify({role:"anon"})).toString("base64url")+".c";
 test("only a role=anon access token with private queue secret may invoke the worker",async()=>{
  await assert.rejects(runTranslationQueue({jwt:"",secret:"secret",fetchFn:()=>{throw Error("not called")}}),/Missing/);
@@ -73,4 +73,34 @@ test("never attempts more than three translations per scheduled run",async()=>{
 test("HTTP failure stops safely and never reports jobs as completed",async()=>{
  const fn=async()=>new Response(JSON.stringify({error:"unavailable"}),{status:503});
  await assert.rejects(runTranslationQueue({jwt:anon,secret:"x",fetchFn:fn}),/HTTP 503/);
+});
+
+
+test("KONTROL is a strict read-only queue status request with zero paid process actions",async()=>{
+ let calls=0;
+ const api=async(_url,options)=>{
+  calls++;
+  assert.deepEqual(JSON.parse(options.body),{action:"status"});
+  assert.equal(options.method,"POST");
+  assert.equal(options.headers["x-queue-secret"],"private-secret");
+  return new Response(JSON.stringify({success:true,states:{queued:9,done:2,superseded:7}}),{status:200});
+ };
+ const result=await readTranslationQueueStatus({jwt:anon,secret:"private-secret",fetchFn:api});
+ assert.deepEqual(result,{queued:9,done:2,superseded:7});
+ assert.equal(calls,1);
+ assert.ok(!JSON.stringify(result).includes("private-secret"));
+});
+test("KONTROL rejects malformed, forbidden or privileged queue status receipts",async()=>{
+ for(const receipt of [
+  {success:false,states:{queued:9}},
+  {success:true,states:{queued:-1}},
+  {success:true,states:{queued:1.5}},
+  {success:true,states:{ready:99}},
+  {success:true,states:"hidden"}
+ ]){
+  assert.throws(()=>validateQueueStatus(receipt),/invalid/);
+ }
+ const bad=async()=>new Response(JSON.stringify({error:"forbidden"}),{status:401});
+ await assert.rejects(readTranslationQueueStatus({jwt:anon,secret:"secret",fetchFn:bad}),/HTTP 401/);
+ await assert.rejects(readTranslationQueueStatus({jwt:"",secret:"secret",fetchFn:bad}),/Missing/);
 });
