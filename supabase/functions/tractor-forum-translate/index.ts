@@ -10,8 +10,8 @@ const SECRET=Deno.env.get("TC_QUEUE_SECRET")||"";
 const AI=Deno.env.get("GEMINI_API_KEY")||"";
 const AZURE_KEY=Deno.env.get("AZURE_TRANSLATOR_KEY")||"";
 const AZURE_REGION=Deno.env.get("AZURE_TRANSLATOR_REGION")||"";
-const SELECTED_PROVIDER=Deno.env.get("TC_TRANSLATION_PROVIDER")||
- (AZURE_KEY&&AZURE_REGION?"azure":"gemini");
+// Azure pilot fails closed when not configured: never silently call Gemini.
+const SELECTED_PROVIDER=Deno.env.get("TC_TRANSLATION_PROVIDER")||"azure";
 const ACTIVE_PROVIDER=SELECTED_PROVIDER==="azure"?"Microsoft Azure Translator":"Google Gemini";
 const LANGS:Record<string,string>={
  en:"English",zh:"Simplified Chinese",hi:"Hindi", "pt-br":"Brazilian Portuguese",
