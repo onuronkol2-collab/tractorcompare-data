@@ -14,6 +14,7 @@ const rows=[
 ];
 const pattern="**/forum-test-api/rest/v1/tc_forum_localized_topics?**";
 test("real public-only topics survive redesign, navigation and honest extra tabs",async({page})=>{
+ await page.setViewportSize({width:1440,height:900});
  await page.route(pattern,route=>route.fulfill({json:rows}));
  await page.goto("/tr/forum/?live-forum-test=1");
  const live=page.locator("[data-forum-live-grid] [data-forum-topic]");
@@ -43,6 +44,7 @@ test("real public-only topics survive redesign, navigation and honest extra tabs
  await expect(page.locator(".member-community")).toBeVisible();
 });
 test("filter sidebar, compact tags and old category buttons stay synchronized",async({page})=>{
+ await page.setViewportSize({width:1440,height:900});
  await page.route(pattern,route=>route.fulfill({json:rows}));
  await page.goto("/tr/forum/?live-forum-test=1");
  const live=page.locator("[data-forum-live-grid] [data-forum-topic]");
@@ -75,7 +77,9 @@ test("all locales expose the same five navigable views with localized copy",asyn
 });
 test("mobile cards and tabs have no horizontal document overflow",async({page})=>{
  await page.setViewportSize({width:390,height:844});
- await page.goto("/tr/forum/");
+ await page.route(pattern,route=>route.fulfill({json:rows}));
+ await page.goto("/tr/forum/?live-forum-test=1");
+ await expect(page.locator("[data-forum-live-grid] [data-forum-topic]")).toHaveCount(2);
  await expect(page.locator(".forum-view-tabs")).toBeVisible();
  await expect(page.locator(".forum-dashboard-rail")).toBeHidden();
  await expect(page.locator('[data-forum-category="maintenance"]')).toBeVisible();
