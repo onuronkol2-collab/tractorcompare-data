@@ -15,6 +15,7 @@ import {hasInternationalSonalikaContext,isSonalikaExportSourceNote,SONALIKA_EXPO
 import { modelSeoMetadata, modelStructuredData, originalVariantNote } from "../lib/model-seo";
 import { getPublicCatalog } from "../lib/catalog";
 import { morePublishedTractors } from "../lib/related-tractors";
+import {modelSourceDiscrepancies, isUnresolvedComparisonSpec} from "../lib/manufacturer-conflicts.mjs";
 import { modelEvidenceAnswers, matchedHeadlinePowerSource } from "../lib/model-evidence-answers.ts";
 import { HEADLINE_PROVENANCE_COPY } from "../lib/headline-provenance-i18n.ts";
 import {forumText as forumCopy} from "../lib/forum-i18n.ts";
@@ -27,13 +28,15 @@ const hasBasak2075Analysis = tractor.brand_name.toLocaleLowerCase("tr").includes
   tractor.model_name.trim().toLocaleLowerCase("tr")==="2075 bk";
 const groups = groupSpecifications(tractor.specifications,lang);
 const manufacturerDiscrepancies = [...new Set(tractor.specifications.map((spec) => verificationNotice(spec, lang)).filter((note): note is string => Boolean(note)))];
+const unresolvedManufacturerConflicts=modelSourceDiscrepancies(tractor,lang);
+const safeEvidenceTractor={...tractor,specifications:tractor.specifications.filter(spec=>!isUnresolvedComparisonSpec(tractor,spec))};
 const listingUrl = localizedPath(lang,"/tractors/");
 const selectionGuideUrl=localizedPath(lang,"/guides/choosing-a-tractor/");
 const translatedSelection=editorialHubTranslation(lang)?.cards[0];
 const compareUrl = localizedPath(lang,"/compare/") + "?left=" + encodeURIComponent(tractor.tractor_id);
 const { title, description, searchDescription } = modelSeoMetadata(tractor, lang);
 const originalNote = originalVariantNote(tractor);
-const answerItems=(lang==="tr"||lang==="en")?modelEvidenceAnswers(tractor,lang):[];
+const answerItems=(lang==="tr"||lang==="en")?modelEvidenceAnswers(safeEvidenceTractor,lang):[];
 const cover=primaryTractorPhoto(tractor);
 const structuredData = import.meta.env.PUBLIC_INDEXING_ENABLED === "true" && Astro.site
   ? modelStructuredData(tractor, lang, Astro.site.toString()) : null;
@@ -54,6 +57,15 @@ const summaryItems = [
     <p class="eyebrow"><span class="eyebrow-mark"></span>{t(lang,"modelEyebrow")}</p>
     <p class="model-brand">{tractor.brand_name}</p><h1>{tractor.brand_name} {tractor.model_name}</h1>
     <p class="model-hero-description">{description}</p>
+    {unresolvedManufacturerConflicts.length>0&&<aside class="model-source-conflict-banner" role="note" aria-label={t(lang,"manufacturerDiscrepancy")}>
+      <strong>{t(lang,"manufacturerDiscrepancy")}</strong>
+      {unresolvedManufacturerConflicts.map(issue=><div>
+        <p>{issue.message}</p>
+        <div class="model-source-conflict-links">{issue.sourceUrls.map((url,index)=>
+          <a href={url} target="_blank" rel="noopener noreferrer">{t(lang,"manufacturerSource")} {index+1} ↗</a>
+        )}</div>
+      </div>)}
+    </aside>
     {originalNote && <details class="model-original-note"><summary>{t(lang,"originalVariantNote")}</summary><p>{originalNote}</p></details>}
     <div class="model-meta">
       {tractor.model_year&&<span>{tractor.model_year}</span>}
@@ -211,6 +223,12 @@ const summaryItems = [
   .model-more-list a strong { font-size: 16px; }
   .model-more-list a span { font-size: 13px; line-height: 1.5; color: #476b52; }
   .model-hero-description {max-width: 790px; margin: 18px 0 0; color: #d1ded3; font-size: clamp(14px,1.35vw,16px); line-height: 1.8; overflow-wrap: anywhere; }
+  .model-source-conflict-banner{max-width:860px;margin:20px 0 15px;padding:16px 18px;border:2px solid #d3ac55;background:#fffaf0;color:#553c16;border-radius:13px;font-size:14px;line-height:1.65}
+  .model-source-conflict-banner strong{display:block;margin-bottom:7px;font-size:15px;color:#67461e}
+  .model-source-conflict-banner p{margin:0 0 9px}
+  .model-source-conflict-links{display:flex;flex-wrap:wrap;gap:9px 18px}
+  .model-source-conflict-links a{color:#5b421d;font-weight:800;text-decoration:underline;text-underline-offset:3px;overflow-wrap:anywhere}
+  .model-source-conflict-links a:focus-visible{outline:3px solid #bb8c34;outline-offset:3px}
   .model-spec-warning {
     margin: 14px 0 0;
     padding: 11px 12px;
