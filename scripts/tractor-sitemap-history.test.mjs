@@ -147,10 +147,17 @@ test("real Astro scoped style attributes between class and data-spec-id preserve
     'class="model-spec-card" data-astro-cid-xyza="xyza"',
     'data-astro-cid-xyza="xyza" data-spec-id="'+uuid+'" class="model-spec-card"'
   );
-  for(const updated of [withScopedPrefix,withScopedSuffix,withClassLast]){
-    assert.equal(significantContentDigest(updated,b),bare,
-      "Any Astro-scoped HTML attribute order must not create false lastmod");
-    assert.notEqual(significantContentDigest(updated.replace("95 hp","105 hp"),b),bare);
+  const classLastOriginal=old.replace(
+    'class="model-spec-card" data-astro-cid-xyza="xyza"',
+    'data-astro-cid-xyza="xyza" class="model-spec-card"'
+  );
+  for(const [before,updated] of [
+    [old,withScopedPrefix],[old,withScopedSuffix],[classLastOriginal,withClassLast]
+  ]){
+    const oldDigest=significantContentDigest(before,b);
+    assert.equal(significantContentDigest(updated,b),oldDigest,
+      "Adding only an identity key must be inert regardless of pre-existing Astro attribute order");
+    assert.notEqual(significantContentDigest(updated.replace("95 hp","105 hp"),b),oldDigest);
   }
   assert.notEqual(significantContentDigest(old.replace("xyza","different"),b),bare,
     "Actual non-exempt markup must still be tracked");
