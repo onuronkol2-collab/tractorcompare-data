@@ -362,3 +362,44 @@ test("approved mobile photo routes have a first-party JPEG in the release", () =
     assert.equal(bytes.readUInt16BE(bytes.length - 2), 0xffd9, photo.thumbUrl);
   }
 });
+
+
+test("Google copyright notices are backed by source-specific uploader declarations in all ten locales",()=>{
+ const owners=[
+  ["Valtra","Q305","valtra-q305-d4c20807","MarcelX42"],
+  ["McCormick","X5.110 HC","mccormick-x5-110-hc-marcelx42-2023","MarcelX42"],
+  ["Steyr","4075 KOMPAKT","steyr-4075-kompakt-joachim-2018","JoachimKohlerBremen"]
+ ];
+ const covered=new Set();
+ for(const [brand,model,fileId,owner] of owners){
+  const photo=primaryTractorPhoto(tractor(brand,model));
+  assert.ok(photo,brand+" "+model);
+  assert.equal(photo.fileId,fileId);
+  assert.equal(photo.photographer,owner);
+  assert.equal(photo.copyrightOwner,owner);
+  assert.equal(photo.copyrightClaimUrl,photo.sourcePage);
+  assert.equal(photo.copyrightEvidence,"commons-own-work-self-license");
+  assert.notEqual(photo.licenseName,"CC0");
+  covered.add(fileId);
+  for(const lang of LOCALES){
+    const schema=modelStructuredData(tractor(brand,model),lang,
+      "https://tractorvs.com/")["@graph"].find(x=>x["@type"]==="ImageObject");
+    assert.equal(schema?.copyrightNotice,owner,brand+" "+model+" "+lang);
+    assert.equal(schema?.creator?.name,owner);
+    assert.equal(schema?.acquireLicensePage,photo.sourcePage);
+    assert.equal(schema?.license,photo.licenseUrl);
+    assert.ok(schema.contentUrl.endsWith(fileId+"-1920.jpg"));
+  }
+ }
+ for(const photo of APPROVED_TRACTOR_PHOTOS){
+  if(photo.copyrightOwner)assert.ok(covered.has(photo.fileId),
+    "New copyright owner claims must be added to reviewed, source-specific registry and Commons proof gate");
+ }
+ const cc0=primaryTractorPhoto(tractor("Valtra","F105"));
+ assert.equal(cc0.licenseName,"CC0");
+ for(const lang of LOCALES){
+  const schema=modelStructuredData(tractor("Valtra","F105"),lang,
+    "https://tractorvs.com/")["@graph"].find(x=>x["@type"]==="ImageObject");
+  assert.equal(schema?.copyrightNotice,undefined,"CC0 must not claim an owner");
+ }
+});
