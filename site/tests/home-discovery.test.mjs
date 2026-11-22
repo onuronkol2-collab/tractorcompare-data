@@ -25,8 +25,8 @@ test("every new UX label has 10 deliberate translations",()=>{
 });
 test("all 10 homepages share one task-first design and retain SEO descriptions",()=>{
   for(const file of [english,turkish,other])assert.match(file,/<HomeExperience/);
-  assert.match(english,/Tractor Specifications & Comparisons/);
-  assert.match(turkish,/Traktör Teknik Verileri ve Karşılaştırma/);
+  assert.match(english,/Tractor Specifications & Model Comparisons/);
+  assert.match(turkish,/Traktör Karşılaştırma ve Teknik Özellikler/);
   assert.match(other,/seoDesc/);
   for(const section of ['id="platform"','id="data"','id="approach"']){
     assert.ok(home.includes(section),section);
