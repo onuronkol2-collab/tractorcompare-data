@@ -1,5 +1,7 @@
 // Credential-free check of TractorVS public Google Images prerequisites.
 import {imageLicenseMetadataIssues} from "./image-license-jsonld-check.mjs";
+import {copyrightZhSitemapPages} from "./image-copyright-live-cases.mjs";
+import {APPROVED_TRACTOR_PHOTOS} from "../src/lib/tractor-photos.ts";
 import {parseProductionSitemapInventory} from "./production-sitemap-inventory.mjs";
 import {classifyPublicImageSitemap} from "./image-seo-asset-boundaries.mjs";
 import {fetchPublicImageAsset,publicImageMimeOk} from "./image-seo-http.mjs";
@@ -14,7 +16,7 @@ async function get(url){
  });
 }
 const sitemapIndexUrl=origin+"/sitemap-index.xml";
-const checked=new Set(),forumMediaAssets=new Set();
+const checked=new Set(),forumMediaAssets=new Set(),zhCopyrightCases=[];
 try{
  const master=await get(sitemapIndexUrl);
  if(master.r.status!==200)throw Error("Master sitemap HTTP "+master.r.status);
@@ -29,6 +31,7 @@ try{
  }
  const inventory=parseProductionSitemapInventory({indexXml,children});
  const imageXml=children.get(origin+"/image-sitemap.xml");
+ zhCopyrightCases.push(...copyrightZhSitemapPages(imageXml,APPROVED_TRACTOR_PHOTOS));
  const images=classifyPublicImageSitemap(imageXml,{
   htmlPages:inventory.htmlPages,forumPages:inventory.forumPages
  });
@@ -104,5 +107,35 @@ for(const {path,label,owner,image} of rightsSamples){
   for(const issue of rights.issues)fail(label+" ImageObject "+issue);
  }catch(e){fail(label+" metadata fetch "+String(e));}
 }
+// Source-verified image copyright must be present on every LIVE Chinese
+// model page (including repeat image URLs on different variant pages).
+// On PR/main push the previous Cloudflare deployment may legitimately serve
+// older HTML, so owner matching becomes strict only on scheduled/manual audits.
+const sampledIds=new Set(rightsSamples.map(x=>x.image).filter(Boolean));
+let additionalCopyrightPages=0;
+for(const entry of zhCopyrightCases){
+ if(sampledIds.has(entry.fileId))continue;
+ try{
+  const {r,bytes}=await get(origin+entry.path);
+  const html=new TextDecoder().decode(bytes);
+  const rights=imageLicenseMetadataIssues(html,{
+   expectedCopyrightOwner:postDeployMode?entry.owner:null
+  });
+  console.log("TRACTOR_IMAGE_GOOGLE_COPYRIGHT "+JSON.stringify({
+   path:entry.path,fileId:entry.fileId,http:r.status,
+   expectedOwner:postDeployMode?entry.owner:null,actualOwner:rights.copyrightNotice,
+   errors:rights.issues
+  }));
+  if(r.status!==200)fail("Copyright example HTTP "+r.status+" "+entry.path);
+  if(!String(rights.contentUrl||"").endsWith("/"+entry.fileId+"-1920.jpg"))
+   fail("Copyright example image identity mismatch "+entry.path);
+  for(const issue of rights.issues)fail("Copyright example "+entry.path+" "+issue);
+  additionalCopyrightPages++;
+ }catch(e){fail("Copyright metadata fetch "+entry.path+" "+String(e));}
+}
+console.log("TRACTOR_IMAGE_GOOGLE_COPYRIGHT_SUMMARY "+JSON.stringify({
+ additionalZhPages:additionalCopyrightPages,sitemapMatched:zhCopyrightCases.length,
+ strictAfterDeployment:postDeployMode
+}));
 console.log("TRACTOR_IMAGE_AUDIT_SUMMARY "+JSON.stringify({checked_tractor_photos:checked.size,checked_approved_forum_media:forumMediaAssets.size,errors:errors.length}));
 if(errors.length)process.exitCode=1;

@@ -364,42 +364,58 @@ test("approved mobile photo routes have a first-party JPEG in the release", () =
 });
 
 
-test("Google copyright notices are backed by source-specific uploader declarations in all ten locales",()=>{
- const owners=[
-  ["Valtra","Q305","valtra-q305-d4c20807","MarcelX42"],
-  ["McCormick","X5.110 HC","mccormick-x5-110-hc-marcelx42-2023","MarcelX42"],
-  ["Steyr","4075 KOMPAKT","steyr-4075-kompakt-joachim-2018","JoachimKohlerBremen"]
- ];
- const covered=new Set();
- for(const [brand,model,fileId,owner] of owners){
-  const photo=primaryTractorPhoto(tractor(brand,model));
-  assert.ok(photo,brand+" "+model);
-  assert.equal(photo.fileId,fileId);
-  assert.equal(photo.photographer,owner);
-  assert.equal(photo.copyrightOwner,owner);
+test("source-backed copyright notices cover approved Google warning images in all ten locales",()=>{
+ const originalThree=new Set([
+  "valtra-q305-d4c20807","mccormick-x5-110-hc-marcelx42-2023",
+  "steyr-4075-kompakt-joachim-2018"
+ ]);
+ const reviewedTwenty=new Set([
+  "tafe-7515-d8c32d69","valtra-n175-e4277f5d",
+  "antonio-carraro-tony-8700-v-3a40790b","tafe-7515-cab-37863e86",
+  "versatile-nemesis-255-be32337e","zetor-forterra-110-536b7625",
+  "tafe-6028-m-826b548b","zetor-forterra-140-346bcbde",
+  "tafe-240-s-c45f9eaf","valtra-t255-622d182c",
+  "versatile-nemesis-175-e95b1863","valtra-q265-65863feb",
+  "fendt-724-vario-01a39bcb","valtra-g135-9d4a4ea3",
+  "valtra-q245-2d50312e","valtra-n135-beef7a3c",
+  "valtra-t215-88d0ab88","valtra-a105-cd63351d",
+  "valtra-a85-af39c01a","valtra-a75-f99b4394"
+ ]);
+ const expected=new Set([...originalThree,...reviewedTwenty,"belarus-132n-picture30-2011"]);
+ assert.equal(expected.size,24);
+ const actual=APPROVED_TRACTOR_PHOTOS.filter(p=>p.copyrightOwner);
+ assert.deepEqual(new Set(actual.map(p=>p.fileId)),expected,
+   "Unexpected ownership claims must undergo separate review before publication");
+ for(const photo of actual){
+  assert.equal(photo.photographer,photo.copyrightOwner);
   assert.equal(photo.copyrightClaimUrl,photo.sourcePage);
   assert.equal(photo.copyrightEvidence,"commons-own-work-self-license");
-  assert.notEqual(photo.licenseName,"CC0");
-  covered.add(fileId);
-  for(const lang of LOCALES){
-    const schema=modelStructuredData(tractor(brand,model),lang,
-      "https://tractorvs.com/")["@graph"].find(x=>x["@type"]==="ImageObject");
-    assert.equal(schema?.copyrightNotice,owner,brand+" "+model+" "+lang);
-    assert.equal(schema?.creator?.name,owner);
-    assert.equal(schema?.acquireLicensePage,photo.sourcePage);
-    assert.equal(schema?.license,photo.licenseUrl);
-    assert.ok(schema.contentUrl.endsWith(fileId+"-1920.jpg"));
+  assert.equal(photo.licenseName,photo.fileId==="belarus-132n-picture30-2011"?"CC BY-SA 3.0":"CC BY-SA 4.0");
+  const record=tractor(photo.brand,photo.model);
+  const main=primaryTractorPhoto(record);
+  assert.equal(main.fileId,photo.fileId);
+  for(const locale of LOCALES){
+   const schema=modelStructuredData(record,locale,"https://tractorvs.com/")["@graph"]
+     .find(x=>x["@type"]==="ImageObject");
+   assert.equal(schema?.copyrightNotice,photo.copyrightOwner,photo.fileId+" "+locale);
+   assert.equal(schema?.creator?.name,photo.photographer);
+   assert.equal(schema?.acquireLicensePage,photo.sourcePage);
+   assert.equal(schema?.license,photo.licenseUrl);
+   assert.ok(schema?.contentUrl?.endsWith(photo.fileId+"-1920.jpg"));
   }
  }
- for(const photo of APPROVED_TRACTOR_PHOTOS){
-  if(photo.copyrightOwner)assert.ok(covered.has(photo.fileId),
-    "New copyright owner claims must be added to reviewed, source-specific registry and Commons proof gate");
- }
- const cc0=primaryTractorPhoto(tractor("Valtra","F105"));
- assert.equal(cc0.licenseName,"CC0");
- for(const lang of LOCALES){
-  const schema=modelStructuredData(tractor("Valtra","F105"),lang,
-    "https://tractorvs.com/")["@graph"].find(x=>x["@type"]==="ImageObject");
-  assert.equal(schema?.copyrightNotice,undefined,"CC0 must not claim an owner");
+ // Two unproved source types and one CC0 dedicaton remain deliberately unclaimed.
+ for(const [brand,model] of [
+  ["Swaraj","735 FE"],["Valtra","F105"]
+ ]){
+  const item=tractor(brand,model),photo=primaryTractorPhoto(item);
+  assert.ok(photo);
+  assert.equal(photo.copyrightOwner,undefined);
+  for(const locale of LOCALES){
+   const obj=modelStructuredData(item,locale,"https://tractorvs.com/")["@graph"]
+     .find(x=>x["@type"]==="ImageObject");
+   assert.equal(obj?.copyrightNotice,undefined,
+     "Do not invent copyright ownership for "+brand+" "+model+" "+locale);
+  }
  }
 });

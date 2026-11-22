@@ -15,26 +15,42 @@ export function reviewCommonsCopyrightWikitext(wikitext,photo){
   const body=String(wikitext||"");
   // Require a user-uploaded self-license declaration AND Own work, not
   // merely a matching attribution string from someone else's file.
-  const ownWork=/(?:\|\s*source\s*=\s*(?:\{\{\s*own\b|own work)|\{\{\s*own\s*\}\})/i.test(body);
-  const ownLicense=/\{\{\s*self\s*\|[^\n}]{0,160}\bcc-by-sa-4\.0\b/i.test(body);
+  const ownWork=/(?:\|\s*source\s*=\s*(?:\{\{\s*own\b|own work)|\{\{\s*own\s*\}\})/i.test(body) ||
+    /\|\s*source\s*=\s*[^\r\n]{0,180}\{\{\s*own\s*\}\}/i.test(body);
+  // One legacy ru.wikipedia -> Commons transfer embeds the self-license after
+  // a nested author template. Require the precise uploader, project and terms.
+  const originalUploaderSelf=photo.fileId==="belarus-132n-picture30-2011" &&
+    /\{\{\s*self\s*\|\s*author\s*=\s*\{\{\s*user at project\s*\|\s*Picture30\s*\|\s*wikipedia\s*\|\s*ru\s*\}\}\s*\|\s*GFDL\s*\|\s*CC-BY-SA-3\.0\b/i.test(body);
+  const ownLicense=/\{\{\s*self\s*\|[^\n}]{0,160}\bcc-by-sa-4\.0\b/i.test(body) ||
+    originalUploaderSelf;
   const author=String(photo.copyrightOwner||"");
   const authorAliases=photo.fileId==="steyr-4075-kompakt-joachim-2018"
     ? ["JoachimKohlerBremen","JoachimKohler-HB"]
     : [author];
   // The claimed owner must be named in the ORIGINAL file's author= field.
   // A name mentioned in a description, unrelated credit or comment is not proof.
+  // Only the exact author= field is eligible, not a body-wide credit.
+  // Unicode-safe boundaries allow documented author names such as Bene Riobó.
+  const authorField=(body.match(/(?:^|\n)\s*\|\s*author\s*=\s*([^\r\n]{0,650})/i)||[])[1]||"";
+  const normalizeAuthor=value=>String(value||"").replaceAll("_"," ").normalize("NFC").trim().toLocaleLowerCase("en");
   const authorPresent=authorAliases.some(alias=>{
-    if(!/^[A-Za-z0-9_-]+$/.test(alias))return false;
-    const pattern="(?:^|\\|)\\s*author\\s*=\\s*[^\\r\\n]{0,350}\\b"+alias+"\\b";
-    return new RegExp(pattern,"i").test(body);
+    const haystack=normalizeAuthor(authorField),needle=normalizeAuthor(alias);
+    const pos=haystack.indexOf(needle);
+    return Boolean(needle&&pos>=0
+      &&(pos===0||!(/[\p{L}\p{N}]/u).test(haystack[pos-1]))
+      &&(pos+needle.length===haystack.length||!(/[\p{L}\p{N}]/u).test(haystack[pos+needle.length])));
   });
+  const originalUploaderAuthor=photo.fileId!=="belarus-132n-picture30-2011" ||
+    /(?:^|\n)\s*\|\s*author\s*=\s*\{\{\s*user at project\s*\|\s*Picture30\s*\|\s*wikipedia\s*\|\s*ru\s*\}\}/i.test(body);
   const sourceUrlSame=photo.copyrightClaimUrl===photo.sourcePage
     && /^https:\/\/commons\.wikimedia\.org\/wiki\/File:[^?#]+$/.test(photo.sourcePage);
-  const hasApprovedLicense=photo.licenseUrl==="https://creativecommons.org/licenses/by-sa/4.0/";
+  const hasApprovedLicense=photo.licenseUrl==="https://creativecommons.org/licenses/by-sa/4.0/" ||
+    (originalUploaderSelf && photo.licenseName==="CC BY-SA 3.0" &&
+      photo.licenseUrl==="https://creativecommons.org/licenses/by-sa/3.0/");
   const claimIsAuthor=photo.photographer===author;
   return {fileId:photo.fileId,owner:author,sourceUrl:photo.sourcePage,
-    ownWork,ownLicense,authorPresent,sourceUrlSame,hasApprovedLicense,claimIsAuthor,
-    verified:ownWork&&ownLicense&&authorPresent&&sourceUrlSame&&hasApprovedLicense&&claimIsAuthor};
+    ownWork,ownLicense,authorPresent,originalUploaderAuthor,sourceUrlSame,hasApprovedLicense,claimIsAuthor,
+    verified:ownWork&&ownLicense&&authorPresent&&originalUploaderAuthor&&sourceUrlSame&&hasApprovedLicense&&claimIsAuthor};
 }
 
 export async function verifyCommonsCopyrightClaims({fetchJson=fetchCommonsJson}={}){
