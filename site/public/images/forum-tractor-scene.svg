@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 350" role="img" aria-labelledby="title desc">
+ <title id="title">TractorVS tarla ve traktör çizimi</title><desc id="desc">Yeşil tarlalar üzerinde özgün çizilmiş bir traktör</desc>
+ <defs><linearGradient id="sky" x2="0" y2="1"><stop stop-color="#d5e8db"/><stop offset="1" stop-color="#f3f7de"/></linearGradient><linearGradient id="hill" x2="0" y2="1"><stop stop-color="#78a46e"/><stop offset="1" stop-color="#c2d494"/></linearGradient><linearGradient id="paint" x2="0" y2="1"><stop stop-color="#2e7a42"/><stop offset="1" stop-color="#17432b"/></linearGradient></defs>
+ <rect width="1000" height="350" fill="url(#sky)"/><circle cx="790" cy="76" r="45" fill="#fff5bd" opacity=".65"/>
+ <path d="M0 215Q105 137 233 192T488 168T757 178T1000 146V350H0Z" fill="#90b788"/>
+ <path d="M0 246Q170 200 308 241T606 216T1000 199V350H0Z" fill="url(#hill)"/>
+ <path d="M0 303Q220 260 438 293T1000 266V350H0Z" fill="#739f59"/>
+ <g opacity=".45" stroke="#e0eaae" stroke-width="8"><path d="M0 341 490 270M95 350 588 279M268 350 712 276M457 350 840 272M649 350 959 272M831 350 1000 310"/></g>
+ <g fill="#376946" opacity=".8"><path d="M8 229v-45h9v45m-22-20c0-23 39-22 39 0Z"/><path d="M91 226v-39h7v39m-21-21c0-20 35-18 35 0Z"/><path d="M329 215v-53h8v53m-22-24c0-22 36-21 36 0Z"/><path d="M946 196v-54h8v54m-23-25c0-22 43-24 43 0Z"/></g>
+ <g transform="translate(584 105)">
+ <ellipse cx="181" cy="182" rx="230" ry="23" fill="#254b2a" opacity=".2"/>
+ <path d="M127 46 161 6h90l34 89-8 54H120Z" fill="#153e2f" stroke="#0e2921" stroke-width="7" stroke-linejoin="round"/>
+ <path d="M161 16h79l20 63H145Z" fill="#bad5cf" stroke="#173d30" stroke-width="5"/>
+ <path d="M198 16v68M145 91h128" stroke="#1c583a" stroke-width="5"/>
+ <path d="M79 91h199q43 0 50 40l-10 46H53l-16-40 19-37Z" fill="url(#paint)" stroke="#153b27" stroke-width="8" stroke-linejoin="round"/>
+ <path d="M55 106 23 107v31h41M277 110h43" stroke="#1f5232" stroke-width="8" fill="none"/>
+ <path d="M64 118h97M169 118h64" stroke="#b7df91" stroke-width="6" opacity=".8"/>
+ <circle cx="103" cy="170" r="51" fill="#1b261d" stroke="#364534" stroke-width="8"/><circle cx="103" cy="170" r="23" fill="#9dab99"/><circle cx="103" cy="170" r="9" fill="#4c6b55"/>
+ <circle cx="281" cy="173" r="34" fill="#1c251d" stroke="#364534" stroke-width="6"/><circle cx="281" cy="173" r="14" fill="#a4afa5"/>
+ <path d="M107 119 89 110h-19v-13h52v17" fill="#f5f3d0"/><path d="M266 98h32v20h-32Z" fill="#eddca7"/>
+ <path d="M277 44h6V-15h7v63" stroke="#163a2a" stroke-width="5" fill="none"/>
+ <path d="M133 144h-60M137 143h58M235 143h57" stroke="#153827" stroke-width="6"/>
+ </g>
+</svg>
