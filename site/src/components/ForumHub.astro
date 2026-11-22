@@ -10,7 +10,7 @@ import {approvedForumHubLocales} from "../lib/forum-hub-locales.mjs";
 import {FORUM_LIVE_TEXT} from "../lib/forum-live-i18n.ts";
 import {forumSeoDescription} from "../lib/forum-format.mjs";
 import {getPublicCatalog} from "../lib/catalog.ts";
-import {localizedPath,LOCALES,type Locale} from "../lib/locales.ts";
+import {localizedPath,LOCALES,LOCALE_TAGS,type Locale} from "../lib/locales.ts";
 interface Props {lang:Locale}
 const {lang}=Astro.props;
 const starters=FORUM_STARTER_GUIDES[lang];
@@ -27,7 +27,8 @@ const topics=publicTopics.filter(topic=>topic.locale===lang);
 const indexableLocales=approvedForumHubLocales(publicTopics,LOCALES,isIndexableForumTopic);
 const catalog=await getPublicCatalog();
 const tractors=new Map(catalog.tractors.map(t=>[t.tractor_id,t]));
-const publicCount=topics.filter(isIndexableForumTopic).length;
+const indexedTopics=topics.filter(isIndexableForumTopic);
+const publicCount=indexedTopics.length;
 const indexable=publicCount>0; // Never index a forum hub whose topics all fail the source/quality gate.
 const path=localizedPath(lang,"/forum/");
 const origin=Astro.site||new URL("https://tractorvs.com");
@@ -35,7 +36,13 @@ const schema=indexable?{
  "@context":"https://schema.org","@type":"CollectionPage",
  "@id":new URL(path,origin).toString()+"#community",
  url:new URL(path,origin).toString(),name:ft(lang,"heading"),
- description:ft(lang,"intro"),isAccessibleForFree:true
+ description:ft(lang,"intro"),inLanguage:LOCALE_TAGS[lang],isAccessibleForFree:true,
+ mainEntity:{"@type":"ItemList",numberOfItems:publicCount,
+  itemListElement:indexedTopics.map((topic,index)=>({
+   "@type":"ListItem",position:index+1,name:topic.title,
+   url:new URL(path+topic.slug+"/",origin).toString()
+  }))
+ }
 }:null;
 ---
 <SiteLayout lang={lang} title={ft(lang,"heading")+" | TractorVS"}
