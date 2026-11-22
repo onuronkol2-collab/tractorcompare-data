@@ -24,6 +24,7 @@ All file and model identifiers, URLs, stated authors, permission labels, source 
 - **Sonalika DI-30Rx Baagban**: The Commons page lists self-owned CC BY-SA, but also asks users to contact the author before commercial use. That contact request is not by itself a new CC-NC license. Combined with the difference between photographed `DI-30Rx` and published generic `DI 30 Baagban`, keep in manual rights / model trim review; neither remove the license nor invent permission.
 - **TYM T130 photograph versus published T6130**: Similar manufacturer platform is not identity; exclude.
 - **Zetor MAJOR HS 80 photograph versus published MAJOR CL 80**: Same family is not the same configuration; exclude.
+- **TYM T495SH photographed versus generic published T4049 (T495)**: TYM's official page confirms the T4049–T495 alias but not that photographed T495SH has the same registered transmission/configuration. The [Commons T495SH file](https://commons.wikimedia.org/wiki/File:TYM_T495SH_Agritechnica_2025_(DSC04665).jpg) is CC BY-SA 4.0 by MarcelX42, but remains quarantined for exact variant proof and image integrity.
 - Other retailer, manufacturer, marketplace stock images without an explicit owner reuse grant are excluded, even if Google can show thumbnails.
 
 ## Next publication gates, in order
