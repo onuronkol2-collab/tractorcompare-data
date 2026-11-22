@@ -51,6 +51,9 @@ jobs:
       - name: Build through the repository-root entrypoint
         run: npm run build
 
+      - name: Verify image alt on every preview HTML page, including forums and all ten locales
+        run: node site/scripts/verify-sitewide-image-alts.mjs site/dist
+
       - name: Validate inert JSON payload locations in all ten generated language pages
         run: node site/scripts/verify-document-data-boundaries.mjs
 
@@ -93,6 +96,7 @@ jobs:
           PUBLIC_INDEXING_ENABLED: "true"
         run: |
           npm run build
+          node site/scripts/verify-sitewide-image-alts.mjs site/dist
           test -f site/dist/sitemap-index.xml
           node site/scripts/verify-unified-sitemap-index.mjs
           node site/scripts/verify-tractor-glossary-build.mjs indexable
