@@ -74,3 +74,75 @@ test("Japanese selection assistant preserves the full tractor-condition question
  assert.equal(advisorText("ja","condition"),"トラクターの状態（新車・中古）");
  assert.deepEqual(advisorTranslationIssues(),[]);
 });
+
+// Guard material safety, price and unit-conversion semantics against future shortened translations.
+test("every language retains key caveats in equipment, pricing and screening guidance",()=>{
+ const markers={
+  "priceNote": [
+    "country",
+    "ülke",
+    "国家",
+    "देश",
+    "país",
+    "pays",
+    "Länder",
+    "страну",
+    "国",
+    "país"
+  ],
+  "bigha": [
+    "verified",
+    "doğrulanmış",
+    "核实",
+    "सत्यापित",
+    "verificada",
+    "vérifiée",
+    "geprüfte",
+    "проверенный",
+    "確認済み",
+    "verificada"
+  ],
+  "unavailable": [
+    "catalogue",
+    "kataloğu",
+    "目录",
+    "कैटलॉग",
+    "catálogo",
+    "catalogue",
+    "Katalog",
+    "каталог",
+    "機種一覧",
+    "catálogo"
+  ],
+  "plowCaution": [
+    "implement",
+    "ekipman",
+    "农具",
+    "उपकरण",
+    "implemento",
+    "outil",
+    "Geräte",
+    "орудия",
+    "作業機",
+    "apero"
+  ],
+  "loaderCaution": [
+    "safe lifting",
+    "kaldırma güvenliğini",
+    "举升安全",
+    "सुरक्षित",
+    "seguros",
+    "sécurité du levage",
+    "sicheres Heben",
+    "безопасность подъёма",
+    "安全な持ち上げ",
+    "seguridad de elevación"
+  ]
+};
+ for(const [key,terms] of Object.entries(markers)){
+   LOCALES.forEach((locale,i)=>{
+     const value=advisorText(locale,key).toLocaleLowerCase();
+     assert.ok(value.includes(terms[i].toLocaleLowerCase()),locale+" "+key+" omits a material condition");
+   });
+ }
+});
