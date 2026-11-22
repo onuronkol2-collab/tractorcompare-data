@@ -6,6 +6,8 @@ import {HISTORICAL_LICENSED_PHOTOS} from "./historical-licensed-photos.ts";
 export interface TractorPhoto {
   brand:string; model:string; fileId:string;
   thumbUrl:string; displayUrl:string; fullUrl:string;
+  /** Optional, strictly allowlisted Commons 720px mobile pilot. */
+  mediumUrl?:string;
   width:number; height:number; sourcePage:string;
   photographer:string; licenseName:string; licenseUrl:string;
   configurationExact:boolean;
@@ -133,21 +135,36 @@ const PHOTO_ORIGINS:readonly Omit<TractorPhoto,"originThumbUrl"|"originDisplayUr
   ...HISTORICAL_LICENSED_PHOTOS
 ];
 /** Stable, first-party indexable image URLs; a fixed Worker allowlist proxies only approved photos. */
+// Limited pilot only: the exact Commons files already approved, not an arbitrary
+// resize parameter or newly discovered/unreviewed photo.
+const MOBILE_720_PILOT=new Set([
+  "belarus-80-1-nikolai-bulykin-kosmos-2026",
+  "antonio-carraro-tigre-3800-439af04e",
+  "new-holland-t5-110-pere-igor-2016"
+]);
 export const APPROVED_TRACTOR_PHOTOS:readonly TractorPhoto[]=PHOTO_ORIGINS.map(source=>({
   ...source,
   originThumbUrl:source.thumbUrl.replace("/480px-", "/500px-"),
   originDisplayUrl:source.displayUrl,
   originFullUrl:source.width<=1920 ? source.fullUrl : source.displayUrl.replace("/960px-","/1920px-"),
   thumbUrl:"/images/tractors/"+source.fileId+"-480.jpg",
+  mediumUrl:MOBILE_720_PILOT.has(source.fileId)?"/images/tractors/"+source.fileId+"-720.jpg":undefined,
   displayUrl:"/images/tractors/"+source.fileId+"-960.jpg",
   fullUrl:"/images/tractors/"+source.fileId+"-1920.jpg",
 }));
 export function resolveApprovedPhotoSource(pathname:string):string|null {
-  const m=/^\/images\/tractors\/([a-z0-9-]+)-(480|960|1920)\.jpg$/.exec(pathname);
+  const m=/^\/images\/tractors\/([a-z0-9-]+)-(480|720|960|1920)\.jpg$/.exec(pathname);
   if(!m)return null;
   const photo=APPROVED_TRACTOR_PHOTOS.find(item=>item.fileId===m[1]);
-  return photo ? m[2]==="480" ? photo.originThumbUrl
-    : m[2]==="960" ? photo.originDisplayUrl : photo.originFullUrl : null;
+  if(!photo)return null;
+  if(m[2]==="720"){
+    // Only the three rights-reviewed files may expose this size. Wikimedia
+    // thumbnail path is derived from their *existing* approved 960px origin.
+    if(photo.mediumUrl!==pathname||!photo.originDisplayUrl.includes("/960px-"))return null;
+    return photo.originDisplayUrl.replace("/960px-","/720px-");
+  }
+  return m[2]==="480" ? photo.originThumbUrl
+    : m[2]==="960" ? photo.originDisplayUrl : photo.originFullUrl;
 }
 function norm(value:string):string{
   return value.normalize("NFKD").replace(/[\u0300-\u036f]/g,"")
