@@ -13,7 +13,7 @@ on:
   workflow_dispatch:
     inputs:
       onay:
-        description: "Gerçek ücretli çeviri için ONAY; ücretsiz kuyruk durumu için KONTROL yazın"
+        description: "ONAY: forum kuyruğu; KONTROL: salt-okunur; TEST: yalnız bir sentetik Cloudflare isteği (ücretsiz koşullara bağlı)"
         required: true
         type: string
 
@@ -33,14 +33,14 @@ jobs:
         with:
           node-version: "22.23.4"
       - name: Test permission boundaries, jobs and receipts
-        run: node --test scripts/tractor-forum-translate-dispatch.test.mjs
+        run: node --test scripts/tractor-forum-translate-dispatch.test.mjs scripts/tractor-forum-cloudflare-smoke.test.mjs
       - uses: denoland/setup-deno@v2
         with:
           deno-version: v2.x
       - name: Typecheck private worker without secrets or paid API calls
         run: deno check --no-config supabase/functions/tractor-forum-translate/index.ts
       - name: Run isolated Cloudflare, Azure and Gemini provider contract tests (no external calls or charges)
-        run: deno test --no-config supabase/functions/tractor-forum-translate/gemini-provider.test.ts supabase/functions/tractor-forum-translate/translation-quality.test.ts supabase/functions/tractor-forum-translate/translation-segments.test.ts supabase/functions/tractor-forum-translate/azure-translator.test.ts supabase/functions/tractor-forum-translate/cloudflare-m2m100.test.ts
+        run: deno test --no-config supabase/functions/tractor-forum-translate/gemini-provider.test.ts supabase/functions/tractor-forum-translate/translation-quality.test.ts supabase/functions/tractor-forum-translate/translation-segments.test.ts supabase/functions/tractor-forum-translate/azure-translator.test.ts supabase/functions/tractor-forum-translate/cloudflare-m2m100.test.ts supabase/functions/tractor-forum-translate/cloudflare-smoke.test.ts
 
   status:
     # KONTROL never calls Gemini; only reports private queue counters.
@@ -59,6 +59,23 @@ jobs:
           TRACTORVS_QUEUE_SECRET: ${{ secrets.TRACTORVS_QUEUE_SECRET }}
           TRACTORVS_TRANSLATION_STATUS_ONLY: "true"
         run: node scripts/tractor-forum-translate-dispatch.mjs
+  synthetic_test:
+    # Exactly one synthetic provider request; cannot read/claim real forum jobs.
+    # Never runs automatically or on PRs, and never calls Gemini/Azure.
+    if: github.event_name == 'workflow_dispatch' && inputs.onay == 'TEST' && github.repository == 'onuronkol2-collab/tractorcompare-data' && github.ref == 'refs/heads/main'
+    needs: check
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22.23.4"
+      - name: Call exactly one synthetic Cloudflare M2M100 sentence
+        env:
+          TRACTORVS_SUPABASE_ANON_JWT: ${{ secrets.TRACTORVS_SUPABASE_ANON_JWT }}
+          TRACTORVS_QUEUE_SECRET: ${{ secrets.TRACTORVS_QUEUE_SECRET }}
+        run: node scripts/tractor-forum-cloudflare-smoke.mjs
   process:
     if: github.event_name == 'workflow_dispatch' && inputs.onay == 'ONAY' && github.repository == 'onuronkol2-collab/tractorcompare-data' && github.ref == 'refs/heads/main'
     needs: check
