@@ -42,3 +42,19 @@ test("production workflow has no legacy TEST ONAY or active queue processor",()=
  assert.doesNotMatch(body,/^\s*- (?:ONAY|TEST|TOPLU_TEST)$/m);
  assert.doesNotMatch(body,/^\s*(?:process|synthetic_test|synthetic_batch_test):/m);
 });
+
+test("CJK month numbers are allowed ONLY when source has the matching Turkish month",()=>{
+ const tr={sourceTitle:"2026 Traktör Bayi Memnuniyeti",sourceBody:"## Tarih\n\n10 Kasım 2026 tarihinde bir araştırma yayımlandı."};
+ const zh=auditManualForumTranslation({...tr,locale:"zh",
+  targetTitle:"2026年拖拉机经销商满意度",
+  targetBody:"## 日期\n\n研究于2026年11月10日公布。"});
+ assert.ok(!zh.errors.includes("numeric_facts_changed"),JSON.stringify(zh.errors));
+ const ja=auditManualForumTranslation({...tr,locale:"ja",
+  targetTitle:"2026年トラクター販売店満足度",
+  targetBody:"## 発表日\n\n2026年11月10日に調査が発表されました。"});
+ assert.ok(!ja.errors.includes("numeric_facts_changed"),JSON.stringify(ja.errors));
+ const broken=auditManualForumTranslation({...tr,locale:"zh",
+  targetTitle:"2026年拖拉机经销商满意度",
+  targetBody:"## 日期\n\n研究于2026年12月10日公布。"});
+ assert.ok(broken.errors.includes("numeric_facts_changed"));
+});
