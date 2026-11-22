@@ -1,0 +1,105 @@
+{
+  "reviewRequired": true,
+  "publicationCount": 0,
+  "images": [
+    {
+      "fileId": "tym-t2026-2500l-marcelx42-2023",
+      "photographer": "MarcelX42",
+      "license": "CC BY-SA 4.0",
+      "sourcePage": "https://commons.wikimedia.org/wiki/File:TYM_2500L_Agritechnica_2023_%28DSC05265%29.jpg",
+      "origin": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/88/TYM_2500L_Agritechnica_2023_%28DSC05265%29.jpg/1920px-TYM_2500L_Agritechnica_2023_%28DSC05265%29.jpg",
+      "originSha256": "1a65a22be4c69b54843de36ec43bf2df5c41ec1bdea67a5ba6d69ef4ee75aaf1",
+      "originBytes": 428234,
+      "derivatives": [
+        {
+          "file": "tym-t2026-2500l-marcelx42-2023-480.jpg",
+          "width": 480,
+          "height": 270,
+          "bytes": 38167,
+          "sha256": "31c74f2f73b5def286b9fdd26fad13114ffb5ba96f0e41d21ae62222dc0024d0"
+        },
+        {
+          "file": "tym-t2026-2500l-marcelx42-2023-960.jpg",
+          "width": 960,
+          "height": 540,
+          "bytes": 124205,
+          "sha256": "cdc837f49eb0d9ecb8c6b5669bea3c70318256e41a11429eb7e6b0248c07ed23"
+        },
+        {
+          "file": "tym-t2026-2500l-marcelx42-2023-1920.jpg",
+          "width": 1920,
+          "height": 1081,
+          "bytes": 405446,
+          "sha256": "19a582817450f516b65e4ba15ae3cb387075eccf1e08d1c621a0ee1959edf64b"
+        }
+      ],
+      "approvedToPublish": false
+    },
+    {
+      "fileId": "tym-t4058-6225c-marcelx42-2023",
+      "photographer": "MarcelX42",
+      "license": "CC BY-SA 4.0",
+      "sourcePage": "https://commons.wikimedia.org/wiki/File:TYM_6225C_Agritechnica_2023_%28DSC03508%29.jpg",
+      "origin": "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/ea/TYM_6225C_Agritechnica_2023_%28DSC03508%29.jpg/1920px-TYM_6225C_Agritechnica_2023_%28DSC03508%29.jpg",
+      "originSha256": "ae7feda196bc375c26c5bb4e243c771d5258287052d2dde53c5050d4960abfb5",
+      "originBytes": 421401,
+      "derivatives": [
+        {
+          "file": "tym-t4058-6225c-marcelx42-2023-480.jpg",
+          "width": 480,
+          "height": 270,
+          "bytes": 32702,
+          "sha256": "ca0c3fd28b085ebcdef559a1a931f9ba776bdcad31ea5835564f14f861254cc7"
+        },
+        {
+          "file": "tym-t4058-6225c-marcelx42-2023-960.jpg",
+          "width": 960,
+          "height": 540,
+          "bytes": 109627,
+          "sha256": "751f83c012d31abb5c0bfbedd0812276871f86cd4a25db5423aa29f2a5928fce"
+        },
+        {
+          "file": "tym-t4058-6225c-marcelx42-2023-1920.jpg",
+          "width": 1920,
+          "height": 1080,
+          "bytes": 400508,
+          "sha256": "8a0fd7395d8ae799e9a30379ec98198eaa97714ab4d27c6b37bdeb323ed70d17"
+        }
+      ],
+      "approvedToPublish": false
+    },
+    {
+      "fileId": "tym-t5075-t78-marcelx42-2023",
+      "photographer": "MarcelX42",
+      "license": "CC BY-SA 4.0",
+      "sourcePage": "https://commons.wikimedia.org/wiki/File:TYM_T78_Agritechnica_2023_%28DSC03605%29.jpg",
+      "origin": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/5b/TYM_T78_Agritechnica_2023_%28DSC03605%29.jpg/1920px-TYM_T78_Agritechnica_2023_%28DSC03605%29.jpg",
+      "originSha256": "67b33b9cbc5525399d8cd72a5fd6f02530e53d7e362f7caeaff6758c47ce9b50",
+      "originBytes": 463712,
+      "derivatives": [
+        {
+          "file": "tym-t5075-t78-marcelx42-2023-480.jpg",
+          "width": 480,
+          "height": 270,
+          "bytes": 39521,
+          "sha256": "88a732099e8a96d7f6f23034b90d5e2d994166d31cf32e5cfcc38572ae55236b"
+        },
+        {
+          "file": "tym-t5075-t78-marcelx42-2023-960.jpg",
+          "width": 960,
+          "height": 540,
+          "bytes": 129991,
+          "sha256": "937b8f89ec67177218e5945d980936c1f5febc81288e74ad3f063a668a08c2d5"
+        },
+        {
+          "file": "tym-t5075-t78-marcelx42-2023-1920.jpg",
+          "width": 1920,
+          "height": 1081,
+          "bytes": 441173,
+          "sha256": "acaf7488737369c5d15228ffd3a3fd6b2510701966825811b28dc554f083d274"
+        }
+      ],
+      "approvedToPublish": false
+    }
+  ]
+}
