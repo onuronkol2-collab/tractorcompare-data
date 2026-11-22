@@ -160,15 +160,53 @@ export function modelSeoMetadata(tractor: TractorRecord, lang: Locale) {
       || rawVariant === "5D Series (non-GS) / Stage V (Türkiye 2025 manufacturer brochure)");
   const deutzIdentityLabel = rawVariant?.startsWith("5D Series GS")
     ? "5D GS · Stage V" : "5D non-GS · Stage V";
+  // Exact, published source-note rows checked against Supabase on 2026-11-22.
+  // Keep the complete variant/market unmodified in the catalogue and JSON-LD.
+  // These display-only labels remove bibliography prose from search titles;
+  // real equipment differences (2WD/4WD, gearing, Stage V, i-HMT, region)
+  // must remain visible. Unknown or later-edited strings use raw identity.
+  const reviewedSourceNotes =
+    tractor.brand_name === "McCormick" && tractor.model_name === "X5.085"
+      && rawVariant === "Stage V X5.085 / 09-2023 brochure"
+      && rawMarket === "Europe / Turkey (manufacturer 09/2023)"
+      ? {variant:"Stage V",markets:["Europe","Turkey"]}
+    : tractor.brand_name === "Steyr" && tractor.model_name === "6440 CERVUS CVT"
+      && rawVariant === "CERVUS CVT"
+      && rawMarket === "International (STEYR 2025 brochure)"
+      ? {variant:null,markets:["International"]}
+    : tractor.brand_name === "Valtra" && tractor.model_name === "T215"
+      && rawVariant === "T Series"
+      && rawMarket === "Europe / UK 2025 manufacturer brochure"
+      ? {variant:"T Series",markets:["Europe","UK"]}
+    : tractor.brand_name === "Yanmar" && tractor.model_name === "YT347"
+      && rawVariant === "YT3 i-HMT"
+      && rawMarket === "Turkey (manufacturer YT3 model table)"
+      ? {variant:"YT3 i-HMT",markets:["Turkey"]}
+    : tractor.brand_name === "Mahindra" && tractor.model_name === "JIVO 225 DI"
+      && rawVariant === "India 2WD / 8F x 4R / manufacturer configuration"
+      && rawMarket === "India"
+      ? {variant:"2WD / 8F x 4R",markets:["India"]}
+    : tractor.brand_name === "Mahindra" && tractor.model_name === "JIVO 245 DI"
+      && rawVariant === "India 4WD / 8F x 4R / exact JIVO 245 DI"
+      && rawMarket === "India"
+      ? {variant:"4WD / 8F x 4R",markets:["India"]}
+    : tractor.brand_name === "Sonalika" && tractor.model_name === "Tiger DI 55 III"
+      && rawVariant === "India / Tiger DI 55 III original / 12F×3R"
+      && rawMarket === "India"
+      ? {variant:"12F×3R",markets:["India"]}
+    : null;
   const variantLabel = isSwarajTarget ? null
     : isLamborghiniStageV || isSpireFSourceNote ? "Stage V"
     : isHistoricalBelarus ? "Honda GX390"
     : isAgraleCargoSourceNote ? null
     : isDeutz5DSourceVariant ? deutzIdentityLabel
+    : reviewedSourceNotes ? reviewedSourceNotes.variant
     : rawVariant;
   const marketLabel = !rawMarket || rawMarket.toLowerCase() === "global" ? null
     : isSwarajTarget ? marketDisplayName("India",lang)
     : isLamborghiniStageV ? marketDisplayName("Europe",lang)
+    : reviewedSourceNotes
+      ? reviewedSourceNotes.markets.map(region=>marketDisplayName(region,lang)).join(" / ")
     : marketDisplayName(rawMarket, lang);
   const qualifiers = [
     variantLabel && variantLabel.length <= 48 ? variantLabel : null,
