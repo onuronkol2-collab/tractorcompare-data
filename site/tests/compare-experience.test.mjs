@@ -54,11 +54,12 @@ test("every published model detail has a comparison CTA using stable tractor id"
   assert.match(detail,/class="model-bottom-actions"/);
   assert.match(detail,/manufacturerDiscrepancies/);
 });
-test("responsive comparison offers mobile scrolling, readable controls and keyboard focus",()=>{
+test("responsive comparison offers side-by-side mobile values, readable controls and keyboard focus",()=>{
   assert.match(css,/\.tc-section \.tc-picker/);
   assert.match(css,/\.tc-combo-input:focus-visible/);
   assert.match(css,/\.tc-picker-results\[hidden\] \{ display: none; \}/);
-  assert.match(css,/\.tc-section \.tc-table tbody th \{ position: sticky; left: 0/);
+  assert.match(css,/grid-template-columns:repeat\(2,minmax\(0,1fr\)\)/);
+  assert.match(compare,/class="tc-cell-model"/);
   assert.match(css,/@media\(max-width:690px\)/);
 });
 
