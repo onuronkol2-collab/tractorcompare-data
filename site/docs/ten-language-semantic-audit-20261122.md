@@ -30,3 +30,13 @@ Depo ana dalındaki `AGENTS.md` ilkeleri ve mevcut denetimler okundu. Bu PR, gen
 - `plowCaution`: lastik tutunması, işleme derinliği, balast ve ekipman üretici teknik şartları birlikte belirtildi.
 - `loaderCaution`: ön yükleyici için güvenli kaldırma talimatı, aks yükü, hidrolik ve denge uyarıları korunarak tamamlandı.
 - Bu madde ve ilk katalog düzeltmesi **kaynak kodunda ve taslak PR'dadır**; ana dala birleştirme veya üretim dağıtımı değildir.
+
+## Üçüncü aşama — 388 model × 10 dil canlı kaynak başlıkları
+
+22 Kasım 2026 tarihli [canlı çeviri denetimi](https://github.com/onuronkol2-collab/tractorcompare-data/actions/runs/45056633686) `3976` benzersiz sitemap URL'si içinde `388` model × `10` dil = `3880` model HTML sayfasını inceledi; `3492` model-dil çiftini karşıladı, `0` tarama hatası raporladı. İngilizce kalmış teknik başlıklar (benzersiz ad / görünme sayısı): pt-br `121 / 154`, fr `116 / 166`, es `109 / 113`. Diğer diller bu **konum-temelli** kontrolün kapsamına giren kriterde sıfır eşleşmeyle geçti; bu tüm metinlerinin kusursuzluğu anlamına gelmez. Terimlerin bir kısmı OEM marka/ürün adları olup bire bir aynılık tek başına yanlış çeviri kanıtı değildir.
+
+`site/src/lib/reviewed-live-technical-headings-20261122.ts` dosyasında, canlı kanıtta tam metin ve kaynak bağlamı eşleşen **98 farklı İngilizce kaynak başlığı** için yalnızca gerçekten İngilizce kalan pt-BR/fr/es hücreleri elle, teknik şartları ve ürün/marka adlarını koruyarak yerelleştirildi. Bu başlıkların önceki canlı gözlemde toplam `pt-br: 117`, `fr: 122`, `es: 84` başlık görünümünü karşılaması öngörülür. **Bunlar model sayfalarında yapılan yeni bir canlı doğrulama değil, kaynak başlığı+locale eşleşmelerinden hesaplanan potansiyel kapatılan gözlem sayılarıdır.** Yeni bir üretim derlemesi/sitemap doğrulaması olmadan gerçekleşen yayın sayısı olarak raporlanamaz. `PowerShuttle` gibi marka isimleri semantik ipucu olmadan çevrilmedi.
+
+Kaynak orijinal teknik sayıları, hp/kW/Nm/rpm birimleri, varyant, model/üretim yılı, üretici belgesi ve Supabase kayıtları değiştirilmedi. `site/tests/reviewed-live-technical-headings-20261122.test.mjs` her kaynağın tam eşleşmesini, yerel etiketin oluşmasını ve orijinal verinin bozulmamasını test eder.
+
+**Kalan kanıt/doğrulama:** Önceki kaydın tamamı yeni kodun canlı yayına alınmış hali değildir; PR üzerinde kaynak/derleme/Playwright/axe ve çeviri önizleme audit'lerinin başarılı sonuçlarını kontrol et; bağımsız doğal dil/yerel tarım terminolojisi QA'sı ve gerçek Cloudflare yayın sonrası audit olmadan tüm site %100 tamamlandı deme.
