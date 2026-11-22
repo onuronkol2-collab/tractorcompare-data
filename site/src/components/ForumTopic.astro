@@ -70,6 +70,11 @@ const schema=eligible?{
    <div class="forum-thread-actions" data-thread-engagement
        data-thread-id={topic.topic_id} data-thread-config={engagementConfig}
        data-thread-copy={engagementCopy}>
+      <div class="forum-thread-counters">
+       <span title={mt(lang,"readsDetail")}>{mt(lang,"memberReads")}: <strong data-thread-read-count>—</strong></span>
+       <span>{mt(lang,"topicLikes")}: <strong data-thread-like-count>—</strong></span>
+      </div>
+      <button type="button" data-like-toggle aria-pressed="false">{mt(lang,"topicLike")}</button>
       <button type="button" data-bookmark-toggle aria-pressed="false">{mt(lang,"saveTopic")}</button>
       <button type="button" data-follow-toggle aria-pressed="false">{mt(lang,"followTopic")}</button>
       <span data-engagement-status role="status" aria-live="polite"></span>
@@ -120,6 +125,11 @@ const schema=eligible?{
 .forum-thread a:focus-visible{outline:3px solid #8cb78a;outline-offset:3px}
 
 .forum-thread-actions,.forum-helpful{display:flex;align-items:center;gap:12px;margin-top:17px;flex-wrap:wrap}
+.forum-thread-counters{display:flex;align-items:center;gap:12px;flex-wrap:wrap;
+ width:100%;font-size:14px;line-height:1.5;color:#365f45}
+.forum-thread-counters span{display:inline-flex;gap:6px;padding:8px 12px;
+ border:1px solid #d2e5d0;border-radius:10px;background:#fff}
+.forum-thread-counters strong{font-variant-numeric:tabular-nums;color:#174b30}
 .forum-thread-actions button,.forum-helpful button{border:1px solid #aac9ad;border-radius:10px;background:#eef6ea;color:#21593b;font:inherit;font-weight:750;padding:9px 13px;cursor:pointer;min-height:42px}
 .forum-thread-actions button[aria-pressed="true"],.forum-helpful button[aria-pressed="true"]{background:#235d3a;color:#fff}
 .forum-thread-actions button:disabled,.forum-helpful button:disabled{opacity:.55}
@@ -128,6 +138,7 @@ const schema=eligible?{
 </style>
 
 <script>
+import {readForumSession} from "../lib/forum-session-store.mjs";
 const community=document.querySelector<HTMLElement>("[data-thread-engagement]");
 if(community){
  const cfg=JSON.parse(community.dataset.threadConfig||"null") as {url:string;key:string}|null;
@@ -135,17 +146,24 @@ if(community){
  const topicId=community.dataset.threadId||"";
  const key="tractorvs_forum_access";
  const uuid=/^[0-9a-f-]{36}$/i;
- const getToken=()=>{try{return sessionStorage.getItem(key)||""}catch{return ""}};
+ const getToken=()=>readForumSession()?.access||"";
  const creds=(token="")=>({apikey:cfg?.key||"",Accept:"application/json",
   ...(token?{Authorization:"Bearer "+token}:{})});
  const status=community.querySelector<HTMLElement>("[data-engagement-status]");
  const bookmark=community.querySelector<HTMLButtonElement>("[data-bookmark-toggle]");
+ const like=community.querySelector<HTMLButtonElement>("[data-like-toggle]");
+ const likeCount=community.querySelector<HTMLElement>("[data-thread-like-count]");
+ const readCount=community.querySelector<HTMLElement>("[data-thread-read-count]");
  const follow=community.querySelector<HTMLButtonElement>("[data-follow-toggle]");
  const buttons=[...document.querySelectorAll<HTMLElement>("[data-helpful-reply]")]
   .filter(el=>uuid.test(el.dataset.replyId||""));
- let ownId="",isBookmarked=false,isFollowing=false;
+ let ownId="",isBookmarked=false,isFollowing=false,isLiked=false;
  const voted=new Set<string>();
  const say=(s:string)=>{if(status)status.textContent=s};
+ function showLiked(){
+  if(like){like.setAttribute("aria-pressed",String(isLiked));
+   like.textContent=isLiked?labels.topicUnlike:labels.topicLike}
+ }
  function showBookmark(){
   if(bookmark){bookmark.setAttribute("aria-pressed",String(isBookmarked));
    bookmark.textContent=isBookmarked?labels.removeTopic:labels.saveTopic}
@@ -172,6 +190,20 @@ if(community){
   const text=await response.text();return text?JSON.parse(text):null;
  };
  async function counts(){
+  if(cfg&&uuid.test(topicId)){
+   try{
+    const totals=await api("/rest/v1/tc_forum_topic_engagement_totals?"+
+     new URLSearchParams({select:"likes,member_reads",topic_id:"eq."+topicId,limit:"1"})) as
+     {likes:number;member_reads:number}[];
+    const total=totals?.[0];
+    if(likeCount)likeCount.textContent=String(typeof total?.likes==="number"?total.likes:0);
+    if(readCount)readCount.textContent=String(typeof total?.member_reads==="number"?total.member_reads:0);
+   }catch{
+    // No fake zero during a backend error or before the new migration.
+    if(likeCount)likeCount.textContent="—";
+    if(readCount)readCount.textContent="—";
+   }
+  }
   const ids=buttons.map(el=>el.dataset.replyId).filter(Boolean) as string[];
   if(!ids.length||!cfg)return;
   try{
@@ -187,7 +219,8 @@ if(community){
   }catch{}
  }
  async function sync(){
-  ownId="";voted.clear();isBookmarked=false;isFollowing=false;showVoted();showBookmark();showFollow();
+  ownId="";voted.clear();isBookmarked=false;isFollowing=false;isLiked=false;
+  showVoted();showBookmark();showFollow();showLiked();
   const token=getToken();
   if(!token||!cfg)return;
   try{
@@ -215,6 +248,19 @@ if(community){
     const rows=await api("/rest/v1/tc_forum_helpful_votes?"+query,token) as {reply_id:string}[];
     rows.forEach(row=>voted.add(row.reply_id));showVoted();
    }
+   // Keep pre-existing forum features working during a staged deployment.
+   try{
+    const likes=await api("/rest/v1/tc_forum_topic_likes?"+
+     new URLSearchParams({select:"topic_id",topic_id:"eq."+topicId,limit:"1"}),token) as
+     {topic_id:string}[];
+    isLiked=Array.isArray(likes)&&likes.length>0;showLiked();
+    await api("/rest/v1/tc_forum_topic_member_reads?on_conflict=topic_id,member_id",token,{
+     method:"POST",headers:{"Content-Type":"application/json",
+      Prefer:"resolution=ignore-duplicates,return=minimal"},
+     body:JSON.stringify({topic_id:topicId})
+    });
+    void counts();
+   }catch{/* Engagement is optional; existing login stays valid. */}
   }catch{ownId=""}
  }
  function requireSession(){
@@ -223,6 +269,21 @@ if(community){
   document.querySelector("#forum-compose")?.scrollIntoView({block:"start"});
   return false;
  }
+ like?.addEventListener("click",async()=>{
+  if(!cfg||!uuid.test(topicId)||!requireSession())return;
+  like.disabled=true;
+  try{
+   const remove=isLiked;
+   const url="/rest/v1/tc_forum_topic_likes"+
+    (remove?"?topic_id=eq."+topicId+"&member_id=eq."+ownId:"");
+   await api(url,getToken(),remove?{method:"DELETE"}:{
+    method:"POST",headers:{"Content-Type":"application/json","Prefer":"return=minimal"},
+    body:JSON.stringify({topic_id:topicId})
+   });
+   isLiked=!remove;showLiked();void counts();say("");
+  }catch{say(labels.voteError)}
+  finally{like.disabled=false}
+ });
  follow?.addEventListener("click",async()=>{
   if(!cfg||!uuid.test(topicId)||!requireSession())return;
   follow.disabled=true;
