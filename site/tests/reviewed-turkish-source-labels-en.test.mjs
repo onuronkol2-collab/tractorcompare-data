@@ -44,3 +44,27 @@ test("unknown manufacturer-specific source headings are not translated by guessi
  const source=sourceSpec("Unknown OEM-specific phrase with unverified meaning");
  assert.equal(specLabel(source,"en"),"Unknown OEM-Specific Phrase With Unverified Meaning");
 });
+
+
+test("eight ASCII-only Turkish technical headings are English on published pages",()=>{
+  const reviewed={
+    "Nominal Motor Devri":"Rated engine speed",
+    "Direksiyon Tipi":"Steering type",
+    "Fren Sistemi":"Brake system",
+    "Fren Tipi":"Brake type",
+    "Direksiyon Sistemi":"Steering system",
+    "Piston Stroku":"Piston stroke",
+    "PTO Tipi":"PTO type",
+    "Hava Filtresi":"Air filter",
+  };
+  assert.equal(Object.keys(reviewed).length,8);
+  for(const [source,english] of Object.entries(reviewed)){
+    assert.ok(!/[ÇĞİÖŞÜçğıöşü]/u.test(source),"ASCII source finding: "+source);
+    const spec=sourceSpec(source),before=structuredClone(spec);
+    assert.equal(specLabel(spec,"en"),english,source);
+    assert.deepEqual(spec,before,"technical data and provenance must stay unchanged");
+    assert.notEqual(specLabel(spec,"tr"),english,"native Turkish label must remain");
+  }
+  const unknown=sourceSpec("Unreviewed ASCII source label");
+  assert.equal(specLabel(unknown,"en"),"Unreviewed ASCII Source Label");
+});
