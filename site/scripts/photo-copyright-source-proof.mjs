@@ -21,7 +21,12 @@ export function reviewCommonsCopyrightWikitext(wikitext,photo){
   const authorAliases=photo.fileId==="steyr-4075-kompakt-joachim-2018"
     ? ["JoachimKohlerBremen","JoachimKohler-HB"]
     : [author];
-  const authorPresent=authorAliases.some(alias=>body.includes(alias));
+  // The claimed owner must be named in the ORIGINAL file's author= field.
+  // A name mentioned in a description, unrelated credit or comment is not proof.
+  const authorPresent=authorAliases.some(alias=>{
+    const escaped=alias.replace(/[.*+?^${}()|[\]\\]/g,"\\  const authorPresent=authorAliases.some(alias=>body.includes(alias));");
+    return new RegExp("(?:^|\\\\|)\\\\s*author\\\\s*=\\\\s*[^\\\\r\\\\n]{0,350}\\\\b"+escaped+"\\\\b","i").test(body);
+  });
   const sourceUrlSame=photo.copyrightClaimUrl===photo.sourcePage
     && /^https:\/\/commons\.wikimedia\.org\/wiki\/File:[^?#]+$/.test(photo.sourcePage);
   const hasApprovedLicense=photo.licenseUrl==="https://creativecommons.org/licenses/by-sa/4.0/";
