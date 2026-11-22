@@ -13,6 +13,7 @@ import {resolve,basename,join} from "node:path";
 import {fileURLToPath} from "node:url";
 import {verifyPublishedSiteInventory} from "./verify-published-site-inventory.mjs";
 import {verifyUnifiedSitemapIndex} from "./verify-unified-sitemap-index.mjs";
+import {auditBuiltImageAlts} from "./verify-sitewide-image-alts.mjs";
 
 const projectRoot=resolve(fileURLToPath(new URL("..",import.meta.url)));
 const expectedOrigin="https://tractorvs.com";
@@ -159,7 +160,16 @@ export function verifyProductionArtifacts({dir=projectRoot,origin=expectedOrigin
   ?readdirSync(turkishTractors,{withFileTypes:true})
    .filter(entry=>entry.isDirectory()&&existsSync(join(turkishTractors,entry.name,"index.html"))).length : 0;
  insist(trCount===tractors,"TR/EN model-page counts differ ("+trCount+"/"+tractors+").");
- return {models:tractors,translatedModels:trCount,terms:96,parts:57,origin};
+ // Check ALL built HTML: also noindex forum pages, header/footer images, and
+ // dormant lightboxes outside <main>. A missing alt blocks release, but a
+ // deliberate alt="" is valid and must not be replaced with SEO filler.
+ const imageAlt=auditBuiltImageAlts(dist);
+ insist(imageAlt.missingAlt.length===0,
+   "Missing image alt attributes on "+imageAlt.missingAlt.length+" built images: "+
+   JSON.stringify(imageAlt.missingAlt.slice(0,8)));
+ return {models:tractors,translatedModels:trCount,terms:96,parts:57,origin,
+   imageAltPages:imageAlt.htmlPages,imageAltImages:imageAlt.images,
+   decorativeOrPendingImageAlts:imageAlt.emptyAlt};
 }
 
 export function preflight(env=process.env){

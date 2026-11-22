@@ -1,4 +1,5 @@
 import {inspectVisibleMainImages} from "./seo-main-markup.mjs";
+import {inspectDocumentImageAlts} from "./verify-sitewide-image-alts.mjs";
 import {parseProductionSitemapInventory,selectProductionSeoPages} from "./production-sitemap-inventory.mjs";
 // Read-only production SEO coverage audit. No credentials or writes.
 const BASE = "https://tractorvs.com";
@@ -140,8 +141,12 @@ for(let i=0;i<urls.length;i+=8){
    // pure helper; an absent alt differs from a valid decorative alt="".
    const imageCheck=inspectVisibleMainImages(body);
    if(!imageCheck.foundMain)error("missing-main",p,"Main content landmark missing");
-   for(const i of imageCheck.missingAlt)
-     error("image-alt",p,"Main image "+i+" lacks alt attribute");
+   // Check document-wide image alt on every crawled live page, including
+   // header/footer, forum members and lightbox markup outside <main>.
+   // alt="" is valid for decorative imagery; only absent alt is an error.
+   const documentImages=inspectDocumentImageAlts(body);
+   for(const i of documentImages.missingAlt)
+     error("image-alt",p,"Image #"+i.index+" ("+i.src+") lacks alt attribute");
    // JSON-LD errors are SEO issues on any page type, not only models.
    for(const [i,raw] of meta.json.entries())try{
      JSON.parse(raw);
