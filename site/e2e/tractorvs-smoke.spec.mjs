@@ -311,3 +311,29 @@ test("Başak 2075 BK 4WD 100 mm OEM length dispute is visible with both sources 
   expect(rows.some(row=>row.key==="wheelbase"),"unrelated measurements remain "+lang).toBe(true);
  }
 });
+
+test("comparison flags genuine configuration-specific lift, height and wheelbase differences",async({page,request})=>{
+ const iseki="3e6886c4-8dc5-4d80-bafd-dc15b88454cc";
+ const newHolland="a31d36a5-694a-4157-90e4-71a13231ab06";
+ const tymF36="6f214ac1-0415-4433-98c9-5307aed48d9c";
+ const tymT475="8f3833e6-7eea-4a5c-a7eb-caa01b065cd5";
+ const sample=await request.get("/comparison-data/tr/"+iseki+".json");
+ test.skip(sample.status()===404,"Offline build contains no published tractor fixtures; live source-linked test is required after deploy.");
+ expect(sample.status()).toBe(200);
+ for(const [left,right,label,firstContext,secondContext] of [
+  [iseki,newHolland,"Arka kaldırma kapasitesi","T97 Cabin","610 mm behind ball ends"],
+  [tymF36,tymT475,"Toplam yükseklik","Front-ROPS","To top of cabin"],
+  [tymF36,tymT475,"Dingil mesafesi","1670","HST transmission"]
+ ]){
+  const response=await page.goto("/tr/compare/?left="+left+"&right="+right,{waitUntil:"domcontentloaded"});
+  expect(response?.status()).toBe(200);
+  const row=page.locator("#tc-rows tr").filter({has:page.locator("th").filter({hasText:label})});
+  await expect(row).toHaveCount(1);
+  await expect(row.locator("th .tc-condition-caution")).toContainText("kaynak notlarını");
+  await expect(row.locator("td").first()).toContainText(firstContext);
+  await expect(row.locator("td").nth(1)).toContainText(secondContext);
+  await expect(row.locator("td a[href^='https://']")).not.toHaveCount(0);
+ }
+ await page.goto("/compare/?left="+iseki+"&right="+newHolland,{waitUntil:"domcontentloaded"});
+ await expect(page.locator("#tc-rows tr").filter({has:page.locator("th").filter({hasText:"Rear lift capacity"})}).locator(".tc-condition-caution")).toContainText("source notes");
+});
