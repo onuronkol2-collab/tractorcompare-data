@@ -245,7 +245,7 @@ export const TECHNICAL_DEEP_DIVES = [
     "group": "engine",
     "heroPhoto": {
       "brand": "McCormick",
-      "model": "X5.120"
+      "model": "X5.120 P3-Drive"
     },
     "title": {
       "tr": "Traktörde Beygir Gücü ve Tork: HP, PS, kW ve PTO Farkları",

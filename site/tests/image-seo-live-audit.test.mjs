@@ -57,3 +57,15 @@ test("JPEG PNG and WEBP magic bytes must match trusted media MIME",()=>{
  assert.equal(publicImageMimeOk("image/jpeg",png),false);
  assert.equal(publicImageMimeOk("image/png",new Uint8Array(20)),false);
 });
+
+test("editorial references must match the approved photograph for that exact guide",async()=>{
+ const {editorialImagePages}=await import("../src/lib/editorial-photos.ts");
+ assert.equal(editorialImagePages.size,8);
+ for(const [path,photos] of editorialImagePages){
+  const page="https://tractorvs.com"+path;
+  const inventory={htmlPages:new Set([page]),forumPages:new Set()};
+  const urls=photos.map(photo=>new URL(photo.fullUrl,page).href);
+  assert.equal(classifyPublicImageSitemap(imageXml([[page,urls]]),inventory).imageReferences,photos.length);
+  assert.throws(()=>classifyPublicImageSitemap(imageXml([[page,["https://tractorvs.com/images/tractors/wrong-1920.jpg"]]]),inventory),/outside/);
+ }
+});

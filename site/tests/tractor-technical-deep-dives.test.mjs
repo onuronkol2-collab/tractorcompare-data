@@ -45,7 +45,7 @@ test("three original deep-dive chapters include substantive bilingual educationa
 });
 
 test("deep-dive articles use existing approved licensed images and honest SEO schema",()=>{
- assert.match(component,/APPROVED_TRACTOR_PHOTOS/);
+ assert.match(component,/editorial-photos\.ts/);
  assert.match(component,/photo\.licenseUrl|hero\.licenseUrl/);
  assert.match(component,/data-tractor-photo/);
  assert.match(component,/availableLocales=\{\["en","tr"\]\}/);

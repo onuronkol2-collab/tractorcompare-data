@@ -1,7 +1,7 @@
 ---
 import SiteLayout from "../layouts/SiteLayout.astro";
 import {localizedPath} from "../lib/locales.ts";
-import {APPROVED_TRACTOR_PHOTOS} from "../lib/tractor-photos.ts";
+import {glossaryHero as hero,glossaryShowcase as showcase} from "../lib/editorial-photos.ts";
 import {GLOSSARY_TERMS,GLOSSARY_SECTIONS,type GlossaryLanguage} from "../lib/tractor-glossary.ts";
 import {TRACTOR_PARTS,GLOSSARY_TO_PART} from "../lib/tractor-parts.ts";
 import TractorParts from "./TractorParts.astro";
@@ -20,11 +20,6 @@ const title=tr?"Traktör Parçaları Ne İşe Yarar? Teknik Terimler | TractorVS
 const description=tr?
  `Traktörde ${TRACTOR_PARTS.length} parçanın ne işe yaradığını ve ${GLOSSARY_TERMS.length} teknik terimi sade örneklerle öğrenin. Motor, PTO, şanzıman, hidrolik ve güvenlik rehberi.`:
  `Discover ${TRACTOR_PARTS.length} tractor parts and ${GLOSSARY_TERMS.length} technical terms in plain language: engine, PTO, gearbox, hydraulics and everyday examples.`;
-const hero=APPROVED_TRACTOR_PHOTOS.find(p=>p.brand==="New Holland"&&p.model==="T5.110");
-const showcase=[
- APPROVED_TRACTOR_PHOTOS.find(p=>p.brand==="Case IH"&&p.model==="Puma 150"),
- APPROVED_TRACTOR_PHOTOS.find(p=>p.brand==="McCormick"&&p.model==="X5.120"),
-].filter((x):x is NonNullable<typeof x>=>Boolean(x));
 const site=Astro.site||new URL("https://tractorvs.com");
 const pageUrl=new URL(pagePath,site).toString();
 const publicImage=hero?new URL(hero.displayUrl,site).toString():undefined;

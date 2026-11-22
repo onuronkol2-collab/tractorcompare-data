@@ -4,6 +4,8 @@ import {LOCALES,localizedPath} from "../lib/locales";
 import {tractorPhotos} from "../lib/tractor-photos";
 import {allPublicForumTopics,allPublicForumReplies,allPublicForumMedia,forumMediaImageUrl,isIndexableForumTopic} from "../lib/forum";
 
+import {editorialImagePages} from "../lib/editorial-photos.ts";
+
 export const prerender=true;
 const escapeXml=(value:string)=>value.replace(/&/g,"&amp;").replace(/</g,"&lt;")
   .replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&apos;");
@@ -22,6 +24,11 @@ export const GET:APIRoute=async({site})=>{
         const page=new URL(localizedPath(locale,"/tractors/"+tractor.slug+"/"),site!).toString();
         entries.push("<url><loc>"+escapeXml(page)+"</loc>"+photoXml+"</url>");
       }
+    }
+    for(const [path,photos] of editorialImagePages){
+      const images=photos.map(photo=>"<image:image><image:loc>"+
+        escapeXml(new URL(photo.fullUrl,site!).href)+"</image:loc></image:image>").join("");
+      entries.push("<url><loc>"+escapeXml(new URL(path,site!).href)+"</loc>"+images+"</url>");
     }
     // Include ONLY approved private-bucket-gateway photos attached to fully
     // moderated, genuinely indexable forum pages. Drafts, rejected images,
