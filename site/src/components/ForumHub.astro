@@ -9,6 +9,7 @@ import {allPublicForumTopics,forumDate,isIndexableForumTopic,publicForumClientCo
 import {approvedForumHubLocales} from "../lib/forum-hub-locales.mjs";
 import {FORUM_LIVE_TEXT} from "../lib/forum-live-i18n.ts";
 import {forumCardExcerpt} from "../lib/forum-format.mjs";
+import {forumSearchText} from "../lib/forum-search.mjs";
 import {getPublicCatalog} from "../lib/catalog.ts";
 import {localizedPath,LOCALES,LOCALE_TAGS,type Locale} from "../lib/locales.ts";
 interface Props {lang:Locale}
@@ -107,7 +108,7 @@ const schema=indexable?{
       {topics.map(topic=>{
        const model=topic.tractor_id?tractors.get(topic.tractor_id):undefined;
        return <article class="community-topic" data-forum-topic data-forum-topic-id={topic.topic_id}
-         data-forum-search={[topic.title,topic.body,model?.brand_name,model?.model_name].filter(Boolean).join(" ").toLocaleLowerCase()}
+         data-forum-search={forumSearchText([topic.title,topic.body,model?.brand_name,model?.model_name].filter(Boolean).join(" "),lang)}
          data-forum-topic-category={topic.category}>
          <div class="community-topic-meta">
           <span>{ft(lang,topic.category)}</span>
@@ -367,6 +368,7 @@ const schema=indexable?{
 </style>
 <script>
  import {initForumLive} from "../lib/forum-live-client.ts";
+ import {forumSearchText} from "../lib/forum-search.mjs";
  const liveRoot=document.querySelector<HTMLElement>("[data-forum-live-root]");
  if(liveRoot)initForumLive(liveRoot);
  const input=document.querySelector<HTMLInputElement>("#forum-filter");
@@ -376,7 +378,7 @@ const schema=indexable?{
  const filters=document.querySelector<HTMLElement>("[data-forum-filters]");
  let selected="all";
  const filter=()=>{
-  const q=(input?.value||"").trim().toLocaleLowerCase();
+  const q=forumSearchText((input?.value||"").trim(),document.documentElement.lang.toLowerCase()==="pt-br"?"pt-br":document.documentElement.lang.slice(0,2));
   const items=cards();
   const hasTopics=items.length>0;
   if(filters)filters.hidden=!hasTopics;
