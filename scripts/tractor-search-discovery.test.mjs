@@ -3,7 +3,7 @@ import assert from "node:assert/strict";
 import {mkdtempSync,rmSync,readFileSync} from "node:fs";
 import {tmpdir} from "node:os";
 import {join} from "node:path";
-import {parseIndex,parsePageSitemap,changedUrls,validatePage,submitIndexNow,run,ORIGIN,KEY,KEY_URL,INDEXNOW_URL,INDEXNOW_FALLBACK_URLS} from "./tractor-search-discovery.mjs";
+import {parseIndex,parsePageSitemap,changedUrls,validatePage,submitIndexNow,run,ORIGIN,KEY,KEY_URL,INDEXNOW_URL,INDEXNOW_FALLBACK_URLS,MAX_CHANGED_PER_RUN} from "./tractor-search-discovery.mjs";
 
 const home=ORIGIN+"/";
 const model=ORIGIN+"/tractors/sample-test/";
@@ -186,5 +186,59 @@ test("all transient IndexNow endpoints failing preserves pending notification ch
   await assert.rejects(()=>run({fetchFn:failover,statePath}),/All IndexNow endpoints unavailable/);
   assert.equal(apiCalls.length,4);
   assert.equal(Object.hasOwn(JSON.parse(readFileSync(statePath,"utf8")).urls,added),false);
+ }finally{rmSync(dir,{recursive:true,force:true});}
+});
+
+
+test("bounded 120-per-hour batch drains a large genuine change queue without duplicates",async()=>{
+ const dir=mkdtempSync(join(tmpdir(),"tractorvs-seo-backlog-"));
+ const statePath=join(dir,"state.json");
+ try{
+  assert.equal(MAX_CHANGED_PER_RUN,120);
+  await run({fetchFn:mock().fetchFn,statePath});
+  const newUrls=Array.from({length:127},(_,i)=>ORIGIN+"/tr/tractors/new-"+i+"/");
+  const livePages=[home,model,...newUrls];
+  const first=mock({pages:livePages});
+  const a=await run({fetchFn:first.fetchFn,statePath});
+  assert.equal(a.indexnow,"accepted");
+  assert.equal(a.max_urls_per_run,120);
+  assert.equal(a.checked,120);
+  assert.equal(a.remaining,7);
+  assert.equal(a.indexnow_sent,120);
+  assert.equal(a.indexnow_http,200);
+  const firstRequests=first.requests.filter(x=>x.url===INDEXNOW_URL);
+  assert.equal(firstRequests.length,1);
+  const sentA=JSON.parse(firstRequests[0].options.body).urlList;
+  assert.equal(sentA.length,120);
+  assert.equal(new Set(sentA).size,120);
+  const second=mock({pages:livePages});
+  const b=await run({fetchFn:second.fetchFn,statePath});
+  assert.equal(b.checked,7);
+  assert.equal(b.remaining,0);
+  assert.equal(b.indexnow_sent,7);
+  const sentB=JSON.parse(second.requests.find(x=>x.url===INDEXNOW_URL).options.body).urlList;
+  assert.equal(sentB.length,7);
+  assert.equal(new Set([...sentA,...sentB]).size,127);
+  const complete=mock({pages:livePages});
+  const done=await run({fetchFn:complete.fetchFn,statePath});
+  assert.equal(done.new_or_modified,0);
+  assert.equal(done.checked,0);
+  assert.equal(done.indexnow_sent,0);
+  assert.equal(complete.requests.some(x=>x.url===INDEXNOW_URL),false);
+ }finally{rmSync(dir,{recursive:true,force:true});}
+});
+
+test("failed rate-limited large-batch IndexNow request cannot advance 120 verified URLs",async()=>{
+ const dir=mkdtempSync(join(tmpdir(),"tractorvs-seo-rate-"));
+ const statePath=join(dir,"state.json");
+ try{
+  await run({fetchFn:mock().fetchFn,statePath});
+  const pages=[home,model,...Array.from({length:125},(_,i)=>ORIGIN+"/tr/tractors/pending-"+i+"/")];
+  const m=mock({pages,status:429});
+  await assert.rejects(()=>run({fetchFn:m.fetchFn,statePath}),/429/);
+  const saved=JSON.parse(readFileSync(statePath,"utf8")).urls;
+  assert.equal(Object.keys(saved).length,2);
+  assert.equal(m.requests.filter(x=>x.url===INDEXNOW_URL).length,1);
+  assert.equal(m.requests.filter(x=>INDEXNOW_FALLBACK_URLS.includes(x.url)).length,0);
  }finally{rmSync(dir,{recursive:true,force:true});}
 });

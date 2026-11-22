@@ -22,7 +22,9 @@ export const INDEXNOW_FALLBACK_URLS=Object.freeze([
 const STATE=resolve(fileURLToPath(new URL("../.seo-discovery/state.json",import.meta.url)));
 const REPORT=resolve(fileURLToPath(new URL("../.seo-discovery/report.json",import.meta.url)));
 const MAX_URLS=20000;
-const MAX_CHANGED_PER_RUN=60;
+// Verify a modest, bounded number of public pages each hour. Never bulk-ping
+// unchanged historic pages or skip canonical/robots checks to drain a backlog.
+export const MAX_CHANGED_PER_RUN=120;
 
 function fail(message){throw Error("[TractorVS SEO discovery] "+message);}
 function xmlField(body,tag){
@@ -188,9 +190,11 @@ export async function run({fetchFn=fetch,statePath=STATE,reportPath=null,dryRun=
   const pending=baseline?[]:changedUrls(state.urls,current);
   const count=baseline?0:changedUrls(state.urls,current,MAX_URLS).length;
   const result={as_of:now.toISOString(),live_urls:current.size,previous_urls:Object.keys(state.urls).length,
+    max_urls_per_run:MAX_CHANGED_PER_RUN,
     historical_urls_baselined:baseline?current.size:0,
     new_or_modified:count,checked:pending.length,remaining:Math.max(0,count-pending.length),
     mode:baseline?"baseline_only":dryRun?"dry_run":"notify",indexnow:"not_sent",indexnow_endpoint:null,
+    indexnow_http:null,indexnow_sent:0,
     google_discovery:"public_sitemap_and_robots; Google_does_not_use_IndexNow",indexed_urls:"unavailable",
     index_status_reason:"Submission or sitemap inclusion is not proof of indexing"};
   if(pending.length){
@@ -199,6 +203,8 @@ export async function run({fetchFn=fetch,statePath=STATE,reportPath=null,dryRun=
       const sent=await submitIndexNow(pending,{fetchFn});
       result.indexnow=sent.status;
       result.indexnow_endpoint=sent.endpoint;
+      result.indexnow_http=sent.http;
+      result.indexnow_sent=sent.sent;
     }
   }
   if(!dryRun){
@@ -235,5 +241,19 @@ if(process.argv[1]&&resolve(process.argv[1])===fileURLToPath(import.meta.url)){
       "| Google | Sitemap/robots discovery; not an IndexNow participant |\n"+
       "| Indexed in search engines | Not measurable from sitemap/IndexNow; requires webmaster data |\n\n"+
       "Baseline created without bulk submission; new public URLs are validated and sent after deployment.\n");
-  }catch(e){console.error(e);process.exitCode=1;}
+  }catch(e){
+    // A failed live sitemap / canonical / API request is never a successful
+    // submission. Preserve a machine-readable failure record for CI artifacts
+    // without writing or advancing the notification checkpoint.
+    const error=String(e?.message||e).slice(0,600);
+    console.error("TRACTORVS_SEARCH_DISCOVERY_FAILED "+JSON.stringify({error}));
+    try{
+      mkdirSync(dirname(REPORT),{recursive:true});
+      writeFileSync(REPORT,JSON.stringify({
+        as_of:new Date().toISOString(),ok:false,mode:"failed",
+        indexnow:"not_accepted_or_not_attempted",checkpoint_advanced:false,error
+      },null,2)+"\n");
+    }catch(writeError){console.error("Failed to persist SEO failure evidence: "+String(writeError));}
+    process.exitCode=1;
+  }
 }
