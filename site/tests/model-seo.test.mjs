@@ -556,3 +556,19 @@ test("reviewed manufacturer families strip only bibliography from headings in te
     market:"Europe / UK 2025 manufacturer brochure",model_year:null},"en").title);
  assert.notEqual(variants[0],variants[1],"distinct Valtra T235 transmissions must not collapse");
 });
+
+
+test("Chinese SEO preview explains verified OEM sources without overclaiming or losing identity",()=>{
+  const item={...tractor,variant:null,market:null,model_year:null,horsepower:null};
+  const {title,searchDescription,description}=modelSeoMetadata(item,"zh");
+  assert.ok(title.includes("McCormick X5.120"));
+  assert.match(searchDescription,/已提供经核实的制造商来源链接。/);
+  assert.match(searchDescription,/核对具体车型与技术参数/);
+  assert.ok(searchDescription.length>=55 && searchDescription.length<=160,
+    "Chinese indexed preview stays accurate, readable and not truncated");
+  assert.ok(description.includes(searchDescription.slice(0,20)));
+  const unverified={...item,specifications:[]};
+  const noSources=modelSeoMetadata(unverified,"zh");
+  assert.doesNotMatch(noSources.searchDescription,/已提供经核实的制造商来源链接/);
+  assert.match(noSources.searchDescription,/暂无已发布/);
+});
