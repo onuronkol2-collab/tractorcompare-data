@@ -194,6 +194,60 @@ export function modelSeoMetadata(tractor: TractorRecord, lang: Locale) {
       && rawVariant === "India / Tiger DI 55 III original / 12F×3R"
       && rawMarket === "India"
       ? {variant:"12F×3R",markets:["India"]}
+    // Same source-note pattern applies to a verified, bounded manufacturer
+    // family. The names and original notes below were read from the published
+    // catalog, and different equipment variants remain separate.
+    : tractor.brand_name === "Valtra"
+      && /^(?:F\d+|G\d+e?|N\d+e?|Q\d+|S\d+|T\d+e?)$/.test(tractor.model_name)
+      && rawMarket === "Europe / UK 2025 manufacturer brochure"
+      ? {variant:rawVariant,markets:["Europe","UK"]}
+    : tractor.brand_name === "Valtra"
+      && /^A(?:75|85|95|105|115)$/.test(tractor.model_name)
+      && rawMarket === "International (2025 brochure)"
+      ? {variant:rawVariant,markets:["International"]}
+    : tractor.brand_name === "Valtra" && tractor.model_name === "S416"
+      && rawMarket === "Europe / Valtra 2025–26 manufacturer documents"
+      && rawVariant === "S Series"
+      ? {variant:"S Series",markets:["Europe"]}
+    : tractor.brand_name === "Steyr"
+      && /^6(?:360|390|440) CERVUS CVT$/.test(tractor.model_name)
+      && rawVariant === "CERVUS CVT"
+      && rawMarket === "International (STEYR 2025 brochure)"
+      ? {variant:null,markets:["International"]}
+    : tractor.brand_name === "Steyr"
+      && /^6(?:170|180|200) IMPULS$/.test(tractor.model_name)
+      && rawVariant === "IMPULS"
+      && rawMarket === "International (2026 manufacturer brochure)"
+      ? {variant:null,markets:["International"]}
+    : tractor.brand_name === "SAME"
+      && /^DORADO NATURAL /.test(tractor.model_name)
+      && rawVariant === "Stage IIIA / 2019 brochure"
+      && rawMarket === "Europe"
+      ? {variant:"Stage IIIA",markets:["Europe"]}
+    : tractor.brand_name === "Landini"
+      && /^2-0(?:45|50|60)$/.test(tractor.model_name)
+      && rawVariant === "Serie 2 / Tier 3 / 2017 brochure"
+      && rawMarket === "Italy"
+      ? {variant:"Serie 2 · Tier 3",markets:["Italy"]}
+    : tractor.brand_name === "Zetor"
+      && /^61(?:30|40|50|70)$/.test(tractor.model_name)
+      && rawVariant === "6 Series / Stage V · manufacturer table"
+      && rawMarket === "International (Stage V specification)"
+      ? {variant:"6 Series · Stage V",markets:["International"]}
+    : tractor.brand_name === "Yanmar" && tractor.model_name === "YT359"
+      && rawVariant === "YT3 i-HMT"
+      && rawMarket === "Turkey (manufacturer YT3 model table)"
+      ? {variant:"YT3 i-HMT",markets:["Turkey"]}
+    : tractor.brand_name === "Mahindra"
+      && tractor.model_name === "JIVO 225 DI 4WD"
+      && rawVariant === "India 4WD / 8F x 4R / manufacturer configuration"
+      && rawMarket === "India"
+      ? {variant:"4WD / 8F x 4R",markets:["India"]}
+    : tractor.brand_name === "Mahindra"
+      && tractor.model_name === "YUVRAJ 215 NXT"
+      && rawVariant === "India 2WD / 6F x 3R / manufacturer configuration"
+      && rawMarket === "India"
+      ? {variant:"2WD / 6F x 3R",markets:["India"]}
     : null;
   const variantLabel = isSwarajTarget ? null
     : isLamborghiniStageV || isSpireFSourceNote ? "Stage V"
