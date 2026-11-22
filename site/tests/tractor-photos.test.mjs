@@ -282,8 +282,8 @@ test("Google ImageObject licensing is model-specific across all approved Commons
       assert.equal(image.license,photo.licenseUrl,"Real image license "+key+" "+locale);
       assert.equal(image.creator.name,photo.photographer);
       assert.equal(image.contentUrl,"https://tractorvs.com"+photo.fullUrl);
-      assert.equal(image.copyrightNotice,undefined,
-        "No unverified ownership notices, including for CC0 photos");
+      assert.equal(image.copyrightNotice,photo.copyrightOwner||undefined,
+        "Only source-verified copyright owners can appear; never claim copyright on CC0");
       assert.ok(!page["@graph"].some(x=>x["@type"]==="Product"||x["@type"]==="Vehicle"));
     }
   }
