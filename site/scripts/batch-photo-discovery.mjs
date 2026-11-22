@@ -1,6 +1,7 @@
 import {matchesPhotoFileModel} from "./photo-model-identity.mjs";
 import {allowedPhotoReuseLicense} from "./photo-license-check.mjs";
 import {fetchIndexedSitemapPages} from "./photo-sitemap-fetch.mjs";
+import {requireCommonsQueryResponse} from "./photo-source-response.mjs";
 /**
  * One-pass, read-only catalogue image discovery.
  * Pulls public LIVE model inventory from the current published sitemap;
@@ -108,7 +109,7 @@ async function commonsCandidates(record){
     url.searchParams.set("prop","imageinfo");
     url.searchParams.set("iiprop","url|size|mime|extmetadata");
     url.searchParams.set("iiurlwidth","960");
-    const body=await getJson(url.toString());
+    const body=requireCommonsQueryResponse(await getJson(url.toString()));
     for(const page of Array.isArray(body.query?.pages)?body.query.pages:[]){
       if(page.title)found.set(page.title,page);
     }
