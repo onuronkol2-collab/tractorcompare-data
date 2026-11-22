@@ -12,6 +12,7 @@ import { MARKET_COUNTRIES, matchingPrice, formatMarketPriceRange } from "../lib/
 import { pricedCatalogModels } from "../lib/catalog-price-payload.ts";
 import { localizedCountryName } from "../lib/country-display";
 import {catalogBrandIndex,BRAND_NAV_COPY,CATALOG_SEARCH_TITLES,CATALOG_FILTER_COPY} from "../lib/catalog-brand-index.mjs";
+import {listedBrandCollections} from "../lib/brand-discovery-pilot.mjs";
 interface Props { lang: Locale; }
 const { lang } = Astro.props;
 
@@ -24,6 +25,7 @@ const brandNavCopy=BRAND_NAV_COPY[lang];
 const filterCopy=CATALOG_FILTER_COPY[lang];
 const firstBrandCard=new Map(brandIndex.map(b=>[b.name,b.firstTractorId]));
 const brandAnchor=new Map(brandIndex.map(b=>[b.name,b.anchorId]));
+const brandGuides=new Map(listedBrandCollections(catalog.tractors).map(item=>[item.name,item.slug]));
 const initialCountry = COUNTRIES_BY_LOCALE[lang] || "US";
 // Unpriced models cannot change their value for any supported country. Keep
 // their server-rendered "price unavailable" text, and only hydrate models with
@@ -74,6 +76,10 @@ const pricePayload = JSON.stringify({
           <a href={"#"+brand.anchorId} data-catalog-brand-jump>
             <span>{brand.name}</span><small>{brand.count} {brandNavCopy.models}</small>
           </a>
+          {(lang==="en"||lang==="tr")&&brandGuides.get(brand.name)&&
+            <a class="catalog-brand-guide" href={localizedPath(lang,"/brands/"+brandGuides.get(brand.name)+"/")}>
+              {lang==="tr"?"Kaynaklı marka rehberi":"Source-backed brand guide"}
+            </a>}
         </li>)}</ul>
         </details>
       </nav>}
@@ -255,6 +261,8 @@ const pricePayload = JSON.stringify({
   .catalog-brand-directory p{margin:0 0 15px;color:#4d6b56;font-size:13px;line-height:1.65;max-width:850px}
   .catalog-brand-directory ul{display:flex;flex-wrap:wrap;gap:8px;padding:0;margin:0;list-style:none}
   .catalog-brand-directory li{list-style:none}
+  .catalog-brand-directory li:has(.catalog-brand-guide){display:flex;align-items:center;flex-wrap:wrap;gap:6px}
+  .catalog-brand-directory a.catalog-brand-guide{border-color:#81a88a;background:#e0efe2;color:#1a5531}
   .catalog-brand-directory a{display:inline-flex;align-items:center;flex-wrap:wrap;gap:8px;min-height:42px;
     padding:7px 11px;border-radius:12px;background:white;border:1px solid #bbd1bb;color:#245a3a;
     font-weight:750;font-size:13px;text-decoration:none}
