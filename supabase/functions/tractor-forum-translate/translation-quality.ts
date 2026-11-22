@@ -45,7 +45,9 @@ export function sameNumericFacts(source:string, translated:string, locale:string
  * allowed; metric horsepower is NOT silently equated to mechanical hp.
  */
 export function samePhysicalUnitFacts(source:string, translated:string):boolean {
- const unitPattern=/(?<![\p{L}\p{N}])(\d+(?:[.,]\d+)*)\s*(hp|kg|kw|ps|ch|cv|马力|公斤|एचपी|किलोग्राम|キログラム|кг)(?![\p{L}\p{M}])/giu;
+ // CJK text attaches digits and sentence particles without whitespace.
+ // Reject adjacent ASCII word fragments without rejecting 75hpの or 为75hp.
+ const unitPattern=/(?<![0-9A-Za-z])(\d+(?:[.,]\d+)*)\s*(hp|kg|kw|ps|ch|cv|马力|公斤|एचपी|किलोग्राम|キログラム|кг)(?![A-Za-z])/giu;
  const normalizeUnit=(unit:string):string=>{
   const u=unit.toLowerCase();
   if(["公斤","किलोग्राम","キログラム","кг"].includes(u))return "kg";
