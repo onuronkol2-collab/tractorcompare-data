@@ -38,3 +38,14 @@ test("Steyr source uses a documented photographer alias from Wikimedia, not a gu
  const content=wiki.replaceAll("MarcelX42","JoachimKohler-HB");
  assert.equal(reviewCommonsCopyrightWikitext(content,steyr).verified,true);
 });
+
+test("Unicode source author, hyphenated corporate account and literal author-field boundaries",()=>{
+ for(const name of ["Bene Riobó","AGCO-Fendt","MB-one","JoachimKohler-HB"]){
+  const p={...base,photographer:name,copyrightOwner:name};
+  const w=wiki.replaceAll("MarcelX42",name);
+  assert.equal(reviewCommonsCopyrightWikitext(w,p).verified,true,name);
+  assert.equal(reviewCommonsCopyrightWikitext(
+   w.replace("|author=[[User:"+name+"|"+name+"]]","|author=[[User:Other|Other]]")+"\n<!-- "+name+" -->",p).verified,false,
+   "Mention outside the author field cannot prove ownership "+name);
+ }
+});
