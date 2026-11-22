@@ -30,7 +30,9 @@ export function inspectCommonsCandidate(wikitext,photo){
  const authorMatch=expected.length>2&&normAuthor(author).includes(expected);
  const licenseCode=String(photo.licenseName||"").toLowerCase().replaceAll(" ","-");
  const selfDeclarations=body.match(/\{\{\s*self\s*\|[^\r\n}]{0,350}/gi)||[];
- const selfLicense=licenseCode!=="cc0"&&selfDeclarations.some(x=>x.toLowerCase().includes(licenseCode));
+ const originalUploaderSelf=photo.fileId==="belarus-132n-picture30-2011" &&
+   /\{\{\s*self\s*\|\s*author\s*=\s*\{\{\s*user at project\s*\|\s*Picture30\s*\|\s*wikipedia\s*\|\s*ru\s*\}\}\s*\|\s*GFDL\s*\|\s*CC-BY-SA-3\.0\b/i.test(body);
+ const selfLicense=(licenseCode!=="cc0"&&selfDeclarations.some(x=>x.toLowerCase().includes(licenseCode)))||originalUploaderSelf;
  const cc0=photo.licenseName==="CC0";
  return {fileId:photo.fileId,brand:photo.brand,model:photo.model,
    photographer:photo.photographer,license:photo.licenseName,
