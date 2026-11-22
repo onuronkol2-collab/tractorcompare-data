@@ -21,3 +21,12 @@ Depo ana dalındaki `AGENTS.md` ilkeleri ve mevcut denetimler okundu. Bu PR, gen
 4. Bağımsız dil editörleriyle anlam doğrulaması; test, PR incelemesi, canlı sitemap/canonical/hreflang kontrolü.
 
 **Değişmeyen sınır:** Teknik ölçüm değerleri, markalar, model/yıl/varyantlar, Supabase RLS/yayın durumları ve forum çeviri onay mekanizması korunmuştur.
+
+## İkinci güvenlik ve fiyat doğruluğu düzeltme grubu
+- Traktör seçim asistanında **5 anlamı yüksek etkili uyarı** 10 dilde karşılaştırıldı; eksik cümleler düzeltildi (41 tekil hücre).
+- `priceNote`: ülke/varyantlar arasında fiyat aktarmama ilkesi ve lastik, vergi, bayi koşulları dokuz dilde açıklandı.
+- `bigha`: değişken yerel alan birimini akre/hektara dönüştürürken **doğrulanmış yerel dönüşüm** seçeneği geri getirildi.
+- `unavailable`: güç verisi olmayan/uygun olmayan sonuçların yanıltıcı sunumu önlendi; kriter değiştirme veya kataloğu açma yönlendirmesi tamamlandı.
+- `plowCaution`: lastik tutunması, işleme derinliği, balast ve ekipman üretici teknik şartları birlikte belirtildi.
+- `loaderCaution`: ön yükleyici için güvenli kaldırma talimatı, aks yükü, hidrolik ve denge uyarıları korunarak tamamlandı.
+- Bu madde ve ilk katalog düzeltmesi **kaynak kodunda ve taslak PR'dadır**; ana dala birleştirme veya üretim dağıtımı değildir.
