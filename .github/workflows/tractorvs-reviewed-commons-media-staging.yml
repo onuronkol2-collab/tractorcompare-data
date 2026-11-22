@@ -13,7 +13,7 @@ concurrency:
   cancel-in-progress: false
 jobs:
   generate_unpublished_review_artifact:
-    if: github.event_name == 'workflow_dispatch' || startsWith(github.event.head_commit.message, 'ci(photo): one-time stage reviewed Steyr Zetor JPEGs')
+    if: "github.event_name == 'workflow_dispatch' || startsWith(github.event.head_commit.message, 'ci(photo): one-time stage reviewed Steyr Zetor JPEGs')"
     runs-on: ubuntu-latest
     timeout-minutes: 12
     steps:
