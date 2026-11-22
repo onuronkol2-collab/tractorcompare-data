@@ -64,13 +64,20 @@ test("side by side comparison cannot treat 1331 or 1642 cc as settled; other spe
  assert.ok(safe.some(s=>s.notice?.includes("1,642")));
  assert.equal(isUnresolvedComparisonSpec(tigre,tigre.specifications[0]),true);
 });
-test("fail open on no conflict and never conflate TIGRE 3800 without suffix F",()=>{
- const single=tractor("TIGRE 3800 F","Antonio Carraro",[spec("engine_displacement_cc",1331,IT,"cc")]);
+test("OEM warning survives public-view suppression, while other variants are unaffected",()=>{
+ const publicTigre=tractor("TIGRE 3800 F","Antonio Carraro",[
+   spec("engine_cylinders",3,IT),
+   spec("transmission_forward_gears",8,IT)
+ ],{variant:"Stage V"});
+ const onlyItalian=tractor("TIGRE 3800 F","Antonio Carraro",[spec("engine_displacement_cc",1331,IT,"cc")]);
  const other=tractor("TIGRE 3800","Antonio Carraro",tigre.specifications);
- assert.equal(modelSourceDiscrepancies(single,"en").length,0);
+ assert.equal(modelSourceDiscrepancies(publicTigre,"en").length,1);
+ assert.equal(modelSourceDiscrepancies(onlyItalian,"en").length,1);
  assert.equal(modelSourceDiscrepancies(other,"en").length,0);
- assert.equal(isUnresolvedComparisonSpec(single,single.specifications[0]),false);
- assert.ok(comparisonSpecs(single,"en").some(s=>s.value==="1331"));
+ assert.equal(isUnresolvedComparisonSpec(onlyItalian,onlyItalian.specifications[0]),true);
+ assert.ok(comparisonSpecs(publicTigre,"en").some(s=>s.notice?.includes("1,642")));
+ assert.equal(comparisonSpecs(onlyItalian,"en").some(s=>s.value==="1331"),false);
+ assert.ok(comparisonSpecs(other,"en").some(s=>s.value==="1331"));
 });
 test("MACH 2 R and Sonalika warning is scoped to actually published source evidence",()=>{
  const mach=tractor("MACH 2 R","Antonio Carraro",[
