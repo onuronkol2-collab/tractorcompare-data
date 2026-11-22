@@ -14,7 +14,7 @@ const tractor=(brand_name,model_name)=>({
   engine:null,transmission:null,drivetrain:null,weight_kg:null,specifications:[]
 });
 test("only exact matching tractor model identity receives a verified photo",()=>{
-  assert.equal(APPROVED_TRACTOR_PHOTOS.length,97);
+  assert.equal(APPROVED_TRACTOR_PHOTOS.length,101);
   assert.equal(tractorPhotos(tractor("Belarus","82.1")).length,4);
   assert.equal(tractorPhotos(tractor("Belarus","80.1")).length,1);
   assert.equal(tractorPhotos(tractor("Belarus","132N")).length,1);
@@ -628,8 +628,14 @@ test("source-backed copyright notices cover approved Google warning images in al
   "tym-t4058-6225c-marcelx42-2023",
   "tym-t5075-t78-marcelx42-2023"
  ]);
- const expected=new Set([...originalThree,...reviewedTwenty,...exactTym,"belarus-132n-picture30-2011"]);
- assert.equal(expected.size,27);
+ const newFourTym=new Set([
+   "tym-t2025p-t25-front-marcelx42-2025",
+   "tym-t2025p-t25-rear-marcelx42-2025",
+   "tym-t6115-t115-front-marcelx42-2025",
+   "tym-t6115-t115-rear-marcelx42-2025"
+ ]);
+ const expected=new Set([...originalThree,...reviewedTwenty,...exactTym,...newFourTym,"belarus-132n-picture30-2011"]);
+ assert.equal(expected.size,31);
  const actual=APPROVED_TRACTOR_PHOTOS.filter(p=>p.copyrightOwner);
  assert.deepEqual(new Set(actual.map(p=>p.fileId)),expected,
    "Unexpected ownership claims must undergo separate review before publication");
@@ -640,16 +646,20 @@ test("source-backed copyright notices cover approved Google warning images in al
   assert.equal(photo.licenseName,photo.fileId==="belarus-132n-picture30-2011"?"CC BY-SA 3.0":"CC BY-SA 4.0");
   const record=tractor(photo.brand,photo.model);
   if(photo.tractorId)record.tractor_id=photo.tractorId;
+  const all=tractorPhotos(record);
+  assert.ok(all.some(p=>p.fileId===photo.fileId),"Approved gallery photo was not associated with the exact variant: "+photo.fileId);
   const main=primaryTractorPhoto(record);
-  assert.equal(main.fileId,photo.fileId);
+  assert.ok(main,"The model needs a primary licensed image");
   for(const locale of LOCALES){
+   // Google primaryImageOfPage points at the primary view. Separate gallery
+   // images retain their own photo-specific source attribution in the UI.
    const schema=modelStructuredData(record,locale,"https://tractorvs.com/")["@graph"]
      .find(x=>x["@type"]==="ImageObject");
-   assert.equal(schema?.copyrightNotice,photo.copyrightOwner,photo.fileId+" "+locale);
-   assert.equal(schema?.creator?.name,photo.photographer);
-   assert.equal(schema?.acquireLicensePage,photo.sourcePage);
-   assert.equal(schema?.license,photo.licenseUrl);
-   assert.ok(schema?.contentUrl?.endsWith(photo.fileId+"-1920.jpg"));
+   assert.equal(schema?.copyrightNotice,main.copyrightOwner,photo.fileId+" "+locale);
+   assert.equal(schema?.creator?.name,main.photographer);
+   assert.equal(schema?.acquireLicensePage,main.sourcePage);
+   assert.equal(schema?.license,main.licenseUrl);
+   assert.ok(schema?.contentUrl?.endsWith(main.fileId+"-1920.jpg"));
   }
  }
  // Two unproved source types and one CC0 dedicaton remain deliberately unclaimed.
