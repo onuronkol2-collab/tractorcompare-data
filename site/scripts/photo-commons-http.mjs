@@ -49,7 +49,19 @@ export async function fetchCommonsJson(url,{
         continue;
       }
       if(!response.ok)throw Error("Commons HTTP "+response.status);
-      return requireCommonsQueryResponse(await response.json());
+      const body=await response.json();
+      // The Action API may also describe quota/replica-lag limits in an HTTP
+      // 200 JSON "error", not only via an HTTP 429/503 response.
+      const logicalCode=body?.error?.code;
+      if(logicalCode==="ratelimited"||logicalCode==="maxlag"){
+        const supplied=parseRetryAfterMs(response.headers?.get?.("retry-after"),now());
+        const cooldown=Math.max(5000,supplied??(5000*2**i));
+        if(cooldown>maxWaitMs||i===maxAttempts-1)
+          throw new CommonsCooldownError(logicalCode==="maxlag"?503:429,cooldown);
+        await sleep(cooldown);
+        continue;
+      }
+      return requireCommonsQueryResponse(body);
     }catch(e){
       if(e instanceof CommonsCooldownError)throw e;
       last=e;
