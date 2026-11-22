@@ -38,7 +38,9 @@ export async function proveLiveManufacturerSpecs({fetchFn=fetch}={}){
     const canonical=linkTag(html,"canonical");
     if(canonical.length!==1||attr(canonical[0],"href")!==url) errors.push(locale+"/"+model.slug+": wrong canonical");
     const rootLang=html.match(/<html\b[^>]*\blang=["']([^"']+)["']/i)?.[1];
-    if(rootLang!==(locale==="pt-br"?"pt-BR":locale))errors.push(locale+"/"+model.slug+": wrong lang");
+    // BCP-47 tags come from site/src/lib/locales.ts, not URL segment names.
+    const expectedLang=locale==="pt-br"?"pt-BR":locale==="zh"?"zh-Hans":locale;
+    if(rootLang!==expectedLang)errors.push(locale+"/"+model.slug+": wrong lang");
     if(!/<h1\b[^>]*>/i.test(html))errors.push(locale+"/"+model.slug+": H1 absent");
     if(/<meta\b[^>]*\bname=["']robots["'][^>]*\bcontent=["'][^"']*noindex/i.test(html))errors.push(locale+"/"+model.slug+": noindex");
     for(const value of model.values)if(!html.includes(value))errors.push(locale+"/"+model.slug+": missing value "+value);
