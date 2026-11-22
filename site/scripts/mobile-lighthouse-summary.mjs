@@ -21,6 +21,35 @@ const METRICS=["first-contentful-paint","largest-contentful-paint","total-blocki
 const CATEGORIES=["performance","accessibility","best-practices","seo"];
 const numeric=x=>typeof x==="number"&&Number.isFinite(x)?x:null;
 
+/** Public first-party images only. These are Lighthouse *estimated* potential
+ * byte savings, NOT measured real-user transfer, a rights audit, or proof that
+ * AVIF/WebP derivatives are already approved or deployed.
+ * Two Lighthouse audits may flag the same file; never add their estimates. */
+export function collectImageOptimizationCandidates(lhr){
+  const rows=new Map();
+  for(const auditId of ["modern-image-formats","uses-responsive-images"]){
+    const items=lhr?.audits?.[auditId]?.details?.items;
+    if(!Array.isArray(items))continue;
+    for(const item of items){
+      if(typeof item?.url!=="string")continue;
+      let url;
+      try{url=new URL(item.url);}catch{continue;}
+      if(url.origin!=="https://tractorvs.com"||!url.pathname.startsWith("/images/")||
+         !/\\.(?:jpe?g|png|webp|avif)$/i.test(url.pathname))continue;
+      const waste=numeric(item.wastedBytes);
+      if(waste===null||waste<=0)continue;
+      const key=url.origin+url.pathname;
+      const existing=rows.get(key)||{url:key,estimatedMaxWasteBytes:0,flags:[]};
+      existing.estimatedMaxWasteBytes=Math.max(existing.estimatedMaxWasteBytes,Math.round(waste));
+      if(!existing.flags.includes(auditId))existing.flags.push(auditId);
+      rows.set(key,existing);
+    }
+  }
+  return [...rows.values()].sort((a,b)=>b.estimatedMaxWasteBytes-a.estimatedMaxWasteBytes||
+    a.url.localeCompare(b.url)).slice(0,20);
+}
+
+
 export function analyzeLighthouse(a,route){
   if(!ROUTES.includes(route))throw Error("Unrecognized mobile report route: "+route);
   if(!a || typeof a!=="object" || !a.categories || !a.audits)throw Error("Lighthouse JSON is missing result categories/audits");
@@ -45,6 +74,7 @@ export function analyzeLighthouse(a,route){
     .map(v=>({id:v.id,title:v.title,score:v.score,
       description:v.description?.slice(0,180)||""}));
   return {route,url,scores,vitals,issues,accessibilityFindings,contrastFailures,seoFindings,
+    imageCandidates:collectImageOptimizationCandidates(a),
     mode:"synthetic_lab_mobile",real_user_inp_measured:false};
 }
 
@@ -91,6 +121,31 @@ export function markdownReport(reports,field={}) {
       lines.push("- **"+r.route+"**: "+fmt(r.scores.seo)+"/100 — "+(reasons||"missing audit details; investigate report JSON"));
     }
   }else lines.push("All "+reports.length+" sampled routes scored 100/100 in this run. This does not certify every sitemap URL or Google indexation.");
+  // An actionable, rights-neutral audit queue with no extra network/API calls.
+  // A single image in two audits cannot have its potential waste double-counted.
+  const imageMap=new Map();
+  for(const report of reports){
+    for(const item of report.imageCandidates||[]){
+      const prev=imageMap.get(item.url)||{
+        url:item.url,estimatedMaxWasteBytes:0,flags:[],routes:[]};
+      prev.estimatedMaxWasteBytes=Math.max(prev.estimatedMaxWasteBytes,item.estimatedMaxWasteBytes);
+      for(const flag of item.flags)if(!prev.flags.includes(flag))prev.flags.push(flag);
+      if(!prev.routes.includes(report.route))prev.routes.push(report.route);
+      imageMap.set(item.url,prev);
+    }
+  }
+  const imageQueue=[...imageMap.values()]
+    .sort((a,b)=>b.estimatedMaxWasteBytes-a.estimatedMaxWasteBytes||a.url.localeCompare(b.url)).slice(0,12);
+  lines.push("","### First-party image optimization candidates (laboratory estimates only)","");
+  if(imageQueue.length){
+    lines.push("A Lighthouse image may appear in multiple audits/routes. Values below are the **largest estimated wasted bytes per image**, never added together. They are not proven speed gains or permissions to modify licensed source files.","",
+      "| First-party image | Sample route(s) | Opportunity flags | Max estimated waste |",
+      "| --- | --- | --- | ---: |");
+    for(const item of imageQueue)lines.push("| \`"+new URL(item.url).pathname+"\` | "+
+      item.routes.join(", ")+" | "+item.flags.join(", ")+" | "+
+      Math.round(item.estimatedMaxWasteBytes/1024)+" KiB |");
+  }else lines.push("No itemized public first-party image opportunities in these Lighthouse results; this does not prove all photographs are optimally sized.");
+  lines.push("","Changing image formats or sizes still requires exact model identity, original file/license evidence, first-party URL, accessibility and image-SEO validation.");
   lines.push("","### Real-user CrUX field data (last 28 days, only if Google reports enough visits)","",
     "| URL | Data level | LCP p75 | CLS p75 | INP p75 |","| --- | --- | ---: | ---: | ---: |");
   for(const [key,url] of Object.entries(FIELD_URLS)){
