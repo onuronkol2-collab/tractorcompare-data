@@ -38,6 +38,10 @@ export const OEM_20261122_SPEC_LABELS: Record<string, Partial<Record<Locale,stri
   }
 };
 export function oem20261122SpecLabel(name:string,locale:Locale):string|null {
-  if(locale==="en")return null;
-  return OEM_20261122_SPEC_LABELS[name.trim()]?.[locale]||null;
+  const exact=name.trim();
+  const qualified=OEM_20261122_SPEC_LABELS[exact];
+  if(!qualified)return null;
+  // Preserve the exact manufacturer qualifier in English too: generic
+  // canonical-key mappings otherwise reduce it to e.g. "PTO power".
+  return locale==="en"?exact:(qualified[locale]||null);
 }
