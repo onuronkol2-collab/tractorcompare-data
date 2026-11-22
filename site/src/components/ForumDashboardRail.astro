@@ -7,17 +7,17 @@ interface Props{lang:Locale;topics:ForumTopic[]}
 const {lang,topics}=Astro.props;
 const copy=FORUM_DASHBOARD_TEXT[lang];
 const icon:Record<string,string>={all:"▦",questions:"?",maintenance:"⚙",reviews:"▤",news:"▣",comparison:"⇄",general:"◉"};
-const categories=["all",...FORUM_CATEGORY_KEYS];
+const categories=[{key:"all",label:ft(lang,"all")},...FORUM_CATEGORY_KEYS.map(key=>({key,label:ft(lang,key)}))];
 ---
 <aside class="forum-dashboard-rail" aria-label={copy.categories}>
  <div class="forum-rail-heading"><h2>{copy.categories}</h2><span aria-hidden="true">▤</span></div>
  <nav class="forum-category-list" aria-label={copy.categories}>
  {categories.map(cat=>{
-  const count=cat==="all"?topics.length:topics.filter(t=>t.category===cat).length;
-  return <button type="button" class:list={["forum-category-link",cat==="all"&&"is-active"]}
-    data-forum-category={cat} aria-pressed={cat==="all"?"true":"false"}>
-    <span class="forum-category-icon" aria-hidden="true">{icon[cat]}</span>
-    <span class="forum-category-title">{cat==="all"?ft(lang,"all"):ft(lang,cat as keyof typeof icon)}</span>
+  const count=cat.key==="all"?topics.length:topics.filter(t=>t.category===cat.key).length;
+  return <button type="button" class:list={["forum-category-link",cat.key==="all"&&"is-active"]}
+    data-forum-category={cat.key} aria-pressed={cat.key==="all"?"true":"false"}>
+    <span class="forum-category-icon" aria-hidden="true">{icon[cat.key]}</span>
+    <span class="forum-category-title">{cat.label}</span>
     <span class="forum-category-number">{count.toLocaleString(lang==="pt-br"?"pt-BR":lang)}</span>
    </button>;
  })}
