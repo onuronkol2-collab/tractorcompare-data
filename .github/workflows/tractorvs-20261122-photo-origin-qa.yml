@@ -5,15 +5,11 @@ on:
       - "site/src/lib/historical-licensed-photos.ts"
       - "site/tests/tractor-photos.test.mjs"
       - "site/scripts/verify-licensed-photos-20261122.mjs"
-      - "site/scripts/export-licensed-commons480-20261122.py"
       - ".github/workflows/tractorvs-20261122-photo-origin-qa.yml"
-  workflow_dispatch:
 permissions:
   contents: read
-
 jobs:
   exact_licensed_origins:
-    if: github.event_name == 'pull_request'
     runs-on: ubuntu-latest
     timeout-minutes: 8
     steps:
@@ -21,71 +17,24 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: "22.23.4"
-      # Do NOT retry Wikimedia on every unrelated PR update when no approved
-      # local JPEGs exist. Missing files are a hard failure, not a skip.
-      - name: Fail closed if any of the nine reviewed JPEG assets is not checked in
+      - name: Check source validator syntax without network
+        run: node --check site/scripts/verify-licensed-photos-20261122.mjs
+      # New media must already be imported and committed separately after
+      # manual review of the default-branch staging workflow's SHA artifact.
+      # Do not consume Wikimedia quota on PR commits missing approved files.
+      - name: Fail closed if any of nine first-party JPEGs is not checked in
         run: |
           set -euo pipefail
           for id in steyr-6240-absolut-blonder1984-2022 zetor-proxima-jj7777-2021 zetor-proxima-raf24-warsaw-2019; do
             for size in 480 960 1920; do
               path="site/public/images/tractors/${id}-${size}.jpg"
               if [ ! -s "$path" ]; then
-                echo "::error::Missing checked-in reviewed JPEG $path; source must be verified before publication"
+                echo "::error::Missing reviewed JPEG $path; source and SHA proof required before publication"
                 exit 1
               fi
             done
           done
-      - name: Verify exact-model licenses, first-party JPEG integrity, and ten-language metadata
+      - name: Verify model, license, JPEG integrity and ten-language metadata
         run: node --experimental-strip-types --test site/tests/tractor-photos.test.mjs
-      - name: Verify six exact Wikimedia origin renditions before release
+      - name: Verify six exact Commons origin renditions before release
         run: node --experimental-strip-types site/scripts/verify-licensed-photos-20261122.mjs
-
-  stage_new_media_for_review:
-    if: github.event_name == 'workflow_dispatch'
-    runs-on: ubuntu-latest
-    timeout-minutes: 8
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
-        with:
-          python-version: "3.12"
-      - name: Install pinned JPEG decoder
-        run: python -m pip install --quiet 'Pillow==11.3.0'
-      # This is a single 1920px origin download per approved File page.
-      # It NEVER commits an image or publishes to a live page. 429 fails closed.
-      - name: Stage nine first-party JPEG derivatives and SHA-256 evidence
-        run: python site/scripts/export-licensed-commons480-20261122.py --output-dir ./photo-derivatives-review
-      - name: Verify all staged JPEGs against their SHA ledger
-        run: |
-          python - <<'PY'
-          import hashlib
-          import json
-          from pathlib import Path
-          from PIL import Image
-          root = Path("photo-derivatives-review")
-          ledger = json.loads((root / "sha256-ledger.json").read_text())
-          assert ledger["reviewRequired"] is True
-          assert ledger["publicationCount"] == 0
-          assert len(ledger["images"]) == 3
-          for entry in ledger["images"]:
-              assert len(entry["derivatives"]) == 3
-              assert {x["width"] for x in entry["derivatives"]} == {480, 960, 1920}
-              for derivative in entry["derivatives"]:
-                  path = root / derivative["file"]
-                  assert path.parent == root
-                  raw = path.read_bytes()
-                  assert hashlib.sha256(raw).hexdigest() == derivative["sha256"]
-                  assert len(raw) == derivative["bytes"]
-                  with Image.open(path) as image:
-                      image.load()
-                      assert image.format == "JPEG"
-                      assert (image.width, image.height) == (derivative["width"], derivative["height"])
-          print("TRACTORVS_REVIEW_ONLY_SHA_LEDGER_VERIFIED")
-          PY
-      - name: Preserve licensed sources and derivatives as an unapproved review artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: tractorvs-steyr-zetor-licensed-jpegs-review-only
-          path: photo-derivatives-review/
-          if-no-files-found: error
-          retention-days: 30
