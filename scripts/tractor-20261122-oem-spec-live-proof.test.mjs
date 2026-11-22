@@ -10,7 +10,7 @@ function mock({hideOne=false,badCanonical=false,noindex=false}={}){
   const all=model?.values||[];
   const safeValues=(hideOne&&lang==="en"&&identity===models[0].slug)?all.slice(1):all;
   const label=lang==="en"?"Manufacturer-quoted PTO power":oem20261122SpecLabel("Manufacturer-quoted PTO power",lang);
-  const html='<html lang="'+(lang==="pt-br"?"pt-BR":lang)+'"><head><link rel="canonical" href="'+(badCanonical&&lang==="fr"?"https://tractorvs.com/fake/":url)+'">'+
+  const html='<html lang="'+(lang==="pt-br"?"pt-BR":lang==="zh"?"zh-Hans":lang)+'"><head><link rel="canonical" href="'+(badCanonical&&lang==="fr"?"https://tractorvs.com/fake/":url)+'">'+
    (noindex?'<meta name="robots" content="noindex">':'<meta name="robots" content="index,follow">')+'</head><body><main><h1>OEM Model</h1>'+
    safeValues.join(" ")+" "+(label||"")+"</main></body></html>";
   return {status:200,headers:{get:key=>key==="content-type"?"text/html; charset=utf-8":null},text:async()=>html};
