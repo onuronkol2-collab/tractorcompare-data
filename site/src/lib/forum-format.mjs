@@ -135,9 +135,10 @@ export function forumSeoDescription(body,max=160) {
  // Never synthesize an unsupported claim or combine incomplete fragments.
  const first=sentences[0]||"";
  const second=sentences[1]||"";
- if(first.endsWith("?")&&second.length>=45&&second.length<=max)
+ const completeThreshold=Math.min(45,Math.floor(max*0.4));
+ if(/[?？]$/u.test(first)&&second.length>=completeThreshold&&second.length<=max)
   return second;
- if(first.length>=45&&first.length<=max)return first;
+ if(first.length>=completeThreshold&&first.length<=max)return first;
  // For unusually long unpunctuated posts, signal intentional shortening
  // with an ellipsis rather than ending at an arbitrary brand/measurement.
  const prefix=Array.from(clean).slice(0,Math.max(1,max-1)).join("");
