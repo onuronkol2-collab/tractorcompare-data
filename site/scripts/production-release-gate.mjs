@@ -179,6 +179,9 @@ export function verifyProductionArtifacts({dir=projectRoot,origin=expectedOrigin
  insist(titleAudit.errors.length===0,
    "Missing/multiple title or wrong model identity on "+titleAudit.errors.length+
    " generated pages: "+JSON.stringify(titleAudit.errors.slice(0,8)));
+ insist(titleAudit.duplicates.length===0,
+   "Different published model/variant URLs share an identical localized title: "+
+   JSON.stringify(titleAudit.duplicates.slice(0,8)));
  console.log("TRACTORVS_PRODUCTION_TITLE_AUDIT "+JSON.stringify({
    htmlDocuments:titleAudit.htmlDocuments,modelPages:titleAudit.modelPages,
    over60:titleAudit.over60,over105:titleAudit.over105,over160:titleAudit.over160,
