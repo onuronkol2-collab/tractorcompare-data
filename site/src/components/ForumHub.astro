@@ -2,10 +2,13 @@
 import SiteLayout from "../layouts/SiteLayout.astro";
 import ForumComposer from "./ForumComposer.astro";
 import ForumMemberPanel from "./ForumMemberPanel.astro";
+import ForumDashboardRail from "./ForumDashboardRail.astro";
+import ForumDashboardPanels from "./ForumDashboardPanels.astro";
+import {FORUM_DASHBOARD_TEXT} from "../lib/forum-dashboard-i18n.ts";
 import {forumText as ft,FORUM_CATEGORY_KEYS} from "../lib/forum-i18n.ts";
 import {memberText as mt} from "../lib/member-i18n.ts";
 import {FORUM_STARTER_GUIDES} from "../lib/forum-starter-guides.ts";
-import {allPublicForumTopics,forumDate,isIndexableForumTopic,publicForumClientConfig} from "../lib/forum.ts";
+import {allPublicForumTopics,allPublicForumReplies,forumDate,isIndexableForumTopic,publicForumClientConfig} from "../lib/forum.ts";
 import {approvedForumHubLocales} from "../lib/forum-hub-locales.mjs";
 import {FORUM_LIVE_TEXT} from "../lib/forum-live-i18n.ts";
 import {forumCardExcerpt} from "../lib/forum-format.mjs";
@@ -22,6 +25,16 @@ const liveConfig=publicForumClientConfig()??(
 const liveBrowserData=JSON.stringify(liveConfig?{...liveConfig,lang}:null);
 const publicTopics=await allPublicForumTopics();
 const topics=publicTopics.filter(topic=>topic.locale===lang);
+const dashboard=FORUM_DASHBOARD_TEXT[lang];
+// Count approved original replies once. Translations must not inflate engagement.
+const replies=await allPublicForumReplies();
+const ownedTopicIds=new Set(topics.map(t=>t.topic_id));
+const replyCounts=new Map<string,number>();
+for(const r of replies){
+ if(r.machine_translated||r.locale!==r.original_locale||!ownedTopicIds.has(r.topic_id))continue;
+ replyCounts.set(r.topic_id,(replyCounts.get(r.topic_id)||0)+1);
+}
+const visibleReplyCount=[...replyCounts.values()].reduce((a,b)=>a+b,0);
 // Link only to other forum hubs with at least one independently approved
 // indexed topic. Empty forums are deliberately noindex and must not appear
 // as reciprocal hreflang alternates.
@@ -48,7 +61,7 @@ const schema=indexable?{
 ---
 <SiteLayout lang={lang} title={ft(lang,"heading")+" | TractorVS"}
  description={ft(lang,"intro")} indexable={indexable} indexableLocales={indexableLocales} structuredData={schema}>
- <div class="community-shell">
+ <div class="community-shell" data-forum-dashboard-copy={JSON.stringify(dashboard)}>
   <header class="community-hero">
    <div class="container community-hero-inner">
     <div class="community-hero-copy">
@@ -61,7 +74,8 @@ const schema=indexable?{
       <a class="compose-link community-link-alt" data-forum-leaderboard-link href="#forum-members">{mt(lang,"leaderboard")}</a>
     </div>
     </div>
-    <aside class="community-hero-panel" aria-label={ft(lang,"category")}>
+    <div class="community-hero-panel">
+      <img class="community-hero-tractor" src="/images/forum-tractor-scene.svg" width="1000" height="350" alt={dashboard.heroAlt} decoding="async"/>
       <div class="community-panel-head">
         <span class="community-panel-mark" aria-hidden="true">T/V</span>
         <span>{ft(lang,"name")}</span>
@@ -74,12 +88,22 @@ const schema=indexable?{
         <span>{ft(lang,"reviews")}</span>
       </div>
       <p class="community-panel-note">{ft(lang,"guidelines")}</p>
-    </aside>
+    </div>
    </div>
   </header>
   <div class="container community-main">
    <div class="community-content-grid">
+   <ForumDashboardRail lang={lang} topics={topics}/>
    <section class="community-list" aria-label={ft(lang,"all")}>
+    <nav class="forum-view-tabs" id="forum-dashboard-tabs" aria-label={dashboard.topics}>
+     {(["latest","popular","unanswered","following","events"] as const).map((key,index)=>
+      <button type="button" data-forum-view={key} aria-pressed={index===0?"true":"false"}
+        class:list={["forum-view-button",index===0&&"is-active"]}>
+       <span class="forum-view-icon" aria-hidden="true">{({latest:"◷",popular:"♨",unanswered:"◉",following:"◇",events:"▤"} as const)[key]}</span>
+       <span>{dashboard[key]}</span>
+      </button>)}
+    </nav>
+    <p class="forum-view-description" data-forum-view-hint>{dashboard.latestHint}</p>
     <div class="community-section-header">
       <div>
         <span class="community-section-eyebrow">{ft(lang,"name")}</span>
@@ -108,13 +132,15 @@ const schema=indexable?{
        <button class="community-filter-clear" type="button" data-forum-clear hidden>{ft(lang,"clearFilters")}</button>
       </div>
      </div>
-    {topics.length>0?<div class="community-topic-grid" id="forum-topic-list">
+    {topics.length>0?<div class="community-topic-grid" id="forum-topic-list" role="list">
       {topics.map(topic=>{
        const model=topic.tractor_id?tractors.get(topic.tractor_id):undefined;
-       return <article class="community-topic" data-forum-topic data-forum-topic-id={topic.topic_id}
+       return <article class="community-topic" role="listitem" data-forum-topic data-forum-topic-id={topic.topic_id}
+         data-forum-reply-count={replyCounts.get(topic.topic_id)||0} data-forum-published-at={topic.created_at}
          data-forum-search={forumSearchText([topic.title,topic.body,model?.brand_name,model?.model_name].filter(Boolean).join(" "),lang)}
          data-forum-topic-category={topic.category}>
-         <div class="community-topic-meta">
+         <span class="community-topic-avatar" aria-hidden="true">{topic.title.trim().slice(0,1).toLocaleUpperCase(lang==="pt-br"?"pt-BR":lang)}</span>
+         <div class="community-topic-content"><div class="community-topic-meta">
           <span>{ft(lang,topic.category)}</span>
           <time datetime={topic.created_at}>{forumDate(topic.created_at,lang)}</time>
          </div>
@@ -124,6 +150,12 @@ const schema=indexable?{
           <a href={localizedPath(lang,"/tractors/"+model.slug+"/")}>{model.brand_name} {model.model_name}</a>
          </p>}
          {topic.machine_translated&&<small>{ft(lang,"translated")}</small>}
+         </div>
+         <span class="community-topic-replies" aria-label={dashboard.replies+": "+String(replyCounts.get(topic.topic_id)||0)}>
+          <span class="community-topic-mobile-label">{dashboard.replies}</span>{replyCounts.get(topic.topic_id)||0}
+         </span>
+         <span class="community-topic-activity"><span class="community-topic-mobile-label">{dashboard.activity}</span>
+          <time datetime={topic.created_at}>{forumDate(topic.created_at,lang)}</time></span>
         </article>;
       })}
      </div>:<>
@@ -139,9 +171,29 @@ const schema=indexable?{
         </div>
       </section>
     </>}
+    <section class="forum-special-view" data-forum-special="browse" hidden aria-labelledby="forum-browse-title">
+      <span class="forum-special-icon" aria-hidden="true">◉</span>
+      <h3 id="forum-browse-title" data-forum-browse-title>{dashboard.popular}</h3>
+      <p data-forum-browse-body>{dashboard.popularNote}</p>
+      <a href="#forum-compose">{dashboard.joinLink}</a>
+    </section>
+    <section class="forum-special-view" data-forum-special="following" hidden aria-labelledby="forum-following-title">
+      <span class="forum-special-icon" aria-hidden="true">◇</span>
+      <h3 id="forum-following-title">{dashboard.followingHeading}</h3>
+      <p data-forum-following-status role="status" aria-live="polite">{dashboard.followingBody}</p>
+      <a href="#forum-compose">{dashboard.followingCta}</a>
+    </section>
+    <section class="forum-special-view" data-forum-special="events" hidden aria-labelledby="forum-events-title">
+      <span class="forum-special-icon" aria-hidden="true">▤</span>
+      <h3 id="forum-events-title">{dashboard.eventsHeading}</h3>
+      <p>{dashboard.eventsBody}</p>
+      <p class="forum-event-ideas">{dashboard.eventIdeas}</p>
+      <a href="#forum-compose">{dashboard.eventsCta}</a>
+    </section>
     <p id="forum-no-results" hidden role="status">{ft(lang,"noResults")}</p>
    </section>
    <aside class="community-sidebar" aria-label={ft(lang,"compose")}>
+     <ForumDashboardPanels lang={lang} topics={topics} replyCount={visibleReplyCount}/>
      <ForumComposer lang={lang} mode="topic"/>
    </aside>
    </div>
@@ -376,55 +428,359 @@ const schema=indexable?{
  .community-topic,.community-hero .compose-link{transition:none}
  .community-topic:hover,.community-hero .compose-link:hover{transform:none}
 }
+
+/* TractorVS forum dashboard — approved visual direction.
+   Topic text, links, login, moderation, public opt-in and indexability stay intact. */
+.community-shell{--forum-ink:#142e20;--forum-muted:#4c6352;--forum-line:#dfe8df;
+ background:#f5f7f5;color:var(--forum-ink)}
+.community-main.container{width:min(1440px,calc(100% - 38px));padding-top:24px;padding-bottom:65px}
+.community-hero{padding:24px 0;background:linear-gradient(100deg,#f5f8f2 0%,#eaf1e7 54%,#d9e8d3 100%);
+ border-bottom:1px solid #dce8d8;color:#173323}
+.community-hero::before{opacity:.18;mask-image:none;pointer-events:none}
+.community-hero-inner.container{width:min(1440px,calc(100% - 38px));display:grid;
+ grid-template-columns:minmax(0,1.05fr) minmax(260px,.95fr);gap:clamp(14px,3vw,42px)}
+.community-hero-copy{padding:clamp(16px,2vw,28px) 0}
+.community-hero .community-kicker{color:#347849;letter-spacing:.12em;margin:0 0 10px}
+.community-hero h1{font-size:clamp(30px,3.25vw,49px);font-weight:900;
+ letter-spacing:-.052em;color:#123222;margin:0 0 14px;line-height:1.16}
+.community-hero-copy>p:not(.community-kicker){color:#3f5748;font-size:clamp(14px,1.2vw,16px);
+ max-width:640px;margin:0 0 20px;line-height:1.68}
+.community-hero .compose-link{min-height:44px;padding:10px 17px;
+ border:1px solid #18583a;border-radius:10px;background:#215f3b;color:#fff;box-shadow:none}
+.community-hero .compose-link:hover{background:#174a2f}
+.community-hero .community-link-alt{background:#fff;color:#275d3a;border-color:#bad3b8}
+.community-hero .community-link-alt:hover{background:#e5f2de;color:#184b30}
+.community-hero-panel{padding:0;border:0;box-shadow:none;background:none;backdrop-filter:none;
+ border-radius:14px;overflow:hidden;align-self:stretch;min-width:0}
+.community-hero-tractor{display:block;width:100%;height:100%;min-height:180px;
+ max-height:248px;object-fit:cover;border-radius:15px;border:1px solid #cadfca}
+.community-hero-panel .community-panel-head,.community-hero-panel .community-panel-label,
+.community-hero-panel .community-panel-categories,.community-hero-panel .community-panel-note{display:none}
+.community-content-grid{grid-template-columns:minmax(175px,215px) minmax(0,1fr) minmax(245px,285px);
+ gap:15px;align-items:start}
+.community-list,.community-sidebar{min-width:0}
+.community-sidebar{display:grid;gap:16px}
+.community-sidebar :global(.community-composer){margin:0;box-shadow:0 8px 26px rgba(12,42,24,.04)}
+/* Emoji picker is anchored to the right-edge sidebar, never beyond viewport. */
+.community-sidebar :global(.forum-emoji-grid){inset-inline-start:auto;inset-inline-end:0;max-width:min(330px,calc(100vw - 52px))}
+.forum-view-tabs{display:flex;align-items:stretch;gap:5px;padding:7px;
+ background:#fff;border:1px solid #dee9dc;border-radius:14px;
+ box-shadow:0 5px 18px rgba(19,48,29,.025);min-width:0}
+.forum-view-button{display:flex;align-items:center;justify-content:center;gap:7px;
+ flex:1 1 auto;min-width:0;min-height:50px;padding:10px 8px;border:0;
+ border-radius:9px;background:transparent;color:#365743;
+ font:inherit;font-size:12px;line-height:1.35;font-weight:800;cursor:pointer;
+ overflow-wrap:anywhere}
+.forum-view-button:hover{background:#edf5e9}
+.forum-view-button.is-active,.forum-view-button[aria-pressed=true]{background:#185536;color:#fff}
+.forum-view-button.is-active:hover{background:#12452b}
+.forum-view-icon{font-size:17px;line-height:1;flex:none}
+.forum-view-description{min-height:24px;font-size:12px;color:#5b7061;
+ margin:12px 3px 14px;line-height:1.65}
+.community-section-header{margin:0 0 12px;align-items:center}
+.community-section-eyebrow{display:none}
+.community-list .community-section-header h2{font-size:15px;color:#244735;letter-spacing:-.02em}
+.community-section-rule{height:1px;flex:1;width:auto;background:#e0e8df}
+.community-filters{margin:0 0 12px;padding:11px 12px;border-radius:12px}
+.community-filters input{min-height:44px;font-size:14px}
+.community-filters label{gap:5px}
+.community-tabs{display:flex;gap:5px;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:thin}
+.community-filter-actions{margin-top:4px}
+.community-topic-grid{gap:0;display:grid;grid-template-columns:minmax(0,1fr);background:#fff;
+ border:1px solid #dce5dc;border-radius:15px;overflow:hidden;
+ box-shadow:0 5px 21px rgba(14,40,21,.028)}
+.community-topic{display:grid;grid-template-columns:42px minmax(0,1fr) 53px minmax(80px,95px);
+ gap:13px;align-items:center;background:#fff;border:0;border-bottom:1px solid #e7eee6;
+ border-radius:0;padding:17px 16px;box-shadow:none;transition:background .14s ease;
+ overflow-wrap:anywhere;min-width:0}
+.community-topic:last-child{border-bottom:0}
+.community-topic:hover{background:#f4f9f0;border-color:#dfe8dc;box-shadow:none;transform:none}
+.community-topic-avatar{display:grid;place-items:center;width:41px;height:41px;
+ flex:none;border-radius:50%;background:#e2f0db;color:#236038;font-weight:900;
+ font-size:16px;border:1px solid #d9e9d2}
+.community-topic-content{min-width:0}
+.community-topic-meta{display:flex;justify-content:flex-start;gap:5px 10px;
+ flex-wrap:wrap;font-size:11px;line-height:1.45;color:#627667}
+.community-topic-meta span:first-child{padding:0;background:none;color:#417550;font-weight:800}
+.community-topic-meta time{color:#6c7d70}
+.community-topic h3{font-size:clamp(14px,1.25vw,16px);line-height:1.35;margin:6px 0 7px;
+ color:#182d20;letter-spacing:-.016em;font-weight:850}
+.community-topic h3 a{gap:7px;display:inline;color:inherit}
+.community-topic-arrow{font-size:13px}
+.community-topic-content>p{font-size:11.5px;line-height:1.65;color:#687b6e;
+ margin:0;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden}
+.community-topic .community-model{margin:7px 0 0;padding:0;border:0}
+.community-model a{font-size:11px}
+.community-topic-replies,.community-topic-activity{text-align:center;font-size:12px;
+ color:#264734;font-weight:850;font-variant-numeric:tabular-nums}
+.community-topic-activity{font-size:11px;font-weight:600;color:#52675a;
+ line-height:1.6}
+.community-topic-activity time{display:block}
+.community-topic-mobile-label{display:block;font-size:10px;font-weight:600;
+ color:#708074;margin-bottom:3px}
+.community-empty{background:#fff;border-color:#d6e2d3}
+.community-starter{margin-top:18px}
+.community-starter-grid{grid-template-columns:repeat(auto-fit,minmax(min(100%,205px),1fr))}
+.community-live-new{margin:0 0 12px}
+.community-shell :global(.forum-live-topic){border-radius:10px;margin:0 0 8px}
+.forum-special-view{padding:clamp(20px,3vw,32px);background:#fff;
+ border:1px solid #dce8dc;border-radius:15px;box-shadow:0 4px 15px rgba(20,47,25,.03)}
+.forum-special-icon{display:grid;place-items:center;background:#e8f3e0;color:#236b3d;
+ border-radius:12px;width:47px;height:47px;font-size:24px;margin-bottom:14px}
+.forum-special-view h3{font-size:20px;line-height:1.4;font-weight:850;
+ color:#153e2a;margin:0 0 11px}
+.forum-special-view p{font-size:13px;line-height:1.85;color:#4f6a56}
+.forum-special-view a{display:inline-flex;align-items:center;min-height:44px;
+ border-radius:9px;padding:11px 15px;background:#1d5937;
+ color:white;text-decoration:none;font-size:12px;font-weight:800}
+.forum-special-view a:hover{background:#12462b}
+.forum-event-ideas{padding:10px 13px;border-inline-start:3px solid #87c26e;
+ background:#f4f8f1;border-radius:5px}
+.forum-view-button:focus-visible,.forum-special-view a:focus-visible{
+ outline:3px solid #80b87a;outline-offset:3px}
+@media(max-width:1180px){
+ .community-content-grid{grid-template-columns:minmax(0,1fr) minmax(240px,300px)}
+}
+@media(max-width:960px){
+ .community-content-grid{grid-template-columns:minmax(0,1fr)}
+ .community-sidebar{grid-column:1;max-width:none;width:100%}
+ .community-hero-inner.container{grid-template-columns:minmax(0,1fr) minmax(235px,.8fr)}
+ .community-tabs{display:flex}
+ .community-filters{padding:13px}
+}
+@media(max-width:720px){
+ .community-hero-inner.container{grid-template-columns:minmax(0,1fr)}
+ .community-hero-panel{display:none}
+ .community-hero{padding:23px 0}
+ .community-hero-copy{padding:6px 0}
+ .community-hero-links{gap:7px}
+ .community-hero .compose-link{flex:1 1 auto;padding:10px}
+ .forum-view-tabs{overflow-x:auto;scroll-snap-type:x proximity;overscroll-behavior-inline:contain}
+ .forum-view-button{min-width:max-content;flex:none;padding:10px 12px;scroll-snap-align:start}
+ .community-topic{grid-template-columns:37px minmax(0,1fr);gap:6px 11px;padding:15px 13px}
+ .community-topic-avatar{width:37px;height:37px;font-size:15px}
+ .community-topic-replies,.community-topic-activity{grid-row:2;grid-column:2;display:inline-flex;
+  align-items:center;gap:5px;text-align:start;font-size:11px}
+ .community-topic-activity{justify-self:end;grid-row:2}
+ .community-topic-mobile-label{display:inline;margin:0}
+ .community-topic h3{font-size:15px}
+ .community-topic-content>p{font-size:12px}
+ .community-filters input{font-size:16px}
+ .community-topic-grid{border-radius:12px}
+}
+@media(max-width:430px){
+ .community-topic-replies{justify-self:start}
+ .community-topic-activity{justify-self:end}
+ .community-topic{gap:8px}
+ .community-topic-activity time{max-width:80px;overflow-wrap:anywhere}
+}
+@media(prefers-reduced-motion:reduce){
+ .community-topic,.forum-view-button{transition:none}
+}
+
 </style>
 <script>
  import {initForumLive} from "../lib/forum-live-client.ts";
  import {forumSearchText} from "../lib/forum-search.mjs";
+ import {readForumSession} from "../lib/forum-session-store.mjs";
+ const shell=document.querySelector<HTMLElement>("[data-forum-dashboard-copy]");
+ const copy=JSON.parse(shell?.dataset.forumDashboardCopy||"{}") as Record<string,string>;
  const liveRoot=document.querySelector<HTMLElement>("[data-forum-live-root]");
  if(liveRoot)initForumLive(liveRoot);
  const input=document.querySelector<HTMLInputElement>("#forum-filter");
  const cards=()=>[...document.querySelectorAll<HTMLElement>("[data-forum-topic]")];
  const categoryButtons=[...document.querySelectorAll<HTMLButtonElement>("[data-forum-category]")];
+ const railButtons=[...document.querySelectorAll<HTMLButtonElement>("[data-forum-rail-category]")];
+ const tagButtons=[...document.querySelectorAll<HTMLButtonElement>("[data-forum-tag-category]")];
+ const allCategoryButtons=[...categoryButtons,...railButtons,...tagButtons];
+ const viewButtons=[...document.querySelectorAll<HTMLButtonElement>("[data-forum-view]")];
  const noResults=document.querySelector<HTMLElement>("#forum-no-results");
  const filters=document.querySelector<HTMLElement>("[data-forum-filters]");
  const countLabel=document.querySelector<HTMLElement>("[data-forum-match-count]");
  const clear=document.querySelector<HTMLButtonElement>("[data-forum-clear]");
+ const viewHint=document.querySelector<HTMLElement>("[data-forum-view-hint]");
+ const followingPanel=document.querySelector<HTMLElement>('[data-forum-special="following"]');
+ const browsePanel=document.querySelector<HTMLElement>('[data-forum-special="browse"]');
+ const browseTitle=document.querySelector<HTMLElement>("[data-forum-browse-title]");
+ const browseBody=document.querySelector<HTMLElement>("[data-forum-browse-body]");
+ const eventsPanel=document.querySelector<HTMLElement>('[data-forum-special="events"]');
+ const followStatus=document.querySelector<HTMLElement>("[data-forum-following-status]");
+ const topicList=document.querySelector<HTMLElement>("#forum-topic-list");
+ const empty=document.querySelector<HTMLElement>(".community-empty");
+ const starter=document.querySelector<HTMLElement>(".community-starter");
+ const heading=document.querySelector<HTMLElement>(".community-section-header");
+ const isView=(v:string)=>["latest","popular","unanswered","following","events"].includes(v);
  let selected="all";
- const filter=()=>{
-  const q=forumSearchText((input?.value||"").trim(),document.documentElement.lang.toLowerCase()==="pt-br"?"pt-br":document.documentElement.lang.slice(0,2));
-  const items=cards();
-  const hasTopics=items.length>0;
-  if(filters)filters.hidden=!hasTopics;
-  let count=0;
-  for(const card of items){
-   const visible=(selected==="all"||card.dataset.forumTopicCategory===selected)&&
-    (!q||(card.dataset.forumSearch||"").includes(q));
-   card.hidden=!visible;
-   if(visible)count++;
-  }
-  if(noResults)noResults.hidden=!hasTopics||count>0;
-  const active=Boolean(q)||selected!=="all";
-  if(countLabel){
-   countLabel.hidden=!hasTopics||!active;
-   if(hasTopics&&active)countLabel.textContent=String(count)+" "+(filters?.dataset.matchingLabel||"");
-  }
-  if(clear)clear.hidden=!hasTopics||!active;
+ let view=isView(new URLSearchParams(location.search).get("view")||"")?
+   (new URLSearchParams(location.search).get("view")||"latest"):"latest";
+ let followed=new Set<string>(),followState:"guest"|"loading"|"ready"|"error"="guest";
+ let followRequest=0;
+ const lang=document.documentElement.lang.toLowerCase()==="pt-br"?"pt-br":document.documentElement.lang.slice(0,2);
+ const replyCount=(el:HTMLElement)=>Math.max(0,Number(el.dataset.forumReplyCount||0)||0);
+ const publishedAt=(el:HTMLElement)=>Date.parse(el.dataset.forumPublishedAt||"")||0;
+ const markCategories=()=>{
+   for(const button of allCategoryButtons){
+    const active=(button.dataset.forumCategory||
+     button.dataset.forumRailCategory||button.dataset.forumTagCategory)==selected;
+    button.classList.toggle("is-active",active);
+    button.setAttribute("aria-pressed",String(active));
+   }
  };
+ const sortPublicRows=()=>{
+  // Rankings are derived ONLY from real published reply counts. No synthetic
+  // views, activity, author identity, likes, or rating data are generated.
+  for(const grid of document.querySelectorAll<HTMLElement>(".community-topic-grid")){
+   const rows=[...grid.querySelectorAll<HTMLElement>(":scope > [data-forum-topic]")];
+   rows.sort((a,b)=>view==="popular"
+    ?replyCount(b)-replyCount(a)||publishedAt(b)-publishedAt(a)
+    :publishedAt(b)-publishedAt(a));
+   for(const row of rows)grid.append(row);
+  }
+ };
+ const updatePublicCounts=()=>{
+  // Include newly approved live-only topics exactly once; dedupe rows between
+  // the published static build and the public live feed.
+  const seen=new Set<string>(),byCategory=new Map<string,number>();
+  let total=0;
+  for(const [index,card] of cards().entries()){
+   const id=card.dataset.forumTopicId||"page-topic-"+index;
+   if(seen.has(id))continue;
+   seen.add(id);total++;
+   const category=card.dataset.forumTopicCategory||"";
+   byCategory.set(category,(byCategory.get(category)||0)+1);
+  }
+  const format=(n:number)=>n.toLocaleString(lang==="pt-br"?"pt-BR":lang);
+  const totalEl=document.querySelector<HTMLElement>("[data-forum-published-topic-total]");
+  if(totalEl)totalEl.textContent=format(total);
+  for(const el of document.querySelectorAll<HTMLElement>("[data-forum-category-count]")){
+   const key=el.dataset.forumCategoryCount||"";
+   el.textContent=format(key==="all"?total:(byCategory.get(key)||0));
+  }
+  for(const el of document.querySelectorAll<HTMLElement>("[data-forum-tag-count]")){
+   el.textContent="("+format(byCategory.get(el.dataset.forumTagCount||"")||0)+")";
+  }
+ };
+ const filter=()=>{
+   const q=forumSearchText((input?.value||"").trim(),lang);
+   const items=cards(),hasTopics=items.length>0;
+   updatePublicCounts();
+   const canList=view!=="events"&&(view!=="following"||followState==="ready");
+   const visibleList=canList&&hasTopics;
+   if(filters)filters.hidden=!visibleList;
+   if(followingPanel)followingPanel.hidden=view!=="following";
+   if(eventsPanel)eventsPanel.hidden=view!=="events";
+   if(heading)heading.hidden=view==="events";
+   if(topicList)topicList.hidden=!canList;
+   if(empty)empty.hidden=view!=="latest"||hasTopics;
+   if(starter)starter.hidden=view!=="latest"||hasTopics;
+   if(liveRoot){
+    // The live-topic client owns its initial loading state; this view gate
+    // only hides it for non-topic and anonymous-following modes.
+    const hasLiveCards=Boolean(liveRoot.querySelector("[data-forum-topic]"));
+    if(!canList)liveRoot.hidden=true;
+    else if(hasLiveCards)liveRoot.hidden=false;
+   }
+   let count=0;
+   for(const card of items){
+    const inCategory=selected==="all"||card.dataset.forumTopicCategory===selected;
+    const inSearch=!q||(card.dataset.forumSearch||"").includes(q);
+    const inView=view==="unanswered"?card.hasAttribute("data-forum-reply-count")&&replyCount(card)===0:
+      view==="following"?followed.has(card.dataset.forumTopicId||""):
+      view==="events"?false:true;
+    const visible=visibleList&&inCategory&&inSearch&&inView;
+    card.hidden=!visible;
+    if(visible)count++;
+   }
+   const allFiltered=Boolean(q)||selected!=="all";
+   if(noResults){
+    noResults.hidden=!canList||!hasTopics||count>0;
+    if(!noResults.hidden)noResults.textContent=view==="unanswered"&&!allFiltered?
+      (copy.noUnanswered||noResults.textContent):
+      (copy.noMatch||noResults.textContent);
+   }
+   if(countLabel){
+    countLabel.hidden=!visibleList||!allFiltered;
+    if(!countLabel.hidden)countLabel.textContent=String(count)+" "+(filters?.dataset.matchingLabel||"");
+   }
+   if(clear)clear.hidden=!visibleList||!allFiltered;
+   if(viewHint)viewHint.textContent=view==="popular"?copy.popularNote:(copy[view+"Hint"]||"");
+   for(const button of viewButtons){
+    const active=button.dataset.forumView===view;
+    button.classList.toggle("is-active",active);
+    button.setAttribute("aria-pressed",String(active));
+   }
+   markCategories();
+   const browseEmpty=(view==="popular"||view==="unanswered")&&count===0;
+   if(browsePanel)browsePanel.hidden=!browseEmpty;
+   if(browseTitle&&browseEmpty)browseTitle.textContent=view==="popular"?copy.popular:copy.unanswered;
+   if(browseBody&&browseEmpty)browseBody.textContent=view==="popular"?copy.popularNote:copy.noUnanswered;
+   if(noResults&&browseEmpty)noResults.hidden=true;
+   if(followStatus&&view==="following"){
+    followStatus.textContent=followState==="ready"?
+      (count>0?copy.followingBody:copy.followEmpty):
+      followState==="error"?copy.followError:copy.followingBody;
+   }
+   if(canList)sortPublicRows();
+ };
+ async function loadFollowing(){
+  const version=++followRequest;
+  const session=readForumSession();
+  const cfg=JSON.parse(liveRoot?.dataset.forumLiveConfig||"null") as {url:string;key:string}|null;
+  if(!session?.access||!cfg){followState="guest";followed.clear();filter();return;}
+  followState="loading";followed.clear();filter();
+  try{
+   const params=new URLSearchParams({select:"topic_id",limit:"200"});
+   const response=await fetch(cfg.url+"/rest/v1/tc_member_topic_follows?"+params,{
+    headers:{"apikey":cfg.key,"Accept":"application/json",
+     Authorization:"Bearer "+session.access},cache:"no-store",
+    signal:AbortSignal.timeout(12000)
+   });
+   if(!response.ok)throw Error("follow service unavailable");
+   const rows=await response.json();
+   if(version!==followRequest)return;
+   if(!Array.isArray(rows))throw Error("invalid follow response");
+   followed=new Set(rows.map(x=>String(x?.topic_id||""))
+    .filter(x=>/^[a-f0-9-]{36}$/i.test(x)));
+   followState="ready";
+  }catch{
+   if(version!==followRequest)return;
+   followed.clear();followState="error";
+  }
+  filter();
+ }
+ function openView(next:string){
+  if(!isView(next))return;
+  view=next;
+  filter();
+  if(view==="following")void loadFollowing();
+ }
  clear?.addEventListener("click",()=>{
   if(input)input.value="";
   selected="all";
-  categoryButtons.forEach(button=>{
-   const active=button.dataset.forumCategory==="all";
-   button.classList.toggle("is-active",active);
-   button.setAttribute("aria-pressed",String(active));
-  });
-  filter();input?.focus();
+  markCategories();filter();input?.focus();
  });
  input?.addEventListener("input",filter);
  document.addEventListener("tractorvs-forum-live-updated",filter);
- for(const button of categoryButtons)button.addEventListener("click",()=>{
-  selected=button.dataset.forumCategory||"all";
-  categoryButtons.forEach(b=>{const active=b===button;b.classList.toggle("is-active",active);b.setAttribute("aria-pressed",String(active))});
-  filter();
+ for(const button of allCategoryButtons)button.addEventListener("click",()=>{
+  selected=button.dataset.forumCategory||button.dataset.forumRailCategory||
+   button.dataset.forumTagCategory||"all";
+  // Keep topic category and view separate; don't replace a selected view
+  // with an unrelated page or silently lose the visitor's search.
+  if(view==="events")view="latest";
+  markCategories();filter();
+  if(button.hasAttribute("data-forum-tag-category"))
+   document.querySelector(".community-list")?.scrollIntoView({block:"start",behavior:"smooth"});
  });
+ for(const button of viewButtons)button.addEventListener("click",()=>
+  openView(button.dataset.forumView||"latest"));
+ for(const button of document.querySelectorAll<HTMLButtonElement>("[data-forum-go-view]"))
+  button.addEventListener("click",()=>{
+   openView(button.dataset.forumGoView||"latest");
+   document.querySelector("#forum-dashboard-tabs")?.scrollIntoView({block:"start",behavior:"smooth"});
+  });
+ window.addEventListener("tractorvs-forum-session",()=>{
+  if(view==="following")void loadFollowing();
+ });
+ markCategories();filter();
+ if(view==="following")void loadFollowing();
 </script>

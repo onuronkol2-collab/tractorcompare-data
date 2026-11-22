@@ -1,0 +1,96 @@
+---
+import {FORUM_DASHBOARD_TEXT} from "../lib/forum-dashboard-i18n.ts";
+import {forumText as ft,FORUM_CATEGORY_KEYS} from "../lib/forum-i18n.ts";
+import {localizedPath,type Locale} from "../lib/locales.ts";
+import type {ForumTopic} from "../lib/forum.ts";
+interface Props {lang:Locale; topics:ForumTopic[]; replyCount:number}
+const {lang,topics,replyCount}=Astro.props;
+const copy=FORUM_DASHBOARD_TEXT[lang];
+const num=(n:number)=>n.toLocaleString(lang==="pt-br"?"pt-BR":lang);
+const categories=FORUM_CATEGORY_KEYS.map(key=>({key,count:topics.filter(t=>t.category===key).length}))
+ .sort((a,b)=>b.count-a.count).slice(0,5);
+---
+<aside class="forum-dashboard-panels" aria-label={copy.stats}>
+ <section class="forum-side-panel forum-side-stats">
+  <h2 class="forum-side-title">{copy.stats}</h2>
+  <div class="forum-stats-grid">
+   <div><strong data-forum-published-topic-total>{num(topics.length)}</strong><span>{copy.liveTopics}</span></div>
+   <div><strong>{num(replyCount)}</strong><span>{copy.liveReplies}</span></div>
+   <div><strong>10</strong><span>{copy.languages}</span></div>
+  </div>
+ </section>
+ <section class="forum-side-panel">
+  <h2 class="forum-side-title"><span aria-hidden="true">⌗</span> {copy.discover}</h2>
+  <p>{copy.discoverBody}</p>
+  <div class="forum-side-tags">
+   {categories.map(cat=><button type="button" data-forum-tag-category={cat.key}
+     aria-pressed="false">#{ft(lang,cat.key)} <span data-forum-tag-count={cat.key}>({num(cat.count)})</span></button>)}
+  </div>
+ </section>
+ <section class="forum-side-panel">
+  <h2 class="forum-side-title"><span aria-hidden="true">♧</span> {copy.people}</h2>
+  <p>{copy.peopleBody}</p>
+  <a class="forum-side-link" href="#forum-members">{copy.peopleLink} <span aria-hidden="true">↗</span></a>
+ </section>
+ <section class="forum-side-panel forum-side-events">
+  <h2 class="forum-side-title"><span aria-hidden="true">▤</span> {copy.eventsHeading}</h2>
+  <p>{copy.eventsBody}</p>
+  <button type="button" class="forum-side-link" data-forum-go-view="events">
+   {copy.events} <span aria-hidden="true">↗</span>
+  </button>
+ </section>
+ <section class="forum-side-panel forum-side-join">
+  <h2 class="forum-side-title">{copy.join}</h2>
+  <p>{copy.joinBody}</p>
+  <a class="forum-side-cta" href="#forum-compose">{copy.joinLink} <span aria-hidden="true">+</span></a>
+ </section>
+</aside>
+<style>
+.forum-dashboard-panels{display:grid;gap:13px;min-width:0;align-content:start}
+.forum-side-panel{border:1px solid #dfe8dd;background:#fff;border-radius:16px;
+ padding:19px;box-shadow:0 6px 20px rgba(15,47,25,.03)}
+.forum-side-title{display:flex;align-items:center;gap:8px;font-size:15px;
+ line-height:1.35;font-weight:850;letter-spacing:-.02em;color:#173c2b;margin:0 0 13px}
+.forum-side-title>span{font-size:18px;color:#3d874a}
+.forum-side-panel>p{font-size:12px;line-height:1.75;color:#546959;margin:0 0 13px}
+.forum-side-stats{background:#f7faf5}
+.forum-stats-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr))}
+.forum-stats-grid>div{display:grid;align-content:start;gap:6px;min-width:0;
+ text-align:center;padding:5px 7px}
+.forum-stats-grid>div+div{border-inline-start:1px solid #dbe7d9}
+.forum-stats-grid strong{font-size:clamp(17px,1.65vw,25px);
+ font-weight:900;color:#16482f;line-height:1.2;font-variant-numeric:tabular-nums}
+.forum-stats-grid span{font-size:10px;color:#58705f;line-height:1.45;overflow-wrap:anywhere}
+.forum-side-tags{display:flex;gap:7px;flex-wrap:wrap}
+.forum-side-tags button{font:inherit;font-size:11px;font-weight:750;
+ padding:8px 10px;min-height:38px;color:#245a37;border:1px solid #dcebd4;
+ border-radius:9px;background:#eaf4e6;cursor:pointer}
+.forum-side-tags button:hover,.forum-side-tags button[aria-pressed=true]{
+ background:#1e5a3a;color:#fff;border-color:#1e5a3a}
+.forum-side-tags button span{color:inherit;opacity:1;font-variant-numeric:tabular-nums}
+.forum-side-link{display:inline-flex;gap:7px;align-items:center;
+ border:1px solid #cbdcc8;border-radius:9px;background:#f3f8f0;
+ padding:10px 12px;color:#205839;font:inherit;font-size:12px;font-weight:800;
+ min-height:43px;text-decoration:none;cursor:pointer}
+.forum-side-link:hover{background:#e2f1df}
+.forum-side-events{background:linear-gradient(120deg,#f6fbf2,#eaf5e4)}
+.forum-side-join{background:linear-gradient(135deg,#16452f,#2d6a3c);
+ color:#f1f8ec;border-color:#3a8050}
+.forum-side-join .forum-side-title{color:#f5faef}
+.forum-side-join>p{color:#e2f0e2}
+.forum-side-cta{display:inline-flex;min-height:45px;justify-content:space-between;
+ align-items:center;gap:12px;background:#bee29e;color:#173d27;border-radius:10px;
+ padding:12px 15px;font-size:12px;font-weight:850;text-decoration:none}
+.forum-side-cta:hover{background:#d5efbd}
+.forum-dashboard-panels a:focus-visible,.forum-dashboard-panels button:focus-visible{
+ outline:3px solid #87c07c;outline-offset:3px}
+@media(max-width:960px){
+ .forum-dashboard-panels{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .forum-side-stats,.forum-side-join{grid-column:1/-1}
+}
+@media(max-width:620px){
+ .forum-dashboard-panels{grid-template-columns:minmax(0,1fr)}
+ .forum-side-panel{padding:16px}
+ .forum-side-stats,.forum-side-join{grid-column:auto}
+}
+</style>

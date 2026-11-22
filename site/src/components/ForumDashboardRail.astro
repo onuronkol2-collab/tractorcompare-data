@@ -1,0 +1,61 @@
+---
+import {FORUM_CATEGORY_KEYS,forumText as ft} from "../lib/forum-i18n.ts";
+import {FORUM_DASHBOARD_TEXT} from "../lib/forum-dashboard-i18n.ts";
+import type {Locale} from "../lib/locales.ts";
+import type {ForumTopic} from "../lib/forum.ts";
+interface Props{lang:Locale;topics:ForumTopic[]}
+const {lang,topics}=Astro.props;
+const copy=FORUM_DASHBOARD_TEXT[lang];
+const icon:Record<string,string>={all:"▦",questions:"?",maintenance:"⚙",reviews:"▤",news:"▣",comparison:"⇄",general:"◉"};
+const categories=[{key:"all",label:ft(lang,"all")},...FORUM_CATEGORY_KEYS.map(key=>({key,label:ft(lang,key)}))];
+---
+<aside class="forum-dashboard-rail" aria-label={copy.categories}>
+ <div class="forum-rail-heading"><h2>{copy.categories}</h2><span aria-hidden="true">▤</span></div>
+ <nav class="forum-category-list" aria-label={copy.categories}>
+ {categories.map(cat=>{
+  const count=cat.key==="all"?topics.length:topics.filter(t=>t.category===cat.key).length;
+  return <button type="button" class:list={["forum-category-link",cat.key==="all"&&"is-active"]}
+    data-forum-rail-category={cat.key} aria-pressed={cat.key==="all"?"true":"false"}>
+    <span class="forum-category-icon" aria-hidden="true">{icon[cat.key]}</span>
+    <span class="forum-category-title">{cat.label}</span>
+    <span class="forum-category-number" data-forum-category-count={cat.key}>{count.toLocaleString(lang==="pt-br"?"pt-BR":lang)}</span>
+   </button>;
+ })}
+ </nav>
+ <div class="forum-language-card">
+  <span class="forum-language-symbol" aria-hidden="true">◎</span>
+  <div><strong>10 · {copy.languages}</strong><p>{copy.languageNote}</p></div>
+ </div>
+</aside>
+<style>
+.forum-dashboard-rail{min-width:0;position:relative;background:#fff;border:1px solid #e0e9e0;border-radius:17px;
+ padding:clamp(16px,1.8vw,22px);box-shadow:0 6px 24px rgba(14,50,27,.035)}
+.forum-rail-heading{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:15px}
+.forum-rail-heading h2{font-size:18px;font-weight:850;letter-spacing:-.025em;color:#163d2a;margin:0}
+.forum-rail-heading>span{color:#4d8750;font-size:19px}
+.forum-category-list{display:grid;gap:5px}
+.forum-category-link{display:grid;grid-template-columns:25px minmax(0,1fr) auto;
+ align-items:center;gap:9px;min-width:0;width:100%;border:1px solid transparent;
+ border-radius:10px;background:transparent;color:#274632;padding:11px 10px;
+ font:inherit;font-size:12.5px;font-weight:700;text-align:start;cursor:pointer;min-height:44px}
+.forum-category-link:hover{background:#f1f7ee}
+.forum-category-link.is-active,.forum-category-link[aria-pressed="true"]{background:#e6f3db;
+ border-color:#d5e9c7;color:#164b2c}
+.forum-category-icon{color:#397b46;font-size:18px;font-weight:850;text-align:center}
+.forum-category-title{overflow-wrap:anywhere}
+.forum-category-number{font-variant-numeric:tabular-nums;color:#57715f;font-size:11px}
+.forum-language-card{display:flex;gap:12px;align-items:flex-start;
+ margin-top:24px;padding:15px 12px;border-radius:13px;
+ background:linear-gradient(125deg,#edf6e8,#e4f2dc);border:1px solid #d7e9d0}
+.forum-language-symbol{font-size:27px;color:#397d43;line-height:1}
+.forum-language-card strong{color:#174d2c;font-size:12.5px}
+.forum-language-card p{margin:7px 0 0;font-size:11px;line-height:1.6;color:#476f50}
+.forum-category-link:focus-visible{outline:3px solid #81b978;outline-offset:2px}
+@media(max-width:1110px){
+ .forum-dashboard-rail{padding:13px}
+ .forum-category-link{padding:9px 7px;gap:6px}
+}
+@media(max-width:1180px){
+ .forum-dashboard-rail{display:none}
+}
+</style>
