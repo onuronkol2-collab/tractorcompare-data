@@ -1,6 +1,6 @@
 import {test} from "node:test";
 import assert from "node:assert/strict";
-import {parseProductionSitemapInventory,selectProductionSeoPages} from "../scripts/production-sitemap-inventory.mjs";
+import {parseProductionSitemapInventory,selectProductionSeoPages,REVIEWED_PAIR_PATHS,reviewedPairSitemapCoverage} from "../scripts/production-sitemap-inventory.mjs";
 const BASE="https://tractorvs.com";
 const langs=["en","tr","zh","hi","pt-br","fr","de","ru","ja","es"];
 const fileNames=["sitemap-0.xml","forum-sitemap.xml","image-sitemap.xml"];
@@ -76,4 +76,34 @@ test("daily audit checks all editorial and forum pages, cycles model samples; we
  const full=selectProductionSeoPages(inventory,{mode:"full"});
  assert.equal(full.length,33);
  assert.equal(new Set(full).size,33);
+});
+
+test("reviewed Deutz GS EN/TR URLs must exist in fetched HTML sitemap (not images or forum)",()=>{
+ assert.deepEqual(REVIEWED_PAIR_PATHS,[
+  "/compare/deutz-fahr-5090-d-gs-vs-5100-d-gs/",
+  "/tr/compare/deutz-fahr-5090-d-gs-vs-5100-d-gs/",
+ ]);
+ const f=fixture(), URLs=REVIEWED_PAIR_PATHS.map(page);
+ const before=reviewedPairSitemapCoverage(parseProductionSitemapInventory(f));
+ assert.equal(before.expected,2);
+ assert.equal(before.listed,0);
+ assert.deepEqual(before.missing,URLs);
+ // An unrelated image child entry must NOT count as a canonical HTML page.
+ const imageOnly=fixture();
+ imageOnly.children[imageOnly.childUrls[2]]=urlset([page("/")]);
+ assert.deepEqual(reviewedPairSitemapCoverage(parseProductionSitemapInventory(imageOnly)).missing,URLs);
+ // The HTML child contains both actual published URLs: no false alarm.
+ f.children[f.childUrls[0]]=urlset([...f.html,...URLs]);
+ const live=reviewedPairSitemapCoverage(parseProductionSitemapInventory(f));
+ assert.equal(live.listed,2);
+ assert.deepEqual(live.missing,[]);
+ assert.equal(live.source,"fetched_master_index_and_html_children");
+ // Even one missing language-specific article must remain a hard audit error.
+ f.children[f.childUrls[0]]=urlset([...f.html,URLs[0]]);
+ const oneMissing=reviewedPairSitemapCoverage(parseProductionSitemapInventory(f));
+ assert.equal(oneMissing.listed,1);
+ assert.deepEqual(oneMissing.missing,[URLs[1]]);
+ // No unreviewed language path is in the exact published set.
+ assert.ok(!REVIEWED_PAIR_PATHS.some(x=>/^\/(?:de|fr|zh|es|ja|ru|hi|pt-br)\//.test(x)));
+ assert.throws(()=>reviewedPairSitemapCoverage(null),/Missing parsed HTML sitemap inventory/);
 });

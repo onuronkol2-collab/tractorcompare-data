@@ -4,6 +4,29 @@
  * to those pages, not additional crawlable pages. No network/write effects.
  */
 const SITE="https://tractorvs.com";
+/**
+ * Real, source-reviewed, already-published EN/TR comparison. Do not require
+ * translations in the other eight locales until editorial review is complete.
+ */
+export const REVIEWED_PAIR_PATHS = Object.freeze([
+  "/compare/deutz-fahr-5090-d-gs-vs-5100-d-gs/",
+  "/tr/compare/deutz-fahr-5090-d-gs-vs-5100-d-gs/",
+]);
+/** Check only canonical HTML URLsets from the fetched live sitemap index. */
+export function reviewedPairSitemapCoverage(inventory){
+ if(!(inventory?.htmlPages instanceof Set))
+  throw Error("[TractorVS SEO inventory] Missing parsed HTML sitemap inventory");
+ const required=REVIEWED_PAIR_PATHS.map(path=>SITE+path);
+ const missing=required.filter(url=>!inventory.htmlPages.has(url));
+ return {
+  expected:required.length,
+  listed:required.length-missing.length,
+  missing,
+  checked_urls:required,
+  source:"fetched_master_index_and_html_children",
+ };
+}
+
 const LOCALES=["en","tr","zh","hi","pt-br","fr","de","ru","ja","es"];
 function invalid(msg){throw Error("[TractorVS SEO inventory] "+msg);}
 function normalized(raw){
