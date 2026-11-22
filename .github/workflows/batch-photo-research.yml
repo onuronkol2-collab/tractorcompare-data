@@ -99,10 +99,12 @@ jobs:
           INVENTORY_OUTCOME: ${{ steps.inventory.outcome }}
           ARCHIVE_OUTCOME: ${{ steps.archive.outcome }}
           PUBLISHED_OUTCOME: ${{ steps.published.outcome }}
+          OPENVERSE_OUTCOME: ${{ steps.openverse.outcome }}
         run: |
           echo "Live inventory outcome: $INVENTORY_OUTCOME"
           echo "Archive research outcome: $ARCHIVE_OUTCOME"
           echo "Published model research outcome: $PUBLISHED_OUTCOME"
+          echo "Independent Openverse (nonpublishing) outcome: $OPENVERSE_OUTCOME"
           node site/scripts/photo-research-quality-gate.mjs
           test "$INVENTORY_OUTCOME" = "success"
           test "$ARCHIVE_OUTCOME" = "success"
