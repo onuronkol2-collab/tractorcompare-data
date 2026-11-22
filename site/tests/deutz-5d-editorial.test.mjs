@@ -92,6 +92,7 @@ test("two real localized static paths, no invented eight-language editorial text
 test("editorial discoverability stays visible from SSR comparison and exact model detail",()=>{
  const compare=readFileSync(new URL("../src/components/TractorComparison.astro",import.meta.url),"utf8");
  const detail=readFileSync(new URL("../src/components/TractorDetail.astro",import.meta.url),"utf8");
+ const articles=readFileSync(new URL("../src/components/EditorialHub.astro",import.meta.url),"utf8");
  assert.match(compare,/editorialPilotAvailable/);
  assert.match(compare,/curatedDeutz5DPair\(catalog\.tractors\)/);
  assert.match(compare,/href=\{localizedPath\(lang,DEUTZ_5D_GS_PILOT\.path\)\}/);
@@ -99,4 +100,6 @@ test("editorial discoverability stays visible from SSR comparison and exact mode
  assert.match(detail,/DEUTZ_5D_GS_PILOT\.leftId/);
  assert.match(detail,/DEUTZ_5D_GS_PILOT\.rightId/);
  assert.match(detail,/href=\{localizedPath\(lang,DEUTZ_5D_GS_PILOT\.path\)\}/);
+ assert.match(articles,/DEUTZ_5D_GS_PILOT\.path/);
+ assert.match(articles,/lang==="tr"\|\|lang==="en"/);
 });
