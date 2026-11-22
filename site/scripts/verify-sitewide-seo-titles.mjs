@@ -15,7 +15,12 @@ const locales=new Set(["tr","zh","hi","pt-br","fr","de","ru","ja","es"]);
 const clean=s=>s.replace(/<[^>]*>/g,"").replace(/\s+/g," ").trim();
 
 export function inspectSeoTitle(html,file="index.html"){
-  // Ignore raw search-engine ownership verification files, which are not pages.
+  // Search-engine ownership challenge files are not editorial pages. Their
+  // verification bytes must remain untouched (even if they contain <html>).
+  if(/^yandex_[a-f0-9]+\.html$/i.test(file)
+     && /Verification:\s*[a-f0-9]+/i.test(html))return null;
+  if(/^naver[a-f0-9]+\.html$/i.test(file)
+     && /naver-site-verification:/i.test(html))return null;
   if(!/<html\b/i.test(html))return null;
   const head=html.match(/<head\b[^>]*>([\s\S]*?)<\/head\s*>/i)?.[1];
   const matches=head?[...head.matchAll(titleTag)].map(x=>clean(x[1])):[];
