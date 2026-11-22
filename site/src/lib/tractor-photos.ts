@@ -186,6 +186,18 @@ const COPY={
   close:["Close photo","Fotoğrafı kapat","关闭照片","फ़ोटो बंद करें","Fechar foto","Fermer la photo","Foto schließen","Закрыть фото","写真を閉じる","Cerrar foto"],
   pending:["Verified model photograph not available yet.","Bu modelin doğrulanmış fotoğrafı henüz yok.","此型号暂无已核实的照片。","इस मॉडल की सत्यापित फ़ोटो अभी उपलब्ध नहीं है।","Ainda não há foto verificada deste modelo.","Aucune photo vérifiée pour ce modèle.","Für dieses Modell liegt noch kein geprüftes Foto vor.","Проверенная фотография этой модели пока недоступна.","このモデルの確認済み写真はまだありません。","Aún no hay una foto verificada de este modelo."],
   credit:["Photo credit","Fotoğraf kaynağı","照片署名","फ़ोटो श्रेय","Crédito da foto","Crédit photo","Bildnachweis","Автор фото","写真提供","Crédito fotográfico"],
+  resizedDerivative:[
+    "A resized and re-encoded copy of the credited photograph may be displayed.",
+    "Kaynağı belirtilen fotoğrafın boyutu değiştirilmiş ve yeniden kodlanmış sürümü gösterilebilir.",
+    "显示的可能是已署名照片经过缩放和重新编码的版本。",
+    "दिखाई गई तस्वीर श्रेयित मूल फ़ोटो का आकार बदला और पुनः एन्कोड किया गया रूप हो सकती है।",
+    "A imagem pode ser uma versão redimensionada e recodificada da foto creditada.",
+    "L’image peut être une version redimensionnée et réencodée de la photo créditée.",
+    "Das Bild kann eine verkleinerte und neu kodierte Version des genannten Fotos sein.",
+    "Изображение может быть уменьшенной и перекодированной версией указанной фотографии.",
+    "表示画像は、クレジット表記された写真を縮小・再エンコードしたものの場合があります。",
+    "La imagen puede ser una versión redimensionada y recodificada de la foto acreditada."
+  ],
   representative:[
     "Photographed equipment may differ from this recorded configuration.",
     "Fotoğraftaki donanım, kayıtlı varyanttan farklı olabilir.",
