@@ -8,7 +8,7 @@ const photo=readFileSync(new URL("../src/components/TractorPhoto.astro",import.m
 test("offscreen paint optimization is restricted to large SSR catalogues",()=>{
  assert.match(component,/"tractor-card-grid--large": catalog\.tractors\.length >= 100/);
  assert.match(component,/@supports \(content-visibility: auto\)/);
- assert.match(component,/\.tractor-card-grid--large > \.tractor-card\s*\{\s*content-visibility: auto;/);
+ assert.match(component,/:global\(\.tractor-card-grid--large > \.tractor-card\)\s*\{\s*content-visibility: auto;/);
  assert.match(component,/contain-intrinsic-block-size: auto 410px/);
  assert.match(component,/@media \(max-width:680px\)/);
  assert.match(component,/contain-intrinsic-block-size: auto 520px/);
