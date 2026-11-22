@@ -2,7 +2,7 @@ import {test} from "node:test";
 import assert from "node:assert/strict";
 import {classifyPublicImageSitemap,PUBLIC_FORUM_MEDIA_ENDPOINT} from "../scripts/image-seo-asset-boundaries.mjs";
 import {fetchPublicImageAsset,publicImageMimeOk} from "../scripts/image-seo-http.mjs";
-import {copyrightZhSitemapPages} from "../scripts/image-copyright-live-cases.mjs";
+import {copyrightZhSitemapPages,copyrightLocaleSitemapSamples,strictCopyrightAuditMode} from "../scripts/image-copyright-live-cases.mjs";
 const root="https://tractorvs.com";
 const model=root+"/tr/tractors/exact-model-123/";
 const forum=root+"/tr/forum/reviewed-topic/";
@@ -84,4 +84,50 @@ test("Google copyright audit lists all Chinese pages sharing a rights-cleared ph
  assert.equal(pages.length,2);
  assert.deepEqual(pages.map(v=>v.path),["/zh/tractors/model-a/","/zh/tractors/model-a-variant/"]);
  assert.ok(pages.every(p=>p.owner==="VerifiedPerson"&&p.fileId==="photo-a"));
+});
+
+
+test("copyright meta audit is strict only on manual, scheduled, or deliberately re-run deployed main",()=>{
+ const cases=[
+  [{eventName:"schedule"},true],
+  [{eventName:"workflow_dispatch"},true],
+  [{eventName:"push",ref:"refs/heads/main",runAttempt:"1"},false],
+  [{eventName:"push",ref:"refs/heads/main",runAttempt:"2"},true],
+  [{eventName:"push",ref:"refs/heads/main",runAttempt:"3"},true],
+  [{eventName:"push",ref:"refs/heads/feature",runAttempt:"3"},false],
+  [{eventName:"pull_request",ref:"refs/pull/342/merge",runAttempt:"2"},false],
+  [{eventName:"push",ref:"refs/heads/main",runAttempt:"garbage"},false],
+  [{eventName:"push",ref:"refs/heads/main",runAttempt:undefined},false],
+ ];
+ for(const [input,expected] of cases)
+  assert.equal(strictCopyrightAuditMode(input),expected,JSON.stringify(input));
+});
+
+
+test("representative rights metadata checks cover all other nine live locales, not just Chinese",()=>{
+ const rights=[{fileId:"known-rights",copyrightOwner:"VerifiedAuthor",
+   sourcePage:"https://commons.wikimedia.org/wiki/File:Known.jpg"},
+  {fileId:"cc0-unclaimed",sourcePage:"https://commons.wikimedia.org/wiki/File:CC0.jpg"}];
+ const locales=["en","tr","zh","hi","pt-br","fr","de","ru","ja","es"];
+ const urls=locales.map(locale=>
+  [(locale==="en"?root:root+"/"+locale)+"/tractors/same-model/",
+   [root+"/images/tractors/known-rights-1920.jpg"]]);
+ urls.push([root+"/ja/tractors/unclaimed/",[root+"/images/tractors/cc0-unclaimed-1920.jpg"]]);
+ const matches=copyrightLocaleSitemapSamples(imageXml(urls),rights,locales);
+ assert.equal(matches.length,9);
+ assert.deepEqual(matches.map(x=>x.locale),["en","tr","hi","pt-br","fr","de","ru","ja","es"]);
+ assert.ok(matches.every(x=>x.owner==="VerifiedAuthor"&&x.fileId==="known-rights"));
+ assert.ok(matches.every(x=>x.path.startsWith(x.locale==="en"?"/tractors/":"/"+x.locale+"/tractors/")));
+});
+test("missing locale, only CC0, and noncanonical photo URLs fail multilingual rights coverage",()=>{
+ const rights=[{fileId:"photo-ok",copyrightOwner:"RightsOwner",sourcePage:"https://commons.wikimedia.org/wiki/File:Photo.jpg"},
+   {fileId:"public-domain",sourcePage:"https://commons.wikimedia.org/wiki/File:PD.jpg"}];
+ const sitemap=imageXml([
+  [root+"/tr/tractors/only-cc0/",[root+"/images/tractors/public-domain-1920.jpg"]],
+  [root+"/tractors/good/",[root+"/images/tractors/photo-ok-1920.jpg"]]
+ ]);
+ assert.throws(()=>copyrightLocaleSitemapSamples(sitemap,rights,["en","tr"]),/tr/);
+ assert.deepEqual(copyrightLocaleSitemapSamples(sitemap,rights,["en"])[0].fileId,"photo-ok");
+ assert.throws(()=>copyrightLocaleSitemapSamples(sitemap,rights,["en","bad"]),/Unknown locale/);
+ assert.throws(()=>copyrightLocaleSitemapSamples("",rights,["en"]),/No rights-verified/);
 });

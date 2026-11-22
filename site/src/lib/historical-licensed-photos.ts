@@ -759,10 +759,63 @@ const candidates=[
     "width": 7008,
     "height": 3944
   },
-  // Six exact published-model CC BY-SA 4.0 image identities; 22 November 2026.
-  // See SHA-256 source ledgers; derivatives are resized from Commons originals.
-  {"brand":"Belarus","model":"510","fileId":"belarus-510-homoatrox-open-day-2017","path":"1/19/Belarus_510_%28open_day_2017%29_1.jpg","photographer":"Homoatrox","license":"CC BY-SA 4.0","width":2484,"height":2748},
-  {"brand":"Belarus","model":"922.3","fileId":"belarus-922-3-bulykin-almaty-2026","path":"4/45/%D0%90%D0%BB%D0%BC%D0%B0%D1%82%D1%8B%2C_%D0%91%D0%B5%D0%BB%D0%B0%D1%80%D1%83%D1%81-922.3_%D0%BD%D0%B0_%D0%9A%D1%83%D0%BB%D1%8B%D0%BC%D0%B1%D0%B5%D1%82%D0%BE%D0%B2%D0%B0-%D0%91%D1%80%D1%83%D0%BD%D0%BE.jpg","photographer":"Nikolai Bulykin","license":"CC BY-SA 4.0","width":5077,"height":3385},
+  // 22 November 2026: Exact model photos licensed by their Commons authors.
+  // These are staged on a private candidate PR branch and cannot be released
+  // until real first-party JPEGs plus source SHA/HTTP/SEO gates have passed.
+  {
+    "brand": "Belarus",
+    "model": "510",
+    "fileId": "belarus-510-homoatrox-open-day-2017",
+    "path": "1/19/Belarus_510_%28open_day_2017%29_1.jpg",
+    "photographer": "Homoatrox",
+    "license": "CC BY-SA 4.0",
+    "width": 2484,
+    "height": 2748
+  },
+  {
+    "brand": "Belarus",
+    "model": "922.3",
+    "fileId": "belarus-922-3-bulykin-almaty-2026",
+    "path": "4/45/%D0%90%D0%BB%D0%BC%D0%B0%D1%82%D1%8B%2C_%D0%91%D0%B5%D0%BB%D0%B0%D1%80%D1%83%D1%81-922.3_%D0%BD%D0%B0_%D0%9A%D1%83%D0%BB%D1%8B%D0%BC%D0%B1%D0%B5%D1%82%D0%BE%D0%B2%D0%B0-%D0%91%D1%80%D1%83%D0%BD%D0%BE.jpg",
+    "photographer": "Nikolai Bulykin",
+    "license": "CC BY-SA 4.0",
+    "width": 5077,
+    "height": 3385
+  },
+  // 22 Nov 2026 batch 2: Commons own-work CC BY-SA, exact published model.
+  // Photo never proves recorded engine/power/market/variant configuration.
+  // Real first-party JPEGs/attribution must pass CI prior to release.
+  {
+    "brand": "Belarus",
+    "model": "451",
+    "fileId": "belarus-451-homoatrox-open-day-2017",
+    "path": "8/8c/Belarus_451_%28open_day_2017%29_1.jpg",
+    "photographer": "Homoatrox",
+    "license": "CC BY-SA 4.0",
+    "width": 1480,
+    "height": 2216
+  },
+  {
+    "brand": "Belarus",
+    "model": "572",
+    "fileId": "belarus-572-bronzedrache-2022",
+    "path": "7/72/Belazs_MTZ_572.jpg",
+    "photographer": "BronzeDrache",
+    "license": "CC BY-SA 4.0",
+    "width": 2000,
+    "height": 1500
+  },
+  {
+    "brand": "Belarus",
+    "model": "923.4",
+    "fileId": "belarus-923-4-homoatrox-open-day-2017",
+    "path": "f/fc/Belarus_923.4_%28open_day_2017%29_1.jpg",
+    "photographer": "Homoatrox",
+    "license": "CC BY-SA 4.0",
+    "width": 3024,
+    "height": 2760
+  },
+  // 22 Nov 2026: exact-model CC BY-SA McCormick photos; hashes in photo-evidence-mccormick-four-20261122.json.
   {"brand":"McCormick","model":"X4.085 TM","fileId":"mccormick-x4-085-tm-marcelx42-2023","path":"f/fb/McCormick_X4.085_TM_Agritechnica_2023_%28DSC05776%29.jpg","photographer":"MarcelX42","license":"CC BY-SA 4.0","width":7008,"height":3944},
   {"brand":"McCormick","model":"X6.414 P6-Drive","fileId":"mccormick-x6-414-p6-drive-marcelx42-2023","path":"5/55/McCormick_X6.414_P6-Drive_Agritechnica_2023_%28DSC04843%29.jpg","photographer":"MarcelX42","license":"CC BY-SA 4.0","width":7008,"height":3944},
   {"brand":"McCormick","model":"X7.618 VT-Drive","fileId":"mccormick-x7-618-vt-drive-marcelx42-2023","path":"5/50/McCormick_X7.618_VT-Drive_Agritechnica_2023_%28DSC05850%29.jpg","photographer":"MarcelX42","license":"CC BY-SA 4.0","width":7008,"height":3944},

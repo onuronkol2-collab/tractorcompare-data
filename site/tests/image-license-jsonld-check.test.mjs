@@ -63,3 +63,27 @@ test("verified same-author Commons copyright claim passes the Google ImageObject
  const cc0={...withNotice,license:"https://creativecommons.org/publicdomain/zero/1.0/"};
  assert.match(inspect(html(cc0)).issues.join(" "),/ownership/);
 });
+
+test("Flickr-licensed but unproven owner and CC0 have no notice in strict live checks",()=>{
+ const flickr={
+  ...photo,
+  contentUrl:"https://tractorvs.com/images/tractors/swaraj-735-fe-0269bdfd-1920.jpg",
+  creator:{"@type":"Person",name:"Rupal Vaidya"},
+  creditText:"Rupal Vaidya · CC BY 2.0",
+  license:"https://creativecommons.org/licenses/by/2.0/",
+  acquireLicensePage:"https://commons.wikimedia.org/wiki/File:Swaraj_735_FE.jpg"
+ };
+ const cc0={
+  ...flickr,
+  creator:{"@type":"Person",name:"Johann Brause"},
+  contentUrl:"https://tractorvs.com/images/tractors/valtra-f105-80828837-1920.jpg",
+  creditText:"Johann Brause · CC0",
+  license:"https://creativecommons.org/publicdomain/zero/1.0/",
+  acquireLicensePage:"https://commons.wikimedia.org/wiki/File:Valtra_F105_auf_der_Agritechnica_2023.jpg"
+ };
+ for(const p of [flickr,cc0]){
+   assert.deepEqual(inspect(html(p),{prohibitCopyrightNotice:true}).issues,[]);
+   assert.match(inspect(html({...p,copyrightNotice:p.creator.name}),
+     {prohibitCopyrightNotice:true}).issues.join(" "),/must not carry a copyrightNotice/);
+ }
+});

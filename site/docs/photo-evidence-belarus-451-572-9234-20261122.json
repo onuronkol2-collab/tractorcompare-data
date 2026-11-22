@@ -1,0 +1,193 @@
+{
+  "reviewedAt": "2026-11-22",
+  "policy": "Only published exact model identity; variant and engine cannot be inferred from a photo. CC BY-SA credits and JPEG HTTP+SHA required. Research candidate until CI and first-party checks complete.",
+  "sourcePagesReviewed": true,
+  "licensePageMetadataReviewed": true,
+  "originalBinaryHttpVerified": true,
+  "firstPartyProxyHttpVerified": false,
+  "jpegContentVerified": true,
+  "releaseStatus": "PR JPEG assets staged, requires CI, first-party HTTP and release approval",
+  "sources": [
+    {
+      "brand": "Belarus",
+      "model": "451",
+      "fileId": "belarus-451-homoatrox-open-day-2017",
+      "sourcePage": "https://commons.wikimedia.org/wiki/File:Belarus_451_(open_day_2017)_1.jpg",
+      "originalFilename": "Belarus 451 (open day 2017) 1.jpg",
+      "photographer": "Homoatrox",
+      "licenseName": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "width": 1480,
+      "height": 2216,
+      "sourceImageUrl": "https://upload.wikimedia.org/wikipedia/commons/8/8c/Belarus_451_%28open_day_2017%29_1.jpg",
+      "modelIdentityEvidence": "Commons own-work file description identifies exact Belarus 451; no evidence of engine option LDW2204 or registered market.",
+      "variantExact": false
+    },
+    {
+      "brand": "Belarus",
+      "model": "572",
+      "fileId": "belarus-572-bronzedrache-2022",
+      "sourcePage": "https://commons.wikimedia.org/wiki/File:Belazs_MTZ_572.jpg",
+      "originalFilename": "Belazs MTZ 572.jpg",
+      "photographer": "BronzeDrache",
+      "licenseName": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "width": 2000,
+      "height": 1500,
+      "sourceImageUrl": "https://upload.wikimedia.org/wikipedia/commons/7/72/Belazs_MTZ_572.jpg",
+      "modelIdentityEvidence": "Commons author self-identifies Belazs/Belarus MTZ 572 in title/description; D-242 and 4WD variant not independently certified.",
+      "variantExact": false
+    },
+    {
+      "brand": "Belarus",
+      "model": "923.4",
+      "fileId": "belarus-923-4-homoatrox-open-day-2017",
+      "sourcePage": "https://commons.wikimedia.org/wiki/File:Belarus_923.4_(open_day_2017)_1.jpg",
+      "originalFilename": "Belarus 923.4 (open day 2017) 1.jpg",
+      "photographer": "Homoatrox",
+      "licenseName": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "width": 3024,
+      "height": 2760,
+      "sourceImageUrl": "https://upload.wikimedia.org/wikipedia/commons/f/fc/Belarus_923.4_%28open_day_2017%29_1.jpg",
+      "modelIdentityEvidence": "Commons own-work file description directly identifies Belarus 923.4 factory open day; Stage IIIa version unverified.",
+      "variantExact": false
+    }
+  ],
+  "sha256": {
+    "belarus-451-homoatrox-open-day-2017": {
+      "480": {
+        "bytes": 119374,
+        "sha256": "2ee4a14ec3533bb89ade9393ea94c8e8e18a51b3a103d12a178e50e99417b357",
+        "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8c/Belarus_451_%28open_day_2017%29_1.jpg/500px-Belarus_451_%28open_day_2017%29_1.jpg"
+      },
+      "960": {
+        "bytes": 345365,
+        "sha256": "ce880b2ae594984c4481f0d7e795be965d3c331cd4f0eeffd3c23f3c58f356a2",
+        "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8c/Belarus_451_%28open_day_2017%29_1.jpg/960px-Belarus_451_%28open_day_2017%29_1.jpg"
+      },
+      "1920": {
+        "bytes": 1192936,
+        "sha256": "5d1d6ee5cb010a8133f9f62462aed3193b70ffce0f5b71a4dc1f81510e3b4fdb",
+        "url": "https://upload.wikimedia.org/wikipedia/commons/8/8c/Belarus_451_%28open_day_2017%29_1.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+      }
+    },
+    "belarus-572-bronzedrache-2022": {
+      "480": {
+        "bytes": 52513,
+        "sha256": "f668cafa5b774d989539db077c77dbc7fbf267eb7d2cdc09672de30f36cfdafa",
+        "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/72/Belazs_MTZ_572.jpg/500px-Belazs_MTZ_572.jpg"
+      },
+      "960": {
+        "bytes": 167855,
+        "sha256": "a3e739d16dc9775b62b3c9a4f75ce6907b7cd150b9c9dba1e5835e804f074dff",
+        "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/72/Belazs_MTZ_572.jpg/960px-Belazs_MTZ_572.jpg"
+      },
+      "1920": {
+        "bytes": 399596,
+        "sha256": "c6477b1f9e8ce192a6b37dac056888a879ad068428550f4c14e233b481d23be6",
+        "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/72/Belazs_MTZ_572.jpg/1920px-Belazs_MTZ_572.jpg"
+      }
+    },
+    "belarus-923-4-homoatrox-open-day-2017": {
+      "480": {
+        "bytes": 79964,
+        "sha256": "622351c9d8fa6c2b4b21506d3e99dbc10729ee544a3e7e2d5fc93e304a74dbea",
+        "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fc/Belarus_923.4_%28open_day_2017%29_1.jpg/500px-Belarus_923.4_%28open_day_2017%29_1.jpg"
+      },
+      "960": {
+        "bytes": 221304,
+        "sha256": "17d60564f081d72c1ddc3a08565bd536e6466cec1de54ec3085214524394af3b",
+        "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fc/Belarus_923.4_%28open_day_2017%29_1.jpg/960px-Belarus_923.4_%28open_day_2017%29_1.jpg"
+      },
+      "1920": {
+        "bytes": 681188,
+        "sha256": "46d2869da441e2c0eddc3949f4f34665ded3783241a414cb90aa0753a13fc681",
+        "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fc/Belarus_923.4_%28open_day_2017%29_1.jpg/1920px-Belarus_923.4_%28open_day_2017%29_1.jpg"
+      }
+    }
+  },
+  "importProof": [
+    {
+      "fileId": "belarus-451-homoatrox-open-day-2017",
+      "commonsSourceUrl": "https://upload.wikimedia.org/wikipedia/commons/8/8c/Belarus_451_%28open_day_2017%29_1.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+      "sourcePage": "https://commons.wikimedia.org/wiki/File:Belarus_451_(open_day_2017)_1.jpg",
+      "photographer": "Homoatrox",
+      "license": "CC BY-SA 4.0",
+      "artistVerified": "Homoatrox",
+      "originalWidth": 1480,
+      "originalHeight": 2216,
+      "derivatives": {
+        "480": {
+          "bytes": 119374,
+          "sha256": "2ee4a14ec3533bb89ade9393ea94c8e8e18a51b3a103d12a178e50e99417b357",
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8c/Belarus_451_%28open_day_2017%29_1.jpg/500px-Belarus_451_%28open_day_2017%29_1.jpg"
+        },
+        "960": {
+          "bytes": 345365,
+          "sha256": "ce880b2ae594984c4481f0d7e795be965d3c331cd4f0eeffd3c23f3c58f356a2",
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8c/Belarus_451_%28open_day_2017%29_1.jpg/960px-Belarus_451_%28open_day_2017%29_1.jpg"
+        },
+        "1920": {
+          "bytes": 1192936,
+          "sha256": "5d1d6ee5cb010a8133f9f62462aed3193b70ffce0f5b71a4dc1f81510e3b4fdb",
+          "url": "https://upload.wikimedia.org/wikipedia/commons/8/8c/Belarus_451_%28open_day_2017%29_1.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+        }
+      }
+    },
+    {
+      "fileId": "belarus-572-bronzedrache-2022",
+      "commonsSourceUrl": "https://upload.wikimedia.org/wikipedia/commons/7/72/Belazs_MTZ_572.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+      "sourcePage": "https://commons.wikimedia.org/wiki/File:Belazs_MTZ_572.jpg",
+      "photographer": "BronzeDrache",
+      "license": "CC BY-SA 4.0",
+      "artistVerified": "BronzeDrache",
+      "originalWidth": 2000,
+      "originalHeight": 1500,
+      "derivatives": {
+        "480": {
+          "bytes": 52513,
+          "sha256": "f668cafa5b774d989539db077c77dbc7fbf267eb7d2cdc09672de30f36cfdafa",
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/72/Belazs_MTZ_572.jpg/500px-Belazs_MTZ_572.jpg"
+        },
+        "960": {
+          "bytes": 167855,
+          "sha256": "a3e739d16dc9775b62b3c9a4f75ce6907b7cd150b9c9dba1e5835e804f074dff",
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/72/Belazs_MTZ_572.jpg/960px-Belazs_MTZ_572.jpg"
+        },
+        "1920": {
+          "bytes": 399596,
+          "sha256": "c6477b1f9e8ce192a6b37dac056888a879ad068428550f4c14e233b481d23be6",
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/72/Belazs_MTZ_572.jpg/1920px-Belazs_MTZ_572.jpg"
+        }
+      }
+    },
+    {
+      "fileId": "belarus-923-4-homoatrox-open-day-2017",
+      "commonsSourceUrl": "https://upload.wikimedia.org/wikipedia/commons/f/fc/Belarus_923.4_%28open_day_2017%29_1.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+      "sourcePage": "https://commons.wikimedia.org/wiki/File:Belarus_923.4_(open_day_2017)_1.jpg",
+      "photographer": "Homoatrox",
+      "license": "CC BY-SA 4.0",
+      "artistVerified": "Homoatrox",
+      "originalWidth": 3024,
+      "originalHeight": 2760,
+      "derivatives": {
+        "480": {
+          "bytes": 79964,
+          "sha256": "622351c9d8fa6c2b4b21506d3e99dbc10729ee544a3e7e2d5fc93e304a74dbea",
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fc/Belarus_923.4_%28open_day_2017%29_1.jpg/500px-Belarus_923.4_%28open_day_2017%29_1.jpg"
+        },
+        "960": {
+          "bytes": 221304,
+          "sha256": "17d60564f081d72c1ddc3a08565bd536e6466cec1de54ec3085214524394af3b",
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fc/Belarus_923.4_%28open_day_2017%29_1.jpg/960px-Belarus_923.4_%28open_day_2017%29_1.jpg"
+        },
+        "1920": {
+          "bytes": 681188,
+          "sha256": "46d2869da441e2c0eddc3949f4f34665ded3783241a414cb90aa0753a13fc681",
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fc/Belarus_923.4_%28open_day_2017%29_1.jpg/1920px-Belarus_923.4_%28open_day_2017%29_1.jpg"
+        }
+      }
+    }
+  ]
+}

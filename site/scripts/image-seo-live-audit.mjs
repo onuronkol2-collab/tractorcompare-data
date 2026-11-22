@@ -1,6 +1,7 @@
 // Credential-free check of TractorVS public Google Images prerequisites.
 import {imageLicenseMetadataIssues} from "./image-license-jsonld-check.mjs";
-import {copyrightZhSitemapPages} from "./image-copyright-live-cases.mjs";
+import {copyrightZhSitemapPages,copyrightLocaleSitemapSamples,strictCopyrightAuditMode} from "./image-copyright-live-cases.mjs";
+import {LOCALES} from "../src/lib/locales.ts";
 import {APPROVED_TRACTOR_PHOTOS} from "../src/lib/tractor-photos.ts";
 import {parseProductionSitemapInventory} from "./production-sitemap-inventory.mjs";
 import {classifyPublicImageSitemap} from "./image-seo-asset-boundaries.mjs";
@@ -16,7 +17,7 @@ async function get(url){
  });
 }
 const sitemapIndexUrl=origin+"/sitemap-index.xml";
-const checked=new Set(),forumMediaAssets=new Set(),zhCopyrightCases=[];
+const checked=new Set(),forumMediaAssets=new Set(),zhCopyrightCases=[],otherLocaleCopyrightCases=[];
 try{
  const master=await get(sitemapIndexUrl);
  if(master.r.status!==200)throw Error("Master sitemap HTTP "+master.r.status);
@@ -32,6 +33,7 @@ try{
  const inventory=parseProductionSitemapInventory({indexXml,children});
  const imageXml=children.get(origin+"/image-sitemap.xml");
  zhCopyrightCases.push(...copyrightZhSitemapPages(imageXml,APPROVED_TRACTOR_PHOTOS));
+ otherLocaleCopyrightCases.push(...copyrightLocaleSitemapSamples(imageXml,APPROVED_TRACTOR_PHOTOS,LOCALES));
  const images=classifyPublicImageSitemap(imageXml,{
   htmlPages:inventory.htmlPages,forumPages:inventory.forumPages
  });
@@ -82,25 +84,34 @@ try{
 // must describe the same image-specific Commons file in each language.
 const rightsSamples=[
  {path:"/zh/tractors/valtra-g135-1a85eb12/",label:"Valtra G135 (CC BY-SA 4.0)"},
- {path:"/zh/tractors/valtra-f105-1f000c28/",label:"Valtra F105 (CC0)"},
+ {path:"/zh/tractors/valtra-f105-1f000c28/",label:"Valtra F105 (CC0)",image:"valtra-f105-80828837",unclaimed:true,expectedLicense:"https://creativecommons.org/publicdomain/zero/1.0/"},
+ {path:"/zh/tractors/swaraj-735-fe-7c7b069f/",label:"Swaraj 735 FE (Flickr-licensed; rights unproven)",image:"swaraj-735-fe-0269bdfd",unclaimed:true,expectedLicense:"https://creativecommons.org/licenses/by/2.0/"},
  // Exact Search Console "validation cannot continue" examples; do not
  // demand post-deploy markup during the pre-deploy PR/main-push checks.
  {path:"/zh/tractors/valtra-q305-5c3743cd/",label:"Valtra Q305 (copyrightNotice)",owner:"MarcelX42",image:"valtra-q305-d4c20807"},
  {path:"/zh/tractors/mccormick-x5-110-hc-c5111bb6/",label:"McCormick X5.110 HC (copyrightNotice)",owner:"MarcelX42",image:"mccormick-x5-110-hc-marcelx42-2023"},
  {path:"/zh/tractors/steyr-4075-kompakt-19743251/",label:"Steyr 4075 Kompakt (copyrightNotice)",owner:"JoachimKohlerBremen",image:"steyr-4075-kompakt-joachim-2018"},
 ];
-const postDeployMode=process.env.GITHUB_EVENT_NAME==="schedule" ||
-  process.env.GITHUB_EVENT_NAME==="workflow_dispatch";
-for(const {path,label,owner,image} of rightsSamples){
+// A push's first attempt may run before Cloudflare deploy. A deliberately
+// re-run main job after the Cloudflare success status must be strict.
+const postDeployMode=strictCopyrightAuditMode({
+ eventName:process.env.GITHUB_EVENT_NAME,
+ ref:process.env.GITHUB_REF,
+ runAttempt:process.env.GITHUB_RUN_ATTEMPT
+});
+for(const {path,label,owner,image,unclaimed,expectedLicense} of rightsSamples){
  try{
   const {r,bytes}=await get(origin+path);
   const html=new TextDecoder().decode(bytes);
   const rights=imageLicenseMetadataIssues(html,{
-    expectedCopyrightOwner:postDeployMode&&owner ? owner : null
+    expectedCopyrightOwner:postDeployMode&&owner ? owner : null,
+    prohibitCopyrightNotice:Boolean(unclaimed)
   });
   console.log("TRACTOR_IMAGE_RIGHTS "+JSON.stringify({
     sample:label,http:r.status,postDeployMode,...rights
   }));
+  if(expectedLicense && rights.license!==expectedLicense)
+    fail(label+" changed the source-specific CC license");
   if(image && !String(rights.contentUrl||"").endsWith("/"+image+"-1920.jpg"))
     fail(label+" has mismatched image identity or license metadata");
   if(r.status!==200)fail(label+" page HTTP "+r.status);
@@ -137,5 +148,33 @@ console.log("TRACTOR_IMAGE_GOOGLE_COPYRIGHT_SUMMARY "+JSON.stringify({
  additionalZhPages:additionalCopyrightPages,sitemapMatched:zhCopyrightCases.length,
  strictAfterDeployment:postDeployMode
 }));
+// Non-Chinese locale coverage is bounded to one sitemap-backed rights-verified
+// photograph per language. This catches live deployment/translation regressions
+// without turning the weekly audit into thousands of network requests.
+let checkedOtherLocales=0;
+for(const entry of otherLocaleCopyrightCases){
+ try{
+  const {r,bytes}=await get(origin+entry.path);
+  const rights=imageLicenseMetadataIssues(new TextDecoder().decode(bytes),{
+    expectedCopyrightOwner:postDeployMode?entry.owner:null
+  });
+  console.log("TRACTOR_IMAGE_LOCALE_COPYRIGHT "+JSON.stringify({
+    locale:entry.locale,path:entry.path,fileId:entry.fileId,http:r.status,
+    expectedOwner:postDeployMode?entry.owner:null,actualOwner:rights.copyrightNotice,
+    errors:rights.issues
+  }));
+  if(r.status!==200)fail("Locale copyright page HTTP "+r.status+" "+entry.locale+" "+entry.path);
+  if(!String(rights.contentUrl||"").endsWith("/"+entry.fileId+"-1920.jpg"))
+    fail("Locale copyright photo identity mismatch "+entry.locale+" "+entry.path);
+  for(const issue of rights.issues)fail("Locale copyright "+entry.locale+" "+issue);
+  checkedOtherLocales++;
+ }catch(e){fail("Locale copyright fetch "+entry.locale+" "+String(e));}
+}
+console.log("TRACTOR_IMAGE_LOCALE_COPYRIGHT_SUMMARY "+JSON.stringify({
+  sampledLanguages:checkedOtherLocales,expectedLanguages:LOCALES.length-1,
+  strictAfterDeployment:postDeployMode
+}));
+if(checkedOtherLocales!==LOCALES.length-1)
+  fail("Missing live non-Chinese locale copyright coverage");
 console.log("TRACTOR_IMAGE_AUDIT_SUMMARY "+JSON.stringify({checked_tractor_photos:checked.size,checked_approved_forum_media:forumMediaAssets.size,errors:errors.length}));
 if(errors.length)process.exitCode=1;
