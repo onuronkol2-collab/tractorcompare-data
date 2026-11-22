@@ -25,7 +25,7 @@ test("English and Turkish homepage metadata describes real search, compare and a
     assert.ok(title.length <= 65, "Homepage title remains readable in results");
     assert.ok(description.length >= 95 && description.length <= 160,
       "Homepage description is informative without padding or truncation");
-    assert.doesNotMatch(description, /\\b(?:best|guarantee|guaranteed|en iyi|garanti)\\b/i,
+    assert.doesNotMatch(description, /\b(?:best|guarantee|guaranteed|en iyi|garanti)\b/i,
       "No unsupported promotion or rankings");
   }
   assert.match(en.title, /Tractor Specifications.*Model Comparisons/);
@@ -36,6 +36,6 @@ test("English and Turkish homepage metadata describes real search, compare and a
   assert.match(home, /const catalogUrl = localizedPath/);
   assert.match(home, /const compareUrl = localizedPath/);
   assert.match(home, /const advisorUrl = localizedPath/);
-  assert.match(home, /<SiteLayout lang=\\{lang\\} title=\\{seoTitle\\} description=\\{seoDescription\\}/);
+  assert.match(home, /<SiteLayout lang=\{lang\} title=\{seoTitle\} description=\{seoDescription\} structuredData=\{homeSchema\}>/);
   assert.match(home, /description:seoDescription/);
 });
