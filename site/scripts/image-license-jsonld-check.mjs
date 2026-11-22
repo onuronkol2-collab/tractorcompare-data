@@ -3,7 +3,10 @@
  * Google image metadata associates the real image with contentUrl and the
  * specific Commons File page with acquireLicensePage.
  */
-export function imageLicenseMetadataIssues(html, { siteOrigin = "https://tractorvs.com" } = {}) {
+export function imageLicenseMetadataIssues(html, {
+  siteOrigin = "https://tractorvs.com",
+  expectedCopyrightOwner = null
+} = {}) {
   const issues = [];
   const photoObjects = [];
   const scripts = [...String(html).matchAll(/<script\b(?=[^>]*\btype=["']application\/ld\+json["'])[^>]*>([\s\S]*?)<\/script>/gi)];
@@ -35,8 +38,19 @@ export function imageLicenseMetadataIssues(html, { siteOrigin = "https://tractor
     issues.push("ImageObject.acquireLicensePage must link to the image-specific Commons File page");
   if (typeof photo.creditText !== "string" || !photo.creditText.trim())
     issues.push("Photographer and license attribution not available");
-  if (photo.copyrightNotice !== undefined)
-    issues.push("Unverified ownership statement reintroduced");
+  if (photo.copyrightNotice !== undefined) {
+    // A Google recommendation is not permission to invent image ownership.
+    // Model-specific proof is enforced separately by the Commons online gate.
+    const holder=photo.copyrightNotice;
+    if (typeof holder!=="string" || !holder.trim() ||
+        /©|(?:tractorvs(?:\.com)?)/i.test(holder) ||
+        photo.creator?.name!==holder ||
+        !String(photo.creditText||"").includes(holder) ||
+        String(photo.license||"").includes("/publicdomain/zero/"))
+      issues.push("Unverified ownership statement reintroduced");
+  }
+  if (expectedCopyrightOwner!==null && photo.copyrightNotice!==expectedCopyrightOwner)
+    issues.push("Verified copyrightNotice missing or incorrect for source photograph");
   if (typeof photo.url === "string" && photo.url.startsWith("https://commons.wikimedia.org/wiki/File:"))
     issues.push("Commons description page incorrectly declared as ImageObject.url instead of acquireLicensePage");
   return {
@@ -45,5 +59,6 @@ export function imageLicenseMetadataIssues(html, { siteOrigin = "https://tractor
     contentUrl: photo.contentUrl ?? null,
     license: photo.license ?? null,
     acquireLicensePage: photo.acquireLicensePage ?? null,
+    copyrightNotice: photo.copyrightNotice ?? null,
   };
 }
