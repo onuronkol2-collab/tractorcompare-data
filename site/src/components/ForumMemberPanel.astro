@@ -44,7 +44,8 @@ const copy=JSON.stringify(MEMBER_TEXT[lang]);
     </div>
    </header>
    <ol data-leaders aria-live="polite"></ol>
-   <p data-leader-empty>{mt(lang,"loading")}</p>
+   <p data-leader-empty role="status" aria-live="polite">{mt(lang,"loading")}</p>
+   <button type="button" class="member-retry" data-retry-leaders hidden>{mt(lang,"retryMembers")}</button>
   </section>
   <section class="member-own" id="forum-member-editor"
     data-member-own hidden aria-label={mt(lang,"myProfile")}>
@@ -83,7 +84,8 @@ const copy=JSON.stringify(MEMBER_TEXT[lang]);
    <h3 id="forum-new-members-title">{mt(lang,"recentMembers")}</h3>
    <p>{mt(lang,"recentMembersIntro")}</p>
    <ol data-recent-members aria-live="polite"></ol>
-   <p data-recent-members-status role="status">{mt(lang,"loading")}</p>
+   <p data-recent-members-status role="status" aria-live="polite">{mt(lang,"loading")}</p>
+   <button type="button" class="member-retry" data-retry-recent hidden>{mt(lang,"retryMembers")}</button>
  </section>
  <dialog data-member-dialog aria-label={mt(lang,"viewProfile")}>
    <div class="member-dialog-top">
@@ -178,6 +180,10 @@ const copy=JSON.stringify(MEMBER_TEXT[lang]);
 .member-recent .member-entry small{display:block;font-size:12px;margin-top:3px}
 .member-recent strong{overflow-wrap:anywhere}
 .member-recent [data-recent-members-status]{margin-top:12px}
+.member-community .member-retry{font:inherit;font-size:13px;font-weight:800;
+ background:#f2f8ef;color:#215838;border:1px solid #a9c9aa;
+ border-radius:10px;padding:10px 15px;min-height:44px;cursor:pointer}
+.member-community .member-retry:hover{background:#e6f2e1}
 .member-community button:focus-visible,.member-community input:focus-visible,
 .member-community textarea:focus-visible{outline:3px solid #75b385;outline-offset:2px}
 @media(max-width:780px){.member-grid{grid-template-columns:1fr}}
@@ -271,6 +277,8 @@ for(const root of widgets){
   const recentEl=query<HTMLOListElement>("[data-recent-members]");
   const recentStatus=query<HTMLElement>("[data-recent-members-status]");
  const empty=query<HTMLElement>("[data-leader-empty]");
+ const retryLeaders=query<HTMLButtonElement>("[data-retry-leaders]");
+ const retryRecent=query<HTMLButtonElement>("[data-retry-recent]");
  const profileForm=query<HTMLFormElement>("[data-member-form]");
  const grid=query<HTMLElement>("[data-member-grid]");
  const leaderSection=query<HTMLElement>("[data-member-leaders]");
@@ -337,7 +345,7 @@ for(const root of widgets){
  activityToggle?.addEventListener("click",()=>{
   if(!ownId)return;
   showActivity=!showActivity;
-  if(showActivity)editing=false;
+  if(showActivity){editing=false;void Promise.all([loadBookmarks(),loadFollowed()]);}
   setPanels();
  });
  document.querySelectorAll<HTMLAnchorElement>("[data-forum-leaderboard-link]").forEach(link=>{
@@ -398,6 +406,8 @@ for(const root of widgets){
   }
  }
  async function loadLeaders(){
+  if(empty){empty.hidden=false;empty.textContent=txt.loading;}
+  if(retryLeaders)retryLeaders.hidden=true;
   try{
    const params=new URLSearchParams({select:"id,handle,display_name,bio,favorite_brand,avatar_path,created_at,show_leaderboard,score_total,score_30d,topic_count,reply_count,helpful_votes",
     show_leaderboard:"eq.true",order:"score_30d.desc,score_total.desc",limit:"60"});
@@ -405,11 +415,16 @@ for(const root of widgets){
     signal:AbortSignal.timeout(12000)});
    if(!res.ok)throw Error();
    leaders=await res.json();renderLeaders();
-  }catch{if(empty)empty.textContent=txt.noMembers}
+  }catch{
+   leaders=[];renderLeaders();
+   if(empty){empty.hidden=false;empty.textContent=txt.memberLoadError;}
+   if(retryLeaders)retryLeaders.hidden=false;
+  }
  }
  async function loadRecentMembers(){
   if(!recentEl)return;
   recentEl.replaceChildren();
+  if(retryRecent)retryRecent.hidden=true;
   if(recentStatus)recentStatus.textContent=txt.loading;
   try{
    // Same security-invoker view and opt-in rule as the existing leaderboard.
@@ -444,12 +459,14 @@ for(const root of widgets){
    }
    if(recentStatus)recentStatus.textContent=valid.length?"":txt.noRecentMembers;
   }catch{
-   if(recentStatus)recentStatus.textContent=txt.noRecentMembers;
+   if(recentStatus)recentStatus.textContent=txt.memberLoadError;
+   if(retryRecent)retryRecent.hidden=false;
   }
  }
  async function loadBookmarks(){
   if(!bookmarkList||!bookmarkPanel)return;
   bookmarkList.replaceChildren();bookmarkPanel.hidden=!(ownId&&showActivity);
+  if(bookmarkEmpty)bookmarkEmpty.textContent=txt.noBookmarks;
   if(!ownId)return;
   try{
    const res=await fetch(cfg.url+"/rest/v1/tc_member_bookmarks?select=topic_id&order=created_at.desc&limit=15",
@@ -471,13 +488,13 @@ for(const root of widgets){
     link.textContent=p.title;li.append(link);bookmarkList.append(li);
    }
    if(bookmarkEmpty)bookmarkEmpty.hidden=rows.length>0;
-  }catch{if(bookmarkEmpty)bookmarkEmpty.hidden=false}
+  }catch{if(bookmarkEmpty){bookmarkEmpty.hidden=false;bookmarkEmpty.textContent=txt.memberLoadError}}
  }
  async function loadFollowed(){
   if(!followingPanel||!followingList)return;
   followingList.replaceChildren();followingPanel.hidden=!(ownId&&showActivity);
   if(!ownId)return;
-  if(followingEmpty)followingEmpty.hidden=false;
+  if(followingEmpty){followingEmpty.hidden=false;followingEmpty.textContent=txt.noFollowingTopics;}
   try{
    const source=await fetch(cfg.url+"/rest/v1/tc_member_topic_follows?"+
     new URLSearchParams({select:"topic_id,last_seen_at",order:"created_at.desc",limit:"15"}),{
@@ -518,7 +535,7 @@ for(const root of widgets){
     followingList.append(li);
    }
    if(followingEmpty)followingEmpty.hidden=rows.length>0;
-  }catch{if(followingEmpty)followingEmpty.hidden=false}
+  }catch{if(followingEmpty){followingEmpty.hidden=false;followingEmpty.textContent=txt.memberLoadError}}
  }
 
  // A new member does not need to fill in a profile form. Create a neutral
@@ -686,6 +703,8 @@ for(const root of widgets){
    renderLeaders();
   });
  }
+ retryLeaders?.addEventListener("click",()=>void loadLeaders());
+ retryRecent?.addEventListener("click",()=>void loadRecentMembers());
  window.addEventListener("tractorvs-forum-session",()=>void loadSelf());
  window.addEventListener("storage",()=>void loadSelf());
  void loadLeaders();void loadRecentMembers();void loadSelf();

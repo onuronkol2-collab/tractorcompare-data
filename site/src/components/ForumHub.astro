@@ -9,6 +9,7 @@ import {allPublicForumTopics,forumDate,isIndexableForumTopic,publicForumClientCo
 import {approvedForumHubLocales} from "../lib/forum-hub-locales.mjs";
 import {FORUM_LIVE_TEXT} from "../lib/forum-live-i18n.ts";
 import {forumCardExcerpt} from "../lib/forum-format.mjs";
+import {forumSearchText} from "../lib/forum-search.mjs";
 import {getPublicCatalog} from "../lib/catalog.ts";
 import {localizedPath,LOCALES,LOCALE_TAGS,type Locale} from "../lib/locales.ts";
 interface Props {lang:Locale}
@@ -92,7 +93,7 @@ const schema=indexable?{
       <p data-forum-live-status role="status" aria-live="polite"></p>
       <div class="community-topic-grid" data-forum-live-grid hidden></div>
     </div>
-     <div class="community-filters" data-forum-filters hidden={topics.length===0}>
+     <div class="community-filters" data-forum-filters data-matching-label={ft(lang,"matchingResults")} hidden={topics.length===0}>
       <label>
        <span>{ft(lang,"search")}</span>
        <input type="search" id="forum-filter" autocomplete="off" placeholder={ft(lang,"search")}/>
@@ -102,12 +103,16 @@ const schema=indexable?{
        {FORUM_CATEGORY_KEYS.map(key=>
         <button type="button" data-forum-category={key} aria-pressed="false">{ft(lang,key)}</button>)}
       </div>
+      <div class="community-filter-actions">
+       <span class="community-filter-count" data-forum-match-count hidden></span>
+       <button class="community-filter-clear" type="button" data-forum-clear hidden>{ft(lang,"clearFilters")}</button>
+      </div>
      </div>
     {topics.length>0?<div class="community-topic-grid" id="forum-topic-list">
       {topics.map(topic=>{
        const model=topic.tractor_id?tractors.get(topic.tractor_id):undefined;
        return <article class="community-topic" data-forum-topic data-forum-topic-id={topic.topic_id}
-         data-forum-search={[topic.title,topic.body,model?.brand_name,model?.model_name].filter(Boolean).join(" ").toLocaleLowerCase()}
+         data-forum-search={forumSearchText([topic.title,topic.body,model?.brand_name,model?.model_name].filter(Boolean).join(" "),lang)}
          data-forum-topic-category={topic.category}>
          <div class="community-topic-meta">
           <span>{ft(lang,topic.category)}</span>
@@ -288,6 +293,13 @@ const schema=indexable?{
 .community-filters input{width:100%;min-height:46px;font-size:14px;color:#173b27;
  border:1px solid #d5dfd5;background:#f9fbf8;border-radius:11px;padding:12px 14px}
 .community-filters input::placeholder{color:#526b5a;opacity:1}
+.community-filter-actions{display:flex;align-items:center;justify-content:space-between;
+ gap:10px;flex-wrap:wrap}
+.community-filter-count{font-size:12px;line-height:1.5;font-weight:750;color:#42634d}
+.community-filters .community-filter-clear{font:inherit;font-size:12px;font-weight:800;
+ min-height:44px;border:1px solid #c3dbc1;border-radius:9px;padding:10px 14px;
+ background:#eaf4e6;color:#1b5736;cursor:pointer}
+.community-filters .community-filter-clear:hover{background:#def0d9}
 .community-tabs{display:flex;gap:7px;margin:14px 0 0;flex-wrap:wrap}
 .community-tabs button{min-height:44px;padding:10px 13px;border:1px solid #e0e9df;
  border-radius:9px;background:#f6f8f5;color:#466253;font-size:12px;font-weight:750;
@@ -367,6 +379,7 @@ const schema=indexable?{
 </style>
 <script>
  import {initForumLive} from "../lib/forum-live-client.ts";
+ import {forumSearchText} from "../lib/forum-search.mjs";
  const liveRoot=document.querySelector<HTMLElement>("[data-forum-live-root]");
  if(liveRoot)initForumLive(liveRoot);
  const input=document.querySelector<HTMLInputElement>("#forum-filter");
@@ -374,9 +387,11 @@ const schema=indexable?{
  const categoryButtons=[...document.querySelectorAll<HTMLButtonElement>("[data-forum-category]")];
  const noResults=document.querySelector<HTMLElement>("#forum-no-results");
  const filters=document.querySelector<HTMLElement>("[data-forum-filters]");
+ const countLabel=document.querySelector<HTMLElement>("[data-forum-match-count]");
+ const clear=document.querySelector<HTMLButtonElement>("[data-forum-clear]");
  let selected="all";
  const filter=()=>{
-  const q=(input?.value||"").trim().toLocaleLowerCase();
+  const q=forumSearchText((input?.value||"").trim(),document.documentElement.lang.toLowerCase()==="pt-br"?"pt-br":document.documentElement.lang.slice(0,2));
   const items=cards();
   const hasTopics=items.length>0;
   if(filters)filters.hidden=!hasTopics;
@@ -388,7 +403,23 @@ const schema=indexable?{
    if(visible)count++;
   }
   if(noResults)noResults.hidden=!hasTopics||count>0;
+  const active=Boolean(q)||selected!=="all";
+  if(countLabel){
+   countLabel.hidden=!hasTopics||!active;
+   if(hasTopics&&active)countLabel.textContent=String(count)+" "+(filters?.dataset.matchingLabel||"");
+  }
+  if(clear)clear.hidden=!hasTopics||!active;
  };
+ clear?.addEventListener("click",()=>{
+  if(input)input.value="";
+  selected="all";
+  categoryButtons.forEach(button=>{
+   const active=button.dataset.forumCategory==="all";
+   button.classList.toggle("is-active",active);
+   button.setAttribute("aria-pressed",String(active));
+  });
+  filter();input?.focus();
+ });
  input?.addEventListener("input",filter);
  document.addEventListener("tractorvs-forum-live-updated",filter);
  for(const button of categoryButtons)button.addEventListener("click",()=>{
