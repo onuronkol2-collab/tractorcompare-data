@@ -25,6 +25,7 @@ on:
       - "site/scripts/archive-brand-photo-discovery.mjs"
       - "site/scripts/photo-model-identity.mjs"
       - "site/scripts/photo-license-check.mjs"
+      - "site/scripts/photo-openverse-independent-batch.mjs"
       - "site/scripts/photo-model-aliases.mjs"
       - "site/tests/photo-*.test.mjs"
       - "site/tests/fixtures/photo-offline-fetch.mjs"
@@ -76,6 +77,15 @@ jobs:
         id: published
         continue-on-error: true
         run: node site/scripts/batch-photo-discovery.mjs
+      # Second independent index, distinct from Wikimedia Commons. No rights
+      # promotion: Openverse metadata remains a private editorial lead only.
+      # This phase has a 12-request/day cap and a hard stop on 429. Its own
+      # report records partial errors without ever changing Commons QA gates.
+      - name: Discover independent Flickr and Europeana CC candidates via Openverse (no publishing)
+        id: openverse
+        if: steps.inventory.outcome == 'success'
+        continue-on-error: true
+        run: node --experimental-strip-types site/scripts/photo-openverse-independent-batch.mjs
       - name: Archive copyright and identity research without publishing drafts
         if: always()
         uses: actions/upload-artifact@v4
@@ -89,10 +99,12 @@ jobs:
           INVENTORY_OUTCOME: ${{ steps.inventory.outcome }}
           ARCHIVE_OUTCOME: ${{ steps.archive.outcome }}
           PUBLISHED_OUTCOME: ${{ steps.published.outcome }}
+          OPENVERSE_OUTCOME: ${{ steps.openverse.outcome }}
         run: |
           echo "Live inventory outcome: $INVENTORY_OUTCOME"
           echo "Archive research outcome: $ARCHIVE_OUTCOME"
           echo "Published model research outcome: $PUBLISHED_OUTCOME"
+          echo "Independent Openverse (nonpublishing) outcome: $OPENVERSE_OUTCOME"
           node site/scripts/photo-research-quality-gate.mjs
           test "$INVENTORY_OUTCOME" = "success"
           test "$ARCHIVE_OUTCOME" = "success"
