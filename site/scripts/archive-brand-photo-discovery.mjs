@@ -1,5 +1,6 @@
 import {matchesPhotoFileModel} from "./photo-model-identity.mjs";
 import {allowedPhotoReuseLicense} from "./photo-license-check.mjs";
+import {requireCommonsQueryResponse} from "./photo-source-response.mjs";
 /** Bulk archive research; brand-level Commons searches avoid 405 API requests.
  * All results are candidates only. They NEVER publish to TractorVS.
  */
@@ -30,7 +31,7 @@ async function query(params){
         signal:AbortSignal.timeout(30000)
       });
       if(!response.ok)throw Error("Commons HTTP "+response.status);
-      return await response.json();
+      return requireCommonsQueryResponse(await response.json());
     }catch(e){last=e;}
   }
   throw last;
@@ -98,3 +99,5 @@ console.log("ARCHIVE_IMAGE_DISCOVERY_SUMMARY "+JSON.stringify({
   brands:byBrand.size,uniqueModels:results.length,
   modelsWithLicensedTitleCandidates:covered,errors:errors.length
 }));
+// Preserve the report for diagnosis, but incomplete research is never success.
+if(errors.length)process.exitCode=1;

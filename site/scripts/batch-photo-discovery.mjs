@@ -1,6 +1,7 @@
 import {matchesPhotoFileModel} from "./photo-model-identity.mjs";
 import {allowedPhotoReuseLicense} from "./photo-license-check.mjs";
 import {fetchIndexedSitemapPages} from "./photo-sitemap-fetch.mjs";
+import {requireCommonsQueryResponse} from "./photo-source-response.mjs";
 /**
  * One-pass, read-only catalogue image discovery.
  * Pulls public LIVE model inventory from the current published sitemap;
@@ -33,21 +34,26 @@ async function get(url,asJson=false){
       const response=await fetch(url,{signal:AbortSignal.timeout(22000),
         headers:{"User-Agent":USER_AGENT,Accept:asJson?"application/json":"text/html,application/xml"}});
       if(!response.ok)throw Error("HTTP "+response.status+" "+url);
+      if(asJson && !/application\/(?:[a-z0-9.+-]*\+)?json(?:;|$)/i.test(response.headers.get("content-type")||""))
+        throw Error("Research API returned non-JSON response for "+new URL(url).origin);
       return asJson?await response.json():await response.text();
     }catch(e){last=e;if(i<2)await delay((i+1)*550);}
   }
   throw last;
 }
+// Positional wrappers: Array.map must never turn an index into a JSON flag.
+const getText=url=>get(url,false);
+const getJson=url=>get(url,true);
 async function publicInventory(){
-  const index=await get(new URL("/sitemap-index.xml",ORIGIN));
-  const pages=await fetchIndexedSitemapPages(index,get);
+  const index=await getText(new URL("/sitemap-index.xml",ORIGIN));
+  const pages=await fetchIndexedSitemapPages(index,getText,{origin:ORIGIN});
   const detail=pages.filter(link=>/^\/tractors\/[^/]+\/$/.test(new URL(link).pathname));
   const results=[];
   for(let i=0;i<detail.length;i+=REQUEST_LIMIT){
     const batch=detail.slice(i,i+REQUEST_LIMIT);
     const records=await Promise.all(batch.map(async link=>{
       try{
-        const html=await get(link);
+        const html=await getText(link);
         const scripts=[...html.matchAll(/<script\b[^>]*type="application\/ld\+json"[^>]*>([\s\S]*?)<\/script>/gi)];
         for(const [,raw] of scripts){
           try{
@@ -103,7 +109,7 @@ async function commonsCandidates(record){
     url.searchParams.set("prop","imageinfo");
     url.searchParams.set("iiprop","url|size|mime|extmetadata");
     url.searchParams.set("iiurlwidth","960");
-    const body=await get(url.toString(),true);
+    const body=requireCommonsQueryResponse(await getJson(url.toString()));
     for(const page of Array.isArray(body.query?.pages)?body.query.pages:[]){
       if(page.title)found.set(page.title,page);
     }
@@ -186,7 +192,8 @@ async function main(){
     await mkdir(PRIVATE_OUTPUT,{recursive:true});
     await writeFile(PRIVATE_OUTPUT+"/draft-report.json",JSON.stringify({generatedAt:new Date().toISOString(),note:"PRIVATE DRAFT RESEARCH. DO NOT PUBLISH.",models:draftReviewed},null,2),{mode:0o600});
   }
-  const report={generatedAt:new Date().toISOString(),note:
+  const report={generatedAt:new Date().toISOString(),
+    runStatus: publicRecords.some(x=>x.error)||reviewed.some(x=>x.error)?"partial":"complete",note:
     "Candidate discovery only. Photos are NOT published, uploaded, licensed by TractorVS, or identity-reviewed.",
     publicModelPages:publicRecords.length,optionalPrivateRecords:privateRecords.length,
     modelSearches:publicReviewed.length,models:publicReviewed};
@@ -199,6 +206,6 @@ async function main(){
   const failed=reviewed.filter(r=>r.error).length;
   console.log("IMAGE_DISCOVERY_SUMMARY "+JSON.stringify({modelSearches:reviewed.length,
     rightsClearedTitleCandidates:candidates,searchFailures:failed,output:OUTPUT}));
-  if(!publicReviewed.length||publicRecords.some(x=>x.error))process.exitCode=1;
+  if(!publicReviewed.length||publicRecords.some(x=>x.error)||failed>0)process.exitCode=1;
 }
 main().catch(e=>{console.error("IMAGE_DISCOVERY_ERROR "+String(e));process.exitCode=1;});
