@@ -366,6 +366,8 @@ test("Google ImageObject licensing is model-specific across all approved Commons
     if(seen.has(key))continue;
     seen.add(key);
     const item=tractor(record.brand,record.model);
+    // Newly verified variants are UUID-scoped; synthetic tests carry the exact published ID.
+    if(record.tractorId)item.tractor_id=record.tractorId;
     const photo=primaryTractorPhoto(item);
     assert.ok(photo,"Approved photo must resolve to an exact real model: "+key);
     for(const locale of LOCALES){
@@ -621,8 +623,13 @@ test("source-backed copyright notices cover approved Google warning images in al
   "valtra-t215-88d0ab88","valtra-a105-cd63351d",
   "valtra-a85-af39c01a","valtra-a75-f99b4394"
  ]);
- const expected=new Set([...originalThree,...reviewedTwenty,"belarus-132n-picture30-2011"]);
- assert.equal(expected.size,24);
+ const exactTym=new Set([
+  "tym-t2026-2500l-marcelx42-2023",
+  "tym-t4058-6225c-marcelx42-2023",
+  "tym-t5075-t78-marcelx42-2023"
+ ]);
+ const expected=new Set([...originalThree,...reviewedTwenty,...exactTym,"belarus-132n-picture30-2011"]);
+ assert.equal(expected.size,27);
  const actual=APPROVED_TRACTOR_PHOTOS.filter(p=>p.copyrightOwner);
  assert.deepEqual(new Set(actual.map(p=>p.fileId)),expected,
    "Unexpected ownership claims must undergo separate review before publication");
@@ -632,6 +639,7 @@ test("source-backed copyright notices cover approved Google warning images in al
   assert.equal(photo.copyrightEvidence,"commons-own-work-self-license");
   assert.equal(photo.licenseName,photo.fileId==="belarus-132n-picture30-2011"?"CC BY-SA 3.0":"CC BY-SA 4.0");
   const record=tractor(photo.brand,photo.model);
+  if(photo.tractorId)record.tractor_id=photo.tractorId;
   const main=primaryTractorPhoto(record);
   assert.equal(main.fileId,photo.fileId);
   for(const locale of LOCALES){
