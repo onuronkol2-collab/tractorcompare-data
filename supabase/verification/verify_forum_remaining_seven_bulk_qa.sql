@@ -1,6 +1,6 @@
--- TractorVS 2026: seven-language bulk editorial QA, READ ONLY.
--- Does not approve/publish any draft. Report only what the database can prove.
--- Run after a new source revision only when source hash is revalidated.
+-- TractorVS 2026: seven-language bulk editorial QA across staged releases, READ ONLY.
+-- Validates approved and pending translations without changing status or exposing drafts.
+-- Historical pre-release audit PR #421; staged release PR #424. Revalidate source hash upon original edit.
 DO $qa$
 DECLARE
  target_topic constant uuid := '713ab252-a925-4ab7-b2c8-a30ce5b86706';
@@ -24,7 +24,8 @@ BEGIN
  IF n<>7 THEN RAISE EXCEPTION 'STOP: expected exactly seven target drafts, found %',n; END IF;
  SELECT count(*) INTO n FROM public.tc_forum_topic_translations
  WHERE topic_id=target_topic AND locale IN ('en','de')
- AND state='ready' AND seo_approved=true;
+ AND state='ready' AND seo_approved=true AND source_hash=expected_hash
+ AND nullif(btrim(reviewed_by_model),'') IS NOT NULL;
  IF n<>2 THEN RAISE EXCEPTION 'STOP: EN/DE release state differs'; END IF;
 
  SELECT coalesce(array_agg(m[1] ORDER BY m[1]),ARRAY[]::text[])
@@ -51,9 +52,16 @@ BEGIN
    ORDER BY locale
  LOOP
   IF draft.source_hash IS DISTINCT FROM expected_hash
-   OR draft.state<>'needs_review' OR draft.seo_approved IS DISTINCT FROM false
-   OR draft.reviewed_by_model IS NOT NULL
-  THEN RAISE EXCEPTION 'STOP: Unsafe status/hash for %',draft.locale; END IF;
+  THEN RAISE EXCEPTION 'STOP: Source hash changed for %',draft.locale; END IF;
+  IF draft.state='ready' THEN
+    IF draft.seo_approved IS DISTINCT FROM true
+     OR nullif(btrim(draft.reviewed_by_model),'') IS NULL
+    THEN RAISE EXCEPTION 'STOP: Approved locale missing SEO/review provenance %',draft.locale; END IF;
+  ELSIF draft.state='needs_review' THEN
+    IF draft.seo_approved IS DISTINCT FROM false OR draft.reviewed_by_model IS NOT NULL
+    THEN RAISE EXCEPTION 'STOP: Pending locale leaked review/SEO approval %',draft.locale; END IF;
+  ELSE RAISE EXCEPTION 'STOP: Unknown translation state %',draft.locale;
+  END IF;
 
   IF public.tc_forum_fact_tokens(source_row.title)
     IS DISTINCT FROM public.tc_forum_fact_tokens(draft.title)
@@ -98,11 +106,16 @@ BEGIN
    OR position('Yanmar' in draft.body)=0 OR position('TYM' in draft.body)=0
   THEN RAISE EXCEPTION 'STOP: unsafe markup or award identity in %',draft.locale; END IF;
  END LOOP;
- IF (SELECT count(*) FROM public.tc_forum_localized_topics WHERE topic_id=target_topic)<>3
- THEN RAISE EXCEPTION 'STOP: unexpected public forum locale count'; END IF;
+ -- Public projection must equal the original plus source-hash-matched approved translations.
+ SELECT 1+count(*) INTO n FROM public.tc_forum_topic_translations
+ WHERE topic_id=target_topic AND locale IN ('en','de','es','fr','hi','ja','pt-br','ru','zh')
+ AND source_hash=expected_hash AND state='ready' AND seo_approved IS TRUE
+ AND nullif(btrim(reviewed_by_model),'') IS NOT NULL;
+ IF (SELECT count(*) FROM public.tc_forum_localized_topics WHERE topic_id=target_topic)<>n
+ THEN RAISE EXCEPTION 'STOP: public locale count differs from approved review states'; END IF;
 END $qa$;
 
--- Security-invoker/RLS must hide seven private drafts from anonymous clients.
+-- Anon must see source plus approved locales, never pending drafts.
 BEGIN;
 SET LOCAL ROLE anon;
 SELECT locale,seo_ready,slug
