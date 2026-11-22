@@ -250,10 +250,13 @@ const pricePayload = JSON.stringify({
     card,index,brand:card.dataset.brand||"",power:card.dataset.power||null,
     year:card.dataset.year||null,name:card.dataset.name||""
   }));
+  let lastSortedOrder:string|null=null;
   const sortCards=()=>{
     const grid=document.querySelector<HTMLElement>("#tractor-card-grid");
     if(!grid)return;
     const order=facetState().sort;
+    // Typing a search term must not move hundreds of DOM nodes on every key.
+    if(order===lastSortedOrder)return;
     const sorted=order==="brand"?rows:[...rows].sort((a,b)=>compareCatalogueRows(a,b,order)||a.index-b.index);
     // Reorder the actual cards, not just CSS order. Reading, keyboard and
     // visual order must agree for assistive technologies. All original
@@ -261,6 +264,7 @@ const pricePayload = JSON.stringify({
     const fragment=document.createDocumentFragment();
     for(const row of sorted)fragment.appendChild(row.card);
     grid.appendChild(fragment);
+    lastSortedOrder=order;
   };
   const filterCatalog = (query: string) => {
     const normalized = normalizeTractorQuery(query);
