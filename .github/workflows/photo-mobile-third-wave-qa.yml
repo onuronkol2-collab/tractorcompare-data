@@ -1,0 +1,53 @@
+name: TractorVS third-wave twelve public licensed photo offline JPEG WebP QA
+on:
+  pull_request:
+    paths:
+      - "site/scripts/photo-mobile-third-wave.mjs"
+      - "site/scripts/photo-mobile-third-wave.py"
+      - "site/tests/photo-mobile-third-wave.test.mjs"
+      - ".github/workflows/photo-mobile-third-wave-qa.yml"
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: tractorvs-third-wave-offline-photo-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+jobs:
+  generate-only:
+    name: Verify twelve public CC photos, offline JPEG/WebP QA — no deployment
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22.23.4"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install isolated free image codec
+        run: python -m pip install --disable-pip-version-check --no-cache-dir Pillow==11.3.0
+      - name: Gate twelve exact previously published photo identities and URLs
+        run: node --experimental-strip-types --test site/tests/photo-mobile-third-wave.test.mjs
+      - name: Test inherited JPEG/WebP codec and verify Python syntax
+        run: |
+          python -m py_compile site/scripts/photo-mobile-third-wave.py
+          python site/scripts/photo-mobile-offline-pilot.py --self-test
+      - name: Prove exactly twelve live public identities from one canonical sitemap request
+        run: |
+          mkdir -p /tmp/tractorvs-third-wave
+          node --experimental-strip-types site/scripts/photo-mobile-third-wave.mjs \
+            /tmp/tractorvs-third-wave/manifest.json
+      - name: Create only non-published 720px JPEG and WebP, with SHA, PSNR, credits
+        run: |
+          python site/scripts/photo-mobile-third-wave.py \
+            --input /tmp/tractorvs-third-wave/manifest.json \
+            --output /tmp/tractorvs-third-wave/review-only
+      - name: Upload images and original CC attribution for separate later review
+        if: success()
+        uses: actions/upload-artifact@v4
+        with:
+          name: tractorvs-third-wave-twelve-licensed-photo-QA-only
+          path: /tmp/tractorvs-third-wave/review-only/
+          retention-days: 7
+          if-no-files-found: error
