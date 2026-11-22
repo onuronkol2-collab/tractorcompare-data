@@ -1,5 +1,6 @@
 import {inspectVisibleMainImages} from "./seo-main-markup.mjs";
 import {inspectDocumentImageAlts,inspectUndocumentedEmptyImageAlts} from "./verify-sitewide-image-alts.mjs";
+import {hasBibliographicTitleLeak} from "./verify-sitewide-seo-titles.mjs";
 import {parseProductionSitemapInventory,selectProductionSeoPages} from "./production-sitemap-inventory.mjs";
 // Read-only production SEO coverage audit. No credentials or writes.
 const BASE = "https://tractorvs.com";
@@ -195,6 +196,8 @@ for(let i=0;i<urls.length;i+=8){
     if(previous && previous!==p)error("duplicate-model-title",p,"Same title as "+previous);
     titlesByLocale.set(titleKey,p);
     // Length guidance is reported for every page type, not only models.
+    if(hasBibliographicTitleLeak(meta.title))
+      warn("model-title-source-note",p,"Bibliographic source wording inside model title; verify exact variant before any edit");
     const graphs=[];
     for(const raw of meta.json)try{
       const value=JSON.parse(raw);graphs.push(...(value["@graph"]||[value]));
