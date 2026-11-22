@@ -4,7 +4,7 @@
  * No Supabase database access; no forum queue, consent data, or publication.
  */
 import {assertCloudflareFreePilotAllowed,CLOUDFLARE_MODEL} from "./cloudflare-m2m100.ts";
-import {sameNumericFacts} from "./translation-quality.ts";
+import {sameNumericFacts,samePhysicalUnitFacts,syntheticTractorTerminologyPresent} from "./translation-quality.ts";
 import {SMOKE_SOURCE} from "./cloudflare-smoke.ts";
 
 export const BATCH_TARGETS=[
@@ -16,6 +16,7 @@ type Fetcher=typeof fetch;
 type BatchRow={
  locale:string;status:"ok"|"error";
  translated_preview?:string;numeric_facts_preserved?:boolean;
+ physical_units_preserved?:boolean;technical_terms_present?:boolean;
  target_script_detected?:boolean|null;error?:string
 };
 function scriptDetected(locale:string,translated:string):boolean|null {
@@ -73,6 +74,8 @@ export async function runCloudflareSyntheticBatch({
   results.push({
    locale:target.locale,status:"ok",translated_preview:translation,
    numeric_facts_preserved:sameNumericFacts(SMOKE_SOURCE,translation,target.locale),
+   physical_units_preserved:samePhysicalUnitFacts(SMOKE_SOURCE,translation),
+   technical_terms_present:syntheticTractorTerminologyPresent(target.locale,translation),
    target_script_detected:scriptDetected(target.locale,translation)
   });
  }
