@@ -1,0 +1,497 @@
+{
+  "schema": "tractorvs-second-batch15-sha-pinned-release-v1",
+  "sourceActionsRun": 45029082604,
+  "sourceArtifactId": 14757380657,
+  "sourceReportSha256": "d228f1338aadd908373e602bb592604493b4d670589f740e04d4c5401b99f20f",
+  "publishApproved": false,
+  "publicPhotos": 15,
+  "assetCount": 30,
+  "heldUnpublishedPhotoIds": [
+    "kubota-m5-112-c3be6b9d",
+    "landini-5-110-roboshift-marcelx42-2023",
+    "new-holland-t6-180-marcelx42-2025"
+  ],
+  "adaptation": "720px LANCZOS resample; JPEG q82 progressive; WebP q80 method6",
+  "records": [
+    {
+      "fileId": "antonio-carraro-tony-8700-v-3a40790b",
+      "brand": "Antonio Carraro",
+      "model": "TONY 8700 V",
+      "sourcePage": "https://commons.wikimedia.org/wiki/File:Antonio_Carraro_TONY_8700V_%282022%29.jpg",
+      "photographer": "Ubraxa",
+      "licenseName": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "configurationExact": false,
+      "source960Bytes": 193541,
+      "source960Sha256": "54433cb19a8ec3bd1a87daa47b5032f70aeabed0671c43b4983a6b8d5d81d1e2",
+      "derivatives": [
+        {
+          "format": "jpeg",
+          "ext": "jpg",
+          "bytes": 109392,
+          "sha256": "322c43cbe989c3ac06b8f52215f75265e0054dcc27a9a3e8b97757e1643cb268",
+          "psnrDb": 35.03,
+          "width": 720,
+          "height": 540
+        },
+        {
+          "format": "webp",
+          "ext": "webp",
+          "bytes": 71306,
+          "sha256": "b59ae73dcc4b35b36baecd2f7bc943456295099ecc1ec9caf2b7c12197463c6e",
+          "psnrDb": 35.46,
+          "width": 720,
+          "height": 540
+        }
+      ]
+    },
+    {
+      "fileId": "basak-5120-7915e01c",
+      "brand": "Başak Traktör",
+      "model": "5120",
+      "sourcePage": "https://commons.wikimedia.org/wiki/File:Ba%C5%9Fak_5120_Red_Power_Agritechnica_2023_%28DSC06644%29.jpg",
+      "photographer": "MarcelX42",
+      "licenseName": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "configurationExact": false,
+      "source960Bytes": 168577,
+      "source960Sha256": "5f44dfce8d881acf17cf47edd909d90717c689cbed50aa7602be0867069fe114",
+      "derivatives": [
+        {
+          "format": "jpeg",
+          "ext": "jpg",
+          "bytes": 95639,
+          "sha256": "0e43019d6f6285750387855dae0eb086854b8bb0f4e62e1df3a6c70bc9483896",
+          "psnrDb": 34.16,
+          "width": 720,
+          "height": 405
+        },
+        {
+          "format": "webp",
+          "ext": "webp",
+          "bytes": 63388,
+          "sha256": "540096cf4179127f2fe97c24a305e7542fd8d2e9dd0782cd7e03d1f503102cf9",
+          "psnrDb": 33.96,
+          "width": 720,
+          "height": 405
+        }
+      ]
+    },
+    {
+      "fileId": "belarus-132n-picture30-2011",
+      "brand": "Belarus",
+      "model": "132N",
+      "sourcePage": "https://commons.wikimedia.org/wiki/File:Belarus-132N.jpg",
+      "photographer": "Picture30",
+      "licenseName": "CC BY-SA 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+      "configurationExact": false,
+      "source960Bytes": 304948,
+      "source960Sha256": "aa2b0b4613126b5990e205a3b578611eb28799cebbd722ae27b0ea9973bbd4bd",
+      "derivatives": [
+        {
+          "format": "jpeg",
+          "ext": "jpg",
+          "bytes": 168669,
+          "sha256": "e6cf8803bbadf4d48fe6049fefaaa2a4faf9ca46ba32bbb38da9e6feba69905e",
+          "psnrDb": 31.87,
+          "width": 720,
+          "height": 540
+        },
+        {
+          "format": "webp",
+          "ext": "webp",
+          "bytes": 137608,
+          "sha256": "c7559f32db28ccfdde184602432104bf7c5d986d0cb0784a863c6702b2571db4",
+          "psnrDb": 33.05,
+          "width": 720,
+          "height": 540
+        }
+      ]
+    },
+    {
+      "fileId": "belarus-82-1-homoatrox-2019",
+      "brand": "Belarus",
+      "model": "82.1",
+      "sourcePage": "https://commons.wikimedia.org/wiki/File:Belarus_MTZ-82_1_tractor_(02).jpg",
+      "photographer": "Homoatrox",
+      "licenseName": "CC BY-SA 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+      "configurationExact": false,
+      "source960Bytes": 227972,
+      "source960Sha256": "41f728ecd5f842294f4d5f2fb0b5ff8fb60ff3ba368763d5b60ce551191fedc9",
+      "derivatives": [
+        {
+          "format": "jpeg",
+          "ext": "jpg",
+          "bytes": 122548,
+          "sha256": "44da7168a907b21a77111e00aee8e9dda4d2bb7a625c9e869f76d73a353aca7e",
+          "psnrDb": 34.49,
+          "width": 720,
+          "height": 590
+        },
+        {
+          "format": "webp",
+          "ext": "webp",
+          "bytes": 83304,
+          "sha256": "d047d9892bb505512ada3ef07696a27098c8e69013c3c22327e45def692b246c",
+          "psnrDb": 35.26,
+          "width": 720,
+          "height": 590
+        }
+      ]
+    },
+    {
+      "fileId": "case-ih-puma-150-chris-woodrich-2025",
+      "brand": "Case IH",
+      "model": "Puma 150",
+      "sourcePage": "https://commons.wikimedia.org/wiki/File:Case_IH_Puma_150_Tractor,_Harrow_Fair,_Harrow,_Ontario,_2025-08-31_01.jpg",
+      "photographer": "Chris Woodrich",
+      "licenseName": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "configurationExact": false,
+      "source960Bytes": 366377,
+      "source960Sha256": "f41a6d57df6f841b17c42163c1f9958c6f6ad0271b321e58f504f5902eb1bf74",
+      "derivatives": [
+        {
+          "format": "jpeg",
+          "ext": "jpg",
+          "bytes": 190975,
+          "sha256": "565e20c7d69ab8a45d1076cf27ff1fc12b690be90d7c88bb1fc2e92c2b2d3217",
+          "psnrDb": 31.83,
+          "width": 720,
+          "height": 576
+        },
+        {
+          "format": "webp",
+          "ext": "webp",
+          "bytes": 155770,
+          "sha256": "bf42d6835029d8c2d9759581bbfd3c820a45d908ba3ca198a9fbf0ad5057f86d",
+          "psnrDb": 33.23,
+          "width": 720,
+          "height": 576
+        }
+      ]
+    },
+    {
+      "fileId": "fendt-724-vario-01a39bcb",
+      "brand": "Fendt",
+      "model": "724 Vario",
+      "sourcePage": "https://commons.wikimedia.org/wiki/File:Fendt-724-Vario.jpg",
+      "photographer": "AGCO-Fendt",
+      "licenseName": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "configurationExact": false,
+      "source960Bytes": 234572,
+      "source960Sha256": "733ecce05d8be47db6a0dff74f45e2a3606d3e973c74a9bd3387e212754404b9",
+      "derivatives": [
+        {
+          "format": "jpeg",
+          "ext": "jpg",
+          "bytes": 123737,
+          "sha256": "cdebbd674a7cf1fb18d62bf739fc848f426d8a8545cc0a09ec7820c1bb841c7a",
+          "psnrDb": 32.84,
+          "width": 720,
+          "height": 479
+        },
+        {
+          "format": "webp",
+          "ext": "webp",
+          "bytes": 93690,
+          "sha256": "a31d5e49646f2fe34b36a57623d7c824b333335ab9a2cf3a8423380a89ae10c6",
+          "psnrDb": 33.96,
+          "width": 720,
+          "height": 479
+        }
+      ]
+    },
+    {
+      "fileId": "mccormick-x5-110-hc-marcelx42-2023",
+      "brand": "McCormick",
+      "model": "X5.110 HC",
+      "sourcePage": "https://commons.wikimedia.org/wiki/File:McCormick_X5.110_HC_Agritechnica_2023_(DSC06793).jpg",
+      "photographer": "MarcelX42",
+      "licenseName": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "configurationExact": false,
+      "source960Bytes": 158581,
+      "source960Sha256": "72ab2ffcde04915ac37528a1e552cedf7b61a768493f1b94ce588f0a9b97caf0",
+      "derivatives": [
+        {
+          "format": "jpeg",
+          "ext": "jpg",
+          "bytes": 90291,
+          "sha256": "cdcd8497082f0269b85b3ab115bd261a44ab8f95afebe04a8bdf66516d049244",
+          "psnrDb": 34.48,
+          "width": 720,
+          "height": 405
+        },
+        {
+          "format": "webp",
+          "ext": "webp",
+          "bytes": 59514,
+          "sha256": "e19edf3f22b2f5f5ca0e9904bf0e8f6506809737f6b4ddbf455831f988337532",
+          "psnrDb": 34.55,
+          "width": 720,
+          "height": 405
+        }
+      ]
+    },
+    {
+      "fileId": "mccormick-x5-120-marcelx42-2023",
+      "brand": "McCormick",
+      "model": "X5.120 P3-Drive",
+      "sourcePage": "https://commons.wikimedia.org/wiki/File:McCormick_X5.120_P3-Drive_Agritechnica_2023_(DSC03865).jpg",
+      "photographer": "MarcelX42",
+      "licenseName": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "configurationExact": false,
+      "source960Bytes": 160564,
+      "source960Sha256": "b50f465b3589a24320c98b92f0d2a64142e58f7e2b863e112379d67437727e2d",
+      "derivatives": [
+        {
+          "format": "jpeg",
+          "ext": "jpg",
+          "bytes": 92022,
+          "sha256": "9970521c92d1804bbe7e6858730dcdfea27718d768fece8d385c67f27e90a778",
+          "psnrDb": 34.41,
+          "width": 720,
+          "height": 405
+        },
+        {
+          "format": "webp",
+          "ext": "webp",
+          "bytes": 60836,
+          "sha256": "8f212251caff10b9115bf2be25faa67b68a97ef91827a4af0c9b1ca7b6b249d8",
+          "psnrDb": 34.19,
+          "width": 720,
+          "height": 405
+        }
+      ]
+    },
+    {
+      "fileId": "tafe-7515-cab-37863e86",
+      "brand": "TAFE",
+      "model": "7515 CAB",
+      "sourcePage": "https://commons.wikimedia.org/wiki/File:TAFE_7515_Cab_Agritechnica_2023_%28DSC03680%29.jpg",
+      "photographer": "MarcelX42",
+      "licenseName": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "configurationExact": false,
+      "source960Bytes": 177260,
+      "source960Sha256": "7d1db581f4743e3959e957e3508e2de8e7c869e0bbcff45809e9ee67c9fd84ce",
+      "derivatives": [
+        {
+          "format": "jpeg",
+          "ext": "jpg",
+          "bytes": 100353,
+          "sha256": "67edfe3790faa953deedbf82f57f158bf52419840e1a7d79e089981c9868d122",
+          "psnrDb": 33.97,
+          "width": 720,
+          "height": 405
+        },
+        {
+          "format": "webp",
+          "ext": "webp",
+          "bytes": 68290,
+          "sha256": "efe6458cb7ab43ce7fad012f569c77cddf755a520d41eda30065d8b8d572344c",
+          "psnrDb": 34.43,
+          "width": 720,
+          "height": 405
+        }
+      ]
+    },
+    {
+      "fileId": "valtra-g135-9d4a4ea3",
+      "brand": "Valtra",
+      "model": "G135",
+      "sourcePage": "https://commons.wikimedia.org/wiki/File:Valtra_G135_Agritechnica_2025_%28DSC09509%29.jpg",
+      "photographer": "MarcelX42",
+      "licenseName": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "configurationExact": false,
+      "source960Bytes": 236999,
+      "source960Sha256": "13735aa48c84c5348145b944a75c22a66cdd77b1992714cd7186d977f878d8bb",
+      "derivatives": [
+        {
+          "format": "jpeg",
+          "ext": "jpg",
+          "bytes": 131393,
+          "sha256": "aedb9df8c191dbe0815f2c3254b7f6db5c49859ccbac8df638710b2d1961df87",
+          "psnrDb": 34.33,
+          "width": 720,
+          "height": 540
+        },
+        {
+          "format": "webp",
+          "ext": "webp",
+          "bytes": 95592,
+          "sha256": "b7e465c5456a0616381654a61a93af0565b5e18f07c781eb6b8bdb660983a3f0",
+          "psnrDb": 35.17,
+          "width": 720,
+          "height": 540
+        }
+      ]
+    },
+    {
+      "fileId": "valtra-q245-2d50312e",
+      "brand": "Valtra",
+      "model": "Q245",
+      "sourcePage": "https://commons.wikimedia.org/wiki/File:Valtra_Q245_Agritechnica_2025_%28DSC05243%29.jpg",
+      "photographer": "MarcelX42",
+      "licenseName": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "configurationExact": false,
+      "source960Bytes": 198437,
+      "source960Sha256": "d432beaeb0e23277c77531825829fa5c8287c83aa4f40f2eb0d447da899fe760",
+      "derivatives": [
+        {
+          "format": "jpeg",
+          "ext": "jpg",
+          "bytes": 111053,
+          "sha256": "050f2bbe9a9123173eb84358007e1c620bd9f19e08d2d9b0f4228fa7f58a835e",
+          "psnrDb": 33.15,
+          "width": 720,
+          "height": 405
+        },
+        {
+          "format": "webp",
+          "ext": "webp",
+          "bytes": 77036,
+          "sha256": "5a27382038887e5e9161cbdb21ddbd108400e7a0b9cf9279b1e93e3501210fe8",
+          "psnrDb": 32.74,
+          "width": 720,
+          "height": 405
+        }
+      ]
+    },
+    {
+      "fileId": "valtra-q265-65863feb",
+      "brand": "Valtra",
+      "model": "Q265",
+      "sourcePage": "https://commons.wikimedia.org/wiki/File:Valtra_Q265_agra_2024_%28DSC03934%29.jpg",
+      "photographer": "MarcelX42",
+      "licenseName": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "configurationExact": false,
+      "source960Bytes": 188224,
+      "source960Sha256": "5f9c9c6dbfbfdd83993211f0cc7c4724dabcfb2b38a841dd22685153591b6ae5",
+      "derivatives": [
+        {
+          "format": "jpeg",
+          "ext": "jpg",
+          "bytes": 103284,
+          "sha256": "e86ec3f1f71b4610fef66d4e98e4ca8e2b30945707323ccfacd7a9f932c226fc",
+          "psnrDb": 33.55,
+          "width": 720,
+          "height": 405
+        },
+        {
+          "format": "webp",
+          "ext": "webp",
+          "bytes": 74050,
+          "sha256": "5d99f47025be501d65614fe88aa2408f83b74636d59c900e3a53eae144bbb204",
+          "psnrDb": 34.65,
+          "width": 720,
+          "height": 405
+        }
+      ]
+    },
+    {
+      "fileId": "valtra-q305-d4c20807",
+      "brand": "Valtra",
+      "model": "Q305",
+      "sourcePage": "https://commons.wikimedia.org/wiki/File:Valtra_Q305_Agritechnica_2025_%28DSC04493%29.jpg",
+      "photographer": "MarcelX42",
+      "licenseName": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "configurationExact": false,
+      "source960Bytes": 220462,
+      "source960Sha256": "3bf175c482c217dbf948fb85ccd63a4887106b2bc8a1ff2fef68a921cb621ec2",
+      "derivatives": [
+        {
+          "format": "jpeg",
+          "ext": "jpg",
+          "bytes": 120273,
+          "sha256": "18c7010dabd81ad2dc1c157dc420a25e40fe49996c832460864bd2862f902276",
+          "psnrDb": 34.62,
+          "width": 720,
+          "height": 540
+        },
+        {
+          "format": "webp",
+          "ext": "webp",
+          "bytes": 85778,
+          "sha256": "9fe014a9b8230a3e511bf310ece8dfe83c384359944417768938f3223c4f0eb2",
+          "psnrDb": 35.76,
+          "width": 720,
+          "height": 540
+        }
+      ]
+    },
+    {
+      "fileId": "yanmar-sa222-b0cb8c8c",
+      "brand": "Yanmar",
+      "model": "SA222",
+      "sourcePage": "https://commons.wikimedia.org/wiki/File:Yanmar_SA222-Q_Agritechnica_2025_%28DSC07302%29.jpg",
+      "photographer": "MarcelX42",
+      "licenseName": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "configurationExact": false,
+      "source960Bytes": 197167,
+      "source960Sha256": "74823117e4f32bba856e162511fc59077b5e69acf3a05197621f3f01c83d3ea8",
+      "derivatives": [
+        {
+          "format": "jpeg",
+          "ext": "jpg",
+          "bytes": 116304,
+          "sha256": "96b0d7de8a4b7e617d14ffaf9ed8410a7108d2f47de98b6e844a335284bf94ed",
+          "psnrDb": 35.25,
+          "width": 720,
+          "height": 540
+        },
+        {
+          "format": "webp",
+          "ext": "webp",
+          "bytes": 75072,
+          "sha256": "832579a2a1a094a06ebda4c29b6c61606f0851cef492542e038c54b9653665e3",
+          "psnrDb": 35.27,
+          "width": 720,
+          "height": 540
+        }
+      ]
+    },
+    {
+      "fileId": "zetor-forterra-140-346bcbde",
+      "brand": "Zetor",
+      "model": "FORTERRA 140",
+      "sourcePage": "https://commons.wikimedia.org/wiki/File:Zetor_Forterra_140_HSX.jpg",
+      "photographer": "Bene Riobó",
+      "licenseName": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "configurationExact": false,
+      "source960Bytes": 182852,
+      "source960Sha256": "6b66f2f73e283a7680403ee49289de994068de5b5a6ce6b6301c34d255498159",
+      "derivatives": [
+        {
+          "format": "jpeg",
+          "ext": "jpg",
+          "bytes": 97630,
+          "sha256": "54d3b526728e2f837a7871aa004bb5ea784e4ced64251870b6b60f62e64fcc53",
+          "psnrDb": 34.54,
+          "width": 720,
+          "height": 480
+        },
+        {
+          "format": "webp",
+          "ext": "webp",
+          "bytes": 69822,
+          "sha256": "9543b4c5b275c12756acd1dd18258366f9d5849678ada7b9ad6c9d21b89798c7",
+          "psnrDb": 35.94,
+          "width": 720,
+          "height": 480
+        }
+      ]
+    }
+  ]
+}
