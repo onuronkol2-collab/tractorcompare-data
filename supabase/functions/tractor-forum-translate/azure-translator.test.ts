@@ -97,10 +97,7 @@ Deno.test("missing credentials or unsupported target NEVER send any content to a
 });
 Deno.test("failed provider, mismatched array and empty translated text fail closed",async()=>{
  const original=JSON.stringify(sample);
- const errors:[
-   (req:RequestInit)=>Response,
- ]=[] as unknown as [(req:RequestInit)=>Response];
- errors.length=0;
+ const errors:Array<(req:RequestInit)=>Response>=[];
  errors.push(()=>new Response(JSON.stringify({error:"busy"}),{status:503}));
  errors.push(()=>new Response(JSON.stringify([{translations:[{to:"fr",text:"wrong locale"}]}]),{status:200}));
  errors.push(()=>new Response(JSON.stringify([]),{status:200}));
