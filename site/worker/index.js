@@ -84,11 +84,11 @@ export default {
         const thumbnail = await env.ASSETS.fetch(request);
         if (thumbnail.ok && thumbnail.headers.get("Content-Type")?.startsWith("image/jpeg")) return thumbnail;
       }
-      // Commons thumbnails can be temporarily unavailable at 1920px even
-      // when the same, approved image is available at 960px. Never redirect
-      // to an unreviewed image or another model; the fallback goes through
-      // the exact same fixed photo-ID / resolution allowlist.
+      // Commons 720/1920px derivatives may be temporarily unavailable even
+      // when the SAME approved image is available at 960px. Never substitute
+      // another model/file or loosen the path allowlist. Short-cache fallback.
       const isFullSize=url.pathname.endsWith("-1920.jpg");
+      const isPilot720=url.pathname.endsWith("-720.jpg");
       const loadPhoto=async(source,timeoutMs)=>{
         try{
           const origin=await fetch(source,{
@@ -103,11 +103,10 @@ export default {
       };
       let source=await loadPhoto(upstream,isFullSize?12000:20000);
       let isFallback=false;
-      if(!source&&isFullSize){
+      if(!source&&(isFullSize||isPilot720)){
         // The only alternative is the 960px version of this *same*
-        // vetted Commons file. Re-check the allowlist instead of editing
-        // the external URL or guessing another model photo.
-        const fallbackPath=url.pathname.replace(/-1920\.jpg$/,"-960.jpg");
+        // vetted Commons file. Re-check the allowlist; never guess image IDs.
+        const fallbackPath=url.pathname.replace(/-(?:1920|720)\.jpg$/,"-960.jpg");
         const fallback=resolveApprovedPhotoSource(fallbackPath);
         if(fallback){
           source=await loadPhoto(fallback,12000);
