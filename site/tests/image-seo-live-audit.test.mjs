@@ -2,7 +2,7 @@ import {test} from "node:test";
 import assert from "node:assert/strict";
 import {classifyPublicImageSitemap,PUBLIC_FORUM_MEDIA_ENDPOINT} from "../scripts/image-seo-asset-boundaries.mjs";
 import {fetchPublicImageAsset,publicImageMimeOk} from "../scripts/image-seo-http.mjs";
-import {copyrightZhSitemapPages} from "../scripts/image-copyright-live-cases.mjs";
+import {copyrightZhSitemapPages,strictCopyrightAuditMode} from "../scripts/image-copyright-live-cases.mjs";
 const root="https://tractorvs.com";
 const model=root+"/tr/tractors/exact-model-123/";
 const forum=root+"/tr/forum/reviewed-topic/";
@@ -84,4 +84,21 @@ test("Google copyright audit lists all Chinese pages sharing a rights-cleared ph
  assert.equal(pages.length,2);
  assert.deepEqual(pages.map(v=>v.path),["/zh/tractors/model-a/","/zh/tractors/model-a-variant/"]);
  assert.ok(pages.every(p=>p.owner==="VerifiedPerson"&&p.fileId==="photo-a"));
+});
+
+
+test("copyright meta audit is strict only on manual, scheduled, or deliberately re-run deployed main",()=>{
+ const cases=[
+  [{eventName:"schedule"},true],
+  [{eventName:"workflow_dispatch"},true],
+  [{eventName:"push",ref:"refs/heads/main",runAttempt:"1"},false],
+  [{eventName:"push",ref:"refs/heads/main",runAttempt:"2"},true],
+  [{eventName:"push",ref:"refs/heads/main",runAttempt:"3"},true],
+  [{eventName:"push",ref:"refs/heads/feature",runAttempt:"3"},false],
+  [{eventName:"pull_request",ref:"refs/pull/342/merge",runAttempt:"2"},false],
+  [{eventName:"push",ref:"refs/heads/main",runAttempt:"garbage"},false],
+  [{eventName:"push",ref:"refs/heads/main",runAttempt:undefined},false],
+ ];
+ for(const [input,expected] of cases)
+  assert.equal(strictCopyrightAuditMode(input),expected,JSON.stringify(input));
 });
