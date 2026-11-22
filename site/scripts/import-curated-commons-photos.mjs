@@ -57,6 +57,14 @@ async function main(){
   const raw=await get(api,"application/json");
   let json;try{json=JSON.parse(raw.body.toString("utf8"))}catch{throw Error("Commons API did not return JSON")}
   if(json.error||!Array.isArray(json.query?.pages))throw Error("Commons API logical error "+JSON.stringify(json.error||{}));
+  // Validate the entire two-file manifest before fetching ANY binary, so a
+  // missing or renamed source cannot waste Wikimedia requests.
+  for(const source of ledger.sources){
+    const found=json.query.pages.some(p=>norm(p.title)==="File:"+norm(source.originalFilename)
+      && !p.missing && !p.invalid && p.imageinfo?.length===1);
+    if(!found)throw Error("Exact Commons File title missing "+source.fileId+
+      "; Commons returned="+JSON.stringify(json.query.pages.map(p=>({title:p.title,missing:p.missing}))));
+  }
   const files=[];
   const proofs=[];
   for(const source of ledger.sources){
