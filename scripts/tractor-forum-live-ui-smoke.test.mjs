@@ -38,8 +38,10 @@ test("no hidden, removed or non-checkbox opt-in passes",()=>{
 test("one stale locale, non-HTML or HTTP failure fails the whole live check",async()=>{
  const first=FORUM_PATHS[0];
  const missing=await auditLiveForumUi({fetchFn:async url=>
-  reply(url.endsWith(first)?healthy.replace('name="show_leaderboard"','name="show_leaderboard" checked'):healthy)});
+  reply(url===ORIGIN+first?healthy.replace('name="show_leaderboard"','name="show_leaderboard" checked'):healthy)});
  assert.equal(missing.ok,false);
+ assert.equal(missing.checked,10);
+ assert.equal(missing.errors.length,1);
  assert.match(missing.errors.join(" "),/checked by default/);
  const badHttp=await auditLiveForumUi({paths:[first],fetchFn:async()=>reply("not available",503)});
  assert.equal(badHttp.ok,false);assert.match(badHttp.errors.join(" "),/HTTP 503/);
