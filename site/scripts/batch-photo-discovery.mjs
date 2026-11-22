@@ -87,7 +87,20 @@ function splitBrandModel(name){
 
 async function main(){
   await mkdir(OUTPUT,{recursive:true});
-  const publicRecords=await publicInventory();
+  // Acquire one consistent public inventory BEFORE the shared Commons brand
+  // scan. All later stages use this same file, not separate snapshots.
+  if(process.argv.includes("--inventory-only")){
+    const records=await publicInventory();
+    if(!records.length||records.some(x=>x.error))
+      throw Error("Cannot seed photo research from incomplete published inventory");
+    await writeFile(OUTPUT+"/published-model-inventory.json",JSON.stringify(records,null,2));
+    console.log("IMAGE_PUBLIC_INVENTORY "+JSON.stringify({pages:records.length,
+      uniqueBrandModelPairs:new Set(records.map(x=>norm(x.brand)+"|"+norm(x.model))).size}));
+    return;
+  }
+  const publicRecords=JSON.parse(await readFile(OUTPUT+"/published-model-inventory.json","utf8"));
+  if(!Array.isArray(publicRecords)||!publicRecords.length||publicRecords.some(x=>x.error))
+    throw Error("Preflight published model inventory missing or incomplete");
   const source=process.env.TRACTOR_IMAGE_INVENTORY_FILE;
   let privateRecords=[];
   if(source){
@@ -118,10 +131,10 @@ async function main(){
   console.log("IMAGE_INVENTORY "+JSON.stringify({publicModelPages:publicRecords.length,
     publicModelErrors:publicRecords.filter(x=>x.error).length,
     optionalDraftRows:privateRecords.length,uniqueModelSearches:entries.length}));
-  // Read-only published catalogue cross-check against this run's *independently*
-  // collected Commons brand research. Do NOT repeat 388 individual Commons API
-  // searches: 2026 rate limiting made 210 of them return HTTP 429.
-  const archive=JSON.parse(await readFile(OUTPUT+"/archived-image-candidates.json","utf8"));
+  // Read-only published catalogue cross-check against this run's brand-batched
+  // Commons evidence. Do NOT repeat 388 individual API searches: the old
+  // workflow triggered 210 HTTP 429 rate-limit failures in a single run.
+  const archive=JSON.parse(await readFile(OUTPUT+"/public-image-candidates.json","utf8"));
   const archiveIndex=indexArchivePhotoCandidates(archive);
   const reviewed=entries.map(entry=>({...entry,
     ...archiveCandidatesForModel(archiveIndex,entry)}));
