@@ -30,7 +30,9 @@ BEGIN
  SELECT count(*) INTO v_fail
  FROM public.tc_forum_topic_translations t WHERE t.topic_id=s.entity_id
  AND (
-  CASE WHEN t.locale IN ('fr','zh','ja')
+  CASE WHEN t.locale IN ('fr','ru')
+   THEN NOT public.tc_forum_locale_grouping_facts_equal(s.body,t.body,t.locale)
+   WHEN t.locale IN ('zh','ja')
    THEN NOT public.tc_forum_contextual_facts_equal(s.body,t.body,t.locale)
    ELSE public.tc_forum_fact_tokens(s.body)<>public.tc_forum_fact_tokens(t.body)
   END
