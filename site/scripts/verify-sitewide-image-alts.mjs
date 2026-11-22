@@ -14,7 +14,7 @@ import {readdirSync,readFileSync} from "node:fs";
 import {join,relative,resolve} from "node:path";
 import {fileURLToPath} from "node:url";
 
-const IMG=/<img\b(?:[^>"']|"[^"]*"|'[^']*')*>/gi;
+const IGNORED_OR_IMG=/<!--[\s\S]*?-->|<(script|style|textarea)\b[^>]*>[\s\S]*?<\/\1\s*>|<img\b(?:[^>\"']|\"[^\"]*\"|'[^']*')*>/gi;
 
 // Parse attribute names, not substrings of quoted values. For example,
 // <img title="missing alt=foo"> has NO alt attribute and must fail the gate.
@@ -50,12 +50,13 @@ function imageAttribute(tag,target){
 }
 
 export function inspectDocumentImageAlts(html){
-  // JavaScript literals such as "<img src='sample'>" are not HTML images.
-  const markup=html.replace(/<!--[\s\S]*?-->/g,"")
-    .replace(/<(script|style|textarea)\b[^>]*>[\s\S]*?<\/\1\s*>/gi,"");
+  // Ignore script/style/textarea and HTML comments during token scanning,
+  // not by sanitizing and rewriting HTML. This never generates executable markup.
+  // Alternation consumes ignored regions before any inner <img> can be seen.
   let images=0,nonemptyAlt=0,emptyAlt=0;
   const missingAlt=[];
-  for(const match of markup.matchAll(IMG)){
+  for(const match of html.matchAll(IGNORED_OR_IMG)){
+    if(!/^<img\b/i.test(match[0]))continue;
     const tag=match[0];
     images++;
     const alt=imageAttribute(tag,"alt");
