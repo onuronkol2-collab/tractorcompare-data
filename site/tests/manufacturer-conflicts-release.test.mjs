@@ -36,6 +36,10 @@ test("static comparison release gate rejects disputed length, missing warning an
   {key:"rear_lift_capacity",value:"3000",unit:"kg",notice:null}
  ];
  assert.equal(auditConflictComparisonJson(good,conflict),true);
+ for(const note of ["Official product page 3,830 mm / brochure 3,930 mm",
+  "Page officielle 3 830 mm / brochure 3 930 mm",
+  "Produktseite 3.830 mm / Broschüre 3.930 mm"])
+  assert.equal(auditConflictComparisonJson([{...good[0],notice:note},good[1]],conflict),true);
  for(const bad of [
   [{key:"overall_length_with_front_ballast_mm",value:"3930" },...good],
   [{key:"overall_length",value:"3830" },...good],
