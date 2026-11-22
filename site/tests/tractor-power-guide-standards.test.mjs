@@ -39,5 +39,5 @@ test("non-power educational guides retain their original wording and 20 November
   for(const guide of other){
     assert.equal(guide.sections.some(x=>x.anchor==="olcum-standartlari"),false);
   }
-  assert.match(article,/hasPowerStandards \? "2026-11-22" : "2026-11-20"/);
+  assert.match(article,/hasEditorialUpdate \? "2026-11-22" : "2026-11-20"/);
 });
