@@ -2,9 +2,11 @@
 import SiteLayout from "../layouts/SiteLayout.astro";
 import {localizedPath,LOCALES,LOCALE_TAGS,type Locale} from "../lib/locales.ts";
 import {editorialHubTranslation} from "../lib/editorial-hub-i18n.ts";
+import {EDITORIAL_DISCOVERY} from "../lib/editorial-discovery-i18n.mjs";
 import {DEUTZ_5D_GS_PILOT} from "../lib/deutz-5d-editorial.ts";
 interface Props {lang:Locale}
 const {lang}=Astro.props;
+const searchCopy=EDITORIAL_DISCOVERY[lang];
 const tr=lang==="tr";
 const root=Astro.site||new URL("https://tractorvs.com");
 const pagePath=localizedPath(lang,"/articles/");
@@ -133,6 +135,16 @@ const schema={
    </div>
   </header>
   <div class="container editorial-body">
+   <section class="editorial-discovery" id="editorial-discovery" hidden aria-label={searchCopy.heading}>
+    <label for="editorial-query">{searchCopy.heading}</label>
+    <div class="editorial-search-row">
+      <input id="editorial-query" type="search" autocomplete="off" maxlength="100" placeholder={searchCopy.placeholder} />
+      <button type="button" id="editorial-clear" hidden>{searchCopy.clear}</button>
+    </div>
+    <p id="editorial-results-count" role="status" aria-live="polite"
+      data-result-template={searchCopy.results}>{searchCopy.results.replace("{visible}",String(articles.length+reviews.length+((lang==="tr"||lang==="en")?1:0))).replace("{total}",String(articles.length+reviews.length+((lang==="tr"||lang==="en")?1:0)))}</p>
+    <p id="editorial-no-results" role="status" hidden>{searchCopy.none}</p>
+   </section>
    <section class="editorial-trust" aria-labelledby="editorial-trust-heading">
     <h2 id="editorial-trust-heading">{copy.trust}</h2>
     <div class="editorial-rules">
@@ -148,7 +160,7 @@ const schema={
      <div><h2 id="editorial-guide-title">{copy.guides}</h2><p>{copy.guidesIntro}</p></div>
      <span>{String(articles.length).padStart(2,"0")}</span>
     </div>
-    <ol class="editorial-grid">{articles.map(entry=><li>
+    <ol class="editorial-grid">{articles.map(entry=><li data-editorial-card>
       <article class="editorial-card">
        <p class="editorial-kicker">{copy.guideLabel}</p>
        <h3><a href={entryHref(entry)} hreflang={LOCALE_TAGS[destinationLanguage(entry)]}>{titleFor(entry)}</a></h3>
@@ -165,7 +177,7 @@ const schema={
      <div><h2 id="editorial-review-title">{copy.review}</h2><p>{copy.reviewIntro}</p></div>
      <span>{String(reviews.length+((lang==="tr"||lang==="en")?1:0)).padStart(2,"0")}</span>
     </div>
-    <ol class="editorial-grid">{reviews.map(entry=><li>
+    <ol class="editorial-grid">{reviews.map(entry=><li data-editorial-card>
       <article class="editorial-card">
        <p class="editorial-kicker">{copy.reviewLabel}</p>
        <h3><a href={entryHref(entry)} hreflang={LOCALE_TAGS[destinationLanguage(entry)]}>{titleFor(entry)}</a></h3>
@@ -176,7 +188,7 @@ const schema={
           aria-label={titleFor(entry)+" — "+copy.read+(englishOnly(entry)?" — "+localized?.englishOriginal:"")}>{copy.read} <span aria-hidden="true">↗</span></a></div>
       </article>
     </li>)}
-    {(lang==="tr"||lang==="en")&&<li>
+    {(lang==="tr"||lang==="en")&&<li data-editorial-card>
       <article class="editorial-card">
         <p class="editorial-kicker">{tr?"AYNI RESMÎ BELGEDEN MODEL KARŞILAŞTIRMASI":"EXACT-MODEL MANUFACTURER DOCUMENT COMPARISON"}</p>
         <h3><a href={localizedPath(lang,DEUTZ_5D_GS_PILOT.path)} hreflang={LOCALE_TAGS[lang]}>
@@ -200,7 +212,46 @@ const schema={
   </div>
  </div>
 </SiteLayout>
+<script>
+  const discovery=document.querySelector<HTMLElement>("#editorial-discovery");
+  const field=document.querySelector<HTMLInputElement>("#editorial-query");
+  const clear=document.querySelector<HTMLButtonElement>("#editorial-clear");
+  const status=document.querySelector<HTMLElement>("#editorial-results-count");
+  const empty=document.querySelector<HTMLElement>("#editorial-no-results");
+  const rows=Array.from(document.querySelectorAll<HTMLElement>("[data-editorial-card]"));
+  if(discovery&&field&&clear&&status&&empty&&rows.length){
+    // All published links remain in SSR HTML. Filtering is a client-side
+    // reading convenience; no fabricated article or extra indexable URL.
+    const normalize=(text:string)=>text.normalize("NFD").replace(/[\\u0300-\\u036f]/g,"").toLocaleLowerCase();
+    const titles=rows.map(row=>normalize(row.textContent||""));
+    discovery.hidden=false;
+    const paint=()=>{
+      const terms=normalize(field.value.trim()).split(/\\s+/).filter(Boolean);
+      let visible=0;
+      rows.forEach((row,i)=>{
+        const match=terms.every(term=>titles[i].includes(term));
+        row.hidden=!match;
+        if(match)visible++;
+      });
+      clear.hidden=!terms.length;
+      status.textContent=(status.dataset.resultTemplate||"").replace("{visible}",String(visible)).replace("{total}",String(rows.length));
+      empty.hidden=visible!==0;
+    };
+    field.addEventListener("input",paint);
+    clear.addEventListener("click",()=>{field.value="";paint();field.focus();});
+    paint();
+  }
+</script>
 <style>
+ .editorial-discovery{padding:clamp(16px,2vw,23px);margin:0 0 35px;border:1px solid #bbd3bd;border-radius:15px;background:linear-gradient(110deg,#eef7eb,#fff)}
+ .editorial-discovery[hidden],.editorial-discovery button[hidden],.editorial-no-results[hidden],.editorial-grid li[hidden]{display:none!important}
+ .editorial-discovery label{display:block;font-size:clamp(16px,2vw,20px);font-weight:850;color:#18452d;margin-bottom:12px}
+ .editorial-search-row{display:flex;gap:9px;flex-wrap:wrap}
+ .editorial-search-row input{flex:1;min-width:min(100%,260px);min-height:50px;padding:12px 14px;background:white;border:1px solid #afccb4;border-radius:9px;color:#183d28;font-size:16px}
+ .editorial-search-row button{min-height:46px;padding:9px 13px;background:#e3efe0;border:1px solid #a7c5a9;border-radius:9px;color:#215537;cursor:pointer;font-size:14px;font-weight:800}
+ .editorial-search-row :is(input,button):focus-visible{outline:3px solid #387c4b;outline-offset:3px}
+ .editorial-discovery p{font-size:13px;font-weight:700;color:#3f664b;margin:12px 0 0;line-height:1.6}
+ .editorial-grid li[hidden]{display:none!important}
  .editorial-hub{color:#1c3225;background:#f5f7f2}
  .editorial-hero{background:radial-gradient(circle at 85% 5%,#255038,transparent 38%),#10241a;color:#eff8ef;padding:55px 0 85px}
  .editorial-crumb{display:flex;align-items:center;gap:10px;font-size:13px;color:#c6d9c2;margin-bottom:46px}
