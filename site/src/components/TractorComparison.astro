@@ -497,6 +497,10 @@ const labelsPayload = JSON.stringify({
     });
     const all=document.querySelector<HTMLButtonElement>("#tc-all");
     const shared=document.querySelector<HTMLButtonElement>("#tc-shared");
+    // Static HTML cannot know visitor query parameters at build time. Hydrate
+    // the accessible pressed state from the actual view=shared deep link.
+    all?.setAttribute("aria-pressed",String(!commonOnly));
+    shared?.setAttribute("aria-pressed",String(commonOnly));
     function setFilter(sharedOnly:boolean){
       commonOnly=sharedOnly;
       all?.setAttribute("aria-pressed",String(!sharedOnly));
