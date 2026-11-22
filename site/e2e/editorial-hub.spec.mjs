@@ -268,3 +268,16 @@ test("official PTO and hydraulic safety sources are scoped to the right publishe
   await expect(page.locator('.learn-further a[href*="nist.gov"]')).toHaveCount(1);
  }
 });
+
+test("published Başak maximum engine-power label matches manufacturer across responsive locales",async({page})=>{
+ for(const [path,label] of [
+  ["/reviews/basak-2075-bk/","Maximum engine power (manufacturer-stated)"],
+  ["/tr/reviews/basak-2075-bk/","Azami motor gücü (üretici beyanı)"],
+  ["/de/reviews/basak-2075-bk/","Maximale Motorleistung (Herstellerangabe)"]
+ ]){
+  const response=await page.goto(path,{waitUntil:"domcontentloaded"});
+  expect(response?.status(),path).toBe(200);
+  await expect(page.locator(".review-facts tbody tr").nth(1).locator('th[scope="row"]')).toHaveText(label);
+  await expect(page.locator(".review-facts tbody tr").nth(1).locator("td")).toContainText("53 kW / 72 hp @ 2500 rpm");
+ }
+});
