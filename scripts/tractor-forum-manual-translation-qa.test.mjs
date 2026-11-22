@@ -15,7 +15,7 @@ test("manual translations must preserve numbers, physical units, headings, links
   ["targetBody",base.targetBody.replace("75 hp","75 PS"),"numeric_units_changed"],
   ["targetBody",base.targetBody.replace("3000","2000"),"numeric_facts_changed"],
   ["targetBody",base.targetBody.replace("example.org","example.com"),"urls_changed"],
-  ["targetBody",base.targetBody.replace("Same","Incorrect"),"brand_missing:Same"],
+  ["targetBody",base.targetBody.replaceAll("Same","Incorrect"),"brand_missing:Same"],
   ["targetBody",base.targetBody.replace("## Results","Results"),"heading_structure_changed"],
   ["targetBody",base.targetBody.replace("| 1 | Same | 13,7 |","1 Same 13,7"),"table_shape_changed"],
   ["targetBody",base.targetBody.replace("- Dealer satisfaction","Dealer satisfaction"),"list_structure_changed"]
