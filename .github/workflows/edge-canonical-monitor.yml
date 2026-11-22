@@ -30,10 +30,10 @@ jobs:
       - name: Unit test 301/308 redirect and canonical verification
         run: node --test site/tests/edge-canonical-audit.test.mjs
       - name: Inspect production HTTP, HTTPS and optional www redirects
-        # Initial monitoring mode: report public Cloudflare settings rather
-        # than block unrelated PRs before the owner completes DNS/SSL changes.
+        # Cloudflare owner configured and independently verified 301 HTTPS/www,
+        # so fail closed on future redirect/canonical regressions.
         env:
-          TRACTORVS_EDGE_CANONICAL_STRICT: "false"
+          TRACTORVS_EDGE_CANONICAL_STRICT: "true"
         run: node site/scripts/edge-canonical-audit.mjs
       - name: Verify exact public 301 chains, all locale homepages and query preservation
         run: |
