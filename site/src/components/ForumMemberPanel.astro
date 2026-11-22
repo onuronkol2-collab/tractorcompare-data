@@ -351,7 +351,8 @@ for(const root of widgets){
    if(!res.ok)throw Error();
    const rows=await res.json() as Profile[];
    const valid=Array.isArray(rows)?rows.filter(p=>
-    p.show_leaderboard===true&&/^[0-9a-f-]{36}$/i.test(p.id)&&
+    p.show_leaderboard===true&&p.display_name!==starterName&&
+    /^[0-9a-f-]{36}$/i.test(p.id)&&
     typeof p.handle==="string"&&/^[a-z][a-z0-9_]{2,23}$/.test(p.handle)&&
     typeof p.created_at==="string"&&Number.isFinite(Date.parse(p.created_at))
    ).sort((a,b)=>Date.parse(b.created_at!)-Date.parse(a.created_at!)).slice(0,12):[];
