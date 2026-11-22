@@ -9,6 +9,14 @@
       "digest": "6882e5ebc48632bf6cf8dd2c398e850b87bdadf552332ab0aa1f38742dcb1ecf",
       "modified": null
     },
+    "https://tractorvs.com/brands/mccormick/": {
+      "digest": "1597c7455366c1354a16dd5d186ff781ce03141822bf25a743caa310ecde7f69",
+      "modified": "2026-11-22T08:02:35.845Z"
+    },
+    "https://tractorvs.com/brands/valtra/": {
+      "digest": "56f326e9983fc3934017a7ec7c98c1bf47eb45dea179b22cabc98a973fd3e72e",
+      "modified": "2026-11-22T08:02:35.845Z"
+    },
     "https://tractorvs.com/compare/": {
       "digest": "003539305befa26e9d9b18174a6b98a3af51fa3abc55029c90dd3a86e8706101",
       "modified": "2026-11-22T06:23:39.537Z"
@@ -11145,6 +11153,14 @@
       "digest": "0b2ff2f6dd89a40db518b347cd052f0cab5c4dd4b2a60e199cdacc7ed9b94676",
       "modified": null
     },
+    "https://tractorvs.com/tr/brands/mccormick/": {
+      "digest": "94782de011b240a5c928fb7791bf8f3f4ae07e726522d0ebbf785794ab323e58",
+      "modified": "2026-11-22T08:02:35.845Z"
+    },
+    "https://tractorvs.com/tr/brands/valtra/": {
+      "digest": "539977afaed2a5867e1044d4af3de3936487ae3369a8b8c857620512df6fd7d6",
+      "modified": "2026-11-22T08:02:35.845Z"
+    },
     "https://tractorvs.com/tr/compare/": {
       "digest": "c225c13edda74498a226430a6d0377fa81c87dd076a1862126ae895d677dc969",
       "modified": "2026-11-22T06:23:39.537Z"
@@ -11186,8 +11202,8 @@
       "modified": null
     },
     "https://tractorvs.com/tr/tractors/": {
-      "digest": "cc640e37460cad1795e66002bd38352016df7832096bd376e7427b439567a744",
-      "modified": "2026-11-22T06:23:39.537Z"
+      "digest": "66e4f5055c194d1b19b6a1a61ccb5c40fcce030807cfd7c7c28af3aa1124bca8",
+      "modified": "2026-11-22T08:02:35.845Z"
     },
     "https://tractorvs.com/tr/tractors/agrale-4125-0b53e944/": {
       "digest": "568db277ad3e970f9135067de5224019aef2a2b45b9b0b57d527593165500ddf",
@@ -12742,8 +12758,8 @@
       "modified": "2026-11-21T19:47:11.499Z"
     },
     "https://tractorvs.com/tractors/": {
-      "digest": "1b0c1283b43418bfcadfe43721d80867088e6d2ec5e9340638019e0dfa4f6732",
-      "modified": "2026-11-22T06:23:39.537Z"
+      "digest": "293548269d5a4f326b56f3c7cf40027602f188aac5615ae627670b0ba8e052fd",
+      "modified": "2026-11-22T08:02:35.845Z"
     },
     "https://tractorvs.com/tractors/agrale-4125-0b53e944/": {
       "digest": "5de348149531ede958cba36a5ad52ba44aa8febf31e506ba50a9c364915b7750",
