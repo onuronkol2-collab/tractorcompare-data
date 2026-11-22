@@ -8,18 +8,21 @@ on:
       - ".github/workflows/tractorvs-forum-translation.yml"
       - "scripts/tractor-forum-translate-dispatch.mjs"
       - "scripts/tractor-forum-translate-dispatch.test.mjs"
+      - "scripts/tractor-forum-cloudflare-smoke*.mjs"
+      - "scripts/tractor-forum-cloudflare-batch*.mjs"
       - "supabase/functions/tractor-forum-translate/**"
   # No schedule or push translation calls. User deliberately chooses when work runs.
   workflow_dispatch:
     inputs:
       onay:
-        description: "Varsayılan KONTROL ücretsizdir; ONAY ayrıca Supabase kuyruk kilidi açılmadan işlem yapmaz; TEST bir sentetik çağrı"
+        description: "KONTROL ücretsiz; TEST tek cümle; TOPLU_TEST 9 dile 9 sentetik istek; ONAY gerçek kuyruk kilidi kapalı"
         required: true
         type: choice
         default: KONTROL
         options:
           - KONTROL
           - TEST
+          - TOPLU_TEST
           - ONAY
 
 permissions:
@@ -38,14 +41,14 @@ jobs:
         with:
           node-version: "22.23.4"
       - name: Test permission boundaries, jobs and receipts
-        run: node --test scripts/tractor-forum-translate-dispatch.test.mjs scripts/tractor-forum-cloudflare-smoke.test.mjs
+        run: node --test scripts/tractor-forum-translate-dispatch.test.mjs scripts/tractor-forum-cloudflare-smoke.test.mjs scripts/tractor-forum-cloudflare-batch.test.mjs
       - uses: denoland/setup-deno@v2
         with:
           deno-version: v2.x
       - name: Typecheck private worker without secrets or paid API calls
         run: deno check --no-config supabase/functions/tractor-forum-translate/index.ts
       - name: Run isolated Cloudflare, Azure and Gemini provider contract tests (no external calls or charges)
-        run: deno test --no-config supabase/functions/tractor-forum-translate/gemini-provider.test.ts supabase/functions/tractor-forum-translate/translation-quality.test.ts supabase/functions/tractor-forum-translate/translation-segments.test.ts supabase/functions/tractor-forum-translate/azure-translator.test.ts supabase/functions/tractor-forum-translate/cloudflare-m2m100.test.ts supabase/functions/tractor-forum-translate/cloudflare-smoke.test.ts supabase/functions/tractor-forum-translate/queue-control.test.ts
+        run: deno test --no-config supabase/functions/tractor-forum-translate/gemini-provider.test.ts supabase/functions/tractor-forum-translate/translation-quality.test.ts supabase/functions/tractor-forum-translate/translation-segments.test.ts supabase/functions/tractor-forum-translate/azure-translator.test.ts supabase/functions/tractor-forum-translate/cloudflare-m2m100.test.ts supabase/functions/tractor-forum-translate/cloudflare-smoke.test.ts supabase/functions/tractor-forum-translate/cloudflare-batch.test.ts supabase/functions/tractor-forum-translate/queue-control.test.ts
 
   status:
     # KONTROL never calls Gemini; only reports private queue counters.
@@ -96,3 +99,21 @@ jobs:
           TRACTORVS_SUPABASE_ANON_JWT: ${{ secrets.TRACTORVS_SUPABASE_ANON_JWT }}
           TRACTORVS_QUEUE_SECRET: ${{ secrets.TRACTORVS_QUEUE_SECRET }}
         run: node scripts/tractor-forum-translate-dispatch.mjs
+
+  synthetic_batch_test:
+    # One explicit TOPLU_TEST dispatch, nine short sentences to separate target
+    # languages. No queue read/claim, no retries, and no publication.
+    if: github.event_name == 'workflow_dispatch' && inputs.onay == 'TOPLU_TEST' && github.repository == 'onuronkol2-collab/tractorcompare-data' && github.ref == 'refs/heads/main'
+    needs: check
+    runs-on: ubuntu-latest
+    timeout-minutes: 4
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22.23.4"
+      - name: Translate one fixed Turkish sentence into nine locales and verify numbers/scripts
+        env:
+          TRACTORVS_SUPABASE_ANON_JWT: ${{ secrets.TRACTORVS_SUPABASE_ANON_JWT }}
+          TRACTORVS_QUEUE_SECRET: ${{ secrets.TRACTORVS_QUEUE_SECRET }}
+        run: node scripts/tractor-forum-cloudflare-batch.mjs
