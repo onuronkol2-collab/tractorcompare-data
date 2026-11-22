@@ -5,6 +5,8 @@
 export function requireCommonsQueryResponse(body) {
   if(!body||typeof body!=="object"||Array.isArray(body))
     throw Error("Commons API returned invalid JSON response shape");
+  if(!Object.hasOwn(body,"query")&&!Object.hasOwn(body,"batchcomplete"))
+    throw Error("Commons API response lacks query completion evidence");
   if(body.error){
     const code=typeof body.error.code==="string"?body.error.code:"unknown";
     throw Error("Commons API reported an error: "+code.slice(0,80));
