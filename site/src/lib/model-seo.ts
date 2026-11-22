@@ -248,6 +248,11 @@ export function modelSeoMetadata(tractor: TractorRecord, lang: Locale) {
       && rawVariant === "India 2WD / 6F x 3R / manufacturer configuration"
       && rawMarket === "India"
       ? {variant:"2WD / 6F x 3R",markets:["India"]}
+    : tractor.brand_name === "Mahindra"
+      && tractor.model_name === "JIVO 305 DI 4WD"
+      && rawVariant === "India 4WD / 8F x 4R / manufacturer specification"
+      && rawMarket === "India"
+      ? {variant:"4WD / 8F x 4R",markets:["India"]}
     : null;
   const variantLabel = isSwarajTarget ? null
     : isLamborghiniStageV || isSpireFSourceNote ? "Stage V"
