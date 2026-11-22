@@ -34,7 +34,7 @@ function scanHeadTags(head){
     const match=/^<(\/?)([a-z][a-z0-9:-]*)/i.exec(head.slice(start));
     if(!match){cursor=start+1;continue;}
     const afterName=start+match[0].length;
-    if(afterName>=head.length||!/[\\s/>]/.test(head[afterName])){
+    if(afterName>=head.length||!/[\s/>]/.test(head[afterName])){
       cursor=afterName;
       continue;
     }
