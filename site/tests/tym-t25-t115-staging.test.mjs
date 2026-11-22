@@ -57,5 +57,5 @@ test("Unchanged core defaults to three; exact four-source TYM wrapper must opt i
   assert.match(core,/SUPPORTED|Unsupported reviewed photograph batch size/);
   assert.match(stage,/core\.EXPECTED_BATCH_COUNT = 4/);
   assert.match(stage,/core\.main\(\)/);
-  assert.equal((stage.match(/\b"MarcelX42", "CC BY-SA 4\.0"/g)||[]).length,4);
+  assert.equal((stage.match(/"MarcelX42", "CC BY-SA 4\.0"/g)||[]).length,4);
 });
