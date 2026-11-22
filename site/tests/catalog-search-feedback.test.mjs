@@ -46,3 +46,14 @@ test("search remains same-page filtering and synchronizes shareable q across lan
  assert.match(catalog,/search\.focus\(\)/);
  assert.match(catalog,/button\[hidden\] \{display:none\}/);
 });
+
+test("explicit market-price country survives locale changes without consent tracking or automatic URL leakage",()=>{
+ assert.match(catalog,/countryAwareCatalogUrl\(window\.location\.href,selected/);
+ assert.match(catalog,/countryAwareCatalogUrl\(link\.href,selected/);
+ assert.match(catalog,/fromUrl=new URLSearchParams\(window\.location\.search\)\.get\("country"\)/);
+ assert.match(catalog,/allowedCountries\.includes\(fromUrl\)/);
+ assert.match(catalog,/manuallySelected=true;\s*refresh\(fromUrl as MarketCountry\)/);
+ assert.match(catalog,/if\(!manuallySelected && geo/);
+ assert.match(catalog,/history\.replaceState\(history\.state/);
+ assert.doesNotMatch(catalog,/localStorage|sessionStorage|document\.cookie/);
+});
