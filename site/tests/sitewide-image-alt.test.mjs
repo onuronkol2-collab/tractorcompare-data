@@ -78,3 +78,16 @@ test("a quoted title mentioning alt= is not a real alt attribute",()=>{
     missingAlt:[{index:1,src:"/bad.jpg"}]
   });
 });
+
+test("ignore nested fake image markup without incomplete sanitization",()=>{
+  const html=String.raw`<!-- <script><img src="/fake-comment.png"></script> -->
+    <script>const example="<img src='/fake-script.png'>";</script>
+    <style> .badge {content:"<img src='/fake-style.png'>"} </style>
+    <textarea><img src="/fake-textarea.png"></textarea>
+    <img src="/actual-decorative.svg" alt="">
+    <footer><img title="A > in an attribute" src="/actual-missing.jpg"></footer>`;
+  assert.deepEqual(inspectDocumentImageAlts(html),{
+    images:2,nonemptyAlt:0,emptyAlt:1,
+    missingAlt:[{index:2,src:"/actual-missing.jpg"}]
+  });
+});
