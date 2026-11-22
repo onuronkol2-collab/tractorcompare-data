@@ -10,7 +10,10 @@ const catalog=await getPublicCatalog();
 const pair=curatedDeutz5DPair(catalog.tractors);
 // A public release must never ship an empty or speculative pilot after a
 // source, market, variant or public-row change. Inert previews remain noindex.
-if(import.meta.env.PUBLIC_INDEXING_ENABLED==="true"&&Astro.site&&!pair){
+// The generic SEO CI builds a deliberately empty, unconfigured catalogue.
+// Its placeholder must be noindex rather than pretending to be live production.
+// The real production gate has a connected public catalogue and fails closed.
+if(import.meta.env.PUBLIC_INDEXING_ENABLED==="true"&&Astro.site&&catalog.configured&&!pair){
  throw Error("[TractorVS editorial evidence gate] "+JSON.stringify(deutz5DPairReadiness(catalog.tractors)));
 }
 const path=localizedPath(lang,DEUTZ_5D_GS_PILOT.path);
