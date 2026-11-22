@@ -2,6 +2,7 @@ import {generateGeminiJson} from "./gemini-provider.ts";
 import {translateAzureArticle} from "./azure-translator.ts";
 import {translateCloudflareArticle} from "./cloudflare-m2m100.ts";
 import {runCloudflareSyntheticSmoke} from "./cloudflare-smoke.ts";
+import {isForumQueueProcessingEnabled} from "./queue-control.ts";
 import {chooseTranslationSegments,translationCheckpoint,nextTranslationCheckpoint} from "./translation-segments.ts";
 import {isUntranslatedTurkishTitle,sameNumericFacts,TRANSLATION_RESUME_FIELDS,verifiedReadyTranslation} from "./translation-quality.ts";
 // Private, consent-gated TractorVS forum translator.
@@ -317,6 +318,10 @@ Deno.serve(async(req)=>{
  if(!equal(req.headers.get("x-queue-secret")||"",SECRET))return reply(401,{error:"Unauthorized"});
  let input:any;try{input=await req.json()}catch{return reply(400,{error:"Invalid JSON"})}
  if(input?.action!=="process_topic"&&input?.action!=="status"&&input?.action!=="test_cloudflare_synthetic")return reply(400,{error:"Unknown action"});
+ // Safety stop after an accidental ONAY invocation. Never claim jobs unless a
+ // separate administrative Supabase secret explicitly authorizes queue processing.
+ if(input.action==="process_topic" && !isForumQueueProcessingEnabled(Deno.env.get("TC_FORUM_QUEUE_PROCESSING_ENABLED")))
+  return reply(423,{success:false,error:"Forum translation queue temporarily disabled"});
  // Dedicated synthetic-only mode: never read or mutate source, queue or forum.
  // Exactly one Cloudflare M2M100 request, with explicit double locks.
  if(input.action==="test_cloudflare_synthetic"){
