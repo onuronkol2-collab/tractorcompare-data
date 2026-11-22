@@ -58,3 +58,24 @@ test("CJK month numbers are allowed ONLY when source has the matching Turkish mo
   targetBody:"## 日期\n\n研究于2026年12月10日公布。"});
  assert.ok(broken.errors.includes("numeric_facts_changed"));
 });
+
+test("percent placement is localized without changing the measured value",()=>{
+ const source={
+  sourceTitle:"2026 Bayi Memnuniyeti Puanları",
+  sourceBody:"## Sonuç\n\nBayi memnuniyetinde %2,6 fark vardır ve motor gücü 75 hp'dir."
+ };
+ const target={
+  targetTitle:"2026 Dealer Satisfaction Scores",
+  targetBody:"## Results\n\nThe dealer satisfaction difference is 2.6%, and engine power is 75 hp."
+ };
+ const good=auditManualForumTranslation({...source,...target,locale:"en"});
+ assert.ok(!good.errors.includes("numeric_units_changed"),JSON.stringify(good.errors));
+ assert.ok(!good.errors.includes("numeric_facts_changed"),JSON.stringify(good.errors));
+ const changed=auditManualForumTranslation({...source,...target,
+  targetBody:target.targetBody.replace("2.6%","2.7%"),locale:"en"});
+ assert.ok(changed.errors.includes("numeric_units_changed"),JSON.stringify(changed.errors));
+ assert.ok(changed.errors.includes("numeric_facts_changed"),JSON.stringify(changed.errors));
+ const wrongUnit=auditManualForumTranslation({...source,...target,
+  targetBody:target.targetBody.replace("75 hp","75 PS"),locale:"en"});
+ assert.ok(wrongUnit.errors.includes("numeric_units_changed"),JSON.stringify(wrongUnit.errors));
+});
