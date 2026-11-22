@@ -98,12 +98,40 @@ export function forumBlocks(source) {
  return blocks.map(block=>block.type==="table"?block:
   ({...block,items:block.lines.map(forumInline)}));
 }
-/** Metadata must be plain prose, not literal Markdown headings or delimiters. */
-export function forumSeoDescription(body,max=175) {
+/** Metadata must be plain prose, not literal Markdown headings or delimiters.
+ * Prefer an accurate complete sentence over an arbitrarily cut factual claim.
+ * 160 characters is an editorial target, NOT a Google hard limit.
+ */
+export function forumSeoDescription(body,max=160) {
  const clean=String(body??"").replace(/^\s{0,3}#{1,4}\s+/gm,"")
   .replace(/(?:\*\*|\x60|(?<!\*)\*(?!\*)|[|])/g,"")
   .replace(/^\s*[-•>]\s+/gm,"")
   .replace(/\s+/g," ").trim();
  if(clean.length<=max)return clean;
- return clean.slice(0,max).replace(/\s+\S*$/u,"").trimEnd()||clean.slice(0,max);
+ // A punctuation boundary is only safe when it actually ends a sentence.
+ // European decimal dots and URL query marks stay inside their tokens.
+ const stops=/[.!?](?=\s|$)|[。！？]/gu;
+ const sentences=[];
+ let start=0;
+ for(const match of clean.matchAll(stops)){
+  const end=(match.index??0)+match[0].length;
+  const segment=clean.slice(start,end).trim();
+  if(segment)sentences.push(segment);
+  start=end;
+  if(sentences.length>=6)break;
+ }
+ // If an opening question is too generic and a subsequent fully written
+ // sentence fits the budget, use that factual sentence from the actual post.
+ // Never synthesize an unsupported claim or combine incomplete fragments.
+ const first=sentences[0]||"";
+ const second=sentences[1]||"";
+ if(first.endsWith("?")&&second.length>=45&&second.length<=max)
+  return second;
+ if(first.length>=45&&first.length<=max)return first;
+ // For unusually long unpunctuated posts, signal intentional shortening
+ // with an ellipsis rather than ending at an arbitrary brand/measurement.
+ const prefix=Array.from(clean).slice(0,Math.max(1,max-1)).join("");
+ const boundary=prefix.lastIndexOf(" ");
+ const safe=boundary>Math.floor(max*0.6)?prefix.slice(0,boundary).trimEnd():prefix.trimEnd();
+ return safe+"…";
 }
