@@ -222,11 +222,11 @@ const schema={
   if(discovery&&field&&clear&&status&&empty&&rows.length){
     // All published links remain in SSR HTML. Filtering is a client-side
     // reading convenience; no fabricated article or extra indexable URL.
-    const normalize=(text:string)=>text.normalize("NFD").replace(/[\\u0300-\\u036f]/g,"").toLocaleLowerCase();
+    const normalize=(text:string)=>text.normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLocaleLowerCase();
     const titles=rows.map(row=>normalize(row.textContent||""));
     discovery.hidden=false;
     const paint=()=>{
-      const terms=normalize(field.value.trim()).split(/\\s+/).filter(Boolean);
+      const terms=normalize(field.value.trim()).split(/\s+/).filter(Boolean);
       let visible=0;
       rows.forEach((row,i)=>{
         const match=terms.every(term=>titles[i].includes(term));
