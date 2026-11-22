@@ -1,6 +1,6 @@
 import type {Locale} from "./locales.ts";
 /** Editorial interface copy: real counts only, no scheduled events or fake engagement. */
-export type ForumDashboardCopy={categories:string;latest:string;popular:string;unanswered:string;following:string;events:string;latestHint:string;popularHint:string;unansweredHint:string;followingHint:string;eventsHint:string;topics:string;replies:string;activity:string;stats:string;liveTopics:string;liveReplies:string;languages:string;discover:string;discoverBody:string;people:string;peopleBody:string;peopleLink:string;join:string;joinBody:string;joinLink:string;eventsHeading:string;eventsBody:string;eventsCta:string;followingHeading:string;followingBody:string;followingCta:string;followEmpty:string;followError:string;noUnanswered:string;noMatch:string;popularNote:string;languageNote:string;forumGuides:string;eventIdeas:string};
+export type ForumDashboardCopy={categories:string;latest:string;popular:string;unanswered:string;following:string;events:string;latestHint:string;popularHint:string;unansweredHint:string;followingHint:string;eventsHint:string;topics:string;replies:string;activity:string;stats:string;liveTopics:string;liveReplies:string;languages:string;discover:string;discoverBody:string;people:string;peopleBody:string;peopleLink:string;join:string;joinBody:string;joinLink:string;eventsHeading:string;eventsBody:string;eventsCta:string;followingHeading:string;followingBody:string;followingCta:string;followEmpty:string;followError:string;noUnanswered:string;noMatch:string;popularNote:string;languageNote:string;forumGuides:string;eventIdeas:string;heroAlt:string};
 export const FORUM_DASHBOARD_TEXT:Record<Locale,ForumDashboardCopy>={
   "en": {
     "categories": "Categories",
@@ -42,7 +42,8 @@ export const FORUM_DASHBOARD_TEXT:Record<Locale,ForumDashboardCopy>={
     "popularNote": "Only real public replies contribute to this ordering; no invented views or activity.",
     "languageNote": "Available in ten languages. Publication in each language follows independent quality review.",
     "forumGuides": "Helpful starting points",
-    "eventIdeas": "Discuss maintenance, spare parts and model comparisons with other owners."
+    "eventIdeas": "Discuss maintenance, spare parts and model comparisons with other owners.",
+    "heroAlt": "Original illustration of a green tractor crossing green farmland."
   },
   "tr": {
     "categories": "Kategoriler",
@@ -84,7 +85,8 @@ export const FORUM_DASHBOARD_TEXT:Record<Locale,ForumDashboardCopy>={
     "popularNote": "Bu sıralamada yalnızca gerçek yayımlanmış yanıtlar kullanılır; sahte okunma veya etkinlik yoktur.",
     "languageNote": "10 dil desteği. Her dilin yayımlanması ayrı kalite incelemesine bağlıdır.",
     "forumGuides": "Başlamak için rehberler",
-    "eventIdeas": "Bakım, yedek parça ve model karşılaştırmalarını diğer kullanıcılarla tartışın."
+    "eventIdeas": "Bakım, yedek parça ve model karşılaştırmalarını diğer kullanıcılarla tartışın.",
+    "heroAlt": "Yeşil tarlada ilerleyen traktörü gösteren özgün çizim."
   },
   "de": {
     "categories": "Kategorien",
@@ -126,7 +128,8 @@ export const FORUM_DASHBOARD_TEXT:Record<Locale,ForumDashboardCopy>={
     "popularNote": "Nur echte veröffentlichte Antworten bestimmen diese Reihenfolge; keine erfundenen Aufrufe.",
     "languageNote": "Zehn Sprachen. Jede Sprachversion wird vor der Veröffentlichung gesondert geprüft.",
     "forumGuides": "Hilfen zum Einstieg",
-    "eventIdeas": "Tausche dich über Wartung, Ersatzteile und Modellvergleiche aus."
+    "eventIdeas": "Tausche dich über Wartung, Ersatzteile und Modellvergleiche aus.",
+    "heroAlt": "Originalzeichnung eines grünen Traktors auf grünen Feldern."
   },
   "fr": {
     "categories": "Catégories",
@@ -168,7 +171,8 @@ export const FORUM_DASHBOARD_TEXT:Record<Locale,ForumDashboardCopy>={
     "popularNote": "Classement fondé uniquement sur les réponses publiées, sans activité inventée.",
     "languageNote": "Dix langues. Chaque version est vérifiée séparément avant publication.",
     "forumGuides": "Guides pour commencer",
-    "eventIdeas": "Discutez d'entretien, de pièces détachées et de comparaisons de modèles."
+    "eventIdeas": "Discutez d'entretien, de pièces détachées et de comparaisons de modèles.",
+    "heroAlt": "Illustration originale d'un tracteur vert traversant des champs."
   },
   "es": {
     "categories": "Categorías",
@@ -210,7 +214,8 @@ export const FORUM_DASHBOARD_TEXT:Record<Locale,ForumDashboardCopy>={
     "popularNote": "Clasificación basada en respuestas publicadas reales, sin visitas inventadas.",
     "languageNote": "Diez idiomas. Cada versión se revisa de forma independiente antes de publicarse.",
     "forumGuides": "Guías para empezar",
-    "eventIdeas": "Comparte dudas de mantenimiento, repuestos y comparaciones de modelos."
+    "eventIdeas": "Comparte dudas de mantenimiento, repuestos y comparaciones de modelos.",
+    "heroAlt": "Ilustración original de un tractor verde en un campo de cultivo."
   },
   "pt-br": {
     "categories": "Categorias",
@@ -252,7 +257,8 @@ export const FORUM_DASHBOARD_TEXT:Record<Locale,ForumDashboardCopy>={
     "popularNote": "Ordem baseada apenas em respostas realmente publicadas, sem visualizações inventadas.",
     "languageNote": "Dez idiomas. Cada versão passa por uma revisão independente antes da publicação.",
     "forumGuides": "Guias para começar",
-    "eventIdeas": "Converse sobre manutenção, peças e comparações de modelos."
+    "eventIdeas": "Converse sobre manutenção, peças e comparações de modelos.",
+    "heroAlt": "Ilustração original de um trator verde em uma plantação."
   },
   "ru": {
     "categories": "Категории",
@@ -294,7 +300,8 @@ export const FORUM_DASHBOARD_TEXT:Record<Locale,ForumDashboardCopy>={
     "popularNote": "Рейтинг основан только на реальных опубликованных ответах, без вымышленных просмотров.",
     "languageNote": "Десять языков. Каждая версия проходит отдельную проверку перед публикацией.",
     "forumGuides": "С чего начать",
-    "eventIdeas": "Обсуждайте обслуживание, запчасти и сравнения моделей."
+    "eventIdeas": "Обсуждайте обслуживание, запчасти и сравнения моделей.",
+    "heroAlt": "Авторская иллюстрация зелёного трактора среди полей."
   },
   "ja": {
     "categories": "カテゴリー",
@@ -336,7 +343,8 @@ export const FORUM_DASHBOARD_TEXT:Record<Locale,ForumDashboardCopy>={
     "popularNote": "公開済みの実際の返信数で順位を決めています。架空の閲覧数は使用しません。",
     "languageNote": "10言語対応。各言語版は公開前に個別に品質を審査します。",
     "forumGuides": "はじめての方へ",
-    "eventIdeas": "整備、部品、モデル比較について交流しましょう。"
+    "eventIdeas": "整備、部品、モデル比較について交流しましょう。",
+    "heroAlt": "緑の畑を走る緑色のトラクターのオリジナルイラスト。"
   },
   "zh": {
     "categories": "分类",
@@ -378,7 +386,8 @@ export const FORUM_DASHBOARD_TEXT:Record<Locale,ForumDashboardCopy>={
     "popularNote": "排名仅依据真实已发布的回复，不使用虚构浏览数据。",
     "languageNote": "支持10种语言。每种语言均需单独通过质量审核后发布。",
     "forumGuides": "入门指南",
-    "eventIdeas": "一起讨论保养、配件与机型比较。"
+    "eventIdeas": "一起讨论保养、配件与机型比较。",
+    "heroAlt": "绿色拖拉机行驶在农田中的原创插画。"
   },
   "hi": {
     "categories": "श्रेणियाँ",
@@ -420,6 +429,7 @@ export const FORUM_DASHBOARD_TEXT:Record<Locale,ForumDashboardCopy>={
     "popularNote": "क्रम केवल वास्तविक प्रकाशित उत्तरों पर आधारित है; काल्पनिक पाठक संख्या नहीं।",
     "languageNote": "10 भाषाएँ समर्थित हैं। प्रकाशन से पहले हर भाषा की अलग गुणवत्ता जाँच होती है।",
     "forumGuides": "शुरुआती मार्गदर्शिका",
-    "eventIdeas": "रखरखाव, स्पेयर पार्ट्स और मॉडल तुलना पर चर्चा करें।"
+    "eventIdeas": "रखरखाव, स्पेयर पार्ट्स और मॉडल तुलना पर चर्चा करें।",
+    "heroAlt": "हरे खेतों में चलते हरे ट्रैक्टर का मौलिक चित्र।"
   }
 };
