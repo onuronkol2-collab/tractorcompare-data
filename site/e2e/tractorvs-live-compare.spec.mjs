@@ -250,3 +250,108 @@ for (const language of [{code:"tr",html:"tr"},...OTHER_LOCALES]) {
     await expect(page.locator("#tc-right-link")).toContainText("T3035");
   });
 }
+
+
+// Research-first discovery QA. This is deliberately separate from commercial
+// shopping journeys: never click a purchase CTA, authenticate or mutate data.
+// During a PR the public site still contains the previous release, therefore
+// only post-deployment production checks execute these new scenarios.
+for(const language of [{code:"tr",html:"tr"},...OTHER_LOCALES]){
+  test("live "+language.code+" research sidebar filters published tractors and preserves SEO",async({page})=>{
+    test.skip(process.env.COMPARE_QA_PREDEPLOY==="true",
+      "New research facet markup is tested only after its Cloudflare deployment.");
+    test.setTimeout(90_000);
+    const root=language.code==="en"?"/":"/"+language.code+"/";
+    const path=root+"tractors/";
+    const response=await page.goto(path,{waitUntil:"domcontentloaded"});
+    expect(response?.status()).toBe(200);
+    await expect(page.locator("html")).toHaveAttribute("lang",language.html);
+    const cards=page.locator(".tractor-card");
+    const total=await cards.count();
+    expect(total).toBeGreaterThan(0);
+    const panel=page.locator("#catalog-facet-panel");
+    await expect(panel).toBeVisible();
+    await expect(panel).toHaveAttribute("data-research-facets","published");
+    const brandSelect=page.locator("#catalog-facet-brand");
+    expect(await brandSelect.locator("option").count()).toBeGreaterThan(1);
+    const brand=await brandSelect.locator("option").nth(1).getAttribute("value");
+    expect(brand).toBeTruthy();
+    await brandSelect.selectOption(brand);
+    const visible=page.locator(".tractor-card:visible");
+    expect(await visible.count()).toBeGreaterThan(0);
+    expect((await visible.evaluateAll(nodes=>nodes.map(x=>x.getAttribute("data-brand"))))
+      .every(value=>value===brand)).toBe(true);
+    expect(new URL(page.url()).searchParams.get("brand")).toBe(brand);
+    await page.locator("#catalog-facet-power").selectOption("p51");
+    expect(new URL(page.url()).searchParams.get("power")).toBe("p51");
+    for(const value of await visible.evaluateAll(nodes=>nodes.map(x=>x.getAttribute("data-power")))){
+      const power=Number(value);
+      expect(value).not.toBe("");
+      expect(power).toBeGreaterThan(50);
+      expect(power).toBeLessThanOrEqual(100);
+    }
+    await page.locator("#catalog-facet-power").selectOption("");
+    await page.locator("#catalog-facet-sort").selectOption("powerAsc");
+    expect(new URL(page.url()).searchParams.get("sort")).toBe("powerAsc");
+    const ranked=await visible.evaluateAll(nodes=>nodes.map(x=>({
+      order:Number(x.style.order), power:x.getAttribute("data-power")
+    })).sort((a,b)=>a.order-b.order));
+    const powers=ranked.filter(x=>x.power!==""&&Number.isFinite(Number(x.power)))
+      .map(x=>Number(x.power));
+    expect(powers).toEqual([...powers].sort((a,b)=>a-b));
+    await expect(page.locator('link[rel="canonical"]'))
+      .toHaveAttribute("href","https://tractorvs.com"+path);
+    const alternates=await page.locator('link[rel="alternate"][hreflang]').evaluateAll(
+      nodes=>nodes.map(node=>node.getAttribute("href")));
+    expect(alternates.length).toBeGreaterThanOrEqual(10);
+    expect(alternates.every(href=>!href?.includes("?"))).toBe(true);
+    // All published model links remain present for crawlers after client
+    // filtering; switching the display must not remove catalogue records.
+    expect(await page.locator(".tractor-card-main[href]").count()).toBe(total);
+    const next=language.code==="tr"?"en":"tr";
+    const nextPath=(next==="en"?"/":"/tr/")+"tractors/";
+    await page.locator(".locale-menu > summary").click();
+    await page.locator('[data-language-choice][data-language-code="'+next+'"]').click();
+    await expect.poll(()=>new URL(page.url()).pathname).toBe(nextPath);
+    const params=new URL(page.url()).searchParams;
+    expect(params.get("brand")).toBe(brand);
+    expect(params.get("sort")).toBe("powerAsc");
+    await expect(page.locator("#catalog-facet-brand")).toHaveValue(brand);
+    await expect(page.locator('link[rel="canonical"]'))
+      .toHaveAttribute("href","https://tractorvs.com"+nextPath);
+  });
+
+  test("live "+language.code+" shared technical view remains active after language change",async({page})=>{
+    test.skip(process.env.COMPARE_QA_PREDEPLOY==="true",
+      "Shared-view persistence is tested against the new release, not the old site.");
+    test.setTimeout(90_000);
+    const prefix=language.code==="en"?"/":"/"+language.code+"/";
+    const path=prefix+"compare/";
+    const response=await page.goto(path+"?left="+TYM_F36+"&right="+TYM_T475+"&view=shared",
+      {waitUntil:"domcontentloaded"});
+    expect(response?.status()).toBe(200);
+    await expect(page.locator("html")).toHaveAttribute("lang",language.html);
+    await expect(page.locator("#tc-shared")).toHaveAttribute("aria-pressed","true");
+    await expect(page.locator("#tc-left-link")).toContainText("T3035");
+    await expect(page.locator("#tc-right-link")).toContainText("T3047");
+    await page.locator("#tc-all").click();
+    await expect.poll(()=>new URL(page.url()).searchParams.has("view")).toBe(false);
+    await page.locator("#tc-shared").click();
+    await expect.poll(()=>new URL(page.url()).searchParams.get("view")).toBe("shared");
+    const next=language.code==="tr"?"en":"tr";
+    const nextPath=(next==="en"?"/":"/tr/")+"compare/";
+    await page.locator(".locale-menu > summary").click();
+    await page.locator('[data-language-choice][data-language-code="'+next+'"]').click();
+    await expect.poll(()=>new URL(page.url()).pathname).toBe(nextPath);
+    expect(new URL(page.url()).searchParams.get("view")).toBe("shared");
+    expect(new URL(page.url()).searchParams.get("left")).toBe(TYM_F36);
+    expect(new URL(page.url()).searchParams.get("right")).toBe(TYM_T475);
+    await expect(page.locator("#tc-shared")).toHaveAttribute("aria-pressed","true");
+    await expect(page.locator("#tc-rows tr td a[href^='https://']").first()).toBeVisible();
+    await expect(page.locator('link[rel="canonical"]'))
+      .toHaveAttribute("href","https://tractorvs.com"+nextPath);
+    await page.reload({waitUntil:"domcontentloaded"});
+    await expect(page.locator("#tc-shared")).toHaveAttribute("aria-pressed","true");
+    await expect(page.locator("#tc-left-link")).toContainText("T3035");
+  });
+}
