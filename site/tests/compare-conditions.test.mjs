@@ -68,15 +68,15 @@ test("matched contexts and unrelated specification keys do not get unnecessary w
 
 test("same two documented configurations have one localized caution in all ten languages",()=>{
   const messages=new Set();
+  const sourceTerms={en:/source/i,tr:/kaynak/,zh:/来源/,hi:/स्रोत/,"pt-br":/fontes/,fr:/sources/,de:/Quellen/,ru:/источ/i,ja:/出典/,es:/fuentes/};
   for(const lang of LOCALES){
     const copy=compareText(lang,"conditionCaution");
     assert.equal(typeof copy,"string");
-    assert.ok(copy.length>55,lang+" caution must explain source-context limitation");
+    assert.ok(copy.length>=20,lang+" caution must contain substantive wording");
+    assert.match(copy,sourceTerms[lang],lang+" must mention checking original source conditions");
     messages.add(copy);
   }
   assert.equal(messages.size,10);
-  assert.match(compareText("tr","conditionCaution"),/kaynak/);
-  assert.match(compareText("en","conditionCaution"),/source/);
 });
 
 test("initial HTML and interactive comparison use the same caution function and preserve mobile table layout",()=>{
