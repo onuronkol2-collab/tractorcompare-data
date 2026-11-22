@@ -396,7 +396,7 @@ test("Belarus 451, 572 and 923.4 Commons source JPG and ten-locale license evide
       assert.ok(image);
       assert.equal(image.creator.name,source.photographer);
       assert.equal(image.license,source.licenseUrl);
-      assert.equal(image.acquireLicensePage,source.sourcePage);
+      assert.equal(decodeURIComponent(image.acquireLicensePage),decodeURIComponent(source.sourcePage),"Both point to the exact same Commons File after percent-decoding");
     }
   }
   for(const wrong of ["451.1","572.1","923.3","923.7"])
