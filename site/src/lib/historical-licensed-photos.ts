@@ -72,7 +72,7 @@ const candidates=[
     "path": "6/60/Valtra_Q305_Agritechnica_2025_%28DSC04493%29.jpg",
     "photographer": "MarcelX42",
     "copyrightOwner": "MarcelX42",
-    "copyrightClaimUrl": "https://commons.wikimedia.org/wiki/File:Valtra_Q305_Agritechnica_2025_(DSC04493).jpg",
+    "copyrightClaimUrl": "https://commons.wikimedia.org/wiki/File:Valtra_Q305_Agritechnica_2025_%28DSC04493%29.jpg",
     "copyrightEvidence": "commons-own-work-self-license",
     "license": "CC BY-SA 4.0",
     "width": 6148,
