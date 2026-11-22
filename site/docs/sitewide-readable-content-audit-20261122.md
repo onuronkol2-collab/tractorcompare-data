@@ -8,8 +8,8 @@ Kullanıcı talebi: tüm önemli sayfalarda mobil okunabilirlik, yazı boyutu, S
 - Genel sitemap-index üzerinde forum, görsel ve genel sitemap bulundu. Bu sonuç Google indeksi veya trafik artışı değildir.
 - Katalog 388 yayımlanmış modeli SSR üzerinden listeliyor. Açık Issue #218 eski ölçümde yaklaşık 790 KB HTML ve mobil performans için kanıta dayalı sayfalama öneriyor. Aynı modelin 10 dildeki kalıcı URL ve aranabilirliği korunmadan otomatik sayfalama uygulanamaz.
 - 21 Kasım 2026 tarihli OpenSEO 50 sayfalık raporunda 41 uzun title, 2 kısa açıklama, 1 uzun açıklama ve crawl page-limit uyarısı var. Title 60 karakter mutlak SEO kuralı değildir; model yılı, varyant, pazar ve ölçüm koşulları silinmemeli.
-- Search Console 23 Ekim-19 Kasım 2026 döneminde 7 URL, toplam 16 gösterim ve 1 tıklama döndürdü. Yeni sayfalar henüz rapora düşmemiş olabilir. GSC geçmiş dönem verisi güncel üretim performansı değildir.
-- Supabase security advisors 15 RLS açık/politika yok bilgi uyarısı ve leaked password protection uyarısı döndürüyor. Özel araştırma tablolarını herkese açmak çözüm değildir; forumun mevcut passwordless stratejisini bozmamak gerekir. Kullanılmayan indeks istatistikleri tek başına indeks silme gerekçesi değildir.
+- Özel Google Search Console verileri herkese açık GitHub belgelerine yazılmadı. Site sahibiyle sınırlı indeks ve arama performansı analizleri üzerinden güncel yayın durumu ayrıca değerlendirilir.
+- Veritabanı güvenlik raporlarında erişim kısıtlı özel tablolar ve kimlik doğrulama yapılandırması ayrı denetlenir. Gizli tablo şeması veya erişim raporları kamuya kopyalanmaz. Özel araştırma tablolarını herkese açmak veya istatistiği zayıf bir indeksi doğrudan silmek çözüm değildir.
 - Lisanslı fotoğraf PR #457/#459/#460, forum performansı PR #458, forum mobil/üye kartı #434/#436 başka iş akışlarında yürürlükte. Çakışan dosyalar editlenmemeli.
 
 ## Bu PR içinde yapılanlar
