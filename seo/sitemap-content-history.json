@@ -1614,8 +1614,8 @@
       "modified": null
     },
     "https://tractorvs.com/es/compare/": {
-      "digest": "40f2e23f86c66f687aaa438e70a9192bb937a3f5b0f29b96409be96109f433ce",
-      "modified": "2026-11-22T11:20:03.700Z"
+      "digest": "90db06c1c2b356fa68215a97a192e8b5b3c684412dc6c5ff054e3b6dea917ced",
+      "modified": "2026-11-22T11:25:08.718Z"
     },
     "https://tractorvs.com/es/farm-advisor/": {
       "digest": "844efa344057998b0a92aeb706bff2247e283543b1fedff3dc54d14a26055c64",
@@ -1638,12 +1638,12 @@
       "modified": "2026-11-22T11:20:03.700Z"
     },
     "https://tractorvs.com/es/tractors/agrale-4125-0b53e944/": {
-      "digest": "09b82587c02d7b807ad405f4a96f95918f280c963f4260a93bfeb7d92ebf2337",
-      "modified": "2026-11-21T19:47:11.499Z"
+      "digest": "f41c9dee57ad6cc1a9c2b8d50b14f4beeca618729274ae34587c9a374d904a25",
+      "modified": "2026-11-22T11:25:08.718Z"
     },
     "https://tractorvs.com/es/tractors/agrale-4125-cargo-66781999/": {
-      "digest": "feb4f7944222d4930fb68fc209562af5f008739720e9c5239d53c84cc2ba71f4",
-      "modified": "2026-11-22T05:19:46.825Z"
+      "digest": "d5e4dc6f6981d60964d3fc5daee9c8495477772b1bb1fd18d7a203bcf5ad5388",
+      "modified": "2026-11-22T11:25:08.718Z"
     },
     "https://tractorvs.com/es/tractors/agrale-4233-e3ed3f24/": {
       "digest": "d7c1cde37e7177894c9968ff07058c6503ccd984bee6088033f4418017f624d3",
@@ -1654,16 +1654,16 @@
       "modified": null
     },
     "https://tractorvs.com/es/tractors/agrale-525-fb5e66a6/": {
-      "digest": "af925da79bcde954c024b07267b998442d5f35fda26d934b9773d2ac5812d0ee",
-      "modified": "2026-11-21T19:47:11.499Z"
+      "digest": "698c18994ae4c9818f236e3423cf1f35ab92ee66211d4230d0bf13492b7a30d4",
+      "modified": "2026-11-22T11:25:08.718Z"
     },
     "https://tractorvs.com/es/tractors/agrale-575-compact-5a960051/": {
-      "digest": "dbeadbefee83ea59f5e7bd68d9b01b2563677397e9e2099880577946e8b67025",
-      "modified": "2026-11-22T04:59:19.699Z"
+      "digest": "6cc490e39676b76f3eedb432bc73f753cb9599d83d7a2cf1c9d4e0d724696723",
+      "modified": "2026-11-22T11:25:08.718Z"
     },
     "https://tractorvs.com/es/tractors/agrale-575-super-d3f67001/": {
-      "digest": "2f87a2472b4f173f5a4b08c3bc390cc732a86c7fb2f0fa8a4e5d8573451c08cd",
-      "modified": "2026-11-22T04:59:19.699Z"
+      "digest": "ea92f5b32f19b63aa906b9bfe6a3ce8a9506dae8b1ef7792bb5956a6ed0b7fb1",
+      "modified": "2026-11-22T11:25:08.718Z"
     },
     "https://tractorvs.com/es/tractors/agrale-6185-6294988c/": {
       "digest": "e7100fe091a111a2f60ed75bd45ff58c3dd81e763cae09f98ca8746e41ae3a37",
@@ -1758,8 +1758,8 @@
       "modified": "2026-11-22T09:48:10.487Z"
     },
     "https://tractorvs.com/es/tractors/belarus-1025-2-0c77919f/": {
-      "digest": "d122b8967854f6e1b058584162f5d27e27f8b0d5eb9d4a4354c24a6525ca01a1",
-      "modified": "2026-11-22T04:59:19.699Z"
+      "digest": "34aaf9535d89e87e25708880f8292f9ca62be48d5eac70bdbf048707cc7e4ce0",
+      "modified": "2026-11-22T11:25:08.718Z"
     },
     "https://tractorvs.com/es/tractors/belarus-112n-01-c902e03c/": {
       "digest": "75326636a5288694b78b1577a9935c38167f8f8ba79a4516e18f15bb3324ebf2",
@@ -1918,8 +1918,8 @@
       "modified": "2026-11-22T05:19:46.825Z"
     },
     "https://tractorvs.com/es/tractors/iseki-txgs24-1d67a7d0/": {
-      "digest": "c4dce38aed9b5f56857432d42208ebd911a215fcbd1045db2c08f5b34f36718d",
-      "modified": "2026-11-22T04:59:19.699Z"
+      "digest": "02862e8f6807f23a00a0a97754e8efd78821cc7245610880c2ea61f8aaa1655f",
+      "modified": "2026-11-22T11:25:08.718Z"
     },
     "https://tractorvs.com/es/tractors/kioti-cx2510-6e8355cf/": {
       "digest": "f8ee7005737a75c9fd458250c8bd78cffd6237d9377bec68eaf350bec356cbe8",
@@ -1954,8 +1954,8 @@
       "modified": "2026-11-22T04:59:19.699Z"
     },
     "https://tractorvs.com/es/tractors/lamborghini-trattori-spire-f-80-target-0c8f654d/": {
-      "digest": "94fce9160a5f5a6791ceb7fc31d0f3d9fdbd0ac1566523fb3c4ce8bde8258f01",
-      "modified": "2026-11-22T05:19:46.825Z"
+      "digest": "ad52ffd71b0b8d3bdd400ccb66cf15bc7e403ca15b4e46e6e037f042282ecebd",
+      "modified": "2026-11-22T11:25:08.718Z"
     },
     "https://tractorvs.com/es/tractors/lamborghini-trattori-spire-s-80-target-f9a68e93/": {
       "digest": "95f1f72bb1e64f8f58c701db202cc2d7cbf879b3ba443c16d8b6519b81bdc61f",
@@ -2122,8 +2122,8 @@
       "modified": "2026-11-22T05:19:46.825Z"
     },
     "https://tractorvs.com/es/tractors/massey-ferguson-4708-standard-5727a834/": {
-      "digest": "fa60f6e0a2e8e98f9b6fb75a2ac30c56427d928eeef1ff5a6889d3d7e1b78b59",
-      "modified": "2026-11-22T05:19:46.825Z"
+      "digest": "5a36521da252f4a93eb14b31730ae583410b8eb2ba746301bcf5b4622d7a39f3",
+      "modified": "2026-11-22T11:25:08.718Z"
     },
     "https://tractorvs.com/es/tractors/massey-ferguson-5s-125-69fc9aa9/": {
       "digest": "f15584e3d45d67bf0cf83668fa7c8f1f8fd5a7d4eed2aa334e50042191092f6a",
@@ -2246,8 +2246,8 @@
       "modified": "2026-11-22T05:19:46.825Z"
     },
     "https://tractorvs.com/es/tractors/mccormick-x5-085-d050e1f3/": {
-      "digest": "5a6d01654b8327030806a54e677a9fc53623c6ae71dca998be42cb6157bbb433",
-      "modified": "2026-11-22T06:30:53.630Z"
+      "digest": "777b65f96993f389396aeabd07d0bb010d16b30561e6f6c49d9cabda44530d5d",
+      "modified": "2026-11-22T11:25:08.718Z"
     },
     "https://tractorvs.com/es/tractors/mccormick-x5-100-5b7dfe47/": {
       "digest": "2f0cd3583ba4fb7626b2ad37817c43a02347e6f879bd90f7e45337fb6cdb443e",
@@ -2670,8 +2670,8 @@
       "modified": "2026-11-22T04:59:19.699Z"
     },
     "https://tractorvs.com/es/tractors/swaraj-735-fe-7c7b069f/": {
-      "digest": "9de0da03b2cd8ce45b39d5a51b56df05e95089e4fa76af339615860660f3990d",
-      "modified": "2026-11-21T21:02:04.777Z"
+      "digest": "7fb39b51c50dbbc87bc4b3b4ccbfc72849f1856e25faf24d1412c87e6f8ab7de",
+      "modified": "2026-11-22T11:25:08.718Z"
     },
     "https://tractorvs.com/es/tractors/swaraj-735-xt-e6ab3418/": {
       "digest": "4323dbf0a8112bff9da9f1c6b670e3350ea66d0e7ad525707b212effd58e4cdf",
@@ -2838,12 +2838,12 @@
       "modified": "2026-11-22T05:19:46.825Z"
     },
     "https://tractorvs.com/es/tractors/tym-t3035-6f214ac1/": {
-      "digest": "f567944b64da50b2660aa1b6ceb813d765a8d7fd2961d6f3965165f224f36947",
-      "modified": "2026-11-22T05:19:46.825Z"
+      "digest": "92fe95e352526fb5f5d29eb13915e846dffc3973c804d0051e493c4d623c7884",
+      "modified": "2026-11-22T11:25:08.718Z"
     },
     "https://tractorvs.com/es/tractors/tym-t3035-82e4ebaa/": {
-      "digest": "739ac37657f317de47c9454d1114621f6b3a9a1e95ec9e72d3a92d69aae75b23",
-      "modified": "2026-11-22T05:19:46.825Z"
+      "digest": "2bbfe572bdb01011d234edc4150bd5463537692a31faf4a425cef24fa99fea15",
+      "modified": "2026-11-22T11:25:08.718Z"
     },
     "https://tractorvs.com/es/tractors/tym-t3039-4172470a/": {
       "digest": "f2587bbeaa081db10dc0b9670628a258cea2c433120f401267b0e097b98d0da0",
@@ -3102,8 +3102,8 @@
       "modified": "2026-11-22T06:30:53.630Z"
     },
     "https://tractorvs.com/es/tractors/zetor-5100-03752cb7/": {
-      "digest": "e9cdb555a300946d654b8a6bed7823de036be55dc09a4d37848d3679bc9e572b",
-      "modified": "2026-11-22T06:23:39.537Z"
+      "digest": "28be3678f863638661fd860961e9d5380bb3eefa982dea7dfc89ea4cb8ba9d12",
+      "modified": "2026-11-22T11:25:08.718Z"
     },
     "https://tractorvs.com/es/tractors/zetor-5115-71ba22c9/": {
       "digest": "e62fba73822a8b90fc6dd61198a8e365dc63421cfcb01781cba357f910af8449",
@@ -3130,64 +3130,64 @@
       "modified": "2026-11-22T06:30:53.630Z"
     },
     "https://tractorvs.com/es/tractors/zetor-forterra-100-2c6bba1c/": {
-      "digest": "5eaf11036ce27ae69716f323ca2d1c9f2d9c91e8cb3dc7e5ef7a545ef9984d33",
-      "modified": "2026-11-22T04:59:19.699Z"
+      "digest": "f8153b003991957690b4fd44fd44c5122747f4b886eb694185e2ab948ff33555",
+      "modified": "2026-11-22T11:25:08.718Z"
     },
     "https://tractorvs.com/es/tractors/zetor-forterra-110-c2193aaa/": {
-      "digest": "4fd28404049d3fdec090a0122469d77134445f9aeda88fcd05728b2700cdcfa4",
-      "modified": "2026-11-22T04:59:19.699Z"
+      "digest": "ac9643ca7a903c58eccbd54e5974d0fe5b1ad31936e42f4f58487d6e3787f2d5",
+      "modified": "2026-11-22T11:25:08.718Z"
     },
     "https://tractorvs.com/es/tractors/zetor-forterra-120-8f3ee10d/": {
-      "digest": "e6dd97a9fc75cb61267dc52acf92697842a2514641f448f3754ab40e13ca4565",
-      "modified": "2026-11-22T04:59:19.699Z"
+      "digest": "cd91236258b6fdb739ff0bf5a06762566a736e5ea13e74e88e4ad79dff1736b9",
+      "modified": "2026-11-22T11:25:08.718Z"
     },
     "https://tractorvs.com/es/tractors/zetor-forterra-120-91ee2619/": {
-      "digest": "5d867da5fcd98b9449a0230332135c9d7cda007a6daf58171ff786e7ec5d9cd6",
-      "modified": "2026-11-22T04:59:19.699Z"
+      "digest": "79b171839de8199b997900a3e00e3aa5a816835774afb17f979210227228fc65",
+      "modified": "2026-11-22T11:25:08.718Z"
     },
     "https://tractorvs.com/es/tractors/zetor-forterra-130-774871f1/": {
-      "digest": "622f492632645fd2a0953f3cdd7deca48f4ab60e0dadbad3d40b58e4f519d5f8",
-      "modified": "2026-11-22T04:59:19.699Z"
+      "digest": "d1043d5ad3aadc608b9bd67d5be8c5d8faed2b0f3247fe46bcaa840ecc425421",
+      "modified": "2026-11-22T11:25:08.718Z"
     },
     "https://tractorvs.com/es/tractors/zetor-forterra-130-85f2e707/": {
-      "digest": "cd69c11567b936efd00973373a3157dd1d3e37d3cfdf91120466559983db845d",
-      "modified": "2026-11-22T04:59:19.699Z"
+      "digest": "52087b0a8868981d078e1ca80ec3a702d888ec81390c2a91cb65f773183ca78e",
+      "modified": "2026-11-22T11:25:08.718Z"
     },
     "https://tractorvs.com/es/tractors/zetor-forterra-130-a98ad948/": {
-      "digest": "a77cf38d81f64f71ebc79052358abd4ed593364746eefb46efce84836f61819c",
-      "modified": "2026-11-22T04:59:19.699Z"
+      "digest": "01c7fa1e181baa70d24c5d9069a24354e3941070c5e0d5e33d9788a7d16eecf1",
+      "modified": "2026-11-22T11:25:08.718Z"
     },
     "https://tractorvs.com/es/tractors/zetor-forterra-140-0a900d97/": {
-      "digest": "2d8375c32a80c892ec9e4977706ce86d8004c43a46bb71ae1a19b078c8ba1c5f",
-      "modified": "2026-11-22T04:59:19.699Z"
+      "digest": "309e80b8fdb586ac49b01b45235764c14dc14bbcc853a7c0edfd900ea45aff1a",
+      "modified": "2026-11-22T11:25:08.718Z"
     },
     "https://tractorvs.com/es/tractors/zetor-forterra-140-33bcf1bf/": {
-      "digest": "ba5c81970e0bb76b41b3fa39eee85d1a83e54716bd0ff8b0ee743b4ba505ad16",
-      "modified": "2026-11-22T04:59:19.699Z"
+      "digest": "c79bf506ad7a2f85f393ce17cee94afa52c3c5c70461c7b0d41153503b79193d",
+      "modified": "2026-11-22T11:25:08.718Z"
     },
     "https://tractorvs.com/es/tractors/zetor-forterra-140-aabda943/": {
-      "digest": "09ea257add7bbaba3fd3f232c6f8594173a2e1637203c51ca600080016c90258",
-      "modified": "2026-11-22T04:59:19.699Z"
+      "digest": "e699856d354c543213e711838c2ac12d4ea5e6923801475e43a92061535eac66",
+      "modified": "2026-11-22T11:25:08.718Z"
     },
     "https://tractorvs.com/es/tractors/zetor-forterra-150-77f21256/": {
-      "digest": "16f07b4b96530e3afca33968e7676545b0f658f822b7d2e40352bc21f3be336e",
-      "modified": "2026-11-22T04:59:19.699Z"
+      "digest": "9065689cce353d3bb8a82451a606458dc4a97521b7b1be9cc84a9e0b780006ee",
+      "modified": "2026-11-22T11:25:08.718Z"
     },
     "https://tractorvs.com/es/tractors/zetor-major-755e44bc/": {
-      "digest": "094dde5b22866aa57051e7fc53253cd723b81adfdcccf36f84ef7a5c287968f3",
-      "modified": "2026-11-22T06:23:39.537Z"
+      "digest": "c8090d13e845ca07c7eb91629aceacdfe796ae620bbb88abd8b3f66d715e9fc3",
+      "modified": "2026-11-22T11:25:08.718Z"
     },
     "https://tractorvs.com/es/tractors/zetor-proxima-c0d8fcfe/": {
-      "digest": "bfa677e9974dc86fe1b40b84c31032d73e5928fa2cfda212cc56865a84bb716b",
-      "modified": "2026-11-22T04:59:19.699Z"
+      "digest": "d07cd696a27dcd19979de9011feac4d1b610137845d8c437675a8549aa4ff84b",
+      "modified": "2026-11-22T11:25:08.718Z"
     },
     "https://tractorvs.com/es/tractors/zetor-proxima-cf11aa07/": {
-      "digest": "2da3de58ee875f25af0921ac3418bf55b5f185e37ddcfd372505f2d6c9f766c3",
-      "modified": "2026-11-22T04:59:19.699Z"
+      "digest": "9c381e10d6fddb3d1ac4e42aa4960605ac6f83c1561438da5aeb7cbe9839c42f",
+      "modified": "2026-11-22T11:25:08.718Z"
     },
     "https://tractorvs.com/es/tractors/zetor-proxima-e715524e/": {
-      "digest": "e0a9a2241a515b5b80d569fc0db88fc4b6affdbf662d888fc6c983a275e86abd",
-      "modified": "2026-11-22T04:59:19.699Z"
+      "digest": "a50cd0796457c489a2056bb6e46be2caed8734a35f46712ab3c95a5d6a9731ec",
+      "modified": "2026-11-22T11:25:08.718Z"
     },
     "https://tractorvs.com/farm-advisor/": {
       "digest": "ff46918f4b631f74eeb0fe04c2a5f84fba9a70d1885cc827ec4da24740e22648",
@@ -3202,8 +3202,8 @@
       "modified": null
     },
     "https://tractorvs.com/fr/compare/": {
-      "digest": "e2e4fc5a9c036c576b9db2648635c215b31015ded66b1d0c2ff7c27eb5294fd4",
-      "modified": "2026-11-22T11:20:03.700Z"
+      "digest": "f5f5085b6f92e304a5a0f3030aefd0e2f3a9e827bcedcf9e6c04748369f3f558",
+      "modified": "2026-11-22T11:25:08.718Z"
     },
     "https://tractorvs.com/fr/farm-advisor/": {
       "digest": "3f9f10f3c5e6bd7cd7e6348563f7afc6b927a041caeea17419b5addd14446f43",
@@ -3226,12 +3226,12 @@
       "modified": "2026-11-22T11:20:03.700Z"
     },
     "https://tractorvs.com/fr/tractors/agrale-4125-0b53e944/": {
-      "digest": "c3c0fa87f1203833b2a9ddd00aa139d8c89f32f119811d3b813c75cc73fe950f",
-      "modified": "2026-11-21T19:47:11.499Z"
+      "digest": "30acefad280a3c83fadf5a4d812cb6b2fb6872fe15584c44d52d0225636ec817",
+      "modified": "2026-11-22T11:25:08.718Z"
     },
     "https://tractorvs.com/fr/tractors/agrale-4125-cargo-66781999/": {
-      "digest": "a422c3af133f769258a32ccd18448cafca5640af3c20e8a3b0bcc964f81c2f02",
-      "modified": "2026-11-22T05:19:46.825Z"
+      "digest": "1ad021b1791d8105d56145170636129dca7027e2fd5c355ad25d52bbf1701362",
+      "modified": "2026-11-22T11:25:08.718Z"
     },
     "https://tractorvs.com/fr/tractors/agrale-4233-e3ed3f24/": {
       "digest": "8d039cbd10b4cc984131497cde9e20368ca328f7acea74bfc17e14596c7664d6",
@@ -3242,24 +3242,24 @@
       "modified": null
     },
     "https://tractorvs.com/fr/tractors/agrale-525-fb5e66a6/": {
-      "digest": "28d77d5538ca0bddc22cd38fcfe938bc244f55c195315dc3cdb8cba3518da5f7",
-      "modified": "2026-11-21T19:47:11.499Z"
+      "digest": "42b629b05f689b1845f92e7e78f51c72287efd9deb384d817142b295cad8848f",
+      "modified": "2026-11-22T11:25:08.718Z"
     },
     "https://tractorvs.com/fr/tractors/agrale-575-compact-5a960051/": {
-      "digest": "f094b9e3a3a5a68c83797a7fb2df02627d9d3b0867d1abcb6221a0ff0f8f726c",
-      "modified": "2026-11-22T04:59:19.699Z"
+      "digest": "92818d882cd29e3e6a41e0e839d043fe9da9c01bec6aedbc410d3f3cf760c87a",
+      "modified": "2026-11-22T11:25:08.718Z"
     },
     "https://tractorvs.com/fr/tractors/agrale-575-super-d3f67001/": {
-      "digest": "5e565151b48b1b2f612dee9e0a1089ff58ed71bfd3688090a4910d0e09ae93bf",
-      "modified": "2026-11-22T04:59:19.699Z"
+      "digest": "93d8e946c9977d872c5c21b988d9981e2b681bbea5b6f3344d1e943c9ddcdc85",
+      "modified": "2026-11-22T11:25:08.718Z"
     },
     "https://tractorvs.com/fr/tractors/agrale-6185-6294988c/": {
-      "digest": "fccc48cade62d00cb3e007b784a9d9986abb701687b4630fe02d623e2d8ddead",
-      "modified": "2026-11-21T19:47:11.499Z"
+      "digest": "333ad78d9f77db2f6693b82d7d463ecaf2025a0250b35a842659e36d70a2f7f3",
+      "modified": "2026-11-22T11:25:08.718Z"
     },
     "https://tractorvs.com/fr/tractors/agrale-7215-5d2edc98/": {
-      "digest": "c76f7b219b1efca5f5efd8c80ac7b404c3e9dda4192164dbdcc96d09b2df25e3",
-      "modified": "2026-11-21T19:47:11.499Z"
+      "digest": "d4e5a44359feb76d095d571ce5b24faab0f15060b58fa459320a8edafac08428",
+      "modified": "2026-11-22T11:25:08.718Z"
     },
     "https://tractorvs.com/fr/tractors/antonio-carraro-mach-2-r-f0ee0c8c/": {
       "digest": "c259e0bc19bf8c864a57c2a092de134c2745f9bcae4e8cc7c3eedd6c751434c2",
@@ -3326,12 +3326,12 @@
       "modified": "2026-11-22T04:59:19.699Z"
     },
     "https://tractorvs.com/fr/tractors/armatrac-804-4-fruit-garden-rops-362ad12b/": {
-      "digest": "3805270dee6e1e92d4b9740135936ff04f11d44224aaa74e45936e198d264775",
-      "modified": "2026-11-22T05:19:46.825Z"
+      "digest": "625c61c1903ba6b6b5c8cf0d2bf76fca804c9f486771417d63dade4f2a5395af",
+      "modified": "2026-11-22T11:25:08.718Z"
     },
     "https://tractorvs.com/fr/tractors/armatrac-804-fruit-garden-cabin-619e4fd9/": {
-      "digest": "400dec8db5bfc3d9c88a9d43a082533c50353fd6f7ea8fcacb7a3f67f3a1e4ea",
-      "modified": "2026-11-22T05:19:46.825Z"
+      "digest": "f10c511e19cdf14eb7b74e1a9a99a489584bac0ad9ef6d099c2a9df4518b7ae9",
+      "modified": "2026-11-22T11:25:08.718Z"
     },
     "https://tractorvs.com/fr/tractors/basak-traktor-2075-bk-9ef236be/": {
       "digest": "0d22c85a8123ac54a5a77814b0d003af67ad6fb97ed787341d33b3439e48c5e5",
@@ -3346,8 +3346,8 @@
       "modified": "2026-11-22T09:48:10.487Z"
     },
     "https://tractorvs.com/fr/tractors/belarus-1025-2-0c77919f/": {
-      "digest": "089281685c8c502c88278e209eb9ac76c3366511b1e10963d20d6dd728d66f95",
-      "modified": "2026-11-22T04:59:19.699Z"
+      "digest": "0c888b6d986f51f34e33190ee9dee33afc2c5ae2c4534c526ef0d0279912deac",
+      "modified": "2026-11-22T11:25:08.718Z"
     },
     "https://tractorvs.com/fr/tractors/belarus-112n-01-c902e03c/": {
       "digest": "a407af538eb54f9798b8350512f085992d5407ffc753af2a7a129143debe9bb9",
@@ -3506,8 +3506,8 @@
       "modified": "2026-11-22T05:19:46.825Z"
     },
     "https://tractorvs.com/fr/tractors/iseki-txgs24-1d67a7d0/": {
-      "digest": "251a1ab6fed5a82b4fca959d8e53daf2fec7c6df644c20e646dc3426d6a3e59f",
-      "modified": "2026-11-22T04:59:19.699Z"
+      "digest": "88930504cfad594a37ad162ee85f7e3b78701a1c7d734d1203c2fd51bdf6492f",
+      "modified": "2026-11-22T11:25:08.718Z"
     },
     "https://tractorvs.com/fr/tractors/kioti-cx2510-6e8355cf/": {
       "digest": "d2fe6ec0f12b3ee27520f1940a372e54975240efd8313b1e778dfb09751ce4e5",
@@ -3542,8 +3542,8 @@
       "modified": "2026-11-22T04:59:19.699Z"
     },
     "https://tractorvs.com/fr/tractors/lamborghini-trattori-spire-f-80-target-0c8f654d/": {
-      "digest": "f9d8ee068113fe5dd4262d019e0ef01c602b0f9fc69ef90fcffecbf87db3b96c",
-      "modified": "2026-11-22T05:19:46.825Z"
+      "digest": "a57048a0e57c5ff8e028943714237f100620df064c1305872898970044af71ce",
+      "modified": "2026-11-22T11:25:08.718Z"
     },
     "https://tractorvs.com/fr/tractors/lamborghini-trattori-spire-s-80-target-f9a68e93/": {
       "digest": "7866d0b3eb8ac41a9654f51d20356b230edd17643564f2998842ac45a47911c6",
@@ -3710,8 +3710,8 @@
       "modified": "2026-11-22T05:19:46.825Z"
     },
     "https://tractorvs.com/fr/tractors/massey-ferguson-4708-standard-5727a834/": {
-      "digest": "817e6774401bc77dbd77a0f550a074fed244660d5c637600952c74be4493d697",
-      "modified": "2026-11-22T05:19:46.825Z"
+      "digest": "56904ea1f97077190d90eaa5c8ea150244cfb8f0ddaa883f7acbb95d76d4db77",
+      "modified": "2026-11-22T11:25:08.718Z"
     },
     "https://tractorvs.com/fr/tractors/massey-ferguson-5s-125-69fc9aa9/": {
       "digest": "efd978dd82575bb79531c89da244eff4ef855af43fb4fd143aba77a20d7aac98",
@@ -3834,8 +3834,8 @@
       "modified": "2026-11-22T05:19:46.825Z"
     },
     "https://tractorvs.com/fr/tractors/mccormick-x5-085-d050e1f3/": {
-      "digest": "09a62461a5a3592129fe9978377ba0cb3cf574b23dc90f878475b3da91bf9a61",
-      "modified": "2026-11-22T06:30:53.630Z"
+      "digest": "7ef39da9202fd67cb8b496487cb58cd63186fc829937b88802c4b22f2331427e",
+      "modified": "2026-11-22T11:25:08.718Z"
     },
     "https://tractorvs.com/fr/tractors/mccormick-x5-100-5b7dfe47/": {
       "digest": "4c61b7012bc88ee6a09852b18cabe6cd0e6bea38310bc19f1d109129ba96780b",
@@ -4258,8 +4258,8 @@
       "modified": "2026-11-22T04:59:19.699Z"
     },
     "https://tractorvs.com/fr/tractors/swaraj-735-fe-7c7b069f/": {
-      "digest": "f3e32be0de985344ada8ae1dec7286cea81e048f02db00e686f545372f6c6cce",
-      "modified": "2026-11-21T21:02:04.777Z"
+      "digest": "4fd4991724af1fae9c7ea62c0d981821dd67b44ea2a9766be36efed464bf9d33",
+      "modified": "2026-11-22T11:25:08.718Z"
     },
     "https://tractorvs.com/fr/tractors/swaraj-735-xt-e6ab3418/": {
       "digest": "b7d719987005a457fad9b08ae46d76ec87f189bb8d154ee4fbc150821f6f33fe",
@@ -4426,12 +4426,12 @@
       "modified": "2026-11-22T05:19:46.825Z"
     },
     "https://tractorvs.com/fr/tractors/tym-t3035-6f214ac1/": {
-      "digest": "07f8e7f2213954410cbeae0f78ac13502f4f5188c2658a1703381ea576ed6a43",
-      "modified": "2026-11-22T05:19:46.825Z"
+      "digest": "583bbfb2f553deed5e1f4aa0df27d276e82e5101bf5986cb91021217b32a49ae",
+      "modified": "2026-11-22T11:25:08.718Z"
     },
     "https://tractorvs.com/fr/tractors/tym-t3035-82e4ebaa/": {
-      "digest": "6d842591581b13315ad8a0cbc63476fd2cf189647f61506d9f1f62d49dd24f81",
-      "modified": "2026-11-22T05:19:46.825Z"
+      "digest": "43729769507be9c52cf20f9f3c5521fa264ccd5a4cf7722955abee726a589e4d",
+      "modified": "2026-11-22T11:25:08.718Z"
     },
     "https://tractorvs.com/fr/tractors/tym-t3039-4172470a/": {
       "digest": "c4970777ade7d154701021568fecc36ba7c072bafa3ac463dbc0fe985ea1f8c8",
@@ -4690,8 +4690,8 @@
       "modified": "2026-11-22T06:30:53.630Z"
     },
     "https://tractorvs.com/fr/tractors/zetor-5100-03752cb7/": {
-      "digest": "ee4d613a9f6d7ac41eab8a0fa23a7d0d7f52bb2cb54061ec6aa8f1d0d697f7a1",
-      "modified": "2026-11-22T06:23:39.537Z"
+      "digest": "74c62080850e0834714efa48af397558f835a0d70dc33c76c7e4f17605d9ea31",
+      "modified": "2026-11-22T11:25:08.718Z"
     },
     "https://tractorvs.com/fr/tractors/zetor-5115-71ba22c9/": {
       "digest": "bde2486806d9a328035e18dcc67808c699917b352fde0c53f054cb3b100ceba0",
@@ -4718,64 +4718,64 @@
       "modified": "2026-11-22T06:30:53.630Z"
     },
     "https://tractorvs.com/fr/tractors/zetor-forterra-100-2c6bba1c/": {
-      "digest": "e3b2074f271de86a8d5c7ecd0dc1bcc70ee89bbd83394ec3f5f46aea279c044c",
-      "modified": "2026-11-22T04:59:19.699Z"
+      "digest": "154deff554d7c449142487bf695b887dc38aad20c0f88a9154d236f1f0712701",
+      "modified": "2026-11-22T11:25:08.718Z"
     },
     "https://tractorvs.com/fr/tractors/zetor-forterra-110-c2193aaa/": {
-      "digest": "98a26db6a046b1adb518186864789b8e6dff4ce5ba9bff2acd32772b886d16c6",
-      "modified": "2026-11-22T04:59:19.699Z"
+      "digest": "6da5bb9e089562dfda236372fe7c828fb49a7b4a4f510fcd035a8149778ec463",
+      "modified": "2026-11-22T11:25:08.718Z"
     },
     "https://tractorvs.com/fr/tractors/zetor-forterra-120-8f3ee10d/": {
-      "digest": "1eb53a5b256fa30bdf5ae4435e2d11ef5048ef1a5b8ad2789237499447c08c83",
-      "modified": "2026-11-22T04:59:19.699Z"
+      "digest": "ba40f4556e6be361913f67b0ef6fdb1133ed2e62df77d0f18662e6b68c70fc47",
+      "modified": "2026-11-22T11:25:08.718Z"
     },
     "https://tractorvs.com/fr/tractors/zetor-forterra-120-91ee2619/": {
-      "digest": "8c21b42983f94e823eb79bfc0228251cff66907c7faaa718a8bf1934c5c13f56",
-      "modified": "2026-11-22T04:59:19.699Z"
+      "digest": "a545c2af816fb4a1c152a68fe6f81256b73e8fac10559963a931f2c8538fca59",
+      "modified": "2026-11-22T11:25:08.718Z"
     },
     "https://tractorvs.com/fr/tractors/zetor-forterra-130-774871f1/": {
-      "digest": "1546f5bff7e2a81ec201739f4c66b1ac114fc68d9418e203b9dbbf51ad98cfcf",
-      "modified": "2026-11-22T04:59:19.699Z"
+      "digest": "43faabdfce305d034044e938a4beb729f4b196a3696a878451ed502a42d8f9bf",
+      "modified": "2026-11-22T11:25:08.718Z"
     },
     "https://tractorvs.com/fr/tractors/zetor-forterra-130-85f2e707/": {
-      "digest": "0710f3078274bd718f206627da1fcab443e4792753d7d15cd2e7f3cd6822dd71",
-      "modified": "2026-11-22T04:59:19.699Z"
+      "digest": "519fd7e68ebcf1fdb52da388256f523eb6f9b423833b8be968e9488e151c0c2f",
+      "modified": "2026-11-22T11:25:08.718Z"
     },
     "https://tractorvs.com/fr/tractors/zetor-forterra-130-a98ad948/": {
-      "digest": "29aa18979e20052fada381ad758f8873ccab90ea497d3198e53ecf2c6648c3b3",
-      "modified": "2026-11-22T04:59:19.699Z"
+      "digest": "f14cc54f06c1848d4169909aaab6157c2da8baa46e9b00e723958299154b7563",
+      "modified": "2026-11-22T11:25:08.718Z"
     },
     "https://tractorvs.com/fr/tractors/zetor-forterra-140-0a900d97/": {
-      "digest": "f821059ace2ebf5e25a82e4e283a2b6acf1dde756ff4b3704c07dabc6dffe39e",
-      "modified": "2026-11-22T04:59:19.699Z"
+      "digest": "5ed924dc1aa53245ef0d84321b5801c1de72ed70506a30fa0ba8434fabd44191",
+      "modified": "2026-11-22T11:25:08.718Z"
     },
     "https://tractorvs.com/fr/tractors/zetor-forterra-140-33bcf1bf/": {
-      "digest": "cd356116ef161951c05baa52d7bf45a9c3b2fa80d20f09fc30ddcdba7d4b0cbe",
-      "modified": "2026-11-22T04:59:19.699Z"
+      "digest": "35ea16759ba038c88d20c5ca6dee2301b946cd8448bf4df0ad59a63e121e212a",
+      "modified": "2026-11-22T11:25:08.718Z"
     },
     "https://tractorvs.com/fr/tractors/zetor-forterra-140-aabda943/": {
-      "digest": "e07d43212c3f598dca76c6070e6de1e3ebd9df1ec53bc3a68c8c2129f2ae310d",
-      "modified": "2026-11-22T04:59:19.699Z"
+      "digest": "ce12565493e880e2169e4a0bf69fe554f9f23519136d49a65b8b238fc86a984d",
+      "modified": "2026-11-22T11:25:08.718Z"
     },
     "https://tractorvs.com/fr/tractors/zetor-forterra-150-77f21256/": {
-      "digest": "fa9d1d5b25c6ac75317a81d69caf8ecc3331b2ca058597430f212474b2c80699",
-      "modified": "2026-11-22T04:59:19.699Z"
+      "digest": "ccca6ced42e9d866a3120ccfa80ceccf0bf16f55ad12a65663b3d9153ad28caa",
+      "modified": "2026-11-22T11:25:08.718Z"
     },
     "https://tractorvs.com/fr/tractors/zetor-major-755e44bc/": {
-      "digest": "98d7778c7fbd34e5a292c84f71033449bb9edf9697af38a1dbb17ba1ed6e37d3",
-      "modified": "2026-11-22T06:23:39.537Z"
+      "digest": "45ec2f4ae61875a8179fdd0bf63a611072b9c86b21d2eec4ddf09303f1ee2e9c",
+      "modified": "2026-11-22T11:25:08.718Z"
     },
     "https://tractorvs.com/fr/tractors/zetor-proxima-c0d8fcfe/": {
-      "digest": "508a066258c31f90a5e4ecb1192f540445f540f6aa2cc926811888a46bba4ac9",
-      "modified": "2026-11-22T04:59:19.699Z"
+      "digest": "17f5990b2cca916cd29712eed3c08b83a97e9b0a26e5b781b56876793fe1c6c9",
+      "modified": "2026-11-22T11:25:08.718Z"
     },
     "https://tractorvs.com/fr/tractors/zetor-proxima-cf11aa07/": {
-      "digest": "a21904424d835cceb0842c4943ce3bac5e1e04ae44c99a1c8d5687701f9c76e7",
-      "modified": "2026-11-22T04:59:19.699Z"
+      "digest": "92f48f530ef3da3707ab1e72bba6c92a37f7d37e8a8152b1b349d83f4109672c",
+      "modified": "2026-11-22T11:25:08.718Z"
     },
     "https://tractorvs.com/fr/tractors/zetor-proxima-e715524e/": {
-      "digest": "3892b2cd82a0cfe70a49a66bf00b4733e430c1050ad027db759512e66cf05f25",
-      "modified": "2026-11-22T04:59:19.699Z"
+      "digest": "bd6588ae515b33cbb900c9e645ee0af9df95db2af47fcd812e1bd3c8a5441a1b",
+      "modified": "2026-11-22T11:25:08.718Z"
     },
     "https://tractorvs.com/guides/choosing-a-tractor/": {
       "digest": "1c6cac50789aef7a00b4204761e024aa6e9aa42906ec542c9ca41d5248f02424",
@@ -7982,8 +7982,8 @@
       "modified": null
     },
     "https://tractorvs.com/pt-br/compare/": {
-      "digest": "7789a130d484444ff1d804b591aa83a389a0e6c41d87fc9c2f4b4a90bcdf2469",
-      "modified": "2026-11-22T11:20:03.700Z"
+      "digest": "b8717cad4847bcaeab675afb57111cc4b45802acee37ead5f407c45db3d4422a",
+      "modified": "2026-11-22T11:25:08.718Z"
     },
     "https://tractorvs.com/pt-br/farm-advisor/": {
       "digest": "88650f3e64bea75375a37a4ed6c878a91926c25949d7434e05197284a2e849dc",
@@ -8006,12 +8006,12 @@
       "modified": "2026-11-22T11:20:03.700Z"
     },
     "https://tractorvs.com/pt-br/tractors/agrale-4125-0b53e944/": {
-      "digest": "e5c8d39f408608dc6a8a09ecfa0571853acddde107e7a1ee3e2dfaa81c5f2393",
-      "modified": "2026-11-21T19:47:11.499Z"
+      "digest": "a6fb1e3dd2c72967b02a80406ba238313c41e4dab228caad9ac983e63a1dcfec",
+      "modified": "2026-11-22T11:25:08.718Z"
     },
     "https://tractorvs.com/pt-br/tractors/agrale-4125-cargo-66781999/": {
-      "digest": "1559575b9499ead4991f037a49d735ab41e1470cfafe487463353a2cb5d5ef04",
-      "modified": "2026-11-22T05:19:46.825Z"
+      "digest": "6cfe220694ad042c33826a2e2309481e178606d7d155ced31a1b581b1adad807",
+      "modified": "2026-11-22T11:25:08.718Z"
     },
     "https://tractorvs.com/pt-br/tractors/agrale-4233-e3ed3f24/": {
       "digest": "87edd13161a93011d5ea904ba401bf82694100901aff8d26c9d1dbe8e6369cec",
@@ -8022,16 +8022,16 @@
       "modified": null
     },
     "https://tractorvs.com/pt-br/tractors/agrale-525-fb5e66a6/": {
-      "digest": "b125d947f57433ba0b9dc3e4e46a0fc0a01248d70a4f24b9007e7505d4b2cc5c",
-      "modified": "2026-11-21T19:47:11.499Z"
+      "digest": "c685bdbc6f29ed600e6e0bad5693df5f93bed217e8a23f5c40b2d4c28b67dd35",
+      "modified": "2026-11-22T11:25:08.718Z"
     },
     "https://tractorvs.com/pt-br/tractors/agrale-575-compact-5a960051/": {
-      "digest": "754dc7add1fefe0ed7266695e0d61e7dad134ad71019463e6c975f33ef350e59",
-      "modified": "2026-11-22T04:59:19.699Z"
+      "digest": "be8dbe6473ad0f8064699b21c269108f6e537032ac0f57a6b154a12397b94cc6",
+      "modified": "2026-11-22T11:25:08.718Z"
     },
     "https://tractorvs.com/pt-br/tractors/agrale-575-super-d3f67001/": {
-      "digest": "5307a989225db64569d794947090ecc6e2a4f7a3612051518e1e6c4ccd85413a",
-      "modified": "2026-11-22T04:59:19.699Z"
+      "digest": "48aa9bdb5a562dece0cd3932dca1be50804a4fd8f37dc70a25faa03a9a9b5c57",
+      "modified": "2026-11-22T11:25:08.718Z"
     },
     "https://tractorvs.com/pt-br/tractors/agrale-6185-6294988c/": {
       "digest": "c9bd2db48132d84680351eac29bc1d00cf8d27193af5a93b49735c131eeed5e5",
@@ -8126,8 +8126,8 @@
       "modified": "2026-11-22T09:48:10.487Z"
     },
     "https://tractorvs.com/pt-br/tractors/belarus-1025-2-0c77919f/": {
-      "digest": "8c503bccfc2821cebd5d2aa37798212b16688b5c5f53e0b45c81e154401bb441",
-      "modified": "2026-11-22T04:59:19.699Z"
+      "digest": "20c46d1fde2d15ba3d6c11a30646222087ae32f681257c5699cf9944dc87a1b6",
+      "modified": "2026-11-22T11:25:08.718Z"
     },
     "https://tractorvs.com/pt-br/tractors/belarus-112n-01-c902e03c/": {
       "digest": "36d5409dd7f6e83888498334621c87f9a3d8478ba52dca84a0dac285b9bb33ce",
@@ -8286,8 +8286,8 @@
       "modified": "2026-11-22T05:19:46.825Z"
     },
     "https://tractorvs.com/pt-br/tractors/iseki-txgs24-1d67a7d0/": {
-      "digest": "b3686c1633bdd63cc28afa57c5ebb89c85cd92f65ddca8548a9c2984971bc249",
-      "modified": "2026-11-22T04:59:19.699Z"
+      "digest": "784d917e166dbc9a643d3757c06f3d678b6d10a54dd284f48609609c3877bfa1",
+      "modified": "2026-11-22T11:25:08.718Z"
     },
     "https://tractorvs.com/pt-br/tractors/kioti-cx2510-6e8355cf/": {
       "digest": "14cd6f4223b7b0cc97942cd13c11418e5d83a6000cc5556586ebeff954a97a6e",
@@ -8322,8 +8322,8 @@
       "modified": "2026-11-22T04:59:19.699Z"
     },
     "https://tractorvs.com/pt-br/tractors/lamborghini-trattori-spire-f-80-target-0c8f654d/": {
-      "digest": "6b7fde3d94a165725bb82a96f942a95457b9b0c88d9108d7ba84e6ba62c52ee2",
-      "modified": "2026-11-22T05:19:46.825Z"
+      "digest": "a0edb66e87b6fc01926202cec6ff0d6893a360fc9bedcee237eea66e47dc5d3a",
+      "modified": "2026-11-22T11:25:08.718Z"
     },
     "https://tractorvs.com/pt-br/tractors/lamborghini-trattori-spire-s-80-target-f9a68e93/": {
       "digest": "2daf4e24a7c6ef516aadc7b84db79639aafd0baaf12752bb622c89a3823191fd",
@@ -8490,8 +8490,8 @@
       "modified": "2026-11-22T05:19:46.825Z"
     },
     "https://tractorvs.com/pt-br/tractors/massey-ferguson-4708-standard-5727a834/": {
-      "digest": "6a73e80ae3f89cdc617d253ba2f4ca8f381557e3ee11d68f3ea16f3ed1fd93a3",
-      "modified": "2026-11-22T05:19:46.825Z"
+      "digest": "6faba4f2ad4d99e317fd7e9f40ade6fb6fe9ce80a3d83854f8e395a2305751d2",
+      "modified": "2026-11-22T11:25:08.718Z"
     },
     "https://tractorvs.com/pt-br/tractors/massey-ferguson-5s-125-69fc9aa9/": {
       "digest": "4de5f193368fe72c6f696db43a157834d6e1fe210aec4a93a8e914ca4caae655",
@@ -8614,8 +8614,8 @@
       "modified": "2026-11-22T05:19:46.825Z"
     },
     "https://tractorvs.com/pt-br/tractors/mccormick-x5-085-d050e1f3/": {
-      "digest": "d6c933e6f8f48a0abe6235d13c5d17077313b1651f3377512fa0081399d87544",
-      "modified": "2026-11-22T06:30:53.630Z"
+      "digest": "6572e0aee46f67e78234d056aa4d2c7afda36b97b3c85554f9941f4606d99dc7",
+      "modified": "2026-11-22T11:25:08.718Z"
     },
     "https://tractorvs.com/pt-br/tractors/mccormick-x5-100-5b7dfe47/": {
       "digest": "dae47b61c42bb9e501026957ea691579cf30cf92b87b1b3866067b905e4e2b8c",
@@ -9038,8 +9038,8 @@
       "modified": "2026-11-22T04:59:19.699Z"
     },
     "https://tractorvs.com/pt-br/tractors/swaraj-735-fe-7c7b069f/": {
-      "digest": "69d7e97dda549029c6a7b417947d7684a6e84bd86684cee13c3c851236011ded",
-      "modified": "2026-11-21T21:02:04.777Z"
+      "digest": "d54b43488c2d71410093417c8c1d051cf03ce54ea768c60c53dd950358a691d6",
+      "modified": "2026-11-22T11:25:08.718Z"
     },
     "https://tractorvs.com/pt-br/tractors/swaraj-735-xt-e6ab3418/": {
       "digest": "d4f5732e924d1938cd553b62a8f47e55c7f6c76595849ab6f373009bab0f398e",
@@ -9206,12 +9206,12 @@
       "modified": "2026-11-22T05:19:46.825Z"
     },
     "https://tractorvs.com/pt-br/tractors/tym-t3035-6f214ac1/": {
-      "digest": "65ab5acabf9f9fe2e6522b34bb7790e363562020caa7f6606b5f35500d3c7a9f",
-      "modified": "2026-11-22T05:19:46.825Z"
+      "digest": "3d0f4adaef8f91b0e64f4c2d25be14a2525253d056494bac9f6add7fa6649acd",
+      "modified": "2026-11-22T11:25:08.718Z"
     },
     "https://tractorvs.com/pt-br/tractors/tym-t3035-82e4ebaa/": {
-      "digest": "9ccf1bd428c4001ee3c0f1c6b7fad1709474ea422f621f063854009dcf723f1c",
-      "modified": "2026-11-22T05:19:46.825Z"
+      "digest": "13fcf1d2878d5e086e47bd59ec18acbeda94a37cfd74d651eaf7d2ecfcfad295",
+      "modified": "2026-11-22T11:25:08.718Z"
     },
     "https://tractorvs.com/pt-br/tractors/tym-t3039-4172470a/": {
       "digest": "76d87d68a321307e94b8996f2e7cda8ffa3e2950b4de65fbc588983c03bd8ca8",
@@ -9470,8 +9470,8 @@
       "modified": "2026-11-22T06:30:53.630Z"
     },
     "https://tractorvs.com/pt-br/tractors/zetor-5100-03752cb7/": {
-      "digest": "a83082687e686445490dff6349d8e5ab8043703b87d4bba8652413710ccdd9e8",
-      "modified": "2026-11-22T06:23:39.537Z"
+      "digest": "6d3c6c7ac0d3b765029fa746acb83bafc9d23e70d37c8e426a8cbdf3616c66a5",
+      "modified": "2026-11-22T11:25:08.718Z"
     },
     "https://tractorvs.com/pt-br/tractors/zetor-5115-71ba22c9/": {
       "digest": "40d4607fa64f9f2082ce32fe189f297233a08065593d1776031451bf0847d368",
@@ -9498,64 +9498,64 @@
       "modified": "2026-11-22T06:30:53.630Z"
     },
     "https://tractorvs.com/pt-br/tractors/zetor-forterra-100-2c6bba1c/": {
-      "digest": "8c18388db1e63767fd45420b24a7c936356fb6bc02bf103963fc1aacf8356f87",
-      "modified": "2026-11-22T04:59:19.699Z"
+      "digest": "22c0994f0e0908c2705f820351339fd218a38001b7080f0cb76e97b36c238db4",
+      "modified": "2026-11-22T11:25:08.718Z"
     },
     "https://tractorvs.com/pt-br/tractors/zetor-forterra-110-c2193aaa/": {
-      "digest": "318109267260ee9a6a3075e6094d7d7b1cc18ace2e37a8ac8ce29b0955787cab",
-      "modified": "2026-11-22T04:59:19.699Z"
+      "digest": "0b029ce4ae4d61dbd3301cbce85c9f54549e9dcdd0a741cb2fd569f7cb5965e8",
+      "modified": "2026-11-22T11:25:08.718Z"
     },
     "https://tractorvs.com/pt-br/tractors/zetor-forterra-120-8f3ee10d/": {
-      "digest": "0cfaa5d0a1444e15f4acb438a6f0e9da0dcfb03143be95713adaa11c75bfe468",
-      "modified": "2026-11-22T04:59:19.699Z"
+      "digest": "dfe0602a8cdfddfcff44861617c74677a8f485d36824b78b33b112b899802b3b",
+      "modified": "2026-11-22T11:25:08.718Z"
     },
     "https://tractorvs.com/pt-br/tractors/zetor-forterra-120-91ee2619/": {
-      "digest": "a11b27fdae326e0f6ccc8787ea3fcbe4c024f38f660363cec50a46f665aad087",
-      "modified": "2026-11-22T04:59:19.699Z"
+      "digest": "45ff3741fdbc1d61e3b6e31669027b44723efab76696c8e8d95259239569f72f",
+      "modified": "2026-11-22T11:25:08.718Z"
     },
     "https://tractorvs.com/pt-br/tractors/zetor-forterra-130-774871f1/": {
-      "digest": "3bacce1bd1dd2f1c2fdaa5e34354d194522ae6e4bdaca6a5428f5b487b5c06c4",
-      "modified": "2026-11-22T04:59:19.699Z"
+      "digest": "d043f79e3e82645a9734b16c97359bef564dad2126e2985b9c9af90dc702cef3",
+      "modified": "2026-11-22T11:25:08.718Z"
     },
     "https://tractorvs.com/pt-br/tractors/zetor-forterra-130-85f2e707/": {
-      "digest": "c3684ab79a67cc8344cec51e7a272829cd77d10358f79545e975d2a169366e88",
-      "modified": "2026-11-22T04:59:19.699Z"
+      "digest": "26f5bbcf007ba25ed6b6e166b8157cf6930ca5e247ed8b39acffa7db94e6aa5d",
+      "modified": "2026-11-22T11:25:08.718Z"
     },
     "https://tractorvs.com/pt-br/tractors/zetor-forterra-130-a98ad948/": {
-      "digest": "ddac724ce81c3ab03aba6f6d64f277b52a40d525e270725773e5fe20582d82a1",
-      "modified": "2026-11-22T04:59:19.699Z"
+      "digest": "22068eb114c674b6f471474957534ae357bf397dd881037f51dbdbdd642b05a7",
+      "modified": "2026-11-22T11:25:08.718Z"
     },
     "https://tractorvs.com/pt-br/tractors/zetor-forterra-140-0a900d97/": {
-      "digest": "87590ec138048e783153ac1870cc5280f5baa8b9c3fde764de7a03d8710e1b93",
-      "modified": "2026-11-22T04:59:19.699Z"
+      "digest": "2c0c9da00ea4fc5347f7cc39b35ecde13d0e74c4077f417973962f5e201f98c1",
+      "modified": "2026-11-22T11:25:08.718Z"
     },
     "https://tractorvs.com/pt-br/tractors/zetor-forterra-140-33bcf1bf/": {
-      "digest": "04c4cff05c96f6349dec8e631a5f58343f51d6d377d5344cbcbaafadd92fe3e5",
-      "modified": "2026-11-22T04:59:19.699Z"
+      "digest": "5e73e0b53811ccf000378d71bbc4ca82532975ae92c8899e03cd7538fec5b118",
+      "modified": "2026-11-22T11:25:08.718Z"
     },
     "https://tractorvs.com/pt-br/tractors/zetor-forterra-140-aabda943/": {
-      "digest": "6b7d8d788dce02e3cb6f26dd452843bf9c1e95e06562d831f89d3e036cc61deb",
-      "modified": "2026-11-22T04:59:19.699Z"
+      "digest": "7582e172b792252e7f38782d3595b7a6218e90f9fa900f8c985dfe2319836f67",
+      "modified": "2026-11-22T11:25:08.718Z"
     },
     "https://tractorvs.com/pt-br/tractors/zetor-forterra-150-77f21256/": {
-      "digest": "0d34fd56d18abf7597e16ffd264305d2dec5b57351aec5638bf258f75b142892",
-      "modified": "2026-11-22T04:59:19.699Z"
+      "digest": "978f98a515237c866629b240b81a1a5c5de4f2eb1a7c7c71ac7ecaebacef5b28",
+      "modified": "2026-11-22T11:25:08.718Z"
     },
     "https://tractorvs.com/pt-br/tractors/zetor-major-755e44bc/": {
-      "digest": "7aaedc4fed26e7b12bb0178c6425a9e545c7786848fe05066dd7d20e182ae382",
-      "modified": "2026-11-22T06:23:39.537Z"
+      "digest": "0d174a6f791771399634f60d90f377621906aec50a1e9d6edd54f6869c60f376",
+      "modified": "2026-11-22T11:25:08.718Z"
     },
     "https://tractorvs.com/pt-br/tractors/zetor-proxima-c0d8fcfe/": {
-      "digest": "aeb791eeb78784d58da559d5540dc1bd981c602d4f2788514b809e6139d97503",
-      "modified": "2026-11-22T04:59:19.699Z"
+      "digest": "4fb6d3baf161dc8ac535764fad273df8a868e45396122d98e2e7ec93eb24df02",
+      "modified": "2026-11-22T11:25:08.718Z"
     },
     "https://tractorvs.com/pt-br/tractors/zetor-proxima-cf11aa07/": {
-      "digest": "63d6f9feef63c5a65d353bdcb53d5c7cc50593c6d580813d8be7114081eb14f6",
-      "modified": "2026-11-22T04:59:19.699Z"
+      "digest": "d9805a3385456656dab9f4b05149753ce72ba1c3105bafb586a0f52de6e75dec",
+      "modified": "2026-11-22T11:25:08.718Z"
     },
     "https://tractorvs.com/pt-br/tractors/zetor-proxima-e715524e/": {
-      "digest": "eda126ebbaad36072f3a8df03d0d4efbeaf7c1024499e21a3707ffdfd4b29665",
-      "modified": "2026-11-22T04:59:19.699Z"
+      "digest": "c3217fa0981d1cb2cb9b7253bfb8972b06c65637fc8cc9317e59fd7551d867da",
+      "modified": "2026-11-22T11:25:08.718Z"
     },
     "https://tractorvs.com/reviews/basak-2075-bk/": {
       "digest": "73f3271c6281c5b0230e50d66cef1a319eb6d5064cf0d93e5b83adc43a054083",
@@ -11322,8 +11322,8 @@
       "modified": "2026-11-22T09:48:10.487Z"
     },
     "https://tractorvs.com/tr/tractors/basak-traktor-5120-01590869/": {
-      "digest": "b2566fe6058d6ea176f4e1c5ec899fdeeecb4ae3e7fdff2586a09f85f1587765",
-      "modified": "2026-11-22T09:48:10.487Z"
+      "digest": "2353100e8713a987935d413528b51b9bff906b4d3f4a00ad7a620c2f6659b725",
+      "modified": "2026-11-22T11:25:08.718Z"
     },
     "https://tractorvs.com/tr/tractors/belarus-1025-2-0c77919f/": {
       "digest": "8c1b5cfab15d5a772997480d482c1b614039d0e6de58a408eea16d6e2c02129e",
@@ -12370,8 +12370,8 @@
       "modified": "2026-11-21T19:08:54.066Z"
     },
     "https://tractorvs.com/tr/tractors/tumosan-8095-163f043b/": {
-      "digest": "60b54757e151109581d054dfe64f2b8e5a6b4b5da145b34d5069527ce5e4465b",
-      "modified": "2026-11-22T09:48:10.487Z"
+      "digest": "d0cd3268396d019e187eb2f32c3269c3f52c1f9f99afdd4ebf8d6c531d55667c",
+      "modified": "2026-11-22T11:25:08.718Z"
     },
     "https://tractorvs.com/tr/tractors/tym-t1019-462f610a/": {
       "digest": "b469c902b4ebe15a98e79d66a17261d2b70e80982d1357acc3278f40f1efb7a1",
