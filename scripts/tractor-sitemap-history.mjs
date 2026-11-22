@@ -70,10 +70,18 @@ export function significantContentDigest(html,url){
     reject("Noindex page included in sitemap: "+url);
   if(!html.includes('rel="canonical" href="'+url+'"'))
     reject("Noncanonical published sitemap page: "+url);
-  // Unlike headers/nav/analytics, this hashes the actual visible main content
-  // + title/description; whitespace-only refactors do not reset dates.
+  // HTML data-spec-id is only a source-identity marker for cross-language
+  // QA; it is not visible editorial content and cannot justify a new sitemap
+  // modification date. Exclude ONLY this precisely scoped, valid UUID added
+  // to the model-spec-card opening tag (never values, links, microdata, titles,
+  // other attributes or visible HTML). Historic hashes were made before this
+  // attribute existed; preserving their inputs avoids fictitious mass lastmod.
   const normalize=s=>s.replace(/\s+/g," ").trim();
-  return createHash("sha256").update([normalize(title),normalize(desc),normalize(main)].join("\n")).digest("hex");
+  const significantMain=normalize(main).replace(
+    /(<article\s+class="model-spec-card")\s+data-spec-id="[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"(?=>)/gi,
+    "$1"
+  );
+  return createHash("sha256").update([normalize(title),normalize(desc),significantMain].join("\n")).digest("hex");
 }
 export function deriveHistory({pages,previous,now=new Date(),minPages=100}){
   if(!previous||previous.version!==1||!previous.pages||typeof previous.pages!=="object")
