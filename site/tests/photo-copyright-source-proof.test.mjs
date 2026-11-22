@@ -19,7 +19,8 @@ test("only exact own-work and self-issued Creative Commons copyright claim is ap
  assert.equal(reviewCommonsCopyrightWikitext(wiki,base).verified,true);
  for(const bad of [wiki.replace("{{own}}","{{source}}"),
     wiki.replace("{{self|cc-by-sa-4.0}}","{{cc-by-sa-4.0}}"),
-    wiki.replaceAll("MarcelX42","OtherAuthor")])
+    wiki.replaceAll("MarcelX42","OtherAuthor"),
+    wiki.replace("|author=[[User:MarcelX42|MarcelX42]]","|author=DifferentAuthor") + "\\n<!-- MarcelX42 appears elsewhere -->"])
    assert.equal(reviewCommonsCopyrightWikitext(bad,base).verified,false);
 });
 test("CC0, wrong Commons file source and wrong claimant cannot become a copyright notice",()=>{
