@@ -657,6 +657,7 @@ export const REVIEWED_LIVE_TECHNICAL_HEADINGS_20261122:Record<string, Partial<Re
   },
   "Wheelbase F-ROPS Mechanical": {
     "fr": "Empattement avec F-ROPS et transmission mécanique",
-    "es": "Distancia entre ejes con F-ROPS y transmisión mecánica"
+    "es": "Distancia entre ejes con F-ROPS y transmisión mecánica",
+    "pt-br": "Distância entre eixos com F-ROPS e transmissão mecânica"
   }
 };
