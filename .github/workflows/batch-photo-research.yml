@@ -26,6 +26,7 @@ on:
       - "site/scripts/photo-license-check.mjs"
       - "site/scripts/photo-model-aliases.mjs"
       - "site/tests/photo-*.test.mjs"
+      - "site/tests/fixtures/photo-offline-fetch.mjs"
 permissions:
   contents: read
 
