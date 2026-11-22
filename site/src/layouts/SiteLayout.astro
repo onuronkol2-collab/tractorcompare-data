@@ -286,11 +286,10 @@ const openGraphLocale: Record<Locale, string> = {
   // at initial page load. The custom event also supports future client routes.
   const languageLinks = [...document.querySelectorAll<HTMLAnchorElement>("[data-language-choice]")];
   const syncLanguageLinks = () => {
-    const search = window.location.search;
     for (const link of languageLinks) {
       if (!link.dataset.languageCode) continue;
       const destination = new URL(link.href, window.location.origin);
-      destination.search = search;
+      destination.search = window.location.search;
       link.href = destination.pathname + destination.search;
     }
   };
