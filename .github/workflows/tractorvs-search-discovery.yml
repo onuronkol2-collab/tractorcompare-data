@@ -3,7 +3,8 @@ name: TractorVS verified search discovery, IndexNow and weekly evidence report
 # No automatic publication or translation: only checks already-public URLs.
 on:
   schedule:
-    - cron: "31 */2 * * *"
+    # Hourly, deduplicated, small validated batches; never re-send unchanged URLs.
+    - cron: "31 * * * *"
     - cron: "11 6 * * 1"
   push:
     branches: [main]
@@ -80,6 +81,16 @@ jobs:
         with:
           path: .seo-discovery/state.json
           key: tractorvs-search-discovery-v1-${{ github.run_id }}-${{ github.run_attempt }}
+      - name: Preserve small hourly IndexNow acceptance or failure evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: tractorvs-indexnow-evidence-${{ github.run_id }}
+          path: |
+            .seo-discovery/report.json
+            .seo-discovery/bing-sitemap-coverage.json
+          retention-days: 7
+          if-no-files-found: ignore
       - name: Publish machine-readable weekly discovery evidence
         if: ${{ github.event.schedule == '11 6 * * 1' }}
         uses: actions/upload-artifact@v4
