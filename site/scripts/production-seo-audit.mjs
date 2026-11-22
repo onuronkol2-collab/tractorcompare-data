@@ -1,5 +1,5 @@
 import {inspectVisibleMainImages} from "./seo-main-markup.mjs";
-import {inspectDocumentImageAlts} from "./verify-sitewide-image-alts.mjs";
+import {inspectDocumentImageAlts,inspectUndocumentedEmptyImageAlts} from "./verify-sitewide-image-alts.mjs";
 import {parseProductionSitemapInventory,selectProductionSeoPages} from "./production-sitemap-inventory.mjs";
 // Read-only production SEO coverage audit. No credentials or writes.
 const BASE = "https://tractorvs.com";
@@ -104,6 +104,11 @@ console.log("TRACTORVS_EDITORIAL_SITEMAP "+
 const modelByLocale=Object.fromEntries(Object.keys(languages).map(k=>[k,new Set()]));
 let valid=0, modelPages=0, modelSample=[], fetchFailures=0;
 const titlesByLocale=new Map();
+// The 60-character threshold is crawler guidance, not a Google requirement.
+// Track it across checked locales as an advisory, without deleting exact
+// model/variant/market/year disambiguators or blocking correct long titles.
+const titleLengths={over60:0,over105:0,byLocale:Object.fromEntries(
+ Object.keys(languages).map(locale=>[locale,{over60:0,over105:0}]))};
 // All 3,882 URLs are verified in the source sitemap daily. To keep the
 // daily audit within GitHub time/network budgets, HTTP/canonical/hreflang
 // checks cover EVERY non-model page plus a rotating, equal-sized sample
@@ -137,6 +142,16 @@ for(let i=0;i<urls.length;i+=8){
       meta.description.length < (locale==="zh"||locale==="ja" ? 12 : 30))
     error("title-description",p,"Missing or clearly empty title/description");
    if(!meta.h1)error("heading",p,"H1 not found");
+   if(meta.title.length>60){
+     titleLengths.over60++;
+     titleLengths.byLocale[locale].over60++;
+     if(meta.title.length>105){
+       titleLengths.over105++;
+       titleLengths.byLocale[locale].over105++;
+     }
+     warn("title-length-guidance",p,"Title has "+meta.title.length+
+       " characters; review optional boilerplate but retain identity");
+   }
    // Full-sitemap accessibility/SEO integrity is handled by a tested
    // pure helper; an absent alt differs from a valid decorative alt="".
    const imageCheck=inspectVisibleMainImages(body);
@@ -147,6 +162,9 @@ for(let i=0;i<urls.length;i+=8){
    const documentImages=inspectDocumentImageAlts(body);
    for(const i of documentImages.missingAlt)
      error("image-alt",p,"Image #"+i.index+" ("+i.src+") lacks alt attribute");
+   for(const i of inspectUndocumentedEmptyImageAlts(body))
+     error("image-alt-empty-context",p,
+       "Blank alt on image #"+i.index+" ("+i.src+") without decorative reason");
    // JSON-LD errors are SEO issues on any page type, not only models.
    for(const [i,raw] of meta.json.entries())try{
      JSON.parse(raw);
@@ -176,7 +194,7 @@ for(let i=0;i<urls.length;i+=8){
     const previous=titlesByLocale.get(titleKey);
     if(previous && previous!==p)error("duplicate-model-title",p,"Same title as "+previous);
     titlesByLocale.set(titleKey,p);
-    if(meta.title.length>105)warn("verbose-title",p,"Title has "+meta.title.length+" characters");
+    // Length guidance is reported for every page type, not only models.
     const graphs=[];
     for(const raw of meta.json)try{
       const value=JSON.parse(raw);graphs.push(...(value["@graph"]||[value]));
@@ -218,6 +236,7 @@ const report={
   imagePageReferences:inventory.imagePages.size,
   checkedPages:valid,modelPages,modelsPerLocale:Object.fromEntries(Object.entries(modelByLocale).map(([k,v])=>[k,v.size])),
   fullPublishedModelsPerLocale:inventory.modelsPerLocale,
+  titleAdvisories:titleLengths,
   errors:problems.length,warnings:warnings.length,
 };
 console.log("TRACTORVS_SEO_AUDIT_REPORT "+JSON.stringify(report));

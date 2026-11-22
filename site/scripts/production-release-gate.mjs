@@ -14,6 +14,7 @@ import {fileURLToPath} from "node:url";
 import {verifyPublishedSiteInventory} from "./verify-published-site-inventory.mjs";
 import {verifyUnifiedSitemapIndex} from "./verify-unified-sitemap-index.mjs";
 import {auditBuiltImageAlts} from "./verify-sitewide-image-alts.mjs";
+import {auditBuiltSeoTitles} from "./verify-sitewide-seo-titles.mjs";
 
 const projectRoot=resolve(fileURLToPath(new URL("..",import.meta.url)));
 const expectedOrigin="https://tractorvs.com";
@@ -167,9 +168,33 @@ export function verifyProductionArtifacts({dir=projectRoot,origin=expectedOrigin
  insist(imageAlt.missingAlt.length===0,
    "Missing image alt attributes on "+imageAlt.missingAlt.length+" built images: "+
    JSON.stringify(imageAlt.missingAlt.slice(0,8)));
+ insist(imageAlt.undocumentedEmptyAlt.length===0,
+   "Blank image alt without decorative context or dynamic-photo explanation: "+
+   JSON.stringify(imageAlt.undocumentedEmptyAlt.slice(0,8)));
+ // Full-build title integrity catches a new locale/model accidentally losing
+ // its real identity even when the sitemap and generic title test still pass.
+ // 60 characters is advisory, NOT a hard Google limit: report it, never
+ // arbitrarily delete true model, market, variant or year details.
+ const titleAudit=auditBuiltSeoTitles(dist);
+ insist(titleAudit.errors.length===0,
+   "Missing/multiple title or wrong model identity on "+titleAudit.errors.length+
+   " generated pages: "+JSON.stringify(titleAudit.errors.slice(0,8)));
+ insist(titleAudit.duplicates.length===0,
+   "Different published model/variant URLs share an identical localized title: "+
+   JSON.stringify(titleAudit.duplicates.slice(0,8)));
+ console.log("TRACTORVS_PRODUCTION_TITLE_AUDIT "+JSON.stringify({
+   htmlDocuments:titleAudit.htmlDocuments,modelPages:titleAudit.modelPages,
+   over60:titleAudit.over60,over105:titleAudit.over105,over160:titleAudit.over160,
+   modelTitleDuplicates:titleAudit.duplicates.length,byLocale:titleAudit.byLocale
+ }));
+ if(titleAudit.duplicates.length)
+   console.warn("TRACTORVS_MODEL_TITLE_DUPLICATES "+
+     JSON.stringify(titleAudit.duplicates.slice(0,12)));
  return {models:tractors,translatedModels:trCount,terms:96,parts:57,origin,
    imageAltPages:imageAlt.htmlPages,imageAltImages:imageAlt.images,
-   decorativeOrPendingImageAlts:imageAlt.emptyAlt};
+   decorativeOrPendingImageAlts:imageAlt.emptyAlt,
+   titlePages:titleAudit.htmlDocuments,titleOver60:titleAudit.over60,
+   titleOver105:titleAudit.over105,duplicateModelTitles:titleAudit.duplicates.length};
 }
 
 export function preflight(env=process.env){

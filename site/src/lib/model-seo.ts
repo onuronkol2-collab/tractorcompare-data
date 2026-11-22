@@ -149,10 +149,22 @@ export function modelSeoMetadata(tractor: TractorRecord, lang: Locale) {
     && tractor.model_name === "Spire F 80 Target"
     && rawVariant === "Stage V / F 80 model / OEM brochure 04-2025"
     && rawMarket === "Europe";
+  // Two published Deutz-Fahr 5D identities differed ONLY in their full,
+  // 60+ character catalogue variant. The old <=48 check discarded both and
+  // produced 20 duplicate model titles across ten languages (5065 D / 5075 D).
+  // Keep the real GS vs non-GS distinction, never the source-document date.
+  const isDeutz5DSourceVariant = tractor.brand_name === "Deutz-Fahr"
+    && /^(?:5055|5065|5075|5090|5100) D$/.test(tractor.model_name)
+    && rawMarket === "Türkiye"
+    && (rawVariant === "5D Series GS / Stage V (Türkiye 2025 manufacturer brochure)"
+      || rawVariant === "5D Series (non-GS) / Stage V (Türkiye 2025 manufacturer brochure)");
+  const deutzIdentityLabel = rawVariant?.startsWith("5D Series GS")
+    ? "5D GS · Stage V" : "5D non-GS · Stage V";
   const variantLabel = isSwarajTarget ? null
     : isLamborghiniStageV || isSpireFSourceNote ? "Stage V"
     : isHistoricalBelarus ? "Honda GX390"
     : isAgraleCargoSourceNote ? null
+    : isDeutz5DSourceVariant ? deutzIdentityLabel
     : rawVariant;
   const marketLabel = !rawMarket || rawMarket.toLowerCase() === "global" ? null
     : isSwarajTarget ? marketDisplayName("India",lang)
