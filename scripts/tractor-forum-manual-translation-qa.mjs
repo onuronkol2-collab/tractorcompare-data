@@ -16,6 +16,27 @@ function numberTokens(value) {
  return [...value.matchAll(/(?<![A-Za-z])\d+(?:[.,]\d+)*/g)]
   .map(m=>m[0].replaceAll(",",".")).sort();
 }
+const MONTHS=[
+ ["ocak",1],["şubat",2],["mart",3],["nisan",4],["mayıs",5],
+ ["haziran",6],["temmuz",7],["ağustos",8],["eylül",9],["ekim",10],
+ ["kasım",11],["aralık",12]
+];
+/** Japanese/Chinese month notation adds numeric month tokens not present in Turkish. */
+function numericFactsEqual(source,translated,locale){
+ const expected=numberTokens(source),actual=numberTokens(translated);
+ if(locale==="zh"||locale==="ja"){
+  const lowered=source.toLocaleLowerCase("tr-TR");
+  for(const [name,num] of MONTHS){
+   const inSource=[...lowered.matchAll(new RegExp("(?<!\\p{L})"+name+"(?!\\p{L})","gu"))].length;
+   const inTarget=[...translated.matchAll(new RegExp("(?<![0-9])"+num+"(?=\\s*月)","g"))].length;
+   for(let n=0;n<Math.min(inSource,inTarget);n++){
+    const idx=actual.indexOf(String(num));
+    if(idx!==-1)actual.splice(idx,1);
+   }
+  }
+ }
+ return JSON.stringify(expected)===JSON.stringify(actual.sort());
+}
 function urlTokens(value) {
  return [...value.matchAll(/https:\/\/[^\s<>"'\])}]+/g)]
   .map(m=>m[0].replace(/[.,;!?]+$/,"")).sort();
@@ -58,11 +79,12 @@ export function auditManualForumTranslation({
  }
  if(errors.length)return {pass:false,errors};
  if(targetTitle.length<12||targetTitle.length>240)errors.push("invalid_title_length");
- if(targetBody.length<sourceBody.length*.45||targetBody.length>sourceBody.length*2.7)
+ const minLengthRatio=locale==="zh"||locale==="ja"?.24:.45;
+ if(targetBody.length<sourceBody.length*minLengthRatio||targetBody.length>sourceBody.length*2.7)
   errors.push("suspicious_length");
  if(sourceTitle.trim()===targetTitle.trim())errors.push("untranslated_title");
  const orig=sourceTitle+"\n"+sourceBody,translation=targetTitle+"\n"+targetBody;
- if(!same(numberTokens(orig),numberTokens(translation)))errors.push("numeric_facts_changed");
+ if(!numericFactsEqual(orig,translation,locale))errors.push("numeric_facts_changed");
  if(!same(urlTokens(orig),urlTokens(translation)))errors.push("urls_changed");
  if(!same(unitFacts(orig),unitFacts(translation)))errors.push("numeric_units_changed");
  if(!same(headingTokens(sourceBody),headingTokens(targetBody)))errors.push("heading_structure_changed");
