@@ -24,8 +24,9 @@ export function reviewCommonsCopyrightWikitext(wikitext,photo){
   // The claimed owner must be named in the ORIGINAL file's author= field.
   // A name mentioned in a description, unrelated credit or comment is not proof.
   const authorPresent=authorAliases.some(alias=>{
-    const escaped=alias.replace(/[.*+?^${}()|[\]\\]/g,"\\  const authorPresent=authorAliases.some(alias=>body.includes(alias));");
-    return new RegExp("(?:^|\\\\|)\\\\s*author\\\\s*=\\\\s*[^\\\\r\\\\n]{0,350}\\\\b"+escaped+"\\\\b","i").test(body);
+    if(!/^[A-Za-z0-9_-]+$/.test(alias))return false;
+    const pattern="(?:^|\\|)\\s*author\\s*=\\s*[^\\r\\n]{0,350}\\b"+alias+"\\b";
+    return new RegExp(pattern,"i").test(body);
   });
   const sourceUrlSame=photo.copyrightClaimUrl===photo.sourcePage
     && /^https:\/\/commons\.wikimedia\.org\/wiki\/File:[^?#]+$/.test(photo.sourcePage);
