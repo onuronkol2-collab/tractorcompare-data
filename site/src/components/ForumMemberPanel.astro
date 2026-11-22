@@ -164,9 +164,10 @@ const copy=JSON.stringify(MEMBER_TEXT[lang]);
 @media(max-width:780px){.member-grid{grid-template-columns:1fr}}
 </style>
 <script>
+import {readForumSession} from "../lib/forum-session-store.mjs";
 type Profile={id:string;handle:string;display_name:string;bio:string;avatar_path:string|null;favorite_brand:string;created_at?:string;show_leaderboard:boolean;
  score_total?:number;score_30d?:number;topic_count?:number;reply_count?:number;helpful_votes?:number};
-const tokenKey="tractorvs_forum_access";
+
 const widgets=document.querySelectorAll<HTMLElement>("[data-community-members]");
 for(const root of widgets){
  const cfg=JSON.parse(root.dataset.memberConfig||"null") as {url:string;key:string}|null;
@@ -422,7 +423,7 @@ for(const root of widgets){
  }
  async function loadSelf(){
   const version=++sessionVersion;
-  try{token=sessionStorage.getItem(tokenKey)||""}catch{token=""}
+  token=readForumSession()?.access||""
   ownId="";
   if(!token){
    editing=false;showActivity=false;
