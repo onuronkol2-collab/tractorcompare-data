@@ -1,0 +1,36 @@
+{
+  "auditDate": "2026-11-22",
+  "sourceOfTruth": "site/docs/photo-curated-tym-exact-three-20261122.json",
+  "mediaIntegritySource": "site/docs/photo-import-evidence-tym-exact-three-20261122.json",
+  "manualReviewMethod": "Individually inspected the nine-artifact staging output by decoding the 480px source-verified JPEGs in a visual display, compared printed body/placard model number with exact Commons File descriptions and published TYM manufacturer model aliases.",
+  "visualReviewCompleted": true,
+  "legalReviewScope": "Commons File pages independently state Own work, uploader MarcelX42, self-assigned CC BY-SA 4.0. Reuse requires photographer attribution, source file and licensing links and attribution when derivatives are resized/re-encoded. No claim to own photographer's images, nor that pictured trims are identical to target specification.",
+  "publicationApprovalBasis": "Author-source/rights verified, exact physical model badges visible, all three published UUIDs pre-existing in Supabase, exact variant-sensitive binding, nine bytes-backed derivatives SHA-verified in first-party folder, fail-closed release tests and ten-locale ImageObject metadata. Production deploy and live HTTP verification are separately required.",
+  "imageReuseScope": "Only exact published TYM tractor_id. An illustrative photo is not evidence of engine or transmission option. 2023 exhibit photo must not be captioned as a 2026 shot.",
+  "photos": [
+    {
+      "fileId": "tym-t2026-2500l-marcelx42-2023",
+      "tractorId": "1aa3a3d6-822b-4346-9d13-b6c0d99bdb1e",
+      "photographer": "MarcelX42",
+      "modelBadgeVisible": true,
+      "visualObservation": "Front and left side of the red TYM tractor; raised 2500L marking visible on display equipment and side hood. Other tractors in background are excluded from the model claim.",
+      "altTextIntent": "TYM T2026 (2500L) tractor photographed at Agritechnica 2023; illustrative of the named model rather than an assumed fitted drivetrain."
+    },
+    {
+      "fileId": "tym-t4058-6225c-marcelx42-2023",
+      "tractorId": "840269b7-e7c3-4e57-80db-56a55e9fbf46",
+      "photographer": "MarcelX42",
+      "modelBadgeVisible": true,
+      "visualObservation": "Red cab-equipped TYM 6225C tractor; both the tractor hood decal 6225C and exhibition placard are readable.",
+      "altTextIntent": "TYM T4058 (6225C) cab tractor displayed at Agritechnica 2023; pictured equipment may differ from the recorded configuration."
+    },
+    {
+      "fileId": "tym-t5075-t78-marcelx42-2023",
+      "tractorId": "d12085d4-5bdf-4017-85f5-7071a6d72e6f",
+      "photographer": "MarcelX42",
+      "modelBadgeVisible": true,
+      "visualObservation": "Red cab-equipped TYM T78 tractor; white T78 model lettering on hood is clearly visible.",
+      "altTextIntent": "TYM T5075 (T78) tractor photographed at Agritechnica 2023, model-identical illustration."
+    }
+  ]
+}
