@@ -23,10 +23,16 @@ export function reviewCommonsCopyrightWikitext(wikitext,photo){
     : [author];
   // The claimed owner must be named in the ORIGINAL file's author= field.
   // A name mentioned in a description, unrelated credit or comment is not proof.
+  // Only the exact author= field is eligible, not a body-wide credit.
+  // Unicode-safe boundaries allow documented author names such as Bene Riobó.
+  const authorField=(body.match(/(?:^|\n)\s*\|\s*author\s*=\s*([^\r\n]{0,650})/i)||[])[1]||"";
+  const normalizeAuthor=value=>String(value||"").replaceAll("_"," ").normalize("NFC").trim().toLocaleLowerCase("en");
   const authorPresent=authorAliases.some(alias=>{
-    if(!/^[A-Za-z0-9_-]+$/.test(alias))return false;
-    const pattern="(?:^|\\|)\\s*author\\s*=\\s*[^\\r\\n]{0,350}\\b"+alias+"\\b";
-    return new RegExp(pattern,"i").test(body);
+    const haystack=normalizeAuthor(authorField),needle=normalizeAuthor(alias);
+    const pos=haystack.indexOf(needle);
+    return Boolean(needle&&pos>=0
+      &&(pos===0||!(/[\p{L}\p{N}]/u).test(haystack[pos-1]))
+      &&(pos+needle.length===haystack.length||!(/[\p{L}\p{N}]/u).test(haystack[pos+needle.length])));
   });
   const sourceUrlSame=photo.copyrightClaimUrl===photo.sourcePage
     && /^https:\/\/commons\.wikimedia\.org\/wiki\/File:[^?#]+$/.test(photo.sourcePage);
