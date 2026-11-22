@@ -4,7 +4,7 @@
 DO $audit$
 DECLARE
   target_topic uuid := '713ab252-a925-4ab7-b2c8-a30ce5b86706';
-  source_hash text := '0102e8edcd864b285733fb30cad4d8f1';
+  expected_hash text := '0102e8edcd864b285733fb30cad4d8f1';
   src record; trg record;
   src_scores text[];
   target_scores text[];
@@ -16,7 +16,7 @@ BEGIN
   SELECT title,body,locale,status,translation_consent,md5(title||chr(31)||body) AS hash
     INTO src FROM public.tc_forum_topics WHERE id=target_topic;
   IF NOT FOUND OR src.locale<>'tr' OR src.status<>'published'
-     OR src.translation_consent IS NOT TRUE OR src.hash<>source_hash
+     OR src.translation_consent IS NOT TRUE OR src.hash<>expected_hash
   THEN RAISE EXCEPTION 'SOURCE changed or consent removed'; END IF;
   SELECT coalesce(array_agg(
      lower(btrim(split_part(l,'|',3)))||':'||
@@ -44,7 +44,7 @@ BEGIN
   FOR trg IN SELECT locale,title,body,source_hash,state,seo_approved,reviewed_by_model,provider
     FROM public.tc_forum_topic_translations WHERE topic_id=target_topic ORDER BY locale
   LOOP
-   IF trg.source_hash<>source_hash OR trg.state<>'needs_review'
+   IF trg.source_hash<>expected_hash OR trg.state<>'needs_review'
       OR trg.seo_approved IS NOT FALSE OR trg.reviewed_by_model IS NOT NULL
       OR trg.provider<>'ChatGPT conversation (manual)'
    THEN RAISE EXCEPTION 'Unsafe draft metadata for %',trg.locale; END IF;
