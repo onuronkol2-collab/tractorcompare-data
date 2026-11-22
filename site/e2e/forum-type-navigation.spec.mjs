@@ -18,7 +18,21 @@ test("forum dashboard typography is readable on desktop, preserving key actions"
 });
 test("compact mobile dashboard has legible navigation, no horizontal overflow and touch-friendly categories",async({page})=>{
  await page.setViewportSize({width:390,height:844});
- await page.goto("/tr/forum/");
+ // Preview builds intentionally have no public forum posts: inject an approved
+ // test-only live feed item to exercise visible category filters.
+ await page.route("**/forum-test-api/rest/v1/tc_forum_localized_topics?**",route=>
+  route.fulfill({json:[{
+   id:"49c767e4-c0ce-42a8-a423-6985f770e1b7",
+   topic_id:"3c45305b-5eea-49eb-9d6e-2f3bbb809b66",
+   locale:"tr",original_locale:"tr",status:"published",machine_translated:false,
+   seo_ready:false,category:"maintenance",tractor_id:null,
+   title:"Traktör hidrolik bakımı ve yağ seviyesi kontrol sorusu",
+   body:"Bakım esnasında hidrolik yağ seviyesi ve filtre kontrolü hakkında deneyimlerimizi paylaşıyoruz.",
+   slug:"2026-test-traktor-bakim-3c45305b5eea49eb9d6e2f3bbb809b66",
+   created_at:"2026-11-22T12:00:00Z",updated_at:"2026-11-22T12:00:00Z"
+  }]}));
+ await page.goto("/tr/forum/?live-forum-test=1");
+ await expect(page.locator("[data-forum-live-grid] [data-forum-topic]")).toHaveCount(1);
  await expect(page.locator(".forum-dashboard-rail")).toBeHidden();
  await expect(page.locator(".forum-view-tabs")).toBeVisible();
  expect(await font(page.locator(".forum-view-button").first())).toBeGreaterThanOrEqual(14);
