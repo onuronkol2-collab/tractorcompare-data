@@ -16,7 +16,7 @@ const CASES=[
   urls:["https://www.antoniocarraro.it/en/catalogue/mach-2-r"]},
  {prefix:"sonalika-gt-22-4wd-",markers:["4WD","2WD"],
   urls:["https://www.sonalika.com/tractor/gt-22-4wd"]},
- {prefix:"basak-traktor-2075-bk-",markers:["3830","3930"],
+ {prefix:"basak-traktor-2075-bk-9ef236be",markers:["3830","3930"],
   urls:["https://basaktraktor.com.tr/urunler/traktorler/tarla-traktorleri/2075-bk",
    "https://admin.basaktraktor.com.tr/upload/7c743eaf-5228-4ae7-94d7-25df6a13e778-2075%20BK%204WD.pdf"],
   comparisonId:"9ef236be-0d91-4c87-af3d-8c0cf33f08a1",
