@@ -49,7 +49,8 @@ const schema=indexable?{
  description={ft(lang,"intro")} indexable={indexable} indexableLocales={indexableLocales} structuredData={schema}>
  <div class="community-shell">
   <header class="community-hero">
-   <div class="container">
+   <div class="container community-hero-inner">
+    <div class="community-hero-copy">
     <p class="community-kicker">TRACTORVS · {ft(lang,"name")}</p>
     <h1>{ft(lang,"heading")}</h1>
     <p>{ft(lang,"intro")}</p>
@@ -58,14 +59,33 @@ const schema=indexable?{
       <a class="compose-link community-link-alt" href="#forum-register-heading">{mt(lang,"register")}</a>
       <a class="compose-link community-link-alt" data-forum-leaderboard-link href="#forum-members">{mt(lang,"leaderboard")}</a>
     </div>
-    <div class="community-guide">
-     <span>{ft(lang,"guidelines")}</span>
     </div>
+    <aside class="community-hero-panel" aria-label={ft(lang,"category")}>
+      <div class="community-panel-head">
+        <span class="community-panel-mark" aria-hidden="true">T/V</span>
+        <span>{ft(lang,"name")}</span>
+      </div>
+      <span class="community-panel-label">{ft(lang,"category")}</span>
+      <div class="community-panel-categories">
+        <span>{ft(lang,"questions")}</span>
+        <span>{ft(lang,"maintenance")}</span>
+        <span>{ft(lang,"comparison")}</span>
+        <span>{ft(lang,"reviews")}</span>
+      </div>
+      <p class="community-panel-note">{ft(lang,"guidelines")}</p>
+    </aside>
    </div>
   </header>
   <div class="container community-main">
+   <div class="community-content-grid">
    <section class="community-list" aria-label={ft(lang,"all")}>
-    <h2>{ft(lang,"all")}</h2>
+    <div class="community-section-header">
+      <div>
+        <span class="community-section-eyebrow">{ft(lang,"name")}</span>
+        <h2>{ft(lang,"all")}</h2>
+      </div>
+      <span class="community-topic-count" aria-label={ft(lang,"all")+": "+topics.length}>{topics.length}</span>
+    </div>
     <div class="community-live-new" data-forum-live-root
       data-forum-live-config={liveBrowserData} hidden>
       <h3 data-forum-live-heading>{FORUM_LIVE_TEXT[lang].early}</h3>
@@ -93,8 +113,8 @@ const schema=indexable?{
           <span>{ft(lang,topic.category)}</span>
           <time datetime={topic.created_at}>{forumDate(topic.created_at,lang)}</time>
          </div>
-         <h3><a href={path+topic.slug+"/"}>{topic.title}</a></h3>
-         <p>{forumCardExcerpt(topic.body,230)}</p>
+         <h3><a href={path+topic.slug+"/"}>{topic.title}<span class="community-topic-arrow" aria-hidden="true">↗</span></a></h3>
+         <p>{forumCardExcerpt(topic.body,160)}</p>
          {model&&<p class="community-model">
           <a href={localizedPath(lang,"/tractors/"+model.slug+"/")}>{model.brand_name} {model.model_name}</a>
          </p>}
@@ -116,7 +136,10 @@ const schema=indexable?{
     </>}
     <p id="forum-no-results" hidden role="status">{ft(lang,"noResults")}</p>
    </section>
-   <ForumComposer lang={lang} mode="topic"/>
+   <aside class="community-sidebar" aria-label={ft(lang,"compose")}>
+     <ForumComposer lang={lang} mode="topic"/>
+   </aside>
+   </div>
    <ForumMemberPanel lang={lang}/>
    <p class="community-help"><a href={localizedPath(lang,"/tractors/")}>{ft(lang,"help")} ↗</a></p>
   </div>
