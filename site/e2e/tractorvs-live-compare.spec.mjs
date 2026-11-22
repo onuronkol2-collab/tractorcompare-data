@@ -183,3 +183,70 @@ for (const language of OTHER_LOCALES) {
     expect((await page.locator("#tc-load-error").textContent())?.trim()||"").toBe("");
   });
 }
+
+
+// A language menu created at first page load can contain stale model IDs after
+// history.replaceState. This real-browser test covers every source locale and
+// destination navigation on desktop/mobile. Only run the new assertion after
+// deployment, not against older production during a pull request.
+for (const language of [{code:"tr",html:"tr"},...OTHER_LOCALES]) {
+  test("live "+language.code+" language switch retains dynamically selected pair",async({page})=>{
+    test.skip(process.env.COMPARE_QA_PREDEPLOY==="true",
+      "Predeploy browser QA must not test new code against old production.");
+    test.setTimeout(90_000);
+    const sourcePath=(language.code==="en"?"/":"/"+language.code+"/")+"compare/";
+    const response=await page.goto(sourcePath+"?left="+ISEKI+"&right="+NEW_HOLLAND,{waitUntil:"domcontentloaded"});
+    expect(response?.status()).toBe(200);
+    await expect(page.locator("html")).toHaveAttribute("lang",language.html);
+    const links=page.locator("[data-language-choice]");
+    await expect(links).toHaveCount(10);
+    const checkDestinations=async(left,right)=>{
+      const destinations=await links.evaluateAll(nodes=>nodes.map(a=>a.getAttribute("href")));
+      for(const href of destinations){
+        expect(href).toBeTruthy();
+        const target=new URL(href,"https://tractorvs.com");
+        expect(target.searchParams.get("left"),language.code+" left: "+target.pathname).toBe(left);
+        expect(target.searchParams.get("right"),language.code+" right: "+target.pathname).toBe(right);
+      }
+    };
+
+    await chooseTractor(page,"left","T3035");
+    await chooseTractor(page,"right","T3047");
+    await expect.poll(()=>new URL(page.url()).searchParams.get("left")).toBe(TYM_F36);
+    await expect.poll(()=>new URL(page.url()).searchParams.get("right")).toBe(TYM_T475);
+    await checkDestinations(TYM_F36,TYM_T475);
+
+    await page.locator("#tc-swap").click();
+    await expect.poll(()=>new URL(page.url()).searchParams.get("left")).toBe(TYM_T475);
+    await expect.poll(()=>new URL(page.url()).searchParams.get("right")).toBe(TYM_F36);
+    await checkDestinations(TYM_T475,TYM_F36);
+
+    const destinationLang=language.code==="tr"?"en":"tr";
+    const targetPath=(destinationLang==="en"?"/":"/"+destinationLang+"/")+"compare/";
+    await page.locator(".locale-menu > summary").click();
+    await page.locator('[data-language-choice][data-language-code="'+destinationLang+'"]').click();
+    await expect.poll(()=>new URL(page.url()).pathname).toBe(targetPath);
+    const url=new URL(page.url());
+    expect(url.searchParams.get("left")).toBe(TYM_T475);
+    expect(url.searchParams.get("right")).toBe(TYM_F36);
+    await expect(page.locator("html")).toHaveAttribute("lang",destinationLang);
+    await expect(page.locator("#tc-left-link")).toContainText("T3047");
+    await expect(page.locator("#tc-right-link")).toContainText("T3035");
+
+    // SEO metadata remains canonical/query-free despite mutable visitor URLs.
+    await expect(page.locator('link[rel="canonical"]')).toHaveAttribute("href","https://tractorvs.com"+targetPath);
+    const alternates=await page.locator('link[rel="alternate"][hreflang]').evaluateAll(
+      nodes=>nodes.map(node=>node.getAttribute("href")));
+    expect(alternates.length).toBeGreaterThanOrEqual(10);
+    expect(alternates.every(href=>!href?.includes("?"))).toBe(true);
+    const l10n=JSON.parse(await page.locator("#tc-i18n").textContent());
+    const row=page.locator("#tc-rows tr").filter({
+      has:page.locator("th .tc-condition-caution").filter({hasText:l10n.transmissionCaution})
+    }).first();
+    await expect(row).toBeVisible();
+    await expect(row.locator("td a[href^='https://']")).not.toHaveCount(0);
+    await page.reload({waitUntil:"domcontentloaded"});
+    await expect(page.locator("#tc-left-link")).toContainText("T3047");
+    await expect(page.locator("#tc-right-link")).toContainText("T3035");
+  });
+}

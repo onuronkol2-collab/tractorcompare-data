@@ -408,6 +408,8 @@ const labelsPayload = JSON.stringify({
       const url=new URL(window.location.href);
       url.searchParams.set("left",left.id);url.searchParams.set("right",right.id);
       window.history.replaceState(null,"",url.pathname+url.search);
+      // Let shared navigation refresh locale destinations after each selection.
+      window.dispatchEvent(new Event("tractorvs:route-state-changed"));
     }
     function makeCombobox(side:"left"|"right",select:HTMLSelectElement){
       const input=document.querySelector<HTMLInputElement>("#tc-"+side+"-search");

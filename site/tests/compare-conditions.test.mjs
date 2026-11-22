@@ -179,3 +179,28 @@ test("live comparison browser QA covers all nine non-Turkish locales with real i
   for(const engine of ["chromium","firefox","webkit","mobile-chromium"])
     assert.ok(config.includes('name:"'+engine+'"'),"Missing supported browser: "+engine);
 });
+
+
+test("live comparison locale links keep the latest selected IDs without modifying canonical SEO URLs",()=>{
+  const layout=readFileSync(new URL("../src/layouts/SiteLayout.astro",import.meta.url),"utf8");
+  const compare=readFileSync(new URL("../src/components/TractorComparison.astro",import.meta.url),"utf8");
+  const live=readFileSync(new URL("../e2e/tractorvs-live-compare.spec.mjs",import.meta.url),"utf8");
+  const workflow=readFileSync(new URL("../../.github/workflows/tractorvs-compare-live-browser-qa.yml",import.meta.url),"utf8");
+  assert.match(layout,/url: localizedPath\(locale, plainPath\) \+ \(plainPath === "\/compare\/" \? Astro\.url\.search : ""\)/);
+  assert.match(layout,/data-language-sync="selection"/);
+  assert.match(layout,/window\.addEventListener\("tractorvs:route-state-changed", syncLanguageLinks\)/);
+  assert.match(layout,/destination\.search = window\.location\.search/);
+  assert.match(layout,/link\.href = destination\.pathname \+ destination\.search/);
+  assert.match(layout,/link\.addEventListener\(eventName, syncLanguageLinks\)/);
+  assert.match(compare,/window\.history\.replaceState\(null,"",url\.pathname\+url\.search\)/);
+  assert.match(compare,/window\.dispatchEvent\(new Event\("tractorvs:route-state-changed"\)\)/);
+  assert.match(layout,/const canonicalUrl = indexingEnabled\s*\? new URL\(Astro\.url\.pathname, Astro\.site!\)\.toString\(\)/);
+  assert.match(layout,/href: new URL\(localizedPath\(locale, plainPath\), Astro\.site!\)\.toString\(\)/);
+  assert.match(live,/for \(const language of \[\{code:"tr",html:"tr"\},\.\.\.OTHER_LOCALES\]\)/);
+  assert.match(live,/await checkDestinations\(TYM_F36,TYM_T475\)/);
+  assert.match(live,/await checkDestinations\(TYM_T475,TYM_F36\)/);
+  assert.match(live,/await page\.locator\("\.locale-menu > summary"\)\.click\(\)/);
+  assert.match(workflow,/COMP[A-Z_]*_PREDEPLOY:/);
+  assert.match(workflow,/data-language-sync="selection"/);
+  assert.match(workflow,/site\/src\/layouts\/SiteLayout\.astro/);
+});
