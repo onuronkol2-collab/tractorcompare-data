@@ -53,10 +53,11 @@ test("near-model or contested rights leads remain explicitly quarantined",()=>{
   const held=new Set([
     "sonalika-di30-baagban-tagooty-2024",
     "tym-t6130-t130-mbone-2023",
-    "zetor-major-hs80-marcelx42-2017"
+    "zetor-major-hs80-marcelx42-2017",
+    "tym-t4049-t495sh-marcelx42-2025"
   ]);
   const quarantined=registry.candidates.filter(x=>held.has(x.fileId));
-  assert.equal(quarantined.length,3);
+  assert.equal(quarantined.length,4);
   for(const lead of quarantined){
     assert.equal(lead.evidence.exactModel,false);
     assert.equal(lead.review.publicationAllowed,false);
