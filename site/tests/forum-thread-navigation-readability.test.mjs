@@ -25,7 +25,7 @@ test("real article headings yield anchored table of contents; no arbitrary slugs
  assert.match(topic,/block\.type==="heading"&&block\.level===2/);
  assert.match(topic,/const showContents=headingLinks\.length>=3/);
  assert.match(topic,/class="forum-topic-toc"/);
- assert.match(topic,/href=\{"#"+item\.id\}/);
+ assert.ok(topic.includes('href={"#"+item.id}'));
  assert.match(topic,/class="forum-jump-replies" href="#forum-replies-heading"/);
  assert.match(topic,/headingPrefix="topic-heading"/);
  assert.match(rich,/id=\{headingPrefix\?headingPrefix\+"-"\+index:undefined\}/);
