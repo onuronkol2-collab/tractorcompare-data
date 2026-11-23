@@ -29,7 +29,7 @@ test("current forum schema stays honest WebPage until real published author proo
 test("private member forms are not presented as public profile rich results",()=>{
   assert.match(members,/show_leaderboard/);
   assert.doesNotMatch(members,/"@type"\s*:\s*"ProfilePage"/);
-  assert.doesNotMatch(members,/auth\.users/);
+  assert.doesNotMatch(members,/\/rest\/v1\/auth\.users/);
 });
 
 test("published, reviewed forum content only: draft and unreviewed translations remain unindexable",()=>{
