@@ -87,7 +87,7 @@ def main():
     if "site/public" in target.as_posix() or target == Path.cwd():
         raise RuntimeError("Refusing to write into production or repository root")
     target.mkdir(parents=True, exist_ok=True)
-    if EXPECTED_BATCH_COUNT not in (1, 3, 4):
+    if EXPECTED_BATCH_COUNT not in (3, 4):
         raise RuntimeError("Unsupported reviewed photograph batch size")
     if len(SOURCES) != EXPECTED_BATCH_COUNT:
         raise RuntimeError("Reviewed photograph source count does not match declared batch")
@@ -130,8 +130,7 @@ def main():
         "reviewRequired": True, "publicationCount": 0, "images": results
     }, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     print(
-        "TRACTORVS_THREE_JPEGS_STAGED_FOR_REVIEW_ONLY" if EXPECTED_BATCH_COUNT == 1
-        else "TRACTORVS_NINE_JPEGS_STAGED_FOR_REVIEW_ONLY" if EXPECTED_BATCH_COUNT == 3
+        "TRACTORVS_NINE_JPEGS_STAGED_FOR_REVIEW_ONLY" if EXPECTED_BATCH_COUNT == 3
         else "TRACTORVS_TWELVE_JPEGS_STAGED_FOR_REVIEW_ONLY",
         flush=True,
     )
