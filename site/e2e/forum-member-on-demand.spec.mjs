@@ -3,9 +3,13 @@ import {test,expect} from "@playwright/test";
 test("public newest-member list loads, optional ranking waits until opening",async({page})=>{
  let rankingRequests=0,recentRequests=0;
  await page.route("**/forum-test-api/rest/v1/tc_member_scores?**",route=>{
-  const select=new URL(route.request().url()).searchParams.get("select")||"";
-  if(select.includes("score_total"))rankingRequests++;
-  else recentRequests++;
+  // The recent-member query legitimately includes score_total, too; it is
+  // not a leaderboard fetch. Distinguish the two requests by their unique
+  // sort contract, so the on-demand ranking gate remains a real assertion.
+  const order=new URL(route.request().url()).searchParams.get("order")||"";
+  if(order==="score_30d.desc,score_total.desc")rankingRequests++;
+  else if(order==="created_at.desc")recentRequests++;
+  else throw Error("Unexpected public member request order: "+order);
   return route.fulfill({json:[]});
  });
  await page.goto("/tr/forum/");
