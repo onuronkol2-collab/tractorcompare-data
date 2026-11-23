@@ -132,27 +132,40 @@ export function guardMassUnpublish(previous,current){
 
 export async function runPublicationSync({repo,ref,jwt,token,fetchFn=fetch,dryRun=false,now=new Date()}) {
   validateScope(repo,ref);
-  const latest=await fingerprintPublicViewWithBoundedRetry({jwt,fetchFn});
-  const stored=await getRecordedSnapshot({token,fetchFn});
-  if(stored.record?.fingerprint===latest.fingerprint) {
-    return {changed:false,committed:false,reason:"public_catalogue_unchanged",...latest};
+  let latest=await fingerprintPublicViewWithBoundedRetry({jwt,fetchFn});
+  let stored=await getRecordedSnapshot({token,fetchFn});
+
+  // A different main-branch writer can win between the GET and PUT. Refresh
+  // both remote SHA and anon-only published data once after HTTP 409; never
+  // force-push or reuse an unverified, possibly stale publication snapshot.
+  for(let attempt=0;attempt<2;attempt++){
+    if(stored.record?.fingerprint===latest.fingerprint) {
+      return {changed:false,committed:false,
+        reason:attempt===0?"public_catalogue_unchanged":"public_catalogue_already_synced_after_conflict",...latest};
+    }
+    guardMassUnpublish(stored.record,latest);
+    if(dryRun)return {changed:true,committed:false,reason:"dry_run_no_commit",...latest};
+    const payload=JSON.stringify({...latest,generated_at:now.toISOString()},null,2)+"\\n";
+    const message="chore(site): sync public catalogue revision ("+latest.published_models+" models)";
+    const request={message,branch:"main",content:Buffer.from(payload,"utf8").toString("base64")};
+    if(stored.sha)request.sha=stored.sha;
+    const response=await fetchFn("https://api.github.com/repos/"+REPO+"/contents/"+SNAPSHOT_PATH,{
+      method:"PUT",
+      headers:{Authorization:"Bearer "+token,Accept:"application/vnd.github+json","Content-Type":"application/json"},
+      body:JSON.stringify(request),
+      signal:AbortSignal.timeout(25_000),
+    });
+    if(response.status===409&&attempt===0){
+      stored=await getRecordedSnapshot({token,fetchFn});
+      latest=await fingerprintPublicViewWithBoundedRetry({jwt,fetchFn});
+      continue;
+    }
+    requireOk(response,[200,201],"GitHub site revision write");
+    const data=await response.json();
+    if(typeof data?.commit?.sha!=="string")throw new Error("GitHub site revision commit missing.");
+    return {changed:true,committed:true,reason:"main_site_revision_committed",...latest,commit:data.commit.sha};
   }
-  guardMassUnpublish(stored.record,latest);
-  if(dryRun)return {changed:true,committed:false,reason:"dry_run_no_commit",...latest};
-  const payload=JSON.stringify({...latest,generated_at:now.toISOString()},null,2)+"\n";
-  const message="chore(site): sync public catalogue revision ("+latest.published_models+" models)";
-  const request={message,branch:"main",content:Buffer.from(payload,"utf8").toString("base64")};
-  if(stored.sha)request.sha=stored.sha;
-  const response=await fetchFn("https://api.github.com/repos/"+REPO+"/contents/"+SNAPSHOT_PATH,{
-    method:"PUT",
-    headers:{Authorization:"Bearer "+token,Accept:"application/vnd.github+json","Content-Type":"application/json"},
-    body:JSON.stringify(request),
-    signal:AbortSignal.timeout(25_000),
-  });
-  requireOk(response,[200,201],"GitHub site revision write");
-  const data=await response.json();
-  if(typeof data?.commit?.sha!=="string")throw new Error("GitHub site revision commit missing.");
-  return {changed:true,committed:true,reason:"main_site_revision_committed",...latest,commit:data.commit.sha};
+  throw new Error("GitHub site revision could not be committed after bounded conflict retry.");
 }
 export async function main(){
   const result=await runPublicationSync({
