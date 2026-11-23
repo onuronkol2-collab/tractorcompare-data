@@ -2,8 +2,8 @@
   "version": 1,
   "pages": {
     "https://tractorvs.com/": {
-      "digest": "cb20ca7840113b7f95f360ea698097c86a418a9b1eb3d4627a73d343df1028f5",
-      "modified": "2026-11-23T09:48:41.478Z"
+      "digest": "c4c5b1c4ff12bd795a486b2d49e73424daecede69416b2be5e9171541bed0eb9",
+      "modified": "2026-11-23T10:00:55.676Z"
     },
     "https://tractorvs.com/articles/": {
       "digest": "f4d32f5ffc67b88681b1b5561e8db5d02e2e3359a514dbf30934b26641bbed54",
@@ -18,28 +18,28 @@
       "modified": "2026-11-22T08:02:35.845Z"
     },
     "https://tractorvs.com/compare/": {
-      "digest": "9678c9bdc46ff251fefa3e44dc0ddb44031b0f2814116258185344682189bd1b",
-      "modified": "2026-11-23T09:48:41.478Z"
+      "digest": "53d94f331dcb45457cb9ec6a50af68235acfd49b7a1b055d2967cd98131ef235",
+      "modified": "2026-11-23T10:00:55.676Z"
     },
     "https://tractorvs.com/compare/deutz-fahr-5090-d-gs-vs-5100-d-gs/": {
       "digest": "52e029185eddc00de0825c5ff15e10991f6a3636635ae2c62375f9df34e109c4",
       "modified": "2026-11-22T16:33:31.612Z"
     },
     "https://tractorvs.com/de/": {
-      "digest": "d79f9d651b7777904b9f89007d20f45cdc91dff3556aeb55cfe31ffe833055ce",
-      "modified": "2026-11-23T09:48:41.478Z"
+      "digest": "f976219ea756f623a0b927a9d3509ad86f66b96675a3b5e80be5f7a0c96cc35d",
+      "modified": "2026-11-23T10:00:55.676Z"
     },
     "https://tractorvs.com/de/articles/": {
       "digest": "e8e5821b7a9a45bf22f1f98c341eb6c77b42f895c99c960f2e7ec29c22d8d083",
       "modified": "2026-11-22T18:22:02.402Z"
     },
     "https://tractorvs.com/de/compare/": {
-      "digest": "3a60a1db9089db343c9069a0c286116fc8d664abd6d10d137d317feda7002a6d",
-      "modified": "2026-11-23T09:48:41.478Z"
+      "digest": "1fd6f6438dcf304fbeef418332b8a9fe1d57a7a891fc8aac9312e23aec8283b4",
+      "modified": "2026-11-23T10:00:55.676Z"
     },
     "https://tractorvs.com/de/farm-advisor/": {
-      "digest": "27a11b954c2b734821d703ab46a3dde8717bd6708de9fda7cbb088874ec3f88c",
-      "modified": "2026-11-23T09:48:41.478Z"
+      "digest": "af625cfecb3ddcb2a61be47e8ea7b1186e67e5b527a0d924f58242b6a581f625",
+      "modified": "2026-11-23T10:00:55.676Z"
     },
     "https://tractorvs.com/de/guides/choosing-a-tractor/": {
       "digest": "690156b1adec284fe12f219df526061b8ef077cfb3299d44d2d883a874faa4b2",
@@ -54,8 +54,8 @@
       "modified": "2026-11-22T15:13:41.997Z"
     },
     "https://tractorvs.com/de/tractors/": {
-      "digest": "9892fc8ad2b573db93d901f85a46976797bb263a34cc13ab4965cc3815f4e88f",
-      "modified": "2026-11-23T09:48:41.478Z"
+      "digest": "46d11cdab0ee1897cbf781f5cec13fccd2eecedb0d042a7f47637d74c3977496",
+      "modified": "2026-11-23T10:00:55.676Z"
     },
     "https://tractorvs.com/de/tractors/agrale-4125-0b53e944/": {
       "digest": "32366e1df6154f04604255bcb6156d1828a47b1b02ef00cb2a1e2b65e857e7f8",
@@ -262,12 +262,12 @@
       "modified": "2026-11-22T15:49:54.478Z"
     },
     "https://tractorvs.com/de/tractors/belarus-920-2-1e1d7219/": {
-      "digest": "145b1adee4d2cd5a0bbd28be5dab77f04afb1e6d3719cb49827b0b138d2234e6",
-      "modified": "2026-11-22T15:49:54.478Z"
+      "digest": "031e491dc2ca39cfbbc4da8d9ef26cdeca439be06aaa60debb92e210718ef180",
+      "modified": "2026-11-23T10:00:55.676Z"
     },
     "https://tractorvs.com/de/tractors/belarus-920-21e79b33/": {
-      "digest": "27c590ec640bc14686e3db1520306524e1126be18a7af78913abae4fee959baa",
-      "modified": "2026-11-22T15:49:54.478Z"
+      "digest": "8ecd1084eb821321e82a4d1a1a879485c8a0d2bd1ecd9de92849c06eb251ddf6",
+      "modified": "2026-11-23T10:00:55.676Z"
     },
     "https://tractorvs.com/de/tractors/belarus-922-3-1cd53d1a/": {
       "digest": "7a289669ba673e30c6572f812c6f2cbdb19e2174aca52f73cec3e38c6bc56280",
@@ -1158,8 +1158,8 @@
       "modified": "2026-11-22T17:26:34.896Z"
     },
     "https://tractorvs.com/de/tractors/tafe-240-s-b6b226a4/": {
-      "digest": "49ba18602442411f8e3c47feb33c3b6fe364f9756187057dc4f3e7cece29a317",
-      "modified": "2026-11-22T12:57:29.705Z"
+      "digest": "59575454e73e5efa48648f09c6b2c56b1109e7e8310cc51a9ff7210b7620886d",
+      "modified": "2026-11-23T10:00:55.676Z"
     },
     "https://tractorvs.com/de/tractors/tafe-5015-25faad96/": {
       "digest": "9d90f7b6cf787fe6f7acb8580197b9d52f4473aadcce169f3d4cb60b8afd2ac2",
@@ -1178,24 +1178,24 @@
       "modified": null
     },
     "https://tractorvs.com/de/tractors/tafe-6020-m-46f5fd77/": {
-      "digest": "958f5c005ec64d55719293bd0b42393370d9eba06419b7ce9666e3ad602e2150",
-      "modified": null
+      "digest": "31d68829594cd925d116b1cd18f8ee78601e8a723385437d2bc36497906a58b2",
+      "modified": "2026-11-23T10:00:55.676Z"
     },
     "https://tractorvs.com/de/tractors/tafe-6028-m-9686ae98/": {
       "digest": "56875717fa1cb648aa5926c3e145f7eba142f482f25489e1763e060f405e5e4a",
       "modified": "2026-11-22T14:57:57.751Z"
     },
     "https://tractorvs.com/de/tractors/tafe-6515-01b0b5ac/": {
-      "digest": "2255167e53030746555bd8a201b065df75c1ea8b4891f192e13fdaff551b2d34",
-      "modified": null
+      "digest": "addcca99b380a30251eebeb9f3778af1e93d3d8ebbaaeb27091ec10a00978727",
+      "modified": "2026-11-23T10:00:55.676Z"
     },
     "https://tractorvs.com/de/tractors/tafe-6515-cab-58b27e16/": {
       "digest": "48f677fdff5ec12a66ec2660618ac95c4f4668b8fa7b1ec5e940f4b042feaea6",
       "modified": null
     },
     "https://tractorvs.com/de/tractors/tafe-6515-cab-advanced-1cad70da/": {
-      "digest": "a98058dd38dd39fa0ea9e4c2e3260086c96bbe1276541d3dc3fdfd66a964e4da",
-      "modified": "2026-11-22T04:59:19.699Z"
+      "digest": "ab10fd7e70140e7f7d69de38864e10caf8680019b024a5e8ccf33191a4b0036e",
+      "modified": "2026-11-23T10:00:55.676Z"
     },
     "https://tractorvs.com/de/tractors/tafe-6515-f-776221d6/": {
       "digest": "082ad94346ed0eed6023eab56cecfa2c0408b32f7ccc4288d5a71abace76bd7a",
@@ -1214,12 +1214,12 @@
       "modified": "2026-11-22T13:56:24.699Z"
     },
     "https://tractorvs.com/de/tractors/tafe-7515-cab-advanced-2009a1ab/": {
-      "digest": "9407736e220c6f980029c48401d8cae47d85c365c5b3ebcb9b50b074c2762697",
-      "modified": "2026-11-22T04:59:19.699Z"
+      "digest": "e8de97bd06aba2121af370436f6bfbadcad1f92393288ec3240d7a5c4d24060e",
+      "modified": "2026-11-23T10:00:55.676Z"
     },
     "https://tractorvs.com/de/tractors/tafe-7515-ge-021c5a78/": {
-      "digest": "72d6297df89192312ae0df6e77ab4168c16cdadf934fd88ed1017fae66fd4de5",
-      "modified": "2026-11-22T12:57:29.705Z"
+      "digest": "af76c60ae3f37c1686962848dd23eef2aeafa4411eb95e4e6065120b4d92b610",
+      "modified": "2026-11-23T10:00:55.676Z"
     },
     "https://tractorvs.com/de/tractors/tumosan-8095-163f043b/": {
       "digest": "c31baabb3448477292b8ea7cefc289256a9d531f940cb02315b6af724c16d09f",
@@ -1610,20 +1610,20 @@
       "modified": "2026-11-22T18:49:27.463Z"
     },
     "https://tractorvs.com/es/": {
-      "digest": "0ea83fa00b21315efc6bd3bba49e513efcb0fde77b97ad03f47378a734f60b2b",
-      "modified": "2026-11-23T09:48:41.478Z"
+      "digest": "a70e2fbc20eb80a1d029af41e4945b4bfe671d726dde20a0120fd9a42bc08371",
+      "modified": "2026-11-23T10:00:55.676Z"
     },
     "https://tractorvs.com/es/articles/": {
       "digest": "0145e305b596770e50c433fa8685671159ccaabc3aafdfd8d7f2806ca6eb3e36",
       "modified": "2026-11-22T18:22:02.402Z"
     },
     "https://tractorvs.com/es/compare/": {
-      "digest": "438e3af20c473ea8228f7da8e58a8ec71b916d0519c35ade6353673f6f9bcd99",
-      "modified": "2026-11-23T09:48:41.478Z"
+      "digest": "8fad227b84a508a4a1e549094e33fc6bde25c0dadc8da3832e637afb3e3ce344",
+      "modified": "2026-11-23T10:00:55.676Z"
     },
     "https://tractorvs.com/es/farm-advisor/": {
-      "digest": "a0eda206ad93012726f5e4460f16333483ca0de7462065e92d4928629251dcdb",
-      "modified": "2026-11-23T09:48:41.478Z"
+      "digest": "18006dd675ca892b318296e61c3ecb7d0d65af417c5b3c474dd4a430b4dd1225",
+      "modified": "2026-11-23T10:00:55.676Z"
     },
     "https://tractorvs.com/es/guides/choosing-a-tractor/": {
       "digest": "b66967a2f9efca29073e9d9aa4ebed44b281cff4773b37eeeb47e915ac5315cc",
@@ -1638,8 +1638,8 @@
       "modified": "2026-11-22T15:13:41.997Z"
     },
     "https://tractorvs.com/es/tractors/": {
-      "digest": "dee06403db7547d8da93f7e5d422c56a9fca0f40d94bd5e148bd20c397a7ad4e",
-      "modified": "2026-11-23T09:48:41.478Z"
+      "digest": "0779901c7445bc938be04525977f3f02c8689188ed75c89511e0f56d0f8d818f",
+      "modified": "2026-11-23T10:00:55.676Z"
     },
     "https://tractorvs.com/es/tractors/agrale-4125-0b53e944/": {
       "digest": "6e72187d478e42d64a088eac4ea90be38a22c86b83d7841c5dd36695f8e1e4d5",
@@ -1846,12 +1846,12 @@
       "modified": "2026-11-22T17:26:34.896Z"
     },
     "https://tractorvs.com/es/tractors/belarus-920-2-1e1d7219/": {
-      "digest": "a3d72c5823b05d1449bca876df5f533cf00a1f30ee2f2664d13adf9e397c1f0b",
-      "modified": "2026-11-22T17:26:34.896Z"
+      "digest": "7fd0d1b32da2c709a77c326e015f43ac617eee0fdef7388c7787cacb70d0610c",
+      "modified": "2026-11-23T10:00:55.676Z"
     },
     "https://tractorvs.com/es/tractors/belarus-920-21e79b33/": {
-      "digest": "61c1c46a7747c01e803569ae85d2f111a21835fb76dba7bae71b4f906f610df8",
-      "modified": "2026-11-22T17:26:34.896Z"
+      "digest": "55e967dcaa30131b93c2e583f5d3270c9f97ec8b8a8b63d2ac893b995f001588",
+      "modified": "2026-11-23T10:00:55.676Z"
     },
     "https://tractorvs.com/es/tractors/belarus-922-3-1cd53d1a/": {
       "digest": "762a50ed21155b0b898d1c22f2e148f6a76c079ac874887c9aaecfc19606d654",
@@ -2742,8 +2742,8 @@
       "modified": "2026-11-22T17:26:34.896Z"
     },
     "https://tractorvs.com/es/tractors/tafe-240-s-b6b226a4/": {
-      "digest": "0d046910b6791c6ca8a8c87523fa037496aebae873230b0fcad120826f8b3085",
-      "modified": "2026-11-22T15:49:54.478Z"
+      "digest": "295ad7a25e818329ee739622c7eef830ba51cfb04d895ca3dd8daa28aa291700",
+      "modified": "2026-11-23T10:00:55.676Z"
     },
     "https://tractorvs.com/es/tractors/tafe-5015-25faad96/": {
       "digest": "0c8bf50dfea2ac397b33d777a3c06a319c099ce2e585da17544fd3d6e844b969",
@@ -2762,24 +2762,24 @@
       "modified": "2026-11-22T15:49:54.478Z"
     },
     "https://tractorvs.com/es/tractors/tafe-6020-m-46f5fd77/": {
-      "digest": "db9e01721d1ed396ae18d70a9faf13626c069823bfa86089e6b13a6008fe4a04",
-      "modified": "2026-11-22T15:49:54.478Z"
+      "digest": "76a16fa29085bd49ececcb5c23b6fdc4be3b7e8eeb3b43060a7f6c205b62f18f",
+      "modified": "2026-11-23T10:00:55.676Z"
     },
     "https://tractorvs.com/es/tractors/tafe-6028-m-9686ae98/": {
       "digest": "1f20832e6819a85e67405e395709114576e352301a9b91eb11c342d5c0435969",
       "modified": "2026-11-22T15:49:54.478Z"
     },
     "https://tractorvs.com/es/tractors/tafe-6515-01b0b5ac/": {
-      "digest": "51b82a61a9125f305fba32ad67a72811eb89ba42abff38a25f1097ab8012c3c1",
-      "modified": "2026-11-22T15:49:54.478Z"
+      "digest": "a145c741594e4151bfc42b31d86e4232afec64c2b9efa68e956362013156d7e2",
+      "modified": "2026-11-23T10:00:55.676Z"
     },
     "https://tractorvs.com/es/tractors/tafe-6515-cab-58b27e16/": {
       "digest": "abc0c6f12dcbc58eac7f2a27426cd30865f260e059afd5be309d165c9ba0a87c",
       "modified": "2026-11-22T15:49:54.478Z"
     },
     "https://tractorvs.com/es/tractors/tafe-6515-cab-advanced-1cad70da/": {
-      "digest": "ec9e43ba10e0a3c4f12e7bdea4807e9599c7bdb9c3caf74d521dd58bcea9b14c",
-      "modified": "2026-11-22T15:49:54.478Z"
+      "digest": "1907dbda9aec7b5f3692551f0c3ccf172d1157d180997e1a505fc2bd81e65db0",
+      "modified": "2026-11-23T10:00:55.676Z"
     },
     "https://tractorvs.com/es/tractors/tafe-6515-f-776221d6/": {
       "digest": "e9a9242be240a1cdee8c3f6bc285f1cd887beaf7e1bd966d573b0793155951b6",
@@ -2798,12 +2798,12 @@
       "modified": "2026-11-22T15:49:54.478Z"
     },
     "https://tractorvs.com/es/tractors/tafe-7515-cab-advanced-2009a1ab/": {
-      "digest": "385012ff8d47321f4574009fa19a961b4d6b6a21a62a44ef600515fb01a768a9",
-      "modified": "2026-11-22T15:49:54.478Z"
+      "digest": "193eac89d8824a94712aa1e7c90f8c594a1d9c82f1572a8b52d91c71b5bc1856",
+      "modified": "2026-11-23T10:00:55.676Z"
     },
     "https://tractorvs.com/es/tractors/tafe-7515-ge-021c5a78/": {
-      "digest": "622a29d255070fe238d2c614fb6a0f5f7f64b6a72f002682243550b08642087f",
-      "modified": "2026-11-22T15:49:54.478Z"
+      "digest": "267b141732dd8bc63eccf4111c669ac28f49d78212fbc2653e066513146f4c2d",
+      "modified": "2026-11-23T10:00:55.676Z"
     },
     "https://tractorvs.com/es/tractors/tumosan-8095-163f043b/": {
       "digest": "a00bf862d70a92122f5c9ce36b613f710c5524baa2adc4693fe813964f943980",
@@ -3194,24 +3194,24 @@
       "modified": "2026-11-22T18:49:27.463Z"
     },
     "https://tractorvs.com/farm-advisor/": {
-      "digest": "ff30bb80d060f8464c8913f53b2147e49f2ab59567e3c52c4c1d1a96a6d23ec1",
-      "modified": "2026-11-23T09:48:41.478Z"
+      "digest": "02c5fd8040a38f3a40cd17e4787e2b32f6032a9f8976a5b6af7cb631e77ebb6a",
+      "modified": "2026-11-23T10:00:55.676Z"
     },
     "https://tractorvs.com/fr/": {
-      "digest": "e8ce1fc087dac71e0f94f4c5e4c1c506e96530b4378537634c6647b6aab26275",
-      "modified": "2026-11-23T09:48:41.478Z"
+      "digest": "6573612e99b8b2c6b23b70c68e74d698fdc7dfedb25e0fc75552c39a4f0ee594",
+      "modified": "2026-11-23T10:00:55.676Z"
     },
     "https://tractorvs.com/fr/articles/": {
       "digest": "b87ad5ef98462bf555f36d462ca40ec0376d8fea5d643ae23f7a7bbbcdec3330",
       "modified": "2026-11-22T18:22:02.402Z"
     },
     "https://tractorvs.com/fr/compare/": {
-      "digest": "e8a744ce9ae62a4ab1ef29290fb8e507a9f326bbb562ed147083a94a790d8252",
-      "modified": "2026-11-23T09:48:41.478Z"
+      "digest": "62bf0c2f19e512b3292c976575872b8621d3d17e2dbc67ea9433258b568d2ba8",
+      "modified": "2026-11-23T10:00:55.676Z"
     },
     "https://tractorvs.com/fr/farm-advisor/": {
-      "digest": "d6f18a30eb1c22e2ecc69b4c69e4620a8d053c966e6c2f6d0a695d007ead5d84",
-      "modified": "2026-11-23T09:48:41.478Z"
+      "digest": "cf48667b514eb8ca232925591e0c9caf8b0ac66d4058d33eda70d6522ea58108",
+      "modified": "2026-11-23T10:00:55.676Z"
     },
     "https://tractorvs.com/fr/guides/choosing-a-tractor/": {
       "digest": "2bcb6691fcc7b4bdda29dcedd7f1c8d8c168edbac67b6658963fae67ff074a2f",
@@ -3226,8 +3226,8 @@
       "modified": "2026-11-22T15:13:41.997Z"
     },
     "https://tractorvs.com/fr/tractors/": {
-      "digest": "56540b30e2c4a6129f86378cec9836aac60ec7b340a4eadb480939805ec52894",
-      "modified": "2026-11-23T09:48:41.478Z"
+      "digest": "e07348558cf09289f53f05ade9c9d87354171a3a5842ee444ef96fbeffbbbde5",
+      "modified": "2026-11-23T10:00:55.676Z"
     },
     "https://tractorvs.com/fr/tractors/agrale-4125-0b53e944/": {
       "digest": "b2f88db3e8539cb6e089c35b63a6adb969706f68db99ac8fe7129d13fcc64d56",
@@ -3434,12 +3434,12 @@
       "modified": "2026-11-22T17:26:34.896Z"
     },
     "https://tractorvs.com/fr/tractors/belarus-920-2-1e1d7219/": {
-      "digest": "148fe9b5b1ab9273657403013d0b48784edb03e64c7ef8d973b8ffa64b82bf13",
-      "modified": "2026-11-22T17:26:34.896Z"
+      "digest": "234de9d2f7a4dae94b37f3b205053dd6467969afd1e953807166b253b741e982",
+      "modified": "2026-11-23T10:00:55.676Z"
     },
     "https://tractorvs.com/fr/tractors/belarus-920-21e79b33/": {
-      "digest": "9277d6542cdf02c0808abcf751649ce4df4f219ac3a70acb3ce4546b9e425373",
-      "modified": "2026-11-22T17:26:34.896Z"
+      "digest": "902c73402f1368da23925664c52614aed24d562faa79b35729cf3d9da3c5d1b5",
+      "modified": "2026-11-23T10:00:55.676Z"
     },
     "https://tractorvs.com/fr/tractors/belarus-922-3-1cd53d1a/": {
       "digest": "670b88c3e30bfa998afcf360ad2e48e59cdd4075195c60f5addafbbf329a154d",
@@ -4330,8 +4330,8 @@
       "modified": "2026-11-22T17:26:34.896Z"
     },
     "https://tractorvs.com/fr/tractors/tafe-240-s-b6b226a4/": {
-      "digest": "158b8c7c19de3f010805aee9d9c224aa48dea8cd2c19a5921bb897e6f07d54eb",
-      "modified": "2026-11-22T12:57:29.705Z"
+      "digest": "eaa92c18a47ca138c27e74869f06d966d170c1737e763bb096477a9d4afccef3",
+      "modified": "2026-11-23T10:00:55.676Z"
     },
     "https://tractorvs.com/fr/tractors/tafe-5015-25faad96/": {
       "digest": "d765b484d3bf3d51c96fd63a0988d587620f7a057c0031a63ccd2d62759f6437",
@@ -4350,24 +4350,24 @@
       "modified": "2026-11-22T04:59:19.699Z"
     },
     "https://tractorvs.com/fr/tractors/tafe-6020-m-46f5fd77/": {
-      "digest": "1a6c3d193a7e4359a4c539427410e766dd5d7a12bb1d8a457950adbb7e2f165c",
-      "modified": "2026-11-22T04:59:19.699Z"
+      "digest": "477ee2aa242ee3afe22a2f648b2ce79d55f3c69d6d0e6248f9b0be1ebd61e2f2",
+      "modified": "2026-11-23T10:00:55.676Z"
     },
     "https://tractorvs.com/fr/tractors/tafe-6028-m-9686ae98/": {
       "digest": "5b427c34305dbabf4447552cba57aeda18103ce633f72d5928fd2cfabd409be2",
       "modified": "2026-11-22T14:57:57.751Z"
     },
     "https://tractorvs.com/fr/tractors/tafe-6515-01b0b5ac/": {
-      "digest": "459517f64e0034a7e55db1b65a6fec05e0eadc3f3ed7eba86e45598d8e3686f7",
-      "modified": "2026-11-22T04:59:19.699Z"
+      "digest": "d35a3bb160f967ca59e1c8c7e1b8ac2e4bbf17598c868e9f254aad450c5934b2",
+      "modified": "2026-11-23T10:00:55.676Z"
     },
     "https://tractorvs.com/fr/tractors/tafe-6515-cab-58b27e16/": {
       "digest": "9b4d538ed91af86e847a2e8354e67265c96947e905464a2f9b201642557de8c5",
       "modified": "2026-11-22T04:59:19.699Z"
     },
     "https://tractorvs.com/fr/tractors/tafe-6515-cab-advanced-1cad70da/": {
-      "digest": "b198851323a0652dce164f1d48f4d948cf3eb67ba2f1cede71ab575d3d4c6399",
-      "modified": "2026-11-22T15:49:54.478Z"
+      "digest": "a64569d0768e4fcedae6db4562d3011462d88f33da8f753ec36eee82e15d3173",
+      "modified": "2026-11-23T10:00:55.676Z"
     },
     "https://tractorvs.com/fr/tractors/tafe-6515-f-776221d6/": {
       "digest": "d797fd8cae9c88635411f6e5285e619e14aedf67115c931f7e5c62d753cd2272",
@@ -4386,12 +4386,12 @@
       "modified": "2026-11-22T13:56:24.699Z"
     },
     "https://tractorvs.com/fr/tractors/tafe-7515-cab-advanced-2009a1ab/": {
-      "digest": "5152b863c5630405876e830fa81695d442605d34d64ac5da5911dda6e36a6b48",
-      "modified": "2026-11-22T15:49:54.478Z"
+      "digest": "8fa122a23db1cca7382b1ff6142837f5e35ef3cd58d004574deb4267d327e789",
+      "modified": "2026-11-23T10:00:55.676Z"
     },
     "https://tractorvs.com/fr/tractors/tafe-7515-ge-021c5a78/": {
-      "digest": "67084d1003c69ddebba587f6aa4aec0ba8349975d06e58273624f18366e20b69",
-      "modified": "2026-11-22T12:57:29.705Z"
+      "digest": "200cdf134adbd28f081243010d75af50eb4cb24b73f48305f37ecadc2fdcefac",
+      "modified": "2026-11-23T10:00:55.676Z"
     },
     "https://tractorvs.com/fr/tractors/tumosan-8095-163f043b/": {
       "digest": "cdb6f9d75ac2440e85191c2f78ea5f1d61658ea2b7c38e96ad28d10eabe47d88",
@@ -4802,20 +4802,20 @@
       "modified": "2026-11-22T14:27:00.768Z"
     },
     "https://tractorvs.com/hi/": {
-      "digest": "bf0413da7b0091338381c6b8fba6aaf20e9c2c5b1b3f121589fe056a68f467ad",
-      "modified": "2026-11-23T09:48:41.478Z"
+      "digest": "ec9926620679ca8b7063e9988c650dce025d0a963889d7e2d370de9346d52005",
+      "modified": "2026-11-23T10:00:55.676Z"
     },
     "https://tractorvs.com/hi/articles/": {
       "digest": "3ef252be723e22cbd42f479762ff15210b935675304ca03b43cf5cc9c06c3def",
       "modified": "2026-11-22T18:22:02.402Z"
     },
     "https://tractorvs.com/hi/compare/": {
-      "digest": "bd30b5572d37e9fcebd1eebbb88b2b176145958c3ecfc21c96487ddc6a0a8c7c",
-      "modified": "2026-11-23T09:48:41.478Z"
+      "digest": "33ed9c49dfc005aa806aecc76a9ea9c77cc42c092ce0b55365751c55cc75b04a",
+      "modified": "2026-11-23T10:00:55.676Z"
     },
     "https://tractorvs.com/hi/farm-advisor/": {
-      "digest": "f5aa10564724fb2fbc3136e6f96a2ffcbb00f49daaa4a0fbfe0b59805c88ad32",
-      "modified": "2026-11-23T09:48:41.478Z"
+      "digest": "6bf8acb721aa565bc7880756f53989457d607f6f1e06641958949b502a1d60f3",
+      "modified": "2026-11-23T10:00:55.676Z"
     },
     "https://tractorvs.com/hi/guides/choosing-a-tractor/": {
       "digest": "c913f0a36c9dbe8d1de8b0c3f4d4c00bb85efdb8fd9de226c7f768740e9ed195",
@@ -4830,8 +4830,8 @@
       "modified": "2026-11-22T15:13:41.997Z"
     },
     "https://tractorvs.com/hi/tractors/": {
-      "digest": "2b2886f1c639fcea74e59a2176e4a904fc7c2a1e8f1330f233246028e60ed9a6",
-      "modified": "2026-11-23T09:48:41.478Z"
+      "digest": "59a2fe0ed7487bb0a237acd9e449883c2e42dba7f1072a233a538e9c14355401",
+      "modified": "2026-11-23T10:00:55.676Z"
     },
     "https://tractorvs.com/hi/tractors/agrale-4125-0b53e944/": {
       "digest": "89d390984132129c6705ac5f42d0a35f6d3e519fbf19cc0d8b6d848cd95ec5cb",
@@ -5038,12 +5038,12 @@
       "modified": "2026-11-22T17:26:34.896Z"
     },
     "https://tractorvs.com/hi/tractors/belarus-920-2-1e1d7219/": {
-      "digest": "42e6ff99d7c6ce563ad861ac8bb4786163a4a5577dd7be8bb020fe1a42684d00",
-      "modified": "2026-11-22T17:26:34.896Z"
+      "digest": "dd7e8a45ef8cbf626b634ed8e231d65cb9bcc76ae9d600ddbe8aed2c6aa5b315",
+      "modified": "2026-11-23T10:00:55.676Z"
     },
     "https://tractorvs.com/hi/tractors/belarus-920-21e79b33/": {
-      "digest": "9d7bfe1663b169a438667c679f5e15cd025af9763711716cefb5096d9ca02941",
-      "modified": "2026-11-22T17:26:34.896Z"
+      "digest": "bac40aac39c9fea20011a8b1f0c38d9e9aba47caefceeedbaf617c1644b0ea10",
+      "modified": "2026-11-23T10:00:55.676Z"
     },
     "https://tractorvs.com/hi/tractors/belarus-922-3-1cd53d1a/": {
       "digest": "e7ea7ca8081a0d95fb6f307caad29f6ffad9c3a83b4a0618f7191510266ac892",
@@ -5934,8 +5934,8 @@
       "modified": "2026-11-22T17:26:34.896Z"
     },
     "https://tractorvs.com/hi/tractors/tafe-240-s-b6b226a4/": {
-      "digest": "47f0c209589ade569f17994e977d3a063852b547deb64723338f4ba05ab74094",
-      "modified": "2026-11-22T12:57:29.705Z"
+      "digest": "3d2b28603b8abbdc962569fac526e79e7b2a0059c6d3f07b5bbffe67f43eb4ef",
+      "modified": "2026-11-23T10:00:55.676Z"
     },
     "https://tractorvs.com/hi/tractors/tafe-5015-25faad96/": {
       "digest": "a4ff51221f587e3c0523b26438143d584d09c42b61172e2dd26e2539f58da3bd",
@@ -5954,24 +5954,24 @@
       "modified": null
     },
     "https://tractorvs.com/hi/tractors/tafe-6020-m-46f5fd77/": {
-      "digest": "889303ed13d9ad1c6777de6955a2c3755916ac4535fa282d3aa1f7f9f41d7626",
-      "modified": null
+      "digest": "c41c082745965cac3cd3771d9d1c2b09d14c2cbd5d2b0e5c3b340693eda52a60",
+      "modified": "2026-11-23T10:00:55.676Z"
     },
     "https://tractorvs.com/hi/tractors/tafe-6028-m-9686ae98/": {
       "digest": "157bf2bf76ab9df595c7f28e95756e5c0b096b06f866040ab0d53572f49b480e",
       "modified": "2026-11-22T14:57:57.751Z"
     },
     "https://tractorvs.com/hi/tractors/tafe-6515-01b0b5ac/": {
-      "digest": "95caeed777a1ca8250fcd564cad716b8c0b2387dbace055bdb708675c2760e9a",
-      "modified": null
+      "digest": "4d2b53e8d8f0f9e5b59b778982356e5646378ef268cde42b9b2ce63c5f22cd4b",
+      "modified": "2026-11-23T10:00:55.676Z"
     },
     "https://tractorvs.com/hi/tractors/tafe-6515-cab-58b27e16/": {
       "digest": "5959ffd96c49c11944adf2997acdb2f8263a4c432e6d3ddeed8d4ff088167976",
       "modified": null
     },
     "https://tractorvs.com/hi/tractors/tafe-6515-cab-advanced-1cad70da/": {
-      "digest": "6d2af1980fd6f4b7c0eee2e4a615bf64d17793c4fc36ab088042f595ebdb1622",
-      "modified": "2026-11-22T15:49:54.478Z"
+      "digest": "05b006417a46325e2dbe47d38a40ee25a7d563bd804b65af198767950e183e3e",
+      "modified": "2026-11-23T10:00:55.676Z"
     },
     "https://tractorvs.com/hi/tractors/tafe-6515-f-776221d6/": {
       "digest": "7fd5dc3788801586a0ddfbf152d88f07e92f1c74a4f74bc68f1aefde6191e42b",
@@ -5990,12 +5990,12 @@
       "modified": "2026-11-22T13:56:24.699Z"
     },
     "https://tractorvs.com/hi/tractors/tafe-7515-cab-advanced-2009a1ab/": {
-      "digest": "e516de12587ae7d72a28037e406e61bfcb81ffd1cd7eae8e26b8ea2dd911d5de",
-      "modified": "2026-11-22T15:49:54.478Z"
+      "digest": "261be2eefdc1015f659157ced8febdb8de1145f395e664e1f6bab18d0fe75ad4",
+      "modified": "2026-11-23T10:00:55.676Z"
     },
     "https://tractorvs.com/hi/tractors/tafe-7515-ge-021c5a78/": {
-      "digest": "683ff0e82c0137d2905a2aef641c1af52a38b5eff9ce38fe2dcc7a08f64c327d",
-      "modified": "2026-11-22T12:57:29.705Z"
+      "digest": "821acf2563071f01ff0535ba950710926e0a30454e611aec6d8c4dc248fc516c",
+      "modified": "2026-11-23T10:00:55.676Z"
     },
     "https://tractorvs.com/hi/tractors/tumosan-8095-163f043b/": {
       "digest": "337d7c5b42c843ce328e97960a324710250b9b4b32d144fb166ace8ceaea9cce",
@@ -6386,20 +6386,20 @@
       "modified": "2026-11-22T18:49:27.463Z"
     },
     "https://tractorvs.com/ja/": {
-      "digest": "34e58aa58740ac868397bf9dda8a043a5e1f71559159b8ce697b8764442e3446",
-      "modified": "2026-11-23T09:48:41.478Z"
+      "digest": "71cb6168a3b672b1f25a5f13adb9e077e12200b49edb6e1de2fedbeaca627ca2",
+      "modified": "2026-11-23T10:00:55.676Z"
     },
     "https://tractorvs.com/ja/articles/": {
       "digest": "867884ed17f13bd46d0ef1d231a61aa757cff00bfcdd1e840fddcf43663f141a",
       "modified": "2026-11-22T18:22:02.402Z"
     },
     "https://tractorvs.com/ja/compare/": {
-      "digest": "3f1c912c53bba9e35f27d03780c00c9b8b1dcd3c2c8d924e0e22b202af1a1bba",
-      "modified": "2026-11-23T09:48:41.478Z"
+      "digest": "2e3829209d512389f9669ffca417ede917a812268ed5557e6fab2d339d4fb76d",
+      "modified": "2026-11-23T10:00:55.676Z"
     },
     "https://tractorvs.com/ja/farm-advisor/": {
-      "digest": "9bee1bdc82f7226029cd9726019b177dd0d94628271b25b048b0c97e45bc1ff0",
-      "modified": "2026-11-23T09:48:41.478Z"
+      "digest": "edd8f49620130ceb03f8c6b728d9638cee1138711adc9f6ed08f25a7634c8b40",
+      "modified": "2026-11-23T10:00:55.676Z"
     },
     "https://tractorvs.com/ja/guides/choosing-a-tractor/": {
       "digest": "8d6dcc961ec504eb5bb5de3dce6c06ede93151cd832f5c762043d50e2dd362d0",
@@ -6414,8 +6414,8 @@
       "modified": "2026-11-22T15:13:41.997Z"
     },
     "https://tractorvs.com/ja/tractors/": {
-      "digest": "ccc9b8ae8008cffbe5b47ff690b748bb1bf256bf1341c542e7babe7fe34d0ad4",
-      "modified": "2026-11-23T09:48:41.478Z"
+      "digest": "b50fd5e79993022acb0e5596f5fa05f151a6cc3dc811a91621db761edf6a53db",
+      "modified": "2026-11-23T10:00:55.676Z"
     },
     "https://tractorvs.com/ja/tractors/agrale-4125-0b53e944/": {
       "digest": "4d0e45acacbeeb3c521ccff6fdb73475c3d2a6b25b8314d917e1fba5cfd09492",
@@ -6622,12 +6622,12 @@
       "modified": "2026-11-22T17:26:34.896Z"
     },
     "https://tractorvs.com/ja/tractors/belarus-920-2-1e1d7219/": {
-      "digest": "e30e058ea4324777099cab41681a21d59f7c8953ed576751d2de3f2a2ebcba52",
-      "modified": "2026-11-22T17:26:34.896Z"
+      "digest": "f0f72fed470626efb2abaf45c6e10338c73855936a78440cdaf5ae629f2c2c6b",
+      "modified": "2026-11-23T10:00:55.676Z"
     },
     "https://tractorvs.com/ja/tractors/belarus-920-21e79b33/": {
-      "digest": "9a62991cdc347d53841b9eec94433e842ab4ec732742691f5f353726f00c8591",
-      "modified": "2026-11-22T17:26:34.896Z"
+      "digest": "6c16efc38dc8ab9a42dc1ce9ccb1ee3bb9b66cb945e167b4ea4b952ea7388e39",
+      "modified": "2026-11-23T10:00:55.676Z"
     },
     "https://tractorvs.com/ja/tractors/belarus-922-3-1cd53d1a/": {
       "digest": "3cfd9f24fe3f911e8895966f17795dd8c7c619cae7ed79524f5eef97423abc99",
@@ -7518,8 +7518,8 @@
       "modified": "2026-11-22T17:26:34.896Z"
     },
     "https://tractorvs.com/ja/tractors/tafe-240-s-b6b226a4/": {
-      "digest": "49d3c1320505f86ecf55ee683c6653b40c46294b24df0c8e1add37a9f65d254c",
-      "modified": "2026-11-22T12:57:29.705Z"
+      "digest": "08fe4e02bed027ef4990e9c10cefc41fd6b9c194f2be3ef183a3ff4a651c812d",
+      "modified": "2026-11-23T10:00:55.676Z"
     },
     "https://tractorvs.com/ja/tractors/tafe-5015-25faad96/": {
       "digest": "bb562e16812ecd65c2874b0c7f7241aae3e5aedd80f63d4f64fe55815e703bb2",
@@ -7538,24 +7538,24 @@
       "modified": null
     },
     "https://tractorvs.com/ja/tractors/tafe-6020-m-46f5fd77/": {
-      "digest": "4a366b39bed733c4fc4505f550e221aa9e78b9a91ed177cb3e2e30041533c648",
-      "modified": null
+      "digest": "4b0355239e9036c4cd408ff76c232e3da809690bf85a1e7ebb830c8e64a99003",
+      "modified": "2026-11-23T10:00:55.676Z"
     },
     "https://tractorvs.com/ja/tractors/tafe-6028-m-9686ae98/": {
       "digest": "0453d846757e2b02cf9d7e602f7d1c5b35e53da08f101ce42ad7bb5d42fb59f6",
       "modified": "2026-11-22T14:57:57.751Z"
     },
     "https://tractorvs.com/ja/tractors/tafe-6515-01b0b5ac/": {
-      "digest": "4e56510b1fe18f08a84803e2923fc1320f4a83b89806017e3ad1a573687711c9",
-      "modified": null
+      "digest": "802da1b7db9e3151da60f3424cc4b719dd7518758e6aa2b8daf46c0b215026e2",
+      "modified": "2026-11-23T10:00:55.676Z"
     },
     "https://tractorvs.com/ja/tractors/tafe-6515-cab-58b27e16/": {
       "digest": "9cb47dac19ca6b861ef376a85066ea32c6c9d9ca2a68ded7f08ce00447f4d44e",
       "modified": null
     },
     "https://tractorvs.com/ja/tractors/tafe-6515-cab-advanced-1cad70da/": {
-      "digest": "660f9464371be7e6359dd310f3c1171eedaf62a63a532c8c5d12592cb9a8dcd1",
-      "modified": null
+      "digest": "b8f7009e3f0e6d4b78f9ee4ecd866dfd78087f3e30a96b143945b96b91410888",
+      "modified": "2026-11-23T10:00:55.676Z"
     },
     "https://tractorvs.com/ja/tractors/tafe-6515-f-776221d6/": {
       "digest": "78bab2a5c83a862359040612364e6aabf22d93b4319de1f62e93a5fccd249a45",
@@ -7574,12 +7574,12 @@
       "modified": "2026-11-22T13:56:24.699Z"
     },
     "https://tractorvs.com/ja/tractors/tafe-7515-cab-advanced-2009a1ab/": {
-      "digest": "3bc580713050717fbd3c557d26e6ec5465488fd3b15f999fe7a7df0488a13c0c",
-      "modified": null
+      "digest": "3c8c04856dace746af2edc16b91493ccfb0a17a0d19af15653036b1cfa76e5f9",
+      "modified": "2026-11-23T10:00:55.676Z"
     },
     "https://tractorvs.com/ja/tractors/tafe-7515-ge-021c5a78/": {
-      "digest": "ac16bcab7285fc9da8b746ba258334364676b3c5982aa0f20f7480044d7a1cef",
-      "modified": "2026-11-22T12:57:29.705Z"
+      "digest": "03722ba39bdeb0653e464eb9ce46b222d477dba9bf98df306bb643bc9d262071",
+      "modified": "2026-11-23T10:00:55.676Z"
     },
     "https://tractorvs.com/ja/tractors/tumosan-8095-163f043b/": {
       "digest": "c91bf7c992528170467fcd7863e9133c31c1cc642158ad4c440d770070c5a56a",
@@ -7978,20 +7978,20 @@
       "modified": null
     },
     "https://tractorvs.com/pt-br/": {
-      "digest": "58cedc023444e4dc263d1b4d733a12c0b653a506155fc5dfb240000a508614c8",
-      "modified": "2026-11-23T09:48:41.478Z"
+      "digest": "d48c4a9de6cb0162ca445fdf60b1bf60ca4414d78be45d4c0c94d6c2ca543216",
+      "modified": "2026-11-23T10:00:55.676Z"
     },
     "https://tractorvs.com/pt-br/articles/": {
       "digest": "117be662005262991fb353875c1cf33ccb9e7a46960f3f88b43118fb9ecdf59d",
       "modified": "2026-11-22T18:22:02.402Z"
     },
     "https://tractorvs.com/pt-br/compare/": {
-      "digest": "c1d54868ddc04aca83d85fd4751ac3206d32d5fab00ef02611d112b2395bea00",
-      "modified": "2026-11-23T09:48:41.478Z"
+      "digest": "3be7a9a7da83d247c616d23b10111c23ef0ef730885aac477dc054bbda878cec",
+      "modified": "2026-11-23T10:00:55.676Z"
     },
     "https://tractorvs.com/pt-br/farm-advisor/": {
-      "digest": "c4712bdd5ff79c3e3cd2ce9c389feb20098e9161199eea7a069fbb190bb23217",
-      "modified": "2026-11-23T09:48:41.478Z"
+      "digest": "d8ca64b6793ece2729142a60dd0a7fb35d3f4922baabc18b6c8beb4b85546f11",
+      "modified": "2026-11-23T10:00:55.676Z"
     },
     "https://tractorvs.com/pt-br/guides/choosing-a-tractor/": {
       "digest": "f87875ed0244ab5360899cf89bf54fcbe4d11392025eb54545b556643b0d275b",
@@ -8006,8 +8006,8 @@
       "modified": "2026-11-22T15:13:41.997Z"
     },
     "https://tractorvs.com/pt-br/tractors/": {
-      "digest": "e5b73c9a4eacc378466fa0456fb90e0c3f63296515ed258e76668c39cf6f4a0f",
-      "modified": "2026-11-23T09:48:41.478Z"
+      "digest": "c08a67faae5e74e9ed000ad9e7ff5246e0fe91e0bc92f68eb96afb2b5bf37c22",
+      "modified": "2026-11-23T10:00:55.676Z"
     },
     "https://tractorvs.com/pt-br/tractors/agrale-4125-0b53e944/": {
       "digest": "5ff1db9f68277bc1544ae51e8b7ab7c0afe49949c5d51c67791975fb0426a0f4",
@@ -8214,12 +8214,12 @@
       "modified": "2026-11-22T17:26:34.896Z"
     },
     "https://tractorvs.com/pt-br/tractors/belarus-920-2-1e1d7219/": {
-      "digest": "8bcabd4de4498878e0cfaf8f6928a5cbbbf2795fc558a7ed0e34cd16b01cb18e",
-      "modified": "2026-11-22T17:26:34.896Z"
+      "digest": "9c8d4255fbdb86bcb1fdea51b9dab336c8dc667b579a5213c232c90ad0c1b43b",
+      "modified": "2026-11-23T10:00:55.676Z"
     },
     "https://tractorvs.com/pt-br/tractors/belarus-920-21e79b33/": {
-      "digest": "26618a3277dbf1e2026c6766143368895633d16ee45b73c86679c99de163bd55",
-      "modified": "2026-11-22T17:26:34.896Z"
+      "digest": "1e6929894260d4dc304d90266f3747bea6ffa37f435f299cd7c55c7a9343c89e",
+      "modified": "2026-11-23T10:00:55.676Z"
     },
     "https://tractorvs.com/pt-br/tractors/belarus-922-3-1cd53d1a/": {
       "digest": "0b3f3bd26ac0170ff2785d7381c21a9a530dd0ac532d2485f1762656ff209823",
@@ -9110,8 +9110,8 @@
       "modified": "2026-11-22T17:26:34.896Z"
     },
     "https://tractorvs.com/pt-br/tractors/tafe-240-s-b6b226a4/": {
-      "digest": "1d8d42685240af93256e5f7d0d9a274581755b7d08fce69333f335fc558c6c81",
-      "modified": "2026-11-22T12:57:29.705Z"
+      "digest": "02974d72e334ee39c27f693f2e58812fb8929a2c27ffa89506a5e43ee264e278",
+      "modified": "2026-11-23T10:00:55.676Z"
     },
     "https://tractorvs.com/pt-br/tractors/tafe-5015-25faad96/": {
       "digest": "62930b982303d4a63a0ea90eb610e20ee94f81fbb918d89e78c7613e0431ea46",
@@ -9130,24 +9130,24 @@
       "modified": "2026-11-22T04:59:19.699Z"
     },
     "https://tractorvs.com/pt-br/tractors/tafe-6020-m-46f5fd77/": {
-      "digest": "7c622935fb4a6e3c2748f39a013b5314a79ad2b48827fa005a3189323059f344",
-      "modified": "2026-11-22T04:59:19.699Z"
+      "digest": "c8e9732f8c41153198e8866134584aaf892a9b3541bea0b5ff9d6d06ea41cfb4",
+      "modified": "2026-11-23T10:00:55.676Z"
     },
     "https://tractorvs.com/pt-br/tractors/tafe-6028-m-9686ae98/": {
       "digest": "07124e9c6891c2680a3fd987c2da03c8c3830fc9c34e9b53a5e74f9a1a4d5d84",
       "modified": "2026-11-22T14:57:57.751Z"
     },
     "https://tractorvs.com/pt-br/tractors/tafe-6515-01b0b5ac/": {
-      "digest": "cab17f0c8b8885be3dff743c66a4d7d102db35d7fd3854a1841c5ab81f601c45",
-      "modified": "2026-11-22T04:59:19.699Z"
+      "digest": "b4843da6d6f5f7b13f46ea055635f8e9678651108293c9ac5ca35f9e24c81502",
+      "modified": "2026-11-23T10:00:55.676Z"
     },
     "https://tractorvs.com/pt-br/tractors/tafe-6515-cab-58b27e16/": {
       "digest": "9341edd2201ede1231cdf0c100850307da995ac18dbe1d82f4585b1728bef8e5",
       "modified": "2026-11-22T04:59:19.699Z"
     },
     "https://tractorvs.com/pt-br/tractors/tafe-6515-cab-advanced-1cad70da/": {
-      "digest": "fa8596746e9952ceb873b3aabeb3727c5f70e4a5783f9bfb4f7f8faa27243a39",
-      "modified": "2026-11-22T15:49:54.478Z"
+      "digest": "1bf35e27afd2888faf739abe7f3732c485c082dd9bb4aaba1475913b2083d1d8",
+      "modified": "2026-11-23T10:00:55.676Z"
     },
     "https://tractorvs.com/pt-br/tractors/tafe-6515-f-776221d6/": {
       "digest": "3c6cf73b1103cb463232abbbd9d2a12182ab0416ca5be6e3ae60ef72aa2c30be",
@@ -9166,12 +9166,12 @@
       "modified": "2026-11-22T13:56:24.699Z"
     },
     "https://tractorvs.com/pt-br/tractors/tafe-7515-cab-advanced-2009a1ab/": {
-      "digest": "ec7bcb747cae9f135d5798f5bcd4a7f3fbd0089237365692e5298337888bf926",
-      "modified": "2026-11-22T15:49:54.478Z"
+      "digest": "00db63f04a8d9ff0def385546a2a83981bc5b8638c8b018daebb1adcddc9c8be",
+      "modified": "2026-11-23T10:00:55.676Z"
     },
     "https://tractorvs.com/pt-br/tractors/tafe-7515-ge-021c5a78/": {
-      "digest": "6111035920652d9ca1f228a60df7469862b6a01851353e98a2cdef545dc72219",
-      "modified": "2026-11-22T12:57:29.705Z"
+      "digest": "b47ebe036450ec3b64407c0e35578695fa3d56f9e0d84999413b052eb41d7007",
+      "modified": "2026-11-23T10:00:55.676Z"
     },
     "https://tractorvs.com/pt-br/tractors/tumosan-8095-163f043b/": {
       "digest": "7a4d4e327eac66de82b6b2f5076f4135672f87012abf0f9b3dbdaf46dac38d31",
@@ -9566,20 +9566,20 @@
       "modified": "2026-11-22T15:13:41.997Z"
     },
     "https://tractorvs.com/ru/": {
-      "digest": "677b1eb268129b516f4c993392d02efa974168ccea9f61801de9a678f199b63c",
-      "modified": "2026-11-23T09:48:41.478Z"
+      "digest": "ecd564ae11387ccc09b51b876c913895236a641385e7093d9ed6ba6774b61e6b",
+      "modified": "2026-11-23T10:00:55.676Z"
     },
     "https://tractorvs.com/ru/articles/": {
       "digest": "af26b8678163822452934ec1c7cb7f12884df875f898bbe76e1654f6e04d4e1a",
       "modified": "2026-11-22T18:22:02.402Z"
     },
     "https://tractorvs.com/ru/compare/": {
-      "digest": "79877fc1f063bafbcc620b04e988049e3be5cabd469047c06c643ae0da95db6e",
-      "modified": "2026-11-23T09:48:41.478Z"
+      "digest": "ffee104a8a2e04e2f67887c839a924858f33db1778694f335af96c477dcbce44",
+      "modified": "2026-11-23T10:00:55.676Z"
     },
     "https://tractorvs.com/ru/farm-advisor/": {
-      "digest": "9f635a46337c229f0cda4a233df351882ea07cd70406a5064d4a5821c5348010",
-      "modified": "2026-11-23T09:48:41.478Z"
+      "digest": "928ef74ee3930f67f3fbbcb9c82741be2d6de0cd9646c8dd1a16b8794a1893d5",
+      "modified": "2026-11-23T10:00:55.676Z"
     },
     "https://tractorvs.com/ru/guides/choosing-a-tractor/": {
       "digest": "d98cc050028a7158fecf1a69f64cfaa33be5717070281c7a716fd60810983c43",
@@ -9594,8 +9594,8 @@
       "modified": "2026-11-22T15:13:41.997Z"
     },
     "https://tractorvs.com/ru/tractors/": {
-      "digest": "9e9acd9268082e5667d177389761196b662ffc11e5eb1a0cb6a4520ab815ee58",
-      "modified": "2026-11-23T09:48:41.478Z"
+      "digest": "d18220c45f966730ef6ae90ecd1f3d7fe0f4ffb11343dd26ca5e8d513a76dcd4",
+      "modified": "2026-11-23T10:00:55.676Z"
     },
     "https://tractorvs.com/ru/tractors/agrale-4125-0b53e944/": {
       "digest": "a743211ff921d260a622929d99a49654ddf88289776922ae4c70310ed030ae99",
@@ -9802,12 +9802,12 @@
       "modified": "2026-11-22T17:26:34.896Z"
     },
     "https://tractorvs.com/ru/tractors/belarus-920-2-1e1d7219/": {
-      "digest": "7ff950d84066d559d7c0662dd218eac6f9ba0a0698028d531dfd226059aa25f3",
-      "modified": "2026-11-22T17:26:34.896Z"
+      "digest": "dfd8d708ea81ae8bc608db931e5dc98c92d6c7f8d48592f0640bd82ec5617660",
+      "modified": "2026-11-23T10:00:55.676Z"
     },
     "https://tractorvs.com/ru/tractors/belarus-920-21e79b33/": {
-      "digest": "62cfdf07ac37b2ca2e4288e12f03059cb99346be00c79a89f4ade07bfbe3e3b9",
-      "modified": "2026-11-22T17:26:34.896Z"
+      "digest": "0dd00ef62eb828624495884e8213357b9d2a6f26ce7a333737e7b80a4714c82c",
+      "modified": "2026-11-23T10:00:55.676Z"
     },
     "https://tractorvs.com/ru/tractors/belarus-922-3-1cd53d1a/": {
       "digest": "ce9908afd465c97690c26c779ca748b9c5d6d69a5e64c30447248aae107ebc31",
@@ -10698,8 +10698,8 @@
       "modified": "2026-11-22T17:26:34.896Z"
     },
     "https://tractorvs.com/ru/tractors/tafe-240-s-b6b226a4/": {
-      "digest": "16a866bcafb5d5fa3858575270626f37b63552cb3722f3d4872e43c5466b3d25",
-      "modified": "2026-11-22T12:57:29.705Z"
+      "digest": "c54a8f3acdbc6244c9fd067b4a7efce433ba1367043bcd4cc550ef8da7a6941e",
+      "modified": "2026-11-23T10:00:55.676Z"
     },
     "https://tractorvs.com/ru/tractors/tafe-5015-25faad96/": {
       "digest": "392abb70eb521bf880010e2f4cccdc80ecb2a7ca39f3cb179d19d727eacb4a55",
@@ -10718,24 +10718,24 @@
       "modified": "2026-11-22T04:59:19.699Z"
     },
     "https://tractorvs.com/ru/tractors/tafe-6020-m-46f5fd77/": {
-      "digest": "18c994f55d31b09d001f54e31fa9c4e8b6b277e1ba77ce104738358d36c67583",
-      "modified": "2026-11-22T04:59:19.699Z"
+      "digest": "f07ee164d9665d38c685158f81497fa51295ce31594d9cdac2bcf60ee25618f9",
+      "modified": "2026-11-23T10:00:55.676Z"
     },
     "https://tractorvs.com/ru/tractors/tafe-6028-m-9686ae98/": {
       "digest": "c5691fe4e54f15d54c4f9eb0feba76b0730f9703364e0582f650da2c0f1e7d7b",
       "modified": "2026-11-22T14:57:57.751Z"
     },
     "https://tractorvs.com/ru/tractors/tafe-6515-01b0b5ac/": {
-      "digest": "ffdfe0d5a6f4cef57503034ef8c3fe9962f1dc4ebaa7ffe9f4b55cc2836e9484",
-      "modified": "2026-11-22T04:59:19.699Z"
+      "digest": "c1105f9929f1395ca87ca6f8142ce617c4166495f8a6cd56d5ec24106e3e9c1f",
+      "modified": "2026-11-23T10:00:55.676Z"
     },
     "https://tractorvs.com/ru/tractors/tafe-6515-cab-58b27e16/": {
       "digest": "983d8eb90b5f25e2fdb8406e63a742fb8ccdbce43bad6d0fbe5c119fb7f4915b",
       "modified": "2026-11-22T04:59:19.699Z"
     },
     "https://tractorvs.com/ru/tractors/tafe-6515-cab-advanced-1cad70da/": {
-      "digest": "58fa9f75eb395aae5ed893f25fce4f3c1db256e6295939435dcb5523507935bc",
-      "modified": "2026-11-22T15:49:54.478Z"
+      "digest": "9877f43592a2b35f07f252c863f455011e65b3f03f261a15e1a591d2e2661232",
+      "modified": "2026-11-23T10:00:55.676Z"
     },
     "https://tractorvs.com/ru/tractors/tafe-6515-f-776221d6/": {
       "digest": "42a57da90e1a20b0211cceb72e02c40f8aded602d69881a8aac4bc70180cd0cd",
@@ -10754,12 +10754,12 @@
       "modified": "2026-11-22T13:56:24.699Z"
     },
     "https://tractorvs.com/ru/tractors/tafe-7515-cab-advanced-2009a1ab/": {
-      "digest": "126c40abec3e20d928072771cf0d665226766019e250fe9d1a55ac7c15bbdb60",
-      "modified": "2026-11-22T15:49:54.478Z"
+      "digest": "217fbdf92be64a83d0b0f73020eb5f53e485f7fc73b50c80d84085ee825c12c8",
+      "modified": "2026-11-23T10:00:55.676Z"
     },
     "https://tractorvs.com/ru/tractors/tafe-7515-ge-021c5a78/": {
-      "digest": "df68a97e1ce3ad986d68cdef393b06b9f9c7918b284412883344bb0478a512a3",
-      "modified": "2026-11-22T12:57:29.705Z"
+      "digest": "745dd00d07f80c2ab65d17ea5d9cb65ddbf56b79a0a90c5e8b07f8abc291e353",
+      "modified": "2026-11-23T10:00:55.676Z"
     },
     "https://tractorvs.com/ru/tractors/tumosan-8095-163f043b/": {
       "digest": "a07781b09f17462cabcca49f80ab12728e20aa87a69ee33a654601c095c4dc44",
@@ -11150,8 +11150,8 @@
       "modified": "2026-11-22T18:49:27.463Z"
     },
     "https://tractorvs.com/tr/": {
-      "digest": "98240869b4c3ed665f93cccf5ded34412f0cbec5800d854838f7c26f1d79bbd7",
-      "modified": "2026-11-23T09:48:41.478Z"
+      "digest": "ea49a6d8382da9adf6d5d2b7614ae03e064b4792078deddbb083ec13389d1b94",
+      "modified": "2026-11-23T10:00:55.676Z"
     },
     "https://tractorvs.com/tr/articles/": {
       "digest": "24af9028de2a49e800978e946a31767a57ff1ac80c98a17fb919a12f2339d53e",
@@ -11166,16 +11166,16 @@
       "modified": "2026-11-22T08:02:35.845Z"
     },
     "https://tractorvs.com/tr/compare/": {
-      "digest": "11a9f222bd1c78dc5e77726a1a5c01ae21b61ef0add5bb1d728a385d247310f2",
-      "modified": "2026-11-23T09:48:41.478Z"
+      "digest": "61eb306cddc02b0b350978262aca3c446aa35b5372ec006ca571bee6fc45b7b1",
+      "modified": "2026-11-23T10:00:55.676Z"
     },
     "https://tractorvs.com/tr/compare/deutz-fahr-5090-d-gs-vs-5100-d-gs/": {
       "digest": "d2f52b331965c94d1f2dc2b55db37a3c22f303a152bddd818417198fb3b29862",
       "modified": "2026-11-22T16:33:31.612Z"
     },
     "https://tractorvs.com/tr/farm-advisor/": {
-      "digest": "54f17f39847f13a2de52417057c86ee92d61285cbcffabaf9c13a33a325e4a18",
-      "modified": "2026-11-23T09:48:41.478Z"
+      "digest": "2af50bf80ad8b03d3f1d7b23a709f40fa31f931c9a610f6225bbdf60cf0870a2",
+      "modified": "2026-11-23T10:00:55.676Z"
     },
     "https://tractorvs.com/tr/guides/choosing-a-tractor/": {
       "digest": "1add30ac1c9c6ae96fcd30180033deda65f446cb1595117819dfe2651d6b025a",
@@ -11210,8 +11210,8 @@
       "modified": "2026-11-22T15:13:41.997Z"
     },
     "https://tractorvs.com/tr/tractors/": {
-      "digest": "8aa49a152846e0f228d8bbc68e9a8ce436344a0641dc970859c660b7c520a8f4",
-      "modified": "2026-11-23T09:48:41.478Z"
+      "digest": "c9ec186ad536646b4911725e5b1c671e2436ed2f349cbaea881c3829fbedbf65",
+      "modified": "2026-11-23T10:00:55.676Z"
     },
     "https://tractorvs.com/tr/tractors/agrale-4125-0b53e944/": {
       "digest": "b877aec9c77214e168c69ab239caf1ba006d9c27f2ab18fec9179791bc08112d",
@@ -11418,12 +11418,12 @@
       "modified": "2026-11-22T15:49:54.478Z"
     },
     "https://tractorvs.com/tr/tractors/belarus-920-2-1e1d7219/": {
-      "digest": "a4f7c281d065abe82231b95d801e69c09178810092c5b5707045efb40a596360",
-      "modified": "2026-11-22T15:49:54.478Z"
+      "digest": "6bf5bc44caa89391d3f98cb4e80d4d69d275c611d9b215714e38298d6e409954",
+      "modified": "2026-11-23T10:00:55.676Z"
     },
     "https://tractorvs.com/tr/tractors/belarus-920-21e79b33/": {
-      "digest": "add23bf20d3ac679b794ad54bdedbb41b0de2bbc3b466ef4b734d8266ec457a9",
-      "modified": "2026-11-22T15:49:54.478Z"
+      "digest": "7678ceb1683488fb03b6c79e14cbf648c65bc4257427562a5df06035325638e4",
+      "modified": "2026-11-23T10:00:55.676Z"
     },
     "https://tractorvs.com/tr/tractors/belarus-922-3-1cd53d1a/": {
       "digest": "206d120b160b7e10da2ddb083354ebb75ff07353269dae9dfca332c1275a9d91",
@@ -12314,8 +12314,8 @@
       "modified": "2026-11-22T04:59:19.699Z"
     },
     "https://tractorvs.com/tr/tractors/tafe-240-s-b6b226a4/": {
-      "digest": "0c951b6a4d26bba222dd125307d606ec75165fca8a2ad2972a191f743bb75449",
-      "modified": "2026-11-22T12:57:29.705Z"
+      "digest": "e3dd412c0a54e75c1ed632737f80ce9d681cb98be2d14d51c33d81705d152fd0",
+      "modified": "2026-11-23T10:00:55.676Z"
     },
     "https://tractorvs.com/tr/tractors/tafe-5015-25faad96/": {
       "digest": "98797b8c87e3ed0b396748556ad7ebc58e66cd3223f727d21bc0c9baedf29779",
@@ -12334,24 +12334,24 @@
       "modified": "2026-11-21T19:08:54.066Z"
     },
     "https://tractorvs.com/tr/tractors/tafe-6020-m-46f5fd77/": {
-      "digest": "c995d604e242982fc2771661290614f545651f964269a6e04de50448d723e8d1",
-      "modified": "2026-11-21T19:08:54.066Z"
+      "digest": "6fd634bb01a28d36b6f59da07afc01f31e59468d3b3d3043c0f570d872b9177b",
+      "modified": "2026-11-23T10:00:55.676Z"
     },
     "https://tractorvs.com/tr/tractors/tafe-6028-m-9686ae98/": {
       "digest": "2485002a9cfa640eea70e632dab7a4a31d2bd6524061c68198eb58f668457da1",
       "modified": "2026-11-22T14:57:57.751Z"
     },
     "https://tractorvs.com/tr/tractors/tafe-6515-01b0b5ac/": {
-      "digest": "9b2c2e90cbdea0b9ec7222ffb8a48c2953c2033993d0691bc183cc8907838afc",
-      "modified": "2026-11-21T19:08:54.066Z"
+      "digest": "c22f929fbcb1836553bafe1a02f7c0ec9ea0363aa3ca6e845c9632c4d548de2e",
+      "modified": "2026-11-23T10:00:55.676Z"
     },
     "https://tractorvs.com/tr/tractors/tafe-6515-cab-58b27e16/": {
       "digest": "908a2420a556b738af412956dfe14d43f377dd98c7328db06da1e7b96c8692c2",
       "modified": "2026-11-21T19:08:54.066Z"
     },
     "https://tractorvs.com/tr/tractors/tafe-6515-cab-advanced-1cad70da/": {
-      "digest": "956321b7384f4da340df44d45cb81ea0471921cc46972ec7b18b02aee0be0efe",
-      "modified": "2026-11-22T15:49:54.478Z"
+      "digest": "0ac1699067440e887ea405a929e631a3dec962384db90b564acf184fc1059080",
+      "modified": "2026-11-23T10:00:55.676Z"
     },
     "https://tractorvs.com/tr/tractors/tafe-6515-f-776221d6/": {
       "digest": "f89069a55615e2076c7ead7f90bce04c30447468a5cb5dae48678386188998e0",
@@ -12370,12 +12370,12 @@
       "modified": "2026-11-22T13:56:24.699Z"
     },
     "https://tractorvs.com/tr/tractors/tafe-7515-cab-advanced-2009a1ab/": {
-      "digest": "e89fb4b6e3abf2591ec3664b357d1b6f328969fb536eb044e30869055db0b87a",
-      "modified": "2026-11-22T15:49:54.478Z"
+      "digest": "f3540220b0ea61390866301336c0b12ac6b6bbfe80b3e2764448b41d042b1729",
+      "modified": "2026-11-23T10:00:55.676Z"
     },
     "https://tractorvs.com/tr/tractors/tafe-7515-ge-021c5a78/": {
-      "digest": "0ab0d5b4ba62c22468e5551b1daa2f2a7fd62bff5ffea346323f06ccde550135",
-      "modified": "2026-11-22T12:57:29.705Z"
+      "digest": "59f5659e54a64220d75d9d2392420814c94bddff733ec04961ca869fe56551aa",
+      "modified": "2026-11-23T10:00:55.676Z"
     },
     "https://tractorvs.com/tr/tractors/tumosan-8095-163f043b/": {
       "digest": "d0cd3268396d019e187eb2f32c3269c3f52c1f9f99afdd4ebf8d6c531d55667c",
@@ -12766,8 +12766,8 @@
       "modified": "2026-11-22T18:49:27.463Z"
     },
     "https://tractorvs.com/tractors/": {
-      "digest": "133906acf92c8b5fc3043af7d597764ea28cbedfec1f947d5128baea4b7cd6c9",
-      "modified": "2026-11-23T09:48:41.478Z"
+      "digest": "ac3be82f614cc5ad18f9196029d5467f1d9a3fb0e137649793cb745d7cabf4c8",
+      "modified": "2026-11-23T10:00:55.676Z"
     },
     "https://tractorvs.com/tractors/agrale-4125-0b53e944/": {
       "digest": "7cb5388368ca5cebb9b7f9b51467ed0cde27248e0c1689c41cd6c15909d42679",
@@ -12974,12 +12974,12 @@
       "modified": "2026-11-22T17:39:52.187Z"
     },
     "https://tractorvs.com/tractors/belarus-920-2-1e1d7219/": {
-      "digest": "4e72d70a7b60397488594c31f10d18fceca264a8cd7508efeeb70253de47ad0c",
-      "modified": "2026-11-22T17:39:52.187Z"
+      "digest": "99b181b6ebde2bfc5b3f8b0635012571a43de3bba9040225b3b77b6db38915cd",
+      "modified": "2026-11-23T10:00:55.676Z"
     },
     "https://tractorvs.com/tractors/belarus-920-21e79b33/": {
-      "digest": "ef20e38fa1849e909f43636acb21163ca4c75b33facf271ae864694648a3ff9c",
-      "modified": "2026-11-22T17:39:52.187Z"
+      "digest": "dfd56564bcd1f49e63c1d167315201b3504adb4840d85aeb810fcc49de78e3d7",
+      "modified": "2026-11-23T10:00:55.676Z"
     },
     "https://tractorvs.com/tractors/belarus-922-3-1cd53d1a/": {
       "digest": "17b52fa4f8cc700d9474cd89c3050677f99d4d265e037b9670bf0e75c0c372fc",
@@ -13870,8 +13870,8 @@
       "modified": "2026-11-22T17:39:52.187Z"
     },
     "https://tractorvs.com/tractors/tafe-240-s-b6b226a4/": {
-      "digest": "fbcf6e0a4c91326da0ff5328f675ba6e6994dac30dace72f88351314d217f43e",
-      "modified": "2026-11-22T12:57:29.705Z"
+      "digest": "b4cce7a8dce4ed6ce36eb2e1f0701b8223480ac57e49c2e261ed62cad155d9ee",
+      "modified": "2026-11-23T10:00:55.676Z"
     },
     "https://tractorvs.com/tractors/tafe-5015-25faad96/": {
       "digest": "ba157b618862b70b5c404f60f6b41956916a31850a389556dc2a573596824271",
@@ -13890,24 +13890,24 @@
       "modified": "2026-11-22T11:49:57.072Z"
     },
     "https://tractorvs.com/tractors/tafe-6020-m-46f5fd77/": {
-      "digest": "bcd2fa7b1dca4a30a8029955ed664cf29988fa4bab8209671fb592f0e1f6198e",
-      "modified": "2026-11-22T11:49:57.072Z"
+      "digest": "627d7111f7b807aa3f7996f626827a4abef7f4630481af1ef35f238ab4a97418",
+      "modified": "2026-11-23T10:00:55.676Z"
     },
     "https://tractorvs.com/tractors/tafe-6028-m-9686ae98/": {
       "digest": "fd8c69bb5ab74a86107c804341f5b1a0cd1be511539b377f5c8b608ef37316e0",
       "modified": "2026-11-22T14:57:57.751Z"
     },
     "https://tractorvs.com/tractors/tafe-6515-01b0b5ac/": {
-      "digest": "b10c84356c748b77f1bc3fff853e2010fc9399c09ef2cafe069135b9b6ebdc0d",
-      "modified": "2026-11-22T11:49:57.072Z"
+      "digest": "c3ddf3f979ef7a88c9a2b7a956dcc57fb569b903000372d41188922291812c7b",
+      "modified": "2026-11-23T10:00:55.676Z"
     },
     "https://tractorvs.com/tractors/tafe-6515-cab-58b27e16/": {
       "digest": "9488e9d8d469290f2cb28b8001a089ae8ec5d19563af22aff704943bf635680a",
       "modified": "2026-11-22T11:49:57.072Z"
     },
     "https://tractorvs.com/tractors/tafe-6515-cab-advanced-1cad70da/": {
-      "digest": "2702dec0fc18324a31ec60df0ac2a81646e43074cfcd77fd01ef7a556d3f8e61",
-      "modified": "2026-11-22T11:49:57.072Z"
+      "digest": "41c4aeb2ab240cfd73c11f5262576f8d4edba5c8d468c58a2b169ba2fc070062",
+      "modified": "2026-11-23T10:00:55.676Z"
     },
     "https://tractorvs.com/tractors/tafe-6515-f-776221d6/": {
       "digest": "8b38f6490ca55034b5bff338dffcd674c2067db99d4b054471eabffa9eff7f88",
@@ -13926,12 +13926,12 @@
       "modified": "2026-11-22T13:56:24.699Z"
     },
     "https://tractorvs.com/tractors/tafe-7515-cab-advanced-2009a1ab/": {
-      "digest": "d5a599b274101eb0d8aa471f8046d779e23abe9e5c3a45cac648feeb24ef3d90",
-      "modified": "2026-11-22T11:49:57.072Z"
+      "digest": "8610b71511db57c70ff8d9c53e98ac75750dad169444873ea4b027c23b00e96e",
+      "modified": "2026-11-23T10:00:55.676Z"
     },
     "https://tractorvs.com/tractors/tafe-7515-ge-021c5a78/": {
-      "digest": "2c9846ef2a0721db50a8aa1d46a95e702f251b2d049b850cc4df4a6c25e11717",
-      "modified": "2026-11-22T12:57:29.705Z"
+      "digest": "ed9a2bd91a20b9eabcb21fc4c1cba2381ce829e7a905ce33fd898b5a297c1f13",
+      "modified": "2026-11-23T10:00:55.676Z"
     },
     "https://tractorvs.com/tractors/tumosan-8095-163f043b/": {
       "digest": "2ada0c5ba0c9c673644e0c0f2c330a1c16642df067ef4118a22b13c13037780a",
@@ -14322,20 +14322,20 @@
       "modified": "2026-11-22T18:49:27.463Z"
     },
     "https://tractorvs.com/zh/": {
-      "digest": "cad6b12cd47c13b6a74865c90f57e291afed55418893a0d0322ba097056d44c3",
-      "modified": "2026-11-23T09:48:41.478Z"
+      "digest": "a3f0ec95bf1f495ad1d01cfa2091397f38e8abb978e0673bd250aa1ac48327f0",
+      "modified": "2026-11-23T10:00:55.676Z"
     },
     "https://tractorvs.com/zh/articles/": {
       "digest": "879a0a248b1d60f80189181df4af6d71c0f128b026d802b831dc37f5508ce1ab",
       "modified": "2026-11-22T18:22:02.402Z"
     },
     "https://tractorvs.com/zh/compare/": {
-      "digest": "74cf4cb96f6644b79ec6694999e41ff553076e0364bd9500a0a7f7623eb5ef4f",
-      "modified": "2026-11-23T09:48:41.478Z"
+      "digest": "f4d0bd993b92663291bc2b108561f8a1bae3645c06470025675b85d1f1c28926",
+      "modified": "2026-11-23T10:00:55.676Z"
     },
     "https://tractorvs.com/zh/farm-advisor/": {
-      "digest": "b3e292582d8b294e0fb860aff8ab540cc268c1b3a29ed57f9c16ee0a7b56c56c",
-      "modified": "2026-11-23T09:48:41.478Z"
+      "digest": "809c4525d76e513858c2507a1bb8f7279018a5d28e8de2d199c4d9138da8ac5e",
+      "modified": "2026-11-23T10:00:55.676Z"
     },
     "https://tractorvs.com/zh/guides/choosing-a-tractor/": {
       "digest": "a2a597a6514f7d38fe74e2cac20096e4049c3c8e9f8227676767414a56e808bf",
@@ -14350,8 +14350,8 @@
       "modified": "2026-11-22T15:13:41.997Z"
     },
     "https://tractorvs.com/zh/tractors/": {
-      "digest": "15299319482a3089130aff4e39d06e661ef514ba718fdaf9855b3564dfbf5fb5",
-      "modified": "2026-11-23T09:48:41.478Z"
+      "digest": "beef109e7809febc03ca59d622fa94250909d594ac09d0f5e054a19ac4846c96",
+      "modified": "2026-11-23T10:00:55.676Z"
     },
     "https://tractorvs.com/zh/tractors/agrale-4125-0b53e944/": {
       "digest": "e6ab843089d45ba67da807eceb735737086451a3597de35ae307039fd8c1c4e7",
@@ -14558,12 +14558,12 @@
       "modified": "2026-11-22T17:26:34.896Z"
     },
     "https://tractorvs.com/zh/tractors/belarus-920-2-1e1d7219/": {
-      "digest": "f31ef8da043a06625605d5db32588c6caa79119f32f474560bb7b1c2ea377062",
-      "modified": "2026-11-22T17:26:34.896Z"
+      "digest": "05c06558131ba7e0f236194168c9ce070a9972a0125c11b3beee6a36a8c9a35d",
+      "modified": "2026-11-23T10:00:55.676Z"
     },
     "https://tractorvs.com/zh/tractors/belarus-920-21e79b33/": {
-      "digest": "17ff4fd5172860ed98217a0a01814a50af83d12154ed872ebd263b7cf2b48022",
-      "modified": "2026-11-22T17:26:34.896Z"
+      "digest": "a27aff2a8fff6aaee832980fe778bbd60997a2599cc0dad48f939b88665e1db6",
+      "modified": "2026-11-23T10:00:55.676Z"
     },
     "https://tractorvs.com/zh/tractors/belarus-922-3-1cd53d1a/": {
       "digest": "e1651a618fb147484cf48c2ebc9a85f8b9c6d67fcb41dc6978dbf9a446d85e92",
@@ -15454,8 +15454,8 @@
       "modified": "2026-11-22T17:26:34.896Z"
     },
     "https://tractorvs.com/zh/tractors/tafe-240-s-b6b226a4/": {
-      "digest": "1d8a94a4b02cbfd5d7e9934ad6ca0a36d70296877f1a5fc2cbd6c04b2fedc33f",
-      "modified": "2026-11-22T12:57:29.705Z"
+      "digest": "82ec98e32a4a51c6686a14f04034e3e656fe077626718a98534abf20cc305dbd",
+      "modified": "2026-11-23T10:00:55.676Z"
     },
     "https://tractorvs.com/zh/tractors/tafe-5015-25faad96/": {
       "digest": "5e23b701633d6d912ea59cddcf79f8c5dc49299626eb9b1f35026bd7700deeca",
@@ -15474,24 +15474,24 @@
       "modified": "2026-11-22T09:58:15.078Z"
     },
     "https://tractorvs.com/zh/tractors/tafe-6020-m-46f5fd77/": {
-      "digest": "6aced478e4e2da6954010dda6d892cb43ae67ea35ace07da4daf07e50eade8cd",
-      "modified": "2026-11-22T09:58:15.078Z"
+      "digest": "0219ed58416b294d70becd0eb040e3fdd2a686820c1d415d6b083737f6b85ee9",
+      "modified": "2026-11-23T10:00:55.676Z"
     },
     "https://tractorvs.com/zh/tractors/tafe-6028-m-9686ae98/": {
       "digest": "04d565fe31788c502f541d9efab0c1c0f68ab20fe9696fd941b68cc2c2e9f331",
       "modified": "2026-11-22T14:57:57.751Z"
     },
     "https://tractorvs.com/zh/tractors/tafe-6515-01b0b5ac/": {
-      "digest": "4302e5b42ee725a8c2c7e8e81e7969d48dae07a3a05208391567dc7e4b55693e",
-      "modified": "2026-11-22T09:58:15.078Z"
+      "digest": "5ee0c4bde4a9a4d388e68f9b577c75c96b39958096b3e314ed7d6d894b39c2b4",
+      "modified": "2026-11-23T10:00:55.676Z"
     },
     "https://tractorvs.com/zh/tractors/tafe-6515-cab-58b27e16/": {
       "digest": "f28c8633cc74d397c277f80de20468d7b2996ffebb0381bb351a06793175f4ad",
       "modified": "2026-11-22T09:58:15.078Z"
     },
     "https://tractorvs.com/zh/tractors/tafe-6515-cab-advanced-1cad70da/": {
-      "digest": "457f29cd089fae0eeddfe3f58c7cdabfcacf43f63677594307a9f0269a90969e",
-      "modified": "2026-11-22T09:58:15.078Z"
+      "digest": "6098ec1db23b4eef1048c310f1efa51935787e4359629090cd65db1baa520f54",
+      "modified": "2026-11-23T10:00:55.676Z"
     },
     "https://tractorvs.com/zh/tractors/tafe-6515-f-776221d6/": {
       "digest": "08de6a2dc485c10c5c137759a21335d546c8cff16e72ce2b1f5c58d823301a39",
@@ -15510,12 +15510,12 @@
       "modified": "2026-11-22T13:56:24.699Z"
     },
     "https://tractorvs.com/zh/tractors/tafe-7515-cab-advanced-2009a1ab/": {
-      "digest": "e5c5d7f4d13e59d008a0a974f3c45276949d0e8d6df2583ee756742ca11749ae",
-      "modified": "2026-11-22T09:58:15.078Z"
+      "digest": "f229fa8835fb51552e8e4892f16c002dde73c1a97cd053035fc1daf70efeff9c",
+      "modified": "2026-11-23T10:00:55.676Z"
     },
     "https://tractorvs.com/zh/tractors/tafe-7515-ge-021c5a78/": {
-      "digest": "f2b7a09901abc18ecefa9718f56ca2c3f423a50be4da4215adb0feb294981f50",
-      "modified": "2026-11-22T12:57:29.705Z"
+      "digest": "648debb9430026b8052943c5987f84104452b6035bf211efd1b16986c317f0d6",
+      "modified": "2026-11-23T10:00:55.676Z"
     },
     "https://tractorvs.com/zh/tractors/tumosan-8095-163f043b/": {
       "digest": "65f9dddbbf7f074cf88e5ec051405296eeb3992eb4829133b279aed360a21365",
