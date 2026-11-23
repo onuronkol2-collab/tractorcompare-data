@@ -148,3 +148,48 @@
 .tc-preview-photo > small{display:block;margin:0;padding:5px 9px;font-size:11px;line-height:1.5;color:#3c5e42}
 .tc-preview-photo > small a{color:inherit;text-decoration:underline;text-underline-offset:2px}
 .tc-preview-photo-button .tractor-photo-brandmark{font-size:12px;bottom:9px;right:9px}
+
+/* Preserve the real three-column HTML table. At <=690px the existing layout
+   displays each source-backed row as a two-model comparison pair; provide
+   a stronger model hierarchy and keyboard/touch access to citation links.
+   No hidden values, altered row semantics, or screen-width scrolling. */
+#main .tc-section .tc-entry a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 36px;
+  max-width: 100%;
+  width: fit-content;
+  font-size: 14px;
+  line-height: 1.5;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  overflow-wrap: anywhere;
+}
+@media (max-width: 690px) {
+  #main .tc-section .tc-table tbody th {
+    color: #203f2a;
+    font-size: 16px;
+    line-height: 1.5;
+    padding: 13px 14px;
+  }
+  #main .tc-section .tc-table tbody td {
+    min-width: 0;
+    padding: 14px 12px;
+    line-height: 1.6;
+  }
+  #main .tc-section .tc-table tbody td:nth-of-type(2) {
+    background-color: #f0f7ec;
+  }
+  #main .tc-section .tc-table .tc-cell-model {
+    margin-bottom: 10px;
+    color: #244c33;
+    font-size: 14px;
+    line-height: 1.5;
+    font-weight: 800;
+    overflow-wrap: anywhere;
+  }
+  #main .tc-section .tc-table tbody tr:focus-within {
+    border-color: #4b9060;
+    box-shadow: 0 0 0 2px rgb(63 132 77 / 11%);
+  }
+}

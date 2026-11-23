@@ -413,10 +413,11 @@ const pricePayload = JSON.stringify({
   .catalog-facet-heading button{min-height:44px;border:1px solid #769e7c;color:#194e32;background:white;border-radius:9px;padding:8px 14px;font:inherit;font-size:14px;font-weight:750;cursor:pointer}
   .catalog-facet-fields{display:grid;grid-template-columns:minmax(0,1fr);gap:13px}
   .catalog-facet-fields label{display:grid;gap:7px;font-size:14px;font-weight:750;color:#274e36;min-width:0}
-  .catalog-facet-fields select{width:100%;min-width:0;height:48px;padding:9px 10px;border:1px solid #afc8b3;border-radius:9px;background:#fff;color:#173e29;font:inherit;font-weight:600}
+  .catalog-facet-fields select{width:100%;min-width:0;min-height:48px;padding:9px 10px;border:1px solid #afc8b3;border-radius:9px;background:#fff;color:#173e29;font:inherit;font-size:16px;font-weight:600}
   .catalog-facet-panel :is(button,select):focus-visible{outline:3px solid #438c57;outline-offset:3px}
   @media(max-width:940px){.catalog-discovery-layout{grid-template-columns:minmax(0,1fr)}.catalog-facet-panel{position:static}.catalog-facet-fields{grid-template-columns:repeat(2,minmax(0,1fr))}}
-  @media(max-width:490px){.catalog-facet-fields{grid-template-columns:1fr}.catalog-facet-heading{align-items:flex-start}}
+  /* Keep two useful filters per row on 360–490px phones; 320px remains a single column. */
+  @media(max-width:359px){.catalog-facet-fields{grid-template-columns:1fr}.catalog-facet-heading{align-items:flex-start}}
   .catalog-search-feedback {grid-column:1/-1;display:flex;align-items:center;flex-wrap:wrap;gap:11px;
     min-height:32px;color:#355c42;font-size:13px;font-weight:700}
   .catalog-search-feedback button {border:1px solid #a6c5ab;border-radius:8px;min-height:36px;
@@ -465,7 +466,7 @@ const pricePayload = JSON.stringify({
   .tractor-card .tractor-photo-gallery { margin-bottom:13px; }
   .catalog-price-filter {display:flex;align-items:center;flex-wrap:wrap;gap:12px;margin-bottom:21px;padding:12px 15px;border:1px solid #dce8da;background:#fff;border-radius:10px;font-size:12px}
   .catalog-price-filter label {font-weight:800}
-  .catalog-price-filter select {padding:8px 12px;border-radius:7px;border:1px solid #becdbc;background:#fff}
+  .catalog-price-filter select {min-height:44px;padding:8px 12px;border-radius:7px;border:1px solid #becdbc;background:#fff;font-size:16px;max-width:100%}
   .catalog-price-filter a {color:#256c43;text-decoration:underline;font-weight:800}
   .tractor-price-summary {padding:9px 0;margin-top:10px;border-top:1px solid #e1e9de;font-weight:700;font-size:11px;color:#3d6545;line-height:1.6}
 </style>
