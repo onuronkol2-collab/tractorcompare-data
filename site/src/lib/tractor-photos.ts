@@ -177,6 +177,31 @@ const ORIGINAL_PHOTO_ORIGINS:readonly Omit<TractorPhoto,"originThumbUrl"|"origin
     copyrightEvidence:"commons-own-work-self-license",
     licenseName:"CC BY-SA 4.0",licenseUrl:"https://creativecommons.org/licenses/by-sa/4.0/",
     configurationExact:false}
+  ,
+  // Exactly matched 2019 Agritechnica showroom model and 2019 Commons own-work
+  // CC BY-SA 4.0 declaration (MarcelX42); do NOT propagate to X7.621/X7.623.
+  {brand:"McCormick",model:"X7.624 VT-Drive",tractorId:"30986b41-b486-41d6-815d-6bec72cd5bf1",
+    fileId:"mccormick-x7-624-vt-drive-marcelx42-2019",
+    thumbUrl:W+"thumb/9/90/McCormick_X7.624_VT-Drive_Agritechnica_2019_-_Front_and_left_side.jpg/480px-McCormick_X7.624_VT-Drive_Agritechnica_2019_-_Front_and_left_side.jpg",
+    displayUrl:W+"thumb/9/90/McCormick_X7.624_VT-Drive_Agritechnica_2019_-_Front_and_left_side.jpg/960px-McCormick_X7.624_VT-Drive_Agritechnica_2019_-_Front_and_left_side.jpg",
+    fullUrl:W+"9/90/McCormick_X7.624_VT-Drive_Agritechnica_2019_-_Front_and_left_side.jpg",
+    width:6000,height:3376,photographer:"MarcelX42",
+    sourcePage:"https://commons.wikimedia.org/wiki/File:McCormick_X7.624_VT-Drive_Agritechnica_2019_-_Front_and_left_side.jpg",
+    licenseName:"CC BY-SA 4.0",licenseUrl:"https://creativecommons.org/licenses/by-sa/4.0/",
+    configurationExact:false
+  },
+  // Exact VT-Drive model (not an X8.630 or X8.627), genuine photographed
+  // Agritechnica 2023; original Commons own-work CC BY-SA 4.0, MarcelX42.
+  {brand:"McCormick",model:"X8.631 VT-Drive",tractorId:"95fdcc9a-c5c0-4329-a20e-3658c997e1ca",
+    fileId:"mccormick-x8-631-vt-drive-marcelx42-2023",
+    thumbUrl:W+"thumb/4/41/McCormick_X8.631_VT-Drive_Agritechnica_2023_%28DSC06784%29.jpg/480px-McCormick_X8.631_VT-Drive_Agritechnica_2023_%28DSC06784%29.jpg",
+    displayUrl:W+"thumb/4/41/McCormick_X8.631_VT-Drive_Agritechnica_2023_%28DSC06784%29.jpg/960px-McCormick_X8.631_VT-Drive_Agritechnica_2023_%28DSC06784%29.jpg",
+    fullUrl:W+"4/41/McCormick_X8.631_VT-Drive_Agritechnica_2023_%28DSC06784%29.jpg",
+    width:7008,height:3944,photographer:"MarcelX42",
+    sourcePage:"https://commons.wikimedia.org/wiki/File:McCormick_X8.631_VT-Drive_Agritechnica_2023_(DSC06784).jpg",
+    licenseName:"CC BY-SA 4.0",licenseUrl:"https://creativecommons.org/licenses/by-sa/4.0/",
+    configurationExact:false
+  }
 ];
 /** Curated historical archive candidates are staged in code; they reach public pages
  * ONLY if an exact brand/model is found in the published Supabase public catalogue.
