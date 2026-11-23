@@ -268,10 +268,14 @@ const labelsPayload = JSON.stringify({
     const modelIndex = new Map(models.map(model => [model.id, model]));
     const byId = (id:string) => modelIndex.get(id);
     const columnTitles = new Map(Array.from(leftSelect.options, option => [option.value, option.text]));
+    const selectedContext = (model:Model) => {
+      const label = columnTitles.get(model.id);
+      return label?.startsWith(model.title + " · ") ? label.slice(model.title.length + 3) : model.variant;
+    };
     const searchIndex = models.map(model => ({
       model,
       name: normalizeTractorQuery(model.title),
-      target: normalizeTractorQuery([model.title, model.variant].filter(Boolean).join(" ")),
+      target: normalizeTractorQuery([model.title, selectedContext(model)].filter(Boolean).join(" ")),
     }));
     const dataDirectory = picker.dataset.directory!;
     const params=new URLSearchParams(window.location.search);
@@ -336,7 +340,7 @@ const labelsPayload = JSON.stringify({
         const strong=preview.querySelector("strong");
         const variant=preview.querySelector("em");
         if(strong)strong.textContent=model.title;
-        if(variant){variant.textContent=model.variant||"";variant.hidden=!model.variant;}
+        if(variant){const context=selectedContext(model);variant.textContent=context||"";variant.hidden=!context;}
       }
     }
     const pending = new Map<string, Promise<Spec[]>>();
@@ -482,7 +486,7 @@ const labelsPayload = JSON.stringify({
           button.className="tc-result";button.setAttribute("aria-selected","false");
           const main=document.createElement("span");main.className="tc-result-main";
           addText(main,"strong",model.title);
-          addText(main,"small",[model.variant,model.power==null?null:model.power+" HP",
+          addText(main,"small",[selectedContext(model),model.power==null?null:model.power+" HP",
             model.specsCount+" "+l10n.specs].filter(Boolean).join(" · "));
           button.append(main);
           addText(button,"span","↗","tc-result-arrow");
