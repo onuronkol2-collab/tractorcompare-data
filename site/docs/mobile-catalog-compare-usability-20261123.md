@@ -8,7 +8,7 @@ Task: on 320/390/768 px screens, apply filters and return to actual published tr
 
 ## Narrow implementation
 
-- At 360–940 px, keep two filter columns (390 px phones now show two controls per row). At ≤359 px use one column. Preserve already-shipped SSR links, all existing filter/query/sort/URL/country logic, and four touch-friendly controls.
+- At 360–940 px keep a two-track filter grid. On 360–490 px phones the long brand and sort selectors span both tracks; the shorter power and year controls share one row (3 rows instead of the previous 4). At ≤359 px use one column. Preserve already-shipped SSR links, all existing filter/query/sort/URL/country logic, and four touch-friendly controls.
 - Set all facet selectors and the country selector to at least 16 px font-size to avoid involuntary mobile zoom; country selector remains 44 px tall.
 - On mobile comparison cards retain the exact semantic table, row headers, column headings, two model-specific data cells and every source citation. Distinguish the second model gently; improve reading rhythm, source links to at least 14 px/36 px and focus-within feedback. No fabricated data, source changes, or change to comparison sorting.
 - CSS only plus read-only Playwright regressions. No changes to Indexed URLs, canonical/hreflang, sources/photos/licenses, RLS, moderation, consent, AGENTS.md, the model data or the Worker.

@@ -96,6 +96,12 @@ test("synthetic source CSS preserves responsive catalogue controls at 320/390/76
     const fields=page.locator(".catalog-facet-fields");
     const tracks=await fields.evaluate(node=>getComputedStyle(node).gridTemplateColumns.trim().split(/\s+/).length);
     expect(tracks).toBe(width===320?1:2);
+    if(width===390){
+      const [brand,power,sort]=await page.locator(".catalog-facet-fields label").evaluateAll(els=>
+        [els[0],els[1],els[3]].map(el=>el.getBoundingClientRect().width));
+      expect(brand).toBeGreaterThan(power*1.5);
+      expect(sort).toBeGreaterThan(power*1.5);
+    }
     for(const sel of [".catalog-facet-fields select",".catalog-price-filter select"]){
       const metrics=await page.locator(sel).first().evaluate(el=>({font:parseFloat(getComputedStyle(el).fontSize),height:el.getBoundingClientRect().height}));
       expect(metrics.font).toBeGreaterThanOrEqual(16);

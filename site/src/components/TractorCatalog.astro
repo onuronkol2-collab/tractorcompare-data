@@ -418,6 +418,8 @@ const pricePayload = JSON.stringify({
   @media(max-width:940px){.catalog-discovery-layout{grid-template-columns:minmax(0,1fr)}.catalog-facet-panel{position:static}.catalog-facet-fields{grid-template-columns:repeat(2,minmax(0,1fr))}}
   /* Keep two useful filters per row on 360–490px phones; 320px remains a single column. */
   @media(max-width:359px){.catalog-facet-fields{grid-template-columns:1fr}.catalog-facet-heading{align-items:flex-start}}
+  /* Long brand and sort labels get full-row width; power/year remain paired. */
+  @media(min-width:360px) and (max-width:490px){.catalog-facet-fields label:first-child,.catalog-facet-fields label:last-child{grid-column:1/-1}}
   .catalog-search-feedback {grid-column:1/-1;display:flex;align-items:center;flex-wrap:wrap;gap:11px;
     min-height:32px;color:#355c42;font-size:13px;font-weight:700}
   .catalog-search-feedback button {border:1px solid #a6c5ab;border-radius:8px;min-height:36px;
