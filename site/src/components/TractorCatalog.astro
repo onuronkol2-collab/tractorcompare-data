@@ -193,6 +193,7 @@ const pricePayload = JSON.stringify({
   import { advisorText } from "../lib/advisor-i18n";
   import { matchesTractorTerms, normalizeTractorQuery } from "../lib/search";
   import {normalizedFacetState,matchesCatalogueFacet,compareCatalogueRows} from "../lib/catalog-facets.mjs";
+  import { countryAwareCatalogUrl } from "../lib/catalog-country-url.mjs";
   import type { Locale } from "../lib/locales";
   const dataNode=document.getElementById("catalog-price-payload");
   const countryControl=document.querySelector<HTMLSelectElement>("#catalog-price-country");
@@ -200,11 +201,15 @@ const pricePayload = JSON.stringify({
     const data=JSON.parse(dataNode.textContent || "{}") as {lang:Locale;models:Array<{
       tractor_id:string;brand_name:string;model_name:string;variant:string|null;market:string|null;model_year:number|null;
     }>};
+    const priceLabels = new Map(
+      Array.from(document.querySelectorAll<HTMLElement>("[data-price-for]"),
+        label => [label.dataset.priceFor, label] as const)
+    );
     let manuallySelected=false;
     const refresh = (country:MarketCountry) => {
       countryControl.value=country;
       for (const tractor of data.models) {
-        const el=document.querySelector<HTMLElement>('[data-price-for="'+tractor.tractor_id+'"]');
+        const el=priceLabels.get(tractor.tractor_id);
         if (!el) continue;
         const price=matchingPrice(tractor,country);
         el.textContent=price
@@ -212,8 +217,26 @@ const pricePayload = JSON.stringify({
           : advisorText(data.lang,"priceUnknown");
       }
     };
-    countryControl.addEventListener("change",()=>{manuallySelected=true;refresh(countryControl.value as MarketCountry);});
-    fetch("/api/visitor-country",{credentials:"same-origin",cache:"no-store"})
+    // Explicitly chosen countries survive a language change or shared URL.
+    // Keep automatic geolocation out of the URL: only visitor-initiated
+    // preferences are persisted, without cookies or tracking.
+    const allowedCountries=MARKET_COUNTRIES as readonly string[];
+    const fromUrl=new URLSearchParams(window.location.search).get("country");
+    if(fromUrl && allowedCountries.includes(fromUrl)){
+      manuallySelected=true;
+      refresh(fromUrl as MarketCountry);
+    }
+    countryControl.addEventListener("change",()=>{
+      const selected=countryControl.value;
+      if(!allowedCountries.includes(selected))return;
+      manuallySelected=true;
+      refresh(selected as MarketCountry);
+      const next=countryAwareCatalogUrl(window.location.href,selected,[...allowedCountries]);
+      history.replaceState(history.state,"",next);
+      for(const link of document.querySelectorAll<HTMLAnchorElement>("[data-language-choice]"))
+        link.href=countryAwareCatalogUrl(link.href,selected,[...allowedCountries]);
+    });
+    if (!manuallySelected) fetch("/api/visitor-country",{credentials:"same-origin",cache:"no-store"})
       .then(r=>r.ok?r.json():null)
       .then((geo:{country?:string}|null)=>{
         if(!manuallySelected && geo && (MARKET_COUNTRIES as readonly string[]).includes(geo.country||""))
