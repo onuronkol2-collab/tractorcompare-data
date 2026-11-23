@@ -227,6 +227,18 @@ export function tractorPhotos(tractor:TractorPhotoLookup):TractorPhoto[]{
 export function primaryTractorPhoto(tractor:Pick<TractorRecord,"brand_name"|"model_name">):TractorPhoto|null{
   return tractorPhotos(tractor)[0]||null;
 }
+/** Social and Google Discover preview only; the on-page image/LCP path stays untouched.
+ * Only already approved first-party photos can be returned. A small original is not
+ * misrepresented as meeting Google's >= 1,200px large-image recommendation.
+ * The 1920 route may return a smaller original if the source is < 1920px.
+ */
+export function preferredTractorPreviewUrl(photo:TractorPhoto|null):string|null{
+  if(!photo)return null;
+  return Number.isFinite(photo.width)&&photo.width>=1200&&
+    Number.isFinite(photo.height)&&photo.height>0
+    ? photo.fullUrl : photo.displayUrl;
+}
+
 const LC=["en","tr","zh","hi","pt-br","fr","de","ru","ja","es"] as const;
 const COPY={
   image:["Photograph:","Fotoğraf:","照片：","फ़ोटो:","Fotografia:","Photo :","Foto:","Фото:","写真：","Fotografía:"],
