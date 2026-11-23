@@ -192,3 +192,41 @@ test("2026 country list ranges remain scoped to exact variants and tax basis", (
   assert.equal(matchingPrice({...basak,model_name:"2075 BK"},"TR"),null);
   assert.equal(matchingPrice(basak,"DE"),null);
 });
+
+// Descriptive market labels are not a free-text region search: only audited
+// labels already present in published source records may expand a region.
+// Unknown and unsupported countries must not leak into other countries.
+test("published market provenance aliases remain country-bound and never imply stock",()=>{
+  const base={tractor_id:"qualified",slug:"q",brand_name:"Market Test",
+    model_name:"Verified",variant:null,model_year:2026,horsepower:82};
+  const choose=(market,country)=>recommendTractors([{...base,market}],{...farm,country},5);
+  for(const market of ["Europe / UK 2025 manufacturer brochure",
+    "Europe / Valtra 2025–26 manufacturer documents",
+    "Europe (manufacturer Stage V 04/2025)"]){
+    assert.equal(choose(market,"DE")[0]?.marketFit,"matched",market);
+    assert.equal(choose(market,"US").length,0,market);
+    assert.equal(choose(market,"TR").length,0,market);
+  }
+  for(const market of ["Turkey","Turkey (manufacturer YT3 model table)"]){
+    assert.equal(choose(market,"TR")[0]?.marketFit,"matched",market);
+    assert.equal(choose(market,"DE").length,0,market);
+  }
+  assert.equal(choose("India (Swaraj Target manufacturer data)","IN")[0]?.marketFit,"matched");
+  assert.equal(choose("India (Swaraj Target manufacturer data)","TR").length,0);
+  assert.equal(choose("North America (2022 OEM YM datasheet; Turkey marketing class separately)","US")[0]?.marketFit,"matched");
+  assert.equal(choose("North America (2022 OEM YM datasheet; Turkey marketing class separately)","TR").length,0,
+    "Mentioning Turkey in an American OEM note MUST NOT imply Turkish market compatibility");
+  assert.equal(choose("Europe / Turkey (manufacturer 09/2023)","TR")[0]?.marketFit,"matched");
+  assert.equal(choose("Europe / Turkey (manufacturer 09/2023)","FR")[0]?.marketFit,"matched");
+  assert.equal(choose("Europe / Turkey (manufacturer 09/2023)","IN").length,0);
+  for(const market of ["International (2025 brochure)",
+    "International (Stage V specification)","International (STEYR 2025 brochure)",
+    "International (2026 manufacturer brochure)","International (ISEKI global catalogue)"]){
+    assert.equal(choose(market,"TR")[0]?.marketFit,"unknown",
+      "International remains an unverified market, never a guaranteed country match");
+  }
+  for(const market of ["Unspecified (historical catalogue)","Italy","United Kingdom",
+    "Europe (USA only)","North America export to Turkey", "South Africa"]){
+    assert.equal(choose(market,"TR").length,0,market);
+  }
+});
