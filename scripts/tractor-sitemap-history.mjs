@@ -149,7 +149,18 @@ export function deriveHistory({pages,previous,now=new Date(),minPages=100,review
       changedOldModels.size===oldModelUrls.length &&
       oldModelUrls.every(url=>changedOldModels.has(url)) &&
       changedOldOther<=100 && added<=100;
-    if(!reviewed)reject("Unusually broad rendered content changes, manual SEO review required");
+    if(!reviewed){
+      // Diagnostics only: never bypass the SEO provenance gate. Count the
+      // affected locales without leaking page text, credentials or hashes.
+      const localeCounts={};
+      for(const url of changedOldModels){
+        const locale=new URL(url).pathname.match(/^\\/(tr|zh|hi|pt-br|fr|de|ru|ja|es)\\/tractors\\//)?.[1]||"en";
+        localeCounts[locale]=(localeCounts[locale]||0)+1;
+      }
+      reject("Unusually broad rendered content changes, manual SEO review required: "+
+        JSON.stringify({changed,pages:pages.length,changedOldModels:changedOldModels.size,
+          changedOldOther,added,localeCounts}));
+    }
     updated.reviewedBulkCopyPr497=true;
   }else if(previous.reviewedBulkCopyPr497===true){
     updated.reviewedBulkCopyPr497=true;
