@@ -26,8 +26,12 @@ test("only exact matching tractor model identity receives a verified photo",()=>
   assert.equal(tractorPhotos(tractor("McCormick","X5.120 P3-Drive")).length,1);
   assert.equal(tractorPhotos(tractor("McCormick","X5.110")).length,0);
   assert.equal(tractorPhotos(tractor("McCormick","X5.110 HC")).length,1);
-  assert.equal(tractorPhotos(tractor("Landini","5-110")).length,0);
-  assert.equal(tractorPhotos(tractor("Landini","5-110 RoboShift")).length,1);
+  const landini=tractor("Landini","5-110");
+  landini.tractor_id="264687c1-8dd2-5801-9e2e-11901f4acf6b";
+  assert.equal(tractorPhotos(landini).length,1);
+  assert.equal(tractorPhotos(tractor("Landini","5-110")).length,0,
+    "An unscoped or wrong UUID must not get the reviewed RoboShift illustrative image");
+  assert.equal(tractorPhotos(tractor("Landini","5-110 RoboShift")).length,0);
   assert.equal(tractorPhotos(tractor("Fendt","724 Vario")).length,1);
   assert.equal(tractorPhotos(tractor("Valtra","Q265")).length,1);
   assert.equal(tractorPhotos(tractor("Başak Traktör","5120")).length,1);
@@ -628,8 +632,8 @@ test("source-backed copyright notices cover approved Google warning images in al
   "tym-t4058-6225c-marcelx42-2023",
   "tym-t5075-t78-marcelx42-2023"
  ]);
- const expected=new Set([...originalThree,...reviewedTwenty,...exactTym,"belarus-132n-picture30-2011","mccormick-x7-621-barzkowice-zwiadowca21-2026"]);
- assert.equal(expected.size,28);
+ const expected=new Set([...originalThree,...reviewedTwenty,...exactTym,"belarus-132n-picture30-2011","mccormick-x7-621-barzkowice-zwiadowca21-2026","landini-5-110-roboshift-marcelx42-2023"]);
+ assert.equal(expected.size,29);
  const actual=APPROVED_TRACTOR_PHOTOS.filter(p=>p.copyrightOwner);
  assert.deepEqual(new Set(actual.map(p=>p.fileId)),expected,
    "Unexpected ownership claims must undergo separate review before publication");
@@ -914,5 +918,85 @@ test("2026 McCormick X7.621 P6 Drive exact source and three SHA-verified JPEGs n
      "Never leak the photographed P6-Drive into another model hero image");
    const graph=modelStructuredData(other,"tr","https://tractorvs.com/")["@graph"];
    assert.equal(graph.some(x=>x["@type"]==="ImageObject"),false);
+ }
+});
+
+
+test("Landini 5-110 source-licensed RoboShift illustration opens only on exact EU record",()=>{
+ const proof=JSON.parse(readFileSync(new URL("../docs/photo-release-proof-landini5110-20261123.json",import.meta.url),"utf8"));
+ const staging=JSON.parse(readFileSync(new URL("../docs/photo-import-evidence-landini5110-20261123.json",import.meta.url),"utf8"));
+ const id="landini-5-110-roboshift-marcelx42-2023";
+ const exact="264687c1-8dd2-5801-9e2e-11901f4acf6b";
+ assert.equal(proof.fileId,id);
+ assert.equal(proof.approvedToPublish,true);
+ assert.equal(proof.publishedRecord.tractor_id,exact);
+ assert.equal(proof.publishedRecord.model_name,"5-110");
+ assert.equal(proof.configurationExact,false);
+ assert.equal(proof.photoTrim,"RoboShift");
+ assert.equal(staging.fileId,id);
+ assert.equal(staging.photographer,"MarcelX42");
+ assert.equal(staging.licenseName,"CC BY-SA 4.0");
+ assert.equal(staging.approvedToPublish,false,"Staging alone must never approve a photograph");
+ assert.equal(proof.originalSourceSha256,staging.originalSourceSha256);
+ const record=tractor("Landini","5-110");
+ record.tractor_id=exact;
+ record.variant="Serie 5 FPT Stage V; EU official brochure / equipment unspecified";
+ record.market="Europe";
+ const photos=tractorPhotos(record);
+ assert.equal(photos.length,1);
+ const p=photos[0];
+ assert.equal(p.fileId,id);
+ assert.equal(p.tractorId,exact);
+ assert.equal(p.brand,"Landini");
+ assert.equal(p.model,"5-110");
+ assert.equal(p.configurationExact,false);
+ assert.equal(p.photographer,"MarcelX42");
+ assert.equal(p.copyrightOwner,"MarcelX42");
+ assert.equal(p.copyrightEvidence,"commons-own-work-self-license");
+ assert.equal(p.copyrightClaimUrl,p.sourcePage);
+ assert.equal(p.sourcePage,staging.sourcePage);
+ assert.equal(p.licenseName,"CC BY-SA 4.0");
+ assert.equal(p.licenseUrl,"https://creativecommons.org/licenses/by-sa/4.0/");
+ const all=[{...staging.existing480,file:id+"-480.jpg"},...staging.newDerivatives];
+ assert.deepEqual(all.map(v=>v.width),[480,960,1920]);
+ for(const asset of all){
+  const uri=new URL("../public/images/tractors/"+asset.file,import.meta.url);
+  assert.ok(existsSync(uri),"Missing first-party published JPEG "+asset.file);
+  const bytes=readFileSync(uri);
+  assert.equal(bytes.length,asset.bytes);
+  assert.equal(createHash("sha256").update(bytes).digest("hex"),asset.sha256);
+  assert.equal(bytes[0],255);assert.equal(bytes[1],216);assert.equal(bytes.at(-1),217);
+  const url="/images/tractors/"+asset.file;
+  assert.ok([p.thumbUrl,p.displayUrl,p.fullUrl].includes(url));
+  assert.ok(resolveApprovedPhotoSource(url)?.includes("Landini_5-110_RoboShift"));
+ }
+ assert.ok(staging.existing480.meanPixelDifferenceFromSource1920.every(value=>value<20),
+   "Original 480 must be physically the same photograph as newly imported 960/1920");
+ for(const locale of LOCALES){
+  const image=modelStructuredData(record,locale,"https://tractorvs.com/")["@graph"]
+   .find(obj=>obj["@type"]==="ImageObject");
+  assert.ok(image,"Source-licensed ImageObject for "+locale);
+  assert.equal(image.creator?.name,p.photographer);
+  assert.equal(image.copyrightNotice,p.copyrightOwner);
+  assert.equal(image.acquireLicensePage,p.sourcePage);
+  assert.equal(image.license,p.licenseUrl);
+  assert.ok(image.contentUrl.endsWith(p.fullUrl));
+  assert.ok(image.thumbnailUrl.endsWith(p.displayUrl));
+  assert.ok(tractorPhotoAlt(record,locale).includes("Landini 5-110"));
+  assert.ok(photoText(locale,"representative").length>10,
+    "Show localized variant/trim disclaimer rather than claiming RoboShift universal");
+ }
+ for(const [wrongModel,wrongId] of [
+  ["5-085","afbb2f1e-5fd9-5374-9532-5008a5d2fad6"],
+  ["5-100","5a793f31-5597-5053-9aef-fd3ca259c588"],
+  ["5-120","b2c71582-ef14-5234-9d75-0b6d39c9cf2e"],
+  ["5-110","00000000-0000-4000-8000-000000000000"],
+  ["5-110 RoboShift",exact]
+ ]){
+  const wrong=tractor("Landini",wrongModel);
+  wrong.tractor_id=wrongId;
+  assert.equal(tractorPhotos(wrong).length,0,
+    "Never transfer image to adjacent model/unauthorized UUID: "+wrongModel+" "+wrongId);
+  assert.equal(primaryTractorPhoto(wrong),null);
  }
 });
