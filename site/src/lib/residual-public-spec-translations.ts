@@ -9,6 +9,9 @@ import type { Locale } from "./locales.ts";
  * manufacturer-stated power to a measured/rated value, or swap 2WD with 4WD.
  */
 export const RESIDUAL_PUBLIC_SPEC_TERMS: Record<string, Partial<Record<Locale,string>>> = {
+  // Verified ArmaTrac 804 Cab/ROPS unballasted configurations; never rewrite measured values.
+  "Weight with cab, without extra ballast": {"tr":"Kabinli traktör ağırlığı (ek balast olmadan)","zh":"配备驾驶室的拖拉机重量（不含额外配重）","hi":"कैब सहित ट्रैक्टर का वजन (अतिरिक्त भार के बिना)","pt-br":"Peso do trator com cabine, sem lastro adicional","fr":"Masse du tracteur avec cabine, sans lest supplémentaire","de":"Traktorgewicht mit Kabine, ohne Zusatzballast","ru":"Масса трактора с кабиной, без дополнительного балласта","ja":"キャブ装備のトラクター重量（追加バラストなし）","es":"Peso del tractor con cabina, sin lastre adicional"},
+  "Weight without ballast (ROPS)": {"tr":"ROPS koruma çerçeveli traktörün ağırlığı (ek balast olmadan)","zh":"配备 ROPS 防翻滚保护架的拖拉机重量（不含配重）","hi":"ROPS सुरक्षा ढाँचे वाले ट्रैक्टर का वजन (अतिरिक्त भार के बिना)","pt-br":"Peso do trator com estrutura ROPS, sem lastro","fr":"Masse du tracteur avec arceau ROPS, sans lest","de":"Traktorgewicht mit ROPS-Überrollschutz, ohne Zusatzballast","ru":"Масса трактора с защитной дугой ROPS, без балласта","ja":"ROPS 装備トラクター重量（追加バラストなし）","es":"Peso del tractor con estructura ROPS, sin lastre adicional"},
   "Clutch": {
     "tr": "Debriyaj",
     "pt-br": "Embreagem",
