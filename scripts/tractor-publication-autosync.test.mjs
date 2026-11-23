@@ -202,3 +202,78 @@ test("a second publication race still fails closed; unauthorized responses are n
   await assert.rejects(fingerprintPublicViewWithBoundedRetry({jwt,fetchFn:denied}),/HTTP 401/);
   assert.equal(authRequests,1,"a 401 must fail immediately, never retry");
 });
+
+test("GitHub 409 conflict refreshes public catalogue and main blob SHA once before committing",async()=>{
+ const api=fakeApi();
+ let getCount=0,putCount=0;
+ const payloads=[];
+ const fetchFn=async(url,init={})=>{
+  if(url.includes("api.github.com")){
+   if((init.method||"GET")==="GET"){
+    getCount++;
+    return new Response(JSON.stringify({sha:"blob-"+getCount,encoding:"base64",
+     content:Buffer.from(JSON.stringify({fingerprint:"old",published_models:2})).toString("base64")}),{status:200});
+   }
+   putCount++;
+   const payload=JSON.parse(init.body);
+   payloads.push(payload);
+   return putCount===1?new Response("Conflict",{status:409}):
+    new Response(JSON.stringify({commit:{sha:"fresh-commit"}}),{status:200});
+  }
+  return api.fetchFn(url,init);
+ };
+ const actual=await runPublicationSync({...base,fetchFn});
+ assert.equal(actual.committed,true);
+ assert.equal(actual.reason,"main_site_revision_committed");
+ assert.equal(getCount,2);
+ assert.equal(putCount,2);
+ assert.deepEqual(payloads.map(p=>p.sha),["blob-1","blob-2"]);
+ assert.deepEqual(api.calls,["supabase:GET","supabase:GET"],
+  "second attempt must recompute published public data, never reuse stale source rows");
+});
+
+test("GitHub 409 followed by another writer's same fingerprint makes no second commit",async()=>{
+ const published=await fingerprintPublicView({jwt,fetchFn:fakeApi().fetchFn});
+ const api=fakeApi();
+ let gets=0,puts=0;
+ const fetchFn=async(url,init={})=>{
+  if(url.includes("api.github.com")){
+   if((init.method||"GET")==="GET"){
+    gets++;
+    return new Response(JSON.stringify({sha:"sha-"+gets,encoding:"base64",
+      content:Buffer.from(JSON.stringify({fingerprint:gets===1?"old":published.fingerprint,
+       published_models:2})).toString("base64")}),{status:200});
+   }
+   puts++;
+   return new Response("Conflict",{status:409});
+  }
+  return api.fetchFn(url,init);
+ };
+ const result=await runPublicationSync({...base,fetchFn});
+ assert.equal(result.committed,false);
+ assert.equal(result.reason,"public_catalogue_already_synced_after_conflict");
+ assert.equal(gets,2);assert.equal(puts,1);
+});
+
+test("second GitHub 409 and 403 fail closed, without looping or authorization bypass",async()=>{
+ for(const deniedStatus of [409,403]){
+  const api=fakeApi();
+  let puts=0,gets=0;
+  const fetchFn=async(url,init={})=>{
+   if(url.includes("api.github.com")){
+    if((init.method||"GET")==="GET"){
+     gets++;
+     return new Response(JSON.stringify({sha:"sha-"+gets,encoding:"base64",
+      content:Buffer.from(JSON.stringify({fingerprint:"old",published_models:2})).toString("base64")}),{status:200});
+    }
+    puts++;
+    return new Response("Denied or conflicted",{status:deniedStatus});
+   }
+   return api.fetchFn(url,init);
+  };
+  await assert.rejects(runPublicationSync({...base,fetchFn}),new RegExp("HTTP "+deniedStatus));
+  assert.equal(puts,deniedStatus===409?2:1);
+  assert.equal(gets,deniedStatus===409?2:1);
+  assert.equal(api.calls.length,deniedStatus===409?2:1);
+ }
+});
