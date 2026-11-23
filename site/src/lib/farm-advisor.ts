@@ -127,8 +127,27 @@ export function horsepowerScreening(input: FarmInputs): { min: number; max: numb
   return { min, max, reasons };
 }
 
+// Approved, EXPLICIT aliases for descriptive production market labels. Never
+// strip arbitrary parentheses or treat unknown regional text as worldwide.
+// The country choice is a compatibility hint, NOT availability or homologation.
+const REVIEWED_MARKET_ALIASES: Readonly<Record<string,string>> = {
+  "europe / uk 2025 manufacturer brochure":"europe",
+  "europe / valtra 2025–26 manufacturer documents":"europe",
+  "europe (manufacturer stage v 04/2025)":"europe",
+  "europe / turkey (manufacturer 09/2023)":"europe / turkey",
+  "turkey (manufacturer yt3 model table)":"turkey",
+  "north america (2022 oem ym datasheet; turkey marketing class separately)":"north america",
+  "india (swaraj target manufacturer data)":"india",
+  "international (2025 brochure)":"international",
+  "international (2026 manufacturer brochure)":"international",
+  "international (stage v specification)":"international",
+  "international (steyr 2025 brochure)":"international",
+  "international (iseki global catalogue)":"international",
+};
 function marketCompatibility(market: string | null, country: MarketCountry): "matched" | "unknown" | "excluded" {
-  const m = String(market || "").toLowerCase().trim();
+  const original=String(market || "").toLowerCase().trim();
+  const m = REVIEWED_MARKET_ALIASES[original] ?? original;
+  if (m === "europe / turkey") return ["TR","FR","DE","ES"].includes(country) ? "matched" : "excluded";
   if (!m || m === "global" || m === "international") return "unknown";
   if (["turkey", "türkiye", "tr"].includes(m)) return country === "TR" ? "matched" : "excluded";
   if (["us", "usa", "united states", "north america"].includes(m)) return ["US","CA"].includes(country) ? "matched" : "excluded";
