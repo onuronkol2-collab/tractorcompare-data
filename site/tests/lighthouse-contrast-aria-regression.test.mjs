@@ -41,9 +41,11 @@ test("forum article cards use native article semantics, never forbidden listitem
  assert.match(hub,/<h3><a href=\{path\+topic\.slug\+"\/"\}>/);
  assert.match(hub,/data-forum-search=/);
 });
-test("readability overrides stay scoped; no global theming or fragile magic numbers",()=>{
- assert.ok(home.includes("#main .home-featured-card"));
- assert.ok(forum.includes("#main .community-shell"));
- assert.doesNotMatch(home.match(/#main \\.home-featured-card \\.tractor-photo-short-credit a \\{[^}]*\\}/)?.[0]||"",/!important/);
- assert.doesNotMatch(forum.match(/#main \\.community-shell \\.community-topic-meta time\\{[^}]*\\}/)?.[0]||"",/!important/);
+test("readability overrides stay scoped and do not need important flags",()=>{
+ const credit=home.split("#main .home-featured-card .tractor-photo-short-credit a {")[1]?.split("}")[0];
+ const date=forum.split("#main .community-shell .community-topic-meta time{")[1]?.split("}")[0];
+ assert.ok(credit,"specific homepage override missing");
+ assert.ok(date,"forum override missing");
+ assert.doesNotMatch(credit,/!important/);
+ assert.doesNotMatch(date,/!important/);
 });
