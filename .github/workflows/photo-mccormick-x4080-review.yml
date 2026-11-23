@@ -8,7 +8,7 @@ on:
       - "site/scripts/stage-reviewed-commons-20261122.py"
       - "site/docs/photo-mccormick-x4080-review-20261123.json"
 permissions:
-  contents: read
+  contents: write
 jobs:
   stage_unpublished_x4080:
     runs-on: ubuntu-latest
@@ -77,3 +77,42 @@ jobs:
           path: photo-x4080-review/
           if-no-files-found: error
           retention-days: 30
+      - name: Attach four verified review files to the exact PR branch, never main
+        if: github.event.pull_request.number == 506 && github.event.pull_request.head.repo.full_name == github.repository
+        env:
+          EXPECTED_HEAD: ${{ github.event.pull_request.head.sha }}
+        run: |
+          set -euo pipefail
+          BRANCH="photo/20261123-mccormick-x4080-review"
+          test "${{ github.event.pull_request.head.ref }}" = "$BRANCH"
+          git fetch --no-tags origin "refs/heads/${BRANCH}:refs/remotes/origin/${BRANCH}"
+          observed="$(git rev-parse "refs/remotes/origin/${BRANCH}")"
+          if [[ "$observed" != "$EXPECTED_HEAD" ]]; then
+            echo "::error::Review branch advanced; refusing a stale automated photo commit."
+            exit 1
+          fi
+          git switch -c photo-verified-assets "refs/remotes/origin/${BRANCH}"
+          id="mccormick-x4-080-mbone-agritechnica-2023"
+          mkdir -p site/public/images/tractors site/docs
+          for size in 480 960 1920; do
+            target="site/public/images/tractors/${id}-${size}.jpg"
+            if [[ -e "$target" ]]; then
+              echo "::error::Photo file already exists; refusing overwrite."
+              exit 1
+            fi
+            install -m 0644 "photo-x4080-review/${id}-${size}.jpg" "$target"
+            git add "$target"
+          done
+          evidence="site/docs/photo-import-evidence-mccormick-x4080-20261123.json"
+          if [[ -e "$evidence" ]]; then
+            echo "::error::Release ledger already exists; refusing overwrite."
+            exit 1
+          fi
+          install -m 0644 photo-x4080-review/sha256-ledger.json "$evidence"
+          git add "$evidence"
+          test "$(git diff --cached --name-only | wc -l)" -eq 4
+          git -c user.name="github-actions[bot]" \
+              -c user.email="41898282+github-actions[bot]@users.noreply.github.com" \
+              commit -m "feat(photo): attach SHA-verified McCormick X4.080 JPEGs to draft PR"
+          git push origin "HEAD:refs/heads/${BRANCH}"
+          echo "Photo assets attached to draft PR #506 only; no publication."
