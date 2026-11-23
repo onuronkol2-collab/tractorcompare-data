@@ -25,6 +25,6 @@ test("exact 22 source-backed keys have only safe known categories",()=>{
   const allowed=new Set(["engine_cylinders","engine_model","engine_displacement","transmission_type","transmission_gears",
     "pto_type","rear_lift_capacity","hydraulic_main_flow","wheelbase","overall_width","ground_clearance",
     "operating_weight","operating_weight_cab"]);
-  for(const [_,key] of rows)assert.ok(allowed.has(key),"Unknown unlocalized canonical key "+key);
+  for(const [_,model,key] of rows)assert.ok(allowed.has(key),"Unknown unlocalized canonical key "+key);
   assert.equal(new Set(rows.slice(0,22).map(x=>x[1]+":"+x[2])).size,22);
 });
