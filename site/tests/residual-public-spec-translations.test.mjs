@@ -193,3 +193,20 @@ test("twelve frequent verified source headings have distinct, native PT-BR / FR 
     assert.notEqual(translated("Hydraulic Working Pressure"),translated("Maximum Hydraulic Operating Pressure"));
   }
 });
+
+test("ArmaTrac 804 source-specific weight labels preserve cab versus ROPS and no-ballast meaning in ten locales",()=>{
+  const cabName="Weight with cab, without extra ballast";
+  const ropsName="Weight without ballast (ROPS)";
+  for(const locale of LOCALES.filter(x=>x!=="en")){
+    const cab=publishedSpecificationLabel(cabName,locale);
+    const rops=publishedSpecificationLabel(ropsName,locale);
+    assert.ok(cab&&rops,locale+" exact weight headings missing");
+    assert.notEqual(cab,rops,locale+" cab/ROPS distinction lost");
+    assert.equal(specLabel({...exampleSpec(cabName),canonical_key:"operating_weight_cab"},locale),cab);
+    assert.equal(specLabel({...exampleSpec(ropsName),canonical_key:"operating_weight"},locale),rops);
+    assert.match(rops,/ROPS/i,locale+" ROPS qualifier erased");
+  }
+  assert.equal(specLabel({...exampleSpec(cabName),canonical_key:"operating_weight_cab"},"en").toLowerCase(),cabName.toLowerCase());
+  assert.equal(specLabel({...exampleSpec(ropsName),canonical_key:"operating_weight"},"en").toLowerCase(),ropsName.toLowerCase());
+  assert.doesNotThrow(validatePublishedSpecTranslations);
+});
