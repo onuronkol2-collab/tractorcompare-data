@@ -133,7 +133,7 @@ const schema=indexable?{
         <button type="button" data-forum-category={key} aria-pressed="false">{ft(lang,key)}</button>)}
       </div>
       <div class="community-filter-actions">
-       <span class="community-filter-count" data-forum-match-count hidden></span>
+       <span class="community-filter-count" data-forum-match-count role="status" aria-live="polite" hidden></span>
        <button class="community-filter-clear" type="button" data-forum-clear hidden>{ft(lang,"clearFilters")}</button>
       </div>
      </div>
@@ -440,6 +440,7 @@ const schema=indexable?{
  .community-panel-categories span{font-size:11px}
  .community-main{padding-top:24px}
  .community-filters{padding:13px}
+ .community-filters input{font-size:16px}
  .community-tabs{flex-wrap:nowrap;overflow-x:auto;overscroll-behavior-inline:contain;
   padding-bottom:6px;scroll-snap-type:x proximity;-webkit-overflow-scrolling:touch}
  .community-tabs button{flex:none;scroll-snap-align:start;white-space:nowrap}
