@@ -154,7 +154,8 @@ export function deriveHistory({pages,previous,now=new Date(),minPages=100,review
       // affected locales without leaking page text, credentials or hashes.
       const localeCounts={};
       for(const url of changedOldModels){
-        const locale=new URL(url).pathname.match(/^\\/(tr|zh|hi|pt-br|fr|de|ru|ja|es)\\/tractors\\//)?.[1]||"en";
+        const pathLocale=new URL(url).pathname.split("/")[1];
+        const locale=["tr","zh","hi","pt-br","fr","de","ru","ja","es"].includes(pathLocale)?pathLocale:"en";
         localeCounts[locale]=(localeCounts[locale]||0)+1;
       }
       reject("Unusually broad rendered content changes, manual SEO review required: "+
