@@ -36,12 +36,12 @@ test("cache invalidates edited brand, model and variant without stale suggestion
 });
 
 test("independent objects with identical text never leak data or sort incorrectly",()=>{
- const a=item("Kubota","M5-112","A"),b=item("Kubota","M5-112","B");
+ const a=item("Kubota","M5-112","Gear-A"),b=item("Kubota","M5-112","Gear-B");
  const m=[a,b];
  assert.equal(findTractorSuggestions(m,"kubota m5",1).length,1);
- assert.deepEqual(findTractorSuggestions(m,"m5").map(x=>x.variant),["A","B"]);
- assert.deepEqual(findTractorSuggestions([a],"B"),[]);
- assert.deepEqual(findTractorSuggestions([b],"B"),[b]);
+ assert.deepEqual(findTractorSuggestions(m,"m5").map(x=>x.variant),["Gear-A","Gear-B"]);
+ assert.deepEqual(findTractorSuggestions([a],"Gear-B"),[]);
+ assert.deepEqual(findTractorSuggestions([b],"Gear-B"),[b]);
 });
 
 test("homepage index caches public normalized strings only and never stores visitors' searches",()=>{
