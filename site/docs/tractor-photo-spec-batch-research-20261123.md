@@ -60,6 +60,10 @@ Yayımlanmış modellerde resim eşleşmelerinin yüksek öncelik taşıdığı 
 
 Bu partide bütün kamuya açık fotoğraf yolları için ikili JPEG indirme, SHA-256, 480/960/1920 türev ve canlı Worker doğrulaması eksik. **Onay/otomatik yayın bilinçli şekilde yapılmadı.** Doğrulanan Creative Commons sayfa metni JPEG byte doğrulamasının yerine geçmez.
 
+### Gerçek JPEG ikili indirme denemesi ve sınır (23 Kasım, ikinci parti)
+
+[GitHub Actions #45245136017](https://github.com/onuronkol2-collab/tractorcompare-data/actions/runs/45245136017) ayrı PR dalında, Valtra Q225 ve Zetor FORTERRA 140 HD için CC BY-SA 4.0 kaynak sayfalarından fotoğraf çekip MIME/JPEG, gerçek piksel genişliği ve SHA-256 doğrulamasıyla **yalnız dal üzerine** altı JPG kaydetmek için güvenlik kontrollü tek seferlik denemeydi. Wikimedia, **ilk ikili fotoğraf isteğini HTTP 429** ile reddetti. Dolayısıyla **0 JPEG indirildi; 0 hash ve 0 yeni yayına alınmış görsel** var. Hata gizlenmedi, aynı kaynağa tekrar istek atılmadı. Tek seferlik yazma iznine sahip geçici workflow dosyası depodan kaldırıldı. Ana daldaki fotoğraf ve workflow sistemi değişmedi. Bu dosya indirilemeden fotoğrafın sitede çalıştığı veya eksiksiz araştırmanın bittiği iddia edilemez.
+
 ## Sonraki toplu kontrol kapıları
 
 1. Güncel yayımlanmış sitemap ile Supabase yayımlanmış UUID envanteri tek tek karşılaştırılmalı (RLS ve taslaklar korunarak).
