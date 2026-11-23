@@ -81,7 +81,7 @@ test("mobile comparison retains row/column semantics and legible source targets"
 test("synthetic source CSS preserves responsive catalogue controls at 320/390/768",async({page})=>{
   for(const width of [320,390,768]){
     await page.setViewportSize({width,height:800});
-    await page.setContent(`<style>${sharedCss}\n${catalogCss}</style>
+    await page.setContent(`<meta name="viewport" content="width=device-width, initial-scale=1"><style>${sharedCss}\n${catalogCss}</style>
       <main id="main"><div class="catalog-discovery-layout">
         <aside class="catalog-facet-panel"><div class="catalog-facet-heading"><h2>Filters</h2></div>
           <div class="catalog-facet-fields">
@@ -113,7 +113,7 @@ test("synthetic source CSS preserves responsive catalogue controls at 320/390/76
 
 test("synthetic source CSS keeps mobile comparison model columns and readable citations",async({page})=>{
   await page.setViewportSize({width:390,height:844});
-  await page.setContent(`<style>${sharedCss}\n${comparisonCss}\n${comparisonInlineCss}</style>
+  await page.setContent(`<meta name="viewport" content="width=device-width, initial-scale=1"><style>${sharedCss}\n${comparisonCss}\n${comparisonInlineCss}</style>
     <main id="main"><section class="tc-section">
       <div class="tc-table-wrap"><table class="tc-table">
         <caption class="tc-sr-only">Published comparisons</caption>
