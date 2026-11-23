@@ -130,6 +130,51 @@ test("mass visible technical content changes still stop sitemap lastmod reconcil
   assert.throws(()=>deriveHistory({pages,previous,now:date2,minPages:100}),/Unusually broad rendered content changes/);
 });
 
+test("exact PR497 review allows only one tracked mass model-copy reconciliation",()=>{
+  const previous={version:1,pages:{}},pages=[];
+  for(let n=0;n<3100;n++){
+    const url=ORIGIN+"/tr/tractors/reviewed-model-"+n+"/";
+    previous.pages[url]={digest:hash("prior model "+n),modified:null};
+    pages.push([url,hash("source copy update "+n)]);
+  }
+  previous.pages[a]={digest:hash("stable homepage"),modified:null};
+  pages.push([a,hash("stable homepage")]);
+  const newPage=ORIGIN+"/tr/articles/new-approved-guide/";
+  pages.push([newPage,hash("real new article")]);
+  assert.throws(()=>deriveHistory({pages,previous,now:date2,minPages:100}),
+    /manual SEO review/,"No automatic approval despite matching page set");
+  const approved=deriveHistory({pages,previous,now:date2,minPages:100,reviewedPr497Copy:true});
+  assert.equal(approved.summary.significant_changes,3101);
+  assert.equal(approved.summary.new_pages,1);
+  assert.equal(approved.summary.reviewed_bulk_copy_pr497,true);
+  assert.equal(approved.history.reviewedBulkCopyPr497,true);
+  assert.equal(approved.lastmod.dates["/tr/tractors/reviewed-model-1/"],date2.toISOString());
+  assert.equal(approved.lastmod.dates["/"],undefined);
+  const nextPages=pages.map(([url,digest])=>[url,hash("later visible change "+digest)]);
+  assert.throws(()=>deriveHistory({pages:nextPages,previous:approved.history,
+    now:new Date("2026-11-24T09:00:00Z"),minPages:100,reviewedPr497Copy:true}),
+  /manual SEO review/,"Approval can never be reused to ignore a future mass edit");
+});
+
+test("reviewed PR497 still rejects partly changed model pages and unrelated mass changes",()=>{
+  const previous={version:1,pages:{}},pages=[];
+  for(let n=0;n<3100;n++){
+    const url=ORIGIN+"/tr/tractors/model-"+n+"/";
+    previous.pages[url]={digest:hash("old "+n),modified:null};
+    pages.push([url,hash(n===0?"old "+n:"changed "+n)]);
+  }
+  assert.throws(()=>deriveHistory({pages,previous,now:date2,minPages:100,reviewedPr497Copy:true}),
+    /manual SEO review/,"A partial model update is not the approved exact worldwide copy change");
+  pages[0]=[pages[0][0],hash("changed 0")];
+  for(let n=0;n<101;n++){
+    const url=ORIGIN+"/tr/guides/changed-"+n+"/";
+    previous.pages[url]={digest:hash("older "+n),modified:null};
+    pages.push([url,hash("newer "+n)]);
+  }
+  assert.throws(()=>deriveHistory({pages,previous,now:date2,minPages:100,reviewedPr497Copy:true}),
+    /manual SEO review/,"Unreviewed non-model changes remain blocked");
+});
+
 test("Astro CSS attribute after source ID cannot create fictitious sitemap changes",()=>{
   // Actual Astro component has scoped styles, which can inject a trailing
   // data-astro-cid-* attribute after author-supplied data-spec-id.
