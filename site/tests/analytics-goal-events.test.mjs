@@ -21,15 +21,10 @@ test("analytics never invents events for lists, user content, unknown or externa
   for (const path of [
     "/", "/tr/", "/tractors/", "/tr/tractors/", "/brands/mccormick/",
     "/articles/", "/tr/forum/", "/tr/reviews/basak-2075-bk/",
-    "/compare/left/", "/tr/farm-advisor/extra/", "/fake/tr/compare/",
+    "/tr/farm-advisor/extra/", "/fake/tr/compare/",
     "/en/compare/", "https://elsewhere.example/compare/", "//elsewhere.example/compare/",
     "/tr/tractors/some-model/?q=private", ""
   ]) {
-    // '/compare/left/' is a valid editorial compare slug; tested below.
-    if (path === "/compare/left/") {
-      assert.equal(analyticsGoalForPath(path),"tractor_comparison_read");
-      continue;
-    }
     assert.equal(analyticsGoalForPath(path),null,path);
   }
 });
