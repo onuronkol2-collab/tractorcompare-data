@@ -28,6 +28,10 @@ Her iki `run*Sync` fonksiyonu GitHub'da **yalnız `409 Conflict`** aldığında 
 - **CI kapıları:** `node --test scripts/tractor-publication-autosync.test.mjs scripts/tractor-forum-publication-autosync.test.mjs`, `site build`, `Golden Rule` ve CodeQL.
 - **Canlı:** PR/CI başarılı olması Cloudflare'ın gerçek yayın sürümü, arama motoru indeks kararı veya Google sıralama kazanımı değildir. Birleştirme sonrası bir sonraki planlı **gerçek** katalog/forum senkron işinin sonucunu ve Cloudflare'daki üretim sürümünü ayrı kontrol et.
 
+## CodeQL'den öğrenilen ek güvenlik kuralı
+
+PR #512'nin ilk CodeQL kontrolü, test mock'larında `url.includes("api.github.com")` kullanımını **3 yüksek önem dereceli `Incomplete URL substring sanitization`** bulgusu olarak işaretledi. Alt alan adı veya URL yolu içinde aynı metin bulunabildiğinden, alan adı güven sınırı kontrolünde bu yöntem kullanılmaz. Testler dahil URL değerleri `new URL(url).hostname === "api.github.com"` gibi **tam ve ayrıştırılmış hostname** eşitliği ile doğrulanmalıdır. Bu değişiklik sonrasında CodeQL sonucu ayrıca kontrol edilmeden “çözüldü” sayılmaz. Daha geniş güvenlik kuralı: dış hedefler için `protocol`, `hostname`, gerekiyorsa `port` ayrı doğrulanmalı; path/substring/endsWith güven sınırı yerine geçmemeli.
+
 ## Öğrenilen kalıcı kural
 
 İki yazan otomasyon farklı `concurrency.group` içinde olduğunda Github Contents API'nin `GET` → `PUT` zinciri atomik bütün-kasa kilidi sayılamaz. 409 yalnızca yeniden `PUT` yapılarak değil, **uzak SHA + gerçek yayımlanmış kaynak yeniden okunarak**, tek sınırlı deneme ve mutlak fail-closed ilkesiyle ele alınır. Ayrıca zamanla `queue: max` kullanımı, ortak grup ve diğer main writers ancak ölçülmüş kuyruk/kota/CI verisiyle değerlendirilir; mevcut cron sıklığı veya diğer iş akışları körlemesine değiştirilmez.
