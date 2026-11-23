@@ -17,9 +17,11 @@ for(const [label,cfg,expected] of [["root",rootWrangler,{main:"./site/worker/ind
  if(cfg.name!=="tractorvs-site"||cfg.assets?.directory!==expected.dir||
    cfg.main!==expected.main||cfg.assets?.binding!=="ASSETS")
    fail(label+" Wrangler entrypoint/assets mismatch");
- const required=["/","/language/*","/api/visitor-country","/images/tractors/*"];
+ const required=["/language/*","/api/visitor-country","/images/tractors/*"];
  for(const path of required)if(!cfg.assets?.run_worker_first?.includes(path))
   fail(label+" Worker misses "+path);
+ if(["/","/*","*"].some(path=>cfg.assets?.run_worker_first?.includes(path)))
+  fail(label+" canonical root must be statically served, not Worker-first");
 }
 for(const file of [".node-version","site/.node-version"]){
  if(!existsSync(resolve(root,file))||readFileSync(resolve(root,file),"utf8").trim()!=="22.23.4")
