@@ -18,8 +18,8 @@
       "modified": "2026-11-22T08:02:35.845Z"
     },
     "https://tractorvs.com/compare/": {
-      "digest": "3d5590f2bd8b36a0e3ea38f7e285e1b38c7113c9aaa9850ebeb15cf4a9784587",
-      "modified": "2026-11-23T15:28:25.293Z"
+      "digest": "954f10b69bab59f8a03be1c8c7bd65870465e219033b44f6272e6e3ab4a824bf",
+      "modified": "2026-11-23T17:13:50.896Z"
     },
     "https://tractorvs.com/compare/deutz-fahr-5090-d-gs-vs-5100-d-gs/": {
       "digest": "922999b9696029c032d6b1c71856522e23db46cc43479dd85fbb929909556a66",
@@ -34,8 +34,8 @@
       "modified": "2026-11-22T18:22:02.402Z"
     },
     "https://tractorvs.com/de/compare/": {
-      "digest": "7329e4533156bd04654fd711cdee040c9d416558e94d6e61042223343ef65e25",
-      "modified": "2026-11-23T15:28:25.293Z"
+      "digest": "0db7f5619dede2e6f20f3f6d02463c9257773935ee46371c7666d31c12dbb284",
+      "modified": "2026-11-23T17:13:50.896Z"
     },
     "https://tractorvs.com/de/farm-advisor/": {
       "digest": "26924ec2dd3ad3aee240aece27e5902431b26a3d9e07b880930a6246e04b368c",
@@ -54,8 +54,8 @@
       "modified": "2026-11-22T15:13:41.997Z"
     },
     "https://tractorvs.com/de/tractors/": {
-      "digest": "30b0dcf5bcff8f7375289f9c0a512afce953df65151303332264916a9bc1f824",
-      "modified": "2026-11-23T16:45:17.078Z"
+      "digest": "ec0d6d94db6f7e0586a47c30b6a51d3937e6943aa3d1170bfa214fca568658e7",
+      "modified": "2026-11-23T17:13:50.896Z"
     },
     "https://tractorvs.com/de/tractors/agrale-4125-0b53e944/": {
       "digest": "6d09ce3492f880497db77b2114853c5574846ee2ce73b4a8e45d7a2de15ff1a7",
@@ -686,8 +686,8 @@
       "modified": "2026-11-23T16:45:17.078Z"
     },
     "https://tractorvs.com/de/tractors/mccormick-x5-120-a02c4df2/": {
-      "digest": "1ba3a34caadb3a0b3cd2b01f81e2b85109ac02df82780cd21bde06adb8f08473",
-      "modified": "2026-11-23T16:45:17.078Z"
+      "digest": "c626cdfd540e06eef398617c1058be4f0f93708ca4ab7c05c975d0cae3631faa",
+      "modified": "2026-11-23T17:13:50.896Z"
     },
     "https://tractorvs.com/de/tractors/mccormick-x6-125-e7af9fdc/": {
       "digest": "aa9ec91dcfb45418c8e630a5f391bfea9d576d5dab512f8382327e088118426d",
@@ -1626,8 +1626,8 @@
       "modified": "2026-11-22T18:22:02.402Z"
     },
     "https://tractorvs.com/es/compare/": {
-      "digest": "ae26e658da8e3e828c3f7da3d73213f6a17ce9aeaebb9c03ed83ce5c34f348db",
-      "modified": "2026-11-23T16:45:17.078Z"
+      "digest": "71daf6fc2ed879c93096fefdd0a64c9e824e62b02f36447ec1361f3321d70c50",
+      "modified": "2026-11-23T17:13:50.896Z"
     },
     "https://tractorvs.com/es/farm-advisor/": {
       "digest": "7f64c03d76cbcc1e2420500c73d5661c8b44c2408de9f8ffe524b2c0aa0cca5c",
@@ -1646,8 +1646,8 @@
       "modified": "2026-11-22T15:13:41.997Z"
     },
     "https://tractorvs.com/es/tractors/": {
-      "digest": "2420a59bcd44a058ac5514359307b05816af8d43c17656252157c78407bb9088",
-      "modified": "2026-11-23T16:45:17.078Z"
+      "digest": "bf78205f2698147472302f95a7fb49ac070d9e0bec83b096ecb2ff6d238d2b88",
+      "modified": "2026-11-23T17:13:50.896Z"
     },
     "https://tractorvs.com/es/tractors/agrale-4125-0b53e944/": {
       "digest": "66ff08a81ce1617e618812e146c025e5a63b6033db3eada87840a2f2c996a1ca",
@@ -2278,8 +2278,8 @@
       "modified": "2026-11-23T16:45:17.078Z"
     },
     "https://tractorvs.com/es/tractors/mccormick-x5-120-a02c4df2/": {
-      "digest": "196afe55db7a2ff0f72ed8fd35a5d0544c41d38f5ca7a7cf82e3a7bc1355bcf6",
-      "modified": "2026-11-23T16:45:17.078Z"
+      "digest": "28a59fd278c14cc42986fd01299934d83751bc0d0eed2a44779d873a375c78ec",
+      "modified": "2026-11-23T17:13:50.896Z"
     },
     "https://tractorvs.com/es/tractors/mccormick-x6-125-e7af9fdc/": {
       "digest": "343970d6bc913e902513f642854585a6badd4e35522cd599f205eb3418020533",
@@ -3222,8 +3222,8 @@
       "modified": "2026-11-22T18:22:02.402Z"
     },
     "https://tractorvs.com/fr/compare/": {
-      "digest": "2bcad4df6320a98bf798f62fa63a7c97586e07cf7aa962d27122a782960d0198",
-      "modified": "2026-11-23T16:45:17.078Z"
+      "digest": "ba37b85888ec5e5570481b7fc0249320efd0536c24644b435a6d2b91b9980c73",
+      "modified": "2026-11-23T17:13:50.896Z"
     },
     "https://tractorvs.com/fr/farm-advisor/": {
       "digest": "03e019a0a5ec98d05b08cf21d6a2ef2f50a7db5e6bb93191e117a6cd4276a4cc",
@@ -3242,8 +3242,8 @@
       "modified": "2026-11-22T15:13:41.997Z"
     },
     "https://tractorvs.com/fr/tractors/": {
-      "digest": "3db5f8f507300be9691e9c3194053b4638ee01bcda9380f8ff994b321f8caa88",
-      "modified": "2026-11-23T16:45:17.078Z"
+      "digest": "095a02d011ee6a33fa0775aa9894c44210d0ec0ce57030cdf202fb35352dc410",
+      "modified": "2026-11-23T17:13:50.896Z"
     },
     "https://tractorvs.com/fr/tractors/agrale-4125-0b53e944/": {
       "digest": "3bcbceb3d1c5e97871150f836cdd2b2d3253d0f488218c5797d45a672df0955f",
@@ -3874,8 +3874,8 @@
       "modified": "2026-11-23T16:45:17.078Z"
     },
     "https://tractorvs.com/fr/tractors/mccormick-x5-120-a02c4df2/": {
-      "digest": "e425838f7c98a6a09780d1d252cb0f7438f7546c9adabcb23aeb2e36d0dd3eb3",
-      "modified": "2026-11-23T16:45:17.078Z"
+      "digest": "8e013573af2df029673806c15f21dd6a835dcdbd7a155f583d96be9c8e7cb258",
+      "modified": "2026-11-23T17:13:50.896Z"
     },
     "https://tractorvs.com/fr/tractors/mccormick-x6-125-e7af9fdc/": {
       "digest": "6448fe467477c46b5ec10e54cceeb3de4aee66e3c4d58753089b5c65f1e29bbb",
@@ -4834,8 +4834,8 @@
       "modified": "2026-11-22T18:22:02.402Z"
     },
     "https://tractorvs.com/hi/compare/": {
-      "digest": "9d2c603d846e1d9c1caf7e0b0f48a7e0f3f7af591f94a18680ff8eb70cc1938a",
-      "modified": "2026-11-23T15:28:25.293Z"
+      "digest": "fc576cb207403d305769f76cd11480b71daf47834cbcc1d72fd28b554706aa4d",
+      "modified": "2026-11-23T17:13:50.896Z"
     },
     "https://tractorvs.com/hi/farm-advisor/": {
       "digest": "b290158b18a9aab625ff4a0b6341a1f18eeaf4c3ee5609de53ded6523016d75d",
@@ -4854,8 +4854,8 @@
       "modified": "2026-11-22T15:13:41.997Z"
     },
     "https://tractorvs.com/hi/tractors/": {
-      "digest": "421599ea94fd0ecc569391921b49edb8aaa8558466acc9d76b96528632de3cee",
-      "modified": "2026-11-23T16:45:17.078Z"
+      "digest": "1a61a710f59be39c4167968fe7600253c471d9a483d51107e2b1afd2256de2b9",
+      "modified": "2026-11-23T17:13:50.896Z"
     },
     "https://tractorvs.com/hi/tractors/agrale-4125-0b53e944/": {
       "digest": "75346326d53a9e640a2b456b24a6b4156159d7198e4df82cc1d70ed0cd1ef0cb",
@@ -5486,8 +5486,8 @@
       "modified": "2026-11-23T16:45:17.078Z"
     },
     "https://tractorvs.com/hi/tractors/mccormick-x5-120-a02c4df2/": {
-      "digest": "ea3c1a59ae6501b984df9bf5b9d0dd5291c34827fbc9356f5b67cd3dfc2a7286",
-      "modified": "2026-11-23T16:45:17.078Z"
+      "digest": "69b17efa2cdf2744c351764bf31afded7437d366b0bb1e0ecd14e8da56754ce6",
+      "modified": "2026-11-23T17:13:50.896Z"
     },
     "https://tractorvs.com/hi/tractors/mccormick-x6-125-e7af9fdc/": {
       "digest": "d076beb20c78f47e232e694ede2e55b65153e400ae572019b159287de6de3c8c",
@@ -6426,8 +6426,8 @@
       "modified": "2026-11-22T18:22:02.402Z"
     },
     "https://tractorvs.com/ja/compare/": {
-      "digest": "4e8dab14572c7e693acb526880fdaed6c5946ddb39c3caa3cb03f33a2509407e",
-      "modified": "2026-11-23T15:28:25.293Z"
+      "digest": "1ad09634ceae270cb876a773804b96fc342dd3e65b7b762213bacdd2bde9c6d9",
+      "modified": "2026-11-23T17:13:50.896Z"
     },
     "https://tractorvs.com/ja/farm-advisor/": {
       "digest": "17d06c174f4e32b61bead8c991a65eec3d449ca1b6a4998e42320373d8012c00",
@@ -6446,8 +6446,8 @@
       "modified": "2026-11-22T15:13:41.997Z"
     },
     "https://tractorvs.com/ja/tractors/": {
-      "digest": "6039731d33abec2b67528a3736035c16eb42f9b62919cc3e1797041c6e524cb6",
-      "modified": "2026-11-23T16:45:17.078Z"
+      "digest": "d1e4938c4787983c6b1af31aa4c84daaf41e05edba2f5524c95eccfc367414d2",
+      "modified": "2026-11-23T17:13:50.896Z"
     },
     "https://tractorvs.com/ja/tractors/agrale-4125-0b53e944/": {
       "digest": "0c88bf6f38128e24c0876c63617a5bcd2fd11be3d275ff0c27a3cdc8fc2a203b",
@@ -7078,8 +7078,8 @@
       "modified": "2026-11-23T16:45:17.078Z"
     },
     "https://tractorvs.com/ja/tractors/mccormick-x5-120-a02c4df2/": {
-      "digest": "eef9cb5387f85e3e3e41ac78baf5bc21c20d1a9772d4c31d06665065fe992aee",
-      "modified": "2026-11-23T16:45:17.078Z"
+      "digest": "2351f6bfdf7411e8cf8741a7089c3a160f511207b0ba253b6f673ed879d815a8",
+      "modified": "2026-11-23T17:13:50.896Z"
     },
     "https://tractorvs.com/ja/tractors/mccormick-x6-125-e7af9fdc/": {
       "digest": "13fd52d5b5d938c0af2a50bb117cbd460ed5ed0888f165b27407aeec574905c6",
@@ -8026,8 +8026,8 @@
       "modified": "2026-11-22T18:22:02.402Z"
     },
     "https://tractorvs.com/pt-br/compare/": {
-      "digest": "c81ff179c1c43eed8f82dac2d5f7de2427276549fe80a941dd834f4c264f839c",
-      "modified": "2026-11-23T16:45:17.078Z"
+      "digest": "36b3fffc4001e095cf7d0cc174f2441db4a19b1c9151279472c69a135a347916",
+      "modified": "2026-11-23T17:13:50.896Z"
     },
     "https://tractorvs.com/pt-br/farm-advisor/": {
       "digest": "aac1d227728c221db5c32c2badfcb6f5b61b113acabd09f44034f32fe1f436f6",
@@ -8046,8 +8046,8 @@
       "modified": "2026-11-22T15:13:41.997Z"
     },
     "https://tractorvs.com/pt-br/tractors/": {
-      "digest": "0c767787e25a334de3a556d97e44d3995fe284a5ffa8b7c8aa24777d9b1316f5",
-      "modified": "2026-11-23T16:45:17.078Z"
+      "digest": "f846f37c70dc3be43e8ed790c472da353c7d762dfe3ccccf981773117c043d53",
+      "modified": "2026-11-23T17:13:50.896Z"
     },
     "https://tractorvs.com/pt-br/tractors/agrale-4125-0b53e944/": {
       "digest": "39ddf2d8809613a1896a7167099871530f3488f7449f813e9615e519022c8280",
@@ -8678,8 +8678,8 @@
       "modified": "2026-11-23T16:45:17.078Z"
     },
     "https://tractorvs.com/pt-br/tractors/mccormick-x5-120-a02c4df2/": {
-      "digest": "4fc41dbd89db0378ce8053da2ce2588d5776c126bac438bbbfe8e8ad376e6a86",
-      "modified": "2026-11-23T16:45:17.078Z"
+      "digest": "3cb030606deda19b40c1dd994bb73b8350a95e1c66d150b85031a572c9914a5c",
+      "modified": "2026-11-23T17:13:50.896Z"
     },
     "https://tractorvs.com/pt-br/tractors/mccormick-x6-125-e7af9fdc/": {
       "digest": "bd3949364419b88ff137bada9784f5bcebad7c76293404d8688e24f92424bef1",
@@ -9622,8 +9622,8 @@
       "modified": "2026-11-22T18:22:02.402Z"
     },
     "https://tractorvs.com/ru/compare/": {
-      "digest": "4d69068044c7b7cb4f985bf68f4ee18abcefe8a3e1e8924cf4678febf246b7b3",
-      "modified": "2026-11-23T15:28:25.293Z"
+      "digest": "33a8d7a7ca733ee4b79868369eac4b7db5625fe59bb6e14b508fe449a8e75110",
+      "modified": "2026-11-23T17:13:50.896Z"
     },
     "https://tractorvs.com/ru/farm-advisor/": {
       "digest": "ecca3dcbd04e42f8f54d9e89838df47e92d0156ad296c0a609df9dac34596c11",
@@ -9642,8 +9642,8 @@
       "modified": "2026-11-22T15:13:41.997Z"
     },
     "https://tractorvs.com/ru/tractors/": {
-      "digest": "1e847a2830c8258dbd22d9c65908d341d86e9bf2b9f777257e593c7bb837a3ca",
-      "modified": "2026-11-23T16:45:17.078Z"
+      "digest": "9d0666bc46e7cb269080dd48afd958f7250369987b4fdc4d9f10cc2065e1b7dd",
+      "modified": "2026-11-23T17:13:50.896Z"
     },
     "https://tractorvs.com/ru/tractors/agrale-4125-0b53e944/": {
       "digest": "8837916d5dd4a853594599399ac8f59b1f2219b4cb0dd78d6fe959e272449067",
@@ -10274,8 +10274,8 @@
       "modified": "2026-11-23T16:45:17.078Z"
     },
     "https://tractorvs.com/ru/tractors/mccormick-x5-120-a02c4df2/": {
-      "digest": "2f7afd036649e063b44997c981692f5cf85b6d77974b1876cad5860ce95edf67",
-      "modified": "2026-11-23T16:45:17.078Z"
+      "digest": "a0d66e76a24cc002a96d6a3270ad0e37825c15e6af2ce9984e5aa19204f72cb3",
+      "modified": "2026-11-23T17:13:50.896Z"
     },
     "https://tractorvs.com/ru/tractors/mccormick-x6-125-e7af9fdc/": {
       "digest": "42b969de78876d6225457d2a46f02cc17d24d8f708b81612045140e30af6e7d6",
@@ -11222,8 +11222,8 @@
       "modified": "2026-11-22T08:02:35.845Z"
     },
     "https://tractorvs.com/tr/compare/": {
-      "digest": "5e0e74035e02187c1d40da5d14907feef0f0de1fba2e72a23824ebbbc15c1662",
-      "modified": "2026-11-23T15:28:25.293Z"
+      "digest": "fed47f0ea0a9afb3ff6e67b5d5439850d5f9a715d635c86bf0133dabb0a1f26c",
+      "modified": "2026-11-23T17:13:50.896Z"
     },
     "https://tractorvs.com/tr/compare/deutz-fahr-5090-d-gs-vs-5100-d-gs/": {
       "digest": "0f223596935ecf9cf2a0972e5fd862ac566c38ba2f83123a156634df383d9733",
@@ -11266,8 +11266,8 @@
       "modified": "2026-11-22T15:13:41.997Z"
     },
     "https://tractorvs.com/tr/tractors/": {
-      "digest": "187834d732ea2655b74823d8c6ebd97da203c0be38a78be453739ccc5428bcf8",
-      "modified": "2026-11-23T16:45:17.078Z"
+      "digest": "b6d12291d98d66ca013a5859535fe96fc82f1ed03217937bcb1fb622c72c220b",
+      "modified": "2026-11-23T17:13:50.896Z"
     },
     "https://tractorvs.com/tr/tractors/agrale-4125-0b53e944/": {
       "digest": "cbfb1b094b1f29a6b421188c362c4724ea5af2560d61a704d8fe0b1596b1b3d8",
@@ -11898,8 +11898,8 @@
       "modified": "2026-11-23T16:45:17.078Z"
     },
     "https://tractorvs.com/tr/tractors/mccormick-x5-120-a02c4df2/": {
-      "digest": "12976e24cdb62677dd96ab125519c0159ed892c101930561705483ee83659ff3",
-      "modified": "2026-11-23T16:45:17.078Z"
+      "digest": "145093aea266f4ac3bc0028271594b698eb951ea18e665de0fc53753526b9825",
+      "modified": "2026-11-23T17:13:50.896Z"
     },
     "https://tractorvs.com/tr/tractors/mccormick-x6-125-e7af9fdc/": {
       "digest": "cd9ab322b02c49b4e2585d790f3fee0cf82531e56b4d6654c6108a8bbe170032",
@@ -12830,8 +12830,8 @@
       "modified": "2026-11-23T16:45:17.078Z"
     },
     "https://tractorvs.com/tractors/": {
-      "digest": "1c1f53ef90a658527fb2b8ea8a2d429bc34ccc1ef729ecb6489e269a8aff24bf",
-      "modified": "2026-11-23T15:28:25.293Z"
+      "digest": "b6f2281e8564da5a0feb203b958a63fb5372605dbed3959aeb32030556e0f90f",
+      "modified": "2026-11-23T17:13:50.896Z"
     },
     "https://tractorvs.com/tractors/agrale-4125-0b53e944/": {
       "digest": "41798f99d5c960a94a56bd2e388c2dc375f095243fcad91abc215ad0c7cf129f",
@@ -13462,8 +13462,8 @@
       "modified": "2026-11-23T16:45:17.078Z"
     },
     "https://tractorvs.com/tractors/mccormick-x5-120-a02c4df2/": {
-      "digest": "875d36d86acc5593b868af55b159e56047f78bb67befb1a692dfaaf113a7582d",
-      "modified": "2026-11-23T16:45:17.078Z"
+      "digest": "a9733aa72aef51fe567aaa7251c1863404974b927e98892d2dd9a2f2a91d5959",
+      "modified": "2026-11-23T17:13:50.896Z"
     },
     "https://tractorvs.com/tractors/mccormick-x6-125-e7af9fdc/": {
       "digest": "4470ac231083e718411e570a951f7d0c200354e651f030a2a1fd8b01c943ec33",
@@ -14402,8 +14402,8 @@
       "modified": "2026-11-22T18:22:02.402Z"
     },
     "https://tractorvs.com/zh/compare/": {
-      "digest": "ed3559909c4075d5437b58088adc84b397eabc69e4a489369551b583658c8da6",
-      "modified": "2026-11-23T15:28:25.293Z"
+      "digest": "0ca0534271f21e1df856287d1c0d87460c9fa34e6c84f5eab53e29b2f15180a9",
+      "modified": "2026-11-23T17:13:50.896Z"
     },
     "https://tractorvs.com/zh/farm-advisor/": {
       "digest": "82e136ccd5d84121aa23750da1e1b216d6738c2cef4b37099a966ebe12a3dc05",
@@ -14422,8 +14422,8 @@
       "modified": "2026-11-22T15:13:41.997Z"
     },
     "https://tractorvs.com/zh/tractors/": {
-      "digest": "f3853db49f744cfdc227034bbd667bb78a305d423429bdd806c9cf0e75042a30",
-      "modified": "2026-11-23T16:45:17.078Z"
+      "digest": "a03b841e805d3a88cfb68ab8089c72f26587d465cdfd86e095d71c37ef881fa5",
+      "modified": "2026-11-23T17:13:50.896Z"
     },
     "https://tractorvs.com/zh/tractors/agrale-4125-0b53e944/": {
       "digest": "93b4acea96bd80e4ef36062b558ec4e05b36d3ed91d72a9ed60ab2f4b9811269",
@@ -15054,8 +15054,8 @@
       "modified": "2026-11-23T16:45:17.078Z"
     },
     "https://tractorvs.com/zh/tractors/mccormick-x5-120-a02c4df2/": {
-      "digest": "16b7d3285f82df88ceda72a466ef9d69164c62c248c2f70cccb565620c0aba36",
-      "modified": "2026-11-23T16:45:17.078Z"
+      "digest": "1e52a4f73e66c87243a7a9d567d526e9a7be16132e33d33a9bd0b1bdab5df801",
+      "modified": "2026-11-23T17:13:50.896Z"
     },
     "https://tractorvs.com/zh/tractors/mccormick-x6-125-e7af9fdc/": {
       "digest": "4bc655971185bec4661b21083e7c94f77b648e888b3deebd51741de081c09d0f",
@@ -15986,6 +15986,6 @@
       "modified": "2026-11-23T16:45:17.078Z"
     }
   },
-  "reviewedBulkCopyPr467": true,
-  "reviewedBulkCopyPr497": true
+  "reviewedBulkCopyPr497": true,
+  "reviewedBulkCopyPr467": true
 }
