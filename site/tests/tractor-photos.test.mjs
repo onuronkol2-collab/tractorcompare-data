@@ -829,7 +829,7 @@ test("McCormick X4.080 exact high-resolution files are real SHA-verified first-p
  assert.equal(photo.licenseName,"CC BY-SA 4.0");
  assert.equal(photo.sourcePage,filePage);
  assert.equal(photo.configurationExact,false);
- assert.ok(photo.displayUrl.endsWith(filename.replace("-1920.jpg","-960.jpg")));
+ assert.ok(photo.displayUrl.endsWith(id+"-960.jpg"));
  assert.ok(photo.fullUrl.endsWith(id+"-1920.jpg"));
  for(const locale of LOCALES){
    const graph=modelStructuredData(exact,locale,"https://tractorvs.com/")["@graph"];
