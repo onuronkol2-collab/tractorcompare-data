@@ -84,7 +84,7 @@ jobs:
           done
           grep -q 'lang="zh-Hans"' site/dist/zh/index.html
           grep -q 'lang="pt-BR"' site/dist/pt-br/index.html
-          node --input-type=module -e "import fs from 'node:fs'; for (const p of ['wrangler.jsonc','site/wrangler.jsonc']) { const c=JSON.parse(fs.readFileSync(p,'utf8')); if (!c.main || c.assets?.binding!=='ASSETS' || !c.assets.run_worker_first.includes('/') || !c.assets.run_worker_first.includes('/language/*')) throw new Error('Missing geo Worker setup: '+p) }"
+          node --input-type=module -e "import fs from 'node:fs'; for (const p of ['wrangler.jsonc','site/wrangler.jsonc']) { const c=JSON.parse(fs.readFileSync(p,'utf8')); if (!c.main || c.assets?.binding!=='ASSETS' || c.assets.run_worker_first.includes('/') || !c.assets.run_worker_first.includes('/language/*')) throw new Error('Invalid geo Worker or static-root setup: '+p) }"
           npx wrangler deploy --dry-run --outdir .wrangler-dry-run
 
       - name: Verify actual Cloudflare site/ root and Wrangler bundle
