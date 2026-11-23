@@ -66,24 +66,36 @@ async function fetchRevision({token,fetchFn}){
 export async function runForumSync({repo,ref,jwt,token,fetchFn=fetch,dryRun=false,now=new Date()}){
  validateScope(repo,ref);validateAnon(jwt);
  if(!token)throw Error("Repository-only GitHub token required.");
- const latest=await fingerprintPublicForum({jwt,fetchFn});
- const previous=await fetchRevision({token,fetchFn});
- if(previous.record?.fingerprint===latest.fingerprint)
-  return {changed:false,committed:false,reason:"public_forum_unchanged",...latest};
- if(dryRun)return {changed:true,committed:false,reason:"dry_run_no_commit",...latest};
- const payload=JSON.stringify({...latest,generated_at:now.toISOString()},null,2)+"\n";
- const request={message:"chore(site): refresh moderated forum public pages ("+latest.public_topics+" locale topics)",
-  branch:"main",content:Buffer.from(payload).toString("base64")};
- if(previous.sha)request.sha=previous.sha;
- const res=await fetchFn("https://api.github.com/repos/"+REPO+"/contents/"+REVISION_PATH,{
-  method:"PUT",
-  headers:{Authorization:"Bearer "+token,Accept:"application/vnd.github+json","Content-Type":"application/json"},
-  body:JSON.stringify(request),signal:AbortSignal.timeout(25000)
- });
- if(res.status!==200&&res.status!==201)throw Error("Forum fingerprint commit failed with HTTP "+res.status);
- const data=await res.json();
- if(typeof data?.commit?.sha!=="string")throw Error("Forum refresh commit not confirmed.");
- return {changed:true,committed:true,reason:"moderated_forum_site_refresh_requested",...latest,commit:data.commit.sha};
+ let latest=await fingerprintPublicForum({jwt,fetchFn});
+ let previous=await fetchRevision({token,fetchFn});
+ // Different main-branch writers use separate workflow concurrency groups.
+ // On a 409, recompute the moderated public view and refresh the remote SHA
+ // once. Never commit an unverified stale snapshot or retry auth failures.
+ for(let attempt=0;attempt<2;attempt++){
+  if(previous.record?.fingerprint===latest.fingerprint)
+   return {changed:false,committed:false,
+    reason:attempt===0?"public_forum_unchanged":"public_forum_already_synced_after_conflict",...latest};
+  if(dryRun)return {changed:true,committed:false,reason:"dry_run_no_commit",...latest};
+  const payload=JSON.stringify({...latest,generated_at:now.toISOString()},null,2)+"\n";
+  const request={message:"chore(site): refresh moderated forum public pages ("+latest.public_topics+" locale topics)",
+   branch:"main",content:Buffer.from(payload).toString("base64")};
+  if(previous.sha)request.sha=previous.sha;
+  const res=await fetchFn("https://api.github.com/repos/"+REPO+"/contents/"+REVISION_PATH,{
+   method:"PUT",
+   headers:{Authorization:"Bearer "+token,Accept:"application/vnd.github+json","Content-Type":"application/json"},
+   body:JSON.stringify(request),signal:AbortSignal.timeout(25000)
+  });
+  if(res.status===409&&attempt===0){
+   previous=await fetchRevision({token,fetchFn});
+   latest=await fingerprintPublicForum({jwt,fetchFn});
+   continue;
+  }
+  if(res.status!==200&&res.status!==201)throw Error("Forum fingerprint commit failed with HTTP "+res.status);
+  const data=await res.json();
+  if(typeof data?.commit?.sha!=="string")throw Error("Forum refresh commit not confirmed.");
+  return {changed:true,committed:true,reason:"moderated_forum_site_refresh_requested",...latest,commit:data.commit.sha};
+ }
+ throw Error("Forum fingerprint commit could not complete after bounded conflict retry.");
 }
 if(process.argv[1]&&resolve(process.argv[1])===fileURLToPath(import.meta.url)){
  const r=await runForumSync({repo:process.env.GITHUB_REPOSITORY,ref:process.env.GITHUB_REF,
