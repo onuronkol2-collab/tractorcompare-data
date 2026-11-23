@@ -6,6 +6,14 @@ import type { Locale } from "./locales.ts";
  * No invented "rated", "measured" or model-specific performance qualifiers.
  */
 export const REVIEWED_PUBLIC_SPEC_HEADINGS: Record<string, Partial<Record<Locale,string>>> = {
+  // 2026-11-23 exact-source headings detected by the 390-model PREVIEW audit.
+  // Air Cab and Protector Cab are retained as manufacturer cab-option names.
+  "Mechanical Gearbox": {tr:"Mekanik şanzıman"},
+  "Travel Speed Range": {tr:"Sürüş hızı aralığı"},
+  "Weight With Air Cab": {tr:"Air Cab kabinli ağırlık",ru:"Масса с кабиной Air Cab"},
+  "Weight With Protector Cab": {tr:"Protector Cab kabinli ağırlık",ru:"Масса с кабиной Protector Cab"},
+  "Rear Wheel Diameter Options Inch": {zh:"后轮直径选项（英寸）"},
+  "Engine Cooling": {ja:"エンジン冷却"},
   // Reviewed 2026-11-22 built-preview: ten precise English source labels / 34 Turkish appearances.
   // Display labels only; original model, source, values, units, configuration unchanged.
   "Clutch And Gearbox Architecture": {tr:"Debriyaj ve şanzımanın yapısı"},
