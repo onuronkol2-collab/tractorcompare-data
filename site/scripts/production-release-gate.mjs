@@ -16,6 +16,7 @@ import {verifyUnifiedSitemapIndex} from "./verify-unified-sitemap-index.mjs";
 import {auditBuiltImageAlts} from "./verify-sitewide-image-alts.mjs";
 import {auditBuiltSeoTitles} from "./verify-sitewide-seo-titles.mjs";
 import {auditBuiltMetaDescriptions} from "./verify-sitewide-meta-descriptions.mjs";
+import {auditBuiltSocialMetadata} from "./verify-sitewide-social-metadata.mjs";
 import {auditBuiltAstroAssets} from "./verify-static-assets-version-compat.mjs";
 import {auditBuiltModelImageRights} from "./verify-built-model-image-rights.mjs";
 
@@ -187,6 +188,18 @@ export function verifyProductionArtifacts({dir=projectRoot,origin=expectedOrigin
  // its real identity even when the sitemap and generic title test still pass.
  // 60 characters is advisory, NOT a hard Google limit: report it, never
  // arbitrarily delete true model, market, variant or year details.
+ const social=auditBuiltSocialMetadata(dist);
+ insist(social.errors.length===0,
+   "Incomplete or inconsistent social metadata: "+JSON.stringify(social.errors.slice(0,12)));
+ insist(social.brandFallbackPages>0,
+   "No branded fallback share previews detected; expected on pages without a verified photo.");
+ const sharePng=readFileSync(join(dist,"images/tractorvs-share-card.png"));
+ insist(sharePng.subarray(0,8).toString("hex")==="89504e470d0a1a0a" &&
+   sharePng.readUInt32BE(16)===1200 && sharePng.readUInt32BE(20)===630,
+   "Branded OG image is missing or malformed.");
+ console.log("TRACTORVS_PRODUCTION_SOCIAL_METADATA "+JSON.stringify({
+   indexablePages:social.indexablePages,brandedPreviews:social.brandFallbackPages,errors:social.errors.length
+ }));
  const titleAudit=auditBuiltSeoTitles(dist);
  insist(titleAudit.errors.length===0,
    "Missing/multiple title or wrong model identity on "+titleAudit.errors.length+
