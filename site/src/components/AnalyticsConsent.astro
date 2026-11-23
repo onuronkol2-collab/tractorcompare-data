@@ -32,6 +32,7 @@ const c = analyticsText(lang);
 </aside>
 <script>
   import { ANALYTICS_CHOICE_KEY, GA4_MEASUREMENT_ID, CLARITY_PROJECT_ID, CLOUDFLARE_WEB_ANALYTICS_TOKEN } from "../lib/analytics-i18n.ts";
+  import { analyticsGoalForPath } from "../lib/analytics-goals.ts";
 
   type AnalyticsChoice = "accepted" | "rejected";
   const banner = document.getElementById("tractorvs-analytics-banner");
@@ -98,6 +99,10 @@ const c = analyticsText(lang);
     analyticsWindow.gtag("config", GA4_MEASUREMENT_ID, {
       send_page_view: true,
     });
+    // Product engagement is measured only after explicit analytics consent.
+    // The event name represents a page type, never a tractor ID or search term.
+    const goal = analyticsGoalForPath(window.location.pathname);
+    if (goal) analyticsWindow.gtag("event", goal);
     const script = document.createElement("script");
     script.async = true;
     script.dataset.tractorvsGa4 = "";
