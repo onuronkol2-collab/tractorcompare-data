@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import {readFileSync} from "node:fs";
+import {readFileSync,existsSync} from "node:fs";
 import {createHash} from "node:crypto";
 import {LOCALES} from "../src/lib/locales.ts";
 import {APPROVED_TRACTOR_PHOTOS,tractorPhotos,primaryTractorPhoto,photoText,tractorPhotoAlt,resolveApprovedPhotoSource,isSupportedCommonsPhotoOrigin,COMMONS_THUMBNAIL_STEPS} from "../src/lib/tractor-photos.ts";
@@ -784,4 +784,65 @@ test("Three visibly verified TYM 2500L, 6225C and T78 Commons photos publish sol
     const graph=modelStructuredData(candidate,"en","https://tractorvs.com/")["@graph"];
     assert.equal(graph.some(node=>node["@type"]==="ImageObject"),false);
   }
+});
+
+
+test("McCormick X4.080 exact high-resolution files are real SHA-verified first-party JPEGs",()=>{
+ const id="mccormick-x4-080-mbone-agritechnica-2023";
+ const data=JSON.parse(readFileSync(new URL("../docs/photo-import-evidence-mccormick-x4080-20261123.json",import.meta.url),"utf8"));
+ assert.equal(data.reviewRequired,true);
+ assert.equal(data.publicationCount,0);
+ assert.equal(data.images.length,1);
+ const source=data.images[0];
+ const filePage="https://commons.wikimedia.org/wiki/File:McCormick_X4.080%2C_Agritechnica_2023%2C_Hanover_%28P1140946%29.jpg";
+ assert.equal(source.fileId,id);
+ assert.equal(source.sourcePage,filePage);
+ assert.equal(source.photographer,"MB-one");
+ assert.equal(source.license,"CC BY-SA 4.0");
+ assert.equal(source.approvedToPublish,false);
+ assert.equal(source.originBytes,651874);
+ assert.match(source.originSha256,/^[0-9a-f]{64}$/);
+ assert.deepEqual(source.derivatives.map(item=>item.width),[480,960,1920]);
+ // Earlier 480px and 720px JPEG/WebP assets are not replaced.
+ for(const suffix of ["-480.jpg","-720.jpg","-720.webp"]){
+   assert.ok(existsSync(new URL("../public/images/tractors/"+id+suffix,import.meta.url)),
+     "Preserve existing low-res photo "+suffix);
+ }
+ for(const size of [960,1920]){
+   const derivative=source.derivatives.find(d=>d.width===size);
+   assert.ok(derivative);
+   const filename=id+"-"+size+".jpg";
+   assert.equal(derivative.file,filename);
+   const bytes=readFileSync(new URL("../public/images/tractors/"+filename,import.meta.url));
+   assert.equal(bytes.length,derivative.bytes);
+   assert.equal(createHash("sha256").update(bytes).digest("hex"),derivative.sha256);
+   assert.equal(bytes.readUInt16BE(0),0xffd8);
+   assert.equal(bytes.readUInt16BE(bytes.length-2),0xffd9);
+ }
+ const exact=tractor("McCormick","X4.080");
+ exact.tractor_id="d0c1306b-f178-4c6e-8c2f-945e645fee79";
+ const photos=tractorPhotos(exact);
+ assert.equal(photos.length,1,"Derivatives must not add duplicate gallery items");
+ const photo=photos[0];
+ assert.equal(photo.fileId,id);
+ assert.equal(photo.photographer,"MB-one");
+ assert.equal(photo.licenseName,"CC BY-SA 4.0");
+ assert.equal(photo.sourcePage,filePage);
+ assert.equal(photo.configurationExact,false);
+ assert.ok(photo.displayUrl.endsWith(id+"-960.jpg"));
+ assert.ok(photo.fullUrl.endsWith(id+"-1920.jpg"));
+ for(const locale of LOCALES){
+   const graph=modelStructuredData(exact,locale,"https://tractorvs.com/")["@graph"];
+   const image=graph.find(node=>node["@type"]==="ImageObject");
+   assert.ok(image,"No X4.080 ImageObject in locale "+locale);
+   assert.ok(image.contentUrl.endsWith(photo.fullUrl));
+   assert.ok(image.thumbnailUrl.endsWith(photo.displayUrl));
+   assert.equal(image.creator.name,"MB-one");
+   assert.equal(image.license,photo.licenseUrl);
+   assert.equal(image.acquireLicensePage,filePage);
+ }
+ for(const other of ["X4.080 F Cab","X4.080 F Platform"]){
+   assert.equal(tractorPhotos(tractor("McCormick",other)).length,0,
+     "Do not spread the standard X4.080 photo to the orchard F trim");
+ }
 });
