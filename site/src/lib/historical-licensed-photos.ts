@@ -319,6 +319,8 @@ const candidates=[
   {
     "brand": "Zetor",
     "model": "FORTERRA 140",
+    // The Commons file depicts HSX equipment; never silently label CL/HD as HSX.
+    "tractorId": "aabda943-446b-4543-a019-c73b743652eb",
     "fileId": "zetor-forterra-140-346bcbde",
     "path": "2/2e/Zetor_Forterra_140_HSX.jpg",
     "photographer": "Bene Riobó",
