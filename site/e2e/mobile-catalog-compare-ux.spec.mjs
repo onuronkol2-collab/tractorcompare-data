@@ -13,7 +13,7 @@ if(!catalogCss || !comparisonInlineCss) throw Error("Missing mobile source CSS f
 const noDocumentOverflow = async page => page.evaluate(() =>
   document.documentElement.scrollWidth <= innerWidth + 2);
 
-for(const width of [320,390,768]){
+for(const width of [320,359,360,390,490,690,768]){
   test(`catalogue filter controls retain a usable grid at ${width}px`,async({page})=>{
     await page.setViewportSize({width,height:800});
     const response=await page.goto("/tr/tractors/",{waitUntil:"domcontentloaded"});
@@ -22,7 +22,7 @@ for(const width of [320,390,768]){
     test.skip(!(await panel.isVisible()),"No published catalogue fixture in the inert local build.");
     const grid=page.locator(".catalog-facet-fields");
     const cols=await grid.evaluate(el=>getComputedStyle(el).gridTemplateColumns.trim().split(/\s+/).length);
-    expect(cols).toBe(width===320?1:2);
+    expect(cols).toBe(width<360?1:2);
     for(const control of ["#catalog-facet-brand","#catalog-facet-power","#catalog-facet-year","#catalog-facet-sort"]){
       const node=page.locator(control);
       await expect(node).toBeVisible();
@@ -78,8 +78,8 @@ test("mobile comparison retains row/column semantics and legible source targets"
 // Synthetic source CSS layout tests: these run even when production catalogue
 // records are deliberately absent from the inert CI HTML build. They use the
 // exact checked-in CSS, not a hand-copied imitation of the mobile rules.
-test("synthetic source CSS preserves responsive catalogue controls at 320/390/768",async({page})=>{
-  for(const width of [320,390,768]){
+test("synthetic source CSS preserves responsive catalogue controls at 320/359/360/390/490/690/768",async({page})=>{
+  for(const width of [320,359,360,390,490,690,768]){
     await page.setViewportSize({width,height:800});
     await page.setContent(`<meta name="viewport" content="width=device-width, initial-scale=1"><style>${sharedCss}\n${catalogCss}</style>
       <main id="main"><div class="catalog-discovery-layout">
@@ -95,7 +95,7 @@ test("synthetic source CSS preserves responsive catalogue controls at 320/390/76
       </main>`);
     const fields=page.locator(".catalog-facet-fields");
     const tracks=await fields.evaluate(node=>getComputedStyle(node).gridTemplateColumns.trim().split(/\s+/).length);
-    expect(tracks).toBe(width===320?1:2);
+    expect(tracks).toBe(width<360?1:2);
     if(width===390){
       const [brand,power,sort]=await page.locator(".catalog-facet-fields label").evaluateAll(els=>
         [els[0],els[1],els[3]].map(el=>el.getBoundingClientRect().width));
@@ -134,5 +134,10 @@ test("synthetic source CSS keeps mobile comparison model columns and readable ci
   const metrics=await link.evaluate(el=>({font:parseFloat(getComputedStyle(el).fontSize),height:el.getBoundingClientRect().height}));
   expect(metrics.font).toBeGreaterThanOrEqual(14);
   expect(metrics.height).toBeGreaterThanOrEqual(36);
+  // Keyboard users must reach the actual citation and reveal the row focus state.
+  await page.keyboard.press("Tab");
+  await expect(link).toBeFocused();
+  await expect(link).toMatchAriaSnapshot(`- link "Manufacturer source"`);
+  await expect(row).toHaveCSS("border-color","rgb(75, 144, 96)");
   expect(await noDocumentOverflow(page)).toBe(true);
 });
