@@ -70,7 +70,7 @@ jobs:
           print("TRACTORVS_TYM_3_OWN_WORK_IMAGES_9_JPEGS_INTEGRITY_OK_REVIEW_ONLY")
           PY
       - name: Preserve artifact for independent visual inspection — not approved or live
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: tractorvs-tym-2500l-6225c-t78-three-source-nine-jpeg-review
           path: tym-exact-three-photo-review/

@@ -42,7 +42,7 @@ jobs:
             --out /tmp/tractorvs-batch18/output
       - name: Retain success and exact per-image failure evidence, never deploy
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: tractorvs-batch18-photo-720-offline-QA-evidence
           path: /tmp/tractorvs-batch18/output/

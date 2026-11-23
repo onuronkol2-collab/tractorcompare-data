@@ -83,7 +83,7 @@ jobs:
           key: tractorvs-search-discovery-v1-${{ github.run_id }}-${{ github.run_attempt }}
       - name: Preserve small hourly IndexNow acceptance or failure evidence
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: tractorvs-indexnow-evidence-${{ github.run_id }}
           path: |
@@ -93,7 +93,7 @@ jobs:
           if-no-files-found: ignore
       - name: Publish machine-readable weekly discovery evidence
         if: ${{ github.event.schedule == '11 6 * * 1' }}
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: tractorvs-weekly-search-discovery-${{ github.run_id }}
           path: |

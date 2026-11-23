@@ -44,7 +44,7 @@ jobs:
         run: node site/scripts/published-translation-audit.mjs
       - name: Preserve the COMPLETE untranslated source-heading inventory for careful reviewed corrections
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: tractorvs-live-translation-report
           path: site/.translation-audit/live.json
@@ -96,7 +96,7 @@ jobs:
         run: node site/scripts/published-translation-audit.mjs
       - name: Preserve full per-locale residual evidence for the next reviewed batch
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: tractorvs-predeploy-technical-translation-coverage
           path: site/.translation-audit/preview.json

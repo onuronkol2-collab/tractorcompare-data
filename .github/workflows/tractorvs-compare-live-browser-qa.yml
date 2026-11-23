@@ -76,7 +76,7 @@ jobs:
         run: npx playwright test --config site/playwright.live.config.mjs
       - name: Upload screenshots and traces on failure
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: tractorvs-live-compare-browser-evidence
           path: |

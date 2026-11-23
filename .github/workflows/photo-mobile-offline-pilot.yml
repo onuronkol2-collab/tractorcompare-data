@@ -44,7 +44,7 @@ jobs:
             --output /tmp/tractorvs-mobile-photo-pilot/output
       - name: Store candidates with Commons attribution, never deploy or commit files
         if: success()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: tractorvs-offline-photo-720-reviewed-candidates
           path: /tmp/tractorvs-mobile-photo-pilot/output/
