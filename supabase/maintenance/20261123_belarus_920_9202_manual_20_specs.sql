@@ -7,7 +7,7 @@ DECLARE
   model920 constant uuid := '21e79b33-189b-44c1-a1e2-703ad8836d92';
   model9202 constant uuid := '1e1d7219-8921-44fe-83a6-c88514c1224a';
   manualSource constant uuid := '1ca19926-c9ca-4440-8b11-038a58921d43';
-  overlaps integer;
+  overlap_count integer;
   inserted_count integer;
 BEGIN
   PERFORM pg_advisory_xact_lock(hashtextextended('tractorvs-mtz-920-9202-spec-review-20261123',0));
@@ -46,10 +46,10 @@ BEGIN
     ('920.2', 'manufacturer_engine_power_unspecified_standard', 'Manufacturer-stated engine power (test standard unspecified)', '59.6', 'kW', 'Manufacturer manual states 59.6 kW at 2200 rpm for D-243 / D-243S but no SAE/ISO test protocol. Do not populate headline HP or equate Kazakhstan dealer rounded 60 kW.', 'Manual printed p.6 model overview MTZ-920 and MTZ-920.2 both D-243/D-243S 59.6 kW / 2200 rpm', 'engine')
 -- MTZ_BELARUS_920_VALUES_END
   )
-  SELECT count(*) INTO overlaps FROM wanted w JOIN public.tractor_specs s
+  SELECT count(*) INTO overlap_count FROM wanted w JOIN public.tractor_specs s
     ON s.tractor_id=(CASE w.model_code WHEN '920' THEN model920 ELSE model9202 END)
     AND s.canonical_key=w.canonical_key;
-  IF overlaps<>0 THEN RAISE EXCEPTION 'Detected % already present canonical keys, aborting all 20 inserts',overlaps; END IF;
+  IF overlap_count<>0 THEN RAISE EXCEPTION 'Detected % already present canonical keys, aborting all 20 inserts',overlap_count; END IF;
   WITH wanted(model_code,canonical_key,spec_name,spec_value,unit,measurement_standard,evidence_text,comparison_class) AS (
     VALUES
 -- MTZ_BELARUS_920_VALUES_BEGIN
