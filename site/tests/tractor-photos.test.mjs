@@ -14,7 +14,7 @@ const tractor=(brand_name,model_name)=>({
   engine:null,transmission:null,drivetrain:null,weight_kg:null,specifications:[]
 });
 test("only exact matching tractor model identity receives a verified photo",()=>{
-  assert.equal(APPROVED_TRACTOR_PHOTOS.length,102);
+  assert.equal(APPROVED_TRACTOR_PHOTOS.length,104);
   assert.equal(tractorPhotos(tractor("Belarus","82.1")).length,4);
   assert.equal(tractorPhotos(tractor("Belarus","80.1")).length,1);
   assert.equal(tractorPhotos(tractor("Belarus","132N")).length,1);
@@ -784,4 +784,58 @@ test("Three visibly verified TYM 2500L, 6225C and T78 Commons photos publish sol
     const graph=modelStructuredData(candidate,"en","https://tractorvs.com/")["@graph"];
     assert.equal(graph.some(node=>node["@type"]==="ImageObject"),false);
   }
+});
+
+
+test("two new McCormick VT-Drive photos stay on exact published UUIDs with verifiable 10-locale ImageObject",()=>{
+ const approved=[
+   ["X7.624 VT-Drive","30986b41-b486-41d6-815d-6bec72cd5bf1",
+    "mccormick-x7-624-vt-drive-marcelx42-2019",
+    "McCormick_X7.624_VT-Drive_Agritechnica_2019_-_Front_and_left_side.jpg",
+    6000,3376],
+   ["X8.631 VT-Drive","95fdcc9a-c5c0-4329-a20e-3658c997e1ca",
+    "mccormick-x8-631-vt-drive-marcelx42-2023",
+    "McCormick_X8.631_VT-Drive_Agritechnica_2023_%28DSC06784%29.jpg",
+    7008,3944],
+ ];
+ for(const [model,id,fileId,filename,width,height] of approved){
+   const exact=tractor("McCormick",model);
+   exact.tractor_id=id;exact.slug=model.toLowerCase().replace(/[^a-z0-9]+/g,"-")+"-"+id.slice(0,8);
+   const p=tractorPhotos(exact);
+   assert.equal(p.length,1,"Only this published model UUID may receive the photo");
+   assert.equal(p[0].tractorId,id);
+   assert.equal(p[0].fileId,fileId);
+   assert.equal(p[0].photographer,"MarcelX42");
+   assert.equal(p[0].licenseName,"CC BY-SA 4.0");
+   assert.equal(p[0].licenseUrl,"https://creativecommons.org/licenses/by-sa/4.0/");
+   assert.equal(p[0].copyrightOwner,undefined,
+    "Never infer copyrightNotice without separately reviewed original wikitext");
+   assert.equal(p[0].configurationExact,false);
+   assert.deepEqual([p[0].width,p[0].height],[width,height]);
+   assert.ok(p[0].originFullUrl.endsWith(filename));
+   assert.match(p[0].originThumbUrl,/\/500px-/);
+   assert.match(p[0].originDisplayUrl,/\/960px-/);
+   assert.match(p[0].originFullUrl,/\/1920px-/);
+   for(const size of [480,960,1920]){
+     const url="/images/tractors/"+fileId+"-"+size+".jpg";
+     assert.match(resolveApprovedPhotoSource(url),/^https:\/\/upload\.wikimedia\.org\/wikipedia\/commons\//);
+   }
+   for(const lang of LOCALES){
+     const graph=modelStructuredData(exact,lang,"https://tractorvs.com/")["@graph"];
+     const image=graph.find(x=>x["@type"]==="ImageObject");
+     assert.ok(image,lang+" must have ImageObject");
+     assert.equal(image.creator.name,"MarcelX42");
+     assert.equal(image.license,p[0].licenseUrl);
+     assert.equal(image.acquireLicensePage,p[0].sourcePage);
+     assert.equal(image.copyrightNotice,undefined);
+     assert.equal(image.thumbnailUrl,"https://tractorvs.com"+p[0].displayUrl);
+   }
+   const wrong=tractor("McCormick",model);wrong.tractor_id="00000000-0000-4000-8000-000000000000";
+   assert.equal(tractorPhotos(wrong).length,0,
+    "Same model text but another UUID cannot inherit this photographed version");
+ }
+ for(const wrong of ["X7.621 VT-Drive","X7.623 VT-Drive","X8.630 VT-Drive","X8.631 P6-Drive"]){
+   assert.equal(tractorPhotos(tractor("McCormick",wrong)).length,0,
+    "Related but different McCormick model cannot inherit new photo: "+wrong);
+ }
 });
