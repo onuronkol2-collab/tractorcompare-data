@@ -53,10 +53,15 @@ export function summarize(samples) {
   const p75=percentile(timings,75);
   // Warn about sampled geographic performance. Never claim to know global field TTFB.
   const highLatency=timings.length>=20 && (p75>800 || fraction>=0.5);
-  const severe=timings.length>=20 && percentile(timings,75)>1600 && fraction>=0.85;
+  // Alert only if a majority of route medians remain slow across 3 checks,
+  // not for one slow connection or geographically sensitive outliers.
+  const byRoute=groupBy("route");
+  const routeGroups=Object.values(byRoute);
+  const sustainedSlowRoutes=routeGroups.filter(x=>x.ok>=2 && x.p50_ms>=500).length;
+  const severe=routeGroups.length>=12 && sustainedSlowRoutes>=Math.ceil(routeGroups.length*0.6);
   return {sample_count:samples.length,successful_count:valid.length,failed_count:samples.length-valid.length,
     p50_ms:percentile(timings,50),p75_ms:p75,p95_ms:percentile(timings,95),
-    buckets,very_slow_share:fraction,by_route:groupBy("route"),by_kind:groupBy("kind"),
+    buckets,very_slow_share:fraction,by_route:byRoute,by_kind:groupBy("kind"),sustained_slow_routes:sustainedSlowRoutes,
     failed_routes:failedRoutes,high_latency_warning:highLatency,severe_latency_warning:severe};
 }
 
@@ -101,6 +106,7 @@ export function markdownReport(report, timestamp) {
   for(const [kind,s] of Object.entries(report.by_kind))lines.push(`| ${kind} | ${s.ok}/${s.count} | ${s.p50_ms??"N/A"} ms | ${s.p75_ms??"N/A"} ms | ${s.failed} |`);
   lines.push("",report.high_latency_warning?"⚠️ High synthetic latency detected; compare across regions and Cloudflare logs before changing cache rules.":"No broad synthetic latency warning for this runner; other regions and crawler environments may differ.");
   if(report.failed_routes.length)lines.push("",`**Unavailable route groups:** ${report.failed_routes.join(", ")}`);
+  if(report.severe_latency_warning)lines.push("","**ALERT:** More than 60% of monitored routes had sustained median header latency >=500 ms across 3 samples; investigate CDN and runner region.");
   lines.push("","Failure alarms cover persistent HTTP/MIME failures only. Slow site-wide synthetic samples are highlighted but need independent confirmation before declaring a real-user regression.");
   return lines.join("\n")+"\n";
 }
@@ -126,5 +132,5 @@ if(process.argv[1] && fileURLToPath(import.meta.url)===process.argv[1]){
   if(process.env.GITHUB_STEP_SUMMARY)appendFileSync(process.env.GITHUB_STEP_SUMMARY,doc);
   // A persistent failure on all 3 probes of the same route is a genuine smoke
   // test failure. Warn without failing on location-dependent latency alone.
-  if(result.summary.failed_routes.length)process.exitCode=1;
+  if(result.summary.failed_routes.length || result.summary.severe_latency_warning)process.exitCode=1;
 }
