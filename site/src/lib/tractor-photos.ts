@@ -8,6 +8,9 @@ export interface TractorPhoto {
   // Explicitly bind variant-sensitive photos to one published tractor UUID.
   // Omitted for historic model-level photographs.
   tractorId?:string;
+  // Exact UUID + model-name scoped illustrative reuse of an already approved
+  // same-base-model photo; not a claim that the pictured trim is installed.
+  illustrativeOn?:readonly {tractorId:string;model:string}[];
   thumbUrl:string; displayUrl:string; fullUrl:string;
   width:number; height:number; sourcePage:string;
   photographer:string; licenseName:string; licenseUrl:string;
@@ -78,6 +81,9 @@ const ORIGINAL_PHOTO_ORIGINS:readonly Omit<TractorPhoto,"originThumbUrl"|"origin
   },
   {
     brand:"McCormick",model:"X5.120 P3-Drive",fileId:"mccormick-x5-120-marcelx42-2023",
+    // Published X5.120 is equipment-unspecified; pictured gearbox is P3-Drive.
+    // Illustrate ONLY the independently verified published record, not any X5.100/X5.110 or trim.
+    illustrativeOn:[{tractorId:"a02c4df2-c719-5a26-abb2-6195cb8e23e5",model:"X5.120"}],
     thumbUrl:W+"thumb/6/66/McCormick_X5.120_P3-Drive_Agritechnica_2023_%28DSC03865%29.jpg/480px-McCormick_X5.120_P3-Drive_Agritechnica_2023_%28DSC03865%29.jpg",
     displayUrl:W+"thumb/6/66/McCormick_X5.120_P3-Drive_Agritechnica_2023_%28DSC03865%29.jpg/960px-McCormick_X5.120_P3-Drive_Agritechnica_2023_%28DSC03865%29.jpg",
     fullUrl:W+"6/66/McCormick_X5.120_P3-Drive_Agritechnica_2023_%28DSC03865%29.jpg",
@@ -237,11 +243,16 @@ type TractorPhotoLookup=Pick<TractorRecord,"brand_name"|"model_name">&Partial<Pi
 /** A model-level photo may illustrate the named model, but a variant-scoped
  * photo must NEVER appear on other models with an identical display name. */
 export function photoMatchesTractor(
-  photo:Pick<TractorPhoto,"brand"|"model"|"tractorId">,
+  photo:Pick<TractorPhoto,"brand"|"model"|"tractorId"|"illustrativeOn">,
   tractor:TractorPhotoLookup
 ):boolean{
-  if(norm(photo.brand)!==norm(tractor.brand_name)||
-     norm(photo.model)!==norm(tractor.model_name))return false;
+  if(norm(photo.brand)!==norm(tractor.brand_name))return false;
+  // Approved reuse needs BOTH the exact public UUID and base-model name.
+  // No gearbox or variant is inferred from the photograph.
+  if(photo.illustrativeOn?.some(item=>
+    item.tractorId===tractor.tractor_id&&
+    norm(item.model)===norm(tractor.model_name)))return true;
+  if(norm(photo.model)!==norm(tractor.model_name))return false;
   if(photo.tractorId)return photo.tractorId===tractor.tractor_id;
   return true;
 }
