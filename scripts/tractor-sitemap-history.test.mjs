@@ -207,3 +207,34 @@ test("Astro CSS attribute after source ID cannot create fictitious sitemap chang
     significantContentDigest(unrelated.replace('class="other-card"',
       'class="other-card" data-spec-id="'+id+'"'),b));
 });
+
+test("exact one-time PR467 multilingual source correction gets truthful lastmod without weakening guard",()=>{
+  const langs=["en","tr","zh","hi","pt-br","fr","de","ru","ja","es"];
+  const previous={version:1,pages:{},reviewedBulkCopyPr497:true},pages=[];
+  for(const lang of langs)for(let n=0;n<390;n++){
+    const prefix=lang==="en"?"/":"/"+lang+"/";
+    const url=ORIGIN+prefix+"tractors/reviewed-model-"+n+"/";
+    previous.pages[url]={digest:hash("original verified model "+lang+n),modified:date1.toISOString()};
+    pages.push([url,hash("corrected independently reviewed source explanation "+lang+n)]);
+  }
+  for(let n=0;n<20;n++){
+    const url=ORIGIN+"/tr/guides/real-guide-"+n+"/";
+    previous.pages[url]={digest:hash("old guide "+n),modified:date1.toISOString()};
+    pages.push([url,hash("updated actual guide "+n)]);
+  }
+  assert.throws(()=>deriveHistory({pages,previous,now:date2,reviewedPr467Copy:false}),/manual SEO review/);
+  const approved=deriveHistory({pages,previous,now:date2,reviewedPr467Copy:true});
+  assert.equal(approved.summary.significant_changes,3920);
+  assert.equal(approved.summary.reviewed_bulk_copy_pr467,true);
+  assert.equal(approved.summary.reviewed_bulk_copy_pr497,true);
+  assert.equal(approved.lastmod.dates["/tr/tractors/reviewed-model-0/"],date2.toISOString());
+  const changedAgain=pages.map(([url,digest])=>[url,hash("new unreviewed content "+digest)]);
+  assert.throws(()=>deriveHistory({pages:changedAgain,previous:approved.history,
+    now:new Date("2026-11-24T09:00:00Z"),reviewedPr467Copy:true}),/manual SEO review/,
+    "Review authorization is consumed and can never authorize another broad modification");
+  const missingLocale=pages.filter(([url])=>url!==ORIGIN+"/ja/tractors/reviewed-model-0/");
+  assert.throws(()=>deriveHistory({pages:missingLocale,previous,now:date2,reviewedPr467Copy:true}),
+    /manual SEO review/,"Every one of the ten exactly matched language cohorts is required");
+  assert.throws(()=>deriveHistory({pages,previous:{...previous,reviewedBulkCopyPr497:false},
+    now:date2,reviewedPr467Copy:true}),/manual SEO review/,"Previous reviewed source checkpoint is required");
+});

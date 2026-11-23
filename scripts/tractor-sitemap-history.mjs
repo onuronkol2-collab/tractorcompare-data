@@ -22,6 +22,24 @@ export const LASTMOD_FILE=join(ROOT,"site/src/data/sitemap-lastmod.json");
 // automatic lastmod updates for manual review. This is a one-time, narrowly
 // scoped approval for the audited exact ui.ts Git blob (not a generic bypass).
 const REVIEWED_PR497_UI_BLOB="28211dd60814f9e7dfbe95e6527ae38d90eace45";
+// PR #467 visibly corrected the introductory source-provenance text on each
+// of the 3,900 model pages (390 per locale) and reviewed exact technical labels.
+// Only these exact public code blobs, together with the already consumed
+// PR #497 checkpoint, can authorize a ONE-TIME, narrowly bounded reconciliation.
+const REVIEWED_PR467_BLOBS={
+  "site/src/lib/ui.ts":"3d637a7b937bda114133d20f714dfefd48607e57",
+  "site/src/lib/published-spec-translations.ts":"a1b7db7dc788eb9786aea5ccd81b33d192321047",
+  "site/src/lib/reviewed-live-technical-headings-20261122.ts":"68ce6719ffcf203a4f4353d9ec64ab942fbb18f8",
+};
+const PR467_LOCALES=["en","tr","zh","hi","pt-br","fr","de","ru","ja","es"];
+function hasReviewedPr467Sources(){
+  try{
+    return Object.entries(REVIEWED_PR467_BLOBS).every(([path,expected])=>
+      execFileSync("git",["rev-parse","HEAD:"+path],{
+        cwd:ROOT,encoding:"utf8",stdio:["ignore","pipe","ignore"]
+      }).trim()===expected);
+  }catch{return false;}
+}
 const isModelPage=url=>/^https:\/\/tractorvs\.com\/(?:tr\/|zh\/|hi\/|pt-br\/|fr\/|de\/|ru\/|ja\/|es\/)?tractors\/[a-z0-9-]+\/$/.test(url);
 function hasReviewedPr497Source(){
   try{
@@ -106,7 +124,7 @@ export function significantContentDigest(html,url){
   });
   return createHash("sha256").update([normalize(title),normalize(desc),significantMain].join("\n")).digest("hex");
 }
-export function deriveHistory({pages,previous,now=new Date(),minPages=100,reviewedPr497Copy=false}){
+export function deriveHistory({pages,previous,now=new Date(),minPages=100,reviewedPr497Copy=false,reviewedPr467Copy=false}){
   if(!previous||previous.version!==1||!previous.pages||typeof previous.pages!=="object")
     reject("Invalid previous history checkpoint");
   if(pages.length<minPages)reject("Too few generated pages to update sitemap history");
@@ -149,12 +167,37 @@ export function deriveHistory({pages,previous,now=new Date(),minPages=100,review
       changedOldModels.size===oldModelUrls.length &&
       oldModelUrls.every(url=>changedOldModels.has(url)) &&
       changedOldOther<=100 && added<=100;
-    if(!reviewed)reject("Unusually broad rendered content changes, manual SEO review required");
-    updated.reviewedBulkCopyPr497=true;
-  }else if(previous.reviewedBulkCopyPr497===true){
-    updated.reviewedBulkCopyPr497=true;
+    const modelLocaleCounts=Object.fromEntries(PR467_LOCALES.map(lang=>[lang,0]));
+    for(const url of changedOldModels){
+      const part=new URL(url).pathname.split("/")[1];
+      const lang=PR467_LOCALES.includes(part)&&part!=="en"?part:"en";
+      modelLocaleCounts[lang]++;
+    }
+    const reviewed467=reviewedPr467Copy &&
+      previous.reviewedBulkCopyPr497===true &&
+      previous.reviewedBulkCopyPr467!==true &&
+      oldModelUrls.length===3900 && changedOldModels.size===3900 &&
+      PR467_LOCALES.every(lang=>modelLocaleCounts[lang]===390) &&
+      added===0 && changedOldOther<=25;
+    if(!reviewed&&!reviewed467){
+      // Diagnostics only: never bypass the SEO provenance gate. Count the
+      // affected locales without leaking page text, credentials or hashes.
+      const localeCounts={};
+      for(const url of changedOldModels){
+        const pathLocale=new URL(url).pathname.split("/")[1];
+        const locale=["tr","zh","hi","pt-br","fr","de","ru","ja","es"].includes(pathLocale)?pathLocale:"en";
+        localeCounts[locale]=(localeCounts[locale]||0)+1;
+      }
+      reject("Unusually broad rendered content changes, manual SEO review required: "+
+        JSON.stringify({changed,pages:pages.length,changedOldModels:changedOldModels.size,
+          changedOldOther,added,localeCounts}));
+    }
+    if(reviewed)updated.reviewedBulkCopyPr497=true;
+    if(reviewed467)updated.reviewedBulkCopyPr467=true;
   }
-  return {history:updated,lastmod:dates,summary:{baseline,pages:pages.length,significant_changes:changed,new_pages:added,dated_pages:Object.keys(dates.dates).length,reviewed_bulk_copy_pr497:updated.reviewedBulkCopyPr497===true}};
+  if(previous.reviewedBulkCopyPr497===true)updated.reviewedBulkCopyPr497=true;
+  if(previous.reviewedBulkCopyPr467===true)updated.reviewedBulkCopyPr467=true;
+  return {history:updated,lastmod:dates,summary:{baseline,pages:pages.length,significant_changes:changed,new_pages:added,dated_pages:Object.keys(dates.dates).length,reviewed_bulk_copy_pr497:updated.reviewedBulkCopyPr497===true,reviewed_bulk_copy_pr467:updated.reviewedBulkCopyPr467===true}};
 }
 export function auditBuiltSitemap({dist=join(ROOT,"site/dist"),historyPath=HISTORY_FILE,lastmodPath=LASTMOD_FILE,now=new Date(),minPages=100}={}){
   const urls=extractPublishedUrls(dist);
@@ -166,7 +209,7 @@ export function auditBuiltSitemap({dist=join(ROOT,"site/dist"),historyPath=HISTO
     return [url,significantContentDigest(html,url)];
   });
   const previous=loadJson(historyPath,{version:1,pages:{}});
-  const result=deriveHistory({pages,previous,now,minPages,reviewedPr497Copy:hasReviewedPr497Source()});
+  const result=deriveHistory({pages,previous,now,minPages,reviewedPr497Copy:hasReviewedPr497Source(),reviewedPr467Copy:hasReviewedPr467Sources()});
   // Write only on successful full inspection; no silent partial sitemap.
   writeFileSync(historyPath,JSON.stringify(result.history,null,2)+"\n");
   writeFileSync(lastmodPath,JSON.stringify(result.lastmod,null,2)+"\n");
