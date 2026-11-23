@@ -47,8 +47,14 @@ export function verifyUnifiedSitemapIndex({dist=resolve(fileURLToPath(new URL(".
     htmlURLs.add(u);
   }
  }
+ // Home and editorial landing pages are discovery entrypoints, not optional
+ // catalogue accessories. Fail production if even one published language is
+ // silently omitted from the single master sitemap (especially TR/FR articles).
  for(const lang of ["","tr/","zh/","hi/","pt-br/","fr/","de/","ru/","ja/","es/"]){
-  insist(htmlURLs.has(origin+"/"+lang+"tractors/"),"Missing indexed catalog locale "+(lang||"en"));
+  for(const [suffix,type] of [["","home"],["articles/","editorial hub"],["tractors/","catalog"]]){
+   insist(htmlURLs.has(origin+"/"+lang+suffix),
+    "Missing indexed "+type+" locale "+(lang||"en"));
+  }
  }
  const image=get("image-sitemap.xml");
  const forum=get("forum-sitemap.xml");

@@ -1,0 +1,33 @@
+name: TractorVS OEM ten-spec publication production proof
+
+on:
+  pull_request:
+    paths:
+      - "scripts/tractor-20261122-oem-spec-live-proof.mjs"
+      - "scripts/tractor-20261122-oem-spec-live-proof.test.mjs"
+      - ".github/workflows/tractorvs-oem-ten-spec-live-proof.yml"
+      - "site/src/lib/oem-20261122-spec-labels.ts"
+  push:
+    branches: [main]
+    paths:
+      - "scripts/tractor-20261122-oem-spec-live-proof.mjs"
+      - "scripts/tractor-20261122-oem-spec-live-proof.test.mjs"
+      - ".github/workflows/tractorvs-oem-ten-spec-live-proof.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  live_qa:
+    runs-on: ubuntu-latest
+    timeout-minutes: 7
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22.23.4"
+      - name: Prove missing OEM data and SEO mistakes fail closed
+        run: node --experimental-strip-types --test scripts/tractor-20261122-oem-spec-live-proof.test.mjs
+      - name: Verify 14 real HTTP production pages (5 models and ten locale choices)
+        run: node --experimental-strip-types scripts/tractor-20261122-oem-spec-live-proof.mjs

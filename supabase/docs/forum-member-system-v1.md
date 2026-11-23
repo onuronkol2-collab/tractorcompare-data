@@ -5,7 +5,7 @@ The existing passwordless email link + OTP flow is preserved. The new membership
 - Email + password sign-up through Supabase Auth (minimum 12 characters requested by UI).
 - Email + password login through Supabase Auth.
 - Optional Google and GitHub OAuth via Supabase authorization endpoint. Both depend on provider enablement and redirect URL registration in the Supabase Dashboard; we cannot safely invent client IDs/secrets. The browser never contains service_role keys or OAuth client secrets.
-- Auth tokens remain in the current browser-tab sessionStorage, as before. Passwords are sent only to the Supabase Auth HTTPS endpoint; not stored in user profiles, logged or copied into the page.
+- Auth access/refresh tokens stay in tab-scoped sessionStorage unless the member chooses **Keep me signed in for 7 days** on a private device. That opt-in mirrors the normal browser persistence behavior of Supabase Auth with a bounded, locally stored access+refresh token pair (seven days since last verified login); it survives closing the tab. On shared devices, members must uncheck the option and sign out. Only tokens are saved persistently, never passwords, email, profile data, uploaded images or private drafts. Passwords are sent only to Supabase Auth HTTPS. Session restoration still checks `/auth/v1/user` and uses refresh-token rotation. All browser storage readable by JavaScript involves a residual XSS/device compromise risk; strict CSP, safe DOM rendering, no unsafe injected HTML, and logout controls must be maintained.
 - After initial registration, an email-confirmation step may be necessary depending on actual Auth settings. Do not disable confirmation for ease of onboarding.
 
 ## Google/GitHub one-time admin configuration
@@ -54,3 +54,12 @@ supabase/verification/verify_forum_members_v1.sql
 Run Node tests, Astro build, Chromium/Firefox/WebKit/Pixel 7 Playwright and axe. Validate provider status in dashboard, email confirmation, migration SQL/RLS/storage policies, avatar type/size/ownership and public/hidden rank behavior. Do not claim OAuth or real email delivery was verified from static simulation.
 
 Later milestones: moderated "best answer" (thread owner selects approved helpful reply), tractor-owner verification without disclosing serial number, opt-in topic-following notifications, source-backed expert Q&A, searchable member profiles only after original-content/moderation policy. Do not gamify spam or promise rewards/credentials based on unverified claims.
+
+
+## November 2026 member engagement and new-member discovery (PR #406)
+
+On published topic pages we show **unique authenticated member readers** and topic likes. Reader counts include each signed-in account once per topic, not anonymous page views and not any measured impression/traffic estimate. Topic likes are restricted to the account's own INSERT/DELETE privileges by RLS; self-likes are rejected; 20 new likes/day UTC maximum prevents vote farming. Totals are maintained by SQL triggers, exposed only when the parent topic is published, and are **not** inserted into Google Schema.org structured data or represented as third-party popularity rankings.
+
+The new bottom-of-forum member list shows at most 12 profiles from the pre-existing `tc_member_scores` view, sorted by their actual join timestamps. It respects the existing `show_leaderboard=true` privacy choice, now described to members as opting into both public rankings and member lists. Private account email, identities of voters, visitors, and auth details are never listed.
+
+Migration: `supabase/migrations/20261122180000_tc_forum_topic_likes_unique_member_reads.sql`. Validate with `supabase/verification/verify_forum_topic_engagement_20261122.sql`, using Supabase Security Advisors. Rollback refuses to delete any engagement records and must never be used on non-empty live tables. Add live test-account verification without creating misleading synthetic live engagement data.

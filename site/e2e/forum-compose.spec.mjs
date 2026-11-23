@@ -64,7 +64,7 @@ test("sign in, recover a draft, publish directly and check its status",async({pa
   await verify.locator("button").click();
   await expect(post).toBeVisible();
  }
- await page.locator('a[href="#forum-compose"]').click();
+ await page.locator('.community-hero-links a[href="#forum-compose"]').click();
  await signIn();
  expect(verifiedCode).toBe("123456");
  const title="Hidrolik basıncı yağ ısınınca değişiyor";

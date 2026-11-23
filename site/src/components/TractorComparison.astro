@@ -2,11 +2,13 @@
 import SiteLayout from "../layouts/SiteLayout.astro";
 import { getPublicCatalog } from "../lib/catalog";
 import { comparisonSpecs } from "../lib/comparison-specs";
+import { requiresConditionCaution, requiresTransmissionCaution } from "../lib/compare-conditions";
 import { INDEPENDENT_SOURCE_COPY } from "../lib/independent-source-i18n";
 import { localizedPath, type Locale } from "../lib/locales";
 import { t } from "../lib/ui";
 import { compareText as cx } from "../lib/compare-ux";
 import {primaryTractorPhoto,tractorPhotoAlt,photoText} from "../lib/tractor-photos";
+import {curatedDeutz5DPair,DEUTZ_5D_GS_PILOT} from "../lib/deutz-5d-editorial.ts";
 import "../styles/compare-experience.css";
 
 interface Props { lang: Locale; }
@@ -30,6 +32,8 @@ const models = catalog.tractors.map((tractor, index) => ({
   })(),
   specs: index < 2 ? comparisonSpecs(tractor, lang) : undefined,
 }));
+const editorialPilotAvailable=(lang==="en"||lang==="tr")&&Boolean(curatedDeutz5DPair(catalog.tractors));
+const initiallySharedOnly=Astro.url.searchParams.get("view")==="shared";
 const initialLeft = models[0];
 const initialRight = models[1];
 const photoOpenLabel=photoText(lang,"open");
@@ -44,7 +48,7 @@ const initialKeys = [...new Set([
     || initialRight?.specs.find((spec) => spec.key === b)?.label || b;
   return leftLabel.localeCompare(rightLabel, lang);
 });
-const initialRows = initialKeys.map((key) => ({
+const initialRows = (initiallySharedOnly ? initialKeys.filter(key=>(initialLeft?.specs.some(s=>s.key===key)&&initialRight?.specs.some(s=>s.key===key))) : initialKeys).map((key) => ({
   key,
   label: initialLeft?.specs.find((spec) => spec.key === key)?.label
     || initialRight?.specs.find((spec) => spec.key === key)?.label || key,
@@ -62,6 +66,8 @@ const labelsPayload = JSON.stringify({
   independent: INDEPENDENT_SOURCE_COPY[lang].label,
   loadError: cx(lang,"loadError"),
   context: t(lang,"condition"),
+  conditionCaution: cx(lang,"conditionCaution"),
+  transmissionCaution: cx(lang,"transmissionCaution"),
   search: cx(lang,"searchModel"),
   noResults: cx(lang,"noResults"),
   results: cx(lang,"results"),
@@ -99,6 +105,12 @@ const labelsPayload = JSON.stringify({
           <span class="tc-step-number">01</span>
           <div><h2>{cx(lang,"step")}</h2><p>{cx(lang,"stepIntro")}</p></div>
         </div>
+        {editorialPilotAvailable && <aside class="tc-note" aria-label={lang==="tr"?"Kaynaklı örnek karşılaştırma":"Source-backed comparison example"}>
+          {lang==="tr"?"Kaynaklı örnek: Deutz-Fahr 5090 D GS ile 5100 D GS için aynı üretici belgesine dayalı özgün analiz.":"Evidence-based example: an original same-brochure Deutz-Fahr 5090 D GS versus 5100 D GS analysis."}
+          {" "}<a href={localizedPath(lang,DEUTZ_5D_GS_PILOT.path)}>
+            {lang==="tr"?"Model farklarını ve ölçüm sınırlarını oku":"Read verified differences and measurement limits"} ↗
+          </a>
+        </aside>}
         <div class="tc-picker" id="tc-picker">
           <div class="tc-picker-side">
             <label for="tc-left-search">{t(lang,"firstTractor")}</label>
@@ -175,8 +187,8 @@ const labelsPayload = JSON.stringify({
             </div>
           </div>
           <div class="tc-filters" role="group" aria-label={cx(lang,"tableIntro")}>
-            <button type="button" id="tc-all" aria-pressed="true">{cx(lang,"all")}</button>
-            <button type="button" id="tc-shared" aria-pressed="false">{cx(lang,"shared")}</button>
+            <button type="button" id="tc-all" aria-pressed={String(!initiallySharedOnly)}>{cx(lang,"all")}</button>
+            <button type="button" id="tc-shared" aria-pressed={String(initiallySharedOnly)}>{cx(lang,"shared")}</button>
           </div>
         </div>
         <p id="tc-no-shared" class="tc-no-shared" role="status" hidden>{cx(lang,"noShared")}</p>
@@ -194,7 +206,7 @@ const labelsPayload = JSON.stringify({
             </tr></thead>
             <tbody id="tc-rows" role="rowgroup">
               {initialRows.map((row) => <tr role="row">
-                <th scope="row" role="rowheader">{row.label}</th>
+                <th scope="row" role="rowheader">{row.label}{requiresConditionCaution(row.key,row.left,row.right) && <small class="tc-condition-caution" role="note">{cx(lang,"conditionCaution")}</small>}{requiresTransmissionCaution(row.key,row.left,row.right) && <small class="tc-condition-caution" role="note">{cx(lang,"transmissionCaution")}</small>}</th>
                 {[row.left, row.right].map((items,index) => <td role="cell">
                   <span class="tc-cell-model" aria-hidden="true">{index===0?initialLeft?.title:initialRight?.title}</span>
                   {items.length ? items.map((spec) => <div class="tc-entry">
@@ -225,6 +237,7 @@ const labelsPayload = JSON.stringify({
 
 <script>
   import { normalizeTractorQuery } from "../lib/search";
+  import { requiresConditionCaution, requiresTransmissionCaution } from "../lib/compare-conditions";
   type Spec = { key:string; label:string; value:string; unit:string|null; context:string|null; rpm:number|null; source:string|null; independent:boolean; notice:string|null };
   type Model = { id:string; title:string; dataUrl:string;
     variant:string|null; power:number|null; specsCount:number;
@@ -238,7 +251,7 @@ const labelsPayload = JSON.stringify({
     const models=JSON.parse(dataNode.textContent||"[]") as Model[];
     const lang=document.documentElement.lang;
     const l10n=JSON.parse(document.querySelector("#tc-i18n")?.textContent||"{}") as {
-      missing:string;source:string;independent:string;loadError:string;context:string;search:string;noResults:string;
+      missing:string;source:string;independent:string;loadError:string;context:string;conditionCaution:string;transmissionCaution:string;search:string;noResults:string;
       results:string;selected:string;exploreModel:string;shared:string;
       summary:string;noShared:string;specs:string;
     };
@@ -246,7 +259,7 @@ const labelsPayload = JSON.stringify({
     const params=new URLSearchParams(window.location.search);
     if(params.get("left")&&byId(params.get("left")!))leftSelect.value=params.get("left")!;
     if(params.get("right")&&byId(params.get("right")!))rightSelect.value=params.get("right")!;
-    let commonOnly=false;
+    let commonOnly=params.get("view")==="shared";
     let changedSide:"left"|"right"="left";
 
     function addText(parent:Element,tag:string,text:string,css?:string){
@@ -365,7 +378,14 @@ const labelsPayload = JSON.stringify({
       for(const key of visible){
         const row=document.createElement("tr");row.setAttribute("role","row");
         const th=document.createElement("th");
-        th.setAttribute("role","rowheader");th.scope="row";th.textContent=label(key);row.appendChild(th);
+        th.setAttribute("role","rowheader");th.scope="row";th.textContent=label(key);
+        if(requiresConditionCaution(key,find(left,key),find(right,key))){
+          addText(th,"small",l10n.conditionCaution,"tc-condition-caution").setAttribute("role","note");
+        }
+        if(requiresTransmissionCaution(key,find(left,key),find(right,key))){
+          addText(th,"small",l10n.transmissionCaution,"tc-condition-caution").setAttribute("role","note");
+        }
+        row.appendChild(th);
         for(const model of [left,right]){
           const td=document.createElement("td");td.setAttribute("role","cell");
           addText(td,"span",model.title,"tc-cell-model").setAttribute("aria-hidden","true");
@@ -388,7 +408,11 @@ const labelsPayload = JSON.stringify({
       }
       const url=new URL(window.location.href);
       url.searchParams.set("left",left.id);url.searchParams.set("right",right.id);
+      if(commonOnly)url.searchParams.set("view","shared");
+      else url.searchParams.delete("view");
       window.history.replaceState(null,"",url.pathname+url.search);
+      // Let shared navigation refresh locale destinations after each selection.
+      window.dispatchEvent(new Event("tractorvs:route-state-changed"));
     }
     function makeCombobox(side:"left"|"right",select:HTMLSelectElement){
       const input=document.querySelector<HTMLInputElement>("#tc-"+side+"-search");
@@ -473,6 +497,10 @@ const labelsPayload = JSON.stringify({
     });
     const all=document.querySelector<HTMLButtonElement>("#tc-all");
     const shared=document.querySelector<HTMLButtonElement>("#tc-shared");
+    // Static HTML cannot know visitor query parameters at build time. Hydrate
+    // the accessible pressed state from the actual view=shared deep link.
+    all?.setAttribute("aria-pressed",String(!commonOnly));
+    shared?.setAttribute("aria-pressed",String(commonOnly));
     function setFilter(sharedOnly:boolean){
       commonOnly=sharedOnly;
       all?.setAttribute("aria-pressed",String(!sharedOnly));

@@ -822,6 +822,23 @@ const candidates=[
   {"brand":"McCormick","model":"X7.624 VT-Drive","fileId":"mccormick-x7-624-vt-drive-marcelx42-2023","path":"a/aa/McCormick_X7.624_VT-Drive_Agritechnica_2023_%28DSC05875%29.jpg","photographer":"MarcelX42","license":"CC BY-SA 4.0","width":7008,"height":3944},
   // 2026-11-22: manufacturer 112H-01 heading refers to 112N-01 in body; Commons own-work CC BY-SA 3.0.
   {"brand":"Belarus","model":"112N-01","fileId":"belarus-112n-01-homoatrox-belagro-2021","path":"1/1b/Belarus_112H-01_tractor_%28Belagro-2021%29.jpg","photographer":"Homoatrox","license":"CC BY-SA 3.0","width":3201,"height":4385},
+  // 2026-11-22 cross-platform licensed image search: verified original self-licence and exact family/model.
+  // https://commons.wikimedia.org/wiki/File:Steyr_Absolut_6240.jpg
+  // Self-authored by Blonder1984 (2022); public-domain dedication plus CC BY 4.0.
+  {"brand":"Steyr","model":"6240 ABSOLUT CVT","fileId":"steyr-6240-absolut-blonder1984-2022","path":"d/d7/Steyr_Absolut_6240.jpg","photographer":"Blonder1984","license":"CC BY 4.0","width":4608,"height":3456},
+  // https://commons.wikimedia.org/wiki/File:ZETOR_PROXIMA.jpg
+  // JJ7777 own work, CC BY-SA 4.0; generic PROXIMA model, no equipment/year assertion.
+  {"brand":"Zetor","model":"PROXIMA","fileId":"zetor-proxima-jj7777-2021","path":"4/4c/ZETOR_PROXIMA.jpg","photographer":"JJ7777","license":"CC BY-SA 4.0","width":2048,"height":1154},
+  // https://commons.wikimedia.org/wiki/File:Zetor_Proxima%2C_WAW.jpg
+  // Raf24~commonswiki own work, CC BY-SA 4.0; second independently attributed view.
+  {"brand":"Zetor","model":"PROXIMA","fileId":"zetor-proxima-raf24-warsaw-2019","path":"8/81/Zetor_Proxima%2C_WAW.jpg","photographer":"Raf24~commonswiki","license":"CC BY-SA 4.0","width":4096,"height":3072},
+  // 22 November 2026: exact-model Commons photo author/source licenses;
+  // 480/960/1920 first-party SHA-256 JPEGs in proof ledger
+  // site/docs/photo-import-evidence-mccormick-tym-wave2-20261122.json.
+  // TYM alias names checked against manufacturer; configurationExact=false.
+  {"brand":"McCormick","model":"X5.085","fileId":"mccormick-x5-085-mbone-2023","path":"b/b2/McCormick%2C_Agritechnica_2023%2C_Hanover_%28P1140949%29.jpg","photographer":"MB-one","license":"CC BY-SA 4.0","width":3161,"height":3951},
+  {"brand":"TYM","model":"T6115","fileId":"tym-t6115-t115-marcelx42-2025","path":"0/01/TYM_T115_Agritechnica_2025_%28DSC04612%29.jpg","photographer":"MarcelX42","license":"CC BY-SA 4.0","width":6139,"height":4093},
+  {"brand":"TYM","model":"T2025P","fileId":"tym-t2025p-t25-marcelx42-2025","path":"0/0b/TYM_T25_Agritechnica_2025_%28DSC04615%29.jpg","photographer":"MarcelX42","license":"CC BY-SA 4.0","width":6011,"height":4508},
 ] as const;
 function licenseUrl(name:string):string{
   if(name==="CC0")return "https://creativecommons.org/publicdomain/zero/1.0/";
@@ -833,6 +850,7 @@ export const HISTORICAL_LICENSED_PHOTOS=candidates.map(p=>{
   const filename=p.path.split("/").at(-1)!;
   return {
     brand:p.brand,model:p.model,fileId:p.fileId,
+    ...("tractorId" in p && typeof p.tractorId==="string" ? {tractorId:p.tractorId} : {}),
     thumbUrl:W+"thumb/"+p.path+"/480px-"+filename,
     displayUrl:W+"thumb/"+p.path+"/960px-"+filename,
     fullUrl:W+p.path,

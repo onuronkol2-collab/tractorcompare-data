@@ -1,0 +1,105 @@
+name: TractorVS reviewed TYM F50CHN exact-variant image staging
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: [".github/workflows/tractorvs-reviewed-tym-f50chn.yml"]
+permissions:
+  contents: write
+concurrency:
+  group: tractorvs-reviewed-f50chn-media
+  cancel-in-progress: false
+jobs:
+  stage_exact_missing_models:
+    if: "github.event_name == 'workflow_dispatch' || startsWith(github.event.head_commit.message, 'ci(photo): one-time stage reviewed TYM F50CHN JPEGs')"
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install pinned image decoder
+        run: python -m pip install --quiet 'Pillow==11.3.0'
+      - name: Verify exact source list and script syntax without network
+        run: |
+          python -m py_compile site/scripts/stage-reviewed-tym-f50chn-20261122.py
+          python - <<'PY'
+          from pathlib import Path
+          text = Path("site/scripts/stage-reviewed-tym-f50chn-20261122.py").read_text()
+          assert text.count("https://thumb.wikimedia.org/wikipedia/commons/thumb/") == 3
+          assert text.count("CC BY-SA 4.0") == 3
+          assert "tym-t3048-f50chn-55-marcelx42-2025" in text
+          assert "tym-t3048-f50chn-57-marcelx42-2025" in text
+          assert "tym-t3048-f50chn-73-marcelx42-2025" in text
+          PY
+      - name: Stage exactly three CC-authorized Commons originals and nine first-party JPEGs
+        run: python site/scripts/stage-reviewed-tym-f50chn-20261122.py --output-dir ./photo-f50chn-review
+      - name: Independently check JPEG dimensions, author, license, SHA and exact IDs
+        run: |
+          python - <<'PY'
+          import hashlib, json
+          from pathlib import Path
+          from PIL import Image
+          root = Path("photo-f50chn-review")
+          r = json.loads((root / "sha256-ledger.json").read_text())
+          assert r["reviewRequired"] is True and r["publicationCount"] == 0
+          ids = {
+              "tym-t3048-f50chn-55-marcelx42-2025": "MarcelX42",
+              "tym-t3048-f50chn-57-marcelx42-2025": "MarcelX42",
+              "tym-t3048-f50chn-73-marcelx42-2025": "MarcelX42",
+          }
+          assert {x["fileId"] for x in r["images"]} == set(ids)
+          for entry in r["images"]:
+              assert entry["approvedToPublish"] is False
+              assert entry["photographer"] == ids[entry["fileId"]]
+              assert entry["license"] == "CC BY-SA 4.0"
+              assert entry["origin"].startswith("https://thumb.wikimedia.org/wikipedia/commons/thumb/")
+              assert len(entry["originSha256"]) == 64
+              assert {d["width"] for d in entry["derivatives"]} == {480,960,1920}
+              for d in entry["derivatives"]:
+                  assert d["file"] == entry["fileId"] + "-" + str(d["width"]) + ".jpg"
+                  p = root / d["file"]
+                  assert p.parent == root
+                  b = p.read_bytes()
+                  assert b[:3] == bytes.fromhex("ffd8ff") and b[-2:] == bytes.fromhex("ffd9")
+                  assert len(b) == d["bytes"]
+                  assert hashlib.sha256(b).hexdigest() == d["sha256"]
+                  with Image.open(p) as image:
+                      image.load()
+                      assert image.format == "JPEG"
+                      assert image.size == (d["width"],d["height"])
+          print("TRACTORVS_WAVE2_NINE_VERIFIED_JPEGS")
+          PY
+      - name: Preserve unapproved JPEGs and full integrity evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: tractorvs-tym-f50chn-three-reviewed-photo-assets
+          path: photo-f50chn-review/
+          if-no-files-found: error
+          retention-days: 30
+      - name: Put nine verified binaries in a new nonpublic-release GitHub branch only
+        run: |
+          set -euo pipefail
+          BRANCH="photo/20261122-wave3-f50chn-verified"
+          # Never overwrite an existing branch, re-run, or bypass review.
+          if git ls-remote --exit-code --heads origin "$BRANCH"; then
+            echo "::error::Review branch already exists. Manual reconciliation required."
+            exit 1
+          fi
+          git switch -c "$BRANCH"
+          mkdir -p site/public/images/tractors site/docs
+          for id in tym-t3048-f50chn-55-marcelx42-2025 tym-t3048-f50chn-57-marcelx42-2025 tym-t3048-f50chn-73-marcelx42-2025; do
+            for size in 480 960 1920; do
+              install -m 0644 "photo-f50chn-review/${id}-${size}.jpg" "site/public/images/tractors/${id}-${size}.jpg"
+              git add "site/public/images/tractors/${id}-${size}.jpg"
+            done
+          done
+          install -m 0644 photo-f50chn-review/sha256-ledger.json site/docs/photo-import-evidence-tym-f50chn-wave3-20261122.json
+          git add site/docs/photo-import-evidence-tym-f50chn-wave3-20261122.json
+          test "$(git diff --cached --name-only | wc -l)" -eq 10
+          git -c user.email="41898282+github-actions[bot]@users.noreply.github.com" -c user.name="github-actions[bot]" commit -m "feat(photo): stage nine verified TYM F50CHN JPEGs for variant-scoped review"
+          git push origin "HEAD:refs/heads/$BRANCH"
+          echo "DRAFT BRANCH ONLY: no photo catalogue, no deployment, no merge."

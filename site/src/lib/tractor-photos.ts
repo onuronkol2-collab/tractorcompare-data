@@ -5,6 +5,9 @@ import {HISTORICAL_LICENSED_PHOTOS} from "./historical-licensed-photos.ts";
 /* Rights are NOT transferred by adding a TractorVS label. */
 export interface TractorPhoto {
   brand:string; model:string; fileId:string;
+  // Explicitly bind variant-sensitive photos to one published tractor UUID.
+  // Omitted for historic model-level photographs.
+  tractorId?:string;
   thumbUrl:string; displayUrl:string; fullUrl:string;
   width:number; height:number; sourcePage:string;
   photographer:string; licenseName:string; licenseUrl:string;
@@ -139,7 +142,41 @@ const ORIGINAL_PHOTO_ORIGINS:readonly Omit<TractorPhoto,"originThumbUrl"|"origin
     sourcePage:"https://commons.wikimedia.org/wiki/File:%D0%9A%D0%BE%D1%81%D0%BC%D0%BE%D1%81%2C_%D0%9C%D0%A2%D0%97-80.1_%D0%BD%D0%B0_%D0%96%D0%B5%D0%BB%D1%82%D0%BE%D0%BA%D1%81%D0%B0%D0%BD%D0%B5.jpg",
     licenseName:"CC BY-SA 4.0",licenseUrl:"https://creativecommons.org/licenses/by-sa/4.0/",
     configurationExact:false
-  }
+  },
+  // Independently licensed Commons own-work 2023 show photos; exact published UUID only.
+  {brand:"TYM",model:"T2026",tractorId:"1aa3a3d6-822b-4346-9d13-b6c0d99bdb1e",
+    fileId:"tym-t2026-2500l-marcelx42-2023",
+    thumbUrl:W+"thumb/8/88/TYM_2500L_Agritechnica_2023_%28DSC05265%29.jpg/480px-TYM_2500L_Agritechnica_2023_%28DSC05265%29.jpg",
+    displayUrl:W+"thumb/8/88/TYM_2500L_Agritechnica_2023_%28DSC05265%29.jpg/960px-TYM_2500L_Agritechnica_2023_%28DSC05265%29.jpg",
+    fullUrl:W+"8/88/TYM_2500L_Agritechnica_2023_%28DSC05265%29.jpg",
+    width:7008,height:3944,photographer:"MarcelX42",
+    sourcePage:"https://commons.wikimedia.org/wiki/File:TYM_2500L_Agritechnica_2023_(DSC05265).jpg",
+    copyrightOwner:"MarcelX42",copyrightClaimUrl:"https://commons.wikimedia.org/wiki/File:TYM_2500L_Agritechnica_2023_(DSC05265).jpg",
+    copyrightEvidence:"commons-own-work-self-license",
+    licenseName:"CC BY-SA 4.0",licenseUrl:"https://creativecommons.org/licenses/by-sa/4.0/",
+    configurationExact:false},
+  {brand:"TYM",model:"T4058",tractorId:"840269b7-e7c3-4e57-80db-56a55e9fbf46",
+    fileId:"tym-t4058-6225c-marcelx42-2023",
+    thumbUrl:W+"thumb/e/ea/TYM_6225C_Agritechnica_2023_%28DSC03508%29.jpg/480px-TYM_6225C_Agritechnica_2023_%28DSC03508%29.jpg",
+    displayUrl:W+"thumb/e/ea/TYM_6225C_Agritechnica_2023_%28DSC03508%29.jpg/960px-TYM_6225C_Agritechnica_2023_%28DSC03508%29.jpg",
+    fullUrl:W+"e/ea/TYM_6225C_Agritechnica_2023_%28DSC03508%29.jpg",
+    width:6545,height:3683,photographer:"MarcelX42",
+    sourcePage:"https://commons.wikimedia.org/wiki/File:TYM_6225C_Agritechnica_2023_(DSC03508).jpg",
+    copyrightOwner:"MarcelX42",copyrightClaimUrl:"https://commons.wikimedia.org/wiki/File:TYM_6225C_Agritechnica_2023_(DSC03508).jpg",
+    copyrightEvidence:"commons-own-work-self-license",
+    licenseName:"CC BY-SA 4.0",licenseUrl:"https://creativecommons.org/licenses/by-sa/4.0/",
+    configurationExact:false},
+  {brand:"TYM",model:"T5075",tractorId:"d12085d4-5bdf-4017-85f5-7071a6d72e6f",
+    fileId:"tym-t5075-t78-marcelx42-2023",
+    thumbUrl:W+"thumb/5/5b/TYM_T78_Agritechnica_2023_%28DSC03605%29.jpg/480px-TYM_T78_Agritechnica_2023_%28DSC03605%29.jpg",
+    displayUrl:W+"thumb/5/5b/TYM_T78_Agritechnica_2023_%28DSC03605%29.jpg/960px-TYM_T78_Agritechnica_2023_%28DSC03605%29.jpg",
+    fullUrl:W+"5/5b/TYM_T78_Agritechnica_2023_%28DSC03605%29.jpg",
+    width:7008,height:3944,photographer:"MarcelX42",
+    sourcePage:"https://commons.wikimedia.org/wiki/File:TYM_T78_Agritechnica_2023_(DSC03605).jpg",
+    copyrightOwner:"MarcelX42",copyrightClaimUrl:"https://commons.wikimedia.org/wiki/File:TYM_T78_Agritechnica_2023_(DSC03605).jpg",
+    copyrightEvidence:"commons-own-work-self-license",
+    licenseName:"CC BY-SA 4.0",licenseUrl:"https://creativecommons.org/licenses/by-sa/4.0/",
+    configurationExact:false}
 ];
 /** Curated historical archive candidates are staged in code; they reach public pages
  * ONLY if an exact brand/model is found in the published Supabase public catalogue.
@@ -172,9 +209,20 @@ function norm(value:string):string{
   return value.normalize("NFKD").replace(/[\u0300-\u036f]/g,"")
     .toLowerCase().replace(/ı/g,"i").replace(/[^a-z0-9]+/g,"");
 }
-export function tractorPhotos(tractor:Pick<TractorRecord,"brand_name"|"model_name">):TractorPhoto[]{
-  return APPROVED_TRACTOR_PHOTOS.filter(photo =>
-    norm(photo.brand)===norm(tractor.brand_name)&&norm(photo.model)===norm(tractor.model_name));
+type TractorPhotoLookup=Pick<TractorRecord,"brand_name"|"model_name">&Partial<Pick<TractorRecord,"tractor_id">>;
+/** A model-level photo may illustrate the named model, but a variant-scoped
+ * photo must NEVER appear on other models with an identical display name. */
+export function photoMatchesTractor(
+  photo:Pick<TractorPhoto,"brand"|"model"|"tractorId">,
+  tractor:TractorPhotoLookup
+):boolean{
+  if(norm(photo.brand)!==norm(tractor.brand_name)||
+     norm(photo.model)!==norm(tractor.model_name))return false;
+  if(photo.tractorId)return photo.tractorId===tractor.tractor_id;
+  return true;
+}
+export function tractorPhotos(tractor:TractorPhotoLookup):TractorPhoto[]{
+  return APPROVED_TRACTOR_PHOTOS.filter(photo=>photoMatchesTractor(photo,tractor));
 }
 export function primaryTractorPhoto(tractor:Pick<TractorRecord,"brand_name"|"model_name">):TractorPhoto|null{
   return tractorPhotos(tractor)[0]||null;

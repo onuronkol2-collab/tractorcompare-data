@@ -7,6 +7,9 @@ const baseURL = "http://127.0.0.1:4173";
 // Offline local build: never point this smoke suite at production or a database.
 export default defineConfig({
   testDir: "./e2e",
+  // Live QA has its own config and real production URL. Never run it against
+  // the inert offline build, where published comparison-data files are absent.
+  testIgnore: ["**/tractorvs-live-compare.spec.mjs"],
   timeout: 30_000,
   expect: { timeout: 10_000 },
   fullyParallel: true,

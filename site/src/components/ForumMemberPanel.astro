@@ -44,7 +44,8 @@ const copy=JSON.stringify(MEMBER_TEXT[lang]);
     </div>
    </header>
    <ol data-leaders aria-live="polite"></ol>
-   <p data-leader-empty>{mt(lang,"loading")}</p>
+   <p data-leader-empty role="status" aria-live="polite">{mt(lang,"loading")}</p>
+   <button type="button" class="member-retry" data-retry-leaders hidden>{mt(lang,"retryMembers")}</button>
   </section>
   <section class="member-own" id="forum-member-editor"
     data-member-own hidden aria-label={mt(lang,"myProfile")}>
@@ -63,8 +64,8 @@ const copy=JSON.stringify(MEMBER_TEXT[lang]);
      <label>{mt(lang,"displayName")} <input name="display_name" required maxlength="40" minlength="2" /></label>
      <label>{mt(lang,"bio")} <textarea name="bio" maxlength="160" rows="3"></textarea></label>
      <label>{mt(lang,"favoriteBrand")} <input name="favorite_brand" maxlength="50"/></label>
-     <label class="member-check"><input type="checkbox" name="show_leaderboard" checked/>
-      {mt(lang,"optOut")}</label>
+     <label class="member-check"><input type="checkbox" name="show_leaderboard"/>
+      {mt(lang,"showPublicProfile")}</label>
      <p class="member-note">{mt(lang,"privacy")}</p>
      <button type="submit">{mt(lang,"save")}</button>
      <p data-profile-status role="status" aria-live="polite"></p>
@@ -79,6 +80,13 @@ const copy=JSON.stringify(MEMBER_TEXT[lang]);
    </div>
   </section>
  </div>
+ <section class="member-recent" aria-labelledby="forum-new-members-title">
+   <h3 id="forum-new-members-title">{mt(lang,"recentMembers")}</h3>
+   <p>{mt(lang,"recentMembersIntro")}</p>
+   <ol data-recent-members aria-live="polite"></ol>
+   <p data-recent-members-status role="status" aria-live="polite">{mt(lang,"loading")}</p>
+   <button type="button" class="member-retry" data-retry-recent hidden>{mt(lang,"retryMembers")}</button>
+ </section>
  <dialog data-member-dialog aria-label={mt(lang,"viewProfile")}>
    <div class="member-dialog-top">
      <h3 data-dialog-name></h3>
@@ -159,14 +167,105 @@ const copy=JSON.stringify(MEMBER_TEXT[lang]);
 .member-community dialog p{overflow-wrap:anywhere;line-height:1.8;margin-bottom:8px}
 .member-profile-link:focus-visible,.member-dialog-top button:focus-visible{outline:3px solid #75b385;outline-offset:2px}
 .member-community [hidden]{display:none!important}
+.member-recent{margin-top:23px;padding:clamp(16px,3vw,23px);border:1px solid #cee1ce;
+ border-radius:16px;background:#fff;min-width:0}
+.member-recent h3{font-size:clamp(20px,2.4vw,25px);color:#194c2e;margin:0 0 6px}
+.member-recent > p{color:#526b57;font-size:13px;line-height:1.6;margin:0 0 13px}
+.member-recent ol{list-style:none;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr));
+ gap:10px;margin:0;padding:0}
+.member-recent li{display:flex;align-items:center;min-width:0;gap:11px;padding:12px;
+ border:1px solid #d8e8d6;border-radius:12px;background:#f9fcf8}
+.member-recent img{width:42px;height:42px;flex:none;border-radius:50%;object-fit:cover}
+.member-recent .member-entry{min-width:0}
+.member-recent .member-entry small{display:block;font-size:12px;margin-top:3px}
+.member-recent strong{overflow-wrap:anywhere}
+.member-recent [data-recent-members-status]{margin-top:12px}
+.member-community .member-retry{font:inherit;font-size:13px;font-weight:800;
+ background:#f2f8ef;color:#215838;border:1px solid #a9c9aa;
+ border-radius:10px;padding:10px 15px;min-height:44px;cursor:pointer}
+.member-community .member-retry:hover{background:#e6f2e1}
 .member-community button:focus-visible,.member-community input:focus-visible,
 .member-community textarea:focus-visible{outline:3px solid #75b385;outline-offset:2px}
 @media(max-width:780px){.member-grid{grid-template-columns:1fr}}
+
+/* Community identity: one clear profile summary, accessible opt-in discovery. */
+.member-community{margin:38px 0 0;padding:33px 0 0;border-top:1px solid #dae6dc;
+ color:#1c3b2b;min-width:0}
+.member-intro{margin:0 0 21px}
+.member-intro h2{font-size:clamp(22px,2.5vw,29px);letter-spacing:-.04em;
+ line-height:1.2;color:#183d2a;margin:0 0 8px;font-weight:850}
+.member-intro p{font-size:13.5px;line-height:1.75;color:#647467;max-width:720px;
+ margin:0}
+.member-toolbar{display:flex;gap:17px;align-items:center;
+ padding:clamp(17px,2vw,23px);margin:0;
+ border:1px solid #dfe8dd;border-radius:18px;background:
+ linear-gradient(115deg,#fff 0%,#fff 65%,#f4f8f2 100%);
+ box-shadow:0 7px 26px rgba(18,50,31,.035)}
+.member-toolbar-avatar{width:58px;height:58px;flex-basis:58px;
+ border:2px solid #dce9d5;background:#245c3c}
+.member-toolbar-identity{gap:5px}
+.member-toolbar-identity strong{font-size:16px;font-weight:850;color:#1c4430;
+ line-height:1.35}
+.member-toolbar-identity small{color:#526655;font-size:12px;line-height:1.6}
+.member-toolbar-buttons{gap:8px}
+.member-toolbar-buttons button{min-height:44px;padding:10px 14px;
+ font-size:12px;font-weight:800;border:1px solid #d5e3d3;background:#f6f9f4;
+ color:#24583d;border-radius:10px}
+.member-toolbar-buttons button:hover{background:#e8f2e4}
+.member-toolbar-buttons button[aria-expanded="true"]{background:#1f583b;
+ border-color:#1f583b;color:#fff}
+.member-grid{margin-top:16px;gap:15px}
+.member-leaders,.member-own{padding:clamp(17px,2.5vw,26px);border-color:#dfe8dd;
+ border-radius:17px;box-shadow:0 7px 24px rgba(23,50,32,.026)}
+.member-section-head h3,.member-own h3{font-size:20px;letter-spacing:-.03em;
+ color:#1d4630}
+.leaderboard-modes button{font:800 12px var(--sans);min-height:43px;
+ padding:9px 13px;border-radius:9px;border-color:#d8e5d5}
+.member-leaders li{padding:15px 0;border-top:1px solid #eef1ec}
+.member-score{color:#265f40;font-variant-numeric:tabular-nums}
+.member-own form{gap:13px}
+.member-own label{font-size:12px;color:#3c604a}
+.member-own input:not([type="checkbox"]),.member-own textarea{
+ border-color:#d2dfd2;border-radius:10px;padding:11px 13px;
+ background:#fbfdfb;min-height:46px;font-size:14px}
+.member-own .member-check{font-size:12px;line-height:1.55}
+.member-own button[type="submit"]{min-height:45px;border-radius:10px;
+ background:#1f583b}
+.member-own button[type="submit"]:hover{background:#163f2a}
+.member-recent{margin-top:16px;padding:clamp(17px,2.5vw,25px);
+ border:1px solid #e0e8dd;border-radius:18px;background:#fff;
+ box-shadow:0 7px 23px rgba(22,50,29,.028)}
+.member-recent h3{font-size:clamp(19px,2.1vw,23px);letter-spacing:-.035em;
+ margin:0 0 7px;color:#1b432e;font-weight:850}
+.member-recent>p{font-size:12.5px;color:#526655;margin:0 0 16px;line-height:1.7}
+.member-recent ol{grid-template-columns:repeat(auto-fill,minmax(min(100%,225px),1fr));gap:10px}
+.member-recent li{padding:13px;border:1px solid #e0e9dc;border-radius:12px;
+ background:#f9fbf8;min-width:0}
+.member-recent li:hover{border-color:#bad9b0}
+.member-recent img{width:43px;height:43px}
+.member-recent .member-entry strong{font-size:13px;line-height:1.4;color:#1d4530}
+.member-recent .member-entry small{color:#526958;font-size:11px;line-height:1.6;
+ overflow-wrap:anywhere}
+.member-community dialog{border-color:#d9e6d6;border-radius:18px;
+ box-shadow:0 30px 90px rgba(7,29,14,.28)}
+.member-community button:focus-visible,.member-community input:focus-visible,
+.member-community textarea:focus-visible{outline:3px solid #88b88a;outline-offset:3px}
+@media(max-width:640px){
+ .member-community{margin-top:30px;padding-top:28px}
+ .member-toolbar{gap:12px;padding:15px}
+ .member-toolbar-avatar{width:48px;height:48px;flex-basis:48px}
+ .member-toolbar-identity{min-width:0}
+ .member-toolbar-buttons{width:100%;display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}
+ .member-toolbar-buttons button{min-width:0;white-space:normal}
+ .member-recent{padding:17px}
+ .member-recent ol{grid-template-columns:1fr}
+}
 </style>
 <script>
+import {readForumSession} from "../lib/forum-session-store.mjs";
 type Profile={id:string;handle:string;display_name:string;bio:string;avatar_path:string|null;favorite_brand:string;created_at?:string;show_leaderboard:boolean;
  score_total?:number;score_30d?:number;topic_count?:number;reply_count?:number;helpful_votes?:number};
-const tokenKey="tractorvs_forum_access";
+
 const widgets=document.querySelectorAll<HTMLElement>("[data-community-members]");
 for(const root of widgets){
  const cfg=JSON.parse(root.dataset.memberConfig||"null") as {url:string;key:string}|null;
@@ -175,7 +274,11 @@ for(const root of widgets){
  const lang=root.dataset.memberLang||"en";
  const query=<T extends Element>(sel:string)=>root.querySelector<T>(sel);
  const rankEl=query<HTMLOListElement>("[data-leaders]");
+  const recentEl=query<HTMLOListElement>("[data-recent-members]");
+  const recentStatus=query<HTMLElement>("[data-recent-members-status]");
  const empty=query<HTMLElement>("[data-leader-empty]");
+ const retryLeaders=query<HTMLButtonElement>("[data-retry-leaders]");
+ const retryRecent=query<HTMLButtonElement>("[data-retry-recent]");
  const profileForm=query<HTMLFormElement>("[data-member-form]");
  const grid=query<HTMLElement>("[data-member-grid]");
  const leaderSection=query<HTMLElement>("[data-member-leaders]");
@@ -231,7 +334,11 @@ for(const root of widgets){
   }
   if(leaderToggle)leaderToggle.setAttribute("aria-expanded",String(showRanks));
  }
- leaderToggle?.addEventListener("click",()=>{showRanks=!showRanks;setPanels()});
+ leaderToggle?.addEventListener("click",()=>{
+  showRanks=!showRanks;setPanels();
+  // Public rankings are optional: never fetch the hidden leaderboard on startup.
+  if(showRanks&&!leadersReady)void loadLeaders();
+ });
  editToggle?.addEventListener("click",()=>{
   if(!ownId)return;
   editing=!editing;
@@ -242,13 +349,14 @@ for(const root of widgets){
  activityToggle?.addEventListener("click",()=>{
   if(!ownId)return;
   showActivity=!showActivity;
-  if(showActivity)editing=false;
+  if(showActivity){editing=false;void Promise.all([loadBookmarks(),loadFollowed()]);}
   setPanels();
  });
  document.querySelectorAll<HTMLAnchorElement>("[data-forum-leaderboard-link]").forEach(link=>{
   link.addEventListener("click",()=>{showRanks=true;setPanels()});
  });
  let leaders:Profile[]=[];
+ let leadersReady=false,leadersLoading=false;
  const headers=(auth=false)=>({apikey:cfg.key,Accept:"application/json",
    ...(auth&&token?{Authorization:"Bearer "+token}:{})});
  const avatarUrl=(p:Profile):string|null=>{
@@ -303,18 +411,69 @@ for(const root of widgets){
   }
  }
  async function loadLeaders(){
+  if(leadersLoading)return;
+  leadersLoading=true;
+  if(empty){empty.hidden=false;empty.textContent=txt.loading;}
+  if(retryLeaders)retryLeaders.hidden=true;
   try{
    const params=new URLSearchParams({select:"id,handle,display_name,bio,favorite_brand,avatar_path,created_at,show_leaderboard,score_total,score_30d,topic_count,reply_count,helpful_votes",
     show_leaderboard:"eq.true",order:"score_30d.desc,score_total.desc",limit:"60"});
    const res=await fetch(cfg.url+"/rest/v1/tc_member_scores?"+params,{headers:headers(),cache:"no-store",
     signal:AbortSignal.timeout(12000)});
    if(!res.ok)throw Error();
-   leaders=await res.json();renderLeaders();
-  }catch{if(empty)empty.textContent=txt.noMembers}
+   leaders=await res.json();leadersReady=true;renderLeaders();
+  }catch{
+   leaders=[];leadersReady=false;renderLeaders();
+   if(empty){empty.hidden=false;empty.textContent=txt.memberLoadError;}
+   if(retryLeaders)retryLeaders.hidden=false;
+  }finally{leadersLoading=false;}
+ }
+ async function loadRecentMembers(){
+  if(!recentEl)return;
+  recentEl.replaceChildren();
+  if(retryRecent)retryRecent.hidden=true;
+  if(recentStatus)recentStatus.textContent=txt.loading;
+  try{
+   // Same security-invoker view and opt-in rule as the existing leaderboard.
+   // Never fetch auth.users, emails or hidden/unlisted member records.
+   const params=new URLSearchParams({
+    select:"id,handle,display_name,avatar_path,created_at,show_leaderboard",
+    show_leaderboard:"eq.true",order:"created_at.desc",limit:"12"
+   });
+   const res=await fetch(cfg.url+"/rest/v1/tc_member_scores?"+params,{
+    headers:headers(),cache:"no-store",signal:AbortSignal.timeout(12000)
+   });
+   if(!res.ok)throw Error();
+   const rows=await res.json() as Profile[];
+   const valid=Array.isArray(rows)?rows.filter(p=>
+    p.show_leaderboard===true&&p.display_name!==starterName&&
+    /^[0-9a-f-]{36}$/i.test(p.id)&&
+    typeof p.handle==="string"&&/^[a-z][a-z0-9_]{2,23}$/.test(p.handle)&&
+    typeof p.created_at==="string"&&Number.isFinite(Date.parse(p.created_at))
+   ).sort((a,b)=>Date.parse(b.created_at!)-Date.parse(a.created_at!)).slice(0,12):[];
+   for(const p of valid){
+    const li=document.createElement("li");
+    const img=document.createElement("img");
+    img.src=avatarUrl(p)||defaultAvatar;img.alt="";img.loading="lazy";
+    img.onerror=()=>{img.onerror=null;img.src=defaultAvatar};
+    const entry=document.createElement("span");entry.className="member-entry";
+    const name=document.createElement("strong");
+    name.textContent=p.display_name===starterName?txt.defaultMemberName:(p.display_name||p.handle);
+    const since=document.createElement("small");
+    since.textContent="@"+p.handle+" · "+txt.memberSince+": "+
+     new Date(p.created_at!).toLocaleDateString(lang,{year:"numeric",month:"short",day:"numeric"});
+    entry.append(name,since);li.append(img,entry);recentEl.append(li);
+   }
+   if(recentStatus)recentStatus.textContent=valid.length?"":txt.noRecentMembers;
+  }catch{
+   if(recentStatus)recentStatus.textContent=txt.memberLoadError;
+   if(retryRecent)retryRecent.hidden=false;
+  }
  }
  async function loadBookmarks(){
   if(!bookmarkList||!bookmarkPanel)return;
   bookmarkList.replaceChildren();bookmarkPanel.hidden=!(ownId&&showActivity);
+  if(bookmarkEmpty)bookmarkEmpty.textContent=txt.noBookmarks;
   if(!ownId)return;
   try{
    const res=await fetch(cfg.url+"/rest/v1/tc_member_bookmarks?select=topic_id&order=created_at.desc&limit=15",
@@ -336,13 +495,13 @@ for(const root of widgets){
     link.textContent=p.title;li.append(link);bookmarkList.append(li);
    }
    if(bookmarkEmpty)bookmarkEmpty.hidden=rows.length>0;
-  }catch{if(bookmarkEmpty)bookmarkEmpty.hidden=false}
+  }catch{if(bookmarkEmpty){bookmarkEmpty.hidden=false;bookmarkEmpty.textContent=txt.memberLoadError}}
  }
  async function loadFollowed(){
   if(!followingPanel||!followingList)return;
   followingList.replaceChildren();followingPanel.hidden=!(ownId&&showActivity);
   if(!ownId)return;
-  if(followingEmpty)followingEmpty.hidden=false;
+  if(followingEmpty){followingEmpty.hidden=false;followingEmpty.textContent=txt.noFollowingTopics;}
   try{
    const source=await fetch(cfg.url+"/rest/v1/tc_member_topic_follows?"+
     new URLSearchParams({select:"topic_id,last_seen_at",order:"created_at.desc",limit:"15"}),{
@@ -383,7 +542,7 @@ for(const root of widgets){
     followingList.append(li);
    }
    if(followingEmpty)followingEmpty.hidden=rows.length>0;
-  }catch{if(followingEmpty)followingEmpty.hidden=false}
+  }catch{if(followingEmpty){followingEmpty.hidden=false;followingEmpty.textContent=txt.memberLoadError}}
  }
 
  // A new member does not need to fill in a profile form. Create a neutral
@@ -394,7 +553,7 @@ for(const root of widgets){
   const neutral:Profile={
    id,handle:"member_"+id.replace(/-/g,"").slice(0,16),
    display_name:starterName,bio:"",favorite_brand:"",
-   avatar_path:null,show_leaderboard:true
+   avatar_path:null,show_leaderboard:false
   };
   try{
    const res=await fetch(cfg.url+"/rest/v1/tc_member_profiles",{
@@ -405,7 +564,8 @@ for(const root of widgets){
    });
    if(res.ok){
     const saved=await res.json() as Profile[];
-    void loadLeaders();
+    void loadRecentMembers();
+    if(showRanks)void loadLeaders();
     return saved[0]||neutral;
    }
    // Concurrent login may have created a profile in another tab.
@@ -422,7 +582,7 @@ for(const root of widgets){
  }
  async function loadSelf(){
   const version=++sessionVersion;
-  try{token=sessionStorage.getItem(tokenKey)||""}catch{token=""}
+  token=readForumSession()?.access||""
   ownId="";
   if(!token){
    editing=false;showActivity=false;
@@ -468,7 +628,7 @@ for(const root of widgets){
     const checked=profileForm.elements.namedItem("show_leaderboard") as HTMLInputElement|null;
     if(checked)checked.checked=p.show_leaderboard;
    }
-   await Promise.all([loadBookmarks(),loadFollowed()]);
+   if(showActivity)await Promise.all([loadBookmarks(),loadFollowed()]);
   }catch{
    if(version!==sessionVersion)return;
    // Transient profile query failure is not an Auth logout; preserve the
@@ -538,7 +698,9 @@ for(const root of widgets){
       ownId+"/avatar.webp?v="+Date.now();
     showAvatar(avatar,src);showAvatar(toolbarAvatar,src);
    }
-   await loadLeaders();
+   leadersReady=false;
+   await loadRecentMembers();
+   if(showRanks)await loadLeaders();
   }catch(e){
    if(status)status.textContent=e instanceof Error&&e.message==="invalid_image"?txt.uploadError:txt.profileError;
   }finally{if(submit)submit.disabled=false}
@@ -551,8 +713,11 @@ for(const root of widgets){
    renderLeaders();
   });
  }
+ retryLeaders?.addEventListener("click",()=>void loadLeaders());
+ retryRecent?.addEventListener("click",()=>void loadRecentMembers());
  window.addEventListener("tractorvs-forum-session",()=>void loadSelf());
  window.addEventListener("storage",()=>void loadSelf());
- void loadLeaders();void loadSelf();
+ // Newest opt-in members are visible; rankings and private activity are on-demand.
+ void loadRecentMembers();void loadSelf();
 }
 </script>

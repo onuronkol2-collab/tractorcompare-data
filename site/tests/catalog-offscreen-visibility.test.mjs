@@ -19,7 +19,7 @@ test("every published card remains server-rendered, crawlable, searchable and co
  assert.match(component,/catalog\.tractors\.map\(\(tractor\)=>/);
  assert.match(component,/href=\{detailPrefix\+tractor\.slug\+"\/"\}/);
  assert.match(component,/data-search=/);
- assert.match(component,/cardSearchKeys\[i\]\.includes\(normalized\)/);
+ assert.match(component,/matchesTractorTerms\(cardSearchKeys\[i\], terms\)/);
  assert.match(component,/if \(card\.hidden !== !match\) card\.hidden = !match/);
  assert.match(component,/id=\{firstBrandCard\.get/);
  assert.match(component,/data-catalog-brand-jump/);

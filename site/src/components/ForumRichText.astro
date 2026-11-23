@@ -2,8 +2,8 @@
 import {forumBlocks} from "../lib/forum-format.mjs";
 import ForumInline from "./ForumInline.astro";
 import type {Locale} from "../lib/locales.ts";
-interface Props {body:string;lang?:Locale}
-const {body,lang="en"}=Astro.props;
+interface Props {body:string;lang?:Locale;headingPrefix?:string}
+const {body,lang="en",headingPrefix}=Astro.props;
 const blocks=forumBlocks(body);
 const labels:Record<string,string>={
  en:"Scrollable data table",tr:"Kaydırılabilir veri tablosu",
@@ -12,18 +12,33 @@ const labels:Record<string,string>={
  de:"Scrollbare Datentabelle",ru:"Прокручиваемая таблица данных",
  ja:"スクロール可能なデータ表",es:"Tabla de datos desplazable"
 };
+const tableHints:Record<Locale,string>={
+  "en": "Scroll horizontally to view every table column.",
+  "tr": "Tablonun tüm sütunlarını görmek için yatay kaydırın.",
+  "de": "Scrollen Sie seitwärts, um alle Tabellenspalten zu sehen.",
+  "fr": "Faites défiler horizontalement pour voir toutes les colonnes du tableau.",
+  "es": "Desplázate horizontalmente para ver todas las columnas de la tabla.",
+  "pt-br": "Role para os lados para ver todas as colunas da tabela.",
+  "ru": "Прокрутите таблицу в сторону, чтобы увидеть все столбцы.",
+  "ja": "表を横にスクロールすると、すべての列を確認できます。",
+  "zh": "横向滚动表格可查看所有列。",
+  "hi": "तालिका के सभी स्तंभ देखने के लिए दाएँ-बाएँ स्क्रॉल करें।"
+};
 ---
 <div class="forum-rich-text">
- {blocks.map(block=>
+ {blocks.map((block,index)=>
   block.type==="table"?
-   <div class="forum-table-wrap" tabindex="0" role="region" aria-label={labels[lang]}>
+   <div class="forum-table-group">
+    <p class="forum-table-hint">{tableHints[lang]}</p>
+    <div class="forum-table-wrap" tabindex="0" role="region" aria-label={labels[lang]}>
     <table>
      <thead><tr>{block.header.map(parts=><th scope="col"><ForumInline parts={parts}/></th>)}</tr></thead>
      <tbody>{block.rows.map(row=><tr>{row.map(parts=><td><ForumInline parts={parts}/></td>)}</tr>)}</tbody>
     </table>
+    </div>
    </div>:
   block.type==="heading"?
-   (block.level===2?<h2><ForumInline parts={block.items[0]}/></h2>:
+   (block.level===2?<h2 id={headingPrefix?headingPrefix+"-"+index:undefined}><ForumInline parts={block.items[0]}/></h2>:
     block.level===3?<h3><ForumInline parts={block.items[0]}/></h3>:
      <h4><ForumInline parts={block.items[0]}/></h4>):
   block.type==="list"?
@@ -49,6 +64,8 @@ const labels:Record<string,string>={
   background:#e6eee8;border-radius:4px;padding:2px 5px;white-space:break-spaces}
  .forum-rich-text :global(a){color:#185d40;text-decoration:underline;text-underline-offset:3px;overflow-wrap:anywhere}
  .forum-rich-text :global(a:focus-visible){outline:3px solid #8cb78a;outline-offset:3px}
+ .forum-table-group{min-width:0;max-width:100%}
+ .forum-table-hint{font-size:14px;line-height:1.55;margin:0 0 8px;color:#395f48;font-weight:700}
  .forum-table-wrap{max-width:100%;overflow-x:auto;margin:18px 0 23px;border:1px solid #c9dac6;border-radius:10px}
  .forum-table-wrap:focus-visible{outline:3px solid #8cb78a;outline-offset:3px}
  .forum-table-wrap table{border-collapse:collapse;min-width:520px;width:100%;font-size:clamp(13px,1.5vw,16px);line-height:1.5}

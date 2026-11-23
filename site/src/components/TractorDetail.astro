@@ -1,5 +1,6 @@
 ---
 import SiteLayout from "../layouts/SiteLayout.astro";
+import "../styles/model-research-toc.css";
 import TractorMarketPrice from "./TractorMarketPrice.astro";
 import ModelSourceIndex from "./ModelSourceIndex.astro";
 import TractorPhoto from "./TractorPhoto.astro";
@@ -15,6 +16,7 @@ import {hasInternationalSonalikaContext,isSonalikaExportSourceNote,SONALIKA_EXPO
 import { modelSeoMetadata, modelStructuredData, originalVariantNote } from "../lib/model-seo";
 import { getPublicCatalog } from "../lib/catalog";
 import { morePublishedTractors } from "../lib/related-tractors";
+import {DEUTZ_5D_GS_PILOT} from "../lib/deutz-5d-editorial.ts";
 import {modelSourceDiscrepancies, isUnresolvedComparisonSpec} from "../lib/manufacturer-conflicts.mjs";
 import { modelEvidenceAnswers, matchedHeadlinePowerSource } from "../lib/model-evidence-answers.ts";
 import { HEADLINE_PROVENANCE_COPY } from "../lib/headline-provenance-i18n.ts";
@@ -33,6 +35,8 @@ const unresolvedManufacturerConflicts=modelSourceDiscrepancies(tractor,lang);
 const safeEvidenceTractor={...tractor,specifications:tractor.specifications.filter(spec=>!isUnresolvedComparisonSpec(tractor,spec))};
 const listingUrl = localizedPath(lang,"/tractors/");
 const selectionGuideUrl=localizedPath(lang,"/guides/choosing-a-tractor/");
+const hasReviewedDeutzComparison=(lang==="tr"||lang==="en") &&
+ (tractor.tractor_id===DEUTZ_5D_GS_PILOT.leftId||tractor.tractor_id===DEUTZ_5D_GS_PILOT.rightId);
 const translatedSelection=editorialHubTranslation(lang)?.cards[0];
 const compareUrl = localizedPath(lang,"/compare/") + "?left=" + encodeURIComponent(tractor.tractor_id);
 const { title, description, searchDescription } = modelSeoMetadata(tractor, lang);
@@ -135,7 +139,7 @@ const summaryItems = [
         {group.specifications.map((spec)=><article class="model-spec-card" data-spec-id={spec.spec_id}>
           <div class="model-spec-top"><h4>{specLabel(spec,lang)}</h4>{(lang==="tr"||lang==="en")&&glossaryAnchorForKey(spec.canonical_key)&&<a class="model-spec-glossary-link" href={localizedPath(lang,"/guides/tractor-technical-terms/")+"#"+glossaryAnchorForKey(spec.canonical_key)} title={lang==="tr"?"Bu teknik terim ne işe yarar?":"What does this technical term mean?"} aria-label={lang==="tr"?specLabel(spec,lang)+" açıklaması": "Learn about "+specLabel(spec,lang)}>?</a>}{spec.rated_rpm!=null&&<span>{spec.rated_rpm} rpm</span>}</div>
           <p class="model-spec-value">{spec.spec_value}{spec.unit?" "+spec.unit:""}</p>
-          {spec.measurement_standard&&!isSonalikaExportSourceNote(spec.measurement_standard)&&<p class="model-spec-note">{spec.measurement_standard}</p>}
+          {spec.measurement_standard && !(isUnresolvedComparisonSpec(tractor,spec) && spec.canonical_key==="overall_length_with_front_ballast_mm") && !isSonalikaExportSourceNote(spec.measurement_standard) && <p class="model-spec-note">{spec.measurement_standard}</p>}
           {officialManufacturerSourceUrl(spec,tractor.brand_name) && <div class="model-spec-source">
             <a href={officialManufacturerSourceUrl(spec,tractor.brand_name)!} target="_blank" rel="noopener noreferrer">{t(lang,"manufacturerSource")} ↗</a>
           </div>}
@@ -163,6 +167,14 @@ const summaryItems = [
           </a>
         </li>)}
       </ul>
+    </div>
+  </section>}
+  {hasReviewedDeutzComparison && <section class="model-technical-analysis-link" aria-label={lang==="tr"?"Aynı kaynaktan model karşılaştırması":"Same-source model comparison"}>
+    <div class="container">
+      <a href={localizedPath(lang,DEUTZ_5D_GS_PILOT.path)}>
+        {lang==="tr"?"Deutz-Fahr 5090 D GS ve 5100 D GS: kaynaklı teknik farklar":"Deutz-Fahr 5090 D GS vs 5100 D GS: source-backed differences"}
+        <span aria-hidden="true">↗</span>
+      </a>
     </div>
   </section>}
   {hasBasak2075Analysis && <section class="model-technical-analysis-link" aria-label={t(lang,"reviewedModelAnalysis")}>
@@ -287,3 +299,38 @@ const summaryItems = [
   @media(prefers-reduced-motion: reduce) { .model-compare-action { transition:none; } .model-compare-action:hover { transform:none; } }
 
 </style>
+
+<script>
+  // Optional, strictly client-side navigation for already-published technical
+  // groups. The server-rendered model measurements, citations and content
+  // remain byte-for-byte unchanged, so this navigation-only improvement does
+  // not manufacture bulk SEO sitemap lastmod updates for 3,880 model pages.
+  const sections=[...document.querySelectorAll<HTMLElement>(".model-spec-section .model-spec-group")];
+  if(sections.length>1){
+    const list=sections[0].parentElement;
+    const container=list?.parentElement;
+    if(list&&container){
+      const nav=document.createElement("nav");
+      nav.className="model-spec-toc";
+      const title=document.querySelector<HTMLElement>(".model-spec-heading h2")?.textContent?.trim();
+      if(title)nav.setAttribute("aria-label",title);
+      const label=document.createElement("strong");
+      label.textContent=title||"";
+      const links=document.createElement("div");
+      for(const [index,section] of sections.entries()){
+        const heading=section.querySelector("h3")?.textContent?.trim();
+        if(!heading)continue;
+        const id="model-spec-group-"+(index+1);
+        section.id=id;
+        const link=document.createElement("a");
+        link.href="#"+id;
+        link.textContent=heading;
+        links.appendChild(link);
+      }
+      if(links.childElementCount>1){
+        nav.append(label,links);
+        container.insertBefore(nav,list);
+      }
+    }
+  }
+</script>

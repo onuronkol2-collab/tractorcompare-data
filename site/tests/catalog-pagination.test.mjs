@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { fetchPublicRows } from "../src/lib/catalog.ts";
+import { fetchPublicRows, fetchPublicRowsWithCountDriftRetry } from "../src/lib/catalog.ts";
 
 const endpoint = new URL("https://db.example.supabase.co/rest/v1/tractorvs_public_specs?select=tractor_id&order=tractor_id.asc");
 
@@ -80,4 +80,83 @@ test("mismatched Content-Range fails closed",async()=>{
   try {
     await assert.rejects(fetchPublicRows(endpoint,"sb_publishable_test",false),/inconsistent row range/);
   } finally {stub.restore();}
+});
+
+test("public catalogue count drift restarts the COMPLETE read once; old rows cannot leak",async()=>{
+ const original=globalThis.fetch;
+ const requests=[];
+ let firstVersion=true;
+ globalThis.fetch=async input=>{
+  const u=new URL(input),offset=Number(u.searchParams.get("offset"));
+  requests.push(offset);
+  if(firstVersion&&offset===500){
+   firstVersion=false;
+   return new Response("[]",{status:200,headers:{"content-range":"*/620","content-type":"application/json"}});
+  }
+  const total=firstVersion?620:590;
+  const size=Math.max(0,Math.min(500,total-offset));
+  const rows=Array.from({length:size},(_,i)=>({row:offset+i,version:firstVersion?"old":"new"}));
+  const range=size?`${offset}-${offset+size-1}/${offset===0?total:"*"}`:`*/${total}`;
+  return new Response(JSON.stringify(rows),{status:200,headers:{"content-range":range,"content-type":"application/json"}});
+ };
+ try {
+  const rows=await fetchPublicRowsWithCountDriftRetry(endpoint,"sb_publishable_test",false);
+  assert.equal(rows.length,590);
+  assert.ok(rows.every(x=>x.version==="new"),"partial rows from the failed first pagination must be discarded");
+  assert.deepEqual(requests,[0,500,0,500]);
+ } finally{globalThis.fetch=original;}
+});
+
+test("count drift repeated on the second complete read remains a HARD failure",async()=>{
+ const original=globalThis.fetch;
+ const requests=[];
+ globalThis.fetch=async input=>{
+  const offset=Number(new URL(input).searchParams.get("offset"));
+  requests.push(offset);
+  const rows=offset===0?Array.from({length:500},(_,n)=>({row:n})):[];
+  return new Response(JSON.stringify(rows),{status:200,headers:{
+   "content-range":offset===0?"0-499/620":"*/620","content-type":"application/json"
+  }});
+ };
+ try {
+  await assert.rejects(
+   fetchPublicRowsWithCountDriftRetry(endpoint,"sb_publishable_test",false),
+   /catalogue count changed during the build/
+  );
+  assert.deepEqual(requests,[0,500,0,500],"only ONE restart allowed, never an infinite retry loop");
+ } finally{globalThis.fetch=original;}
+});
+
+test("HTTP 416 and malformed row range are not retried or normalized away",async()=>{
+ const original=globalThis.fetch;
+ let calls=0;
+ try {
+  globalThis.fetch=async()=>{calls++;return new Response("[]",{status:416});};
+  await assert.rejects(fetchPublicRowsWithCountDriftRetry(endpoint,"sb_publishable_test",false),/HTTP 416/);
+  assert.equal(calls,1);
+  calls=0;
+  globalThis.fetch=async()=>{calls++;return new Response('[{"row":0}]',{status:200,headers:{
+   "content-range":"3-3/1","content-type":"application/json"
+  }});};
+  await assert.rejects(fetchPublicRowsWithCountDriftRetry(endpoint,"sb_publishable_test",false),/inconsistent row range/);
+  assert.equal(calls,1);
+ } finally{globalThis.fetch=original;}
+});
+
+test("new retry attempt's HTTP error remains fatal after discarding changed-count rows",async()=>{
+ const original=globalThis.fetch;
+ const calls=[];
+ globalThis.fetch=async input=>{
+  const offset=Number(new URL(input).searchParams.get("offset"));
+  calls.push(offset);
+  if(calls.length===3)return new Response("[]",{status:416});
+  const rows=offset===0?Array.from({length:500},(_,i)=>({row:i})):[];
+  return new Response(JSON.stringify(rows),{status:200,headers:{
+   "content-range":offset===0?"0-499/620":"*/620","content-type":"application/json"
+  }});
+ };
+ try {
+  await assert.rejects(fetchPublicRowsWithCountDriftRetry(endpoint,"sb_publishable_test",false),/HTTP 416 at offset 0/);
+  assert.deepEqual(calls,[0,500,0],"no partial rows or third retry after the new attempt fails");
+ } finally{globalThis.fetch=original;}
 });

@@ -23,6 +23,11 @@ on:
       - ".github/workflows/tractorvs-sitemap-history.yml"
   pull_request:
     paths:
+      # Model detail presentation can affect thousands of published HTML
+      # digests. Run the *real* source/RLS-backed sitemap guard BEFORE merge.
+      - "site/src/components/TractorDetail.astro"
+      - "site/src/components/TractorPhoto.astro"
+      - "site/src/styles/model-research-toc.css"
       - "site/astro.config.mjs"
       - "scripts/tractor-sitemap-history.mjs"
       - "scripts/tractor-sitemap-history.test.mjs"

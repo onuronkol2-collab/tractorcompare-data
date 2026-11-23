@@ -72,3 +72,12 @@ test("homepage autocomplete appears beneath search and supports keyboard",()=>{
   assert.match(css,/\.home-search-results\[hidden\] \{ display: none; \}/);
   assert.match(css,/\.home-search-option:focus-visible/);
 });
+
+
+test("home hero editorial links directly to the two published glossary locales",()=>{
+  assert.match(home,/const glossaryUrl = \(lang==="tr" \|\| lang==="en"\)/);
+  assert.match(home,/href=\{glossaryUrl\}/);
+  assert.match(home,/class="home-editorial-resource"/);
+  assert.match(home,/lang==="tr"\?"Traktör teknik terimleri ve parçaları":"Tractor technical terms and parts"/);
+  assert.match(css,/\.home-editorial-resource \.home-outline-link:focus-visible/);
+});

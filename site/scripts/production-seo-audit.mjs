@@ -2,7 +2,7 @@ import {inspectVisibleMainImages} from "./seo-main-markup.mjs";
 import {inspectDocumentImageAlts,inspectUndocumentedEmptyImageAlts} from "./verify-sitewide-image-alts.mjs";
 import {hasBibliographicTitleLeak} from "./verify-sitewide-seo-titles.mjs";
 import {readOpeningTagAttribute} from "./seo-html-attributes.mjs";
-import {parseProductionSitemapInventory,selectProductionSeoPages} from "./production-sitemap-inventory.mjs";
+import {parseProductionSitemapInventory,selectProductionSeoPages,reviewedPairSitemapCoverage} from "./production-sitemap-inventory.mjs";
 // Read-only production SEO coverage audit. No credentials or writes.
 const BASE = "https://tractorvs.com";
 const languages = {en:"en",tr:"tr",zh:"zh-Hans",hi:"hi","pt-br":"pt-BR",fr:"fr",de:"de",ru:"ru",ja:"ja",es:"es"};
@@ -75,6 +75,14 @@ catch(e){
  process.exit(1); // Never make 3,882 page requests after a broken public inventory.
 }
 const unique=inventory.pages;
+// A source-reviewed published article must not disappear from the ONE live
+// HTML sitemap while its public URL still responds. Only actual fetched XML
+// membership counts; audit-tool "inSitemap" heuristics are not evidence.
+const publishedPair=reviewedPairSitemapCoverage(inventory);
+console.log("TRACTORVS_REVIEWED_PAIR_SITEMAP_LIVE "+JSON.stringify(publishedPair));
+for(const url of publishedPair.missing)
+ error("reviewed-pair-sitemap-missing",url,
+  "Already-published curated comparison absent from LIVE HTML child sitemap; inspect Cloudflare deploy/caching and canonical routes");
 console.log("TRACTORVS_SEO_INVENTORY "+JSON.stringify({
  sitemap_files:inventory.indexChildren,html_pages:inventory.htmlPages.size,
  approved_forum_pages:inventory.forumPages.size,image_page_references:inventory.imagePages.size,

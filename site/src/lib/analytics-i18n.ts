@@ -8,6 +8,8 @@ export const CLARITY_PROJECT_ID = "zgzm6vovif" as const;
 
 export const ANALYTICS_TEXT: Record<Locale, {
   consentTitle: string;
+  consentCompact: string;
+  consentDetails: string;
   consentDescription: string;
   clarityConsent: string;
   cloudflareConsent: string;
@@ -27,6 +29,8 @@ export const ANALYTICS_TEXT: Record<Locale, {
 }> = {
   "en": {
     "consentTitle": "Optional site analytics",
+    "consentCompact": "If you agree, Google Analytics may use cookies, Microsoft Clarity records masked browsing sessions, and Cloudflare measures visits without cookies. You can reject and keep browsing.",
+    "consentDetails": "What does this include?",
     "consentDescription": "If you agree, Google Analytics helps us understand visits to tractor pages. Google may use cookies and process usage data. Nothing is sent to Google Analytics before you choose Accept.",
     "accept": "Accept analytics",
     "reject": "Reject analytics",
@@ -46,6 +50,8 @@ export const ANALYTICS_TEXT: Record<Locale, {
   },
   "tr": {
     "consentTitle": "İsteğe bağlı site analizi",
+    "consentCompact": "İzin verirsen Google Analytics çerez kullanabilir, Microsoft Clarity hassas içerikleri maskelenmiş oturumları kaydeder; Cloudflare ziyaretleri çerezsiz ölçer. Reddetsen de siteyi kullanabilirsin.",
+    "consentDetails": "Ayrıntılı bilgi",
     "consentDescription": "İzin verirsen Google Analytics, traktör sayfalarımızın kullanımını anlamamıza yardımcı olur. Google çerez kullanabilir ve kullanım verilerini işleyebilir. Kabul etmeden Google Analytics yüklenmez.",
     "accept": "Analize izin ver",
     "reject": "Analizi reddet",
@@ -65,6 +71,8 @@ export const ANALYTICS_TEXT: Record<Locale, {
   },
   "zh": {
     "consentTitle": "可选的网站分析",
+    "consentCompact": "同意后，Google Analytics 可能使用 Cookie，Microsoft Clarity 会记录已遮蔽敏感信息的浏览会话，Cloudflare 则不使用 Cookie 统计访问量。拒绝后仍可正常浏览。",
+    "consentDetails": "了解详情",
     "consentDescription": "如果您同意，Google Analytics 将帮助我们了解拖拉机页面的使用情况。Google 可能使用 Cookie 并处理使用数据。在您选择同意之前，我们不会加载 Google Analytics。",
     "accept": "同意分析",
     "reject": "拒绝分析",
@@ -84,6 +92,8 @@ export const ANALYTICS_TEXT: Record<Locale, {
   },
   "hi": {
     "consentTitle": "वैकल्पिक वेबसाइट विश्लेषण",
+    "consentCompact": "आपकी अनुमति पर Google Analytics कुकीज़ उपयोग कर सकता है, Microsoft Clarity संवेदनशील जानकारी छिपाकर सत्र रिकॉर्ड करता है और Cloudflare बिना कुकीज़ के विज़िट मापता है। मना करने पर भी साइट इस्तेमाल कर सकते हैं।",
+    "consentDetails": "अधिक जानकारी",
     "consentDescription": "यदि आप सहमति देते हैं, तो Google Analytics हमें ट्रैक्टर पेजों के उपयोग को समझने में मदद करता है। Google कुकीज़ का उपयोग और उपयोग संबंधी डेटा प्रोसेस कर सकता है। आपकी सहमति से पहले यह लोड नहीं होता।",
     "accept": "विश्लेषण स्वीकार करें",
     "reject": "विश्लेषण अस्वीकार करें",
@@ -103,6 +113,8 @@ export const ANALYTICS_TEXT: Record<Locale, {
   },
   "pt-br": {
     "consentTitle": "Análise opcional do site",
+    "consentCompact": "Com sua permissão, o Google Analytics pode usar cookies, o Microsoft Clarity grava sessões com dados sensíveis ocultos e a Cloudflare mede visitas sem cookies. Você pode recusar e continuar navegando.",
+    "consentDetails": "Mais informações",
     "consentDescription": "Com sua permissão, o Google Analytics nos ajuda a entender o uso das páginas de tratores. O Google pode usar cookies e tratar dados de utilização. O Analytics não é carregado antes do seu consentimento.",
     "accept": "Aceitar análise",
     "reject": "Recusar análise",
@@ -122,6 +134,8 @@ export const ANALYTICS_TEXT: Record<Locale, {
   },
   "fr": {
     "consentTitle": "Statistiques facultatives",
+    "consentCompact": "Avec votre accord, Google Analytics peut utiliser des cookies, Microsoft Clarity enregistre des sessions masquées et Cloudflare mesure les visites sans cookies. Vous pouvez refuser et continuer à naviguer.",
+    "consentDetails": "En savoir plus",
     "consentDescription": "Avec votre accord, Google Analytics nous aide à comprendre l'utilisation des pages de tracteurs. Google peut utiliser des cookies et traiter des données d'utilisation. Aucun outil Analytics n'est chargé avant votre accord.",
     "accept": "Accepter les statistiques",
     "reject": "Refuser",
@@ -141,6 +155,8 @@ export const ANALYTICS_TEXT: Record<Locale, {
   },
   "de": {
     "consentTitle": "Optionale Website-Analyse",
+    "consentCompact": "Mit Ihrer Einwilligung kann Google Analytics Cookies nutzen, Microsoft Clarity zeichnet maskierte Sitzungen auf und Cloudflare misst Besuche ohne Cookies. Sie können ablehnen und die Seite weiter nutzen.",
+    "consentDetails": "Weitere Informationen",
     "consentDescription": "Mit Ihrer Zustimmung hilft uns Google Analytics, die Nutzung der Traktorenseiten zu verstehen. Google kann Cookies setzen und Nutzungsdaten verarbeiten. Vor Ihrer Zustimmung wird Analytics nicht geladen.",
     "accept": "Analyse zulassen",
     "reject": "Analyse ablehnen",
@@ -160,6 +176,8 @@ export const ANALYTICS_TEXT: Record<Locale, {
   },
   "ru": {
     "consentTitle": "Необязательная аналитика сайта",
+    "consentCompact": "С вашего согласия Google Analytics может использовать cookie, Microsoft Clarity записывает сеансы с маскировкой конфиденциальных данных, а Cloudflare считает посещения без cookie. Можно отказаться и продолжить просмотр.",
+    "consentDetails": "Подробнее",
     "consentDescription": "С вашего согласия Google Analytics поможет нам понять, как используют страницы тракторов. Google может применять cookie и обрабатывать данные об использовании. До согласия Analytics не загружается.",
     "accept": "Разрешить аналитику",
     "reject": "Отклонить",
@@ -179,6 +197,8 @@ export const ANALYTICS_TEXT: Record<Locale, {
   },
   "ja": {
     "consentTitle": "任意のサイト分析",
+    "consentCompact": "同意すると、Google Analytics は Cookie を使用する場合があり、Microsoft Clarity は機密情報を隠した操作記録を保存し、Cloudflare は Cookie なしで訪問を測定します。拒否してもサイトを利用できます。",
+    "consentDetails": "詳しい説明",
     "consentDescription": "同意いただくと、Google Analytics によりトラクターのページ利用状況を把握できます。Google は Cookie を使用し、利用データを処理する場合があります。同意前には読み込みません。",
     "accept": "分析に同意する",
     "reject": "分析を拒否する",
@@ -198,6 +218,8 @@ export const ANALYTICS_TEXT: Record<Locale, {
   },
   "es": {
     "consentTitle": "Análisis opcional del sitio",
+    "consentCompact": "Con tu permiso, Google Analytics puede usar cookies, Microsoft Clarity graba sesiones con datos sensibles ocultos y Cloudflare mide visitas sin cookies. Puedes rechazarlo y seguir navegando.",
+    "consentDetails": "Más información",
     "consentDescription": "Si das tu consentimiento, Google Analytics nos ayuda a entender el uso de las páginas de tractores. Google puede utilizar cookies y procesar datos de uso. No cargamos Analytics antes de que aceptes.",
     "accept": "Aceptar análisis",
     "reject": "Rechazar análisis",

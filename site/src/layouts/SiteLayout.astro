@@ -1,5 +1,6 @@
 ---
 import "../styles/global.css";
+import "../styles/research-layout.css";
 import "../styles/tractor-photos.css";
 import PhotoLightbox from "../components/PhotoLightbox.astro";
 import LocaleSuggestion from "../components/LocaleSuggestion.astro";
@@ -65,7 +66,9 @@ const alternatives = indexingEnabled
 const languageChoices = availableLocales.map((locale) => ({
   lang: locale,
   label: LOCALE_NAMES[locale],
-  url: localizedPath(locale, plainPath),
+  // Keep a direct comparison deep-link functional even before hydration.
+  // Canonical and hreflang metadata above intentionally remain query-free.
+  url: localizedPath(locale, plainPath) + (plainPath === "/compare/" ? Astro.url.search : ""),
 }));
 const openGraphLocale: Record<Locale, string> = {
   en:"en_US", tr:"tr_TR", zh:"zh_CN", hi:"hi_IN", "pt-br":"pt_BR",
@@ -180,7 +183,7 @@ const openGraphLocale: Record<Locale, string> = {
               </div>
             </form>
           </details>
-          <details class="locale-menu" data-site-disclosure>
+          <details class="locale-menu" data-site-disclosure data-language-sync="selection">
             <summary class="language-switch" aria-label={LOCALE_NAMES[lang] + " — " + t(lang,"selectLanguage")}>
               <span class="language-dot"></span>{LOCALE_NAMES[lang]} <span aria-hidden="true">▾</span>
             </summary>
@@ -254,19 +257,28 @@ const openGraphLocale: Record<Locale, string> = {
           </p>
         </div>
         <div class="footer-links">
-          <a href={guidePath}>{t(lang,"guideLink")}</a>
-          <a href={glossaryPath}>{t(lang,"navTechnicalTerms")}{lang!=="tr"&&lang!=="en"?" (EN)":""}</a>
-          <a href={methodologyPath}>{t(lang,"methodologyLink")}{lang!=="tr"&&lang!=="en"?" (EN)":""}</a>
-          <a href={homePath}>{t(lang,"navHome")}</a>
-          <a href={catalogPath}>{t(lang,"navCatalog")}</a>
-          <a href={comparePath}>{t(lang,"navCompare")}</a>
-          <a href={advisorPath}>{tx(lang,"nav")}</a>
-          <a href={forumPath}>{forumCopy(lang,"name")}</a>
-          <a href={homePath + "#data"}>{t(lang,"navData")}</a>
-          <a href={homePath + "#approach"}>{t(lang,"navApproach")}</a>
-          <a href={articlesPath}>{editorialLabel[lang]}</a>
-          <a href={localizedPath(lang,"/privacy/")}>{analyticsCopy.privacyLink}</a>
-          <button type="button" id="tractorvs-analytics-settings" class="footer-analytics-settings">{analyticsCopy.settings}</button>
+          <section class="footer-group">
+            <h2>{brand.name}</h2>
+            <a href={homePath}>{t(lang,"navHome")}</a>
+            <a href={catalogPath}>{t(lang,"navCatalog")}</a>
+            <a href={comparePath}>{t(lang,"navCompare")}</a>
+            <a href={advisorPath}>{tx(lang,"nav")}</a>
+            <a href={forumPath}>{forumCopy(lang,"name")}</a>
+          </section>
+          <section class="footer-group">
+            <h2>{t(lang,"navResources")}</h2>
+            <a href={articlesPath}>{editorialLabel[lang]}</a>
+            <a href={guidePath}>{t(lang,"guideLink")}</a>
+            <a href={glossaryPath}>{t(lang,"navTechnicalTerms")}{lang!=="tr"&&lang!=="en"?" (EN)":""}</a>
+            <a href={methodologyPath}>{t(lang,"methodologyLink")}{lang!=="tr"&&lang!=="en"?" (EN)":""}</a>
+          </section>
+          <section class="footer-group">
+            <h2>{t(lang,"navData")}</h2>
+            <a href={homePath + "#data"}>{t(lang,"navData")}</a>
+            <a href={homePath + "#approach"}>{t(lang,"navApproach")}</a>
+            <a href={localizedPath(lang,"/privacy/")}>{analyticsCopy.privacyLink}</a>
+            <button type="button" id="tractorvs-analytics-settings" class="footer-analytics-settings">{analyticsCopy.settings}</button>
+          </section>
         </div>
       </div>
       <div class="container footer-bottom">
@@ -279,14 +291,25 @@ const openGraphLocale: Record<Locale, string> = {
   </body>
 </html>
 <script>
-  // Keep selected comparison query parameters when switching language.
-  for (const link of document.querySelectorAll<HTMLAnchorElement>("[data-language-choice]")) {
-    const code = link.dataset.languageCode;
-    if (!code) continue;
-    const destination = new URL(link.href);
-    // Preserve model selections on direct canonical locale links.
-    destination.search = window.location.search;
-    link.href = destination.pathname + destination.search;
+  // The comparison updates the URL with history.replaceState() after model
+  // changes. Language links must track the CURRENT selection, not the selection
+  // at initial page load. The custom event also supports future client routes.
+  const languageLinks = [...document.querySelectorAll<HTMLAnchorElement>("[data-language-choice]")];
+  const syncLanguageLinks = () => {
+    for (const link of languageLinks) {
+      if (!link.dataset.languageCode) continue;
+      const destination = new URL(link.href, window.location.origin);
+      destination.search = window.location.search;
+      link.href = destination.pathname + destination.search;
+    }
+  };
+  syncLanguageLinks();
+  window.addEventListener("tractorvs:route-state-changed", syncLanguageLinks);
+  // Also refresh on direct interaction, including new-tab and keyboard usage,
+  // if some other client component changes history without emitting the event.
+  for (const link of languageLinks) {
+    for (const eventName of ["pointerdown", "focus", "contextmenu", "click", "auxclick"])
+      link.addEventListener(eventName, syncLanguageLinks);
   }
 
   // Native <details> works without JavaScript; these small enhancements make

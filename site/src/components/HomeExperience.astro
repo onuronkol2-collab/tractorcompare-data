@@ -1,5 +1,6 @@
 ---
 import SiteLayout from "../layouts/SiteLayout.astro";
+import TractorPhoto from "./TractorPhoto.astro";
 import "../styles/home-experience.css";
 import { getPublicCatalog } from "../lib/catalog";
 import { homeText as h } from "../lib/home-ui";
@@ -8,16 +9,26 @@ import { localizedPath, type Locale } from "../lib/locales";
 import { t } from "../lib/ui";
 import { advisorText as tx } from "../lib/advisor-i18n";
 import { editorialHubTranslation } from "../lib/editorial-hub-i18n";
+import {DEUTZ_5D_GS_PILOT,curatedDeutz5DPair} from "../lib/deutz-5d-editorial.ts";
 
 interface Props { lang: Locale; seoTitle?: string; seoDescription?: string }
 const { lang, seoTitle = "TractorVS | " + h(lang,"seoTitle"),
   seoDescription = h(lang,"seoDesc") } = Astro.props;
 const catalogue = await getPublicCatalog();
+// Google currently knows both locale homepages but not this reviewed comparison.
+// The link also gives readers a real, exact-variant model task; no invented locale
+// editions, synthetic pair data or claims of an independent tractor test.
+const reviewedGsPair=(lang==="tr"||lang==="en")
+  ?curatedDeutz5DPair(catalogue.tractors):null;
+const reviewedGsPairHref=reviewedGsPair
+  ?localizedPath(lang,DEUTZ_5D_GS_PILOT.path):null;
 const catalogUrl = localizedPath(lang, "/tractors/");
 const compareUrl = localizedPath(lang, "/compare/");
 const advisorUrl = localizedPath(lang, "/farm-advisor/");
 const articlesUrl = localizedPath(lang, "/articles/");
 const selectionGuideUrl = localizedPath(lang, "/guides/choosing-a-tractor/");
+// These two editorial language editions are actually published; never invent an untranslated route.
+const glossaryUrl = (lang==="tr" || lang==="en") ? localizedPath(lang, "/guides/tractor-technical-terms/") : null;
 const basakReviewUrl = localizedPath(lang, "/reviews/basak-2075-bk/");
 const editorialCopy = editorialHubTranslation(lang);
 const editorialPreview = {
@@ -208,18 +219,23 @@ const suggestionPayload = JSON.stringify(catalogue.tractors.map((tractor) => ({
           </div>
         </nav>
       )}
-      <div class="home-featured-grid">
+      <div class="home-featured-grid" data-research-gallery="licensed">
         {featured.map((tractor) => (
-          <a class="home-featured-card" href={detailBase + tractor.slug + "/"}>
-            <span class="home-featured-brand">{tractor.brand_name}</span>
-            <h3>{tractor.model_name}</h3>
-            {tractor.variant && <p class="home-featured-variant">{tractor.variant}</p>}
-            <div class="home-featured-facts">
-              {tractor.horsepower != null && <span><strong>{tractor.horsepower} HP</strong>{t(lang,"power")}</span>}
-              <span><strong>{tractor.specifications.length}</strong>{t(lang,"specifications")}</span>
-            </div>
-            <span class="home-featured-link">{d(lang,"modelDetails")} <span aria-hidden="true">↗</span></span>
-          </a>
+          <article class="home-featured-card">
+            {/** Actual licensed tractor imagery with full-screen view and
+                 visible photographer/license credits; never an AI-made model photo. */}
+            <TractorPhoto tractor={tractor} lang={lang} mode="catalog" />
+            <a class="home-featured-main" href={detailBase + tractor.slug + "/"}>
+              <span class="home-featured-brand">{tractor.brand_name}</span>
+              <h3>{tractor.model_name}</h3>
+              {tractor.variant && <p class="home-featured-variant">{tractor.variant}</p>}
+              <div class="home-featured-facts">
+                {tractor.horsepower != null && <span><strong>{tractor.horsepower} HP</strong>{t(lang,"power")}</span>}
+                <span><strong>{tractor.specifications.length}</strong>{t(lang,"specifications")}</span>
+              </div>
+              <span class="home-featured-link">{d(lang,"modelDetails")} <span aria-hidden="true">↗</span></span>
+            </a>
+          </article>
         ))}
       </div>
     </div>
@@ -247,6 +263,25 @@ const suggestionPayload = JSON.stringify(catalogue.tractors.map((tractor) => ({
           <span aria-hidden="true" class="home-editorial-arrow">↗</span>
         </a>
       </div>
+      {reviewedGsPairHref && <div class="home-editorial-resource home-editorial-source-pair">
+        <p><strong>{lang==="tr"?"Aynı üretici belgesinden traktör karşılaştırması":"Tractor comparison from one manufacturer document"}</strong>{" "}
+          {lang==="tr"
+            ?"Deutz-Fahr 5090 D GS ile 5100 D GS modellerinin Türkiye GS / Stage V üretici tablosundaki 12 belgeli teknik ölçütünü inceleyin. Bağımsız saha testi değildir."
+            :"Explore 12 documented technical measures for Deutz-Fahr 5090 D GS and 5100 D GS from the same Türkiye GS / Stage V manufacturer specification table. Not an independent field test."}</p>
+        <a class="home-outline-link" href={reviewedGsPairHref}>
+          {lang==="tr"?"Kaynaklı 5090 D GS / 5100 D GS karşılaştırması":"Verified 5090 D GS / 5100 D GS comparison"}
+          <span aria-hidden="true">↗</span>
+        </a>
+      </div>}
+      {glossaryUrl && <div class="home-editorial-resource">
+        <p>{lang==="tr"
+          ?"Traktör teknik tablosunda PTO, tork veya hidrolik bir terimi mi açıklamak istiyorsunuz?"
+          :"Need a plain-language explanation of PTO, torque or hydraulic measurements?"}</p>
+        <a class="home-outline-link" href={glossaryUrl}>
+          {lang==="tr"?"Traktör teknik terimleri ve parçaları":"Tractor technical terms and parts"}
+          <span aria-hidden="true">↗</span>
+        </a>
+      </div>}
     </div>
   </section>
 

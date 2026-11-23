@@ -12,6 +12,7 @@ import { MARKET_COUNTRIES, matchingPrice, formatMarketPriceRange } from "../lib/
 import { pricedCatalogModels } from "../lib/catalog-price-payload.ts";
 import { localizedCountryName } from "../lib/country-display";
 import {catalogBrandIndex,BRAND_NAV_COPY,CATALOG_SEARCH_TITLES,CATALOG_FILTER_COPY} from "../lib/catalog-brand-index.mjs";
+import {CATALOG_FACET_COPY} from "../lib/catalog-facets.mjs";
 import {listedBrandCollections} from "../lib/brand-discovery-pilot.mjs";
 interface Props { lang: Locale; }
 const { lang } = Astro.props;
@@ -23,6 +24,7 @@ const detailPrefix = localizedPath(lang,"/tractors/");
 const brandIndex=catalogBrandIndex(catalog.tractors);
 const brandNavCopy=BRAND_NAV_COPY[lang];
 const filterCopy=CATALOG_FILTER_COPY[lang];
+const facetsCopy=CATALOG_FACET_COPY[lang];
 const firstBrandCard=new Map(brandIndex.map(b=>[b.name,b.firstTractorId]));
 const brandAnchor=new Map(brandIndex.map(b=>[b.name,b.anchorId]));
 const brandGuides=new Map(listedBrandCollections(catalog.tractors).map(item=>[item.name,item.slug]));
@@ -68,6 +70,46 @@ const pricePayload = JSON.stringify({
           <button id="catalog-search-clear" type="button" hidden>{filterCopy.clear}</button>
         </div>
       </div>
+      <div class="catalog-discovery-layout">
+      <aside class="catalog-facet-panel" id="catalog-facet-panel" hidden aria-label={facetsCopy.filters} data-research-facets="published">
+        <div class="catalog-facet-heading">
+          <h2>{facetsCopy.filters}</h2>
+          <button id="catalog-reset-facets" type="button">{facetsCopy.reset}</button>
+        </div>
+        <div class="catalog-facet-fields">
+          <label>{facetsCopy.brand}
+            <select id="catalog-facet-brand">
+              <option value="">{facetsCopy.all}</option>
+              {brandIndex.map(brand=><option value={brand.name}>{brand.name} ({brand.count})</option>)}
+            </select>
+          </label>
+          <label>{facetsCopy.power}
+            <select id="catalog-facet-power">
+              <option value="">{facetsCopy.all}</option>
+              <option value="up50">{facetsCopy.up50}</option>
+              <option value="p51">{facetsCopy.p51}</option>
+              <option value="p101">{facetsCopy.p101}</option>
+              <option value="over150">{facetsCopy.over150}</option>
+            </select>
+          </label>
+          <label>{facetsCopy.year}
+            <select id="catalog-facet-year">
+              <option value="">{facetsCopy.all}</option>
+              <option value="recent">{facetsCopy.recent}</option>
+              <option value="older">{facetsCopy.older}</option>
+            </select>
+          </label>
+          <label>{facetsCopy.sort}
+            <select id="catalog-facet-sort">
+              <option value="brand">{facetsCopy.default}</option>
+              <option value="newest">{facetsCopy.newest}</option>
+              <option value="powerAsc">{facetsCopy.powerAsc}</option>
+              <option value="powerDesc">{facetsCopy.powerDesc}</option>
+            </select>
+          </label>
+        </div>
+      </aside>
+      <div class="catalog-results-panel">
       {brandIndex.length>1&&<nav class="catalog-brand-directory" aria-label={brandNavCopy.heading}>
         <details>
         <summary><strong>{brandNavCopy.heading}</strong><span>{brandIndex.length}</span></summary>
@@ -97,7 +139,9 @@ const pricePayload = JSON.stringify({
       <div class:list={["tractor-card-grid", { "tractor-card-grid--two": catalog.tractors.length === 2, "tractor-card-grid--large": catalog.tractors.length >= 100 }]} id="tractor-card-grid">
         {catalog.tractors.map((tractor)=><article class="tractor-card"
           id={firstBrandCard.get(tractor.brand_name)===tractor.tractor_id?brandAnchor.get(tractor.brand_name):undefined}
-          data-search={[tractor.brand_name,tractor.model_name,tractor.variant||"",tractor.market||"",tractor.engine||""].join(" ").toLowerCase()}>
+          data-search={[tractor.brand_name,tractor.model_name,tractor.variant||"",tractor.market||"",tractor.engine||""].join(" ").toLowerCase()}
+          data-brand={tractor.brand_name} data-power={tractor.horsepower??""} data-year={tractor.model_year??""}
+          data-name={tractor.brand_name+" "+tractor.model_name+" "+(tractor.variant||"")}>
           <TractorPhoto tractor={tractor} lang={lang} mode="catalog" sprite />
           <a class="tractor-card-main" href={detailPrefix+tractor.slug+"/"}>
           <div class="tractor-card-top"><span class="tractor-brand">{tractor.brand_name}</span><span class="tractor-card-arrow" aria-hidden="true">↗</span></div>
@@ -127,6 +171,8 @@ const pricePayload = JSON.stringify({
         </article>)}
       </div>
       <p class="catalog-no-results" id="catalog-no-results" role="status" hidden>{t(lang,"noMatches")}</p>
+      </div>
+      </div>
     </> : <div class="catalog-empty">
       <span class="catalog-empty-mark">01 / DATA</span>
       <h2>{catalog.configured
@@ -145,7 +191,8 @@ const pricePayload = JSON.stringify({
   import { matchingPrice, formatMarketPriceRange, MARKET_COUNTRIES } from "../lib/market-prices";
   import type { MarketCountry } from "../lib/market-prices";
   import { advisorText } from "../lib/advisor-i18n";
-  import { normalizeTractorQuery } from "../lib/search";
+  import { matchesTractorTerms, normalizeTractorQuery } from "../lib/search";
+  import {normalizedFacetState,matchesCatalogueFacet,compareCatalogueRows} from "../lib/catalog-facets.mjs";
   import { countryAwareCatalogUrl } from "../lib/catalog-country-url.mjs";
   import type { Locale } from "../lib/locales";
   const dataNode=document.getElementById("catalog-price-payload");
@@ -154,11 +201,15 @@ const pricePayload = JSON.stringify({
     const data=JSON.parse(dataNode.textContent || "{}") as {lang:Locale;models:Array<{
       tractor_id:string;brand_name:string;model_name:string;variant:string|null;market:string|null;model_year:number|null;
     }>};
+    const priceLabels = new Map(
+      Array.from(document.querySelectorAll<HTMLElement>("[data-price-for]"),
+        label => [label.dataset.priceFor, label] as const)
+    );
     let manuallySelected=false;
     const refresh = (country:MarketCountry) => {
       countryControl.value=country;
       for (const tractor of data.models) {
-        const el=document.querySelector<HTMLElement>('[data-price-for="'+tractor.tractor_id+'"]');
+        const el=priceLabels.get(tractor.tractor_id);
         if (!el) continue;
         const price=matchingPrice(tractor,country);
         el.textContent=price
@@ -185,7 +236,7 @@ const pricePayload = JSON.stringify({
       for(const link of document.querySelectorAll<HTMLAnchorElement>("[data-language-choice]"))
         link.href=countryAwareCatalogUrl(link.href,selected,[...allowedCountries]);
     });
-    fetch("/api/visitor-country",{credentials:"same-origin",cache:"no-store"})
+    if (!manuallySelected) fetch("/api/visitor-country",{credentials:"same-origin",cache:"no-store"})
       .then(r=>r.ok?r.json():null)
       .then((geo:{country?:string}|null)=>{
         if(!manuallySelected && geo && (MARKET_COUNTRIES as readonly string[]).includes(geo.country||""))
@@ -200,12 +251,52 @@ const pricePayload = JSON.stringify({
   const noResults = document.querySelector<HTMLElement>("#catalog-no-results");
   const visibleCount = document.querySelector<HTMLElement>("#catalog-visible-count");
   const clearSearch = document.querySelector<HTMLButtonElement>("#catalog-search-clear");
+  const facetPanel=document.querySelector<HTMLElement>("#catalog-facet-panel");
+  const brandFacet=document.querySelector<HTMLSelectElement>("#catalog-facet-brand");
+  const powerFacet=document.querySelector<HTMLSelectElement>("#catalog-facet-power");
+  const yearFacet=document.querySelector<HTMLSelectElement>("#catalog-facet-year");
+  const sortFacet=document.querySelector<HTMLSelectElement>("#catalog-facet-sort");
+  const facetReset=document.querySelector<HTMLButtonElement>("#catalog-reset-facets");
+  const availableBrands=Array.from(brandFacet?.options||[]).map(option=>option.value).filter(Boolean);
+  const initialFacets=normalizedFacetState(new URLSearchParams(location.search),availableBrands);
+  if(brandFacet)brandFacet.value=initialFacets.brand;
+  if(powerFacet)powerFacet.value=initialFacets.power;
+  if(yearFacet)yearFacet.value=initialFacets.year;
+  if(sortFacet)sortFacet.value=initialFacets.sort;
+  // All model links stay SSR/crawlable; controls enhance the full published list.
+  if(facetPanel)facetPanel.hidden=false;
+  const facetState=()=>({
+    brand:brandFacet?.value||"",power:powerFacet?.value||"",
+    year:yearFacet?.value||"",sort:sortFacet?.value||"brand"
+  });
+  const rows=cards.map((card,index)=>({
+    card,index,brand:card.dataset.brand||"",power:card.dataset.power||null,
+    year:card.dataset.year||null,name:card.dataset.name||""
+  }));
+  let lastSortedOrder:string|null=null;
+  const sortCards=()=>{
+    const grid=document.querySelector<HTMLElement>("#tractor-card-grid");
+    if(!grid)return;
+    const order=facetState().sort;
+    // Typing a search term must not move hundreds of DOM nodes on every key.
+    if(order===lastSortedOrder)return;
+    const sorted=order==="brand"?rows:[...rows].sort((a,b)=>compareCatalogueRows(a,b,order)||a.index-b.index);
+    // Reorder the actual cards, not just CSS order. Reading, keyboard and
+    // visual order must agree for assistive technologies. All original
+    // server-rendered model links and published records remain in the DOM.
+    const fragment=document.createDocumentFragment();
+    for(const row of sorted)fragment.appendChild(row.card);
+    grid.appendChild(fragment);
+    lastSortedOrder=order;
+  };
   const filterCatalog = (query: string) => {
     const normalized = normalizeTractorQuery(query);
+    const terms = normalized.split(/\s+/).filter(Boolean);
+    const state=facetState();
     let visible = 0;
     for (let i = 0; i < cards.length; i++) {
       const card = cards[i];
-      const match = cardSearchKeys[i].includes(normalized);
+      const match = matchesTractorTerms(cardSearchKeys[i], terms) && matchesCatalogueFacet(rows[i],state);
       // Avoid invalidating styles/layout for unaffected cards on each input.
       if (card.hidden !== !match) card.hidden = !match;
       if (match) visible++;
@@ -214,6 +305,7 @@ const pricePayload = JSON.stringify({
     if (visibleCount) visibleCount.textContent=(visibleCount.dataset.countTemplate||"")
       .replace("{visible}",String(visible)).replace("{total}",String(cards.length));
     if (clearSearch) clearSearch.hidden = !normalized;
+    if(facetReset)facetReset.hidden=!facetState().brand&&!facetState().power&&!facetState().year&&facetState().sort==="brand"&&!normalized;
   };
   // Keep refresh/share and locale switching aligned with the user's current
   // filter. Canonical SEO stays on the clean published catalogue URL.
@@ -222,19 +314,48 @@ const pricePayload = JSON.stringify({
     const next=new URL(location.href);
     if(query) next.searchParams.set("q",query);
     else next.searchParams.delete("q");
+    const state=facetState();
+    for(const [key,value] of [
+      ["brand",state.brand],["power",state.power],["year",state.year],
+      ["sort",state.sort==="brand"?"":state.sort]
+    ]) {
+      if(value)next.searchParams.set(key,value);
+      else next.searchParams.delete(key);
+    }
     history.replaceState(history.state,"",next.pathname+next.search+next.hash);
+    // Preserve the original catalogue search-language contract while also
+    // carrying the new research facets to every locale destination.
     for(const link of document.querySelectorAll<HTMLAnchorElement>("[data-language-choice]")){
       const destination=new URL(link.href);
       if(query) destination.searchParams.set("q",query);
       else destination.searchParams.delete("q");
+      for(const key of ["brand","power","year","sort"]){
+        const value=next.searchParams.get(key);
+        if(value) destination.searchParams.set(key,value);
+        else destination.searchParams.delete(key);
+      }
       link.href=destination.pathname+destination.search+destination.hash;
     }
+    // Shared navigation handles other dynamic route state consistently.
+    window.dispatchEvent(new Event("tractorvs:route-state-changed"));
   };
   search?.addEventListener("input", () => {
     filterCatalog(search.value);
     syncSearchURL(search.value);
   });
   const clearQueryFromURL = () => syncSearchURL("");
+  for(const control of [brandFacet,powerFacet,yearFacet,sortFacet]) {
+    control?.addEventListener("change",()=>{if(control===sortFacet)sortCards();filterCatalog(search?.value||"");syncSearchURL(search?.value||"");});
+  }
+  facetReset?.addEventListener("click",()=>{
+    if(brandFacet)brandFacet.value="";
+    if(powerFacet)powerFacet.value="";
+    if(yearFacet)yearFacet.value="";
+    if(sortFacet)sortFacet.value="brand";
+    if(search)search.value="";
+    sortCards();filterCatalog("");syncSearchURL("");
+    search?.focus();
+  });
   clearSearch?.addEventListener("click", () => {
     if (!search) return;
     search.value="";
@@ -245,23 +366,43 @@ const pricePayload = JSON.stringify({
   // Brand anchors must not target a hidden result after filtering.
   for(const link of document.querySelectorAll<HTMLAnchorElement>("[data-catalog-brand-jump]")){
     link.addEventListener("click",()=>{
-      if(!search?.value)return;
-      search.value="";
-      filterCatalog("");
+      if(search)search.value="";
+      if(brandFacet)brandFacet.value="";
+      if(powerFacet)powerFacet.value="";
+      if(yearFacet)yearFacet.value="";
+      if(sortFacet)sortFacet.value="brand";
+      sortCards();filterCatalog("");
       clearQueryFromURL();
     });
   }
   // A homepage search or brand chip lands on a real, filtered catalogue.
   // Keep the canonical URL on the clean catalogue path for search engines.
   const requested = new URLSearchParams(window.location.search).get("q")?.trim().slice(0,100);
+  sortCards();
   if (search && requested) {
     search.value = requested;
     filterCatalog(requested);
     requestAnimationFrame(() => search.scrollIntoView({block:"start"}));
+  } else {
+    filterCatalog("");
   }
 </script>
 
 <style>
+  .catalog-discovery-layout{display:grid;grid-template-columns:minmax(225px,270px) minmax(0,1fr);gap:clamp(14px,2vw,24px);align-items:start}
+  .catalog-results-panel{min-width:0}
+  .catalog-results-panel :global(.tractor-card-grid){grid-template-columns:repeat(auto-fill,minmax(min(100%,245px),1fr));gap:clamp(12px,2vw,20px)}
+  .catalog-facet-panel{position:sticky;top:90px;align-self:start;border:1px solid #bbd5bd;border-radius:16px;padding:clamp(15px,2.4vw,22px);margin:0 0 18px;background:linear-gradient(130deg,#f0f7ed,#fff);box-shadow:0 7px 30px #163d2710}
+  .catalog-facet-panel[hidden],.catalog-facet-heading button[hidden]{display:none!important}
+  .catalog-facet-heading{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:14px}
+  .catalog-facet-heading h2{margin:0;font-size:clamp(17px,2vw,21px);color:#194c31}
+  .catalog-facet-heading button{min-height:44px;border:1px solid #769e7c;color:#194e32;background:white;border-radius:9px;padding:8px 14px;font:inherit;font-size:14px;font-weight:750;cursor:pointer}
+  .catalog-facet-fields{display:grid;grid-template-columns:minmax(0,1fr);gap:13px}
+  .catalog-facet-fields label{display:grid;gap:7px;font-size:14px;font-weight:750;color:#274e36;min-width:0}
+  .catalog-facet-fields select{width:100%;min-width:0;height:48px;padding:9px 10px;border:1px solid #afc8b3;border-radius:9px;background:#fff;color:#173e29;font:inherit;font-weight:600}
+  .catalog-facet-panel :is(button,select):focus-visible{outline:3px solid #438c57;outline-offset:3px}
+  @media(max-width:940px){.catalog-discovery-layout{grid-template-columns:minmax(0,1fr)}.catalog-facet-panel{position:static}.catalog-facet-fields{grid-template-columns:repeat(2,minmax(0,1fr))}}
+  @media(max-width:490px){.catalog-facet-fields{grid-template-columns:1fr}.catalog-facet-heading{align-items:flex-start}}
   .catalog-search-feedback {grid-column:1/-1;display:flex;align-items:center;flex-wrap:wrap;gap:11px;
     min-height:32px;color:#355c42;font-size:13px;font-weight:700}
   .catalog-search-feedback button {border:1px solid #a6c5ab;border-radius:8px;min-height:36px;
