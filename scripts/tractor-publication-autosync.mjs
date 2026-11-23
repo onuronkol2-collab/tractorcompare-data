@@ -145,7 +145,7 @@ export async function runPublicationSync({repo,ref,jwt,token,fetchFn=fetch,dryRu
     }
     guardMassUnpublish(stored.record,latest);
     if(dryRun)return {changed:true,committed:false,reason:"dry_run_no_commit",...latest};
-    const payload=JSON.stringify({...latest,generated_at:now.toISOString()},null,2)+"\\n";
+    const payload=JSON.stringify({...latest,generated_at:now.toISOString()},null,2)+"\n";
     const message="chore(site): sync public catalogue revision ("+latest.published_models+" models)";
     const request={message,branch:"main",content:Buffer.from(payload,"utf8").toString("base64")};
     if(stored.sha)request.sha=stored.sha;
