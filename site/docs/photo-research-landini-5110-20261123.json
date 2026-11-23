@@ -1,0 +1,36 @@
+{
+  "auditDate": "2026-11-23",
+  "purpose": "Landini 5-110 published model photo family unblocked by mapping previously staged 5-110 RoboShift own-work Commons photo",
+  "photoSourceType": "Wikimedia Commons photographer's own work",
+  "sourceFilePage": "https://commons.wikimedia.org/wiki/File:Landini_5-110_RoboShift_Agritechnica_2023_(DSC05711).jpg",
+  "source1920": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/9b/Landini_5-110_RoboShift_Agritechnica_2023_%28DSC05711%29.jpg/1920px-Landini_5-110_RoboShift_Agritechnica_2023_%28DSC05711%29.jpg",
+  "photographer": "MarcelX42",
+  "licenseName": "CC BY-SA 4.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+  "originalImageDimensions": [
+    6487,
+    3651
+  ],
+  "originalCaptureDate": "2023-11-16",
+  "actualPhotoDescription": "Landini 5-110 RoboShift exhibition tractor photographed at Agritechnica 2023",
+  "publishedRecord": {
+    "brand": "Landini",
+    "model_name": "5-110",
+    "variant": "Serie 5 FPT Stage V; EU official brochure / equipment unspecified",
+    "market": "Europe",
+    "tractor_id": "264687c1-8dd2-5801-9e2e-11901f4acf6b"
+  },
+  "modelFamilyConfirmed": true,
+  "visibleConfigurationExact": false,
+  "configurationWarning": "The shown RoboShift gearbox/trim is illustrative only. The published Landini 5-110 record does not independently verify RoboShift transmission on every unit.",
+  "fileId": "landini-5-110-roboshift-marcelx42-2023",
+  "originalAlreadyCommitted480": "site/public/images/tractors/landini-5-110-roboshift-marcelx42-2023-480.jpg",
+  "approvedToPublish": false,
+  "releaseState": "staging_and_visual_review_only",
+  "rejectConditions": [
+    "The downloaded source does not match existing 480 first-party image",
+    "Original filename, photographer, model family or CC license differ",
+    "No encoded JPEG, wrong checksum, invalid aspect ratio or a Commons HTTP 429/403",
+    "Replacing previously stored 480 with a different frame, using unrelated model variants or asserting RoboShift standard"
+  ]
+}
