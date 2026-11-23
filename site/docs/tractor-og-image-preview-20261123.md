@@ -32,3 +32,9 @@
 - Merge, deploy ve canlı gözlem birbirinden ayrı değerlendirilir: canlı üretim HTML `og:image`, Twitter kartı, `200`/MIME ve görsel boyutu doğrulanmadan “canlıda doğrulandı” denmez. Google'ın yeniden taraması ve gerçek Discover gösterimleri garanti edilmez.
 
 **Geri alma:** yalnızca bu PR'ın uygulama kodu değişikliklerini revert ederek eski `-960.jpg` sosyal önizleme davranışına dön; diğer traktör fotoğrafı varlıklarını silme.
+
+## 23 Kasım 2026 — canlı metadata örnekleri ve kalıcı regresyon denetimi
+
+Üç canlı model sayfasında (`/tr/tractors/belarus-952-4-55df9fc2/`, `/tr/tractors/belarus-1221-3-6ed6e4a3/`, `/tr/tractors/mccormick-x7-621-p6-drive-9c4cb31f/`) gerçek HTML `og:image` / `twitter:image` alanlarının aynı kayıtlı `-1920.jpg` adresine işaret ettiği, temiz canonical ve `max-image-preview:large` bulunduğu incelendi. Bu **meta kanıtıdır**, görselin bütün URL/HTTP yanıtlarının veya Google Discover görünürlüğünün kanıtı değildir.
+
+Bundan sonra `site/scripts/image-preview-meta-audit.mjs` ve `site/tests/image-preview-meta-audit.test.mjs` aynı fotoğrafın OG/Twitter, canonical, robots ve `ImageObject` kimliği tutarlılığını doğrular; 10 dilin sözleşmesini test eder. `image-seo-live-audit.mjs` zaten yaptığı model sayfası isteğini kullanır, ek HTTP çağrısı yapmaz. İlk PR/main push dağıtım öncesi olduğundan yalnız kayda geçer; schedule/manual veya deploy sonrası ana dal tekrarında yanlış önizleme **red** sonucuna yol açar. Google indeksleme ve fotoğraf telifi ayrı kapılarda ölçülür.
