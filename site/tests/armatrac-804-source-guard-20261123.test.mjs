@@ -20,7 +20,7 @@ test("manufacturer collision facts are not inserted as new measurements",()=>{
   assert.match(content,/right-hand/);
 });
 test("exact 22 source-backed keys have only safe known categories",()=>{
-  const rows=[...content.matchAll(/\('(?:cab|rops)', '([a-z_]+)', '([^']+)',/g)];
+  const rows=[...content.matchAll(/\('(cab|rops)', '([a-z_]+)', '([^']+)',/g)];
   assert.equal(rows.length,44,"22 values are repeated once for overlap check and once for INSERT");
   const allowed=new Set(["engine_cylinders","engine_model","engine_displacement","transmission_type","transmission_gears",
     "pto_type","rear_lift_capacity","hydraulic_main_flow","wheelbase","overall_width","ground_clearance",
