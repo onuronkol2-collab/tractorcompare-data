@@ -7,6 +7,7 @@
  * Never stamp every URL with today's date merely because a build ran.
  */
 import {createHash} from "node:crypto";
+import {execFileSync} from "node:child_process";
 import {readFileSync,writeFileSync,existsSync} from "node:fs";
 import {resolve,join,dirname} from "node:path";
 import {fileURLToPath} from "node:url";
@@ -15,6 +16,21 @@ export const ROOT=resolve(fileURLToPath(new URL("../",import.meta.url)));
 export const ORIGIN="https://tractorvs.com";
 export const HISTORY_FILE=join(ROOT,"seo/sitemap-content-history.json");
 export const LASTMOD_FILE=join(ROOT,"site/src/data/sitemap-lastmod.json");
+
+// PR #497 changed the visible source-provenance explanation on all 3,880
+// published model pages. The existing 85% mass-change guard correctly paused
+// automatic lastmod updates for manual review. This is a one-time, narrowly
+// scoped approval for the audited exact ui.ts Git blob (not a generic bypass).
+const REVIEWED_PR497_UI_BLOB="28211dd60814f9e7dfbe95e6527ae38d90eace45";
+const isModelPage=url=>/^https:\/\/tractorvs\.com\/(?:tr\/|zh\/|hi\/|pt-br\/|fr\/|de\/|ru\/|ja\/|es\/)?tractors\/[a-z0-9-]+\/$/.test(url);
+function hasReviewedPr497Source(){
+  try{
+    const sha=execFileSync("git",["rev-parse","HEAD:site/src/lib/ui.ts"],{
+      cwd:ROOT,encoding:"utf8",stdio:["ignore","pipe","ignore"]
+    }).trim();
+    return sha===REVIEWED_PR497_UI_BLOB;
+  }catch{return false;}
+}
 
 function reject(reason){throw Error("[TractorVS lastmod] "+reason);}
 function loadJson(path,fallback){
@@ -90,7 +106,7 @@ export function significantContentDigest(html,url){
   });
   return createHash("sha256").update([normalize(title),normalize(desc),significantMain].join("\n")).digest("hex");
 }
-export function deriveHistory({pages,previous,now=new Date(),minPages=100}){
+export function deriveHistory({pages,previous,now=new Date(),minPages=100,reviewedPr497Copy=false}){
   if(!previous||previous.version!==1||!previous.pages||typeof previous.pages!=="object")
     reject("Invalid previous history checkpoint");
   if(pages.length<minPages)reject("Too few generated pages to update sitemap history");
@@ -101,6 +117,9 @@ export function deriveHistory({pages,previous,now=new Date(),minPages=100}){
   const updated={version:1,pages:{}};
   const dates={version:1,dates:{}};
   let changed=0,added=0;
+  const oldModelUrls=Object.keys(previous.pages).filter(isModelPage);
+  const changedOldModels=new Set();
+  let changedOldOther=0;
   const timestamp=now.toISOString();
   for(const [url,digest] of pages){
     if(!/^[0-9a-f]{64}$/.test(digest))reject("Invalid rendered content digest");
@@ -109,6 +128,8 @@ export function deriveHistory({pages,previous,now=new Date(),minPages=100}){
     if(!baseline&&old?.digest!==digest){
       changed++;
       if(!old)added++;
+      else if(isModelPage(url))changedOldModels.add(url);
+      else changedOldOther++;
     }
     if(modified!==null && modified!==undefined){
       if(!Number.isFinite(Date.parse(modified))||Date.parse(modified)>now.getTime()+1000)
@@ -117,9 +138,23 @@ export function deriveHistory({pages,previous,now=new Date(),minPages=100}){
     }
     updated.pages[url]={digest,modified:modified??null};
   }
-  if(existing && changed>Math.max(100,Math.floor(pages.length*0.85)))
-    reject("Unusually broad rendered content changes, manual SEO review required");
-  return {history:updated,lastmod:dates,summary:{baseline,pages:pages.length,significant_changes:changed,new_pages:added,dated_pages:Object.keys(dates.dates).length}};
+  if(existing && changed>Math.max(100,Math.floor(pages.length*0.85))){
+    // Fail closed unless the previously reviewed PR #497 ui.ts blob is still
+    // byte-identical AND every pre-existing model page changed. Normal minor
+    // releases (at most 100 other/new pages) may coexist. This exception is
+    // permanently consumed when the next provenance checkpoint is saved.
+    const reviewed=reviewedPr497Copy &&
+      previous.reviewedBulkCopyPr497!==true &&
+      oldModelUrls.length>=3000 &&
+      changedOldModels.size===oldModelUrls.length &&
+      oldModelUrls.every(url=>changedOldModels.has(url)) &&
+      changedOldOther<=100 && added<=100;
+    if(!reviewed)reject("Unusually broad rendered content changes, manual SEO review required");
+    updated.reviewedBulkCopyPr497=true;
+  }else if(previous.reviewedBulkCopyPr497===true){
+    updated.reviewedBulkCopyPr497=true;
+  }
+  return {history:updated,lastmod:dates,summary:{baseline,pages:pages.length,significant_changes:changed,new_pages:added,dated_pages:Object.keys(dates.dates).length,reviewed_bulk_copy_pr497:updated.reviewedBulkCopyPr497===true}};
 }
 export function auditBuiltSitemap({dist=join(ROOT,"site/dist"),historyPath=HISTORY_FILE,lastmodPath=LASTMOD_FILE,now=new Date(),minPages=100}={}){
   const urls=extractPublishedUrls(dist);
@@ -131,7 +166,7 @@ export function auditBuiltSitemap({dist=join(ROOT,"site/dist"),historyPath=HISTO
     return [url,significantContentDigest(html,url)];
   });
   const previous=loadJson(historyPath,{version:1,pages:{}});
-  const result=deriveHistory({pages,previous,now,minPages});
+  const result=deriveHistory({pages,previous,now,minPages,reviewedPr497Copy:hasReviewedPr497Source()});
   // Write only on successful full inspection; no silent partial sitemap.
   writeFileSync(historyPath,JSON.stringify(result.history,null,2)+"\n");
   writeFileSync(lastmodPath,JSON.stringify(result.lastmod,null,2)+"\n");
