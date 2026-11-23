@@ -9,7 +9,7 @@ const sql=readFileSync(new URL("../../supabase/maintenance/20261123_belarus_920_
 const start=sql.indexOf("-- MTZ_BELARUS_920_VALUES_BEGIN");
 const end=sql.indexOf("-- MTZ_BELARUS_920_VALUES_END");
 const block=sql.slice(start,end);
-const entries=[...block.matchAll(/\\('(920(?:\\.2)?)', '([a-z_]+)', '([^']+)'/g)];
+const entries=[...block.matchAll(/\('(920(?:\.2)?)', '([a-z_]+)', '([^']+)'/g)];
 const names=[
 "Standard front tyre size",
 "Standard rear tyre size",
@@ -35,13 +35,13 @@ test("Belarus review has exactly 20 independently scoped rows, no existing model
   assert.match(sql,/inserted_count<>20/);
   assert.match(sql,/overlaps<>0/);
   assert.match(sql,/source_url='/);
-  assert.doesNotMatch(sql,/\\b(?:UPDATE|DELETE|TRUNCATE|ALTER|DROP)\\s+(?:TABLE\\s+)?(?:public\\.)?(?:tractors|tractor_specs|data_sources)\\b/i);
+  assert.doesNotMatch(sql,/\b(?:UPDATE|DELETE|TRUNCATE|ALTER|DROP)\s+(?:TABLE\s+)?(?:public\.)?(?:tractors|tractor_specs|data_sources)\b/i);
 });
 test("tyres, axle gearing, hydraulics and optional equipment are not conflated",()=>{
   assert.match(block,/Portal; sliding bevel-reduction housings/);
   assert.match(block,/non-sliding bar with planetary wheel reduction/);
-  assert.match(block,/13\\.6-20/);assert.match(block,/360\\/70R24/);
-  assert.match(block,/16\\.9R38/);assert.match(block,/18\\.4R34/);
+  assert.match(block,/13\.6-20/);assert.match(block,/360\/70R24/);
+  assert.match(block,/16\.9R38/);assert.match(block,/18\.4R34/);
   assert.match(block,/power cylinder/);assert.match(block,/two self-contained cylinders/);
   assert.match(block,/oil-bath optional/);
   assert.doesNotMatch(block,/'hydraulic_pressure'|'rear_lift_capacity'|'model_year'/);
