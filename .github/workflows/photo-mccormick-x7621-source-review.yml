@@ -7,7 +7,7 @@ on:
       - "site/scripts/photo-stage-mccormick-x7621-20261123.py"
       - ".github/workflows/photo-mccormick-x7621-source-review.yml"
 permissions:
-  contents: read
+  contents: write
 jobs:
   research_without_publication:
     runs-on: ubuntu-latest
@@ -71,3 +71,59 @@ jobs:
           path: photo-x7621-review/
           if-no-files-found: error
           retention-days: 30
+      - name: Verify actual release evidence and attach JPEGs to exact draft PR only
+        if: github.event.pull_request.number == 508 && github.event.pull_request.head.repo.full_name == github.repository
+        env:
+          EXPECTED_HEAD: ${{ github.event.pull_request.head.sha }}
+        run: |
+          set -euo pipefail
+          BRANCH="photo/20261123-mccormick-x7621-rights-variant-review"
+          test "${{ github.event.pull_request.head.ref }}" = "$BRANCH"
+          python - <<'PY'
+          import hashlib,json
+          from pathlib import Path
+          release=json.loads(Path("site/docs/photo-release-proof-mccormick-x7621-p6-20261123.json").read_text())
+          staging=json.loads(Path("photo-x7621-review/sha256-ledger.json").read_text())
+          assert release["approvedToPublish"] is True
+          assert release["visualEvidence"]["modelConfirmed"] is True
+          assert release["visualEvidence"]["gearboxConfirmed"] is True
+          assert release["visualEvidence"]["gearboxBadge"] == "P6 DRIVE"
+          assert release["publishedModel"]["tractorId"] == "9c4cb31f-4fab-49ae-8ba1-3eee9f0059be"
+          assert release["excludedVariant"]["tractorId"] == "085667ad-637c-481a-be71-847f439d7fa6"
+          assert release["sourceSha256"] == staging["sourceSha256"]
+          assert release["sourceBytes"] == staging["sourceBytes"]
+          assert release["sourcePage"] == staging["sourcePage"]
+          assert release["sourceAuthor"] == staging["photographer"]
+          assert len(release["derivedAssets"]) == len(staging["derivatives"]) == 3
+          for row,evidence in zip(staging["derivatives"],release["derivedAssets"]):
+            assert row["width"] == evidence["width"] and row["height"] == evidence["height"]
+            assert row["bytes"] == evidence["bytes"] and row["sha256"] == evidence["sha256"]
+            asset=Path("photo-x7621-review")/row["file"]
+            raw=asset.read_bytes()
+            assert len(raw) == evidence["bytes"]
+            assert hashlib.sha256(raw).hexdigest() == evidence["sha256"]
+          print("TRACTORVS_X7621_P6_EXACT_UUID_AND_BYTE_PROOF_APPROVED")
+          PY
+          git fetch --no-tags origin "refs/heads/${BRANCH}:refs/remotes/origin/${BRANCH}"
+          observed="$(git rev-parse "refs/remotes/origin/${BRANCH}")"
+          if [[ "$observed" != "$EXPECTED_HEAD" ]]; then
+            echo "::error::Review branch changed after source check; abort to prevent stale push."
+            exit 1
+          fi
+          git switch -c photo-verified-attachments "refs/remotes/origin/${BRANCH}"
+          id="mccormick-x7-621-barzkowice-zwiadowca21-2026"
+          mkdir -p site/public/images/tractors site/docs
+          for size in 480 960 1920; do
+            target="site/public/images/tractors/${id}-${size}.jpg"
+            test ! -e "$target" || { echo "::error::Refusing to replace existing photo asset"; exit 1; }
+            install -m 0644 "photo-x7621-review/${id}-${size}.jpg" "$target"
+            git add "$target"
+          done
+          evidence="site/docs/photo-import-evidence-mccormick-x7621-p6-20261123.json"
+          test ! -e "$evidence"
+          install -m 0644 photo-x7621-review/sha256-ledger.json "$evidence"
+          git add "$evidence"
+          test "$(git diff --cached --name-only | wc -l)" -eq 4
+          git -c user.name="github-actions[bot]" -c user.email="41898282+github-actions[bot]@users.noreply.github.com" commit -m "feat(photo): attach three SHA-reviewed X7.621 P6 JPEGs to draft PR"
+          git push origin "HEAD:refs/heads/${BRANCH}"
+          echo "Draft PR only; no merge or production publication."
