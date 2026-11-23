@@ -213,11 +213,16 @@ export function sourceBackedHorsepower(
 ): number | null {
   const values: number[] = [];
   const acceptable = new Set(["engine_power", "engine_rated_power", "rated_engine_power", "engine_gross_power"]);
+  // Some manufacturer pages say "Engine HP" while actually providing a broad
+  // power CATEGORY. A mistakenly flattened endpoint must never be promoted to
+  // an exact number in model cards, search, SEO or adviser recommendations.
+  const categoryOrRange = /\b(?:power|hp)\s*(?:category|class|range)\b|\bengine\s*(?:power|hp)\s*[:–\-]?\s*\d+(?:[.,]\d+)?\s*[-–—]\s*\d+(?:[.,]\d+)?/i;
   for (const spec of specs) {
     const key = (spec.canonical_key || "").trim().toLowerCase();
     const genericName = (spec.spec_name || "").trim().toLowerCase();
     if (!acceptable.has(key) && !(key === "" &&
       ["engine power","rated engine power","nominal engine power"].includes(genericName))) continue;
+    if (categoryOrRange.test((spec.spec_name || "") + " " + (spec.evidence_text || ""))) continue;
     if (!/^(hp|bhp)$/i.test((spec.unit || "").trim())) continue;
     if (!spec.evidence_text?.trim() || !spec.verified_at || !safeHttpUrl(spec.source_url)) continue;
     const raw = (spec.spec_value || "").trim();

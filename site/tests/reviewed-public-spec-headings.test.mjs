@@ -109,3 +109,27 @@ test("2026-11-22 built-preview Turkish residuals: ten exact labels keep all sour
   assert.notEqual(publishedSpecificationLabel("Mechanical Shuttle","tr"),
     publishedSpecificationLabel("PowerShuttle","tr"));
 });
+
+test("2026-11-23 published-preview zero-regression labels retain exact model terminology",()=>{
+  const entries=[
+    ["Mechanical Gearbox","tr","Mekanik şanzıman"],
+    ["Travel Speed Range","tr","Sürüş hızı aralığı"],
+    ["Weight With Air Cab","tr","Air Cab kabinli ağırlık"],
+    ["Weight With Protector Cab","tr","Protector Cab kabinli ağırlık"],
+    ["Weight With Air Cab","ru","Масса с кабиной Air Cab"],
+    ["Weight With Protector Cab","ru","Масса с кабиной Protector Cab"],
+    ["Rear Wheel Diameter Options Inch","zh","后轮直径选项（英寸）"],
+    ["Engine Cooling","ja","エンジン冷却"],
+  ];
+  for(const [english,locale,translated] of entries){
+    assert.equal(REVIEWED_PUBLIC_SPEC_HEADINGS[english][locale],translated);
+    assert.equal(publishedSpecificationLabel(english,locale),translated);
+    const spec={...data,spec_name:english,evidence_text:"OEM source text",
+      spec_value:"1990",unit:"kg"};
+    const before=structuredClone(spec);
+    assert.equal(specLabel(spec,locale),translated);
+    assert.deepEqual(spec,before,"only the visible heading should change");
+  }
+  assert.notEqual(publishedSpecificationLabel("Weight With Air Cab","ru"),
+    publishedSpecificationLabel("Weight With Protector Cab","ru"));
+});
