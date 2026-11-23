@@ -5,6 +5,7 @@ import {publicForumClientConfig} from "../lib/forum.ts";
 import ForumEditor from "./ForumEditor.astro";
 import {getPublicCatalog} from "../lib/catalog.ts";
 import {LOCALES,LOCALE_NAMES,LOCALE_TAGS,localizedPath,type Locale} from "../lib/locales.ts";
+import {FORUM_DRAFT_LENGTH_COPY,FORUM_DRAFT_MAX} from "../lib/forum-draft-length.mjs";
 interface Props {lang:Locale; mode:"topic"|"reply"; topicId?:string}
 const {lang,mode,topicId}=Astro.props;
 const cfg=publicForumClientConfig() ?? (
@@ -16,6 +17,10 @@ const choices=[...catalogue].sort((a,b)=>
  a.brand_name.localeCompare(b.brand_name)||a.model_name.localeCompare(b.model_name));
 const browserConfig=JSON.stringify(cfg?{url:cfg.url,key:cfg.key,lang,mode,topicId:topicId||null}:null);
 const memberMessages=JSON.stringify(MEMBER_TEXT[lang]);
+const draftLengthMessages=JSON.stringify(FORUM_DRAFT_LENGTH_COPY[lang]);
+const maxBodyLength=FORUM_DRAFT_MAX[mode];
+const bodyCounterId=`forum-body-count-${lang}-${mode}`;
+const bodyWarningId=`forum-body-warning-${lang}-${mode}`;
 const strings=JSON.stringify({
  pending:ft(lang,"pending"),sent:ft(lang,"sent"),authRequired:ft(lang,"authRequired"),
  publicationCheck:ft(lang,"publicationCheck"),publicationChecking:ft(lang,"publicationChecking"),
@@ -39,7 +44,8 @@ const strings=JSON.stringify({
 });
 ---
 <section id="forum-compose" tabindex="-1" class="community-composer" data-forum-composer
- data-forum-config={browserConfig} data-forum-messages={strings} data-member-messages={memberMessages}>
+ data-forum-config={browserConfig} data-forum-messages={strings} data-member-messages={memberMessages}
+ data-forum-draft-length-messages={draftLengthMessages}>
  <h2>{mode==="topic"?ft(lang,"compose"):ft(lang,"reply")}</h2>
  {cfg ? <>
   <p class="forum-guest-note" data-guest-readonly>{mt(lang,"guestReadOnly")}</p>
@@ -182,8 +188,14 @@ const strings=JSON.stringify({
     </label>
     <label>{mode==="topic"?ft(lang,"body"):ft(lang,"reply")}
       <textarea name="body" required minlength={mode==="topic"?40:10}
-       maxlength={mode==="topic"?12000:6000} rows={mode==="topic"?7:4}></textarea>
+       maxlength={maxBodyLength} rows={mode==="topic"?7:4}
+       aria-describedby={bodyCounterId+" "+bodyWarningId}></textarea>
     </label>
+    <p class="forum-body-count" id={bodyCounterId} data-forum-body-count>
+     {0} / {maxBodyLength} {FORUM_DRAFT_LENGTH_COPY[lang].unit}
+    </p>
+    <p class="forum-body-limit-warning" id={bodyWarningId} data-forum-body-warning
+      role="status" aria-live="polite" aria-atomic="true"></p>
     <ForumEditor lang={lang}/>
     <label class="forum-checkbox">
       <input type="checkbox" name="translation_consent"/>
@@ -218,6 +230,11 @@ const strings=JSON.stringify({
 .community-composer label{display:grid;gap:8px;font-size:14px;font-weight:750;color:#2a5237}
 .community-composer input:not([type="checkbox"]),.community-composer select,.community-composer textarea{width:100%;max-width:100%;min-height:43px;border:1px solid #abc6ac;border-radius:10px;background:white;color:#243e2b;padding:11px 12px;font:inherit}
 .community-composer textarea{resize:vertical;line-height:1.6}
+.community-composer .forum-body-count{margin:4px 0 3px;color:#356347;font-size:13px;
+ font-weight:700;font-variant-numeric:tabular-nums;text-align:end}
+.community-composer .forum-body-limit-warning:not(:empty){margin:3px 0 12px;padding:9px 12px;
+ border-radius:9px;border:1px solid #d4aa63;background:#fff7e7;color:#654011;
+ font-size:14px;font-weight:650;line-height:1.5}
 .community-composer button{display:inline-flex;justify-content:center;align-items:center;padding:12px 19px;min-height:44px;border:0;border-radius:10px;background:#245e3b;color:white;cursor:pointer;font:inherit;font-weight:800;max-width:max-content}
 .community-composer button:hover{background:#194b2d}
 .community-composer button:disabled{opacity:.64;cursor:wait}
@@ -361,6 +378,7 @@ const strings=JSON.stringify({
 <script>
 import {isLocale} from "../lib/locales.ts";
 import {initForumEditor} from "../lib/forum-editor-client.ts";
+import {draftLengthState,wouldOverflowForumPaste} from "../lib/forum-draft-length.mjs";
 import {FORUM_SESSION_KEY,readForumSession,rememberForumSession,clearForumSession,isForumRemembered}
  from "../lib/forum-session-store.mjs";
 type FormContainer=HTMLElement & {dataset:DOMStringMap};
@@ -371,6 +389,7 @@ for(const widget of widgets){
  if(!cfg)continue;
  const copy=JSON.parse(widget.dataset.forumMessages||"{}") as Record<string,string>;
  const memberCopy=JSON.parse(widget.dataset.memberMessages||"{}") as Record<string,string>;
+  const lengthCopy=JSON.parse(widget.dataset.forumDraftLengthMessages||"{}") as Record<string,string>;
  const el=<T extends HTMLElement>(selector:string)=>widget.querySelector<T>(selector);
  const authForm=el<HTMLFormElement>("[data-forum-email]");
  const authGate=el<HTMLDetailsElement>("[data-forum-auth-gate]");
@@ -397,6 +416,32 @@ for(const widget of widgets){
  const edit=el<HTMLButtonElement>("[data-edit-email]");
  const verifyForm=el<HTMLFormElement>("[data-forum-verify]");
  const postForm=el<HTMLFormElement>("[data-forum-post]");
+  const bodyField=postForm?.querySelector<HTMLTextAreaElement>('textarea[name="body"]');
+  const bodyCount=el<HTMLElement>("[data-forum-body-count]");
+  const bodyWarning=el<HTMLElement>("[data-forum-body-warning]");
+  const formatCount=new Intl.NumberFormat(cfg.lang==="pt-br"?"pt-BR":cfg.lang==="zh"?"zh-CN":cfg.lang);
+  function updateBodyLength(){
+   if(!bodyField)return;
+   const state=draftLengthState(bodyField.value,bodyField.maxLength);
+   if(bodyCount)bodyCount.textContent=
+    formatCount.format(state.used)+" / "+formatCount.format(state.limit)+" "+(lengthCopy.unit||"");
+   if(bodyWarning)bodyWarning.textContent=state.full?(lengthCopy.full||""):
+    state.warning?(lengthCopy.near||""):"";
+  }
+  bodyField?.addEventListener("input",updateBodyLength);
+  bodyField?.addEventListener("change",updateBodyLength);
+  // Native maxlength may silently truncate a long paste. Reject it before
+  // the browser alters the field, leaving the user's existing draft intact.
+  bodyField?.addEventListener("paste",event=>{
+   if(!bodyField||!event.clipboardData)return;
+   const pasted=event.clipboardData.getData("text/plain");
+   if(wouldOverflowForumPaste(bodyField.value,bodyField.selectionStart,
+       bodyField.selectionEnd,pasted,bodyField.maxLength)){
+    event.preventDefault();
+    if(bodyWarning)bodyWarning.textContent=lengthCopy.paste||lengthCopy.full||"";
+   }
+  });
+  updateBodyLength();
  const logout=el<HTMLButtonElement>("[data-forum-logout]");
  const message=el<HTMLElement>("[data-forum-status]");
  const publicationPanel=el<HTMLElement>("[data-forum-publication-panel]");
@@ -520,6 +565,7 @@ for(const widget of widgets){
     const input=postForm.elements.namedItem(name);
     if(input && "value" in input && typeof draft[name]==="string")input.value=draft[name];
    }
+   updateBodyLength();
    msg(copy.draftRestored);
   }catch{}
  }
@@ -962,7 +1008,7 @@ for(const widget of widgets){
    let photoOk=true;
    if(editor?.hasPhotos())photoOk=await editor.commit(postId,cfg.mode);
    try{sessionStorage.removeItem(draftKey())}catch{}
-   postForm.reset();editor?.refresh();
+   postForm.reset();editor?.refresh();updateBodyLength();
    msg(copy.pending);void showHistory();
    if(cfg.mode==="topic")void setupPublicationCheck(postId);
   }catch{msg(copy.postError)}
