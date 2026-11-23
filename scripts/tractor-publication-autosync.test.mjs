@@ -208,7 +208,7 @@ test("GitHub 409 conflict refreshes public catalogue and main blob SHA once befo
  let getCount=0,putCount=0;
  const payloads=[];
  const fetchFn=async(url,init={})=>{
-  if(url.includes("api.github.com")){
+  if(new URL(url).hostname==="api.github.com"){
    if((init.method||"GET")==="GET"){
     getCount++;
     return new Response(JSON.stringify({sha:"blob-"+getCount,encoding:"base64",
@@ -237,7 +237,7 @@ test("GitHub 409 followed by another writer's same fingerprint makes no second c
  const api=fakeApi();
  let gets=0,puts=0;
  const fetchFn=async(url,init={})=>{
-  if(url.includes("api.github.com")){
+  if(new URL(url).hostname==="api.github.com"){
    if((init.method||"GET")==="GET"){
     gets++;
     return new Response(JSON.stringify({sha:"sha-"+gets,encoding:"base64",
@@ -260,7 +260,7 @@ test("second GitHub 409 and 403 fail closed, without looping or authorization by
   const api=fakeApi();
   let puts=0,gets=0;
   const fetchFn=async(url,init={})=>{
-   if(url.includes("api.github.com")){
+   if(new URL(url).hostname==="api.github.com"){
     if((init.method||"GET")==="GET"){
      gets++;
      return new Response(JSON.stringify({sha:"sha-"+gets,encoding:"base64",
