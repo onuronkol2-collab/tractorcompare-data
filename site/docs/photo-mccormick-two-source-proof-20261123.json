@@ -1,0 +1,45 @@
+{
+  "scope": "published-models-only",
+  "reviewedOn": "2026-11-23",
+  "sources": "Commons individual File pages, uploader own-work declarations and exact published model identity; no manufacturer marketing-photo copyright is inferred",
+  "photos": [
+    {
+      "brand": "McCormick",
+      "model": "X7.624 VT-Drive",
+      "tractorId": "30986b41-b486-41d6-815d-6bec72cd5bf1",
+      "fileId": "mccormick-x7-624-vt-drive-marcelx42-2019",
+      "filePage": "https://commons.wikimedia.org/wiki/File:McCormick_X7.624_VT-Drive_Agritechnica_2019_-_Front_and_left_side.jpg",
+      "photographer": "MarcelX42",
+      "licenseName": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "width": 6000,
+      "height": 3376,
+      "note": "2019 Agritechnica front/left photograph; exact X7.624 VT-Drive model, not the X7.621 or X7.623. Tire management add-on seen; does not assert Clever Cab configuration equals currently sold variants."
+    },
+    {
+      "brand": "McCormick",
+      "model": "X8.631 VT-Drive",
+      "tractorId": "95fdcc9a-c5c0-4329-a20e-3658c997e1ca",
+      "fileId": "mccormick-x8-631-vt-drive-marcelx42-2023",
+      "filePage": "https://commons.wikimedia.org/wiki/File:McCormick_X8.631_VT-Drive_Agritechnica_2023_(DSC06784).jpg",
+      "photographer": "MarcelX42",
+      "licenseName": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "width": 7008,
+      "height": 3944,
+      "note": "2023 Agritechnica front/side photograph; X8.631 VT-Drive exact model. It is not X8.630/other X8 series or a guarantee of the Clever Cab trim."
+    }
+  ],
+  "rejected": [
+    {
+      "brand": "Sonalika",
+      "model": "DI 30 Baagban",
+      "reason": "Available Wikimedia images caption a DI-30Rx trim and author requests contact prior to commercial use; exact TractorVS variant comparison and reuse conditions require independent clarification, not published."
+    },
+    {
+      "brand": "TYM",
+      "model": "T475",
+      "reason": "Available third-party dealer/manufacturer images do not provide an individual Creative Commons commercial-derivative license."
+    }
+  ]
+}
