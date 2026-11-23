@@ -39,7 +39,7 @@ test("only exact matching tractor model identity receives a verified photo",()=>
     "Same UUID with wrong model name must never be matched");
   assert.equal(tractorPhotos(tractor("McCormick","X5.100")).length,0);
   for(const locale of LOCALES)
-    assert.match(tractorPhotoAlt(publishedX5120,locale),/McCormick X5\\.120/);
+    assert.ok(tractorPhotoAlt(publishedX5120,locale).includes("McCormick X5.120"));
   assert.equal(tractorPhotos(tractor("McCormick","X5.110")).length,0);
   assert.equal(tractorPhotos(tractor("McCormick","X5.110 HC")).length,1);
   const landini=tractor("Landini","5-110");
