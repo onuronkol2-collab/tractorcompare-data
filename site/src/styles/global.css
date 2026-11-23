@@ -621,3 +621,164 @@ button, input { font: inherit; }
     width:min(400px,calc(100% - 24px));
   }
 }
+
+
+/* 2026-11-22 — Evidence-based readable content pass.
+   Only the site's informative labels, explanations and source notes are
+   enlarged. Decorative microtype, published copy, SEO URLs, forum's separate
+   readable stylesheet, layout geometry and analytics consent are untouched.
+   Keep language-dependent text wrapping and 200% text zoom viable. */
+#main :is(.section-summary, .data-copy > p:not(.eyebrow), .approach-copy p,
+          .feature-card > p:last-of-type, .catalog-empty p, .model-spec-heading > p) {
+  font-size: clamp(15px, 1.25vw, 17px);
+  line-height: 1.75;
+  overflow-wrap: break-word;
+}
+#main :is(.hero-lede, .catalog-intro) {
+  font-size: clamp(16px, 1.35vw, 18px);
+  line-height: 1.7;
+}
+#main :is(.hero-assurance, .panel-foot p, .principle-list li,
+          .roadmap-strip strong, .catalog-no-results) {
+  font-size: 14px;
+  line-height: 1.65;
+}
+#main :is(.hero-footnote, .roadmap-strip small, .panel-kicker,
+          .spec-number, .spec-state) {
+  font-size: 12px;
+  line-height: 1.6;
+  overflow-wrap: anywhere;
+}
+#main .spec-name { font-size: 14px; line-height: 1.55; }
+#main .model-spec-top h4 { font-size: 15px; line-height: 1.55; }
+#main .model-spec-top > span { font-size: 12px; color: #53665a; line-height: 1.5; }
+#main :is(.model-spec-note, .model-spec-card blockquote) {
+  font-size: 14px;
+  line-height: 1.7;
+  overflow-wrap: anywhere;
+}
+#main .model-spec-source a {
+  font-size: 14px;
+  line-height: 1.6;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  overflow-wrap: anywhere;
+}
+#main :is(.model-spec-source small, .model-spec-source > span) {
+  font-size: 13px;
+  line-height: 1.55;
+  color: #4b6353;
+  overflow-wrap: anywhere;
+}
+#main :is(.tractor-card-footer, .tractor-price-summary,
+          .catalog-toolbar > span) {
+  font-size: 14px;
+  line-height: 1.6;
+  overflow-wrap: anywhere;
+}
+#main :is(.catalog-facet-fields label, .catalog-brand-directory a,
+          .catalog-search-feedback, .catalog-brand-directory p) {
+  font-size: 15px;
+  line-height: 1.55;
+  overflow-wrap: anywhere;
+}
+#main :is(.catalog-brand-directory small, .catalog-brand-directory summary span) {
+  font-size: 13px;
+  line-height: 1.5;
+}
+#main :is(.tc-result-main small, .tc-selected-preview small,
+          .tc-selected-preview em, .tc-preview-photo > small,
+          .tc-entry small, .tc-cell-model) {
+  font-size: 14px;
+  line-height: 1.6;
+  overflow-wrap: anywhere;
+}
+#main :is(.tc-workspace-intro p, .tc-table-bar p, .tc-note,
+          .tc-data-warning, .tc-condition-caution) {
+  font-size: 15px;
+  line-height: 1.65;
+  overflow-wrap: anywhere;
+}
+@media (max-width: 720px) {
+  #main :is(.hero-assurance, .section-summary, .feature-card > p:last-of-type,
+            .model-spec-heading > p, .catalog-intro) { font-size: 16px; }
+  #main .model-summary-grid > div { min-width: 0; }
+  #main .spec-row { min-width: 0; }
+  #main :is(.model-spec-card, .model-spec-top, .catalog-results-panel) { min-width: 0; }
+}
+
+
+/* Preserve provenance and editorial nuance in the model/review experience:
+   no labels, evidence links, engine-variant qualifiers or dates are removed. */
+#main :is(.model-summary-provenance-note, .model-summary-power-source,
+          .model-summary-power-review, .model-original-note,
+          .model-spec-glossary-banner span, .model-forum-discussion span,
+          .model-more-list a span, .model-compare-copy small) {
+  font-size: 14px;
+  line-height: 1.65;
+  overflow-wrap: anywhere;
+}
+#main :is(.model-evidence-heading > p:last-child, .model-answer-card p,
+          .model-source-conflict-banner, .model-spec-warning,
+          .model-answer-links a, .model-answer-method a) {
+  font-size: 15px;
+  line-height: 1.7;
+  overflow-wrap: anywhere;
+}
+#main :is(.editorial-rules p, .editorial-card > p:not(.editorial-kicker)) {
+  font-size: 16px;
+  line-height: 1.75;
+  overflow-wrap: break-word;
+}
+#main :is(.editorial-card-footer time, .editorial-card .editorial-language-note,
+          .editorial-discovery p, .editorial-crumb, .editorial-start,
+          .editorial-trust > a, .editorial-card-footer a, .editorial-disclaimer) {
+  font-size: 14px;
+  line-height: 1.65;
+  overflow-wrap: anywhere;
+}
+#main :is(.guide-inline-sources, .guide-sources p:last-child,
+          .guide-sources li, .guide-date, .guide-crumb) {
+  font-size: 14px;
+  line-height: 1.7;
+  overflow-wrap: anywhere;
+}
+
+
+/* Technical learning content and image attribution are essential text,
+   not decoration. Keep original copyright text and all evidence links. */
+#main :is(.learn-cover figcaption, .glossary-cover figcaption,
+          .glossary-gallery figcaption span, .tractor-photo-short-credit,
+          .tractor-photo-short-credit small, .tractor-photo-caption small) {
+  font-size: 13px;
+  line-height: 1.6;
+  overflow-wrap: anywhere;
+}
+#main .tractor-photo-caption { font-size: 14px; line-height: 1.65; }
+#main :is(.learn-toc a, .learn-keypoint strong, .learn-related-terms > div a,
+          .learn-more-grid small, .parts-stats span, .parts-flow > p,
+          .parts-flow-item li, .parts-flow-item p, .parts-jump a,
+          .parts-group-heading p, .parts-source-note p,
+          .glossary-search-box label, .glossary-search-box #glossary-search-status,
+          .glossary-quick-nav a, .glossary-group-head p, .glossary-see-part,
+          .glossary-example p, .glossary-caution p,
+          .glossary-deepdives-grid p, .glossary-sources li a span) {
+  font-size: 14px;
+  line-height: 1.65;
+  overflow-wrap: anywhere;
+}
+#main :is(.glossary-meaning strong, .glossary-example strong,
+          .glossary-caution strong, .parts-flow-number, .part-card strong,
+          .learn-chapter-index, .learn-more-grid span) {
+  font-size: 12px;
+  line-height: 1.5;
+}
+#main :is(.home-search-note, .home-preview-label,
+          .home-spotlight small, .home-preview-stats span,
+          .home-featured-variant, .home-featured-facts span,
+          .home-search-option-brand) {
+  font-size: 14px;
+  line-height: 1.65;
+  overflow-wrap: anywhere;
+}
+#main .home-brand-row a { font-size: 14px; min-height: 44px; }
