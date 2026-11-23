@@ -1,5 +1,6 @@
 // Credential-free check of TractorVS public Google Images prerequisites.
 import {imageLicenseMetadataIssues} from "./image-license-jsonld-check.mjs";
+import {previewMetadataIssues} from "./image-preview-meta-audit.mjs";
 import {copyrightZhSitemapPages,copyrightLocaleSitemapSamples,strictCopyrightAuditMode} from "./image-copyright-live-cases.mjs";
 import {LOCALES} from "../src/lib/locales.ts";
 import {APPROVED_TRACTOR_PHOTOS} from "../src/lib/tractor-photos.ts";
@@ -78,6 +79,20 @@ try{
  const rights=imageLicenseMetadataIssues(html);
  console.log("TRACTOR_IMAGE_RIGHTS "+JSON.stringify({sample:"Belarus 82.1",...rights}));
  for(const issue of rights.issues)fail("Belarus 82.1 ImageObject "+issue);
+ // This is a post-deployment-only assertion. Initial PR/main push audits can
+ // race Cloudflare and must not fail on an older, otherwise valid live build.
+ const previewStrict=strictCopyrightAuditMode({
+  eventName:process.env.GITHUB_EVENT_NAME,
+  ref:process.env.GITHUB_REF,
+  runAttempt:process.env.GITHUB_RUN_ATTEMPT
+ });
+ const previewIssues=previewMetadataIssues(html,{
+  canonical:origin+"/tr/tractors/belarus-82-1-940a988a/",
+  ogImage:origin+"/images/tractors/belarus-82-1-homoatrox-2019-1920.jpg",
+  jsonLdImage:rights.contentUrl
+ });
+ console.log("TRACTOR_IMAGE_PREVIEW "+JSON.stringify({sample:"Belarus 82.1",previewStrict,issues:previewIssues}));
+ if(previewStrict)for(const issue of previewIssues)fail("Belarus 82.1 preview "+issue);
 }catch(e){fail("Model detail "+String(e));}
 // Independently sample the two real Search Console warning examples:
 // a CC BY-SA photograph and a CC0 public-domain dedication. The metadata
