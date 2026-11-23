@@ -16,6 +16,7 @@ import {verifyUnifiedSitemapIndex} from "./verify-unified-sitemap-index.mjs";
 import {auditBuiltImageAlts} from "./verify-sitewide-image-alts.mjs";
 import {auditBuiltSeoTitles} from "./verify-sitewide-seo-titles.mjs";
 import {auditBuiltMetaDescriptions} from "./verify-sitewide-meta-descriptions.mjs";
+import {auditBuiltAstroAssets} from "./verify-static-assets-version-compat.mjs";
 
 const projectRoot=resolve(fileURLToPath(new URL("..",import.meta.url)));
 const expectedOrigin="https://tractorvs.com";
@@ -209,6 +210,18 @@ export function verifyProductionArtifacts({dir=projectRoot,origin=expectedOrigin
  if(titleAudit.duplicates.length)
    console.warn("TRACTORVS_MODEL_TITLE_DUPLICATES "+
      JSON.stringify(titleAudit.duplicates.slice(0,12)));
+ // Catch broken first-party Astro script/style/font references before Cloudflare
+ // receives a new asset manifest. This validates one built version; it cannot
+ // prove that old tabs or rollout traffic will use a compatible Worker version.
+ const assetGraph=auditBuiltAstroAssets(dist);
+ insist(assetGraph.htmlDocuments>=10&&assetGraph.assetFiles>0&&assetGraph.referenceCount>0,
+   "Astro asset integrity audit found no usable HTML or generated asset references.");
+ insist(assetGraph.missingReferences.length===0,
+   "Dangling Astro JS/CSS/font references: "+JSON.stringify(assetGraph.missingReferences.slice(0,10)));
+ console.log("TRACTORVS_RELEASE_ASSET_GRAPH "+JSON.stringify({
+   htmlPages:assetGraph.htmlDocuments,assetFiles:assetGraph.assetFiles,
+   assetReferences:assetGraph.referenceCount,broken:assetGraph.missingReferences.length
+ }));
  return {models:tractors,translatedModels:trCount,terms:96,parts:57,origin,
    imageAltPages:imageAlt.htmlPages,imageAltImages:imageAlt.images,
    decorativeOrPendingImageAlts:imageAlt.emptyAlt,
