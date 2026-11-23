@@ -74,7 +74,7 @@ jobs:
           print("TRACTORVS_WAVE2_NINE_VERIFIED_JPEGS")
           PY
       - name: Preserve unapproved JPEGs and full integrity evidence
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: tractorvs-tym-f50chn-three-reviewed-photo-assets
           path: photo-f50chn-review/

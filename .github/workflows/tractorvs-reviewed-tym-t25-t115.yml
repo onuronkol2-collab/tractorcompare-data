@@ -72,7 +72,7 @@ jobs:
           print("TRACTORVS_TYM_4_INDEPENDENT_SOURCE_12_JPEG_REVIEW_ONLY_SHA_OK")
           PY
       - name: Preserve review-only evidence and JPEGs
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: tractorvs-tym-t25-t115-four-commons-jpegs-review-only
           path: tym-t25-t115-four-review/

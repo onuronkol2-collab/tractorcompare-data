@@ -57,7 +57,7 @@ jobs:
             --output /tmp/tractorvs-third-wave/review-only
       - name: Upload images and original CC attribution for separate later review
         if: success() && steps.lifecycle.outputs.released == 'false'
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: tractorvs-third-wave-twelve-licensed-photo-QA-only
           path: /tmp/tractorvs-third-wave/review-only/
