@@ -55,6 +55,16 @@ test("narrow multilingual homepage reflows without clipping research links",asyn
   }
 });
 
+test("advisor remains one coherent research panel, not nested floating cards",async({page})=>{
+  await page.goto("/tr/farm-advisor/",{waitUntil:"domcontentloaded"});
+  const form=page.locator(".advisor-form");
+  await expect(form).toBeVisible();
+  expect(await form.evaluate(el=>parseFloat(getComputedStyle(el).borderRadius))).toBeGreaterThanOrEqual(16);
+  const first=page.locator(".advisor-form .advisor-step").first();
+  await expect(first).toBeVisible();
+  expect(await first.evaluate(el=>getComputedStyle(el).boxShadow)).toBe("none");
+});
+
 test("reduced-motion visitors never get an animated card lift",async({page})=>{
   await page.emulateMedia({reducedMotion:"reduce"});
   await page.goto("/tr/",{waitUntil:"domcontentloaded"});

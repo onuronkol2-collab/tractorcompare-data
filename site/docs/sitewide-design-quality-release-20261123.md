@@ -6,7 +6,7 @@ Date: 2026-11-23. Scope: visual CSS in `site/src/styles/research-layout.css`, sh
 
 The site is a **tractor research, model specification and comparison resource**, never a buying marketplace. Existing page families already contain deep-green hero regions, a sage palette, model specification tables, source notes and structured routes. However header microtype, card hierarchy, large sets of independently designed surfaces and long multilingual labels have diverged over successive changes. The existing 2026 readability pass enlarged many pieces of text; this patch builds a **coherent, reusable presentation layer** on top without replacing those improvements.
 
-User task: from any of ten languages, locate catalogue / comparison / a model and its official source, understand what is verified, and navigate on mobile without clipping or hidden controls. Expected result: common research-card hierarchy, 15px source links, 16px forum form text, visible typography, calm focus/hover treatments, no fake offers or products, and 320px reflow.
+User task: from any of ten languages, locate catalogue / comparison / a model and its official source, understand what is verified, and navigate on mobile without clipping or hidden controls. Expected result: common research-card hierarchy (the advisor keeps one complete panel rather than nested step cards), 15px source links, 16px forum form text, visible typography, calm focus/hover treatments, no fake offers or products, and 320px reflow.
 
 ## Decisions and boundaries
 

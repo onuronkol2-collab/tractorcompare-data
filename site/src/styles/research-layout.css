@@ -27,7 +27,7 @@
   background: radial-gradient(ellipse at 90% 0, #31593c, transparent 55%), #15291e;
   color: #f5f8f2;
 }
-#main :is(.home-action-card, .tractor-card, .model-answer-card, .editorial-card, .advisor-step, .community-starter-card) {
+#main :is(.home-action-card, .tractor-card, .model-answer-card, .editorial-card, .advisor-form, .community-starter-card) {
   border: 1px solid var(--research-edge);
   border-block-start: 3px solid var(--research-accent);
   border-radius: 14px;
@@ -152,7 +152,7 @@ body { line-height: 1.55; }
 /* Research surfaces share a consistent visual weight across discovery,
    catalogue, model evidence, comparison, editorial, advisor and forum. */
 #main :is(.home-action-card, .home-featured-card, .tractor-card,
-          .model-answer-card, .editorial-card, .advisor-step,
+          .model-answer-card, .editorial-card, .advisor-form,
           .community-starter-card, .model-spec-card) {
   min-inline-size: 0;
   border-color: var(--ui-line);
@@ -160,11 +160,12 @@ body { line-height: 1.55; }
   box-shadow: var(--ui-shadow);
 }
 #main :is(.home-action-card, .home-featured-card, .tractor-card,
-          .model-answer-card, .editorial-card, .advisor-step,
+          .model-answer-card, .editorial-card, .advisor-form,
           .community-starter-card, .model-spec-card) {
   background-color: var(--ui-surface);
 }
 #main .home-action-card--accent { background-color: #e7f1e2; }
+#main .home-featured-card { background-color: var(--ui-surface-soft); }
 #main :is(.home-action-card, .home-featured-card, .tractor-card, .editorial-card) {
   transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
 }
