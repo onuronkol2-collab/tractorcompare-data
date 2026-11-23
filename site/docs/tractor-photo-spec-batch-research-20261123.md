@@ -89,3 +89,45 @@ Bu partide bütün kamuya açık fotoğraf yolları için ikili JPEG indirme, SH
 5. Mevcut `.github/workflows/batch-photo-research.yml` ve ilgili saatlik spec araştırmaları tekrar kurulmayacak, yetkisiz otomatik onay veya API sınırını aşma eklenmeyecek.
 
 **Araç sınırlamaları:** Firecrawl kredi kotası dolu olduğu için yeni sayfa taraması bu araçta çalışmadı. Wikimedia orijinal JPEG indirme/doğrulama oturumda tamamlanamadı. Bu kısıtlar güvenlik/lisans kapısını geçersiz kılmaz.
+
+## Dördüncü araştırma dalgası — 23 Kasım 2026, ikinci devam oturumu
+
+### Tam fotoğraf eşleşmesi: gerçek katalog boşlukları
+
+Bu kontrol, önceki tahmini tek marka-model aile oranından farklıdır: **canlı Supabase'in 390 yayımlanmış traktör UUID kaydı**, repo `site/src/lib/historical-licensed-photos.ts` ve `site/src/lib/tractor-photos.ts` dosyalarındaki **103 onaylı/kurallı fotoğraf kaydı** ve `photoMatchesTractor`'ın marka/model + `tractorId` + açık `illustrativeOn` korumasıyla eşleştirildi.
+
+- **390 yayımlanmış traktör kaydının 86'sında** en az 1 eşleşen lisanslı fotoğraf kaydı var; **304'ünde henüz yok**. Bu **canlı HTTP/Google indeksleme sonucu değildir**; onaylı kaynak kodu ve yayımlanmış envanter arasındaki model kimliği kapsama ölçümüdür.
+- **103 onaylı fotoğrafın 12'si** yalnız taslak model envanterinde eşleşiyor. Bunları yayımlanmış görsel diye saymak yanlıştır. Örn. Fendt 516 Vario, CLAAS Arion 660, CLAAS Axion 870, Kubota M5-112/M6-141, John Deere 5075E/6R 150, Deutz-Fahr 6165 ve Case IH Puma 150. Bu model taslaklarını sadece fotoğraf bulundu diye otomatik yayımlamak yasaktır; kaynak/veri/variant/SEO/10 dil kapıları tamamlanmalı.
+- Yayımlanmış/fotoğrafsız en yüksek öncelik marka-kayıt sayıları: McCormick **49**, Sonalika **32**, Mahindra **25**, TYM **22**, Swaraj **21**, Valtra **18**, Steyr **17**, Zetor **16**, Antonio Carraro **14**, Belarus **12**, TAFE **11**, Agrale **9**, Kioti **8**, Deutz-Fahr **7**. Marka/model sayısı zamanla değişebilir; bunlar 23 Kasım anlık kontrolüdür.
+- **Zaten onaylı kayıtları tekrar satın alma/çekme yok:** Valtra Q225, `valtra-q225-a6c1308e`; Steyr 6200 IMPULS, `steyr-6200-impuls-2025`. Yeni bulunan Commons dosyaları aynı model için alternatif açıdır, mevcut onaylı fotoğrafın varlığını silmez. Özellikle Steyr için ikinci kaynağın **CVT** şanzıman varyantı onaylanmadan genel `6200 IMPULS` fotoğrafı diye otomatik kullanılmaz.
+- Zetor Forterra 140 HSX'nin CL/HD'ye taşmasını engelleyen kod düzeltmesi **[PR #540](https://github.com/onuronkol2-collab/tractorcompare-data/pull/540)** ile GitHub ana dalına alındı; 8/8 CI onayından sonra. Canlı deploy sürümü ayrıca ölçülmeli.
+
+**Kanıtların kapsamı:** `tractorvs_image_candidates` satır sayısı yayımlanmış modellerin fotoğrafsızlık sayısı değildir; orada draft/arşiv kaynaklı adaylar da bulunur. Onaylı bir fotoğrafın yalnız kodda bulunması yetmez: JPEG bytes/MIME, SHA, URL HTTP 200, sayfa `img` ve Google Images durumları ayrı ölçülür. Bu rapor tüm gelecekteki görsellerin telifini garanti etmez.
+
+### 92 yeni teknik aday — beş mevcut Sonalika modelinde toplu eksik tamamlama
+
+Supabase `tractorvs_spec_review_candidates` tablosuna **idempotent WHERE NOT EXISTS korumasıyla** aşağıdaki kaynakların birebir üretici teknik tablosundan 92 yeni aday `needs_review` olarak eklendi. Teknik değerler kamuya açık `tractor_specs` tablosuna aktarılmadı, yayımlanmış modellerin `status` alanları değiştirilmedi:
+
+| Mevcut model | Ek aday | Birincil üretici belge/URL | Varyant kontrolü |
+|---|---:|---|---|
+| Sonalika 125 | 17 | [International Sonalika 125](https://international.sonalika.com/product/sonalika-125/) | 4WD ve farklı debriyaj/hidrolik/lastik opsiyonları model yılına göre değişebilir |
+| Sonalika 45 | 19 | [International Sonalika 45](https://international.sonalika.com/product/sonalika-45/) | Kaynak açık 2WD, katalog kayıt varyantı belirtilmemiş; hızlar 2000 rpm'de verilmiştir |
+| Sonalika 55 | 21 | [International Sonalika 55](https://international.sonalika.com/product/sonalika-55/) | Üretici aynı sayfada **2WD ve 4WD** ağırlık/ön lastik/aks aralığı yayımlıyor; ayrı `weight_2wd/4wd`, `wheelbase_2wd/4wd`, `front_tyre_size_2wd/4wd` anahtarları kullanıldı |
+| Sonalika 75 N | 18 | [International Sonalika 75 N](https://international.sonalika.com/product/sonalika-75-n/) | 4WD, bağ/bahçe dar traktör; 2200 rpm hız koşulu ve opsiyonel tekerlek boyları korunmalı |
+| Sonalika 90 N | 17 | [International Sonalika 90 N](https://international.sonalika.com/product/sonalika-90-n/) | 4WD, 2000 rpm hız koşulu; orijinal sayfada yerden yükseklik birimi etiketsiz olduğundan **ground_clearance adayı eklenmedi** |
+
+**Ölçüm dürüstlüğü:** Katalogda yer alan eski teknik değerler (motor gücü, PTO, kaldırma) körlemesine tekrar yazılmadı. Yeni `spec_name`, `canonical_key`, `unit`, üretici URL, kaynak tablo ifadesi ve veri doğrulama notları birlikte saklandı. Tüm 92 özellik yayımlanmadan önce sözlük/yerelleştirme, birim tutarlılığı, model-pazar-varyant uyumu, opsiyonel/donanım farkları ve otomatik karşılaştırma testleri geçirilmeli.
+
+### Altı yeni üretici duyurusu model taslağı, 44 kaynaklı özellik
+
+**Yeni Holland 10 Kasım 2026 [T2S resmî basın duyurusu](https://agriculture.newholland.com/en-gb/europe/new-holland-world/news/2026/new-t2s-compact-tractor-lineup):** `T2.35S`, `T2.40S`, `T2.45S`, `T2.50S`, `T2.55S`. Beşi de `draft` olarak oluşturuldu ve her biri için **6** seri geneli üretici özelliği eklendi (1,9 L, üç silindir, 12×12 senkronize shuttle **veya** üç kademeli HST, Category II ile 950 kg / Category III ile 1315 kg kaldırma seçenekleri, FieldOps için **opsiyonel CM1X modem** ile bağlantı hazır oluş). **35–57 hp seri aralığı tekil modellere tahmin dağıtılmadı.** Sipariş için üretici açıklaması **2027 başı**; traktör `model_year` alanı varsayımla doldurulmadı.
+
+**Valtra [6. nesil T Serisi üretici duyurusu](https://www.valtra.com/int/en/stories/news/6th-generation-valtra-t-series-delivers-strong-performance-and-user-experience.html):** `T236` taslağına **14** kaynaklı bilgi eklendi (AGCO Power CORE75, 7,5 L, altı silindir, **245 hp maksimum**, **1.184 Nm maksimum**, CVT/powershift seçeneği, 2.950 mm dingil mesafesi ve 575 mm'ye kadar yerden yükseklik gibi seri koşullu değerler). Üreticinin **%5 düşük best-point SFC** ifadesi **laboratuvar ve yalnız belli nokta** beyanıdır; **bağımsız tarla tüketimi olarak kaydedilmedi**. `57 km/h` yerel trafik kurallarına bağlıdır; tüm varyantlara kesin azami hız değildir.
+
+Yeni kaynaklar `data_sources` içinde orijinal üretici basın bültenlerine bağlandı. **Toplam 6 yeni taslak ve 44 teknik spec kaydı; sıfır yeni yayımlanmış model.** Üretici haber fotoğrafları açık yeniden kullanım lisansı teşkil etmediği için henüz onaylı traktör fotoğrafı olarak kullanılmadı.
+
+### Kaynak çeşitliliği ve fotoğraf izinleri
+
+Wikimedia Commons marka kategorileri (Sonalika, Mahindra, Kioti, Agrale ve SAME) ve üretici kaynakları gözden geçirildi. Commons'ta pek çok fotoğrafın modeli katalogda bulunan **başka** traktöre, eski sürüme veya bilinmeyen versiyona ait; kategori adına dayanarak otomatik resim eklenmedi. `Swaraj 855 FE` için bulunan 500×350 haricî kaynaklı PNG hakkındaki şüphe değişmedi. GitHub üzerinden orijinal Wikimedia JPEG erişiminde önceki **HTTP 429** gerçekleşmiş olduğundan yeni izin aşma/yoğun tekrar indirme uygulanmadı.
+
+**Sonraki kalite kapısı:** Önce kaynak/ekipman eşleşmesi; sonra geçerli yeniden kullanım izni ve yazar; sonra orijinal medya MIME/piksel/hash ve first-party JPG türevler; sonra 10 dilde `ImageObject`/alt metin, sitemap, OpenGraph/Discover, responsive LCP ve Cloudflare canlı doğrulaması. Bu bağımsız doğrulamalar tamamlanmadan eksik fotoğraf uydurulmaz.
