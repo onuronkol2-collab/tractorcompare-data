@@ -201,6 +201,7 @@ const areaUnitOptions = [
   import { COUNTRY_CURRENCIES, MARKET_COUNTRIES, formatMarketPriceRange } from "../lib/market-prices";
   import type { MarketCountry } from "../lib/market-prices";
   import { advisorText } from "../lib/advisor-i18n";
+  import { ADVISOR_CALCULATION_DONE_EVENT } from "../lib/analytics-product-actions";
   import { selectAdvisorFacts } from "../lib/advisor-evidence";
   import type { Locale } from "../lib/locales";
 
@@ -498,6 +499,7 @@ const areaUnitOptions = [
         results.appendChild(node("p",t("priceNote"),"advisor-final-note"));
         results.appendChild(node("p",t("editFields"),"advisor-edit-hint"));
         results.hidden=false;
+        window.dispatchEvent(new Event(ADVISOR_CALCULATION_DONE_EVENT));
         const reduced=window.matchMedia("(prefers-reduced-motion: reduce)").matches;
         requestAnimationFrame(()=>{
           results.scrollIntoView({behavior:reduced?"instant":"smooth",block:"start"});
