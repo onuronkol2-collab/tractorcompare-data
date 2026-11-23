@@ -28,7 +28,8 @@ const REVIEWED_PR497_UI_BLOB="28211dd60814f9e7dfbe95e6527ae38d90eace45";
 // PR #497 checkpoint, can authorize a ONE-TIME, narrowly bounded reconciliation.
 const REVIEWED_PR467_BLOBS={
   "site/src/lib/ui.ts":"3d637a7b937bda114133d20f714dfefd48607e57",
-  "site/src/lib/published-spec-translations.ts":"68ce6719ffcf203a4f4353d9ec64ab942fbb18f8",
+  "site/src/lib/published-spec-translations.ts":"a1b7db7dc788eb9786aea5ccd81b33d192321047",
+  "site/src/lib/reviewed-live-technical-headings-20261122.ts":"68ce6719ffcf203a4f4353d9ec64ab942fbb18f8",
 };
 const PR467_LOCALES=["en","tr","zh","hi","pt-br","fr","de","ru","ja","es"];
 function hasReviewedPr467Sources(){
