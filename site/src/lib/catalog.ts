@@ -664,6 +664,10 @@ export function specLabel(spec: PublicSpec, lang: Locale): string {
   // Exact source-qualified labels must not lose optional and OEM context.
   const sourceHeading=oem20261122SpecLabel(spec.spec_name,lang);
   if(sourceHeading)return sourceHeading;
+  // Do not collapse reviewed, explicitly unballasted Cab/ROPS source headings
+  // into an unspecified operating-weight label in English.
+  if(lang==="en" && /^(?:Weight with cab, without extra ballast|Weight without ballast \\(ROPS\\))$/i.test(spec.spec_name.trim()))
+    return spec.spec_name.trim();
   if (lang === "en") {
     const sourceName = spec.spec_name.trim().replace(/\s+/g," ").toLocaleLowerCase("tr");
     const known = auditedTurkishSourceHeadingInEnglish[sourceName] || REVIEWED_SOURCE_EN_LOOKUP.get(reviewedEnglishSourceKey(spec.spec_name));
