@@ -11,7 +11,7 @@ for(const width of [320,390,768]){
     const panel=page.locator("#catalog-facet-panel");
     test.skip(!(await panel.isVisible()),"No published catalogue fixture in the inert local build.");
     const grid=page.locator(".catalog-facet-fields");
-    const cols=await grid.evaluate(el=>getComputedStyle(el).gridTemplateColumns.trim().split(/\\s+/).length);
+    const cols=await grid.evaluate(el=>getComputedStyle(el).gridTemplateColumns.trim().split(/\s+/).length);
     expect(cols).toBe(width===320?1:2);
     for(const control of ["#catalog-facet-brand","#catalog-facet-power","#catalog-facet-year","#catalog-facet-sort"]){
       const node=page.locator(control);
@@ -54,7 +54,7 @@ test("mobile comparison retains row/column semantics and legible source targets"
   const row=table.locator("tbody tr").first();
   await expect(row.locator('th[scope="row"]')).toHaveCount(1);
   await expect(row.locator("td")).toHaveCount(2);
-  expect(await row.evaluate(el=>getComputedStyle(el).gridTemplateColumns.split(/\\s+/).length)).toBe(2);
+  expect(await row.evaluate(el=>getComputedStyle(el).gridTemplateColumns.split(/\s+/).length)).toBe(2);
   expect(await noDocumentOverflow(page)).toBe(true);
   const sourceLink=table.locator(".tc-entry a").first();
   if(await sourceLink.count()){
