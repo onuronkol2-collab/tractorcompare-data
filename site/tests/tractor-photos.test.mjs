@@ -910,6 +910,8 @@ test("2026 McCormick X7.621 P6 Drive exact source and three SHA-verified JPEGs n
    const other=tractor("McCormick",model);other.tractor_id=id;
    assert.equal(tractorPhotos(other).length,0,
      "P6-Drive photograph must not appear on another gearbox/model/UUID");
+   assert.equal(primaryTractorPhoto(other),null,
+     "Never leak the photographed P6-Drive into another model hero image");
    const graph=modelStructuredData(other,"tr","https://tractorvs.com/")["@graph"];
    assert.equal(graph.some(x=>x["@type"]==="ImageObject"),false);
  }
