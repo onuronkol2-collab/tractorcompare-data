@@ -27,6 +27,10 @@ Yayımlanmış modellerde resim eşleşmelerinin yüksek öncelik taşıdığı 
 
 İki değer aynı traktörün birbirine rakip verileri değildir: test edilen **iki farklı şanzıman varyantını** anlatır. `tractorvs_spec_review_candidates` tablosuna **iki ayrı `needs_review` kaydı** eklendi; `tractor_specs` tablosuna eklenmedi. Mevcut `6200 IMPULS` kaydı motor/şanzıman alanlarında kesin varyant göstermediği için otomatik yayın bloke. DLG'nin [test metodolojisi](https://www.dlg.org/en/tests/agricultural-technology-and-farm-inputs/dlg-powermix) ve ilgili PDF tabloları orijinal ölçüm koşulunu açıklıyor; PDF'nin bu oturumda görsel sayfa doğrulaması başarısız olduğundan kesin koşul yalnız resmî DLG HTML'nin doğruladığı düzeyde raporlandı.
 
+### İkinci bağımsız test: Zetor FORTERRA 140 HSX
+
+[Irish Farmers Journal'ın 16 Temmuz 2014 tarihli Forterra 140 HSX test özeti](https://www.farmersjournal.ie/zetor-twin-test-part-1-the-forterra-161081) Nicholas Gainford Ltd dinamometresinde nominal PTO devrinde **113 hp** kaydedildiğini bildiriyor. Bu **ayrı bir `needs_review`** kaydı olarak HSX UUID'sine (`aabda943-446b-4543-a019-c73b743652eb`) eklendi. Makale ücretli/erişimi kısıtlı olduğundan oturumda tamamı doğrulanamadı; 2014 test traktörünü daha yeni UK pazar konfigürasyonuyla kesin eşleştirmedik. **İnternetteki [profi Forterra HD testinde](https://www.profi.co.uk/test-centre/zetor-forterra-hd/) belirtilen 93,6 kW PTO ölçümü `Forterra 150 HD` modeline aittir; `Forterra 140 HD` verisine taşınmamalıdır.** Bu, toplu model-varyant karışmasını önleme örneğidir.
+
 ## Gerçek kod değişikliği — yalnız PR dalı
 
 `site/src/lib/historical-licensed-photos.ts` içinde uzun süredir bulunan `Zetor_Forterra_140_HSX.jpg` (Bene Riobó, CC BY-SA 4.0) model düzeyinde tanımlanmıştı; aynı marka/model adıyla kaydedilmiş **CL** ve **HD** varyantlarına da yanlışlıkla yayılabilirdi. Bu fotoğraf sadece doğrulanmış `FORTERRA 140 HSX` UUID'sine (`aabda943-446b-4543-a019-c73b743652eb`) bağlandı. `site/tests/tractor-photos.test.mjs` içine CL/HD/HSX ayrım regresyon testi eklendi. Yeni medya/binary eklenmedi; fotoğraf sayısı sabit.
