@@ -16,12 +16,13 @@ const fixtures=[
 test("published-only and exact approved identities dedupe; incomplete or draft inventory fails closed",()=>{
  const sel=selectPublishedMissing(fixtures,[{brand:"Zetor",model:"PROXIMA"}],{index:0,limit:12});
  assert.equal(sel.missing,2);
- assert.deepEqual(sel.selected,[{brand:"McCormick",model:"X5.085"},{brand:"Sonalika",model:"DI 30 Baagban"}]);
+ assert.equal(sel.missingPublishedRecords,3,"Duplicate model name must retain two distinct published IDs");
+ assert.deepEqual(sel.selected,[{brand:"McCormick",model:"X5.085",missingTractorIds:["m1","m2"]},{brand:"Sonalika",model:"DI 30 Baagban",missingTractorIds:["s1"]}]);
  assert.equal(key({brand:"McCormick",model:"X5.085"}),key({brand:"McCormick",model:"X5 085"}));
  assert.throws(()=>selectPublishedMissing([...fixtures,{...fixtures[0],status:"draft"}],[]),/non-public/);
  assert.throws(()=>selectPublishedMissing([{...fixtures[0],pageUrl:null}],[]),/incomplete|non-public/i);
  assert.throws(()=>selectPublishedMissing(fixtures,[],{limit:MAX_REQUESTS+1}),/Unsafe/);
- assert.deepEqual(selectPublishedMissing(fixtures,[{brand:"McCormick",model:"X5.085"},{brand:"Sonalika",model:"DI 30 Baagban"},{brand:"Zetor",model:"PROXIMA"}]),{missing:0,selected:[],offset:0});
+ assert.deepEqual(selectPublishedMissing(fixtures,[{brand:"McCormick",model:"X5.085"},{brand:"Sonalika",model:"DI 30 Baagban"},{brand:"Zetor",model:"PROXIMA"}]),{missing:0,missingPublishedRecords:0,selected:[],offset:0});
 });
 test("independent provider candidate is an unapproved research lead, never an automatic photo",()=>{
  const result=classifyOpenverseResult(valid(),"McCormick","X5.085");
@@ -65,6 +66,7 @@ test("12 max provider search rotates missing identities, keeps bounded leads and
  const report=await researchIndependentSources(fixtures,{approved:[{brand:"Zetor",model:"PROXIMA"}],fetchFn:fake,index:0,limit:MAX_REQUESTS,delayFn:async ms=>delay.push(ms)});
  assert.equal(report.status,"complete");
  assert.equal(report.missing_unique_pairs,2);
+ assert.equal(report.missing_published_variant_records,3);
  assert.equal(report.queries_sent,2);
  assert.equal(seen.length,2);
  assert.equal(report.candidates.length,14,"7 leads maximum per model");
@@ -85,4 +87,56 @@ test("HTTP/JSON source failure stays partial rather than treating missing result
  const report=await researchIndependentSources([fixtures[0]],{approved:[],fetchFn:async()=>({status:200,headers:{get:()=> "text/html"},json:async()=>({results:[]})}),delayFn:async()=>{}});
  assert.equal(report.status,"partial");
  assert.equal(report.models[0].status,"error");
+});
+
+
+test("one approved variant cannot hide another published variant with the same model name",()=>{
+ const published=[
+   {...pub("TYM","T3048","f50"),variant:"F50 / Series 3"},
+   {...pub("TYM","T3048","f50cn"),variant:"F50CN / cab"},
+   {...pub("TYM","T3048","f50chn"),variant:"F50CHN / 3-range HST"},
+ ];
+ const selected=selectPublishedMissing(published,[
+   {brand:"TYM",model:"T3048",tractorId:"f50chn"}
+ ],{limit:MAX_REQUESTS});
+ assert.equal(selected.missing,1,"One brand/model API query is still sufficient");
+ assert.equal(selected.missingPublishedRecords,2);
+ assert.deepEqual(selected.selected,[{brand:"TYM",model:"T3048",missingTractorIds:["f50","f50cn"]}]);
+ const familyPhoto=selectPublishedMissing(published,[{brand:"TYM",model:"T3048"}]);
+ assert.deepEqual(familyPhoto,{missing:0,missingPublishedRecords:0,selected:[],offset:0},
+   "Legacy model-family photos remain representative for already-rendered model pages");
+ const fullyCovered=selectPublishedMissing(published,published.map(r=>({
+   brand:r.brand,model:r.model,tractorId:r.tractor_id,
+ })));
+ assert.equal(fullyCovered.missing,0);
+ assert.equal(fullyCovered.missingPublishedRecords,0);
+ assert.throws(()=>selectPublishedMissing([...published,{
+   ...published[0],model:"T754",tractor_id:"f50",
+ }],[]),/reused by different model/);
+});
+
+test("read-only Openverse research never offers an already-photo-covered variant for publication",async()=>{
+ const published=[
+   {...pub("TYM","T3048","f50"),variant:"F50"},
+   {...pub("TYM","T3048","f50chn"),variant:"F50CHN"},
+ ];
+ let apiCalls=0;
+ const report=await researchIndependentSources(published,{
+   approved:[{brand:"TYM",model:"T3048",tractorId:"f50chn"}],
+   index:0,limit:MAX_REQUESTS,
+   fetchFn:async()=>{apiCalls++;return {
+     status:200,headers:{get:()=> "application/json"},
+     json:async()=>({results:[{
+       ...valid("TYM T3048 tractor"),
+       source:"flickr",
+     }]})
+   };},delayFn:async()=>{},
+ });
+ assert.equal(apiCalls,1);
+ assert.equal(report.queries_sent,1);
+ assert.equal(report.missing_unique_pairs,1);
+ assert.equal(report.missing_published_variant_records,1);
+ assert.deepEqual(report.models[0].missingTractorIds,["f50"]);
+ assert.ok(report.candidates.every(x=>x.allowed_to_publish===false));
+ assert.ok(report.candidates.every(x=>x.exact_visual_model_identity_verified===false));
 });

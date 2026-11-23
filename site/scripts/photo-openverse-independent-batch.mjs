@@ -20,16 +20,30 @@ export const key=r=>norm(r.brand)+"|"+norm(r.model);
 export function selectPublishedMissing(records,approved=APPROVED_TRACTOR_PHOTOS,{index=0,limit=MAX_REQUESTS}={}){
  if(!Array.isArray(records)||!records.length||records.some(r=>r.status!=="published"||!r.brand||!r.model||!r.pageUrl||!r.tractor_id||r.error)) throw Error("Incomplete or non-public input: refuse cross-platform research");
  if(!Array.isArray(approved)||!Number.isSafeInteger(index)||index<0||!Number.isInteger(limit)||limit<1||limit>MAX_REQUESTS)throw Error("Unsafe batch settings");
- const photographed=new Set(approved.map(p=>key({brand:p.brand,model:p.model})));
- const unique=new Map();
- for(const r of records){const k=key(r);if(!unique.has(k)&&!photographed.has(k))unique.set(k,{brand:r.brand,model:r.model});}
+ // Photo identity is sometimes variant-scoped (tractorId), never just a
+ // brand+model string. A photographed TYM T3048/F50CHN must not cause the
+ // photo-less T3048/F50 and F50CN entries to be skipped from research.
+ const photographedExactIds=new Set(approved.filter(p=>p.tractorId).map(p=>String(p.tractorId)));
+ const photographedModelFamilies=new Set(approved.filter(p=>!p.tractorId).map(key));
+ const unique=new Map(),missingPublishedIds=new Set(),seenIds=new Map();
+ for(const r of records){
+  const k=key(r), id=String(r.tractor_id);
+  const prior=seenIds.get(id);
+  if(prior && prior!==k)throw Error("Published tractor_id reused by different model: refuse photo research");
+  seenIds.set(id,k);
+  if(photographedExactIds.has(id)||photographedModelFamilies.has(k))continue;
+  missingPublishedIds.add(id);
+  if(!unique.has(k))unique.set(k,{brand:r.brand,model:r.model,missingTractorIds:[]});
+  if(!unique.get(k).missingTractorIds.includes(id))unique.get(k).missingTractorIds.push(id);
+ }
  const missing=[...unique.values()].sort((a,b)=>{
  const ap=PRIORITY.indexOf(a.brand),bp=PRIORITY.indexOf(b.brand);
  return (ap<0?99:ap)-(bp<0?99:bp)||a.brand.localeCompare(b.brand)||a.model.localeCompare(b.model);
  });
- if(!missing.length)return {missing:0,selected:[],offset:0};
+ if(!missing.length)return {missing:0,missingPublishedRecords:0,selected:[],offset:0};
  const offset=(index*limit)%missing.length;
- return {missing:missing.length,offset,selected:[...missing,...missing].slice(offset,offset+Math.min(limit,missing.length))};
+ return {missing:missing.length,missingPublishedRecords:missingPublishedIds.size,
+  offset,selected:[...missing,...missing].slice(offset,offset+Math.min(limit,missing.length))};
 }
 function cleanHttps(v){
  try{const u=new URL(v);if(u.protocol!=="https:"||u.username||u.password||u.port||u.href.length>800)return null;return u.href;}
@@ -64,7 +78,9 @@ export async function researchIndependentSources(records,{fetchFn=fetch,approved
  const selection=selectPublishedMissing(records,approved,{index,limit});
  const report={generated_at:new Date().toISOString(),status:"complete",provider:"Openverse",
   scopes:["flickr","europeana"],read_only:true,source:"published sitemap only",
-  missing_unique_pairs:selection.missing,rotation_offset:selection.offset,
+  missing_unique_pairs:selection.missing,
+  missing_published_variant_records:selection.missingPublishedRecords,
+  rotation_offset:selection.offset,
   query_budget:limit,queries_sent:0,rate_limited:false,models:[],candidates:[],
   note:"Aggregator matches are untrusted leads, never photo publication approvals."};
  for(const item of selection.selected){
@@ -99,7 +115,9 @@ export async function main(){
  await mkdir(PUBLIC_REPORT_DIR,{recursive:true});
  await writeFile(PUBLIC_REPORT_DIR+"/openverse-independent-provider-review.json",JSON.stringify(result,null,2)+"\n");
  console.log("TRACTORVS_OPENVERSE_READONLY "+JSON.stringify({status:result.status,queries:result.queries_sent,
- missingUniquePairs:result.missing_unique_pairs,candidateCount:result.candidates.length,
+ missingUniquePairs:result.missing_unique_pairs,
+ missingPublishedVariants:result.missing_published_variant_records,
+ candidateCount:result.candidates.length,
  providers:result.scopes,publicationCount:0,rateLimited:result.rate_limited}));
  // API quota/source failures remain an explicit failure in this independent
  // research lane. The Commons gate stays separate; never label partial as complete.
