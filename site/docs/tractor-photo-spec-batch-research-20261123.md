@@ -1,0 +1,42 @@
+# TractorVS — toplu traktör teknik veri ve fotoğraf araştırması (23 Kasım 2026)
+
+> **Durum:** Birinci kanıt tabanlı araştırma partisi. Bu belge eksiksiz fotoğraf kapsaması veya canlı yayın onayı değildir. Supabase inceleme kayıtları güncellendi; yeni dosyalar resim sunucusuna yüklenmedi. Önce ana dal AGENTS.md, mevcut PR'lar ve fotoğraf QA kapıları incelendi.
+
+## Envanter ve araştırma önceliği
+
+23 Kasım canlı Supabase sorgusunda: **43 marka**, **767 traktör (390 published, 355 draft, 22 archived)**, **12.224 teknik özellik** ve **479 veri kaynağı** görüldü. Fotoğraf aday tablosunda işlemden önce **765 research_needed** satırı bulunuyordu. `tractor_research_queue`: 401 queued, 5 retry, 28 needs_source, 4 failed ve 20 completed. Bu sayılar fotoğrafın sitede gösterildiği anlamına gelmez.
+
+Yayımlanmış modellerde resim eşleşmelerinin yüksek öncelik taşıdığı marka grupları (repo marka/model kayıtları ile yapılan **yaklaşık** aile bazlı kontrol): McCormick, Sonalika, Mahindra, Swaraj, Valtra, Steyr, TYM, Antonio Carraro, Zetor. Bu **tam model-varyant kapsama raporu değildir**; UUID-scope ve indirilmiş doğrulanmış JPEG sayılmadan nihai yüzde verilemez.
+
+## Toplu fotoğraf aday kayıtları — Supabase, yayımlanmadı
+
+| Marka/model (veritabanı UUID eşleşmesi) | Bağımsız fotoğraf dayanağı | Çözülmemiş kapı |
+|---|---|---|
+| Zetor FORTERRA 140 **HD** (`0a900d97-3df4-444b-a25d-2c9885683b99`) | [Wikimedia File:Zetor Forterra 140 HD.jpg](https://commons.wikimedia.org/wiki/File:Zetor_Forterra_140_HD.jpg), Maindistorsion, own-work CC BY-SA 4.0, 1296×1122 | Orijinal JPEG HTTP/sha doğrulaması ve zaman/varyant tutarlılığı; durum `license_review` |
+| Steyr 6200 IMPULS (`15383bd8-8678-489f-b752-67070dc9756d`) | [Wikimedia: 6200 Impuls CVT DSC08459](https://commons.wikimedia.org/wiki/File:Steyr_6200_Impuls_CVT_Agritechnica_2025_(DSC08459).jpg), MarcelX42, own-work CC BY-SA 4.0, 6017×4513 | Veritabanı şanzıman varyantı CVT olarak kesinleşmemiş; kaynak JPEG HTTP/sha doğrulaması; durum `identity_review` |
+| Sonalika DI 30 Baagban (`ad248a3c-d9af-45f9-9aff-93c54d2f45e8`) | [Wikimedia: DI-30Rx 09555](https://commons.wikimedia.org/wiki/File:Sonalika_Baagban_DI-30Rx_Tractor_Left_Front_Coorg_Feb24_A7C_09555.jpg), Timothy A. Gonsalves, own-work CC BY-SA 4.0, 3820×3820 | **DI-30Rx, genel DI 30 Baagban'ın kesin varyantı olarak gösterilemez.** Yazarın ticari kullanım öncesi iletişim notu ayrıca değerlendirilecek; durum `identity_review` |
+| Valtra Q225 (`96623863-6825-429e-88b0-805923de69b8`) | [Wikimedia File:Valtra Q225.jpg](https://commons.wikimedia.org/wiki/File:Valtra_Q225.jpg); [Valtra Q Series kategori listesi](https://commons.wikimedia.org/wiki/Category:Valtra_Q_Series), 4650×3100 | İlgili tekil dosya sayfasının yetki/atfı ve görüntü doğrulaması henüz yapılmadı; durum `license_review` |
+
+**Yayınlama kuralı:** Kaynak görüntü URL'sinin yalnız metadata'da bulunması yayına uygunluk anlamına gelmez. Wikimedia Commons kaynak sayfası + model/yıl/pazar/varyant + lisans + atıf + orijinal JPEG HTTP/MIME/byte/SHA + 480/960/1920 türev ve Worker/Cloudflare testi birlikte doğrulanmalıdır. `rights_verified_at`, `identity_verified_at` ve `image_asset_url` bilinçli şekilde doldurulmadı; `approved` durumu verilmedi.
+
+## Bağımsız standardize performans kanıtı — incelemeye eklendi
+
+[DLG TestService'in bağımsız traktör test açıklamasına](https://www.dlg.org/detail/dlg-testservice-traktoren-unabhaengig-und-sicher-pruefen) göre:
+- **Steyr 6200 Impuls CVT:** DLG PowerMix tarla çalışması özgül yakıt tüketimi **257 g/kWh**.
+- **Steyr 6200 Impuls S-Control 8:** ayrı şanzıman konfigürasyonunda **243 g/kWh**.
+
+İki değer aynı traktörün birbirine rakip verileri değildir: test edilen **iki farklı şanzıman varyantını** anlatır. `tractorvs_spec_review_candidates` tablosuna **iki ayrı `needs_review` kaydı** eklendi; `tractor_specs` tablosuna eklenmedi. Mevcut `6200 IMPULS` kaydı motor/şanzıman alanlarında kesin varyant göstermediği için otomatik yayın bloke. DLG'nin [test metodolojisi](https://www.dlg.org/en/tests/agricultural-technology-and-farm-inputs/dlg-powermix) ve ilgili PDF tabloları orijinal ölçüm koşulunu açıklıyor; PDF'nin bu oturumda görsel sayfa doğrulaması başarısız olduğundan kesin koşul yalnız resmî DLG HTML'nin doğruladığı düzeyde raporlandı.
+
+## Gerçek kod değişikliği — yalnız PR dalı
+
+`site/src/lib/historical-licensed-photos.ts` içinde uzun süredir bulunan `Zetor_Forterra_140_HSX.jpg` (Bene Riobó, CC BY-SA 4.0) model düzeyinde tanımlanmıştı; aynı marka/model adıyla kaydedilmiş **CL** ve **HD** varyantlarına da yanlışlıkla yayılabilirdi. Bu fotoğraf sadece doğrulanmış `FORTERRA 140 HSX` UUID'sine (`aabda943-446b-4543-a019-c73b743652eb`) bağlandı. `site/tests/tractor-photos.test.mjs` içine CL/HD/HSX ayrım regresyon testi eklendi. Yeni medya/binary eklenmedi; fotoğraf sayısı sabit.
+
+## Sonraki toplu kontrol kapıları
+
+1. Güncel yayımlanmış sitemap ile Supabase yayımlanmış UUID envanteri tek tek karşılaştırılmalı (RLS ve taslaklar korunarak).
+2. Lisansı belirsiz adaylar bağımsız Flickr/Europeana/Openverse ve üretici/OECD/DLG kaynaklarından, kota aşmadan tamamlanmalı.
+3. Üretici broşürü, bağımsız teknik test, pazar ve ölçüm standardı uyuşmayan teknik değerler `needs_review` olarak kalmalı.
+4. GitHub fotoğraf testleri, QA, üretim derlemesi, 10 dil/meta/alt ve çalışan diğer özelliklerin regresyonları geçmeden PR birleştirilmemeli; gerçek site dağıtımı ayrı ölçülmeli.
+5. Mevcut `.github/workflows/batch-photo-research.yml` ve ilgili saatlik spec araştırmaları tekrar kurulmayacak, yetkisiz otomatik onay veya API sınırını aşma eklenmeyecek.
+
+**Araç sınırlamaları:** Firecrawl kredi kotası dolu olduğu için yeni sayfa taraması bu araçta çalışmadı. Wikimedia orijinal JPEG indirme/doğrulama oturumda tamamlanamadı. Bu kısıtlar güvenlik/lisans kapısını geçersiz kılmaz.
