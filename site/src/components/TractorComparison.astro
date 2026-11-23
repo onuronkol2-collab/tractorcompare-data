@@ -75,6 +75,7 @@ const labelsPayload = JSON.stringify({
   source: t(lang,"manufacturerSource"),
   independent: INDEPENDENT_SOURCE_COPY[lang].label,
   loadError: cx(lang,"loadError"),
+  loading: cx(lang,"loading"),
   context: t(lang,"condition"),
   conditionCaution: cx(lang,"conditionCaution"),
   transmissionCaution: cx(lang,"transmissionCaution"),
@@ -214,7 +215,7 @@ const labelsPayload = JSON.stringify({
               <th scope="col" role="columnheader"><a id="tc-left-link" href={initialLeft?.detailsUrl}>{columnTitle(initialLeft)}</a></th>
               <th scope="col" role="columnheader"><a id="tc-right-link" href={initialRight?.detailsUrl}>{columnTitle(initialRight)}</a></th>
             </tr></thead>
-            <tbody id="tc-rows" role="rowgroup">
+            <tbody id="tc-rows" role="rowgroup" aria-busy="false">
               {initialRows.map((row) => <tr role="row">
                 <th scope="row" role="rowheader">{row.label}{requiresConditionCaution(row.key,row.left,row.right) && <small class="tc-condition-caution" role="note">{cx(lang,"conditionCaution")}</small>}{requiresTransmissionCaution(row.key,row.left,row.right) && <small class="tc-condition-caution" role="note">{cx(lang,"transmissionCaution")}</small>}</th>
                 {[row.left, row.right].map((items,index) => <td role="cell">
@@ -270,7 +271,7 @@ const labelsPayload = JSON.stringify({
     }
     const lang=document.documentElement.lang;
     const l10n=JSON.parse(document.querySelector("#tc-i18n")?.textContent||"{}") as {
-      missing:string;source:string;independent:string;loadError:string;context:string;conditionCaution:string;transmissionCaution:string;search:string;noResults:string;
+      missing:string;source:string;independent:string;loadError:string;loading:string;context:string;conditionCaution:string;transmissionCaution:string;search:string;noResults:string;
       results:string;selected:string;exploreModel:string;shared:string;
       summary:string;noShared:string;specs:string;
     };
@@ -392,9 +393,11 @@ const labelsPayload = JSON.stringify({
       const error = document.querySelector<HTMLElement>("#tc-load-error");
       if (error) error.hidden = true;
       if (!left.specs || !right.specs) {
+        // Mark only the rows busy: the live summary remains available to screen readers.
+        tbody.setAttribute("aria-busy","true");
         tbody.replaceChildren();
         const summary = document.querySelector("#tc-summary");
-        if (summary) summary.textContent = "";
+        if (summary) summary.textContent = l10n.loading;
         for (const id of ["tc-data-warning", "tc-no-shared"]) {
           const item = document.getElementById(id);
           if (item) item.hidden = true;
@@ -403,9 +406,13 @@ const labelsPayload = JSON.stringify({
         try {
           await Promise.all([loadSpecs(left), loadSpecs(right)]);
         } catch {
-          if (current === revision && error) {
-            error.hidden = false;
-            error.textContent = l10n.loadError;
+          if (current === revision) {
+            tbody.setAttribute("aria-busy","false");
+            if (summary) summary.textContent = "";
+            if (error) {
+              error.hidden = false;
+              error.textContent = l10n.loadError;
+            }
           }
           return;
         }
@@ -438,6 +445,7 @@ const labelsPayload = JSON.stringify({
         fragment.appendChild(row);
       }
       tbody.replaceChildren(fragment);
+      tbody.setAttribute("aria-busy","false");
       const summary=document.querySelector<HTMLElement>("#tc-summary");
       if(summary)summary.textContent=shared.length+" "+l10n.summary+" · "+keys.length+" "+l10n.specs;
       const empty=document.querySelector<HTMLElement>("#tc-no-shared");
