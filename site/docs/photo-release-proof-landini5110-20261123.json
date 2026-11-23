@@ -1,0 +1,49 @@
+{
+  "reviewDate": "2026-11-23",
+  "fileId": "landini-5-110-roboshift-marcelx42-2023",
+  "approvedToPublish": true,
+  "approvalType": "approved photograph of a documented Landini 5-110 RoboShift tractor, illustrative only of the published 5-110 model family; no precise gearbox claim",
+  "publishedRecord": {
+    "brand": "Landini",
+    "model_name": "5-110",
+    "market": "Europe",
+    "variant": "Serie 5 FPT Stage V; EU official brochure / equipment unspecified",
+    "tractor_id": "264687c1-8dd2-5801-9e2e-11901f4acf6b"
+  },
+  "photoTrim": "RoboShift",
+  "configurationExact": false,
+  "gearboxClaimForPublishedModel": false,
+  "modelFamilyEvidence": "Wikimedia Commons original title and photographer's own-work description identify a Landini 5-110 RoboShift exhibition photo; 5-110 is the model part and RoboShift is specifically the displayed configuration only.",
+  "sourcePage": "https://commons.wikimedia.org/wiki/File:Landini_5-110_RoboShift_Agritechnica_2023_(DSC05711).jpg",
+  "photographer": "MarcelX42",
+  "copyrightOwner": "MarcelX42",
+  "licenseName": "CC BY-SA 4.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+  "ownWorkSelfLicenseEvidence": "Commons file page: Source=Own work; Author=MarcelX42; copyright-holder self-applied CC BY-SA 4.0. Upload metadata and original wikitext to be independently audited in CI.",
+  "originalSourceSha256": "c2cb7363f2344915078879aa82323841ae5e0e5946a12db58246823bad0dba12",
+  "originalSourceBytes": 468668,
+  "existing480sha256": "ec7d58e8ffc65beaf06404d575efd984fdbf955ab81fa2fa3b8cf6d974afd9e5",
+  "new960sha256": "a30ac5fef1aa08455dedc40e0cd335bf82bc88444d2d3c7b8958daa2916c4dfb",
+  "new1920sha256": "df3de0991ba6381f0243410ee7f5738246ae7ce0358c6e91072bc405847de7f9",
+  "oldThumbnailPixelDiff": [
+    5.8469,
+    4.8787,
+    6.7655
+  ],
+  "avoided": [
+    "No overwriting the original 480px JPEG",
+    "Do not suggest all Landini 5-110 units have RoboShift gearbox",
+    "No silent inheritance to Landini 5-100 or 5-120",
+    "No photos assigned by brand similarity or other tractor_id",
+    "No fabricated author/copyright claim",
+    "No manufacturer photo without redistribution rights"
+  ],
+  "releaseGates": [
+    "Wikimedia self-license copyright proof audit",
+    "Exact first-party SHA-verified real JPEG assets at 480/960/1920",
+    "All ten locales ImageObject, attribution, accurate alt and localized equipment disclaimer",
+    "Image sitemap only published ID",
+    "GitHub build/SEO/Golden Rule/security/Cloudflare preview checks",
+    "Independent real production HTTP200+image/jpeg and model HTML/VT exclusion"
+  ]
+}
