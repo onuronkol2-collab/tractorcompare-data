@@ -9,7 +9,7 @@ import ForumMediaGallery from "./ForumMediaGallery.astro";
 import {forumText as ft} from "../lib/forum-i18n.ts";
 import {memberText as mt,MEMBER_TEXT} from "../lib/member-i18n.ts";
 import {publicForumClientConfig} from "../lib/forum.ts";
-import {forumSeoDescription} from "../lib/forum-format.mjs";
+import {sourceAwareForumSeoDescription} from "../lib/forum-seo-curation.mjs";
 import {allPublicForumTopics,isIndexableForumTopic,allPublicForumReplies,allPublicForumMedia,forumMediaImageUrl,forumThreadReplies,forumDate,type ForumTopic} from "../lib/forum.ts";
 import {getPublicCatalog} from "../lib/catalog.ts";
 import {localizedPath,type Locale,LOCALE_TAGS,LOCALE_NAMES} from "../lib/locales.ts";
@@ -35,7 +35,7 @@ const publicPath=forumUrl+topic.slug+"/";
 const versions=(await allPublicForumTopics()).filter(row=>row.topic_id===topic.topic_id);
 const originalTopic=topic.machine_translated?versions.find(row=>!row.machine_translated&&row.locale===topic.original_locale):null;
 const eligible=isIndexableForumTopic(topic);
-const seoDescription=forumSeoDescription(topic.body);
+const seoDescription=sourceAwareForumSeoDescription(topic.topic_id,lang,topic.body);
 const engagementCfg=publicForumClientConfig()??(
  process.env.TRACTORVS_FORUM_BROWSER_TEST==="true"&&process.env.PUBLIC_INDEXING_ENABLED==="false"
  ? {url:"http://127.0.0.1:4173/forum-test-api",key:"inert-browser-fixture"}:null);
