@@ -24,6 +24,24 @@ test("only exact matching tractor model identity receives a verified photo",()=>
   assert.equal(tractorPhotos(tractor("Case IH","Puma 150")).length,1);
   assert.equal(tractorPhotos(tractor("McCormick","X5.120")).length,0);
   assert.equal(tractorPhotos(tractor("McCormick","X5.120 P3-Drive")).length,1);
+  // A genuine 2023 X5.120 P3-Drive photo may illustrate ONLY the published
+  // equipment-unspecified X5.120. The photographed gearbox is NOT implied.
+  const publishedX5120=tractor("McCormick","X5.120");
+  publishedX5120.tractor_id="a02c4df2-c719-5a26-abb2-6195cb8e23e5";
+  const approvedP3=tractorPhotos(tractor("McCormick","X5.120 P3-Drive"))[0];
+  assert.equal(tractorPhotos(publishedX5120).length,1);
+  assert.equal(tractorPhotos(publishedX5120)[0].fileId,approvedP3.fileId);
+  assert.equal(tractorPhotos(publishedX5120)[0].configurationExact,false);
+  assert.equal(tractorPhotos(tractor("McCormick","X5.120")).length,0,
+    "No unrelated or unspecific UUID may inherit the representative image");
+  const wrongModelSameId=tractor("McCormick","X5.110");
+  wrongModelSameId.tractor_id=publishedX5120.tractor_id;
+  assert.equal(tractorPhotos(wrongModelSameId).length,0,
+    "An ID alone cannot override the base-model identity");
+  assert.equal(tractorPhotos(tractor("McCormick","X5.100")).length,0);
+  for(const locale of LOCALES){
+    assert.match(tractorPhotoAlt(publishedX5120,locale),/McCormick X5\.120/);
+  }
   assert.equal(tractorPhotos(tractor("McCormick","X5.110")).length,0);
   assert.equal(tractorPhotos(tractor("McCormick","X5.110 HC")).length,1);
   const landini=tractor("Landini","5-110");
