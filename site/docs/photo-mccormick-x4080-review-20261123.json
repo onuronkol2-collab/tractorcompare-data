@@ -3,7 +3,7 @@
   "checkedOn": "2026-11-23",
   "reviewOnly": true,
   "publicationCount": 0,
-  "sourceBinaryDownloaded": false,
+  "sourceBinaryDownloaded": true,
   "allowAutomaticApproval": false,
   "target": {
     "brand": "McCormick",
@@ -23,18 +23,20 @@
     "licenseName": "CC BY-SA 4.0",
     "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
     "filePageCaption": "McCormick X4.080 at Agritechnica 2023",
-    "visualModelBadgeConfirmed": false,
+    "visualModelBadgeConfirmed": true,
     "photoDerivedFromOriginal": false,
     "rightsEvidence": "Individual Wikimedia Commons File page states Source=Own work and copyright-holder CC BY-SA 4.0. Image metadata also identifies author Matti Blume; caption identifies X4.080.",
     "caveat": "Photo shows a showroom X4.080. Model-year, EU Stage V, market and standard-cab equipment must not be inferred solely from this photo."
   },
   "releaseGates": [
-    "Acquire genuine Commons 1920px JPEG; no retry or 429 workaround",
-    "Verify JPEG MIME, full decoding, dimensions and source SHA-256",
-    "Derive 480/960/1920 first-party JPEGs and preserve hashes",
-    "Visually verify tractor badge/trim; refuse different X4.080 F orchard variants",
-    "Add UUID-restricted metadata, author/source/license/crop notice, ten-language ImageObject and image sitemap",
-    "Pass photo tests, Golden Rule, production build and CodeQL then verify live origin endpoints"
+    "Verify existing 480px and 720px files remain untouched",
+    "Attach only SHA-verified missing 960px and 1920px first-party JPEGs to draft branch",
+    "Maintain exact model X4.080 identity and MB-one CC BY-SA 4.0 author/source/credits",
+    "Verify 10-language ImageObject and live SEO thumbnail/fullscreen sources",
+    "Pass Golden Rule, site build, production bundle and photo derivative integration checks"
   ],
-  "notes": "This is a new review-only lead. The current production photo library must remain unchanged until complete verification. No Supabase updates."
+  "notes": "Existing X4.080 first-party 480px JPEG and 720px derivatives are already published. This PR adds only previously absent 960px and 1920px first-party JPEGs, preserving existing source metadata and original 480px. Visually reviewed exact X4.080 roof badge on 1920px Commons JPEG in current session. PR stays draft until tests pass.",
+  "scope": "existing-photo-first-party-derivative-completion",
+  "alreadyPublishedModelHasPhoto": true,
+  "newModelCoverage": 0
 }
