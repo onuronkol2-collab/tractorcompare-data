@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "checkedOn": "2026-11-23",
+  "reviewOnly": true,
+  "publicationCount": 0,
+  "sourceBinaryDownloaded": false,
+  "allowAutomaticApproval": false,
+  "target": {
+    "brand": "McCormick",
+    "model": "X4.080",
+    "tractorId": "d0c1306b-f178-4c6e-8c2f-945e645fee79",
+    "variant": "Standard cab / EU Stage V",
+    "status": "published"
+  },
+  "source": {
+    "commonsFilePage": "https://commons.wikimedia.org/wiki/File:McCormick_X4.080%2C_Agritechnica_2023%2C_Hanover_%28P1140946%29.jpg",
+    "originalFileName": "McCormick X4.080, Agritechnica 2023, Hanover (P1140946).jpg",
+    "fileId": "mccormick-x4-080-mbone-agritechnica-2023",
+    "photographer": "MB-one (Matti Blume)",
+    "ownWorkDeclared": true,
+    "originalWidth": 3371,
+    "originalHeight": 2697,
+    "licenseName": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "filePageCaption": "McCormick X4.080 at Agritechnica 2023",
+    "visualModelBadgeConfirmed": false,
+    "photoDerivedFromOriginal": false,
+    "rightsEvidence": "Individual Wikimedia Commons File page states Source=Own work and copyright-holder CC BY-SA 4.0. Image metadata also identifies author Matti Blume; caption identifies X4.080.",
+    "caveat": "Photo shows a showroom X4.080. Model-year, EU Stage V, market and standard-cab equipment must not be inferred solely from this photo."
+  },
+  "releaseGates": [
+    "Acquire genuine Commons 1920px JPEG; no retry or 429 workaround",
+    "Verify JPEG MIME, full decoding, dimensions and source SHA-256",
+    "Derive 480/960/1920 first-party JPEGs and preserve hashes",
+    "Visually verify tractor badge/trim; refuse different X4.080 F orchard variants",
+    "Add UUID-restricted metadata, author/source/license/crop notice, ten-language ImageObject and image sitemap",
+    "Pass photo tests, Golden Rule, production build and CodeQL then verify live origin endpoints"
+  ],
+  "notes": "This is a new review-only lead. The current production photo library must remain unchanged until complete verification. No Supabase updates."
+}
