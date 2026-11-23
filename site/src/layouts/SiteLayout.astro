@@ -1,5 +1,6 @@
 ---
 import "../styles/global.css";
+import "../styles/research-layout.css";
 import "../styles/tractor-photos.css";
 import PhotoLightbox from "../components/PhotoLightbox.astro";
 import LocaleSuggestion from "../components/LocaleSuggestion.astro";
@@ -256,19 +257,28 @@ const openGraphLocale: Record<Locale, string> = {
           </p>
         </div>
         <div class="footer-links">
-          <a href={guidePath}>{t(lang,"guideLink")}</a>
-          <a href={glossaryPath}>{t(lang,"navTechnicalTerms")}{lang!=="tr"&&lang!=="en"?" (EN)":""}</a>
-          <a href={methodologyPath}>{t(lang,"methodologyLink")}{lang!=="tr"&&lang!=="en"?" (EN)":""}</a>
-          <a href={homePath}>{t(lang,"navHome")}</a>
-          <a href={catalogPath}>{t(lang,"navCatalog")}</a>
-          <a href={comparePath}>{t(lang,"navCompare")}</a>
-          <a href={advisorPath}>{tx(lang,"nav")}</a>
-          <a href={forumPath}>{forumCopy(lang,"name")}</a>
-          <a href={homePath + "#data"}>{t(lang,"navData")}</a>
-          <a href={homePath + "#approach"}>{t(lang,"navApproach")}</a>
-          <a href={articlesPath}>{editorialLabel[lang]}</a>
-          <a href={localizedPath(lang,"/privacy/")}>{analyticsCopy.privacyLink}</a>
-          <button type="button" id="tractorvs-analytics-settings" class="footer-analytics-settings">{analyticsCopy.settings}</button>
+          <section class="footer-group">
+            <h2>{brand.name}</h2>
+            <a href={homePath}>{t(lang,"navHome")}</a>
+            <a href={catalogPath}>{t(lang,"navCatalog")}</a>
+            <a href={comparePath}>{t(lang,"navCompare")}</a>
+            <a href={advisorPath}>{tx(lang,"nav")}</a>
+            <a href={forumPath}>{forumCopy(lang,"name")}</a>
+          </section>
+          <section class="footer-group">
+            <h2>{t(lang,"navResources")}</h2>
+            <a href={articlesPath}>{editorialLabel[lang]}</a>
+            <a href={guidePath}>{t(lang,"guideLink")}</a>
+            <a href={glossaryPath}>{t(lang,"navTechnicalTerms")}{lang!=="tr"&&lang!=="en"?" (EN)":""}</a>
+            <a href={methodologyPath}>{t(lang,"methodologyLink")}{lang!=="tr"&&lang!=="en"?" (EN)":""}</a>
+          </section>
+          <section class="footer-group">
+            <h2>{t(lang,"navData")}</h2>
+            <a href={homePath + "#data"}>{t(lang,"navData")}</a>
+            <a href={homePath + "#approach"}>{t(lang,"navApproach")}</a>
+            <a href={localizedPath(lang,"/privacy/")}>{analyticsCopy.privacyLink}</a>
+            <button type="button" id="tractorvs-analytics-settings" class="footer-analytics-settings">{analyticsCopy.settings}</button>
+          </section>
         </div>
       </div>
       <div class="container footer-bottom">

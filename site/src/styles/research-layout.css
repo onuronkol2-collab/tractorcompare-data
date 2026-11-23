@@ -1,0 +1,98 @@
+/* Shared navigation, research surfaces and reading rhythm. */
+:root {
+  --research-edge: #c5d3c7;
+  --research-accent: #39704d;
+  --research-shadow: 0 3px 12px rgb(27 54 33 / 6%);
+}
+
+.site-header {
+  border-block-start: 3px solid #9dc781;
+  background: #122219;
+}
+.site-header .desktop-nav > a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+}
+.site-header .desktop-nav > a.is-current-section {
+  box-shadow: inset 0 -2px #b7df91;
+  text-decoration: none;
+}
+
+#main h1 {
+  text-wrap: balance;
+  overflow-wrap: anywhere;
+}
+#main :is(.catalog-hero, .model-hero, .advisor-hero, .tc-hero, .editorial-hero) {
+  background: radial-gradient(ellipse at 90% 0, #31593c, transparent 55%), #15291e;
+  color: #f5f8f2;
+}
+#main :is(.home-action-card, .tractor-card, .model-answer-card, .editorial-card, .advisor-step, .community-starter-card) {
+  border: 1px solid var(--research-edge);
+  border-block-start: 3px solid var(--research-accent);
+  border-radius: 14px;
+  box-shadow: var(--research-shadow);
+  min-inline-size: 0;
+}
+#main :is(.tractor-card-specs, .model-summary-grid, .tc-table, .home-featured-facts) {
+  font-variant-numeric: tabular-nums;
+}
+#main :is(.model-spec-group, .method-section) > h3 {
+  border-inline-start: .25rem solid var(--research-accent);
+  padding-inline-start: .75rem;
+}
+#main :is(.model-hero-description, .catalog-intro, .home-intro-lede) {
+  max-inline-size: 65ch;
+  line-height: 1.65;
+}
+#main :is(.thread-breadcrumb, .brand-breadcrumbs, .glossary-breadcrumbs) {
+  flex-wrap: wrap;
+  overflow-wrap: anywhere;
+}
+@media (hover: hover) {
+  #main .tc-table tbody tr:hover > td { background-color: #edf5ea; }
+}
+.site-footer {
+  border-block-start: 4px solid #83aa72;
+}
+.site-footer .footer-main {
+  display: grid;
+  grid-template-columns: minmax(12rem, .85fr) minmax(0, 2.6fr);
+  gap: clamp(1.5rem, 5vw, 5rem);
+  padding-block: clamp(2rem, 4vw, 4rem);
+}
+.site-footer .footer-note {
+  margin-inline-start: 0;
+  max-width: 34ch;
+  font-size: .875rem;
+  color: #b8c9bb;
+}
+.site-footer .footer-links {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 10.5rem), 1fr));
+  gap: 1.5rem;
+  padding: 0;
+}
+.footer-group { min-inline-size: 0; }
+.footer-group h2 {
+  border-block-end: 1px solid #435b49;
+  color: #ddefd4;
+  margin: 0 0 .5rem;
+  padding-block-end: .65rem;
+  font-size: 1rem;
+  line-height: 1.45;
+}
+.site-footer .footer-group :is(a, button) {
+  min-height: 44px;
+  color: #c4d2c7;
+  font-size: .875rem;
+  line-height: 1.4;
+  overflow-wrap: anywhere;
+}
+.footer-group :is(a, button):is(:hover, :focus-visible) {
+  text-decoration: underline;
+  text-underline-offset: .2em;
+}
+@media (max-width: 48rem) {
+  .site-footer .footer-main { grid-template-columns: minmax(0, 1fr); }
+}
