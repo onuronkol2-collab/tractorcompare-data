@@ -99,3 +99,74 @@ test("independently approved public photos trigger a new static build without pr
  assert.equal(result.committed,true);
  assert.ok(m.calls.every(c=>!c.url.includes("/storage/")&&!c.url.includes("service_role")));
 });
+
+test("forum GitHub 409 conflict reloads moderated public rows and target blob before one retry",async()=>{
+ const api=mock({topics:[topic]});
+ let gets=0,puts=0;
+ const payloads=[];
+ const fetchFn=async(url,opts={})=>{
+  if(new URL(url).hostname==="api.github.com"){
+   if((opts.method||"GET")==="GET"){
+    gets++;
+    return new Response(JSON.stringify({sha:"forum-blob-"+gets,encoding:"base64",
+      content:Buffer.from(JSON.stringify({fingerprint:"old"})).toString("base64")}),{status:200});
+   }
+   puts++;
+   payloads.push(JSON.parse(opts.body));
+   return puts===1?new Response("Concurrent branch write",{status:409}):
+    new Response(JSON.stringify({commit:{sha:"recovered-commit"}}),{status:201});
+  }
+  return api.fetchFn(url,opts);
+ };
+ const result=await runForumSync({...base,fetchFn});
+ assert.equal(result.committed,true);assert.equal(result.public_topics,1);
+ assert.equal(puts,2);assert.equal(gets,2);
+ assert.deepEqual(payloads.map(p=>p.sha),["forum-blob-1","forum-blob-2"]);
+ assert.equal(api.calls.filter(c=>c.url.includes("supabase.co")).length,6,
+  "after conflict, all three published forum sources must be recomputed");
+ assert.ok(api.calls.every(c=>c.method!=="POST"));
+});
+
+test("forum 409 already committed by other writer avoids duplicate revision writes",async()=>{
+ const existing=await fingerprintPublicForum({jwt:anon,fetchFn:mock({topics:[topic]}).fetchFn});
+ const api=mock({topics:[topic]});
+ let gets=0,puts=0;
+ const fetchFn=async(url,opts={})=>{
+  if(new URL(url).hostname==="api.github.com"){
+   if((opts.method||"GET")==="GET"){
+    gets++;
+    return new Response(JSON.stringify({sha:"forum-blob-"+gets,encoding:"base64",
+      content:Buffer.from(JSON.stringify({fingerprint:gets===1?"old":existing.fingerprint})).toString("base64")}),{status:200});
+   }
+   puts++;
+   return new Response("Conflict",{status:409});
+  }
+  return api.fetchFn(url,opts);
+ };
+ const actual=await runForumSync({...base,fetchFn});
+ assert.equal(actual.committed,false);
+ assert.equal(actual.reason,"public_forum_already_synced_after_conflict");
+ assert.equal(puts,1);assert.equal(gets,2);
+});
+
+test("forum repeated 409 and authorization 403 fail closed without unbounded retries",async()=>{
+ for(const code of [409,403]){
+  const api=mock({topics:[topic]});
+  let gets=0,puts=0;
+  const fetchFn=async(url,opts={})=>{
+   if(new URL(url).hostname==="api.github.com"){
+    if((opts.method||"GET")==="GET"){
+     gets++;
+     return new Response(JSON.stringify({sha:"blob-"+gets,encoding:"base64",
+      content:Buffer.from(JSON.stringify({fingerprint:"old"})).toString("base64")}),{status:200});
+    }
+    puts++;
+    return new Response("Blocked",{status:code});
+   }
+   return api.fetchFn(url,opts);
+  };
+  await assert.rejects(runForumSync({...base,fetchFn}),new RegExp("HTTP "+code));
+  assert.equal(puts,code===409?2:1);assert.equal(gets,code===409?2:1);
+  assert.equal(api.calls.filter(c=>c.url.includes("supabase.co")).length,code===409?6:3);
+ }
+});
