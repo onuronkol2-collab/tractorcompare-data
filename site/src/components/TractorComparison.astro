@@ -6,6 +6,7 @@ import { requiresConditionCaution, requiresTransmissionCaution } from "../lib/co
 import { INDEPENDENT_SOURCE_COPY } from "../lib/independent-source-i18n";
 import { localizedPath, type Locale } from "../lib/locales";
 import { t } from "../lib/ui";
+import { marketDisplayName } from "../lib/market-display";
 import { compareText as cx } from "../lib/compare-ux";
 import {primaryTractorPhoto,tractorPhotoAlt,photoText} from "../lib/tractor-photos";
 import {curatedDeutz5DPair,DEUTZ_5D_GS_PILOT} from "../lib/deutz-5d-editorial.ts";
@@ -23,7 +24,8 @@ const models = catalog.tractors.map((tractor, index) => ({
   power: tractor.horsepower,
   specsCount: tractor.specifications.length,
   detailsUrl: localizedPath(lang, "/tractors/" + tractor.slug + "/"),
-  dataUrl: "/comparison-data/" + lang + "/" + tractor.tractor_id + ".json",
+  market: marketDisplayName(tractor.market, lang),
+  year: tractor.model_year,
   photo: (() => {
     const p = primaryTractorPhoto(tractor);
     return p ? {thumbUrl:p.thumbUrl,fullUrl:p.fullUrl,photographer:p.photographer,
@@ -59,7 +61,15 @@ const initialNotices = [...new Set([
   ...(initialLeft?.specs || []).map((spec) => spec.notice),
   ...(initialRight?.specs || []).map((spec) => spec.notice),
 ].filter((note): note is string => Boolean(note)))];
-const payload = JSON.stringify(models).replace(/</g, "\\u003c");
+const nameCounts = new Map<string, number>();
+for (const model of models) nameCounts.set(model.title, (nameCounts.get(model.title) ?? 0) + 1);
+function columnTitle(model: (typeof models)[number]) {
+  if (nameCounts.get(model.title) === 1) return model.title;
+  return [model.title, model.variant, model.year, model.market].filter(Boolean).join(" · ");
+}
+// The native choices already carry the display label. Only the selector's
+// search metadata and published evidence need to travel in the JSON.
+const payload = JSON.stringify(models.map(({market, year, ...model}) => model)).replace(/</g, "\\u003c");
 const labelsPayload = JSON.stringify({
   missing: t(lang,"notPublished"),
   source: t(lang,"manufacturerSource"),
@@ -111,7 +121,7 @@ const labelsPayload = JSON.stringify({
             {lang==="tr"?"Model farklarını ve ölçüm sınırlarını oku":"Read verified differences and measurement limits"} ↗
           </a>
         </aside>}
-        <div class="tc-picker" id="tc-picker">
+        <div class="tc-picker" id="tc-picker" data-directory={"/comparison-data/"+lang+"/"}>
           <div class="tc-picker-side">
             <label for="tc-left-search">{t(lang,"firstTractor")}</label>
             <div class="tc-searchbox">
@@ -122,7 +132,7 @@ const labelsPayload = JSON.stringify({
                 aria-label={t(lang,"firstTractor")} hidden></div>
             </div>
             <select id="tc-left" class="tc-native-select" aria-label={t(lang,"firstTractor")}>
-              {models.map((model, index) => <option value={model.id} selected={index===0}>{model.title}</option>)}
+              {models.map((model, index) => <option value={model.id} selected={index===0}>{columnTitle(model)}</option>)}
             </select>
           <div class="tc-preview-photo" id="tc-left-photo" hidden={!initialLeft?.photo}>
             <button class="tc-preview-photo-button" id="tc-left-photo-button" type="button"
@@ -156,7 +166,7 @@ const labelsPayload = JSON.stringify({
                 aria-label={t(lang,"secondTractor")} hidden></div>
             </div>
             <select id="tc-right" class="tc-native-select" aria-label={t(lang,"secondTractor")}>
-              {models.map((model, index) => <option value={model.id} selected={index===1}>{model.title}</option>)}
+              {models.map((model, index) => <option value={model.id} selected={index===1}>{columnTitle(model)}</option>)}
             </select>
           <div class="tc-preview-photo" id="tc-right-photo" hidden={!initialRight?.photo}>
             <button class="tc-preview-photo-button" id="tc-right-photo-button" type="button"
@@ -201,14 +211,14 @@ const labelsPayload = JSON.stringify({
             <caption class="tc-sr-only">{t(lang,"compareHeading")}</caption>
             <thead role="rowgroup"><tr role="row">
               <th scope="col" role="columnheader">{t(lang,"specification")}</th>
-              <th scope="col" role="columnheader"><a id="tc-left-link" href={initialLeft?.detailsUrl}>{initialLeft?.title}</a></th>
-              <th scope="col" role="columnheader"><a id="tc-right-link" href={initialRight?.detailsUrl}>{initialRight?.title}</a></th>
+              <th scope="col" role="columnheader"><a id="tc-left-link" href={initialLeft?.detailsUrl}>{columnTitle(initialLeft)}</a></th>
+              <th scope="col" role="columnheader"><a id="tc-right-link" href={initialRight?.detailsUrl}>{columnTitle(initialRight)}</a></th>
             </tr></thead>
             <tbody id="tc-rows" role="rowgroup">
               {initialRows.map((row) => <tr role="row">
                 <th scope="row" role="rowheader">{row.label}{requiresConditionCaution(row.key,row.left,row.right) && <small class="tc-condition-caution" role="note">{cx(lang,"conditionCaution")}</small>}{requiresTransmissionCaution(row.key,row.left,row.right) && <small class="tc-condition-caution" role="note">{cx(lang,"transmissionCaution")}</small>}</th>
                 {[row.left, row.right].map((items,index) => <td role="cell">
-                  <span class="tc-cell-model" aria-hidden="true">{index===0?initialLeft?.title:initialRight?.title}</span>
+                  <span class="tc-cell-model" aria-hidden="true">{columnTitle(index===0?initialLeft:initialRight)}</span>
                   {items.length ? items.map((spec) => <div class="tc-entry">
                     <strong>{spec.value}{spec.unit ? " " + spec.unit : ""}</strong>
                     {spec.context && <small>{t(lang,"condition")}: {spec.context}</small>}
@@ -239,7 +249,7 @@ const labelsPayload = JSON.stringify({
   import { normalizeTractorQuery } from "../lib/search";
   import { requiresConditionCaution, requiresTransmissionCaution } from "../lib/compare-conditions";
   type Spec = { key:string; label:string; value:string; unit:string|null; context:string|null; rpm:number|null; source:string|null; independent:boolean; notice:string|null };
-  type Model = { id:string; title:string; dataUrl:string;
+  type Model = { id:string; title:string;
     variant:string|null; power:number|null; specsCount:number;
     detailsUrl:string; photo:{thumbUrl:string;fullUrl:string;photographer:string;sourcePage:string;licenseUrl:string;licenseName:string;alt:string}|null; specs:Spec[] };
   const dataNode=document.querySelector<HTMLScriptElement>("#tc-payload");
@@ -255,7 +265,15 @@ const labelsPayload = JSON.stringify({
       results:string;selected:string;exploreModel:string;shared:string;
       summary:string;noShared:string;specs:string;
     };
-    const byId=(id:string)=>models.find(model=>model.id===id);
+    const modelIndex = new Map(models.map(model => [model.id, model]));
+    const byId = (id:string) => modelIndex.get(id);
+    const columnTitles = new Map(Array.from(leftSelect.options, option => [option.value, option.text]));
+    const searchIndex = models.map(model => ({
+      model,
+      name: normalizeTractorQuery(model.title),
+      target: normalizeTractorQuery([model.title, model.variant].filter(Boolean).join(" ")),
+    }));
+    const dataDirectory = picker.dataset.directory!;
     const params=new URLSearchParams(window.location.search);
     if(params.get("left")&&byId(params.get("left")!))leftSelect.value=params.get("left")!;
     if(params.get("right")&&byId(params.get("right")!))rightSelect.value=params.get("right")!;
@@ -291,7 +309,7 @@ const labelsPayload = JSON.stringify({
       const input=document.querySelector<HTMLInputElement>("#tc-"+side+"-search");
       const header=document.querySelector<HTMLAnchorElement>("#tc-"+side+"-link");
       if(input && document.activeElement!==input)input.value=model.title;
-      if(header){header.href=model.detailsUrl;header.textContent=model.title;}
+      if(header){header.href=model.detailsUrl;header.textContent=columnTitles.get(model.id) ?? model.title;}
 
       const photoFrame=document.querySelector<HTMLElement>("#tc-"+side+"-photo");
       const photoButton=document.querySelector<HTMLButtonElement>("#tc-"+side+"-photo-button");
@@ -326,13 +344,26 @@ const labelsPayload = JSON.stringify({
       if (model.specs) return;
       let request = pending.get(model.id);
       if (!request) {
-        request = fetch(model.dataUrl).then(async response => {
+        request = fetch(dataDirectory + encodeURIComponent(model.id) + ".json").then(async response => {
           if (!response.ok) throw new Error("Comparison data unavailable");
           return await response.json() as Spec[];
         }).finally(() => pending.delete(model.id));
         pending.set(model.id, request);
       }
       model.specs = await request;
+    }
+    const specGroups = new WeakMap<Model, Map<string, Spec[]>>();
+    function groupSpecs(model:Model) {
+      const cached = specGroups.get(model);
+      if (cached) return cached;
+      const groups = new Map<string, Spec[]>();
+      for (const spec of model.specs) {
+        const entries = groups.get(spec.key);
+        if (entries) entries.push(spec);
+        else groups.set(spec.key, [spec]);
+      }
+      specGroups.set(model, groups);
+      return groups;
     }
     let revision = 0;
     async function render(){
@@ -368,8 +399,8 @@ const labelsPayload = JSON.stringify({
         if (current !== revision) return;
       }
       setPreview("left",left);setPreview("right",right);
-      const keys=[...new Set([...left.specs,...right.specs].map(spec=>spec.key))];
-      const find=(model:Model,key:string)=>model.specs.filter(spec=>spec.key===key);
+      const keys=[...new Set([...groupSpecs(left).keys(), ...groupSpecs(right).keys()])];
+      const find=(model:Model,key:string)=>groupSpecs(model).get(key) ?? [];
       const label=(key:string)=>find(left,key)[0]?.label||find(right,key)[0]?.label||key;
       keys.sort((a,b)=>label(a).localeCompare(label(b),lang));
       const shared=keys.filter(key=>find(left,key).length>0&&find(right,key).length>0);
@@ -388,7 +419,7 @@ const labelsPayload = JSON.stringify({
         row.appendChild(th);
         for(const model of [left,right]){
           const td=document.createElement("td");td.setAttribute("role","cell");
-          addText(td,"span",model.title,"tc-cell-model").setAttribute("aria-hidden","true");
+          addText(td,"span",columnTitles.get(model.id) ?? model.title,"tc-cell-model").setAttribute("aria-hidden","true");
           renderCell(td,find(model,key));row.appendChild(td);
         }
         fragment.appendChild(row);
@@ -439,17 +470,13 @@ const labelsPayload = JSON.stringify({
       const paint=(query:string)=>{
         const q=normalizeTractorQuery(query);
         const terms=q.split(/\s+/).filter(Boolean);
-        const results=models.filter(model=>{
-          const target=normalizeTractorQuery([model.title,model.variant].filter(Boolean).join(" "));
-          return terms.every(word=>target.includes(word));
-        }).sort((a,b)=>{
-          const aName=normalizeTractorQuery(a.title),bName=normalizeTractorQuery(b.title);
-          const rank=(name:string)=>name===q?0:name.startsWith(q)?1:name.includes(q)?2:3;
-          return rank(aName)-rank(bName)||a.title.localeCompare(b.title);
-        }).slice(0,8);
+        const rank=(name:string)=>name===q?0:name.startsWith(q)?1:name.includes(q)?2:3;
+        const results=searchIndex.filter(entry=>terms.every(term=>entry.target.includes(term)))
+          .sort((a,b)=>rank(a.name)-rank(b.name)||a.model.title.localeCompare(b.model.title))
+          .slice(0,8);
         popup.replaceChildren();setActive(-1);
         if(!results.length)addText(popup,"p",l10n.noResults,"tc-no-options");
-        for(const [i,model] of results.entries()){
+        for(const [i,{model}] of results.entries()){
           const button=document.createElement("button");
           button.type="button";button.role="option";button.id="tc-"+side+"-option-"+i;
           button.className="tc-result";button.setAttribute("aria-selected","false");
