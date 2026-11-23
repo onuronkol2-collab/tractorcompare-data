@@ -4,7 +4,7 @@ import "../styles/model-research-toc.css";
 import TractorMarketPrice from "./TractorMarketPrice.astro";
 import ModelSourceIndex from "./ModelSourceIndex.astro";
 import TractorPhoto from "./TractorPhoto.astro";
-import {primaryTractorPhoto} from "../lib/tractor-photos";
+import {primaryTractorPhoto,preferredTractorPreviewUrl} from "../lib/tractor-photos";
 import {glossaryAnchorForKey} from "../lib/tractor-glossary.ts";
 import { groupSpecifications, officialManufacturerSourceUrl, reviewedIndependentSourceUrl, specLabel, verificationNotice, type TractorRecord } from "../lib/catalog";
 import {INDEPENDENT_SOURCE_COPY} from "../lib/independent-source-i18n.ts";
@@ -43,6 +43,7 @@ const { title, description, searchDescription } = modelSeoMetadata(tractor, lang
 const originalNote = originalVariantNote(tractor);
 const answerItems=(lang==="tr"||lang==="en")?modelEvidenceAnswers(safeEvidenceTractor,lang):[];
 const cover=primaryTractorPhoto(tractor);
+const socialPreviewImage=preferredTractorPreviewUrl(cover);
 const structuredData = import.meta.env.PUBLIC_INDEXING_ENABLED === "true" && Astro.site
   ? modelStructuredData(tractor, lang, Astro.site.toString()) : null;
 const isSonalikaExport = hasInternationalSonalikaContext(tractor);
@@ -56,7 +57,7 @@ const summaryItems = [
   {key:"weight",label:t(lang,"weight"),value:tractor.weight_kg!=null?tractor.weight_kg+" kg":null},
 ].filter((item)=>item.value);
 ---
-<SiteLayout lang={lang} title={title} description={searchDescription} structuredData={structuredData} ogImage={cover && Astro.site ? new URL(cover.displayUrl,Astro.site).toString() : null}>
+<SiteLayout lang={lang} title={title} description={searchDescription} structuredData={structuredData} ogImage={socialPreviewImage && Astro.site ? new URL(socialPreviewImage,Astro.site).toString() : null}>
   <section class="model-hero"><div class="container">
     <a class="catalog-breadcrumb" href={listingUrl}>← {t(lang,"allTractors")}</a>
     <p class="eyebrow"><span class="eyebrow-mark"></span>{t(lang,"modelEyebrow")}</p>
