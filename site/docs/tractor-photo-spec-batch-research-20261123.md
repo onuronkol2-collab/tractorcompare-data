@@ -64,6 +64,20 @@ Bu partide bütün kamuya açık fotoğraf yolları için ikili JPEG indirme, SH
 
 [GitHub Actions #45245136017](https://github.com/onuronkol2-collab/tractorcompare-data/actions/runs/45245136017) ayrı PR dalında, Valtra Q225 ve Zetor FORTERRA 140 HD için CC BY-SA 4.0 kaynak sayfalarından fotoğraf çekip MIME/JPEG, gerçek piksel genişliği ve SHA-256 doğrulamasıyla **yalnız dal üzerine** altı JPG kaydetmek için güvenlik kontrollü tek seferlik denemeydi. Wikimedia, **ilk ikili fotoğraf isteğini HTTP 429** ile reddetti. Dolayısıyla **0 JPEG indirildi; 0 hash ve 0 yeni yayına alınmış görsel** var. Hata gizlenmedi, aynı kaynağa tekrar istek atılmadı. Tek seferlik yazma iznine sahip geçici workflow dosyası depodan kaldırıldı. Ana daldaki fotoğraf ve workflow sistemi değişmedi. Bu dosya indirilemeden fotoğrafın sitede çalıştığı veya eksiksiz araştırmanın bittiği iddia edilemez.
 
+### Üçüncü parti — EIMA 2026 kaynaklı yeni modeller (taslak)
+
+Üreticinin [McCormick EIMA 2026 haberindeki X serisi duyurusu](https://mccormick-tractors.com/gb/en/news/McCormick-at-EIMA-2026--the--X--generation-raises-the-bar-for-power-and-technology.html) eski katalogla karşılaştırıldı. `X6.415` ve `X7.624 VT-Drive` gibi önceden mevcut kayıtlar ikinci kez eklenmedi. **Mevcut envanterde bulunmayan üç model** yalnız `status=draft` olarak oluşturuldu. EIMA sergi duyurusundan kesin **model yılı** çıkarılmadı (`model_year=NULL`).
+
+| Yeni taslak | UUID | Kaynaklı teknik özellik | Kritik kimlik notu |
+|---|---|---:|---|
+| McCormick X6.416 P6-Drive | `eceef744-c59f-4824-ac8c-592397889d6c` | **17** | 144 hp normal maksimum, 155 hp EPM; 600/630 Nm normal/EPM tork ayrı, 24F/24R standart / 40F/40R creeper |
+| McCormick X7.627 VT-Drive | `703c2999-1128-41a1-9e4f-212c293ddbc5` | **11** | 271 hp, FPT N67 6,7 L, 212 L/min CCLS, 60 km/h yalnız izinli pazarda |
+| McCormick X8.634 VT-Drive | `04b31c97-5073-4757-ab02-34568b940ea6` | **10** | 340 hp, Stage V FPT N67, 212 L/min, 60 km/h yalnız izinli pazarda |
+
+**38 teknik özellik** `tractor_specs` tablosuna *yalnız bu üç taslak traktör* için, `data_sources.id=9155d120-e4b5-4b3b-a26a-8e030c32b13e` kaynak bağlantısıyla ve model/konfigürasyon/ağırlık yaklaşık/opsiyon sınırlamaları `evidence_text` ve `measurement_standard` alanlarında korunarak yazıldı. Halihazırda yayımlanmış hiçbir traktörün teknik özelliği değiştirilmedi. Yeni markalar uydurulmadı: mevcut McCormick markası kullanıldı. Taslaklar 10 dil, SEO, resim, QA ve güvenli yayın eşiğini geçmeden üretim kataloğuna veya sitemap'e alınamaz.
+
+**İndirme/risk:** Üreticinin haber sayfasında fotoğraf olması TractorVS için yeniden kullanım lisansı vermez. Bu üç taslak için herhangi bir telifli resim kaydedilmedi veya yayımlanmadı. Açık lisanslı ve birebir model kimliği doğrulanmış görseller ayrıca araştırılmalıdır.
+
 ## Sonraki toplu kontrol kapıları
 
 1. Güncel yayımlanmış sitemap ile Supabase yayımlanmış UUID envanteri tek tek karşılaştırılmalı (RLS ve taslaklar korunarak).
