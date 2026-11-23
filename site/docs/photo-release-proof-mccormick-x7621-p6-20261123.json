@@ -1,0 +1,83 @@
+{
+  "reviewedOn": "2026-11-23",
+  "reviewer": "TractorVS editorial visual verification",
+  "approvalScope": "one published tractor UUID and one CC BY-SA photograph",
+  "approvedToPublish": true,
+  "publishedModel": {
+    "brand": "McCormick",
+    "model": "X7.621 P6-Drive",
+    "tractorId": "9c4cb31f-4fab-49ae-8ba1-3eee9f0059be",
+    "variant": "Clever Cab / P6-Drive"
+  },
+  "excludedVariant": {
+    "model": "X7.621 VT-Drive",
+    "tractorId": "085667ad-637c-481a-be71-847f439d7fa6",
+    "reason": "Physical P6 DRIVE decal visible; do not reuse photo for VT-Drive."
+  },
+  "visualEvidence": {
+    "modelBadge": "X7.621",
+    "gearboxBadge": "P6 DRIVE",
+    "modelConfirmed": true,
+    "gearboxConfirmed": true,
+    "sourceImageReviewedAtPx": [
+      1920,
+      1462
+    ],
+    "hoodCropBox": [
+      760,
+      380,
+      850,
+      420
+    ],
+    "transmissionDecalCropBox": [
+      1370,
+      540,
+      1550,
+      820
+    ],
+    "configurationExact": false,
+    "caution": "Photo proves model and gearbox label only; cannot independently guarantee Clever Cab/equipment/region or technical specs."
+  },
+  "fileId": "mccormick-x7-621-barzkowice-zwiadowca21-2026",
+  "sourcePage": "https://commons.wikimedia.org/wiki/File:Barzkowice_-_McCormick_X7.621_-_12.09.2026_13-26-59.jpg",
+  "sourceAuthor": "Radosław Drożdżewski (User:Zwiadowca21)",
+  "license": "CC BY-SA 4.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+  "sourceDeclaration": "Commons File page (Source=Own work; copyright holder directly declares CC BY-SA 4.0)",
+  "sourceUsed": "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/a8/Barzkowice_-_McCormick_X7.621_-_12.09.2026_13-26-59.jpg/1920px-Barzkowice_-_McCormick_X7.621_-_12.09.2026_13-26-59.jpg",
+  "sourceBytes": 751837,
+  "sourceSha256": "77c1cbbc5501c2355e68734c396da28ee12fe709c837f9cd287c74042720c8ef",
+  "derivedAssets": [
+    {
+      "width": 480,
+      "height": 366,
+      "bytes": 50047,
+      "sha256": "92b04893f79b30f5edd144788d87b09903c2fc1ea38d19378303b4c9ebb17d0c"
+    },
+    {
+      "width": 960,
+      "height": 731,
+      "bytes": 184868,
+      "sha256": "c9b7bc4dc0113cc040502a66ebb691e3004e12f22ac19bd6a451e92cdce1331e"
+    },
+    {
+      "width": 1920,
+      "height": 1462,
+      "bytes": 694131,
+      "sha256": "9492aef95c9ed1f3737623cba57b273a9c9bffd091e9bfbe587d131afc581533"
+    }
+  ],
+  "releaseGates": [
+    "All three first-party JPEG assets must exist and match SHA-256",
+    "Actual source license and author UI attribution must remain visible",
+    "Exactly one published tractor_id matches",
+    "ImageObject in ten locales and sitemap contain only this page",
+    "Golden Rule, build, production safety, origin JPEG and live HTML/proxy tests must pass"
+  ],
+  "falseClaimsPrevented": [
+    "never assert exactly photographed engine, configuration or sold market",
+    "never reuse on VT-Drive or X7.623/X7.624",
+    "never assert copyright holder is TractorVS",
+    "no technical specifications inferred from imagery"
+  ]
+}

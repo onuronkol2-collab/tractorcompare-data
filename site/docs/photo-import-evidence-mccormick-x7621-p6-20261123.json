@@ -1,0 +1,41 @@
+{
+  "reviewRequired": true,
+  "publicationCount": 0,
+  "approvedToPublish": false,
+  "visualGearboxConfirmation": false,
+  "fileId": "mccormick-x7-621-barzkowice-zwiadowca21-2026",
+  "sourcePage": "https://commons.wikimedia.org/wiki/File:Barzkowice_-_McCormick_X7.621_-_12.09.2026_13-26-59.jpg",
+  "photographer": "Radosław Drożdżewski (User:Zwiadowca21)",
+  "licenseName": "CC BY-SA 4.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+  "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/a8/Barzkowice_-_McCormick_X7.621_-_12.09.2026_13-26-59.jpg/1920px-Barzkowice_-_McCormick_X7.621_-_12.09.2026_13-26-59.jpg",
+  "sourceBytes": 751837,
+  "sourceSha256": "77c1cbbc5501c2355e68734c396da28ee12fe709c837f9cd287c74042720c8ef",
+  "sourceDimensions": [
+    1920,
+    1462
+  ],
+  "derivatives": [
+    {
+      "file": "mccormick-x7-621-barzkowice-zwiadowca21-2026-480.jpg",
+      "width": 480,
+      "height": 366,
+      "bytes": 50047,
+      "sha256": "92b04893f79b30f5edd144788d87b09903c2fc1ea38d19378303b4c9ebb17d0c"
+    },
+    {
+      "file": "mccormick-x7-621-barzkowice-zwiadowca21-2026-960.jpg",
+      "width": 960,
+      "height": 731,
+      "bytes": 184868,
+      "sha256": "c9b7bc4dc0113cc040502a66ebb691e3004e12f22ac19bd6a451e92cdce1331e"
+    },
+    {
+      "file": "mccormick-x7-621-barzkowice-zwiadowca21-2026-1920.jpg",
+      "width": 1920,
+      "height": 1462,
+      "bytes": 694131,
+      "sha256": "9492aef95c9ed1f3737623cba57b273a9c9bffd091e9bfbe587d131afc581533"
+    }
+  ]
+}

@@ -24,8 +24,14 @@ export function reviewCommonsCopyrightWikitext(wikitext,photo){
   const ownLicense=/\{\{\s*self\s*\|[^\n}]{0,160}\bcc-by-sa-4\.0\b/i.test(body) ||
     originalUploaderSelf;
   const author=String(photo.copyrightOwner||"");
+  // Commons displays the human byline Radosław Drożdżewski, but its original
+  // author template references the named account User:Zwiadowca21. Whitelist
+  // this explicit real-name/account pair for this exact 2026 photo only.
   const authorAliases=photo.fileId==="steyr-4075-kompakt-joachim-2018"
     ? ["JoachimKohlerBremen","JoachimKohler-HB"]
+    : photo.fileId==="mccormick-x7-621-barzkowice-zwiadowca21-2026" &&
+      author==="Radosław Drożdżewski (User:Zwiadowca21)"
+    ? ["Radosław Drożdżewski","Zwiadowca21"]
     : [author];
   // The claimed owner must be named in the ORIGINAL file's author= field.
   // A name mentioned in a description, unrelated credit or comment is not proof.

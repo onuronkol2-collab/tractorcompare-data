@@ -14,7 +14,7 @@ const tractor=(brand_name,model_name)=>({
   engine:null,transmission:null,drivetrain:null,weight_kg:null,specifications:[]
 });
 test("only exact matching tractor model identity receives a verified photo",()=>{
-  assert.equal(APPROVED_TRACTOR_PHOTOS.length,102);
+  assert.equal(APPROVED_TRACTOR_PHOTOS.length,103);
   assert.equal(tractorPhotos(tractor("Belarus","82.1")).length,4);
   assert.equal(tractorPhotos(tractor("Belarus","80.1")).length,1);
   assert.equal(tractorPhotos(tractor("Belarus","132N")).length,1);
@@ -628,8 +628,8 @@ test("source-backed copyright notices cover approved Google warning images in al
   "tym-t4058-6225c-marcelx42-2023",
   "tym-t5075-t78-marcelx42-2023"
  ]);
- const expected=new Set([...originalThree,...reviewedTwenty,...exactTym,"belarus-132n-picture30-2011"]);
- assert.equal(expected.size,27);
+ const expected=new Set([...originalThree,...reviewedTwenty,...exactTym,"belarus-132n-picture30-2011","mccormick-x7-621-barzkowice-zwiadowca21-2026"]);
+ assert.equal(expected.size,28);
  const actual=APPROVED_TRACTOR_PHOTOS.filter(p=>p.copyrightOwner);
  assert.deepEqual(new Set(actual.map(p=>p.fileId)),expected,
    "Unexpected ownership claims must undergo separate review before publication");
@@ -844,5 +844,75 @@ test("McCormick X4.080 exact high-resolution files are real SHA-verified first-p
  for(const other of ["X4.080 F Cab","X4.080 F Platform"]){
    assert.equal(tractorPhotos(tractor("McCormick",other)).length,0,
      "Do not spread the standard X4.080 photo to the orchard F trim");
+ }
+});
+
+
+test("2026 McCormick X7.621 P6 Drive exact source and three SHA-verified JPEGs never match VT Drive",()=>{
+ const fileId="mccormick-x7-621-barzkowice-zwiadowca21-2026";
+ const proof=JSON.parse(readFileSync(new URL("../docs/photo-release-proof-mccormick-x7621-p6-20261123.json",import.meta.url),"utf8"));
+ assert.equal(proof.approvedToPublish,true);
+ assert.equal(proof.fileId,fileId);
+ assert.equal(proof.visualEvidence.modelBadge,"X7.621");
+ assert.equal(proof.visualEvidence.gearboxBadge,"P6 DRIVE");
+ assert.equal(proof.visualEvidence.modelConfirmed,true);
+ assert.equal(proof.visualEvidence.gearboxConfirmed,true);
+ assert.equal(proof.visualEvidence.configurationExact,false);
+ const p6=tractor("McCormick","X7.621 P6-Drive");
+ p6.tractor_id="9c4cb31f-4fab-49ae-8ba1-3eee9f0059be";
+ const photos=tractorPhotos(p6);
+ assert.equal(photos.length,1,"Only this exact P6-Drive UUID is photographed");
+ const photo=photos[0];
+ assert.equal(photo.fileId,fileId);
+ assert.equal(photo.tractorId,p6.tractor_id);
+ assert.equal(photo.model,p6.model_name);
+ assert.equal(photo.sourcePage,proof.sourcePage);
+ assert.equal(photo.photographer,proof.sourceAuthor);
+ assert.equal(photo.copyrightOwner,proof.sourceAuthor);
+ assert.equal(photo.copyrightClaimUrl,proof.sourcePage);
+ assert.equal(photo.copyrightEvidence,"commons-own-work-self-license");
+ assert.equal(photo.licenseName,proof.license);
+ assert.equal(photo.licenseUrl,proof.licenseUrl);
+ assert.equal(photo.configurationExact,false);
+ for(const [i,size] of [480,960,1920].entries()){
+   const d=proof.derivedAssets[i];
+   assert.equal(d.width,size);
+   const filename=fileId+"-"+size+".jpg";
+   const uri=new URL("../public/images/tractors/"+filename,import.meta.url);
+   assert.ok(existsSync(uri),"Source-backed first-party photo missing: "+filename);
+   const b=readFileSync(uri);
+   assert.equal(b.length,d.bytes,filename);
+   assert.equal(createHash("sha256").update(b).digest("hex"),d.sha256,filename);
+   assert.equal(b.readUInt16BE(0),0xffd8);
+   assert.equal(b.readUInt16BE(b.length-2),0xffd9);
+   assert.ok([photo.thumbUrl,photo.displayUrl,photo.fullUrl].includes("/images/tractors/"+filename));
+   const source=resolveApprovedPhotoSource("/images/tractors/"+filename);
+   assert.ok(source?.startsWith("https://upload.wikimedia.org/wikipedia/commons/thumb/a/a8/"));
+   assert.match(source,new RegExp("/"+(size===480?500:size)+"px-"));
+ }
+ for(const locale of LOCALES){
+   const graph=modelStructuredData(p6,locale,"https://tractorvs.com/")["@graph"];
+   const image=graph.find(x=>x["@type"]==="ImageObject");
+   assert.ok(image,locale+" must expose correct source-backed ImageObject");
+   assert.equal(image.creator.name,photo.photographer);
+   assert.equal(image.copyrightNotice,photo.copyrightOwner);
+   assert.equal(image.license,photo.licenseUrl);
+   assert.equal(image.acquireLicensePage,photo.sourcePage);
+   assert.ok(image.contentUrl.endsWith(photo.fullUrl));
+   assert.ok(image.thumbnailUrl.endsWith(photo.displayUrl));
+ }
+ const nonP6=[
+   ["X7.621 VT-Drive","085667ad-637c-481a-be71-847f439d7fa6"],
+   ["X7.621 P6-Drive","00000000-0000-4000-8000-000000000000"],
+   ["X7.623 P6-Drive","3470a6c5-7708-4f28-a797-1986c32b3439"]
+ ];
+ for(const [model,id] of nonP6){
+   const other=tractor("McCormick",model);other.tractor_id=id;
+   assert.equal(tractorPhotos(other).length,0,
+     "P6-Drive photograph must not appear on another gearbox/model/UUID");
+   assert.equal(primaryTractorPhoto(other),null,
+     "Never leak the photographed P6-Drive into another model hero image");
+   const graph=modelStructuredData(other,"tr","https://tractorvs.com/")["@graph"];
+   assert.equal(graph.some(x=>x["@type"]==="ImageObject"),false);
  }
 });
