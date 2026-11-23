@@ -24,7 +24,8 @@ test("legacy model-level photos remain available across published variants",()=>
   assert.equal(photoMatchesTractor(photo,{brand_name:"Zetor",model_name:"PROXIMA POWER 120"}),false);
 });
 
-test("no F50CHN photo is approved merely by adding support for a scoped identity",()=>{
-  for(const id of [TARGET,F50,F50CN])
+test("approved F50CHN licensed photos are scoped only to the exact published tractor UUID",()=>{
+  assert.equal(tractorPhotos({brand_name:"TYM",model_name:"T3048",tractor_id:TARGET}).length,3);
+  for(const id of [F50,F50CN,undefined])
     assert.equal(tractorPhotos({brand_name:"TYM",model_name:"T3048",tractor_id:id}).length,0);
 });
