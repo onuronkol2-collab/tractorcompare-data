@@ -1,6 +1,7 @@
 import type { Locale } from "./locales.ts";
 import { REVIEWED_PUBLIC_SPEC_HEADINGS } from "./reviewed-public-spec-headings.ts";
 import { RESIDUAL_PUBLIC_SPEC_TERMS } from "./residual-public-spec-translations.ts";
+import { REVIEWED_LIVE_TECHNICAL_HEADINGS_20261122 } from "./reviewed-live-technical-headings-20261122.ts";
 import { LIVE_REVIEWED_SPEC_HEADINGS_20261121 } from "./live-reviewed-spec-headings-20261121.ts";
 
 /**
@@ -208,6 +209,9 @@ const NORMALIZED_TRANSLATIONS=new Map(
 const NORMALIZED_RESIDUAL=new Map(
   Object.entries(RESIDUAL_PUBLIC_SPEC_TERMS).map(([name,translations]) => [normalizeSpecName(name),translations]),
 );
+const NORMALIZED_20261122=new Map(
+  Object.entries(REVIEWED_LIVE_TECHNICAL_HEADINGS_20261122).map(([name,translations])=>[normalizeSpecName(name),translations]),
+);
 const NORMALIZED_LIVE_REVIEWED=new Map(
   Object.entries(LIVE_REVIEWED_SPEC_HEADINGS_20261121).map(([name,translations]) => [normalizeSpecName(name),translations]),
 );
@@ -219,18 +223,20 @@ const NORMALIZED_LIVE_REVIEWED=new Map(
 export function auditedResidualSpecificationLabel(specName:string,lang:Locale):string|null{
   if(lang==="en")return null;
   const key=normalizeSpecName(specName);
-  return NORMALIZED_RESIDUAL.get(key)?.[lang] || NORMALIZED_LIVE_REVIEWED.get(key)?.[lang] || null;
+  return NORMALIZED_20261122.get(key)?.[lang] || NORMALIZED_RESIDUAL.get(key)?.[lang] || NORMALIZED_LIVE_REVIEWED.get(key)?.[lang] || null;
 }
 export function publishedSpecificationLabel(specName:string,lang:Locale):string|null{
   if(lang==="en")return null;
   const normalized=normalizeSpecName(specName);
-  return NORMALIZED_TRANSLATIONS.get(normalized)?.[lang]
+  return NORMALIZED_20261122.get(normalized)?.[lang]
+    || NORMALIZED_TRANSLATIONS.get(normalized)?.[lang]
     || NORMALIZED_RESIDUAL.get(normalized)?.[lang]
     || NORMALIZED_LIVE_REVIEWED.get(normalized)?.[lang]
     || null;
 }
 export function validatePublishedSpecTranslations():void {
   for (const [name,entries] of [
+    ...Object.entries(REVIEWED_LIVE_TECHNICAL_HEADINGS_20261122),
     ...Object.entries(PUBLISHED_SPEC_TERMS),
     ...Object.entries(RESIDUAL_PUBLIC_SPEC_TERMS),
     ...Object.entries(LIVE_REVIEWED_SPEC_HEADINGS_20261121),
