@@ -55,6 +55,25 @@ test("only exact matching tractor model identity receives a verified photo",()=>
   assert.equal(tractorPhotos(tractor("Case IH","Puma 155")).length,0);
   assert.equal(primaryTractorPhoto(tractor("Unknown Brand","X")),null);
 });
+test("Forterra 140 HSX photo is scoped to HSX, never CL or HD", () => {
+  // All three published UK models share the base name but have different trim.
+  const variants = [
+    ["CL", "33bcf1bf-275e-4737-8a61-92599756c29f", false],
+    ["HD", "0a900d97-3df4-444b-a25d-2c9885683b99", false],
+    ["HSX", "aabda943-446b-4543-a019-c73b743652eb", true],
+  ];
+  for (const [variant,id,expectPhoto] of variants) {
+    const record=tractor("Zetor","FORTERRA 140");
+    record.tractor_id=id;
+    record.variant=variant;
+    const hsx=tractorPhotos(record).filter(x=>x.fileId==="zetor-forterra-140-346bcbde");
+    assert.equal(hsx.length,expectPhoto?1:0,"Licensed HSX photograph must not leak to "+variant);
+    if (hsx.length) assert.equal(hsx[0].tractorId,id);
+  }
+  assert.equal(tractorPhotos(tractor("Zetor","FORTERRA 140")).length,0,
+    "No photo without the exact published HSX tractor identity");
+});
+
 test("new Belarus photographs keep exact model names and rights credit", () => {
   const photo132=tractorPhotos(tractor("Belarus","132N"))[0];
   const photo152=tractorPhotos(tractor("Belarus","152"))[0];
