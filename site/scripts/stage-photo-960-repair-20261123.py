@@ -43,7 +43,7 @@ def sha(data: bytes) -> str:
 
 
 def load_jpeg(raw: bytes, label: str) -> Image.Image:
-    if len(raw) < 1000 or raw[:3] != b"\xff\\xd8\\xff" or raw[-2:] != b"\xff\\xd9":
+    if len(raw) < 1000 or raw[:3] != bytes.fromhex("ffd8ff") or raw[-2:] != bytes.fromhex("ffd9"):
         raise ValueError(f"{label}: invalid JPEG magic, length, or ending")
     with Image.open(io.BytesIO(raw)) as decoded:
         decoded.load()
