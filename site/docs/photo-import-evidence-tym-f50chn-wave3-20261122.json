@@ -1,0 +1,105 @@
+{
+  "reviewRequired": true,
+  "publicationCount": 0,
+  "images": [
+    {
+      "fileId": "tym-t3048-f50chn-55-marcelx42-2025",
+      "photographer": "MarcelX42",
+      "license": "CC BY-SA 4.0",
+      "sourcePage": "https://commons.wikimedia.org/wiki/File:TYM_F50Chn_Agritechnica_2025_%28DSC04655%29.jpg",
+      "origin": "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/c2/TYM_F50Chn_Agritechnica_2025_%28DSC04655%29.jpg/1920px-TYM_F50Chn_Agritechnica_2025_%28DSC04655%29.jpg",
+      "originSha256": "905f05cd2313649e975b2abbbeeba551b8d13091cdfd4cbada31515fcf5f55f8",
+      "originBytes": 593820,
+      "derivatives": [
+        {
+          "file": "tym-t3048-f50chn-55-marcelx42-2025-480.jpg",
+          "width": 480,
+          "height": 360,
+          "bytes": 49949,
+          "sha256": "1dc9e446bc40ba965253217c48b31a0387f2b9622ebe04ecb5274f0dad0b2d86"
+        },
+        {
+          "file": "tym-t3048-f50chn-55-marcelx42-2025-960.jpg",
+          "width": 960,
+          "height": 720,
+          "bytes": 161321,
+          "sha256": "c3942b61d4a34a91ececd22b95a22d3f08c2ebf821aea7b1b374c0cc5b0dbcce"
+        },
+        {
+          "file": "tym-t3048-f50chn-55-marcelx42-2025-1920.jpg",
+          "width": 1920,
+          "height": 1440,
+          "bytes": 567673,
+          "sha256": "24c713f6a5822f4f5c8b28814d06841da3af957f6c17308193b14a65239c5a32"
+        }
+      ],
+      "approvedToPublish": false
+    },
+    {
+      "fileId": "tym-t3048-f50chn-57-marcelx42-2025",
+      "photographer": "MarcelX42",
+      "license": "CC BY-SA 4.0",
+      "sourcePage": "https://commons.wikimedia.org/wiki/File:TYM_F50Chn_Agritechnica_2025_%28DSC04657%29.jpg",
+      "origin": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/27/TYM_F50Chn_Agritechnica_2025_%28DSC04657%29.jpg/1920px-TYM_F50Chn_Agritechnica_2025_%28DSC04657%29.jpg",
+      "originSha256": "a99d62cdc1ff13bee95e5c424deec9b78ed132fcee923065fc3f9fda2d55f0c5",
+      "originBytes": 654242,
+      "derivatives": [
+        {
+          "file": "tym-t3048-f50chn-57-marcelx42-2025-480.jpg",
+          "width": 480,
+          "height": 360,
+          "bytes": 51219,
+          "sha256": "d4c3ba638132c9cbe864fd842920d152fe46394ee2d533642fd16c5d3ab119c9"
+        },
+        {
+          "file": "tym-t3048-f50chn-57-marcelx42-2025-960.jpg",
+          "width": 960,
+          "height": 720,
+          "bytes": 171336,
+          "sha256": "a3a1997548aa8bd5ea24030b8ffae7435c07963938be6e8657b95174bdcd5ca1"
+        },
+        {
+          "file": "tym-t3048-f50chn-57-marcelx42-2025-1920.jpg",
+          "width": 1920,
+          "height": 1440,
+          "bytes": 622898,
+          "sha256": "0f444e18b48f3c9e602848b1cac286ce097a88918f5d32aa04dcace8d04a12e6"
+        }
+      ],
+      "approvedToPublish": false
+    },
+    {
+      "fileId": "tym-t3048-f50chn-73-marcelx42-2025",
+      "photographer": "MarcelX42",
+      "license": "CC BY-SA 4.0",
+      "sourcePage": "https://commons.wikimedia.org/wiki/File:TYM_F50Chn_Agritechnica_2025_%28DSC04673%29.jpg",
+      "origin": "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/60/TYM_F50Chn_Agritechnica_2025_%28DSC04673%29.jpg/1920px-TYM_F50Chn_Agritechnica_2025_%28DSC04673%29.jpg",
+      "originSha256": "526dc9692694896013dcb3f98ed648cc1ed58a2c304b24426363d97ebfe01311",
+      "originBytes": 601922,
+      "derivatives": [
+        {
+          "file": "tym-t3048-f50chn-73-marcelx42-2025-480.jpg",
+          "width": 480,
+          "height": 360,
+          "bytes": 53210,
+          "sha256": "e1012ac1cd90229b04220612b7b691136bf4a3de2252370ddd607466d355c04a"
+        },
+        {
+          "file": "tym-t3048-f50chn-73-marcelx42-2025-960.jpg",
+          "width": 960,
+          "height": 720,
+          "bytes": 171315,
+          "sha256": "63299065a0fcae61bde51ab6680200f3da5d040b35077bdc4e6b767a47ee1cb6"
+        },
+        {
+          "file": "tym-t3048-f50chn-73-marcelx42-2025-1920.jpg",
+          "width": 1920,
+          "height": 1440,
+          "bytes": 573798,
+          "sha256": "1e20b233fb5848d146882d86a92efcdb21651b336874f0f0248948fb6402ed7b"
+        }
+      ],
+      "approvedToPublish": false
+    }
+  ]
+}

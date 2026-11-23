@@ -1,0 +1,138 @@
+{
+  "reviewRequired": true,
+  "publicationCount": 0,
+  "images": [
+    {
+      "fileId": "tym-t2025p-t25-front-marcelx42-2025",
+      "photographer": "MarcelX42",
+      "license": "CC BY-SA 4.0",
+      "sourcePage": "https://commons.wikimedia.org/wiki/File:TYM_T25_Agritechnica_2025_%28DSC04615%29.jpg",
+      "origin": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/0b/TYM_T25_Agritechnica_2025_%28DSC04615%29.jpg/1920px-TYM_T25_Agritechnica_2025_%28DSC04615%29.jpg",
+      "originSha256": "32a399d689bc28f95bd858888356b5784cd79a6952c27cb43081f675faacc08b",
+      "originBytes": 597398,
+      "derivatives": [
+        {
+          "file": "tym-t2025p-t25-front-marcelx42-2025-480.jpg",
+          "width": 480,
+          "height": 360,
+          "bytes": 47306,
+          "sha256": "a2a2164878723a380b613bfce3d379c2a934be03f574dee6ea05510ef8ae8619"
+        },
+        {
+          "file": "tym-t2025p-t25-front-marcelx42-2025-960.jpg",
+          "width": 960,
+          "height": 720,
+          "bytes": 157179,
+          "sha256": "21f20f2a0be1805b69e364d511ea5cf373836c4b27aeda75e317f05606e587b8"
+        },
+        {
+          "file": "tym-t2025p-t25-front-marcelx42-2025-1920.jpg",
+          "width": 1920,
+          "height": 1440,
+          "bytes": 569825,
+          "sha256": "6529618781ccfef1bca7f22629432e5e4a25037e33c8b36d964874d4590e505f"
+        }
+      ],
+      "approvedToPublish": false
+    },
+    {
+      "fileId": "tym-t2025p-t25-rear-marcelx42-2025",
+      "photographer": "MarcelX42",
+      "license": "CC BY-SA 4.0",
+      "sourcePage": "https://commons.wikimedia.org/wiki/File:TYM_T25_Agritechnica_2025_%28DSC04675%29.jpg",
+      "origin": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d7/TYM_T25_Agritechnica_2025_%28DSC04675%29.jpg/1920px-TYM_T25_Agritechnica_2025_%28DSC04675%29.jpg",
+      "originSha256": "8fcf8af2fd7d5cedf14ac5b2f03b66a30889c2e036a7fdb1b648a03ae65c255a",
+      "originBytes": 672296,
+      "derivatives": [
+        {
+          "file": "tym-t2025p-t25-rear-marcelx42-2025-480.jpg",
+          "width": 480,
+          "height": 360,
+          "bytes": 53304,
+          "sha256": "a5e9ac2c5c2d16710a94e1238d54b13931fcafe7fd5554f6c223779a3fb61b0d"
+        },
+        {
+          "file": "tym-t2025p-t25-rear-marcelx42-2025-960.jpg",
+          "width": 960,
+          "height": 720,
+          "bytes": 178780,
+          "sha256": "285448caacf7774a5915f147c195a904b04b9b8c86ef1292b8e3c88e538006ad"
+        },
+        {
+          "file": "tym-t2025p-t25-rear-marcelx42-2025-1920.jpg",
+          "width": 1920,
+          "height": 1440,
+          "bytes": 638969,
+          "sha256": "7ffec6593a9e83bd1b750628c8a0e865fe717d8b171b569267b324b0fd4a02cc"
+        }
+      ],
+      "approvedToPublish": false
+    },
+    {
+      "fileId": "tym-t6115-t115-front-marcelx42-2025",
+      "photographer": "MarcelX42",
+      "license": "CC BY-SA 4.0",
+      "sourcePage": "https://commons.wikimedia.org/wiki/File:TYM_T115_Agritechnica_2025_%28DSC04612%29.jpg",
+      "origin": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/01/TYM_T115_Agritechnica_2025_%28DSC04612%29.jpg/1920px-TYM_T115_Agritechnica_2025_%28DSC04612%29.jpg",
+      "originSha256": "a7cbd5a393efa8a61045f365353c118530ede2691fad9a6b28c9fe2b496296ee",
+      "originBytes": 505280,
+      "derivatives": [
+        {
+          "file": "tym-t6115-t115-front-marcelx42-2025-480.jpg",
+          "width": 480,
+          "height": 320,
+          "bytes": 44486,
+          "sha256": "794096bc79a9799c34f442ff5f07e5ec57fb8d33f02e8b9ed3331414fd749d96"
+        },
+        {
+          "file": "tym-t6115-t115-front-marcelx42-2025-960.jpg",
+          "width": 960,
+          "height": 640,
+          "bytes": 144060,
+          "sha256": "876d209e0ef02cdc61f7c563a4d90afd842bbcdbe422761655fb0144e643a233"
+        },
+        {
+          "file": "tym-t6115-t115-front-marcelx42-2025-1920.jpg",
+          "width": 1920,
+          "height": 1280,
+          "bytes": 482630,
+          "sha256": "0ece70d738771fd4da42a63d0138850d00e99cf4adf61c618a21fd79b8009b91"
+        }
+      ],
+      "approvedToPublish": false
+    },
+    {
+      "fileId": "tym-t6115-t115-rear-marcelx42-2025",
+      "photographer": "MarcelX42",
+      "license": "CC BY-SA 4.0",
+      "sourcePage": "https://commons.wikimedia.org/wiki/File:TYM_T115_Agritechnica_2025_%28DSC04663%29.jpg",
+      "origin": "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/ca/TYM_T115_Agritechnica_2025_%28DSC04663%29.jpg/1920px-TYM_T115_Agritechnica_2025_%28DSC04663%29.jpg",
+      "originSha256": "b8001132cb02478e127a066cf0089a24b42347165bff28a64b9ab4f44e0c9c4c",
+      "originBytes": 601239,
+      "derivatives": [
+        {
+          "file": "tym-t6115-t115-rear-marcelx42-2025-480.jpg",
+          "width": 480,
+          "height": 320,
+          "bytes": 48757,
+          "sha256": "58e0f14d12c97b91694e895efe6b08c959e18fe335a82eb15c7eca7af68a57ef"
+        },
+        {
+          "file": "tym-t6115-t115-rear-marcelx42-2025-960.jpg",
+          "width": 960,
+          "height": 640,
+          "bytes": 165138,
+          "sha256": "744473798cb388bfc12380d7f1cbd89c125ace402877300cfc6b5dd1e7b21b44"
+        },
+        {
+          "file": "tym-t6115-t115-rear-marcelx42-2025-1920.jpg",
+          "width": 1920,
+          "height": 1280,
+          "bytes": 571049,
+          "sha256": "08895d263be57459f92ed15012f97eaae6efa586f305d78a6c554787b3f75ebb"
+        }
+      ],
+      "approvedToPublish": false
+    }
+  ]
+}
