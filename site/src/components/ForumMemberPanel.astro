@@ -179,6 +179,13 @@ const copy=JSON.stringify(MEMBER_TEXT[lang]);
 .member-recent .member-entry{min-width:0}
 .member-recent .member-entry small{display:block;font-size:12px;margin-top:3px}
 .member-recent strong{overflow-wrap:anywhere}
+.member-recent .member-profile-link{display:inline-flex;align-items:center;text-align:start;
+ padding:7px 0;min-height:44px;border:0;background:transparent;
+ color:#1b5937;font:inherit;font-size:13px;font-weight:850;
+ line-height:1.4;text-decoration:underline;text-underline-offset:3px;
+ cursor:pointer;overflow-wrap:anywhere}
+.member-recent .member-profile-link:hover{color:#113c27}
+.member-recent .member-profile-link:focus-visible{outline:3px solid #75b385;outline-offset:2px}
 .member-recent [data-recent-members-status]{margin-top:12px}
 .member-community .member-retry{font:inherit;font-size:13px;font-weight:800;
  background:#f2f8ef;color:#215838;border:1px solid #a9c9aa;
@@ -365,6 +372,22 @@ for(const root of widgets){
   return cfg.url+"/storage/v1/object/public/tc-forum-avatars/"+
    encodeURIComponent(p.id)+"/avatar.webp";
  };
+ function openMemberDialog(p:Profile){
+  if(p.show_leaderboard!==true||!dialog)return;
+
+    if(!dialog)return;
+    if(dialogName)dialogName.textContent=p.display_name||p.handle;
+    if(dialogHandle)dialogHandle.textContent="@"+p.handle;
+    if(dialogBio)dialogBio.textContent=p.bio||"";
+    if(dialogBrand)dialogBrand.textContent=p.favorite_brand?txt.favoriteBrand+": "+p.favorite_brand:"";
+    if(dialogContribution)dialogContribution.textContent=
+      txt.topics+": "+String(p.topic_count||0)+" · "+txt.replies+": "+String(p.reply_count||0)+
+      " · "+txt.helpful+": "+String(p.helpful_votes||0)+" · "+txt.points+": "+String(p.score_total||0);
+    if(dialogJoin)dialogJoin.textContent=p.created_at?
+      txt.memberSince+": "+new Date(p.created_at).toLocaleDateString(lang):"";
+    dialog.showModal();
+   
+ }
  function renderLeaders(){
   if(!rankEl)return;
   rankEl.replaceChildren();
@@ -389,19 +412,7 @@ for(const root of widgets){
    const name=document.createElement("button");name.type="button";
    name.className="member-profile-link";name.textContent=p.display_name||p.handle;
    name.setAttribute("aria-label",txt.viewProfile+": "+(p.display_name||p.handle));
-   name.addEventListener("click",()=>{
-    if(!dialog)return;
-    if(dialogName)dialogName.textContent=p.display_name||p.handle;
-    if(dialogHandle)dialogHandle.textContent="@"+p.handle;
-    if(dialogBio)dialogBio.textContent=p.bio||"";
-    if(dialogBrand)dialogBrand.textContent=p.favorite_brand?txt.favoriteBrand+": "+p.favorite_brand:"";
-    if(dialogContribution)dialogContribution.textContent=
-      txt.topics+": "+String(p.topic_count||0)+" · "+txt.replies+": "+String(p.reply_count||0)+
-      " · "+txt.helpful+": "+String(p.helpful_votes||0)+" · "+txt.points+": "+String(p.score_total||0);
-    if(dialogJoin)dialogJoin.textContent=p.created_at?
-      txt.memberSince+": "+new Date(p.created_at).toLocaleDateString(lang):"";
-    dialog.showModal();
-   });
+   name.addEventListener("click",()=>openMemberDialog(p));
    const minor=document.createElement("small");
    const badge=(p.score_total||0)>=150?txt.mentor:(p.score_total||0)>=25?txt.contributor:txt.newcomer;
    minor.textContent="@"+p.handle+" · "+badge;
@@ -438,7 +449,7 @@ for(const root of widgets){
    // Same security-invoker view and opt-in rule as the existing leaderboard.
    // Never fetch auth.users, emails or hidden/unlisted member records.
    const params=new URLSearchParams({
-    select:"id,handle,display_name,avatar_path,created_at,show_leaderboard",
+    select:"id,handle,display_name,avatar_path,created_at,show_leaderboard,bio,favorite_brand,score_total,topic_count,reply_count,helpful_votes",
     show_leaderboard:"eq.true",order:"created_at.desc",limit:"12"
    });
    const res=await fetch(cfg.url+"/rest/v1/tc_member_scores?"+params,{
@@ -458,8 +469,11 @@ for(const root of widgets){
     img.src=avatarUrl(p)||defaultAvatar;img.alt="";img.loading="lazy";
     img.onerror=()=>{img.onerror=null;img.src=defaultAvatar};
     const entry=document.createElement("span");entry.className="member-entry";
-    const name=document.createElement("strong");
-    name.textContent=p.display_name===starterName?txt.defaultMemberName:(p.display_name||p.handle);
+    const name=document.createElement("button");
+    name.type="button";name.className="member-profile-link";
+    name.textContent=p.display_name||p.handle;
+    name.setAttribute("aria-label",txt.viewProfile+": "+(p.display_name||p.handle));
+    name.addEventListener("click",()=>openMemberDialog(p));
     const since=document.createElement("small");
     since.textContent="@"+p.handle+" · "+txt.memberSince+": "+
      new Date(p.created_at!).toLocaleDateString(lang,{year:"numeric",month:"short",day:"numeric"});
