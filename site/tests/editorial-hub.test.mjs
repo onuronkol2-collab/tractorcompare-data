@@ -84,3 +84,13 @@ test("production release fails closed if bilingual archives or sitemap entries d
  assert.ok(audit.includes('"/articles/"'));
  assert.ok(audit.includes('"/tr/articles/"'));
 });
+
+test("ten-language article cards use readable metadata without inventing new routes",()=>{
+ const hub=file("src/components/EditorialHub.astro");
+ assert.match(hub,/editorial-eyebrow,\.editorial-kicker\{[^}]*font-size:13px/);
+ assert.match(hub,/editorial-card-footer time\{[^}]*font-size:14px/);
+ assert.match(hub,/editorial-language-note\{font-size:14px/);
+ assert.match(hub,/editorial-grid\{list-style:none/);
+ assert.match(hub,/href=\{entryHref\(entry\)\}/);
+ assert.match(hub,/englishOnly\(entry\)/);
+});
