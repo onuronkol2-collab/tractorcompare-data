@@ -1,0 +1,24 @@
+name: TractorVS selected Commons image source health
+on:
+  pull_request:
+    paths:
+      - "site/src/lib/tractor-photos.ts"
+      - "site/tests/tractor-photos.test.mjs"
+      - "site/docs/photo-mccormick-two-source-proof-20261123.json"
+      - "site/scripts/photo-selected-commons-source-health.mjs"
+      - ".github/workflows/photo-selected-commons-source-health.yml"
+permissions:
+  contents: read
+jobs:
+  verify_two_original_commons_sources:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22.23.4"
+      - name: Check exact published UUID and all supported photo origins (6 GETs maximum)
+        run: node --experimental-strip-types site/scripts/photo-selected-commons-source-health.mjs
+      - name: Validate rights, 10-language schema, exact models and image proxy URL regressions
+        run: node --experimental-strip-types --test site/tests/tractor-photos.test.mjs
