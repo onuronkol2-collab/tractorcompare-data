@@ -120,7 +120,7 @@ body { line-height: 1.55; }
 .site-header .brand-words strong { font-size: clamp(16px, 1.3vw, 19px); line-height: 1.2; }
 .site-header .brand-words small { font-size: 11px; line-height: 1.5; letter-spacing: .035em; color: #b7c9b9; }
 .site-header .desktop-nav > a {
-  padding-inline: 10px;
+  padding-inline: clamp(2px, .35vw, 5px);
   border-radius: 8px;
   font-size: 14px;
   font-weight: 750;

@@ -23,6 +23,20 @@ test("shared research surfaces have readable typography and consistent card geom
   expect(await noDocumentOverflow(page)).toBe(true);
 });
 
+test("translated laptop navigation keeps the language switch visible",async({page})=>{
+  await page.setViewportSize({width:1281,height:780});
+  for(const locale of ["de","pt-br"]){
+    await page.goto("/"+locale+"/",{waitUntil:"domcontentloaded"});
+    expect(await noDocumentOverflow(page),locale).toBe(true);
+    const desktop=page.locator(".desktop-nav");
+    const actions=page.locator(".header-actions");
+    const nav=await desktop.boundingBox();
+    const controls=await actions.boundingBox();
+    if(nav && controls)expect(nav.x+nav.width,locale).toBeLessThanOrEqual(controls.x+2);
+    await expect(page.locator(".locale-menu > summary")).toBeVisible();
+  }
+});
+
 test("catalogue and editorial evidence links stay legible without changing navigation",async({page})=>{
   await page.setViewportSize({width:1280,height:800});
   for(const route of ["/tr/tractors/","/tr/articles/"]){
