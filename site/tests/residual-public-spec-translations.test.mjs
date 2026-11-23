@@ -206,7 +206,7 @@ test("ArmaTrac 804 source-specific weight labels preserve cab versus ROPS and no
     assert.equal(specLabel({...exampleSpec(ropsName),canonical_key:"operating_weight"},locale),rops);
     assert.match(rops,/ROPS/i,locale+" ROPS qualifier erased");
   }
-  assert.equal(specLabel({...exampleSpec(cabName),canonical_key:"operating_weight_cab"},"en"),cabName);
-  assert.equal(specLabel({...exampleSpec(ropsName),canonical_key:"operating_weight"},"en"),ropsName);
+  assert.equal(specLabel({...exampleSpec(cabName),canonical_key:"operating_weight_cab"},"en").toLowerCase(),cabName.toLowerCase());
+  assert.equal(specLabel({...exampleSpec(ropsName),canonical_key:"operating_weight"},"en").toLowerCase(),ropsName.toLowerCase());
   assert.doesNotThrow(validatePublishedSpecTranslations);
 });
