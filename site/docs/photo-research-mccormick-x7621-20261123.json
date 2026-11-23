@@ -1,0 +1,47 @@
+{
+  "scope": "independent-commons-review-only",
+  "auditDate": "2026-11-23",
+  "purpose": "Source-licensed real JPEG visual inspection to determine whether X7.621 is P6-Drive or VT-Drive; no direct publication",
+  "sourcePage": "https://commons.wikimedia.org/wiki/File:Barzkowice_-_McCormick_X7.621_-_12.09.2026_13-26-59.jpg",
+  "photographer": "Radosław Drożdżewski (User:Zwiadowca21)",
+  "sourceDeclaration": "Own work; copyright-holder declaration",
+  "licenseName": "CC BY-SA 4.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+  "originalWidth": 3690,
+  "originalHeight": 2809,
+  "imageCaptured": "2026-09-12",
+  "licenseEvidenceVerified": true,
+  "fileId": "mccormick-x7-621-barzkowice-zwiadowca21-2026",
+  "source1920": "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/a8/Barzkowice_-_McCormick_X7.621_-_12.09.2026_13-26-59.jpg/1920px-Barzkowice_-_McCormick_X7.621_-_12.09.2026_13-26-59.jpg",
+  "publishedModelCandidates": [
+    {
+      "brand": "McCormick",
+      "model": "X7.621 P6-Drive",
+      "tractorId": "9c4cb31f-4fab-49ae-8ba1-3eee9f0059be",
+      "variant": "Clever Cab / P6-Drive"
+    },
+    {
+      "brand": "McCormick",
+      "model": "X7.621 VT-Drive",
+      "tractorId": "085667ad-637c-481a-be71-847f439d7fa6",
+      "variant": "Clever Cab / VT-Drive"
+    }
+  ],
+  "photoStatus": "research_only",
+  "visualGearboxConfirmation": false,
+  "approvedToPublish": false,
+  "publicationCount": 0,
+  "cautions": [
+    "Do not apply a generic X7.621 picture to both P6/VT transmissions",
+    "Do not claim Clever Cab or year/market/options exact from outdoor photo",
+    "Never auto-approve based on search captions or aggregate image licence",
+    "Use reviewed photographer name and Commons File page; mark resize modifications and retain CC BY-SA reuse terms"
+  ],
+  "releaseGates": [
+    "Download source JPEG and decode visually (single allowed thumbnail, no 429 bypass)",
+    "Manually verify actual X7.621 badge AND P6-Drive or VT-Drive gearbox evidence",
+    "Verify JPEG SHA-256/dimensions, 480/960/1920 derivative integrity",
+    "Bind exact verified tractor UUID only, 10-language image credits and JSON-LD",
+    "Run production build/Golden Rule/Image SEO and live URL checks"
+  ]
+}
