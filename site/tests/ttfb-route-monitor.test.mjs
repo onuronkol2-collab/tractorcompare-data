@@ -69,3 +69,17 @@ test("runMonitor uses a bounded target list and retries, no third-party URLs",as
   assert.equal(result.summary.successful_count,2);
   assert.equal(result.summary.failed_count,0);
 });
+
+test("sustained slowdown on a majority of routes triggers CI; isolated slow regions do not",()=>{
+  const make=(slowRoutes)=>Array.from({length:20},(_,i)=>
+    Array.from({length:3},()=>({route:"route-"+i,kind:"static",status:200,
+      content_type_ok:true,headers_ms:i<slowRoutes?650:80}))).flat();
+  const warning=summarize(make(12));
+  assert.equal(warning.sustained_slow_routes,12);
+  assert.equal(warning.severe_latency_warning,true);
+  assert.match(markdownReport(warning,"2026-11-23T00:00:00Z"),/ALERT:/);
+  const tolerable=summarize(make(11));
+  assert.equal(tolerable.severe_latency_warning,false);
+  const unreliable=make(12).map(x=>({...x,status:503,content_type_ok:false}));
+  assert.equal(summarize(unreliable).severe_latency_warning,false);
+});
