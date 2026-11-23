@@ -33,7 +33,7 @@ Mevcut `site/src/lib/catalog.ts` fonksiyonu `sourceBackedHorsepower`, katalog ve
 
 ## Yapılmayan ve hâlâ gereken işler
 
-- **No production change was manually deployed:** Supabase şeması, canlı teknik değerler, RLS, forum, SEO URL'leri, kaynak/atıf ve model durumları değiştirilmedi. Kod değişikliğinin GitHub'a birleştirilmesi, Cloudflare canlı dağıtımı ve Google indeksleme ayrı doğrulanmalı.
+- **not deployed manually / canlı dağıtım henüz doğrulanmadı:** Supabase şeması, canlı teknik değerler, RLS, forum, SEO URL'leri, kaynak/atıf ve model durumları değiştirilmedi. Kod değişikliğinin GitHub'a birleştirilmesi, Cloudflare canlı dağıtımı ve Google indeksleme ayrı doğrulanmalı.
 - Kaynağı bulunan dört Swaraj güç **kategorisini** doğru türde bir özellik olarak kamuya sunma işi ayrı ve kaynaklı kayıt/şablon doğrulaması gerektirir; bu PR bunu yapmaz.
 - Belarus için kılavuz PDF sayfası ve tam motor varyantı/doğrulama tarihi bulunmadan `horsepower` doldurulmaz.
 - Fotoğrafların lisansı, kullanıcı deneyimi ve saha güvenilirliği bu incelemenin kapsamı dışında kalmıştır.
