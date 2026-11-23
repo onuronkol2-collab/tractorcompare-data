@@ -1027,7 +1027,8 @@ test("two already licensed photos have verified first-party 960 and 1920 JPEG si
   assert.equal(photo.brand,identity.brand);
   assert.equal(photo.model,identity.model);
   assert.equal(photo.photographer,identity.author);
-  assert.equal(photo.sourcePage,entry.sourcePage);
+  assert.equal(decodeURIComponent(photo.sourcePage),decodeURIComponent(entry.sourcePage),
+    "Equivalent percent-encoded Commons File URLs must identify the same actual image");
   assert.equal(photo.licenseName,"CC BY-SA 4.0");
   const old=entry.existing480;
   const oldBytes=readFileSync(new URL("../public/images/tractors/"+old.file,import.meta.url));
