@@ -1,0 +1,39 @@
+{
+  "reviewRequired": true,
+  "publicationCount": 0,
+  "images": [
+    {
+      "fileId": "mccormick-x4-080-mbone-agritechnica-2023",
+      "photographer": "MB-one",
+      "license": "CC BY-SA 4.0",
+      "sourcePage": "https://commons.wikimedia.org/wiki/File:McCormick_X4.080%2C_Agritechnica_2023%2C_Hanover_%28P1140946%29.jpg",
+      "origin": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/33/McCormick_X4.080%2C_Agritechnica_2023%2C_Hanover_%28P1140946%29.jpg/1920px-McCormick_X4.080%2C_Agritechnica_2023%2C_Hanover_%28P1140946%29.jpg",
+      "originSha256": "eb9062e0086babc5ebff3504c45944ee72c57fee7fb5acb8c2a9f303f653dc91",
+      "originBytes": 651874,
+      "derivatives": [
+        {
+          "file": "mccormick-x4-080-mbone-agritechnica-2023-480.jpg",
+          "width": 480,
+          "height": 384,
+          "bytes": 55728,
+          "sha256": "ab01b13e9d822e05e2dfc5c00b52b367bf851bc55f65bb69cae872e7c29e3515"
+        },
+        {
+          "file": "mccormick-x4-080-mbone-agritechnica-2023-960.jpg",
+          "width": 960,
+          "height": 768,
+          "bytes": 183018,
+          "sha256": "a4b158c8fb42a9389cb50a98d1bf440871c275e5526e215c898bd2f2c0f3aa73"
+        },
+        {
+          "file": "mccormick-x4-080-mbone-agritechnica-2023-1920.jpg",
+          "width": 1920,
+          "height": 1536,
+          "bytes": 621035,
+          "sha256": "efb81fe02cb6d77db53b123d9dc712572d7ce92cec4df69eb00a3a69e80cfbcd"
+        }
+      ],
+      "approvedToPublish": false
+    }
+  ]
+}
