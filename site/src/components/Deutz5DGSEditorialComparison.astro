@@ -25,13 +25,13 @@ const title=tr
 const description=tr
  ?"Deutz-Fahr 5090 D GS ile 5100 D GS motor gücü, tork, PTO ve hidrolik değerlerini aynı Türkiye üretici belgesinden, ölçüm sınırlarıyla karşılaştırın."
  :"Compare Deutz-Fahr 5090 D GS and 5100 D GS engine power, torque, PTO and hydraulics using the same verified Turkish manufacturer specification.";
-const breadcrumb=pair?{
- "@context":"https://schema.org","@type":"BreadcrumbList",
- itemListElement:[
-  {"@type":"ListItem",position:1,name:tr?"Ana sayfa":"Home",item:new URL(localizedPath(lang,"/"),Astro.site!).toString()},
-  {"@type":"ListItem",position:2,name:tr?"Traktör karşılaştırma":"Compare tractors",item:new URL(comparePath,Astro.site!).toString()},
-  {"@type":"ListItem",position:3,name:tr?"5090 D GS ve 5100 D GS":"5090 D GS vs 5100 D GS",item:fullUrl}
- ]}:null;
+const breadcrumbItems=pair?[
+ {"@type":"ListItem",position:1,name:tr?"Ana sayfa":"Home",
+  item:new URL(localizedPath(lang,"/"),Astro.site||"https://tractorvs.com").toString()},
+ {"@type":"ListItem",position:2,name:tr?"Makaleler":"Articles",
+  item:new URL(localizedPath(lang,"/articles/"),Astro.site||"https://tractorvs.com").toString()},
+ {"@type":"ListItem",position:3,name:tr?"5090 D GS ile 5100 D GS":"5090 D GS vs 5100 D GS",item:fullUrl}
+]:null;
 const modelUrl=(slug:string)=>localizedPath(lang,"/tractors/"+slug+"/");
 const interactive=pair?comparePath+"?left="+encodeURIComponent(pair.left.tractor_id)+
  "&right="+encodeURIComponent(pair.right.tractor_id):comparePath;
@@ -103,14 +103,35 @@ const comparisonLabels=tr?{
  articles:"Technical guides",
  unavailable:"This comparison publishes only if the exact public source and equipment records are verified. Source or variant identity is being checked."
 };
+const articleHubUrl=new URL(localizedPath(lang,"/articles/"),Astro.site||"https://tractorvs.com").toString();
+// Evidence-gated: unavailable preview content has no Article/TechArticle claim.
+const schema=pair&&breadcrumbItems?{
+ "@context":"https://schema.org",
+ "@graph":[
+  {"@type":"TechArticle","@id":fullUrl+"#article",
+   headline:comparisonLabels.heading,description,url:fullUrl,inLanguage:lang,
+   isAccessibleForFree:true,
+   author:{"@type":"Organization",name:"TractorVS"},
+   publisher:{"@type":"Organization",name:"TractorVS"},
+   isBasedOn:pair.source,citation:[pair.source],
+   about:[{"@type":"Thing",name:"Deutz-Fahr 5090 D GS"},
+          {"@type":"Thing",name:"Deutz-Fahr 5100 D GS"}],
+   isPartOf:{"@id":articleHubUrl+"#webpage"},
+   mainEntityOfPage:{"@id":fullUrl+"#webpage"}},
+  {"@type":"WebPage","@id":fullUrl+"#webpage",url:fullUrl,
+   name:comparisonLabels.heading,description,inLanguage:lang,
+   mainEntity:{"@id":fullUrl+"#article"}},
+  {"@type":"BreadcrumbList",itemListElement:breadcrumbItems}
+ ]
+}:null;
 ---
-<SiteLayout lang={lang} title={title} description={description} structuredData={breadcrumb}
+<SiteLayout lang={lang} title={title} description={description} structuredData={schema}
   ogType="article" indexable={Boolean(pair)}
   indexableLocales={["en","tr"]} availableLocales={["en","tr"]}>
   <div class="e5-wrap">
     <nav aria-label={tr?"İçerik yolu":"Breadcrumb"} class="e5-crumb">
       <a href={localizedPath(lang,"/")}>{tr?"Ana sayfa":"Home"}</a>
-      <span aria-hidden="true">/</span><a href={comparePath}>{tr?"Karşılaştırma":"Compare"}</a>
+      <span aria-hidden="true">/</span><a href={localizedPath(lang,"/articles/")}>{tr?"Makaleler":"Articles"}</a>
       <span aria-hidden="true">/</span><span>5090 D GS / 5100 D GS</span>
     </nav>
     <header class="e5-hero">
@@ -180,6 +201,16 @@ const comparisonLabels=tr?{
         <p class="e5-source"><a href={pair.source} target="_blank" rel="noopener noreferrer">
           {comparisonLabels.doc} <span aria-hidden="true">↗</span></a></p>
       </section>
+      <section class="e5-learning" aria-labelledby="e5-learning-title">
+        <h2 id="e5-learning-title">{tr?"Bu teknik değerleri nasıl yorumlamalısınız?":"How should you interpret these specifications?"}</h2>
+        <p>{tr?"Broşürdeki değerleri aynı ölçüm türüyle karşılaştırmak önemlidir. İlgili rehberler kavramları ve güvenlik sınırlarını açıklar.":"Compare like-for-like measurements, not just brochure numbers. These guides explain technical terms and safety limits."}</p>
+        <ul>
+          <li><a href={localizedPath(lang,"/guides/tractor-engine-power-and-torque/")}>{tr?"Motor gücü, tork ve test standartları":"Engine power, torque and testing standards"}</a></li>
+          <li><a href={localizedPath(lang,"/guides/pto-and-power-take-off/")}>{tr?"PTO devirleri ile PTO çıkış gücü arasındaki fark":"PTO speed versus PTO shaft power"}</a></li>
+          <li><a href={localizedPath(lang,"/guides/tractor-hydraulic-lift-explained/")}>{tr?"Hidrolik debi ve kaldırma kapasitesi nasıl değerlendirilir?":"How to interpret hydraulic flow and lift capacity"}</a></li>
+          <li><a href={localizedPath(lang,"/guides/tractor-technical-terms/")}>{tr?"Traktör parçaları ve teknik terimler":"Tractor components and technical terms"}</a></li>
+        </ul>
+      </section>
       <nav class="e5-related" aria-label={comparisonLabels.openModels}>
         <h2>{comparisonLabels.openModels}</h2>
         <div>
@@ -222,6 +253,10 @@ const comparisonLabels=tr?{
  .e5-table tbody td:nth-child(2),.e5-table tbody td:nth-child(3){font-weight:750}
  .e5-source a,.e5-related a{color:#225e3c;text-decoration:underline;text-underline-offset:3px;font-weight:700;overflow-wrap:anywhere}
  .e5-conclusion{padding:26px;background:#f0f7e9;border-radius:14px}
+ .e5-learning{padding:clamp(18px,3vw,28px);background:#f4f8f1;border:1px solid #ceddc9;border-radius:14px}
+ .e5-learning ul{margin:15px 0 0;padding-left:22px;display:grid;gap:11px}
+ .e5-learning li{padding-left:3px}
+ .e5-learning a{color:#225e3c;text-decoration:underline;text-underline-offset:3px;font-weight:750;overflow-wrap:anywhere}
  .e5-related{border-top:1px solid #d4dfd4;margin-top:38px;padding-top:26px}
  .e5-related>div{display:flex;gap:15px;flex-wrap:wrap}
  .e5-related a{border:1px solid #bdd3be;border-radius:10px;padding:11px 15px}
