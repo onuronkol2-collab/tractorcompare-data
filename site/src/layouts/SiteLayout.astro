@@ -2,6 +2,7 @@
 import "../styles/global.css";
 import "../styles/research-layout.css";
 import "../styles/tractor-photos.css";
+import "../styles/interaction-accessibility.css";
 import PhotoLightbox from "../components/PhotoLightbox.astro";
 import LocaleSuggestion from "../components/LocaleSuggestion.astro";
 import AnalyticsConsent from "../components/AnalyticsConsent.astro";
@@ -230,7 +231,7 @@ const openGraphLocale: Record<Locale, string> = {
       </div>
     </header>
 
-    <main id="main">
+    <main id="main" tabindex="-1">
       {lang==="en" && Astro.url.pathname==="/" && <LocaleSuggestion />}
       <slot />
     </main>

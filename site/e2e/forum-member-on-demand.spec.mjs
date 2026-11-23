@@ -3,9 +3,12 @@ import {test,expect} from "@playwright/test";
 test("public newest-member list loads, optional ranking waits until opening",async({page})=>{
  let rankingRequests=0,recentRequests=0;
  await page.route("**/forum-test-api/rest/v1/tc_member_scores?**",route=>{
-  const select=new URL(route.request().url()).searchParams.get("select")||"";
-  if(select.includes("score_total"))rankingRequests++;
-  else recentRequests++;
+  // Recent profile cards now include public score fields; distinguish the
+  // optional ranking request by ordering, not selected column names.
+  const query=new URL(route.request().url()).searchParams;
+  if(query.get("order")==="created_at.desc")recentRequests++;
+  else if((query.get("order")||"").includes("score_30d.desc"))rankingRequests++;
+  else throw Error("Unexpected member scores query shape");
   return route.fulfill({json:[]});
  });
  await page.goto("/tr/forum/");
