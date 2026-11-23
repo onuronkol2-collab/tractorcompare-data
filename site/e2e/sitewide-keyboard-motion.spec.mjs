@@ -43,6 +43,14 @@ test("mobile navigation maintains visible keyboard focus and clean SEO metadata"
  await page.keyboard.press("Shift+Tab");
  const keyboardOutline=await menu.locator("summary").evaluate(el=>getComputedStyle(el).outlineStyle);
  expect([outline,keyboardOutline]).toContain("solid");
- await expect(page.locator('link[rel="canonical"]')).toHaveAttribute("href","https://tractorvs.com/tr/");
- await expect(page.locator('meta[name="robots"]')).toHaveAttribute("content",/index,follow/);
+ // CI intentionally builds an inert noindex preview. Published builds must
+ // expose the canonical; previews must keep their canonical absent.
+ const robots=await page.locator('meta[name="robots"]').getAttribute("content");
+ expect(robots).toMatch(/^(?:noindex,nofollow|index,follow)/);
+ if(robots?.startsWith("noindex")){
+  await expect(page.locator('link[rel="canonical"]')).toHaveCount(0);
+ }else{
+  await expect(page.locator('link[rel="canonical"]')).toHaveAttribute("href","https://tractorvs.com/tr/");
+  expect(robots).toContain("index,follow");
+ }
 });
