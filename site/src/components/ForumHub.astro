@@ -137,10 +137,10 @@ const schema=indexable?{
        <button class="community-filter-clear" type="button" data-forum-clear hidden>{ft(lang,"clearFilters")}</button>
       </div>
      </div>
-    {topics.length>0?<div class="community-topic-grid" id="forum-topic-list" role="list">
+    {topics.length>0?<div class="community-topic-grid" id="forum-topic-list">
       {topics.map(topic=>{
        const model=topic.tractor_id?tractors.get(topic.tractor_id):undefined;
-       return <article class="community-topic" role="listitem" data-forum-topic data-forum-topic-id={topic.topic_id}
+       return <article class="community-topic" data-forum-topic data-forum-topic-id={topic.topic_id}
          data-forum-reply-count={replyCounts.get(topic.topic_id)||0} data-forum-published-at={topic.created_at}
          data-forum-search={forumSearchText([topic.title,topic.body,model?.brand_name,model?.model_name].filter(Boolean).join(" "),lang)}
          data-forum-topic-category={topic.category}>
