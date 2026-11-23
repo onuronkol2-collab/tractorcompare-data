@@ -98,6 +98,7 @@ const schema=indexable?{
   <div class="container community-main">
    <div class="community-content-grid">
    <ForumDashboardRail lang={lang} topics={topics}/>
+   <div class="community-primary-column">
    <section class="community-list" aria-label={ft(lang,"all")}>
     <nav class="forum-view-tabs" id="forum-dashboard-tabs" aria-label={dashboard.topics}>
      {(["latest","popular","unanswered","following","events"] as const).map((key,index)=>
@@ -208,9 +209,12 @@ const schema=indexable?{
       </ul>}
     </section>
    </section>
-   <aside class="community-sidebar" aria-label={ft(lang,"compose")}>
-     <ForumDashboardPanels lang={lang} topics={topics} replyCount={visibleReplyCount}/>
+   <div class="forum-primary-composer" data-forum-compose-region>
      <ForumComposer lang={lang} mode="topic"/>
+   </div>
+   </div>
+   <aside class="community-sidebar" aria-label={dashboard.stats}>
+     <ForumDashboardPanels lang={lang} topics={topics} replyCount={visibleReplyCount}/>
    </aside>
    </div>
    <ForumMemberPanel lang={lang}/>
@@ -347,7 +351,7 @@ const schema=indexable?{
 .community-main{padding-top:clamp(26px,4vw,47px);padding-bottom:75px}
 .community-content-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(280px,330px);
  gap:clamp(20px,2.5vw,32px);align-items:start}
-.community-list,.community-sidebar{min-width:0}
+.community-list,.community-sidebar,.community-primary-column,.forum-primary-composer{min-width:0}
 .community-section-header{display:flex;align-items:flex-end;justify-content:space-between;
  gap:15px;margin:0 0 21px}
 .community-section-eyebrow{display:block;color:#425749;font-weight:850;font-size:10px;
@@ -414,7 +418,9 @@ const schema=indexable?{
 .community-shell :global(.forum-live-topic h3){font-size:clamp(17px,1.9vw,21px);
  font-weight:800;letter-spacing:-.02em}
 .community-shell :global(.forum-live-meta){font-size:11px;color:#526b5a}
-.community-sidebar :global(.community-composer){margin:0;min-width:0}
+.community-primary-column{display:flex;flex-direction:column;gap:clamp(20px,2.3vw,30px);align-self:start}
+.forum-primary-composer{width:100%;min-width:0;scroll-margin-top:6rem}
+.forum-primary-composer :global(.community-composer){margin:0;min-width:0;width:100%}
 .community-help{padding-top:16px;border-top:1px solid var(--forum-line);font-size:13px}
 .community-shell a:focus-visible,.community-shell button:focus-visible,
 .community-shell input:focus-visible{outline:3px solid #80b97e;outline-offset:3px}
@@ -422,7 +428,7 @@ const schema=indexable?{
  .community-hero-inner{grid-template-columns:minmax(0,1fr)}
  .community-hero-panel{max-width:650px}
  .community-content-grid{grid-template-columns:minmax(0,1fr)}
- .community-sidebar{max-width:700px;width:100%}
+ .community-sidebar{max-width:none;width:100%}
 }
 @media(max-width:640px){
  .community-hero{padding:38px 0 42px}
@@ -474,11 +480,11 @@ const schema=indexable?{
 .community-hero-panel .community-panel-categories,.community-hero-panel .community-panel-note{display:none}
 .community-content-grid{grid-template-columns:minmax(175px,215px) minmax(0,1fr) minmax(245px,285px);
  gap:15px;align-items:start}
-.community-list,.community-sidebar{min-width:0}
+.community-list,.community-sidebar,.community-primary-column,.forum-primary-composer{min-width:0}
 .community-sidebar{display:grid;gap:16px}
-.community-sidebar :global(.community-composer){margin:0;box-shadow:0 8px 26px rgba(12,42,24,.04)}
+.forum-primary-composer :global(.community-composer){margin:0;box-shadow:0 8px 26px rgba(12,42,24,.04)}
 /* Emoji picker is anchored to the right-edge sidebar, never beyond viewport. */
-.community-sidebar :global(.forum-emoji-grid){inset-inline-start:auto;inset-inline-end:0;max-width:min(330px,calc(100vw - 52px))}
+.forum-primary-composer :global(.forum-emoji-grid){inset-inline-start:auto;inset-inline-end:0;max-width:min(330px,calc(100vw - 52px))}
 .forum-view-tabs{display:flex;align-items:stretch;gap:5px;padding:7px;
  background:#fff;border:1px solid #dee9dc;border-radius:14px;
  box-shadow:0 5px 18px rgba(19,48,29,.025);min-width:0}
