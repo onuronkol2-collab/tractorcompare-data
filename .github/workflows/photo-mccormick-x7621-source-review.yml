@@ -1,0 +1,73 @@
+name: TractorVS McCormick X7.621 research-only JPEG staging
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - "site/docs/photo-research-mccormick-x7621-20261123.json"
+      - "site/scripts/photo-stage-mccormick-x7621-20261123.py"
+      - ".github/workflows/photo-mccormick-x7621-source-review.yml"
+permissions:
+  contents: read
+jobs:
+  research_without_publication:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Verify strict license/identity review intent
+        run: |
+          python -m py_compile site/scripts/photo-stage-mccormick-x7621-20261123.py
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          m=json.loads(Path("site/docs/photo-research-mccormick-x7621-20261123.json").read_text())
+          assert m["photoStatus"] == "research_only"
+          assert m["approvedToPublish"] is False
+          assert m["visualGearboxConfirmation"] is False
+          assert m["publicationCount"] == 0
+          assert m["licenseName"] == "CC BY-SA 4.0"
+          assert m["fileId"] == "mccormick-x7-621-barzkowice-zwiadowca21-2026"
+          assert {p["model"] for p in m["publishedModelCandidates"]} == {"X7.621 P6-Drive","X7.621 VT-Drive"}
+          print("TRACTORVS_X7621_FAIL_CLOSED_ON_UNKNOWN_GEARBOX")
+          PY
+      - name: Install pinned image decoder
+        run: python -m pip install --quiet "Pillow==11.3.0"
+      - name: Fetch one licensed source and derive three review JPEGs
+        run: python site/scripts/photo-stage-mccormick-x7621-20261123.py --output-dir ./photo-x7621-review
+      - name: Verify actual bytes and SHA-256 integrity
+        run: |
+          python - <<'PY'
+          import json,hashlib
+          from pathlib import Path
+          from PIL import Image
+          root=Path("photo-x7621-review")
+          proof=json.loads((root/"sha256-ledger.json").read_text())
+          assert proof["reviewRequired"] is True
+          assert proof["approvedToPublish"] is False
+          assert proof["visualGearboxConfirmation"] is False
+          assert proof["publicationCount"] == 0
+          assert proof["fileId"] == "mccormick-x7-621-barzkowice-zwiadowca21-2026"
+          assert len(proof["sourceSha256"]) == 64 and proof["sourceBytes"] > 10000
+          assert {p["width"] for p in proof["derivatives"]} == {480,960,1920}
+          for row in proof["derivatives"]:
+            path=root/row["file"]
+            b=path.read_bytes()
+            assert len(b) == row["bytes"]
+            assert hashlib.sha256(b).hexdigest() == row["sha256"]
+            assert b[:3] == bytes.fromhex("ffd8ff") and b[-2:] == bytes.fromhex("ffd9")
+            with Image.open(path) as photo:
+              photo.load()
+              assert photo.format == "JPEG" and photo.width == row["width"]
+              assert photo.height == row["height"]
+          print("TRACTORVS_X7621_REVIEW_ONLY_IMAGE_INTEGRITY_OK")
+          PY
+      - name: Retain only unpublished JPEG research artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: tractorvs-x7621-licensed-visual-review-only
+          path: photo-x7621-review/
+          if-no-files-found: error
+          retention-days: 30
