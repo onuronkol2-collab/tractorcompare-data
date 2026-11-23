@@ -36,7 +36,7 @@ function redirect(location, preferred = null) {
   return new Response(null, { status: 302, headers });
 }
 
-/** Only root and explicit language selection use the Worker; other pages are static. */
+/** Worker only handles explicitly allowlisted special routes; root HTML is static. */
 export default {
   async fetch(request, env) {
     const url = new URL(request.url);
