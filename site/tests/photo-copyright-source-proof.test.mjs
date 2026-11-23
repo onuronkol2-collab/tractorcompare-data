@@ -74,3 +74,34 @@ test("Belarus 132N original ru.wikipedia uploader signed the nested CC BY-SA 3.0
  assert.equal(reviewCommonsCopyrightWikitext(wikiText,{...p,fileId:"unreviewed"}).verified,false,
    "Legacy template exception cannot silently extend to other images");
 });
+
+
+test("McCormick X7.621 photographer real name is linked solely to the actual Commons uploader account",()=>{
+ const p={...base,fileId:"mccormick-x7-621-barzkowice-zwiadowca21-2026",
+   photographer:"Radosław Drożdżewski (User:Zwiadowca21)",
+   copyrightOwner:"Radosław Drożdżewski (User:Zwiadowca21)",
+   sourcePage:"https://commons.wikimedia.org/wiki/File:Barzkowice_-_McCormick_X7.621_-_12.09.2026_13-26-59.jpg",
+   copyrightClaimUrl:"https://commons.wikimedia.org/wiki/File:Barzkowice_-_McCormick_X7.621_-_12.09.2026_13-26-59.jpg"};
+ const raw=[
+  "{{Information",
+  "|Description={{en|McCormick X7.621 tractor}}",
+  "|Source={{own}}",
+  "|Author=Photographs by {{User:Zwiadowca21}}",
+  "}}",
+  "{{self|cc-by-sa-4.0}}"
+ ].join("\n");
+ assert.equal(reviewCommonsCopyrightWikitext(raw,p).verified,true,
+   "Verified author's Commons account must match source author field");
+ for(const wrong of [
+  raw.replace("Zwiadowca21","AnotherUser"),
+  raw.replace("{{own}}","Photo by unrelated photographer"),
+  raw.replace("{{self|cc-by-sa-4.0}}","{{cc-by-sa-4.0}}"),
+  raw.replace("|Author=Photographs by {{User:Zwiadowca21}}","|Author=Unknown")+"\\n<!-- User:Zwiadowca21 -->"
+ ]){
+  assert.equal(reviewCommonsCopyrightWikitext(wrong,p).verified,false,
+   "Alias does not bypass Own work, exact author field, or self-license");
+ }
+ assert.equal(reviewCommonsCopyrightWikitext(raw,{...p,fileId:"an-unreviewed-photo"}).verified,false,
+   "No global byline or surname equivalence");
+ assert.equal(reviewCommonsCopyrightWikitext(raw,{...p,copyrightOwner:"TractorVS"}).verified,false);
+});
