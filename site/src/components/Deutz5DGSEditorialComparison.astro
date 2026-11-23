@@ -138,6 +138,17 @@ const schema=pair&&breadcrumbItems?{
       <span class="e5-eyebrow">{comparisonLabels.eyebrow}</span>
       <h1>{comparisonLabels.heading}</h1>
       <p>{comparisonLabels.intro}</p>
+      {pair&&<p class="e5-quick-answer">
+        <strong>{tr?"Kısa yanıt:":"Short answer:"}</strong>
+        {" "}{tr?"Aynı üretici belgesinde 5090 D GS'nin nominal motor gücü":"In the same manufacturer brochure, the 5090 D GS has rated engine power of"}
+        {" "}<strong>{display(pair.rows[0].left,"HP")}</strong>,
+        {tr?" 5100 D GS'nin ise":" compared with"}{" "}
+        <strong>{display(pair.rows[0].right,"HP")}</strong>.
+        {" "}{tr?"Üreticiye göre maksimum tork sırasıyla":"Manufacturer-stated peak torque is"}
+        {" "}<strong>{display(pair.rows[2].left,"Nm")}</strong>
+        {" "}{tr?"ve":"versus"}{" "}<strong>{display(pair.rows[2].right,"Nm")}</strong>.
+        {" "}{tr?"Bu karşılaştırma saha performansı veya yakıt tüketimi testi değildir.":"These figures are not an independent field-performance or fuel-consumption test."}
+      </p>}
       <div class="e5-actions">
         <a href={interactive}>{comparisonLabels.openTool} <span aria-hidden="true">↗</span></a>
         <a href={localizedPath(lang,"/articles/")}>{comparisonLabels.articles} <span aria-hidden="true">↗</span></a>
@@ -231,6 +242,7 @@ const schema=pair&&breadcrumbItems?{
  .e5-eyebrow{display:block;font-weight:750;font-size:11px;letter-spacing:.13em;color:#c4e3bc;margin-bottom:16px}
  .e5-hero h1{font-size:clamp(27px,3.4vw,43px);line-height:1.2;margin:0 0 18px;max-width:850px}
  .e5-hero p{max-width:820px;color:#e1eddf;line-height:1.75;margin:0}
+ .e5-hero .e5-quick-answer{margin:18px 0 0;padding:15px 18px;border-left:4px solid #bbd9a4;background:#173f2c;border-radius:8px;color:#f3f9ee;font-size:16px;line-height:1.75}
  .e5-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:24px}
  .e5-actions a{border:1px solid #d3e6bf;border-radius:9px;padding:10px 15px;color:#fff;font-weight:750;text-decoration:none}
  .e5-actions a:first-child{color:#143824;background:#d3e6bf}
