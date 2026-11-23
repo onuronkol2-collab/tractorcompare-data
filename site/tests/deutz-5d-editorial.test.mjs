@@ -124,5 +124,9 @@ test("comparison uses only evidence-linked TechArticle schema and honest editori
   "tractor-hydraulic-lift-explained","tractor-technical-terms"
  ])assert.ok(source.includes('localizedPath(lang,"/guides/'+slug+'/")'),
    "truthful bilingual contextual link "+slug);
+ assert.match(source,/class="e5-quick-answer"/);
+ assert.match(source,/display\(pair\.rows\[0\]\.left,"HP"\)/);
+ assert.match(source,/display\(pair\.rows\[0\]\.right,"HP"\)/);
+ assert.match(source,/independent field-performance or fuel-consumption test/);
  assert.doesNotMatch(source,/"@type":"Product"/);
 });
