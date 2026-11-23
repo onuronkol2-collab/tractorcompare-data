@@ -576,7 +576,7 @@ test("McCormick X5.085 and TYM T6115/T2025P have exact licensed files, source pr
 test("historic photo batch is staged with rights and does not create records",()=>{
   assert.equal(HISTORICAL_LICENSED_PHOTOS.length,88);
   const all=new Set(HISTORICAL_LICENSED_PHOTOS.map(x=>x.fileId));
-  assert.equal(all.size,83);
+  assert.equal(all.size,88);
   assert.ok(HISTORICAL_LICENSED_PHOTOS.every(x=>x.configurationExact===false));
   assert.ok(!HISTORICAL_LICENSED_PHOTOS.some(x=>["Product","Vehicle"].includes(x.model)));
 });
