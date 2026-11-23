@@ -2,8 +2,8 @@
   "version": 1,
   "pages": {
     "https://tractorvs.com/": {
-      "digest": "3758db17bfb594bac1716d677371c9531aaabd99712bb564c327b9943d470fe0",
-      "modified": "2026-11-23T12:59:16.928Z"
+      "digest": "8d570149c19a74ca9385df96b2c824e082eff5a4bd21d728802b5be2358ec219",
+      "modified": "2026-11-23T18:15:08.467Z"
     },
     "https://tractorvs.com/articles/": {
       "digest": "f4d32f5ffc67b88681b1b5561e8db5d02e2e3359a514dbf30934b26641bbed54",
@@ -18,28 +18,28 @@
       "modified": "2026-11-22T08:02:35.845Z"
     },
     "https://tractorvs.com/compare/": {
-      "digest": "954f10b69bab59f8a03be1c8c7bd65870465e219033b44f6272e6e3ab4a824bf",
-      "modified": "2026-11-23T17:13:50.896Z"
+      "digest": "1525facc6d3a1e80c97923dc62d93644f95dbf73b1b6e3e3469f4cb7bd2f400b",
+      "modified": "2026-11-23T18:15:08.467Z"
     },
     "https://tractorvs.com/compare/deutz-fahr-5090-d-gs-vs-5100-d-gs/": {
       "digest": "922999b9696029c032d6b1c71856522e23db46cc43479dd85fbb929909556a66",
       "modified": "2026-11-23T16:20:24.281Z"
     },
     "https://tractorvs.com/de/": {
-      "digest": "0c774663bb8062aa14b16df944461f4d9a75342ebc4cd47b0d6d9e6543e430a6",
-      "modified": "2026-11-23T12:59:16.928Z"
+      "digest": "bfb1ce31ea182956b411842bd43cc503b8bb0de1c7dc8c235ca0fe93199e372f",
+      "modified": "2026-11-23T18:15:08.467Z"
     },
     "https://tractorvs.com/de/articles/": {
       "digest": "e8e5821b7a9a45bf22f1f98c341eb6c77b42f895c99c960f2e7ec29c22d8d083",
       "modified": "2026-11-22T18:22:02.402Z"
     },
     "https://tractorvs.com/de/compare/": {
-      "digest": "0db7f5619dede2e6f20f3f6d02463c9257773935ee46371c7666d31c12dbb284",
-      "modified": "2026-11-23T17:13:50.896Z"
+      "digest": "6d910a600cd717cddfcc56aea04a8f620ebd4f5542110f49697f34a6946718ea",
+      "modified": "2026-11-23T18:15:08.467Z"
     },
     "https://tractorvs.com/de/farm-advisor/": {
-      "digest": "26924ec2dd3ad3aee240aece27e5902431b26a3d9e07b880930a6246e04b368c",
-      "modified": "2026-11-23T16:45:17.078Z"
+      "digest": "f033a82f8bd9405734f91ed6e58267bf0988d2379335837d00e1476b48c68646",
+      "modified": "2026-11-23T18:15:08.467Z"
     },
     "https://tractorvs.com/de/guides/choosing-a-tractor/": {
       "digest": "690156b1adec284fe12f219df526061b8ef077cfb3299d44d2d883a874faa4b2",
@@ -54,8 +54,8 @@
       "modified": "2026-11-22T15:13:41.997Z"
     },
     "https://tractorvs.com/de/tractors/": {
-      "digest": "ec0d6d94db6f7e0586a47c30b6a51d3937e6943aa3d1170bfa214fca568658e7",
-      "modified": "2026-11-23T17:13:50.896Z"
+      "digest": "1842ef2e98dc734a3b7f7b21848cf134bf5c24e9a66b979cb25217d7904c7a45",
+      "modified": "2026-11-23T18:15:08.467Z"
     },
     "https://tractorvs.com/de/tractors/agrale-4125-0b53e944/": {
       "digest": "6d09ce3492f880497db77b2114853c5574846ee2ce73b4a8e45d7a2de15ff1a7",
@@ -98,32 +98,32 @@
       "modified": "2026-11-23T16:45:17.078Z"
     },
     "https://tractorvs.com/de/tractors/antonio-carraro-mach-4-r-f267b552/": {
-      "digest": "29fca25a2cca832eb7093ea73a95dabe46282ed9019a8811e5dcb4e0784775cc",
-      "modified": "2026-11-23T16:45:17.078Z"
+      "digest": "ab21dffb3f569db4fb7bc0c23dc892dc930233cc3d545bafc8f4ca66082d5aa1",
+      "modified": "2026-11-23T18:15:08.467Z"
     },
     "https://tractorvs.com/de/tractors/antonio-carraro-panther-22-m-f4794a70/": {
-      "digest": "a4bb3493d1b2d7f73fd31532980da38f47a6d16053d2456822444987463b2c2e",
-      "modified": "2026-11-23T16:45:17.078Z"
+      "digest": "2665c8e1ef5f54adabf7087135936f9f4a89307216029485eecab6c3fdf9bef3",
+      "modified": "2026-11-23T18:15:08.467Z"
     },
     "https://tractorvs.com/de/tractors/antonio-carraro-panther-26-h-48e8caec/": {
-      "digest": "d5e66a0a47e30094a845aa8fd4ca6950b622e0a728cd23937e23f7b17822f515",
-      "modified": "2026-11-23T16:45:17.078Z"
+      "digest": "71c645afaafe9ae90c6915b0510a946fbf0b8c50fea18c2aa8e66dcd496e9836",
+      "modified": "2026-11-23T18:15:08.467Z"
     },
     "https://tractorvs.com/de/tractors/antonio-carraro-panther-26-m-da7afde6/": {
-      "digest": "27afee14a82cb3d9989ff04a40b926402abea88c7f65a392793a00204fcb0443",
-      "modified": "2026-11-23T16:45:17.078Z"
+      "digest": "ef8334119896d254437c3935b16948cc20a133430a85ebb355fbaefa792e4275",
+      "modified": "2026-11-23T18:15:08.467Z"
     },
     "https://tractorvs.com/de/tractors/antonio-carraro-sn-6800-v-321df789/": {
-      "digest": "d76e7c08c9c02aba33ef1bb9f270ef02d199cbb7de2f9b30b17e2cb11c60f81e",
-      "modified": "2026-11-23T16:45:17.078Z"
+      "digest": "ee2c7cb5af3b5c6f31379bad4fa23436e70b8bfadb32c1118d0ecc1d4c29c350",
+      "modified": "2026-11-23T18:15:08.467Z"
     },
     "https://tractorvs.com/de/tractors/antonio-carraro-tc-6800-f-ef4320ef/": {
-      "digest": "f9c0eb05f49565952f319d31aa35715c649de646925d45623ca0af7c56fafbc4",
-      "modified": "2026-11-23T16:45:17.078Z"
+      "digest": "fc3c86ed77455fb1ea4cae0b6f2a194eaada71f152c501d8982f80952d8df355",
+      "modified": "2026-11-23T18:15:08.467Z"
     },
     "https://tractorvs.com/de/tractors/antonio-carraro-tgf-7800-s-44929c2c/": {
-      "digest": "c681295f6a8674e7ed0e9a6a2509993e87a7b245edc4a64a72cc26bbb3dfeeec",
-      "modified": "2026-11-23T16:45:17.078Z"
+      "digest": "e90d4f3926c180a916cd65b09b0fb5b354ac994b83fbfce1a24c9b6933e6a090",
+      "modified": "2026-11-23T18:15:08.467Z"
     },
     "https://tractorvs.com/de/tractors/antonio-carraro-tigre-3800-f-3872ab21/": {
       "digest": "60f944d4ceb0377b8642b4ee055199bf31d64796e65ca2b04188d6ad25b6948d",
@@ -134,8 +134,8 @@
       "modified": "2026-11-23T16:45:17.078Z"
     },
     "https://tractorvs.com/de/tractors/antonio-carraro-tony-8700-v-057ddf74/": {
-      "digest": "a8e6bda1bba05ee68b64fed5d9f758a8a56336fb43243d4083a9dc06145a4686",
-      "modified": "2026-11-23T16:45:17.078Z"
+      "digest": "f2625114b854fd27e143d24eebf6db11bbad6569fdfca14d0506f63b4313070d",
+      "modified": "2026-11-23T18:15:08.467Z"
     },
     "https://tractorvs.com/de/tractors/antonio-carraro-tony-8900-sr-0ebc6c93/": {
       "digest": "7d21bb75fa8f32d8067a2e16edc2ad71c492f06cd4cd28771a8930b524ec8e6a",
@@ -146,16 +146,16 @@
       "modified": "2026-11-23T16:45:17.078Z"
     },
     "https://tractorvs.com/de/tractors/antonio-carraro-tony-8900-trg-7fa6422c/": {
-      "digest": "c3c891b1ab8052ac9343646e7d94dd410bb301c784fdbfd30f055dd7561df872",
-      "modified": "2026-11-23T16:45:17.078Z"
+      "digest": "ce258400b8d19722b63944e10af66b4eed93e77317222361c3fd96567534f64a",
+      "modified": "2026-11-23T18:15:08.467Z"
     },
     "https://tractorvs.com/de/tractors/antonio-carraro-trx-5800-cf9f7eff/": {
-      "digest": "175433c3634a3d1aad3c1db9f881653db4a447fff43a0ffa85ff25a41786aaa9",
-      "modified": "2026-11-23T16:45:17.078Z"
+      "digest": "60f68789436235574986f88493bd4afef38a36c095c9782fd452a8fe71742cf3",
+      "modified": "2026-11-23T18:15:08.467Z"
     },
     "https://tractorvs.com/de/tractors/antonio-carraro-trx-7800-s-b678b91d/": {
-      "digest": "e02021fe258e948f1eb9aa8312c2800636e60533c0bf236f57acc617b68616a9",
-      "modified": "2026-11-23T16:45:17.078Z"
+      "digest": "fa83fd417bee8ebed837a9a07d406d2f349006a6b24301530ea57db6ddd78c34",
+      "modified": "2026-11-23T18:15:08.467Z"
     },
     "https://tractorvs.com/de/tractors/armatrac-804-4-fruit-garden-rops-362ad12b/": {
       "digest": "2b42b724b4eb8f0d44ae6a41f802a3c42dc3424f8b03eef839388f44dc03b967",
@@ -1618,20 +1618,20 @@
       "modified": "2026-11-23T16:45:17.078Z"
     },
     "https://tractorvs.com/es/": {
-      "digest": "4ce16de373d714cf136127a85faaeeef480cf0cdff3ea1086b04bd9edad05bc9",
-      "modified": "2026-11-23T12:59:16.928Z"
+      "digest": "6b9fff8903a54a29fd1c4ddae05e5ada9c8111dfee4941d678bff3f3098078f6",
+      "modified": "2026-11-23T18:15:08.467Z"
     },
     "https://tractorvs.com/es/articles/": {
       "digest": "0145e305b596770e50c433fa8685671159ccaabc3aafdfd8d7f2806ca6eb3e36",
       "modified": "2026-11-22T18:22:02.402Z"
     },
     "https://tractorvs.com/es/compare/": {
-      "digest": "71daf6fc2ed879c93096fefdd0a64c9e824e62b02f36447ec1361f3321d70c50",
-      "modified": "2026-11-23T17:13:50.896Z"
+      "digest": "c129fc7f1d9cc917fb0f6033a6cd6df734d453958f8d1a96ebdf05472e065372",
+      "modified": "2026-11-23T18:15:08.467Z"
     },
     "https://tractorvs.com/es/farm-advisor/": {
-      "digest": "7f64c03d76cbcc1e2420500c73d5661c8b44c2408de9f8ffe524b2c0aa0cca5c",
-      "modified": "2026-11-23T16:45:17.078Z"
+      "digest": "4914db645d6005eaec5c1c2fa2dc6653d7ab443aa23d176a81fd680dcb7740a6",
+      "modified": "2026-11-23T18:15:08.467Z"
     },
     "https://tractorvs.com/es/guides/choosing-a-tractor/": {
       "digest": "b66967a2f9efca29073e9d9aa4ebed44b281cff4773b37eeeb47e915ac5315cc",
@@ -1646,8 +1646,8 @@
       "modified": "2026-11-22T15:13:41.997Z"
     },
     "https://tractorvs.com/es/tractors/": {
-      "digest": "bf78205f2698147472302f95a7fb49ac070d9e0bec83b096ecb2ff6d238d2b88",
-      "modified": "2026-11-23T17:13:50.896Z"
+      "digest": "2d0f32b378035d665b546813b754b5804c715493f1f9c7fd5858c1fe5808e086",
+      "modified": "2026-11-23T18:15:08.467Z"
     },
     "https://tractorvs.com/es/tractors/agrale-4125-0b53e944/": {
       "digest": "66ff08a81ce1617e618812e146c025e5a63b6033db3eada87840a2f2c996a1ca",
@@ -1690,32 +1690,32 @@
       "modified": "2026-11-23T16:45:17.078Z"
     },
     "https://tractorvs.com/es/tractors/antonio-carraro-mach-4-r-f267b552/": {
-      "digest": "06d16833b13f4bf8920ad21bae65d86d689c5b3539ddc98324a6784867562d40",
-      "modified": "2026-11-23T16:45:17.078Z"
+      "digest": "789a9d9846fc11cc8f55b315e4a7137ea5c4b46b47f1ebc7fb850cf121514cdd",
+      "modified": "2026-11-23T18:15:08.467Z"
     },
     "https://tractorvs.com/es/tractors/antonio-carraro-panther-22-m-f4794a70/": {
-      "digest": "a29c700337eb094d8adda0cd3359516fcf5578969f88c9f0126431f75563e3f1",
-      "modified": "2026-11-23T16:45:17.078Z"
+      "digest": "30951c256680bda0e78f6f541e40607a06bda2c83272231023b9bcb2e2c7bee4",
+      "modified": "2026-11-23T18:15:08.467Z"
     },
     "https://tractorvs.com/es/tractors/antonio-carraro-panther-26-h-48e8caec/": {
-      "digest": "b861da47a1a8d721538ce87beeda44913fbfb5f3a5512d603b992376d5203b46",
-      "modified": "2026-11-23T16:45:17.078Z"
+      "digest": "b957d7b58c834d7f952ab5aad1fc985389c370d51969c3783dba95a2be76a990",
+      "modified": "2026-11-23T18:15:08.467Z"
     },
     "https://tractorvs.com/es/tractors/antonio-carraro-panther-26-m-da7afde6/": {
-      "digest": "02875216635255f1b149cafc4927811ffc1461c4cd496967550e9bd9b2377d32",
-      "modified": "2026-11-23T16:45:17.078Z"
+      "digest": "f21f56c60a3e579bd2ed62047721b6ed346b6f3a27e34dea2fde1a69f3c37324",
+      "modified": "2026-11-23T18:15:08.467Z"
     },
     "https://tractorvs.com/es/tractors/antonio-carraro-sn-6800-v-321df789/": {
-      "digest": "92c23d0f4d5e9ae0a48ef276080ae9e516754aeda0e4549e171f6d9348f88815",
-      "modified": "2026-11-23T16:45:17.078Z"
+      "digest": "752914237042bdcc68d8364ea60d0a51f791c8bfe414d917f5a90193aa0e0b46",
+      "modified": "2026-11-23T18:15:08.467Z"
     },
     "https://tractorvs.com/es/tractors/antonio-carraro-tc-6800-f-ef4320ef/": {
-      "digest": "7a565927018a414763f608e5d9854ad5900e1445ae25ebaa629286c1d63a9360",
-      "modified": "2026-11-23T16:45:17.078Z"
+      "digest": "6dcaa5657080d3d9f302dc96909c3f21d732480d7d3bb09a1d107a26699a8439",
+      "modified": "2026-11-23T18:15:08.467Z"
     },
     "https://tractorvs.com/es/tractors/antonio-carraro-tgf-7800-s-44929c2c/": {
-      "digest": "efd0cd79c5180d6610e423a189a3c113ed80a4fe544e335fc4bedbd053d31b86",
-      "modified": "2026-11-23T16:45:17.078Z"
+      "digest": "57c804375997bce90619700e08908e1ac640d0976d0f33bc2867da3f53a911fa",
+      "modified": "2026-11-23T18:15:08.467Z"
     },
     "https://tractorvs.com/es/tractors/antonio-carraro-tigre-3800-f-3872ab21/": {
       "digest": "50911f457cfa13372c73fae99f01c2c36c200ed3c962f4640c94c1a1ca947aea",
@@ -1726,8 +1726,8 @@
       "modified": "2026-11-23T16:45:17.078Z"
     },
     "https://tractorvs.com/es/tractors/antonio-carraro-tony-8700-v-057ddf74/": {
-      "digest": "d915d3e8619203a34bcfe92d853a99f593bef67dc511dd213946b1f0d6a00926",
-      "modified": "2026-11-23T16:45:17.078Z"
+      "digest": "f8464838b3d950553633689a86141b199bd7ffc4646074417b2284dfbf20abb0",
+      "modified": "2026-11-23T18:15:08.467Z"
     },
     "https://tractorvs.com/es/tractors/antonio-carraro-tony-8900-sr-0ebc6c93/": {
       "digest": "8467aa957fd4c25ee4c0b5da8247b6cb2442a39a3a786515a8601ca05e88b5c7",
@@ -1738,16 +1738,16 @@
       "modified": "2026-11-23T16:45:17.078Z"
     },
     "https://tractorvs.com/es/tractors/antonio-carraro-tony-8900-trg-7fa6422c/": {
-      "digest": "6cedfbc189226a7026bf7b4eb6ca0c80ad4a85c4ee7ca76628a81a0e9db2c1d3",
-      "modified": "2026-11-23T16:45:17.078Z"
+      "digest": "2a3fce58d04dc8821c598bc15e45cfd1dce9a7a4404bfcdf25b40a77dba77945",
+      "modified": "2026-11-23T18:15:08.467Z"
     },
     "https://tractorvs.com/es/tractors/antonio-carraro-trx-5800-cf9f7eff/": {
-      "digest": "dfdc06725933f5c9a4efcf5e9a600a94cf35b422b2c748e4d425bc1b3062c610",
-      "modified": "2026-11-23T16:45:17.078Z"
+      "digest": "8e764ae95c6ffbff41988675298b3af4f5e9ceb7edff0fc437e07f5aecf0eedb",
+      "modified": "2026-11-23T18:15:08.467Z"
     },
     "https://tractorvs.com/es/tractors/antonio-carraro-trx-7800-s-b678b91d/": {
-      "digest": "cb9d6c4f6a1bf52666a1eea8adc74a20293e775c897373729a5e2630aca759f2",
-      "modified": "2026-11-23T16:45:17.078Z"
+      "digest": "cf75ac81b91cfb47aa394a79bd4e5f810143dab13c76d1f73d9f3b87c4baacdc",
+      "modified": "2026-11-23T18:15:08.467Z"
     },
     "https://tractorvs.com/es/tractors/armatrac-804-4-fruit-garden-rops-362ad12b/": {
       "digest": "17badcabbeff4789b1926390d43afff31b32d40ac4b7ec2cefdc3d002f36ba65",
@@ -3210,24 +3210,24 @@
       "modified": "2026-11-23T16:45:17.078Z"
     },
     "https://tractorvs.com/farm-advisor/": {
-      "digest": "7389c88628dd350aa2a99c8da13195b638ddb294823b40804cf9b62783c568c2",
-      "modified": "2026-11-23T12:59:16.928Z"
+      "digest": "2958c1653e29e8ea7077f0a6e26092e04fd9e2986ed83cedcb5f1196b8d2c725",
+      "modified": "2026-11-23T18:15:08.467Z"
     },
     "https://tractorvs.com/fr/": {
-      "digest": "f2ffaa5df65def1470527ca2c22daf7cb4f5ffef87d6fb3a8751e69e21fb84e1",
-      "modified": "2026-11-23T12:59:16.928Z"
+      "digest": "fefd1479c16a9ae1d681dfe390b57bb02f49135ffdc3759c7db5bf2dbca374d3",
+      "modified": "2026-11-23T18:15:08.467Z"
     },
     "https://tractorvs.com/fr/articles/": {
       "digest": "b87ad5ef98462bf555f36d462ca40ec0376d8fea5d643ae23f7a7bbbcdec3330",
       "modified": "2026-11-22T18:22:02.402Z"
     },
     "https://tractorvs.com/fr/compare/": {
-      "digest": "ba37b85888ec5e5570481b7fc0249320efd0536c24644b435a6d2b91b9980c73",
-      "modified": "2026-11-23T17:13:50.896Z"
+      "digest": "c5f53f9ad0a2be1684df4a7cca6543c923fadd8dd8ff7502b7ccb533816ff227",
+      "modified": "2026-11-23T18:15:08.467Z"
     },
     "https://tractorvs.com/fr/farm-advisor/": {
-      "digest": "03e019a0a5ec98d05b08cf21d6a2ef2f50a7db5e6bb93191e117a6cd4276a4cc",
-      "modified": "2026-11-23T16:45:17.078Z"
+      "digest": "869dffae73ddb785014fc76c7434f7ba19809d8aa23407435a6583fd32d89e00",
+      "modified": "2026-11-23T18:15:08.467Z"
     },
     "https://tractorvs.com/fr/guides/choosing-a-tractor/": {
       "digest": "2bcb6691fcc7b4bdda29dcedd7f1c8d8c168edbac67b6658963fae67ff074a2f",
@@ -3242,8 +3242,8 @@
       "modified": "2026-11-22T15:13:41.997Z"
     },
     "https://tractorvs.com/fr/tractors/": {
-      "digest": "095a02d011ee6a33fa0775aa9894c44210d0ec0ce57030cdf202fb35352dc410",
-      "modified": "2026-11-23T17:13:50.896Z"
+      "digest": "aae8c3fe54dd406b4f4bb47f69982c41ec562d83d65a014d200051e1751ac44c",
+      "modified": "2026-11-23T18:15:08.467Z"
     },
     "https://tractorvs.com/fr/tractors/agrale-4125-0b53e944/": {
       "digest": "3bcbceb3d1c5e97871150f836cdd2b2d3253d0f488218c5797d45a672df0955f",
@@ -3286,32 +3286,32 @@
       "modified": "2026-11-23T16:45:17.078Z"
     },
     "https://tractorvs.com/fr/tractors/antonio-carraro-mach-4-r-f267b552/": {
-      "digest": "6248b88dd957d83418fbca12948c37d6b4b66d9bf34c9a42f330bf696dec1e34",
-      "modified": "2026-11-23T16:45:17.078Z"
+      "digest": "5a0c417df763a3f6e049b246c277b58f74f9cdcc29a0fb0cd401c86143e7e1e6",
+      "modified": "2026-11-23T18:15:08.467Z"
     },
     "https://tractorvs.com/fr/tractors/antonio-carraro-panther-22-m-f4794a70/": {
-      "digest": "dc1c49f19204b2b73c9d63861fd81e6548b065ec51102917d305039c5543df6a",
-      "modified": "2026-11-23T16:45:17.078Z"
+      "digest": "62ce59c0188a32903f7de90da8bc982cef9562440f0f6ff1b012ec141b4c52ca",
+      "modified": "2026-11-23T18:15:08.467Z"
     },
     "https://tractorvs.com/fr/tractors/antonio-carraro-panther-26-h-48e8caec/": {
-      "digest": "40e8592960adf97dc5212f0c447f20a256247daabb0a42961bd41c9fa85282b7",
-      "modified": "2026-11-23T16:45:17.078Z"
+      "digest": "85ee2adff4967b9196d4706e64f5ee5871a8efdf8499569745d4a19617578428",
+      "modified": "2026-11-23T18:15:08.467Z"
     },
     "https://tractorvs.com/fr/tractors/antonio-carraro-panther-26-m-da7afde6/": {
-      "digest": "d1e3ce19f454729743f79afc13b8c17097effa1c67c8f5b366dec81614807938",
-      "modified": "2026-11-23T16:45:17.078Z"
+      "digest": "df37414223a4c57d24d9fe88a13346745121139804414360a65a2d2d25a48cd3",
+      "modified": "2026-11-23T18:15:08.467Z"
     },
     "https://tractorvs.com/fr/tractors/antonio-carraro-sn-6800-v-321df789/": {
-      "digest": "fc391f842e4288169aeb0e5c429457ee28012002f55fd16b4be43aef51e9fb84",
-      "modified": "2026-11-23T16:45:17.078Z"
+      "digest": "0080d76a179698ef114156ea3cfa00492cfa8a54aceb8d867b7bbe7686faa930",
+      "modified": "2026-11-23T18:15:08.467Z"
     },
     "https://tractorvs.com/fr/tractors/antonio-carraro-tc-6800-f-ef4320ef/": {
-      "digest": "77e71638ea8b702a6552e34f11a3b085f646c129bc4ba4c562b89c876c52269b",
-      "modified": "2026-11-23T16:45:17.078Z"
+      "digest": "bc24c4335b176fcba0bf49f52a76b77013f9f4cc7f9f572c203c840658ee85fa",
+      "modified": "2026-11-23T18:15:08.467Z"
     },
     "https://tractorvs.com/fr/tractors/antonio-carraro-tgf-7800-s-44929c2c/": {
-      "digest": "ed4a9c17d7d1b6f87eb5345f4a0d2a8110d80e88d81325aeb5778b870c3888ba",
-      "modified": "2026-11-23T16:45:17.078Z"
+      "digest": "595f210bbd317fb33a80d8aefce85cc961d90dc15cf9879c2096925461175ee0",
+      "modified": "2026-11-23T18:15:08.467Z"
     },
     "https://tractorvs.com/fr/tractors/antonio-carraro-tigre-3800-f-3872ab21/": {
       "digest": "3622e522564ca26771232fd9ae7e13102189790560e08ecc3a436e3d0029d727",
@@ -3322,8 +3322,8 @@
       "modified": "2026-11-23T16:45:17.078Z"
     },
     "https://tractorvs.com/fr/tractors/antonio-carraro-tony-8700-v-057ddf74/": {
-      "digest": "3f0e938b976c716f0942989509293266e566bb9de35fb10bcd29e281b53fe8a8",
-      "modified": "2026-11-23T16:45:17.078Z"
+      "digest": "551dca2390fc6b9e18bac09783e0c3579c6e8668219fa6cee27b437272de351d",
+      "modified": "2026-11-23T18:15:08.467Z"
     },
     "https://tractorvs.com/fr/tractors/antonio-carraro-tony-8900-sr-0ebc6c93/": {
       "digest": "9533c52d97021273e0c52a16b1a75b270e521d123d181fd28c7445d31c820e8e",
@@ -3334,16 +3334,16 @@
       "modified": "2026-11-23T16:45:17.078Z"
     },
     "https://tractorvs.com/fr/tractors/antonio-carraro-tony-8900-trg-7fa6422c/": {
-      "digest": "078dd0dfeeb0c051df5e9c096153ae362838fe90a22529c7d49aa09f7b583540",
-      "modified": "2026-11-23T16:45:17.078Z"
+      "digest": "e6c5067bdb8769671531e8076bbbdc8f35240cdf00c2bbf07072485516f8096c",
+      "modified": "2026-11-23T18:15:08.467Z"
     },
     "https://tractorvs.com/fr/tractors/antonio-carraro-trx-5800-cf9f7eff/": {
-      "digest": "9210dd82803c787dcd26f2d567c4c85e83feb082eaf25fea620403262c0ea2ea",
-      "modified": "2026-11-23T16:45:17.078Z"
+      "digest": "e49e1397b7fbf20b14db1e76ef7d066fa228468fd54ce6dc55ab2c3012ba0071",
+      "modified": "2026-11-23T18:15:08.467Z"
     },
     "https://tractorvs.com/fr/tractors/antonio-carraro-trx-7800-s-b678b91d/": {
-      "digest": "6fbd421fe8a43d02a472a6e19cad616577c551a0ed738712bdd134ac97dd3553",
-      "modified": "2026-11-23T16:45:17.078Z"
+      "digest": "984cf5a6531496d404947756858ceda61ceed1fc29e530067cbdeaa099fc66d4",
+      "modified": "2026-11-23T18:15:08.467Z"
     },
     "https://tractorvs.com/fr/tractors/armatrac-804-4-fruit-garden-rops-362ad12b/": {
       "digest": "1764027b1587d839c7da80e060feebaee643f2e9a9246682f6bb766acd43ff1f",
@@ -4826,20 +4826,20 @@
       "modified": "2026-11-22T14:27:00.768Z"
     },
     "https://tractorvs.com/hi/": {
-      "digest": "e7dab7ccf69aeea32dd53336d00e117dd3939208fd8153c5766dd56de5f3717a",
-      "modified": "2026-11-23T12:59:16.928Z"
+      "digest": "235eb218eab45be33f8ca9f072fc12fed9499bead9ed56dcfcc55819c6c06f99",
+      "modified": "2026-11-23T18:15:08.467Z"
     },
     "https://tractorvs.com/hi/articles/": {
       "digest": "3ef252be723e22cbd42f479762ff15210b935675304ca03b43cf5cc9c06c3def",
       "modified": "2026-11-22T18:22:02.402Z"
     },
     "https://tractorvs.com/hi/compare/": {
-      "digest": "fc576cb207403d305769f76cd11480b71daf47834cbcc1d72fd28b554706aa4d",
-      "modified": "2026-11-23T17:13:50.896Z"
+      "digest": "9f7402cb8e65f523c3d717053a065d9a6427a9e173102412c8f8c58ef365e9c5",
+      "modified": "2026-11-23T18:15:08.467Z"
     },
     "https://tractorvs.com/hi/farm-advisor/": {
-      "digest": "b290158b18a9aab625ff4a0b6341a1f18eeaf4c3ee5609de53ded6523016d75d",
-      "modified": "2026-11-23T16:45:17.078Z"
+      "digest": "1ba9f97eb20ee943ee82acc6f5955c6adf6b9125ea0b3bd4464b7441c9254609",
+      "modified": "2026-11-23T18:15:08.467Z"
     },
     "https://tractorvs.com/hi/guides/choosing-a-tractor/": {
       "digest": "c913f0a36c9dbe8d1de8b0c3f4d4c00bb85efdb8fd9de226c7f768740e9ed195",
@@ -4854,8 +4854,8 @@
       "modified": "2026-11-22T15:13:41.997Z"
     },
     "https://tractorvs.com/hi/tractors/": {
-      "digest": "1a61a710f59be39c4167968fe7600253c471d9a483d51107e2b1afd2256de2b9",
-      "modified": "2026-11-23T17:13:50.896Z"
+      "digest": "9a020be4020da3c2c742f045fc53ed489db3b99e7a5af093c6d478d4be967edf",
+      "modified": "2026-11-23T18:15:08.467Z"
     },
     "https://tractorvs.com/hi/tractors/agrale-4125-0b53e944/": {
       "digest": "75346326d53a9e640a2b456b24a6b4156159d7198e4df82cc1d70ed0cd1ef0cb",
@@ -4898,32 +4898,32 @@
       "modified": "2026-11-23T16:45:17.078Z"
     },
     "https://tractorvs.com/hi/tractors/antonio-carraro-mach-4-r-f267b552/": {
-      "digest": "564c2f0eb6c0364eaa1b3babbdf098b61283577e18812570912fea147c590636",
-      "modified": "2026-11-23T16:45:17.078Z"
+      "digest": "757cae7ee9c234399782735a2e4dde1649aaecc7a366a907a93225b81d5d632f",
+      "modified": "2026-11-23T18:15:08.467Z"
     },
     "https://tractorvs.com/hi/tractors/antonio-carraro-panther-22-m-f4794a70/": {
-      "digest": "5db0bc9df49c0eb46f5a49023e2ec7145e453bb8554748c08499148885096853",
-      "modified": "2026-11-23T16:45:17.078Z"
+      "digest": "6b6bceb4442ca835352124e8c0f243760d0c209970de718f434b0afd2ada170d",
+      "modified": "2026-11-23T18:15:08.467Z"
     },
     "https://tractorvs.com/hi/tractors/antonio-carraro-panther-26-h-48e8caec/": {
-      "digest": "70250597c4e8375ac96cee3e5ee05e96d282cbe88532658954f36d342dd669f5",
-      "modified": "2026-11-23T16:45:17.078Z"
+      "digest": "4eb38886eba5ce2600aa52ab8b4f3a1c342676edffd68f2cc7e81b01b33d540e",
+      "modified": "2026-11-23T18:15:08.467Z"
     },
     "https://tractorvs.com/hi/tractors/antonio-carraro-panther-26-m-da7afde6/": {
-      "digest": "0c37eae1e1368acb9601317a5c179182372a7d933b8b4e2de916cbff546ad5c7",
-      "modified": "2026-11-23T16:45:17.078Z"
+      "digest": "7c37d74747595079695b45379a49b4c5772c638975ef2d46f6ce43224fd3f46e",
+      "modified": "2026-11-23T18:15:08.467Z"
     },
     "https://tractorvs.com/hi/tractors/antonio-carraro-sn-6800-v-321df789/": {
-      "digest": "45dd2e1dd9dd29de302e0bf67a375084012467fdbfeb51344aec77d4ae4b46ee",
-      "modified": "2026-11-23T16:45:17.078Z"
+      "digest": "d5854b5d05f0bb9e1fbf4d340f8e785c20d328f9777b792e50fd171f4e6a725a",
+      "modified": "2026-11-23T18:15:08.467Z"
     },
     "https://tractorvs.com/hi/tractors/antonio-carraro-tc-6800-f-ef4320ef/": {
-      "digest": "542d6b8ce73ff1c0d57da416c07fc64a3b89bf5efcbe700ecf2da9bf9ef6c2a6",
-      "modified": "2026-11-23T16:45:17.078Z"
+      "digest": "db5d1d59dfd17f703c1cc73b05874f2f2b5a167c7a7a3a09670fd24037e6597c",
+      "modified": "2026-11-23T18:15:08.467Z"
     },
     "https://tractorvs.com/hi/tractors/antonio-carraro-tgf-7800-s-44929c2c/": {
-      "digest": "6406b26e2c9e243918f4474edc5554b759e76063e693b9fb0c57bb7bc5259625",
-      "modified": "2026-11-23T16:45:17.078Z"
+      "digest": "ae1e6d453a1d1006b03a4a30f8fbdbdaa8312edf3aa063e53cef3e872f0d53b4",
+      "modified": "2026-11-23T18:15:08.467Z"
     },
     "https://tractorvs.com/hi/tractors/antonio-carraro-tigre-3800-f-3872ab21/": {
       "digest": "efc40a0ba25e8c990658817500518b382ec6177ecac07d01635435d6a0756102",
@@ -4934,8 +4934,8 @@
       "modified": "2026-11-23T16:45:17.078Z"
     },
     "https://tractorvs.com/hi/tractors/antonio-carraro-tony-8700-v-057ddf74/": {
-      "digest": "ede735b270a7de4831d8d8f651437ee9606fea9cee8c3fee6b824ad9975518ef",
-      "modified": "2026-11-23T16:45:17.078Z"
+      "digest": "7d255900d96fd6fdd170220138c2f4879b3575ceae5fd8fd5bab92933e670bc8",
+      "modified": "2026-11-23T18:15:08.467Z"
     },
     "https://tractorvs.com/hi/tractors/antonio-carraro-tony-8900-sr-0ebc6c93/": {
       "digest": "8e2b14cacd07b1f0a5cab5f64353fb684e8c25ccba9da1188c67400332c09975",
@@ -4946,16 +4946,16 @@
       "modified": "2026-11-23T16:45:17.078Z"
     },
     "https://tractorvs.com/hi/tractors/antonio-carraro-tony-8900-trg-7fa6422c/": {
-      "digest": "044b9328dfae5e8f76dbfb4fb0b158085603d3d5352f8000f0f539a936104e70",
-      "modified": "2026-11-23T16:45:17.078Z"
+      "digest": "b4e7f010a203472a6a1c2573d39d74695d4b703d2ca4fa4494a0b7da1773310c",
+      "modified": "2026-11-23T18:15:08.467Z"
     },
     "https://tractorvs.com/hi/tractors/antonio-carraro-trx-5800-cf9f7eff/": {
-      "digest": "aef51ca1f22d13de36534d79a72989cbe231fc4a952b4359cafd6da7a9b7e217",
-      "modified": "2026-11-23T16:45:17.078Z"
+      "digest": "f06cec4afafc9559a78056d868a4bca03aaacee0f29059c508eea96e5bb5b5df",
+      "modified": "2026-11-23T18:15:08.467Z"
     },
     "https://tractorvs.com/hi/tractors/antonio-carraro-trx-7800-s-b678b91d/": {
-      "digest": "f493bbe63330d6cd6e30fe9de9bc3647b8dbac64e276446f0d318c8364569d18",
-      "modified": "2026-11-23T16:45:17.078Z"
+      "digest": "955e41b20bec4c8c72f0e31e9e5388ca3d70f3c6001790c054c48367b56f42d2",
+      "modified": "2026-11-23T18:15:08.467Z"
     },
     "https://tractorvs.com/hi/tractors/armatrac-804-4-fruit-garden-rops-362ad12b/": {
       "digest": "37575e7fc14b04646c1490694d733bb865d9e9a02dae55290858f2292402db1d",
@@ -6418,20 +6418,20 @@
       "modified": "2026-11-23T16:45:17.078Z"
     },
     "https://tractorvs.com/ja/": {
-      "digest": "72cac8221d9d69af2e10a727fc794f932db3c2eb0cda2c912b4263f199e5121e",
-      "modified": "2026-11-23T12:59:16.928Z"
+      "digest": "254b3dd4b47968f4db639df9afcecb041d3f0e0bbb235efc3bff60d84079a691",
+      "modified": "2026-11-23T18:15:08.467Z"
     },
     "https://tractorvs.com/ja/articles/": {
       "digest": "867884ed17f13bd46d0ef1d231a61aa757cff00bfcdd1e840fddcf43663f141a",
       "modified": "2026-11-22T18:22:02.402Z"
     },
     "https://tractorvs.com/ja/compare/": {
-      "digest": "1ad09634ceae270cb876a773804b96fc342dd3e65b7b762213bacdd2bde9c6d9",
-      "modified": "2026-11-23T17:13:50.896Z"
+      "digest": "b4e2e70dca46e535c7da7a4e2157374161280ed36e5a13763f9d95093cdf6f47",
+      "modified": "2026-11-23T18:15:08.467Z"
     },
     "https://tractorvs.com/ja/farm-advisor/": {
-      "digest": "17d06c174f4e32b61bead8c991a65eec3d449ca1b6a4998e42320373d8012c00",
-      "modified": "2026-11-23T16:45:17.078Z"
+      "digest": "ca273475eb92f219fb70ee734e57eb99e8f5ccebf28dbc2bcd8a1d0a58017be5",
+      "modified": "2026-11-23T18:15:08.467Z"
     },
     "https://tractorvs.com/ja/guides/choosing-a-tractor/": {
       "digest": "8d6dcc961ec504eb5bb5de3dce6c06ede93151cd832f5c762043d50e2dd362d0",
@@ -6446,8 +6446,8 @@
       "modified": "2026-11-22T15:13:41.997Z"
     },
     "https://tractorvs.com/ja/tractors/": {
-      "digest": "d1e4938c4787983c6b1af31aa4c84daaf41e05edba2f5524c95eccfc367414d2",
-      "modified": "2026-11-23T17:13:50.896Z"
+      "digest": "a9a3e1782855dd48bedb6b007bb6b319eadc95f85ccbdac186516f504c3da296",
+      "modified": "2026-11-23T18:15:08.467Z"
     },
     "https://tractorvs.com/ja/tractors/agrale-4125-0b53e944/": {
       "digest": "0c88bf6f38128e24c0876c63617a5bcd2fd11be3d275ff0c27a3cdc8fc2a203b",
@@ -6490,32 +6490,32 @@
       "modified": "2026-11-23T16:45:17.078Z"
     },
     "https://tractorvs.com/ja/tractors/antonio-carraro-mach-4-r-f267b552/": {
-      "digest": "126a0e98b228d1e89866de3fb30a1216ea1faa1a41e5089b549af9a966d3290f",
-      "modified": "2026-11-23T16:45:17.078Z"
+      "digest": "4c6725d8ee5cb3fc4ab4903dfe2b3ee73800bda225ba3e8090494b3ceca4d770",
+      "modified": "2026-11-23T18:15:08.467Z"
     },
     "https://tractorvs.com/ja/tractors/antonio-carraro-panther-22-m-f4794a70/": {
-      "digest": "5c00ac6ca554dd2e8df69c63867cfdd46f270d1ea16d20aeb91b707aa61f3341",
-      "modified": "2026-11-23T16:45:17.078Z"
+      "digest": "b9b7b2e2af12ebc38c359c3fd972d7c98251415fc2ae09e813e09b44873d4583",
+      "modified": "2026-11-23T18:15:08.467Z"
     },
     "https://tractorvs.com/ja/tractors/antonio-carraro-panther-26-h-48e8caec/": {
-      "digest": "6824b8345e68e54644e5e23f3e4678320886da79aae301a45aea4c123157cadf",
-      "modified": "2026-11-23T16:45:17.078Z"
+      "digest": "85a844c5fc25314876f6774645625f6e0948da3e4a3dc51228ad430c6c74e8e0",
+      "modified": "2026-11-23T18:15:08.467Z"
     },
     "https://tractorvs.com/ja/tractors/antonio-carraro-panther-26-m-da7afde6/": {
-      "digest": "fc52ed08cee376690e141c349b59b77f8bd4270886177ddcb7e436016074dafc",
-      "modified": "2026-11-23T16:45:17.078Z"
+      "digest": "77e4d22c3e8e302fe91b97d6664dacce5c6e66e56711353e2df3c94953b18910",
+      "modified": "2026-11-23T18:15:08.467Z"
     },
     "https://tractorvs.com/ja/tractors/antonio-carraro-sn-6800-v-321df789/": {
-      "digest": "47ebaf28b6be64de92c8f3a6808feb2e13260cb2e4af30ec57552c88d2112fe2",
-      "modified": "2026-11-23T16:45:17.078Z"
+      "digest": "78a965c1dbcf0f49719f8ec23e068ee87f3c3f3ce686723dfcfabe3a641563c8",
+      "modified": "2026-11-23T18:15:08.467Z"
     },
     "https://tractorvs.com/ja/tractors/antonio-carraro-tc-6800-f-ef4320ef/": {
-      "digest": "cf25d1a89f116afdbb3b950bc2294a12f55c4b1e85ffcf2c4d9bc04053f3b168",
-      "modified": "2026-11-23T16:45:17.078Z"
+      "digest": "ca952ee3f523c964b87a0c12c31765d23ec5edda2a12570f48ac8fa4ad6d84a6",
+      "modified": "2026-11-23T18:15:08.467Z"
     },
     "https://tractorvs.com/ja/tractors/antonio-carraro-tgf-7800-s-44929c2c/": {
-      "digest": "24d4d0c7833831d9a60e96e59509d3c3d1a3852435b964130a3ca56dbc4c733d",
-      "modified": "2026-11-23T16:45:17.078Z"
+      "digest": "fc464189af65ec44e25e2f95ed3754d187b063034fad3a98d798bc9264c4287a",
+      "modified": "2026-11-23T18:15:08.467Z"
     },
     "https://tractorvs.com/ja/tractors/antonio-carraro-tigre-3800-f-3872ab21/": {
       "digest": "c8d3588ea16841995ae8cb12942f9fb7a6c65edb5852fb8e4be8d6c96e665aac",
@@ -6526,8 +6526,8 @@
       "modified": "2026-11-23T16:45:17.078Z"
     },
     "https://tractorvs.com/ja/tractors/antonio-carraro-tony-8700-v-057ddf74/": {
-      "digest": "b3218e85a6c1b22ce26fa711b26f646c9ef3463736d38558f7e598f12f06899c",
-      "modified": "2026-11-23T16:45:17.078Z"
+      "digest": "75273a779d72720801f19eedabaabef87b1e5fd84aa2491c3744b72164d58ddc",
+      "modified": "2026-11-23T18:15:08.467Z"
     },
     "https://tractorvs.com/ja/tractors/antonio-carraro-tony-8900-sr-0ebc6c93/": {
       "digest": "0c3724a0ffcf92510dfba4a7848446ee93b8bb2ef5f87ffa67f3abe05844b6b6",
@@ -6538,16 +6538,16 @@
       "modified": "2026-11-23T16:45:17.078Z"
     },
     "https://tractorvs.com/ja/tractors/antonio-carraro-tony-8900-trg-7fa6422c/": {
-      "digest": "322dfc579f6794b94891f91e52fc15e4f0bd3a6e788eb16c4042de45af466d02",
-      "modified": "2026-11-23T16:45:17.078Z"
+      "digest": "a795b260a26134021afdbb13478d92c27c101b249e68d51e8c8626bda3ea8988",
+      "modified": "2026-11-23T18:15:08.467Z"
     },
     "https://tractorvs.com/ja/tractors/antonio-carraro-trx-5800-cf9f7eff/": {
-      "digest": "9da0dd6cc4f5112ea0bc4395d38ac346fc4a9d4c7e273c811274ceedd59a0d95",
-      "modified": "2026-11-23T16:45:17.078Z"
+      "digest": "729923e688d516990feca794ffda37d45f75b147e8c5b89524b7ba6f91b7d71b",
+      "modified": "2026-11-23T18:15:08.467Z"
     },
     "https://tractorvs.com/ja/tractors/antonio-carraro-trx-7800-s-b678b91d/": {
-      "digest": "a9ca193e1335ae9d57511c1d61959f11e853e14306c63199cb3aaf9a1418778c",
-      "modified": "2026-11-23T16:45:17.078Z"
+      "digest": "d2fdd7565fcc6ab121708ba9865f1bfd6d71e5ce37738b3441d7a3dc23fe77a1",
+      "modified": "2026-11-23T18:15:08.467Z"
     },
     "https://tractorvs.com/ja/tractors/armatrac-804-4-fruit-garden-rops-362ad12b/": {
       "digest": "1295debaf1e270397cd0e78ca616a0901c9ce74d8a2bff3d58627d3d118b1b96",
@@ -6654,12 +6654,12 @@
       "modified": "2026-11-23T16:45:17.078Z"
     },
     "https://tractorvs.com/ja/tractors/belarus-920-2-1e1d7219/": {
-      "digest": "45760eac8246a6bfd2a76d3cc77615ee0e1caca2ca4804fc940cb4716d2b639c",
-      "modified": "2026-11-23T16:45:17.078Z"
+      "digest": "5f19b07999c89fbe5b50a775b57e51f8154b86f304027f35eabb9fc7b75104f1",
+      "modified": "2026-11-23T18:15:08.467Z"
     },
     "https://tractorvs.com/ja/tractors/belarus-920-21e79b33/": {
-      "digest": "68cc178a3705715c1b3ead8a2474719472e39612f10c4f97fc9b237d2cda323a",
-      "modified": "2026-11-23T16:45:17.078Z"
+      "digest": "7c407a12a1187db50e1cfdb67cf11d2f47ea893a368c1d75292f591219b2291f",
+      "modified": "2026-11-23T18:15:08.467Z"
     },
     "https://tractorvs.com/ja/tractors/belarus-922-3-1cd53d1a/": {
       "digest": "a811de0dcc7793bef92aefd202514728b8d177f02d783156a1395d5974b5219f",
@@ -6778,16 +6778,16 @@
       "modified": "2026-11-23T16:45:17.078Z"
     },
     "https://tractorvs.com/ja/tractors/landini-2-045-7a209c9f/": {
-      "digest": "75c187aed918ee270e8967ee7d62bad2f0327ad34b837a34d5f38fe26b138009",
-      "modified": "2026-11-23T16:45:17.078Z"
+      "digest": "75f69819645c47fde2672c533031c920f25345a994c980c1fa315852627ce006",
+      "modified": "2026-11-23T18:15:08.467Z"
     },
     "https://tractorvs.com/ja/tractors/landini-2-050-e5471212/": {
-      "digest": "efbf42fd92d33dc832e2d462fdd71ef0e3e5ca960f15f3ea723fe8cda1e3dc25",
-      "modified": "2026-11-23T16:45:17.078Z"
+      "digest": "ac582015582b226ee34d9e2f93ca1609e261a225f40e069a72910992b8d2f4bd",
+      "modified": "2026-11-23T18:15:08.467Z"
     },
     "https://tractorvs.com/ja/tractors/landini-2-060-94281fe1/": {
-      "digest": "4b1d5b52808825a79f3cf6fc1122108da3eb0ef7e1f6cbe048606eee5e9c1f5c",
-      "modified": "2026-11-23T16:45:17.078Z"
+      "digest": "9a75530fb4d60a25d771ab7bd16f4eb9b4cecc6556fef88923de59ba9b15ee7c",
+      "modified": "2026-11-23T18:15:08.467Z"
     },
     "https://tractorvs.com/ja/tractors/landini-5-085-afbb2f1e/": {
       "digest": "bc8e5d12eecb3e5612c392ec6a484539e45c05b0bf83787c91aea3c626a1eedf",
@@ -8018,20 +8018,20 @@
       "modified": null
     },
     "https://tractorvs.com/pt-br/": {
-      "digest": "868a2e09d6b82f50825e69bb5b70107c549f4c2fb38b1bfd7bc50b7e6f2c2c71",
-      "modified": "2026-11-23T12:59:16.928Z"
+      "digest": "74535f09cd3afa7fd8faefb53ed0e0e8d22ea5af2566f452a62dd41c0fae3e82",
+      "modified": "2026-11-23T18:15:08.467Z"
     },
     "https://tractorvs.com/pt-br/articles/": {
       "digest": "117be662005262991fb353875c1cf33ccb9e7a46960f3f88b43118fb9ecdf59d",
       "modified": "2026-11-22T18:22:02.402Z"
     },
     "https://tractorvs.com/pt-br/compare/": {
-      "digest": "36b3fffc4001e095cf7d0cc174f2441db4a19b1c9151279472c69a135a347916",
-      "modified": "2026-11-23T17:13:50.896Z"
+      "digest": "7d700d8b609555ed7b8f4684d59e104ecf6730060f9a125e74ea9b314a2a6b09",
+      "modified": "2026-11-23T18:15:08.467Z"
     },
     "https://tractorvs.com/pt-br/farm-advisor/": {
-      "digest": "aac1d227728c221db5c32c2badfcb6f5b61b113acabd09f44034f32fe1f436f6",
-      "modified": "2026-11-23T16:45:17.078Z"
+      "digest": "94acdb5625b7a6922df8248609fb2d7281c7cc26c8942958474c70f60ca223dc",
+      "modified": "2026-11-23T18:15:08.467Z"
     },
     "https://tractorvs.com/pt-br/guides/choosing-a-tractor/": {
       "digest": "f87875ed0244ab5360899cf89bf54fcbe4d11392025eb54545b556643b0d275b",
@@ -8046,8 +8046,8 @@
       "modified": "2026-11-22T15:13:41.997Z"
     },
     "https://tractorvs.com/pt-br/tractors/": {
-      "digest": "f846f37c70dc3be43e8ed790c472da353c7d762dfe3ccccf981773117c043d53",
-      "modified": "2026-11-23T17:13:50.896Z"
+      "digest": "b4cf4eb42e4651b428ff05983f007d57aef1b311cc8fcdf9459130ef08b82205",
+      "modified": "2026-11-23T18:15:08.467Z"
     },
     "https://tractorvs.com/pt-br/tractors/agrale-4125-0b53e944/": {
       "digest": "39ddf2d8809613a1896a7167099871530f3488f7449f813e9615e519022c8280",
@@ -8090,32 +8090,32 @@
       "modified": "2026-11-23T16:45:17.078Z"
     },
     "https://tractorvs.com/pt-br/tractors/antonio-carraro-mach-4-r-f267b552/": {
-      "digest": "9c6620031e7c3276b8ef2587e7b4de9a76d8a13b73bfca97d34acdbb8a9c152b",
-      "modified": "2026-11-23T16:45:17.078Z"
+      "digest": "f83e61362307774abbaaf24b62a3802637ca4a028f43db00dca41fb659ff5ee2",
+      "modified": "2026-11-23T18:15:08.467Z"
     },
     "https://tractorvs.com/pt-br/tractors/antonio-carraro-panther-22-m-f4794a70/": {
-      "digest": "f3b1a20b47f96dd33b0e3caf8c424a3f853a08b39464bf5bff3b7bd626e241dc",
-      "modified": "2026-11-23T16:45:17.078Z"
+      "digest": "89633b1de5c4fbbc4be54a7ea72d6cb66ba892414065d588263cf9f69246ee61",
+      "modified": "2026-11-23T18:15:08.467Z"
     },
     "https://tractorvs.com/pt-br/tractors/antonio-carraro-panther-26-h-48e8caec/": {
-      "digest": "a5a71c98d1ab399d661caa9a0f303c219d2eec734a6dc3792ab4ababcfc8099d",
-      "modified": "2026-11-23T16:45:17.078Z"
+      "digest": "c3a8061302e17a1429550aef864680c935444c28c4459354fa48952f323af505",
+      "modified": "2026-11-23T18:15:08.467Z"
     },
     "https://tractorvs.com/pt-br/tractors/antonio-carraro-panther-26-m-da7afde6/": {
-      "digest": "46fbe8dc92a14cc6eaa1613176b50021526cefeb7f1826837e33d4c702e76d49",
-      "modified": "2026-11-23T16:45:17.078Z"
+      "digest": "ab7c07c1a7e76f1fce7a79ac5809a2121106630f5d278d68def6eadfa9b4620b",
+      "modified": "2026-11-23T18:15:08.467Z"
     },
     "https://tractorvs.com/pt-br/tractors/antonio-carraro-sn-6800-v-321df789/": {
-      "digest": "2422b7d2c80c66f494c83e22ab4afe9806912bbd2f3a4781e0df2d9065f02348",
-      "modified": "2026-11-23T16:45:17.078Z"
+      "digest": "3dfc16e345b304eee0589cde77a5937bda0d1b80fdffc238439be8db80643631",
+      "modified": "2026-11-23T18:15:08.467Z"
     },
     "https://tractorvs.com/pt-br/tractors/antonio-carraro-tc-6800-f-ef4320ef/": {
-      "digest": "a18094660a0ca6d7cf21299559807d4e89b3d069d0c604e292b5c4039f83fcf9",
-      "modified": "2026-11-23T16:45:17.078Z"
+      "digest": "18d8f2f2c7ac2fdb14996635f7dda5a713ab05c3a18f32bcb9863b70f7bd4365",
+      "modified": "2026-11-23T18:15:08.467Z"
     },
     "https://tractorvs.com/pt-br/tractors/antonio-carraro-tgf-7800-s-44929c2c/": {
-      "digest": "fec44b6ce4caf46f16a776c6560bec321c5334eaf36ecf7ad7f3da4130d03830",
-      "modified": "2026-11-23T16:45:17.078Z"
+      "digest": "b23be9a7db5803cfab5ab3eb0b56d628e8b792f60def736d3da7b685f1b50a59",
+      "modified": "2026-11-23T18:15:08.467Z"
     },
     "https://tractorvs.com/pt-br/tractors/antonio-carraro-tigre-3800-f-3872ab21/": {
       "digest": "7a56048ce626eaebac47e79b5d68204884e0874922a0e6f2d579d6fe08852d31",
@@ -8126,8 +8126,8 @@
       "modified": "2026-11-23T16:45:17.078Z"
     },
     "https://tractorvs.com/pt-br/tractors/antonio-carraro-tony-8700-v-057ddf74/": {
-      "digest": "602d12bc7a2f930f283772b1eda29b941ada8992282597fe53f7058f0a16dd94",
-      "modified": "2026-11-23T16:45:17.078Z"
+      "digest": "56732c5c907d273617aa42341204a2669317cb0b14fd081c540bb0a604443122",
+      "modified": "2026-11-23T18:15:08.467Z"
     },
     "https://tractorvs.com/pt-br/tractors/antonio-carraro-tony-8900-sr-0ebc6c93/": {
       "digest": "7a8186c629a94622e60827f65bd86b0906c2a0adfdf2a2ededc041d3509c2fc6",
@@ -8138,16 +8138,16 @@
       "modified": "2026-11-23T16:45:17.078Z"
     },
     "https://tractorvs.com/pt-br/tractors/antonio-carraro-tony-8900-trg-7fa6422c/": {
-      "digest": "99c3fa6d775085f7ac326ddf7e6adcf4759d031820f8156cf95f2bd6016fba6e",
-      "modified": "2026-11-23T16:45:17.078Z"
+      "digest": "9af909dc06ebde0928e249093f8c26c6036bdc5ddf5f0a82231d13ab14dd21a8",
+      "modified": "2026-11-23T18:15:08.467Z"
     },
     "https://tractorvs.com/pt-br/tractors/antonio-carraro-trx-5800-cf9f7eff/": {
-      "digest": "fd0b1f1d702309121e8ae8acf69eb9957a97fcbc32f1b4796f20d9c0900aa0fd",
-      "modified": "2026-11-23T16:45:17.078Z"
+      "digest": "9cf94c648f3a78ed588461134bde52005a7aa1881a1ac7ba051a74992ac21c65",
+      "modified": "2026-11-23T18:15:08.467Z"
     },
     "https://tractorvs.com/pt-br/tractors/antonio-carraro-trx-7800-s-b678b91d/": {
-      "digest": "5b7909d4957260929203a3e2eaac9d350d13ed608e8fe35a4d619beea6240a40",
-      "modified": "2026-11-23T16:45:17.078Z"
+      "digest": "d5fb73f2befb4953c97273d4b8a50754c05e678b488029be1c928fa2449c64bc",
+      "modified": "2026-11-23T18:15:08.467Z"
     },
     "https://tractorvs.com/pt-br/tractors/armatrac-804-4-fruit-garden-rops-362ad12b/": {
       "digest": "ff66a69e776dc465700d49ed6f1ba4acdb6eab98e7cc374d262ae0443df9c515",
@@ -9614,20 +9614,20 @@
       "modified": "2026-11-22T15:13:41.997Z"
     },
     "https://tractorvs.com/ru/": {
-      "digest": "0de0ac841de4cac01e45b7757f80250728ef65e7ab108886cf933c078dee4328",
-      "modified": "2026-11-23T12:59:16.928Z"
+      "digest": "f47f2f20ad0a58ed95a775c5f6a8b3add489315e37cc44285a84be5cd7eed0a4",
+      "modified": "2026-11-23T18:15:08.467Z"
     },
     "https://tractorvs.com/ru/articles/": {
       "digest": "af26b8678163822452934ec1c7cb7f12884df875f898bbe76e1654f6e04d4e1a",
       "modified": "2026-11-22T18:22:02.402Z"
     },
     "https://tractorvs.com/ru/compare/": {
-      "digest": "33a8d7a7ca733ee4b79868369eac4b7db5625fe59bb6e14b508fe449a8e75110",
-      "modified": "2026-11-23T17:13:50.896Z"
+      "digest": "ce3480e6127821e83132cdff31e944d32ee79990c5b8180d5c088ab19c290871",
+      "modified": "2026-11-23T18:15:08.467Z"
     },
     "https://tractorvs.com/ru/farm-advisor/": {
-      "digest": "ecca3dcbd04e42f8f54d9e89838df47e92d0156ad296c0a609df9dac34596c11",
-      "modified": "2026-11-23T16:45:17.078Z"
+      "digest": "ca035566159336e2b3dd64e8d95d14e651a241db66e175d30a6ef7b8167ecb86",
+      "modified": "2026-11-23T18:15:08.467Z"
     },
     "https://tractorvs.com/ru/guides/choosing-a-tractor/": {
       "digest": "d98cc050028a7158fecf1a69f64cfaa33be5717070281c7a716fd60810983c43",
@@ -9642,8 +9642,8 @@
       "modified": "2026-11-22T15:13:41.997Z"
     },
     "https://tractorvs.com/ru/tractors/": {
-      "digest": "9d0666bc46e7cb269080dd48afd958f7250369987b4fdc4d9f10cc2065e1b7dd",
-      "modified": "2026-11-23T17:13:50.896Z"
+      "digest": "16a3dca3285cfe4e2bd49fa9158dacdfb9123d190ea8a5b64ff63cfff83a03bf",
+      "modified": "2026-11-23T18:15:08.467Z"
     },
     "https://tractorvs.com/ru/tractors/agrale-4125-0b53e944/": {
       "digest": "8837916d5dd4a853594599399ac8f59b1f2219b4cb0dd78d6fe959e272449067",
@@ -9686,32 +9686,32 @@
       "modified": "2026-11-23T16:45:17.078Z"
     },
     "https://tractorvs.com/ru/tractors/antonio-carraro-mach-4-r-f267b552/": {
-      "digest": "fb16337c696a940ca7b4c59c73f8fd02d003b3c94272fdba82811390b24c53b0",
-      "modified": "2026-11-23T16:45:17.078Z"
+      "digest": "a7cacc585a579bdc5f1bd8e45db09654533ee93570edd31f9e50f3bdf760bc2c",
+      "modified": "2026-11-23T18:15:08.467Z"
     },
     "https://tractorvs.com/ru/tractors/antonio-carraro-panther-22-m-f4794a70/": {
-      "digest": "755d8eb19fe0b9f2444dcbac8527727ee6abad4a75dad07d06133b08df596069",
-      "modified": "2026-11-23T16:45:17.078Z"
+      "digest": "12583121f1046787a115e748f946bfcd9a0fb090fb9ae45056bcc9a46e9652c4",
+      "modified": "2026-11-23T18:15:08.467Z"
     },
     "https://tractorvs.com/ru/tractors/antonio-carraro-panther-26-h-48e8caec/": {
-      "digest": "d50f31eeb7b6005980e07ac4a3bc38ec72062ba1258cc59e27d99c983fa356de",
-      "modified": "2026-11-23T16:45:17.078Z"
+      "digest": "88f2070b03c58451cb43e8f7f54a77d47d7008bfb760359de55098a057a4ad21",
+      "modified": "2026-11-23T18:15:08.467Z"
     },
     "https://tractorvs.com/ru/tractors/antonio-carraro-panther-26-m-da7afde6/": {
-      "digest": "0113a8dc432d9481c4b156fe1d1383094416072009e44c5404f402a6b50e3d48",
-      "modified": "2026-11-23T16:45:17.078Z"
+      "digest": "1f8d65d63fc09949d4a5c59cf84a771691aa6afd6b38f323c0e911d50e55f50f",
+      "modified": "2026-11-23T18:15:08.467Z"
     },
     "https://tractorvs.com/ru/tractors/antonio-carraro-sn-6800-v-321df789/": {
-      "digest": "cc3b91b73f0cf4dfbc814e0f2fd00cda7f4bab402cbdbf2a0a8e6e0974596dc6",
-      "modified": "2026-11-23T16:45:17.078Z"
+      "digest": "cbb33b88de8fdbc6d43faf579ba9f0c51a1e6c213c8b3914bcccd9553c2398cc",
+      "modified": "2026-11-23T18:15:08.467Z"
     },
     "https://tractorvs.com/ru/tractors/antonio-carraro-tc-6800-f-ef4320ef/": {
-      "digest": "334d23b2f3a3d93298faf78dfdd93171a94486d9f92e2e4c81349946fcc619ab",
-      "modified": "2026-11-23T16:45:17.078Z"
+      "digest": "84b07730488f26ecda798ed2ada826c639b27fffe2c9fa08f108469cef59d3ac",
+      "modified": "2026-11-23T18:15:08.467Z"
     },
     "https://tractorvs.com/ru/tractors/antonio-carraro-tgf-7800-s-44929c2c/": {
-      "digest": "6344edb836685608f941142fc0b502c9bb29ae8ecc45161514468ba6db237fa5",
-      "modified": "2026-11-23T16:45:17.078Z"
+      "digest": "0bbae48fc2341b9b826e0e18abbd66587756f6887909146166353ad065e297c6",
+      "modified": "2026-11-23T18:15:08.467Z"
     },
     "https://tractorvs.com/ru/tractors/antonio-carraro-tigre-3800-f-3872ab21/": {
       "digest": "c470acf9980721d088ee7a305617a21a3d96357ba09e015e44edf4e01376d1ca",
@@ -9722,8 +9722,8 @@
       "modified": "2026-11-23T16:45:17.078Z"
     },
     "https://tractorvs.com/ru/tractors/antonio-carraro-tony-8700-v-057ddf74/": {
-      "digest": "00ef958534c520af4c6fe0cdb54bc51a8be84368c4878e9683d603af94012ea2",
-      "modified": "2026-11-23T16:45:17.078Z"
+      "digest": "43f5531e6737679b706cbe42078ad4e64d8baba177e441581f1a238666f6754a",
+      "modified": "2026-11-23T18:15:08.467Z"
     },
     "https://tractorvs.com/ru/tractors/antonio-carraro-tony-8900-sr-0ebc6c93/": {
       "digest": "eebb04acfc55df4788c9c1ee3c0e3f4e205a60bbeda9d7a6c910efc49bcec96d",
@@ -9734,16 +9734,16 @@
       "modified": "2026-11-23T16:45:17.078Z"
     },
     "https://tractorvs.com/ru/tractors/antonio-carraro-tony-8900-trg-7fa6422c/": {
-      "digest": "d5a4a042fa5cb76ac5d3f123886ee628944efcd0ee16922362e3d0d0a11a4cfb",
-      "modified": "2026-11-23T16:45:17.078Z"
+      "digest": "4708737bf23c6c9e077d344638a40f134424a217f0ed651003faf338c53fe0f9",
+      "modified": "2026-11-23T18:15:08.467Z"
     },
     "https://tractorvs.com/ru/tractors/antonio-carraro-trx-5800-cf9f7eff/": {
-      "digest": "aecb19d6cf3e43734d183ab99f51edab3ee322c819da70aeb90741d76a96ffc0",
-      "modified": "2026-11-23T16:45:17.078Z"
+      "digest": "f65207921635479b1b530ff8280b9ba68804f80a5dd4b0f93f832c0f31057d6e",
+      "modified": "2026-11-23T18:15:08.467Z"
     },
     "https://tractorvs.com/ru/tractors/antonio-carraro-trx-7800-s-b678b91d/": {
-      "digest": "d1ae6f3dd25dc08973f11e47e9714b5cf5844585f62a43d13db81bb1a1f76345",
-      "modified": "2026-11-23T16:45:17.078Z"
+      "digest": "09f011cc9ecac72c5336af42b92fe33d78bfffb38c9b1f4ba56623bf2a8760fc",
+      "modified": "2026-11-23T18:15:08.467Z"
     },
     "https://tractorvs.com/ru/tractors/armatrac-804-4-fruit-garden-rops-362ad12b/": {
       "digest": "b557a88c2d799afe7c207253fa19ff10f9d6cee2843864b4e7e079edd73fab63",
@@ -11206,8 +11206,8 @@
       "modified": "2026-11-23T16:45:17.078Z"
     },
     "https://tractorvs.com/tr/": {
-      "digest": "082f0ca47f7be32ade1e9d3c21d6de9f37acb9008a76023769b0140e02e80070",
-      "modified": "2026-11-23T12:59:16.928Z"
+      "digest": "337f1ad288223c4f4fe9bc7c4e23bdaa5657418906698df4b18fc79c8f28518b",
+      "modified": "2026-11-23T18:15:08.467Z"
     },
     "https://tractorvs.com/tr/articles/": {
       "digest": "24af9028de2a49e800978e946a31767a57ff1ac80c98a17fb919a12f2339d53e",
@@ -11222,16 +11222,16 @@
       "modified": "2026-11-22T08:02:35.845Z"
     },
     "https://tractorvs.com/tr/compare/": {
-      "digest": "fed47f0ea0a9afb3ff6e67b5d5439850d5f9a715d635c86bf0133dabb0a1f26c",
-      "modified": "2026-11-23T17:13:50.896Z"
+      "digest": "93380a98872b685d32ee2aaa22e940b990ffa71201d4bb898c526e2365598f4e",
+      "modified": "2026-11-23T18:15:08.467Z"
     },
     "https://tractorvs.com/tr/compare/deutz-fahr-5090-d-gs-vs-5100-d-gs/": {
       "digest": "0f223596935ecf9cf2a0972e5fd862ac566c38ba2f83123a156634df383d9733",
       "modified": "2026-11-23T16:20:24.281Z"
     },
     "https://tractorvs.com/tr/farm-advisor/": {
-      "digest": "f2bb8c80eb39f2a3f9db061ae600755e0995720976de002bc8b6073af09001bb",
-      "modified": "2026-11-23T12:59:16.928Z"
+      "digest": "f8c31d554c26727dbd7fd178d0d70b37391da4b41dc0551dc76b13b579e2b8c0",
+      "modified": "2026-11-23T18:15:08.467Z"
     },
     "https://tractorvs.com/tr/guides/choosing-a-tractor/": {
       "digest": "1add30ac1c9c6ae96fcd30180033deda65f446cb1595117819dfe2651d6b025a",
@@ -11266,8 +11266,8 @@
       "modified": "2026-11-22T15:13:41.997Z"
     },
     "https://tractorvs.com/tr/tractors/": {
-      "digest": "b6d12291d98d66ca013a5859535fe96fc82f1ed03217937bcb1fb622c72c220b",
-      "modified": "2026-11-23T17:13:50.896Z"
+      "digest": "f0fb57c475db6349913d07ea7855b5bb8b681a596a4fa674c3a5e4a42d3aad44",
+      "modified": "2026-11-23T18:15:08.467Z"
     },
     "https://tractorvs.com/tr/tractors/agrale-4125-0b53e944/": {
       "digest": "cbfb1b094b1f29a6b421188c362c4724ea5af2560d61a704d8fe0b1596b1b3d8",
@@ -11310,32 +11310,32 @@
       "modified": "2026-11-23T16:45:17.078Z"
     },
     "https://tractorvs.com/tr/tractors/antonio-carraro-mach-4-r-f267b552/": {
-      "digest": "87e5c430621e7bc60d0c4f8a08b4d3a2150a4d632189e96118342e3fe8bc7e0f",
-      "modified": "2026-11-23T16:45:17.078Z"
+      "digest": "5f5e3d487b3518e0b07863a59ac787506592aeb4d5934d4a40e99ab6ca53ee7c",
+      "modified": "2026-11-23T18:15:08.467Z"
     },
     "https://tractorvs.com/tr/tractors/antonio-carraro-panther-22-m-f4794a70/": {
-      "digest": "8d91d2990d0d9fbe759c3eba7c526a990fe8e8aaad3c15068cab496b8a9eea03",
-      "modified": "2026-11-23T16:45:17.078Z"
+      "digest": "fa31985d0fd519a1cb6d0e8bc243be48e3117db24d66856706de96f4b3ba1934",
+      "modified": "2026-11-23T18:15:08.467Z"
     },
     "https://tractorvs.com/tr/tractors/antonio-carraro-panther-26-h-48e8caec/": {
-      "digest": "522094dbabb5fe04ed04ac21978a0e6398680618efc5a43c1a52a0485fd56b1d",
-      "modified": "2026-11-23T16:45:17.078Z"
+      "digest": "7b77cd0a81a16797683e7c6fa3182dd61537ef522cce937548afcd8bca9db4b2",
+      "modified": "2026-11-23T18:15:08.467Z"
     },
     "https://tractorvs.com/tr/tractors/antonio-carraro-panther-26-m-da7afde6/": {
-      "digest": "f660d526e72889900463795d1a0f275a4f0b59211443d0b5ff745ed121cb1853",
-      "modified": "2026-11-23T16:45:17.078Z"
+      "digest": "35f68cdbea1a37fb36c4b02d184b83d390a783110724b35107846e89efaed915",
+      "modified": "2026-11-23T18:15:08.467Z"
     },
     "https://tractorvs.com/tr/tractors/antonio-carraro-sn-6800-v-321df789/": {
-      "digest": "3a6dc1f01d7a85b4cf168ee0bece6034f6b0f5a55602a85802666ca1127e504f",
-      "modified": "2026-11-23T16:45:17.078Z"
+      "digest": "5bad0c90613ddddbf28d2695cb2e31cb7090686cf0924900ffcee274c779d48d",
+      "modified": "2026-11-23T18:15:08.467Z"
     },
     "https://tractorvs.com/tr/tractors/antonio-carraro-tc-6800-f-ef4320ef/": {
-      "digest": "e351b294e81685dd89b2e4b1b56c45debbaff2001c7645ddf2a47cbfdeb3dfe4",
-      "modified": "2026-11-23T16:45:17.078Z"
+      "digest": "86eff0a9c8141322f51cf705c85bbe01b27a283cd1fd9788204ce42dea6d2fd6",
+      "modified": "2026-11-23T18:15:08.467Z"
     },
     "https://tractorvs.com/tr/tractors/antonio-carraro-tgf-7800-s-44929c2c/": {
-      "digest": "b09348a173d8b57b002bedc35e42ea448754f4b2ae872d6883b2e6c7a9e74762",
-      "modified": "2026-11-23T16:45:17.078Z"
+      "digest": "d805ff85e629c43348e54586bcfb08e285d32b34a76418f8d8815e2087622aa6",
+      "modified": "2026-11-23T18:15:08.467Z"
     },
     "https://tractorvs.com/tr/tractors/antonio-carraro-tigre-3800-f-3872ab21/": {
       "digest": "1f619725ca97f842e13d7c8345b4159c9df9c7b85695c21df9a9572d44f1c156",
@@ -11346,8 +11346,8 @@
       "modified": "2026-11-23T16:45:17.078Z"
     },
     "https://tractorvs.com/tr/tractors/antonio-carraro-tony-8700-v-057ddf74/": {
-      "digest": "320cfba693d562bd30414d7014becf653336276cdf153bfb0b61f5968d5dcc37",
-      "modified": "2026-11-23T16:45:17.078Z"
+      "digest": "8e88f69757c72f660e87bb7a842d486abfdce714a77841c0a77a9b2d9d8dbe3e",
+      "modified": "2026-11-23T18:15:08.467Z"
     },
     "https://tractorvs.com/tr/tractors/antonio-carraro-tony-8900-sr-0ebc6c93/": {
       "digest": "0196aff481e77f1ed58b5a1ce4c175cf3efd5c6d4d6e3e5d4a0b70c939ec10c9",
@@ -11358,16 +11358,16 @@
       "modified": "2026-11-23T16:45:17.078Z"
     },
     "https://tractorvs.com/tr/tractors/antonio-carraro-tony-8900-trg-7fa6422c/": {
-      "digest": "db59731547c0b34ca1a30743401a1c64d389459a4a7c2a4f5067573303ef5d22",
-      "modified": "2026-11-23T16:45:17.078Z"
+      "digest": "74fb2c9ceb8162a46e499a2ac093281951e0ca95a15c3945b9bba70ed4dd93c9",
+      "modified": "2026-11-23T18:15:08.467Z"
     },
     "https://tractorvs.com/tr/tractors/antonio-carraro-trx-5800-cf9f7eff/": {
-      "digest": "0a0d59b6d3ba9c33e5165fe6e2c5f9f2735d2199685731ed434c28b0f959a5a8",
-      "modified": "2026-11-23T16:45:17.078Z"
+      "digest": "b9fe9da56cae1c13b5c0653c3ec0badb29882356becdd5cd65767c1366586731",
+      "modified": "2026-11-23T18:15:08.467Z"
     },
     "https://tractorvs.com/tr/tractors/antonio-carraro-trx-7800-s-b678b91d/": {
-      "digest": "d6435ac1c88bcdacbc78b941d6de0cf88a58444bdef7ade930eec0732e614be0",
-      "modified": "2026-11-23T16:45:17.078Z"
+      "digest": "d164dd5cd804b28b5283d5f2b460a354653d87bd0f0d287da4fdaba3467d5b4d",
+      "modified": "2026-11-23T18:15:08.467Z"
     },
     "https://tractorvs.com/tr/tractors/armatrac-804-4-fruit-garden-rops-362ad12b/": {
       "digest": "84c230c0d125e23e3a1f9fd01c579dba9eaf6363bb880c04c16099b3b71c41d6",
@@ -12034,12 +12034,12 @@
       "modified": "2026-11-23T16:45:17.078Z"
     },
     "https://tractorvs.com/tr/tractors/solis-s-50-dt-c7ce4206/": {
-      "digest": "fd09a9169ecdfa1edc6f688fb9f4b11c13d9c928bb4218934cb36c2c81c7953e",
-      "modified": "2026-11-23T16:45:17.078Z"
+      "digest": "47869e3b0396a0bf428883e5d0cdbe4017f782ff0936ffc24e3935ef8e209dea",
+      "modified": "2026-11-23T18:15:08.467Z"
     },
     "https://tractorvs.com/tr/tractors/solis-s-50-st-6ecbbd12/": {
-      "digest": "f303371ae5c0f55f0c63856cef771f1a83d151b04b35afe201acf13de57c34ed",
-      "modified": "2026-11-23T16:45:17.078Z"
+      "digest": "78f3a5c9b0c72f0613144ec392b36ead09aa28e89033159810a6957ab3656cdf",
+      "modified": "2026-11-23T18:15:08.467Z"
     },
     "https://tractorvs.com/tr/tractors/sonalika-110-wt-d76351cf/": {
       "digest": "7483308d41666189fab8ad9b4ff35bd7bb45b3e6a4ccf4363522cba5f7eb2bdc",
@@ -12830,8 +12830,8 @@
       "modified": "2026-11-23T16:45:17.078Z"
     },
     "https://tractorvs.com/tractors/": {
-      "digest": "b6f2281e8564da5a0feb203b958a63fb5372605dbed3959aeb32030556e0f90f",
-      "modified": "2026-11-23T17:13:50.896Z"
+      "digest": "d88ef06eac89793b50467d6d795be79bc3eb7013996a295239cb5988ba665aa7",
+      "modified": "2026-11-23T18:15:08.467Z"
     },
     "https://tractorvs.com/tractors/agrale-4125-0b53e944/": {
       "digest": "41798f99d5c960a94a56bd2e388c2dc375f095243fcad91abc215ad0c7cf129f",
@@ -12874,32 +12874,32 @@
       "modified": "2026-11-23T16:45:17.078Z"
     },
     "https://tractorvs.com/tractors/antonio-carraro-mach-4-r-f267b552/": {
-      "digest": "5572e956d127a1b246bfc7623a59f5293e50128c481f8a02717466e4de03548f",
-      "modified": "2026-11-23T16:45:17.078Z"
+      "digest": "6d1871de16506141f20d66c297e990590476046dbabfdacfd7bff39c13574f36",
+      "modified": "2026-11-23T18:15:08.467Z"
     },
     "https://tractorvs.com/tractors/antonio-carraro-panther-22-m-f4794a70/": {
-      "digest": "46b893bfc96ce824cdce483874ac9f0626d3df3dae3e9d6b34a5e3331f302299",
-      "modified": "2026-11-23T16:45:17.078Z"
+      "digest": "95aed34c64ac675194b0b3640d32666839faf1ae7b58625e8b5a96c2d1e39082",
+      "modified": "2026-11-23T18:15:08.467Z"
     },
     "https://tractorvs.com/tractors/antonio-carraro-panther-26-h-48e8caec/": {
-      "digest": "f6c34e3df6fe0cd0f1fd293a89d28a89e7ca0cf9b48366717c91e9d050544f18",
-      "modified": "2026-11-23T16:45:17.078Z"
+      "digest": "7c3d16f96e8782e21d5b46d217e6c6aba66902103053c906b9389ee441acf793",
+      "modified": "2026-11-23T18:15:08.467Z"
     },
     "https://tractorvs.com/tractors/antonio-carraro-panther-26-m-da7afde6/": {
-      "digest": "94fc67849bf9b294c45a6d91253ff14dbe1d68fe8096f9d2d2eb14d7c74d0f0b",
-      "modified": "2026-11-23T16:45:17.078Z"
+      "digest": "2ef4608abae0634fc46c89107292b8589467090246c72ee7a1d9ff6aaebd7ec3",
+      "modified": "2026-11-23T18:15:08.467Z"
     },
     "https://tractorvs.com/tractors/antonio-carraro-sn-6800-v-321df789/": {
-      "digest": "035acefe9dd0040e7623d0e2d12a6e12e87236e8f0e8700438a6786e0c1273f3",
-      "modified": "2026-11-23T16:45:17.078Z"
+      "digest": "80edb50004b0dc3eaf389cd4a266fe3367c75eb720a8ff5c4f51d9252eff07bb",
+      "modified": "2026-11-23T18:15:08.467Z"
     },
     "https://tractorvs.com/tractors/antonio-carraro-tc-6800-f-ef4320ef/": {
-      "digest": "0139c979c75142c1336261d66bce31133154b4f09e0a4f2cf9e2d65d9599f327",
-      "modified": "2026-11-23T16:45:17.078Z"
+      "digest": "c1ea652e0521334aa3bb57f0f73872c31c095d72d28db547d45b5d92623da417",
+      "modified": "2026-11-23T18:15:08.467Z"
     },
     "https://tractorvs.com/tractors/antonio-carraro-tgf-7800-s-44929c2c/": {
-      "digest": "2a5ae80ed13901692361ad8f79fe0aec6ea966d941544f77240f66bb8f18a101",
-      "modified": "2026-11-23T16:45:17.078Z"
+      "digest": "a522f0a3f4ab87c909ed8da15b93e9f29ce1e6d9fbd6398b020b40cb3a76b317",
+      "modified": "2026-11-23T18:15:08.467Z"
     },
     "https://tractorvs.com/tractors/antonio-carraro-tigre-3800-f-3872ab21/": {
       "digest": "e1e04bb155056afc92889a354e4ea2b7a011433a197b9f6bc59bddd70cf4c366",
@@ -12910,8 +12910,8 @@
       "modified": "2026-11-23T16:45:17.078Z"
     },
     "https://tractorvs.com/tractors/antonio-carraro-tony-8700-v-057ddf74/": {
-      "digest": "fef7787fe1c15cb65666f62e1987849a02de5a79f788b72398b2545b9e6b6559",
-      "modified": "2026-11-23T16:45:17.078Z"
+      "digest": "3e63bce16b243c0f62c2c968c2ff85c09d54a6571a5f1b66610b46af4884031d",
+      "modified": "2026-11-23T18:15:08.467Z"
     },
     "https://tractorvs.com/tractors/antonio-carraro-tony-8900-sr-0ebc6c93/": {
       "digest": "4ca660dadb49e1f730d042b7697031ada3099432f73056356ebe19cf654cf4a5",
@@ -12922,16 +12922,16 @@
       "modified": "2026-11-23T16:45:17.078Z"
     },
     "https://tractorvs.com/tractors/antonio-carraro-tony-8900-trg-7fa6422c/": {
-      "digest": "7e55f0fa08bd216daceb06442fd120ee1a3f436888ac3c837dcda4f2a6d8c6d4",
-      "modified": "2026-11-23T16:45:17.078Z"
+      "digest": "ef1673a478970612b6e13ebdfe6bc4819defa6a90d241f664278f8588263e7a5",
+      "modified": "2026-11-23T18:15:08.467Z"
     },
     "https://tractorvs.com/tractors/antonio-carraro-trx-5800-cf9f7eff/": {
-      "digest": "0f6e1cc9a4a415af47b928629f5eb9527f0299f646c67404325168d3fb452676",
-      "modified": "2026-11-23T16:45:17.078Z"
+      "digest": "2eeef19ce027cced421e389e7aec7df8dca0bb4703e41517452e29837d027120",
+      "modified": "2026-11-23T18:15:08.467Z"
     },
     "https://tractorvs.com/tractors/antonio-carraro-trx-7800-s-b678b91d/": {
-      "digest": "e9784230304381344dab9c641874cc3aabd9df72b146aedc3fca776a76c20269",
-      "modified": "2026-11-23T16:45:17.078Z"
+      "digest": "6e94f8c7e3fc07a2fab560e4a723f568eea49d8ab4c248a5974d9f9b8d66d656",
+      "modified": "2026-11-23T18:15:08.467Z"
     },
     "https://tractorvs.com/tractors/armatrac-804-4-fruit-garden-rops-362ad12b/": {
       "digest": "27f32fcd526f301ee99de4446316e1964c211e999d145ff3d850c2c7535450d2",
@@ -14394,20 +14394,20 @@
       "modified": "2026-11-23T16:45:17.078Z"
     },
     "https://tractorvs.com/zh/": {
-      "digest": "58fe6c6222769874b90d90ad70a2ffd5f418adae88180b7b8b316d3c6c09e7eb",
-      "modified": "2026-11-23T12:59:16.928Z"
+      "digest": "ee9c1f869a78dec920a95884319d93bd094432a56bbc2c66bd5157c7fae0631d",
+      "modified": "2026-11-23T18:15:08.467Z"
     },
     "https://tractorvs.com/zh/articles/": {
       "digest": "879a0a248b1d60f80189181df4af6d71c0f128b026d802b831dc37f5508ce1ab",
       "modified": "2026-11-22T18:22:02.402Z"
     },
     "https://tractorvs.com/zh/compare/": {
-      "digest": "0ca0534271f21e1df856287d1c0d87460c9fa34e6c84f5eab53e29b2f15180a9",
-      "modified": "2026-11-23T17:13:50.896Z"
+      "digest": "9c37865f772fd62bfd54ef92f4bf9f684d9170cf9b0d2f18a615ddbb37c4c3af",
+      "modified": "2026-11-23T18:15:08.467Z"
     },
     "https://tractorvs.com/zh/farm-advisor/": {
-      "digest": "82e136ccd5d84121aa23750da1e1b216d6738c2cef4b37099a966ebe12a3dc05",
-      "modified": "2026-11-23T16:45:17.078Z"
+      "digest": "6cf21bb0f484695d9f37755093e5bf886b5888cf2035261cc9fabf6509e5501c",
+      "modified": "2026-11-23T18:15:08.467Z"
     },
     "https://tractorvs.com/zh/guides/choosing-a-tractor/": {
       "digest": "a2a597a6514f7d38fe74e2cac20096e4049c3c8e9f8227676767414a56e808bf",
@@ -14422,8 +14422,8 @@
       "modified": "2026-11-22T15:13:41.997Z"
     },
     "https://tractorvs.com/zh/tractors/": {
-      "digest": "a03b841e805d3a88cfb68ab8089c72f26587d465cdfd86e095d71c37ef881fa5",
-      "modified": "2026-11-23T17:13:50.896Z"
+      "digest": "637f271f22ba835f4d2bfdbc70842d2a60b4032652bebed63e60fb2fee7e57d6",
+      "modified": "2026-11-23T18:15:08.467Z"
     },
     "https://tractorvs.com/zh/tractors/agrale-4125-0b53e944/": {
       "digest": "93b4acea96bd80e4ef36062b558ec4e05b36d3ed91d72a9ed60ab2f4b9811269",
@@ -14466,32 +14466,32 @@
       "modified": "2026-11-23T16:45:17.078Z"
     },
     "https://tractorvs.com/zh/tractors/antonio-carraro-mach-4-r-f267b552/": {
-      "digest": "8bf7825ec80fc34512f3dd9e7beb2d29973ad6c61cfba10537ca7f14fb2c9dfb",
-      "modified": "2026-11-23T16:45:17.078Z"
+      "digest": "47bc10e56d2758ba577536463f90f17d54a6e91ff7d16b1e7cdf6c804b5ca85b",
+      "modified": "2026-11-23T18:15:08.467Z"
     },
     "https://tractorvs.com/zh/tractors/antonio-carraro-panther-22-m-f4794a70/": {
-      "digest": "1b2f3d38108317a6fdc8548779bfec21d589048ba3c88373d36e6c4784a9c36a",
-      "modified": "2026-11-23T16:45:17.078Z"
+      "digest": "4dd33551b37477e28a1f9b089218196147d63ef994b1d9ab877b84c92a623d86",
+      "modified": "2026-11-23T18:15:08.467Z"
     },
     "https://tractorvs.com/zh/tractors/antonio-carraro-panther-26-h-48e8caec/": {
-      "digest": "47041245216b1b6b17c0d9872a6b7a518a274e9a9558fa5b59babf89660e6b64",
-      "modified": "2026-11-23T16:45:17.078Z"
+      "digest": "75494c2ff01a63920657ae3b726a31963a53a8c82ed6f08f305be6afcd0670ab",
+      "modified": "2026-11-23T18:15:08.467Z"
     },
     "https://tractorvs.com/zh/tractors/antonio-carraro-panther-26-m-da7afde6/": {
-      "digest": "6cc1719e3d570ecdff1d12e7c963def8e90b93efbb42c5f97d79bc77cf747d04",
-      "modified": "2026-11-23T16:45:17.078Z"
+      "digest": "f328efe1795736a503017b12d7d1cbff8dba2ca4f335a5cf034b3976a92d10bd",
+      "modified": "2026-11-23T18:15:08.467Z"
     },
     "https://tractorvs.com/zh/tractors/antonio-carraro-sn-6800-v-321df789/": {
-      "digest": "4d8037dc69793c249cf4dce4f0ea8fdaf59ada9fa2c5b903179cf44fecc39567",
-      "modified": "2026-11-23T16:45:17.078Z"
+      "digest": "1567e8440f8f3e0f875f5b43527a6ef8d5961f5bac9b3addb7034f7cd3b3891e",
+      "modified": "2026-11-23T18:15:08.467Z"
     },
     "https://tractorvs.com/zh/tractors/antonio-carraro-tc-6800-f-ef4320ef/": {
-      "digest": "5771fc8ce49c598244e62a3e21ba5b340a113b989c476feb96a686dd849556bc",
-      "modified": "2026-11-23T16:45:17.078Z"
+      "digest": "bbd31b3aa1df12bbe403cb67a8d65851abc210253624b532485a9bf7b39fb5fe",
+      "modified": "2026-11-23T18:15:08.467Z"
     },
     "https://tractorvs.com/zh/tractors/antonio-carraro-tgf-7800-s-44929c2c/": {
-      "digest": "cd8f3794daf2fc4912c99d6ebf74d6e5e016cc910fde03ba653ec25750cb58ce",
-      "modified": "2026-11-23T16:45:17.078Z"
+      "digest": "130fcdc33853fa8f7269ef56a5404f213dd9e5a60e4098ed6443620b19ccc7c9",
+      "modified": "2026-11-23T18:15:08.467Z"
     },
     "https://tractorvs.com/zh/tractors/antonio-carraro-tigre-3800-f-3872ab21/": {
       "digest": "2bedcc7a3da9c653c65d1ba30dbf54216cd5385655d50a11e0ef41dbb207dd7e",
@@ -14502,8 +14502,8 @@
       "modified": "2026-11-23T16:45:17.078Z"
     },
     "https://tractorvs.com/zh/tractors/antonio-carraro-tony-8700-v-057ddf74/": {
-      "digest": "cc9a7e031b474698c93e01609234d98c6303f93672cd9e00c1611e1b8cf60218",
-      "modified": "2026-11-23T16:45:17.078Z"
+      "digest": "1a3433c370baaac73b4eba489b82797c9018116d9f0172e3cb2f6d7696586440",
+      "modified": "2026-11-23T18:15:08.467Z"
     },
     "https://tractorvs.com/zh/tractors/antonio-carraro-tony-8900-sr-0ebc6c93/": {
       "digest": "7f74facb5548d408d567e604d4454265aabf3e52056c589d65a4251196bfbb7a",
@@ -14514,16 +14514,16 @@
       "modified": "2026-11-23T16:45:17.078Z"
     },
     "https://tractorvs.com/zh/tractors/antonio-carraro-tony-8900-trg-7fa6422c/": {
-      "digest": "17e15fb285aabf30d0b11c5ba6854c98adc85012d6c66dc9ecd7f5feeeb3f1b6",
-      "modified": "2026-11-23T16:45:17.078Z"
+      "digest": "5faf2d68b5076dda345e2e7815431e8c42b63edfbc02ab6b4a04e833fa0af597",
+      "modified": "2026-11-23T18:15:08.467Z"
     },
     "https://tractorvs.com/zh/tractors/antonio-carraro-trx-5800-cf9f7eff/": {
-      "digest": "a49ce05d4d54f7aab9a8b1fc35cd7ca9baae4f6608567fa317e258387125347a",
-      "modified": "2026-11-23T16:45:17.078Z"
+      "digest": "07143dec610275b3e2c8f1d9376a72cc0767485af25bd815b3c076ff16db58ed",
+      "modified": "2026-11-23T18:15:08.467Z"
     },
     "https://tractorvs.com/zh/tractors/antonio-carraro-trx-7800-s-b678b91d/": {
-      "digest": "0bc1a9c41531b11520cc9446603b4edc19b8b0ed07a2945171736ab326edfaf5",
-      "modified": "2026-11-23T16:45:17.078Z"
+      "digest": "a8b9cfd2b46cf982a6996eee863b02519f8af499a4531300e2c3b35f1a3292c1",
+      "modified": "2026-11-23T18:15:08.467Z"
     },
     "https://tractorvs.com/zh/tractors/armatrac-804-4-fruit-garden-rops-362ad12b/": {
       "digest": "6e1ac74ff74a834482aded354ebca1d51661465867e8a5d79768e0bec6437add",
