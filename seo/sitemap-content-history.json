@@ -54,8 +54,8 @@
       "modified": "2026-11-22T15:13:41.997Z"
     },
     "https://tractorvs.com/de/tractors/": {
-      "digest": "9b158f6cfcb5c02b383f96b2d9cdb0e4e6668e6e185dd1a3610bcf45d7f629a2",
-      "modified": "2026-11-23T06:45:40.053Z"
+      "digest": "3d4198133341dddda152d57f9420560cfcd986140807387abec6d0950cc4a75a",
+      "modified": "2026-11-23T09:34:32.778Z"
     },
     "https://tractorvs.com/de/tractors/agrale-4125-0b53e944/": {
       "digest": "32366e1df6154f04604255bcb6156d1828a47b1b02ef00cb2a1e2b65e857e7f8",
@@ -158,12 +158,12 @@
       "modified": "2026-11-22T04:59:19.699Z"
     },
     "https://tractorvs.com/de/tractors/armatrac-804-4-fruit-garden-rops-362ad12b/": {
-      "digest": "c5bdc764e9a68ed24eb9d5cdfa9e77a28d44019295b52960cb21a019420664c3",
-      "modified": "2026-11-23T06:45:40.053Z"
+      "digest": "844481105f844461c494f6c6292ececfcf9896d8382da361a27ddd406ed2d273",
+      "modified": "2026-11-23T09:34:32.778Z"
     },
     "https://tractorvs.com/de/tractors/armatrac-804-fruit-garden-cabin-619e4fd9/": {
-      "digest": "2cafa5c6f0b9e6862c61bda9f8191e5905f14f6555c57fc7a9b0dc9ad675a235",
-      "modified": "2026-11-23T06:45:40.053Z"
+      "digest": "ec46301afce2f291dfffc3bb8ee20ba86ebcd90baf5fd8cc10a7649c3b5930b3",
+      "modified": "2026-11-23T09:34:32.778Z"
     },
     "https://tractorvs.com/de/tractors/basak-traktor-2075-bk-9ef236be/": {
       "digest": "dd956bb427c5660d079e506192df89c821c28c096ef738e2f78720e5d3b15c4a",
@@ -1638,8 +1638,8 @@
       "modified": "2026-11-22T15:13:41.997Z"
     },
     "https://tractorvs.com/es/tractors/": {
-      "digest": "2296ba7f90434dc82a0c5abcaab95f9859c54c5522cf5ab41fc42cacbf55db4f",
-      "modified": "2026-11-23T06:45:40.053Z"
+      "digest": "a386e884699f27e12221df1211a3f1793e0b0c82a583f634ee6659be320c91d1",
+      "modified": "2026-11-23T09:34:32.778Z"
     },
     "https://tractorvs.com/es/tractors/agrale-4125-0b53e944/": {
       "digest": "6e72187d478e42d64a088eac4ea90be38a22c86b83d7841c5dd36695f8e1e4d5",
@@ -1742,12 +1742,12 @@
       "modified": "2026-11-22T15:49:54.478Z"
     },
     "https://tractorvs.com/es/tractors/armatrac-804-4-fruit-garden-rops-362ad12b/": {
-      "digest": "1e80eebb7f5efb17458c2c6906438bdab3ddb76d11a19827fc2e923e9dc8e546",
-      "modified": "2026-11-23T06:45:40.053Z"
+      "digest": "57382a0b2ae32fecb55b43f7560a890713ec52d9f36dfdcb39b02765166c4b04",
+      "modified": "2026-11-23T09:34:32.778Z"
     },
     "https://tractorvs.com/es/tractors/armatrac-804-fruit-garden-cabin-619e4fd9/": {
-      "digest": "acabb7ead6b0d7fe6f7c5651bc6854ca269752620f86fc565c2fbbc997624cba",
-      "modified": "2026-11-23T06:45:40.053Z"
+      "digest": "7fbe4eaeaa2bace0a5c0870a70988666aee62d2dd9b1d0c0024125ea487bb969",
+      "modified": "2026-11-23T09:34:32.778Z"
     },
     "https://tractorvs.com/es/tractors/basak-traktor-2075-bk-9ef236be/": {
       "digest": "c88a35dd58b01a9d01f8b895edf42d834ea70c646128d9018529714c3c6daa69",
@@ -3226,8 +3226,8 @@
       "modified": "2026-11-22T15:13:41.997Z"
     },
     "https://tractorvs.com/fr/tractors/": {
-      "digest": "78be9e6dbf5d3c4435c87a2951b498dee2fd1951ad0b16246c17f06b30befe48",
-      "modified": "2026-11-23T06:45:40.053Z"
+      "digest": "b6ad06ad82480a736d5c09c519ff22457cc4f4a9662caa71bcdb84f5ad271688",
+      "modified": "2026-11-23T09:34:32.778Z"
     },
     "https://tractorvs.com/fr/tractors/agrale-4125-0b53e944/": {
       "digest": "b2f88db3e8539cb6e089c35b63a6adb969706f68db99ac8fe7129d13fcc64d56",
@@ -3330,12 +3330,12 @@
       "modified": "2026-11-22T15:49:54.478Z"
     },
     "https://tractorvs.com/fr/tractors/armatrac-804-4-fruit-garden-rops-362ad12b/": {
-      "digest": "c6bec58c816b18a76355706ae4d5a641542fb27e96e03b872863841acb88aee8",
-      "modified": "2026-11-23T06:45:40.053Z"
+      "digest": "66c263c5832428d95f18b81b10061d9202060b4fbf6520cb0249f40ee31e98f1",
+      "modified": "2026-11-23T09:34:32.778Z"
     },
     "https://tractorvs.com/fr/tractors/armatrac-804-fruit-garden-cabin-619e4fd9/": {
-      "digest": "08fdccf666a092202ff02a90286a3db2f591282c5b25571493ab754173388658",
-      "modified": "2026-11-23T06:45:40.053Z"
+      "digest": "c83318c33f3488a9ec14b7da74b632c004a92458fb174bcc26f9a9c4f3a05fa7",
+      "modified": "2026-11-23T09:34:32.778Z"
     },
     "https://tractorvs.com/fr/tractors/basak-traktor-2075-bk-9ef236be/": {
       "digest": "b42e53ce70e481e78c4fe5eef3cd65252c04500584b03d7c63f40759491682db",
@@ -4830,8 +4830,8 @@
       "modified": "2026-11-22T15:13:41.997Z"
     },
     "https://tractorvs.com/hi/tractors/": {
-      "digest": "fcb937f722c160a3d9f7afd437c7a00234e6968577d76d2fca26ee785afe17eb",
-      "modified": "2026-11-23T06:45:40.053Z"
+      "digest": "88963946ecfe1e63f0b89a2b5b9e31cfbf534957332173d525c8be0603fbf42c",
+      "modified": "2026-11-23T09:34:32.778Z"
     },
     "https://tractorvs.com/hi/tractors/agrale-4125-0b53e944/": {
       "digest": "89d390984132129c6705ac5f42d0a35f6d3e519fbf19cc0d8b6d848cd95ec5cb",
@@ -4934,12 +4934,12 @@
       "modified": "2026-11-21T19:47:11.499Z"
     },
     "https://tractorvs.com/hi/tractors/armatrac-804-4-fruit-garden-rops-362ad12b/": {
-      "digest": "e3b5696787574f40c42dae034fb0a709cbc8b45f3fd1d33e5219bf5dcee18c73",
-      "modified": "2026-11-23T06:45:40.053Z"
+      "digest": "edbe8cc0bf210beda040fcf7f6f035f94340aa06f074e9af4e7ac0476fa7a0a7",
+      "modified": "2026-11-23T09:34:32.778Z"
     },
     "https://tractorvs.com/hi/tractors/armatrac-804-fruit-garden-cabin-619e4fd9/": {
-      "digest": "d4741e244accab1c3d9daf952d7144b22490a212e335ad574e1343b4ddf32556",
-      "modified": "2026-11-23T06:45:40.053Z"
+      "digest": "c452bbd70252060875ebc141ddfb1cb2a27d3f6cde98c47bb74621bb3de19fa8",
+      "modified": "2026-11-23T09:34:32.778Z"
     },
     "https://tractorvs.com/hi/tractors/basak-traktor-2075-bk-9ef236be/": {
       "digest": "4545f93fa48788e9d79732896e89edeffeb7afeb1ea8bf56a6ef01a12b27b261",
@@ -6414,8 +6414,8 @@
       "modified": "2026-11-22T15:13:41.997Z"
     },
     "https://tractorvs.com/ja/tractors/": {
-      "digest": "cd0728cc9ffee3b9f9933ecbddcca6793243661f21bd7de96967821a1451d753",
-      "modified": "2026-11-23T06:45:40.053Z"
+      "digest": "f11607798c952d130203311e7c8c30dde93f0502d868cf042556c44eca6dd64d",
+      "modified": "2026-11-23T09:34:32.778Z"
     },
     "https://tractorvs.com/ja/tractors/agrale-4125-0b53e944/": {
       "digest": "4d0e45acacbeeb3c521ccff6fdb73475c3d2a6b25b8314d917e1fba5cfd09492",
@@ -6518,12 +6518,12 @@
       "modified": null
     },
     "https://tractorvs.com/ja/tractors/armatrac-804-4-fruit-garden-rops-362ad12b/": {
-      "digest": "aa8bbecfeea34904d123ae9dc834a008de3e1d75ec8cd4b7dd667a1d8d19d442",
-      "modified": "2026-11-23T06:45:40.053Z"
+      "digest": "ad53a4ddce95f4bd83835d3dc4a3707944ff9d71c819814b342f32fd0fdc8196",
+      "modified": "2026-11-23T09:34:32.778Z"
     },
     "https://tractorvs.com/ja/tractors/armatrac-804-fruit-garden-cabin-619e4fd9/": {
-      "digest": "d5e57c7f568b2fc8ff08de67d87310bc534c9f4e5fdbb353208280654fb198ef",
-      "modified": "2026-11-23T06:45:40.053Z"
+      "digest": "48bdd713d500b671882101d648db6345cfd729b8d206c4b1f0312f0f9c003649",
+      "modified": "2026-11-23T09:34:32.778Z"
     },
     "https://tractorvs.com/ja/tractors/basak-traktor-2075-bk-9ef236be/": {
       "digest": "8a52e5cd5a020591fcbb5ab56e045a54d0a5db25c1c464cd790c020b47abd8f9",
@@ -8006,8 +8006,8 @@
       "modified": "2026-11-22T15:13:41.997Z"
     },
     "https://tractorvs.com/pt-br/tractors/": {
-      "digest": "1f4ab695c0c8c7ae791a00b85fb69c71d854bbc1c831eebf01db56c11a8a9d22",
-      "modified": "2026-11-23T06:45:40.053Z"
+      "digest": "90dacb00771f67e7a6ca7e9bf957847c3a8b158e7882b328f94c28b11bfb8928",
+      "modified": "2026-11-23T09:34:32.778Z"
     },
     "https://tractorvs.com/pt-br/tractors/agrale-4125-0b53e944/": {
       "digest": "5ff1db9f68277bc1544ae51e8b7ab7c0afe49949c5d51c67791975fb0426a0f4",
@@ -8110,12 +8110,12 @@
       "modified": "2026-11-22T15:49:54.478Z"
     },
     "https://tractorvs.com/pt-br/tractors/armatrac-804-4-fruit-garden-rops-362ad12b/": {
-      "digest": "3ac7801709a68e2ed1f93f021767f7ba5387affcea655faad72b1dd36bd6347e",
-      "modified": "2026-11-23T06:45:40.053Z"
+      "digest": "ec2061aa45c80f986ee2127a12b3e5719166ea9438dd4779976b76727bf1a9f0",
+      "modified": "2026-11-23T09:34:32.778Z"
     },
     "https://tractorvs.com/pt-br/tractors/armatrac-804-fruit-garden-cabin-619e4fd9/": {
-      "digest": "67f768c2200b64a45049bbce51b2391daf8935ba8ff465dfc50167e7b39333d6",
-      "modified": "2026-11-23T06:45:40.053Z"
+      "digest": "d462cd64369f50e86504b276cbd209e4f4c8d0e27f497ca81297081957266c62",
+      "modified": "2026-11-23T09:34:32.778Z"
     },
     "https://tractorvs.com/pt-br/tractors/basak-traktor-2075-bk-9ef236be/": {
       "digest": "1420e0162e56a86a9e78db7cdec0e32cad6d755299ca20580834058f70133d49",
@@ -9594,8 +9594,8 @@
       "modified": "2026-11-22T15:13:41.997Z"
     },
     "https://tractorvs.com/ru/tractors/": {
-      "digest": "12ecf2687fccf733c12b8342983b52d214d11b84a64de49f019ef381dab944f7",
-      "modified": "2026-11-23T06:45:40.053Z"
+      "digest": "086daf4ee7f7d42cf757bcda576c4e3db3b0074efe55ea428a73012ffc8b3438",
+      "modified": "2026-11-23T09:34:32.778Z"
     },
     "https://tractorvs.com/ru/tractors/agrale-4125-0b53e944/": {
       "digest": "a743211ff921d260a622929d99a49654ddf88289776922ae4c70310ed030ae99",
@@ -9698,12 +9698,12 @@
       "modified": "2026-11-22T15:49:54.478Z"
     },
     "https://tractorvs.com/ru/tractors/armatrac-804-4-fruit-garden-rops-362ad12b/": {
-      "digest": "17f46afddc56ab27c04fe3c6a84b3e8f8e376fc083d5310f86cc035b2f788102",
-      "modified": "2026-11-23T06:45:40.053Z"
+      "digest": "5b35fb125aecf74b21d13f25624fe5966c3d84ab2d765f1c44c7819494ea80ee",
+      "modified": "2026-11-23T09:34:32.778Z"
     },
     "https://tractorvs.com/ru/tractors/armatrac-804-fruit-garden-cabin-619e4fd9/": {
-      "digest": "a8c1af1462782a809187743079381f5a853cff4324d15b877531960e5abe7ab4",
-      "modified": "2026-11-23T06:45:40.053Z"
+      "digest": "3a71fe1c468834e55e7fb045f9bff9db91115e8568fd068e1e41370f740c7ec3",
+      "modified": "2026-11-23T09:34:32.778Z"
     },
     "https://tractorvs.com/ru/tractors/basak-traktor-2075-bk-9ef236be/": {
       "digest": "d8b23c3a4bbd5fe2aebc3c5c6e5ed49dcacaeb4b8a22ae1d81a7cade15a1ba97",
@@ -11210,8 +11210,8 @@
       "modified": "2026-11-22T15:13:41.997Z"
     },
     "https://tractorvs.com/tr/tractors/": {
-      "digest": "92fb3c8b6619b1122e46099c2fb4f322055f43ed2926e753b2fbf8229746e4cd",
-      "modified": "2026-11-23T06:45:40.053Z"
+      "digest": "89aebd01c2a36b96d124ea27109d6a5b1472ca63745cb3697162d9193bbb980b",
+      "modified": "2026-11-23T09:34:32.778Z"
     },
     "https://tractorvs.com/tr/tractors/agrale-4125-0b53e944/": {
       "digest": "b877aec9c77214e168c69ab239caf1ba006d9c27f2ab18fec9179791bc08112d",
@@ -11314,12 +11314,12 @@
       "modified": "2026-11-22T04:59:19.699Z"
     },
     "https://tractorvs.com/tr/tractors/armatrac-804-4-fruit-garden-rops-362ad12b/": {
-      "digest": "81b528504d6f2e871d4bcd80c23374c4cfe5fa8ebf7e6bfefa5cf33422182865",
-      "modified": "2026-11-23T06:45:40.053Z"
+      "digest": "469b1b1b686074423282d7de6650968baacef2a8bcfd51e5cc2407f26ed5bccf",
+      "modified": "2026-11-23T09:34:32.778Z"
     },
     "https://tractorvs.com/tr/tractors/armatrac-804-fruit-garden-cabin-619e4fd9/": {
-      "digest": "d875d19021c924ff2998c538fbca1897322c301c816107be7a3b357c6b215268",
-      "modified": "2026-11-23T06:45:40.053Z"
+      "digest": "01385fceaa430e2af5b61d63b992c54ddc3e7c88ce70ecfcf1a11e3b41b64975",
+      "modified": "2026-11-23T09:34:32.778Z"
     },
     "https://tractorvs.com/tr/tractors/basak-traktor-2075-bk-9ef236be/": {
       "digest": "6ea5a4622d848a922a3a40478cc947c59a287d173f92898a4438bd55f6ee567d",
@@ -12766,8 +12766,8 @@
       "modified": "2026-11-22T18:49:27.463Z"
     },
     "https://tractorvs.com/tractors/": {
-      "digest": "b854b88ab6e723fd0d2d33964a50f5e6c142312f796042d79c1f23363aa868bf",
-      "modified": "2026-11-23T06:45:40.053Z"
+      "digest": "b4e5ccd7c1403ac406723cf51d03897e032255d6072270e6f0f2a61395658c07",
+      "modified": "2026-11-23T09:34:32.778Z"
     },
     "https://tractorvs.com/tractors/agrale-4125-0b53e944/": {
       "digest": "7cb5388368ca5cebb9b7f9b51467ed0cde27248e0c1689c41cd6c15909d42679",
@@ -12870,12 +12870,12 @@
       "modified": "2026-11-22T04:59:19.699Z"
     },
     "https://tractorvs.com/tractors/armatrac-804-4-fruit-garden-rops-362ad12b/": {
-      "digest": "70e74101aee473fc9416a3c2429f5ac75cb43abaf4618610b38815c6e626f149",
-      "modified": "2026-11-23T06:45:40.053Z"
+      "digest": "5c2d7bb047793a2e29c63d078f69117b5052ca8fcc76b3bd4963e6b81a050205",
+      "modified": "2026-11-23T09:34:32.778Z"
     },
     "https://tractorvs.com/tractors/armatrac-804-fruit-garden-cabin-619e4fd9/": {
-      "digest": "b13e63bdbf2707ada4c844cc8b57b792c9f3226c5cd4db06c06f4ed5c13f3f60",
-      "modified": "2026-11-23T06:45:40.053Z"
+      "digest": "0afc98ddd633b94302cc7b39181612c2b2c10bd188677fae771f46c0cf0f7d32",
+      "modified": "2026-11-23T09:34:32.778Z"
     },
     "https://tractorvs.com/tractors/basak-traktor-2075-bk-9ef236be/": {
       "digest": "aea13b7da3fc38ba7956a3bae6c21319e4e51908c9b476f8ae08238f19e34fa6",
@@ -14350,8 +14350,8 @@
       "modified": "2026-11-22T15:13:41.997Z"
     },
     "https://tractorvs.com/zh/tractors/": {
-      "digest": "c22cb14ff25073522b42ee7e4ee8f606c175e70abb4ae7b07fb6f42f86191f54",
-      "modified": "2026-11-23T06:45:40.053Z"
+      "digest": "b146cb5f1675d66c5e03c83148499907f0c90ae5e7ff0523c30a14077f92e509",
+      "modified": "2026-11-23T09:34:32.778Z"
     },
     "https://tractorvs.com/zh/tractors/agrale-4125-0b53e944/": {
       "digest": "e6ab843089d45ba67da807eceb735737086451a3597de35ae307039fd8c1c4e7",
@@ -14454,12 +14454,12 @@
       "modified": "2026-11-22T09:58:15.078Z"
     },
     "https://tractorvs.com/zh/tractors/armatrac-804-4-fruit-garden-rops-362ad12b/": {
-      "digest": "b13438733a70c7e0ef01ba16f67357d271fe092eb3f53c4e346d6cf79d52f24a",
-      "modified": "2026-11-23T06:45:40.053Z"
+      "digest": "864429f37e60ce009aa6faf78c874d22c351c37dbd02497a22e9f9975a5b6333",
+      "modified": "2026-11-23T09:34:32.778Z"
     },
     "https://tractorvs.com/zh/tractors/armatrac-804-fruit-garden-cabin-619e4fd9/": {
-      "digest": "b0460638a6b8f673ec25da96c5e05bbf775a4006421119995bb3157f61ada6af",
-      "modified": "2026-11-23T06:45:40.053Z"
+      "digest": "c67e62b37db93d1731f4612b0fedd185cc5d9e683df7592d983728bdd9783b12",
+      "modified": "2026-11-23T09:34:32.778Z"
     },
     "https://tractorvs.com/zh/tractors/basak-traktor-2075-bk-9ef236be/": {
       "digest": "4e65c247132545205fec36a84dd61ff33f1f0efb37c0fc15efbbbd34f5e149fb",
