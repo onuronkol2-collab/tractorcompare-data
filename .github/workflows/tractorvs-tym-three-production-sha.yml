@@ -1,0 +1,44 @@
+name: TractorVS new TYM photo production HTTP+SHA proof
+on:
+  pull_request:
+    paths:
+      - "site/scripts/verify-tym-three-production.mjs"
+      - "site/tests/verify-tym-three-production.test.mjs"
+      - ".github/workflows/tractorvs-tym-three-production-sha.yml"
+  push:
+    branches: [main]
+    paths:
+      - "site/scripts/verify-tym-three-production.mjs"
+      - "site/tests/verify-tym-three-production.test.mjs"
+      - ".github/workflows/tractorvs-tym-three-production-sha.yml"
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: tractorvs-tym-3-production-9-jpeg-sha-readonly
+  cancel-in-progress: false
+jobs:
+  offline_source_and_sha_regression:
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22.23.4"
+      - name: Check source catalog, hashes and malformed HTTP responses
+        run: node --test site/tests/verify-tym-three-production.test.mjs
+  public_production_sha:
+    needs: offline_source_and_sha_regression
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22.23.4"
+      - name: Re-fetch nine production files and verify actual JPEG bytes and original SHA
+        env:
+          PHOTO_ORIGIN: https://tractorvs.com
+        run: node site/scripts/verify-tym-three-production.mjs

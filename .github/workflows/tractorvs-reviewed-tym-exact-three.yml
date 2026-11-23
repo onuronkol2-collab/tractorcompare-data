@@ -1,0 +1,100 @@
+name: TractorVS independently licensed TYM exact-three JPEG review staging
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: [".github/workflows/tractorvs-reviewed-tym-exact-three.yml"]
+permissions:
+  contents: write
+concurrency:
+  group: tractorvs-reviewed-tym-exact-three-20261122
+  cancel-in-progress: false
+jobs:
+  stage_verified_originals_without_publication:
+    if: "github.event_name == 'workflow_dispatch' || startsWith(github.event.head_commit.message, 'ci(photo): one-time stage TYM exact three')"
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22.23.4"
+      - name: Install pinned Pillow only
+        run: python -m pip install --quiet 'Pillow==11.3.0'
+      - name: Verify model UUID, source rights evidence and local scripts without network
+        run: |
+          python -m py_compile site/scripts/stage-reviewed-commons-20261122.py site/scripts/stage-reviewed-tym-exact-three-20261122.py
+          node --test site/tests/tym-exact-photos-staging.test.mjs
+      - name: Download exact three creator-owned Commons sources and generate nine JPEG derivatives
+        run: python site/scripts/stage-reviewed-tym-exact-three-20261122.py --output-dir ./tym-exact-three-photo-review
+      - name: Independently validate source ledger, file bytes, JPEG decoding and source identities
+        run: |
+          python - <<'PY'
+          import hashlib, json
+          from pathlib import Path
+          from PIL import Image
+          root=Path("tym-exact-three-photo-review")
+          ledger=json.loads((root/"sha256-ledger.json").read_text())
+          manifest=json.loads(Path("site/docs/photo-curated-tym-exact-three-20261122.json").read_text())
+          expected={p["fileId"]:p for p in manifest["photos"]}
+          assert manifest["publicationCount"]==0 and len(expected)==3
+          assert ledger["reviewRequired"] is True and ledger["publicationCount"]==0
+          assert {x["fileId"] for x in ledger["images"]}==set(expected)
+          assert len(ledger["images"])==3
+          for item in ledger["images"]:
+              doc=expected[item["fileId"]]
+              assert item["approvedToPublish"] is False
+              assert item["photographer"]==doc["photographer"]
+              assert item["license"]==doc["license"]
+              assert item["sourcePage"].replace("%28","(").replace("%29",")")==doc["sourcePage"]
+              assert doc["commonsStoragePath"] in item["origin"]
+              assert len(item["originSha256"])==64
+              assert item["originBytes"]>10000
+              assert {d["width"] for d in item["derivatives"]}=={480,960,1920}
+              for d in item["derivatives"]:
+                  p=root/d["file"]
+                  assert p.parent==root
+                  data=p.read_bytes()
+                  assert data[:3]==bytes.fromhex("ffd8ff") and data[-2:]==bytes.fromhex("ffd9")
+                  assert len(data)==d["bytes"]
+                  assert hashlib.sha256(data).hexdigest()==d["sha256"]
+                  with Image.open(p) as img:
+                      img.load()
+                      assert img.format=="JPEG"
+                      assert img.size==(d["width"],d["height"])
+          print("TRACTORVS_TYM_3_OWN_WORK_IMAGES_9_JPEGS_INTEGRITY_OK_REVIEW_ONLY")
+          PY
+      - name: Preserve artifact for independent visual inspection — not approved or live
+        uses: actions/upload-artifact@v4
+        with:
+          name: tractorvs-tym-2500l-6225c-t78-three-source-nine-jpeg-review
+          path: tym-exact-three-photo-review/
+          if-no-files-found: error
+          retention-days: 30
+      - name: Write only genuine hashed binaries and source ledger to isolated review branch
+        run: |
+          set -euo pipefail
+          BRANCH="photo/20261122-tym-2500l-6225c-t78-verified-jpegs"
+          if git ls-remote --exit-code --heads origin "$BRANCH"; then
+            echo "::error::An existing review branch requires reconciliation; refusing overwrite"
+            exit 1
+          fi
+          git switch -c "$BRANCH"
+          mkdir -p site/public/images/tractors site/docs
+          for id in tym-t2026-2500l-marcelx42-2023 tym-t4058-6225c-marcelx42-2023 tym-t5075-t78-marcelx42-2023; do
+            for width in 480 960 1920; do
+              install -m 0644 "tym-exact-three-photo-review/${id}-${width}.jpg" "site/public/images/tractors/${id}-${width}.jpg"
+              git add "site/public/images/tractors/${id}-${width}.jpg"
+            done
+          done
+          install -m 0644 tym-exact-three-photo-review/sha256-ledger.json site/docs/photo-import-evidence-tym-exact-three-20261122.json
+          git add site/docs/photo-import-evidence-tym-exact-three-20261122.json
+          test "$(git diff --cached --name-only | wc -l)" -eq 10
+          git -c user.email="41898282+github-actions[bot]@users.noreply.github.com" -c user.name="github-actions[bot]" commit -m "ci(photo): stage independently hash-verified TYM exact-three review binaries"
+          git push origin "HEAD:refs/heads/$BRANCH"
+          echo "REVIEW ONLY: no public photo resolver change, no deployment, no Supabase mutation."

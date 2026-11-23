@@ -4,15 +4,12 @@ const pixels=async(locator)=>locator.evaluate(node=>Number.parseFloat(getCompute
 const noOverflow=async(page)=>page.evaluate(()=>
  document.documentElement.scrollWidth<=window.innerWidth+2);
 
-test("Turkish and English catalogue copy stays readable and canonical",async({page})=>{
- for(const [url,canonical] of [
-  ["/tr/tractors/","https://tractorvs.com/tr/tractors/"],
-  ["/tractors/","https://tractorvs.com/tractors/"]
- ]){
+test("Turkish and English catalogue copy stays readable in the noindex preview",async({page})=>{
+ for(const url of ["/tr/tractors/","/tractors/"]){
   const response=await page.goto(url,{waitUntil:"domcontentloaded"});
   expect(response?.status()).toBe(200);
   await expect(page.locator("h1")).toHaveCount(1);
-  await expect(page.locator('link[rel="canonical"]')).toHaveAttribute("href",canonical);
+  await expect(page.locator('link[rel="canonical"]')).toHaveCount(0);
   expect(await pixels(page.locator(".catalog-intro"))).toBeGreaterThanOrEqual(16);
   const cards=page.locator(".tractor-card");
   if(await cards.count()){
@@ -41,7 +38,7 @@ test("narrow-screen catalogue and homepage avoid horizontal overflow",async({pag
 test("Turkish editorial hub exposes readable evidence-first cards and dates",async({page})=>{
  const response=await page.goto("/tr/articles/",{waitUntil:"domcontentloaded"});
  expect(response?.status()).toBe(200);
- await expect(page.locator('link[rel="canonical"]')).toHaveAttribute("href","https://tractorvs.com/tr/articles/");
+ await expect(page.locator('link[rel="canonical"]')).toHaveCount(0);
  await expect(page.locator(".editorial-card").first()).toBeVisible();
  expect(await pixels(page.locator(".editorial-card > p:not(.editorial-kicker)").first())).toBeGreaterThanOrEqual(16);
  expect(await pixels(page.locator(".editorial-card-footer time").first())).toBeGreaterThanOrEqual(14);

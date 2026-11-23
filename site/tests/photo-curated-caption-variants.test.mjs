@@ -5,8 +5,18 @@ import {readFileSync} from "node:fs";
 const registry=JSON.parse(readFileSync(new URL("../docs/photo-curated-caption-and-alias-candidates-20261122.json",import.meta.url),"utf8"));
 const approvedSource=readFileSync(new URL("../src/lib/tractor-photos.ts",import.meta.url),"utf8")+
   readFileSync(new URL("../src/lib/historical-licensed-photos.ts",import.meta.url),"utf8");
+// Research is a historical snapshot. A later photo may graduate to the
+// published catalogue ONLY with an independently persisted real SHA ledger.
+// This allowlist must never include ambiguous T3048 F50CHN/HS80/T130 images.
+const promotedWithEvidence=new Set([
+ "mccormick-x5-085-mbone-2023",
+ "tym-t6115-t115-marcelx42-2025",
+ "tym-t2025p-t25-marcelx42-2025"
+]);
+const wave2Proof=JSON.parse(readFileSync(new URL("../docs/photo-import-evidence-mccormick-tym-wave2-20261122.json",import.meta.url),"utf8"));
 
-test("new caption and alias photo discoveries are research-only, never silently published",()=>{
+
+test("caption research stays fail-closed and only SHA-proven candidates graduate to approved photos",()=>{
   assert.equal(registry.schemaVersion,1);
   assert.equal(registry.publicationCount,0);
   assert.equal(registry.publicAssetCount,0);
@@ -29,7 +39,18 @@ test("new caption and alias photo discoveries are research-only, never silently 
     assert.ok(candidate.evidence.method);
     // Nothing from this exploratory file may leak into the approved photos
     // until source JPEG provenance, exact model and CI are independently accepted.
-    assert.ok(!approvedSource.includes(candidate.fileId),"A research-only ID was accidentally published: "+candidate.fileId);
+    if(promotedWithEvidence.has(candidate.fileId)){
+      const verified=wave2Proof.images.find(x=>x.fileId===candidate.fileId);
+      assert.ok(verified,"Promoted photo missing real source/JPEG evidence: "+candidate.fileId);
+      assert.ok(approvedSource.includes(candidate.fileId),"Verified photo missing from catalogue");
+      assert.equal(verified.photographer,candidate.source.creator);
+      assert.equal(verified.license,"CC BY-SA 4.0");
+      assert.equal(verified.derivatives.length,3);
+      assert.deepEqual(new Set(verified.derivatives.map(d=>d.width)),new Set([480,960,1920]));
+      assert.equal(verified.approvedToPublish,false,"The staging ledger never self-authorizes release");
+    }else{
+      assert.ok(!approvedSource.includes(candidate.fileId),"An unverified/ambiguous candidate was published: "+candidate.fileId);
+    }
   }
   assert.equal(new Set(registry.candidates.map(x=>x.fileId)).size,registry.candidates.length);
   assert.equal(new Set(registry.candidates.map(x=>x.source.fileUrl)).size,registry.candidates.length);
@@ -44,9 +65,10 @@ test("TYM T3048 F50CHN research is pinned to the exact published tractor UUID",(
   assert.match(f50.target.variantGuard,/F50CHN/);
   assert.equal(f50.review.status,"variant_specific_code_change_required_binary_pending");
   assert.equal(f50.review.publicationAllowed,false);
-  // Current production photo lookup is name-based, so adding a photo record
-  // for T3048 here would leak it into neighboring variants. Hold the image.
-  assert.match(approvedSource,/norm\(photo\.model\)===norm\(tractor\.model_name\)/);
+  // New resolver is strict on tractor UUID, but without independently
+  // reviewed JPEG/source proof this candidate remains unpublished.
+  assert.ok(!approvedSource.includes(f50.fileId));
+  assert.match(approvedSource,/photo\.tractorId===tractor\.tractor_id/);
 });
 
 test("near-model or contested rights leads remain explicitly quarantined",()=>{

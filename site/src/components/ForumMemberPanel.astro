@@ -334,7 +334,11 @@ for(const root of widgets){
   }
   if(leaderToggle)leaderToggle.setAttribute("aria-expanded",String(showRanks));
  }
- leaderToggle?.addEventListener("click",()=>{showRanks=!showRanks;setPanels()});
+ leaderToggle?.addEventListener("click",()=>{
+  showRanks=!showRanks;setPanels();
+  // Public rankings are optional: never fetch the hidden leaderboard on startup.
+  if(showRanks&&!leadersReady)void loadLeaders();
+ });
  editToggle?.addEventListener("click",()=>{
   if(!ownId)return;
   editing=!editing;
@@ -352,6 +356,7 @@ for(const root of widgets){
   link.addEventListener("click",()=>{showRanks=true;setPanels()});
  });
  let leaders:Profile[]=[];
+ let leadersReady=false,leadersLoading=false;
  const headers=(auth=false)=>({apikey:cfg.key,Accept:"application/json",
    ...(auth&&token?{Authorization:"Bearer "+token}:{})});
  const avatarUrl=(p:Profile):string|null=>{
@@ -406,6 +411,8 @@ for(const root of widgets){
   }
  }
  async function loadLeaders(){
+  if(leadersLoading)return;
+  leadersLoading=true;
   if(empty){empty.hidden=false;empty.textContent=txt.loading;}
   if(retryLeaders)retryLeaders.hidden=true;
   try{
@@ -414,12 +421,12 @@ for(const root of widgets){
    const res=await fetch(cfg.url+"/rest/v1/tc_member_scores?"+params,{headers:headers(),cache:"no-store",
     signal:AbortSignal.timeout(12000)});
    if(!res.ok)throw Error();
-   leaders=await res.json();renderLeaders();
+   leaders=await res.json();leadersReady=true;renderLeaders();
   }catch{
-   leaders=[];renderLeaders();
+   leaders=[];leadersReady=false;renderLeaders();
    if(empty){empty.hidden=false;empty.textContent=txt.memberLoadError;}
    if(retryLeaders)retryLeaders.hidden=false;
-  }
+  }finally{leadersLoading=false;}
  }
  async function loadRecentMembers(){
   if(!recentEl)return;
@@ -557,7 +564,8 @@ for(const root of widgets){
    });
    if(res.ok){
     const saved=await res.json() as Profile[];
-    void Promise.all([loadLeaders(),loadRecentMembers()]);
+    void loadRecentMembers();
+    if(showRanks)void loadLeaders();
     return saved[0]||neutral;
    }
    // Concurrent login may have created a profile in another tab.
@@ -620,7 +628,7 @@ for(const root of widgets){
     const checked=profileForm.elements.namedItem("show_leaderboard") as HTMLInputElement|null;
     if(checked)checked.checked=p.show_leaderboard;
    }
-   await Promise.all([loadBookmarks(),loadFollowed()]);
+   if(showActivity)await Promise.all([loadBookmarks(),loadFollowed()]);
   }catch{
    if(version!==sessionVersion)return;
    // Transient profile query failure is not an Auth logout; preserve the
@@ -690,7 +698,9 @@ for(const root of widgets){
       ownId+"/avatar.webp?v="+Date.now();
     showAvatar(avatar,src);showAvatar(toolbarAvatar,src);
    }
-   await Promise.all([loadLeaders(),loadRecentMembers()]);
+   leadersReady=false;
+   await loadRecentMembers();
+   if(showRanks)await loadLeaders();
   }catch(e){
    if(status)status.textContent=e instanceof Error&&e.message==="invalid_image"?txt.uploadError:txt.profileError;
   }finally{if(submit)submit.disabled=false}
@@ -707,6 +717,7 @@ for(const root of widgets){
  retryRecent?.addEventListener("click",()=>void loadRecentMembers());
  window.addEventListener("tractorvs-forum-session",()=>void loadSelf());
  window.addEventListener("storage",()=>void loadSelf());
- void loadLeaders();void loadRecentMembers();void loadSelf();
+ // Newest opt-in members are visible; rankings and private activity are on-demand.
+ void loadRecentMembers();void loadSelf();
 }
 </script>

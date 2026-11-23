@@ -54,7 +54,7 @@ button, input { font: inherit; }
 }
 .desktop-nav a:hover, .language-switch:hover { color: var(--green-bright); }
 .header-actions { display: flex; align-items: center; gap: 20px; }
-.language-switch { display: inline-flex; align-items: center; gap: 8px; }
+.language-switch { min-height: 44px; min-width: 44px; justify-content: center; display: inline-flex; align-items: center; gap: 8px; }
 .language-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--green-bright); }
 .header-cta {
   display: inline-flex; align-items: center; gap: 12px; padding: 11px 16px;
@@ -383,7 +383,6 @@ button, input { font: inherit; }
 .locale-options a:hover,.locale-options a:focus-visible { background: #e8f0e6; color: #183e29; }
 .locale-options a[aria-current=page] { background: #d5eacc; font-weight: 850; }
 @media (max-width:720px) {
-  .locale-menu > summary { max-width: 136px; overflow: hidden; text-overflow: ellipsis; }
   .header-cta { display:none; }
 }
 
@@ -492,19 +491,15 @@ button, input { font: inherit; }
 
 /* Accessible registration CTA remains available on narrow phones. */
 .header-cta.header-signup{white-space:nowrap;min-height:44px}
-@media(max-width:720px){
- .header-cta.header-signup{display:inline-flex;justify-content:center;gap:5px;padding:9px 10px;font-size:12px}
- .header-actions{gap:7px}
- .locale-menu > summary{max-width:74px;overflow:hidden;text-overflow:ellipsis}
+@media (max-width: 720px) {
+  .header-inner { flex-wrap: wrap; gap: 4px 12px; padding-block: 8px; }
+  .header-actions { flex-wrap: wrap; justify-content: flex-end; gap: 6px; margin-inline-start: auto; max-width: 100%; }
+  .header-cta.header-signup { display: inline-flex; justify-content: center; gap: 5px; padding: 9px 12px; font-size: .875rem; white-space: normal; }
+  .language-switch { font-size: .875rem; gap: 5px; }
 }
-@media(max-width:390px){
- .brand-words small{display:none}
- .header-cta.header-signup{padding:9px 8px;font-size:11px}
- .header-inner{gap:7px}
- .header-actions{gap:5px}
- .locale-menu > summary{max-width:62px}
+@media (max-width: 390px) {
+  .brand-words small { display: none; }
 }
-
 
 /* TractorVS 2026 global discovery navigation.
    Keep important destinations as real SSR <a href> links for users and crawlers. */
@@ -619,7 +614,8 @@ button, input { font: inherit; }
 
 /* Anchor the panel to the full header when controls follow the menu button. */
 @media (max-width:1280px) {
-  .site-header .mobile-nav { position:static; }
+  .site-header :is(.mobile-nav, .locale-menu) { position: static; }
+  .site-header .locale-options { top: 100%; right: 12px; max-width: calc(100% - 24px); }
   .site-header .mobile-nav-links {
     top:100%; right:max(12px,calc((100% - 1360px)/2));
     width:min(400px,calc(100% - 24px));
