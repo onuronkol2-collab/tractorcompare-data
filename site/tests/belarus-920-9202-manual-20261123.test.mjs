@@ -33,7 +33,7 @@ test("Belarus review has exactly 20 independently scoped rows, no existing model
   assert.match(sql,/1e1d7219-8921-44fe-83a6-c88514c1224a/);
   assert.match(sql,/t.status='published'/);
   assert.match(sql,/inserted_count<>20/);
-  assert.match(sql,/overlaps<>0/);
+  assert.match(sql,/overlap_count<>0/);
   assert.match(sql,/source_url='/);
   assert.doesNotMatch(sql,/\b(?:UPDATE|DELETE|TRUNCATE|ALTER|DROP)\s+(?:TABLE\s+)?(?:public\.)?(?:tractors|tractor_specs|data_sources)\b/i);
 });
