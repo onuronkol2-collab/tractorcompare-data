@@ -1,6 +1,9 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import {readFileSync} from "node:fs";
+import {copyFileSync, mkdtempSync, readFileSync, rmSync, writeFileSync} from "node:fs";
+import {tmpdir} from "node:os";
+import {join} from "node:path";
+import {verifyCrawlerGuide} from "../scripts/verify-crawler-guide.mjs";
 import {localizedPath,LOCALES} from "../src/lib/locales.ts";
 import {editorialHubTranslation} from "../src/lib/editorial-hub-i18n.ts";
 
@@ -68,15 +71,26 @@ test("GEO citation schema repeats exactly the real source links already visible 
  assert.match(dive,/dateModified:editedOn/);
 });
 
-test("optional crawler navigation truthfully states what is and is not translated",()=>{
- const llms=readFileSync(new URL("../public/llms.txt",import.meta.url),"utf8");
- assert.match(llms,/article index have ten language versions/);
- assert.match(llms,/four other long technical articles currently have English and Turkish text only/);
- assert.match(llms,/https:\/\/tractorvs\.com\/articles\//);
- assert.match(llms,/https:\/\/tractorvs\.com\/tr\/articles\//);
- assert.match(llms,/https:\/\/tractorvs\.com\/guides\/choosing-a-tractor\//);
- assert.match(llms,/https:\/\/tractorvs\.com\/reviews\/basak-2075-bk\//);
- assert.match(llms,/optional navigation aid/);
+test("the crawler guide describes actual editorial coverage when published", () => {
+  const source = new URL("../public/llms.txt", import.meta.url);
+  verifyCrawlerGuide(source, source);
+});
+
+test("omitting crawler navigation is valid but a broken publication is rejected", t => {
+  const dir = mkdtempSync(join(tmpdir(), "tractorvs-crawler-guide-"));
+  t.after(() => rmSync(dir, {recursive: true, force: true}));
+  const source = join(dir, "source.txt");
+  const built = join(dir, "built.txt");
+  assert.doesNotThrow(() => verifyCrawlerGuide(source, built));
+
+  writeFileSync(built, "old content");
+  assert.throws(() => verifyCrawlerGuide(source, built), /Stale llms\.txt/);
+  writeFileSync(source, "new content");
+  assert.throws(() => verifyCrawlerGuide(source, built), /differs from its source/);
+  rmSync(built);
+  assert.throws(() => verifyCrawlerGuide(source, built), /missing from the build/);
+  copyFileSync(source, built);
+  assert.throws(() => verifyCrawlerGuide(source, built), /Missing from llms\.txt/);
 });
 
 test("sourced manufacturer hp notation is not silently equated with metric PS",()=>{

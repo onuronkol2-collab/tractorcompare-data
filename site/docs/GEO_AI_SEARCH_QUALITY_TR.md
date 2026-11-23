@@ -1,7 +1,7 @@
 # TractorVS | SEO + GEO/AEO doğrulanabilir görünürlük planı
-**Güncelleme:** 20 Kasım 2026 — yalnızca kanıta dayalı içerik; arama sıralaması veya yapay zekâda alıntılanma garantisi yok.
+Son kaynak denetimi 23 Kasım 2026. Bu rehber, [AGENTS.md içindeki on önceliğin](../../AGENTS.md#seo-ve-geo) PR incelemesinde, yayında ve haftalık ölçümde nasıl kullanılacağını açıklar. Teknik dağıtım koşulları [SEO yayın rehberinde](seo-launch-gate.md) yer alır.
 
-## Doğrulanan mevcut güçlü noktalar
+## 20 Kasım 2026 tarihli başlangıç kaydı
 - Published-only, kaynak ve model/varyant kimliğini koruyan statik traktör katalogu.
 - On dilde model sayfaları ve kaynak bağlamına uygun canonical/hreflang.
 - Genişletilmiş parça sözlüğü, 3 özgün uygulama rehberi, kaynak denetimi metodolojisi.
@@ -13,18 +13,25 @@
 2. **Alıntı izlenebilirliği:** Her kısa cevabın yanında üretici veya bağımsız teknik belge linki; modelin WebPage JSON-LD yapısında yalnızca gerçek onaylı kaynaklardan citation.
 3. **Yayıncı kimliği:** Site ana sayfalarında WebSite + Organization + WebPage JSON-LD, tüm dillerde aynı kuruluş kimliği. Sahte yıldız puanı, kullanıcı yorumu, Offer, stok/fiyat veya saha testi eklenmez.
 4. **AI taranabilirliği:** indexable robots.txt içinde OAI-SearchBot açıkça izinli; noindex önizleme robots koruması devam. `llms.txt` yalnız isteğe bağlı keşif rehberi: Google'a sıralama kazandırdığı iddia edilmez.
-5. **CI koruması:** normal ve indexable yapıların her ikisinde yapılandırılmış veri, bot izinleri, kaynaklı cevap kodu ve .txt dosyası kontrol edilir.
+5. Önizleme ve indekslenebilir derleme kontrolleri yayıncı kimliğini, robot kurallarını ve kaynaklı yanıtları doğrular. İsteğe bağlı `llms.txt` sunuluyorsa dosyanın derlemeye eksiksiz ulaştığı ve gerçek yayın kapsamını anlattığı da kontrol edilir.
 
-## İzle ve geliştir (ölçülebilir)
-- **Her hafta:** Search Console 7 gün ve önceki 7 gün; tıklama, gösterim, ortalama konum ve sorgu/sayfa kırılımı. Günlük küçük sayıdan trend çıkarma.
-- **Aylık:** Search Console Sayfa Dizine Ekleme: gönderilen / dizine eklenen / keşfedildi fakat dizine eklenmedi / tarandı fakat dizine eklenmedi. Sitemap gönderimi indeks garantisi değildir.
-- **Bing Webmaster Tools:** AI Performance ekranından alıntı sayfaları, alıntı/grounding eğilimleri ve yayımlanan rapor kapsamını kontrol et. Bir AI aracının bizi mutlaka kaynak göstereceğini iddia etme.
-- **Referans trafik:** Doğrulanmış analitik araçları üzerinden chatgpt.com, bing.com ve diğer AI kaynaklarından gelen referrer'ları ayrı değerlendir. Kaynak verisi olmayan sıralama yüzdeleri uydurma.
-- **Crawl ve güvenlik:** Cloudflare bot/WAF tarafından Googlebot/Bingbot/OAI-SearchBot için engelleme yok mu kontrol et; robot izinleri tek başına güvenlik duvarını geçemez.
-- **Katalog kalitesi:** Yayımlanmış tüm sayfaların gerçek model/yıl/pazar/varyant eşleşmesi, değer kanıtı, durum ve fotoğraf telif hakları; yalnız yeterli kanıtı olan farklı sayfalar indekslenebilir. Aynı metni anahtar kelime için çoğaltma.
-- **Yeni içerik:** Gerçek arama ihtiyacına göre özgün alıcı soruları, doğru birim karşılaştırması, çalışma örnekleri, kaynaklı orijinal analiz; iki dilden başlayıp yalnız gerçekten çevrilmiş sayfalarla genişle.
-- **Güncelleme tarihleri:** yalnızca içerikte gerçek değişiklik olduğunda güncelle. Yapay zekâ botları için sahte tazelik veya API anahtarı açıklama.
-- **Google üretken yapay zekâ ölçümü (2026 güncellemesi):** Search Console'un ayrı **Generative AI performance** raporu AI Overviews/AI Mode dâhil desteklenen AI arama deneyimlerinde gösterimleri, görünen sayfaları ve ülke/cihaz/tarih kırılımlarını raporlar (3 Haziran 2026 duyurusu; 31 Ağustos'ta küresel yayılım). Bu metrikler belirli tek bir yapay zekâ yanıtında atıf, yerleşim, tıklama veya sıralama garantisi vermez. Raporun sitede veri gösterip göstermediğini hesaptan ayrıca doğrula.
+## Ölçümden karara
+
+Haftalık indeksleme raporunda aynı URL'leri, dilleri ve tamamlanmış tarih aralıklarını karşılaştır. Yedi günlük hacim küçükse daha uzun, eşit iki dönemi kullan. Aylık değerlendirmede dizine girmesi beklenen model, karşılaştırma, makale ve onaylı forum URL'lerinin dağılımını ayrı incele. Her bulguda kaynağı, dönemi, kapsamı ve örneklemi belirt. Rapor erişimi, düşük hacim ve ölçülen sıfır farklı durumlardır.
+
+| Sorulacak soru | Veri ve yorum | Sonuca göre ilk işlem |
+| --- | --- | --- |
+| Google doğru URL'yi dizine aldı mı? | URL Denetimi'nde dizin durumu, son tarama ve Google'ın seçtiği canonical. Site haritası, HTTP yanıtı ve IndexNow kabulü keşif veya erişim kanıtıdır. | İndeksleme sorunu varsa ilk HTML, robots, önizleme sınırı, tercih edilen URL ve iç bağlantıyı incele. [URL Denetimi](https://support.google.com/webmasters/answer/9012289) |
+| Kullanıcı hangi sorudan geliyor? | Search Console Arama Sonuçları raporunda sorgu, sayfa, ülke ve cihaz bazında gösterim, tıklama, tıklanma oranı ve ortalama konum. | Benzer sorgu, cihaz ve konumda gösterim alıp az tıklanan sayfada başlığı, sonuç özetini ve sayfanın sunduğu yanıtı incele. [Arama performansı](https://support.google.com/webmasters/answer/7576553) |
+| Google'ın yapay zekâ yanıtında bağlantı göründü mü? | Search Console üretken yapay zekâ raporu AI Overviews ve AI Mode bağlantı **gösterimlerini** sağlar. Sayfa, ülke, cihaz ve tarih kırılımlarını kullan. Yeterli gösterim yoksa rapor görünmeyebilir. | Dizin ve snippet uygunluğunu, gerektiğinde mülkün üst mülkten devraldığı dahil etme tercihini salt okunur doğrula. [Rapor](https://support.google.com/webmasters/answer/16984139) · [Katılım ayarı](https://support.google.com/webmasters/answer/16908024) |
+| Bing veya Copilot hangi sayfayı kaynak gösterdi? | Bing Webmaster Tools AI Performance desteklenen deneyimlerde atıf sayısını, kaynak URL'lerini ve örnek arama ifadelerini gösterir. | Atıf alan model veya konunun ölçüm standardını ve kaynağını incele. Sonucu Bing'in belgelenmiş kapsamıyla raporla. [Bing AI Performance](https://blogs.bing.com/webmaster/2026/2/Introducing-AI-Performance-in-Bing-Webmaster-Tools-Public-Preview/) |
+| Ziyaretçi gelip karşılaştırma yaptı mı? | GA4'te tanınan ChatGPT, Gemini ve benzeri yönlendirmeler **Yapay Zekâ Asistanı** kanalındadır. Google AI Overviews ve AI Mode ziyaretleri **Organik Arama** kanalına dahildir. Genel bir alan adı yönlendirmesi tek başına AI atfını kanıtlamaz. | Mevcut rıza kapsamında toplanması doğrulanmışsa karşılaştırma başlatma, tamamlama veya üretici belgesini açma olayını izle. Tamamlama oranı verirken aynı dönem ve kesitteki başlangıç sayısını payda olarak belirt. Olay kurulmamışsa veri durumunu kaydet. [GA4 kanal tanımları](https://support.google.com/analytics/answer/9756891?hl=tr) |
+
+**Yayın ve erişim.** Google'ın üretken arama özellikleri için sayfanın dizinde ve metin önizlemesine uygun olması gerekir. ChatGPT aramasında `OAI-SearchBot`, eğitim tercihinde `GPTBot` geçerlidir. Bir erişim sorunu gözlenirse robots, HTTP ve CDN davranışını ilgili sağlayıcının yayımladığı doğrulama bilgileriyle incele. Erişim veya gösterim, bir sonraki yanıtta atıf garantisi vermez. [Google'ın GEO rehberi](https://developers.google.com/search/docs/fundamentals/ai-optimization-guide) · [OpenAI tarayıcıları](https://developers.openai.com/api/docs/bots)
+
+**Editoryal örnek.** Türkiye pazarı GS donanımında 5090 D ve 5100 D için ECE R120 nominal motor gücü sırasıyla 86 ve 97 HP'dir. Üretici tablosu kuyruk mili devir seçeneklerini ayrı verir. Bunlardan kuyruk mili çıkış gücü türetilmez. Kabul örneği, iki değeri de aynı satırda göstermek, aradaki 11 HP farkın anlamını açıklamak ve ilgili PDF sayfasına bağlantı vermektir. Her modele kendi belgesi uygulanır. [Üretici tablosu, basılı s. 15](https://www.deutz-fahr.com/media/5D_Keyline_Faz_5_TRK.pdf) · [Yayımlanmış karşılaştırma](https://tractorvs.com/tr/compare/deutz-fahr-5090-d-gs-vs-5100-d-gs/)
+
+**Araştırma sonuçlarının kapsamı.** Pew'in Mart 2025 ABD örnekleminde AI özeti görülen ziyaretlerin %8'inde, özet görülmeyenlerin %15'inde klasik sonuca tıklandı. TractorVS için çıkarım gösterimi, ziyareti ve tamamlanan görevi ayrı izlemektir. Siteye ait hedef ve eşikler kendi ölçümümüzden türetilir. [Pew araştırması ve yöntemi](https://www.pewresearch.org/short-reads/2025/07/22/google-users-are-less-likely-to-click-on-links-when-an-ai-summary-appears-in-the-results/)
 
 ## Resmî kılavuzlar
 - Google AI arama özellikleri: https://developers.google.com/search/docs/appearance/ai-features
@@ -49,8 +56,8 @@ Bu bölüm, resmî belgelere dayalı **öğrenme kaydıdır**; burada yazılan �
 | --- | --- | --- |
 | Teknik SEO | Yayınlanmış her modelin varyant/pazar/yıl/birim/kaynak kimliği ilk HTTP HTML'de görünür; robots, canonical, hreflang ve sitemap birbiriyle tutarlı olmalı | Örnek değil, ilgili değişiklik etkisindeki tüm URL'lerde ve 10 dilde uygun otomatik regresyon; canlı indeks verileri ayrı |
 | GEO/içerik | Teknik soruları kaynak göstererek açık yanıtla, gerçek karşılaştırma ve sınırları açıkla; özgün analiz ekle; uydurma uzmanlık/puan/tecrübe yaratma | Kaynak URL + son kanıt tarihi + model/varyant kimliği; editoryal QA |
-| Yapılandırılmış veri | Yalnız sayfada görünür, doğrulanmış içerik için uygun `Article`, `DiscussionForumPosting`, `ImageObject`, `WebPage` vb. kullan; sahte `Offer`, rating veya inceleme ekleme | Rich Results Test + gerçek HTML eşleşmesi, uygun sayfa türü ve yayın durumu |
-| Çok dil | Her dil sayfası gerçekten yerelleştirilmiş içerik taşımalı; kendisi dâhil karşılıklı `hreflang` ve doğru canonical eşleşmesi olmalı | 10 dil × etkilenen sayfa türü: ters bağlantı, 200, indexable, doğal çeviri QA |
+| Yapılandırılmış veri | Editoryal yazıda uygun `Article`, gerçek kullanıcı gönderisinde görünür yazar, yayın tarihi ve içerik kanıtlandığında `DiscussionForumPosting`, kanıt yetersizse `WebPage` kullan. Fotoğraf, tarih ve atıflar ekranda görülen bilgiyle eşleşir. | Desteklenen türlerde Rich Results Test ve gerçek HTML. Ana yazının yazarını, forum onayını ve kullanıcı gizliliğini ayrı doğrula. [Forum kuralları](https://developers.google.com/search/docs/appearance/structured-data/discussion-forum) |
+| Çok dil | Şablonu desteklenen on dilde denetle. Tekil içerikte yalnız tam çevrilmiş ve yayımlanmış eşdeğerler birbirini belirtir. Pazar, varyant, birim, dipnot ve kaynak korunur. | Yayımlanmış dil kümesinde kendisini içeren karşılıklı `hreflang`, doğru canonical, 200 ve doğal çeviri. Taslak dil alternatifler arasına girmez. |
 | Görsel keşfi | Tam model kimliğine uygun, lisansı/atıfı kanıtlı ve gerçek fotoğrafı kullan; açıklayıcı alt metin, sayfa bağlamı ve uygun çözünürlük sağla | Kaynak/izin kanıtı, görsel HTTP/MIME/hash, sayfa HTML, gerektiğinde GSC multimodal verisi |
 | Performans | Gerçek kullanıcının 75. yüzdelik değerinde iyi hedefler: LCP ≤ 2,5 s; INP ≤ 200 ms; CLS ≤ 0,1. Laboratuvar ve RUM'u karıştırma | Mobil ve masaüstü ayrı CrUX/RUM; Lighthouse değişiklik regresyonu |
 | Tasarım/erişilebilirlik | WCAG 2.2 AA hedefi; 10 dilde okunabilir metin, klavye/odak, dokunma alanı, kontrast, açıklayıcı hata; karşılaştırma filtresi kullanıcıyı şaşırtmamalı | axe-core + gerçek klavye/mobil akış testi, ekran görüntüsü, gerçek görev tamamlama; otomatik axe tüm WCAG'ı kanıtlamaz |
@@ -73,3 +80,4 @@ Bu bölüm, resmî belgelere dayalı **öğrenme kaydıdır**; burada yazılan �
 3. Önce mevcut kod ve canlı veri araştırılır; kök neden saptanmadan puan için değişiklik yapılmaz. Çözüm, beklenen fayda ve olası regresyon riskini içeren plan oluşturulur.
 4. Toplu ama güvenli değişiklikler ayrı PR'da uygulanır; Playwright/axe, çok dilli SEO, güvenlik, fotoğraf lisansı ve yayın kuralları test edilir. Hesaptaki canlı ölçümler ancak erişim ve veri varsa raporlanır.
 5. Sonuçlar `incelendi / değiştirildi / test edildi / ana dala birleştirildi / canlıda doğrulandı` olarak ayrı işaretlenir. Başarılı teknik ve tekrarlanmayı önleyecek regresyon testi repo belgelerine eklenir.
+6. Haftalık kaynak taraması resmî belgedeki değişikliği mevcut kuralla karşılaştırır. Değişen hüküm, kanıt ve doğrulama yöntemi aynı PR'da güncellenir. Haftalık indeksleme görevi yukarıdaki ölçümleri eldeki verilerle izler. Gerileme sürüyorsa etkilenen URL'yi, gözlemi ve yeniden ölçüm koşulunu bir sonraki rapora taşır. Anlamlı değişiklik yoksa yeni görev veya yinelenen PR açılmaz.

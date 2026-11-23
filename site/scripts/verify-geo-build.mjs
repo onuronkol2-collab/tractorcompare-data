@@ -1,15 +1,12 @@
 import assert from "node:assert/strict";
-import {readFileSync,existsSync} from "node:fs";
+import {readFileSync} from "node:fs";
 import {join} from "node:path";
+import {verifyCrawlerGuide} from "./verify-crawler-guide.mjs";
 const mode=process.argv[2];
 assert.ok(mode==="indexable"||mode==="noindex");
 const root="site/dist";
 const get=(p)=>readFileSync(join(root,p),"utf8");
-const ai=get("llms.txt");
-assert.match(ai,/TractorVS — tractor specifications/);
-assert.match(ai,/https:\/\/tractorvs\.com\/methodology\//);
-assert.match(ai,/https:\/\/tractorvs\.com\/sitemap-index\.xml/);
-assert.doesNotMatch(ai,/draft\/tractor|AggregateRating|Guaranteed AI ranking/i);
+verifyCrawlerGuide("site/public/llms.txt", join(root, "llms.txt"));
 for(const home of ["index.html","tr/index.html"]){
  const html=get(home);
  assert.match(html,/"@type":"Organization"/,home+" must identify publisher");
