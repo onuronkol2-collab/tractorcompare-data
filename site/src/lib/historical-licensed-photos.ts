@@ -848,7 +848,7 @@ const candidates=[
   // 23 Nov 2026: existing T25/T115 front views are reused, not duplicated.
   // Two separately licensed rear angles, scoped only to the published International UUIDs.
   {"brand":"TYM","model":"T2025P","tractorId":"622ddce0-f3a8-48ad-8ec6-45ca936dba6f","fileId":"tym-t2025p-t25-rear-marcelx42-2025","path":"d/d7/TYM_T25_Agritechnica_2025_%28DSC04675%29.jpg","photographer":"MarcelX42","license":"CC BY-SA 4.0","width":5944,"height":4458},
-  {"brand":"TYM","model":"T6115","tractorId":"80fd42a2-3059-40bb-a0e1-511ae6100213","fileId":"tym-t6115-t115-rear-marcelx42-2025","path":"c/ca/TYM_T115_Agritechnica_2025_%28DSC04663%29.jpg","photographer":"MarcelX42","license":"CC BY-SA 4.0","width":6120,"height":4080},
+  {"brand":"TYM","model":"T6115","tractorId":"80fd42a2-3059-40bb-a0e1-511ae6100213","fileId":"tym-t6115-t115-rear-marcelx42-2025","path":"c/ca/TYM_T115_Agritechnica_2025_%28DSC04663%29.jpg","photographer":"MarcelX42","license":"CC BY-SA 4.0","width":6224,"height":4149},
 ] as const;
 function licenseUrl(name:string):string{
   if(name==="CC0")return "https://creativecommons.org/publicdomain/zero/1.0/";
