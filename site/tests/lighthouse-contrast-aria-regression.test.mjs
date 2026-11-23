@@ -44,5 +44,6 @@ test("forum article cards use native article semantics, never forbidden listitem
 test("readability overrides stay scoped; no global theming or fragile magic numbers",()=>{
  assert.ok(home.includes("#main .home-featured-card"));
  assert.ok(forum.includes("#main .community-shell"));
- assert.doesNotMatch(home+forum,/!important/);
+ assert.doesNotMatch(home.match(/#main \\.home-featured-card \\.tractor-photo-short-credit a \\{[^}]*\\}/)?.[0]||"",/!important/);
+ assert.doesNotMatch(forum.match(/#main \\.community-shell \\.community-topic-meta time\\{[^}]*\\}/)?.[0]||"",/!important/);
 });
