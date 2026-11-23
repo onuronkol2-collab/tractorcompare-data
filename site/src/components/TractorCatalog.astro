@@ -33,7 +33,15 @@ const initialCountry = COUNTRIES_BY_LOCALE[lang] || "US";
 // their server-rendered "price unavailable" text, and only hydrate models with
 // actual, evidence-backed market prices. All model links remain crawlable HTML.
 const pricePayload = JSON.stringify({
-  lang, models: pricedCatalogModels(catalog.tractors),
+  unknown: tx(lang,"priceUnknown"),
+  models: pricedCatalogModels(catalog.tractors).map(model => {
+    const prices: Partial<Record<(typeof MARKET_COUNTRIES)[number], string>> = {};
+    for (const country of MARKET_COUNTRIES) {
+      const price = matchingPrice(model, country);
+      if (price) prices[country] = tx(lang,"priceTitle") + ": " + formatMarketPriceRange(price,lang);
+    }
+    return {id: model.tractor_id, prices};
+  }),
 }).replace(/</g,"\\u003c");
 ---
 <SiteLayout lang={lang} title={title} description={description}>
@@ -108,6 +116,10 @@ const pricePayload = JSON.stringify({
             </select>
           </label>
         </div>
+        <a class="catalog-results-jump" href="#tractor-card-grid">
+          <span data-facet-result-count>{filterCopy.shown.replace("{visible}",String(catalog.tractors.length)).replace("{total}",String(catalog.tractors.length))}</span>
+          <span aria-hidden="true">↓</span>
+        </a>
       </aside>
       <div class="catalog-results-panel">
       {brandIndex.length>1&&<nav class="catalog-brand-directory" aria-label={brandNavCopy.heading}>
@@ -136,7 +148,7 @@ const pricePayload = JSON.stringify({
         </symbol>
       </svg>
       <form id="catalog-compare" action={localizedPath(lang,"/compare/")} method="get" hidden></form>
-      <div class:list={["tractor-card-grid", { "tractor-card-grid--two": catalog.tractors.length === 2, "tractor-card-grid--large": catalog.tractors.length >= 100 }]} id="tractor-card-grid">
+      <div class:list={["tractor-card-grid", { "tractor-card-grid--two": catalog.tractors.length === 2, "tractor-card-grid--large": catalog.tractors.length >= 100 }]} id="tractor-card-grid" tabindex="-1">
         {catalog.tractors.map((tractor)=><article class="tractor-card"
           id={firstBrandCard.get(tractor.brand_name)===tractor.tractor_id?brandAnchor.get(tractor.brand_name):undefined}
           data-search={[tractor.brand_name,tractor.model_name,tractor.variant||"",tractor.market||"",tractor.engine||""].join(" ").toLowerCase()}
@@ -188,39 +200,32 @@ const pricePayload = JSON.stringify({
 </SiteLayout>
 
 <script>
-  import { matchingPrice, formatMarketPriceRange, MARKET_COUNTRIES } from "../lib/market-prices";
   import type { MarketCountry } from "../lib/market-prices";
-  import { advisorText } from "../lib/advisor-i18n";
   import { matchesTractorTerms, normalizeTractorQuery } from "../lib/search";
   import {normalizedFacetState,matchesCatalogueFacet,compareCatalogueRows} from "../lib/catalog-facets.mjs";
   import { countryAwareCatalogUrl } from "../lib/catalog-country-url.mjs";
-  import type { Locale } from "../lib/locales";
   const dataNode=document.getElementById("catalog-price-payload");
   const countryControl=document.querySelector<HTMLSelectElement>("#catalog-price-country");
   if (dataNode && countryControl) {
-    const data=JSON.parse(dataNode.textContent || "{}") as {lang:Locale;models:Array<{
-      tractor_id:string;brand_name:string;model_name:string;variant:string|null;market:string|null;model_year:number|null;
-    }>};
-    const priceLabels = new Map(
-      Array.from(document.querySelectorAll<HTMLElement>("[data-price-for]"),
-        label => [label.dataset.priceFor, label] as const)
-    );
+    const data=JSON.parse(dataNode.textContent || "{}") as {
+      unknown: string;
+      models: Array<{id: string; prices: Partial<Record<MarketCountry,string>>}>;
+    };
+    const pricedLabels = data.models.map(model => ({
+      label: document.querySelector<HTMLElement>(`[data-price-for="${CSS.escape(model.id)}"]`),
+      prices: model.prices,
+    }));
     let manuallySelected=false;
     const refresh = (country:MarketCountry) => {
       countryControl.value=country;
-      for (const tractor of data.models) {
-        const el=priceLabels.get(tractor.tractor_id);
-        if (!el) continue;
-        const price=matchingPrice(tractor,country);
-        el.textContent=price
-          ? advisorText(data.lang,"priceTitle")+": "+formatMarketPriceRange(price,data.lang)
-          : advisorText(data.lang,"priceUnknown");
+      for (const {label, prices} of pricedLabels) {
+        if (label) label.textContent = prices[country] ?? data.unknown;
       }
     };
     // Explicitly chosen countries survive a language change or shared URL.
     // Keep automatic geolocation out of the URL: only visitor-initiated
     // preferences are persisted, without cookies or tracking.
-    const allowedCountries=MARKET_COUNTRIES as readonly string[];
+    const allowedCountries=Array.from(countryControl.options, option => option.value);
     const fromUrl=new URLSearchParams(window.location.search).get("country");
     if(fromUrl && allowedCountries.includes(fromUrl)){
       manuallySelected=true;
@@ -239,7 +244,7 @@ const pricePayload = JSON.stringify({
     if (!manuallySelected) fetch("/api/visitor-country",{credentials:"same-origin",cache:"no-store"})
       .then(r=>r.ok?r.json():null)
       .then((geo:{country?:string}|null)=>{
-        if(!manuallySelected && geo && (MARKET_COUNTRIES as readonly string[]).includes(geo.country||""))
+        if(!manuallySelected && geo && allowedCountries.includes(geo.country||""))
           refresh(geo.country as MarketCountry);
       }).catch(()=>{});
   }
@@ -251,6 +256,7 @@ const pricePayload = JSON.stringify({
   const noResults = document.querySelector<HTMLElement>("#catalog-no-results");
   const visibleCount = document.querySelector<HTMLElement>("#catalog-visible-count");
   const clearSearch = document.querySelector<HTMLButtonElement>("#catalog-search-clear");
+  const jumpCount=document.querySelector<HTMLElement>("[data-facet-result-count]");
   const facetPanel=document.querySelector<HTMLElement>("#catalog-facet-panel");
   const brandFacet=document.querySelector<HTMLSelectElement>("#catalog-facet-brand");
   const powerFacet=document.querySelector<HTMLSelectElement>("#catalog-facet-power");
@@ -273,7 +279,7 @@ const pricePayload = JSON.stringify({
     card,index,brand:card.dataset.brand||"",power:card.dataset.power||null,
     year:card.dataset.year||null,name:card.dataset.name||""
   }));
-  let lastSortedOrder:string|null=null;
+  let lastSortedOrder="brand"; // The server already renders the default order.
   const sortCards=()=>{
     const grid=document.querySelector<HTMLElement>("#tractor-card-grid");
     if(!grid)return;
@@ -304,6 +310,7 @@ const pricePayload = JSON.stringify({
     if (noResults) noResults.hidden = visible > 0;
     if (visibleCount) visibleCount.textContent=(visibleCount.dataset.countTemplate||"")
       .replace("{visible}",String(visible)).replace("{total}",String(cards.length));
+    if (jumpCount && visibleCount) jumpCount.textContent = visibleCount.textContent;
     if (clearSearch) clearSearch.hidden = !normalized;
     if(facetReset)facetReset.hidden=!facetState().brand&&!facetState().power&&!facetState().year&&facetState().sort==="brand"&&!normalized;
   };
@@ -388,10 +395,17 @@ const pricePayload = JSON.stringify({
   }
 </script>
 
-<style>
+<style is:global>
+  .catalog-results-jump { display:none; }
+  @media(max-width:940px){
+    .catalog-results-jump {display:flex;justify-content:space-between;align-items:center;gap:12px;
+      min-height:44px;margin-top:16px;padding:10px 14px;border-radius:8px;background:#285b40;
+      color:white;font-size:1rem;font-weight:700;}
+    .catalog-results-jump:focus-visible {outline:3px solid #39704d;outline-offset:3px;}
+  }
   .catalog-discovery-layout{display:grid;grid-template-columns:minmax(225px,270px) minmax(0,1fr);gap:clamp(14px,2vw,24px);align-items:start}
   .catalog-results-panel{min-width:0}
-  .catalog-results-panel :global(.tractor-card-grid){grid-template-columns:repeat(auto-fill,minmax(min(100%,245px),1fr));gap:clamp(12px,2vw,20px)}
+  .catalog-results-panel .tractor-card-grid{grid-template-columns:repeat(auto-fill,minmax(min(100%,245px),1fr));gap:clamp(12px,2vw,20px)}
   .catalog-facet-panel{position:sticky;top:90px;align-self:start;border:1px solid #bbd5bd;border-radius:16px;padding:clamp(15px,2.4vw,22px);margin:0 0 18px;background:linear-gradient(130deg,#f0f7ed,#fff);box-shadow:0 7px 30px #163d2710}
   .catalog-facet-panel[hidden],.catalog-facet-heading button[hidden]{display:none!important}
   .catalog-facet-heading{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:14px}
@@ -435,12 +449,12 @@ const pricePayload = JSON.stringify({
      keep existing behavior. Estimated block sizes are only layout fallbacks;
      no SEO pages, filtering data, or model details are discarded. */
   @supports (content-visibility: auto) {
-    :global(.tractor-card-grid--large > .tractor-card) {
+    .tractor-card-grid--large > .tractor-card {
       content-visibility: auto;
       contain-intrinsic-block-size: auto 410px;
     }
     @media (max-width:680px) {
-      :global(.tractor-card-grid--large > .tractor-card) {
+      .tractor-card-grid--large > .tractor-card {
         contain-intrinsic-block-size: auto 520px;
       }
     }
