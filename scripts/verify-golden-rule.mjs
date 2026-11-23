@@ -10,7 +10,10 @@ const checks = new Map([
     "Google Drive", "Playwright", "axe-core", "CodeQL", "Dependabot",
     "Cloudflare Web Analytics", "Malware alerts", "Secret Protection", "Push protection",
     "Enable with JS Snippet installation", "Süreklilik ve dürüst sınır",
+    "(site/docs/GEO_AI_SEARCH_QUALITY_TR.md)", "(site/docs/seo-launch-gate.md)",
   ]],
+  ["site/docs/GEO_AI_SEARCH_QUALITY_TR.md", ["(../../AGENTS.md#seo-ve-geo)", "(seo-launch-gate.md)"]],
+  ["site/docs/seo-launch-gate.md", ["PUBLIC_INDEXING_ENABLED", "SITE_URL"]],
   ["README.md", ["AGENTS.md"]],
   [".github/copilot-instructions.md", ["AGENTS.md", "Altın Entegrasyon Kuralı"]],
   ["CLAUDE.md", ["AGENTS.md", "ALTIN KURAL"]],
@@ -18,7 +21,7 @@ const checks = new Map([
   [".cursor/rules/tractorvs-golden-rule.mdc", [
     "alwaysApply: true", "AGENTS.md", "ALTIN KURAL",
   ]],
-  [".github/pull_request_template.md", ["AGENTS.md", "RLS", "SEO"]],
+  [".github/pull_request_template.md", ["AGENTS.md#seo-ve-geo", "RLS", "SEO"]],
   ["docs/CHATGPT_PROJECT_INSTRUCTIONS.md", [
     "AGENTS.md", "Proje Talimatları", "maksimum kalite",
     "Playwright", "axe-core", "CodeQL", "Dependabot", "Cloudflare Web Analytics",
@@ -37,12 +40,19 @@ for (const [path, required] of checks) {
   for (const phrase of required) {
     if (!text.includes(phrase)) problems.push(`missing in ${path}: ${phrase}`);
   }
+  if (path === "AGENTS.md") {
+    const section = text.split(/^#{1,3} /m).find(part => /^SEO ve GEO\r?\n/.test(part));
+    const order = Array.from((section ?? "").matchAll(/^(\d+)\.\s+\S/gm), item => item[1]);
+    if (order.join(",") !== "1,2,3,4,5,6,7,8,9,10") {
+      problems.push("AGENTS.md#seo-ve-geo must contain the ten project priorities in order");
+    }
+  }
 }
 if (problems.length) {
   console.error("TractorVS golden-rule integrity check FAILED:");
   for (const issue of problems) console.error("- " + issue);
   process.exitCode = 1;
 } else {
-  console.log("TractorVS golden-rule policy and agent adapters: verified (8 files).");
+  console.log(`TractorVS golden-rule policy and agent adapters: verified (${checks.size} files).`);
   console.log("Note: this verifies repository artifacts, not AI memory or compliance.");
 }
