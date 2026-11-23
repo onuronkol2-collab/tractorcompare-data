@@ -16,7 +16,10 @@
 #main .community-shell .community-topic-meta{font-size:13px;line-height:1.5}
 #main .community-shell .community-topic .community-topic-replies,
 #main .community-shell .community-topic .community-topic-activity{font-size:13px;line-height:1.45}
-#main .community-shell .community-topic .community-topic-mobile-label{font-size:12px;line-height:1.45}
+#main .community-shell .community-topic .community-topic-mobile-label{font-size:12px;line-height:1.45;color:#48634f}
+/* Lighthouse AA failures: dates and compact labels on white forum topic cards.
+   Scoped to the forum hub, never change contrast on the dark thread surface. */
+#main .community-shell .community-topic-meta time{color:#48634f}
 #main .community-shell .community-topic .community-model a{font-size:13px}
 #main .community-shell .community-topic small{font-size:13px}
 #main .community-shell .forum-live-new>[data-forum-live-status]{font-size:14px}
