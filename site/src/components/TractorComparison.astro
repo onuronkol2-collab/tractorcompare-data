@@ -69,7 +69,7 @@ function columnTitle(model: (typeof models)[number]) {
 }
 // The native choices already carry the display label. Only the selector's
 // search metadata and published evidence need to travel in the JSON.
-const payload = JSON.stringify(models.map(({market, year, ...model}) => model)).replace(/</g, "\\u003c");
+const payload = JSON.stringify(models.map(({id, market, year, ...model}) => model)).replace(/</g, "\\u003c");
 const labelsPayload = JSON.stringify({
   missing: t(lang,"notPublished"),
   source: t(lang,"manufacturerSource"),
@@ -166,7 +166,7 @@ const labelsPayload = JSON.stringify({
                 aria-label={t(lang,"secondTractor")} hidden></div>
             </div>
             <select id="tc-right" class="tc-native-select" aria-label={t(lang,"secondTractor")}>
-              {models.map((model, index) => <option value={model.id} selected={index===1}>{columnTitle(model)}</option>)}
+              {models.map((model, index) => <option selected={index===1}>{columnTitle(model)}</option>)}
             </select>
           <div class="tc-preview-photo" id="tc-right-photo" hidden={!initialRight?.photo}>
             <button class="tc-preview-photo-button" id="tc-right-photo-button" type="button"
@@ -258,7 +258,16 @@ const labelsPayload = JSON.stringify({
   const tbody=document.querySelector<HTMLTableSectionElement>("#tc-rows");
   const picker=document.querySelector<HTMLElement>("#tc-picker");
   if(dataNode&&leftSelect&&rightSelect&&tbody&&picker){
-    const models=JSON.parse(dataNode.textContent||"[]") as Model[];
+    const records = JSON.parse(dataNode.textContent || "[]") as Omit<Model, "id">[];
+    const models = records.map((record, index) => ({
+      ...record,
+      id: leftSelect.options[index].value,
+    }));
+    // Both native lists render the same ordered model choices. Supply the
+    // right-hand option values from the model index before restoring deep links.
+    for (const [index, model] of models.entries()) {
+      rightSelect.options[index].value = model.id;
+    }
     const lang=document.documentElement.lang;
     const l10n=JSON.parse(document.querySelector("#tc-i18n")?.textContent||"{}") as {
       missing:string;source:string;independent:string;loadError:string;context:string;conditionCaution:string;transmissionCaution:string;search:string;noResults:string;
