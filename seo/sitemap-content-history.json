@@ -2,8 +2,8 @@
   "version": 1,
   "pages": {
     "https://tractorvs.com/": {
-      "digest": "c4c5b1c4ff12bd795a486b2d49e73424daecede69416b2be5e9171541bed0eb9",
-      "modified": "2026-11-23T10:00:55.676Z"
+      "digest": "3758db17bfb594bac1716d677371c9531aaabd99712bb564c327b9943d470fe0",
+      "modified": "2026-11-23T12:59:16.928Z"
     },
     "https://tractorvs.com/articles/": {
       "digest": "f4d32f5ffc67b88681b1b5561e8db5d02e2e3359a514dbf30934b26641bbed54",
@@ -18,28 +18,28 @@
       "modified": "2026-11-22T08:02:35.845Z"
     },
     "https://tractorvs.com/compare/": {
-      "digest": "fe91a61444116e80bbbdbf4355276a96f930ae0a1e038418e0f69f8be94f03ba",
-      "modified": "2026-11-23T10:11:17.814Z"
+      "digest": "d7054df86282bd61f2a851cdc970b54eea9901505e1477f66b822a6402a91f96",
+      "modified": "2026-11-23T12:59:16.928Z"
     },
     "https://tractorvs.com/compare/deutz-fahr-5090-d-gs-vs-5100-d-gs/": {
       "digest": "52e029185eddc00de0825c5ff15e10991f6a3636635ae2c62375f9df34e109c4",
       "modified": "2026-11-22T16:33:31.612Z"
     },
     "https://tractorvs.com/de/": {
-      "digest": "f976219ea756f623a0b927a9d3509ad86f66b96675a3b5e80be5f7a0c96cc35d",
-      "modified": "2026-11-23T10:00:55.676Z"
+      "digest": "0c774663bb8062aa14b16df944461f4d9a75342ebc4cd47b0d6d9e6543e430a6",
+      "modified": "2026-11-23T12:59:16.928Z"
     },
     "https://tractorvs.com/de/articles/": {
       "digest": "e8e5821b7a9a45bf22f1f98c341eb6c77b42f895c99c960f2e7ec29c22d8d083",
       "modified": "2026-11-22T18:22:02.402Z"
     },
     "https://tractorvs.com/de/compare/": {
-      "digest": "b9e0ee72370f9bd4474630418455296148d89c6117584bc0c528d5e933cfef00",
-      "modified": "2026-11-23T10:11:17.814Z"
+      "digest": "6329766a97a28584749d1d9f50157eddd9a9258d7338717ed646f243916c3304",
+      "modified": "2026-11-23T12:59:16.928Z"
     },
     "https://tractorvs.com/de/farm-advisor/": {
-      "digest": "af625cfecb3ddcb2a61be47e8ea7b1186e67e5b527a0d924f58242b6a581f625",
-      "modified": "2026-11-23T10:00:55.676Z"
+      "digest": "3c39ff25fbf5c179a95efc1e99eb7d36143fc0e5761b882f2bf702ec6d8a99ae",
+      "modified": "2026-11-23T12:59:16.928Z"
     },
     "https://tractorvs.com/de/guides/choosing-a-tractor/": {
       "digest": "690156b1adec284fe12f219df526061b8ef077cfb3299d44d2d883a874faa4b2",
@@ -54,8 +54,8 @@
       "modified": "2026-11-22T15:13:41.997Z"
     },
     "https://tractorvs.com/de/tractors/": {
-      "digest": "46d11cdab0ee1897cbf781f5cec13fccd2eecedb0d042a7f47637d74c3977496",
-      "modified": "2026-11-23T10:00:55.676Z"
+      "digest": "90bee94da0370c66681afbfc388cb0ec00886b26e334daa8df7ada402e4e6648",
+      "modified": "2026-11-23T12:59:16.928Z"
     },
     "https://tractorvs.com/de/tractors/agrale-4125-0b53e944/": {
       "digest": "4fab7db93beab145e44aab4c9b21cc327cf3ebdc5cc870882fed79c54e377680",
@@ -762,8 +762,8 @@
       "modified": "2026-11-23T10:30:02.300Z"
     },
     "https://tractorvs.com/de/tractors/mccormick-x7-621-p6-drive-9c4cb31f/": {
-      "digest": "380413535eb0bbe477cc7131fc61f9e5e88ea214969970464577eedbcf89a992",
-      "modified": "2026-11-23T10:30:02.300Z"
+      "digest": "39b51badbdb4c2391fea1d1863cc8c70dcbca5f1d752318a79268b7bd3c36469",
+      "modified": "2026-11-23T12:59:16.928Z"
     },
     "https://tractorvs.com/de/tractors/mccormick-x7-621-vt-drive-085667ad/": {
       "digest": "ce87d862365caf3d91a7a870c2c9d621892c056692ee9d02c9eacc86622c5cef",
@@ -820,6 +820,14 @@
     "https://tractorvs.com/de/tractors/same-dorado-natural-90-4-f3ebdbe2/": {
       "digest": "a825ca4f52eabc793370917cce0da9558fe435c81d903385439e4999adb2f3fb",
       "modified": "2026-11-23T10:30:02.300Z"
+    },
+    "https://tractorvs.com/de/tractors/solis-s-50-dt-c7ce4206/": {
+      "digest": "e74fa60c1ebf9bffe985b410196dab4e62f3ce6f96050bee045d17f5cda28aab",
+      "modified": "2026-11-23T12:59:16.928Z"
+    },
+    "https://tractorvs.com/de/tractors/solis-s-50-st-6ecbbd12/": {
+      "digest": "4cbeb8a1e6d0d0c73485d639467e4f5131be26a6affbf9a227dc56ea3d400984",
+      "modified": "2026-11-23T12:59:16.928Z"
     },
     "https://tractorvs.com/de/tractors/sonalika-110-wt-d76351cf/": {
       "digest": "5b51ec0abe5582839cfc9a0148c5bfed7ff36baa7e74a9b05b913b05366e6a03",
@@ -1610,20 +1618,20 @@
       "modified": "2026-11-23T10:30:02.300Z"
     },
     "https://tractorvs.com/es/": {
-      "digest": "a70e2fbc20eb80a1d029af41e4945b4bfe671d726dde20a0120fd9a42bc08371",
-      "modified": "2026-11-23T10:00:55.676Z"
+      "digest": "4ce16de373d714cf136127a85faaeeef480cf0cdff3ea1086b04bd9edad05bc9",
+      "modified": "2026-11-23T12:59:16.928Z"
     },
     "https://tractorvs.com/es/articles/": {
       "digest": "0145e305b596770e50c433fa8685671159ccaabc3aafdfd8d7f2806ca6eb3e36",
       "modified": "2026-11-22T18:22:02.402Z"
     },
     "https://tractorvs.com/es/compare/": {
-      "digest": "4f14e79687e438a385ef47f5fbff5139260d9f08dca4bca9d21dd6fc701d97d2",
-      "modified": "2026-11-23T10:11:17.814Z"
+      "digest": "7c2a5b55901ec885af5f2672e593db369fe3df35c6435f7ff37fb3c8c4824fc6",
+      "modified": "2026-11-23T12:59:16.928Z"
     },
     "https://tractorvs.com/es/farm-advisor/": {
-      "digest": "18006dd675ca892b318296e61c3ecb7d0d65af417c5b3c474dd4a430b4dd1225",
-      "modified": "2026-11-23T10:00:55.676Z"
+      "digest": "1a8bddeb806e6e7b35b8b7ad4f2f11c7b5bc0ee56975f0c8f6dd762d1ce57f3a",
+      "modified": "2026-11-23T12:59:16.928Z"
     },
     "https://tractorvs.com/es/guides/choosing-a-tractor/": {
       "digest": "b66967a2f9efca29073e9d9aa4ebed44b281cff4773b37eeeb47e915ac5315cc",
@@ -1638,8 +1646,8 @@
       "modified": "2026-11-22T15:13:41.997Z"
     },
     "https://tractorvs.com/es/tractors/": {
-      "digest": "0779901c7445bc938be04525977f3f02c8689188ed75c89511e0f56d0f8d818f",
-      "modified": "2026-11-23T10:00:55.676Z"
+      "digest": "468bd8f8b1e01940d69bbd72253b25c32f40c1757296c0f3a4e6d927324b4601",
+      "modified": "2026-11-23T12:59:16.928Z"
     },
     "https://tractorvs.com/es/tractors/agrale-4125-0b53e944/": {
       "digest": "aa4b8bbae248cf4a73eaa452d43cc4209bd31050d51b936cdc5fc4c243e1c219",
@@ -2346,8 +2354,8 @@
       "modified": "2026-11-23T10:30:02.300Z"
     },
     "https://tractorvs.com/es/tractors/mccormick-x7-621-p6-drive-9c4cb31f/": {
-      "digest": "c6428addb8088409e7841fd25ac06fa0a0f7aa8117e62b02f302d3b278377bf3",
-      "modified": "2026-11-23T10:30:02.300Z"
+      "digest": "03cc735ef4dda146ce1244da13c44b6fd9382f8cf34bfdee1609470d1744866c",
+      "modified": "2026-11-23T12:59:16.928Z"
     },
     "https://tractorvs.com/es/tractors/mccormick-x7-621-vt-drive-085667ad/": {
       "digest": "c8cea208765b70a1b37b711c92aebd2c627740e144de887c3eba3bae6842393f",
@@ -2404,6 +2412,14 @@
     "https://tractorvs.com/es/tractors/same-dorado-natural-90-4-f3ebdbe2/": {
       "digest": "690baeebd6d0cf2777ef60d9859f7e79af1de032eefead9c64cfe9476f065aef",
       "modified": "2026-11-23T10:30:02.300Z"
+    },
+    "https://tractorvs.com/es/tractors/solis-s-50-dt-c7ce4206/": {
+      "digest": "3580ee9b066a9744e66b3a56f1cfec9b6c4b55d7cb17e8d314713002fb9aa695",
+      "modified": "2026-11-23T12:59:16.928Z"
+    },
+    "https://tractorvs.com/es/tractors/solis-s-50-st-6ecbbd12/": {
+      "digest": "c164ff0a58471751b08fcacbb7b2863dab46b2cb561414d45265c9e58fe81f8e",
+      "modified": "2026-11-23T12:59:16.928Z"
     },
     "https://tractorvs.com/es/tractors/sonalika-110-wt-d76351cf/": {
       "digest": "0a98298ed9fa826fadf0c30888220d59be9754a562a44c2cc6d7d0856612bf79",
@@ -3194,24 +3210,24 @@
       "modified": "2026-11-23T10:30:02.300Z"
     },
     "https://tractorvs.com/farm-advisor/": {
-      "digest": "02c5fd8040a38f3a40cd17e4787e2b32f6032a9f8976a5b6af7cb631e77ebb6a",
-      "modified": "2026-11-23T10:00:55.676Z"
+      "digest": "7389c88628dd350aa2a99c8da13195b638ddb294823b40804cf9b62783c568c2",
+      "modified": "2026-11-23T12:59:16.928Z"
     },
     "https://tractorvs.com/fr/": {
-      "digest": "6573612e99b8b2c6b23b70c68e74d698fdc7dfedb25e0fc75552c39a4f0ee594",
-      "modified": "2026-11-23T10:00:55.676Z"
+      "digest": "f2ffaa5df65def1470527ca2c22daf7cb4f5ffef87d6fb3a8751e69e21fb84e1",
+      "modified": "2026-11-23T12:59:16.928Z"
     },
     "https://tractorvs.com/fr/articles/": {
       "digest": "b87ad5ef98462bf555f36d462ca40ec0376d8fea5d643ae23f7a7bbbcdec3330",
       "modified": "2026-11-22T18:22:02.402Z"
     },
     "https://tractorvs.com/fr/compare/": {
-      "digest": "eeba20d4378a58afd409c55e2269d7e8a2c987dc8cc90c18f39b32b9d1575293",
-      "modified": "2026-11-23T10:11:17.814Z"
+      "digest": "c6d8b857dc05f1a9b6979f17c4a2aa5ed230e91e73eb68bc560a0966e8d78870",
+      "modified": "2026-11-23T12:59:16.928Z"
     },
     "https://tractorvs.com/fr/farm-advisor/": {
-      "digest": "cf48667b514eb8ca232925591e0c9caf8b0ac66d4058d33eda70d6522ea58108",
-      "modified": "2026-11-23T10:00:55.676Z"
+      "digest": "5b69c9b6e8638934c43bba684e4e10b7ee65b69044ecafcf617672f1778a66b8",
+      "modified": "2026-11-23T12:59:16.928Z"
     },
     "https://tractorvs.com/fr/guides/choosing-a-tractor/": {
       "digest": "2bcb6691fcc7b4bdda29dcedd7f1c8d8c168edbac67b6658963fae67ff074a2f",
@@ -3226,8 +3242,8 @@
       "modified": "2026-11-22T15:13:41.997Z"
     },
     "https://tractorvs.com/fr/tractors/": {
-      "digest": "e07348558cf09289f53f05ade9c9d87354171a3a5842ee444ef96fbeffbbbde5",
-      "modified": "2026-11-23T10:00:55.676Z"
+      "digest": "f54c3eff3bbd16d48e5b5957c736f271d851c5fc966f5d38cc1be96058796e67",
+      "modified": "2026-11-23T12:59:16.928Z"
     },
     "https://tractorvs.com/fr/tractors/agrale-4125-0b53e944/": {
       "digest": "b98b582cfbfa9b7df8470fd12b8d693c09d8af117c619118c9078a5fa745e69f",
@@ -3934,8 +3950,8 @@
       "modified": "2026-11-23T10:30:02.300Z"
     },
     "https://tractorvs.com/fr/tractors/mccormick-x7-621-p6-drive-9c4cb31f/": {
-      "digest": "047f8552d20fac51468b9564f7526286d22ca17423562b2dbebd20389f41a0d7",
-      "modified": "2026-11-23T10:30:02.300Z"
+      "digest": "823fba95dc9e64e1a96f7a9a467a13ef4c77c30facbef5cba2ddcde2596efe39",
+      "modified": "2026-11-23T12:59:16.928Z"
     },
     "https://tractorvs.com/fr/tractors/mccormick-x7-621-vt-drive-085667ad/": {
       "digest": "1ae9a973470b32d12bd7faa0db9e65f1ccb25556cdcf8ee7fcef3962204bd1cf",
@@ -3992,6 +4008,14 @@
     "https://tractorvs.com/fr/tractors/same-dorado-natural-90-4-f3ebdbe2/": {
       "digest": "e822439d1d1c148efeb9a1152b8079d6194338ce38c01e605aa342116eb5de02",
       "modified": "2026-11-23T10:30:02.300Z"
+    },
+    "https://tractorvs.com/fr/tractors/solis-s-50-dt-c7ce4206/": {
+      "digest": "ac8a6384b0caf9fad7a6651d48e106abbb3cb952646f855fcbcc14a759d90a69",
+      "modified": "2026-11-23T12:59:16.928Z"
+    },
+    "https://tractorvs.com/fr/tractors/solis-s-50-st-6ecbbd12/": {
+      "digest": "d556184281a37c012bf9cffbc66fa34921b9e96de6b7a594b6b18905166d8bb1",
+      "modified": "2026-11-23T12:59:16.928Z"
     },
     "https://tractorvs.com/fr/tractors/sonalika-110-wt-d76351cf/": {
       "digest": "09512b7b57c9aeb23eb911020e9368f39621d580c0fd34fa181195ef9fad537f",
@@ -4802,20 +4826,20 @@
       "modified": "2026-11-22T14:27:00.768Z"
     },
     "https://tractorvs.com/hi/": {
-      "digest": "ec9926620679ca8b7063e9988c650dce025d0a963889d7e2d370de9346d52005",
-      "modified": "2026-11-23T10:00:55.676Z"
+      "digest": "e7dab7ccf69aeea32dd53336d00e117dd3939208fd8153c5766dd56de5f3717a",
+      "modified": "2026-11-23T12:59:16.928Z"
     },
     "https://tractorvs.com/hi/articles/": {
       "digest": "3ef252be723e22cbd42f479762ff15210b935675304ca03b43cf5cc9c06c3def",
       "modified": "2026-11-22T18:22:02.402Z"
     },
     "https://tractorvs.com/hi/compare/": {
-      "digest": "0195444865ae9cc126dc526af09df1e143e57eaf6c13f1e478c5d78240d62a3e",
-      "modified": "2026-11-23T10:11:17.814Z"
+      "digest": "d40d92e46ada934bc821bb55fd67b94cfeffb78b8693a21b0d34d3bdd421428e",
+      "modified": "2026-11-23T12:59:16.928Z"
     },
     "https://tractorvs.com/hi/farm-advisor/": {
-      "digest": "6bf8acb721aa565bc7880756f53989457d607f6f1e06641958949b502a1d60f3",
-      "modified": "2026-11-23T10:00:55.676Z"
+      "digest": "e5e200e3083fe510f7572629886df13f83b4053777ebcdd3c93755feb3cdec50",
+      "modified": "2026-11-23T12:59:16.928Z"
     },
     "https://tractorvs.com/hi/guides/choosing-a-tractor/": {
       "digest": "c913f0a36c9dbe8d1de8b0c3f4d4c00bb85efdb8fd9de226c7f768740e9ed195",
@@ -4830,8 +4854,8 @@
       "modified": "2026-11-22T15:13:41.997Z"
     },
     "https://tractorvs.com/hi/tractors/": {
-      "digest": "59a2fe0ed7487bb0a237acd9e449883c2e42dba7f1072a233a538e9c14355401",
-      "modified": "2026-11-23T10:00:55.676Z"
+      "digest": "7dfda80d62157210009b6ab4c5cd607e692646c3b3ef6d5014cceff536713102",
+      "modified": "2026-11-23T12:59:16.928Z"
     },
     "https://tractorvs.com/hi/tractors/agrale-4125-0b53e944/": {
       "digest": "1ea9d833e3959448e798ae89c01586e9b4b4e657f25d3ee62ebb5f13dd91707f",
@@ -5538,8 +5562,8 @@
       "modified": "2026-11-23T10:30:02.300Z"
     },
     "https://tractorvs.com/hi/tractors/mccormick-x7-621-p6-drive-9c4cb31f/": {
-      "digest": "5cebf08acbdd7dd195ad0febd91af0254d63442bfa6cc272505a26995af26907",
-      "modified": "2026-11-23T10:30:02.300Z"
+      "digest": "4ff95c27fdb6ac49f19b09179909094159d2e216c877ecf36d2623af12cb7559",
+      "modified": "2026-11-23T12:59:16.928Z"
     },
     "https://tractorvs.com/hi/tractors/mccormick-x7-621-vt-drive-085667ad/": {
       "digest": "b02e4858501011d8669d015fdb764b085e0d5f79139055172147abf11271bfab",
@@ -5596,6 +5620,14 @@
     "https://tractorvs.com/hi/tractors/same-dorado-natural-90-4-f3ebdbe2/": {
       "digest": "95603001561e6a4ccad115a9b63b31579e5a88f4674703b22adaf1cf604d083f",
       "modified": "2026-11-23T10:30:02.300Z"
+    },
+    "https://tractorvs.com/hi/tractors/solis-s-50-dt-c7ce4206/": {
+      "digest": "8fdc271eb35fc26e9437c36df18a0502d108dccb71eb69ed74bf99e8b24a4d12",
+      "modified": "2026-11-23T12:59:16.928Z"
+    },
+    "https://tractorvs.com/hi/tractors/solis-s-50-st-6ecbbd12/": {
+      "digest": "4a12d5ea4e061d28393c9201be76e59f44fcf5a01e28cb071c9e45d295b0da58",
+      "modified": "2026-11-23T12:59:16.928Z"
     },
     "https://tractorvs.com/hi/tractors/sonalika-110-wt-d76351cf/": {
       "digest": "85a17125f3d637f63b757aa9a0b6531cb15c2f24d030357fa84e754a86b86f35",
@@ -6386,20 +6418,20 @@
       "modified": "2026-11-23T10:30:02.300Z"
     },
     "https://tractorvs.com/ja/": {
-      "digest": "71cb6168a3b672b1f25a5f13adb9e077e12200b49edb6e1de2fedbeaca627ca2",
-      "modified": "2026-11-23T10:00:55.676Z"
+      "digest": "72cac8221d9d69af2e10a727fc794f932db3c2eb0cda2c912b4263f199e5121e",
+      "modified": "2026-11-23T12:59:16.928Z"
     },
     "https://tractorvs.com/ja/articles/": {
       "digest": "867884ed17f13bd46d0ef1d231a61aa757cff00bfcdd1e840fddcf43663f141a",
       "modified": "2026-11-22T18:22:02.402Z"
     },
     "https://tractorvs.com/ja/compare/": {
-      "digest": "33ccd4793f5a76de4b5a1a4b913c30b5268af2bf8168275b8fca79d8e6c62703",
-      "modified": "2026-11-23T10:11:17.814Z"
+      "digest": "3c9e56c9e1372b671d8f07ebc9d896dd663e963ed52283bbefdad4cbd64b16ed",
+      "modified": "2026-11-23T12:59:16.928Z"
     },
     "https://tractorvs.com/ja/farm-advisor/": {
-      "digest": "edd8f49620130ceb03f8c6b728d9638cee1138711adc9f6ed08f25a7634c8b40",
-      "modified": "2026-11-23T10:00:55.676Z"
+      "digest": "bbaee71c6f89fd2b0047d836935434c0047b3d44ce9f0ac857179dc8a59552e5",
+      "modified": "2026-11-23T12:59:16.928Z"
     },
     "https://tractorvs.com/ja/guides/choosing-a-tractor/": {
       "digest": "8d6dcc961ec504eb5bb5de3dce6c06ede93151cd832f5c762043d50e2dd362d0",
@@ -6414,8 +6446,8 @@
       "modified": "2026-11-22T15:13:41.997Z"
     },
     "https://tractorvs.com/ja/tractors/": {
-      "digest": "b50fd5e79993022acb0e5596f5fa05f151a6cc3dc811a91621db761edf6a53db",
-      "modified": "2026-11-23T10:00:55.676Z"
+      "digest": "e81708885614194f43f6953e0e3e37235c9e3584028575a9449aefcdabab3043",
+      "modified": "2026-11-23T12:59:16.928Z"
     },
     "https://tractorvs.com/ja/tractors/agrale-4125-0b53e944/": {
       "digest": "83758a0232fcab390273899f21b4d268e2a09d19fd5ad6fd0aa6df19969ed006",
@@ -7122,8 +7154,8 @@
       "modified": "2026-11-23T10:30:02.300Z"
     },
     "https://tractorvs.com/ja/tractors/mccormick-x7-621-p6-drive-9c4cb31f/": {
-      "digest": "c0a3bea7cb80a6722405c729592d7fe76f1ce244a1cea43a2768a7ed8283384c",
-      "modified": "2026-11-23T10:30:02.300Z"
+      "digest": "a8f7e648d1d7e749647766aa32efd7fe65130a62e800354136294b7039e5bd1f",
+      "modified": "2026-11-23T12:59:16.928Z"
     },
     "https://tractorvs.com/ja/tractors/mccormick-x7-621-vt-drive-085667ad/": {
       "digest": "67e63e0430bae143455d1eb9f8b718fea6486e2f1c3cf0b3256c0d1c90a975cf",
@@ -7180,6 +7212,14 @@
     "https://tractorvs.com/ja/tractors/same-dorado-natural-90-4-f3ebdbe2/": {
       "digest": "3eada1396dd2c933a4e3162c6a33cffb07ea24e42620bd77a312afd20729551a",
       "modified": "2026-11-23T10:30:02.300Z"
+    },
+    "https://tractorvs.com/ja/tractors/solis-s-50-dt-c7ce4206/": {
+      "digest": "aac8f41f38fc31685db957e7343422d66c88391683b2ce213736a039e63f5764",
+      "modified": "2026-11-23T12:59:16.928Z"
+    },
+    "https://tractorvs.com/ja/tractors/solis-s-50-st-6ecbbd12/": {
+      "digest": "8f13f4322f7c24290db6dd5b26aac052834a0448630c90403c4cc0dcd8c27af6",
+      "modified": "2026-11-23T12:59:16.928Z"
     },
     "https://tractorvs.com/ja/tractors/sonalika-110-wt-d76351cf/": {
       "digest": "56178fa8ec6f4d4781fb42971a727a0cc2aa1ae6aa571f89a117fd446273f0c2",
@@ -7978,20 +8018,20 @@
       "modified": null
     },
     "https://tractorvs.com/pt-br/": {
-      "digest": "d48c4a9de6cb0162ca445fdf60b1bf60ca4414d78be45d4c0c94d6c2ca543216",
-      "modified": "2026-11-23T10:00:55.676Z"
+      "digest": "868a2e09d6b82f50825e69bb5b70107c549f4c2fb38b1bfd7bc50b7e6f2c2c71",
+      "modified": "2026-11-23T12:59:16.928Z"
     },
     "https://tractorvs.com/pt-br/articles/": {
       "digest": "117be662005262991fb353875c1cf33ccb9e7a46960f3f88b43118fb9ecdf59d",
       "modified": "2026-11-22T18:22:02.402Z"
     },
     "https://tractorvs.com/pt-br/compare/": {
-      "digest": "cb1df7a1a36049482046b5f259348e2d9de4a31f1ca52e51f1aa03b448b49052",
-      "modified": "2026-11-23T10:11:17.814Z"
+      "digest": "fba2c23e70588bcd5d89b19ce9254514e01a3aad2fcbf9015f53c62dd9ec44bb",
+      "modified": "2026-11-23T12:59:16.928Z"
     },
     "https://tractorvs.com/pt-br/farm-advisor/": {
-      "digest": "d8ca64b6793ece2729142a60dd0a7fb35d3f4922baabc18b6c8beb4b85546f11",
-      "modified": "2026-11-23T10:00:55.676Z"
+      "digest": "da81e28c096e6ff1b42accbe535d001a9edab734791e79256e0a43a766431ea1",
+      "modified": "2026-11-23T12:59:16.928Z"
     },
     "https://tractorvs.com/pt-br/guides/choosing-a-tractor/": {
       "digest": "f87875ed0244ab5360899cf89bf54fcbe4d11392025eb54545b556643b0d275b",
@@ -8006,8 +8046,8 @@
       "modified": "2026-11-22T15:13:41.997Z"
     },
     "https://tractorvs.com/pt-br/tractors/": {
-      "digest": "c08a67faae5e74e9ed000ad9e7ff5246e0fe91e0bc92f68eb96afb2b5bf37c22",
-      "modified": "2026-11-23T10:00:55.676Z"
+      "digest": "f79f366f5769514963ec0a349e310a972d771229d29d6f025fb6bd8748a57483",
+      "modified": "2026-11-23T12:59:16.928Z"
     },
     "https://tractorvs.com/pt-br/tractors/agrale-4125-0b53e944/": {
       "digest": "474d7ca3b4e57cebfeea405934a6d1f88799c10ba0930e6a7adf83af7006ceea",
@@ -8714,8 +8754,8 @@
       "modified": "2026-11-23T10:30:02.300Z"
     },
     "https://tractorvs.com/pt-br/tractors/mccormick-x7-621-p6-drive-9c4cb31f/": {
-      "digest": "84c51b1ad24f0a334eab1caabc0eb7a842c9e8d75c25fc8ab12dbc195b9d2aef",
-      "modified": "2026-11-23T10:30:02.300Z"
+      "digest": "5e0a6bc869143762c933c6c0a60c5ab3157554c8dc64757c88e768ba31c16b92",
+      "modified": "2026-11-23T12:59:16.928Z"
     },
     "https://tractorvs.com/pt-br/tractors/mccormick-x7-621-vt-drive-085667ad/": {
       "digest": "33f21808f5162a7680ec7f02af1829fb770fef07032ece4bc99e5354f0203c8f",
@@ -8772,6 +8812,14 @@
     "https://tractorvs.com/pt-br/tractors/same-dorado-natural-90-4-f3ebdbe2/": {
       "digest": "903129c77fa18fe57b1eb3d94833e51170c70cefbafcb281bd560e32504dd3ee",
       "modified": "2026-11-23T10:30:02.300Z"
+    },
+    "https://tractorvs.com/pt-br/tractors/solis-s-50-dt-c7ce4206/": {
+      "digest": "3eb4386a32ad0003c00c9ee1d0120a298f9641fd26c49146451130e2318c53f4",
+      "modified": "2026-11-23T12:59:16.928Z"
+    },
+    "https://tractorvs.com/pt-br/tractors/solis-s-50-st-6ecbbd12/": {
+      "digest": "16eb99ffff1046e425cf78bd91cb31523be049752f0b5acf7d60ac286d9ab046",
+      "modified": "2026-11-23T12:59:16.928Z"
     },
     "https://tractorvs.com/pt-br/tractors/sonalika-110-wt-d76351cf/": {
       "digest": "edae48c21a1a8828be600d49477d841dda00cd29aca18721630361a1e02a3a02",
@@ -9566,20 +9614,20 @@
       "modified": "2026-11-22T15:13:41.997Z"
     },
     "https://tractorvs.com/ru/": {
-      "digest": "ecd564ae11387ccc09b51b876c913895236a641385e7093d9ed6ba6774b61e6b",
-      "modified": "2026-11-23T10:00:55.676Z"
+      "digest": "0de0ac841de4cac01e45b7757f80250728ef65e7ab108886cf933c078dee4328",
+      "modified": "2026-11-23T12:59:16.928Z"
     },
     "https://tractorvs.com/ru/articles/": {
       "digest": "af26b8678163822452934ec1c7cb7f12884df875f898bbe76e1654f6e04d4e1a",
       "modified": "2026-11-22T18:22:02.402Z"
     },
     "https://tractorvs.com/ru/compare/": {
-      "digest": "918e89898f0047aea8a7a4435105afc68a135a0f9a7f52dc49f01c08b949c499",
-      "modified": "2026-11-23T10:11:17.814Z"
+      "digest": "3a51acd09d6e9572ad98b0bef2fdb12b3700ba36c100486937e2630bf6cc595b",
+      "modified": "2026-11-23T12:59:16.928Z"
     },
     "https://tractorvs.com/ru/farm-advisor/": {
-      "digest": "928ef74ee3930f67f3fbbcb9c82741be2d6de0cd9646c8dd1a16b8794a1893d5",
-      "modified": "2026-11-23T10:00:55.676Z"
+      "digest": "16a9050560449bbcadcf52e06a2e2d9288b69e1e2c28da829ae2cd9352b30583",
+      "modified": "2026-11-23T12:59:16.928Z"
     },
     "https://tractorvs.com/ru/guides/choosing-a-tractor/": {
       "digest": "d98cc050028a7158fecf1a69f64cfaa33be5717070281c7a716fd60810983c43",
@@ -9594,8 +9642,8 @@
       "modified": "2026-11-22T15:13:41.997Z"
     },
     "https://tractorvs.com/ru/tractors/": {
-      "digest": "d18220c45f966730ef6ae90ecd1f3d7fe0f4ffb11343dd26ca5e8d513a76dcd4",
-      "modified": "2026-11-23T10:00:55.676Z"
+      "digest": "6249be4e0aea8231a4f3fb6cf521c17e9183ea6f774c1c99c52c502c49d27da4",
+      "modified": "2026-11-23T12:59:16.928Z"
     },
     "https://tractorvs.com/ru/tractors/agrale-4125-0b53e944/": {
       "digest": "39acb9121c96e29ffcaa415d95bd6b8ef5c3a37c74187caba5b0b00b3c2f5b37",
@@ -10302,8 +10350,8 @@
       "modified": "2026-11-23T10:30:02.300Z"
     },
     "https://tractorvs.com/ru/tractors/mccormick-x7-621-p6-drive-9c4cb31f/": {
-      "digest": "bf767cd34169741cb057f08e8cad9d9b165c179568d2705677e97601ba4c0882",
-      "modified": "2026-11-23T10:30:02.300Z"
+      "digest": "a8d62b12b6ce5cfdb36c3f3514b7471e25d8d91cd33f96ac5e3af94d01ca8ca6",
+      "modified": "2026-11-23T12:59:16.928Z"
     },
     "https://tractorvs.com/ru/tractors/mccormick-x7-621-vt-drive-085667ad/": {
       "digest": "b43592f9fdd94591fbbaaa109b25acf1564b3db8eaa67e60e8dc11a22dd79452",
@@ -10360,6 +10408,14 @@
     "https://tractorvs.com/ru/tractors/same-dorado-natural-90-4-f3ebdbe2/": {
       "digest": "413ec9ef64fb06df47dd0d0c4768ba90b1f2d1e4134adc5fce81e860c2704a32",
       "modified": "2026-11-23T10:30:02.300Z"
+    },
+    "https://tractorvs.com/ru/tractors/solis-s-50-dt-c7ce4206/": {
+      "digest": "03fd86db8148f6d3ba50ecd858218579fe727f7e71355b6837b161cc1b8d3b2e",
+      "modified": "2026-11-23T12:59:16.928Z"
+    },
+    "https://tractorvs.com/ru/tractors/solis-s-50-st-6ecbbd12/": {
+      "digest": "bfa504c75014bd61094fe29fb6431b5d9ec53da142a01e52dce1a5d0501a2718",
+      "modified": "2026-11-23T12:59:16.928Z"
     },
     "https://tractorvs.com/ru/tractors/sonalika-110-wt-d76351cf/": {
       "digest": "ca581c7834ccf35e0c13a5d1ac0d3abbf8c2c0ed151f641e6b58592a2d727ccf",
@@ -11150,8 +11206,8 @@
       "modified": "2026-11-23T10:30:02.300Z"
     },
     "https://tractorvs.com/tr/": {
-      "digest": "ea49a6d8382da9adf6d5d2b7614ae03e064b4792078deddbb083ec13389d1b94",
-      "modified": "2026-11-23T10:00:55.676Z"
+      "digest": "082f0ca47f7be32ade1e9d3c21d6de9f37acb9008a76023769b0140e02e80070",
+      "modified": "2026-11-23T12:59:16.928Z"
     },
     "https://tractorvs.com/tr/articles/": {
       "digest": "24af9028de2a49e800978e946a31767a57ff1ac80c98a17fb919a12f2339d53e",
@@ -11166,16 +11222,16 @@
       "modified": "2026-11-22T08:02:35.845Z"
     },
     "https://tractorvs.com/tr/compare/": {
-      "digest": "793899960945ffa82004eaff864565c94f4aa1bef80df150518c36c0437db8a2",
-      "modified": "2026-11-23T10:11:17.814Z"
+      "digest": "41c70ee5a0a3d488415cfe93e3f4b1c5b9001e3324fc2ae7ccdadcc8ae762534",
+      "modified": "2026-11-23T12:59:16.928Z"
     },
     "https://tractorvs.com/tr/compare/deutz-fahr-5090-d-gs-vs-5100-d-gs/": {
       "digest": "d2f52b331965c94d1f2dc2b55db37a3c22f303a152bddd818417198fb3b29862",
       "modified": "2026-11-22T16:33:31.612Z"
     },
     "https://tractorvs.com/tr/farm-advisor/": {
-      "digest": "2af50bf80ad8b03d3f1d7b23a709f40fa31f931c9a610f6225bbdf60cf0870a2",
-      "modified": "2026-11-23T10:00:55.676Z"
+      "digest": "f2bb8c80eb39f2a3f9db061ae600755e0995720976de002bc8b6073af09001bb",
+      "modified": "2026-11-23T12:59:16.928Z"
     },
     "https://tractorvs.com/tr/guides/choosing-a-tractor/": {
       "digest": "1add30ac1c9c6ae96fcd30180033deda65f446cb1595117819dfe2651d6b025a",
@@ -11210,8 +11266,8 @@
       "modified": "2026-11-22T15:13:41.997Z"
     },
     "https://tractorvs.com/tr/tractors/": {
-      "digest": "c9ec186ad536646b4911725e5b1c671e2436ed2f349cbaea881c3829fbedbf65",
-      "modified": "2026-11-23T10:00:55.676Z"
+      "digest": "e479e41f6d51df4ad171778d2e07d30de8d64f1141d000596e356f61a43b5b13",
+      "modified": "2026-11-23T12:59:16.928Z"
     },
     "https://tractorvs.com/tr/tractors/agrale-4125-0b53e944/": {
       "digest": "60548b99b0e009e67dc13ea80ee271c4b4f1aef8ab588697e058f112ebb41e27",
@@ -11918,8 +11974,8 @@
       "modified": "2026-11-23T10:30:02.300Z"
     },
     "https://tractorvs.com/tr/tractors/mccormick-x7-621-p6-drive-9c4cb31f/": {
-      "digest": "8de1749a351659cf55c94a1fe62978437d5108e6e7f8c2e2a2ca844262a69f1d",
-      "modified": "2026-11-23T10:30:02.300Z"
+      "digest": "52b099bbc3bcb36a67d43e06dbd58668bcb173dd9734aaf08dc5d56029324544",
+      "modified": "2026-11-23T12:59:16.928Z"
     },
     "https://tractorvs.com/tr/tractors/mccormick-x7-621-vt-drive-085667ad/": {
       "digest": "bd98c0b3d2f1273d338a82b1c6a15153b354769dfbfb9bff6133955858bdd567",
@@ -11976,6 +12032,14 @@
     "https://tractorvs.com/tr/tractors/same-dorado-natural-90-4-f3ebdbe2/": {
       "digest": "8ca2eee339d8eac6328749b3d85a34acb31dbb89b6f8d8b62faec415f51b98d3",
       "modified": "2026-11-23T10:30:02.300Z"
+    },
+    "https://tractorvs.com/tr/tractors/solis-s-50-dt-c7ce4206/": {
+      "digest": "70ce57d40c53516b1ba06a870b81f3e3a1ed9b62fef935472e1911b993aba399",
+      "modified": "2026-11-23T12:59:16.928Z"
+    },
+    "https://tractorvs.com/tr/tractors/solis-s-50-st-6ecbbd12/": {
+      "digest": "3df1545f37e3e6b5898faa18a1048363f819cfc08239a15c2913c4346a45e77e",
+      "modified": "2026-11-23T12:59:16.928Z"
     },
     "https://tractorvs.com/tr/tractors/sonalika-110-wt-d76351cf/": {
       "digest": "a2923f57223fa23f9954e20eebabb190bbf8dc1c787e7d15d11daafdbb122ac8",
@@ -12766,8 +12830,8 @@
       "modified": "2026-11-23T10:30:02.300Z"
     },
     "https://tractorvs.com/tractors/": {
-      "digest": "ac3be82f614cc5ad18f9196029d5467f1d9a3fb0e137649793cb745d7cabf4c8",
-      "modified": "2026-11-23T10:00:55.676Z"
+      "digest": "89aa99c3304ff60cccdcd2bfe3f71efbb276a1f34b8e94df6b95342982d041ca",
+      "modified": "2026-11-23T12:59:16.928Z"
     },
     "https://tractorvs.com/tractors/agrale-4125-0b53e944/": {
       "digest": "3e63f2c49f7c9c9664e9b1d621a7cda8ad4c71f8f795cbb9c5c80ad555dce273",
@@ -13474,8 +13538,8 @@
       "modified": "2026-11-23T10:30:02.300Z"
     },
     "https://tractorvs.com/tractors/mccormick-x7-621-p6-drive-9c4cb31f/": {
-      "digest": "964bd5012581057a85f59856863ad656ea804d0b9d5f66c9b1a8ec6ca4308ee4",
-      "modified": "2026-11-23T10:30:02.300Z"
+      "digest": "6c383b6136aa44fa0f93172dc868b2af803ede5981d9289d83a0ceb313621848",
+      "modified": "2026-11-23T12:59:16.928Z"
     },
     "https://tractorvs.com/tractors/mccormick-x7-621-vt-drive-085667ad/": {
       "digest": "3e2d157d2b80db39c2dae1d16d173ab5fddd6064189ddc2fbc010f3a4609b781",
@@ -13532,6 +13596,14 @@
     "https://tractorvs.com/tractors/same-dorado-natural-90-4-f3ebdbe2/": {
       "digest": "87d00d29edd542ef599f38390ba7f8fe6318608aa6f1afd61489a501fa0b724c",
       "modified": "2026-11-23T10:30:02.300Z"
+    },
+    "https://tractorvs.com/tractors/solis-s-50-dt-c7ce4206/": {
+      "digest": "69fdcba9f76997fc1d2cd303e06ce59d65ee7bc1b4a7889878346405ddad1bec",
+      "modified": "2026-11-23T12:59:16.928Z"
+    },
+    "https://tractorvs.com/tractors/solis-s-50-st-6ecbbd12/": {
+      "digest": "11af78314416a09eaa529c52e34610490a5a266b10b36a02c92275acae814e6f",
+      "modified": "2026-11-23T12:59:16.928Z"
     },
     "https://tractorvs.com/tractors/sonalika-110-wt-d76351cf/": {
       "digest": "074ba1cd2b9ad549be4a81078f8928864347b710e9331d467f35783daababdbd",
@@ -14322,20 +14394,20 @@
       "modified": "2026-11-23T10:30:02.300Z"
     },
     "https://tractorvs.com/zh/": {
-      "digest": "a3f0ec95bf1f495ad1d01cfa2091397f38e8abb978e0673bd250aa1ac48327f0",
-      "modified": "2026-11-23T10:00:55.676Z"
+      "digest": "58fe6c6222769874b90d90ad70a2ffd5f418adae88180b7b8b316d3c6c09e7eb",
+      "modified": "2026-11-23T12:59:16.928Z"
     },
     "https://tractorvs.com/zh/articles/": {
       "digest": "879a0a248b1d60f80189181df4af6d71c0f128b026d802b831dc37f5508ce1ab",
       "modified": "2026-11-22T18:22:02.402Z"
     },
     "https://tractorvs.com/zh/compare/": {
-      "digest": "3cdb33b6d68c61ba0c3183ab92c0ba90bac4ca21d75812ef807b152a1c0ed38d",
-      "modified": "2026-11-23T10:11:17.814Z"
+      "digest": "df811bfd51583db3f2ea1a4266a421c3790d7f0620c78962f10c7736fbe9e120",
+      "modified": "2026-11-23T12:59:16.928Z"
     },
     "https://tractorvs.com/zh/farm-advisor/": {
-      "digest": "809c4525d76e513858c2507a1bb8f7279018a5d28e8de2d199c4d9138da8ac5e",
-      "modified": "2026-11-23T10:00:55.676Z"
+      "digest": "3e83ddbec0d2c46b61115b1f83d2b5d65c819c7dd151ae1edea5551a321deb98",
+      "modified": "2026-11-23T12:59:16.928Z"
     },
     "https://tractorvs.com/zh/guides/choosing-a-tractor/": {
       "digest": "a2a597a6514f7d38fe74e2cac20096e4049c3c8e9f8227676767414a56e808bf",
@@ -14350,8 +14422,8 @@
       "modified": "2026-11-22T15:13:41.997Z"
     },
     "https://tractorvs.com/zh/tractors/": {
-      "digest": "beef109e7809febc03ca59d622fa94250909d594ac09d0f5e054a19ac4846c96",
-      "modified": "2026-11-23T10:00:55.676Z"
+      "digest": "cfc93739f0b481f88e6b6d306137c86e93c5de6f54eb3b3d2e022cea431138a5",
+      "modified": "2026-11-23T12:59:16.928Z"
     },
     "https://tractorvs.com/zh/tractors/agrale-4125-0b53e944/": {
       "digest": "9828f7895c5a41ad58d5f21ccbee73c1f8ffb2295d9b4672ec9e7e34bd69fca4",
@@ -15058,8 +15130,8 @@
       "modified": "2026-11-23T10:30:02.300Z"
     },
     "https://tractorvs.com/zh/tractors/mccormick-x7-621-p6-drive-9c4cb31f/": {
-      "digest": "57f4c7ecc782e5ba1359aad64b5bd19c8dd9c654f3fe50e53d4f1da7c38d4eac",
-      "modified": "2026-11-23T10:30:02.300Z"
+      "digest": "558832a577259e10a5a2002c119327bcaef7e1f0b97c1e181790b5475e7a1fa2",
+      "modified": "2026-11-23T12:59:16.928Z"
     },
     "https://tractorvs.com/zh/tractors/mccormick-x7-621-vt-drive-085667ad/": {
       "digest": "dd4a52508fe0c5d5f82f4783b9f202cecd9b7697b1c4d0735b67db295d8587b2",
@@ -15116,6 +15188,14 @@
     "https://tractorvs.com/zh/tractors/same-dorado-natural-90-4-f3ebdbe2/": {
       "digest": "f4da9d60b800dc6f823766308fcdb9b9dc63975e3873f7015830b8ad6b346ef7",
       "modified": "2026-11-23T10:30:02.300Z"
+    },
+    "https://tractorvs.com/zh/tractors/solis-s-50-dt-c7ce4206/": {
+      "digest": "95f85075c005c85c918c2cc725afb2a4c88ecf66dbc8eeff6ccf13f8aba762af",
+      "modified": "2026-11-23T12:59:16.928Z"
+    },
+    "https://tractorvs.com/zh/tractors/solis-s-50-st-6ecbbd12/": {
+      "digest": "032211a40bfe820693e76ba9cad21628d4dc4f762ac0c582f929dad8351c42de",
+      "modified": "2026-11-23T12:59:16.928Z"
     },
     "https://tractorvs.com/zh/tractors/sonalika-110-wt-d76351cf/": {
       "digest": "7087f0e6da589edc7a8e7c0639bb5abfdfd196d6394fab9ed56fe9ed3a6c9cbe",
