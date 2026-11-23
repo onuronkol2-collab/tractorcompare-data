@@ -1,0 +1,93 @@
+name: TractorVS Landini 5-110 source-only JPEG staging
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - "site/docs/photo-research-landini-5110-20261123.json"
+      - "site/scripts/photo-stage-landini-5110-20261123.py"
+      - ".github/workflows/photo-stage-landini5110-1123.yml"
+permissions:
+  contents: write
+concurrency:
+  group: tractorvs-landini5110-staging-${{ github.event.pull_request.number }}
+  cancel-in-progress: false
+jobs:
+  stage_reviewed_jpegs:
+    if: github.repository == 'onuronkol2-collab/tractorcompare-data' && github.event.pull_request.number == 513 && github.event.pull_request.head.repo.full_name == github.repository && github.event.pull_request.head.ref == 'photo/landini5110-1123'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Pin exact source, licence and unpublished stage
+        run: |
+          python -m py_compile site/scripts/photo-stage-landini-5110-20261123.py
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          m=json.loads(Path("site/docs/photo-research-landini-5110-20261123.json").read_text())
+          assert m["fileId"]=="landini-5-110-roboshift-marcelx42-2023"
+          assert m["publishedRecord"]["tractor_id"]=="264687c1-8dd2-5801-9e2e-11901f4acf6b"
+          assert m["visibleConfigurationExact"] is False
+          assert m["licenseName"]=="CC BY-SA 4.0" and m["photographer"]=="MarcelX42"
+          assert m["approvedToPublish"] is False
+          assert m["source1920"]=="https://thumb.wikimedia.org/wikipedia/commons/thumb/9/9b/Landini_5-110_RoboShift_Agritechnica_2023_%28DSC05711%29.jpg/1920px-Landini_5-110_RoboShift_Agritechnica_2023_%28DSC05711%29.jpg"
+          print("LANDINI_ID_SOURCE_LICENSE_GATES_OK")
+          PY
+      - name: Install pinned image decoder
+        run: python -m pip install --quiet "Pillow==11.3.0"
+      - name: Fetch one Commons source and compare published 480
+        run: python site/scripts/photo-stage-landini-5110-20261123.py ./photo-landini5110-review
+      - name: Validate 960 and 1920 actual JPEG bytes and source SHA
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          from PIL import Image
+          import hashlib,json
+          root=Path("photo-landini5110-review")
+          m=json.loads((root/"sha256-ledger.json").read_text())
+          assert m["reviewRequired"] is True and m["approvedToPublish"] is False
+          assert m["publicationCount"]==0
+          assert len(m["newDerivatives"])==2 and len(m["originalSourceSha256"])==64
+          assert {row["width"] for row in m["newDerivatives"]}=={960,1920}
+          assert all(x<20 for x in m["existing480"]["meanPixelDifferenceFromSource1920"])
+          existing=Path("site/public/images/tractors")/(m["fileId"]+"-480.jpg")
+          b=existing.read_bytes()
+          assert len(b)==m["existing480"]["bytes"]
+          assert hashlib.sha256(b).hexdigest()==m["existing480"]["sha256"]
+          for row in m["newDerivatives"]:
+            b=(root/row["file"]).read_bytes()
+            assert len(b)==row["bytes"] and hashlib.sha256(b).hexdigest()==row["sha256"]
+            assert b[:3]==bytes.fromhex("ffd8ff") and b[-2:]==bytes.fromhex("ffd9")
+            with Image.open(root/row["file"]) as im:
+              im.load()
+              assert im.format=="JPEG" and (im.width,im.height)==(row["width"],row["height"])
+          print("LANDINI_5110_480_FRAME_MATCH_NEW_JPEGS_SHA_OK")
+          PY
+      - name: Attach verified files to this exact PR branch only
+        env:
+          EXPECTED_HEAD: ${{ github.event.pull_request.head.sha }}
+        run: |
+          set -euo pipefail
+          BRANCH=photo/landini5110-1123
+          git fetch --no-tags origin "refs/heads/${BRANCH}:refs/remotes/origin/${BRANCH}"
+          observed="$(git rev-parse "refs/remotes/origin/${BRANCH}")"
+          [[ "$observed" == "$EXPECTED_HEAD" ]] || { echo "::error::Branch changed: fail closed"; exit 1; }
+          git switch -c verified-landini-photo "refs/remotes/origin/${BRANCH}"
+          id=landini-5-110-roboshift-marcelx42-2023
+          for size in 960 1920; do
+            dst="site/public/images/tractors/${id}-${size}.jpg"
+            test ! -e "$dst" || { echo "::error::Image would overwrite"; exit 1; }
+            install -m 0644 "photo-landini5110-review/${id}-${size}.jpg" "$dst"
+            git add "$dst"
+          done
+          proof=site/docs/photo-import-evidence-landini5110-20261123.json
+          test ! -e "$proof"
+          install -m 0644 photo-landini5110-review/sha256-ledger.json "$proof"
+          git add "$proof"
+          [[ "$(git diff --cached --name-only | wc -l)" == 3 ]] || exit 1
+          git -c user.name="github-actions[bot]" -c user.email="41898282+github-actions[bot]@users.noreply.github.com" commit -m "feat(photo): attach SHA-reviewed high-resolution Landini 5-110 JPEGs"
+          git push origin "HEAD:refs/heads/${BRANCH}"
+          echo "Draft PR branch only. No production deployment."
