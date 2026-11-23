@@ -113,12 +113,18 @@ const ORIGINAL_PHOTO_ORIGINS:readonly Omit<TractorPhoto,"originThumbUrl"|"origin
     licenseName:"CC BY-SA 4.0",licenseUrl:"https://creativecommons.org/licenses/by-sa/4.0/",
     configurationExact:false
   },
-  {brand:"Landini",model:"5-110 RoboShift",fileId:"landini-5-110-roboshift-marcelx42-2023",
+  // Exact EU published 5-110 model UUID; RoboShift is only the shown photo's
+  // equipment. Do NOT infer the catalogued tractor has the RoboShift gearbox.
+  {brand:"Landini",model:"5-110",tractorId:"264687c1-8dd2-5801-9e2e-11901f4acf6b",
+    fileId:"landini-5-110-roboshift-marcelx42-2023",
     thumbUrl:W+"thumb/9/9b/Landini_5-110_RoboShift_Agritechnica_2023_%28DSC05711%29.jpg/480px-Landini_5-110_RoboShift_Agritechnica_2023_%28DSC05711%29.jpg",
     displayUrl:W+"thumb/9/9b/Landini_5-110_RoboShift_Agritechnica_2023_%28DSC05711%29.jpg/960px-Landini_5-110_RoboShift_Agritechnica_2023_%28DSC05711%29.jpg",
     fullUrl:W+"9/9b/Landini_5-110_RoboShift_Agritechnica_2023_%28DSC05711%29.jpg",
     width:6487,height:3651,photographer:"MarcelX42",
     sourcePage:"https://commons.wikimedia.org/wiki/File:Landini_5-110_RoboShift_Agritechnica_2023_(DSC05711).jpg",
+    copyrightOwner:"MarcelX42",
+    copyrightClaimUrl:"https://commons.wikimedia.org/wiki/File:Landini_5-110_RoboShift_Agritechnica_2023_(DSC05711).jpg",
+    copyrightEvidence:"commons-own-work-self-license",
     licenseName:"CC BY-SA 4.0",licenseUrl:"https://creativecommons.org/licenses/by-sa/4.0/",
     configurationExact:false
   },
