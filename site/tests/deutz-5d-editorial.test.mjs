@@ -103,3 +103,26 @@ test("editorial discoverability stays visible from SSR comparison and exact mode
  assert.match(articles,/DEUTZ_5D_GS_PILOT\.path/);
  assert.match(articles,/lang==="tr"\|\|lang==="en"/);
 });
+
+test("comparison uses only evidence-linked TechArticle schema and honest editorial breadcrumbs",()=>{
+ const source=readFileSync(new URL("../src/components/Deutz5DGSEditorialComparison.astro",import.meta.url),"utf8");
+ assert.match(source,/const schema=pair&&breadcrumbItems\?/);
+ assert.match(source,/"@type":"TechArticle"/);
+ assert.match(source,/"@type":"WebPage"/);
+ assert.match(source,/"@type":"BreadcrumbList"/);
+ assert.match(source,/structuredData=\{schema\}/);
+ assert.match(source,/isBasedOn:pair\.source,citation:\[pair\.source\]/);
+ assert.match(source,/isPartOf:\{"@id":articleHubUrl\+"#webpage"\}/);
+ assert.match(source,/mainEntityOfPage:\{"@id":fullUrl\+"#webpage"\}/);
+ assert.match(source,/indexable=\{Boolean\(pair\)\}/);
+ assert.match(source,/name:"TractorVS"/);
+ assert.doesNotMatch(source,/datePublished:/,"do not invent the article publication date");
+ assert.doesNotMatch(source,/dateModified:/,"do not fake a source revalidation timestamp");
+ assert.match(source,/href=\{localizedPath\(lang,"\/articles\/"\)\}/);
+ for(const slug of [
+  "tractor-engine-power-and-torque","pto-and-power-take-off",
+  "tractor-hydraulic-lift-explained","tractor-technical-terms"
+ ])assert.ok(source.includes('localizedPath(lang,"/guides/'+slug+'/")'),
+   "truthful bilingual contextual link "+slug);
+ assert.doesNotMatch(source,/"@type":"Product"/);
+});
