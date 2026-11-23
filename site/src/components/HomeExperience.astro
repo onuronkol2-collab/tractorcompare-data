@@ -10,6 +10,7 @@ import { t } from "../lib/ui";
 import { advisorText as tx } from "../lib/advisor-i18n";
 import { editorialHubTranslation } from "../lib/editorial-hub-i18n";
 import {DEUTZ_5D_GS_PILOT,curatedDeutz5DPair} from "../lib/deutz-5d-editorial.ts";
+import {listedBrandCollections} from "../lib/brand-discovery-pilot.mjs";
 
 interface Props { lang: Locale; seoTitle?: string; seoDescription?: string }
 const { lang, seoTitle = "TractorVS | " + h(lang,"seoTitle"),
@@ -53,6 +54,10 @@ for (const tractor of catalogue.tractors) {
 }
 const brands = [...brandCounts.entries()]
   .sort((a,b) => b[1] - a[1] || a[0].localeCompare(b[0],lang)).slice(0,6);
+// Show only reviewed, published EN/TR brand collections. Other locales have
+// no translated brand collection routes and must not link to invented URLs.
+const publishedBrandGuides=(lang==="en"||lang==="tr")
+  ? listedBrandCollections(catalogue.tractors) : [];
 const sorted = [...catalogue.tractors]
   .sort((a,b) => b.specifications.length-a.specifications.length ||
     a.brand_name.localeCompare(b.brand_name,lang) ||
@@ -214,6 +219,19 @@ const suggestionPayload = JSON.stringify(catalogue.tractors.map((tractor) => ({
             {brands.map(([brand,number]) => (
               <a href={catalogUrl + "?q=" + encodeURIComponent(brand)}>
                 {brand}<span aria-hidden="true"> · {number}</span>
+              </a>
+            ))}
+          </div>
+        </nav>
+      )}
+      {publishedBrandGuides.length > 0 && (
+        <nav class="home-brand-row home-brand-guides"
+          aria-label={lang==="tr"?"Kaynaklı traktör marka rehberleri":"Source-backed tractor brand guides"}>
+          <strong>{lang==="tr"?"Kaynaklı marka rehberleri":"Source-backed brand guides"}</strong>
+          <div>
+            {publishedBrandGuides.map(brand=>(
+              <a href={localizedPath(lang,"/brands/"+brand.slug+"/")}>
+                {brand.name} {lang==="tr"?"traktör modelleri ve teknik veriler":"tractor models and specifications"}
               </a>
             ))}
           </div>
