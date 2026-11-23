@@ -11,7 +11,7 @@ import {fileURLToPath} from "node:url";
 export const ORIGIN = "https://tractorvs.com";
 export const SAMPLES_PER_ROUTE = 3;
 export const TARGETS = Object.freeze([
-  {name:"en-home",path:"/",kind:"worker-root",type:"text/html"},
+  {name:"en-home",path:"/",kind:"static-root",type:"text/html"},
   {name:"tr-home",path:"/tr/",kind:"static-home",type:"text/html"},
   {name:"en-catalog",path:"/tractors/",kind:"static-catalog",type:"text/html"},
   ...["tr","zh","hi","pt-br","fr","de","ru","ja","es"].map(locale=>({

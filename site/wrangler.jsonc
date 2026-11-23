@@ -8,7 +8,6 @@
     "directory": "./dist",
     "binding": "ASSETS",
     "run_worker_first": [
-      "/",
       "/language/*",
       "/api/visitor-country",
       "/sitemap.xml",

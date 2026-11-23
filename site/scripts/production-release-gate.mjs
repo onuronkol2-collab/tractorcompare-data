@@ -51,8 +51,13 @@ export function verifyProductionConfiguration(env=process.env,dir=process.cwd())
  insist(wrangler.name==="tractorvs-site","Worker name must be tractorvs-site.");
  insist(wrangler.main==="./worker/index.js"&&wrangler.assets?.directory==="./dist"&&wrangler.assets?.binding==="ASSETS",
    "Worker entrypoint/static-assets directory differs from reviewed configuration.");
- for(const route of ["/","/language/*","/api/visitor-country","/images/tractors/*"])
+ for(const route of ["/language/*","/api/visitor-country","/images/tractors/*"])
   insist(wrangler.assets?.run_worker_first?.includes(route),"Missing Worker route for "+route);
+ // Root is a generated index.html; route it to Cloudflare Static Assets directly.
+ insist(!wrangler.assets?.run_worker_first?.includes("/") &&
+   !wrangler.assets?.run_worker_first?.includes("/*") &&
+   !wrangler.assets?.run_worker_first?.includes("*"),
+   "Canonical root must use static asset-first routing, not an unconditional Worker.");
  if(env.WORKERS_CI_BRANCH)
   insist(env.WORKERS_CI_BRANCH==="main","Production deploy is allowed only from main; not "+env.WORKERS_CI_BRANCH);
  insist(env.PUBLIC_INDEXING_ENABLED==="true",

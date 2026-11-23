@@ -6,7 +6,7 @@ test("fixed public targets cover ten locale catalogues and contrasting page type
   assert.equal(ORIGIN,"https://tractorvs.com");
   for(const locale of ["en","tr","zh","hi","pt-br","fr","de","ru","ja","es"])
     assert.ok(TARGETS.some(t=>t.name===locale+"-catalog"),locale);
-  for(const kind of ["worker-root","static-home","static-catalog","static-tool","static-editorial","static-discovery","static-model"])
+  for(const kind of ["static-root","static-home","static-catalog","static-tool","static-editorial","static-discovery","static-model"])
     assert.ok(TARGETS.some(t=>t.kind===kind),kind);
   for(const target of TARGETS){
     const url=new URL(target.path,ORIGIN);

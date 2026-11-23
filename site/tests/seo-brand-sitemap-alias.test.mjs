@@ -68,7 +68,7 @@ test("both Wrangler entrypoints route sitemap.xml to the same tested edge Worker
  for(const file of ["wrangler.jsonc","../wrangler.jsonc"]){
   const config=JSON.parse(read(file));
   assert.ok(config.assets.run_worker_first.includes("/sitemap.xml"),file);
-  assert.ok(config.assets.run_worker_first.includes("/"),file);
+  assert.ok(!config.assets.run_worker_first.includes("/"),file+" canonical home must use static-first routing");
  }
  const robots=read("src/pages/robots.txt.ts");
  assert.match(robots,/sitemap-index\.xml/);
