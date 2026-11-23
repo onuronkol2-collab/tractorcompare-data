@@ -1000,3 +1000,47 @@ test("Landini 5-110 source-licensed RoboShift illustration opens only on exact E
   assert.equal(primaryTractorPhoto(wrong),null);
  }
 });
+
+
+test("two already licensed photos have verified first-party 960 and 1920 JPEG sizes",()=>{
+ const proof=JSON.parse(readFileSync(new URL("../docs/photo-960-1920-repair-evidence-20261123.json",import.meta.url),"utf8"));
+ assert.equal(proof.reviewRequired,true);
+ assert.equal(proof.approvedToPublish,false);
+ assert.equal(proof.publicationCount,0);
+ assert.equal(proof.images.length,2);
+ const expected=new Map([
+  ["valtra-t255-622d182c",{brand:"Valtra",model:"T255",author:"Bene Riobó"}],
+  ["versatile-nemesis-255-be32337e",{brand:"Versatile",model:"Nemesis 255",author:"MarcelX42"}]
+ ]);
+ assert.deepEqual(new Set(proof.images.map(p=>p.fileId)),new Set(expected.keys()));
+ for(const entry of proof.images){
+  const identity=expected.get(entry.fileId);
+  assert.ok(identity);
+  assert.equal(entry.brand,identity.brand);
+  assert.equal(entry.model,identity.model);
+  assert.equal(entry.author,identity.author);
+  assert.equal(entry.license,"CC BY-SA 4.0");
+  assert.equal(entry.sourceRoute,"https://tractorvs.com/images/tractors/"+entry.fileId+"-1920.jpg");
+  assert.ok(entry.meanRgbDifferenceAgainstExisting480.every(x=>x<20));
+  const photo=APPROVED_TRACTOR_PHOTOS.find(p=>p.fileId===entry.fileId);
+  assert.ok(photo,"Previously approved photograph must still exist");
+  assert.equal(photo.brand,identity.brand);
+  assert.equal(photo.model,identity.model);
+  assert.equal(photo.photographer,identity.author);
+  assert.equal(decodeURIComponent(photo.sourcePage),decodeURIComponent(entry.sourcePage),
+    "Equivalent percent-encoded Commons File URLs must identify the same actual image");
+  assert.equal(photo.licenseName,"CC BY-SA 4.0");
+  const old=entry.existing480;
+  const oldBytes=readFileSync(new URL("../public/images/tractors/"+old.file,import.meta.url));
+  assert.equal(createHash("sha256").update(oldBytes).digest("hex"),old.sha256);
+  assert.deepEqual(entry.newFiles.map(v=>v.width),[960,1920]);
+  for(const asset of entry.newFiles){
+   const bytes=readFileSync(new URL("../public/images/tractors/"+asset.file,import.meta.url));
+   assert.equal(bytes.length,asset.bytes);
+   assert.equal(createHash("sha256").update(bytes).digest("hex"),asset.sha256);
+   assert.equal(bytes.subarray(0,3).toString("hex"),"ffd8ff");
+   assert.equal(bytes.subarray(-2).toString("hex"),"ffd9");
+   assert.ok([photo.displayUrl,photo.fullUrl].includes("/images/tractors/"+asset.file));
+  }
+ }
+});

@@ -1,0 +1,89 @@
+{
+  "reviewRequired": true,
+  "approvedToPublish": false,
+  "publicationCount": 0,
+  "purpose": "repair persistent production HTTP 502 from missing checked-in 960px JPEGs",
+  "reviewedOn": "2026-11-23",
+  "images": [
+    {
+      "fileId": "valtra-t255-622d182c",
+      "brand": "Valtra",
+      "model": "T255",
+      "author": "Bene Riobó",
+      "license": "CC BY-SA 4.0",
+      "sourcePage": "https://commons.wikimedia.org/wiki/File:Valtra_T255_01.jpg",
+      "sourceRoute": "https://tractorvs.com/images/tractors/valtra-t255-622d182c-1920.jpg",
+      "originWidth": 1920,
+      "originHeight": 1280,
+      "existing480": {
+        "file": "valtra-t255-622d182c-480.jpg",
+        "sha256": "61334ca36485a08182819ed46b91400fe4e43ad39eb5cc949bdd0e896ae5b4b4",
+        "width": 480,
+        "height": 320,
+        "bytes": 52580
+      },
+      "source1920Sha256": "363e0d3fc844ff57cdb4c2e4188c81baa8d210f3c038131abbfdb4e82ff2de2a",
+      "meanRgbDifferenceAgainstExisting480": [
+        5.056,
+        4.67,
+        6.148
+      ],
+      "newFiles": [
+        {
+          "file": "valtra-t255-622d182c-960.jpg",
+          "width": 960,
+          "height": 640,
+          "bytes": 231054,
+          "sha256": "b80e775ce1c7db25557b36392a3b16324519a8213a8406894e58865b20ea3628"
+        },
+        {
+          "file": "valtra-t255-622d182c-1920.jpg",
+          "width": 1920,
+          "height": 1280,
+          "bytes": 773293,
+          "sha256": "363e0d3fc844ff57cdb4c2e4188c81baa8d210f3c038131abbfdb4e82ff2de2a"
+        }
+      ]
+    },
+    {
+      "fileId": "versatile-nemesis-255-be32337e",
+      "brand": "Versatile",
+      "model": "Nemesis 255",
+      "author": "MarcelX42",
+      "license": "CC BY-SA 4.0",
+      "sourcePage": "https://commons.wikimedia.org/wiki/File:Versatile_Nemesis_255_CVT_Agritechnica_2025_(DSC08750).jpg",
+      "sourceRoute": "https://tractorvs.com/images/tractors/versatile-nemesis-255-be32337e-1920.jpg",
+      "originWidth": 1920,
+      "originHeight": 1441,
+      "existing480": {
+        "file": "versatile-nemesis-255-be32337e-480.jpg",
+        "sha256": "18ae3ab9672b07ba014460a8e6e1bc7312f85e8a8a649c7ca8540bd8be8c9d3f",
+        "width": 480,
+        "height": 361,
+        "bytes": 56804
+      },
+      "source1920Sha256": "c842076784b47ca9c72f79817255236e1e3f01be9596bf69bf0cc980a2f9ee5a",
+      "meanRgbDifferenceAgainstExisting480": [
+        7.154,
+        6.033,
+        7.029
+      ],
+      "newFiles": [
+        {
+          "file": "versatile-nemesis-255-be32337e-960.jpg",
+          "width": 960,
+          "height": 720,
+          "bytes": 232652,
+          "sha256": "597480b27813f934c2d9715e787d56c7ac188de8a9490bdf936a135e5e81a17d"
+        },
+        {
+          "file": "versatile-nemesis-255-be32337e-1920.jpg",
+          "width": 1920,
+          "height": 1441,
+          "bytes": 745766,
+          "sha256": "c842076784b47ca9c72f79817255236e1e3f01be9596bf69bf0cc980a2f9ee5a"
+        }
+      ]
+    }
+  ]
+}
