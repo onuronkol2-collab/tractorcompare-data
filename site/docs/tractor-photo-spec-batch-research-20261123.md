@@ -35,6 +35,31 @@ Yayımlanmış modellerde resim eşleşmelerinin yüksek öncelik taşıdığı 
 
 `site/src/lib/historical-licensed-photos.ts` içinde uzun süredir bulunan `Zetor_Forterra_140_HSX.jpg` (Bene Riobó, CC BY-SA 4.0) model düzeyinde tanımlanmıştı; aynı marka/model adıyla kaydedilmiş **CL** ve **HD** varyantlarına da yanlışlıkla yayılabilirdi. Bu fotoğraf sadece doğrulanmış `FORTERRA 140 HSX` UUID'sine (`aabda943-446b-4543-a019-c73b743652eb`) bağlandı. `site/tests/tractor-photos.test.mjs` içine CL/HD/HSX ayrım regresyon testi eklendi. Yeni medya/binary eklenmedi; fotoğraf sayısı sabit.
 
+## İkinci araştırma partisi — üretici ve bağımsız test kaynakları
+
+23 Kasım ikinci görev geçişinde resmî Sonalika WT 110 HTML'si, Agrale'nin resmî 4233 ürün sayfası, KIOTI CX2510 üretici teknik sayfası, Hindistan devlet test raporu ve birden fazla Wikimedia Commons File sayfası ile kaynaklar çapraz denetlendi.
+
+### Teknik kanıt: 25 yeni inceleme satırı, 0 yayımlanan satır
+
+| Model / güven seviyesi | İncelemeye giren veri | Yayın engeli |
+|---|---|---|
+| Sonalika **110 WT**, International (`d76351cf-7497-47ce-aed1-372bae4e07ce`) | Üretici teknik tablosundan **19 eksik alan** (4WD, çift debriyaj, fren, hidrolik direksiyon, ön/arka lastik, uzunluk-genişlik-ROPS yüksekliği, yerden yükseklik, iz genişliği, yağ/batarya/alternatör kapasiteleri, hız, PTO devreye alma, askı sınıfı). | `needs_review`; on dil teknik terimler ve birim formatı/opsiyonel donanım kontrolünden sonra yayın. Kaynak: [Sonalika 110 WT resmî](https://international.sonalika.com/product/sonalika-110-wt/). OEM sayfasında `Displacement (ltr) = 4127` yazdığı halde birimin ne olduğu **şüpheli**; bu değer **eklenmedi**. |
+| Agrale **4233**, Brazil (`e3ed3f24-a207-44cf-8b96-b33e5e92723e`) | Mevcut **30 cv**/69 Nm/2250 rpm karşısında resmî ürün HTML'si **25 cv**/65 Nm/**2550** rpm veriyor: **3 çelişki adayı**. | `needs_review`; üretim yılı, motor revizyonu ve rating standardı çözülmeden katalog verisi değiştirilmedi. [Agrale resmî ürün sayfası](https://www.agrale.com.br/pt/detalhes/tratores/tratores-agricolas/trator-4233) / [resmî PDF](https://pdf.agrale.com.br/2019/ficha-tecnica/pt/trator-4233-1/184/). PDF metninde ayrıca 24,5 cv / 6,9 daNm a 2550 rpm bildiriliyor; bu oturumda PDF **görüntü ekranı alınamadı**, kesin uzlaşma ilan edilmedi. |
+| Swaraj **855 FE 4WD** yayın kaydı (`44e7f340-ebd3-4e72-843a-303312a96c07`) | Hindistan [CFM&TI 2025 855 FE 4x4 **N3** raporu](https://fmttibudni.gov.in/files/12_SWARAJ_855_FE_4x4_N3.pdf) PDF metin tablosunda **33,0 kW** 2 saatlik maksimum PTO, **200,6 Nm** eşdeğer krank torku ve **257 g/kWh** maksimum PTO'da özgül tüketim bildiriyor: **3 bağımsız test adayı**. | `needs_review`: N3 konfigürasyonu genel 855 FE 4WD ile eşleşmiş değil; web üzerinden PDF sayfa görüntüsü iki denemede zaman aşımına girdi. Bunlar OEM nominal değer değil bağımsız test; hiçbir değer canlı spec tablosuna eklenmedi. |
+
+**Süreklilik:** KIOTI CX2510 ve CX2510H üretici tabloları katalogdaki 34+ alanla karşılaştırıldı; var olan teknik alanlar gereksiz tekrar yazılmadı. Mahindra 605 DI MS ürün sayfasındaki güç/konfigürasyon ifadeleri kendi içinde birden çok ölçüm tanımı içerdiğinden yeni **güç** değeri varsayılmadı.
+
+### Ek fotoğraf kanıtı
+
+| Model | Kaynak sonucu | Kayıt |
+|---|---|---|
+| Valtra **Q225** | [Commons dosya sayfası](https://commons.wikimedia.org/wiki/File:Valtra_Q225.jpg): Bene Riobó, kendi çekimi, CC BY-SA 4.0, 4650×3100 JPEG; özgün dosya `6/6e/Valtra_Q225.jpg` | Önceki `license_review` → `identity_review`; lisans ve özgün dosya yolu kaydedildi. 2024 İsveç fotoğrafı ile Europe/UK katalog konfigürasyonu incelemede. |
+| Steyr **6200 Impuls CVT** | [Commons fotoğraf](https://commons.wikimedia.org/wiki/File:Steyr_6200_Impuls_CVT_Agritechnica_2025_(DSC08459).jpg): MarcelX42, kendi çekimi, CC BY-SA 4.0, 6017×4513 JPEG | Kaynak bağlantısı/atfı tamamlandı; kayıt şanzıman varyantı kesin olmadığından `identity_review` kaldı. |
+| Massey Ferguson **4708 Standard Platform** (South Africa) | [Commons 4708 Fransa fotoğrafı](https://commons.wikimedia.org/wiki/File:Lanouaille_Massey_Ferguson_4708.jpg): Père Igor, kendi çekimi, CC BY-SA 4.0, 2996×2247 JPEG | **Yeni** aday `identity_review`: Fransız 4708 ile Güney Afrika 4708 Standard Platform ekipmanı doğrulanmadan yayın yok. |
+| Swaraj **855 FE** | [Commons 855 FE PNG](https://commons.wikimedia.org/wiki/File:Swaraj-855-FE1669626848.png) 500×350, harici KhetiGaadi kaynaklı | Sadece özel `reviewed_notes` alanına dışlama nedeni kaydedildi; üçüncü taraf görsel hakları ve piksel kalitesi belirsiz, `research_needed` kaldı, **yayın yok**. |
+
+Bu partide bütün kamuya açık fotoğraf yolları için ikili JPEG indirme, SHA-256, 480/960/1920 türev ve canlı Worker doğrulaması eksik. **Onay/otomatik yayın bilinçli şekilde yapılmadı.** Doğrulanan Creative Commons sayfa metni JPEG byte doğrulamasının yerine geçmez.
+
 ## Sonraki toplu kontrol kapıları
 
 1. Güncel yayımlanmış sitemap ile Supabase yayımlanmış UUID envanteri tek tek karşılaştırılmalı (RLS ve taslaklar korunarak).
