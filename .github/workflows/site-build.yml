@@ -104,6 +104,9 @@ jobs:
           node site/scripts/verify-sitewide-meta-descriptions.mjs site/dist
           test -f site/dist/sitemap-index.xml
           node site/scripts/verify-unified-sitemap-index.mjs
+          node --experimental-strip-types --test site/tests/verify-built-model-image-rights.test.mjs
+          # Model-page photo rights are scanned in the authenticated production bundle gate.
+          # This secretless preview intentionally has no catalogue model pages.
           node site/scripts/verify-tractor-glossary-build.mjs indexable
           node site/scripts/verify-geo-build.mjs indexable
           grep -q '^Allow: /$' site/dist/robots.txt

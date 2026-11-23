@@ -17,6 +17,7 @@ import {auditBuiltImageAlts} from "./verify-sitewide-image-alts.mjs";
 import {auditBuiltSeoTitles} from "./verify-sitewide-seo-titles.mjs";
 import {auditBuiltMetaDescriptions} from "./verify-sitewide-meta-descriptions.mjs";
 import {auditBuiltAstroAssets} from "./verify-static-assets-version-compat.mjs";
+import {auditBuiltModelImageRights} from "./verify-built-model-image-rights.mjs";
 
 const projectRoot=resolve(fileURLToPath(new URL("..",import.meta.url)));
 const expectedOrigin="https://tractorvs.com";
@@ -91,6 +92,10 @@ export function verifyProductionArtifacts({dir=projectRoot,origin=expectedOrigin
  // Deployment is blocked if independently generated forum/image maps are not
  // in the master index. GSC/Bing need only receive the root index in future.
  verifyUnifiedSitemapIndex({dist,origin});
+ // Fail the production build if any published model image loses its actual
+ // license, source, verified owner notice or safe no-notice status.
+ const imageRights=auditBuiltModelImageRights({dist,origin});
+ insist(imageRights.modelPagesWithPhotos>0,"No approved image metadata on generated tractor pages.");
  // The visible homepage must expose real, language-matched article discovery links.
  // Keep this after the original homepage/robots checks to catch broken localized builds.
  for(const locale of ["en","tr","zh","hi","pt-br","fr","de","ru","ja","es"]){
