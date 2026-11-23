@@ -30,7 +30,9 @@ jobs:
           assert data["source"]["fileId"] == "mccormick-x4-080-mbone-agritechnica-2023"
           assert data["source"]["ownWorkDeclared"] is True
           assert data["source"]["licenseName"] == "CC BY-SA 4.0"
-          assert data["source"]["visualModelBadgeConfirmed"] is False
+          assert data["source"]["visualModelBadgeConfirmed"] is True
+          assert data["alreadyPublishedModelHasPhoto"] is True
+          assert data["newModelCoverage"] == 0
           assert not data["allowAutomaticApproval"]
           print("TRACTORVS_EXACT_X4080_SOURCE_REVIEW_ONLY")
           PY
@@ -77,7 +79,7 @@ jobs:
           path: photo-x4080-review/
           if-no-files-found: error
           retention-days: 30
-      - name: Attach four verified review files to the exact PR branch, never main
+      - name: Attach only two missing high-resolution JPEGs and one ledger to the exact PR branch, never main
         if: github.event.pull_request.number == 506 && github.event.pull_request.head.repo.full_name == github.repository
         env:
           EXPECTED_HEAD: ${{ github.event.pull_request.head.sha }}
@@ -94,7 +96,9 @@ jobs:
           git switch -c photo-verified-assets "refs/remotes/origin/${BRANCH}"
           id="mccormick-x4-080-mbone-agritechnica-2023"
           mkdir -p site/public/images/tractors site/docs
-          for size in 480 960 1920; do
+          test -f "site/public/images/tractors/${id}-480.jpg"
+          test -f "site/public/images/tractors/${id}-720.webp"
+          for size in 960 1920; do
             target="site/public/images/tractors/${id}-${size}.jpg"
             if [[ -e "$target" ]]; then
               echo "::error::Photo file already exists; refusing overwrite."
@@ -110,9 +114,9 @@ jobs:
           fi
           install -m 0644 photo-x4080-review/sha256-ledger.json "$evidence"
           git add "$evidence"
-          test "$(git diff --cached --name-only | wc -l)" -eq 4
+          test "$(git diff --cached --name-only | wc -l)" -eq 3
           git -c user.name="github-actions[bot]" \
               -c user.email="41898282+github-actions[bot]@users.noreply.github.com" \
               commit -m "feat(photo): attach SHA-verified McCormick X4.080 JPEGs to draft PR"
           git push origin "HEAD:refs/heads/${BRANCH}"
-          echo "Photo assets attached to draft PR #506 only; no publication."
+          echo "Only the two missing high-resolution JPEG derivatives attached to draft PR #506; existing 480px JPEG and current live catalog untouched."
