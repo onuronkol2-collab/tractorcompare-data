@@ -7,6 +7,7 @@ on:
       - ".github/dependabot.yml"
       - "site/src/**"
       - "site/public/_headers"
+      - "site/public/favicon.png"
       - "site/tests/security-static-headers.test.mjs"
       - "site/e2e/**"
       - "site/scripts/verify-published-site-inventory.mjs"

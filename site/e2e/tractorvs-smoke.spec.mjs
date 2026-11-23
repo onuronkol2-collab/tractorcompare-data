@@ -36,17 +36,42 @@ test("catalogue, comparison and forum routes expose a main landmark", async ({ p
   }
 });
 
-test("ten localized home pages are reachable and declare their language", async ({ page }) => {
+test("ten localized home pages share the TractorVS search identity and favicon", async ({ page }) => {
   const locales = [
     ["/", "en"], ["/tr/", "tr"], ["/de/", "de"], ["/fr/", "fr"],
     ["/es/", "es"], ["/ru/", "ru"], ["/hi/", "hi"], ["/ja/", "ja"],
     ["/zh/", "zh-Hans"], ["/pt-br/", "pt-BR"],
   ];
+  const siteRoot = new URL("/", process.env.SITE_URL || "https://tractorvs.com/").href;
+  const icon = page.locator('head link[rel~="icon"][type="image/png"]');
   for (const [path, lang] of locales) {
     const response = await page.goto(path, { waitUntil: "domcontentloaded" });
     expect(response?.status(), "Locale HTTP status: " + path).toBe(200);
     await expect(page.locator("html")).toHaveAttribute("lang", lang);
+    await expect(icon).toHaveAttribute("href", "/favicon.png");
+    await expect(page.locator('head meta[property="og:site_name"]')).toHaveAttribute("content", "TractorVS");
+    const blocks = await page.locator('head script[type="application/ld+json"]').allTextContents();
+    const entities = blocks.flatMap(text => {
+      const json = JSON.parse(text);
+      return json["@graph"] ?? json;
+    });
+    const websites = entities.filter(entity => entity["@type"] === "WebSite");
+    expect(websites, path).toHaveLength(1);
+    expect(websites[0], path).toMatchObject({ name: "TractorVS", url: siteRoot });
   }
+
+  const response = await page.request.get("/favicon.png");
+  expect(response.status()).toBe(200);
+  expect(response.headers()["content-type"]).toMatch(/^image\/png\b/i);
+  const dimensions = await icon.evaluate(async link => {
+    const image = new Image();
+    image.src = link.href;
+    await image.decode();
+    return { width: image.naturalWidth, height: image.naturalHeight, sizes: Array.from(link.sizes) };
+  });
+  expect(dimensions.width).toBe(dimensions.height);
+  expect(dimensions.width).toBeGreaterThan(48);
+  expect(dimensions.sizes).toContain(`${dimensions.width}x${dimensions.height}`);
 });
 
 test("mobile navigation reaches tractor comparison from the menu", async ({ page, isMobile }) => {
