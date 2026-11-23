@@ -47,6 +47,24 @@ test("comparison UI preserves sourced spec identities and deep-linked model sele
   assert.match(compare,/window.history.replaceState/);
   assert.match(compare,/tractor.variant\?\.split\(";"\)/);
 });
+
+test("asynchronous comparison loading is announced without stale rows or stuck busy state",()=>{
+  assert.match(compare, /id="tc-summary" role="status" aria-live="polite"/);
+  assert.match(compare, /<tbody id="tc-rows" role="rowgroup" aria-busy="false">/);
+  assert.match(compare, /loading: cx\(lang,"loading"\)/);
+  assert.match(compare, /loading:string/);
+  assert.match(compare, /if \(!left\.specs \|\| !right\.specs\) \{/);
+  assert.match(compare, /tbody\.setAttribute\("aria-busy","true"\)/);
+  assert.match(compare, /if \(summary\) summary\.textContent = l10n\.loading/);
+  assert.match(compare, /if \(current === revision\) \{\s*tbody\.setAttribute\("aria-busy","false"\)/);
+  assert.match(compare, /if \(current !== revision\) return/);
+  assert.match(compare, /tbody\.replaceChildren\(fragment\);\s*tbody\.setAttribute\("aria-busy","false"\)/);
+  for(const locale of LOCALES){
+    assert.ok(compareText(locale,"loading").trim().length>15,locale+" loading status");
+  }
+  assert.notEqual(compareText("en","loading"),compareText("tr","loading"));
+});
+
 test("every published model detail has a comparison CTA using stable tractor id",()=>{
   assert.match(detail,/const compareUrl = localizedPath\(lang,"\/compare\/"\) \+ "\?left=" \+ encodeURIComponent\(tractor.tractor_id\)/);
   assert.match(detail,/class="model-compare-action" href=\{compareUrl\}/);
