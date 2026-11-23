@@ -85,3 +85,102 @@ Kaynaklar: [OWASP LLM Top 10 2026](https://genai.owasp.org/top-10-for-llm-applic
 3. Sekiz alanın her birinde tek cümlelik uygulama kararı, test ve kabul ölçütü çıkar; özgünlük/SEO/GEO/güvenlik kurallarını beraber uygula.
 4. Henüz uygulama yetkisi yoksa araştırma notu ve öneri olarak bırak. Kod/site değişikliği yalnız kullanıcı izinli, ayrı PR ve mevcut kalite kapısıyla yapılır.
 5. İlerleme raporunda **öğrenildi / belgelendi / test edildi / uygulandı / canlı doğrulandı** basamaklarını ayrı göster. Uzmanlık ve sıralama garantisi iddia etme.
+
+
+## Ek araştırma turu R2 — 23 Kasım 2026
+
+**Sınır ve dürüstlük:** Bu ek, mevcut sekiz alanı ve Altın Entegrasyon Kuralı'nı değiştirmez. Resmî/kamuya açık kaynaklardan yeni uygulama sonuçları çıkarır. Tüm internet taranmış değildir; örnekleme giren başlıca standartlar, tarihli araştırmalar ve bağımsız uzman rehberleri karşılaştırılmıştır. Canlı TractorVS arayüzü, Supabase, ücretli hizmet, sızma testi, kullanıcı testi veya dağıtım bu araştırmada gerçekleştirilmedi. İncelenen bir kaynakta geçen sonuç, TractorVS'nin kendi ölçümüymüş gibi aktarılmaz.
+
+### R2.1 — Traktör testlerinin gerçekten karşılaştırılabilir olması
+
+OECD resmî sayfasına göre Code 2 için PTO şaftındaki güç/yakıt tüketimi, asfalt veya beton zeminde dinamometre yüklü çeki gücü/yakıt tüketimi, yardımcı hidrolik (spool valve) çıkışındaki hidrolik güç ve **üç nokta askı kaldırma kapasitesinin alt bağlantı uçlarında veya bağlı bir çerçeve üzerinde ölçülmesi** ayrı testlerdir. Motor beyanı, PTO testi, çeki gücü, lift kapasitesi ve hidrolik debi tek bir genel değer olarak birleştirilmemeli. Ölçülen test durumu ile sahadaki kullanım koşulları da karıştırılmamalı.
+
+AEF ISOBUS veritabanı işlevselliği ürün bazında ve birden fazla ürünün *ortak* desteklediği işlevler bazında gösterir; modül/ECU ve opsiyon ayrıntıları da vardır. Tek başına bir traktörün 'ISOBUS destekli' olması, belirli terminal ve ekipman kombinasyonunun her işlevde uyumlu olduğunu göstermez. Kamuya açık doğrulanmamış bir ürün kaydını sertifikalı uyumluluk sonucu diye yayımlama.
+
+**Kabul testi:** Aynı birimli iki sayıyı karşılaştırmak için aynı fiziksel değişken + üretici/test sınıfı + model/yıl/varyant/pazar + ölçüm konumu/koşulu kontrol et. Bağlı ekipman uyumluluğunda tam ürün, sertifikalı sürüm, ECU/modül ve ortak işlev kanıtı yoksa 'doğrulanamadı' göster.
+
+Kaynak: https://www.oecd.org/en/topics/tractors.html ; https://www.aef-online.org/aef-isobus-database/ ; https://www.aef-online.org/products/aef-isobus-database.html
+
+### R2.2 — Veri kalitesinin standart statüsü ve izlenebilirlik
+
+W3C Data Quality Vocabulary (DQV) bir **Working Group Note**'tur; W3C Recommendation diye gösterilmemeli. Bu yaklaşım kaliteyi tek evrensel skora indirgemez; doğruluk, eksiksizlik, güncellik, erişilebilirlik ve kullanıcı amacına uygunluk ayrı değerlendirilir. DQV ve PROV-O, mevcut Supabase şemasının zorunlu teknik çözümü değil, kaynak/ölçüm kökenini düşünmek için kavramsal referanslardır.
+
+**Önemli sürüm kapısı:** W3C **SHACL 1.2 Core**, 16 Kasım 2026 itibarıyla *Working Draft* olarak yayımlanmıştır; SHACL 1.2 Inference Rules 19 Kasım 2026'da yine taslaktır. Kararlı **SHACL 2017 Recommendation** ile aynı olgunlukta ilan edilmesin. RDF tabanlı kural motoru ile mevcut PostgreSQL CHECK/FK/pgTAP önlemleri sebepsiz yere değiştirilmesin.
+
+**Kabul testi:** Her özellik için orijinal kaynak parçası, kaynak URL, kaynak türü, varyant kapsamı, iddia/metin, normalize değer ve birim, doğrulayan süreç/tarih, çatışma statüsü ve yayımlanma statüsünün izlenebilirliğini sorgula. Otomatik çıkarım, varlık olarak aynı sayısal alanı oluştursa bile provenans kayboluyorsa başarısız kabul et.
+
+Kaynak: https://www.w3.org/TR/vocab-dqv/ ; https://www.w3.org/TR/prov-o/ ; https://www.w3.org/TR/shacl/ ; https://www.w3.org/TR/shacl-core/
+
+### R2.3 — RLS ile sürüm tedarik zincirinde ayrık güvenlik kapıları
+
+PostgreSQL güncel belgelerine göre tablo sahibi çoğunlukla RLS denetimini atlar; `BYPASSRLS` rolü olan kullanıcılar da atlar. Birden fazla **permissive** politika OR, **restrictive** politika AND ile birleşebilir; `security definer` fonksiyonları çağıranın doğrudan göremeyeceği veriyi okuyabilir. Bu davranışlar 'RLS açık' kontrolünün tek başına yeterli olmadığını gösterir. PostgreSQL belgesinin **19** sürümü, TractorVS'nin üretim PostgreSQL sürümü olduğu kanıtı değildir; uygulanmadan önce gerçek sürüm okunmalı.
+
+SLSA v1.2 build provenance kaydı, belirli bir derleme platformunun belirli tanımla belirli çıktı üretmiş olduğunu doğrulamaya yarar; uygulamanın içerik doğruluğu, lisans güvenliği veya canlı site performansını tek başına kanıtlamaz.
+
+**Kabul testi:** anon/auth/author/moderator/service-role ve özel fonksiyonlar için izin/ret testleri + tokenların asgari yetkisi; RLS politika birleşimlerinin test edilmesi; aynı sürümde kaynak SHA → build artifact hash → dağıtım SHA bağlantısının izlenmesi. Başarılı CI ≠ Cloudflare canlı yayın ≠ doğrulanmış kullanıcı sonucu.
+
+Kaynak: https://www.postgresql.org/docs/current/ddl-rowsecurity.html ; https://slsa.dev/spec/v1.2/build-provenance ; https://docs.github.com/en/actions/how-tos/secure-your-work/use-artifact-attestations
+
+### R2.4 — Veri yoğunluğu yüksek UI/UX ve bilimsel kullanıcı deneyimi
+
+IBM Carbon'un Ekim 2026 güncel data-table rehberi tablo başlığı ve açıklamayla verinin neyi temsil ettiğinin, birimler/özelliklerin ve etkileşim durumlarının anlaşılmasını öneriyor. Ürün odaklı tipografi ile büyük 'expressive' metinler farklı amaçlar için: traktör karşılaştırmalarında süslü büyük başlık uğruna teknik hücreleri küçültme. Baymard'ın 2026 spec-sheet araştırması **e-ticaret** tabanlıdır; oranlar ve satın alma çağrıları TractorVS'ye doğrudan genellenemez.
+
+Nielsen Norman Group'un 26 Haziran 2026 baseline rehberine göre önce/sonra ölçümün aynı yöntem ve kitleyle yapılması şarttır. Önce görevi tanımla, sonra 5 saniye/ilk tıklama/test tamamlama gibi seçilen ölçüyü başlangıç ve yeni sürümde karşılaştır. Sentetik kullanıcı veya AI tarafından oluşturulmuş görüşme, gerçek katılımcı gözlemi değildir.
+
+**Kabul testi:** 'Traktör modeli bul → ölçüm türünü ayırt et → kaynağı aç → aynı değeri iki modelde karşılaştır' görevlerinde kullanıcı, dil ve cihaz örneklemini kaydet. Etiket/değer/birim/kaynak ilişkisini 10 dilde ve klavyeyle izle. Uzman incelemesi yapıldıysa bunu gerçek kullanıcı testi gibi bildirme.
+
+Kaynak: https://www.carbondesignsystem.com/building-blocks/core/components/data-table/guidelines ; https://www.carbondesignsystem.com/building-blocks/foundations/typography/type-sets ; https://baymard.com/blog/product-spec-sheet-ux-design ; https://www.nngroup.com/articles/establishing-baselines/
+
+### R2.5 — Kronik arıza iddialarında payda ve belirsizlik
+
+EQUATOR STROBE gözlemsel çalışmalar için raporlama kontrol listesidir; traktör güvenilirliği için resmî arıza standardı değildir. Yine de seçilme kriteri, çalışma grubu, sonuç sayısı, belirsizlik, karıştırıcı değişken ve sınırlılıkların raporlanması gereğini öğretir. Forum şikâyeti sayısı tek başına risk ölçümü, nedensellik veya arıza oranı göstermez; kaydedilen şikâyetler belli modele sahip bütün işletmeleri temsil etmeyebilir.
+
+**Kabul testi:** Bir 'en çok arızalanan' iddiasından önce aynı gözlem dönemi, gerçekten tanımlanmış arıza olayı, maruz kalma paydası (ör. traktör-adet-yıl veya çalışma saati), örneklem seçimi, varyant/yaş/servis koşulları ve belirsizlik sağlanmış olmalı. Yoksa yalnız 'raporlanan örnekler' şeklinde sınırlandır; kanıtsız marka sıralaması oluşturma.
+
+Kaynak: https://equator-network.org/reporting-guidelines/strobe/strobe-checklist.html ; https://developers.google.com/search/docs/fundamentals/creating-helpful-content
+
+### R2.6 — CLDR 49 tarih, içerik kimliği ve yerel biçim
+
+**Sürüm tarihi düzeltmesi:** Unicode `UTS #35` CLDR 49 standardı **21 Ekim 2026**, kararlı CLDR 49 **sürümü 22 Ekim 2026** tarihlidir. Eski öğrenme notlarında 'CLDR 49 21 Ekim'de yayımlandı' tek başına görülürse bu iki tarihi ayır. Unicode 49 sayı/tarih/yerel birim biçimleme değişikliklerini içerir; içerikteki ölçülen fiziksel değer yeniden hesaplanmış veya test edilmiş sayılmaz.
+
+Google, `hreflang` ve HTML `lang` özniteliklerini sayfanın dilini belirlemek için kullanmadığını; `hreflang` ile eşdeğer yerelleştirilmiş sayfalar arasındaki ilişkiyi okuduğunu açıklıyor. Her sayfa sürümü, kendisi dahil karşılıklı eşdeğerleri göstermeli; henüz yayımlanmamış forum çevirilerine bağlantı verilmemeli.
+
+**Kabul testi:** Sabit anlamlı sayı/değer + kaynak birim + kullanıcı locale gösterimi; on dilde aynı model kimliği; CJK satır kırılması/Devanagari birleşimi/Avrupa dil etiketleri; yayımlanmış ve eşdeğer sayfalar için karşılıklı hreflang/sitemap/canonical doğrulaması.
+
+Kaynak: https://cldr.unicode.org/downloads/cldr-49 ; https://unicode.org/reports/tr35/ ; https://developers.google.com/search/docs/specialty/international/localized-versions
+
+### R2.7 — SEO/GEO, ajan dostu semantik ve görsel lisansı
+
+Google Search Central'ın 2026 AI rehberi; `llms.txt`, AI'ya özel schema, çok küçük içerik parçalarına zorunlu ayırma veya sıralama garantisi gibi iddiaları desteklemez. Etkili odak: yararlı ve özgün teknik analiz, taranabilir ve gerçek görünür içerik, anlamlı navigasyon. web.dev'nin *agent-friendly websites* yazısına göre agent'lar ekran görüntüsü, HTML ve accessibility tree'den yararlanabilir. **WebMCP henüz öneri/aktif geliştirme aşamasındadır**; standartlaşmış ve SEO zorunluluğuymuş gibi üretime ekleme.
+
+Google görsel metadata'sındaki `creator`, `creditText`, `copyrightNotice`, `license` ve `contentUrl` alanları görselin kullanım koşulları hakkında bilgi sağlar; metadata varlığı fotoğrafın lisansının gerçekten izin verdiğini **kanıtlamaz**. Eşleşen traktör modeli + ticari yeniden kullanım hakkı + gereken atıf bağımsız doğrulanmadan fotoğraf yayınlama.
+
+Google'ın canonical tercihi bir **ipucu**, garanti değildir; Google'ın seçtiği canonical ve gerçek indeksleme GSC'de ayrı kontrol edilir. Çok sayıda filtreli katalog URL'si için kör robots/noindex/canonical müdahalesi yapma. Güncel Google crawl budget rehberinin milyon+ URL örneklemi, TractorVS'nin mevcut ölçeğinde otomatik olarak 'crawl budget krizi' olduğu anlamına gelmez.
+
+**Kabul testi:** Canlı HTML semantiği + 10 dilde URL ve kaynaklı fotoğraflar + AI görünürlük raporu ile standart arama gösterimlerini ayrı yorumlama; crawler yanıtı, Google indeks kararı, sıralama ve üçüncü taraf puanını birbirine eşitlememe.
+
+Kaynak: https://developers.google.com/search/docs/fundamentals/ai-optimization-guide ; https://web.dev/articles/ai-agent-site-ux ; https://developers.google.com/search/docs/appearance/structured-data/image-license-metadata ; https://developers.google.com/search/docs/crawling-indexing/canonicalization ; https://developers.google.com/crawling/docs/crawl-budget
+
+### R2.8 — AI güvenliğinde kötü niyetli kaynağa direnç ve kalibrasyon
+
+OWASP LLM Top 10 2026, kötü niyetli talimatların PDF/web/araç yanıtı gibi **düşük güvenli içerikten** gelebileceğini ve yetkili talimat gibi ele alınmaması gerektiğini belirtir. Üretici PDF'sindeki görünür veya gizli talimatlar sistem/hizmet izinlerini değiştiremez. Ajanın teknik veriye erişimi bir şeyi yayımlama veya gizli anahtara erişme izni değildir.
+
+22 Nisan 2026 tarihli Nature çalışması `correct / incorrect / abstain` ayrımıyla değerlendirme yapılmasını ve yanlış cevap maliyetinin hesaba katılmasını savunuyor. Örneklerin sayısı, kaynak türü ve koşullar açıklanmadan yüzde başarı iddiası oluşturma. NIST AI RMF GenAI Profile (2024, resmî sayfa 2026'da güncellendi) risk yönetimi başvurusudur; 'otomatik doğruluk sertifikası' değildir.
+
+**Kabul testi:** (a) gerçek ve kaynaklı teknik veri, (b) yanlış varyantla aynı sayı, (c) birim çelişkisi, (d) lisansı şüpheli fotoğraf, (e) prompt injection içeren üretici PDF metni, (f) gizli taslak, (g) ücret/kota sınırı örneklerinden oluşan adversarial altın set; her biri için doğru cevap, hatalı yayına geçirme, uygun yerde 'kanıt yetersiz' diyebilme, açık kaynak URL ve izin ihlali ayrı sayılır. False publish oranını başarı ölçüsünün merkezine koy; onay kapısını AI öz güvenine bırakma.
+
+Kaynak: https://genai.owasp.org/llm2026/llm012026-prompt-injection/ ; https://www.nature.com/articles/s41586-026-10549-w ; https://www.nist.gov/publications/artificial-intelligence-risk-management-framework-generative-artificial-intelligence
+
+### R2.9 — Öncelikli araştırma ve kabul tablosu
+
+| Öncelik | Soru | Gerçek kabul kanıtı | Risk / yapılmaması gereken |
+|---|---|---|---|
+| P0 | Yeni veri yanlış model/varyant mı? | Belge, kimlik, ölçüm türü ve çelişki kontrolü | Sessizce toplu yayımlama |
+| P0 | Anon/draft veya servis yetkisi sızıyor mu? | RLS/fonksiyon izin ve ret testleri | Service-role anahtarını istemciye taşıma |
+| P1 | Fotoğraf gerçekten lisanslı mı? | Dosya-özgül hak, atıf ve model eşleşmesi | Atıfsız üretici fotoğrafını kopyalama |
+| P1 | Çeviri teknik anlamı koruyor mu? | 10 dilde anlamlı örneklem, varyant ve birim testi | Eksik çeviriyi hreflang ile yayımlama |
+| P1 | Kullanıcı doğru karşılaştırmayı tamamlayabiliyor mu? | Aynı yöntemle önce/sonra görev testi; gerçek kullanıcı yoksa dürüst rapor | Görselliği başarı oranı gibi sunma |
+| P1 | SEO/GEO gerçek etkisi nedir? | Aynı URL, dil, dönem için GSC/Bing/analitik kanıtı | IndexNow/sitemap 200 ile indekslendi deme |
+| P2 | Yeni altyapı kontrolü gerekli mi? | Kaynak SHA, doğrulanabilir artifact ve canlı dağıtım kanıtı | Kullanıcı etkisi olmadan karmaşık mimari değişiklik |
+
+**Süreç:** Bu bölüm araştırmadır. İleride ilgili göreve girildiğinde güncel AGENTS ve başvuru standartları tekrar kontrol edilir; dokümantasyonun yazılmış olması otomatik olarak site değişikliği, güvenlik testi, kullanıcı testi veya sürekli model eğitimi gerçekleştirilmiş olduğu anlamına gelmez.
