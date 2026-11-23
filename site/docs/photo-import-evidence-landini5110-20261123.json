@@ -1,0 +1,48 @@
+{
+  "reviewRequired": true,
+  "approvedToPublish": false,
+  "publicationCount": 0,
+  "fileId": "landini-5-110-roboshift-marcelx42-2023",
+  "sourcePage": "https://commons.wikimedia.org/wiki/File:Landini_5-110_RoboShift_Agritechnica_2023_(DSC05711).jpg",
+  "photographer": "MarcelX42",
+  "licenseName": "CC BY-SA 4.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+  "model": {
+    "brand": "Landini",
+    "model_name": "5-110",
+    "variant": "Serie 5 FPT Stage V; EU official brochure / equipment unspecified",
+    "market": "Europe",
+    "tractor_id": "264687c1-8dd2-5801-9e2e-11901f4acf6b"
+  },
+  "original1920": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/9b/Landini_5-110_RoboShift_Agritechnica_2023_%28DSC05711%29.jpg/1920px-Landini_5-110_RoboShift_Agritechnica_2023_%28DSC05711%29.jpg",
+  "originalSourceBytes": 468668,
+  "originalSourceSha256": "c2cb7363f2344915078879aa82323841ae5e0e5946a12db58246823bad0dba12",
+  "existing480": {
+    "width": 480,
+    "height": 270,
+    "bytes": 36129,
+    "sha256": "ec7d58e8ffc65beaf06404d575efd984fdbf955ab81fa2fa3b8cf6d974afd9e5",
+    "meanPixelDifferenceFromSource1920": [
+      5.8469,
+      4.8787,
+      6.7655
+    ]
+  },
+  "newDerivatives": [
+    {
+      "file": "landini-5-110-roboshift-marcelx42-2023-960.jpg",
+      "width": 960,
+      "height": 540,
+      "bytes": 125811,
+      "sha256": "a30ac5fef1aa08455dedc40e0cd335bf82bc88444d2d3c7b8958daa2916c4dfb"
+    },
+    {
+      "file": "landini-5-110-roboshift-marcelx42-2023-1920.jpg",
+      "width": 1920,
+      "height": 1081,
+      "bytes": 447724,
+      "sha256": "df3de0991ba6381f0243410ee7f5738246ae7ce0358c6e91072bc405847de7f9"
+    }
+  ],
+  "configurationExact": false
+}
