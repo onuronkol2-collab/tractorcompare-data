@@ -27,7 +27,7 @@
   background: radial-gradient(ellipse at 90% 0, #31593c, transparent 55%), #15291e;
   color: #f5f8f2;
 }
-#main :is(.home-action-card, .tractor-card, .model-answer-card, .editorial-card, .advisor-step, .community-starter-card) {
+#main :is(.home-action-card, .tractor-card, .model-answer-card, .editorial-card, .advisor-form, .community-starter-card) {
   border: 1px solid var(--research-edge);
   border-block-start: 3px solid var(--research-accent);
   border-radius: 14px;
@@ -95,4 +95,210 @@
 }
 @media (max-width: 48rem) {
   .site-footer .footer-main { grid-template-columns: minmax(0, 1fr); }
+}
+
+/* TractorVS sitewide research design quality (2026-11-23).
+   Visual-only: maintain model identity, measurements, comparative table
+   semantics, canonical/hreflang, forum auth, consent and licensed photos.
+   Consistent evidence-first surfaces, without turning this into a marketplace. */
+:root {
+  --ui-surface: #fff;
+  --ui-surface-soft: #f8fbf6;
+  --ui-line: #cedbce;
+  --ui-ink-secondary: #425b49;
+  --ui-accent: #285b40;
+  --ui-radius: 18px;
+  --ui-shadow: 0 3px 12px rgb(15 41 23 / 5%), 0 13px 30px rgb(15 41 23 / 3%);
+  --ui-shadow-hover: 0 8px 24px rgb(15 41 23 / 9%), 0 24px 48px rgb(15 41 23 / 5%);
+  --ui-reading-width: 68ch;
+}
+body { line-height: 1.55; }
+#main :is(h1, h2, h3) { text-wrap: balance; }
+#main :is(p, li, dd, blockquote) { overflow-wrap: break-word; }
+
+/* The logo and the main paths are the first reading task on every page. */
+.site-header .brand-words strong { font-size: clamp(16px, 1.3vw, 19px); line-height: 1.2; }
+.site-header .brand-words small { font-size: 11px; line-height: 1.5; letter-spacing: .035em; color: #b7c9b9; }
+.site-header .desktop-nav > a {
+  padding-inline: clamp(2px, .35vw, 5px);
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 750;
+  color: #e4ede3;
+  transition: color .16s ease, background-color .16s ease;
+}
+.site-header .desktop-nav > a:is(:hover, :focus-visible) {
+  background-color: rgb(183 223 145 / 11%);
+  color: #e5f8ce;
+}
+.site-header .desktop-nav > a[aria-current="page"],
+.site-header .desktop-nav > a.is-current-section {
+  color: #d3f2bd;
+}
+.site-header .resource-nav-menu > summary,
+.site-header .language-switch { font-size: 14px; line-height: 1.45; }
+.site-header .header-cta { border-radius: 10px; font-size: 14px; line-height: 1.4; }
+.site-header .header-cta:is(:hover, :focus-visible) { background-color: #d4edb8; }
+.site-header :is(.locale-options, .mobile-nav-links, .resource-nav-links, .header-search-form) {
+  border-color: #b8ceb9;
+  border-radius: 15px;
+  box-shadow: 0 18px 48px rgb(4 21 12 / 23%);
+}
+.site-header :is(.locale-options a, .mobile-nav-links a, .resource-nav-links a) {
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+
+/* Research surfaces share a consistent visual weight across discovery,
+   catalogue, model evidence, comparison, editorial, advisor and forum. */
+#main :is(.home-action-card, .home-featured-card, .tractor-card,
+          .model-answer-card, .editorial-card, .advisor-form,
+          .community-starter-card, .model-spec-card) {
+  min-inline-size: 0;
+  border-color: var(--ui-line);
+  border-radius: var(--ui-radius);
+  box-shadow: var(--ui-shadow);
+}
+#main :is(.home-action-card, .home-featured-card, .tractor-card,
+          .model-answer-card, .editorial-card, .advisor-form,
+          .community-starter-card, .model-spec-card) {
+  background-color: var(--ui-surface);
+}
+#main .home-action-card--accent { background-color: #e7f1e2; }
+#main .home-featured-card { background-color: var(--ui-surface-soft); }
+#main :is(.home-action-card, .home-featured-card, .tractor-card, .editorial-card) {
+  transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+}
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  #main :is(.home-action-card, .home-featured-card, .tractor-card, .editorial-card):hover {
+    transform: translateY(-2px);
+    box-shadow: var(--ui-shadow-hover);
+    border-color: #a5c2a3;
+  }
+}
+#main :is(.home-action-card, .home-featured-card, .tractor-card, .editorial-card):focus-within {
+  border-color: #5e9869;
+  box-shadow: 0 0 0 2px rgb(63 132 77 / 12%), var(--ui-shadow);
+}
+
+/* Hierarchy and reading rhythm: keep technical labels distinct from values,
+   units, qualifiers, source notes and uncertainty statements. */
+#main :is(.home-section-heading h2, .model-spec-heading h2,
+          .tc-workspace-intro h2, .tc-table-bar h2,
+          .community-section-header h2) {
+  line-height: 1.2;
+  letter-spacing: -.035em;
+}
+#main :is(.home-action-card h3, .home-featured-card h3,
+          .tractor-card h2, .editorial-card h3) {
+  line-height: 1.25;
+  letter-spacing: -.025em;
+  overflow-wrap: break-word;
+}
+#main :is(.home-action-card p, .home-featured-card p,
+          .tractor-card-meta, .editorial-card > p:not(.editorial-kicker),
+          .model-answer-card p) {
+  line-height: 1.7;
+}
+#main .home-action-card p { font-size: clamp(15px, 1.1vw, 17px); color: #445d4b; }
+#main .home-featured-card p { color: #405948; }
+#main :is(.catalog-toolbar > span, .catalog-search-feedback,
+          .model-spec-heading > p, .tc-workspace-intro p, .tc-table-bar p,
+          .editorial-rules p) {
+  max-inline-size: var(--ui-reading-width);
+  color: var(--ui-ink-secondary);
+  line-height: 1.7;
+}
+#main .model-spec-card { padding: clamp(18px, 2vw, 24px); }
+#main .model-spec-top { min-inline-size: 0; flex-wrap: wrap; row-gap: 5px; }
+#main .model-spec-top h4 { color: #2c5038; font-size: 15px; line-height: 1.5; }
+#main .model-spec-top > span {
+  min-inline-size: 0;
+  flex: 0 1 auto;
+  color: #4f6655;
+  font-size: 13px;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+#main .model-spec-value {
+  font-size: clamp(23px, 2.25vw, 30px);
+  line-height: 1.28;
+  letter-spacing: -.03em;
+  font-variant-numeric: tabular-nums;
+}
+#main .model-spec-source a {
+  font-size: 15px;
+  line-height: 1.6;
+  text-decoration: underline;
+  text-underline-offset: .18em;
+}
+#main .model-spec-source small,
+#main .model-spec-source > span { color: #445d4a; font-size: 13px; line-height: 1.6; }
+#main .catalog-toolbar label { color: #284c37; font-size: 15px; }
+#main .tractor-card h2 { font-size: clamp(22px, 2vw, 26px); }
+
+/* Credible content links must look like links, especially source references. */
+#main :is(.model-spec-source a, .guide-sources a, .model-answer-links a,
+          .editorial-card-footer a, .parts-source-note a,
+          .tractor-photo-short-credit a) {
+  text-decoration: underline;
+  text-decoration-thickness: .09em;
+  text-underline-offset: .2em;
+}
+#main :is(.model-spec-source a, .guide-sources a, .model-answer-links a,
+          .editorial-card-footer a, .parts-source-note a,
+          .tractor-photo-short-credit a):is(:hover, :focus-visible) {
+  text-decoration-thickness: .15em;
+}
+
+/* Data stays scannable and source conditions remain connected to each row. */
+#main :is(.model-summary-grid, .home-featured-facts, .tc-table,
+          .tractor-card-specs) { font-variant-numeric: tabular-nums; }
+#main .model-spec-group > h3 { padding-block: 0 14px; font-size: clamp(19px, 1.7vw, 22px); }
+#main .tc-section .tc-picker { border-color: var(--ui-line); box-shadow: var(--ui-shadow); }
+#main .tc-section .tc-table thead th { background-color: #d9e9d3; }
+#main .tc-section .tc-table tbody th { background-color: #edf5e9; }
+#main .tc-section .tc-table tbody td { line-height: 1.6; }
+
+/* Forum focus: make editorial reading distinct from secondary counts,
+   without touching member privacy, moderation, form state or data requests. */
+#main .community-shell .community-topic h3 { line-height: 1.4; }
+#main .community-shell .community-topic-content > p {
+  font-size: 15px;
+  line-height: 1.7;
+}
+#main .community-shell :is(.community-topic-meta, .forum-live-meta) {
+  line-height: 1.6;
+}
+#main .community-shell :is(input:not([type="checkbox"]), select, textarea) {
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+/* Footer is a real navigation destination, not decorative microcopy. */
+.site-footer .footer-group :is(a, button) { font-size: 15px; line-height: 1.5; }
+.site-footer .footer-group h2 { font-size: 17px; }
+.site-footer .footer-bottom { font-size: 12px; line-height: 1.65; }
+.site-footer .footer-note { line-height: 1.7; }
+
+/* Controlled reflow for long German/Portuguese terms and non-Latin scripts.
+   Never clip the 2–4 column comparison table or independently scroll the body. */
+@media (max-width: 48rem) {
+  #main :is(.home-action-card, .home-featured-card,
+            .tractor-card, .model-answer-card, .editorial-card,
+            .advisor-step, .model-spec-card) { border-radius: 16px; }
+  #main :is(.tc-workspace-intro, .tc-table-bar-title) {
+    min-inline-size: 0;
+    flex-wrap: wrap;
+    align-items: flex-start;
+  }
+  #main :is(.model-spec-top, .model-spec-source, .home-brand-row) {
+    min-inline-size: 0;
+    overflow-wrap: anywhere;
+  }
+  .site-footer .footer-bottom { flex-wrap: wrap; row-gap: 6px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  #main :is(.home-action-card, .home-featured-card,
+            .tractor-card, .editorial-card):hover { transform: none; }
 }
