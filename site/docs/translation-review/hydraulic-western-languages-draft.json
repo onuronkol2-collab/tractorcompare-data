@@ -56,6 +56,12 @@
       "https://tractortestlab.unl.edu/",
       "https://www.oecd.org/en/topics/tractors.html",
       "https://www.hse.gov.uk/agriculture/topics/machinery/fluid.htm"
+    ],
+    "verification": "This article is educational and does not claim hands-on testing, component disassembly or tractor ownership. For a model-specific number, confirm the exact tractor, year, market and equipment in the producer's documentation. Where independent tests exist, compare their test procedures.",
+    "sourceLabels": [
+      "Nebraska Tractor Test Laboratory",
+      "OECD tractor testing codes",
+      "HSE — high-pressure hydraulic fluid injection hazards"
     ]
   },
   "reviewed": false,
@@ -107,6 +113,12 @@
             "Fehlt in zwei Prospekten der Messpunkt der Hubkraft, lautet das ehrliche Ergebnis „nicht direkt vergleichbar“, statt einen Sieger zu behaupten. Vor Wartung oder Schlauchanschluss muss gespeicherter Druck nach Herstellervorgaben sicher abgebaut werden. Suchen Sie niemals mit bloßen Händen nach einem unter Druck stehenden Hydraulikleck: Hochdruckflüssigkeit kann die Haut durchdringen und schwere Verletzungen verursachen."
           ]
         }
+      ],
+      "verification": "Dieser Artikel dient der technischen Bildung und behauptet weder praktische Tests noch Demontage oder eigenen Traktorbesitz. Prüfen Sie modellbezogene Zahlen anhand der genauen Ausführung, des Baujahrs, Markts und der Ausstattung in den Herstellerunterlagen. Vergleichen Sie bei unabhängigen Tests die Prüfverfahren.",
+      "sourceLabels": [
+        "Nebraska Tractor Test Laboratory",
+        "OECD-Prüfcodes für Traktoren",
+        "HSE – Gefahren durch Injektion von Hydraulikflüssigkeit unter hohem Druck"
       ]
     },
     "fr": {
@@ -155,6 +167,12 @@
             "Si deux brochures omettent le point de mesure du relevage, la conclusion honnête est « pas directement comparable », plutôt que de désigner un gagnant. Avant toute maintenance hydraulique ou connexion de flexible, suivez la procédure du fabricant pour éliminer la pression résiduelle en sécurité. Ne recherchez jamais une fuite sous pression à mains nues : le fluide à haute pression peut pénétrer la peau et provoquer des blessures graves."
           ]
         }
+      ],
+      "verification": "Cet article est pédagogique et ne prétend pas reposer sur des essais pratiques, un démontage ou la possession d’un tracteur. Pour une valeur propre à un modèle, vérifiez la version exacte, l’année, le marché et l’équipement dans la documentation du fabricant. Pour les essais indépendants, comparez les procédures utilisées.",
+      "sourceLabels": [
+        "Laboratoire d’essais de tracteurs du Nebraska",
+        "Codes d’essais de tracteurs de l’OCDE",
+        "HSE — risques d’injection de fluide hydraulique sous haute pression"
       ]
     },
     "es": {
@@ -203,6 +221,12 @@
             "Si dos catálogos omiten el punto de medición de la elevación, la conclusión honesta es «no directamente comparables», no un ganador seguro. Antes del mantenimiento hidráulico o de conectar mangueras, siga el procedimiento del fabricante para liberar de forma segura la presión acumulada. Nunca busque una fuga hidráulica presurizada con las manos desnudas: el fluido a alta presión puede penetrar la piel y causar lesiones graves."
           ]
         }
+      ],
+      "verification": "Este artículo es educativo y no afirma que se hayan realizado pruebas prácticas, desmontajes ni que se posea un tractor. Para una cifra concreta, verifique el modelo, el año, el mercado y el equipamiento exactos en la documentación del fabricante. Si existen ensayos independientes, compare sus procedimientos.",
+      "sourceLabels": [
+        "Laboratorio de Ensayos de Tractores de Nebraska",
+        "Códigos de ensayo de tractores de la OCDE",
+        "HSE — riesgos de inyección de fluido hidráulico a alta presión"
       ]
     },
     "pt-br": {
@@ -251,7 +275,14 @@
             "Se dois catálogos omitirem o ponto de medição do levante, a conclusão honesta é «não diretamente comparáveis», em vez de apontar um vencedor. Antes da manutenção hidráulica ou conexão de mangueiras, siga o procedimento do fabricante para liberar com segurança a pressão armazenada. Nunca procure um vazamento hidráulico pressurizado com as mãos desprotegidas: fluido sob alta pressão pode penetrar a pele e causar ferimentos graves."
           ]
         }
+      ],
+      "verification": "Este artigo é educativo e não alega testes práticos, desmontagem de componentes ou propriedade de um trator. Para um dado de modelo, confirme o modelo, ano, mercado e equipamentos exatos na documentação do fabricante. Quando houver testes independentes, compare os procedimentos utilizados.",
+      "sourceLabels": [
+        "Laboratório de Ensaios de Tratores de Nebraska",
+        "Códigos de ensaio de tratores da OCDE",
+        "HSE — riscos de injeção de fluido hidráulico sob alta pressão"
       ]
     }
-  }
+  },
+  "translationScope": "Main article, comparison note, verification disclosure and source link labels only. UI, glossary links, photo credit and related content must be integrated and reviewed before publishing."
 }
