@@ -26,7 +26,7 @@ test("published model links remain server-rendered and the accessible search cou
  assert.match(catalog,/data-count-template=\{filterCopy\.shown\}/);
  assert.match(catalog,/String\(catalog\.tractors\.length\)/);
  assert.match(catalog,/id="catalog-search-clear" type="button" hidden/);
- assert.match(catalog,/if \(clearSearch\) clearSearch\.hidden = !normalized/);
+ assert.match(catalog,/if \(clearSearch && clearSearch.hidden !== !normalized\) clearSearch\.hidden = !normalized/);
  assert.match(catalog,/filterCatalog\(""\)/);
  assert.match(catalog,/clearQueryFromURL\(\)/);
  assert.doesNotMatch(catalog,/const modelCount = [0-9]+|fakeResults|AI-generated result count/i);
@@ -42,7 +42,9 @@ test("search remains same-page filtering and synchronizes shareable q across lan
  assert.match(catalog,/destination\.searchParams\.set\("q",query\)/);
  assert.match(catalog,/history\.replaceState\(history\.state/);
  assert.match(catalog,/new URLSearchParams\(window\.location\.search\)\.get\("q"\)/);
- assert.match(catalog,/if \(noResults\) noResults\.hidden = visible > 0/);
+ assert.match(catalog,/const empty = visible === 0/);
+ assert.match(catalog,/if \(noResults && noResults.hidden === empty\) noResults\.hidden = !empty/);
+ assert.match(catalog,/if\(visibleCount.textContent!==countText\) visibleCount.textContent=countText/);
  assert.match(catalog,/search\.focus\(\)/);
  assert.match(catalog,/button\[hidden\] \{display:none\}/);
 });
