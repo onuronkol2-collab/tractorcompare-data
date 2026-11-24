@@ -2,8 +2,8 @@
   "version": 1,
   "pages": {
     "https://tractorvs.com/": {
-      "digest": "02b7d1b2778775e8c9e2d46379678c14a30272e2b0255e5b3ab9cb8d7f97c90c",
-      "modified": "2026-11-24T18:04:40.415Z"
+      "digest": "a2bb8c0ff55e9e6c6ffc53d1a3c64b20f7303f53fa682537cf8700d881119c9c",
+      "modified": "2026-11-24T18:13:53.928Z"
     },
     "https://tractorvs.com/articles/": {
       "digest": "a22ac47998f82d2b8426a43cba5780deab1550bd512ff7dc9066613092553adc",
@@ -18,28 +18,28 @@
       "modified": "2026-11-22T08:02:35.845Z"
     },
     "https://tractorvs.com/compare/": {
-      "digest": "fe94bae5a6247beae2a224cfd2a226879593d241e2854f54e68d13323324f370",
-      "modified": "2026-11-24T18:04:40.415Z"
+      "digest": "d6bfe9ae0328a994526e35d0293438ff1d566484d0eeff77d9e4a6a21170d560",
+      "modified": "2026-11-24T18:13:53.928Z"
     },
     "https://tractorvs.com/compare/deutz-fahr-5090-d-gs-vs-5100-d-gs/": {
       "digest": "922999b9696029c032d6b1c71856522e23db46cc43479dd85fbb929909556a66",
       "modified": "2026-11-23T16:20:24.281Z"
     },
     "https://tractorvs.com/de/": {
-      "digest": "f0503dca5b69796b548a9d81d7bee0ce235ec176a9c954196eb0d3d626b38b70",
-      "modified": "2026-11-24T18:04:40.415Z"
+      "digest": "4c16244e15828a91f4e060f803e17d7614bffe0ad63dc893874e0ee5e7ce0bff",
+      "modified": "2026-11-24T18:13:53.928Z"
     },
     "https://tractorvs.com/de/articles/": {
       "digest": "9cce9f9a36c605c632ee48dff4ecd8c4081fa5dae572b36eafe256ac8d2f2263",
       "modified": "2026-11-24T16:26:42.582Z"
     },
     "https://tractorvs.com/de/compare/": {
-      "digest": "5d839efd2f7d867c7351fc4bc4999d48719dc61312d3254a5b764ed4fd7a909c",
-      "modified": "2026-11-24T18:04:40.415Z"
+      "digest": "22dffab69fedc3d2c6ad9521ef4df9add70440ba273855c28a5bea48329dd262",
+      "modified": "2026-11-24T18:13:53.928Z"
     },
     "https://tractorvs.com/de/farm-advisor/": {
-      "digest": "8098d88fde490b9e4eac834a4e54c130917bff7fd1832dee312b0b8a5f4306ab",
-      "modified": "2026-11-24T18:04:40.415Z"
+      "digest": "cff549375933ba61d3ddb8786428e0be5c5a638e5edc2fb10f5d7c180d09037b",
+      "modified": "2026-11-24T18:13:53.928Z"
     },
     "https://tractorvs.com/de/guides/choosing-a-tractor/": {
       "digest": "acc98b0e38785c5bb7351954a96e7befc0334131c983ee46d8c6b2b857b3a780",
@@ -54,8 +54,8 @@
       "modified": "2026-11-24T16:26:42.582Z"
     },
     "https://tractorvs.com/de/tractors/": {
-      "digest": "6690d97a080e4f6470bf69a95be9512a1181cfecb2f83187b9bcc601e17da632",
-      "modified": "2026-11-24T18:04:40.415Z"
+      "digest": "f54aa82353ef00ee9e6e5aa6103b5555d57d9caaab3c23f7d3c91f8c08d137c9",
+      "modified": "2026-11-24T18:13:53.928Z"
     },
     "https://tractorvs.com/de/tractors/agrale-4125-0b53e944/": {
       "digest": "cdb27054e6be39c7c02cbfb34aa38e40f8d59d9b590108e3677651c1e13cec0e",
@@ -166,16 +166,24 @@
       "modified": "2026-11-23T16:45:17.078Z"
     },
     "https://tractorvs.com/de/tractors/basak-traktor-2055-d1258ec7/": {
-      "digest": "fe1a01a572300d20a176433ae67519cdd3e00df6ab2d0df9e67e49deddb1119d",
-      "modified": "2026-11-24T18:04:40.415Z"
+      "digest": "cd9856fe44d0b9f356f1afaffc20ddce77fe9607b3340bb5ac12e16a620a8f91",
+      "modified": "2026-11-24T18:13:53.928Z"
     },
     "https://tractorvs.com/de/tractors/basak-traktor-2075-bk-9ef236be/": {
-      "digest": "be93d16d9cea7dee12697aa0a3fa9f36debd7ca6902539cdec48b42c129235d4",
-      "modified": "2026-11-24T18:04:40.415Z"
+      "digest": "db2f7ddddfeeb5ad90404a1ff821d27fd4081918735070e66b94856eefe6e6cf",
+      "modified": "2026-11-24T18:13:53.928Z"
     },
     "https://tractorvs.com/de/tractors/basak-traktor-2075-bt-ddb654b6/": {
-      "digest": "134677765f8798aea46d55c1874a5d91df11c95fc8343b327ae727edd962d1f7",
-      "modified": "2026-11-24T18:04:40.415Z"
+      "digest": "e5f44d3ad300c647e97b2df41052697dfe289065326b06bd228528ff1d8a0e04",
+      "modified": "2026-11-24T18:13:53.928Z"
+    },
+    "https://tractorvs.com/de/tractors/basak-traktor-3026-2bc6ed35/": {
+      "digest": "a66a0dcbc9ce2cb4e571ef14ba73d5a861e480c43d21bd887c29ed6c56d06713",
+      "modified": "2026-11-24T18:13:53.928Z"
+    },
+    "https://tractorvs.com/de/tractors/basak-traktor-5075-compact-20e382ea/": {
+      "digest": "7463475164229fb5e793bde741d6886f7c0d62d41c89fbd65be1e62eba7609da",
+      "modified": "2026-11-24T18:13:53.928Z"
     },
     "https://tractorvs.com/de/tractors/basak-traktor-5120-01590869/": {
       "digest": "3c3a02b8e5ad5004bc8d000853e05d191a995d9a439f2bcadce573627e9e0a13",
@@ -969,25 +977,45 @@
       "digest": "fd70e3fadfb79097fecd128df9e25554bea3fbf78925cc0d4ffead92563575fc",
       "modified": "2026-11-24T15:48:25.289Z"
     },
+    "https://tractorvs.com/de/tractors/solis-50-stage-v-rops-92f3de83/": {
+      "digest": "a5f08ea8d162be81a5cd4d090f4aa07aae010cb3587ebfb08bba59db17a844dd",
+      "modified": "2026-11-24T18:13:53.928Z"
+    },
+    "https://tractorvs.com/de/tractors/solis-60-hvac-stage-v-ee86ff52/": {
+      "digest": "e4e62cee91208e32900fd40736459da437c419620a4643b09c7436bec78bbadf",
+      "modified": "2026-11-24T18:13:53.928Z"
+    },
+    "https://tractorvs.com/de/tractors/solis-60-stage-v-rops-7be538d8/": {
+      "digest": "1dc67e3eb3b7833bacdfb058b2439c472579295facfcca160d6d5a4d37b0a4bb",
+      "modified": "2026-11-24T18:13:53.928Z"
+    },
     "https://tractorvs.com/de/tractors/solis-75-dt-mr-39a48550/": {
-      "digest": "c2f3c52933ac473f439401cc40251daece84669a6d8774bfb952005f6d49d129",
-      "modified": "2026-11-24T18:04:40.415Z"
+      "digest": "94112fea755016f9260ac57e28b290930823925e3026b39a26bfd1286a2bf2df",
+      "modified": "2026-11-24T18:13:53.928Z"
+    },
+    "https://tractorvs.com/de/tractors/solis-75-hvac-stage-v-948b5823/": {
+      "digest": "955747e5e5fee5cbbf24ef5c973addad93afe06189b055294970581214af5012",
+      "modified": "2026-11-24T18:13:53.928Z"
     },
     "https://tractorvs.com/de/tractors/solis-90-dt-mr-33e556bc/": {
-      "digest": "a6e6a1ba17b28bc8c3e9330e5b38483c7c2ae08a51a543a79dd4bf6d44bbc109",
-      "modified": "2026-11-24T18:04:40.415Z"
+      "digest": "1ef1f3ee70fb6c0ed6a45e7455c9944e661196532b54f10d648a03f9637d1e8a",
+      "modified": "2026-11-24T18:13:53.928Z"
+    },
+    "https://tractorvs.com/de/tractors/solis-90-hvac-stage-v-8760f728/": {
+      "digest": "5d36b721810cc65286aaa383d25d13b4a3db91c9c6c35df41769af5930f8b847",
+      "modified": "2026-11-24T18:13:53.928Z"
     },
     "https://tractorvs.com/de/tractors/solis-s-50-dt-c7ce4206/": {
-      "digest": "76cd4d82afea7494b443b8e4867573e4dd9227cc257d7366b178890bae20c5f8",
-      "modified": "2026-11-24T18:04:40.415Z"
+      "digest": "c58e1bdb2a8b3b52f25a2a6d0d81526e91d37d72be01081f85a0877c84440e35",
+      "modified": "2026-11-24T18:13:53.928Z"
     },
     "https://tractorvs.com/de/tractors/solis-s-50-st-6ecbbd12/": {
-      "digest": "087be27bb62e0fc852d1ed18666b911b863f973258d56f2ef854e12371757683",
-      "modified": "2026-11-24T18:04:40.415Z"
+      "digest": "d2c0adf832060d0c0b1908947d2f36bd66af0ef9fdf607dc157fb90c18c80155",
+      "modified": "2026-11-24T18:13:53.928Z"
     },
     "https://tractorvs.com/de/tractors/solis-s-75-nt-crdi-d3dccd43/": {
-      "digest": "1219dd04d7b8e7903885c5721b86c158d68f9fd09bd217ad00ce7dd86cef6727",
-      "modified": "2026-11-24T18:04:40.415Z"
+      "digest": "ed7abfbc5b3cc205e3e721ef23cc3264f9b4ad83dce740f989665a7bf7030049",
+      "modified": "2026-11-24T18:13:53.928Z"
     },
     "https://tractorvs.com/de/tractors/sonalika-110-wt-d76351cf/": {
       "digest": "2c31348502ffb07fcdae4736caaea390229105644e16ccdd500784187dae0633",
@@ -1674,16 +1702,28 @@
       "modified": "2026-11-24T18:04:40.415Z"
     },
     "https://tractorvs.com/de/tractors/versatile-530-ef3c1117/": {
-      "digest": "6b378897fd5df87a688fffacb0841bafc08bc9ac350fd6884049c99dea5d736e",
-      "modified": "2026-11-24T18:04:40.415Z"
+      "digest": "e89bb8d7ac8f73809722341c754bacd15d71efef91aba077b59a35610d141d44",
+      "modified": "2026-11-24T18:13:53.928Z"
+    },
+    "https://tractorvs.com/de/tractors/versatile-530dt-47837e65/": {
+      "digest": "3c5de47e2e1904ce47aaaf289ee374b51d75b8f8acbda48a1b3014e2d3ea5d17",
+      "modified": "2026-11-24T18:13:53.928Z"
     },
     "https://tractorvs.com/de/tractors/versatile-580-4a09051c/": {
-      "digest": "47f333067dc22d23d12fa8b56765e2bae3e3e79e778e124b3a4f9fda7152455d",
-      "modified": "2026-11-24T18:04:40.415Z"
+      "digest": "44f7471045bcdf079b84d69a071956bc178a2a9e7501763103a2ad7c4b71b244",
+      "modified": "2026-11-24T18:13:53.928Z"
+    },
+    "https://tractorvs.com/de/tractors/versatile-580dt-636f2708/": {
+      "digest": "91848ee998eaf9046f2c6e57c44947057f1e4eafe5cfedd65f97d4c0409a2875",
+      "modified": "2026-11-24T18:13:53.928Z"
     },
     "https://tractorvs.com/de/tractors/versatile-620-08b724f4/": {
-      "digest": "411734cd7d8280222896682675e850cb3a377eb8ac43d5c20df017445a98faca",
-      "modified": "2026-11-24T18:04:40.415Z"
+      "digest": "97f5592dec462781c9cfd2ac0b9e8c60435f54de8e5f918a0707cd7a89c7fc0e",
+      "modified": "2026-11-24T18:13:53.928Z"
+    },
+    "https://tractorvs.com/de/tractors/versatile-620dt-cbdfd364/": {
+      "digest": "8366da74ae690c94e815e6ab3ef76d32fb35c596d2a74bfec24b6a2ac40db0ae",
+      "modified": "2026-11-24T18:13:53.928Z"
     },
     "https://tractorvs.com/de/tractors/versatile-nemesis-175-9016d690/": {
       "digest": "904fb544e1a0c5b04287bfdcc23e4365512a46a50c9a53af34b39cb2414acf50",
@@ -1838,20 +1878,20 @@
       "modified": "2026-11-24T16:37:35.751Z"
     },
     "https://tractorvs.com/es/": {
-      "digest": "c2a6e40edd5600602f9d9603d17e8f77f6a913c560a9ebaf7f9d2f556a59ab3f",
-      "modified": "2026-11-24T18:04:40.415Z"
+      "digest": "d5086a59efe290c1edb456eecaa5ac3807a04061b671d134f9eb46944a01cd1d",
+      "modified": "2026-11-24T18:13:53.928Z"
     },
     "https://tractorvs.com/es/articles/": {
       "digest": "bdb48056cf70631e4bf66f4d96e825f1ddccbf4ea1cbae9bf064674cf5f89895",
       "modified": "2026-11-24T16:26:42.582Z"
     },
     "https://tractorvs.com/es/compare/": {
-      "digest": "f04a4ca29a991718f67ce174ca6b30838bdc0e5309c7f63f6de6c5e0491aad87",
-      "modified": "2026-11-24T18:04:40.415Z"
+      "digest": "110f4319f4add19a3eed39c8def2c4695e095d8830b27f330bfe6a7413faf8c2",
+      "modified": "2026-11-24T18:13:53.928Z"
     },
     "https://tractorvs.com/es/farm-advisor/": {
-      "digest": "043e8d9bce26938d2200bf7844eef497013450d216059e68ec7ed6b58c15b68f",
-      "modified": "2026-11-24T18:04:40.415Z"
+      "digest": "748d9f0c1c4dadd2e3a451a33168044c5bad91b3d706cc270001585f6811a673",
+      "modified": "2026-11-24T18:13:53.928Z"
     },
     "https://tractorvs.com/es/guides/choosing-a-tractor/": {
       "digest": "b1a38e2e8c95d29d38a3f9d5bbf8050212ab529d55835bf6ded427f21ed8cc7e",
@@ -1866,8 +1906,8 @@
       "modified": "2026-11-24T16:26:42.582Z"
     },
     "https://tractorvs.com/es/tractors/": {
-      "digest": "3289651b9772d56aeea07fb4a9738deafd9f8b18862cbf2e86f760ad8df9e9fd",
-      "modified": "2026-11-24T18:04:40.415Z"
+      "digest": "0a330a9770fe749dc67836ab4f87d31d0972dc6c7b0d00376e751f6d87cf8109",
+      "modified": "2026-11-24T18:13:53.928Z"
     },
     "https://tractorvs.com/es/tractors/agrale-4125-0b53e944/": {
       "digest": "f06a64d2f3c0f38fc43ddb427a077c88ef10ab6f77a3074e18518a88795995a3",
@@ -1978,16 +2018,24 @@
       "modified": "2026-11-23T16:45:17.078Z"
     },
     "https://tractorvs.com/es/tractors/basak-traktor-2055-d1258ec7/": {
-      "digest": "a15fcaf8acb1bda57e21fe99450f1993ca226c1c1a1040d1428e18795442f235",
-      "modified": "2026-11-24T18:04:40.415Z"
+      "digest": "917207ec5bdd5db8fc12e3c4a0bc98c48a2d7ac1e5bea6f82fa9ec09a26d67fc",
+      "modified": "2026-11-24T18:13:53.928Z"
     },
     "https://tractorvs.com/es/tractors/basak-traktor-2075-bk-9ef236be/": {
-      "digest": "8da3024d3cdecbb89478cadb8c0c3b0b435b3bee24966b0ded8acf4572b5222d",
-      "modified": "2026-11-24T18:04:40.415Z"
+      "digest": "2435398d88108c40545827428b37561dc9df746303925f0ddb12e77c3a0c8808",
+      "modified": "2026-11-24T18:13:53.928Z"
     },
     "https://tractorvs.com/es/tractors/basak-traktor-2075-bt-ddb654b6/": {
-      "digest": "3f77ae60af5d5f4eff2fdaceb5ce2bb9aa9807df3e64d7f810d58d0baa208830",
-      "modified": "2026-11-24T18:04:40.415Z"
+      "digest": "763812f418cfcfefa30a8ad70b714cca1c137e7244f2675e22febe0076f103b3",
+      "modified": "2026-11-24T18:13:53.928Z"
+    },
+    "https://tractorvs.com/es/tractors/basak-traktor-3026-2bc6ed35/": {
+      "digest": "fe36927e95826b37e7a52f62b4f1674a458baa0d9040b65ba45dc9444e70c434",
+      "modified": "2026-11-24T18:13:53.928Z"
+    },
+    "https://tractorvs.com/es/tractors/basak-traktor-5075-compact-20e382ea/": {
+      "digest": "51d18a076dc47075be209554a9ccfdfba783e5099b6c9b3ecdce7c7e3ca704bf",
+      "modified": "2026-11-24T18:13:53.928Z"
     },
     "https://tractorvs.com/es/tractors/basak-traktor-5120-01590869/": {
       "digest": "1e0d35e0017bd04882734837d2b05b4f9786c550702bf0b8b21f85886d4d75fe",
@@ -2781,25 +2829,45 @@
       "digest": "b46988a5899d0f34a905b1b3c313f7be86a0ef7c9d88223be1c80949ac770cda",
       "modified": "2026-11-24T15:48:25.289Z"
     },
+    "https://tractorvs.com/es/tractors/solis-50-stage-v-rops-92f3de83/": {
+      "digest": "b56c758f10bb2fee61ba6fb699b1b70f30b71a786bbb858eca8354d97c371ccb",
+      "modified": "2026-11-24T18:13:53.928Z"
+    },
+    "https://tractorvs.com/es/tractors/solis-60-hvac-stage-v-ee86ff52/": {
+      "digest": "2042e9212e07575403a717afd808ed292d3e40fb581965ababd5bb6053530057",
+      "modified": "2026-11-24T18:13:53.928Z"
+    },
+    "https://tractorvs.com/es/tractors/solis-60-stage-v-rops-7be538d8/": {
+      "digest": "4a44fc58d6b9b84e36140d1017f16b4f1182b8f7347ca9e445d739d8fce0ecb5",
+      "modified": "2026-11-24T18:13:53.928Z"
+    },
     "https://tractorvs.com/es/tractors/solis-75-dt-mr-39a48550/": {
-      "digest": "58296fd3e3ff8984ef2ef32a5da920ec81fa754e1af33f585025c2acc6565f3b",
-      "modified": "2026-11-24T18:04:40.415Z"
+      "digest": "9bb8e072b79a6c836468fa878dbc088567b6ff51bd7d40b53c8bfb770c8f097e",
+      "modified": "2026-11-24T18:13:53.928Z"
+    },
+    "https://tractorvs.com/es/tractors/solis-75-hvac-stage-v-948b5823/": {
+      "digest": "a2e658ef29df2ad832014ef2044eba9d76f541d5abe4b60c5734ea01fe55630d",
+      "modified": "2026-11-24T18:13:53.928Z"
     },
     "https://tractorvs.com/es/tractors/solis-90-dt-mr-33e556bc/": {
-      "digest": "b101a92a901e491c8d05fab97706ee501eb129b9916bc97aab77adbdb6cad76c",
-      "modified": "2026-11-24T18:04:40.415Z"
+      "digest": "69ecd2419a6dc407bd42f334ea3ec234e21ce37dc01c6876fc7f1c05a0b230e7",
+      "modified": "2026-11-24T18:13:53.928Z"
+    },
+    "https://tractorvs.com/es/tractors/solis-90-hvac-stage-v-8760f728/": {
+      "digest": "ff301ee1f04a9b9dc7decfabf71797b09b9a14e149b2fa2a331a6a71faee3b69",
+      "modified": "2026-11-24T18:13:53.928Z"
     },
     "https://tractorvs.com/es/tractors/solis-s-50-dt-c7ce4206/": {
-      "digest": "5feb93f996c7482cd4f6eae14a8a8579568a72e0a50ef5c7c79d8f88acd08199",
-      "modified": "2026-11-24T18:04:40.415Z"
+      "digest": "eb989b4892d6227dfde0d0999b82e8dce8c08400d35998a0e8ba1a6e33728490",
+      "modified": "2026-11-24T18:13:53.928Z"
     },
     "https://tractorvs.com/es/tractors/solis-s-50-st-6ecbbd12/": {
-      "digest": "d7348b1b88d7ac8d506034edd33813c3234620ffdd761048581924fb0d6224e5",
-      "modified": "2026-11-24T18:04:40.415Z"
+      "digest": "b1322d3b8cc490f1f8e0781ba433418ce36cc036e6e94e6891588c9c1edcb188",
+      "modified": "2026-11-24T18:13:53.928Z"
     },
     "https://tractorvs.com/es/tractors/solis-s-75-nt-crdi-d3dccd43/": {
-      "digest": "e691eafc6c88ca2d9268c99ea7935f7be1c9189f3f00f91e0e199c4dd9496bf8",
-      "modified": "2026-11-24T18:04:40.415Z"
+      "digest": "b15bee62cb0c8fbaa3e2c3a900b6be26fa04f1b74254d359fb3079b68663d756",
+      "modified": "2026-11-24T18:13:53.928Z"
     },
     "https://tractorvs.com/es/tractors/sonalika-110-wt-d76351cf/": {
       "digest": "292960f89e1deaecbbf1ef2b47dca984fa58b5b0d84edcd64592236af4a617b8",
@@ -3486,16 +3554,28 @@
       "modified": "2026-11-24T18:04:40.415Z"
     },
     "https://tractorvs.com/es/tractors/versatile-530-ef3c1117/": {
-      "digest": "b7a6cca6509491f1e54cd4f7a68b1621a199cb59fc82e052c913e42d11b0f4bf",
-      "modified": "2026-11-24T18:04:40.415Z"
+      "digest": "4cdc763871c2d0c0d3ddfd8c31984d0cfef8a54f55601c558e6ff5e380179700",
+      "modified": "2026-11-24T18:13:53.928Z"
+    },
+    "https://tractorvs.com/es/tractors/versatile-530dt-47837e65/": {
+      "digest": "e3a41e2a37f3fe233f0861db0fb316ba9e56e19789d639e7e086bf894e6b7536",
+      "modified": "2026-11-24T18:13:53.928Z"
     },
     "https://tractorvs.com/es/tractors/versatile-580-4a09051c/": {
-      "digest": "6b206bf3bfcf5ea1e2c51b8de02090f7f05577769da6c5298e69f63f81cff903",
-      "modified": "2026-11-24T18:04:40.415Z"
+      "digest": "436d7ab3efa1078e1867a95292edb0f947fe83b92d04268016eca0665a1d420a",
+      "modified": "2026-11-24T18:13:53.928Z"
+    },
+    "https://tractorvs.com/es/tractors/versatile-580dt-636f2708/": {
+      "digest": "c6979bbefcd96b9498520a02b90ae916cec669113343e1fc7a616d56eba2f69a",
+      "modified": "2026-11-24T18:13:53.928Z"
     },
     "https://tractorvs.com/es/tractors/versatile-620-08b724f4/": {
-      "digest": "3f5b8eebe2f93a243e9bec7d01f8e82d4caff06f19d9a9e4b50d85b452ff4fc4",
-      "modified": "2026-11-24T18:04:40.415Z"
+      "digest": "2c81cf5665201366ba679109a3309013f556e2bed8b45a64de7ba59d0cbd957e",
+      "modified": "2026-11-24T18:13:53.928Z"
+    },
+    "https://tractorvs.com/es/tractors/versatile-620dt-cbdfd364/": {
+      "digest": "b3d672a3d410f755554f8b90b235d03cef73b1804ad6344c2711fbfcb636e127",
+      "modified": "2026-11-24T18:13:53.928Z"
     },
     "https://tractorvs.com/es/tractors/versatile-nemesis-175-9016d690/": {
       "digest": "c60f71e1890de5ff1e8560a2071fa4407ee661c14600c24b26836baf7ee16bd1",
@@ -3650,24 +3730,24 @@
       "modified": "2026-11-24T16:37:35.751Z"
     },
     "https://tractorvs.com/farm-advisor/": {
-      "digest": "fd0af2a25953a0d870fd0d401fd386b8ea9d903411fcabf85e8ecd23fcedeb60",
-      "modified": "2026-11-24T18:04:40.415Z"
+      "digest": "a8cb1d6f7d201f0dfa90f28928f2e8ba1e34ad9dde9ce0d4c1ce4ddd7e026540",
+      "modified": "2026-11-24T18:13:53.928Z"
     },
     "https://tractorvs.com/fr/": {
-      "digest": "b7dc2e7898eee61eefbff9a1880523f64a6281b4939bf16545f2ec746c7106ca",
-      "modified": "2026-11-24T18:04:40.415Z"
+      "digest": "bc48104476f64c746e7eb3a19d702edb9438f3e8611f412bdf737de4068e45bc",
+      "modified": "2026-11-24T18:13:53.928Z"
     },
     "https://tractorvs.com/fr/articles/": {
       "digest": "4a6ade76cf3c3ad17590b25a3c3290bfa43c878f3fe79c923cfc4b99766edbed",
       "modified": "2026-11-24T16:26:42.582Z"
     },
     "https://tractorvs.com/fr/compare/": {
-      "digest": "c27bf042230b3af9cc566927c767f91b09648e1ea8d39dc049dcdfd669daee89",
-      "modified": "2026-11-24T18:04:40.415Z"
+      "digest": "ea102d723feecfa8816808d1db6ab5c39fbf602550e3c0529bc2ce9d82c74874",
+      "modified": "2026-11-24T18:13:53.928Z"
     },
     "https://tractorvs.com/fr/farm-advisor/": {
-      "digest": "a9a21d4c9486cc738adbfc2aa95c3413cc2f3606e44e8bf15f36627d498a5205",
-      "modified": "2026-11-24T18:04:40.415Z"
+      "digest": "4547dd6479f8825305111e8849de6c1514838277b673fbc2bb4ea4c4fbb1e7c5",
+      "modified": "2026-11-24T18:13:53.928Z"
     },
     "https://tractorvs.com/fr/guides/choosing-a-tractor/": {
       "digest": "c1d4a891053a117f4d26b0fbe43fcc365ce9bb70ed72e2dfba60abaf90180b1e",
@@ -3682,8 +3762,8 @@
       "modified": "2026-11-24T16:26:42.582Z"
     },
     "https://tractorvs.com/fr/tractors/": {
-      "digest": "201d8aeb962894b8d4986f4c28136cefb3abe51e5261779d8b042d64f183f57b",
-      "modified": "2026-11-24T18:04:40.415Z"
+      "digest": "19bfed8c336e64d44eda81f68ecb4090f2f1bf3a7d6c4058a87e637c88087f02",
+      "modified": "2026-11-24T18:13:53.928Z"
     },
     "https://tractorvs.com/fr/tractors/agrale-4125-0b53e944/": {
       "digest": "b8a1b58c8d94fe6c14b841d647d0cfa886abe3ee91e2ec31c091658027d90821",
@@ -3794,16 +3874,24 @@
       "modified": "2026-11-23T16:45:17.078Z"
     },
     "https://tractorvs.com/fr/tractors/basak-traktor-2055-d1258ec7/": {
-      "digest": "43f21a2355e7fd23cd5c11cfe001a4050a5caa68941b7482528734063f7f8512",
-      "modified": "2026-11-24T18:04:40.415Z"
+      "digest": "7a1eabed92449c8b54e55de1182f067f599bc927a0d9cf97a23e02e47b84b2d3",
+      "modified": "2026-11-24T18:13:53.928Z"
     },
     "https://tractorvs.com/fr/tractors/basak-traktor-2075-bk-9ef236be/": {
-      "digest": "c4ba6106148cde3bb959df0c1cf222749beaeaf0a4335174a07d25b8a6151ecc",
-      "modified": "2026-11-24T18:04:40.415Z"
+      "digest": "2444fa9710d623f5c0865fa24b48b89830726159db3535d6c521125f07cd8427",
+      "modified": "2026-11-24T18:13:53.928Z"
     },
     "https://tractorvs.com/fr/tractors/basak-traktor-2075-bt-ddb654b6/": {
-      "digest": "165da0b85d0a03ab47f4ae2c84ba5fe578ae3363c48a65b6c7ce81814a4f8e96",
-      "modified": "2026-11-24T18:04:40.415Z"
+      "digest": "34a4c106c8816dc91e3aff4fc4325a7051ca3749f3b19254e291e15f8f85bbc5",
+      "modified": "2026-11-24T18:13:53.928Z"
+    },
+    "https://tractorvs.com/fr/tractors/basak-traktor-3026-2bc6ed35/": {
+      "digest": "793462a79206e3eaed3144461bd22d4f1ededdc5652529272379807befb02b0b",
+      "modified": "2026-11-24T18:13:53.928Z"
+    },
+    "https://tractorvs.com/fr/tractors/basak-traktor-5075-compact-20e382ea/": {
+      "digest": "4ff6f184b5a792271a4798f346cd3ad5e77451e8da0f65dcd1faa6016801fb4e",
+      "modified": "2026-11-24T18:13:53.928Z"
     },
     "https://tractorvs.com/fr/tractors/basak-traktor-5120-01590869/": {
       "digest": "5259b20e8706a7b3bea38c70fe732b317c9c0871adfa645567334a00922419b5",
@@ -4597,25 +4685,45 @@
       "digest": "03e9027ced6884517c7c1981abf92598efe0a66486c53fada86c3522be8a7d51",
       "modified": "2026-11-24T15:48:25.289Z"
     },
+    "https://tractorvs.com/fr/tractors/solis-50-stage-v-rops-92f3de83/": {
+      "digest": "3b9d133ef0c32626e70a3003112cbe1e14f84904b57ddf31265d6852f2d73a36",
+      "modified": "2026-11-24T18:13:53.928Z"
+    },
+    "https://tractorvs.com/fr/tractors/solis-60-hvac-stage-v-ee86ff52/": {
+      "digest": "be6effe841b7ef6441e130b0c18ae4b813c408a89900f3f3e427f6519a54e861",
+      "modified": "2026-11-24T18:13:53.928Z"
+    },
+    "https://tractorvs.com/fr/tractors/solis-60-stage-v-rops-7be538d8/": {
+      "digest": "9de876cc1ba2e09e3c7c0ec33762f8f69e25945aaf1b36ae8fcb841574d76d82",
+      "modified": "2026-11-24T18:13:53.928Z"
+    },
     "https://tractorvs.com/fr/tractors/solis-75-dt-mr-39a48550/": {
-      "digest": "6e57d4fd88ef3ed704917a9803d231deb5de3a40043010c3be6fe5e25aebdd42",
-      "modified": "2026-11-24T18:04:40.415Z"
+      "digest": "4745d2670a7a2f0a1415388e77367bf0d4d693fa776c2ad16f682627512bf342",
+      "modified": "2026-11-24T18:13:53.928Z"
+    },
+    "https://tractorvs.com/fr/tractors/solis-75-hvac-stage-v-948b5823/": {
+      "digest": "5783857157cef3dc850ff381d195348053399e92799d15a66f8b990769853bd2",
+      "modified": "2026-11-24T18:13:53.928Z"
     },
     "https://tractorvs.com/fr/tractors/solis-90-dt-mr-33e556bc/": {
-      "digest": "91884e5fb4d38d27eb6fc7047f204eadf4fd19b6d3a81909dac48c74173638bb",
-      "modified": "2026-11-24T18:04:40.415Z"
+      "digest": "b5a8cbf5f9e10b33de08b49df9a5ba19949abf769418db92f0831bb9444691c4",
+      "modified": "2026-11-24T18:13:53.928Z"
+    },
+    "https://tractorvs.com/fr/tractors/solis-90-hvac-stage-v-8760f728/": {
+      "digest": "ded9967fbdddfe7327ca956d0bfdba0c132f5c71ddb7069781b0900e66a2b45f",
+      "modified": "2026-11-24T18:13:53.928Z"
     },
     "https://tractorvs.com/fr/tractors/solis-s-50-dt-c7ce4206/": {
-      "digest": "52b0cc76ec3ad4f1e8d2b51ff1c5c104b6872724011037a90a4d8944384312a0",
-      "modified": "2026-11-24T18:04:40.415Z"
+      "digest": "ad57fe32016062ab2886ac85f1835cd364eac93a4baadd8953951b55fbc12b0c",
+      "modified": "2026-11-24T18:13:53.928Z"
     },
     "https://tractorvs.com/fr/tractors/solis-s-50-st-6ecbbd12/": {
-      "digest": "1157cf3bd50a0e34b0af38b0d2bbb4f09fff993dfc66002e7e4ba78f436b64f4",
-      "modified": "2026-11-24T18:04:40.415Z"
+      "digest": "cd13d9f9067b19ec819152dee1d6192d996c6d5026680051bb70e62b7a9712d8",
+      "modified": "2026-11-24T18:13:53.928Z"
     },
     "https://tractorvs.com/fr/tractors/solis-s-75-nt-crdi-d3dccd43/": {
-      "digest": "e0f636ad3c5f426f358e943bd382172636adbc6d3a173b81ae17df1dee34b4b6",
-      "modified": "2026-11-24T18:04:40.415Z"
+      "digest": "1100dd4f13c2a95a8ab2915442bf3e6d82fc82f82289686a2dfb60f6e51f652a",
+      "modified": "2026-11-24T18:13:53.928Z"
     },
     "https://tractorvs.com/fr/tractors/sonalika-110-wt-d76351cf/": {
       "digest": "619fc8b269f1d62c8ece5dfa25048e58670511dfff6437fcd2950cccfdcf1b03",
@@ -5302,16 +5410,28 @@
       "modified": "2026-11-24T18:04:40.415Z"
     },
     "https://tractorvs.com/fr/tractors/versatile-530-ef3c1117/": {
-      "digest": "daa5ece4fe82e6dfbb2f12a53b79325fbf09463b1912a27086dedb1f1e5fd6dd",
-      "modified": "2026-11-24T18:04:40.415Z"
+      "digest": "6d9912f4cf1678d50090ef25dc5cbd623169ee8379ac7e76142f064edde4c6d2",
+      "modified": "2026-11-24T18:13:53.928Z"
+    },
+    "https://tractorvs.com/fr/tractors/versatile-530dt-47837e65/": {
+      "digest": "33d049ece1d26577809b090b22f9ef3ce774ac8e9aa93da0467761e15dac4a45",
+      "modified": "2026-11-24T18:13:53.928Z"
     },
     "https://tractorvs.com/fr/tractors/versatile-580-4a09051c/": {
-      "digest": "7f30709f65840bbe41c485a33dd897f064fe6d426fdd6bd1ffc8d11a97ae85b3",
-      "modified": "2026-11-24T18:04:40.415Z"
+      "digest": "4418b2668affab52d4b7080f6e107235a0a38f3fe59e79b71fb4f7bcc6c3c05d",
+      "modified": "2026-11-24T18:13:53.928Z"
+    },
+    "https://tractorvs.com/fr/tractors/versatile-580dt-636f2708/": {
+      "digest": "da36f61e03cb1d8681eaa64ae2e6f49b30b022ae2999c3ca564fb5adb7c8aa33",
+      "modified": "2026-11-24T18:13:53.928Z"
     },
     "https://tractorvs.com/fr/tractors/versatile-620-08b724f4/": {
-      "digest": "fedf5cfb32845c73d1f08016239af17ad2f2efa83b4df2acbba379da2b5f5393",
-      "modified": "2026-11-24T18:04:40.415Z"
+      "digest": "c0805aef2f84a5615851e2ce86d1ac5f59870b33e2170816a43cfde3f8649194",
+      "modified": "2026-11-24T18:13:53.928Z"
+    },
+    "https://tractorvs.com/fr/tractors/versatile-620dt-cbdfd364/": {
+      "digest": "baca4f699289d0d0151c97953e9e7f76062087eb721ac314a018f4c5a3edb80d",
+      "modified": "2026-11-24T18:13:53.928Z"
     },
     "https://tractorvs.com/fr/tractors/versatile-nemesis-175-9016d690/": {
       "digest": "41dd6cd4b06ecf0a0ae9b6a45fe8fc2417eb5d74aa5ebd7ef6c4405c38e36e0a",
@@ -5486,20 +5606,20 @@
       "modified": "2026-11-24T16:20:05.453Z"
     },
     "https://tractorvs.com/hi/": {
-      "digest": "4c3a219ad893c2d217e9436be2716f1ce4ad4a6b31a08a55ec366291680cd3a9",
-      "modified": "2026-11-24T18:04:40.415Z"
+      "digest": "08c780b20bb44105f49759a8945b810c598d10c0d539c886244c36cbec27fafc",
+      "modified": "2026-11-24T18:13:53.928Z"
     },
     "https://tractorvs.com/hi/articles/": {
       "digest": "1dd3e6fa62b3d37f34dfb83496f61d3855a83279c8a5c6613c48e6f0cbf69ac6",
       "modified": "2026-11-24T16:26:42.582Z"
     },
     "https://tractorvs.com/hi/compare/": {
-      "digest": "61fa2e7302366733bafa1e6139f1b2055b6d851adeab9702c2b15d26db68fefa",
-      "modified": "2026-11-24T18:04:40.415Z"
+      "digest": "c89d6183f4fb6928908f7ee04ad9b464768344b38fccd3ab9a5afd5c9cf4a7b7",
+      "modified": "2026-11-24T18:13:53.928Z"
     },
     "https://tractorvs.com/hi/farm-advisor/": {
-      "digest": "2e29b726929b5119715eaa71306ff01bc31bffbdbc68479bba4ca5b4ef9f473f",
-      "modified": "2026-11-24T18:04:40.415Z"
+      "digest": "f8dd0c75827154d9da80c5394353a43f3d8a1558039c4f204ae74db07d04d1cb",
+      "modified": "2026-11-24T18:13:53.928Z"
     },
     "https://tractorvs.com/hi/guides/choosing-a-tractor/": {
       "digest": "182a472bc39c4e8c2c4754f4ffe4a35e8c60044329742a12c926273a58b527e3",
@@ -5514,8 +5634,8 @@
       "modified": "2026-11-24T16:26:42.582Z"
     },
     "https://tractorvs.com/hi/tractors/": {
-      "digest": "fd37701ad56980816da6db15472fb3e9f1aa1f6455784feb48fce2be1e208490",
-      "modified": "2026-11-24T18:04:40.415Z"
+      "digest": "326354d445a3f1b7341438f70b3927c90f4790ee5bc90ee7311d8a41605f2cfa",
+      "modified": "2026-11-24T18:13:53.928Z"
     },
     "https://tractorvs.com/hi/tractors/agrale-4125-0b53e944/": {
       "digest": "377693b0bd65595b584c51290356012a376a147f2fdc091d3647ed0c215298f0",
@@ -5626,16 +5746,24 @@
       "modified": "2026-11-23T16:45:17.078Z"
     },
     "https://tractorvs.com/hi/tractors/basak-traktor-2055-d1258ec7/": {
-      "digest": "eba6e357283000deb31a7159b11fa55a96ab578b9bc10cdefadb6fbf1d3850fa",
-      "modified": "2026-11-24T18:04:40.415Z"
+      "digest": "360597168e1ffd348343234eb93d08e5cd9a74d7d6b8dd870b85f3910972cb69",
+      "modified": "2026-11-24T18:13:53.928Z"
     },
     "https://tractorvs.com/hi/tractors/basak-traktor-2075-bk-9ef236be/": {
-      "digest": "1be4111b646b5cccb14f90ae0c6a2d06164220f0a38c10953814590c898b9337",
-      "modified": "2026-11-24T18:04:40.415Z"
+      "digest": "e233071231af6a562393fddc0b49f323f5b08c89fbdc594fc55b614ad0c03c34",
+      "modified": "2026-11-24T18:13:53.928Z"
     },
     "https://tractorvs.com/hi/tractors/basak-traktor-2075-bt-ddb654b6/": {
-      "digest": "faa42c1b1a7aacc00792d0215ed9340ad2425f77580edd128f4eb58fa370c7f4",
-      "modified": "2026-11-24T18:04:40.415Z"
+      "digest": "ccf966e06749b9e1fb86ff17b622f222a5391dc8bc33779b269acc89346e7907",
+      "modified": "2026-11-24T18:13:53.928Z"
+    },
+    "https://tractorvs.com/hi/tractors/basak-traktor-3026-2bc6ed35/": {
+      "digest": "e84f064b1e8c0bf21a5f6dc428fd2d75205dee6e3e541c805c3352b52d4e88e3",
+      "modified": "2026-11-24T18:13:53.928Z"
+    },
+    "https://tractorvs.com/hi/tractors/basak-traktor-5075-compact-20e382ea/": {
+      "digest": "efd49eaf4906d7c368de86fd35b5818bac977507435ba6b8eb1e2089f55f6293",
+      "modified": "2026-11-24T18:13:53.928Z"
     },
     "https://tractorvs.com/hi/tractors/basak-traktor-5120-01590869/": {
       "digest": "28b54bbde2314c6c01aa373379d0211954870e0eca580c7ee316890e8f57c8ec",
@@ -6429,25 +6557,45 @@
       "digest": "c0cac4e0ab9444bc09af5c062547e891cab5a7053e6977f6fe9bb5f7e508ab96",
       "modified": "2026-11-24T15:48:25.289Z"
     },
+    "https://tractorvs.com/hi/tractors/solis-50-stage-v-rops-92f3de83/": {
+      "digest": "f9e6bdb1c60ec2c6543a1d4d2bec625cf41591bf473ffd04c19dd11727c4aca1",
+      "modified": "2026-11-24T18:13:53.928Z"
+    },
+    "https://tractorvs.com/hi/tractors/solis-60-hvac-stage-v-ee86ff52/": {
+      "digest": "edb4b3bb34334b9e789cc92e754028ab6d31290a72862cd65c67ba1f17f5e9cd",
+      "modified": "2026-11-24T18:13:53.928Z"
+    },
+    "https://tractorvs.com/hi/tractors/solis-60-stage-v-rops-7be538d8/": {
+      "digest": "ac782398389b1fac5ec69562039d7948ea927f1577da315e23d36439c562b1cf",
+      "modified": "2026-11-24T18:13:53.928Z"
+    },
     "https://tractorvs.com/hi/tractors/solis-75-dt-mr-39a48550/": {
-      "digest": "abb3fd418c033128031797e1165ab25b2ae798de4c77ae56ef7f88b787e8a6ca",
-      "modified": "2026-11-24T18:04:40.415Z"
+      "digest": "7a263a309ba98cdf9da8931f5b67003f4bc99174d55a27eada54b89d0752fc0c",
+      "modified": "2026-11-24T18:13:53.928Z"
+    },
+    "https://tractorvs.com/hi/tractors/solis-75-hvac-stage-v-948b5823/": {
+      "digest": "a2941cd504eaf7edf4ab371da04dab86e34267cb1a05cf00de3031ffcf4d06f0",
+      "modified": "2026-11-24T18:13:53.928Z"
     },
     "https://tractorvs.com/hi/tractors/solis-90-dt-mr-33e556bc/": {
-      "digest": "f2295f6d30458aa0310f7305ccc095f18bbe9e9db9acd08cabb501373184f2aa",
-      "modified": "2026-11-24T18:04:40.415Z"
+      "digest": "4b454f8a33dda04b0b04d2e21215a6d9dda2933366cccb57a8d9c13fc663ecea",
+      "modified": "2026-11-24T18:13:53.928Z"
+    },
+    "https://tractorvs.com/hi/tractors/solis-90-hvac-stage-v-8760f728/": {
+      "digest": "68c6ffbbe4bd188df6a68d6b27b23008f4858961d446c11715006ae40dce3b04",
+      "modified": "2026-11-24T18:13:53.928Z"
     },
     "https://tractorvs.com/hi/tractors/solis-s-50-dt-c7ce4206/": {
-      "digest": "6ce9effbe0c135198aa80cb4738fec571fbd7e59f0c68eeb0edb14ca6113c945",
-      "modified": "2026-11-24T18:04:40.415Z"
+      "digest": "449408495216f6ad5107916559749d9125ca737840abbdd8b7dd02bdd8b47389",
+      "modified": "2026-11-24T18:13:53.928Z"
     },
     "https://tractorvs.com/hi/tractors/solis-s-50-st-6ecbbd12/": {
-      "digest": "9727292d4c33b6b6865992f4ca2d7c33f15626a031f6937aaf5d6910e6f2c765",
-      "modified": "2026-11-24T18:04:40.415Z"
+      "digest": "55d45355383ca446db9390a04b0afb11ba82f8f8bfa9874f94bf333fcf3e3734",
+      "modified": "2026-11-24T18:13:53.928Z"
     },
     "https://tractorvs.com/hi/tractors/solis-s-75-nt-crdi-d3dccd43/": {
-      "digest": "427fc05f0e2975e3efec6cd785d2d7e4b2e218be2b56f34cd4f5744bf577787f",
-      "modified": "2026-11-24T18:04:40.415Z"
+      "digest": "7efca5552ab58b98bb1138c4a3c95835b25d53d08695720adc6850d2d946a875",
+      "modified": "2026-11-24T18:13:53.928Z"
     },
     "https://tractorvs.com/hi/tractors/sonalika-110-wt-d76351cf/": {
       "digest": "8a4830aad370ed52e662c0560468be1108e0f914ff7e4463f8be75fbfad7418d",
@@ -7134,16 +7282,28 @@
       "modified": "2026-11-24T18:04:40.415Z"
     },
     "https://tractorvs.com/hi/tractors/versatile-530-ef3c1117/": {
-      "digest": "d4b99a4d80bee1ec90864077df3c8ed8629a08647b44e51f2fba1f0aa2cc8afb",
-      "modified": "2026-11-24T18:04:40.415Z"
+      "digest": "27d29f3e3dd0ba9b13dd6dbd82f0f063f61edba10be89a2fc9089e1382f8e48e",
+      "modified": "2026-11-24T18:13:53.928Z"
+    },
+    "https://tractorvs.com/hi/tractors/versatile-530dt-47837e65/": {
+      "digest": "9115dfda39f3dfc07d6f0d685eb251f99f101f944edec0c8c9fdc5abbc8a2430",
+      "modified": "2026-11-24T18:13:53.928Z"
     },
     "https://tractorvs.com/hi/tractors/versatile-580-4a09051c/": {
-      "digest": "3096573f72d604d47adb39dadcb37f21483d63ce7d55e830ed4d8aa9477a2bb9",
-      "modified": "2026-11-24T18:04:40.415Z"
+      "digest": "fa7017ed575ab360d702e1b151bb95afb49a28fcd5d743dab76102e7c9ffa96d",
+      "modified": "2026-11-24T18:13:53.928Z"
+    },
+    "https://tractorvs.com/hi/tractors/versatile-580dt-636f2708/": {
+      "digest": "9f7a07670827e4613ae872e15be69fb25396e0809969f588852f679aab34cb75",
+      "modified": "2026-11-24T18:13:53.928Z"
     },
     "https://tractorvs.com/hi/tractors/versatile-620-08b724f4/": {
-      "digest": "29c3b6d54166c2d673ee363a69fcdf7d0e03ef9b22a8f457b28801d753a700e2",
-      "modified": "2026-11-24T18:04:40.415Z"
+      "digest": "2b45cf2140e57ca32286261b2ffb3e83894d460753c0eb14336518223280a899",
+      "modified": "2026-11-24T18:13:53.928Z"
+    },
+    "https://tractorvs.com/hi/tractors/versatile-620dt-cbdfd364/": {
+      "digest": "00fd4645a3ea6167f4acdbae505d5b974b285af03777a79bee06175cbcc84414",
+      "modified": "2026-11-24T18:13:53.928Z"
     },
     "https://tractorvs.com/hi/tractors/versatile-nemesis-175-9016d690/": {
       "digest": "0c40ac041735c9b3c6ba12bbfdc36b3d7eaad1b9d85c8cc75436271967e5a3f8",
@@ -7298,20 +7458,20 @@
       "modified": "2026-11-24T16:37:35.751Z"
     },
     "https://tractorvs.com/ja/": {
-      "digest": "a9980f03a2d6a1a308b28287460352dade67cfe2f518d0930637012d799f3f92",
-      "modified": "2026-11-24T18:04:40.415Z"
+      "digest": "67d0cc7a7d40732d0f59537e087dfeccf73a816fa4c3825fb0512083e229b512",
+      "modified": "2026-11-24T18:13:53.928Z"
     },
     "https://tractorvs.com/ja/articles/": {
       "digest": "e7227b3b4bcb7c68aaa26c0f04f9c1bf76670c6a5107a8003d3f3ad226099b83",
       "modified": "2026-11-24T16:26:42.582Z"
     },
     "https://tractorvs.com/ja/compare/": {
-      "digest": "1533e462a5d4fa27d693b6a8b56c0156e6182b9f048fa9e3f756ebed277f9a13",
-      "modified": "2026-11-24T18:04:40.415Z"
+      "digest": "55e588623658c2c8c3e753e317892f01d6c1827775552c3bb1ddd9bcad60c01f",
+      "modified": "2026-11-24T18:13:53.928Z"
     },
     "https://tractorvs.com/ja/farm-advisor/": {
-      "digest": "c9c6a7d0fe7941104756be4d264dfda6b180d24e63d68a64d769b198f71eb67b",
-      "modified": "2026-11-24T18:04:40.415Z"
+      "digest": "c7411e15d66b3821a09cd323a15ccd261c1377c3a19141b5ae6d5c3558eafbf3",
+      "modified": "2026-11-24T18:13:53.928Z"
     },
     "https://tractorvs.com/ja/guides/choosing-a-tractor/": {
       "digest": "3b72ae07966123309d9613efe318636ac1a028d9500feddbedf32aba6fa643fe",
@@ -7326,8 +7486,8 @@
       "modified": "2026-11-24T16:26:42.582Z"
     },
     "https://tractorvs.com/ja/tractors/": {
-      "digest": "6d056ba672d0730fb029f3e6720847c255e54b6a4e9b0f793bde0b4fdd4ec086",
-      "modified": "2026-11-24T18:04:40.415Z"
+      "digest": "02b71c0e260e4e65dede789b9e435156e68606426a6ca6a7ac25261b76d67db0",
+      "modified": "2026-11-24T18:13:53.928Z"
     },
     "https://tractorvs.com/ja/tractors/agrale-4125-0b53e944/": {
       "digest": "965b5bd2023b7307e4cf2f8c683a86963aec03228a45eea3dd3b2d988dcbebac",
@@ -7438,16 +7598,24 @@
       "modified": "2026-11-23T16:45:17.078Z"
     },
     "https://tractorvs.com/ja/tractors/basak-traktor-2055-d1258ec7/": {
-      "digest": "07a99267804555502fc9f632d1b10c763607fea48c251c88ec95ef56fc5bc683",
-      "modified": "2026-11-24T18:04:40.415Z"
+      "digest": "14f2fc9c03432db7063037b50e3cbbb475df9e962619bea7d6b17e2359ebb798",
+      "modified": "2026-11-24T18:13:53.928Z"
     },
     "https://tractorvs.com/ja/tractors/basak-traktor-2075-bk-9ef236be/": {
-      "digest": "88743861303e53419bbad60c22e1350018ed0ae238a997139096e4e3dda4449b",
-      "modified": "2026-11-24T18:04:40.415Z"
+      "digest": "4669f1a79359be4085d1a6625369846a439aa1344693d939488a58855f92402c",
+      "modified": "2026-11-24T18:13:53.928Z"
     },
     "https://tractorvs.com/ja/tractors/basak-traktor-2075-bt-ddb654b6/": {
-      "digest": "b45aaddac2c95456c78019eeacbcfe8c27174e5ba5e89c64357d3f7527da405e",
-      "modified": "2026-11-24T18:04:40.415Z"
+      "digest": "77dcd9878579daf8472f09064c86c04410894eb78bc7f7e3c22a185c94d21179",
+      "modified": "2026-11-24T18:13:53.928Z"
+    },
+    "https://tractorvs.com/ja/tractors/basak-traktor-3026-2bc6ed35/": {
+      "digest": "1f28a067b6cc2885385cfbbfc9ce0536dc8651b6fca1311ad778660098cbb317",
+      "modified": "2026-11-24T18:13:53.928Z"
+    },
+    "https://tractorvs.com/ja/tractors/basak-traktor-5075-compact-20e382ea/": {
+      "digest": "8d35c7f5479508e0293d24e958fcc4465672840776124853a1e14c6307dc28c2",
+      "modified": "2026-11-24T18:13:53.928Z"
     },
     "https://tractorvs.com/ja/tractors/basak-traktor-5120-01590869/": {
       "digest": "923b17cee8ed2ccbd3784bb18fefdcc12d6074e877ca68d51aefd8c1e61331df",
@@ -8241,25 +8409,45 @@
       "digest": "206e67d58986594dc50cbfa409c5e4d0997aef8c6efe55c5203dec0df1b97d71",
       "modified": "2026-11-24T15:48:25.289Z"
     },
+    "https://tractorvs.com/ja/tractors/solis-50-stage-v-rops-92f3de83/": {
+      "digest": "37455348e7f5d0bb955e2ad2496e2768ae9cba4c3982b0d4b05d1e3cf17126bc",
+      "modified": "2026-11-24T18:13:53.928Z"
+    },
+    "https://tractorvs.com/ja/tractors/solis-60-hvac-stage-v-ee86ff52/": {
+      "digest": "0917e0b56256d94a33f1700d82914b4aa9c4f9d5cd999eda79aac6cf7be6ce8e",
+      "modified": "2026-11-24T18:13:53.928Z"
+    },
+    "https://tractorvs.com/ja/tractors/solis-60-stage-v-rops-7be538d8/": {
+      "digest": "17a142c2adf5fb2d703b3fccbe50a08b53c3ab16f984a31b6ba4bb52cc6b0ac6",
+      "modified": "2026-11-24T18:13:53.928Z"
+    },
     "https://tractorvs.com/ja/tractors/solis-75-dt-mr-39a48550/": {
-      "digest": "47cb1c0b1b0b2004a9167ad1ad546eb13aa716d1ce70224cacf6aa9013d8a4f3",
-      "modified": "2026-11-24T18:04:40.415Z"
+      "digest": "32a851cf1865c59736287e8ab1acaf89731d99c383170add7debdeb8e3eec961",
+      "modified": "2026-11-24T18:13:53.928Z"
+    },
+    "https://tractorvs.com/ja/tractors/solis-75-hvac-stage-v-948b5823/": {
+      "digest": "64733232afa73f09922fb62a75f0932fe6f39dfdce92ec09afac4c3167847384",
+      "modified": "2026-11-24T18:13:53.928Z"
     },
     "https://tractorvs.com/ja/tractors/solis-90-dt-mr-33e556bc/": {
-      "digest": "341df211e7522a6cfaeef803294c7d083206cfe3257870eb84b682671237368e",
-      "modified": "2026-11-24T18:04:40.415Z"
+      "digest": "9c2902358623f09732255c45df267f6ade855f1456ea2edee2a4cb87c1cd32ff",
+      "modified": "2026-11-24T18:13:53.928Z"
+    },
+    "https://tractorvs.com/ja/tractors/solis-90-hvac-stage-v-8760f728/": {
+      "digest": "54c782cdd2bcff0ed9a3ce186cb4b42c7334391d7e1505952e9b2024b2b0dd75",
+      "modified": "2026-11-24T18:13:53.928Z"
     },
     "https://tractorvs.com/ja/tractors/solis-s-50-dt-c7ce4206/": {
-      "digest": "9e65721c485d6548883471e851bb2de59601d47b2c3b92d62fb9f5943b131ab9",
-      "modified": "2026-11-24T18:04:40.415Z"
+      "digest": "2b0af228b25f8ba56d33ef9e227ff324ef3b32a4faaed1d2dae9bbd020ab37b1",
+      "modified": "2026-11-24T18:13:53.928Z"
     },
     "https://tractorvs.com/ja/tractors/solis-s-50-st-6ecbbd12/": {
-      "digest": "7a81f68f04ae4f93376a36ffb703da18fa9ea85ba8fdd9f63d5b0a7ba9f7aafb",
-      "modified": "2026-11-24T18:04:40.415Z"
+      "digest": "6288f8c8c67972fbe9864340f53cc3ed84f126ede2cca75b3777c94b403b450f",
+      "modified": "2026-11-24T18:13:53.928Z"
     },
     "https://tractorvs.com/ja/tractors/solis-s-75-nt-crdi-d3dccd43/": {
-      "digest": "07d83759be13b77958e7fddbc21c4b2c6d5936d52daae944f9ded7e1db478728",
-      "modified": "2026-11-24T18:04:40.415Z"
+      "digest": "91d3bbbe317bf23634382030bf55289815cc6567d20e781585c4ed10317c6102",
+      "modified": "2026-11-24T18:13:53.928Z"
     },
     "https://tractorvs.com/ja/tractors/sonalika-110-wt-d76351cf/": {
       "digest": "35682666711c484d481d40c02187897b43fcd83565c5768815abd1858881cebe",
@@ -8946,16 +9134,28 @@
       "modified": "2026-11-24T18:04:40.415Z"
     },
     "https://tractorvs.com/ja/tractors/versatile-530-ef3c1117/": {
-      "digest": "800982fe77f5d974fe5d747150f82c3064f8c693774bdf866a1251425dc1ce1f",
-      "modified": "2026-11-24T18:04:40.415Z"
+      "digest": "45e64c518df37d837c692e87e0aa51fef7f2a334f0b913abf6293898d470e477",
+      "modified": "2026-11-24T18:13:53.928Z"
+    },
+    "https://tractorvs.com/ja/tractors/versatile-530dt-47837e65/": {
+      "digest": "a293ba90b5128394f1c0fa897ac052a7b949359186af521a1f62b12d30c8b1fb",
+      "modified": "2026-11-24T18:13:53.928Z"
     },
     "https://tractorvs.com/ja/tractors/versatile-580-4a09051c/": {
-      "digest": "b75c35b1bb5fb39c1bde0e256fa064c5a4b16b6689b1ec0df7df009a81554da4",
-      "modified": "2026-11-24T18:04:40.415Z"
+      "digest": "5fe674671b0e644a6172dd216c45d982291b0ae54dcd7810ea1a77a60f3c9f06",
+      "modified": "2026-11-24T18:13:53.928Z"
+    },
+    "https://tractorvs.com/ja/tractors/versatile-580dt-636f2708/": {
+      "digest": "75f9547cbe5f7a3cb0ea59d3c7abb94962a8bbdb78a8d62707bd8dec4cbc6b96",
+      "modified": "2026-11-24T18:13:53.928Z"
     },
     "https://tractorvs.com/ja/tractors/versatile-620-08b724f4/": {
-      "digest": "24ff4cf7694993887688ea4b4069d83b12d3e35863b17a33ece0c4fd4799ae4a",
-      "modified": "2026-11-24T18:04:40.415Z"
+      "digest": "0ef08b7a72cba8aab26c74f5bee2ce4ff37dddbd26969ac9288bdcf57bd40045",
+      "modified": "2026-11-24T18:13:53.928Z"
+    },
+    "https://tractorvs.com/ja/tractors/versatile-620dt-cbdfd364/": {
+      "digest": "84afd925d5c3514500dfb55e75edb817cbfe8a49f0587218bd6b2cec15ee9e68",
+      "modified": "2026-11-24T18:13:53.928Z"
     },
     "https://tractorvs.com/ja/tractors/versatile-nemesis-175-9016d690/": {
       "digest": "102232e6c43ab708ee5d0822b3df56427883e258e563b68efd94fedb21e438c9",
@@ -9118,20 +9318,20 @@
       "modified": null
     },
     "https://tractorvs.com/pt-br/": {
-      "digest": "523f19304fa581be4b57fff14bc90518892232db91aaa943576cbb9ae1f9f6a1",
-      "modified": "2026-11-24T18:04:40.415Z"
+      "digest": "e7d1cd2548120e856620220df0e51b90b31b1cb3de20c63424aacf823edad38e",
+      "modified": "2026-11-24T18:13:53.928Z"
     },
     "https://tractorvs.com/pt-br/articles/": {
       "digest": "10ec54bd81ea3854a508000ce24ff618520893d7ecde37011f24d97042a3a46f",
       "modified": "2026-11-24T16:26:42.582Z"
     },
     "https://tractorvs.com/pt-br/compare/": {
-      "digest": "2e44c2775a34376231176fc34d7d9e5462db559a4518b2cd56e655b51da67c9f",
-      "modified": "2026-11-24T18:04:40.415Z"
+      "digest": "305f16c6986657aeae152275ea7d427a015b5e21993093dc8bed0b1de7f1e397",
+      "modified": "2026-11-24T18:13:53.928Z"
     },
     "https://tractorvs.com/pt-br/farm-advisor/": {
-      "digest": "ee8b6fa04288f2d9c08d681f350d199ff9798c362c935d84f54ba58b71a7f730",
-      "modified": "2026-11-24T18:04:40.415Z"
+      "digest": "b12e4234f68e7f478b9b1f6bf173129ef96eb5cc5e043ec81a75815f85615615",
+      "modified": "2026-11-24T18:13:53.928Z"
     },
     "https://tractorvs.com/pt-br/guides/choosing-a-tractor/": {
       "digest": "4547c1623e77bc94554e228d8ec08a89cfd907bf3b528ccc1dd806a2ea8c676a",
@@ -9146,8 +9346,8 @@
       "modified": "2026-11-24T16:26:42.582Z"
     },
     "https://tractorvs.com/pt-br/tractors/": {
-      "digest": "67039b658108c50ded765ed2d24b0fddb2275addcdcd3593515b0928973de278",
-      "modified": "2026-11-24T18:04:40.415Z"
+      "digest": "e8ed4e85db041697bcc4d6c1ac45d1d44ddd7a91e94410485e174560b84b1583",
+      "modified": "2026-11-24T18:13:53.928Z"
     },
     "https://tractorvs.com/pt-br/tractors/agrale-4125-0b53e944/": {
       "digest": "3035c759979d10f52ec904cc6b8c6a240cc6ee75461ad5cec913e87a25f8c41b",
@@ -9258,16 +9458,24 @@
       "modified": "2026-11-23T16:45:17.078Z"
     },
     "https://tractorvs.com/pt-br/tractors/basak-traktor-2055-d1258ec7/": {
-      "digest": "9198e2ec1cdf1c1e86a02b72e9a36baa73f479d6b128cc65c78471a25268b7f7",
-      "modified": "2026-11-24T18:04:40.415Z"
+      "digest": "5ee1f81ae1acd8882eb13137ce597cd508e978893f3eee62661efde1b5163cea",
+      "modified": "2026-11-24T18:13:53.928Z"
     },
     "https://tractorvs.com/pt-br/tractors/basak-traktor-2075-bk-9ef236be/": {
-      "digest": "60b325126dc7ee5021907f35628deb183b0ced6b4cb4a9172667b20285971c77",
-      "modified": "2026-11-24T18:04:40.415Z"
+      "digest": "ef9ec40c99f7bd4defdc29426c66d41f19b79a9305d01d37b3751681e89cf175",
+      "modified": "2026-11-24T18:13:53.928Z"
     },
     "https://tractorvs.com/pt-br/tractors/basak-traktor-2075-bt-ddb654b6/": {
-      "digest": "94a3fec256393644a74989815e5a9d04b5721b81d7b456f5d5e5c09e9923bb1d",
-      "modified": "2026-11-24T18:04:40.415Z"
+      "digest": "1ab872f4cb964248d253c1bed9638d29ff46ced045bec6f8cceff9a6671b0714",
+      "modified": "2026-11-24T18:13:53.928Z"
+    },
+    "https://tractorvs.com/pt-br/tractors/basak-traktor-3026-2bc6ed35/": {
+      "digest": "6cb45fbeaf6f758c16f23cc8391f6ca144c72ef820097f5a1a4f17691b45656e",
+      "modified": "2026-11-24T18:13:53.928Z"
+    },
+    "https://tractorvs.com/pt-br/tractors/basak-traktor-5075-compact-20e382ea/": {
+      "digest": "f5f569eae5eb47df02d0c03f7d0a38709bd388a7ab206b246c47c6ebacda3885",
+      "modified": "2026-11-24T18:13:53.928Z"
     },
     "https://tractorvs.com/pt-br/tractors/basak-traktor-5120-01590869/": {
       "digest": "abf4b3fef7a6e50716cc1a86653d8b9ea9220e9b50d975189b10a4bbf8145423",
@@ -10061,25 +10269,45 @@
       "digest": "9491e519f7a2b9fcf3cdccd1938ba8ef5aecbffdb8560dfb67dd9d300cb7dad1",
       "modified": "2026-11-24T15:48:25.289Z"
     },
+    "https://tractorvs.com/pt-br/tractors/solis-50-stage-v-rops-92f3de83/": {
+      "digest": "1ab477123a01a8e6fd4f1026d200d73baa32a24992131247638436aa7488efc6",
+      "modified": "2026-11-24T18:13:53.928Z"
+    },
+    "https://tractorvs.com/pt-br/tractors/solis-60-hvac-stage-v-ee86ff52/": {
+      "digest": "80ab6548c47910e40958035dcba74a6ca8d2b3595bda5fe7f0dc29564254b004",
+      "modified": "2026-11-24T18:13:53.928Z"
+    },
+    "https://tractorvs.com/pt-br/tractors/solis-60-stage-v-rops-7be538d8/": {
+      "digest": "1aef41b856103b6cb20fe54bf0f78eb24713e221d20ea3ccd26fd3a44e61a5de",
+      "modified": "2026-11-24T18:13:53.928Z"
+    },
     "https://tractorvs.com/pt-br/tractors/solis-75-dt-mr-39a48550/": {
-      "digest": "d06ba3bab5a30ee4c5de254279942e780a30c16e3f0ddcd4568b112ec893098d",
-      "modified": "2026-11-24T18:04:40.415Z"
+      "digest": "06ac2ef7040a292f8b242d813558f774c322b803c3f186fdf099f1c49ff0fedd",
+      "modified": "2026-11-24T18:13:53.928Z"
+    },
+    "https://tractorvs.com/pt-br/tractors/solis-75-hvac-stage-v-948b5823/": {
+      "digest": "1e1cfb3df88f77432d446c06c2be1cffc25d0d164469db68508b9eb427044b18",
+      "modified": "2026-11-24T18:13:53.928Z"
     },
     "https://tractorvs.com/pt-br/tractors/solis-90-dt-mr-33e556bc/": {
-      "digest": "449106e703ce951ce8f88d7772256b936543c22e03ba7dac5354573641e1e7d2",
-      "modified": "2026-11-24T18:04:40.415Z"
+      "digest": "3a9aeccb415db20fba1723ca9ab06eef951084d0431a8bd62bdead5be53cb249",
+      "modified": "2026-11-24T18:13:53.928Z"
+    },
+    "https://tractorvs.com/pt-br/tractors/solis-90-hvac-stage-v-8760f728/": {
+      "digest": "e967a4ccc3ebb9556fe67ade46b7ec661e8e5034587c261fc6c7f85474dacbf7",
+      "modified": "2026-11-24T18:13:53.928Z"
     },
     "https://tractorvs.com/pt-br/tractors/solis-s-50-dt-c7ce4206/": {
-      "digest": "56ce9bfc03db45b8d4e3a3b2d8075279a7e2b080e88d32127ddc988dffa1afe9",
-      "modified": "2026-11-24T18:04:40.415Z"
+      "digest": "5a162fba6c2e3626ea7f5ae6bd4a60d73c2b5dfe0e206e5bd6dac445830ff1bb",
+      "modified": "2026-11-24T18:13:53.928Z"
     },
     "https://tractorvs.com/pt-br/tractors/solis-s-50-st-6ecbbd12/": {
-      "digest": "11b4c0f6486a8439b6ee0472c8bf108613a7e0a9da5ec1473606053c8702893a",
-      "modified": "2026-11-24T18:04:40.415Z"
+      "digest": "efee5a5b1c3e27413c26276cf3ecb9031c242b38aea138818ab6f71af5469b38",
+      "modified": "2026-11-24T18:13:53.928Z"
     },
     "https://tractorvs.com/pt-br/tractors/solis-s-75-nt-crdi-d3dccd43/": {
-      "digest": "aed212a0370c7f7fd51ea2588735660b3c3fbecd62ebc20254de991cf908ccac",
-      "modified": "2026-11-24T18:04:40.415Z"
+      "digest": "2cf70f7dc87ca7e07b9ac578c0fca4ef370d3c144263a23fd2e554ea9246e908",
+      "modified": "2026-11-24T18:13:53.928Z"
     },
     "https://tractorvs.com/pt-br/tractors/sonalika-110-wt-d76351cf/": {
       "digest": "f81acdcb899be7591fdd71ce0c047e64c4a0a667fd5d0187528bb8b631e2c55b",
@@ -10766,16 +10994,28 @@
       "modified": "2026-11-24T18:04:40.415Z"
     },
     "https://tractorvs.com/pt-br/tractors/versatile-530-ef3c1117/": {
-      "digest": "c16507e3341067a6c5a08525c3f49e8b2e9022429458c8e3f697d471e86fca82",
-      "modified": "2026-11-24T18:04:40.415Z"
+      "digest": "1c5750f9d44267da836fe856c4878ea53867ff4ef745ef1dc79966f4f626372b",
+      "modified": "2026-11-24T18:13:53.928Z"
+    },
+    "https://tractorvs.com/pt-br/tractors/versatile-530dt-47837e65/": {
+      "digest": "abc43317af0d9fb5caee32d09c0ae6da2bf32e09b1ab124a8133cd4f034ba1fb",
+      "modified": "2026-11-24T18:13:53.928Z"
     },
     "https://tractorvs.com/pt-br/tractors/versatile-580-4a09051c/": {
-      "digest": "5fb01acf9174a44e21208cf74893124738ba1eed9a1d3270fa6ba6564fc2cb6c",
-      "modified": "2026-11-24T18:04:40.415Z"
+      "digest": "53b6381b423094969b5de81a037ad4f6f2020c525ec8239ebc81c1647cf6987d",
+      "modified": "2026-11-24T18:13:53.928Z"
+    },
+    "https://tractorvs.com/pt-br/tractors/versatile-580dt-636f2708/": {
+      "digest": "0607adaf359900f713d24bd7b3b2d86224e5ed8882f52788ae1dd10d36a648bd",
+      "modified": "2026-11-24T18:13:53.928Z"
     },
     "https://tractorvs.com/pt-br/tractors/versatile-620-08b724f4/": {
-      "digest": "dbad291ec604be3e04d1bf2ffdd73bcfef393f830cf49102a22c8129d983545a",
-      "modified": "2026-11-24T18:04:40.415Z"
+      "digest": "2647a8ce82745ffa0aa8c59182ef67b2e719ce1897f95323a70cfc2848101940",
+      "modified": "2026-11-24T18:13:53.928Z"
+    },
+    "https://tractorvs.com/pt-br/tractors/versatile-620dt-cbdfd364/": {
+      "digest": "83264a180fb7a102e4ea3df76c7a1028c086c3c2fc640260b22bb9506ec6f28a",
+      "modified": "2026-11-24T18:13:53.928Z"
     },
     "https://tractorvs.com/pt-br/tractors/versatile-nemesis-175-9016d690/": {
       "digest": "0a8c22c25d7fa167016777f0a56427aa6b356a82556168fd7d76bbcba1e2fcd8",
@@ -10934,20 +11174,20 @@
       "modified": "2026-11-24T16:26:42.582Z"
     },
     "https://tractorvs.com/ru/": {
-      "digest": "38ffb91ba23e14ca691062f9f8b9fdb6a250fbdd55fbc51979b4ccaa609e9ed2",
-      "modified": "2026-11-24T18:04:40.415Z"
+      "digest": "92255adc05e5c507f07969063f0dfdfc427801049596157b4e73889874bd8ed2",
+      "modified": "2026-11-24T18:13:53.928Z"
     },
     "https://tractorvs.com/ru/articles/": {
       "digest": "83f2b8b29637582a4fd73e4032eaf3277f45b572b08ed19445bece909c458085",
       "modified": "2026-11-24T16:26:42.582Z"
     },
     "https://tractorvs.com/ru/compare/": {
-      "digest": "cc7b6c981f042fc959dcc45aad29839649eacecc8ae000366c1b3b0e3e21b90e",
-      "modified": "2026-11-24T18:04:40.415Z"
+      "digest": "d56f25cddd2500ca6eb909a8f8566d94ea513ac9fa80ec28ecb92259efb7b6e4",
+      "modified": "2026-11-24T18:13:53.928Z"
     },
     "https://tractorvs.com/ru/farm-advisor/": {
-      "digest": "5a32543580b0abed949094a0e79e3e21e9c868c41c0e4fedb3c39649cf627738",
-      "modified": "2026-11-24T18:04:40.415Z"
+      "digest": "4c7ddf4674af0b710cdb2f8011938e77e439c560a4649a16e6c1a63a275e0bc4",
+      "modified": "2026-11-24T18:13:53.928Z"
     },
     "https://tractorvs.com/ru/guides/choosing-a-tractor/": {
       "digest": "0aa1ab2f5e2ea379edf42d5ef3becdda7c6ec1fb49f661a79b788c5ce5095d7b",
@@ -10962,8 +11202,8 @@
       "modified": "2026-11-24T16:26:42.582Z"
     },
     "https://tractorvs.com/ru/tractors/": {
-      "digest": "eb1c1c133fda3579ca50e41fe698e98f8d4e18f9495abca631238e9f4521f4d5",
-      "modified": "2026-11-24T18:04:40.415Z"
+      "digest": "44c8a49845531adaf6b352cf33f6b6a49e958d7241dbcda69a60bf4d90082876",
+      "modified": "2026-11-24T18:13:53.928Z"
     },
     "https://tractorvs.com/ru/tractors/agrale-4125-0b53e944/": {
       "digest": "53476e3788b9d66af5646cb6135ee03fb9ec7a337276a541bddb8c95d1b1c509",
@@ -11074,16 +11314,24 @@
       "modified": "2026-11-23T16:45:17.078Z"
     },
     "https://tractorvs.com/ru/tractors/basak-traktor-2055-d1258ec7/": {
-      "digest": "7ddfaf547a16f4db09388a20dce8d7fbd3ef1cc0eab33c6a97be739f9df770ce",
-      "modified": "2026-11-24T18:04:40.415Z"
+      "digest": "1c2e9a533b786a001c21e9c42b846f951219afbf8556b9e70d8b09041e29b317",
+      "modified": "2026-11-24T18:13:53.928Z"
     },
     "https://tractorvs.com/ru/tractors/basak-traktor-2075-bk-9ef236be/": {
-      "digest": "30b2c24f0e10adac0fd010a54057a383893936e26a851f55e4eda8fe67277cc8",
-      "modified": "2026-11-24T18:04:40.415Z"
+      "digest": "50c8bf80af74772e630040cbd054b131bc246af85cfc4f492e27aceff77f4509",
+      "modified": "2026-11-24T18:13:53.928Z"
     },
     "https://tractorvs.com/ru/tractors/basak-traktor-2075-bt-ddb654b6/": {
-      "digest": "2b977d506f6fb35769c3db927f425731a6e1404a3cdcc1e0db70fb58dbe14f15",
-      "modified": "2026-11-24T18:04:40.415Z"
+      "digest": "1024b9ef2f893e872590b4c9edb5be09702442118e2aa272284f50f5e2e58313",
+      "modified": "2026-11-24T18:13:53.928Z"
+    },
+    "https://tractorvs.com/ru/tractors/basak-traktor-3026-2bc6ed35/": {
+      "digest": "9a44e4b7eb00bcd2002b55470f221a3147672f4e20c1392740fedcccc70270b2",
+      "modified": "2026-11-24T18:13:53.928Z"
+    },
+    "https://tractorvs.com/ru/tractors/basak-traktor-5075-compact-20e382ea/": {
+      "digest": "89b04eebb8f1586a41df6d9e2745314b34d5dfd055395a41867e6962b5c78988",
+      "modified": "2026-11-24T18:13:53.928Z"
     },
     "https://tractorvs.com/ru/tractors/basak-traktor-5120-01590869/": {
       "digest": "add7897ac38e416eaed98a07e59af2712ba33030e24a36c58352e5261bffa481",
@@ -11877,25 +12125,45 @@
       "digest": "bf392dad3742f5ee51ff8eafbf5afef800dd20d55d1679ea073aa0ea600a0064",
       "modified": "2026-11-24T15:48:25.289Z"
     },
+    "https://tractorvs.com/ru/tractors/solis-50-stage-v-rops-92f3de83/": {
+      "digest": "6baa6d8889ae38e30a6b3a74cef6bd58d4c1b15fa4196b4e4138f42addc3d236",
+      "modified": "2026-11-24T18:13:53.928Z"
+    },
+    "https://tractorvs.com/ru/tractors/solis-60-hvac-stage-v-ee86ff52/": {
+      "digest": "7839cdbea9e06b0889791b352e6af05e3d34020382be36fa324d1acc1841dd35",
+      "modified": "2026-11-24T18:13:53.928Z"
+    },
+    "https://tractorvs.com/ru/tractors/solis-60-stage-v-rops-7be538d8/": {
+      "digest": "49386a2c4efd9f4bd274bec84a9f26a88c927b5229cebc0fd4df21271a8043bb",
+      "modified": "2026-11-24T18:13:53.928Z"
+    },
     "https://tractorvs.com/ru/tractors/solis-75-dt-mr-39a48550/": {
-      "digest": "c3c2839818111eb9c1b1328e308eb051e1b09d8fc494ee6a484e145153686470",
-      "modified": "2026-11-24T18:04:40.415Z"
+      "digest": "3c87c637e8b052d214fbdb406f5aba7648f1df3ddcfb74d64b0735b5c1228e16",
+      "modified": "2026-11-24T18:13:53.928Z"
+    },
+    "https://tractorvs.com/ru/tractors/solis-75-hvac-stage-v-948b5823/": {
+      "digest": "5c6e862af6edf3178a75f699a952bbe9d42bad7ed644dd4c480a9c5bafb180f5",
+      "modified": "2026-11-24T18:13:53.928Z"
     },
     "https://tractorvs.com/ru/tractors/solis-90-dt-mr-33e556bc/": {
-      "digest": "258d30593cde07cc8b77f6b5107b565d66ce79cf14f113f2c5327b0b27a00e05",
-      "modified": "2026-11-24T18:04:40.415Z"
+      "digest": "0ea0a046f7d87601f14333e75dcd5fc7717c13aed84f790f0aec0145d1c70291",
+      "modified": "2026-11-24T18:13:53.928Z"
+    },
+    "https://tractorvs.com/ru/tractors/solis-90-hvac-stage-v-8760f728/": {
+      "digest": "ec38f40abd669831ade5b8cb8f3b680fbc68a5e26e01497ddd0ad0777be5804b",
+      "modified": "2026-11-24T18:13:53.928Z"
     },
     "https://tractorvs.com/ru/tractors/solis-s-50-dt-c7ce4206/": {
-      "digest": "566967ebfb173fb1090c1b2e7240e26b2e6437b03f273f76bf2ff31db3c939e0",
-      "modified": "2026-11-24T18:04:40.415Z"
+      "digest": "54f0f37a644cf38c8c5e29dace604abc33986f45496c484352b333d9f39960dd",
+      "modified": "2026-11-24T18:13:53.928Z"
     },
     "https://tractorvs.com/ru/tractors/solis-s-50-st-6ecbbd12/": {
-      "digest": "98a37e447ea3502f0b7f86ec53d84ae5d9c33aac429c9f03e01f92ecaf268438",
-      "modified": "2026-11-24T18:04:40.415Z"
+      "digest": "5f02ebb5b204ff553950441ff27892f33713876b94505e1662fab30174005f20",
+      "modified": "2026-11-24T18:13:53.928Z"
     },
     "https://tractorvs.com/ru/tractors/solis-s-75-nt-crdi-d3dccd43/": {
-      "digest": "25c898c19be7ab079df60f883445527280b1a6cdb2537fcc54d0e32a1b182efb",
-      "modified": "2026-11-24T18:04:40.415Z"
+      "digest": "547568c0b1997d5c7f370bbb5be0b383f10bd9967744a8b96c8739ca69848a1d",
+      "modified": "2026-11-24T18:13:53.928Z"
     },
     "https://tractorvs.com/ru/tractors/sonalika-110-wt-d76351cf/": {
       "digest": "7959cb813c10df47a4ac4473b48ab24c527fe36dbc0923d72d7e41b6eb5036a9",
@@ -12582,16 +12850,28 @@
       "modified": "2026-11-24T18:04:40.415Z"
     },
     "https://tractorvs.com/ru/tractors/versatile-530-ef3c1117/": {
-      "digest": "b23681894bf1f1d48a33a8f547dc6f69e0ee58771a8d3620936a6858987d8ee9",
-      "modified": "2026-11-24T18:04:40.415Z"
+      "digest": "dc8f90c351536b30a7d38e463444574296600cd500ea8669a5da7cad703dd832",
+      "modified": "2026-11-24T18:13:53.928Z"
+    },
+    "https://tractorvs.com/ru/tractors/versatile-530dt-47837e65/": {
+      "digest": "72e62ca2dd55192c2cf07afd2521e51f6c3e4a885d1d41f86adcfc3f60a815ff",
+      "modified": "2026-11-24T18:13:53.928Z"
     },
     "https://tractorvs.com/ru/tractors/versatile-580-4a09051c/": {
-      "digest": "d82d922d2188aae4fc207916c0938de0482eb88d62f6dfea4247519688f88d2c",
-      "modified": "2026-11-24T18:04:40.415Z"
+      "digest": "f7b125f84061335ab8501e31b1353eeb0a2a31febbb24c44e772bd2794deb83b",
+      "modified": "2026-11-24T18:13:53.928Z"
+    },
+    "https://tractorvs.com/ru/tractors/versatile-580dt-636f2708/": {
+      "digest": "28e3fe61a2bc8856ca09d2cc529154bf47ef50afb557619cfe9a55747f76c693",
+      "modified": "2026-11-24T18:13:53.928Z"
     },
     "https://tractorvs.com/ru/tractors/versatile-620-08b724f4/": {
-      "digest": "5d87830c2a6e561eacad583594b112f1077a61737d2df56ec7a8203e741170fa",
-      "modified": "2026-11-24T18:04:40.415Z"
+      "digest": "d39368e8de28725b948376b9565b54d1f0ae13809254129016961c4b311f579b",
+      "modified": "2026-11-24T18:13:53.928Z"
+    },
+    "https://tractorvs.com/ru/tractors/versatile-620dt-cbdfd364/": {
+      "digest": "f1ecbe542ddb624b06f076e983f1d833e37a8e327400965749f4be76aa0d4b66",
+      "modified": "2026-11-24T18:13:53.928Z"
     },
     "https://tractorvs.com/ru/tractors/versatile-nemesis-175-9016d690/": {
       "digest": "28947adf7fc6a55887e2c9f6bade1e4003deab741bc1157bd0ff78fbd8a89445",
@@ -12746,8 +13026,8 @@
       "modified": "2026-11-24T16:37:35.751Z"
     },
     "https://tractorvs.com/tr/": {
-      "digest": "50ce19323f9706fdeacc5a2c7feadce7aa6e87df720d460dbfff78494e2834f9",
-      "modified": "2026-11-24T18:04:40.415Z"
+      "digest": "47b157dcede96cd777217aeda1c79f1cc70a637a4d1cc90cc9e815c55a543539",
+      "modified": "2026-11-24T18:13:53.928Z"
     },
     "https://tractorvs.com/tr/articles/": {
       "digest": "75d1132252a6b94ba476a895c078b5f180c697c16484cb41b026573a16aabb99",
@@ -12762,16 +13042,16 @@
       "modified": "2026-11-22T08:02:35.845Z"
     },
     "https://tractorvs.com/tr/compare/": {
-      "digest": "cb6ef223f4c8ff7fdfe9f89f5398aeb532aa960d6e1e95f603c60819b77d62a0",
-      "modified": "2026-11-24T18:04:40.415Z"
+      "digest": "878782cddb5e2cffdaae866884d7b1035ada608f2091c7157419d833f5b80f51",
+      "modified": "2026-11-24T18:13:53.928Z"
     },
     "https://tractorvs.com/tr/compare/deutz-fahr-5090-d-gs-vs-5100-d-gs/": {
       "digest": "0f223596935ecf9cf2a0972e5fd862ac566c38ba2f83123a156634df383d9733",
       "modified": "2026-11-23T16:20:24.281Z"
     },
     "https://tractorvs.com/tr/farm-advisor/": {
-      "digest": "fbed456ac567ed341403583af55fe25cff984cfbf20085ec5f129517bdfc4b48",
-      "modified": "2026-11-24T18:04:40.415Z"
+      "digest": "9a73b44e39e433ece3379ea3560c31f0e55194f22e00a04e27da9bb0e6db70f1",
+      "modified": "2026-11-24T18:13:53.928Z"
     },
     "https://tractorvs.com/tr/guides/choosing-a-tractor/": {
       "digest": "11c88ba0738bb3c87249f11db80f4130fbfd238a4e8fc58849bc385efa714b93",
@@ -12806,8 +13086,8 @@
       "modified": "2026-11-24T16:26:42.582Z"
     },
     "https://tractorvs.com/tr/tractors/": {
-      "digest": "2af2d113ea4c7ebecf5c83686f7a355ceb80828361baf42f8e524138610e863a",
-      "modified": "2026-11-24T18:04:40.415Z"
+      "digest": "7d22db539d536851d6e58193b0911df946ed0fed10e3fca7f49287316079c823",
+      "modified": "2026-11-24T18:13:53.928Z"
     },
     "https://tractorvs.com/tr/tractors/agrale-4125-0b53e944/": {
       "digest": "cbfb1b094b1f29a6b421188c362c4724ea5af2560d61a704d8fe0b1596b1b3d8",
@@ -12918,16 +13198,24 @@
       "modified": "2026-11-23T16:45:17.078Z"
     },
     "https://tractorvs.com/tr/tractors/basak-traktor-2055-d1258ec7/": {
-      "digest": "455c42aa0ef7e97f938435fbb33386e0e222bbbff35b982c1a66a770239e1d61",
-      "modified": "2026-11-24T18:04:40.415Z"
+      "digest": "93924adbdb3b81193bcbb49619f9e2e9f537ede3c55ae5e6f684ca00271084b5",
+      "modified": "2026-11-24T18:13:53.928Z"
     },
     "https://tractorvs.com/tr/tractors/basak-traktor-2075-bk-9ef236be/": {
-      "digest": "b80749fb7b71f18257aab06ed7777516a1a0b9763674355f9462082eeb44f6b1",
-      "modified": "2026-11-24T18:04:40.415Z"
+      "digest": "89a4d79f84428e64a80a5a8d7a8945973c7fb3f9d29c186894d8ab02356ddf3c",
+      "modified": "2026-11-24T18:13:53.928Z"
     },
     "https://tractorvs.com/tr/tractors/basak-traktor-2075-bt-ddb654b6/": {
-      "digest": "b1a011f2b5a2700b1c88f3800424e7fab5cadb711f33d4d2868c1422ca16c321",
-      "modified": "2026-11-24T18:04:40.415Z"
+      "digest": "23da75922e96b8166aad0c6b9d37e4414826cd2f4b3722a0f0f36f96f5659ac1",
+      "modified": "2026-11-24T18:13:53.928Z"
+    },
+    "https://tractorvs.com/tr/tractors/basak-traktor-3026-2bc6ed35/": {
+      "digest": "12d7829992790a0cb87fcf7605c6301286a8bb4994959c87406ad24cfd647145",
+      "modified": "2026-11-24T18:13:53.928Z"
+    },
+    "https://tractorvs.com/tr/tractors/basak-traktor-5075-compact-20e382ea/": {
+      "digest": "666ebfa1e172c35090c78a644ad8b4b2a298608a4ae566914f62384e86b75f30",
+      "modified": "2026-11-24T18:13:53.928Z"
     },
     "https://tractorvs.com/tr/tractors/basak-traktor-5120-01590869/": {
       "digest": "ee576fbbe8699a1d3729d7415b0c161bfe290e26680e93aa2ab50080e91cd819",
@@ -13721,25 +14009,45 @@
       "digest": "53669ac27035ac53a8d34b0f945e83bd373a2f840e92159a71ee29d32fb9501c",
       "modified": "2026-11-23T16:45:17.078Z"
     },
+    "https://tractorvs.com/tr/tractors/solis-50-stage-v-rops-92f3de83/": {
+      "digest": "690a97dc996de9024809de2dd96e3f80d9dff3aae6e01cf98b271d13fb2ea754",
+      "modified": "2026-11-24T18:13:53.928Z"
+    },
+    "https://tractorvs.com/tr/tractors/solis-60-hvac-stage-v-ee86ff52/": {
+      "digest": "0cfd3e46d7181654d19177ce66877b695d1482564a36e7e87731b7b4076f5cd2",
+      "modified": "2026-11-24T18:13:53.928Z"
+    },
+    "https://tractorvs.com/tr/tractors/solis-60-stage-v-rops-7be538d8/": {
+      "digest": "600c3f245a6fad0ee394d2351ceda1ce9a79c315c5762d77aed7eab3fdb06ec7",
+      "modified": "2026-11-24T18:13:53.928Z"
+    },
     "https://tractorvs.com/tr/tractors/solis-75-dt-mr-39a48550/": {
-      "digest": "3bfac74033d14508df23ab705bbfc696c6708d0c43a6ac1582156113a2420069",
-      "modified": "2026-11-24T18:04:40.415Z"
+      "digest": "d7d897ca920337ac5733cccfc05ae8af60fcb3d589feca7138e5c82c9f3719d5",
+      "modified": "2026-11-24T18:13:53.928Z"
+    },
+    "https://tractorvs.com/tr/tractors/solis-75-hvac-stage-v-948b5823/": {
+      "digest": "87b5801813b297008d83398d13791a0f106e0532b6ed99ff042e40459441f961",
+      "modified": "2026-11-24T18:13:53.928Z"
     },
     "https://tractorvs.com/tr/tractors/solis-90-dt-mr-33e556bc/": {
-      "digest": "00de0581f25e4e03152d0b37710cfb9747007cdcba5eb20659e95565cc1c5688",
-      "modified": "2026-11-24T18:04:40.415Z"
+      "digest": "464d2983c6443f01fe3414aeac99c045c76a456686e359d27e37450fe90e83f6",
+      "modified": "2026-11-24T18:13:53.928Z"
+    },
+    "https://tractorvs.com/tr/tractors/solis-90-hvac-stage-v-8760f728/": {
+      "digest": "cc46d17e6dfbaa3d2f68a2d61cb5af3940686f699b786420fb6c0fa20035a8db",
+      "modified": "2026-11-24T18:13:53.928Z"
     },
     "https://tractorvs.com/tr/tractors/solis-s-50-dt-c7ce4206/": {
-      "digest": "1e3b52906d1eee50d0eab17196a241a7a83358ed38de2a8d95138add051a4b1a",
-      "modified": "2026-11-24T18:04:40.415Z"
+      "digest": "985b2336456394b21247f42703c4ae71d23253139e3a276b03e2b8a8447ca30f",
+      "modified": "2026-11-24T18:13:53.928Z"
     },
     "https://tractorvs.com/tr/tractors/solis-s-50-st-6ecbbd12/": {
-      "digest": "d52a3d7ff0b68e6b4167050c0a53b15e99832fb760df1e657ae394be99abbd1e",
-      "modified": "2026-11-24T18:04:40.415Z"
+      "digest": "e884f656e7e40a7aa369cb7ac8f0ea5188711a1e1a4fcb5295d6f7711120112a",
+      "modified": "2026-11-24T18:13:53.928Z"
     },
     "https://tractorvs.com/tr/tractors/solis-s-75-nt-crdi-d3dccd43/": {
-      "digest": "54a0aae45a960113a8439385bc9adee1ed4bb2a21865213dd8340020dd16f60e",
-      "modified": "2026-11-24T18:04:40.415Z"
+      "digest": "3e9ae5c805e08959b2f51abc18e0fa510ac39a90fd4aa68fab21e81147b241db",
+      "modified": "2026-11-24T18:13:53.928Z"
     },
     "https://tractorvs.com/tr/tractors/sonalika-110-wt-d76351cf/": {
       "digest": "1c6b87ac09e4003c359bfeb85c4fb61ae175c3a7f36d72ec45b556d0d98d20a0",
@@ -14426,16 +14734,28 @@
       "modified": "2026-11-24T18:04:40.415Z"
     },
     "https://tractorvs.com/tr/tractors/versatile-530-ef3c1117/": {
-      "digest": "b3bf95d3924af6bf05ddfe973f4ad13689c834e273daac28a4f59e6db161cc74",
-      "modified": "2026-11-24T18:04:40.415Z"
+      "digest": "03400f9c60fdde11a98b85ba9fa081e9e56703fba95e90646b7a8cd0240e3337",
+      "modified": "2026-11-24T18:13:53.928Z"
+    },
+    "https://tractorvs.com/tr/tractors/versatile-530dt-47837e65/": {
+      "digest": "1497039bb24f4b8947b7a67550c19c9d6006cd19f8148c170c63475c5a3336df",
+      "modified": "2026-11-24T18:13:53.928Z"
     },
     "https://tractorvs.com/tr/tractors/versatile-580-4a09051c/": {
-      "digest": "58b2304dc655e44c6d2f06b34a8fffe14a674feaa3f5e6153bfd0129f8f0e96d",
-      "modified": "2026-11-24T18:04:40.415Z"
+      "digest": "826de20f9dd19d86ddde0dadaef4a9199970674b0a98d6ed7d5a810c068b203c",
+      "modified": "2026-11-24T18:13:53.928Z"
+    },
+    "https://tractorvs.com/tr/tractors/versatile-580dt-636f2708/": {
+      "digest": "a8d6ade27c3e12b9a948ffa772aceb72697148ba619ac131d8129dd7c1d2639b",
+      "modified": "2026-11-24T18:13:53.928Z"
     },
     "https://tractorvs.com/tr/tractors/versatile-620-08b724f4/": {
-      "digest": "b9a0a30a96be9bb4fd403e7597ff05f040d22685bd0e1ca4c11ccf5406483091",
-      "modified": "2026-11-24T18:04:40.415Z"
+      "digest": "af0be656c2ee66d86039fa87a5e09479bd7d5ce454fa99a6859ba0ef0bbe49a8",
+      "modified": "2026-11-24T18:13:53.928Z"
+    },
+    "https://tractorvs.com/tr/tractors/versatile-620dt-cbdfd364/": {
+      "digest": "92a19ffc2eff8383afd24ddb3adb3db1799d19a97d75df5cf5418985015b78c8",
+      "modified": "2026-11-24T18:13:53.928Z"
     },
     "https://tractorvs.com/tr/tractors/versatile-nemesis-175-9016d690/": {
       "digest": "08081d2a785a6a8e96bd354c0263c666080370a4b71862ced6d30e8e5bfa2690",
@@ -14590,8 +14910,8 @@
       "modified": "2026-11-24T16:37:35.751Z"
     },
     "https://tractorvs.com/tractors/": {
-      "digest": "974c1d029f44d430c3e079a912064bb62dc63ea8e706dcbff8fb8152b9bb6e15",
-      "modified": "2026-11-24T18:04:40.415Z"
+      "digest": "001af00f7a2c5d4d8e9e43c2ab8c5c8765e8ec2b80e5d9da6d2c520bee8f9776",
+      "modified": "2026-11-24T18:13:53.928Z"
     },
     "https://tractorvs.com/tractors/agrale-4125-0b53e944/": {
       "digest": "41798f99d5c960a94a56bd2e388c2dc375f095243fcad91abc215ad0c7cf129f",
@@ -14702,16 +15022,24 @@
       "modified": "2026-11-23T16:45:17.078Z"
     },
     "https://tractorvs.com/tractors/basak-traktor-2055-d1258ec7/": {
-      "digest": "becb244fac4e72222b468a376ae767c7617f2c3f93162285bc878d17cb75fc88",
-      "modified": "2026-11-24T18:04:40.415Z"
+      "digest": "f708a6446d66cbb60bf90e25d8eb227c2e083e2451cf211de3a5f77249ae535c",
+      "modified": "2026-11-24T18:13:53.928Z"
     },
     "https://tractorvs.com/tractors/basak-traktor-2075-bk-9ef236be/": {
-      "digest": "388e3eca8d35c9f47535b4b997fa4a1ca780f17c64532dfabd6e88b4cdb2b49d",
-      "modified": "2026-11-24T18:04:40.415Z"
+      "digest": "ce01448f8de331e67616a60b3b63d5898d7e843919ae598fd9d3f079ab6204b9",
+      "modified": "2026-11-24T18:13:53.928Z"
     },
     "https://tractorvs.com/tractors/basak-traktor-2075-bt-ddb654b6/": {
-      "digest": "11423266981e6ec9472aee7704d335ad5fa8e105c4c1c3b112e846410f43ac18",
-      "modified": "2026-11-24T18:04:40.415Z"
+      "digest": "30da0eb5a57f0d342cf2d496660b238c72d9c283b9acacb03692673394a7c851",
+      "modified": "2026-11-24T18:13:53.928Z"
+    },
+    "https://tractorvs.com/tractors/basak-traktor-3026-2bc6ed35/": {
+      "digest": "13217318628b6b015f4cac3753be4969ca462834a178639cebe92e7e684fede4",
+      "modified": "2026-11-24T18:13:53.928Z"
+    },
+    "https://tractorvs.com/tractors/basak-traktor-5075-compact-20e382ea/": {
+      "digest": "96d7335411e56b78339d1c780c3cd4b2e228cd94cbe656892bd970a3cc685c5e",
+      "modified": "2026-11-24T18:13:53.928Z"
     },
     "https://tractorvs.com/tractors/basak-traktor-5120-01590869/": {
       "digest": "87d5b718763eea8296d3626339bee4d050faf39f09bc1c0d7026add0a8a67f72",
@@ -15505,25 +15833,45 @@
       "digest": "ba8010934f66bc0ea2359b437cafa3d8d38808149aab9587083c1f5da6d75c2b",
       "modified": "2026-11-23T16:45:17.078Z"
     },
+    "https://tractorvs.com/tractors/solis-50-stage-v-rops-92f3de83/": {
+      "digest": "28c30a3c90dcedaf2b2982a640c63a111e82f6442d0a4a48674cf068c1f4c1bd",
+      "modified": "2026-11-24T18:13:53.928Z"
+    },
+    "https://tractorvs.com/tractors/solis-60-hvac-stage-v-ee86ff52/": {
+      "digest": "a72eb7a7b4c672838335fe40b8987d48236a86b94a6271ff251b65a998e56ecd",
+      "modified": "2026-11-24T18:13:53.928Z"
+    },
+    "https://tractorvs.com/tractors/solis-60-stage-v-rops-7be538d8/": {
+      "digest": "61a04c513867d624373f8c77b8e3e4705adade8a248849c2b9fd08c597f832bb",
+      "modified": "2026-11-24T18:13:53.928Z"
+    },
     "https://tractorvs.com/tractors/solis-75-dt-mr-39a48550/": {
-      "digest": "8f480bc30a6e343181547b24d5d0030b1494a1c083cb0964b7d32b1e93e59741",
-      "modified": "2026-11-24T18:04:40.415Z"
+      "digest": "dace5e3f75450509240a3aa567e87e512ccb7d02307196da724857d29040c224",
+      "modified": "2026-11-24T18:13:53.928Z"
+    },
+    "https://tractorvs.com/tractors/solis-75-hvac-stage-v-948b5823/": {
+      "digest": "76699841e10256e94748e39604374599658c5c3e0fd50f57ccc7e621f20ba006",
+      "modified": "2026-11-24T18:13:53.928Z"
     },
     "https://tractorvs.com/tractors/solis-90-dt-mr-33e556bc/": {
-      "digest": "7a151259b5903bf792e5cefdaa99055b95988a8812fa4dca74bd688dc6f52ac0",
-      "modified": "2026-11-24T18:04:40.415Z"
+      "digest": "82b714d659ab54c8790245f0eb5a5f7d426386f869338b78c02fadf91187b947",
+      "modified": "2026-11-24T18:13:53.928Z"
+    },
+    "https://tractorvs.com/tractors/solis-90-hvac-stage-v-8760f728/": {
+      "digest": "d0b9457287c77a0fe115beb762e20bfc93f4d2c6e89e2414273ea2caa4ac7004",
+      "modified": "2026-11-24T18:13:53.928Z"
     },
     "https://tractorvs.com/tractors/solis-s-50-dt-c7ce4206/": {
-      "digest": "785110092b2b5441830651e1621d3d959d33685d89ef8a9777aa2979dd2b04b5",
-      "modified": "2026-11-24T18:04:40.415Z"
+      "digest": "ad531e87e5a6b817372c11d251d052743371ccd10569af715ac1d5ac2740ab93",
+      "modified": "2026-11-24T18:13:53.928Z"
     },
     "https://tractorvs.com/tractors/solis-s-50-st-6ecbbd12/": {
-      "digest": "be07d85e435c280136d2004a33c54cedd2204befad43f58ae79e08ca687a7013",
-      "modified": "2026-11-24T18:04:40.415Z"
+      "digest": "f212ac80b52cd340142c8d340600c554e7a390040e277583f9706cc147b8302b",
+      "modified": "2026-11-24T18:13:53.928Z"
     },
     "https://tractorvs.com/tractors/solis-s-75-nt-crdi-d3dccd43/": {
-      "digest": "e17edc30ed1d9c28cf2b575ee532e5966d98fa1ff1b9b7a7781b52407d269946",
-      "modified": "2026-11-24T18:04:40.415Z"
+      "digest": "15ffe12fa9b594fa6306c6a05b93c4cc7b120f4923638b696f7c03cdb95720ba",
+      "modified": "2026-11-24T18:13:53.928Z"
     },
     "https://tractorvs.com/tractors/sonalika-110-wt-d76351cf/": {
       "digest": "670d38379a7d3c7556657fbd7c18cff79f89d8a8cc19934e046a40c68d62b4e0",
@@ -16210,16 +16558,28 @@
       "modified": "2026-11-24T18:04:40.415Z"
     },
     "https://tractorvs.com/tractors/versatile-530-ef3c1117/": {
-      "digest": "c17ae925d524721436eafbba5099fc5d2e1e34aa1ba2e93aa9eee924cec0cba6",
-      "modified": "2026-11-24T18:04:40.415Z"
+      "digest": "f565c42a21bade7da699f33c4621409461b431963cef0a8a5993939417046a1b",
+      "modified": "2026-11-24T18:13:53.928Z"
+    },
+    "https://tractorvs.com/tractors/versatile-530dt-47837e65/": {
+      "digest": "f5a044d00353b1ef39abe8e3ed6ed663d21673e48a2c568fb53e5747746e8da8",
+      "modified": "2026-11-24T18:13:53.928Z"
     },
     "https://tractorvs.com/tractors/versatile-580-4a09051c/": {
-      "digest": "51107aba0300b027bf8fba6b6fa30a7224953598a0f9ce251a46ab672616503b",
-      "modified": "2026-11-24T18:04:40.415Z"
+      "digest": "7ea087384b6ab4238a22a972d87b18a8857bedab35db9aedb6a3263eb197d694",
+      "modified": "2026-11-24T18:13:53.928Z"
+    },
+    "https://tractorvs.com/tractors/versatile-580dt-636f2708/": {
+      "digest": "b1d08f299f938b6939eb7afe058e62b930dc90998c60c3a4a39cae50f5835200",
+      "modified": "2026-11-24T18:13:53.928Z"
     },
     "https://tractorvs.com/tractors/versatile-620-08b724f4/": {
-      "digest": "ce0eac8f10a9c796d47d5dfa858ce9e55a7cc4820ab355fc88fcf10bc9ccf144",
-      "modified": "2026-11-24T18:04:40.415Z"
+      "digest": "26c41e172527c50321b114ec1eef4cab554331531ebdea40e1988e5ce7c67cce",
+      "modified": "2026-11-24T18:13:53.928Z"
+    },
+    "https://tractorvs.com/tractors/versatile-620dt-cbdfd364/": {
+      "digest": "0fc01521c9d9107c4a9125c2d52336b31953c9b75e3e06be042cf515b43f048b",
+      "modified": "2026-11-24T18:13:53.928Z"
     },
     "https://tractorvs.com/tractors/versatile-nemesis-175-9016d690/": {
       "digest": "8df6520209708ae0d39203cc44b35fc8bead8271db9cf643043c97801d442c8d",
@@ -16374,20 +16734,20 @@
       "modified": "2026-11-24T16:37:35.751Z"
     },
     "https://tractorvs.com/zh/": {
-      "digest": "9d35fd26c5a2aca4177c389bb271adb9888656e3daf6dcf87e17faab90209c8d",
-      "modified": "2026-11-24T18:04:40.415Z"
+      "digest": "094c33892ccc2c396bf9e62a24151b677ae935def75689983d26023df87bb0aa",
+      "modified": "2026-11-24T18:13:53.928Z"
     },
     "https://tractorvs.com/zh/articles/": {
       "digest": "5e6ee9807459baae052b17e309edce3c5271e3b0dfb6c00aaa8433a08ac323d1",
       "modified": "2026-11-24T16:26:42.582Z"
     },
     "https://tractorvs.com/zh/compare/": {
-      "digest": "10a3909ac7a6e3b0814bb31625f636762ce3483da0682c07bd44952af8bc094c",
-      "modified": "2026-11-24T18:04:40.415Z"
+      "digest": "abee38819426186fb0ba32a67ba454114fb5db841730ff939887172a26ebfe70",
+      "modified": "2026-11-24T18:13:53.928Z"
     },
     "https://tractorvs.com/zh/farm-advisor/": {
-      "digest": "b11dc1c07b9aaa565e9f882a8aa2ea1ff3247ecf987f3f2380aaca301c39eb94",
-      "modified": "2026-11-24T18:04:40.415Z"
+      "digest": "ef26a0f254f2a68d845e896a137e4e12896e93542fd63382f3558acbbdf8d17d",
+      "modified": "2026-11-24T18:13:53.928Z"
     },
     "https://tractorvs.com/zh/guides/choosing-a-tractor/": {
       "digest": "5a3e53c6e32392c8b9c1e19830ba7d37146aa48dfce472d6abf7212810b227cb",
@@ -16402,8 +16762,8 @@
       "modified": "2026-11-24T16:26:42.582Z"
     },
     "https://tractorvs.com/zh/tractors/": {
-      "digest": "c5baf282c7dd3aff75456e931bcda0dea828a95c8d32976479c6c2a5c63469ce",
-      "modified": "2026-11-24T18:04:40.415Z"
+      "digest": "4fcc39049822cdca41d9f00cfb850c50abccedb436d02d6bda3faacfc9474ebe",
+      "modified": "2026-11-24T18:13:53.928Z"
     },
     "https://tractorvs.com/zh/tractors/agrale-4125-0b53e944/": {
       "digest": "af9707caacf9593a39899530ab3e9b8ee2971cf1a45030048991469d0d814ed1",
@@ -16514,16 +16874,24 @@
       "modified": "2026-11-23T16:45:17.078Z"
     },
     "https://tractorvs.com/zh/tractors/basak-traktor-2055-d1258ec7/": {
-      "digest": "c70c36b611f091bf5c5d9bd3fd1cc3b6dcf15fef2aca32cfd23f0b745885abac",
-      "modified": "2026-11-24T18:04:40.415Z"
+      "digest": "0894c00cdf54402504a7beb6e168aa1163231edcf202f1240edc04ab4f744dcc",
+      "modified": "2026-11-24T18:13:53.928Z"
     },
     "https://tractorvs.com/zh/tractors/basak-traktor-2075-bk-9ef236be/": {
-      "digest": "2acced07bc2ef5ed6ec5848a1b89305354876d06bb920fb1ba52d9cc0c3472d7",
-      "modified": "2026-11-24T18:04:40.415Z"
+      "digest": "7d30fd2ec505585b30c644223811ebe16771dfb69fe8fd08fe65be8d1d41d85c",
+      "modified": "2026-11-24T18:13:53.928Z"
     },
     "https://tractorvs.com/zh/tractors/basak-traktor-2075-bt-ddb654b6/": {
-      "digest": "99b950e29afbfb66670cd8820c98d3e7ba468562870aded6f1d9ea608e132fd8",
-      "modified": "2026-11-24T18:04:40.415Z"
+      "digest": "dc94699347490b5f12697191c994288d262b63164343cde278af3735d4e5e69a",
+      "modified": "2026-11-24T18:13:53.928Z"
+    },
+    "https://tractorvs.com/zh/tractors/basak-traktor-3026-2bc6ed35/": {
+      "digest": "ea01f22e35891e1a7d64c3c5bf1e2a6b49c6cd493e35ac56f826313e596d01b1",
+      "modified": "2026-11-24T18:13:53.928Z"
+    },
+    "https://tractorvs.com/zh/tractors/basak-traktor-5075-compact-20e382ea/": {
+      "digest": "6f321d392c83c4027f463058a732315046defd2ed7520f2e106d24e50c9c23ad",
+      "modified": "2026-11-24T18:13:53.928Z"
     },
     "https://tractorvs.com/zh/tractors/basak-traktor-5120-01590869/": {
       "digest": "7a289e3fae36299b2e500f4e03d276798b2c2e7c985f5714ef9d021a20213452",
@@ -17317,25 +17685,45 @@
       "digest": "bcd04ceab9a71e07aa52bf3e9c65d87d510a7ce36b04f8bb75c9a33c3a04ba90",
       "modified": "2026-11-24T15:48:25.289Z"
     },
+    "https://tractorvs.com/zh/tractors/solis-50-stage-v-rops-92f3de83/": {
+      "digest": "374f5afc3585c94710463ee90d8886c609e580481d2e2915206d6b57eb3c7ce3",
+      "modified": "2026-11-24T18:13:53.928Z"
+    },
+    "https://tractorvs.com/zh/tractors/solis-60-hvac-stage-v-ee86ff52/": {
+      "digest": "719261b7a9ab8d79e22adee2f58b17a1e6008b08bc72c6ecf23779321a23982c",
+      "modified": "2026-11-24T18:13:53.928Z"
+    },
+    "https://tractorvs.com/zh/tractors/solis-60-stage-v-rops-7be538d8/": {
+      "digest": "7ede653443f1aed47962e2b0ae203fea27ccf3cee4ddfe845dc3327b1655aa94",
+      "modified": "2026-11-24T18:13:53.928Z"
+    },
     "https://tractorvs.com/zh/tractors/solis-75-dt-mr-39a48550/": {
-      "digest": "076725c68ed083f1db2bcbe5f817a0e5b79619a4e31bf3ae07e02022591666d4",
-      "modified": "2026-11-24T18:04:40.415Z"
+      "digest": "a357d7fee77d507adede978f0c53d54f67e5acca525b40e91b48fe256607103a",
+      "modified": "2026-11-24T18:13:53.928Z"
+    },
+    "https://tractorvs.com/zh/tractors/solis-75-hvac-stage-v-948b5823/": {
+      "digest": "3de9d1551ccde013e4ad4c72f4fc5faac484e1e6198a4f02077a9aed51c07a73",
+      "modified": "2026-11-24T18:13:53.928Z"
     },
     "https://tractorvs.com/zh/tractors/solis-90-dt-mr-33e556bc/": {
-      "digest": "76c3c9ab665b8efe605bfa4631eefced214d2e754060762150b8be08250ee0dc",
-      "modified": "2026-11-24T18:04:40.415Z"
+      "digest": "abfd795c79443471c78be262860e32d72e193e6049a049ea20577c4631f8c14d",
+      "modified": "2026-11-24T18:13:53.928Z"
+    },
+    "https://tractorvs.com/zh/tractors/solis-90-hvac-stage-v-8760f728/": {
+      "digest": "44e9852b394b4ad7c287163aaaab9643f11edc3da631e69d1338e9f6f6c86756",
+      "modified": "2026-11-24T18:13:53.928Z"
     },
     "https://tractorvs.com/zh/tractors/solis-s-50-dt-c7ce4206/": {
-      "digest": "d27468f52f811c18edeb866e73700b97596657ca6160fbcf4f35f20e2cc20bfe",
-      "modified": "2026-11-24T18:04:40.415Z"
+      "digest": "015b8c2c736959d8d5bf3d5f706c7603de5272b006d4978de988f24939d2ff31",
+      "modified": "2026-11-24T18:13:53.928Z"
     },
     "https://tractorvs.com/zh/tractors/solis-s-50-st-6ecbbd12/": {
-      "digest": "a5079da686824750cfa2aad1b8b22bfe173cf91a590c783e617d36e48ddc771e",
-      "modified": "2026-11-24T18:04:40.415Z"
+      "digest": "89ece878b094428a3f047c2e89bc018f3790ab47277988402a56d93582ee84b9",
+      "modified": "2026-11-24T18:13:53.928Z"
     },
     "https://tractorvs.com/zh/tractors/solis-s-75-nt-crdi-d3dccd43/": {
-      "digest": "8a66cfd448b5cbabf6b414e0c603593b41b5208ce4272da267ed9704dac4813f",
-      "modified": "2026-11-24T18:04:40.415Z"
+      "digest": "943eb49766a76cf222ab1703e29afaef0c390e6cbc0d66c8c1128fc98eaca7e0",
+      "modified": "2026-11-24T18:13:53.928Z"
     },
     "https://tractorvs.com/zh/tractors/sonalika-110-wt-d76351cf/": {
       "digest": "730b2a7b270683f9ccfd9e912fbc89b00ced9f9eac596d1f001a3f04dd8a3eac",
@@ -18022,16 +18410,28 @@
       "modified": "2026-11-24T18:04:40.415Z"
     },
     "https://tractorvs.com/zh/tractors/versatile-530-ef3c1117/": {
-      "digest": "ff9606bf64544e2cca91f94b24f7cb180abe7b7e7f2953ef9513c18531dbbe6e",
-      "modified": "2026-11-24T18:04:40.415Z"
+      "digest": "78a9bb2e6f32befe7fa1abc1594aa6fdf335e5cb36b91c98e1d8f8599b1cba53",
+      "modified": "2026-11-24T18:13:53.928Z"
+    },
+    "https://tractorvs.com/zh/tractors/versatile-530dt-47837e65/": {
+      "digest": "e8c925def3080c9d6bd64211176292d29d5ef74946ff1587c1fe03c2a6903605",
+      "modified": "2026-11-24T18:13:53.928Z"
     },
     "https://tractorvs.com/zh/tractors/versatile-580-4a09051c/": {
-      "digest": "2656b412506ed4c6a13f283b9bb87e84efdff77888dee2a3153407aaf575e395",
-      "modified": "2026-11-24T18:04:40.415Z"
+      "digest": "b5047695df3853611e9327adde8e4a139cc29e5d707f734144d7e2bff5d9db78",
+      "modified": "2026-11-24T18:13:53.928Z"
+    },
+    "https://tractorvs.com/zh/tractors/versatile-580dt-636f2708/": {
+      "digest": "79fb9a502568ab07c67137537948eebc40cef134e0a99a1a4969475191201b07",
+      "modified": "2026-11-24T18:13:53.928Z"
     },
     "https://tractorvs.com/zh/tractors/versatile-620-08b724f4/": {
-      "digest": "b2bfbffb3a82f7bb72645d4bd41db19dadfec0a8bca5f480b327f0bb129dcf5a",
-      "modified": "2026-11-24T18:04:40.415Z"
+      "digest": "26997a6f3ae47ad98cc55e57cb41e845b230d43c9d95342a13f31b0114edfdce",
+      "modified": "2026-11-24T18:13:53.928Z"
+    },
+    "https://tractorvs.com/zh/tractors/versatile-620dt-cbdfd364/": {
+      "digest": "61370fac89f5a1555c9bf48f4b2814fa01df85ca535c24931cd78b597a2a134f",
+      "modified": "2026-11-24T18:13:53.928Z"
     },
     "https://tractorvs.com/zh/tractors/versatile-nemesis-175-9016d690/": {
       "digest": "d29bec67f295bb6700632b04c1c03bb15145d7cdf8b7b004db9a7352882da3db",
