@@ -1,0 +1,49 @@
+{
+  "fileId": "mf-4708-platform-pere-igor-2016",
+  "tractorId": "5727a834-a31d-4d85-9d0a-22468b2fa6c7",
+  "sourcePage": "https://commons.wikimedia.org/wiki/File:Lanouaille_Massey_Ferguson_4708.jpg",
+  "photographer": "Père Igor",
+  "license": "CC BY-SA 4.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+  "sourceDate": "2016-10-23",
+  "configurationExact": false,
+  "scope": "Visible MF 4708 badge and open platform; France 2016 photograph representative of the model only, not proof of South Africa 2021 trim.",
+  "sourceOriginal": "https://upload.wikimedia.org/wikipedia/commons/a/a8/Lanouaille_Massey_Ferguson_4708.jpg",
+  "original": {
+    "bytes": 1419345,
+    "width": 2996,
+    "height": 2247,
+    "sha1": "31bfe1396bb2df40edfeb48b75b868b499573a96",
+    "sha256": "1020fab948f7505de2899160ea819cd7f11793bfe653cc5132ab5683bce95180"
+  },
+  "originalArtifact": 14934029449,
+  "transferRun": 45461207533,
+  "transferJob": 138683934866,
+  "changes": "Resized and JPEG re-encoded, no crop, same CC BY-SA 4.0 license.",
+  "derivatives": [
+    {
+      "file": "mf-4708-platform-pere-igor-2016-480.jpg",
+      "width": 480,
+      "height": 360,
+      "sha256": "d2187b253babd0ed4a4a2fe37a7b126776faaec9c83eea400feecd4008f29736",
+      "bytes": 54319,
+      "chunks": 7
+    },
+    {
+      "file": "mf-4708-platform-pere-igor-2016-960.jpg",
+      "width": 960,
+      "height": 720,
+      "sha256": "08452f6814f964a09a0133e74f14f085650e5a801f95a4dbabb160a08e9cb900",
+      "bytes": 186839,
+      "chunks": 21
+    },
+    {
+      "file": "mf-4708-platform-pere-igor-2016-1920.jpg",
+      "width": 1920,
+      "height": 1440,
+      "sha256": "8a3318fddd9080dde7be26795ef39b2b7154ec17445a9ff93f834b027b537cea",
+      "bytes": 590352,
+      "chunks": 66
+    }
+  ]
+}

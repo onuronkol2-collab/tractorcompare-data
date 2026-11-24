@@ -921,6 +921,7 @@ const candidates=[
     "height": 2848
   },
   {"brand":"Zetor","model":"MAJOR","tractorId":"755e44bc-8043-4d41-9e08-f40e818ac00b","fileId":"zetor-major-cl80-jj7777","path":"6/6a/ZETOR_MAJOR.jpg","photographer":"JJ7777","license":"CC BY-SA 4.0","width":4969,"height":3313},
+  {"brand":"Massey Ferguson","model":"4708 Standard","tractorId":"5727a834-a31d-4d85-9d0a-22468b2fa6c7","fileId":"mf-4708-platform-pere-igor-2016","path":"a/a8/Lanouaille_Massey_Ferguson_4708.jpg","photographer":"Père Igor","license":"CC BY-SA 4.0","width":2996,"height":2247,"resizedDerivative":true},
 ] as const;
 function licenseUrl(name:string):string{
   if(name==="CC0")return "https://creativecommons.org/publicdomain/zero/1.0/";
@@ -943,6 +944,7 @@ export const HISTORICAL_LICENSED_PHOTOS=candidates.map(p=>{
       ? {copyrightOwner:p.copyrightOwner,
          copyrightClaimUrl:p.copyrightClaimUrl,
          copyrightEvidence:p.copyrightEvidence} : {}),
+    ...("resizedDerivative" in p && p.resizedDerivative===true ? {resizedDerivative:true} : {}),
     configurationExact:false
   };
 });
