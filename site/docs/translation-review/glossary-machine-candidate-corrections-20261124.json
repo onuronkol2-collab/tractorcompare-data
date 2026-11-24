@@ -1,0 +1,992 @@
+{
+  "schema": 1,
+  "state": "editorial-corrections-await-independent-review",
+  "reviewed": false,
+  "notForPublication": true,
+  "sourceBlobSha": "a5379d60c7c1f53dfcfb528c9ee7743a450faaa5",
+  "rawCandidateBlobSha": "0c24790fc3ed3ff75c8a2d3cb9fe985dddeb1925",
+  "scope": "Manual source-aligned corrections to all initially flagged technical fields and additional obvious Portuguese semantic or regional errors. Other fields remain unreviewed; not evidence of independent approval.",
+  "corrections": [
+    {
+      "locale": "zh",
+      "id": "emission",
+      "field": "example",
+      "source": "Stage V and older Stage IIIA refer to different regulatory regimes.",
+      "original": "第五阶段和更早的第三阶段A指的是不同的监管制度。",
+      "revised": "Stage V（第五阶段）与较早的 Stage IIIA（第三阶段 A）属于不同的排放法规体系。",
+      "reason": "source fidelity and protected notation"
+    },
+    {
+      "locale": "zh",
+      "id": "traction",
+      "field": "example",
+      "source": "4WD may reduce slip on wet soil; 2WD may suffice on firm ground.",
+      "original": "四驱车在湿滑土壤上可以减少打滑；两驱车在坚实地面上可能就足够了。",
+      "revised": "四轮驱动（4WD）可能减少湿地作业时的车轮打滑；在坚实地面上，两轮驱动（2WD）可能已足够。",
+      "reason": "source fidelity and protected notation"
+    },
+    {
+      "locale": "zh",
+      "id": "traction",
+      "field": "caution",
+      "source": "Tyres, weight and soil matter; 4WD is not universally superior.",
+      "original": "轮胎、重量和土壤物质；四驱车并非在所有方面都优于其他车辆。",
+      "revised": "轮胎、整机质量和土壤条件都很重要；四轮驱动（4WD）并非在所有情况下都更优。",
+      "reason": "source fidelity and protected notation"
+    },
+    {
+      "locale": "zh",
+      "id": "dimensions",
+      "field": "caution",
+      "source": "They can vary with cab, ROPS, ballast and tyre configuration.",
+      "original": "它们会因驾驶室、防滚架、压载物和轮胎配置而异。",
+      "revised": "外形尺寸可能因驾驶室、防翻滚保护结构（ROPS）、配重和轮胎配置而异。",
+      "reason": "source fidelity and protected notation"
+    },
+    {
+      "locale": "zh",
+      "id": "tyre-size",
+      "field": "caution",
+      "source": "Front/rear rolling circumference matters on 4WD; substitutions need approval.",
+      "original": "四驱车的前后滚动周长很重要；替换需要获得批准。",
+      "revised": "四轮驱动（4WD）拖拉机的前后轮滚动周长及其匹配关系很重要；更换轮胎须获得批准。",
+      "reason": "source fidelity and protected notation"
+    },
+    {
+      "locale": "zh",
+      "id": "turning-radius",
+      "field": "caution",
+      "source": "Tyres, 4WD, brake assistance and test method affect the figure.",
+      "original": "轮胎、四驱系统、制动辅助系统和测试方法都会影响该数值。",
+      "revised": "轮胎、四轮驱动（4WD）、制动辅助转向和试验方法都会影响该数值。",
+      "reason": "source fidelity and protected notation"
+    },
+    {
+      "locale": "zh",
+      "id": "rops",
+      "field": "example",
+      "source": "On open-station tractors, ROPS and a seat belt work together.",
+      "original": "在敞篷拖拉机上，防滚架和安全带共同发挥作用。",
+      "revised": "在开放式驾驶台拖拉机上，防翻滚保护结构（ROPS）与安全带共同发挥保护作用。",
+      "reason": "source fidelity and protected notation"
+    },
+    {
+      "locale": "zh",
+      "id": "rops",
+      "field": "caution",
+      "source": "ROPS alone does not make unbelted driving safe; follow foldable-ROPS instructions.",
+      "original": "单靠防滚架并不能保证不系安全带驾驶安全；请遵循可折叠防滚架的使用说明。",
+      "revised": "仅有防翻滚保护结构（ROPS）并不意味着不系安全带也能安全驾驶；请遵循可折叠 ROPS 的使用说明。",
+      "reason": "source fidelity and protected notation"
+    },
+    {
+      "locale": "zh",
+      "id": "steering",
+      "field": "caution",
+      "source": "Power steering is not the same as an HST drive gearbox.",
+      "original": "动力转向系统与高速传动变速箱并不相同。",
+      "revised": "助力转向与静液压传动（HST）变速箱不是同一系统。",
+      "reason": "source fidelity and protected notation"
+    },
+    {
+      "locale": "zh",
+      "id": "test-standards",
+      "field": "definition",
+      "source": "Engine standards describe declared power conditions; OECD codes define tractor testing procedures.",
+      "original": "发动机标准描述了声明的功率条件；经合组织规范定义了拖拉机测试程序。",
+      "revised": "发动机标准规定声明功率的测量条件；经济合作与发展组织（OECD）的规范规定拖拉机试验程序。",
+      "reason": "source fidelity and protected notation"
+    },
+    {
+      "locale": "zh",
+      "id": "engine-fuel",
+      "field": "example",
+      "source": "Diesel and DEF go into separate tanks; DEF is not a fuel additive.",
+      "original": "柴油和尿素溶液分别装入不同的油箱；尿素溶液不是燃料添加剂。",
+      "revised": "柴油和柴油机尾气处理液（DEF）应分别加入各自的储液箱；DEF 不是燃油添加剂。",
+      "reason": "source fidelity and protected notation"
+    },
+    {
+      "locale": "zh",
+      "id": "hydraulic-steering",
+      "field": "example",
+      "source": "A combined 45 L/min figure does not mean all of it reaches an implement.",
+      "original": "总流量 45 升/分钟并不意味着所有流量都能到达农具。",
+      "revised": "合计流量为 45 L/min（升/分钟），并不意味着全部流量都能供给农具。",
+      "reason": "source fidelity and protected notation"
+    },
+    {
+      "locale": "hi",
+      "id": "emission",
+      "field": "example",
+      "source": "Stage V and older Stage IIIA refer to different regulatory regimes.",
+      "original": "चरण V और उससे पहले के चरण IIIA अलग-अलग नियामक व्यवस्थाओं को संदर्भित करते हैं।",
+      "revised": "Stage V और पहले का Stage IIIA अलग-अलग उत्सर्जन नियामक व्यवस्थाओं को दर्शाते हैं।",
+      "reason": "source fidelity and protected notation"
+    },
+    {
+      "locale": "hi",
+      "id": "dpf-scr",
+      "field": "definition",
+      "source": "DPF traps soot particles; SCR uses a dosing fluid to reduce nitrogen oxides.",
+      "original": "डीपीएफ कालिख के कणों को फंसाता है; एससीआर नाइट्रोजन ऑक्साइड को कम करने के लिए एक डोजिंग द्रव का उपयोग करता है।",
+      "revised": "डीज़ल कण फ़िल्टर (DPF) कालिख के कणों को रोकता है; चयनात्मक उत्प्रेरक अपचयन (SCR) नाइट्रोजन ऑक्साइड घटाने के लिए निर्धारित मात्रा में अभिकर्मक द्रव का उपयोग करता है।",
+      "reason": "source fidelity and protected notation"
+    },
+    {
+      "locale": "hi",
+      "id": "dpf-scr",
+      "field": "example",
+      "source": "A tractor with DEF has a separate tank; it must not go into the diesel tank.",
+      "original": "डीईएफ से चलने वाले ट्रैक्टर में एक अलग टैंक होता है; इसे डीजल टैंक में नहीं डालना चाहिए।",
+      "revised": "DEF का उपयोग करने वाले ट्रैक्टर में इसके लिए अलग टैंक होता है; DEF को डीज़ल टैंक में नहीं डालना चाहिए।",
+      "reason": "source fidelity and protected notation"
+    },
+    {
+      "locale": "hi",
+      "id": "cvt",
+      "field": "caution",
+      "source": "Not all CVTs share the same operating principle, efficiency or maintenance needs.",
+      "original": "सभी सीवीटी का संचालन सिद्धांत, दक्षता या रखरखाव संबंधी आवश्यकताएं एक जैसी नहीं होती हैं।",
+      "revised": "सभी निरंतर परिवर्तनशील ट्रांसमिशन (CVT) के संचालन सिद्धांत, दक्षता और रखरखाव की आवश्यकताएँ समान नहीं होतीं।",
+      "reason": "source fidelity and protected notation"
+    },
+    {
+      "locale": "hi",
+      "id": "clutch",
+      "field": "caution",
+      "source": "Dual clutch does not necessarily mean a car-style DCT gearbox.",
+      "original": "डुअल क्लच का मतलब यह नहीं है कि उसमें कार की तरह डीसीटी गियरबॉक्स हो।",
+      "revised": "डबल क्लच का अर्थ अनिवार्य रूप से कार जैसा डुअल-क्लच ट्रांसमिशन (DCT) नहीं है।",
+      "reason": "source fidelity and protected notation"
+    },
+    {
+      "locale": "hi",
+      "id": "dimensions",
+      "field": "caution",
+      "source": "They can vary with cab, ROPS, ballast and tyre configuration.",
+      "original": "ये कैब, आरओपीएस, गिट्टी और टायर कॉन्फ़िगरेशन के आधार पर भिन्न हो सकते हैं।",
+      "revised": "ये आयाम कैब, पलटने से सुरक्षा देने वाली संरचना (ROPS), अतिरिक्त भार और टायर विन्यास के अनुसार बदल सकते हैं।",
+      "reason": "source fidelity and protected notation"
+    },
+    {
+      "locale": "hi",
+      "id": "rops",
+      "field": "example",
+      "source": "On open-station tractors, ROPS and a seat belt work together.",
+      "original": "ओपन-स्टेशन ट्रैक्टरों में, आरओपीएस और सीट बेल्ट एक साथ काम करते हैं।",
+      "revised": "खुले चालक मंच वाले ट्रैक्टरों में ROPS और सीट बेल्ट मिलकर सुरक्षा प्रदान करते हैं।",
+      "reason": "source fidelity and protected notation"
+    },
+    {
+      "locale": "hi",
+      "id": "rops",
+      "field": "caution",
+      "source": "ROPS alone does not make unbelted driving safe; follow foldable-ROPS instructions.",
+      "original": "केवल आरओपीएस का उपयोग करने से बिना बेल्ट लगाए गाड़ी चलाना सुरक्षित नहीं हो जाता; फोल्डेबल आरओपीएस के निर्देशों का पालन करें।",
+      "revised": "केवल ROPS होने से बिना सीट बेल्ट लगाए वाहन चलाना सुरक्षित नहीं हो जाता; मोड़कर नीचे की जा सकने वाली ROPS के उपयोग संबंधी निर्देशों का पालन करें।",
+      "reason": "source fidelity and protected notation"
+    },
+    {
+      "locale": "hi",
+      "id": "fops",
+      "field": "caution",
+      "source": "ROPS and FOPS are not the same certification.",
+      "original": "आरओपीएस और एफओपीएस एक ही प्रमाणन नहीं हैं।",
+      "revised": "ROPS और गिरती वस्तुओं से सुरक्षा देने वाली FOPS संरचनाओं के प्रमाणन अलग-अलग हैं।",
+      "reason": "source fidelity and protected notation"
+    },
+    {
+      "locale": "hi",
+      "id": "steering",
+      "field": "caution",
+      "source": "Power steering is not the same as an HST drive gearbox.",
+      "original": "पावर स्टीयरिंग और एचएसटी ड्राइव गियरबॉक्स एक समान नहीं हैं।",
+      "revised": "पावर स्टीयरिंग और हाइड्रोस्टैटिक ट्रांसमिशन (HST) गियरबॉक्स अलग प्रणालियाँ हैं।",
+      "reason": "source fidelity and protected notation"
+    },
+    {
+      "locale": "hi",
+      "id": "test-standards",
+      "field": "definition",
+      "source": "Engine standards describe declared power conditions; OECD codes define tractor testing procedures.",
+      "original": "इंजन मानक घोषित शक्ति स्थितियों का वर्णन करते हैं; ओईसीडी कोड ट्रैक्टर परीक्षण प्रक्रियाओं को परिभाषित करते हैं।",
+      "revised": "इंजन मानक घोषित शक्ति की मापन स्थितियाँ बताते हैं; आर्थिक सहयोग और विकास संगठन (OECD) के कोड ट्रैक्टर परीक्षण प्रक्रियाएँ निर्धारित करते हैं।",
+      "reason": "source fidelity and protected notation"
+    },
+    {
+      "locale": "hi",
+      "id": "options",
+      "field": "example",
+      "source": "A US HST version may differ from a European manual version of the same name.",
+      "original": "यूएस एचएसटी संस्करण उसी नाम के यूरोपीय मैनुअल संस्करण से भिन्न हो सकता है।",
+      "revised": "अमेरिकी HST संस्करण उसी नाम के यूरोपीय मैनुअल ट्रांसमिशन संस्करण से अलग हो सकता है।",
+      "reason": "source fidelity and protected notation"
+    },
+    {
+      "locale": "hi",
+      "id": "engine-fuel",
+      "field": "example",
+      "source": "Diesel and DEF go into separate tanks; DEF is not a fuel additive.",
+      "original": "डीज़ल और डीईएफ को अलग-अलग टैंकों में डाला जाता है; डीईएफ ईंधन में मिलाने वाला पदार्थ नहीं है।",
+      "revised": "डीज़ल और डीज़ल एग्ज़ॉस्ट फ्लूइड (DEF) अलग-अलग टैंकों में डाले जाते हैं; DEF ईंधन में मिलाने वाला पदार्थ नहीं है।",
+      "reason": "source fidelity and protected notation"
+    },
+    {
+      "locale": "hi",
+      "id": "gross-power",
+      "field": "example",
+      "source": "The same 75 kW figure can represent different test configurations.",
+      "original": "वही 75 किलोवाट का आंकड़ा विभिन्न परीक्षण विन्यासों का प्रतिनिधित्व कर सकता है।",
+      "revised": "75 kW का समान मान अलग-अलग परीक्षण विन्यासों को दर्शा सकता है।",
+      "reason": "source fidelity and protected notation"
+    },
+    {
+      "locale": "hi",
+      "id": "hydraulic-steering",
+      "field": "example",
+      "source": "A combined 45 L/min figure does not mean all of it reaches an implement.",
+      "original": "45 लीटर/मिनट का संयुक्त आंकड़ा यह सुनिश्चित नहीं करता कि वह सारा पानी किसी उपकरण तक पहुंच जाए।",
+      "revised": "45 L/min (लीटर प्रति मिनट) का संयुक्त तेल प्रवाह यह नहीं दर्शाता कि पूरा प्रवाह कृषि उपकरण तक उपलब्ध है।",
+      "reason": "source fidelity and protected notation"
+    },
+    {
+      "locale": "hi",
+      "id": "operator-platform",
+      "field": "caution",
+      "source": "A cab alone is not proof of ROPS or FOPS certification.",
+      "original": "केवल एक कैब होना ही आरओपीएस या एफओपीएस प्रमाणन का प्रमाण नहीं है।",
+      "revised": "केवल कैब होने से ROPS या FOPS प्रमाणन सिद्ध नहीं होता।",
+      "reason": "source fidelity and protected notation"
+    },
+    {
+      "locale": "ru",
+      "id": "emission",
+      "field": "example",
+      "source": "Stage V and older Stage IIIA refer to different regulatory regimes.",
+      "original": "Стадия V и более ранняя стадия IIIA обозначают разные режимы регулирования.",
+      "revised": "Stage V и более ранний Stage IIIA относятся к разным нормативным режимам ограничения выбросов.",
+      "reason": "source fidelity and protected notation"
+    },
+    {
+      "locale": "ru",
+      "id": "cvt",
+      "field": "caution",
+      "source": "Not all CVTs share the same operating principle, efficiency or maintenance needs.",
+      "original": "Не все вариаторные трансмиссии имеют одинаковый принцип работы, эффективность или требования к техническому обслуживанию.",
+      "revised": "Не все бесступенчатые трансмиссии (CVT) имеют одинаковый принцип действия, КПД и требования к обслуживанию.",
+      "reason": "source fidelity and protected notation"
+    },
+    {
+      "locale": "ru",
+      "id": "traction",
+      "field": "example",
+      "source": "4WD may reduce slip on wet soil; 2WD may suffice on firm ground.",
+      "original": "Наличие полного привода может уменьшить скольжение на мокрой почве; на твердой поверхности может быть достаточно привода на два колеса.",
+      "revised": "Полный привод (4WD) может уменьшать буксование на влажной почве; на твёрдом грунте может быть достаточно привода на два колеса (2WD).",
+      "reason": "source fidelity and protected notation"
+    },
+    {
+      "locale": "ru",
+      "id": "traction",
+      "field": "caution",
+      "source": "Tyres, weight and soil matter; 4WD is not universally superior.",
+      "original": "Шины, вес и тип грунта имеют значение; полноприводные автомобили не всегда превосходят полноприводные.",
+      "revised": "Важны шины, масса трактора и свойства почвы; полный привод (4WD) не всегда превосходит привод на два колеса.",
+      "reason": "source fidelity and protected notation"
+    },
+    {
+      "locale": "ru",
+      "id": "dimensions",
+      "field": "caution",
+      "source": "They can vary with cab, ROPS, ballast and tyre configuration.",
+      "original": "Они могут различаться в зависимости от типа кабины, защитной дуги, балласта и конфигурации шин.",
+      "revised": "Габариты могут меняться в зависимости от кабины, защитной конструкции при опрокидывании (ROPS), балласта и шин.",
+      "reason": "source fidelity and protected notation"
+    },
+    {
+      "locale": "ru",
+      "id": "tyre-size",
+      "field": "caution",
+      "source": "Front/rear rolling circumference matters on 4WD; substitutions need approval.",
+      "original": "При использовании полноприводных автомобилей важен диаметр передней/задней оси; замена требует согласования.",
+      "revised": "Для тракторов 4WD важно согласование длин окружностей качения передних и задних шин; замена требует одобрения.",
+      "reason": "source fidelity and protected notation"
+    },
+    {
+      "locale": "ru",
+      "id": "turning-radius",
+      "field": "caution",
+      "source": "Tyres, 4WD, brake assistance and test method affect the figure.",
+      "original": "На этот показатель влияют шины, полный привод, усилитель тормозов и метод тестирования.",
+      "revised": "На показатель влияют шины, полный привод (4WD), подтормаживание колеса для поворота и методика испытания.",
+      "reason": "source fidelity and protected notation"
+    },
+    {
+      "locale": "ru",
+      "id": "steering",
+      "field": "caution",
+      "source": "Power steering is not the same as an HST drive gearbox.",
+      "original": "Усилитель рулевого управления — это не то же самое, что гидростатическая коробка передач.",
+      "revised": "Рулевое управление с усилителем и гидростатическая трансмиссия (HST) — разные системы.",
+      "reason": "source fidelity and protected notation"
+    },
+    {
+      "locale": "ru",
+      "id": "noise",
+      "field": "caution",
+      "source": "Do not rank machines from dB(A) figures without test location and standard.",
+      "original": "Не следует ранжировать оборудование по показателям дБ(А) без указания места проведения испытаний и стандарта.",
+      "revised": "Не сравнивайте машины по значениям dB(A) (дБА), не зная точки измерения и стандарта испытаний.",
+      "reason": "source fidelity and protected notation"
+    },
+    {
+      "locale": "ru",
+      "id": "test-standards",
+      "field": "definition",
+      "source": "Engine standards describe declared power conditions; OECD codes define tractor testing procedures.",
+      "original": "Стандарты для двигателей описывают заявленные режимы работы, а коды ОЭСР определяют процедуры испытаний тракторов.",
+      "revised": "Стандарты на двигатели определяют условия измерения заявленной мощности; коды ОЭСР (OECD) устанавливают процедуры испытаний тракторов.",
+      "reason": "source fidelity and protected notation"
+    },
+    {
+      "locale": "ru",
+      "id": "gross-power",
+      "field": "example",
+      "source": "The same 75 kW figure can represent different test configurations.",
+      "original": "Одно и то же значение в 75 кВт может соответствовать различным конфигурациям испытаний.",
+      "revised": "Одинаковое значение 75 kW (кВт) может соответствовать разным конфигурациям испытаний.",
+      "reason": "source fidelity and protected notation"
+    },
+    {
+      "locale": "ru",
+      "id": "hydraulic-steering",
+      "field": "example",
+      "source": "A combined 45 L/min figure does not mean all of it reaches an implement.",
+      "original": "Суммарный показатель в 45 л/мин не означает, что весь объем жидкости достигает навесного оборудования.",
+      "revised": "Суммарный расход 45 L/min (л/мин) не означает, что весь этот поток масла доступен навесному оборудованию.",
+      "reason": "source fidelity and protected notation"
+    },
+    {
+      "locale": "ru",
+      "id": "battery",
+      "field": "example",
+      "source": "An 80 Ah and a 100 Ah battery may have different cranking capability.",
+      "original": "Аккумуляторы емкостью 80 Ач и 100 Ач могут иметь разную пусковую мощность.",
+      "revised": "Аккумуляторы ёмкостью 80 Ah и 100 Ah (А·ч) могут иметь разные пусковые характеристики.",
+      "reason": "source fidelity and protected notation"
+    },
+    {
+      "locale": "ja",
+      "id": "emission",
+      "field": "example",
+      "source": "Stage V and older Stage IIIA refer to different regulatory regimes.",
+      "original": "ステージVとそれ以前のステージIIIAは、異なる規制制度を指します。",
+      "revised": "Stage V（ステージV）と、以前の Stage IIIA（ステージIIIA）は、異なる排出ガス規制体系を指します。",
+      "reason": "source fidelity and protected notation"
+    },
+    {
+      "locale": "ja",
+      "id": "turning-radius",
+      "field": "caution",
+      "source": "Tyres, 4WD, brake assistance and test method affect the figure.",
+      "original": "タイヤ、四輪駆動、ブレーキアシスト、およびテスト方法が数値に影響します。",
+      "revised": "タイヤ、四輪駆動（4WD）、ブレーキによる旋回補助、試験方法が数値に影響します。",
+      "reason": "source fidelity and protected notation"
+    },
+    {
+      "locale": "ja",
+      "id": "hydraulic-steering",
+      "field": "example",
+      "source": "A combined 45 L/min figure does not mean all of it reaches an implement.",
+      "original": "合計45L/分という数値は、そのすべてが農具に到達することを意味するものではありません。",
+      "revised": "合計流量が45 L/min（リットル毎分）でも、その全量が作業機に供給されるとは限りません。",
+      "reason": "source fidelity and protected notation"
+    },
+    {
+      "locale": "pt-br",
+      "id": "emission",
+      "field": "example",
+      "source": "Stage V and older Stage IIIA refer to different regulatory regimes.",
+      "original": "O Estágio V e o Estágio IIIA, mais antigo, referem-se a regimes regulatórios diferentes.",
+      "revised": "Stage V (estágio V) e o anterior Stage IIIA (estágio IIIA) correspondem a regimes regulatórios de emissões diferentes.",
+      "reason": "source fidelity and protected notation"
+    },
+    {
+      "locale": "pt-br",
+      "id": "traction",
+      "field": "example",
+      "source": "4WD may reduce slip on wet soil; 2WD may suffice on firm ground.",
+      "original": "A tração nas quatro rodas pode reduzir o risco de escorregar em solo molhado; a tração em duas rodas pode ser suficiente em terreno firme.",
+      "revised": "A tração nas quatro rodas (4WD) pode reduzir a patinagem em solo úmido; a tração em duas rodas (2WD) pode ser suficiente em solo firme.",
+      "reason": "source fidelity and protected notation"
+    },
+    {
+      "locale": "pt-br",
+      "id": "traction",
+      "field": "caution",
+      "source": "Tyres, weight and soil matter; 4WD is not universally superior.",
+      "original": "Pneus, peso e tipo de solo importam; a tração nas quatro rodas não é universalmente superior.",
+      "revised": "Pneus, massa e condições do solo são importantes; a tração nas quatro rodas (4WD) nem sempre é superior.",
+      "reason": "source fidelity and protected notation"
+    },
+    {
+      "locale": "pt-br",
+      "id": "tyre-size",
+      "field": "caution",
+      "source": "Front/rear rolling circumference matters on 4WD; substitutions need approval.",
+      "original": "A circunferência de rolamento dianteira/traseira é importante em veículos com tração nas quatro rodas; substituições precisam de aprovação.",
+      "revised": "Em tratores 4WD, o casamento das circunferências de rolamento dos pneus dianteiros e traseiros é importante; substituições exigem aprovação.",
+      "reason": "source fidelity and protected notation"
+    },
+    {
+      "locale": "pt-br",
+      "id": "turning-radius",
+      "field": "caution",
+      "source": "Tyres, 4WD, brake assistance and test method affect the figure.",
+      "original": "Os pneus, a tração nas quatro rodas, a assistência de frenagem e o método de teste afetam o resultado.",
+      "revised": "Os pneus, a tração 4WD, o auxílio de frenagem nas curvas e o método de ensaio influenciam o valor.",
+      "reason": "source fidelity and protected notation"
+    },
+    {
+      "locale": "pt-br",
+      "id": "test-standards",
+      "field": "definition",
+      "source": "Engine standards describe declared power conditions; OECD codes define tractor testing procedures.",
+      "original": "As normas do motor descrevem as condições de potência declaradas; os códigos da OCDE definem os procedimentos de teste do trator.",
+      "revised": "As normas de motores descrevem as condições de medição da potência declarada; os códigos da OCDE (OECD) definem os procedimentos de ensaio de tratores.",
+      "reason": "source fidelity and protected notation"
+    },
+    {
+      "locale": "pt-br",
+      "id": "engine-type",
+      "field": "definition",
+      "source": "Describes basic engine operation, such as diesel or petrol, four-stroke or two-stroke and cooling method.",
+      "original": "Descreve o funcionamento básico do motor, como diesel ou gasolina, quatro tempos ou dois tempos e método de refrigeração.",
+      "revised": "Descreve o funcionamento básico do motor, como diesel ou gasolina, quatro ou dois tempos e método de arrefecimento.",
+      "reason": "source fidelity and protected notation"
+    },
+    {
+      "locale": "pt-br",
+      "id": "bore-stroke",
+      "field": "definition",
+      "source": "Bore is cylinder diameter; stroke is piston travel between dead centres.",
+      "original": "Diâmetro do cilindro (bore); curso (skill) é o deslocamento do pistão entre os pontos mortos.",
+      "revised": "O diâmetro interno do cilindro é o alesamento; o curso é o deslocamento do pistão entre os pontos mortos.",
+      "reason": "regional terminology or semantic correction"
+    },
+    {
+      "locale": "pt-br",
+      "id": "bore-stroke",
+      "field": "caution",
+      "source": "If calculated displacement conflicts with the listed volume, flag the inconsistency.",
+      "original": "Se o deslocamento calculado entrar em conflito com o volume listado, sinalize a inconsistência.",
+      "revised": "Se a cilindrada calculada divergir do volume declarado, sinalize a inconsistência.",
+      "reason": "regional terminology or semantic correction"
+    },
+    {
+      "locale": "pt-br",
+      "id": "cylinders",
+      "field": "definition",
+      "source": "The number of piston cylinders, influencing size, smoothness and engine character.",
+      "original": "O número de cilindros do pistão influencia o tamanho, a suavidade e as características do motor.",
+      "revised": "Número de cilindros com pistões, que influencia o tamanho, a suavidade de funcionamento e as características do motor.",
+      "reason": "regional terminology or semantic correction"
+    },
+    {
+      "locale": "pt-br",
+      "id": "cylinders",
+      "field": "example",
+      "source": "A three-cylinder and a four-cylinder model may feel and weigh differently.",
+      "original": "Um modelo de três cilindros e um de quatro cilindros podem ter sensações e pesos diferentes.",
+      "revised": "Um modelo de três cilindros e outro de quatro podem apresentar comportamento e massa diferentes.",
+      "reason": "regional terminology or semantic correction"
+    },
+    {
+      "locale": "pt-br",
+      "id": "fuel-injection",
+      "field": "definition",
+      "source": "The system that meters and injects fuel at controlled pressure and timing.",
+      "original": "O sistema que mede e injeta combustível a uma pressão e tempo controlados.",
+      "revised": "Sistema que dosa e injeta combustível com pressão e momento de injeção controlados.",
+      "reason": "regional terminology or semantic correction"
+    },
+    {
+      "locale": "pt-br",
+      "id": "dpf-scr",
+      "field": "definition",
+      "source": "DPF traps soot particles; SCR uses a dosing fluid to reduce nitrogen oxides.",
+      "original": "O DPF retém partículas de fuligem; o SCR utiliza um fluido de dosagem para reduzir os óxidos de nitrogênio.",
+      "revised": "O filtro de partículas diesel (DPF) retém partículas de fuligem; a redução catalítica seletiva (SCR) utiliza um reagente dosado para reduzir os óxidos de nitrogênio.",
+      "reason": "regional terminology or semantic correction"
+    },
+    {
+      "locale": "pt-br",
+      "id": "dpf-scr",
+      "field": "example",
+      "source": "A tractor with DEF has a separate tank; it must not go into the diesel tank.",
+      "original": "Um trator com DEF (fluido de escapamento diesel) possui um tanque separado; o DEF não deve ser misturado com o tanque de diesel comum.",
+      "revised": "Um trator que utiliza DEF (fluido de tratamento dos gases de escape) possui um reservatório separado; o DEF não deve ser colocado no tanque de diesel.",
+      "reason": "regional terminology or semantic correction"
+    },
+    {
+      "locale": "pt-br",
+      "id": "manual-gearbox",
+      "field": "caution",
+      "source": "Gear count alone does not establish comfort or durability.",
+      "original": "A quantidade de equipamentos envolvidos no equipamento, por si só, não garante conforto ou durabilidade.",
+      "revised": "O número de marchas, por si só, não comprova conforto nem durabilidade.",
+      "reason": "regional terminology or semantic correction"
+    },
+    {
+      "locale": "pt-br",
+      "id": "powershift",
+      "field": "caution",
+      "source": "Partial powershift is not the same as full-range powershift.",
+      "original": "A troca de marchas parcial não é a mesma coisa que a troca de marchas completa.",
+      "revised": "Uma transmissão Powershift parcial não é equivalente a uma transmissão que permite trocar todas as relações sob carga.",
+      "reason": "regional terminology or semantic correction"
+    },
+    {
+      "locale": "pt-br",
+      "id": "hst",
+      "field": "definition",
+      "source": "A driveline using a hydraulic pump and motor to vary ground speed smoothly.",
+      "original": "Um sistema de transmissão que utiliza uma bomba hidráulica e um motor para variar a velocidade de deslocamento de forma suave.",
+      "revised": "Sistema de transmissão que utiliza uma bomba e um motor hidráulicos para variar suavemente a velocidade de deslocamento.",
+      "reason": "regional terminology or semantic correction"
+    },
+    {
+      "locale": "pt-br",
+      "id": "final-drive",
+      "field": "example",
+      "source": "Portal and planetary arrangements can affect clearance and torque reduction.",
+      "original": "Os arranjos de portal e planetários podem afetar a folga e a redução do torque.",
+      "revised": "Eixos portal e conjuntos de engrenagens planetárias podem influenciar a altura livre do solo e a relação de redução.",
+      "reason": "regional terminology or semantic correction"
+    },
+    {
+      "locale": "pt-br",
+      "id": "front-pto",
+      "field": "caution",
+      "source": "Often optional; front linkage and power ratings also matter.",
+      "original": "Geralmente opcionais; a articulação dianteira e a potência do motor também são importantes.",
+      "revised": "Frequentemente é opcional; o engate dianteiro e as potências admissíveis também devem ser considerados.",
+      "reason": "regional terminology or semantic correction"
+    },
+    {
+      "locale": "pt-br",
+      "id": "three-point",
+      "field": "caution",
+      "source": "Link geometry, category and implement centre of gravity matter as much as lift rating.",
+      "original": "A geometria da ligação, a categoria e a implementação do centro de gravidade são tão importantes quanto a capacidade de sustentação.",
+      "revised": "A geometria e a categoria do engate, assim como o centro de gravidade do implemento, são tão importantes quanto a capacidade de levantamento.",
+      "reason": "regional terminology or semantic correction"
+    },
+    {
+      "locale": "pt-br",
+      "id": "ehr",
+      "field": "definition",
+      "source": "Electronic control of linkage position or draft response.",
+      "original": "Controle eletrônico da posição da articulação ou da resposta ao acionamento.",
+      "revised": "Controle eletrônico da posição do engate ou de sua resposta ao esforço de tração.",
+      "reason": "regional terminology or semantic correction"
+    },
+    {
+      "locale": "pt-br",
+      "id": "ehr",
+      "field": "example",
+      "source": "It may help return an implement to a repeatable headland height.",
+      "original": "Isso pode ajudar a retornar um implemento a uma altura de cabeceira repetível.",
+      "revised": "Pode ajudar a retornar um implemento a uma altura repetível na cabeceira da lavoura.",
+      "reason": "regional terminology or semantic correction"
+    },
+    {
+      "locale": "pt-br",
+      "id": "draft-control",
+      "field": "definition",
+      "source": "Draft control reacts to implement resistance; position control targets linkage position.",
+      "original": "O controle de tração reage para implementar resistência; o controle de posição visa a posição de ligação.",
+      "revised": "O controle de esforço responde à resistência do implemento; o controle de posição busca uma posição determinada do engate.",
+      "reason": "regional terminology or semantic correction"
+    },
+    {
+      "locale": "pt-br",
+      "id": "draft-control",
+      "field": "example",
+      "source": "Draft control can matter for ploughing; position control for grading.",
+      "original": "O controle da tração pode ser importante para a aração; o controle da posição, para o nivelamento.",
+      "revised": "O controle de esforço pode ser útil na aração e o controle de posição no nivelamento.",
+      "reason": "regional terminology or semantic correction"
+    },
+    {
+      "locale": "pt-br",
+      "id": "draft-control",
+      "field": "caution",
+      "source": "It still requires proper soil and implement setup.",
+      "original": "Ainda é necessário preparar o solo adequadamente e utilizar os implementos necessários.",
+      "revised": "Ainda é necessário ajustar o sistema de acordo com o solo e o implemento.",
+      "reason": "regional terminology or semantic correction"
+    },
+    {
+      "locale": "pt-br",
+      "id": "front-linkage",
+      "field": "example",
+      "source": "It can carry a front mower or implement instead of a simple weight.",
+      "original": "Ele pode transportar um cortador de grama frontal ou outro implemento em vez de um simples peso.",
+      "revised": "Pode carregar uma segadora frontal ou outro implemento em vez de um simples contrapeso.",
+      "reason": "regional terminology or semantic correction"
+    },
+    {
+      "locale": "pt-br",
+      "id": "hydraulic-types",
+      "field": "example",
+      "source": "Variable-displacement systems can adjust delivered flow to demand.",
+      "original": "Os sistemas de deslocamento variável podem ajustar a vazão fornecida à demanda.",
+      "revised": "Sistemas de deslocamento volumétrico variável podem ajustar a vazão fornecida à demanda.",
+      "reason": "regional terminology or semantic correction"
+    },
+    {
+      "locale": "pt-br",
+      "id": "wheelbase",
+      "field": "caution",
+      "source": "Turning radius depends on more than wheelbase.",
+      "original": "O raio de viragem depende de mais fatores além da distância entre eixos.",
+      "revised": "O raio de giro depende de outros fatores além da distância entre eixos.",
+      "reason": "regional terminology or semantic correction"
+    },
+    {
+      "locale": "pt-br",
+      "id": "track-width",
+      "field": "example",
+      "source": "Adjustable track width matters for row crops.",
+      "original": "A largura ajustável da esteira é importante para culturas em fileiras.",
+      "revised": "A bitola ajustável é importante para cultivos em linhas.",
+      "reason": "regional terminology or semantic correction"
+    },
+    {
+      "locale": "pt-br",
+      "id": "dimensions",
+      "field": "example",
+      "source": "They determine whether the tractor fits a greenhouse door or vineyard row.",
+      "original": "Eles determinam se o trator é adequado para a porta de uma estufa ou para uma fileira de vinhedos.",
+      "revised": "Indicam se o trator passa pela porta de uma estufa ou entre as linhas de um vinhedo.",
+      "reason": "regional terminology or semantic correction"
+    },
+    {
+      "locale": "pt-br",
+      "id": "operating-weight",
+      "field": "definition",
+      "source": "Different mass definitions according to fluids, driver and fitted equipment.",
+      "original": "Definições de massa diferentes de acordo com os fluidos, o condutor e os equipamentos instalados.",
+      "revised": "Diferentes definições de massa conforme os fluidos, o operador e os equipamentos instalados.",
+      "reason": "regional terminology or semantic correction"
+    },
+    {
+      "locale": "pt-br",
+      "id": "tyre-pressure",
+      "field": "definition",
+      "source": "Inflation pressure affects tyre behaviour and, with load, soil contact stress.",
+      "original": "A pressão de inflação afeta o comportamento dos pneus e, com a carga, a tensão de contato com o solo.",
+      "revised": "A pressão de calibragem influencia o comportamento dos pneus e, juntamente com a carga, a pressão de contato com o solo.",
+      "reason": "regional terminology or semantic correction"
+    },
+    {
+      "locale": "pt-br",
+      "id": "rops",
+      "field": "definition",
+      "source": "A tested protective structure intended to maintain operator clearance in a rollover.",
+      "original": "Uma estrutura de proteção testada, projetada para manter a distância segura do operador em caso de capotamento.",
+      "revised": "Estrutura de proteção ensaiada, destinada a preservar um espaço de segurança para o operador em caso de capotamento.",
+      "reason": "regional terminology or semantic correction"
+    },
+    {
+      "locale": "pt-br",
+      "id": "rops",
+      "field": "example",
+      "source": "On open-station tractors, ROPS and a seat belt work together.",
+      "original": "Em tratores com cabine aberta, a estrutura ROPS e o cinto de segurança funcionam em conjunto.",
+      "revised": "Em tratores com plataforma de operação aberta, a estrutura ROPS e o cinto de segurança atuam em conjunto.",
+      "reason": "regional terminology or semantic correction"
+    },
+    {
+      "locale": "pt-br",
+      "id": "rops",
+      "field": "caution",
+      "source": "ROPS alone does not make unbelted driving safe; follow foldable-ROPS instructions.",
+      "original": "A estrutura ROPS sozinha não torna a condução sem cinto de segurança segura; siga as instruções para montagem de uma estrutura ROPS dobrável.",
+      "revised": "A estrutura ROPS, sozinha, não torna seguro operar sem cinto de segurança; siga as instruções de utilização das estruturas ROPS rebatíveis.",
+      "reason": "regional terminology or semantic correction"
+    },
+    {
+      "locale": "pt-br",
+      "id": "brakes",
+      "field": "example",
+      "source": "A wet-disc system can manage heat and wear differently.",
+      "original": "Um sistema de freio a disco úmido pode lidar com o calor e o desgaste de forma diferente.",
+      "revised": "Um sistema de freios a discos banhados a óleo pode dissipar calor e apresentar desgaste de maneira diferente.",
+      "reason": "regional terminology or semantic correction"
+    },
+    {
+      "locale": "pt-br",
+      "id": "options",
+      "field": "example",
+      "source": "A US HST version may differ from a European manual version of the same name.",
+      "original": "A versão americana do HST pode diferir da versão europeia do manual com o mesmo nome.",
+      "revised": "Uma versão HST dos Estados Unidos pode diferir da versão europeia com transmissão manual que tem o mesmo nome.",
+      "reason": "regional terminology or semantic correction"
+    },
+    {
+      "locale": "pt-br",
+      "id": "engine-fuel",
+      "field": "example",
+      "source": "Diesel and DEF go into separate tanks; DEF is not a fuel additive.",
+      "original": "O diesel e o DEF (armazenamento diesel com ar comprimido) são armazenados em tanques separados; o DEF não é um aditivo de combustível.",
+      "revised": "O diesel e o fluido de tratamento dos gases de escape (DEF) vão em reservatórios separados; o DEF não é um aditivo do combustível.",
+      "reason": "regional terminology or semantic correction"
+    },
+    {
+      "locale": "pt-br",
+      "id": "engine-fuel",
+      "field": "caution",
+      "source": "Check the maker's permitted biodiesel blends for the exact version.",
+      "original": "Verifique as misturas de biodiesel permitidas pelo fabricante para obter a versão exata.",
+      "revised": "Verifique as misturas de biodiesel autorizadas pelo fabricante para a versão exata.",
+      "reason": "regional terminology or semantic correction"
+    },
+    {
+      "locale": "pt-br",
+      "id": "crankshaft",
+      "field": "example",
+      "source": "Engine rpm is fundamentally crankshaft rotation speed.",
+      "original": "A rotação do motor (rpm) é fundamentalmente a velocidade de rotação da cambota.",
+      "revised": "A rotação do motor (rpm) corresponde fundamentalmente à velocidade de rotação do virabrequim.",
+      "reason": "regional terminology or semantic correction"
+    },
+    {
+      "locale": "pt-br",
+      "id": "travel-speed",
+      "field": "definition",
+      "source": "The range of ground speeds available from gearbox and tyres.",
+      "original": "A gama de velocidades de deslocamento disponíveis, dependendo da caixa de velocidades e dos pneus.",
+      "revised": "Faixa de velocidades de deslocamento permitidas pela caixa de câmbio e pelos pneus.",
+      "reason": "regional terminology or semantic correction"
+    },
+    {
+      "locale": "pt-br",
+      "id": "travel-speed",
+      "field": "example",
+      "source": "Creeper gears can be useful for very slow implement operations.",
+      "original": "As engrenagens de marcha lenta podem ser úteis para operações com implementos muito lentos.",
+      "revised": "Marchas superreduzidas podem ser úteis em operações com implementos a velocidades muito baixas.",
+      "reason": "regional terminology or semantic correction"
+    },
+    {
+      "locale": "pt-br",
+      "id": "gear-range",
+      "field": "example",
+      "source": "A 24F/24R gearbox may combine twelve gears with two ranges.",
+      "original": "Uma caixa de velocidades 24F/24R pode combinar doze velocidades com duas gamas.",
+      "revised": "Uma caixa de câmbio 24F/24R pode combinar doze marchas com duas faixas.",
+      "reason": "regional terminology or semantic correction"
+    },
+    {
+      "locale": "pt-br",
+      "id": "hydraulic-pump",
+      "field": "definition",
+      "source": "Uses mechanical input to move hydraulic oil through the circuit.",
+      "original": "Utiliza entrada mecânica para movimentar o óleo hidráulico através do circuito.",
+      "revised": "Utiliza energia mecânica para movimentar o óleo hidráulico pelo circuito.",
+      "reason": "regional terminology or semantic correction"
+    },
+    {
+      "locale": "pt-br",
+      "id": "hydraulic-steering",
+      "field": "definition",
+      "source": "Oil flow supplied to the power steering circuit.",
+      "original": "Fluxo de óleo fornecido ao circuito da direção hidráulica.",
+      "revised": "Vazão de óleo fornecida ao circuito da direção assistida.",
+      "reason": "regional terminology or semantic correction"
+    },
+    {
+      "locale": "pt-br",
+      "id": "hydraulic-steering",
+      "field": "example",
+      "source": "A combined 45 L/min figure does not mean all of it reaches an implement.",
+      "original": "Uma vazão combinada de 45 L/min não significa que toda essa água chegue ao implemento.",
+      "revised": "Uma vazão combinada de 45 L/min não significa que todo esse fluxo de óleo esteja disponível para o implemento.",
+      "reason": "regional terminology or semantic correction"
+    },
+    {
+      "locale": "pt-br",
+      "id": "hydraulic-steering",
+      "field": "caution",
+      "source": "Keep steering flow and implement-available flow as distinct figures.",
+      "original": "Mantenha o fluxo de direção e o fluxo disponível para implementação como figuras distintas.",
+      "revised": "Mantenha separados os valores de vazão da direção e de vazão disponível para os implementos.",
+      "reason": "regional terminology or semantic correction"
+    },
+    {
+      "locale": "pt-br",
+      "id": "hydraulic-implement",
+      "field": "definition",
+      "source": "The stated flow available to implement or linkage functions.",
+      "original": "O fluxo declarado está disponível para implementar ou vincular funções.",
+      "revised": "Vazão declarada como disponível para as funções dos implementos ou do engate.",
+      "reason": "regional terminology or semantic correction"
+    },
+    {
+      "locale": "pt-br",
+      "id": "hydraulic-implement",
+      "field": "example",
+      "source": "Implement-available flow matters more than combined pump output for hydraulic motors.",
+      "original": "Para motores hidráulicos, a vazão disponível no implemento é mais importante do que a potência de saída combinada da bomba.",
+      "revised": "Para motores hidráulicos, a vazão disponível no implemento é mais relevante do que a vazão combinada das bombas.",
+      "reason": "regional terminology or semantic correction"
+    },
+    {
+      "locale": "pt-br",
+      "id": "hydraulic-implement",
+      "field": "caution",
+      "source": "Confirm flow at the actual coupler and under the stated test conditions.",
+      "original": "Confirme o fluxo no acoplador real e sob as condições de teste especificadas.",
+      "revised": "Confirme a vazão no engate rápido correspondente e nas condições de ensaio indicadas.",
+      "reason": "regional terminology or semantic correction"
+    },
+    {
+      "locale": "pt-br",
+      "id": "tyre-type",
+      "field": "example",
+      "source": "Turf tyres may be selected to reduce marking on grass.",
+      "original": "Pneus próprios para relva podem ser escolhidos para reduzir as marcas na grama.",
+      "revised": "Pneus para gramados podem ser escolhidos para reduzir marcas na grama.",
+      "reason": "regional terminology or semantic correction"
+    },
+    {
+      "locale": "pt-br",
+      "id": "track-adjustment",
+      "field": "example",
+      "source": "Track can be set to suit different crop row spacings.",
+      "original": "A configuração da esteira pode ser ajustada para se adequar a diferentes espaçamentos entre as linhas de plantio.",
+      "revised": "A bitola pode ser ajustada para diferentes espaçamentos entre linhas de cultivo.",
+      "reason": "regional terminology or semantic correction"
+    },
+    {
+      "locale": "pt-br",
+      "id": "track-adjustment",
+      "field": "caution",
+      "source": "Incorrect rim mounting or axle loading can create safety risks.",
+      "original": "A montagem incorreta das jantes ou a carga inadequada nos eixos podem criar riscos de segurança.",
+      "revised": "A montagem incorreta dos aros ou uma carga inadequada nos eixos pode gerar riscos à segurança.",
+      "reason": "regional terminology or semantic correction"
+    },
+    {
+      "locale": "pt-br",
+      "id": "cab-suspension",
+      "field": "caution",
+      "source": "Seat, axle and cab suspension are separate options.",
+      "original": "Assento, eixo e suspensão da cabine são opcionais.",
+      "revised": "As suspensões do assento, do eixo e da cabine são opções distintas.",
+      "reason": "regional terminology or semantic correction"
+    },
+    {
+      "locale": "pt-br",
+      "id": "battery",
+      "field": "example",
+      "source": "An 80 Ah and a 100 Ah battery may have different cranking capability.",
+      "original": "Uma bateria de 80 Ah e uma de 100 Ah podem ter capacidades de arranque diferentes.",
+      "revised": "Uma bateria de 80 Ah e outra de 100 Ah podem ter capacidades de partida diferentes.",
+      "reason": "regional terminology or semantic correction"
+    },
+    {
+      "locale": "pt-br",
+      "id": "battery",
+      "field": "caution",
+      "source": "Amp-hours and cold-cranking amps are different specifications.",
+      "original": "Ampères-hora e amperes de arranque a frio são especificações diferentes.",
+      "revised": "Ampères-hora e corrente de partida a frio são especificações diferentes.",
+      "reason": "regional terminology or semantic correction"
+    },
+    {
+      "locale": "pt-br",
+      "id": "isobus",
+      "field": "example",
+      "source": "A compatible drill can exchange setup and work data through a display.",
+      "original": "Uma furadeira compatível pode trocar dados de configuração e de trabalho através de um visor.",
+      "revised": "Uma semeadora compatível pode trocar dados de configuração e de trabalho por meio de um monitor.",
+      "reason": "regional terminology or semantic correction"
+    },
+    {
+      "locale": "pt-br",
+      "id": "isobus",
+      "field": "caution",
+      "source": "An ISOBUS socket does not guarantee every function works with every implement.",
+      "original": "Um conector ISOBUS não garante que todas as funções funcionem com todos os dispositivos.",
+      "revised": "Um conector ISOBUS não garante que todas as funções funcionem com todos os implementos.",
+      "reason": "regional terminology or semantic correction"
+    },
+    {
+      "locale": "pt-br",
+      "id": "engine-type",
+      "field": "example",
+      "source": "A four-stroke diesel engine completes a power cycle over two crankshaft revolutions.",
+      "original": "Um motor diesel de quatro tempos completa um ciclo de potência em duas rotações da cambota.",
+      "revised": "Um motor diesel de quatro tempos completa um ciclo em duas voltas do virabrequim.",
+      "reason": "regional terminology or semantic correction"
+    },
+    {
+      "locale": "pt-br",
+      "id": "external-controls",
+      "field": "caution",
+      "source": "Never stand in a crush zone between tractor and implement; follow safe procedures.",
+      "original": "Nunca fique na zona de impacto entre o trator e o implemento; siga os procedimentos de segurança.",
+      "revised": "Nunca permaneça na zona de esmagamento entre o trator e o implemento; siga os procedimentos de segurança.",
+      "reason": "regional terminology or semantic correction"
+    },
+    {
+      "locale": "pt-br",
+      "id": "engine-oil",
+      "field": "definition",
+      "source": "The prescribed oil fill for the sump and lubrication system, critical to wear and heat management.",
+      "original": "O nível de óleo recomendado para o cárter e o sistema de lubrificação é crucial para o controle do desgaste e da temperatura.",
+      "revised": "Quantidade de óleo prescrita para o cárter e o sistema de lubrificação, essencial para controlar o desgaste e o calor.",
+      "reason": "regional terminology or semantic correction"
+    },
+    {
+      "locale": "pt-br",
+      "id": "engine-oil",
+      "field": "example",
+      "source": "An 11-litre engine oil fill is not an 11-litre fuel-consumption figure.",
+      "original": "Um tanque com capacidade para 11 litros de óleo do motor não corresponde ao consumo de 11 litros de combustível.",
+      "revised": "Um abastecimento de 11 litros de óleo do motor não corresponde a um consumo de 11 litros de combustível.",
+      "reason": "regional terminology or semantic correction"
+    },
+    {
+      "locale": "pt-br",
+      "id": "model-identity",
+      "field": "example",
+      "source": "A model name can cover distinct US and European transmissions.",
+      "original": "Um mesmo modelo de transmissão pode abranger versões distintas dos EUA e da Europa.",
+      "revised": "Um mesmo nome de modelo pode abranger transmissões diferentes nos Estados Unidos e na Europa.",
+      "reason": "regional terminology or semantic correction"
+    },
+    {
+      "locale": "pt-br",
+      "id": "transport-lock",
+      "field": "example",
+      "source": "A folding mower may require a transport lock before road travel.",
+      "original": "Um cortador de relva dobrável pode necessitar de uma trava de transporte antes de ser transportado por estrada.",
+      "revised": "Uma segadora dobrável pode exigir uma trava de transporte antes de circular em estrada.",
+      "reason": "regional terminology or semantic correction"
+    },
+    {
+      "locale": "pt-br",
+      "id": "transport-lock",
+      "field": "caution",
+      "source": "A transport lock does not replace the manufacturer's road and load limits.",
+      "original": "Uma trava de transporte não substitui os limites de carga e de rodagem definidos pelo fabricante.",
+      "revised": "Uma trava de transporte não substitui os limites de circulação e de carga estabelecidos pelo fabricante.",
+      "reason": "regional terminology or semantic correction"
+    }
+  ]
+}
