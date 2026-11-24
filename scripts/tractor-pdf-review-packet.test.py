@@ -1,6 +1,8 @@
 import copy
 import importlib.util
 import json
+import os
+import subprocess
 from pathlib import Path
 import re
 import stat
@@ -85,6 +87,78 @@ class PacketTests(unittest.TestCase):
                 mod.write_private_sql(out,sql)
             with self.assertRaises(ValueError):
                 mod.write_private_sql(Path(__file__).parent/"must-not-exist.sql",sql)
+
+@unittest.skipUnless(os.environ.get("TRACTORVS_PACKET_POSTGRES_TEST")=="1",
+                     "isolated PostgreSQL integration test enabled in CI")
+class SqlTransactionTests(unittest.TestCase):
+    def test_disposable_database_transaction_guards(self):
+        # A new ephemeral Unix-socket-only cluster, never the project's
+        # Supabase database. Do not inherit PGHOST/PASSWORD or credentials.
+        env={"PATH":os.defpath,"LC_ALL":"C.UTF-8"}
+        bindir=Path(subprocess.check_output(["pg_config","--bindir"],env=env,text=True).strip())
+        with tempfile.TemporaryDirectory(prefix="tractor-packet-pg-") as tmp:
+            root=Path(tmp)
+            data=root/"cluster"
+            def run(name,*args,**kwargs):
+                return subprocess.run([str(bindir/name),*args],env=env,text=True,
+                                      capture_output=True,timeout=40,**kwargs)
+            run("initdb","-D",str(data),"-A","trust","--no-locale","-E","UTF8",check=True)
+            run("pg_ctl","-D",str(data),"-l",str(root/"postgres.log"),
+                "-o",f"-h '' -k {root}","-w","start",check=True)
+            try:
+                def sql(query,ok=True):
+                    p=run("psql","-X","-h",str(root),"-d","postgres","-v","ON_ERROR_STOP=1",
+                          "-At","-c",query)
+                    self.assertEqual(p.returncode==0,ok,p.stderr)
+                    return p.stdout.strip()
+                sql("""
+                CREATE ROLE anon; CREATE ROLE authenticated;
+                CREATE TABLE public.brands(id integer primary key,name text);
+                CREATE TABLE public.tractors(id uuid primary key,brand_id integer references public.brands,
+                  status text,model_name text,market text,variant text,model_year integer);
+                CREATE TABLE public.data_sources(id integer primary key,source_url text,publisher text);
+                CREATE TABLE public.tractor_specs(tractor_id uuid references public.tractors,source_id integer references public.data_sources);
+                CREATE TABLE public.tractorvs_spec_review_candidates(
+                   tractor_id uuid references public.tractors,canonical_key text,spec_name text,spec_value text,
+                   unit text,comparison_class text,measurement_standard text,source_url text,source_publisher text,
+                   source_tier text,evidence_text text,observed_at date,review_status text,review_note text,
+                   UNIQUE(tractor_id,canonical_key,spec_value,source_url));
+                ALTER TABLE public.tractorvs_spec_review_candidates ENABLE ROW LEVEL SECURITY;
+                INSERT INTO public.brands VALUES (1,'Synthetic');
+                INSERT INTO public.tractors VALUES
+                  ('00000000-0000-4000-8000-000000000001',1,'draft','TEST-A','Test',NULL,NULL),
+                  ('00000000-0000-4000-8000-000000000002',1,'draft','TEST-B','Test',NULL,NULL);
+                INSERT INTO public.data_sources VALUES(1,'https://manufacturer.example/catalog.pdf','Synthetic');
+                INSERT INTO public.tractor_specs SELECT id,1 FROM public.tractors;
+                """)
+                r,p=fixture()
+                rows=mod.build_packet(r,p)
+                count="SELECT count(*) FROM public.tractorvs_spec_review_candidates"
+                sql(mod.sql_packet(rows))
+                self.assertEqual(sql(count),"0")
+                sql(mod.sql_packet(rows,True))
+                self.assertEqual(sql(count+" WHERE review_status='needs_review'"),"4")
+                sql(mod.sql_packet(rows,True))
+                self.assertEqual(sql(count),"4")
+                # A new candidate is inserted before the conflicting existing
+                # scope is detected; the whole failed transaction must roll back.
+                altered=copy.deepcopy(rows)
+                altered[0]["unit"]="hp"
+                altered[1]["spec_value"]="999"
+                sql(mod.sql_packet(altered,True),False)
+                self.assertEqual(sql(count),"4")
+                sql("UPDATE public.tractors SET status='published' WHERE model_name='TEST-B'")
+                sql(mod.sql_packet(rows,True),False)
+                sql("UPDATE public.tractors SET status='draft' WHERE model_name='TEST-B'")
+                sql("GRANT SELECT ON public.tractorvs_spec_review_candidates TO anon")
+                sql(mod.sql_packet(rows,True),False)
+                self.assertEqual(sql(count),"4")
+                sql("REVOKE SELECT ON public.tractorvs_spec_review_candidates FROM anon")
+                sql("DELETE FROM public.tractor_specs WHERE tractor_id='00000000-0000-4000-8000-000000000002'")
+                sql(mod.sql_packet(rows,True),False)
+                self.assertEqual(sql(count),"4")
+            finally:
+                run("pg_ctl","-D",str(data),"-m","immediate","-w","stop",check=True)
 
 if __name__=="__main__":
     unittest.main()
