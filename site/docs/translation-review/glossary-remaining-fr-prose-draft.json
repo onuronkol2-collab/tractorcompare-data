@@ -585,23 +585,33 @@
   "sources": [
     {
       "url": "https://www.oecd.org/fr/themes/tracteurs.html",
-      "checked": "2026-11-24",
-      "scope": "French tractor test terminology; separate performance, protective structure and noise test codes; not validation of all glossary translations."
+      "state": "unreachable-in-this-review",
+      "attempted": "2026-11-24",
+      "scope": "French page timed out; not verified or relied on. French alternate /fr/topics/tractors.html also timed out."
     },
     {
       "url": "https://agriculture.gouv.fr/renversement-des-tracteurs-et-protection-contre-les-chutes-dobjets",
       "checked": "2026-11-24",
-      "scope": "Terminology for rollover and falling-object protective structures."
+      "scope": "Terminology for rollover and falling-object protective structures.",
+      "state": "verified-accessible"
     },
     {
       "url": "https://agriculture.gouv.fr/en-tracteur-la-ceinture-de-securite-simpose",
       "checked": "2026-11-24",
-      "scope": "Seat belt and protective survival space terminology."
+      "scope": "Seat belt and protective survival space terminology.",
+      "state": "verified-accessible"
     },
     {
       "url": "https://sudaquitaine.msa.fr/lfp/sst/la-fiche-machine-tracteur",
       "checked": "2026-11-24",
-      "scope": "PTO and driveline guarding vocabulary and limitations."
+      "scope": "MSA machine checklist confirms protective tractor PTO shield, joint guard limits, rear lifting controls, hitch and braking terminology. 2021 safety guidance, not 2026 failure statistics.",
+      "state": "verified-accessible"
+    },
+    {
+      "url": "https://www.oecd.org/en/topics/tractors.html",
+      "checked": "2026-11-24",
+      "state": "verified-accessible",
+      "scope": "English primary source confirms distinct performance, protective structure and noise testing; not French linguistic approval."
     }
   ]
 }
