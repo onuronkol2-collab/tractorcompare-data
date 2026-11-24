@@ -230,12 +230,14 @@ const schema={
       let visible=0;
       rows.forEach((row,i)=>{
         const match=terms.every(term=>titles[i].includes(term));
-        row.hidden=!match;
+        if(row.hidden===match)row.hidden=!match;
         if(match)visible++;
       });
-      clear.hidden=!terms.length;
-      status.textContent=(status.dataset.resultTemplate||"").replace("{visible}",String(visible)).replace("{total}",String(rows.length));
-      empty.hidden=visible!==0;
+      const hideClear=!terms.length;
+      if(clear.hidden!==hideClear)clear.hidden=hideClear;
+      const message=(status.dataset.resultTemplate||"").replace("{visible}",String(visible)).replace("{total}",String(rows.length));
+      if(status.textContent!==message)status.textContent=message;
+      if(empty.hidden!==(visible!==0))empty.hidden=visible!==0;
     };
     field.addEventListener("input",paint);
     clear.addEventListener("click",()=>{field.value="";paint();field.focus();});

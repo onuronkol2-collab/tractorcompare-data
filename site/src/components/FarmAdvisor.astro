@@ -223,25 +223,28 @@ const areaUnitOptions = [
     let touched = false;
     let unitTouched = false;
 
+    const implementInputs=Array.from(form.querySelectorAll<HTMLInputElement>('input[name="implements"]'));
+    const equipmentDetails=([
+      [plowDetail,"plow"],[laserDetail,"laser_leveler"],
+    ] as const).flatMap(([element,kind])=>element?[{
+      element,kind,fields:Array.from(element.querySelectorAll<HTMLInputElement|HTMLSelectElement>("input,select"))
+    }]:[]);
     const selectedTools = ():FarmImplement[] =>
-      Array.from(form.querySelectorAll<HTMLInputElement>('input[name="implements"]:checked'))
+      implementInputs.filter(input=>input.checked)
         .map((input) => input.value as FarmImplement)
         .filter((kind) => (FARM_IMPLEMENT_TYPES as readonly string[]).includes(kind));
 
     const updateEquipmentDetails = () => {
       const picked = selectedTools();
-      for (const [element, kind] of [
-        [plowDetail,"plow"],[laserDetail,"laser_leveler"],
-      ] as const) {
-        if (!element) continue;
+      for (const {element,kind,fields} of equipmentDetails) {
         const active=picked.includes(kind);
-        element.hidden=!active;
-        element.querySelectorAll<HTMLInputElement|HTMLSelectElement>("input,select").forEach((field)=> {
-          field.disabled=!active;
+        if(element.hidden===active)element.hidden=!active;
+        fields.forEach((field)=> {
+          if(field.disabled===active)field.disabled=!active;
         });
       }
     };
-    form.querySelectorAll<HTMLInputElement>('input[name="implements"]').forEach((item) =>
+    implementInputs.forEach((item) =>
       item.addEventListener("change",updateEquipmentDetails)
     );
     updateEquipmentDetails();
@@ -249,8 +252,8 @@ const areaUnitOptions = [
     const setCountry = (country:MarketCountry) => {
       countryInput.value=country;
       if (!unitTouched) unitInput.value=COUNTRY_AREA_UNITS[country];
-      if (currency) currency.textContent=COUNTRY_CURRENCIES[country];
-      if (areaNote) areaNote.hidden=country!=="IN";
+      if (currency&&currency.textContent!==COUNTRY_CURRENCIES[country]) currency.textContent=COUNTRY_CURRENCIES[country];
+      if (areaNote&&areaNote.hidden!==(country!=="IN")) areaNote.hidden=country!=="IN";
     };
     unitInput.addEventListener("change",()=>{unitTouched=true; touched=true;});
     form.addEventListener("input",()=>{touched=true;});
