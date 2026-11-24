@@ -16,6 +16,8 @@ export function initForumThreadTools(root:HTMLElement){
  const grid=query<HTMLElement>("[data-live-reply-grid]");
  const composer=query<HTMLElement>("#forum-compose");
  const say=(message:string)=>{if(status)status.textContent=message};
+ const feedback=query<HTMLElement>(".forum-thread-feedback");
+ const replyText=(body:Element|null)=>body?[...body.querySelectorAll("p:not(.forum-table-hint),li,blockquote,h2,h3,h4,th,td")].map(el=>el.textContent||"").join(" "):"";
  const all=()=>[...root.querySelectorAll<HTMLElement>("[data-static-reply-id],.forum-live-reply")];
  const permalink=(reply:HTMLElement)=>discussionLink(canonical,reply.id);
  let initialReplyHash=location.hash.startsWith("#reply-")?location.hash.slice(1):"";
@@ -49,7 +51,7 @@ export function initForumThreadTools(root:HTMLElement){
   }
   const field=form.querySelector<HTMLTextAreaElement>('textarea[name="body"]');
   if(!field||!body)return;
-  const text=body.innerText||body.textContent||"";
+  const text=replyText(body);
   const value=appendReplyQuote(field.value,text,permalink(reply),field.maxLength);
   if(value===null){say(labels.limit);return}
   const preview=form.querySelector<HTMLButtonElement>("[data-editor-preview]");
@@ -83,7 +85,7 @@ export function initForumThreadTools(root:HTMLElement){
   let shown=0;
   for(const reply of replies){
    const body=reply.querySelector("[data-thread-reply-body]");
-   const matches=replyMatches(body?.textContent||"",term,lang);
+   const matches=replyMatches(replyText(body),term,lang);
    reply.hidden=!matches;if(matches)shown++;
   }
   if(filterStatus)filterStatus.textContent=term.trim()?(shown?labels.shown+": "+shown+"/"+replies.length:labels.noResults):"";
@@ -101,6 +103,11 @@ export function initForumThreadTools(root:HTMLElement){
   const button=event.target.closest<HTMLButtonElement>("button[data-thread-action]");
   if(!button||!root.contains(button))return;
   const action=button.dataset.threadAction;
+  if(action!=="clear"&&feedback){
+   const group=button.closest(".forum-public-tools,.forum-reply-tools");
+   if(group&&feedback.parentElement!==group)group.append(feedback);
+   if(fallback)fallback.hidden=true;say("");
+  }
   if(action==="share")void share();
   else if(action==="copy-topic")void copy(discussionLink(canonical));
   else if(action==="print")window.print();
