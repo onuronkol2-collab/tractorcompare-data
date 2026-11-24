@@ -707,3 +707,27 @@ test("reviewed Sonalika title removes repeated market or model names without los
   }
  }
 });
+
+
+test("Başak 5120 and other medium-length identities retain localized technical titles in every language",()=>{
+  const cases=[
+    {...tractor,brand_name:"Başak Traktör",model_name:"5120",variant:"Red Power · 4WD · Stage V",market:"global",model_year:null},
+    {...tractor,brand_name:"Antonio Carraro",model_name:"TIGRE 3800",variant:"Stage V / 4WD",market:"global",model_year:null},
+  ];
+  const nouns={en:/specs|specifications/i,tr:/özellik/i,zh:/技术参数/,hi:/तकनीकी विवरण/,
+    "pt-br":/ficha técnica/i,fr:/fiche technique/i,de:/daten|technische/i,
+    ru:/характеристики/i,ja:/仕様|諸元/,es:/datos técnicos|especificaciones/i};
+  for(const model of cases){
+    const titles=Object.entries(nouns).map(([locale,noun])=>{
+      const meta=modelSeoMetadata(model,locale);
+      assert.match(meta.title,noun,locale+" localized technical noun");
+      assert.ok(meta.title.includes(model.brand_name+" "+model.model_name),locale);
+      assert.ok(meta.title.includes(model.variant),locale+" exact equipment identity");
+      assert.ok(meta.title.length<=105,locale+" no gratuitous length");
+      assert.ok(meta.description.includes(model.variant),locale+" source identity");
+      assert.notEqual(meta.title,modelSeoMetadata({...model,variant:"Different equipment"},locale).title);
+      return meta.title;
+    });
+    assert.equal(new Set(titles).size,10,"localized titles must not collapse at the advisory length boundary");
+  }
+});
