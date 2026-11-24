@@ -13,5 +13,6 @@ test("catalog forum integration uses only exact model ID and language, public bo
  assert.match(detail,/modelForumTopics\(lang,tractor\.tractor_id\)/);
  assert.match(detail,/modelDiscussions\.length>0/);
  assert.match(detail,/localizedPath\(lang,"\/forum\/"\+topic\.slug\+"\/"\)/);
- assert.match(detail,/encodeURIComponent\(tractor\.tractor_id\)\+"#forum-compose"/);
+ assert.match(detail,/encodeURIComponent\(tractor\.tractor_id\)/);
+ assert.doesNotMatch(detail,/encodeURIComponent\(tractor\.tractor_id\)\+"#forum-compose"/);
 });
