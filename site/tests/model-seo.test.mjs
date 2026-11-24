@@ -731,3 +731,29 @@ test("Başak 5120 and other medium-length identities retain localized technical 
     assert.equal(new Set(titles).size,10,"localized titles must not collapse at the advisory length boundary");
   }
 });
+
+
+test("source-matched engine power takes priority over generic counts in model snippets",()=>{
+ const locales=["en","tr","zh","hi","pt-br","fr","de","ru","ja","es"];
+ const model={...tractor,variant:"X5 FPT F36 Stage V / exact configuration / transmission equipment"};
+ for(const locale of locales){
+  const meta=modelSeoMetadata(model,locale);
+  assert.ok(meta.searchDescription.includes(model.variant),locale+" exact variant retained");
+  assert.ok(meta.searchDescription.includes("114 HP"),locale+" verified fact prioritized");
+  assert.ok(meta.searchDescription.length<=160,locale);
+  const conflicting=modelSeoMetadata({...model,horsepower:135},locale);
+  assert.ok(!conflicting.searchDescription.includes("135 HP"),locale+" unsupported fact forbidden");
+ }
+});
+
+test("long model identity is never silently discarded to fit an arbitrary snippet length",()=>{
+ const variant="Exact manufacturer configuration with specialised transmission and axle equipment / additional hydraulic package / particular regional configuration";
+ const model={...tractor,variant,model_year:2025};
+ for(const locale of ["en","tr","zh","hi","pt-br","fr","de","ru","ja","es"]){
+  const meta=modelSeoMetadata(model,locale);
+  assert.ok(meta.searchDescription.includes(variant),locale+" exact variant");
+  assert.ok(meta.searchDescription.includes("2025"),locale+" year");
+  assert.ok(!meta.searchDescription.includes("114 HP"),locale+" no orphaned power assertion");
+  assert.ok(!meta.searchDescription.endsWith("…"));
+ }
+});
