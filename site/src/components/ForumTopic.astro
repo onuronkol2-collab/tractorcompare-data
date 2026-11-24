@@ -10,6 +10,7 @@ import {forumText as ft} from "../lib/forum-i18n.ts";
 import {memberText as mt,MEMBER_TEXT} from "../lib/member-i18n.ts";
 import {publicForumClientConfig} from "../lib/forum.ts";
 import {sourceAwareForumSeoDescription} from "../lib/forum-seo-curation.mjs";
+import {sourceAwareForumSeoTitle} from "../lib/forum-curated-titles.mjs";
 import {allPublicForumTopics,isIndexableForumTopic,allPublicForumReplies,allPublicForumMedia,forumMediaImageUrl,forumThreadReplies,forumDate,type ForumTopic} from "../lib/forum.ts";
 import {getPublicCatalog} from "../lib/catalog.ts";
 import {localizedPath,type Locale,LOCALE_TAGS,LOCALE_NAMES} from "../lib/locales.ts";
@@ -56,7 +57,7 @@ const schema=eligible?{
 // No real author identity is present in the public projection.
 // Never invent author profiles or engagement statistics for rich results.
 ---
-<SiteLayout lang={lang} title={topic.title+" | TractorVS"} description={seoDescription}
+<SiteLayout lang={lang} title={sourceAwareForumSeoTitle(topic.topic_id,lang,topic.title)} description={seoDescription}
   indexable={eligible} structuredData={schema} availableLocales={availableLocales} indexableLocales={indexableLocales}>
  <div class="forum-thread">
   <div class="container">
