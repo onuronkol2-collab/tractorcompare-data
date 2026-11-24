@@ -4,7 +4,7 @@ import "../styles/model-research-toc.css";
 import TractorMarketPrice from "./TractorMarketPrice.astro";
 import ModelSourceIndex from "./ModelSourceIndex.astro";
 import TractorPhoto from "./TractorPhoto.astro";
-import {primaryTractorPhoto,preferredTractorPreviewUrl} from "../lib/tractor-photos";
+import {primaryTractorPhoto,preferredTractorPreviewUrl,tractorPhotoAlt} from "../lib/tractor-photos";
 import {glossaryAnchorForKey} from "../lib/tractor-glossary.ts";
 import { groupSpecifications, officialManufacturerSourceUrl, reviewedIndependentSourceUrl, specLabel, verificationNotice, type TractorRecord } from "../lib/catalog";
 import {INDEPENDENT_SOURCE_COPY} from "../lib/independent-source-i18n.ts";
@@ -63,7 +63,7 @@ const summaryItems = [
   {key:"weight",label:t(lang,"weight"),value:tractor.weight_kg!=null?tractor.weight_kg+" kg":null},
 ].filter((item)=>item.value);
 ---
-<SiteLayout lang={lang} title={title} description={searchDescription} structuredData={structuredData} ogImage={socialPreviewImage && Astro.site ? new URL(socialPreviewImage,Astro.site).toString() : null}>
+<SiteLayout lang={lang} title={title} description={searchDescription} structuredData={structuredData} ogImage={socialPreviewImage && Astro.site ? new URL(socialPreviewImage,Astro.site).toString() : null} ogImageAlt={socialPreviewImage ? tractorPhotoAlt(tractor,lang) : null}>
   <section class="model-hero"><div class="container">
     <a class="catalog-breadcrumb" href={listingUrl}>← {t(lang,"allTractors")}</a>
     <p class="eyebrow"><span class="eyebrow-mark"></span>{t(lang,"modelEyebrow")}</p>
