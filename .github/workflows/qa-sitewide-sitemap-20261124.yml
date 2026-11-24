@@ -8,7 +8,7 @@ permissions:
 jobs:
   audit:
     runs-on: ubuntu-latest
-    timeout-minutes: 5
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
         with:
@@ -52,3 +52,17 @@ jobs:
           report={"main":len(main),"forum":len(forum),"distinct":len(set(main+forum)),"image_page_refs":len(images),"distinct_image_files":len(image_files),"orphan_image_pages":len(set(images)-set(main+forum)),"cross_map_duplicates":len(set(main)&set(forum)),"models_per_locale":{l:len(buckets[l]) for l in locales},"model_parity":all(buckets[l]==buckets["en"] for l in locales),"db_expected_models":469,"model_count_match":all(len(buckets[l])==469 for l in locales),"forum_topic_urls":len(actual_forum),"db_expected_forum":len(expected_forum),"missing_forum":sorted(expected_forum-actual_forum),"extra_forum":sorted(actual_forum-expected_forum),"page_types":dict(types),"example_model":sorted(buckets["en"])[:3]}
           print("INVENTORY",json.dumps(report),flush=True)
           PY
+      - name: Daily production SEO audit across all page types and rotating model sample
+        if: always()
+        env:
+          TRACTORVS_SEO_AUDIT_MODE: daily
+          TRACTORVS_SEO_EVIDENCE_PATH: ${{ runner.temp }}/qa-production-seo.json
+        run: node site/scripts/production-seo-audit.mjs
+      - name: Preserve detailed read-only report
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: qa-production-seo
+          path: ${{ runner.temp }}/qa-production-seo.json
+          if-no-files-found: warn
+          retention-days: 7
