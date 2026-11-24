@@ -12,7 +12,10 @@ test("all 24 article review drafts preserve source structure and technical numbe
  assert.equal(result.glossaryFields,448);
  assert.equal(result.remainingNames,656);
  assert.equal(result.totalGlossaryNames,768);
- assert.equal(result.missingGlossaryProseFields,1968);
+ assert.equal(result.completeGlossaryDraftEntries,194);
+ assert.equal(result.additionalProseFields,246);
+ assert.equal(result.missingGlossaryProseFields,1722);
+ assert.deepEqual(result.completeGlossaryDraftLocales,["de"]);
  assert.equal(result.structuralChecks,"passed");
  assert.equal(result.publicationApproved,false);
 });
