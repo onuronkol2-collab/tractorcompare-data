@@ -162,7 +162,7 @@ const schema=eligible?{
      <ul>{related.map(item=><li><a href={forumUrl+item.slug+"/"}>{item.title}</a><small>{ft(lang,item.category)}</small></li>)}</ul>
    </section>}
    <nav class="forum-back" aria-label={threadNav.navigation}>
-    <a href="#forum-topic-start" class="forum-home-button">{tools.top}</a>
+    <a href="#forum-topic-start" class="forum-topic-top-button">{tools.top}</a>
     <a href={forumUrl} class="forum-home-button"><span class="forum-home-icon" aria-hidden="true">←</span><span>{threadNav.home}</span></a>
    </nav>
   </div>
