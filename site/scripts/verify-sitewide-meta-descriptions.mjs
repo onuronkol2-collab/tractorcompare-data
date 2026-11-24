@@ -9,6 +9,7 @@
 import {readdirSync,readFileSync} from "node:fs";
 import {join,relative,resolve} from "node:path";
 import {fileURLToPath} from "node:url";
+import {readOpeningTagAttribute as attribute} from "./seo-html-attributes.mjs";
 
 /**
  * Scan actual opening tags without rewriting HTML. A regex strip of comments
@@ -68,11 +69,6 @@ export function scanHeadTags(head){
   }
   return {links,metas};
 }
-const attribute=(tag,name)=>{
-  const expression=new RegExp("(?:^|\\s)"+name+"\\s*=\\s*(?:\"([^\"]*)\"|'([^']*)'|([^\\s/>]+))","i");
-  const found=tag.match(expression);
-  return found?(found[1]??found[2]??found[3]??""):null;
-};
 const displayText=value=>value.replace(/&(?:amp|lt|gt|quot|apos|nbsp|#(?:x[0-9a-f]+|[0-9]+));/gi,token=>{
   const key=token.slice(1,-1).toLowerCase();
   const names={amp:"&",lt:"<",gt:">",quot:'"',apos:"'",nbsp:" "};
@@ -104,9 +100,40 @@ export function inspectMetaDescription(html,file="index.html"){
   return {description,length:description.length,locale:locales.has(locale)?locale:"en",errors};
 }
 
+/** Exact reuse is an editorial review signal, not proof of duplicate content.
+ * Scope same-language groups to distinct canonical pages. Cross-language
+ * groups compare only the same model route, not unrelated technical records.
+ * A sampled crawl can establish observed reuse, never absence sitewide.
+ */
+export function descriptionReuseGroups(records){
+  const same=new Map(),cross=new Map();
+  for(const {file,description} of records){
+    if(typeof file!=="string"||typeof description!=="string"||!description.trim())continue;
+    const normalized=description.normalize("NFC").replace(/\s+/g," ").trim();
+    const first=file.split("/")[0],locale=locales.has(first)?first:"en";
+    const key=JSON.stringify([locale,normalized]);
+    const group=same.get(key)??{locale,description:normalized,files:new Set()};
+    group.files.add(file);same.set(key,group);
+    const model=/^(?:(tr|zh|hi|pt-br|fr|de|ru|ja|es)\/)?tractors\/([^/]+)\/index\.html$/.exec(file);
+    if(!model)continue;
+    const crossKey=JSON.stringify([model[2],normalized]);
+    const candidate=cross.get(crossKey)??{slug:model[2],description:normalized,locales:new Map()};
+    candidate.locales.set(locale,file);cross.set(crossKey,candidate);
+  }
+  return {
+    sameLocale:[...same.values()].filter(g=>g.files.size>1)
+      .map(({locale,description,files})=>({locale,description,files:[...files].sort()}))
+      .sort((a,b)=>a.locale.localeCompare(b.locale)||a.description.localeCompare(b.description)),
+    crossLocale:[...cross.values()].filter(g=>g.locales.size>1)
+      .map(({slug,description,locales})=>({slug,description,locales:[...locales.keys()].sort(),files:[...locales.values()].sort()}))
+      .sort((a,b)=>a.slug.localeCompare(b.slug)||a.description.localeCompare(b.description)),
+  };
+}
+
 export function auditBuiltMetaDescriptions(directory){
   const root=resolve(directory);
   const result={htmlDocuments:0,indexablePages:0,over160:0,byLocale:{},errors:[],longExamples:[]};
+  const records=[];
   function scan(current){
     for(const entry of readdirSync(current,{withFileTypes:true})){
       const path=join(current,entry.name);
@@ -117,6 +144,7 @@ export function auditBuiltMetaDescriptions(directory){
         const meta=inspectMetaDescription(readFileSync(path,"utf8"),file);
         if(!meta)continue;
         result.indexablePages++;
+        if(!meta.errors.length)records.push({file,description:meta.description});
         const group=result.byLocale[meta.locale]??={pages:0,over160:0};
         group.pages++;
         for(const code of meta.errors)result.errors.push({file,code});
@@ -132,6 +160,7 @@ export function auditBuiltMetaDescriptions(directory){
   scan(root);
   if(result.htmlDocuments===0)throw Error("No HTML documents found for meta-description QA");
   if(result.indexablePages===0)throw Error("No canonical indexable pages found for meta-description QA");
+  result.reuse=descriptionReuseGroups(records);
   return result;
 }
 
@@ -140,10 +169,13 @@ if(process.argv[1]&&resolve(process.argv[1])===fileURLToPath(import.meta.url)){
     const report=auditBuiltMetaDescriptions(process.argv[2]||"site/dist");
     console.log("TRACTORVS_SITEWIDE_META_QA "+JSON.stringify({
       htmlDocuments:report.htmlDocuments,indexablePages:report.indexablePages,
-      over160:report.over160,errors:report.errors.length,byLocale:report.byLocale
+      over160:report.over160,errors:report.errors.length,byLocale:report.byLocale,
+      sameLocaleDescriptionGroups:report.reuse.sameLocale.length,crossLocaleDescriptionGroups:report.reuse.crossLocale.length
     }));
     if(report.longExamples.length)
       console.log("META_LENGTH_ADVISORIES "+JSON.stringify(report.longExamples.slice(0,12)));
+    if(report.reuse.sameLocale.length||report.reuse.crossLocale.length)
+      console.warn("META_DESCRIPTION_REUSE_REVIEW "+JSON.stringify(report.reuse));
     if(report.errors.length){
       console.error("META_DESCRIPTION_ERRORS "+JSON.stringify(report.errors.slice(0,30)));
       process.exitCode=1;
