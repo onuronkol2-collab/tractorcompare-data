@@ -31,3 +31,21 @@ test("non-hero slots and lazy hero extras use accurate sizes; first hero priorit
   assert.ok(photo.includes('photo.thumbUrl+" 480w, "'));
   assert.ok(photo.includes('photo.displayUrl+" 960w"'));
 });
+
+test("catalog and detail lazy image slots follow their actual layout rather than a hero width",()=>{
+ const catalog=read("components/TractorCatalog.astro");
+ const css=read("styles/tractor-photos.css");
+ assert.ok(catalog.includes('mode="catalog" sprite slotSizes="auto, (max-width:540px) calc(100vw - 76px), (max-width:720px) 240px, (max-width:940px) 400px, 350px"'));
+ assert.match(catalog,/\.catalog-results-panel \.tractor-card-grid\{grid-template-columns:repeat\(auto-fill,minmax\(min\(100%,245px\),1fr\)\);gap:clamp\(12px,2vw,20px\)/);
+ assert.match(catalog,/\.catalog-discovery-layout\{display:grid;grid-template-columns:minmax\(225px,270px\)/);
+ assert.match(catalog,/@media\(max-width:940px\)\{\.catalog-discovery-layout\{grid-template-columns:minmax\(0,1fr\)/);
+ assert.match(global,/\.tractor-card \{[^}]*padding: 23px; border: 1px/);
+ assert.match(global,/\.tractor-card \{ padding: 19px; \}/);
+ assert.match(css,/\.tractor-photo-gallery--hero\{max-width:900px/);
+ assert.match(css,/grid-template-columns:repeat\(3,minmax\(0,1fr\)\);\s*gap:10px/);
+ assert.match(css,/@media\(max-width:620px\)\s*\{[\s\S]*?grid-template-columns:repeat\(2,minmax\(0,1fr\)\)/);
+ assert.match(css,/\.tractor-photo-frame:first-child \{\s*grid-column:1 \/ -1/);
+ assert.ok(photo.includes('loading={mode==="hero"&&index===0?"eager":"lazy"}'));
+ assert.ok(photo.includes('srcset={mobile.webpUrl+" 720w"}'));
+ assert.ok(photo.includes('mobile.jpegUrl+" 720w, "'));
+});
