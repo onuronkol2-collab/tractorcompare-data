@@ -43,7 +43,7 @@ test("follow UI stays private and counts only approved replies from other member
  assert.match(panel,/tc_member_topic_follows/);
  assert.match(panel,/tc_forum_replies/);
  assert.match(panel,/status:"eq\.published"/);
- assert.match(panel,/reply\.author_id!==ownId/);
+ assert.match(panel,/reply\.author_id!==owner/);
  assert.match(panel,/newReplies/);
  assert.doesNotMatch(topic,/update[^;]*tc_forum_topics\.status/i);
 });
