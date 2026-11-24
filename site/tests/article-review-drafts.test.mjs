@@ -8,6 +8,8 @@ test("all 24 article review drafts preserve source structure and technical numbe
  assert.equal(result.draftTranslations,24);
  assert.equal(result.bodyParagraphs,272);
  assert.equal(result.uiLabels,192);
+ assert.equal(result.glossaryEntries,112);
+ assert.equal(result.glossaryFields,448);
  assert.equal(result.structuralChecks,"passed");
  assert.equal(result.publicationApproved,false);
 });
