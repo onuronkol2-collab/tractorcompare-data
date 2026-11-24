@@ -3,48 +3,18 @@ import type {Locale} from "../lib/locales.ts";
 interface Props {lang:Locale; items:{id:string;label:string}[]}
 const {lang,items}=Astro.props;
 const labels={
-  "en": [
-    "On this page",
-    "Back to articles"
-  ],
-  "tr": [
-    "İçindekiler",
-    "Makalelere dön"
-  ],
-  "zh": [
-    "本文目录",
-    "返回文章列表"
-  ],
-  "hi": [
-    "इस लेख में",
-    "लेखों की सूची पर लौटें"
-  ],
-  "pt-br": [
-    "Neste artigo",
-    "Voltar aos artigos"
-  ],
-  "fr": [
-    "Dans cet article",
-    "Retour aux articles"
-  ],
-  "de": [
-    "Auf dieser Seite",
-    "Zurück zu den Artikeln"
-  ],
-  "ru": [
-    "В этой статье",
-    "К списку статей"
-  ],
-  "ja": [
-    "この記事の目次",
-    "記事一覧に戻る"
-  ],
-  "es": [
-    "En este artículo",
-    "Volver a los artículos"
-  ]
+  "en": "On this page",
+  "tr": "İçindekiler",
+  "zh": "本文目录",
+  "hi": "इस लेख में",
+  "pt-br": "Neste artigo",
+  "fr": "Dans cet article",
+  "de": "Auf dieser Seite",
+  "ru": "В этой статье",
+  "ja": "この記事の目次",
+  "es": "En este artículo"
 };
-const [title]=labels[lang];
+const title=labels[lang];
 if(!items.length||new Set(items.map(x=>x.id)).size!==items.length||items.some(x=>!x.label.trim()||!/^[a-z][a-z0-9-]*$/.test(x.id)))throw Error("Invalid editorial contents");
 ---
 <nav class="article-contents" aria-labelledby="article-contents-heading">
