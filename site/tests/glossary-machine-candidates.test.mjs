@@ -39,3 +39,27 @@ test("machine candidate snapshot is source bound, complete in shape and explicit
  assert.equal(counts.reduce((n,x)=>n+x.received,0),1230);
  assert.ok(counts.every(x=>x.completeEntries===82));
 });
+
+test("editorial corrections preserve the raw snapshot, source identity and technical tokens",()=>{
+ const rawText=read("../docs/translation-review/glossary-google-sheets-candidates-20261124.json");
+ const patch=JSON.parse(read("../docs/translation-review/glossary-machine-candidate-corrections-20261124.json"));
+ assert.equal(patch.rawCandidateBlobSha,createHash("sha1").update("blob "+Buffer.byteLength(rawText)+"\0").update(rawText).digest("hex"));
+ assert.equal(patch.sourceBlobSha,source.sourceBlobSha);
+ assert.equal(patch.state,"editorial-corrections-await-independent-review");
+ assert.equal(patch.reviewed,false);
+ assert.equal(patch.notForPublication,true);
+ const keys=new Set();
+ const codes=["13.6-28","14.9-28","12F/12R","24F/24R","4WD","2WD","Stage V","Stage IIIA","DPF","SCR","DEF","ROPS","FOPS","HST","CVT","DCT","ISOBUS","OECD","dB(A)","kW","L/min","Ah"];
+ const nums=s=>[...s.normalize("NFKC").matchAll(/\d+(?:[., \u00a0\u202f]\d+)*/g)].map(m=>m[0].replace(/[., \u00a0\u202f]/g,""));
+ for(const c of patch.corrections){
+  const key=[c.locale,c.id,c.field].join("/");
+  assert.ok(!keys.has(key));keys.add(key);
+  assert.equal(c.source,source.rows.find(x=>x.id===c.id).source[c.field]);
+  assert.equal(c.original,packet.jobs.find(x=>x.locale===c.locale).entries.find(x=>x.id===c.id).fields[c.field].value);
+  assert.ok(c.revised.trim()&&c.revised!==c.original);
+  for(const code of codes)if(c.source.includes(code))assert.ok(c.revised.includes(code),key+" "+code);
+  for(const n of new Set(nums(c.source)))assert.ok(nums(c.revised).includes(n),key+" "+n);
+ }
+ assert.equal(keys.size,109);
+ for(const j of packet.jobs)for(const e of j.entries)for(const [k,v] of Object.entries(e.fields))if(v.flags.some(x=>x.startsWith("check-")))assert.ok(keys.has([j.locale,e.id,k].join("/")));
+});
