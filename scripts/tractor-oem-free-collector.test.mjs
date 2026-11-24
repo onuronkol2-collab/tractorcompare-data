@@ -4,7 +4,8 @@ import {readFileSync} from "node:fs";
 import {
  allowedOemUrl,validModelMention,scrubMarkup,readOemDocument,robotsAllowed,
  MAX_HTML_BYTES,MAX_PDF_BYTES,MAX_PER_RUN,aggregateResults,
- MAX_DRAFT_IDS_PER_LOOKUP,draftIdBatches,safeCollectorQueryFailure
+ MAX_DRAFT_IDS_PER_LOOKUP,draftIdBatches,safeCollectorQueryFailure,
+ MAX_DRAFT_SCAN,SPEC_LINK_PAGE_SIZE,MAX_SPEC_LINKS,selectBulkOemSources
 } from "../supabase/functions/tractor-oem-free-collector/policy.mjs";
 import {validateReceipt,runFreeCollector} from "./tractor-oem-free-dispatch.mjs";
 
@@ -167,7 +168,14 @@ test("406 queued UUIDs use bounded, lossless PostgREST draft-only batches",()=>{
  assert.match(edge,/for\(const batch of draftIdBatches\(ids\)\)/);
  assert.match(edge,/\.in\("id",batch\)/);
  assert.match(edge,/\.eq\("status","draft"\)/);
- assert.match(edge,/if\(tractors\.length>250\)throw Error\("draft_scan_cap"\)/);
+ assert.match(edge,/if\(tractors\.length>MAX_DRAFT_SCAN\)throw Error\("draft_scan_cap"\)/);
+ assert.equal(MAX_DRAFT_SCAN,499);
+ assert.equal(SPEC_LINK_PAGE_SIZE,500);
+ assert.equal(MAX_SPEC_LINKS,12000);
+ assert.match(edge,/for\(const batch of draftIdBatches\(\[\.\.\.drafts\.keys\(\)\]\)\)/);
+ assert.match(edge,/\.order\("id",\{ascending:true\}\)/);
+ assert.match(edge,/\.range\(offset,offset\+SPEC_LINK_PAGE_SIZE-1\)/);
+ assert.doesNotMatch(edge,/\.in\("tractor_id",\[\.\.\.drafts\.keys\(\)\]\)/);
  assert.doesNotMatch(edge,/\.in\("id",ids\)/);
 });
 
@@ -186,4 +194,49 @@ test("private OEM failure diagnostics cannot log draft identifiers or secret val
  const edge=readFileSync(new URL("../supabase/functions/tractor-oem-free-collector/index.ts",import.meta.url),"utf8");
  assert.match(edge,/safeCollectorQueryFailure\(scope,status,error\)/);
  assert.doesNotMatch(edge,/console\.error\([^\n]*(?:error\.message|error\.details|source_url|queueSecret)/);
+});
+
+test("bulk collection prioritizes distinct draft coverage without increasing requests",()=>{
+ const now=Date.parse("2026-11-24T12:00:00Z");
+ const item=(brand,host,path,ids)=>({brand,source_host:host,source_url:"https://"+host+"/"+path,associated_draft_ids:ids});
+ const shared=item("Erkunt","erkunttraktor.com.tr","Modeller",["a","b","c","d"]);
+ const repeated=item("Tümosan","www.tumosan.com.tr","catalog",[...Array(30).fill("x")]);
+ const sameBrand=item("Erkunt","www.erkunttraktor.com.tr","other",["e","f","g"]);
+ const single=item("Hattat","www.hattattraktor.com.tr","tractors",["z"]);
+ const expired=item("Bobcat","www.bobcat.com","cached",["1","2","3","4","5","6"]);
+ const cached=item("Solis","www.solisturkiye.com","catalog",["1","2","3","4","5","6","7"]);
+ const list=[repeated,sameBrand,shared,cached,expired,single];
+ const map=new Map([[cached.source_url,{next_check_at:"2026-12-01T00:00:00Z"}],
+  [expired.source_url,{next_check_at:"2026-11-20T00:00:00Z"}]]);
+ const result=selectBulkOemSources(list,map,now);
+ assert.equal(result.remaining,5);
+ assert.equal(result.picked.length,3);
+ assert.equal(result.picked[0],shared);
+ assert.ok(!result.picked.includes(sameBrand));
+ assert.ok(!result.picked.includes(cached));
+ assert.ok(!result.picked.includes(expired));
+ assert.deepEqual(new Set(result.picked.map(x=>x.brand)),new Set(["Erkunt","Hattat","Tümosan"]));
+ assert.deepEqual(list,[repeated,sameBrand,shared,cached,expired,single]);
+ assert.throws(()=>selectBulkOemSources(list,map,now,4),/invalid_source_selection/);
+ assert.deepEqual(selectBulkOemSources([expired],map,now).picked,[expired]);
+ const edge=readFileSync(new URL("../supabase/functions/tractor-oem-free-collector/index.ts",import.meta.url),"utf8");
+ assert.match(edge,/selectBulkOemSources\(list,cacheMap,now,MAX_PER_RUN\)/);
+ assert.match(edge,/associated_draft_ids\.add\(tractor\.id\)/);
+});
+test("expanded manufacturer scope remains HTTPS, exact host and brand bound",()=>{
+ const sources=[
+  ["Erkunt","https://erkunttraktor.com.tr/Modeller"],
+  ["Tümosan","https://www.tumosan.com.tr/tr/urun-kategori/traktor"],
+  ["Hattat","https://www.hattattraktor.com.tr/traktorler"],
+  ["Bobcat","https://www.bobcat.com/eu/en/equipment/compact-tractors"],
+  ["Solis","https://www.solisturkiye.com/urunlerimiz/"]
+ ];
+ for(const [brand,url] of sources){
+  assert.equal(allowedOemUrl(url,brand),url);
+  assert.equal(allowedOemUrl(url,"Kioti"),null);
+  assert.equal(allowedOemUrl(url.replace("https://","http://"),brand),null);
+  const deceptive=new URL(url);
+  deceptive.hostname+=".invalid";
+  assert.equal(allowedOemUrl(deceptive.toString(),brand),null);
+ }
 });

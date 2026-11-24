@@ -9,7 +9,10 @@
 import type {PublicSpec,TractorRecord} from "./catalog.ts";
 import {officialManufacturerSourceUrl,reviewedIndependentSourceUrl} from "./catalog.ts";
 
-export type AnswerLanguage="en"|"tr";
+import {LOCALE_TAGS,type Locale} from "./locales.ts";
+import {MODEL_ANSWER_UI,localizedEvidenceCopy,hasModelAnswerTermGuides,type AnswerField} from "./model-evidence-answer-i18n.ts";
+
+export type AnswerLanguage=Locale;
 export interface EvidenceAnswer {
   id:string;
   question:string;
@@ -29,7 +32,7 @@ type Candidate={
   key:string;
 };
 type Field={
- id:string;
+ id:AnswerField;
  keys:readonly string[];
  unit:string;
  min:number;
@@ -159,7 +162,7 @@ const text={
  }
 } as const;
 function formatNumber(value:number,lang:AnswerLanguage){
- return new Intl.NumberFormat(lang==="tr"?"tr-TR":"en-US",{maximumFractionDigits:2}).format(value);
+ return new Intl.NumberFormat(lang==="tr"?"tr-TR":lang==="en"?"en-US":LOCALE_TAGS[lang],{maximumFractionDigits:2}).format(value);
 }
 function safeStandard(s:string|null):string {
  // Include concise, printable test context only. Never turn large database notes
@@ -167,23 +170,29 @@ function safeStandard(s:string|null):string {
  if(!s||s.length>90||/[<>\r\n]/.test(s))return "";
  return s;
 }
-export function modelEvidenceAnswers(tractor:Pick<TractorRecord,"brand_name"|"model_name"|"specifications">,lang:AnswerLanguage):EvidenceAnswer[]{
- const name=tractor.brand_name+" "+tractor.model_name;
+export function modelEvidenceAnswers(tractor:Pick<TractorRecord,"brand_name"|"model_name"|"specifications">&Partial<Pick<TractorRecord,"variant">>,lang:AnswerLanguage):EvidenceAnswer[]{
+ const baseName=tractor.brand_name+" "+tractor.model_name;
+ const variant=tractor.variant?.trim();
+ // Preserve short, actual variant identities such as GEAR vs HST; long
+ // source/marketing notes remain in the original visible record and source.
+ const name=lang!=="en"&&lang!=="tr"&&variant&&variant.length<=24&&!/[<>\r\n]/.test(variant)&&!baseName.toLowerCase().includes(variant.toLowerCase())?baseName+" ("+variant+")":baseName;
  const answers:EvidenceAnswer[]=[];
  for(const field of fields){
   const found=selectUnambiguous(tractor.specifications,field,tractor.brand_name);
   if(!found)continue;
-  const standard=safeStandard(found.standard);
+  const originalLanguage=lang==="en"||lang==="tr";
+  const standard=originalLanguage?safeStandard(found.standard):"";
   const standardSuffix=standard?(lang==="tr"?" (ölçüm bilgisi: "+standard+")":" (reported context: "+standard+")"):"";
-  const rpm=found.ratedRpm===null?null:formatNumber(found.ratedRpm,lang)+(lang==="tr"?" dev/dk":" rpm");
+  const rpm=found.ratedRpm===null?null:formatNumber(found.ratedRpm,lang)+" "+MODEL_ANSWER_UI[lang].rpm;
   const measurementNote=[standard?null:found.standard,rpm].filter(Boolean).join(" · ")||null;
   const v=formatNumber(found.value,lang);
-  const phrasing=(text[lang] as Record<string,(n:string,v:string,s:string)=>{question:string;answer:string}>)[field.id==="rated-power"?"rated":field.id==="pto-power"?"pto":field.id];
-  const copy=phrasing(name,v,standardSuffix);
+  const copy=lang==="en"||lang==="tr"
+   ? (text[lang] as Record<string,(n:string,v:string,s:string)=>{question:string;answer:string}>)[field.id==="rated-power"?"rated":field.id==="pto-power"?"pto":field.id](name,v,standardSuffix)
+   : localizedEvidenceCopy(lang,field.id,name,v);
   answers.push({
    id:field.id,question:copy.question,answer:copy.answer,measurementNote,
    sourceUrl:found.sourceUrl,sourceType:found.sourceType,
-   guidePath:field.id==="rated-power"?"/guides/tractor-engine-power-and-torque/":
+   guidePath:!hasModelAnswerTermGuides(lang)?null:field.id==="rated-power"?"/guides/tractor-engine-power-and-torque/":
      field.id==="pto-power"?"/guides/pto-and-power-take-off/":
      field.id==="rear-hitch-lift"?"/guides/tractor-hydraulic-lift-explained/":
      null

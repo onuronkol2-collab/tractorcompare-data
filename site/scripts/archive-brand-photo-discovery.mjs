@@ -1,4 +1,6 @@
 import {matchesPhotoFileModel} from "./photo-model-identity.mjs";
+import {matchesManufacturerPhotoAlias} from "./photo-model-aliases.mjs";
+import {selectDiversePhotoTitles} from "./photo-title-diversity.mjs";
 import {allowedPhotoReuseLicense} from "./photo-license-check.mjs";
 import {fetchCommonsJson,CommonsCooldownError} from "./photo-commons-http.mjs";
 import {mergePhotoResearchModels,photoResearchKey} from "./photo-research-model-union.mjs";
@@ -58,7 +60,7 @@ for(const [brand,models] of byBrand){
         if(item.title?.startsWith("File:"))fileTitles.add(item.title);
     }catch(e){errors.push({brand,stage:"search",error:String(e)});}
   }
-  const titles=[...fileTitles].filter(t=>models.some(m=>matchesPhotoFileModel(brand,m.model,t))).slice(0,90);
+  const titles=selectDiversePhotoTitles(brand,models,fileTitles,90);
   const media=[];
   for(let i=0;i<titles.length;i+=20){
     try{
@@ -81,7 +83,7 @@ for(const [brand,models] of byBrand){
   }
   let coverage=0;
   for(const model of models){
-    const photos=media.filter(v=>matchesPhotoFileModel(brand,model.model,v.fileTitle)).slice(0,6);
+    const photos=media.filter(v=>matchesPhotoFileModel(brand,model.model,v.fileTitle)||matchesManufacturerPhotoAlias(brand,model.model,v.fileTitle)).slice(0,6);
     if(photos.length)coverage++;
     if(historical.has(key(model)))results.push({...historical.get(key(model)),photos});
     if(publicModels.has(key(model)))publicResults.push({...publicModels.get(key(model)),photos});

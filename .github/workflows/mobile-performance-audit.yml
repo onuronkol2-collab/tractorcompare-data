@@ -6,6 +6,8 @@ on:
       - ".github/workflows/mobile-performance-audit.yml"
       - "site/scripts/mobile-lighthouse-summary.mjs"
       - "site/tests/mobile-lighthouse-summary.test.mjs"
+      - "site/scripts/live-home-photo-evidence.mjs"
+      - "site/tests/live-home-photo-evidence.test.mjs"
       - "site/scripts/catalog-mobile-html-baseline.mjs"
       - "site/tests/catalog-mobile-html-baseline.test.mjs"
   workflow_dispatch:
@@ -33,6 +35,10 @@ jobs:
       - name: Measure live ten-locale catalogue HTML footprint and crawlable SSR links
         if: github.event_name != 'pull_request'
         run: node site/scripts/catalog-mobile-html-baseline.mjs
+      - name: Test direct HTML responsive photo evidence (offline)
+        run: node --test site/tests/live-home-photo-evidence.test.mjs
+      - name: Verify real production home photo markup without HTML cleaning
+        run: node site/scripts/live-home-photo-evidence.mjs
       - name: Measure indexable site templates and sampled languages with mobile Lighthouse
         run: |
           set -euo pipefail
