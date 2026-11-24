@@ -1,0 +1,356 @@
+{
+  "state": "draft-needs-independent-editorial-review",
+  "sourceBlobSha": "853424394588964819f45e85b60d4dbcfdaa9e18",
+  "sourceSlug": "tractor-engine-power-and-torque",
+  "sourceLanguage": "en",
+  "sourceComponent": "site/src/components/TractorTechnicalDeepDive.astro",
+  "source": {
+    "title": "Tractor Horsepower and Torque: HP, PS, kW and PTO Compared",
+    "description": "A practical guide to tractor horsepower, PS and kW, rated versus maximum output, torque and how to compare engine and PTO ratings.",
+    "lead": "Two brochures both advertise '100 horsepower'—but that does not promise identical field performance. Engine speed, torque curve, test standard, driveline losses and tyre traction all influence the result. This guide explains what the figures actually mean.",
+    "comparisonNote": "When two brochures both say 100 hp, read the label beside each figure. Maximum engine power on one sheet and rated power on the other describe different operating points. For a PTO-driven implement, look for a separate measurement at the shaft.",
+    "sections": [
+      {
+        "anchor": "hp-ps-kw",
+        "title": "Are HP, PS and kW the same units?",
+        "paragraphs": [
+          "Mechanical hp, metric PS and kilowatts measure power but have different unit sizes. Approximately 1 kW equals 1.341 mechanical hp or 1.360 PS. Compare values in a shared unit before drawing conclusions.",
+          "For example, 75 kW is approximately 100.6 hp or 102.0 PS. Converting units does not make rated power and maximum power comparable unless their test basis also matches.",
+          "A real manufacturer example: Başak's official 2075 BK brochure states engine power as 53 kW / 72 hp. Under NIST unit factors, 53 kW is approximately 72.1 metric PS but 71.1 mechanical hp. Do not silently treat the maker's ‘hp’ label as either horsepower definition without checking the unit convention. Preserve both original manufacturer figures as reported; they are not an independent PTO power result or proof of a particular test standard."
+        ]
+      },
+      {
+        "anchor": "nominal-max-boost",
+        "title": "Rated, maximum and boost power",
+        "paragraphs": [
+          "Rated power refers to an output at stated rated conditions. Maximum output may occur at another engine speed. Boost can add power only under particular transport or PTO conditions, depending on the tractor.",
+          "If a product advertises '120 hp plus 15 hp boost', do not assume 135 hp is constantly available for every field task. Inspect the enabling conditions and standard used."
+        ]
+      },
+      {
+        "anchor": "tork",
+        "title": "Why torque in Nm matters—but not alone",
+        "paragraphs": [
+          "Torque is turning moment at the crankshaft. A torque curve and torque rise can help explain how the engine behaves when load increases and rpm falls. Crankshaft torque is not the same thing as drawbar pull.",
+          "A machine may have strong engine torque yet perform poorly with inappropriate gearing, unsuitable tyres or excessive wheel slip. Review torque against rpm and driveline choices."
+        ]
+      },
+      {
+        "anchor": "motor-ve-pto",
+        "title": "Engine power versus PTO power",
+        "paragraphs": [
+          "Ploughing, mowing, baling and loader work demand power in different ways. Drawbar work depends on traction and slip; rotary implements depend on PTO output; loaders add hydraulic flow, pressure and stability.",
+          "Two tractors with the same engine rating may have different PTO test results. Never substitute a maker's engine declaration for an independent PTO measurement."
+        ]
+      },
+      {
+        "anchor": "olcum-standartlari",
+        "title": "ISO 14396, UN/ECE R120 and OECD Code 2: which power is measured?",
+        "paragraphs": [
+          "A brochure mentioning ISO 14396 or UN/ECE R120 is describing an engine-output declaration measured under a defined engine test procedure. It is not automatically the power available at the tractor's PTO shaft or drawbar. Read the standard, engine speed and rated-versus-maximum qualification together before comparing advertised horsepower.",
+          "OECD Code 2 answers a different question by testing the tractor's performance under specified procedures. Its published summaries may include PTO power and fuel consumption, drawbar performance and available hydraulic output. A maker's engine claim is therefore not interchangeable with an OECD PTO or drawbar test value. Even identical numerical horsepower figures are not equivalent unless the measured output and procedure are the same.",
+          "Before deciding, check five details: exact model/variant, country and emissions version, measurement standard, rpm associated with the power figure, and when any temporary boost becomes available. If an independent test is cited, verify the tested tractor's equipment and engine version against the one you are buying. An unavailable test basis should be labelled 'not directly comparable', not silently assumed."
+        ]
+      },
+      {
+        "anchor": "katalog-karsilastirma",
+        "title": "How to compare two horsepower figures fairly",
+        "paragraphs": [
+          "Confirm model year, market edition and engine code. Identify the unit, power category, test standard and rpm for each claim. If these differ or are unknown, mark the comparison as qualified rather than pretending the figures are identical.",
+          "The better tractor depends on tasks and implements, not only the larger horsepower number. PTO modes, lift capacity, weight, tyres and service support should also inform the decision."
+        ]
+      }
+    ],
+    "verification": "This article is educational and does not claim hands-on testing, component disassembly or tractor ownership. For a model-specific number, confirm the exact tractor, year, market and equipment in the producer's documentation. Where independent tests exist, compare their test procedures.",
+    "sources": [
+      "https://tractortestlab.unl.edu/",
+      "https://www.oecd.org/en/topics/tractors.html",
+      "https://eur-lex.europa.eu/eli/reg/2019/405/oj/eng",
+      "https://www.dlg.org/en/magazin/survey-tests/tractor-model-descriptions-no-standardised-information",
+      "https://www.nist.gov/pml/special-publication-811/nist-guide-si-appendix-b-conversion-factors/nist-guide-si-appendix-b9",
+      "https://admin.basaktraktor.com.tr/upload/4c2bf423-d9a1-4ffc-aa6b-1f0188c313aa-2075%20BK.pdf"
+    ],
+    "sourceLabels": [
+      "Nebraska Tractor Test Laboratory",
+      "OECD tractor testing codes",
+      "UN/ECE R120 — official engine power measurement regulation",
+      "DLG Test Centre — why tractor power claims differ",
+      "NIST — mechanical horsepower and metric PS conversion factors",
+      "Başak 2075 BK — official 53 kW / 72 hp brochure"
+    ]
+  },
+  "reviewed": false,
+  "notForPublication": true,
+  "translations": {
+    "zh": {
+      "title": "拖拉机发动机功率与扭矩：hp、PS、kW 和 PTO 功率对比",
+      "description": "了解拖拉机功率单位 hp、PS 和 kW、额定功率与最大功率、扭矩，以及发动机与 PTO 功率的正确比较方法。",
+      "lead": "两份产品样本都标称“100 马力”，但这并不保证相同的田间作业性能。发动机转速、扭矩曲线、试验标准、传动损失和轮胎牵引力都会影响结果。本文解释这些数值的实际含义。",
+      "comparisonNote": "两份样本都写着 100 hp 时，请阅读每个数值旁的说明。一份标注最大发动机功率，另一份标注额定功率，两者代表不同工况。对 PTO 驱动的机具，应寻找输出轴处的单独测量值。",
+      "sections": [
+        {
+          "anchor": "hp-ps-kw",
+          "title": "hp、PS 和 kW 是相同单位吗？",
+          "paragraphs": [
+            "机械马力 hp、公制马力 PS 和千瓦都是功率单位，但单位大小不同。1 kW 约等于 1.341 机械 hp 或 1.360 PS。得出结论前，应将数值换算到相同单位。",
+            "例如，75 kW 约等于 100.6 hp 或 102.0 PS。即便完成单位换算，额定功率与最大功率也不能直接比较，除非试验依据同样一致。",
+            "真实的制造商实例：Başak 2075 BK 官方样本标注发动机功率为 53 kW / 72 hp。按照 NIST 的单位换算系数，53 kW 约为 72.1 公制 PS，而机械马力约为 71.1 hp。在核实制造商采用的单位约定前，不应擅自将其 hp 标签视为任一马力定义。应保留原始标称的两个数值；它们既不是独立 PTO 功率试验结果，也不能证明使用了某一特定试验标准。"
+          ]
+        },
+        {
+          "anchor": "nominal-max-boost",
+          "title": "额定功率、最大功率与增功模式（boost）",
+          "paragraphs": [
+            "额定功率指规定额定条件下的输出功率。最大功率可能出现在另一发动机转速。不同车型的增功功能可能仅在特定运输或 PTO 作业条件下提供额外功率。",
+            "若产品标称“120 hp 加 15 hp 增功”，不可认定所有田间作业中都能持续获得 135 hp。应检查增功启用条件及采用的标准。"
+          ]
+        },
+        {
+          "anchor": "tork",
+          "title": "为什么 Nm 扭矩很重要，但不能单独判断",
+          "paragraphs": [
+            "扭矩是曲轴上的转动力矩。扭矩曲线和扭矩储备可以帮助理解负荷增加、转速下降时的发动机表现。曲轴扭矩不等同于牵引杆上的牵引力。",
+            "即便发动机扭矩较高，如果传动比不合适、轮胎不适用或车轮滑转过大，拖拉机仍可能表现不佳。应结合转速及传动系统选择分析扭矩。"
+          ]
+        },
+        {
+          "anchor": "motor-ve-pto",
+          "title": "发动机功率与 PTO 功率",
+          "paragraphs": [
+            "犁耕、割草、打捆和装载作业对功率的需求各不相同。牵引作业取决于附着力和滑转；旋转机具依赖 PTO 输出；装载机还涉及液压流量、压力和稳定性。",
+            "发动机额定功率相同的两台拖拉机可能有不同的 PTO 试验结果。切勿用制造商标称发动机功率代替独立的 PTO 功率测量值。"
+          ]
+        },
+        {
+          "anchor": "olcum-standartlari",
+          "title": "ISO 14396、UN/ECE R120 和 OECD Code 2：测量的是哪种功率？",
+          "paragraphs": [
+            "样本中提及 ISO 14396 或 UN/ECE R120，表示按照规定的发动机试验程序测得的发动机功率声明，并不自动代表 PTO 轴或牵引杆处可用的功率。比较标称马力前，应结合标准、发动机转速以及额定或最大功率的限定。",
+            "OECD Code 2 通过规定的程序测试拖拉机性能，回答的是另一类问题。公开摘要可能包含 PTO 功率、燃油消耗、牵引性能和可用液压功率。因此，制造商发动机功率声明不能替代 OECD PTO 或牵引杆试验数值。即使马力数字相同，只有被测输出和试验程序一致时才具有等同性。",
+            "决定前核对五项信息：准确型号和变型、国家和排放版本、测量标准、功率对应转速，以及临时增功可用的条件。如引用独立试验，请核实受试拖拉机的配置和发动机版本与拟购买车型一致。试验依据缺失时，应标注“不能直接比较”，而非擅自假定。"
+          ]
+        },
+        {
+          "anchor": "katalog-karsilastirma",
+          "title": "如何公平比较两个马力数值",
+          "paragraphs": [
+            "确认车型年份、市场版本和发动机代码。识别每项数据的单位、功率类别、试验标准和转速。若存在差异或信息未知，应注明比较限制，而不是假装数值等同。",
+            "哪台拖拉机更适合取决于作业和机具，而不仅是更大的功率数字。还应考虑 PTO 模式、提升能力、质量、轮胎和售后服务。"
+          ]
+        }
+      ],
+      "sourceLabels": [
+        "内布拉斯加拖拉机试验实验室",
+        "OECD 拖拉机试验规范",
+        "UN/ECE R120 — 发动机功率测量的正式法规",
+        "DLG 试验中心 — 拖拉机功率标称值为何不同",
+        "NIST — 机械马力 hp 与公制马力 PS 的换算系数",
+        "Başak 2075 BK — 官方 53 kW / 72 hp 样本"
+      ],
+      "verification": "本文仅用于技术知识介绍，并不声称进行过实机试验、拆解零部件或拥有拖拉机。对于具体车型的数值，应查阅制造商文件，确认准确的型号、年份、销售市场和配置。如有独立试验，还应比较试验方法。"
+    },
+    "hi": {
+      "title": "ट्रैक्टर की शक्ति और टॉर्क: hp, PS, kW और PTO की तुलना",
+      "description": "ट्रैक्टर की hp, PS और kW इकाइयाँ, निर्धारित व अधिकतम शक्ति, टॉर्क तथा इंजन और PTO शक्ति की तुलना समझें।",
+      "lead": "दो विवरणिकाएँ ‘100 अश्वशक्ति’ का दावा करती हैं, लेकिन इससे खेत में समान प्रदर्शन की गारंटी नहीं मिलती। इंजन की गति, टॉर्क वक्र, परीक्षण मानक, संचरण हानियाँ और टायरों की कर्षण क्षमता परिणाम को प्रभावित करती हैं। यह मार्गदर्शिका इन आँकड़ों का वास्तविक अर्थ बताती है।",
+      "comparisonNote": "जब दो विवरणिकाओं में 100 hp लिखा हो, तो हर आँकड़े के साथ उसका नाम पढ़ें। एक में अधिकतम इंजन शक्ति और दूसरी में निर्धारित शक्ति अलग-अलग संचालन बिंदु दर्शाती हैं। PTO से चलने वाले उपकरण के लिए शाफ्ट पर अलग मापन देखें।",
+      "sections": [
+        {
+          "anchor": "hp-ps-kw",
+          "title": "क्या hp, PS और kW एक जैसी इकाइयाँ हैं?",
+          "paragraphs": [
+            "यांत्रिक hp, मीट्रिक PS और किलोवाट शक्ति मापते हैं, लेकिन उनकी इकाइयों का परिमाण अलग है। 1 kW लगभग 1.341 यांत्रिक hp या 1.360 PS के बराबर है। निष्कर्ष निकालने से पहले एक ही इकाई में आँकड़ों की तुलना करें।",
+            "उदाहरण के लिए, 75 kW लगभग 100.6 hp या 102.0 PS है। इकाइयों का रूपांतरण निर्धारित और अधिकतम शक्ति को तुलनीय नहीं बनाता, जब तक परीक्षण का आधार भी समान न हो।",
+            "निर्माता का वास्तविक उदाहरण: Başak की 2075 BK की आधिकारिक विवरणिका में इंजन शक्ति 53 kW / 72 hp दी गई है। NIST के इकाई रूपांतरण गुणकों के अनुसार 53 kW लगभग 72.1 मीट्रिक PS, लेकिन 71.1 यांत्रिक hp है। निर्माता की इकाई परंपरा जाँचे बिना उसके hp लेबल को किसी एक अश्वशक्ति की परिभाषा न मानें। मूल घोषित दोनों आँकड़े सुरक्षित रखें; वे स्वतंत्र PTO शक्ति परीक्षण का परिणाम या किसी विशेष परीक्षण मानक का प्रमाण नहीं हैं।"
+          ]
+        },
+        {
+          "anchor": "nominal-max-boost",
+          "title": "निर्धारित शक्ति, अधिकतम शक्ति और अतिरिक्त शक्ति (boost)",
+          "paragraphs": [
+            "निर्धारित शक्ति बताई गई निर्धारित परिस्थितियों में निर्गम शक्ति है। अधिकतम शक्ति किसी अन्य इंजन गति पर मिल सकती है। ट्रैक्टर के अनुसार boost केवल कुछ परिवहन या PTO कार्य परिस्थितियों में अतिरिक्त शक्ति दे सकता है।",
+            "यदि किसी उत्पाद में ‘120 hp और 15 hp boost’ लिखा हो, तो यह न मानें कि हर खेत के काम में 135 hp लगातार उपलब्ध है। सक्रिय होने की परिस्थितियाँ और प्रयुक्त मानक जाँचें।"
+          ]
+        },
+        {
+          "anchor": "tork",
+          "title": "Nm में टॉर्क महत्वपूर्ण क्यों है, लेकिन अकेला पर्याप्त क्यों नहीं है",
+          "paragraphs": [
+            "टॉर्क क्रैंकशाफ्ट पर लगने वाला घूर्णन आघूर्ण है। टॉर्क वक्र और टॉर्क वृद्धि यह समझने में मदद करते हैं कि भार बढ़ने और rpm घटने पर इंजन कैसे व्यवहार करता है। क्रैंकशाफ्ट का टॉर्क ड्रॉबार के खींचने वाले बल के समान नहीं है।",
+            "इंजन में अधिक टॉर्क होने पर भी गलत गियर अनुपात, अनुपयुक्त टायर या पहियों के अत्यधिक फिसलने से ट्रैक्टर खराब प्रदर्शन कर सकता है। rpm और संचरण विकल्पों के साथ टॉर्क का आकलन करें।"
+          ]
+        },
+        {
+          "anchor": "motor-ve-pto",
+          "title": "इंजन शक्ति और PTO शक्ति में अंतर",
+          "paragraphs": [
+            "जुताई, घास काटना, बेल बनाना और लोडर चलाना अलग-अलग ढंग से शक्ति माँगते हैं। ड्रॉबार का काम कर्षण और फिसलन पर निर्भर है; घूमने वाले उपकरण PTO निर्गम पर; लोडर में हाइड्रोलिक प्रवाह, दबाव और स्थिरता भी महत्वपूर्ण हैं।",
+            "एक जैसी निर्धारित इंजन शक्ति वाले दो ट्रैक्टरों के PTO परीक्षण परिणाम अलग हो सकते हैं। स्वतंत्र PTO मापन के स्थान पर निर्माता की घोषित इंजन शक्ति का उपयोग कभी न करें।"
+          ]
+        },
+        {
+          "anchor": "olcum-standartlari",
+          "title": "ISO 14396, UN/ECE R120 और OECD Code 2: कौन-सी शक्ति मापी जाती है?",
+          "paragraphs": [
+            "ISO 14396 या UN/ECE R120 का उल्लेख करने वाली विवरणिका एक निर्धारित इंजन परीक्षण प्रक्रिया के तहत मापी गई इंजन शक्ति की घोषणा बताती है। यह अपने आप PTO शाफ्ट या ड्रॉबार पर उपलब्ध शक्ति नहीं है। घोषित अश्वशक्ति की तुलना से पहले मानक, इंजन गति तथा निर्धारित या अधिकतम शक्ति की श्रेणी साथ में पढ़ें।",
+            "OECD Code 2 निर्धारित प्रक्रियाओं के तहत ट्रैक्टर का प्रदर्शन मापकर एक अलग प्रश्न का उत्तर देता है। प्रकाशित सारांश में PTO शक्ति और ईंधन खपत, ड्रॉबार प्रदर्शन तथा उपलब्ध हाइड्रोलिक शक्ति शामिल हो सकती है। इसलिए निर्माता की इंजन शक्ति का दावा OECD PTO या ड्रॉबार परीक्षण के मान का विकल्प नहीं है। अश्वशक्ति के समान अंक भी तभी समतुल्य हैं जब मापा गया निर्गम और प्रक्रिया समान हों।",
+            "निर्णय से पहले पाँच बातें जाँचें: सटीक मॉडल व संस्करण, देश व उत्सर्जन संस्करण, मापन मानक, शक्ति से संबंधित rpm और अस्थायी boost उपलब्ध होने की परिस्थितियाँ। स्वतंत्र परीक्षण का उल्लेख होने पर जाँचे गए ट्रैक्टर के उपकरण और इंजन संस्करण का खरीदे जाने वाले मॉडल से मिलान करें। परीक्षण का आधार न मिले तो ‘सीधे तुलना योग्य नहीं’ लिखें, अनुमान न लगाएँ।"
+          ]
+        },
+        {
+          "anchor": "katalog-karsilastirma",
+          "title": "दो शक्ति आँकड़ों की निष्पक्ष तुलना कैसे करें",
+          "paragraphs": [
+            "मॉडल वर्ष, बाज़ार संस्करण और इंजन कोड की पुष्टि करें। प्रत्येक दावे की इकाई, शक्ति श्रेणी, परीक्षण मानक और rpm पहचानें। इनमें अंतर हो या जानकारी अज्ञात हो तो तुलना की सीमा स्पष्ट करें, आँकड़ों को समान न मानें।",
+            "बेहतर ट्रैक्टर का चुनाव काम और उपकरणों पर निर्भर करता है, केवल अधिक अश्वशक्ति पर नहीं। PTO मोड, उठाने की क्षमता, वजन, टायर और सेवा सहायता पर भी विचार करें।"
+          ]
+        }
+      ],
+      "sourceLabels": [
+        "नेब्रास्का ट्रैक्टर परीक्षण प्रयोगशाला",
+        "OECD ट्रैक्टर परीक्षण कोड",
+        "UN/ECE R120 — इंजन शक्ति मापन का आधिकारिक विनियम",
+        "DLG परीक्षण केंद्र — ट्रैक्टर शक्ति के दावों में अंतर क्यों होता है",
+        "NIST — यांत्रिक hp और मीट्रिक PS के रूपांतरण गुणक",
+        "Başak 2075 BK — 53 kW / 72 hp की आधिकारिक विवरणिका"
+      ],
+      "verification": "यह लेख शैक्षिक है; इसमें स्वयं ट्रैक्टर चलाकर परीक्षण करने, पुर्जे खोलने या ट्रैक्टर का मालिक होने का दावा नहीं किया गया है। किसी मॉडल के विशिष्ट आँकड़े के लिए निर्माता के दस्तावेज़ में सटीक मॉडल, वर्ष, बाज़ार और उपकरण की पुष्टि करें। स्वतंत्र परीक्षण उपलब्ध हों तो उनकी परीक्षण विधियों की तुलना करें।"
+    },
+    "ru": {
+      "title": "Мощность и крутящий момент трактора: hp, PS, кВт (kW) и ВОМ",
+      "description": "Практическое руководство по единицам hp, PS и kW, номинальной и максимальной мощности, крутящему моменту и сравнению двигателя с ВОМ.",
+      "lead": "Два каталога заявляют «100 лошадиных сил», но это не гарантирует одинаковой производительности в поле. На результат влияют обороты двигателя, кривая крутящего момента, стандарт испытаний, потери в трансмиссии и сцепление шин. Руководство объясняет смысл этих цифр.",
+      "comparisonNote": "Если два каталога указывают 100 hp, прочтите название каждого показателя. Максимальная мощность двигателя в одном и номинальная в другом относятся к разным рабочим режимам. Для орудия с приводом от ВОМ ищите отдельное измерение на валу.",
+      "sections": [
+        {
+          "anchor": "hp-ps-kw",
+          "title": "Одинаковы ли единицы hp, PS и kW?",
+          "paragraphs": [
+            "Механическая лошадиная сила hp, метрическая лошадиная сила PS и киловатт измеряют мощность, но имеют разные размеры единиц. 1 kW примерно равен 1,341 механической hp или 1,360 PS. Перед выводами приведите показатели к общей единице.",
+            "Например, 75 kW — примерно 100,6 hp или 102,0 PS. Перевод единиц не делает номинальную и максимальную мощность сопоставимыми, если не совпадает также основа испытаний.",
+            "Реальный пример производителя: официальный каталог Başak 2075 BK указывает мощность двигателя 53 kW / 72 hp. По коэффициентам NIST 53 kW — примерно 72,1 метрической PS, но 71,1 механической hp. Не относите обозначение hp производителя к одной из этих единиц без проверки принятой системы. Сохраните обе исходные цифры; это не результат независимого испытания мощности ВОМ и не подтверждение конкретного стандарта испытаний."
+          ]
+        },
+        {
+          "anchor": "nominal-max-boost",
+          "title": "Номинальная, максимальная и дополнительная мощность (boost)",
+          "paragraphs": [
+            "Номинальная мощность относится к выходной мощности при заданных номинальных условиях. Максимум может достигаться при других оборотах двигателя. В зависимости от трактора boost даёт дополнительную мощность только при определённых транспортных работах или условиях работы ВОМ.",
+            "Если заявлено «120 hp плюс 15 hp boost», не считайте, что 135 hp постоянно доступны при любых полевых работах. Проверьте условия активации и используемый стандарт."
+          ]
+        },
+        {
+          "anchor": "tork",
+          "title": "Почему важен крутящий момент в Nm, но не сам по себе",
+          "paragraphs": [
+            "Крутящий момент — вращательный момент на коленчатом валу. Кривая и запас крутящего момента помогают понять поведение двигателя при росте нагрузки и падении оборотов. Момент на коленвале не равен тяговому усилию на тяговом брусе.",
+            "Даже при высоком моменте двигателя трактор может работать плохо из-за неподходящей передачи, шин или чрезмерного буксования. Оценивайте момент с учётом оборотов и выбора трансмиссии."
+          ]
+        },
+        {
+          "anchor": "motor-ve-pto",
+          "title": "Мощность двигателя и мощность ВОМ",
+          "paragraphs": [
+            "Вспашка, кошение, прессование тюков и погрузочные работы предъявляют разные требования к мощности. Работа на тяговом брусе зависит от сцепления и буксования; вращающиеся орудия — от мощности ВОМ; для погрузчика важны также расход и давление гидравлики и устойчивость.",
+            "Два трактора с одинаковой мощностью двигателя могут показать разные результаты испытаний ВОМ. Никогда не заменяйте независимое измерение мощности ВОМ заявленной мощностью двигателя."
+          ]
+        },
+        {
+          "anchor": "olcum-standartlari",
+          "title": "ISO 14396, UN/ECE R120 и OECD Code 2: какая мощность измеряется?",
+          "paragraphs": [
+            "Упоминание ISO 14396 или UN/ECE R120 в каталоге означает заявленную мощность двигателя, измеренную по определённой процедуре испытаний двигателя. Она не равна автоматически мощности на валу ВОМ или тяговом брусе. Перед сравнением заявленной мощности учитывайте стандарт, обороты двигателя и категорию номинальной или максимальной мощности.",
+            "OECD Code 2 отвечает на другой вопрос, испытывая характеристики трактора по заданным процедурам. Опубликованные сводки могут включать мощность ВОМ и расход топлива, тяговые характеристики и доступную гидравлическую мощность. Заявленная мощность двигателя не взаимозаменяема с результатом испытаний OECD на ВОМ или тяговом брусе. Даже совпадающие числовые значения эквивалентны лишь при совпадении измеряемой величины и процедуры.",
+            "Перед решением проверьте пять деталей: точную модель и вариант, страну и версию экологического стандарта, стандарт измерения, обороты для показателя мощности и условия доступности временного boost. При ссылке на независимое испытание сопоставьте комплектацию и версию двигателя испытанного трактора с приобретаемым. Неизвестную основу испытаний следует обозначить как «напрямую не сравнимо», а не предполагать."
+          ]
+        },
+        {
+          "anchor": "katalog-karsilastirma",
+          "title": "Как корректно сравнить две цифры мощности",
+          "paragraphs": [
+            "Подтвердите год модели, рыночную версию и код двигателя. Определите единицу, категорию мощности, стандарт испытаний и обороты для каждого значения. При различиях или неизвестных данных отметьте ограничения сравнения, не выдавая цифры за эквивалентные.",
+            "Выбор подходящего трактора зависит от задач и орудий, а не только от большей мощности. Учитывайте также режимы ВОМ, грузоподъёмность, массу, шины и сервисную поддержку."
+          ]
+        }
+      ],
+      "sourceLabels": [
+        "Лаборатория тракторных испытаний Небраски",
+        "Кодексы ОЭСР для испытаний тракторов",
+        "UN/ECE R120 — официальный регламент измерения мощности двигателя",
+        "Испытательный центр DLG — почему различаются заявленные мощности",
+        "NIST — коэффициенты перевода механической hp и метрической PS",
+        "Başak 2075 BK — официальный каталог 53 kW / 72 hp"
+      ],
+      "verification": "Статья носит образовательный характер; она не утверждает, что авторы проводили практические испытания, разбирали узлы или владели трактором. Для конкретного показателя проверьте точную модель, год, рынок и комплектацию в документации производителя. Если доступны независимые испытания, сравните методики."
+    },
+    "ja": {
+      "title": "トラクターの出力とトルク：hp・PS・kW・PTO出力の比較",
+      "description": "トラクターのhp・PS・kW、定格出力と最大出力、トルク、エンジン出力とPTO出力の比較方法を解説します。",
+      "lead": "二つのカタログに「100馬力」とあっても、圃場で同じ性能が得られるとは限りません。エンジン回転数、トルク曲線、試験規格、伝達損失、タイヤのけん引力が結果に影響します。本記事では数値の実際の意味を説明します。",
+      "comparisonNote": "二つのカタログに100 hpと記載されている場合は、各数値の項目名を確認します。一方が最大エンジン出力、他方が定格出力なら、異なる運転点の値です。PTO駆動作業機では軸での別個の測定値を確認してください。",
+      "sections": [
+        {
+          "anchor": "hp-ps-kw",
+          "title": "hp、PS、kWは同じ単位か",
+          "paragraphs": [
+            "機械馬力hp、仏馬力（メートル馬力）PS、キロワットは出力の単位ですが、大きさは異なります。1 kWは約1.341機械hpまたは1.360 PSです。結論を出す前に同じ単位で比較します。",
+            "例えば75 kWは約100.6 hpまたは102.0 PSです。単位を換算しても、試験条件が一致しない限り定格出力と最大出力を直接比較できるわけではありません。",
+            "実際のメーカーの例として、Başak 2075 BKの公式カタログはエンジン出力を53 kW / 72 hpと記載しています。NISTの換算係数では、53 kWは約72.1 PSですが、機械馬力では71.1 hpです。メーカーのhp表記について、採用している単位の定義を確認せず一方と決めつけてはいけません。メーカー公表の原数値を両方保持してください。独立したPTO出力試験の結果でも、特定の試験規格の証明でもありません。"
+          ]
+        },
+        {
+          "anchor": "nominal-max-boost",
+          "title": "定格出力、最大出力、ブースト出力",
+          "paragraphs": [
+            "定格出力は指定された定格条件での出力です。最大出力は別のエンジン回転数で発生する場合があります。機種によってブーストは特定の輸送条件やPTO作業条件でのみ出力を増加させます。",
+            "「120 hpに15 hpのブースト」と表示されていても、あらゆる圃場作業で135 hpが常時利用できると考えてはいけません。作動条件と適用規格を確認します。"
+          ]
+        },
+        {
+          "anchor": "tork",
+          "title": "Nmで示されるトルクが重要だが、それだけでは不十分な理由",
+          "paragraphs": [
+            "トルクはクランク軸における回転モーメントです。トルク曲線とトルク上昇率は、負荷が増し回転数が下がる際のエンジンの挙動を理解する助けになります。クランク軸トルクはドローバーのけん引力とは異なります。",
+            "高いエンジントルクを持つ機種でも、変速比やタイヤが不適切だったり、車輪のスリップが過大だったりすれば性能が低下する場合があります。回転数と動力伝達系の選択肢を踏まえてトルクを評価します。"
+          ]
+        },
+        {
+          "anchor": "motor-ve-pto",
+          "title": "エンジン出力とPTO出力の違い",
+          "paragraphs": [
+            "耕起、草刈り、梱包、ローダー作業では異なる形で動力が必要です。ドローバー作業はけん引力とスリップ、回転作業機はPTO出力に依存します。ローダーでは油圧流量、圧力、安定性も重要です。",
+            "同じエンジン定格出力の二機種でもPTO試験結果が異なる場合があります。独立したPTO測定値をメーカーのエンジン公表値で置き換えないでください。"
+          ]
+        },
+        {
+          "anchor": "olcum-standartlari",
+          "title": "ISO 14396、UN/ECE R120、OECD Code 2：どの出力を測るのか",
+          "paragraphs": [
+            "ISO 14396やUN/ECE R120が記載されたカタログは、規定されたエンジン試験手順によるエンジン出力の公表値を示します。その値がそのままPTO軸やドローバーで利用できる出力になるわけではありません。馬力を比較する前に規格、エンジン回転数、定格・最大の区別を併せて確認します。",
+            "OECD Code 2は規定手順でトラクターの性能を試験し、別の問いに答えます。公表概要にはPTO出力と燃料消費、ドローバー性能、利用可能な油圧出力が含まれる場合があります。メーカーのエンジン公表値とOECDのPTOまたはドローバー試験値は置き換えられません。馬力の数値が同じでも測定対象と手順が同じでなければ等価ではありません。",
+            "判断前に五つの事項を確認します。正確な型式・仕様、国と排出ガス仕様、測定規格、出力に対応する回転数、一時的ブーストの作動条件です。独立試験を参照する場合は、試験機の装備とエンジン仕様を購入予定機と照合します。試験根拠が不明なら推定せず「直接比較できない」と明示してください。"
+          ]
+        },
+        {
+          "anchor": "katalog-karsilastirma",
+          "title": "二つの馬力数値を公平に比較する方法",
+          "paragraphs": [
+            "年式、市場仕様、エンジンコードを確認します。それぞれの単位、出力区分、試験規格、回転数を特定します。異なる場合や不明な場合は、同じ数値として扱わず比較条件の制約を明示してください。",
+            "より適したトラクターは馬力の大きさだけでなく作業内容と作業機によって決まります。PTOモード、揚力、重量、タイヤ、サービス体制も判断材料です。"
+          ]
+        }
+      ],
+      "sourceLabels": [
+        "ネブラスカ・トラクター試験研究所",
+        "OECDトラクター試験コード",
+        "UN/ECE R120 — エンジン出力測定に関する公式規則",
+        "DLG試験センター — トラクター出力公表値が異なる理由",
+        "NIST — 機械馬力hpとメートル馬力PSの換算係数",
+        "Başak 2075 BK — 53 kW / 72 hp の公式カタログ"
+      ],
+      "verification": "この記事は技術教育を目的としており、実機試験、部品の分解、トラクターの所有経験を主張するものではありません。特定の機種の数値は製造元の資料で正確な型式、年式、市場、装備を確認してください。独立した試験がある場合は、その試験方法を比較します。"
+    }
+  },
+  "sourceComponentBlobSha": "e8a86025ece122ad013843e9d3305843970f60f5",
+  "translationScope": "Main article, comparison note, verification disclosure and six source labels. Conditional Deutz-Fahr GS case/table and related links, UI, photo credits and glossary integration remain pending. Not for publication."
+}
