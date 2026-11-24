@@ -4,61 +4,99 @@ on:
     branches: [main]
     paths:
       - '.github/workflows/photo-batch-evidence-transfer-20261124.yml'
-      - 'site/scripts/photo-batch-evidence-transfer-20261124.mjs'
 permissions:
   contents: read
   actions: read
 jobs:
-  recover_mf:
+  prepare:
+    name: Prepare ${{ matrix.photo.id }}
     runs-on: ubuntu-latest
-    timeout-minutes: 5
+    timeout-minutes: 6
+    strategy:
+      fail-fast: false
+      max-parallel: 3
+      matrix:
+        photo:
+          - id: jcb-6260-marcelx42-2025
+            index: 1
+            sha256: 'ea8fc5c2a171a71539b456eccfb4c1c138f06e94de402c51931b07b30e82629b'
+            width: 6224
+            height: 4672
+            format: MPO
+          - id: jcb-6300-marcelx42-2025
+            index: 2
+            sha256: '110763319e24dd52dc1bdd867bd7b72de2f00920c48bf3b53c1887b6342e24a3'
+            width: 6224
+            height: 4672
+            format: MPO
+          - id: versatile-295-marcelx42-2025
+            index: 3
+            sha256: 'e6e0e3d66153e04498aecc8b53e6e9474ed39f2c08c7dc76873b4e755818f51a'
+            width: 6224
+            height: 4672
+            format: JPEG
+          - id: versatile-460-marcelx42-2025
+            index: 4
+            sha256: '976136e4958f32f9bcfee73d37a651c0b6213d8f5a8287f59371a9f93b520f03'
+            width: 6224
+            height: 4672
+            format: JPEG
+          - id: versatile-620dt-marcelx42-2025
+            index: 5
+            sha256: '932765d013a584b0af0b044a4c45e78bd271b74f01e9292a3a7700b565781e3c'
+            width: 4880
+            height: 3253
+            format: JPEG
     steps:
       - uses: actions/download-artifact@v4
         with:
-          name: tractorvs-curated-source-review-20261124
-          run-id: 45422737022
+          name: tractorvs-photo-batch-evidence-20261124
+          run-id: 45460950896
           github-token: ${{ github.token }}
           path: recovered
       - name: Prepare isolated image processing environment
         run: |
           python -m venv /tmp/tractorvs-photo-venv
           /tmp/tractorvs-photo-venv/bin/pip install --disable-pip-version-check Pillow==12.0.0
-      - name: Validate and encode only the reviewed public CC BY-SA MF original
+      - name: Verify known original and encode resized public CC BY-SA derivative
+        env:
+          PHOTO_ID: ${{ matrix.photo.id }}
+          INDEX: ${{ matrix.photo.index }}
+          SHA: ${{ matrix.photo.sha256 }}
+          WIDTH: ${{ matrix.photo.width }}
+          HEIGHT: ${{ matrix.photo.height }}
+          FORMAT: ${{ matrix.photo.format }}
         run: |
           /tmp/tractorvs-photo-venv/bin/python - <<'PY'
-          import pathlib, hashlib, base64, json
-          from PIL import Image
-          files=list(pathlib.Path('recovered').rglob('candidate-4.jpg'))
+          import pathlib, hashlib, base64, json, os
+          from PIL import Image, ImageOps
+          pid=os.environ['PHOTO_ID']; idx=int(os.environ['INDEX'])
+          report=json.loads(next(pathlib.Path('recovered').rglob('report.json')).read_text())
+          row=report['entries'][idx]; m=row['metadata']
+          assert m['extmetadata']['LicenseShortName']['value']=='CC BY-SA 4.0'
+          assert row['sha256']==os.environ['SHA']
+          files=list(pathlib.Path('recovered').rglob('candidate-'+str(idx)+'.jpg'))
           assert len(files)==1
           raw=files[0].read_bytes()
-          assert hashlib.sha256(raw).hexdigest()=='1020fab948f7505de2899160ea819cd7f11793bfe653cc5132ab5683bce95180'
-          im=Image.open(files[0]); im.load(); assert im.format=='JPEG' and im.size==(2996,2247)
+          assert hashlib.sha256(raw).hexdigest()==os.environ['SHA']
+          assert hashlib.sha1(raw).hexdigest()==m['sha1']
+          im=Image.open(files[0]); assert im.format==os.environ['FORMAT']
+          assert im.size==(int(os.environ['WIDTH']),int(os.environ['HEIGHT']))
+          im.seek(0); im.load(); im=ImageOps.exif_transpose(im).convert('RGB')
           for w in [480,960,1920]:
-              p=pathlib.Path(f'mf-4708-platform-pere-igor-2016-{w}.jpg')
-              im.resize((w,w*3//4),Image.Resampling.LANCZOS).convert('RGB').save(p,'JPEG',quality=85,optimize=True)
+              h=round(im.height*w/im.width)
+              assert w<=im.width
+              p=pathlib.Path(f'{pid}-{w}.jpg')
+              im.resize((w,h),Image.Resampling.LANCZOS).save(p,'JPEG',quality=84,optimize=True)
               b=p.read_bytes()
-              with Image.open(p) as check: check.load(); assert check.size==(w,w*3//4)
-              chunks=[base64.b64encode(b).decode()[i:i+12000] for i in range(0,len(base64.b64encode(b)),12000)]
-              print('PUBLIC_PHOTO_META '+json.dumps({'file':p.name,'width':w,'height':w*3//4,'sha256':hashlib.sha256(b).hexdigest(),'bytes':len(b),'chunks':len(chunks)}))
+              with Image.open(p) as check: check.load(); assert check.format=='JPEG' and check.size==(w,h)
+              enc=base64.b64encode(b).decode()
+              chunks=[enc[i:i+12000] for i in range(0,len(enc),12000)]
+              print('PUBLIC_PHOTO_META '+json.dumps({'file':p.name,'width':w,'height':h,'sha256':hashlib.sha256(b).hexdigest(),'bytes':len(b),'chunks':len(chunks)}))
               for i,c in enumerate(chunks): print(f'PUBLIC_PHOTO_CHUNK {p.name} {i} {c}')
           PY
       - uses: actions/upload-artifact@v7
         with:
-          name: mf-4708-reviewed-transfer
-          path: mf-4708-platform-pere-igor-2016-*.jpg
+          name: transfer-${{ matrix.photo.id }}
+          path: ${{ matrix.photo.id }}-*.jpg
           retention-days: 7
-  collect_new:
-    runs-on: ubuntu-latest
-    timeout-minutes: 12
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: '22.23.4'
-      - run: node site/scripts/photo-batch-evidence-transfer-20261124.mjs
-      - uses: actions/upload-artifact@v7
-        if: always()
-        with:
-          name: tractorvs-photo-batch-evidence-20261124
-          path: photo-batch-evidence
-          retention-days: 14
