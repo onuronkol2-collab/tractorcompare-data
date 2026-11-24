@@ -18,8 +18,8 @@
       "modified": "2026-11-22T08:02:35.845Z"
     },
     "https://tractorvs.com/compare/": {
-      "digest": "a0dd287c3e7cbb8c835ef7cd2d076e93ab2d934a044404200bcae135c9f1e19a",
-      "modified": "2026-11-24T03:38:26.773Z"
+      "digest": "822c181c73c4553967b42570f6e63c791c4aa616ad4a5cbc09135907a10bab15",
+      "modified": "2026-11-24T09:52:29.479Z"
     },
     "https://tractorvs.com/compare/deutz-fahr-5090-d-gs-vs-5100-d-gs/": {
       "digest": "922999b9696029c032d6b1c71856522e23db46cc43479dd85fbb929909556a66",
@@ -34,8 +34,8 @@
       "modified": "2026-11-22T18:22:02.402Z"
     },
     "https://tractorvs.com/de/compare/": {
-      "digest": "6f9fbef68b7749d0c81eb32bb68c3dcef8c19d6d92d3fddaed620b27b5363954",
-      "modified": "2026-11-24T03:38:26.773Z"
+      "digest": "f275750966e95efbf916da807ae8e6bd251df6ef5df8583c8fcd622aaf470f05",
+      "modified": "2026-11-24T09:52:29.479Z"
     },
     "https://tractorvs.com/de/farm-advisor/": {
       "digest": "f033a82f8bd9405734f91ed6e58267bf0988d2379335837d00e1476b48c68646",
@@ -54,8 +54,8 @@
       "modified": "2026-11-22T15:13:41.997Z"
     },
     "https://tractorvs.com/de/tractors/": {
-      "digest": "44d48db981629dec6c5a3023adb93592a841c59a54c9d7034f7c99a16ea794a0",
-      "modified": "2026-11-23T19:24:17.522Z"
+      "digest": "c7e686882507e1b7c31717b46512f5a082fd9129f87d2276f4b06df36569bfca",
+      "modified": "2026-11-24T09:52:29.479Z"
     },
     "https://tractorvs.com/de/tractors/agrale-4125-0b53e944/": {
       "digest": "6d09ce3492f880497db77b2114853c5574846ee2ce73b4a8e45d7a2de15ff1a7",
@@ -1586,8 +1586,8 @@
       "modified": "2026-11-23T16:45:17.078Z"
     },
     "https://tractorvs.com/de/tractors/zetor-forterra-140-0a900d97/": {
-      "digest": "d9487f3b6e9436c371f3b820058450fc80bf655ff1fad1c951dd579be2171483",
-      "modified": "2026-11-23T19:24:17.522Z"
+      "digest": "3896b4caa7b43dd1c5f9c0ab0dcab592defad4f87669bf5b0b147eaa3844bae3",
+      "modified": "2026-11-24T09:52:29.479Z"
     },
     "https://tractorvs.com/de/tractors/zetor-forterra-140-33bcf1bf/": {
       "digest": "da05feb5ec76d75332814aa5fb4c2480ea9024d7b74a08de80407da1a223ea22",
@@ -1626,8 +1626,8 @@
       "modified": "2026-11-22T18:22:02.402Z"
     },
     "https://tractorvs.com/es/compare/": {
-      "digest": "86c5b613c54b5b895cfd5c3e531ef0f7dbc7458323ea7930cd7c23ce299bc5e2",
-      "modified": "2026-11-24T03:38:26.773Z"
+      "digest": "d1e8643076820bd2c4f71ef88caf5427b4d98aad7405410e3500a5740207b890",
+      "modified": "2026-11-24T09:52:29.479Z"
     },
     "https://tractorvs.com/es/farm-advisor/": {
       "digest": "4914db645d6005eaec5c1c2fa2dc6653d7ab443aa23d176a81fd680dcb7740a6",
@@ -1646,8 +1646,8 @@
       "modified": "2026-11-22T15:13:41.997Z"
     },
     "https://tractorvs.com/es/tractors/": {
-      "digest": "9004f4c23da026129edf711f3a1ea209bd5fd13deef9c9b3e9ce2e7449d0a516",
-      "modified": "2026-11-23T19:24:17.522Z"
+      "digest": "644d6008ce337a437d3cbe33705aef7992233ae351d96009dc2c9bae747e831d",
+      "modified": "2026-11-24T09:52:29.479Z"
     },
     "https://tractorvs.com/es/tractors/agrale-4125-0b53e944/": {
       "digest": "66ff08a81ce1617e618812e146c025e5a63b6033db3eada87840a2f2c996a1ca",
@@ -3178,8 +3178,8 @@
       "modified": "2026-11-23T16:45:17.078Z"
     },
     "https://tractorvs.com/es/tractors/zetor-forterra-140-0a900d97/": {
-      "digest": "60c1c95aba59fa8d66c52b941670b7b217b8b13dfde3df47a3a5bce9c71a5602",
-      "modified": "2026-11-23T19:24:17.522Z"
+      "digest": "46dca4ccb13c49fcf419892bbdf57f9d420b23f10206e9393ea7c83965fee9cb",
+      "modified": "2026-11-24T09:52:29.479Z"
     },
     "https://tractorvs.com/es/tractors/zetor-forterra-140-33bcf1bf/": {
       "digest": "4ba44200f857ff430b4bbde0ebafa70716c6ee9ccb6693ea5c2c11fb4c7d1cfe",
@@ -3222,8 +3222,8 @@
       "modified": "2026-11-22T18:22:02.402Z"
     },
     "https://tractorvs.com/fr/compare/": {
-      "digest": "3395f7c59b818ec68e3640091129cdb3b9aa3744433c283f13b54b3d6eede9c1",
-      "modified": "2026-11-24T03:38:26.773Z"
+      "digest": "1cc266ac9da8e3c89d1b6d86170220f54d300bf51b467189f3f2ead382309f69",
+      "modified": "2026-11-24T09:52:29.479Z"
     },
     "https://tractorvs.com/fr/farm-advisor/": {
       "digest": "869dffae73ddb785014fc76c7434f7ba19809d8aa23407435a6583fd32d89e00",
@@ -3242,8 +3242,8 @@
       "modified": "2026-11-22T15:13:41.997Z"
     },
     "https://tractorvs.com/fr/tractors/": {
-      "digest": "20b406aec72bd1e1ff1772917652decb0acc5b952df5ca0b8a88d447809d6f0a",
-      "modified": "2026-11-23T19:24:17.522Z"
+      "digest": "d5c29767ded862ba374b42e9c21d62844b0357d0d3c8c4c8b6bf72a018274ffa",
+      "modified": "2026-11-24T09:52:29.479Z"
     },
     "https://tractorvs.com/fr/tractors/agrale-4125-0b53e944/": {
       "digest": "3bcbceb3d1c5e97871150f836cdd2b2d3253d0f488218c5797d45a672df0955f",
@@ -4774,8 +4774,8 @@
       "modified": "2026-11-23T16:45:17.078Z"
     },
     "https://tractorvs.com/fr/tractors/zetor-forterra-140-0a900d97/": {
-      "digest": "db7d7019ad7c01c7e93816db9aa42d043ea4b721c271bb45b98651a3e85179d8",
-      "modified": "2026-11-23T19:24:17.522Z"
+      "digest": "791c196d9e132b8034780429f9cb4a1518c722072caee1fa0b31bfc94f7cbfe8",
+      "modified": "2026-11-24T09:52:29.479Z"
     },
     "https://tractorvs.com/fr/tractors/zetor-forterra-140-33bcf1bf/": {
       "digest": "7441cfd62aa59167a64276995dfb4b29efb9201189d6ad56f0e238a4174b414b",
@@ -4834,8 +4834,8 @@
       "modified": "2026-11-22T18:22:02.402Z"
     },
     "https://tractorvs.com/hi/compare/": {
-      "digest": "253dd6352c54b2eee2595dbbd102b92312052a85dffb146e69e3511f5298021b",
-      "modified": "2026-11-24T03:38:26.773Z"
+      "digest": "386569b9c7010e1bf6cff6aa05fc7be3f3d44e105f9e1c614267b3b10c9d1e18",
+      "modified": "2026-11-24T09:52:29.479Z"
     },
     "https://tractorvs.com/hi/farm-advisor/": {
       "digest": "1ba9f97eb20ee943ee82acc6f5955c6adf6b9125ea0b3bd4464b7441c9254609",
@@ -4854,8 +4854,8 @@
       "modified": "2026-11-22T15:13:41.997Z"
     },
     "https://tractorvs.com/hi/tractors/": {
-      "digest": "b4630fd9c45af0d5c29c1d8742cca13d40ebeac63c62a67432f2d57e0a91231e",
-      "modified": "2026-11-23T19:24:17.522Z"
+      "digest": "7fdd60e0b041057366b8cb82eaa48ce79959daf8f885327e758ab3e0ab30ad87",
+      "modified": "2026-11-24T09:52:29.479Z"
     },
     "https://tractorvs.com/hi/tractors/agrale-4125-0b53e944/": {
       "digest": "75346326d53a9e640a2b456b24a6b4156159d7198e4df82cc1d70ed0cd1ef0cb",
@@ -6386,8 +6386,8 @@
       "modified": "2026-11-23T16:45:17.078Z"
     },
     "https://tractorvs.com/hi/tractors/zetor-forterra-140-0a900d97/": {
-      "digest": "92c5f584985a1dd308577a568d0160ab0b4f680335fc2ef9fb635b55507a6207",
-      "modified": "2026-11-23T19:24:17.522Z"
+      "digest": "fa9dc26cc6d80fdac843f9e2d4b464c68b18837ef1748fc7e6fe226dfc024202",
+      "modified": "2026-11-24T09:52:29.479Z"
     },
     "https://tractorvs.com/hi/tractors/zetor-forterra-140-33bcf1bf/": {
       "digest": "5faa8eb25cde3e7bf9c2f43aae1c173702241eee0c422e78a870f920dae5012c",
@@ -6426,8 +6426,8 @@
       "modified": "2026-11-22T18:22:02.402Z"
     },
     "https://tractorvs.com/ja/compare/": {
-      "digest": "2eef14ccf7997f38d37b9ed5c9c58f000c9b40c37f846ac1a1daddd411466b9a",
-      "modified": "2026-11-24T03:38:26.773Z"
+      "digest": "3d3864d4c41d693121c19eba3413a5462a44a7f869a89c12d2e8743545b12e22",
+      "modified": "2026-11-24T09:52:29.479Z"
     },
     "https://tractorvs.com/ja/farm-advisor/": {
       "digest": "ca273475eb92f219fb70ee734e57eb99e8f5ccebf28dbc2bcd8a1d0a58017be5",
@@ -6446,8 +6446,8 @@
       "modified": "2026-11-22T15:13:41.997Z"
     },
     "https://tractorvs.com/ja/tractors/": {
-      "digest": "e111fdbf8132b18d37d7e29953a9f179d2f9037dbb7e034af50db3e486f0ae39",
-      "modified": "2026-11-23T19:24:17.522Z"
+      "digest": "429be119fa01d872a22e20dba89deddb3e8159caac2bc4ee9c475f3ba143ac7b",
+      "modified": "2026-11-24T09:52:29.479Z"
     },
     "https://tractorvs.com/ja/tractors/agrale-4125-0b53e944/": {
       "digest": "0c88bf6f38128e24c0876c63617a5bcd2fd11be3d275ff0c27a3cdc8fc2a203b",
@@ -7978,8 +7978,8 @@
       "modified": "2026-11-23T16:45:17.078Z"
     },
     "https://tractorvs.com/ja/tractors/zetor-forterra-140-0a900d97/": {
-      "digest": "b747ca1b95c780768debb2802a7a273a527b4e7a113c090b8d702826c63e184d",
-      "modified": "2026-11-23T19:24:17.522Z"
+      "digest": "ac4dffafd5b0b41895d68aa0d28165b5fcfe1ec2d014ab0b7f478d20b7c1b42a",
+      "modified": "2026-11-24T09:52:29.479Z"
     },
     "https://tractorvs.com/ja/tractors/zetor-forterra-140-33bcf1bf/": {
       "digest": "f41c8f577f13c016541d15508495754fef2694762fa4a7a9db371e4bb89327dd",
@@ -8026,8 +8026,8 @@
       "modified": "2026-11-22T18:22:02.402Z"
     },
     "https://tractorvs.com/pt-br/compare/": {
-      "digest": "084b4a85fb9144885f6378b643d290022d3d04bc62861438fe805d743caa4ab1",
-      "modified": "2026-11-24T03:38:26.773Z"
+      "digest": "8a119bac880162095da1607c279dabb7588a5d1babd31d32fdc1c3e272cd0450",
+      "modified": "2026-11-24T09:52:29.479Z"
     },
     "https://tractorvs.com/pt-br/farm-advisor/": {
       "digest": "94acdb5625b7a6922df8248609fb2d7281c7cc26c8942958474c70f60ca223dc",
@@ -8046,8 +8046,8 @@
       "modified": "2026-11-22T15:13:41.997Z"
     },
     "https://tractorvs.com/pt-br/tractors/": {
-      "digest": "f97ed77c01547b016e4c94b3507996d0a4c4b904ea87ead60d604af6cf986d0c",
-      "modified": "2026-11-23T19:24:17.522Z"
+      "digest": "186979bdfbf9495018fe03c041fc5f8238c6e14566b87333b94adfd3bb57b554",
+      "modified": "2026-11-24T09:52:29.479Z"
     },
     "https://tractorvs.com/pt-br/tractors/agrale-4125-0b53e944/": {
       "digest": "39ddf2d8809613a1896a7167099871530f3488f7449f813e9615e519022c8280",
@@ -9578,8 +9578,8 @@
       "modified": "2026-11-23T16:45:17.078Z"
     },
     "https://tractorvs.com/pt-br/tractors/zetor-forterra-140-0a900d97/": {
-      "digest": "122a734a29c8f3f11f8e71c540da1ea99da354102024073fbe86a36e5c5ef1de",
-      "modified": "2026-11-23T19:24:17.522Z"
+      "digest": "2c7dce544e8b849cbdba05d2c83d5a461891aaea7ba6ec4e1232f4c4775aff46",
+      "modified": "2026-11-24T09:52:29.479Z"
     },
     "https://tractorvs.com/pt-br/tractors/zetor-forterra-140-33bcf1bf/": {
       "digest": "d0449d3286c9dd75afbdd2416e0a35a3a1275bd7245b9a92ebfba3770be44b38",
@@ -9622,8 +9622,8 @@
       "modified": "2026-11-22T18:22:02.402Z"
     },
     "https://tractorvs.com/ru/compare/": {
-      "digest": "6349ada2d49255cd7bf6009f17d10fa2be352afc4aecf2f808591e077e321b50",
-      "modified": "2026-11-24T03:38:26.773Z"
+      "digest": "fd55df0ce89691c7de7b2beb12903f7f30a082b6775194388edb37c9bc81eb0f",
+      "modified": "2026-11-24T09:52:29.479Z"
     },
     "https://tractorvs.com/ru/farm-advisor/": {
       "digest": "ca035566159336e2b3dd64e8d95d14e651a241db66e175d30a6ef7b8167ecb86",
@@ -9642,8 +9642,8 @@
       "modified": "2026-11-22T15:13:41.997Z"
     },
     "https://tractorvs.com/ru/tractors/": {
-      "digest": "33b8d34ceea5519871868b40a3d14c34f585dd126c969536b88955b5931fb0c7",
-      "modified": "2026-11-23T19:24:17.522Z"
+      "digest": "112c07ec639f4a13bd9036413e164d64e5c6a7cd584486005352b4f488d48822",
+      "modified": "2026-11-24T09:52:29.479Z"
     },
     "https://tractorvs.com/ru/tractors/agrale-4125-0b53e944/": {
       "digest": "8837916d5dd4a853594599399ac8f59b1f2219b4cb0dd78d6fe959e272449067",
@@ -11174,8 +11174,8 @@
       "modified": "2026-11-23T16:45:17.078Z"
     },
     "https://tractorvs.com/ru/tractors/zetor-forterra-140-0a900d97/": {
-      "digest": "4e539f4a74f746c8e0978d8163ac7ba6c193b2e023aabe84a15898efb52c9212",
-      "modified": "2026-11-23T19:24:17.522Z"
+      "digest": "ea3ebf9b32de8a3c4f5af33d8d1dd4eae07ea7225ebe4d87cc893736289e3623",
+      "modified": "2026-11-24T09:52:29.479Z"
     },
     "https://tractorvs.com/ru/tractors/zetor-forterra-140-33bcf1bf/": {
       "digest": "f5e1d2a790f31dfc1a5a804439c70983dd77f350fb77cb846f94c14c1b931459",
@@ -11222,8 +11222,8 @@
       "modified": "2026-11-22T08:02:35.845Z"
     },
     "https://tractorvs.com/tr/compare/": {
-      "digest": "a69c2671792e5257a2f43f72762871972dd6aaa8279df401d3299274de40f65e",
-      "modified": "2026-11-24T03:38:26.773Z"
+      "digest": "8b3b3047204f160c4f06311eaf44247fb2e10f4e46e0d03114b8fc53bf04fd6c",
+      "modified": "2026-11-24T09:52:29.479Z"
     },
     "https://tractorvs.com/tr/compare/deutz-fahr-5090-d-gs-vs-5100-d-gs/": {
       "digest": "0f223596935ecf9cf2a0972e5fd862ac566c38ba2f83123a156634df383d9733",
@@ -11266,8 +11266,8 @@
       "modified": "2026-11-22T15:13:41.997Z"
     },
     "https://tractorvs.com/tr/tractors/": {
-      "digest": "3f4fa43dd1548c27c93641edb9c4356343d2990ee3a90c39220aac3279e4cd97",
-      "modified": "2026-11-23T19:24:17.522Z"
+      "digest": "2000c95cb009c4e50e93af1644a63e3121a2338e4a88722a58c136eb3ea504f5",
+      "modified": "2026-11-24T09:52:29.479Z"
     },
     "https://tractorvs.com/tr/tractors/agrale-4125-0b53e944/": {
       "digest": "cbfb1b094b1f29a6b421188c362c4724ea5af2560d61a704d8fe0b1596b1b3d8",
@@ -12798,8 +12798,8 @@
       "modified": "2026-11-23T16:45:17.078Z"
     },
     "https://tractorvs.com/tr/tractors/zetor-forterra-140-0a900d97/": {
-      "digest": "3201e75e0a2f5356d2937ee0b59853a586aeb74f514933f763fbe0d93f3ebd62",
-      "modified": "2026-11-23T19:24:17.522Z"
+      "digest": "f7df012e78a918acd0b9b7535fb8b558ae74b79ba79d3e63dc9294220cc9d700",
+      "modified": "2026-11-24T09:52:29.479Z"
     },
     "https://tractorvs.com/tr/tractors/zetor-forterra-140-33bcf1bf/": {
       "digest": "7a928eab426754b60292dd5a57ea8f43d7a680b7e83d5b0007cba76b3a78fc4e",
@@ -12830,8 +12830,8 @@
       "modified": "2026-11-23T16:45:17.078Z"
     },
     "https://tractorvs.com/tractors/": {
-      "digest": "1d34c13ce3520d614381a05c0213946f7b70069199bbb66d78f75eed5af583c6",
-      "modified": "2026-11-23T19:24:17.522Z"
+      "digest": "a448f1602338adb344d6b8ed49fc6f33994a55c84730f18af4439ae351243118",
+      "modified": "2026-11-24T09:52:29.479Z"
     },
     "https://tractorvs.com/tractors/agrale-4125-0b53e944/": {
       "digest": "41798f99d5c960a94a56bd2e388c2dc375f095243fcad91abc215ad0c7cf129f",
@@ -14362,8 +14362,8 @@
       "modified": "2026-11-23T16:45:17.078Z"
     },
     "https://tractorvs.com/tractors/zetor-forterra-140-0a900d97/": {
-      "digest": "7eeb43eb05ff72004e791988cf4a5f0d95cbae653953ca1103fa347064dede56",
-      "modified": "2026-11-23T19:24:17.522Z"
+      "digest": "f669ea5d38c39e813290071282b1f5ffc3a028d663a6cfbe0e4e00b3b4737dee",
+      "modified": "2026-11-24T09:52:29.479Z"
     },
     "https://tractorvs.com/tractors/zetor-forterra-140-33bcf1bf/": {
       "digest": "2fd3f50e126e8e8e6d5b95a796ba1f8662dad6e1084611edd81684a6380d0643",
@@ -14402,8 +14402,8 @@
       "modified": "2026-11-22T18:22:02.402Z"
     },
     "https://tractorvs.com/zh/compare/": {
-      "digest": "43cdb82ca676702f9ddd35488bce5225961752f1ca34503ce9e2fbfd400da2f7",
-      "modified": "2026-11-24T03:38:26.773Z"
+      "digest": "23051045be59c1d6441eb4f782feb7aea7599e9687f8e3eff7da26774d6521f7",
+      "modified": "2026-11-24T09:52:29.479Z"
     },
     "https://tractorvs.com/zh/farm-advisor/": {
       "digest": "6cf21bb0f484695d9f37755093e5bf886b5888cf2035261cc9fabf6509e5501c",
@@ -14422,8 +14422,8 @@
       "modified": "2026-11-22T15:13:41.997Z"
     },
     "https://tractorvs.com/zh/tractors/": {
-      "digest": "d2d0f75c974c766abf8cb6d9bd225953386fde327cdb6d75ace6f57d76bf3aad",
-      "modified": "2026-11-23T19:24:17.522Z"
+      "digest": "a4dd74e999f8440f4786d5f64b87ca634b102120a1f0f62672281aa4a8bc216c",
+      "modified": "2026-11-24T09:52:29.479Z"
     },
     "https://tractorvs.com/zh/tractors/agrale-4125-0b53e944/": {
       "digest": "93b4acea96bd80e4ef36062b558ec4e05b36d3ed91d72a9ed60ab2f4b9811269",
@@ -15954,8 +15954,8 @@
       "modified": "2026-11-23T16:45:17.078Z"
     },
     "https://tractorvs.com/zh/tractors/zetor-forterra-140-0a900d97/": {
-      "digest": "98550e6719f2a03bbe3a7022a9f693aeabb8f7fed4bd553315def3c186760f11",
-      "modified": "2026-11-23T19:24:17.522Z"
+      "digest": "ddddfb6dc18cb37d545a0bb306acc6356049b34a3675159b6ff0215d9fb84603",
+      "modified": "2026-11-24T09:52:29.479Z"
     },
     "https://tractorvs.com/zh/tractors/zetor-forterra-140-33bcf1bf/": {
       "digest": "d8d99d5834153c9d1a747f0418a3e285935c06a371ddb97fbbd4941ed04f7991",
