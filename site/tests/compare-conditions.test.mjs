@@ -190,7 +190,9 @@ test("live comparison locale links keep the latest selected IDs without modifyin
   assert.match(layout,/data-language-sync="selection"/);
   assert.match(layout,/window\.addEventListener\("tractorvs:route-state-changed", syncLanguageLinks\)/);
   assert.match(layout,/destination\.search = window\.location\.search/);
-  assert.match(layout,/link\.href = destination\.pathname \+ destination\.search/);
+  assert.match(layout,/const next = destination\.pathname \+ destination\.search/);
+  assert.match(layout,/if \(link\.getAttribute\("href"\) !== next\) link\.href = next/);
+  assert.match(layout,/if \(lastSyncedSearch === window\.location\.search\) return/);
   assert.match(layout,/link\.addEventListener\(eventName, syncLanguageLinks\)/);
   assert.match(compare,/window\.history\.replaceState\(null,"",url\.pathname\+url\.search\)/);
   assert.match(compare,/window\.dispatchEvent\(new Event\("tractorvs:route-state-changed"\)\)/);
