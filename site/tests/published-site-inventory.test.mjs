@@ -3,7 +3,7 @@ import assert from "node:assert/strict";
 import {mkdtempSync,mkdirSync,writeFileSync,unlinkSync,rmSync} from "node:fs";
 import {tmpdir} from "node:os";
 import {join,dirname} from "node:path";
-import {safePublishedModelFloor,verifyPublishedSiteInventory,PUBLIC_LOCALES,PUBLIC_LOCALE_TAGS} from "../scripts/verify-published-site-inventory.mjs";
+import {safePublishedModelFloor,verifyPublishedSiteInventory,PUBLIC_LOCALES,PUBLIC_LOCALE_TAGS,inspectLocaleAnnotations,verifyModelDiscoveryMarkup} from "../scripts/verify-published-site-inventory.mjs";
 
 const snapshot={
  source:"anon_public_view",published_models:2,public_rows:6,fingerprint:"a".repeat(64)
@@ -96,4 +96,32 @@ test("published inventory rejects a missing catalogue link or reciprocal hreflan
   assert.throws(()=>verifyPublishedSiteInventory({projectRoot:root,configuredMinimum:1}),
    /Missing reciprocal hreflang de/);
  }finally{rmSync(root,{recursive:true,force:true});}
+});
+
+
+test("locale audit catches duplicate case-insensitive hreflang and conflicting canonical annotations",()=>{
+ const links=[
+  '<link rel="canonical" href="https://tractorvs.com/tractors/a/">',
+  '<link rel="alternate" hreflang="pt-BR" href="https://tractorvs.com/pt-br/tractors/a/">',
+  '<link rel="alternate" hreflang="PT-br" href="https://tractorvs.com/pt-br/tractors/b/">',
+  '<link rel="alternate" hreflang="de" href="https://tractorvs.com/de/tractors/a/" media="screen">',
+  '<link rel="alternate" hreflang="xx" href="https://tractorvs.com/xx/tractors/a/">',
+  '<link rel="alternate" type="application/rss+xml" href="/feed.xml">',
+ ];
+ const result=inspectLocaleAnnotations(links);
+ assert.equal(result.canonical.length,1);
+ assert.deepEqual(result.errors,["Duplicate hreflang pt-br","Mixed hreflang representation de","Unexpected hreflang xx"]);
+ assert.equal(inspectLocaleAnnotations([links[0],links[1],links[5]]).errors.length,0);
+});
+
+test("published model head rejects conflicting or hidden annotations instead of matching HTML substrings",()=>{
+ const html=modelHtml("tr","tractor-a");
+ const options={slug:"tractor-a",locale:"tr",catalogLinks:new Set(["/tr/tractors/tractor-a/"])};
+ const add=link=>html.replace("</head>",link+"</head>");
+ assert.equal(verifyModelDiscoveryMarkup({...options,html}),true);
+ assert.throws(()=>verifyModelDiscoveryMarkup({...options,html:add('<link rel="alternate" hreflang="DE" href="https://tractorvs.com/de/tractors/tractor-b/">')}),/Duplicate hreflang de/);
+ assert.throws(()=>verifyModelDiscoveryMarkup({...options,html:add('<link rel="canonical" href="https://tractorvs.com/tractors/tractor-b/">')}),/duplicate or wrong model canonical/);
+ const comment=html.replace(/<link rel="alternate" hreflang="de"[^>]+>/,tag=>"<!--"+tag+"-->");
+ assert.throws(()=>verifyModelDiscoveryMarkup({...options,html:comment}),/Missing reciprocal hreflang de/);
+ assert.equal(verifyModelDiscoveryMarkup({...options,html:html.replace('hreflang="pt-BR"','hreflang="PT-br"')}),true);
 });
