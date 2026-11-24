@@ -19,9 +19,13 @@ jobs:
           run-id: 45422737022
           github-token: ${{ github.token }}
           path: recovered
+      - name: Prepare isolated image processing environment
+        run: |
+          python -m venv /tmp/tractorvs-photo-venv
+          /tmp/tractorvs-photo-venv/bin/pip install --disable-pip-version-check Pillow==12.0.0
       - name: Validate and encode only the reviewed public CC BY-SA MF original
         run: |
-          python - <<'PY'
+          /tmp/tractorvs-photo-venv/bin/python - <<'PY'
           import pathlib, hashlib, base64, json
           from PIL import Image
           files=list(pathlib.Path('recovered').rglob('candidate-4.jpg'))
