@@ -11,7 +11,8 @@ export function discussionLink(canonical,id=""){
 export function replyMatches(text,query,locale){
  const normalized=(value)=>String(value??"").normalize("NFKC").toLocaleLowerCase(locale).replace(/\s+/gu," ").trim();
  const search=normalized(query).slice(0,160);
- return !search||search.split(" ").every(term=>normalized(text).includes(term));
+ const haystack=normalized(text);
+ return !search||search.split(" ").every(term=>haystack.includes(term));
 }
 export function appendReplyQuote(draft,body,url,maxLength){
  const text=String(body??"").replace(/\s+/gu," ").trim();
