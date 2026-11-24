@@ -157,7 +157,7 @@ const schema={
         {id:"review-references-heading",label:localized?.sourceTitle ?? (tr?"Kaynak tablosu":"Source register")}
       ]}/>
       <section class="review-facts" aria-labelledby="facts-heading">
-        <h2 id="facts-heading">{localized?.figures ?? (tr?"Üretici belgesindeki teknik veriler":"Figures in the manufacturer's specification")}</h2>
+        <h2 id="facts-heading" tabindex="-1">{localized?.figures ?? (tr?"Üretici belgesindeki teknik veriler":"Figures in the manufacturer's specification")}</h2>
         <div class="review-table-scroll" role="region" tabindex="0" aria-labelledby="facts-heading"><table>
           <thead><tr><th scope="col">{localized?.label ?? (tr?"Ölçüm / özellik":"Measurement / specification")}</th>
             <th scope="col">{localized?.value ?? (tr?"Üretici değeri":"Manufacturer's figure")}</th></tr></thead>
@@ -173,7 +173,7 @@ const schema={
           {localized?.variantNote ?? (tr?"Değerler model yılı, pazar veya opsiyonlara göre değişebilir.":"Actual equipment may differ by year, market and options.")}</p>
       </section>
       <section class="review-variant-comparison" aria-labelledby="basak-bk-bt-comparison-title">
-        <h2 id="basak-bk-bt-comparison-title">{variantCopy.heading}</h2>
+        <h2 id="basak-bk-bt-comparison-title" tabindex="-1">{variantCopy.heading}</h2>
         <p class="review-comparison-intro">{variantCopy.lead}</p>
         <table>
           <caption class="review-comparison-caption">{variantCopy.checked}</caption>
@@ -197,12 +197,12 @@ const schema={
         </p>
         {publicBtModel && <p class="review-bt-model-link"><a href={localizedPath(lang,"/tractors/"+publicBtModel.slug+"/")}>{variantCopy.viewBt} ↗</a></p>}
       </section>
-      {sections.map((section,index)=><section class="review-prose" id={"review-section-"+(index+1)}>
+      {sections.map((section,index)=><section class="review-prose" id={"review-section-"+(index+1)} tabindex="-1">
         <h2>{section.h}</h2>
         {section.p.map(text=><p>{text}</p>)}
       </section>)}
       <section class="review-references" aria-labelledby="review-references-heading">
-        <h2 id="review-references-heading">{localized?.sourceTitle ?? (tr?"Kaynak tablosu":"Source register")}</h2>
+        <h2 id="review-references-heading" tabindex="-1">{localized?.sourceTitle ?? (tr?"Kaynak tablosu":"Source register")}</h2>
         <p>{localized?.sourceIntro ?? (tr?"Yalnızca üreticinin kendi kaynakları. Erişim/denetim tarihi: 19 Kasım 2026.":"Original manufacturer sources only. Checked 19 November 2026.")}</p>
         <ul>{references.map(item=><li><a href={item.url} target="_blank" rel="noopener noreferrer">{item.name}</a></li>)}</ul>
       </section>
