@@ -579,7 +579,7 @@ for(const widget of widgets){
     const input=postForm.elements.namedItem(name);
     if(input && "value" in input && typeof draft[name]==="string")input.value=draft[name];
    }
-   updateBodyLength();
+   updateBodyLength();editor?.refresh();
    msg(copy.draftRestored);
   }catch{}
  }
@@ -973,7 +973,7 @@ for(const widget of widgets){
   if(editor&&!editor.valid())return;
   for(const field of postForm.querySelectorAll<HTMLInputElement|HTMLTextAreaElement>('input[name="title"],textarea[name="body"]')){
    field.value=field.value.trim();
-   const count=Array.from(field.value).length;
+   const count=field.value.length;
    if(count<field.minLength||count>field.maxLength){
     field.focus();
     msg(field.labels?.[0]?.textContent?.trim()+" ("+field.minLength+"–"+field.maxLength+")");
