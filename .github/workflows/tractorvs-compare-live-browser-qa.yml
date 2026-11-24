@@ -27,8 +27,11 @@ permissions:
   contents: read
 
 concurrency:
-  group: tractorvs-live-compare-qa
-  cancel-in-progress: false
+  # Isolate production pushes from read-only PR checks and scheduled QA.
+  # A newer production push supersedes an older run against stale content;
+  # this never cancels CI jobs in other workflows.
+  group: tractorvs-live-compare-qa-${{ github.event_name }}
+  cancel-in-progress: ${{ github.event_name == 'push' }}
 
 jobs:
   production-browser:
