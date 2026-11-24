@@ -2,6 +2,36 @@
 // Shared by the private Supabase worker and Node's unit tests.
 export const MAX_PER_RUN=3;
 
+export const MAX_DRAFT_SCAN=499;
+export const SPEC_LINK_PAGE_SIZE=500;
+export const MAX_SPEC_LINKS=12000;
+
+// Rank unique document-to-draft associations, not repeated spec rows.
+// Only already allowlisted private candidates reach this function.
+export function selectBulkOemSources(candidates,cacheMap,now,max=MAX_PER_RUN){
+ if(!Array.isArray(candidates)||!(cacheMap instanceof Map)||!Number.isFinite(now)
+    ||!Number.isInteger(max)||max<1||max>MAX_PER_RUN)throw Error("invalid_source_selection");
+ const remaining=candidates.filter(item=>{
+  const cached=cacheMap.get(item.source_url);
+  return !cached||!cached.next_check_at||Date.parse(cached.next_check_at)<=now;
+ });
+ const ranked=remaining.slice().sort((a,b)=>{
+  const freshA=Number(!cacheMap.has(a.source_url)),freshB=Number(!cacheMap.has(b.source_url));
+  return freshB-freshA ||
+   new Set(b.associated_draft_ids).size-new Set(a.associated_draft_ids).size ||
+   a.source_url.localeCompare(b.source_url,"en");
+ });
+ const picked=[],hosts=new Set(),brands=new Set();
+ for(const item of ranked){
+  if(picked.length>=max)break;
+  const host=item.source_host.replace(/^www\./,"");
+  if(hosts.has(host)||brands.has(item.brand))continue;
+  hosts.add(host);brands.add(item.brand);picked.push(item);
+ }
+ return {picked,remaining:remaining.length};
+}
+
+
 const SAFE_QUERY_STAGES=new Set(["queue_read","draft_read","brand_read","spec_read","source_read","cache_read","cache_write"]);
 // Only fixed stage names, HTTP status and a conservative SQL/PostgREST code
 // may reach CI logs. NEVER print exception messages, URLs, UUIDs or headers.
@@ -46,7 +76,14 @@ export const OEM_HOSTS=Object.freeze({
  "Steyr":["www.steyr-traktoren.com"],
  "Swaraj":["www.swarajtractors.com"],
  "Versatile":["www.versatile-ag.com"],
- "Zetor":["www.zetor.com"]
+ "Zetor":["www.zetor.com"],
+ // Exact brand domains reviewed against current manufacturer / authorized
+ // national product catalogues on 2026-11-24. Transport only, not auto approval.
+ "Tümosan":["tumosan.com.tr","www.tumosan.com.tr"],
+ "Erkunt":["erkunttraktor.com.tr","www.erkunttraktor.com.tr"],
+ "Hattat":["hattattraktor.com.tr","www.hattattraktor.com.tr"],
+ "Bobcat":["www.bobcat.com"],
+ "Solis":["www.solisturkiye.com"]
 });
 const clean=x=>String(x??"").normalize("NFKC").trim();
 export function allowedOemUrl(raw,brand){
