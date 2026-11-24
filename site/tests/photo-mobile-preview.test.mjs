@@ -1,16 +1,20 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import {readFileSync} from "node:fs";
-import {EXPECTED_ORIGIN,previewCandidates,verifyPreviewAssets} from "../scripts/verify-mobile-preview-assets.mjs";
+import {previewOriginFromComments,hasPreviewRelease,previewCandidates,verifyPreviewAssets} from "../scripts/verify-mobile-preview-assets.mjs";
 
-test("only six SHA-pinned CC review photo URLs can be checked on fixed PR preview",()=>{
+const ORIGIN="https://test-preview-tractorvs-site.onuronkol2.workers.dev";
+const HEAD="a".repeat(40);
+const cloudflareComment=(origin=ORIGIN,commit=HEAD.slice(0,7))=>({user:{login:"cloudflare-workers-and-pages[bot]"},body:"### Preview URL: "+origin+" (commit "+commit+")\n###### This URL reflects your latest Preview deployment"});
+
+test("only six SHA-pinned CC review photo URLs can be checked on a verified PR preview",()=>{
  const assets=previewCandidates();
  assert.equal(assets.length,6);
  assert.equal(assets.filter(x=>x.mime==="image/webp").length,3);
  assert.equal(assets.filter(x=>x.mime==="image/jpeg").length,3);
  assert.ok(assets.every(x=>x.urlPath.startsWith("/images/tractors/")&&
    x.urlPath.includes("-720.")&&x.sha256.length===64));
- assert.match(EXPECTED_ORIGIN,/\.onuronkol2\.workers\.dev$/);
+ assert.equal(previewOriginFromComments([cloudflareComment()],HEAD),ORIGIN);
  assert.throws(()=>previewCandidates({records:[]}),/Invalid reviewed/);
 });
 test("preview client checks actual bytes, size and MIME rather than trusting HTTP 200",async()=>{
@@ -22,7 +26,7 @@ test("preview client checks actual bytes, size and MIME rather than trusting HTT
    const mime=path.endsWith(".webp")?"image/webp":"image/jpeg";
    return new Response(data,{status:200,headers:{"Content-Type":mime}});
  };
- const verified=await verifyPreviewAssets({fetchFn});
+ const verified=await verifyPreviewAssets({origin:ORIGIN,fetchFn});
  assert.equal(verified.length,6);
  assert.equal(calls.length,6);
  assert.ok(calls.every(x=>x.opts.redirect==="error"));
@@ -30,10 +34,30 @@ test("preview client checks actual bytes, size and MIME rather than trusting HTT
    origin:"https://tractorvs.com",
    fetchFn
  }),/No cross-domain or production/);
- await assert.rejects(verifyPreviewAssets({fetchFn:async()=>new Response(
+ await assert.rejects(verifyPreviewAssets({origin:ORIGIN,fetchFn:async()=>new Response(
    "<html>not an image</html>",{status:200,headers:{"Content-Type":"text/html"}}
  )}),/MIME mismatch/);
- await assert.rejects(verifyPreviewAssets({fetchFn:async()=>new Response(
+ await assert.rejects(verifyPreviewAssets({origin:ORIGIN,fetchFn:async()=>new Response(
    Buffer.from("fake-data"),{status:200,headers:{"Content-Type":"image/webp"}}
  )}),/MIME mismatch|SHA\/size mismatch/);
+});
+
+test("resolve only the current commit from the Cloudflare bot and the allowed preview host",()=>{
+ assert.equal(previewOriginFromComments([cloudflareComment()],HEAD),ORIGIN);
+ assert.equal(previewOriginFromComments([cloudflareComment(ORIGIN,"bbbbbbb")],HEAD),null);
+ assert.equal(previewOriginFromComments([cloudflareComment("https://tractorvs.com")],HEAD),null);
+ assert.equal(previewOriginFromComments([cloudflareComment("https://test-preview-tractorvs-site.onuronkol2.workers.dev.evil.example")],HEAD),null);
+ assert.equal(previewOriginFromComments([{...cloudflareComment(),user:{login:"untrusted"}}],HEAD),null);
+ assert.throws(()=>previewOriginFromComments([cloudflareComment()],"aaaaaaa"),/full PR head SHA/);
+ assert.equal(hasPreviewRelease('<head><meta name="tractorvs-release-sha" content="'+HEAD+'"></head>',HEAD),true);
+ assert.equal(hasPreviewRelease('<meta name="tractorvs-release-sha" content="'+"b".repeat(40)+'">',HEAD),false);
+ assert.equal(hasPreviewRelease('<meta name="tractorvs-release-sha" content="aaaaaaa">',HEAD),false);
+});
+test("preview asset verification rejects production and unrelated workers before any request",async()=>{
+ let count=0;
+ const fetchFn=async()=>{count++;throw Error("Unexpected request");};
+ for(const origin of [undefined,"https://tractorvs.com","https://tractorvs-site.onuronkol2.workers.dev","https://unrelated.onuronkol2.workers.dev",ORIGIN+"/"]){
+  await assert.rejects(verifyPreviewAssets({origin,fetchFn}),/No cross-domain or production/);
+ }
+ assert.equal(count,0);
 });
