@@ -14,7 +14,9 @@ test("empty category keeps user choice while surfacing a deliberate show-all act
  assert.match(hub,/view==="latest"&&canList&&hasTopics&&count===0&&allFiltered/);
  assert.match(hub,/emptyReset\?\.addEventListener\("click"/);
  assert.match(hub,/view="latest";\s*resetFilters\(\)/);
- assert.match(hub,/selected="all";\s*markCategories\(\);filter\(\);input\?\.focus\(\)/);
+ assert.match(hub,/selected="all";\s*filter\(\);input\?\.focus\(\)/);
+ const filterBody=hub.slice(hub.indexOf(" const filter=()=>{"),hub.indexOf(" async function loadFollowing"));
+ assert.match(filterBody,/markCategories\(\);/,"Filter refresh must also restore the active category controls");
  assert.match(hub,/data-forum-rail-category/);
  assert.match(hub,/data-forum-category/);
  assert.match(hub,/data-forum-tag-category/);

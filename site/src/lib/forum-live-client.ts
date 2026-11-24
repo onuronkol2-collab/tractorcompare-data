@@ -87,6 +87,9 @@ export function initForumLive(root:HTMLElement):void{
  // This preserves existing offline sign-in/posting tests with strict API mocks.
  if(cfg.key==="inert-browser-fixture"&&!new URLSearchParams(location.search).has("live-forum-test"))return;
  const text=FORUM_LIVE_TEXT[cfg.lang];
+ const dateFormatter=new Intl.DateTimeFormat(cfg.lang==="zh"?"zh-CN":cfg.lang==="pt-br"?"pt-BR":cfg.lang,{
+  year:"numeric",month:"short",day:"numeric",timeZone:"UTC"
+ });
  let call=0;
  async function refresh(showPending=false){
   const current=++call;
@@ -106,29 +109,30 @@ export function initForumLive(root:HTMLElement):void{
    if(!Array.isArray(raw))throw Error("Invalid public forum response");
    if(current!==call)return;
    const staticIds=new Set([...document.querySelectorAll<HTMLElement>("[data-forum-topic][data-forum-topic-id]")]
+    .filter(el=>!grid.contains(el)) // previously fetched live cards are not server-rendered duplicates
     .map(el=>el.dataset.forumTopicId||""));
    const approved=(raw as PubRow[]).filter(row=>safeRow(row,cfg!.lang) && !staticIds.has(row.topic_id));
    const byId=new Map<string,PubRow>();
    for(const row of approved)if(!byId.has(row.topic_id))byId.set(row.topic_id,row);
-   grid.replaceChildren();
+   const fragment=document.createDocumentFragment();
    for(const row of byId.values()){
     const article=make("article");article.className="community-topic forum-live-topic";
     article.dataset.forumTopic="";article.dataset.forumTopicId=row.topic_id;
     article.dataset.forumTopicCategory=row.category;
+    article.dataset.forumPublishedAt=row.created_at;
     article.dataset.forumSearch=forumSearchText(row.title+" "+row.body,cfg!.lang);
     const meta=make("p");meta.className="forum-live-meta";
     const time=make("time");time.dateTime=row.created_at;
-    time.textContent=new Intl.DateTimeFormat(cfg!.lang==="zh"?"zh-CN":cfg!.lang==="pt-br"?"pt-BR":cfg!.lang,{
-     year:"numeric",month:"short",day:"numeric",timeZone:"UTC"
-    }).format(new Date(row.created_at));meta.append(time);
+    time.textContent=dateFormatter.format(new Date(row.created_at));meta.append(time);
     const title=make("h3");title.textContent=row.title;
     const excerpt=make("p");excerpt.textContent=forumSeoDescription(row.body,230);
     const details=make("details"),summary=make("summary");summary.textContent=text.read;
     const note=make("p");note.className="forum-live-note";note.textContent=text.summary;
     const body=make("div");body.className="forum-live-body";richBody(row.body,body);
     details.append(summary,note,body);
-    article.append(meta,title,excerpt,details);grid.append(article);
+    article.append(meta,title,excerpt,details);fragment.append(article);
    }
+   grid.replaceChildren(fragment);
    const hasNew=byId.size>0;
    heading.hidden=!hasNew;grid.hidden=!hasNew;root.hidden=!hasNew;
    status.textContent="";
