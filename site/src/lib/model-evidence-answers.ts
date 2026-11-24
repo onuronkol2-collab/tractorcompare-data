@@ -162,7 +162,7 @@ const text={
  }
 } as const;
 function formatNumber(value:number,lang:AnswerLanguage){
- return new Intl.NumberFormat(LOCALE_TAGS[lang],{maximumFractionDigits:2}).format(value);
+ return new Intl.NumberFormat(lang==="tr"?"tr-TR":lang==="en"?"en-US":LOCALE_TAGS[lang],{maximumFractionDigits:2}).format(value);
 }
 function safeStandard(s:string|null):string {
  // Include concise, printable test context only. Never turn large database notes
@@ -175,7 +175,7 @@ export function modelEvidenceAnswers(tractor:Pick<TractorRecord,"brand_name"|"mo
  const variant=tractor.variant?.trim();
  // Preserve short, actual variant identities such as GEAR vs HST; long
  // source/marketing notes remain in the original visible record and source.
- const name=variant&&variant.length<=24&&!/[<>\r\n]/.test(variant)&&!baseName.toLowerCase().includes(variant.toLowerCase())?baseName+" ("+variant+")":baseName;
+ const name=lang!=="en"&&lang!=="tr"&&variant&&variant.length<=24&&!/[<>\r\n]/.test(variant)&&!baseName.toLowerCase().includes(variant.toLowerCase())?baseName+" ("+variant+")":baseName;
  const answers:EvidenceAnswer[]=[];
  for(const field of fields){
   const found=selectUnambiguous(tractor.specifications,field,tractor.brand_name);

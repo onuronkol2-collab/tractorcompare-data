@@ -128,7 +128,7 @@ const summaryItems = [
           {item.guidePath&&<a href={localizedPath(lang,item.guidePath)}>{answerCopy.explain} ↗</a>}
         </div>
       </article>)}</div>
-      <p class="model-answer-method"><a href={localizedPath(answerMethodLocale,"/methodology/")} hreflang={answerMethodLocale}>{answerCopy.method} ↗</a></p>
+      <p class="model-answer-method"><a href={localizedPath(answerMethodLocale,"/methodology/")} hreflang={lang==="en"||lang==="tr"?undefined:answerMethodLocale}>{answerCopy.method} ↗</a></p>
     </section>}
     <a class="model-forum-discussion"
       href={localizedPath(lang,"/forum/")+"?tractor="+encodeURIComponent(tractor.tractor_id)}>

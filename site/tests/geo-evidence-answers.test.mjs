@@ -93,7 +93,7 @@ test("visible model answers and public sources are part of server-rendered HTML 
  assert.match(html,/href=\{item\.sourceUrl\}/);
  assert.match(html,/const answerItems=modelEvidenceAnswers\(safeEvidenceTractor,lang\)/);
  assert.match(html,/localizedPath\(answerMethodLocale,"\/methodology\/"\)/);
- assert.match(html,/hreflang=\{answerMethodLocale\}/);
+ assert.match(html,/hreflang=\{lang==="en"\|\|lang==="tr"\?undefined:answerMethodLocale\}/);
  assert.doesNotMatch(html,/\"@type\":\"FAQPage\"/);
 });
 
@@ -223,4 +223,18 @@ test("search-demand pilot: Swaraj 735 FE Hindi answer uses verified lift, wheelb
 test("all locales keep the existing fail-closed evidence gate",()=>{
  const model={...base,specifications:[spec("engine_rated_power","114","hp"),spec("engine_rated_power","115","hp"),spec("fuel_tank_capacity","150","L",{verified_at:null}),spec("rear_lift_capacity","5000","kgf"),spec("engine_displacement","3600","cc"),spec("wheelbase_mm","2355","mm",{source_url:"https://unreviewed.example/model"})]};
  for(const locale of LOCALES)assert.deepEqual(modelEvidenceAnswers(model,locale),[],locale);
+});
+
+test("English and Turkish legacy answer text, formatting and guide links stay unchanged",()=>{
+ const model={...base,variant:"4WD",specifications:[
+  spec("engine_rated_power","114","hp",{rated_rpm:2200,measurement_standard:"ECE R120"}),
+  spec("wheelbase_mm","2355","mm")
+ ]};
+ for(const locale of ["en","tr"]){
+  const answers=modelEvidenceAnswers(model,locale);
+  assert.deepEqual(answers,modelEvidenceAnswers({...model,variant:null},locale));
+  assert.equal(answers[0].guidePath,"/guides/tractor-engine-power-and-torque/");
+  assert.equal(answers[0].measurementNote,locale==="en"?"2,200 rpm":"2.200 dev/dk");
+  assert.match(answers[0].answer,/ECE R120/);
+ }
 });

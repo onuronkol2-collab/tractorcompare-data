@@ -10,3 +10,6 @@ Translate actual questions, answers and provenance labels to eight additional lo
 
 ## Acceptance
 Existing geo-evidence tests plus ten-locale parity, exact-source LS and Swaraj fixtures, missing evidence and conflicting values. Preview/live verification should confirm visible localized questions and original source links on the actual German and Hindi routes after deployment. Unit fixtures are not live deployment proof. Recheck Search Console query/page metrics on a comparable later period; no ranking or indexing guarantee. Rollback by reverting this PR only.
+
+## Follow-up: preserve existing EN/TR HTML
+The first preview correctly rejected 3,540 significant changes (354 per language), including avoidable EN/TR edits. Preserve existing EN/TR number format, names and methodology link attributes. Variant qualifiers are limited to the eight new languages in this release. The expected upper bound for new-language pages is 8 × 390 = 3,120 of 3,996 existing HTML pages; actual changed count must come from the production-catalog preview. The 85% guard remains entirely unchanged. Re-run all gates on the updated branch, including the new parallel browser test workflow from main. If the preview still rejects, investigate actual render differences rather than bypassing the guard.
