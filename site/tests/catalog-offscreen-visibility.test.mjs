@@ -24,7 +24,7 @@ test("every published card remains server-rendered, crawlable, searchable and co
  assert.match(component,/id=\{firstBrandCard\.get/);
  assert.match(component,/data-catalog-brand-jump/);
  assert.match(component,/form="catalog-compare"/);
- assert.match(component,/<TractorPhoto tractor=\{tractor\} lang=\{lang\} mode="catalog" sprite \/>/);
+ assert.match(component,/<TractorPhoto tractor=\{tractor\} lang=\{lang\} mode="catalog" sprite slotSizes="auto, [^"]+" \/>/);
  assert.match(photo,/loading=\{mode==="hero"&&index===0\?"eager":"lazy"\}/);
 });
 
