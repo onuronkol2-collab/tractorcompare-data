@@ -145,4 +145,30 @@ for(const region of ["western","eastern"]){
  }
 }
 assert.deepEqual([...glossaryLocales].sort(),[...locales].sort());
-console.log(JSON.stringify({draftTranslations:count,bodyParagraphs:paragraphs,uiLabels,glossaryEntries,glossaryFields,structuralChecks:"passed",independentReview:"pending",publicationApproved:false}));
+// The remaining name-only batch must be the exact complement of the core.
+const remaining=JSON.parse(read("docs/translation-review/glossary-remaining-bulk-draft.json"));
+assert.equal(remaining.state,"draft-needs-independent-editorial-review");
+assert.equal(remaining.reviewed,false);
+assert.equal(remaining.notForPublication,true);
+assert.equal(remaining.sourceBlobSha,blobSha(glossarySource));
+assert.deepEqual([...remaining.languages].sort(),[...locales].sort());
+const pendingRows=glossaryRows.filter(r=>!expectedIds.includes(r[1]));
+assert.equal(pendingRows.length,82);
+assert.equal(remaining.rows.length,pendingRows.length);
+let remainingNames=0;
+for(const [i,row] of remaining.rows.entries()){
+ const original=pendingRows[i];
+ assert.deepEqual({id:row.id,category:row.category,source:row.source},
+  {id:original[1],category:original[0],source:{name:original[3],definition:original[5],example:original[7],caution:original[9]}});
+ assert.deepEqual(Object.keys(row.names).sort(),[...locales].sort());
+ for(const [lang,name] of Object.entries(row.names)){
+  assert.ok(typeof name==="string"&&name.trim().length>1&&name.length<=250,lang+" "+row.id);
+  const script=lang==="ja"?/[\p{Script=Han}\p{Script=Hiragana}\p{Script=Katakana}]/u:scripts[lang];
+  if(script&&row.id!=="dpf-scr")assert.ok(script.test(name),lang+" "+row.id+" script");
+  for(const token of ["DPF","SCR","AdBlue/DEF","2WD","4WD","4x4","CVT","HST","EHR","ROPS","FOPS","ECE R120","ISO 14396","ISOBUS","GNSS"]){
+   if(row.source.name.includes(token))assert.ok(name.includes(token),lang+" "+row.id+" missing "+token);
+  }
+  remainingNames++;
+ }
+}
+console.log(JSON.stringify({draftTranslations:count,bodyParagraphs:paragraphs,uiLabels,glossaryEntries,glossaryFields,remainingNames,totalGlossaryNames:glossaryEntries+remainingNames,missingGlossaryProseFields:remainingNames*3,structuralChecks:"passed",independentReview:"pending",publicationApproved:false}));
