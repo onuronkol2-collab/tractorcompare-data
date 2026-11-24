@@ -33,6 +33,7 @@ const c = analyticsText(lang);
 <script>
   import { ANALYTICS_CHOICE_KEY, GA4_MEASUREMENT_ID, CLARITY_PROJECT_ID, CLOUDFLARE_WEB_ANALYTICS_TOKEN } from "../lib/analytics-i18n.ts";
   import { analyticsGoalForPath } from "../lib/analytics-goals.ts";
+  import { PRODUCT_ACTION_EVENTS, ADVISOR_CALCULATION_DONE_EVENT } from "../lib/analytics-product-actions";
 
   type AnalyticsChoice = "accepted" | "rejected";
   const banner = document.getElementById("tractorvs-analytics-banner");
@@ -213,6 +214,28 @@ const c = analyticsText(lang);
       }
     }
   }
+
+  // Only action names are sent. Never read form contents, search terms,
+  // model IDs or visitor information; preserve the native form navigation.
+  function trackAnonymousAction(name: typeof PRODUCT_ACTION_EVENTS[keyof typeof PRODUCT_ACTION_EVENTS]) {
+    if (storedChoice() !== "accepted" ||
+        !document.querySelector("script[data-tractorvs-ga4]")) return;
+    analyticsWindow.gtag?.("event", name);
+  }
+
+  // This is a genuine comparison launch, not a catalog page impression.
+  document.addEventListener("submit", (event) => {
+    const target = event.target;
+    if (target instanceof HTMLFormElement && target.id === "catalog-compare") {
+      trackAnonymousAction(PRODUCT_ACTION_EVENTS.compareLaunch);
+    }
+  }, {capture: true});
+
+  // The advisor publishes this signal only after a valid calculation has
+  // successfully rendered, never for invalid or failed form submissions.
+  window.addEventListener(ADVISOR_CALCULATION_DONE_EVENT, () => {
+    trackAnonymousAction(PRODUCT_ACTION_EVENTS.advisorCalculated);
+  });
 
   accept?.addEventListener("click", () => choose("accepted"));
   reject?.addEventListener("click", () => choose("rejected"));
