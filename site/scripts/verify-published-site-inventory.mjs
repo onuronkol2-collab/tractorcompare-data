@@ -6,6 +6,8 @@
 import {readFileSync,readdirSync,existsSync} from "node:fs";
 import {resolve,join} from "node:path";
 import {fileURLToPath} from "node:url";
+import {scanHeadTags} from "./verify-sitewide-meta-descriptions.mjs";
+import {readOpeningTagAttribute as attr} from "./seo-html-attributes.mjs";
 
 const defaultRoot=resolve(fileURLToPath(new URL("../",import.meta.url)));
 export const PUBLIC_LOCALES=["en","tr","zh","hi","pt-br","fr","de","ru","ja","es"];
@@ -33,6 +35,32 @@ export const PUBLIC_LOCALE_TAGS={
 const modelPath=(locale,slug)=>
  "/"+(locale==="en"?"":locale+"/")+"tractors/"+slug+"/";
 
+/** Inspect actual head links; a second conflicting annotation must never
+ * disappear when a language-to-URL map is constructed. Codes are case-insensitive.
+ * Keep an explicit language allowlist rather than accepting unreviewed locales.
+ */
+export function inspectLocaleAnnotations(links){
+ const canonical=[],alternates=new Map(),errors=[];
+ for(const link of links){
+  const rel=(attr(link,"rel")||"").toLowerCase().trim().split(/\s+/);
+  const href=attr(link,"href");
+  const code=attr(link,"hreflang")?.trim().toLowerCase();
+  if(rel.includes("canonical")){
+   canonical.push(href);
+   if(code||rel.includes("alternate"))errors.push("Canonical mixed with alternate language annotation");
+  }
+  if(!rel.includes("alternate")||code===undefined)continue;
+  if(!code||!href)errors.push("Empty hreflang or URL");
+  if(alternates.has(code))errors.push("Duplicate hreflang "+code);
+  if(attr(link,"media")!==null||attr(link,"type")!==null)
+   errors.push("Mixed hreflang representation "+code);
+  if(!Object.values(PUBLIC_LOCALE_TAGS).some(tag=>tag.toLowerCase()===code)&&code!=="x-default")
+   errors.push("Unexpected hreflang "+code);
+  alternates.set(code,href);
+ }
+ return {canonical,alternates,errors};
+}
+
 /** Validate every published model URL before a production deployment. */
 export function verifyModelDiscoveryMarkup({
  html,catalogLinks,slug,locale,origin="https://tractorvs.com"
@@ -41,18 +69,22 @@ export function verifyModelDiscoveryMarkup({
  const path=modelPath(locale,slug);
  const url=origin+path;
  check(catalogLinks.has(path),"Missing server-rendered catalogue link to "+path);
- check(html.includes('rel="canonical" href="'+url+'"'),
-   "Missing or wrong model canonical: "+url);
+ const head=html.match(/<head\b[^>]*>([\s\S]*?)<\/head\s*>/i)?.[1]||"";
+ const annotations=inspectLocaleAnnotations(scanHeadTags(head).links);
+ check(annotations.errors.length===0,
+   "Conflicting model SEO annotations: "+url+" "+annotations.errors.join("; "));
+ check(annotations.canonical.length===1&&annotations.canonical[0]===url,
+   "Missing, duplicate or wrong model canonical: "+url);
  check(html.includes('name="robots" content="index,follow'),
    "Published model is not explicitly indexable: "+url);
  check(!/<meta[^>]*name="robots"[^>]*content="[^"]*noindex/i.test(html),
    "Published model has noindex: "+url);
  for(const [alternateLocale,tag] of Object.entries(PUBLIC_LOCALE_TAGS)){
   const alternate=origin+modelPath(alternateLocale,slug);
-  check(html.includes('hreflang="'+tag+'" href="'+alternate+'"'),
+  check(annotations.alternates.get(tag.toLowerCase())===alternate,
     "Missing reciprocal hreflang "+tag+" for "+url);
  }
- check(html.includes('hreflang="x-default" href="'+origin+modelPath("en",slug)+'"'),
+ check(annotations.alternates.get("x-default")===origin+modelPath("en",slug),
    "Missing x-default to English source model page: "+url);
  return true;
 }

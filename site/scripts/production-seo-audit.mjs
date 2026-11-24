@@ -7,6 +7,7 @@ import {hasBibliographicTitleLeak,inspectSeoTitle,crossLocaleModelTitleGroups} f
 import {writeFileSync} from "node:fs";
 import {extractCanonicalAnchors,summarizeCanonicalGraph} from "./production-internal-link-graph.mjs";
 import {readOpeningTagAttribute} from "./seo-html-attributes.mjs";
+import {inspectLocaleAnnotations} from "./verify-published-site-inventory.mjs";
 import {parseProductionSitemapInventory,selectProductionSeoPages,reviewedPairSitemapCoverage,resolveProductionSeoMode,verifyProductionSeoCoverage} from "./production-sitemap-inventory.mjs";
 // Read-only production SEO coverage audit. No credentials or writes.
 const BASE = "https://tractorvs.com";
@@ -41,14 +42,15 @@ const attr=(html,name)=>readOpeningTagAttribute(html,name);
 function metadata(html){
  const head=/<head\b[^>]*>([\s\S]*?)<\/head\s*>/i.exec(html)?.[1] || "";
  const {links,metas}=scanHeadTags(head);
+ const annotations=inspectLocaleAnnotations(links);
  const m=(name)=>attr(metas.find(tag=>attr(tag,"name")===name)||"","content");
  return {
   links,
   title:inspectSeoTitle(html)?.title||"",
   description:m("description")||"", robots:m("robots")||"",
-  canonical:links.filter(x=>attr(x,"rel")==="canonical").map(x=>attr(x,"href")),
-  alternates:links.filter(x=>attr(x,"rel")==="alternate" && attr(x,"hreflang"))
-    .map(x=>({lang:attr(x,"hreflang"),url:attr(x,"href")})),
+  canonical:annotations.canonical,
+  alternates:annotations.alternates,
+  annotationErrors:annotations.errors,
   lang:html.match(/<html[^>]*lang=['"]([^'"]+)['"]/i)?.[1]||"",
   h1:/<h1\b/i.test(html),
   json:matches(html,/<script[^>]*type=['"]application\/ld\+json['"][^>]*>([\s\S]*?)<\/script>/gi),
@@ -198,13 +200,14 @@ for(let i=0;i<urls.length;i+=8){
    }catch(e){error("jsonld-parse",p,"Script "+(i+1)+": "+String(e));}
    if(meta.lang!==languages[locale])error("html-language",p,"HTML lang "+meta.lang+" expected "+languages[locale]);
    const base=p.replace(/^\/(tr|zh|hi|pt-br|fr|de|ru|ja|es)(?=\/)/,"");
-   const alternateMap=new Map(meta.alternates.map(x=>[x.lang,x.url]));
+   for(const reason of meta.annotationErrors)error("hreflang-annotation",p,reason);
+   const alternateMap=meta.alternates;
    // Methodology has only EN/TR translations; guides now have all ten.
    // Expect reciprocal alternate tags ONLY when a matching indexable URL
    // really exists in this fetched production sitemap inventory.
    for(const [l,code] of Object.entries(languages)){
     const expected=BASE+(l==="en"?base:"/"+l+base);
-    const actual=alternateMap.get(code);
+    const actual=alternateMap.get(code.toLowerCase());
     if(unique.has(expected) && actual!==expected)
       error("hreflang",p,code+" expected "+expected);
     if(!unique.has(expected) && actual)
