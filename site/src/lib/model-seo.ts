@@ -171,6 +171,49 @@ function compactReviewedTitleVariant(tractor:TractorRecord, rawVariant:string|nu
  return current;
 }
 
+// Exact published variant rows reviewed on 2026-11-24. These are display-only
+// editorial changes: no source, equipment claim, market or record is rewritten.
+// Unknown or edited configurations must keep their original representation.
+const REVIEWED_TYM_TITLE_VARIANTS: Record<string, readonly string[]> = {
+  T2024:["2500H / 2-range HST / ROPS","2500R / 6F x 2R / ROPS"],
+  T2026:["2500HL / 2- or 3-range HST","2500L / manual 6F x 2R or 9F x 3R"],
+  T3025:["F25 / ROPS / SS 12F×12R or HST 3-range options"],
+  T3048:["F50CHN / F50C cab / 3-range HST","F50CN / F50C cab / 12F x 12R"],
+  T4048:["5025C / cab / 12F x 12R","5025CH / cab / 3-range HST",
+    "5025H / 3-range HST / ROPS","5025R / 12F x 12R / ROPS"],
+  T4058:["6225C / cab / 12F x 12R","6225CH / cab / 3-range HST"],
+  T5068:["T68 / Series 5 / cab / 24F x 24R"],
+};
+const SHORT_INTERNATIONAL_TITLE: Record<Locale,string> = {
+  en:"International",tr:"Uluslararası",zh:"国际",hi:"अंतरराष्ट्रीय",
+  "pt-br":"Internacional",fr:"International",de:"International",
+  ru:"Междунар. каталог",ja:"国際",es:"Internacional",
+};
+function reviewedRemainingTitleIdentity(tractor:TractorRecord, rawVariant:string|null,
+  rawMarket:string|null, variant:string|null, market:string|null, lang:Locale) {
+  const name=tractor.model_name;
+  // The actual stored market is International; retain the explicit catalogue
+  // wording in the full description and page. Do not turn it into "global".
+  if(tractor.brand_name==="TYM" && rawMarket==="International" && rawVariant &&
+      Object.hasOwn(REVIEWED_TYM_TITLE_VARIANTS,name) && REVIEWED_TYM_TITLE_VARIANTS[name].includes(rawVariant)) {
+    return {variant:rawVariant.replaceAll(" / ",", ").replaceAll(" x ","×"),
+      market:SHORT_INTERNATIONAL_TITLE[lang]};
+  }
+  if(tractor.brand_name==="Sonalika" && name==="FP-18" &&
+      rawMarket==="International" && rawVariant==="Manufacturer export FP-18 / 2WD") {
+    return {variant:"2WD / export",market:SHORT_INTERNATIONAL_TITLE[lang]};
+  }
+  if(tractor.brand_name==="Sonalika" && rawMarket==="India") {
+    if(name==="DI 35" && rawVariant==="2WD DI 35 / RX / Sikander family options")
+      return {variant:"2WD / RX / Sikander family options",market};
+    if(name==="DI 30 Baagban" && rawVariant==="India 2WD / orchard / 8F+2R / rear tire options")
+      return {variant:"2WD, orchard, 8F+2R, rear tire options",market};
+    if(name==="GT 20" && rawVariant==="India 2WD 6F+2R / single clutch / tyre options")
+      return {variant:"2WD 6F+2R, single clutch, tyre options",market};
+  }
+  return {variant,market};
+}
+
 export function modelSeoMetadata(tractor: TractorRecord, lang: Locale) {
   const model = tractor.brand_name + " " + tractor.model_name;
   // The three verified manufacturer families below contain *catalogue-source notes*
@@ -326,10 +369,10 @@ export function modelSeoMetadata(tractor: TractorRecord, lang: Locale) {
     : reviewedSourceNotes
       ? reviewedSourceNotes.markets.map(region=>marketDisplayName(region,lang)).join(" / ")
     : marketDisplayName(rawMarket, lang);
-  const buildTitle=(titleVariant:string|null)=>{
+  const buildTitle=(titleVariant:string|null,titleMarket=marketLabel)=>{
   const qualifiers = [
     titleVariant && titleVariant.length <= 48 ? titleVariant : null,
-    marketLabel, tractor.model_year == null ? null : String(tractor.model_year)
+    titleMarket, tractor.model_year == null ? null : String(tractor.model_year)
   ].filter((part):part is string=>Boolean(part));
   const identityQualifiers=qualifiers.length ? " — " + qualifiers.join(" · ") : "";
   const fullTitle=model + " " + t(lang,"modelSpecsTitle") + identityQualifiers + " | TractorVS";
@@ -361,7 +404,12 @@ export function modelSeoMetadata(tractor: TractorRecord, lang: Locale) {
   const compactVariant=compactReviewedTitleVariant(tractor,rawVariant,rawMarket,variantLabel);
   const compactTitle=compactVariant!==variantLabel?buildTitle(compactVariant):originalTitle;
   // Do not churn short titles or replace an existing one with a longer title.
-  const title=originalTitle.length>60 && compactTitle.length<originalTitle.length?compactTitle:originalTitle;
+  const previouslyReviewedTitle=originalTitle.length>60 && compactTitle.length<originalTitle.length?compactTitle:originalTitle;
+  const reviewedIdentity=reviewedRemainingTitleIdentity(tractor,rawVariant,rawMarket,
+    compactVariant,marketLabel,lang);
+  const remainingTitle=buildTitle(reviewedIdentity.variant,reviewedIdentity.market);
+  const title=previouslyReviewedTitle.length>60 && remainingTitle.length<previouslyReviewedTitle.length
+    ? remainingTitle : previouslyReviewedTitle;
 
   const copy = MODEL_COPY[lang];
   const sourceCount = new Set(tractor.specifications.map(spec =>

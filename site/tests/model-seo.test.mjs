@@ -659,3 +659,51 @@ test("reviewed redundant title labels retain model, equipment, market and origin
   assert.ok(unknown.title.includes("special axle"),locale+" unknown equipment not removed");
  }
 });
+
+
+test("reviewed remaining title compaction preserves exact TYM variants, markets and original source data",()=>{
+  const locales=["en","tr","zh","hi","pt-br","fr","de","ru","ja","es"];
+  const variants=["5025C / cab / 12F x 12R","5025CH / cab / 3-range HST",
+    "5025H / 3-range HST / ROPS","5025R / 12F x 12R / ROPS"];
+  for(const locale of locales){
+    const titles=variants.map(variant=>{
+      const row={...tractor,brand_name:"TYM",model_name:"T4048",market:"International",variant,model_year:null};
+      const meta=modelSeoMetadata(row,locale);
+      assert.ok(meta.title.includes("TYM T4048"),locale);
+      assert.ok(meta.title.includes(variant.split(" / ")[0]),locale+" alias lost");
+      for(const term of variant.split(" / ").slice(1))
+        assert.ok(meta.title.includes(term)||meta.title.includes(term.replaceAll(" x ","×")),locale+" "+term);
+      assert.ok(meta.description.includes(variant),locale+" full variant in source description");
+      assert.equal(modelStructuredData(row,locale,"https://tractorvs.example")["@graph"][2].disambiguatingDescription,variant+" · International");
+      return meta.title;
+    });
+    assert.equal(new Set(titles).size,variants.length,locale+" distinct equipment variants");
+  }
+  const row={...tractor,brand_name:"TYM",model_name:"T4048",market:"International",variant:variants[0],model_year:null};
+  const known=modelSeoMetadata(row,"de").title;
+  assert.ok(known.length<=60,known);
+  const unknown=modelSeoMetadata({...row,variant:"5025C / cab / 12F x 12R / special axle"},"de").title;
+  assert.ok(unknown.includes("special axle"),unknown);
+  assert.ok(unknown.includes("Internationaler Katalog"),unknown);
+  const other=modelSeoMetadata({...row,market:"Europe"},"de").title;
+  assert.notEqual(known,other);
+});
+
+test("reviewed Sonalika title removes repeated market or model names without losing configuration",()=>{
+ const rows=[
+  ["DI 35","2WD DI 35 / RX / Sikander family options","India",["2WD","RX","Sikander"]],
+  ["DI 30 Baagban","India 2WD / orchard / 8F+2R / rear tire options","India",["2WD","orchard","8F+2R","rear tire options"]],
+  ["GT 20","India 2WD 6F+2R / single clutch / tyre options","India",["2WD","6F+2R","single clutch","tyre options"]],
+  ["FP-18","Manufacturer export FP-18 / 2WD","International",["2WD","export"]],
+ ];
+ for(const [model_name,variant,market,keep] of rows){
+  const row={...tractor,brand_name:"Sonalika",model_name,variant,market,model_year:null};
+  for(const locale of ["en","tr","zh","hi","pt-br","fr","de","ru","ja","es"]){
+   const meta=modelSeoMetadata(row,locale);
+   assert.ok(meta.title.includes("Sonalika "+model_name),locale);
+   for(const term of keep)assert.ok(meta.title.includes(term),locale+" "+term);
+   assert.ok(meta.description.includes(variant),locale);
+   assert.equal(modelStructuredData(row,locale,"https://tractorvs.example")["@graph"][2].disambiguatingDescription,variant+" · "+market);
+  }
+ }
+});

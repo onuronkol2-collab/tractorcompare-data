@@ -641,14 +641,21 @@ const schema=indexable?{
  let followed=new Set<string>(),followState:"guest"|"loading"|"ready"|"error"="guest";
  let followRequest=0;
  const lang=document.documentElement.lang.toLowerCase()==="pt-br"?"pt-br":document.documentElement.lang.slice(0,2);
+ const countFormatter=new Intl.NumberFormat(lang==="pt-br"?"pt-BR":lang);
+ const countTargets={total:document.querySelector<HTMLElement>("[data-forum-published-topic-total]"),categories:[...document.querySelectorAll<HTMLElement>("[data-forum-category-count]")],tags:[...document.querySelectorAll<HTMLElement>("[data-forum-tag-count]")]};
+ const setText=(el:HTMLElement|null,value:string)=>{if(el&&el.textContent!==value)el.textContent=value;};
+ const setHidden=(el:HTMLElement|null,value:boolean)=>{if(el&&el.hidden!==value)el.hidden=value;};
+ const setPressed=(button:HTMLButtonElement,active:boolean)=>{
+  if(button.classList.contains("is-active")!==active)button.classList.toggle("is-active",active);
+  if(button.getAttribute("aria-pressed")!==String(active))button.setAttribute("aria-pressed",String(active));
+ };
  const replyCount=(el:HTMLElement)=>Math.max(0,Number(el.dataset.forumReplyCount||0)||0);
  const publishedAt=(el:HTMLElement)=>Date.parse(el.dataset.forumPublishedAt||"")||0;
  const markCategories=()=>{
    for(const button of allCategoryButtons){
     const active=(button.dataset.forumCategory||
      button.dataset.forumRailCategory||button.dataset.forumTagCategory)==selected;
-    button.classList.toggle("is-active",active);
-    button.setAttribute("aria-pressed",String(active));
+    setPressed(button,active);
    }
  };
  const sortPublicRows=()=>{
@@ -656,39 +663,39 @@ const schema=indexable?{
   // views, activity, author identity, likes, or rating data are generated.
   for(const grid of document.querySelectorAll<HTMLElement>(".community-topic-grid")){
    const rows=[...grid.querySelectorAll<HTMLElement>(":scope > [data-forum-topic]")];
-   rows.sort((a,b)=>view==="popular"
+   const ordered=[...rows].sort((a,b)=>view==="popular"
     ?replyCount(b)-replyCount(a)||publishedAt(b)-publishedAt(a)
     :publishedAt(b)-publishedAt(a));
-   for(const row of rows)grid.append(row);
+   // Avoid reparenting every card on each search keystroke. Keep focus and open details intact when already ordered.
+   if(ordered.some((row,index)=>row!==rows[index]))for(const row of ordered)grid.append(row);
   }
  };
- const updatePublicCounts=()=>{
+ const updatePublicCounts=(items:HTMLElement[])=>{
   // Include newly approved live-only topics exactly once; dedupe rows between
   // the published static build and the public live feed.
   const seen=new Set<string>(),byCategory=new Map<string,number>();
   let total=0;
-  for(const [index,card] of cards().entries()){
+  for(const [index,card] of items.entries()){
    const id=card.dataset.forumTopicId||"page-topic-"+index;
    if(seen.has(id))continue;
    seen.add(id);total++;
    const category=card.dataset.forumTopicCategory||"";
    byCategory.set(category,(byCategory.get(category)||0)+1);
   }
-  const format=(n:number)=>n.toLocaleString(lang==="pt-br"?"pt-BR":lang);
-  const totalEl=document.querySelector<HTMLElement>("[data-forum-published-topic-total]");
-  if(totalEl)totalEl.textContent=format(total);
-  for(const el of document.querySelectorAll<HTMLElement>("[data-forum-category-count]")){
+  const format=(n:number)=>countFormatter.format(n);
+  setText(countTargets.total,format(total));
+  for(const el of countTargets.categories){
    const key=el.dataset.forumCategoryCount||"";
-   el.textContent=format(key==="all"?total:(byCategory.get(key)||0));
+   setText(el,format(key==="all"?total:(byCategory.get(key)||0)));
   }
-  for(const el of document.querySelectorAll<HTMLElement>("[data-forum-tag-count]")){
-   el.textContent="("+format(byCategory.get(el.dataset.forumTagCount||"")||0)+")";
+  for(const el of countTargets.tags){
+   setText(el,"("+format(byCategory.get(el.dataset.forumTagCount||"")||0)+")");
   }
  };
  const filter=()=>{
    const q=forumSearchText((input?.value||"").trim(),lang);
    const items=cards(),hasTopics=items.length>0;
-   updatePublicCounts();
+   updatePublicCounts(items);
    const canList=view!=="events"&&(view!=="following"||followState==="ready");
    const visibleList=canList&&hasTopics;
    if(filters)filters.hidden=!visibleList;
@@ -713,7 +720,7 @@ const schema=indexable?{
       view==="following"?followed.has(card.dataset.forumTopicId||""):
       view==="events"?false:true;
     const visible=visibleList&&inCategory&&inSearch&&inView;
-    card.hidden=!visible;
+    setHidden(card,!visible);
     if(visible)count++;
    }
    const allFiltered=Boolean(q)||selected!=="all";
@@ -731,11 +738,10 @@ const schema=indexable?{
     if(!countLabel.hidden)countLabel.textContent=String(count)+" "+(filters?.dataset.matchingLabel||"");
    }
    if(clear)clear.hidden=!visibleList||!allFiltered;
-   if(viewHint)viewHint.textContent=view==="popular"?copy.popularNote:(copy[view+"Hint"]||"");
+   setText(viewHint,view==="popular"?copy.popularNote:(copy[view+"Hint"]||""));
    for(const button of viewButtons){
     const active=button.dataset.forumView===view;
-    button.classList.toggle("is-active",active);
-    button.setAttribute("aria-pressed",String(active));
+    setPressed(button,active);
    }
    markCategories();
    const browseEmpty=(view==="popular"||view==="unanswered")&&count===0;
@@ -785,7 +791,7 @@ const schema=indexable?{
  const resetFilters=()=>{
   if(input)input.value="";
   selected="all";
-  markCategories();filter();input?.focus();
+  filter();input?.focus();
  };
  clear?.addEventListener("click",resetFilters);
  emptyReset?.addEventListener("click",()=>{
@@ -801,7 +807,7 @@ const schema=indexable?{
   // Keep topic category and view separate; don't replace a selected view
   // with an unrelated page or silently lose the visitor's search.
   if(view==="events")view="latest";
-  markCategories();filter();
+  filter();
   if(button.hasAttribute("data-forum-tag-category"))
    document.querySelector(".community-list")?.scrollIntoView({block:"start",behavior:"smooth"});
  });
@@ -815,6 +821,6 @@ const schema=indexable?{
  window.addEventListener("tractorvs-forum-session",()=>{
   if(view==="following")void loadFollowing();
  });
- markCategories();filter();
+ filter();
  if(view==="following")void loadFollowing();
 </script>

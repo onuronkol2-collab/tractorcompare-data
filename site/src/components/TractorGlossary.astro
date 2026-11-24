@@ -109,10 +109,10 @@ const queryTerms=(term:(typeof GLOSSARY_TERMS)[number])=>
        <picture>
         {heroMobile&&<source type="image/webp"
           media="(max-width:760px) and (max-resolution:2dppx)"
-          srcset={heroMobile.webpUrl+" 720w"} sizes="(max-width: 840px) 100vw, 540px"/>}
+          srcset={heroMobile.webpUrl+" 720w"} sizes="(max-width: 720px) min(calc(100vw - 58px), 538px), (max-width: 900px) min(calc(100vw - 70px), 608px), min(calc(44.64vw - 44.32px), 495px)"/>}
         <img src={hero.displayUrl}
           srcset={hero.thumbUrl+" 480w, "+(heroMobile?heroMobile.jpegUrl+" 720w, ":"")+hero.displayUrl+" 960w"}
-          sizes="(max-width: 840px) 100vw, 540px" width={hero.width} height={hero.height}
+          sizes="(max-width: 720px) min(calc(100vw - 58px), 538px), (max-width: 900px) min(calc(100vw - 70px), 608px), min(calc(44.64vw - 44.32px), 495px)" width={hero.width} height={hero.height}
           alt={tr?"New Holland T5.110 traktörün dış görünümü; teknik terimler için genel örnek":
             "New Holland T5.110 tractor exterior, general example for understanding technical terms"}
           decoding="async" loading="eager" fetchpriority="high"/>
@@ -246,10 +246,10 @@ const queryTerms=(term:(typeof GLOSSARY_TERMS)[number])=>
          <picture>
           {mobile&&<source type="image/webp"
             media="(max-width:760px) and (max-resolution:2dppx)"
-            srcset={mobile.webpUrl+" 720w"} sizes="(max-width:700px) 100vw, 470px"/>}
+            srcset={mobile.webpUrl+" 720w"} sizes="auto, (max-width: 680px) min(calc(100vw - 88px), 508px), (max-width: 720px) 223px, min(calc(50vw - 81px), 523px)"/>}
           <img src={photo.thumbUrl}
             srcset={photo.thumbUrl+" 480w, "+(mobile?mobile.jpegUrl+" 720w, ":"")+photo.displayUrl+" 960w"}
-            sizes="(max-width:700px) 100vw, 470px" width={photo.width} height={photo.height}
+            sizes="auto, (max-width: 680px) min(calc(100vw - 88px), 508px), (max-width: 720px) 223px, min(calc(50vw - 81px), 523px)" width={photo.width} height={photo.height}
             loading="lazy" decoding="async" alt={(tr?"Traktör genel görünümü: ":"Tractor exterior: ")+photo.brand+" "+photo.model}/>
          </picture>
          <span class="glossary-zoom" aria-hidden="true">⤢</span>

@@ -52,21 +52,30 @@ test("glossary preserves Turkish normalization, grouped results, empty state and
   assert.deepEqual(nodes.slice(0,5).map(n=>n.hidden),[false,false,false,false,true]);
   assert.equal(status.textContent,"2 açıklama gösteriliyor");
 });
-test("editorial multiword filtering, clear, focus and result count remain intact",()=>{
-  const discovery=new Element({hidden:true}),field=new Element(),clear=new Element(),empty=new Element({hidden:true});
+test("editorial multiword filtering, language selection, reset, focus and counts remain intact",()=>{
+  const discovery=new Element({hidden:true}),field=new Element(),clear=new Element(),empty=new Element({hidden:true}),reset=new Element();
   const status=new Element({dataset:{resultTemplate:"{visible} / {total}"}});
-  const a=new Element({text:"Café tractor guide"}),b=new Element({text:"Tractor history"});
-  const ids={"#editorial-discovery":discovery,"#editorial-query":field,"#editorial-clear":clear,"#editorial-results-count":status,"#editorial-no-results":empty};
-  execute(component("EditorialHub"),{document:{querySelector:id=>ids[id],querySelectorAll:()=>[a,b]}});
+  const a=new Element({text:"Café tractor guide IŞIK",dataset:{readingLanguage:"local"}}),b=new Element({text:"Tractor history",dataset:{readingLanguage:"other"}});
+  const all=new Element(),local=new Element(),other=new Element();
+  all.value="all";all.checked=true;local.value="local";other.value="other";
+  const countA=new Element(),countB=new Element();
+  const sections=[{querySelector:()=>countA,contains:row=>row===a},{querySelector:()=>countB,contains:row=>row===b}];
+  const ids={"#editorial-discovery":discovery,"#editorial-query":field,"#editorial-clear":clear,"#editorial-results-count":status,"#editorial-no-results":empty,"#editorial-reset":reset};
+  execute(component("EditorialHub"),{document:{querySelector:id=>ids[id],querySelectorAll:selector=>selector==="[data-editorial-card]"?[a,b]:selector===".editorial-section"?sections:[all,local,other]}});
   assert.equal(discovery.hidden,false);assert.equal(status.textContent,"2 / 2");
-  field.value="CAFE guide";field.emit("input");
+  field.value="CAFE guide isik";field.emit("input");
   assert.equal(a.hidden,false);assert.equal(b.hidden,true);assert.equal(status.textContent,"1 / 2");
-  const nodes=[a,b,clear,empty,status],count=writes(...nodes);
+  assert.equal(countA.textContent,"01");assert.equal(countB.textContent,"00");
+  const nodes=[a,b,clear,empty,status,countA,countB],count=writes(...nodes);
   field.emit("input");assert.equal(writes(...nodes),count);
-  field.value="none";field.emit("input");assert.equal(empty.hidden,false);
-  clear.emit("click");assert.equal(field.value,"");assert.equal(field.focused,true);
+  all.checked=false;other.checked=true;other.emit("change");
+  assert.equal(empty.hidden,false);assert.equal(status.textContent,"0 / 2");
+  reset.emit("click");assert.equal(field.value,"");assert.equal(field.focused,true);
+  assert.equal(all.checked,true);assert.equal(other.checked,false);
   assert.equal(a.hidden,false);assert.equal(b.hidden,false);assert.equal(clear.hidden,true);
   assert.equal(empty.hidden,true);assert.equal(status.textContent,"2 / 2");
+  field.value="history";field.emit("input");clear.emit("click");
+  assert.equal(field.value,"");assert.equal(a.hidden,false);assert.equal(b.hidden,false);
 });
 test("advisor equipment toggles preserve allowed choices and disabled state without repeated queries",()=>{
   const plow=new Element(),laser=new Element(),unknown=new Element();

@@ -1,5 +1,6 @@
 ---
 import SiteLayout from "../layouts/SiteLayout.astro";
+import EditorialContents from "./EditorialContents.astro";
 import {getPublicCatalog} from "../lib/catalog";
 import {localizedPath,LOCALES,BREADCRUMB_LABELS,RELATED_PAGES_LABELS,type Locale} from "../lib/locales";
 import {reviewedLanguage} from "../lib/basak-2075-review-i18n";
@@ -149,8 +150,14 @@ const schema={
       <p class="review-disclosure">{localized?.disclaimer ?? (tr
         ?"Bu bir saha testi veya sahip incelemesi değildir. Sayısal değerler Başak'ın resmî teknik broşüründen alınmış üretici beyanlarıdır; bağımsız performans ölçümleri değildir."
         :"This is not a field test or an owner's review. All numeric values below are manufacturer-stated specifications from Başak's technical document, not independent performance measurements.")}</p>
+      <EditorialContents lang={lang} items={[
+        {id:"facts-heading",label:localized?.figures ?? (tr?"Üretici belgesindeki teknik veriler":"Figures in the manufacturer's specification")},
+        {id:"basak-bk-bt-comparison-title",label:variantCopy.heading},
+        ...sections.map((section,index)=>({id:"review-section-"+(index+1),label:section.h})),
+        {id:"review-references-heading",label:localized?.sourceTitle ?? (tr?"Kaynak tablosu":"Source register")}
+      ]}/>
       <section class="review-facts" aria-labelledby="facts-heading">
-        <h2 id="facts-heading">{localized?.figures ?? (tr?"Üretici belgesindeki teknik veriler":"Figures in the manufacturer's specification")}</h2>
+        <h2 id="facts-heading" tabindex="-1">{localized?.figures ?? (tr?"Üretici belgesindeki teknik veriler":"Figures in the manufacturer's specification")}</h2>
         <div class="review-table-scroll" role="region" tabindex="0" aria-labelledby="facts-heading"><table>
           <thead><tr><th scope="col">{localized?.label ?? (tr?"Ölçüm / özellik":"Measurement / specification")}</th>
             <th scope="col">{localized?.value ?? (tr?"Üretici değeri":"Manufacturer's figure")}</th></tr></thead>
@@ -166,7 +173,7 @@ const schema={
           {localized?.variantNote ?? (tr?"Değerler model yılı, pazar veya opsiyonlara göre değişebilir.":"Actual equipment may differ by year, market and options.")}</p>
       </section>
       <section class="review-variant-comparison" aria-labelledby="basak-bk-bt-comparison-title">
-        <h2 id="basak-bk-bt-comparison-title">{variantCopy.heading}</h2>
+        <h2 id="basak-bk-bt-comparison-title" tabindex="-1">{variantCopy.heading}</h2>
         <p class="review-comparison-intro">{variantCopy.lead}</p>
         <table>
           <caption class="review-comparison-caption">{variantCopy.checked}</caption>
@@ -190,12 +197,12 @@ const schema={
         </p>
         {publicBtModel && <p class="review-bt-model-link"><a href={localizedPath(lang,"/tractors/"+publicBtModel.slug+"/")}>{variantCopy.viewBt} ↗</a></p>}
       </section>
-      {sections.map(section=><section class="review-prose">
+      {sections.map((section,index)=><section class="review-prose" id={"review-section-"+(index+1)} tabindex="-1">
         <h2>{section.h}</h2>
         {section.p.map(text=><p>{text}</p>)}
       </section>)}
-      <section class="review-references">
-        <h2>{localized?.sourceTitle ?? (tr?"Kaynak tablosu":"Source register")}</h2>
+      <section class="review-references" aria-labelledby="review-references-heading">
+        <h2 id="review-references-heading" tabindex="-1">{localized?.sourceTitle ?? (tr?"Kaynak tablosu":"Source register")}</h2>
         <p>{localized?.sourceIntro ?? (tr?"Yalnızca üreticinin kendi kaynakları. Erişim/denetim tarihi: 19 Kasım 2026.":"Original manufacturer sources only. Checked 19 November 2026.")}</p>
         <ul>{references.map(item=><li><a href={item.url} target="_blank" rel="noopener noreferrer">{item.name}</a></li>)}</ul>
       </section>
@@ -211,7 +218,7 @@ const schema={
 <style>
   .review-page{padding:clamp(34px,5vw,65px) 0 85px;background:#f7faf5;color:#203728}
   .review-wrap{max-width:900px}
-  .review-crumb{display:flex;gap:8px;align-items:center;font-size:13px;color:#607264;margin:0 0 28px}
+  .review-crumb{display:flex;gap:8px;align-items:center;flex-wrap:wrap;font-size:13px;color:#607264;margin:0 0 28px}
   .review-page a{color:#1a6136;text-decoration:underline;text-underline-offset:3px;overflow-wrap:anywhere}
   .review-overline{font-weight:850;color:#315f3d;font-size:12px;letter-spacing:.12em}
   .review-page h1{font-size:clamp(30px,4.7vw,49px);line-height:1.14;letter-spacing:-.025em;color:#193a27;margin:15px 0 23px}
@@ -219,6 +226,7 @@ const schema={
   .review-date{font-size:13px;color:#5e7566}
   .review-disclosure{background:#e5efe1;border-left:4px solid #3b804d;padding:15px 18px;border-radius:4px;font-size:14px;line-height:1.75}
   .review-page h2{font-size:clamp(22px,2.6vw,28px);line-height:1.25;margin:0 0 17px;color:#1f422b}
+  .review-prose,#facts-heading,#basak-bk-bt-comparison-title,#review-references-heading{scroll-margin-top:24px}
   .review-facts,.review-prose{padding:27px 0;border-bottom:1px solid #d6e4d3}
   .review-variant-comparison{margin:30px 0;padding:clamp(17px,3vw,25px);background:#eef6eb;border:1px solid #bed6bd;border-radius:16px;}
   .review-variant-comparison h2{margin:0 0 12px}

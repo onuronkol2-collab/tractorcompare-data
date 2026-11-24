@@ -21,6 +21,8 @@ const {lang}=Astro.props as {lang:Locale};
   const license=document.querySelector<HTMLSpanElement>("#tractor-photo-dialog-license");
   const close=document.querySelector<HTMLButtonElement>("[data-photo-close]");
   const safe=(value:string)=>{
+    // Empty or whitespace-only metadata is missing evidence, not the current page URL.
+    if(!value.trim())return null;
     try{const u=new URL(value,location.href);return ["http:","https:"].includes(u.protocol)?u.href:null;}
     catch{return null;}
   };

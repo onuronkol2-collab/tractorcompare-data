@@ -2,7 +2,7 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import {readFileSync} from "node:fs";
 import {LOCALES} from "../src/lib/locales.ts";
-import {EDITORIAL_DISCOVERY} from "../src/lib/editorial-discovery-i18n.mjs";
+import {EDITORIAL_DISCOVERY,EDITORIAL_READING_LANGUAGE} from "../src/lib/editorial-discovery-i18n.mjs";
 
 const file=name=>readFileSync(new URL("../src/"+name,import.meta.url),"utf8");
 
@@ -64,14 +64,26 @@ test("farm advisor keeps its existing evidence rules and gains three accessible 
 
 test("editorial search only hides SSR-published cards, without creating new indexable pages",()=>{
   const hub=file("components/EditorialHub.astro");
-  assert.match(hub,/import \{EDITORIAL_DISCOVERY\}/);
+  assert.match(hub,/import \{EDITORIAL_DISCOVERY,EDITORIAL_READING_LANGUAGE\}/);
   assert.match(hub,/id="editorial-discovery" hidden/);
   assert.match(hub,/id="editorial-query" type="search"/);
   assert.match(hub,/\[data-editorial-card\]/);
   assert.match(hub,/row.hidden=!match/);
   assert.match(hub,/aria-live="polite"/);
-  assert.match(hub,/id="editorial-no-results" role="status" hidden/);
+  assert.match(hub,/id="editorial-no-results" hidden/);
+  assert.match(hub,/id="editorial-reset"/);
+  assert.match(hub,/id="editorial-results-count" role="status" aria-live="polite"/);
   assert.match(hub,/entries\.filter\(x=>x.type==="guide"\)/);
   assert.match(hub,/entries\.filter\(x=>x.type==="review"\)/);
   assert.doesNotMatch(hub,/window\.history|history\.pushState|history\.replaceState/);
+});
+
+test("reading-language labels are complete and coverage placeholders are intact",()=>{
+ assert.deepEqual(Object.keys(EDITORIAL_READING_LANGUAGE).sort(),[...LOCALES].sort());
+ for(const lang of LOCALES){
+  const labels=EDITORIAL_READING_LANGUAGE[lang];
+  assert.deepEqual(Object.keys(labels).sort(),["all","coverage","language","local","other","reset","sections"]);
+  for(const label of Object.values(labels))assert.ok(label.trim().length>1);
+  assert.ok(labels.coverage.includes("{local}")&&labels.coverage.includes("{total}"));
+ }
 });

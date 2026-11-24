@@ -154,7 +154,7 @@ const pricePayload = JSON.stringify({
           data-search={[tractor.brand_name,tractor.model_name,tractor.variant||"",tractor.market||"",tractor.engine||""].join(" ").toLowerCase()}
           data-brand={tractor.brand_name} data-power={tractor.horsepower??""} data-year={tractor.model_year??""}
           data-name={tractor.brand_name+" "+tractor.model_name+" "+(tractor.variant||"")}>
-          <TractorPhoto tractor={tractor} lang={lang} mode="catalog" sprite />
+          <TractorPhoto tractor={tractor} lang={lang} mode="catalog" sprite slotSizes="auto, (max-width:540px) calc(100vw - 76px), (max-width:720px) 240px, (max-width:940px) 400px, 350px" />
           <a class="tractor-card-main" href={detailPrefix+tractor.slug+"/"}>
           <div class="tractor-card-top"><span class="tractor-brand">{tractor.brand_name}</span><span class="tractor-card-arrow" aria-hidden="true">↗</span></div>
           <h2>{tractor.brand_name} {tractor.model_name}</h2>

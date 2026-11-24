@@ -77,7 +77,7 @@ test("catalogue stays a crawlable technical reference, even with a two-column re
     "matchesCatalogueFacet(rows[i],state)",
     'catalog.tractors.map((tractor)=><article',
     'href={detailPrefix+tractor.slug+"/"}',
-    '<TractorPhoto tractor={tractor} lang={lang} mode="catalog" sprite />',
+    '<TractorPhoto tractor={tractor} lang={lang} mode="catalog" sprite slotSizes="auto, (max-width:540px) calc(100vw - 76px), (max-width:720px) 240px, (max-width:940px) 400px, 350px" />',
   ])assert.ok(source.includes(selector),selector);
   assert.match(source,/const nextPath=next.pathname\+next.search\+next.hash/);
   assert.match(source,/const routeChanged=nextPath!==location.pathname\+location.search\+location.hash/);
