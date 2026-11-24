@@ -7,10 +7,34 @@ const source=read("src/lib/tractor-technical-deep-dives.ts");
 const component=read("src/components/TractorTechnicalDeepDive.astro");
 const articles=JSON.parse(source.split("export const TECHNICAL_DEEP_DIVES = ")[1].split("] as const;")[0]+"]");
 const locales=["de","fr","es","pt-br","zh","hi","ru","ja"];
-const digits=s=>[...s.matchAll(/(?<![0-9])(?:[0-9]{1,3}(?:[., \u00a0\u202f][0-9]{3})+|[0-9]+)(?:E)?(?![0-9])/g)].map(x=>x[0].replace(/[., \u00a0\u202f]/g,""));
+// Source English uses commas for grouped integers and dots for decimals.
+ // Decimal source values must retain a decimal separator and the exact digits;
+ // never equate 1.341 kW conversion factors with 1341 or round 102.0 to 102.
+const tokens=s=>[...s.matchAll(/(?<![0-9])(?:[0-9]{1,3}(?:[, \u00a0\u202f][0-9]{3})+|[0-9]+(?:\.[0-9]+)?)(?:E)?(?![0-9])/g)].map(x=>x[0]);
+const escaped=s=>s.replace(/[.*+?^$(){}|[\]\\]/g,"\\$&");
+function numberRetained(src,translated,lang){
+ const group=/^\d{1,3}(?:,\d{3})+$/.test(src);
+ const decimal=/^\d+\.\d+$/.test(src);
+ const commaDecimal=["de","fr","es","pt-br","ru"].includes(lang);
+ let pattern=escaped(src);
+ if(group){
+  const parts=src.split(",");
+  pattern="(?:"+parts.join("")+"|"+parts.join(commaDecimal?"[. \\u00a0\\u202f]":"[, \\u00a0\\u202f]")+")";
+ }else if(decimal){
+  pattern=src.split(".").map(escaped).join(commaDecimal?",":"\\.");
+ }
+ return new RegExp("(?<![0-9.,])"+pattern+"(?![0-9A-Z.,])","u").test(translated);
+}
+assert.ok(numberRetained("1.341","1,341 hp","de"));
+assert.ok(!numberRetained("1.341","1341 hp","de"));
+assert.ok(!numberRetained("1.341","1.341 hp","de"));
+assert.ok(numberRetained("3,000","3 000 kg","fr"));
+assert.ok(!numberRetained("3,000","3,000 kg","de"));
+assert.ok(!numberRetained("540","540E","en"));
+assert.ok(!numberRetained("72.1","172.1","en"));
 const scripts={zh:/\p{Script=Han}/u,hi:/\p{Script=Devanagari}/u,ru:/\p{Script=Cyrillic}/u,ja:/[\p{Script=Hiragana}\p{Script=Katakana}]/u};
 let count=0, paragraphs=0;
-for(const type of ["pto","hydraulic"]){
+for(const type of ["pto","hydraulic","power"]){
  const seen=new Set();
  for(const region of ["western","eastern"]){
   const doc=JSON.parse(read("docs/translation-review/"+type+"-"+region+"-languages-draft.json"));
@@ -19,10 +43,15 @@ for(const type of ["pto","hydraulic"]){
   assert.equal(doc.notForPublication,true);
   assert.equal(doc.sourceBlobSha,blobSha(source),"Source blob changed: independent review must be repeated");
   assert.equal(doc.sourceComponentBlobSha,blobSha(component),"Rendering/source disclosure changed");
-  assert.equal(doc.sourceSlug,type==="pto"?"pto-and-power-take-off":"tractor-hydraulic-lift-explained");
+  assert.equal(doc.sourceSlug,type==="pto"?"pto-and-power-take-off":type==="hydraulic"?"tractor-hydraulic-lift-explained":"tractor-engine-power-and-torque");
   const article=articles.find(a=>a.slug===doc.sourceSlug);
   assert.ok(article);
-  const expectedSources=["https://tractortestlab.unl.edu/","https://www.oecd.org/en/topics/tractors.html",type==="pto"?"https://www.hse.gov.uk/agriculture/topics/machinery/safe-use-1.htm":"https://www.hse.gov.uk/agriculture/topics/machinery/fluid.htm"];
+  const expectedSources=["https://tractortestlab.unl.edu/","https://www.oecd.org/en/topics/tractors.html",...(type==="power"?[
+   "https://eur-lex.europa.eu/eli/reg/2019/405/oj/eng",
+   "https://www.dlg.org/en/magazin/survey-tests/tractor-model-descriptions-no-standardised-information",
+   "https://www.nist.gov/pml/special-publication-811/nist-guide-si-appendix-b-conversion-factors/nist-guide-si-appendix-b9",
+   "https://admin.basaktraktor.com.tr/upload/4c2bf423-d9a1-4ffc-aa6b-1f0188c313aa-2075%20BK.pdf"
+  ]:[type==="pto"?"https://www.hse.gov.uk/agriculture/topics/machinery/safe-use-1.htm":"https://www.hse.gov.uk/agriculture/topics/machinery/fluid.htm"])];
   assert.deepEqual(doc.source.sources,expectedSources);
   for(const url of expectedSources)assert.ok(component.includes(url));
   assert.ok(component.includes(doc.source.verification));
@@ -35,7 +64,8 @@ for(const type of ["pto","hydraulic"]){
     assert.ok(typeof value==="string"&&value.trim()&&value!==src,lang+" "+label);
     assert.ok(value.length<=Math.max(src.length*5,180),lang+" unusually long "+label);
     if(scripts[lang])assert.ok(scripts[lang].test(value),lang+" script "+label);
-    for(const n of new Set(digits(src)))assert.ok(digits(value).includes(n),lang+" missing "+n+" in "+label);
+    for(const n of new Set(tokens(src)))assert.ok(numberRetained(n,value,lang),lang+" missing or altered "+n+" in "+label);
+    for(const standard of ["ISO 14396","UN/ECE R120","OECD Code 2"])if(src.includes(standard))assert.ok(value.includes(standard),lang+" missing "+standard);
    }
    for(const field of ["title","description","lead","comparisonNote","verification"])validate(doc.source[field],entry[field],field);
    assert.equal(entry.sections.length,article.sections.length);
