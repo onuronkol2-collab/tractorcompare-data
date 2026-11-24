@@ -604,3 +604,26 @@ test("Chinese SEO preview explains verified OEM sources without overclaiming or 
   assert.doesNotMatch(noSources.searchDescription,/已提供经核实的制造商来源链接/);
   assert.match(noSources.searchDescription,/暂无已发布/);
 });
+
+test("LS MT573CPS keeps its actual power shuttle cab and market in search titles",()=>{
+  const model={...tractor,brand_name:"LS Tractor",model_name:"MT573CPS",market:"US",
+    variant:"US official product / power shuttle cab"};
+  for(const locale of ["en","tr","de","fr","es","ru","hi","ja","zh","pt-br"]) {
+    const {title}=modelSeoMetadata(model,locale);
+    assert.match(title,/LS Tractor MT573CPS/);
+    assert.match(title,/power shuttle cab/);
+    assert.doesNotMatch(title,/official product/);
+  }
+  assert.match(modelSeoMetadata({...model,variant:"US special cab"},"en").title,/US special cab/);
+});
+
+test("a short search description preserves the independent provenance when the long sentence cannot fit",()=>{
+  const model={...tractor,brand_name:"Belarus",model_name:"510",market:null,
+    variant:"D-244 / 2WD / canopy",horsepower:null,specifications:[{...tractor.specifications[0],
+      source_type:"independent_catalog",source_publisher:"TractorData",
+      source_url:"https://www.tractordata.com/farm-tractors/example.html",
+      evidence_text:"Third-party reported specification from the independent technical database."}]};
+  const {searchDescription}=modelSeoMetadata(model,"en");
+  assert.match(searchDescription,/Independent reference \(not manufacturer-verified\)/);
+  assert.ok(searchDescription.length<=160);
+});

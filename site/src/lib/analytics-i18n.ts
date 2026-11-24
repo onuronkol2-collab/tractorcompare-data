@@ -142,7 +142,7 @@ export const ANALYTICS_TEXT: Record<Locale, {
     "settings": "Préférences statistiques",
     "privacyLink": "Confidentialité et statistiques",
     "privacyTitle": "Confidentialité et statistiques",
-    "privacyIntro": "TractorVS utilise Google Analytics de manière facultative. Ce service n'est pas nécessaire pour consulter les fiches techniques, les sources et les comparaisons.",
+    "privacyIntro": "Google Analytics est facultatif sur TractorVS. Vous pouvez consulter les fiches techniques, les sources et les comparaisons sans activer ce service.",
     "privacyCollect": "Si vous acceptez, Google Analytics peut recevoir les pages consultées, les interactions, une localisation approximative et des données sur l'appareil, et déposer des cookies de mesure. Google traite ces données selon ses conditions.",
     "privacyChoice": "Google Analytics n'est pas chargé avant votre accord. Vous pouvez refuser tout en utilisant le site. Modifiez votre choix via « Préférences statistiques » en pied de page. Le refus n'efface pas les données déjà transmises à Google.",
     "clarityConsent": "Avec votre accord, Microsoft Clarity analyse aussi les clics et le défilement et enregistre des sessions dont le contenu sensible est masqué. Il n'est pas chargé avant votre consentement.",

@@ -55,3 +55,20 @@ test("evidence-backed HST and GEAR entries of the exact same LS J27 model cross-
   assert.equal(results[0].variant,"GEAR");
   assert.ok(results.every(row=>row.tractor_id!==current.tractor_id));
 });
+
+test("all same-brand models receive a second discovery path even with sparse power data", async () => {
+  const {modelDiscoveryLinks} = await import("../src/lib/related-tractors.ts");
+  const family = [2,3,4,8,10,12,14].map(n=>make("model-"+n,"Example","Europe",null));
+  const singleton = make("other","Other brand","US",null);
+  const published = [...family,singleton];
+  const inbound = new Set();
+  for (const model of family) {
+    const links = modelDiscoveryLinks(model,published);
+    assert.deepEqual(links.slice(0,3),morePublishedTractors(model,published));
+    assert.ok(links.length<=4 && links.every(row=>row!==model && row!==singleton));
+    assert.equal(new Set(links.map(row=>row.slug)).size,links.length);
+    links.forEach(row=>inbound.add(row.slug));
+  }
+  assert.equal(inbound.size,family.length);
+  assert.deepEqual(modelDiscoveryLinks(singleton,published),morePublishedTractors(singleton,published));
+});

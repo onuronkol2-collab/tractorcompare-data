@@ -302,6 +302,12 @@ Ek ayrıntı: `site/docs/editorial-quality-gate-20261121.md` ve `site/tests/edit
 - **Google 28 kayıt denetimi:** 28 satır 26 özgün görsele karşılık gelir (Zetor Forterra 140 aynı resmi üç URL'de kullanır). Önceki üç, ardından toplu fotoğraf araştırmasında doğrulanan 20 ve Belarus 132N ancak kaynak denetimi/CI başarılıysa yayımlanabilir. Flickr'dan aktarılan Swaraj 735 FE (CC BY 2.0) ve CC0 Valtra F105 için telif sahipliği uydurma. Google doğrulamasının başlamış olması sonuçlandığı anlamına gelmez.
 - CC0 veya kaynakta sahiplik kanıtı bulunmayan görsele `copyrightNotice` uydurulmaz; eksikliği raporlanır. Her yeni fotoğraf, lisans ve bire bir model uygunluğu dışında **ayrı** telif sahibi kanıtı ister. Yayınlanan kodun canlıya dağıtılması ve ardından Google'ın yeniden taraması ayrı doğrulanır.
 
+### Ahrefs tarama bildirimlerinin takibi
+
+- Rapordaki tarama tarihini, etkilenen URL sayısını ve özgün dosya sayısını ayrı kaydet. Ücretli URL dökümü yoksa son yayının site haritalarını ve sayfaların ilk HTML yanıtını incele. Ahrefs bildirimini kapanmış saymak için sonraki taramayı karşılaştır.
+- Ortak CSS uyarısında sayfanın gerçekten bağlandığı adresi GET ile kontrol et. Durum, MIME, içerik ve örnek kaynak sayfayı kaydet. Mevcut günlük örneklem ve haftalık tam denetim her farklı yerel CSS dosyasını bir kez kontrol eder. Katalogdaki her yayımlanmış modelin aynı dilde erişilebilirliğini ve uygun marka içi geçişleri koru.
+- Başlık ve açıklamaları model, pazar, varyant ve kanıtla birlikte değerlendir. Çince ve Japoncada karakter eşiklerini tek başına kusur sayma. Yavaş sayfa veya bot yanıtını değerlendirirken ölçüm yeri, rota, yanıt kodu ve örnek sayısını belirt. Yönlendirmelerde başlangıç, hedef ve zinciri kaydet.
+
 ## Süreklilik ve dürüst sınır
 Bu dosya GitHub deposunda saklanan, değişiklik geçmişi olan **kalıcı proje kaynağıdır**. Asistanın ChatGPT iç belleğine silinemez bir kayıt yazıldığı veya her yeni sohbette bu dosyanın kendiliğinden okunduğu anlamına gelmez. Yeni sohbetlerin aynı ilkeyi uygulaması için bu dosyanın bağlantısını ChatGPT Project Instructions / Proje Talimatları içinde tutmak ve işe başlarken dosyayı okumak en güvenilir yöntemdir.
 

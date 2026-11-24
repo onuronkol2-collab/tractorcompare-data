@@ -1,5 +1,7 @@
 import type {TractorRecord} from "./catalog.ts";
 
+const catalogueOrder = new Intl.Collator("en", {numeric:true});
+
 /**
  * Show real, already-published model pages as ordinary crawlable HTML links.
  * Same manufacturer first; within that brand, show exact same-name model variants before other machines, then same market and nearby documented power.
@@ -30,4 +32,20 @@ export function morePublishedTractors(
     return left[0]-right[0] || left[1]-right[1] || left[2]-right[2]
       || left[3]-right[3] || a.slug.localeCompare(b.slug,"en");
   }).slice(0,max);
+}
+
+
+// Include the next published model in the same manufacturer's catalogue order.
+// Ranking alone repeatedly selects popular peers, leaving some records with
+// only their catalogue listing. Preserve all three ranked recommendations.
+export function modelDiscoveryLinks(current: TractorRecord, published: readonly TractorRecord[]) {
+  const ranked = morePublishedTractors(current, published);
+  const brand = current.brand_name.trim().toLowerCase();
+  const family = published.filter(item => item.brand_name.trim().toLowerCase() === brand)
+    .sort((left,right) => catalogueOrder.compare(left.model_name,right.model_name)
+      || left.slug.localeCompare(right.slug,"en"));
+  const index = family.findIndex(item => item.tractor_id === current.tractor_id);
+  if (index < 0 || family.length < 2) return ranked;
+  const next = family[(index + 1) % family.length];
+  return ranked.some(item => item.slug === next.slug) ? ranked : [...ranked,next];
 }
