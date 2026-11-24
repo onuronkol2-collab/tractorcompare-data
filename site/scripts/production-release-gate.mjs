@@ -218,8 +218,12 @@ export function verifyProductionArtifacts({dir=projectRoot,origin=expectedOrigin
  console.log("TRACTORVS_PRODUCTION_META_AUDIT "+JSON.stringify({
    htmlDocuments:metaAudit.htmlDocuments,indexablePages:metaAudit.indexablePages,
    over160:metaAudit.over160,structuralErrors:metaAudit.errors.length,
-   byLocale:metaAudit.byLocale
+   byLocale:metaAudit.byLocale,
+   sameLocaleDescriptionGroups:metaAudit.reuse.sameLocale.length,
+   crossLocaleDescriptionGroups:metaAudit.reuse.crossLocale.length
  }));
+ if(metaAudit.reuse.sameLocale.length||metaAudit.reuse.crossLocale.length)
+   console.warn("TRACTORVS_DESCRIPTION_REUSE_REVIEW "+JSON.stringify(metaAudit.reuse));
  // The 2026-11-22 production audit reached zero real model titles that
  // leak manufacturer brochure/source-table notes. Future source-note variants
  // require explicit editorial verification, not silent keyword truncation.
@@ -255,7 +259,9 @@ export function verifyProductionArtifacts({dir=projectRoot,origin=expectedOrigin
    titleOver105:titleAudit.over105,duplicateModelTitles:titleAudit.duplicates.length,
    bibliographyTitleCandidates:titleAudit.bibliographyTitles,
    crossLocaleTitleGroups:titleAudit.crossLocaleCandidates.length,
-   metaIndexablePages:metaAudit.indexablePages,metaOver160:metaAudit.over160};
+   metaIndexablePages:metaAudit.indexablePages,metaOver160:metaAudit.over160,
+   sameLocaleDescriptionGroups:metaAudit.reuse.sameLocale.length,
+   crossLocaleDescriptionGroups:metaAudit.reuse.crossLocale.length};
 }
 
 export function preflight(env=process.env){

@@ -1,5 +1,5 @@
 import {localStylesheets,stylesheetProblem} from "./live-stylesheets.mjs";
-import {scanHeadTags} from "./verify-sitewide-meta-descriptions.mjs";
+import {scanHeadTags,inspectMetaDescription,descriptionReuseGroups} from "./verify-sitewide-meta-descriptions.mjs";
 import {inspectSocialMetadata} from "./verify-sitewide-social-metadata.mjs";
 import {inspectVisibleMainImages} from "./seo-main-markup.mjs";
 import {inspectDocumentImageAlts,inspectUndocumentedEmptyImageAlts} from "./verify-sitewide-image-alts.mjs";
@@ -39,15 +39,18 @@ async function fetchPage(url) {
 }
 const xmlLocs=s=>matches(s,/<loc>([^<]+)<\/loc>/g).map(x=>x.replaceAll("&amp;","&"));
 const attr=(html,name)=>readOpeningTagAttribute(html,name);
-function metadata(html){
+function metadata(html,file){
  const head=/<head\b[^>]*>([\s\S]*?)<\/head\s*>/i.exec(html)?.[1] || "";
  const {links,metas}=scanHeadTags(head);
  const annotations=inspectLocaleAnnotations(links);
- const m=(name)=>attr(metas.find(tag=>attr(tag,"name")===name)||"","content");
+ const m=(name)=>attr(metas.find(tag=>(attr(tag,"name")||"").toLowerCase()===name)||"","content");
+ const title=inspectSeoTitle(html,file);
+ const description=inspectMetaDescription(html,file);
  return {
   links,
-  title:inspectSeoTitle(html)?.title||"",
-  description:m("description")||"", robots:m("robots")||"",
+  title:title?.title||"",titleErrors:title?.errors||["missing-document-title"],
+  description:description?.description||"",descriptionErrors:description?.errors||[], robots:m("robots")||"",
+  noindex:metas.some(tag=>(attr(tag,"name")||"").toLowerCase()==="robots" && /\bnoindex\b/i.test(attr(tag,"content")||"")),
   canonical:annotations.canonical,
   alternates:annotations.alternates,
   annotationErrors:annotations.errors,
@@ -125,6 +128,8 @@ const inspectedPages=[];
 const observedAnchors=new Map();
 const titlesByLocale=new Map();
 const modelTitleRecords=[];
+const descriptionRecords=[];
+const descriptionLengths={over160:0,byLocale:Object.fromEntries(Object.keys(languages).map(l=>[l,0]))};
 const stylesheetRefs=new Map();
 // The 60-character threshold is crawler guidance, not a Google requirement.
 // Track it across checked locales as an advisory, without deleting exact
@@ -151,9 +156,10 @@ for(let i=0;i<urls.length;i+=8){
    }
    const {body,response}=await fetchPage(page);
    if(response.status!==200){error("page-http",p,"HTTP "+response.status);return;}
-   if((response.headers.get("x-robots-tag")||"").includes("noindex"))
+   if(/\bnoindex\b/i.test(response.headers.get("x-robots-tag")||""))
     error("blocked-header",p,"X-Robots-Tag noindex on production");
-   const meta=metadata(body);
+   const file=p.slice(1)+"index.html";
+   const meta=metadata(body,file);
    for(const asset of localStylesheets(meta.links,page)){
      const entry=stylesheetRefs.get(asset) ?? {example:p,pages:0};
      entry.pages++;
@@ -161,10 +167,19 @@ for(let i=0;i<urls.length;i+=8){
    }
    const social=inspectSocialMetadata(body,p);
    for(const reason of social?.errors ?? [])error("social-metadata",p,reason);
-   if(meta.robots.includes("noindex"))error("blocked-meta",p,meta.robots);
+   if(meta.noindex)error("blocked-meta",p,"A robots meta tag contains noindex");
+   for(const reason of meta.titleErrors)error("title-integrity",p,reason);
+   for(const reason of meta.descriptionErrors)error("description-integrity",p,reason);
    if(meta.canonical.length!==1 || meta.canonical[0]!==page)
     error("canonical",p,JSON.stringify(meta.canonical));
    const locale=p.match(/^\/(tr|zh|hi|pt-br|fr|de|ru|ja|es)\//)?.[1]||"en";
+   if(meta.description&&!meta.descriptionErrors.length){
+     descriptionRecords.push({file,description:meta.description});
+     if(meta.description.length>160){
+       descriptionLengths.over160++;descriptionLengths.byLocale[locale]++;
+       warn("description-length-guidance",p,"Description exceeds editorial length guidance; preserve verified identity and evidence",{length:meta.description.length});
+     }
+   }
    // CJK descriptions convey useful content with fewer characters. These
    // checks are quality signals, not artificial Google length requirements.
    if(meta.title.length < (locale==="zh"||locale==="ja" ? 6 : 10) ||
@@ -216,6 +231,8 @@ for(let i=0;i<urls.length;i+=8){
    const defaultExpected=BASE+base;
    if(unique.has(defaultExpected) && alternateMap.get("x-default")!==defaultExpected)
      error("x-default",p,"Invalid default language");
+   if(!unique.has(defaultExpected)&&alternateMap.has("x-default"))
+     error("x-default",p,"Default language points to an unlisted page");
    const isModel=/\/tractors\/[^/]+\/$/.test(p);
    if(isModel){
     const slug=p.split("/").filter(Boolean).at(-1);
@@ -286,6 +303,9 @@ console.log("TRACTORVS_INTERNAL_LINK_GRAPH "+JSON.stringify(internalLinkSummary)
 const crossLocaleTitleCandidates=crossLocaleModelTitleGroups(modelTitleRecords);
 for(const group of crossLocaleTitleCandidates)warn("cross-locale-model-title",group.files[0],
  "Identical title observed for the same model in multiple locales; review language wording without removing identity",group);
+const descriptionReuse=descriptionReuseGroups(descriptionRecords);
+for(const group of descriptionReuse.sameLocale)warn("same-locale-description-reuse",group.files[0],"Review repeated description on distinct observed canonical pages",group);
+for(const group of descriptionReuse.crossLocale)warn("cross-locale-model-description",group.files[0],"Review identical model description in multiple observed languages",group);
 const report={
   site:BASE,mode:AUDIT_MODE,sitemaps:siteMaps.length,sitemapUrls:unique.size,
   htmlPages:inventory.htmlPages.size,forumPages:inventory.forumPages.size,
@@ -294,6 +314,9 @@ const report={
   fullPublishedModelsPerLocale:inventory.modelsPerLocale,
   titleAdvisories:titleLengths,
   crossLocaleTitleGroups:crossLocaleTitleCandidates.length,
+  descriptionAdvisories:descriptionLengths,
+  sameLocaleDescriptionGroups:descriptionReuse.sameLocale.length,
+  crossLocaleDescriptionGroups:descriptionReuse.crossLocale.length,
   internalLinkSummary,
   errors:problems.length,warnings:warnings.length,
 };
@@ -302,6 +325,6 @@ console.log("TRACTORVS_SEO_MODEL_SAMPLES "+JSON.stringify(modelSample));
 if(warnings.length)console.log("TRACTORVS_SEO_WARNINGS "+JSON.stringify(warnings.slice(0,30)));
 // CI retains the complete review inventory rather than just 30 console samples.
 if(process.env.TRACTORVS_SEO_EVIDENCE_PATH){
- writeFileSync(process.env.TRACTORVS_SEO_EVIDENCE_PATH,JSON.stringify({report,warnings,problems,internalLinks,crossLocaleTitleCandidates},null,2)+"\n");
+ writeFileSync(process.env.TRACTORVS_SEO_EVIDENCE_PATH,JSON.stringify({report,warnings,problems,internalLinks,crossLocaleTitleCandidates,descriptionReuse},null,2)+"\n");
 }
 if(problems.length)process.exitCode=1;

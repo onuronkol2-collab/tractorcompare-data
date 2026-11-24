@@ -3,7 +3,7 @@ import assert from "node:assert/strict";
 import {mkdtempSync,mkdirSync,writeFileSync,rmSync} from "node:fs";
 import {tmpdir} from "node:os";
 import {join} from "node:path";
-import {inspectMetaDescription,auditBuiltMetaDescriptions}
+import {inspectMetaDescription,auditBuiltMetaDescriptions,descriptionReuseGroups}
   from "../scripts/verify-sitewide-meta-descriptions.mjs";
 
 const page=(description,robots="index,follow")=>
@@ -106,4 +106,48 @@ test("unclosed script does not let a following fake description pass inspection"
     '<script>const x = "not closed"; <meta name="description" content="unreachable">'+
     '</head><body></body></html>';
   assert.deepEqual(inspectMetaDescription(html).errors,["missing-or-duplicate-description"]);
+});
+
+
+test("quoted attributes cannot impersonate name or content attributes",()=>{
+ const fake=page("<meta title=' name=\"description\" content=\"Fake evidence\"'>");
+ assert.deepEqual(inspectMetaDescription(fake).errors,["missing-or-duplicate-description"]);
+ const real=page("<meta title=' content=\"Fake evidence\"' name=\"description\" content=\"Actual evidence\">");
+ assert.equal(inspectMetaDescription(real).description,"Actual evidence");
+});
+
+test("description reuse is scoped to distinct canonical paths and observed model translations",()=>{
+ const rows=[
+  {file:"tractors/a/index.html",description:"Shared  evidence"},
+  {file:"tractors/a/index.html",description:"Shared evidence"},
+  {file:"tractors/b/index.html",description:"Shared evidence"},
+  {file:"tr/tractors/a/index.html",description:"Shared evidence"},
+  {file:"de/tractors/a/index.html",description:"Shared evidence"},
+  {file:"es/tractors/b/index.html",description:"Distinta descripción"},
+  {file:"fr/tractors/c/index.html",description:"Shared evidence"},
+  {file:"tr/articles/index.html",description:"Shared evidence"},
+  {file:"tr/tractors/b/index.html",description:"   "},
+ ];
+ const groups=descriptionReuseGroups(rows);
+ assert.deepEqual(groups.sameLocale.map(x=>[x.locale,x.files.length]),[["en",2],["tr",2]]);
+ assert.equal(groups.crossLocale.length,1);
+ assert.deepEqual(groups.crossLocale[0].locales,["de","en","tr"]);
+ assert.equal(groups.crossLocale[0].slug,"a");
+ assert.deepEqual(descriptionReuseGroups(rows.slice(0,2)),{sameLocale:[],crossLocale:[]});
+});
+
+test("whole-build reuse is advisory and excludes noindex content",()=>{
+ const root=mkdtempSync(join(tmpdir(),"tractorvs-description-reuse-"));
+ try{
+  for(const file of ["tractors/a/index.html","tractors/b/index.html","de/tractors/a/index.html","tr/tractors/a/index.html"]){
+   const dest=join(root,file);
+   mkdirSync(join(dest,".."),{recursive:true});
+   writeFileSync(dest,page('<meta name="description" content="Shared verified evidence">',file.startsWith("tr/")?"noindex,nofollow":"index,follow"));
+  }
+  const report=auditBuiltMetaDescriptions(root);
+  assert.equal(report.errors.length,0);
+  assert.equal(report.indexablePages,3);
+  assert.equal(report.reuse.sameLocale.length,1);
+  assert.deepEqual(report.reuse.crossLocale[0].locales,["de","en"]);
+ }finally{rmSync(root,{recursive:true,force:true});}
 });
