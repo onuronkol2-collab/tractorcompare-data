@@ -259,7 +259,10 @@ const schema=indexable?{
  .community-shell :global(.forum-live-topic h3){font-size:20px;line-height:1.4;margin:10px 0;color:#1f563a}
  .community-shell :global(.forum-live-topic p){font-size:14px;line-height:1.72;color:#3d5b48}
  .community-shell :global(.forum-live-meta){font-size:12px;color:#477759}
- .community-shell :global(.forum-live-topic details){border-top:1px solid #d3e4d2;padding-top:12px;margin-top:15px}
+ .community-shell :global(.forum-live-topic details){margin-top:8px}
+ .community-shell :global(.forum-live-topic summary h3){display:inline;margin:0;color:inherit;overflow-wrap:anywhere}
+ .community-shell :global(.forum-live-read-label){display:block;font-size:12px;font-weight:500;margin:6px 0 8px;text-decoration:underline}
+ .community-shell :global(.forum-live-topic details[open] + p){display:none}
  .community-shell :global(.forum-live-topic summary){color:#17583a;text-decoration:underline;
   font-size:14px;font-weight:800;cursor:pointer;padding:8px 0}
  .community-shell :global(.forum-live-topic summary:focus-visible){outline:3px solid #83bc8a;outline-offset:2px}
