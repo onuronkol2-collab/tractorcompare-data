@@ -158,3 +158,22 @@ test("catalog hot path keeps source-visible SSR while avoiding repeated DOM scan
  assert.match(src,/if\(routeChanged\)window.dispatchEvent/);
  assert.match(src,/if \(card.hidden !== !match\) card.hidden = !match/);
 });
+
+test("compare's client-side model state is accepted only after loading the exact requested document",()=>{
+ const expected=ROUTE_URLS.compare;
+ const left="0b53e944-0ccd-4fbd-84e8-f49ffde1a2ae",right="66781999-258a-4baa-a52b-9a4f79c8b708";
+ const query="?left="+left+"&right="+right;
+ const report={...sample,requestedUrl:expected,mainDocumentUrl:expected,finalDisplayedUrl:expected+query};
+ assert.doesNotThrow(()=>validateLiveLighthouseResult(report,"compare"));
+ assert.doesNotThrow(()=>validateLiveLighthouseResult({...report,finalDisplayedUrl:expected+"?right="+right+"&left="+left},"compare"));
+ for(const url of [
+   expected+"?left="+left,expected+"?left="+left+"&right="+left,
+   expected+query+"&left="+left,expected+query+"&utm_source=test",
+   expected+query+"#anchor",expected+"?left=wrong&right="+right,
+   "https://tractorvs.com/compare/"+query,"https://example.org/tr/compare/"+query
+ ])assert.throws(()=>validateLiveLighthouseResult({...report,finalDisplayedUrl:url},"compare"),/Unexpected Lighthouse final URL/,url);
+ assert.throws(()=>validateLiveLighthouseResult({...report,mainDocumentUrl:expected+query},"compare"),/Unexpected Lighthouse final URL/);
+ assert.throws(()=>validateLiveLighthouseResult({...report,mainDocumentUrl:undefined},"compare"),/Unexpected Lighthouse final URL/);
+ assert.throws(()=>validateLiveLighthouseResult({...report,requestedUrl:ROUTE_URLS.home},"compare"),/Unexpected Lighthouse final URL/);
+ assert.throws(()=>validateLiveLighthouseResult({...sample,finalDisplayedUrl:ROUTE_URLS.home+query},"home"),/Unexpected Lighthouse final URL/);
+});
