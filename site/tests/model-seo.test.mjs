@@ -747,7 +747,7 @@ test("source-matched engine power takes priority over generic counts in model sn
 });
 
 test("long model identity is never silently discarded to fit an arbitrary snippet length",()=>{
- const variant="Exact manufacturer configuration with specialised transmission and axle equipment / additional hydraulic package / particular regional configuration";
+ const variant="Exact manufacturer configuration with specialised transmission and axle equipment / additional hydraulic package / particular regional configuration / additional transmission and factory axle options";
  const model={...tractor,variant,model_year:2025};
  for(const locale of ["en","tr","zh","hi","pt-br","fr","de","ru","ja","es"]){
   const meta=modelSeoMetadata(model,locale);
@@ -756,4 +756,18 @@ test("long model identity is never silently discarded to fit an arbitrary snippe
   assert.ok(!meta.searchDescription.includes("114 HP"),locale+" no orphaned power assertion");
   assert.ok(!meta.searchDescription.endsWith("…"));
  }
+});
+
+
+test("independently reported power retains its qualifier in a constrained search snippet",()=>{
+ const model={...tractor,brand_name:"Belarus",model_name:"510",variant:"D-244 / 2WD",market:null,
+  specifications:[{...tractor.specifications[1],source_type:"independent_catalog",
+   source_publisher:"TractorData",source_url:"https://www.tractordata.com/farm-tractors/example.html",
+   evidence_text:"Third-party reported specification from the independent technical database."}]};
+ const meta=modelSeoMetadata(model,"en");
+ assert.match(meta.searchDescription,/Independent reference \(not manufacturer-verified\)/);
+ assert.match(meta.searchDescription,/114 HP/);
+ assert.ok(meta.searchDescription.length<=160);
+ const constrained=modelSeoMetadata({...model,variant:"D-244 / 2WD / regional configuration with additional transmission equipment and other variants"},"en");
+ assert.doesNotMatch(constrained.searchDescription,/114 HP/);
 });
