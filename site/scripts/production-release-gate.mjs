@@ -267,7 +267,40 @@ function verifyCloudflareReleaseIdentity(env) {
    "Cloudflare production release must come from the reviewed main branch.");
  const sha=verifiedReleaseSha(env.WORKERS_CI_COMMIT_SHA);
  insist(Boolean(sha),"Cloudflare production build is missing a full Git commit SHA.");
- const pages=["index.html","tr/index.html","tr/tractors/index.html","tr/compare/index.html"];
+ // Explicit fixed paths: no caller-provided directory, locale, or file name.
+ // A failed locale build must block production rather than silently ship stale HTML.
+ const pages=[
+  "index.html",
+  "tractors/index.html",
+  "compare/index.html",
+  "tr/index.html",
+  "tr/tractors/index.html",
+  "tr/compare/index.html",
+  "zh/index.html",
+  "zh/tractors/index.html",
+  "zh/compare/index.html",
+  "hi/index.html",
+  "hi/tractors/index.html",
+  "hi/compare/index.html",
+  "pt-br/index.html",
+  "pt-br/tractors/index.html",
+  "pt-br/compare/index.html",
+  "fr/index.html",
+  "fr/tractors/index.html",
+  "fr/compare/index.html",
+  "de/index.html",
+  "de/tractors/index.html",
+  "de/compare/index.html",
+  "ru/index.html",
+  "ru/tractors/index.html",
+  "ru/compare/index.html",
+  "ja/index.html",
+  "ja/tractors/index.html",
+  "ja/compare/index.html",
+  "es/index.html",
+  "es/tractors/index.html",
+  "es/compare/index.html"
+ ];
  for(const filename of pages) {
   const html=readText(join(projectRoot,"dist",filename));
   insist(hasReleaseSha(html,sha),
