@@ -6,8 +6,8 @@
       "modified": "2026-11-24T10:24:45.384Z"
     },
     "https://tractorvs.com/articles/": {
-      "digest": "f4d32f5ffc67b88681b1b5561e8db5d02e2e3359a514dbf30934b26641bbed54",
-      "modified": "2026-11-22T18:22:02.402Z"
+      "digest": "a22ac47998f82d2b8426a43cba5780deab1550bd512ff7dc9066613092553adc",
+      "modified": "2026-11-24T16:26:42.582Z"
     },
     "https://tractorvs.com/brands/mccormick/": {
       "digest": "1597c7455366c1354a16dd5d186ff781ce03141822bf25a743caa310ecde7f69",
@@ -30,8 +30,8 @@
       "modified": "2026-11-24T10:24:45.384Z"
     },
     "https://tractorvs.com/de/articles/": {
-      "digest": "e8e5821b7a9a45bf22f1f98c341eb6c77b42f895c99c960f2e7ec29c22d8d083",
-      "modified": "2026-11-22T18:22:02.402Z"
+      "digest": "9cce9f9a36c605c632ee48dff4ecd8c4081fa5dae572b36eafe256ac8d2f2263",
+      "modified": "2026-11-24T16:26:42.582Z"
     },
     "https://tractorvs.com/de/compare/": {
       "digest": "bce5f2e2534dda6076af5d22bc649612576b790c2268936b6b52c5d286f3f2be",
@@ -42,16 +42,16 @@
       "modified": "2026-11-23T18:15:08.467Z"
     },
     "https://tractorvs.com/de/guides/choosing-a-tractor/": {
-      "digest": "73b47b7e80d691d9df9843f77861c532617e97b19045d89cba12e16d69b4a274",
-      "modified": "2026-11-24T05:01:16.833Z"
+      "digest": "acc98b0e38785c5bb7351954a96e7befc0334131c983ee46d8c6b2b857b3a780",
+      "modified": "2026-11-24T16:26:42.582Z"
     },
     "https://tractorvs.com/de/privacy/": {
       "digest": "660593ca17b0e847574893ae1908672d0700c273495554fac54f13e168621030",
       "modified": null
     },
     "https://tractorvs.com/de/reviews/basak-2075-bk/": {
-      "digest": "dd5601ffe45298fd61d7b079eef032f8483215c893594b7c410fdfc2988c42ec",
-      "modified": "2026-11-22T15:13:41.997Z"
+      "digest": "d668e9f80a851bd52858443bc5e0a13011c2c9cc794e82b70305603b851d4573",
+      "modified": "2026-11-24T16:26:42.582Z"
     },
     "https://tractorvs.com/de/tractors/": {
       "digest": "8e2c16a59faa3df7b9607f259af7fab025e0e5f2f0800ecf857a1907db0fd886",
@@ -1622,8 +1622,8 @@
       "modified": "2026-11-24T10:24:45.384Z"
     },
     "https://tractorvs.com/es/articles/": {
-      "digest": "0145e305b596770e50c433fa8685671159ccaabc3aafdfd8d7f2806ca6eb3e36",
-      "modified": "2026-11-22T18:22:02.402Z"
+      "digest": "bdb48056cf70631e4bf66f4d96e825f1ddccbf4ea1cbae9bf064674cf5f89895",
+      "modified": "2026-11-24T16:26:42.582Z"
     },
     "https://tractorvs.com/es/compare/": {
       "digest": "e438f60d8313e013b7db488dbbc47a6bc5fe1bcca8753802402337253cbbcb58",
@@ -1634,16 +1634,16 @@
       "modified": "2026-11-23T18:15:08.467Z"
     },
     "https://tractorvs.com/es/guides/choosing-a-tractor/": {
-      "digest": "91ff8c9ec386daef104e39800fedad2b874062a7cd665ea37c3793f3044eb556",
-      "modified": "2026-11-24T10:19:05.384Z"
+      "digest": "b1a38e2e8c95d29d38a3f9d5bbf8050212ab529d55835bf6ded427f21ed8cc7e",
+      "modified": "2026-11-24T16:26:42.582Z"
     },
     "https://tractorvs.com/es/privacy/": {
       "digest": "5280a3acb4d9d32f3870a0fb917d9f22aafeb501c2c28aeec0b0a5c04849fc25",
       "modified": null
     },
     "https://tractorvs.com/es/reviews/basak-2075-bk/": {
-      "digest": "86089b5ffc917108b18dc69ccba6f350a865778b7266c80ba1e75c0b033dc8e0",
-      "modified": "2026-11-22T15:13:41.997Z"
+      "digest": "f8c24755fbe0dd06d39c003964b3589fb1fab64d76cb1c19c97879c0e0d31547",
+      "modified": "2026-11-24T16:26:42.582Z"
     },
     "https://tractorvs.com/es/tractors/": {
       "digest": "2e228fdf1d1e6abe686fd642593fecb66a9e379f5a5cfa1853283d371e758134",
@@ -3218,8 +3218,8 @@
       "modified": "2026-11-24T10:24:45.384Z"
     },
     "https://tractorvs.com/fr/articles/": {
-      "digest": "b87ad5ef98462bf555f36d462ca40ec0376d8fea5d643ae23f7a7bbbcdec3330",
-      "modified": "2026-11-22T18:22:02.402Z"
+      "digest": "4a6ade76cf3c3ad17590b25a3c3290bfa43c878f3fe79c923cfc4b99766edbed",
+      "modified": "2026-11-24T16:26:42.582Z"
     },
     "https://tractorvs.com/fr/compare/": {
       "digest": "be15a8dc1f49d28fb2a4e66493add32fc00e4858f72cce11c15e01dc6fd6a522",
@@ -3230,16 +3230,16 @@
       "modified": "2026-11-23T18:15:08.467Z"
     },
     "https://tractorvs.com/fr/guides/choosing-a-tractor/": {
-      "digest": "283c45aae594911283b703c27814be3b9fbb9d9c1ea79b59273bd1d2e14630bb",
-      "modified": "2026-11-24T10:19:05.384Z"
+      "digest": "c1d4a891053a117f4d26b0fbe43fcc365ce9bb70ed72e2dfba60abaf90180b1e",
+      "modified": "2026-11-24T16:26:42.582Z"
     },
     "https://tractorvs.com/fr/privacy/": {
       "digest": "ac13ad482ddb61ddbb8489fe87da2f0909beee0bfc866a87c6413abd84754362",
       "modified": "2026-11-24T05:01:16.833Z"
     },
     "https://tractorvs.com/fr/reviews/basak-2075-bk/": {
-      "digest": "0ec8aeb9b447b4bc7db2e035d79de83fc069d9cdc55a9bf6160455764a4e2f36",
-      "modified": "2026-11-22T15:13:41.997Z"
+      "digest": "d042cacc85ec51ce0d87b527eef6b2182af9384297f1f0e27863dc7ac094ad69",
+      "modified": "2026-11-24T16:26:42.582Z"
     },
     "https://tractorvs.com/fr/tractors/": {
       "digest": "a665fd5bd9cddfbd8f089d0c4460628c24d1e289a478e57ed80202aae26e1c4c",
@@ -4806,8 +4806,8 @@
       "modified": "2026-11-23T16:45:17.078Z"
     },
     "https://tractorvs.com/guides/choosing-a-tractor/": {
-      "digest": "f334a960f070e905c77776cd72201e5c9c99e39fab73c52d63f2b44bbdf46aed",
-      "modified": "2026-11-24T10:19:05.384Z"
+      "digest": "9ecf9c96d1ad6ba6fc1306756fd2d8be20c52958694e479b3f88cf1e7e2e14a0",
+      "modified": "2026-11-24T16:26:42.582Z"
     },
     "https://tractorvs.com/guides/pto-and-power-take-off/": {
       "digest": "f0284c707518510870e2bb6427301da1c18939b1ec681fccf302fefe89d69034",
@@ -4830,8 +4830,8 @@
       "modified": "2026-11-24T10:24:45.384Z"
     },
     "https://tractorvs.com/hi/articles/": {
-      "digest": "3ef252be723e22cbd42f479762ff15210b935675304ca03b43cf5cc9c06c3def",
-      "modified": "2026-11-22T18:22:02.402Z"
+      "digest": "1dd3e6fa62b3d37f34dfb83496f61d3855a83279c8a5c6613c48e6f0cbf69ac6",
+      "modified": "2026-11-24T16:26:42.582Z"
     },
     "https://tractorvs.com/hi/compare/": {
       "digest": "bc5fb0ca23365c079d36482dd4b0121d6912c502edd58534c039a8fa1e27e305",
@@ -4842,16 +4842,16 @@
       "modified": "2026-11-23T18:15:08.467Z"
     },
     "https://tractorvs.com/hi/guides/choosing-a-tractor/": {
-      "digest": "56e64335ab16969d4eab04c73c989d7e28511ee35b7798bd79299bda034cc261",
-      "modified": "2026-11-24T10:19:05.384Z"
+      "digest": "182a472bc39c4e8c2c4754f4ffe4a35e8c60044329742a12c926273a58b527e3",
+      "modified": "2026-11-24T16:26:42.582Z"
     },
     "https://tractorvs.com/hi/privacy/": {
       "digest": "38509a1765fbdf74b8bf0cd356e2dbd66f0de4efb4a13a2cd445bdefcba40929",
       "modified": null
     },
     "https://tractorvs.com/hi/reviews/basak-2075-bk/": {
-      "digest": "58fb223438c75f5611a82e803e979a8b6551f2a39196657a3e585e3aa98ffb5a",
-      "modified": "2026-11-22T15:13:41.997Z"
+      "digest": "8221faf4607dbd3dbc772973fade59797c2dcfa1b4da486d4da9ea8da2111668",
+      "modified": "2026-11-24T16:26:42.582Z"
     },
     "https://tractorvs.com/hi/tractors/": {
       "digest": "6e8f854db0ddab616eb8892ad48f7939aedaa32bba5a30bafc5bbf4de665dd57",
@@ -6422,8 +6422,8 @@
       "modified": "2026-11-24T10:24:45.384Z"
     },
     "https://tractorvs.com/ja/articles/": {
-      "digest": "867884ed17f13bd46d0ef1d231a61aa757cff00bfcdd1e840fddcf43663f141a",
-      "modified": "2026-11-22T18:22:02.402Z"
+      "digest": "e7227b3b4bcb7c68aaa26c0f04f9c1bf76670c6a5107a8003d3f3ad226099b83",
+      "modified": "2026-11-24T16:26:42.582Z"
     },
     "https://tractorvs.com/ja/compare/": {
       "digest": "b5a8ce477b7d03d043af1d35a470284d989348bdd80551c8c10e0a55462c800e",
@@ -6434,16 +6434,16 @@
       "modified": "2026-11-23T18:15:08.467Z"
     },
     "https://tractorvs.com/ja/guides/choosing-a-tractor/": {
-      "digest": "8d6dcc961ec504eb5bb5de3dce6c06ede93151cd832f5c762043d50e2dd362d0",
-      "modified": "2026-11-22T14:30:59.764Z"
+      "digest": "3b72ae07966123309d9613efe318636ac1a028d9500feddbedf32aba6fa643fe",
+      "modified": "2026-11-24T16:26:42.582Z"
     },
     "https://tractorvs.com/ja/privacy/": {
       "digest": "5591a7b83eb7457a571db02782b42cbb67044984e644775425efeb8a1ff5e737",
       "modified": null
     },
     "https://tractorvs.com/ja/reviews/basak-2075-bk/": {
-      "digest": "a251703664b33831280f7c4fd9b7b6582f9b8f8c6844411afd0874f87f3a39f0",
-      "modified": "2026-11-22T15:13:41.997Z"
+      "digest": "798f9740c3b3326f2031ff78c67e339f7d0430081d72b289fe99a4fe3e75594c",
+      "modified": "2026-11-24T16:26:42.582Z"
     },
     "https://tractorvs.com/ja/tractors/": {
       "digest": "446dc6aa1c422530094fe80f09122cb49879afcd932d8a09a67edfae3e57822a",
@@ -8022,8 +8022,8 @@
       "modified": "2026-11-24T10:24:45.384Z"
     },
     "https://tractorvs.com/pt-br/articles/": {
-      "digest": "117be662005262991fb353875c1cf33ccb9e7a46960f3f88b43118fb9ecdf59d",
-      "modified": "2026-11-22T18:22:02.402Z"
+      "digest": "10ec54bd81ea3854a508000ce24ff618520893d7ecde37011f24d97042a3a46f",
+      "modified": "2026-11-24T16:26:42.582Z"
     },
     "https://tractorvs.com/pt-br/compare/": {
       "digest": "56af4c57ebf304329dba1470e47d020f8a5efb9524da13bf3b8eb4da9930253b",
@@ -8034,16 +8034,16 @@
       "modified": "2026-11-23T18:15:08.467Z"
     },
     "https://tractorvs.com/pt-br/guides/choosing-a-tractor/": {
-      "digest": "126a1e657572d35f63dff7fb8cf0c1f664cceeaf2f10217f05c55e3d22c7c35b",
-      "modified": "2026-11-24T05:01:16.833Z"
+      "digest": "4547c1623e77bc94554e228d8ec08a89cfd907bf3b528ccc1dd806a2ea8c676a",
+      "modified": "2026-11-24T16:26:42.582Z"
     },
     "https://tractorvs.com/pt-br/privacy/": {
       "digest": "ad7a15fea0d6ddbefc64a27466458ebe4dab4dc780fd07706bac4dd5ccc99617",
       "modified": null
     },
     "https://tractorvs.com/pt-br/reviews/basak-2075-bk/": {
-      "digest": "c92b226e0ed25542e8f446b118a1225d918ad387895b3ea461b5a7d348bea0e0",
-      "modified": "2026-11-22T15:13:41.997Z"
+      "digest": "7421ae880f296a192eb63820a768d3aefa3321a63a1cd838d9949dd473610e6f",
+      "modified": "2026-11-24T16:26:42.582Z"
     },
     "https://tractorvs.com/pt-br/tractors/": {
       "digest": "1747e67aa04f1eaa63743dcf3e9aaff9cae5df45c5d27a08647aaad5bbf84cbb",
@@ -9610,16 +9610,16 @@
       "modified": "2026-11-23T16:45:17.078Z"
     },
     "https://tractorvs.com/reviews/basak-2075-bk/": {
-      "digest": "4585ac2c8aded64c915f48f6ed3877688d05da14ea121d83ff1dd94238f0242e",
-      "modified": "2026-11-22T15:13:41.997Z"
+      "digest": "3ed7a8a28479d5f711799c588b7137dcdeb88f82a585ecf144b096eb108210b7",
+      "modified": "2026-11-24T16:26:42.582Z"
     },
     "https://tractorvs.com/ru/": {
       "digest": "75f614f5f0ada6ed07dc463d5b82886c34d6e4f621b307a5c343bac13cd502c1",
       "modified": "2026-11-24T10:24:45.384Z"
     },
     "https://tractorvs.com/ru/articles/": {
-      "digest": "af26b8678163822452934ec1c7cb7f12884df875f898bbe76e1654f6e04d4e1a",
-      "modified": "2026-11-22T18:22:02.402Z"
+      "digest": "83f2b8b29637582a4fd73e4032eaf3277f45b572b08ed19445bece909c458085",
+      "modified": "2026-11-24T16:26:42.582Z"
     },
     "https://tractorvs.com/ru/compare/": {
       "digest": "fe5ec79343ac8151eab9475dbbb4d5135ef81c90ebacd5f1b792937eaedc981a",
@@ -9630,16 +9630,16 @@
       "modified": "2026-11-23T18:15:08.467Z"
     },
     "https://tractorvs.com/ru/guides/choosing-a-tractor/": {
-      "digest": "c87e76fe785469fa3e7eb5e67cdf43e224ec88b50bfa3d97a944750712db20b9",
-      "modified": "2026-11-24T10:19:05.384Z"
+      "digest": "0aa1ab2f5e2ea379edf42d5ef3becdda7c6ec1fb49f661a79b788c5ce5095d7b",
+      "modified": "2026-11-24T16:26:42.582Z"
     },
     "https://tractorvs.com/ru/privacy/": {
       "digest": "fdcf1dd126b62af7f2d6da6793752eb70d5cf774a7e887b983a816425b569fe8",
       "modified": null
     },
     "https://tractorvs.com/ru/reviews/basak-2075-bk/": {
-      "digest": "4eaee3a430213c2e373a4f6865a8cbf6f793060ae5fa7638ee61254ea402ee66",
-      "modified": "2026-11-22T15:13:41.997Z"
+      "digest": "773a92edad3928529bcbae99b248bff27fba12869794fc581c13e25fba92aea3",
+      "modified": "2026-11-24T16:26:42.582Z"
     },
     "https://tractorvs.com/ru/tractors/": {
       "digest": "30037795df9f1f9ccf2fdf5013abd1606e77d306e897959310d0b726e26817ad",
@@ -11210,8 +11210,8 @@
       "modified": "2026-11-24T10:24:45.384Z"
     },
     "https://tractorvs.com/tr/articles/": {
-      "digest": "24af9028de2a49e800978e946a31767a57ff1ac80c98a17fb919a12f2339d53e",
-      "modified": "2026-11-22T18:22:02.402Z"
+      "digest": "75d1132252a6b94ba476a895c078b5f180c697c16484cb41b026573a16aabb99",
+      "modified": "2026-11-24T16:26:42.582Z"
     },
     "https://tractorvs.com/tr/brands/mccormick/": {
       "digest": "94782de011b240a5c928fb7791bf8f3f4ae07e726522d0ebbf785794ab323e58",
@@ -11234,8 +11234,8 @@
       "modified": "2026-11-23T18:15:08.467Z"
     },
     "https://tractorvs.com/tr/guides/choosing-a-tractor/": {
-      "digest": "1add30ac1c9c6ae96fcd30180033deda65f446cb1595117819dfe2651d6b025a",
-      "modified": "2026-11-22T14:30:59.764Z"
+      "digest": "11c88ba0738bb3c87249f11db80f4130fbfd238a4e8fc58849bc385efa714b93",
+      "modified": "2026-11-24T16:26:42.582Z"
     },
     "https://tractorvs.com/tr/guides/pto-and-power-take-off/": {
       "digest": "de5ee4f23719bd6a292702ab2f6366f755c52c33a3eefc674c509b3e31ec0054",
@@ -11262,8 +11262,8 @@
       "modified": null
     },
     "https://tractorvs.com/tr/reviews/basak-2075-bk/": {
-      "digest": "2a54324e561f2db22ae654a4b9e65d7675a81e96c19600b826138c1a15f15222",
-      "modified": "2026-11-22T15:13:41.997Z"
+      "digest": "47ed3734d44340ef3f4a2ea292602692a76a95c60bb010e4c2247104fb230e44",
+      "modified": "2026-11-24T16:26:42.582Z"
     },
     "https://tractorvs.com/tr/tractors/": {
       "digest": "afea748d6663773d990bab0131214a68d83a72005cfae42e9e7d048777c97cb2",
@@ -14398,8 +14398,8 @@
       "modified": "2026-11-24T10:24:45.384Z"
     },
     "https://tractorvs.com/zh/articles/": {
-      "digest": "879a0a248b1d60f80189181df4af6d71c0f128b026d802b831dc37f5508ce1ab",
-      "modified": "2026-11-22T18:22:02.402Z"
+      "digest": "5e6ee9807459baae052b17e309edce3c5271e3b0dfb6c00aaa8433a08ac323d1",
+      "modified": "2026-11-24T16:26:42.582Z"
     },
     "https://tractorvs.com/zh/compare/": {
       "digest": "8494f139dc855ca71b56df9e610a0547523b361f4fef7cae9a1ef0eab071e501",
@@ -14410,16 +14410,16 @@
       "modified": "2026-11-23T18:15:08.467Z"
     },
     "https://tractorvs.com/zh/guides/choosing-a-tractor/": {
-      "digest": "a2a597a6514f7d38fe74e2cac20096e4049c3c8e9f8227676767414a56e808bf",
-      "modified": "2026-11-22T14:30:59.764Z"
+      "digest": "5a3e53c6e32392c8b9c1e19830ba7d37146aa48dfce472d6abf7212810b227cb",
+      "modified": "2026-11-24T16:26:42.582Z"
     },
     "https://tractorvs.com/zh/privacy/": {
       "digest": "b7d88e8d5ea7a79e44d7acb696a9705b4aae023b855267c0a3a325731119207d",
       "modified": null
     },
     "https://tractorvs.com/zh/reviews/basak-2075-bk/": {
-      "digest": "93a211f3c65cf86b84012b5b708b153074ee6191799b1f13d30328d70782efc3",
-      "modified": "2026-11-22T15:13:41.997Z"
+      "digest": "4725e0ac75ad72ee8db06eb2305b7c0961c78a69fb4d9bec403e901976592b1e",
+      "modified": "2026-11-24T16:26:42.582Z"
     },
     "https://tractorvs.com/zh/tractors/": {
       "digest": "23af2753bb6f69aca5866dceffa3fa9bde43468d7579ad200c0e5fde528fa41d",
