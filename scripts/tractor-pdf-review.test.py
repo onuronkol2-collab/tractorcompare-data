@@ -102,5 +102,92 @@ class PdfReviewTests(unittest.TestCase):
             with self.assertRaises(ValueError):
                 mod.review_pdf(bad, ["B3055"])
 
+class PdfColumnTests(unittest.TestCase):
+    @staticmethod
+    def layout():
+        # Explicit fixed-width, two model columns. Tests are invented data,
+        # never evidence for actual Hattat or other production tractor specs.
+        row = lambda label, a, b: f"{label:<20}{a:<12}  {b:<12}"
+        page = "\n".join([
+            row("Model", "TEST-A", "TEST-B"),
+            row("Power [kW]", "40", "55"),
+            row("Torque [Nm]", "200", "280"),
+            row("Mass [kg]", "-", "3200"),
+            row("Fuel [L]", "70", ""),
+            row("PTO [rpm]", "540/540E", "540/750"),
+        ])
+        manifest = {"schema":1, "sha256":"fake-fixture-hash", "tables":[
+            {"page":1, "header_line":1, "header_label":"Model",
+             "columns":[{"model":"TEST-A","start":20,"end":32},
+                        {"model":"TEST-B","start":34,"end":46}],
+             "rows":[{"line":2,"label":"Power [kW]"},
+                     {"line":3,"label":"Torque [Nm]"},
+                     {"line":4,"label":"Mass [kg]"},
+                     {"line":5,"label":"Fuel [L]"},
+                     {"line":6,"label":"PTO [rpm]"}]}]}
+        return page,manifest
+
+    def setUp(self):
+        import runpy
+        self.extract = runpy.run_path(str(SCRIPT.with_name("tractor-pdf-columns.py")))["extract_candidates"]
+
+    def extract_fixture(self, page, manifest):
+        return self.extract([page], ["TEST-A","TEST-B"], "fake-fixture-hash", manifest)
+
+    def test_exact_column_candidates_and_missing_cell_rejection(self):
+        page, manifest = self.layout()
+        report = self.extract_fixture(page, manifest)
+        self.assertEqual(report["status"], "partial_column_review")
+        cells = report["candidate_cells"]
+        self.assertEqual(len(cells), 6)
+        self.assertEqual([(x["model"], x["source_value"]) for x in cells[:2]],
+                         [("TEST-A","40"),("TEST-B","55")])
+        self.assertEqual([x["source_value"] for x in cells[-2:]], ["540/540E","540/750"])
+        self.assertEqual([x["layout_line"] for x in report["blocked_rows"]], [4,5])
+        self.assertTrue(all(not x["allowed_to_publish"] for x in cells))
+        self.assertEqual(report["approved"], 0)
+        self.assertEqual(report["published"], 0)
+
+    def test_wrong_hash_header_model_order_or_overlap_rejected(self):
+        for mutate in (
+            lambda m: m.update(sha256="other"),
+            lambda m: m["tables"][0]["columns"].reverse(),
+            lambda m: m["tables"][0]["columns"][1].update(start=25),
+            lambda m: m["tables"][0]["columns"][1].update(model="TEST-A"),
+            lambda m: m["tables"][0]["columns"][1].update(model="NOT-REQUESTED"),
+            lambda m: m["tables"][0].update(header_label="Other"),
+            lambda m: m["tables"][0]["rows"].append({"line":2,"label":"Power [kW]"}),
+        ):
+            page, manifest = self.layout()
+            mutate(manifest)
+            with self.assertRaises(ValueError):
+                self.extract_fixture(page, manifest)
+        page, manifest = self.layout()
+        with self.assertRaises(ValueError):
+            self.extract_fixture(page.replace("TEST-A","TEST-Z"), manifest)
+
+    def test_boundary_drift_and_unmapped_content_block_row(self):
+        page,manifest = self.layout()
+        lines = page.splitlines()
+        lines[1] = "Power [kW]".ljust(20) + "12345678901234567890"
+        lines[2] += "UNMAPPED"
+        report = self.extract_fixture("\n".join(lines), manifest)
+        self.assertEqual([r["layout_line"] for r in report["blocked_rows"]], [2,3,4,5])
+        self.assertEqual(len(report["candidate_cells"]), 2)
+
+    def test_private_manifest_bound_to_real_pdf_hash(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            pdf = root / "test.pdf"
+            make_pdf(pdf)
+            manifest = root / "manifest.json"
+            manifest.write_text(json.dumps({"schema":1,"sha256":"wrong","tables":[]}))
+            with self.assertRaises(ValueError):
+                mod.review_pdf(pdf, ["B3055","B3065"], mod.read_table_manifest(manifest))
+            manifest.write_bytes(b" " * (mod.MAX_MANIFEST_BYTES+1))
+            with self.assertRaises(ValueError):
+                mod.read_table_manifest(manifest)
+
+
 if __name__ == "__main__":
     unittest.main()
