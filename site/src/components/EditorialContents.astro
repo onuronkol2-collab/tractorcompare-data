@@ -1,0 +1,62 @@
+---
+import type {Locale} from "../lib/locales.ts";
+interface Props {lang:Locale; items:{id:string;label:string}[]}
+const {lang,items}=Astro.props;
+const labels={
+  "en": [
+    "On this page",
+    "Back to articles"
+  ],
+  "tr": [
+    "İçindekiler",
+    "Makalelere dön"
+  ],
+  "zh": [
+    "本文目录",
+    "返回文章列表"
+  ],
+  "hi": [
+    "इस लेख में",
+    "लेखों की सूची पर लौटें"
+  ],
+  "pt-br": [
+    "Neste artigo",
+    "Voltar aos artigos"
+  ],
+  "fr": [
+    "Dans cet article",
+    "Retour aux articles"
+  ],
+  "de": [
+    "Auf dieser Seite",
+    "Zurück zu den Artikeln"
+  ],
+  "ru": [
+    "В этой статье",
+    "К списку статей"
+  ],
+  "ja": [
+    "この記事の目次",
+    "記事一覧に戻る"
+  ],
+  "es": [
+    "En este artículo",
+    "Volver a los artículos"
+  ]
+};
+const [title]=labels[lang];
+if(!items.length||new Set(items.map(x=>x.id)).size!==items.length||items.some(x=>!x.label.trim()||!/^[a-z][a-z0-9-]*$/.test(x.id)))throw Error("Invalid editorial contents");
+---
+<nav class="article-contents" aria-labelledby="article-contents-heading">
+ <h2 id="article-contents-heading">{title}</h2>
+ <ol>{items.map(item=><li><a href={"#"+item.id}>{item.label}</a></li>)}</ol>
+</nav>
+<style>
+.article-contents{margin:24px 0 12px;padding:clamp(16px,3vw,25px);border:1px solid #c9ddc7;background:#fff;border-radius:12px;min-width:0}
+.article-contents h2{margin:0 0 10px;color:#23472f;font-size:clamp(20px,2.5vw,25px);line-height:1.4}
+.article-contents ol{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:4px 24px;margin:0;padding-inline-start:24px}
+.article-contents li{min-width:0;color:#385b41}
+.article-contents a{display:flex;align-items:center;min-height:44px;color:#215b35;text-decoration:underline;text-underline-offset:3px;font-size:15px;line-height:1.5;overflow-wrap:anywhere}
+.article-contents a:focus-visible{outline:3px solid #39784a;outline-offset:2px;border-radius:4px}
+@media(max-width:620px){.article-contents ol{grid-template-columns:1fr;gap:0}}
+</style>
