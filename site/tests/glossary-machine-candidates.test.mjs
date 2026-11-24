@@ -36,4 +36,6 @@ test("machine candidate snapshot is source bound, complete in shape and explicit
   counts.push({locale:job.locale,received,flagged,completeEntries});
  }
  assert.deepEqual(packet.counts,counts);
+ assert.equal(counts.reduce((n,x)=>n+x.received,0),1230);
+ assert.ok(counts.every(x=>x.completeEntries===82));
 });
