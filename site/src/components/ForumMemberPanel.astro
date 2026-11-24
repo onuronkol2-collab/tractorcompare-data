@@ -555,8 +555,8 @@ for(const root of widgets){
     new URLSearchParams({select:"topic_id,created_at,author_id",status:"eq.published",
       topic_id:"in.("+ids.join(",")+")",created_at:"gt."+cutoff,limit:"500"}),{
       headers:headers(true),cache:"no-store",signal:AbortSignal.timeout(12000)});
-   if(!replyRes.ok)throw Error();
-   const replies=await replyRes.json() as {topic_id:string;created_at:string;author_id:string}[];
+   const repliesAvailable=replyRes.ok;
+   const replies=repliesAvailable?await replyRes.json() as {topic_id:string;created_at:string;author_id:string}[]:[];
    if(!current())return;
    const dates=new Map(followed.map(rec=>[rec.topic_id,rec.last_seen_at]));
    const counts=new Map<string,number>();
@@ -580,7 +580,7 @@ for(const root of widgets){
     }
     followingList.append(li);
    }
-   if(followingEmpty)followingEmpty.hidden=rows.length>0;
+   if(followingEmpty){followingEmpty.hidden=rows.length>0&&repliesAvailable;followingEmpty.textContent=repliesAvailable?txt.noFollowingTopics:txt.memberLoadError;}
   }catch{if(current()&&followingEmpty){followingEmpty.hidden=false;followingEmpty.textContent=txt.memberLoadError}}
  }
 
