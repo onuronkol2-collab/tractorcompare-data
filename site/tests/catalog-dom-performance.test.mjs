@@ -9,7 +9,7 @@ const photo = read("components/TractorPhoto.astro");
 test("all catalog photo placeholders reuse one local SVG symbol; no unlicensed image is substituted",()=>{
  assert.equal((catalog.match(/<symbol id="tractorvs-catalog-photo-symbol"/g)||[]).length,1);
  assert.match(catalog,/class="catalog-photo-sprite"/);
- assert.match(catalog,/<TractorPhoto tractor=\{tractor\} lang=\{lang\} mode="catalog" sprite \/>/);
+ assert.match(catalog,/<TractorPhoto tractor=\{tractor\} lang=\{lang\} mode="catalog" sprite slotSizes="auto, [^"]+" \/>/);
  assert.match(photo,/sprite && mode==="catalog"/);
  assert.match(photo,/<use href="#tractorvs-catalog-photo-symbol" \/>/);
  assert.match(photo,/photos\.length===0/);
