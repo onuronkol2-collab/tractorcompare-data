@@ -12,6 +12,7 @@ import os
 from pathlib import Path
 import re
 import resource
+import runpy
 import subprocess
 import tempfile
 import unicodedata
@@ -21,6 +22,7 @@ MAX_TEXT_BYTES = 4 * 1024 * 1024
 MAX_PAGES = 120
 MAX_MODELS = 100
 MAX_HITS_PER_MODEL = 20
+MAX_MANIFEST_BYTES = 128 * 1024
 
 def fold(text):
     text = unicodedata.normalize("NFKC", str(text)).casefold()
@@ -74,7 +76,7 @@ def run_tool(args, cwd, output):
     if result.returncode or output.stat().st_size >= MAX_TEXT_BYTES:
         raise ValueError("PDF parser failed or exceeded limits")
 
-def review_pdf(path, models):
+def review_pdf(path, models, table_manifest=None):
     path = Path(path).resolve(strict=True)
     if not path.is_file() or not 5 <= path.stat().st_size <= MAX_BYTES:
         raise ValueError("PDF size or file type rejected")
@@ -105,12 +107,17 @@ def review_pdf(path, models):
             raise ValueError("PDF page/layout mismatch")
         located = index_pages(pages, models)
         blank = [i for i, page in enumerate(pages, 1) if not page.strip()]
-        return {"schema": 1, "sha256": digest, "bytes": len(data),
+        report = {"schema": 1, "sha256": digest, "bytes": len(data),
                 "pages": count, "textless_pages": blank,
                 "status": "partial_text_review" if blank else "page_indexed",
                 "models": located, "paid_calls": 0, "db_writes": 0,
                 "published": 0,
-                "note": "Review actual PDF page, exact column, variant, market, units and footnotes independently. No OCR or spec assignment."}
+                "note": "Review actual PDF page, exact column, variant, market, units and footnotes independently. No OCR or automatic spec approval."}
+        if table_manifest is not None:
+            # Execute only a checked-in local module, never manifest-supplied code.
+            extractor = runpy.run_path(str(Path(__file__).resolve().with_name("tractor-pdf-columns.py")))["extract_candidates"]
+            report["table_review"] = extractor(pages, models, digest, table_manifest)
+        return report
 
 def write_private(report, output):
     output = Path(output).absolute()
@@ -125,22 +132,37 @@ def write_private(report, output):
         json.dump(report, f, ensure_ascii=False, indent=2)
         f.write("\n")
 
+def read_table_manifest(path):
+    path = Path(path).resolve(strict=True)
+    root = Path(__file__).resolve().parents[1]
+    if not path.is_file() or root in path.parents:
+        raise ValueError("manifest must be a private local file outside checkout")
+    with path.open("rb") as f:
+        data = f.read(MAX_MANIFEST_BYTES + 1)
+    if len(data) > MAX_MANIFEST_BYTES:
+        raise ValueError("manifest exceeds limit")
+    return json.loads(data)
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--pdf", required=True)
     parser.add_argument("--model", action="append", required=True)
     parser.add_argument("--output", required=True)
+    parser.add_argument("--table-manifest", help="Private, hash-bound model-column review plan")
     args = parser.parse_args()
     try:
-        report = review_pdf(args.pdf, args.model)
+        manifest = read_table_manifest(args.table_manifest) if args.table_manifest else None
+        report = review_pdf(args.pdf, args.model, manifest)
         write_private(report, args.output)
-    except (OSError, ValueError, subprocess.SubprocessError):
+    except (OSError, ValueError, RecursionError, subprocess.SubprocessError):
         # Private source paths, model names and parser messages must not leak.
         parser.exit(1, "PDF review failed; inspect the local input and limits privately.\n")
     print(json.dumps({"status": report["status"], "pages": report["pages"],
                       "textless_pages": len(report["textless_pages"]),
                       "models": len(report["models"]),
                       "models_located": sum(bool(m["locations"]) for m in report["models"]),
+                      "table_candidates": len(report.get("table_review", {}).get("candidate_cells", [])),
+                      "blocked_table_rows": len(report.get("table_review", {}).get("blocked_rows", [])),
                       "published": 0, "paid_calls": 0, "db_writes": 0}))
 
 if __name__ == "__main__":
