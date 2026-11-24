@@ -61,6 +61,13 @@ test("editor safely formats text, previews emoji, and publishes text while keepi
  await form.locator("[data-editor-preview]").click();
  await expect(body).toHaveValue(sample);
  await expect(body).toHaveCSS("font-weight","400");
+ await body.evaluate(el=>{
+  el.setSelectionRange(el.value.length,el.value.length);
+  const data=new DataTransfer();data.setData("text/plain","Model\tÜlke\nTD5.90\tTürkiye");
+  el.dispatchEvent(new ClipboardEvent("paste",{clipboardData:data,bubbles:true,cancelable:true}));
+ });
+ await expect(body).toHaveValue(/\| TD5\.90 \| Türkiye \|/);
+
  await form.locator("[data-editor-preview]").click();
  // Browser must strip original file metadata by re-encoding to WebP.
  const png=Buffer.from("iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+Z+HoAAAAASUVORK5CYII=","base64");
