@@ -316,6 +316,14 @@ for(const root of widgets){
  query<HTMLButtonElement>("[data-dialog-close]")?.addEventListener("click",()=>dialog?.close());
  let ownId="",token="",rankMode:"month"|"all"="month";
  let editing=false,showActivity=false,showRanks=false,sessionVersion=0;
+ let bookmarkVersion=0,followVersion=0;
+ // Private activity must never cross a logout, account switch or newer request.
+ function clearPrivateActivity(){
+  ++bookmarkVersion;++followVersion;
+  bookmarkList?.replaceChildren();followingList?.replaceChildren();
+  if(bookmarkEmpty){bookmarkEmpty.hidden=false;bookmarkEmpty.textContent=txt.noBookmarks}
+  if(followingEmpty){followingEmpty.hidden=false;followingEmpty.textContent=txt.noFollowingTopics}
+ }
  const defaultAvatar="/images/forum-member-default.svg";
  const starterName="TractorVS Member";
  function showAvatar(img:HTMLImageElement|null,url:string|null){
@@ -487,6 +495,8 @@ for(const root of widgets){
  }
  async function loadBookmarks(){
   if(!bookmarkList||!bookmarkPanel)return;
+  const version=++bookmarkVersion,owner=ownId;
+  const current=()=>version===bookmarkVersion&&Boolean(owner)&&owner===ownId;
   bookmarkList.replaceChildren();bookmarkPanel.hidden=!(ownId&&showActivity);
   if(bookmarkEmpty)bookmarkEmpty.textContent=txt.noBookmarks;
   if(!ownId)return;
@@ -495,6 +505,7 @@ for(const root of widgets){
     {headers:headers(true),cache:"no-store",signal:AbortSignal.timeout(12000)});
    if(!res.ok)throw Error();
    const saved=await res.json() as {topic_id:string}[];
+   if(!current())return;
    const ids=saved.map(x=>x.topic_id).filter(x=>/^[a-f0-9-]{36}$/.test(x));
    if(!ids.length){if(bookmarkEmpty)bookmarkEmpty.hidden=false;return}
    const path=new URLSearchParams({select:"id,title,slug,locale",status:"eq.published",
@@ -503,6 +514,9 @@ for(const root of widgets){
     {headers:headers(true),cache:"no-store",signal:AbortSignal.timeout(12000)});
    if(!topics.ok)throw Error();
    const rows=await topics.json() as {id:string;title:string;slug:string;locale:string}[];
+   if(!current())return;
+   const savedOrder=new Map(ids.map((id,index)=>[id,index]));
+   rows.sort((a,b)=>(savedOrder.get(a.id)??Infinity)-(savedOrder.get(b.id)??Infinity));
    for(const p of rows){
     const li=document.createElement("li"),link=document.createElement("a");
     const prefix=p.locale==="en"?"":"/"+p.locale;
@@ -510,10 +524,12 @@ for(const root of widgets){
     link.textContent=p.title;li.append(link);bookmarkList.append(li);
    }
    if(bookmarkEmpty)bookmarkEmpty.hidden=rows.length>0;
-  }catch{if(bookmarkEmpty){bookmarkEmpty.hidden=false;bookmarkEmpty.textContent=txt.memberLoadError}}
+  }catch{if(current()&&bookmarkEmpty){bookmarkEmpty.hidden=false;bookmarkEmpty.textContent=txt.memberLoadError}}
  }
  async function loadFollowed(){
   if(!followingPanel||!followingList)return;
+  const version=++followVersion,owner=ownId;
+  const current=()=>version===followVersion&&Boolean(owner)&&owner===ownId;
   followingList.replaceChildren();followingPanel.hidden=!(ownId&&showActivity);
   if(!ownId)return;
   if(followingEmpty){followingEmpty.hidden=false;followingEmpty.textContent=txt.noFollowingTopics;}
@@ -523,6 +539,7 @@ for(const root of widgets){
       headers:headers(true),cache:"no-store",signal:AbortSignal.timeout(12000)});
    if(!source.ok)throw Error();
    const followed=await source.json() as {topic_id:string;last_seen_at:string}[];
+   if(!current())return;
    const ids=followed.map(f=>f.topic_id).filter(id=>/^[a-f0-9-]{36}$/i.test(id));
    if(!ids.length)return;
    const url="/rest/v1/tc_forum_topics?"+new URLSearchParams({
@@ -531,33 +548,40 @@ for(const root of widgets){
     signal:AbortSignal.timeout(12000)});
    if(!topics.ok)throw Error();
    const rows=await topics.json() as {id:string;title:string;slug:string;locale:string}[];
+   if(!current())return;
    const cutoff=followed.reduce((old,rec)=>rec.last_seen_at<old?rec.last_seen_at:old,
     new Date().toISOString());
    const replyRes=await fetch(cfg.url+"/rest/v1/tc_forum_replies?"+
     new URLSearchParams({select:"topic_id,created_at,author_id",status:"eq.published",
       topic_id:"in.("+ids.join(",")+")",created_at:"gt."+cutoff,limit:"500"}),{
       headers:headers(true),cache:"no-store",signal:AbortSignal.timeout(12000)});
-   const replies=replyRes.ok?await replyRes.json() as
-    {topic_id:string;created_at:string;author_id:string}[]:[];
+   if(!replyRes.ok)throw Error();
+   const replies=await replyRes.json() as {topic_id:string;created_at:string;author_id:string}[];
+   if(!current())return;
    const dates=new Map(followed.map(rec=>[rec.topic_id,rec.last_seen_at]));
+   const counts=new Map<string,number>();
+   for(const reply of replies){
+    const since=dates.get(reply.topic_id);
+    if(since&&reply.created_at>since&&reply.author_id!==owner)counts.set(reply.topic_id,(counts.get(reply.topic_id)||0)+1);
+   }
+   const followOrder=new Map(ids.map((id,index)=>[id,index]));
+   rows.sort((a,b)=>(counts.get(b.id)||0)-(counts.get(a.id)||0)||(followOrder.get(a.id)??Infinity)-(followOrder.get(b.id)??Infinity));
    for(const topic of rows){
     const li=document.createElement("li"),link=document.createElement("a");
     const prefix=topic.locale==="en"?"":"/"+topic.locale;
     link.href=prefix+"/forum/"+encodeURIComponent(topic.slug)+"/";
     link.textContent=topic.title;li.append(link);
-    const since=dates.get(topic.id)||"";
-    const count=replies.filter(reply=>reply.topic_id===topic.id &&
-     reply.created_at>since && reply.author_id!==ownId).length;
+    const count=counts.get(topic.id)||0;
     if(count){
       const badge=document.createElement("span");
       badge.className="unread-count";
-      badge.textContent=count+" "+txt.newReplies;
+      badge.textContent=(replies.length===500?"≥":"")+count+" "+txt.newReplies;
       li.append(badge);
     }
     followingList.append(li);
    }
    if(followingEmpty)followingEmpty.hidden=rows.length>0;
-  }catch{if(followingEmpty){followingEmpty.hidden=false;followingEmpty.textContent=txt.memberLoadError}}
+  }catch{if(current()&&followingEmpty){followingEmpty.hidden=false;followingEmpty.textContent=txt.memberLoadError}}
  }
 
  // A new member does not need to fill in a profile form. Create a neutral
@@ -599,6 +623,7 @@ for(const root of widgets){
   const version=++sessionVersion;
   token=readForumSession()?.access||""
   ownId="";
+  clearPrivateActivity();setPanels();
   if(!token){
    editing=false;showActivity=false;
    if(guest)guest.hidden=false;
