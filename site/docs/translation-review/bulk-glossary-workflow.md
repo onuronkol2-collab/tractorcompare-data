@@ -1,6 +1,6 @@
 # Bulk glossary translation review
 
-The 96 original glossary IDs are split into 14 core entries with four drafted fields in eight languages and 82 remaining entries with drafted names in eight languages. This is 768 translated name drafts, not 768 complete entries. German now has 82 additional complete entry drafts (246 fields); 194 of 768 full entries are drafted. The other seven languages still need 1,722 prose fields. Existing 24 technical-guide body translations and 192 shared UI strings are preserved. These drafts are not public routes.
+The 96 original glossary IDs are split into 14 core entries with four drafted fields in eight languages and 82 remaining entries with drafted names in eight languages. This is 768 translated name drafts, not 768 complete entries. German and French each have 82 additional complete entry drafts (492 fields combined); 276 of 768 full entries are drafted. The other six languages still need 1,476 prose fields. Existing 24 technical-guide body translations and 192 shared UI strings are preserved. These drafts are not public routes.
 
 ## One exchange, not per-term jobs
 
