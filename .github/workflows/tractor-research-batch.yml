@@ -16,6 +16,8 @@ on:
       - "scripts/tractor-targeted-claim-guard.test.mjs"
       - "scripts/tractor-free-source-triage.mjs"
       - "scripts/tractor-pdf-review.py"
+      - "scripts/tractor-pdf-review-packet.py"
+      - "scripts/tractor-pdf-review-packet.test.py"
       - "scripts/tractor-pdf-columns.py"
       - "scripts/tractor-pdf-review.test.py"
       - "scripts/tractor-free-source-triage.test.mjs"
@@ -75,6 +77,7 @@ jobs:
             sudo apt-get install -y --no-install-recommends poppler-utils
           fi
           python3 scripts/tractor-pdf-review.test.py -v
+          python3 scripts/tractor-pdf-review-packet.test.py -v
       - name: Test queue caps, authentication and failure handling
         run: node --test scripts/tractor-research-batch.test.mjs scripts/tractor-research-continuation.test.mjs scripts/tractor-research-budget.test.mjs scripts/tractor-research-watchdog.test.mjs scripts/tractor-targeted-claim-guard.test.mjs scripts/tractor-free-source-triage.test.mjs scripts/tractor-oem-source-review-batch.test.mjs
 
