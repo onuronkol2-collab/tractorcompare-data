@@ -356,6 +356,10 @@ Bu dosya GitHub deposunda saklanan, değişiklik geçmişi olan **kalıcı proje
 - Birleştirme, üretime dağıtım, canlı site doğrulaması ve arama motoru indekslemesi farklı aşamalardır. Gerçek sonucu kanıtla; erişim yoksa veya yayın işlemi henüz tamamlanmadıysa açıkça belirt. Gereksiz yeni onay bekleme ve testleri hız uğruna gevşetme.
 
 
+### Kalıcı güncel sürüm üstünlüğü ve açık iş denetimi — 24 Kasım 2026
+
+- Kullanıcının sürekli talimatı: Yarım kalan işleri topluca değerlendir; yalnız gerekli, mevcut sürümden daha yararlı, doğrulanmış değişiklikleri yayımla. Eski PR'ın testlerinin başarılı olması tek başına yeterli değildir. Ana daldaki güncel uygulamayı, ilgili dosya ve değişiklikleri, varsa canlı kanıtı ve güncel kabul koşullarını önce karşılaştır. Eşdeğer veya daha iyi güncel çözüm varsa eski sürümü yayımlama. Kısmen değerli, eski veya çakışan PR'ın yalnız eksik faydasını güncel ana dal üzerinde yeniden uygula ve yeni SHA için test et. İnceleme taslağı, eksik kaynak/lisans, çeviri onayı, başarısız veya atlanmış zorunlu kontrol, bağımlılık sürümü sözleşmesi ve veritabanı/migrasyon riskleri ayrı tutulur. Eski açık işi sırf kapatmak için güvenlik kapılarını gevşetme, güncel özellikleri geri alma veya taslak içeriği indeksleme. Sonucu birleştirildi, canlı doğrulandı, gereksiz/yerine geçildi, yeniden uyarlama gerekiyor veya kanıt bekliyor olarak açıkça kaydet; ilgili eski PR'ı ancak yerine geçen çözüm veya gereksizlik kanıtlandığında kapat. Ücretli araç, kota, RLS, 10 dil, SEO/GEO, lisans ve kalite kuralları korunur.
+
 ### SOHBETTEN ANINDA TOPLU ÇALIŞMA — 24 Kasım 2026
 
 **Kullanıcının kalıcı talimatı:** "Saatlik çözümler yerine her yazdığımda bunu uygulayacak bir sistem yap." Bu kural saatlik otomasyonlara bağlı değildir. Her kullanıcı kaynaklı TractorVS geliştirme, araştırma veya devam talebi geldiğinde mevcut sohbet çalışmasının içinde uygula. "Devam", "kaldığın yerden devam et" gibi kısa komutlar son yetkili iş kapsamını sürdürür; yeni iş kapsamı icat etme. Salt durum sorusunda gerçek durumu doğrula; ilgisiz sorularda veya açıkça değişiklik yapılmaması istenen araştırmalarda yazma/yayın yapma.
