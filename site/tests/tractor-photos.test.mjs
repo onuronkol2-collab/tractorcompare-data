@@ -14,7 +14,7 @@ const tractor=(brand_name,model_name)=>({
   engine:null,transmission:null,drivetrain:null,weight_kg:null,specifications:[]
 });
 test("only exact matching tractor model identity receives a verified photo",()=>{
-  assert.equal(APPROVED_TRACTOR_PHOTOS.length,104);
+  assert.equal(APPROVED_TRACTOR_PHOTOS.length,109);
   assert.equal(tractorPhotos(tractor("Belarus","82.1")).length,4);
   assert.equal(tractorPhotos(tractor("Belarus","80.1")).length,1);
   assert.equal(tractorPhotos(tractor("Belarus","132N")).length,1);
@@ -615,9 +615,9 @@ test("McCormick X5.085 and TYM T6115/T2025P have exact licensed files, source pr
 });
 
 test("historic photo batch is staged with rights and does not create records",()=>{
-  assert.equal(HISTORICAL_LICENSED_PHOTOS.length,89);
+  assert.equal(HISTORICAL_LICENSED_PHOTOS.length,94);
   const all=new Set(HISTORICAL_LICENSED_PHOTOS.map(x=>x.fileId));
-  assert.equal(all.size,89);
+  assert.equal(all.size,94);
   assert.ok(HISTORICAL_LICENSED_PHOTOS.every(x=>x.configurationExact===false));
   assert.ok(!HISTORICAL_LICENSED_PHOTOS.some(x=>["Product","Vehicle"].includes(x.model)));
 });
@@ -1080,4 +1080,23 @@ test("two already licensed photos have verified first-party 960 and 1920 JPEG si
    assert.ok([photo.displayUrl,photo.fullUrl].includes("/images/tractors/"+asset.file));
   }
  }
+});
+
+test("Visible model badges and static JPEGs belong only to the reviewed record",()=>{
+  const evidence=JSON.parse(readFileSync(new URL("../docs/photo-evidence-exact-badges-20261124.json",import.meta.url)));
+  for(const item of evidence){
+    const record={...tractor(item.brand,item.model),tractor_id:item.tractorId};
+    const photo=tractorPhotos(record).find(p=>p.fileId===item.fileId);
+    assert.ok(photo);
+    assert.equal(photo.licenseUrl,item.licenseUrl);
+    assert.equal(photo.photographer,item.photographer);
+    assert.equal(photo.configurationExact,false);
+    const siblings={Belarus:["920.2","920.3","920.5"],Kioti:["HX1302ATC-EU","HX1403"],Swaraj:[item.model+" 4WD",item.model+" Protek"]}[item.brand];
+    for(const model of siblings)
+      assert.ok(!tractorPhotos({...record,model_name:model}).some(p=>p.fileId===photo.fileId));
+    for(const derivative of item.derivatives){
+      const bytes=readFileSync(new URL("../public/images/tractors/"+derivative.file,import.meta.url));
+      assert.equal(createHash("sha256").update(bytes).digest("hex"),derivative.sha256);
+    }
+  }
 });
