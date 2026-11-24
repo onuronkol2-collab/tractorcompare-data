@@ -922,6 +922,11 @@ const candidates=[
   },
   {"brand":"Zetor","model":"MAJOR","tractorId":"755e44bc-8043-4d41-9e08-f40e818ac00b","fileId":"zetor-major-cl80-jj7777","path":"6/6a/ZETOR_MAJOR.jpg","photographer":"JJ7777","license":"CC BY-SA 4.0","width":4969,"height":3313},
   {"brand":"Massey Ferguson","model":"4708 Standard","tractorId":"5727a834-a31d-4d85-9d0a-22468b2fa6c7","fileId":"mf-4708-platform-pere-igor-2016","path":"a/a8/Lanouaille_Massey_Ferguson_4708.jpg","photographer":"Père Igor","license":"CC BY-SA 4.0","width":2996,"height":2247,"resizedDerivative":true},
+  {"brand":"JCB","model":"6260","tractorId":"a2c6eec1-e9f1-44f9-97c3-661b7ba69996","fileId":"jcb-6260-marcelx42-2025","path":"7/77/JCB_Fastrac_6260_Agritechnica_2025_%28DSC05623%29.jpg","photographer":"MarcelX42","license":"CC BY-SA 4.0","width":6224,"height":4672,"resizedDerivative":true},
+  {"brand":"JCB","model":"6300","tractorId":"7c90179a-5584-40ab-9338-2850180d2197","fileId":"jcb-6300-marcelx42-2025","path":"9/9a/JCB_Fastrac_6300_Agritechnica_2025_%28DSC00362%29.jpg","photographer":"MarcelX42","license":"CC BY-SA 4.0","width":6224,"height":4672,"resizedDerivative":true},
+  {"brand":"Versatile","model":"295","tractorId":"9a8bdada-0a7c-4a19-a5df-dc56ff9c159e","fileId":"versatile-295-marcelx42-2025","path":"7/79/Versatile_295_Agritechnica_2025_%28DSC03651%29.jpg","photographer":"MarcelX42","license":"CC BY-SA 4.0","width":6224,"height":4672,"resizedDerivative":true},
+  {"brand":"Versatile","model":"460","tractorId":"259a5389-2bf4-4a25-97a6-01fe6484843e","fileId":"versatile-460-marcelx42-2025","path":"e/ed/Versatile_460_Agritechnica_2025_%28DSC00494%29.jpg","photographer":"MarcelX42","license":"CC BY-SA 4.0","width":6224,"height":4672,"resizedDerivative":true},
+  {"brand":"Versatile","model":"620DT","tractorId":"cbdfd364-e6a9-4323-ac6d-72010165d9a0","fileId":"versatile-620dt-marcelx42-2025","path":"f/f8/Versatile_620DT_Agritechnica_2025_%28DSC00990%29.jpg","photographer":"MarcelX42","license":"CC BY-SA 4.0","width":4880,"height":3253,"resizedDerivative":true},
 ] as const;
 function licenseUrl(name:string):string{
   if(name==="CC0")return "https://creativecommons.org/publicdomain/zero/1.0/";
