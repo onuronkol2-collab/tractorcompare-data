@@ -3,6 +3,7 @@ import SiteLayout from "../layouts/SiteLayout.astro";
 import ForumComposer from "./ForumComposer.astro";
 import ForumRichText from "./ForumRichText.astro";
 import {forumBlocks} from "../lib/forum-format.mjs";
+import {relatedForumTopics} from "../lib/forum-discovery.mjs";
 import {FORUM_THREAD_NAV_TEXT} from "../lib/forum-thread-nav-i18n.ts";
 import "../styles/forum-readable.css";
 import ForumMediaGallery from "./ForumMediaGallery.astro";
@@ -33,7 +34,10 @@ const headingLinks=forumBlocks(topic.body).flatMap((block,index)=>
   : []);
 const showContents=headingLinks.length>=3;
 const publicPath=forumUrl+topic.slug+"/";
-const versions=(await allPublicForumTopics()).filter(row=>row.topic_id===topic.topic_id);
+const publicTopics=await allPublicForumTopics();
+const versions=publicTopics.filter(row=>row.topic_id===topic.topic_id);
+const related=relatedForumTopics(topic,publicTopics);
+const relatedLabel:Record<Locale,string>={en:"Related discussions",tr:"İlgili forum konuları",zh:"相关讨论",hi:"संबंधित चर्चाएँ","pt-br":"Discussões relacionadas",fr:"Discussions associées",de:"Verwandte Diskussionen",ru:"Связанные обсуждения",ja:"関連する話題",es:"Temas relacionados"};
 const originalTopic=topic.machine_translated?versions.find(row=>!row.machine_translated&&row.locale===topic.original_locale):null;
 const eligible=isIndexableForumTopic(topic);
 const seoDescription=sourceAwareForumSeoDescription(topic.topic_id,lang,topic.body);
@@ -66,7 +70,7 @@ const schema=eligible?{
    <nav class="thread-breadcrumb" aria-label={threadNav.navigation}>
     <a href={forumUrl} class="forum-home-button"><span class="forum-home-icon" aria-hidden="true">←</span><span>{threadNav.home}</span></a>
     <span class="thread-breadcrumb-separator" aria-hidden="true">/</span>
-    <span class="thread-breadcrumb-current">{ft(lang,topic.category)}</span>
+    <a class="thread-breadcrumb-current" href={forumUrl+"?category="+encodeURIComponent(topic.category)}>{ft(lang,topic.category)}</a>
    </nav>
    <article class="forum-first-post">
     <div class="thread-meta">
@@ -132,6 +136,10 @@ const schema=eligible?{
     </div>
    </section>
    <ForumComposer lang={lang} mode="reply" topicId={topic.topic_id}/>
+   {related.length>0&&<section class="forum-related" aria-labelledby="forum-related-heading">
+     <h2 id="forum-related-heading">{relatedLabel[lang]}</h2>
+     <ul>{related.map(item=><li><a href={forumUrl+item.slug+"/"}>{item.title}</a><small>{ft(lang,item.category)}</small></li>)}</ul>
+   </section>}
    <nav class="forum-back" aria-label={threadNav.navigation}>
     <a href={forumUrl} class="forum-home-button"><span class="forum-home-icon" aria-hidden="true">←</span><span>{threadNav.home}</span></a>
    </nav>
@@ -139,6 +147,14 @@ const schema=eligible?{
  </div>
 </SiteLayout>
 <style>
+.forum-related{margin:28px 0;padding:clamp(16px,3vw,28px);background:white;border:1px solid #c9dac6;border-radius:14px;min-width:0}
+.forum-related h2{font-size:clamp(18px,2.4vw,24px);margin:0 0 12px;color:#205335}
+.forum-related ul{list-style:none;padding:0;margin:0;display:grid;gap:10px}
+.forum-related li{display:grid;gap:4px;padding:8px 0;border-bottom:1px solid #dce8da;overflow-wrap:anywhere}
+.forum-related li:last-child{border:0}
+.forum-related a{font-weight:650;line-height:1.5}
+.forum-related small{color:#42634d}
+
 .forum-thread :global(.forum-live-reply){background:#fff;border:1px solid #c9dac6;border-radius:14px;padding:clamp(16px,3vw,26px);margin:12px 0;line-height:1.85;overflow-wrap:anywhere;min-width:0}
 .forum-thread :global(.forum-live-reply p){white-space:pre-wrap}
 .forum-thread :global(.forum-live-reply-meta){font-size:13px;color:#42634d}
