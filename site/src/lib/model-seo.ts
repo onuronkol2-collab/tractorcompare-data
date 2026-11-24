@@ -195,7 +195,7 @@ function reviewedRemainingTitleIdentity(tractor:TractorRecord, rawVariant:string
   // The actual stored market is International; retain the explicit catalogue
   // wording in the full description and page. Do not turn it into "global".
   if(tractor.brand_name==="TYM" && rawMarket==="International" && rawVariant &&
-      REVIEWED_TYM_TITLE_VARIANTS[name]?.includes(rawVariant)) {
+      Object.hasOwn(REVIEWED_TYM_TITLE_VARIANTS,name) && REVIEWED_TYM_TITLE_VARIANTS[name].includes(rawVariant)) {
     return {variant:rawVariant.replaceAll(" / ",", ").replaceAll(" x ","×"),
       market:SHORT_INTERNATIONAL_TITLE[lang]};
   }
