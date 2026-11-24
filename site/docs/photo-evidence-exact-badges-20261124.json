@@ -41,5 +41,185 @@
         "bytes": 828713
       }
     ]
+  },
+  {
+    "brand": "Swaraj",
+    "model": "855 FE",
+    "tractorId": "270602da-150d-48d7-82c8-7d0536ac00c8",
+    "fileId": "swaraj-855-fe-edward-middleton",
+    "path": "2/23/Swaraj.jpg",
+    "photographer": "Edward Middleton",
+    "license": "CC BY-SA 4.0",
+    "width": 5422,
+    "height": 3615,
+    "sourcePage": "https://commons.wikimedia.org/wiki/File:Swaraj.jpg",
+    "originalUrl": "https://upload.wikimedia.org/wikipedia/commons/2/23/Swaraj.jpg",
+    "originalSha256": "30bdb49a0ae2cde35b6dd6c2ec9e58e930ec9780e7cf5d2313bd6ef495af9bf6",
+    "originalBytes": 12712960,
+    "modelEvidence": "Visible SWARAJ and 855 FE markings and narrow undriven front wheels. Restricted to the base FE record.",
+    "scope": "Model illustration only; exact year, market and factory configuration unverified.",
+    "sourceCredit": "Own work, Edward Middleton",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "changes": "Proportional resizing and JPEG compression; derivatives distributed under CC BY-SA 4.0.",
+    "derivatives": [
+      {
+        "file": "swaraj-855-fe-edward-middleton-480.jpg",
+        "width": 480,
+        "height": 320,
+        "sha256": "8c812f9644b8ce16812bdaa82a9638f968f69ce02fb4e06132847f02dfcb3c3c",
+        "bytes": 46288
+      },
+      {
+        "file": "swaraj-855-fe-edward-middleton-960.jpg",
+        "width": 960,
+        "height": 640,
+        "sha256": "8cdfeb9e153c8f26dd9663911774f874161e7a65cffd6e49dab8b779fc35c86e",
+        "bytes": 158617
+      },
+      {
+        "file": "swaraj-855-fe-edward-middleton-1920.jpg",
+        "width": 1920,
+        "height": 1280,
+        "sha256": "4c3b1b497bf3efb327bc8f0be2f2f3d0b02010e7468582aaba85618467d17020",
+        "bytes": 529164
+      }
+    ]
+  },
+  {
+    "brand": "Swaraj",
+    "model": "744 FE",
+    "tractorId": "50becf25-9554-4223-9b74-5709dddf3433",
+    "fileId": "swaraj-744-fe-vikshipta-anik-var",
+    "path": "7/7a/Nature-tk005.jpg",
+    "photographer": "Vikshipta Anik Var",
+    "license": "CC BY-SA 4.0",
+    "width": 4608,
+    "height": 3072,
+    "sourcePage": "https://commons.wikimedia.org/wiki/File:Nature-tk005.jpg",
+    "originalUrl": "https://upload.wikimedia.org/wikipedia/commons/7/7a/Nature-tk005.jpg",
+    "originalSha256": "3325f7f77da7e642e0dc2d796f4b8cb5dd1fd308150810f92ed952947fa862a5",
+    "originalBytes": 2766942,
+    "modelEvidence": "Visible SWARAJ and 744 FE markings and narrow undriven front wheels. Restricted to the base FE record.",
+    "scope": "Model illustration only; exact year, market and factory configuration unverified.",
+    "sourceCredit": "Own work, Vikshipta Anik Var",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "changes": "Proportional resizing and JPEG compression; derivatives distributed under CC BY-SA 4.0.",
+    "derivatives": [
+      {
+        "file": "swaraj-744-fe-vikshipta-anik-var-480.jpg",
+        "width": 480,
+        "height": 320,
+        "sha256": "2439d3c5808db16482cd006f8231c506b63ccc581c55bc7bf9cf932c000e80a3",
+        "bytes": 36412
+      },
+      {
+        "file": "swaraj-744-fe-vikshipta-anik-var-960.jpg",
+        "width": 960,
+        "height": 640,
+        "sha256": "1e780130691b8cbabad68fbd28e43c82985ff5d95d64a2f386f1b24842d5e06b",
+        "bytes": 131888
+      },
+      {
+        "file": "swaraj-744-fe-vikshipta-anik-var-1920.jpg",
+        "width": 1920,
+        "height": 1280,
+        "sha256": "455893cb333662c575af3dcad87e817dab55622e064552ced21a98f0f3c9f6ac",
+        "bytes": 476393
+      }
+    ]
+  },
+  {
+    "brand": "Kioti",
+    "model": "HX1402ATC-EU",
+    "tractorId": "cfc1d71f-91ed-fe20-9234-af87297968f9",
+    "fileId": "kioti-hx1402atc-eu-eko-las-28",
+    "path": "8/8d/Eko-Las_-_Kioti_HX1402_-_05.09.2025_14-47-28.jpg",
+    "photographer": "Rados\u0142aw Dro\u017cd\u017cewski (Zwiadowca21)",
+    "license": "CC BY-SA 4.0",
+    "width": 3585,
+    "height": 2676,
+    "sourcePage": "https://commons.wikimedia.org/wiki/File:Eko-Las_-_Kioti_HX1402_-_05.09.2025_14-47-28.jpg",
+    "originalUrl": "https://upload.wikimedia.org/wikipedia/commons/8/8d/Eko-Las_-_Kioti_HX1402_-_05.09.2025_14-47-28.jpg",
+    "originalSha256": "b047bc43e0819184f272006dff9874f26e97b99e956bd23f77c0d8ae081fa51d",
+    "originalBytes": 4037882,
+    "modelEvidence": "HX1402 shown at Eko-Las, Poland. The side view shows the HX1402 badge. KIOTI Europe specifications and parts catalogue identify HX1402ATC-EU under HX1402. No equipment or year claim.",
+    "modelSources": [
+      "https://kioti.pl/wp-content/uploads/2024/09/HX-Catalog-2024_EN-1.pdf",
+      "https://www.kiotibenelux.nl/wp-content/uploads/2023/02/56903-24-A4-Gamme_STAGE_V_BELGIE_NL_.pdf"
+    ],
+    "scope": "Model illustration only; exact year, market and factory configuration unverified.",
+    "sourceCredit": "Own work, Rados\u0142aw Dro\u017cd\u017cewski (Zwiadowca21)",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "changes": "Proportional resizing and JPEG compression; derivatives distributed under CC BY-SA 4.0.",
+    "derivatives": [
+      {
+        "file": "kioti-hx1402atc-eu-eko-las-28-480.jpg",
+        "width": 480,
+        "height": 358,
+        "sha256": "600c9629e45c175f2468b039c79ca5468a32e7eb5ac1aa453577d59091fa6e96",
+        "bytes": 33333
+      },
+      {
+        "file": "kioti-hx1402atc-eu-eko-las-28-960.jpg",
+        "width": 960,
+        "height": 717,
+        "sha256": "8bdf9264984b110acb5b6d02ca6feee0c61552a2e7b90ab5229a849cd8eb9153",
+        "bytes": 102377
+      },
+      {
+        "file": "kioti-hx1402atc-eu-eko-las-28-1920.jpg",
+        "width": 1920,
+        "height": 1433,
+        "sha256": "470638b9330f13cd5c5654b99420776c5f2e047e7344a9460d8ed282e12c9777",
+        "bytes": 308202
+      }
+    ]
+  },
+  {
+    "brand": "Kioti",
+    "model": "HX1402ATC-EU",
+    "tractorId": "cfc1d71f-91ed-fe20-9234-af87297968f9",
+    "fileId": "kioti-hx1402atc-eu-eko-las-46",
+    "path": "9/9a/Eko-Las_-_Kioti_HX1402_-_05.09.2025_14-47-46.jpg",
+    "photographer": "Rados\u0142aw Dro\u017cd\u017cewski (Zwiadowca21)",
+    "license": "CC BY-SA 4.0",
+    "width": 4288,
+    "height": 2848,
+    "sourcePage": "https://commons.wikimedia.org/wiki/File:Eko-Las_-_Kioti_HX1402_-_05.09.2025_14-47-46.jpg",
+    "originalUrl": "https://upload.wikimedia.org/wikipedia/commons/9/9a/Eko-Las_-_Kioti_HX1402_-_05.09.2025_14-47-46.jpg",
+    "originalSha256": "46dfb4e555e671fdceeedb4e79ae9f15a532336f5225710c7d1303f3d990142b",
+    "originalBytes": 5237509,
+    "modelEvidence": "HX1402 shown at Eko-Las, Poland. The side view shows the HX1402 badge. KIOTI Europe specifications and parts catalogue identify HX1402ATC-EU under HX1402. No equipment or year claim.",
+    "modelSources": [
+      "https://kioti.pl/wp-content/uploads/2024/09/HX-Catalog-2024_EN-1.pdf",
+      "https://www.kiotibenelux.nl/wp-content/uploads/2023/02/56903-24-A4-Gamme_STAGE_V_BELGIE_NL_.pdf"
+    ],
+    "scope": "Model illustration only; exact year, market and factory configuration unverified.",
+    "sourceCredit": "Own work, Rados\u0142aw Dro\u017cd\u017cewski (Zwiadowca21)",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "changes": "Proportional resizing and JPEG compression; derivatives distributed under CC BY-SA 4.0.",
+    "derivatives": [
+      {
+        "file": "kioti-hx1402atc-eu-eko-las-46-480.jpg",
+        "width": 480,
+        "height": 319,
+        "sha256": "36f2ced3e978877f6b4f09863c8f08bd64093e361957c1c0d0021f59de7eed99",
+        "bytes": 31812
+      },
+      {
+        "file": "kioti-hx1402atc-eu-eko-las-46-960.jpg",
+        "width": 960,
+        "height": 638,
+        "sha256": "3891af31a844aebe97ffa5fffb21486b62be1ffed66c696848c35e149b5785e8",
+        "bytes": 100227
+      },
+      {
+        "file": "kioti-hx1402atc-eu-eko-las-46-1920.jpg",
+        "width": 1920,
+        "height": 1275,
+        "sha256": "7bf152b03aeeaa23415683ea1d8a241cad22f5fd3f1c03575be984b29f680979",
+        "bytes": 309300
+      }
+    ]
   }
 ]

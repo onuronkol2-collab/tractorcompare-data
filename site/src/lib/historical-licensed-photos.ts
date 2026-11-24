@@ -876,6 +876,50 @@ const candidates=[
     "width": 4608,
     "height": 3456
   },
+  {
+    "brand": "Swaraj",
+    "model": "855 FE",
+    "tractorId": "270602da-150d-48d7-82c8-7d0536ac00c8",
+    "fileId": "swaraj-855-fe-edward-middleton",
+    "path": "2/23/Swaraj.jpg",
+    "photographer": "Edward Middleton",
+    "license": "CC BY-SA 4.0",
+    "width": 5422,
+    "height": 3615
+  },
+  {
+    "brand": "Swaraj",
+    "model": "744 FE",
+    "tractorId": "50becf25-9554-4223-9b74-5709dddf3433",
+    "fileId": "swaraj-744-fe-vikshipta-anik-var",
+    "path": "7/7a/Nature-tk005.jpg",
+    "photographer": "Vikshipta Anik Var",
+    "license": "CC BY-SA 4.0",
+    "width": 4608,
+    "height": 3072
+  },
+  {
+    "brand": "Kioti",
+    "model": "HX1402ATC-EU",
+    "tractorId": "cfc1d71f-91ed-fe20-9234-af87297968f9",
+    "fileId": "kioti-hx1402atc-eu-eko-las-28",
+    "path": "8/8d/Eko-Las_-_Kioti_HX1402_-_05.09.2025_14-47-28.jpg",
+    "photographer": "Rados\u0142aw Dro\u017cd\u017cewski (Zwiadowca21)",
+    "license": "CC BY-SA 4.0",
+    "width": 3585,
+    "height": 2676
+  },
+  {
+    "brand": "Kioti",
+    "model": "HX1402ATC-EU",
+    "tractorId": "cfc1d71f-91ed-fe20-9234-af87297968f9",
+    "fileId": "kioti-hx1402atc-eu-eko-las-46",
+    "path": "9/9a/Eko-Las_-_Kioti_HX1402_-_05.09.2025_14-47-46.jpg",
+    "photographer": "Rados\u0142aw Dro\u017cd\u017cewski (Zwiadowca21)",
+    "license": "CC BY-SA 4.0",
+    "width": 4288,
+    "height": 2848
+  },
 ] as const;
 function licenseUrl(name:string):string{
   if(name==="CC0")return "https://creativecommons.org/publicdomain/zero/1.0/";
