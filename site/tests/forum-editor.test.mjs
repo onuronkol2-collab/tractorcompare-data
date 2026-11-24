@@ -131,3 +131,16 @@ test("Chinese sentences end cleanly without whitespace and forum cards keep prio
  assert.equal(forumCardExcerpt(preview,230),previousCard);
  assert.match(read("../src/components/ForumHub.astro"),/forumCardExcerpt\(topic\.body,230\)/);
 });
+
+
+test("preview controls precede the editor and preserve the validated plain-text source",()=>{
+ const component=read("../src/components/ForumEditor.astro");
+ const composer=read("../src/components/ForumComposer.astro");
+ const client=read("../src/lib/forum-editor-client.ts");
+ assert.ok(component.indexOf("data-editor-preview aria-pressed")<component.indexOf('slot name="body"'));
+ assert.match(composer,/<label slot="body">/);
+ assert.match(composer,/textarea\{[^}]*font-weight:400/);
+ assert.match(client,/sourcePanel.hidden=open/);
+ assert.match(client,/textarea.addEventListener\("invalid",\(\)=>setPreview\(false\)\)/);
+ assert.match(component,/:global\(\.forum-editor-preview-table th\)/);
+});
