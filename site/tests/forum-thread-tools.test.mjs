@@ -47,3 +47,15 @@ test("all ten languages provide complete interaction copy and public rendering s
  assert.match(page,/@media print/);
  assert.match(page,/data-static-reply-id/);
 });
+
+test("verified member switches clear prior draft, private history and media before assigning new owner",()=>{
+ const composer=readFileSync(new URL("../src/components/ForumComposer.astro",import.meta.url),"utf8");
+ const start=composer.indexOf("if(userId&&userId!==data.id)");
+ const end=composer.indexOf("userId=data.id;saveSession",start);
+ assert.ok(start>=0&&end>start);
+ const guard=composer.slice(start,end);
+ assert.match(guard,/\+\+historyVersion/);
+ assert.match(guard,/historyList\?\.replaceChildren/);
+ assert.match(guard,/postForm\?\.reset\(\);editor\?\.clear\(\)/);
+ assert.match(guard,/updateBodyLength\(\)/);
+});
