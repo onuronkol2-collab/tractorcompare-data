@@ -1,6 +1,6 @@
 import {test} from "node:test";
 import assert from "node:assert/strict";
-import {parseProductionSitemapInventory,selectProductionSeoPages,REVIEWED_PAIR_PATHS,reviewedPairSitemapCoverage} from "../scripts/production-sitemap-inventory.mjs";
+import {parseProductionSitemapInventory,selectProductionSeoPages,REVIEWED_PAIR_PATHS,reviewedPairSitemapCoverage,resolveProductionSeoMode,verifyProductionSeoCoverage} from "../scripts/production-sitemap-inventory.mjs";
 const BASE="https://tractorvs.com";
 const langs=["en","tr","zh","hi","pt-br","fr","de","ru","ja","es"];
 const fileNames=["sitemap-0.xml","forum-sitemap.xml","image-sitemap.xml"];
@@ -106,4 +106,23 @@ test("reviewed Deutz GS EN/TR URLs must exist in fetched HTML sitemap (not image
  // No unreviewed language path is in the exact published set.
  assert.ok(!REVIEWED_PAIR_PATHS.some(x=>/^\/(?:de|fr|zh|es|ja|ru|hi|pt-br)\//.test(x)));
  assert.throws(()=>reviewedPairSitemapCoverage(null),/Missing parsed HTML sitemap inventory/);
+});
+
+
+test("explicit full audit cannot silently degrade to a daily sample",()=>{
+ assert.equal(resolveProductionSeoMode(undefined),"daily");
+ assert.equal(resolveProductionSeoMode("daily"),"daily");
+ assert.equal(resolveProductionSeoMode("full"),"full");
+ for(const mode of ["","FULL","weekly",null])assert.throws(()=>resolveProductionSeoMode(mode),/Invalid SEO audit mode/);
+});
+test("full and daily coverage require actual exact page inspection, not just a green run",()=>{
+ const inventory=parseProductionSitemapInventory(fixture());
+ const full=selectProductionSeoPages(inventory,{mode:"full"});
+ const daily=selectProductionSeoPages(inventory,{mode:"daily",day:0,samplePerLocale:1});
+ assert.deepEqual(verifyProductionSeoCoverage(inventory,full,full,"full"),{plannedPages:33,checkedPages:33,totalIndexablePages:33,fullCoverage:true});
+ assert.equal(verifyProductionSeoCoverage(inventory,daily,daily,"daily").fullCoverage,false);
+ assert.throws(()=>verifyProductionSeoCoverage(inventory,daily,daily,"full"),/Full SEO plan/);
+ assert.throws(()=>verifyProductionSeoCoverage(inventory,full,full.slice(1),"full"),/Incomplete/);
+ assert.throws(()=>verifyProductionSeoCoverage(inventory,full,[...full.slice(1),full[1]],"full"),/duplicate/);
+ assert.throws(()=>verifyProductionSeoCoverage(inventory,daily,[...daily.slice(1),page("/not-inspected/")],"daily"),/Incomplete/);
 });

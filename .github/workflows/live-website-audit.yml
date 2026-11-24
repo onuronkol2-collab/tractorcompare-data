@@ -22,7 +22,20 @@ on:
       - "site/scripts/live-stylesheets.mjs"
       - "site/tests/live-stylesheets.test.mjs"
       - "site/scripts/seo-main-markup.mjs"
+      - "site/scripts/seo-html-attributes.mjs"
+      - "site/tests/seo-html-attributes.test.mjs"
+      - "site/scripts/production-sitemap-inventory.mjs"
+      - "site/tests/production-sitemap-inventory.test.mjs"
   workflow_dispatch:
+    inputs:
+      mode:
+        description: "Live HTML coverage: daily sample or every canonical sitemap page"
+        type: choice
+        required: true
+        default: daily
+        options:
+          - daily
+          - full
   # Daily 09:00 Europe/Istanbul (06:00 UTC): free, public SEO regression check.
   schedule:
     - cron: "0 6 * * *"
@@ -61,5 +74,15 @@ jobs:
       - name: Verify full sitemap inventory and inspect live SEO (daily rotating sample; weekly all pages)
         if: github.event_name != 'pull_request'
         env:
-          TRACTORVS_SEO_AUDIT_MODE: ${{ github.event.schedule == '0 7 * * 0' && 'full' || 'daily' }}
-        run: node site/scripts/production-seo-audit.mjs
+          TRACTORVS_SEO_AUDIT_MODE: ${{ (github.event_name == 'workflow_dispatch' && inputs.mode == 'full' || github.event.schedule == '0 7 * * 0') && 'full' || 'daily' }}
+        run: |
+          set -o pipefail
+          node site/scripts/production-seo-audit.mjs 2>&1 | tee "$RUNNER_TEMP/tractorvs-seo-audit.log"
+      - name: Preserve live SEO scope and result evidence
+        if: always() && github.event_name != 'pull_request'
+        uses: actions/upload-artifact@v7
+        with:
+          name: tractorvs-live-seo-audit-evidence
+          path: ${{ runner.temp }}/tractorvs-seo-audit.log
+          if-no-files-found: warn
+          retention-days: 7
