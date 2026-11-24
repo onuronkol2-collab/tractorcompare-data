@@ -312,3 +312,10 @@ Ek ayrıntı: `site/docs/editorial-quality-gate-20261121.md` ve `site/tests/edit
 Bu dosya GitHub deposunda saklanan, değişiklik geçmişi olan **kalıcı proje kaynağıdır**. Asistanın ChatGPT iç belleğine silinemez bir kayıt yazıldığı veya her yeni sohbette bu dosyanın kendiliğinden okunduğu anlamına gelmez. Yeni sohbetlerin aynı ilkeyi uygulaması için bu dosyanın bağlantısını ChatGPT Project Instructions / Proje Talimatları içinde tutmak ve işe başlarken dosyayı okumak en güvenilir yöntemdir.
 
 *Son kural güncellemesi: 23 Kasım 2026.*
+
+
+### Kalıcı QA yürütme kanıtı — 24 Kasım 2026
+
+- **Yeşil durum, gerçek test kanıtı değildir.** Her yayın raporunda yerel/PR/önizleme/üretim ortamı, test envanteri, çalıştırılan ve başarılı/başarısız/atlanan/kararsız test sayıları, commit ve kanıt bağlantıları ayrı tutulur. Zorunlu kapsam eksikliği, iptal/zaman aşımı, beklenmeyen skip veya flaky sonuç yayın doğrulaması için başarısız sayılır; kasıtlı ortam/tarayıcı istisnaları gerekçeli ve ayrı raporlanır. PR envanteri canlı QA olarak sunulmaz.
+- **10 dil × 4 tarayıcı araştırma QA kapısı:** `site/scripts/verify-research-qa-report.mjs` gerçek üretimde her dil/tarayıcı çiftinin geçtiğini doğrular; `TRACTORVS_RESEARCH_QA_EVIDENCE` raporu ve ilgili regresyon testleri korunur. Tarayıcı kurulum sorunlarında yalnız etkilenen işi sınırlı biçimde yeniden dene, zaman/ağ bütçesi ve artefaktları koru; test kapsamını azaltma, `continue-on-error` veya sahte başarılı sonuç ekleme. Yeni benzer hata görülürse diğer iş akışlarını çakışmasız denetle.
+- **Canlı sürüm kanıtı:** Cloudflare build/merge SHA, gerçekten sunulan sürüm ve canlı işlev testi ayrı kanıtlardır; eski HTML işaretleri yeni sürüm kanıtı değildir. Erişim veya kesin SHA kanıtı yoksa bu sınırı belirt. Olay geçmişi, regresyon ve iş akışı kapsamı: [QA yürütme kanıtı](site/docs/research-qa-execution-evidence-20261124.md).
