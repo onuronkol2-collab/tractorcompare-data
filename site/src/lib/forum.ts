@@ -77,6 +77,22 @@ export async function allPublicForumTopics():Promise<ForumTopic[]> {
   .then(rows=>rows.filter(isSafeForumTopic));
  return topicsCache;
 }
+// One public topic index per build, shared across every localized model page.
+// No extra network request for each tractor.
+let modelTopicsCache:Promise<Map<string,ForumTopic[]>>|undefined;
+export async function modelForumTopics(lang:Locale,tractorId:string):Promise<ForumTopic[]>{
+ if(!modelTopicsCache)modelTopicsCache=allPublicForumTopics().then(rows=>{
+  const index=new Map<string,ForumTopic[]>();
+  for(const row of rows){
+   if(!row.tractor_id||row.status!=="published")continue;
+   const key=row.locale+":"+row.tractor_id;
+   const group=index.get(key)||[];
+   if(group.length<4){group.push(row);index.set(key,group)}
+  }
+  return index;
+ });
+ return (await modelTopicsCache).get(lang+":"+tractorId)||[];
+}
 export async function publishedForumTopics(lang:Locale):Promise<ForumTopic[]> {
  return (await allPublicForumTopics()).filter(x=>x.locale===lang);
 }
