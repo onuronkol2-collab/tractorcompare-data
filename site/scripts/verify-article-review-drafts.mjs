@@ -172,7 +172,7 @@ for(const [i,row] of remaining.rows.entries()){
  }
 }
 // All completed prose batches share one validator and one completeness gate.
-const completeGlossaryDraftLocales=["de","fr"];
+const completeGlossaryDraftLocales=["de","fr","es"];
 let additionalProseFields=0,additionalEntries=0;
 for(const locale of completeGlossaryDraftLocales){
  const prose=JSON.parse(read("docs/translation-review/glossary-remaining-"+locale+"-prose-draft.json"));
