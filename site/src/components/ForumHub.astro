@@ -15,6 +15,7 @@ import {FORUM_LIVE_TEXT} from "../lib/forum-live-i18n.ts";
 import {forumCardExcerpt} from "../lib/forum-format.mjs";
 import {forumHubSeoDescription} from "../lib/forum-hub-seo.mjs";
 import {forumSearchText} from "../lib/forum-search.mjs";
+import {forumActivityByTopic,latestForumActivity} from "../lib/forum-discovery.mjs";
 import {getPublicCatalog} from "../lib/catalog.ts";
 import {localizedPath,LOCALES,LOCALE_TAGS,type Locale} from "../lib/locales.ts";
 interface Props {lang:Locale}
@@ -30,6 +31,14 @@ const topics=publicTopics.filter(topic=>topic.locale===lang);
 const dashboard=FORUM_DASHBOARD_TEXT[lang];
 // Count approved original replies once. Translations must not inflate engagement.
 const replies=await allPublicForumReplies();
+const activityByTopic=forumActivityByTopic(replies);
+const replySearch=new Map<string,string>();
+// Bound extra client search data; only already-public replies in this language.
+for(const reply of replies){
+ if(reply.locale!==lang||reply.status!=="published")continue;
+ const existing=replySearch.get(reply.topic_id)||"";
+ if(existing.length<12000)replySearch.set(reply.topic_id,(existing+" "+reply.body).slice(0,12000));
+}
 const ownedTopicIds=new Set(topics.map(t=>t.topic_id));
 const replyCounts=new Map<string,number>();
 for(const r of replies){
@@ -140,9 +149,10 @@ const schema=indexable?{
     {topics.length>0?<div class="community-topic-grid" id="forum-topic-list">
       {topics.map(topic=>{
        const model=topic.tractor_id?tractors.get(topic.tractor_id):undefined;
+       const activity=latestForumActivity(topic.created_at,activityByTopic.get(topic.topic_id));
        return <article class="community-topic" data-forum-topic data-forum-topic-id={topic.topic_id}
          data-forum-reply-count={replyCounts.get(topic.topic_id)||0} data-forum-published-at={topic.created_at}
-         data-forum-search={forumSearchText([topic.title,topic.body,model?.brand_name,model?.model_name].filter(Boolean).join(" "),lang)}
+         data-forum-search={forumSearchText([topic.title,topic.body,model?.brand_name,model?.model_name,ft(lang,topic.category),replySearch.get(topic.topic_id)].filter(Boolean).join(" "),lang)}
          data-forum-topic-category={topic.category}>
          <span class="community-topic-avatar" aria-hidden="true">{topic.title.trim().slice(0,1).toLocaleUpperCase(lang==="pt-br"?"pt-BR":lang)}</span>
          <div class="community-topic-content"><div class="community-topic-meta">
@@ -160,7 +170,7 @@ const schema=indexable?{
           <span class="community-topic-mobile-label">{dashboard.replies}</span>{replyCounts.get(topic.topic_id)||0}
          </span>
          <span class="community-topic-activity"><span class="community-topic-mobile-label">{dashboard.activity}</span>
-          <time datetime={topic.created_at}>{forumDate(topic.created_at,lang)}</time></span>
+          <time datetime={activity}>{forumDate(activity,lang)}</time></span>
         </article>;
       })}
      </div>:<>
@@ -607,7 +617,7 @@ const schema=indexable?{
 </style>
 <script>
  import {initForumLive} from "../lib/forum-live-client.ts";
- import {forumSearchText} from "../lib/forum-search.mjs";
+ import {forumSearchTerms,matchesForumTerms} from "../lib/forum-discovery.mjs";
  import {readForumSession} from "../lib/forum-session-store.mjs";
  const shell=document.querySelector<HTMLElement>("[data-forum-dashboard-copy]");
  const copy=JSON.parse(shell?.dataset.forumDashboardCopy||"{}") as Record<string,string>;
@@ -638,7 +648,8 @@ const schema=indexable?{
  const starter=document.querySelector<HTMLElement>(".community-starter");
  const heading=document.querySelector<HTMLElement>(".community-section-header");
  const isView=(v:string)=>["latest","popular","unanswered","following","events"].includes(v);
- let selected="all";
+ const requestedCategory=new URLSearchParams(location.search).get("category")||"";
+ let selected=allCategoryButtons.some(button=>(button.dataset.forumCategory||button.dataset.forumRailCategory||button.dataset.forumTagCategory)===requestedCategory)?requestedCategory:"all";
  let view=isView(new URLSearchParams(location.search).get("view")||"")?
    (new URLSearchParams(location.search).get("view")||"latest"):"latest";
  let followed=new Set<string>(),followState:"guest"|"loading"|"ready"|"error"="guest";
@@ -696,7 +707,7 @@ const schema=indexable?{
   }
  };
  const filter=()=>{
-   const q=forumSearchText((input?.value||"").trim(),lang);
+   const q=forumSearchTerms(input?.value||"",lang);
    const items=cards(),hasTopics=items.length>0;
    updatePublicCounts(items);
    const canList=view!=="events"&&(view!=="following"||followState==="ready");
@@ -718,7 +729,7 @@ const schema=indexable?{
    let count=0;
    for(const card of items){
     const inCategory=selected==="all"||card.dataset.forumTopicCategory===selected;
-    const inSearch=!q||(card.dataset.forumSearch||"").includes(q);
+    const inSearch=matchesForumTerms(card.dataset.forumSearch,q);
     const inView=view==="unanswered"?card.hasAttribute("data-forum-reply-count")&&replyCount(card)===0:
       view==="following"?followed.has(card.dataset.forumTopicId||""):
       view==="events"?false:true;
@@ -726,7 +737,7 @@ const schema=indexable?{
     setHidden(card,!visible);
     if(visible)count++;
    }
-   const allFiltered=Boolean(q)||selected!=="all";
+   const allFiltered=q.length>0||selected!=="all";
    // Respect deliberate category choices; never silently clear a zero-result filter.
    // Instead offer a visible route back to the real published discussions.
    if(emptyHelp)emptyHelp.hidden=!(view==="latest"&&canList&&hasTopics&&count===0&&allFiltered);
