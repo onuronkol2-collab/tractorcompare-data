@@ -1,6 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import {forumSearchTerms,matchesForumTerms,forumActivityByTopic,latestForumActivity,relatedForumTopics} from "../src/lib/forum-discovery.mjs";
+import {forumBlocks} from "../src/lib/forum-format.mjs";
+import {forumSearchTerms,matchesForumTerms,forumActivityByTopic,latestForumActivity,relatedForumTopics,forumSpreadsheetMarkdown} from "../src/lib/forum-discovery.mjs";
 
 test("multi-term search tolerates order and Turkish accent differences without changing Hindi vowels",()=>{
  const terms=forumSearchTerms("  ŞANZIMAN   New  holland şanzıman ","tr");
@@ -32,4 +33,15 @@ test("related topics prefer identical catalog model, exclude other languages, se
  assert.deepEqual(result.map(x=>x.topic_id),["g","c","b"]);
  assert.equal(relatedForumTopics(root,[root]).length,0);
  assert.equal(relatedForumTopics(root,[row("g"),row("c")],1).length,1);
+});
+
+test("spreadsheet paste preserves cells and rejects ambiguous or unsafe table formats",()=>{
+ const original="Marka\tÜlke\r\nJohn Deere\tABD\r\nDeutz-Fahr\tAlmanya\r\n";
+ const markdown=forumSpreadsheetMarkdown(original);
+ assert.ok(markdown);
+ const blocks=forumBlocks(markdown);
+ assert.equal(blocks.length,1);
+ assert.equal(blocks[0].type,"table");
+ assert.deepEqual(blocks[0].rows.map(row=>row.map(cell=>cell.map(part=>part.text).join(""))),[["John Deere","ABD"],["Deutz-Fahr","Almanya"]]);
+ for(const value of ["single line","a\tb","a\tb\nc","a\tb\nx|y\tz","a\tb\n<script>\tz","a\tb\n x\tz"])assert.equal(forumSpreadsheetMarkdown(value),null);
 });
