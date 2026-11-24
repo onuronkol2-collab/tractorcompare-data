@@ -19,6 +19,7 @@ import {auditBuiltMetaDescriptions} from "./verify-sitewide-meta-descriptions.mj
 import {auditBuiltSocialMetadata} from "./verify-sitewide-social-metadata.mjs";
 import {auditBuiltAstroAssets} from "./verify-static-assets-version-compat.mjs";
 import {auditBuiltModelImageRights} from "./verify-built-model-image-rights.mjs";
+import {hasReleaseSha,verifiedReleaseSha} from "../src/lib/release-provenance.mjs";
 
 const projectRoot=resolve(fileURLToPath(new URL("..",import.meta.url)));
 const expectedOrigin="https://tractorvs.com";
@@ -257,14 +258,33 @@ export function verifyProductionArtifacts({dir=projectRoot,origin=expectedOrigin
 export function preflight(env=process.env){
  return verifyProductionConfiguration(env,projectRoot);
 }
+// This protects only genuine Cloudflare Workers Builds. Inert GitHub/local
+// builds have WORKERS_CI unset and are covered by their existing CI contracts.
+// All read paths below are fixed application paths, never caller-supplied.
+function verifyCloudflareReleaseIdentity(env) {
+ if(env.WORKERS_CI!=="1")return {checked:false};
+ insist(env.WORKERS_CI_BRANCH==="main",
+   "Cloudflare production release must come from the reviewed main branch.");
+ const sha=verifiedReleaseSha(env.WORKERS_CI_COMMIT_SHA);
+ insist(Boolean(sha),"Cloudflare production build is missing a full Git commit SHA.");
+ const pages=["index.html","tr/index.html","tr/tractors/index.html","tr/compare/index.html"];
+ for(const filename of pages) {
+  const html=readText(join(projectRoot,"dist",filename));
+  insist(hasReleaseSha(html,sha),
+    "Build SHA missing, duplicated, or mismatched in: "+filename);
+ }
+ return {checked:true,pages:pages.length};
+}
+
 export function postflight(env=process.env){
  const config=preflight(env);
  const floor=env.MIN_PUBLIC_TRACTOR_PAGES?Number(env.MIN_PUBLIC_TRACTOR_PAGES):100;
  const basic=verifyProductionArtifacts({origin:config.origin,minTractors:floor});
+ const provenance=verifyCloudflareReleaseIdentity(env);
  const protectedInventory=verifyPublishedSiteInventory({
   origin:config.origin,configuredMinimum:floor
  });
- return {...basic,...protectedInventory};
+ return {...basic,...protectedInventory,cloudflareReleaseShaVerified:provenance.checked};
 }
 
 if(process.argv[1]&&resolve(process.argv[1])===fileURLToPath(import.meta.url)){
