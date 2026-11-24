@@ -333,6 +333,7 @@ test("reading-language coverage and filter agree with actual published article r
   await search.fill("zzzz-no-article-2456436");
   await expect(afterSearch).toHaveCount(0);
   await expect(page.locator("#editorial-no-results")).toBeVisible();
+  await expect(page.locator("[data-editorial-section-count]")).toHaveText(["00","00"]);
   await page.locator("#editorial-reset").click();
   await expect(afterSearch).toHaveCount(total);
   await expect(search).toBeFocused();
@@ -354,4 +355,36 @@ test("all published article links and coverage remain accessible without JavaScr
    await expect(page.locator("[data-editorial-card]:visible")).toHaveCount(path.includes("/tr/")?7:6);
   }
  }finally{await context.close();}
+});
+
+
+test("full-text guide and model review offer localized source and section jumps in every language",async({page})=>{
+ test.setTimeout(120000);
+ await page.setViewportSize({width:390,height:844});
+ for(const lang of ["en","tr","zh","hi","pt-br","fr","de","ru","ja","es"]){
+  for(const [path,n,source] of [
+   ["/guides/choosing-a-tractor/",8,"#guide-sources-heading"],
+   ["/reviews/basak-2075-bk/",7,"#review-references-heading"]
+  ]){
+   await page.goto((lang==="en"?"":"/"+lang)+path,{waitUntil:"domcontentloaded"});
+   const toc=page.locator(".article-contents");
+   await expect(toc).toHaveCount(1);
+   await expect(toc).toBeVisible();
+   const links=toc.locator("a[href^='#']");
+   await expect(links).toHaveCount(n);
+   for(const link of await links.all()){
+    const target=await link.getAttribute("href");
+    await expect(page.locator(target)).toHaveCount(1);
+    expect((await link.textContent()).trim()).not.toBe("");
+    expect((await link.boundingBox())?.height??0).toBeGreaterThanOrEqual(44);
+   }
+   const sources=toc.locator('a[href="'+source+'"]');
+   await sources.focus();
+   await expect(sources).toBeFocused();
+   await page.keyboard.press("Enter");
+   await expect(page.locator(source)).toBeInViewport();
+   expect(new URL(page.url()).hash).toBe(source);
+   expect(await page.evaluate(()=>document.documentElement.scrollWidth)).toBeLessThanOrEqual(392);
+  }
+ }
 });
