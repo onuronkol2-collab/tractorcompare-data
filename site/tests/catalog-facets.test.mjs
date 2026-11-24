@@ -79,7 +79,9 @@ test("catalogue stays a crawlable technical reference, even with a two-column re
     'href={detailPrefix+tractor.slug+"/"}',
     '<TractorPhoto tractor={tractor} lang={lang} mode="catalog" sprite />',
   ])assert.ok(source.includes(selector),selector);
-  assert.match(source,/history.replaceState\(history.state,"",next.pathname\+next.search\+next.hash\)/);
+  assert.match(source,/const nextPath=next.pathname\+next.search\+next.hash/);
+  assert.match(source,/const routeChanged=nextPath!==location.pathname\+location.search\+location.hash/);
+  assert.match(source,/if\(routeChanged\) history.replaceState\(history.state,"",nextPath\)/);
   assert.match(source,/tractorvs:route-state-changed/);
   assert.match(layout,/const canonicalUrl = indexingEnabled\s*\? new URL\(Astro.url.pathname, Astro.site!\)/);
   assert.match(layout,/href: new URL\(localizedPath\(locale, plainPath\), Astro.site!\)/);
