@@ -138,7 +138,7 @@ const summaryItems = [
       <ul>{modelDiscussions.map(topic=><li><a href={localizedPath(lang,"/forum/"+topic.slug+"/")}>{topic.title}</a><small>{forumCopy(lang,topic.category)}</small></li>)}</ul>
     </section>}
     <a class="model-forum-discussion"
-      href={localizedPath(lang,"/forum/")+"?tractor="+encodeURIComponent(tractor.tractor_id)+"#forum-compose"}>
+      href={localizedPath(lang,"/forum/")+"?tractor="+encodeURIComponent(tractor.tractor_id)}>
       <strong>{forumCopy(lang,"name")} · {forumCopy(lang,"compose")}</strong>
       <span>{forumCopy(lang,"intro")} ↗</span>
     </a>
