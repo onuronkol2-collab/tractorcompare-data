@@ -49,7 +49,7 @@ test("rendered release identity is unique, exact, and fail closed",()=>{
 
 test("Cloudflare main postflight blocks missing, stale or mismatched build metadata",()=>{
   assert.match(releaseGate,/env\.WORKERS_CI!=="1"\|\|env\.WORKERS_CI_BRANCH!=="main"/);
-  assert.match(releaseGate,/verifyCloudflareBuildSha\(\{env\}\)/);
+  assert.match(releaseGate,/verifyCloudflareBuildSha\(env\)/);
   assert.match(releaseGate,/hasReleaseSha\(html,sha\)/);
   for(const path of ["index.html","tr/index.html","tr/compare/index.html","tr/tractors/index.html"]){
     assert.ok(releaseGate.includes('"'+path+'"'),path);
