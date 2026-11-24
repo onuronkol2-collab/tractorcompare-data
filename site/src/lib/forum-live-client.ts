@@ -126,11 +126,15 @@ export function initForumLive(root:HTMLElement):void{
     time.textContent=dateFormatter.format(new Date(row.created_at));meta.append(time);
     const title=make("h3");title.textContent=row.title;
     const excerpt=make("p");excerpt.textContent=forumSeoDescription(row.body,230);
-    const details=make("details"),summary=make("summary");summary.textContent=text.read;
+    // Native disclosure: the topic title itself opens the approved content,
+    // including keyboard activation, without a speculative permanent URL.
+    const details=make("details"),summary=make("summary");
+    const readLabel=make("span");readLabel.className="forum-live-read-label";readLabel.textContent=text.read;
+    title.append(readLabel);summary.append(title);
     const note=make("p");note.className="forum-live-note";note.textContent=text.summary;
     const body=make("div");body.className="forum-live-body";richBody(row.body,body);
     details.append(summary,note,body);
-    article.append(meta,title,excerpt,details);fragment.append(article);
+    article.append(meta,details,excerpt);fragment.append(article);
    }
    grid.replaceChildren(fragment);
    const hasNew=byId.size>0;
