@@ -260,14 +260,14 @@ export function preflight(env=process.env){
 }
 // Only Cloudflare's real production build must carry its exact Git provenance.
 // GitHub's inert/static test builds have no WORKERS_CI identity and remain unchanged.
-export function verifyCloudflareBuildSha({env=process.env,dir=projectRoot}={}){
+export function verifyCloudflareBuildSha(env=process.env){
  if(env.WORKERS_CI!=="1"||env.WORKERS_CI_BRANCH!=="main")
   return {verified:false};
  const sha=verifiedReleaseSha(env.WORKERS_CI_COMMIT_SHA);
  insist(Boolean(sha),"Cloudflare production build is missing a valid WORKERS_CI_COMMIT_SHA.");
  const pages=["index.html","tr/index.html","tr/compare/index.html","tr/tractors/index.html"];
  for(const page of pages){
-  const html=readText(join(dir,"dist",page));
+  const html=readText(join(projectRoot,"dist",page));
   insist(hasReleaseSha(html,sha),"Cloudflare production HTML release SHA is missing or incorrect: "+page);
  }
  console.log("TRACTORVS_RELEASE_SHA_CHECK "+JSON.stringify({sha,pages:pages.length}));
@@ -278,7 +278,7 @@ export function postflight(env=process.env){
  const config=preflight(env);
  const floor=env.MIN_PUBLIC_TRACTOR_PAGES?Number(env.MIN_PUBLIC_TRACTOR_PAGES):100;
  const basic=verifyProductionArtifacts({origin:config.origin,minTractors:floor});
- const releaseShaCheck=verifyCloudflareBuildSha({env});
+ const releaseShaCheck=verifyCloudflareBuildSha(env);
  const protectedInventory=verifyPublishedSiteInventory({
   origin:config.origin,configuredMinimum:floor
  });
