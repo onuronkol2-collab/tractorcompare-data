@@ -445,15 +445,22 @@ export function modelSeoMetadata(tractor: TractorRecord, lang: Locale) {
     searchDescription+=" "+sentence;
     return true;
   };
+  const independentLabel=INDEPENDENT_SOURCE_COPY[lang].label+
+    (lang==="zh"||lang==="ja"?"。":lang==="hi"?"।":".");
   const addIndependent=():boolean=>{
     if(!independentSentence)return false;
-    return addSentence(independentSentence)||addSentence(INDEPENDENT_SOURCE_COPY[lang].label+
-      (lang==="zh"||lang==="ja"?"。":lang==="hi"?"।":"."));
+    return addSentence(independentSentence)||addSentence(independentLabel);
   };
   const independentPower=headlinePower?.sourceType==="independent"&&!hasInternationalSonalikaContext(tractor);
   // A standalone independent power figure must retain its provenance.
   if(independentPower){
-    if(addIndependent())addSentence(powerSentence);
+    if(independentSentence&&powerSentence&&
+        searchDescription.length+2+independentLabel.length+powerSentence.length<=160){
+      addSentence(independentLabel);
+      addSentence(powerSentence);
+    }else{
+      addIndependent();
+    }
   }else{
     addSentence(powerSentence);
   }
