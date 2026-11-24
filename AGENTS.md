@@ -10,6 +10,10 @@ Kullanıcının açık ve sürekli talebi:
 
 Bu ilke **her projeyle ilgili görevde** geçerlidir. Tek seferlik bir istek değildir. Yeni araçlar bağlandığında kapsam kendiliğinden genişler; yalnızca aşağıdaki örnek adlarla sınırlı değildir.
 
+### Bağımsız kaynakların sürekli kullanımı — 24 Kasım 2026
+
+Her ilgili traktör marka/model/özellik, karşılaştırma, makale ve fotoğraf araştırmasında üretici kaynaklarıyla birlikte uygun bağımsız kamu/üniversite testleri, akademik araştırmalar ve özgün saha testlerini proaktif tara; [bağımsız kaynak çalışma listesini](supabase/docs/tractor-independent-evidence-20261124.md) mevcut küresel dizinle birlikte kullan. Aynı testin yeniden yayınlarını bağımsız kanıt sayma; üretici beyanı, ölçüm, saha gözlemi, bayi memnuniyeti ve kullanıcı deneyimini ayrı etiketle. 2026 güvenilirlik/arıza kuralı, kaynak/ölçüm/model/pazar doğrulaması, telif, kota ve yayın kapıları aynen korunur. Akademik veya editoryal kaynakta sponsor/çıkar ilişkisini kontrol et; fotoğraf için ayrı uyumlu lisans şarttır. Yeni kaynakları tarih ve gerçek kanıtla kaydet; engellenen kaynağı aşma.
+
 ### SEO ve GEO
 
 **Kalıcı proje önceliği.** Her görevde hangi kullanıcı sorusunun, yayımlanmış sayfanın veya ortak şablonun etkilendiğini belirle. Aşağıdaki sırayı kapsamla orantılı uygula. Arama erişimini topluca kesen bir hata veya kullanıcıya yanlış teknik değer gösteren bir sayfa önce ele alınır. Mevcut RLS, moderasyon, rıza, lisans ve yayın koşulları her adımda geçerlidir.
