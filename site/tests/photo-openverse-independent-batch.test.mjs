@@ -161,3 +161,53 @@ test("valid lead beyond initial seven is discovered in the same request",async()
  const report=await researchIndependentSources([fixtures[0]],{approved:[],fetchFn:async()=>({status:200,headers:{get:()=>"application/json"},json:async()=>({results:[...Array(10).fill(valid("Other tractor")),valid("McCormick X5.085")]})}),delayFn:async()=>{}});
  assert.equal(report.queries_sent,1);assert.equal(report.candidates.length,1);
 });
+
+
+test("one provider response yields additional exact metadata leads for other missing models, not covered records",async()=>{
+ const models=[
+   pub("McCormick","X5.085","a"),pub("McCormick","X5.120","b"),
+   pub("McCormick","X5.120","b2"),pub("McCormick","X5.130","c"),
+   pub("Zetor","PROXIMA","z"),
+ ];
+ const lead=(title,id)=>({...valid(title),foreign_landing_url:"https://www.flickr.com/photos/creator/"+id});
+ let calls=0;
+ const report=await researchIndependentSources(models,{
+   approved:[{brand:"McCormick",model:"X5.120",tractorId:"b2"},{brand:"McCormick",model:"X5.130"}],
+   index:0,limit:1,delayFn:async()=>{},
+   fetchFn:async()=>{calls++;return {status:200,headers:{get:()=>"application/json"},
+    json:async()=>({results:[
+     lead("McCormick X5.085 tractor","a"),
+     lead("McCormick X5.120 tractor","b"),lead("McCormick X5.120 tractor","b"),
+     lead("McCormick X5.130 tractor","c"),lead("Zetor PROXIMA tractor","z"),
+     lead("McCormick X5.1200 tractor","near"),
+    ]})};}
+ });
+ assert.equal(calls,1);
+ assert.equal(report.queries_sent,1);
+ assert.equal(report.candidates.length,2);
+ assert.equal(report.cross_model_candidates,1);
+ assert.equal(report.matched_model_pairs,2);
+ const extra=report.candidates.find(x=>x.model==="X5.120");
+ assert.deepEqual(extra.missingTractorIds,["b"]);
+ assert.equal(extra.discovered_by_model,"X5.085");
+ assert.equal(extra.cross_model_discovery,true);
+ assert.equal(extra.allowed_to_publish,false);
+ assert.equal(extra.exact_visual_model_identity_verified,false);
+ assert.equal(extra.original_author_rights_verified,false);
+ assert.ok(report.candidates.every(x=>!x.source_page_url.endsWith("/near")));
+});
+test("reused results stay deduplicated and capped across queries; request failures are counted",async()=>{
+ const models=[pub("McCormick","X5.085","a"),pub("McCormick","X5.120","b")];
+ const results=Array.from({length:10},(_,i)=>({...valid("McCormick X5.120 tractor"),
+   foreign_landing_url:"https://www.flickr.com/photos/creator/id"+i}));
+ const report=await researchIndependentSources(models,{approved:[],limit:2,delayFn:async()=>{},
+   fetchFn:async()=>({status:200,headers:{get:()=>"application/json"},json:async()=>({results})})});
+ assert.equal(report.queries_sent,2);
+ assert.equal(report.candidates.length,7);
+ assert.ok(report.candidates.every(x=>x.model==="X5.120"&&!x.cross_model_discovery));
+ assert.equal(report.cross_model_candidates,0);
+ const failure=await researchIndependentSources(models,{approved:[],limit:1,delayFn:async()=>{},
+   fetchFn:async()=>{throw Error("network");}});
+ assert.equal(failure.status,"partial");
+ assert.equal(failure.queries_sent,1);
+});
