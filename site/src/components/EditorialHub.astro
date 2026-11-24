@@ -160,7 +160,7 @@ const schema={
    <section class="editorial-section" id="rehberler" aria-labelledby="editorial-guide-title">
     <div class="editorial-section-title">
      <div><h2 id="editorial-guide-title">{copy.guides}</h2><p>{copy.guidesIntro}</p></div>
-     <span>{String(articles.length).padStart(2,"0")}</span>
+     <span data-editorial-section-count>{String(articles.length).padStart(2,"0")}</span>
     </div>
     <ol class="editorial-grid">{articles.map(entry=><li data-editorial-card data-reading-language={englishOnly(entry)?"other":"local"}>
       <article class="editorial-card">
@@ -177,7 +177,7 @@ const schema={
    <section class="editorial-section" id="incelemeler" aria-labelledby="editorial-review-title">
     <div class="editorial-section-title">
      <div><h2 id="editorial-review-title">{copy.review}</h2><p>{copy.reviewIntro}</p></div>
-     <span>{String(reviews.length+((lang==="tr"||lang==="en")?1:0)).padStart(2,"0")}</span>
+     <span data-editorial-section-count>{String(reviews.length+extraReview).padStart(2,"0")}</span>
     </div>
     <ol class="editorial-grid">{reviews.map(entry=><li data-editorial-card data-reading-language={englishOnly(entry)?"other":"local"}>
       <article class="editorial-card">
@@ -237,8 +237,12 @@ const schema={
   if(discovery&&field&&clear&&status&&empty&&reset&&rows.length){
     // All published links remain in SSR HTML. Filtering is a client-side
     // reading convenience; no fabricated article or extra indexable URL.
-    const normalize=(text:string)=>text.normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLocaleLowerCase();
+    const normalize=(text:string)=>text.normalize("NFKC").normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase().replace(/ı/g,"i");
     const titles=rows.map(row=>normalize(row.textContent||""));
+    const sections=Array.from(document.querySelectorAll<HTMLElement>(".editorial-section")).map(section=>({
+      count:section.querySelector<HTMLElement>("[data-editorial-section-count]"),
+      rows:rows.filter(row=>section.contains(row))
+    }));
     discovery.hidden=false;
     const paint=()=>{
       const terms=normalize(field.value.trim()).split(/\s+/).filter(Boolean);
@@ -248,6 +252,10 @@ const schema={
         const match=(reading==="all"||row.dataset.readingLanguage===reading)&&terms.every(term=>titles[i].includes(term));
         if(row.hidden===match)row.hidden=!match;
         if(match)visible++;
+      });
+      sections.forEach(section=>{
+        const count=String(section.rows.filter(row=>!row.hidden).length).padStart(2,"0");
+        if(section.count&&section.count.textContent!==count)section.count.textContent=count;
       });
       const hideClear=!terms.length;
       if(clear.hidden!==hideClear)clear.hidden=hideClear;
