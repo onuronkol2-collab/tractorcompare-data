@@ -19,7 +19,7 @@ permissions:
 jobs:
   mobile_lighthouse:
     runs-on: ubuntu-latest
-    timeout-minutes: 25
+    timeout-minutes: 40
     steps:
       - uses: actions/checkout@v4
       - name: Check Chrome and Node
@@ -37,23 +37,8 @@ jobs:
         run: |
           set -euo pipefail
           mkdir -p /tmp/tractorvs-lighthouse
-          for route in home catalog model compare advisor articles glossary selection review forum en-home zh-home de-model ja-guide; do
-            case "$route" in
-              home) url="https://tractorvs.com/tr/" ;;
-              catalog) url="https://tractorvs.com/tr/tractors/" ;;
-              model) url="https://tractorvs.com/tr/tractors/belarus-80-1-ca3d18f9/" ;;
-              compare) url="https://tractorvs.com/tr/compare/" ;;
-              advisor) url="https://tractorvs.com/tr/farm-advisor/" ;;
-              articles) url="https://tractorvs.com/tr/articles/" ;;
-              glossary) url="https://tractorvs.com/guides/tractor-technical-terms/" ;;
-              selection) url="https://tractorvs.com/tr/guides/choosing-a-tractor/" ;;
-              review) url="https://tractorvs.com/tr/reviews/basak-2075-bk/" ;;
-              forum) url="https://tractorvs.com/tr/forum/" ;;
-              en-home) url="https://tractorvs.com/" ;;
-              zh-home) url="https://tractorvs.com/zh/" ;;
-              de-model) url="https://tractorvs.com/de/tractors/antonio-carraro-tigre-3800-fc5f6f1d/" ;;
-              ja-guide) url="https://tractorvs.com/ja/guides/choosing-a-tractor/" ;;
-            esac
+          node --input-type=module -e 'import { ROUTE_URLS } from "./site/scripts/mobile-lighthouse-summary.mjs"; for (const [route,url] of Object.entries(ROUTE_URLS)) console.log(route+" "+url)' > /tmp/tractorvs-lighthouse/routes.txt
+          while read -r route url; do
             echo "Auditing $route $url"
             npx --yes lighthouse@12.8.2 "$url" \
               --chrome-flags="--headless --no-sandbox --disable-dev-shm-usage" \
@@ -61,8 +46,8 @@ jobs:
               --emulated-form-factor=mobile \
               --throttling-method=simulate \
               --output=json --output-path="/tmp/tractorvs-lighthouse/$route.json" \
-              --quiet
-          done
+              --quiet < /dev/null
+          done < /tmp/tractorvs-lighthouse/routes.txt
           node site/scripts/mobile-lighthouse-summary.mjs
 
       - name: Upload diagnostic Lighthouse JSON

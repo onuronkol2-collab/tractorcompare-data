@@ -211,15 +211,23 @@ const pricePayload = JSON.stringify({
       unknown: string;
       models: Array<{id: string; prices: Partial<Record<MarketCountry,string>>}>;
     };
+    // Index the existing SSR labels in one DOM traversal, not one selector scan per model.
+    // First match preserves querySelector semantics; published IDs are unchanged.
+    const labelsById = new Map<string, HTMLElement>();
+    for (const label of document.querySelectorAll<HTMLElement>("[data-price-for]")) {
+      const id = label.dataset.priceFor;
+      if (id && !labelsById.has(id)) labelsById.set(id,label);
+    }
     const pricedLabels = data.models.map(model => ({
-      label: document.querySelector<HTMLElement>(`[data-price-for="${CSS.escape(model.id)}"]`),
+      label: labelsById.get(model.id),
       prices: model.prices,
     }));
     let manuallySelected=false;
     const refresh = (country:MarketCountry) => {
       countryControl.value=country;
       for (const {label, prices} of pricedLabels) {
-        if (label) label.textContent = prices[country] ?? data.unknown;
+        const next = prices[country] ?? data.unknown;
+        if (label && label.textContent !== next) label.textContent = next;
       }
     };
     // Explicitly chosen countries survive a language change or shared URL.
@@ -307,12 +315,17 @@ const pricePayload = JSON.stringify({
       if (card.hidden !== !match) card.hidden = !match;
       if (match) visible++;
     }
-    if (noResults) noResults.hidden = visible > 0;
-    if (visibleCount) visibleCount.textContent=(visibleCount.dataset.countTemplate||"")
-      .replace("{visible}",String(visible)).replace("{total}",String(cards.length));
-    if (jumpCount && visibleCount) jumpCount.textContent = visibleCount.textContent;
-    if (clearSearch) clearSearch.hidden = !normalized;
-    if(facetReset)facetReset.hidden=!facetState().brand&&!facetState().power&&!facetState().year&&facetState().sort==="brand"&&!normalized;
+    const empty = visible === 0;
+    if (noResults && noResults.hidden === empty) noResults.hidden = !empty;
+    if (visibleCount) {
+      const countText=(visibleCount.dataset.countTemplate||"")
+        .replace("{visible}",String(visible)).replace("{total}",String(cards.length));
+      if(visibleCount.textContent!==countText) visibleCount.textContent=countText;
+      if(jumpCount && jumpCount.textContent!==countText) jumpCount.textContent=countText;
+    }
+    if (clearSearch && clearSearch.hidden !== !normalized) clearSearch.hidden = !normalized;
+    const hideReset=!state.brand&&!state.power&&!state.year&&state.sort==="brand"&&!normalized;
+    if(facetReset && facetReset.hidden!==hideReset)facetReset.hidden=hideReset;
   };
   // Keep refresh/share and locale switching aligned with the user's current
   // filter. Canonical SEO stays on the clean published catalogue URL.
@@ -329,7 +342,9 @@ const pricePayload = JSON.stringify({
       if(value)next.searchParams.set(key,value);
       else next.searchParams.delete(key);
     }
-    history.replaceState(history.state,"",next.pathname+next.search+next.hash);
+    const nextPath=next.pathname+next.search+next.hash;
+    const routeChanged=nextPath!==location.pathname+location.search+location.hash;
+    if(routeChanged) history.replaceState(history.state,"",nextPath);
     // Preserve the original catalogue search-language contract while also
     // carrying the new research facets to every locale destination.
     for(const link of document.querySelectorAll<HTMLAnchorElement>("[data-language-choice]")){
@@ -341,10 +356,10 @@ const pricePayload = JSON.stringify({
         if(value) destination.searchParams.set(key,value);
         else destination.searchParams.delete(key);
       }
-      link.href=destination.pathname+destination.search+destination.hash;
+      if(link.href!==destination.href)link.href=destination.pathname+destination.search+destination.hash;
     }
     // Shared navigation handles other dynamic route state consistently.
-    window.dispatchEvent(new Event("tractorvs:route-state-changed"));
+    if(routeChanged)window.dispatchEvent(new Event("tractorvs:route-state-changed"));
   };
   search?.addEventListener("input", () => {
     filterCatalog(search.value);

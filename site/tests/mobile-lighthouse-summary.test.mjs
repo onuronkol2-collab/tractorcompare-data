@@ -1,7 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import {readFileSync} from "node:fs";
-import {analyzeLighthouse,collectImageOptimizationCandidates,interpretCrux,markdownReport,FIELD_THRESHOLDS} from "../scripts/mobile-lighthouse-summary.mjs";
+import {analyzeLighthouse,collectImageOptimizationCandidates,interpretCrux,markdownReport,FIELD_THRESHOLDS,ROUTE_URLS,validateLiveLighthouseResult,repeatedHomeMedian} from "../scripts/mobile-lighthouse-summary.mjs";
 
 const sample={
   finalUrl:"https://tractorvs.com/tr/",
@@ -115,4 +115,65 @@ test("no image itemization never implies photos are already optimized",()=>{
  assert.deepEqual(collectImageOptimizationCandidates({audits:{}}),[]);
  const md=markdownReport([analyzeLighthouse(sample,"home")],{});
  assert.match(md,/does not prove all photographs are optimally sized/);
+});
+
+test("weekly mobile route inventory includes all ten localized home pages and keeps prior templates",()=>{
+ const paths=["/","/tr/","/zh/","/hi/","/pt-br/","/fr/","/de/","/ru/","/ja/","/es/"];
+ for(const path of paths)assert.ok(Object.values(ROUTE_URLS).includes("https://tractorvs.com"+path),path);
+ assert.equal(Object.keys(ROUTE_URLS).length,23);
+ for(const route of ["home","home-repeat-2","home-repeat-3"])assert.equal(ROUTE_URLS[route],"https://tractorvs.com/tr/");
+ const workflow=readFileSync(new URL("../../.github/workflows/mobile-performance-audit.yml",import.meta.url),"utf8");
+ assert.match(workflow,/import \{ ROUTE_URLS \}/);
+ assert.match(workflow,/done < \/tmp\/tractorvs-lighthouse\/routes\.txt/);
+});
+test("live audits reject wrong same-origin paths, runtime errors and incomplete data",()=>{
+ assert.doesNotThrow(()=>validateLiveLighthouseResult(sample,"home"));
+ assert.throws(()=>validateLiveLighthouseResult(sample,"catalog"),/Unexpected Lighthouse final URL/);
+ assert.throws(()=>validateLiveLighthouseResult({...sample,runtimeError:{code:"NO_FCP"}},"home"),/runtime failure/);
+ assert.throws(()=>validateLiveLighthouseResult({...sample,categories:{...sample.categories,performance:{score:null}}},"home"),/Missing or invalid Lighthouse score/);
+ assert.throws(()=>validateLiveLighthouseResult({...sample,audits:{...sample.audits,"total-blocking-time":{numericValue:null}}},"home"),/Missing or invalid Lighthouse lab metric/);
+});
+test("three TR lab visits preserve individual results and report their median instead of cherry-picking",()=>{
+ const reports=["home","home-repeat-2","home-repeat-3"].map((route,i)=>analyzeLighthouse({
+  ...sample,categories:{...sample.categories,performance:{score:[.66,1,.98][i]}},
+  audits:{...sample.audits,"largest-contentful-paint":{numericValue:[2649,1417,2027][i]}}
+ },route));
+ assert.equal(repeatedHomeMedian(reports).performance,98);
+ assert.equal(repeatedHomeMedian(reports).lcp,2027);
+ assert.equal(repeatedHomeMedian(reports.slice(0,2)),null);
+ const md=markdownReport(reports,{home:{available:false,reason:"PageSpeed_http_429"}});
+ assert.match(md,/median of three separate simulated visits: performance 98/);
+ assert.match(md,/PageSpeed_http_429/);
+ assert.match(md,/\| home \| 66 /);
+});
+test("catalog hot path keeps source-visible SSR while avoiding repeated DOM scans and writes",()=>{
+ const src=readFileSync(new URL("../src/components/TractorCatalog.astro",import.meta.url),"utf8");
+ assert.match(src,/const labelsById = new Map<string, HTMLElement>/);
+ assert.match(src,/querySelectorAll<HTMLElement>\("\[data-price-for\]"\)/);
+ assert.match(src,/label: labelsById.get\(model.id\)/);
+ assert.doesNotMatch(src,/CSS.escape\(model.id\)/);
+ assert.match(src,/label.textContent !== next/);
+ assert.match(src,/visibleCount.textContent!==countText/);
+ assert.match(src,/if\(routeChanged\) history.replaceState/);
+ assert.match(src,/if\(routeChanged\)window.dispatchEvent/);
+ assert.match(src,/if \(card.hidden !== !match\) card.hidden = !match/);
+});
+
+test("compare's client-side model state is accepted only after loading the exact requested document",()=>{
+ const expected=ROUTE_URLS.compare;
+ const left="0b53e944-0ccd-4fbd-84e8-f49ffde1a2ae",right="66781999-258a-4baa-a52b-9a4f79c8b708";
+ const query="?left="+left+"&right="+right;
+ const report={...sample,requestedUrl:expected,mainDocumentUrl:expected,finalDisplayedUrl:expected+query};
+ assert.doesNotThrow(()=>validateLiveLighthouseResult(report,"compare"));
+ assert.doesNotThrow(()=>validateLiveLighthouseResult({...report,finalDisplayedUrl:expected+"?right="+right+"&left="+left},"compare"));
+ for(const url of [
+   expected+"?left="+left,expected+"?left="+left+"&right="+left,
+   expected+query+"&left="+left,expected+query+"&utm_source=test",
+   expected+query+"#anchor",expected+"?left=wrong&right="+right,
+   "https://tractorvs.com/compare/"+query,"https://example.org/tr/compare/"+query
+ ])assert.throws(()=>validateLiveLighthouseResult({...report,finalDisplayedUrl:url},"compare"),/Unexpected Lighthouse final URL/,url);
+ assert.throws(()=>validateLiveLighthouseResult({...report,mainDocumentUrl:expected+query},"compare"),/Unexpected Lighthouse final URL/);
+ assert.throws(()=>validateLiveLighthouseResult({...report,mainDocumentUrl:undefined},"compare"),/Unexpected Lighthouse final URL/);
+ assert.throws(()=>validateLiveLighthouseResult({...report,requestedUrl:ROUTE_URLS.home},"compare"),/Unexpected Lighthouse final URL/);
+ assert.throws(()=>validateLiveLighthouseResult({...sample,finalDisplayedUrl:ROUTE_URLS.home+query},"home"),/Unexpected Lighthouse final URL/);
 });
