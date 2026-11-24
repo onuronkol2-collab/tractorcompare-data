@@ -56,7 +56,18 @@ test("Workers production postflight verifies fixed HTML paths and fails closed",
   assert.match(releaseGate, /hasReleaseSha\(html,sha\)/);
   assert.match(releaseGate, /insist\(hasReleaseSha\(html,sha\)/);
   assert.doesNotMatch(releaseGate, /function verifyCloudflareReleaseIdentity\([^)]*dir/);
-  for (const path of ["index.html", "tr/index.html", "tr/tractors/index.html", "tr/compare/index.html"]) {
-    assert.ok(releaseGate.includes('"' + path + '"'), path);
-  }
+  const declared = releaseGate.match(/const pages=\[([\s\S]*?)\];/);
+  assert.ok(declared, "Production page manifest is missing");
+  const files = JSON.parse("[" + declared[1] + "]");
+  const locales = ["en", "tr", "zh", "hi", "pt-br", "fr", "de", "ru", "ja", "es"];
+  const expected = locales.flatMap((locale) => {
+    const prefix = locale === "en" ? "" : locale + "/";
+    return [prefix + "index.html", prefix + "tractors/index.html", prefix + "compare/index.html"];
+  });
+  assert.equal(files.length, 30, "No localized template can be omitted");
+  assert.equal(new Set(files).size, 30, "No duplicate path can hide a missing locale");
+  assert.deepEqual([...files].sort(), expected.sort());
+  assert.ok(files.every((file) => !file.startsWith("/") && !file.includes("..")));
+  assert.match(releaseGate, /join\(projectRoot,"dist",filename\)/);
+  assert.match(releaseGate, /hasReleaseSha\(html,sha\)/);
 });
