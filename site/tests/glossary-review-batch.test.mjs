@@ -35,3 +35,9 @@ test("intake is source-bound and rejects missing, duplicate, English and placeho
  ];
  for(const mutate of mutations){const copy=structuredClone(result);mutate(copy);assert.throws(()=>validateReturn(p,copy));}
 });
+
+test("offline Argos adapter contract tests run without external models or network",async()=>{
+ const {execFileSync}=await import("node:child_process");
+ const {fileURLToPath}=await import("node:url");
+ execFileSync("python3",[fileURLToPath(new URL("../scripts/test-translate-glossary-argos-offline.py",import.meta.url))],{encoding:"utf8",env:{...process.env,PYTHONDONTWRITEBYTECODE:"1"}});
+});
