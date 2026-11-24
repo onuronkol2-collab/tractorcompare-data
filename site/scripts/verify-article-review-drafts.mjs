@@ -23,7 +23,7 @@ function numberRetained(src,translated,lang){
  }else if(decimal){
   pattern=src.split(".").map(escaped).join(commaDecimal?",":"\\.");
  }
- return new RegExp("(?<![0-9.,])"+pattern+"(?![0-9A-Z.,])","u").test(translated);
+ return new RegExp("(?<![0-9])(?<![0-9][.,])"+pattern+"(?![0-9A-Z]|[.,][0-9])","u").test(translated);
 }
 assert.ok(numberRetained("1.341","1,341 hp","de"));
 assert.ok(!numberRetained("1.341","1341 hp","de"));
@@ -31,6 +31,8 @@ assert.ok(!numberRetained("1.341","1.341 hp","de"));
 assert.ok(numberRetained("3,000","3 000 kg","fr"));
 assert.ok(!numberRetained("3,000","3,000 kg","de"));
 assert.ok(!numberRetained("540","540E","en"));
+assert.ok(numberRetained("540","540, 540E and 1000","en"));
+assert.ok(!numberRetained("72","72.1","en"));
 assert.ok(!numberRetained("72.1","172.1","en"));
 const scripts={zh:/\p{Script=Han}/u,hi:/\p{Script=Devanagari}/u,ru:/\p{Script=Cyrillic}/u,ja:/[\p{Script=Hiragana}\p{Script=Katakana}]/u};
 let count=0, paragraphs=0;
