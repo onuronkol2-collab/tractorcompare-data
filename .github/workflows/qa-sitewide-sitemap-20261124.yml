@@ -1,0 +1,54 @@
+name: Read-only sitewide live sitemap audit
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/qa-sitewide-sitemap-20261124.yml'
+permissions:
+  contents: read
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - name: Existing full sitemap coverage guard
+        run: node scripts/tractor-bing-sitemap-coverage.mjs
+      - name: Inventory XML and compare public database snapshot
+        if: always()
+        run: |
+          python3 - <<'PY'
+          import urllib.request, xml.etree.ElementTree as ET, collections, json, re
+          from urllib.parse import urlsplit
+          root="https://tractorvs.com"
+          def fetch(path):
+              with urllib.request.urlopen(urllib.request.Request(path,headers={"User-Agent":"TractorVS-sitemap-audit/1.0","Cache-Control":"no-cache"}),timeout=25) as r:
+                  print("HTTP",path,r.status,r.headers.get_content_type(),flush=True)
+                  return r.read().decode()
+          robots=fetch(root+"/robots.txt")
+          index=ET.fromstring(fetch(root+"/sitemap-index.xml"))
+          children=[x.text for x in index.findall(".//{*}loc")]
+          print("CHILDREN",json.dumps(children))
+          print("ROBOTS",json.dumps([x for x in robots.splitlines() if x.lower().startswith("sitemap:")]))
+          main=[]; forum=[]; images=[]; image_files=set(); lastmods={}
+          for url in children:
+              tree=ET.fromstring(fetch(url)); entries=tree.findall("{*}url"); locs=[x.findtext("{*}loc") for x in entries]
+              dates=[x.findtext("{*}lastmod") for x in entries if x.findtext("{*}lastmod")]
+              print("XML",json.dumps({"url":url,"count":len(locs),"duplicates":len(locs)-len(set(locs)),"lastmod_count":len(dates),"latest":max(dates,default=None)}))
+              if url.endswith("/image-sitemap.xml"):
+                  images+=locs
+                  image_files.update(x.text for e in entries for x in e.findall(".//{http://www.google.com/schemas/sitemap-image/1.1}loc"))
+              elif url.endswith("/forum-sitemap.xml"):forum+=locs
+              else:main+=locs
+          locales=["en","tr","zh","hi","pt-br","fr","de","ru","ja","es"]; buckets=collections.defaultdict(set); types=collections.Counter()
+          for url in main:
+              parts=urlsplit(url).path.strip("/").split("/")
+              l=parts.pop(0) if parts[0] in locales[1:] else "en"
+              types[parts[0] or "home"]+=1
+              if len(parts)==2 and parts[0]=="tractors":buckets[l].add(parts[1])
+          expected_forum=set(root+x for x in ["/de/forum/2020-2027-traktor-kronik-arizalari-ve-sorunlu-modeller-9f82b9f37aab41ee8588a0a383f80694/","/de/forum/2026-traktor-bayi-memnuniyeti-siralamasi-markalar-ve-puanlar-713ab252a9254ab7b2c8a30ce5b86706/","/de/forum/traktor-markalari-hangi-ulkenin-dunya-traktor-markalari-ve-uretim-yerleri-2026-b11d1ad6f0cc4a18ab839d18ccc2f7ea/","/forum/2020-2027-traktor-kronik-arizalari-ve-sorunlu-modeller-9f82b9f37aab41ee8588a0a383f80694/","/forum/2026-traktor-bayi-memnuniyeti-siralamasi-markalar-ve-puanlar-713ab252a9254ab7b2c8a30ce5b86706/","/forum/traktor-markalari-hangi-ulkenin-dunya-traktor-markalari-ve-uretim-yerleri-2026-b11d1ad6f0cc4a18ab839d18ccc2f7ea/","/es/forum/2020-2027-traktor-kronik-arizalari-ve-sorunlu-modeller-9f82b9f37aab41ee8588a0a383f80694/","/es/forum/traktor-markalari-hangi-ulkenin-dunya-traktor-markalari-ve-uretim-yerleri-2026-b11d1ad6f0cc4a18ab839d18ccc2f7ea/","/fr/forum/2020-2027-traktor-kronik-arizalari-ve-sorunlu-modeller-9f82b9f37aab41ee8588a0a383f80694/","/fr/forum/2026-traktor-bayi-memnuniyeti-siralamasi-markalar-ve-puanlar-713ab252a9254ab7b2c8a30ce5b86706/","/fr/forum/traktor-markalari-hangi-ulkenin-dunya-traktor-markalari-ve-uretim-yerleri-2026-b11d1ad6f0cc4a18ab839d18ccc2f7ea/","/hi/forum/2020-2027-traktor-kronik-arizalari-ve-sorunlu-modeller-9f82b9f37aab41ee8588a0a383f80694/","/hi/forum/traktor-markalari-hangi-ulkenin-dunya-traktor-markalari-ve-uretim-yerleri-2026-b11d1ad6f0cc4a18ab839d18ccc2f7ea/","/ja/forum/2020-2027-traktor-kronik-arizalari-ve-sorunlu-modeller-9f82b9f37aab41ee8588a0a383f80694/","/ja/forum/traktor-markalari-hangi-ulkenin-dunya-traktor-markalari-ve-uretim-yerleri-2026-b11d1ad6f0cc4a18ab839d18ccc2f7ea/","/pt-br/forum/2020-2027-traktor-kronik-arizalari-ve-sorunlu-modeller-9f82b9f37aab41ee8588a0a383f80694/","/pt-br/forum/2026-traktor-bayi-memnuniyeti-siralamasi-markalar-ve-puanlar-713ab252a9254ab7b2c8a30ce5b86706/","/pt-br/forum/traktor-markalari-hangi-ulkenin-dunya-traktor-markalari-ve-uretim-yerleri-2026-b11d1ad6f0cc4a18ab839d18ccc2f7ea/","/ru/forum/2020-2027-traktor-kronik-arizalari-ve-sorunlu-modeller-9f82b9f37aab41ee8588a0a383f80694/","/ru/forum/2026-traktor-bayi-memnuniyeti-siralamasi-markalar-ve-puanlar-713ab252a9254ab7b2c8a30ce5b86706/","/ru/forum/traktor-markalari-hangi-ulkenin-dunya-traktor-markalari-ve-uretim-yerleri-2026-b11d1ad6f0cc4a18ab839d18ccc2f7ea/","/tr/forum/2020-2027-traktor-kronik-arizalari-ve-sorunlu-modeller-9f82b9f37aab41ee8588a0a383f80694/","/tr/forum/2026-traktor-bayi-memnuniyeti-siralamasi-markalar-ve-puanlar-713ab252a9254ab7b2c8a30ce5b86706/","/tr/forum/traktor-markalari-hangi-ulkenin-dunya-traktor-markalari-ve-uretim-yerleri-2026-b11d1ad6f0cc4a18ab839d18ccc2f7ea/","/zh/forum/2020-2027-traktor-kronik-arizalari-ve-sorunlu-modeller-9f82b9f37aab41ee8588a0a383f80694/","/zh/forum/traktor-markalari-hangi-ulkenin-dunya-traktor-markalari-ve-uretim-yerleri-2026-b11d1ad6f0cc4a18ab839d18ccc2f7ea/"])
+          actual_forum=set(x for x in forum if re.fullmatch(r"/(?:(?:tr|zh|hi|pt-br|fr|de|ru|ja|es)/)?forum/[^/]+/",urlsplit(x).path))
+          report={"main":len(main),"forum":len(forum),"distinct":len(set(main+forum)),"image_page_refs":len(images),"distinct_image_files":len(image_files),"orphan_image_pages":len(set(images)-set(main+forum)),"cross_map_duplicates":len(set(main)&set(forum)),"models_per_locale":{l:len(buckets[l]) for l in locales},"model_parity":all(buckets[l]==buckets["en"] for l in locales),"db_expected_models":469,"model_count_match":all(len(buckets[l])==469 for l in locales),"forum_topic_urls":len(actual_forum),"db_expected_forum":len(expected_forum),"missing_forum":sorted(expected_forum-actual_forum),"extra_forum":sorted(actual_forum-expected_forum),"page_types":dict(types),"example_model":sorted(buckets["en"])[:3]}
+          print("INVENTORY",json.dumps(report),flush=True)
+          PY
