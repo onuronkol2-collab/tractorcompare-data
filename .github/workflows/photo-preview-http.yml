@@ -32,12 +32,11 @@ jobs:
           branch_slug="$(printf '%s' "$SOURCE_BRANCH" | tr '[:upper:]' '[:lower:]' | sed 's|/|-|g; s|[^a-z0-9-]|-|g')"
           [[ "$branch_slug" =~ ^[a-z0-9][a-z0-9-]+$ ]] || { echo "Invalid preview branch slug"; exit 1; }
           origin="https://${branch_slug}-tractorvs-site.onuronkol2.workers.dev"
-          # The Cloudflare branch preview contains the PR head, not a moving main.
-          # Pin the event SHAs even when GitHub retries an older workflow run.
+          # Branch preview contains PR head; pin event SHAs across retries.
           [[ "$BASE_SHA" =~ ^[0-9a-f]{40}$ && "$HEAD_SHA" =~ ^[0-9a-f]{40}$ ]]
           [[ "$(git rev-parse HEAD)" == "$HEAD_SHA" ]]
           changed="$(git diff --name-only --diff-filter=AMR "$BASE_SHA...$HEAD_SHA" -- site/public/images/tractors)"
-          mapfile -t assets < <(printf '%s\n' "$changed" | grep -E '\.(jpg|jpeg)
+          mapfile -t assets < <(printf '%s\n' "$changed" | grep -E '\.(jpg|jpeg)$' || true)
           if (("${#assets[@]}" == 0)); then
             echo "No changed JPEG assets to verify."
             exit 0
@@ -68,43 +67,6 @@ jobs:
                 fi
                 echo "Preview JPEG SHA mismatch at $asset_path (attempt $attempt)"
                 status="sha-mismatch"
-              fi
-              if [[ "$status" == 429 || "$status" == 401 || "$status" == 403 ]]; then
-                echo "Non-retryable preview HTTP $status for $asset_path"
-                exit 1
-              fi
-              if (( attempt == 18 )); then
-                echo "Preview did not return HTTP 200 for $asset_path, last HTTP $status"
-                exit 1
-              fi
-              sleep 8
-            done
-            [[ "$ready" == 1 ]] || exit 1
-          done
- || true)
-          if (("${#assets[@]}" == 0)); then
-            echo "No changed JPEG assets to verify."
-            exit 0
-          fi
-          echo "Checking ${#assets[@]} changed first-party JPEG assets against Cloudflare preview"
-          tmp="$(mktemp)"
-          trap 'rm -f "$tmp"' EXIT
-          for path in "${assets[@]}"; do
-            [[ "$path" =~ ^site/public/images/tractors/[a-z0-9-]+\.jpe?g$ ]] || { echo "Unsafe or unrecognized path: $path"; exit 1; }
-            asset_path="${path#site/public}"
-            url="$origin$asset_path"
-            ready=0
-            for attempt in {1..18}; do
-              result="$(curl -sSL -o "$tmp" -w '%{http_code}|%{content_type}' --max-time 18 "$url")" || result="000|"
-              status="${result%%|*}"
-              mime="${result#*|}"
-              if [[ "$status" == 200 ]]; then
-                [[ "$mime" == image/jpeg* ]] || { echo "Bad MIME $mime at $asset_path"; exit 1; }
-                [[ "$(file --brief --mime-type "$tmp")" == "image/jpeg" ]] || { echo "Body is not JPEG: $asset_path"; exit 1; }
-                [[ "$(wc -c < "$tmp")" -ge 10000 ]] || { echo "JPEG unexpectedly small: $asset_path"; exit 1; }
-                echo "OK $asset_path HTTP 200 $mime bytes=$(wc -c < "$tmp") sha256=$(sha256sum "$tmp" | cut -d' ' -f1)"
-                ready=1
-                break
               fi
               if [[ "$status" == 429 || "$status" == 401 || "$status" == 403 ]]; then
                 echo "Non-retryable preview HTTP $status for $asset_path"
