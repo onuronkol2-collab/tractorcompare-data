@@ -84,4 +84,20 @@ for(const type of ["pto","hydraulic","power"]){
  }
  assert.deepEqual([...seen].sort(),[...locales].sort());
 }
-console.log(JSON.stringify({draftTranslations:count,bodyParagraphs:paragraphs,structuralChecks:"passed",independentReview:"pending",publicationApproved:false}));
+const ui=JSON.parse(read("docs/translation-review/technical-guide-ui-draft.json"));
+assert.equal(ui.state,"draft-needs-independent-editorial-review");
+assert.equal(ui.reviewed,false);
+assert.equal(ui.notForPublication,true);
+assert.equal(ui.sourceComponentBlobSha,blobSha(component));
+assert.deepEqual(Object.keys(ui.labels).sort(),[...locales].sort());
+const uiKeys=["home","articles","guide","eyebrow","read","compareTractors","photoFullscreen","photoAltPrefix","photoDisclaimer","contents","fairComparison","verifyHeading","apply","nextHeading","nextDescription","compare","catalog","relatedTopics","relatedGuide","sourceLanguageEnglish","sourceLanguageTurkish","glossaryEnglish","glossaryEnglishNotice","reviewDate"];
+let uiLabels=0;
+for(const [lang,labels] of Object.entries(ui.labels)){
+ assert.deepEqual(Object.keys(labels).sort(),[...uiKeys].sort());
+ for(const [key,value] of Object.entries(labels)){
+  assert.ok(typeof value==="string"&&value.trim().length>1&&value.length<=300,lang+" "+key);
+  if(scripts[lang])assert.ok(scripts[lang].test(value),lang+" script "+key);
+  uiLabels++;
+ }
+}
+console.log(JSON.stringify({draftTranslations:count,bodyParagraphs:paragraphs,uiLabels,structuralChecks:"passed",independentReview:"pending",publicationApproved:false}));
