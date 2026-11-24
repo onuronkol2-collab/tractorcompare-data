@@ -8,10 +8,67 @@ import {fileURLToPath} from "node:url";
 // Template-based weekly Lighthouse sample. The full production sitemap is
 // separately checked by production-seo-audit.mjs; lab scoring every model page
 // would be costly and cannot be reduced to one universal "SEO score".
-export const ROUTES=[
-  "home","catalog","model","compare","advisor","articles","glossary",
-  "selection","review","forum","en-home","zh-home","de-model","ja-guide"
-];
+// One source of truth for the workflow and parser; cover all ten home locales
+// plus the existing template set. Repeat the previously noisy TR home test.
+const origin="https://tractorvs.com";
+export const ROUTE_PATHS={
+  "home":"/tr/",
+  "catalog":"/tr/tractors/",
+  "model":"/tr/tractors/belarus-80-1-ca3d18f9/",
+  "compare":"/tr/compare/",
+  "advisor":"/tr/farm-advisor/",
+  "articles":"/tr/articles/",
+  "glossary":"/guides/tractor-technical-terms/",
+  "selection":"/tr/guides/choosing-a-tractor/",
+  "review":"/tr/reviews/basak-2075-bk/",
+  "forum":"/tr/forum/",
+  "en-home":"/",
+  "zh-home":"/zh/",
+  "de-model":"/de/tractors/antonio-carraro-tigre-3800-fc5f6f1d/",
+  "ja-guide":"/ja/guides/choosing-a-tractor/",
+  "hi-home":"/hi/",
+  "pt-br-home":"/pt-br/",
+  "fr-home":"/fr/",
+  "de-home":"/de/",
+  "ru-home":"/ru/",
+  "ja-home":"/ja/",
+  "es-home":"/es/",
+  "home-repeat-2":"/tr/",
+  "home-repeat-3":"/tr/"
+};
+export const ROUTES=Object.keys(ROUTE_PATHS);
+export const ROUTE_URLS=Object.fromEntries(ROUTES.map(route=>[route,origin+ROUTE_PATHS[route]]));
+
+// Reject redirects to another locale/path, runtime failures and missing scores
+// in real workflow results rather than reporting the wrong page as measured.
+export function validateLiveLighthouseResult(lhr,route){
+  if(!Object.hasOwn(ROUTE_URLS,route))throw Error("Unrecognized mobile report route: "+route);
+  if(lhr?.runtimeError)throw Error("Lighthouse runtime failure for "+route+": "+lhr.runtimeError.code);
+  const expected=ROUTE_URLS[route];
+  const final=lhr?.finalDisplayedUrl||lhr?.finalUrl;
+  if(final!==expected)throw Error("Unexpected Lighthouse final URL for "+route+": "+final+" (expected "+expected+")");
+  for(const key of CATEGORIES){
+    const score=lhr?.categories?.[key]?.score;
+    if(typeof score!=="number"||!Number.isFinite(score)||score<0||score>1)
+      throw Error("Missing or invalid Lighthouse score for "+route+": "+key);
+  }
+  for(const key of ["largest-contentful-paint","cumulative-layout-shift","total-blocking-time"]){
+    const value=lhr?.audits?.[key]?.numericValue;
+    if(typeof value!=="number"||!Number.isFinite(value)||value<0)
+      throw Error("Missing or invalid Lighthouse lab metric for "+route+": "+key);
+  }
+}
+export function repeatedHomeMedian(reports){
+  const samples=["home","home-repeat-2","home-repeat-3"].map(route=>reports.find(r=>r.route===route));
+  if(samples.some(r=>!r))return null;
+  const median=values=>values.every(v=>typeof v==="number"&&Number.isFinite(v))?[...values].sort((a,b)=>a-b)[1]:null;
+  return {
+    performance:median(samples.map(r=>r.scores.performance)),
+    lcp:median(samples.map(r=>r.vitals["largest-contentful-paint"])),
+    cls:median(samples.map(r=>r.vitals["cumulative-layout-shift"])),
+    tbt:median(samples.map(r=>r.vitals["total-blocking-time"])),
+  };
+}
 export const FIELD_URLS={
   home:"https://tractorvs.com/tr/",
   catalog:"https://tractorvs.com/tr/tractors/",
@@ -113,6 +170,10 @@ export function markdownReport(reports,field={}) {
       fmt(r.vitals["largest-contentful-paint"],"ms")+" | "+fmt(r.vitals["cumulative-layout-shift"],"cls")+
       " | "+fmt(r.vitals["total-blocking-time"],"ms")+" |");
   }
+  const repeated=repeatedHomeMedian(reports);
+  if(repeated)lines.push("","TR home — median of three separate simulated visits: performance "+
+    fmt(repeated.performance)+", lab LCP "+fmt(repeated.lcp,"ms")+", lab CLS "+fmt(repeated.cls,"cls")+
+    ", lab TBT "+fmt(repeated.tbt,"ms")+". All individual runs remain above; this is not field p75.");
   const below100=reports.filter(r=>r.scores.seo!==100);
   lines.push("","### SEO Lighthouse checks on indexable representative templates","");
   if(below100.length){
@@ -150,7 +211,7 @@ export function markdownReport(reports,field={}) {
     "| URL | Data level | LCP p75 | CLS p75 | INP p75 |","| --- | --- | ---: | ---: | ---: |");
   for(const [key,url] of Object.entries(FIELD_URLS)){
     const f=field[key];
-    lines.push("| "+url+" | "+(f?.available?f.scope:"Unavailable")+
+    lines.push("| "+url+" | "+(f?.available?f.scope:"Unavailable"+(f?.reason?" ("+f.reason+")":""))+
       " | "+fmt(f?.values?.lcp_ms,"ms")+" | "+fmt(f?.values?.cls,"cls")+
       " | "+fmt(f?.values?.inp_ms,"ms")+" |");
   }
@@ -174,7 +235,11 @@ async function cruxField(url){
 }
 export async function main(){
   const dir=resolve(process.env.TRACTORVS_LIGHTHOUSE_REPORT_DIR||"/tmp/tractorvs-lighthouse");
-  const reports=ROUTES.map(route=>analyzeLighthouse(JSON.parse(readFileSync(join(dir,route+".json"),"utf8")),route));
+  const reports=ROUTES.map(route=>{
+    const lhr=JSON.parse(readFileSync(join(dir,route+".json"),"utf8"));
+    validateLiveLighthouseResult(lhr,route);
+    return analyzeLighthouse(lhr,route);
+  });
   for(const result of reports)console.log("TRACTORVS_MOBILE_BASELINE "+JSON.stringify(result));
   const field={};
   for(const [key,url] of Object.entries(FIELD_URLS)){
