@@ -127,6 +127,34 @@ export function collectImageOptimizationCandidates(lhr){
 }
 
 
+
+/** Attribute estimated Lighthouse opportunities to exact first-party static
+ * build resources. Do not add overlapping estimates or expose URL queries.
+ * No network requests, resource removal, or claim of measured speed gains. */
+export function collectStaticResourceCandidates(lhr){
+  const rows=new Map();
+  for(const auditId of ["render-blocking-resources","unused-css-rules","unused-javascript"]){
+    const items=lhr?.audits?.[auditId]?.details?.items;
+    if(!Array.isArray(items))continue;
+    for(const item of items){
+      let url;
+      try{url=new URL(item?.url);}catch{continue;}
+      if(url.origin!=="https://tractorvs.com"||
+         !/^\/_astro\/[A-Za-z0-9_.-]+\.(?:css|m?js)$/.test(url.pathname))continue;
+      const bytes=numeric(item.wastedBytes),ms=numeric(item.wastedMs);
+      if(!(bytes>0||ms>0))continue;
+      const key=url.origin+url.pathname;
+      const row=rows.get(key)||{url:key,estimatedMaxWasteBytes:0,estimatedMaxWasteMs:0,flags:[]};
+      row.estimatedMaxWasteBytes=Math.max(row.estimatedMaxWasteBytes,Math.round(bytes||0));
+      row.estimatedMaxWasteMs=Math.max(row.estimatedMaxWasteMs,Math.round(ms||0));
+      if(!row.flags.includes(auditId))row.flags.push(auditId);
+      rows.set(key,row);
+    }
+  }
+  return [...rows.values()].sort((a,b)=>b.estimatedMaxWasteMs-a.estimatedMaxWasteMs||
+    b.estimatedMaxWasteBytes-a.estimatedMaxWasteBytes||a.url.localeCompare(b.url)).slice(0,30);
+}
+
 export function analyzeLighthouse(a,route){
   if(!ROUTES.includes(route))throw Error("Unrecognized mobile report route: "+route);
   if(!a || typeof a!=="object" || !a.categories || !a.audits)throw Error("Lighthouse JSON is missing result categories/audits");
@@ -152,6 +180,7 @@ export function analyzeLighthouse(a,route){
       description:v.description?.slice(0,180)||""}));
   return {route,url,scores,vitals,issues,accessibilityFindings,contrastFailures,seoFindings,
     imageCandidates:collectImageOptimizationCandidates(a),
+    resourceCandidates:collectStaticResourceCandidates(a),
     mode:"synthetic_lab_mobile",real_user_inp_measured:false};
 }
 
@@ -227,6 +256,28 @@ export function markdownReport(reports,field={}) {
       Math.round(item.estimatedMaxWasteBytes/1024)+" KiB |");
   }else lines.push("No itemized public first-party image opportunities in these Lighthouse results; this does not prove all photographs are optimally sized.");
   lines.push("","Changing image formats or sizes still requires exact model identity, original file/license evidence, first-party URL, accessibility and image-SEO validation.");
+  const resourceMap=new Map();
+  for(const report of reports){
+    for(const item of report.resourceCandidates||[]){
+      const row=resourceMap.get(item.url)||{url:item.url,estimatedMaxWasteMs:0,estimatedMaxWasteBytes:0,flags:[],routes:[]};
+      row.estimatedMaxWasteMs=Math.max(row.estimatedMaxWasteMs,item.estimatedMaxWasteMs);
+      row.estimatedMaxWasteBytes=Math.max(row.estimatedMaxWasteBytes,item.estimatedMaxWasteBytes);
+      for(const flag of item.flags)if(!row.flags.includes(flag))row.flags.push(flag);
+      if(!row.routes.includes(report.route))row.routes.push(report.route);
+      resourceMap.set(item.url,row);
+    }
+  }
+  lines.push("","### First-party static CSS/JS resource opportunities (laboratory estimates only)","");
+  if(resourceMap.size){
+    lines.push("Maximum estimates per resource across sampled routes; overlapping opportunities are not additive. Keep critical styles, accessibility, consent and functionality intact.","",
+      "| Resource | Sample route(s) | Flags | Max estimated delay | Max estimated waste |",
+      "| --- | --- | --- | ---: | ---: |");
+    for(const item of [...resourceMap.values()].sort((a,b)=>b.estimatedMaxWasteMs-a.estimatedMaxWasteMs||
+      b.estimatedMaxWasteBytes-a.estimatedMaxWasteBytes||a.url.localeCompare(b.url)).slice(0,20)){
+      lines.push("| "+new URL(item.url).pathname+" | "+item.routes.join(", ")+" | "+item.flags.join(", ")+" | "+
+        item.estimatedMaxWasteMs+" ms | "+Math.round(item.estimatedMaxWasteBytes/1024)+" KiB |");
+    }
+  }else lines.push("No itemized positive first-party static CSS/JS estimates; this does not prove all resources are optimal.");
   lines.push("","### Real-user CrUX field data (last 28 days, only if Google reports enough visits)","",
     "| URL | Data level | LCP p75 | CLS p75 | INP p75 |","| --- | --- | ---: | ---: | ---: |");
   for(const [key,url] of Object.entries(FIELD_URLS)){
