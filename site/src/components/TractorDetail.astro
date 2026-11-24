@@ -15,7 +15,7 @@ import { BRAND_COUNTRY_LABEL, brandCountryName, marketDisplayName } from "../lib
 import {hasInternationalSonalikaContext,isSonalikaExportSourceNote,SONALIKA_EXPORT_COPY} from "../lib/sonalika-context-i18n.ts";
 import { modelSeoMetadata, modelStructuredData, originalVariantNote } from "../lib/model-seo";
 import { getPublicCatalog } from "../lib/catalog";
-import { morePublishedTractors } from "../lib/related-tractors";
+import { modelDiscoveryLinks } from "../lib/related-tractors";
 import {DEUTZ_5D_GS_PILOT} from "../lib/deutz-5d-editorial.ts";
 import {modelSourceDiscrepancies, isUnresolvedComparisonSpec} from "../lib/manufacturer-conflicts.mjs";
 import { modelEvidenceAnswers, matchedHeadlinePowerSource } from "../lib/model-evidence-answers.ts";
@@ -25,7 +25,7 @@ import {editorialHubTranslation} from "../lib/editorial-hub-i18n.ts";
 interface Props { lang: Locale; tractor: TractorRecord; }
 const { lang, tractor } = Astro.props;
 // Same read-only, published-only catalogue already used by getStaticPaths.
-const moreModels = morePublishedTractors(tractor,(await getPublicCatalog()).tractors);
+const moreModels = modelDiscoveryLinks(tractor,(await getPublicCatalog()).tractors);
 const hasBasak2075Analysis = tractor.brand_name.toLocaleLowerCase("tr").includes("başak") &&
   (tractor.model_name.trim().toLocaleLowerCase("tr")==="2075 bk" ||
    tractor.model_name.trim().toLocaleLowerCase("tr")==="2075 bt");

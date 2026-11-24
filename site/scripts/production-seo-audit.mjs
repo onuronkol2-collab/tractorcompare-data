@@ -1,3 +1,6 @@
+import {localStylesheets,stylesheetProblem} from "./live-stylesheets.mjs";
+import {scanHeadTags} from "./verify-sitewide-meta-descriptions.mjs";
+import {inspectSocialMetadata} from "./verify-sitewide-social-metadata.mjs";
 import {inspectVisibleMainImages} from "./seo-main-markup.mjs";
 import {inspectDocumentImageAlts,inspectUndocumentedEmptyImageAlts} from "./verify-sitewide-image-alts.mjs";
 import {hasBibliographicTitleLeak} from "./verify-sitewide-seo-titles.mjs";
@@ -17,7 +20,7 @@ async function fetchPage(url) {
   let lastFailure;
   for(let n=0;n<4;n++){
     try{
-      const response=await fetch(u,{redirect:"follow",signal:AbortSignal.timeout(25000)});
+      const response=await fetch(u,{redirect:"manual",signal:AbortSignal.timeout(25000)});
       if([429,502,503,504].includes(response.status) && n<3) {
         lastFailure=new Error("Transient HTTP "+response.status);
       } else {
@@ -33,11 +36,12 @@ async function fetchPage(url) {
 }
 const xmlLocs=s=>matches(s,/<loc>([^<]+)<\/loc>/g).map(x=>x.replaceAll("&amp;","&"));
 const attr=(html,name)=>readOpeningTagAttribute(html,name);
-const tags=(html,name)=>[...html.matchAll(new RegExp("<"+name+"\\b[^>]*>","gi"))].map(m=>m[0]);
 function metadata(html){
- const links=tags(html,"link"), metas=tags(html,"meta");
+ const head=/<head\b[^>]*>([\s\S]*?)<\/head\s*>/i.exec(html)?.[1] || "";
+ const {links,metas}=scanHeadTags(head);
  const m=(name)=>attr(metas.find(tag=>attr(tag,"name")===name)||"","content");
  return {
+  links,
   title:html.match(/<title[^>]*>([^<]+)<\/title>/i)?.[1]||"",
   description:m("description")||"", robots:m("robots")||"",
   canonical:links.filter(x=>attr(x,"rel")==="canonical").map(x=>attr(x,"href")),
@@ -114,6 +118,7 @@ console.log("TRACTORVS_EDITORIAL_SITEMAP "+
 const modelByLocale=Object.fromEntries(Object.keys(languages).map(k=>[k,new Set()]));
 let valid=0, modelPages=0, modelSample=[], fetchFailures=0;
 const titlesByLocale=new Map();
+const stylesheetRefs=new Map();
 // The 60-character threshold is crawler guidance, not a Google requirement.
 // Track it across checked locales as an advisory, without deleting exact
 // model/variant/market/year disambiguators or blocking correct long titles.
@@ -142,6 +147,13 @@ for(let i=0;i<urls.length;i+=8){
    if((response.headers.get("x-robots-tag")||"").includes("noindex"))
     error("blocked-header",p,"X-Robots-Tag noindex on production");
    const meta=metadata(body);
+   for(const asset of localStylesheets(meta.links,page)){
+     const entry=stylesheetRefs.get(asset) ?? {example:p,pages:0};
+     entry.pages++;
+     stylesheetRefs.set(asset,entry);
+   }
+   const social=inspectSocialMetadata(body,p);
+   for(const reason of social?.errors ?? [])error("social-metadata",p,reason);
    if(meta.robots.includes("noindex"))error("blocked-meta",p,meta.robots);
    if(meta.canonical.length!==1 || meta.canonical[0]!==page)
     error("canonical",p,JSON.stringify(meta.canonical));
@@ -233,6 +245,16 @@ for(let i=0;i<urls.length;i+=8){
   }catch(e){fetchFailures++;error("page-fetch",page,String(e));}
  }));
 }
+for (const [asset,refs] of stylesheetRefs) {
+  let reason;
+  try {
+    const {response,body}=await fetchPage(asset);
+    reason=stylesheetProblem(response,body);
+  } catch (err) { reason=String(err); }
+  if (reason) error("live-stylesheet",asset,reason+"; referenced by "+refs.pages+" checked pages, e.g. "+refs.example);
+}
+console.log("TRACTORVS_LIVE_STYLESHEETS "+JSON.stringify({distinct:stylesheetRefs.size,
+  failed:problems.filter(issue=>issue.code==="live-stylesheet").length}));
 const baseline=[...modelByLocale.en].sort().join("|");
 // Incomplete network crawls are failures, but must not invent missing-model
 // claims: only compare complete per-locale inventories after every page loads.

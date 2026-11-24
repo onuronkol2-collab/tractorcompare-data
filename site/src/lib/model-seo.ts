@@ -166,7 +166,10 @@ export function modelSeoMetadata(tractor: TractorRecord, lang: Locale) {
   // real equipment differences (2WD/4WD, gearing, Stage V, i-HMT, region)
   // must remain visible. Unknown or later-edited strings use raw identity.
   const reviewedSourceNotes =
-    tractor.brand_name === "McCormick" && tractor.model_name === "X5.085"
+    tractor.brand_name === "LS Tractor" && tractor.model_name === "MT573CPS"
+      && rawMarket === "US" && rawVariant === "US official product / power shuttle cab"
+      ? {variant:"power shuttle cab",markets:["US"]}
+    : tractor.brand_name === "McCormick" && tractor.model_name === "X5.085"
       && rawVariant === "Stage V X5.085 / 09-2023 brochure"
       && rawMarket === "Europe / Turkey (manufacturer 09/2023)"
       ? {variant:"Stage V",markets:["Europe","Turkey"]}
@@ -330,7 +333,12 @@ export function modelSeoMetadata(tractor: TractorRecord, lang: Locale) {
   const snippetStart=(identity+".").length<=120 ? identity+"." : model+".";
   let searchDescription=snippetStart;
   for(const part of segments.slice(1)){
-    if(searchDescription.length+1+part.length<=160)searchDescription+=" "+part;
+    let sentence=part;
+    // Keep the evidence qualifier when the full independent-source sentence cannot fit.
+    if (part===INDEPENDENT_SOURCE_COPY[lang].seoOnlyIndependent && searchDescription.length+1+part.length>160) {
+      sentence=INDEPENDENT_SOURCE_COPY[lang].label + (lang==="zh" || lang==="ja" ? "。" : lang==="hi" ? "।" : ".");
+    }
+    if(searchDescription.length+1+sentence.length<=160)searchDescription+=" "+sentence;
   }
   return {title,description,searchDescription};
 }

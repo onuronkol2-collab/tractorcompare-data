@@ -3,12 +3,13 @@ import {readdirSync,readFileSync} from "node:fs";
 import {join,relative,resolve} from "node:path";
 import {fileURLToPath} from "node:url";
 
-const readAttr=(tag,key)=>new RegExp("(?:^|\\s)"+key+"\\s*=\\s*[\"']([^\"']*)[\"']","i").exec(tag)?.[1]??null;
+import {readOpeningTagAttribute as readAttr} from "./seo-html-attributes.mjs";
+import {scanHeadTags} from "./verify-sitewide-meta-descriptions.mjs";
+
 export function inspectSocialMetadata(html,file="index.html"){
   const head=/<head\b[^>]*>([\s\S]*?)<\/head\s*>/i.exec(html)?.[1];
   if(!head)return null;
-  const metas=[...head.matchAll(/<meta\b[^>]*>/gi)].map(x=>x[0]);
-  const links=[...head.matchAll(/<link\b[^>]*>/gi)].map(x=>x[0]);
+  const {metas,links}=scanHeadTags(head);
   const canonical=links.find(tag=>readAttr(tag,"rel")?.toLowerCase().split(/\s+/).includes("canonical"));
   if(!canonical || metas.some(tag=>readAttr(tag,"name")?.toLowerCase()==="robots" &&
     /\bnoindex\b/i.test(readAttr(tag,"content")||"")))return null;

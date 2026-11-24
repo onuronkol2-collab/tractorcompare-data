@@ -19,7 +19,7 @@ import {fileURLToPath} from "node:url";
  * echo into HTML, or mutate any source content; skip comments and rawtext
  * nodes in place, respecting quoted attributes and their embedded '>' signs.
  */
-function scanHeadTags(head){
+export function scanHeadTags(head){
   const links=[],metas=[];
   let cursor=0;
   while(cursor<head.length){

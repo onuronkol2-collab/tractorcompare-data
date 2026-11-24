@@ -41,3 +41,9 @@ test("brand social asset exists as a real 1200x630 PNG, not a placeholder URL",(
   assert.equal(img.readUInt32BE(20),630);
   assert.ok(img.byteLength>10000 && img.byteLength<1500000);
 });
+
+test("an apparent social image in a script cannot hide a missing real tag",()=>{
+  const tag='<meta property="og:image" content="'+fallback+'">';
+  const html=fixture().replace(tag,"<script type='text/plain'>"+tag+"</script>");
+  assert.ok(inspectSocialMetadata(html).errors.some(x=>x.startsWith("og:image ")));
+});

@@ -27,6 +27,8 @@ const relatedTerms=guide.glossary.map(id=>{
  return term;
 });
 const headline=guide.title[lang];
+const brandedTitle = headline+" | TractorVS";
+const searchTitle = brandedTitle.length <= 60 ? brandedTitle : headline;
 const description=guide.description[lang];
 // Update a page's date only when its actual content or visible source register changes.
 const hasPowerStandards = slug === "tractor-engine-power-and-torque";
@@ -84,7 +86,7 @@ const structuredData={
  ]
 };
 ---
-<SiteLayout lang={lang} title={headline+" | TractorVS"} description={description}
+<SiteLayout lang={lang} title={searchTitle} description={description}
   availableLocales={["en","tr"]} ogType="article" ogImage={image} structuredData={structuredData}>
 <article class="learn-article">
  <header class="learn-hero">
