@@ -6,6 +6,8 @@ import { readFileSync } from "node:fs";
 const checks = new Map([
   ["AGENTS.md", [
     "ALTIN KURAL", "TAM ENTEGRASYON", "GitHub", "Supabase",
+    "### Ücretsiz araçlardan maksimum fayda", "ChatGPT’nin daha iyi yaptığı",
+    "Yalnızca ücretsiz sürümleri", "kullanıcıya bağlantı isteği gönder",
     "Firecrawl", "Microsoft Clarity", "PostHog", "OpenSEO",
     "Google Drive", "Playwright", "axe-core", "CodeQL", "Dependabot",
     "Cloudflare Web Analytics", "Malware alerts", "Secret Protection", "Push protection",
@@ -30,6 +32,7 @@ const checks = new Map([
   [".github/pull_request_template.md", ["AGENTS.md#seo-ve-geo", "RLS", "SEO"]],
   ["docs/CHATGPT_PROJECT_INSTRUCTIONS.md", [
     "AGENTS.md", "Proje Talimatları", "maksimum kalite",
+    "Yalnızca ücretsiz sürümleri", "kullanıcıya bağlantı isteği gönder",
     "Playwright", "axe-core", "CodeQL", "Dependabot", "Cloudflare Web Analytics",
   ]],
 ]);
