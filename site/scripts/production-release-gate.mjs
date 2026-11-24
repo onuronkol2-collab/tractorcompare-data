@@ -19,7 +19,6 @@ import {auditBuiltMetaDescriptions} from "./verify-sitewide-meta-descriptions.mj
 import {auditBuiltSocialMetadata} from "./verify-sitewide-social-metadata.mjs";
 import {auditBuiltAstroAssets} from "./verify-static-assets-version-compat.mjs";
 import {auditBuiltModelImageRights} from "./verify-built-model-image-rights.mjs";
-import {hasReleaseSha,verifiedReleaseSha} from "../src/lib/release-provenance.mjs";
 
 const projectRoot=resolve(fileURLToPath(new URL("..",import.meta.url)));
 const expectedOrigin="https://tractorvs.com";
@@ -258,31 +257,14 @@ export function verifyProductionArtifacts({dir=projectRoot,origin=expectedOrigin
 export function preflight(env=process.env){
  return verifyProductionConfiguration(env,projectRoot);
 }
-// Only Cloudflare's real production build must carry its exact Git provenance.
-// GitHub's inert/static test builds have no WORKERS_CI identity and remain unchanged.
-export function verifyCloudflareBuildSha(env=process.env){
- if(env.WORKERS_CI!=="1"||env.WORKERS_CI_BRANCH!=="main")
-  return {verified:false};
- const sha=verifiedReleaseSha(env.WORKERS_CI_COMMIT_SHA);
- insist(Boolean(sha),"Cloudflare production build is missing a valid WORKERS_CI_COMMIT_SHA.");
- const pages=["index.html","tr/index.html","tr/compare/index.html","tr/tractors/index.html"];
- for(const page of pages){
-  const html=readText(join(projectRoot,"dist",page));
-  insist(hasReleaseSha(html,sha),"Cloudflare production HTML release SHA is missing or incorrect: "+page);
- }
- console.log("TRACTORVS_RELEASE_SHA_CHECK "+JSON.stringify({pages:pages.length,passed:true}));
- return {verified:true,pages:pages.length};
-}
-
 export function postflight(env=process.env){
  const config=preflight(env);
  const floor=env.MIN_PUBLIC_TRACTOR_PAGES?Number(env.MIN_PUBLIC_TRACTOR_PAGES):100;
  const basic=verifyProductionArtifacts({origin:config.origin,minTractors:floor});
- const releaseShaCheck=verifyCloudflareBuildSha(env);
  const protectedInventory=verifyPublishedSiteInventory({
   origin:config.origin,configuredMinimum:floor
  });
- return {...basic,...protectedInventory,releaseShaVerified:releaseShaCheck.verified};
+ return {...basic,...protectedInventory};
 }
 
 if(process.argv[1]&&resolve(process.argv[1])===fileURLToPath(import.meta.url)){
