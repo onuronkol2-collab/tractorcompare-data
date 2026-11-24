@@ -355,3 +355,59 @@ for(const language of [{code:"tr",html:"tr"},...OTHER_LOCALES]){
     await expect(page.locator("#tc-left-link")).toContainText("T3035");
   });
 }
+
+
+// Network-controlled production test for the change released in PR #548.
+// The initial document and every source datum come from published routes.
+// Requests are delayed or failed only within this test's isolated browser.
+test("live mobile comparison announces loading, recovers from a failed request and preserves citations",async({page,request})=>{
+  test.skip(process.env.COMPARE_QA_PREDEPLOY==="true",
+    "The new loading state must be checked after its Cloudflare release, not against prior production.");
+  test.setTimeout(90_000);
+  await page.setViewportSize({width:390,height:844});
+  const response=await page.goto(tractorUrl(ISEKI,NEW_HOLLAND),{waitUntil:"domcontentloaded"});
+  expect(response?.status()).toBe(200);
+  await expect(page.locator("#tc-rows tr").first()).toBeVisible();
+
+  const sourceResponse=await request.get("/comparison-data/tr/"+TYM_F36+".json");
+  expect(sourceResponse.status()).toBe(200);
+  const genuineSpecs=await sourceResponse.body();
+  let releaseRequest=()=>{};
+  const gate=new Promise(resolve=>{releaseRequest=resolve;});
+  await page.route("**/comparison-data/tr/"+TYM_F36+".json",async route=>{
+    await gate;
+    await route.fulfill({status:200,contentType:"application/json",body:genuineSpecs});
+  });
+
+  try {
+    await chooseTractor(page,"left","T3035");
+    await expect(page.locator("#tc-rows")).toHaveAttribute("aria-busy","true");
+    await expect(page.locator("#tc-rows tr")).toHaveCount(0);
+    await expect(page.locator("#tc-summary")).toContainText("Yayımlanmış teknik özellikler yükleniyor");
+  } finally {
+    releaseRequest();
+  }
+  await expect(page.locator("#tc-rows")).toHaveAttribute("aria-busy","false");
+  await expect(page.locator("#tc-rows tr").first()).toBeVisible();
+  await expect(page.locator("#tc-summary")).not.toContainText("yükleniyor");
+  await expect.poll(()=>new URL(page.url()).searchParams.get("left")).toBe(TYM_F36);
+
+  // No source file is altered: simulate a single failed browser GET and retry.
+  const failingUrl="**/comparison-data/tr/"+TYM_T475+".json";
+  await page.route(failingUrl,route=>route.abort("failed"));
+  await chooseTractor(page,"right","T3047");
+  await expect(page.locator("#tc-rows")).toHaveAttribute("aria-busy","false");
+  await expect(page.locator("#tc-load-error")).toBeVisible();
+  await expect(page.locator("#tc-load-error")).toContainText("Teknik veriler yüklenemedi");
+  await expect(page.locator("#tc-rows tr")).toHaveCount(0);
+  await page.unroute(failingUrl);
+
+  await chooseTractor(page,"right","T3047");
+  await expect(page.locator("#tc-load-error")).toBeHidden();
+  await expect(page.locator("#tc-rows")).toHaveAttribute("aria-busy","false");
+  await expect(page.locator("#tc-rows tr").first()).toBeVisible();
+  await expect(page.locator("#tc-rows td a[href^='https://']").first()).toBeVisible();
+  await expect.poll(()=>new URL(page.url()).searchParams.get("right")).toBe(TYM_T475);
+  await expect(page.locator('link[rel="canonical"]')).toHaveAttribute(
+    "href","https://tractorvs.com/tr/compare/");
+});
