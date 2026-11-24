@@ -23,6 +23,12 @@ jobs:
           run-id: 45422737022
           github-token: ${{ github.token }}
           path: review-input
+      - name: Install distribution-maintained image processing tools
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends imagemagick
+          command -v identify
+          command -v convert
       - name: Verify pinned original and prepare proportional JPEGs
         run: python3 site/scripts/stage-zetor-major-cl80-20261124.py
       - name: Commit only reviewed photo assets and evidence on candidate branch
