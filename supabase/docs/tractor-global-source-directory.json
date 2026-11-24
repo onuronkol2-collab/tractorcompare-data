@@ -346,6 +346,194 @@
       "scope": "Use only creator-specific permitted works and original rights, never assume all photos reusable.",
       "automatic_fetch": false,
       "publication_approved": false
+    },
+    {
+      "id": "kubota-jp-manual",
+      "name": "Kubota Japan tractor manual index",
+      "region": "JP",
+      "kind": "model_index",
+      "url": "https://agriculture.kubota.co.jp/after-support/manual/list_category.html?category=TR",
+      "scope": "Observed 1079 search results across 44 pages on 2026-11-24; not 1079 unique tractors. Model codes and power labels may include variants. Deduplicate manual URLs and inspect exact manual revision, model column, measurement definition and domestic market. No automatic download or photo rights.",
+      "automatic_fetch": false,
+      "publication_approved": false,
+      "checked_on": "2026-11-24"
+    },
+    {
+      "id": "yanmar-jp-manual",
+      "name": "Yanmar Japan tractor and JD manual index",
+      "region": "JP",
+      "kind": "model_index",
+      "url": "https://www.yanmar.com/jp/support/manuals/agri/tractor.html",
+      "scope": "Paginated multi-model manuals, including CT crawler tractors. Also contains implements; exclude non-tractor equipment and do not infer manufacturer from category. Public accessible manuals only.",
+      "automatic_fetch": false,
+      "publication_approved": false,
+      "checked_on": "2026-11-24"
+    },
+    {
+      "id": "yanmar-jp-catalog",
+      "name": "Yanmar Japan current agricultural catalogues",
+      "region": "JP",
+      "kind": "model_index",
+      "url": "https://www.yanmar.com/jp/support/catalogs/agri.html",
+      "scope": "2026 comprehensive catalogues and shared YT tractor series brochures. Large document sizes require existing bounded offline PDF tools; review exact suffix, equipment and page/column. No automatic reuse of illustrations.",
+      "automatic_fetch": false,
+      "publication_approved": false,
+      "checked_on": "2026-11-24"
+    },
+    {
+      "id": "india-farm-mech",
+      "name": "India Ministry farm mechanization platform",
+      "region": "IN",
+      "kind": "discovery",
+      "url": "https://agrimachinery.nic.in/",
+      "scope": "Public machinery model discovery only. Never collect farmer, dealer personal data, application, registration, engine or chassis identifiers. Subsidy eligibility is not measured performance.",
+      "automatic_fetch": false,
+      "publication_approved": false,
+      "checked_on": "2026-11-24"
+    },
+    {
+      "id": "bihar-models",
+      "name": "Bihar government approved active model list",
+      "region": "IN",
+      "kind": "model_index",
+      "url": "https://farmech.bihar.gov.in/FMNEW/Manu_ModelActList.aspx",
+      "scope": "Public manufacturer/model-list discovery only, availability and filters may vary. No beneficiary or registration information. Confirm exact tractor report and OEM specification.",
+      "automatic_fetch": false,
+      "publication_approved": false,
+      "checked_on": "2026-11-24"
+    },
+    {
+      "id": "assam-models",
+      "name": "Assam government tractor model lists",
+      "region": "IN",
+      "kind": "model_index",
+      "url": "https://diragri.assam.gov.in/schemes/chief-minister-samagra-gramya-unnayan-yojana-cmsguy",
+      "scope": "Published approved model list by PTO power category. Actual PDF rows not reviewed in this pass; category is not measured power.",
+      "automatic_fetch": false,
+      "publication_approved": false,
+      "checked_on": "2026-11-24"
+    },
+    {
+      "id": "fedro",
+      "name": "Swiss FEDRO vehicle data",
+      "region": "CH",
+      "kind": "discovery",
+      "url": "https://www.astra.admin.ch/en/vehicle-data",
+      "scope": "Public type approval data where available; verify data dictionary, licence, vehicle class and exact model. Some data products are fee-based; do not buy. No individual vehicle or owner information.",
+      "automatic_fetch": false,
+      "publication_approved": false,
+      "checked_on": "2026-11-24"
+    },
+    {
+      "id": "rdw",
+      "name": "Netherlands RDW open vehicle data",
+      "region": "NL",
+      "kind": "discovery",
+      "url": "https://data.overheid.nl/en/dataset/basisregistratie-voertuigen---rdw",
+      "scope": "Public dataset discovery; evaluate schema and vehicle category before using aggregated manufacturer/model identities only. Never retrieve or retain plate, owner or individual vehicle identifiers. Registration year is not model year.",
+      "automatic_fetch": false,
+      "publication_approved": false,
+      "checked_on": "2026-11-24"
+    },
+    {
+      "id": "epa-nrci",
+      "name": "US EPA annual engine certification data",
+      "region": "US",
+      "kind": "test_index",
+      "url": "https://www.epa.gov/compliance-and-fuel-economy-data/annual-certification-data-vehicles-engines-and-equipment",
+      "scope": "Nonroad compression ignition engine-family data; exact family and year crosswalk to OEM tractor engine required. Engine certificate alone does not prove installed tractor power, configuration or emissions standard in another market.",
+      "automatic_fetch": false,
+      "publication_approved": false,
+      "checked_on": "2026-11-24"
+    },
+    {
+      "id": "ibama-mar",
+      "name": "Brazil IBAMA agricultural engine certification",
+      "region": "BR",
+      "kind": "methodology",
+      "url": "https://www.gov.br/pt-br/servicos/obter-licenca-para-o-uso-da-configuracao-do-veiculo-ou-motor-lcvm-maquinas-rodoviarias-e-agricolas",
+      "scope": "MAR-I licensing process; no actual model-level certificate accessed. Never infer approval or emissions values from process or proposed rules.",
+      "automatic_fetch": false,
+      "publication_approved": false,
+      "checked_on": "2026-11-24"
+    },
+    {
+      "id": "fao-agris",
+      "name": "FAO AGRIS multilingual agricultural research",
+      "region": "Global",
+      "kind": "discovery",
+      "url": "https://www.fao.org/agris/search-and-browse",
+      "scope": "AGROVOC and scholarly metadata for local-language research discovery. Obtain original publication, exact measured tractor and test methodology. Bibliographic entry is not technical evidence.",
+      "automatic_fetch": false,
+      "publication_approved": false,
+      "checked_on": "2026-11-24"
+    },
+    {
+      "id": "crossref",
+      "name": "Crossref public scholarly metadata",
+      "region": "Global",
+      "kind": "discovery",
+      "url": "https://www.crossref.org/documentation/retrieve-metadata/rest-api",
+      "scope": "DOI metadata and original studies; free public API within current terms and limits. Full-text availability, licence and study scope must be checked separately.",
+      "automatic_fetch": false,
+      "publication_approved": false,
+      "checked_on": "2026-11-24"
+    },
+    {
+      "id": "digitalnz",
+      "name": "DigitalNZ collections",
+      "region": "NZ",
+      "kind": "photo_discovery",
+      "url": "https://digitalnz.org/developers",
+      "scope": "Free metadata API, access requirements and limits to be checked at execution; source item image rights are separate. Historical tractor and agricultural engineering photos, not guaranteed new models.",
+      "rights_url": "https://digitalnz.org/developers/api-docs-v3",
+      "automatic_fetch": false,
+      "publication_approved": false,
+      "checked_on": "2026-11-24"
+    },
+    {
+      "id": "nla",
+      "name": "National Library of Australia collections",
+      "region": "AU",
+      "kind": "photo_discovery",
+      "url": "https://www.library.gov.au/services/copyright-library-collections/copyright-permissions",
+      "scope": "Public catalogue and individual items only where access permits. Trove API restrictions require separate eligibility review, do not assume access. Verify original photograph public-domain status or explicit commercial derivative licence.",
+      "automatic_fetch": false,
+      "publication_approved": false,
+      "checked_on": "2026-11-24"
+    },
+    {
+      "id": "commons-sdc",
+      "name": "Commons structured data discovery",
+      "region": "Global",
+      "kind": "photo_discovery",
+      "url": "https://commons.wikimedia.org/wiki/Commons:Structured_data/Get_involved/Finding_data",
+      "scope": "Combine category and depicts P180 for candidate discovery where exact Wikidata entity is known. Incomplete metadata; no automatic identity or rights approval. Same existing request budget; replace low-yield calls, never add uncontrolled requests.",
+      "automatic_fetch": false,
+      "publication_approved": false,
+      "checked_on": "2026-11-24"
+    },
+    {
+      "id": "commons-agritechnica2025",
+      "name": "Commons Agritechnica 2025 photo category",
+      "region": "DE",
+      "kind": "photo_discovery",
+      "url": "https://commons.wikimedia.org/wiki/Category:Agritechnica_2025",
+      "scope": "Event/brand subcategories as shared source groups; verified subcategories for Basak, VST, Preet and TYM. Category membership is not model identification. Exclude equipment/toys and inspect actual original badge and individual licence.",
+      "automatic_fetch": false,
+      "publication_approved": false,
+      "checked_on": "2026-11-24"
+    },
+    {
+      "id": "iiif-rights",
+      "name": "IIIF presentation rights and attribution",
+      "region": "Global",
+      "kind": "methodology",
+      "url": "https://iiif.io/api/presentation/3.0/",
+      "scope": "Institutional scan manifests can locate images and catalogue pages. Inspect image-level rights, requiredStatement and underlying source; manifest or thumbnail does not grant commercial image rights.",
+      "automatic_fetch": false,
+      "publication_approved": false,
+      "checked_on": "2026-11-24"
     }
   ]
 }
