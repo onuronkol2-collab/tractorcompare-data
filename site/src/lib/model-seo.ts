@@ -457,7 +457,18 @@ export function modelSeoMetadata(tractor: TractorRecord, lang: Locale) {
   const reviewedLong=reviewedLongTitleRow(tractor.brand_name,tractor.model_name,rawVariant,rawMarket,tractor.model_year ?? null);
   // An explicitly reviewed real configuration is more important than length.
   // Do not choose the previous shorter title if it had lost the entire variant.
-  const title=reviewedLong ? buildTitle(reviewedLong.variant, reviewedLong.market
+  // For these exact reviewed records preserve a native technical title noun
+  // even when the full mechanical configuration exceeds the advisory budget.
+  // This avoids identical ES/PT-BR titles without deleting factual qualifiers.
+  const reviewedLongTitle=reviewedLong ? buildTitle(reviewedLong.variant, reviewedLong.market
+    ? marketDisplayName(reviewedLong.market,lang) : marketLabel, true) : null;
+  const needsLocalizedLongNoun=reviewedLong && tractor.brand_name==="Antonio Carraro" &&
+    ["TONY 8700 V","TONY 8900 TRG"].includes(tractor.model_name) &&
+    (lang==="es" || lang==="pt-br") && reviewedLongTitle &&
+    !reviewedLongTitle.includes(CONCISE_SPECS_TITLE[lang]);
+  const title=needsLocalizedLongNoun
+    ? reviewedLongTitle!.replace(model+" — ",model+" "+CONCISE_SPECS_TITLE[lang]+" — ")
+    : reviewedLong ? buildTitle(reviewedLong.variant, reviewedLong.market
     ? marketDisplayName(reviewedLong.market,lang) : marketLabel, true)
     : t97 ? buildTitle("Cabin / ROPS",SHORT_INTERNATIONAL_TITLE[lang])
     : txgs ? buildTitle("4WD hydrostatic / ROPS") : restoredIsekiVariant ? remainingTitle : shorterTitle;
