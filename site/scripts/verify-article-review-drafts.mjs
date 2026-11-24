@@ -171,41 +171,42 @@ for(const [i,row] of remaining.rows.entries()){
   remainingNames++;
  }
 }
-// German prose batch: exact IDs, target names and numeric/code conventions.
-const deProse=JSON.parse(read("docs/translation-review/glossary-remaining-de-prose-draft.json"));
-assert.equal(deProse.schema,1);
-assert.equal(deProse.state,"draft-needs-independent-editorial-review");
-assert.equal(deProse.notForPublication,true);
-assert.equal(deProse.reviewed,false);
-assert.equal(deProse.sourceBlobSha,blobSha(glossarySource));
-assert.equal(deProse.locale,"de");
-assert.equal(deProse.entries.length,remaining.rows.length);
-let additionalProseFields=0;
-for(const [i,entry] of deProse.entries.entries()){
- const original=remaining.rows[i];
- assert.equal(entry.id,original.id);
- assert.equal(entry.name,original.names.de);
- assert.deepEqual(Object.keys(entry).sort(),["caution","definition","example","id","name"]);
- for(const field of ["definition","example","caution"]){
-  const value=entry[field],src=original.source[field];
-  assert.ok(typeof value==="string"&&value.trim()&&value!==src&&value.length<=Math.max(800,src.length*5),entry.id+" "+field);
-  // Tyre designations and gear notation are indivisible technical identifiers,
-  // not localized decimal measurements. Validate them before removing from the
-  // numerical-token comparison (which deliberately rejects integer fragments).
-  let numericSource=src,numericTarget=value;
-  for(const code of ["13.6-28","14.9-28","12F/12R","24F/24R","4WD","2WD"]){
-   if(src.includes(code)){
-    assert.ok(value.includes(code),entry.id+" missing "+code);
-    numericSource=numericSource.split(code).join("");
-    numericTarget=numericTarget.split(code).join("");
+// All completed prose batches share one validator and one completeness gate.
+const completeGlossaryDraftLocales=["de","fr"];
+let additionalProseFields=0,additionalEntries=0;
+for(const locale of completeGlossaryDraftLocales){
+ const prose=JSON.parse(read("docs/translation-review/glossary-remaining-"+locale+"-prose-draft.json"));
+ assert.equal(prose.schema,1);
+ assert.equal(prose.state,"draft-needs-independent-editorial-review");
+ assert.equal(prose.notForPublication,true);
+ assert.equal(prose.reviewed,false);
+ assert.equal(prose.sourceBlobSha,blobSha(glossarySource));
+ assert.equal(prose.locale,locale);
+ assert.equal(prose.entries.length,remaining.rows.length);
+ for(const [i,entry] of prose.entries.entries()){
+  const original=remaining.rows[i];
+  assert.equal(entry.id,original.id);
+  assert.equal(entry.name,original.names[locale]);
+  assert.deepEqual(Object.keys(entry).sort(),["caution","definition","example","id","name"]);
+  for(const field of ["definition","example","caution"]){
+   const value=entry[field],src=original.source[field];
+   assert.ok(typeof value==="string"&&value.trim()&&value!==src&&value.length<=Math.max(800,src.length*5),locale+" "+entry.id+" "+field);
+   let numericSource=src,numericTarget=value;
+   for(const code of ["13.6-28","14.9-28","12F/12R","24F/24R","4WD","2WD"]){
+    if(src.includes(code)){
+     assert.ok(value.includes(code),locale+" "+entry.id+" missing "+code);
+     numericSource=numericSource.split(code).join("");
+     numericTarget=numericTarget.split(code).join("");
+    }
    }
+   for(const n of new Set(tokens(numericSource)))assert.ok(numberRetained(n,numericTarget,locale),locale+" "+entry.id+" "+field+" missing "+n);
+   for(const code of ["Stage V","Stage IIIA","DPF","SCR","DEF","ROPS","FOPS","HST","CVT","DCT","ISOBUS","OECD","dB(A)"]){
+    if(src.includes(code))assert.ok(value.includes(code),locale+" "+entry.id+" missing "+code);
+   }
+   additionalProseFields++;
   }
-  for(const n of new Set(tokens(numericSource)))assert.ok(numberRetained(n,numericTarget,"de"),entry.id+" "+field+" missing "+n);
-  for(const code of ["Stage V","Stage IIIA","DPF","SCR","DEF","ROPS","FOPS","HST","CVT","DCT","ISOBUS","OECD","dB(A)"]){
-   if(src.includes(code))assert.ok(value.includes(code),entry.id+" missing "+code);
-  }
-  additionalProseFields++;
+  additionalEntries++;
  }
 }
-assert.equal(additionalProseFields,246);
-console.log(JSON.stringify({draftTranslations:count,bodyParagraphs:paragraphs,uiLabels,glossaryEntries,glossaryFields,remainingNames,totalGlossaryNames:glossaryEntries+remainingNames,completeGlossaryDraftEntries:glossaryEntries+deProse.entries.length,additionalProseFields,missingGlossaryProseFields:remainingNames*3-additionalProseFields,completeGlossaryDraftLocales:["de"],structuralChecks:"passed",independentReview:"pending",publicationApproved:false}));
+assert.equal(additionalProseFields,remaining.rows.length*completeGlossaryDraftLocales.length*3);
+console.log(JSON.stringify({draftTranslations:count,bodyParagraphs:paragraphs,uiLabels,glossaryEntries,glossaryFields,remainingNames,totalGlossaryNames:glossaryEntries+remainingNames,completeGlossaryDraftEntries:glossaryEntries+additionalEntries,additionalProseFields,missingGlossaryProseFields:remainingNames*3-additionalProseFields,completeGlossaryDraftLocales,structuralChecks:"passed",independentReview:"pending",publicationApproved:false}));
