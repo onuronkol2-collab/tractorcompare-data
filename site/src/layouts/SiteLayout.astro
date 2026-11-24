@@ -58,6 +58,11 @@ const editorialLabel: Record<Locale,string> = {
 const canonicalUrl = indexingEnabled
   ? new URL(Astro.url.pathname, Astro.site!).toString()
   : undefined;
+// Branded social preview only where no licensed, model-matched image exists.
+// Never use a different tractor's photo as a placeholder.
+const brandShareImage = indexingEnabled && Astro.site
+  ? new URL("/images/tractorvs-share-card.png", Astro.site!).toString()
+  : null;
 const alternatives = indexingEnabled
   ? indexableLocales.map((locale) => ({
       locale: LOCALE_TAGS[locale],
@@ -127,10 +132,16 @@ const openGraphLocale: Record<Locale, string> = {
       <meta property="og:locale:alternate" content={openGraphLocale[locale]} />
     )}
     {ogImage && <meta property="og:image" content={ogImage} />}
-    <meta name="twitter:card" content={ogImage ? "summary_large_image" : "summary"} />
+    {!ogImage && brandShareImage && <meta property="og:image" content={brandShareImage} />}
+    {!ogImage && brandShareImage && <meta property="og:image:alt" content="TractorVS" />}
+    {!ogImage && brandShareImage && <meta property="og:image:width" content="1200" />}
+    {!ogImage && brandShareImage && <meta property="og:image:height" content="630" />}
+    {!ogImage && brandShareImage && <meta property="og:image:type" content="image/png" />}
+    <meta name="twitter:card" content={ogImage || brandShareImage ? "summary_large_image" : "summary"} />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
     {ogImage && <meta name="twitter:image" content={ogImage} />}
+    {!ogImage && brandShareImage && <meta name="twitter:image" content={brandShareImage} />}
   </head>
   <body>
     <a class="skip-link" href="#main">{t(lang,"skip")}</a>
