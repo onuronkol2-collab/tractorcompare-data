@@ -920,6 +920,7 @@ const candidates=[
     "width": 4288,
     "height": 2848
   },
+  {"brand":"Zetor","model":"MAJOR","tractorId":"755e44bc-8043-4d41-9e08-f40e818ac00b","fileId":"zetor-major-cl80-jj7777","path":"6/6a/ZETOR_MAJOR.jpg","photographer":"JJ7777","license":"CC BY-SA 4.0","width":4969,"height":3313},
 ] as const;
 function licenseUrl(name:string):string{
   if(name==="CC0")return "https://creativecommons.org/publicdomain/zero/1.0/";
