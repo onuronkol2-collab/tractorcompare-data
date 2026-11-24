@@ -627,3 +627,35 @@ test("a short search description preserves the independent provenance when the l
   assert.match(searchDescription,/Independent reference \(not manufacturer-verified\)/);
   assert.ok(searchDescription.length<=160);
 });
+
+
+test("reviewed redundant title labels retain model, equipment, market and original source identity",()=>{
+ const cases=[
+  {brand_name:"McCormick",model_name:"X4.120 F Platform",variant:"Orchard F / Platform / Speed Four",market:"Europe",keep:["Platform","Orchard","Speed Four"],drop:"Orchard F / Platform"},
+  {brand_name:"McCormick",model_name:"X6.414 P6-Drive",variant:"P6-Drive / standard gearbox",market:"Europe",keep:["P6-Drive","standard gearbox"],drop:"P6-Drive / standard gearbox"},
+  {brand_name:"McCormick",model_name:"X7.418 P6-Drive",variant:"Clever Cab / P6-Drive",market:"Europe",keep:["Clever Cab","P6-Drive"],drop:"Clever Cab / P6-Drive"},
+  {brand_name:"Mahindra",model_name:"NOVO 755 DI PP 4WD V1",variant:"India 4WD / 15F x 15R / creeper optional",market:"India",keep:["4WD","15F x 15R","creeper optional"],drop:"India 4WD /"},
+  {brand_name:"Mahindra",model_name:"JIVO 225 DI 4WD NT",variant:"India 4WD / 8F x 4R / narrow track",market:"India",keep:["4WD","8F x 4R","narrow track"],drop:"India 4WD /"}
+ ];
+ const locales=["en","tr","zh","hi","pt-br","fr","de","ru","ja","es"];
+ for(const row of cases){
+  let compacted=0;
+  for(const locale of locales){
+   const record={...tractor,...row,model_year:null,horsepower:null};
+   const meta=modelSeoMetadata(record,locale);
+   assert.ok(meta.title.includes(row.brand_name+" "+row.model_name),locale+" model");
+   for(const label of row.keep)assert.ok(meta.title.includes(label),locale+" "+row.model_name+" lost "+label);
+   if(!meta.title.includes(row.drop))compacted++;
+   assert.ok(meta.description.includes(row.variant),locale+" raw variant in description");
+   assert.equal(modelStructuredData(record,locale,"https://tractorvs.example")["@graph"][2].disambiguatingDescription,row.variant+" · "+row.market);
+  }
+  // A reviewed short title stays unchanged; only known long examples need a reduction.
+  if(row.model_name!=="X7.418 P6-Drive")assert.ok(compacted>0,row.model_name+" no title improvement");
+ }
+ const base={...tractor,brand_name:"McCormick",model_name:"X7.418 P6-Drive",market:"Europe",model_year:null};
+ for(const locale of locales){
+  assert.notEqual(modelSeoMetadata({...base,variant:"Clever Cab / P6-Drive"},locale).title,modelSeoMetadata({...base,variant:"Efficient / P6-Drive"},locale).title);
+  const unknown=modelSeoMetadata({...base,variant:"Clever Cab / P6-Drive / special axle"},locale);
+  assert.ok(unknown.title.includes("special axle"),locale+" unknown equipment not removed");
+ }
+});
