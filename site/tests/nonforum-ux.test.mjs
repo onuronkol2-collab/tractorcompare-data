@@ -24,7 +24,7 @@ test("homepage uses reviewed, licensed photography with valid link semantics",()
   const css=file("styles/home-experience.css");
   assert.match(home,/import TractorPhoto from "\.\/TractorPhoto\.astro"/);
   assert.match(home,/<article class="home-featured-card">/);
-  assert.match(home,/<TractorPhoto tractor=\{tractor\} lang=\{lang\} mode="catalog"\s*\/>/);
+  assert.match(home,/<TractorPhoto tractor=\{tractor\} lang=\{lang\} mode="catalog" slotSizes="[^"]+"\s*\/>/);
   assert.match(home,/<a class="home-featured-main" href=\{detailBase \+ tractor.slug \+ "\/"\}>/);
   assert.doesNotMatch(home,/<a class="home-featured-card"/);
   assert.match(photos,/href=\{photo.sourcePage\}/);

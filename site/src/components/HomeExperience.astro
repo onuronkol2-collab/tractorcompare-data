@@ -242,7 +242,7 @@ const suggestionPayload = JSON.stringify(catalogue.tractors.map((tractor) => ({
           <article class="home-featured-card">
             {/** Actual licensed tractor imagery with full-screen view and
                  visible photographer/license credits; never an AI-made model photo. */}
-            <TractorPhoto tractor={tractor} lang={lang} mode="catalog" />
+            <TractorPhoto tractor={tractor} lang={lang} mode="catalog" slotSizes="auto, (max-width:620px) min(calc(100vw - 88px), 508px), (max-width:720px) 219px, (max-width:800px) calc(50vw - 85px), min(calc(33.333vw - 80px), 323px)" />
             <a class="home-featured-main" href={detailBase + tractor.slug + "/"}>
               <span class="home-featured-brand">{tractor.brand_name}</span>
               <h3>{tractor.model_name}</h3>
