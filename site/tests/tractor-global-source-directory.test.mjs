@@ -1,0 +1,6 @@
+import test from "node:test";
+import assert from "node:assert/strict";
+import {readFileSync} from "node:fs";
+const data=JSON.parse(readFileSync(new URL("../../supabase/docs/tractor-global-source-directory.json",import.meta.url),"utf8"));
+test("global source directory is discovery-only, bounded and unique",()=>{assert.equal(data.version,1);assert.ok(data.sources.length>=30);assert.equal(new Set(data.sources.map(x=>x.id)).size,data.sources.length);for(const s of data.sources){assert.equal(s.automatic_fetch,false);assert.equal(s.publication_approved,false);assert.ok(s.scope.length>15);for(const raw of [s.url,s.rights_url].filter(Boolean)){const u=new URL(raw);assert.equal(u.protocol,"https:");assert.equal(u.username,"");assert.equal(u.password,"");assert.equal(u.port,"");}}});
+test("photo directory retains restrictive rights warnings",()=>{const byId=new Map(data.sources.map(s=>[s.id,s]));assert.match(byId.get("finna").scope,/Metadata CC0 is not image licence/);assert.match(byId.get("wur").scope,/CC BY-NC/);assert.match(byId.get("smithsonian").scope,/item-specific CC0/);assert.match(byId.get("loc").scope,/restricted/);assert.ok(data.sources.filter(s=>s.kind==="photo_discovery").length>=8);});
