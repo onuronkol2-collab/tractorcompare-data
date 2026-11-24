@@ -54,6 +54,30 @@ export function inspectSeoTitle(html,file="index.html"){
   return {title,length:title.length,heading,isModel,locale,errors};
 }
 
+/**
+ * Only identical titles of the SAME model route across observed locales.
+ * These are editorial review candidates, not automatic indexing failures:
+ * unusually long exact model identities may legitimately use the same title.
+ * Never compare different models here or infer missing locales from a sample.
+ */
+export function crossLocaleModelTitleGroups(records){
+  const groups=new Map();
+  for(const {file,title} of records){
+    const match=/^(?:(tr|zh|hi|pt-br|fr|de|ru|ja|es)\/)?tractors\/([^/]+)\/index\.html$/.exec(file);
+    if(!match||!title?.trim())continue;
+    const locale=match[1]||"en",slug=match[2];
+    const normalized=title.normalize("NFC").replace(/\s+/g," ").trim();
+    const key=JSON.stringify([slug,normalized]);
+    const group=groups.get(key)??{slug,title:normalized,locales:new Map()};
+    group.locales.set(locale,file);
+    groups.set(key,group);
+  }
+  return [...groups.values()].filter(group=>group.locales.size>1)
+    .map(({slug,title,locales})=>({slug,title,locales:[...locales.keys()].sort(),
+      files:[...locales.values()].sort()}))
+    .sort((a,b)=>a.slug.localeCompare(b.slug)||a.title.localeCompare(b.title));
+}
+
 export function auditBuiltSeoTitles(dir){
   const root=resolve(dir);
   const summary={
@@ -61,6 +85,7 @@ export function auditBuiltSeoTitles(dir){
     byLocale:{},errors:[],duplicates:[],longExamples:[],bibliographyExamples:[],bibliographyTitles:0
   };
   const modelTitles=new Map();
+  const modelTitleRecords=[];
   function walk(directory){
     for(const entry of readdirSync(directory,{withFileTypes:true})){
       const path=join(directory,entry.name);
@@ -90,6 +115,7 @@ export function auditBuiltSeoTitles(dir){
         // A localized title must identify exactly one model page. We report
         // duplicates for editorial QA rather than hiding a real variant.
         if(page.isModel && page.title){
+          modelTitleRecords.push({file,title:page.title});
           const key=page.locale+"::"+page.title;
           const previous=modelTitles.get(key);
           if(previous&&previous!==file)
@@ -101,6 +127,7 @@ export function auditBuiltSeoTitles(dir){
   }
   walk(root);
   if(!summary.htmlDocuments)throw Error("No HTML documents found for title QA");
+  summary.crossLocaleCandidates=crossLocaleModelTitleGroups(modelTitleRecords);
   return summary;
 }
 
@@ -108,14 +135,15 @@ if(process.argv[1]&&resolve(process.argv[1])===fileURLToPath(import.meta.url)){
   try{
     const dir=resolve(process.argv[2]||"site/dist");
     const report=auditBuiltSeoTitles(dir);
-    const {htmlDocuments,modelPages,over60,over105,over160,byLocale,errors,duplicates,longExamples,bibliographyTitles,bibliographyExamples}=report;
+    const {htmlDocuments,modelPages,over60,over105,over160,byLocale,errors,duplicates,longExamples,bibliographyTitles,bibliographyExamples,crossLocaleCandidates}=report;
     console.log("TRACTORVS_SITEWIDE_TITLE_QA "+JSON.stringify({
       htmlDocuments,modelPages,over60,over105,over160,
-      modelTitleDuplicates:duplicates.length,sourceNoteTitleCandidates:bibliographyTitles,structuralErrors:errors.length,byLocale
+      modelTitleDuplicates:duplicates.length,crossLocaleTitleGroups:crossLocaleCandidates.length,sourceNoteTitleCandidates:bibliographyTitles,structuralErrors:errors.length,byLocale
     }));
     if(longExamples.length)console.log("TITLE_QA_SAMPLES "+JSON.stringify(longExamples.slice(0,16)));
     if(bibliographyExamples.length)console.log("TITLE_QA_SOURCE_NOTE_REVIEW "+JSON.stringify(bibliographyExamples.slice(0,16)));
     if(duplicates.length)console.warn("TITLE_QA_DUPLICATE_MODELS "+JSON.stringify(duplicates.slice(0,20)));
+    if(crossLocaleCandidates.length)console.warn("TITLE_QA_CROSS_LOCALE_REVIEW "+JSON.stringify(crossLocaleCandidates));
     if(errors.length){
       console.error("TITLE_QA_ERRORS "+JSON.stringify(errors.slice(0,30)));
       process.exitCode=1;
