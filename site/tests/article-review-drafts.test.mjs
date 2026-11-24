@@ -10,6 +10,9 @@ test("all 24 article review drafts preserve source structure and technical numbe
  assert.equal(result.uiLabels,192);
  assert.equal(result.glossaryEntries,112);
  assert.equal(result.glossaryFields,448);
+ assert.equal(result.remainingNames,656);
+ assert.equal(result.totalGlossaryNames,768);
+ assert.equal(result.missingGlossaryProseFields,1968);
  assert.equal(result.structuralChecks,"passed");
  assert.equal(result.publicationApproved,false);
 });
