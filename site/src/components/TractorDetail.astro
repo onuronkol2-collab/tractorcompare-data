@@ -19,6 +19,7 @@ import { modelDiscoveryLinks } from "../lib/related-tractors";
 import {DEUTZ_5D_GS_PILOT} from "../lib/deutz-5d-editorial.ts";
 import {modelSourceDiscrepancies, isUnresolvedComparisonSpec} from "../lib/manufacturer-conflicts.mjs";
 import { modelEvidenceAnswers, matchedHeadlinePowerSource } from "../lib/model-evidence-answers.ts";
+import {MODEL_ANSWER_UI,modelAnswerMethodLocale} from "../lib/model-evidence-answer-i18n.ts";
 import { HEADLINE_PROVENANCE_COPY } from "../lib/headline-provenance-i18n.ts";
 import {forumText as forumCopy} from "../lib/forum-i18n.ts";
 import {editorialHubTranslation} from "../lib/editorial-hub-i18n.ts";
@@ -41,7 +42,9 @@ const translatedSelection=editorialHubTranslation(lang)?.cards[0];
 const compareUrl = localizedPath(lang,"/compare/") + "?left=" + encodeURIComponent(tractor.tractor_id);
 const { title, description, searchDescription } = modelSeoMetadata(tractor, lang);
 const originalNote = originalVariantNote(tractor);
-const answerItems=(lang==="tr"||lang==="en")?modelEvidenceAnswers(safeEvidenceTractor,lang):[];
+const answerItems=modelEvidenceAnswers(safeEvidenceTractor,lang);
+const answerCopy=MODEL_ANSWER_UI[lang];
+const answerMethodLocale=modelAnswerMethodLocale(lang);
 const cover=primaryTractorPhoto(tractor);
 const socialPreviewImage=preferredTractorPreviewUrl(cover);
 const structuredData = import.meta.env.PUBLIC_INDEXING_ENABLED === "true" && Astro.site
@@ -110,22 +113,22 @@ const summaryItems = [
     </aside>}
     {answerItems.length>0 && <section class="model-evidence-answers" aria-labelledby="model-answers-heading">
       <div class="model-evidence-heading">
-        <p class="eyebrow"><span class="eyebrow-mark"></span>{lang==="tr"?"KAYNAĞI GÖSTERİLEN KISA CEVAPLAR":"SHORT ANSWERS WITH SOURCES"}</p>
-        <h2 id="model-answers-heading">{lang==="tr"?"Bu traktör hakkında doğrulanabilen bilgiler":"Documented facts about this tractor"}</h2>
-        <p>{lang==="tr"?"Buradaki rakamlar yalnızca bağlantılı kanıtı bulunan teknik kayıtlarımızdan alınır. Eksik veya çelişkili bilgiler kesinmiş gibi özetlenmez.":"Only reviewed, source-linked technical entries are summarized here. Missing or conflicting claims are not guessed."}</p>
+        <p class="eyebrow"><span class="eyebrow-mark"></span>{answerCopy.eyebrow}</p>
+        <h2 id="model-answers-heading">{answerCopy.heading}</h2>
+        <p>{answerCopy.intro}</p>
       </div>
       <div class="model-answer-grid">{answerItems.map(item=><article class="model-answer-card" id={"answer-" + item.id}>
         <h3>{item.question}</h3>
         <p>{item.answer}</p>
-        {item.measurementNote && <p><strong>{lang==="tr"?"Ölçüm notu":"Measurement note"}</strong> · {item.measurementNote}</p>}
+        {item.measurementNote && <p><strong>{answerCopy.measurement}</strong> · {item.measurementNote}</p>}
         <div class="model-answer-links">
           <a href={item.sourceUrl} target="_blank" rel="noopener noreferrer">
-            {lang==="tr"?(item.sourceType==="manufacturer"?"Üretici kaynağı":"Bağımsız teknik kaynak"):(item.sourceType==="manufacturer"?"Manufacturer source":"Independent technical source")} ↗
+            {item.sourceType==="manufacturer"?answerCopy.manufacturer:answerCopy.independent} ↗
           </a>
-          {item.guidePath&&<a href={localizedPath(lang,item.guidePath)}>{lang==="tr"?"Terimi açıkla":"Explain the term"} ↗</a>}
+          {item.guidePath&&<a href={localizedPath(lang,item.guidePath)}>{answerCopy.explain} ↗</a>}
         </div>
       </article>)}</div>
-      <p class="model-answer-method"><a href={localizedPath(lang,"/methodology/")}>{lang==="tr"?"Kaynaklarımızı nasıl doğruluyoruz?":"How we verify technical sources"} ↗</a></p>
+      <p class="model-answer-method"><a href={localizedPath(answerMethodLocale,"/methodology/")} hreflang={answerMethodLocale}>{answerCopy.method} ↗</a></p>
     </section>}
     <a class="model-forum-discussion"
       href={localizedPath(lang,"/forum/")+"?tractor="+encodeURIComponent(tractor.tractor_id)}>
