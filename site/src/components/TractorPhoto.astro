@@ -3,8 +3,8 @@ import {tractorPhotos,photoText,tractorPhotoAlt} from "../lib/tractor-photos";
 import {approvedMobilePhotoFormats} from "../lib/approved-mobile-photo-assets.mjs";
 import type {TractorRecord} from "../lib/catalog";
 import type {Locale} from "../lib/locales";
-interface Props { tractor:TractorRecord;lang:Locale;mode?:"hero"|"catalog"|"compare"; sprite?:boolean; }
-const {tractor,lang,mode="hero",sprite=false}=Astro.props;
+interface Props { tractor:TractorRecord;lang:Locale;mode?:"hero"|"catalog"|"compare"; sprite?:boolean; slotSizes?:string; }
+const {tractor,lang,mode="hero",sprite=false,slotSizes}=Astro.props;
 const photos=tractorPhotos(tractor);
 const visiblePhotos=mode==="hero" ? photos : photos.slice(0,1);
 const renderedPhotos=visiblePhotos.map(photo=>({photo,mobile:approvedMobilePhotoFormats(photo.fileId)}));
@@ -35,10 +35,10 @@ const label=tractorPhotoAlt(tractor,lang);
         {mobile && <source type="image/webp"
           media="(max-width:760px) and (max-resolution:2dppx)"
           srcset={mobile.webpUrl+" 720w"}
-          sizes={mode==="hero"?"(max-width:760px) calc(100vw - 48px), 860px":"(max-width:680px) calc(100vw - 36px), 400px"}/>}
+          sizes={mode==="hero"?"(max-width:760px) calc(100vw - 48px), 860px":(slotSizes ?? "(max-width:680px) calc(100vw - 36px), 400px")}/>}
         <img src={mode==="hero"?photo.displayUrl:photo.thumbUrl}
           srcset={photo.thumbUrl+" 480w, "+(mobile?mobile.jpegUrl+" 720w, ":"")+photo.displayUrl+" 960w"}
-          sizes={mode==="hero"?"(max-width:760px) calc(100vw - 48px), 860px":"(max-width:680px) calc(100vw - 36px), 400px"}
+          sizes={mode==="hero"?"(max-width:760px) calc(100vw - 48px), 860px":(slotSizes ?? "(max-width:680px) calc(100vw - 36px), 400px")}
           width={photo.width} height={photo.height} decoding="async"
           loading={mode==="hero"&&index===0?"eager":"lazy"} fetchpriority={mode==="hero"&&index===0?"high":undefined} alt={label+(photos.length>1?" — "+(index+1):"")}/>
       </picture>
