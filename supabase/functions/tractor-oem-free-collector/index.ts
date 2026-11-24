@@ -5,7 +5,8 @@
 import {createClient} from "npm:@supabase/supabase-js@2";
 import {
  allowedOemUrl,readOemDocument,robotsAllowed,validModelMention,aggregateResults,
- MAX_PER_RUN,CACHE_HOURS,draftIdBatches,safeCollectorQueryFailure
+ MAX_PER_RUN,CACHE_HOURS,draftIdBatches,safeCollectorQueryFailure,
+ MAX_DRAFT_SCAN,SPEC_LINK_PAGE_SIZE,MAX_SPEC_LINKS,selectBulkOemSources
 } from "./policy.mjs";
 
 const url=Deno.env.get("SUPABASE_URL")||"";
@@ -61,17 +62,27 @@ async function collect(){
    .select("id,brand_id,model_name,status").in("id",batch)
    .eq("status","draft").limit(251),"draft_read");
   tractors.push(...rows);
-  if(tractors.length>250)throw Error("draft_scan_cap");
+  if(tractors.length>MAX_DRAFT_SCAN)throw Error("draft_scan_cap");
  }
  const drafts=new Map(tractors.map(t=>[t.id,t]));
  if(!drafts.size)return {eligible_drafts:0,trusted_urls:0,cache_hits:0,...aggregateResults([])};
  const brands=await checked(db.from("brands").select("id,name")
   .in("id",[...new Set(tractors.map(t=>t.brand_id))]).limit(120),"brand_read");
  const brandMap=new Map(brands.map(b=>[b.id,b.name]));
- const specLinks=await checked(db.from("tractor_specs").select("tractor_id,source_id")
-  .in("tractor_id",[...drafts.keys()]).not("source_id","is",null)
-  .limit(5000),"spec_read");
- if(specLinks.length===5000)throw Error("spec_scan_cap");
+ // Batch UUID filters AND paginate spec links explicitly: PostgREST may cap
+ // a response below a requested .limit(). A short first page of a large
+ // unpaginated request is not proof of complete coverage.
+ const specLinks=[];
+ for(const batch of draftIdBatches([...drafts.keys()])){
+  for(let offset=0;;offset+=SPEC_LINK_PAGE_SIZE){
+   const page=await checked(db.from("tractor_specs").select("id,tractor_id,source_id")
+    .in("tractor_id",batch).not("source_id","is",null).order("id",{ascending:true})
+    .range(offset,offset+SPEC_LINK_PAGE_SIZE-1),"spec_read");
+   specLinks.push(...page);
+   if(specLinks.length>MAX_SPEC_LINKS)throw Error("spec_scan_cap");
+   if(page.length<SPEC_LINK_PAGE_SIZE)break;
+  }
+ }
  const sourceIds=[...new Set(specLinks.map(x=>x.source_id).filter(Boolean))];
  if(!sourceIds.length)return {eligible_drafts:drafts.size,trusted_urls:0,cache_hits:0,...aggregateResults([])};
  if(sourceIds.length>500)throw Error("source_scan_cap");
@@ -92,8 +103,9 @@ async function collect(){
   if(!safe)continue;
   if(!candidates.has(safe))candidates.set(safe,{
    source_url:safe,source_host:new URL(safe).hostname,
-   associated_models:[]});
-  candidates.get(safe).associated_models.push(tractor.model_name);
+   brand,associated_models:new Set(),associated_draft_ids:new Set()});
+  candidates.get(safe).associated_models.add(tractor.model_name);
+  candidates.get(safe).associated_draft_ids.add(tractor.id);
  }
  const list=[...candidates.values()];
  if(list.length>500)throw Error("trusted_source_scan_cap");
@@ -104,17 +116,9 @@ async function collect(){
     .select("source_url,next_check_at").in("source_url",batch),"cache_read"));
  }
  const cacheMap=new Map(caches.map(x=>[x.source_url,x]));
- const remaining=list.filter(x=>{
-  const item=cacheMap.get(x.source_url);
-  return !item||!item.next_check_at||Date.parse(item.next_check_at)<=now;
- });
- // At most one source from each OEM hostname per run; remain courteous.
- const picked=[],usedHosts=new Set();
- for(const item of remaining){
-  if(picked.length>=MAX_PER_RUN)break;
-  if(usedHosts.has(item.source_host))continue;
-  usedHosts.add(item.source_host);picked.push(item);
- }
+ // Prioritize uncached documents covering the most distinct drafts,
+ // while preserving the request budget and one source per brand/host.
+ const {picked,remaining}=selectBulkOemSources(list,cacheMap,now,MAX_PER_RUN);
  const updates=[],robotsCache=new Map();
  for(const entry of picked){
   const permitted=await robotsAllowed(entry.source_url,{cache:robotsCache});
@@ -123,7 +127,7 @@ async function collect(){
     content_bytes:null,content_sha256:null,excerpt:null};
   // Mention is merely a discovery hint, not technical identity evidence.
   const mentions=doc.status==="fetched_html" &&
-   entry.associated_models.some(m=>validModelMention(doc.excerpt,m));
+   [...entry.associated_models].some(m=>validModelMention(doc.excerpt,m));
   const ttl=doc.status==="fetch_error"||doc.status==="http_error"?24:CACHE_HOURS;
   const record={
    source_url:entry.source_url,source_host:entry.source_host,
@@ -140,8 +144,8 @@ async function collect(){
   updates.push({status:doc.status});
  }
  return {eligible_drafts:drafts.size,trusted_urls:list.length,
-  cache_hits:list.length-remaining.length,
-  deferred_sources:Math.max(0,remaining.length-picked.length),
+  cache_hits:list.length-remaining,
+  deferred_sources:Math.max(0,remaining-picked.length),
   ...aggregateResults(updates)};
 }
 Deno.serve(async req=>{

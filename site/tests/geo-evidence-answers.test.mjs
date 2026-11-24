@@ -3,6 +3,8 @@ import {readFileSync} from "node:fs";
 import test from "node:test";
 import {modelEvidenceAnswers} from "../src/lib/model-evidence-answers.ts";
 import {modelStructuredData} from "../src/lib/model-seo.ts";
+import {LOCALES,NEW_LOCALES,LOCALE_TAGS} from "../src/lib/locales.ts";
+import {MODEL_ANSWER_UI,modelAnswerMethodLocale} from "../src/lib/model-evidence-answer-i18n.ts";
 
 const base={
  tractor_id:"4f83ab62-0000-0000-0000-000000000000",
@@ -89,7 +91,9 @@ test("visible model answers and public sources are part of server-rendered HTML 
  assert.match(html,/item\.question/);
  assert.match(html,/item\.answer/);
  assert.match(html,/href=\{item\.sourceUrl\}/);
- assert.match(html,/availableLocales|lang==="tr"\|\|lang==="en"/);
+ assert.match(html,/const answerItems=modelEvidenceAnswers\(safeEvidenceTractor,lang\)/);
+ assert.match(html,/localizedPath\(answerMethodLocale,"\/methodology\/"\)/);
+ assert.match(html,/hreflang=\{lang==="en"\|\|lang==="tr"\?undefined:answerMethodLocale\}/);
  assert.doesNotMatch(html,/\"@type\":\"FAQPage\"/);
 });
 
@@ -142,8 +146,9 @@ test("new GEO fields do not crowd out previously verified wheelbase and fuel ans
 test("manufacturer HTML product pages are labelled sources, not presumed documents",()=>{
  const detail=readFileSync(new URL("../src/components/TractorDetail.astro",import.meta.url),"utf8");
  const index=readFileSync(new URL("../src/lib/model-source-index.ts",import.meta.url),"utf8");
- assert.match(detail,/"Manufacturer source"/);
- assert.match(detail,/"Üretici kaynağı"/);
+ assert.equal(MODEL_ANSWER_UI.en.manufacturer,"Manufacturer source");
+ assert.equal(MODEL_ANSWER_UI.tr.manufacturer,"Üretici kaynağı");
+ assert.match(detail,/answerCopy\.manufacturer/);
  assert.doesNotMatch(detail,/Manufacturer document|Üretici belgesi/);
  assert.match(index,/official: "Manufacturer source"/);
  assert.match(index,/official: "Üretici kaynağı"/);
@@ -160,5 +165,76 @@ test("preserve long measurement conditions and distinguish test speeds",()=>{
  assert.equal(answers[1].guidePath,"/guides/tractor-hydraulic-lift-explained/");
  for(const other of [{...engine,rated_rpm:1800},{...engine,spec_value:"110-114"}]){
    assert.deepEqual(modelEvidenceAnswers({...base,specifications:[engine,other]},"en"),[]);
+ }
+});
+
+test("every locale renders the same six source-qualified facts, not translated measurement units",()=>{
+ const model={...base,specifications:[
+  spec("engine_rated_power","114","hp",{rated_rpm:2200}),
+  spec("pto_power_hp","89","hp"),spec("engine_displacement","3.6","L"),
+  spec("rear_lift_capacity_kg","4500","kg",{measurement_standard:"with assistor rams"}),
+  spec("wheelbase_mm","2355","mm"),spec("fuel_tank_capacity","135","L")
+ ]};
+ const expected=modelEvidenceAnswers(model,"en").map(({id,sourceUrl,sourceType})=>({id,sourceUrl,sourceType}));
+ for(const locale of LOCALES){
+  const answers=modelEvidenceAnswers(model,locale);
+  assert.deepEqual(answers.map(({id,sourceUrl,sourceType})=>({id,sourceUrl,sourceType})),expected,locale);
+  assert.ok(Object.values(MODEL_ANSWER_UI[locale]).every(s=>s.trim()),locale);
+  assert.ok(answers.every(a=>a.question.includes("McCormick X5.120")&&!/\{[nv]\}|undefined|NaN/.test(a.answer+a.question)),locale);
+  assert.match(answers[0].answer,/114 (?:HP|hp)/);
+  const fmt=new Intl.NumberFormat(LOCALE_TAGS[locale],{maximumFractionDigits:2});
+  assert.ok(answers[2].answer.includes(fmt.format(3.6)),locale);
+  assert.ok(answers[0].measurementNote.includes(fmt.format(2200)),locale);
+  assert.ok((answers[3].measurementNote||answers[3].answer).includes("with assistor rams"),locale);
+  if(NEW_LOCALES.includes(locale)){
+   assert.ok(answers.every(a=>a.guidePath===null),locale+" cannot link to an unpublished localized guide");
+   assert.notEqual(answers[0].question,modelEvidenceAnswers(model,"en")[0].question,locale);
+   assert.equal(modelAnswerMethodLocale(locale),"en");
+  }
+ }
+ assert.equal(modelAnswerMethodLocale("tr"),"tr");
+});
+test("search-demand pilot: LS J27 GEAR and HST stay distinct in German with original source units",()=>{
+ const source="https://www.lstractor.com/en/product/tractor/tractor_J";
+ const rows=[spec("engine_power","27","HP",{source_url:source,source_type:"official_product_page",measurement_standard:"J27 GEAR factory specification"}),spec("fuel_tank_capacity","25","L",{source_url:source,source_type:"official_product_page"}),spec("wheelbase","1500","mm",{source_url:source,source_type:"official_product_page"}),spec("rear_lift_capacity","650","kgf",{source_url:source,source_type:"official_product_page"})];
+ const model={...base,brand_name:"LS Tractor",model_name:"J27",variant:"GEAR",specifications:rows};
+ const answers=modelEvidenceAnswers(model,"de");
+ assert.deepEqual(answers.map(a=>a.id),["rated-power","wheelbase","fuel"]);
+ assert.match(answers[0].question,/J27 \(GEAR\)/);assert.match(answers[0].answer,/27 HP/);
+ assert.equal(answers[0].measurementNote,"J27 GEAR factory specification");
+ assert.ok(answers.every(a=>a.sourceUrl===source));
+ const hst=modelEvidenceAnswers({...model,variant:"HST",specifications:rows.map(s=>({...s,measurement_standard:s.measurement_standard?.replace("GEAR","HST")}))},"de");
+ assert.match(hst[0].question,/J27 \(HST\)/);
+ assert.notEqual(hst[0].question,answers[0].question);
+});
+test("search-demand pilot: Swaraj 735 FE Hindi answer uses verified lift, wheelbase and fuel, not power class",()=>{
+ const source="https://www.swarajtractors.com/swaraj-735-fe-tractor";
+ const official={source_url:source,source_type:"official_product_specification"};
+ const model={...base,brand_name:"Swaraj",model_name:"735 FE",variant:null,market:"India",horsepower:40,specifications:[
+  spec("engine_power","31-40","HP",official),spec("engine_displacement","2734","cm3",official),
+  spec("rear_lift_capacity","1650","kg",official),spec("wheelbase_mm","2090","mm",official),spec("fuel_tank_capacity","47","L",official)
+ ]};
+ const answers=modelEvidenceAnswers(model,"hi");
+ assert.deepEqual(answers.map(a=>a.id),["rear-hitch-lift","wheelbase","fuel"]);
+ assert.ok(answers.every(a=>a.question.includes("Swaraj 735 FE")&&a.sourceUrl===source));
+ assert.match(answers[0].answer,/1,650 kg/);
+ assert.ok(!answers.some(a=>a.id==="rated-power"));
+});
+test("all locales keep the existing fail-closed evidence gate",()=>{
+ const model={...base,specifications:[spec("engine_rated_power","114","hp"),spec("engine_rated_power","115","hp"),spec("fuel_tank_capacity","150","L",{verified_at:null}),spec("rear_lift_capacity","5000","kgf"),spec("engine_displacement","3600","cc"),spec("wheelbase_mm","2355","mm",{source_url:"https://unreviewed.example/model"})]};
+ for(const locale of LOCALES)assert.deepEqual(modelEvidenceAnswers(model,locale),[],locale);
+});
+
+test("English and Turkish legacy answer text, formatting and guide links stay unchanged",()=>{
+ const model={...base,variant:"4WD",specifications:[
+  spec("engine_rated_power","114","hp",{rated_rpm:2200,measurement_standard:"ECE R120"}),
+  spec("wheelbase_mm","2355","mm")
+ ]};
+ for(const locale of ["en","tr"]){
+  const answers=modelEvidenceAnswers(model,locale);
+  assert.deepEqual(answers,modelEvidenceAnswers({...model,variant:null},locale));
+  assert.equal(answers[0].guidePath,"/guides/tractor-engine-power-and-torque/");
+  assert.equal(answers[0].measurementNote,locale==="en"?"2,200 rpm":"2.200 dev/dk");
+  assert.match(answers[0].answer,/ECE R120/);
  }
 });
