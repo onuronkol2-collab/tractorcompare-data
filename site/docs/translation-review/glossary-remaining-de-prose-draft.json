@@ -9,23 +9,33 @@
   "sources": [
     {
       "url": "https://www.dlg.org/tests/landtechnik-betriebsmittel/dlg-powermix",
-      "scope": "German measurement terminology, not a review of all entries"
+      "scope": "PowerMix distinct drawbar, PTO and hydraulic work cycles; no reliability inference.",
+      "checked": "2026-11-24",
+      "state": "verified-accessible"
     },
     {
       "url": "https://www.dlg.org/tests/landtechnik-betriebsmittel/pruefberichte/test-john-deere-serie-7r",
-      "scope": "German front/rear lift and separate power measurement terminology"
+      "scope": "Report 6296 confirms PTO test measurement, EHR, front hitch and PTO terminology; not a current model reliability ranking.",
+      "checked": "2026-11-24",
+      "state": "verified-accessible"
     },
     {
       "url": "https://www.svlfg.de/galabau",
-      "scope": "PTO guarding wording"
+      "scope": "SVLFG guidance confirms covered driveline and anti-rotation protection; application-specific safety guidance.",
+      "checked": "2026-11-24",
+      "state": "verified-accessible"
     },
     {
       "url": "https://www.svlfg.de/frontlader",
-      "scope": "ROPS/FOPS protection context"
+      "scope": "SVLFG loader safety distinguishes rollover protection and falling-object protection.",
+      "checked": "2026-11-24",
+      "state": "verified-accessible"
     },
     {
       "url": "https://www.dlg.org/mediacenter/dlg-merkblaetter/dlg-merkblatt-461-massnahmen-zur-optimierung-der-traktion",
-      "scope": "Traction and ballast terminology"
+      "scope": "DLG 461 (2020) supports soil, slip, ballast and tractive force terminology; not a 2026 failure-rate source.",
+      "checked": "2026-11-24",
+      "state": "verified-accessible"
     }
   ],
   "entries": [
