@@ -16,6 +16,7 @@ on:
       - "scripts/tractor-targeted-claim-guard.test.mjs"
       - "scripts/tractor-free-source-triage.mjs"
       - "scripts/tractor-pdf-review.py"
+      - "scripts/tractor-pdf-columns.py"
       - "scripts/tractor-pdf-review.test.py"
       - "scripts/tractor-free-source-triage.test.mjs"
       - "scripts/tractor-oem-source-review-batch.test.mjs"
