@@ -237,7 +237,7 @@ const schema={
         {id:"guide-sources-heading",label:copy.sourceTitle}
       ]}/>
       <ol class="guide-steps">
-        {copy.sections.map((section,index)=><li id={"guide-section-"+(index+1)}>
+        {copy.sections.map((section,index)=><li id={"guide-section-"+(index+1)} tabindex="-1">
           <h2><span aria-hidden="true">{index+1}.</span> {section.title}</h2>
           {section.paragraphs.map(p=><p>{p}</p>)}
           <p class="guide-question">{section.question}</p>
@@ -245,7 +245,7 @@ const schema={
         </li>)}
       </ol>
       <section class="guide-checklist" aria-labelledby="guide-checklist-heading">
-        <h2 id="guide-checklist-heading">{copy.worksheetTitle}</h2>
+        <h2 id="guide-checklist-heading" tabindex="-1">{copy.worksheetTitle}</h2>
         <div class="guide-table-scroll" role="region" tabindex="0" aria-labelledby="guide-checklist-heading">
           <table>
             <thead><tr>{copy.headers.map(h=><th scope="col">{h}</th>)}</tr></thead>
@@ -254,7 +254,7 @@ const schema={
         </div>
       </section>
       <section class="guide-sources" aria-labelledby="guide-sources-heading">
-        <h2 id="guide-sources-heading">{copy.sourceTitle}</h2>
+        <h2 id="guide-sources-heading" tabindex="-1">{copy.sourceTitle}</h2>
         <p>{copy.sourceIntro}</p>
         <ol>{sources.map((s,idx)=><li><a href={s.url} hreflang="en" target="_blank" rel="noopener noreferrer">{sourceLabel(idx)} (EN)</a></li>)}</ol>
         <p><strong>{copy.limits}</strong></p>
