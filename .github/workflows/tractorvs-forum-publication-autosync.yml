@@ -5,6 +5,8 @@ name: TractorVS published forum static content refresh
 # runtime logic, secrets and permissions remain unchanged.
 # 22 Nov 2026 release audit: after separately approving the EN forum translation,
 # this workflow may refresh its already-public fingerprint; it never grants approval.
+# 24 Nov 2026: request immediate refresh for all ten approved locales of the
+# tractor brand origins article. Only existing anonymous public fingerprint sync runs.
 on:
   # GitHub schedules are best effort and can be delayed; avoid hour boundaries.
   # Recheck public RLS views every ten minutes (cheap when unchanged).
