@@ -270,7 +270,7 @@ export function verifyCloudflareBuildSha(env=process.env){
   const html=readText(join(projectRoot,"dist",page));
   insist(hasReleaseSha(html,sha),"Cloudflare production HTML release SHA is missing or incorrect: "+page);
  }
- console.log("TRACTORVS_RELEASE_SHA_CHECK "+JSON.stringify({sha,pages:pages.length}));
+ console.log("TRACTORVS_RELEASE_SHA_CHECK "+JSON.stringify({pages:pages.length,passed:true}));
  return {verified:true,pages:pages.length};
 }
 
