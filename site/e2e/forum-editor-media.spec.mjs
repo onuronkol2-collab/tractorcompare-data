@@ -61,6 +61,16 @@ test("editor safely formats text, previews emoji, and publishes text while keepi
  await form.locator("[data-editor-preview]").click();
  await expect(body).toHaveValue(sample);
  await expect(body).toHaveCSS("font-weight","400");
+ await body.evaluate(el=>{
+  el.setSelectionRange(el.value.length,el.value.length);
+  // Firefox does not reliably expose constructor-injected ClipboardEvent data.
+  // Supply the same clipboard contract to the actual paste handler.
+  const event=new Event("paste",{bubbles:true,cancelable:true});
+  Object.defineProperty(event,"clipboardData",{value:{getData:type=>type==="text/plain"?"Model\tÜlke\nTD5.90\tTürkiye":""}});
+  if(el.dispatchEvent(event))throw Error("Spreadsheet paste was not handled");
+ });
+ await expect(body).toHaveValue(/\| TD5\.90 \| Türkiye \|/);
+
  await form.locator("[data-editor-preview]").click();
  // Browser must strip original file metadata by re-encoding to WebP.
  const png=Buffer.from("iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+Z+HoAAAAASUVORK5CYII=","base64");
