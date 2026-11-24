@@ -9,3 +9,16 @@ From the repository root, run `node site/scripts/prepare-glossary-review-batch.m
 ## Review and release
 
 A structural pass is not proof of meaning, correct units, safety warning fidelity or independent review. Compare every field with its original, verify numbers, unit conventions, factual caveats, regional terminology and safety warnings. Integrate only complete reviewed locales with real route, source, canonical, hreflang and sitemap checks. No partial glossary fallback pretending to be translated. Existing glossary PR #127 is untouched; reconcile overlapping work before release. DeepL supported languages were checked, but the available connector did not expose a verified cost/quota; no translation requests were made. Do not activate paid or automatic provider jobs without authorization.
+
+## Offline alternative: Argos Translate (24 November 2026)
+
+Primary upstream sources: https://github.com/argosopentech/argos-translate and https://github.com/argosopentech/argospm-index/blob/main/index.json (index blob c64b1a1664df1a3dd1c213b693fbfe18de2efebb). The index exposes direct English-to-target packages for all eight languages, including Brazilian Portuguese code pb, not generic pt. The adapter requires exact package versions, rejects pivot translation, and never downloads or installs models itself.
+
+After separately checking model licences, dependency versions, download hashes and available local compute, an operator may install reviewed model packages on an isolated machine with networking disabled for inference. Export the review packet as above, then run:
+
+    python3 site/scripts/translate-glossary-argos-offline.py /tmp/glossary-review.json /tmp/argos-draft.json
+    node site/scripts/prepare-glossary-review-batch.mjs check-return /tmp/argos-draft.json
+
+The output is an unreviewed candidate packet, not approved translated content. Use the matching explicit locale selection on export and check-return if needed. Sentence chunking is disabled; every input is one bounded glossary field. Check for omitted meaning, numeric/technical errors, safety warnings and regional fluency; compare with trusted independent sources and obtain required editorial review. No secret, paid API, new scheduled workflow, production database, site route, or auto-publication is involved. The current chat environment lacks Argos and cannot resolve the download host, so no real model inference has occurred. Contract tests use synthetic data, not linguistic evaluation. Do not report a successful model run until observed.
+
+Other possibilities: Helsinki-NLP OPUS-MT local models (model-card-specific licences and direction checks); Google Cloud Translation's monthly free credit and Azure Translator free tier (billing/account/quota verification required before use); DeepL connector (cost/quota unverified). Prefer existing free local compute over enabling a paid service, and never revive disabled forum automation.
