@@ -103,4 +103,44 @@ for(const [lang,labels] of Object.entries(ui.labels)){
   uiLabels++;
  }
 }
-console.log(JSON.stringify({draftTranslations:count,bodyParagraphs:paragraphs,uiLabels,structuralChecks:"passed",independentReview:"pending",publicationApproved:false}));
+// Partial glossary drafts must match the exact original rows and guide links.
+const glossarySource=read("src/lib/tractor-glossary.ts");
+const glossaryRows=JSON.parse(glossarySource.split("export const GLOSSARY_ROWS = ")[1].split("] as const;")[0]+"]");
+const expectedIds=[...new Set(articles.flatMap(a=>a.glossary))].sort();
+assert.equal(expectedIds.length,14);
+const glossaryLocales=new Set();
+let glossaryEntries=0,glossaryFields=0;
+for(const region of ["western","eastern"]){
+ const doc=JSON.parse(read("docs/translation-review/glossary-core-"+region+"-languages-draft.json"));
+ assert.equal(doc.state,"draft-needs-independent-editorial-review");
+ assert.equal(doc.reviewed,false);
+ assert.equal(doc.notForPublication,true);
+ assert.equal(doc.sourceBlobSha,blobSha(glossarySource));
+ assert.deepEqual(doc.source.map(x=>x.id).sort(),expectedIds);
+ for(const entry of doc.source){
+  const r=glossaryRows.find(x=>x[1]===entry.id);
+  assert.deepEqual(entry,{id:r[1],name:r[3],definition:r[5],example:r[7],caution:r[9]});
+ }
+ for(const [lang,entries] of Object.entries(doc.translations)){
+  assert.ok(locales.includes(lang)&&!glossaryLocales.has(lang));
+  glossaryLocales.add(lang);
+  assert.deepEqual(Object.keys(entries).sort(),expectedIds);
+  for(const original of doc.source){
+   const entry=entries[original.id];
+   assert.deepEqual(Object.keys(entry).sort(),["caution","definition","example","name"]);
+   for(const key of ["name","definition","example","caution"]){
+    const value=entry[key];
+    assert.ok(typeof value==="string"&&value.trim()&&value!==original[key],lang+" "+original.id+" "+key);
+    const script=lang==="ja"&&key==="name"?/[\p{Script=Han}\p{Script=Hiragana}\p{Script=Katakana}]/u:scripts[lang];
+    if(script)assert.ok(script.test(value),lang+" script "+original.id+" "+key);
+    for(const n of new Set(tokens(original[key])))assert.ok(numberRetained(n,value,lang),lang+" missing "+n+" "+original.id+" "+key);
+    if(original[key].includes("1⅜"))assert.ok(value.includes("1⅜"),lang+" changed shaft diameter");
+    if(original[key].includes("ECE/ISO"))assert.ok(value.includes("ECE/ISO"),lang+" changed standard");
+    glossaryFields++;
+   }
+   glossaryEntries++;
+  }
+ }
+}
+assert.deepEqual([...glossaryLocales].sort(),[...locales].sort());
+console.log(JSON.stringify({draftTranslations:count,bodyParagraphs:paragraphs,uiLabels,glossaryEntries,glossaryFields,structuralChecks:"passed",independentReview:"pending",publicationApproved:false}));
