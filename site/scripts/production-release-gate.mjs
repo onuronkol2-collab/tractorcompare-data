@@ -229,8 +229,10 @@ export function verifyProductionArtifacts({dir=projectRoot,origin=expectedOrigin
  console.log("TRACTORVS_PRODUCTION_TITLE_AUDIT "+JSON.stringify({
    htmlDocuments:titleAudit.htmlDocuments,modelPages:titleAudit.modelPages,
    over60:titleAudit.over60,over105:titleAudit.over105,over160:titleAudit.over160,
-   modelTitleDuplicates:titleAudit.duplicates.length,byLocale:titleAudit.byLocale
+   modelTitleDuplicates:titleAudit.duplicates.length,crossLocaleTitleGroups:titleAudit.crossLocaleCandidates.length,byLocale:titleAudit.byLocale
  }));
+ if(titleAudit.crossLocaleCandidates.length)
+   console.warn("TRACTORVS_CROSS_LOCALE_TITLE_REVIEW "+JSON.stringify(titleAudit.crossLocaleCandidates));
  if(titleAudit.duplicates.length)
    console.warn("TRACTORVS_MODEL_TITLE_DUPLICATES "+
      JSON.stringify(titleAudit.duplicates.slice(0,12)));
@@ -252,6 +254,7 @@ export function verifyProductionArtifacts({dir=projectRoot,origin=expectedOrigin
    titlePages:titleAudit.htmlDocuments,titleOver60:titleAudit.over60,
    titleOver105:titleAudit.over105,duplicateModelTitles:titleAudit.duplicates.length,
    bibliographyTitleCandidates:titleAudit.bibliographyTitles,
+   crossLocaleTitleGroups:titleAudit.crossLocaleCandidates.length,
    metaIndexablePages:metaAudit.indexablePages,metaOver160:metaAudit.over160};
 }
 

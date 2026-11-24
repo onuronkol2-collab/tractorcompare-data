@@ -3,7 +3,7 @@ import assert from "node:assert/strict";
 import {mkdtempSync,mkdirSync,writeFileSync,rmSync} from "node:fs";
 import {tmpdir} from "node:os";
 import {join} from "node:path";
-import {inspectSeoTitle,auditBuiltSeoTitles,hasBibliographicTitleLeak} from "../scripts/verify-sitewide-seo-titles.mjs";
+import {inspectSeoTitle,auditBuiltSeoTitles,hasBibliographicTitleLeak,crossLocaleModelTitleGroups} from "../scripts/verify-sitewide-seo-titles.mjs";
 
 const doc=(title,main)=>'<!doctype html><html lang="en"><head><title>'
   +title+'</title></head><body>'+main+'</body></html>';
@@ -94,5 +94,40 @@ test("source bibliographies in model titles are flagged even when <=60 character
   assert.equal(report.errors.length,0);
   assert.equal(report.bibliographyTitles,1);
   assert.equal(report.bibliographyExamples[0].file,"tractors/landini/index.html");
+ }finally{rmSync(root,{recursive:true,force:true});}
+});
+
+
+test("cross-locale audit reports same model titles but does not conflate other models or repeated observations",()=>{
+ const records=[
+  {file:"es/tractors/basak-5120/index.html",title:"Başak 5120 — Stage V"},
+  {file:"fr/tractors/basak-5120/index.html",title:"Başak 5120 — Stage V"},
+  {file:"ru/tractors/basak-5120/index.html",title:"Başak 5120 —  Stage V"},
+  {file:"ru/tractors/basak-5120/index.html",title:"Başak 5120 —  Stage V"},
+  {file:"tractors/basak-5120/index.html",title:"Başak 5120 Specs — Stage V"},
+  {file:"tr/tractors/another/index.html",title:"Başak 5120 — Stage V"},
+  {file:"fr/articles/index.html",title:"Başak 5120 — Stage V"},
+ ];
+ const groups=crossLocaleModelTitleGroups(records);
+ assert.equal(groups.length,1);
+ assert.deepEqual(groups[0].locales,["es","fr","ru"]);
+ assert.equal(groups[0].slug,"basak-5120");
+ assert.equal(crossLocaleModelTitleGroups([records[0]]).length,0);
+ assert.deepEqual(crossLocaleModelTitleGroups(records.map(r=>({...r,title:r.file}))),[]);
+});
+
+test("full build surfaces cross-language candidate separately from same-language duplicates and structural errors",()=>{
+ const root=mkdtempSync(join(tmpdir(),"tractorvs-locale-title-"));
+ try{
+  for(const locale of ["es","fr","ru"]){
+   const folder=join(root,locale,"tractors","basak-5120");
+   mkdirSync(folder,{recursive:true});
+   writeFileSync(join(folder,"index.html"),doc("Başak 5120 — Stage V","<h1>Başak 5120</h1>"));
+  }
+  const report=auditBuiltSeoTitles(root);
+  assert.equal(report.crossLocaleCandidates.length,1);
+  assert.equal(report.duplicates.length,0);
+  assert.equal(report.errors.length,0);
+  assert.equal(report.crossLocaleCandidates[0].files.length,3);
  }finally{rmSync(root,{recursive:true,force:true});}
 });

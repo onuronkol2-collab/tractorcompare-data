@@ -3,7 +3,7 @@ import {scanHeadTags} from "./verify-sitewide-meta-descriptions.mjs";
 import {inspectSocialMetadata} from "./verify-sitewide-social-metadata.mjs";
 import {inspectVisibleMainImages} from "./seo-main-markup.mjs";
 import {inspectDocumentImageAlts,inspectUndocumentedEmptyImageAlts} from "./verify-sitewide-image-alts.mjs";
-import {hasBibliographicTitleLeak,inspectSeoTitle} from "./verify-sitewide-seo-titles.mjs";
+import {hasBibliographicTitleLeak,inspectSeoTitle,crossLocaleModelTitleGroups} from "./verify-sitewide-seo-titles.mjs";
 import {writeFileSync} from "node:fs";
 import {extractCanonicalAnchors,summarizeCanonicalGraph} from "./production-internal-link-graph.mjs";
 import {readOpeningTagAttribute} from "./seo-html-attributes.mjs";
@@ -122,6 +122,7 @@ let valid=0, modelPages=0, modelSample=[], fetchFailures=0;
 const inspectedPages=[];
 const observedAnchors=new Map();
 const titlesByLocale=new Map();
+const modelTitleRecords=[];
 const stylesheetRefs=new Map();
 // The 60-character threshold is crawler guidance, not a Google requirement.
 // Track it across checked locales as an advisory, without deleting exact
@@ -216,6 +217,7 @@ for(let i=0;i<urls.length;i+=8){
    if(isModel){
     const slug=p.split("/").filter(Boolean).at(-1);
     modelByLocale[locale].add(slug);modelPages++;
+    modelTitleRecords.push({file:p.slice(1)+"index.html",title:meta.title});
     const titleKey=locale+"::"+meta.title;
     const previous=titlesByLocale.get(titleKey);
     if(previous && previous!==p)error("duplicate-model-title",p,"Same title as "+previous);
@@ -278,6 +280,9 @@ const {noIncoming,unreachable,...internalLinkSummary}=internalLinks;
 console.log("TRACTORVS_INTERNAL_LINK_GRAPH "+JSON.stringify(internalLinkSummary));
 // Report graph candidates separately from SEO errors/title advisories. A static
 // HTML graph is not proof of search-engine crawling, indexing or all aliases.
+const crossLocaleTitleCandidates=crossLocaleModelTitleGroups(modelTitleRecords);
+for(const group of crossLocaleTitleCandidates)warn("cross-locale-model-title",group.files[0],
+ "Identical title observed for the same model in multiple locales; review language wording without removing identity",group);
 const report={
   site:BASE,mode:AUDIT_MODE,sitemaps:siteMaps.length,sitemapUrls:unique.size,
   htmlPages:inventory.htmlPages.size,forumPages:inventory.forumPages.size,
@@ -285,6 +290,7 @@ const report={
   plannedPages:urls.length,checkedPages:valid,coverageComplete:coverage!==null,fullCoverage:coverage?.fullCoverage===true,modelPages,modelsPerLocale:Object.fromEntries(Object.entries(modelByLocale).map(([k,v])=>[k,v.size])),
   fullPublishedModelsPerLocale:inventory.modelsPerLocale,
   titleAdvisories:titleLengths,
+  crossLocaleTitleGroups:crossLocaleTitleCandidates.length,
   internalLinkSummary,
   errors:problems.length,warnings:warnings.length,
 };
@@ -293,6 +299,6 @@ console.log("TRACTORVS_SEO_MODEL_SAMPLES "+JSON.stringify(modelSample));
 if(warnings.length)console.log("TRACTORVS_SEO_WARNINGS "+JSON.stringify(warnings.slice(0,30)));
 // CI retains the complete review inventory rather than just 30 console samples.
 if(process.env.TRACTORVS_SEO_EVIDENCE_PATH){
- writeFileSync(process.env.TRACTORVS_SEO_EVIDENCE_PATH,JSON.stringify({report,warnings,problems,internalLinks},null,2)+"\n");
+ writeFileSync(process.env.TRACTORVS_SEO_EVIDENCE_PATH,JSON.stringify({report,warnings,problems,internalLinks,crossLocaleTitleCandidates},null,2)+"\n");
 }
 if(problems.length)process.exitCode=1;
