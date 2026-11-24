@@ -70,6 +70,48 @@ export const VERIFIED_FORUM_TITLE_PAIRS = Object.freeze({
       "Рейтинг удовлетворённости дилеров тракторов за 2026 год: бренды и баллы",
       "Рейтинг дилеров тракторов 2026 | TractorVS"
     ]
+  },
+  "b11d1ad6-f0cc-4a18-ab83-9d18ccc2f7ea": {
+    "de": [
+      "Woher kommen Traktormarken? Herkunft, Eigentümer und Produktionsstandorte (2026)",
+      "Traktormarken: Herkunft, Eigentümer, Werke (2026)"
+    ],
+    "en": [
+      "Tractor brand origins: countries, owners and manufacturing locations (2026)",
+      "Tractor brands: origins, owners and factories (2026)"
+    ],
+    "es": [
+      "¿De qué país son las marcas de tractores? Origen, propietarios y fábricas (2026)",
+      "Marcas de tractores: origen, dueños y fábricas (2026)"
+    ],
+    "fr": [
+      "De quels pays viennent les marques de tracteurs ? Origines, propriétaires et usines (2026)",
+      "Marques de tracteurs : origine, propriétaires, usines (2026)"
+    ],
+    "hi": [
+      "ट्रैक्टर ब्रांड किस देश के हैं? दुनिया के ब्रांड, स्वामी और उत्पादन स्थल (2026)",
+      "ट्रैक्टर ब्रांड: देश, स्वामी और उत्पादन स्थल (2026)"
+    ],
+    "ja": [
+      "トラクターブランドの発祥国は？世界のメーカー、所有企業と生産地（2026年）",
+      "トラクターブランドの発祥国・所有企業・生産地（2026年） | TractorVS"
+    ],
+    "pt-br": [
+      "De que país são as marcas de tratores? Origens, proprietários e fábricas (2026)",
+      "Marcas de tratores: origem, donos e fábricas (2026)"
+    ],
+    "ru": [
+      "Из каких стран происходят марки тракторов? Владельцы и места производства (2026)",
+      "Марки тракторов: страны, владельцы и производство (2026)"
+    ],
+    "tr": [
+      "Traktör Markaları Hangi Ülkenin? Dünya Traktör Markaları ve Üretim Yerleri (2026)",
+      "Traktör Markaları: Ülkeler, Sahipleri ve Üretim (2026)"
+    ],
+    "zh": [
+      "拖拉机品牌来自哪个国家？全球品牌归属及生产地（2026年）",
+      "拖拉机品牌：来源国、归属与生产地（2026年） | TractorVS"
+    ]
   }
 });
 
