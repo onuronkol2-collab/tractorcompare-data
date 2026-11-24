@@ -771,3 +771,32 @@ test("independently reported power retains its qualifier in a constrained search
  const constrained=modelSeoMetadata({...model,variant:"D-244 / 2WD / regional configuration with additional transmission equipment and other variants"},"en");
  assert.doesNotMatch(constrained.searchDescription,/114 HP/);
 });
+
+
+test("reviewed Turkish and regional model titles preserve exact equipment and source data",()=>{
+ const locales=["en","tr","zh","hi","pt-br","fr","de","ru","ja","es"];
+ const cases=[
+  {brand_name:"Farmtrac",model_name:"45 Powermaxx",variant:"India / 2WD / constant-mesh 8F+2R",market:"India",must:["2WD","constant-mesh 8F+2R"]},
+  {brand_name:"Farmtrac",model_name:"60 Powermaxx",variant:"India / 2WD / T20 16F+4R",market:"India",must:["2WD","T20 16F+4R"]},
+  {brand_name:"Hattat",model_name:"B 3055",variant:"Stage V · 4WD · ROPS · 12F/12R",market:"Türkiye",must:["Stage V","4WD","ROPS","12F/12R"]},
+  {brand_name:"Erkunt",model_name:"Nimet 75 E+",variant:"CRD5 eCapra · 4WD · kabin · 24F/24R",market:"Türkiye",must:["CRD5 eCapra","4WD","24F/24R"]},
+  {brand_name:"IRUM",model_name:"TAGRO 102",variant:"Stage V / F36 FPT / 12F-12R / 4WD / cab",market:"Romania",must:["Stage V","F36 FPT","12F-12R","4WD","cab"]},
+  {brand_name:"Iseki",model_name:"T97 Series",variant:"T97 Cabin / T97 ROPS (manufacturer specification)",market:"International (ISEKI global catalogue)",must:["Cabin","ROPS"]},
+  {brand_name:"Iseki",model_name:"TXGS24",variant:"UK official TXGS24 brochure / 4WD hydrostatic / ROPS",market:"United Kingdom",must:["4WD hydrostatic","ROPS"]},
+  {brand_name:"Iseki",model_name:"TG6687",variant:"TG6 Stage V / Power shuttle / ROPS / WJRE4",market:"Europe",must:["Stage V","Power shuttle","ROPS","WJRE4"]}
+ ];
+ for(const {must,...row} of cases) for(const locale of locales){
+  const model={...tractor,...row,model_year:null};
+  const m=modelSeoMetadata(model,locale);
+  assert.ok(m.title.includes(row.brand_name+" "+row.model_name),locale+" model");
+  for(const value of must)assert.ok(m.title.includes(value),locale+" lost "+value+": "+m.title);
+  assert.doesNotMatch(m.title,/manufacturer specification|UK official TXGS24 brochure|ISEKI global catalogue/);
+  assert.equal(modelStructuredData(model,locale,"https://tractorvs.example")["@graph"][2].disambiguatingDescription,row.variant+" · "+row.market);
+ }
+ const one={...tractor,...cases.at(-1),model_year:null};
+ const other={...one,variant:"TG6 Stage V / HST / cab / HMWJCYE4"};
+ for(const locale of locales)assert.notEqual(modelSeoMetadata(one,locale).title,modelSeoMetadata(other,locale).title);
+ const farm={...tractor,...cases[0],model_year:null};
+ assert.equal((modelSeoMetadata(farm,"en").title.match(/India/g)||[]).length,1);
+ assert.ok(modelSeoMetadata({...farm,variant:"India / 2WD / different gearing"},"en").title.includes("different gearing"));
+});

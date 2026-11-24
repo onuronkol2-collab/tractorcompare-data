@@ -211,6 +211,43 @@ function reviewedRemainingTitleIdentity(tractor:TractorRecord, rawVariant:string
     if(name==="GT 20" && rawVariant==="India 2WD 6F+2R / single clutch / tyre options")
       return {variant:"2WD 6F+2R, single clutch, tyre options",market};
   }
+  // Exact published records checked against the anonymous catalogue on 24 Nov.
+  // Compact display separators and repeated regional labels, not equipment.
+  // Preserve the unmodified source strings in the description and JSON-LD.
+  if (tractor.brand_name==="Farmtrac" && rawMarket==="India") {
+    if (name==="45 Powermaxx" && rawVariant==="India / 2WD / constant-mesh 8F+2R")
+      return {variant:"2WD, constant-mesh 8F+2R",market};
+    if (name==="60 Powermaxx" && rawVariant==="India / 2WD / T20 16F+4R")
+      return {variant:"2WD, T20 16F+4R",market};
+  }
+  if (tractor.brand_name==="Hattat" && rawMarket==="Türkiye" &&
+      /^B (?:3055|3065|3085|3095|3105)$/.test(name) &&
+      rawVariant==="Stage V · 4WD · ROPS · 12F/12R")
+    return {variant:"Stage V, 4WD, ROPS, 12F/12R",market};
+  if (tractor.brand_name==="Erkunt" && rawMarket==="Türkiye" && rawVariant) {
+    const gears:Record<string,string>={"Bereket 60 E":"12F/12R","Bereket 65 E":"12F/12R",
+      "Bereket 65 E+":"12F/12R","Kıymet 90 Lüks":"16F/16R","Nimet 75 E+":"24F/24R",
+      "Nimet 75 Lüks":"16F/16R","Servet 85 Lüks":"16F/16R"};
+    const gear=gears[name];
+    if (gear && rawVariant==="CRD5 eCapra · 4WD · kabin · "+gear) {
+      const cab:Record<Locale,string>={en:"cab",tr:"kabin",zh:"驾驶室",hi:"केबिन",
+        "pt-br":"cabine",fr:"cabine",de:"Kabine",ru:"кабина",ja:"キャブ",es:"cabina"};
+      return {variant:"CRD5 eCapra, 4WD, "+cab[lang]+", "+gear,market};
+    }
+  }
+  if (tractor.brand_name==="IRUM" && name==="TAGRO 102" && rawMarket==="Romania" &&
+      rawVariant==="Stage V / F36 FPT / 12F-12R / 4WD / cab")
+    return {variant:"Stage V, F36 FPT, 12F-12R, 4WD, cab",market};
+  if (tractor.brand_name==="Iseki" && rawMarket==="Europe" && rawVariant) {
+    const reviewed:Record<string,readonly string[]>={
+      TG6407:["TG6 Stage V / Dual clutch / cab / GMWJCYE4","TG6 Stage V / Dual clutch / rear ROPS / GMWJRE4"],
+      TG6507:["TG6 Stage V / Dual clutch / cab / GMWJCYE4","TG6 Stage V / HST / cab / HMWJCYE4"],
+      TG6557:["TG6 Stage V / Power shuttle / cab / MWJCYE4"],
+      TG6687:["TG6 Stage V / HST / cab / HMWJCYE4","TG6 Stage V / Power shuttle / cab / MWJCYE4",
+        "TG6 Stage V / Power shuttle / ROPS / WJRE4"]
+    };
+    if (reviewed[name]?.includes(rawVariant)) return {variant:rawVariant.replaceAll(" / ",", "),market};
+  }
   return {variant,market};
 }
 
@@ -403,8 +440,21 @@ export function modelSeoMetadata(tractor: TractorRecord, lang: Locale) {
   const reviewedIdentity=reviewedRemainingTitleIdentity(tractor,rawVariant,rawMarket,
     compactVariant,marketLabel,lang);
   const remainingTitle=buildTitle(reviewedIdentity.variant,reviewedIdentity.market);
-  const title=previouslyReviewedTitle.length>60 && remainingTitle.length<previouslyReviewedTitle.length
+  const shorterTitle=previouslyReviewedTitle.length>60 && remainingTitle.length<previouslyReviewedTitle.length
     ? remainingTitle : previouslyReviewedTitle;
+  // The prior 48-character variant filter suppressed the two genuine T97
+  // equipment choices. Remove only the verified bibliography wording.
+  const t97=tractor.brand_name==="Iseki" && tractor.model_name==="T97 Series" &&
+    rawVariant==="T97 Cabin / T97 ROPS (manufacturer specification)" &&
+    rawMarket==="International (ISEKI global catalogue)";
+  const txgs=tractor.brand_name==="Iseki" && tractor.model_name==="TXGS24" &&
+    rawVariant==="UK official TXGS24 brochure / 4WD hydrostatic / ROPS" &&
+    rawMarket==="United Kingdom";
+  const restoredIsekiVariant=tractor.brand_name==="Iseki" && rawMarket==="Europe" &&
+    reviewedIdentity.variant!==variantLabel && Boolean(reviewedIdentity.variant) &&
+    reviewedIdentity.variant!.length<=48 && Boolean(variantLabel && variantLabel.length>48);
+  const title=t97 ? buildTitle("Cabin / ROPS",SHORT_INTERNATIONAL_TITLE[lang])
+    : txgs ? buildTitle("4WD hydrostatic / ROPS") : restoredIsekiVariant ? remainingTitle : shorterTitle;
 
   const copy = MODEL_COPY[lang];
   const sourceCount = new Set(tractor.specifications.map(spec =>
