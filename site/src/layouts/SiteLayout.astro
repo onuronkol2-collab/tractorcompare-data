@@ -32,7 +32,7 @@ const { lang, title, description, structuredData = null, ogImage = null, ogType 
 const structuredJson = structuredData ? JSON.stringify(structuredData).replace(/</g, "\\u003c") : null;
 // Cloudflare Workers Builds provides this public commit identity at build time.
 // It is not a deployment signature; the live workflow compares it with the push SHA.
-const releaseSha = verifiedReleaseSha(process.env.WORKERS_CI_COMMIT_SHA);
+const releaseSha = verifiedReleaseSha(import.meta.env.WORKERS_CI_COMMIT_SHA);
 const indexingEnabled =
   import.meta.env.PUBLIC_INDEXING_ENABLED === "true" && Boolean(Astro.site) && indexable;
 const homePath = localizedPath(lang, "/");
