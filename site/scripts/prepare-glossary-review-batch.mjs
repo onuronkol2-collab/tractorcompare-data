@@ -57,17 +57,18 @@ export function validateReturn(packet,returned){
  return {languages:packet.jobs.length,entries:packet.jobs.reduce((n,j)=>n+j.entries.length,0),completedFields,structuralIntake:"passed",semanticNumberUnitSafetyReview:"pending",independentReview:"pending",publicationApproved:false};
 }
 function main(){
- execFileSync(process.execPath,[verifier],{stdio:["ignore","ignore","inherit"]});
+ const verification=JSON.parse(execFileSync(process.execPath,[verifier],{encoding:"utf8"}));
  const doc=JSON.parse(read("../docs/translation-review/glossary-remaining-bulk-draft.json"));
+ const pending=doc.languages.filter(locale=>!verification.completeGlossaryDraftLocales.includes(locale));
  const args=process.argv.slice(2);
  const mode=args.shift()||"export";
  if(mode==="export"){
-  const selected=args.length?args:doc.languages;
+  const selected=args.length?args:pending;
   console.log(JSON.stringify(makePacket(doc,selected),null,2));return;
  }
  if(mode==="check-return"){
   const input=args.shift();assert.ok(input,"Provide a returned JSON path");
-  const selected=args.length?args:doc.languages;
+  const selected=args.length?args:pending;
   const raw=readFileSync(input);assert.ok(raw.length<=4*1024*1024,"Return exceeds 4 MiB");
   console.log(JSON.stringify(validateReturn(makePacket(doc,selected),JSON.parse(raw.toString("utf8")))));return;
  }
