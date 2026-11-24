@@ -1,4 +1,5 @@
 import {forumBlocks} from "./forum-format.mjs";
+import {forumSpreadsheetMarkdown} from "./forum-discovery.mjs";
 import type {ForumEditorCopy} from "./forum-editor-i18n.ts";
 
 type Config={url:string;key:string};
@@ -136,6 +137,23 @@ export function initForumEditor(
  }
  // Native form validation must always be able to focus the original field.
  textarea.addEventListener("invalid",()=>setPreview(false));
+ // The composer's native paste-limit guard runs first. Keep the source intact
+ // when table markup would exceed the limit, rather than truncate any cells.
+ textarea.addEventListener("paste",event=>{
+  if(event.defaultPrevented||!event.clipboardData)return;
+  const original=event.clipboardData.getData("text/plain");
+  const table=forumSpreadsheetMarkdown(original);
+  if(table===null)return;
+  const start=textarea.selectionStart,end=textarea.selectionEnd;
+  const prefix=start>0&&textarea.value[start-1]!=="\n"?"\n\n":"\n";
+  const suffix="\n\n";
+  const replacement=prefix+table+suffix;
+  if(textarea.value.length-(end-start)+replacement.length>textarea.maxLength)return;
+  event.preventDefault();
+  textarea.setRangeText(replacement,start,end,"end");
+  textarea.dispatchEvent(new Event("input",{bubbles:true}));
+ });
+
  function insertAround(mode:string){
   setPreview(false);
   const start=textarea.selectionStart,end=textarea.selectionEnd;
