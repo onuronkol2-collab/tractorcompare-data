@@ -14,7 +14,7 @@ const tractor=(brand_name,model_name)=>({
   engine:null,transmission:null,drivetrain:null,weight_kg:null,specifications:[]
 });
 test("only exact matching tractor model identity receives a verified photo",()=>{
-  assert.equal(APPROVED_TRACTOR_PHOTOS.length,103);
+  assert.equal(APPROVED_TRACTOR_PHOTOS.length,104);
   assert.equal(tractorPhotos(tractor("Belarus","82.1")).length,4);
   assert.equal(tractorPhotos(tractor("Belarus","80.1")).length,1);
   assert.equal(tractorPhotos(tractor("Belarus","132N")).length,1);
@@ -68,6 +68,8 @@ test("Forterra 140 HSX photo is scoped to HSX, never CL or HD", () => {
     record.variant=variant;
     const hsx=tractorPhotos(record).filter(x=>x.fileId==="zetor-forterra-140-346bcbde");
     assert.equal(hsx.length,expectPhoto?1:0,"Licensed HSX photograph must not leak to "+variant);
+    const hd=tractorPhotos(record).filter(photo=>photo.fileId==="zetor-forterra-140-hd-maindistorsion");
+    assert.equal(hd.length,variant==="HD"?1:0,"HD photograph must match the HD record only");
     if (hsx.length) assert.equal(hsx[0].tractorId,id);
   }
   assert.equal(tractorPhotos(tractor("Zetor","FORTERRA 140")).length,0,
@@ -613,9 +615,9 @@ test("McCormick X5.085 and TYM T6115/T2025P have exact licensed files, source pr
 });
 
 test("historic photo batch is staged with rights and does not create records",()=>{
-  assert.equal(HISTORICAL_LICENSED_PHOTOS.length,88);
+  assert.equal(HISTORICAL_LICENSED_PHOTOS.length,89);
   const all=new Set(HISTORICAL_LICENSED_PHOTOS.map(x=>x.fileId));
-  assert.equal(all.size,88);
+  assert.equal(all.size,89);
   assert.ok(HISTORICAL_LICENSED_PHOTOS.every(x=>x.configurationExact===false));
   assert.ok(!HISTORICAL_LICENSED_PHOTOS.some(x=>["Product","Vehicle"].includes(x.model)));
 });
@@ -667,8 +669,8 @@ test("source-backed copyright notices cover approved Google warning images in al
   "tym-t4058-6225c-marcelx42-2023",
   "tym-t5075-t78-marcelx42-2023"
  ]);
- const expected=new Set([...originalThree,...reviewedTwenty,...exactTym,"belarus-132n-picture30-2011","mccormick-x7-621-barzkowice-zwiadowca21-2026","landini-5-110-roboshift-marcelx42-2023"]);
- assert.equal(expected.size,29);
+ const expected=new Set([...originalThree,...reviewedTwenty,...exactTym,"zetor-forterra-140-hd-maindistorsion","belarus-132n-picture30-2011","mccormick-x7-621-barzkowice-zwiadowca21-2026","landini-5-110-roboshift-marcelx42-2023"]);
+ assert.equal(expected.size,30);
  const actual=APPROVED_TRACTOR_PHOTOS.filter(p=>p.copyrightOwner);
  assert.deepEqual(new Set(actual.map(p=>p.fileId)),expected,
    "Unexpected ownership claims must undergo separate review before publication");
