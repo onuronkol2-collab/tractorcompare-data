@@ -40,6 +40,15 @@ test("all 10 homepages share one task-first design and retain SEO descriptions",
   assert.match(home,/getPublicCatalog\(\)/);
   assert.doesNotMatch(home,/Math\.random|fake|hardcodedCount|aggregateRating|offers:/i);
 });
+test("homepage links only to source-backed, published EN/TR brand guides",()=>{
+  assert.match(home,/import \{listedBrandCollections\} from "\.\.\/lib\/brand-discovery-pilot\.mjs"/);
+  assert.match(home,/const publishedBrandGuides=\(lang==="en"\|\|lang==="tr"\)/);
+  assert.match(home,/listedBrandCollections\(catalogue\.tractors\)/);
+  assert.match(home,/<nav class="home-brand-row home-brand-guides"/);
+  assert.match(home,/href=\{localizedPath\(lang,"\/brands\/"\+brand\.slug\+"\/"\)\}/);
+  assert.match(home,/publishedBrandGuides\.length > 0/);
+});
+
 test("homepage model/brand searches are actually used to filter catalogue",()=>{
   assert.match(home,/encodeURIComponent\(brand\)/);
   assert.match(catalog,/new URLSearchParams\(window.location.search\).get\("q"\)/);
