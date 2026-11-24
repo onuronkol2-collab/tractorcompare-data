@@ -57,16 +57,19 @@ jobs:
                 -o /tmp/tractorvs-compare-live.html https://tractorvs.com/tr/compare/ &&
               grep -Fq 'Şanzıman seçenekleri' /tmp/tractorvs-compare-live.html &&
               grep -Fq 'data-language-sync="selection"' /tmp/tractorvs-compare-live.html &&
+              # Both actual static pages must be from this push, not an old release.
+              grep -Fq "name=\"tractorvs-release-sha\" content=\"${GITHUB_SHA}\"" /tmp/tractorvs-compare-live.html &&
               curl --max-time 20 --silent --show-error --fail --location \
                 -o /tmp/tractorvs-catalog-live.html https://tractorvs.com/tr/tractors/ &&
-              grep -Fq 'data-research-facets="published"' /tmp/tractorvs-catalog-live.html; then
+              grep -Fq 'data-research-facets="published"' /tmp/tractorvs-catalog-live.html &&
+              grep -Fq "name=\"tractorvs-release-sha\" content=\"${GITHUB_SHA}\"" /tmp/tractorvs-catalog-live.html; then
               matched=1
               break
             fi
             sleep 20
           done
           if [ "$matched" != 1 ]; then
-            echo "::error::Cloudflare production has not exposed the required comparison and research-catalogue markers after the bounded verification window. No live test result can be claimed."
+            echo "::error::Cloudflare production has not exposed this exact push SHA and the required comparison/catalogue markers after the bounded window. Do not claim that the new release passed live QA."
             exit 1
           fi
       - name: Install locked project and pinned browser QA tools
