@@ -46,7 +46,27 @@ export function validateLiveLighthouseResult(lhr,route){
   if(lhr?.runtimeError)throw Error("Lighthouse runtime failure for "+route+": "+lhr.runtimeError.code);
   const expected=ROUTE_URLS[route];
   const final=lhr?.finalDisplayedUrl||lhr?.finalUrl;
-  if(final!==expected)throw Error("Unexpected Lighthouse final URL for "+route+": "+final+" (expected "+expected+")");
+  // Lighthouse 12 distinguishes the document loaded over HTTP from the URL
+  // displayed after client-side history.replaceState. Compare initializes two
+  // published model IDs in that history entry; it is not an HTTP redirect.
+  // Never ignore arbitrary query strings, wrong paths or origins.
+  const unexpected=()=>Error("Unexpected Lighthouse final URL for "+route+": "+final+" (expected "+expected+")");
+  if(lhr.requestedUrl && lhr.requestedUrl!==expected)throw unexpected();
+  if(lhr.mainDocumentUrl && lhr.mainDocumentUrl!==expected)throw unexpected();
+  if(final!==expected){
+    let actual;
+    try{actual=new URL(final);}catch{throw unexpected();}
+    const uuid=/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+    const keys=[...actual.searchParams.keys()];
+    const left=actual.searchParams.get("left"),right=actual.searchParams.get("right");
+    const validCompareState=route==="compare" && actual.origin===origin &&
+      actual.pathname===ROUTE_PATHS.compare && !actual.username && !actual.password && !actual.hash &&
+      keys.length===2 && actual.searchParams.getAll("left").length===1 &&
+      actual.searchParams.getAll("right").length===1 &&
+      uuid.test(left||"") && uuid.test(right||"") && left.toLowerCase()!==right.toLowerCase() &&
+      lhr.mainDocumentUrl===expected;
+    if(!validCompareState)throw unexpected();
+  }
   for(const key of CATEGORIES){
     const score=lhr?.categories?.[key]?.score;
     if(typeof score!=="number"||!Number.isFinite(score)||score<0||score>1)
