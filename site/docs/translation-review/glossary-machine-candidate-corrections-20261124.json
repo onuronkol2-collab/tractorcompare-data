@@ -94,7 +94,7 @@
       "field": "definition",
       "source": "Engine standards describe declared power conditions; OECD codes define tractor testing procedures.",
       "original": "发动机标准描述了声明的功率条件；经合组织规范定义了拖拉机测试程序。",
-      "revised": "发动机标准规定额定或声明功率的测量条件；经济合作与发展组织（OECD）的规范规定拖拉机试验程序。",
+      "revised": "发动机标准规定声明功率的测量条件；经济合作与发展组织（OECD）的规范规定拖拉机试验程序。",
       "reason": "source fidelity and protected notation"
     },
     {
@@ -526,7 +526,7 @@
       "field": "example",
       "source": "A tractor with DEF has a separate tank; it must not go into the diesel tank.",
       "original": "Um trator com DEF (fluido de escapamento diesel) possui um tanque separado; o DEF não deve ser misturado com o tanque de diesel comum.",
-      "revised": "Um trator que utiliza DEF (fluido de tratamento dos gases de escape, como o ARLA 32) possui um reservatório separado; o DEF não deve ser colocado no tanque de diesel.",
+      "revised": "Um trator que utiliza DEF (fluido de tratamento dos gases de escape) possui um reservatório separado; o DEF não deve ser colocado no tanque de diesel.",
       "reason": "regional terminology or semantic correction"
     },
     {
