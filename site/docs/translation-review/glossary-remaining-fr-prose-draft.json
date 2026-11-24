@@ -1,0 +1,585 @@
+{
+  "schema": 1,
+  "state": "draft-needs-independent-editorial-review",
+  "notForPublication": true,
+  "reviewed": false,
+  "sourceBlobSha": "a5379d60c7c1f53dfcfb528c9ee7743a450faaa5",
+  "locale": "fr",
+  "scope": "Complete French drafts of the remaining 82 glossary entries. Source-aligned AI drafting; technical terminology cross-check and independent editorial review remain separate.",
+  "entries": [
+    {
+      "id": "torque-rise",
+      "name": "Réserve de couple / hausse de couple",
+      "definition": "Pourcentage indiquant de combien le couple peut augmenter lorsque le régime moteur diminue sous charge.",
+      "example": "Elle peut influencer la réaction du moteur lorsque la charrue rencontre un sol plus résistant.",
+      "caution": "Les constructeurs peuvent utiliser des régimes de référence différents pour le calcul."
+    },
+    {
+      "id": "displacement",
+      "name": "Cylindrée (cm³ / L)",
+      "definition": "Volume total balayé par les pistons ; 3 000 cm³ correspondent à environ 3,0 litres.",
+      "example": "Deux moteurs de même cylindrée peuvent développer des puissances différentes.",
+      "caution": "Une cylindrée supérieure ne garantit ni de meilleures performances ni une consommation plus faible."
+    },
+    {
+      "id": "cylinders",
+      "name": "Nombre de cylindres",
+      "definition": "Nombre de cylindres à piston, qui influe sur les dimensions, la régularité de fonctionnement et le caractère du moteur.",
+      "example": "Un moteur à trois cylindres et un moteur à quatre cylindres peuvent différer par leur comportement et leur masse.",
+      "caution": "Le nombre de cylindres ne suffit pas à établir la fiabilité ou la puissance."
+    },
+    {
+      "id": "bore-stroke",
+      "name": "Alésage et course",
+      "definition": "L'alésage est le diamètre du cylindre ; la course est le déplacement du piston entre ses points morts.",
+      "example": "Une indication de 110 × 116 mm désigne ces deux dimensions.",
+      "caution": "Si la cylindrée calculée ne correspond pas au volume annoncé, signalez l'incohérence."
+    },
+    {
+      "id": "rpm",
+      "name": "Régime moteur (tr/min)",
+      "definition": "Nombre de tours du vilebrequin par minute ; le régime moteur est distinct de celui de la prise de force (PDF).",
+      "example": "Une prise de force réglée sur 540 tr/min peut nécessiter un régime moteur différent.",
+      "caution": "Vérifiez les régimes associés à la puissance maximale et au couple maximal."
+    },
+    {
+      "id": "turbo",
+      "name": "Turbocompresseur et échangeur d’air",
+      "definition": "Le turbocompresseur exploite l'énergie des gaz d'échappement pour comprimer l'air admis ; l'échangeur refroidit cet air comprimé.",
+      "example": "Un moteur turbocompressé de petite cylindrée peut fournir une puissance importante.",
+      "caution": "Le turbo seul ne garantit ni une faible consommation ni une longue durée de vie."
+    },
+    {
+      "id": "fuel-injection",
+      "name": "Rampe commune / injection de carburant",
+      "definition": "Système qui dose et injecte le carburant à une pression et à un instant contrôlés.",
+      "example": "L'injection électronique contribue à maîtriser la combustion sous différentes charges.",
+      "caution": "La pression d'injection ne constitue pas à elle seule un indicateur de puissance ou de fiabilité."
+    },
+    {
+      "id": "emission",
+      "name": "Norme d’émissions (Stage / Tier)",
+      "definition": "Limites d'émissions à l'échappement applicables à un marché et à une période réglementaire donnés.",
+      "example": "Stage V et l'ancienne norme Stage IIIA correspondent à des régimes réglementaires différents.",
+      "caution": "Un même nom de modèle peut désigner des équipements antipollution différents selon le marché."
+    },
+    {
+      "id": "dpf-scr",
+      "name": "DPF, SCR et AdBlue/DEF",
+      "definition": "Le filtre DPF retient les particules de suie ; le système SCR utilise un réactif dosé pour réduire les oxydes d'azote.",
+      "example": "Un tracteur utilisant du DEF dispose d'un réservoir distinct ; ce liquide ne doit pas être versé dans le réservoir de gazole.",
+      "caution": "Toutes les classes d'émissions n'imposent pas les mêmes équipements ; consultez le manuel du modèle."
+    },
+    {
+      "id": "manual-gearbox",
+      "name": "Boîte mécanique",
+      "definition": "Les rapports sont sélectionnés mécaniquement ; le fonctionnement de l'embrayage dépend de la conception.",
+      "example": "12F/12R signifie 12 rapports avant et 12 rapports arrière.",
+      "caution": "Le nombre de rapports ne suffit pas à établir le confort ou la durabilité."
+    },
+    {
+      "id": "powershift",
+      "name": "Transmission Powershift",
+      "definition": "Boîte permettant de changer certains rapports sous charge sans actionner la pédale d'embrayage.",
+      "example": "Elle peut faciliter les ajustements de vitesse pendant le travail.",
+      "caution": "Une transmission Powershift partielle ne couvre pas nécessairement tous les rapports."
+    },
+    {
+      "id": "cvt",
+      "name": "Transmission à variation continue (CVT)",
+      "definition": "Fait varier en continu le rapport de transmission dans une plage de fonctionnement.",
+      "example": "Elle peut maintenir la vitesse de travail choisie tout en adaptant le régime moteur.",
+      "caution": "Toutes les transmissions CVT n'ont pas le même principe de fonctionnement, le même rendement ni les mêmes besoins d'entretien."
+    },
+    {
+      "id": "hst",
+      "name": "Transmission hydrostatique (HST)",
+      "definition": "Transmission utilisant une pompe et un moteur hydrauliques pour faire varier progressivement la vitesse d'avancement.",
+      "example": "Elle est utile lors de manœuvres répétées avec un chargeur.",
+      "caution": "La transmission hydrostatique ne doit pas être confondue avec l'hydraulique auxiliaire des outils."
+    },
+    {
+      "id": "shuttle",
+      "name": "Inverseur de marche",
+      "definition": "Commande ou mécanisme permettant de sélectionner la marche avant ou arrière.",
+      "example": "Il facilite les changements fréquents de sens pendant la manutention des balles.",
+      "caution": "Les inverseurs mécaniques, synchronisés et électrohydrauliques diffèrent."
+    },
+    {
+      "id": "clutch",
+      "name": "Embrayage et double embrayage",
+      "definition": "Accouple ou désaccouple la transmission ; les systèmes à deux étages peuvent dissocier la prise de force de l'avancement.",
+      "example": "Sur certains tracteurs, le second étage de la pédale commande la prise de force.",
+      "caution": "Un double embrayage ne désigne pas nécessairement une boîte DCT de type automobile."
+    },
+    {
+      "id": "traction",
+      "name": "Deux et quatre roues motrices (2WD/4WD)",
+      "definition": "Indique si deux ou quatre roues peuvent transmettre un effort moteur au sol.",
+      "example": "Le 4WD peut limiter le patinage sur sol humide ; le 2WD peut suffire sur terrain ferme.",
+      "caution": "Les pneus, la masse et le sol comptent ; le 4WD n'est pas toujours supérieur."
+    },
+    {
+      "id": "diff-lock",
+      "name": "Blocage du différentiel",
+      "definition": "Limite l'écart de vitesse entre les roues pour améliorer la motricité sur sol glissant.",
+      "example": "Il peut préserver l'adhérence lorsqu'une roue patine sur sol humide.",
+      "caution": "Respectez les consignes pour les virages et les surfaces dures ; ne l'utilisez pas sans discernement."
+    },
+    {
+      "id": "final-drive",
+      "name": "Réduction finale, essieu et différentiel 4x4",
+      "definition": "La réduction finale et les éléments du pont transmettent le couple de la chaîne cinématique aux roues.",
+      "example": "Les montages portiques et planétaires peuvent influer sur la garde au sol et le rapport de réduction.",
+      "caution": "Le type de pont seul ne suffit pas à établir la durabilité ou la motricité."
+    },
+    {
+      "id": "ground-pto",
+      "name": "Prise de force proportionnelle à l’avancement",
+      "definition": "Mode de prise de force dont la rotation est liée au déplacement du tracteur.",
+      "example": "Certains outils nécessitent une rotation proportionnelle à la vitesse d'avancement.",
+      "caution": "Ce mode n'est pas interchangeable avec un régime standard de 540 tr/min."
+    },
+    {
+      "id": "front-pto",
+      "name": "Prise de force avant",
+      "definition": "Sortie de prise de force située à l'avant, destinée aux outils frontaux.",
+      "example": "Elle peut permettre de travailler simultanément avec des outils avant et arrière.",
+      "caution": "Souvent proposée en option ; le relevage avant et les puissances admissibles comptent aussi."
+    },
+    {
+      "id": "three-point",
+      "name": "Attelage trois points",
+      "definition": "Système d'attelage d'un outil comportant deux bras inférieurs et un troisième point supérieur.",
+      "example": "Il positionne les charrues, les semoirs et les fraises rotatives par rapport au tracteur.",
+      "caution": "La géométrie, la catégorie d'attelage et le centre de gravité de l'outil comptent autant que la capacité de relevage."
+    },
+    {
+      "id": "ehr",
+      "name": "EHR / contrôle électronique du relevage",
+      "definition": "Commande électronique de la position du relevage ou de sa réaction à l'effort.",
+      "example": "Elle peut aider à retrouver une hauteur d'outil reproductible en bout de champ.",
+      "caution": "La conception des capteurs et les fonctions de commande varient selon les modèles."
+    },
+    {
+      "id": "draft-control",
+      "name": "Contrôle d’effort et de position",
+      "definition": "Le contrôle d'effort réagit à la résistance de l'outil ; le contrôle de position vise une position déterminée du relevage.",
+      "example": "Le contrôle d'effort peut être utile au labour et le contrôle de position au nivellement.",
+      "caution": "Un réglage adapté au sol et à l'outil reste nécessaire."
+    },
+    {
+      "id": "front-linkage",
+      "name": "Relevage avant",
+      "definition": "Dispositif d'attelage et de levage d'outils à l'avant du tracteur.",
+      "example": "Il peut recevoir une faucheuse frontale ou un autre outil à la place d'une simple masse.",
+      "caution": "Vérifiez séparément la prise de force avant, la capacité de relevage et les limites de charge du pont avant."
+    },
+    {
+      "id": "hydraulic-types",
+      "name": "Hydraulique à centre ouvert et fermé",
+      "definition": "Architectures de circuit décrivant la gestion du débit par la pompe et les distributeurs lorsqu'aucune fonction n'est sollicitée.",
+      "example": "Les systèmes à cylindrée variable peuvent adapter le débit fourni à la demande.",
+      "caution": "Les seules mentions centre ouvert ou centre fermé ne déterminent pas les performances de l'outil."
+    },
+    {
+      "id": "wheelbase",
+      "name": "Empattement",
+      "definition": "Distance longitudinale entre les centres des essieux avant et arrière.",
+      "example": "Un empattement plus court peut faciliter les manœuvres en espace réduit.",
+      "caution": "Le rayon de braquage ne dépend pas uniquement de l'empattement."
+    },
+    {
+      "id": "track-width",
+      "name": "Voie",
+      "definition": "Distance entre les plans médians des roues gauche et droite d'un même essieu.",
+      "example": "Une voie réglable est importante pour les cultures en rangs.",
+      "caution": "La largeur hors tout est différente de la voie mesurée entre les centres des roues."
+    },
+    {
+      "id": "ground-clearance",
+      "name": "Garde au sol",
+      "definition": "Distance entre le sol et le point inférieur spécifié sous le tracteur.",
+      "example": "Elle est importante pour passer au-dessus des cultures et des obstacles.",
+      "caution": "La taille des pneus et le point de mesure modifient le résultat."
+    },
+    {
+      "id": "dimensions",
+      "name": "Longueur, largeur et hauteur hors tout",
+      "definition": "Longueur, largeur et hauteur extérieures du tracteur dans une configuration donnée.",
+      "example": "Elles déterminent si le tracteur peut franchir une porte de serre ou circuler dans un rang de vigne.",
+      "caution": "Elles peuvent varier avec la cabine, la structure ROPS, le lestage et les pneus."
+    },
+    {
+      "id": "operating-weight",
+      "name": "Masse à vide et masse en ordre de marche",
+      "definition": "Différentes définitions de masse selon les fluides, le conducteur et les équipements montés.",
+      "example": "Une version avec cabine peut peser davantage qu'un modèle à poste ouvert.",
+      "caution": "Les masses à l'expédition, à sec et en ordre de marche ne doivent pas être assimilées."
+    },
+    {
+      "id": "ballast",
+      "name": "Lestage / masses avant",
+      "definition": "Masse supplémentaire destinée à améliorer la motricité et l'équilibre.",
+      "example": "Un outil arrière lourd peut nécessiter un lestage avant approprié.",
+      "caution": "Un lestage excessif augmente le tassement du sol et les charges sur les essieux."
+    },
+    {
+      "id": "tyre-size",
+      "name": "Dimensions des pneus",
+      "definition": "Définit la section, la construction et la dimension de jante du pneu.",
+      "example": "13.6-28 et 14.9-28 sont deux dimensions nominales de pneus différentes.",
+      "caution": "Sur un tracteur 4WD, le rapport entre les circonférences de roulement avant et arrière compte ; toute substitution doit être approuvée."
+    },
+    {
+      "id": "tyre-pressure",
+      "name": "Pression de gonflage et pression au sol",
+      "definition": "La pression de gonflage influe sur le comportement du pneu et, avec la charge, sur la contrainte de contact au sol.",
+      "example": "Une pression adaptée à la charge influence la motricité et l'empreinte au sol.",
+      "caution": "Ne recommandez pas une pression sans consulter les tableaux de charge et de vitesse du fabricant de pneus."
+    },
+    {
+      "id": "turning-radius",
+      "name": "Rayon de braquage",
+      "definition": "Rayon géométrique du virage lorsque la direction est braquée au maximum.",
+      "example": "Il renseigne sur la facilité de demi-tour dans une cour étroite ou en bordure de champ.",
+      "caution": "Les pneus, le 4WD, l'assistance au braquage par freinage et la méthode d'essai influencent cette valeur."
+    },
+    {
+      "id": "drawbar",
+      "name": "Barre de traction et puissance à la barre",
+      "definition": "La barre de traction relie une charge remorquée ; la puissance à la barre est la puissance utile transmise à l'effort de traction.",
+      "example": "Une remorque attelée doit toujours respecter les exigences de freinage et de masse admissible.",
+      "caution": "La puissance moteur, la puissance à la prise de force et la puissance à la barre sont des mesures distinctes."
+    },
+    {
+      "id": "axle-load",
+      "name": "Charge admissible par essieu et masse totale",
+      "definition": "Limites fixées par le constructeur pour les charges par essieu et la masse totale de la machine.",
+      "example": "Vérifiez les limites par essieu lorsque vous combinez un chargeur et un lestage.",
+      "caution": "La capacité de relevage ne dispense pas de respecter les limites de masse admissible."
+    },
+    {
+      "id": "rops",
+      "name": "ROPS / protection contre le retournement",
+      "definition": "Structure de protection soumise à des essais, destinée à préserver un espace de survie pour le conducteur en cas de retournement.",
+      "example": "Sur les tracteurs à poste ouvert, la structure ROPS et la ceinture de sécurité fonctionnent ensemble.",
+      "caution": "La structure ROPS seule ne rend pas la conduite sans ceinture sûre ; respectez les consignes relatives aux structures rabattables."
+    },
+    {
+      "id": "fops",
+      "name": "FOPS / protection contre les chutes d’objets",
+      "definition": "Structure conçue pour protéger contre des risques définis de chute d'objets.",
+      "example": "Les travaux forestiers et de chargement peuvent nécessiter des protections distinctes.",
+      "caution": "Les structures ROPS et FOPS ne relèvent pas de la même certification."
+    },
+    {
+      "id": "brakes",
+      "name": "Freins à disques secs et immergés",
+      "definition": "Types de freins dont les éléments de friction fonctionnent à sec ou dans l'huile.",
+      "example": "Les disques immergés peuvent gérer différemment la chaleur et l'usure.",
+      "caution": "La distance d'arrêt dépend aussi des pneus, du chargement, de la surface et de l'entretien."
+    },
+    {
+      "id": "seatbelt",
+      "name": "Ceinture de sécurité et siège opérateur",
+      "definition": "Équipements destinés à retenir le conducteur et à réduire les vibrations transmises.",
+      "example": "Le port correct de la ceinture est essentiel pour bénéficier de la protection contre le retournement.",
+      "caution": "Respectez le manuel de la machine et les exigences locales de sécurité."
+    },
+    {
+      "id": "steering",
+      "name": "Direction hydrostatique / assistée",
+      "definition": "Systèmes de direction assistés par énergie hydraulique.",
+      "example": "Ils peuvent faciliter les manœuvres de chargeur à basse vitesse.",
+      "caution": "La direction assistée est distincte d'une transmission hydrostatique HST."
+    },
+    {
+      "id": "cab-air",
+      "name": "Filtration de cabine et climatisation",
+      "definition": "Équipements de confort du conducteur et, lorsque cela est spécifié, de filtration de l'air.",
+      "example": "L'entretien des filtres est important lors des travaux poussiéreux.",
+      "caution": "Un filtre de cabine ordinaire ne constitue pas une protection certifiée contre les pesticides."
+    },
+    {
+      "id": "noise",
+      "name": "Bruit et vibrations",
+      "definition": "Niveaux de bruit et de vibrations auxquels le conducteur peut être exposé.",
+      "example": "La cabine, le siège et les protections auditives peuvent compter lors de longues journées de travail.",
+      "caution": "Ne classez pas les machines à partir de valeurs en dB(A) sans connaître le point de mesure et la norme d'essai."
+    },
+    {
+      "id": "fuel-tank",
+      "name": "Capacité du réservoir de carburant",
+      "definition": "Quantité de carburant que le réservoir peut contenir ; elle ne mesure ni la consommation ni l'autonomie.",
+      "example": "Un réservoir de 80 litres ne garantit pas un nombre fixe d'heures de travail.",
+      "caution": "La consommation varie selon la charge, la vitesse et les conditions d'utilisation."
+    },
+    {
+      "id": "service-interval",
+      "name": "Intervalle d’entretien",
+      "definition": "Intervalle d'entretien prescrit en heures de fonctionnement ou en durée calendaire.",
+      "example": "L'huile moteur et le fluide hydraulique peuvent avoir des intervalles différents.",
+      "caution": "Une utilisation sévère en milieu poussiéreux peut exiger des intervalles plus courts."
+    },
+    {
+      "id": "filters",
+      "name": "Filtres à air, à carburant et à huile",
+      "definition": "Pièces d'entretien qui limitent l'entrée des contaminants dans le moteur ou les circuits de fluides.",
+      "example": "Un filtre à air obstrué peut affecter les performances du moteur.",
+      "caution": "Utilisez les filtres et les intervalles d'entretien approuvés pour le modèle."
+    },
+    {
+      "id": "test-standards",
+      "name": "ECE R120, ISO 14396 et essais OCDE",
+      "definition": "Les normes moteur définissent les conditions de puissance déclarée ; les codes de l'OCDE (OECD) définissent les procédures d'essai des tracteurs.",
+      "example": "Ne comparez pas une déclaration de puissance moteur à un essai de prise de force du Nebraska comme s'il s'agissait de la même mesure.",
+      "caution": "Indiquez toujours le point de mesure, l'année, la procédure et la norme de mesure."
+    },
+    {
+      "id": "source-quality",
+      "name": "Brochure constructeur et essai indépendant",
+      "definition": "Une brochure rapporte une déclaration du constructeur ; un essai indépendant présente des mesures réalisées dans des conditions précisées.",
+      "example": "Une puissance estimée à la prise de force dans un catalogue n'équivaut pas à un essai de prise de force en laboratoire.",
+      "caution": "Ne présentez pas comme vérifiées ou testées indépendamment des valeurs non documentées."
+    },
+    {
+      "id": "options",
+      "name": "Équipement de série, options et variantes de marché",
+      "definition": "Distingue les équipements de série, les packs en option et les configurations régionales.",
+      "example": "Une version américaine HST peut différer d'une version européenne à boîte mécanique portant le même nom.",
+      "caution": "Ne laissez pas entendre que toutes les options mentionnées sont montées sur un seul tracteur."
+    },
+    {
+      "id": "engine-make",
+      "name": "Constructeur du moteur",
+      "definition": "Entreprise qui fabrique le moteur ou le commercialise sous sa marque ; elle peut être différente du constructeur du tracteur.",
+      "example": "Une série de tracteurs peut utiliser un motoriste pour une génération et un autre par la suite.",
+      "caution": "La marque seule n'identifie pas les pièces ; confirmez le code du moteur."
+    },
+    {
+      "id": "engine-model",
+      "name": "Modèle ou code moteur",
+      "definition": "Identifiant du constructeur correspondant à une conception ou à une version de moteur précise.",
+      "example": "Pour l'entretien, le code moteur peut distinguer les générations d'un tracteur portant le même nom.",
+      "caution": "Le code moteur peut changer selon la norme d'émissions ou le marché visé."
+    },
+    {
+      "id": "engine-valves",
+      "name": "Nombre de soupapes du moteur",
+      "definition": "Nombre de soupapes régulant l'admission et l'échappement dans les cylindres.",
+      "example": "Un moteur à quatre cylindres et 16 soupapes peut avoir quatre soupapes par cylindre.",
+      "caution": "Le nombre de soupapes ne suffit pas à établir un couple supérieur ou une durée de vie plus longue."
+    },
+    {
+      "id": "cooling",
+      "name": "Système de refroidissement et radiateur",
+      "definition": "Le radiateur dissipe la chaleur du liquide de refroidissement ; une pompe le fait circuler dans le moteur.",
+      "example": "Si la température augmente sous charge, la propreté du radiateur et le fonctionnement du ventilateur sont importants.",
+      "caution": "N'ouvrez jamais un circuit de refroidissement chaud sous pression ; suivez le manuel."
+    },
+    {
+      "id": "air-cleaner",
+      "name": "Filtre à air moteur",
+      "definition": "Filtre l'air d'admission chargé de poussière pour limiter la contamination abrasive des pistons et cylindres.",
+      "example": "Pendant des récoltes poussiéreuses, le contrôle du filtre peut devoir être plus fréquent.",
+      "caution": "Les filtres à élément sec et les filtres à bain d'huile nécessitent des procédures d'entretien différentes."
+    },
+    {
+      "id": "engine-fuel",
+      "name": "Gazole et type de carburant",
+      "definition": "Carburant pour lequel le moteur est conçu ; sa compatibilité avec le système d'injection est importante.",
+      "example": "Le gazole et le DEF vont dans des réservoirs distincts ; le DEF n'est pas un additif au carburant.",
+      "caution": "Vérifiez les mélanges de biodiesel autorisés par le constructeur pour la version exacte."
+    },
+    {
+      "id": "piston",
+      "name": "Piston et segments",
+      "definition": "Le piston transforme la pression de combustion en mouvement ; les segments contribuent à l'étanchéité du cylindre et au contrôle de l'huile.",
+      "example": "Des segments usés peuvent augmenter la consommation d'huile ou provoquer une perte de compression.",
+      "caution": "La couleur de la fumée seule ne permet pas de poser un diagnostic ; des essais appropriés sont nécessaires."
+    },
+    {
+      "id": "crankshaft",
+      "name": "Vilebrequin",
+      "definition": "Transforme le mouvement alternatif des pistons en rotation et transmet la puissance du moteur.",
+      "example": "Le régime moteur correspond fondamentalement à la vitesse de rotation du vilebrequin.",
+      "caution": "Le vilebrequin et l'arbre de prise de force sont différents et reliés par la chaîne de transmission."
+    },
+    {
+      "id": "gross-power",
+      "name": "Puissance moteur brute et nette",
+      "definition": "Les puissances moteur brute et nette peuvent différer selon la configuration d'essai et les équipements auxiliaires.",
+      "example": "Une même valeur de 75 kW peut correspondre à des configurations d'essai différentes.",
+      "caution": "Les puissances brute, nominale, à la prise de force et avec surpuissance ne sont pas interchangeables."
+    },
+    {
+      "id": "travel-speed",
+      "name": "Vitesse routière et vitesse minimale de travail",
+      "definition": "Plage de vitesses d'avancement permises par la transmission et les pneus.",
+      "example": "Les rapports rampants peuvent être utiles aux travaux à très faible vitesse.",
+      "caution": "La vitesse routière maximale ne dispense pas de respecter la réglementation et les limites de l'équipement."
+    },
+    {
+      "id": "axle-suspension",
+      "name": "Suspension du pont avant",
+      "definition": "Aide à absorber les mouvements du pont avant, ce qui influe sur le confort et le contact des roues avec le sol.",
+      "example": "Elle peut améliorer le confort en transportant une remorque sur une route irrégulière.",
+      "caution": "La suspension du pont avant et celle de la cabine sont des systèmes distincts."
+    },
+    {
+      "id": "gear-range",
+      "name": "Gamme, super-réducteur et rapport Powershift",
+      "definition": "Gammes de vitesses supplémentaires ou rapports commutables sous charge s'ajoutant aux rapports principaux.",
+      "example": "Une boîte 24F/24R peut combiner douze rapports et deux gammes.",
+      "caution": "Le nombre de rapports seul ne prouve pas que tous sont commutables sous charge."
+    },
+    {
+      "id": "pto-clutch",
+      "name": "Embrayage et engagement de la PDF",
+      "definition": "Dispositif d'embrayage permettant d'accoupler ou de désaccoupler l'entraînement de la prise de force.",
+      "example": "Un engagement électrohydraulique peut rendre le démarrage de la prise de force plus progressif.",
+      "caution": "Ne vous approchez pas d'un outil qui continue à tourner par inertie après le désengagement."
+    },
+    {
+      "id": "pto-guard",
+      "name": "Protection de l’arbre de PDF",
+      "definition": "Protections destinées à réduire le risque de contact accidentel avec l'arbre de prise de force en rotation et ses articulations.",
+      "example": "Vérifiez que la protection est intacte et correctement montée lors de l'attelage des outils.",
+      "caution": "N'intervenez jamais sur une prise de force en mouvement dont les protections sont absentes ; arrêtez le moteur."
+    },
+    {
+      "id": "hydraulic-pump",
+      "name": "Pompe hydraulique",
+      "definition": "Utilise une énergie mécanique pour faire circuler l'huile dans le circuit hydraulique.",
+      "example": "La rapidité de réaction d'un outil dépend de la pompe et de la disposition des distributeurs.",
+      "caution": "Ne supposez pas que tous les débits de pompe annoncés sont disponibles aux coupleurs arrière."
+    },
+    {
+      "id": "hydraulic-cylinder",
+      "name": "Vérin hydraulique",
+      "definition": "Actionneur qui transforme la pression hydraulique en mouvement linéaire de poussée ou de traction.",
+      "example": "Les vérins de levage du chargeur et de basculement du godet ont des fonctions différentes.",
+      "caution": "La pression, les dimensions du vérin et les limiteurs de pression comptent en plus du débit."
+    },
+    {
+      "id": "hydraulic-steering",
+      "name": "Débit de la pompe de direction",
+      "definition": "Débit d'huile fourni au circuit de direction assistée.",
+      "example": "Un débit combiné de 45 L/min ne signifie pas que la totalité est disponible pour un outil.",
+      "caution": "Distinguez le débit de direction du débit disponible pour les outils."
+    },
+    {
+      "id": "hydraulic-implement",
+      "name": "Débit de la pompe des outils",
+      "definition": "Débit annoncé comme disponible pour les fonctions des outils ou du relevage.",
+      "example": "Pour les moteurs hydrauliques, le débit disponible pour l'outil importe davantage que le débit combiné des pompes.",
+      "caution": "Confirmez le débit au coupleur concerné et dans les conditions d'essai indiquées."
+    },
+    {
+      "id": "tyre-type",
+      "name": "Pneus agricoles, gazon et industriels",
+      "definition": "La sculpture et la construction des pneus influent sur la motricité et les effets sur le sol.",
+      "example": "Les pneus gazon peuvent être choisis pour réduire les marques sur l'herbe.",
+      "caution": "Ne remplacez jamais un type de pneu sans compatibilité approuvée de dimensions et de charge."
+    },
+    {
+      "id": "track-adjustment",
+      "name": "Voie réglable",
+      "definition": "Réglage de l'espacement des roues dans une plage approuvée au moyen des jantes ou des essieux.",
+      "example": "La voie peut être adaptée à différents espacements de rangs de cultures.",
+      "caution": "Un montage incorrect des jantes ou une charge inadéquate sur les essieux peut créer des risques de sécurité."
+    },
+    {
+      "id": "cab-suspension",
+      "name": "Suspension de cabine",
+      "definition": "Ressorts et amortisseurs destinés à réduire les vibrations transmises du châssis à la cabine.",
+      "example": "Elle peut influer sur la fatigue du conducteur lors de longs transports.",
+      "caution": "Les suspensions du siège, du pont et de la cabine sont des options distinctes."
+    },
+    {
+      "id": "operator-platform",
+      "name": "Plateforme opérateur et structure de cabine",
+      "definition": "Zone comprenant le siège du conducteur, l'espace pour les pieds et les commandes.",
+      "example": "Les planchers plats, tunnels de transmission et cabines diffèrent sur le plan ergonomique.",
+      "caution": "Une cabine seule ne prouve pas une certification ROPS ou FOPS."
+    },
+    {
+      "id": "battery",
+      "name": "Capacité de la batterie (Ah)",
+      "definition": "Indication de la quantité de charge électrique que la batterie peut stocker pour le démarrage et les systèmes électriques.",
+      "example": "Une batterie de 80 Ah et une batterie de 100 Ah peuvent avoir des capacités de démarrage différentes.",
+      "caution": "Les ampères-heures et le courant de démarrage à froid sont des caractéristiques distinctes."
+    },
+    {
+      "id": "alternator",
+      "name": "Débit de l’alternateur (A)",
+      "definition": "Générateur entraîné par le moteur, qui alimente les consommateurs électriques et recharge la batterie.",
+      "example": "Des feux supplémentaires et des appareils électroniques augmentent les besoins électriques.",
+      "caution": "Le courant nominal peut n'être disponible qu'à un régime moteur déterminé."
+    },
+    {
+      "id": "isobus",
+      "name": "Communication tracteur-outil ISOBUS",
+      "definition": "Famille de normes de communication permettant aux tracteurs et aux outils compatibles d'échanger données et commandes.",
+      "example": "Un semoir compatible peut échanger des réglages et des données de travail par l'intermédiaire d'un écran.",
+      "caution": "Une prise ISOBUS ne garantit pas que chaque fonction soit compatible avec chaque outil."
+    },
+    {
+      "id": "gps-guidance",
+      "name": "Guidage GNSS et autoguidage",
+      "definition": "Systèmes par satellite qui affichent des lignes de guidage ou dirigent automatiquement les tracteurs compatibles.",
+      "example": "Ils peuvent contribuer à limiter le recouvrement des passages lors des travaux de précision.",
+      "caution": "La précision dépend du service de correction, du récepteur et de l'application."
+    },
+    {
+      "id": "engine-type",
+      "name": "Type de fonctionnement du moteur",
+      "definition": "Décrit le fonctionnement de base du moteur : diesel ou essence, quatre ou deux temps, et mode de refroidissement.",
+      "example": "Un moteur diesel à quatre temps accomplit un cycle complet en deux tours de vilebrequin.",
+      "caution": "Le type de moteur est une information différente de son code modèle ou de sa puissance nominale."
+    },
+    {
+      "id": "external-controls",
+      "name": "Commandes extérieures du relevage arrière",
+      "definition": "Commandes permettant, dans des conditions prescrites, de positionner le relevage arrière depuis l'extérieur de la cabine.",
+      "example": "Des boutons de relevage montés sur les ailes peuvent faciliter le positionnement lors de l'attelage d'un outil.",
+      "caution": "Ne vous placez jamais dans une zone d'écrasement entre le tracteur et l'outil ; respectez les procédures de sécurité."
+    },
+    {
+      "id": "engine-oil",
+      "name": "Capacité d’huile moteur",
+      "definition": "Quantité d'huile prescrite pour le carter et le système de lubrification, essentielle à la maîtrise de l'usure et de la chaleur.",
+      "example": "Une quantité d'huile moteur de 11 litres n'est pas une consommation de carburant de 11 litres.",
+      "caution": "La quantité de remplissage peut varier avec le remplacement du filtre et la version du moteur ; vérifiez la jauge."
+    },
+    {
+      "id": "cab-visibility",
+      "name": "Surface vitrée, visibilité et volume de cabine",
+      "definition": "Caractéristiques de conception distinctes décrivant la visibilité périphérique et le volume du poste de conduite.",
+      "example": "De bonnes lignes de visibilité aident les conducteurs de chargeurs à voir les charges et les personnes à proximité.",
+      "caution": "La surface vitrée seule ne mesure ni les angles morts, ni l'isolation acoustique, ni la certification de sécurité."
+    },
+    {
+      "id": "model-identity",
+      "name": "Code modèle, année et variante de marché",
+      "definition": "Identifiants permettant de distinguer les familles de produits, les générations, les moteurs ou les marchés visés.",
+      "example": "Un même nom de modèle peut recouvrir des transmissions distinctes aux États-Unis et en Europe.",
+      "caution": "Ne transférez jamais une caractéristique à une autre variante sans preuve précise d'identité."
+    },
+    {
+      "id": "transport-lock",
+      "name": "Verrouillage de transport et sécurité de l’outil",
+      "definition": "Dispositifs mécaniques ou hydrauliques destinés à limiter les mouvements indésirables de l'outil pendant le transport ou le stationnement.",
+      "example": "Une faucheuse repliable peut nécessiter un verrouillage de transport avant de prendre la route.",
+      "caution": "Le verrouillage de transport ne remplace pas les limites de circulation et de charge fixées par le constructeur."
+    },
+    {
+      "id": "cab-comfort",
+      "name": "Rétroviseurs chauffants et dégivrage des vitres",
+      "definition": "Équipements électriques qui aident à éliminer la buée ou le givre des rétroviseurs et des vitres par temps froid et humide.",
+      "example": "Désembuer la vitre arrière peut faciliter la marche arrière.",
+      "caution": "Des rétroviseurs chauffants ne prouvent ni que toutes les zones sont visibles ni que cet équipement est de série."
+    }
+  ]
+}
