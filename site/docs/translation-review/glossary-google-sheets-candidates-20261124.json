@@ -6,37 +6,37 @@
   "sourceBlobSha": "a5379d60c7c1f53dfcfb528c9ee7743a450faaa5",
   "provider": "Google Sheets GOOGLETRANSLATE",
   "sourceLanguage": "en",
-  "scope": "Snapshot of available calculated values from 246 source rows × five languages; unavailable cells represented by null. The pt provider language is generic Portuguese, not certified Brazilian Portuguese. Machine candidates require full semantic, numeric, unit, safety and native-language review; never public content.",
+  "scope": "All 246 source rows × five languages have returned machine candidates. Generic Portuguese requires Brazilian localization. Flags are conservative lexical and numeric screening only, not semantic approval. Every field remains non-public and requires technical, linguistic and safety review.",
   "counts": [
     {
       "locale": "pt-br",
-      "received": 184,
-      "flagged": 184,
-      "completeEntries": 35
+      "received": 246,
+      "flagged": 246,
+      "completeEntries": 82
     },
     {
       "locale": "zh",
-      "received": 192,
+      "received": 246,
       "flagged": 12,
-      "completeEntries": 39
+      "completeEntries": 82
     },
     {
       "locale": "hi",
-      "received": 178,
-      "flagged": 10,
-      "completeEntries": 32
+      "received": 246,
+      "flagged": 16,
+      "completeEntries": 82
     },
     {
       "locale": "ru",
-      "received": 181,
-      "flagged": 11,
-      "completeEntries": 34
+      "received": 246,
+      "flagged": 13,
+      "completeEntries": 82
     },
     {
       "locale": "ja",
-      "received": 180,
-      "flagged": 1,
-      "completeEntries": 34
+      "received": 246,
+      "flagged": 3,
+      "completeEntries": 82
     }
   ],
   "jobs": [
@@ -90,8 +90,11 @@
               ]
             },
             "caution": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "Um motor maior não é automaticamente mais potente ou mais econômico em termos de combustível.",
+              "flags": [
+                "Brazilian Portuguese review required; provider locale pt"
+              ]
             }
           }
         },
@@ -100,8 +103,11 @@
           "name": "Número de cilindros",
           "fields": {
             "definition": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "O número de cilindros do pistão influencia o tamanho, a suavidade e as características do motor.",
+              "flags": [
+                "Brazilian Portuguese review required; provider locale pt"
+              ]
             },
             "example": {
               "state": "machine-candidate",
@@ -165,8 +171,11 @@
               ]
             },
             "caution": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "Verifique a relação entre a rotação por minuto (RPM) e os valores de potência e torque máximos.",
+              "flags": [
+                "Brazilian Portuguese review required; provider locale pt"
+              ]
             }
           }
         },
@@ -202,12 +211,18 @@
           "name": "Common rail / injeção de combustível",
           "fields": {
             "definition": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "O sistema que mede e injeta combustível a uma pressão e tempo controlados.",
+              "flags": [
+                "Brazilian Portuguese review required; provider locale pt"
+              ]
             },
             "example": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "A injeção eletrônica ajuda a controlar a combustão em diferentes cargas.",
+              "flags": [
+                "Brazilian Portuguese review required; provider locale pt"
+              ]
             },
             "caution": {
               "state": "machine-candidate",
@@ -279,12 +294,18 @@
           "name": "Transmissão manual",
           "fields": {
             "definition": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "As relações de transmissão são selecionadas mecanicamente; o funcionamento da embreagem depende do projeto.",
+              "flags": [
+                "Brazilian Portuguese review required; provider locale pt"
+              ]
             },
             "example": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "12F/12R significa 12 relações de marcha para frente e 12 relações para trás.",
+              "flags": [
+                "Brazilian Portuguese review required; provider locale pt"
+              ]
             },
             "caution": {
               "state": "machine-candidate",
@@ -334,8 +355,11 @@
               ]
             },
             "example": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "Pode manter uma velocidade de campo escolhida enquanto ajusta a rotação do motor.",
+              "flags": [
+                "Brazilian Portuguese review required; provider locale pt"
+              ]
             },
             "caution": {
               "state": "machine-candidate",
@@ -385,8 +409,11 @@
               ]
             },
             "example": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "Isso facilita as frequentes mudanças de direção durante o manuseio dos fardos.",
+              "flags": [
+                "Brazilian Portuguese review required; provider locale pt"
+              ]
             },
             "caution": {
               "state": "machine-candidate",
@@ -402,12 +429,18 @@
           "name": "Embreagem e dupla embreagem",
           "fields": {
             "definition": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "Conecta ou desconecta a transmissão; projetos de dois estágios podem separar o acionamento da tomada de força (PTO) do deslocamento.",
+              "flags": [
+                "Brazilian Portuguese review required; provider locale pt"
+              ]
             },
             "example": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "Em alguns tratores, um segundo estágio de pedal controla a transmissão da tomada de força (TDF).",
+              "flags": [
+                "Brazilian Portuguese review required; provider locale pt"
+              ]
             },
             "caution": {
               "state": "machine-candidate",
@@ -423,16 +456,31 @@
           "name": "Tração em duas e quatro rodas (2WD/4WD)",
           "fields": {
             "definition": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "Indica se duas ou quatro rodas podem contribuir para a tração motriz.",
+              "flags": [
+                "Brazilian Portuguese review required; provider locale pt"
+              ]
             },
             "example": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "A tração nas quatro rodas pode reduzir o risco de escorregar em solo molhado; a tração em duas rodas pode ser suficiente em terreno firme.",
+              "flags": [
+                "check-code:4WD",
+                "check-code:2WD",
+                "check-number:4",
+                "check-number:2",
+                "Brazilian Portuguese review required; provider locale pt"
+              ]
             },
             "caution": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "Pneus, peso e tipo de solo importam; a tração nas quatro rodas não é universalmente superior.",
+              "flags": [
+                "check-code:4WD",
+                "check-number:4",
+                "Brazilian Portuguese review required; provider locale pt"
+              ]
             }
           }
         },
@@ -448,8 +496,11 @@
               ]
             },
             "example": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "Pode ajudar a manter a aderência quando uma das rodas está derrapando em piso molhado.",
+              "flags": [
+                "Brazilian Portuguese review required; provider locale pt"
+              ]
             },
             "caution": {
               "state": "machine-candidate",
@@ -533,8 +584,11 @@
               ]
             },
             "caution": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "Geralmente opcionais; a articulação dianteira e a potência do motor também são importantes.",
+              "flags": [
+                "Brazilian Portuguese review required; provider locale pt"
+              ]
             }
           }
         },
@@ -570,8 +624,11 @@
           "name": "EHR / controle eletrônico do levante",
           "fields": {
             "definition": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "Controle eletrônico da posição da articulação ou da resposta ao acionamento.",
+              "flags": [
+                "Brazilian Portuguese review required; provider locale pt"
+              ]
             },
             "example": {
               "state": "machine-candidate",
@@ -601,12 +658,18 @@
               ]
             },
             "example": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "O controle da tração pode ser importante para a aração; o controle da posição, para o nivelamento.",
+              "flags": [
+                "Brazilian Portuguese review required; provider locale pt"
+              ]
             },
             "caution": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "Ainda é necessário preparar o solo adequadamente e utilizar os implementos necessários.",
+              "flags": [
+                "Brazilian Portuguese review required; provider locale pt"
+              ]
             }
           }
         },
@@ -642,8 +705,11 @@
           "name": "Hidráulica de centro aberto e fechado",
           "fields": {
             "definition": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "Arquiteturas de circuitos que descrevem como bombas e válvulas lidam com o fluxo quando nenhuma função é exigida.",
+              "flags": [
+                "Brazilian Portuguese review required; provider locale pt"
+              ]
             },
             "example": {
               "state": "machine-candidate",
@@ -680,8 +746,11 @@
               ]
             },
             "caution": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "O raio de viragem depende de mais fatores além da distância entre eixos.",
+              "flags": [
+                "Brazilian Portuguese review required; provider locale pt"
+              ]
             }
           }
         },
@@ -771,16 +840,25 @@
           "name": "Peso sem carga e peso operacional",
           "fields": {
             "definition": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "Definições de massa diferentes de acordo com os fluidos, o condutor e os equipamentos instalados.",
+              "flags": [
+                "Brazilian Portuguese review required; provider locale pt"
+              ]
             },
             "example": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "Uma versão com cabine pode pesar mais do que um modelo sem cabine.",
+              "flags": [
+                "Brazilian Portuguese review required; provider locale pt"
+              ]
             },
             "caution": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "Os pesos de embarque, a seco e em operação não devem ser considerados idênticos.",
+              "flags": [
+                "Brazilian Portuguese review required; provider locale pt"
+              ]
             }
           }
         },
@@ -816,8 +894,11 @@
           "name": "Medidas dos pneus",
           "fields": {
             "definition": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "Define a seção do pneu, sua construção e o tamanho do aro.",
+              "flags": [
+                "Brazilian Portuguese review required; provider locale pt"
+              ]
             },
             "example": {
               "state": "machine-candidate",
@@ -831,7 +912,7 @@
               "value": "A circunferência de rolamento dianteira/traseira é importante em veículos com tração nas quatro rodas; substituições precisam de aprovação.",
               "flags": [
                 "check-code:4WD",
-                "check-numeric-values",
+                "check-number:4",
                 "Brazilian Portuguese review required; provider locale pt"
               ]
             }
@@ -849,8 +930,11 @@
               ]
             },
             "example": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "A pressão adequada à carga afeta a tração e a impressão no solo.",
+              "flags": [
+                "Brazilian Portuguese review required; provider locale pt"
+              ]
             },
             "caution": {
               "state": "machine-candidate",
@@ -866,8 +950,11 @@
           "name": "Raio de giro",
           "fields": {
             "definition": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "O raio geométrico de uma curva com a direção totalmente esterçada.",
+              "flags": [
+                "Brazilian Portuguese review required; provider locale pt"
+              ]
             },
             "example": {
               "state": "machine-candidate",
@@ -881,8 +968,9 @@
               "value": "Os pneus, a tração nas quatro rodas, a assistência de frenagem e o método de teste afetam o resultado.",
               "flags": [
                 "check-code:4WD",
-                "check-numeric-values",
-                "Brazilian Portuguese review required; provider locale pt"
+                "check-number:4",
+                "Brazilian Portuguese review required; provider locale pt",
+                "check-placeholder"
               ]
             }
           }
@@ -919,8 +1007,11 @@
           "name": "Carga admissível por eixo e massa total",
           "fields": {
             "definition": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "Limites do fabricante para cargas por eixo e massa total da máquina.",
+              "flags": [
+                "Brazilian Portuguese review required; provider locale pt"
+              ]
             },
             "example": {
               "state": "machine-candidate",
@@ -957,8 +1048,11 @@
               ]
             },
             "caution": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "A estrutura ROPS sozinha não torna a condução sem cinto de segurança segura; siga as instruções para montagem de uma estrutura ROPS dobrável.",
+              "flags": [
+                "Brazilian Portuguese review required; provider locale pt"
+              ]
             }
           }
         },
@@ -981,8 +1075,11 @@
               ]
             },
             "caution": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "ROPS e FOPS não são a mesma certificação.",
+              "flags": [
+                "Brazilian Portuguese review required; provider locale pt"
+              ]
             }
           }
         },
@@ -1005,8 +1102,11 @@
               ]
             },
             "caution": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "A distância de frenagem também depende dos pneus, da carga, da superfície e da manutenção.",
+              "flags": [
+                "Brazilian Portuguese review required; provider locale pt"
+              ]
             }
           }
         },
@@ -1029,8 +1129,11 @@
               ]
             },
             "caution": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "Siga as instruções do manual da máquina e as normas de segurança locais.",
+              "flags": [
+                "Brazilian Portuguese review required; provider locale pt"
+              ]
             }
           }
         },
@@ -1046,8 +1149,11 @@
               ]
             },
             "example": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "Manobras com carregadeiras em baixa velocidade podem ser mais fáceis.",
+              "flags": [
+                "Brazilian Portuguese review required; provider locale pt"
+              ]
             },
             "caution": {
               "state": "machine-candidate",
@@ -1097,12 +1203,18 @@
               ]
             },
             "example": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "Cabine, assento e proteção auditiva podem fazer diferença em turnos longos.",
+              "flags": [
+                "Brazilian Portuguese review required; provider locale pt"
+              ]
             },
             "caution": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "Não classifique máquinas com base em valores de dB(A) sem local de teste e padrão.",
+              "flags": [
+                "Brazilian Portuguese review required; provider locale pt"
+              ]
             }
           }
         },
@@ -1111,8 +1223,11 @@
           "name": "Capacidade do tanque de combustível",
           "fields": {
             "definition": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "Quantidade de combustível que um tanque comporta; não é uma medida de consumo ou autonomia.",
+              "flags": [
+                "Brazilian Portuguese review required; provider locale pt"
+              ]
             },
             "example": {
               "state": "machine-candidate",
@@ -1169,12 +1284,18 @@
               ]
             },
             "example": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "Um filtro de ar obstruído pode afetar o desempenho do motor.",
+              "flags": [
+                "Brazilian Portuguese review required; provider locale pt"
+              ]
             },
             "caution": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "Utilize filtros aprovados pelo modelo e respeite os intervalos de manutenção.",
+              "flags": [
+                "Brazilian Portuguese review required; provider locale pt"
+              ]
             }
           }
         },
@@ -1198,8 +1319,11 @@
               ]
             },
             "caution": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "Sempre indique o ponto de teste, o ano, o procedimento e o padrão de medição.",
+              "flags": [
+                "Brazilian Portuguese review required; provider locale pt"
+              ]
             }
           }
         },
@@ -1222,8 +1346,11 @@
               ]
             },
             "caution": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "Não rotule valores não documentados como verificados ou testados independentemente.",
+              "flags": [
+                "Brazilian Portuguese review required; provider locale pt"
+              ]
             }
           }
         },
@@ -1259,8 +1386,11 @@
           "name": "Fabricante do motor",
           "fields": {
             "definition": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "A empresa que fabrica ou comercializa o motor; pode ser diferente do fabricante do trator.",
+              "flags": [
+                "Brazilian Portuguese review required; provider locale pt"
+              ]
             },
             "example": {
               "state": "machine-candidate",
@@ -1283,12 +1413,18 @@
           "name": "Modelo ou código do motor",
           "fields": {
             "definition": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "Identificador do fabricante para um determinado modelo ou versão de motor.",
+              "flags": [
+                "Brazilian Portuguese review required; provider locale pt"
+              ]
             },
             "example": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "Para fins de manutenção, um código de motor pode distinguir gerações de tratores com o mesmo nome.",
+              "flags": [
+                "Brazilian Portuguese review required; provider locale pt"
+              ]
             },
             "caution": {
               "state": "machine-candidate",
@@ -1392,8 +1528,11 @@
               ]
             },
             "example": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "O diesel e o DEF (armazenamento diesel com ar comprimido) são armazenados em tanques separados; o DEF não é um aditivo de combustível.",
+              "flags": [
+                "Brazilian Portuguese review required; provider locale pt"
+              ]
             },
             "caution": {
               "state": "machine-candidate",
@@ -1409,8 +1548,11 @@
           "name": "Pistão e anéis",
           "fields": {
             "definition": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "O pistão converte a pressão da combustão em movimento; os anéis ajudam a vedar o cilindro e a controlar o óleo.",
+              "flags": [
+                "Brazilian Portuguese review required; provider locale pt"
+              ]
             },
             "example": {
               "state": "machine-candidate",
@@ -1420,8 +1562,11 @@
               ]
             },
             "caution": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "A cor da fumaça por si só não é um diagnóstico; são necessários exames adequados.",
+              "flags": [
+                "Brazilian Portuguese review required; provider locale pt"
+              ]
             }
           }
         },
@@ -1444,8 +1589,11 @@
               ]
             },
             "caution": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "O virabrequim e o eixo da tomada de força são diferentes, conectados através da linha de transmissão.",
+              "flags": [
+                "Brazilian Portuguese review required; provider locale pt"
+              ]
             }
           }
         },
@@ -1461,8 +1609,11 @@
               ]
             },
             "example": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "A mesma potência de 75 kW pode representar diferentes configurações de teste.",
+              "flags": [
+                "Brazilian Portuguese review required; provider locale pt"
+              ]
             },
             "caution": {
               "state": "machine-candidate",
@@ -1593,8 +1744,11 @@
               ]
             },
             "example": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "Verifique se a proteção está intacta e encaixada corretamente ao conectar os implementos.",
+              "flags": [
+                "Brazilian Portuguese review required; provider locale pt"
+              ]
             },
             "caution": {
               "state": "machine-candidate",
@@ -1637,8 +1791,11 @@
           "name": "Cilindro hidráulico",
           "fields": {
             "definition": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "Um atuador que converte a pressão hidráulica em movimento linear de empurrar ou puxar.",
+              "flags": [
+                "Brazilian Portuguese review required; provider locale pt"
+              ]
             },
             "example": {
               "state": "machine-candidate",
@@ -1648,8 +1805,11 @@
               ]
             },
             "caution": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "Pressão, tamanho do cilindro e válvulas de alívio são tão importantes quanto a vazão.",
+              "flags": [
+                "Brazilian Portuguese review required; provider locale pt"
+              ]
             }
           }
         },
@@ -1658,8 +1818,11 @@
           "name": "Vazão da bomba de direção",
           "fields": {
             "definition": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "Fluxo de óleo fornecido ao circuito da direção hidráulica.",
+              "flags": [
+                "Brazilian Portuguese review required; provider locale pt"
+              ]
             },
             "example": {
               "state": "machine-candidate",
@@ -1682,12 +1845,18 @@
           "name": "Vazão da bomba de implementos",
           "fields": {
             "definition": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "O fluxo declarado está disponível para implementar ou vincular funções.",
+              "flags": [
+                "Brazilian Portuguese review required; provider locale pt"
+              ]
             },
             "example": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "Para motores hidráulicos, a vazão disponível no implemento é mais importante do que a potência de saída combinada da bomba.",
+              "flags": [
+                "Brazilian Portuguese review required; provider locale pt"
+              ]
             },
             "caution": {
               "state": "machine-candidate",
@@ -1703,12 +1872,18 @@
           "name": "Pneus agrícolas, de gramado e industriais",
           "fields": {
             "definition": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "O padrão e a construção da banda de rodagem influenciam a tração e o impacto com o solo.",
+              "flags": [
+                "Brazilian Portuguese review required; provider locale pt"
+              ]
             },
             "example": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "Pneus próprios para relva podem ser escolhidos para reduzir as marcas na grama.",
+              "flags": [
+                "Brazilian Portuguese review required; provider locale pt"
+              ]
             },
             "caution": {
               "state": "machine-candidate",
@@ -1731,8 +1906,11 @@
               ]
             },
             "example": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "A configuração da esteira pode ser ajustada para se adequar a diferentes espaçamentos entre as linhas de plantio.",
+              "flags": [
+                "Brazilian Portuguese review required; provider locale pt"
+              ]
             },
             "caution": {
               "state": "machine-candidate",
@@ -1843,8 +2021,11 @@
               ]
             },
             "caution": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "A amperagem nominal pode estar disponível apenas em uma rotação específica do motor.",
+              "flags": [
+                "Brazilian Portuguese review required; provider locale pt"
+              ]
             }
           }
         },
@@ -1894,8 +2075,11 @@
               ]
             },
             "caution": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "A precisão depende do serviço de correção, do receptor e da aplicação.",
+              "flags": [
+                "Brazilian Portuguese review required; provider locale pt"
+              ]
             }
           }
         },
@@ -1907,7 +2091,8 @@
               "state": "machine-candidate",
               "value": "Descreve o funcionamento básico do motor, como diesel ou gasolina, quatro tempos ou dois tempos e método de refrigeração.",
               "flags": [
-                "Brazilian Portuguese review required; provider locale pt"
+                "Brazilian Portuguese review required; provider locale pt",
+                "check-placeholder"
               ]
             },
             "example": {
@@ -1992,8 +2177,11 @@
               ]
             },
             "example": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "Uma boa visibilidade ajuda os operadores de carregadeiras a verem as cargas e as pessoas próximas.",
+              "flags": [
+                "Brazilian Portuguese review required; provider locale pt"
+              ]
             },
             "caution": {
               "state": "machine-candidate",
@@ -2009,8 +2197,11 @@
           "name": "Código do modelo, ano e versão de mercado",
           "fields": {
             "definition": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "Identificadores usados ​​para distinguir famílias de produtos, gerações, motores ou mercados-alvo.",
+              "flags": [
+                "Brazilian Portuguese review required; provider locale pt"
+              ]
             },
             "example": {
               "state": "machine-candidate",
@@ -2067,8 +2258,11 @@
               ]
             },
             "example": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "Limpar o vidro traseiro embaçado pode ajudar na hora de dar ré.",
+              "flags": [
+                "Brazilian Portuguese review required; provider locale pt"
+              ]
             },
             "caution": {
               "state": "machine-candidate",
@@ -2095,8 +2289,9 @@
               "flags": []
             },
             "example": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "当犁遇到较硬的土壤时，发动机的反应可能会受到影响。",
+              "flags": []
             },
             "caution": {
               "state": "machine-candidate",
@@ -2115,12 +2310,14 @@
               "flags": []
             },
             "example": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "排量相同的两台发动机可能产生不同的输出功率。",
+              "flags": []
             },
             "caution": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "排量更大的发动机并不一定性能更强或燃油效率更高。",
+              "flags": []
             }
           }
         },
@@ -2134,8 +2331,9 @@
               "flags": []
             },
             "example": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "三缸和四缸车型在驾驶感受和重量上可能有所不同。",
+              "flags": []
             },
             "caution": {
               "state": "machine-candidate",
@@ -2149,8 +2347,9 @@
           "name": "缸径与行程",
           "fields": {
             "definition": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "缸径是指气缸直径；行程是指活塞在两个死点之间的行程。",
+              "flags": []
             },
             "example": {
               "state": "machine-candidate",
@@ -2200,8 +2399,9 @@
               "flags": []
             },
             "caution": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "单靠涡轮增压器既不能保证燃油经济性，也不能保证使用寿命。",
+              "flags": []
             }
           }
         },
@@ -2307,8 +2507,9 @@
               "flags": []
             },
             "caution": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "部分动力换挡与全范围动力换挡并不相同。",
+              "flags": []
             }
           }
         },
@@ -2348,8 +2549,9 @@
               "flags": []
             },
             "caution": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "静液压驱动与辅助机具液压系统并不相同。",
+              "flags": []
             }
           }
         },
@@ -2368,8 +2570,9 @@
               "flags": []
             },
             "caution": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "机械式、同步式和电液式换向器各不相同。",
+              "flags": []
             }
           }
         },
@@ -2399,8 +2602,9 @@
           "name": "两轮与四轮驱动（2WD/4WD）",
           "fields": {
             "definition": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "表示两个或四个车轮是否能提供驱动牵引力。",
+              "flags": []
             },
             "example": {
               "state": "machine-candidate",
@@ -2408,7 +2612,8 @@
               "flags": [
                 "check-code:4WD",
                 "check-code:2WD",
-                "check-numeric-values"
+                "check-number:4",
+                "check-number:2"
               ]
             },
             "caution": {
@@ -2416,7 +2621,7 @@
               "value": "轮胎、重量和土壤物质；四驱车并非在所有方面都优于其他车辆。",
               "flags": [
                 "check-code:4WD",
-                "check-numeric-values"
+                "check-number:4"
               ]
             }
           }
@@ -2426,8 +2631,9 @@
           "name": "差速锁",
           "fields": {
             "definition": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "限制车轮间的速度差，以帮助在湿滑地面上获得牵引力。",
+              "flags": []
             },
             "example": {
               "state": "machine-candidate",
@@ -2451,8 +2657,9 @@
               "flags": []
             },
             "example": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "门式和行星式结构会影响间隙和扭矩减小。",
+              "flags": []
             },
             "caution": {
               "state": "machine-candidate",
@@ -2476,8 +2683,9 @@
               "flags": []
             },
             "caution": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "它与标准的 540 rpm 模式不可互换。",
+              "flags": []
             }
           }
         },
@@ -2507,8 +2715,9 @@
           "name": "三点悬挂装置",
           "fields": {
             "definition": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "一种由两个下连杆和一个上连杆组成的农具连接装置。",
+              "flags": []
             },
             "example": {
               "state": "machine-candidate",
@@ -2532,12 +2741,14 @@
               "flags": []
             },
             "example": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "它有助于将农具恢复到可重复的地头高度。",
+              "flags": []
             },
             "caution": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "传感器设计和控制功能因型号而异。",
+              "flags": []
             }
           }
         },
@@ -2551,8 +2762,9 @@
               "flags": []
             },
             "example": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "耕作时需要控制牵引力；平整土地时需要控制位置。",
+              "flags": []
             },
             "caution": {
               "state": "machine-candidate",
@@ -2566,8 +2778,9 @@
           "name": "前悬挂装置",
           "fields": {
             "definition": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "拖拉机前部的农具安装和提升装置。",
+              "flags": []
             },
             "example": {
               "state": "machine-candidate",
@@ -2586,8 +2799,9 @@
           "name": "开中心与闭中心液压系统",
           "fields": {
             "definition": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "电路架构描述了当不需要任何功能时，泵和阀门如何处理流量。",
+              "flags": []
             },
             "example": {
               "state": "machine-candidate",
@@ -2653,8 +2867,9 @@
               "flags": []
             },
             "example": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "它对清除农作物和障碍物至关重要。",
+              "flags": []
             },
             "caution": {
               "state": "machine-candidate",
@@ -2696,8 +2911,9 @@
               "flags": []
             },
             "example": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "驾驶室车型的重量可能比开放式驾驶室车型更重。",
+              "flags": []
             },
             "caution": {
               "state": "machine-candidate",
@@ -2711,8 +2927,9 @@
           "name": "配重／前部配重",
           "fields": {
             "definition": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "增加配重以增强牵引力和平衡性。",
+              "flags": []
             },
             "example": {
               "state": "machine-candidate",
@@ -2745,7 +2962,7 @@
               "value": "四驱车的前后滚动周长很重要；替换需要获得批准。",
               "flags": [
                 "check-code:4WD",
-                "check-numeric-values"
+                "check-number:4"
               ]
             }
           }
@@ -2760,12 +2977,14 @@
               "flags": []
             },
             "example": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "适当的载荷压力会影响牵引力和土壤压痕。",
+              "flags": []
             },
             "caution": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "不建议在未参考轮胎制造商提供的载重/速度表的情况下进行充气。",
+              "flags": []
             }
           }
         },
@@ -2788,7 +3007,7 @@
               "value": "轮胎、四驱系统、制动辅助系统和测试方法都会影响该数值。",
               "flags": [
                 "check-code:4WD",
-                "check-numeric-values"
+                "check-number:4"
               ]
             }
           }
@@ -2819,8 +3038,9 @@
           "name": "允许轴荷与总质量",
           "fields": {
             "definition": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "制造商对轴荷和整机质量的限制。",
+              "flags": []
             },
             "example": {
               "state": "machine-candidate",
@@ -2869,8 +3089,9 @@
               "flags": []
             },
             "example": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "林业和装载作业会产生不同的防护需求。",
+              "flags": []
             },
             "caution": {
               "state": "machine-candidate",
@@ -2884,8 +3105,9 @@
           "name": "干式与湿式盘式制动器",
           "fields": {
             "definition": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "采用干式或油浸式摩擦部件的制动器设计。",
+              "flags": []
             },
             "example": {
               "state": "machine-candidate",
@@ -2893,8 +3115,9 @@
               "flags": []
             },
             "caution": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "制动距离还取决于轮胎、载重、路面状况和保养情况。",
+              "flags": []
             }
           }
         },
@@ -2947,12 +3170,14 @@
           "name": "驾驶室过滤与空调",
           "fields": {
             "definition": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "为操作人员提供舒适性的设备，以及在指定情况下提供的空气过滤设备。",
+              "flags": []
             },
             "example": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "在粉尘作业环境中，过滤器的保养至关重要。",
+              "flags": []
             },
             "caution": {
               "state": "machine-candidate",
@@ -2997,8 +3222,9 @@
               "flags": []
             },
             "caution": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "油耗随负载、转速和运行条件而变化。",
+              "flags": []
             }
           }
         },
@@ -3012,8 +3238,9 @@
               "flags": []
             },
             "example": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "发动机油和液压油的保养周期可能不同。",
+              "flags": []
             },
             "caution": {
               "state": "machine-candidate",
@@ -3027,12 +3254,14 @@
           "name": "空气、燃油与机油滤清器",
           "fields": {
             "definition": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "限制污染物进入发动机或流体回路的维修部件。",
+              "flags": []
             },
             "example": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "空气滤清器堵塞会影响发动机性能。",
+              "flags": []
             },
             "caution": {
               "state": "machine-candidate",
@@ -3053,8 +3282,9 @@
               ]
             },
             "example": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "不要将发动机声明与内布拉斯加州动力输出轴测试作为同一指标进行比较。",
+              "flags": []
             },
             "caution": {
               "state": "machine-candidate",
@@ -3068,8 +3298,9 @@
           "name": "制造商样本与独立试验",
           "fields": {
             "definition": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "产品手册记录了制造商的声明；独立测试报告则记录了在规定条件下进行的测量结果。",
+              "flags": []
             },
             "example": {
               "state": "machine-candidate",
@@ -3114,8 +3345,9 @@
               "flags": []
             },
             "example": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "同一系列拖拉机，上一代可以使用一家发动机供应商的产品，下一代可以使用另一家。",
+              "flags": []
             },
             "caution": {
               "state": "machine-candidate",
@@ -3202,8 +3434,9 @@
               "flags": []
             },
             "caution": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "干式滤芯过滤器和油浴式过滤器需要不同的维护程序。",
+              "flags": []
             }
           }
         },
@@ -3212,8 +3445,9 @@
           "name": "柴油与燃料类型",
           "fields": {
             "definition": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "发动机设计使用的燃料；与喷射系统的兼容性很重要。",
+              "flags": []
             },
             "example": {
               "state": "machine-candidate",
@@ -3286,8 +3520,9 @@
               "flags": []
             },
             "caution": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "总功率、额定功率、PTO功率和增压功率不能互相替代。",
+              "flags": []
             }
           }
         },
@@ -3466,12 +3701,14 @@
           "name": "机具液压泵流量",
           "fields": {
             "definition": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "所述流程可用于实施或连接功能。",
+              "flags": []
             },
             "example": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "对于液压马达而言，实际可用流量比泵的总输出量更重要。",
+              "flags": []
             },
             "caution": {
               "state": "machine-candidate",
@@ -3485,8 +3722,9 @@
           "name": "农业、草坪与工业轮胎",
           "fields": {
             "definition": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "胎面花纹和结构会影响牵引力和地面冲击力。",
+              "flags": []
             },
             "example": {
               "state": "machine-candidate",
@@ -3510,12 +3748,14 @@
               "flags": []
             },
             "example": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "可以根据不同的作物行距设置轨道。",
+              "flags": []
             },
             "caution": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "轮辋安装不当或车轴载荷不当会造成安全隐患。",
+              "flags": []
             }
           }
         },
@@ -3524,8 +3764,9 @@
           "name": "驾驶室悬架",
           "fields": {
             "definition": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "弹簧和减震器旨在减少从底盘传递到驾驶室的振动。",
+              "flags": []
             },
             "example": {
               "state": "machine-candidate",
@@ -3544,8 +3785,9 @@
           "name": "驾驶平台与驾驶室结构",
           "fields": {
             "definition": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "该区域包括操作员座椅、脚踏空间和操作控制装置。",
+              "flags": []
             },
             "example": {
               "state": "machine-candidate",
@@ -3553,8 +3795,9 @@
               "flags": []
             },
             "caution": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "单凭驾驶室本身并不能证明其符合 ROPS 或 FOPS 认证标准。",
+              "flags": []
             }
           }
         },
@@ -3568,8 +3811,9 @@
               "flags": []
             },
             "example": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "80Ah 和 100Ah 的电池可能具有不同的启动能力。",
+              "flags": []
             },
             "caution": {
               "state": "machine-candidate",
@@ -3593,8 +3837,9 @@
               "flags": []
             },
             "caution": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "额定电流可能仅在指定的发动机转速下可用。",
+              "flags": []
             }
           }
         },
@@ -3603,12 +3848,14 @@
           "name": "ISOBUS 拖拉机与机具通信",
           "fields": {
             "definition": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "一种标准化的通信系统，允许兼容的拖拉机和农具交换数据和控制信息。",
+              "flags": []
             },
             "example": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "兼容的钻机可以通过显示屏交换设置和工作数据。",
+              "flags": []
             },
             "caution": {
               "state": "machine-candidate",
@@ -3727,8 +3974,9 @@
           "name": "型号代码、年份与市场变型",
           "fields": {
             "definition": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "用于区分产品系列、代际、发动机或目标市场的标识符。",
+              "flags": []
             },
             "example": {
               "state": "machine-candidate",
@@ -3736,8 +3984,9 @@
               "flags": []
             },
             "caution": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "在没有确凿证据的情况下，切勿将规格转移到其他变体上。",
+              "flags": []
             }
           }
         },
@@ -3794,8 +4043,9 @@
           "name": "टॉर्क वृद्धि / टॉर्क रिज़र्व",
           "fields": {
             "definition": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "एक प्रतिशत जो यह दर्शाता है कि लोड के तहत इंजन की गति कम होने पर टॉर्क में कितनी वृद्धि हो सकती है।",
+              "flags": []
             },
             "example": {
               "state": "machine-candidate",
@@ -3861,12 +4111,14 @@
               "flags": []
             },
             "example": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "'110 × 116 मिमी' का विनिर्देश इन दो आयामों को दर्शाता है।",
+              "flags": []
             },
             "caution": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "यदि परिकलित विस्थापन सूचीबद्ध आयतन से मेल नहीं खाता है, तो विसंगति को चिह्नित करें।",
+              "flags": []
             }
           }
         },
@@ -3880,8 +4132,9 @@
               "flags": []
             },
             "example": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "540 आरपीएम पीटीओ सेटिंग के लिए अलग इंजन आरपीएम की आवश्यकता हो सकती है।",
+              "flags": []
             },
             "caution": {
               "state": "machine-candidate",
@@ -3895,8 +4148,9 @@
           "name": "टर्बोचार्जर और इंटरकूलर",
           "fields": {
             "definition": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "टर्बो एग्जॉस्ट की ऊर्जा का उपयोग करके इनटेक हवा को संपीड़ित करता है; इंटरकूलर संपीड़ित हवा को ठंडा करता है।",
+              "flags": []
             },
             "example": {
               "state": "machine-candidate",
@@ -3936,8 +4190,9 @@
           "name": "उत्सर्जन मानक (Stage / Tier)",
           "fields": {
             "definition": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "किसी बाजार और नियामक अवधि पर लागू होने वाली निकास-उत्सर्जन सीमाएं।",
+              "flags": []
             },
             "example": {
               "state": "machine-candidate",
@@ -3959,12 +4214,19 @@
           "name": "DPF, SCR और AdBlue/DEF",
           "fields": {
             "definition": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "डीपीएफ कालिख के कणों को फंसाता है; एससीआर नाइट्रोजन ऑक्साइड को कम करने के लिए एक डोजिंग द्रव का उपयोग करता है।",
+              "flags": [
+                "check-code:DPF",
+                "check-code:SCR"
+              ]
             },
             "example": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "डीईएफ से चलने वाले ट्रैक्टर में एक अलग टैंक होता है; इसे डीजल टैंक में नहीं डालना चाहिए।",
+              "flags": [
+                "check-code:DEF"
+              ]
             },
             "caution": {
               "state": "machine-candidate",
@@ -3988,8 +4250,9 @@
               "flags": []
             },
             "caution": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "केवल गियर की संख्या से ही आराम या टिकाऊपन का निर्धारण नहीं होता।",
+              "flags": []
             }
           }
         },
@@ -4003,8 +4266,9 @@
               "flags": []
             },
             "example": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "इससे काम करते समय गति को समायोजित करना आसान हो जाता है।",
+              "flags": []
             },
             "caution": {
               "state": "machine-candidate",
@@ -4093,8 +4357,11 @@
               "flags": []
             },
             "caution": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "डुअल क्लच का मतलब यह नहीं है कि उसमें कार की तरह डीसीटी गियरबॉक्स हो।",
+              "flags": [
+                "check-code:DCT"
+              ]
             }
           }
         },
@@ -4134,8 +4401,9 @@
               "flags": []
             },
             "caution": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "घुमाने और कठोर सतह पर उपयोग करने संबंधी निर्देशों का पालन करें; इसका अंधाधुंध उपयोग न करें।",
+              "flags": []
             }
           }
         },
@@ -4217,8 +4485,9 @@
               "flags": []
             },
             "caution": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "लिफ्ट रेटिंग की तरह ही ज्यामिति, श्रेणी और उपकरण के गुरुत्वाकर्षण केंद्र का महत्व भी उतना ही अधिक होता है।",
+              "flags": []
             }
           }
         },
@@ -4232,8 +4501,9 @@
               "flags": []
             },
             "example": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "इससे उपकरण को एक निश्चित ऊंचाई पर वापस लाने में मदद मिल सकती है।",
+              "flags": []
             },
             "caution": {
               "state": "machine-candidate",
@@ -4247,8 +4517,9 @@
           "name": "ड्राफ्ट और स्थिति नियंत्रण",
           "fields": {
             "definition": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "ड्राफ्ट कंट्रोल, कार्यान्वयन प्रतिरोध पर प्रतिक्रिया करता है; पोजीशन कंट्रोल, लिंकेज की स्थिति को लक्षित करता है।",
+              "flags": []
             },
             "example": {
               "state": "machine-candidate",
@@ -4277,8 +4548,9 @@
               "flags": []
             },
             "caution": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "फ्रंट पीटीओ, उठाने की क्षमता और फ्रंट एक्सल की सीमाओं की अलग-अलग जांच करनी होगी।",
+              "flags": []
             }
           }
         },
@@ -4308,8 +4580,9 @@
           "name": "व्हीलबेस",
           "fields": {
             "definition": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "आगे और पीछे के एक्सल केंद्रों के बीच की अनुदैर्ध्य दूरी।",
+              "flags": []
             },
             "example": {
               "state": "machine-candidate",
@@ -4349,8 +4622,9 @@
           "name": "ग्राउंड क्लीयरेंस",
           "fields": {
             "definition": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "जमीन से निर्दिष्ट सबसे निचले बिंदु तक की दूरी।",
+              "flags": []
             },
             "example": {
               "state": "machine-candidate",
@@ -4358,8 +4632,9 @@
               "flags": []
             },
             "caution": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "टायर का आकार और माप बिंदु परिणाम को प्रभावित करते हैं।",
+              "flags": []
             }
           }
         },
@@ -4417,8 +4692,9 @@
               "flags": []
             },
             "example": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "भारी पिछले उपकरण के लिए उपयुक्त अग्र बैलास्ट की आवश्यकता हो सकती है।",
+              "flags": []
             },
             "caution": {
               "state": "machine-candidate",
@@ -4453,8 +4729,9 @@
           "name": "टायर वायु दबाव और मिट्टी पर दबाव",
           "fields": {
             "definition": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "टायर का वायु दाब उसके व्यवहार को प्रभावित करता है और भार पड़ने पर मिट्टी के साथ संपर्क तनाव को भी प्रभावित करता है।",
+              "flags": []
             },
             "example": {
               "state": "machine-candidate",
@@ -4462,8 +4739,9 @@
               "flags": []
             },
             "caution": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "टायर निर्माता की भार/गति सारणी के बिना टायर में हवा भरने की अनुशंसा न करें।",
+              "flags": []
             }
           }
         },
@@ -4477,12 +4755,14 @@
               "flags": []
             },
             "example": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "यह दर्शाता है कि ट्रैक्टर तंग आंगनों या खेत के किनारों पर कितनी आसानी से घूम सकता है।",
+              "flags": []
             },
             "caution": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "टायर, 4WD, ब्रेक असिस्टेंस और परीक्षण विधि इस आंकड़े को प्रभावित करते हैं।",
+              "flags": []
             }
           }
         },
@@ -4501,8 +4781,9 @@
               "flags": []
             },
             "caution": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "इंजन, पीटीओ और ड्रॉबार की शक्ति अलग-अलग मापन विधियां हैं।",
+              "flags": []
             }
           }
         },
@@ -4516,8 +4797,9 @@
               "flags": []
             },
             "example": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "लोडर और गिट्टी को जोड़ते समय एक्सल की सीमाओं की जांच करें।",
+              "flags": []
             },
             "caution": {
               "state": "machine-candidate",
@@ -4531,12 +4813,16 @@
           "name": "ROPS / पलटने से सुरक्षा",
           "fields": {
             "definition": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "एक परीक्षित सुरक्षात्मक संरचना जिसका उद्देश्य गाड़ी पलटने की स्थिति में ऑपरेटर को सुरक्षित रखना है।",
+              "flags": []
             },
             "example": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "ओपन-स्टेशन ट्रैक्टरों में, आरओपीएस और सीट बेल्ट एक साथ काम करते हैं।",
+              "flags": [
+                "check-code:ROPS"
+              ]
             },
             "caution": {
               "state": "machine-candidate",
@@ -4552,8 +4838,9 @@
           "name": "FOPS / गिरती वस्तुओं से सुरक्षा",
           "fields": {
             "definition": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "एक ऐसी संरचना जिसे निर्दिष्ट गिरने वाली वस्तुओं के खतरों से सुरक्षा प्रदान करने के लिए डिज़ाइन किया गया है।",
+              "flags": []
             },
             "example": {
               "state": "machine-candidate",
@@ -4596,12 +4883,14 @@
           "name": "सीट बेल्ट और ऑपरेटर सीट",
           "fields": {
             "definition": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "यह उपकरण संचालक को स्थिर रखने और कंपन के संचरण को कम करने के लिए बनाया गया है।",
+              "flags": []
             },
             "example": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "पलटने से सुरक्षा का लाभ उठाने के लिए बेल्ट का सही उपयोग करना आवश्यक है।",
+              "flags": []
             },
             "caution": {
               "state": "machine-candidate",
@@ -4701,8 +4990,9 @@
           "name": "सर्विस अंतराल",
           "fields": {
             "definition": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "रखरखाव के लिए निर्धारित परिचालन घंटे या कैलेंडर अंतराल।",
+              "flags": []
             },
             "example": {
               "state": "machine-candidate",
@@ -4710,8 +5000,9 @@
               "flags": []
             },
             "caution": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "अत्यधिक धूल भरे वातावरण में परिचालन के दौरान कम अंतराल की आवश्यकता हो सकती है।",
+              "flags": []
             }
           }
         },
@@ -4741,8 +5032,11 @@
           "name": "ECE R120, ISO 14396 और OECD परीक्षण",
           "fields": {
             "definition": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "इंजन मानक घोषित शक्ति स्थितियों का वर्णन करते हैं; ओईसीडी कोड ट्रैक्टर परीक्षण प्रक्रियाओं को परिभाषित करते हैं।",
+              "flags": [
+                "check-code:OECD"
+              ]
             },
             "example": {
               "state": "machine-candidate",
@@ -4761,12 +5055,14 @@
           "name": "निर्माता की विवरणिका और स्वतंत्र परीक्षण",
           "fields": {
             "definition": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "एक ब्रोशर में निर्माता के दावे का विवरण होता है; एक स्वतंत्र परीक्षण निर्दिष्ट परिस्थितियों में किए गए मापों की रिपोर्ट करता है।",
+              "flags": []
             },
             "example": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "कैटलॉग में दी गई अनुमानित पीटीओ संख्या प्रयोगशाला में किए गए पीटीओ परीक्षण के समान नहीं होती है।",
+              "flags": []
             },
             "caution": {
               "state": "machine-candidate",
@@ -4785,12 +5081,16 @@
               "flags": []
             },
             "example": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "यूएस एचएसटी संस्करण उसी नाम के यूरोपीय मैनुअल संस्करण से भिन्न हो सकता है।",
+              "flags": [
+                "check-code:HST"
+              ]
             },
             "caution": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "इसका यह अर्थ न लगाएं कि सूचीबद्ध सभी विकल्प एक ही ट्रैक्टर में लगे होते हैं।",
+              "flags": []
             }
           }
         },
@@ -4809,8 +5109,9 @@
               "flags": []
             },
             "caution": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "केवल ब्रांड ही पुर्जों की पहचान नहीं है; इंजन मॉडल कोड की पुष्टि करें।",
+              "flags": []
             }
           }
         },
@@ -4840,8 +5141,9 @@
           "name": "इंजन वाल्वों की संख्या",
           "fields": {
             "definition": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "सिलेंडरों के माध्यम से अंतर्ग्रहण और निकास प्रवाह को नियंत्रित करने वाले वाल्वों की संख्या।",
+              "flags": []
             },
             "example": {
               "state": "machine-candidate",
@@ -4849,8 +5151,9 @@
               "flags": []
             },
             "caution": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "केवल वाल्वों की संख्या से ही अधिक टॉर्क या इंजन की लंबी आयु निर्धारित नहीं होती है।",
+              "flags": []
             }
           }
         },
@@ -4864,8 +5167,9 @@
               "flags": []
             },
             "example": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "यदि लोड पड़ने पर तापमान बढ़ता है, तो रेडिएटर की सफाई और पंखे का संचालन महत्वपूर्ण होता है।",
+              "flags": []
             },
             "caution": {
               "state": "machine-candidate",
@@ -4879,8 +5183,9 @@
           "name": "इंजन एयर क्लीनर",
           "fields": {
             "definition": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "यह फिल्टर धूल भरी हवा को छानकर पिस्टन और सिलेंडरों के घर्षणकारी संदूषण को कम करता है।",
+              "flags": []
             },
             "example": {
               "state": "machine-candidate",
@@ -4888,8 +5193,9 @@
               "flags": []
             },
             "caution": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "ड्राई-एलिमेंट और ऑयल-बाथ फिल्टर के लिए अलग-अलग सर्विस प्रक्रियाएं आवश्यक होती हैं।",
+              "flags": []
             }
           }
         },
@@ -4910,8 +5216,9 @@
               ]
             },
             "caution": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "सही संस्करण जानने के लिए निर्माता द्वारा स्वीकृत बायोडीजल मिश्रणों की जांच करें।",
+              "flags": []
             }
           }
         },
@@ -4925,8 +5232,9 @@
               "flags": []
             },
             "example": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "घिसे हुए छल्ले तेल की खपत बढ़ा सकते हैं या संपीड़न में कमी ला सकते हैं।",
+              "flags": []
             },
             "caution": {
               "state": "machine-candidate",
@@ -4973,8 +5281,9 @@
               ]
             },
             "caution": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "सकल, रेटेड, पीटीओ और बूस्टेड पावर को एक दूसरे के स्थान पर उपयोग नहीं किया जाना चाहिए।",
+              "flags": []
             }
           }
         },
@@ -4983,8 +5292,9 @@
           "name": "सड़क गति और न्यूनतम कार्य गति",
           "fields": {
             "definition": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "गियरबॉक्स और टायरों से उपलब्ध जमीनी गति की सीमा।",
+              "flags": []
             },
             "example": {
               "state": "machine-candidate",
@@ -4992,8 +5302,9 @@
               "flags": []
             },
             "caution": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "सड़क पर अधिकतम गति सीमा सड़क नियमों या उपकरण सीमाओं को रद्द नहीं करती है।",
+              "flags": []
             }
           }
         },
@@ -5007,8 +5318,9 @@
               "flags": []
             },
             "example": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "यह ऊबड़-खाबड़ सड़कों पर ट्रेलर ले जाते समय यात्रा के आराम को बेहतर बना सकता है।",
+              "flags": []
             },
             "caution": {
               "state": "machine-candidate",
@@ -5022,8 +5334,9 @@
           "name": "गियर रेंज, क्रीपर और पावरशिफ्ट चरण",
           "fields": {
             "definition": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "मुख्य गियरों पर अतिरिक्त गति सीमाएं या भार के अधीन स्थानांतरित किए जा सकने वाले चरण जोड़े जा सकते हैं।",
+              "flags": []
             },
             "example": {
               "state": "machine-candidate",
@@ -5047,12 +5360,14 @@
               "flags": []
             },
             "example": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "इलेक्ट्रोहाइड्रोलिक एंगेजमेंट से पीटीओ का स्टार्ट-अप आसान हो सकता है।",
+              "flags": []
             },
             "caution": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "किसी उपकरण के अलग होने के बाद भी जब वह अभी भी बिना हिले-डुले चल रहा हो तो उसके पास न जाएं।",
+              "flags": []
             }
           }
         },
@@ -5082,12 +5397,14 @@
           "name": "हाइड्रोलिक पंप",
           "fields": {
             "definition": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "यह सर्किट के माध्यम से हाइड्रोलिक तेल को स्थानांतरित करने के लिए यांत्रिक इनपुट का उपयोग करता है।",
+              "flags": []
             },
             "example": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "पंप और वाल्व की व्यवस्था के आधार पर प्रतिक्रिया की गति निर्भर करती है।",
+              "flags": []
             },
             "caution": {
               "state": "machine-candidate",
@@ -5176,8 +5493,9 @@
               "flags": []
             },
             "caution": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "बिना स्वीकृत आकार और भार अनुकूलता वाले टायरों का कभी भी प्रतिस्थापन न करें।",
+              "flags": []
             }
           }
         },
@@ -5233,8 +5551,9 @@
               "flags": []
             },
             "example": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "समतल फर्श, ट्रांसमिशन टनल और कैब की एर्गोनॉमिक्स में भिन्नता होती है।",
+              "flags": []
             },
             "caution": {
               "state": "machine-candidate",
@@ -5251,8 +5570,9 @@
           "name": "बैटरी क्षमता (Ah)",
           "fields": {
             "definition": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "स्टार्टिंग और इलेक्ट्रिकल सिस्टम के लिए उपयोग की जाने वाली बैटरी चार्ज स्टोरेज की रेटिंग।",
+              "flags": []
             },
             "example": {
               "state": "machine-candidate",
@@ -5292,12 +5612,14 @@
           "name": "ISOBUS ट्रैक्टर-उपकरण संचार",
           "fields": {
             "definition": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "एक मानकीकृत संचार प्रणाली जो संगत ट्रैक्टरों और उपकरणों को डेटा और नियंत्रणों का आदान-प्रदान करने की अनुमति देती है।",
+              "flags": []
             },
             "example": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "एक संगत ड्रिल डिस्प्ले के माध्यम से सेटअप और कार्य संबंधी डेटा का आदान-प्रदान कर सकती है।",
+              "flags": []
             },
             "caution": {
               "state": "machine-candidate",
@@ -5332,12 +5654,14 @@
           "name": "इंजन संचालन का प्रकार",
           "fields": {
             "definition": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "इसमें इंजन के बुनियादी संचालन का वर्णन किया गया है, जैसे कि डीजल या पेट्रोल, चार-स्ट्रोक या दो-स्ट्रोक और शीतलन विधि।",
+              "flags": []
             },
             "example": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "एक चार-स्ट्रोक डीजल इंजन दो क्रैंकशाफ्ट चक्करों में एक शक्ति चक्र पूरा करता है।",
+              "flags": []
             },
             "caution": {
               "state": "machine-candidate",
@@ -5356,8 +5680,9 @@
               "flags": []
             },
             "example": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "फेंडर पर लगे लिफ्ट बटन किसी उपकरण को जोड़ते समय स्थिति निर्धारण को आसान बना सकते हैं।",
+              "flags": []
             },
             "caution": {
               "state": "machine-candidate",
@@ -5376,8 +5701,9 @@
               "flags": []
             },
             "example": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "11 लीटर इंजन ऑयल भरने का मतलब यह नहीं है कि ईंधन की खपत भी 11 लीटर होगी।",
+              "flags": []
             },
             "caution": {
               "state": "machine-candidate",
@@ -5401,8 +5727,9 @@
               "flags": []
             },
             "caution": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "केवल कांच का क्षेत्रफल ही ब्लाइंड स्पॉट, ध्वनि इन्सुलेशन या सुरक्षा प्रमाणन को नहीं मापता है।",
+              "flags": []
             }
           }
         },
@@ -5432,12 +5759,14 @@
           "name": "ट्रांसपोर्ट लॉक और उपकरण सुरक्षा",
           "fields": {
             "definition": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "परिवहन या पार्किंग के दौरान उपकरण की अवांछित गति को सीमित करने के लिए यांत्रिक या हाइड्रोलिक व्यवस्थाएं।",
+              "flags": []
             },
             "example": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "सड़क यात्रा से पहले फोल्डिंग लॉन मोवर के लिए ट्रांसपोर्ट लॉक की आवश्यकता हो सकती है।",
+              "flags": []
             },
             "caution": {
               "state": "machine-candidate",
@@ -5461,8 +5790,9 @@
               "flags": []
             },
             "caution": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "हीटेड मिरर यह साबित नहीं करते कि सभी दृश्य स्पष्ट हैं या यह सुविधा मानक रूप से उपलब्ध है।",
+              "flags": []
             }
           }
         }
@@ -5477,16 +5807,19 @@
           "name": "Запас / рост крутящего момента",
           "fields": {
             "definition": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "Процентное значение, описывающее, насколько может увеличиться крутящий момент при снижении частоты вращения двигателя под нагрузкой.",
+              "flags": []
             },
             "example": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "Это может повлиять на реакцию двигателя при столкновении плуга с более твердой почвой.",
+              "flags": []
             },
             "caution": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "Производители могут рассчитывать это, используя различные эталонные скорости.",
+              "flags": []
             }
           }
         },
@@ -5500,8 +5833,9 @@
               "flags": []
             },
             "example": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "Два двигателя одинакового рабочего объёма могут развивать разную мощность.",
+              "flags": []
             },
             "caution": {
               "state": "machine-candidate",
@@ -5525,8 +5859,9 @@
               "flags": []
             },
             "caution": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "Одного лишь количества цилиндров недостаточно для доказательства надежности или производительности.",
+              "flags": []
             }
           }
         },
@@ -5577,8 +5912,9 @@
           "name": "Турбокомпрессор и интеркулер",
           "fields": {
             "definition": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "Турбокомпрессор использует энергию выхлопных газов для сжатия всасываемого воздуха; промежуточный охладитель охлаждает сжатый воздух.",
+              "flags": []
             },
             "example": {
               "state": "machine-candidate",
@@ -5642,8 +5978,9 @@
           "name": "DPF, SCR и AdBlue/DEF",
           "fields": {
             "definition": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "Сажевый фильтр (DPF) улавливает частицы сажи; система селективного каталитического восстановления (SCR) использует дозирующую жидкость для снижения выбросов оксидов азота.",
+              "flags": []
             },
             "example": {
               "state": "machine-candidate",
@@ -5672,8 +6009,9 @@
               "flags": []
             },
             "caution": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "Одного лишь количества передач недостаточно для определения комфорта или долговечности.",
+              "flags": []
             }
           }
         },
@@ -5687,8 +6025,9 @@
               "flags": []
             },
             "example": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "Это может упростить регулировку скорости во время работы.",
+              "flags": []
             },
             "caution": {
               "state": "machine-candidate",
@@ -5730,8 +6069,9 @@
               "flags": []
             },
             "example": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "Это полезно при многократных маневрах погрузчика.",
+              "flags": []
             },
             "caution": {
               "state": "machine-candidate",
@@ -5745,8 +6085,9 @@
           "name": "Реверсор / механизм смены направления",
           "fields": {
             "definition": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "Механизм управления, используемый для выбора движения вперед и назад.",
+              "flags": []
             },
             "example": {
               "state": "machine-candidate",
@@ -5775,8 +6116,9 @@
               "flags": []
             },
             "caution": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "Двухдисковое сцепление не обязательно означает коробку передач DCT, как у легковых автомобилей.",
+              "flags": []
             }
           }
         },
@@ -5795,7 +6137,8 @@
               "flags": [
                 "check-code:4WD",
                 "check-code:2WD",
-                "check-numeric-values"
+                "check-number:4",
+                "check-number:2"
               ]
             },
             "caution": {
@@ -5803,7 +6146,7 @@
               "value": "Шины, вес и тип грунта имеют значение; полноприводные автомобили не всегда превосходят полноприводные.",
               "flags": [
                 "check-code:4WD",
-                "check-numeric-values"
+                "check-number:4"
               ]
             }
           }
@@ -5834,12 +6177,14 @@
           "name": "Конечная передача, мост и дифференциал 4x4",
           "fields": {
             "definition": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "Главная передача и компоненты моста передают крутящий момент трансмиссии на колеса.",
+              "flags": []
             },
             "example": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "Портальные и планетарные редукторы могут влиять на зазор и снижение крутящего момента.",
+              "flags": []
             },
             "caution": {
               "state": "machine-candidate",
@@ -5905,8 +6250,9 @@
               "flags": []
             },
             "caution": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "Геометрия, категория и центр тяжести навесного оборудования имеют такое же значение, как и грузоподъемность.",
+              "flags": []
             }
           }
         },
@@ -5920,8 +6266,9 @@
               "flags": []
             },
             "example": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "Это может помочь вернуть орудие на стабильную высоту на мысе.",
+              "flags": []
             },
             "caution": {
               "state": "machine-candidate",
@@ -5966,8 +6313,9 @@
               "flags": []
             },
             "caution": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "Передний ВОМ, грузоподъемность и пределы передней оси необходимо проверять отдельно.",
+              "flags": []
             }
           }
         },
@@ -5997,8 +6345,9 @@
           "name": "Колёсная база",
           "fields": {
             "definition": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "Продольное расстояние между центрами передней и задней осей.",
+              "flags": []
             },
             "example": {
               "state": "machine-candidate",
@@ -6043,8 +6392,9 @@
               "flags": []
             },
             "example": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "Это важно для обеспечения зазора над посевами и препятствиями.",
+              "flags": []
             },
             "caution": {
               "state": "machine-candidate",
@@ -6137,7 +6487,7 @@
               "value": "При использовании полноприводных автомобилей важен диаметр передней/задней оси; замена требует согласования.",
               "flags": [
                 "check-code:4WD",
-                "check-numeric-values"
+                "check-number:4"
               ]
             }
           }
@@ -6147,8 +6497,9 @@
           "name": "Давление в шинах и давление на почву",
           "fields": {
             "definition": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "Давление в шине влияет на её поведение и, при нагрузке, на контактное напряжение с грунтом.",
+              "flags": []
             },
             "example": {
               "state": "machine-candidate",
@@ -6156,8 +6507,9 @@
               "flags": []
             },
             "caution": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "Не рекомендуется накачивать шины без таблиц нагрузки/скорости, предоставленных производителем.",
+              "flags": []
             }
           }
         },
@@ -6171,12 +6523,17 @@
               "flags": []
             },
             "example": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "Это показывает, насколько легко трактор может развернуться на ограниченных площадках или на краю поля.",
+              "flags": []
             },
             "caution": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "На этот показатель влияют шины, полный привод, усилитель тормозов и метод тестирования.",
+              "flags": [
+                "check-code:4WD",
+                "check-number:4"
+              ]
             }
           }
         },
@@ -6195,8 +6552,9 @@
               "flags": []
             },
             "caution": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "Мощность двигателя, ВОМ и тяговое усилие измеряются по-разному.",
+              "flags": []
             }
           }
         },
@@ -6210,8 +6568,9 @@
               "flags": []
             },
             "example": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "При совмещении погрузчика и балласта проверьте предельные значения длины оси.",
+              "flags": []
             },
             "caution": {
               "state": "machine-candidate",
@@ -6230,8 +6589,9 @@
               "flags": []
             },
             "example": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "На тракторах с открытой кабиной система защиты от опрокидывания (ROPS) и ремень безопасности работают совместно.",
+              "flags": []
             },
             "caution": {
               "state": "machine-candidate",
@@ -6245,8 +6605,9 @@
           "name": "FOPS / защита от падающих предметов",
           "fields": {
             "definition": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "Конструкция, предназначенная для защиты от определенных опасностей, связанных с падением предметов.",
+              "flags": []
             },
             "example": {
               "state": "machine-candidate",
@@ -6286,8 +6647,9 @@
           "name": "Ремень безопасности и сиденье оператора",
           "fields": {
             "definition": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "Оборудование, предназначенное для удержания оператора и снижения передаваемой вибрации.",
+              "flags": []
             },
             "example": {
               "state": "machine-candidate",
@@ -6394,8 +6756,9 @@
           "name": "Интервал обслуживания",
           "fields": {
             "definition": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "Установленный интервал рабочего времени или календарный интервал для проведения технического обслуживания.",
+              "flags": []
             },
             "example": {
               "state": "machine-candidate",
@@ -6435,8 +6798,11 @@
           "name": "ECE R120, ISO 14396 и испытания ОЭСР",
           "fields": {
             "definition": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "Стандарты для двигателей описывают заявленные режимы работы, а коды ОЭСР определяют процедуры испытаний тракторов.",
+              "flags": [
+                "check-code:OECD"
+              ]
             },
             "example": {
               "state": "machine-candidate",
@@ -6455,12 +6821,14 @@
           "name": "Каталог производителя и независимое испытание",
           "fields": {
             "definition": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "В брошюре фиксируется заявление производителя; в независимом исследовании приводятся результаты измерений, проведенных в указанных условиях.",
+              "flags": []
             },
             "example": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "Расчетное значение ВОМ, указанное в каталоге, не совпадает с лабораторным испытанием ВОМ.",
+              "flags": []
             },
             "caution": {
               "state": "machine-candidate",
@@ -6500,12 +6868,14 @@
               "flags": []
             },
             "example": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "В одной серии тракторов может использоваться один поставщик двигателей в одном поколении, а другой — в более поздних.",
+              "flags": []
             },
             "caution": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "Марка сама по себе не является идентификатором детали; необходимо уточнить код модели двигателя.",
+              "flags": []
             }
           }
         },
@@ -6545,8 +6915,9 @@
               "flags": []
             },
             "caution": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "Одного лишь количества клапанов недостаточно для увеличения крутящего момента или срока службы двигателя.",
+              "flags": []
             }
           }
         },
@@ -6576,8 +6947,9 @@
           "name": "Воздухоочиститель двигателя",
           "fields": {
             "definition": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "Фильтрует запыленный всасываемый воздух, уменьшая абразивное загрязнение поршней и цилиндров.",
+              "flags": []
             },
             "example": {
               "state": "machine-candidate",
@@ -6585,8 +6957,9 @@
               "flags": []
             },
             "caution": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "Для сухих и масляных фильтров требуются разные процедуры обслуживания.",
+              "flags": []
             }
           }
         },
@@ -6595,8 +6968,9 @@
           "name": "Дизельное топливо и тип топлива",
           "fields": {
             "definition": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "Тип топлива, для которого предназначен двигатель, и его совместимость с системой впрыска имеют значение.",
+              "flags": []
             },
             "example": {
               "state": "machine-candidate",
@@ -6604,8 +6978,9 @@
               "flags": []
             },
             "caution": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "Для уточнения точной версии проверьте список разрешенных производителем биодизельных смесей.",
+              "flags": []
             }
           }
         },
@@ -6619,8 +6994,9 @@
               "flags": []
             },
             "example": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "Изношенные поршневые кольца могут увеличить расход масла или привести к потере компрессии.",
+              "flags": []
             },
             "caution": {
               "state": "machine-candidate",
@@ -6634,12 +7010,14 @@
           "name": "Коленчатый вал",
           "fields": {
             "definition": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "Преобразует возвратно-поступательное движение поршня во вращение и обеспечивает выходную мощность двигателя.",
+              "flags": []
             },
             "example": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "Частота вращения двигателя в оборотах в минуту (об/мин) — это, по сути, скорость вращения коленчатого вала.",
+              "flags": []
             },
             "caution": {
               "state": "machine-candidate",
@@ -6665,8 +7043,9 @@
               ]
             },
             "caution": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "Полная, номинальная, мощность, вырабатываемая ВОМ, и мощность с наддувом не должны заменять друг друга.",
+              "flags": []
             }
           }
         },
@@ -6675,8 +7054,9 @@
           "name": "Транспортная и минимальная рабочая скорость",
           "fields": {
             "definition": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "Диапазон скоростей движения, обеспечиваемый коробкой передач и шинами.",
+              "flags": []
             },
             "example": {
               "state": "machine-candidate",
@@ -6684,8 +7064,9 @@
               "flags": []
             },
             "caution": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "Максимальная скорость на дороге не отменяет дорожные правила или ограничения, установленные оборудованием.",
+              "flags": []
             }
           }
         },
@@ -6699,8 +7080,9 @@
               "flags": []
             },
             "example": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "Это может повысить комфорт при перевозке прицепа по неровным дорогам.",
+              "flags": []
             },
             "caution": {
               "state": "machine-candidate",
@@ -6714,8 +7096,9 @@
           "name": "Диапазон передач, ходоуменьшитель и ступень Powershift",
           "fields": {
             "definition": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "Дополнительные диапазоны скоростей или ступенчатые переключения под нагрузкой, наложенные на основные шестерни.",
+              "flags": []
             },
             "example": {
               "state": "machine-candidate",
@@ -6734,16 +7117,19 @@
           "name": "Муфта и включение ВОМ",
           "fields": {
             "definition": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "Сцепление, обеспечивающее включение или выключение привода к валу отбора мощности.",
+              "flags": []
             },
             "example": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "Электрогидравлическое включение может облегчить запуск ВОМ.",
+              "flags": []
             },
             "caution": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "Не приближайтесь к орудию, пока оно еще движется накатом после отключения.",
+              "flags": []
             }
           }
         },
@@ -6762,8 +7148,9 @@
               "flags": []
             },
             "caution": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "Никогда не обслуживайте работающий ВОМ с отсутствующими защитными кожухами; остановите двигатель.",
+              "flags": []
             }
           }
         },
@@ -6772,8 +7159,9 @@
           "name": "Гидравлический насос",
           "fields": {
             "definition": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "Использует механический привод для перемещения гидравлического масла по контуру.",
+              "flags": []
             },
             "example": {
               "state": "machine-candidate",
@@ -6797,8 +7185,9 @@
               "flags": []
             },
             "example": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "Цилиндры подъема погрузчика и наклона ковша выполняют разные функции.",
+              "flags": []
             },
             "caution": {
               "state": "machine-candidate",
@@ -6866,8 +7255,9 @@
               "flags": []
             },
             "caution": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "Никогда не заменяйте тип шин, если не указано иное, обеспечивающее совместимость по размеру и нагрузке.",
+              "flags": []
             }
           }
         },
@@ -6907,8 +7297,9 @@
               "flags": []
             },
             "caution": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "Подвеска сидений, осей и кабины предлагается в качестве отдельных опций.",
+              "flags": []
             }
           }
         },
@@ -6917,12 +7308,14 @@
           "name": "Платформа оператора и конструкция кабины",
           "fields": {
             "definition": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "Зона, в которой расположены сиденье оператора, пространство для ног и органы управления.",
+              "flags": []
             },
             "example": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "Эргономика плоских полов, трансмиссионных тоннелей и кабин различается.",
+              "flags": []
             },
             "caution": {
               "state": "machine-candidate",
@@ -6990,8 +7383,9 @@
               "flags": []
             },
             "caution": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "Наличие ISOBUS-сокета не гарантирует корректную работу всех функций с любым устройством.",
+              "flags": []
             }
           }
         },
@@ -7021,12 +7415,14 @@
           "name": "Тип рабочего процесса двигателя",
           "fields": {
             "definition": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "Описывает основные принципы работы двигателя, например, дизельного или бензинового, четырехтактного или двухтактного, а также способ охлаждения.",
+              "flags": []
             },
             "example": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "Четырехтактный дизельный двигатель совершает рабочий цикл за два оборота коленчатого вала.",
+              "flags": []
             },
             "caution": {
               "state": "machine-candidate",
@@ -7040,16 +7436,19 @@
           "name": "Наружное управление задней навеской",
           "fields": {
             "definition": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "Органы управления, позволяющие позиционировать заднюю навеску снаружи кабины при заданных условиях.",
+              "flags": []
             },
             "example": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "Кнопки подъема, установленные на крыльях, могут облегчить позиционирование при сцепке навесного оборудования.",
+              "flags": []
             },
             "caution": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "Никогда не стойте в зоне защемления между трактором и навесным оборудованием; соблюдайте правила техники безопасности.",
+              "flags": []
             }
           }
         },
@@ -7063,8 +7462,9 @@
               "flags": []
             },
             "example": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "Заливка 11 литров моторного масла не означает расход топлива в 11 литров.",
+              "flags": []
             },
             "caution": {
               "state": "machine-candidate",
@@ -7078,8 +7478,9 @@
           "name": "Площадь остекления, обзорность и объём кабины",
           "fields": {
             "definition": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "Отдельные конструктивные решения, описывающие круговой обзор и защитный кожух для оператора.",
+              "flags": []
             },
             "example": {
               "state": "machine-candidate",
@@ -7172,8 +7573,9 @@
               "flags": []
             },
             "example": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "それは、耕うん機が固い土壌に遭遇した際のエンジンの反応に影響を与える可能性がある。",
+              "flags": []
             },
             "caution": {
               "state": "machine-candidate",
@@ -7187,8 +7589,9 @@
           "name": "エンジン排気量（cc / L）",
           "fields": {
             "definition": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "ピストンが掃気する総容積は3,000ccで、約3.0リットルです。",
+              "flags": []
             },
             "example": {
               "state": "machine-candidate",
@@ -7207,8 +7610,9 @@
           "name": "シリンダー数",
           "fields": {
             "definition": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "ピストンシリンダーの数は、エンジンのサイズ、滑らかさ、特性に影響を与える。",
+              "flags": []
             },
             "example": {
               "state": "machine-candidate",
@@ -7216,8 +7620,9 @@
               "flags": []
             },
             "caution": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "シリンダー数だけでは、信頼性や出力は証明されない。",
+              "flags": []
             }
           }
         },
@@ -7226,8 +7631,9 @@
           "name": "ボアとストローク",
           "fields": {
             "definition": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "ボアとはシリンダーの直径、ストロークとはピストンが死点間を移動する距離のことです。",
+              "flags": []
             },
             "example": {
               "state": "machine-candidate",
@@ -7246,8 +7652,9 @@
           "name": "エンジン回転数（rpm）",
           "fields": {
             "definition": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "クランクシャフトの毎分回転数。エンジン回転数とPTO回転数は同じではありません。",
+              "flags": []
             },
             "example": {
               "state": "machine-candidate",
@@ -7276,8 +7683,9 @@
               "flags": []
             },
             "caution": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "ターボチャージャーだけでは、燃費向上も耐用年数も保証されません。",
+              "flags": []
             }
           }
         },
@@ -7312,12 +7720,17 @@
               "flags": []
             },
             "example": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "ステージVとそれ以前のステージIIIAは、異なる規制制度を指します。",
+              "flags": [
+                "check-code:Stage V",
+                "check-code:Stage IIIA"
+              ]
             },
             "caution": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "同じモデル名でも、市場によって排ガス対策装置が異なる場合があります。",
+              "flags": []
             }
           }
         },
@@ -7336,8 +7749,9 @@
               "flags": []
             },
             "caution": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "排出ガス規制の区分によって必要なハードウェアが異なるため、モデルのマニュアルを参照してください。",
+              "flags": []
             }
           }
         },
@@ -7409,8 +7823,9 @@
           "name": "油圧式無段変速機（HST）",
           "fields": {
             "definition": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "油圧ポンプとモーターを用いて、走行速度をスムーズに変化させる駆動系。",
+              "flags": []
             },
             "example": {
               "state": "machine-candidate",
@@ -7455,8 +7870,9 @@
               "flags": []
             },
             "example": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "一部のトラクターでは、2段階目のペダル操作でPTO駆動を制御します。",
+              "flags": []
             },
             "caution": {
               "state": "machine-candidate",
@@ -7470,8 +7886,9 @@
           "name": "二輪・四輪駆動（2WD/4WD）",
           "fields": {
             "definition": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "駆動力が2輪か4輪のどちらで得られるかを示します。",
+              "flags": []
             },
             "example": {
               "state": "machine-candidate",
@@ -7490,8 +7907,9 @@
           "name": "デフロック",
           "fields": {
             "definition": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "車輪間の速度差を制限することで、滑りやすい路面でのトラクションを向上させます。",
+              "flags": []
             },
             "example": {
               "state": "machine-candidate",
@@ -7531,8 +7949,9 @@
           "name": "走行速度連動PTO",
           "fields": {
             "definition": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "トラクターの走行距離に連動したPTOモード。",
+              "flags": []
             },
             "example": {
               "state": "machine-candidate",
@@ -7540,8 +7959,9 @@
               "flags": []
             },
             "caution": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "標準の540rpmモードとは互換性がありません。",
+              "flags": []
             }
           }
         },
@@ -7560,8 +7980,9 @@
               "flags": []
             },
             "caution": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "多くの場合オプションですが、フロントリンケージと出力定格も重要です。",
+              "flags": []
             }
           }
         },
@@ -7575,8 +7996,9 @@
               "flags": []
             },
             "example": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "トラクターに対して、耕うん機、播種機、ロータリー耕うん機の位置を調整する装置です。",
+              "flags": []
             },
             "caution": {
               "state": "machine-candidate",
@@ -7616,12 +8038,14 @@
               "flags": []
             },
             "example": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "耕起作業においては牽引力の制御が重要であり、整地作業においては位置制御が重要となる。",
+              "flags": []
             },
             "caution": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "それでも、適切な土壌と農具の設置が必要である。",
+              "flags": []
             }
           }
         },
@@ -7656,12 +8080,14 @@
               "flags": []
             },
             "example": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "可変容量システムは、需要に応じて供給流量を調整できる。",
+              "flags": []
             },
             "caution": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "オープンセンター／クローズドセンターという表示だけでは、農機具の性能は判断できません。",
+              "flags": []
             }
           }
         },
@@ -7733,8 +8159,9 @@
           "name": "全長・全幅・全高",
           "fields": {
             "definition": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "指定された構成におけるトラクターの外観上の長さ、幅、高さ。",
+              "flags": []
             },
             "example": {
               "state": "machine-candidate",
@@ -7795,8 +8222,9 @@
           "name": "タイヤサイズ",
           "fields": {
             "definition": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "タイヤの断面形状、構造、リムサイズを定義します。",
+              "flags": []
             },
             "example": {
               "state": "machine-candidate",
@@ -7804,8 +8232,9 @@
               "flags": []
             },
             "caution": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "4WD車の場合、前後輪の回転周長が重要となるため、代替品を使用する場合は承認が必要です。",
+              "flags": []
             }
           }
         },
@@ -7849,7 +8278,7 @@
               "value": "タイヤ、四輪駆動、ブレーキアシスト、およびテスト方法が数値に影響します。",
               "flags": [
                 "check-code:4WD",
-                "check-numeric-values"
+                "check-number:4"
               ]
             }
           }
@@ -7859,12 +8288,14 @@
           "name": "ドローバーとけん引出力",
           "fields": {
             "definition": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "ドローバーは牽引される荷物を繋ぎ、ドローバーの動力は牽引力に伝達される有効な仕事である。",
+              "flags": []
             },
             "example": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "連結されたトレーラーも、制動性能および許容重量の制限を満たさなければならない。",
+              "flags": []
             },
             "caution": {
               "state": "machine-candidate",
@@ -7909,8 +8340,9 @@
               "flags": []
             },
             "caution": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "ROPS（横転保護構造）だけでは、シートベルトを着用していない状態での運転は安全ではありません。折りたたみ式ROPSの取扱説明書に従ってください。",
+              "flags": []
             }
           }
         },
@@ -7929,8 +8361,9 @@
               "flags": []
             },
             "caution": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "ROPSとFOPSは同じ認証ではありません。",
+              "flags": []
             }
           }
         },
@@ -7944,12 +8377,14 @@
               "flags": []
             },
             "example": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "湿式ディスクシステムは、熱と摩耗を異なる方法で管理できる。",
+              "flags": []
             },
             "caution": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "制動距離は、タイヤの種類、積載量、路面状況、メンテナンス状況にも左右されます。",
+              "flags": []
             }
           }
         },
@@ -7979,8 +8414,9 @@
           "name": "油圧式ステアリング・パワーステアリング",
           "fields": {
             "definition": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "油圧動力によって補助される操舵システム。",
+              "flags": []
             },
             "example": {
               "state": "machine-candidate",
@@ -8004,12 +8440,14 @@
               "flags": []
             },
             "example": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "粉塵の多い作業環境では、フィルターの手入れが重要です。",
+              "flags": []
             },
             "caution": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "通常のキャブフィルターは、農薬に対する保護性能が認証されていません。",
+              "flags": []
             }
           }
         },
@@ -8039,16 +8477,19 @@
           "name": "燃料タンク容量",
           "fields": {
             "definition": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "燃料タンクに貯まる燃料の量であり、消費量や航続距離を示すものではありません。",
+              "flags": []
             },
             "example": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "80リットルのタンクは、一定の稼働時間を保証するものではありません。",
+              "flags": []
             },
             "caution": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "消費量は、負荷、速度、運転条件によって異なります。",
+              "flags": []
             }
           }
         },
@@ -8062,8 +8503,9 @@
               "flags": []
             },
             "example": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "エンジンオイルと作動油は、交換時期が異なる場合があります。",
+              "flags": []
             },
             "caution": {
               "state": "machine-candidate",
@@ -8077,8 +8519,9 @@
           "name": "エア・燃料・オイルフィルター",
           "fields": {
             "definition": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "エンジンや流体回路への汚染物質の侵入を制限するサービス部品。",
+              "flags": []
             },
             "example": {
               "state": "machine-candidate",
@@ -8107,8 +8550,9 @@
               "flags": []
             },
             "caution": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "必ず試験箇所、年、手順、測定基準を明記してください。",
+              "flags": []
             }
           }
         },
@@ -8127,8 +8571,9 @@
               "flags": []
             },
             "caution": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "文書化されていない値を、検証済みまたは独立してテスト済みであるとラベル付けしないでください。",
+              "flags": []
             }
           }
         },
@@ -8137,8 +8582,9 @@
           "name": "標準装備・オプション・市場別仕様",
           "fields": {
             "definition": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "基本装備、オプションパッケージ、地域別構成を区別します。",
+              "flags": []
             },
             "example": {
               "state": "machine-candidate",
@@ -8204,8 +8650,9 @@
               "flags": []
             },
             "example": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "4気筒16バルブエンジンは、1気筒あたり4バルブを備えている場合がある。",
+              "flags": []
             },
             "caution": {
               "state": "machine-candidate",
@@ -8308,12 +8755,14 @@
               "flags": []
             },
             "example": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "エンジン回転数（rpm）は、基本的にクランクシャフトの回転速度のことです。",
+              "flags": []
             },
             "caution": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "クランクシャフトとPTOシャフトは別物であり、ドライブトレインを介して接続されている。",
+              "flags": []
             }
           }
         },
@@ -8322,8 +8771,9 @@
           "name": "エンジン総出力と正味出力",
           "fields": {
             "definition": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "エンジンの総出力と正味出力は、試験構成や補助機器によって異なる場合があります。",
+              "flags": []
             },
             "example": {
               "state": "machine-candidate",
@@ -8347,8 +8797,9 @@
               "flags": []
             },
             "example": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "クリーパーギアは、非常に低速な農機具の操作に役立ちます。",
+              "flags": []
             },
             "caution": {
               "state": "machine-candidate",
@@ -8388,8 +8839,9 @@
               "flags": []
             },
             "example": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "24F/24Rギアボックスは、12速のギアと2つのレンジを組み合わせることができる。",
+              "flags": []
             },
             "caution": {
               "state": "machine-candidate",
@@ -8424,8 +8876,9 @@
           "name": "PTO軸の安全カバー",
           "fields": {
             "definition": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "回転するPTOシャフトおよびジョイントへの偶発的な接触を軽減するためのガード。",
+              "flags": []
             },
             "example": {
               "state": "machine-candidate",
@@ -8433,8 +8886,9 @@
               "flags": []
             },
             "caution": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "ガードが欠落している状態で、稼働中のPTOを整備してはいけません。必ずエンジンを停止させてください。",
+              "flags": []
             }
           }
         },
@@ -8474,8 +8928,9 @@
               "flags": []
             },
             "caution": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "流量に加えて、圧力、シリンダーのサイズ、安全弁も重要です。",
+              "flags": []
             }
           }
         },
@@ -8489,12 +8944,16 @@
               "flags": []
             },
             "example": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "合計45L/分という数値は、そのすべてが農具に到達することを意味するものではありません。",
+              "flags": [
+                "check-code:L/min"
+              ]
             },
             "caution": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "操舵流量と実機利用可能流量は、別々の数値として扱うこと。",
+              "flags": []
             }
           }
         },
@@ -8508,12 +8967,14 @@
               "flags": []
             },
             "example": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "油圧モーターにおいては、ポンプの合計出力よりも、装置が実際に使用できる流量の方が重要である。",
+              "flags": []
             },
             "caution": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "実際のカプラーにおいて、規定の試験条件下で流量を確認してください。",
+              "flags": []
             }
           }
         },
@@ -8543,16 +9004,19 @@
           "name": "輪距調整",
           "fields": {
             "definition": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "リムまたは車軸を使用して、承認された範囲内でホイール間隔を調整する。",
+              "flags": []
             },
             "example": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "トラックは、作物の畝間隔に合わせて設定できます。",
+              "flags": []
             },
             "caution": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "リムの取り付け方や車軸への荷重が不適切だと、安全上のリスクが生じる可能性があります。",
+              "flags": []
             }
           }
         },
@@ -8566,8 +9030,9 @@
               "flags": []
             },
             "example": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "長時間の運搬作業において、作業員の疲労に影響を与える可能性がある。",
+              "flags": []
             },
             "caution": {
               "state": "machine-candidate",
@@ -8607,8 +9072,9 @@
               "flags": []
             },
             "example": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "80Ahのバッテリーと100Ahのバッテリーでは、始動能力が異なる場合がある。",
+              "flags": []
             },
             "caution": {
               "state": "machine-candidate",
@@ -8627,8 +9093,9 @@
               "flags": []
             },
             "example": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "照明器具や電子機器が増えると、電力需要も増加します。",
+              "flags": []
             },
             "caution": {
               "state": "machine-candidate",
@@ -8673,8 +9140,9 @@
               "flags": []
             },
             "caution": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "精度は、補正サービス、受信者、およびアプリケーションによって異なります。",
+              "flags": []
             }
           }
         },
@@ -8725,8 +9193,9 @@
           "name": "エンジンオイル容量",
           "fields": {
             "definition": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "オイルパンおよび潤滑システムへの規定オイル充填量は、摩耗および熱管理において非常に重要です。",
+              "flags": []
             },
             "example": {
               "state": "machine-candidate",
@@ -8771,12 +9240,14 @@
               "flags": []
             },
             "example": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "一つのモデル名で、米国仕様と欧州仕様の異なるトランスミッションを区別できる場合がある。",
+              "flags": []
             },
             "caution": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "正確な同一性を示す証拠がない限り、仕様を別のバリアントに移行してはならない。",
+              "flags": []
             }
           }
         },
@@ -8806,8 +9277,9 @@
           "name": "ヒーター付きミラーと窓の霜取り",
           "fields": {
             "definition": {
-              "state": "unavailable",
-              "value": null
+              "state": "machine-candidate",
+              "value": "寒くて湿気の多い天候時に、鏡や窓の曇りや氷を取り除くのに役立つ電気的な機能。",
+              "flags": []
             },
             "example": {
               "state": "machine-candidate",
