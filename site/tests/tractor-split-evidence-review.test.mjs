@@ -1,5 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
+import { spawnSync } from "node:child_process";
+import { fileURLToPath } from "node:url";
 import {routeCatalogueEvidence} from "../../scripts/tractor-split-evidence-review.mjs";
 const gates=keys=>Object.fromEntries(keys.map(k=>[k,"pass"]));
 const base=()=>({model:{brand:"Synthetic",model:"A",market:"Test"},modelGates:gates(["identity","deduplication","sourceProvenance","contentQuality","requiredReview","rls","localeSeo","releaseTests","coverageAfterOmission"]),claims:[{key:"rated_power",type:"manufacturer_spec",gates:{...gates(["originalEvidence","modelMarketMatch","unitsAndConditions","conflictResolved"]),independentEvidence:"pending"}}]});
@@ -11,3 +13,27 @@ test("conflicting claim isolated only if existing coverage gate passes",()=>{con
 test("no mandatory model gate is optional",()=>{for(const key of Object.keys(base().modelGates)){const x=base();x.modelGates[key]="pending";assert.equal(routeCatalogueEvidence(x).technicalRoute,"hold_model",key);}});
 test("photo requires every gate even if technical data are ready",()=>{const g=gates(["publishedTarget","exactIdentity","commercialReuse","derivativesPermitted","attribution","originalBytes","hashVerified","decodeAndMime","assetTests"]);for(const key of Object.keys(g)){const x=base();x.photo={gates:{...g,[key]:"pending"}};assert.equal(routeCatalogueEvidence(x).photoRoute,"hold_photo",key);}const x=base();x.photo={gates:g};const r=routeCatalogueEvidence(x);assert.equal(r.photoRoute,"route_to_existing_photo_review");assert.equal(r.allowedToPublish,false);});
 test("malformed missing or duplicate evidence fails closed",()=>{const x=base();delete x.modelGates.rls;assert.throws(()=>routeCatalogueEvidence(x));const y=base();y.claims.push(y.claims[0]);assert.throws(()=>routeCatalogueEvidence(y));assert.throws(()=>routeCatalogueEvidence({...base(),model:{}}));});
+
+test("batch separates pending review, failed review, photos and malformed records", () => {
+  const ready = base();
+  const pending = base();
+  pending.modelGates.requiredReview = "pending";
+  const failed = base();
+  failed.modelGates.requiredReview = "fail";
+  const incomplete = structuredClone(pending);
+  incomplete.modelGates.identity = "pending";
+  const script = fileURLToPath(new URL("../../scripts/tractor-catalogue-batch-review.mjs", import.meta.url));
+  const run = records => spawnSync(process.execPath, [script], {
+    input: JSON.stringify(records), encoding: "utf8",
+  });
+  const mixed = run([ready, pending, failed, incomplete, null]);
+  assert.equal(mixed.status, 1);
+  const queues = JSON.parse(mixed.stdout);
+  assert.deepEqual(queues.releaseReview, [0]);
+  assert.deepEqual(queues.requiredReview, [1]);
+  assert.deepEqual(queues.heldModels.map(x => x.index), [2, 3]);
+  assert.deepEqual(queues.missingPhotos, [0, 1, 2, 3]);
+  assert.deepEqual(queues.invalidRecords.map(x => x.index), [4]);
+  assert.equal(run([ready, pending]).status, 0);
+  assert.equal(run({}).status, 1);
+});

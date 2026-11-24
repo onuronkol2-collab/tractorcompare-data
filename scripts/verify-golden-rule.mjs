@@ -6,6 +6,7 @@ import { readFileSync } from "node:fs";
 const checks = new Map([
   ["AGENTS.md", [
     "ALTIN KURAL", "TAM ENTEGRASYON", "GitHub", "Supabase",
+    "### Katalog verisini toplu doğrulama ve canlıya aktarma",
     "### Ücretsiz araçlardan maksimum fayda", "ChatGPT’nin daha iyi yaptığı",
     "Yalnızca ücretsiz sürümleri", "kullanıcıya bağlantı isteği gönder",
     "Firecrawl", "Microsoft Clarity", "PostHog", "OpenSEO",
