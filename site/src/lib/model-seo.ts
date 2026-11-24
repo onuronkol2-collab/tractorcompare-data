@@ -449,6 +449,10 @@ export function modelSeoMetadata(tractor: TractorRecord, lang: Locale) {
     (lang==="zh"||lang==="ja"?"。":lang==="hi"?"।":".");
   const addIndependent=():boolean=>{
     if(!independentSentence)return false;
+    // Keep useful specification coverage alongside provenance when both fit
+    // only with the existing concise source label. Never weaken the label.
+    const fullWithCount=searchDescription.length+2+independentSentence.length+countSentence.length;
+    if(fullWithCount>160&&addSentence(independentLabel))return true;
     return addSentence(independentSentence)||addSentence(independentLabel);
   };
   const independentPower=headlinePower?.sourceType==="independent"&&!hasInternationalSonalikaContext(tractor);
