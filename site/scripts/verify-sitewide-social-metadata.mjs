@@ -29,7 +29,20 @@ export function inspectSocialMetadata(html,file="index.html"){
     errors.push("social preview card is not a large image");
   if(values["og:image"] && !/^https:\/\//.test(values["og:image"]))
     errors.push("social preview image is not absolute HTTPS");
-  return {file,errors,brandFallback:values["og:image"]==="https://tractorvs.com/images/tractorvs-share-card.png"};
+  const brandFallback=values["og:image"]==="https://tractorvs.com/images/tractorvs-share-card.png";
+  const modelPage=/\/tractors\/[^/]+\/$/.test(new URL(url||"https://tractorvs.com/","https://tractorvs.com").pathname);
+  // Custom images elsewhere need their own reviewed description. Require
+  // matching, nonempty alt for the known model-photo and brand-fallback paths.
+  if(modelPage||brandFallback){
+    const alts=["og:image:alt","twitter:image:alt"].map(tag=>{
+      const matches=get(tag);
+      if(matches.length!==1||!matches[0]?.trim())errors.push(tag+" missing/duplicate/empty");
+      return matches[0];
+    });
+    if(alts[0]&&alts[1]&&alts[0]!==alts[1])errors.push("social preview alternative texts differ");
+    if(brandFallback&&alts.some(alt=>alt&&alt!=="TractorVS"))errors.push("brand fallback alt misidentifies image");
+  }
+  return {file,errors,brandFallback};
 }
 export function auditBuiltSocialMetadata(directory){
   const root=resolve(directory),summary={htmlDocuments:0,indexablePages:0,brandFallbackPages:0,errors:[]};
