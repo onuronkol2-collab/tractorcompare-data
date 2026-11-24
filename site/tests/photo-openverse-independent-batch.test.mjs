@@ -69,7 +69,8 @@ test("12 max provider search rotates missing identities, keeps bounded leads and
  assert.equal(report.missing_published_variant_records,3);
  assert.equal(report.queries_sent,2);
  assert.equal(seen.length,2);
- assert.equal(report.candidates.length,14,"7 leads maximum per model");
+ assert.equal(report.candidates.length,2,"Repeated landing URLs count only once per model");
+ assert.ok(seen.every(u=>u.searchParams.get("page_size")==="20"));
  assert.ok(report.candidates.every(x=>x.allowed_to_publish===false));
  assert.equal(delay.length,2);
 });
@@ -139,4 +140,24 @@ test("read-only Openverse research never offers an already-photo-covered variant
  assert.deepEqual(report.models[0].missingTractorIds,["f50"]);
  assert.ok(report.candidates.every(x=>x.allowed_to_publish===false));
  assert.ok(report.candidates.every(x=>x.exact_visual_model_identity_verified===false));
+});
+
+
+test("full title token boundaries and tag evidence expand discovery without auto-approval",()=>{
+ const separated=classifyOpenverseResult(valid("McCormick tractor at a show, X5.085"),"McCormick","X5.085");
+ assert.equal(separated.metadata_match,"title");
+ assert.equal(classifyOpenverseResult(valid("McCormick X5.0850"),"McCormick","X5.085"),null);
+ const tagged=classifyOpenverseResult({...valid("Agricultural exhibition"),tags:[{name:"Sonalika"},{name:"DI 30 Baagban"}]},"Sonalika","DI 30 Baagban");
+ assert.equal(tagged.metadata_match,"tags");assert.equal(tagged.allowed_to_publish,false);
+ assert.ok(classifyOpenverseResult(valid("TYM T475 tractor"),"TYM","T3047"));
+});
+test("approved exact identity and explicit illustrative aliases use the same match as public pages",()=>{
+ const published=[pub("TYM","T3048","a"),pub("TYM","T3048","b")];
+ const approved=[{brand:"TYM",model:"T3048",tractorId:"a"},{brand:"TYM",model:"F50",tractorId:"other",illustrativeOn:[{tractorId:"b",model:"T3048"}]}];
+ assert.equal(selectPublishedMissing(published,approved).missingPublishedRecords,0);
+ assert.equal(selectPublishedMissing(published,[{brand:"Wrong",model:"T3048",tractorId:"a"}]).missingPublishedRecords,2);
+});
+test("valid lead beyond initial seven is discovered in the same request",async()=>{
+ const report=await researchIndependentSources([fixtures[0]],{approved:[],fetchFn:async()=>({status:200,headers:{get:()=>"application/json"},json:async()=>({results:[...Array(10).fill(valid("Other tractor")),valid("McCormick X5.085")]})}),delayFn:async()=>{}});
+ assert.equal(report.queries_sent,1);assert.equal(report.candidates.length,1);
 });

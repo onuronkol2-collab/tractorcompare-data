@@ -8,7 +8,9 @@
 import {readFile,mkdir,writeFile} from "node:fs/promises";
 import {resolve} from "node:path";
 import {fileURLToPath} from "node:url";
-import {APPROVED_TRACTOR_PHOTOS} from "../src/lib/tractor-photos.ts";
+import {APPROVED_TRACTOR_PHOTOS,photoMatchesTractor} from "../src/lib/tractor-photos.ts";
+import {matchesPhotoFileModel} from "./photo-model-identity.mjs";
+import {matchesManufacturerPhotoAlias,manufacturerPhotoAlias} from "./photo-model-aliases.mjs";
 
 export const MAX_REQUESTS=12;
 export const PUBLIC_REPORT_DIR=resolve("./photo-discovery-report");
@@ -23,15 +25,13 @@ export function selectPublishedMissing(records,approved=APPROVED_TRACTOR_PHOTOS,
  // Photo identity is sometimes variant-scoped (tractorId), never just a
  // brand+model string. A photographed TYM T3048/F50CHN must not cause the
  // photo-less T3048/F50 and F50CN entries to be skipped from research.
- const photographedExactIds=new Set(approved.filter(p=>p.tractorId).map(p=>String(p.tractorId)));
- const photographedModelFamilies=new Set(approved.filter(p=>!p.tractorId).map(key));
  const unique=new Map(),missingPublishedIds=new Set(),seenIds=new Map();
  for(const r of records){
   const k=key(r), id=String(r.tractor_id);
   const prior=seenIds.get(id);
   if(prior && prior!==k)throw Error("Published tractor_id reused by different model: refuse photo research");
   seenIds.set(id,k);
-  if(photographedExactIds.has(id)||photographedModelFamilies.has(k))continue;
+  if(approved.some(p=>photoMatchesTractor(p,{tractor_id:id,brand_name:r.brand,model_name:r.model})))continue;
   missingPublishedIds.add(id);
   if(!unique.has(k))unique.set(k,{brand:r.brand,model:r.model,missingTractorIds:[]});
   if(!unique.get(k).missingTractorIds.includes(id))unique.get(k).missingTractorIds.push(id);
@@ -64,12 +64,12 @@ export function classifyOpenverseResult(item,brand,model){
  const val=String(item.license).toLowerCase(),path=licenseUri.pathname.toLowerCase();
  if(!(val==="cc0"?path.startsWith("/publicdomain/zero/"):
    path.startsWith("/licenses/"+val+"/")))return null;
- const tokens=(norm(brand+" "+model).match(/[a-z0-9]+/g)||[]).filter(t=>t.length>=2);
- const normalizedTitle=norm(item.title);
- const relevant=tokens.every(t=>normalizedTitle.includes(t));
- if(!relevant)return null;
+ const matches=value=>matchesPhotoFileModel(brand,model,value)||matchesManufacturerPhotoAlias(brand,model,value);
+ const tags=Array.isArray(item.tags)?item.tags.slice(0,40).map(t=>typeof t?.name==="string"?t.name.slice(0,120):"").filter(Boolean):[];
+ const evidence=matches(item.title)?"title":matches(tags.join(" "))?"tags":null;
+ if(!evidence)return null;
  return {brand,model,title:item.title.slice(0,250),
-  source,creator:String(item.creator||"").slice(0,160)||null,
+  source,metadata_match:evidence,creator:String(item.creator||"").slice(0,160)||null,
   license:val,license_url:license,source_page_url:landing,
   exact_visual_model_identity_verified:false,original_author_rights_verified:false,
   allowed_to_publish:false,review_status:"external_provider_review_needed"};
@@ -86,10 +86,11 @@ export async function researchIndependentSources(records,{fetchFn=fetch,approved
  for(const item of selection.selected){
   const u=new URL(API);
   // Broad discoverability with a separate exact title-only model gate below.
-  u.searchParams.set("q",item.brand+" "+item.model+" tractor");
+  const alias=manufacturerPhotoAlias(item.brand,item.model);
+  u.searchParams.set("q",item.brand+" "+(alias||item.model));
   u.searchParams.set("source","flickr,europeana");
   u.searchParams.set("license","by,by-sa,cc0");
-  u.searchParams.set("page_size","7");
+  u.searchParams.set("page_size","20");
   const url=u.toString();
   if(new URL(url).origin!=="https://api.openverse.org")throw Error("Openverse host changed");
   let response;
@@ -100,7 +101,8 @@ export async function researchIndependentSources(records,{fetchFn=fetch,approved
     if(!String(response.headers?.get("content-type")||"").includes("application/json"))throw Error("Openverse unexpected response type");
     const body=await response.json();
     if(!Array.isArray(body?.results))throw Error("Openverse results absent");
-    const matches=body.results.slice(0,7).map(x=>classifyOpenverseResult(x,item.brand,item.model)).filter(Boolean);
+    const leads=body.results.slice(0,20).map(x=>classifyOpenverseResult(x,item.brand,item.model)).filter(Boolean);
+    const matches=[...new Map(leads.map(lead=>[lead.source_page_url,lead])).values()].sort((a,b)=>Number(b.metadata_match==="title")-Number(a.metadata_match==="title")).slice(0,7);
     report.models.push({...item,status:200,leads:matches.length});
     report.candidates.push(...matches);
   }catch(e){report.status="partial";report.models.push({...item,status:"error",reason:String(e?.message||e).slice(0,160),leads:0});}
