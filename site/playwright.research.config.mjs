@@ -11,7 +11,7 @@ export default defineConfig({
   forbidOnly:Boolean(process.env.CI),
   retries:process.env.CI?1:0,
   workers:1,
-  reporter:process.env.CI?[["list"],["html",{open:"never",outputFolder:"playwright-research-report"}]]:"list",
+  reporter:process.env.CI?[["list"],["html",{open:"never",outputFolder:"playwright-research-report"}],["json",{outputFile:process.env.RESEARCH_QA_JSON_REPORT || "playwright-research-evidence.json"}]]:"list",
   outputDir:"test-results-research",
   use:{baseURL:"https://tractorvs.com",trace:"retain-on-failure",screenshot:"only-on-failure",video:"off"},
   projects:[

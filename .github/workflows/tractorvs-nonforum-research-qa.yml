@@ -11,6 +11,9 @@ on:
       - "site/src/components/FarmAdvisor.astro"
       - "site/src/components/EditorialHub.astro"
       - "site/e2e-live/tractorvs-research.spec.mjs"
+      - "site/scripts/verify-research-qa-report.mjs"
+      - "site/tests/research-qa-report.test.mjs"
+      - "site/playwright.research.config.mjs"
       - ".github/workflows/tractorvs-nonforum-research-qa.yml"
   push:
     branches: [main]
@@ -23,6 +26,8 @@ on:
       - "site/src/components/FarmAdvisor.astro"
       - "site/src/components/EditorialHub.astro"
       - "site/e2e-live/tractorvs-research.spec.mjs"
+      - "site/scripts/verify-research-qa-report.mjs"
+      - "site/tests/research-qa-report.test.mjs"
       - "site/playwright.research.config.mjs"
       - ".github/workflows/tractorvs-nonforum-research-qa.yml"
   workflow_dispatch:
@@ -39,7 +44,7 @@ concurrency:
 jobs:
   production-research-browser:
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 45
     env:
       CI: "true"
       RESEARCH_QA_PREDEPLOY: ${{ github.event_name == 'pull_request' }}
@@ -78,10 +83,26 @@ jobs:
         run: |
           npm ci --no-audit --no-fund
           npm install --no-save --package-lock=false --ignore-scripts @playwright/test@1.65.1
+      - name: Test execution evidence gate (offline)
+        run: node --test site/tests/research-qa-report.test.mjs
+      - name: List predeployment test inventory (not a live UX pass)
+        if: github.event_name == 'pull_request'
+        run: |
+          npx playwright test --config site/playwright.research.config.mjs --list --reporter=list
+          echo '### Predeployment: test inventory only; no live UX execution. Production evidence is required after merge.' >> "$GITHUB_STEP_SUMMARY"
       - name: Install desktop and mobile browser engines
+        if: github.event_name != 'pull_request'
         run: npx playwright install --with-deps chromium firefox webkit
       - name: Verify all ten languages using real public research journeys
+        if: github.event_name != 'pull_request'
+        env:
+          RESEARCH_QA_JSON_REPORT: ${{ github.workspace }}/site/playwright-research-evidence.json
         run: npx playwright test --config site/playwright.research.config.mjs
+      - name: Require actual passing evidence for every language and browser
+        if: github.event_name != 'pull_request'
+        run: |
+          node site/scripts/verify-research-qa-report.mjs site/playwright-research-evidence.json
+          echo '### Production: all 40 required language/browser journeys executed and passed; no skipped or flaky tests.' >> "$GITHUB_STEP_SUMMARY"
       - name: Preserve screenshots and traces on failures
         if: always()
         uses: actions/upload-artifact@v7
@@ -90,5 +111,6 @@ jobs:
           path: |
             site/playwright-research-report
             site/test-results-research
+            site/playwright-research-evidence.json
           if-no-files-found: ignore
           retention-days: 7
