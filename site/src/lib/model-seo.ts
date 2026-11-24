@@ -422,31 +422,56 @@ export function modelSeoMetadata(tractor: TractorRecord, lang: Locale) {
   // Sonalika's explicitly qualified *category* (not engine test output)
   // retains its separate manufacturer-market wording.
   const headlinePower=matchedHeadlinePowerSource(tractor);
-  const segments = [
-    identity + ".",
-    tractor.specifications.length ? copy.specs(tractor.specifications.length) : copy.empty,
-    tractor.horsepower == null ? null : (hasInternationalSonalikaContext(tractor)
-      ? SONALIKA_EXPORT_COPY[lang].hpDescription(tractor.horsepower)
-      : headlinePower ? copy.power(tractor.horsepower) : null),
-    sourceCount ? copy.withSources : (independentCount ? null : copy.withoutSources),
-    independentCount ? INDEPENDENT_SOURCE_COPY[lang].seoOnlyIndependent : null,
-    variantContext && lang === "en" ? copy.note(variantContext.replace(/[.。।]+$/u, "")) : null,
-  ].filter((part):part is string=>Boolean(part));
+  const countSentence=tractor.specifications.length ? copy.specs(tractor.specifications.length) : copy.empty;
+  const powerSentence=tractor.horsepower == null ? null : (hasInternationalSonalikaContext(tractor)
+    ? SONALIKA_EXPORT_COPY[lang].hpDescription(tractor.horsepower)
+    : headlinePower ? copy.power(tractor.horsepower) : null);
+  const manufacturerSentence=sourceCount ? copy.withSources : (independentCount ? null : copy.withoutSources);
+  const independentSentence=independentCount ? INDEPENDENT_SOURCE_COPY[lang].seoOnlyIndependent : null;
+  const noteSentence=variantContext && lang === "en" ? copy.note(variantContext.replace(/[.。।]+$/u, "")) : null;
+  const segments = [identity+".",countSentence,powerSentence,manufacturerSentence,independentSentence,noteSentence]
+    .filter((part):part is string=>Boolean(part));
   const description=segments.join(" ");
   // The full, source-aware editorial explanation remains visible on the page.
   // Build the search snippet separately from complete sentences rather than
   // cutting a technical value, market, or source qualifier mid-word.
   // 160 is an editorial target, not a Google ranking or display guarantee.
-  const snippetStart=(identity+".").length<=120 ? identity+"." : model+".";
-  let searchDescription=snippetStart;
-  for(const part of segments.slice(1)){
-    let sentence=part;
-    // Keep the evidence qualifier when the full independent-source sentence cannot fit.
-    if (part===INDEPENDENT_SOURCE_COPY[lang].seoOnlyIndependent && searchDescription.length+1+part.length>160) {
-      sentence=INDEPENDENT_SOURCE_COPY[lang].label + (lang==="zh" || lang==="ja" ? "。" : lang==="hi" ? "।" : ".");
+  // A generic count should not displace a verified, query-relevant power
+  // fact. Never discard exact market/variant/year to fit such a fact.
+  // A truly long identity may exceed the advisory limit by itself.
+  let searchDescription=identity+".";
+  const addSentence=(sentence:string|null):boolean=>{
+    if(!sentence||searchDescription.length+1+sentence.length>160)return false;
+    searchDescription+=" "+sentence;
+    return true;
+  };
+  const independentLabel=INDEPENDENT_SOURCE_COPY[lang].label+
+    (lang==="zh"||lang==="ja"?"。":lang==="hi"?"।":".");
+  const addIndependent=():boolean=>{
+    if(!independentSentence)return false;
+    // Keep useful specification coverage alongside provenance when both fit
+    // only with the existing concise source label. Never weaken the label.
+    const fullWithCount=searchDescription.length+2+independentSentence.length+countSentence.length;
+    if(fullWithCount>160&&addSentence(independentLabel))return true;
+    return addSentence(independentSentence)||addSentence(independentLabel);
+  };
+  const independentPower=headlinePower?.sourceType==="independent"&&!hasInternationalSonalikaContext(tractor);
+  // A standalone independent power figure must retain its provenance.
+  if(independentPower){
+    if(independentSentence&&powerSentence&&
+        searchDescription.length+2+independentLabel.length+powerSentence.length<=160){
+      addSentence(independentLabel);
+      addSentence(powerSentence);
+    }else{
+      addIndependent();
     }
-    if(searchDescription.length+1+sentence.length<=160)searchDescription+=" "+sentence;
+  }else{
+    addSentence(powerSentence);
   }
+  if(!independentPower&&independentSentence)addIndependent();
+  addSentence(countSentence);
+  addSentence(manufacturerSentence);
+  addSentence(noteSentence);
   return {title,description,searchDescription};
 }
 
