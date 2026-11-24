@@ -312,16 +312,23 @@ const openGraphLocale: Record<Locale, string> = {
   // changes. Language links must track the CURRENT selection, not the selection
   // at initial page load. The custom event also supports future client routes.
   const languageLinks = [...document.querySelectorAll<HTMLAnchorElement>("[data-language-choice]")];
+  let lastSyncedSearch: string | null = null;
   const syncLanguageLinks = () => {
+    // Pointer, keyboard and context-menu events often arrive together.
+    // Static language choices only need rewriting when route state changes.
+    if (lastSyncedSearch === window.location.search) return;
     for (const link of languageLinks) {
       if (!link.dataset.languageCode) continue;
       const destination = new URL(link.href, window.location.origin);
       destination.search = window.location.search;
-      link.href = destination.pathname + destination.search;
+      const next = destination.pathname + destination.search;
+      if (link.getAttribute("href") !== next) link.href = next;
     }
+    lastSyncedSearch = window.location.search;
   };
   syncLanguageLinks();
   window.addEventListener("tractorvs:route-state-changed", syncLanguageLinks);
+  window.addEventListener("popstate", syncLanguageLinks);
   // Also refresh on direct interaction, including new-tab and keyboard usage,
   // if some other client component changes history without emitting the event.
   for (const link of languageLinks) {
