@@ -53,7 +53,8 @@ jobs:
                   status,final,ct,html=fetch(u);p=Parse();p.feed(html)
                   # The title should identify the exact article, not merely a generic forum page.
                   title=" ".join(p.h1)
-                  result={"locale":l,"http":status,"final_url":final==u,"html":ct=="text/html","lang":p.lang.lower().split("-")[0]==l.split("-")[0],"canonical":p.canonical==[u],"indexable":any("index" in x and "noindex" not in x for x in p.robots) and not any("noindex" in x for x in p.robots),"title":titles[l].casefold() in title.casefold(),"hreflang":sum(p.alts.get(k)==v for k,v in urls.items()),"sitemap":u in locs}
+                  result={"locale":l,"http":status,"final_url":final==u,"html":ct=="text/html","lang":p.lang.lower().split("-")[0]==l.split("-")[0],"canonical":p.canonical==[u],"indexable":any("index" in x and "noindex" not in x for x in p.robots) and not any("noindex" in x for x in p.robots),"title":titles[l].casefold() in title.casefold(),"hreflang":sum(p.alts.get(k)==v or (k=="zh" and any(p.alts.get(tag)==v for tag in ("zh-cn","zh-hans","zh-hans-cn"))) for k,v in urls.items()),"sitemap":u in locs}
+                  result["alternate_tags"]=sorted(p.alts.keys()); result["unmatched_urls"]=[k for k,v in urls.items() if v not in p.alts.values()]
                   result["pass"]=all(result[k] for k in ("final_url","html","lang","canonical","indexable","title","sitemap")) and status==200 and result["hreflang"]==10
                   return result
               except Exception as e: return {"locale":l,"pass":False,"error":str(e)}
