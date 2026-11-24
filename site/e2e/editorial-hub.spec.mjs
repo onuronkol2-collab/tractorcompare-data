@@ -49,9 +49,9 @@ test("ten authentic article hubs expose only real source-backed pages with corre
   if(!["en","tr"].includes(activeLocale)){
    expect(links.filter(href=>href.startsWith("/"+activeLocale+"/"))).toHaveLength(2);
    expect(links.filter(href=>!href.startsWith("/"+activeLocale+"/"))).toHaveLength(4);
-   await expect(page.locator(".editorial-language-note")).toHaveCount(4);
+   await expect(page.locator('[data-reading-language="other"] .editorial-language-note')).toHaveCount(4);
   }else{
-   await expect(page.locator(".editorial-language-note")).toHaveCount(0);
+   await expect(page.locator('[data-reading-language="other"] .editorial-language-note')).toHaveCount(0);
   }
  }
 });
@@ -216,7 +216,7 @@ test("editorial links have mobile touch targets without altering translation fal
  await expect(page.locator('.editorial-card h3 a[href="/de/guides/choosing-a-tractor/"]')).toHaveCount(1);
  await expect(page.locator('.editorial-card h3 a[href="/guides/tractor-engine-power-and-torque/"]')).toHaveAttribute("hreflang","en");
  await expect(page.locator('.editorial-card h3 a[href="/de/reviews/basak-2075-bk/"]')).toHaveCount(1);
- await expect(page.locator(".editorial-language-note")).toHaveCount(4);
+ await expect(page.locator('[data-reading-language="other"] .editorial-language-note')).toHaveCount(4);
  for(const control of await page.locator(".editorial-jumps a,.editorial-card-footer a").all()){
   const box=await control.boundingBox();
   expect(box?.height??0,"Touch target height").toBeGreaterThanOrEqual(44);
@@ -291,4 +291,67 @@ test("published Başak maximum engine-power label matches manufacturer across re
   await expect(page.locator(".review-facts tbody tr").nth(1).locator('th[scope="row"]')).toHaveText(label);
   await expect(page.locator(".review-facts tbody tr").nth(1).locator("td")).toContainText("53 kW / 72 hp @ 2500 rpm");
  }
+});
+
+
+test("reading-language coverage and filter agree with actual published article routes in all ten languages",async({page})=>{
+ test.setTimeout(90000);
+ await page.setViewportSize({width:320,height:800});
+ for(const locale of ["en","tr","zh","hi","pt-br","fr","de","ru","ja","es"]){
+  const path=(locale==="en"?"":"/"+locale)+"/articles/";
+  const same=["en","tr"].includes(locale);
+  const total=same?7:6;
+  const native=same?7:2;
+  await page.goto(path,{waitUntil:"domcontentloaded"});
+  const cards=page.locator("[data-editorial-card]");
+  const nativeCards=page.locator('[data-editorial-card][data-reading-language="local"]');
+  const foreignCards=page.locator('[data-editorial-card][data-reading-language="other"]');
+  await expect(cards).toHaveCount(total);
+  await expect(nativeCards).toHaveCount(native);
+  await expect(foreignCards).toHaveCount(total-native);
+  await expect(page.locator(".editorial-language-note")).toHaveCount(total);
+  await expect(page.locator(".editorial-coverage")).toBeVisible();
+  await expect(page.locator(".editorial-coverage")).toContainText(String(native));
+  await expect(page.locator(".editorial-coverage")).toContainText(String(total));
+  const before=await cards.locator("h3 a").evaluateAll(links=>links.map(a=>a.getAttribute("href")));
+  const afterSearch=page.locator("[data-editorial-card]:visible");
+  const search=page.locator("#editorial-query");
+  await expect(search).toBeVisible();
+  if(same){
+   await expect(page.locator(".editorial-language-filter")).toHaveCount(0);
+  }else{
+   const local=page.locator('input[name="editorial-reading-language"][value="local"]');
+   const other=page.locator('input[name="editorial-reading-language"][value="other"]');
+   await local.check();
+   await expect(afterSearch).toHaveCount(2);
+   await expect(foreignCards.first()).toBeHidden();
+   await other.check();
+   await expect(afterSearch).toHaveCount(4);
+   await expect(nativeCards.first()).toBeHidden();
+   await expect(page.locator("#editorial-results-count")).toContainText("4");
+  }
+  await search.fill("zzzz-no-article-2456436");
+  await expect(afterSearch).toHaveCount(0);
+  await expect(page.locator("#editorial-no-results")).toBeVisible();
+  await page.locator("#editorial-reset").click();
+  await expect(afterSearch).toHaveCount(total);
+  await expect(search).toBeFocused();
+  await expect(search).toHaveValue("");
+  expect(await cards.locator("h3 a").evaluateAll(links=>links.map(a=>a.getAttribute("href")))).toEqual(before);
+  expect(await page.evaluate(()=>document.documentElement.scrollWidth),path).toBeLessThanOrEqual(322);
+ }
+});
+
+test("all published article links and coverage remain accessible without JavaScript",async({browser})=>{
+ const context=await browser.newContext({javaScriptEnabled:false});
+ try{
+  const page=await context.newPage();
+  await page.route("**/*",route=>["127.0.0.1","localhost"].includes(new URL(route.request().url()).hostname)?route.continue():route.abort());
+  for(const path of ["/tr/articles/","/hi/articles/"]){
+   await page.goto(path,{waitUntil:"domcontentloaded"});
+   await expect(page.locator("#editorial-discovery")).toBeHidden();
+   await expect(page.locator(".editorial-coverage")).toBeVisible();
+   await expect(page.locator("[data-editorial-card]:visible")).toHaveCount(path.includes("/tr/")?7:6);
+  }
+ }finally{await context.close();}
 });
