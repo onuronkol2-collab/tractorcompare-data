@@ -1,0 +1,32 @@
+name: TractorVS curated five-photo source evidence (review only)
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - "site/scripts/review-curated-photo-candidates-20261124.mjs"
+      - ".github/workflows/photo-curated-source-review-20261124.yml"
+permissions:
+  contents: read
+concurrency:
+  group: tractorvs-curated-source-review-20261124
+  cancel-in-progress: false
+jobs:
+  collect_candidate_evidence:
+    if: github.head_ref == 'photos/curated-source-review-20261124' && github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22.23.4"
+      - name: Read source metadata and originals with hard cooldown stop
+        run: node site/scripts/review-curated-photo-candidates-20261124.mjs
+      - uses: actions/upload-artifact@v7
+        if: always()
+        with:
+          name: tractorvs-curated-source-review-20261124
+          path: curated-photo-review-20261124/
+          retention-days: 7
