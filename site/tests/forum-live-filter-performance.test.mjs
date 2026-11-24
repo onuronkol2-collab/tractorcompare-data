@@ -46,7 +46,7 @@ test("live refresh preserves previously approved live topics, excludes static du
  root.dataset.forumLiveConfig=JSON.stringify({url:"https://example.supabase.co",key:"public-fixture",lang:"en"});
  root.querySelector=key=>({"[data-forum-live-grid]":grid,"[data-forum-live-status]":status,"[data-forum-live-heading]":heading}[key]);
  const listeners={},events=[];
- const document={createElement:()=>new El(),createDocumentFragment(){const el=new El();el.fragment=true;return el},querySelectorAll:()=>[staticCard,...grid.children],querySelector:()=>null,addEventListener(name,fn){listeners[name]=fn},dispatchEvent(e){events.push(e.type)}};
+ const document={createElement:tag=>Object.assign(new El(),{tag}),createDocumentFragment(){const el=new El();el.fragment=true;return el},querySelectorAll:()=>[staticCard,...grid.children],querySelector:()=>null,addEventListener(name,fn){listeners[name]=fn},dispatchEvent(e){events.push(e.type)}};
  const row=(topic_id,extra={})=>({id:topic_id,topic_id,locale:"en",original_locale:"en",status:"published",slug:"approved-forum-topic",category:"questions",created_at:"2026-11-22T12:00:00Z",title:"A sufficiently long approved title",body:"A sufficiently long approved forum message with real content.",machine_translated:false,...extra});
  let response=[row(id1),row(id2),row(id2),row(id3,{status:"draft"})];
  const context={document,URLSearchParams,Intl,Date,AbortSignal,Event,location:{search:""},FORUM_LIVE_TEXT:{en:{pending:"loading",failed:"failed",read:"read",summary:"summary"}},forumBlocks:()=>[],forumSeoDescription:body=>body,forumSearchText:s=>s.toLowerCase(),fetch:async()=>({ok:true,json:async()=>response})};
@@ -56,6 +56,15 @@ test("live refresh preserves previously approved live topics, excludes static du
  await tick();
  assert.equal(grid.children.length,1);assert.equal(grid.children[0].dataset.forumTopicId,id2);
  assert.equal(grid.children[0].dataset.forumPublishedAt,"2026-11-22T12:00:00Z");
+ const [meta,details,excerpt]=grid.children[0].children;
+ assert.equal(details.tag,"details");
+ assert.equal(details.children[0].tag,"summary");
+ assert.equal(details.children[0].children[0].tag,"h3");
+ assert.equal(details.children[0].children[0].textContent,"A sufficiently long approved title");
+ assert.equal(details.children[0].children[0].children[0].textContent,"read");
+ assert.equal(details.children[2].className,"forum-live-body");
+ assert.equal(excerpt.tag,"p");
+ assert.equal(meta.className,"forum-live-meta");
  assert.equal(grid.children[0].dataset.forumReplyCount,undefined,"No invented live reply count");
  listeners["tractorvs-forum-topic-saved"]();await tick();
  assert.equal(grid.children.length,1);assert.equal(grid.children[0].dataset.forumTopicId,id2);
