@@ -1,5 +1,6 @@
 ---
 import SiteLayout from "../layouts/SiteLayout.astro";
+import EditorialContents from "./EditorialContents.astro";
 import {localizedPath, LOCALES, BREADCRUMB_LABELS, type Locale} from "../lib/locales";
 import {guideTranslation} from "../lib/tractor-guide-i18n";
 import {editorialHubTranslation} from "../lib/editorial-hub-i18n";
@@ -177,8 +178,13 @@ const schema={
       <p class="guide-lead">{copy.lead}</p>
       <p class="guide-date"><strong>{copy.updated}:</strong> <time datetime="2026-11-19">{pageDate}</time></p>
       <p class="guide-honesty">{copy.noTest}</p>
+      <EditorialContents lang={lang} items={[
+        ...copy.sections.map((section,index)=>({id:"guide-section-"+(index+1),label:section.title})),
+        {id:"guide-checklist-heading",label:copy.worksheetTitle},
+        {id:"guide-sources-heading",label:copy.sourceTitle}
+      ]}/>
       <ol class="guide-steps">
-        {copy.sections.map((section,index)=><li>
+        {copy.sections.map((section,index)=><li id={"guide-section-"+(index+1)}>
           <h2><span aria-hidden="true">{index+1}.</span> {section.title}</h2>
           {section.paragraphs.map(p=><p>{p}</p>)}
           <p class="guide-question">{section.question}</p>
@@ -223,7 +229,7 @@ const schema={
   .guide-date{font-size:13px;color:#62756b;margin:17px 0 26px}
   .guide-honesty{background:#eef5e9;border-left:4px solid #39784a;padding:14px 18px;font-size:14px;line-height:1.7}
   .guide-steps{list-style:none;counter-reset:none;padding:0;margin:27px 0 40px}
-  .guide-steps>li{padding:25px 0;border-bottom:1px solid #d8e3d5}
+  .guide-steps>li{scroll-margin-top:24px;padding:25px 0;border-bottom:1px solid #d8e3d5}
   .tractor-guide h2{font-size:clamp(22px,2.6vw,28px);line-height:1.3;color:#1d3c28;margin:0 0 18px}
   .guide-steps h2 span{color:#4e8f5f}
   .guide-steps p,.guide-sources p,.guide-next p{font-size:16px;line-height:1.85;margin:0 0 15px}
@@ -233,6 +239,7 @@ const schema={
   .guide-table-scroll{overflow-x:auto;overscroll-behavior-inline:contain}
   .guide-table-scroll:focus-visible{outline:3px solid #39784a;outline-offset:3px;border-radius:4px}
   .guide-checklist{padding:27px 0}
+  #guide-checklist-heading,#guide-sources-heading{scroll-margin-top:24px}
   .guide-checklist table{width:100%;border-collapse:collapse;min-width:560px;font-size:14px;line-height:1.6}
   .guide-checklist th,.guide-checklist td{text-align:left;vertical-align:top;padding:13px;border-bottom:1px solid #ccdac8}
   .guide-checklist thead{background:#e3efe0}
