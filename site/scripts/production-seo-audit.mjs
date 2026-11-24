@@ -5,6 +5,7 @@ import {inspectVisibleMainImages} from "./seo-main-markup.mjs";
 import {inspectDocumentImageAlts,inspectUndocumentedEmptyImageAlts} from "./verify-sitewide-image-alts.mjs";
 import {hasBibliographicTitleLeak,inspectSeoTitle} from "./verify-sitewide-seo-titles.mjs";
 import {writeFileSync} from "node:fs";
+import {extractCanonicalAnchors,summarizeCanonicalGraph} from "./production-internal-link-graph.mjs";
 import {readOpeningTagAttribute} from "./seo-html-attributes.mjs";
 import {parseProductionSitemapInventory,selectProductionSeoPages,reviewedPairSitemapCoverage,resolveProductionSeoMode,verifyProductionSeoCoverage} from "./production-sitemap-inventory.mjs";
 // Read-only production SEO coverage audit. No credentials or writes.
@@ -119,6 +120,7 @@ console.log("TRACTORVS_EDITORIAL_SITEMAP "+
 const modelByLocale=Object.fromEntries(Object.keys(languages).map(k=>[k,new Set()]));
 let valid=0, modelPages=0, modelSample=[], fetchFailures=0;
 const inspectedPages=[];
+const observedAnchors=new Map();
 const titlesByLocale=new Map();
 const stylesheetRefs=new Map();
 // The 60-character threshold is crawler guidance, not a Google requirement.
@@ -243,6 +245,7 @@ for(let i=0;i<urls.length;i+=8){
     const count=subject?.subjectOf?.length || 0;
     if(modelSample.length<6)modelSample.push({path:p,title:meta.title,description:meta.description,linkedManufacturerSources:count,entityType:subject?.["@type"],htmlBytes:Buffer.byteLength(body)});
    }
+   observedAnchors.set(page,extractCanonicalAnchors(body,page,unique));
    inspectedPages.push(page);
    valid++;
   }catch(e){fetchFailures++;error("page-fetch",page,String(e));}
@@ -270,6 +273,11 @@ if(fetchFailures===0 && valid===urls.length){
 let coverage=null;
 try{coverage=verifyProductionSeoCoverage(inventory,urls,inspectedPages,AUDIT_MODE);}
 catch(e){error("crawl-coverage","/sitemap-index.xml",String(e?.message||e));}
+const internalLinks=summarizeCanonicalGraph(unique,observedAnchors,{fullCoverage:coverage?.fullCoverage===true,roots:Object.keys(languages).map(lang=>BASE+(lang==="en"?"/":"/"+lang+"/"))});
+const {noIncoming,unreachable,...internalLinkSummary}=internalLinks;
+console.log("TRACTORVS_INTERNAL_LINK_GRAPH "+JSON.stringify(internalLinkSummary));
+// Report graph candidates separately from SEO errors/title advisories. A static
+// HTML graph is not proof of search-engine crawling, indexing or all aliases.
 const report={
   site:BASE,mode:AUDIT_MODE,sitemaps:siteMaps.length,sitemapUrls:unique.size,
   htmlPages:inventory.htmlPages.size,forumPages:inventory.forumPages.size,
@@ -277,6 +285,7 @@ const report={
   plannedPages:urls.length,checkedPages:valid,coverageComplete:coverage!==null,fullCoverage:coverage?.fullCoverage===true,modelPages,modelsPerLocale:Object.fromEntries(Object.entries(modelByLocale).map(([k,v])=>[k,v.size])),
   fullPublishedModelsPerLocale:inventory.modelsPerLocale,
   titleAdvisories:titleLengths,
+  internalLinkSummary,
   errors:problems.length,warnings:warnings.length,
 };
 console.log("TRACTORVS_SEO_AUDIT_REPORT "+JSON.stringify(report));
@@ -284,6 +293,6 @@ console.log("TRACTORVS_SEO_MODEL_SAMPLES "+JSON.stringify(modelSample));
 if(warnings.length)console.log("TRACTORVS_SEO_WARNINGS "+JSON.stringify(warnings.slice(0,30)));
 // CI retains the complete review inventory rather than just 30 console samples.
 if(process.env.TRACTORVS_SEO_EVIDENCE_PATH){
- writeFileSync(process.env.TRACTORVS_SEO_EVIDENCE_PATH,JSON.stringify({report,warnings,problems},null,2)+"\n");
+ writeFileSync(process.env.TRACTORVS_SEO_EVIDENCE_PATH,JSON.stringify({report,warnings,problems,internalLinks},null,2)+"\n");
 }
 if(problems.length)process.exitCode=1;
