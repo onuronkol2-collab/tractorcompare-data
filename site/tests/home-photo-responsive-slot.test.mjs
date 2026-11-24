@@ -20,8 +20,8 @@ test("featured photo sizes track the actual card grid and container breakpoints"
   assert.ok(global.includes("width: min(100% - 36px, 560px)"));
 });
 
-test("only explicit non-hero slots override sizes; original sources, attribution and priority remain",()=>{
-  const sizes='sizes={mode==="hero"?"(max-width:760px) calc(100vw - 48px), 860px":(slotSizes ?? "(max-width:680px) calc(100vw - 36px), 400px")}';
+test("non-hero slots and lazy hero extras use accurate sizes; first hero priority and attribution remain",()=>{
+  const sizes='sizes={mode==="hero"?(index===0?"(max-width:760px) calc(100vw - 48px), 860px":"auto, (max-width:620px) min(calc(50vw - 23px), 275px), (max-width:720px) 180px, min(calc(33.333vw - 22.667px), 294px)"):(slotSizes ?? "(max-width:680px) calc(100vw - 36px), 400px")}';
   assert.equal(photo.split(sizes).length-1,2);
   assert.ok(photo.includes('loading={mode==="hero"&&index===0?"eager":"lazy"}'));
   assert.ok(photo.includes('fetchpriority={mode==="hero"&&index===0?"high":undefined}'));
