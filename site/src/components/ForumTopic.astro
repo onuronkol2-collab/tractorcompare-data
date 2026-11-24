@@ -41,6 +41,8 @@ const engagementCfg=publicForumClientConfig()??(
  process.env.TRACTORVS_FORUM_BROWSER_TEST==="true"&&process.env.PUBLIC_INDEXING_ENABLED==="false"
  ? {url:"http://127.0.0.1:4173/forum-test-api",key:"inert-browser-fixture"}:null);
 const engagementConfig=JSON.stringify(engagementCfg);
+const liveReplyConfig=JSON.stringify(engagementCfg?{...engagementCfg,lang,topicId:topic.topic_id}:null);
+const liveReplyCopy:Record<Locale,{heading:string;failed:string}>={en:{heading:"New replies",failed:"New replies could not be checked. Existing replies remain available."},tr:{heading:"Yeni yanıtlar",failed:"Yeni yanıtlar kontrol edilemedi. Mevcut yanıtlar okunabilir."},zh:{heading:"最新回复",failed:"暂时无法检查新回复，已有回复仍可阅读。"},hi:{heading:"नए उत्तर",failed:"नए उत्तर जाँचे नहीं जा सके। मौजूदा उत्तर उपलब्ध हैं।"},"pt-br":{heading:"Novas respostas",failed:"Não foi possível verificar novas respostas. As existentes continuam disponíveis."},fr:{heading:"Nouvelles réponses",failed:"Impossible de vérifier les nouvelles réponses. Les réponses existantes restent disponibles."},de:{heading:"Neue Antworten",failed:"Neue Antworten konnten nicht geprüft werden. Vorhandene Antworten bleiben verfügbar."},ru:{heading:"Новые ответы",failed:"Не удалось проверить новые ответы. Существующие ответы доступны."},ja:{heading:"新しい返信",failed:"新しい返信を確認できませんでした。既存の返信は閲覧できます。"},es:{heading:"Nuevas respuestas",failed:"No se pudieron comprobar las nuevas respuestas. Las anteriores siguen disponibles."}};
 const engagementCopy=JSON.stringify(MEMBER_TEXT[lang]);
 const availableLocales=versions.map(row=>row.locale);
 const indexableLocales=versions.filter(isIndexableForumTopic).map(row=>row.locale);
@@ -104,8 +106,8 @@ const schema=eligible?{
       <span data-engagement-status role="status" aria-live="polite"></span>
    </div>
    <section class="forum-replies" aria-labelledby="forum-replies-heading">
-    <h2 id="forum-replies-heading">{ft(lang,"replies")} ({replies.length})</h2>
-    {replies.map(({reply,original},i)=><article class="forum-reply" id={"reply-"+reply.id}>
+    <h2 id="forum-replies-heading">{ft(lang,"replies")} (<span data-forum-reply-total={replies.length}>{replies.length}</span>)</h2>
+    {replies.map(({reply,original},i)=><article class="forum-reply" id={"reply-"+reply.id} data-static-reply-id={reply.id}>
       <div class="reply-meta">
        <a href={"#reply-"+reply.id}>#{i+1}</a>
        <time datetime={reply.created_at}>{forumDate(reply.created_at,lang)}</time>
@@ -123,6 +125,11 @@ const schema=eligible?{
        <div lang={LOCALE_TAGS[original.locale]}><ForumRichText body={original.body} lang={original.locale}/></div>
       </details>}
     </article>)}
+    <div data-forum-live-replies data-live-reply-config={liveReplyConfig} data-live-reply-failed={liveReplyCopy[lang].failed} hidden>
+      <h3 data-live-reply-heading hidden>{liveReplyCopy[lang].heading}</h3>
+      <p data-live-reply-status role="status" aria-live="polite"></p>
+      <div data-live-reply-grid hidden></div>
+    </div>
    </section>
    <ForumComposer lang={lang} mode="reply" topicId={topic.topic_id}/>
    <nav class="forum-back" aria-label={threadNav.navigation}>
@@ -132,6 +139,13 @@ const schema=eligible?{
  </div>
 </SiteLayout>
 <style>
+.forum-thread :global(.forum-live-reply){background:#fff;border:1px solid #c9dac6;border-radius:14px;padding:clamp(16px,3vw,26px);margin:12px 0;line-height:1.85;overflow-wrap:anywhere;min-width:0}
+.forum-thread :global(.forum-live-reply p){white-space:pre-wrap}
+.forum-thread :global(.forum-live-reply-meta){font-size:13px;color:#42634d}
+.forum-thread :global(.forum-live-reply-table){max-width:100%;overflow-x:auto;border:1px solid #c9dac6;border-radius:8px}
+.forum-thread :global(.forum-live-reply-table table){min-width:350px;width:100%;border-collapse:collapse}
+.forum-thread :global(.forum-live-reply-table th),.forum-thread :global(.forum-live-reply-table td){padding:9px;border-bottom:1px solid #dce8da;text-align:start;vertical-align:top}
+.forum-thread :global(.forum-live-reply-table th){background:#eaf3e9}
 .forum-thread{background:#f3f8f1;color:#2b4b35;min-height:68vh;padding:32px 0 75px}
 .thread-breadcrumb,.forum-back{font-size:13px;color:#376e47;line-height:1.6;margin:0 0 18px}
 .forum-thread a{color:#23683e;text-decoration:underline;text-underline-offset:3px}
@@ -247,6 +261,9 @@ const schema=eligible?{
 
 <script>
 import {readForumSession} from "../lib/forum-session-store.mjs";
+import {initForumLiveReplies} from "../lib/forum-live-replies.ts";
+const liveReplies=document.querySelector<HTMLElement>("[data-forum-live-replies]");
+if(liveReplies)initForumLiveReplies(liveReplies);
 const community=document.querySelector<HTMLElement>("[data-thread-engagement]");
 if(community){
  const cfg=JSON.parse(community.dataset.threadConfig||"null") as {url:string;key:string}|null;
