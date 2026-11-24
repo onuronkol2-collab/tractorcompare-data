@@ -135,3 +135,24 @@ export function selectProductionSeoPages(inventory,{mode="daily",day=0,samplePer
  }
  return [...selected];
 }
+
+/** Explicit mode selection; a typo must not silently downgrade a full crawl. */
+export function resolveProductionSeoMode(mode) {
+ if(mode===undefined || mode==="daily")return "daily";
+ if(mode==="full")return "full";
+ invalid("Invalid SEO audit mode");
+}
+
+/** A completed network request is not enough: every planned canonical page
+ * must reach the end of inspection, exactly once. */
+export function verifyProductionSeoCoverage(inventory,planned,inspected,mode) {
+ resolveProductionSeoMode(mode);
+ const plannedSet=new Set(planned), inspectedSet=new Set(inspected);
+ if(!plannedSet.size || plannedSet.size!==planned.length || inspectedSet.size!==inspected.length)
+  invalid("Empty or duplicate crawl evidence");
+ if([...plannedSet].some(url=>!inventory.pages.has(url)))invalid("Unlisted planned SEO URL");
+ if(mode==="full" && plannedSet.size!==inventory.pages.size)invalid("Full SEO plan does not cover every sitemap page");
+ if(inspectedSet.size!==plannedSet.size || [...plannedSet].some(url=>!inspectedSet.has(url)))
+  invalid("Incomplete or mismatched live SEO inspection: "+inspectedSet.size+" of "+plannedSet.size);
+ return {plannedPages:plannedSet.size,checkedPages:inspectedSet.size,totalIndexablePages:inventory.pages.size,fullCoverage:inspectedSet.size===inventory.pages.size};
+}

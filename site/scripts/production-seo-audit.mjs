@@ -5,12 +5,12 @@ import {inspectVisibleMainImages} from "./seo-main-markup.mjs";
 import {inspectDocumentImageAlts,inspectUndocumentedEmptyImageAlts} from "./verify-sitewide-image-alts.mjs";
 import {hasBibliographicTitleLeak} from "./verify-sitewide-seo-titles.mjs";
 import {readOpeningTagAttribute} from "./seo-html-attributes.mjs";
-import {parseProductionSitemapInventory,selectProductionSeoPages,reviewedPairSitemapCoverage} from "./production-sitemap-inventory.mjs";
+import {parseProductionSitemapInventory,selectProductionSeoPages,reviewedPairSitemapCoverage,resolveProductionSeoMode,verifyProductionSeoCoverage} from "./production-sitemap-inventory.mjs";
 // Read-only production SEO coverage audit. No credentials or writes.
 const BASE = "https://tractorvs.com";
 const languages = {en:"en",tr:"tr",zh:"zh-Hans",hi:"hi","pt-br":"pt-BR",fr:"fr",de:"de",ru:"ru",ja:"ja",es:"es"};
 const problems=[], warnings=[];
-const AUDIT_MODE=process.env.TRACTORVS_SEO_AUDIT_MODE==="full"?"full":"daily";
+const AUDIT_MODE=resolveProductionSeoMode(process.env.TRACTORVS_SEO_AUDIT_MODE);
 const error=(code,page,why)=>{problems.push({code,page,why});console.error("SEO_ERROR "+JSON.stringify({code,page,why}));};
 const warn=(code,page,why)=>{warnings.push({code,page,why});};
 const matches=(txt,re)=>[...txt.matchAll(re)].map(m=>m[1]);
@@ -117,6 +117,7 @@ console.log("TRACTORVS_EDITORIAL_SITEMAP "+
 // Duplicates within an HTML/forum/image child are rejected by the typed inventory helper.
 const modelByLocale=Object.fromEntries(Object.keys(languages).map(k=>[k,new Set()]));
 let valid=0, modelPages=0, modelSample=[], fetchFailures=0;
+const inspectedPages=[];
 const titlesByLocale=new Map();
 const stylesheetRefs=new Map();
 // The 60-character threshold is crawler guidance, not a Google requirement.
@@ -241,6 +242,7 @@ for(let i=0;i<urls.length;i+=8){
     const count=subject?.subjectOf?.length || 0;
     if(modelSample.length<6)modelSample.push({path:p,title:meta.title,description:meta.description,linkedManufacturerSources:count,entityType:subject?.["@type"],htmlBytes:Buffer.byteLength(body)});
    }
+   inspectedPages.push(page);
    valid++;
   }catch(e){fetchFailures++;error("page-fetch",page,String(e));}
  }));
@@ -258,17 +260,20 @@ console.log("TRACTORVS_LIVE_STYLESHEETS "+JSON.stringify({distinct:stylesheetRef
 const baseline=[...modelByLocale.en].sort().join("|");
 // Incomplete network crawls are failures, but must not invent missing-model
 // claims: only compare complete per-locale inventories after every page loads.
-if(fetchFailures===0){
+if(fetchFailures===0 && valid===urls.length){
   for(const [locale,slugs] of Object.entries(modelByLocale))
    if([...slugs].sort().join("|")!==baseline)
     error("locale-model-mismatch",locale,"Published models differ across locales: "+slugs.size+" vs en="+modelByLocale.en.size);
   if(modelByLocale.en.size<17)error("missing-models","/tractors/","Fewer than 17 published model URLs in sitemap");
 }
+let coverage=null;
+try{coverage=verifyProductionSeoCoverage(inventory,urls,inspectedPages,AUDIT_MODE);}
+catch(e){error("crawl-coverage","/sitemap-index.xml",String(e?.message||e));}
 const report={
   site:BASE,mode:AUDIT_MODE,sitemaps:siteMaps.length,sitemapUrls:unique.size,
   htmlPages:inventory.htmlPages.size,forumPages:inventory.forumPages.size,
   imagePageReferences:inventory.imagePages.size,
-  checkedPages:valid,modelPages,modelsPerLocale:Object.fromEntries(Object.entries(modelByLocale).map(([k,v])=>[k,v.size])),
+  plannedPages:urls.length,checkedPages:valid,coverageComplete:coverage!==null,fullCoverage:coverage?.fullCoverage===true,modelPages,modelsPerLocale:Object.fromEntries(Object.entries(modelByLocale).map(([k,v])=>[k,v.size])),
   fullPublishedModelsPerLocale:inventory.modelsPerLocale,
   titleAdvisories:titleLengths,
   errors:problems.length,warnings:warnings.length,
