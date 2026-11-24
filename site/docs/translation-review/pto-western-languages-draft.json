@@ -55,6 +55,12 @@
       "https://tractortestlab.unl.edu/",
       "https://www.oecd.org/en/topics/tractors.html",
       "https://www.hse.gov.uk/agriculture/topics/machinery/safe-use-1.htm"
+    ],
+    "verification": "This article is educational and does not claim hands-on testing, component disassembly or tractor ownership. For a model-specific number, confirm the exact tractor, year, market and equipment in the producer's documentation. Where independent tests exist, compare their test procedures.",
+    "sourceLabels": [
+      "Nebraska Tractor Test Laboratory",
+      "OECD tractor testing codes",
+      "HSE — safe stop procedure for agricultural machinery"
     ]
   },
   "reviewed": false,
@@ -276,5 +282,7 @@
         "HSE — procedimento de parada segura de máquinas agrícolas"
       ]
     }
-  }
+  },
+  "sourceComponentBlobSha": "e8a86025ece122ad013843e9d3305843970f60f5",
+  "translationScope": "Main article, comparison note, verification disclosure and source link labels only. UI, glossary links, photo credit and related content must be integrated and reviewed before publishing."
 }
