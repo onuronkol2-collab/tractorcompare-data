@@ -1,0 +1,351 @@
+{
+  "version": 1,
+  "verified_on": "2026-11-24",
+  "purpose": "Public research starting points, NOT source approval, automatic crawl allowlist or photo permission.",
+  "sources": [
+    {
+      "id": "agri-trac2",
+      "name": "AGRI-TRAC2 OECD performance abstracts",
+      "region": "Global",
+      "kind": "test_index",
+      "url": "https://site.unibo.it/trattori-certificati-ocse/en",
+      "scope": "Model and approval-number discovery; manufacturer-consented Code 2 abstracts only; verify exact transmission, approval number and test conditions.",
+      "automatic_fetch": false,
+      "publication_approved": false
+    },
+    {
+      "id": "agri-trac2-2026",
+      "name": "AGRI-TRAC2 2026 approvals",
+      "region": "Global",
+      "kind": "test_index",
+      "url": "https://site.unibo.it/trattori-certificati-ocse/en/year-2026",
+      "scope": "Prioritize 2026 approvals and all paginated entries; list entries are identities, not complete measured facts.",
+      "automatic_fetch": false,
+      "publication_approved": false
+    },
+    {
+      "id": "oecd-codes",
+      "name": "OECD tractor codes",
+      "region": "Global",
+      "kind": "methodology",
+      "url": "https://www.oecd.org/en/topics/tractors.html",
+      "scope": "Separate Code 2 performance from protective structures and noise; do not infer measurements from standards.",
+      "automatic_fetch": false,
+      "publication_approved": false
+    },
+    {
+      "id": "oecd-stations",
+      "name": "AGRI-TRAC2 testing stations",
+      "region": "Global",
+      "kind": "discovery",
+      "url": "https://site.unibo.it/trattori-certificati-ocse/en/who-we-are/ts/",
+      "scope": "Discover national testing bodies; a station listing is not an individual test report.",
+      "automatic_fetch": false,
+      "publication_approved": false
+    },
+    {
+      "id": "budni",
+      "name": "CFMTTI Budni test report summaries",
+      "region": "IN",
+      "kind": "test_index",
+      "url": "https://fmttibudni.gov.in/index.php/en/progress-report/summary-of-tested-machines-ict",
+      "scope": "Annual lists of commercial/initial/batch tests. Use original exact report and variant; report date is not model year.",
+      "automatic_fetch": false,
+      "publication_approved": false
+    },
+    {
+      "id": "budni-models",
+      "name": "CFMTTI tested machines",
+      "region": "IN",
+      "kind": "model_index",
+      "url": "https://fmttibudni.gov.in/index.php/en/machines",
+      "scope": "Discover tested models, then resolve report and OEM source.",
+      "automatic_fetch": false,
+      "publication_approved": false
+    },
+    {
+      "id": "nebraska",
+      "name": "Nebraska Tractor Test Lab",
+      "region": "US",
+      "kind": "test_index",
+      "url": "https://tractortestlab.unl.edu/test-reports/",
+      "scope": "Public reports where available; do not purchase reports without authorization.",
+      "automatic_fetch": false,
+      "publication_approved": false
+    },
+    {
+      "id": "nebraska-digital",
+      "name": "UNL DigitalCommons tractor lab",
+      "region": "US",
+      "kind": "test_index",
+      "url": "https://digitalcommons.unl.edu/tractor_lab/",
+      "scope": "Historic and modern test publications; use exact report ID and generation.",
+      "automatic_fetch": false,
+      "publication_approved": false
+    },
+    {
+      "id": "nebraska-summary",
+      "name": "Nebraska government documents",
+      "region": "US",
+      "kind": "test_index",
+      "url": "https://govdocs.nebraska.gov/epubs/U2060/S001.html",
+      "scope": "Annual historic summaries; preserve year, tested equipment and source.",
+      "automatic_fetch": false,
+      "publication_approved": false
+    },
+    {
+      "id": "dlg",
+      "name": "DLG report database",
+      "region": "DE",
+      "kind": "test_index",
+      "url": "https://www.dlg.org/en/tests/agricultural-technology-and-farm-inputs/test-reports",
+      "scope": "Measured report data only for matched configuration.",
+      "automatic_fetch": false,
+      "publication_approved": false
+    },
+    {
+      "id": "dlg-powermix",
+      "name": "DLG PowerMix",
+      "region": "DE",
+      "kind": "test_index",
+      "url": "https://www.dlg.org/en/tests/agricultural-technology-and-farm-inputs/dlg-powermix",
+      "scope": "Keep workload, transport and field cycles distinct; do not convert g/kWh into L/h without valid assumptions.",
+      "automatic_fetch": false,
+      "publication_approved": false
+    },
+    {
+      "id": "tamtest",
+      "name": "TAMTEST",
+      "region": "TR",
+      "kind": "methodology",
+      "url": "https://www.tarimorman.gov.tr/TRGM/tamtest/Menu/41/Traktor-Ve-Is-Makineleri-Bolumu",
+      "scope": "Official testing and approval context; report access not guaranteed.",
+      "automatic_fetch": false,
+      "publication_approved": false
+    },
+    {
+      "id": "naro",
+      "name": "NARO safety inspection results",
+      "region": "JP",
+      "kind": "model_index",
+      "url": "https://www.naro.go.jp/org/iam/Test/",
+      "scope": "Japanese model/market identity and explicitly listed safety equipment; no inferred performance or model year.",
+      "automatic_fetch": false,
+      "publication_approved": false
+    },
+    {
+      "id": "naro-method",
+      "name": "NARO test methods",
+      "region": "JP",
+      "kind": "methodology",
+      "url": "https://www.naro.go.jp/laboratory/iam/contents/test/",
+      "scope": "Distinguish safety inspection, ROPS and automation from performance tests.",
+      "automatic_fetch": false,
+      "publication_approved": false
+    },
+    {
+      "id": "koat",
+      "name": "KoAT agricultural machinery",
+      "region": "KR",
+      "kind": "discovery",
+      "url": "https://www.koat.or.kr/business/digital.do",
+      "scope": "Official Korean machinery testing program; retrieve individual public reports separately.",
+      "automatic_fetch": false,
+      "publication_approved": false
+    },
+    {
+      "id": "koat-2025",
+      "name": "KoAT 2025 testing annual report announcement",
+      "region": "KR",
+      "kind": "discovery",
+      "url": "https://www.koat.or.kr/board/media/16147/view.do",
+      "scope": "Discover report publication; announcement is not a model technical table.",
+      "automatic_fetch": false,
+      "publication_approved": false
+    },
+    {
+      "id": "josephinum",
+      "name": "Josephinum tractor reports",
+      "region": "AT",
+      "kind": "test_index",
+      "url": "https://www.josephinum.at/forschung-und-pruefung/agrartechnik/pruefung-agrartechnik/pruefung-traktoren/pruefberichte-traktoren.html",
+      "scope": "Use accessible actual reports and test codes.",
+      "automatic_fetch": false,
+      "publication_approved": false
+    },
+    {
+      "id": "ema",
+      "name": "Estacion Mecanica Agricola",
+      "region": "ES",
+      "kind": "methodology",
+      "url": "https://www.mapa.gob.es/es/agricultura/temas/medios-de-produccion/maquinaria-agricola/estacion-mecanica-agricola",
+      "scope": "Official Spanish test station; obtain specific reports before using numeric data.",
+      "automatic_fetch": false,
+      "publication_approved": false
+    },
+    {
+      "id": "china-moa",
+      "name": "Chinese Ministry of Agriculture machinery appraisal",
+      "region": "CN",
+      "kind": "methodology",
+      "url": "https://www.agri.cn/zx/hxgg/202404/t20240430_8629972.htm",
+      "scope": "Official test standard announcement; discover current model-specific approvals separately.",
+      "automatic_fetch": false,
+      "publication_approved": false
+    },
+    {
+      "id": "inrae",
+      "name": "INRAE Agate",
+      "region": "FR",
+      "kind": "archive",
+      "url": "https://agate.inrae.fr/agate/en/content/agricultural-machinery-testing-modus-operandi",
+      "scope": "Historical test documentation; check access, date, identity and reuse.",
+      "automatic_fetch": false,
+      "publication_approved": false
+    },
+    {
+      "id": "ufsm",
+      "name": "UFSM Agrotecnologia",
+      "region": "BR",
+      "kind": "discovery",
+      "url": "https://www.ufsm.br/grupos/agrotec/paginas/ensaios-de-tratores-agricolas",
+      "scope": "Academic test methods and references; obtain actual study before assigning facts.",
+      "automatic_fetch": false,
+      "publication_approved": false
+    },
+    {
+      "id": "iowa",
+      "name": "Iowa State agricultural machinery literature",
+      "region": "US",
+      "kind": "archive",
+      "url": "https://digitalcollections.lib.iastate.edu/aglit/",
+      "scope": "Historic catalogue evidence; item-specific rights.",
+      "automatic_fetch": false,
+      "publication_approved": false
+    },
+    {
+      "id": "wur",
+      "name": "Wageningen Special Collections",
+      "region": "NL",
+      "kind": "archive",
+      "url": "https://www.wur.nl/en/library/special-collections",
+      "scope": "Historical brochures/manuals; engineering photo collection has CC BY-NC 4.0, do not reuse commercially without separate permission.",
+      "automatic_fetch": false,
+      "publication_approved": false
+    },
+    {
+      "id": "wisconsin",
+      "name": "McCormick-International Harvester Collection",
+      "region": "US",
+      "kind": "archive",
+      "url": "https://wisconsinhistory.org/research/explore-our-collections/collection-overviews/mccormick-international-harvester-collection/",
+      "scope": "Production records, catalogues, photos; item-level permission; no presumed open licence.",
+      "automatic_fetch": false,
+      "publication_approved": false
+    },
+    {
+      "id": "ventura",
+      "name": "Allison tractor manuals collection",
+      "region": "US",
+      "kind": "archive",
+      "url": "https://venturamuseum-archives.libraryhost.com/repositories/2/archival_objects/61799",
+      "scope": "Finding aid; digitization and access not guaranteed.",
+      "automatic_fetch": false,
+      "publication_approved": false
+    },
+    {
+      "id": "tractordata",
+      "name": "TractorData",
+      "region": "Global",
+      "kind": "secondary",
+      "url": "https://www.tractordata.com/compare/",
+      "scope": "Secondary independent discovery and cross-check only; follow primary sources; respect rights, no bulk reproduction.",
+      "automatic_fetch": false,
+      "publication_approved": false
+    },
+    {
+      "id": "finna",
+      "name": "Finna",
+      "region": "FI",
+      "kind": "photo_discovery",
+      "url": "https://www.finna.fi/",
+      "scope": "Search tractor/traktori/Valmet/Valtra and local model names. Metadata CC0 is not image licence. Require item-specific commercial and derivative permission.",
+      "rights_url": "https://www.finna.fi/Content/terms_en-gb",
+      "automatic_fetch": false,
+      "publication_approved": false
+    },
+    {
+      "id": "smithsonian",
+      "name": "Smithsonian Open Access",
+      "region": "US",
+      "kind": "photo_discovery",
+      "url": "https://www.si.edu/openaccess",
+      "scope": "Only item-specific CC0 media; distinguish real full-size tractors from toy/model objects.",
+      "rights_url": "https://www.si.edu/openaccess/faq",
+      "automatic_fetch": false,
+      "publication_approved": false
+    },
+    {
+      "id": "loc",
+      "name": "Library of Congress FSA-OWI",
+      "region": "US",
+      "kind": "photo_discovery",
+      "url": "https://loc.gov/pictures/collection/fsa/",
+      "scope": "Historical photos; verify rights advisory and original agency/creator, copied images may be restricted.",
+      "rights_url": "https://www.loc.gov/item/2002708960/",
+      "automatic_fetch": false,
+      "publication_approved": false
+    },
+    {
+      "id": "dpla",
+      "name": "Digital Public Library of America",
+      "region": "US",
+      "kind": "photo_discovery",
+      "url": "https://dp.la/",
+      "scope": "Aggregator; follow original institution and item rights; no blanket permission.",
+      "rights_url": "https://dp.la/about/rights-categories",
+      "automatic_fetch": false,
+      "publication_approved": false
+    },
+    {
+      "id": "europeana",
+      "name": "Europeana agricultural machinery",
+      "region": "Europe",
+      "kind": "photo_discovery",
+      "url": "https://www.europeana.eu/en/collections/topic/170-agricultural-machinery",
+      "scope": "Follow original provider and per-object rights, no aggregator licence assumption.",
+      "automatic_fetch": false,
+      "publication_approved": false
+    },
+    {
+      "id": "commons",
+      "name": "Wikimedia Commons",
+      "region": "Global",
+      "kind": "photo_discovery",
+      "url": "https://commons.wikimedia.org/",
+      "scope": "Existing Commons provider; file-specific rights, source and visual identity. Respect Retry-After.",
+      "automatic_fetch": false,
+      "publication_approved": false
+    },
+    {
+      "id": "openverse",
+      "name": "Openverse",
+      "region": "Global",
+      "kind": "photo_discovery",
+      "url": "https://openverse.org/",
+      "scope": "Existing Flickr/Europeana integration, only leads; verify original provider metadata and original file.",
+      "automatic_fetch": false,
+      "publication_approved": false
+    },
+    {
+      "id": "flickr",
+      "name": "Flickr",
+      "region": "Global",
+      "kind": "photo_discovery",
+      "url": "https://www.flickr.com/",
+      "scope": "Use only creator-specific permitted works and original rights, never assume all photos reusable.",
+      "automatic_fetch": false,
+      "publication_approved": false
+    }
+  ]
+}
