@@ -15,6 +15,7 @@ test("53 exact reviewed long identities remain in every locale and original sour
   assert.equal(reviewedLongTitleRow(row.brand,row.model,row.rawVariant+" revised",row.rawMarket,row.year),undefined);
   assert.equal(reviewedLongTitleRow(row.brand,row.model,row.rawVariant,row.rawMarket+" revised",row.year),undefined);
   assert.equal(reviewedLongTitleRow(row.brand,row.model,row.rawVariant,row.rawMarket,1901),undefined);
+  const localizedTitles=new Set();
   for(const lang of locales){
    const meta=modelSeoMetadata(m,lang);
    assert.ok(meta.title.includes(row.brand+" "+row.model),lang+" identity");
@@ -27,6 +28,8 @@ test("53 exact reviewed long identities remain in every locale and original sour
    const key=lang+"::"+meta.title;
    assert.ok(!titles.has(key),"Duplicate reviewed title: "+key);
    titles.set(key,row.model);
+   assert.ok(!localizedTitles.has(meta.title),lang+" same cross-locale title: "+meta.title);
+   localizedTitles.add(meta.title);
   }
  }
  assert.equal(titles.size,530);
