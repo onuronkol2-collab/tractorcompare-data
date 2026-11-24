@@ -54,8 +54,8 @@
       "modified": "2026-11-24T16:26:42.582Z"
     },
     "https://tractorvs.com/de/tractors/": {
-      "digest": "8e2c16a59faa3df7b9607f259af7fab025e0e5f2f0800ecf857a1907db0fd886",
-      "modified": "2026-11-24T15:48:25.289Z"
+      "digest": "848b6f514a3f33665ee91ed773ef56f04233513d4d8285ca86c256e31de7dcd6",
+      "modified": "2026-11-24T16:37:35.751Z"
     },
     "https://tractorvs.com/de/tractors/agrale-4125-0b53e944/": {
       "digest": "cdb27054e6be39c7c02cbfb34aa38e40f8d59d9b590108e3677651c1e13cec0e",
@@ -250,8 +250,8 @@
       "modified": "2026-11-24T15:48:25.289Z"
     },
     "https://tractorvs.com/de/tractors/belarus-82-1-940a988a/": {
-      "digest": "1f6e2da2d4465c3f908f884d2ddcbf590811748ca059aab9102565cdc6e0bffc",
-      "modified": "2026-11-24T15:48:25.289Z"
+      "digest": "0786231e28c24d98823cd6078e4098b4a39247eb50106f73da14b4bd8fab8c0a",
+      "modified": "2026-11-24T16:37:35.751Z"
     },
     "https://tractorvs.com/de/tractors/belarus-892-2-2f9d2a97/": {
       "digest": "3768144e85f3e205a5056aae5fd873bf0b74b902adc443a36201308f228b3975",
@@ -366,8 +366,8 @@
       "modified": "2026-11-24T15:48:25.289Z"
     },
     "https://tractorvs.com/de/tractors/kioti-hx1402atc-eu-cfc1d71f/": {
-      "digest": "d7718557bf46b6b995a123fe0d26f0e0764f59ca438e3e16498d9e8ea2a32a01",
-      "modified": "2026-11-24T15:48:25.289Z"
+      "digest": "7faef9263653ee3466d631fe992aa9fcc85792a1e46d473981536cfa28371255",
+      "modified": "2026-11-24T16:37:35.751Z"
     },
     "https://tractorvs.com/de/tractors/kioti-hx9010pc-eu-1a56bc00/": {
       "digest": "f17fd26930e68ad1a275bd044e4cc8a5d1d9b427e2f019c66a1f0e4c863b983c",
@@ -1250,8 +1250,8 @@
       "modified": "2026-11-24T15:48:25.289Z"
     },
     "https://tractorvs.com/de/tractors/tym-t2025p-622ddce0/": {
-      "digest": "cf191bf28c8749867f273dd395d5315c6187b4d00445cd389a6747bb17f49b43",
-      "modified": "2026-11-24T15:48:25.289Z"
+      "digest": "067195c22d3bf7f090f6c3f7d1766fa5370ea25886613e825b28b9f0c705bc44",
+      "modified": "2026-11-24T16:37:35.751Z"
     },
     "https://tractorvs.com/de/tractors/tym-t2026-1aa3a3d6/": {
       "digest": "4726f309d56273cf76ae786567667bfaabc8225387692d1b9782cc0a6c1843d0",
@@ -1282,8 +1282,8 @@
       "modified": "2026-11-24T15:48:25.289Z"
     },
     "https://tractorvs.com/de/tractors/tym-t3048-458be7b8/": {
-      "digest": "b31c1f116dd644d0b1b18f7a53ef15c92df5a71fde26de2cefe87613b5c54ae8",
-      "modified": "2026-11-24T15:48:25.289Z"
+      "digest": "44665deef27e05deb80a0a6981ce834de548c93a7da568473604f30ac65c504b",
+      "modified": "2026-11-24T16:37:35.751Z"
     },
     "https://tractorvs.com/de/tractors/tym-t3048-5d1360a7/": {
       "digest": "1f0fe3332f966e5184b47a8bbd117449a41609369af0eded50b4f2bf0b1359cf",
@@ -1338,8 +1338,8 @@
       "modified": "2026-11-24T15:48:25.289Z"
     },
     "https://tractorvs.com/de/tractors/tym-t6115-80fd42a2/": {
-      "digest": "850ab1775ba8f078485f9b342fcd340f3c1a569711bc80325759ea992a04dc40",
-      "modified": "2026-11-24T15:48:25.289Z"
+      "digest": "0106611a8b70b6036270443e9c6a3c78a5bc0af1c343bee46df891ae6f7650c7",
+      "modified": "2026-11-24T16:37:35.751Z"
     },
     "https://tractorvs.com/de/tractors/tym-t6130-7597d8a9/": {
       "digest": "edfcbb03bb80d55e0442666989c66e58220525fb596138e06a5703bd5145e272",
@@ -1606,16 +1606,16 @@
       "modified": "2026-11-24T15:48:25.289Z"
     },
     "https://tractorvs.com/de/tractors/zetor-proxima-c0d8fcfe/": {
-      "digest": "0f8a2eb6cfb136a3cf23cfc8cbf26c243b24ccd8c6d376c7a5e5da1d0525ef13",
-      "modified": "2026-11-23T16:45:17.078Z"
+      "digest": "fe2473977529b9f3eabef8f6a7d71d779662c6d16ec917388f41f1b5dfd3f4a4",
+      "modified": "2026-11-24T16:37:35.751Z"
     },
     "https://tractorvs.com/de/tractors/zetor-proxima-cf11aa07/": {
-      "digest": "9b3c7e872c50043f41f7cf973a9accbe9838383e9dcb922d9fe090c6df9feeb9",
-      "modified": "2026-11-23T16:45:17.078Z"
+      "digest": "c4b1e96727fffd080cf91da35d7c347aa96f005ea4ebf931210feacb2ab43c19",
+      "modified": "2026-11-24T16:37:35.751Z"
     },
     "https://tractorvs.com/de/tractors/zetor-proxima-e715524e/": {
-      "digest": "06bdbafc608783245ea2fa4c5a068e4ee5b7baf4278d5c570d86cdf25e6e0448",
-      "modified": "2026-11-23T16:45:17.078Z"
+      "digest": "b82864d27849e96bba1db24a070e39552c32a9b999bfb9f1e2636a369b8b9aef",
+      "modified": "2026-11-24T16:37:35.751Z"
     },
     "https://tractorvs.com/es/": {
       "digest": "78c230807453c2bfa35abdbca4af7956a25fe901f6ab46aea48f56374b14f588",
@@ -1646,8 +1646,8 @@
       "modified": "2026-11-24T16:26:42.582Z"
     },
     "https://tractorvs.com/es/tractors/": {
-      "digest": "2e228fdf1d1e6abe686fd642593fecb66a9e379f5a5cfa1853283d371e758134",
-      "modified": "2026-11-24T15:48:25.289Z"
+      "digest": "f1341067a05beef4ba8790b1c51f93c868aec9aee5a18d351446ae0bf3a2ddd5",
+      "modified": "2026-11-24T16:37:35.751Z"
     },
     "https://tractorvs.com/es/tractors/agrale-4125-0b53e944/": {
       "digest": "f06a64d2f3c0f38fc43ddb427a077c88ef10ab6f77a3074e18518a88795995a3",
@@ -1842,8 +1842,8 @@
       "modified": "2026-11-24T15:48:25.289Z"
     },
     "https://tractorvs.com/es/tractors/belarus-82-1-940a988a/": {
-      "digest": "6cdeb81a3e450bec9259151d3881e22c1f76c2106c6bc2fd9034b05032a36440",
-      "modified": "2026-11-24T15:48:25.289Z"
+      "digest": "74e4816c5e8dfc48dbe0a6f813bcec346d26b179d0a83ee23b1fbb6f21581896",
+      "modified": "2026-11-24T16:37:35.751Z"
     },
     "https://tractorvs.com/es/tractors/belarus-892-2-2f9d2a97/": {
       "digest": "75573741ebf60fb7e4a26d84884664ca5210086f08755b6b5e89fd3a359ce806",
@@ -1958,8 +1958,8 @@
       "modified": "2026-11-24T15:48:25.289Z"
     },
     "https://tractorvs.com/es/tractors/kioti-hx1402atc-eu-cfc1d71f/": {
-      "digest": "7abc9a3e8126a86b343ed19a2b76ee39def5a1f9bd056c3f6f1fcdfb6f3d7352",
-      "modified": "2026-11-24T15:48:25.289Z"
+      "digest": "23f8d4bd1c2a81ea53e4968b7bcd0b66353417d0968b1be343141ca69958fd09",
+      "modified": "2026-11-24T16:37:35.751Z"
     },
     "https://tractorvs.com/es/tractors/kioti-hx9010pc-eu-1a56bc00/": {
       "digest": "f74a23dd001cef2632b637978d27c75f31d5b4fb5ec1ec5ae405b4b63fa167d1",
@@ -2842,8 +2842,8 @@
       "modified": "2026-11-24T15:48:25.289Z"
     },
     "https://tractorvs.com/es/tractors/tym-t2025p-622ddce0/": {
-      "digest": "9ee11c02d37ee885e616ca1a5b5514429da3ef2b4782a37a5627008fc8da9ea7",
-      "modified": "2026-11-24T15:48:25.289Z"
+      "digest": "6592e5c101a66f9ee36a1883336dfbfd9a995b33030f5fc2032caf438e4de0e5",
+      "modified": "2026-11-24T16:37:35.751Z"
     },
     "https://tractorvs.com/es/tractors/tym-t2026-1aa3a3d6/": {
       "digest": "2d52efc9dcbb7c3a358f905150f2241862150d265904674c7827d3daccec04cc",
@@ -2874,8 +2874,8 @@
       "modified": "2026-11-24T15:48:25.289Z"
     },
     "https://tractorvs.com/es/tractors/tym-t3048-458be7b8/": {
-      "digest": "8163d109d7c521d5b409901d83ab1387f550b755ab197b49cd8e53a8b404d105",
-      "modified": "2026-11-24T15:48:25.289Z"
+      "digest": "6b6014aec855a26862fe974e024f4f52eacc76efa4c618a834747e47f49957ae",
+      "modified": "2026-11-24T16:37:35.751Z"
     },
     "https://tractorvs.com/es/tractors/tym-t3048-5d1360a7/": {
       "digest": "8002051fbf77913c98f32dd69c67ac1a39ebcbf2b5647f8a1ff07d1a67e1577b",
@@ -2930,8 +2930,8 @@
       "modified": "2026-11-24T15:48:25.289Z"
     },
     "https://tractorvs.com/es/tractors/tym-t6115-80fd42a2/": {
-      "digest": "2576968bda36a9fe66fd19359f95062fb039eb21699194fcaafdb4bd3dca3bbd",
-      "modified": "2026-11-24T15:48:25.289Z"
+      "digest": "74fe103be11067323ef4d5074fe603952037b9fef880d48657a98e06f2e13772",
+      "modified": "2026-11-24T16:37:35.751Z"
     },
     "https://tractorvs.com/es/tractors/tym-t6130-7597d8a9/": {
       "digest": "882c22b0b5de415c66f02ea8902c7fdce30cab7d56f33cdb133704fd03be1627",
@@ -3198,16 +3198,16 @@
       "modified": "2026-11-24T15:48:25.289Z"
     },
     "https://tractorvs.com/es/tractors/zetor-proxima-c0d8fcfe/": {
-      "digest": "c0be4a26399bf87aeecf21daafcf2654cbe1b6fa2bad2201e7108db6dfb9d5fb",
-      "modified": "2026-11-23T16:45:17.078Z"
+      "digest": "53cbd19f2d97a61db267ce68558059e4c055077fe3d4f8f4ba057efffa153e67",
+      "modified": "2026-11-24T16:37:35.751Z"
     },
     "https://tractorvs.com/es/tractors/zetor-proxima-cf11aa07/": {
-      "digest": "3eb803a3b98bc4b8aa5527cabc557af7ecf8611747a75ade1a48dedc46e95e04",
-      "modified": "2026-11-23T16:45:17.078Z"
+      "digest": "fc52e66ffb3c887479843c31b541e04db122b18374f2e230b240a9895c0aee19",
+      "modified": "2026-11-24T16:37:35.751Z"
     },
     "https://tractorvs.com/es/tractors/zetor-proxima-e715524e/": {
-      "digest": "ae9917fa248a5b4c0b96ccb54ecaa54d2ffc09184181c3cc6b7fc028835c5442",
-      "modified": "2026-11-23T16:45:17.078Z"
+      "digest": "e119c4ef8398912c4ecc9aacb485e39a6c19076e28ca6b242165fb1896eb06c0",
+      "modified": "2026-11-24T16:37:35.751Z"
     },
     "https://tractorvs.com/farm-advisor/": {
       "digest": "2958c1653e29e8ea7077f0a6e26092e04fd9e2986ed83cedcb5f1196b8d2c725",
@@ -3242,8 +3242,8 @@
       "modified": "2026-11-24T16:26:42.582Z"
     },
     "https://tractorvs.com/fr/tractors/": {
-      "digest": "a665fd5bd9cddfbd8f089d0c4460628c24d1e289a478e57ed80202aae26e1c4c",
-      "modified": "2026-11-24T15:48:25.289Z"
+      "digest": "04022813c291b1c3fd31ac44bf37557049f12ffe34014611ad9c1fa119569240",
+      "modified": "2026-11-24T16:37:35.751Z"
     },
     "https://tractorvs.com/fr/tractors/agrale-4125-0b53e944/": {
       "digest": "b8a1b58c8d94fe6c14b841d647d0cfa886abe3ee91e2ec31c091658027d90821",
@@ -3438,8 +3438,8 @@
       "modified": "2026-11-24T15:48:25.289Z"
     },
     "https://tractorvs.com/fr/tractors/belarus-82-1-940a988a/": {
-      "digest": "623e31228d3a318fa0e7efda8bc2b05c4474353094ef8797d0d49ce8f5b99369",
-      "modified": "2026-11-24T15:48:25.289Z"
+      "digest": "d74e33e721e842df2d8f05e6afdfc5687d751b2c9851237dfdb3384e923d53e5",
+      "modified": "2026-11-24T16:37:35.751Z"
     },
     "https://tractorvs.com/fr/tractors/belarus-892-2-2f9d2a97/": {
       "digest": "c26b0d4f1fec409496fbdced05e018be98b2b854e463eaa69ed2e91cea0b4d77",
@@ -3554,8 +3554,8 @@
       "modified": "2026-11-24T15:48:25.289Z"
     },
     "https://tractorvs.com/fr/tractors/kioti-hx1402atc-eu-cfc1d71f/": {
-      "digest": "acb41c5c7c9329041122335e6d47d672392011f25d06b0d22f12a3883d681626",
-      "modified": "2026-11-24T15:48:25.289Z"
+      "digest": "e1a2be9c1f539f415caccbcd5523a0006f8f13c5f872909b003d4f91731c294d",
+      "modified": "2026-11-24T16:37:35.751Z"
     },
     "https://tractorvs.com/fr/tractors/kioti-hx9010pc-eu-1a56bc00/": {
       "digest": "6d1ff3ed7c2da2a6e7d60d8bb7c1e8f1d6aa3e7b6c0f4e46b494d6452ff21497",
@@ -4438,8 +4438,8 @@
       "modified": "2026-11-24T15:48:25.289Z"
     },
     "https://tractorvs.com/fr/tractors/tym-t2025p-622ddce0/": {
-      "digest": "6cec0ed664ca626fcdb3870b9ec806870d0866733824256049342d6c354f8790",
-      "modified": "2026-11-24T15:48:25.289Z"
+      "digest": "6c6ce59be1ed8e7668525a047fb5a16558051523518e475cfa3e3518c04b57be",
+      "modified": "2026-11-24T16:37:35.751Z"
     },
     "https://tractorvs.com/fr/tractors/tym-t2026-1aa3a3d6/": {
       "digest": "ef26ca6dc5e32a69e84c22caafe5bb4326a7bdd1ad66226ce15a17eb49d69a24",
@@ -4470,8 +4470,8 @@
       "modified": "2026-11-24T15:48:25.289Z"
     },
     "https://tractorvs.com/fr/tractors/tym-t3048-458be7b8/": {
-      "digest": "811539a5fe110df20b4ab6bf4c3912e8abe71929854915084edf21bd0f83783d",
-      "modified": "2026-11-24T15:48:25.289Z"
+      "digest": "a1e99bc1ff97e15187edfbb43c4f50c9a66c8f486e169b32a951d6be6567cab3",
+      "modified": "2026-11-24T16:37:35.751Z"
     },
     "https://tractorvs.com/fr/tractors/tym-t3048-5d1360a7/": {
       "digest": "87ab64e7a075ffb988eb7f73e99ae54e2bf02187f50b89dd70270e7d4143f212",
@@ -4526,8 +4526,8 @@
       "modified": "2026-11-24T15:48:25.289Z"
     },
     "https://tractorvs.com/fr/tractors/tym-t6115-80fd42a2/": {
-      "digest": "be53039ae20fe421287847b027508be6e079c7c6e66b3346f2aaec3ed2b6da92",
-      "modified": "2026-11-24T15:48:25.289Z"
+      "digest": "37275a5ccb950b4f87230421d88fff780daaf15c842395aa8c3e535bf538a98b",
+      "modified": "2026-11-24T16:37:35.751Z"
     },
     "https://tractorvs.com/fr/tractors/tym-t6130-7597d8a9/": {
       "digest": "f0cd96a8f0aa1ca57cd9d9bb296a3a13d272e98ff0e806950d30ffa45afc6f8c",
@@ -4794,16 +4794,16 @@
       "modified": "2026-11-24T15:48:25.289Z"
     },
     "https://tractorvs.com/fr/tractors/zetor-proxima-c0d8fcfe/": {
-      "digest": "274b9f9f2bc24a97b2a82b9db07573ad5bbd3e015a4ed8c2c75da0caf6d690fc",
-      "modified": "2026-11-23T16:45:17.078Z"
+      "digest": "80d4bfc3fdacf7dd37ff118705cb50b1643cb24e171c626eb4b5f1d977fdc5a5",
+      "modified": "2026-11-24T16:37:35.751Z"
     },
     "https://tractorvs.com/fr/tractors/zetor-proxima-cf11aa07/": {
-      "digest": "ca14c912105435612713c349ddf0377a783594d7e8d3cf55fcc5b71f395b0b72",
-      "modified": "2026-11-23T16:45:17.078Z"
+      "digest": "c35c9e16d40969a508f59c19a3204c4d214a5777bef65e03f39cb85c5d4e6c48",
+      "modified": "2026-11-24T16:37:35.751Z"
     },
     "https://tractorvs.com/fr/tractors/zetor-proxima-e715524e/": {
-      "digest": "660509de38b10170d16e2218ec965b2e5f65c309a927e330bdf5a55cbcfb519f",
-      "modified": "2026-11-23T16:45:17.078Z"
+      "digest": "49456d1aec34c9f20d6d3b720ecb8357a3e7240131a0fbb38a18cb077cf0914f",
+      "modified": "2026-11-24T16:37:35.751Z"
     },
     "https://tractorvs.com/guides/choosing-a-tractor/": {
       "digest": "9ecf9c96d1ad6ba6fc1306756fd2d8be20c52958694e479b3f88cf1e7e2e14a0",
@@ -4854,8 +4854,8 @@
       "modified": "2026-11-24T16:26:42.582Z"
     },
     "https://tractorvs.com/hi/tractors/": {
-      "digest": "6e8f854db0ddab616eb8892ad48f7939aedaa32bba5a30bafc5bbf4de665dd57",
-      "modified": "2026-11-24T15:48:25.289Z"
+      "digest": "e65798cc5b945e45bc1a073558f8146b4798cc251e7c304e81c3d44d82379df1",
+      "modified": "2026-11-24T16:37:35.751Z"
     },
     "https://tractorvs.com/hi/tractors/agrale-4125-0b53e944/": {
       "digest": "377693b0bd65595b584c51290356012a376a147f2fdc091d3647ed0c215298f0",
@@ -5050,8 +5050,8 @@
       "modified": "2026-11-24T15:48:25.289Z"
     },
     "https://tractorvs.com/hi/tractors/belarus-82-1-940a988a/": {
-      "digest": "3e3c3955f0c9666c995d29ff66b3172da717fff08c8a2d4de767774283362e37",
-      "modified": "2026-11-24T15:48:25.289Z"
+      "digest": "27582763142a3603fffe3548bcc62f3d29136fe86ebe3753cabf648ae89f6e4d",
+      "modified": "2026-11-24T16:37:35.751Z"
     },
     "https://tractorvs.com/hi/tractors/belarus-892-2-2f9d2a97/": {
       "digest": "dbee80a72de09444c1b73956ab3fa9165d002c28c3d027392fa0e545a14d667c",
@@ -5166,8 +5166,8 @@
       "modified": "2026-11-24T15:48:25.289Z"
     },
     "https://tractorvs.com/hi/tractors/kioti-hx1402atc-eu-cfc1d71f/": {
-      "digest": "36bf367dba024502f948cba8892320e3e2fbc8fe642401e7596d947c2f28a5ac",
-      "modified": "2026-11-24T15:48:25.289Z"
+      "digest": "1c3f47637b62bf7864cc8f3671f4db292eb45788d048ab9d8cbe572437d5caf4",
+      "modified": "2026-11-24T16:37:35.751Z"
     },
     "https://tractorvs.com/hi/tractors/kioti-hx9010pc-eu-1a56bc00/": {
       "digest": "c9de4ecc67f4cefe82c455edf27fbbf111ad2339431e96301bbe9522855066e4",
@@ -6050,8 +6050,8 @@
       "modified": "2026-11-24T15:48:25.289Z"
     },
     "https://tractorvs.com/hi/tractors/tym-t2025p-622ddce0/": {
-      "digest": "ee1ffb41dce250ee169b34f91824e4dbcb712de458cc8a3a4fbaa2d84bb158ff",
-      "modified": "2026-11-24T15:48:25.289Z"
+      "digest": "38a67c3104e4daf1bb3710d34c3627499d775d1f351f9cf90b071eb53f9661a5",
+      "modified": "2026-11-24T16:37:35.751Z"
     },
     "https://tractorvs.com/hi/tractors/tym-t2026-1aa3a3d6/": {
       "digest": "efe1b17880ac11d3779a27a404ff0ed88fde1e1354ae6f5b1355c4611266d905",
@@ -6082,8 +6082,8 @@
       "modified": "2026-11-24T15:48:25.289Z"
     },
     "https://tractorvs.com/hi/tractors/tym-t3048-458be7b8/": {
-      "digest": "ce494eec9f81b46fcd8c3381606035ba631a7c70296466d495bc5de19fe01c81",
-      "modified": "2026-11-24T15:48:25.289Z"
+      "digest": "0f80ee13eb876857ab4f86b4ca38bfc83996bc7bd2c51ef9e0b9a1141457ee0e",
+      "modified": "2026-11-24T16:37:35.751Z"
     },
     "https://tractorvs.com/hi/tractors/tym-t3048-5d1360a7/": {
       "digest": "0f5b60f3505e4810589ce91abef1e175d8c5c9778cdd407d8ac50db128616a0b",
@@ -6138,8 +6138,8 @@
       "modified": "2026-11-24T15:48:25.289Z"
     },
     "https://tractorvs.com/hi/tractors/tym-t6115-80fd42a2/": {
-      "digest": "972c816d0710b85ade534df0a457ca0f534bbb357d030d6f90fb8b1663595afe",
-      "modified": "2026-11-24T15:48:25.289Z"
+      "digest": "a219be5475f6f39df3c107bcef2ae6f81357b38d2784e3f9cd6d6d877b31b3e6",
+      "modified": "2026-11-24T16:37:35.751Z"
     },
     "https://tractorvs.com/hi/tractors/tym-t6130-7597d8a9/": {
       "digest": "08f3429fd616403116becf45d58f1e0b639da0bda433b1b8dd8804aa139b3804",
@@ -6406,16 +6406,16 @@
       "modified": "2026-11-24T15:48:25.289Z"
     },
     "https://tractorvs.com/hi/tractors/zetor-proxima-c0d8fcfe/": {
-      "digest": "904381f62de756772452a476f3ef2e59d95205542a98fbef8f69721caf15a56b",
-      "modified": "2026-11-23T16:45:17.078Z"
+      "digest": "f85288c2d2bf87d184d0fb730da31c6e09a21fa647b98b749d47e60be366c3ef",
+      "modified": "2026-11-24T16:37:35.751Z"
     },
     "https://tractorvs.com/hi/tractors/zetor-proxima-cf11aa07/": {
-      "digest": "e3ad1928a3d29a6bd52eac7758a32e05e68d851cf1a744d5e51543481e53786d",
-      "modified": "2026-11-23T16:45:17.078Z"
+      "digest": "7eccc19716a5abdc803a0416f7b0af5676e875ae4d9ddf8c5a47367dec25716d",
+      "modified": "2026-11-24T16:37:35.751Z"
     },
     "https://tractorvs.com/hi/tractors/zetor-proxima-e715524e/": {
-      "digest": "a5e43a837e627b0743d7907c8ebdae14b655703604852d0c1afc8eff1946b648",
-      "modified": "2026-11-23T16:45:17.078Z"
+      "digest": "9815771fdb30c39dfc3603c8c72aa08a100e6e23c04b7b09394308da410714ba",
+      "modified": "2026-11-24T16:37:35.751Z"
     },
     "https://tractorvs.com/ja/": {
       "digest": "2125260c2df476ae1ec8f48b4df61acf364791ae2b582c35f5dd081c108988e8",
@@ -6446,8 +6446,8 @@
       "modified": "2026-11-24T16:26:42.582Z"
     },
     "https://tractorvs.com/ja/tractors/": {
-      "digest": "446dc6aa1c422530094fe80f09122cb49879afcd932d8a09a67edfae3e57822a",
-      "modified": "2026-11-24T15:48:25.289Z"
+      "digest": "751976fffc1dd84bb871f8714b7cd67b2f6fa8a748d54b04397f9bc97d0865d1",
+      "modified": "2026-11-24T16:37:35.751Z"
     },
     "https://tractorvs.com/ja/tractors/agrale-4125-0b53e944/": {
       "digest": "965b5bd2023b7307e4cf2f8c683a86963aec03228a45eea3dd3b2d988dcbebac",
@@ -6642,8 +6642,8 @@
       "modified": "2026-11-24T15:48:25.289Z"
     },
     "https://tractorvs.com/ja/tractors/belarus-82-1-940a988a/": {
-      "digest": "b8681828e9f2e7de64a8d453885e7d9a25fd68424ed485715ba90f8f63832e62",
-      "modified": "2026-11-24T15:48:25.289Z"
+      "digest": "4dc812f9038343b5cdfe850b257eb3da9e1d42f9e712e6e8dae98445266a988e",
+      "modified": "2026-11-24T16:37:35.751Z"
     },
     "https://tractorvs.com/ja/tractors/belarus-892-2-2f9d2a97/": {
       "digest": "68353988e281b8da82f512d961afc032c315c6561833e2bde7daa5c8ad08b3d9",
@@ -6758,8 +6758,8 @@
       "modified": "2026-11-24T15:48:25.289Z"
     },
     "https://tractorvs.com/ja/tractors/kioti-hx1402atc-eu-cfc1d71f/": {
-      "digest": "af130d8d4a2581a0324ae4ed8b59ab2ac87d1585deb35b05ac2b98b458ce0d88",
-      "modified": "2026-11-24T15:48:25.289Z"
+      "digest": "1946de63353afb5baa7959dab99edbc9a48661bbeeb68760be4ac91caa12bd7b",
+      "modified": "2026-11-24T16:37:35.751Z"
     },
     "https://tractorvs.com/ja/tractors/kioti-hx9010pc-eu-1a56bc00/": {
       "digest": "f675ecb410e068f285ef7013b514b12263b5d9b77cb74783804c896cbd12ba1f",
@@ -7642,8 +7642,8 @@
       "modified": "2026-11-24T15:48:25.289Z"
     },
     "https://tractorvs.com/ja/tractors/tym-t2025p-622ddce0/": {
-      "digest": "d9d329206c3c8b801b55ebb121b04300d2d0ba6b3a7f707524451d3a48f2b3b2",
-      "modified": "2026-11-24T15:48:25.289Z"
+      "digest": "6d93587c1fd61eae7b8e553b1e58769b84b817f4e9885d7f6ada650424af5535",
+      "modified": "2026-11-24T16:37:35.751Z"
     },
     "https://tractorvs.com/ja/tractors/tym-t2026-1aa3a3d6/": {
       "digest": "9da863fd7ef7eaed8edd0288e2945929d33f3b1aa364b7880194628520d4397f",
@@ -7674,8 +7674,8 @@
       "modified": "2026-11-24T15:48:25.289Z"
     },
     "https://tractorvs.com/ja/tractors/tym-t3048-458be7b8/": {
-      "digest": "75347614704acb8d40a218bcdcc7185bb43f75d3c37efdd9e62edb6892e256b2",
-      "modified": "2026-11-24T15:48:25.289Z"
+      "digest": "7d3a2bb62a4e370dfdc8daa5d74cbc80ad54b24b2a56013689452de1bc221d0e",
+      "modified": "2026-11-24T16:37:35.751Z"
     },
     "https://tractorvs.com/ja/tractors/tym-t3048-5d1360a7/": {
       "digest": "e1c30c54b0f0212ee7152bc0a5d26dfe7cccfae0fb23d50ebb8300df9e4a66d9",
@@ -7730,8 +7730,8 @@
       "modified": "2026-11-24T15:48:25.289Z"
     },
     "https://tractorvs.com/ja/tractors/tym-t6115-80fd42a2/": {
-      "digest": "ff66a9e046652187a6940e0125e5fb90eb446bbd4e9478d0f748dfeb9825a9ed",
-      "modified": "2026-11-24T15:48:25.289Z"
+      "digest": "3a921d8247cc64425b0614259a7039f499c05f7ae4a725a1368e1d2c449c0836",
+      "modified": "2026-11-24T16:37:35.751Z"
     },
     "https://tractorvs.com/ja/tractors/tym-t6130-7597d8a9/": {
       "digest": "e8c90fa2a5fb2942d88e5168ffec6f713a6a7f4676d8ca668e2de33fd69bf4dd",
@@ -7998,16 +7998,16 @@
       "modified": "2026-11-24T15:48:25.289Z"
     },
     "https://tractorvs.com/ja/tractors/zetor-proxima-c0d8fcfe/": {
-      "digest": "484934160d58e0ade1e5b8b8095c5151bc05eb310d8983cabd4c387df225e5ed",
-      "modified": "2026-11-23T16:45:17.078Z"
+      "digest": "014098b2c11132895fab55aeaeb60e58ad6fae50bc35c75acedef00fe606e90e",
+      "modified": "2026-11-24T16:37:35.751Z"
     },
     "https://tractorvs.com/ja/tractors/zetor-proxima-cf11aa07/": {
-      "digest": "1d528bcae2235cd13ae9c20a7e8e2eee75c7c6036d821aa7d2bb304724db1571",
-      "modified": "2026-11-23T16:45:17.078Z"
+      "digest": "4b3229e9b2957343162eb3f47e1a1d4fc9c4dbb20f4fef5a9321884abb9d68bc",
+      "modified": "2026-11-24T16:37:35.751Z"
     },
     "https://tractorvs.com/ja/tractors/zetor-proxima-e715524e/": {
-      "digest": "39696ff8e9bc273180933f6c909bdd59955c89ddd3a821a62d07ade9bdffc0af",
-      "modified": "2026-11-23T16:45:17.078Z"
+      "digest": "56f662d56bd9ad476d47af86bb73a7d538bf676c069cafe468a838ccd93cc7a1",
+      "modified": "2026-11-24T16:37:35.751Z"
     },
     "https://tractorvs.com/methodology/": {
       "digest": "7ea58000060b32be0c5e671aedccb71fa9c3ae59aeedf250932a1a37c72174d3",
@@ -8046,8 +8046,8 @@
       "modified": "2026-11-24T16:26:42.582Z"
     },
     "https://tractorvs.com/pt-br/tractors/": {
-      "digest": "1747e67aa04f1eaa63743dcf3e9aaff9cae5df45c5d27a08647aaad5bbf84cbb",
-      "modified": "2026-11-24T15:48:25.289Z"
+      "digest": "73bda87e64061f742442827eb62414cd65eca071ee919bbcf9f81b43fbd9a638",
+      "modified": "2026-11-24T16:37:35.751Z"
     },
     "https://tractorvs.com/pt-br/tractors/agrale-4125-0b53e944/": {
       "digest": "3035c759979d10f52ec904cc6b8c6a240cc6ee75461ad5cec913e87a25f8c41b",
@@ -8242,8 +8242,8 @@
       "modified": "2026-11-24T15:48:25.289Z"
     },
     "https://tractorvs.com/pt-br/tractors/belarus-82-1-940a988a/": {
-      "digest": "37201bea9b36f043c05f97f9e464943800d5e527826f824c76a349760ecf2e5f",
-      "modified": "2026-11-24T15:48:25.289Z"
+      "digest": "16e52e67f0c8e1eb9cb280e05a6345adc21a89863cb0044d507f8a1d0f51f0b4",
+      "modified": "2026-11-24T16:37:35.751Z"
     },
     "https://tractorvs.com/pt-br/tractors/belarus-892-2-2f9d2a97/": {
       "digest": "fa529ff438685a0ec46ea5c2a123941fc75f7dfa5c243274186495ea9b3965eb",
@@ -8358,8 +8358,8 @@
       "modified": "2026-11-24T15:48:25.289Z"
     },
     "https://tractorvs.com/pt-br/tractors/kioti-hx1402atc-eu-cfc1d71f/": {
-      "digest": "8d5769d4a4a18dcc597c647547c59b4d5a451557554d70942184a91fdcef5608",
-      "modified": "2026-11-24T15:48:25.289Z"
+      "digest": "d7aceb469e85b046e36a74c46f39ccfc3aa1c6f52388ed8197a7aa4fe170debe",
+      "modified": "2026-11-24T16:37:35.751Z"
     },
     "https://tractorvs.com/pt-br/tractors/kioti-hx9010pc-eu-1a56bc00/": {
       "digest": "e954f9e9f3c575a1c88e13aa885eb4c7edac78e6fe739164e8a2a77780f61c79",
@@ -9242,8 +9242,8 @@
       "modified": "2026-11-24T15:48:25.289Z"
     },
     "https://tractorvs.com/pt-br/tractors/tym-t2025p-622ddce0/": {
-      "digest": "e1b0964d5a08d88429385ac23538cadc132823a331f9340cf47037e24c79644d",
-      "modified": "2026-11-24T15:48:25.289Z"
+      "digest": "58d6898a644bd26d38a7db69e0c769ad360510580611f3aaa15ce06d7f0caaac",
+      "modified": "2026-11-24T16:37:35.751Z"
     },
     "https://tractorvs.com/pt-br/tractors/tym-t2026-1aa3a3d6/": {
       "digest": "79ebfdd65799572bff832c21b06f1d3c09b168da0f9f2357e32d8cd576970997",
@@ -9274,8 +9274,8 @@
       "modified": "2026-11-24T15:48:25.289Z"
     },
     "https://tractorvs.com/pt-br/tractors/tym-t3048-458be7b8/": {
-      "digest": "fc904783c096653ec374a874417c0242450c49e20ada1d8a846cd5e0833f27e6",
-      "modified": "2026-11-24T15:48:25.289Z"
+      "digest": "ee4910ff66468f8066a103736db1a600d4c6c07e2f9c64caf080e62efe897d32",
+      "modified": "2026-11-24T16:37:35.751Z"
     },
     "https://tractorvs.com/pt-br/tractors/tym-t3048-5d1360a7/": {
       "digest": "2aa7a69f61dc4818c6c934f89fe0b4948cf22a0fb05371c42ff9fb3e0780ae90",
@@ -9330,8 +9330,8 @@
       "modified": "2026-11-24T15:48:25.289Z"
     },
     "https://tractorvs.com/pt-br/tractors/tym-t6115-80fd42a2/": {
-      "digest": "3d1366a91f82e3c6b3c788c4b0c74c5e807d74c8ac925a8c0688e5f4e1ed2814",
-      "modified": "2026-11-24T15:48:25.289Z"
+      "digest": "9a1a223228d67397cb12bdec8803ae100eb9374c89f87657bf06e227b6f8405b",
+      "modified": "2026-11-24T16:37:35.751Z"
     },
     "https://tractorvs.com/pt-br/tractors/tym-t6130-7597d8a9/": {
       "digest": "3723ee1030998ceaf97485048ccd46a1a597f0415411cbb148cf6745549d98d9",
@@ -9598,16 +9598,16 @@
       "modified": "2026-11-24T15:48:25.289Z"
     },
     "https://tractorvs.com/pt-br/tractors/zetor-proxima-c0d8fcfe/": {
-      "digest": "e4b533eab1bb93a363e6738681c77e7b9ad00e3e6697e3f12d964c0480c0dfd0",
-      "modified": "2026-11-23T16:45:17.078Z"
+      "digest": "6e6fd0fb5017d5b17091f5ce4cd9d3e353d395eba688eb9850226e3fb3256c1a",
+      "modified": "2026-11-24T16:37:35.751Z"
     },
     "https://tractorvs.com/pt-br/tractors/zetor-proxima-cf11aa07/": {
-      "digest": "ddf501aa514a67461682754e98ba7a593d160bd98fc584ae54a0ba6cc4e13cc8",
-      "modified": "2026-11-23T16:45:17.078Z"
+      "digest": "55bb835f07112eb5b5cd352a7df5e05ee8faaad9e68c653c2ff7e246ab614911",
+      "modified": "2026-11-24T16:37:35.751Z"
     },
     "https://tractorvs.com/pt-br/tractors/zetor-proxima-e715524e/": {
-      "digest": "66c471d9adf8696aca5f81a5e825b27e0b971d18cf9d4bb97de6d6ee4032f381",
-      "modified": "2026-11-23T16:45:17.078Z"
+      "digest": "c5291fbb813954c511e35ff7f53e0a6d8e75c4bce1d92ba523aa46a38c3fc7a5",
+      "modified": "2026-11-24T16:37:35.751Z"
     },
     "https://tractorvs.com/reviews/basak-2075-bk/": {
       "digest": "3ed7a8a28479d5f711799c588b7137dcdeb88f82a585ecf144b096eb108210b7",
@@ -9642,8 +9642,8 @@
       "modified": "2026-11-24T16:26:42.582Z"
     },
     "https://tractorvs.com/ru/tractors/": {
-      "digest": "30037795df9f1f9ccf2fdf5013abd1606e77d306e897959310d0b726e26817ad",
-      "modified": "2026-11-24T15:48:25.289Z"
+      "digest": "a58db0ca1447a361844d3e3780f48a8a87520adecd0e0030b46e3c56cdac1ca4",
+      "modified": "2026-11-24T16:37:35.751Z"
     },
     "https://tractorvs.com/ru/tractors/agrale-4125-0b53e944/": {
       "digest": "53476e3788b9d66af5646cb6135ee03fb9ec7a337276a541bddb8c95d1b1c509",
@@ -9838,8 +9838,8 @@
       "modified": "2026-11-24T15:48:25.289Z"
     },
     "https://tractorvs.com/ru/tractors/belarus-82-1-940a988a/": {
-      "digest": "9d9f76265e5c37a27eb5090b83b2a2ce9e104b45f5a21ef0dee19040efc17305",
-      "modified": "2026-11-24T15:48:25.289Z"
+      "digest": "79ddb20b4d3324a0093049915f1b89eb5e36c236a0b3bd6e7dec0f062f288d1f",
+      "modified": "2026-11-24T16:37:35.751Z"
     },
     "https://tractorvs.com/ru/tractors/belarus-892-2-2f9d2a97/": {
       "digest": "10d4c6912c3062d09d259adf178a2ba66b17f6e13c76c72ac244ec82ca0b08c3",
@@ -9954,8 +9954,8 @@
       "modified": "2026-11-24T15:48:25.289Z"
     },
     "https://tractorvs.com/ru/tractors/kioti-hx1402atc-eu-cfc1d71f/": {
-      "digest": "ff68159ce0509a22e31e50a6dc60122b8b2d763296db77ef2dc0b2892bfb6db6",
-      "modified": "2026-11-24T15:48:25.289Z"
+      "digest": "603040cfd3a61509dc5c3d7a1ef8164ab96fd0cdc4996f87fd95ae7939be99a9",
+      "modified": "2026-11-24T16:37:35.751Z"
     },
     "https://tractorvs.com/ru/tractors/kioti-hx9010pc-eu-1a56bc00/": {
       "digest": "d2821dad78ac97e2b3d47aeebe41b4aadd8501965766ec17d52bb0250b3fa082",
@@ -10838,8 +10838,8 @@
       "modified": "2026-11-24T15:48:25.289Z"
     },
     "https://tractorvs.com/ru/tractors/tym-t2025p-622ddce0/": {
-      "digest": "5f73b0f2125eaee5f172e0d6dd7f9603823fe8753c44f48bb2697c1e4ac8a26b",
-      "modified": "2026-11-24T15:48:25.289Z"
+      "digest": "59d4f367198ff7154a07851f1baca91fe3eb743dd581e54ef28a0842f01b8cf9",
+      "modified": "2026-11-24T16:37:35.751Z"
     },
     "https://tractorvs.com/ru/tractors/tym-t2026-1aa3a3d6/": {
       "digest": "4b68c920b3cc58cae443a4eac3845f8e406fd132d3fab8a0ef07da9fa402ca44",
@@ -10870,8 +10870,8 @@
       "modified": "2026-11-24T15:48:25.289Z"
     },
     "https://tractorvs.com/ru/tractors/tym-t3048-458be7b8/": {
-      "digest": "3e45453a9ad06d20daa4175756a3515e15ad3bca43f8c7130cb11618c016b6af",
-      "modified": "2026-11-24T15:48:25.289Z"
+      "digest": "511c50aacbf2b54630ae891ca5699a2c6aa58f49f64cfd9be91a752c43fb0388",
+      "modified": "2026-11-24T16:37:35.751Z"
     },
     "https://tractorvs.com/ru/tractors/tym-t3048-5d1360a7/": {
       "digest": "3cfb6b248b61ee0c274b3023e739c26a9664720f9a2e6303480f1d5f4fccf38a",
@@ -10926,8 +10926,8 @@
       "modified": "2026-11-24T15:48:25.289Z"
     },
     "https://tractorvs.com/ru/tractors/tym-t6115-80fd42a2/": {
-      "digest": "6ccd3b861c420a9c8e0d3f6b3dd1790039d40ba7e4fc2869cc2efaebb3682d05",
-      "modified": "2026-11-24T15:48:25.289Z"
+      "digest": "b35465f8aaab7d8c724f41c53cdc484835c47bc183127e0619bbcdcc686e38a0",
+      "modified": "2026-11-24T16:37:35.751Z"
     },
     "https://tractorvs.com/ru/tractors/tym-t6130-7597d8a9/": {
       "digest": "f4902cb095cb6e3dc88a71e71b5e95760bf7c4e2a147a2db8ce81c74ee460a67",
@@ -11194,16 +11194,16 @@
       "modified": "2026-11-24T15:48:25.289Z"
     },
     "https://tractorvs.com/ru/tractors/zetor-proxima-c0d8fcfe/": {
-      "digest": "50be5204458c13778736a87482168af076b81e65f0a0707aca8d9a06fadf3e02",
-      "modified": "2026-11-23T16:45:17.078Z"
+      "digest": "b72ea9870f95c6fd6896d1862dd0de14c858b0078f5cd385db5737b68e19d145",
+      "modified": "2026-11-24T16:37:35.751Z"
     },
     "https://tractorvs.com/ru/tractors/zetor-proxima-cf11aa07/": {
-      "digest": "de88c7a8418f67a04315b1826a91d77743533a0e7560833312e2f706e5970965",
-      "modified": "2026-11-23T16:45:17.078Z"
+      "digest": "b945d9c18a09fa068187cb30cbeb0ff1344c01d1fa78bf488e237dd6a1af102e",
+      "modified": "2026-11-24T16:37:35.751Z"
     },
     "https://tractorvs.com/ru/tractors/zetor-proxima-e715524e/": {
-      "digest": "2b77a925e8afee236909b514e16e394c73b82028c0e556440aecd66a40a7e648",
-      "modified": "2026-11-23T16:45:17.078Z"
+      "digest": "647a842ca54d4f830eb82912f11734a7601cd4986c4034e08fa587a3af8ddda5",
+      "modified": "2026-11-24T16:37:35.751Z"
     },
     "https://tractorvs.com/tr/": {
       "digest": "4fb6dd00e9898d1c5c3d970eb2e6edb2e9d749f056ff92f7104bfa10ed1e3ccc",
@@ -11266,8 +11266,8 @@
       "modified": "2026-11-24T16:26:42.582Z"
     },
     "https://tractorvs.com/tr/tractors/": {
-      "digest": "afea748d6663773d990bab0131214a68d83a72005cfae42e9e7d048777c97cb2",
-      "modified": "2026-11-24T15:48:25.289Z"
+      "digest": "c455d4026204af01ce14a6ddc77cb2ccc72cf20914a673567957a5a6e19a3604",
+      "modified": "2026-11-24T16:37:35.751Z"
     },
     "https://tractorvs.com/tr/tractors/agrale-4125-0b53e944/": {
       "digest": "cbfb1b094b1f29a6b421188c362c4724ea5af2560d61a704d8fe0b1596b1b3d8",
@@ -11462,8 +11462,8 @@
       "modified": "2026-11-24T05:01:16.833Z"
     },
     "https://tractorvs.com/tr/tractors/belarus-82-1-940a988a/": {
-      "digest": "fd0c0cad826412dd50633369a13b95c75240f7236ff52d6546ec2a9a215e9e60",
-      "modified": "2026-11-24T05:01:16.833Z"
+      "digest": "0d94480d344b0de48f2f46d7a4fe534c74cebd8d447fc8ec2a0f5273e557e3c1",
+      "modified": "2026-11-24T16:37:35.751Z"
     },
     "https://tractorvs.com/tr/tractors/belarus-892-2-2f9d2a97/": {
       "digest": "9dd5cc0ae392a999414c19a3b64815f430d166c0fb1080a20bf680c7325b75df",
@@ -11578,8 +11578,8 @@
       "modified": "2026-11-23T16:45:17.078Z"
     },
     "https://tractorvs.com/tr/tractors/kioti-hx1402atc-eu-cfc1d71f/": {
-      "digest": "b3511deaaf5285404c5fbf18db275cac3aebc5c3cd4d20bd0f9d062341dffe8d",
-      "modified": "2026-11-24T10:19:05.384Z"
+      "digest": "9900bd97c62fbe5a3fcbcefbaf2db080e98465641b9d972e9efbfffc1a225a67",
+      "modified": "2026-11-24T16:37:35.751Z"
     },
     "https://tractorvs.com/tr/tractors/kioti-hx9010pc-eu-1a56bc00/": {
       "digest": "a937a1b9791066978bb535adeeecfd3d0b02e2ed959c6c942dca8e11fea07831",
@@ -12462,8 +12462,8 @@
       "modified": "2026-11-23T16:45:17.078Z"
     },
     "https://tractorvs.com/tr/tractors/tym-t2025p-622ddce0/": {
-      "digest": "a887d2c6777a871c53d0f4f5e6946768df8f6028f250cfccd260dab504b4a152",
-      "modified": "2026-11-24T05:01:16.833Z"
+      "digest": "d9dae06a4095e0fec03f7a20acc3e825cb85562315368764f34bfa91b1c32c3b",
+      "modified": "2026-11-24T16:37:35.751Z"
     },
     "https://tractorvs.com/tr/tractors/tym-t2026-1aa3a3d6/": {
       "digest": "d92ca5eaa7e253bd3e9e4885e6641afac21d26a380e4b4ed2a5962e18a6636db",
@@ -12494,8 +12494,8 @@
       "modified": "2026-11-24T05:01:16.833Z"
     },
     "https://tractorvs.com/tr/tractors/tym-t3048-458be7b8/": {
-      "digest": "f616090f58938cc68a7be130860881367dbe5a81e0e8d364041585adad943ec3",
-      "modified": "2026-11-23T16:45:17.078Z"
+      "digest": "2db01d0172075e70f8005820fb43e8a9a548a1c6a819da71b2bfbbb321dcf0ca",
+      "modified": "2026-11-24T16:37:35.751Z"
     },
     "https://tractorvs.com/tr/tractors/tym-t3048-5d1360a7/": {
       "digest": "88ed880e87548ae1511062e326a0b9da2358b34e3dd89dc88abf66b17933abc4",
@@ -12550,8 +12550,8 @@
       "modified": "2026-11-24T05:01:16.833Z"
     },
     "https://tractorvs.com/tr/tractors/tym-t6115-80fd42a2/": {
-      "digest": "969ba46a6899f1513995145e8c6a0af0554795c4ddb84e3d1acf50d1e6674da9",
-      "modified": "2026-11-24T05:01:16.833Z"
+      "digest": "ae4b48518d14b905daedf412ae657bc7f22ec282b5038b5437b29a2bba252079",
+      "modified": "2026-11-24T16:37:35.751Z"
     },
     "https://tractorvs.com/tr/tractors/tym-t6130-7597d8a9/": {
       "digest": "82abc9c9af00f398ace3963d9aa684e701e92394e068ccab705d6b2fedc73ff2",
@@ -12818,20 +12818,20 @@
       "modified": "2026-11-24T15:48:25.289Z"
     },
     "https://tractorvs.com/tr/tractors/zetor-proxima-c0d8fcfe/": {
-      "digest": "885f95b51996a0372cc8f9e442a460568e0ecdd291d91ff59c3434342cc7f85a",
-      "modified": "2026-11-23T16:45:17.078Z"
+      "digest": "2d5faa56d09b588e0a5c82314ac784adadfba009ee09a5e75f0e51e2a84e7d24",
+      "modified": "2026-11-24T16:37:35.751Z"
     },
     "https://tractorvs.com/tr/tractors/zetor-proxima-cf11aa07/": {
-      "digest": "6f89c660cf5dba17304fd6d45b32b5b4be4371b0fd23054caa6003f581c0d97d",
-      "modified": "2026-11-23T16:45:17.078Z"
+      "digest": "9ed1baf421cac3c49c1f7e1dcdd5900aa0ce5d6f135f59ec91f32c914293e859",
+      "modified": "2026-11-24T16:37:35.751Z"
     },
     "https://tractorvs.com/tr/tractors/zetor-proxima-e715524e/": {
-      "digest": "221200869aa89116ced4f0d645ff312a6018a3c77cfce1e6b1ad7a9ccbfcf2b7",
-      "modified": "2026-11-23T16:45:17.078Z"
+      "digest": "39096c991b6d6b756ce6559fc21133c031c867ca4253cd110c6634273607c8d1",
+      "modified": "2026-11-24T16:37:35.751Z"
     },
     "https://tractorvs.com/tractors/": {
-      "digest": "350d7b8daf22816a7d2b7f11cae86ebf16e05f4e0421afef3c3dd901da21a6d3",
-      "modified": "2026-11-24T15:48:25.289Z"
+      "digest": "bfa28a05946f274d95622fc265485f7cf25ed5bdeba5302c255d5b035fa2f7b1",
+      "modified": "2026-11-24T16:37:35.751Z"
     },
     "https://tractorvs.com/tractors/agrale-4125-0b53e944/": {
       "digest": "41798f99d5c960a94a56bd2e388c2dc375f095243fcad91abc215ad0c7cf129f",
@@ -13026,8 +13026,8 @@
       "modified": "2026-11-24T05:01:16.833Z"
     },
     "https://tractorvs.com/tractors/belarus-82-1-940a988a/": {
-      "digest": "de89c29937bd51fdd06bfa893b1d639f323bc936edae5b893c525e9f1ce77d63",
-      "modified": "2026-11-24T05:01:16.833Z"
+      "digest": "4b8b585afc68f6ffba247f58ee82822c9810e6b4ede51548d1dea305a5f8860f",
+      "modified": "2026-11-24T16:37:35.751Z"
     },
     "https://tractorvs.com/tractors/belarus-892-2-2f9d2a97/": {
       "digest": "2948c8eb8bb1a8e594378c918b9f79d9c844e73937e32663fdb64337b01458ac",
@@ -13142,8 +13142,8 @@
       "modified": "2026-11-23T16:45:17.078Z"
     },
     "https://tractorvs.com/tractors/kioti-hx1402atc-eu-cfc1d71f/": {
-      "digest": "785a287280ee89f4f95ce1d9b8a8eab7e2120d5e241cff7da2881f61b54c469c",
-      "modified": "2026-11-24T10:19:05.384Z"
+      "digest": "5b9458efc2de65a6644b1aff79295916adc5df65f3ab627a02ccd0977df41bd6",
+      "modified": "2026-11-24T16:37:35.751Z"
     },
     "https://tractorvs.com/tractors/kioti-hx9010pc-eu-1a56bc00/": {
       "digest": "7da94a9fa5a3574eedd142178f5782cd78969dd22b5439ae3dfaafe3a8d1424c",
@@ -14026,8 +14026,8 @@
       "modified": "2026-11-23T16:45:17.078Z"
     },
     "https://tractorvs.com/tractors/tym-t2025p-622ddce0/": {
-      "digest": "644aa86fb337a8aee3a21af72c31f7e8eb518880991442a742d0ec2f945f57d0",
-      "modified": "2026-11-24T05:01:16.833Z"
+      "digest": "7ea63c2eb3ceb906e99612ab4469ca72f0cf25836e5cf6972d62a4a6d28e7783",
+      "modified": "2026-11-24T16:37:35.751Z"
     },
     "https://tractorvs.com/tractors/tym-t2026-1aa3a3d6/": {
       "digest": "28c9a6aab2a3656166e9cafe4ca5209505a1f731ba855d7267df259422437194",
@@ -14058,8 +14058,8 @@
       "modified": "2026-11-24T05:01:16.833Z"
     },
     "https://tractorvs.com/tractors/tym-t3048-458be7b8/": {
-      "digest": "a902aff5ba1f3ed1575d67e1bdd246ef913bc43c4409d2a9f74b9cfc91695a70",
-      "modified": "2026-11-23T16:45:17.078Z"
+      "digest": "38c1b51565446dda46c8647ec70e1227f422a85c56d690ae703b80a0bb2bd70d",
+      "modified": "2026-11-24T16:37:35.751Z"
     },
     "https://tractorvs.com/tractors/tym-t3048-5d1360a7/": {
       "digest": "37a302f3016fac2de22182928b42a666db6bb54bcbc7c3c7e5c976127ff514f5",
@@ -14114,8 +14114,8 @@
       "modified": "2026-11-24T05:01:16.833Z"
     },
     "https://tractorvs.com/tractors/tym-t6115-80fd42a2/": {
-      "digest": "2f234b29d9dcd836588739df7f1cb6b474da67c8f1d914f365c0a92adc6f6322",
-      "modified": "2026-11-24T05:01:16.833Z"
+      "digest": "5a1b4a3ef49c91b821fd2432e40b3263095229fbaf5836b8fd3ea509d401c124",
+      "modified": "2026-11-24T16:37:35.751Z"
     },
     "https://tractorvs.com/tractors/tym-t6130-7597d8a9/": {
       "digest": "46f514446ec4ed70f17b436c63eea0203df5a742e5438e8de77778311acdb7ae",
@@ -14382,16 +14382,16 @@
       "modified": "2026-11-24T15:48:25.289Z"
     },
     "https://tractorvs.com/tractors/zetor-proxima-c0d8fcfe/": {
-      "digest": "f73e15e8a6236b56520b21ad4fcdae4be7cc4d35f2cbb3e3ecfddba427858903",
-      "modified": "2026-11-23T16:45:17.078Z"
+      "digest": "cb149220946b07853506ed22e55cbaed606728c8d55c87346254304608049dba",
+      "modified": "2026-11-24T16:37:35.751Z"
     },
     "https://tractorvs.com/tractors/zetor-proxima-cf11aa07/": {
-      "digest": "91d1086bff97abfa60bafa0fe4320dbd37221dd0dc65ab2ad9ee2ad9111fbd15",
-      "modified": "2026-11-23T16:45:17.078Z"
+      "digest": "e1d3706874de6f2bdb37ebaf14be80ce82fa819d1ab54f91d7733ffb037b7d69",
+      "modified": "2026-11-24T16:37:35.751Z"
     },
     "https://tractorvs.com/tractors/zetor-proxima-e715524e/": {
-      "digest": "48e1d31528873fc942a3df2bb07faaf3cafbcd5069ac6790186f28f259d90b8d",
-      "modified": "2026-11-23T16:45:17.078Z"
+      "digest": "aff9bdee7f13f09b44a7dfbdbd56fd76e2a73552031aafbfbdd4b8554455f2a2",
+      "modified": "2026-11-24T16:37:35.751Z"
     },
     "https://tractorvs.com/zh/": {
       "digest": "45c77897eb11ca4bcb0b5fdfc5a24c37d96f6c248861ec9780e3f3fcaf7ebca6",
@@ -14422,8 +14422,8 @@
       "modified": "2026-11-24T16:26:42.582Z"
     },
     "https://tractorvs.com/zh/tractors/": {
-      "digest": "23af2753bb6f69aca5866dceffa3fa9bde43468d7579ad200c0e5fde528fa41d",
-      "modified": "2026-11-24T15:48:25.289Z"
+      "digest": "35517c01ef6864b317740f917ae2c4bcd07333c427c54bb65f3bc5826dc2e657",
+      "modified": "2026-11-24T16:37:35.751Z"
     },
     "https://tractorvs.com/zh/tractors/agrale-4125-0b53e944/": {
       "digest": "af9707caacf9593a39899530ab3e9b8ee2971cf1a45030048991469d0d814ed1",
@@ -14618,8 +14618,8 @@
       "modified": "2026-11-24T15:48:25.289Z"
     },
     "https://tractorvs.com/zh/tractors/belarus-82-1-940a988a/": {
-      "digest": "b4a2344494217f14bcf2650ef802bf893b328308ef1984e417c4ecdba74c190d",
-      "modified": "2026-11-24T15:48:25.289Z"
+      "digest": "26758a1311cbeaec68f84ed21688ac9e68f31aa4f94e985e713d66a661408941",
+      "modified": "2026-11-24T16:37:35.751Z"
     },
     "https://tractorvs.com/zh/tractors/belarus-892-2-2f9d2a97/": {
       "digest": "675c6006f04d6f16c487d684c8a0dbb7b087729f8709e14a50666df0af3ef93c",
@@ -14734,8 +14734,8 @@
       "modified": "2026-11-24T15:48:25.289Z"
     },
     "https://tractorvs.com/zh/tractors/kioti-hx1402atc-eu-cfc1d71f/": {
-      "digest": "ea4194d68152cd227b169d9ea0c3666f9922b4d0e83aa3235303186e3c9d191b",
-      "modified": "2026-11-24T15:48:25.289Z"
+      "digest": "cae7b0adfb2c6839e541c034761dad601d47925065d69ee47f4cbc8763af98e0",
+      "modified": "2026-11-24T16:37:35.751Z"
     },
     "https://tractorvs.com/zh/tractors/kioti-hx9010pc-eu-1a56bc00/": {
       "digest": "5fff165e5927e1f56f6301f592d0d117d2dfd60e6a28a93f354439a6c52d7079",
@@ -15618,8 +15618,8 @@
       "modified": "2026-11-24T15:48:25.289Z"
     },
     "https://tractorvs.com/zh/tractors/tym-t2025p-622ddce0/": {
-      "digest": "7934c2db2d2eb00f677ed0549c143259a35d2e061a23b8dbd1161ec0d34befa6",
-      "modified": "2026-11-24T15:48:25.289Z"
+      "digest": "28a65123709d51a927acf9f73ec0fa9491388e7b3e9011a5fa5ac32fa79a0770",
+      "modified": "2026-11-24T16:37:35.751Z"
     },
     "https://tractorvs.com/zh/tractors/tym-t2026-1aa3a3d6/": {
       "digest": "1bb458725979ffa6262ccfd2f27e59e8135639ded95d8be51d1b671beacffb4e",
@@ -15650,8 +15650,8 @@
       "modified": "2026-11-24T15:48:25.289Z"
     },
     "https://tractorvs.com/zh/tractors/tym-t3048-458be7b8/": {
-      "digest": "8e7f731ca400b10ce74efde5a8ee32ac6045d55ff7f58366fe3a328092a14eeb",
-      "modified": "2026-11-24T15:48:25.289Z"
+      "digest": "8163fdcc33fe139144edb7d79c60e7d7ba455af7928daefaa97cfa267c7a9aea",
+      "modified": "2026-11-24T16:37:35.751Z"
     },
     "https://tractorvs.com/zh/tractors/tym-t3048-5d1360a7/": {
       "digest": "a08b2b5dc2df9767c2c0240e5bf1175a307b0587bc1dd80393efb70ca109190b",
@@ -15706,8 +15706,8 @@
       "modified": "2026-11-24T15:48:25.289Z"
     },
     "https://tractorvs.com/zh/tractors/tym-t6115-80fd42a2/": {
-      "digest": "31c94edf6142b0404a0c7ae846e60e62aeff99826888948091b10b1f0ed85a2c",
-      "modified": "2026-11-24T15:48:25.289Z"
+      "digest": "a4410db4e57edbcf0ae6ebca7001c4d5d79c455e6e9f3f3d20358c801bbd4938",
+      "modified": "2026-11-24T16:37:35.751Z"
     },
     "https://tractorvs.com/zh/tractors/tym-t6130-7597d8a9/": {
       "digest": "879721193cf49bf0195eb74dac5f602b83894c01751d18010e55ac51302a4542",
@@ -15974,16 +15974,16 @@
       "modified": "2026-11-24T15:48:25.289Z"
     },
     "https://tractorvs.com/zh/tractors/zetor-proxima-c0d8fcfe/": {
-      "digest": "45987ba768ffa006d52494ad743d03b627ef7c2925bdfdd00efce973491cd6b6",
-      "modified": "2026-11-23T16:45:17.078Z"
+      "digest": "952743f80800370e7e955d9439965d85e6064514396f1c57ccda565bd9aab1eb",
+      "modified": "2026-11-24T16:37:35.751Z"
     },
     "https://tractorvs.com/zh/tractors/zetor-proxima-cf11aa07/": {
-      "digest": "06b52b44f79ce8fb240619c6a717db3bd8941611227cca096433a284c769ac15",
-      "modified": "2026-11-23T16:45:17.078Z"
+      "digest": "46ac2f156abe26f9468d9983dddba3ede6cd1c4f806d370eeb0ef1da05ca09e8",
+      "modified": "2026-11-24T16:37:35.751Z"
     },
     "https://tractorvs.com/zh/tractors/zetor-proxima-e715524e/": {
-      "digest": "b8d908a2b4b24cb5cbc8fdc46bc7d2ad5a96dc0434b3c067b2d6c97552712b1b",
-      "modified": "2026-11-23T16:45:17.078Z"
+      "digest": "8f43d2f619c4d65e7ddb53092a9f15254ae60a0ddf2c85ed9dd84be74b62e0a4",
+      "modified": "2026-11-24T16:37:35.751Z"
     }
   },
   "reviewedBulkCopyPr497": true,
