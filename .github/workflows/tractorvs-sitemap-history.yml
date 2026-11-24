@@ -34,7 +34,8 @@ on:
       - ".github/workflows/tractorvs-sitemap-history.yml"
 
 concurrency:
-  group: tractorvs-sitemap-history-main
+  # Read-only PRs have no shared writes; keep main's single writer serialized.
+  group: ${{ github.event_name == 'pull_request' && format('tractorvs-sitemap-history-pr-{0}', github.event.pull_request.number) || 'tractorvs-sitemap-history-main' }}
   cancel-in-progress: false
 permissions:
   contents: read
@@ -69,6 +70,8 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: "22.23.4"
+          cache: npm
+          cache-dependency-path: site/package-lock.json
       - name: Install pinned Astro production dependencies
         working-directory: site
         run: npm ci --no-audit --no-fund
@@ -104,6 +107,8 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: "22.23.4"
+          cache: npm
+          cache-dependency-path: site/package-lock.json
       - name: Install pinned Astro production dependencies
         working-directory: site
         run: npm ci --no-audit --no-fund
