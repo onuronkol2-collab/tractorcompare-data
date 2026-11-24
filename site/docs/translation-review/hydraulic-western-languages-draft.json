@@ -1,0 +1,288 @@
+{
+  "state": "draft-needs-independent-editorial-review",
+  "sourceBlobSha": "853424394588964819f45e85b60d4dbcfdaa9e18",
+  "sourceComponentBlobSha": "e8a86025ece122ad013843e9d3305843970f60f5",
+  "sourceSlug": "tractor-hydraulic-lift-explained",
+  "sourceLanguage": "en",
+  "sourceComponent": "site/src/components/TractorTechnicalDeepDive.astro",
+  "source": {
+    "title": "Tractor Hydraulic Lift Capacity Explained: Flow, Pressure and 610 mm",
+    "description": "Understand rear linkage lift capacity, the 610 mm measurement point, hydraulic flow versus pressure and safe implement matching.",
+    "lead": "A brochure claims a rear hitch lift of 3,000 kg. Can the tractor safely carry any three-tonne implement? Not necessarily. The measurement point, implement centre of gravity, machine stability and hydraulic configuration all matter.",
+    "comparisonNote": "Before comparing two lift ratings, find where each load was measured. A rating at the link ends and one measured behind them describe different loading conditions, even when both are given in kilograms.",
+    "sections": [
+      {
+        "anchor": "kapasite-nedir",
+        "title": "What does rear lift capacity measure?",
+        "paragraphs": [
+          "Rear hitch lift capacity describes the mass a three-point linkage can raise under specified conditions. It is not the same as drawbar towing capacity.",
+          "An implement whose centre of gravity sits farther behind the hitch may unload the front axle more than a compact implement of the same mass. Front ballast, axle limits and stability remain relevant."
+        ]
+      },
+      {
+        "anchor": "610-mm",
+        "title": "Why 610 mm behind the hitch matters",
+        "paragraphs": [
+          "Brochures may give a figure 'at ball ends' or '610 mm behind the ball ends'. Moving the load farther away increases the lever effect, so the two ratings are not necessarily equivalent.",
+          "If Tractor A claims 3,000 kg at the ends and Tractor B claims 2,700 kg at 610 mm, the larger number alone does not prove A can manage a given rear-mounted implement better. Match measurement points first."
+        ]
+      },
+      {
+        "anchor": "debi-basinc",
+        "title": "Flow in L/min versus pressure in bar",
+        "paragraphs": [
+          "Hydraulic flow is the volume of oil available per unit time and influences cylinder speed. Pressure contributes to the force a cylinder can generate. High pressure does not automatically mean fast loader motion, nor does high flow guarantee lifting strength.",
+          "Also distinguish total pump flow from the flow available to implements. Steering circuits may account for part of the declared total."
+        ]
+      },
+      {
+        "anchor": "askilar-kategoriler",
+        "title": "Three-point hitch categories and remote valves",
+        "paragraphs": [
+          "Categories I, II and III refer to linkage pin sizes and geometry; they are not simply a ranking of load capacity. The tractor and implement connection categories must be compatible.",
+          "Remote hydraulic valves supply external cylinders or motors. Confirm outlet pairs, single/double-acting control and usable flow against the implement manual."
+        ]
+      },
+      {
+        "anchor": "guvenli-kontrol",
+        "title": "A practical implement-matching method",
+        "paragraphs": [
+          "Record implement mass, how far its centre of gravity extends rearward, hitch category, remote outlets and front ballast needs. Check tractor axle limits and the actual implement manual.",
+          "If two brochures omit the lift measurement point, the honest comparison is 'not directly comparable' rather than a confident winner. Before hydraulic maintenance or hose connections, follow the manufacturer's procedure to release stored pressure safely. Never feel for a pressurized hydraulic leak with bare hands: high-pressure fluid can penetrate skin and cause serious injury."
+        ]
+      }
+    ],
+    "sources": [
+      "https://tractortestlab.unl.edu/",
+      "https://www.oecd.org/en/topics/tractors.html",
+      "https://www.hse.gov.uk/agriculture/topics/machinery/fluid.htm"
+    ],
+    "verification": "This article is educational and does not claim hands-on testing, component disassembly or tractor ownership. For a model-specific number, confirm the exact tractor, year, market and equipment in the producer's documentation. Where independent tests exist, compare their test procedures.",
+    "sourceLabels": [
+      "Nebraska Tractor Test Laboratory",
+      "OECD tractor testing codes",
+      "HSE — high-pressure hydraulic fluid injection hazards"
+    ]
+  },
+  "reviewed": false,
+  "notForPublication": true,
+  "translations": {
+    "de": {
+      "title": "Hubkraft der Traktorhydraulik: Fördermenge, Druck und 610 mm",
+      "description": "Hubkraft der Heckhydraulik, Messpunkt 610 mm, Volumenstrom und Druck verstehen und Anbaugeräte sicher zuordnen.",
+      "lead": "Ein Prospekt nennt eine Hubkraft von 3.000 kg am Heck. Kann der Traktor jedes drei Tonnen schwere Anbaugerät sicher tragen? Nicht unbedingt. Messpunkt, Schwerpunkt des Geräts, Standsicherheit und Hydraulikausstattung sind entscheidend.",
+      "comparisonNote": "Prüfen Sie vor dem Vergleich zweier Hubkraftangaben, wo die Last jeweils gemessen wurde. Ein Wert an den Unterlenkerenden und ein dahinter gemessener Wert beschreiben unterschiedliche Lastbedingungen, auch wenn beide in Kilogramm angegeben sind.",
+      "sections": [
+        {
+          "anchor": "kapasite-nedir",
+          "title": "Was misst die Hubkraft am Heck?",
+          "paragraphs": [
+            "Die Hubkraft am Heck beschreibt die Masse, die der Dreipunktkraftheber unter bestimmten Bedingungen anheben kann. Sie ist nicht mit der Anhängelast an der Zugvorrichtung gleichzusetzen.",
+            "Ein Gerät mit weiter hinten liegendem Schwerpunkt kann die Vorderachse stärker entlasten als ein kompaktes Gerät gleicher Masse. Frontballastierung, zulässige Achslasten und Standsicherheit bleiben wichtig."
+          ]
+        },
+        {
+          "anchor": "610-mm",
+          "title": "Warum 610 mm hinter den Unterlenkerenden wichtig sind",
+          "paragraphs": [
+            "Prospekte können Werte „an den Koppelpunkten“ oder „610 mm hinter den Koppelpunkten“ nennen. Eine weiter entfernte Last erhöht die Hebelwirkung; deshalb sind diese Angaben nicht unbedingt gleichwertig.",
+            "Wenn Traktor A 3.000 kg an den Koppelpunkten und Traktor B 2.700 kg bei 610 mm angibt, beweist die größere Zahl allein nicht, dass A ein bestimmtes Heckanbaugerät besser handhaben kann. Vergleichen Sie zunächst die Messpunkte."
+          ]
+        },
+        {
+          "anchor": "debi-basinc",
+          "title": "Volumenstrom in L/min und Druck in bar",
+          "paragraphs": [
+            "Der hydraulische Volumenstrom ist das pro Zeiteinheit verfügbare Ölvolumen und beeinflusst die Zylindergeschwindigkeit. Der Druck trägt zur Kraft bei, die ein Zylinder erzeugen kann. Hoher Druck bedeutet nicht automatisch schnelle Frontladerbewegungen; hoher Volumenstrom garantiert keine große Hubkraft.",
+            "Unterscheiden Sie außerdem die Gesamtfördermenge der Pumpe von dem für Anbaugeräte verfügbaren Volumenstrom. Lenkungskreisläufe können einen Teil des angegebenen Gesamtwerts beanspruchen."
+          ]
+        },
+        {
+          "anchor": "askilar-kategoriler",
+          "title": "Dreipunktkategorien und Zusatzsteuergeräte",
+          "paragraphs": [
+            "Die Kategorien I, II und III bezeichnen Bolzengrößen und Anschlussgeometrie; sie sind keine einfache Rangfolge der Tragfähigkeit. Die Anschlusskategorien von Traktor und Anbaugerät müssen zusammenpassen.",
+            "Hydraulische Zusatzsteuergeräte versorgen externe Zylinder oder Motoren. Gleichen Sie Anschluss­paare, einfach- oder doppeltwirkende Steuerung und nutzbaren Volumenstrom mit der Geräteanleitung ab."
+          ]
+        },
+        {
+          "anchor": "guvenli-kontrol",
+          "title": "Anbaugeräte systematisch zuordnen",
+          "paragraphs": [
+            "Notieren Sie Gerätemasse, Abstand des Schwerpunkts nach hinten, Anbaukategorie, Zusatzanschlüsse und erforderliche Frontballastierung. Beachten Sie die zulässigen Achslasten des Traktors und die Betriebsanleitung des Geräts.",
+            "Fehlt in zwei Prospekten der Messpunkt der Hubkraft, lautet das ehrliche Ergebnis „nicht direkt vergleichbar“, statt einen Sieger zu behaupten. Vor Wartung oder Schlauchanschluss muss gespeicherter Druck nach Herstellervorgaben sicher abgebaut werden. Suchen Sie niemals mit bloßen Händen nach einem unter Druck stehenden Hydraulikleck: Hochdruckflüssigkeit kann die Haut durchdringen und schwere Verletzungen verursachen."
+          ]
+        }
+      ],
+      "verification": "Dieser Artikel dient der technischen Bildung und behauptet weder praktische Tests noch Demontage oder eigenen Traktorbesitz. Prüfen Sie modellbezogene Zahlen anhand der genauen Ausführung, des Baujahrs, Markts und der Ausstattung in den Herstellerunterlagen. Vergleichen Sie bei unabhängigen Tests die Prüfverfahren.",
+      "sourceLabels": [
+        "Nebraska Tractor Test Laboratory",
+        "OECD-Prüfcodes für Traktoren",
+        "HSE – Gefahren durch Injektion von Hydraulikflüssigkeit unter hohem Druck"
+      ]
+    },
+    "fr": {
+      "title": "Capacité de relevage hydraulique du tracteur : débit, pression et 610 mm",
+      "description": "Comprendre la capacité du relevage arrière, le point de mesure à 610 mm, le débit et la pression hydrauliques, et la compatibilité des outils.",
+      "lead": "Une brochure annonce une capacité de relevage arrière de 3 000 kg. Le tracteur peut-il porter en toute sécurité n’importe quel outil de trois tonnes ? Pas nécessairement. Le point de mesure, le centre de gravité de l’outil, la stabilité et la configuration hydraulique comptent.",
+      "comparisonNote": "Avant de comparer deux capacités de relevage, vérifiez où chaque charge a été mesurée. Une mesure aux rotules et une mesure en arrière de celles-ci correspondent à des conditions de charge différentes, même exprimées en kilogrammes.",
+      "sections": [
+        {
+          "anchor": "kapasite-nedir",
+          "title": "Que mesure la capacité du relevage arrière ?",
+          "paragraphs": [
+            "Elle décrit la masse qu’un attelage trois points peut soulever dans des conditions définies. Elle ne correspond pas à la capacité de remorquage à la barre de traction.",
+            "Un outil dont le centre de gravité est plus éloigné derrière l’attelage peut délester davantage l’essieu avant qu’un outil compact de même masse. Le lestage avant, les limites de charge des essieux et la stabilité restent importants."
+          ]
+        },
+        {
+          "anchor": "610-mm",
+          "title": "Pourquoi la mesure à 610 mm derrière les rotules importe",
+          "paragraphs": [
+            "Les brochures peuvent indiquer une valeur « aux rotules » ou « à 610 mm derrière les rotules ». Éloigner la charge augmente l’effet de levier ; les deux capacités ne sont donc pas nécessairement équivalentes.",
+            "Si le tracteur A annonce 3 000 kg aux rotules et le tracteur B 2 700 kg à 610 mm, le chiffre le plus élevé ne prouve pas à lui seul que A convient mieux à un outil arrière donné. Comparez d’abord les mêmes points de mesure."
+          ]
+        },
+        {
+          "anchor": "debi-basinc",
+          "title": "Débit en L/min et pression en bar",
+          "paragraphs": [
+            "Le débit hydraulique correspond au volume d’huile disponible par unité de temps et influence la vitesse du vérin. La pression contribue à la force que le vérin peut développer. Une pression élevée ne signifie pas automatiquement un chargeur rapide, et un débit élevé ne garantit pas une grande force de relevage.",
+            "Distinguez aussi le débit total de la pompe du débit disponible pour les outils. Les circuits de direction peuvent utiliser une partie du total annoncé."
+          ]
+        },
+        {
+          "anchor": "askilar-kategoriler",
+          "title": "Catégories d’attelage trois points et distributeurs auxiliaires",
+          "paragraphs": [
+            "Les catégories I, II et III désignent les dimensions des axes et la géométrie de l’attelage ; elles ne constituent pas un simple classement de capacité de charge. Les catégories de raccordement du tracteur et de l’outil doivent être compatibles.",
+            "Les distributeurs hydrauliques auxiliaires alimentent les vérins ou moteurs externes. Vérifiez les paires de sorties, la commande simple ou double effet et le débit utilisable selon la notice de l’outil."
+          ]
+        },
+        {
+          "anchor": "guvenli-kontrol",
+          "title": "Méthode pratique pour choisir un outil compatible",
+          "paragraphs": [
+            "Relevez la masse de l’outil, l’éloignement de son centre de gravité vers l’arrière, sa catégorie d’attelage, les sorties auxiliaires et le lestage avant nécessaire. Vérifiez les limites des essieux et la notice de l’outil.",
+            "Si deux brochures omettent le point de mesure du relevage, la conclusion honnête est « pas directement comparable », plutôt que de désigner un gagnant. Avant toute maintenance hydraulique ou connexion de flexible, suivez la procédure du fabricant pour éliminer la pression résiduelle en sécurité. Ne recherchez jamais une fuite sous pression à mains nues : le fluide à haute pression peut pénétrer la peau et provoquer des blessures graves."
+          ]
+        }
+      ],
+      "verification": "Cet article est pédagogique et ne prétend pas reposer sur des essais pratiques, un démontage ou la possession d’un tracteur. Pour une valeur propre à un modèle, vérifiez la version exacte, l’année, le marché et l’équipement dans la documentation du fabricant. Pour les essais indépendants, comparez les procédures utilisées.",
+      "sourceLabels": [
+        "Laboratoire d’essais de tracteurs du Nebraska",
+        "Codes d’essais de tracteurs de l’OCDE",
+        "HSE — risques d’injection de fluide hydraulique sous haute pression"
+      ]
+    },
+    "es": {
+      "title": "Capacidad de elevación hidráulica del tractor: caudal, presión y 610 mm",
+      "description": "Comprenda la elevación trasera, el punto de medición a 610 mm, el caudal y la presión hidráulica y la compatibilidad segura del apero.",
+      "lead": "Un catálogo anuncia una capacidad de elevación trasera de 3.000 kg. ¿Puede el tractor portar con seguridad cualquier apero de tres toneladas? No necesariamente. Importan el punto de medición, el centro de gravedad del apero, la estabilidad y la configuración hidráulica.",
+      "comparisonNote": "Antes de comparar dos capacidades de elevación, compruebe dónde se midió cada carga. Una medición en las rótulas y otra detrás de ellas describen condiciones de carga diferentes, aunque ambas se expresen en kilogramos.",
+      "sections": [
+        {
+          "anchor": "kapasite-nedir",
+          "title": "¿Qué mide la capacidad de elevación trasera?",
+          "paragraphs": [
+            "Describe la masa que el enganche de tres puntos puede elevar bajo condiciones determinadas. No equivale a la capacidad de remolque en la barra de tiro.",
+            "Un apero cuyo centro de gravedad queda más lejos detrás del enganche puede descargar el eje delantero más que otro compacto de la misma masa. El lastre delantero, los límites de los ejes y la estabilidad siguen siendo importantes."
+          ]
+        },
+        {
+          "anchor": "610-mm",
+          "title": "Por qué importan los 610 mm detrás del enganche",
+          "paragraphs": [
+            "Los catálogos pueden indicar valores «en las rótulas» o «a 610 mm detrás de las rótulas». Alejar la carga aumenta el efecto de palanca; por ello las dos capacidades no son necesariamente equivalentes.",
+            "Si el tractor A declara 3.000 kg en las rótulas y el B 2.700 kg a 610 mm, la cifra mayor por sí sola no demuestra que A pueda manejar mejor un apero trasero concreto. Iguale primero los puntos de medición."
+          ]
+        },
+        {
+          "anchor": "debi-basinc",
+          "title": "Caudal en L/min frente a presión en bar",
+          "paragraphs": [
+            "El caudal hidráulico es el volumen de aceite disponible por unidad de tiempo e influye en la velocidad del cilindro. La presión contribuye a la fuerza que puede generar el cilindro. Una presión alta no significa automáticamente un movimiento rápido del cargador, ni un caudal alto garantiza fuerza de elevación.",
+            "Distinga además el caudal total de la bomba del caudal disponible para los aperos. Los circuitos de dirección pueden consumir parte del total declarado."
+          ]
+        },
+        {
+          "anchor": "askilar-kategoriler",
+          "title": "Categorías del enganche de tres puntos y distribuidores auxiliares",
+          "paragraphs": [
+            "Las categorías I, II y III se refieren a las dimensiones de los pasadores y la geometría del enganche; no son una simple clasificación de capacidad de carga. Las categorías de conexión del tractor y el apero deben ser compatibles.",
+            "Los distribuidores hidráulicos auxiliares alimentan cilindros o motores externos. Compruebe los pares de salidas, el mando de simple o doble efecto y el caudal utilizable conforme al manual del apero."
+          ]
+        },
+        {
+          "anchor": "guvenli-kontrol",
+          "title": "Método práctico para comprobar la compatibilidad",
+          "paragraphs": [
+            "Anote la masa del apero, cuánto se desplaza hacia atrás su centro de gravedad, la categoría del enganche, las salidas auxiliares y el lastre delantero necesario. Compruebe los límites de los ejes del tractor y el manual del apero.",
+            "Si dos catálogos omiten el punto de medición de la elevación, la conclusión honesta es «no directamente comparables», no un ganador seguro. Antes del mantenimiento hidráulico o de conectar mangueras, siga el procedimiento del fabricante para liberar de forma segura la presión acumulada. Nunca busque una fuga hidráulica presurizada con las manos desnudas: el fluido a alta presión puede penetrar la piel y causar lesiones graves."
+          ]
+        }
+      ],
+      "verification": "Este artículo es educativo y no afirma que se hayan realizado pruebas prácticas, desmontajes ni que se posea un tractor. Para una cifra concreta, verifique el modelo, el año, el mercado y el equipamiento exactos en la documentación del fabricante. Si existen ensayos independientes, compare sus procedimientos.",
+      "sourceLabels": [
+        "Laboratorio de Ensayos de Tractores de Nebraska",
+        "Códigos de ensayo de tractores de la OCDE",
+        "HSE — riesgos de inyección de fluido hidráulico a alta presión"
+      ]
+    },
+    "pt-br": {
+      "title": "Capacidade de levante hidráulico do trator: vazão, pressão e 610 mm",
+      "description": "Entenda a capacidade do engate traseiro, o ponto de medição a 610 mm, a vazão e a pressão hidráulica e a compatibilidade segura de implementos.",
+      "lead": "Um catálogo anuncia capacidade de levante traseiro de 3.000 kg. O trator pode carregar com segurança qualquer implemento de três toneladas? Não necessariamente. O ponto de medição, o centro de gravidade do implemento, a estabilidade e a configuração hidráulica são importantes.",
+      "comparisonNote": "Antes de comparar duas capacidades de levante, verifique onde cada carga foi medida. Um valor nas extremidades dos braços e outro medido atrás delas representam condições de carga diferentes, mesmo quando ambos são expressos em quilogramas.",
+      "sections": [
+        {
+          "anchor": "kapasite-nedir",
+          "title": "O que a capacidade de levante traseiro mede?",
+          "paragraphs": [
+            "A capacidade de levante traseiro descreve a massa que o engate de três pontos consegue erguer em condições específicas. Não equivale à capacidade de reboque na barra de tração.",
+            "Um implemento com centro de gravidade mais afastado para trás pode aliviar mais o eixo dianteiro do que um implemento compacto de mesma massa. Lastro dianteiro, limites dos eixos e estabilidade continuam relevantes."
+          ]
+        },
+        {
+          "anchor": "610-mm",
+          "title": "Por que importa a medição a 610 mm atrás do engate",
+          "paragraphs": [
+            "Catálogos podem informar valores nas rótulas ou a 610 mm atrás delas. Afastar a carga aumenta o efeito de alavanca; portanto, os valores não são necessariamente equivalentes.",
+            "Se o trator A declara 3.000 kg nas rótulas e o B 2.700 kg a 610 mm, o número maior por si só não prova que A consegue operar melhor um determinado implemento traseiro. Primeiro, compare pontos de medição iguais."
+          ]
+        },
+        {
+          "anchor": "debi-basinc",
+          "title": "Vazão em L/min e pressão em bar",
+          "paragraphs": [
+            "Vazão hidráulica é o volume de óleo disponível por unidade de tempo e influencia a velocidade do cilindro. A pressão contribui para a força que o cilindro pode gerar. Pressão alta não significa automaticamente movimento rápido do carregador, nem vazão alta garante força de levante.",
+            "Diferencie também a vazão total da bomba da vazão disponível para implementos. Os circuitos de direção podem consumir parte do total declarado."
+          ]
+        },
+        {
+          "anchor": "askilar-kategoriler",
+          "title": "Categorias do engate de três pontos e válvulas de controle remoto",
+          "paragraphs": [
+            "As categorias I, II e III indicam dimensões dos pinos e geometria de engate; não são uma simples classificação de capacidade de carga. As categorias de conexão do trator e do implemento devem ser compatíveis.",
+            "As válvulas de controle remoto alimentam cilindros ou motores externos. Confira os pares de saídas, o controle de simples ou dupla ação e a vazão utilizável conforme o manual do implemento."
+          ]
+        },
+        {
+          "anchor": "guvenli-kontrol",
+          "title": "Método prático para combinar trator e implemento",
+          "paragraphs": [
+            "Registre a massa do implemento, o deslocamento de seu centro de gravidade para trás, a categoria de engate, as saídas remotas e a necessidade de lastro dianteiro. Verifique os limites dos eixos do trator e o manual do implemento.",
+            "Se dois catálogos omitirem o ponto de medição do levante, a conclusão honesta é «não diretamente comparáveis», em vez de apontar um vencedor. Antes da manutenção hidráulica ou conexão de mangueiras, siga o procedimento do fabricante para liberar com segurança a pressão armazenada. Nunca procure um vazamento hidráulico pressurizado com as mãos desprotegidas: fluido sob alta pressão pode penetrar a pele e causar ferimentos graves."
+          ]
+        }
+      ],
+      "verification": "Este artigo é educativo e não alega testes práticos, desmontagem de componentes ou propriedade de um trator. Para um dado de modelo, confirme o modelo, ano, mercado e equipamentos exatos na documentação do fabricante. Quando houver testes independentes, compare os procedimentos utilizados.",
+      "sourceLabels": [
+        "Laboratório de Ensaios de Tratores de Nebraska",
+        "Códigos de ensaio de tratores da OCDE",
+        "HSE — riscos de injeção de fluido hidráulico sob alta pressão"
+      ]
+    }
+  },
+  "translationScope": "Main article, comparison note, verification disclosure and source link labels only. UI, glossary links, photo credit and related content must be integrated and reviewed before publishing."
+}

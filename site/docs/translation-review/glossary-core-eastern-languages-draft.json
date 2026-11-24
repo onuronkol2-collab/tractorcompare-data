@@ -1,0 +1,453 @@
+{
+  "state": "draft-needs-independent-editorial-review",
+  "sourceBlobSha": "a5379d60c7c1f53dfcfb528c9ee7743a450faaa5",
+  "scope": "14 glossary entries directly referenced by the three technical guides. Partial glossary; not for publication.",
+  "reviewed": false,
+  "notForPublication": true,
+  "source": [
+    {
+      "id": "engine-power",
+      "name": "Engine power",
+      "definition": "The rate at which an engine can do work, shown as hp, metric PS/CV or kW.",
+      "example": "Trailer hauling and mowing can demand power in different ways.",
+      "caution": "Compare the test point and hp/PS units; a model number is not a verified power figure."
+    },
+    {
+      "id": "rated-power",
+      "name": "Rated engine power",
+      "definition": "Power specified by the manufacturer at a stated rated engine speed.",
+      "example": "When two tractors are called 100 hp, first check whether both figures are rated outputs.",
+      "caution": "Do not compare rated, maximum and boost power as if they were interchangeable."
+    },
+    {
+      "id": "maximum-power",
+      "name": "Maximum power and boost",
+      "definition": "Maximum power is a peak output under specified conditions; boost can be available only in certain operating states.",
+      "example": "A tractor offering transport boost may not supply it continuously in the field.",
+      "caution": "Read the manufacturer’s boost activation conditions and ECE/ISO standard."
+    },
+    {
+      "id": "torque",
+      "name": "Torque (Nm)",
+      "definition": "Turning moment at the crankshaft; it helps describe loaded engine behaviour but is not drawbar pull.",
+      "example": "During slow heavy work, a torque curve can matter more than one peak figure.",
+      "caution": "Check the rpm at which torque occurs and the gearing."
+    },
+    {
+      "id": "pto",
+      "name": "PTO / power take-off",
+      "definition": "Transfers tractor power mechanically to rotating implements.",
+      "example": "Mowers, mixers and rotary tillers can use PTO power.",
+      "caution": "Never remove PTO guarding; contact with a rotating shaft can be fatal."
+    },
+    {
+      "id": "pto-power",
+      "name": "PTO power",
+      "definition": "Power available at the PTO shaft, typically below crankshaft output.",
+      "example": "Use it when checking the input power required by an implement.",
+      "caution": "Do not confuse engine and PTO power or manufacturer estimates and tested results."
+    },
+    {
+      "id": "pto-speeds",
+      "name": "540 / 540E / 1000 PTO speeds",
+      "definition": "Selectable PTO shaft speeds; 540E may reach 540 shaft rpm at lower engine rpm.",
+      "example": "An implement requiring 540 rpm must not be driven at 1,000 rpm.",
+      "caution": "Match the implement manual’s permitted PTO speed and shaft type."
+    },
+    {
+      "id": "independent-pto",
+      "name": "Independent PTO / live PTO",
+      "definition": "Describes how independently PTO engagement can be controlled from ground drive.",
+      "example": "Some systems let the implement continue turning while travel stops.",
+      "caution": "Independent, live and two-stage PTO are not identical arrangements."
+    },
+    {
+      "id": "pto-shaft",
+      "name": "PTO shaft size and spline count",
+      "definition": "Describes the PTO output shaft coupling geometry.",
+      "example": "A six-spline 1⅜-inch shaft and a 21-spline shaft are not directly interchangeable.",
+      "caution": "Check speed and shaft geometry separately; use only an approved adaptor."
+    },
+    {
+      "id": "hydraulic-flow",
+      "name": "Hydraulic flow (L/min)",
+      "definition": "The volume of oil moved per unit time under stated conditions.",
+      "example": "Loader cylinder speed is affected by available oil flow.",
+      "caution": "Total pump, steering and implement-available flows can differ."
+    },
+    {
+      "id": "hydraulic-pressure",
+      "name": "Hydraulic pressure (bar)",
+      "definition": "Hydraulic circuit pressure; related to force capability.",
+      "example": "Pressure and cylinder area together affect force.",
+      "caution": "Higher pressure alone does not guarantee fast or large lifting."
+    },
+    {
+      "id": "rear-lift",
+      "name": "Rear linkage lift capacity",
+      "definition": "How much a rear three-point linkage can lift at a specified point and test condition.",
+      "example": "2,500 kg at the ball ends is not the same claim as 2,500 kg at 610 mm behind.",
+      "caution": "Check whether the figure is at ball ends, 610 mm rearward or across the full lift arc."
+    },
+    {
+      "id": "hydraulic-remotes",
+      "name": "Remote hydraulics / SCV / spool",
+      "definition": "Valves and couplers that direct oil to external cylinders and motors.",
+      "example": "A folding rake needs the required number of hydraulic couplers.",
+      "caution": "Check single/double-acting function, flow and outlet count separately."
+    },
+    {
+      "id": "hitch-category",
+      "name": "Hitch category (I, II, III)",
+      "definition": "Standard size class of three-point linkage pins and connections.",
+      "example": "Category I implement pins may not match Category III linkage without adaptation.",
+      "caution": "A higher category does not automatically mean safe lifting of any implement."
+    }
+  ],
+  "translations": {
+    "zh": {
+      "engine-power": {
+        "name": "发动机功率",
+        "definition": "发动机单位时间内做功的能力，用 hp、 公制马力 PS/CV 或 kW 表示。",
+        "example": "牵引拖车和割草的功率需求方式可能不同。",
+        "caution": "比较测量点及 hp/PS 单位；型号数字并非经核实的功率值。"
+      },
+      "rated-power": {
+        "name": "发动机额定功率",
+        "definition": "制造商规定的额定发动机转速下的功率。",
+        "example": "两台拖拉机均标称 100 hp 时，先确认两者是否均为额定输出功率。",
+        "caution": "额定功率、最大功率和增功值不能视为可互换的数据。"
+      },
+      "maximum-power": {
+        "name": "最大功率与增功",
+        "definition": "最大功率是规定条件下的峰值输出；增功可能仅在特定工作状态下可用。",
+        "example": "具备运输增功功能的拖拉机不一定能在田间持续提供该功率。",
+        "caution": "查阅制造商规定的增功启用条件和 ECE/ISO 标准。"
+      },
+      "torque": {
+        "name": "扭矩（Nm）",
+        "definition": "曲轴上的转动力矩，有助于描述发动机带负荷时的表现，但不等于牵引力。",
+        "example": "低速重负荷作业时，扭矩曲线可能比单一峰值更重要。",
+        "caution": "核对产生该扭矩的转速和传动比。"
+      },
+      "pto": {
+        "name": "动力输出轴（PTO）",
+        "definition": "以机械方式将拖拉机动力传递给旋转机具。",
+        "example": "割草机、搅拌机和旋耕机可以使用 PTO 功率。",
+        "caution": "绝不可拆除 PTO 防护装置；接触旋转轴可能致命。"
+      },
+      "pto-power": {
+        "name": "PTO 输出功率",
+        "definition": "PTO 轴处可用的功率，通常低于曲轴输出功率。",
+        "example": "可用该值核对机具所需的输入功率。",
+        "caution": "不要混淆发动机功率与 PTO 功率，也不要混淆制造商估算值与试验结果。"
+      },
+      "pto-speeds": {
+        "name": "PTO 转速 540 / 540E / 1000",
+        "definition": "可选择的 PTO 轴转速；540E 可在较低发动机转速下达到轴转速 540 转/分钟。",
+        "example": "要求 540 转/分钟的机具不得以 1000 转/分钟驱动。",
+        "caution": "按机具说明书匹配允许的 PTO 转速和轴类型。"
+      },
+      "independent-pto": {
+        "name": "独立式 PTO / 持续式 PTO（live PTO）",
+        "definition": "描述 PTO 接合控制与行驶传动之间的独立程度。",
+        "example": "部分系统允许拖拉机停止行驶时机具继续旋转。",
+        "caution": "独立式、持续式及双级离合器 PTO 并非相同机构。"
+      },
+      "pto-shaft": {
+        "name": "PTO 轴尺寸与花键数量",
+        "definition": "描述 PTO 输出轴的连接几何尺寸。",
+        "example": "1⅜ 英寸六花键轴与 21 花键轴不能直接互换。",
+        "caution": "分别核对转速和轴连接尺寸；只使用经批准的适配器。"
+      },
+      "hydraulic-flow": {
+        "name": "液压流量（L/min）",
+        "definition": "规定条件下单位时间内输送的油液体积。",
+        "example": "装载机液压缸运动速度受可用油液流量影响。",
+        "caution": "液压泵总流量、转向流量和机具可用流量可能不同。"
+      },
+      "hydraulic-pressure": {
+        "name": "液压压力（bar）",
+        "definition": "液压回路的压力，与产生力的能力有关。",
+        "example": "压力和液压缸作用面积共同影响产生的力。",
+        "caution": "仅提高压力不能保证快速提升或较大提升能力。"
+      },
+      "rear-lift": {
+        "name": "后悬挂提升能力",
+        "definition": "后三点悬挂装置在规定测量点和试验条件下可以提升的质量。",
+        "example": "球头处 2500 kg 与球头后方 610 mm 处 2500 kg 并非相同声明。",
+        "caution": "核实数值是在球头处、后方 610 mm 处，还是在整个提升行程内测得。"
+      },
+      "hydraulic-remotes": {
+        "name": "外接液压阀（SCV）",
+        "definition": "将油液导向外部液压缸和马达的阀及联接器。",
+        "example": "折叠式搂草机需要足够数量的液压联接器。",
+        "caution": "分别检查单作用或双作用功能、流量和油口数量。"
+      },
+      "hitch-category": {
+        "name": "悬挂类别（I、II、III）",
+        "definition": "三点悬挂连接销和联接件的标准尺寸类别。",
+        "example": "I 类机具连接销可能无法直接匹配 III 类悬挂装置。",
+        "caution": "类别更高并不保证能安全提升任意机具。"
+      }
+    },
+    "hi": {
+      "engine-power": {
+        "name": "इंजन शक्ति",
+        "definition": "इंजन के कार्य करने की दर, जिसे hp, मीट्रिक PS/CV या kW में दिखाते हैं।",
+        "example": "ट्रेलर खींचने और घास काटने में शक्ति की माँग अलग हो सकती है।",
+        "caution": "मापन बिंदु और hp/PS इकाइयों का मिलान करें; मॉडल संख्या प्रमाणित शक्ति का आँकड़ा नहीं है।"
+      },
+      "rated-power": {
+        "name": "निर्धारित इंजन शक्ति",
+        "definition": "निर्माता द्वारा बताई गई निर्धारित इंजन गति पर निर्दिष्ट शक्ति।",
+        "example": "दो ट्रैक्टरों पर 100 hp लिखा हो, तो पहले जाँचें कि दोनों आँकड़े निर्धारित निर्गम शक्ति के हैं।",
+        "caution": "निर्धारित, अधिकतम और अतिरिक्त boost शक्ति को एक-दूसरे के बराबर न मानें।"
+      },
+      "maximum-power": {
+        "name": "अधिकतम शक्ति और boost",
+        "definition": "अधिकतम शक्ति निर्दिष्ट परिस्थितियों में शिखर निर्गम है; boost केवल कुछ संचालन स्थितियों में उपलब्ध हो सकता है।",
+        "example": "परिवहन के लिए boost देने वाला ट्रैक्टर खेत में लगातार वह शक्ति नहीं दे सकता है।",
+        "caution": "निर्माता की boost सक्रिय होने की शर्तें और ECE/ISO मानक पढ़ें।"
+      },
+      "torque": {
+        "name": "टॉर्क (Nm)",
+        "definition": "क्रैंकशाफ्ट पर घूर्णन आघूर्ण; यह भार के तहत इंजन का व्यवहार बताने में सहायक है, लेकिन ड्रॉबार का खींचने वाला बल नहीं है।",
+        "example": "धीमी गति के भारी काम में एक शिखर आँकड़े की तुलना में टॉर्क वक्र अधिक महत्वपूर्ण हो सकता है।",
+        "caution": "टॉर्क से जुड़ी rpm और गियर अनुपात जाँचें।"
+      },
+      "pto": {
+        "name": "पावर टेक-ऑफ (PTO)",
+        "definition": "ट्रैक्टर की शक्ति यांत्रिक रूप से घूमने वाले उपकरणों तक पहुँचाता है।",
+        "example": "घास काटने की मशीन, मिक्सर और रोटरी टिलर PTO शक्ति उपयोग कर सकते हैं।",
+        "caution": "PTO सुरक्षा कवच कभी न हटाएँ; घूमते शाफ्ट से संपर्क जानलेवा हो सकता है।"
+      },
+      "pto-power": {
+        "name": "PTO शक्ति",
+        "definition": "PTO शाफ्ट पर उपलब्ध शक्ति, जो सामान्यतः क्रैंकशाफ्ट के निर्गम से कम होती है।",
+        "example": "उपकरण के लिए आवश्यक इनपुट शक्ति जाँचते समय इसका उपयोग करें।",
+        "caution": "इंजन और PTO शक्ति या निर्माता के अनुमान और परीक्षण परिणाम को आपस में न मिलाएँ।"
+      },
+      "pto-speeds": {
+        "name": "PTO गति 540 / 540E / 1000",
+        "definition": "PTO शाफ्ट की चयन योग्य गतियाँ; 540E कम इंजन rpm पर शाफ्ट की 540 rpm गति दे सकता है।",
+        "example": "540 rpm की आवश्यकता वाले उपकरण को 1000 rpm पर नहीं चलाना चाहिए।",
+        "caution": "उपकरण की पुस्तिका में अनुमत PTO गति और शाफ्ट प्रकार का मिलान करें।"
+      },
+      "independent-pto": {
+        "name": "स्वतंत्र PTO / लाइव PTO",
+        "definition": "बताता है कि चाल के संचरण से अलग PTO को किस सीमा तक नियंत्रित किया जा सकता है।",
+        "example": "कुछ तंत्र ट्रैक्टर रुकने पर भी उपकरण को घूमने देते हैं।",
+        "caution": "स्वतंत्र, लाइव और दो-चरण वाले PTO एक जैसे तंत्र नहीं हैं।"
+      },
+      "pto-shaft": {
+        "name": "PTO शाफ्ट के आयाम और स्प्लाइन की संख्या",
+        "definition": "PTO निर्गम शाफ्ट के जोड़ की ज्यामिति बताता है।",
+        "example": "छह स्प्लाइन वाला 1⅜ इंच शाफ्ट और 21 स्प्लाइन वाला शाफ्ट सीधे एक-दूसरे के स्थान पर नहीं लगाए जा सकते।",
+        "caution": "गति और शाफ्ट की ज्यामिति अलग जाँचें; केवल अनुमोदित एडैप्टर उपयोग करें।"
+      },
+      "hydraulic-flow": {
+        "name": "हाइड्रोलिक प्रवाह (L/min)",
+        "definition": "निर्दिष्ट परिस्थितियों में प्रति इकाई समय स्थानांतरित तेल का आयतन।",
+        "example": "लोडर सिलिंडर की गति उपलब्ध तेल प्रवाह पर निर्भर करती है।",
+        "caution": "पंप का कुल प्रवाह, स्टीयरिंग प्रवाह और उपकरण के लिए उपलब्ध प्रवाह अलग हो सकते हैं।"
+      },
+      "hydraulic-pressure": {
+        "name": "हाइड्रोलिक दबाव (bar)",
+        "definition": "हाइड्रोलिक सर्किट का दबाव, जिसका संबंध बल उत्पन्न करने की क्षमता से है।",
+        "example": "दबाव और सिलिंडर का क्षेत्रफल मिलकर बल को प्रभावित करते हैं।",
+        "caution": "अधिक दबाव अकेले तेज़ उठाने या अधिक उठाने की क्षमता की गारंटी नहीं देता।"
+      },
+      "rear-lift": {
+        "name": "पिछले हिच की उठाने की क्षमता",
+        "definition": "निर्दिष्ट मापन बिंदु और परीक्षण परिस्थिति में तीन-बिंदु पिछला हिच जितना द्रव्यमान उठा सकता है।",
+        "example": "बॉल सिरों पर 2500 kg और उनसे 610 mm पीछे 2500 kg एक ही दावा नहीं है।",
+        "caution": "जाँचें कि आँकड़ा बॉल सिरों पर, 610 mm पीछे या उठाने के पूरे मार्ग में मापा गया है।"
+      },
+      "hydraulic-remotes": {
+        "name": "रिमोट हाइड्रोलिक वाल्व (SCV)",
+        "definition": "बाहरी सिलिंडरों और मोटरों तक तेल पहुँचाने वाले वाल्व और कपलर।",
+        "example": "मोड़ने योग्य रेक को आवश्यक संख्या में हाइड्रोलिक कपलर चाहिए।",
+        "caution": "एकल या दोहरे प्रभाव वाला कार्य, प्रवाह और आउटलेट की संख्या अलग जाँचें।"
+      },
+      "hitch-category": {
+        "name": "हिच श्रेणी (I, II, III)",
+        "definition": "तीन-बिंदु हिच के पिन और जोड़ के आकार की मानक श्रेणी।",
+        "example": "श्रेणी I उपकरण के पिन बिना अनुकूलन के श्रेणी III हिच पर फिट नहीं हो सकते हैं।",
+        "caution": "ऊँची श्रेणी अपने आप किसी भी उपकरण को सुरक्षित उठाने की गारंटी नहीं देती।"
+      }
+    },
+    "ru": {
+      "engine-power": {
+        "name": "Мощность двигателя",
+        "definition": "Скорость выполнения работы двигателем, выражаемая в hp, метрических PS/CV или kW.",
+        "example": "Буксировка прицепа и кошение предъявляют разные требования к мощности.",
+        "caution": "Сравнивайте точку измерения и единицы hp/PS; номер модели не является подтверждённой мощностью."
+      },
+      "rated-power": {
+        "name": "Номинальная мощность двигателя",
+        "definition": "Мощность, указанная производителем при заданной номинальной частоте вращения двигателя.",
+        "example": "Если у двух тракторов указано 100 hp, сначала проверьте, являются ли оба значения номинальными.",
+        "caution": "Не считайте номинальную, максимальную и дополнительную мощность boost взаимозаменяемыми."
+      },
+      "maximum-power": {
+        "name": "Максимальная мощность и boost",
+        "definition": "Максимальная мощность — пиковая отдача при заданных условиях; boost может быть доступен только в отдельных режимах работы.",
+        "example": "Трактор с транспортным boost может не обеспечивать эту мощность постоянно в поле.",
+        "caution": "Изучите условия включения boost и стандарт ECE/ISO производителя."
+      },
+      "torque": {
+        "name": "Крутящий момент (Nm)",
+        "definition": "Момент на коленчатом валу; помогает описать работу двигателя под нагрузкой, но не равен тяговому усилию.",
+        "example": "При медленной тяжёлой работе кривая момента может быть важнее единственного пикового значения.",
+        "caution": "Проверьте обороты, соответствующие моменту, и передаточные отношения."
+      },
+      "pto": {
+        "name": "Вал отбора мощности (ВОМ/PTO)",
+        "definition": "Механически передаёт мощность трактора вращающимся орудиям.",
+        "example": "Косилки, смесители и почвообрабатывающие фрезы могут использовать мощность ВОМ.",
+        "caution": "Никогда не снимайте защиту ВОМ; контакт с вращающимся валом может быть смертельным."
+      },
+      "pto-power": {
+        "name": "Мощность ВОМ",
+        "definition": "Мощность на валу отбора мощности, обычно ниже мощности на коленвале.",
+        "example": "Используйте её для проверки входной мощности, необходимой орудию.",
+        "caution": "Не путайте мощность двигателя и ВОМ, оценки производителя и результаты испытаний."
+      },
+      "pto-speeds": {
+        "name": "Обороты ВОМ 540 / 540E / 1000",
+        "definition": "Выбираемые обороты ВОМ; 540E может обеспечить 540 об/мин на валу при меньших оборотах двигателя.",
+        "example": "Орудие, рассчитанное на 540 об/мин, нельзя приводить с частотой 1 000 об/мин.",
+        "caution": "Сверьте допустимые обороты ВОМ и тип вала с руководством орудия."
+      },
+      "independent-pto": {
+        "name": "Независимый / полунезависимый ВОМ (live PTO)",
+        "definition": "Описывает степень независимости управления включением ВОМ от ходовой трансмиссии.",
+        "example": "Некоторые системы позволяют орудию продолжать вращаться при остановке движения.",
+        "caution": "Независимый, полунезависимый ВОМ и ВОМ с двухступенчатым сцеплением не являются одинаковыми механизмами."
+      },
+      "pto-shaft": {
+        "name": "Размеры и число шлицев ВОМ",
+        "definition": "Описывает геометрию соединения выходного вала ВОМ.",
+        "example": "Шестишлицевой вал диаметром 1⅜ дюйма и вал с 21 шлицем не являются непосредственно взаимозаменяемыми.",
+        "caution": "Проверяйте обороты и геометрию отдельно; используйте только одобренный переходник."
+      },
+      "hydraulic-flow": {
+        "name": "Расход гидравлики (L/min)",
+        "definition": "Объём масла, перемещаемый за единицу времени при заданных условиях.",
+        "example": "Скорость цилиндра погрузчика зависит от доступного расхода масла.",
+        "caution": "Общий расход насоса, расход рулевого управления и доступный орудиям расход могут различаться."
+      },
+      "hydraulic-pressure": {
+        "name": "Давление гидравлики (bar)",
+        "definition": "Давление в гидравлическом контуре, связанное со способностью создавать усилие.",
+        "example": "Давление и площадь цилиндра вместе влияют на усилие.",
+        "caution": "Более высокое давление само по себе не гарантирует быстрого подъёма или высокой грузоподъёмности."
+      },
+      "rear-lift": {
+        "name": "Грузоподъёмность задней навески",
+        "definition": "Масса, которую задняя трёхточечная навеска поднимает в заданной точке и при определённых условиях испытаний.",
+        "example": "2 500 кг на концах тяг — не то же самое, что 2 500 кг на расстоянии 610 мм позади них.",
+        "caution": "Уточняйте, измерен ли показатель на концах тяг, в 610 мм позади них или по всей траектории подъёма."
+      },
+      "hydraulic-remotes": {
+        "name": "Выносные гидрораспределители (SCV)",
+        "definition": "Клапаны и соединения, направляющие масло к внешним цилиндрам и моторам.",
+        "example": "Складным граблям требуется достаточное количество гидравлических соединений.",
+        "caution": "Проверяйте отдельно одностороннее или двустороннее действие, расход и число гидровыводов."
+      },
+      "hitch-category": {
+        "name": "Категория навески (I, II, III)",
+        "definition": "Стандартный размерный класс пальцев и соединений трёхточечной навески.",
+        "example": "Пальцы орудия категории I могут не подходить к навеске категории III без адаптации.",
+        "caution": "Более высокая категория не гарантирует безопасный подъём любого орудия."
+      }
+    },
+    "ja": {
+      "engine-power": {
+        "name": "エンジン出力",
+        "definition": "エンジンが単位時間に行える仕事の量で、hp、メートル馬力PS/CV、kWなどで表します。",
+        "example": "トレーラーのけん引と草刈りでは動力の要求が異なる場合があります。",
+        "caution": "測定点とhp/PSの単位を確認します。型式番号は確認済みの出力値ではありません。"
+      },
+      "rated-power": {
+        "name": "エンジン定格出力",
+        "definition": "メーカーが指定した定格エンジン回転数での出力。",
+        "example": "二つの機種が100 hpと表示されていても、まず両方が定格出力か確認します。",
+        "caution": "定格出力、最大出力、ブースト出力を互換の値として比較しないでください。"
+      },
+      "maximum-power": {
+        "name": "最大出力とブースト",
+        "definition": "最大出力は指定条件でのピーク出力です。ブーストは特定の運転状態でのみ使える場合があります。",
+        "example": "輸送時にブーストを使える機種でも、圃場で常時その出力が得られるとは限りません。",
+        "caution": "メーカーのブースト作動条件とECE/ISO規格を確認します。"
+      },
+      "torque": {
+        "name": "トルク（Nm）",
+        "definition": "クランク軸での回転モーメント。負荷時のエンジン特性を示すのに役立ちますが、けん引力とは異なります。",
+        "example": "低速の重作業では単一のピーク値よりもトルク曲線が重要な場合があります。",
+        "caution": "トルクに対応する回転数と変速比を確認します。"
+      },
+      "pto": {
+        "name": "PTO（動力取出軸）",
+        "definition": "トラクターの動力を回転作業機に機械的に伝えます。",
+        "example": "モア、ミキサー、ロータリー耕うん機などはPTO出力を利用できます。",
+        "caution": "PTOの安全カバーを絶対に取り外さないでください。回転軸への接触は死亡事故につながるおそれがあります。"
+      },
+      "pto-power": {
+        "name": "PTO出力",
+        "definition": "PTO軸で利用可能な出力で、通常はクランク軸出力より小さくなります。",
+        "example": "作業機が必要とする入力を確認する際に使用します。",
+        "caution": "エンジン出力とPTO出力、メーカー推定値と試験値を混同しないでください。"
+      },
+      "pto-speeds": {
+        "name": "PTO回転速度 540 / 540E / 1000",
+        "definition": "選択できるPTO軸の回転速度。540Eはより低いエンジン回転数で軸回転速度540 rpmを得られる場合があります。",
+        "example": "540 rpmを必要とする作業機を1000 rpmで駆動してはいけません。",
+        "caution": "作業機の取扱説明書に記載された許容PTO回転速度と軸の種類に合わせます。"
+      },
+      "independent-pto": {
+        "name": "独立PTO / ライブPTO",
+        "definition": "走行駆動系からどの程度独立してPTOの接続を制御できるかを示します。",
+        "example": "走行を止めても作業機を回転させ続けられる方式があります。",
+        "caution": "独立式、ライブ式、二段クラッチ式のPTOは同一の機構ではありません。"
+      },
+      "pto-shaft": {
+        "name": "PTO軸の寸法とスプライン数",
+        "definition": "PTO出力軸の接続形状を示します。",
+        "example": "1⅜インチの6スプライン軸と21スプライン軸は直接互換ではありません。",
+        "caution": "回転速度と軸の接続形状を別々に確認し、承認されたアダプターのみ使用します。"
+      },
+      "hydraulic-flow": {
+        "name": "油圧流量（L/min）",
+        "definition": "指定条件で単位時間当たりに移動する作動油の体積。",
+        "example": "ローダーのシリンダー速度は利用可能な油圧流量に左右されます。",
+        "caution": "ポンプ総流量、ステアリング流量、作業機に利用可能な流量は異なる場合があります。"
+      },
+      "hydraulic-pressure": {
+        "name": "油圧圧力（bar）",
+        "definition": "油圧回路の圧力で、力を発生させる能力に関係します。",
+        "example": "圧力とシリンダーの受圧面積が発生する力に影響します。",
+        "caution": "高圧だけで速い持ち上げ動作や大きな揚力が保証されるわけではありません。"
+      },
+      "rear-lift": {
+        "name": "後部リンクの揚力",
+        "definition": "指定の測定位置と試験条件で後部三点リンクが持ち上げられる質量。",
+        "example": "ボール端で2500 kgという値と、その610 mm後方で2500 kgという値は同じ条件ではありません。",
+        "caution": "ボール端、610 mm後方、または全揚程での測定か確認します。"
+      },
+      "hydraulic-remotes": {
+        "name": "外部油圧バルブ（SCV）",
+        "definition": "外部のシリンダーやモーターへ作動油を送るバルブと継手。",
+        "example": "折りたたみ式レーキには必要な数の油圧継手が必要です。",
+        "caution": "単動・複動の機能、流量、ポート数を別々に確認します。"
+      },
+      "hitch-category": {
+        "name": "ヒッチカテゴリ（I、II、III）",
+        "definition": "三点リンクのピンと接続部の標準寸法区分。",
+        "example": "カテゴリIの作業機のピンは、調整なしではカテゴリIIIのリンクに適合しない場合があります。",
+        "caution": "上位カテゴリでも任意の作業機を安全に持ち上げられるとは限りません。"
+      }
+    }
+  }
+}

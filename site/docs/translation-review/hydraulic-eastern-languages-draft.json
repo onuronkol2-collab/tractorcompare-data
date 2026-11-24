@@ -1,0 +1,288 @@
+{
+  "state": "draft-needs-independent-editorial-review",
+  "sourceBlobSha": "853424394588964819f45e85b60d4dbcfdaa9e18",
+  "sourceComponentBlobSha": "e8a86025ece122ad013843e9d3305843970f60f5",
+  "sourceSlug": "tractor-hydraulic-lift-explained",
+  "sourceLanguage": "en",
+  "sourceComponent": "site/src/components/TractorTechnicalDeepDive.astro",
+  "source": {
+    "title": "Tractor Hydraulic Lift Capacity Explained: Flow, Pressure and 610 mm",
+    "description": "Understand rear linkage lift capacity, the 610 mm measurement point, hydraulic flow versus pressure and safe implement matching.",
+    "lead": "A brochure claims a rear hitch lift of 3,000 kg. Can the tractor safely carry any three-tonne implement? Not necessarily. The measurement point, implement centre of gravity, machine stability and hydraulic configuration all matter.",
+    "comparisonNote": "Before comparing two lift ratings, find where each load was measured. A rating at the link ends and one measured behind them describe different loading conditions, even when both are given in kilograms.",
+    "sections": [
+      {
+        "anchor": "kapasite-nedir",
+        "title": "What does rear lift capacity measure?",
+        "paragraphs": [
+          "Rear hitch lift capacity describes the mass a three-point linkage can raise under specified conditions. It is not the same as drawbar towing capacity.",
+          "An implement whose centre of gravity sits farther behind the hitch may unload the front axle more than a compact implement of the same mass. Front ballast, axle limits and stability remain relevant."
+        ]
+      },
+      {
+        "anchor": "610-mm",
+        "title": "Why 610 mm behind the hitch matters",
+        "paragraphs": [
+          "Brochures may give a figure 'at ball ends' or '610 mm behind the ball ends'. Moving the load farther away increases the lever effect, so the two ratings are not necessarily equivalent.",
+          "If Tractor A claims 3,000 kg at the ends and Tractor B claims 2,700 kg at 610 mm, the larger number alone does not prove A can manage a given rear-mounted implement better. Match measurement points first."
+        ]
+      },
+      {
+        "anchor": "debi-basinc",
+        "title": "Flow in L/min versus pressure in bar",
+        "paragraphs": [
+          "Hydraulic flow is the volume of oil available per unit time and influences cylinder speed. Pressure contributes to the force a cylinder can generate. High pressure does not automatically mean fast loader motion, nor does high flow guarantee lifting strength.",
+          "Also distinguish total pump flow from the flow available to implements. Steering circuits may account for part of the declared total."
+        ]
+      },
+      {
+        "anchor": "askilar-kategoriler",
+        "title": "Three-point hitch categories and remote valves",
+        "paragraphs": [
+          "Categories I, II and III refer to linkage pin sizes and geometry; they are not simply a ranking of load capacity. The tractor and implement connection categories must be compatible.",
+          "Remote hydraulic valves supply external cylinders or motors. Confirm outlet pairs, single/double-acting control and usable flow against the implement manual."
+        ]
+      },
+      {
+        "anchor": "guvenli-kontrol",
+        "title": "A practical implement-matching method",
+        "paragraphs": [
+          "Record implement mass, how far its centre of gravity extends rearward, hitch category, remote outlets and front ballast needs. Check tractor axle limits and the actual implement manual.",
+          "If two brochures omit the lift measurement point, the honest comparison is 'not directly comparable' rather than a confident winner. Before hydraulic maintenance or hose connections, follow the manufacturer's procedure to release stored pressure safely. Never feel for a pressurized hydraulic leak with bare hands: high-pressure fluid can penetrate skin and cause serious injury."
+        ]
+      }
+    ],
+    "sources": [
+      "https://tractortestlab.unl.edu/",
+      "https://www.oecd.org/en/topics/tractors.html",
+      "https://www.hse.gov.uk/agriculture/topics/machinery/fluid.htm"
+    ],
+    "verification": "This article is educational and does not claim hands-on testing, component disassembly or tractor ownership. For a model-specific number, confirm the exact tractor, year, market and equipment in the producer's documentation. Where independent tests exist, compare their test procedures.",
+    "sourceLabels": [
+      "Nebraska Tractor Test Laboratory",
+      "OECD tractor testing codes",
+      "HSE — high-pressure hydraulic fluid injection hazards"
+    ]
+  },
+  "reviewed": false,
+  "notForPublication": true,
+  "translations": {
+    "zh": {
+      "title": "拖拉机液压提升能力详解：流量、压力与 610 mm 测量点",
+      "description": "了解后悬挂提升能力、610 mm 测量点、液压流量与压力的区别，以及如何安全匹配机具。",
+      "lead": "产品样本标注后悬挂提升能力为 3000 kg。拖拉机就一定能安全承载任何三吨重的机具吗？并非如此。测量点、机具重心、整机稳定性和液压配置都很重要。",
+      "comparisonNote": "比较两种提升能力前，先确认各自的负载测量位置。悬挂杆端测得的数值与其后方测得的数值反映不同的负载条件，即使单位都是千克。",
+      "sections": [
+        {
+          "anchor": "kapasite-nedir",
+          "title": "后悬挂提升能力测量的是什么？",
+          "paragraphs": [
+            "后悬挂提升能力表示三点悬挂装置在规定条件下可以提升的质量，并不等于牵引杆的拖曳能力。",
+            "与质量相同但结构紧凑的机具相比，重心位于悬挂装置更后方的机具可能使前轴减载更多。前部配重、车轴载荷限制和稳定性仍然重要。"
+          ]
+        },
+        {
+          "anchor": "610-mm",
+          "title": "为什么悬挂球头后方 610 mm 的测量点很重要",
+          "paragraphs": [
+            "产品样本可能给出“球头处”或“球头后方 610 mm”的数值。负载距离增加会增大杠杆效应，所以两种提升能力不一定等效。",
+            "如果拖拉机 A 的球头处提升能力为 3000 kg，而拖拉机 B 在 610 mm 处为 2700 kg，仅凭较大的数字不能证明 A 更适合某种后悬挂机具。应先统一测量点。"
+          ]
+        },
+        {
+          "anchor": "debi-basinc",
+          "title": "流量（L/min）与压力（bar）的区别",
+          "paragraphs": [
+            "液压流量是单位时间内可供使用的油液体积，影响液压缸运动速度。压力关系到液压缸能够产生的力。高压力不一定意味着装载机动作快，大流量也不能保证提升力大。",
+            "还要区分液压泵总流量与机具实际可用流量。转向回路可能占用标称总流量的一部分。"
+          ]
+        },
+        {
+          "anchor": "askilar-kategoriler",
+          "title": "三点悬挂类别与外接液压阀",
+          "paragraphs": [
+            "I、II、III 类表示悬挂连接销尺寸和几何结构，并不是简单的承载能力等级。拖拉机与机具的连接类别必须匹配。",
+            "外接液压阀为外部液压缸或马达供油。根据机具说明书核对成对油口、单作用或双作用控制方式及可用流量。"
+          ]
+        },
+        {
+          "anchor": "guvenli-kontrol",
+          "title": "匹配机具的实用方法",
+          "paragraphs": [
+            "记录机具质量、重心向后延伸的距离、悬挂类别、外接油口及前部配重需求。核对拖拉机车轴载荷限制和机具说明书。",
+            "如果两份样本都未注明提升能力测量点，应诚实地判断为“无法直接比较”，而不是断言某一方更好。进行液压维护或连接软管前，必须按制造商规定安全释放储存的压力。绝不能徒手寻找带压液压泄漏点：高压油液可穿透皮肤并造成严重伤害。"
+          ]
+        }
+      ],
+      "verification": "本文仅用于技术知识介绍，并不声称进行过实机试验、拆解零部件或拥有拖拉机。对于具体车型的数值，应查阅制造商文件，确认准确的型号、年份、销售市场和配置。如有独立试验，还应比较试验方法。",
+      "sourceLabels": [
+        "内布拉斯加拖拉机试验实验室",
+        "OECD 拖拉机试验规范",
+        "HSE — 高压液压油液注入伤害风险"
+      ]
+    },
+    "hi": {
+      "title": "ट्रैक्टर की हाइड्रोलिक उठाने की क्षमता: प्रवाह, दबाव और 610 mm",
+      "description": "पिछले हिच की उठाने की क्षमता, 610 mm मापन बिंदु, हाइड्रोलिक प्रवाह व दबाव और उपकरण की सुरक्षित संगतता समझें।",
+      "lead": "एक विवरणिका में पिछले हिच की उठाने की क्षमता 3000 kg लिखी है। क्या ट्रैक्टर किसी भी तीन टन के उपकरण को सुरक्षित ढंग से उठा सकता है? ज़रूरी नहीं। मापन बिंदु, उपकरण का गुरुत्व केंद्र, मशीन की स्थिरता और हाइड्रोलिक विन्यास महत्वपूर्ण हैं।",
+      "comparisonNote": "दो उठाने की क्षमता वाले आँकड़ों की तुलना से पहले जाँचें कि भार कहाँ मापा गया था। लिंक के सिरों पर मापा गया भार और उनसे पीछे मापा गया भार अलग परिस्थितियाँ दर्शाते हैं, भले ही दोनों किलोग्राम में हों।",
+      "sections": [
+        {
+          "anchor": "kapasite-nedir",
+          "title": "पिछले हिच की उठाने की क्षमता क्या मापती है?",
+          "paragraphs": [
+            "यह क्षमता उस द्रव्यमान को दर्शाती है जिसे तीन-बिंदु हिच निर्धारित परिस्थितियों में उठा सकता है। यह ड्रॉबार की खींचने की क्षमता के बराबर नहीं है।",
+            "जिस उपकरण का गुरुत्व केंद्र हिच से अधिक पीछे है, वह समान द्रव्यमान वाले छोटे आकार के उपकरण की तुलना में अगले एक्सल का भार अधिक घटा सकता है। आगे का बैलास्ट, एक्सल की सीमाएँ और स्थिरता महत्वपूर्ण रहती हैं।"
+          ]
+        },
+        {
+          "anchor": "610-mm",
+          "title": "हिच के बॉल सिरों से 610 mm पीछे का मापन क्यों महत्वपूर्ण है",
+          "paragraphs": [
+            "विवरणिकाओं में क्षमता ‘बॉल सिरों पर’ या ‘बॉल सिरों से 610 mm पीछे’ दी जा सकती है। भार को दूर ले जाने से उत्तोलक प्रभाव बढ़ता है, इसलिए दोनों आँकड़े आवश्यक रूप से समान नहीं हैं।",
+            "यदि ट्रैक्टर A के सिरों पर क्षमता 3000 kg और ट्रैक्टर B की 610 mm पर क्षमता 2700 kg है, तो केवल बड़ा आँकड़ा यह सिद्ध नहीं करता कि A किसी निश्चित पिछले उपकरण के लिए अधिक उपयुक्त है। पहले मापन बिंदु समान करें।"
+          ]
+        },
+        {
+          "anchor": "debi-basinc",
+          "title": "L/min में प्रवाह और bar में दबाव का अंतर",
+          "paragraphs": [
+            "हाइड्रोलिक प्रवाह प्रति इकाई समय उपलब्ध तेल का आयतन है और सिलिंडर की गति को प्रभावित करता है। दबाव सिलिंडर द्वारा उत्पन्न बल में योगदान देता है। अधिक दबाव से लोडर की गति अपने आप तेज़ नहीं होती और अधिक प्रवाह उठाने के बल की गारंटी नहीं देता।",
+            "पंप के कुल प्रवाह और उपकरण के लिए उपलब्ध प्रवाह में भी अंतर करें। स्टीयरिंग सर्किट घोषित कुल प्रवाह का कुछ भाग उपयोग कर सकते हैं।"
+          ]
+        },
+        {
+          "anchor": "askilar-kategoriler",
+          "title": "तीन-बिंदु हिच की श्रेणियाँ और रिमोट वाल्व",
+          "paragraphs": [
+            "श्रेणियाँ I, II और III हिच के पिन के आकार और संयोजन की ज्यामिति दर्शाती हैं; ये केवल भार क्षमता की श्रेणी नहीं हैं। ट्रैक्टर और उपकरण की जोड़ श्रेणियाँ संगत होनी चाहिए।",
+            "रिमोट हाइड्रोलिक वाल्व बाहरी सिलिंडर या मोटर को तेल उपलब्ध कराते हैं। उपकरण की पुस्तिका के अनुसार आउटलेट के जोड़े, एकल या दोहरे प्रभाव वाले नियंत्रण और उपयोग योग्य प्रवाह की पुष्टि करें।"
+          ]
+        },
+        {
+          "anchor": "guvenli-kontrol",
+          "title": "उपकरण की संगतता जाँचने का व्यावहारिक तरीका",
+          "paragraphs": [
+            "उपकरण का द्रव्यमान, गुरुत्व केंद्र का पीछे तक विस्तार, हिच की श्रेणी, रिमोट आउटलेट और सामने के बैलास्ट की आवश्यकता दर्ज करें। ट्रैक्टर की एक्सल सीमाएँ और उपकरण की वास्तविक पुस्तिका जाँचें।",
+            "यदि दो विवरणिकाएँ उठाने की क्षमता का मापन बिंदु नहीं बतातीं, तो किसी एक को निश्चित रूप से बेहतर बताने के बजाय ईमानदार निष्कर्ष ‘सीधे तुलना योग्य नहीं’ है। हाइड्रोलिक रखरखाव या होज़ जोड़ने से पहले निर्माता की प्रक्रिया के अनुसार संचित दबाव सुरक्षित रूप से निकालें। दबावयुक्त हाइड्रोलिक रिसाव को नंगे हाथों से कभी न खोजें: उच्च दबाव वाला द्रव त्वचा में प्रवेश कर गंभीर चोट पहुँचा सकता है।"
+          ]
+        }
+      ],
+      "verification": "यह लेख शैक्षिक है; इसमें स्वयं ट्रैक्टर चलाकर परीक्षण करने, पुर्जे खोलने या ट्रैक्टर का मालिक होने का दावा नहीं किया गया है। किसी मॉडल के विशिष्ट आँकड़े के लिए निर्माता के दस्तावेज़ में सटीक मॉडल, वर्ष, बाज़ार और उपकरण की पुष्टि करें। स्वतंत्र परीक्षण उपलब्ध हों तो उनकी परीक्षण विधियों की तुलना करें।",
+      "sourceLabels": [
+        "नेब्रास्का ट्रैक्टर परीक्षण प्रयोगशाला",
+        "OECD ट्रैक्टर परीक्षण कोड",
+        "HSE — उच्च दबाव वाले हाइड्रोलिक द्रव के शरीर में प्रवेश से खतरे"
+      ]
+    },
+    "ru": {
+      "title": "Грузоподъёмность гидравлики трактора: расход, давление и 610 мм",
+      "description": "Грузоподъёмность задней навески, точка измерения 610 мм, расход и давление гидравлики, безопасный подбор орудий.",
+      "lead": "В каталоге указана грузоподъёмность задней навески 3000 кг. Может ли трактор безопасно нести любое трёхтонное орудие? Не обязательно. Важны точка измерения, центр тяжести орудия, устойчивость и конфигурация гидравлики.",
+      "comparisonNote": "Прежде чем сравнивать два показателя грузоподъёмности, выясните, где измеряли нагрузку. Измерение на концах тяг и измерение позади них описывают разные условия нагружения, даже если оба значения указаны в килограммах.",
+      "sections": [
+        {
+          "anchor": "kapasite-nedir",
+          "title": "Что измеряет грузоподъёмность задней навески?",
+          "paragraphs": [
+            "Грузоподъёмность задней навески характеризует массу, которую трёхточечное навесное устройство способно поднять в заданных условиях. Она не равна допустимой массе при буксировке за тяговый брус.",
+            "Орудие с центром тяжести, расположенным дальше позади навески, может сильнее разгрузить передний мост, чем компактное орудие той же массы. Передний балласт, допустимые нагрузки на мосты и устойчивость остаются важными."
+          ]
+        },
+        {
+          "anchor": "610-mm",
+          "title": "Почему важна точка на расстоянии 610 мм позади навески",
+          "paragraphs": [
+            "В каталогах могут приводиться значения на шарнирах концов тяг или на расстоянии 610 мм позади них. Удаление нагрузки увеличивает плечо рычага, поэтому эти показатели не обязательно эквивалентны.",
+            "Если для трактора A заявлено 3000 кг на концах тяг, а для трактора B — 2700 кг на расстоянии 610 мм, большее число само по себе не доказывает, что A лучше подходит для конкретного задненавесного орудия. Сначала сопоставьте одинаковые точки измерения."
+          ]
+        },
+        {
+          "anchor": "debi-basinc",
+          "title": "Расход в л/мин (L/min) и давление в барах (bar)",
+          "paragraphs": [
+            "Гидравлический расход — объём масла, доступный за единицу времени; он влияет на скорость гидроцилиндра. Давление участвует в формировании усилия цилиндра. Высокое давление не обязательно означает быстрое движение погрузчика, а большой расход не гарантирует высокого подъёмного усилия.",
+            "Различайте общий расход насоса и расход, доступный орудиям. Контуры рулевого управления могут использовать часть заявленного общего расхода."
+          ]
+        },
+        {
+          "anchor": "askilar-kategoriler",
+          "title": "Категории трёхточечной навески и выносные гидрораспределители",
+          "paragraphs": [
+            "Категории I, II и III относятся к размерам пальцев и геометрии навески, а не просто к ранжированию грузоподъёмности. Категории соединения трактора и орудия должны быть совместимы.",
+            "Выносные гидрораспределители обеспечивают подачу масла к внешним цилиндрам или моторам. По руководству орудия уточните пары гидровыводов, управление одностороннего или двустороннего действия и доступный расход."
+          ]
+        },
+        {
+          "anchor": "guvenli-kontrol",
+          "title": "Практический подбор совместимого орудия",
+          "paragraphs": [
+            "Запишите массу орудия, расстояние его центра тяжести назад, категорию навески, гидровыводы и требования к переднему балласту. Проверьте ограничения нагрузок на мосты трактора и руководство орудия.",
+            "Если в двух каталогах отсутствуют точки измерения грузоподъёмности, честный вывод — «напрямую не сравнимы», а не уверенный выбор победителя. Перед обслуживанием гидравлики или подключением шлангов безопасно сбросьте остаточное давление по процедуре производителя. Никогда не ищите утечку гидравлики под давлением голыми руками: жидкость под высоким давлением может проникнуть под кожу и вызвать тяжёлую травму."
+          ]
+        }
+      ],
+      "verification": "Статья носит образовательный характер; она не утверждает, что авторы проводили практические испытания, разбирали узлы или владели трактором. Для конкретного показателя проверьте точную модель, год, рынок и комплектацию в документации производителя. Если доступны независимые испытания, сравните методики.",
+      "sourceLabels": [
+        "Лаборатория тракторных испытаний Небраски",
+        "Кодексы ОЭСР для испытаний тракторов",
+        "HSE — опасность проникновения гидравлической жидкости под высоким давлением в ткани"
+      ]
+    },
+    "ja": {
+      "title": "トラクターの油圧揚力とは？流量・圧力・610 mmの測定位置",
+      "description": "後部リンクの揚力、610 mmの測定位置、油圧流量と圧力の違い、作業機との安全な適合性を解説します。",
+      "lead": "カタログに後部ヒッチの揚力が3000 kgと記載されています。どんな3トンの作業機でも安全に装着できるのでしょうか。必ずしもそうではありません。測定位置、作業機の重心、車体の安定性、油圧構成が重要です。",
+      "comparisonNote": "揚力の数値を比較する前に、それぞれの荷重をどこで測定したか確認します。リンク端で測定した値とその後方で測定した値は、同じkg表示でも異なる荷重条件を示します。",
+      "sections": [
+        {
+          "anchor": "kapasite-nedir",
+          "title": "後部ヒッチの揚力は何を測っているのか",
+          "paragraphs": [
+            "後部ヒッチの揚力とは、所定の条件で三点リンクが持ち上げられる質量を示すものです。ドローバーのけん引能力とは異なります。",
+            "重心がヒッチのより後方にある作業機は、同じ質量でコンパクトな作業機よりも前車軸の荷重を大きく減らす場合があります。前部バラスト、車軸の許容荷重、安定性も重要です。"
+          ]
+        },
+        {
+          "anchor": "610-mm",
+          "title": "リンクのボール端から610 mm後方での測定が重要な理由",
+          "paragraphs": [
+            "カタログには「ボール端」または「ボール端から610 mm後方」の値が記載されることがあります。荷重が離れるほどてこの作用が大きくなるため、二つの揚力値は必ずしも同等ではありません。",
+            "トラクターAがボール端で3000 kg、トラクターBが610 mmの位置で2700 kgと公表していても、大きな数値だけでAが特定の後部作業機により適しているとは証明できません。まず測定位置をそろえます。"
+          ]
+        },
+        {
+          "anchor": "debi-basinc",
+          "title": "L/minで表す流量とbarで表す圧力",
+          "paragraphs": [
+            "油圧流量は単位時間当たりに利用できる油の体積で、シリンダーの速度に影響します。圧力はシリンダーが発生できる力に関係します。高圧だからといってローダーが速く動くとは限らず、大流量が大きな揚力を保証するわけでもありません。",
+            "ポンプの総流量と作業機が利用できる流量も区別します。ステアリング回路が公表された総流量の一部を使用することがあります。"
+          ]
+        },
+        {
+          "anchor": "askilar-kategoriler",
+          "title": "三点リンクのカテゴリと外部油圧バルブ",
+          "paragraphs": [
+            "カテゴリI、II、IIIはリンクのピン寸法や接続形状を表し、単純な荷重能力の順位ではありません。トラクターと作業機の接続カテゴリは適合している必要があります。",
+            "外部油圧バルブは外部のシリンダーやモーターに作動油を供給します。作業機の取扱説明書に照らして、油圧ポートの組数、単動・複動の制御方式、利用可能な流量を確認します。"
+          ]
+        },
+        {
+          "anchor": "guvenli-kontrol",
+          "title": "作業機の適合性を確認する実用的な方法",
+          "paragraphs": [
+            "作業機の質量、重心が後方に離れている距離、ヒッチカテゴリ、外部油圧ポート、前部バラストの必要量を記録します。トラクターの車軸荷重制限と作業機の取扱説明書を確認します。",
+            "二つのカタログで揚力の測定位置が省略されていれば、優劣を断定するのではなく「直接比較できない」と判断するのが妥当です。油圧装置の整備やホース接続の前に、メーカーの手順に従って残圧を安全に解除します。加圧された油圧装置の漏れを素手で探さないでください。高圧の作動油が皮膚を貫通し、重傷を引き起こすおそれがあります。"
+          ]
+        }
+      ],
+      "verification": "この記事は技術教育を目的としており、実機試験、部品の分解、トラクターの所有経験を主張するものではありません。特定の機種の数値は製造元の資料で正確な型式、年式、市場、装備を確認してください。独立した試験がある場合は、その試験方法を比較します。",
+      "sourceLabels": [
+        "ネブラスカ・トラクター試験研究所",
+        "OECDトラクター試験コード",
+        "HSE — 高圧油圧作動油の注入による危険性"
+      ]
+    }
+  },
+  "translationScope": "Main article, comparison note, verification disclosure and source link labels only. UI, glossary links, photo credit and related content must be integrated and reviewed before publishing."
+}

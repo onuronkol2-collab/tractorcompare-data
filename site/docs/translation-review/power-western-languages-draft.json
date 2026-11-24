@@ -1,0 +1,356 @@
+{
+  "state": "draft-needs-independent-editorial-review",
+  "sourceBlobSha": "853424394588964819f45e85b60d4dbcfdaa9e18",
+  "sourceSlug": "tractor-engine-power-and-torque",
+  "sourceLanguage": "en",
+  "sourceComponent": "site/src/components/TractorTechnicalDeepDive.astro",
+  "source": {
+    "title": "Tractor Horsepower and Torque: HP, PS, kW and PTO Compared",
+    "description": "A practical guide to tractor horsepower, PS and kW, rated versus maximum output, torque and how to compare engine and PTO ratings.",
+    "lead": "Two brochures both advertise '100 horsepower'—but that does not promise identical field performance. Engine speed, torque curve, test standard, driveline losses and tyre traction all influence the result. This guide explains what the figures actually mean.",
+    "comparisonNote": "When two brochures both say 100 hp, read the label beside each figure. Maximum engine power on one sheet and rated power on the other describe different operating points. For a PTO-driven implement, look for a separate measurement at the shaft.",
+    "sections": [
+      {
+        "anchor": "hp-ps-kw",
+        "title": "Are HP, PS and kW the same units?",
+        "paragraphs": [
+          "Mechanical hp, metric PS and kilowatts measure power but have different unit sizes. Approximately 1 kW equals 1.341 mechanical hp or 1.360 PS. Compare values in a shared unit before drawing conclusions.",
+          "For example, 75 kW is approximately 100.6 hp or 102.0 PS. Converting units does not make rated power and maximum power comparable unless their test basis also matches.",
+          "A real manufacturer example: Başak's official 2075 BK brochure states engine power as 53 kW / 72 hp. Under NIST unit factors, 53 kW is approximately 72.1 metric PS but 71.1 mechanical hp. Do not silently treat the maker's ‘hp’ label as either horsepower definition without checking the unit convention. Preserve both original manufacturer figures as reported; they are not an independent PTO power result or proof of a particular test standard."
+        ]
+      },
+      {
+        "anchor": "nominal-max-boost",
+        "title": "Rated, maximum and boost power",
+        "paragraphs": [
+          "Rated power refers to an output at stated rated conditions. Maximum output may occur at another engine speed. Boost can add power only under particular transport or PTO conditions, depending on the tractor.",
+          "If a product advertises '120 hp plus 15 hp boost', do not assume 135 hp is constantly available for every field task. Inspect the enabling conditions and standard used."
+        ]
+      },
+      {
+        "anchor": "tork",
+        "title": "Why torque in Nm matters—but not alone",
+        "paragraphs": [
+          "Torque is turning moment at the crankshaft. A torque curve and torque rise can help explain how the engine behaves when load increases and rpm falls. Crankshaft torque is not the same thing as drawbar pull.",
+          "A machine may have strong engine torque yet perform poorly with inappropriate gearing, unsuitable tyres or excessive wheel slip. Review torque against rpm and driveline choices."
+        ]
+      },
+      {
+        "anchor": "motor-ve-pto",
+        "title": "Engine power versus PTO power",
+        "paragraphs": [
+          "Ploughing, mowing, baling and loader work demand power in different ways. Drawbar work depends on traction and slip; rotary implements depend on PTO output; loaders add hydraulic flow, pressure and stability.",
+          "Two tractors with the same engine rating may have different PTO test results. Never substitute a maker's engine declaration for an independent PTO measurement."
+        ]
+      },
+      {
+        "anchor": "olcum-standartlari",
+        "title": "ISO 14396, UN/ECE R120 and OECD Code 2: which power is measured?",
+        "paragraphs": [
+          "A brochure mentioning ISO 14396 or UN/ECE R120 is describing an engine-output declaration measured under a defined engine test procedure. It is not automatically the power available at the tractor's PTO shaft or drawbar. Read the standard, engine speed and rated-versus-maximum qualification together before comparing advertised horsepower.",
+          "OECD Code 2 answers a different question by testing the tractor's performance under specified procedures. Its published summaries may include PTO power and fuel consumption, drawbar performance and available hydraulic output. A maker's engine claim is therefore not interchangeable with an OECD PTO or drawbar test value. Even identical numerical horsepower figures are not equivalent unless the measured output and procedure are the same.",
+          "Before deciding, check five details: exact model/variant, country and emissions version, measurement standard, rpm associated with the power figure, and when any temporary boost becomes available. If an independent test is cited, verify the tested tractor's equipment and engine version against the one you are buying. An unavailable test basis should be labelled 'not directly comparable', not silently assumed."
+        ]
+      },
+      {
+        "anchor": "katalog-karsilastirma",
+        "title": "How to compare two horsepower figures fairly",
+        "paragraphs": [
+          "Confirm model year, market edition and engine code. Identify the unit, power category, test standard and rpm for each claim. If these differ or are unknown, mark the comparison as qualified rather than pretending the figures are identical.",
+          "The better tractor depends on tasks and implements, not only the larger horsepower number. PTO modes, lift capacity, weight, tyres and service support should also inform the decision."
+        ]
+      }
+    ],
+    "verification": "This article is educational and does not claim hands-on testing, component disassembly or tractor ownership. For a model-specific number, confirm the exact tractor, year, market and equipment in the producer's documentation. Where independent tests exist, compare their test procedures.",
+    "sources": [
+      "https://tractortestlab.unl.edu/",
+      "https://www.oecd.org/en/topics/tractors.html",
+      "https://eur-lex.europa.eu/eli/reg/2019/405/oj/eng",
+      "https://www.dlg.org/en/magazin/survey-tests/tractor-model-descriptions-no-standardised-information",
+      "https://www.nist.gov/pml/special-publication-811/nist-guide-si-appendix-b-conversion-factors/nist-guide-si-appendix-b9",
+      "https://admin.basaktraktor.com.tr/upload/4c2bf423-d9a1-4ffc-aa6b-1f0188c313aa-2075%20BK.pdf"
+    ],
+    "sourceLabels": [
+      "Nebraska Tractor Test Laboratory",
+      "OECD tractor testing codes",
+      "UN/ECE R120 — official engine power measurement regulation",
+      "DLG Test Centre — why tractor power claims differ",
+      "NIST — mechanical horsepower and metric PS conversion factors",
+      "Başak 2075 BK — official 53 kW / 72 hp brochure"
+    ]
+  },
+  "reviewed": false,
+  "notForPublication": true,
+  "translations": {
+    "de": {
+      "title": "Traktorleistung und Drehmoment: hp, PS, kW und Zapfwellenleistung",
+      "description": "Praxisleitfaden zu Traktorleistung in hp, PS und kW, Nenn- und Maximalleistung, Drehmoment und dem Vergleich von Motor- und Zapfwellenleistung.",
+      "lead": "Zwei Prospekte werben mit „100 Pferdestärken“ – das garantiert keine identische Feldleistung. Motordrehzahl, Drehmomentverlauf, Prüfnorm, Übertragungsverluste und Reifentraktion beeinflussen das Ergebnis. Dieser Leitfaden erklärt die tatsächliche Bedeutung der Zahlen.",
+      "comparisonNote": "Steht in zwei Prospekten 100 hp, lesen Sie die Bezeichnung neben jedem Wert. Maximale Motorleistung in einem und Nennleistung im anderen beschreiben unterschiedliche Betriebspunkte. Suchen Sie für zapfwellengetriebene Geräte einen separaten Messwert an der Welle.",
+      "sections": [
+        {
+          "anchor": "hp-ps-kw",
+          "title": "Sind hp, PS und kW dieselben Einheiten?",
+          "paragraphs": [
+            "Mechanische hp, metrische PS und Kilowatt messen Leistung, haben aber unterschiedliche Einheitsgrößen. 1 kW entspricht ungefähr 1,341 mechanischen hp oder 1,360 PS. Rechnen Sie die Werte vor einem Vergleich in dieselbe Einheit um.",
+            "75 kW entsprechen beispielsweise etwa 100,6 hp oder 102,0 PS. Die Umrechnung macht Nennleistung und Maximalleistung nicht vergleichbar, sofern die Prüfgrundlage nicht ebenfalls übereinstimmt.",
+            "Ein reales Herstellerbeispiel: Başak nennt im offiziellen Prospekt des 2075 BK eine Motorleistung von 53 kW / 72 hp. Nach den Umrechnungsfaktoren des NIST entsprechen 53 kW etwa 72,1 metrischen PS, aber 71,1 mechanischen hp. Ordnen Sie die Herstellerangabe „hp“ nicht ohne Prüfung der verwendeten Einheit einer der beiden Definitionen zu. Bewahren Sie beide Originalwerte unverändert; sie sind weder ein unabhängiger Zapfwellenmesswert noch der Nachweis einer bestimmten Prüfnorm."
+          ]
+        },
+        {
+          "anchor": "nominal-max-boost",
+          "title": "Nennleistung, Maximalleistung und Boost",
+          "paragraphs": [
+            "Nennleistung bezeichnet die Leistung unter angegebenen Nennbedingungen. Die maximale Leistung kann bei einer anderen Motordrehzahl auftreten. Je nach Traktor kann Boost nur unter bestimmten Transport- oder Zapfwellenbedingungen zusätzliche Leistung bereitstellen.",
+            "Wenn ein Produkt mit „120 hp plus 15 hp Boost“ beworben wird, gehen Sie nicht davon aus, dass 135 hp bei jeder Feldarbeit dauerhaft zur Verfügung stehen. Prüfen Sie die Aktivierungsbedingungen und die verwendete Norm."
+          ]
+        },
+        {
+          "anchor": "tork",
+          "title": "Warum das Drehmoment in Nm wichtig ist – aber nicht allein",
+          "paragraphs": [
+            "Das Drehmoment beschreibt die Drehwirkung einer Kraft an der Kurbelwelle. Drehmomentkurve und Drehmomentanstieg können erklären, wie sich der Motor bei zunehmender Last und sinkender Drehzahl verhält. Kurbelwellendrehmoment ist nicht dasselbe wie Zugkraft an der Zugvorrichtung.",
+            "Ein Traktor kann ein hohes Motordrehmoment haben und dennoch bei ungeeigneter Übersetzung, falschen Reifen oder übermäßigem Schlupf schlecht arbeiten. Betrachten Sie Drehmoment zusammen mit Drehzahl und Antriebsstrang."
+          ]
+        },
+        {
+          "anchor": "motor-ve-pto",
+          "title": "Motorleistung und Zapfwellenleistung",
+          "paragraphs": [
+            "Pflügen, Mähen, Ballenpressen und Frontladerarbeit stellen unterschiedliche Leistungsanforderungen. Zugkraftarbeit hängt von Traktion und Schlupf ab; rotierende Geräte von der Zapfwellenleistung; bei Frontladern kommen hydraulischer Volumenstrom, Druck und Standsicherheit hinzu.",
+            "Zwei Traktoren mit derselben Motorleistung können unterschiedliche Zapfwellenprüfwerte aufweisen. Ersetzen Sie niemals eine unabhängige Zapfwellenmessung durch eine Motorleistungsangabe des Herstellers."
+          ]
+        },
+        {
+          "anchor": "olcum-standartlari",
+          "title": "ISO 14396, UN/ECE R120 und OECD Code 2: Welche Leistung wird gemessen?",
+          "paragraphs": [
+            "Ein Prospekt mit ISO 14396 oder UN/ECE R120 beschreibt eine Motorleistungsangabe nach einem festgelegten Motorprüfverfahren. Sie entspricht nicht automatisch der Leistung an der Zapfwelle oder Zugvorrichtung. Lesen Sie Prüfnorm, Motordrehzahl und die Angabe Nenn- oder Maximalleistung gemeinsam, bevor Sie beworbene Leistungswerte vergleichen.",
+            "OECD Code 2 beantwortet eine andere Frage: Er prüft die Leistung des Traktors nach festgelegten Verfahren. Veröffentlichte Zusammenfassungen können Zapfwellenleistung und Kraftstoffverbrauch, Zugleistung und verfügbare hydraulische Leistung enthalten. Eine Motorleistungsangabe des Herstellers ist daher nicht mit einem OECD-Prüfwert an Zapfwelle oder Zugvorrichtung austauschbar. Selbst gleiche Zahlenwerte sind nur dann gleichwertig, wenn Messgröße und Prüfverfahren übereinstimmen.",
+            "Prüfen Sie vor der Entscheidung fünf Angaben: exaktes Modell und Variante, Land und Abgasversion, Prüfnorm, zur Leistungsangabe gehörende Drehzahl und Bedingungen für einen zeitweiligen Boost. Bei unabhängigen Tests vergleichen Sie Ausstattung und Motorversion des geprüften Traktors mit dem Kaufmodell. Eine unbekannte Prüfgrundlage muss als „nicht direkt vergleichbar“ gekennzeichnet werden."
+          ]
+        },
+        {
+          "anchor": "katalog-karsilastirma",
+          "title": "Wie man zwei Leistungsangaben fair vergleicht",
+          "paragraphs": [
+            "Prüfen Sie Modelljahr, Marktausführung und Motorcode. Bestimmen Sie Einheit, Leistungskategorie, Prüfnorm und Drehzahl jeder Angabe. Wenn diese abweichen oder unbekannt sind, kennzeichnen Sie den Vergleich als eingeschränkt, statt Gleichheit vorzutäuschen.",
+            "Welcher Traktor besser geeignet ist, hängt von Aufgaben und Geräten ab, nicht nur vom höheren Leistungswert. Auch Zapfwellenstufen, Hubkraft, Gewicht, Reifen und Kundendienst sollten berücksichtigt werden."
+          ]
+        }
+      ],
+      "sourceLabels": [
+        "Nebraska Tractor Test Laboratory",
+        "OECD-Prüfcodes für Traktoren",
+        "UN/ECE R120 — offizielle Regelung zur Messung der Motorleistung",
+        "DLG-Testzentrum — warum Traktorleistungsangaben abweichen",
+        "NIST — Umrechnungsfaktoren für mechanische hp und metrische PS",
+        "Başak 2075 BK — offizieller Prospekt mit 53 kW / 72 hp"
+      ],
+      "verification": "Dieser Artikel dient der technischen Bildung und behauptet weder praktische Tests noch Demontage oder eigenen Traktorbesitz. Prüfen Sie modellbezogene Zahlen anhand der genauen Ausführung, des Baujahrs, Markts und der Ausstattung in den Herstellerunterlagen. Vergleichen Sie bei unabhängigen Tests die Prüfverfahren."
+    },
+    "fr": {
+      "title": "Puissance et couple du tracteur : hp, ch (PS), kW et prise de force",
+      "description": "Guide pratique des unités hp, PS et kW, des puissances nominale et maximale, du couple et de la comparaison moteur/PDF.",
+      "lead": "Deux brochures annoncent «100 chevaux», sans garantir des performances identiques au champ. Le régime moteur, la courbe de couple, la norme d’essai, les pertes de transmission et l’adhérence influencent le résultat. Ce guide explique ce que signifient réellement les chiffres.",
+      "comparisonNote": "Si deux brochures indiquent 100 hp, lisez l’intitulé associé à chaque valeur. Une puissance moteur maximale et une puissance nominale correspondent à des points de fonctionnement différents. Pour un outil entraîné par la prise de force, cherchez une mesure distincte à l’arbre.",
+      "sections": [
+        {
+          "anchor": "hp-ps-kw",
+          "title": "Les hp, PS et kW sont-ils identiques ?",
+          "paragraphs": [
+            "Le hp mécanique, le cheval-vapeur métrique PS et le kilowatt mesurent une puissance, mais leurs valeurs unitaires diffèrent. 1 kW correspond environ à 1,341 hp mécaniques ou 1,360 PS. Ramenez les valeurs à une unité commune avant de conclure.",
+            "Par exemple, 75 kW correspondent environ à 100,6 hp ou 102,0 PS. Convertir les unités ne rend pas les puissances nominale et maximale comparables si les bases d’essai ne sont pas également identiques.",
+            "Exemple réel du constructeur : la brochure officielle du Başak 2075 BK annonce 53 kW / 72 hp de puissance moteur. Selon les facteurs du NIST, 53 kW correspondent environ à 72,1 PS métriques, mais à 71,1 hp mécaniques. N’interprétez pas silencieusement le «hp» du constructeur comme l’une ou l’autre définition sans vérifier la convention. Conservez les deux valeurs originales ; elles ne constituent ni une mesure indépendante à la prise de force ni la preuve d’une norme d’essai particulière."
+          ]
+        },
+        {
+          "anchor": "nominal-max-boost",
+          "title": "Puissances nominale, maximale et surpuissance (boost)",
+          "paragraphs": [
+            "La puissance nominale correspond à la puissance aux conditions nominales indiquées. La puissance maximale peut être atteinte à un autre régime. Selon le tracteur, le boost ajoute de la puissance uniquement dans certaines conditions de transport ou d’utilisation de la prise de force.",
+            "Si un produit annonce «120 hp plus 15 hp de boost», ne supposez pas que 135 hp sont disponibles en permanence pour tous les travaux. Examinez les conditions d’activation et la norme utilisée."
+          ]
+        },
+        {
+          "anchor": "tork",
+          "title": "Pourquoi le couple en Nm compte, mais ne suffit pas",
+          "paragraphs": [
+            "Le couple est le moment de rotation au vilebrequin. La courbe de couple et sa réserve peuvent expliquer le comportement du moteur lorsque la charge augmente et que le régime diminue. Le couple au vilebrequin n’est pas l’effort de traction à la barre.",
+            "Un tracteur peut offrir un couple moteur important tout en travaillant mal avec un rapport inadapté, des pneus inadéquats ou un patinage excessif. Examinez le couple en fonction du régime et de la transmission."
+          ]
+        },
+        {
+          "anchor": "motor-ve-pto",
+          "title": "Puissance moteur et puissance à la prise de force",
+          "paragraphs": [
+            "Labour, fauche, pressage et chargeur exigent de la puissance de différentes manières. Le travail à la barre dépend de l’adhérence et du patinage ; les outils rotatifs de la puissance à la PDF ; le chargeur fait aussi intervenir débit hydraulique, pression et stabilité.",
+            "Deux tracteurs de même puissance moteur peuvent avoir des résultats d’essai différents à la PDF. Ne substituez jamais la déclaration de puissance moteur du constructeur à une mesure indépendante à la prise de force."
+          ]
+        },
+        {
+          "anchor": "olcum-standartlari",
+          "title": "ISO 14396, UN/ECE R120 et OECD Code 2 : quelle puissance est mesurée ?",
+          "paragraphs": [
+            "Une brochure citant ISO 14396 ou UN/ECE R120 indique une puissance moteur déterminée selon une procédure d’essai définie. Ce n’est pas automatiquement la puissance disponible à la prise de force ou à la barre de traction. Lisez ensemble norme, régime moteur et qualification nominale ou maximale avant de comparer les valeurs annoncées.",
+            "Le code 2 de l’OCDE (OECD Code 2) répond à une autre question : il évalue les performances du tracteur selon des procédures définies. Ses synthèses peuvent inclure puissance à la PDF et consommation de carburant, performances à la barre et puissance hydraulique disponible. Une déclaration moteur du constructeur ne peut donc remplacer un résultat d’essai OCDE à la PDF ou à la barre. Même des valeurs numériques identiques ne sont pas équivalentes sans même grandeur mesurée et même procédure.",
+            "Avant de décider, vérifiez cinq éléments : modèle et variante exacts, pays et version antipollution, norme de mesure, régime correspondant à la puissance et conditions de disponibilité du boost temporaire. Si un essai indépendant est cité, vérifiez l’équipement et la version moteur du tracteur testé par rapport au modèle acheté. Une base d’essai indisponible doit être signalée comme «non directement comparable»."
+          ]
+        },
+        {
+          "anchor": "katalog-karsilastirma",
+          "title": "Comparer équitablement deux puissances annoncées",
+          "paragraphs": [
+            "Confirmez l’année du modèle, la version de marché et le code moteur. Identifiez unité, catégorie de puissance, norme d’essai et régime pour chaque valeur. En cas de différences ou d’inconnues, signalez les limites du comparatif au lieu de supposer les chiffres équivalents.",
+            "Le meilleur tracteur dépend du travail et des outils, pas uniquement du chiffre de puissance le plus élevé. Les régimes de PDF, le relevage, le poids, les pneus et le service après-vente comptent aussi."
+          ]
+        }
+      ],
+      "sourceLabels": [
+        "Laboratoire d’essais de tracteurs du Nebraska",
+        "Codes d’essais de tracteurs de l’OCDE",
+        "UN/ECE R120 — règlement officiel de mesure de la puissance moteur",
+        "Centre d’essais DLG — pourquoi les puissances annoncées diffèrent",
+        "NIST — facteurs de conversion du hp mécanique et du PS métrique",
+        "Başak 2075 BK — brochure officielle 53 kW / 72 hp"
+      ],
+      "verification": "Cet article est pédagogique et ne prétend pas reposer sur des essais pratiques, un démontage ou la possession d’un tracteur. Pour une valeur propre à un modèle, vérifiez la version exacte, l’année, le marché et l’équipement dans la documentation du fabricant. Pour les essais indépendants, comparez les procédures utilisées."
+    },
+    "es": {
+      "title": "Potencia y par del tractor: hp, PS, kW y toma de fuerza",
+      "description": "Guía práctica sobre hp, PS y kW, potencia nominal y máxima, par y comparación de potencia del motor y de la TDF.",
+      "lead": "Dos catálogos anuncian «100 caballos de potencia», pero eso no garantiza el mismo rendimiento en campo. Influyen el régimen del motor, la curva de par, la norma de ensayo, las pérdidas de transmisión y la tracción de los neumáticos. Esta guía explica qué significan las cifras.",
+      "comparisonNote": "Cuando dos catálogos indican 100 hp, lea la denominación junto a cada cifra. La potencia máxima del motor en uno y la nominal en el otro describen puntos de funcionamiento diferentes. Para un apero accionado por la TDF, busque una medición separada en el eje.",
+      "sections": [
+        {
+          "anchor": "hp-ps-kw",
+          "title": "¿Son iguales las unidades hp, PS y kW?",
+          "paragraphs": [
+            "El hp mecánico, el PS métrico y el kilovatio miden potencia, pero sus unidades tienen magnitudes distintas. 1 kW equivale aproximadamente a 1,341 hp mecánicos o 1,360 PS. Compare los valores en una unidad común antes de sacar conclusiones.",
+            "Por ejemplo, 75 kW equivalen aproximadamente a 100,6 hp o 102,0 PS. Convertir las unidades no hace comparables las potencias nominal y máxima si no coincide también la base de ensayo.",
+            "Ejemplo real del fabricante: el catálogo oficial del Başak 2075 BK indica 53 kW / 72 hp de potencia del motor. Según los factores del NIST, 53 kW corresponden aproximadamente a 72,1 PS métricos, pero a 71,1 hp mecánicos. No interprete la etiqueta «hp» del fabricante como una definición u otra sin comprobar la convención utilizada. Conserve ambas cifras originales: no son un resultado independiente de potencia en la TDF ni prueba de una norma determinada."
+          ]
+        },
+        {
+          "anchor": "nominal-max-boost",
+          "title": "Potencia nominal, máxima y aumento temporal (boost)",
+          "paragraphs": [
+            "La potencia nominal se refiere a la potencia bajo las condiciones nominales especificadas. La máxima puede alcanzarse a otro régimen. Según el tractor, el boost añade potencia solo en determinadas condiciones de transporte o uso de la TDF.",
+            "Si un producto anuncia «120 hp más 15 hp de boost», no suponga que 135 hp están siempre disponibles para cualquier labor. Compruebe las condiciones de activación y la norma aplicada."
+          ]
+        },
+        {
+          "anchor": "tork",
+          "title": "Por qué importa el par en Nm, pero no por sí solo",
+          "paragraphs": [
+            "El par es el momento de giro en el cigüeñal. La curva de par y la reserva de par ayudan a explicar el comportamiento del motor cuando aumenta la carga y disminuyen las rpm. El par del cigüeñal no es la fuerza de tiro en la barra.",
+            "Un tractor puede tener un par motor alto y rendir mal con una relación inadecuada, neumáticos incorrectos o patinamiento excesivo. Examine el par en función del régimen y las opciones de transmisión."
+          ]
+        },
+        {
+          "anchor": "motor-ve-pto",
+          "title": "Potencia del motor frente a potencia de la TDF",
+          "paragraphs": [
+            "Arar, segar, empacar y trabajar con un cargador exigen potencia de distintas formas. El trabajo de tiro depende de la tracción y el patinamiento; los aperos rotativos dependen de la TDF; el cargador añade caudal hidráulico, presión y estabilidad.",
+            "Dos tractores con la misma potencia del motor pueden obtener resultados distintos en ensayos de TDF. Nunca sustituya una medición independiente de la TDF por una declaración de potencia del motor."
+          ]
+        },
+        {
+          "anchor": "olcum-standartlari",
+          "title": "ISO 14396, UN/ECE R120 y OECD Code 2: ¿qué potencia se mide?",
+          "paragraphs": [
+            "Un catálogo que cita ISO 14396 o UN/ECE R120 describe una declaración de potencia del motor medida según un procedimiento definido. No es automáticamente la potencia disponible en la TDF o la barra de tiro. Lea conjuntamente la norma, el régimen del motor y la distinción nominal/máxima antes de comparar cifras.",
+            "El código 2 de la OCDE (OECD Code 2) responde a otra pregunta mediante ensayos del rendimiento del tractor según procedimientos definidos. Los resúmenes publicados pueden incluir potencia de TDF y consumo de combustible, rendimiento de tiro y potencia hidráulica disponible. Por ello la declaración del motor no es intercambiable con un resultado OCDE en la TDF o barra. Incluso cifras idénticas no son equivalentes si no coinciden la magnitud medida y el procedimiento.",
+            "Antes de decidir, compruebe cinco detalles: modelo y variante exactos, país y versión de emisiones, norma de medición, régimen asociado a la potencia y condiciones del boost temporal. Si se cita un ensayo independiente, verifique el equipamiento y versión del motor ensayados frente al tractor que comprará. Si falta la base de ensayo, indique «no directamente comparable» en lugar de asumirla."
+          ]
+        },
+        {
+          "anchor": "katalog-karsilastirma",
+          "title": "Cómo comparar dos cifras de potencia de forma justa",
+          "paragraphs": [
+            "Confirme año del modelo, edición de mercado y código del motor. Identifique la unidad, categoría de potencia, norma de ensayo y régimen de cada cifra. Si difieren o se desconocen, indique las limitaciones en vez de fingir equivalencia.",
+            "El tractor más adecuado depende de las tareas y los aperos, no solo de la potencia más alta. También deben considerarse los modos de TDF, la capacidad de elevación, el peso, los neumáticos y el servicio técnico."
+          ]
+        }
+      ],
+      "sourceLabels": [
+        "Laboratorio de Ensayos de Tractores de Nebraska",
+        "Códigos de ensayo de tractores de la OCDE",
+        "UN/ECE R120 — reglamento oficial de medición de potencia del motor",
+        "Centro de ensayos DLG — por qué difieren las potencias declaradas",
+        "NIST — factores de conversión de hp mecánicos y PS métricos",
+        "Başak 2075 BK — catálogo oficial de 53 kW / 72 hp"
+      ],
+      "verification": "Este artículo es educativo y no afirma que se hayan realizado pruebas prácticas, desmontajes ni que se posea un tractor. Para una cifra concreta, verifique el modelo, el año, el mercado y el equipamiento exactos en la documentación del fabricante. Si existen ensayos independientes, compare sus procedimientos."
+    },
+    "pt-br": {
+      "title": "Potência e torque do trator: hp, PS, kW e tomada de potência",
+      "description": "Guia prático sobre hp, PS e kW, potência nominal e máxima, torque e comparação da potência do motor com a da TDP.",
+      "lead": "Dois catálogos anunciam «100 cavalos de potência», mas isso não garante desempenho idêntico no campo. Rotação do motor, curva de torque, norma de ensaio, perdas de transmissão e tração dos pneus influenciam o resultado. Este guia explica o significado dos números.",
+      "comparisonNote": "Quando dois catálogos indicam 100 hp, leia a descrição de cada valor. Potência máxima do motor em um e potência nominal no outro representam pontos de operação diferentes. Para implementos acionados pela TDP, procure uma medição separada no eixo.",
+      "sections": [
+        {
+          "anchor": "hp-ps-kw",
+          "title": "hp, PS e kW são unidades iguais?",
+          "paragraphs": [
+            "O hp mecânico, o PS métrico e o quilowatt medem potência, mas têm magnitudes unitárias diferentes. 1 kW equivale aproximadamente a 1,341 hp mecânico ou 1,360 PS. Compare valores na mesma unidade antes de concluir.",
+            "Por exemplo, 75 kW equivalem a aproximadamente 100,6 hp ou 102,0 PS. A conversão de unidades não torna potência nominal e máxima comparáveis se a base de ensaio também não coincidir.",
+            "Exemplo real do fabricante: o catálogo oficial do Başak 2075 BK informa potência do motor de 53 kW / 72 hp. Pelos fatores do NIST, 53 kW correspondem a cerca de 72,1 PS métricos, mas 71,1 hp mecânicos. Não atribua silenciosamente o rótulo «hp» do fabricante a uma dessas definições sem verificar a convenção. Preserve os dois valores originais; não são um resultado independente de potência na TDP nem prova de uma norma específica."
+          ]
+        },
+        {
+          "anchor": "nominal-max-boost",
+          "title": "Potência nominal, máxima e extra temporária (boost)",
+          "paragraphs": [
+            "Potência nominal refere-se à potência nas condições nominais declaradas. A máxima pode ocorrer em outra rotação. Dependendo do trator, o boost acrescenta potência somente em certas condições de transporte ou uso da TDP.",
+            "Se um produto anuncia «120 hp mais 15 hp de boost», não presuma que 135 hp estarão permanentemente disponíveis em todo trabalho. Verifique as condições de ativação e a norma adotada."
+          ]
+        },
+        {
+          "anchor": "tork",
+          "title": "Por que o torque em Nm importa, mas não basta",
+          "paragraphs": [
+            "Torque é o momento de rotação no virabrequim. A curva e a reserva de torque ajudam a explicar o comportamento do motor quando a carga aumenta e a rotação diminui. Torque no virabrequim não é o mesmo que força de tração na barra.",
+            "Um trator pode ter torque elevado e ainda apresentar desempenho ruim com relação de transmissão inadequada, pneus impróprios ou patinagem excessiva. Analise torque em função da rotação e das opções de transmissão."
+          ]
+        },
+        {
+          "anchor": "motor-ve-pto",
+          "title": "Potência do motor versus potência na TDP",
+          "paragraphs": [
+            "Aração, corte, enfardamento e carregamento exigem potência de formas diferentes. Trabalho na barra depende de tração e patinagem; implementos rotativos dependem da TDP; carregadores também exigem vazão hidráulica, pressão e estabilidade.",
+            "Dois tratores com a mesma potência do motor podem apresentar resultados de ensaio diferentes na TDP. Nunca substitua uma medição independente na TDP pela declaração de potência do motor."
+          ]
+        },
+        {
+          "anchor": "olcum-standartlari",
+          "title": "ISO 14396, UN/ECE R120 e OECD Code 2: qual potência é medida?",
+          "paragraphs": [
+            "Um catálogo que menciona ISO 14396 ou UN/ECE R120 apresenta uma declaração de potência do motor medida segundo procedimento definido. Não é automaticamente a potência disponível na TDP ou barra de tração. Leia juntos norma, rotação do motor e qualificação nominal ou máxima antes de comparar potências.",
+            "O código 2 da OCDE (OECD Code 2) responde a outra pergunta, testando o desempenho do trator segundo procedimentos definidos. Os resumos publicados podem incluir potência na TDP e consumo de combustível, desempenho na barra e potência hidráulica disponível. Portanto, uma declaração do motor não substitui um resultado de ensaio OCDE na TDP ou barra. Mesmo números idênticos não são equivalentes se a grandeza medida e o procedimento não coincidirem.",
+            "Antes de decidir, confira cinco detalhes: modelo e variante exatos, país e versão de emissões, norma de medição, rotação associada à potência e condições de disponibilidade do boost temporário. Se houver ensaio independente, confira equipamento e versão do motor testado em relação ao trator a comprar. Base de ensaio indisponível deve ser indicada como «não diretamente comparável»."
+          ]
+        },
+        {
+          "anchor": "katalog-karsilastirma",
+          "title": "Como comparar duas potências de forma justa",
+          "paragraphs": [
+            "Confirme ano do modelo, versão de mercado e código do motor. Identifique unidade, categoria de potência, norma de ensaio e rotação de cada declaração. Se divergirem ou forem desconhecidas, indique a limitação em vez de presumir equivalência.",
+            "O trator mais adequado depende das tarefas e implementos, não apenas da maior potência. Modos de TDP, capacidade de levante, peso, pneus e assistência técnica também devem orientar a decisão."
+          ]
+        }
+      ],
+      "sourceLabels": [
+        "Laboratório de Ensaios de Tratores de Nebraska",
+        "Códigos de ensaio de tratores da OCDE",
+        "UN/ECE R120 — regulamento oficial de medição da potência do motor",
+        "Centro de ensaios DLG — por que as potências declaradas diferem",
+        "NIST — fatores de conversão de hp mecânico e PS métrico",
+        "Başak 2075 BK — catálogo oficial de 53 kW / 72 hp"
+      ],
+      "verification": "Este artigo é educativo e não alega testes práticos, desmontagem de componentes ou propriedade de um trator. Para um dado de modelo, confirme o modelo, ano, mercado e equipamentos exatos na documentação do fabricante. Quando houver testes independentes, compare os procedimentos utilizados."
+    }
+  },
+  "sourceComponentBlobSha": "e8a86025ece122ad013843e9d3305843970f60f5",
+  "translationScope": "Main article, comparison note, verification disclosure and six source labels. Conditional Deutz-Fahr GS case/table and related links, UI, photo credits and glossary integration remain pending. Not for publication."
+}

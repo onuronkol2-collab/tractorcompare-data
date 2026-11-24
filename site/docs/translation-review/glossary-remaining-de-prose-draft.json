@@ -1,0 +1,607 @@
+{
+  "schema": 1,
+  "state": "draft-needs-independent-editorial-review",
+  "notForPublication": true,
+  "reviewed": false,
+  "sourceBlobSha": "a5379d60c7c1f53dfcfb528c9ee7743a450faaa5",
+  "locale": "de",
+  "scope": "All 82 remaining German glossary prose entries, together with existing 14 core entries and 96 term-name drafts. Original English source aligned. Independent review and publication integration pending.",
+  "sources": [
+    {
+      "url": "https://www.dlg.org/tests/landtechnik-betriebsmittel/dlg-powermix",
+      "scope": "German measurement terminology, not a review of all entries"
+    },
+    {
+      "url": "https://www.dlg.org/tests/landtechnik-betriebsmittel/pruefberichte/test-john-deere-serie-7r",
+      "scope": "German front/rear lift and separate power measurement terminology"
+    },
+    {
+      "url": "https://www.svlfg.de/galabau",
+      "scope": "PTO guarding wording"
+    },
+    {
+      "url": "https://www.svlfg.de/frontlader",
+      "scope": "ROPS/FOPS protection context"
+    },
+    {
+      "url": "https://www.dlg.org/mediacenter/dlg-merkblaetter/dlg-merkblatt-461-massnahmen-zur-optimierung-der-traktion",
+      "scope": "Traction and ballast terminology"
+    }
+  ],
+  "entries": [
+    {
+      "id": "torque-rise",
+      "name": "Drehmomentanstieg / Drehmomentreserve",
+      "definition": "Prozentuale Angabe dazu, wie stark das Drehmoment bei sinkender Motordrehzahl unter Last ansteigen kann.",
+      "example": "Sie kann beeinflussen, wie der Motor reagiert, wenn ein Pflug auf schwereren Boden trifft.",
+      "caution": "Hersteller können unterschiedliche Bezugsdrehzahlen für die Berechnung verwenden."
+    },
+    {
+      "id": "displacement",
+      "name": "Hubraum (cm³ / L)",
+      "definition": "Das gesamte von den Kolben überstrichene Volumen; 3.000 cm³ entsprechen etwa 3,0 Litern.",
+      "example": "Zwei Motoren mit gleichem Hubraum können unterschiedliche Leistungen erzeugen.",
+      "caution": "Ein größerer Motor ist nicht automatisch leistungsfähiger oder sparsamer."
+    },
+    {
+      "id": "cylinders",
+      "name": "Zylinderzahl",
+      "definition": "Anzahl der Arbeitszylinder, die Baugröße, Laufruhe und Charakteristik des Motors beeinflusst.",
+      "example": "Ein Dreizylinder und ein Vierzylinder können sich im Laufverhalten und Gewicht unterscheiden.",
+      "caution": "Die Zylinderzahl allein belegt weder Zuverlässigkeit noch Leistung."
+    },
+    {
+      "id": "bore-stroke",
+      "name": "Bohrung und Hub",
+      "definition": "Die Bohrung ist der Zylinderdurchmesser; der Hub ist der Kolbenweg zwischen den Totpunkten.",
+      "example": "Eine Angabe von 110 × 116 mm bezeichnet diese beiden Abmessungen.",
+      "caution": "Weicht der berechnete Hubraum vom angegebenen Volumen ab, kennzeichnen Sie den Widerspruch."
+    },
+    {
+      "id": "rpm",
+      "name": "Motordrehzahl (rpm)",
+      "definition": "Umdrehungen der Kurbelwelle pro Minute; Motordrehzahl und Zapfwellendrehzahl sind nicht dasselbe.",
+      "example": "Die Zapfwellenstufe mit 540 U/min kann eine andere Motordrehzahl erfordern.",
+      "caution": "Prüfen Sie die Drehzahl, bei der Spitzenleistung und maximales Drehmoment angegeben werden."
+    },
+    {
+      "id": "turbo",
+      "name": "Turbolader und Ladeluftkühler",
+      "definition": "Ein Turbolader nutzt Abgasenergie, um die Ansaugluft zu verdichten; ein Ladeluftkühler kühlt die verdichtete Luft.",
+      "example": "Ein kleinerer Turbomotor kann eine hohe Leistung erzielen.",
+      "caution": "Ein Turbolader allein garantiert weder geringen Kraftstoffverbrauch noch lange Lebensdauer."
+    },
+    {
+      "id": "fuel-injection",
+      "name": "Common-Rail / Kraftstoffeinspritzung",
+      "definition": "System, das den Kraftstoff dosiert und mit geregeltem Druck zum vorgesehenen Zeitpunkt einspritzt.",
+      "example": "Elektronische Einspritzung unterstützt die Verbrennungsregelung bei wechselnder Last.",
+      "caution": "Der Einspritzdruck allein ist kein Maß für Leistung oder Zuverlässigkeit."
+    },
+    {
+      "id": "emission",
+      "name": "Abgasnorm (Stage / Tier)",
+      "definition": "Abgasgrenzwerte, die für einen Markt und einen bestimmten Geltungszeitraum gelten.",
+      "example": "Stage V und die ältere Stufe Stage IIIA stehen für unterschiedliche Vorschriften.",
+      "caution": "Ein gleichnamiges Modell kann je nach Markt unterschiedliche Abgasausstattungen haben."
+    },
+    {
+      "id": "dpf-scr",
+      "name": "DPF, SCR und AdBlue/DEF",
+      "definition": "Der DPF hält Rußpartikel zurück; die SCR nutzt eine Dosierflüssigkeit zur Verringerung von Stickoxiden.",
+      "example": "Ein Traktor mit DEF besitzt einen separaten Tank; DEF darf nicht in den Dieseltank gelangen.",
+      "caution": "Nicht jede Abgasstufe erfordert dieselbe Technik; beachten Sie die Betriebsanleitung des Modells."
+    },
+    {
+      "id": "manual-gearbox",
+      "name": "Schaltgetriebe",
+      "definition": "Die Übersetzungen werden mechanisch gewählt; die Kupplungsbetätigung hängt von der Bauart ab.",
+      "example": "12F/12R bezeichnet 12 Vorwärts- und 12 Rückwärtsgänge.",
+      "caution": "Die Zahl der Gänge allein belegt weder Bedienkomfort noch Haltbarkeit."
+    },
+    {
+      "id": "powershift",
+      "name": "Lastschaltgetriebe (Powershift)",
+      "definition": "Getriebe, das bestimmte Übersetzungswechsel unter Last ohne Betätigung des Kupplungspedals ermöglicht.",
+      "example": "Es kann die Anpassung der Fahrgeschwindigkeit während der Arbeit erleichtern.",
+      "caution": "Teil-Lastschaltung ist nicht dasselbe wie eine Lastschaltung über den gesamten Übersetzungsbereich."
+    },
+    {
+      "id": "cvt",
+      "name": "Stufenloses Getriebe (CVT)",
+      "definition": "Verändert die Antriebsübersetzung innerhalb eines Betriebsbereichs stufenlos.",
+      "example": "Es kann eine gewählte Arbeitsgeschwindigkeit halten und dabei die Motordrehzahl anpassen.",
+      "caution": "CVT-Getriebe unterscheiden sich in Funktionsprinzip, Wirkungsgrad und Wartungsbedarf."
+    },
+    {
+      "id": "hst",
+      "name": "Hydrostatisches Getriebe (HST)",
+      "definition": "Antrieb mit Hydraulikpumpe und Hydraulikmotor zur stufenlosen Veränderung der Fahrgeschwindigkeit.",
+      "example": "Das kann bei wiederholten Frontladermanövern hilfreich sein.",
+      "caution": "Der hydrostatische Fahrantrieb ist nicht mit der Arbeitshydraulik gleichzusetzen."
+    },
+    {
+      "id": "shuttle",
+      "name": "Wendeschaltung / Reversierer",
+      "definition": "Bedienelement oder Mechanismus zur Wahl der Vorwärts- oder Rückwärtsfahrt.",
+      "example": "Er erleichtert häufige Richtungswechsel beim Ballentransport.",
+      "caution": "Mechanische, synchronisierte und elektrohydraulische Wendeschaltungen unterscheiden sich."
+    },
+    {
+      "id": "clutch",
+      "name": "Kupplung und Doppelkupplung",
+      "definition": "Verbindet oder trennt den Antrieb; zweistufige Bauarten können Zapfwellen- und Fahrantrieb getrennt schalten.",
+      "example": "Bei manchen Traktoren steuert die zweite Pedalstufe den Zapfwellenantrieb.",
+      "caution": "Eine Doppelkupplung bedeutet nicht zwangsläufig ein Pkw-ähnliches DCT-Getriebe."
+    },
+    {
+      "id": "traction",
+      "name": "Zwei- und Allradantrieb (2WD/4WD)",
+      "definition": "Gibt an, ob zwei oder vier Räder Antriebskraft übertragen können.",
+      "example": "4WD kann Schlupf auf nassem Boden verringern; 2WD kann auf festem Untergrund ausreichen.",
+      "caution": "Reifen, Gewicht und Boden sind wichtig; 4WD ist nicht grundsätzlich überlegen."
+    },
+    {
+      "id": "diff-lock",
+      "name": "Differenzialsperre",
+      "definition": "Begrenzt den Drehzahlunterschied der Räder, um die Traktion auf rutschigem Boden zu verbessern.",
+      "example": "Sie kann den Kraftschluss unterstützen, wenn ein Rad auf nassem Boden durchdreht.",
+      "caution": "Beachten Sie die Anweisungen für Kurvenfahrten und feste Untergründe; setzen Sie die Sperre nicht wahllos ein."
+    },
+    {
+      "id": "final-drive",
+      "name": "Endantrieb, Achse und 4x4-Differenzial",
+      "definition": "Endübersetzung und Achsbauteile übertragen das Drehmoment des Antriebsstrangs auf die Räder.",
+      "example": "Portal- und Planetengetriebe können Bodenfreiheit und Untersetzung beeinflussen.",
+      "caution": "Die Achsbauart allein belegt weder Haltbarkeit noch Traktion."
+    },
+    {
+      "id": "ground-pto",
+      "name": "Wegzapfwelle",
+      "definition": "Zapfwellenmodus, bei dem die Drehbewegung an den Fahrweg des Traktors gekoppelt ist.",
+      "example": "Bestimmte Geräte benötigen eine zur Fahrgeschwindigkeit proportionale Drehung.",
+      "caution": "Sie ist nicht mit der üblichen Zapfwellenstufe von 540 U/min austauschbar."
+    },
+    {
+      "id": "front-pto",
+      "name": "Frontzapfwelle",
+      "definition": "Vorderer Zapfwellenanschluss für frontmontierte Geräte.",
+      "example": "Damit können Front- und Heckgeräte gemeinsam arbeiten.",
+      "caution": "Häufig Sonderausstattung; auch Frontkraftheber und Leistungsangaben sind zu berücksichtigen."
+    },
+    {
+      "id": "three-point",
+      "name": "Dreipunktkraftheber",
+      "definition": "Geräteanbau mit zwei Unterlenkern und einem Oberlenker.",
+      "example": "Er positioniert Pflüge, Sämaschinen und Bodenfräsen relativ zum Traktor.",
+      "caution": "Anbaugeometrie, Kategorie und Geräteschwerpunkt sind ebenso wichtig wie die Hubkraft."
+    },
+    {
+      "id": "ehr",
+      "name": "EHR / elektronische Hubwerksregelung",
+      "definition": "Elektronische Regelung der Hubwerksposition oder der Zugkraftreaktion.",
+      "example": "Sie kann helfen, ein Gerät am Vorgewende wieder auf eine reproduzierbare Höhe zu bringen.",
+      "caution": "Sensorbauart und Regelfunktionen variieren je nach Modell."
+    },
+    {
+      "id": "draft-control",
+      "name": "Zugkraft- und Lageregelung",
+      "definition": "Die Zugkraftregelung reagiert auf den Gerätewiderstand; die Lageregelung hält eine vorgegebene Hubwerksposition.",
+      "example": "Zugkraftregelung kann beim Pflügen wichtig sein, Lageregelung beim Planieren.",
+      "caution": "Eine sachgerechte Einstellung für Boden und Gerät bleibt erforderlich."
+    },
+    {
+      "id": "front-linkage",
+      "name": "Frontkraftheber",
+      "definition": "Anbau- und Hubvorrichtung an der Vorderseite des Traktors.",
+      "example": "Sie kann ein Frontmähwerk oder ein anderes Gerät statt eines einfachen Gewichts aufnehmen.",
+      "caution": "Frontzapfwelle, Hubkraft und zulässige Vorderachslast sind getrennt zu prüfen."
+    },
+    {
+      "id": "hydraulic-types",
+      "name": "Open-Center- und Closed-Center-Hydraulik",
+      "definition": "Schaltungskonzepte, die beschreiben, wie Pumpe und Ventile den Volumenstrom bei fehlender Verbraucheranforderung handhaben.",
+      "example": "Systeme mit Verstellpumpen können die Fördermenge an den Bedarf anpassen.",
+      "caution": "Die Bezeichnung Open Center oder Closed Center allein bestimmt nicht die Leistung am Gerät."
+    },
+    {
+      "id": "wheelbase",
+      "name": "Radstand",
+      "definition": "Längsabstand zwischen den Mittelpunkten der Vorder- und Hinterachse.",
+      "example": "Ein kürzerer Radstand kann das Rangieren auf engem Raum erleichtern.",
+      "caution": "Der Wenderadius hängt nicht allein vom Radstand ab."
+    },
+    {
+      "id": "track-width",
+      "name": "Spurweite",
+      "definition": "Abstand zwischen den Mittellinien des linken und rechten Rades einer Achse.",
+      "example": "Eine verstellbare Spurweite ist bei Reihenkulturen wichtig.",
+      "caution": "Die Gesamtbreite ist nicht mit der Spurweite zwischen den Radmitten gleichzusetzen."
+    },
+    {
+      "id": "ground-clearance",
+      "name": "Bodenfreiheit",
+      "definition": "Abstand zwischen Boden und dem angegebenen tiefsten Punkt an der Fahrzeugunterseite.",
+      "example": "Er ist für das Überfahren von Pflanzen und Hindernissen wichtig.",
+      "caution": "Reifengröße und Messpunkt beeinflussen den Wert."
+    },
+    {
+      "id": "dimensions",
+      "name": "Gesamtlänge, -breite und -höhe",
+      "definition": "Äußere Länge, Breite und Höhe des Traktors in einer angegebenen Konfiguration.",
+      "example": "Sie bestimmen, ob der Traktor durch eine Gewächshaustür oder eine Weinbergszeile passt.",
+      "caution": "Kabine, ROPS, Ballast und Bereifung können die Maße verändern."
+    },
+    {
+      "id": "operating-weight",
+      "name": "Leergewicht und Betriebsgewicht",
+      "definition": "Unterschiedliche Massendefinitionen abhängig von Betriebsstoffen, Fahrer und montierter Ausstattung.",
+      "example": "Eine Kabinenausführung kann schwerer als ein Modell mit offenem Fahrerstand sein.",
+      "caution": "Versandgewicht, Trockengewicht und Betriebsgewicht dürfen nicht gleichgesetzt werden."
+    },
+    {
+      "id": "ballast",
+      "name": "Ballast / Frontgewichte",
+      "definition": "Zusatzgewicht für Traktion und Gleichgewicht.",
+      "example": "Ein schweres Heckgerät kann eine geeignete Frontballastierung erfordern.",
+      "caution": "Übermäßiger Ballast erhöht Bodenverdichtung und Achslast."
+    },
+    {
+      "id": "tyre-size",
+      "name": "Reifengröße",
+      "definition": "Bezeichnet Reifenquerschnitt, Bauart und Felgengröße.",
+      "example": "13.6-28 und 14.9-28 sind unterschiedliche nominale Reifengrößen.",
+      "caution": "Bei 4WD ist das Verhältnis der Abrollumfänge vorne und hinten wichtig; ein Wechsel muss zulässig sein."
+    },
+    {
+      "id": "tyre-pressure",
+      "name": "Reifenfülldruck und Bodendruck",
+      "definition": "Der Reifenfülldruck beeinflusst das Reifenverhalten und zusammen mit der Radlast die Kontaktbeanspruchung des Bodens.",
+      "example": "Ein der Last angepasster Fülldruck beeinflusst Traktion und Bodenabdruck.",
+      "caution": "Empfehlen Sie keinen Fülldruck ohne die Last- und Geschwindigkeitstabellen des Reifenherstellers."
+    },
+    {
+      "id": "turning-radius",
+      "name": "Wenderadius",
+      "definition": "Geometrischer Radius einer Kurvenfahrt bei vollem Lenkeinschlag.",
+      "example": "Er zeigt, wie leicht ein Traktor auf engem Hofraum oder am Feldrand wenden kann.",
+      "caution": "Reifen, 4WD, Lenkbremsenunterstützung und Prüfverfahren beeinflussen den Wert."
+    },
+    {
+      "id": "drawbar",
+      "name": "Zugpendel und Zugleistung",
+      "definition": "Das Zugpendel verbindet die Anhängelast mit dem Traktor; Zugleistung ist die nutzbare Leistung beim Ziehen.",
+      "example": "Auch ein angekuppelter Anhänger muss die Bremsanforderungen und zulässigen Massengrenzen erfüllen.",
+      "caution": "Motor-, Zapfwellen- und Zugleistung sind unterschiedliche Messgrößen."
+    },
+    {
+      "id": "axle-load",
+      "name": "Zulässige Achslast und Gesamtmasse",
+      "definition": "Herstellergrenzwerte für Achslasten und Gesamtmasse der Maschine.",
+      "example": "Prüfen Sie die Achslastgrenzen bei der Kombination von Frontlader und Ballast.",
+      "caution": "Die Hubkraftangabe setzt die zulässigen Massengrenzen nicht außer Kraft."
+    },
+    {
+      "id": "rops",
+      "name": "ROPS / Überrollschutz",
+      "definition": "Geprüfte Schutzstruktur, die bei einem Umsturz einen Überlebensfreiraum für den Fahrer erhalten soll.",
+      "example": "Bei Traktoren mit offenem Fahrerstand wirken ROPS und Sicherheitsgurt zusammen.",
+      "caution": "ROPS allein macht das Fahren ohne Gurt nicht sicher; beachten Sie die Anweisungen für klappbare Schutzbügel."
+    },
+    {
+      "id": "fops",
+      "name": "FOPS / Schutz vor herabfallenden Gegenständen",
+      "definition": "Schutzstruktur gegen festgelegte Gefahren durch herabfallende Gegenstände.",
+      "example": "Forst- und Frontladerarbeiten können unterschiedliche Schutzanforderungen stellen.",
+      "caution": "ROPS- und FOPS-Zertifizierungen sind nicht dasselbe."
+    },
+    {
+      "id": "brakes",
+      "name": "Trockene und nasse Scheibenbremsen",
+      "definition": "Bremsbauarten mit Reibelementen, die trocken oder im Ölbad arbeiten.",
+      "example": "Nasse Scheibenbremsen können Wärme und Verschleiß anders bewältigen.",
+      "caution": "Der Bremsweg hängt auch von Reifen, Beladung, Untergrund und Wartung ab."
+    },
+    {
+      "id": "seatbelt",
+      "name": "Sicherheitsgurt und Fahrersitz",
+      "definition": "Ausstattung zum Zurückhalten des Fahrers und zur Verminderung übertragener Schwingungen.",
+      "example": "Richtiges Anlegen des Sicherheitsgurts ist entscheidend, damit der Überrollschutz wirksam sein kann.",
+      "caution": "Beachten Sie die Betriebsanleitung und die örtlichen Sicherheitsvorschriften."
+    },
+    {
+      "id": "steering",
+      "name": "Hydrostatische Lenkung / Servolenkung",
+      "definition": "Lenksysteme mit hydraulischer Unterstützung.",
+      "example": "Langsame Frontladermanöver können dadurch erleichtert werden.",
+      "caution": "Servolenkung ist nicht dasselbe wie ein hydrostatisches Fahrgetriebe (HST)."
+    },
+    {
+      "id": "cab-air",
+      "name": "Kabinenfilterung und Klimaanlage",
+      "definition": "Ausstattung für Fahrerkomfort und, soweit angegeben, Luftfilterung.",
+      "example": "Bei staubigen Arbeiten ist die Filterpflege wichtig.",
+      "caution": "Ein normaler Kabinenfilter ist kein zertifizierter Schutz vor Pflanzenschutzmitteln."
+    },
+    {
+      "id": "noise",
+      "name": "Geräusch und Vibration",
+      "definition": "Geräusch- und Schwingungspegel, denen der Fahrer ausgesetzt sein kann.",
+      "example": "Kabine, Sitz und Gehörschutz können bei langen Einsätzen wichtig sein.",
+      "caution": "Erstellen Sie keine Rangliste aus dB(A)-Werten ohne Messort und Prüfnorm."
+    },
+    {
+      "id": "fuel-tank",
+      "name": "Kraftstofftankvolumen",
+      "definition": "Kraftstoffmenge, die der Tank aufnehmen kann; kein Maß für Verbrauch oder Reichweite.",
+      "example": "Ein 80-Liter-Tank garantiert keine feste Anzahl von Betriebsstunden.",
+      "caution": "Der Verbrauch hängt von Last, Geschwindigkeit und Einsatzbedingungen ab."
+    },
+    {
+      "id": "service-interval",
+      "name": "Wartungsintervall",
+      "definition": "Vorgeschriebener Betriebsstunden- oder Kalenderzeitraum zwischen Wartungsarbeiten.",
+      "example": "Für Motoröl und Hydraulikflüssigkeit können unterschiedliche Intervalle gelten.",
+      "caution": "Starke Staubbelastung kann kürzere Intervalle erfordern."
+    },
+    {
+      "id": "filters",
+      "name": "Luft-, Kraftstoff- und Ölfilter",
+      "definition": "Wartungsteile, die Verunreinigungen im Motor oder in Flüssigkeitskreisläufen begrenzen.",
+      "example": "Ein zugesetzter Luftfilter kann die Motorleistung beeinträchtigen.",
+      "caution": "Verwenden Sie für das Modell zugelassene Filter und Wartungsintervalle."
+    },
+    {
+      "id": "test-standards",
+      "name": "ECE R120, ISO 14396 und OECD-Prüfungen",
+      "definition": "Motornormen beschreiben die Bedingungen für Leistungsangaben; OECD-Codes definieren Prüfverfahren für Traktoren.",
+      "example": "Vergleichen Sie eine Motorleistungsangabe und eine Nebraska-Zapfwellenprüfung nicht als dieselbe Messgröße.",
+      "caution": "Nennen Sie stets Messpunkt, Jahr, Prüfverfahren und Messnorm."
+    },
+    {
+      "id": "source-quality",
+      "name": "Herstellerprospekt und unabhängige Prüfung",
+      "definition": "Ein Prospekt dokumentiert eine Herstellerangabe; ein unabhängiger Test berichtet Messwerte unter festgelegten Bedingungen.",
+      "example": "Ein geschätzter Zapfwellenwert aus einem Katalog ist nicht dasselbe wie eine Laborprüfung an der Zapfwelle.",
+      "caution": "Bezeichnen Sie nicht dokumentierte Werte weder als verifiziert noch als unabhängig geprüft."
+    },
+    {
+      "id": "options",
+      "name": "Serienausstattung, Optionen und Marktvarianten",
+      "definition": "Unterscheidet Serienausstattung, optionale Pakete und regionale Konfigurationen.",
+      "example": "Eine US-Ausführung mit HST kann sich von einer europäischen Schaltgetriebevariante gleichen Namens unterscheiden.",
+      "caution": "Erwecken Sie nicht den Eindruck, alle aufgeführten Optionen seien an einem einzigen Traktor montiert."
+    },
+    {
+      "id": "engine-make",
+      "name": "Motorhersteller",
+      "definition": "Unternehmen, das den Motor herstellt oder unter seiner Marke vertreibt; es kann sich vom Traktorhersteller unterscheiden.",
+      "example": "Eine Traktorserie kann in einer Generation einen Motorlieferanten und später einen anderen haben.",
+      "caution": "Die Marke allein identifiziert keine Ersatzteile; prüfen Sie den Motorcode."
+    },
+    {
+      "id": "engine-model",
+      "name": "Motormodell oder Motorcode",
+      "definition": "Herstellerkennung für eine bestimmte Motorbauart oder -version.",
+      "example": "Bei Wartungsarbeiten kann der Motorcode Generationen eines gleichnamigen Traktors unterscheiden.",
+      "caution": "Der Motorcode kann sich mit der Abgasstufe oder dem Zielmarkt ändern."
+    },
+    {
+      "id": "engine-valves",
+      "name": "Anzahl der Motorventile",
+      "definition": "Anzahl der Ventile, die den Einlass und Auslass der Zylinder steuern.",
+      "example": "Ein Vierzylindermotor mit 16 Ventilen kann vier Ventile je Zylinder besitzen.",
+      "caution": "Die Ventilzahl allein belegt weder höheres Drehmoment noch längere Motorlebensdauer."
+    },
+    {
+      "id": "cooling",
+      "name": "Kühlsystem und Kühler",
+      "definition": "Der Kühler gibt Wärme aus dem Kühlmittel ab; eine Umwälzpumpe fördert es durch den Motor.",
+      "example": "Steigt die Temperatur unter Last, sind ein sauberer Kühler und die Funktion des Lüfters wichtig.",
+      "caution": "Öffnen Sie niemals ein heißes, unter Druck stehendes Kühlsystem; beachten Sie die Betriebsanleitung."
+    },
+    {
+      "id": "air-cleaner",
+      "name": "Motorluftfilter",
+      "definition": "Filtert staubige Ansaugluft, um den abrasiven Eintrag von Partikeln in Kolben- und Zylinderbereiche zu verringern.",
+      "example": "Bei staubigen Erntearbeiten kann eine häufigere Filterkontrolle erforderlich sein.",
+      "caution": "Trockenluftfilter und Ölbadluftfilter erfordern unterschiedliche Wartungsverfahren."
+    },
+    {
+      "id": "engine-fuel",
+      "name": "Diesel und Kraftstoffart",
+      "definition": "Kraftstoff, für den der Motor ausgelegt ist; die Verträglichkeit mit dem Einspritzsystem ist entscheidend.",
+      "example": "Diesel und DEF gehören in getrennte Tanks; DEF ist kein Kraftstoffzusatz.",
+      "caution": "Prüfen Sie die für die genaue Motorversion zulässigen Biodieselmischungen des Herstellers."
+    },
+    {
+      "id": "piston",
+      "name": "Kolben und Kolbenringe",
+      "definition": "Der Kolben wandelt Verbrennungsdruck in Bewegung um; Kolbenringe dichten den Zylinder ab und regulieren den Ölfilm.",
+      "example": "Verschlissene Kolbenringe können zu erhöhtem Ölverbrauch oder Kompressionsverlust führen.",
+      "caution": "Die Rauchfarbe allein ist keine Diagnose; eine sachgerechte Prüfung ist erforderlich."
+    },
+    {
+      "id": "crankshaft",
+      "name": "Kurbelwelle",
+      "definition": "Wandelt die Hubbewegung der Kolben in Drehbewegung um und gibt die Motorleistung ab.",
+      "example": "Die Motordrehzahl ist im Wesentlichen die Drehzahl der Kurbelwelle.",
+      "caution": "Kurbelwelle und Zapfwelle sind verschiedene Wellen, die über den Antriebsstrang verbunden sind."
+    },
+    {
+      "id": "gross-power",
+      "name": "Brutto- und Nettomotorleistung",
+      "definition": "Brutto- und Nettoleistungsangaben können sich je nach Prüfkonfiguration und Nebenaggregaten unterscheiden.",
+      "example": "Dieselbe Angabe von 75 kW kann für unterschiedliche Prüfkonfigurationen stehen.",
+      "caution": "Brutto-, Nenn-, Zapfwellen- und Boost-Leistung dürfen nicht füreinander eingesetzt werden."
+    },
+    {
+      "id": "travel-speed",
+      "name": "Straßengeschwindigkeit und Mindestarbeitsgeschwindigkeit",
+      "definition": "Bereich der Fahrgeschwindigkeiten, die sich aus Getriebe und Bereifung ergeben.",
+      "example": "Kriechgänge können für sehr langsame Gerätearbeiten nützlich sein.",
+      "caution": "Die maximale Straßengeschwindigkeit setzt weder Verkehrsregeln noch Ausrüstungsgrenzen außer Kraft."
+    },
+    {
+      "id": "axle-suspension",
+      "name": "Vorderachsfederung",
+      "definition": "Federt Bewegungen der Vorderachse ab und beeinflusst Fahrkomfort sowie Rad-Boden-Kontakt.",
+      "example": "Beim Anhängertransport auf unebenen Straßen kann sie den Fahrkomfort erhöhen.",
+      "caution": "Vorderachsfederung und Kabinenfederung sind unterschiedliche Systeme."
+    },
+    {
+      "id": "gear-range",
+      "name": "Ganggruppe, Kriechgang und Lastschaltstufe",
+      "definition": "Zusätzliche Geschwindigkeitsgruppen oder unter Last schaltbare Stufen ergänzen die Hauptgänge.",
+      "example": "Ein 24F/24R-Getriebe kann zwölf Gänge mit zwei Gruppen kombinieren.",
+      "caution": "Die Gangzahl allein beweist keine vollständige Lastschaltfunktion."
+    },
+    {
+      "id": "pto-clutch",
+      "name": "Zapfwellenkupplung und -schaltung",
+      "definition": "Kupplungsanordnung zum Ein- oder Ausschalten des Zapfwellenantriebs.",
+      "example": "Elektrohydraulisches Einschalten kann ein sanfteres Anlaufen der Zapfwelle ermöglichen.",
+      "caution": "Nähern Sie sich keinem Gerät, solange es nach dem Ausschalten noch nachläuft."
+    },
+    {
+      "id": "pto-guard",
+      "name": "Zapfwellenschutz",
+      "definition": "Schutzeinrichtungen, die unbeabsichtigten Kontakt mit der rotierenden Zapf- beziehungsweise Gelenkwelle und ihren Gelenken verhindern sollen.",
+      "example": "Prüfen Sie beim Ankuppeln, ob die Abdeckung intakt und ordnungsgemäß montiert ist.",
+      "caution": "Führen Sie niemals Wartungsarbeiten an einer laufenden Zapfwelle mit fehlenden Schutzvorrichtungen durch; stellen Sie den Motor ab."
+    },
+    {
+      "id": "hydraulic-pump",
+      "name": "Hydraulikpumpe",
+      "definition": "Nutzt mechanische Antriebsleistung, um Hydrauliköl durch den Kreislauf zu fördern.",
+      "example": "Die Reaktionsgeschwindigkeit eines Geräts hängt von Pumpe und Ventilanordnung ab.",
+      "caution": "Gehen Sie nicht davon aus, dass alle angegebenen Pumpenfördermengen an den Heckkupplungen verfügbar sind."
+    },
+    {
+      "id": "hydraulic-cylinder",
+      "name": "Hydraulikzylinder",
+      "definition": "Stellantrieb, der hydraulischen Druck in eine geradlinige Druck- oder Zugbewegung umwandelt.",
+      "example": "Hub- und Kippzylinder eines Frontladers erfüllen unterschiedliche Aufgaben.",
+      "caution": "Druck, Zylindergröße und Druckbegrenzungsventile sind neben dem Volumenstrom wichtig."
+    },
+    {
+      "id": "hydraulic-steering",
+      "name": "Förderstrom der Lenkungspumpe",
+      "definition": "Ölvolumenstrom, der dem hydraulischen Lenkungskreislauf zugeführt wird.",
+      "example": "Ein kombinierter Wert von 45 L/min bedeutet nicht, dass der gesamte Volumenstrom einem Gerät zur Verfügung steht.",
+      "caution": "Lenkungsvolumenstrom und für Geräte verfügbarer Volumenstrom müssen getrennt angegeben werden."
+    },
+    {
+      "id": "hydraulic-implement",
+      "name": "Förderstrom der Arbeitshydraulik",
+      "definition": "Angegebener Volumenstrom, der für Geräte- oder Hubwerksfunktionen zur Verfügung steht.",
+      "example": "Für Hydraulikmotoren ist der tatsächlich verfügbare Gerätevolumenstrom wichtiger als die kombinierte Pumpenfördermenge.",
+      "caution": "Bestätigen Sie den Volumenstrom am betreffenden Anschluss und unter den angegebenen Prüfbedingungen."
+    },
+    {
+      "id": "tyre-type",
+      "name": "Landwirtschafts-, Rasen- und Industriereifen",
+      "definition": "Profilgestaltung und Reifenbauart beeinflussen Traktion und Bodeneinwirkung.",
+      "example": "Rasenreifen können gewählt werden, um Spuren auf Grasflächen zu vermindern.",
+      "caution": "Wechseln Sie den Reifentyp niemals ohne zugelassene Größen- und Lastkompatibilität."
+    },
+    {
+      "id": "track-adjustment",
+      "name": "Verstellbare Spurweite",
+      "definition": "Veränderung des Radabstands innerhalb eines zulässigen Bereichs mittels Felgen oder Achsen.",
+      "example": "Die Spurweite kann an unterschiedliche Reihenabstände angepasst werden.",
+      "caution": "Fehlerhafte Felgenmontage oder unzulässige Achsbelastung kann Sicherheitsrisiken verursachen."
+    },
+    {
+      "id": "cab-suspension",
+      "name": "Kabinenfederung",
+      "definition": "Federn und Dämpfer, die vom Fahrgestell auf die Kabine übertragene Schwingungen vermindern sollen.",
+      "example": "Sie kann die Ermüdung des Fahrers bei langen Transporteinsätzen beeinflussen.",
+      "caution": "Sitz-, Achs- und Kabinenfederung sind separate Ausstattungsmerkmale."
+    },
+    {
+      "id": "operator-platform",
+      "name": "Fahrerplattform und Kabinenaufbau",
+      "definition": "Bereich für Fahrersitz, Fußraum und Bedienelemente.",
+      "example": "Ebene Böden, Getriebetunnel und Kabinen unterscheiden sich ergonomisch.",
+      "caution": "Eine Kabine allein belegt keine ROPS- oder FOPS-Zertifizierung."
+    },
+    {
+      "id": "battery",
+      "name": "Batteriekapazität (Ah)",
+      "definition": "Kenngröße für die speicherbare elektrische Ladung einer Batterie für Startvorgang und Bordelektrik.",
+      "example": "Batterien mit 80 Ah und 100 Ah können unterschiedliche Kaltstarteigenschaften haben.",
+      "caution": "Amperestunden und Kaltstartstrom sind unterschiedliche Kenngrößen."
+    },
+    {
+      "id": "alternator",
+      "name": "Lichtmaschinenleistung (A)",
+      "definition": "Vom Motor angetriebener Generator, der elektrische Verbraucher versorgt und die Batterie lädt.",
+      "example": "Zusatzscheinwerfer und elektronische Geräte erhöhen den Strombedarf.",
+      "caution": "Der Nennstrom kann nur bei einer bestimmten Motordrehzahl verfügbar sein."
+    },
+    {
+      "id": "isobus",
+      "name": "ISOBUS-Traktor-Geräte-Kommunikation",
+      "definition": "Standardisierte Kommunikationsfamilie, mit der kompatible Traktoren und Geräte Daten und Steuerinformationen austauschen können.",
+      "example": "Eine kompatible Sämaschine kann Einstellungen und Arbeitsdaten über ein Terminal austauschen.",
+      "caution": "Eine ISOBUS-Steckdose garantiert nicht, dass jede Funktion mit jedem Gerät funktioniert."
+    },
+    {
+      "id": "gps-guidance",
+      "name": "GNSS-Spurführung und automatische Lenkung",
+      "definition": "Satellitengestützte Systeme, die Führungslinien anzeigen oder kompatible Traktoren automatisch lenken.",
+      "example": "Sie können Überlappungen bei Präzisionsarbeiten auf dem Feld verringern.",
+      "caution": "Die Genauigkeit hängt von Korrekturdienst, Empfänger und Anwendung ab."
+    },
+    {
+      "id": "engine-type",
+      "name": "Motorarbeitsprinzip",
+      "definition": "Beschreibt die grundlegende Motorarbeitsweise, beispielsweise Diesel oder Benzin, Vier- oder Zweitakt und Kühlungsart.",
+      "example": "Ein Viertakt-Dieselmotor durchläuft einen vollständigen Arbeitszyklus in zwei Kurbelwellenumdrehungen.",
+      "caution": "Die Motorbauart ist ein anderes Merkmal als Motorcode oder Nennleistung."
+    },
+    {
+      "id": "external-controls",
+      "name": "Externe Heckkraftheberbedienung",
+      "definition": "Bedienelemente, die unter vorgeschriebenen Bedingungen eine Positionierung des Heckkrafthebers außerhalb der Kabine ermöglichen.",
+      "example": "Hubwerkstasten am Kotflügel können das Positionieren beim Geräteanbau erleichtern.",
+      "caution": "Halten Sie sich niemals im Quetschbereich zwischen Traktor und Gerät auf; befolgen Sie die sicheren Arbeitsverfahren."
+    },
+    {
+      "id": "engine-oil",
+      "name": "Motorölfüllmenge",
+      "definition": "Vorgeschriebene Ölfüllmenge für Ölwanne und Schmiersystem, wichtig für Verschleiß- und Wärmehaushalt.",
+      "example": "Eine Motorölfüllung von 11 Litern ist keine Kraftstoffverbrauchsangabe von 11 Litern.",
+      "caution": "Die Füllmenge kann je nach Filterwechsel und Motorversion variieren; kontrollieren Sie den Ölmessstab."
+    },
+    {
+      "id": "cab-visibility",
+      "name": "Kabinenverglasung, Sicht und Volumen",
+      "definition": "Getrennte Konstruktionsmerkmale für Rundumsicht und umschlossenen Fahrerraum.",
+      "example": "Gute Sichtlinien helfen Frontladerfahrern, Lasten und Personen in der Nähe zu erkennen.",
+      "caution": "Die Glasfläche allein misst weder tote Winkel noch Schalldämmung oder Sicherheitszertifizierung."
+    },
+    {
+      "id": "model-identity",
+      "name": "Modellcode, Baujahr und Marktvariante",
+      "definition": "Kennungen zur Unterscheidung von Produktfamilien, Generationen, Motoren oder Zielmärkten.",
+      "example": "Ein Modellname kann unterschiedliche Getriebeausführungen für die USA und Europa umfassen.",
+      "caution": "Übertragen Sie niemals technische Angaben auf eine andere Variante ohne eindeutigen Identitätsnachweis."
+    },
+    {
+      "id": "transport-lock",
+      "name": "Transportsicherung und Gerätesicherung",
+      "definition": "Mechanische oder hydraulische Vorrichtungen, die unbeabsichtigte Gerätebewegungen während Transport oder Abstellen begrenzen sollen.",
+      "example": "Ein klappbares Mähwerk kann vor Straßenfahrt eine Transportsicherung erfordern.",
+      "caution": "Die Transportsicherung ersetzt nicht die vom Hersteller festgelegten Straßen- und Lastgrenzen."
+    },
+    {
+      "id": "cab-comfort",
+      "name": "Beheizbare Spiegel und Scheibenentfrostung",
+      "definition": "Elektrische Einrichtungen, die bei kalter, feuchter Witterung Beschlag oder Eis an Spiegeln und Scheiben entfernen helfen.",
+      "example": "Eine freie Heckscheibe kann beim Rückwärtsfahren helfen.",
+      "caution": "Beheizbare Spiegel beweisen weder freie Sicht in alle Richtungen noch Serienausstattung."
+    }
+  ]
+}

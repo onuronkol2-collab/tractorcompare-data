@@ -1,0 +1,1659 @@
+{
+  "state": "draft-needs-independent-editorial-review",
+  "sourceBlobSha": "a5379d60c7c1f53dfcfb528c9ee7743a450faaa5",
+  "reviewed": false,
+  "notForPublication": true,
+  "scope": "All 82 remaining glossary names in eight target languages; definitions, examples and cautions remain pending. No translated full-text route is authorized by this file.",
+  "languages": [
+    "de",
+    "fr",
+    "es",
+    "pt-br",
+    "zh",
+    "hi",
+    "ru",
+    "ja"
+  ],
+  "rows": [
+    {
+      "id": "torque-rise",
+      "category": "engine",
+      "source": {
+        "name": "Torque rise / torque reserve",
+        "definition": "A percentage describing how much torque can increase as engine speed drops under load.",
+        "example": "It may affect how the engine responds when a plough meets tougher soil.",
+        "caution": "Manufacturers may calculate it using different reference speeds."
+      },
+      "names": {
+        "de": "Drehmomentanstieg / Drehmomentreserve",
+        "fr": "Réserve de couple / hausse de couple",
+        "es": "Reserva de par / aumento del par",
+        "pt-br": "Reserva de torque / aumento de torque",
+        "zh": "扭矩储备／扭矩增幅",
+        "hi": "टॉर्क वृद्धि / टॉर्क रिज़र्व",
+        "ru": "Запас / рост крутящего момента",
+        "ja": "トルク上昇率・トルク予備力"
+      }
+    },
+    {
+      "id": "displacement",
+      "category": "engine",
+      "source": {
+        "name": "Engine displacement (cc / L)",
+        "definition": "The total volume swept by the pistons; 3,000 cc is about 3.0 litres.",
+        "example": "Two engines of the same displacement can produce different outputs.",
+        "caution": "A larger engine is not automatically more capable or more fuel-efficient."
+      },
+      "names": {
+        "de": "Hubraum (cm³ / L)",
+        "fr": "Cylindrée (cm³ / L)",
+        "es": "Cilindrada (cm³ / L)",
+        "pt-br": "Cilindrada (cm³ / L)",
+        "zh": "发动机排量（cm³ / L）",
+        "hi": "इंजन विस्थापन (cm³ / L)",
+        "ru": "Рабочий объём двигателя (см³ / л)",
+        "ja": "エンジン排気量（cc / L）"
+      }
+    },
+    {
+      "id": "cylinders",
+      "category": "engine",
+      "source": {
+        "name": "Number of cylinders",
+        "definition": "The number of piston cylinders, influencing size, smoothness and engine character.",
+        "example": "A three-cylinder and a four-cylinder model may feel and weigh differently.",
+        "caution": "Cylinder count alone does not prove reliability or output."
+      },
+      "names": {
+        "de": "Zylinderzahl",
+        "fr": "Nombre de cylindres",
+        "es": "Número de cilindros",
+        "pt-br": "Número de cilindros",
+        "zh": "气缸数",
+        "hi": "सिलिंडरों की संख्या",
+        "ru": "Число цилиндров",
+        "ja": "シリンダー数"
+      }
+    },
+    {
+      "id": "bore-stroke",
+      "category": "engine",
+      "source": {
+        "name": "Bore and stroke",
+        "definition": "Bore is cylinder diameter; stroke is piston travel between dead centres.",
+        "example": "A specification of '110 × 116 mm' denotes these two dimensions.",
+        "caution": "If calculated displacement conflicts with the listed volume, flag the inconsistency."
+      },
+      "names": {
+        "de": "Bohrung und Hub",
+        "fr": "Alésage et course",
+        "es": "Diámetro y carrera",
+        "pt-br": "Diâmetro e curso",
+        "zh": "缸径与行程",
+        "hi": "बोर और स्ट्रोक",
+        "ru": "Диаметр цилиндра и ход поршня",
+        "ja": "ボアとストローク"
+      }
+    },
+    {
+      "id": "rpm",
+      "category": "engine",
+      "source": {
+        "name": "Engine speed (rpm)",
+        "definition": "Crankshaft revolutions per minute; engine rpm is not the same as PTO rpm.",
+        "example": "A 540 rpm PTO setting can require a different engine rpm.",
+        "caution": "Check the rpm attached to peak power and torque figures."
+      },
+      "names": {
+        "de": "Motordrehzahl (rpm)",
+        "fr": "Régime moteur (tr/min)",
+        "es": "Régimen del motor (rpm)",
+        "pt-br": "Rotação do motor (rpm)",
+        "zh": "发动机转速（rpm）",
+        "hi": "इंजन गति (rpm)",
+        "ru": "Частота вращения двигателя (об/мин)",
+        "ja": "エンジン回転数（rpm）"
+      }
+    },
+    {
+      "id": "turbo",
+      "category": "engine",
+      "source": {
+        "name": "Turbocharger and intercooler",
+        "definition": "A turbo uses exhaust energy to compress intake air; an intercooler cools the compressed charge.",
+        "example": "A smaller turbocharged engine can deliver substantial output.",
+        "caution": "A turbo alone guarantees neither fuel economy nor service life."
+      },
+      "names": {
+        "de": "Turbolader und Ladeluftkühler",
+        "fr": "Turbocompresseur et échangeur d’air",
+        "es": "Turbocompresor e intercooler",
+        "pt-br": "Turbocompressor e intercooler",
+        "zh": "涡轮增压器与中冷器",
+        "hi": "टर्बोचार्जर और इंटरकूलर",
+        "ru": "Турбокомпрессор и интеркулер",
+        "ja": "ターボチャージャーとインタークーラー"
+      }
+    },
+    {
+      "id": "fuel-injection",
+      "category": "engine",
+      "source": {
+        "name": "Common rail / fuel injection",
+        "definition": "The system that meters and injects fuel at controlled pressure and timing.",
+        "example": "Electronic injection helps control combustion across loads.",
+        "caution": "Injection pressure is not itself a power or reliability score."
+      },
+      "names": {
+        "de": "Common-Rail / Kraftstoffeinspritzung",
+        "fr": "Rampe commune / injection de carburant",
+        "es": "Common rail / inyección de combustible",
+        "pt-br": "Common rail / injeção de combustível",
+        "zh": "共轨／燃油喷射",
+        "hi": "कॉमन रेल / ईंधन इंजेक्शन",
+        "ru": "Common rail / впрыск топлива",
+        "ja": "コモンレール・燃料噴射"
+      }
+    },
+    {
+      "id": "emission",
+      "category": "engine",
+      "source": {
+        "name": "Emissions standard (Stage / Tier)",
+        "definition": "Exhaust-emission limits that apply to a market and regulatory period.",
+        "example": "Stage V and older Stage IIIA refer to different regulatory regimes.",
+        "caution": "The same model name may have different emissions equipment by market."
+      },
+      "names": {
+        "de": "Abgasnorm (Stage / Tier)",
+        "fr": "Norme d’émissions (Stage / Tier)",
+        "es": "Norma de emisiones (Stage / Tier)",
+        "pt-br": "Norma de emissões (Stage / Tier)",
+        "zh": "排放标准（Stage / Tier）",
+        "hi": "उत्सर्जन मानक (Stage / Tier)",
+        "ru": "Экологический стандарт (Stage / Tier)",
+        "ja": "排出ガス規制（Stage / Tier）"
+      }
+    },
+    {
+      "id": "dpf-scr",
+      "category": "engine",
+      "source": {
+        "name": "DPF, SCR and AdBlue/DEF",
+        "definition": "DPF traps soot particles; SCR uses a dosing fluid to reduce nitrogen oxides.",
+        "example": "A tractor with DEF has a separate tank; it must not go into the diesel tank.",
+        "caution": "Not every emissions class mandates identical hardware; consult the model manual."
+      },
+      "names": {
+        "de": "DPF, SCR und AdBlue/DEF",
+        "fr": "DPF, SCR et AdBlue/DEF",
+        "es": "DPF, SCR y AdBlue/DEF",
+        "pt-br": "DPF, SCR e AdBlue/DEF",
+        "zh": "DPF、SCR 与 AdBlue/DEF",
+        "hi": "DPF, SCR और AdBlue/DEF",
+        "ru": "DPF, SCR и AdBlue/DEF",
+        "ja": "DPF・SCR・AdBlue/DEF"
+      }
+    },
+    {
+      "id": "manual-gearbox",
+      "category": "drivetrain",
+      "source": {
+        "name": "Manual transmission",
+        "definition": "Gear ratios are selected mechanically; clutch operation depends on the design.",
+        "example": "12F/12R means 12 forward and 12 reverse ratios.",
+        "caution": "Gear count alone does not establish comfort or durability."
+      },
+      "names": {
+        "de": "Schaltgetriebe",
+        "fr": "Boîte mécanique",
+        "es": "Transmisión manual",
+        "pt-br": "Transmissão manual",
+        "zh": "机械式变速箱",
+        "hi": "मैनुअल ट्रांसमिशन",
+        "ru": "Механическая коробка передач",
+        "ja": "マニュアル変速機"
+      }
+    },
+    {
+      "id": "powershift",
+      "category": "drivetrain",
+      "source": {
+        "name": "Powershift transmission",
+        "definition": "A gearbox allowing some ratio changes under load without clutch-pedal operation.",
+        "example": "It can make speed adjustments easier while working.",
+        "caution": "Partial powershift is not the same as full-range powershift."
+      },
+      "names": {
+        "de": "Lastschaltgetriebe (Powershift)",
+        "fr": "Transmission Powershift",
+        "es": "Transmisión Powershift",
+        "pt-br": "Transmissão Powershift",
+        "zh": "动力换挡变速箱",
+        "hi": "पावरशिफ्ट ट्रांसमिशन",
+        "ru": "Коробка передач Powershift",
+        "ja": "パワーシフト変速機"
+      }
+    },
+    {
+      "id": "cvt",
+      "category": "drivetrain",
+      "source": {
+        "name": "CVT / continuously variable transmission",
+        "definition": "Continuously varies drive ratio over an operating range.",
+        "example": "It may maintain a chosen field speed while adjusting engine rpm.",
+        "caution": "Not all CVTs share the same operating principle, efficiency or maintenance needs."
+      },
+      "names": {
+        "de": "Stufenloses Getriebe (CVT)",
+        "fr": "Transmission à variation continue (CVT)",
+        "es": "Transmisión continuamente variable (CVT)",
+        "pt-br": "Transmissão continuamente variável (CVT)",
+        "zh": "无级变速箱（CVT）",
+        "hi": "निरंतर परिवर्तनीय ट्रांसमिशन (CVT)",
+        "ru": "Бесступенчатая трансмиссия (CVT)",
+        "ja": "無段変速機（CVT）"
+      }
+    },
+    {
+      "id": "hst",
+      "category": "drivetrain",
+      "source": {
+        "name": "HST / hydrostatic transmission",
+        "definition": "A driveline using a hydraulic pump and motor to vary ground speed smoothly.",
+        "example": "It is useful during repeated loader manoeuvres.",
+        "caution": "Hydrostatic drive is not the same as auxiliary implement hydraulics."
+      },
+      "names": {
+        "de": "Hydrostatisches Getriebe (HST)",
+        "fr": "Transmission hydrostatique (HST)",
+        "es": "Transmisión hidrostática (HST)",
+        "pt-br": "Transmissão hidrostática (HST)",
+        "zh": "静液压传动（HST）",
+        "hi": "हाइड्रोस्टैटिक ट्रांसमिशन (HST)",
+        "ru": "Гидростатическая трансмиссия (HST)",
+        "ja": "油圧式無段変速機（HST）"
+      }
+    },
+    {
+      "id": "shuttle",
+      "category": "drivetrain",
+      "source": {
+        "name": "Shuttle / reverser",
+        "definition": "The control or mechanism used to select forward and reverse travel.",
+        "example": "It eases frequent direction changes during bale handling.",
+        "caution": "Mechanical, synchronized and electrohydraulic reversers differ."
+      },
+      "names": {
+        "de": "Wendeschaltung / Reversierer",
+        "fr": "Inverseur de marche",
+        "es": "Inversor de marcha",
+        "pt-br": "Reversor de marcha",
+        "zh": "换向机构",
+        "hi": "शटल / रिवर्सर",
+        "ru": "Реверсор / механизм смены направления",
+        "ja": "前後進切替装置（リバーサー）"
+      }
+    },
+    {
+      "id": "clutch",
+      "category": "drivetrain",
+      "source": {
+        "name": "Clutch and dual clutch",
+        "definition": "Connects or disconnects drive; two-stage designs may separate PTO engagement from travel.",
+        "example": "On some tractors a second pedal stage controls PTO drive.",
+        "caution": "Dual clutch does not necessarily mean a car-style DCT gearbox."
+      },
+      "names": {
+        "de": "Kupplung und Doppelkupplung",
+        "fr": "Embrayage et double embrayage",
+        "es": "Embrague y doble embrague",
+        "pt-br": "Embreagem e dupla embreagem",
+        "zh": "离合器与双离合器",
+        "hi": "क्लच और डुअल क्लच",
+        "ru": "Сцепление и двойное сцепление",
+        "ja": "クラッチとダブルクラッチ"
+      }
+    },
+    {
+      "id": "traction",
+      "category": "drivetrain",
+      "source": {
+        "name": "2WD and 4WD drive",
+        "definition": "Indicates whether two or four wheels can contribute driven traction.",
+        "example": "4WD may reduce slip on wet soil; 2WD may suffice on firm ground.",
+        "caution": "Tyres, weight and soil matter; 4WD is not universally superior."
+      },
+      "names": {
+        "de": "Zwei- und Allradantrieb (2WD/4WD)",
+        "fr": "Deux et quatre roues motrices (2WD/4WD)",
+        "es": "Tracción a dos y cuatro ruedas (2WD/4WD)",
+        "pt-br": "Tração em duas e quatro rodas (2WD/4WD)",
+        "zh": "两轮与四轮驱动（2WD/4WD）",
+        "hi": "दो और चार पहिया ड्राइव (2WD/4WD)",
+        "ru": "Двух- и полноприводная схема (2WD/4WD)",
+        "ja": "二輪・四輪駆動（2WD/4WD）"
+      }
+    },
+    {
+      "id": "diff-lock",
+      "category": "drivetrain",
+      "source": {
+        "name": "Differential lock",
+        "definition": "Limits differential wheel-speed difference to help traction on slippery ground.",
+        "example": "It can help maintain grip when one wheel is slipping on wet ground.",
+        "caution": "Follow turning and hard-surface instructions; do not use it indiscriminately."
+      },
+      "names": {
+        "de": "Differenzialsperre",
+        "fr": "Blocage du différentiel",
+        "es": "Bloqueo del diferencial",
+        "pt-br": "Bloqueio do diferencial",
+        "zh": "差速锁",
+        "hi": "डिफरेंशियल लॉक",
+        "ru": "Блокировка дифференциала",
+        "ja": "デフロック"
+      }
+    },
+    {
+      "id": "final-drive",
+      "category": "drivetrain",
+      "source": {
+        "name": "Final drive, axle and 4x4 differential",
+        "definition": "Final gearing and axle components transmit driveline torque to the wheels.",
+        "example": "Portal and planetary arrangements can affect clearance and torque reduction.",
+        "caution": "Axle type alone does not establish durability or traction."
+      },
+      "names": {
+        "de": "Endantrieb, Achse und 4x4-Differenzial",
+        "fr": "Réduction finale, essieu et différentiel 4x4",
+        "es": "Reducción final, eje y diferencial 4x4",
+        "pt-br": "Redução final, eixo e diferencial 4x4",
+        "zh": "终传动、车桥与 4x4 差速器",
+        "hi": "फाइनल ड्राइव, एक्सल और 4x4 डिफरेंशियल",
+        "ru": "Конечная передача, мост и дифференциал 4x4",
+        "ja": "最終減速機・車軸・4x4デファレンシャル"
+      }
+    },
+    {
+      "id": "ground-pto",
+      "category": "pto",
+      "source": {
+        "name": "Ground-speed PTO",
+        "definition": "A PTO mode tied to the tractor’s ground travel.",
+        "example": "Certain implements require rotation tied to travel speed.",
+        "caution": "It is not interchangeable with a standard 540 rpm mode."
+      },
+      "names": {
+        "de": "Wegzapfwelle",
+        "fr": "Prise de force proportionnelle à l’avancement",
+        "es": "TDF proporcional al avance",
+        "pt-br": "TDP proporcional ao avanço",
+        "zh": "行走同步动力输出轴",
+        "hi": "ग्राउंड-स्पीड PTO",
+        "ru": "Синхронный ВОМ",
+        "ja": "走行速度連動PTO"
+      }
+    },
+    {
+      "id": "front-pto",
+      "category": "pto",
+      "source": {
+        "name": "Front PTO",
+        "definition": "A PTO outlet at the front for front-mounted implements.",
+        "example": "It can enable front and rear implements to work together.",
+        "caution": "Often optional; front linkage and power ratings also matter."
+      },
+      "names": {
+        "de": "Frontzapfwelle",
+        "fr": "Prise de force avant",
+        "es": "Toma de fuerza delantera",
+        "pt-br": "Tomada de potência dianteira",
+        "zh": "前置动力输出轴",
+        "hi": "फ्रंट PTO",
+        "ru": "Передний ВОМ",
+        "ja": "フロントPTO"
+      }
+    },
+    {
+      "id": "three-point",
+      "category": "hydraulics",
+      "source": {
+        "name": "Three-point linkage",
+        "definition": "An implement attachment arrangement using two lower links and a top link.",
+        "example": "It positions ploughs, drills and rotary tillers relative to the tractor.",
+        "caution": "Link geometry, category and implement centre of gravity matter as much as lift rating."
+      },
+      "names": {
+        "de": "Dreipunktkraftheber",
+        "fr": "Attelage trois points",
+        "es": "Enganche de tres puntos",
+        "pt-br": "Engate de três pontos",
+        "zh": "三点悬挂装置",
+        "hi": "तीन-बिंदु हिच",
+        "ru": "Трёхточечное навесное устройство",
+        "ja": "三点リンク"
+      }
+    },
+    {
+      "id": "ehr",
+      "category": "hydraulics",
+      "source": {
+        "name": "EHR / electronic hitch control",
+        "definition": "Electronic control of linkage position or draft response.",
+        "example": "It may help return an implement to a repeatable headland height.",
+        "caution": "Sensor design and control features vary by model."
+      },
+      "names": {
+        "de": "EHR / elektronische Hubwerksregelung",
+        "fr": "EHR / contrôle électronique du relevage",
+        "es": "EHR / control electrónico del elevador",
+        "pt-br": "EHR / controle eletrônico do levante",
+        "zh": "EHR／电控悬挂",
+        "hi": "EHR / इलेक्ट्रॉनिक हिच नियंत्रण",
+        "ru": "EHR / электронное управление навеской",
+        "ja": "EHR・電子式ヒッチ制御"
+      }
+    },
+    {
+      "id": "draft-control",
+      "category": "hydraulics",
+      "source": {
+        "name": "Draft control / position control",
+        "definition": "Draft control reacts to implement resistance; position control targets linkage position.",
+        "example": "Draft control can matter for ploughing; position control for grading.",
+        "caution": "It still requires proper soil and implement setup."
+      },
+      "names": {
+        "de": "Zugkraft- und Lageregelung",
+        "fr": "Contrôle d’effort et de position",
+        "es": "Control de esfuerzo y posición",
+        "pt-br": "Controle de esforço e posição",
+        "zh": "力调节与位调节",
+        "hi": "ड्राफ्ट और स्थिति नियंत्रण",
+        "ru": "Силовое и позиционное регулирование",
+        "ja": "ドラフト制御・位置制御"
+      }
+    },
+    {
+      "id": "front-linkage",
+      "category": "hydraulics",
+      "source": {
+        "name": "Front linkage",
+        "definition": "An implement mounting and lifting arrangement at the tractor front.",
+        "example": "It can carry a front mower or implement instead of a simple weight.",
+        "caution": "Front PTO, lifting capacity and front axle limits must be checked separately."
+      },
+      "names": {
+        "de": "Frontkraftheber",
+        "fr": "Relevage avant",
+        "es": "Enganche delantero",
+        "pt-br": "Engate dianteiro",
+        "zh": "前悬挂装置",
+        "hi": "फ्रंट लिंकेज",
+        "ru": "Передняя навеска",
+        "ja": "フロントリンク"
+      }
+    },
+    {
+      "id": "hydraulic-types",
+      "category": "hydraulics",
+      "source": {
+        "name": "Open-centre and closed-centre hydraulics",
+        "definition": "Circuit architectures describing how pump and valves handle flow when no function is demanded.",
+        "example": "Variable-displacement systems can adjust delivered flow to demand.",
+        "caution": "Open/closed-centre labels alone do not determine implement performance."
+      },
+      "names": {
+        "de": "Open-Center- und Closed-Center-Hydraulik",
+        "fr": "Hydraulique à centre ouvert et fermé",
+        "es": "Hidráulica de centro abierto y cerrado",
+        "pt-br": "Hidráulica de centro aberto e fechado",
+        "zh": "开中心与闭中心液压系统",
+        "hi": "ओपन-सेंटर और क्लोज़्ड-सेंटर हाइड्रोलिक्स",
+        "ru": "Гидросистемы с открытым и закрытым центром",
+        "ja": "オープンセンター・クローズドセンター油圧"
+      }
+    },
+    {
+      "id": "wheelbase",
+      "category": "dimensions",
+      "source": {
+        "name": "Wheelbase",
+        "definition": "Longitudinal distance between front and rear axle centres.",
+        "example": "A shorter wheelbase may help manoeuvring in tight spaces.",
+        "caution": "Turning radius depends on more than wheelbase."
+      },
+      "names": {
+        "de": "Radstand",
+        "fr": "Empattement",
+        "es": "Distancia entre ejes",
+        "pt-br": "Distância entre eixos",
+        "zh": "轴距",
+        "hi": "व्हीलबेस",
+        "ru": "Колёсная база",
+        "ja": "ホイールベース"
+      }
+    },
+    {
+      "id": "track-width",
+      "category": "dimensions",
+      "source": {
+        "name": "Track width",
+        "definition": "Distance between the centres of the left and right wheels on one axle.",
+        "example": "Adjustable track width matters for row crops.",
+        "caution": "Overall width is not the same as wheel-centre track width."
+      },
+      "names": {
+        "de": "Spurweite",
+        "fr": "Voie",
+        "es": "Ancho de vía",
+        "pt-br": "Bitola",
+        "zh": "轮距",
+        "hi": "ट्रैक चौड़ाई",
+        "ru": "Ширина колеи",
+        "ja": "輪距"
+      }
+    },
+    {
+      "id": "ground-clearance",
+      "category": "dimensions",
+      "source": {
+        "name": "Ground clearance",
+        "definition": "The distance from the ground to the specified lowest underside point.",
+        "example": "It matters for clearance over crops and obstacles.",
+        "caution": "Tyre size and measurement point alter the result."
+      },
+      "names": {
+        "de": "Bodenfreiheit",
+        "fr": "Garde au sol",
+        "es": "Altura libre al suelo",
+        "pt-br": "Vão livre do solo",
+        "zh": "离地间隙",
+        "hi": "ग्राउंड क्लीयरेंस",
+        "ru": "Дорожный просвет",
+        "ja": "最低地上高"
+      }
+    },
+    {
+      "id": "dimensions",
+      "category": "dimensions",
+      "source": {
+        "name": "Overall length, width and height",
+        "definition": "The exterior length, width and height of the tractor in a stated configuration.",
+        "example": "They determine whether the tractor fits a greenhouse door or vineyard row.",
+        "caution": "They can vary with cab, ROPS, ballast and tyre configuration."
+      },
+      "names": {
+        "de": "Gesamtlänge, -breite und -höhe",
+        "fr": "Longueur, largeur et hauteur hors tout",
+        "es": "Longitud, anchura y altura totales",
+        "pt-br": "Comprimento, largura e altura totais",
+        "zh": "整机长、宽、高",
+        "hi": "कुल लंबाई, चौड़ाई और ऊँचाई",
+        "ru": "Габаритные длина, ширина и высота",
+        "ja": "全長・全幅・全高"
+      }
+    },
+    {
+      "id": "operating-weight",
+      "category": "dimensions",
+      "source": {
+        "name": "Unladen and operating weight",
+        "definition": "Different mass definitions according to fluids, driver and fitted equipment.",
+        "example": "A cab variant can weigh more than an open-station model.",
+        "caution": "Shipping, dry and operating weights must not be treated as identical."
+      },
+      "names": {
+        "de": "Leergewicht und Betriebsgewicht",
+        "fr": "Masse à vide et masse en ordre de marche",
+        "es": "Peso en vacío y en orden de marcha",
+        "pt-br": "Peso sem carga e peso operacional",
+        "zh": "空载质量与工作质量",
+        "hi": "खाली और परिचालन वजन",
+        "ru": "Масса без нагрузки и эксплуатационная масса",
+        "ja": "空車重量・運転時重量"
+      }
+    },
+    {
+      "id": "ballast",
+      "category": "dimensions",
+      "source": {
+        "name": "Ballast / front weights",
+        "definition": "Additional weight used for traction and balance.",
+        "example": "A heavy rear implement may require suitable front ballast.",
+        "caution": "Excess ballast increases soil compaction and axle load."
+      },
+      "names": {
+        "de": "Ballast / Frontgewichte",
+        "fr": "Lestage / masses avant",
+        "es": "Lastre / contrapesos delanteros",
+        "pt-br": "Lastro / contrapesos dianteiros",
+        "zh": "配重／前部配重",
+        "hi": "बैलास्ट / आगे के भार",
+        "ru": "Балласт / передние грузы",
+        "ja": "バラスト・前部ウエイト"
+      }
+    },
+    {
+      "id": "tyre-size",
+      "category": "dimensions",
+      "source": {
+        "name": "Tyre size",
+        "definition": "Defines tyre section, construction and rim size.",
+        "example": "13.6-28 and 14.9-28 tyres are different nominal sizes.",
+        "caution": "Front/rear rolling circumference matters on 4WD; substitutions need approval."
+      },
+      "names": {
+        "de": "Reifengröße",
+        "fr": "Dimensions des pneus",
+        "es": "Medidas de neumáticos",
+        "pt-br": "Medidas dos pneus",
+        "zh": "轮胎规格",
+        "hi": "टायर का आकार",
+        "ru": "Размер шин",
+        "ja": "タイヤサイズ"
+      }
+    },
+    {
+      "id": "tyre-pressure",
+      "category": "dimensions",
+      "source": {
+        "name": "Tyre inflation and soil pressure",
+        "definition": "Inflation pressure affects tyre behaviour and, with load, soil contact stress.",
+        "example": "Load-appropriate pressure affects traction and soil imprint.",
+        "caution": "Do not recommend inflation without the tyre maker’s load/speed tables."
+      },
+      "names": {
+        "de": "Reifenfülldruck und Bodendruck",
+        "fr": "Pression de gonflage et pression au sol",
+        "es": "Presión de inflado y sobre el suelo",
+        "pt-br": "Pressão de inflação e pressão sobre o solo",
+        "zh": "轮胎充气压力与土壤接触压力",
+        "hi": "टायर वायु दबाव और मिट्टी पर दबाव",
+        "ru": "Давление в шинах и давление на почву",
+        "ja": "タイヤ空気圧と接地圧"
+      }
+    },
+    {
+      "id": "turning-radius",
+      "category": "dimensions",
+      "source": {
+        "name": "Turning radius",
+        "definition": "The geometric radius of a turn at full steering lock.",
+        "example": "It indicates how easily the tractor can turn around in confined yards or at field edges.",
+        "caution": "Tyres, 4WD, brake assistance and test method affect the figure."
+      },
+      "names": {
+        "de": "Wenderadius",
+        "fr": "Rayon de braquage",
+        "es": "Radio de giro",
+        "pt-br": "Raio de giro",
+        "zh": "转弯半径",
+        "hi": "टर्निंग रेडियस",
+        "ru": "Радиус поворота",
+        "ja": "旋回半径"
+      }
+    },
+    {
+      "id": "drawbar",
+      "category": "dimensions",
+      "source": {
+        "name": "Drawbar and drawbar power",
+        "definition": "The drawbar connects a towed load; drawbar power is useful work delivered to the pull.",
+        "example": "An attached trailer still must meet braking and permitted mass limits.",
+        "caution": "Engine, PTO and drawbar power are different measurements."
+      },
+      "names": {
+        "de": "Zugpendel und Zugleistung",
+        "fr": "Barre de traction et puissance à la barre",
+        "es": "Barra de tiro y potencia de tiro",
+        "pt-br": "Barra de tração e potência na barra",
+        "zh": "牵引杆与牵引功率",
+        "hi": "ड्रॉबार और ड्रॉबार शक्ति",
+        "ru": "Тяговый брус и тяговая мощность",
+        "ja": "ドローバーとけん引出力"
+      }
+    },
+    {
+      "id": "axle-load",
+      "category": "dimensions",
+      "source": {
+        "name": "Permitted axle load and gross mass",
+        "definition": "Manufacturer limits for axle loads and total machine mass.",
+        "example": "Check axle limits when combining a loader and ballast.",
+        "caution": "Lift rating does not override the permitted mass limits."
+      },
+      "names": {
+        "de": "Zulässige Achslast und Gesamtmasse",
+        "fr": "Charge admissible par essieu et masse totale",
+        "es": "Carga admisible por eje y masa total",
+        "pt-br": "Carga admissível por eixo e massa total",
+        "zh": "允许轴荷与总质量",
+        "hi": "अनुमत एक्सल भार और कुल द्रव्यमान",
+        "ru": "Допустимая нагрузка на ось и полная масса",
+        "ja": "許容軸荷重と総質量"
+      }
+    },
+    {
+      "id": "rops",
+      "category": "safety",
+      "source": {
+        "name": "ROPS / rollover protection",
+        "definition": "A tested protective structure intended to maintain operator clearance in a rollover.",
+        "example": "On open-station tractors, ROPS and a seat belt work together.",
+        "caution": "ROPS alone does not make unbelted driving safe; follow foldable-ROPS instructions."
+      },
+      "names": {
+        "de": "ROPS / Überrollschutz",
+        "fr": "ROPS / protection contre le retournement",
+        "es": "ROPS / protección antivuelco",
+        "pt-br": "ROPS / proteção contra capotamento",
+        "zh": "ROPS／翻滚保护结构",
+        "hi": "ROPS / पलटने से सुरक्षा",
+        "ru": "ROPS / защита при опрокидывании",
+        "ja": "ROPS・転倒時保護構造"
+      }
+    },
+    {
+      "id": "fops",
+      "category": "safety",
+      "source": {
+        "name": "FOPS / falling-object protection",
+        "definition": "A structure designed to protect from specified falling-object hazards.",
+        "example": "Forestry and loader tasks can create distinct protection needs.",
+        "caution": "ROPS and FOPS are not the same certification."
+      },
+      "names": {
+        "de": "FOPS / Schutz vor herabfallenden Gegenständen",
+        "fr": "FOPS / protection contre les chutes d’objets",
+        "es": "FOPS / protección contra caída de objetos",
+        "pt-br": "FOPS / proteção contra queda de objetos",
+        "zh": "FOPS／落物保护结构",
+        "hi": "FOPS / गिरती वस्तुओं से सुरक्षा",
+        "ru": "FOPS / защита от падающих предметов",
+        "ja": "FOPS・落下物保護構造"
+      }
+    },
+    {
+      "id": "brakes",
+      "category": "safety",
+      "source": {
+        "name": "Dry and wet disc brakes",
+        "definition": "Brake designs with friction components operating dry or in oil.",
+        "example": "A wet-disc system can manage heat and wear differently.",
+        "caution": "Stopping distance also depends on tyres, loading, surface and maintenance."
+      },
+      "names": {
+        "de": "Trockene und nasse Scheibenbremsen",
+        "fr": "Freins à disques secs et immergés",
+        "es": "Frenos de disco secos y húmedos",
+        "pt-br": "Freios a disco secos e banhados a óleo",
+        "zh": "干式与湿式盘式制动器",
+        "hi": "ड्राई और वेट डिस्क ब्रेक",
+        "ru": "Сухие и мокрые дисковые тормоза",
+        "ja": "乾式・湿式ディスクブレーキ"
+      }
+    },
+    {
+      "id": "seatbelt",
+      "category": "safety",
+      "source": {
+        "name": "Seat belt and operator seat",
+        "definition": "Equipment intended to retain the operator and reduce transmitted vibration.",
+        "example": "Proper belt use is essential to benefit from rollover protection.",
+        "caution": "Follow the machine manual and local safety requirements."
+      },
+      "names": {
+        "de": "Sicherheitsgurt und Fahrersitz",
+        "fr": "Ceinture de sécurité et siège opérateur",
+        "es": "Cinturón de seguridad y asiento del operador",
+        "pt-br": "Cinto de segurança e assento do operador",
+        "zh": "安全带与驾驶员座椅",
+        "hi": "सीट बेल्ट और ऑपरेटर सीट",
+        "ru": "Ремень безопасности и сиденье оператора",
+        "ja": "シートベルトと運転席"
+      }
+    },
+    {
+      "id": "steering",
+      "category": "safety",
+      "source": {
+        "name": "Hydrostatic / power steering",
+        "definition": "Steering systems assisted by hydraulic power.",
+        "example": "Low-speed loader manoeuvres can be easier.",
+        "caution": "Power steering is not the same as an HST drive gearbox."
+      },
+      "names": {
+        "de": "Hydrostatische Lenkung / Servolenkung",
+        "fr": "Direction hydrostatique / assistée",
+        "es": "Dirección hidrostática / asistida",
+        "pt-br": "Direção hidrostática / assistida",
+        "zh": "静液压转向／动力转向",
+        "hi": "हाइड्रोस्टैटिक / पावर स्टीयरिंग",
+        "ru": "Гидростатическое / усиленное рулевое управление",
+        "ja": "油圧式ステアリング・パワーステアリング"
+      }
+    },
+    {
+      "id": "cab-air",
+      "category": "safety",
+      "source": {
+        "name": "Cab filtration and air conditioning",
+        "definition": "Equipment for operator comfort and, where specified, air filtration.",
+        "example": "Filter care matters in dusty operations.",
+        "caution": "A normal cab filter is not certified pesticide protection."
+      },
+      "names": {
+        "de": "Kabinenfilterung und Klimaanlage",
+        "fr": "Filtration de cabine et climatisation",
+        "es": "Filtración de cabina y aire acondicionado",
+        "pt-br": "Filtragem da cabine e ar-condicionado",
+        "zh": "驾驶室过滤与空调",
+        "hi": "केबिन फ़िल्ट्रेशन और एयर कंडीशनिंग",
+        "ru": "Фильтрация воздуха и кондиционирование кабины",
+        "ja": "キャビン空気ろ過とエアコン"
+      }
+    },
+    {
+      "id": "noise",
+      "category": "safety",
+      "source": {
+        "name": "Noise and vibration",
+        "definition": "Noise and vibration levels to which an operator may be exposed.",
+        "example": "Cab, seat and hearing protection can matter on long shifts.",
+        "caution": "Do not rank machines from dB(A) figures without test location and standard."
+      },
+      "names": {
+        "de": "Geräusch und Vibration",
+        "fr": "Bruit et vibrations",
+        "es": "Ruido y vibraciones",
+        "pt-br": "Ruído e vibração",
+        "zh": "噪声与振动",
+        "hi": "शोर और कंपन",
+        "ru": "Шум и вибрация",
+        "ja": "騒音と振動"
+      }
+    },
+    {
+      "id": "fuel-tank",
+      "category": "ownership",
+      "source": {
+        "name": "Fuel tank capacity",
+        "definition": "Amount of fuel a tank holds; not a measure of consumption or range.",
+        "example": "An 80-litre tank does not promise a fixed number of hours.",
+        "caution": "Consumption varies with load, speed and operating conditions."
+      },
+      "names": {
+        "de": "Kraftstofftankvolumen",
+        "fr": "Capacité du réservoir de carburant",
+        "es": "Capacidad del depósito de combustible",
+        "pt-br": "Capacidade do tanque de combustível",
+        "zh": "燃油箱容量",
+        "hi": "ईंधन टैंक क्षमता",
+        "ru": "Ёмкость топливного бака",
+        "ja": "燃料タンク容量"
+      }
+    },
+    {
+      "id": "service-interval",
+      "category": "ownership",
+      "source": {
+        "name": "Service interval",
+        "definition": "A prescribed operating-hour or calendar interval for maintenance.",
+        "example": "Engine oil and hydraulic fluid may have different intervals.",
+        "caution": "Severe dusty operation may require shorter intervals."
+      },
+      "names": {
+        "de": "Wartungsintervall",
+        "fr": "Intervalle d’entretien",
+        "es": "Intervalo de mantenimiento",
+        "pt-br": "Intervalo de manutenção",
+        "zh": "保养间隔",
+        "hi": "सर्विस अंतराल",
+        "ru": "Интервал обслуживания",
+        "ja": "整備間隔"
+      }
+    },
+    {
+      "id": "filters",
+      "category": "ownership",
+      "source": {
+        "name": "Air, fuel and oil filters",
+        "definition": "Service parts that limit contaminants reaching the engine or fluid circuits.",
+        "example": "A restricted air filter can affect engine performance.",
+        "caution": "Use model-approved filters and maintenance intervals."
+      },
+      "names": {
+        "de": "Luft-, Kraftstoff- und Ölfilter",
+        "fr": "Filtres à air, à carburant et à huile",
+        "es": "Filtros de aire, combustible y aceite",
+        "pt-br": "Filtros de ar, combustível e óleo",
+        "zh": "空气、燃油与机油滤清器",
+        "hi": "एयर, ईंधन और ऑयल फ़िल्टर",
+        "ru": "Воздушный, топливный и масляный фильтры",
+        "ja": "エア・燃料・オイルフィルター"
+      }
+    },
+    {
+      "id": "test-standards",
+      "category": "ownership",
+      "source": {
+        "name": "ECE R120, ISO 14396 and OECD tests",
+        "definition": "Engine standards describe declared power conditions; OECD codes define tractor testing procedures.",
+        "example": "Do not compare an engine declaration with a Nebraska PTO test as the same metric.",
+        "caution": "Always name the test point, year, procedure and measurement standard."
+      },
+      "names": {
+        "de": "ECE R120, ISO 14396 und OECD-Prüfungen",
+        "fr": "ECE R120, ISO 14396 et essais OCDE",
+        "es": "ECE R120, ISO 14396 y ensayos OCDE",
+        "pt-br": "ECE R120, ISO 14396 e ensaios OCDE",
+        "zh": "ECE R120、ISO 14396 与 OECD 试验",
+        "hi": "ECE R120, ISO 14396 और OECD परीक्षण",
+        "ru": "ECE R120, ISO 14396 и испытания ОЭСР",
+        "ja": "ECE R120・ISO 14396・OECD試験"
+      }
+    },
+    {
+      "id": "source-quality",
+      "category": "ownership",
+      "source": {
+        "name": "Manufacturer brochure vs independent test",
+        "definition": "A brochure records a maker's claim; an independent test reports measurements under stated conditions.",
+        "example": "An estimated catalogue PTO figure is not the same as a laboratory PTO test.",
+        "caution": "Do not label undocumented values as verified or independently tested."
+      },
+      "names": {
+        "de": "Herstellerprospekt und unabhängige Prüfung",
+        "fr": "Brochure constructeur et essai indépendant",
+        "es": "Catálogo del fabricante y ensayo independiente",
+        "pt-br": "Catálogo do fabricante e ensaio independente",
+        "zh": "制造商样本与独立试验",
+        "hi": "निर्माता की विवरणिका और स्वतंत्र परीक्षण",
+        "ru": "Каталог производителя и независимое испытание",
+        "ja": "メーカー資料と独立試験"
+      }
+    },
+    {
+      "id": "options",
+      "category": "ownership",
+      "source": {
+        "name": "Standard, optional and market variants",
+        "definition": "Distinguishes base equipment, optional packages and regional configurations.",
+        "example": "A US HST version may differ from a European manual version of the same name.",
+        "caution": "Do not imply every listed option is fitted to one tractor."
+      },
+      "names": {
+        "de": "Serienausstattung, Optionen und Marktvarianten",
+        "fr": "Équipement de série, options et variantes de marché",
+        "es": "Equipamiento de serie, opcional y variantes de mercado",
+        "pt-br": "Equipamentos de série, opcionais e versões de mercado",
+        "zh": "标准配置、选装与市场变型",
+        "hi": "मानक, वैकल्पिक और बाज़ार संस्करण",
+        "ru": "Стандартное оборудование, опции и рыночные версии",
+        "ja": "標準装備・オプション・市場別仕様"
+      }
+    },
+    {
+      "id": "engine-make",
+      "category": "engine",
+      "source": {
+        "name": "Engine manufacturer",
+        "definition": "The company that makes or brands the engine; it may differ from the tractor manufacturer.",
+        "example": "A tractor series can use one engine supplier in one generation and another later.",
+        "caution": "The brand alone is not a parts identifier; confirm the engine model code."
+      },
+      "names": {
+        "de": "Motorhersteller",
+        "fr": "Constructeur du moteur",
+        "es": "Fabricante del motor",
+        "pt-br": "Fabricante do motor",
+        "zh": "发动机制造商",
+        "hi": "इंजन निर्माता",
+        "ru": "Производитель двигателя",
+        "ja": "エンジンメーカー"
+      }
+    },
+    {
+      "id": "engine-model",
+      "category": "engine",
+      "source": {
+        "name": "Engine model or code",
+        "definition": "A manufacturer identifier for a particular engine design or version.",
+        "example": "For maintenance, an engine code can distinguish generations of the same tractor name.",
+        "caution": "An engine code can change with the emissions stage or target market."
+      },
+      "names": {
+        "de": "Motormodell oder Motorcode",
+        "fr": "Modèle ou code moteur",
+        "es": "Modelo o código del motor",
+        "pt-br": "Modelo ou código do motor",
+        "zh": "发动机型号或代码",
+        "hi": "इंजन मॉडल या कोड",
+        "ru": "Модель или код двигателя",
+        "ja": "エンジン型式・コード"
+      }
+    },
+    {
+      "id": "engine-valves",
+      "category": "engine",
+      "source": {
+        "name": "Number of engine valves",
+        "definition": "The number of valves controlling intake and exhaust flow through the cylinders.",
+        "example": "A four-cylinder 16-valve engine may have four valves per cylinder.",
+        "caution": "Valve count alone does not establish greater torque or engine longevity."
+      },
+      "names": {
+        "de": "Anzahl der Motorventile",
+        "fr": "Nombre de soupapes du moteur",
+        "es": "Número de válvulas del motor",
+        "pt-br": "Número de válvulas do motor",
+        "zh": "发动机气门数",
+        "hi": "इंजन वाल्वों की संख्या",
+        "ru": "Число клапанов двигателя",
+        "ja": "エンジンバルブ数"
+      }
+    },
+    {
+      "id": "cooling",
+      "category": "engine",
+      "source": {
+        "name": "Cooling system and radiator",
+        "definition": "The radiator dissipates heat from coolant; a circulation pump moves it through the engine.",
+        "example": "If temperature rises under load, radiator cleanliness and fan operation matter.",
+        "caution": "Never open a pressurised hot cooling system; follow the manual."
+      },
+      "names": {
+        "de": "Kühlsystem und Kühler",
+        "fr": "Système de refroidissement et radiateur",
+        "es": "Sistema de refrigeración y radiador",
+        "pt-br": "Sistema de arrefecimento e radiador",
+        "zh": "冷却系统与散热器",
+        "hi": "कूलिंग सिस्टम और रेडिएटर",
+        "ru": "Система охлаждения и радиатор",
+        "ja": "冷却装置とラジエーター"
+      }
+    },
+    {
+      "id": "air-cleaner",
+      "category": "engine",
+      "source": {
+        "name": "Engine air cleaner",
+        "definition": "Filters dusty intake air to reduce abrasive contamination of pistons and cylinders.",
+        "example": "During dusty harvest work, filter inspection may become more frequent.",
+        "caution": "Dry-element and oil-bath filters require different service procedures."
+      },
+      "names": {
+        "de": "Motorluftfilter",
+        "fr": "Filtre à air moteur",
+        "es": "Filtro de aire del motor",
+        "pt-br": "Filtro de ar do motor",
+        "zh": "发动机空气滤清器",
+        "hi": "इंजन एयर क्लीनर",
+        "ru": "Воздухоочиститель двигателя",
+        "ja": "エンジンエアクリーナー"
+      }
+    },
+    {
+      "id": "engine-fuel",
+      "category": "engine",
+      "source": {
+        "name": "Diesel and fuel type",
+        "definition": "The fuel the engine is designed to use; compatibility with its injection system matters.",
+        "example": "Diesel and DEF go into separate tanks; DEF is not a fuel additive.",
+        "caution": "Check the maker's permitted biodiesel blends for the exact version."
+      },
+      "names": {
+        "de": "Diesel und Kraftstoffart",
+        "fr": "Gazole et type de carburant",
+        "es": "Diésel y tipo de combustible",
+        "pt-br": "Diesel e tipo de combustível",
+        "zh": "柴油与燃料类型",
+        "hi": "डीज़ल और ईंधन का प्रकार",
+        "ru": "Дизельное топливо и тип топлива",
+        "ja": "ディーゼルと燃料の種類"
+      }
+    },
+    {
+      "id": "piston",
+      "category": "engine",
+      "source": {
+        "name": "Piston and rings",
+        "definition": "The piston converts combustion pressure into motion; rings help seal the cylinder and control oil.",
+        "example": "Worn rings can increase oil consumption or cause loss of compression.",
+        "caution": "Smoke colour alone is not a diagnosis; proper testing is needed."
+      },
+      "names": {
+        "de": "Kolben und Kolbenringe",
+        "fr": "Piston et segments",
+        "es": "Pistón y segmentos",
+        "pt-br": "Pistão e anéis",
+        "zh": "活塞与活塞环",
+        "hi": "पिस्टन और रिंग",
+        "ru": "Поршень и поршневые кольца",
+        "ja": "ピストンとピストンリング"
+      }
+    },
+    {
+      "id": "crankshaft",
+      "category": "engine",
+      "source": {
+        "name": "Crankshaft",
+        "definition": "Converts piston reciprocating motion into rotation and delivers engine output.",
+        "example": "Engine rpm is fundamentally crankshaft rotation speed.",
+        "caution": "The crankshaft and PTO shaft are different, connected through the driveline."
+      },
+      "names": {
+        "de": "Kurbelwelle",
+        "fr": "Vilebrequin",
+        "es": "Cigüeñal",
+        "pt-br": "Virabrequim",
+        "zh": "曲轴",
+        "hi": "क्रैंकशाफ्ट",
+        "ru": "Коленчатый вал",
+        "ja": "クランクシャフト"
+      }
+    },
+    {
+      "id": "gross-power",
+      "category": "engine",
+      "source": {
+        "name": "Gross and net engine power",
+        "definition": "Gross and net engine figures can differ according to test configuration and auxiliary equipment.",
+        "example": "The same 75 kW figure can represent different test configurations.",
+        "caution": "Gross, rated, PTO and boosted power must not be substituted for each other."
+      },
+      "names": {
+        "de": "Brutto- und Nettomotorleistung",
+        "fr": "Puissance moteur brute et nette",
+        "es": "Potencia bruta y neta del motor",
+        "pt-br": "Potência bruta e líquida do motor",
+        "zh": "发动机总功率与净功率",
+        "hi": "सकल और शुद्ध इंजन शक्ति",
+        "ru": "Полная и полезная мощность двигателя",
+        "ja": "エンジン総出力と正味出力"
+      }
+    },
+    {
+      "id": "travel-speed",
+      "category": "drivetrain",
+      "source": {
+        "name": "Road speed and minimum working speed",
+        "definition": "The range of ground speeds available from gearbox and tyres.",
+        "example": "Creeper gears can be useful for very slow implement operations.",
+        "caution": "Top road speed does not override road regulations or equipment limits."
+      },
+      "names": {
+        "de": "Straßengeschwindigkeit und Mindestarbeitsgeschwindigkeit",
+        "fr": "Vitesse routière et vitesse minimale de travail",
+        "es": "Velocidad en carretera y velocidad mínima de trabajo",
+        "pt-br": "Velocidade rodoviária e velocidade mínima de trabalho",
+        "zh": "道路行驶速度与最低作业速度",
+        "hi": "सड़क गति और न्यूनतम कार्य गति",
+        "ru": "Транспортная и минимальная рабочая скорость",
+        "ja": "路上走行速度と最低作業速度"
+      }
+    },
+    {
+      "id": "axle-suspension",
+      "category": "drivetrain",
+      "source": {
+        "name": "Front axle suspension",
+        "definition": "Helps absorb front-axle movement, influencing ride comfort and wheel contact.",
+        "example": "It can improve ride comfort while transporting a trailer on uneven roads.",
+        "caution": "Front axle suspension and cab suspension are different systems."
+      },
+      "names": {
+        "de": "Vorderachsfederung",
+        "fr": "Suspension du pont avant",
+        "es": "Suspensión del eje delantero",
+        "pt-br": "Suspensão do eixo dianteiro",
+        "zh": "前桥悬架",
+        "hi": "फ्रंट एक्सल सस्पेंशन",
+        "ru": "Подвеска переднего моста",
+        "ja": "フロントアクスルサスペンション"
+      }
+    },
+    {
+      "id": "gear-range",
+      "category": "drivetrain",
+      "source": {
+        "name": "Gear range, creeper and powershift step",
+        "definition": "Additional speed ranges or under-load shiftable steps layered onto main gears.",
+        "example": "A 24F/24R gearbox may combine twelve gears with two ranges.",
+        "caution": "A gear count alone does not prove full powershift operation."
+      },
+      "names": {
+        "de": "Ganggruppe, Kriechgang und Lastschaltstufe",
+        "fr": "Gamme, super-réducteur et rapport Powershift",
+        "es": "Gama de marchas, superreductora y escalón Powershift",
+        "pt-br": "Gama de marchas, super-redutor e estágio Powershift",
+        "zh": "挡位范围、爬行挡与动力换挡级",
+        "hi": "गियर रेंज, क्रीपर और पावरशिफ्ट चरण",
+        "ru": "Диапазон передач, ходоуменьшитель и ступень Powershift",
+        "ja": "変速レンジ・クリープギア・パワーシフト段"
+      }
+    },
+    {
+      "id": "pto-clutch",
+      "category": "pto",
+      "source": {
+        "name": "PTO clutch and engagement",
+        "definition": "The clutching arrangement that engages or disconnects drive to the PTO shaft.",
+        "example": "Electrohydraulic engagement can make PTO start-up smoother.",
+        "caution": "Do not approach an implement while it is still coasting after disengagement."
+      },
+      "names": {
+        "de": "Zapfwellenkupplung und -schaltung",
+        "fr": "Embrayage et engagement de la PDF",
+        "es": "Embrague y acoplamiento de la TDF",
+        "pt-br": "Embreagem e acionamento da TDP",
+        "zh": "PTO 离合器与接合",
+        "hi": "PTO क्लच और एंगेजमेंट",
+        "ru": "Муфта и включение ВОМ",
+        "ja": "PTOクラッチと接続"
+      }
+    },
+    {
+      "id": "pto-guard",
+      "category": "pto",
+      "source": {
+        "name": "PTO shaft guard",
+        "definition": "Guarding intended to reduce accidental contact with the rotating PTO shaft and joints.",
+        "example": "Check that the shield is intact and correctly fitted when connecting implements.",
+        "caution": "Never service a running PTO with missing guards; stop the engine."
+      },
+      "names": {
+        "de": "Zapfwellenschutz",
+        "fr": "Protection de l’arbre de PDF",
+        "es": "Protección del eje de TDF",
+        "pt-br": "Proteção do eixo da TDP",
+        "zh": "PTO 轴防护装置",
+        "hi": "PTO शाफ्ट सुरक्षा कवच",
+        "ru": "Защитный кожух ВОМ",
+        "ja": "PTO軸の安全カバー"
+      }
+    },
+    {
+      "id": "hydraulic-pump",
+      "category": "hydraulics",
+      "source": {
+        "name": "Hydraulic pump",
+        "definition": "Uses mechanical input to move hydraulic oil through the circuit.",
+        "example": "Implement response speed depends on the pump and valve arrangement.",
+        "caution": "Do not assume all stated pump flows are available at the rear couplers."
+      },
+      "names": {
+        "de": "Hydraulikpumpe",
+        "fr": "Pompe hydraulique",
+        "es": "Bomba hidráulica",
+        "pt-br": "Bomba hidráulica",
+        "zh": "液压泵",
+        "hi": "हाइड्रोलिक पंप",
+        "ru": "Гидравлический насос",
+        "ja": "油圧ポンプ"
+      }
+    },
+    {
+      "id": "hydraulic-cylinder",
+      "category": "hydraulics",
+      "source": {
+        "name": "Hydraulic cylinder",
+        "definition": "An actuator converting hydraulic pressure into linear pushing or pulling motion.",
+        "example": "Loader lift and bucket-tilt cylinders serve different functions.",
+        "caution": "Pressure, cylinder size and relief valves matter alongside flow."
+      },
+      "names": {
+        "de": "Hydraulikzylinder",
+        "fr": "Vérin hydraulique",
+        "es": "Cilindro hidráulico",
+        "pt-br": "Cilindro hidráulico",
+        "zh": "液压缸",
+        "hi": "हाइड्रोलिक सिलिंडर",
+        "ru": "Гидравлический цилиндр",
+        "ja": "油圧シリンダー"
+      }
+    },
+    {
+      "id": "hydraulic-steering",
+      "category": "hydraulics",
+      "source": {
+        "name": "Steering pump flow",
+        "definition": "Oil flow supplied to the power steering circuit.",
+        "example": "A combined 45 L/min figure does not mean all of it reaches an implement.",
+        "caution": "Keep steering flow and implement-available flow as distinct figures."
+      },
+      "names": {
+        "de": "Förderstrom der Lenkungspumpe",
+        "fr": "Débit de la pompe de direction",
+        "es": "Caudal de la bomba de dirección",
+        "pt-br": "Vazão da bomba de direção",
+        "zh": "转向泵流量",
+        "hi": "स्टीयरिंग पंप प्रवाह",
+        "ru": "Расход насоса рулевого управления",
+        "ja": "ステアリングポンプ流量"
+      }
+    },
+    {
+      "id": "hydraulic-implement",
+      "category": "hydraulics",
+      "source": {
+        "name": "Implement pump flow",
+        "definition": "The stated flow available to implement or linkage functions.",
+        "example": "Implement-available flow matters more than combined pump output for hydraulic motors.",
+        "caution": "Confirm flow at the actual coupler and under the stated test conditions."
+      },
+      "names": {
+        "de": "Förderstrom der Arbeitshydraulik",
+        "fr": "Débit de la pompe des outils",
+        "es": "Caudal de la bomba de implementos",
+        "pt-br": "Vazão da bomba de implementos",
+        "zh": "机具液压泵流量",
+        "hi": "उपकरण पंप प्रवाह",
+        "ru": "Расход насоса рабочей гидравлики",
+        "ja": "作業機用ポンプ流量"
+      }
+    },
+    {
+      "id": "tyre-type",
+      "category": "dimensions",
+      "source": {
+        "name": "Agricultural, turf and industrial tyres",
+        "definition": "Tread pattern and construction influence traction and ground impact.",
+        "example": "Turf tyres may be selected to reduce marking on grass.",
+        "caution": "Never substitute tyre types without approved size and load compatibility."
+      },
+      "names": {
+        "de": "Landwirtschafts-, Rasen- und Industriereifen",
+        "fr": "Pneus agricoles, gazon et industriels",
+        "es": "Neumáticos agrícolas, de césped e industriales",
+        "pt-br": "Pneus agrícolas, de gramado e industriais",
+        "zh": "农业、草坪与工业轮胎",
+        "hi": "कृषि, टर्फ और औद्योगिक टायर",
+        "ru": "Сельскохозяйственные, газонные и промышленные шины",
+        "ja": "農業用・芝用・産業用タイヤ"
+      }
+    },
+    {
+      "id": "track-adjustment",
+      "category": "dimensions",
+      "source": {
+        "name": "Adjustable wheel track",
+        "definition": "Adjustment of wheel spacing within an approved range using rims or axles.",
+        "example": "Track can be set to suit different crop row spacings.",
+        "caution": "Incorrect rim mounting or axle loading can create safety risks."
+      },
+      "names": {
+        "de": "Verstellbare Spurweite",
+        "fr": "Voie réglable",
+        "es": "Ancho de vía ajustable",
+        "pt-br": "Bitola ajustável",
+        "zh": "可调轮距",
+        "hi": "समायोज्य व्हील ट्रैक",
+        "ru": "Регулируемая колея",
+        "ja": "輪距調整"
+      }
+    },
+    {
+      "id": "cab-suspension",
+      "category": "safety",
+      "source": {
+        "name": "Cab suspension",
+        "definition": "Springs and dampers designed to reduce vibration passed from chassis to cab.",
+        "example": "It can affect operator fatigue during long transport jobs.",
+        "caution": "Seat, axle and cab suspension are separate options."
+      },
+      "names": {
+        "de": "Kabinenfederung",
+        "fr": "Suspension de cabine",
+        "es": "Suspensión de cabina",
+        "pt-br": "Suspensão da cabine",
+        "zh": "驾驶室悬架",
+        "hi": "केबिन सस्पेंशन",
+        "ru": "Подвеска кабины",
+        "ja": "キャビンサスペンション"
+      }
+    },
+    {
+      "id": "operator-platform",
+      "category": "safety",
+      "source": {
+        "name": "Operator platform and cab structure",
+        "definition": "The area housing operator seat, foot space and operating controls.",
+        "example": "Flat floors, transmission tunnels and cabs differ in ergonomics.",
+        "caution": "A cab alone is not proof of ROPS or FOPS certification."
+      },
+      "names": {
+        "de": "Fahrerplattform und Kabinenaufbau",
+        "fr": "Plateforme opérateur et structure de cabine",
+        "es": "Plataforma del operador y estructura de cabina",
+        "pt-br": "Plataforma do operador e estrutura da cabine",
+        "zh": "驾驶平台与驾驶室结构",
+        "hi": "ऑपरेटर प्लेटफ़ॉर्म और केबिन संरचना",
+        "ru": "Платформа оператора и конструкция кабины",
+        "ja": "運転者プラットフォームとキャビン構造"
+      }
+    },
+    {
+      "id": "battery",
+      "category": "ownership",
+      "source": {
+        "name": "Battery capacity (Ah)",
+        "definition": "A rating for battery charge storage used for starting and electrical systems.",
+        "example": "An 80 Ah and a 100 Ah battery may have different cranking capability.",
+        "caution": "Amp-hours and cold-cranking amps are different specifications."
+      },
+      "names": {
+        "de": "Batteriekapazität (Ah)",
+        "fr": "Capacité de la batterie (Ah)",
+        "es": "Capacidad de la batería (Ah)",
+        "pt-br": "Capacidade da bateria (Ah)",
+        "zh": "蓄电池容量（Ah）",
+        "hi": "बैटरी क्षमता (Ah)",
+        "ru": "Ёмкость аккумулятора (А·ч)",
+        "ja": "バッテリー容量（Ah）"
+      }
+    },
+    {
+      "id": "alternator",
+      "category": "ownership",
+      "source": {
+        "name": "Alternator output (A)",
+        "definition": "The engine-driven generator supplying electrical loads and charging the battery.",
+        "example": "Extra lights and electronic devices increase electrical demand.",
+        "caution": "Rated amps may only be available at specified engine speed."
+      },
+      "names": {
+        "de": "Lichtmaschinenleistung (A)",
+        "fr": "Débit de l’alternateur (A)",
+        "es": "Corriente del alternador (A)",
+        "pt-br": "Corrente do alternador (A)",
+        "zh": "发电机输出电流（A）",
+        "hi": "अल्टरनेटर आउटपुट (A)",
+        "ru": "Ток генератора (А)",
+        "ja": "オルタネーター出力電流（A）"
+      }
+    },
+    {
+      "id": "isobus",
+      "category": "ownership",
+      "source": {
+        "name": "ISOBUS tractor-implement communication",
+        "definition": "A standardised communication family allowing compatible tractors and implements to exchange data and controls.",
+        "example": "A compatible drill can exchange setup and work data through a display.",
+        "caution": "An ISOBUS socket does not guarantee every function works with every implement."
+      },
+      "names": {
+        "de": "ISOBUS-Traktor-Geräte-Kommunikation",
+        "fr": "Communication tracteur-outil ISOBUS",
+        "es": "Comunicación tractor-apero ISOBUS",
+        "pt-br": "Comunicação trator-implemento ISOBUS",
+        "zh": "ISOBUS 拖拉机与机具通信",
+        "hi": "ISOBUS ट्रैक्टर-उपकरण संचार",
+        "ru": "Связь трактора и орудия ISOBUS",
+        "ja": "ISOBUSによるトラクター・作業機通信"
+      }
+    },
+    {
+      "id": "gps-guidance",
+      "category": "ownership",
+      "source": {
+        "name": "GNSS guidance and autosteer",
+        "definition": "Satellite-based systems that display guidance lines or steer compatible tractors.",
+        "example": "It can help reduce pass overlap during precision fieldwork.",
+        "caution": "Accuracy depends on correction service, receiver and application."
+      },
+      "names": {
+        "de": "GNSS-Spurführung und automatische Lenkung",
+        "fr": "Guidage GNSS et autoguidage",
+        "es": "Guiado GNSS y dirección automática",
+        "pt-br": "Orientação GNSS e direção automática",
+        "zh": "GNSS 导航与自动转向",
+        "hi": "GNSS मार्गदर्शन और ऑटो-स्टीयर",
+        "ru": "Навигация GNSS и автоматическое руление",
+        "ja": "GNSSガイダンスと自動操舵"
+      }
+    },
+    {
+      "id": "engine-type",
+      "category": "engine",
+      "source": {
+        "name": "Engine operating type",
+        "definition": "Describes basic engine operation, such as diesel or petrol, four-stroke or two-stroke and cooling method.",
+        "example": "A four-stroke diesel engine completes a power cycle over two crankshaft revolutions.",
+        "caution": "Engine type is not the same field as its model code or rated horsepower."
+      },
+      "names": {
+        "de": "Motorarbeitsprinzip",
+        "fr": "Type de fonctionnement du moteur",
+        "es": "Tipo de funcionamiento del motor",
+        "pt-br": "Tipo de funcionamento do motor",
+        "zh": "发动机工作类型",
+        "hi": "इंजन संचालन का प्रकार",
+        "ru": "Тип рабочего процесса двигателя",
+        "ja": "エンジンの作動方式"
+      }
+    },
+    {
+      "id": "external-controls",
+      "category": "hydraulics",
+      "source": {
+        "name": "External rear-linkage controls",
+        "definition": "Controls that permit rear linkage positioning from outside the cab under prescribed conditions.",
+        "example": "Fender-mounted lift buttons may ease positioning when coupling an implement.",
+        "caution": "Never stand in a crush zone between tractor and implement; follow safe procedures."
+      },
+      "names": {
+        "de": "Externe Heckkraftheberbedienung",
+        "fr": "Commandes extérieures du relevage arrière",
+        "es": "Mandos externos del elevador trasero",
+        "pt-br": "Comandos externos do levante traseiro",
+        "zh": "后悬挂外部控制",
+        "hi": "बाहरी पिछले हिच नियंत्रण",
+        "ru": "Наружное управление задней навеской",
+        "ja": "後部リンク外部操作装置"
+      }
+    },
+    {
+      "id": "engine-oil",
+      "category": "ownership",
+      "source": {
+        "name": "Engine oil capacity",
+        "definition": "The prescribed oil fill for the sump and lubrication system, critical to wear and heat management.",
+        "example": "An 11-litre engine oil fill is not an 11-litre fuel-consumption figure.",
+        "caution": "Fill quantity can differ with filter changes and engine versions; check the dipstick."
+      },
+      "names": {
+        "de": "Motorölfüllmenge",
+        "fr": "Capacité d’huile moteur",
+        "es": "Capacidad de aceite del motor",
+        "pt-br": "Capacidade de óleo do motor",
+        "zh": "发动机机油容量",
+        "hi": "इंजन तेल क्षमता",
+        "ru": "Объём моторного масла",
+        "ja": "エンジンオイル容量"
+      }
+    },
+    {
+      "id": "cab-visibility",
+      "category": "safety",
+      "source": {
+        "name": "Cab glass area, visibility and volume",
+        "definition": "Separate design measures describing all-round visibility and the operator's enclosure.",
+        "example": "Good sight lines help loader operators see loads and people nearby.",
+        "caution": "Glass area alone does not measure blind spots, sound insulation or safety certification."
+      },
+      "names": {
+        "de": "Kabinenverglasung, Sicht und Volumen",
+        "fr": "Surface vitrée, visibilité et volume de cabine",
+        "es": "Superficie acristalada, visibilidad y volumen de cabina",
+        "pt-br": "Área envidraçada, visibilidade e volume da cabine",
+        "zh": "驾驶室玻璃面积、视野与容积",
+        "hi": "केबिन काँच क्षेत्र, दृश्यता और आयतन",
+        "ru": "Площадь остекления, обзорность и объём кабины",
+        "ja": "キャビンガラス面積・視界・容積"
+      }
+    },
+    {
+      "id": "model-identity",
+      "category": "ownership",
+      "source": {
+        "name": "Model code, year and market variant",
+        "definition": "Identifiers used to distinguish product families, generations, engines or target markets.",
+        "example": "A model name can cover distinct US and European transmissions.",
+        "caution": "Never transfer a specification to another variant without exact identity evidence."
+      },
+      "names": {
+        "de": "Modellcode, Baujahr und Marktvariante",
+        "fr": "Code modèle, année et variante de marché",
+        "es": "Código de modelo, año y variante de mercado",
+        "pt-br": "Código do modelo, ano e versão de mercado",
+        "zh": "型号代码、年份与市场变型",
+        "hi": "मॉडल कोड, वर्ष और बाज़ार संस्करण",
+        "ru": "Код модели, год и рыночный вариант",
+        "ja": "型式コード・年式・市場別仕様"
+      }
+    },
+    {
+      "id": "transport-lock",
+      "category": "safety",
+      "source": {
+        "name": "Transport lock and implement security",
+        "definition": "Mechanical or hydraulic provisions intended to limit unwanted implement movement during transport or parking.",
+        "example": "A folding mower may require a transport lock before road travel.",
+        "caution": "A transport lock does not replace the manufacturer's road and load limits."
+      },
+      "names": {
+        "de": "Transportsicherung und Gerätesicherung",
+        "fr": "Verrouillage de transport et sécurité de l’outil",
+        "es": "Bloqueo de transporte y seguridad del apero",
+        "pt-br": "Trava de transporte e segurança do implemento",
+        "zh": "运输锁止与机具固定",
+        "hi": "ट्रांसपोर्ट लॉक और उपकरण सुरक्षा",
+        "ru": "Транспортный фиксатор и фиксация орудия",
+        "ja": "輸送ロックと作業機の固定"
+      }
+    },
+    {
+      "id": "cab-comfort",
+      "category": "safety",
+      "source": {
+        "name": "Heated mirrors and window defrosting",
+        "definition": "Electrical features that help clear mist or ice from mirrors and windows in cold, damp weather.",
+        "example": "Clearing a misted rear window can help when reversing.",
+        "caution": "Heated mirrors do not prove all views are clear or the feature is standard."
+      },
+      "names": {
+        "de": "Beheizbare Spiegel und Scheibenentfrostung",
+        "fr": "Rétroviseurs chauffants et dégivrage des vitres",
+        "es": "Retrovisores calefactados y desempañado de cristales",
+        "pt-br": "Retrovisores aquecidos e desembaçamento dos vidros",
+        "zh": "加热后视镜与车窗除霜",
+        "hi": "हीटेड मिरर और विंडो डीफ़्रॉस्टिंग",
+        "ru": "Обогрев зеркал и размораживание стёкол",
+        "ja": "ヒーター付きミラーと窓の霜取り"
+      }
+    }
+  ]
+}

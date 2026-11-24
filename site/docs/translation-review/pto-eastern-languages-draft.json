@@ -1,0 +1,288 @@
+{
+  "state": "draft-needs-independent-editorial-review",
+  "sourceBlobSha": "853424394588964819f45e85b60d4dbcfdaa9e18",
+  "sourceSlug": "pto-and-power-take-off",
+  "sourceLanguage": "en",
+  "sourceComponent": "site/src/components/TractorTechnicalDeepDive.astro",
+  "source": {
+    "title": "What Is a Tractor PTO? 540, 540E and 1000 RPM Explained",
+    "description": "Learn how the tractor power take-off works, why 540, 540E and 1000 rpm differ, and how to check safe implement compatibility.",
+    "lead": "How does a mower rotate while the tractor moves? The power take-off carries mechanical power to the implement. But seeing 'PTO' on a specification sheet does not mean every attachment is compatible: speed, shaft coupling and usable power are separate questions.",
+    "comparisonNote": "If a mower calls for 540 rpm, first check that the tractor can deliver that speed at the PTO shaft. Then match the shaft connection and the mower’s PTO power requirement. Engine horsepower alone answers neither question.",
+    "sections": [
+      {
+        "anchor": "nasil-calisir",
+        "title": "What does the PTO actually do?",
+        "paragraphs": [
+          "The engine's rotation passes through the driveline to a rear or front power output. With the correct guarded shaft, the implement uses that rotation for its blades, rotor or pump. Pulling an implement and rotating it are different tasks, so tyre traction and PTO power have different roles.",
+          "A rotary tiller moves across the field while its rotor turns. These demands should not be described by one horsepower figure. Look for separate engine output and PTO output values."
+        ]
+      },
+      {
+        "anchor": "540-540e-1000",
+        "title": "540, 540E and 1000 rpm: why they differ",
+        "paragraphs": [
+          "540 rpm is a common rated PTO shaft speed. On a compatible tractor, 540E can deliver a 540 rpm output at a lower engine speed, potentially reducing fuel use and noise in light work. It is not a universal feature or a guarantee of savings at heavy load.",
+          "Never select 1000 rpm simply because it sounds more powerful. Match the implement's specified operating speed. Driving a 540 rpm implement at 1000 rpm can cause severe damage or injury."
+        ]
+      },
+      {
+        "anchor": "guc-ve-baglanti",
+        "title": "Checking PTO power and coupling size",
+        "paragraphs": [
+          "Engine power is measured at the engine; PTO power is available at the output shaft and may be lower because of transmission losses. Compare the implement's stated requirement with PTO power on the same unit and test basis.",
+          "PTO output diameter and spline count determine connection geometry. Shafts with different splines are not interchangeable. Check the implement manual for permitted shaft length, angle, guarding and coupler type."
+        ]
+      },
+      {
+        "anchor": "bagimsiz-pto",
+        "title": "Independent PTO versus two-stage clutch",
+        "paragraphs": [
+          "An independent PTO can be controlled separately from tractor travel. In some two-stage clutch systems, pressing the pedal first disengages travel and then the PTO. Those mechanisms are not identical and should not be assumed to behave the same.",
+          "For baling and frequent stops, inspect the exact engagement arrangement in the model's manual rather than relying on a generic PTO label."
+        ]
+      },
+      {
+        "anchor": "satin-alma",
+        "title": "A pre-purchase PTO compatibility check",
+        "paragraphs": [
+          "Write down the implement's permitted PTO speeds and power requirement. Then compare verified tractor PTO power, selectable speed modes, spline geometry and coupling dimensions. An unlisted feature is unknown—not automatically present.",
+          "Finally consider hitch category, implement mass and any required hydraulic couplers. PTO compatibility is only part of the overall machine match. Never operate an unguarded rotating shaft. Before making or adjusting a PTO connection, follow the tractor and implement manuals: apply the parking brake, disengage power, stop the engine, remove the key and wait until every moving part has stopped."
+        ]
+      }
+    ],
+    "sources": [
+      "https://tractortestlab.unl.edu/",
+      "https://www.oecd.org/en/topics/tractors.html",
+      "https://www.hse.gov.uk/agriculture/topics/machinery/safe-use-1.htm"
+    ],
+    "verification": "This article is educational and does not claim hands-on testing, component disassembly or tractor ownership. For a model-specific number, confirm the exact tractor, year, market and equipment in the producer's documentation. Where independent tests exist, compare their test procedures.",
+    "sourceLabels": [
+      "Nebraska Tractor Test Laboratory",
+      "OECD tractor testing codes",
+      "HSE — safe stop procedure for agricultural machinery"
+    ]
+  },
+  "reviewed": false,
+  "notForPublication": true,
+  "translations": {
+    "zh": {
+      "title": "拖拉机动力输出轴（PTO）是什么？540、540E 和 1000 转/分钟详解",
+      "description": "了解拖拉机动力输出轴的工作原理、540、540E 和 1000 转/分钟的区别，以及如何安全核对机具匹配性。",
+      "lead": "拖拉机前进时，割草机如何旋转？动力输出轴向机具传递机械功率。技术参数表中有 PTO 并不代表所有机具都能匹配；转速、轴的连接方式和可用功率需要分别核对。",
+      "comparisonNote": "如果割草机要求 540 转/分钟，首先核对拖拉机的动力输出轴能否提供该转速，再核对轴的连接方式和割草机所需的 PTO 功率。仅凭发动机功率无法回答这些问题。",
+      "sections": [
+        {
+          "anchor": "nasil-calisir",
+          "title": "动力输出轴究竟有什么作用？",
+          "paragraphs": [
+            "发动机的旋转运动通过传动系统传到后部或前部的动力输出端。使用匹配且带防护装置的传动轴，机具利用这种旋转运动驱动刀片、转子或泵。牵引机具和驱动机具旋转是不同的工作，轮胎牵引力与 PTO 功率的作用也不同。",
+            "旋耕机在田间前进的同时，其转子也在旋转。不能用一个功率数值概括这两种需求，应分别查看发动机功率和 PTO 输出功率。"
+          ]
+        },
+        {
+          "anchor": "540-540e-1000",
+          "title": "540、540E 和 1000 转/分钟有何区别？",
+          "paragraphs": [
+            "540 转/分钟是常见的 PTO 额定转速。对于支持该功能的拖拉机，540E 可在较低发动机转速下提供 540 转/分钟的输出，轻负荷作业时可能减少燃油消耗和噪声。这并非所有车型都有的功能，也不保证重负荷下能够节省燃油。",
+            "绝不能仅因为 1000 转/分钟听起来功率更大就选择该档位。必须匹配机具规定的工作转速。以 1000 转/分钟驱动额定转速为 540 转/分钟的机具，可能造成严重损坏或人身伤害。"
+          ]
+        },
+        {
+          "anchor": "guc-ve-baglanti",
+          "title": "如何核对 PTO 功率和连接尺寸？",
+          "paragraphs": [
+            "发动机功率在发动机处测量；PTO 功率是在输出轴处可获得的功率，可能因传动损失而较低。用相同的单位和试验依据，将机具规定的功率需求与 PTO 功率进行比较。",
+            "PTO 输出轴的直径和花键数量决定连接几何尺寸。不同花键的轴不能互换。请查阅机具说明书，核对允许的传动轴长度、角度、防护装置及联接器类型。"
+          ]
+        },
+        {
+          "anchor": "bagimsiz-pto",
+          "title": "独立式 PTO 与双级离合器的区别",
+          "paragraphs": [
+            "独立式 PTO 可以与拖拉机行驶传动系统分开控制。在某些双级离合器系统中，踏板的第一段行程分离行驶传动，第二段分离 PTO。这两种机构并不相同，不能假定其工作方式一致。",
+            "打捆作业及需要频繁停车时，应查看具体型号说明书中的接合机构，而不是仅凭一般的 PTO 名称判断。"
+          ]
+        },
+        {
+          "anchor": "satin-alma",
+          "title": "购买机具前的 PTO 匹配检查",
+          "paragraphs": [
+            "记录机具允许的 PTO 转速和功率要求，再与拖拉机已核实的 PTO 功率、可选转速模式、花键几何尺寸和联接尺寸比较。未列出的功能属于未知，并不意味着一定具备。",
+            "还要考虑悬挂装置类别、机具质量以及所需的液压接头。PTO 匹配只是整机匹配的一部分。绝不可使用无防护的旋转轴。连接或调整 PTO 前，遵循拖拉机和机具说明书：拉紧驻车制动器、断开动力传动、关闭发动机、拔下钥匙，并等待所有运动部件完全停止。"
+          ]
+        }
+      ],
+      "verification": "本文仅用于技术知识介绍，并不声称进行过实机试验、拆解零部件或拥有拖拉机。对于具体车型的数值，应查阅制造商文件，确认准确的型号、年份、销售市场和配置。如有独立试验，还应比较试验方法。",
+      "sourceLabels": [
+        "内布拉斯加拖拉机试验实验室",
+        "OECD 拖拉机试验规范",
+        "HSE — 农业机械安全停机程序"
+      ]
+    },
+    "hi": {
+      "title": "ट्रैक्टर का पावर टेक-ऑफ (PTO) क्या है? 540, 540E और 1000 rpm की व्याख्या",
+      "description": "ट्रैक्टर के PTO का काम, 540, 540E और 1000 rpm में अंतर तथा कृषि उपकरण की सुरक्षित संगतता जाँचने का तरीका समझें।",
+      "lead": "ट्रैक्टर आगे बढ़ता है तो घास काटने वाली मशीन कैसे घूमती है? पावर टेक-ऑफ उपकरण तक यांत्रिक शक्ति पहुँचाता है। विनिर्देश पत्र में PTO लिखा होने का अर्थ यह नहीं कि हर उपकरण संगत है: गति, शाफ्ट का जोड़ और उपलब्ध शक्ति अलग-अलग बातें हैं।",
+      "comparisonNote": "यदि घास काटने वाली मशीन को 540 rpm चाहिए, तो पहले जाँचें कि ट्रैक्टर PTO शाफ्ट पर यह गति दे सकता है। फिर शाफ्ट के जोड़ और मशीन की PTO शक्ति की आवश्यकता का मिलान करें। केवल इंजन की अश्वशक्ति से इन प्रश्नों का उत्तर नहीं मिलता।",
+      "sections": [
+        {
+          "anchor": "nasil-calisir",
+          "title": "PTO वास्तव में क्या करता है?",
+          "paragraphs": [
+            "इंजन की घूर्णन गति संचरण तंत्र से होकर पीछे या आगे के शक्ति-निर्गम तक पहुँचती है। सही और सुरक्षा कवच वाले शाफ्ट की सहायता से उपकरण इस गति से अपने ब्लेड, रोटर या पंप चलाता है। उपकरण को खींचना और उसे घुमाकर चलाना अलग काम हैं, इसलिए टायरों की कर्षण क्षमता और PTO शक्ति की भूमिकाएँ भी अलग हैं।",
+            "रोटरी टिलर खेत में आगे बढ़ता है और उसका रोटर साथ-साथ घूमता है। इन दोनों आवश्यकताओं को एक ही अश्वशक्ति के आँकड़े से नहीं बताना चाहिए। इंजन और PTO की अलग-अलग निर्गम शक्ति देखें।"
+          ]
+        },
+        {
+          "anchor": "540-540e-1000",
+          "title": "540, 540E और 1000 rpm में क्या अंतर है?",
+          "paragraphs": [
+            "540 rpm PTO शाफ्ट की एक प्रचलित निर्धारित गति है। संगत ट्रैक्टर में 540E कम इंजन गति पर 540 rpm का निर्गम दे सकता है, जिससे हल्के काम में ईंधन और शोर कम हो सकते हैं। यह हर ट्रैक्टर में उपलब्ध नहीं है और भारी भार में बचत की गारंटी नहीं देता।",
+            "केवल अधिक शक्तिशाली लगने के कारण कभी 1000 rpm न चुनें। उपकरण की निर्धारित संचालन गति का पालन करें। 540 rpm वाले उपकरण को 1000 rpm पर चलाने से गंभीर क्षति या चोट हो सकती है।"
+          ]
+        },
+        {
+          "anchor": "guc-ve-baglanti",
+          "title": "PTO शक्ति और जोड़ के आयाम जाँचना",
+          "paragraphs": [
+            "इंजन शक्ति इंजन पर मापी जाती है; PTO शक्ति निर्गम शाफ्ट पर उपलब्ध होती है और संचरण में होने वाली हानियों के कारण कम हो सकती है। समान इकाई और परीक्षण आधार पर उपकरण की घोषित आवश्यकता की तुलना PTO शक्ति से करें।",
+            "PTO निर्गम शाफ्ट का व्यास और स्प्लाइन की संख्या उसके जोड़ के आयाम निर्धारित करते हैं। अलग स्प्लाइन वाले शाफ्ट परस्पर बदलकर नहीं लगाए जा सकते। अनुमत शाफ्ट लंबाई, कोण, सुरक्षा कवच और कपलिंग के प्रकार के लिए उपकरण की पुस्तिका देखें।"
+          ]
+        },
+        {
+          "anchor": "bagimsiz-pto",
+          "title": "स्वतंत्र PTO और दो-चरण वाले क्लच का अंतर",
+          "paragraphs": [
+            "स्वतंत्र PTO को ट्रैक्टर की चाल से अलग नियंत्रित किया जा सकता है। कुछ दो-चरण वाले क्लच में पैडल पहले चाल के संचरण को और फिर PTO को अलग करता है। दोनों तंत्र एक जैसे नहीं हैं और इनके व्यवहार को समान नहीं मानना चाहिए।",
+            "गाँठ बनाने वाली बेलर मशीन और बार-बार रुकने वाले कामों के लिए सामान्य PTO नाम पर निर्भर होने के बजाय संबंधित मॉडल की पुस्तिका में उसके जुड़ने और अलग होने की व्यवस्था देखें।"
+          ]
+        },
+        {
+          "anchor": "satin-alma",
+          "title": "उपकरण खरीदने से पहले PTO संगतता की जाँच",
+          "paragraphs": [
+            "उपकरण की अनुमत PTO गतियाँ और शक्ति की आवश्यकता लिखें। फिर ट्रैक्टर की प्रमाणित PTO शक्ति, उपलब्ध गति मोड, स्प्लाइन के आयाम और कपलिंग के आयामों से उनका मिलान करें। जो विशेषता सूची में नहीं है, उसे अज्ञात समझें; यह न मानें कि वह अवश्य मौजूद है।",
+            "अंत में हिच की श्रेणी, उपकरण का द्रव्यमान और आवश्यक हाइड्रोलिक जोड़ भी देखें। PTO की संगतता पूरे संयोजन की उपयुक्तता का केवल एक भाग है। बिना सुरक्षा कवच के घूमता शाफ्ट कभी न चलाएँ। PTO जोड़ने या समायोजित करने से पहले ट्रैक्टर और उपकरण की पुस्तिकाओं का पालन करें: पार्किंग ब्रेक लगाएँ, शक्ति संचरण अलग करें, इंजन बंद करें, चाबी निकालें और सभी चलने वाले हिस्सों के पूर्णतः रुकने की प्रतीक्षा करें।"
+          ]
+        }
+      ],
+      "verification": "यह लेख शैक्षिक है; इसमें स्वयं ट्रैक्टर चलाकर परीक्षण करने, पुर्जे खोलने या ट्रैक्टर का मालिक होने का दावा नहीं किया गया है। किसी मॉडल के विशिष्ट आँकड़े के लिए निर्माता के दस्तावेज़ में सटीक मॉडल, वर्ष, बाज़ार और उपकरण की पुष्टि करें। स्वतंत्र परीक्षण उपलब्ध हों तो उनकी परीक्षण विधियों की तुलना करें।",
+      "sourceLabels": [
+        "नेब्रास्का ट्रैक्टर परीक्षण प्रयोगशाला",
+        "OECD ट्रैक्टर परीक्षण कोड",
+        "HSE — कृषि मशीनों को सुरक्षित ढंग से रोकने की प्रक्रिया"
+      ]
+    },
+    "ru": {
+      "title": "Что такое вал отбора мощности (ВОМ/PTO) трактора? 540, 540E и 1000 об/мин",
+      "description": "Как работает ВОМ трактора, чем отличаются 540, 540E и 1000 об/мин и как проверить безопасную совместимость орудий.",
+      "lead": "Как вращается косилка во время движения трактора? Вал отбора мощности передаёт механическую мощность орудию. Указание ВОМ в технических характеристиках не означает совместимость со всеми орудиями: частота вращения, соединение вала и доступная мощность требуют отдельных проверок.",
+      "comparisonNote": "Если косилка рассчитана на 540 об/мин, сначала убедитесь, что трактор может обеспечить такую частоту вращения ВОМ. Затем проверьте соединение вала и требуемую косилке мощность ВОМ. Одной мощности двигателя недостаточно для ответа на эти вопросы.",
+      "sections": [
+        {
+          "anchor": "nasil-calisir",
+          "title": "Для чего нужен ВОМ?",
+          "paragraphs": [
+            "Вращение двигателя передаётся через трансмиссию на задний или передний выход отбора мощности. При помощи подходящего защищённого карданного вала орудие приводит во вращение ножи, ротор или насос. Тянуть орудие и приводить его во вращение — разные задачи; тяговые свойства шин и мощность ВОМ выполняют разные функции.",
+            "Почвообрабатывающая фреза движется по полю, одновременно вращается её ротор. Эти требования нельзя выразить одной цифрой мощности. Ищите отдельные значения мощности двигателя и ВОМ."
+          ]
+        },
+        {
+          "anchor": "540-540e-1000",
+          "title": "540, 540E и 1000 об/мин: в чём разница?",
+          "paragraphs": [
+            "540 об/мин — распространённая номинальная частота вращения ВОМ. На совместимом тракторе режим 540E позволяет получить на выходе 540 об/мин при меньших оборотах двигателя, что может снизить расход топлива и шум при лёгкой работе. Такая функция есть не у всех тракторов и не гарантирует экономии при большой нагрузке.",
+            "Никогда не выбирайте 1000 об/мин только потому, что это кажется более мощным режимом. Соблюдайте установленную для орудия рабочую частоту вращения. Привод орудия, рассчитанного на 540 об/мин, с частотой 1000 об/мин может привести к серьёзным повреждениям или травмам."
+          ]
+        },
+        {
+          "anchor": "guc-ve-baglanti",
+          "title": "Проверка мощности ВОМ и размеров соединения",
+          "paragraphs": [
+            "Мощность двигателя измеряется на двигателе; мощность ВОМ доступна на выходном валу и может быть ниже из-за потерь в трансмиссии. Сопоставляйте заявленные требования орудия с мощностью ВОМ в одинаковых единицах и при сопоставимом методе испытаний.",
+            "Диаметр выходного вала ВОМ и количество шлицев определяют геометрию соединения. Валы с разными шлицами не взаимозаменяемы. По руководству орудия уточните допустимую длину и угол карданного вала, защитные устройства и тип соединительной муфты."
+          ]
+        },
+        {
+          "anchor": "bagimsiz-pto",
+          "title": "Независимый ВОМ и двухступенчатое сцепление",
+          "paragraphs": [
+            "Независимым ВОМ можно управлять отдельно от движения трактора. В некоторых системах двухступенчатого сцепления первая ступень хода педали отключает движение, а вторая — ВОМ. Механизмы не идентичны, поэтому нельзя считать, что они действуют одинаково.",
+            "При прессовании тюков и частых остановках уточняйте устройство включения в руководстве конкретной модели, а не по общему обозначению ВОМ."
+          ]
+        },
+        {
+          "anchor": "satin-alma",
+          "title": "Проверка совместимости перед покупкой орудия",
+          "paragraphs": [
+            "Запишите допустимую частоту вращения ВОМ и потребную мощность орудия. Затем сравните подтверждённую мощность ВОМ трактора, доступные режимы вращения, геометрию шлицев и размеры соединения. Если характеристика не указана, она неизвестна, а не гарантированно присутствует.",
+            "Учитывайте также категорию навески, массу орудия и необходимые гидравлические соединения. Совместимость ВОМ — лишь часть пригодности всего агрегата. Никогда не эксплуатируйте вращающийся вал без защиты. Перед подключением или регулировкой ВОМ следуйте руководствам трактора и орудия: включите стояночный тормоз, отключите передачу мощности, остановите двигатель, выньте ключ и дождитесь полной остановки всех движущихся деталей."
+          ]
+        }
+      ],
+      "verification": "Статья носит образовательный характер; она не утверждает, что авторы проводили практические испытания, разбирали узлы или владели трактором. Для конкретного показателя проверьте точную модель, год, рынок и комплектацию в документации производителя. Если доступны независимые испытания, сравните методики.",
+      "sourceLabels": [
+        "Лаборатория тракторных испытаний Небраски",
+        "Кодексы ОЭСР для испытаний тракторов",
+        "HSE — процедура безопасной остановки сельскохозяйственных машин"
+      ]
+    },
+    "ja": {
+      "title": "トラクターのPTO（動力取出軸）とは？540、540E、1000 rpmの違い",
+      "description": "トラクターのPTOの仕組み、540、540E、1000 rpmの違い、作業機との安全な適合性の確認方法を解説します。",
+      "lead": "トラクターが走行している間、モアはどのように回転するのでしょうか。PTOは作業機へ機械的な動力を伝えます。仕様表にPTOと書いてあっても、すべての作業機に対応するわけではありません。回転速度、軸の接続、利用できる出力は別々に確認する必要があります。",
+      "comparisonNote": "モアが540 rpmを必要とする場合、まずトラクターのPTO軸でその回転速度を出せるか確認します。次に軸の接続方法とモアが必要とするPTO出力を照合します。エンジンの馬力だけでは判断できません。",
+      "sections": [
+        {
+          "anchor": "nasil-calisir",
+          "title": "PTOは何をする装置か",
+          "paragraphs": [
+            "エンジンの回転は動力伝達系を通じて後部または前部の動力取出口に伝わります。適切な安全カバー付き伝動軸を使用すると、作業機はその回転によって刃、ローター、ポンプなどを駆動できます。作業機をけん引することと回転駆動することは別の作業で、タイヤのけん引力とPTO出力の役割も異なります。",
+            "ロータリー耕うん機は圃場を進みながらローターを回転させます。この二つの要求を一つの馬力の数値で表すべきではありません。エンジン出力とPTO出力を別々に確認しましょう。"
+          ]
+        },
+        {
+          "anchor": "540-540e-1000",
+          "title": "540、540E、1000 rpmはなぜ異なるのか",
+          "paragraphs": [
+            "540 rpmは一般的なPTO軸の定格回転速度です。対応するトラクターでは540Eを使うと、低いエンジン回転数で540 rpmのPTO出力回転速度を得られる場合があり、軽作業時に燃料消費や騒音を抑えられる可能性があります。全機種に備わる機能ではなく、高負荷時の節約を保証するものでもありません。",
+            "高出力に見えるという理由だけで1000 rpmを選ばないでください。作業機指定の運転回転速度に合わせます。540 rpm用の作業機を1000 rpmで駆動すると、重大な破損やけがにつながるおそれがあります。"
+          ]
+        },
+        {
+          "anchor": "guc-ve-baglanti",
+          "title": "PTO出力と接続寸法の確認",
+          "paragraphs": [
+            "エンジン出力はエンジンで測定され、PTO出力は出力軸で利用可能な動力です。伝達損失によりPTO出力の方が小さいことがあります。同じ単位と試験条件に基づいて、作業機の要求出力とPTO出力を比較してください。",
+            "PTO軸の直径とスプライン数が接続形状を決めます。スプラインの異なる軸は互換ではありません。伝動軸の許容長さ、角度、安全カバー、継手の種類を作業機の取扱説明書で確認します。"
+          ]
+        },
+        {
+          "anchor": "bagimsiz-pto",
+          "title": "独立PTOと二段クラッチの違い",
+          "paragraphs": [
+            "独立PTOはトラクターの走行とは別に操作できます。一部の二段クラッチでは、ペダルの第一段で走行動力を切り、第二段でPTOを切ります。両者は同一の機構ではなく、同じように動作すると考えてはいけません。",
+            "ベーラーによる梱包作業や頻繁に停止する作業では、一般的なPTOの名称ではなく、機種の取扱説明書で具体的な接続・切断方式を確認します。"
+          ]
+        },
+        {
+          "anchor": "satin-alma",
+          "title": "作業機を購入する前の適合性確認",
+          "paragraphs": [
+            "作業機の許容PTO回転速度と必要出力を記録します。トラクターの確認済みPTO出力、選択可能な回転速度、スプライン形状、継手寸法と比較してください。記載がない機能は不明であり、備わっているとみなしてはいけません。",
+            "最後に三点リンクなどの連結装置のカテゴリ、作業機の質量、必要な油圧継手も考慮します。PTOの適合性は全体の適合性の一部にすぎません。安全カバーのない回転軸を絶対に運転しないでください。PTOの接続・調整前はトラクターと作業機の取扱説明書に従い、駐車ブレーキをかけ、動力伝達を切り、エンジンを停止し、キーを抜いて、すべての可動部が完全に停止するまで待ちます。"
+          ]
+        }
+      ],
+      "verification": "この記事は技術教育を目的としており、実機試験、部品の分解、トラクターの所有経験を主張するものではありません。特定の機種の数値は製造元の資料で正確な型式、年式、市場、装備を確認してください。独立した試験がある場合は、その試験方法を比較します。",
+      "sourceLabels": [
+        "ネブラスカ・トラクター試験研究所",
+        "OECDトラクター試験コード",
+        "HSE — 農業機械の安全な停止手順"
+      ]
+    }
+  },
+  "sourceComponentBlobSha": "e8a86025ece122ad013843e9d3305843970f60f5",
+  "translationScope": "Main article, comparison note, verification disclosure and source link labels only. UI, glossary links, photo credit and related content must be integrated and reviewed before publishing."
+}

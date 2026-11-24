@@ -1,0 +1,453 @@
+{
+  "state": "draft-needs-independent-editorial-review",
+  "sourceBlobSha": "a5379d60c7c1f53dfcfb528c9ee7743a450faaa5",
+  "scope": "14 glossary entries directly referenced by the three technical guides. Partial glossary; not for publication.",
+  "reviewed": false,
+  "notForPublication": true,
+  "source": [
+    {
+      "id": "engine-power",
+      "name": "Engine power",
+      "definition": "The rate at which an engine can do work, shown as hp, metric PS/CV or kW.",
+      "example": "Trailer hauling and mowing can demand power in different ways.",
+      "caution": "Compare the test point and hp/PS units; a model number is not a verified power figure."
+    },
+    {
+      "id": "rated-power",
+      "name": "Rated engine power",
+      "definition": "Power specified by the manufacturer at a stated rated engine speed.",
+      "example": "When two tractors are called 100 hp, first check whether both figures are rated outputs.",
+      "caution": "Do not compare rated, maximum and boost power as if they were interchangeable."
+    },
+    {
+      "id": "maximum-power",
+      "name": "Maximum power and boost",
+      "definition": "Maximum power is a peak output under specified conditions; boost can be available only in certain operating states.",
+      "example": "A tractor offering transport boost may not supply it continuously in the field.",
+      "caution": "Read the manufacturer’s boost activation conditions and ECE/ISO standard."
+    },
+    {
+      "id": "torque",
+      "name": "Torque (Nm)",
+      "definition": "Turning moment at the crankshaft; it helps describe loaded engine behaviour but is not drawbar pull.",
+      "example": "During slow heavy work, a torque curve can matter more than one peak figure.",
+      "caution": "Check the rpm at which torque occurs and the gearing."
+    },
+    {
+      "id": "pto",
+      "name": "PTO / power take-off",
+      "definition": "Transfers tractor power mechanically to rotating implements.",
+      "example": "Mowers, mixers and rotary tillers can use PTO power.",
+      "caution": "Never remove PTO guarding; contact with a rotating shaft can be fatal."
+    },
+    {
+      "id": "pto-power",
+      "name": "PTO power",
+      "definition": "Power available at the PTO shaft, typically below crankshaft output.",
+      "example": "Use it when checking the input power required by an implement.",
+      "caution": "Do not confuse engine and PTO power or manufacturer estimates and tested results."
+    },
+    {
+      "id": "pto-speeds",
+      "name": "540 / 540E / 1000 PTO speeds",
+      "definition": "Selectable PTO shaft speeds; 540E may reach 540 shaft rpm at lower engine rpm.",
+      "example": "An implement requiring 540 rpm must not be driven at 1,000 rpm.",
+      "caution": "Match the implement manual’s permitted PTO speed and shaft type."
+    },
+    {
+      "id": "independent-pto",
+      "name": "Independent PTO / live PTO",
+      "definition": "Describes how independently PTO engagement can be controlled from ground drive.",
+      "example": "Some systems let the implement continue turning while travel stops.",
+      "caution": "Independent, live and two-stage PTO are not identical arrangements."
+    },
+    {
+      "id": "pto-shaft",
+      "name": "PTO shaft size and spline count",
+      "definition": "Describes the PTO output shaft coupling geometry.",
+      "example": "A six-spline 1⅜-inch shaft and a 21-spline shaft are not directly interchangeable.",
+      "caution": "Check speed and shaft geometry separately; use only an approved adaptor."
+    },
+    {
+      "id": "hydraulic-flow",
+      "name": "Hydraulic flow (L/min)",
+      "definition": "The volume of oil moved per unit time under stated conditions.",
+      "example": "Loader cylinder speed is affected by available oil flow.",
+      "caution": "Total pump, steering and implement-available flows can differ."
+    },
+    {
+      "id": "hydraulic-pressure",
+      "name": "Hydraulic pressure (bar)",
+      "definition": "Hydraulic circuit pressure; related to force capability.",
+      "example": "Pressure and cylinder area together affect force.",
+      "caution": "Higher pressure alone does not guarantee fast or large lifting."
+    },
+    {
+      "id": "rear-lift",
+      "name": "Rear linkage lift capacity",
+      "definition": "How much a rear three-point linkage can lift at a specified point and test condition.",
+      "example": "2,500 kg at the ball ends is not the same claim as 2,500 kg at 610 mm behind.",
+      "caution": "Check whether the figure is at ball ends, 610 mm rearward or across the full lift arc."
+    },
+    {
+      "id": "hydraulic-remotes",
+      "name": "Remote hydraulics / SCV / spool",
+      "definition": "Valves and couplers that direct oil to external cylinders and motors.",
+      "example": "A folding rake needs the required number of hydraulic couplers.",
+      "caution": "Check single/double-acting function, flow and outlet count separately."
+    },
+    {
+      "id": "hitch-category",
+      "name": "Hitch category (I, II, III)",
+      "definition": "Standard size class of three-point linkage pins and connections.",
+      "example": "Category I implement pins may not match Category III linkage without adaptation.",
+      "caution": "A higher category does not automatically mean safe lifting of any implement."
+    }
+  ],
+  "translations": {
+    "de": {
+      "engine-power": {
+        "name": "Motorleistung",
+        "definition": "Die Arbeit pro Zeiteinheit, die ein Motor leisten kann, angegeben in hp, metrischen PS/CV oder kW.",
+        "example": "Anhängertransport und Mähen stellen unterschiedliche Leistungsanforderungen.",
+        "caution": "Prüfen Sie Messpunkt und hp/PS-Einheiten; eine Modellnummer ist keine belegte Leistungsangabe."
+      },
+      "rated-power": {
+        "name": "Motornennleistung",
+        "definition": "Vom Hersteller bei einer angegebenen Nenndrehzahl spezifizierte Leistung.",
+        "example": "Werden zwei Traktoren mit 100 hp angegeben, prüfen Sie zuerst, ob beide Werte Nennleistungen sind.",
+        "caution": "Nennleistung, Maximalleistung und Boost nicht als austauschbare Werte vergleichen."
+      },
+      "maximum-power": {
+        "name": "Maximalleistung und Boost",
+        "definition": "Maximalleistung ist die Spitzenleistung unter festgelegten Bedingungen; Boost steht gegebenenfalls nur in bestimmten Betriebszuständen zur Verfügung.",
+        "example": "Ein Traktor mit Transport-Boost liefert diese Leistung auf dem Feld möglicherweise nicht dauerhaft.",
+        "caution": "Lesen Sie die Boost-Aktivierungsbedingungen und die ECE/ISO-Norm des Herstellers."
+      },
+      "torque": {
+        "name": "Drehmoment (Nm)",
+        "definition": "Drehwirkung an der Kurbelwelle; sie beschreibt das Motorverhalten unter Last, ist aber nicht die Zugkraft.",
+        "example": "Bei langsamer schwerer Arbeit kann die Drehmomentkurve wichtiger sein als ein einzelner Spitzenwert.",
+        "caution": "Prüfen Sie die Drehzahl des Drehmoments und die Übersetzung."
+      },
+      "pto": {
+        "name": "Zapfwelle (PTO)",
+        "definition": "Überträgt Traktorleistung mechanisch auf rotierende Geräte.",
+        "example": "Mähwerke, Mischgeräte und Bodenfräsen können Zapfwellenleistung nutzen.",
+        "caution": "Entfernen Sie niemals Zapfwellenschutzvorrichtungen; Kontakt mit einer rotierenden Welle kann tödlich sein."
+      },
+      "pto-power": {
+        "name": "Zapfwellenleistung",
+        "definition": "An der Zapfwelle verfügbare Leistung, meist geringer als an der Kurbelwelle.",
+        "example": "Nutzen Sie sie zur Prüfung der erforderlichen Eingangsleistung eines Geräts.",
+        "caution": "Verwechseln Sie weder Motor- und Zapfwellenleistung noch Herstellerabschätzungen und Prüfwerte."
+      },
+      "pto-speeds": {
+        "name": "Zapfwellendrehzahlen 540 / 540E / 1000",
+        "definition": "Wählbare Zapfwellendrehzahlen; 540E kann 540 U/min bei geringerer Motordrehzahl ermöglichen.",
+        "example": "Ein Gerät für 540 U/min darf nicht mit 1.000 U/min angetrieben werden.",
+        "caution": "Gleichen Sie zulässige Zapfwellendrehzahl und Wellentyp mit der Geräteanleitung ab."
+      },
+      "independent-pto": {
+        "name": "Unabhängige Zapfwelle / Live-PTO",
+        "definition": "Beschreibt, wie unabhängig vom Fahrantrieb die Zapfwelle geschaltet werden kann.",
+        "example": "Bei manchen Systemen kann das Gerät bei stillstehendem Traktor weiterdrehen.",
+        "caution": "Unabhängige Zapfwelle, Live-PTO und Zweistufenkupplung sind nicht identisch."
+      },
+      "pto-shaft": {
+        "name": "Zapfwellenabmessungen und Verzahnungszahl",
+        "definition": "Beschreibt die Anschlussgeometrie der Zapfwelle.",
+        "example": "Eine Welle mit sechs Keilnuten und 1⅜ Zoll sowie eine Welle mit 21 Keilnuten sind nicht direkt austauschbar.",
+        "caution": "Prüfen Sie Drehzahl und Anschlussgeometrie getrennt; verwenden Sie nur zugelassene Adapter."
+      },
+      "hydraulic-flow": {
+        "name": "Hydraulischer Volumenstrom (L/min)",
+        "definition": "Unter angegebenen Bedingungen pro Zeiteinheit bewegtes Ölvolumen.",
+        "example": "Die Geschwindigkeit eines Frontladerzylinders hängt vom verfügbaren Ölvolumenstrom ab.",
+        "caution": "Gesamtfördermenge, Lenkungsvolumenstrom und für Geräte verfügbarer Volumenstrom können abweichen."
+      },
+      "hydraulic-pressure": {
+        "name": "Hydraulikdruck (bar)",
+        "definition": "Druck im Hydraulikkreis; steht in Beziehung zur erzeugbaren Kraft.",
+        "example": "Druck und Zylinderfläche beeinflussen gemeinsam die Kraft.",
+        "caution": "Höherer Druck allein garantiert weder schnelles Heben noch hohe Hubkraft."
+      },
+      "rear-lift": {
+        "name": "Hubkraft des Heckkrafthebers",
+        "definition": "Masse, die der Heck-Dreipunktkraftheber an einem bestimmten Punkt unter festgelegten Prüfbedingungen anheben kann.",
+        "example": "2.500 kg an den Koppelpunkten sind nicht dieselbe Angabe wie 2.500 kg bei 610 mm dahinter.",
+        "caution": "Prüfen Sie, ob an den Koppelpunkten, 610 mm dahinter oder über den gesamten Hubweg gemessen wurde."
+      },
+      "hydraulic-remotes": {
+        "name": "Hydraulische Zusatzsteuergeräte / SCV",
+        "definition": "Ventile und Kupplungen, die Öl zu externen Zylindern und Motoren leiten.",
+        "example": "Ein klappbarer Schwader benötigt die erforderliche Anzahl Hydraulikkupplungen.",
+        "caution": "Prüfen Sie einfach- oder doppeltwirkende Funktion, Volumenstrom und Anschlusszahl separat."
+      },
+      "hitch-category": {
+        "name": "Anbaukategorie (I, II, III)",
+        "definition": "Genormte Größenklasse der Bolzen und Anschlüsse des Dreipunktkrafthebers.",
+        "example": "Gerätebolzen der Kategorie I passen möglicherweise ohne Anpassung nicht an Kategorie III.",
+        "caution": "Eine höhere Kategorie garantiert nicht das sichere Heben beliebiger Geräte."
+      }
+    },
+    "fr": {
+      "engine-power": {
+        "name": "Puissance du moteur",
+        "definition": "Taux de travail que le moteur peut fournir, exprimé en hp, PS/CV métriques ou kW.",
+        "example": "Le transport d’une remorque et la fauche peuvent demander de la puissance différemment.",
+        "caution": "Comparez le point de mesure et les unités hp/PS ; un numéro de modèle ne constitue pas une puissance vérifiée."
+      },
+      "rated-power": {
+        "name": "Puissance nominale du moteur",
+        "definition": "Puissance spécifiée par le constructeur à un régime nominal indiqué.",
+        "example": "Lorsque deux tracteurs sont annoncés à 100 hp, vérifiez d’abord si les deux valeurs sont nominales.",
+        "caution": "Ne considérez pas les puissances nominale, maximale et supplémentaire (boost) comme interchangeables."
+      },
+      "maximum-power": {
+        "name": "Puissance maximale et surpuissance (boost)",
+        "definition": "La puissance maximale est une valeur de pointe dans des conditions définies ; le boost peut n’être disponible que dans certains états de fonctionnement.",
+        "example": "Un tracteur offrant un boost au transport ne le fournit pas forcément en continu au champ.",
+        "caution": "Lisez les conditions d’activation du boost et la norme ECE/ISO du constructeur."
+      },
+      "torque": {
+        "name": "Couple (Nm)",
+        "definition": "Moment de rotation au vilebrequin ; il décrit le comportement du moteur en charge, mais n’est pas l’effort à la barre de traction.",
+        "example": "Lors de travaux lents et lourds, la courbe de couple peut compter davantage qu’une seule valeur maximale.",
+        "caution": "Vérifiez le régime correspondant au couple et les rapports de transmission."
+      },
+      "pto": {
+        "name": "Prise de force (PDF/PTO)",
+        "definition": "Transmet mécaniquement la puissance du tracteur aux outils rotatifs.",
+        "example": "Les faucheuses, mélangeuses et fraises rotatives peuvent utiliser la puissance de la PDF.",
+        "caution": "Ne retirez jamais les protections de la prise de force : un contact avec un arbre tournant peut être mortel."
+      },
+      "pto-power": {
+        "name": "Puissance à la prise de force",
+        "definition": "Puissance disponible à l’arbre de la PDF, généralement inférieure à celle du vilebrequin.",
+        "example": "Utilisez-la pour vérifier la puissance d’entrée exigée par l’outil.",
+        "caution": "Ne confondez ni puissance moteur et puissance à la PDF, ni estimations constructeur et résultats d’essais."
+      },
+      "pto-speeds": {
+        "name": "Régimes de PDF 540 / 540E / 1000",
+        "definition": "Régimes sélectionnables de l’arbre ; 540E peut fournir 540 tr/min à un régime moteur inférieur.",
+        "example": "Un outil prévu pour 540 tr/min ne doit pas être entraîné à 1 000 tr/min.",
+        "caution": "Respectez le régime de PDF et le type d’arbre autorisés par la notice de l’outil."
+      },
+      "independent-pto": {
+        "name": "PDF indépendante / semi-indépendante (live PTO)",
+        "definition": "Décrit le degré d’indépendance de la commande de PDF par rapport à l’avancement.",
+        "example": "Certains systèmes permettent à l’outil de continuer à tourner lorsque l’avancement s’arrête.",
+        "caution": "PDF indépendante, semi-indépendante et embrayage à deux étages ne désignent pas des mécanismes identiques."
+      },
+      "pto-shaft": {
+        "name": "Dimensions et cannelures de l’arbre de PDF",
+        "definition": "Décrit la géométrie de raccordement de l’arbre de sortie.",
+        "example": "Un arbre à six cannelures de 1⅜ pouce et un arbre à 21 cannelures ne sont pas directement interchangeables.",
+        "caution": "Vérifiez séparément le régime et la géométrie de l’arbre ; utilisez uniquement un adaptateur homologué."
+      },
+      "hydraulic-flow": {
+        "name": "Débit hydraulique (L/min)",
+        "definition": "Volume d’huile déplacé par unité de temps dans des conditions indiquées.",
+        "example": "La vitesse du vérin d’un chargeur dépend du débit disponible.",
+        "caution": "Le débit total, celui de la direction et celui disponible pour les outils peuvent différer."
+      },
+      "hydraulic-pressure": {
+        "name": "Pression hydraulique (bar)",
+        "definition": "Pression du circuit hydraulique, liée à sa capacité à produire une force.",
+        "example": "La pression et la surface du vérin influencent ensemble la force.",
+        "caution": "Une pression plus élevée ne garantit à elle seule ni un relevage rapide ni une grande capacité."
+      },
+      "rear-lift": {
+        "name": "Capacité du relevage arrière",
+        "definition": "Masse que l’attelage arrière trois points peut soulever à un point et dans des conditions d’essai définis.",
+        "example": "2 500 kg aux rotules ne représentent pas la même mesure que 2 500 kg à 610 mm derrière celles-ci.",
+        "caution": "Vérifiez si le chiffre concerne les rotules, 610 mm derrière elles ou l’ensemble de la course de relevage."
+      },
+      "hydraulic-remotes": {
+        "name": "Distributeurs hydrauliques auxiliaires (SCV)",
+        "definition": "Distributeurs et coupleurs acheminant l’huile aux vérins et moteurs externes.",
+        "example": "Un andaineur repliable nécessite un nombre suffisant de coupleurs hydrauliques.",
+        "caution": "Vérifiez séparément le simple ou double effet, le débit et le nombre de sorties."
+      },
+      "hitch-category": {
+        "name": "Catégorie d’attelage (I, II, III)",
+        "definition": "Classe dimensionnelle normalisée des axes et raccordements de l’attelage trois points.",
+        "example": "Les axes d’un outil de catégorie I peuvent être incompatibles avec un attelage de catégorie III sans adaptation.",
+        "caution": "Une catégorie supérieure ne garantit pas le relevage sûr de n’importe quel outil."
+      }
+    },
+    "es": {
+      "engine-power": {
+        "name": "Potencia del motor",
+        "definition": "Ritmo al que un motor puede realizar trabajo, expresado en hp, PS/CV métricos o kW.",
+        "example": "Arrastrar un remolque y segar pueden exigir potencia de distintas formas.",
+        "caution": "Compare el punto de medición y las unidades hp/PS; el número de modelo no es una potencia verificada."
+      },
+      "rated-power": {
+        "name": "Potencia nominal del motor",
+        "definition": "Potencia especificada por el fabricante a un régimen nominal indicado.",
+        "example": "Si dos tractores se anuncian con 100 hp, compruebe primero si ambos valores son nominales.",
+        "caution": "No trate la potencia nominal, la máxima y el boost como intercambiables."
+      },
+      "maximum-power": {
+        "name": "Potencia máxima y aumento temporal (boost)",
+        "definition": "La potencia máxima es un pico en condiciones especificadas; el boost puede estar disponible solo en determinados estados de funcionamiento.",
+        "example": "Un tractor con boost de transporte puede no ofrecerlo continuamente en el campo.",
+        "caution": "Lea las condiciones de activación del boost y la norma ECE/ISO del fabricante."
+      },
+      "torque": {
+        "name": "Par motor (Nm)",
+        "definition": "Momento de giro en el cigüeñal; ayuda a describir el comportamiento del motor bajo carga, pero no equivale a la fuerza de tiro.",
+        "example": "En trabajos lentos y pesados, la curva de par puede importar más que un solo valor máximo.",
+        "caution": "Compruebe las rpm a las que se alcanza el par y las relaciones de transmisión."
+      },
+      "pto": {
+        "name": "Toma de fuerza (TDF/PTO)",
+        "definition": "Transmite mecánicamente potencia del tractor a los aperos rotativos.",
+        "example": "Segadoras, mezcladoras y fresadoras rotativas pueden utilizar la potencia de la TDF.",
+        "caution": "Nunca retire las protecciones de la TDF: el contacto con un eje giratorio puede ser mortal."
+      },
+      "pto-power": {
+        "name": "Potencia de la TDF",
+        "definition": "Potencia disponible en el eje de la TDF, normalmente inferior a la del cigüeñal.",
+        "example": "Utilícela para comprobar la potencia de entrada requerida por el apero.",
+        "caution": "No confunda potencia del motor y de la TDF, ni estimaciones del fabricante y resultados de ensayo."
+      },
+      "pto-speeds": {
+        "name": "Regímenes de TDF 540 / 540E / 1000",
+        "definition": "Regímenes seleccionables del eje; 540E puede alcanzar 540 rpm con menor régimen del motor.",
+        "example": "Un apero que requiere 540 rpm no debe accionarse a 1.000 rpm.",
+        "caution": "Respete el régimen de TDF y tipo de eje permitidos en el manual del apero."
+      },
+      "independent-pto": {
+        "name": "TDF independiente / TDF continua (live PTO)",
+        "definition": "Describe el grado de independencia del accionamiento de la TDF respecto del avance.",
+        "example": "Algunos sistemas permiten que el apero siga girando cuando se detiene el desplazamiento.",
+        "caution": "TDF independiente, continua y de embrague de dos etapas no son mecanismos idénticos."
+      },
+      "pto-shaft": {
+        "name": "Dimensiones y número de estrías de la TDF",
+        "definition": "Describe la geometría de conexión del eje de salida.",
+        "example": "Un eje de seis estrías de 1⅜ pulgadas y otro de 21 estrías no son directamente intercambiables.",
+        "caution": "Compruebe por separado el régimen y la geometría del eje; utilice únicamente adaptadores homologados."
+      },
+      "hydraulic-flow": {
+        "name": "Caudal hidráulico (L/min)",
+        "definition": "Volumen de aceite desplazado por unidad de tiempo en condiciones indicadas.",
+        "example": "La velocidad del cilindro de un cargador depende del caudal disponible.",
+        "caution": "El caudal total, el de dirección y el disponible para aperos pueden diferir."
+      },
+      "hydraulic-pressure": {
+        "name": "Presión hidráulica (bar)",
+        "definition": "Presión del circuito hidráulico, relacionada con la capacidad de generar fuerza.",
+        "example": "La presión y el área del cilindro influyen conjuntamente en la fuerza.",
+        "caution": "Una mayor presión no garantiza por sí sola una elevación rápida ni una gran capacidad."
+      },
+      "rear-lift": {
+        "name": "Capacidad de elevación trasera",
+        "definition": "Masa que el enganche trasero de tres puntos puede elevar en un punto y condiciones de ensayo determinados.",
+        "example": "2.500 kg en las rótulas no equivalen a 2.500 kg a 610 mm detrás de ellas.",
+        "caution": "Compruebe si la cifra corresponde a las rótulas, a 610 mm detrás o a todo el recorrido de elevación."
+      },
+      "hydraulic-remotes": {
+        "name": "Distribuidores hidráulicos auxiliares (SCV)",
+        "definition": "Válvulas y acoplamientos que conducen aceite a cilindros y motores externos.",
+        "example": "Un rastrillo plegable necesita el número adecuado de acoplamientos hidráulicos.",
+        "caution": "Compruebe por separado el simple o doble efecto, el caudal y el número de salidas."
+      },
+      "hitch-category": {
+        "name": "Categoría de enganche (I, II, III)",
+        "definition": "Clase de tamaño normalizada de los pasadores y conexiones del enganche de tres puntos.",
+        "example": "Los pasadores de un apero de categoría I pueden no encajar en un enganche de categoría III sin adaptación.",
+        "caution": "Una categoría superior no garantiza la elevación segura de cualquier apero."
+      }
+    },
+    "pt-br": {
+      "engine-power": {
+        "name": "Potência do motor",
+        "definition": "Taxa de realização de trabalho pelo motor, expressa em hp, PS/CV métricos ou kW.",
+        "example": "Tracionar uma carreta e roçar podem exigir potência de formas diferentes.",
+        "caution": "Compare o ponto de medição e as unidades hp/PS; o número do modelo não é uma potência comprovada."
+      },
+      "rated-power": {
+        "name": "Potência nominal do motor",
+        "definition": "Potência especificada pelo fabricante em uma rotação nominal indicada.",
+        "example": "Quando dois tratores são anunciados com 100 hp, verifique primeiro se ambos os valores são nominais.",
+        "caution": "Não trate as potências nominal, máxima e extra (boost) como intercambiáveis."
+      },
+      "maximum-power": {
+        "name": "Potência máxima e extra (boost)",
+        "definition": "Potência máxima é o pico sob condições especificadas; o boost pode estar disponível apenas em determinados estados de operação.",
+        "example": "Um trator com boost para transporte pode não fornecê-lo continuamente no campo.",
+        "caution": "Leia as condições de ativação do boost e a norma ECE/ISO do fabricante."
+      },
+      "torque": {
+        "name": "Torque (Nm)",
+        "definition": "Momento de rotação no virabrequim; ajuda a descrever o comportamento do motor sob carga, mas não é força na barra de tração.",
+        "example": "Em trabalho lento e pesado, a curva de torque pode ser mais importante que um único valor máximo.",
+        "caution": "Confira a rotação em que ocorre o torque e as relações de transmissão."
+      },
+      "pto": {
+        "name": "Tomada de potência (TDP/PTO)",
+        "definition": "Transmite mecanicamente a potência do trator a implementos rotativos.",
+        "example": "Roçadeiras, misturadores e enxadas rotativas podem usar a potência da TDP.",
+        "caution": "Nunca retire as proteções da TDP; o contato com um eixo giratório pode ser fatal."
+      },
+      "pto-power": {
+        "name": "Potência na TDP",
+        "definition": "Potência disponível no eixo da TDP, geralmente inferior à do virabrequim.",
+        "example": "Use-a para conferir a potência de entrada exigida pelo implemento.",
+        "caution": "Não confunda potência do motor com a da TDP, nem estimativas do fabricante com resultados de ensaios."
+      },
+      "pto-speeds": {
+        "name": "Rotações da TDP 540 / 540E / 1000",
+        "definition": "Rotações selecionáveis do eixo; 540E pode atingir 540 rpm na saída com menor rotação do motor.",
+        "example": "Um implemento que exige 540 rpm não deve ser acionado a 1.000 rpm.",
+        "caution": "Respeite a rotação da TDP e o tipo de eixo permitidos no manual do implemento."
+      },
+      "independent-pto": {
+        "name": "TDP independente / TDP contínua (live PTO)",
+        "definition": "Descreve a independência do acionamento da TDP em relação ao deslocamento.",
+        "example": "Alguns sistemas permitem que o implemento continue girando quando o deslocamento para.",
+        "caution": "TDP independente, contínua e com embreagem de dois estágios não são mecanismos idênticos."
+      },
+      "pto-shaft": {
+        "name": "Dimensões e número de estrias da TDP",
+        "definition": "Descreve a geometria de conexão do eixo de saída.",
+        "example": "Um eixo de seis estrias de 1⅜ polegada e outro de 21 estrias não são diretamente intercambiáveis.",
+        "caution": "Confira separadamente a rotação e a geometria do eixo; use apenas adaptador aprovado."
+      },
+      "hydraulic-flow": {
+        "name": "Vazão hidráulica (L/min)",
+        "definition": "Volume de óleo movimentado por unidade de tempo sob condições indicadas.",
+        "example": "A velocidade do cilindro de um carregador depende da vazão disponível.",
+        "caution": "Vazões total, de direção e disponível para implementos podem ser diferentes."
+      },
+      "hydraulic-pressure": {
+        "name": "Pressão hidráulica (bar)",
+        "definition": "Pressão do circuito hidráulico, relacionada à capacidade de produzir força.",
+        "example": "Pressão e área do cilindro influenciam juntas a força.",
+        "caution": "Pressão maior não garante sozinha levante rápido nem grande capacidade."
+      },
+      "rear-lift": {
+        "name": "Capacidade de levante traseiro",
+        "definition": "Massa que o engate traseiro de três pontos consegue levantar em um ponto e condições de ensaio específicos.",
+        "example": "2.500 kg nas rótulas não representam a mesma medição que 2.500 kg a 610 mm atrás delas.",
+        "caution": "Verifique se o valor é nas rótulas, a 610 mm atrás delas ou ao longo de todo o curso de levante."
+      },
+      "hydraulic-remotes": {
+        "name": "Válvulas de controle remoto (VCR/SCV)",
+        "definition": "Válvulas e engates que direcionam óleo a cilindros e motores externos.",
+        "example": "Um ancinho dobrável precisa do número adequado de engates hidráulicos.",
+        "caution": "Confira separadamente ação simples ou dupla, vazão e número de saídas."
+      },
+      "hitch-category": {
+        "name": "Categoria de engate (I, II, III)",
+        "definition": "Classe de tamanho normalizada dos pinos e conexões do engate de três pontos.",
+        "example": "Pinos de um implemento de categoria I podem não encaixar em um engate de categoria III sem adaptação.",
+        "caution": "Uma categoria superior não garante o levante seguro de qualquer implemento."
+      }
+    }
+  }
+}
