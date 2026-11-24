@@ -46,7 +46,7 @@ jobs:
               --emulated-form-factor=mobile \
               --throttling-method=simulate \
               --output=json --output-path="/tmp/tractorvs-lighthouse/$route.json" \
-              --quiet
+              --quiet < /dev/null
           done < /tmp/tractorvs-lighthouse/routes.txt
           node site/scripts/mobile-lighthouse-summary.mjs
 
