@@ -14,7 +14,9 @@ function fixture({photo=fallback,noindex=false,extra=""}={}){
     '<meta property="og:url" content="https://tractorvs.com/">'+
     '<meta property="og:image" content="'+photo+'">'+
     '<meta name="twitter:card" content="summary_large_image">'+
-    '<meta name="twitter:image" content="'+photo+'">'+extra+
+    '<meta name="twitter:image" content="'+photo+'">'+
+    '<meta property="og:image:alt" content="'+(photo===fallback?"TractorVS":"Fotoğraf: Başak 2075 BK")+'">'+
+    '<meta name="twitter:image:alt" content="'+(photo===fallback?"TractorVS":"Fotoğraf: Başak 2075 BK")+'">'+extra+
     '</head><body><main>Models</main></body></html>';
 }
 test("one canonical indexable social preview passes for brand or licensed model image",()=>{
@@ -46,4 +48,23 @@ test("an apparent social image in a script cannot hide a missing real tag",()=>{
   const tag='<meta property="og:image" content="'+fallback+'">';
   const html=fixture().replace(tag,"<script type='text/plain'>"+tag+"</script>");
   assert.ok(inspectSocialMetadata(html).errors.some(x=>x.startsWith("og:image ")));
+});
+
+
+test("model preview and fallback must have one matching and truthful image alt per platform",()=>{
+ const photo="https://tractorvs.com/images/tractors/example-1920.jpg";
+ const modelUrl="https://tractorvs.com/tr/tractors/basak-2075-bk/";
+ const html=fixture({photo}).replaceAll('content="https://tractorvs.com/"','content="'+modelUrl+'"').replace('href="https://tractorvs.com/"','href="'+modelUrl+'"');
+ assert.deepEqual(inspectSocialMetadata(html).errors,[]);
+ assert.ok(inspectSocialMetadata(html.replace('<meta name="twitter:image:alt" content="Fotoğraf: Başak 2075 BK">','')).errors.some(x=>x.startsWith("twitter:image:alt ")));
+ assert.ok(inspectSocialMetadata(html.replace('property="og:image:alt" content="Fotoğraf: Başak 2075 BK"','property="og:image:alt" content="Other model"')).errors.includes("social preview alternative texts differ"));
+ assert.ok(inspectSocialMetadata(fixture().replaceAll('image:alt" content="TractorVS"','image:alt" content="Tractor photo"')).errors.includes("brand fallback alt misidentifies image"));
+});
+
+test("model detail passes localized alt only for its real licensed photo preview",()=>{
+ const detail=readFileSync(new URL("../src/components/TractorDetail.astro",import.meta.url),"utf8");
+ const layout=readFileSync(new URL("../src/layouts/SiteLayout.astro",import.meta.url),"utf8");
+ assert.match(detail,/ogImageAlt=\{socialPreviewImage \? tractorPhotoAlt\(tractor,lang\) : null\}/);
+ assert.match(layout,/ogImage && ogImageAlt && <meta property="og:image:alt" content=\{ogImageAlt\}/);
+ assert.match(layout,/ogImage && ogImageAlt && <meta name="twitter:image:alt" content=\{ogImageAlt\}/);
 });
