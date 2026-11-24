@@ -2,8 +2,8 @@
   "version": 1,
   "pages": {
     "https://tractorvs.com/": {
-      "digest": "027ec8da55da4fccd12619533dbcb8fee351af7a6a97706539e9b0fe03630dfb",
-      "modified": "2026-11-24T03:38:26.773Z"
+      "digest": "960f0a675849dac5533c7c2922889b27cd89c4fe2b4948c8b1d4ec4fdb5ea9e0",
+      "modified": "2026-11-24T10:24:45.384Z"
     },
     "https://tractorvs.com/articles/": {
       "digest": "f4d32f5ffc67b88681b1b5561e8db5d02e2e3359a514dbf30934b26641bbed54",
@@ -26,8 +26,8 @@
       "modified": "2026-11-23T16:20:24.281Z"
     },
     "https://tractorvs.com/de/": {
-      "digest": "bfb1ce31ea182956b411842bd43cc503b8bb0de1c7dc8c235ca0fe93199e372f",
-      "modified": "2026-11-23T18:15:08.467Z"
+      "digest": "6d26199a39ff6abea3d9fc9d597e357ff97189cb143022610473f361112f23d9",
+      "modified": "2026-11-24T10:24:45.384Z"
     },
     "https://tractorvs.com/de/articles/": {
       "digest": "e8e5821b7a9a45bf22f1f98c341eb6c77b42f895c99c960f2e7ec29c22d8d083",
@@ -1618,8 +1618,8 @@
       "modified": "2026-11-23T16:45:17.078Z"
     },
     "https://tractorvs.com/es/": {
-      "digest": "6b9fff8903a54a29fd1c4ddae05e5ada9c8111dfee4941d678bff3f3098078f6",
-      "modified": "2026-11-23T18:15:08.467Z"
+      "digest": "78c230807453c2bfa35abdbca4af7956a25fe901f6ab46aea48f56374b14f588",
+      "modified": "2026-11-24T10:24:45.384Z"
     },
     "https://tractorvs.com/es/articles/": {
       "digest": "0145e305b596770e50c433fa8685671159ccaabc3aafdfd8d7f2806ca6eb3e36",
@@ -3214,8 +3214,8 @@
       "modified": "2026-11-23T18:15:08.467Z"
     },
     "https://tractorvs.com/fr/": {
-      "digest": "fefd1479c16a9ae1d681dfe390b57bb02f49135ffdc3759c7db5bf2dbca374d3",
-      "modified": "2026-11-23T18:15:08.467Z"
+      "digest": "7dfc588ca8118db0cb83768751d457f5b04461833fcfa4dabbb0243045f092fd",
+      "modified": "2026-11-24T10:24:45.384Z"
     },
     "https://tractorvs.com/fr/articles/": {
       "digest": "b87ad5ef98462bf555f36d462ca40ec0376d8fea5d643ae23f7a7bbbcdec3330",
@@ -4826,8 +4826,8 @@
       "modified": "2026-11-22T14:27:00.768Z"
     },
     "https://tractorvs.com/hi/": {
-      "digest": "235eb218eab45be33f8ca9f072fc12fed9499bead9ed56dcfcc55819c6c06f99",
-      "modified": "2026-11-23T18:15:08.467Z"
+      "digest": "edd04d2d5fc4b825376c3581ba2ed7b44bc20746fd8006fe043e0c41f4c68cd8",
+      "modified": "2026-11-24T10:24:45.384Z"
     },
     "https://tractorvs.com/hi/articles/": {
       "digest": "3ef252be723e22cbd42f479762ff15210b935675304ca03b43cf5cc9c06c3def",
@@ -6418,8 +6418,8 @@
       "modified": "2026-11-23T16:45:17.078Z"
     },
     "https://tractorvs.com/ja/": {
-      "digest": "254b3dd4b47968f4db639df9afcecb041d3f0e0bbb235efc3bff60d84079a691",
-      "modified": "2026-11-23T18:15:08.467Z"
+      "digest": "2125260c2df476ae1ec8f48b4df61acf364791ae2b582c35f5dd081c108988e8",
+      "modified": "2026-11-24T10:24:45.384Z"
     },
     "https://tractorvs.com/ja/articles/": {
       "digest": "867884ed17f13bd46d0ef1d231a61aa757cff00bfcdd1e840fddcf43663f141a",
@@ -8018,8 +8018,8 @@
       "modified": null
     },
     "https://tractorvs.com/pt-br/": {
-      "digest": "74535f09cd3afa7fd8faefb53ed0e0e8d22ea5af2566f452a62dd41c0fae3e82",
-      "modified": "2026-11-23T18:15:08.467Z"
+      "digest": "22069b09969114429291ac552b64212bf3b01dcd542c5a3bae54a9515f89f412",
+      "modified": "2026-11-24T10:24:45.384Z"
     },
     "https://tractorvs.com/pt-br/articles/": {
       "digest": "117be662005262991fb353875c1cf33ccb9e7a46960f3f88b43118fb9ecdf59d",
@@ -9614,8 +9614,8 @@
       "modified": "2026-11-22T15:13:41.997Z"
     },
     "https://tractorvs.com/ru/": {
-      "digest": "f47f2f20ad0a58ed95a775c5f6a8b3add489315e37cc44285a84be5cd7eed0a4",
-      "modified": "2026-11-23T18:15:08.467Z"
+      "digest": "75f614f5f0ada6ed07dc463d5b82886c34d6e4f621b307a5c343bac13cd502c1",
+      "modified": "2026-11-24T10:24:45.384Z"
     },
     "https://tractorvs.com/ru/articles/": {
       "digest": "af26b8678163822452934ec1c7cb7f12884df875f898bbe76e1654f6e04d4e1a",
@@ -11206,8 +11206,8 @@
       "modified": "2026-11-23T16:45:17.078Z"
     },
     "https://tractorvs.com/tr/": {
-      "digest": "cebe802f47ddb790e3c4e2970997243dcaa4845b6dce1aca07099c88f090d78c",
-      "modified": "2026-11-24T03:38:26.773Z"
+      "digest": "4fb6dd00e9898d1c5c3d970eb2e6edb2e9d749f056ff92f7104bfa10ed1e3ccc",
+      "modified": "2026-11-24T10:24:45.384Z"
     },
     "https://tractorvs.com/tr/articles/": {
       "digest": "24af9028de2a49e800978e946a31767a57ff1ac80c98a17fb919a12f2339d53e",
@@ -14394,8 +14394,8 @@
       "modified": "2026-11-23T16:45:17.078Z"
     },
     "https://tractorvs.com/zh/": {
-      "digest": "ee9c1f869a78dec920a95884319d93bd094432a56bbc2c66bd5157c7fae0631d",
-      "modified": "2026-11-23T18:15:08.467Z"
+      "digest": "45c77897eb11ca4bcb0b5fdfc5a24c37d96f6c248861ec9780e3f3fcaf7ebca6",
+      "modified": "2026-11-24T10:24:45.384Z"
     },
     "https://tractorvs.com/zh/articles/": {
       "digest": "879a0a248b1d60f80189181df4af6d71c0f128b026d802b831dc37f5508ce1ab",
