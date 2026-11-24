@@ -14,7 +14,7 @@ const tractor=(brand_name,model_name)=>({
   engine:null,transmission:null,drivetrain:null,weight_kg:null,specifications:[]
 });
 test("only exact matching tractor model identity receives a verified photo",()=>{
-  assert.equal(APPROVED_TRACTOR_PHOTOS.length,109);
+  assert.equal(APPROVED_TRACTOR_PHOTOS.length,110);
   assert.equal(tractorPhotos(tractor("Belarus","82.1")).length,4);
   assert.equal(tractorPhotos(tractor("Belarus","80.1")).length,1);
   assert.equal(tractorPhotos(tractor("Belarus","132N")).length,1);
@@ -615,9 +615,9 @@ test("McCormick X5.085 and TYM T6115/T2025P have exact licensed files, source pr
 });
 
 test("historic photo batch is staged with rights and does not create records",()=>{
-  assert.equal(HISTORICAL_LICENSED_PHOTOS.length,94);
+  assert.equal(HISTORICAL_LICENSED_PHOTOS.length,95);
   const all=new Set(HISTORICAL_LICENSED_PHOTOS.map(x=>x.fileId));
-  assert.equal(all.size,94);
+  assert.equal(all.size,HISTORICAL_LICENSED_PHOTOS.length,"All historical photo IDs must be unique");
   assert.ok(HISTORICAL_LICENSED_PHOTOS.every(x=>x.configurationExact===false));
   assert.ok(!HISTORICAL_LICENSED_PHOTOS.some(x=>["Product","Vehicle"].includes(x.model)));
 });
@@ -1099,4 +1099,16 @@ test("Visible model badges and static JPEGs belong only to the reviewed record",
       assert.equal(createHash("sha256").update(bytes).digest("hex"),derivative.sha256);
     }
   }
+});
+
+
+test("Zetor Major CL80 verified photo belongs only to the reviewed Europe UUID",()=>{
+ const [e]=JSON.parse(readFileSync(new URL("../docs/photo-evidence-zetor-major-cl80-20261124.json",import.meta.url),"utf8"));
+ const exact={...tractor("Zetor","MAJOR"),tractor_id:"755e44bc-8043-4d41-9e08-f40e818ac00b",variant:"CL 80 · Europe",market:"Europe"};
+ const p=tractorPhotos(exact).find(photo=>photo.fileId==="zetor-major-cl80-jj7777");
+ assert.ok(p);assert.equal(p.tractorId,exact.tractor_id);assert.equal(p.photographer,"JJ7777");assert.equal(p.licenseName,"CC BY-SA 4.0");assert.equal(p.sourcePage,e.sourcePage);assert.equal(p.configurationExact,false);
+ for(const wrong of [{...exact,tractor_id:"00000000-0000-4000-8000-000000000000"},{...exact,model_name:"MAJOR HS 80"},{...exact,brand_name:"Other"}])assert.ok(!tractorPhotos(wrong).some(x=>x.fileId===p.fileId));
+ assert.deepEqual(e.derivatives.map(x=>x.width),[480,960,1920]);
+ for(const d of e.derivatives){const b=readFileSync(new URL("../public/images/tractors/"+d.file,import.meta.url));assert.equal(b.length,d.bytes);assert.equal(createHash("sha256").update(b).digest("hex"),d.sha256);assert.equal(b.subarray(0,3).toString("hex"),"ffd8ff");assert.equal(b.subarray(-2).toString("hex"),"ffd9");assert.ok(resolveApprovedPhotoSource("/images/tractors/"+d.file)?.includes("ZETOR_MAJOR.jpg"));}
+ for(const locale of LOCALES){const image=modelStructuredData(exact,locale,"https://tractorvs.com/")["@graph"].find(x=>x["@type"]==="ImageObject");assert.ok(image,locale);assert.equal(image.creator?.name,p.photographer);assert.equal(image.license,p.licenseUrl);assert.equal(image.acquireLicensePage,p.sourcePage);assert.ok(image.contentUrl.endsWith(p.fullUrl));assert.ok(tractorPhotoAlt(exact,locale).includes("Zetor MAJOR"));assert.ok(photoText(locale,"representative").length>10);}
 });

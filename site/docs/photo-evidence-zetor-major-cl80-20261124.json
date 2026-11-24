@@ -1,0 +1,49 @@
+[
+  {
+    "brand": "Zetor",
+    "model": "MAJOR",
+    "tractorId": "755e44bc-8043-4d41-9e08-f40e818ac00b",
+    "fileId": "zetor-major-cl80-jj7777",
+    "path": "6/6a/ZETOR_MAJOR.jpg",
+    "photographer": "JJ7777",
+    "license": "CC BY-SA 4.0",
+    "width": 4969,
+    "height": 3313,
+    "sourcePage": "https://commons.wikimedia.org/wiki/File:ZETOR_MAJOR.jpg",
+    "originalUrl": "https://upload.wikimedia.org/wikipedia/commons/6/6a/ZETOR_MAJOR.jpg",
+    "originalSha256": "36aadf37489ec747954a277831487cd200ee5ae4ac18138cd9e541220cf9b53b",
+    "originalBytes": 6320573,
+    "modelEvidence": "Independent visual review of original candidate-5.jpg: Zetor and MAJOR CL 80 hood markings legible when enlarged. Public inventory confirms exact CL 80 Europe UUID. Not MAJOR HS 80.",
+    "modelSources": [
+      "https://www.zetor.com/zetor-major-technical-parameters"
+    ],
+    "scope": "Model illustration only; year and equipment not verified.",
+    "sourceCredit": "Own work, JJ7777",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "changes": "Proportional resizing and JPEG compression; derivatives distributed under CC BY-SA 4.0.",
+    "sourceArtifact": "https://github.com/onuronkol2-collab/tractorcompare-data/actions/runs/45422737022/artifacts/14934029449",
+    "derivatives": [
+      {
+        "file": "zetor-major-cl80-jj7777-480.jpg",
+        "width": 480,
+        "height": 320,
+        "sha256": "fe376865c58694603dc3f0d39a54d3953f829927a4f91e92ab353c3f9db9c2e4",
+        "bytes": 96279
+      },
+      {
+        "file": "zetor-major-cl80-jj7777-960.jpg",
+        "width": 960,
+        "height": 640,
+        "sha256": "fd5ee9205f884bb5b405957be1d9b32ad56aa905a3b448a14836eb7743788101",
+        "bytes": 372407
+      },
+      {
+        "file": "zetor-major-cl80-jj7777-1920.jpg",
+        "width": 1920,
+        "height": 1280,
+        "sha256": "767060990843c3474952aeb98c9f8430ad7b008ea54a6d735c18a4867c2a04ee",
+        "bytes": 1319707
+      }
+    ]
+  }
+]
