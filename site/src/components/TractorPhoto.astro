@@ -35,10 +35,10 @@ const label=tractorPhotoAlt(tractor,lang);
         {mobile && <source type="image/webp"
           media="(max-width:760px) and (max-resolution:2dppx)"
           srcset={mobile.webpUrl+" 720w"}
-          sizes={mode==="hero"?"(max-width:760px) calc(100vw - 48px), 860px":(slotSizes ?? "(max-width:680px) calc(100vw - 36px), 400px")}/>}
+          sizes={mode==="hero"?(index===0?"(max-width:760px) calc(100vw - 48px), 860px":"auto, (max-width:620px) min(calc(50vw - 23px), 275px), (max-width:720px) 180px, min(calc(33.333vw - 22.667px), 294px)"):(slotSizes ?? "(max-width:680px) calc(100vw - 36px), 400px")}/>}
         <img src={mode==="hero"?photo.displayUrl:photo.thumbUrl}
           srcset={photo.thumbUrl+" 480w, "+(mobile?mobile.jpegUrl+" 720w, ":"")+photo.displayUrl+" 960w"}
-          sizes={mode==="hero"?"(max-width:760px) calc(100vw - 48px), 860px":(slotSizes ?? "(max-width:680px) calc(100vw - 36px), 400px")}
+          sizes={mode==="hero"?(index===0?"(max-width:760px) calc(100vw - 48px), 860px":"auto, (max-width:620px) min(calc(50vw - 23px), 275px), (max-width:720px) 180px, min(calc(33.333vw - 22.667px), 294px)"):(slotSizes ?? "(max-width:680px) calc(100vw - 36px), 400px")}
           width={photo.width} height={photo.height} decoding="async"
           loading={mode==="hero"&&index===0?"eager":"lazy"} fetchpriority={mode==="hero"&&index===0?"high":undefined} alt={label+(photos.length>1?" — "+(index+1):"")}/>
       </picture>
