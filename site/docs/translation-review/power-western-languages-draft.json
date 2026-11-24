@@ -85,7 +85,7 @@
     "de": {
       "title": "Traktorleistung und Drehmoment: hp, PS, kW und Zapfwellenleistung",
       "description": "Praxisleitfaden zu Traktorleistung in hp, PS und kW, Nenn- und Maximalleistung, Drehmoment und dem Vergleich von Motor- und Zapfwellenleistung.",
-      "lead": "Zwei Prospekte werben mit „100 horsepower“ – das garantiert keine identische Feldleistung. Motordrehzahl, Drehmomentverlauf, Prüfnorm, Übertragungsverluste und Reifentraktion beeinflussen das Ergebnis. Dieser Leitfaden erklärt die tatsächliche Bedeutung der Zahlen.",
+      "lead": "Zwei Prospekte werben mit „100 Pferdestärken“ – das garantiert keine identische Feldleistung. Motordrehzahl, Drehmomentverlauf, Prüfnorm, Übertragungsverluste und Reifentraktion beeinflussen das Ergebnis. Dieser Leitfaden erklärt die tatsächliche Bedeutung der Zahlen.",
       "comparisonNote": "Steht in zwei Prospekten 100 hp, lesen Sie die Bezeichnung neben jedem Wert. Maximale Motorleistung in einem und Nennleistung im anderen beschreiben unterschiedliche Betriebspunkte. Suchen Sie für zapfwellengetriebene Geräte einen separaten Messwert an der Welle.",
       "sections": [
         {
@@ -109,7 +109,7 @@
           "anchor": "tork",
           "title": "Warum das Drehmoment in Nm wichtig ist – aber nicht allein",
           "paragraphs": [
-            "Drehmoment ist das Drehmoment an der Kurbelwelle. Drehmomentkurve und Drehmomentanstieg können erklären, wie sich der Motor bei zunehmender Last und sinkender Drehzahl verhält. Kurbelwellendrehmoment ist nicht dasselbe wie Zugkraft an der Zugvorrichtung.",
+            "Das Drehmoment beschreibt die Drehwirkung einer Kraft an der Kurbelwelle. Drehmomentkurve und Drehmomentanstieg können erklären, wie sich der Motor bei zunehmender Last und sinkender Drehzahl verhält. Kurbelwellendrehmoment ist nicht dasselbe wie Zugkraft an der Zugvorrichtung.",
             "Ein Traktor kann ein hohes Motordrehmoment haben und dennoch bei ungeeigneter Übersetzung, falschen Reifen oder übermäßigem Schlupf schlecht arbeiten. Betrachten Sie Drehmoment zusammen mit Drehzahl und Antriebsstrang."
           ]
         },
@@ -152,7 +152,7 @@
     "fr": {
       "title": "Puissance et couple du tracteur : hp, ch (PS), kW et prise de force",
       "description": "Guide pratique des unités hp, PS et kW, des puissances nominale et maximale, du couple et de la comparaison moteur/PDF.",
-      "lead": "Deux brochures annoncent «100 horsepower», sans garantir des performances identiques au champ. Le régime moteur, la courbe de couple, la norme d’essai, les pertes de transmission et l’adhérence influencent le résultat. Ce guide explique ce que signifient réellement les chiffres.",
+      "lead": "Deux brochures annoncent «100 chevaux», sans garantir des performances identiques au champ. Le régime moteur, la courbe de couple, la norme d’essai, les pertes de transmission et l’adhérence influencent le résultat. Ce guide explique ce que signifient réellement les chiffres.",
       "comparisonNote": "Si deux brochures indiquent 100 hp, lisez l’intitulé associé à chaque valeur. Une puissance moteur maximale et une puissance nominale correspondent à des points de fonctionnement différents. Pour un outil entraîné par la prise de force, cherchez une mesure distincte à l’arbre.",
       "sections": [
         {
@@ -219,8 +219,8 @@
     "es": {
       "title": "Potencia y par del tractor: hp, PS, kW y toma de fuerza",
       "description": "Guía práctica sobre hp, PS y kW, potencia nominal y máxima, par y comparación de potencia del motor y de la TDF.",
-      "lead": "Dos catálogos anuncian «100 horsepower», pero eso no garantiza el mismo rendimiento en campo. Influyen el régimen del motor, la curva de par, la norma de ensayo, las pérdidas de transmisión y la tracción de los neumáticos. Esta guía explica qué significan las cifras.",
-      "comparisonNote": "Cuando dos catálogos indican 100 hp, lea la denominación junto a cada cifra. La potencia máxima del motor en uno y la nominal en el otro describen puntos de funcionamiento diferentes. Para un apero accionado por la TDF, busque una medición independiente en el eje.",
+      "lead": "Dos catálogos anuncian «100 caballos de potencia», pero eso no garantiza el mismo rendimiento en campo. Influyen el régimen del motor, la curva de par, la norma de ensayo, las pérdidas de transmisión y la tracción de los neumáticos. Esta guía explica qué significan las cifras.",
+      "comparisonNote": "Cuando dos catálogos indican 100 hp, lea la denominación junto a cada cifra. La potencia máxima del motor en uno y la nominal en el otro describen puntos de funcionamiento diferentes. Para un apero accionado por la TDF, busque una medición separada en el eje.",
       "sections": [
         {
           "anchor": "hp-ps-kw",
@@ -286,7 +286,7 @@
     "pt-br": {
       "title": "Potência e torque do trator: hp, PS, kW e tomada de potência",
       "description": "Guia prático sobre hp, PS e kW, potência nominal e máxima, torque e comparação da potência do motor com a da TDP.",
-      "lead": "Dois catálogos anunciam «100 horsepower», mas isso não garante desempenho idêntico no campo. Rotação do motor, curva de torque, norma de ensaio, perdas de transmissão e tração dos pneus influenciam o resultado. Este guia explica o significado dos números.",
+      "lead": "Dois catálogos anunciam «100 cavalos de potência», mas isso não garante desempenho idêntico no campo. Rotação do motor, curva de torque, norma de ensaio, perdas de transmissão e tração dos pneus influenciam o resultado. Este guia explica o significado dos números.",
       "comparisonNote": "Quando dois catálogos indicam 100 hp, leia a descrição de cada valor. Potência máxima do motor em um e potência nominal no outro representam pontos de operação diferentes. Para implementos acionados pela TDP, procure uma medição separada no eixo.",
       "sections": [
         {
