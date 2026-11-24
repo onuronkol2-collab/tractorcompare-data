@@ -22,6 +22,9 @@ if(!items.length||new Set(items.map(x=>x.id)).size!==items.length||items.some(x=
  <ol>{items.map(item=><li><a href={"#"+item.id}>{item.label}</a></li>)}</ol>
 </nav>
 <style>
+/* The long article jump must land at the destination without a scrolling
+   animation competing with native focus or late viewport changes. */
+:global(html:has(.article-contents)){scroll-behavior:auto}
 .article-contents{margin:24px 0 12px;padding:clamp(16px,3vw,25px);border:1px solid #c9ddc7;background:#fff;border-radius:12px;min-width:0}
 .article-contents h2{margin:0 0 10px;color:#23472f;font-size:clamp(20px,2.5vw,25px);line-height:1.4}
 .article-contents ol{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:4px 24px;margin:0;padding-inline-start:24px}
