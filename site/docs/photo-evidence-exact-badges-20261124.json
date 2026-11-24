@@ -1,0 +1,45 @@
+[
+  {
+    "brand": "Belarus",
+    "model": "920",
+    "tractorId": "21e79b33-189b-44c1-a1e2-703ad8836d92",
+    "fileId": "belarus-920-aschroet-crispendorf",
+    "path": "4/4e/D%C3%B6rflas%2C_Crispendorf_09.jpg",
+    "photographer": "Aschroet",
+    "license": "CC0",
+    "width": 4608,
+    "height": 3456,
+    "sourcePage": "https://commons.wikimedia.org/wiki/File:D%C3%B6rflas%2C_Crispendorf_09.jpg",
+    "originalUrl": "https://upload.wikimedia.org/wikipedia/commons/4/4e/D%C3%B6rflas%2C_Crispendorf_09.jpg",
+    "originalSha256": "125c46cabf1ced1ecce22ac2ed17e25c0f762304dda4c065ce57778e71d29cb9",
+    "originalBytes": 3647683,
+    "modelEvidence": "Both hood markings, BELARUS and 920, are legible in the original. The similarly categorized Riga airport image reads 920.3.",
+    "scope": "Model illustration only; equipment and year are not verified.",
+    "sourceCredit": "Own work, Aschroet",
+    "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+    "changes": "Resized and JPEG-compressed.",
+    "derivatives": [
+      {
+        "file": "belarus-920-aschroet-crispendorf-480.jpg",
+        "width": 480,
+        "height": 360,
+        "sha256": "c3fb319e56c2a53783612c37bed826c6ad3693b173aaf4637f2f9f1419262677",
+        "bytes": 59691
+      },
+      {
+        "file": "belarus-920-aschroet-crispendorf-960.jpg",
+        "width": 960,
+        "height": 720,
+        "sha256": "0333d209090dc0c3ef98a748c1d202fc1f61645fa624ac5fb530f215c0da501f",
+        "bytes": 229222
+      },
+      {
+        "file": "belarus-920-aschroet-crispendorf-1920.jpg",
+        "width": 1920,
+        "height": 1440,
+        "sha256": "c2a4d551a7f661f4a4bc2f21321d17811aea2487222b6c4580cf073988b587d6",
+        "bytes": 828713
+      }
+    ]
+  }
+]

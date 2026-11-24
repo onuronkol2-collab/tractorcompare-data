@@ -865,6 +865,17 @@ const candidates=[
     "width": 1296,
     "height": 1122
   },
+  {
+    "brand": "Belarus",
+    "model": "920",
+    "tractorId": "21e79b33-189b-44c1-a1e2-703ad8836d92",
+    "fileId": "belarus-920-aschroet-crispendorf",
+    "path": "4/4e/D%C3%B6rflas%2C_Crispendorf_09.jpg",
+    "photographer": "Aschroet",
+    "license": "CC0",
+    "width": 4608,
+    "height": 3456
+  },
 ] as const;
 function licenseUrl(name:string):string{
   if(name==="CC0")return "https://creativecommons.org/publicdomain/zero/1.0/";
