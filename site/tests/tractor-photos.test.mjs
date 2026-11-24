@@ -14,7 +14,7 @@ const tractor=(brand_name,model_name)=>({
   engine:null,transmission:null,drivetrain:null,weight_kg:null,specifications:[]
 });
 test("only exact matching tractor model identity receives a verified photo",()=>{
-  assert.equal(APPROVED_TRACTOR_PHOTOS.length,110);
+  assert.equal(APPROVED_TRACTOR_PHOTOS.length,111);
   assert.equal(tractorPhotos(tractor("Belarus","82.1")).length,4);
   assert.equal(tractorPhotos(tractor("Belarus","80.1")).length,1);
   assert.equal(tractorPhotos(tractor("Belarus","132N")).length,1);
@@ -1111,4 +1111,14 @@ test("Zetor Major CL80 verified photo belongs only to the reviewed Europe UUID",
  assert.deepEqual(e.derivatives.map(x=>x.width),[480,960,1920]);
  for(const d of e.derivatives){const b=readFileSync(new URL("../public/images/tractors/"+d.file,import.meta.url));assert.equal(b.length,d.bytes);assert.equal(createHash("sha256").update(b).digest("hex"),d.sha256);assert.equal(b.subarray(0,3).toString("hex"),"ffd8ff");assert.equal(b.subarray(-2).toString("hex"),"ffd9");assert.ok(resolveApprovedPhotoSource("/images/tractors/"+d.file)?.includes("ZETOR_MAJOR.jpg"));}
  for(const locale of LOCALES){const image=modelStructuredData(exact,locale,"https://tractorvs.com/")["@graph"].find(x=>x["@type"]==="ImageObject");assert.ok(image,locale);assert.equal(image.creator?.name,p.photographer);assert.equal(image.license,p.licenseUrl);assert.equal(image.acquireLicensePage,p.sourcePage);assert.ok(image.contentUrl.endsWith(p.fullUrl));assert.ok(tractorPhotoAlt(exact,locale).includes("Zetor MAJOR"));assert.ok(photoText(locale,"representative").length>10);}
+});
+
+
+test("MF 4708 representative platform photograph uses reviewed original, license and scoped UUID",()=>{
+ const e=JSON.parse(readFileSync(new URL("../docs/photo-evidence-mf4708-20261124.json",import.meta.url),"utf8"));
+ const exact={...tractor("Massey Ferguson","4708 Standard"),tractor_id:e.tractorId,variant:"Platform",market:"South Africa"};
+ const p=tractorPhotos(exact).find(x=>x.fileId===e.fileId);assert.ok(p);assert.equal(p.configurationExact,false);assert.equal(p.resizedDerivative,true);assert.equal(p.licenseName,"CC BY-SA 4.0");assert.equal(p.photographer,"Père Igor");assert.equal(p.sourcePage,e.sourcePage);
+ for(const other of [{...exact,tractor_id:"00000000-0000-4000-8000-000000000000"},{...exact,model_name:"4708 M"},{...exact,brand_name:"Other"}])assert.ok(!tractorPhotos(other).some(x=>x.fileId===p.fileId));
+ for(const d of e.derivatives){const b=readFileSync(new URL("../public/images/tractors/"+d.file,import.meta.url));assert.equal(b.length,d.bytes);assert.equal(createHash("sha256").update(b).digest("hex"),d.sha256);assert.equal(b.subarray(0,3).toString("hex"),"ffd8ff");assert.equal(b.subarray(-2).toString("hex"),"ffd9");assert.ok(resolveApprovedPhotoSource("/images/tractors/"+d.file)?.includes("Lanouaille_Massey_Ferguson_4708.jpg"));}
+ for(const locale of LOCALES){const im=modelStructuredData(exact,locale,"https://tractorvs.com/")["@graph"].find(x=>x["@type"]==="ImageObject");assert.ok(im,locale);assert.equal(im.creator?.name,p.photographer);assert.equal(im.license,p.licenseUrl);assert.equal(im.acquireLicensePage,p.sourcePage);assert.ok(photoText(locale,"representative").length>10);}
 });

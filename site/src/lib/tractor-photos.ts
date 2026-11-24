@@ -15,6 +15,8 @@ export interface TractorPhoto {
   width:number; height:number; sourcePage:string;
   photographer:string; licenseName:string; licenseUrl:string;
   configurationExact:boolean;
+  /** Explicit notice for resized/re-encoded first-party derivatives. */
+  resizedDerivative?:boolean;
   // A holder notice is emitted ONLY after the exact Commons File page
   // independently attests Own work + self-applied license (not merely attribution).
   copyrightOwner?:string;

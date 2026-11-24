@@ -49,11 +49,11 @@ const label=tractorPhotoAlt(tractor,lang);
       <span>{photoText(lang,"credit")}: <a href={photo.sourcePage} target="_blank" rel="noopener noreferrer">{photo.photographer}</a>
       · <a href={photo.licenseUrl} target="_blank" rel="noopener noreferrer">{photo.licenseName}</a></span>
       {!photo.configurationExact&&<small>{photoText(lang,"representative")}</small>}
-      {mobile&&<small>{photoText(lang,"resizedDerivative")}</small>}
+      {(mobile||photo.resizedDerivative)&&<small>{photoText(lang,"resizedDerivative")}</small>}
     </figcaption> : <figcaption class="tractor-photo-short-credit">
       <a href={photo.sourcePage} target="_blank" rel="noopener noreferrer">{photo.photographer} · {photo.licenseName}</a>
       {!photo.configurationExact&&<small>{photoText(lang,"representative")}</small>}
-      {mobile&&<small>{photoText(lang,"resizedDerivative")}</small>}
+      {(mobile||photo.resizedDerivative)&&<small>{photoText(lang,"resizedDerivative")}</small>}
     </figcaption>}
   </figure>)}
 </div>}
