@@ -1,6 +1,7 @@
 import {forumBlocks} from "./forum-format.mjs";
 import {forumSpreadsheetMarkdown} from "./forum-discovery.mjs";
-import type {ForumEditorCopy} from "./forum-editor-i18n.ts";
+import type {ForumEditorCopy,ForumWritingCopy} from "./forum-editor-i18n.ts";
+import {forumBlockInsertion} from "./forum-writing-tools.mjs";
 
 type Config={url:string;key:string};
 type Photo={
@@ -62,7 +63,7 @@ export function initForumEditor(
  const postForm=widget.querySelector<HTMLFormElement>("[data-forum-post]");
  const textarea=postForm?.querySelector<HTMLTextAreaElement>('textarea[name="body"]');
  if(!root||!postForm||!textarea)return null;
- const copy=JSON.parse(root.dataset.editorCopy||"{}") as ForumEditorCopy;
+ const copy=JSON.parse(root.dataset.editorCopy||"{}") as ForumEditorCopy & ForumWritingCopy;
  const $=<T extends HTMLElement>(sel:string)=>root.querySelector<T>(sel);
  const filesInput=$<HTMLInputElement>("[data-editor-files]");
  const photosList=$<HTMLUListElement>("[data-editor-photo-list]");
@@ -175,12 +176,29 @@ export function initForumEditor(
  for(const button of root.querySelectorAll<HTMLButtonElement>("[data-editor-format]")){
   button.addEventListener("click",()=>insertAround(button.dataset.editorFormat||""));
  }
+ for(const button of root.querySelectorAll<HTMLButtonElement>("[data-editor-block]")){
+  button.addEventListener("click",()=>{
+   setPreview(false);
+   const start=textarea.selectionStart,end=textarea.selectionEnd;
+   const edit=forumBlockInsertion(textarea.value,start,end,button.dataset.editorBlock,copy,textarea.maxLength);
+   if(!edit){setStatus(copy.cannotInsert);textarea.focus();return}
+   textarea.setRangeText(edit.replacement,start,end,"end");textarea.focus();
+   textarea.setSelectionRange(edit.selectionStart,edit.selectionEnd);
+   textarea.dispatchEvent(new Event("input",{bubbles:true}));setStatus("");
+  });
+ }
+ const expand=$<HTMLButtonElement>("[data-editor-expand]");
+ expand?.addEventListener("click",()=>{
+  const expanded=root.dataset.expanded!=="true";
+  root.dataset.expanded=String(expanded);expand.setAttribute("aria-pressed",String(expanded));
+  expand.setAttribute("aria-label",expanded?copy.collapse:copy.expand);expand.title=expanded?copy.collapse:copy.expand;
+ });
  const emojiPopup=$<HTMLDetailsElement>(".forum-emoji");
  for(const button of root.querySelectorAll<HTMLButtonElement>("[data-editor-emoji]")){
   button.addEventListener("click",()=>{
    setPreview(false);
    const emoji=button.dataset.editorEmoji||"";
-   if(textarea.value.length+emoji.length>textarea.maxLength)return;
+   if(textarea.value.length-(textarea.selectionEnd-textarea.selectionStart)+emoji.length>textarea.maxLength)return;
    textarea.setRangeText(emoji,textarea.selectionStart,textarea.selectionEnd,"end");
    textarea.focus();textarea.dispatchEvent(new Event("input",{bubbles:true}));
    if(emojiPopup)emojiPopup.open=false;

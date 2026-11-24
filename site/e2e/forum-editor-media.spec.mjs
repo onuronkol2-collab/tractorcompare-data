@@ -70,6 +70,17 @@ test("editor safely formats text, previews emoji, and publishes text while keepi
   if(el.dispatchEvent(event))throw Error("Spreadsheet paste was not handled");
  });
  await expect(body).toHaveValue(/\| TD5\.90 \| Türkiye \|/);
+ await form.locator("[data-editor-expand]").click();
+ await expect(form.locator("[data-editor-expand]")).toHaveAttribute("aria-pressed","true");
+ await form.locator("[data-editor-expand]").click();
+ await expect(form.locator("[data-editor-expand]")).toHaveAttribute("aria-pressed","false");
+ await body.evaluate(el=>el.setSelectionRange(el.value.length,el.value.length));
+ await form.locator('[data-editor-block="heading"]').click();
+ await expect(body).toHaveValue(/## Bölüm başlığı/);
+ await body.evaluate(el=>el.setSelectionRange(el.value.length,el.value.length));
+ await form.locator('[data-editor-block="table"]').click();
+ await expect(body).toHaveValue(/\| Sütun 1 \| Sütun 2 \|/);
+
 
  await form.locator("[data-editor-preview]").click();
  // Browser must strip original file metadata by re-encoding to WebP.

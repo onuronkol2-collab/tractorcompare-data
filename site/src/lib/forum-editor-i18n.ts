@@ -185,3 +185,17 @@ export const FORUM_EDITOR_COPY:Record<Locale,ForumEditorCopy>={
   photoDuplicate:"Esta foto ya está seleccionada."
  }
 };
+
+export type ForumWritingCopy={heading:string;headingPlaceholder:string;table:string;column:string;cell:string;expand:string;collapse:string;cannotInsert:string};
+export const FORUM_WRITING_COPY:Record<Locale,ForumWritingCopy>={
+ en:{heading:"Heading",headingPlaceholder:"Section heading",table:"Insert table",column:"Column",cell:"Cell",expand:"Expand writing area",collapse:"Reduce writing area",cannotInsert:"Choose a single line for a heading, place the cursor for a table, and check the character limit."},
+ tr:{heading:"Başlık",headingPlaceholder:"Bölüm başlığı",table:"Tablo ekle",column:"Sütun",cell:"Hücre",expand:"Yazı alanını genişlet",collapse:"Yazı alanını küçült",cannotInsert:"Başlık için tek satır seçin, tablo için imleci yerleştirin ve karakter sınırını kontrol edin."},
+ zh:{heading:"标题",headingPlaceholder:"章节标题",table:"插入表格",column:"列",cell:"单元格",expand:"扩大编辑区",collapse:"缩小编辑区",cannotInsert:"标题请选择单行文字，表格请定位光标，并检查字符限制。"},
+ hi:{heading:"शीर्षक",headingPlaceholder:"अनुभाग शीर्षक",table:"तालिका जोड़ें",column:"स्तंभ",cell:"सेल",expand:"लेखन क्षेत्र बड़ा करें",collapse:"लेखन क्षेत्र छोटा करें",cannotInsert:"शीर्षक के लिए एक पंक्ति चुनें, तालिका के लिए कर्सर रखें और वर्ण सीमा जाँचें।"},
+ "pt-br":{heading:"Título",headingPlaceholder:"Título da seção",table:"Inserir tabela",column:"Coluna",cell:"Célula",expand:"Ampliar área de escrita",collapse:"Reduzir área de escrita",cannotInsert:"Selecione uma linha para o título, posicione o cursor para a tabela e verifique o limite de caracteres."},
+ fr:{heading:"Titre",headingPlaceholder:"Titre de section",table:"Insérer un tableau",column:"Colonne",cell:"Cellule",expand:"Agrandir la zone de rédaction",collapse:"Réduire la zone de rédaction",cannotInsert:"Sélectionnez une ligne pour le titre, placez le curseur pour le tableau et vérifiez la limite de caractères."},
+ de:{heading:"Überschrift",headingPlaceholder:"Abschnittsüberschrift",table:"Tabelle einfügen",column:"Spalte",cell:"Zelle",expand:"Schreibbereich vergrößern",collapse:"Schreibbereich verkleinern",cannotInsert:"Wählen Sie eine Zeile für die Überschrift, setzen Sie den Cursor für die Tabelle und prüfen Sie das Zeichenlimit."},
+ ru:{heading:"Заголовок",headingPlaceholder:"Заголовок раздела",table:"Вставить таблицу",column:"Столбец",cell:"Ячейка",expand:"Увеличить поле ввода",collapse:"Уменьшить поле ввода",cannotInsert:"Выберите одну строку для заголовка, установите курсор для таблицы и проверьте лимит символов."},
+ ja:{heading:"見出し",headingPlaceholder:"セクションの見出し",table:"表を挿入",column:"列",cell:"セル",expand:"入力欄を広げる",collapse:"入力欄を縮める",cannotInsert:"見出しは1行を選択し、表はカーソル位置を指定して、文字数制限を確認してください。"},
+ es:{heading:"Título",headingPlaceholder:"Título de sección",table:"Insertar tabla",column:"Columna",cell:"Celda",expand:"Ampliar área de escritura",collapse:"Reducir área de escritura",cannotInsert:"Selecciona una línea para el título, coloca el cursor para la tabla y comprueba el límite de caracteres."}
+};

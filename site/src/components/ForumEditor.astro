@@ -1,9 +1,9 @@
 ---
-import {FORUM_EDITOR_COPY} from "../lib/forum-editor-i18n.ts";
+import {FORUM_EDITOR_COPY,FORUM_WRITING_COPY} from "../lib/forum-editor-i18n.ts";
 import type {Locale} from "../lib/locales.ts";
 interface Props {lang:Locale;editorId:string}
 const {lang,editorId}=Astro.props;
-const labels=FORUM_EDITOR_COPY[lang];
+const labels={...FORUM_EDITOR_COPY[lang],...FORUM_WRITING_COPY[lang]};
 const emoji=["🚜","🌾","🛠️","⚙️","🔧","💬","✅","❓","📷","👨‍🌾","👩‍🌾","🌱","🚜","👍","⚠️","😊","😂","🎉","❤️","🔋"];
 ---
 <div class="forum-editor" data-forum-editor data-editor-copy={JSON.stringify(labels)}>
@@ -14,6 +14,9 @@ const emoji=["🚜","🌾","🛠️","⚙️","🔧","💬","✅","❓","📷","
    <button type="button" data-editor-format="list" aria-label={labels.list} title={labels.list}>☷</button>
    <button type="button" data-editor-format="quote" aria-label={labels.quote} title={labels.quote}>❞</button>
    <button type="button" data-editor-format="code" aria-label={labels.code} title={labels.code}>{"</>"}</button>
+   <button type="button" data-editor-block="heading" aria-label={labels.heading} title={labels.heading}>H2</button>
+   <button type="button" data-editor-block="table" aria-label={labels.table} title={labels.table}>▦</button>
+   <button type="button" data-editor-expand aria-pressed="false" aria-label={labels.expand} title={labels.expand}>↕</button>
    <details class="forum-emoji">
     <summary aria-label={labels.emoji} title={labels.emoji}>😊</summary>
     <div class="forum-emoji-grid" aria-label={labels.emoji}>
@@ -47,6 +50,8 @@ const emoji=["🚜","🌾","🛠️","⚙️","🔧","💬","✅","❓","📷","
 </div>
 <style>
  .forum-editor{margin-top:-5px;display:grid;gap:12px;min-width:0}
+ .forum-editor[data-expanded="true"] :global(textarea[name="body"]){min-height:clamp(300px,65vh,720px);max-height:none}
+ .forum-editor[data-expanded="true"] .forum-editor-preview-content{min-height:clamp(300px,65vh,720px)}
  [data-editor-source][hidden],[data-editor-preview-panel][hidden]{display:none!important}
  .forum-editor-top{display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px;align-items:center}
  .forum-editor-toolbar{display:flex;flex-wrap:wrap;gap:6px;align-items:center;background:#e8f2e8;
