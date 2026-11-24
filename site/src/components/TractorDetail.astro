@@ -22,9 +22,12 @@ import { modelEvidenceAnswers, matchedHeadlinePowerSource } from "../lib/model-e
 import {MODEL_ANSWER_UI,modelAnswerMethodLocale} from "../lib/model-evidence-answer-i18n.ts";
 import { HEADLINE_PROVENANCE_COPY } from "../lib/headline-provenance-i18n.ts";
 import {forumText as forumCopy} from "../lib/forum-i18n.ts";
+import {modelForumTopics} from "../lib/forum.ts";
 import {editorialHubTranslation} from "../lib/editorial-hub-i18n.ts";
 interface Props { lang: Locale; tractor: TractorRecord; }
 const { lang, tractor } = Astro.props;
+const modelDiscussions=await modelForumTopics(lang,tractor.tractor_id);
+const discussionTitle:Record<Locale,string>={en:"Discussions about this tractor",tr:"Bu traktör hakkındaki forum konuları",zh:"关于这款拖拉机的讨论",hi:"इस ट्रैक्टर पर चर्चाएँ","pt-br":"Discussões sobre este trator",fr:"Discussions sur ce tracteur",de:"Diskussionen zu diesem Traktor",ru:"Обсуждения этого трактора",ja:"このトラクターに関する話題",es:"Debates sobre este tractor"};
 // Same read-only, published-only catalogue already used by getStaticPaths.
 const moreModels = modelDiscoveryLinks(tractor,(await getPublicCatalog()).tractors);
 const hasBasak2075Analysis = tractor.brand_name.toLocaleLowerCase("tr").includes("başak") &&
@@ -130,8 +133,12 @@ const summaryItems = [
       </article>)}</div>
       <p class="model-answer-method"><a href={localizedPath(answerMethodLocale,"/methodology/")} hreflang={lang==="en"||lang==="tr"?undefined:answerMethodLocale}>{answerCopy.method} ↗</a></p>
     </section>}
+    {modelDiscussions.length>0&&<section class="model-forum-topics" aria-labelledby="model-forum-heading">
+      <h2 id="model-forum-heading">{discussionTitle[lang]}</h2>
+      <ul>{modelDiscussions.map(topic=><li><a href={localizedPath(lang,"/forum/"+topic.slug+"/")}>{topic.title}</a><small>{forumCopy(lang,topic.category)}</small></li>)}</ul>
+    </section>}
     <a class="model-forum-discussion"
-      href={localizedPath(lang,"/forum/")+"?tractor="+encodeURIComponent(tractor.tractor_id)}>
+      href={localizedPath(lang,"/forum/")+"?tractor="+encodeURIComponent(tractor.tractor_id)+"#forum-compose"}>
       <strong>{forumCopy(lang,"name")} · {forumCopy(lang,"compose")}</strong>
       <span>{forumCopy(lang,"intro")} ↗</span>
     </a>
@@ -198,6 +205,14 @@ const summaryItems = [
  .model-summary-power-source:focus-visible { outline:3px solid #b7df91; outline-offset:3px; border-radius:3px; }
  .model-summary-power-review { color:#e4e5d1; }
 
+ .model-forum-topics{padding:clamp(16px,3vw,26px);border:1px solid #bcd5cf;border-radius:13px;background:#fff;margin:18px 0 12px;min-width:0}
+ .model-forum-topics h2{font-size:clamp(18px,2.3vw,24px);color:#245b49;margin:0 0 12px}
+ .model-forum-topics ul{list-style:none;margin:0;padding:0;display:grid;gap:6px}
+ .model-forum-topics li{display:grid;gap:3px;border-bottom:1px solid #dbe9e1;padding:8px 0;overflow-wrap:anywhere}
+ .model-forum-topics li:last-child{border:0}
+ .model-forum-topics a{color:#245b49;text-decoration:underline;font-weight:700;line-height:1.55;min-height:44px;display:flex;align-items:center}
+ .model-forum-topics a:focus-visible{outline:3px solid #8abdae;outline-offset:3px}
+ .model-forum-topics small{color:#42634d}
  .model-forum-discussion{display:flex;flex-wrap:wrap;align-items:center;gap:6px 17px;margin:17px 0 22px;padding:17px 19px;background:#f2f8f7;border:1px solid #bcd5cf;border-radius:13px;color:#245b49;text-decoration:none}
  .model-forum-discussion strong{font-size:15px;font-weight:900}
  .model-forum-discussion span{font-size:13px;line-height:1.6}
