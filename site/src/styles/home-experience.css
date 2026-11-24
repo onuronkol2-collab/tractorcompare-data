@@ -91,7 +91,9 @@
 .home-featured-card .tractor-photo-gallery {margin:0 0 18px;min-height:0;}
 .home-featured-card .tractor-photo-frame {min-width:0;}
 .home-featured-card .tractor-photo-short-credit {line-height:1.6;font-size:12px;overflow-wrap:anywhere;}
-.home-featured-card .tractor-photo-short-credit a {color:#d8efc5;text-underline-offset:3px;}
+/* Higher specificity than shared #main link colors: pale attribution text
+   sits on a dark photo frame and must remain readable in all ten locales. */
+#main .home-featured-card .tractor-photo-short-credit a {color:#d8efc5;text-underline-offset:3px;}
 .home-featured-card .tractor-photo-placeholder {min-height:150px;}
 .home-featured-card .tractor-photo-button {min-height:150px;}
 .home-featured-card .tractor-photo-gallery img {object-fit:contain;background:#eff5eb;}
