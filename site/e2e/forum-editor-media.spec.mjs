@@ -48,6 +48,20 @@ test("editor safely formats text, previews emoji, and publishes text while keepi
  await form.locator("[data-editor-preview]").click();
  await expect(form.locator("[data-editor-preview-content] strong")).toContainText("Yağ ısındıktan");
  await expect(form.locator("[data-editor-preview-content]")).toContainText("🚜");
+ await expect(body).toBeHidden();
+ await form.locator("[data-editor-preview]").click();
+ await expect(body).toBeVisible();
+ const original=await body.inputValue();
+ const sample=original+"\n\n## Üretim ülkeleri\n\n| Marka | Ülke |\n|---|---|\n| John Deere | ABD |\n| Deutz-Fahr | Almanya |";
+ await body.fill(sample);
+ await form.locator("[data-editor-preview]").click();
+ await expect(form.locator("[data-editor-preview-content] h2")).toHaveText("Üretim ülkeleri");
+ await expect(form.locator("[data-editor-preview-content] table tbody tr")).toHaveCount(2);
+ await expect(form.locator("[data-editor-preview-content] th").first()).toHaveCSS("font-weight","800");
+ await form.locator("[data-editor-preview]").click();
+ await expect(body).toHaveValue(sample);
+ await expect(body).toHaveCSS("font-weight","400");
+ await form.locator("[data-editor-preview]").click();
  // Browser must strip original file metadata by re-encoding to WebP.
  const png=Buffer.from("iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+Z+HoAAAAASUVORK5CYII=","base64");
  await form.locator("[data-editor-files]").setInputFiles({name:"pump.png",mimeType:"image/png",buffer:png});

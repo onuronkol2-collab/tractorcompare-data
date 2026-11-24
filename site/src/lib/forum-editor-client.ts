@@ -69,6 +69,7 @@ export function initForumEditor(
  const rightsLabel=$<HTMLElement>("[data-editor-photo-rights]");
  const counter=$<HTMLElement>("[data-editor-count]");
  const previewPanel=$<HTMLElement>("[data-editor-preview-panel]");
+ const sourcePanel=$<HTMLElement>("[data-editor-source]");
  const previewBody=$<HTMLElement>("[data-editor-preview-content]");
  const previewToggle=$<HTMLButtonElement>("[data-editor-preview]");
  const retry=$<HTMLButtonElement>("[data-editor-retry]");
@@ -80,7 +81,7 @@ export function initForumEditor(
  function renderCounter(){
   if(!counter)return;
   const words=textarea.value.trim()?textarea.value.trim().split(/\s+/u).length:0;
-  counter.textContent=copy.words+": "+words+" · "+copy.characters+": "+Array.from(textarea.value).length+
+  counter.textContent=copy.words+": "+words+" · "+copy.characters+": "+textarea.value.length+
    "/"+textarea.maxLength;
  }
  const drawSegments=(parts:{type:string;text:string}[],into:HTMLElement)=>{
@@ -123,7 +124,20 @@ export function initForumEditor(
    previewBody.append(holder);
   }
  }
+ function setPreview(open:boolean){
+  if(!previewPanel||!sourcePanel||!previewToggle)return;
+  previewPanel.hidden=!open;
+  sourcePanel.hidden=open;
+  previewToggle.setAttribute("aria-pressed",String(open));
+  const label=previewToggle.querySelector<HTMLElement>("span");
+  if(label)label.textContent=open?copy.write:copy.preview;
+  previewToggle.title=open?copy.write:copy.preview;
+  if(open)drawPreview();
+ }
+ // Native form validation must always be able to focus the original field.
+ textarea.addEventListener("invalid",()=>setPreview(false));
  function insertAround(mode:string){
+  setPreview(false);
   const start=textarea.selectionStart,end=textarea.selectionEnd;
   const chosen=textarea.value.slice(start,end);
   let before="",after="";
@@ -146,6 +160,7 @@ export function initForumEditor(
  const emojiPopup=$<HTMLDetailsElement>(".forum-emoji");
  for(const button of root.querySelectorAll<HTMLButtonElement>("[data-editor-emoji]")){
   button.addEventListener("click",()=>{
+   setPreview(false);
    const emoji=button.dataset.editorEmoji||"";
    if(textarea.value.length+emoji.length>textarea.maxLength)return;
    textarea.setRangeText(emoji,textarea.selectionStart,textarea.selectionEnd,"end");
@@ -155,10 +170,7 @@ export function initForumEditor(
  }
  previewToggle?.addEventListener("click",()=>{
   if(!previewPanel)return;
-  previewPanel.hidden=!previewPanel.hidden;
-  previewToggle.setAttribute("aria-pressed",String(!previewPanel.hidden));
-  previewToggle.querySelector<HTMLElement>("span")!.textContent=previewPanel.hidden?copy.preview:copy.write;
-  if(!previewPanel.hidden)drawPreview();
+  setPreview(previewPanel.hidden);
  });
  textarea.addEventListener("input",()=>{renderCounter();if(previewPanel&&!previewPanel.hidden)drawPreview()});
  renderCounter();
@@ -279,5 +291,5 @@ export function initForumEditor(
    if(ok)setStatus(copy.photoRetrySuccess);
   }finally{retry.disabled=false}
  });
- return {valid,commit,clear,refresh:()=>{paintPhotos();renderCounter()},hasPhotos:()=>photos.length>0};
+ return {valid,commit,clear,refresh:()=>{paintPhotos();renderCounter();setPreview(false)},hasPhotos:()=>photos.length>0};
 }
