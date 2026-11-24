@@ -2,8 +2,8 @@
   "version": 1,
   "pages": {
     "https://tractorvs.com/": {
-      "digest": "960f0a675849dac5533c7c2922889b27cd89c4fe2b4948c8b1d4ec4fdb5ea9e0",
-      "modified": "2026-11-24T10:24:45.384Z"
+      "digest": "64b4241cd8e3861fd3adb02ecb1352ece76d73d764b671a03a8d3b2a61f8131f",
+      "modified": "2026-11-24T16:54:38.519Z"
     },
     "https://tractorvs.com/articles/": {
       "digest": "a22ac47998f82d2b8426a43cba5780deab1550bd512ff7dc9066613092553adc",
@@ -18,28 +18,28 @@
       "modified": "2026-11-22T08:02:35.845Z"
     },
     "https://tractorvs.com/compare/": {
-      "digest": "47b47e715854bfcdd75e285950e91cc436d86a84ec0759a885161626db61a3db",
-      "modified": "2026-11-24T15:48:25.289Z"
+      "digest": "5f48e107a3ec1a65112814b248c46437ff547e7673dcf8c3ebb8ebef1cafe87b",
+      "modified": "2026-11-24T16:54:38.519Z"
     },
     "https://tractorvs.com/compare/deutz-fahr-5090-d-gs-vs-5100-d-gs/": {
       "digest": "922999b9696029c032d6b1c71856522e23db46cc43479dd85fbb929909556a66",
       "modified": "2026-11-23T16:20:24.281Z"
     },
     "https://tractorvs.com/de/": {
-      "digest": "6d26199a39ff6abea3d9fc9d597e357ff97189cb143022610473f361112f23d9",
-      "modified": "2026-11-24T10:24:45.384Z"
+      "digest": "4c83497390be7cc189c9e04bfbbad765789519a06611c3b772c4db0c3f887d28",
+      "modified": "2026-11-24T16:54:38.519Z"
     },
     "https://tractorvs.com/de/articles/": {
       "digest": "9cce9f9a36c605c632ee48dff4ecd8c4081fa5dae572b36eafe256ac8d2f2263",
       "modified": "2026-11-24T16:26:42.582Z"
     },
     "https://tractorvs.com/de/compare/": {
-      "digest": "bce5f2e2534dda6076af5d22bc649612576b790c2268936b6b52c5d286f3f2be",
-      "modified": "2026-11-24T15:48:25.289Z"
+      "digest": "68398ab0c799fdfd58b3be0c87d756217fe526f325f3ddd2c613aa79d4f04319",
+      "modified": "2026-11-24T16:54:38.519Z"
     },
     "https://tractorvs.com/de/farm-advisor/": {
-      "digest": "f033a82f8bd9405734f91ed6e58267bf0988d2379335837d00e1476b48c68646",
-      "modified": "2026-11-23T18:15:08.467Z"
+      "digest": "329903a70a4a85f36950fa39067e9cf9dc8a84425da0fbd119e31d1751c6be32",
+      "modified": "2026-11-24T16:54:38.519Z"
     },
     "https://tractorvs.com/de/guides/choosing-a-tractor/": {
       "digest": "acc98b0e38785c5bb7351954a96e7befc0334131c983ee46d8c6b2b857b3a780",
@@ -54,8 +54,8 @@
       "modified": "2026-11-24T16:26:42.582Z"
     },
     "https://tractorvs.com/de/tractors/": {
-      "digest": "848b6f514a3f33665ee91ed773ef56f04233513d4d8285ca86c256e31de7dcd6",
-      "modified": "2026-11-24T16:37:35.751Z"
+      "digest": "18928cc8b4cd5effeb8c7918e9edcee8726c012f3cd44d186cbbca1fc9c314d2",
+      "modified": "2026-11-24T16:54:38.519Z"
     },
     "https://tractorvs.com/de/tractors/agrale-4125-0b53e944/": {
       "digest": "cdb27054e6be39c7c02cbfb34aa38e40f8d59d9b590108e3677651c1e13cec0e",
@@ -830,12 +830,12 @@
       "modified": "2026-11-23T16:45:17.078Z"
     },
     "https://tractorvs.com/de/tractors/sonalika-110-wt-d76351cf/": {
-      "digest": "8534c4df087ccc802286136811a7c07f9da18be0f6cde299d69bbd331f175bef",
-      "modified": "2026-11-24T15:48:25.289Z"
+      "digest": "2c31348502ffb07fcdae4736caaea390229105644e16ccdd500784187dae0633",
+      "modified": "2026-11-24T16:54:38.519Z"
     },
     "https://tractorvs.com/de/tractors/sonalika-125-812d14fd/": {
-      "digest": "ea53ed9ff66e8b5f58dcc4213e6d60c44dc55d2e26bbf72de7ed5ac84fa3fa60",
-      "modified": "2026-11-24T15:48:25.289Z"
+      "digest": "0d1fd07fbbae56d8d0c3c2814c4b5137d34c0080dca391d084441298d5d72625",
+      "modified": "2026-11-24T16:54:38.519Z"
     },
     "https://tractorvs.com/de/tractors/sonalika-20-6aa4d57a/": {
       "digest": "b38fb4c6372f93f7003855cfdf757620283187429b72487335ad5de831e693a9",
@@ -858,8 +858,8 @@
       "modified": "2026-11-24T15:48:25.289Z"
     },
     "https://tractorvs.com/de/tractors/sonalika-55-3e536204/": {
-      "digest": "eb90448abcc84486c1e56a5ca3f836d3109816c4adc85df18cd692a140ff8004",
-      "modified": "2026-11-24T15:48:25.289Z"
+      "digest": "d6209cb29c82c7ae7459a90b57e0d71005fde8cd2d433183f1db2176f31ba566",
+      "modified": "2026-11-24T16:54:38.519Z"
     },
     "https://tractorvs.com/de/tractors/sonalika-60-3-cylinder-778f2041/": {
       "digest": "cd62df81b57c1618e5128159be607041eaa8214dd284cc8c1aa0b5ec830994db",
@@ -870,8 +870,8 @@
       "modified": "2026-11-24T15:48:25.289Z"
     },
     "https://tractorvs.com/de/tractors/sonalika-75-n-ed47ec06/": {
-      "digest": "07a8d179a382bee5808060af212187b727f93ec470dea695b37d4a375c31e11f",
-      "modified": "2026-11-24T15:48:25.289Z"
+      "digest": "379396f0bd25ac730336c6d9eb921f1eb14e5128bdc8f354a9d1606ff537002c",
+      "modified": "2026-11-24T16:54:38.519Z"
     },
     "https://tractorvs.com/de/tractors/sonalika-75-rx-aca8ec18/": {
       "digest": "1747ff75cc89c5376ed48c4a9de9806432196bb3115753fdae6deb2050346250",
@@ -882,8 +882,8 @@
       "modified": "2026-11-24T15:48:25.289Z"
     },
     "https://tractorvs.com/de/tractors/sonalika-90-n-fc849f5f/": {
-      "digest": "54418e1b7307a9aff9799faee1ea12366b4e189f93f416d040f62d676ee27051",
-      "modified": "2026-11-24T15:48:25.289Z"
+      "digest": "ad0b19df6ac56d9263d9a72261d0c5aa2220e1fe5941ccfb0a585f8bdb3372f2",
+      "modified": "2026-11-24T16:54:38.519Z"
     },
     "https://tractorvs.com/de/tractors/sonalika-90-wt-38f696fa/": {
       "digest": "2dbd51acd37445c958613a8dcc954ef278b4bbe4f47da737728f9802c4a51447",
@@ -1618,20 +1618,20 @@
       "modified": "2026-11-24T16:37:35.751Z"
     },
     "https://tractorvs.com/es/": {
-      "digest": "78c230807453c2bfa35abdbca4af7956a25fe901f6ab46aea48f56374b14f588",
-      "modified": "2026-11-24T10:24:45.384Z"
+      "digest": "4ab83ed97e9a99257869da5e712bec38183012b824aa69277c4620f5a70ec846",
+      "modified": "2026-11-24T16:54:38.519Z"
     },
     "https://tractorvs.com/es/articles/": {
       "digest": "bdb48056cf70631e4bf66f4d96e825f1ddccbf4ea1cbae9bf064674cf5f89895",
       "modified": "2026-11-24T16:26:42.582Z"
     },
     "https://tractorvs.com/es/compare/": {
-      "digest": "e438f60d8313e013b7db488dbbc47a6bc5fe1bcca8753802402337253cbbcb58",
-      "modified": "2026-11-24T15:48:25.289Z"
+      "digest": "7680900b46dbaea82e3cf221c94bbfaf3d223bf0fc763ca3e79d906593af49dd",
+      "modified": "2026-11-24T16:54:38.519Z"
     },
     "https://tractorvs.com/es/farm-advisor/": {
-      "digest": "4914db645d6005eaec5c1c2fa2dc6653d7ab443aa23d176a81fd680dcb7740a6",
-      "modified": "2026-11-23T18:15:08.467Z"
+      "digest": "a1affbf1f4a12b6c088d49df07bdadb5d378989baa8805d7e13fc8c33baf0dfe",
+      "modified": "2026-11-24T16:54:38.519Z"
     },
     "https://tractorvs.com/es/guides/choosing-a-tractor/": {
       "digest": "b1a38e2e8c95d29d38a3f9d5bbf8050212ab529d55835bf6ded427f21ed8cc7e",
@@ -1646,8 +1646,8 @@
       "modified": "2026-11-24T16:26:42.582Z"
     },
     "https://tractorvs.com/es/tractors/": {
-      "digest": "f1341067a05beef4ba8790b1c51f93c868aec9aee5a18d351446ae0bf3a2ddd5",
-      "modified": "2026-11-24T16:37:35.751Z"
+      "digest": "82cfd68d775f0fd17bab6fb9500e71808c7632d0396bb2a757446c1bd1e41861",
+      "modified": "2026-11-24T16:54:38.519Z"
     },
     "https://tractorvs.com/es/tractors/agrale-4125-0b53e944/": {
       "digest": "f06a64d2f3c0f38fc43ddb427a077c88ef10ab6f77a3074e18518a88795995a3",
@@ -2422,12 +2422,12 @@
       "modified": "2026-11-23T16:45:17.078Z"
     },
     "https://tractorvs.com/es/tractors/sonalika-110-wt-d76351cf/": {
-      "digest": "d6abc7b80b8b2421555a1a851663b251d242277f19f3ec432dd301dfdee41c18",
-      "modified": "2026-11-24T15:48:25.289Z"
+      "digest": "292960f89e1deaecbbf1ef2b47dca984fa58b5b0d84edcd64592236af4a617b8",
+      "modified": "2026-11-24T16:54:38.519Z"
     },
     "https://tractorvs.com/es/tractors/sonalika-125-812d14fd/": {
-      "digest": "6dee56bad30bff8060ca6933d474bb7bc214830e8c59b4a1e34477e69d5d52ad",
-      "modified": "2026-11-24T15:48:25.289Z"
+      "digest": "7070b9f7be927a2909c8a177b76ec2245397dad5f60ddc8b0e0aea4870ac74be",
+      "modified": "2026-11-24T16:54:38.519Z"
     },
     "https://tractorvs.com/es/tractors/sonalika-20-6aa4d57a/": {
       "digest": "41e26b69091fce0fa2c21c408096354f957ba2c8bea391d63da1048dedc3a8dd",
@@ -2450,8 +2450,8 @@
       "modified": "2026-11-24T15:48:25.289Z"
     },
     "https://tractorvs.com/es/tractors/sonalika-55-3e536204/": {
-      "digest": "e181156df969e84dfc1d96d36288182cdecf27575a361fa698410dd8b9088df9",
-      "modified": "2026-11-24T15:48:25.289Z"
+      "digest": "4e5f74437931b54f665f3d01f42dce6f1e882147b9e5818fead10a64cf27191e",
+      "modified": "2026-11-24T16:54:38.519Z"
     },
     "https://tractorvs.com/es/tractors/sonalika-60-3-cylinder-778f2041/": {
       "digest": "c3c74495e1971ac89ae180acbfc8a23fbf1e16fb5a97feb761136a98b4991bfb",
@@ -2462,8 +2462,8 @@
       "modified": "2026-11-24T15:48:25.289Z"
     },
     "https://tractorvs.com/es/tractors/sonalika-75-n-ed47ec06/": {
-      "digest": "ff8fbb0ed6c20b511ec464ad1e9a6babb2982475cf643b5b8abf15257c9363f0",
-      "modified": "2026-11-24T15:48:25.289Z"
+      "digest": "bdf9ca932436a7a4d3c8c3eae324a9d595700f1e701476368154de8bb50e3dec",
+      "modified": "2026-11-24T16:54:38.519Z"
     },
     "https://tractorvs.com/es/tractors/sonalika-75-rx-aca8ec18/": {
       "digest": "9f34f34f4a811f74d9336712719837585afb54d2ab6f18f147f2c48e5cf9c3b3",
@@ -2474,8 +2474,8 @@
       "modified": "2026-11-24T15:48:25.289Z"
     },
     "https://tractorvs.com/es/tractors/sonalika-90-n-fc849f5f/": {
-      "digest": "ead8b99129cd59e9bb5b85bfe4db729a8496e9673dba308667618918d8e5499d",
-      "modified": "2026-11-24T15:48:25.289Z"
+      "digest": "dd96301a750307e3fdb10d1c74200af5e63468566fc9aeb271f05a1e2e31d265",
+      "modified": "2026-11-24T16:54:38.519Z"
     },
     "https://tractorvs.com/es/tractors/sonalika-90-wt-38f696fa/": {
       "digest": "e4af0ccb6ee98eead6ceaad838feb41fd3ba33daf37e1f528adcb9890e35fcaf",
@@ -3210,24 +3210,24 @@
       "modified": "2026-11-24T16:37:35.751Z"
     },
     "https://tractorvs.com/farm-advisor/": {
-      "digest": "2958c1653e29e8ea7077f0a6e26092e04fd9e2986ed83cedcb5f1196b8d2c725",
-      "modified": "2026-11-23T18:15:08.467Z"
+      "digest": "d311e350e2c2c35777b26ad4f1526e2f0bd401cbf8ea015ba1dff4a56239da18",
+      "modified": "2026-11-24T16:54:38.519Z"
     },
     "https://tractorvs.com/fr/": {
-      "digest": "7dfc588ca8118db0cb83768751d457f5b04461833fcfa4dabbb0243045f092fd",
-      "modified": "2026-11-24T10:24:45.384Z"
+      "digest": "15307ae1ff5dfb054820ca1ff4d5d2efff78b963fbe2cfbb50ff895994a20698",
+      "modified": "2026-11-24T16:54:38.519Z"
     },
     "https://tractorvs.com/fr/articles/": {
       "digest": "4a6ade76cf3c3ad17590b25a3c3290bfa43c878f3fe79c923cfc4b99766edbed",
       "modified": "2026-11-24T16:26:42.582Z"
     },
     "https://tractorvs.com/fr/compare/": {
-      "digest": "be15a8dc1f49d28fb2a4e66493add32fc00e4858f72cce11c15e01dc6fd6a522",
-      "modified": "2026-11-24T15:48:25.289Z"
+      "digest": "fb2df52e6d28860c86fb5a8c28244f3a08dd0e512ad150d89753cc02dd8598b1",
+      "modified": "2026-11-24T16:54:38.519Z"
     },
     "https://tractorvs.com/fr/farm-advisor/": {
-      "digest": "869dffae73ddb785014fc76c7434f7ba19809d8aa23407435a6583fd32d89e00",
-      "modified": "2026-11-23T18:15:08.467Z"
+      "digest": "9b7d881764dfc0e01679bc16fe22d3bfca2bb690ff11d751699c05dfd83b4b46",
+      "modified": "2026-11-24T16:54:38.519Z"
     },
     "https://tractorvs.com/fr/guides/choosing-a-tractor/": {
       "digest": "c1d4a891053a117f4d26b0fbe43fcc365ce9bb70ed72e2dfba60abaf90180b1e",
@@ -3242,8 +3242,8 @@
       "modified": "2026-11-24T16:26:42.582Z"
     },
     "https://tractorvs.com/fr/tractors/": {
-      "digest": "04022813c291b1c3fd31ac44bf37557049f12ffe34014611ad9c1fa119569240",
-      "modified": "2026-11-24T16:37:35.751Z"
+      "digest": "f256b841db3794001dab09cb399af3205d7e60366de69cd4e5c10071211429b6",
+      "modified": "2026-11-24T16:54:38.519Z"
     },
     "https://tractorvs.com/fr/tractors/agrale-4125-0b53e944/": {
       "digest": "b8a1b58c8d94fe6c14b841d647d0cfa886abe3ee91e2ec31c091658027d90821",
@@ -4018,12 +4018,12 @@
       "modified": "2026-11-23T16:45:17.078Z"
     },
     "https://tractorvs.com/fr/tractors/sonalika-110-wt-d76351cf/": {
-      "digest": "a83a3929badea9554e6bdf03ec7b8ff3fe4f3deb4db9205435a28729a2ddb00d",
-      "modified": "2026-11-24T15:48:25.289Z"
+      "digest": "619fc8b269f1d62c8ece5dfa25048e58670511dfff6437fcd2950cccfdcf1b03",
+      "modified": "2026-11-24T16:54:38.519Z"
     },
     "https://tractorvs.com/fr/tractors/sonalika-125-812d14fd/": {
-      "digest": "8f9e470d6ba9cfddec2f79ba00d4b47d18231a93238fa752c79b941cd365da20",
-      "modified": "2026-11-24T15:48:25.289Z"
+      "digest": "5ba6575140bb0a5a9029a90111e7e2f06b3c9b9ba02d29ede26ffa52693854f3",
+      "modified": "2026-11-24T16:54:38.519Z"
     },
     "https://tractorvs.com/fr/tractors/sonalika-20-6aa4d57a/": {
       "digest": "ea8801560c2fef68e54605053949ddb151acd5eb7bdc22ad308676653db2dd70",
@@ -4046,8 +4046,8 @@
       "modified": "2026-11-24T15:48:25.289Z"
     },
     "https://tractorvs.com/fr/tractors/sonalika-55-3e536204/": {
-      "digest": "4ff76b408df9d4b98974702e7e7314001db3342edc891f0c39867f7e6f426ff4",
-      "modified": "2026-11-24T15:48:25.289Z"
+      "digest": "4da7674a2bbac8fe96584591a7374c5088c6f6dbe438c5afff4755176925f659",
+      "modified": "2026-11-24T16:54:38.519Z"
     },
     "https://tractorvs.com/fr/tractors/sonalika-60-3-cylinder-778f2041/": {
       "digest": "42117d2afc49af241533757de9b174f30a04230ffd9d9f5d4d4f4216fe242f61",
@@ -4058,8 +4058,8 @@
       "modified": "2026-11-24T15:48:25.289Z"
     },
     "https://tractorvs.com/fr/tractors/sonalika-75-n-ed47ec06/": {
-      "digest": "d48c979b004a80ececdf34d33aa4e0165d3fe59a5d90e347344f95151905b8bb",
-      "modified": "2026-11-24T15:48:25.289Z"
+      "digest": "b54ba1523288fe24083fe8e022a422883180dc82d2b3620d031b426826286ef4",
+      "modified": "2026-11-24T16:54:38.519Z"
     },
     "https://tractorvs.com/fr/tractors/sonalika-75-rx-aca8ec18/": {
       "digest": "6eb857a7cf3ae8d67b04cc1d86b0881481279eee3f24e528ec5e0c32e68b69ad",
@@ -4070,8 +4070,8 @@
       "modified": "2026-11-24T15:48:25.289Z"
     },
     "https://tractorvs.com/fr/tractors/sonalika-90-n-fc849f5f/": {
-      "digest": "2ebf56917c347ca78e94bd849700b7025b5d2cd475c3f3f536a71d4d3a3c107a",
-      "modified": "2026-11-24T15:48:25.289Z"
+      "digest": "d27de60c7a8988a9fc123794562a2034f8f2d2f395e02ddb7bf24bfb50ef6a21",
+      "modified": "2026-11-24T16:54:38.519Z"
     },
     "https://tractorvs.com/fr/tractors/sonalika-90-wt-38f696fa/": {
       "digest": "e51e4d7e3540f6c71bd6a331f54150558211aa2b1afc2fcd907accfb9ae23522",
@@ -4826,20 +4826,20 @@
       "modified": "2026-11-24T16:20:05.453Z"
     },
     "https://tractorvs.com/hi/": {
-      "digest": "edd04d2d5fc4b825376c3581ba2ed7b44bc20746fd8006fe043e0c41f4c68cd8",
-      "modified": "2026-11-24T10:24:45.384Z"
+      "digest": "bbe80ff50d198cb4e58e99d1bf86f9494130825bc99210e4ed3866e216331f73",
+      "modified": "2026-11-24T16:54:38.519Z"
     },
     "https://tractorvs.com/hi/articles/": {
       "digest": "1dd3e6fa62b3d37f34dfb83496f61d3855a83279c8a5c6613c48e6f0cbf69ac6",
       "modified": "2026-11-24T16:26:42.582Z"
     },
     "https://tractorvs.com/hi/compare/": {
-      "digest": "bc5fb0ca23365c079d36482dd4b0121d6912c502edd58534c039a8fa1e27e305",
-      "modified": "2026-11-24T15:48:25.289Z"
+      "digest": "29a5dbdcf7bec13b2b0c97bd201258cebe658f75d9a31cd5e4f63057550477b7",
+      "modified": "2026-11-24T16:54:38.519Z"
     },
     "https://tractorvs.com/hi/farm-advisor/": {
-      "digest": "1ba9f97eb20ee943ee82acc6f5955c6adf6b9125ea0b3bd4464b7441c9254609",
-      "modified": "2026-11-23T18:15:08.467Z"
+      "digest": "04b9adf190b6357a6986407d4486ae285fc7c07c0908ef8d8a0db1db6bf46459",
+      "modified": "2026-11-24T16:54:38.519Z"
     },
     "https://tractorvs.com/hi/guides/choosing-a-tractor/": {
       "digest": "182a472bc39c4e8c2c4754f4ffe4a35e8c60044329742a12c926273a58b527e3",
@@ -4854,8 +4854,8 @@
       "modified": "2026-11-24T16:26:42.582Z"
     },
     "https://tractorvs.com/hi/tractors/": {
-      "digest": "e65798cc5b945e45bc1a073558f8146b4798cc251e7c304e81c3d44d82379df1",
-      "modified": "2026-11-24T16:37:35.751Z"
+      "digest": "62aa202bc278a9e8e46333d1cacf9a248a865e5274582cbdff5a8b061fab2067",
+      "modified": "2026-11-24T16:54:38.519Z"
     },
     "https://tractorvs.com/hi/tractors/agrale-4125-0b53e944/": {
       "digest": "377693b0bd65595b584c51290356012a376a147f2fdc091d3647ed0c215298f0",
@@ -5630,12 +5630,12 @@
       "modified": "2026-11-23T16:45:17.078Z"
     },
     "https://tractorvs.com/hi/tractors/sonalika-110-wt-d76351cf/": {
-      "digest": "ccd63c40178fa348043e5a978d9a539c292952d48127d2c0cbd24c53aadfd74d",
-      "modified": "2026-11-24T15:48:25.289Z"
+      "digest": "8a4830aad370ed52e662c0560468be1108e0f914ff7e4463f8be75fbfad7418d",
+      "modified": "2026-11-24T16:54:38.519Z"
     },
     "https://tractorvs.com/hi/tractors/sonalika-125-812d14fd/": {
-      "digest": "2fd570263c125b118aa363af7d812505f3ef671db47d5b0eda0e804ab7568754",
-      "modified": "2026-11-24T15:48:25.289Z"
+      "digest": "586e5ba2437a248ce2fab37cfac290370aaaa3f54264af507fb48e8634be01ba",
+      "modified": "2026-11-24T16:54:38.519Z"
     },
     "https://tractorvs.com/hi/tractors/sonalika-20-6aa4d57a/": {
       "digest": "d04fc3698983b31ca4d99eff600092c28b50c793641011ff73cd01553dfaf0ab",
@@ -5658,8 +5658,8 @@
       "modified": "2026-11-24T15:48:25.289Z"
     },
     "https://tractorvs.com/hi/tractors/sonalika-55-3e536204/": {
-      "digest": "209a29b900a38a36ee2822a59c6fa988057f36f37d7aefa078383f4955b9efdf",
-      "modified": "2026-11-24T15:48:25.289Z"
+      "digest": "b6cab7243157de7e04af5eed14a528747300b852f82bc6392ca3b70f9c5d4712",
+      "modified": "2026-11-24T16:54:38.519Z"
     },
     "https://tractorvs.com/hi/tractors/sonalika-60-3-cylinder-778f2041/": {
       "digest": "b2100134d8de0fb1e76c42aad686f5a445ca24771b15ab9e20fb4144b34534ca",
@@ -5670,8 +5670,8 @@
       "modified": "2026-11-24T15:48:25.289Z"
     },
     "https://tractorvs.com/hi/tractors/sonalika-75-n-ed47ec06/": {
-      "digest": "0c72cae5b2eb3733e00dea600643b8cd2d0694e3724aff736f1093adc210269a",
-      "modified": "2026-11-24T15:48:25.289Z"
+      "digest": "acd1f783ffa420094bfed450b5ddbbe8aa25cae648be4938fa2182932150e6f1",
+      "modified": "2026-11-24T16:54:38.519Z"
     },
     "https://tractorvs.com/hi/tractors/sonalika-75-rx-aca8ec18/": {
       "digest": "aa62012625c4825080eb7ad86e241d7e0a26fee660810c82279780172687807a",
@@ -5682,8 +5682,8 @@
       "modified": "2026-11-24T15:48:25.289Z"
     },
     "https://tractorvs.com/hi/tractors/sonalika-90-n-fc849f5f/": {
-      "digest": "80638bb3dcbb4d5eb7aa4ce31487416bec90afc989932e08ec1ed6ba7bd16ebc",
-      "modified": "2026-11-24T15:48:25.289Z"
+      "digest": "fe74ac112b5c39a5b6d89ebf3e86433210160d31bae713e3a3af8318867b06bd",
+      "modified": "2026-11-24T16:54:38.519Z"
     },
     "https://tractorvs.com/hi/tractors/sonalika-90-wt-38f696fa/": {
       "digest": "17fc7bf298cfc23fb6ca5915e7cae77fd9aa309492cddfb01fd47f051c7831ad",
@@ -6418,20 +6418,20 @@
       "modified": "2026-11-24T16:37:35.751Z"
     },
     "https://tractorvs.com/ja/": {
-      "digest": "2125260c2df476ae1ec8f48b4df61acf364791ae2b582c35f5dd081c108988e8",
-      "modified": "2026-11-24T10:24:45.384Z"
+      "digest": "8d6d64bfed62d8128b3ba4cb2e08991a781e23e6cd733ddd12c190367de308e5",
+      "modified": "2026-11-24T16:54:38.519Z"
     },
     "https://tractorvs.com/ja/articles/": {
       "digest": "e7227b3b4bcb7c68aaa26c0f04f9c1bf76670c6a5107a8003d3f3ad226099b83",
       "modified": "2026-11-24T16:26:42.582Z"
     },
     "https://tractorvs.com/ja/compare/": {
-      "digest": "b5a8ce477b7d03d043af1d35a470284d989348bdd80551c8c10e0a55462c800e",
-      "modified": "2026-11-24T15:48:25.289Z"
+      "digest": "cd433d9f86736814af84af036c122e7bb7394f0adebc0dc77cbcc792e221dc07",
+      "modified": "2026-11-24T16:54:38.519Z"
     },
     "https://tractorvs.com/ja/farm-advisor/": {
-      "digest": "ca273475eb92f219fb70ee734e57eb99e8f5ccebf28dbc2bcd8a1d0a58017be5",
-      "modified": "2026-11-23T18:15:08.467Z"
+      "digest": "b4665bbe6b2973d7490c7fc14faf8f4ce6d015c23fb41471dec7c8281fe36899",
+      "modified": "2026-11-24T16:54:38.519Z"
     },
     "https://tractorvs.com/ja/guides/choosing-a-tractor/": {
       "digest": "3b72ae07966123309d9613efe318636ac1a028d9500feddbedf32aba6fa643fe",
@@ -6446,8 +6446,8 @@
       "modified": "2026-11-24T16:26:42.582Z"
     },
     "https://tractorvs.com/ja/tractors/": {
-      "digest": "751976fffc1dd84bb871f8714b7cd67b2f6fa8a748d54b04397f9bc97d0865d1",
-      "modified": "2026-11-24T16:37:35.751Z"
+      "digest": "64ff43a7bbb09297b6ea7680106c39f56f37e87639fae2a9f228973d163b322e",
+      "modified": "2026-11-24T16:54:38.519Z"
     },
     "https://tractorvs.com/ja/tractors/agrale-4125-0b53e944/": {
       "digest": "965b5bd2023b7307e4cf2f8c683a86963aec03228a45eea3dd3b2d988dcbebac",
@@ -7222,12 +7222,12 @@
       "modified": "2026-11-23T16:45:17.078Z"
     },
     "https://tractorvs.com/ja/tractors/sonalika-110-wt-d76351cf/": {
-      "digest": "94bab9eed59e4c0c28f01d2bbcfc5f7c46eda099588c98487db81afd972b561e",
-      "modified": "2026-11-24T15:48:25.289Z"
+      "digest": "35682666711c484d481d40c02187897b43fcd83565c5768815abd1858881cebe",
+      "modified": "2026-11-24T16:54:38.519Z"
     },
     "https://tractorvs.com/ja/tractors/sonalika-125-812d14fd/": {
-      "digest": "610d61e19dd1cb4bb2813b17282b5935acd7cd8d80a218d25b39d21cec870557",
-      "modified": "2026-11-24T15:48:25.289Z"
+      "digest": "432ff2cd14ae12ca21ee1add5b5360b95a9cfd1894875d1917a05060ad81b2f0",
+      "modified": "2026-11-24T16:54:38.519Z"
     },
     "https://tractorvs.com/ja/tractors/sonalika-20-6aa4d57a/": {
       "digest": "a6b3d66bd77d761b8a32e1386cc55412467bb506e302f760bf19ce5239d84227",
@@ -7250,8 +7250,8 @@
       "modified": "2026-11-24T15:48:25.289Z"
     },
     "https://tractorvs.com/ja/tractors/sonalika-55-3e536204/": {
-      "digest": "6cf6e833d6e32292f3547a1079d25c9a56d37fc1dcc9ff8890e41671995c0423",
-      "modified": "2026-11-24T15:48:25.289Z"
+      "digest": "72192599666868140868c81db33aff331fadf79b2c92449b05a56e9c2701b860",
+      "modified": "2026-11-24T16:54:38.519Z"
     },
     "https://tractorvs.com/ja/tractors/sonalika-60-3-cylinder-778f2041/": {
       "digest": "a68b515b55787437b125e542bdd8b4d66515fb3dd12b003cd28a053c157c42b3",
@@ -7262,8 +7262,8 @@
       "modified": "2026-11-24T15:48:25.289Z"
     },
     "https://tractorvs.com/ja/tractors/sonalika-75-n-ed47ec06/": {
-      "digest": "32e11e54e8a8221361fe1fbd4709540099954bd5cd3cff9f874b9cd7b01edc72",
-      "modified": "2026-11-24T15:48:25.289Z"
+      "digest": "2f4f0c37b529f5cec1962a9ef2d7e8ff1927d57e3b8e4149cdda709d444569e5",
+      "modified": "2026-11-24T16:54:38.519Z"
     },
     "https://tractorvs.com/ja/tractors/sonalika-75-rx-aca8ec18/": {
       "digest": "46e6ab1bae2b869c7cb7a2d636f1657f3c874b5a17c019a14cff0612cdeb5174",
@@ -7274,8 +7274,8 @@
       "modified": "2026-11-24T15:48:25.289Z"
     },
     "https://tractorvs.com/ja/tractors/sonalika-90-n-fc849f5f/": {
-      "digest": "87381585642dc9bb14ad510992f91feec9213fd23007db18488c65d928c71f68",
-      "modified": "2026-11-24T15:48:25.289Z"
+      "digest": "576564ecf0e797e63592d8838719a62e7fb31688a746cfebc13d9ada5b90185e",
+      "modified": "2026-11-24T16:54:38.519Z"
     },
     "https://tractorvs.com/ja/tractors/sonalika-90-wt-38f696fa/": {
       "digest": "247904bc1c7284a3eea6f900955a981118ad4effca2e7384cadefd4413af471e",
@@ -8018,20 +8018,20 @@
       "modified": null
     },
     "https://tractorvs.com/pt-br/": {
-      "digest": "22069b09969114429291ac552b64212bf3b01dcd542c5a3bae54a9515f89f412",
-      "modified": "2026-11-24T10:24:45.384Z"
+      "digest": "ef916b8195c206535058e3af1b47b50fc0a26f5c13db30d98a838449bdc1c429",
+      "modified": "2026-11-24T16:54:38.519Z"
     },
     "https://tractorvs.com/pt-br/articles/": {
       "digest": "10ec54bd81ea3854a508000ce24ff618520893d7ecde37011f24d97042a3a46f",
       "modified": "2026-11-24T16:26:42.582Z"
     },
     "https://tractorvs.com/pt-br/compare/": {
-      "digest": "56af4c57ebf304329dba1470e47d020f8a5efb9524da13bf3b8eb4da9930253b",
-      "modified": "2026-11-24T15:48:25.289Z"
+      "digest": "3cf2c6ebd679fe8e3c2034fb22ebf9d767891dab4a563235678415873a058ecd",
+      "modified": "2026-11-24T16:54:38.519Z"
     },
     "https://tractorvs.com/pt-br/farm-advisor/": {
-      "digest": "94acdb5625b7a6922df8248609fb2d7281c7cc26c8942958474c70f60ca223dc",
-      "modified": "2026-11-23T18:15:08.467Z"
+      "digest": "f9446fef9429b036b3f382c74aea998e659dc048a25a8887ac80d0d93b764f05",
+      "modified": "2026-11-24T16:54:38.519Z"
     },
     "https://tractorvs.com/pt-br/guides/choosing-a-tractor/": {
       "digest": "4547c1623e77bc94554e228d8ec08a89cfd907bf3b528ccc1dd806a2ea8c676a",
@@ -8046,8 +8046,8 @@
       "modified": "2026-11-24T16:26:42.582Z"
     },
     "https://tractorvs.com/pt-br/tractors/": {
-      "digest": "73bda87e64061f742442827eb62414cd65eca071ee919bbcf9f81b43fbd9a638",
-      "modified": "2026-11-24T16:37:35.751Z"
+      "digest": "b75e5edb80ecf25066ed35a49eb713a9b09dc30e50347715e3b3375dad365bca",
+      "modified": "2026-11-24T16:54:38.519Z"
     },
     "https://tractorvs.com/pt-br/tractors/agrale-4125-0b53e944/": {
       "digest": "3035c759979d10f52ec904cc6b8c6a240cc6ee75461ad5cec913e87a25f8c41b",
@@ -8822,12 +8822,12 @@
       "modified": "2026-11-23T16:45:17.078Z"
     },
     "https://tractorvs.com/pt-br/tractors/sonalika-110-wt-d76351cf/": {
-      "digest": "882716674478f1ff8e0093a36a770bc5f135a5313e1149f994849250d2b14db6",
-      "modified": "2026-11-24T15:48:25.289Z"
+      "digest": "f81acdcb899be7591fdd71ce0c047e64c4a0a667fd5d0187528bb8b631e2c55b",
+      "modified": "2026-11-24T16:54:38.519Z"
     },
     "https://tractorvs.com/pt-br/tractors/sonalika-125-812d14fd/": {
-      "digest": "1afcb5180a0005e77906a979fc184c629908d9a91af345dc4e01f76cf522042e",
-      "modified": "2026-11-24T15:48:25.289Z"
+      "digest": "f810ee33acdfe15fc60acceded36497f564ab2c98a0cd3a2c26103d9a5f5a4bf",
+      "modified": "2026-11-24T16:54:38.519Z"
     },
     "https://tractorvs.com/pt-br/tractors/sonalika-20-6aa4d57a/": {
       "digest": "7affcb88f75e1f8ede7b016a1c8123b6ac1b1f2a2272ef99ff547878292b5440",
@@ -8850,8 +8850,8 @@
       "modified": "2026-11-24T15:48:25.289Z"
     },
     "https://tractorvs.com/pt-br/tractors/sonalika-55-3e536204/": {
-      "digest": "3f209c5da667042e5d8377b25ae843b5a96a3b95aae31db7fb5ba404ac62139d",
-      "modified": "2026-11-24T15:48:25.289Z"
+      "digest": "3310d34ca70fa195f4c8ac266d7bbc5c4d76b589ac26000323c29b4f36c3ee08",
+      "modified": "2026-11-24T16:54:38.519Z"
     },
     "https://tractorvs.com/pt-br/tractors/sonalika-60-3-cylinder-778f2041/": {
       "digest": "2a0728101d9b395a8a3e8d85ec64a78b9cb249649ab9e085f89f52abb8d3fb2a",
@@ -8862,8 +8862,8 @@
       "modified": "2026-11-24T15:48:25.289Z"
     },
     "https://tractorvs.com/pt-br/tractors/sonalika-75-n-ed47ec06/": {
-      "digest": "5a74aaed4fd1af1d4648bcc93e297b2a93298cabbe14ecff32a11c5ca8919b15",
-      "modified": "2026-11-24T15:48:25.289Z"
+      "digest": "52b305b056863d31c582d468783c3566afb7f81927d77b9fe590584325437b14",
+      "modified": "2026-11-24T16:54:38.519Z"
     },
     "https://tractorvs.com/pt-br/tractors/sonalika-75-rx-aca8ec18/": {
       "digest": "b99740d6f85ce320d2f7459210db33e8e228292e015bfb8bb6a24a38f2b57828",
@@ -8874,8 +8874,8 @@
       "modified": "2026-11-24T15:48:25.289Z"
     },
     "https://tractorvs.com/pt-br/tractors/sonalika-90-n-fc849f5f/": {
-      "digest": "13457bc0262fdaf6b2138908257b7526596da172175575442a001fdaff6f53af",
-      "modified": "2026-11-24T15:48:25.289Z"
+      "digest": "5672671cb484e9c62602a07e3dfb7a761c005eb3589daff101321fab4368fe18",
+      "modified": "2026-11-24T16:54:38.519Z"
     },
     "https://tractorvs.com/pt-br/tractors/sonalika-90-wt-38f696fa/": {
       "digest": "72b8e77753bb4a410b758f1164f075b92decba7d1431b829cf04a465065bcb0c",
@@ -9614,20 +9614,20 @@
       "modified": "2026-11-24T16:26:42.582Z"
     },
     "https://tractorvs.com/ru/": {
-      "digest": "75f614f5f0ada6ed07dc463d5b82886c34d6e4f621b307a5c343bac13cd502c1",
-      "modified": "2026-11-24T10:24:45.384Z"
+      "digest": "cb961e7c0b89e24c7e671a2176f09c601133dcd8cde4ffba29a00d1ffba01538",
+      "modified": "2026-11-24T16:54:38.519Z"
     },
     "https://tractorvs.com/ru/articles/": {
       "digest": "83f2b8b29637582a4fd73e4032eaf3277f45b572b08ed19445bece909c458085",
       "modified": "2026-11-24T16:26:42.582Z"
     },
     "https://tractorvs.com/ru/compare/": {
-      "digest": "fe5ec79343ac8151eab9475dbbb4d5135ef81c90ebacd5f1b792937eaedc981a",
-      "modified": "2026-11-24T15:48:25.289Z"
+      "digest": "668e10fe7b05ee215d76b11d712cc0bb1a1309c08b4a700b16450ea8d8045dce",
+      "modified": "2026-11-24T16:54:38.519Z"
     },
     "https://tractorvs.com/ru/farm-advisor/": {
-      "digest": "ca035566159336e2b3dd64e8d95d14e651a241db66e175d30a6ef7b8167ecb86",
-      "modified": "2026-11-23T18:15:08.467Z"
+      "digest": "b4522eb2b192df7ee4e17dd2485437af39c768f09b50fc63216d7c017e039f2a",
+      "modified": "2026-11-24T16:54:38.519Z"
     },
     "https://tractorvs.com/ru/guides/choosing-a-tractor/": {
       "digest": "0aa1ab2f5e2ea379edf42d5ef3becdda7c6ec1fb49f661a79b788c5ce5095d7b",
@@ -9642,8 +9642,8 @@
       "modified": "2026-11-24T16:26:42.582Z"
     },
     "https://tractorvs.com/ru/tractors/": {
-      "digest": "a58db0ca1447a361844d3e3780f48a8a87520adecd0e0030b46e3c56cdac1ca4",
-      "modified": "2026-11-24T16:37:35.751Z"
+      "digest": "093f84d26ca04a11a20c6323d6963d6d5b20a3f264ead101aea45918eddb98a2",
+      "modified": "2026-11-24T16:54:38.519Z"
     },
     "https://tractorvs.com/ru/tractors/agrale-4125-0b53e944/": {
       "digest": "53476e3788b9d66af5646cb6135ee03fb9ec7a337276a541bddb8c95d1b1c509",
@@ -10418,12 +10418,12 @@
       "modified": "2026-11-23T16:45:17.078Z"
     },
     "https://tractorvs.com/ru/tractors/sonalika-110-wt-d76351cf/": {
-      "digest": "3233162a76e9ce595f47c600383cd8327b0bc52dc1a5e51c7ae5771858c52fd9",
-      "modified": "2026-11-24T15:48:25.289Z"
+      "digest": "7959cb813c10df47a4ac4473b48ab24c527fe36dbc0923d72d7e41b6eb5036a9",
+      "modified": "2026-11-24T16:54:38.519Z"
     },
     "https://tractorvs.com/ru/tractors/sonalika-125-812d14fd/": {
-      "digest": "5e2572f37b55a311eec1bb95012ee344d91b4d6acfc1e24fc5db7d08dc55f122",
-      "modified": "2026-11-24T15:48:25.289Z"
+      "digest": "d294f70f8d08999e3662618b00633d9264ed0f6cf71a47c292503f865d22043a",
+      "modified": "2026-11-24T16:54:38.519Z"
     },
     "https://tractorvs.com/ru/tractors/sonalika-20-6aa4d57a/": {
       "digest": "2de97736b8c6a3485e10ac0b2eba1e59e0b8a8f048086a764f2339cd8fa60983",
@@ -10446,8 +10446,8 @@
       "modified": "2026-11-24T15:48:25.289Z"
     },
     "https://tractorvs.com/ru/tractors/sonalika-55-3e536204/": {
-      "digest": "f3582a5f0f5b681df935e57a2266b331809408e2a9580a8eaf6c9a4451b13fba",
-      "modified": "2026-11-24T15:48:25.289Z"
+      "digest": "fe55e8b0a4d2001f0124df4c71a5a59f2b734e7653e6f75fa331c2e6d76b7cc1",
+      "modified": "2026-11-24T16:54:38.519Z"
     },
     "https://tractorvs.com/ru/tractors/sonalika-60-3-cylinder-778f2041/": {
       "digest": "42a5f17c9c3490ea7e83d9910404fe2e866b886380dc7588b11bc3c449c3050f",
@@ -10458,8 +10458,8 @@
       "modified": "2026-11-24T15:48:25.289Z"
     },
     "https://tractorvs.com/ru/tractors/sonalika-75-n-ed47ec06/": {
-      "digest": "20a05ea112bea7886a87062ef7d8cfa3c61c733059e553d35bc59bb4f40d06da",
-      "modified": "2026-11-24T15:48:25.289Z"
+      "digest": "1a1ac4af557b98f71d6d3046217d73a6202a1371646f7cf9044cf365e00f6ad6",
+      "modified": "2026-11-24T16:54:38.519Z"
     },
     "https://tractorvs.com/ru/tractors/sonalika-75-rx-aca8ec18/": {
       "digest": "e9c511e232d9f956b129920e340eba753abe98629ce24fa8af2283a3a4c96cf5",
@@ -10470,8 +10470,8 @@
       "modified": "2026-11-24T15:48:25.289Z"
     },
     "https://tractorvs.com/ru/tractors/sonalika-90-n-fc849f5f/": {
-      "digest": "ad0c1411b9286430773ec4b8e459f734bfc69f6746899c32b3e571a357c7de39",
-      "modified": "2026-11-24T15:48:25.289Z"
+      "digest": "aaaef944a3225eab56fd0df72634da1b7577b7fe784471a722ebb4d1e2ca8131",
+      "modified": "2026-11-24T16:54:38.519Z"
     },
     "https://tractorvs.com/ru/tractors/sonalika-90-wt-38f696fa/": {
       "digest": "bbffe5e5ac6c99b5184517eefe075f659aea5a40313ebd3036b8df5893b789fe",
@@ -11206,8 +11206,8 @@
       "modified": "2026-11-24T16:37:35.751Z"
     },
     "https://tractorvs.com/tr/": {
-      "digest": "4fb6dd00e9898d1c5c3d970eb2e6edb2e9d749f056ff92f7104bfa10ed1e3ccc",
-      "modified": "2026-11-24T10:24:45.384Z"
+      "digest": "b8e8d8b6822c7e9b2900333cc98fe8f4609658b19ce0c8b8da40c033d3a497e5",
+      "modified": "2026-11-24T16:54:38.519Z"
     },
     "https://tractorvs.com/tr/articles/": {
       "digest": "75d1132252a6b94ba476a895c078b5f180c697c16484cb41b026573a16aabb99",
@@ -11222,16 +11222,16 @@
       "modified": "2026-11-22T08:02:35.845Z"
     },
     "https://tractorvs.com/tr/compare/": {
-      "digest": "f4432d4525ad349be183b8ad0dd95b12d0f5c9cef93085f6637c965628050c05",
-      "modified": "2026-11-24T15:48:25.289Z"
+      "digest": "adf86f5a1b95235cd1fc552253180bcafd45aa822eab0001bb78d0f804e1f2b0",
+      "modified": "2026-11-24T16:54:38.519Z"
     },
     "https://tractorvs.com/tr/compare/deutz-fahr-5090-d-gs-vs-5100-d-gs/": {
       "digest": "0f223596935ecf9cf2a0972e5fd862ac566c38ba2f83123a156634df383d9733",
       "modified": "2026-11-23T16:20:24.281Z"
     },
     "https://tractorvs.com/tr/farm-advisor/": {
-      "digest": "f8c31d554c26727dbd7fd178d0d70b37391da4b41dc0551dc76b13b579e2b8c0",
-      "modified": "2026-11-23T18:15:08.467Z"
+      "digest": "f708423ce9cbb23637ad98505d6f8d2ad869e32fc58a8421cc4727c45cf474dc",
+      "modified": "2026-11-24T16:54:38.519Z"
     },
     "https://tractorvs.com/tr/guides/choosing-a-tractor/": {
       "digest": "11c88ba0738bb3c87249f11db80f4130fbfd238a4e8fc58849bc385efa714b93",
@@ -11266,8 +11266,8 @@
       "modified": "2026-11-24T16:26:42.582Z"
     },
     "https://tractorvs.com/tr/tractors/": {
-      "digest": "c455d4026204af01ce14a6ddc77cb2ccc72cf20914a673567957a5a6e19a3604",
-      "modified": "2026-11-24T16:37:35.751Z"
+      "digest": "e2dc1642dff04966f3bacd6545c1f3ad6ebfcd7f5c59939953579df3a44a3775",
+      "modified": "2026-11-24T16:54:38.519Z"
     },
     "https://tractorvs.com/tr/tractors/agrale-4125-0b53e944/": {
       "digest": "cbfb1b094b1f29a6b421188c362c4724ea5af2560d61a704d8fe0b1596b1b3d8",
@@ -12042,12 +12042,12 @@
       "modified": "2026-11-23T18:15:08.467Z"
     },
     "https://tractorvs.com/tr/tractors/sonalika-110-wt-d76351cf/": {
-      "digest": "38509a55d95ca436600f340677d9c4ed1e289540fbb8487ceabc5483f464c31a",
-      "modified": "2026-11-24T05:01:16.833Z"
+      "digest": "1c6b87ac09e4003c359bfeb85c4fb61ae175c3a7f36d72ec45b556d0d98d20a0",
+      "modified": "2026-11-24T16:54:38.519Z"
     },
     "https://tractorvs.com/tr/tractors/sonalika-125-812d14fd/": {
-      "digest": "5a21702a89f9c556f88d813a9924901411c6ddcf6c9df419c7b7d60939f3df54",
-      "modified": "2026-11-24T05:01:16.833Z"
+      "digest": "6acd7c755432d769cdb4f80ba602f302d204f187a1acd718a0452055c0a5b193",
+      "modified": "2026-11-24T16:54:38.519Z"
     },
     "https://tractorvs.com/tr/tractors/sonalika-20-6aa4d57a/": {
       "digest": "f0fc42b7283f2acbafe7e238148be9f6381f63b89348958da606dbc8ce044ab8",
@@ -12070,8 +12070,8 @@
       "modified": "2026-11-24T05:01:16.833Z"
     },
     "https://tractorvs.com/tr/tractors/sonalika-55-3e536204/": {
-      "digest": "26e45ae005fda533ac3090c1de382f38e772db7a599732449bbf75dca229e58c",
-      "modified": "2026-11-24T05:01:16.833Z"
+      "digest": "8a07826aa1aa504f463bc163cf6658c7e3f63c012819d35f1d976b55ebafefaa",
+      "modified": "2026-11-24T16:54:38.519Z"
     },
     "https://tractorvs.com/tr/tractors/sonalika-60-3-cylinder-778f2041/": {
       "digest": "dbe5986ab43be6e654edfbd32cbaaf14b6529250a80e6e713eff75f1ed967e54",
@@ -12082,8 +12082,8 @@
       "modified": "2026-11-24T05:01:16.833Z"
     },
     "https://tractorvs.com/tr/tractors/sonalika-75-n-ed47ec06/": {
-      "digest": "28d7b3940596bddd2cd054a0a3c0c28b28b37de546213c0f30703e9181b8d457",
-      "modified": "2026-11-24T05:01:16.833Z"
+      "digest": "a419cddc6fd12dbaba8606b6d360031adfa8762a6a765d176654ca4fcfa2771e",
+      "modified": "2026-11-24T16:54:38.519Z"
     },
     "https://tractorvs.com/tr/tractors/sonalika-75-rx-aca8ec18/": {
       "digest": "694b419f3e5c415fb1fa0e12d483fa184143bd610d35572a105d24abbf002e0e",
@@ -12094,8 +12094,8 @@
       "modified": "2026-11-24T05:01:16.833Z"
     },
     "https://tractorvs.com/tr/tractors/sonalika-90-n-fc849f5f/": {
-      "digest": "fed435399408f0c60244156346491b879932e81e0b06ec4b0adef56a1631c699",
-      "modified": "2026-11-24T05:01:16.833Z"
+      "digest": "a6c9d9879d1b681f0cd2cf769960915e3c81ddbf131dbe1af0d81881809190b2",
+      "modified": "2026-11-24T16:54:38.519Z"
     },
     "https://tractorvs.com/tr/tractors/sonalika-90-wt-38f696fa/": {
       "digest": "ea4e35879e19a72ada18a18f764c0db0fc95b924843fc15b2ef2548debede7c2",
@@ -12830,8 +12830,8 @@
       "modified": "2026-11-24T16:37:35.751Z"
     },
     "https://tractorvs.com/tractors/": {
-      "digest": "bfa28a05946f274d95622fc265485f7cf25ed5bdeba5302c255d5b035fa2f7b1",
-      "modified": "2026-11-24T16:37:35.751Z"
+      "digest": "cd83075b0fa5cf9f22036c4cd5dc04408846cd218887fd928f278c524c10348e",
+      "modified": "2026-11-24T16:54:38.519Z"
     },
     "https://tractorvs.com/tractors/agrale-4125-0b53e944/": {
       "digest": "41798f99d5c960a94a56bd2e388c2dc375f095243fcad91abc215ad0c7cf129f",
@@ -13606,12 +13606,12 @@
       "modified": "2026-11-23T16:45:17.078Z"
     },
     "https://tractorvs.com/tractors/sonalika-110-wt-d76351cf/": {
-      "digest": "8c6bd5db5e7814a8d0ef2ee8c6c2ac37655cb908daa827fd0af6a17af2b94347",
-      "modified": "2026-11-24T05:01:16.833Z"
+      "digest": "670d38379a7d3c7556657fbd7c18cff79f89d8a8cc19934e046a40c68d62b4e0",
+      "modified": "2026-11-24T16:54:38.519Z"
     },
     "https://tractorvs.com/tractors/sonalika-125-812d14fd/": {
-      "digest": "6f0995fc9fc1c3e70938b33e8ea85d5062ff12f10fd18149747fb26ee429a11b",
-      "modified": "2026-11-24T05:01:16.833Z"
+      "digest": "08dc344b277c1df7845d4907afd6ba3d3470c01850b8ce8d4b88f733fd035818",
+      "modified": "2026-11-24T16:54:38.519Z"
     },
     "https://tractorvs.com/tractors/sonalika-20-6aa4d57a/": {
       "digest": "df443b262505c05834df85162630b37d8954be42cc23a0919ce85bea4504b74a",
@@ -13634,8 +13634,8 @@
       "modified": "2026-11-24T05:01:16.833Z"
     },
     "https://tractorvs.com/tractors/sonalika-55-3e536204/": {
-      "digest": "938189ca92ea88fbdafc64bb32fa88d36e103a0eb15ed93e5b7b980a7cb51a2a",
-      "modified": "2026-11-24T05:01:16.833Z"
+      "digest": "387bc512017bd9de468e5f696bd746d7a0314f4eb27be7b84b6e08601d0de842",
+      "modified": "2026-11-24T16:54:38.519Z"
     },
     "https://tractorvs.com/tractors/sonalika-60-3-cylinder-778f2041/": {
       "digest": "dde6b078af9ed0a20858b67d230413e486e4a6665658f36fb0f57417aae70c9a",
@@ -13646,8 +13646,8 @@
       "modified": "2026-11-24T05:01:16.833Z"
     },
     "https://tractorvs.com/tractors/sonalika-75-n-ed47ec06/": {
-      "digest": "653a40f12ac30fccbe0c74aa7b091af086f3ce80375c5a2681f469a5b12d023c",
-      "modified": "2026-11-24T05:01:16.833Z"
+      "digest": "f209b845743d84783bda2f2eedaeb57da9974a3af22347d7e1e44db020f494c8",
+      "modified": "2026-11-24T16:54:38.519Z"
     },
     "https://tractorvs.com/tractors/sonalika-75-rx-aca8ec18/": {
       "digest": "8559558bb06806482d0c0db60f022dbafedd85946b01a621c92d7cc1ba6345a6",
@@ -13658,8 +13658,8 @@
       "modified": "2026-11-24T05:01:16.833Z"
     },
     "https://tractorvs.com/tractors/sonalika-90-n-fc849f5f/": {
-      "digest": "03747ad139d8b8b44a0427b0420e42ac07c8c421e9373450b919c30d82b37562",
-      "modified": "2026-11-24T05:01:16.833Z"
+      "digest": "f23909ea72e1b2b8e0d3b79e340327030bf9bd66c0a3fdacdba0500de2711b32",
+      "modified": "2026-11-24T16:54:38.519Z"
     },
     "https://tractorvs.com/tractors/sonalika-90-wt-38f696fa/": {
       "digest": "273d8025fe0687ffb0d49d767d1804ae44edb63678f3dc5f6693a7f553399797",
@@ -14394,20 +14394,20 @@
       "modified": "2026-11-24T16:37:35.751Z"
     },
     "https://tractorvs.com/zh/": {
-      "digest": "45c77897eb11ca4bcb0b5fdfc5a24c37d96f6c248861ec9780e3f3fcaf7ebca6",
-      "modified": "2026-11-24T10:24:45.384Z"
+      "digest": "835e0f2c646c63d5a7f1941b0a01587144068e3649c1a247f326c39fc05c8598",
+      "modified": "2026-11-24T16:54:38.519Z"
     },
     "https://tractorvs.com/zh/articles/": {
       "digest": "5e6ee9807459baae052b17e309edce3c5271e3b0dfb6c00aaa8433a08ac323d1",
       "modified": "2026-11-24T16:26:42.582Z"
     },
     "https://tractorvs.com/zh/compare/": {
-      "digest": "8494f139dc855ca71b56df9e610a0547523b361f4fef7cae9a1ef0eab071e501",
-      "modified": "2026-11-24T15:48:25.289Z"
+      "digest": "24a29a7ed6ce4aead63c7e5abaa4c6ef5d8fe3ee2e5dbbaf0632f064a0b32692",
+      "modified": "2026-11-24T16:54:38.519Z"
     },
     "https://tractorvs.com/zh/farm-advisor/": {
-      "digest": "6cf21bb0f484695d9f37755093e5bf886b5888cf2035261cc9fabf6509e5501c",
-      "modified": "2026-11-23T18:15:08.467Z"
+      "digest": "11252ba7f6c6d086f2b9b3e7b1c37854fe8b9e8671d0c9130ec0107914276c01",
+      "modified": "2026-11-24T16:54:38.519Z"
     },
     "https://tractorvs.com/zh/guides/choosing-a-tractor/": {
       "digest": "5a3e53c6e32392c8b9c1e19830ba7d37146aa48dfce472d6abf7212810b227cb",
@@ -14422,8 +14422,8 @@
       "modified": "2026-11-24T16:26:42.582Z"
     },
     "https://tractorvs.com/zh/tractors/": {
-      "digest": "35517c01ef6864b317740f917ae2c4bcd07333c427c54bb65f3bc5826dc2e657",
-      "modified": "2026-11-24T16:37:35.751Z"
+      "digest": "1091dfe6784e456459e4291014510cf996989bdaa4669d57233c42f7776a77be",
+      "modified": "2026-11-24T16:54:38.519Z"
     },
     "https://tractorvs.com/zh/tractors/agrale-4125-0b53e944/": {
       "digest": "af9707caacf9593a39899530ab3e9b8ee2971cf1a45030048991469d0d814ed1",
@@ -15198,12 +15198,12 @@
       "modified": "2026-11-23T16:45:17.078Z"
     },
     "https://tractorvs.com/zh/tractors/sonalika-110-wt-d76351cf/": {
-      "digest": "55ec2ad4bc455f9c6827415741c3b7d930f925bf0688f5ad0966bb1b6a6adc18",
-      "modified": "2026-11-24T15:48:25.289Z"
+      "digest": "730b2a7b270683f9ccfd9e912fbc89b00ced9f9eac596d1f001a3f04dd8a3eac",
+      "modified": "2026-11-24T16:54:38.519Z"
     },
     "https://tractorvs.com/zh/tractors/sonalika-125-812d14fd/": {
-      "digest": "d9b767288a50b7d4939e0e2029e9478bd958dc8eb0a9eb827550be4cd169b194",
-      "modified": "2026-11-24T15:48:25.289Z"
+      "digest": "af8fe259898bcae9e5beea4cc8f6294eb10444ea02e21d123703812d5a77fc0e",
+      "modified": "2026-11-24T16:54:38.519Z"
     },
     "https://tractorvs.com/zh/tractors/sonalika-20-6aa4d57a/": {
       "digest": "0fc3f7f603c9688707a165c397581b01e00d368a9b5774e4abdfcea0c586d6cd",
@@ -15226,8 +15226,8 @@
       "modified": "2026-11-24T15:48:25.289Z"
     },
     "https://tractorvs.com/zh/tractors/sonalika-55-3e536204/": {
-      "digest": "b0adf75e98e63a962c18f158def064539a976b2ac42b5330d8768ce770c38da0",
-      "modified": "2026-11-24T15:48:25.289Z"
+      "digest": "231e0ef0a1db26acdae878f9a5c94c8342bdfdbb3e4e90fd6eca0e9aece25ecd",
+      "modified": "2026-11-24T16:54:38.519Z"
     },
     "https://tractorvs.com/zh/tractors/sonalika-60-3-cylinder-778f2041/": {
       "digest": "678cfecd4a3c3c5f528c38f11d843b3f5a0b97ec2fbce765104695b557d7c4ab",
@@ -15238,8 +15238,8 @@
       "modified": "2026-11-24T15:48:25.289Z"
     },
     "https://tractorvs.com/zh/tractors/sonalika-75-n-ed47ec06/": {
-      "digest": "2f9f37bb7bd7d7e2db356938b90938fdd8a2a8ebaaa9c0faaf2981fd4481e2f6",
-      "modified": "2026-11-24T15:48:25.289Z"
+      "digest": "3b4866235f49e18c6b8cc0b120c6d9058934b5b61081351fd488a1f8d6beffc7",
+      "modified": "2026-11-24T16:54:38.519Z"
     },
     "https://tractorvs.com/zh/tractors/sonalika-75-rx-aca8ec18/": {
       "digest": "f858dc0f7e211290175636c3d9f04ee3cf9b25bdaed9130d3fa165464238162a",
@@ -15250,8 +15250,8 @@
       "modified": "2026-11-24T15:48:25.289Z"
     },
     "https://tractorvs.com/zh/tractors/sonalika-90-n-fc849f5f/": {
-      "digest": "f4abf3cc08800de316a425b5e923301dae63150e752eb54e51c4ce8f191ca331",
-      "modified": "2026-11-24T15:48:25.289Z"
+      "digest": "8129fd1dcbbaa12fe47a69a36a830d5a2bf0eedb467d09704579abb28f63dbf7",
+      "modified": "2026-11-24T16:54:38.519Z"
     },
     "https://tractorvs.com/zh/tractors/sonalika-90-wt-38f696fa/": {
       "digest": "53775d996880a2a0ef9222f56e23ca6599929e6de2f5502da0d15abe3cd325ef",
