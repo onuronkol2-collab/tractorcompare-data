@@ -10,6 +10,7 @@ import { analyticsText } from "../lib/analytics-i18n.ts";
 import { brand } from "../config/brand";
 import { LOCALES, LOCALE_NAMES, LOCALE_TAGS, localizedPath, unlocalizedPath, type Locale } from "../lib/locales";
 import { t } from "../lib/ui";
+import { verifiedReleaseSha } from "../lib/release-provenance.mjs";
 import { advisorText as tx } from "../lib/advisor-i18n";
 import {forumText as forumCopy} from "../lib/forum-i18n.ts";
 import {memberText as memberCopy} from "../lib/member-i18n.ts";
@@ -29,6 +30,9 @@ interface Props {
 const { lang, title, description, structuredData = null, ogImage = null, ogType = "website", indexable = true, availableLocales = LOCALES, indexableLocales = availableLocales } = Astro.props;
 // Escape literal HTML opener characters before embedding JSON-LD from database text.
 const structuredJson = structuredData ? JSON.stringify(structuredData).replace(/</g, "\\u003c") : null;
+// Cloudflare Workers Builds provides this public commit identity at build time.
+// It is not a deployment signature; the live workflow compares it with the push SHA.
+const releaseSha = verifiedReleaseSha(import.meta.env.WORKERS_CI_COMMIT_SHA);
 const indexingEnabled =
   import.meta.env.PUBLIC_INDEXING_ENABLED === "true" && Boolean(Astro.site) && indexable;
 const homePath = localizedPath(lang, "/");
@@ -87,6 +91,7 @@ const openGraphLocale: Record<Locale, string> = {
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    {releaseSha && <meta name="tractorvs-release-sha" content={releaseSha} />}
     {/* Seznam Webmaster ownership: serve on root and redirected locale homepages only. */}
     {plainPath==="/" && indexingEnabled && <meta name="seznam-wmt" content="j3zomI2WVcqwWkKadjNc1pXonj4g8L7O" />}
     {plainPath==="/" && <script is:inline>
