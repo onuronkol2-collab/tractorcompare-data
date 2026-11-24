@@ -1019,6 +1019,7 @@ for(const widget of widgets){
     return;
    }
    if(cfg.mode==="topic")document.dispatchEvent(new Event("tractorvs-forum-topic-saved"));
+   else document.dispatchEvent(new Event("tractorvs-forum-reply-saved"));
    let photoOk=true;
    if(editor?.hasPhotos())photoOk=await editor.commit(postId,cfg.mode);
    try{sessionStorage.removeItem(draftKey())}catch{}
