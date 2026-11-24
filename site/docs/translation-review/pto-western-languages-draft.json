@@ -1,0 +1,280 @@
+{
+  "state": "draft-needs-independent-editorial-review",
+  "sourceBlobSha": "853424394588964819f45e85b60d4dbcfdaa9e18",
+  "sourceSlug": "pto-and-power-take-off",
+  "sourceLanguage": "en",
+  "sourceComponent": "site/src/components/TractorTechnicalDeepDive.astro",
+  "source": {
+    "title": "What Is a Tractor PTO? 540, 540E and 1000 RPM Explained",
+    "description": "Learn how the tractor power take-off works, why 540, 540E and 1000 rpm differ, and how to check safe implement compatibility.",
+    "lead": "How does a mower rotate while the tractor moves? The power take-off carries mechanical power to the implement. But seeing 'PTO' on a specification sheet does not mean every attachment is compatible: speed, shaft coupling and usable power are separate questions.",
+    "comparisonNote": "If a mower calls for 540 rpm, first check that the tractor can deliver that speed at the PTO shaft. Then match the shaft connection and the mower’s PTO power requirement. Engine horsepower alone answers neither question.",
+    "sections": [
+      {
+        "anchor": "nasil-calisir",
+        "title": "What does the PTO actually do?",
+        "paragraphs": [
+          "The engine's rotation passes through the driveline to a rear or front power output. With the correct guarded shaft, the implement uses that rotation for its blades, rotor or pump. Pulling an implement and rotating it are different tasks, so tyre traction and PTO power have different roles.",
+          "A rotary tiller moves across the field while its rotor turns. These demands should not be described by one horsepower figure. Look for separate engine output and PTO output values."
+        ]
+      },
+      {
+        "anchor": "540-540e-1000",
+        "title": "540, 540E and 1000 rpm: why they differ",
+        "paragraphs": [
+          "540 rpm is a common rated PTO shaft speed. On a compatible tractor, 540E can deliver a 540 rpm output at a lower engine speed, potentially reducing fuel use and noise in light work. It is not a universal feature or a guarantee of savings at heavy load.",
+          "Never select 1000 rpm simply because it sounds more powerful. Match the implement's specified operating speed. Driving a 540 rpm implement at 1000 rpm can cause severe damage or injury."
+        ]
+      },
+      {
+        "anchor": "guc-ve-baglanti",
+        "title": "Checking PTO power and coupling size",
+        "paragraphs": [
+          "Engine power is measured at the engine; PTO power is available at the output shaft and may be lower because of transmission losses. Compare the implement's stated requirement with PTO power on the same unit and test basis.",
+          "PTO output diameter and spline count determine connection geometry. Shafts with different splines are not interchangeable. Check the implement manual for permitted shaft length, angle, guarding and coupler type."
+        ]
+      },
+      {
+        "anchor": "bagimsiz-pto",
+        "title": "Independent PTO versus two-stage clutch",
+        "paragraphs": [
+          "An independent PTO can be controlled separately from tractor travel. In some two-stage clutch systems, pressing the pedal first disengages travel and then the PTO. Those mechanisms are not identical and should not be assumed to behave the same.",
+          "For baling and frequent stops, inspect the exact engagement arrangement in the model's manual rather than relying on a generic PTO label."
+        ]
+      },
+      {
+        "anchor": "satin-alma",
+        "title": "A pre-purchase PTO compatibility check",
+        "paragraphs": [
+          "Write down the implement's permitted PTO speeds and power requirement. Then compare verified tractor PTO power, selectable speed modes, spline geometry and coupling dimensions. An unlisted feature is unknown—not automatically present.",
+          "Finally consider hitch category, implement mass and any required hydraulic couplers. PTO compatibility is only part of the overall machine match. Never operate an unguarded rotating shaft. Before making or adjusting a PTO connection, follow the tractor and implement manuals: apply the parking brake, disengage power, stop the engine, remove the key and wait until every moving part has stopped."
+        ]
+      }
+    ],
+    "sources": [
+      "https://tractortestlab.unl.edu/",
+      "https://www.oecd.org/en/topics/tractors.html",
+      "https://www.hse.gov.uk/agriculture/topics/machinery/safe-use-1.htm"
+    ]
+  },
+  "reviewed": false,
+  "notForPublication": true,
+  "translations": {
+    "de": {
+      "title": "Was ist die Zapfwelle (PTO) am Traktor? 540, 540E und 1000 U/min",
+      "description": "Wie die Zapfwelle arbeitet, was 540, 540E und 1000 U/min unterscheidet und wie sich die sichere Eignung von Anbaugeräten prüfen lässt.",
+      "lead": "Wie dreht sich das Mähwerk, während der Traktor fährt? Die Zapfwelle überträgt mechanische Leistung auf das Gerät. Die Angabe „PTO“ im Datenblatt bedeutet jedoch nicht, dass jedes Gerät kompatibel ist: Drehzahl, Wellenanschluss und nutzbare Leistung sind getrennt zu prüfen.",
+      "comparisonNote": "Wenn ein Mähwerk 540 U/min erfordert, prüfen Sie zunächst, ob der Traktor diese Drehzahl an der Zapfwelle bereitstellen kann. Gleichen Sie dann den Wellenanschluss und den Leistungsbedarf des Mähwerks an der Zapfwelle ab. Die Motorleistung allein beantwortet keine dieser Fragen.",
+      "sections": [
+        {
+          "anchor": "nasil-calisir",
+          "title": "Welche Aufgabe hat die Zapfwelle?",
+          "paragraphs": [
+            "Die Drehbewegung des Motors gelangt über den Antriebsstrang zu einem hinteren oder vorderen Leistungsabtrieb. Mit einer passenden, geschützten Gelenkwelle treibt das Gerät damit seine Messer, seinen Rotor oder seine Pumpe an. Das Ziehen und das Antreiben eines Geräts sind unterschiedliche Aufgaben; Reifentraktion und Zapfwellenleistung erfüllen deshalb unterschiedliche Funktionen.",
+            "Eine Bodenfräse bewegt sich über das Feld, während sich ihr Rotor dreht. Diese Anforderungen dürfen nicht durch eine einzige Leistungszahl beschrieben werden. Suchen Sie getrennte Angaben zur Motor- und Zapfwellenleistung."
+          ]
+        },
+        {
+          "anchor": "540-540e-1000",
+          "title": "540, 540E und 1000 U/min: Warum unterscheiden sie sich?",
+          "paragraphs": [
+            "540 U/min ist eine gängige Nenndrehzahl der Zapfwelle. Bei einem dafür ausgelegten Traktor kann 540E eine Abtriebsdrehzahl von 540 U/min bei geringerer Motordrehzahl ermöglichen. Bei leichter Arbeit lassen sich dadurch möglicherweise Kraftstoffverbrauch und Geräusch verringern. Die Funktion ist nicht überall vorhanden und garantiert bei hoher Last keine Einsparung.",
+            "Wählen Sie niemals 1000 U/min, nur weil dies leistungsstärker klingt. Halten Sie die vorgeschriebene Betriebsdrehzahl des Anbaugeräts ein. Der Betrieb eines für 540 U/min vorgesehenen Geräts mit 1000 U/min kann schwere Schäden oder Verletzungen verursachen."
+          ]
+        },
+        {
+          "anchor": "guc-ve-baglanti",
+          "title": "Zapfwellenleistung und Anschlussmaße prüfen",
+          "paragraphs": [
+            "Motorleistung wird am Motor gemessen; Zapfwellenleistung steht an der Abtriebswelle zur Verfügung und kann wegen Übertragungsverlusten geringer sein. Vergleichen Sie die geforderte Geräteleistung mit der Zapfwellenleistung bei gleicher Einheit und Prüfgrundlage.",
+            "Durchmesser und Verzahnungszahl der Zapfwelle bestimmen die Anschlussgeometrie. Wellen mit unterschiedlichen Verzahnungen sind nicht austauschbar. Prüfen Sie in der Geräteanleitung die zulässige Wellenlänge, den Winkel, die Schutzeinrichtungen und die Anschlussart."
+          ]
+        },
+        {
+          "anchor": "bagimsiz-pto",
+          "title": "Unabhängige Zapfwelle und Zweistufenkupplung",
+          "paragraphs": [
+            "Eine unabhängige Zapfwelle lässt sich getrennt vom Fahrantrieb steuern. Bei manchen Zweistufenkupplungen trennt die erste Pedalstufe den Fahrantrieb und die zweite die Zapfwelle. Diese Mechanismen sind nicht identisch und dürfen nicht als gleichwertig angenommen werden.",
+            "Für Ballenpressen und Arbeiten mit häufigen Stopps prüfen Sie die genaue Betätigung in der Betriebsanleitung des Modells, statt sich auf eine allgemeine Zapfwellenbezeichnung zu verlassen."
+          ]
+        },
+        {
+          "anchor": "satin-alma",
+          "title": "Kompatibilität vor dem Gerätekauf prüfen",
+          "paragraphs": [
+            "Notieren Sie zulässige Zapfwellendrehzahlen und Leistungsbedarf des Geräts. Vergleichen Sie dann belegte Zapfwellenleistung, verfügbare Drehzahlstufen, Verzahnung und Anschlussmaße des Traktors. Eine nicht aufgeführte Eigenschaft ist unbekannt und nicht automatisch vorhanden.",
+            "Berücksichtigen Sie schließlich Anbaukategorie, Gerätemasse und erforderliche Hydraulikanschlüsse. Zapfwellenkompatibilität ist nur ein Teil der gesamten Eignung. Betreiben Sie niemals eine ungeschützte rotierende Welle. Befolgen Sie vor Anschluss oder Einstellung die Anleitungen von Traktor und Gerät: Feststellbremse anziehen, Antrieb auskuppeln, Motor abstellen, Schlüssel abziehen und warten, bis alle beweglichen Teile stillstehen."
+          ]
+        }
+      ],
+      "verification": "Dieser Artikel dient der technischen Bildung und behauptet weder praktische Tests noch Demontage oder eigenen Traktorbesitz. Prüfen Sie modellbezogene Zahlen anhand der genauen Ausführung, des Baujahrs, Markts und der Ausstattung in den Herstellerunterlagen. Vergleichen Sie bei unabhängigen Tests die Prüfverfahren.",
+      "sourceLabels": [
+        "Nebraska Tractor Test Laboratory",
+        "OECD-Prüfcodes für Traktoren",
+        "HSE – sicheres Stillsetzen landwirtschaftlicher Maschinen"
+      ]
+    },
+    "fr": {
+      "title": "Qu’est-ce que la prise de force (PDF/PTO) d’un tracteur ? 540, 540E et 1000 tr/min",
+      "description": "Comprendre la prise de force du tracteur, les différences entre 540, 540E et 1000 tr/min et les vérifications de compatibilité et de sécurité des outils.",
+      "lead": "Comment une faucheuse tourne-t-elle lorsque le tracteur avance ? La prise de force transmet la puissance mécanique à l’outil. La mention PTO sur une fiche technique ne garantit pas la compatibilité de tous les outils : régime, accouplement et puissance disponible sont des questions distinctes.",
+      "comparisonNote": "Si une faucheuse exige 540 tr/min, vérifiez d’abord que la prise de force du tracteur peut fournir ce régime. Vérifiez ensuite l’accouplement et la puissance à la prise de force requise. La puissance du moteur ne répond pas à ces questions.",
+      "sections": [
+        {
+          "anchor": "nasil-calisir",
+          "title": "À quoi sert réellement la prise de force ?",
+          "paragraphs": [
+            "La rotation du moteur passe par la transmission jusqu’à une sortie de puissance arrière ou avant. Avec un arbre de transmission adapté et protégé, l’outil utilise cette rotation pour entraîner ses lames, son rotor ou sa pompe. Tirer et entraîner un outil sont deux tâches différentes : l’adhérence des pneus et la puissance à la prise de force ont donc des rôles distincts.",
+            "Une fraise rotative avance dans le champ pendant que son rotor tourne. Ces deux besoins ne doivent pas être résumés par une seule valeur de puissance. Recherchez des valeurs distinctes pour le moteur et la prise de force."
+          ]
+        },
+        {
+          "anchor": "540-540e-1000",
+          "title": "540, 540E et 1000 tr/min : quelles différences ?",
+          "paragraphs": [
+            "540 tr/min est un régime nominal courant de prise de force. Sur un tracteur compatible, le mode 540E permet d’obtenir 540 tr/min à la sortie avec un régime moteur inférieur, ce qui peut réduire la consommation et le bruit lors de travaux légers. Cette fonction n’est pas universelle et ne garantit aucune économie sous forte charge.",
+            "Ne sélectionnez jamais 1000 tr/min simplement parce que ce régime semble plus puissant. Respectez le régime prescrit pour l’outil. Entraîner un outil prévu pour 540 tr/min à 1000 tr/min peut provoquer de graves dommages ou blessures."
+          ]
+        },
+        {
+          "anchor": "guc-ve-baglanti",
+          "title": "Vérifier la puissance et les dimensions de l’accouplement",
+          "paragraphs": [
+            "La puissance du moteur est mesurée au moteur ; la puissance à la prise de force est disponible à l’arbre de sortie et peut être inférieure en raison des pertes de transmission. Comparez le besoin indiqué pour l’outil à la puissance à la prise de force, à unité et méthode d’essai identiques.",
+            "Le diamètre et le nombre de cannelures déterminent la géométrie de raccordement. Les arbres présentant des cannelures différentes ne sont pas interchangeables. Consultez la notice de l’outil pour la longueur et l’angle admissibles de l’arbre, ses protections et le type d’accouplement."
+          ]
+        },
+        {
+          "anchor": "bagimsiz-pto",
+          "title": "Prise de force indépendante et embrayage à deux étages",
+          "paragraphs": [
+            "Une prise de force indépendante peut être commandée séparément de l’avancement du tracteur. Dans certains embrayages à deux étages, la première course de la pédale débraye l’avancement, puis la seconde la prise de force. Ces mécanismes ne sont pas identiques et ne doivent pas être supposés fonctionner de la même manière.",
+            "Pour le pressage des balles et les arrêts fréquents, vérifiez le dispositif précis de commande dans la notice du modèle plutôt que de vous fier à une appellation générique."
+          ]
+        },
+        {
+          "anchor": "satin-alma",
+          "title": "Vérifier la compatibilité avant l’achat d’un outil",
+          "paragraphs": [
+            "Notez les régimes de prise de force autorisés et la puissance nécessaire à l’outil. Comparez ensuite la puissance vérifiée du tracteur à la prise de force, ses régimes disponibles, la géométrie des cannelures et les dimensions d’accouplement. Une caractéristique non indiquée est inconnue, et non automatiquement présente.",
+            "Tenez également compte de la catégorie d’attelage, de la masse de l’outil et des raccords hydrauliques nécessaires. La compatibilité de la prise de force n’est qu’une partie de l’adéquation globale. N’utilisez jamais un arbre tournant non protégé. Avant le raccordement ou le réglage, suivez les notices du tracteur et de l’outil : serrez le frein de stationnement, désengagez l’entraînement, arrêtez le moteur, retirez la clé et attendez l’arrêt complet de toutes les pièces mobiles."
+          ]
+        }
+      ],
+      "verification": "Cet article est pédagogique et ne prétend pas reposer sur des essais pratiques, un démontage ou la possession d’un tracteur. Pour une valeur propre à un modèle, vérifiez la version exacte, l’année, le marché et l’équipement dans la documentation du fabricant. Pour les essais indépendants, comparez les procédures utilisées.",
+      "sourceLabels": [
+        "Laboratoire d’essais de tracteurs du Nebraska",
+        "Codes d’essais de tracteurs de l’OCDE",
+        "HSE — procédure d’arrêt sécurisé des machines agricoles"
+      ]
+    },
+    "es": {
+      "title": "¿Qué es la toma de fuerza (TDF/PTO) del tractor? 540, 540E y 1000 rpm",
+      "description": "Cómo funciona la toma de fuerza, por qué se distinguen 540, 540E y 1000 rpm y cómo comprobar la compatibilidad segura de los aperos.",
+      "lead": "¿Cómo gira una segadora mientras avanza el tractor? La toma de fuerza transmite potencia mecánica al apero. Que la ficha técnica indique PTO no significa que todos los accesorios sean compatibles: el régimen, el acoplamiento y la potencia disponible son cuestiones distintas.",
+      "comparisonNote": "Si una segadora exige 540 rpm, compruebe primero que el tractor puede proporcionar ese régimen en la toma de fuerza. Después compruebe la conexión del eje y la potencia que requiere la segadora en la TDF. La potencia del motor por sí sola no responde a estas preguntas.",
+      "sections": [
+        {
+          "anchor": "nasil-calisir",
+          "title": "¿Qué función cumple la toma de fuerza?",
+          "paragraphs": [
+            "La rotación del motor pasa por la transmisión hasta una salida de potencia trasera o delantera. Con un eje de transmisión adecuado y protegido, el apero aprovecha esa rotación para mover cuchillas, rotor o bomba. Arrastrar y accionar un apero son tareas distintas, por lo que la tracción de los neumáticos y la potencia de la TDF cumplen funciones diferentes.",
+            "Una fresadora rotativa avanza por el campo mientras gira su rotor. Estas demandas no deben describirse mediante una sola cifra de potencia. Busque valores separados de potencia del motor y de la TDF."
+          ]
+        },
+        {
+          "anchor": "540-540e-1000",
+          "title": "540, 540E y 1000 rpm: por qué son diferentes",
+          "paragraphs": [
+            "540 rpm es un régimen nominal habitual de la toma de fuerza. En un tractor compatible, 540E puede proporcionar una salida de 540 rpm con un régimen de motor inferior, lo que puede reducir el consumo y el ruido en trabajos ligeros. No es una función universal ni garantiza ahorros con cargas elevadas.",
+            "Nunca seleccione 1000 rpm solo porque parezca más potente. Respete el régimen de funcionamiento especificado para el apero. Accionar un apero de 540 rpm a 1000 rpm puede provocar daños graves o lesiones."
+          ]
+        },
+        {
+          "anchor": "guc-ve-baglanti",
+          "title": "Comprobar la potencia y las dimensiones del acoplamiento",
+          "paragraphs": [
+            "La potencia del motor se mide en el motor; la potencia de la TDF está disponible en el eje de salida y puede ser menor por las pérdidas de transmisión. Compare el requisito declarado del apero con la potencia de la TDF, utilizando la misma unidad y base de ensayo.",
+            "El diámetro y el número de estrías de la TDF determinan la geometría de conexión. Los ejes de diferentes estrías no son intercambiables. Consulte el manual del apero para conocer la longitud y el ángulo admisibles, las protecciones y el tipo de acoplamiento."
+          ]
+        },
+        {
+          "anchor": "bagimsiz-pto",
+          "title": "TDF independiente frente al embrague de dos etapas",
+          "paragraphs": [
+            "Una TDF independiente puede controlarse por separado del avance del tractor. En algunos embragues de dos etapas, la primera parte del recorrido del pedal desacopla el avance y la segunda la TDF. Estos mecanismos no son idénticos y no debe suponerse que funcionan igual.",
+            "Para el empacado y las paradas frecuentes, compruebe el sistema exacto de accionamiento en el manual del modelo, en lugar de confiar en una denominación genérica de la TDF."
+          ]
+        },
+        {
+          "anchor": "satin-alma",
+          "title": "Comprobación de compatibilidad antes de comprar un apero",
+          "paragraphs": [
+            "Anote los regímenes de TDF permitidos y la potencia requerida por el apero. Compare después la potencia verificada de la TDF del tractor, los regímenes seleccionables, las estrías y las dimensiones de conexión. Una característica no indicada es desconocida, no necesariamente presente.",
+            "Considere finalmente la categoría del enganche, la masa del apero y los acoplamientos hidráulicos necesarios. La compatibilidad de la TDF es solo parte de la adecuación total. Nunca utilice un eje giratorio sin protección. Antes de conectar o ajustar la TDF, siga los manuales del tractor y del apero: aplique el freno de estacionamiento, desacople la transmisión de potencia, apague el motor, retire la llave y espere a que todas las piezas móviles se detengan."
+          ]
+        }
+      ],
+      "verification": "Este artículo es educativo y no afirma que se hayan realizado pruebas prácticas, desmontajes ni que se posea un tractor. Para una cifra concreta, verifique el modelo, el año, el mercado y el equipamiento exactos en la documentación del fabricante. Si existen ensayos independientes, compare sus procedimientos.",
+      "sourceLabels": [
+        "Laboratorio de Ensayos de Tractores de Nebraska",
+        "Códigos de ensayo de tractores de la OCDE",
+        "HSE — procedimiento de parada segura de maquinaria agrícola"
+      ]
+    },
+    "pt-br": {
+      "title": "O que é a tomada de potência (TDP/PTO) do trator? 540, 540E e 1000 rpm",
+      "description": "Entenda o funcionamento da TDP, as diferenças entre 540, 540E e 1000 rpm e como verificar a compatibilidade segura dos implementos.",
+      "lead": "Como uma roçadeira gira enquanto o trator avança? A tomada de potência transmite potência mecânica ao implemento. A indicação PTO na ficha técnica não garante a compatibilidade de todos os acessórios: rotação, acoplamento do eixo e potência disponível são questões distintas.",
+      "comparisonNote": "Se uma roçadeira exige 540 rpm, verifique primeiro se o trator consegue fornecer essa rotação na TDP. Depois confira a conexão do eixo e a potência na TDP exigida pela roçadeira. A potência do motor, sozinha, não responde a essas perguntas.",
+      "sections": [
+        {
+          "anchor": "nasil-calisir",
+          "title": "Qual é a função da tomada de potência?",
+          "paragraphs": [
+            "A rotação do motor passa pelo sistema de transmissão até uma saída de potência traseira ou dianteira. Com o eixo cardã adequado e protegido, o implemento utiliza essa rotação para acionar lâminas, rotor ou bomba. Tracionar e acionar um implemento são tarefas distintas; a tração dos pneus e a potência da TDP têm papéis diferentes.",
+            "Uma enxada rotativa avança pelo campo enquanto seu rotor gira. Essas demandas não devem ser descritas por um único valor de potência. Procure valores separados de potência do motor e da TDP."
+          ]
+        },
+        {
+          "anchor": "540-540e-1000",
+          "title": "540, 540E e 1000 rpm: por que são diferentes?",
+          "paragraphs": [
+            "540 rpm é uma rotação nominal comum da TDP. Em tratores compatíveis, 540E pode fornecer 540 rpm na saída com menor rotação do motor, potencialmente reduzindo consumo e ruído em trabalhos leves. Não é uma função universal nem garante economia sob carga elevada.",
+            "Nunca selecione 1000 rpm apenas porque parece mais potente. Respeite a rotação de operação especificada pelo implemento. Acionar um implemento de 540 rpm a 1000 rpm pode causar danos graves ou ferimentos."
+          ]
+        },
+        {
+          "anchor": "guc-ve-baglanti",
+          "title": "Como conferir potência e dimensões do acoplamento",
+          "paragraphs": [
+            "A potência do motor é medida no motor; a potência da TDP está disponível no eixo de saída e pode ser menor devido às perdas de transmissão. Compare a necessidade declarada do implemento com a potência da TDP, usando a mesma unidade e base de ensaio.",
+            "O diâmetro e o número de estrias da TDP determinam a geometria de conexão. Eixos com estrias diferentes não são intercambiáveis. Consulte o manual do implemento quanto ao comprimento e ângulo permitidos do cardã, às proteções e ao tipo de acoplamento."
+          ]
+        },
+        {
+          "anchor": "bagimsiz-pto",
+          "title": "TDP independente versus embreagem de dois estágios",
+          "paragraphs": [
+            "Uma TDP independente pode ser controlada separadamente do deslocamento do trator. Em algumas embreagens de dois estágios, o primeiro curso do pedal desacopla a tração e o segundo a TDP. Esses mecanismos não são idênticos e não se deve pressupor o mesmo funcionamento.",
+            "Para enfardamento e paradas frequentes, consulte no manual do modelo o mecanismo exato de acionamento, em vez de confiar numa denominação genérica de TDP."
+          ]
+        },
+        {
+          "anchor": "satin-alma",
+          "title": "Verificação de compatibilidade antes da compra",
+          "paragraphs": [
+            "Anote as rotações permitidas da TDP e a potência exigida pelo implemento. Compare a potência comprovada da TDP do trator, as rotações selecionáveis, as estrias e as dimensões de acoplamento. Uma característica não informada é desconhecida, não automaticamente presente.",
+            "Considere também a categoria do engate, a massa do implemento e os acoplamentos hidráulicos necessários. Compatibilidade da TDP é apenas parte da adequação do conjunto. Nunca opere um eixo giratório desprotegido. Antes de conectar ou ajustar a TDP, siga os manuais do trator e do implemento: acione o freio de estacionamento, desengate a transmissão de potência, desligue o motor, retire a chave e espere até que todas as partes móveis parem."
+          ]
+        }
+      ],
+      "verification": "Este artigo é educativo e não alega testes práticos, desmontagem de componentes ou propriedade de um trator. Para um dado de modelo, confirme o modelo, ano, mercado e equipamentos exatos na documentação do fabricante. Quando houver testes independentes, compare os procedimentos utilizados.",
+      "sourceLabels": [
+        "Laboratório de Ensaios de Tratores de Nebraska",
+        "Códigos de ensaio de tratores da OCDE",
+        "HSE — procedimento de parada segura de máquinas agrícolas"
+      ]
+    }
+  }
+}
