@@ -3,7 +3,8 @@ import {scanHeadTags} from "./verify-sitewide-meta-descriptions.mjs";
 import {inspectSocialMetadata} from "./verify-sitewide-social-metadata.mjs";
 import {inspectVisibleMainImages} from "./seo-main-markup.mjs";
 import {inspectDocumentImageAlts,inspectUndocumentedEmptyImageAlts} from "./verify-sitewide-image-alts.mjs";
-import {hasBibliographicTitleLeak} from "./verify-sitewide-seo-titles.mjs";
+import {hasBibliographicTitleLeak,inspectSeoTitle} from "./verify-sitewide-seo-titles.mjs";
+import {writeFileSync} from "node:fs";
 import {readOpeningTagAttribute} from "./seo-html-attributes.mjs";
 import {parseProductionSitemapInventory,selectProductionSeoPages,reviewedPairSitemapCoverage,resolveProductionSeoMode,verifyProductionSeoCoverage} from "./production-sitemap-inventory.mjs";
 // Read-only production SEO coverage audit. No credentials or writes.
@@ -12,7 +13,7 @@ const languages = {en:"en",tr:"tr",zh:"zh-Hans",hi:"hi","pt-br":"pt-BR",fr:"fr",
 const problems=[], warnings=[];
 const AUDIT_MODE=resolveProductionSeoMode(process.env.TRACTORVS_SEO_AUDIT_MODE);
 const error=(code,page,why)=>{problems.push({code,page,why});console.error("SEO_ERROR "+JSON.stringify({code,page,why}));};
-const warn=(code,page,why)=>{warnings.push({code,page,why});};
+const warn=(code,page,why,details={})=>{warnings.push({code,page,why,...details});};
 const matches=(txt,re)=>[...txt.matchAll(re)].map(m=>m[1]);
 async function fetchPage(url) {
   const u=new URL(url,BASE);
@@ -42,7 +43,7 @@ function metadata(html){
  const m=(name)=>attr(metas.find(tag=>attr(tag,"name")===name)||"","content");
  return {
   links,
-  title:html.match(/<title[^>]*>([^<]+)<\/title>/i)?.[1]||"",
+  title:inspectSeoTitle(html)?.title||"",
   description:m("description")||"", robots:m("robots")||"",
   canonical:links.filter(x=>attr(x,"rel")==="canonical").map(x=>attr(x,"href")),
   alternates:links.filter(x=>attr(x,"rel")==="alternate" && attr(x,"hreflang"))
@@ -173,7 +174,7 @@ for(let i=0;i<urls.length;i+=8){
        titleLengths.byLocale[locale].over105++;
      }
      warn("title-length-guidance",p,"Title has "+meta.title.length+
-       " characters; review optional boilerplate but retain identity");
+       " characters; review optional boilerplate but retain identity",{title:meta.title,length:meta.title.length});
    }
    // Full-sitemap accessibility/SEO integrity is handled by a tested
    // pure helper; an absent alt differs from a valid decorative alt="".
@@ -281,4 +282,8 @@ const report={
 console.log("TRACTORVS_SEO_AUDIT_REPORT "+JSON.stringify(report));
 console.log("TRACTORVS_SEO_MODEL_SAMPLES "+JSON.stringify(modelSample));
 if(warnings.length)console.log("TRACTORVS_SEO_WARNINGS "+JSON.stringify(warnings.slice(0,30)));
+// CI retains the complete review inventory rather than just 30 console samples.
+if(process.env.TRACTORVS_SEO_EVIDENCE_PATH){
+ writeFileSync(process.env.TRACTORVS_SEO_EVIDENCE_PATH,JSON.stringify({report,warnings,problems},null,2)+"\n");
+}
 if(problems.length)process.exitCode=1;

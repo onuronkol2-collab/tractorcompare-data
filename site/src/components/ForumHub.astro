@@ -63,7 +63,7 @@ const schema=indexable?{
  }
 }:null;
 ---
-<SiteLayout lang={lang} title={ft(lang,"heading")+" | TractorVS"}
+<SiteLayout lang={lang} title={(ft(lang,"heading")+" | TractorVS").length<=60?ft(lang,"heading")+" | TractorVS":ft(lang,"heading")}
  description={forumHubSeoDescription(lang,ft(lang,"intro"))} indexable={indexable} indexableLocales={indexableLocales} structuredData={schema}>
  <div class="community-shell" data-forum-dashboard-copy={JSON.stringify(dashboard)}>
   <header class="community-hero">

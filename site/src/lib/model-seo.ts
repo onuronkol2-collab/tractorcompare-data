@@ -115,6 +115,62 @@ export function originalVariantNote(tractor:Pick<TractorRecord,"variant">):strin
   return tractor.variant?.split(";").slice(1).join(";").trim() || null;
 }
 
+/** Published catalogue rows reviewed read-only on 2026-11-24. Remove
+ * repeated model-name/market wording only from the search title. Exact
+ * variant and market matching makes this opt-in, not a general truncation.
+ * Keep the original source record, description and JSON-LD untouched. */
+function compactReviewedTitleVariant(tractor:TractorRecord, rawVariant:string|null,
+ rawMarket:string|null, current:string|null):string|null {
+ const name=tractor.model_name;
+ if(tractor.brand_name==="McCormick" && rawMarket==="Europe"){
+  if(/^X2\.0(?:55|60) (?:GE|STD)$/.test(name) &&
+    rawVariant===name.split(" ").at(-1)+" / synchro shuttle")return "synchro shuttle";
+  if(/^X4\.(?:080|090|100|110|120) F (?:Cab|Platform)$/.test(name) &&
+    rawVariant==="Orchard F / "+name.split(" ").at(-1)+" / Speed Four")return "Orchard / Speed Four";
+  if(/^X4\.(?:085|095|105|110|120) T[FM]$/.test(name) &&
+    rawVariant===name.split(" ").at(-1)+" crawler / metal track shoes")return "crawler / metal track shoes";
+  if(/^X6\.(?:413|414|415) P6-Drive$/.test(name) &&
+    rawVariant==="P6-Drive / standard gearbox")return "standard gearbox";
+  if(/^X6\.(?:616|618) XtraShift$/.test(name) &&
+    rawVariant==="XtraShift / standard gearbox")return "standard gearbox";
+  if(/^X7\.(?:417|418|617|618|620|621|623|624) (?:P6|VT)-Drive$/.test(name)){
+   const drive=name.split(" ").at(-1);
+   if(rawVariant==="Clever Cab / "+drive)return "Clever Cab";
+   if(drive==="P6-Drive" && rawVariant==="Efficient / P6-Drive")return "Efficient";
+  }
+ }
+ if(tractor.brand_name==="Mahindra" && rawMarket==="India"){
+  if(name==="JIVO 225 DI 4WD NT" && rawVariant==="India 4WD / 8F x 4R / narrow track")return "8F x 4R / narrow track";
+  if(name==="JIVO 245 VINEYARD" && rawVariant==="India 4WD / 8F x 4R / vineyard")return "4WD / 8F x 4R";
+  if(name==="JIVO 365 DI 4WD" && rawVariant==="India 4WD / 8F x 8R / 9.5x20 tyre")return "8F x 8R / 9.5x20 tyre";
+  if(name==="NOVO 755 DI PP 4WD V1" && rawVariant==="India 4WD / 15F x 15R / creeper optional")return "15F x 15R / creeper optional";
+  if(name==="YUVRAJ 215 NXT NT" && rawVariant==="India 2WD / 6F x 3R / narrow track")return "2WD / 6F x 3R / narrow track";
+  if(/^OJA (?:2124|2127|2130)$/.test(name) && rawVariant==="4WD (India)")return "4WD";
+  if(name==="NOVO 605 DI PS V1" && rawVariant==="India 2WD / 15F x 3R")return "2WD / 15F x 3R";
+  if(name==="JIVO 225 DI 4WD" && rawVariant==="India 4WD / 8F x 4R / manufacturer configuration")return "8F x 4R";
+  if(name==="JIVO 305 DI 4WD" && rawVariant==="India 4WD / 8F x 4R / manufacturer specification")return "8F x 4R";
+ }
+ if(tractor.brand_name==="Kioti" && rawMarket==="US"){
+  if(name==="CX2510" && rawVariant==="US / gear / open station")return "gear / open station";
+  if(name==="CX2510H" && rawVariant==="US / HST / open station")return "HST / open station";
+  if(name==="CX2510H CAB" && rawVariant==="US / factory cab")return "factory cab";
+ }
+ if(tractor.brand_name==="LS Tractor" && rawMarket==="US"){
+  if(/^MT12[25]$/.test(name) && rawVariant==="US official product / ROPS HST")return "ROPS HST";
+  if(name==="MT573C" && rawVariant==="US official product / synchro cab")return "synchro cab";
+ }
+ if(tractor.brand_name==="Sonalika" && rawMarket==="India"){
+  if(name==="GT 22 4WD" && rawVariant==="4WD / 6F + 2R / single clutch")return "6F + 2R / single clutch";
+  if(name==="Tiger DI 42 PP 4WD" && rawVariant==="4WD / 8F+2R / constant mesh / power steering")return "8F+2R / constant mesh / power steering";
+ }
+ if(tractor.brand_name==="Swaraj" && name==="855 FE Protek" && rawMarket==="India" &&
+    rawVariant==="2WD/4WD configurable model family")return "2WD/4WD configurable";
+ if(tractor.brand_name==="Antonio Carraro" && ((name==="TONY 8900 SR" && rawMarket==="Europe") ||
+    (name==="TONY 8900 TR" && rawMarket==="Australia")) &&
+    rawVariant==="Stage V / ROPS or Air cab options")return "Stage V / ROPS or Air cab";
+ return current;
+}
+
 export function modelSeoMetadata(tractor: TractorRecord, lang: Locale) {
   const model = tractor.brand_name + " " + tractor.model_name;
   // The three verified manufacturer families below contain *catalogue-source notes*
@@ -270,8 +326,9 @@ export function modelSeoMetadata(tractor: TractorRecord, lang: Locale) {
     : reviewedSourceNotes
       ? reviewedSourceNotes.markets.map(region=>marketDisplayName(region,lang)).join(" / ")
     : marketDisplayName(rawMarket, lang);
+  const buildTitle=(titleVariant:string|null)=>{
   const qualifiers = [
-    variantLabel && variantLabel.length <= 48 ? variantLabel : null,
+    titleVariant && titleVariant.length <= 48 ? titleVariant : null,
     marketLabel, tractor.model_year == null ? null : String(tractor.model_year)
   ].filter((part):part is string=>Boolean(part));
   const identityQualifiers=qualifiers.length ? " — " + qualifiers.join(" · ") : "";
@@ -291,13 +348,20 @@ export function modelSeoMetadata(tractor: TractorRecord, lang: Locale) {
   const identityOnlyTitle=model + identityQualifiers + " | TractorVS";
   const conciseWithoutSiteName=model + " " + CONCISE_SPECS_TITLE[lang] + identityQualifiers;
   const identityWithoutSiteName=model + identityQualifiers;
-  const title=fullTitle.length<=60 ? fullTitle
+  return fullTitle.length<=60 ? fullTitle
     : conciseTitle.length<=60 ? conciseTitle
     : conciseWithoutSiteName.length<=60 ? conciseWithoutSiteName
     : identityOnlyTitle.length<=60 ? identityOnlyTitle
     : identityWithoutSiteName.length<=60 ? identityWithoutSiteName
     : conciseWithoutSiteName.length<=105 ? conciseWithoutSiteName
     : identityWithoutSiteName;
+
+  };
+  const originalTitle=buildTitle(variantLabel);
+  const compactVariant=compactReviewedTitleVariant(tractor,rawVariant,rawMarket,variantLabel);
+  const compactTitle=compactVariant!==variantLabel?buildTitle(compactVariant):originalTitle;
+  // Do not churn short titles or replace an existing one with a longer title.
+  const title=originalTitle.length>60 && compactTitle.length<originalTitle.length?compactTitle:originalTitle;
 
   const copy = MODEL_COPY[lang];
   const sourceCount = new Set(tractor.specifications.map(spec =>
