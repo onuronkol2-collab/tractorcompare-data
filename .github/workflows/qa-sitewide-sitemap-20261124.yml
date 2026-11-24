@@ -52,6 +52,37 @@ jobs:
           report={"main":len(main),"forum":len(forum),"distinct":len(set(main+forum)),"image_page_refs":len(images),"distinct_image_files":len(image_files),"orphan_image_pages":len(set(images)-set(main+forum)),"cross_map_duplicates":len(set(main)&set(forum)),"models_per_locale":{l:len(buckets[l]) for l in locales},"model_parity":all(buckets[l]==buckets["en"] for l in locales),"db_expected_models":469,"model_count_match":all(len(buckets[l])==469 for l in locales),"forum_topic_urls":len(actual_forum),"db_expected_forum":len(expected_forum),"missing_forum":sorted(expected_forum-actual_forum),"extra_forum":sorted(actual_forum-expected_forum),"page_types":dict(types),"example_model":sorted(buckets["en"])[:3]}
           print("INVENTORY",json.dumps(report),flush=True)
           PY
+      - name: Verify merged SEO title package on live domain
+        if: always()
+        run: |
+          python3 - <<'PY'
+          import urllib.request, re, html, json
+          from concurrent.futures import ThreadPoolExecutor
+          base="https://tractorvs.com"
+          locales=["en","tr","de","es","fr","pt-br","hi","ru","ja","zh"]
+          def check(l):
+              root=base+("" if l=="en" else "/"+l)+"/tractors/"
+              rows=[]
+              for model in ["farmtrac-45-powermaxx-8acb2304","iseki-t97-series-3e6886c4"]:
+                  url=root+model+"/"
+                  try:
+                      with urllib.request.urlopen(urllib.request.Request(url,headers={"User-Agent":"TractorVS-public-release-audit/1.0","Cache-Control":"no-cache"}),timeout=20) as res:
+                          body=res.read().decode()
+                          m=re.search(r"<title[^>]*>(.*?)</title>",body,re.S|re.I)
+                          title=html.unescape(m.group(1)).strip() if m else ""
+                          if model.startswith("iseki"):
+                              verified="Cabin" in title and "ROPS" in title and "ISEKI global catalogue" not in title
+                          else:
+                              verified="2WD" in title and "constant-mesh 8F+2R" in title and "India / 2WD" not in title
+                          rows.append({"locale":l,"model":model,"status":res.status,"title":title,"updated":verified})
+                  except Exception as e: rows.append({"locale":l,"model":model,"updated":False,"error":str(e)})
+              return rows
+          with ThreadPoolExecutor(max_workers=3) as pool:
+              result=[row for rows in pool.map(check,locales) for row in rows]
+          for row in result: print("TITLE_LIVE",json.dumps(row,ensure_ascii=False))
+          print("TITLE_LIVE_TOTAL",sum(x["updated"] for x in result),len(result))
+          if not all(x["updated"] for x in result): raise SystemExit(1)
+          PY
       - name: Daily production SEO audit across all page types and rotating model sample
         if: always()
         env:
