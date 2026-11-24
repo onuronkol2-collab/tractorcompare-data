@@ -20,7 +20,7 @@ test("only an exact public Git commit SHA is eligible for build metadata", () =>
 });
 
 test("shared Astro layout emits build-time provenance with no URL, SEO or tracker changes", () => {
-  assert.match(layout, /verifiedReleaseSha\(process\.env\.WORKERS_CI_COMMIT_SHA\)/);
+  assert.match(layout, /verifiedReleaseSha\(import\.meta\.env\.WORKERS_CI_COMMIT_SHA\)/);
   assert.match(layout, /\{releaseSha && <meta name="tractorvs-release-sha" content=\{releaseSha\} \/>\}/);
   assert.match(layout, /<link rel="canonical" href=\{canonicalUrl\}/);
   assert.match(layout, /hreflang=\{alternate\.locale\}/);
