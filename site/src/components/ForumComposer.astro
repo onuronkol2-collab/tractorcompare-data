@@ -188,17 +188,18 @@ const strings=JSON.stringify({
       </select>
      </label>
     </div>
-    <label>{mode==="topic"?ft(lang,"body"):ft(lang,"reply")}
+    <ForumEditor lang={lang} editorId={bodyCounterId}>
+    <label slot="body">{mode==="topic"?ft(lang,"body"):ft(lang,"reply")}
       <textarea name="body" required minlength={mode==="topic"?40:10}
        maxlength={maxBodyLength} rows={mode==="topic"?7:4}
        aria-describedby={bodyCounterId+" "+bodyWarningId}></textarea>
     </label>
-    <p class="forum-body-count" id={bodyCounterId} data-forum-body-count>
+    <p slot="count" class="forum-body-count" id={bodyCounterId} data-forum-body-count>
      {0} / {maxBodyLength} {FORUM_DRAFT_LENGTH_COPY[lang].unit}
     </p>
-    <p class="forum-body-limit-warning" id={bodyWarningId} data-forum-body-warning
+    <p slot="count" class="forum-body-limit-warning" id={bodyWarningId} data-forum-body-warning
       role="status" aria-live="polite" aria-atomic="true"></p>
-    <ForumEditor lang={lang}/>
+    </ForumEditor>
     <label class="forum-checkbox">
       <input type="checkbox" name="translation_consent"/>
       <span>{ft(lang,"consent")}</span>
@@ -321,7 +322,7 @@ const strings=JSON.stringify({
 .community-composer select:focus,.community-composer textarea:focus{
  border-color:#438960;outline:3px solid rgba(105,161,102,.24);outline-offset:1px
 }
-.community-composer textarea{min-height:160px;line-height:1.8}
+.community-composer textarea{min-height:clamp(180px,30vh,320px);line-height:1.75;font-weight:400;font-size:16px;tab-size:4;max-height:65vh}
 .community-composer [data-forum-post]{gap:16px}
 .community-composer [data-forum-post] button[type="submit"],
 .community-composer .forum-register button[type="submit"]{
