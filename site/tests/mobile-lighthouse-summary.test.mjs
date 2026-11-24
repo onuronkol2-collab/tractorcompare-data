@@ -1,7 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import {readFileSync} from "node:fs";
-import {analyzeLighthouse,collectImageOptimizationCandidates,interpretCrux,markdownReport,FIELD_THRESHOLDS,ROUTE_URLS,validateLiveLighthouseResult,repeatedHomeMedian} from "../scripts/mobile-lighthouse-summary.mjs";
+import {analyzeLighthouse,collectImageOptimizationCandidates,collectStaticResourceCandidates,interpretCrux,markdownReport,FIELD_THRESHOLDS,ROUTE_URLS,validateLiveLighthouseResult,repeatedHomeMedian} from "../scripts/mobile-lighthouse-summary.mjs";
 
 const sample={
   finalUrl:"https://tractorvs.com/tr/",
@@ -176,4 +176,29 @@ test("compare's client-side model state is accepted only after loading the exact
  assert.throws(()=>validateLiveLighthouseResult({...report,mainDocumentUrl:undefined},"compare"),/Unexpected Lighthouse final URL/);
  assert.throws(()=>validateLiveLighthouseResult({...report,requestedUrl:ROUTE_URLS.home},"compare"),/Unexpected Lighthouse final URL/);
  assert.throws(()=>validateLiveLighthouseResult({...sample,finalDisplayedUrl:ROUTE_URLS.home+query},"home"),/Unexpected Lighthouse final URL/);
+});
+
+
+test("static CSS and JS opportunities identify exact first-party files without adding overlapping estimates",()=>{
+ const css="https://tractorvs.com/_astro/SiteLayout.abc123.css",js="https://tractorvs.com/_astro/search.def456.js";
+ const audits={
+  "render-blocking-resources":{details:{items:[{url:css+"?v=private-token",wastedMs:300},
+   {url:"https://other.example/_astro/other.css",wastedMs:9000},
+   {url:"https://tractorvs.com/api/private.js",wastedMs:9000}]}},
+  "unused-css-rules":{details:{items:[{url:css,wastedBytes:8192,wastedMs:100},{url:css,wastedBytes:4096,wastedMs:150}]}},
+  "unused-javascript":{details:{items:[{url:js,wastedBytes:16384,wastedMs:80},{url:js,wastedBytes:-1},{url:"not a URL",wastedBytes:3000}]}}
+ };
+ const items=collectStaticResourceCandidates({audits});
+ assert.deepEqual(items,[
+  {url:css,estimatedMaxWasteBytes:8192,estimatedMaxWasteMs:300,flags:["render-blocking-resources","unused-css-rules"]},
+  {url:js,estimatedMaxWasteBytes:16384,estimatedMaxWasteMs:80,flags:["unused-javascript"]}
+ ]);
+ const reports=["home","advisor"].map(route=>analyzeLighthouse({...sample,audits:{...sample.audits,...audits}},route));
+ assert.deepEqual(reports[0].resourceCandidates,items);
+ const md=markdownReport(reports,{});
+ assert.match(md,/First-party static CSS\/JS resource opportunities/);
+ assert.match(md,/SiteLayout\.abc123\.css \| home, advisor \| render-blocking-resources, unused-css-rules \| 300 ms \| 8 KiB/);
+ assert.doesNotMatch(md,/private-token|other\.example|api\/private|600 ms/);
+ assert.deepEqual(collectStaticResourceCandidates({audits:{}}),[]);
+ assert.match(markdownReport([analyzeLighthouse(sample,"home")],{}),/does not prove all resources are optimal/);
 });
