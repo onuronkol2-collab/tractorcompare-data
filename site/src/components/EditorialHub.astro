@@ -2,11 +2,12 @@
 import SiteLayout from "../layouts/SiteLayout.astro";
 import {localizedPath,LOCALES,LOCALE_TAGS,type Locale} from "../lib/locales.ts";
 import {editorialHubTranslation} from "../lib/editorial-hub-i18n.ts";
-import {EDITORIAL_DISCOVERY} from "../lib/editorial-discovery-i18n.mjs";
+import {EDITORIAL_DISCOVERY,EDITORIAL_READING_LANGUAGE} from "../lib/editorial-discovery-i18n.mjs";
 import {DEUTZ_5D_GS_PILOT} from "../lib/deutz-5d-editorial.ts";
 interface Props {lang:Locale}
 const {lang}=Astro.props;
 const searchCopy=EDITORIAL_DISCOVERY[lang];
+const readingCopy=EDITORIAL_READING_LANGUAGE[lang];
 const tr=lang==="tr";
 const root=Astro.site||new URL("https://tractorvs.com");
 const pagePath=localizedPath(lang,"/articles/");
@@ -89,6 +90,10 @@ const englishOnly=(entry:(typeof entries)[number])=>
 const methodologyHref=localizedPath(lang==="tr"?"tr":"en","/methodology/");
 const articles=entries.filter(x=>x.type==="guide");
 const reviews=entries.filter(x=>x.type==="review");
+const extraReview=lang==="tr"||lang==="en"?1:0;
+const articleCount=entries.length+extraReview;
+const localCount=entries.filter(entry=>!englishOnly(entry)).length+extraReview;
+const coverage=readingCopy.coverage.replace("{local}",String(localCount)).replace("{total}",String(articleCount));
 const urlFor=(path:string)=>new URL(localizedPath(lang,path),root).toString();
 const schema={
  "@context":"https://schema.org",
@@ -128,7 +133,8 @@ const schema={
     <p class="editorial-eyebrow">{copy.eyebrow}</p>
     <h1>{copy.heading}</h1>
     <p class="editorial-intro">{copy.intro}</p>
-    <nav class="editorial-jumps" aria-label={copy.hub}>
+    <p class="editorial-coverage">{coverage}</p>
+    <nav class="editorial-jumps" aria-label={readingCopy.sections}>
      <a class="editorial-start" href="#rehberler">{copy.jump} <span aria-hidden="true">↓</span></a>
      <a class="editorial-start editorial-start-secondary" href="#incelemeler">{copy.review} <span aria-hidden="true">↓</span></a>
     </nav>
@@ -141,31 +147,27 @@ const schema={
       <input id="editorial-query" type="search" autocomplete="off" maxlength="100" placeholder={searchCopy.placeholder} />
       <button type="button" id="editorial-clear" hidden>{searchCopy.clear}</button>
     </div>
+    {localCount<articleCount&&<fieldset class="editorial-language-filter">
+      <legend>{readingCopy.language}</legend>
+      <label><input type="radio" name="editorial-reading-language" value="all" checked/> <span>{readingCopy.all}</span></label>
+      <label><input type="radio" name="editorial-reading-language" value="local"/> <span>{readingCopy.local}</span></label>
+      <label><input type="radio" name="editorial-reading-language" value="other"/> <span>{readingCopy.other}</span></label>
+    </fieldset>}
     <p id="editorial-results-count" role="status" aria-live="polite"
       data-result-template={searchCopy.results}>{searchCopy.results.replace("{visible}",String(articles.length+reviews.length+((lang==="tr"||lang==="en")?1:0))).replace("{total}",String(articles.length+reviews.length+((lang==="tr"||lang==="en")?1:0)))}</p>
-    <p id="editorial-no-results" role="status" hidden>{searchCopy.none}</p>
-   </section>
-   <section class="editorial-trust" aria-labelledby="editorial-trust-heading">
-    <h2 id="editorial-trust-heading">{copy.trust}</h2>
-    <div class="editorial-rules">
-     {copy.rules.map((rule,i)=><div>
-       <span aria-hidden="true">{String(i+1).padStart(2,"0")}</span>
-       <h3>{rule[0]}</h3><p>{rule[1]}</p>
-     </div>)}
-    </div>
-    <a href={methodologyHref}>{copy.methods}{lang!=="en"&&lang!=="tr"?" (EN)":""} ↗</a>
+    <div id="editorial-no-results" hidden><p>{searchCopy.none}</p><button type="button" id="editorial-reset">{readingCopy.reset}</button></div>
    </section>
    <section class="editorial-section" id="rehberler" aria-labelledby="editorial-guide-title">
     <div class="editorial-section-title">
      <div><h2 id="editorial-guide-title">{copy.guides}</h2><p>{copy.guidesIntro}</p></div>
      <span>{String(articles.length).padStart(2,"0")}</span>
     </div>
-    <ol class="editorial-grid">{articles.map(entry=><li data-editorial-card>
+    <ol class="editorial-grid">{articles.map(entry=><li data-editorial-card data-reading-language={englishOnly(entry)?"other":"local"}>
       <article class="editorial-card">
        <p class="editorial-kicker">{copy.guideLabel}</p>
        <h3><a href={entryHref(entry)} hreflang={LOCALE_TAGS[destinationLanguage(entry)]}>{titleFor(entry)}</a></h3>
        <p>{summaryFor(entry)}</p>
-       {englishOnly(entry)&&<p class="editorial-language-note" lang={lang}>{localized?.englishOriginal}</p>}
+       <p class="editorial-language-note" lang={lang}>{englishOnly(entry)?localized?.englishOriginal:readingCopy.local}</p>
        <div class="editorial-card-footer"><time datetime={entry.checked}>{copy.checked}: {entry.checked}</time>
         <a href={entryHref(entry)} hreflang={LOCALE_TAGS[destinationLanguage(entry)]}
           aria-label={titleFor(entry)+" — "+copy.read+(englishOnly(entry)?" — "+localized?.englishOriginal:"")}>{copy.read} <span aria-hidden="true">↗</span></a></div>
@@ -177,18 +179,18 @@ const schema={
      <div><h2 id="editorial-review-title">{copy.review}</h2><p>{copy.reviewIntro}</p></div>
      <span>{String(reviews.length+((lang==="tr"||lang==="en")?1:0)).padStart(2,"0")}</span>
     </div>
-    <ol class="editorial-grid">{reviews.map(entry=><li data-editorial-card>
+    <ol class="editorial-grid">{reviews.map(entry=><li data-editorial-card data-reading-language={englishOnly(entry)?"other":"local"}>
       <article class="editorial-card">
        <p class="editorial-kicker">{copy.reviewLabel}</p>
        <h3><a href={entryHref(entry)} hreflang={LOCALE_TAGS[destinationLanguage(entry)]}>{titleFor(entry)}</a></h3>
        <p>{summaryFor(entry)}</p>
-       {englishOnly(entry)&&<p class="editorial-language-note" lang={lang}>{localized?.englishOriginal}</p>}
+       <p class="editorial-language-note" lang={lang}>{englishOnly(entry)?localized?.englishOriginal:readingCopy.local}</p>
        <div class="editorial-card-footer"><time datetime={entry.checked}>{copy.checked}: {entry.checked}</time>
         <a href={entryHref(entry)} hreflang={LOCALE_TAGS[destinationLanguage(entry)]}
           aria-label={titleFor(entry)+" — "+copy.read+(englishOnly(entry)?" — "+localized?.englishOriginal:"")}>{copy.read} <span aria-hidden="true">↗</span></a></div>
       </article>
     </li>)}
-    {(lang==="tr"||lang==="en")&&<li data-editorial-card>
+    {(lang==="tr"||lang==="en")&&<li data-editorial-card data-reading-language="local">
       <article class="editorial-card">
         <p class="editorial-kicker">{tr?"AYNI RESMÎ BELGEDEN MODEL KARŞILAŞTIRMASI":"EXACT-MODEL MANUFACTURER DOCUMENT COMPARISON"}</p>
         <h3><a href={localizedPath(lang,DEUTZ_5D_GS_PILOT.path)} hreflang={LOCALE_TAGS[lang]}>
@@ -196,11 +198,22 @@ const schema={
         <p>{tr
           ?"Aynı Türkiye Stage V / GS belgesinde nominal motor gücü, tork, PTO ve hidrolik verileri. Uyuşmayan varyantlar ve belirsiz ölçümler birleştirilmez."
           :"A side-by-side reading of rated power, torque, PTO and hydraulic figures from the same Türkiye-market GS Stage V brochure; no assumed field-test results."}</p>
+        <p class="editorial-language-note">{readingCopy.local}</p>
         <div class="editorial-card-footer"><time datetime="2026-11-22">{copy.checked}: 2026-11-22</time>
           <a href={localizedPath(lang,DEUTZ_5D_GS_PILOT.path)} hreflang={LOCALE_TAGS[lang]}>{copy.read} <span aria-hidden="true">↗</span></a>
         </div>
       </article>
     </li>}</ol>
+   </section>
+   <section class="editorial-trust" aria-labelledby="editorial-trust-heading">
+    <h2 id="editorial-trust-heading">{copy.trust}</h2>
+    <div class="editorial-rules">
+     {copy.rules.map((rule,i)=><div>
+       <span aria-hidden="true">{String(i+1).padStart(2,"0")}</span>
+       <h3>{rule[0]}</h3><p>{rule[1]}</p>
+     </div>)}
+    </div>
+    <a href={methodologyHref}>{copy.methods}{lang!=="en"&&lang!=="tr"?" (EN)":""} ↗</a>
    </section>
    <p class="editorial-disclaimer">{copy.disclaimer}</p>
    <aside class="editorial-cta">
@@ -218,8 +231,10 @@ const schema={
   const clear=document.querySelector<HTMLButtonElement>("#editorial-clear");
   const status=document.querySelector<HTMLElement>("#editorial-results-count");
   const empty=document.querySelector<HTMLElement>("#editorial-no-results");
+  const reset=document.querySelector<HTMLButtonElement>("#editorial-reset");
+  const languages=Array.from(document.querySelectorAll<HTMLInputElement>('input[name="editorial-reading-language"]'));
   const rows=Array.from(document.querySelectorAll<HTMLElement>("[data-editorial-card]"));
-  if(discovery&&field&&clear&&status&&empty&&rows.length){
+  if(discovery&&field&&clear&&status&&empty&&reset&&rows.length){
     // All published links remain in SSR HTML. Filtering is a client-side
     // reading convenience; no fabricated article or extra indexable URL.
     const normalize=(text:string)=>text.normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLocaleLowerCase();
@@ -227,9 +242,10 @@ const schema={
     discovery.hidden=false;
     const paint=()=>{
       const terms=normalize(field.value.trim()).split(/\s+/).filter(Boolean);
+      const reading=languages.find(input=>input.checked)?.value||"all";
       let visible=0;
       rows.forEach((row,i)=>{
-        const match=terms.every(term=>titles[i].includes(term));
+        const match=(reading==="all"||row.dataset.readingLanguage===reading)&&terms.every(term=>titles[i].includes(term));
         if(row.hidden===match)row.hidden=!match;
         if(match)visible++;
       });
@@ -239,6 +255,8 @@ const schema={
       if(status.textContent!==message)status.textContent=message;
       if(empty.hidden!==(visible!==0))empty.hidden=visible!==0;
     };
+    languages.forEach(input=>input.addEventListener("change",paint));
+    reset.addEventListener("click",()=>{field.value="";languages.forEach(input=>{input.checked=input.value==="all";});paint();field.focus();});
     field.addEventListener("input",paint);
     clear.addEventListener("click",()=>{field.value="";paint();field.focus();});
     paint();
@@ -246,12 +264,18 @@ const schema={
 </script>
 <style>
  .editorial-discovery{padding:clamp(16px,2vw,23px);margin:0 0 35px;border:1px solid #bbd3bd;border-radius:15px;background:linear-gradient(110deg,#eef7eb,#fff)}
- .editorial-discovery[hidden],.editorial-discovery button[hidden],.editorial-no-results[hidden],.editorial-grid li[hidden]{display:none!important}
+ .editorial-discovery[hidden],.editorial-discovery button[hidden],#editorial-no-results[hidden],.editorial-grid li[hidden]{display:none!important}
  .editorial-discovery label{display:block;font-size:clamp(16px,2vw,20px);font-weight:850;color:#18452d;margin-bottom:12px}
  .editorial-search-row{display:flex;gap:9px;flex-wrap:wrap}
  .editorial-search-row input{flex:1;min-width:min(100%,260px);min-height:50px;padding:12px 14px;background:white;border:1px solid #afccb4;border-radius:9px;color:#183d28;font-size:16px}
  .editorial-search-row button{min-height:46px;padding:9px 13px;background:#e3efe0;border:1px solid #a7c5a9;border-radius:9px;color:#215537;cursor:pointer;font-size:14px;font-weight:800}
- .editorial-search-row :is(input,button):focus-visible{outline:3px solid #387c4b;outline-offset:3px}
+ .editorial-search-row :is(input,button):focus-visible,.editorial-language-filter input:focus-visible,#editorial-reset:focus-visible{outline:3px solid #387c4b;outline-offset:3px}
+ .editorial-language-filter{border:0;padding:0;margin:15px 0 0;min-width:0;display:flex;flex-wrap:wrap;gap:8px 14px}
+ .editorial-language-filter legend{font-size:15px;font-weight:800;color:#214c32;margin-bottom:5px}
+ .editorial-discovery .editorial-language-filter label{display:flex;align-items:center;gap:8px;font-size:15px;font-weight:650;margin:0;min-height:44px;cursor:pointer;overflow-wrap:anywhere}
+ .editorial-language-filter input{accent-color:#236539;width:18px;height:18px;flex:none}
+ #editorial-reset{margin-top:8px;min-height:44px;border:1px solid #a7c5a9;border-radius:8px;background:#e3efe0;color:#215537;padding:8px 14px;font-size:15px;font-weight:750;cursor:pointer}
+ .editorial-coverage{color:#e0eddd;max-width:765px;font-size:16px;line-height:1.6;margin:20px 0 0}
  .editorial-discovery p{font-size:13px;font-weight:700;color:#3f664b;margin:12px 0 0;line-height:1.6}
  .editorial-grid li[hidden]{display:none!important}
  .editorial-hub{color:#1c3225;background:#f5f7f2}
@@ -259,13 +283,13 @@ const schema={
  .editorial-crumb{display:flex;align-items:center;gap:10px;font-size:13px;color:#c6d9c2;margin-bottom:46px}
  .editorial-crumb a,.editorial-trust>a{text-decoration:underline;text-underline-offset:4px}
  .editorial-eyebrow,.editorial-kicker{letter-spacing:.1em;font-size:13px;font-weight:850;color:#b7df91}
- .editorial-hero h1{max-width:800px;font-size:clamp(36px,5.5vw,65px);line-height:1.1;letter-spacing:-.04em;margin:15px 0}
+ .editorial-hero h1{max-width:800px;font-size:clamp(30px,5.5vw,65px);line-height:1.16;letter-spacing:-.025em;margin:15px 0;overflow-wrap:anywhere}
  .editorial-intro{max-width:765px;color:#c9d9c9;line-height:1.85;font-size:clamp(16px,2vw,19px)}
  .editorial-jumps{display:flex;align-items:stretch;flex-wrap:wrap;gap:12px;margin-top:22px}
  .editorial-start{display:inline-flex;align-items:center;justify-content:center;gap:18px;background:#b7df91;color:#12311c;border-radius:9px;padding:13px 19px;min-height:44px;font-size:14px;font-weight:800}
  .editorial-start-secondary{background:transparent;color:#eff8ef;border:1px solid #b7df91}
  .editorial-body{padding:58px 0 85px}
- .editorial-trust{border:1px solid #d6e4d3;background:#fff;border-radius:17px;padding:clamp(20px,4vw,35px)}
+ .editorial-trust{margin-top:50px;border:1px solid #d6e4d3;background:#fff;border-radius:17px;padding:clamp(20px,4vw,35px)}
  .editorial-trust h2{font-size:clamp(23px,2.8vw,34px);margin:0 0 25px}
  .editorial-rules{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:28px;margin-bottom:20px}
  .editorial-rules span{color:#38764b;font-weight:850}
@@ -281,9 +305,9 @@ const schema={
  .editorial-grid>li{min-width:0}
  .editorial-card{display:flex;flex-direction:column;gap:12px;height:100%;padding:clamp(20px,3vw,29px);background:#fff;border:1px solid #dce6d8;border-radius:14px}
  .editorial-kicker{color:#397c4a;margin:0}
- .editorial-card h3{margin:0;font-size:clamp(20px,2.2vw,25px);line-height:1.35}
+ .editorial-card h3{margin:0;font-size:clamp(20px,2.2vw,25px);line-height:1.35;overflow-wrap:anywhere}
  .editorial-card h3 a{text-decoration:underline;text-decoration-color:#c4d7c2;text-underline-offset:4px}
- .editorial-card>p:not(.editorial-kicker){margin:0;color:#4e6553;line-height:1.75;font-size:15px}
+ .editorial-card>p:not(.editorial-kicker){margin:0;color:#4e6553;line-height:1.75;font-size:16px;overflow-wrap:anywhere}
  .editorial-card-footer{border-top:1px solid #e0e9de;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;padding-top:16px;margin-top:auto}
  .editorial-card-footer time{color:#506856;font-size:14px;line-height:1.55}
  .editorial-card .editorial-language-note{font-size:14px;color:#345741;background:#eaf2e7;border-radius:6px;padding:8px 10px;font-weight:800;align-self:flex-start}
@@ -294,5 +318,5 @@ const schema={
  .editorial-cta>div{display:flex;gap:12px;flex-wrap:wrap}
  .editorial-cta a{border:1px solid #9bcf86;border-radius:8px;padding:11px 14px;font-weight:800;font-size:13px}
  .editorial-hub a:focus-visible{outline:3px solid #64ad60;outline-offset:4px}
- @media(max-width:750px){.editorial-grid,.editorial-rules{grid-template-columns:1fr}.editorial-hero{padding-bottom:55px}.editorial-body{padding-top:28px}.editorial-section{margin-top:50px}}
+ @media(max-width:750px){.editorial-grid,.editorial-rules{grid-template-columns:1fr}.editorial-hero{padding:28px 0 35px}.editorial-crumb{margin-bottom:22px;flex-wrap:wrap}.editorial-body{padding-top:20px}.editorial-section{margin-top:32px}.editorial-jumps{gap:8px}.editorial-start{flex:1 1 100%;min-width:0;overflow-wrap:anywhere}.editorial-section-title{gap:12px}.editorial-section-title>div{min-width:0;overflow-wrap:anywhere}.editorial-cta{padding:20px}.editorial-cta>div{width:100%}.editorial-cta a{min-height:44px;overflow-wrap:anywhere}.editorial-language-filter{flex-direction:column;gap:0}}
 </style>
