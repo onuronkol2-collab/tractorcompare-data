@@ -130,7 +130,9 @@ for(const region of ["western","eastern"]){
    assert.deepEqual(Object.keys(entry).sort(),["caution","definition","example","name"]);
    for(const key of ["name","definition","example","caution"]){
     const value=entry[key];
-    assert.ok(typeof value==="string"&&value.trim()&&value!==original[key],lang+" "+original.id+" "+key);
+    // Torque (Nm) is a legitimate identical technical label in Brazilian Portuguese.
+    const identicalTechnicalLabel=lang==="pt-br"&&original.id==="torque"&&key==="name"&&value==="Torque (Nm)";
+    assert.ok(typeof value==="string"&&value.trim()&&(value!==original[key]||identicalTechnicalLabel),lang+" "+original.id+" "+key);
     const script=lang==="ja"&&key==="name"?/[\p{Script=Han}\p{Script=Hiragana}\p{Script=Katakana}]/u:scripts[lang];
     if(script)assert.ok(script.test(value),lang+" script "+original.id+" "+key);
     for(const n of new Set(tokens(original[key])))assert.ok(numberRetained(n,value,lang),lang+" missing "+n+" "+original.id+" "+key);
