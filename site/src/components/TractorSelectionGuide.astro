@@ -22,6 +22,59 @@ const sources=[
    en:"University of Minnesota Extension — Buying a used tractor",
    tr:"Minnesota Üniversitesi Tarım Yayım Birimi — İkinci el traktör seçimi"},
 ];
+// Local-language descriptions of the original institutions/documents. Links still
+// point to the actual original (English) resources, never fabricated translations.
+const sourceLabels:Partial<Record<Locale,string[]>>={
+  "zh": [
+    "OECD — 官方拖拉机试验标准规范",
+    "内布拉斯加大学 — 拖拉机试验实验室",
+    "内布拉斯加拖拉机试验实验室 — 已发布试验报告",
+    "明尼苏达大学农业推广部 — 二手拖拉机选购"
+  ],
+  "hi": [
+    "OECD — आधिकारिक ट्रैक्टर परीक्षण के मानक कोड",
+    "नेब्रास्का विश्वविद्यालय — ट्रैक्टर परीक्षण प्रयोगशाला",
+    "नेब्रास्का ट्रैक्टर परीक्षण प्रयोगशाला — प्रकाशित परीक्षण रिपोर्ट",
+    "मिनेसोटा विश्वविद्यालय का कृषि विस्तार विभाग — पुराना ट्रैक्टर खरीदना"
+  ],
+  "pt-br": [
+    "OCDE — Códigos-padrão para ensaios oficiais de tratores",
+    "Universidade de Nebraska — Laboratório de Ensaios de Tratores",
+    "Laboratório de Ensaios de Tratores de Nebraska — Relatórios publicados",
+    "Extensão da Universidade de Minnesota — Compra de trator usado"
+  ],
+  "fr": [
+    "OCDE — Codes normalisés pour les essais officiels de tracteurs",
+    "Université du Nebraska — Laboratoire d’essais de tracteurs",
+    "Laboratoire d’essais de tracteurs du Nebraska — Rapports publiés",
+    "Service de vulgarisation de l’Université du Minnesota — Achat d’un tracteur d’occasion"
+  ],
+  "de": [
+    "OECD — Standardisierte Vorschriften für amtliche Traktorprüfungen",
+    "Universität Nebraska — Traktorprüflabor",
+    "Traktorprüflabor Nebraska — Veröffentlichte Prüfberichte",
+    "Beratungsdienst der Universität Minnesota — Gebrauchttraktorkauf"
+  ],
+  "ru": [
+    "ОЭСР — Стандартные кодексы официальных испытаний тракторов",
+    "Университет Небраски — Лаборатория испытаний тракторов",
+    "Лаборатория испытаний тракторов Небраски — Опубликованные отчёты",
+    "Служба сельскохозяйственного консультирования Университета Миннесоты — Покупка подержанного трактора"
+  ],
+  "ja": [
+    "OECD — トラクターの公的試験に関する標準コード",
+    "ネブラスカ大学 — トラクター試験研究所",
+    "ネブラスカ・トラクター試験研究所 — 公開試験報告書",
+    "ミネソタ大学の農業普及部門 — 中古トラクターの購入"
+  ],
+  "es": [
+    "OCDE — Códigos normalizados para ensayos oficiales de tractores",
+    "Universidad de Nebraska — Laboratorio de Ensayos de Tractores",
+    "Laboratorio de Ensayos de Tractores de Nebraska — Informes publicados",
+    "Servicio de extensión de la Universidad de Minnesota — Compra de un tractor usado"
+  ]
+};
+const sourceLabel=(index:number)=>sourceLabels[lang]?.[index]??(tr?sources[index].tr:sources[index].en);
 const baseCopy=tr ? {
   title:"Traktör seçerken nelere dikkat edilmeli? | TractorVS",
   meta:"Traktör seçimi için teknik rehber: motor ve PTO gücü, hidrolik debi, kaldırma, çekiş, güvenlik ve belgelenmiş testleri doğru karşılaştırın.",
@@ -188,7 +241,7 @@ const schema={
           <h2><span aria-hidden="true">{index+1}.</span> {section.title}</h2>
           {section.paragraphs.map(p=><p>{p}</p>)}
           <p class="guide-question">{section.question}</p>
-          <p class="guide-inline-sources">{copy.sourcePrefix}: {section.refs.map((idx)=><a href={sources[idx].url} lang={tr?"tr":"en"} target="_blank" rel="noopener noreferrer">{tr?sources[idx].tr:sources[idx].en}</a>)}</p>
+          <p class="guide-inline-sources">{copy.sourcePrefix}: {section.refs.map((idx)=><a href={sources[idx].url} hreflang="en" target="_blank" rel="noopener noreferrer">{sourceLabel(idx)} (EN)</a>)}</p>
         </li>)}
       </ol>
       <section class="guide-checklist" aria-labelledby="guide-checklist-heading">
@@ -203,7 +256,7 @@ const schema={
       <section class="guide-sources" aria-labelledby="guide-sources-heading">
         <h2 id="guide-sources-heading">{copy.sourceTitle}</h2>
         <p>{copy.sourceIntro}</p>
-        <ol>{sources.map(s=><li><a href={s.url} lang={tr?"tr":"en"} target="_blank" rel="noopener noreferrer">{tr?s.tr:s.en}</a></li>)}</ol>
+        <ol>{sources.map((s,idx)=><li><a href={s.url} hreflang="en" target="_blank" rel="noopener noreferrer">{sourceLabel(idx)} (EN)</a></li>)}</ol>
         <p><strong>{copy.limits}</strong></p>
       </section>
       <section class="guide-next" aria-labelledby="guide-next-heading">
