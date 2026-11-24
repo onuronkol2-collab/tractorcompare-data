@@ -96,7 +96,10 @@ for(const [lang,labels] of Object.entries(ui.labels)){
  assert.deepEqual(Object.keys(labels).sort(),[...uiKeys].sort());
  for(const [key,value] of Object.entries(labels)){
   assert.ok(typeof value==="string"&&value.trim().length>1&&value.length<=300,lang+" "+key);
-  if(scripts[lang])assert.ok(scripts[lang].test(value),lang+" script "+key);
+  // Japanese short UI labels can be entirely Kanji (e.g. 記事, 編集確認).
+  // Keep the stricter kana requirement for full article paragraphs above.
+  const uiScript=lang==="ja"?/[\p{Script=Han}\p{Script=Hiragana}\p{Script=Katakana}]/u:scripts[lang];
+  if(uiScript)assert.ok(uiScript.test(value),lang+" script "+key);
   uiLabels++;
  }
 }
