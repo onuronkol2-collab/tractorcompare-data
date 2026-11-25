@@ -1,0 +1,39 @@
+name: QA only - sitemap digest root cause
+on:
+  pull_request:
+    paths:
+      - ".github/workflows/qa-sitemap-digest-root-cause.yml"
+      - "scripts/qa-sitemap-digest-root-cause.mjs"
+permissions:
+  contents: read
+jobs:
+  compare:
+    if: github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/checkout@v4
+        with:
+          ref: c86bc0f39906d53e1e3805f724185fb1b3ace767
+          path: checkpoint
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22.23.4"
+      - name: Build checkpoint and current sources with public catalog
+        env:
+          SITE_URL: https://tractorvs.com
+          PUBLIC_INDEXING_ENABLED: "true"
+          WORKERS_CI_BRANCH: main
+          SUPABASE_URL: https://aaufxtcvnzgavtlintiv.supabase.co
+          SUPABASE_ANON_KEY: ${{ secrets.TRACTORVS_SUPABASE_ANON_JWT }}
+          MIN_PUBLIC_TRACTOR_PAGES: "100"
+        run: |
+          for root in checkpoint/site site; do
+            (cd "$root" && npm ci --no-audit --no-fund && npm run build:production) > "$RUNNER_TEMP/$(echo "$root" | tr / _)-build.log" 2>&1 || { tail -n 45 "$RUNNER_TEMP/$(echo "$root" | tr / _)-build.log"; exit 1; }
+          done
+      - name: Compare exact ledger hashes and classify rendered HTML differences
+        run: node scripts/qa-sitemap-digest-root-cause.mjs checkpoint/site/dist site/dist checkpoint/seo/sitemap-content-history.json
