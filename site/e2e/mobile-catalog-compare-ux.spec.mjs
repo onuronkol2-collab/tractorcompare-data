@@ -165,3 +165,21 @@ test("comparison combobox retains input focus and differing-data view is shareab
   await page.locator("#tc-all").click();
   await expect.poll(()=>new URL(page.url()).searchParams.get("view")).toBe(null);
 });
+
+test("home search suggestions keep DOM focus and leave the Tab sequence",async({page})=>{
+  await page.goto("/tr/",{waitUntil:"domcontentloaded"});
+  const input=page.locator("#home-model-query");
+  const payload=page.locator("#home-suggestions-data");
+  if(!(await payload.count()))test.skip(true,"No search fixture in inert build.");
+  const models=JSON.parse(await payload.textContent()||"[]");
+  test.skip(!models.length,"No published catalogue fixture in inert build.");
+  await input.fill(models[0].brand);
+  const options=page.locator("#home-search-results .home-search-option");
+  await expect(options.first()).toBeVisible();
+  await input.press("ArrowUp");
+  await expect(input).toHaveAttribute("aria-activedescendant",await options.last().getAttribute("id"));
+  await expect(input).toBeFocused();
+  await expect(options.first()).toHaveAttribute("tabindex","-1");
+  await input.press("Tab");
+  await expect(input).toHaveAttribute("aria-expanded","false");
+});

@@ -10,9 +10,3 @@ export function differentPublishedEntries(left, right) {
   return a.length !== b.length || a.some((entry, index) => entry !== b[index]);
 }
 
-// Keep focus on the editable combobox via aria-activedescendant.
-export function nextComparisonOption(active, count, direction) {
-  if (count < 1) return -1;
-  if (active < 0 || active >= count) return direction === 1 ? 0 : count - 1;
-  return (active + direction + count) % count;
-}
