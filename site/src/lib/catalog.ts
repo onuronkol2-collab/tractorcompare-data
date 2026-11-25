@@ -2452,6 +2452,9 @@ const reviewedLegacyDocuments = new Map([
   ["https://www.antoniocarraro.it/au/catalogue/Panther_22M", "web_page"],
   ["https://www.swarajtractors.com/products", "product_catalog"],
   ["https://www.yanmar.com/tr/agri/products/tractor/", "product_catalog"],
+  // Original manufacturer international technical table read 2026-11-25.
+  // The catalog source type is permitted for this exact document only.
+  ["https://ytocorp.com/5-5-2-90-110hp-tractor-nlx-nly-series.html", "official_product_catalog"],
 ]);
 
 // Distributor copy of STEYR edition 15S0019COMINB (11/2014); the original CDN location is retired.
@@ -2526,6 +2529,8 @@ const approvedManufacturerHosts: Record<string, string[]> = {
 // The original German F36 brochure is served from TYM's named Umbraco media
 // tenant. Only THIS reviewed exact PDF is permitted, never the shared CDN root.
 const approvedExactManufacturerDocuments: Record<string, string[]> = {
+  // YTO International original technical table; no whole-domain or other document approval.
+  "yto": ["https://ytocorp.com/5-5-2-90-110hp-tractor-nlx-nly-series.html"],
   "belarus": [
     "https://mtz.ru/novosti/13-rukovodstva/48-belarus-80-1-82-1-820-rukovodstvo-po-ekspluatatsii",
   ],
