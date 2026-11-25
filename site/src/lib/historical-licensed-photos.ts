@@ -850,8 +850,6 @@ const candidates=[
   {"brand":"TYM","model":"T3048","tractorId":"458be7b8-f6b8-4319-b264-dc6c7cc36ae7","fileId":"tym-t3048-f50chn-73-marcelx42-2025","path":"6/60/TYM_F50Chn_Agritechnica_2025_%28DSC04673%29.jpg","photographer":"MarcelX42","license":"CC BY-SA 4.0","width":5962,"height":4472},
   // 23 Nov 2026: existing T25/T115 front views are reused, not duplicated.
   // Two separately licensed rear angles, scoped only to the published International UUIDs.
-  {"brand":"TYM","model":"T2025P","tractorId":"622ddce0-f3a8-48ad-8ec6-45ca936dba6f","fileId":"tym-t2025p-t25-rear-marcelx42-2025","path":"d/d7/TYM_T25_Agritechnica_2025_%28DSC04675%29.jpg","photographer":"MarcelX42","license":"CC BY-SA 4.0","width":5944,"height":4458},
-  {"brand":"TYM","model":"T6115","tractorId":"80fd42a2-3059-40bb-a0e1-511ae6100213","fileId":"tym-t6115-t115-rear-marcelx42-2025","path":"c/ca/TYM_T115_Agritechnica_2025_%28DSC04663%29.jpg","photographer":"MarcelX42","license":"CC BY-SA 4.0","width":6224,"height":4149},
   {
     "brand": "Zetor",
     "model": "FORTERRA 140",
@@ -929,7 +927,6 @@ const candidates=[
   {"brand":"Versatile","model":"460","tractorId":"259a5389-2bf4-4a25-97a6-01fe6484843e","fileId":"versatile-460-marcelx42-2025","path":"e/ed/Versatile_460_Agritechnica_2025_%28DSC00494%29.jpg","photographer":"MarcelX42","license":"CC BY-SA 4.0","width":6224,"height":4672,"resizedDerivative":true},
   {"brand":"Versatile","model":"620DT","tractorId":"cbdfd364-e6a9-4323-ac6d-72010165d9a0","fileId":"versatile-620dt-marcelx42-2025","path":"f/f8/Versatile_620DT_Agritechnica_2025_%28DSC00990%29.jpg","photographer":"MarcelX42","license":"CC BY-SA 4.0","width":4880,"height":3253,"resizedDerivative":true},
   {"brand":"Lindner","model":"Lintrac 160 LDrive","tractorId":"7999a853-ec41-4c44-9f1d-2fa326713a81","fileId":"lindner-lintrac-160-ldrive-marcelx42-front","path":"5/59/Lindner_Lintrac_160_LDrive_Agritechnica_2025_%28DSC08766%29.jpg","photographer":"MarcelX42","license":"CC BY-SA 4.0","width":5959,"height":4469,"resizedDerivative":true},
-  {"brand":"Lindner","model":"Lintrac 160 LDrive","tractorId":"7999a853-ec41-4c44-9f1d-2fa326713a81","fileId":"lindner-lintrac-160-ldrive-marcelx42-rear","path":"4/49/Lindner_Lintrac_160_LDrive_Agritechnica_2025_%28DSC08778%29.jpg","photographer":"MarcelX42","license":"CC BY-SA 4.0","width":6143,"height":4611,"resizedDerivative":true},
   {"brand":"Lindner","model":"Lintrac 95 LS","tractorId":"092125c4-ef05-44ac-a2b3-9c653dda01f4","fileId":"lindner-lintrac-95-ls-alpin-marcelx42","path":"5/50/Lindner_Lintrac_95_LS_Alpin_Agritechnica_2023_%28DSC05164%29.jpg","photographer":"MarcelX42","license":"CC BY-SA 4.0","width":6680,"height":3759,"resizedDerivative":true},
   {"brand":"Solis","model":"S 26 HST","tractorId":"45b7ce31-c2d1-492d-a2eb-8b081fc89c7f","fileId":"solis-s26-hst-sebleouf-2019","path":"7/70/Sommet_de_l%27%C3%89levage_2019_-_Tracteur_Solis_26_HST.jpg","photographer":"Sebleouf","license":"CC BY-SA 4.0","width":4032,"height":3016,"resizedDerivative":true},
   {"brand":"Solis","model":"90 HVAC Stage V","tractorId":"8760f728-4121-4f22-85c5-dbf5c99ab64b","fileId":"solis-s90-shuttle-xl-cabin-marcelx42-2025","path":"9/90/Solis_S90_Shuttle_XL_Cabin_Agritechnica_2025_%28DSC04064%29.jpg","photographer":"MarcelX42","license":"CC BY-SA 4.0","width":5847,"height":4385,"resizedDerivative":true},

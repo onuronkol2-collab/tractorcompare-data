@@ -14,7 +14,7 @@ const tractor=(brand_name,model_name)=>({
   engine:null,transmission:null,drivetrain:null,weight_kg:null,specifications:[]
 });
 test("only exact matching tractor model identity receives a verified photo",()=>{
-  assert.equal(APPROVED_TRACTOR_PHOTOS.length,130);
+  assert.equal(APPROVED_TRACTOR_PHOTOS.length,127);
   assert.equal(tractorPhotos(tractor("Belarus","82.1")).length,4);
   assert.equal(tractorPhotos(tractor("Belarus","80.1")).length,1);
   assert.equal(tractorPhotos(tractor("Belarus","132N")).length,1);
@@ -615,7 +615,7 @@ test("McCormick X5.085 and TYM T6115/T2025P have exact licensed files, source pr
 });
 
 test("historic photo batch is staged with rights and does not create records",()=>{
-  assert.equal(HISTORICAL_LICENSED_PHOTOS.length,115);
+  assert.equal(HISTORICAL_LICENSED_PHOTOS.length,112);
   const all=new Set(HISTORICAL_LICENSED_PHOTOS.map(x=>x.fileId));
   assert.equal(all.size,HISTORICAL_LICENSED_PHOTOS.length,"All historical photo IDs must be unique");
   assert.ok(HISTORICAL_LICENSED_PHOTOS.every(x=>x.configurationExact===false));
@@ -1140,9 +1140,9 @@ test("Five reviewed JCB and Versatile model photos have exact UUID scopes, credi
 });
 
 
-test("Lindner three reviewed photos are UUID-scoped representative images with ten-language rights",()=>{
+test("Lindner two retained front or side photos are UUID-scoped representative images with ten-language rights",()=>{
  const entries=JSON.parse(readFileSync(new URL("../docs/photo-evidence-lindner-three-20261125.json",import.meta.url),"utf8"));
- assert.equal(entries.length,3);
+ assert.equal(entries.length,2);
  for(const e of entries){
  const exact={...tractor(e.brand,e.model),tractor_id:e.tractorId};const p=tractorPhotos(exact).find(x=>x.fileId===e.fileId);
  assert.ok(p,e.fileId);assert.equal(p.configurationExact,false);assert.equal(p.resizedDerivative,true);assert.equal(p.licenseName,e.license);assert.equal(p.photographer,e.photographer);assert.equal(decodeURIComponent(p.sourcePage),decodeURIComponent(e.sourcePage));
@@ -1159,7 +1159,7 @@ test("Lindner three reviewed photos are UUID-scoped representative images with t
  assert.ok(gallery.includes("href={photo.sourcePage}"));
  assert.ok(gallery.includes("href={photo.licenseUrl}"));
  }
- assert.equal(tractorPhotos({...tractor("Lindner","Lintrac 160 LDrive"),tractor_id:"7999a853-ec41-4c44-9f1d-2fa326713a81"}).length,2);
+ assert.equal(tractorPhotos({...tractor("Lindner","Lintrac 160 LDrive"),tractor_id:"7999a853-ec41-4c44-9f1d-2fa326713a81"}).length,1);
  assert.equal(tractorPhotos({...tractor("Lindner","Lintrac 95 LS"),tractor_id:"092125c4-ef05-44ac-a2b3-9c653dda01f4"}).length,1);
 });
 
@@ -1208,7 +1208,7 @@ test("Three salvaged Hattat and TAFE photos are UUID-scoped representative image
 test("Four front or side Başak and Bobcat photos are UUID-scoped representative images with ten-language rights",()=>{
  const entries=JSON.parse(readFileSync(new URL("../docs/photo-evidence-50-target-wave-one-six-20261125.json",import.meta.url),"utf8"));
  assert.equal(entries.length,4);assert.equal(new Set(entries.map(e=>e.tractorId)).size,4);
- for(const excluded of ["basak-2055-rear-mbone-2023","basak-3026-rear-marcelx42-2025"]){assert.ok(!APPROVED_TRACTOR_PHOTOS.some(p=>p.fileId===excluded));for(const width of [480,960,1920])assert.throws(()=>readFileSync(new URL("../public/images/tractors/"+excluded+"-"+width+".jpg",import.meta.url)),{code:"ENOENT"});}
+ for(const excluded of ["basak-2055-rear-mbone-2023","basak-3026-rear-marcelx42-2025","tym-t2025p-t25-rear-marcelx42-2025","tym-t6115-t115-rear-marcelx42-2025","lindner-lintrac-160-ldrive-marcelx42-rear"]){assert.ok(!APPROVED_TRACTOR_PHOTOS.some(p=>p.fileId===excluded));for(const width of [480,960,1920])assert.throws(()=>readFileSync(new URL("../public/images/tractors/"+excluded+"-"+width+".jpg",import.meta.url)),{code:"ENOENT"});}
  for(const e of entries){
  const exact={...tractor(e.brand,e.model),tractor_id:e.tractorId};const p=tractorPhotos(exact).find(x=>x.fileId===e.fileId);
  assert.ok(p,e.fileId);if(e.copyrightEvidence==="commons-own-work-self-license"){assert.equal(p.copyrightOwner,e.photographer);assert.equal(p.copyrightEvidence,e.copyrightEvidence);assert.equal(decodeURIComponent(p.copyrightClaimUrl),decodeURIComponent(e.sourcePage));}else{assert.equal(p.copyrightOwner,undefined);assert.equal(p.copyrightClaimUrl,undefined);assert.equal(p.copyrightEvidence,undefined);}assert.deepEqual(e.derivatives.map(d=>d.width),[480,960,1920]);if(e.originalFormat==='MPO'){assert.equal(e.originalFrameCount,2);assert.equal(e.selectedFrame,0);assert.match(e.changes,/primary frame/);}assert.equal(p.configurationExact,false);assert.equal(p.resizedDerivative,true);assert.equal(p.licenseName,e.license);assert.equal(p.photographer,e.photographer);assert.equal(decodeURIComponent(p.sourcePage),decodeURIComponent(e.sourcePage));
