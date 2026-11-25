@@ -1,8 +1,11 @@
 -- CANDIDATE: apply only after isolated SQL regression, review and site release plan.
 -- No author impersonation, JWT minting, public admin RPC or service-role grant.
 BEGIN;
+CREATE ROLE tc_forum_assisted_executor NOLOGIN NOINHERIT NOCREATEDB NOCREATEROLE NOREPLICATION NOBYPASSRLS;
+GRANT tc_forum_assisted_executor TO postgres WITH INHERIT FALSE, SET TRUE;
 CREATE SCHEMA tc_assisted_private;
 REVOKE ALL ON SCHEMA tc_assisted_private FROM PUBLIC, anon, authenticated, service_role;
+GRANT USAGE ON SCHEMA tc_assisted_private TO tc_forum_assisted_executor;
 CREATE TABLE public.tc_forum_assisted_grants (
   id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
   owner_id uuid NOT NULL DEFAULT auth.uid() REFERENCES auth.users(id) ON DELETE CASCADE,
@@ -69,18 +72,21 @@ BEGIN
  RETURN NEW;
 END $fn$;
 
--- Invoker only: never a public SECURITY DEFINER RPC. The existing SQL-admin
--- connector can call this narrow function, but a user must first consent.
+-- Private, explicitly granted SECURITY DEFINER entry point. The execution
+-- role cannot log in, cannot bypass RLS and receives no table permissions.
+-- Owner identity is derived exclusively from the live, owner-issued grant.
 CREATE FUNCTION tc_assisted_private.publish_topic(
  p_grant_id uuid, p_request_id uuid, p_locale text, p_category text,
  p_title text, p_body text, p_tractor_id uuid DEFAULT NULL
 ) RETURNS TABLE(topic_id uuid, slug text)
-LANGUAGE plpgsql SECURITY INVOKER SET search_path='' AS $fn$
+LANGUAGE plpgsql SECURITY DEFINER SET search_path='' AS $fn$
 DECLARE g public.tc_forum_assisted_grants%ROWTYPE; existing tc_assisted_private.publication_audit%ROWTYPE;
  new_id uuid:=gen_random_uuid(); clean_title text:=btrim(p_title);
  clean_body text:=btrim(p_body); marker text; digest bytea;
 BEGIN
- IF current_user<>'postgres' THEN RAISE EXCEPTION 'Publisher unavailable'; END IF;
+ IF current_user<>'postgres' OR session_user<>'postgres'
+ OR current_setting('role',true) IS DISTINCT FROM 'tc_forum_assisted_executor'
+ THEN RAISE EXCEPTION 'Publisher unavailable'; END IF;
  IF p_grant_id IS NULL OR p_request_id IS NULL OR p_locale IS NULL OR p_category IS NULL
  OR clean_title IS NULL OR clean_body IS NULL THEN RAISE EXCEPTION 'Invalid content'; END IF;
  marker:=CASE p_locale
@@ -125,5 +131,5 @@ BEGIN
  RETURN QUERY SELECT t.id,t.slug FROM public.tc_forum_topics t WHERE t.id=new_id;
 END $fn$;
 REVOKE ALL ON FUNCTION tc_assisted_private.publish_topic(uuid,uuid,text,text,text,text,uuid) FROM PUBLIC, anon, authenticated, service_role;
-GRANT EXECUTE ON FUNCTION tc_assisted_private.publish_topic(uuid,uuid,text,text,text,text,uuid) TO postgres;
+GRANT EXECUTE ON FUNCTION tc_assisted_private.publish_topic(uuid,uuid,text,text,text,text,uuid) TO tc_forum_assisted_executor;
 COMMIT;

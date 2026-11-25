@@ -1,7 +1,10 @@
 -- Revoke all delegated publication first. Preserve historical audit and topics.
 BEGIN;
-REVOKE EXECUTE ON FUNCTION tc_assisted_private.publish_topic(uuid,uuid,text,text,text,text,uuid) FROM postgres;
+REVOKE EXECUTE ON FUNCTION tc_assisted_private.publish_topic(uuid,uuid,text,text,text,text,uuid) FROM tc_forum_assisted_executor;
 DROP FUNCTION tc_assisted_private.publish_topic(uuid,uuid,text,text,text,text,uuid);
+REVOKE USAGE ON SCHEMA tc_assisted_private FROM tc_forum_assisted_executor;
+REVOKE tc_forum_assisted_executor FROM postgres;
+DROP ROLE tc_forum_assisted_executor;
 UPDATE public.tc_forum_assisted_grants SET revoked=true WHERE NOT revoked;
 REVOKE INSERT(owner_id) ON public.tc_forum_assisted_grants FROM authenticated;
 CREATE OR REPLACE FUNCTION public.tc_forum_rate_limit_insert()
