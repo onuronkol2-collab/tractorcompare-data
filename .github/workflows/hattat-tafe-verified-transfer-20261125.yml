@@ -1,0 +1,91 @@
+name: TractorVS Hattat TAFE reviewed derivative transfer (review only)
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - '.github/workflows/hattat-tafe-verified-transfer-20261125.yml'
+permissions:
+  contents: read
+  actions: read
+jobs:
+  prepare:
+    if: github.head_ref == 'photos/hattat-tafe-transfer-20261125' && github.event.pull_request.head.repo.full_name == github.repository
+    name: Prepare ${{ matrix.photo.id }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    strategy:
+      fail-fast: false
+      max-parallel: 3
+      matrix:
+        photo:
+          - id: hattat-b3105-matti-blume-2023
+            index: 1
+            sha256: '39e75e351c608eaaac23a37dd74045c2485307f7a8a866684502db25f13734b6'
+            width: 4608
+            height: 3456
+            format: JPEG
+          - id: hattat-b3105-marcelx42-2023
+            index: 2
+            sha256: '05d3307c6a28d42292cc389709636240805558e1369abca8d83f2352488a4ee5'
+            width: 7008
+            height: 3944
+            format: JPEG
+          - id: tafe-7515-cab-advanced-representative-marcelx42-2023
+            index: 3
+            sha256: '63dd78d2b4f045cb4befe370073bd53f74351805fa7a4160052e6ceb46dd2118'
+            width: 7008
+            height: 3944
+            format: JPEG
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: tractorvs-hattat-tafe-valtra-photo-review-20261125
+          run-id: 45640677693
+          github-token: ${{ github.token }}
+          path: recovered
+      - name: Prepare isolated image processing environment
+        run: |
+          python -m venv /tmp/tractorvs-photo-venv
+          /tmp/tractorvs-photo-venv/bin/pip install --disable-pip-version-check Pillow==12.0.0
+      - name: Verify known original and encode resized public CC BY-SA derivative
+        env:
+          PHOTO_ID: ${{ matrix.photo.id }}
+          INDEX: ${{ matrix.photo.index }}
+          SHA: ${{ matrix.photo.sha256 }}
+          WIDTH: ${{ matrix.photo.width }}
+          HEIGHT: ${{ matrix.photo.height }}
+          FORMAT: ${{ matrix.photo.format }}
+        run: |
+          /tmp/tractorvs-photo-venv/bin/python - <<'PY'
+          import pathlib, hashlib, base64, json, os
+          from PIL import Image, ImageOps
+          pid=os.environ['PHOTO_ID']; idx=int(os.environ['INDEX'])
+          report=json.loads(next(pathlib.Path('recovered').rglob('report.json')).read_text())
+          row=report['entries'][idx-1]; m=row['metadata']
+          assert m['extmetadata']['LicenseShortName']['value']=='CC BY-SA 4.0'
+          assert row['sha256']==os.environ['SHA']
+          files=list(pathlib.Path('recovered').rglob('candidate-'+str(idx)+'.jpg'))
+          assert len(files)==1
+          raw=files[0].read_bytes()
+          assert hashlib.sha256(raw).hexdigest()==os.environ['SHA']
+          assert hashlib.sha1(raw).hexdigest()==m['sha1']
+          im=Image.open(files[0]); assert im.format==os.environ['FORMAT']
+          assert im.size==(int(os.environ['WIDTH']),int(os.environ['HEIGHT']))
+          im.seek(0); im.load(); im=ImageOps.exif_transpose(im).convert('RGB')
+          for w in [480,960,1920]:
+              h=round(im.height*w/im.width)
+              assert w<=im.width
+              p=pathlib.Path(f'{pid}-{w}.jpg')
+              im.resize((w,h),Image.Resampling.LANCZOS).save(p,'JPEG',quality=84,optimize=True)
+              b=p.read_bytes()
+              with Image.open(p) as check: check.load(); assert check.format=='JPEG' and check.size==(w,h)
+              enc=base64.b64encode(b).decode()
+              chunks=[enc[i:i+12000] for i in range(0,len(enc),12000)]
+              print('PUBLIC_PHOTO_META '+json.dumps({'file':p.name,'width':w,'height':h,'sha256':hashlib.sha256(b).hexdigest(),'bytes':len(b),'chunks':len(chunks)}))
+              for i,c in enumerate(chunks): print(f'PUBLIC_PHOTO_CHUNK {p.name} {i} {c}')
+          PY
+      - uses: actions/upload-artifact@v7
+        with:
+          name: transfer-${{ matrix.photo.id }}
+          path: ${{ matrix.photo.id }}-*.jpg
+          retention-days: 7
