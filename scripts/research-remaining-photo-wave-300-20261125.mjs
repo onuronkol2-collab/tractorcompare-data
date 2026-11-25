@@ -14,11 +14,11 @@ const unique=[...new Map(prior.models.map(r=>[r.tractor_id,r])).values()];
 const missing=unique.filter(r=>!APPROVED_TRACTOR_PHOTOS.some(p=>photoMatchesTractor(p,{tractor_id:r.tractor_id,brand_name:r.brand,model_name:r.model})));
 const previous=JSON.parse(await readFile("previous-wave/report.json","utf8")); const second=JSON.parse(await readFile("second-wave/report.json","utf8")); const visited=new Set([...previous.selectedModels,...second.selectedModels].map(r=>r.tractor_id));
 const priorities=["Yanmar","Mahindra","Sonalika","Swaraj","TYM","McCormick","Kioti","Agrale","LS Tractor","Iseki","Solis"];
-const eligible=missing.filter(r=>!visited.has(r.tractor_id));
-const ordered=eligible.sort((a,b)=>(priorities.includes(a.brand)?priorities.indexOf(a.brand):priorities.length)-(priorities.includes(b.brand)?priorities.indexOf(b.brand):priorities.length)||a.model.localeCompare(b.model));
-const hasPrior=ordered.filter(r=>r.candidates?.length);
-const targets=[...new Map([...hasPrior,...ordered].map(r=>[r.tractor_id,r])).values()];
-const report={generatedAt:new Date().toISOString(),scope:"Archived public sitemap model identities checked against current registry; not full live catalogue",sourceArchive:14994831046,publicModelCount:unique.length,missingModelCount:missing.length,selectedModels:targets.map(({tractor_id,brand,model,variant})=>({tractor_id,brand,model,variant})),candidateCount:0,downloaded:0,publicationCount:0,allowedToPublish:false,errors:[],queries:[],entries:[]};
+// Recover every previously collected, unused archive photograph, prioritizing photo-less models.
+const missingIds=new Set(missing.map(r=>r.tractor_id));
+const targets=unique.filter(r=>r.candidates?.length).sort((a,b)=>Number(missingIds.has(b.tractor_id))-Number(missingIds.has(a.tractor_id))||a.brand.localeCompare(b.brand)||a.model.localeCompare(b.model));
+const hasPrior=targets;
+const report={generatedAt:new Date().toISOString(),scope:"Archived public sitemap model identities checked against current registry; not full live catalogue",sourceArchive:14994831046,mode:"recover unused archive originals; missing models first, other published models second",publicModelCount:unique.length,missingModelCount:missing.length,selectedModels:targets.map(({tractor_id,brand,model,variant})=>({tractor_id,brand,model,variant})),candidateCount:0,downloaded:0,publicationCount:0,allowedToPublish:false,errors:[],queries:[],entries:[]};
 const sleep=ms=>new Promise(r=>setTimeout(r,ms));
 const deadline=Date.now()+12*60*1000;
 const withinBudget=()=>Date.now()<deadline;
@@ -39,6 +39,8 @@ const match=(r,t)=>matchesPhotoFileModel(r.brand,r.model,t)||matchesManufacturer
 // Existing known rejected files are never silently rediscovered.
 const held=new Set(["File:IRUM Tagro 102 Agritechnica 2019 - Front and right side.jpg","File:Solis 50.jpg","File:Tractors in Afghanistan.jpg","File:Eko-Las - Valtra N155 - 05.09.2025 13-24-29.jpg","File:Same Dorado 90.4 mit Agrar Swissline 7000.jpg","File:Sonalika Baagban DI-30Rx Tractor Left Front Coorg Feb24 A7C 09555.jpg"].map(normalizeTitle));
 for(const row of [...(previous.entries||[]),...(second.entries||[])])held.add(normalizeTitle(row.title));
+// Preserve user-rejected and retired rear views, and already staged files from the earlier wave.
+for(const title of ["File:Lindner Lintrac 160 LDrive Agritechnica 2025 (DSC08778).jpg","File:TYM T25 Agritechnica 2025 (DSC04675).jpg","File:TYM T115 Agritechnica 2025 (DSC04663).jpg"])held.add(normalizeTitle(title));
 for(const row of targets)for(const c of row.candidates||[])if(!held.has(normalizeTitle(c.fileTitle)))add(c.fileTitle,[row],"archive");
 let paused=false;
 async function query(params){
@@ -49,56 +51,11 @@ async function query(params){
  try{return await fetchCommonsJson(u,{maxAttempts:1});}
  catch(e){report.errors.push({stage:"query",error:String(e)});if(e instanceof CommonsCooldownError)paused=true;return null}
 }
-// Exact model category lookup in batches; no retry of prior busy CirrusSearch.
-const categories=new Map();
-for(const row of targets){
- for(const model of new Set([row.model,manufacturerPhotoAlias(row.brand,row.model)].filter(Boolean))){
-  const title="Category:"+row.brand+" "+model;
-  if(!categories.has(title))categories.set(title,[]);
-  categories.get(title).push(row);
- }
-}
-const keys=[...categories.keys()];
-const found=[];
-for(let i=0;i<keys.length&&!paused&&withinBudget();i+=40){
- const titles=keys.slice(i,i+40);
- const data=await query({titles:titles.join("|"),prop:"categoryinfo"});
- report.queries.push({kind:"category lookup",titles,completed:Boolean(data)});
- for(const page of data?.query?.pages||[]){
-  if(page.missing||!page.categoryinfo?.files||!categories.has(page.title))continue;
-  found.push(page.title);
- }
-}
-for(const cat of found){
- if(paused||!withinBudget())break;
- const data=await query({list:"categorymembers",cmtitle:cat,cmtype:"file",cmlimit:100});
- const members=data?.query?.categorymembers||[];
- report.queries.push({kind:"category members",category:cat,returned:members.length,completed:Boolean(data)});
- for(const m of members)if(!held.has(normalizeTitle(m.title)))add(m.title,categories.get(cat),"exact model category; visual review required");
-}
-// Exact category names are sparse; scan brand-wide filename search results against
-// every remaining model of that brand, keeping the original exact identity gate.
-// This is candidate discovery only: visual model/angle review remains required.
-const byBrand=new Map();
-for(const row of targets){if(!byBrand.has(row.brand))byBrand.set(row.brand,[]);byBrand.get(row.brand).push(row);}
-const brandGroups=[...byBrand.entries()].sort((a,b)=>b[1].length-a[1].length||a[0].localeCompare(b[0]));
-const discoveryDeadline=Date.now()+Math.min(4*60*1000,Math.max(0,deadline-Date.now()-4*60*1000));
-for(const [brand,rows] of brandGroups){
- if(paused||!withinBudget()||Date.now()>=discoveryDeadline)break;
- const safeBrand=brand.replace(/["\\]/g," ");
- const term=brand==="LS Tractor"?"LS tractor":safeBrand;
- const data=await query({list:"search",srnamespace:6,srlimit:100,srsearch:'intitle:"'+term+'" filetype:bitmap'});
- const results=data?.query?.search||[];
- report.queries.push({kind:"brand-wide filename search",brand,returned:results.length,completed:Boolean(data)});
- for(const item of results){
-  if(held.has(normalizeTitle(item.title)))continue;
-  const matches=rows.filter(r=>match(r,item.title));
-  if(matches.length)add(item.title,matches,"brand-wide filename search; visual review required");
- }
-}
+// Two discovery waves returned zero new leads. Do not repeat those searches.
 await writeFile(root+"/report.json",JSON.stringify(report,null,2));
 const sorted=[...leads.values()].filter(x=>!held.has(normalizeTitle(x.title))).sort((a,b)=>Number(b.kinds.includes("archive"))-Number(a.kinds.includes("archive"))||a.targets.length-b.targets.length||a.title.localeCompare(b.title));
 const selected=[],counts=new Map();
+sorted.sort((a,b)=>Number(b.targets.some(t=>missingIds.has(t.tractor_id)))-Number(a.targets.some(t=>missingIds.has(t.tractor_id))));
 // Give distinct missing UUIDs first choice, then retain the other unique leads.
 for(const lead of sorted){if(lead.targets.some(r=>!counts.has(r.tractor_id))){selected.push(lead);for(const r of lead.targets)counts.set(r.tractor_id,1);}}
 for(const lead of sorted)if(!selected.includes(lead))selected.push(lead);
