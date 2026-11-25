@@ -24,6 +24,12 @@ on:
       - "supabase/verification/verify_tractorvs_public_catalog_view.sql"
       - ".github/workflows/site-build.yml"
 
+# Superseded PR revisions must not occupy runners needed by the current batch.
+# Keep push, scheduled and manually dispatched checks independent.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.run_id }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
 permissions:
   contents: read
 
