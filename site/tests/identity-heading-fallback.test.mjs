@@ -4,8 +4,8 @@ import {reviewedIdentityFallback,reviewedIdentityFallbackHeadings} from "../src/
 import {specLabel} from "../src/lib/catalog.ts";
 const locales=["tr","zh","hi","pt-br","fr","de","ru","ja","es"];
 test("every reviewed stable-ID English display heading has a native fallback in all nine target languages",()=>{
- assert.equal(reviewedIdentityFallbackHeadings.length,190);
- assert.equal(new Set(reviewedIdentityFallbackHeadings).size,190);
+ assert.equal(reviewedIdentityFallbackHeadings.length,232);
+ assert.equal(new Set(reviewedIdentityFallbackHeadings).size,232);
  for(const heading of reviewedIdentityFallbackHeadings){
   for(const lang of locales){
    assert.notEqual(reviewedIdentityFallback(heading,heading,lang),heading,lang+" "+heading);
@@ -53,4 +53,15 @@ test("third batch preserves distinct limits, speed conditions, units and axle/PT
   for(const [label,pattern] of [["Width Max Mm",/mm|мм/],["Width Min Mm",/mm|мм/],["Maximum Total Weight At 40 Km/H",/40/],["Maximum Total Weight At 50 Km/H",/50/],["PTO Horsepower",/HP/],["AdBlue/DEF Tank Capacity",/AdBlue\/DEF/],["2WD Front Axle Configuration",/2WD|2RM|两轮/]])assert.match(translated(label),pattern,lang+" "+label);
   for(const [a,b] of [["Width Max Mm","Width Min Mm"],["Maximum Total Weight At 40 Km/H","Maximum Total Weight At 50 Km/H"],["Front PTO Speed","Rear PTO Shaft"],["Length With Front Linkage Lowered","Length With Front Linkage In Transport Position"]])assert.notEqual(translated(a),translated(b),lang);
  }
+});
+
+
+test("fourth reviewed batch preserves power ratings, front/rear PTO and hydraulic pump distinctions",()=>{
+ for(const lang of locales){
+  const t=label=>reviewedIdentityFallback(label,label,lang);
+  for(const [label,pattern] of [["Engine Rated Power Kw",/kW|кВт/],["Gross Engine Power (KW)",/kW|кВт/],["Urea/AdBlue Tank Capacity",/AdBlue/],["Mid Pto Speed Rpm",/rpm|dev\/dk|tr\/min|U\/min|об\/мин/]])assert.match(t(label),pattern,lang+" "+label);
+  for(const [a,b] of [["Engine Rated Power Kw","Gross Engine Power (KW)"],["Optional Front PTO Speed","Rear PTO System"],["Implement Pump Flow","Steering Pump Flow"],["Maximum Hydraulic Pump Flow","Main Hydraulic Pump Pressure"],["Three Point Hitch Category","Three Point Hitch"],["Service Brakes","Main Brake"],["Standard Front Ballast","Length Without Front Weight"]])assert.notEqual(t(a),t(b),lang);
+ }
+ for(const label of ["Pump Capacity","Intercooler","Engine Max Power Hp 2000 25 Ec","Liftomatic"])assert.equal(reviewedIdentityFallback(label,label,"tr"),label);
+ assert.equal(reviewedIdentityFallback("Battery Capacity","Battery capacity already localized","tr"),"Battery capacity already localized");
 });
