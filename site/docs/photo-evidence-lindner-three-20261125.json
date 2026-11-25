@@ -1,0 +1,146 @@
+[
+  {
+    "brand": "Lindner",
+    "model": "Lintrac 160 LDrive",
+    "tractorId": "7999a853-ec41-4c44-9f1d-2fa326713a81",
+    "fileId": "lindner-lintrac-160-ldrive-marcelx42-front",
+    "path": "5/59/Lindner_Lintrac_160_LDrive_Agritechnica_2025_%28DSC08766%29.jpg",
+    "width": 5959,
+    "height": 4469,
+    "photographer": "MarcelX42",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "sourcePage": "https://commons.wikimedia.org/wiki/File:Lindner_Lintrac_160_LDrive_Agritechnica_2025_%28DSC08766%29.jpg",
+    "originalUrl": "https://upload.wikimedia.org/wikipedia/commons/5/59/Lindner_Lintrac_160_LDrive_Agritechnica_2025_%28DSC08766%29.jpg",
+    "originalSha1": "4fad35e11874fa6873d045262e54e3b84d7af111",
+    "originalSha256": "53d59c4132185f5f1f689063a9d0bdb1075d2e3a6817bccc562673c9ab43eda9",
+    "originalBytes": 13950176,
+    "sourceArtifact": 14990756066,
+    "transferRun": 45544841127,
+    "transferJob": 138971851260,
+    "modelEvidence": "Front view, Commons caption identifies 160 LDrive at Agritechnica 2025; rear photograph from same event shows LINTRAC 160 badge. Representative.",
+    "modelSources": [],
+    "scope": "Model illustration only; exact equipment and model year not verified.",
+    "changes": "Proportional resize and JPEG compression; CC BY-SA 4.0 retained.",
+    "derivatives": [
+      {
+        "file": "lindner-lintrac-160-ldrive-marcelx42-front-480.jpg",
+        "width": 480,
+        "height": 360,
+        "sha256": "9bf349aa1258939efceec08d869cac55d11b07eaf4c126a655dfe5906c5f18e7",
+        "bytes": 49446
+      },
+      {
+        "file": "lindner-lintrac-160-ldrive-marcelx42-front-960.jpg",
+        "width": 960,
+        "height": 720,
+        "sha256": "ffe171509539198b39d0ef5a182831a54b242ce5383f252c0fead08394423892",
+        "bytes": 154707
+      },
+      {
+        "file": "lindner-lintrac-160-ldrive-marcelx42-front-1920.jpg",
+        "width": 1920,
+        "height": 1440,
+        "sha256": "5ceffde4c57c268020bde257a20a8ebf4dd00586378b99ba42b58e6e42e7fb1c",
+        "bytes": 487246
+      }
+    ]
+  },
+  {
+    "brand": "Lindner",
+    "model": "Lintrac 160 LDrive",
+    "tractorId": "7999a853-ec41-4c44-9f1d-2fa326713a81",
+    "fileId": "lindner-lintrac-160-ldrive-marcelx42-rear",
+    "path": "4/49/Lindner_Lintrac_160_LDrive_Agritechnica_2025_%28DSC08778%29.jpg",
+    "width": 6143,
+    "height": 4611,
+    "photographer": "MarcelX42",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "sourcePage": "https://commons.wikimedia.org/wiki/File:Lindner_Lintrac_160_LDrive_Agritechnica_2025_%28DSC08778%29.jpg",
+    "originalUrl": "https://upload.wikimedia.org/wikipedia/commons/4/49/Lindner_Lintrac_160_LDrive_Agritechnica_2025_%28DSC08778%29.jpg",
+    "originalSha1": "0f95cc220cc4cd5f6ba8add02fa6278887893e8c",
+    "originalSha256": "50ea2b67d7b578de15e9f5973bd9caacd2bd43f4c4bbc706a56ba991ebd01ca8",
+    "originalBytes": 16212553,
+    "sourceArtifact": 14990756066,
+    "transferRun": 45544841127,
+    "transferJob": 138971851496,
+    "modelEvidence": "Rear view with readable LINTRAC 160 badge; exact model identified in original caption. Representative.",
+    "modelSources": [],
+    "scope": "Model illustration only; exact equipment and model year not verified.",
+    "changes": "Proportional resize and JPEG compression; CC BY-SA 4.0 retained.",
+    "derivatives": [
+      {
+        "file": "lindner-lintrac-160-ldrive-marcelx42-rear-480.jpg",
+        "width": 480,
+        "height": 360,
+        "sha256": "cce4eb67f86591f7b1eb4bbd61ab6487cf921986b6b3d6ef0dda78816d0be2a8",
+        "bytes": 52967
+      },
+      {
+        "file": "lindner-lintrac-160-ldrive-marcelx42-rear-960.jpg",
+        "width": 960,
+        "height": 721,
+        "sha256": "4086eadab895270737f47bd69bdd86b6c708dc484de3e584c43fac21114d7d3a",
+        "bytes": 164759
+      },
+      {
+        "file": "lindner-lintrac-160-ldrive-marcelx42-rear-1920.jpg",
+        "width": 1920,
+        "height": 1441,
+        "sha256": "6dd26d18f794953639be15930da5e0569c49c3a768f6b47ecb3d7a7bfc2c5ee6",
+        "bytes": 505605
+      }
+    ]
+  },
+  {
+    "brand": "Lindner",
+    "model": "Lintrac 95 LS",
+    "tractorId": "092125c4-ef05-44ac-a2b3-9c653dda01f4",
+    "fileId": "lindner-lintrac-95-ls-alpin-marcelx42",
+    "path": "5/50/Lindner_Lintrac_95_LS_Alpin_Agritechnica_2023_%28DSC05164%29.jpg",
+    "width": 6680,
+    "height": 3759,
+    "photographer": "MarcelX42",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "sourcePage": "https://commons.wikimedia.org/wiki/File:Lindner_Lintrac_95_LS_Alpin_Agritechnica_2023_%28DSC05164%29.jpg",
+    "originalUrl": "https://upload.wikimedia.org/wikipedia/commons/5/50/Lindner_Lintrac_95_LS_Alpin_Agritechnica_2023_%28DSC05164%29.jpg",
+    "originalSha1": "0b5a6644e343dc3beb6f0a9c6bc0d5458bc9aa51",
+    "originalSha256": "24a69a0e17585bb1cbf6dfd07b49a2c7d2662c8e07bf6824dab8d9c2b7bae06b",
+    "originalBytes": 12642969,
+    "sourceArtifact": 14990756066,
+    "transferRun": 45544841127,
+    "transferJob": 138971851547,
+    "modelEvidence": "Original caption identifies Lintrac 95 LS Alpin. Manufacturer identifies Alpin as equipment variant of 95 LS, not exact catalogue configuration. Representative only.",
+    "modelSources": [
+      "https://www.lindner-traktoren.at/de-at/traktoren-transporter/lintrac/lintrac-95-ls-alpin",
+      "https://www.lindner-traktoren.at/de-at/gebrauchtmaschinen/lintrac-95-ls-p885"
+    ],
+    "scope": "Model illustration only; exact equipment and model year not verified.",
+    "changes": "Proportional resize and JPEG compression; CC BY-SA 4.0 retained.",
+    "derivatives": [
+      {
+        "file": "lindner-lintrac-95-ls-alpin-marcelx42-480.jpg",
+        "width": 480,
+        "height": 270,
+        "sha256": "5a29202b38931bc5eaac8c42efa9b9c608bcb07c24a79adeec9be78836a4a527",
+        "bytes": 33647
+      },
+      {
+        "file": "lindner-lintrac-95-ls-alpin-marcelx42-960.jpg",
+        "width": 960,
+        "height": 540,
+        "sha256": "ee5a7fd2b323511c448aa735bf1782a2e33474b4b312bd465c4da60bf25ebf01",
+        "bytes": 108554
+      },
+      {
+        "file": "lindner-lintrac-95-ls-alpin-marcelx42-1920.jpg",
+        "width": 1920,
+        "height": 1080,
+        "sha256": "5459a8344f207e58de305a3b23eacba3f31ae4b6a1759816702a1341eb589624",
+        "bytes": 341721
+      }
+    ]
+  }
+]
