@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import {compareLiveDates,inspectLiveDates} from "../scripts/live-lastmod-proof.mjs";
+import {compareLiveDates,inspectLiveDates,proveDeployedDates,readRevisionDateMap} from "../scripts/live-lastmod-proof.mjs";
 const origin="https://tractorvs.com",sha="a".repeat(40),date="2026-11-25T12:00:00.000Z";
 const locales=["en","tr","zh","hi","pt-br","fr","de","ru","ja","es"];
 const paths=locales.flatMap(l=>{const p=l==="en"?"":"/"+l;return [p+"/tractors/",p+"/tractors/test-abcd1234/"];});
@@ -25,4 +25,27 @@ test("read-only release proof does not grade stale or changing deployment",async
  const good=await inspectLiveDates({target:sha,dateMap,fetchFn:mock()});assert.equal(good.status,"verified");assert.equal(good.verifiedPages,20);
  homes=0;const stale=await inspectLiveDates({target:sha,dateMap,fetchFn:mock({stale:true})});assert.equal(stale.status,"deployment_pending");assert.equal(stale.verifiedPages,0);assert.equal(homes,1);
  homes=0;const change=await inspectLiveDates({target:sha,dateMap,fetchFn:mock({changing:true})});assert.equal(change.status,"deployment_changed");assert.equal(change.verifiedPages,0);
+});
+
+test("production proof waits for deployment; compares verified descendant with its own ledger",async()=>{
+ const next="b".repeat(40),children=makeChildren();
+ let homeCalls=0,readCalls=0;
+ const mock=async(url)=>{
+  if(new URL(url).pathname==="/"){homeCalls++;return new Response('<meta name="tractorvs-release-sha" content="'+(homeCalls===1?"c".repeat(40):next)+'">',{headers:{"Content-Type":"text/html"}});}
+  return new Response(url.endsWith("sitemap-index.xml")?indexXml:children.get(url),{headers:{"Content-Type":"application/xml"}});
+ };
+ const proof=await proveDeployedDates({target:sha,dateMap:{version:1,dates:{}},fetchFn:mock,acceptDescendant:async(a,b)=>a===sha&&b===next,readMap:async(s)=>{readCalls++;assert.equal(s,next);return dateMap;},attempts:2,pause:async()=>{}});
+ assert.equal(proof.status,"verified");assert.equal(proof.requestedTarget,sha);assert.equal(proof.observed,next);assert.equal(readCalls,1);
+});
+test("unverified descendant cannot trigger ledger or sitemap reads",async()=>{
+ let calls=0;
+ const proof=await proveDeployedDates({target:sha,dateMap,attempts:2,pause:async()=>{},fetchFn:async(url)=>{calls++;assert.equal(url,origin+"/");return new Response('<meta name="tractorvs-release-sha" content="'+"b".repeat(40)+'">',{headers:{"Content-Type":"text/html"}});},readMap:async()=>{throw Error("unexpected ledger read");}});
+ assert.equal(proof.status,"deployment_pending");assert.equal(proof.verifiedPages,0);assert.equal(calls,2);
+});
+test("exact ledger reads are limited to the immutable reviewed repository path",async()=>{
+ const result=await readRevisionDateMap(sha,{token:"test",fetchFn:async(url,opts)=>{
+  assert.equal(url,"https://api.github.com/repos/onuronkol2-collab/tractorcompare-data/contents/site/src/data/sitemap-lastmod.json?ref="+sha);
+  assert.equal(opts.redirect,"error");return Response.json(dateMap);
+ }});assert.deepEqual(result,dateMap);
+ await assert.rejects(readRevisionDateMap("main"),/Invalid ledger revision/);
 });
