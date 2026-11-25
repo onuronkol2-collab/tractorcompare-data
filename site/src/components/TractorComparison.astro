@@ -87,6 +87,7 @@ const labelsPayload = JSON.stringify({
   shared: cx(lang,"shared"),
   summary: cx(lang,"summary"),
   noShared: cx(lang,"noShared"),
+  noDifferent: cx(lang,"noDifferent"),
   specs: t(lang,"specifications"),
 }).replace(/</g, "\\u003c");
 ---
@@ -200,8 +201,10 @@ const labelsPayload = JSON.stringify({
           <div class="tc-filters" role="group" aria-label={cx(lang,"tableIntro")}>
             <button type="button" id="tc-all" aria-pressed={String(!initiallySharedOnly)}>{cx(lang,"all")}</button>
             <button type="button" id="tc-shared" aria-pressed={String(initiallySharedOnly)}>{cx(lang,"shared")}</button>
+            <button type="button" id="tc-different" aria-pressed="false" hidden>{cx(lang,"different")}</button>
           </div>
         </div>
+        <p id="tc-different-note" class="tc-note" hidden>{cx(lang,"differentNote")}</p>
         <p id="tc-no-shared" class="tc-no-shared" role="status" hidden>{cx(lang,"noShared")}</p>
         <p class="tc-note">{t(lang,"comparisonCaveat")}</p>
         <aside id="tc-data-warning" class="tc-data-warning" role="note" hidden={initialNotices.length === 0}>
@@ -248,6 +251,8 @@ const labelsPayload = JSON.stringify({
 
 <script>
   import { normalizeTractorQuery } from "../lib/search";
+  import { differentPublishedEntries } from "../lib/compare-display.mjs";
+  import { nextComboboxOption } from "../lib/combobox-navigation.mjs";
   import { requiresConditionCaution, requiresTransmissionCaution } from "../lib/compare-conditions";
   type Spec = { key:string; label:string; value:string; unit:string|null; context:string|null; rpm:number|null; source:string|null; independent:boolean; notice:string|null };
   type Model = { id:string; title:string;
@@ -273,7 +278,7 @@ const labelsPayload = JSON.stringify({
     const l10n=JSON.parse(document.querySelector("#tc-i18n")?.textContent||"{}") as {
       missing:string;source:string;independent:string;loadError:string;loading:string;context:string;conditionCaution:string;transmissionCaution:string;search:string;noResults:string;
       results:string;selected:string;exploreModel:string;shared:string;
-      summary:string;noShared:string;specs:string;
+      summary:string;noShared:string;noDifferent:string;specs:string;
     };
     const modelIndex = new Map(models.map(model => [model.id, model]));
     const byId = (id:string) => modelIndex.get(id);
@@ -292,6 +297,7 @@ const labelsPayload = JSON.stringify({
     if(params.get("left")&&byId(params.get("left")!))leftSelect.value=params.get("left")!;
     if(params.get("right")&&byId(params.get("right")!))rightSelect.value=params.get("right")!;
     let commonOnly=params.get("view")==="shared";
+    let differentOnly=params.get("view")==="different";
     let changedSide:"left"|"right"="left";
 
     function addText(parent:Element,tag:string,text:string,css?:string){
@@ -424,7 +430,10 @@ const labelsPayload = JSON.stringify({
       const label=(key:string)=>find(left,key)[0]?.label||find(right,key)[0]?.label||key;
       keys.sort((a,b)=>label(a).localeCompare(label(b),lang));
       const shared=keys.filter(key=>find(left,key).length>0&&find(right,key).length>0);
-      const visible=commonOnly?shared:keys;
+      const different=shared.filter(key=>differentPublishedEntries(find(left,key),find(right,key))
+        || requiresConditionCaution(key,find(left,key),find(right,key))
+        || requiresTransmissionCaution(key,find(left,key),find(right,key)));
+      const visible=differentOnly?different:commonOnly?shared:keys;
       const fragment=document.createDocumentFragment();
       for(const key of visible){
         const row=document.createElement("tr");row.setAttribute("role","row");
@@ -449,7 +458,10 @@ const labelsPayload = JSON.stringify({
       const summary=document.querySelector<HTMLElement>("#tc-summary");
       if(summary)summary.textContent=shared.length+" "+l10n.summary+" · "+keys.length+" "+l10n.specs;
       const empty=document.querySelector<HTMLElement>("#tc-no-shared");
-      if(empty)empty.hidden=!(commonOnly&&!shared.length);
+      if(empty){
+        empty.hidden=!((commonOnly&&!shared.length)||(differentOnly&&!different.length));
+        empty.textContent=differentOnly?l10n.noDifferent:l10n.noShared;
+      }
       const notes=[...new Set([...left.specs,...right.specs].map(spec=>spec.notice)
         .filter((v):v is string=>Boolean(v)))];
       const warnings=document.querySelector<HTMLElement>("#tc-data-warning");
@@ -460,7 +472,8 @@ const labelsPayload = JSON.stringify({
       }
       const url=new URL(window.location.href);
       url.searchParams.set("left",left.id);url.searchParams.set("right",right.id);
-      if(commonOnly)url.searchParams.set("view","shared");
+      if(differentOnly)url.searchParams.set("view","different");
+      else if(commonOnly)url.searchParams.set("view","shared");
       else url.searchParams.delete("view");
       window.history.replaceState(null,"",url.pathname+url.search);
       // Let shared navigation refresh locale destinations after each selection.
@@ -499,7 +512,9 @@ const labelsPayload = JSON.stringify({
         if(!results.length)addText(popup,"p",l10n.noResults,"tc-no-options");
         for(const [i,{model}] of results.entries()){
           const button=document.createElement("button");
-          button.type="button";button.role="option";button.id="tc-"+side+"-option-"+i;
+          button.type="button";button.role="option";button.tabIndex=-1;button.id="tc-"+side+"-option-"+i;
+          // Mouse selection must not move DOM focus out of the combobox.
+          button.addEventListener("mousedown",event=>event.preventDefault());
           button.className="tc-result";button.setAttribute("aria-selected","false");
           const main=document.createElement("span");main.className="tc-result-main";
           addText(main,"strong",model.title);
@@ -516,12 +531,13 @@ const labelsPayload = JSON.stringify({
       input.addEventListener("focus",()=>{input.select();paint("");});
       input.addEventListener("input",()=>paint(input.value));
       input.addEventListener("keydown",event=>{
+        if(event.isComposing||event.keyCode===229)return;
+        if(event.key==="Tab"){if(!popup.hidden)close();return;}
         if(event.key==="Escape"){if(!popup.hidden){event.preventDefault();close();}return;}
         if(event.key==="ArrowDown"||event.key==="ArrowUp"){
           if(popup.hidden)paint("");
           const buttons=options();if(!buttons.length)return;
-          event.preventDefault();setActive(event.key==="ArrowDown"
-            ?(active+1)%buttons.length:(active-1+buttons.length)%buttons.length);
+          event.preventDefault();setActive(nextComboboxOption(active,buttons.length,event.key==="ArrowDown"?1:-1));
         }else if(event.key==="Enter"&&!popup.hidden){
           const btn=options()[active<0?0:active];if(btn){event.preventDefault();btn.click();}
         }
@@ -547,16 +563,25 @@ const labelsPayload = JSON.stringify({
     const shared=document.querySelector<HTMLButtonElement>("#tc-shared");
     // Static HTML cannot know visitor query parameters at build time. Hydrate
     // the accessible pressed state from the actual view=shared deep link.
-    all?.setAttribute("aria-pressed",String(!commonOnly));
-    shared?.setAttribute("aria-pressed",String(commonOnly));
-    function setFilter(sharedOnly:boolean){
-      commonOnly=sharedOnly;
-      all?.setAttribute("aria-pressed",String(!sharedOnly));
-      shared?.setAttribute("aria-pressed",String(sharedOnly));
+    const differentButton=document.querySelector<HTMLButtonElement>("#tc-different");
+    const differentNote=document.querySelector<HTMLElement>("#tc-different-note");
+    if(differentButton)differentButton.hidden=false;
+    function syncFilterControls(){
+      all?.setAttribute("aria-pressed",String(!commonOnly&&!differentOnly));
+      shared?.setAttribute("aria-pressed",String(commonOnly));
+      differentButton?.setAttribute("aria-pressed",String(differentOnly));
+      if(differentNote)differentNote.hidden=!differentOnly;
+    }
+    syncFilterControls();
+    function setFilter(view:"all"|"shared"|"different"){
+      commonOnly=view==="shared";
+      differentOnly=view==="different";
+      syncFilterControls();
       render();
     }
-    all?.addEventListener("click",()=>setFilter(false));
-    shared?.addEventListener("click",()=>setFilter(true));
+    all?.addEventListener("click",()=>setFilter("all"));
+    shared?.addEventListener("click",()=>setFilter("shared"));
+    differentButton?.addEventListener("click",()=>setFilter("different"));
     render();
   }
 
