@@ -143,7 +143,7 @@ const schema=eligible?{
       <ForumMediaGallery lang={lang} photos={replyMedia(reply.id)} contentLanguage={LOCALE_TAGS[reply.original_locale]}/>
       <div class="forum-helpful" data-helpful-reply data-reply-id={reply.id}>
        <button type="button" data-helpful-toggle aria-pressed="false">{mt(lang,"helpfulButton")}</button>
-       <span data-helpful-count aria-live="polite">0</span>
+       <span data-helpful-count aria-live="polite">—</span>
       </div>
       {reply.machine_translated&&<details class="reply-original">
        <summary>{ft(lang,"readOriginal")} · <bdi lang={LOCALE_TAGS[original.locale]}>{LOCALE_NAMES[original.locale]}</bdi></summary>
@@ -342,6 +342,10 @@ if(community){
  const buttons=[...document.querySelectorAll<HTMLElement>("[data-helpful-reply]")]
   .filter(el=>uuid.test(el.dataset.replyId||""));
  let ownId="",isBookmarked=false,isFollowing=false,isLiked=false;
+ let sessionVersion=0,countVersion=0,verifiedToken="";
+ const currentSession=(version:number,token:string)=>version===sessionVersion&&token===getToken();
+ const activeOwner=()=>({version:sessionVersion,token:verifiedToken,owner:ownId});
+ const isActive=(snapshot:ReturnType<typeof activeOwner>)=>!!snapshot.owner&&snapshot.owner===ownId&&currentSession(snapshot.version,snapshot.token);
  const voted=new Set<string>();
  const say=(s:string)=>{if(status)status.textContent=s};
  function showLiked(){
@@ -374,15 +378,18 @@ if(community){
   const text=await response.text();return text?JSON.parse(text):null;
  };
  async function counts(){
+  const version=++countVersion;
   if(cfg&&uuid.test(topicId)){
    try{
     const totals=await api("/rest/v1/tc_forum_topic_engagement_totals?"+
      new URLSearchParams({select:"likes,member_reads",topic_id:"eq."+topicId,limit:"1"})) as
      {likes:number;member_reads:number}[];
+    if(version!==countVersion)return;
     const total=totals?.[0];
     if(likeCount)likeCount.textContent=String(typeof total?.likes==="number"?total.likes:0);
     if(readCount)readCount.textContent=String(typeof total?.member_reads==="number"?total.member_reads:0);
    }catch{
+    if(version!==countVersion)return;
     // No fake zero during a backend error or before the new migration.
     if(likeCount)likeCount.textContent="—";
     if(readCount)readCount.textContent="—";
@@ -391,52 +398,66 @@ if(community){
   const ids=buttons.map(el=>el.dataset.replyId).filter(Boolean) as string[];
   if(!ids.length||!cfg)return;
   try{
-   const p=new URLSearchParams({select:"reply_id,helpful_count",
-    reply_id:"in.("+ids.join(",")+")"});
-   const rows=await api("/rest/v1/tc_forum_reply_helpful_totals?"+p) as
-    {reply_id:string;helpful_count:number}[];
+   const rows:{reply_id:string;helpful_count:number}[]=[];
+   for(let offset=0;offset<ids.length;offset+=60){
+    const p=new URLSearchParams({select:"reply_id,helpful_count",reply_id:"in.("+ids.slice(offset,offset+60).join(",")+")"});
+    const part=await api("/rest/v1/tc_forum_reply_helpful_totals?"+p) as {reply_id:string;helpful_count:number}[];
+    if(version!==countVersion)return;
+    rows.push(...part);
+   }
    const counts=new Map(rows.map(row=>[row.reply_id,row.helpful_count]));
    for(const element of buttons){
     const count=element.querySelector<HTMLElement>("[data-helpful-count]");
     if(count)count.textContent=String(counts.get(element.dataset.replyId||"")||0);
    }
-  }catch{}
+  }catch{
+   if(version!==countVersion)return;
+   for(const element of buttons){const count=element.querySelector<HTMLElement>("[data-helpful-count]");if(count)count.textContent="—"}
+  }
  }
  async function sync(){
+  const version=++sessionVersion;
+  verifiedToken="";
   ownId="";voted.clear();isBookmarked=false;isFollowing=false;isLiked=false;
-  showVoted();showBookmark();showFollow();showLiked();
+  showVoted();showBookmark();showFollow();showLiked();say("");
   const token=getToken();
   if(!token||!cfg)return;
   try{
    const u=await api("/auth/v1/user",token) as {id:string};
-   if(!uuid.test(u.id||""))return;
-   ownId=u.id;
-   const p=new URLSearchParams({select:"topic_id",topic_id:"eq."+topicId,limit:"1"});
+   if(!currentSession(version,token)||!uuid.test(u.id||""))return;
+   const owner=u.id;
+   const p=new URLSearchParams({select:"topic_id",topic_id:"eq."+topicId,member_id:"eq."+owner,limit:"1"});
    const saved=await api("/rest/v1/tc_member_bookmarks?"+p,token) as {topic_id:string}[];
+   if(!currentSession(version,token))return;
    isBookmarked=saved.length>0;showBookmark();
    const followed=await api("/rest/v1/tc_member_topic_follows?"+
-    new URLSearchParams({select:"topic_id",topic_id:"eq."+topicId,limit:"1"}),token) as {topic_id:string}[];
+    new URLSearchParams({select:"topic_id",topic_id:"eq."+topicId,member_id:"eq."+owner,limit:"1"}),token) as {topic_id:string}[];
+   if(!currentSession(version,token))return;
    isFollowing=followed.length>0;showFollow();
    if(isFollowing){
     // Viewing a followed thread marks its existing moderated replies as read.
     // Do not modify notification timestamps for users who have not followed.
     await api("/rest/v1/tc_member_topic_follows?"+
-      new URLSearchParams({topic_id:"eq."+topicId,member_id:"eq."+ownId}),token,{
+      new URLSearchParams({topic_id:"eq."+topicId,member_id:"eq."+owner}),token,{
       method:"PATCH",headers:{"Content-Type":"application/json","Prefer":"return=minimal"},
       body:JSON.stringify({last_seen_at:new Date().toISOString()})
     });
    }
+   if(!currentSession(version,token))return;
    const ids=buttons.map(el=>el.dataset.replyId).filter(Boolean) as string[];
-   if(ids.length){
-    const query=new URLSearchParams({select:"reply_id",reply_id:"in.("+ids.join(",")+")"});
+   for(let offset=0;offset<ids.length;offset+=60){
+    const query=new URLSearchParams({select:"reply_id",voter_id:"eq."+owner,reply_id:"in.("+ids.slice(offset,offset+60).join(",")+")"});
     const rows=await api("/rest/v1/tc_forum_helpful_votes?"+query,token) as {reply_id:string}[];
-    rows.forEach(row=>voted.add(row.reply_id));showVoted();
+    if(!currentSession(version,token))return;
+    rows.forEach(row=>voted.add(row.reply_id));
    }
+   showVoted();
    // Keep pre-existing forum features working during a staged deployment.
    try{
     const likes=await api("/rest/v1/tc_forum_topic_likes?"+
-     new URLSearchParams({select:"topic_id",topic_id:"eq."+topicId,limit:"1"}),token) as
+     new URLSearchParams({select:"topic_id",topic_id:"eq."+topicId,member_id:"eq."+owner,limit:"1"}),token) as
      {topic_id:string}[];
+    if(!currentSession(version,token))return;
     isLiked=Array.isArray(likes)&&likes.length>0;showLiked();
     await api("/rest/v1/tc_forum_topic_member_reads?on_conflict=topic_id,member_id",token,{
      method:"POST",headers:{"Content-Type":"application/json",
@@ -445,53 +466,60 @@ if(community){
     });
     void counts();
    }catch{/* Engagement is optional; existing login stays valid. */}
-  }catch{ownId=""}
+   if(currentSession(version,token)){ownId=owner;verifiedToken=token}
+  }catch{if(currentSession(version,token)){ownId="";verifiedToken="";voted.clear();isBookmarked=false;isFollowing=false;isLiked=false;showVoted();showBookmark();showFollow();showLiked()}}
  }
  function requireSession(){
-  if(ownId)return true;
+  if(isActive(activeOwner()))return true;
   say(labels.voteLogin);
   document.querySelector("#forum-compose")?.scrollIntoView({block:"start"});
   return false;
  }
  like?.addEventListener("click",async()=>{
   if(!cfg||!uuid.test(topicId)||!requireSession())return;
+  const snapshot=activeOwner();
   like.disabled=true;
   try{
    const remove=isLiked;
    const url="/rest/v1/tc_forum_topic_likes"+
-    (remove?"?topic_id=eq."+topicId+"&member_id=eq."+ownId:"");
-   await api(url,getToken(),remove?{method:"DELETE"}:{
+    (remove?"?topic_id=eq."+topicId+"&member_id=eq."+snapshot.owner:"");
+   await api(url,snapshot.token,remove?{method:"DELETE"}:{
     method:"POST",headers:{"Content-Type":"application/json","Prefer":"return=minimal"},
     body:JSON.stringify({topic_id:topicId})
    });
+   if(!isActive(snapshot))return;
    isLiked=!remove;showLiked();void counts();say("");
-  }catch{say(labels.voteError)}
+  }catch{if(isActive(snapshot))say(labels.voteError)}
   finally{like.disabled=false}
  });
  follow?.addEventListener("click",async()=>{
   if(!cfg||!uuid.test(topicId)||!requireSession())return;
+  const snapshot=activeOwner();
   follow.disabled=true;
   try{
    const endpoint="/rest/v1/tc_member_topic_follows"+
-    (isFollowing?"?topic_id=eq."+topicId+"&member_id=eq."+ownId:"");
-   await api(endpoint,getToken(),isFollowing?{method:"DELETE"}:{
+    (isFollowing?"?topic_id=eq."+topicId+"&member_id=eq."+snapshot.owner:"");
+   await api(endpoint,snapshot.token,isFollowing?{method:"DELETE"}:{
     method:"POST",headers:{"Content-Type":"application/json","Prefer":"return=minimal"},
     body:JSON.stringify({topic_id:topicId})});
+   if(!isActive(snapshot))return;
    isFollowing=!isFollowing;showFollow();say("");
-  }catch{say(labels.voteError)}
+  }catch{if(isActive(snapshot))say(labels.voteError)}
   finally{follow.disabled=false}
  });
  bookmark?.addEventListener("click",async()=>{
   if(!cfg||!uuid.test(topicId)||!requireSession())return;
+  const snapshot=activeOwner();
   bookmark.disabled=true;
   try{
    const url="/rest/v1/tc_member_bookmarks"+
-    (isBookmarked?"?topic_id=eq."+topicId+"&member_id=eq."+ownId:"");
-   await api(url,getToken(),isBookmarked?{method:"DELETE"}:{
+    (isBookmarked?"?topic_id=eq."+topicId+"&member_id=eq."+snapshot.owner:"");
+   await api(url,snapshot.token,isBookmarked?{method:"DELETE"}:{
     method:"POST",headers:{"Content-Type":"application/json","Prefer":"return=minimal"},
     body:JSON.stringify({topic_id:topicId})});
+   if(!isActive(snapshot))return;
    isBookmarked=!isBookmarked;showBookmark();say("");
-  }catch{say(labels.voteError)}
+  }catch{if(isActive(snapshot))say(labels.voteError)}
   finally{bookmark.disabled=false}
  });
  for(const element of buttons){
@@ -500,17 +528,19 @@ if(community){
    if(!cfg||!requireSession())return;
    const id=element.dataset.replyId||"";
    if(!uuid.test(id))return;
+   const snapshot=activeOwner();
    button.disabled=true;
    try{
     const remove=voted.has(id);
     const url="/rest/v1/tc_forum_helpful_votes"+
-     (remove?"?reply_id=eq."+id+"&voter_id=eq."+ownId:"");
-    await api(url,getToken(),remove?{method:"DELETE"}:{
+     (remove?"?reply_id=eq."+id+"&voter_id=eq."+snapshot.owner:"");
+    await api(url,snapshot.token,remove?{method:"DELETE"}:{
      method:"POST",headers:{"Content-Type":"application/json","Prefer":"return=minimal"},
      body:JSON.stringify({reply_id:id})});
+    if(!isActive(snapshot))return;
     if(remove)voted.delete(id);else voted.add(id);
     showVoted();void counts();say("");
-   }catch{say(labels.voteError)}
+   }catch{if(isActive(snapshot))say(labels.voteError)}
    finally{button.disabled=false}
   });
  }
