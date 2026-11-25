@@ -86,8 +86,17 @@ function installFetch(){
   assert(process.env.SITE_URL===origin&&process.env.SUPABASE_URL===mock&&
     process.env.SUPABASE_PUBLISHABLE_KEY===fakeKey&&!process.env.SUPABASE_ANON_KEY,
     "Fixture fetch refused outside isolated QA origin");
-  const rows=JSON.parse(readFileSync(process.env[input],"utf8"));
-  fixtureGroups(rows);
+  const candidates=JSON.parse(readFileSync(process.env[input],"utf8"));
+  fixtureGroups(candidates);
+  // The unrelated editorial comparison is intentionally fail-closed in an
+  // indexed build. Supply its minimal, already-published snapshot, not invented
+  // editorial evidence or a production-gate exception. Audit only candidates.
+  const baseline=JSON.parse(readFileSync(join(siteRoot,"tests/fixtures/nominal-preview-public-editorial-baseline.json"),"utf8"));
+  assert(baseline.length===24&&new Set(baseline.map(r=>r.tractor_id)).size===2,"Public editorial fixture is incomplete");
+  assert(baseline.every(r=>r.verified_at&&r.evidence_text&&r.source_type==="manufacturer_specification"),"Public editorial prerequisite invalid");
+  const candidateIds=new Set(candidates.map(r=>r.tractor_id));
+  assert(!baseline.some(r=>candidateIds.has(r.tractor_id)),"Candidate overlaps public editorial prerequisite");
+  const rows=[...candidates,...baseline];
   // No external fetch or Supabase service credentials in this preview.
   globalThis.fetch=async (resource,options={})=>{
     const url=new URL(resource instanceof Request?resource.url:resource);
