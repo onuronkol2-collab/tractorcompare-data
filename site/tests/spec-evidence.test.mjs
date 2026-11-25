@@ -274,3 +274,65 @@ test("reviewed McCormick and STEYR technical tables remain document- and brand-s
     assert.equal(officialManufacturerSourceUrl({...row,source_url:url+"&other=1"},brand),null);
   }
 });
+
+
+test("reviewed Iseki, JCB, Lindner and Erkunt exact documents restore source citations without widening host trust", () => {
+  const documents = [
+  [
+    "Iseki",
+    "https://www.iseki.co.jp/global/cms/upload/pdf/products/tractor/TG6%20Specification.pdf",
+    "official_technical_pdf"
+  ],
+  [
+    "JCB",
+    "https://www.jcb.com/en-GB/products/machines/agricultural-tractors/6000-series/",
+    "official_product_specification"
+  ],
+  [
+    "JCB",
+    "https://www.jcb.com/en-GB/explore/insight/news/2025/11/jcb-launches-all-new-high-tech-fastrac-6000-series-tractors/",
+    "official_product_page"
+  ],
+  [
+    "Lindner",
+    "https://www.lindner-traktoren.at/en/tractors-transporters/lintrac/lintrac-75-ls",
+    "official_product_page"
+  ],
+  [
+    "Lindner",
+    "https://www.lindner-traktoren.at/en/tractors-transporters/lintrac/lintrac-95-ls",
+    "official_product_page"
+  ],
+  [
+    "Lindner",
+    "https://www.lindner-traktoren.at/en/tractors-transporters/lintrac/lintrac-115-ls",
+    "official_product_page"
+  ],
+  [
+    "Lindner",
+    "https://www.lindner-traktoren.at/en/tractors-transporters/tractors/lintrac-160",
+    "official_product_page"
+  ],
+  [
+    "Erkunt",
+    "https://erkunttraktor.com.tr/assets/model_dosyalar/pdfs/LuksCRD5Brosur.pdf?t=20260304140933",
+    "official_technical_pdf"
+  ]
+];
+  for (const [brand, url, source_type] of documents) {
+    const row = {...official, source_url:url, source_type};
+    assert.equal(officialManufacturerSourceUrl(row,brand),url);
+    assert.equal(officialManufacturerSourceUrl(row,"Unrelated Brand"),null);
+    for (const bad of [
+      {...row, source_url:url.replace("https://","http://")},
+      {...row, source_url:url.replace(/^(https:\/\/[^/]+)/,"$1:8443")},
+      {...row, source_url:url.replace(/^(https:\/\/[^/]+)/,"$1.evil.example")},
+      {...row, source_url:url+(url.includes("?")?"&":"?")+"unexpected=1"},
+      {...row, source_url:new URL("/unreviewed-document.pdf",url).href},
+      {...row, evidence_text:""},
+      {...row, verified_at:null},
+      {...row, source_type:"independent_test"},
+    ]) assert.equal(officialManufacturerSourceUrl(bad,brand),null,brand);
+  }
+  assert.equal(officialManufacturerSourceUrl({...official,source_url:"https://www.newholland.com.tr:8443/tractors/model"},"New Holland"),null);
+});
