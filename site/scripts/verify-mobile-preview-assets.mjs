@@ -8,6 +8,7 @@ import {createHash} from "node:crypto";
 import {fileURLToPath} from "node:url";
 import {resolve} from "node:path";
 import {hasReleaseSha} from "../src/lib/release-provenance.mjs";
+import {waitForWorkersBuild} from "./workers-build-readiness.mjs";
 
 const PREVIEW_HOST=/^https:\/\/[a-z0-9][a-z0-9-]*-tractorvs-site\.onuronkol2\.workers\.dev$/;
 const SHA=/^[a-f0-9]{40}$/;
@@ -146,7 +147,8 @@ export async function verifyPreviewAssets({origin,fetchFn=fetch}={}){
 if(process.argv[1]&&resolve(process.argv[1])===fileURLToPath(import.meta.url)){
   try{
     const sha=process.env.PREVIEW_HEAD_SHA;
-    const origin=await currentPreview({pr:process.env.PREVIEW_PR_NUMBER,sha,token:process.env.GH_TOKEN,branch:process.env.PREVIEW_HEAD_BRANCH,log:row=>console.log("TRACTORVS_PREVIEW_READINESS "+JSON.stringify(row))});
+    await waitForWorkersBuild({sha,token:process.env.GH_TOKEN,log:row=>console.log("TRACTORVS_WORKERS_BUILD_READINESS "+JSON.stringify(row))});
+    const origin=await currentPreview({pr:process.env.PREVIEW_PR_NUMBER,sha,token:process.env.GH_TOKEN,branch:process.env.PREVIEW_HEAD_BRANCH,attempts:12,log:row=>console.log("TRACTORVS_PREVIEW_READINESS "+JSON.stringify(row))});
     console.log("TRACTORVS_720_PREVIEW_RELEASE "+JSON.stringify({origin,sha:process.env.PREVIEW_HEAD_SHA}));
     const checked=await verifyPreviewAssets({origin});
     if(!(await verifyPreviewIdentity(origin,sha)).ready)throw Error("PREVIEW_DEPLOYMENT_CHANGED: release changed during image checks; evidence not complete");

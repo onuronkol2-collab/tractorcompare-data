@@ -3,7 +3,7 @@
 import {readFileSync} from "node:fs";
 import {resolve} from "node:path";
 import {fileURLToPath} from "node:url";
-import {releaseFromHtml} from "./live-release-readiness.mjs";
+import {releaseFromHtml,waitForProductionRelease,mainDescendantVerifier} from "./live-release-readiness.mjs";
 import {parseProductionSitemapInventory} from "./production-sitemap-inventory.mjs";
 const origin="https://tractorvs.com";
 const shaPattern=/^[a-f0-9]{40}$/;
@@ -29,6 +29,27 @@ export function compareLiveDates({indexXml,children,dateMap}){
  if(seen.size!==inventory.htmlPages.size)throw Error("Incomplete live HTML date audit");
  const missing=Object.keys(dateMap.dates).filter(path=>!seen.has(origin+path));
  return {verifiedPages:seen.size,datedPages:dated,mismatches,missingRecordedUrls:missing};
+}
+// Only a previously ancestry-verified main descendant is passed here.
+// Fetch its exact immutable ledger rather than comparing it with stale checkout data.
+export async function readRevisionDateMap(sha,{token="",fetchFn=fetch}={}){
+ if(typeof sha!=="string"||!shaPattern.test(sha))throw Error("Invalid ledger revision");
+ const url="https://api.github.com/repos/onuronkol2-collab/tractorcompare-data/contents/site/src/data/sitemap-lastmod.json?ref="+sha;
+ const response=await fetchFn(url,{redirect:"error",signal:AbortSignal.timeout(20000),headers:{Accept:"application/vnd.github.raw+json",...(token?{Authorization:"Bearer "+token}:{})}});
+ if(!response.ok)throw Error("Exact revision ledger unavailable: HTTP "+response.status);
+ const raw=await response.text();
+ if(raw.length>2_000_000)throw Error("Exact revision ledger exceeds audit size");
+ const map=JSON.parse(raw);
+ if(map?.version!==1||!map.dates||typeof map.dates!=="object"||Array.isArray(map.dates))throw Error("Invalid exact revision ledger");
+ return map;
+}
+export async function proveDeployedDates({target,dateMap,fetchFn=fetch,acceptDescendant=async()=>false,readMap=async()=>{throw Error("Exact descendant ledger unavailable");},pause,attempts=16,log=()=>{}}={}){
+ const readiness=await waitForProductionRelease({target,fetchFn,acceptDescendant,sleep:pause,attempts,log});
+ if(readiness.status!=="ready")return {status:readiness.status,target,observed:readiness.observed,verifiedPages:0};
+ const revision=readiness.observed;
+ const ledger=revision===target?dateMap:await readMap(revision);
+ const proof=await inspectLiveDates({target:revision,dateMap:ledger,fetchFn});
+ return {...proof,requestedTarget:target};
 }
 export async function inspectLiveDates({target,dateMap,fetchFn=fetch}={}){
  if(typeof target!=="string"||!shaPattern.test(target))throw Error("Invalid expected release SHA");
@@ -62,9 +83,10 @@ export async function inspectLiveDates({target,dateMap,fetchFn=fetch}={}){
 if(process.argv[1]&&resolve(process.argv[1])===fileURLToPath(import.meta.url)){
  try{
   const dateMap=JSON.parse(readFileSync(new URL("../src/data/sitemap-lastmod.json",import.meta.url),"utf8"));
-  const result=await inspectLiveDates({target:process.argv[2],dateMap});
+  const token=process.env.GITHUB_TOKEN||"";
+  const result=await proveDeployedDates({target:process.argv[2],dateMap,acceptDescendant:mainDescendantVerifier({token}),readMap:sha=>readRevisionDateMap(sha,{token}),log:row=>console.log("TRACTORVS_LASTMOD_READINESS "+JSON.stringify(row))});
   console.log("TRACTORVS_LIVE_LASTMOD "+JSON.stringify(result));
-  if(result.status==="date_mismatch")process.exitCode=1;
-  if(result.status!=="verified"&&result.status!=="date_mismatch")console.log("::warning::Live date proof not complete: "+result.status+"; do not count as verified.");
+  if(result.status==="date_mismatch"||result.status==="inventory_drift")process.exitCode=1;
+  else if(result.status!=="verified"){console.error("::error::Live date proof not complete: "+result.status+"; no successful release proof.");process.exitCode=2;}
  }catch(e){console.error(String(e.message));process.exitCode=1;}
 }
