@@ -1,0 +1,220 @@
+[
+  {
+    "brand": "Başak Traktör",
+    "model": "2055",
+    "tractorId": "d1258ec7-f544-4d8b-b5a3-dee2d2b15a6b",
+    "fileId": "basak-2055-kompakt-marcelx42-2023",
+    "path": "e/e1/Ba%C5%9Fak_2055_Kompakt_Agritechnica_2023_%28DSC04448%29.jpg",
+    "photographer": "MarcelX42",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "sourcePage": "https://commons.wikimedia.org/wiki/File:Ba%C5%9Fak_2055_Kompakt_Agritechnica_2023_%28DSC04448%29.jpg",
+    "originalUrl": "https://upload.wikimedia.org/wikipedia/commons/e/e1/Ba%C5%9Fak_2055_Kompakt_Agritechnica_2023_%28DSC04448%29.jpg",
+    "width": 7008,
+    "height": 3944,
+    "originalSha1": "af9df74eebe9259f2dc44a0e130012357aec6196",
+    "originalSha256": "ceaecc7a4e0455bbca2f55d67970d1efac18be95a16a056cbda8b394b0e5ba79",
+    "originalBytes": 14996229,
+    "originalFormat": "JPEG",
+    "originalFrameCount": 1,
+    "selectedFrame": 0,
+    "sourceArtifact": 15037422585,
+    "transferRun": 45646982097,
+    "transferJob": 139320492071,
+    "description": "Schrägansicht der Front eines Başak 2055 Kompakt, ausgestellt auf der Agritechnica 2023. Angebaut ist ein Gerät des Typs Basak BH 2100 am Heck.",
+    "modelEvidence": "Front three-quarter Başak 2055 Kompakt at Agritechnica 2023; current OEM 2055 4WD compact model matches base identity. Exact year and options not claimed.",
+    "modelSources": [
+      "https://basaktraktor.com.tr/urunler/traktorler/tarla-traktorleri/2055"
+    ],
+    "scope": "Model illustration only; exact market equipment not verified.",
+    "copyrightEvidence": "commons-attribution-license-verified-no-owner-claim",
+    "changes": "Proportional resize and JPEG compression, CC BY-SA 4.0 retained.",
+    "derivatives": [
+      {
+        "file": "basak-2055-kompakt-marcelx42-2023-480.jpg",
+        "width": 480,
+        "height": 270,
+        "bytes": 43785,
+        "sha256": "1756331f508a8fda579f2d21a6a661b6e9d4152c4fb3cc34022896849c111e6c"
+      },
+      {
+        "file": "basak-2055-kompakt-marcelx42-2023-960.jpg",
+        "width": 960,
+        "height": 540,
+        "bytes": 141817,
+        "sha256": "a35e61098c22c8b315bcd472969e7ee51e2d323cd65e1ebbbd5652acaf8b3193"
+      },
+      {
+        "file": "basak-2055-kompakt-marcelx42-2023-1920.jpg",
+        "width": 1920,
+        "height": 1081,
+        "bytes": 435188,
+        "sha256": "ac172a48e1e9e4092b1db2e28be34f65bc0ba144dcaaffe4d8499b9419885575"
+      }
+    ]
+  },
+  {
+    "brand": "Bobcat",
+    "model": "CT2540",
+    "tractorId": "70e438cb-c57c-4744-bf9f-2ae0a38e35b6",
+    "fileId": "bobcat-ct2540-marcelx42-2025",
+    "path": "8/8a/Bobcat_CT2540_Agritechnica_2025_%28DSC05725%29.jpg",
+    "photographer": "MarcelX42",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "sourcePage": "https://commons.wikimedia.org/wiki/File:Bobcat_CT2540_Agritechnica_2025_%28DSC05725%29.jpg",
+    "originalUrl": "https://upload.wikimedia.org/wikipedia/commons/8/8a/Bobcat_CT2540_Agritechnica_2025_%28DSC05725%29.jpg",
+    "width": 6224,
+    "height": 4672,
+    "originalSha1": "a257f2b200e258eb31c9616989e2c816f147f9fe",
+    "originalSha256": "464ced9cf6f5f4aef444dd6c746238484582129b08e04ed02c4e13d987782415",
+    "originalBytes": 7812251,
+    "originalFormat": "MPO",
+    "originalFrameCount": 2,
+    "selectedFrame": 0,
+    "sourceArtifact": 15037422585,
+    "transferRun": 45646982097,
+    "transferJob": 139320491376,
+    "description": "Schrägansicht der Front einer Bobcat CT2540, ausgestellt auf der Agritechnica 2025.",
+    "modelEvidence": "Bobcat CT2540 enclosed cab; caption and badge match model. EU/NA both cab and hydrostatic; power differs slightly. Representative only.",
+    "modelSources": [
+      "https://www.bobcat.com/eu/en/equipment/compact-tractors/ct2540",
+      "https://www.bobcat.com/na/en/equipment/tractors/compact-tractors/2000-platform-compact-tractors/ct2540"
+    ],
+    "scope": "Model illustration only; exact market equipment not verified.",
+    "copyrightEvidence": "commons-attribution-license-verified-no-owner-claim",
+    "changes": "Extract verified primary frame; Proportional resize and JPEG compression, CC BY-SA 4.0 retained.",
+    "derivatives": [
+      {
+        "file": "bobcat-ct2540-marcelx42-2025-480.jpg",
+        "width": 480,
+        "height": 360,
+        "bytes": 50876,
+        "sha256": "2fdf9aa74826316a303204c55695c37e74ba1ba7243f34eb51e30a2cfcc8b6c7"
+      },
+      {
+        "file": "bobcat-ct2540-marcelx42-2025-960.jpg",
+        "width": 960,
+        "height": 721,
+        "bytes": 150879,
+        "sha256": "b0b63e776ad9faef7abee828d6083ad8470f1f6d8eb85131ffab12d9d4cee469"
+      },
+      {
+        "file": "bobcat-ct2540-marcelx42-2025-1920.jpg",
+        "width": 1920,
+        "height": 1441,
+        "bytes": 432148,
+        "sha256": "d52cf0ec2c04ceeae8dd77e7e7b85a3ddf823e21cf3823ead212dfde6060c926"
+      }
+    ]
+  },
+  {
+    "brand": "Bobcat",
+    "model": "CT4058",
+    "tractorId": "cafcb2bc-d2a4-452e-bdc8-3a52e9a5db81",
+    "fileId": "bobcat-ct4058-marcelx42-2025",
+    "path": "f/fd/Bobcat_CT4058_Agritechnica_2025_%28DSC08950%29.jpg",
+    "photographer": "MarcelX42",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "sourcePage": "https://commons.wikimedia.org/wiki/File:Bobcat_CT4058_Agritechnica_2025_%28DSC08950%29.jpg",
+    "originalUrl": "https://upload.wikimedia.org/wikipedia/commons/f/fd/Bobcat_CT4058_Agritechnica_2025_%28DSC08950%29.jpg",
+    "width": 6030,
+    "height": 4523,
+    "originalSha1": "859dd0f27c52fe24c2297b23ff18e58c0fce8206",
+    "originalSha256": "c9e8549ee3c8e17f5916bef52d18c05e78267b3940bd759decd2f26653283cdc",
+    "originalBytes": 12311810,
+    "originalFormat": "JPEG",
+    "originalFrameCount": 1,
+    "selectedFrame": 0,
+    "sourceArtifact": 15037422585,
+    "transferRun": 45646982097,
+    "transferJob": 139320491799,
+    "description": "Schrägansicht der Front einer Bobcat CT4058, ausgestellt auf der Agritechnica 2025.",
+    "modelEvidence": "Bobcat CT4058 open ROPS and 4WD; EU H-shuttle vs North America HST, same base model number/ROPS. No exact transmission claim.",
+    "modelSources": [
+      "https://www.bobcat.com/eu/en/equipment/compact-tractors/ct4058",
+      "https://www.bobcat.com/na/en/equipment/tractors/compact-tractors/4000-platform-compact-tractors/ct4058"
+    ],
+    "scope": "Model illustration only; exact market equipment not verified.",
+    "copyrightEvidence": "commons-attribution-license-verified-no-owner-claim",
+    "changes": "Proportional resize and JPEG compression, CC BY-SA 4.0 retained.",
+    "derivatives": [
+      {
+        "file": "bobcat-ct4058-marcelx42-2025-480.jpg",
+        "width": 480,
+        "height": 360,
+        "bytes": 50738,
+        "sha256": "f96380ee86175278dd31af6612a112c7e8b348048fa07d4782b22a2e6b3c651e"
+      },
+      {
+        "file": "bobcat-ct4058-marcelx42-2025-960.jpg",
+        "width": 960,
+        "height": 720,
+        "bytes": 151037,
+        "sha256": "382a45ec63a20e8a01a71a6524f4787e1c29f713935291677dd3a39598979ab7"
+      },
+      {
+        "file": "bobcat-ct4058-marcelx42-2025-1920.jpg",
+        "width": 1920,
+        "height": 1440,
+        "bytes": 439276,
+        "sha256": "7eff1fdaec48d392f296af97678b4764b560bce3a80e0faf473da62547d5430d"
+      }
+    ]
+  },
+  {
+    "brand": "Başak Traktör",
+    "model": "3026",
+    "tractorId": "2bc6ed35-ed73-4a0d-9edb-53462f0045fc",
+    "fileId": "basak-3026-front-marcelx42-2025",
+    "path": "c/c6/Ba%C5%9Fak_3026_Agritechnica_2025_%28DSC03713%29.jpg",
+    "photographer": "MarcelX42",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "sourcePage": "https://commons.wikimedia.org/wiki/File:Ba%C5%9Fak_3026_Agritechnica_2025_%28DSC03713%29.jpg",
+    "originalUrl": "https://upload.wikimedia.org/wikipedia/commons/c/c6/Ba%C5%9Fak_3026_Agritechnica_2025_%28DSC03713%29.jpg",
+    "width": 6139,
+    "height": 4604,
+    "originalSha1": "c8a68e0146981dd8493ade796a352a139bf0a528",
+    "originalSha256": "82bff80f67a77f1f2a03059c434179bb90a8676cb26d096113eb6d46f11afc85",
+    "originalBytes": 15258189,
+    "originalFormat": "JPEG",
+    "originalFrameCount": 1,
+    "selectedFrame": 0,
+    "sourceArtifact": 15037422585,
+    "transferRun": 45646982097,
+    "transferJob": 139320491801,
+    "description": "Schrägansicht der Front eines Başak 3026 Stage V, ausgestellt auf der Agritechnica 2025.",
+    "modelEvidence": "Başak 3026 Stage V front view at Agritechnica 2025; OEM 3026 compact 4WD model matches, not exact 2026 production year.",
+    "modelSources": [
+      "https://basaktraktor.com.tr/urunler/traktorler/bahce-traktorleri/3026"
+    ],
+    "scope": "Model illustration only; exact market equipment not verified.",
+    "copyrightEvidence": "commons-attribution-license-verified-no-owner-claim",
+    "changes": "Proportional resize and JPEG compression, CC BY-SA 4.0 retained.",
+    "derivatives": [
+      {
+        "file": "basak-3026-front-marcelx42-2025-480.jpg",
+        "width": 480,
+        "height": 360,
+        "bytes": 45889,
+        "sha256": "26be57d0f92e6a0f58d54fc265191d901378b228c24dc08d7f62d2f276cfaf26"
+      },
+      {
+        "file": "basak-3026-front-marcelx42-2025-960.jpg",
+        "width": 960,
+        "height": 720,
+        "bytes": 142240,
+        "sha256": "073106f01747336115c0cae2561f07cc87bf4989348286c6aeb6bc8048d28fd8"
+      },
+      {
+        "file": "basak-3026-front-marcelx42-2025-1920.jpg",
+        "width": 1920,
+        "height": 1440,
+        "bytes": 453903,
+        "sha256": "7e76044c59ffff9179678fdb528879ec300024af151f007aa6ecb79bdd729a2a"
+      }
+    ]
+  }
+]

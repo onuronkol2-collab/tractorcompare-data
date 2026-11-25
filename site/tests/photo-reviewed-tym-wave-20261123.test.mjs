@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import {readFileSync} from "node:fs";
+import {readFileSync,existsSync} from "node:fs";
 import {createHash} from "node:crypto";
 import {LOCALES} from "../src/lib/locales.ts";
 import {APPROVED_TRACTOR_PHOTOS,tractorPhotos} from "../src/lib/tractor-photos.ts";
@@ -15,11 +15,9 @@ const model=(name,id)=>({
   transmission:null,drivetrain:null,weight_kg:null,specifications:[]
 });
 const ledger=(name)=>JSON.parse(readFileSync(new URL("../docs/"+name,import.meta.url),"utf8"));
-test("five first-party licensed JPEG sources are unique, binary integrity verified and scoped to the correct UUIDs",()=>{
-  const proof=[...ledger("photo-import-evidence-tym-f50chn-wave3-20261122.json").images,
-    ...ledger("photo-import-evidence-tym-t25-t115-four-20261122.json").images
-      .filter(x=>x.fileId.endsWith("-rear-marcelx42-2025"))];
-  assert.equal(proof.length,5);
+test("three retained first-party licensed JPEG sources are unique, binary integrity verified and scoped to the correct UUIDs",()=>{
+  const proof=ledger("photo-import-evidence-tym-f50chn-wave3-20261122.json").images;
+  assert.equal(proof.length,3);
   const approved=new Map(APPROVED_TRACTOR_PHOTOS.map(x=>[x.fileId,x]));
   for(const src of proof){
     const photo=approved.get(src.fileId);
@@ -65,17 +63,18 @@ test("F50CHN has three new views and cannot leak to adjacent T3048 variants in t
     undefined
   ])assert.equal(tractorPhotos(model("T3048",id)).length,0);
 });
-test("international T25 and T115 reuse existing front photo and have one new, unique rear angle",()=>{
+test("international T25 and T115 retain their existing front photos and exclude retired rear views",()=>{
   for(const [name,id,front,rear] of [
     ["T2025P",T25,"tym-t2025p-t25-marcelx42-2025","tym-t2025p-t25-rear-marcelx42-2025"],
     ["T6115",T115,"tym-t6115-t115-marcelx42-2025","tym-t6115-t115-rear-marcelx42-2025"]
   ]){
     const gallery=tractorPhotos(model(name,id));
-    assert.deepEqual(gallery.map(x=>x.fileId),[front,rear]);
-    assert.equal(gallery[1].tractorId,id);
-    assert.equal(gallery[1].photographer,"MarcelX42");
+    assert.deepEqual(gallery.map(x=>x.fileId),[front]);
+    assert.equal(gallery[0].photographer,"MarcelX42");
+    assert.ok(!APPROVED_TRACTOR_PHOTOS.some(p=>p.fileId===rear));
+    for(const width of [480,960,1920])assert.ok(!existsSync(new URL("../public/images/tractors/"+rear+"-"+width+".jpg",import.meta.url)));
     assert.equal(tractorPhotos(model(name,"00000000-0000-4000-8000-000000000000")).length,1,
-      "Legacy front may remain model-level; rear view must remain exact UUID only");
+      "Legacy front may remain model-level; retired rear must not be present");
     for(const locale of LOCALES){
       const image=modelStructuredData(model(name,id),locale,"https://tractorvs.com/")["@graph"]
         .find(x=>x["@type"]==="ImageObject");
