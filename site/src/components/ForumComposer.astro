@@ -19,6 +19,7 @@ const browserConfig=JSON.stringify(cfg?{url:cfg.url,key:cfg.key,lang,mode,topicI
 const memberMessages=JSON.stringify(MEMBER_TEXT[lang]);
 const draftLengthMessages=JSON.stringify(FORUM_DRAFT_LENGTH_COPY[lang]);
 const maxBodyLength=FORUM_DRAFT_MAX[mode];
+const assistedCopy = ({"en":["Import draft (.json)","Review and publish yourself.","Draft imported. Review it.","Invalid draft.","Clear your current draft first."],"tr":["Taslak içe aktar (.json)","İncele ve kendin yayımla.","Taslak aktarıldı. İncele.","Geçersiz taslak.","Önce mevcut taslağını temizle."],"zh":["导入草稿 (.json)","请检查后自行发布。","草稿已导入，请检查。","草稿无效。","请先清空当前草稿。"],"hi":["मसौदा आयात (.json)","जाँचकर स्वयं प्रकाशित करें।","मसौदा आयात हुआ। जाँचें।","अमान्य मसौदा।","पहले वर्तमान मसौदा साफ़ करें।"],"pt-br":["Importar rascunho (.json)","Revise e publique você mesmo.","Rascunho importado. Revise.","Rascunho inválido.","Limpe o rascunho atual primeiro."],"fr":["Importer un brouillon (.json)","Relisez et publiez vous-même.","Brouillon importé. Relisez-le.","Brouillon invalide.","Effacez d’abord le brouillon actuel."],"de":["Entwurf importieren (.json)","Prüfe und veröffentliche selbst.","Entwurf importiert. Bitte prüfen.","Ungültiger Entwurf.","Zuerst aktuellen Entwurf leeren."],"ru":["Импорт черновика (.json)","Проверьте и опубликуйте сами.","Черновик импортирован. Проверьте.","Недействительный черновик.","Сначала очистите текущий черновик."],"ja":["下書きを読み込む (.json)","確認してご自身で公開してください。","下書きを読み込みました。確認してください。","無効な下書き。","現在の下書きを先に消去してください。"],"es":["Importar borrador (.json)","Revisa y publica tú mismo.","Borrador importado. Revísalo.","Borrador no válido.","Borra primero el borrador actual."]})[lang];
 const bodyCounterId=`forum-body-count-${lang}-${mode}`;
 const bodyWarningId=`forum-body-warning-${lang}-${mode}`;
 const strings=JSON.stringify({
@@ -45,7 +46,7 @@ const strings=JSON.stringify({
 ---
 <section id="forum-compose" tabindex="-1" class="community-composer" data-forum-composer
  data-forum-config={browserConfig} data-forum-messages={strings} data-member-messages={memberMessages}
- data-forum-draft-length-messages={draftLengthMessages}>
+ data-forum-draft-length-messages={draftLengthMessages} data-assisted-draft-copy={JSON.stringify(assistedCopy)}>
  <h2>{mode==="topic"?ft(lang,"compose"):ft(lang,"reply")}</h2>
  {cfg ? <>
   <p class="forum-guest-note" data-guest-readonly>{mt(lang,"guestReadOnly")}</p>
@@ -165,6 +166,7 @@ const strings=JSON.stringify({
    <summary>{ft(lang,"myPosts")}</summary><p data-history-status role="status"></p><ul data-history-list></ul>
   </details>
   <form data-forum-post hidden>
+    {mode==="topic"&&<label>{assistedCopy[0]}<input type="file" accept=".json,application/json" data-assisted-draft-file/><small>{assistedCopy[1]}</small></label>}
     {mode==="topic"&&<label>{ft(lang,"title")}
       <input type="text" name="title" minlength="12" maxlength="160" required/>
     </label>}
@@ -391,6 +393,7 @@ const strings=JSON.stringify({
 </style>
 <script>
 import {isLocale} from "../lib/locales.ts";
+import {parseAssistedDraft,ASSISTED_DRAFT_MAX_BYTES} from "../lib/forum-assisted-draft.mjs";
 import {initForumEditor} from "../lib/forum-editor-client.ts";
 import {draftLengthState,wouldOverflowForumPaste} from "../lib/forum-draft-length.mjs";
 import {FORUM_SESSION_KEY,readForumSession,rememberForumSession,clearForumSession,isForumRemembered}
@@ -583,6 +586,32 @@ for(const widget of widgets){
    msg(copy.draftRestored);
   }catch{}
  }
+ const assistedFile=el<HTMLInputElement>("[data-assisted-draft-file]");
+ const assistedCopy=JSON.parse(widget.dataset.assistedDraftCopy||"[]") as string[];
+ assistedFile?.addEventListener("change",async()=>{
+  const file=assistedFile.files?.[0]; assistedFile.value="";
+  if(!file||!postForm||!token||!userId||postForm.hidden)return;
+  const account=userId, session=token;
+  const hasExisting=()=>["title","body"].some(name=>String(new FormData(postForm).get(name)||"").trim());
+  if(hasExisting()){msg(assistedCopy[4]);return}
+  try{
+   if(file.size>ASSISTED_DRAFT_MAX_BYTES)throw Error("invalid");
+   const draft=parseAssistedDraft(await file.text(),bodyField?.maxLength||12000);
+   if(account!==userId||session!==token||postForm.hidden)return;
+   if(hasExisting()){msg(assistedCopy[4]);return}
+   for(const name of ["category","source_locale","tractor_id"] as const){
+    const field=postForm.elements.namedItem(name);
+    if(!(field instanceof HTMLSelectElement)||![...field.options].some(o=>o.value===draft[name]))throw Error("invalid");
+   }
+   for(const name of draftNames){
+    const field=postForm.elements.namedItem(name);
+    if(field && "value" in field)field.value=draft[name as keyof typeof draft];
+   }
+   const consent=postForm.elements.namedItem("translation_consent");
+   if(consent instanceof HTMLInputElement)consent.checked=false;
+   updateBodyLength();editor?.refresh();saveDraft();msg(assistedCopy[2]);
+  }catch{if(account===userId&&session===token)msg(assistedCopy[3])}
+ });
  postForm?.addEventListener("input",saveDraft);
  postForm?.addEventListener("change",saveDraft);
  let historyVersion=0;
