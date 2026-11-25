@@ -4,8 +4,8 @@ import {reviewedIdentityFallback,reviewedIdentityFallbackHeadings} from "../src/
 import {specLabel} from "../src/lib/catalog.ts";
 const locales=["tr","zh","hi","pt-br","fr","de","ru","ja","es"];
 test("every reviewed stable-ID English display heading has a native fallback in all nine target languages",()=>{
- assert.equal(reviewedIdentityFallbackHeadings.length,96);
- assert.equal(new Set(reviewedIdentityFallbackHeadings).size,96);
+ assert.equal(reviewedIdentityFallbackHeadings.length,154);
+ assert.equal(new Set(reviewedIdentityFallbackHeadings).size,154);
  for(const heading of reviewedIdentityFallbackHeadings){
   for(const lang of locales){
    assert.notEqual(reviewedIdentityFallback(heading,heading,lang),heading,lang+" "+heading);
@@ -30,4 +30,13 @@ test("high impact reviewed engineering labels preserve source details and values
  }
  const lift="Continuous Rear Lift Capacity At 610 Mm (OECD)";
  for(const lang of locales)assert.match(reviewedIdentityFallback(lift,lift,lang),/610/);
+});
+
+
+test("second reviewed batch preserves measurement standards and qualifiers",()=>{
+ for(const locale of locales){
+  for(const [label,pattern] of [["Engine Rpm At Maximum Power (ISO 14396)",/ISO 14396/],["Lift Capacity At 610mm Behind Lift Point",/610/],["Engine RPM At 540 PTO",/540/],["Engine RPM At 1000 PTO",/1000/],["Category V Drawbar Vertical Load",/V/]])assert.match(reviewedIdentityFallback(label,label,locale),pattern,locale+" "+label);
+  assert.notEqual(reviewedIdentityFallback("Maximum Reverse Speed","Maximum Reverse Speed",locale),reviewedIdentityFallback("Minimum Reverse Speed","Minimum Reverse Speed",locale));
+ }
+ assert.equal(reviewedIdentityFallback("Engine Max Power Hp 2000 25 Ec","Engine Max Power Hp 2000 25 Ec","fr"),"Engine Max Power Hp 2000 25 Ec");
 });
