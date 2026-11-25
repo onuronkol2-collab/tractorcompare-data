@@ -3,17 +3,19 @@ import assert from "node:assert/strict";
 import {readFileSync} from "node:fs";
 import {stripTypeScriptTypes} from "node:module";
 import vm from "node:vm";
+import {forumBrowseOrder} from "../src/lib/forum-browse.mjs";
 const read=path=>readFileSync(new URL("../src/"+path,import.meta.url),"utf8");
 const hub=read("components/ForumHub.astro");
 const live=read("lib/forum-live-client.ts");
 test("forum sorting preserves existing order and only reparents when real rank changes",()=>{
- const older={dataset:{forumReplyCount:"4",forumPublishedAt:"2026-11-21T00:00:00Z"}};
+ const older={dataset:{forumReplyCount:"4",forumPublishedAt:"2026-11-21T00:00:00Z",forumActivityAt:"2026-11-24T00:00:00Z"}};
  const newer={dataset:{forumReplyCount:"1",forumPublishedAt:"2026-11-22T00:00:00Z"}};
  let rows=[newer,older],writes=0;
  const grid={querySelectorAll:()=>rows.slice(),append(row){writes++;rows=rows.filter(x=>x!==row);rows.push(row)}};
  const document={querySelectorAll:()=>[grid]};
  const script=hub.slice(hub.indexOf(" const sortPublicRows="),hub.indexOf(" const updatePublicCounts="));
- const context=vm.createContext({document,view:"latest",replyCount:el=>Number(el.dataset.forumReplyCount),publishedAt:el=>Date.parse(el.dataset.forumPublishedAt)});
+ for(const row of [older,newer])row.hasAttribute=name=>name==="data-forum-reply-count";
+ const context=vm.createContext({document,view:"latest",sortSelect:{value:"newest"},forumBrowseOrder,replyCount:el=>Number(el.dataset.forumReplyCount)});
  vm.runInContext(stripTypeScriptTypes(script+"\nsortPublicRows();"),context);
  assert.equal(writes,0);
  context.view="popular";vm.runInContext("sortPublicRows();",context);
@@ -21,6 +23,9 @@ test("forum sorting preserves existing order and only reparents when real rank c
  vm.runInContext("sortPublicRows();",context);assert.equal(writes,2);
  context.view="latest";vm.runInContext("sortPublicRows();",context);
  assert.deepEqual(rows,[newer,older]);
+ context.sortSelect.value="activity";vm.runInContext("sortPublicRows();",context);
+ assert.deepEqual(rows,[older,newer]);assert.equal(writes,6);
+ vm.runInContext("sortPublicRows();",context);assert.equal(writes,6);
 });
 test("unchanged forum filter values do not trigger repeated writes",()=>{
  const fragment=hub.slice(hub.indexOf(" const setText="),hub.indexOf(" const replyCount="));

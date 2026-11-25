@@ -13,7 +13,7 @@ import {FORUM_LIVE_TEXT} from "./forum-live-i18n.ts";
 
 type PubRow={
  id:string;topic_id:string;locale:string;original_locale:string;status:string;
- title:string;body:string;slug:string;category:string;created_at:string;
+ title:string;body:string;slug:string;category:string;created_at:string;tractor_id?:string|null;
  machine_translated:boolean
 };
 type PublicConfig={url:string;key:string;lang:Locale};
@@ -95,7 +95,7 @@ export function initForumLive(root:HTMLElement):void{
   const current=++call;
   if(showPending){root.hidden=false;status.textContent=text.pending;}
   const query=new URLSearchParams({
-   select:"id,topic_id,locale,original_locale,slug,category,status,created_at,title,body,machine_translated",
+   select:"id,topic_id,locale,original_locale,slug,category,status,created_at,title,body,machine_translated,tractor_id",
    locale:"eq."+cfg!.lang,status:"eq.published",order:"created_at.desc",limit:"60"
   });
   try{
@@ -115,12 +115,18 @@ export function initForumLive(root:HTMLElement):void{
    const byId=new Map<string,PubRow>();
    for(const row of approved)if(!byId.has(row.topic_id))byId.set(row.topic_id,row);
    const fragment=document.createDocumentFragment();
+   const modelLabels=new Map([...document.querySelectorAll<HTMLOptionElement>("[data-forum-tractor] option")].map(option=>[option.value,option.textContent||""]));
    for(const row of byId.values()){
     const article=make("article");article.className="community-topic forum-live-topic";
     article.dataset.forumTopic="";article.dataset.forumTopicId=row.topic_id;
     article.dataset.forumTopicCategory=row.category;
     article.dataset.forumPublishedAt=row.created_at;
-    article.dataset.forumSearch=forumSearchText(row.title+" "+row.body,cfg!.lang);
+    article.dataset.forumActivityAt=row.created_at;
+    const modelId=typeof row.tractor_id==="string"&&uuid.test(row.tractor_id)?row.tractor_id:"";
+    const modelLabel=modelLabels.get(modelId)||"";
+    article.dataset.forumModelId=modelId;
+    article.dataset.forumModelLabel=modelLabel;
+    article.dataset.forumSearch=forumSearchText(row.title+" "+row.body+" "+modelLabel,cfg!.lang);
     const meta=make("p");meta.className="forum-live-meta";
     const time=make("time");time.dateTime=row.created_at;
     time.textContent=dateFormatter.format(new Date(row.created_at));meta.append(time);
