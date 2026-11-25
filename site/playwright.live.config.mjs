@@ -11,7 +11,7 @@ export default defineConfig({
   forbidOnly: Boolean(process.env.CI),
   retries: process.env.CI ? 1 : 0,
   workers: 1,
-  reporter: process.env.CI ? [["list"], ["html", {open:"never",outputFolder:"playwright-live-report"}]] : "list",
+  reporter: process.env.CI ? [["list"], ["html", {open:"never",outputFolder:"playwright-live-report"}], ...(process.env.PLAYWRIGHT_JSON_OUTPUT_FILE ? [["json",{outputFile:process.env.PLAYWRIGHT_JSON_OUTPUT_FILE}]] : [])] : "list",
   outputDir: "test-results-live",
   use: {
     baseURL: "https://tractorvs.com",

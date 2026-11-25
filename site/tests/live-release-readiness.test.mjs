@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import {releaseFromHtml,waitForProductionRelease,mainDescendantVerifier} from "../scripts/live-release-readiness.mjs";
+import {releaseFromHtml,waitForProductionRelease,mainDescendantVerifier,trustedWorkersRelease} from "../scripts/live-release-readiness.mjs";
 const A="a".repeat(40),B="b".repeat(40),C="c".repeat(40);
 const html=sha=>'<meta name="tractorvs-release-sha" content="'+sha+'">';
 const page=sha=>new Response(html(sha),{headers:{"content-type":"text/html"}});
@@ -23,4 +23,30 @@ test("mixed production pages never pass or execute content tests",async()=>{
 });
 test("preflight rejects off-origin or malformed path input",async()=>{
  for(const path of ["//evil.example/","/../","https://example.com/","/tr/?x=1"])await assert.rejects(waitForProductionRelease({target:A,paths:[path]}),/Invalid readiness routes/);
+});
+
+test("served release still needs trusted successful Workers build before content QA",async()=>{
+ let calls=0,checks=0,pauses=0;
+ const r=await waitForProductionRelease({target:A,paths:["/tr/compare/","/tr/tractors/"],fetchFn:async()=>{calls++;return page(A)},confirmRelease:async sha=>{assert.equal(sha,A);return ++checks===2;},sleep:async()=>pauses++});
+ assert.equal(r.status,"ready");assert.equal(calls,4);assert.equal(pauses,1);
+});
+test("build gate checks exact observed SHA and fails closed",async()=>{
+ const verify=conclusion=>trustedWorkersRelease({token:"test",fetchFn:async(url)=>{
+  assert.ok(url.includes("/commits/"+B+"/check-runs?"));
+  return Response.json({check_runs:[{id:1,name:"Workers Builds: tractorvs-site",head_sha:B,app:{slug:"cloudflare-workers-and-pages"},status:conclusion?"completed":"in_progress",conclusion}]});
+ }});
+ assert.equal(await verify(null)(B),false);
+ assert.equal(await verify("success")(B),true);
+ await assert.rejects(verify("failure")(B),/PRODUCTION_BUILD_FAILED/);
+});
+test("longer production polling remains bounded and does not grade stale content",async()=>{
+ let calls=0;
+ const r=await waitForProductionRelease({target:B,attempts:46,fetchFn:async()=>{calls++;return page(A)},sleep:async()=>{}});
+ assert.equal(r.status,"deployment_pending");assert.equal(calls,46);assert.equal(r.contentChecks,0);
+ await assert.rejects(waitForProductionRelease({target:B,attempts:47}),/Invalid readiness configuration/);
+});
+test("immutable non-descendant relationships avoid repeated GitHub comparisons",async()=>{
+ let calls=0;
+ const verify=mainDescendantVerifier({fetchFn:async()=>{calls++;return Response.json({status:"behind",behind_by:1})}});
+ assert.equal(await verify(B,A),false);assert.equal(await verify(B,A),false);assert.equal(calls,1);
 });

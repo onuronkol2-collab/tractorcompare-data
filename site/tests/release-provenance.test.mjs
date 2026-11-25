@@ -37,6 +37,8 @@ test("live push QA requires coherent verified release provenance on both public 
   assert.match(readiness, /merge_base_commit\?\.sha===sha/);
   assert.match(readiness, /DEPLOYMENT_PENDING: requested release not visible; no content assertions performed/);
   assert.ok(liveQa.indexOf("node site/scripts/live-release-readiness.mjs") < liveQa.indexOf("npx playwright test"));
+  assert.match(liveQa,/TRACTORVS_REQUIRE_WORKERS_BUILD: "true"/);
+  assert.match(liveQa,/needs: \[release-readiness, live-browser-projects\]/);
 });
 
 test("production SHA comparison requires exactly one real, matching static meta tag", () => {

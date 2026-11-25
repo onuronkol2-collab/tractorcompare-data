@@ -8,6 +8,7 @@ on:
       - "site/scripts/live-public-response.mjs"
       - "site/scripts/live-lastmod-proof.mjs"
       - "site/scripts/live-release-readiness.mjs"
+      - "site/scripts/workers-build-readiness.mjs"
       - "site/src/lib/release-provenance.mjs"
       - "site/tests/live-release-readiness.test.mjs"
       - "site/tests/live-lastmod-proof.test.mjs"
@@ -31,6 +32,7 @@ on:
       - "site/scripts/live-public-response.mjs"
       - "site/scripts/live-lastmod-proof.mjs"
       - "site/scripts/live-release-readiness.mjs"
+      - "site/scripts/workers-build-readiness.mjs"
       - "site/src/lib/release-provenance.mjs"
       - "site/tests/live-release-readiness.test.mjs"
       - "site/tests/live-lastmod-proof.test.mjs"
@@ -64,6 +66,7 @@ on:
 
 permissions:
   contents: read
+  checks: read
 
 jobs:
   inspect:
@@ -95,6 +98,7 @@ jobs:
         if: github.event_name != 'pull_request'
         env:
           GITHUB_TOKEN: ${{ github.token }}
+          TRACTORVS_REQUIRE_WORKERS_BUILD: "true"
         run: node site/scripts/live-lastmod-proof.mjs "$GITHUB_SHA"
       - name: Verify full sitemap inventory and inspect live SEO (daily rotating sample; weekly all pages)
         if: ${{ !cancelled() && github.event_name != 'pull_request' }}
