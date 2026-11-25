@@ -131,3 +131,16 @@ test("home and comparison use the same accessible combobox keyboard rules",()=>{
   assert.match(home,/event\.isComposing/);
   assert.match(home,/event\.key === "Tab"/);
 });
+
+import {isPublishedSpecList} from "../src/lib/compare-display.mjs";
+test("malformed comparison responses fail closed and valid empty records remain valid",()=>{
+  const spec={key:"engine_power",label:"Engine power",value:"75",unit:"HP",context:null,rpm:2200,source:null,notice:null};
+  assert.equal(isPublishedSpecList([spec]),true);
+  assert.equal(isPublishedSpecList([]),true);
+  for(const invalid of [null,{},[null],[{...spec,value:75}],[{...spec,key:""}],[{...spec,rpm:"2200"}],[{...spec,source:{url:"bad"}}]])assert.equal(isPublishedSpecList(invalid),false);
+  const component=readFileSync(new URL("../src/components/TractorComparison.astro",import.meta.url),"utf8");
+  assert.ok(component.indexOf("syncSelection(left,right);") < component.indexOf("await Promise.all([loadSpecs(left), loadSpecs(right)])"));
+  assert.match(component,/id="tc-retry" type="button"/);
+  assert.match(component,/if\(retry\)retry.hidden=false/);
+  assert.match(component,/if \(!isPublishedSpecList\(payload\)\) throw/);
+});
