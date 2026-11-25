@@ -816,9 +816,25 @@ const approvedExactManufacturerDocuments: Record<string, string[]> = {
     "https://pdf.agrale.com.br/2019/ficha-tecnica/en/tractor-agrale-575-super-1/255/",
   ],
   "iseki": [
+    // Reviewed TG6 model columns: publication checkpoint 20261124-iseki-lindner-twelve-models.
+    "https://www.iseki.co.jp/global/cms/upload/pdf/products/tractor/TG6%20Specification.pdf",
     "https://www.iseki.co.jp/global/cms/upload/pdf/products/tractor/t97_spec.pdf",
     // Exact ISEKI UK & Ireland TXGS24 range brochure (not arbitrary shared WordPress uploads).
     "https://www.iseki.co.uk/wp-content/uploads/2021/02/Iseki-TXGS24-Range-WEB-2.pdf",
+  ],
+  // Exact OEM pages verified in the 20261124 Iseki/Lindner and Erkunt/JCB publication checkpoints.
+  "jcb": [
+    "https://www.jcb.com/en-GB/products/machines/agricultural-tractors/6000-series/",
+    "https://www.jcb.com/en-GB/explore/insight/news/2025/11/jcb-launches-all-new-high-tech-fastrac-6000-series-tractors/",
+  ],
+  "lindner": [
+    "https://www.lindner-traktoren.at/en/tractors-transporters/lintrac/lintrac-75-ls",
+    "https://www.lindner-traktoren.at/en/tractors-transporters/lintrac/lintrac-95-ls",
+    "https://www.lindner-traktoren.at/en/tractors-transporters/lintrac/lintrac-115-ls",
+    "https://www.lindner-traktoren.at/en/tractors-transporters/tractors/lintrac-160",
+  ],
+  "erkunt": [
+    "https://erkunttraktor.com.tr/assets/model_dosyalar/pdfs/LuksCRD5Brosur.pdf?t=20260304140933",
   ],
   "lamborghini trattori": [
     "https://www.lamborghini-tractors.com/en-eu/tractors/vineyards-orchards-compacts/download/7987_d432d453ca77b6271f17857f0d842cd0",
@@ -916,7 +932,7 @@ export function officialManufacturerSourceUrl(
   const raw = safeHttpUrl(spec.source_url);
   if (!raw) return null;
   const url = new URL(raw);
-  if (url.protocol !== "https:" || url.username || url.password) return null;
+  if (url.protocol !== "https:" || url.username || url.password || url.port) return null;
   // Identical STEYR publication code 23S0001COMINB, 09/2023, at its current OEM download URL.
   if (brandName.trim().toLowerCase() === "steyr" && url.href === "https://assets.cnhindustrial.com/steyr/assets/Agriculture/Products/Tractors/Absolut%20Series/NEUE%206280%20ABSOLUT%20CVT/Brochures/2023/23s0001-cominb_absolut_p32_low.pdf") {
     return "https://cnhi-p-001-delivery.sitecorecontenthub.cloud/api/public/content/76a92c3114b14b28a2817ad0977309c9?v=ab84c59d";
