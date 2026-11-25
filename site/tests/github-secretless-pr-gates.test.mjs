@@ -24,6 +24,6 @@ test("protected translation production preview cannot be run by forks/Dependabot
  assert.match(p,/SUPABASE_ANON_KEY: \$\{\{ secrets\.TRACTORVS_SUPABASE_ANON_JWT \}\}/);
  assert.match(p,/TRANSLATION_MAX_TR_OCCURRENCES: "0"/);
  assert.match(p,/TRANSLATION_MAX_EN_SOURCE_OCCURRENCES: "0"/);
- assert.match(p,/TRANSLATION_ZERO_LOCALES: "tr,zh,hi,de,ru,ja"/);
+ assert.match(p,/TRANSLATION_ZERO_LOCALES: "tr,zh,hi,de,ru,ja,pt-br,fr,es"/);
  assert.doesNotMatch(p,/pull_request_target/);
 });
