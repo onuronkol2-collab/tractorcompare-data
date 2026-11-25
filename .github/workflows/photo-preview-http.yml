@@ -20,18 +20,23 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
+          ref: ${{ github.event.pull_request.head.sha }}
       - name: Verify all changed first-party JPEGs are deployed at Cloudflare preview
         shell: bash
         env:
           SOURCE_BRANCH: ${{ github.head_ref }}
-          BASE_BRANCH: ${{ github.base_ref }}
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
         run: |
           set -euo pipefail
           branch_slug="$(printf '%s' "$SOURCE_BRANCH" | tr '[:upper:]' '[:lower:]' | sed 's|/|-|g; s|[^a-z0-9-]|-|g')"
           [[ "$branch_slug" =~ ^[a-z0-9][a-z0-9-]+$ ]] || { echo "Invalid preview branch slug"; exit 1; }
           origin="https://${branch_slug}-tractorvs-site.onuronkol2.workers.dev"
-          git fetch origin "$BASE_BRANCH" --depth=1
-          mapfile -t assets < <(git diff --name-only "origin/$BASE_BRANCH" HEAD -- site/public/images/tractors | grep -E '\.(jpg|jpeg)$' || true)
+          # Branch preview contains PR head; pin event SHAs across retries.
+          [[ "$BASE_SHA" =~ ^[0-9a-f]{40}$ && "$HEAD_SHA" =~ ^[0-9a-f]{40}$ ]]
+          [[ "$(git rev-parse HEAD)" == "$HEAD_SHA" ]]
+          changed="$(git diff --name-only --diff-filter=AMR "$BASE_SHA...$HEAD_SHA" -- site/public/images/tractors)"
+          mapfile -t assets < <(printf '%s\n' "$changed" | grep -E '\.(jpg|jpeg)$' || true)
           if (("${#assets[@]}" == 0)); then
             echo "No changed JPEG assets to verify."
             exit 0
@@ -41,6 +46,8 @@ jobs:
           trap 'rm -f "$tmp"' EXIT
           for path in "${assets[@]}"; do
             [[ "$path" =~ ^site/public/images/tractors/[a-z0-9-]+\.jpe?g$ ]] || { echo "Unsafe or unrecognized path: $path"; exit 1; }
+            [[ -f "$path" ]] || { echo "Missing checked-out JPEG: $path"; exit 1; }
+            expected_sha="$(sha256sum "$path" | cut -d' ' -f1)"
             asset_path="${path#site/public}"
             url="$origin$asset_path"
             ready=0
@@ -52,9 +59,14 @@ jobs:
                 [[ "$mime" == image/jpeg* ]] || { echo "Bad MIME $mime at $asset_path"; exit 1; }
                 [[ "$(file --brief --mime-type "$tmp")" == "image/jpeg" ]] || { echo "Body is not JPEG: $asset_path"; exit 1; }
                 [[ "$(wc -c < "$tmp")" -ge 10000 ]] || { echo "JPEG unexpectedly small: $asset_path"; exit 1; }
-                echo "OK $asset_path HTTP 200 $mime bytes=$(wc -c < "$tmp") sha256=$(sha256sum "$tmp" | cut -d' ' -f1)"
-                ready=1
-                break
+                actual_sha="$(sha256sum "$tmp" | cut -d' ' -f1)"
+                if [[ "$actual_sha" == "$expected_sha" ]]; then
+                  echo "OK $asset_path HTTP 200 $mime bytes=$(wc -c < "$tmp") sha256=$actual_sha"
+                  ready=1
+                  break
+                fi
+                echo "Preview JPEG SHA mismatch at $asset_path (attempt $attempt)"
+                status="sha-mismatch"
               fi
               if [[ "$status" == 429 || "$status" == 401 || "$status" == 403 ]]; then
                 echo "Non-retryable preview HTTP $status for $asset_path"

@@ -91,7 +91,7 @@ const ORIGINAL_PHOTO_ORIGINS:readonly Omit<TractorPhoto,"originThumbUrl"|"origin
     width:7008,height:3944,photographer:"MarcelX42",
     sourcePage:"https://commons.wikimedia.org/wiki/File:McCormick_X5.120_P3-Drive_Agritechnica_2023_(DSC03865).jpg",
     licenseName:"CC BY-SA 4.0",licenseUrl:"https://creativecommons.org/licenses/by-sa/4.0/",
-    configurationExact:false
+    resizedDerivative:true,configurationExact:false
   },
   {brand:"Belarus",model:"82.1",fileId:"belarus-82-1-homoatrox-open-day-2017-1",
     thumbUrl:W+"thumb/d/d9/Belarus_82.1_%28open_day_2017%29_1.jpg/480px-Belarus_82.1_%28open_day_2017%29_1.jpg",

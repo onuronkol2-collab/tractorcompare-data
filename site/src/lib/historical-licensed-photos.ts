@@ -519,6 +519,7 @@ const candidates=[
     "fileId": "steyr-6440-cervus-cvt-2025",
     "path": "2/23/Steyr_6440_Cervus_CVT_Agritechnica_2025_%28DSC04360%29.jpg",
     "photographer": "MarcelX42",
+    "resizedDerivative": true,
     "license": "CC BY-SA 4.0",
     "width": 6164,
     "height": 4627

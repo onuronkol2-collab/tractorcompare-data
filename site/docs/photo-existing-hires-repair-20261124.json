@@ -1,0 +1,66 @@
+{
+  "purpose": "Repair already-approved photos without changing identity or replacing 480px assets",
+  "artifact": 14954293624,
+  "run": 45465116389,
+  "job": 138697841951,
+  "artifactSha256": "43a20eb4c0853827e493eb3afe6fe850ae68f645b9a0decaff5898a763bdbd9c",
+  "license": "CC BY-SA 4.0",
+  "author": "MarcelX42",
+  "changes": "Resized and JPEG re-encoded; original hash, exact license, visual match to 480px and full decode checked. No new model approval.",
+  "entries": [
+    {
+      "fileId": "mccormick-x5-120-marcelx42-2023",
+      "sourcePage": "https://commons.wikimedia.org/wiki/File:McCormick_X5.120_P3-Drive_Agritechnica_2023_(DSC03865).jpg",
+      "sourceSha256": "5a62168a21f533ec491f37e239bce3ea57e109d0cfa1304038c9de9892aa500d",
+      "sourceSha1": "bfdff8bde929f81daba6179405581abb70869770",
+      "meanRgbDifferenceAgainstExisting480": [
+        6.397631172839506,
+        4.649814814814815,
+        5.453356481481482
+      ],
+      "derivatives": [
+        {
+          "file": "mccormick-x5-120-marcelx42-2023-960.jpg",
+          "width": 960,
+          "height": 540,
+          "bytes": 123623,
+          "sha256": "3097d1efc433ad7151c9653fc1c336b4d88ff7ebab8327c7fbb36d39b3940209"
+        },
+        {
+          "file": "mccormick-x5-120-marcelx42-2023-1920.jpg",
+          "width": 1920,
+          "height": 1081,
+          "bytes": 380288,
+          "sha256": "4599c4b7ea41afe97c03d03b5d5f0129fb4fc9a97759619e08e5cd6e45a6595d"
+        }
+      ]
+    },
+    {
+      "fileId": "steyr-6440-cervus-cvt-2025",
+      "sourcePage": "https://commons.wikimedia.org/wiki/File:Steyr_6440_Cervus_CVT_Agritechnica_2025_(DSC04360).jpg",
+      "sourceSha256": "24f300b3388b52b82e23bd7908f3b77c7298d39cceb3e7b1f2591918a95f23d0",
+      "sourceSha1": "21720daf96ca72f3cc18d3588f7b26f0009c9e02",
+      "meanRgbDifferenceAgainstExisting480": [
+        5.222091412742382,
+        4.022149122807018,
+        5.78303324099723
+      ],
+      "derivatives": [
+        {
+          "file": "steyr-6440-cervus-cvt-2025-960.jpg",
+          "width": 960,
+          "height": 721,
+          "bytes": 146739,
+          "sha256": "508c453ab84f2785798eaa5cc8bda7ee6f37b2d2907a97eed6fd6d15e5b3967d"
+        },
+        {
+          "file": "steyr-6440-cervus-cvt-2025-1920.jpg",
+          "width": 1920,
+          "height": 1441,
+          "bytes": 449056,
+          "sha256": "723e7c49a302fd2f5bfd8e77ddb099ba3fea90b624679ac9848499d35ce8641a"
+        }
+      ]
+    }
+  ]
+}
