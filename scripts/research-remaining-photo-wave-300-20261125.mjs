@@ -76,6 +76,27 @@ for(const cat of found){
  report.queries.push({kind:"category members",category:cat,returned:members.length,completed:Boolean(data)});
  for(const m of members)if(!held.has(normalizeTitle(m.title)))add(m.title,categories.get(cat),"exact model category; visual review required");
 }
+// Exact category names are sparse; scan brand-wide filename search results against
+// every remaining model of that brand, keeping the original exact identity gate.
+// This is candidate discovery only: visual model/angle review remains required.
+const byBrand=new Map();
+for(const row of targets){if(!byBrand.has(row.brand))byBrand.set(row.brand,[]);byBrand.get(row.brand).push(row);}
+const brandGroups=[...byBrand.entries()].sort((a,b)=>b[1].length-a[1].length||a[0].localeCompare(b[0]));
+const discoveryDeadline=Date.now()+Math.min(4*60*1000,Math.max(0,deadline-Date.now()-4*60*1000));
+for(const [brand,rows] of brandGroups){
+ if(paused||!withinBudget()||Date.now()>=discoveryDeadline)break;
+ const safeBrand=brand.replace(/["\\]/g," ");
+ const term=brand==="LS Tractor"?"LS tractor":safeBrand;
+ const data=await query({list:"search",srnamespace:6,srlimit:100,srsearch:'intitle:"'+term+'" filetype:bitmap'});
+ const results=data?.query?.search||[];
+ report.queries.push({kind:"brand-wide filename search",brand,returned:results.length,completed:Boolean(data)});
+ for(const item of results){
+  if(held.has(normalizeTitle(item.title)))continue;
+  const matches=rows.filter(r=>match(r,item.title));
+  if(matches.length)add(item.title,matches,"brand-wide filename search; visual review required");
+ }
+}
+await writeFile(root+"/report.json",JSON.stringify(report,null,2));
 const sorted=[...leads.values()].filter(x=>!held.has(normalizeTitle(x.title))).sort((a,b)=>Number(b.kinds.includes("archive"))-Number(a.kinds.includes("archive"))||a.targets.length-b.targets.length||a.title.localeCompare(b.title));
 const selected=[],counts=new Map();
 // Give distinct missing UUIDs first choice, then retain the other unique leads.
