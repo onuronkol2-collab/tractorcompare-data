@@ -238,3 +238,22 @@ test("exact one-time PR467 multilingual source correction gets truthful lastmod 
   assert.throws(()=>deriveHistory({pages,previous:{...previous,reviewedBulkCopyPr497:false},
     now:date2,reviewedPr467Copy:true}),/manual SEO review/,"Previous reviewed source checkpoint is required");
 });
+
+
+test("sitemap provenance runs before shared HTML inputs merge, not just component edits",()=>{
+  const workflow=readFileSync(new URL("../.github/workflows/tractorvs-sitemap-history.yml",import.meta.url),"utf8");
+  const patterns=section=>[...section.matchAll(/^      - "([^"]+)"$/gm)].map(m=>m[1]);
+  const push=workflow.split("  push:\n")[1].split("  pull_request:")[0];
+  const pr=workflow.split("  pull_request:")[1].split("\nconcurrency:")[0];
+  const expected=["site/src/**","!site/src/data/sitemap-lastmod.json","site/public/**",
+    "site/astro.config.mjs","site/package.json","site/package-lock.json",
+    "site/scripts/production-release-gate.mjs","site/scripts/verify-*.mjs",
+    "scripts/tractor-sitemap-history.mjs","scripts/tractor-sitemap-history.test.mjs",
+    ".github/workflows/tractorvs-sitemap-history.yml"];
+  assert.deepEqual(patterns(push),expected);
+  assert.deepEqual(patterns(pr),expected,"All significant source inputs must receive the same premerge guard");
+  assert.ok(expected.indexOf("!site/src/data/sitemap-lastmod.json")>expected.indexOf("site/src/**"),"Ledger-only generated updates must remain excluded");
+  assert.match(workflow,/if ! changed_paths="\$\(git diff --name-only "\$AUDITED_BASE" origin\/main\)"; then/);
+  assert.ok(workflow.includes("seo/sitemap-content-history\\.json$"),"A concurrent history checkpoint invalidates the audited baseline");
+  assert.ok(workflow.includes("package(-lock)?\\.json$"),"Dependency changes invalidate the audited build");
+});

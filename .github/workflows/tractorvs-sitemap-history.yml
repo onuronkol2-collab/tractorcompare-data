@@ -15,20 +15,31 @@ on:
   push:
     branches: [main]
     paths:
+      # Shared catalogue, metadata, translations, routes and styles can all
+      # change the significant HTML digest, even without editing TractorDetail.
       - "site/src/**"
       - "!site/src/data/sitemap-lastmod.json"
+      - "site/public/**"
       - "site/astro.config.mjs"
+      - "site/package.json"
+      - "site/package-lock.json"
+      - "site/scripts/production-release-gate.mjs"
+      - "site/scripts/verify-*.mjs"
       - "scripts/tractor-sitemap-history.mjs"
       - "scripts/tractor-sitemap-history.test.mjs"
       - ".github/workflows/tractorvs-sitemap-history.yml"
   pull_request:
     paths:
-      # Model detail presentation can affect thousands of published HTML
-      # digests. Run the *real* source/RLS-backed sitemap guard BEFORE merge.
-      - "site/src/components/TractorDetail.astro"
-      - "site/src/components/TractorPhoto.astro"
-      - "site/src/styles/model-research-toc.css"
+      # Shared catalogue, metadata, translations, routes and styles can all
+      # change the significant HTML digest, even without editing TractorDetail.
+      - "site/src/**"
+      - "!site/src/data/sitemap-lastmod.json"
+      - "site/public/**"
       - "site/astro.config.mjs"
+      - "site/package.json"
+      - "site/package-lock.json"
+      - "site/scripts/production-release-gate.mjs"
+      - "site/scripts/verify-*.mjs"
       - "scripts/tractor-sitemap-history.mjs"
       - "scripts/tractor-sitemap-history.test.mjs"
       - ".github/workflows/tractorvs-sitemap-history.yml"
@@ -150,8 +161,13 @@ jobs:
             # or rebase stale content over a changed published site.
             for attempt in 1 2 3; do
               git fetch origin main
-              if git diff --name-only "$AUDITED_BASE" origin/main |
-                grep -Eq '^(site/src/|site/astro.config.mjs|site/public/)'; then
+              # A failed comparison must never be mistaken for no changes.
+              if ! changed_paths="$(git diff --name-only "$AUDITED_BASE" origin/main)"; then
+                echo "::error::Could not compare audited revision with main; refusing stale provenance write."
+                exit 1
+              fi
+              if printf '%s\n' "$changed_paths" |
+                grep -Eq '^(site/(src/|public/|scripts/|astro\.config\.mjs$|package(-lock)?\.json$)|scripts/tractor-sitemap-history(\.test)?\.mjs$|seo/sitemap-content-history\.json$|\.github/workflows/tractorvs-sitemap-history\.yml$)'; then
                 echo "::error::Public-site input changed during sitemap audit; refusing to record stale lastmod. A scheduled run will rebuild from the new source."
                 exit 1
               fi
