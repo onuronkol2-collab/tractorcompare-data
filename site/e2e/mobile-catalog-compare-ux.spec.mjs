@@ -177,6 +177,12 @@ test("comparison combobox retains input focus and differing-data view is shareab
     await route.fulfill({response,body:html});
   });
   await page.goto("/tr/compare/",{waitUntil:"load"});
+  // Exercise the actual consent controls rather than forcing a click through
+  // the fixed mobile banner. The user's rejection must persist across reload.
+  const consentBanner=page.locator("#tractorvs-analytics-banner");
+  await expect(consentBanner).toBeVisible();
+  await page.locator("#tractorvs-analytics-reject").click();
+  await expect(consentBanner).toBeHidden();
   await expect(page.locator("#tc-picker")).toHaveClass(/tc-js-ready/);
   const input=page.locator("#tc-left-search");
   await input.focus();
@@ -198,6 +204,7 @@ test("comparison combobox retains input focus and differing-data view is shareab
   }
   await expect.poll(()=>new URL(page.url()).searchParams.get("view")).toBe("different");
   await page.reload({waitUntil:"load"});
+  await expect(consentBanner).toBeHidden();
   await expect(diff).toHaveAttribute("aria-pressed","true");
   if(fixture)await expect(page.locator("#tc-rows th")).toHaveText(["QA Difference"]);
   await page.locator("#tc-shared").click();
