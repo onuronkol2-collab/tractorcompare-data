@@ -1775,15 +1775,15 @@ const rows:readonly (readonly string[])[]=[
   ],
   [
     "Maximum Hydraulic Operating Pressure",
-    "Hidrolik çalışma basıncı",
-    "液压工作压力",
-    "हाइड्रोलिक कार्य दबाव",
-    "Pressão de trabalho hidráulica",
-    "Pression de service hydraulique",
-    "Hydraulikbetriebsdruck",
-    "Рабочее давление гидросистемы",
-    "油圧作動圧力",
-    "Presión de trabajo hidráulica"
+    "Azami hidrolik çalışma basıncı",
+    "最大液压工作压力",
+    "अधिकतम हाइड्रोलिक कार्य दबाव",
+    "Pressão máxima de trabalho hidráulica",
+    "Pression de service hydraulique maximale",
+    "Maximaler Hydraulikbetriebsdruck",
+    "Максимальное рабочее давление гидросистемы",
+    "最大油圧作動圧力",
+    "Presión máxima de trabajo hidráulica"
   ],
   [
     "Engine Gross Power",
