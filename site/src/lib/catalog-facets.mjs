@@ -3,6 +3,21 @@
  * only source-published model attributes can qualify a filter.
  * These parameters are visitor view state, never canonical search pages.
  */
+import {MARKET_COUNTRIES} from "./market-prices.ts";
+import {matchesDocumentedCatalogueMarket} from "./farm-advisor.ts";
+
+export const CATALOG_MARKET_COPY = {
+  en:{label:"Documented model market",note:"Not local availability or approval."},
+  tr:{label:"Belgelenmiş model pazarı",note:"Yerel satış durumu veya onay anlamına gelmez."},
+  zh:{label:"有记录的型号市场",note:"不代表当地有货或已获批准。"},
+  hi:{label:"दर्ज मॉडल बाज़ार",note:"स्थानीय उपलब्धता या मंज़ूरी का प्रमाण नहीं।"},
+  "pt-br":{label:"Mercado documentado do modelo",note:"Não indica disponibilidade ou aprovação local."},
+  fr:{label:"Marché documenté du modèle",note:"Ne garantit ni disponibilité ni homologation locale."},
+  de:{label:"Dokumentierter Modellmarkt",note:"Keine Aussage zur lokalen Verfügbarkeit oder Zulassung."},
+  ru:{label:"Документированный рынок модели",note:"Не означает наличие или допуск на местном рынке."},
+  ja:{label:"資料に記載されたモデル市場",note:"現地での販売状況や認可を示すものではありません。"},
+  es:{label:"Mercado documentado del modelo",note:"No indica disponibilidad ni homologación local."},
+};
 export const CATALOG_FACET_COPY = {
   en:{filters:"Refine published models",brand:"Manufacturer",power:"Engine power",year:"Model year",sort:"Sort models",all:"All",up50:"Up to 50 HP",p51:"Over 50–100 HP",p101:"Over 100–150 HP",over150:"Over 150 HP",recent:"2020 or newer",older:"Before 2020",default:"Manufacturer A–Z",newest:"Newest model year",powerAsc:"Power: low to high",powerDesc:"Power: high to low",reset:"Reset filters"},
   tr:{filters:"Yayımlanmış modelleri filtrele",brand:"Marka",power:"Motor gücü",year:"Model yılı",sort:"Modelleri sırala",all:"Tümü",up50:"50 HP ve altı",p51:"50 üzeri–100 HP",p101:"100 üzeri–150 HP",over150:"150 HP üzeri",recent:"2020 ve sonrası",older:"2020 öncesi",default:"Marka A–Z",newest:"En yeni model yılı",powerAsc:"Güç: düşükten yükseğe",powerDesc:"Güç: yüksekten düşüğe",reset:"Filtreleri sıfırla"},
@@ -23,15 +38,18 @@ export function normalizedFacetState(params,brands=[]) {
   const power=params.get("power")||"";
   const year=params.get("year")||"";
   const sort=params.get("sort")||"brand";
+  const market=params.get("market")||"";
   return {
     brand:brands.includes(brand)?brand:"",
     power:VALID_POWER.includes(power)?power:"",
     year:VALID_YEAR.includes(year)?year:"",
+    market:MARKET_COUNTRIES.includes(market)?market:"",
     sort:VALID_SORT.includes(sort)?sort:"brand",
   };
 }
 export function matchesCatalogueFacet(row,state) {
   if(state.brand && row.brand!==state.brand)return false;
+  if(state.market&&!matchesDocumentedCatalogueMarket(row.market??null,state.market))return false;
   if(state.power) {
     const hp=Number(row.power);
     if(row.power==null || row.power==="" || !Number.isFinite(hp))return false;
