@@ -674,6 +674,15 @@ for(const widget of widgets){
    const data=await response.json();
    if(typeof data?.id!=="string")throw Error("invalid");
    if(attempt!==activeAuthAttempt)return false;
+   // A verified account switch must not carry another member's draft,
+   // unpublished history, pending photos or in-flight history response.
+   if(userId&&userId!==data.id){
+    ++historyVersion;
+    if(historyPanel)historyPanel.open=false;
+    historyList?.replaceChildren();
+    if(historyStatus)historyStatus.textContent="";
+    postForm?.reset();editor?.clear();editor?.refresh();updateBodyLength();
+   }
    userId=data.id;saveSession(access,rotatedRefresh);setLogin(true);restoreDraft();return true;
   }catch(error){
    if(attempt===activeAuthAttempt&&error instanceof Error&&

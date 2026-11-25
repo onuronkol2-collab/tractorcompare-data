@@ -5,6 +5,7 @@ import ForumRichText from "./ForumRichText.astro";
 import {forumBlocks} from "../lib/forum-format.mjs";
 import {relatedForumTopics} from "../lib/forum-discovery.mjs";
 import {FORUM_THREAD_NAV_TEXT} from "../lib/forum-thread-nav-i18n.ts";
+import {THREAD_TOOLS} from "../lib/forum-thread-tools-i18n.ts";
 import "../styles/forum-readable.css";
 import ForumMediaGallery from "./ForumMediaGallery.astro";
 import {forumText as ft} from "../lib/forum-i18n.ts";
@@ -27,6 +28,7 @@ const catalog=(await getPublicCatalog()).tractors;
 const tractor=topic.tractor_id?catalog.find(t=>t.tractor_id===topic.tractor_id):null;
 const forumUrl=localizedPath(lang,"/forum/");
 const threadNav=FORUM_THREAD_NAV_TEXT[lang];
+const tools=THREAD_TOOLS[lang];
 // The table of contents comes solely from this published post's real H2 headings.
 const headingLinks=forumBlocks(topic.body).flatMap((block,index)=>
  block.type==="heading"&&block.level===2
@@ -65,14 +67,14 @@ const schema=eligible?{
 ---
 <SiteLayout lang={lang} title={sourceAwareForumSeoTitle(topic.topic_id,lang,topic.title)} description={seoDescription}
   indexable={eligible} structuredData={schema} availableLocales={availableLocales} indexableLocales={indexableLocales}>
- <div class="forum-thread">
+ <div class="forum-thread" data-thread-tools-lang={lang} data-thread-canonical={new URL(publicPath,origin).href}>
   <div class="container">
    <nav class="thread-breadcrumb" aria-label={threadNav.navigation}>
     <a href={forumUrl} class="forum-home-button"><span class="forum-home-icon" aria-hidden="true">←</span><span>{threadNav.home}</span></a>
     <span class="thread-breadcrumb-separator" aria-hidden="true">/</span>
     <a class="thread-breadcrumb-current" href={forumUrl+"?category="+encodeURIComponent(topic.category)}>{ft(lang,topic.category)}</a>
    </nav>
-   <article class="forum-first-post">
+   <article class="forum-first-post" id="forum-topic-start">
     <div class="thread-meta">
      <span>{ft(lang,topic.category)}</span>
      <time datetime={topic.created_at}>{forumDate(topic.created_at,lang)}</time>
@@ -81,6 +83,12 @@ const schema=eligible?{
     <h1>{topic.title}</h1>
     <div class="forum-topic-navigation">
       <a class="forum-jump-replies" href="#forum-replies-heading">{threadNav.replies}<span aria-hidden="true">↓</span></a>
+      <a class="forum-jump-replies" href="#forum-compose">{tools.reply}</a>
+      <div class="forum-public-tools" data-thread-js hidden>
+       <button type="button" data-thread-action="share">{tools.share}</button>
+       <button type="button" data-thread-action="copy-topic">{tools.copy}</button>
+       <button type="button" data-thread-action="print">{tools.print}</button>
+      </div>
     </div>
     {showContents&&<details class="forum-topic-toc">
       <summary>{threadNav.onThisPage} <span class="forum-topic-toc-count" aria-hidden="true">{headingLinks.length}</span></summary>
@@ -110,7 +118,16 @@ const schema=eligible?{
       <span data-engagement-status role="status" aria-live="polite"></span>
    </div>
    <section class="forum-replies" aria-labelledby="forum-replies-heading">
+    <div class="forum-thread-feedback" data-thread-js hidden>
+      <p data-thread-tools-status role="status" aria-live="polite"></p>
+      <input type="text" readonly data-thread-copy-fallback aria-label={tools.copy} hidden/>
+    </div>
     <h2 id="forum-replies-heading">{ft(lang,"replies")} (<span data-forum-reply-total={replies.length}>{replies.length}</span>)</h2>
+    <div class="forum-reply-filter" data-thread-reply-filter hidden>
+      <label>{tools.filter}<input type="search" data-thread-reply-search maxlength="160" autocomplete="off"/></label>
+      <button type="button" data-thread-action="clear">{tools.clear}</button>
+      <p data-thread-filter-status role="status" aria-live="polite"></p>
+    </div>
     {replies.map(({reply,original},i)=><article class="forum-reply" id={"reply-"+reply.id} data-static-reply-id={reply.id}>
       <div class="reply-meta">
        <a href={"#reply-"+reply.id}>#{i+1}</a>
@@ -118,7 +135,11 @@ const schema=eligible?{
        {reply.machine_translated&&<span>{ft(lang,"translated")}</span>}
       </div>
       {reply.locale!==lang&&<p class="reply-language">{ft(lang,"originalLanguage")} · <bdi lang={LOCALE_TAGS[reply.locale]}>{LOCALE_NAMES[reply.locale]}</bdi></p>}
-      <div lang={LOCALE_TAGS[reply.locale]}><ForumRichText body={reply.body} lang={reply.locale}/></div>
+      <div lang={LOCALE_TAGS[reply.locale]} data-thread-reply-body><ForumRichText body={reply.body} lang={reply.locale}/></div>
+      <div class="forum-reply-tools" data-thread-reply-actions data-thread-js hidden>
+       <button type="button" data-thread-action="copy-reply">{tools.copy}</button>
+       <button type="button" data-thread-action="quote">{tools.quote}</button>
+      </div>
       <ForumMediaGallery lang={lang} photos={replyMedia(reply.id)} contentLanguage={LOCALE_TAGS[reply.original_locale]}/>
       <div class="forum-helpful" data-helpful-reply data-reply-id={reply.id}>
        <button type="button" data-helpful-toggle aria-pressed="false">{mt(lang,"helpfulButton")}</button>
@@ -141,12 +162,31 @@ const schema=eligible?{
      <ul>{related.map(item=><li><a href={forumUrl+item.slug+"/"}>{item.title}</a><small>{ft(lang,item.category)}</small></li>)}</ul>
    </section>}
    <nav class="forum-back" aria-label={threadNav.navigation}>
+    <a href="#forum-topic-start" class="forum-topic-top-button">{tools.top}</a>
     <a href={forumUrl} class="forum-home-button"><span class="forum-home-icon" aria-hidden="true">←</span><span>{threadNav.home}</span></a>
    </nav>
   </div>
  </div>
 </SiteLayout>
 <style>
+.forum-public-tools,.forum-thread :global(.forum-reply-tools),.forum-reply-filter{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:10px 0;min-width:0}
+.forum-thread :global([data-thread-action]){font:inherit;font-size:13px;min-height:44px;padding:8px 12px;border:1px solid #aac9ad;border-radius:9px;background:#f3f8f1;color:#21593b;cursor:pointer}
+.forum-thread :global([data-thread-action]:focus-visible){outline:3px solid #376e47;outline-offset:2px}
+.forum-reply-filter label{display:grid;gap:5px;flex:1;min-width:min(100%,230px);font-size:14px;font-weight:650}
+.forum-reply-filter input,.forum-thread-feedback input{font:inherit;width:100%;min-height:44px;border:1px solid #aac9ad;border-radius:8px;padding:8px 12px;box-sizing:border-box}
+.forum-reply-filter p,.forum-thread-feedback p{font-size:13px;color:#365f45;flex-basis:100%;margin:0}
+.forum-thread :global([data-static-reply-id][hidden]),.forum-thread :global(.forum-live-reply[hidden]),.forum-thread :global([data-thread-js][hidden]),.forum-reply-filter[hidden],.forum-thread-feedback input[hidden]{display:none!important}
+#forum-topic-start,.forum-thread :global(.forum-live-reply){scroll-margin-top:6rem}
+@media print{
+ .forum-thread{background:#fff;color:#111;padding:0}
+ .forum-thread :global([data-static-reply-id][hidden]),.forum-thread :global(.forum-live-reply[hidden]){display:block!important}
+ .forum-thread :global([data-thread-js]),.forum-reply-filter,.forum-thread :global(.forum-reply-tools),.forum-thread-actions,.forum-helpful,.forum-topic-navigation,.thread-breadcrumb,.forum-back,.forum-related,.forum-thread :global(#forum-compose){display:none!important}
+ .forum-first-post,.forum-reply,.forum-thread :global(.forum-live-reply){border:0;padding:8px 0;box-shadow:none}
+ .forum-thread :global(.forum-table-wrap),.forum-thread :global(.forum-live-reply-table){overflow:visible;max-width:100%}
+ .forum-thread :global(table){min-width:0!important;width:100%!important;table-layout:fixed;overflow-wrap:anywhere}
+ .forum-thread :global(img){max-width:100%;max-height:240px;object-fit:contain}
+}
+
 .forum-related{margin:28px 0;padding:clamp(16px,3vw,28px);background:white;border:1px solid #c9dac6;border-radius:14px;min-width:0}
 .forum-related h2{font-size:clamp(18px,2.4vw,24px);margin:0 0 12px;color:#205335}
 .forum-related ul{list-style:none;padding:0;margin:0;display:grid;gap:10px}
@@ -278,6 +318,9 @@ const schema=eligible?{
 <script>
 import {readForumSession} from "../lib/forum-session-store.mjs";
 import {initForumLiveReplies} from "../lib/forum-live-replies.ts";
+import {initForumThreadTools} from "../lib/forum-thread-tools-client.ts";
+const threadTools=document.querySelector<HTMLElement>("[data-thread-tools-lang]");
+if(threadTools)initForumThreadTools(threadTools);
 const liveReplies=document.querySelector<HTMLElement>("[data-forum-live-replies]");
 if(liveReplies)initForumLiveReplies(liveReplies);
 const community=document.querySelector<HTMLElement>("[data-thread-engagement]");
