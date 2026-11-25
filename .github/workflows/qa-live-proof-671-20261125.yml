@@ -1,0 +1,63 @@
+name: Read-only live proof of release 671
+on:
+  pull_request:
+    branches: [main]
+    paths: ['.github/workflows/qa-live-proof-671-20261125.yml']
+permissions:
+  contents: read
+jobs:
+  live:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22.23.4"
+      - name: Check merged revision is present
+        run: git merge-base --is-ancestor 5e57cefc45a59c2e56acebb258691c344b158ef2 HEAD
+      - name: Verify production includes merged release in every locale
+        run: |
+          python3 - <<'PY'
+          import urllib.request, re, time, json, concurrent.futures, subprocess
+          target="5e57cefc45a59c2e56acebb258691c344b158ef2"
+          paths=["/tractors/"]+["/"+l+"/tractors/" for l in ["tr","zh","hi","pt-br","fr","de","ru","ja","es"]]
+          def check(path):
+              url="https://tractorvs.com"+path
+              with urllib.request.urlopen(urllib.request.Request(url,headers={"User-Agent":"TractorVS release QA read-only","Cache-Control":"no-cache"}),timeout=20) as r:
+                  assert r.status==200 and r.geturl()==url
+                  html=r.read().decode("utf-8")
+                  sha=re.search(r'<meta[^>]*name="tractorvs-release-sha"[^>]*content="([a-f0-9]{40})"',html)
+                  if not sha:
+                      sha=re.search(r'<meta[^>]*content="([a-f0-9]{40})"[^>]*name="tractorvs-release-sha"',html)
+                  return {"path":path,"sha":sha.group(1) if sha else None}
+          def contains(rev):
+              if not rev: return False
+              return subprocess.run(['git','merge-base','--is-ancestor',target,rev],stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL).returncode==0
+          for attempt in range(8):
+              with concurrent.futures.ThreadPoolExecutor(max_workers=4) as pool: rows=list(pool.map(check,paths))
+              print("RELEASE_671_SHA_PROOF",json.dumps(rows),flush=True)
+              if all(contains(row["sha"]) for row in rows):break
+              if attempt<7:
+                  time.sleep(30)
+                  subprocess.run(['git','fetch','origin','main'],check=True,stdout=subprocess.DEVNULL)
+          assert all(contains(row["sha"]) for row in rows), "Expected production release not verified"
+          PY
+      - name: Verify all live canonical metadata
+        env:
+          TRACTORVS_SEO_AUDIT_MODE: full
+          TRACTORVS_SEO_EVIDENCE_PATH: ${{ runner.temp }}/tractorvs-live-671.json
+        run: node site/scripts/production-seo-audit.mjs
+      - name: Verify metadata advisory targets
+        run: |
+          node --input-type=module -e 'import fs from "node:fs"; const d=JSON.parse(fs.readFileSync(process.env.RUNNER_TEMP+"/tractorvs-live-671.json","utf8")); const r=d.report; console.log("RELEASE_671_METADATA",JSON.stringify({pages:r.checkedPages,full:r.fullCoverage,errors:r.errors,titleOver105:r.titleAdvisories.over105,descriptionOver160:r.descriptionAdvisories.over160})); if(!r.fullCoverage||r.errors||r.titleAdvisories.over105||r.descriptionAdvisories.over160)process.exitCode=1;'
+      - uses: actions/upload-artifact@v7
+        if: always()
+        with:
+          name: live-release-671-evidence
+          path: ${{ runner.temp }}/tractorvs-live-671.json
+          if-no-files-found: warn
+          retention-days: 7
