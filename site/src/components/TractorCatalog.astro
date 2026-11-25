@@ -191,6 +191,7 @@ const pricePayload = JSON.stringify({
         </article>)}
       </div>
       <p class="catalog-no-results" id="catalog-no-results" role="status" hidden>{t(lang,"noMatches")}</p>
+      <button type="button" id="catalog-empty-reset" class="catalog-empty-reset" hidden>{facetsCopy.reset}</button>
       </div>
       </div>
     </> : <div class="catalog-empty">
@@ -270,6 +271,7 @@ const pricePayload = JSON.stringify({
   // Keep the complete published SSR catalogue and all crawlable links intact.
   const cardSearchKeys = cards.map(card => normalizeTractorQuery(card.dataset.search || ""));
   const noResults = document.querySelector<HTMLElement>("#catalog-no-results");
+  const emptyReset = document.querySelector<HTMLButtonElement>("#catalog-empty-reset");
   const visibleCount = document.querySelector<HTMLElement>("#catalog-visible-count");
   const clearSearch = document.querySelector<HTMLButtonElement>("#catalog-search-clear");
   const jumpCount=document.querySelector<HTMLElement>("[data-facet-result-count]");
@@ -327,6 +329,7 @@ const pricePayload = JSON.stringify({
     }
     const empty = visible === 0;
     if (noResults && noResults.hidden === empty) noResults.hidden = !empty;
+    if (emptyReset && emptyReset.hidden === empty) emptyReset.hidden = !empty;
     if (visibleCount) {
       const countText=(visibleCount.dataset.countTemplate||"")
         .replace("{visible}",String(visible)).replace("{total}",String(cards.length));
@@ -379,7 +382,7 @@ const pricePayload = JSON.stringify({
   for(const control of [brandFacet,powerFacet,yearFacet,marketFacet,sortFacet]) {
     control?.addEventListener("change",()=>{if(control===sortFacet)sortCards();filterCatalog(search?.value||"");syncSearchURL(search?.value||"");});
   }
-  facetReset?.addEventListener("click",()=>{
+  const resetFilters=()=>{
     if(brandFacet)brandFacet.value="";
     if(powerFacet)powerFacet.value="";
     if(yearFacet)yearFacet.value="";
@@ -388,7 +391,9 @@ const pricePayload = JSON.stringify({
     if(search)search.value="";
     sortCards();filterCatalog("");syncSearchURL("");
     search?.focus();
-  });
+  };
+  facetReset?.addEventListener("click",resetFilters);
+  emptyReset?.addEventListener("click",resetFilters);
   clearSearch?.addEventListener("click", () => {
     if (!search) return;
     search.value="";
@@ -420,9 +425,14 @@ const pricePayload = JSON.stringify({
   } else {
     filterCatalog("");
   }
+  // Clean stale/invalid facet values before sharing or changing language.
+  if(search && facetPanel && cards.length) syncSearchURL(search.value);
 </script>
 
 <style is:global>
+  .catalog-empty-reset{display:inline-flex;align-items:center;min-height:44px;padding:10px 16px;border:1px solid #769e7c;border-radius:9px;color:#194e32;background:#fff;font:inherit;font-weight:750;cursor:pointer}
+  .catalog-empty-reset[hidden]{display:none}
+  .catalog-empty-reset:focus-visible{outline:3px solid #438c57;outline-offset:3px}
   .catalog-results-jump { display:none; }
   @media(max-width:940px){
     .catalog-results-jump {display:flex;justify-content:space-between;align-items:center;gap:12px;
