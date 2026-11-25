@@ -4,8 +4,8 @@ import {reviewedIdentityFallback,reviewedIdentityFallbackHeadings} from "../src/
 import {specLabel} from "../src/lib/catalog.ts";
 const locales=["tr","zh","hi","pt-br","fr","de","ru","ja","es"];
 test("every reviewed stable-ID English display heading has a native fallback in all nine target languages",()=>{
- assert.equal(reviewedIdentityFallbackHeadings.length,154);
- assert.equal(new Set(reviewedIdentityFallbackHeadings).size,154);
+ assert.equal(reviewedIdentityFallbackHeadings.length,190);
+ assert.equal(new Set(reviewedIdentityFallbackHeadings).size,190);
  for(const heading of reviewedIdentityFallbackHeadings){
   for(const lang of locales){
    assert.notEqual(reviewedIdentityFallback(heading,heading,lang),heading,lang+" "+heading);
@@ -44,4 +44,13 @@ test("second reviewed batch preserves measurement standards and qualifiers",()=>
 
 test("maximum operating pressure cannot collapse into unqualified working pressure",()=>{
  for(const lang of locales)assert.notEqual(reviewedIdentityFallback("Maximum Hydraulic Operating Pressure","Maximum Hydraulic Operating Pressure",lang),reviewedIdentityFallback("Hydraulic Working Pressure","Hydraulic Working Pressure",lang),lang);
+});
+
+
+test("third batch preserves distinct limits, speed conditions, units and axle/PTO qualifiers",()=>{
+ for(const lang of locales){
+  const translated=label=>reviewedIdentityFallback(label,label,lang);
+  for(const [label,pattern] of [["Width Max Mm",/mm|мм/],["Width Min Mm",/mm|мм/],["Maximum Total Weight At 40 Km/H",/40/],["Maximum Total Weight At 50 Km/H",/50/],["PTO Horsepower",/HP/],["AdBlue/DEF Tank Capacity",/AdBlue\/DEF/],["2WD Front Axle Configuration",/2WD|2RM|两轮/]])assert.match(translated(label),pattern,lang+" "+label);
+  for(const [a,b] of [["Width Max Mm","Width Min Mm"],["Maximum Total Weight At 40 Km/H","Maximum Total Weight At 50 Km/H"],["Front PTO Speed","Rear PTO Shaft"],["Length With Front Linkage Lowered","Length With Front Linkage In Transport Position"]])assert.notEqual(translated(a),translated(b),lang);
+ }
 });
