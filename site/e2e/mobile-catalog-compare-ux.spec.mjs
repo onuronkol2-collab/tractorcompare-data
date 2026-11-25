@@ -142,10 +142,43 @@ test("synthetic source CSS keeps mobile comparison model columns and readable ci
   expect(await noDocumentOverflow(page)).toBe(true);
 });
 
+// Only intercepted test-browser responses contain these invented records.
+// The production build, catalogue, database and generated files remain untouched.
+// The real Astro-bundled client scripts still execute; never skip the new behavior
+// just because CI intentionally builds without a public catalogue.
+const fixtureSpec=(key,label,value)=>({key,label,value,unit:null,context:null,rpm:null,source:null,independent:false,notice:null});
+const fixtureModels=[
+  {title:"QA Tractor A",variant:null,power:null,specsCount:3,detailsUrl:"/tr/tractors/",photo:null,specs:[
+    fixtureSpec("fixture_equal","QA Equal","1"),fixtureSpec("fixture_difference","QA Difference","2"),
+    fixtureSpec("fixture_missing","QA Missing","3")]},
+  {title:"QA Tractor B",variant:null,power:null,specsCount:2,detailsUrl:"/tr/tractors/",photo:null,specs:[
+    fixtureSpec("fixture_equal","QA Equal","1"),fixtureSpec("fixture_difference","QA Difference","4")]}
+];
+function replacePayload(html,id,data){
+  const pattern=new RegExp('(<script\\b[^>]*\\bid="'+id+'"[^>]*>)[\\s\\S]*?(</script>)');
+  if(!pattern.test(html))throw Error("Missing compiled payload: "+id);
+  return html.replace(pattern,(_,open,close)=>open+JSON.stringify(data)+close);
+}
+const fixturePicker=()=>{
+  const controls=["left","right"].map((side,index)=>
+    '<div class="tc-picker-side"><div class="tc-searchbox"><input class="tc-combo-input" id="tc-'+side+'-search" aria-label="'+side+'" role="combobox" aria-expanded="false" aria-controls="tc-'+side+'-results" aria-autocomplete="list"><div class="tc-picker-results" id="tc-'+side+'-results" role="listbox" hidden></div></div><select class="tc-native-select" id="tc-'+side+'"><option value="qa-a" '+(index===0?"selected":"")+'>QA Tractor A</option><option value="qa-b" '+(index===1?"selected":"")+'>QA Tractor B</option></select></div>'
+  ).join("");
+  return '<section class="tc-section"><div id="tc-picker" class="tc-picker" data-directory="/comparison-data/tr/">'+controls+'</div><button id="tc-all" aria-pressed="true">All</button><button id="tc-shared" aria-pressed="false">Shared</button><button id="tc-different" aria-pressed="false" hidden>Different</button><p id="tc-different-note" hidden>Different published entries only</p><p id="tc-no-shared" hidden></p><p id="tc-summary"></p><table class="tc-table"><tbody id="tc-rows"></tbody></table></section>';
+};
 test("comparison combobox retains input focus and differing-data view is shareable",async({page})=>{
-  await page.goto("/tr/compare/",{waitUntil:"domcontentloaded"});
+  await page.route(url=>url.pathname==="/tr/compare/",async route=>{
+    const response=await route.fetch();
+    let html=await response.text();
+    // On a populated build use the real controls and real records instead.
+    if(!html.includes('id="tc-picker"')){
+      html=replacePayload(html,"tc-payload",fixtureModels);
+      html=html.replace("</body>",fixturePicker()+"</body>");
+    }
+    await route.fulfill({response,body:html});
+  });
+  await page.goto("/tr/compare/",{waitUntil:"load"});
+  await expect(page.locator("#tc-picker")).toHaveClass(/tc-js-ready/);
   const input=page.locator("#tc-left-search");
-  test.skip(!(await input.isVisible()),"No published comparison fixtures in the inert local build.");
   await input.focus();
   const options=page.locator("#tc-left-results .tc-result");
   await expect(options.first()).toBeVisible();
@@ -155,26 +188,39 @@ test("comparison combobox retains input focus and differing-data view is shareab
   await expect(options.first()).toHaveAttribute("tabindex","-1");
   await input.press("Tab");
   await expect(input).toHaveAttribute("aria-expanded","false");
+  const fixture=await page.locator("#tc-rows th").filter({hasText:"QA Equal"}).count()>0;
   const diff=page.locator("#tc-different");
   await diff.click();
   await expect(diff).toHaveAttribute("aria-pressed","true");
   await expect(page.locator("#tc-different-note")).toBeVisible();
+  if(fixture){
+    await expect(page.locator("#tc-rows th")).toHaveText(["QA Difference"]);
+  }
   await expect.poll(()=>new URL(page.url()).searchParams.get("view")).toBe("different");
-  await page.reload({waitUntil:"domcontentloaded"});
+  await page.reload({waitUntil:"load"});
   await expect(diff).toHaveAttribute("aria-pressed","true");
+  if(fixture)await expect(page.locator("#tc-rows th")).toHaveText(["QA Difference"]);
+  await page.locator("#tc-shared").click();
+  if(fixture)await expect(page.locator("#tc-rows th")).toHaveText(["QA Difference","QA Equal"]);
   await page.locator("#tc-all").click();
+  if(fixture)await expect(page.locator("#tc-rows th")).toHaveText(["QA Difference","QA Equal","QA Missing"]);
   await expect.poll(()=>new URL(page.url()).searchParams.get("view")).toBe(null);
 });
 
 test("home search suggestions keep DOM focus and leave the Tab sequence",async({page})=>{
-  await page.goto("/tr/",{waitUntil:"domcontentloaded"});
+  await page.route(url=>url.pathname==="/tr/",async route=>{
+    const response=await route.fetch();
+    const html=replacePayload(await response.text(),"home-suggestions-data",[
+      {brand:"QA Tractor",model:"A",variant:null,year:null,horsepower:null,specs:3,url:"/tr/tractors/"},
+      {brand:"QA Tractor",model:"B",variant:null,year:null,horsepower:null,specs:2,url:"/tr/tractors/"}
+    ]);
+    await route.fulfill({response,body:html});
+  });
+  await page.goto("/tr/",{waitUntil:"load"});
   const input=page.locator("#home-model-query");
-  const payload=page.locator("#home-suggestions-data");
-  if(!(await payload.count()))test.skip(true,"No search fixture in inert build.");
-  const models=JSON.parse(await payload.textContent()||"[]");
-  test.skip(!models.length,"No published catalogue fixture in inert build.");
-  await input.fill(models[0].brand);
+  await input.fill("QA Tractor");
   const options=page.locator("#home-search-results .home-search-option");
+  await expect(options).toHaveCount(2);
   await expect(options.first()).toBeVisible();
   await input.press("ArrowUp");
   await expect(input).toHaveAttribute("aria-activedescendant",await options.last().getAttribute("id"));
