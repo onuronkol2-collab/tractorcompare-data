@@ -6,6 +6,7 @@ test("delegated topic permission is explicit, revocable and isolated between ses
   if(url.pathname.endsWith("/auth/v1/user"))return route.fulfill({json:{id:owner}});
   if(url.pathname.endsWith("/auth/v1/settings"))return route.fulfill({json:{external:{google:false,github:false}}});
   if(url.pathname.endsWith("/auth/v1/logout"))return route.fulfill({status:204});
+  if(url.pathname.endsWith("/rest/v1/tc_forum_assisted_eligible"))return route.fulfill({json:owner==="owner-a"?[{owner_id:owner}]:[]});
   if(url.pathname.endsWith("/rest/v1/tc_forum_assisted_grants")){
    if(req.method()==="GET")return route.fulfill({json:grants.has(owner)?[grants.get(owner)]:[]});
    expect(req.headers().authorization).toBe("Bearer test-only");
@@ -56,9 +57,7 @@ test("delegated topic permission is explicit, revocable and isolated between ses
  await expect(panel).toBeHidden();
  owner="owner-b";
  await page.goto("/tr/forum/?delegate-test=2#access_token=test-only");
- await expect(panel).toBeVisible();
- await panel.locator("summary").click();
- await expect(status).toHaveText("Yetki yok");
+ await expect(panel).toBeHidden();
  await expect(approve).not.toBeChecked();
  await expect(activate).toBeDisabled();
  expect(writes).toHaveLength(3);

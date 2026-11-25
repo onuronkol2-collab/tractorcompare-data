@@ -3,6 +3,7 @@ on:
   pull_request:
     paths:
       - "supabase/sql/forum_assisted_publication_candidate.sql"
+      - "supabase/sql/forum_assisted_owner_only.sql"
       - "supabase/rollback/forum_assisted_publication_rollback.sql"
       - "supabase/verification/forum_assisted_publication_*"
       - ".github/workflows/forum-assisted-publication-check.yml"
@@ -32,6 +33,6 @@ jobs:
           FIXTURE_CONTAINER: ${{ job.services.postgres.id }}
         run: |
           set -euo pipefail
-          for file in supabase/verification/forum_assisted_publication_fixture.sql supabase/sql/forum_assisted_publication_candidate.sql supabase/verification/forum_assisted_publication_test.sql supabase/rollback/forum_assisted_publication_rollback.sql; do
+          for file in supabase/verification/forum_assisted_publication_fixture.sql supabase/sql/forum_assisted_publication_candidate.sql supabase/verification/forum_assisted_owner_only_setup.sql supabase/verification/forum_assisted_publication_test.sql supabase/rollback/forum_assisted_publication_rollback.sql; do
             docker exec -i "$FIXTURE_CONTAINER" psql -U postgres -d postgres -v ON_ERROR_STOP=1 < "$file"
           done

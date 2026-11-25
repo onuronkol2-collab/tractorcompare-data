@@ -594,11 +594,21 @@ for(const widget of widgets){
   ++delegationVersion;delegation=null;delegationKnown=false;delegationBusy=false;
   if(delegationConfirm)delegationConfirm.checked=false;
   if(delegationStatus)delegationStatus.textContent="";
-  if(delegationPanel){delegationPanel.hidden=!loggedIn;delegationPanel.open=false}
+  if(delegationPanel){delegationPanel.hidden=true;delegationPanel.open=false}
   updateDelegationButtons();
+  if(loggedIn&&delegationPanel&&token&&userId)void checkDelegationEligibility();
+ }
+ async function checkDelegationEligibility(){
+  const version=delegationVersion,account=userId,session=token;
+  try{
+   const res=await fetch(cfg.url+"/rest/v1/tc_forum_assisted_eligible?select=owner_id&limit=1",{headers:header(session),cache:"no-store",signal:AbortSignal.timeout(12000)});
+   if(!res.ok)return;
+   const rows=await res.json();
+   if(version===delegationVersion&&account===userId&&session===token&&delegationPanel&&Array.isArray(rows)&&rows.length===1&&rows[0]?.owner_id===account)delegationPanel.hidden=false;
+  }catch{/* Fail closed; normal forum posting is unaffected. */}
  }
  async function refreshDelegation(){
-  if(!delegationPanel?.open||!token||!userId||!delegationStatus||delegationBusy)return;
+  if(!delegationPanel?.open||delegationPanel.hidden||!token||!userId||!delegationStatus||delegationBusy)return;
   const version=++delegationVersion, account=userId, session=token;
   const current=()=>version===delegationVersion&&account===userId&&session===token;
   delegationKnown=false;delegationBusy=true;updateDelegationButtons();delegationStatus.textContent=copy.loading;
@@ -616,7 +626,7 @@ for(const widget of widgets){
   finally{if(current()){delegationBusy=false;updateDelegationButtons()}}
  }
  async function changeDelegation(revoke:boolean){
-  if(!token||!userId||!delegationKnown||delegationBusy||!delegationPanel?.open||!delegationStatus)return;
+  if(!token||!userId||!delegationKnown||delegationBusy||!delegationPanel?.open||delegationPanel.hidden||!delegationStatus)return;
   if(revoke?!delegation:!!delegation||!delegationConfirm?.checked)return;
   const version=++delegationVersion, account=userId, session=token;
   const current=()=>version===delegationVersion&&account===userId&&session===token;
