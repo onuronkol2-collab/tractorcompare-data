@@ -130,7 +130,10 @@ export function significantContentDigest(html,url,{legacy=false}={}){
   // suffix of this exact empty, local module script. Preserve its presence,
   // component identity, all other attributes, inline JSON, and all content.
   const stableMain=legacy?significantMain:significantMain.replace(
-    /<script\b[^>]*><\/script>/gi,tag=>{
+    /<script(?=[\s/>])[^>]*><\/script(?=[\s/>])[^>]*>/gi,tag=>{
+      // Include browser-tolerated end-tag whitespace and attributes
+      // (CodeQL js/bad-tag-filter). Keep the original tag and delimiters:
+      // this is a digest-only substitution, never an HTML sanitizer.
       if(!/\stype="module"(?=\s|>)/.test(tag))return tag;
       return tag.replace(/(\ssrc="\/_astro\/TractorMarketPrice\.astro_astro_type_script_index_0_lang\.)[A-Za-z0-9_-]{8,32}(\.js")(?=\s|>)/g,"$1__BUILD_HASH__$2");
     });

@@ -351,3 +351,21 @@ test("final rebuilt HTML and XML must match candidate ledger despite concurrent 
   assert.throws(()=>verifyRebuiltCheckpoint(ctx),/date map differs/);
  }finally{rmSync(ctx.root,{recursive:true,force:true});}
 });
+
+
+test("digest-only script normalization covers browser-tolerated closing tags without deleting markup",()=>{
+ const module=(hash,ending,body="")=>'<script type="module" src="/_astro/TractorMarketPrice.astro_astro_type_script_index_0_lang.'+hash+'.js">'+body+ending;
+ for(const ending of ["</script>","</script >","</script\t>","</SCRIPT>","</script data-extra=\"kept\">","</script/>"]){
+  const html=sample(b,module("Db5Sr4d7",ending));
+  const updated=sample(b,module("B7Ok9FpF",ending));
+  assert.equal(significantContentDigest(html,b),significantContentDigest(updated,b),ending);
+  assert.notEqual(significantContentDigest(html,b,{legacy:true}),significantContentDigest(updated,b,{legacy:true}),ending);
+ }
+ // Nonempty scripts and lookalike tag names must not be normalized.
+ for(const [ending,body] of [["</script>","importantPayload()"],["</script-other>",""]]){
+  assert.notEqual(significantContentDigest(sample(b,module("Db5Sr4d7",ending,body)),b),
+   significantContentDigest(sample(b,module("B7Ok9FpF",ending,body)),b));
+ }
+ assert.notEqual(significantContentDigest(sample(b,module("Db5Sr4d7","</script>")),b),
+  significantContentDigest(sample(b,module("Db5Sr4d7","</script data-extra=\"kept\">")),b));
+});
