@@ -18,8 +18,8 @@
       "modified": "2026-11-22T08:02:35.845Z"
     },
     "https://tractorvs.com/compare/": {
-      "digest": "b4757a72e444974a3a665276f9c318b22e83d272f1a909198b92210d7ecf1cc0",
-      "modified": "2026-11-24T19:08:58.338Z"
+      "digest": "29a8d59966f0bc02e4e3ee5b1a5f0bd16319346fe3f8c0dbf1af73555dee9f00",
+      "modified": "2026-11-25T04:56:52.781Z"
     },
     "https://tractorvs.com/compare/deutz-fahr-5090-d-gs-vs-5100-d-gs/": {
       "digest": "922999b9696029c032d6b1c71856522e23db46cc43479dd85fbb929909556a66",
@@ -34,8 +34,8 @@
       "modified": "2026-11-24T16:26:42.582Z"
     },
     "https://tractorvs.com/de/compare/": {
-      "digest": "7ececee67f8f62433e0356bafd3978116ef127248c7e0dc97627190b89a870f1",
-      "modified": "2026-11-24T19:08:58.338Z"
+      "digest": "42222fcc7b7c65a2b8c6f108dfaba8afdc48998949a91e1bb3d6e48c0b07c2f2",
+      "modified": "2026-11-25T04:56:52.781Z"
     },
     "https://tractorvs.com/de/farm-advisor/": {
       "digest": "228d7ed780441bf4cbc7296d8949c232aabadf23fbd96fd2d0ea1873ecc138ea",
@@ -54,8 +54,8 @@
       "modified": "2026-11-24T16:26:42.582Z"
     },
     "https://tractorvs.com/de/tractors/": {
-      "digest": "00a0792e964406c4236cb1435df78ee807e19329f46a57e1360313b84977dacd",
-      "modified": "2026-11-25T03:59:14.275Z"
+      "digest": "c14ff94cba7154b9515339e692f7d5267dea767ea00b6f6d6878d48b94ea59ff",
+      "modified": "2026-11-25T04:56:52.781Z"
     },
     "https://tractorvs.com/de/tractors/agrale-4125-0b53e944/": {
       "digest": "dca961d5ce905bcf97c141971310212a9e1e36824288230455bcba362a9d0f83",
@@ -606,16 +606,16 @@
       "modified": "2026-11-24T18:04:40.415Z"
     },
     "https://tractorvs.com/de/tractors/lindner-lintrac-160-ldrive-7999a853/": {
-      "digest": "f42a194b4967f115bd638269bf9214dd1caab88fdea412144524b8885d8ba8a3",
-      "modified": "2026-11-24T18:04:40.415Z"
+      "digest": "f5a1d64f0a2a3b4402160669a3a2bb719551f7a1e94ddd734be9bb9414a08ce6",
+      "modified": "2026-11-25T04:56:52.781Z"
     },
     "https://tractorvs.com/de/tractors/lindner-lintrac-75-ls-64999276/": {
       "digest": "026ba8840de209c7911431852216c048e0a994c9122c74b9ce1cbd149bd3f1d4",
       "modified": "2026-11-24T18:04:40.415Z"
     },
     "https://tractorvs.com/de/tractors/lindner-lintrac-95-ls-092125c4/": {
-      "digest": "39c009a23947517e0d3ef88aba14e02d3ad3f39bf44c51d73adef9ac48fde8b8",
-      "modified": "2026-11-24T18:04:40.415Z"
+      "digest": "b2132ac00abf4c36a13714df5331d0a781c9057d73fe4fafa5dd8ad79bdbbf3f",
+      "modified": "2026-11-25T04:56:52.781Z"
     },
     "https://tractorvs.com/de/tractors/ls-tractor-j27-19685234/": {
       "digest": "817c1eb7afff48f18e53ec9921b131fa8c220684d394e59a76f3eb5c4727ff45",
@@ -1942,8 +1942,8 @@
       "modified": "2026-11-24T16:26:42.582Z"
     },
     "https://tractorvs.com/es/compare/": {
-      "digest": "b1740687ff5f9f889077b9f3d2866c5de27325c2c6bf9267adfdc1dc0fb5bf10",
-      "modified": "2026-11-24T19:08:58.338Z"
+      "digest": "b56a4e9d8765e08d25cc2b9e243936020db0836b3bfd6fa8d0d5b1a713f732b3",
+      "modified": "2026-11-25T04:56:52.781Z"
     },
     "https://tractorvs.com/es/farm-advisor/": {
       "digest": "e5ec30ff6eb12a62a2455cd50800d40ef07b754cef27865779f8630f2a6c50b7",
@@ -1962,8 +1962,8 @@
       "modified": "2026-11-24T16:26:42.582Z"
     },
     "https://tractorvs.com/es/tractors/": {
-      "digest": "51707e2c33ec45f1682a98b6fcf2acba4f8a9517089119720b21e959e11889e3",
-      "modified": "2026-11-25T03:59:14.275Z"
+      "digest": "995d3b62f165289803c5c95e079f21066f845133ddd926881b6a4d1764aa9052",
+      "modified": "2026-11-25T04:56:52.781Z"
     },
     "https://tractorvs.com/es/tractors/agrale-4125-0b53e944/": {
       "digest": "45bd466a13cab5391661fa54b1725b0dfed68b126786f7039faafd12e9662a02",
@@ -2514,16 +2514,16 @@
       "modified": "2026-11-24T18:04:40.415Z"
     },
     "https://tractorvs.com/es/tractors/lindner-lintrac-160-ldrive-7999a853/": {
-      "digest": "730d435fb4b454807c876ebe04d3f66b80b5b87f70945636b9eb019920b15c32",
-      "modified": "2026-11-24T18:04:40.415Z"
+      "digest": "20d69e4b9bd8255a1bf87eca9b16c5d307cffeb4c5a0eab5f26be560d5e633c1",
+      "modified": "2026-11-25T04:56:52.781Z"
     },
     "https://tractorvs.com/es/tractors/lindner-lintrac-75-ls-64999276/": {
       "digest": "753ee72743897774c266a4d864da17e9b456989f3e14c320bb95244ad697803f",
       "modified": "2026-11-24T18:04:40.415Z"
     },
     "https://tractorvs.com/es/tractors/lindner-lintrac-95-ls-092125c4/": {
-      "digest": "108d8581ed8009211cb61f140e27dda5359d86e7a8c70620de87a0e008c13867",
-      "modified": "2026-11-24T18:04:40.415Z"
+      "digest": "643e9876154cbfc0b50f020986b1974992fed93ed4fca345ec62325edaba5616",
+      "modified": "2026-11-25T04:56:52.781Z"
     },
     "https://tractorvs.com/es/tractors/ls-tractor-j27-19685234/": {
       "digest": "b66a1f4ac207d558bc1f3e0e21c59e90b471e71acd36c5ab9058a9170b79152f",
@@ -3854,8 +3854,8 @@
       "modified": "2026-11-24T16:26:42.582Z"
     },
     "https://tractorvs.com/fr/compare/": {
-      "digest": "4a41e68fc88524461e39a9d1b81ef6f0b5f6a295d1100da67169e34cb1278c90",
-      "modified": "2026-11-24T19:08:58.338Z"
+      "digest": "92cb3d2806ac32037e99f6c48f3c650b99c529792ea638bdac785ae033ca5dbf",
+      "modified": "2026-11-25T04:56:52.781Z"
     },
     "https://tractorvs.com/fr/farm-advisor/": {
       "digest": "126ce409df841d7e8ca8ba746f87163bbc6db5d8379f6f0f840afdcf22636237",
@@ -3874,8 +3874,8 @@
       "modified": "2026-11-24T16:26:42.582Z"
     },
     "https://tractorvs.com/fr/tractors/": {
-      "digest": "dd2a39443887446d1a4c248014f00944ec2edaa2b7badafd8f6c07fdfc1df15e",
-      "modified": "2026-11-25T03:59:14.275Z"
+      "digest": "e941efeecad1608b814466660cf4546e76d200bee068363ce733d0aecda3d9b3",
+      "modified": "2026-11-25T04:56:52.781Z"
     },
     "https://tractorvs.com/fr/tractors/agrale-4125-0b53e944/": {
       "digest": "89d04f3150ad9e9a6770da16217d6e1d9113017df45ebe7f1196372665719ff5",
@@ -4426,16 +4426,16 @@
       "modified": "2026-11-24T18:04:40.415Z"
     },
     "https://tractorvs.com/fr/tractors/lindner-lintrac-160-ldrive-7999a853/": {
-      "digest": "9eb2b43fdc25c4e0d59058db47965d5ab76976d23de6e395620b5f47002e377a",
-      "modified": "2026-11-24T18:24:43.671Z"
+      "digest": "c03845136a3555068a2f51fdb02a7b1ac0ef0511ce3f43ef75e122fc21cbaf01",
+      "modified": "2026-11-25T04:56:52.781Z"
     },
     "https://tractorvs.com/fr/tractors/lindner-lintrac-75-ls-64999276/": {
       "digest": "e2cae04238fb7dfeb6b734d51368330ed6ebedcb35548de31c3a5f3587ca0765",
       "modified": "2026-11-24T18:04:40.415Z"
     },
     "https://tractorvs.com/fr/tractors/lindner-lintrac-95-ls-092125c4/": {
-      "digest": "ecf2b985b5fe4937ab59196f91b23994f5f5bbcd7b7687a21c4728d325490ca6",
-      "modified": "2026-11-24T18:04:40.415Z"
+      "digest": "d7061aee07f68b93062b4e02a3eb333afa195c851c828f313728d3de043050d1",
+      "modified": "2026-11-25T04:56:52.781Z"
     },
     "https://tractorvs.com/fr/tractors/ls-tractor-j27-19685234/": {
       "digest": "9c485f4cc53e1115e5aa011b953044071db0ffe04a8f843d9163e2c080992b59",
@@ -5782,8 +5782,8 @@
       "modified": "2026-11-24T16:26:42.582Z"
     },
     "https://tractorvs.com/hi/compare/": {
-      "digest": "d1b9c071195cc16cbd7ff6e5871fa011f90850706a26b12a16f1030587e9db42",
-      "modified": "2026-11-24T19:08:58.338Z"
+      "digest": "c3df7cf771b8361d2f8bfc07ce4e20d1f1a2ac1313cfb58096cd1a22b09749b0",
+      "modified": "2026-11-25T04:56:52.781Z"
     },
     "https://tractorvs.com/hi/farm-advisor/": {
       "digest": "1ff3c88ec0b3dab06227e0a512de1f646426b8750e0cf80ebdab4a7bd276aa21",
@@ -5802,8 +5802,8 @@
       "modified": "2026-11-24T16:26:42.582Z"
     },
     "https://tractorvs.com/hi/tractors/": {
-      "digest": "0a5a26855ab411164eee96c33fdc3ffc1ab075b19b3d1e26d30f1cd5058929e4",
-      "modified": "2026-11-25T03:59:14.275Z"
+      "digest": "8dd8b945f8836fd25b2e2f12cb328d26f41704c28c4ce6df4a3ab699238db186",
+      "modified": "2026-11-25T04:56:52.781Z"
     },
     "https://tractorvs.com/hi/tractors/agrale-4125-0b53e944/": {
       "digest": "b175adeabbf9c14f5cec6c88bd067a2523fa718edd394321c57975198ac952bc",
@@ -6354,16 +6354,16 @@
       "modified": "2026-11-24T18:04:40.415Z"
     },
     "https://tractorvs.com/hi/tractors/lindner-lintrac-160-ldrive-7999a853/": {
-      "digest": "ba4b7e4b1d8b60288845f87c4b375aa18b22628588f3be1ed30aca83a1676f76",
-      "modified": "2026-11-24T18:04:40.415Z"
+      "digest": "bc8d73d54eca21fcfff6c5b6da51664bf070815e2a175c9b82b9deb1364f88b1",
+      "modified": "2026-11-25T04:56:52.781Z"
     },
     "https://tractorvs.com/hi/tractors/lindner-lintrac-75-ls-64999276/": {
       "digest": "99f8bf012a8ff9458d45ce1295bcaa0c20fd219beea4fb801f4418a28f822b8e",
       "modified": "2026-11-24T18:04:40.415Z"
     },
     "https://tractorvs.com/hi/tractors/lindner-lintrac-95-ls-092125c4/": {
-      "digest": "ceec83499636f11f3c48819427d8fa38201847433c1e637b6fba29f8d8a19253",
-      "modified": "2026-11-24T18:04:40.415Z"
+      "digest": "8c61f9afd8545ab37d1761c22948a8af7de3f9a35bb5ec5303adda7be40a6478",
+      "modified": "2026-11-25T04:56:52.781Z"
     },
     "https://tractorvs.com/hi/tractors/ls-tractor-j27-19685234/": {
       "digest": "e9a7f3abd7514ee8f2bb083ff328d740c5ebe19f27fb1b802b2f617ef088f045",
@@ -7690,8 +7690,8 @@
       "modified": "2026-11-24T16:26:42.582Z"
     },
     "https://tractorvs.com/ja/compare/": {
-      "digest": "56b29ac91443d75465a335c45713d071aa2cb0d06aa0be09a5844b4f6183b5c1",
-      "modified": "2026-11-24T19:08:58.338Z"
+      "digest": "0cd8ec6e05ff2e4c4488e47a272df8fd4cee909915b34d9b7e40747a83dde6ad",
+      "modified": "2026-11-25T04:56:52.781Z"
     },
     "https://tractorvs.com/ja/farm-advisor/": {
       "digest": "60f3750df5f53edd6a553e2ff0b10a8f5e6b57b1b5a03e85c6d9a925291040c5",
@@ -7710,8 +7710,8 @@
       "modified": "2026-11-24T16:26:42.582Z"
     },
     "https://tractorvs.com/ja/tractors/": {
-      "digest": "a075296efda6cc7c4d9c64b38a7c4e15245a1db38125bb76605714ce6c19ca25",
-      "modified": "2026-11-25T03:59:14.275Z"
+      "digest": "1bba8f4a057fcd26fe479c0dc250bac323aba7e50ef6f04f7986e4f9a05f6e82",
+      "modified": "2026-11-25T04:56:52.781Z"
     },
     "https://tractorvs.com/ja/tractors/agrale-4125-0b53e944/": {
       "digest": "e5e7203b6862bfde71a226cbc67ab14654f745bacf55bb185cb9924480aac572",
@@ -8262,16 +8262,16 @@
       "modified": "2026-11-24T18:04:40.415Z"
     },
     "https://tractorvs.com/ja/tractors/lindner-lintrac-160-ldrive-7999a853/": {
-      "digest": "7e7c9b94278b31d315b1ae5f9b047755b220d1ed2b9a5865de7ffe4662ce55ac",
-      "modified": "2026-11-24T18:04:40.415Z"
+      "digest": "06933439e9df094e43d7543a04e223caf17b0a750ca754a394d99f2f16dc93bc",
+      "modified": "2026-11-25T04:56:52.781Z"
     },
     "https://tractorvs.com/ja/tractors/lindner-lintrac-75-ls-64999276/": {
       "digest": "34db8a6369de4f1dafa87e9ed007c1e156f414b85da8bfd3bbf640775f27a91b",
       "modified": "2026-11-24T18:04:40.415Z"
     },
     "https://tractorvs.com/ja/tractors/lindner-lintrac-95-ls-092125c4/": {
-      "digest": "674690b81ab7248608a30b3854f490945cb418bbeb29df715c16eb77fd043c58",
-      "modified": "2026-11-24T18:04:40.415Z"
+      "digest": "2502a0f752eee8402549b71cafa8be83aa7fcfdd7345d75dabbee62f90d93d1a",
+      "modified": "2026-11-25T04:56:52.781Z"
     },
     "https://tractorvs.com/ja/tractors/ls-tractor-j27-19685234/": {
       "digest": "f0d04d9f16fcbd159641ec2b5f9123c1b5807ea2eb5edca1c2a1fe889fc86b70",
@@ -9606,8 +9606,8 @@
       "modified": "2026-11-24T16:26:42.582Z"
     },
     "https://tractorvs.com/pt-br/compare/": {
-      "digest": "b0a70bb2951c0d7d57cc5535043a346e2af135c36461ace5322bce5ebc47f2f7",
-      "modified": "2026-11-24T19:08:58.338Z"
+      "digest": "f70ce02c4469f72809c8b5bddd85f76d46e6632d4399d5f635a3c2552428b404",
+      "modified": "2026-11-25T04:56:52.781Z"
     },
     "https://tractorvs.com/pt-br/farm-advisor/": {
       "digest": "cd28786ebaa92cca71ff38cb968889214bdc154145bb07cccb6aaaa609311c6a",
@@ -9626,8 +9626,8 @@
       "modified": "2026-11-24T16:26:42.582Z"
     },
     "https://tractorvs.com/pt-br/tractors/": {
-      "digest": "50af8e76c635e4aff9465515396c79beb09569ac62bbd1f0d45e43c4c7c7bdcd",
-      "modified": "2026-11-25T03:59:14.275Z"
+      "digest": "8825939ec9e07e825e611a5b76a054c9e719fe11b7f1bd7a9fc59a30786c41d0",
+      "modified": "2026-11-25T04:56:52.781Z"
     },
     "https://tractorvs.com/pt-br/tractors/agrale-4125-0b53e944/": {
       "digest": "74b5d5a52feca96f929c2a5faa28eb439f78db6b1d92fe382322424b65572f14",
@@ -10178,16 +10178,16 @@
       "modified": "2026-11-24T18:04:40.415Z"
     },
     "https://tractorvs.com/pt-br/tractors/lindner-lintrac-160-ldrive-7999a853/": {
-      "digest": "7bf9f5da7588234bd252c800c4850bde96234f8aa6d809369c05d68cd4d3a1f3",
-      "modified": "2026-11-24T18:04:40.415Z"
+      "digest": "16480c390821859d1c3f83b187343d320518af73336663ce72c2d25388baac8b",
+      "modified": "2026-11-25T04:56:52.781Z"
     },
     "https://tractorvs.com/pt-br/tractors/lindner-lintrac-75-ls-64999276/": {
       "digest": "f2a6c1eeae11a91afbcf68bd8c528a4ecf74eec2680d74ae601818844771a078",
       "modified": "2026-11-24T18:04:40.415Z"
     },
     "https://tractorvs.com/pt-br/tractors/lindner-lintrac-95-ls-092125c4/": {
-      "digest": "52e00f4c9e8659dce3d27b5a72c91db6c27fcc07e2ef6f5ce1d72f733eff887c",
-      "modified": "2026-11-24T18:04:40.415Z"
+      "digest": "1f9608eab683783ad3b105df796f290817ecb3bb7e93fa36a6e6efc496e52b1e",
+      "modified": "2026-11-25T04:56:52.781Z"
     },
     "https://tractorvs.com/pt-br/tractors/ls-tractor-j27-19685234/": {
       "digest": "8d2d8c34ff5e2e3cda7b8a9a7c0b0806c1d3bf82647aedbcc091537a67e88976",
@@ -11518,8 +11518,8 @@
       "modified": "2026-11-24T16:26:42.582Z"
     },
     "https://tractorvs.com/ru/compare/": {
-      "digest": "81156ad976f152d9515ecd2321dda07e45da9311292b2b89607a7d1e397497da",
-      "modified": "2026-11-24T19:08:58.338Z"
+      "digest": "d18fde97dc339fec71736d5a8c58198bd1355e167b94a26f3169c6460dc07aa9",
+      "modified": "2026-11-25T04:56:52.781Z"
     },
     "https://tractorvs.com/ru/farm-advisor/": {
       "digest": "be84846f07fdbd0daa25147f2ae6dc38d62b789f441265d5892be82ac5020db2",
@@ -11538,8 +11538,8 @@
       "modified": "2026-11-24T16:26:42.582Z"
     },
     "https://tractorvs.com/ru/tractors/": {
-      "digest": "d4a8e16c2638be452157ffe429d0079fee8ce631f2a966e7c771d8f1cc121329",
-      "modified": "2026-11-25T03:59:14.275Z"
+      "digest": "be22e94626a8e68eec80012d3b3210d701d307a8fff6237bef4fd3af1c234b5f",
+      "modified": "2026-11-25T04:56:52.781Z"
     },
     "https://tractorvs.com/ru/tractors/agrale-4125-0b53e944/": {
       "digest": "b8566694b57e0f02fafbac56f26cb0945f50b51415dd95abc1dfbc6205a0df9d",
@@ -12090,16 +12090,16 @@
       "modified": "2026-11-24T18:04:40.415Z"
     },
     "https://tractorvs.com/ru/tractors/lindner-lintrac-160-ldrive-7999a853/": {
-      "digest": "afa412697ef76eb6799a230bbc05a51660301026d71037d1762262e35060ab11",
-      "modified": "2026-11-24T18:04:40.415Z"
+      "digest": "795075e1868245f24271c187ea395e0907e3557710ba7ce943d8c36fc1d4b47d",
+      "modified": "2026-11-25T04:56:52.781Z"
     },
     "https://tractorvs.com/ru/tractors/lindner-lintrac-75-ls-64999276/": {
       "digest": "9b618fc301285b0eebb37d1d6e07f7717397db41b1155637fed08b02f5769fae",
       "modified": "2026-11-24T18:04:40.415Z"
     },
     "https://tractorvs.com/ru/tractors/lindner-lintrac-95-ls-092125c4/": {
-      "digest": "0aee5fe0079eb63ee271749c4b64a4fe652ab3f3b76e165bcf2a6f79749768f5",
-      "modified": "2026-11-24T18:04:40.415Z"
+      "digest": "52e069cb0b99abd2fea95878209eb84aac47d16cfe54b62685e685b0999d61f5",
+      "modified": "2026-11-25T04:56:52.781Z"
     },
     "https://tractorvs.com/ru/tractors/ls-tractor-j27-19685234/": {
       "digest": "9e6ad76a6f16d93fd4e34cf20dee2c1bb5afb46946d2c6ca8dc0cf0124f69ab7",
@@ -13434,8 +13434,8 @@
       "modified": "2026-11-22T08:02:35.845Z"
     },
     "https://tractorvs.com/tr/compare/": {
-      "digest": "79a68d6b8a8fcda580b93042c0c300ed5bc7babd21f0f8b3b792a5d1e200088e",
-      "modified": "2026-11-24T19:08:58.338Z"
+      "digest": "9a363e76f69751091f675de90c95bcdc49931905d165a568d7f0547343d52145",
+      "modified": "2026-11-25T04:56:52.781Z"
     },
     "https://tractorvs.com/tr/compare/deutz-fahr-5090-d-gs-vs-5100-d-gs/": {
       "digest": "0f223596935ecf9cf2a0972e5fd862ac566c38ba2f83123a156634df383d9733",
@@ -13478,8 +13478,8 @@
       "modified": "2026-11-24T16:26:42.582Z"
     },
     "https://tractorvs.com/tr/tractors/": {
-      "digest": "ef4b00794c201cfc2b536b268d368796d39d47a7b57fb05f29e21d0cd946214c",
-      "modified": "2026-11-25T03:59:14.275Z"
+      "digest": "fa05800b954af4e3d5e6a3df9589edc58fcc1d554114cc29fc9525b15f10a181",
+      "modified": "2026-11-25T04:56:52.781Z"
     },
     "https://tractorvs.com/tr/tractors/agrale-4125-0b53e944/": {
       "digest": "4548c60881a0a317b5fafff695995aedbfa6760fb005f4ebe576fc64027080ac",
@@ -14030,16 +14030,16 @@
       "modified": "2026-11-24T18:04:40.415Z"
     },
     "https://tractorvs.com/tr/tractors/lindner-lintrac-160-ldrive-7999a853/": {
-      "digest": "a8fcb5a271efb275d474439ecf4534662efcd761d362562992b25c6858b25ae0",
-      "modified": "2026-11-24T18:04:40.415Z"
+      "digest": "6f7e5562ed99b8923b13c2d00fd65ffed089207a89c2f6796aaf4cb40a8a2f9d",
+      "modified": "2026-11-25T04:56:52.781Z"
     },
     "https://tractorvs.com/tr/tractors/lindner-lintrac-75-ls-64999276/": {
       "digest": "de99f7788685a0bd39f8004325f456b7e1d60b3166b93b34c6cc6396f5f6a057",
       "modified": "2026-11-24T18:04:40.415Z"
     },
     "https://tractorvs.com/tr/tractors/lindner-lintrac-95-ls-092125c4/": {
-      "digest": "3e3523d2b22e91d6610f5ea8b0ac7b593097c9e6591864009a6ff1f5f427b9da",
-      "modified": "2026-11-24T18:04:40.415Z"
+      "digest": "b4636d45950a9035aa849c624180d19b9572c4bd4823176ef1a1444a9a3faf1d",
+      "modified": "2026-11-25T04:56:52.781Z"
     },
     "https://tractorvs.com/tr/tractors/ls-tractor-j27-19685234/": {
       "digest": "443de3cd528a9cc5c47819edc84c72eb07b21478bacacaf505a9fc026b16fc1c",
@@ -15358,8 +15358,8 @@
       "modified": "2026-11-24T16:37:35.751Z"
     },
     "https://tractorvs.com/tractors/": {
-      "digest": "e87cf22a4671fb1ab88711b2d47767276fdf30ac6a9e23811726dbe31c073ee1",
-      "modified": "2026-11-25T03:59:14.275Z"
+      "digest": "c118d59fcb00a5da5080b199c48031f57046ef7c12d2126104469fc59102be5c",
+      "modified": "2026-11-25T04:56:52.781Z"
     },
     "https://tractorvs.com/tractors/agrale-4125-0b53e944/": {
       "digest": "3eee9df3b3ddcce2d2434d40c43385f4f6d1d0dd7993c419d6c4398ea7a81568",
@@ -15910,16 +15910,16 @@
       "modified": "2026-11-24T18:04:40.415Z"
     },
     "https://tractorvs.com/tractors/lindner-lintrac-160-ldrive-7999a853/": {
-      "digest": "40f5ce316b8c0afc2915f4b837d259b774a5f970e4c29d87a70ae76309c0c33f",
-      "modified": "2026-11-24T18:04:40.415Z"
+      "digest": "06d47d32b06432db85d0b2f2023fbce75931d5a6d1c2931404c0a0fb06b16fbb",
+      "modified": "2026-11-25T04:56:52.781Z"
     },
     "https://tractorvs.com/tractors/lindner-lintrac-75-ls-64999276/": {
       "digest": "721fa55b2430ca04ed30b6a110838a8f3eba1ec3ba20865d9736f691f6556378",
       "modified": "2026-11-24T18:04:40.415Z"
     },
     "https://tractorvs.com/tractors/lindner-lintrac-95-ls-092125c4/": {
-      "digest": "351c0e90a3f3c76c80e9ac77c4998cc22032004922e030421f04a59a50448cdb",
-      "modified": "2026-11-24T18:04:40.415Z"
+      "digest": "2bcb1a432dd039f86b0aea6436ecc4dfa3e240a04da497ecf1ab07d9bdbc6524",
+      "modified": "2026-11-25T04:56:52.781Z"
     },
     "https://tractorvs.com/tractors/ls-tractor-j27-19685234/": {
       "digest": "3df99e9e0a1d67caed763e017c7125e437e5e97f52c7fd16d9b3406b3c7b79c0",
@@ -17246,8 +17246,8 @@
       "modified": "2026-11-24T16:26:42.582Z"
     },
     "https://tractorvs.com/zh/compare/": {
-      "digest": "2a03e169de0e8b374eab6b8cdbe2589becaa35e186f2eeedd04cc19a2e1458aa",
-      "modified": "2026-11-24T19:08:58.338Z"
+      "digest": "3ca676cbe13fe2b38dd95949733462f6718343a4f4dae1c29f0cef950fca03ee",
+      "modified": "2026-11-25T04:56:52.781Z"
     },
     "https://tractorvs.com/zh/farm-advisor/": {
       "digest": "db3cbb5fe806c72f024ae3a707a5e7e6d6249976743b83ca8923a3f9d3df3d79",
@@ -17266,8 +17266,8 @@
       "modified": "2026-11-24T16:26:42.582Z"
     },
     "https://tractorvs.com/zh/tractors/": {
-      "digest": "485dcb09f2c34c358f94818bf79a7f6ab3bffb86c8e7ba8d13bc317782ac0038",
-      "modified": "2026-11-25T03:59:14.275Z"
+      "digest": "2decaaa34c62bb7486e74ede5215b72416b7f1e94cfdd5f73ff65848754541cd",
+      "modified": "2026-11-25T04:56:52.781Z"
     },
     "https://tractorvs.com/zh/tractors/agrale-4125-0b53e944/": {
       "digest": "080a84dd3d7f5896e4b8c4660d501fc14b8e967068e4991ddcbe17ede070ec9a",
@@ -17818,16 +17818,16 @@
       "modified": "2026-11-24T18:04:40.415Z"
     },
     "https://tractorvs.com/zh/tractors/lindner-lintrac-160-ldrive-7999a853/": {
-      "digest": "8ca3b7debcf96698b8ae6f4ed2fa41829aa0b60c508daa9365415b064e3272ea",
-      "modified": "2026-11-24T18:04:40.415Z"
+      "digest": "fbd430262c1c2c147fe7950c7df6d8a959769cebe41106be1b8674ec8b3c4c0b",
+      "modified": "2026-11-25T04:56:52.781Z"
     },
     "https://tractorvs.com/zh/tractors/lindner-lintrac-75-ls-64999276/": {
       "digest": "45b2c79d8187d4df60ab9281adc9b0b71d4dff167f1e18dc6a02b97b68cce1d7",
       "modified": "2026-11-24T18:04:40.415Z"
     },
     "https://tractorvs.com/zh/tractors/lindner-lintrac-95-ls-092125c4/": {
-      "digest": "422b5e027fab92ad1b3d58ee3ef7c719d103adafc1661c23aedc5f725f9c8d7e",
-      "modified": "2026-11-24T18:04:40.415Z"
+      "digest": "38198416577009039b6656a1e2b7900a23e46353172fd5196729c2b37ecb811b",
+      "modified": "2026-11-25T04:56:52.781Z"
     },
     "https://tractorvs.com/zh/tractors/ls-tractor-j27-19685234/": {
       "digest": "28ba1223e97ceae1b6d5b1d7b04a8d9ebf9eda2cb04c9e2c2ec09e12482679e7",
