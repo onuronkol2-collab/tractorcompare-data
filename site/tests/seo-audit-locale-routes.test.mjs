@@ -28,7 +28,10 @@ test("new public SEO smoke audit reports 404 translated pages, not just a succes
   const code=read("scripts/live-website-audit.mjs");
   assert.match(code,/TRACTORVS_LIVE_EDITORIAL_HEALTH/);
   assert.match(code,/http_non_ok/);
-  assert.match(code,/GITHUB_EVENT_NAME==="push"/);
-  assert.match(code,/editorialProblems\.length/);
+  // All canonical production audits (push, scheduled, manual) fail on
+  // partial HTTP/markup/identity errors; PRs remain observational.
+  assert.ok(code.includes('production&&process.env.GITHUB_EVENT_NAME!=="pull_request"'));
+  assert.ok(code.includes('publicProblems.length||modelProblems.length||parity.length'));
+  assert.match(code,/TRACTORVS_PUBLIC_RESPONSE_HEALTH/);
   assert.match(code,/process\.exitCode=1/);
 });
