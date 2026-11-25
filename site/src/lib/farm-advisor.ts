@@ -166,6 +166,17 @@ function marketCompatibility(market: string | null, country: MarketCountry): "ma
   return "excluded";
 }
 
+/** Browse documented market scope only; never infer local stock or approval.
+ * Unlike the advisor's broad North American screening, an explicitly US
+ * record is not itself evidence of a Canadian market record.
+ */
+export function matchesDocumentedCatalogueMarket(market:string|null,country:MarketCountry):boolean{
+  if(!MARKET_COUNTRIES.includes(country))return false;
+  const raw=String(market||"").trim().toLowerCase();
+  if(["us","usa","united states"].includes(raw))return country==="US";
+  return marketCompatibility(market,country)==="matched";
+}
+
 export type AdvisorTractor = Pick<TractorRecord, "tractor_id" | "slug" | "brand_name" | "model_name" | "variant" | "market" | "model_year" | "horsepower"> & { facts?: AdvisorFact[] };
 export interface FarmMatch {
   tractor: AdvisorTractor;
