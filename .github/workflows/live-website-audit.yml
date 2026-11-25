@@ -5,6 +5,14 @@ on:
     paths:
       - ".github/workflows/live-website-audit.yml"
       - "site/scripts/live-website-audit.mjs"
+      - "site/scripts/live-public-response.mjs"
+      - "site/scripts/live-lastmod-proof.mjs"
+      - "site/scripts/live-release-readiness.mjs"
+      - "site/src/lib/release-provenance.mjs"
+      - "site/tests/live-release-readiness.test.mjs"
+      - "site/tests/live-lastmod-proof.test.mjs"
+      - "site/worker/index.js"
+      - "site/tests/live-public-response-security.test.mjs"
       - "site/scripts/production-seo-audit.mjs"
       - "site/scripts/production-internal-link-graph.mjs"
       - "site/tests/production-internal-link-graph.test.mjs"
@@ -20,6 +28,14 @@ on:
     paths:
       - ".github/workflows/live-website-audit.yml"
       - "site/scripts/live-website-audit.mjs"
+      - "site/scripts/live-public-response.mjs"
+      - "site/scripts/live-lastmod-proof.mjs"
+      - "site/scripts/live-release-readiness.mjs"
+      - "site/src/lib/release-provenance.mjs"
+      - "site/tests/live-release-readiness.test.mjs"
+      - "site/tests/live-lastmod-proof.test.mjs"
+      - "site/worker/index.js"
+      - "site/tests/live-public-response-security.test.mjs"
       - "site/scripts/production-seo-audit.mjs"
       - "site/scripts/production-internal-link-graph.mjs"
       - "site/tests/production-internal-link-graph.test.mjs"
@@ -59,7 +75,7 @@ jobs:
         with:
           node-version: "22.23.4"
       - name: Test sitemap boundaries and real HTML meta-attribute parsing
-        run: node --test site/tests/live-stylesheets.test.mjs site/tests/production-sitemap-inventory.test.mjs site/tests/seo-html-attributes.test.mjs site/tests/production-internal-link-graph.test.mjs
+        run: node --experimental-strip-types --test site/tests/live-public-response-security.test.mjs site/tests/live-lastmod-proof.test.mjs site/tests/live-release-readiness.test.mjs site/tests/live-stylesheets.test.mjs site/tests/production-sitemap-inventory.test.mjs site/tests/seo-html-attributes.test.mjs site/tests/production-internal-link-graph.test.mjs
       - name: Inspect workers.dev preview
         env:
           TRACTORVS_AUDIT_ORIGIN: https://tractorvs-site.onuronkol2.workers.dev
@@ -75,8 +91,13 @@ jobs:
       - name: Explain the predeployment live SEO boundary
         if: github.event_name == 'pull_request'
         run: echo "Full live-sitemap SEO requires deployment; PR tests validate its new source checks, production live audit runs after main updates."
-      - name: Verify full sitemap inventory and inspect live SEO (daily rotating sample; weekly all pages)
+      - name: Verify live sitemap dates against exact deployed revision
         if: github.event_name != 'pull_request'
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: node site/scripts/live-lastmod-proof.mjs "$GITHUB_SHA"
+      - name: Verify full sitemap inventory and inspect live SEO (daily rotating sample; weekly all pages)
+        if: ${{ !cancelled() && github.event_name != 'pull_request' }}
         env:
           TRACTORVS_SEO_EVIDENCE_PATH: ${{ runner.temp }}/tractorvs-seo-audit-details.json
           TRACTORVS_SEO_AUDIT_MODE: ${{ (github.event_name == 'workflow_dispatch' && inputs.mode == 'full' || github.event.schedule == '0 7 * * 0') && 'full' || 'daily' }}

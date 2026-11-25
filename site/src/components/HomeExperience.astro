@@ -341,6 +341,7 @@ const suggestionPayload = JSON.stringify(catalogue.tractors.map((tractor) => ({
 
 <script>
   import { findTractorSuggestions } from "../lib/search";
+  import { nextComboboxOption } from "../lib/combobox-navigation.mjs";
   import type { TractorSuggestion } from "../lib/search";
 
   const input = document.querySelector<HTMLInputElement>("#home-model-query");
@@ -389,6 +390,8 @@ const suggestionPayload = JSON.stringify(catalogue.tractors.map((tractor) => ({
           option.href = model.url;
           option.id = "home-search-option-" + index;
           option.setAttribute("role","option");
+          option.tabIndex = -1;
+          option.addEventListener("mousedown", event => event.preventDefault());
           option.setAttribute("aria-selected","false");
           const nameBox = document.createElement("span");
           nameBox.className = "home-search-option-identity";
@@ -429,6 +432,8 @@ const suggestionPayload = JSON.stringify(catalogue.tractors.map((tractor) => ({
     input.addEventListener("input",render);
     input.addEventListener("focus",render);
     input.addEventListener("keydown",(event) => {
+      if (event.isComposing || event.keyCode === 229) return;
+      if (event.key === "Tab") { if (!popup.hidden) close(); return; }
       if (event.key === "Escape") {
         if (!popup.hidden) { event.preventDefault(); close(); }
         return;
@@ -438,9 +443,7 @@ const suggestionPayload = JSON.stringify(catalogue.tractors.map((tractor) => ({
         const links = options();
         if (!links.length) return;
         event.preventDefault();
-        select(event.key === "ArrowDown"
-          ? (selectedIndex+1)%links.length
-          : (selectedIndex-1+links.length)%links.length);
+        select(nextComboboxOption(selectedIndex,links.length,event.key === "ArrowDown"?1:-1));
       }
       if (event.key === "Enter" && selectedIndex >= 0 && !popup.hidden) {
         const link = options()[selectedIndex];

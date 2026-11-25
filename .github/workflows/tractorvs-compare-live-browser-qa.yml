@@ -11,6 +11,9 @@ on:
   push:
     branches: [main]
     paths:
+      - "site/scripts/live-release-readiness.mjs"
+      - "site/src/lib/compare-display.mjs"
+      - "site/src/lib/combobox-navigation.mjs"
       - "site/src/lib/compare-conditions.ts"
       - "site/src/lib/compare-ux.ts"
       - "site/src/components/TractorComparison.astro"
@@ -48,30 +51,11 @@ jobs:
           cache: npm
       # Cloudflare receives the main push independently of GitHub Actions.
       # Avoid testing the previous deployment and reporting a false regression.
-      - name: Await actual Cloudflare production release (bounded)
-        if: github.event_name == 'push'
-        run: |
-          matched=0
-          for attempt in $(seq 1 15); do
-            if curl --max-time 20 --silent --show-error --fail --location \
-                -o /tmp/tractorvs-compare-live.html https://tractorvs.com/tr/compare/ &&
-              grep -Fq 'Şanzıman seçenekleri' /tmp/tractorvs-compare-live.html &&
-              grep -Fq 'data-language-sync="selection"' /tmp/tractorvs-compare-live.html &&
-              # Both actual static pages must be from this push, not an old release.
-              grep -Fq "name=\"tractorvs-release-sha\" content=\"${GITHUB_SHA}\"" /tmp/tractorvs-compare-live.html &&
-              curl --max-time 20 --silent --show-error --fail --location \
-                -o /tmp/tractorvs-catalog-live.html https://tractorvs.com/tr/tractors/ &&
-              grep -Fq 'data-research-facets="published"' /tmp/tractorvs-catalog-live.html &&
-              grep -Fq "name=\"tractorvs-release-sha\" content=\"${GITHUB_SHA}\"" /tmp/tractorvs-catalog-live.html; then
-              matched=1
-              break
-            fi
-            sleep 20
-          done
-          if [ "$matched" != 1 ]; then
-            echo "::error::Cloudflare production has not exposed this exact push SHA and the required comparison/catalogue markers after the bounded window. Do not claim that the new release passed live QA."
-            exit 1
-          fi
+      - name: Await coherent verified Cloudflare release (bounded)
+        if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: node site/scripts/live-release-readiness.mjs "$GITHUB_SHA" /tr/compare/ /tr/tractors/
       - name: Install locked project and pinned browser QA tools
         run: |
           npm ci --no-audit --no-fund

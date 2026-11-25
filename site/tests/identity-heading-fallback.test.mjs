@@ -4,8 +4,8 @@ import {reviewedIdentityFallback,reviewedIdentityFallbackHeadings} from "../src/
 import {specLabel} from "../src/lib/catalog.ts";
 const locales=["tr","zh","hi","pt-br","fr","de","ru","ja","es"];
 test("every reviewed stable-ID English display heading has a native fallback in all nine target languages",()=>{
- assert.equal(reviewedIdentityFallbackHeadings.length,272);
- assert.equal(new Set(reviewedIdentityFallbackHeadings).size,272);
+ assert.equal(reviewedIdentityFallbackHeadings.length,327);
+ assert.equal(new Set(reviewedIdentityFallbackHeadings).size,327);
  for(const heading of reviewedIdentityFallbackHeadings){
   for(const lang of locales){
    assert.notEqual(reviewedIdentityFallback(heading,heading,lang),heading,lang+" "+heading);
@@ -72,5 +72,14 @@ test("fifth batch retains vehicle configuration, measurement units and operating
   const t=label=>reviewedIdentityFallback(label,label,lang);
   for(const [label,pattern] of [["Engine Gross Horsepower",/HP/],["Permissible Gvw 2wd Kg",/2WD|2RM/],["Wheelbase 2wd Mm",/mm|мм/],["Hydraulic Steering Pump Flow Lpm",/L\/min|L\/dk|л\/мин/],["Height To ROPS",/ROPS/],["Height To Top ROPS Or Cab",/ROPS/]])assert.match(t(label),pattern,lang+" "+label);
   for(const [a,b] of [["Max Speed 2wd Kmh","Min Speed 2wd Kmh"],["Unladen Cab 2wd Kg","Unladen Platform 2wd Kg"],["4WD Control","4WD Engagement Control"],["Weight Without Extra Ballast","Weight Without Ballast"],["Height To ROPS","Height To Top ROPS Or Cab"],["Ag Front Tyre","Ag Rear Tyre"],["Optional Electronic Remotes","Standard Electronic Remotes"]])assert.notEqual(t(a),t(b),lang);
+ }
+});
+
+
+test("sixth batch preserves drive, exact units, conditions and manufacturer scope",()=>{
+ for(const lang of locales){
+  const t=label=>reviewedIdentityFallback(label,label,lang);
+  for(const [label,pattern] of [["Maximum Engine Power With PowerPlus For Eligible Hydraulic, Mobile PTO And Haulage Work",/PowerPlus/],["Height With Maximum Tyre SRI",/SRI/],["Height With Minimum Tyre SRI",/SRI/],["Manufacturer ROPS/Cabin Weight Range Boundary, Load Status Unspecified",/ROPS/],["Manufacturer Cab/ROPS Weight Boundary (Load Condition Unstated)",/ROPS/],["Length, CVT",/CVT/],["Length, Powershift",/Powershift/],["Engine Max Power Cv Iso",/CV.*ISO/],["Engine Max Power Kw Iso",/(kW|кВт).*ISO/],["Rear Lift Capacity At 24 Inches Behind Link Ends",/24/],["Front Hitch Lift Option Kg",/kg|кг/],["Front Steering Angle Deg",/°/],["Ground Clearance Mm",/mm|мм/],["PTO Power (KW)",/kW|кВт/]])assert.match(t(label),pattern,lang+" "+label);
+  for(const [a,b] of [["Height With Maximum Tyre SRI","Height With Minimum Tyre SRI"],["Length, CVT","Length, Powershift"],["Working Weight – CVT","Working Weight – Powershift"],["Minimum Speed","Minimum Speed With Creeper"],["Engine Max Power Cv Iso","Engine Max Power Kw Iso"],["Transmission Gears – Standard","Transmission Gears – Creeper Option"],["Largest Manufacturer-Listed Front Tire Size","Largest Manufacturer-Listed Rear Tire Size"],["PTO Rated Power","PTO Power (KW)"],["Maximum Height","Maximum Width"]])assert.notEqual(t(a),t(b),lang);
  }
 });

@@ -9,11 +9,14 @@ on:
       - "site/src/lib/approved-mobile-photo-assets.mjs"
       - "site/worker/index.js"
       - "site/scripts/verify-mobile-preview-assets.mjs"
+      - "site/scripts/workers-build-readiness.mjs"
+      - "site/tests/workers-build-readiness.test.mjs"
       - "site/tests/photo-mobile-preview.test.mjs"
       - "site/docs/photo-mobile-720-artifact-evidence.json"
       - ".github/workflows/photo-mobile-preview-sha-gate.yml"
 permissions:
   contents: read
+  checks: read
   pull-requests: read
 concurrency:
   group: tractorvs-720-preview-${{ github.event.pull_request.number }}
@@ -21,11 +24,14 @@ concurrency:
 jobs:
   exact-asset-preview:
     name: Verify real Cloudflare preview WebP/JPEG bytes and SHA (no deploy)
-    if: github.repository == 'onuronkol2-collab/tractorcompare-data'
+    if: github.repository == 'onuronkol2-collab/tractorcompare-data' && github.event.pull_request.head.repo.full_name == github.repository
     runs-on: ubuntu-latest
-    timeout-minutes: 12
+    timeout-minutes: 18
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          persist-credentials: false
       - uses: actions/setup-node@v4
         with:
           node-version: "22.23.4"
@@ -33,10 +39,12 @@ jobs:
         run: |
           node --experimental-strip-types --test \
             site/tests/photo-mobile-local-assets.test.mjs \
-            site/tests/photo-mobile-preview.test.mjs
+            site/tests/photo-mobile-preview.test.mjs \
+            site/tests/workers-build-readiness.test.mjs
       - name: Check exactly three 720px WebP + three JPEG on deployed Cloudflare preview
         env:
           GH_TOKEN: ${{ github.token }}
           PREVIEW_PR_NUMBER: ${{ github.event.pull_request.number }}
           PREVIEW_HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+          PREVIEW_HEAD_BRANCH: ${{ github.head_ref }}
         run: node site/scripts/verify-mobile-preview-assets.mjs

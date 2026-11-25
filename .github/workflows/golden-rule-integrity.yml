@@ -25,3 +25,9 @@ jobs:
 
       - name: Verify safe forum RLS policy consolidation (offline, no database writes)
         run: node --test scripts/forum-rls-policy-performance.test.mjs
+
+      - name: Verify CodeQL incident recovery policy (offline, no retries or writes)
+        run: node --test scripts/codeql-recovery.test.mjs
+
+      - name: Verify automated nominal catalogue evidence and preserved release gates (offline)
+        run: node --test site/tests/tractor-split-evidence-review.test.mjs

@@ -87,8 +87,10 @@ test("catalogue stays a crawlable technical reference, even with a two-column re
   assert.match(layout,/href: new URL\(localizedPath\(locale, plainPath\), Astro.site!\)/);
   assert.match(compare,/const initiallySharedOnly=Astro.url.searchParams.get\("view"\)==="shared"/);
   assert.match(compare,/let commonOnly=params.get\("view"\)==="shared"/);
-  assert.match(compare,/all\?\.setAttribute\("aria-pressed",String\(!commonOnly\)\)/);
+  assert.match(compare,/all\?\.setAttribute\("aria-pressed",String\(!commonOnly&&!differentOnly\)\)/);
   assert.match(compare,/shared\?\.setAttribute\("aria-pressed",String\(commonOnly\)\)/);
+  assert.match(compare,/differentButton\?\.setAttribute\("aria-pressed",String\(differentOnly\)\)/);
+  assert.match(compare,/if\(differentOnly\)url.searchParams.set\("view","different"\)/);
   assert.match(compare,/if\(commonOnly\)url.searchParams.set\("view","shared"\)/);
   assert.match(compare,/else url.searchParams.delete\("view"\)/);
   assert.match(source,/catalog-facet-panel\{position:sticky/);
@@ -115,4 +117,12 @@ test("explicit market facet respects documented geographic scope and never hides
  assert.match(html,/data-market=\{tractor.market\?\?""\}/);
  assert.match(html,/\["market",state.market\]/);
  assert.equal((html.match(/if\(marketFacet\)marketFacet.value="";/g)||[]).length,2);
+});
+
+test("empty catalogue recovery shares the filter reset and normalizes stale incoming URL state",()=>{
+  const source=readFileSync(new URL("../src/components/TractorCatalog.astro",import.meta.url),"utf8");
+  assert.match(source,/id="catalog-empty-reset" class="catalog-empty-reset" hidden/);
+  assert.match(source,/facetReset\?\.addEventListener\("click",resetFilters\)/);
+  assert.match(source,/emptyReset\?\.addEventListener\("click",resetFilters\)/);
+  assert.match(source,/if\(search && facetPanel && cards.length\) syncSearchURL\(search.value\)/);
 });

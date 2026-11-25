@@ -4,7 +4,7 @@ import {mkdtempSync,mkdirSync,writeFileSync,readFileSync,rmSync} from "node:fs";
 import {tmpdir} from "node:os";
 import {join,dirname} from "node:path";
 import {createHash} from "node:crypto";
-import {significantContentDigest,deriveHistory,auditBuiltSitemap,extractPublishedUrls,ORIGIN} from "./tractor-sitemap-history.mjs";
+import {significantContentDigest,deriveHistory,auditBuiltSitemap,extractPublishedUrls,migrateDigestCheckpoint,DIGEST_ALGORITHM,historicalModelSlugs,prepareHistoricalCatalogSource,verifyRebuiltCheckpoint,ORIGIN} from "./tractor-sitemap-history.mjs";
 
 const a=ORIGIN+"/", b=ORIGIN+"/tr/tractors/safe-model/";
 const hash=s=>createHash("sha256").update(s).digest("hex");
@@ -237,4 +237,135 @@ test("exact one-time PR467 multilingual source correction gets truthful lastmod 
     /manual SEO review/,"Every one of the ten exactly matched language cohorts is required");
   assert.throws(()=>deriveHistory({pages,previous:{...previous,reviewedBulkCopyPr497:false},
     now:date2,reviewedPr467Copy:true}),/manual SEO review/,"Previous reviewed source checkpoint is required");
+});
+
+
+test("sitemap provenance runs before shared HTML inputs merge, not just component edits",()=>{
+  const workflow=readFileSync(new URL("../.github/workflows/tractorvs-sitemap-history.yml",import.meta.url),"utf8");
+  const patterns=section=>[...section.matchAll(/^      - "([^"]+)"$/gm)].map(m=>m[1]);
+  const push=workflow.split("  push:\n")[1].split("  pull_request:")[0];
+  const pr=workflow.split("  pull_request:")[1].split("\nconcurrency:")[0];
+  const expected=["site/src/**","!site/src/data/sitemap-lastmod.json","site/public/**",
+    "site/astro.config.mjs","site/package.json","site/package-lock.json",
+    "site/scripts/production-release-gate.mjs","site/scripts/verify-*.mjs",
+    "scripts/tractor-sitemap-history.mjs","scripts/tractor-sitemap-history.test.mjs",
+    ".github/workflows/tractorvs-sitemap-history.yml"];
+  assert.deepEqual(patterns(push),expected);
+  assert.deepEqual(patterns(pr),expected,"All significant source inputs must receive the same premerge guard");
+  assert.ok(expected.indexOf("!site/src/data/sitemap-lastmod.json")>expected.indexOf("site/src/**"),"Ledger-only generated updates must remain excluded");
+  assert.match(workflow,/if ! changed_paths="\$\(git diff --name-only "\$AUDITED_BASE" origin\/main\)"; then/);
+  assert.ok(workflow.includes("seo/sitemap-content-history\\.json$"),"A concurrent history checkpoint invalidates the audited baseline");
+  assert.ok(workflow.includes("package(-lock)?\\.json$"),"Dependency changes invalidate the audited build");
+});
+
+
+test("only the exact generated market-price module cache hash is ignored",()=>{
+ const module=hash=>'<script type="module" src="/_astro/TractorMarketPrice.astro_astro_type_script_index_0_lang.'+hash+'.js"></script>';
+ const old=sample(b,'<p>95 HP</p>'+module("Db5Sr4d7")+'<script type="application/json">{"value":95}</script>');
+ const updated=old.replace("Db5Sr4d7","B7Ok9FpF");
+ assert.equal(significantContentDigest(old,b),significantContentDigest(updated,b));
+ assert.notEqual(significantContentDigest(old,b,{legacy:true}),significantContentDigest(updated,b,{legacy:true}));
+ for(const change of [
+  updated.replace("95 HP","105 HP"),
+  updated.replace('{"value":95}','{"value":105}'),
+  updated.replace('type="module"','type="text/javascript"'),
+  updated.replace('type="module"','type="module" integrity="sha256-example"'),
+  updated.replace("TractorMarketPrice","OtherComponent"),
+  updated.replace(module("B7Ok9FpF"),""),
+ ]) assert.notEqual(significantContentDigest(old,b),significantContentDigest(change,b));
+ const external=sample(b,'<script type="module" src="https://example.org/TractorMarketPrice.astro_astro_type_script_index_0_lang.Db5Sr4d7.js"></script>');
+ assert.notEqual(significantContentDigest(external,b),significantContentDigest(external.replace("Db5Sr4d7","B7Ok9FpF"),b));
+});
+
+test("legacy migration verifies every old hash and preserves all dates, updates only actual differences",()=>{
+ const legacy=setup(),current=setup();
+ try{
+  const component=hash=>'<script type="module" src="/_astro/TractorMarketPrice.astro_astro_type_script_index_0_lang.'+hash+'.js"></script>';
+  legacy.write(b,"Real tractor page"+component("Db5Sr4d7"));
+  current.write(b,"Real tractor page"+component("B7Ok9FpF"));
+  const read=(ctx,url)=>readFileSync(join(ctx.dist,new URL(url).pathname.slice(1),"index.html"),"utf8");
+  const previous={version:1,pages:{
+   [a]:{digest:significantContentDigest(read(legacy,a),a,{legacy:true}),modified:null},
+   [b]:{digest:significantContentDigest(read(legacy,b),b,{legacy:true}),modified:date1.toISOString()}
+  },reviewedBulkCopyPr497:true};
+  writeFileSync(current.historyPath,JSON.stringify(previous));
+  writeFileSync(current.lastmodPath,JSON.stringify({version:1,dates:{"/tr/tractors/safe-model/":date1.toISOString()}}));
+  assert.throws(()=>auditBuiltSitemap({...current,now:date2,minPages:2,legacyDist:null}),/requires the verified historical build/);
+  const oldHistory=readFileSync(current.historyPath,"utf8"),oldDates=readFileSync(current.lastmodPath,"utf8");
+  legacy.write(a,"Unexpected baseline corruption");
+  assert.throws(()=>auditBuiltSitemap({...current,now:date2,minPages:2,legacyDist:legacy.dist}),/cannot reproduce checkpoint/);
+  assert.equal(readFileSync(current.historyPath,"utf8"),oldHistory);
+  assert.equal(readFileSync(current.lastmodPath,"utf8"),oldDates);
+  legacy.write(a,"Real homepage");
+  const migrated=migrateDigestCheckpoint(previous,legacy.dist);
+  assert.equal(migrated.pages[b].modified,date1.toISOString());
+  assert.equal(migrated.pages[a].modified,null);
+  const result=auditBuiltSitemap({...current,now:date2,minPages:2,legacyDist:legacy.dist});
+  assert.equal(result.significant_changes,0);
+  assert.equal(JSON.parse(readFileSync(current.historyPath)).digestAlgorithm,DIGEST_ALGORITHM);
+  assert.equal(JSON.parse(readFileSync(current.historyPath)).reviewedBulkCopyPr497,true);
+  assert.equal(JSON.parse(readFileSync(current.lastmodPath)).dates["/tr/tractors/safe-model/"],date1.toISOString());
+  current.write(b,"Corrected real engine specification"+component("B7Ok9FpF"));
+  const next=auditBuiltSitemap({...current,now:date2,minPages:2,legacyDist:null});
+  assert.equal(next.significant_changes,1);
+  assert.equal(JSON.parse(readFileSync(current.lastmodPath)).dates["/tr/tractors/safe-model/"],date2.toISOString());
+ }finally{rmSync(legacy.root,{recursive:true,force:true});rmSync(current.root,{recursive:true,force:true});}
+});
+
+
+test("historical build scopes to exact prior published model slugs, never current inventory",()=>{
+ const slug="known-tractor-abcd1234";
+ const locales=["en","tr","zh","hi","pt-br","fr","de","ru","ja","es"];
+ const pages=Object.fromEntries(locales.map(lang=>[ORIGIN+(lang==="en"?"":"/"+lang)+"/tractors/"+slug+"/",{digest:hash(lang),modified:null}]));
+ const previous={version:1,pages:{...pages,[ORIGIN+"/"]:{digest:hash("home"),modified:null}}};
+ assert.deepEqual(historicalModelSlugs(previous),[slug]);
+ const source="before\n  const tractors = [...groups.values()].map((tractor) => {\nafter";
+ const patched=prepareHistoricalCatalogSource(source,previous);
+ assert.match(patched,/historicalSlugs = new Set\(\["known-tractor-abcd1234"\]\)/);
+ assert.match(patched,/filter\(tractor => historicalSlugs\.has\(tractor\.slug\)\)/);
+ assert.match(patched,/Historical public catalogue identity mismatch/);
+ assert.throws(()=>prepareHistoricalCatalogSource("unexpected",previous),/Unexpected historical catalogue source/);
+ const incomplete={version:1,pages:{...pages}};
+ delete incomplete.pages[ORIGIN+"/ja/tractors/"+slug+"/"];
+ assert.throws(()=>historicalModelSlugs(incomplete),/identity inventory incomplete/);
+});
+
+
+test("final rebuilt HTML and XML must match candidate ledger despite concurrent database updates",()=>{
+ const ctx=setup();
+ try{
+  auditBuiltSitemap({...ctx,now:date1,minPages:2});
+  assert.deepEqual(verifyRebuiltCheckpoint(ctx),{verifiedPages:2,verifiedDates:0});
+  ctx.write(b,"Concurrent verified technical change");
+  assert.throws(()=>verifyRebuiltCheckpoint(ctx),/Rebuilt catalogue drift/);
+  auditBuiltSitemap({...ctx,now:date2,minPages:2});
+  assert.throws(()=>verifyRebuiltCheckpoint(ctx),/XML lastmod mismatch/);
+  const sitemap=join(ctx.dist,"sitemap-0.xml");
+  const xml=readFileSync(sitemap,"utf8").replace("<loc>"+b+"</loc>","<loc>"+b+"</loc><lastmod>"+date2.toISOString()+"</lastmod>");
+  writeFileSync(sitemap,xml);
+  assert.deepEqual(verifyRebuiltCheckpoint(ctx),{verifiedPages:2,verifiedDates:1});
+  writeFileSync(sitemap,xml.replace(date2.toISOString(),date1.toISOString()));
+  assert.throws(()=>verifyRebuiltCheckpoint(ctx),/XML lastmod mismatch/);
+  writeFileSync(sitemap,xml);
+  writeFileSync(ctx.lastmodPath,JSON.stringify({version:1,dates:{}}));
+  assert.throws(()=>verifyRebuiltCheckpoint(ctx),/date map differs/);
+ }finally{rmSync(ctx.root,{recursive:true,force:true});}
+});
+
+
+test("digest-only script normalization covers browser-tolerated closing tags without deleting markup",()=>{
+ const module=(hash,ending,body="")=>'<script type="module" src="/_astro/TractorMarketPrice.astro_astro_type_script_index_0_lang.'+hash+'.js">'+body+ending;
+ for(const ending of ["</script>","</script >","</script\t>","</SCRIPT>","</script data-extra=\"kept\">","</script/>"]){
+  const html=sample(b,module("Db5Sr4d7",ending));
+  const updated=sample(b,module("B7Ok9FpF",ending));
+  assert.equal(significantContentDigest(html,b),significantContentDigest(updated,b),ending);
+  assert.notEqual(significantContentDigest(html,b,{legacy:true}),significantContentDigest(updated,b,{legacy:true}),ending);
+ }
+ // Nonempty scripts and lookalike tag names must not be normalized.
+ for(const [ending,body] of [["</script>","importantPayload()"],["</script-other>",""]]){
+  assert.notEqual(significantContentDigest(sample(b,module("Db5Sr4d7",ending,body)),b),
+   significantContentDigest(sample(b,module("B7Ok9FpF",ending,body)),b));
+ }
+ assert.notEqual(significantContentDigest(sample(b,module("Db5Sr4d7","</script>")),b),
+  significantContentDigest(sample(b,module("Db5Sr4d7","</script data-extra=\"kept\">")),b));
 });

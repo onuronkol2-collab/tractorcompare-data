@@ -141,3 +141,129 @@ test("synthetic source CSS keeps mobile comparison model columns and readable ci
   await expect(row).toHaveCSS("border-color","rgb(75, 144, 96)");
   expect(await noDocumentOverflow(page)).toBe(true);
 });
+
+// Only intercepted test-browser responses contain these invented records.
+// The production build, catalogue, database and generated files remain untouched.
+// The real Astro-bundled client scripts still execute; never skip the new behavior
+// just because CI intentionally builds without a public catalogue.
+const fixtureSpec=(key,label,value)=>({key,label,value,unit:null,context:null,rpm:null,source:null,independent:false,notice:null});
+const fixtureModels=[
+  {title:"QA Tractor A",variant:null,power:null,specsCount:3,detailsUrl:"/tr/tractors/",photo:null,specs:[
+    fixtureSpec("fixture_equal","QA Equal","1"),fixtureSpec("fixture_difference","QA Difference","2"),
+    fixtureSpec("fixture_missing","QA Missing","3")]},
+  {title:"QA Tractor B",variant:null,power:null,specsCount:2,detailsUrl:"/tr/tractors/",photo:null,specs:[
+    fixtureSpec("fixture_equal","QA Equal","1"),fixtureSpec("fixture_difference","QA Difference","4")]},
+  {title:"QA Tractor C",variant:null,power:null,specsCount:1,detailsUrl:"/tr/tractors/",photo:null}
+];
+function replacePayload(html,id,data){
+  const pattern=new RegExp('(<script\\b[^>]*\\bid="'+id+'"[^>]*>)[\\s\\S]*?(</script>)');
+  if(!pattern.test(html))throw Error("Missing compiled payload: "+id);
+  return html.replace(pattern,(_,open,close)=>open+JSON.stringify(data)+close);
+}
+const fixturePicker=()=>{
+  const controls=["left","right"].map((side,index)=>
+    '<div class="tc-picker-side"><div class="tc-searchbox"><input class="tc-combo-input" id="tc-'+side+'-search" aria-label="'+side+'" role="combobox" aria-expanded="false" aria-controls="tc-'+side+'-results" aria-autocomplete="list"><div class="tc-picker-results" id="tc-'+side+'-results" role="listbox" hidden></div></div><select class="tc-native-select" id="tc-'+side+'"><option value="qa-a" '+(index===0?"selected":"")+'>QA Tractor A</option><option value="qa-b" '+(index===1?"selected":"")+'>QA Tractor B</option><option value="qa-c">QA Tractor C</option></select></div>'
+  ).join("");
+  return '<section class="tc-section"><div id="tc-picker" class="tc-picker" data-directory="/comparison-data/tr/">'+controls+'</div><div class="tc-table-bar"><div class="tc-table-bar-title"><h2>QA comparison</h2></div><div class="tc-filters" role="group" aria-label="Comparison filters"><button id="tc-all" type="button" aria-pressed="true">All</button><button id="tc-shared" type="button" aria-pressed="false">Shared</button><button id="tc-different" type="button" aria-pressed="false" hidden>Different</button></div></div><p id="tc-different-note" hidden>Different published entries only</p><p id="tc-no-shared" hidden></p><p id="tc-summary"></p><p id="tc-load-error" role="alert" hidden></p><button type="button" id="tc-retry" hidden>Retry</button><table class="tc-table"><tbody id="tc-rows"></tbody></table></section>';
+};
+test("comparison combobox retains input focus and differing-data view is shareable",async({page})=>{
+  await page.route(url=>url.pathname==="/tr/compare/",async route=>{
+    const response=await route.fetch();
+    let html=await response.text();
+    // On a populated build use the real controls and real records instead.
+    if(!html.includes('id="tc-picker"')){
+      html=replacePayload(html,"tc-payload",fixtureModels);
+      html=html.replace("</body>",fixturePicker()+"</body>");
+    }
+    await route.fulfill({response,body:html});
+  });
+  await page.goto("/tr/compare/",{waitUntil:"load"});
+  // Exercise the actual consent controls rather than forcing a click through
+  // the fixed mobile banner. The user's rejection must persist across reload.
+  const consentBanner=page.locator("#tractorvs-analytics-banner");
+  await expect(consentBanner).toBeVisible();
+  await page.locator("#tractorvs-analytics-reject").click();
+  await expect(consentBanner).toBeHidden();
+  await expect(page.locator("#tc-picker")).toHaveClass(/tc-js-ready/);
+  const input=page.locator("#tc-left-search");
+  await input.focus();
+  const options=page.locator("#tc-left-results .tc-result");
+  await expect(options.first()).toBeVisible();
+  await input.press("ArrowUp");
+  await expect(input).toHaveAttribute("aria-activedescendant",await options.last().getAttribute("id"));
+  await expect(input).toBeFocused();
+  await expect(options.first()).toHaveAttribute("tabindex","-1");
+  await input.press("Tab");
+  await expect(input).toHaveAttribute("aria-expanded","false");
+  // Tab can move to the next model combobox and legitimately open its list.
+  // Dismiss it by keyboard, then leave the picker before clicking filters.
+  const nextInput=page.locator("#tc-right-search");
+  if(await nextInput.evaluate(el=>el===document.activeElement)){
+    await expect(nextInput).toHaveAttribute("aria-expanded","true");
+    await nextInput.press("Escape");
+    await expect(nextInput).toHaveAttribute("aria-expanded","false");
+  }
+  await expect(page.locator("#tc-left-results")).toBeHidden();
+  await expect(page.locator("#tc-right-results")).toBeHidden();
+  const fixture=await page.locator("#tc-rows th").filter({hasText:"QA Equal"}).count()>0;
+  const diff=page.locator("#tc-different");
+  await diff.click();
+  await expect(diff).toHaveAttribute("aria-pressed","true");
+  await expect(page.locator("#tc-different-note")).toBeVisible();
+  if(fixture){
+    await expect(page.locator("#tc-rows th")).toHaveText(["QA Difference"]);
+  }
+  await expect.poll(()=>new URL(page.url()).searchParams.get("view")).toBe("different");
+  await page.reload({waitUntil:"load"});
+  await expect(consentBanner).toBeHidden();
+  await expect(diff).toHaveAttribute("aria-pressed","true");
+  if(fixture)await expect(page.locator("#tc-rows th")).toHaveText(["QA Difference"]);
+  await page.locator("#tc-shared").click();
+  if(fixture)await expect(page.locator("#tc-rows th")).toHaveText(["QA Difference","QA Equal"]);
+  await page.locator("#tc-all").click();
+  if(fixture)await expect(page.locator("#tc-rows th")).toHaveText(["QA Difference","QA Equal","QA Missing"]);
+  await expect.poll(()=>new URL(page.url()).searchParams.get("view")).toBe(null);
+  if(fixture){
+    let requests=0;
+    await page.route("**/comparison-data/tr/qa-c.json",async route=>{
+      requests++;
+      await route.fulfill({status:200,contentType:"application/json",body:JSON.stringify(requests===1?{invalid:true}:[fixtureSpec("fixture_difference","QA Difference","5")])});
+    });
+    const right=page.locator("#tc-right-search");
+    await right.fill("QA Tractor C");
+    await page.locator("#tc-right-results .tc-result").first().click();
+    await expect.poll(()=>new URL(page.url()).searchParams.get("right")).toBe("qa-c");
+    await expect(page.locator("#tc-load-error")).toBeVisible();
+    await expect(page.locator("#tc-rows")).toHaveAttribute("aria-busy","false");
+    await expect(page.locator("#tc-rows tr")).toHaveCount(0);
+    await page.locator("#tc-retry").click();
+    await expect(page.locator("#tc-load-error")).toBeHidden();
+    await expect(page.locator("#tc-retry")).toBeHidden();
+    await expect(page.locator("#tc-rows")).toHaveAttribute("aria-busy","false");
+    await expect(page.locator("#tc-rows")).toContainText("5");
+    expect(requests).toBe(2);
+  }
+});
+
+test("home search suggestions keep DOM focus and leave the Tab sequence",async({page})=>{
+  await page.route(url=>url.pathname==="/tr/",async route=>{
+    const response=await route.fetch();
+    const html=replacePayload(await response.text(),"home-suggestions-data",[
+      {brand:"QA Tractor",model:"A",variant:null,year:null,horsepower:null,specs:3,url:"/tr/tractors/"},
+      {brand:"QA Tractor",model:"B",variant:null,year:null,horsepower:null,specs:2,url:"/tr/tractors/"}
+    ]);
+    await route.fulfill({response,body:html});
+  });
+  await page.goto("/tr/",{waitUntil:"load"});
+  const input=page.locator("#home-model-query");
+  await input.fill("QA Tractor");
+  const options=page.locator("#home-search-results .home-search-option");
+  await expect(options).toHaveCount(2);
+  await expect(options.first()).toBeVisible();
+  await input.press("ArrowUp");
+  await expect(input).toHaveAttribute("aria-activedescendant",await options.last().getAttribute("id"));
+  await expect(input).toBeFocused();
+  await expect(options.first()).toHaveAttribute("tabindex","-1");
+  await input.press("Tab");
+  await expect(input).toHaveAttribute("aria-expanded","false");
+});

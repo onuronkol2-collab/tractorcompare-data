@@ -94,3 +94,53 @@ test("market and country labels are localized; underlying model identity is neve
   assert.equal(localizedCountryName("DE","de"),"Deutschland");
   assert.notEqual(localizedCountryName("FR","fr"),localizedCountryName("FR","tr"));
 });
+
+import {differentPublishedEntries} from "../src/lib/compare-display.mjs";
+import {nextComboboxOption} from "../src/lib/combobox-navigation.mjs";
+test("different entries never interpret missing values as differences or normalize measurements",()=>{
+  const a={value:"100",unit:"hp",context:"rated",rpm:2200,notice:null,source:"https://example.com/a"};
+  assert.equal(differentPublishedEntries([a],[]),false);
+  assert.equal(differentPublishedEntries([],[a]),false);
+  assert.equal(differentPublishedEntries([a],[{...a,source:"https://example.com/b"}]),false);
+  for(const patch of [{value:"101"},{unit:"kW"},{context:"peak"},{rpm:2100},{notice:"Different conditions"}]){
+    assert.equal(differentPublishedEntries([a],[{...a,...patch}]),true);
+  }
+  const b={...a,value:"80"};
+  assert.equal(differentPublishedEntries([a,b],[b,a]),false);
+  assert.equal(differentPublishedEntries([a],[a,b]),true);
+  assert.match(compare,/differentOnly\?different:commonOnly\?shared:keys/);
+  assert.match(compare,/id="tc-different"/);
+  assert.match(compare,/url\.searchParams\.set\("view","different"\)/);
+});
+test("combobox keyboard selects the first or last option from no selection",()=>{
+  assert.equal(nextComboboxOption(-1,8,1),0);
+  assert.equal(nextComboboxOption(-1,8,-1),7);
+  assert.equal(nextComboboxOption(0,8,-1),7);
+  assert.equal(nextComboboxOption(7,8,1),0);
+  assert.equal(nextComboboxOption(-1,0,1),-1);
+  assert.match(compare,/button\.tabIndex=-1/);
+  assert.match(compare,/event\.isComposing/);
+  assert.match(compare,/event\.key==="Tab"/);
+});
+
+test("home and comparison use the same accessible combobox keyboard rules",()=>{
+  const home=read("components/HomeExperience.astro");
+  assert.match(home,/nextComboboxOption\(selectedIndex,links.length/);
+  assert.match(compare,/nextComboboxOption\(active,buttons.length/);
+  assert.match(home,/option\.tabIndex = -1/);
+  assert.match(home,/event\.isComposing/);
+  assert.match(home,/event\.key === "Tab"/);
+});
+
+import {isPublishedSpecList} from "../src/lib/compare-display.mjs";
+test("malformed comparison responses fail closed and valid empty records remain valid",()=>{
+  const spec={key:"engine_power",label:"Engine power",value:"75",unit:"HP",context:null,rpm:2200,source:null,notice:null};
+  assert.equal(isPublishedSpecList([spec]),true);
+  assert.equal(isPublishedSpecList([]),true);
+  for(const invalid of [null,{},[null],[{...spec,value:75}],[{...spec,key:""}],[{...spec,rpm:"2200"}],[{...spec,source:{url:"bad"}}]])assert.equal(isPublishedSpecList(invalid),false);
+  const component=readFileSync(new URL("../src/components/TractorComparison.astro",import.meta.url),"utf8");
+  assert.ok(component.indexOf("syncSelection(left,right);") < component.indexOf("await Promise.all([loadSpecs(left), loadSpecs(right)])"));
+  assert.match(component,/id="tc-retry" type="button"/);
+  assert.match(component,/if\(retry\)retry.hidden=false/);
+  assert.match(component,/if \(!isPublishedSpecList\(payload\)\) throw/);
+});
