@@ -87,8 +87,10 @@ test("catalogue stays a crawlable technical reference, even with a two-column re
   assert.match(layout,/href: new URL\(localizedPath\(locale, plainPath\), Astro.site!\)/);
   assert.match(compare,/const initiallySharedOnly=Astro.url.searchParams.get\("view"\)==="shared"/);
   assert.match(compare,/let commonOnly=params.get\("view"\)==="shared"/);
-  assert.match(compare,/all\?\.setAttribute\("aria-pressed",String\(!commonOnly\)\)/);
+  assert.match(compare,/all\?\.setAttribute\("aria-pressed",String\(!commonOnly&&!differentOnly\)\)/);
   assert.match(compare,/shared\?\.setAttribute\("aria-pressed",String\(commonOnly\)\)/);
+  assert.match(compare,/differentButton\?\.setAttribute\("aria-pressed",String\(differentOnly\)\)/);
+  assert.match(compare,/if\(differentOnly\)url.searchParams.set\("view","different"\)/);
   assert.match(compare,/if\(commonOnly\)url.searchParams.set\("view","shared"\)/);
   assert.match(compare,/else url.searchParams.delete\("view"\)/);
   assert.match(source,/catalog-facet-panel\{position:sticky/);
