@@ -37,7 +37,7 @@ function redirect(location, preferred = null) {
 }
 
 /** Only root and explicit language selection use the Worker; other pages are static. */
-export default {
+const routes = {
   async fetch(request, env) {
     const url = new URL(request.url);
     const method = request.method;
@@ -188,4 +188,24 @@ export default {
   }
 };
 
+// _headers applies only to static assets, not Worker-generated responses.
+export function finalizeEdgeResponse(request,response){
+  const headers=new Headers(response.headers);
+  if(!headers.has("X-Content-Type-Options"))headers.set("X-Content-Type-Options","nosniff");
+  if(!headers.has("Referrer-Policy"))headers.set("Referrer-Policy","strict-origin-when-cross-origin");
+  if(response.status>=400)headers.set("Cache-Control","no-store");
+  if(response.status===405&&!headers.has("Allow")){
+    const p=new URL(request.url).pathname;
+    if(p.startsWith("/language/")||p.startsWith("/images/tractors/")||
+      p==="/api/visitor-country"||p==="/sitemap.xml")headers.set("Allow","GET, HEAD");
+  }
+  const body=request.method==="HEAD"?null:response.body;
+  // Keep redirect cookies, status, cache directives, image MIME and streaming.
+  return new Response(body,{status:response.status,statusText:response.statusText,headers});
+}
+export default {
+  async fetch(request,env){
+    return finalizeEdgeResponse(request,await routes.fetch(request,env));
+  }
+};
 export { cookieLocale, internalDestination };

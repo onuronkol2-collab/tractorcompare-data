@@ -5,6 +5,8 @@ on:
     paths:
       - ".github/workflows/live-website-audit.yml"
       - "site/scripts/live-website-audit.mjs"
+      - "site/scripts/live-public-response.mjs"
+      - "site/tests/live-public-response-security.test.mjs"
       - "site/scripts/production-seo-audit.mjs"
       - "site/scripts/production-internal-link-graph.mjs"
       - "site/tests/production-internal-link-graph.test.mjs"
@@ -20,6 +22,8 @@ on:
     paths:
       - ".github/workflows/live-website-audit.yml"
       - "site/scripts/live-website-audit.mjs"
+      - "site/scripts/live-public-response.mjs"
+      - "site/tests/live-public-response-security.test.mjs"
       - "site/scripts/production-seo-audit.mjs"
       - "site/scripts/production-internal-link-graph.mjs"
       - "site/tests/production-internal-link-graph.test.mjs"
@@ -59,7 +63,7 @@ jobs:
         with:
           node-version: "22.23.4"
       - name: Test sitemap boundaries and real HTML meta-attribute parsing
-        run: node --test site/tests/live-stylesheets.test.mjs site/tests/production-sitemap-inventory.test.mjs site/tests/seo-html-attributes.test.mjs site/tests/production-internal-link-graph.test.mjs
+        run: node --experimental-strip-types --test site/tests/live-public-response-security.test.mjs site/tests/live-stylesheets.test.mjs site/tests/production-sitemap-inventory.test.mjs site/tests/seo-html-attributes.test.mjs site/tests/production-internal-link-graph.test.mjs
       - name: Inspect workers.dev preview
         env:
           TRACTORVS_AUDIT_ORIGIN: https://tractorvs-site.onuronkol2.workers.dev
