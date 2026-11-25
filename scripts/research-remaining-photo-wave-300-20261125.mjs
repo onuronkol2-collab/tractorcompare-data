@@ -14,11 +14,138 @@ const unique=[...new Map(prior.models.map(r=>[r.tractor_id,r])).values()];
 const missing=unique.filter(r=>!APPROVED_TRACTOR_PHOTOS.some(p=>photoMatchesTractor(p,{tractor_id:r.tractor_id,brand_name:r.brand,model_name:r.model})));
 const previous=JSON.parse(await readFile("previous-wave/report.json","utf8")); const second=JSON.parse(await readFile("second-wave/report.json","utf8")); const visited=new Set([...previous.selectedModels,...second.selectedModels].map(r=>r.tractor_id));
 const priorities=["Yanmar","Mahindra","Sonalika","Swaraj","TYM","McCormick","Kioti","Agrale","LS Tractor","Iseki","Solis"];
-// Recover every previously collected, unused archive photograph, prioritizing photo-less models.
+// New direct source-page leads discovered by indexed web search, not the exhausted archive query.
+const direct=[
+  [
+    "Belarus",
+    "1221.3",
+    "Belarus MTZ-1221 3 tractor.jpg",
+    "Belarus 1221.3 (open day 2017) 1.jpg"
+  ],
+  [
+    "Belarus",
+    "952",
+    "Belarus 952.jpg",
+    "Belarus 952 (new).jpg"
+  ],
+  [
+    "Belarus",
+    "952.3",
+    "Belarus 952.3 Tractor in Bucharest 2011.jpg"
+  ],
+  [
+    "Belarus",
+    "952.4",
+    "Belarus 952.4 tractor.jpg",
+    "Belarus 952.4 tractor 2.jpg"
+  ],
+  [
+    "Belarus",
+    "920.2",
+    "Belarus 920.2 tractor.jpg"
+  ],
+  [
+    "Belarus",
+    "1220.4",
+    "Belarus 1220.4.jpg"
+  ],
+  [
+    "Belarus",
+    "892.2",
+    "Belarus 892.2, 2025 Dunapataj.jpg",
+    "Космос, МТЗ-892.2 на Желтоксане.jpg"
+  ],
+  [
+    "Belarus",
+    "922.3",
+    "Алматы, Беларус-922.3 на Кулымбетова-Бруно (1).jpg"
+  ],
+  [
+    "Belarus",
+    "923.4",
+    "Belarus 923.4 (open day 2017) 2.jpg"
+  ],
+  [
+    "Belarus",
+    "510",
+    "Belarus 510 tractor, Minsk Tractor Works.jpg",
+    "Belarus 510 (open day 2017) 1.jpg"
+  ],
+  [
+    "Belarus",
+    "572",
+    "Belazs MTZ 572.jpg"
+  ],
+  [
+    "Steyr",
+    "6240 ABSOLUT CVT",
+    "Steyr Absolut 6240.jpg"
+  ],
+  [
+    "Steyr",
+    "4075 KOMPAKT",
+    "Steyr 4075 Kompakt.jpg"
+  ],
+  [
+    "Steyr",
+    "4115 KOMPAKT",
+    "Steyr Kompakt 4115.jpg"
+  ],
+  [
+    "Steyr",
+    "4105 KOMPAKT",
+    "2018-06-28 (801) Steyr 4105 Kompakt in Kirchberg an der Pielach.jpg"
+  ],
+  [
+    "Steyr",
+    "4085 KOMPAKT",
+    "Steyr 4085 Kompakti Ecotech.jpg"
+  ],
+  [
+    "Steyr",
+    "4095 KOMPAKT",
+    "Steyr 4095 Kompakt mit Kuhn BRP28 Mulch- und Häckselgerät.jpg"
+  ],
+  [
+    "Steyr",
+    "6340 TERRUS CVT",
+    "Steyr 6340 Terrus CVT Agritechnica 2023 (DSC04861).jpg"
+  ],
+  [
+    "Steyr",
+    "6200 IMPULS",
+    "Steyr 6200 Impuls CVT Agritechnica 2025 (DSC03498).jpg"
+  ],
+  [
+    "Steyr",
+    "6280 ABSOLUT CVT",
+    "Steyr 6280 Absolut CVT agra 2024 (DSC02603).jpg",
+    "Steyr 6280 Absolut CVT Öko-Feldtage 2025 (DSC01877).jpg",
+    "Steyr 6280 Absolut CVT Öko-Feldtage 2025 (DSC02133).jpg"
+  ],
+  [
+    "Steyr",
+    "6440 CERVUS CVT",
+    "Steyr 6440 Cervus CVT Agritechnica 2025 (DSC04360).jpg",
+    "Steyr 6440 Cervus CVT Agritechnica 2025 (DSC08437).jpg"
+  ],
+  [
+    "Steyr",
+    "4130 EXPERT CVT",
+    "Steyr 4130 Expert CVT agra 2024 (DSC01621).jpg",
+    "Steyr 4130 Expert CVT agra 2026 (DSC1525).jpg"
+  ],
+  [
+    "Steyr",
+    "4140 EXPERT CVT",
+    "Steyr 4140 Expert CVT Agritechnica 2023 (DSC05407).jpg",
+    "Steyr 4140 Expert CVT Kommunal Agritechnica 2025 (DSC05835).jpg"
+  ]
+];
 const missingIds=new Set(missing.map(r=>r.tractor_id));
-const targets=unique.filter(r=>r.candidates?.length).sort((a,b)=>Number(missingIds.has(b.tractor_id))-Number(missingIds.has(a.tractor_id))||a.brand.localeCompare(b.brand)||a.model.localeCompare(b.model));
-const hasPrior=targets;
-const report={generatedAt:new Date().toISOString(),scope:"Archived public sitemap model identities checked against current registry; not full live catalogue",sourceArchive:14994831046,mode:"recover unused archive originals; missing models first, other published models second",publicModelCount:unique.length,missingModelCount:missing.length,selectedModels:targets.map(({tractor_id,brand,model,variant})=>({tractor_id,brand,model,variant})),candidateCount:0,downloaded:0,publicationCount:0,allowedToPublish:false,errors:[],queries:[],entries:[]};
+const targets=missing.filter(r=>direct.some(([brand,model])=>r.brand===brand&&r.model.toUpperCase()===model.toUpperCase()));
+const hasPrior=[];
+const report={generatedAt:new Date().toISOString(),scope:"Archived public sitemap model identities checked against current registry; not full live catalogue",sourceArchive:14994831046,mode:"new exact source pages for currently missing Belarus and Steyr models",publicModelCount:unique.length,missingModelCount:missing.length,selectedModels:targets.map(({tractor_id,brand,model,variant})=>({tractor_id,brand,model,variant})),candidateCount:0,downloaded:0,publicationCount:0,allowedToPublish:false,errors:[],queries:[],entries:[]};
 const sleep=ms=>new Promise(r=>setTimeout(r,ms));
 const deadline=Date.now()+12*60*1000;
 const withinBudget=()=>Date.now()<deadline;
@@ -41,7 +168,7 @@ const held=new Set(["File:IRUM Tagro 102 Agritechnica 2019 - Front and right sid
 for(const row of [...(previous.entries||[]),...(second.entries||[])])held.add(normalizeTitle(row.title));
 // Preserve user-rejected and retired rear views, and already staged files from the earlier wave.
 for(const title of ["File:Lindner Lintrac 160 LDrive Agritechnica 2025 (DSC08778).jpg","File:TYM T25 Agritechnica 2025 (DSC04675).jpg","File:TYM T115 Agritechnica 2025 (DSC04663).jpg"])held.add(normalizeTitle(title));
-for(const row of targets)for(const c of row.candidates||[])if(!held.has(normalizeTitle(c.fileTitle)))add(c.fileTitle,[row],"archive");
+for(const [brand,model,...titles] of direct){const rows=targets.filter(r=>r.brand===brand&&r.model.toUpperCase()===model.toUpperCase());if(!rows.length)continue;for(const name of titles){const title="File:"+name;if(!held.has(normalizeTitle(title)))add(title,rows,"indexed exact source page; visual inspection required");}}
 let paused=false;
 async function query(params){
  if(paused||!withinBudget())return null;
