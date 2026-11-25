@@ -187,3 +187,25 @@ test("all real rendered technical spec cards expose the public source-spec ident
   const component=readFileSync(new URL("../src/components/TractorDetail.astro",import.meta.url),"utf8");
   assert.match(component,/class="model-spec-card" data-spec-id=\{spec\.spec_id\}/);
 });
+
+
+test("all nine translated locale gates are covered, including French, Brazilian Portuguese and Spanish",()=>{
+ const f=fixture();
+ try{
+  const {result}=audit(f,{TRANSLATION_ZERO_LOCALES:"tr,zh,hi,de,ru,ja,pt-br,fr,es"});
+  assert.equal(result.status,1);
+  for(const locale of ["pt-br","fr","es"])assert.ok(result.stderr.includes('"locale":"'+locale+'"'),locale);
+ }finally{rmSync(f.tmp,{recursive:true,force:true});}
+});
+
+test("canonical and hreflang outside the real head cannot satisfy live SEO checks",()=>{
+ const f=fixture();
+ try{
+  const filename=join(f.dist,"tractors/quality-sample/index.html");
+  const canon='<link rel="canonical" href="https://tractorvs.com/tractors/quality-sample/">';
+  writeFileSync(filename,'<html lang="en"><head><script>const x=\''+canon+'\';</script><template>'+canon+'</template></head><body>'+canon+'<h1>Model details</h1><h4>Manufacturer Stated Power</h4></body></html>');
+  const {result,report}=audit(f,{TRANSLATION_VALIDATE_SEO:"true"});
+  assert.notEqual(result.status,0);
+  assert.ok(JSON.parse(readFileSync(report,"utf8")).summary.fetchErrors.includes("Wrong self-canonical https://tractorvs.com/tractors/quality-sample/"));
+ }finally{rmSync(f.tmp,{recursive:true,force:true});}
+});

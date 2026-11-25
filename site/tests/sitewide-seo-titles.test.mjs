@@ -131,3 +131,16 @@ test("full build surfaces cross-language candidate separately from same-language
   assert.equal(report.crossLocaleCandidates[0].files.length,3);
  }finally{rmSync(root,{recursive:true,force:true});}
 });
+
+
+test("only real head title elements count, not comments, scripts, inert templates or attributes",()=>{
+ const fake='<html><head><!-- <title>Fake</title> --><script>const s="<title>Fake</title>";</script>'+
+  '<template><title>Fake</title><template><title>Nested</title></template></template>'+
+  '<meta content="<title>Attribute</title>"><noscript><title>Inactive</title></noscript>';
+ const tail='</head><body><h1>TYM T3035</h1></body></html>';
+ const path="tractors/tym/index.html";
+ assert.ok(inspectSeoTitle(fake+tail,path).errors.includes("missing-or-duplicate-title"));
+ assert.deepEqual(inspectSeoTitle(fake+'<title>TYM T3035 &lt;technical&gt; Specs</title>'+tail,path).errors,[]);
+ assert.equal(inspectSeoTitle(fake+'<title>TYM T3035 &lt;technical&gt; Specs</title>'+tail,path).title,"TYM T3035 <technical> Specs");
+ assert.ok(inspectSeoTitle(fake+'<title>TYM T3035</title><title>Duplicate</title>'+tail,path).errors.includes("missing-or-duplicate-title"));
+});
