@@ -37,4 +37,6 @@ test("live workflow has bounded parallelism, all four projects, common gate, evi
  assert.equal((w.match(/TRACTORVS_EXACT_SNAPSHOT: "true"/g)||[]).length,2);
  assert.match(w,/test "\$MATRIX_RESULT" = success/);
  assert.doesNotMatch(w,/continue-on-error:/);
+ assert.match(w,/\n        env:\n          PLAYWRIGHT_JSON_OUTPUT_FILE: \$\{\{ runner\.temp \}\}/);
+ assert.doesNotMatch(w,/\n      PLAYWRIGHT_JSON_OUTPUT_FILE:/);
 });

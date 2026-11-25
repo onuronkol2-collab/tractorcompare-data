@@ -93,7 +93,6 @@ jobs:
       COMPARE_QA_PREDEPLOY: ${{ github.event_name == 'pull_request' }}
       BROWSER_PROJECT: ${{ matrix.project }}
       RELEASE_SHA: ${{ needs.release-readiness.outputs.release_sha }}
-      PLAYWRIGHT_JSON_OUTPUT_FILE: ${{ runner.temp }}/tractorvs-live-browser-report.json
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -115,9 +114,11 @@ jobs:
           TRACTORVS_EXACT_SNAPSHOT: "true"
         run: node site/scripts/live-release-readiness.mjs "$RELEASE_SHA" /tr/compare/ /tr/tractors/
       - name: Check the actual public TractorVS interaction and citations
+        env:
+          PLAYWRIGHT_JSON_OUTPUT_FILE: ${{ runner.temp }}/tractorvs-live-browser-report.json
         run: npx playwright test --config site/playwright.live.config.mjs --project="$BROWSER_PROJECT"
       - name: Require complete and non-flaky executed evidence
-        run: node site/scripts/verify-live-browser-report.mjs "$PLAYWRIGHT_JSON_OUTPUT_FILE" "$BROWSER_PROJECT" "$COMPARE_QA_PREDEPLOY"
+        run: node site/scripts/verify-live-browser-report.mjs "$RUNNER_TEMP/tractorvs-live-browser-report.json" "$BROWSER_PROJECT" "$COMPARE_QA_PREDEPLOY"
       - name: Verify exact shared release after browser tests
         if: github.event_name != 'pull_request'
         env:
