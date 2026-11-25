@@ -54,60 +54,6 @@
     ]
   },
   {
-    "brand": "Başak Traktör",
-    "model": "2055",
-    "tractorId": "d1258ec7-f544-4d8b-b5a3-dee2d2b15a6b",
-    "fileId": "basak-2055-rear-mbone-2023",
-    "path": "1/11/Basak_2055%2C_Agritechnica_2023%2C_Hanover_%28P1160290%29.jpg",
-    "photographer": "MB-one",
-    "license": "CC BY-SA 4.0",
-    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
-    "sourcePage": "https://commons.wikimedia.org/wiki/File:Basak_2055%2C_Agritechnica_2023%2C_Hanover_%28P1160290%29.jpg",
-    "originalUrl": "https://upload.wikimedia.org/wikipedia/commons/1/11/Basak_2055%2C_Agritechnica_2023%2C_Hanover_%28P1160290%29.jpg",
-    "width": 3253,
-    "height": 4066,
-    "originalSha1": "14628882e79b51271d97d30468255763a2fd681e",
-    "originalSha256": "fbe3a6ab8878acc7648e50ac77a1eba80c70ba14bb8e8bd4aa2831ca5e3e95ee",
-    "originalBytes": 7520186,
-    "originalFormat": "JPEG",
-    "originalFrameCount": 1,
-    "selectedFrame": 0,
-    "sourceArtifact": 15037422585,
-    "transferRun": 45646982097,
-    "transferJob": 139320492555,
-    "description": "Başak Traktör 2055 with Başak BH 2100 at Agritechnica 2023",
-    "modelEvidence": "Rear Başak 2055 with BH 2100 attachment; source caption identifies model, visible tractor and attachment; secondary distinct view only.",
-    "modelSources": [
-      "https://basaktraktor.com.tr/urunler/traktorler/tarla-traktorleri/2055"
-    ],
-    "scope": "Model illustration only; exact market equipment not verified.",
-    "copyrightEvidence": "commons-attribution-license-verified-no-owner-claim",
-    "changes": "Proportional resize and JPEG compression, CC BY-SA 4.0 retained.",
-    "derivatives": [
-      {
-        "file": "basak-2055-rear-mbone-2023-480.jpg",
-        "width": 480,
-        "height": 600,
-        "bytes": 71120,
-        "sha256": "35b6a1b9c06e06e99515b25605cab72dc565a86c791724e6523cf1cd0a709e82"
-      },
-      {
-        "file": "basak-2055-rear-mbone-2023-960.jpg",
-        "width": 960,
-        "height": 1200,
-        "bytes": 225813,
-        "sha256": "d6b7ecc6fc26f56bce8e236dbc9adf16ae1adcd8e450f0d3b645d5438a7b5061"
-      },
-      {
-        "file": "basak-2055-rear-mbone-2023-1920.jpg",
-        "width": 1920,
-        "height": 2400,
-        "bytes": 698931,
-        "sha256": "9af209454b6da5ea1506a80d88575141a60fd3dd613b1fc604662ed59f8148ec"
-      }
-    ]
-  },
-  {
     "brand": "Bobcat",
     "model": "CT2540",
     "tractorId": "70e438cb-c57c-4744-bf9f-2ae0a38e35b6",
@@ -214,60 +160,6 @@
         "height": 1440,
         "bytes": 439276,
         "sha256": "7eff1fdaec48d392f296af97678b4764b560bce3a80e0faf473da62547d5430d"
-      }
-    ]
-  },
-  {
-    "brand": "Başak Traktör",
-    "model": "3026",
-    "tractorId": "2bc6ed35-ed73-4a0d-9edb-53462f0045fc",
-    "fileId": "basak-3026-front-marcelx42-2025",
-    "path": "c/c6/Ba%C5%9Fak_3026_Agritechnica_2025_%28DSC03713%29.jpg",
-    "photographer": "MarcelX42",
-    "license": "CC BY-SA 4.0",
-    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
-    "sourcePage": "https://commons.wikimedia.org/wiki/File:Ba%C5%9Fak_3026_Agritechnica_2025_%28DSC03713%29.jpg",
-    "originalUrl": "https://upload.wikimedia.org/wikipedia/commons/c/c6/Ba%C5%9Fak_3026_Agritechnica_2025_%28DSC03713%29.jpg",
-    "width": 6139,
-    "height": 4604,
-    "originalSha1": "c8a68e0146981dd8493ade796a352a139bf0a528",
-    "originalSha256": "82bff80f67a77f1f2a03059c434179bb90a8676cb26d096113eb6d46f11afc85",
-    "originalBytes": 15258189,
-    "originalFormat": "JPEG",
-    "originalFrameCount": 1,
-    "selectedFrame": 0,
-    "sourceArtifact": 15037422585,
-    "transferRun": 45646982097,
-    "transferJob": 139320491801,
-    "description": "Schrägansicht der Front eines Başak 3026 Stage V, ausgestellt auf der Agritechnica 2025.",
-    "modelEvidence": "Başak 3026 Stage V front view at Agritechnica 2025; OEM 3026 compact 4WD model matches, not exact 2026 production year.",
-    "modelSources": [
-      "https://basaktraktor.com.tr/urunler/traktorler/bahce-traktorleri/3026"
-    ],
-    "scope": "Model illustration only; exact market equipment not verified.",
-    "copyrightEvidence": "commons-attribution-license-verified-no-owner-claim",
-    "changes": "Proportional resize and JPEG compression, CC BY-SA 4.0 retained.",
-    "derivatives": [
-      {
-        "file": "basak-3026-front-marcelx42-2025-480.jpg",
-        "width": 480,
-        "height": 360,
-        "bytes": 45889,
-        "sha256": "26be57d0f92e6a0f58d54fc265191d901378b228c24dc08d7f62d2f276cfaf26"
-      },
-      {
-        "file": "basak-3026-front-marcelx42-2025-960.jpg",
-        "width": 960,
-        "height": 720,
-        "bytes": 142240,
-        "sha256": "073106f01747336115c0cae2561f07cc87bf4989348286c6aeb6bc8048d28fd8"
-      },
-      {
-        "file": "basak-3026-front-marcelx42-2025-1920.jpg",
-        "width": 1920,
-        "height": 1440,
-        "bytes": 453903,
-        "sha256": "7e76044c59ffff9179678fdb528879ec300024af151f007aa6ecb79bdd729a2a"
       }
     ]
   },
