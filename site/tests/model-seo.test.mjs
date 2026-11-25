@@ -345,6 +345,26 @@ test("model snippet remains concise while full source context stays visible in t
  assert.match(detail,/model-hero-description">\{description\}/);
 });
 
+test("long TONY 8700 V descriptions preserve source identity and differentiate ten locales",()=>{
+ const model={...tractor,brand_name:"Antonio Carraro",model_name:"TONY 8700 V",
+  variant:"Europe Stage V / 8700 V model only / hybrid mechanical-hydrostatic / Deutz 2900cc / cab 2525-2725 kg",
+  market:"Europe",model_year:null,horsepower:null};
+ const labels={en:/specs|specifications/i,tr:/özellik|teknik/i,zh:/技术参数/,hi:/तकनीकी विवरण/,
+  "pt-br":/ficha técnica|especificações/i,fr:/fiche technique|caractéristiques/i,de:/daten|technische/i,
+  ru:/характеристик|техническ/i,ja:/仕様|諸元/,es:/datos técnicos|especificaciones/i};
+ const snippets=Object.entries(labels).map(([locale,label])=>{
+  const meta=modelSeoMetadata(model,locale);
+  assert.match(meta.searchDescription,label,locale+" localized context");
+  assert.ok(meta.searchDescription.includes(model.variant),locale+" complete variant");
+  assert.ok(meta.searchDescription.includes("Antonio Carraro TONY 8700 V"),locale+" identity");
+  assert.ok(!meta.searchDescription.includes("114 HP"),locale+" unsupported power");
+  return meta.searchDescription;
+ });
+ assert.equal(new Set(snippets).size,10);
+ const empty={...model,specifications:[],variant:model.variant+" / extended exact transmission identity"};
+ assert.match(modelSeoMetadata(empty,"en").searchDescription,/Technical specifications have not yet been published/i);
+});
+
 test("concise snippet never invents horsepower when headline evidence conflicts",()=>{
  const inconsistent={...tractor,horsepower:135};
  for(const locale of ["en","tr","zh","hi","pt-br","fr","de","ru","ja","es"]){

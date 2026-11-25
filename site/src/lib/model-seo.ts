@@ -522,6 +522,18 @@ export function modelSeoMetadata(tractor: TractorRecord, lang: Locale) {
   addSentence(countSentence);
   addSentence(manufacturerSentence);
   addSentence(noteSentence);
+  // A long identity must not leave the entire snippet in source-language
+  // wording. Live audit 2026-11-24: TONY 8700 V repeated identical
+  // descriptions across DE/ES/PT-BR and EN/FR when no full sentence fit.
+  // Reuse the reviewed localized technical noun, without shortening the
+  // variant, market or year, or adding a new unsupported numeric claim.
+  // 160 remains guidance: an exact identity plus useful language context
+  // may legitimately exceed it. Empty records must stay explicitly empty.
+  if(searchDescription===identity+"."){
+    searchDescription=tractor.specifications.length
+      ? model+" — "+CONCISE_SPECS_TITLE[lang]+identity.slice(model.length)+"."
+      : identity+". "+copy.empty;
+  }
   return {title,description,searchDescription};
 }
 
