@@ -1163,9 +1163,10 @@ const rows:readonly (readonly string[])[]=[
   ]
 ];
 const table=new Map(rows.map(row=>[row[0],row.slice(1)]));
+const normalize=(heading:string)=>heading.normalize("NFC").replace(/[’‘]/g,"'").replace(/\s+/g," ").trim();
 export function reviewedIdentityFallback(english:string,current:string,lang:Locale):string {
-  if(lang==="en"||current!==english)return current;
+  if(lang==="en"||normalize(current)!==normalize(english))return current;
   const index=locales.indexOf(lang as typeof locales[number]);
-  return index<0?current:table.get(english)?.[index]??current;
+  return index<0?current:table.get(normalize(english))?.[index]??current;
 }
 export const reviewedIdentityFallbackHeadings=Object.freeze(rows.map(row=>row[0]));

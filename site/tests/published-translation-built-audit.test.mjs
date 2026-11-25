@@ -209,3 +209,27 @@ test("canonical and hreflang outside the real head cannot satisfy live SEO check
   assert.ok(JSON.parse(readFileSync(report,"utf8")).summary.fetchErrors.includes("Wrong self-canonical https://tractorvs.com/tractors/quality-sample/"));
  }finally{rmSync(f.tmp,{recursive:true,force:true});}
 });
+
+
+test("reviewed identity gate blocks reordered English fallback without banning identical standard codes",()=>{
+ const f=fixture();
+ try{
+  for(const locale of locales){
+   const filename=join(f.dist,(locale==="en"?"":locale+"/")+"tractors/quality-sample/index.html");
+   const card=(id,label)=>'<article class="model-spec-card" data-spec-id="'+id+'"><h4>'+label+'</h4></article>';
+   const html=locale==="en"?card("a","Maximum System Pressure")+card("b","PTO"):card("b","PTO")+card("a",locale==="tr"?"Maximum System Pressure":"Localized pressure "+locale);
+   writeFileSync(filename,'<html><body>'+html+'</body></html>');
+  }
+  const {result,report}=audit(f,{TRANSLATION_REVIEWED_IDENTITY_GATE:"true",TRANSLATION_REQUIRE_SPEC_IDENTITIES:"true"});
+  assert.equal(result.status,1,result.stdout+result.stderr);
+  assert.match(result.stderr,/TRANSLATION_AUDIT_REVIEWED_IDENTITY_REGRESSION/);
+  const summary=JSON.parse(readFileSync(report,"utf8")).summary;
+  assert.equal(summary.occurrenceCounts.tr,0);
+  assert.equal(summary.identity.reviewedRemainingOccurrences,1);
+  const file=join(f.dist,"tr/tractors/quality-sample/index.html");
+  writeFileSync(file,readFileSync(file,"utf8").replace("Maximum System Pressure","Azami sistem basıncı"));
+  const fixed=audit(f,{TRANSLATION_REVIEWED_IDENTITY_GATE:"true",TRANSLATION_REQUIRE_SPEC_IDENTITIES:"true"});
+  assert.equal(fixed.result.status,0,fixed.result.stdout+fixed.result.stderr);
+  assert.equal(JSON.parse(readFileSync(fixed.report,"utf8")).summary.identity.reviewedRemainingOccurrences,0);
+ }finally{rmSync(f.tmp,{recursive:true,force:true});}
+});

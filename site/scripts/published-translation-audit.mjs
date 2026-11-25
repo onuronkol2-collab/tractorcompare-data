@@ -4,6 +4,7 @@ import {readFileSync,writeFileSync,existsSync,mkdirSync} from "node:fs";
 import {resolve,dirname} from "node:path";
 import {scanHeadTags} from "./verify-sitewide-meta-descriptions.mjs";
 import {readOpeningTagAttribute as attr} from "./seo-html-attributes.mjs";
+import {reviewedIdentityFallbackHeadings} from "../src/lib/reviewed-identity-heading-fallback.ts";
 const DIST=process.env.TRANSLATION_DIST_ROOT?.trim() ? resolve(process.env.TRANSLATION_DIST_ROOT) : null;
 const BASE="https://tractorvs.com";
 const locales=["en","tr","zh","hi","pt-br","fr","de","ru","ja","es"];
@@ -242,7 +243,13 @@ const identityHeadingCounts=Object.fromEntries(locales.slice(1).map(locale=>[
 const identityOccurrenceCounts=Object.fromEntries(locales.slice(1).map(locale=>[
   locale,identityRemaining.filter(item=>item.locale===locale).reduce((n,item)=>n+item.count,0)
 ]));
+const reviewedIdentitySet=new Set(reviewedIdentityFallbackHeadings);
+const reviewedIdentityRegressions=identityRemaining.filter(item=>reviewedIdentitySet.has(item.english));
+const reviewedIdentityOccurrences=reviewedIdentityRegressions.reduce((n,item)=>n+item.count,0);
 const identitySummary={
+  reviewedHeadingCount:reviewedIdentitySet.size,
+  reviewedRemainingPairs:reviewedIdentityRegressions.length,
+  reviewedRemainingOccurrences:reviewedIdentityOccurrences,
   comparedPairs:identityComparedPairs,skippedPairs:identitySkippedPairs,
   pagesWithStableIds:identityRows.size,pagesWithoutStableIds:identitySkippedPages.length,
   identicalHeadingCounts:identityHeadingCounts,
@@ -304,6 +311,19 @@ if(process.env.TRANSLATION_ZERO_LOCALES?.trim()){
       console.error("TRANSLATION_AUDIT_ZERO_LOCALE_REGRESSION "+JSON.stringify({locale,remaining:occurrenceCounts[locale]}));
       process.exitCode=1;
     }
+  }
+}
+if(process.env.TRANSLATION_REVIEWED_IDENTITY_GATE==="true"||process.env.TRANSLATION_STRICT==="true"){
+  if(reviewedIdentityOccurrences){
+    console.error("TRANSLATION_AUDIT_REVIEWED_IDENTITY_REGRESSION "+JSON.stringify({
+      pairs:reviewedIdentityRegressions.length,occurrences:reviewedIdentityOccurrences,
+      examples:reviewedIdentityRegressions.slice(0,30)
+    }));
+    process.exitCode=1;
+  }
+  if(identitySkippedPages.length){
+    console.error("TRANSLATION_AUDIT_REVIEWED_IDENTITY_COVERAGE "+identitySkippedPages.length);
+    process.exitCode=1;
   }
 }
 if(errors.length)process.exitCode=1;
