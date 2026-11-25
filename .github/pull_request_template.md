@@ -11,6 +11,11 @@
 - [ ] Mobil deneyim, SEO (canonical/hreflang/sitemap), erişilebilirlik ve performans etkisi incelendi.
 - [ ] Uygun otomatik testler çalıştırıldı; sonuçlar ve henüz çalıştırılamayan testler yazıldı.
 
+### Maksimum Geliştirme Hızı
+
+- [ ] Açık PR dosya sahipliği, ortak kaynak/kanıt yeniden kullanımı, uyumlu toplu değişiklik ve mevcut testlerin güncel SHA uyumu değerlendirildi.
+- [ ] Süre, kapsam, maliyet, başarısız/atlanan kontrol ve gerçek canlı sürüm ayrı kaydedildi; gereksiz tekrar veya kalite kapısı atlama yapılmadı.
+
 ### Arama veya kullanıcı deneyimi etkisi
 
 <!-- Bir kamu sayfası etkileniyorsa arama sorusunu, örnek URL/dili ve değişen yanıtı yaz. Kapsama göre kaynak sayfası/ölçüm koşulu, dizin ve dil işaretleri, mobil görev veya şema-yazarlık kanıtını ekle. Ortak şablonda incelenen kapsamı belirt. -->

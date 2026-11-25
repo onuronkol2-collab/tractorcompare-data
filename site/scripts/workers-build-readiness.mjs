@@ -13,13 +13,17 @@ export function classifyWorkersBuild(payload,sha){
  if(newest.status!=="completed")return {status:"pending",reason:"build-"+newest.status};
  return newest.conclusion==="success"?{status:"ready",checkId:newest.id}:{status:"failed",reason:"build-"+newest.conclusion,checkId:newest.id};
 }
-export async function waitForWorkersBuild({sha,token,fetchFn=fetch,pause=sleep,attempts=36,intervalMs=15000,log=()=>{}}={}){
- if(typeof sha!=="string"||!SHA.test(sha)||!token||!Number.isInteger(attempts)||attempts<1||attempts>36||!Number.isInteger(intervalMs)||intervalMs<0||intervalMs>15000)throw Error("Invalid Workers build readiness configuration");
- for(let attempt=1;attempt<=attempts;attempt++){
+export async function readWorkersBuild({sha,token,fetchFn=fetch}={}){
+ if(typeof sha!=="string"||!SHA.test(sha)||!token)throw Error("Invalid Workers build readiness configuration");
   const res=await fetchFn(API+"/commits/"+sha+"/check-runs?filter=latest&per_page=100",{redirect:"error",signal:AbortSignal.timeout(12000),headers:{Authorization:"Bearer "+token,Accept:"application/vnd.github+json"}});
   if(res.status===429||res.headers.get("retry-after")||res.headers.get("x-ratelimit-remaining")==="0")throw Error("GitHub check lookup rate limited; honor cooldown");
   if(!res.ok)throw Error("GitHub check lookup HTTP "+res.status);
-  const result=classifyWorkersBuild(await res.json(),sha);
+ return classifyWorkersBuild(await res.json(),sha);
+}
+export async function waitForWorkersBuild({sha,token,fetchFn=fetch,pause=sleep,attempts=36,intervalMs=15000,log=()=>{}}={}){
+ if(typeof sha!=="string"||!SHA.test(sha)||!token||!Number.isInteger(attempts)||attempts<1||attempts>36||!Number.isInteger(intervalMs)||intervalMs<0||intervalMs>15000)throw Error("Invalid Workers build readiness configuration");
+ for(let attempt=1;attempt<=attempts;attempt++){
+  const result=await readWorkersBuild({sha,token,fetchFn});
   log({attempt,sha,...result});
   if(result.status==="ready")return result;
   if(result.status==="failed")throw Error("PREVIEW_BUILD_FAILED: "+result.reason);

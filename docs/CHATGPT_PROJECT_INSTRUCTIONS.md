@@ -18,3 +18,7 @@ Nominal teknik katalog verilerinde rutin insan incelemesi yerine kanıta dayalı
 4. Kaydet; yeni bir sohbette AGENTS.md dosyasının okunup okunamadığını sorarak denetle.
 
 Bu yöntem gelecekteki hataları azaltır; **mutlak, değiştirilemez AI belleği garantisi değildir**. Güncel GitHub kaydı ve PR kontrolleri birlikte kullanılmalıdır.
+
+## Kalıcı geliştirme hızı ve kalite tercihi — 25 Kasım 2026
+
+Her görevde AGENTS.md içindeki Maksimum Geliştirme Hızı kuralını ve `site/docs/maximum-quality-throughput-20261125.md` rehberini uygula. İlgili işleri en geniş güvenli toplu pakette tamamla; çakışmayan işleri paralel yürüt; güncel SHA'ya bağlı başarılı testleri ve kaynak kanıtlarını yeniden kullan. Dört tarayıcı ve tam canlı doğrulama, güvenlik, SEO, veri ve lisans kapıları korunur. Test/dağıtım zaman kaybını ölç, yalnız gerçek nedeni gider, ücretsiz altyapı kullan, kullanıcıya gereksiz onay sorusu sorma. GitHub kaydı hesap içi bellek veya ChatGPT Proje Talimatları alanının otomatik güncellendiği anlamına gelmez.

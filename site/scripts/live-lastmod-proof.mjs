@@ -3,7 +3,7 @@
 import {readFileSync} from "node:fs";
 import {resolve} from "node:path";
 import {fileURLToPath} from "node:url";
-import {releaseFromHtml,waitForProductionRelease,mainDescendantVerifier} from "./live-release-readiness.mjs";
+import {releaseFromHtml,waitForProductionRelease,mainDescendantVerifier,trustedWorkersRelease} from "./live-release-readiness.mjs";
 import {parseProductionSitemapInventory} from "./production-sitemap-inventory.mjs";
 const origin="https://tractorvs.com";
 const shaPattern=/^[a-f0-9]{40}$/;
@@ -43,8 +43,8 @@ export async function readRevisionDateMap(sha,{token="",fetchFn=fetch}={}){
  if(map?.version!==1||!map.dates||typeof map.dates!=="object"||Array.isArray(map.dates))throw Error("Invalid exact revision ledger");
  return map;
 }
-export async function proveDeployedDates({target,dateMap,fetchFn=fetch,acceptDescendant=async()=>false,readMap=async()=>{throw Error("Exact descendant ledger unavailable");},pause,attempts=16,log=()=>{}}={}){
- const readiness=await waitForProductionRelease({target,fetchFn,acceptDescendant,sleep:pause,attempts,log});
+export async function proveDeployedDates({target,dateMap,fetchFn=fetch,acceptDescendant=async()=>false,readMap=async()=>{throw Error("Exact descendant ledger unavailable");},pause,attempts=16,confirmRelease=async()=>true,log=()=>{}}={}){
+ const readiness=await waitForProductionRelease({target,fetchFn,acceptDescendant,sleep:pause,attempts,confirmRelease,log});
  if(readiness.status!=="ready")return {status:readiness.status,target,observed:readiness.observed,verifiedPages:0};
  const revision=readiness.observed;
  const ledger=revision===target?dateMap:await readMap(revision);
@@ -84,7 +84,8 @@ if(process.argv[1]&&resolve(process.argv[1])===fileURLToPath(import.meta.url)){
  try{
   const dateMap=JSON.parse(readFileSync(new URL("../src/data/sitemap-lastmod.json",import.meta.url),"utf8"));
   const token=process.env.GITHUB_TOKEN||"";
-  const result=await proveDeployedDates({target:process.argv[2],dateMap,acceptDescendant:mainDescendantVerifier({token}),readMap:sha=>readRevisionDateMap(sha,{token}),log:row=>console.log("TRACTORVS_LASTMOD_READINESS "+JSON.stringify(row))});
+  const requireBuild=process.env.TRACTORVS_REQUIRE_WORKERS_BUILD==="true";
+  const result=await proveDeployedDates({target:process.argv[2],dateMap,attempts:requireBuild?46:16,confirmRelease:requireBuild?trustedWorkersRelease({token}):async()=>true,acceptDescendant:mainDescendantVerifier({token}),readMap:sha=>readRevisionDateMap(sha,{token}),log:row=>console.log("TRACTORVS_LASTMOD_READINESS "+JSON.stringify(row))});
   console.log("TRACTORVS_LIVE_LASTMOD "+JSON.stringify(result));
   if(result.status==="date_mismatch"||result.status==="inventory_drift")process.exitCode=1;
   else if(result.status!=="verified"){console.error("::error::Live date proof not complete: "+result.status+"; no successful release proof.");process.exitCode=2;}

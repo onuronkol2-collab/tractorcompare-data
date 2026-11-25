@@ -23,3 +23,10 @@ test("wait through missing and running checks without probing stale preview; fai
  await assert.rejects(waitForWorkersBuild({...options,fetchFn:async()=>Response.json(reply())}),/PREVIEW_BUILD_PENDING/);
  await assert.rejects(waitForWorkersBuild({...options,fetchFn:async()=>new Response("",{status:429})}),/rate limited/);
 });
+
+test("single trusted check lookup rejects missing credentials and rate limits",async()=>{
+ const {readWorkersBuild}=await import("../scripts/workers-build-readiness.mjs");
+ await assert.rejects(readWorkersBuild({sha,token:""}),/Invalid Workers/);
+ await assert.rejects(readWorkersBuild({sha,token:"test",fetchFn:async()=>new Response("",{status:429})}),/rate limited/);
+ assert.equal((await readWorkersBuild({sha,token:"test",fetchFn:async()=>Response.json(reply(check()))})).status,"ready");
+});

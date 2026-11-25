@@ -19,6 +19,7 @@ const checks = new Map([
     "(site/docs/GEO_AI_SEARCH_QUALITY_TR.md#arama-sonucu)",
     "Kalıcı QA yürütme kanıtı", "TRACTORVS_RESEARCH_QA_EVIDENCE",
     "(site/docs/research-qa-execution-evidence-20261124.md)",
+    "### Maksimum Geliştirme Hızı", "(site/docs/maximum-quality-throughput-20261125.md)", "Üretim skip/flaky/eksik/iptal",
   ]],
   ["site/docs/GEO_AI_SEARCH_QUALITY_TR.md", ["(../../AGENTS.md#seo-ve-geo)", "(seo-launch-gate.md)", "## Arama sonucu\n"]],
   ["site/docs/seo-launch-gate.md", ["PUBLIC_INDEXING_ENABLED", "SITE_URL"]],
@@ -32,11 +33,12 @@ const checks = new Map([
   [".cursor/rules/tractorvs-golden-rule.mdc", [
     "alwaysApply: true", "AGENTS.md", "ALTIN KURAL",
   ]],
-  [".github/pull_request_template.md", ["AGENTS.md#seo-ve-geo", "RLS", "SEO"]],
+  ["site/docs/maximum-quality-throughput-20261125.md", ["692fe414", "DEPLOYMENT_PENDING", "max-parallel: 2", "Geri alma"]],
+  [".github/pull_request_template.md", ["AGENTS.md#seo-ve-geo", "RLS", "SEO", "Maksimum Geliştirme Hızı"]],
   ["docs/CHATGPT_PROJECT_INSTRUCTIONS.md", [
     "AGENTS.md", "Proje Talimatları", "maksimum kalite",
     "Yalnızca ücretsiz sürümleri", "kullanıcıya bağlantı isteği gönder",
-    "Playwright", "axe-core", "CodeQL", "Dependabot", "Cloudflare Web Analytics",
+    "Playwright", "axe-core", "CodeQL", "Dependabot", "Cloudflare Web Analytics", "Maksimum Geliştirme Hızı",
   ]],
 ]);
 
