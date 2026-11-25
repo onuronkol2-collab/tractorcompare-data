@@ -14,7 +14,7 @@ const tractor=(brand_name,model_name)=>({
   engine:null,transmission:null,drivetrain:null,weight_kg:null,specifications:[]
 });
 test("only exact matching tractor model identity receives a verified photo",()=>{
-  assert.equal(APPROVED_TRACTOR_PHOTOS.length,126);
+  assert.equal(APPROVED_TRACTOR_PHOTOS.length,132);
   assert.equal(tractorPhotos(tractor("Belarus","82.1")).length,4);
   assert.equal(tractorPhotos(tractor("Belarus","80.1")).length,1);
   assert.equal(tractorPhotos(tractor("Belarus","132N")).length,1);
@@ -615,7 +615,7 @@ test("McCormick X5.085 and TYM T6115/T2025P have exact licensed files, source pr
 });
 
 test("historic photo batch is staged with rights and does not create records",()=>{
-  assert.equal(HISTORICAL_LICENSED_PHOTOS.length,111);
+  assert.equal(HISTORICAL_LICENSED_PHOTOS.length,117);
   const all=new Set(HISTORICAL_LICENSED_PHOTOS.map(x=>x.fileId));
   assert.equal(all.size,HISTORICAL_LICENSED_PHOTOS.length,"All historical photo IDs must be unique");
   assert.ok(HISTORICAL_LICENSED_PHOTOS.every(x=>x.configurationExact===false));
@@ -1187,6 +1187,27 @@ test("Four salvaged Solis and TYM photos are UUID-scoped representative images w
 test("Three salvaged Hattat and TAFE photos are UUID-scoped representative images with ten-language rights",()=>{
  const entries=JSON.parse(readFileSync(new URL("../docs/photo-evidence-hattat-tafe-three-20261125.json",import.meta.url),"utf8"));
  assert.equal(entries.length,3);assert.equal(new Set(entries.map(e=>e.tractorId)).size,2);
+ for(const e of entries){
+ const exact={...tractor(e.brand,e.model),tractor_id:e.tractorId};const p=tractorPhotos(exact).find(x=>x.fileId===e.fileId);
+ assert.ok(p,e.fileId);if(e.copyrightEvidence==="commons-own-work-self-license"){assert.equal(p.copyrightOwner,e.photographer);assert.equal(p.copyrightEvidence,e.copyrightEvidence);assert.equal(decodeURIComponent(p.copyrightClaimUrl),decodeURIComponent(e.sourcePage));}else{assert.equal(p.copyrightOwner,undefined);assert.equal(p.copyrightClaimUrl,undefined);assert.equal(p.copyrightEvidence,undefined);}assert.deepEqual(e.derivatives.map(d=>d.width),[480,960,1920]);if(e.originalFormat==='MPO'){assert.equal(e.originalFrameCount,2);assert.equal(e.selectedFrame,0);assert.match(e.changes,/primary frame/);}assert.equal(p.configurationExact,false);assert.equal(p.resizedDerivative,true);assert.equal(p.licenseName,e.license);assert.equal(p.photographer,e.photographer);assert.equal(decodeURIComponent(p.sourcePage),decodeURIComponent(e.sourcePage));
+ for(const other of [{...exact,tractor_id:"00000000-0000-4000-8000-000000000000"},{...exact,model_name:e.model+" WRONG"},{...exact,brand_name:"Other"}])assert.ok(!tractorPhotos(other).some(x=>x.fileId===p.fileId));
+ for(const d of e.derivatives){const b=readFileSync(new URL("../public/images/tractors/"+d.file,import.meta.url));assert.equal(b.length,d.bytes);assert.equal(createHash("sha256").update(b).digest("hex"),d.sha256);assert.equal(b.subarray(0,3).toString("hex"),"ffd8ff");assert.equal(b.subarray(-2).toString("hex"),"ffd9");assert.ok(resolveApprovedPhotoSource("/images/tractors/"+d.file));}
+ // Structured data intentionally describes the primary gallery image; each secondary
+ // image retains its individual source and license in the visible gallery.
+ const primary=tractorPhotos(exact)[0];
+ assert.ok(primary);
+ for(const locale of LOCALES){const im=modelStructuredData(exact,locale,"https://tractorvs.com/")["@graph"].find(x=>x["@type"]==="ImageObject");assert.ok(im,locale);assert.equal(im.creator?.name,primary.photographer);assert.equal(im.license,primary.licenseUrl);assert.equal(im.acquireLicensePage,primary.sourcePage);assert.equal(im.contentUrl,"https://tractorvs.com"+primary.fullUrl);assert.ok(photoText(locale,"representative").length>10);}
+ const gallery=file("components/TractorPhoto.astro");
+ assert.ok(gallery.includes("data-photo-source={photo.sourcePage}"));
+ assert.ok(gallery.includes("data-photo-license={photo.licenseUrl}"));
+ assert.ok(gallery.includes("href={photo.sourcePage}"));
+ assert.ok(gallery.includes("href={photo.licenseUrl}"));
+ }
+});
+
+test("Six reviewed Başak and Bobcat photos are UUID-scoped representative images with ten-language rights",()=>{
+ const entries=JSON.parse(readFileSync(new URL("../docs/photo-evidence-50-target-wave-one-six-20261125.json",import.meta.url),"utf8"));
+ assert.equal(entries.length,6);assert.equal(new Set(entries.map(e=>e.tractorId)).size,4);
  for(const e of entries){
  const exact={...tractor(e.brand,e.model),tractor_id:e.tractorId};const p=tractorPhotos(exact).find(x=>x.fileId===e.fileId);
  assert.ok(p,e.fileId);if(e.copyrightEvidence==="commons-own-work-self-license"){assert.equal(p.copyrightOwner,e.photographer);assert.equal(p.copyrightEvidence,e.copyrightEvidence);assert.equal(decodeURIComponent(p.copyrightClaimUrl),decodeURIComponent(e.sourcePage));}else{assert.equal(p.copyrightOwner,undefined);assert.equal(p.copyrightClaimUrl,undefined);assert.equal(p.copyrightEvidence,undefined);}assert.deepEqual(e.derivatives.map(d=>d.width),[480,960,1920]);if(e.originalFormat==='MPO'){assert.equal(e.originalFrameCount,2);assert.equal(e.selectedFrame,0);assert.match(e.changes,/primary frame/);}assert.equal(p.configurationExact,false);assert.equal(p.resizedDerivative,true);assert.equal(p.licenseName,e.license);assert.equal(p.photographer,e.photographer);assert.equal(decodeURIComponent(p.sourcePage),decodeURIComponent(e.sourcePage));
