@@ -28,6 +28,12 @@ test("sign in, recover a draft, publish directly and check its status",async({pa
   if(url.pathname.endsWith("/auth/v1/logout"))return route.fulfill({status:204});
   if(url.pathname.endsWith("/auth/v1/settings"))return route.fulfill({json:{external:{google:false,github:false}}});
   if(["/forum-test-api/rest/v1/tc_member_scores","/forum-test-api/rest/v1/tc_member_profiles","/forum-test-api/rest/v1/tc_member_bookmarks"].includes(url.pathname))return route.fulfill({json:[]});
+  if(url.pathname.endsWith("/rest/v1/tc_forum_assisted_eligible")){
+   expect(request.method()).toBe("GET");
+   expect(request.headers().authorization).toBe("Bearer mock-session");
+   expect(url.searchParams.get("select")).toBe("owner_id");
+   return route.fulfill({json:[]});
+  }
   expect(url.pathname).toBe("/forum-test-api/rest/v1/tc_forum_topics");
   expect(request.headers().authorization).toBe("Bearer mock-session");
   if(request.method()==="GET"){

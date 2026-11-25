@@ -5,6 +5,7 @@ SELECT set_config('request.jwt.claims','{"sub":"00000000-0000-4000-8000-00000000
 INSERT INTO public.tc_forum_assisted_grants(owner_id) VALUES ('00000000-0000-4000-8000-000000000001');
 DO $$ BEGIN
  IF (SELECT count(id) FROM public.tc_forum_assisted_grants)<>1 THEN RAISE EXCEPTION 'Owner cannot read grant'; END IF;
+ IF (SELECT count(owner_id) FROM public.tc_forum_assisted_eligible)<>1 THEN RAISE EXCEPTION 'Owner eligibility absent'; END IF;
  BEGIN
   INSERT INTO public.tc_forum_assisted_grants(owner_id,expires_at) VALUES ('00000000-0000-4000-8000-000000000001',now()+interval '100 days');
   RAISE EXCEPTION 'unexpected grant manipulation';
@@ -17,6 +18,15 @@ END $$;
 SELECT set_config('request.jwt.claims','{"sub":"00000000-0000-4000-8000-000000000002","session_id":"00000000-0000-4000-8000-000000000022","email":"b@example.invalid","is_anonymous":false}',false);
 DO $$ BEGIN
  IF (SELECT count(id) FROM public.tc_forum_assisted_grants)<>0 THEN RAISE EXCEPTION 'Other owner can read grants'; END IF;
+ IF (SELECT count(owner_id) FROM public.tc_forum_assisted_eligible)<>0 THEN RAISE EXCEPTION 'Other owner sees eligibility'; END IF;
+ BEGIN
+  INSERT INTO public.tc_forum_assisted_grants(owner_id) VALUES ('00000000-0000-4000-8000-000000000002');
+  RAISE EXCEPTION 'Ineligible user created own grant';
+ EXCEPTION WHEN insufficient_privilege THEN NULL; END;
+ BEGIN
+  INSERT INTO public.tc_forum_assisted_eligible(owner_id) VALUES ('00000000-0000-4000-8000-000000000002');
+  RAISE EXCEPTION 'Ineligible user enrolled themselves';
+ EXCEPTION WHEN insufficient_privilege THEN NULL; END;
  BEGIN
   INSERT INTO public.tc_forum_assisted_grants(owner_id) VALUES ('00000000-0000-4000-8000-000000000001');
   RAISE EXCEPTION 'Other owner can create grant';
