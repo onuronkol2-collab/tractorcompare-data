@@ -18,8 +18,8 @@
       "modified": "2026-11-22T08:02:35.845Z"
     },
     "https://tractorvs.com/compare/": {
-      "digest": "1eaafabc0788afde6ab6141e422d21e3d8eabd9093da38b164ea7b0cdd573081",
-      "modified": "2026-11-25T16:35:52.123Z"
+      "digest": "36f0c9939a49d20f760ceb9e4657e1346e70b2de992bae8eda7a65d5020c86b4",
+      "modified": "2026-11-25T16:54:50.762Z"
     },
     "https://tractorvs.com/compare/deutz-fahr-5090-d-gs-vs-5100-d-gs/": {
       "digest": "922999b9696029c032d6b1c71856522e23db46cc43479dd85fbb929909556a66",
@@ -34,8 +34,8 @@
       "modified": "2026-11-24T16:26:42.582Z"
     },
     "https://tractorvs.com/de/compare/": {
-      "digest": "fd4aa364f79ffeeb0337787bad33a2aa47c9d933b449495e691e272ab4dac6b5",
-      "modified": "2026-11-25T16:35:52.123Z"
+      "digest": "d1d4b04279107f1f92a16c40099e0d6520df7977f74e9f9581c9f395e02934fa",
+      "modified": "2026-11-25T16:54:50.762Z"
     },
     "https://tractorvs.com/de/farm-advisor/": {
       "digest": "62c79cfc9107261e787f41d64af1da0593217089fa023b9cf5a1df48126a5111",
@@ -1954,8 +1954,8 @@
       "modified": "2026-11-24T16:26:42.582Z"
     },
     "https://tractorvs.com/es/compare/": {
-      "digest": "03b8189e4f358ebaf33cf4470274ef4a2e9c9af7185d01242b3c6370936d1679",
-      "modified": "2026-11-25T16:35:52.123Z"
+      "digest": "31b75d366f1b39b05aa75f9b8d942bbf7f466c5b62de75105ce008c6febe9db2",
+      "modified": "2026-11-25T16:54:50.762Z"
     },
     "https://tractorvs.com/es/farm-advisor/": {
       "digest": "6976560c606098bf213087d4f5921197076142f7f7ca1a4fa8aa59a5dbd9c21d",
@@ -3878,8 +3878,8 @@
       "modified": "2026-11-24T16:26:42.582Z"
     },
     "https://tractorvs.com/fr/compare/": {
-      "digest": "e591b07ecf1e1cc1ceec2d5d5d229002ce5703ac3e964818a7c74824062e18c0",
-      "modified": "2026-11-25T16:35:52.123Z"
+      "digest": "fb9a1491e58857e94284c981a2a0045a2b559c18d2fae612c9ae345fa9a7566e",
+      "modified": "2026-11-25T16:54:50.762Z"
     },
     "https://tractorvs.com/fr/farm-advisor/": {
       "digest": "67ad73c24f3f8a4e8c84a867610994df9041ccf9642e42e87fc4a6facdc01abd",
@@ -5818,8 +5818,8 @@
       "modified": "2026-11-24T16:26:42.582Z"
     },
     "https://tractorvs.com/hi/compare/": {
-      "digest": "707c21cbea3aee17ae1deb7c65d58d685500acc85897ef33d341aef6bf554b30",
-      "modified": "2026-11-25T16:35:52.123Z"
+      "digest": "758de7c78bfcd44e648828c8b3e4a649116e819d28998082e014033fdf8cc2e3",
+      "modified": "2026-11-25T16:54:50.762Z"
     },
     "https://tractorvs.com/hi/farm-advisor/": {
       "digest": "15110f4f5917338098706957443b42ad5dd04d07f252686913c78e416118929e",
@@ -7738,8 +7738,8 @@
       "modified": "2026-11-24T16:26:42.582Z"
     },
     "https://tractorvs.com/ja/compare/": {
-      "digest": "f263c2982ac52cf7a35e3a84637b61e717be0e1635220a821cca3158fcdd5b44",
-      "modified": "2026-11-25T16:35:52.123Z"
+      "digest": "4be95eaafa0d1bc04731309cd3d2a369ac65f98995d91ec0a1a098ea3aed1172",
+      "modified": "2026-11-25T16:54:50.762Z"
     },
     "https://tractorvs.com/ja/farm-advisor/": {
       "digest": "cfd8b38b34300694a36458131a4de92637263dc33ed7a1bd8282070a7de9b952",
@@ -9666,8 +9666,8 @@
       "modified": "2026-11-24T16:26:42.582Z"
     },
     "https://tractorvs.com/pt-br/compare/": {
-      "digest": "b6d6a4042be15d94a57c2c26492c2431b1b235ad08eebe7f11e7ea5f8a00280c",
-      "modified": "2026-11-25T16:35:52.123Z"
+      "digest": "e0903542487c4d04376ebad8e27b6d6772e1e5a5c8ebcc0e17c889af5e8cb1b0",
+      "modified": "2026-11-25T16:54:50.762Z"
     },
     "https://tractorvs.com/pt-br/farm-advisor/": {
       "digest": "4bc89384bde6155b2c00f82edc476a6fa18d3c62b5a71a3b93ce736f6eba3eab",
@@ -11590,8 +11590,8 @@
       "modified": "2026-11-24T16:26:42.582Z"
     },
     "https://tractorvs.com/ru/compare/": {
-      "digest": "20aa440d77e03b861a8ab1350da9cd571c9fd444ab9bfdf319af60b95a18dd17",
-      "modified": "2026-11-25T16:35:52.123Z"
+      "digest": "10e18f2f7848fab2b2ad4e32e2afeb8f9a1730608becb8b8c224e8c2d6e7f3a9",
+      "modified": "2026-11-25T16:54:50.762Z"
     },
     "https://tractorvs.com/ru/farm-advisor/": {
       "digest": "d6d97fa096b75dd093605ff3904c757309f593ccf0d3c363087775756861732f",
@@ -13518,8 +13518,8 @@
       "modified": "2026-11-22T08:02:35.845Z"
     },
     "https://tractorvs.com/tr/compare/": {
-      "digest": "f63f8357e2d31190e02e62e738e90c01c912af447446dc64d713a1f64a90fe08",
-      "modified": "2026-11-25T16:35:52.123Z"
+      "digest": "011ea9ebd712b279ea692ff95eb4783af75d4f906377ce1629a5ebec29c733b8",
+      "modified": "2026-11-25T16:54:50.762Z"
     },
     "https://tractorvs.com/tr/compare/deutz-fahr-5090-d-gs-vs-5100-d-gs/": {
       "digest": "0f223596935ecf9cf2a0972e5fd862ac566c38ba2f83123a156634df383d9733",
@@ -17354,8 +17354,8 @@
       "modified": "2026-11-24T16:26:42.582Z"
     },
     "https://tractorvs.com/zh/compare/": {
-      "digest": "8cf1945c60c9f45e88534b71b9f6d04105ceaaa9dde94404ee66a5cd7c7fdf6f",
-      "modified": "2026-11-25T16:35:52.123Z"
+      "digest": "6f18e2fa9f0d05cf9576a95eb38230e358dd56b96e7f3d6bfa9caf07d430f4c0",
+      "modified": "2026-11-25T16:54:50.762Z"
     },
     "https://tractorvs.com/zh/farm-advisor/": {
       "digest": "7af38845364ce628d1e5ffa4953ff0113609bbd5f15fb2607475093873294ace",
