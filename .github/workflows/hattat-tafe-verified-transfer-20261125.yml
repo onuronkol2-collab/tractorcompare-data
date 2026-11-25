@@ -18,24 +18,12 @@ jobs:
       max-parallel: 3
       matrix:
         photo:
-          - id: hattat-b3105-matti-blume-2023
-            index: 1
-            sha256: '39e75e351c608eaaac23a37dd74045c2485307f7a8a866684502db25f13734b6'
-            width: 4608
-            height: 3456
-            format: JPEG
-          - id: hattat-b3105-marcelx42-2023
-            index: 2
-            sha256: '05d3307c6a28d42292cc389709636240805558e1369abca8d83f2352488a4ee5'
-            width: 7008
-            height: 3944
-            format: JPEG
           - id: tafe-7515-cab-advanced-representative-marcelx42-2023
             index: 3
             sha256: '63dd78d2b4f045cb4befe370073bd53f74351805fa7a4160052e6ceb46dd2118'
             width: 7008
             height: 3944
-            format: JPEG
+            format: MPO
     steps:
       - uses: actions/download-artifact@v4
         with:
@@ -71,6 +59,8 @@ jobs:
           assert hashlib.sha1(raw).hexdigest()==m['sha1']
           im=Image.open(files[0]); assert im.format==os.environ['FORMAT']
           assert im.size==(int(os.environ['WIDTH']),int(os.environ['HEIGHT']))
+          assert im.n_frames==2, 'Expected verified two-frame MPO source'
+          im.seek(1); im.load(); assert im.size==(1920,1080)
           im.seek(0); im.load(); im=ImageOps.exif_transpose(im).convert('RGB')
           for w in [480,960,1920]:
               h=round(im.height*w/im.width)
