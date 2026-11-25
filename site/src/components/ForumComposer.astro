@@ -20,6 +20,18 @@ const memberMessages=JSON.stringify(MEMBER_TEXT[lang]);
 const draftLengthMessages=JSON.stringify(FORUM_DRAFT_LENGTH_COPY[lang]);
 const maxBodyLength=FORUM_DRAFT_MAX[mode];
 const assistedCopy = ({"en":["Import draft (.json)","Review and publish yourself.","Draft imported. Review it.","Invalid draft.","Clear your current draft first."],"tr":["Taslak içe aktar (.json)","İncele ve kendin yayımla.","Taslak aktarıldı. İncele.","Geçersiz taslak.","Önce mevcut taslağını temizle."],"zh":["导入草稿 (.json)","请检查后自行发布。","草稿已导入，请检查。","草稿无效。","请先清空当前草稿。"],"hi":["मसौदा आयात (.json)","जाँचकर स्वयं प्रकाशित करें।","मसौदा आयात हुआ। जाँचें।","अमान्य मसौदा।","पहले वर्तमान मसौदा साफ़ करें।"],"pt-br":["Importar rascunho (.json)","Revise e publique você mesmo.","Rascunho importado. Revise.","Rascunho inválido.","Limpe o rascunho atual primeiro."],"fr":["Importer un brouillon (.json)","Relisez et publiez vous-même.","Brouillon importé. Relisez-le.","Brouillon invalide.","Effacez d’abord le brouillon actuel."],"de":["Entwurf importieren (.json)","Prüfe und veröffentliche selbst.","Entwurf importiert. Bitte prüfen.","Ungültiger Entwurf.","Zuerst aktuellen Entwurf leeren."],"ru":["Импорт черновика (.json)","Проверьте и опубликуйте сами.","Черновик импортирован. Проверьте.","Недействительный черновик.","Сначала очистите текущий черновик."],"ja":["下書きを読み込む (.json)","確認してご自身で公開してください。","下書きを読み込みました。確認してください。","無効な下書き。","現在の下書きを先に消去してください。"],"es":["Importar borrador (.json)","Revisa y publica tú mismo.","Borrador importado. Revísalo.","Borrador no válido.","Borra primero el borrador actual."]})[lang];
+const delegatedCopy=({
+ en:["AI-assisted publishing","Allow up to 24 hours of AI-assisted topic publishing; normal quotas apply. No password or other account access is granted. Topics disclose AI assistance.","I authorize this limited access.","Authorize for 24 hours","Revoke authorization","Active until","No authorization","Could not verify authorization. Try again.","Expired; revoke before authorizing again."],
+ tr:["Yapay zekâ destekli yayınlama","En fazla 24 saat boyunca yapay zekâ destekli konu yayınına izin ver. Normal konu sınırları geçerli. Parola veya başka hesap erişimi verilmez. Konularda yapay zekâ desteği belirtilir.","Bu sınırlı yetkiyi onaylıyorum.","24 saat yetkilendir","Yetkiyi iptal et","Bitiş zamanı","Yetki yok","Yetki doğrulanamadı. Tekrar dene.","Süre doldu; yeniden yetkilendirmeden önce iptal et."],
+ zh:["AI 辅助发布","允许最多 24 小时的 AI 辅助主题发布，遵守正常限额。不授予密码或其他账户权限，主题注明 AI 辅助。","我同意此有限授权。","授权 24 小时","撤销授权","有效期至","未授权","无法验证授权，请重试。","已过期，请先撤销再授权。"],
+ hi:["एआई-सहायित प्रकाशन","24 घंटे तक एआई-सहायित विषय प्रकाशन की अनुमति दें। सामान्य सीमा लागू है। पासवर्ड या अन्य खाता पहुँच नहीं दी जाती। विषय में एआई सहायता बताई जाएगी।","मैं इस सीमित अनुमति से सहमत हूँ।","24 घंटे की अनुमति","अनुमति रद्द करें","समाप्ति समय","कोई अनुमति नहीं","अनुमति सत्यापित नहीं हुई। पुनः प्रयास करें।","समय समाप्त; नई अनुमति से पहले रद्द करें।"],
+ "pt-br":["Publicação assistida por IA","Autorize publicações de tópicos com IA por até 24 horas; os limites normais se aplicam. Sem acesso à senha ou a outras funções da conta. A assistência de IA será informada.","Autorizo este acesso limitado.","Autorizar por 24 horas","Revogar autorização","Válida até","Sem autorização","Não foi possível verificar a autorização. Tente novamente.","Expirada; revogue antes de autorizar novamente."],
+ fr:["Publication assistée par IA","Autorisez la publication de sujets assistée par IA pendant 24 heures au maximum. Les quotas habituels s’appliquent. Aucun accès au mot de passe ni aux autres fonctions du compte. L’assistance IA sera signalée.","J’autorise cet accès limité.","Autoriser pour 24 heures","Révoquer l’autorisation","Valable jusqu’au","Aucune autorisation","Impossible de vérifier l’autorisation. Réessayez.","Expirée ; révoquez avant de réautoriser."],
+ de:["KI-unterstützte Veröffentlichung","Erlaube bis zu 24 Stunden lang KI-unterstützte Themenbeiträge. Die normalen Limits gelten. Kein Passwort- oder weiterer Kontozugriff. Die KI-Unterstützung wird angegeben.","Ich erlaube diesen eingeschränkten Zugriff.","Für 24 Stunden erlauben","Berechtigung widerrufen","Gültig bis","Keine Berechtigung","Berechtigung nicht überprüfbar. Erneut versuchen.","Abgelaufen; vor neuer Freigabe widerrufen."],
+ ru:["Публикация с помощью ИИ","Разрешите публикацию тем с помощью ИИ на срок до 24 часов. Действуют обычные лимиты. Пароль и другие права доступа не передаются. Использование ИИ будет указано.","Я разрешаю этот ограниченный доступ.","Разрешить на 24 часа","Отозвать разрешение","Действует до","Нет разрешения","Не удалось проверить разрешение. Повторите попытку.","Истекло; отзовите перед повторной выдачей."],
+ ja:["AI 支援による投稿","最長24時間、AI 支援によるトピック投稿を許可します。通常の投稿制限が適用されます。パスワードや他のアカウント権限は付与しません。AI 支援を明記します。","この限定的な権限を許可します。","24時間許可する","権限を取り消す","有効期限","権限なし","権限を確認できません。再試行してください。","期限切れです。再許可の前に取り消してください。"],
+ es:["Publicación asistida por IA","Autoriza la publicación de temas con ayuda de IA durante un máximo de 24 horas. Se mantienen los límites habituales. No se concede acceso a la contraseña ni a otras funciones. Se indicará el uso de IA.","Autorizo este acceso limitado.","Autorizar durante 24 horas","Revocar autorización","Válida hasta","Sin autorización","No se pudo verificar la autorización. Inténtalo de nuevo.","Caducada; revoca antes de volver a autorizar."]
+})[lang];
 const bodyCounterId=`forum-body-count-${lang}-${mode}`;
 const bodyWarningId=`forum-body-warning-${lang}-${mode}`;
 const strings=JSON.stringify({
@@ -46,7 +58,7 @@ const strings=JSON.stringify({
 ---
 <section id="forum-compose" tabindex="-1" class="community-composer" data-forum-composer
  data-forum-config={browserConfig} data-forum-messages={strings} data-member-messages={memberMessages}
- data-forum-draft-length-messages={draftLengthMessages} data-assisted-draft-copy={JSON.stringify(assistedCopy)}>
+ data-forum-draft-length-messages={draftLengthMessages} data-assisted-draft-copy={JSON.stringify(assistedCopy)} data-delegated-copy={JSON.stringify(delegatedCopy)}>
  <h2>{mode==="topic"?ft(lang,"compose"):ft(lang,"reply")}</h2>
  {cfg ? <>
   <p class="forum-guest-note" data-guest-readonly>{mt(lang,"guestReadOnly")}</p>
@@ -165,6 +177,14 @@ const strings=JSON.stringify({
   <details data-forum-history hidden>
    <summary>{ft(lang,"myPosts")}</summary><p data-history-status role="status"></p><ul data-history-list></ul>
   </details>
+  {mode==="topic"&&<details data-delegated-panel hidden>
+   <summary>{delegatedCopy[0]}</summary>
+   <p>{delegatedCopy[1]}</p>
+   <label class="forum-checkbox"><input type="checkbox" data-delegated-confirm/><span>{delegatedCopy[2]}</span></label>
+   <button type="button" data-delegated-activate disabled>{delegatedCopy[3]}</button>
+   <button type="button" data-delegated-revoke disabled>{delegatedCopy[4]}</button>
+   <p data-delegated-status role="status" aria-live="polite"></p>
+  </details>}
   <form data-forum-post hidden>
     {mode==="topic"&&<label>{assistedCopy[0]}<input type="file" accept=".json,application/json" data-assisted-draft-file/><small>{assistedCopy[1]}</small></label>}
     {mode==="topic"&&<label>{ft(lang,"title")}
@@ -556,6 +576,68 @@ for(const widget of widgets){
  const historyStatus=el<HTMLElement>("[data-history-status]");
  let userId="";
  let token="";
+ const delegationPanel=el<HTMLDetailsElement>("[data-delegated-panel]");
+ const delegationConfirm=el<HTMLInputElement>("[data-delegated-confirm]");
+ const delegationActivate=el<HTMLButtonElement>("[data-delegated-activate]");
+ const delegationRevoke=el<HTMLButtonElement>("[data-delegated-revoke]");
+ const delegationStatus=el<HTMLElement>("[data-delegated-status]");
+ const delegationCopy=JSON.parse(widget.dataset.delegatedCopy||"[]") as string[];
+ type Delegation={id:string;expires_at:string;revoked:boolean};
+ let delegation:Delegation|null=null, delegationKnown=false, delegationBusy=false, delegationVersion=0;
+ const delegationUrl=cfg.url+"/rest/v1/tc_forum_assisted_grants";
+ function updateDelegationButtons(){
+  if(delegationActivate)delegationActivate.disabled=!delegationKnown||delegationBusy||!!delegation||!delegationConfirm?.checked||!token;
+  if(delegationRevoke)delegationRevoke.disabled=!delegationKnown||delegationBusy||!delegation||!token;
+  if(delegationConfirm)delegationConfirm.disabled=!delegationKnown||delegationBusy||!!delegation;
+ }
+ function resetDelegation(loggedIn:boolean){
+  ++delegationVersion;delegation=null;delegationKnown=false;delegationBusy=false;
+  if(delegationConfirm)delegationConfirm.checked=false;
+  if(delegationStatus)delegationStatus.textContent="";
+  if(delegationPanel){delegationPanel.hidden=!loggedIn;delegationPanel.open=false}
+  updateDelegationButtons();
+ }
+ async function refreshDelegation(){
+  if(!delegationPanel?.open||!token||!userId||!delegationStatus||delegationBusy)return;
+  const version=++delegationVersion, account=userId, session=token;
+  const current=()=>version===delegationVersion&&account===userId&&session===token;
+  delegationKnown=false;delegationBusy=true;updateDelegationButtons();delegationStatus.textContent=copy.loading;
+  try{
+   const res=await fetch(delegationUrl+"?select=id,expires_at,revoked&revoked=eq.false&limit=2",{
+    headers:header(session),cache:"no-store",signal:AbortSignal.timeout(12000)});
+   if(!res.ok)throw Error("unavailable");
+   const rows=await res.json();
+   if(!current())return;
+   if(!Array.isArray(rows)||rows.length>1||rows.some(row=>typeof row.id!=="string"||!Number.isFinite(Date.parse(row.expires_at))||row.revoked!==false))throw Error("invalid");
+   delegation=rows[0]||null;delegationKnown=true;
+   delegationStatus.textContent=delegation?(Date.parse(delegation.expires_at)>Date.now()
+    ?delegationCopy[5]+" "+new Date(delegation.expires_at).toLocaleString(cfg.lang):delegationCopy[8]):delegationCopy[6];
+  }catch{if(current())delegationStatus.textContent=delegationCopy[7]}
+  finally{if(current()){delegationBusy=false;updateDelegationButtons()}}
+ }
+ async function changeDelegation(revoke:boolean){
+  if(!token||!userId||!delegationKnown||delegationBusy||!delegationPanel?.open||!delegationStatus)return;
+  if(revoke?!delegation:!!delegation||!delegationConfirm?.checked)return;
+  const version=++delegationVersion, account=userId, session=token;
+  const current=()=>version===delegationVersion&&account===userId&&session===token;
+  const grantId=delegation?.id;
+  delegationBusy=true;delegationKnown=false;updateDelegationButtons();
+  try{
+   const res=await fetch(delegationUrl+(revoke?"?id=eq."+encodeURIComponent(grantId||""):""),{
+    method:revoke?"PATCH":"POST",headers:{...header(session),Prefer:"return=minimal"},
+    body:JSON.stringify(revoke?{revoked:true}:{owner_id:account}),signal:AbortSignal.timeout(12000)});
+   if(!res.ok)throw Error("unavailable");
+  }catch{if(current())delegationStatus.textContent=delegationCopy[7]}
+  finally{if(current()){
+   delegationBusy=false;if(delegationConfirm)delegationConfirm.checked=false;
+   // Read back the real state even when the write response was interrupted.
+   await refreshDelegation();
+  }}
+ }
+ delegationPanel?.addEventListener("toggle",()=>{if(delegationPanel.open)void refreshDelegation()});
+ delegationConfirm?.addEventListener("change",updateDelegationButtons);
+ delegationActivate?.addEventListener("click",()=>void changeDelegation(false));
+ delegationRevoke?.addEventListener("click",()=>void changeDelegation(true));
  let email="";
  let signupEmail="";
  const msg=(text:string)=>{if(message)message.textContent=text};
@@ -646,6 +728,7 @@ for(const widget of widgets){
   window.dispatchEvent(new Event("tractorvs-forum-session"));
  }
  function setLogin(loggedIn:boolean){
+  resetDelegation(loggedIn);
   if(historyPanel)historyPanel.hidden=!loggedIn;
   if(!loggedIn){
    ++historyVersion;
