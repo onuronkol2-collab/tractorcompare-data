@@ -1146,7 +1146,16 @@ test("Lindner three reviewed photos are UUID-scoped representative images with t
  assert.ok(p,e.fileId);assert.equal(p.configurationExact,false);assert.equal(p.resizedDerivative,true);assert.equal(p.licenseName,e.license);assert.equal(p.photographer,e.photographer);assert.equal(decodeURIComponent(p.sourcePage),decodeURIComponent(e.sourcePage));
  for(const other of [{...exact,tractor_id:"00000000-0000-4000-8000-000000000000"},{...exact,model_name:e.model+" WRONG"},{...exact,brand_name:"Other"}])assert.ok(!tractorPhotos(other).some(x=>x.fileId===p.fileId));
  for(const d of e.derivatives){const b=readFileSync(new URL("../public/images/tractors/"+d.file,import.meta.url));assert.equal(b.length,d.bytes);assert.equal(createHash("sha256").update(b).digest("hex"),d.sha256);assert.equal(b.subarray(0,3).toString("hex"),"ffd8ff");assert.equal(b.subarray(-2).toString("hex"),"ffd9");assert.ok(resolveApprovedPhotoSource("/images/tractors/"+d.file));}
- for(const locale of LOCALES){const im=modelStructuredData(exact,locale,"https://tractorvs.com/")["@graph"].find(x=>x["@type"]==="ImageObject");assert.ok(im,locale);assert.equal(im.creator?.name,p.photographer);assert.equal(im.license,p.licenseUrl);assert.equal(im.acquireLicensePage,p.sourcePage);assert.ok(photoText(locale,"representative").length>10);}
+ // Structured data intentionally describes the primary gallery image; each secondary
+ // image retains its individual source and license in the visible gallery.
+ const primary=tractorPhotos(exact)[0];
+ assert.ok(primary);
+ for(const locale of LOCALES){const im=modelStructuredData(exact,locale,"https://tractorvs.com/")["@graph"].find(x=>x["@type"]==="ImageObject");assert.ok(im,locale);assert.equal(im.creator?.name,primary.photographer);assert.equal(im.license,primary.licenseUrl);assert.equal(im.acquireLicensePage,primary.sourcePage);assert.equal(im.contentUrl,"https://tractorvs.com"+primary.fullUrl);assert.ok(photoText(locale,"representative").length>10);}
+ const gallery=file("components/TractorPhoto.astro");
+ assert.ok(gallery.includes("data-photo-source={photo.sourcePage}"));
+ assert.ok(gallery.includes("data-photo-license={photo.licenseUrl}"));
+ assert.ok(gallery.includes("href={photo.sourcePage}"));
+ assert.ok(gallery.includes("href={photo.licenseUrl}"));
  }
  assert.equal(tractorPhotos({...tractor("Lindner","Lintrac 160 LDrive"),tractor_id:"7999a853-ec41-4c44-9f1d-2fa326713a81"}).length,2);
  assert.equal(tractorPhotos({...tractor("Lindner","Lintrac 95 LS"),tractor_id:"092125c4-ef05-44ac-a2b3-9c653dda01f4"}).length,1);
