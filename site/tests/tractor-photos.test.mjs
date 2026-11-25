@@ -670,7 +670,9 @@ test("source-backed copyright notices cover approved Google warning images in al
   "tym-t5075-t78-marcelx42-2023"
  ]);
  const expected=new Set([...originalThree,...reviewedTwenty,...exactTym,"zetor-forterra-140-hd-maindistorsion","belarus-132n-picture30-2011","mccormick-x7-621-barzkowice-zwiadowca21-2026","landini-5-110-roboshift-marcelx42-2023"]);
- assert.equal(expected.size,30);
+ expected.add("hattat-b3105-marcelx42-2023");
+ expected.add("tafe-7515-cab-advanced-representative-marcelx42-2023");
+ assert.equal(expected.size,32);
  const actual=APPROVED_TRACTOR_PHOTOS.filter(p=>p.copyrightOwner);
  assert.deepEqual(new Set(actual.map(p=>p.fileId)),expected,
    "Unexpected ownership claims must undergo separate review before publication");
@@ -1187,7 +1189,7 @@ test("Three salvaged Hattat and TAFE photos are UUID-scoped representative image
  assert.equal(entries.length,3);assert.equal(new Set(entries.map(e=>e.tractorId)).size,2);
  for(const e of entries){
  const exact={...tractor(e.brand,e.model),tractor_id:e.tractorId};const p=tractorPhotos(exact).find(x=>x.fileId===e.fileId);
- assert.ok(p,e.fileId);assert.equal(p.copyrightOwner,e.photographer);assert.equal(p.copyrightEvidence,e.copyrightEvidence);assert.equal(decodeURIComponent(p.copyrightClaimUrl),decodeURIComponent(e.sourcePage));assert.deepEqual(e.derivatives.map(d=>d.width),[480,960,1920]);if(e.originalFormat==='MPO'){assert.equal(e.originalFrameCount,2);assert.equal(e.selectedFrame,0);assert.match(e.changes,/primary frame/);}assert.equal(p.configurationExact,false);assert.equal(p.resizedDerivative,true);assert.equal(p.licenseName,e.license);assert.equal(p.photographer,e.photographer);assert.equal(decodeURIComponent(p.sourcePage),decodeURIComponent(e.sourcePage));
+ assert.ok(p,e.fileId);if(e.copyrightEvidence==="commons-own-work-self-license"){assert.equal(p.copyrightOwner,e.photographer);assert.equal(p.copyrightEvidence,e.copyrightEvidence);assert.equal(decodeURIComponent(p.copyrightClaimUrl),decodeURIComponent(e.sourcePage));}else{assert.equal(p.copyrightOwner,undefined);assert.equal(p.copyrightClaimUrl,undefined);assert.equal(p.copyrightEvidence,undefined);}assert.deepEqual(e.derivatives.map(d=>d.width),[480,960,1920]);if(e.originalFormat==='MPO'){assert.equal(e.originalFrameCount,2);assert.equal(e.selectedFrame,0);assert.match(e.changes,/primary frame/);}assert.equal(p.configurationExact,false);assert.equal(p.resizedDerivative,true);assert.equal(p.licenseName,e.license);assert.equal(p.photographer,e.photographer);assert.equal(decodeURIComponent(p.sourcePage),decodeURIComponent(e.sourcePage));
  for(const other of [{...exact,tractor_id:"00000000-0000-4000-8000-000000000000"},{...exact,model_name:e.model+" WRONG"},{...exact,brand_name:"Other"}])assert.ok(!tractorPhotos(other).some(x=>x.fileId===p.fileId));
  for(const d of e.derivatives){const b=readFileSync(new URL("../public/images/tractors/"+d.file,import.meta.url));assert.equal(b.length,d.bytes);assert.equal(createHash("sha256").update(b).digest("hex"),d.sha256);assert.equal(b.subarray(0,3).toString("hex"),"ffd8ff");assert.equal(b.subarray(-2).toString("hex"),"ffd9");assert.ok(resolveApprovedPhotoSource("/images/tractors/"+d.file));}
  // Structured data intentionally describes the primary gallery image; each secondary
