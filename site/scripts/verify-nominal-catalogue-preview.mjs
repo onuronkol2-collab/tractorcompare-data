@@ -6,7 +6,7 @@
  */
 import {readFileSync,writeFileSync,mkdtempSync,rmSync,realpathSync,statSync,readdirSync} from "node:fs";
 import {tmpdir} from "node:os";
-import {resolve,join,relative,isAbsolute} from "node:path";
+import {resolve,join,relative,isAbsolute,sep} from "node:path";
 import {fileURLToPath,pathToFileURL} from "node:url";
 import {spawnSync} from "node:child_process";
 import {PUBLIC_LOCALES,verifyModelDiscoveryMarkup} from "./verify-published-site-inventory.mjs";
@@ -145,7 +145,7 @@ function main(){
   if(privateInput){
     assert(!process.env.CI&&!process.env.GITHUB_ACTIONS&&!process.env.WORKERS_CI_BRANCH,"Private data is forbidden in CI or Cloudflare");
     const path=realpathSync(args[1]),rel=relative(repoRoot,path);
-    assert(rel.startsWith("..")||isAbsolute(rel),"Private data must be outside the repository");
+    assert(rel===".."||rel.startsWith(".."+sep)||isAbsolute(rel),"Private data must be outside the repository");
     assert((statSync(path).mode&0o077)===0,"Private file permissions must exclude group/other access");
     rows=JSON.parse(readFileSync(path,"utf8"));
   }else rows=syntheticRows();
