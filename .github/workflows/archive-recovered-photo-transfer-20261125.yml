@@ -109,7 +109,9 @@ jobs:
                   assert not out.exists()
                   out.write_bytes(data);ds.append({**d,"file":filename})
               license_url="https://creativecommons.org/publicdomain/zero/1.0/" if e["license"]=="CC0" else "https://creativecommons.org/licenses/by-sa/4.0/"
-              assert e["licenseUrl"].rstrip("/")==license_url.rstrip("/")
+              lu=urlsplit(e["licenseUrl"]); canonical=urlsplit(license_url)
+              assert lu.scheme in ("http","https") and lu.netloc=="creativecommons.org" and not lu.query and not lu.fragment
+              assert re.sub(r"/deed\.[a-zA-Z-]+/?$","/",lu.path).rstrip("/")==canonical.path.rstrip("/"),"License path mismatch: "+e["licenseUrl"]
               record=dict(brand=t["brand"],model=t["model"],tractorId=t["tractor_id"],fileId=fid,path=sourcepath,photographer=e["photographer"],license=e["license"],width=e["width"],height=e["height"],resizedDerivative=True)
               records.append(record)
               evidence.append({**record,"sourcePage":source,"sourcePageOriginal":e["sourcePage"],"originalUrl":e["sourceUrl"],"licenseUrl":license_url,"originalSha256":sha,"originalSha1":e["verifiedSha1"],"originalBytes":e["originalBytes"],"originalFormat":e["decodedFormat"],"originalFrameCount":e["decodedFrames"],"selectedFrame":e["selectedFrame"],"sourceArtifact":15052415930,"sourceRun":45674748767,"candidate":e["file"],"description":e["description"],"targetVariant":t.get("variant"),"angle":"visually-reviewed-front-side-or-front-quarter","modelEvidence":"Reviewed original-derived contact sheet, exact source model title and catalogue UUID; equipment may differ.","scope":"Representative model photo, not exact variant configuration.","copyrightEvidence":"commons-attribution-license-verified-no-owner-claim","changes":"Verified primary frame; proportional resize and JPEG compression; source license retained.","derivatives":ds})
