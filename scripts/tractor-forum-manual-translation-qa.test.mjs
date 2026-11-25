@@ -156,3 +156,21 @@ test("French and Russian native thousand grouping keeps magnitude, rejects chang
   assert.ok(corrupted.errors.includes("numeric_facts_changed"),JSON.stringify(corrupted.errors));
  }
 });
+
+
+test("sowing season is not October; real October and day facts remain mandatory",()=>{
+ const cfg={sourceTitle:"2026 Tarım Ekonomisi ve Üretim Maliyetleri",sourceBody:"## Tarihler\n\nÇiftçiler birçok üretim giderini ekim döneminde karşılıyor ancak hasat döneminde fiyatı bilmiyor. 10 Ekim 2026."};
+ for(const [locale,targetTitle,targetBody] of [
+  ["zh","2026年全球农业经济与生产成本分析","## 日期\n\n农民在播种期承担费用，收获期价格未知。2026年10月10日。"],
+  ["ja","2026年の世界農業経済と生産費用の分析","## 日程\n\n農家は播種期に費用を負担し、収穫期の価格は不明。2026年10月10日。"]
+ ]){
+  const input={...cfg,locale,targetTitle,targetBody};
+  assert.ok(!auditManualForumTranslation(input).errors.includes("numeric_facts_changed"));
+  for(const bad of ["2026年11月10日","2026年10月11日"]){
+   const result=auditManualForumTranslation({...input,targetBody:targetBody.replace("2026年10月10日",bad)});
+   assert.ok(result.errors.includes("calendar_facts_changed"));
+  }
+  const extra=auditManualForumTranslation({...input,targetBody:targetBody+" 10月。"});
+  assert.ok(extra.errors.includes("numeric_facts_changed"));
+ }
+});

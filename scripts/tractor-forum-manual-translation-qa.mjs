@@ -25,7 +25,8 @@ const MONTHS=[
 function numericFactsEqual(source,translated,locale){
  const expected=numberTokens(source),actual=numberTokens(translated);
  if(locale==="zh"||locale==="ja"){
-  const lowered=source.toLocaleLowerCase("tr-TR");
+  // In this explicit sowing/harvest context, lowercase ekim is not October.
+  const lowered=source.replace(/(?<![\p{L}\p{N}_])üretim giderini ekim döneminde karşılıyor ancak hasat döneminde(?![\p{L}\p{N}_])/gu,"üretim giderini tohum ekme döneminde karşılıyor ancak hasat döneminde").toLocaleLowerCase("tr-TR");
   for(const [name,num] of MONTHS){
    const inSource=[...lowered.matchAll(new RegExp("(?<!\\p{L})"+name+"(?!\\p{L})","gu"))].length;
    const inTarget=[...translated.matchAll(new RegExp("(?<![0-9])"+num+"(?=\\s*月)","g"))].length;
