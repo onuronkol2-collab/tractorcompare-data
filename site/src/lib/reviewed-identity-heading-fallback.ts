@@ -1,7 +1,7 @@
 import type {Locale} from "./locales.ts";
 
 /** Exact English DISPLAY headings identified by stable public spec IDs in the
- * 2026-11-25 reports (runs 45587503577, 45588077404 and 45590939141). This is a last-resort presentation
+ * 2026-11-25 reports (runs 45587503577, 45588077404 45590939141 and 45594642806). This is a last-resort presentation
  * fallback ONLY when the existing localized heading still equals English.
  * Preserve already localized headings, raw spec names, values, units,
  * standards, source qualifiers and measurement context. Never translate codes
@@ -2288,7 +2288,49 @@ const rows:readonly (readonly string[])[]=[
     "Задние тормоза",
     "後部ブレーキ",
     "Frenos traseros"
-  ]
+  ],
+  ["Battery Capacity","Akü kapasitesi","蓄电池容量","बैटरी क्षमता","Capacidade da bateria","Capacité de la batterie","Batteriekapazität","Ёмкость аккумулятора","バッテリー容量","Capacidad de la batería"],
+  ["Engine Speed At Max Power","Azami güçte motor devri","最大功率时的发动机转速","अधिकतम शक्ति पर इंजन की गति","Rotação do motor na potência máxima","Régime moteur à puissance maximale","Motordrehzahl bei maximaler Leistung","Частота вращения двигателя при максимальной мощности","最大出力時のエンジン回転数","Régimen del motor a potencia máxima"],
+  ["Hydraulic Circuit Type","Hidrolik devre tipi","液压回路类型","हाइड्रोलिक सर्किट का प्रकार","Tipo de circuito hidráulico","Type de circuit hydraulique","Art des Hydraulikkreislaufs","Тип гидравлического контура","油圧回路の種類","Tipo de circuito hidráulico"],
+  ["Rear PTO System","Arka kuyruk mili sistemi","后动力输出系统","पिछला पीटीओ सिस्टम","Sistema de TDP traseira","Système de PDF arrière","Heckzapfwellenanlage","Система заднего ВОМ","リアPTOシステム","Sistema de TDF trasera"],
+  ["Service Brakes","Servis frenleri","行车制动器","सर्विस ब्रेक","Freios de serviço","Freins de service","Betriebsbremsen","Рабочие тормоза","常用ブレーキ","Frenos de servicio"],
+  ["Hydraulic Lifting Capacity","Hidrolik kaldırma kapasitesi","液压提升能力","हाइड्रोलिक उठाने की क्षमता","Capacidade de elevação hidráulica","Capacité de levage hydraulique","Hydraulische Hubkraft","Гидравлическая грузоподъёмность","油圧持上げ能力","Capacidad de elevación hidráulica"],
+  ["Hydraulic Pump Type","Hidrolik pompa tipi","液压泵类型","हाइड्रोलिक पंप का प्रकार","Tipo de bomba hidráulica","Type de pompe hydraulique","Typ der Hydraulikpumpe","Тип гидравлического насоса","油圧ポンプの種類","Tipo de bomba hidráulica"],
+  ["Engine Rated Rpm","Nominal motor devri","发动机额定转速","इंजन की रेटेड गति","Rotação nominal do motor","Régime nominal du moteur","Nenndrehzahl des Motors","Номинальная частота вращения двигателя","エンジン定格回転数","Régimen nominal del motor"],
+  ["Hydraulic Lift Capacity","Hidrolik kaldırma kapasitesi","液压提升能力","हाइड्रोलिक लिफ्ट क्षमता","Capacidade de elevação hidráulica","Capacité de levage hydraulique","Hydraulische Hubkraft","Грузоподъёмность гидроподъёмника","油圧リフトの持上げ能力","Capacidad de elevación hidráulica"],
+  ["Optional Front PTO Speed","Opsiyonel ön kuyruk mili devri","可选前动力输出轴转速","वैकल्पिक फ्रंट पीटीओ गति","Rotação opcional da TDP dianteira","Régime de la PDF avant en option","Optionale Frontzapfwellendrehzahl","Частота вращения переднего ВОМ (опция)","オプションのフロントPTO回転数","Régimen opcional de la TDF delantera"],
+  ["Engine Fuel System","Motor yakıt sistemi","发动机燃油系统","इंजन ईंधन प्रणाली","Sistema de combustível do motor","Système d'alimentation en carburant du moteur","Kraftstoffsystem des Motors","Топливная система двигателя","エンジン燃料システム","Sistema de alimentación de combustible del motor"],
+  ["Engine Rated Power Kw","Nominal motor gücü (kW)","发动机额定功率（kW）","इंजन की रेटेड शक्ति (kW)","Potência nominal do motor (kW)","Puissance nominale du moteur (kW)","Motornennleistung (kW)","Номинальная мощность двигателя (кВт)","エンジン定格出力（kW）","Potencia nominal del motor (kW)"],
+  ["Maximum Hydraulic Pump Flow","Azami hidrolik pompa debisi","液压泵最大流量","अधिकतम हाइड्रोलिक पंप प्रवाह","Vazão máxima da bomba hidráulica","Débit maximal de la pompe hydraulique","Maximaler Förderstrom der Hydraulikpumpe","Максимальная подача гидравлического насоса","油圧ポンプ最大吐出量","Caudal máximo de la bomba hidráulica"],
+  ["Steering Pump Flow","Direksiyon pompası debisi","转向泵流量","स्टीयरिंग पंप प्रवाह","Vazão da bomba de direção","Débit de la pompe de direction","Förderstrom der Lenkungspumpe","Подача насоса рулевого управления","ステアリングポンプ流量","Caudal de la bomba de dirección"],
+  ["Three Point Hitch Category","Üç nokta askı kategorisi","三点悬挂类别","थ्री-पॉइंट हिच श्रेणी","Categoria do engate de três pontos","Catégorie d'attelage à trois points","Kategorie der Dreipunktaufhängung","Категория трёхточечной навески","三点ヒッチのカテゴリー","Categoría del enganche de tres puntos"],
+  ["Coolant Capacity","Soğutma sıvısı kapasitesi","冷却液容量","कूलेंट क्षमता","Capacidade do líquido de arrefecimento","Capacité de liquide de refroidissement","Kühlmittelfüllmenge","Объём охлаждающей жидкости","冷却液容量","Capacidad de refrigerante"],
+  ["Crankcase Capacity","Karter kapasitesi","曲轴箱容量","क्रैंककेस क्षमता","Capacidade do cárter","Capacité du carter","Kurbelgehäuse-Fassungsvermögen","Объём картера","クランクケース容量","Capacidad del cárter"],
+  ["Engine Intercooler Standard","Standart motor ara soğutucusu","标准发动机中冷器","मानक इंजन इंटरकूलर","Intercooler do motor de série","Refroidisseur d'air de suralimentation de série","Serienmäßiger Ladeluftkühler","Интеркулер двигателя в стандартной комплектации","エンジン用インタークーラー（標準装備）","Intercooler del motor de serie"],
+  ["Engine Make And Model","Motor markası ve modeli","发动机品牌和型号","इंजन का ब्रांड और मॉडल","Marca e modelo do motor","Marque et modèle du moteur","Motorhersteller und Modell","Марка и модель двигателя","エンジンメーカーと型式","Marca y modelo del motor"],
+  ["Exhaust Aftertreatment","Egzoz gazı son işlem sistemi","尾气后处理","निकास गैस का पश्च-उपचार","Pós-tratamento dos gases de escape","Post-traitement des gaz d'échappement","Abgasnachbehandlung","Система нейтрализации отработавших газов","排気後処理","Postratamiento de los gases de escape"],
+  ["Gross Engine Power (KW)","Brüt motor gücü (kW)","发动机总功率（kW）","सकल इंजन शक्ति (kW)","Potência bruta do motor (kW)","Puissance brute du moteur (kW)","Bruttomotorleistung (kW)","Полная мощность двигателя брутто (кВт)","エンジングロス出力（kW）","Potencia bruta del motor (kW)"],
+  ["Implement Pump Flow","Ekipman hidrolik pompası debisi","机具液压泵流量","उपकरण हाइड्रोलिक पंप प्रवाह","Vazão da bomba hidráulica dos implementos","Débit de la pompe hydraulique des outils","Förderstrom der Arbeitshydraulikpumpe","Подача насоса рабочей гидравлики","作業機用油圧ポンプ流量","Caudal de la bomba hidráulica de los aperos"],
+  ["Length Without Front Weight","Ön ağırlık olmadan uzunluk","不含前配重的长度","अगले भार के बिना लंबाई","Comprimento sem peso dianteiro","Longueur sans masse avant","Länge ohne Frontgewicht","Длина без переднего груза","フロントウエイトなし全長","Longitud sin contrapeso delantero"],
+  ["Lifting Capacity","Kaldırma kapasitesi","提升能力","उठाने की क्षमता","Capacidade de elevação","Capacité de levage","Hubkraft","Грузоподъёмность","持上げ能力","Capacidad de elevación"],
+  ["Main Hydraulic Pump Pressure","Ana hidrolik pompa basıncı","主液压泵压力","मुख्य हाइड्रोलिक पंप दबाव","Pressão da bomba hidráulica principal","Pression de la pompe hydraulique principale","Druck der Haupthydraulikpumpe","Давление основного гидравлического насоса","主油圧ポンプ圧力","Presión de la bomba hidráulica principal"],
+  ["Manufacturer PTO Power","Üreticinin bildirdiği kuyruk mili gücü","制造商标示的动力输出轴功率","निर्माता द्वारा बताई गई पीटीओ शक्ति","Potência da TDP informada pelo fabricante","Puissance à la PDF déclarée par le constructeur","Zapfwellenleistung laut Hersteller","Мощность ВОМ по данным производителя","メーカー公表PTO出力","Potencia de la TDF declarada por el fabricante"],
+  ["Main Brake","Ana fren","主制动器","मुख्य ब्रेक","Freio principal","Frein principal","Hauptbremse","Основной тормоз","主ブレーキ","Freno principal"],
+  ["Main Hydraulic Flow - Standard","Standart ana hidrolik debi","标准主液压流量","मानक मुख्य हाइड्रोलिक प्रवाह","Vazão hidráulica principal de série","Débit hydraulique principal de série","Förderstrom der Haupthydraulik serienmäßig","Подача основной гидросистемы в стандартной комплектации","標準主油圧流量","Caudal hidráulico principal de serie"],
+  ["Maximum Hydraulic Flow","Azami hidrolik debi","最大液压流量","अधिकतम हाइड्रोलिक प्रवाह","Vazão hidráulica máxima","Débit hydraulique maximal","Maximaler Hydraulikförderstrom","Максимальная подача гидросистемы","最大油圧流量","Caudal hidráulico máximo"],
+  ["Maximum Rear Hitch Capacity","Arka askının azami kapasitesi","后悬挂最大承载能力","पिछले हिच की अधिकतम क्षमता","Capacidade máxima do engate traseiro","Capacité maximale de l'attelage arrière","Maximale Tragfähigkeit des Heckkrafthebers","Максимальная грузоподъёмность задней навески","リアヒッチ最大容量","Capacidad máxima del enganche trasero"],
+  ["Mid Pto Speed Rpm","Orta kuyruk mili devri (dev/dk)","中置动力输出轴转速（rpm）","मध्य पीटीओ की गति (rpm)","Rotação da TDP central (rpm)","Régime de la PDF ventrale (tr/min)","Drehzahl der Zwischenachszapfwelle (U/min)","Частота вращения среднего ВОМ (об/мин)","ミッドPTO回転数（rpm）","Régimen de la TDF central (rpm)"],
+  ["Overall Height With Cab","Kabin dahil toplam yükseklik","带驾驶室的总高度","कैब सहित कुल ऊँचाई","Altura total com cabine","Hauteur totale avec cabine","Gesamthöhe mit Kabine","Общая высота с кабиной","キャブ付き全高","Altura total con cabina"],
+  ["Rear Agricultural Tyre","Arka tarım lastiği","后农用轮胎","पिछला कृषि टायर","Pneu agrícola traseiro","Pneu agricole arrière","Hinterer Landwirtschaftsreifen","Задняя сельскохозяйственная шина","後輪農業用タイヤ","Neumático agrícola trasero"],
+  ["Rear Hydraulic Circuits","Arka hidrolik devreler","后部液压回路","पिछले हाइड्रोलिक सर्किट","Circuitos hidráulicos traseiros","Circuits hydrauliques arrière","Hintere Hydraulikkreisläufe","Задние гидравлические контуры","後部油圧回路","Circuitos hidráulicos traseros"],
+  ["Rear Track Width Range","Arka iz genişliği aralığı","后轮距范围","पिछली ट्रैक चौड़ाई की सीमा","Faixa de bitola traseira","Plage de voie arrière","Bereich der Hinterradspurweite","Диапазон ширины задней колеи","後輪トレッド幅の範囲","Rango de ancho de vía trasera"],
+  ["Reverse Travel Speed","Geri seyir hızı","倒车行驶速度","पीछे चलने की गति","Velocidade de deslocamento em marcha à ré","Vitesse de déplacement en marche arrière","Rückwärtsfahrgeschwindigkeit","Скорость движения задним ходом","後進走行速度","Velocidad de desplazamiento marcha atrás"],
+  ["Shuttle Type","İleri-geri mekik tipi","换向机构类型","शटल रिवर्सर का प्रकार","Tipo de reversor","Type d'inverseur","Typ des Wendegetriebes","Тип реверса","シャトル機構の種類","Tipo de inversor"],
+  ["Standard Front Ballast","Standart ön balast","标准前配重","मानक अगला बैलास्ट","Lastro dianteiro de série","Lestage avant de série","Serienmäßiger Frontballast","Передний балласт в стандартной комплектации","標準フロントバラスト","Contrapeso delantero de serie"],
+  ["Three Point Hitch","Üç nokta askı sistemi","三点悬挂装置","तीन-बिंदु हिच","Engate de três pontos","Attelage à trois points","Dreipunktaufhängung","Трёхточечная навеска","三点ヒッチ","Enganche de tres puntos"],
+  ["Transmission Control","Şanzıman kumandası","变速箱控制","ट्रांसमिशन नियंत्रण","Controle da transmissão","Commande de la transmission","Getriebesteuerung","Управление трансмиссией","トランスミッション制御","Control de la transmisión"],
+  ["Unladen Weight (Tanks Empty)","Yüksüz ağırlık (depolar boş)","空载重量（储液罐为空）","बिना लोड वजन (टैंक खाली)","Peso sem carga (tanques vazios)","Poids à vide (réservoirs vides)","Unbeladenes Gewicht (Tanks leer)","Масса без груза (баки пусты)","無積載重量（タンク空）","Peso sin carga (depósitos vacíos)"],
+  ["Urea/AdBlue Tank Capacity","Üre/AdBlue deposu kapasitesi","尿素/AdBlue储罐容量","यूरिया/AdBlue टैंक क्षमता","Capacidade do tanque de ureia/AdBlue","Capacité du réservoir d'urée/AdBlue","Fassungsvermögen des Harnstoff-/AdBlue-Tanks","Вместимость бака мочевины/AdBlue","尿素/AdBlueタンク容量","Capacidad del depósito de urea/AdBlue"]
 ];
 const table=new Map(rows.map(row=>[row[0],row.slice(1)]));
 const normalize=(heading:string)=>heading.normalize("NFC").replace(/[’‘]/g,"'").replace(/\s+/g," ").trim();
