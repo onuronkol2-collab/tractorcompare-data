@@ -466,12 +466,18 @@ export function modelSeoMetadata(tractor: TractorRecord, lang: Locale) {
     ["TONY 8700 V","TONY 8900 TRG"].includes(tractor.model_name) &&
     (lang==="es" || lang==="pt-br") && reviewedLongTitle &&
     !reviewedLongTitle.includes(CONCISE_SPECS_TITLE[lang]);
-  const title=needsLocalizedLongNoun
+  const fullReviewedTitle=needsLocalizedLongNoun
     ? reviewedLongTitle!.replace(model+" — ",model+" "+CONCISE_SPECS_TITLE[lang]+" — ")
     : reviewedLong ? buildTitle(reviewedLong.variant, reviewedLong.market
     ? marketDisplayName(reviewedLong.market,lang) : marketLabel, true)
     : t97 ? buildTitle("Cabin / ROPS",SHORT_INTERNATIONAL_TITLE[lang])
     : txgs ? buildTitle("4WD hydrostatic / ROPS") : restoredIsekiVariant ? remainingTitle : shorterTitle;
+
+  // Full live audit 45594475241: four ES/PT-BR titles exceed the guidance
+  // only because of the generic technical noun. Keep every exact qualifier.
+  const title=needsLocalizedLongNoun && fullReviewedTitle.length>105
+    ? fullReviewedTitle.replace(model+" "+CONCISE_SPECS_TITLE[lang]+" — ",model+" "+(lang==="es"?"Datos":"Ficha")+" — ")
+    : fullReviewedTitle;
 
   const copy = MODEL_COPY[lang];
   const sourceCount = new Set(tractor.specifications.map(spec =>
@@ -550,6 +556,19 @@ export function modelSeoMetadata(tractor: TractorRecord, lang: Locale) {
     searchDescription=tractor.specifications.length
       ? model+" — "+CONCISE_SPECS_TITLE[lang]+identity.slice(model.length)+"."
       : identity+". "+copy.empty;
+  }
+  // The same full live audit found 16 overlong snippets on four exact
+  // reviewed records. Use the existing reviewed equipment identity only for
+  // this metadata advisory, never for the visible explanation or JSON-LD.
+  // Do not shorten unknown variants or introduce an unsupported power claim.
+  const auditedSnippetRow=reviewedLong && (
+    (reviewedLong.brand==="ArmaTrac" && ["804 Fruit Garden Cabin","804.4 Fruit Garden ROPS"].includes(reviewedLong.model)) ||
+    (reviewedLong.brand==="Yanmar" && ["YM347","YM359"].includes(reviewedLong.model)));
+  if(auditedSnippetRow && tractor.specifications.length && searchDescription.length>160){
+    const reviewedMarket=reviewedLong.market ? marketDisplayName(reviewedLong.market,lang) : marketLabel;
+    const qualifiers=[reviewedLong.variant,reviewedMarket,tractor.model_year==null?null:String(tractor.model_year)].filter(Boolean).join(" · ");
+    const compact=model+" — "+CONCISE_SPECS_TITLE[lang]+" ("+qualifiers+").";
+    if(compact.length<=160 && compact.length<searchDescription.length)searchDescription=compact;
   }
   return {title,description,searchDescription};
 }
