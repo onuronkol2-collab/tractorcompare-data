@@ -3,7 +3,7 @@ import assert from "node:assert/strict";
 import {readFileSync} from "node:fs";
 import {LOCALES} from "../src/lib/locales.ts";
 import {
-  CATALOG_FACET_COPY,normalizedFacetState,matchesCatalogueFacet,
+  CATALOG_FACET_COPY,CATALOG_MARKET_COPY,normalizedFacetState,matchesCatalogueFacet,
   compareCatalogueRows,VALID_POWER,VALID_YEAR,VALID_SORT,
 } from "../src/lib/catalog-facets.mjs";
 
@@ -22,14 +22,14 @@ test("research-only catalogue filters are available and named in every supported
 test("facet values are strictly bounded to published brands and known choices",()=>{
   const brands=["Başak Traktör","John Deere"];
   const p=new URLSearchParams({
-    brand:"Başak Traktör",power:"p51",year:"recent",sort:"powerDesc",unknown:"ignored"
+    brand:"Başak Traktör",power:"p51",year:"recent",market:"TR",sort:"powerDesc",unknown:"ignored"
   });
   assert.deepEqual(normalizedFacetState(p,brands),{
-    brand:"Başak Traktör",power:"p51",year:"recent",sort:"powerDesc"
+    brand:"Başak Traktör",power:"p51",year:"recent",market:"TR",sort:"powerDesc"
   });
   assert.deepEqual(normalizedFacetState(new URLSearchParams({
-    brand:"Unpublished",power:"zero",year:"1900",sort:"buy_now"
-  }),brands),{brand:"",power:"",year:"",sort:"brand"});
+    brand:"Unpublished",power:"zero",year:"1900",market:"not-a-country",sort:"buy_now"
+  }),brands),{brand:"",power:"",year:"",market:"",sort:"brand"});
   assert.deepEqual(VALID_POWER,["up50","p51","p101","over150"]);
   assert.deepEqual(VALID_YEAR,["recent","older"]);
   assert.deepEqual(VALID_SORT,["brand","newest","powerAsc","powerDesc"]);
@@ -93,4 +93,26 @@ test("catalogue stays a crawlable technical reference, even with a two-column re
   assert.match(compare,/else url.searchParams.delete\("view"\)/);
   assert.match(source,/catalog-facet-panel\{position:sticky/);
   assert.doesNotMatch(source,/satın al|buy now|checkout|order tractor|seller listing/ig);
+});
+
+
+test("explicit market facet respects documented geographic scope and never hides default catalogue",()=>{
+ for(const [market,country,expected] of [
+  ["Turkey","TR",true],["Turkey","IN",false],["US","CA",false],["USA","US",true],
+  ["North America","CA",true],["Europe","DE",true],["Europe","TR",false],
+  ["Europe / Turkey (manufacturer 09/2023)","TR",true],["global","TR",false],
+  [null,"TR",false],["unreviewed region","TR",false],["India (Swaraj target manufacturer data)","IN",true],
+ ]){
+  assert.equal(matchesCatalogueFacet({market},{market:country}),expected,market+" "+country);
+  assert.equal(matchesCatalogueFacet({market},{market:""}),true);
+ }
+ for(const l of LOCALES){
+  assert.ok(CATALOG_MARKET_COPY[l].label.length>1);
+  assert.ok(CATALOG_MARKET_COPY[l].note.length>1);
+ }
+ const html=readFileSync(new URL("../src/components/TractorCatalog.astro",import.meta.url),"utf8");
+ assert.match(html,/id="catalog-facet-market" aria-describedby="catalog-market-note"/);
+ assert.match(html,/data-market=\{tractor.market\?\?""\}/);
+ assert.match(html,/\["market",state.market\]/);
+ assert.equal((html.match(/if\(marketFacet\)marketFacet.value="";/g)||[]).length,2);
 });
