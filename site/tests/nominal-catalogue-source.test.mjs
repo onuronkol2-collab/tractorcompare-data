@@ -47,3 +47,31 @@ test("ten-language model SEO preserves identity and exact citations, not an omit
     assert.ok(!schema["@graph"].some(x=>["Product","Offer","Review","ImageObject"].includes(x["@type"])),lang);
   }
 });
+
+test("published Kioti headings retain exact tire category, axle and width in failed-audit locales",async()=>{
+  const {specLabel}=await import("../src/lib/catalog.ts");
+  const fixtures=[
+    ["Front agricultural tire","front_agricultural_tire",{"pt-br":"Pneu agrícola dianteiro",fr:"Pneu agricole avant",es:"Neumático agrícola delantero"}],
+    ["Rear agricultural tire","rear_agricultural_tire",{"pt-br":"Pneu agrícola traseiro",fr:"Pneu agricole arrière",es:"Neumático agrícola trasero"}],
+    ["Front industrial tire","front_industrial_tire",{"pt-br":"Pneu industrial dianteiro",fr:"Pneu industriel avant",es:"Neumático industrial delantero"}],
+    ["Rear industrial tire","rear_industrial_tire",{"pt-br":"Pneu industrial traseiro",fr:"Pneu industriel arrière",es:"Neumático industrial trasero"}],
+    ["Front R14 tire option","front_r14_tire_option",{"pt-br":"Opção de pneu dianteiro R14",fr:"Option de pneu avant R14",es:"Opción de neumático delantero R14"}],
+    ["Rear R14 tire option","rear_r14_tire_option",{"pt-br":"Opção de pneu traseiro R14",fr:"Option de pneu arrière R14",es:"Opción de neumático trasero R14"}],
+    ["Front tread","front_tread_mm",{"pt-br":"Bitola dianteira",fr:"Voie avant",es:"Ancho de vía delantero"}],
+    ["Rear tread","rear_tread_mm",{"pt-br":"Bitola traseira",fr:"Voie arrière",es:"Ancho de vía trasero"}],
+    ["Front turf tire","front_turf_tire",{"pt-br":"Pneu dianteiro para gramados",fr:"Pneu avant pour gazon",es:"Neumático delantero para césped"}],
+    ["Rear turf tire","rear_turf_tire",{"pt-br":"Pneu traseiro para gramados",fr:"Pneu arrière pour gazon",es:"Neumático trasero para césped"}],
+    ["Overall height","overall_height_mm",{"pt-br":"Altura total",es:"Altura total"}],
+    ["Hitch control","hitch_control_type",{de:"Hubwerksregelung"}],
+  ];
+  let checked=0;
+  for(const [name,key,expected] of fixtures){
+    const spec={spec_name:name,canonical_key:key,spec_value:"123",unit:null};
+    for(const [locale,label] of Object.entries(expected)){
+      assert.equal(specLabel(spec,locale),label,name+" "+locale);
+      checked++;
+    }
+    assert.equal(spec.spec_value,"123");
+  }
+  assert.equal(checked,33);
+});
