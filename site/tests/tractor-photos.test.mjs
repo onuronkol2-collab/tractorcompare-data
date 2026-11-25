@@ -615,7 +615,7 @@ test("McCormick X5.085 and TYM T6115/T2025P have exact licensed files, source pr
 });
 
 test("historic photo batch is staged with rights and does not create records",()=>{
-  assert.equal(HISTORICAL_LICENSED_PHOTOS.length,112);
+  assert.equal(HISTORICAL_LICENSED_PHOTOS.length,147);
   const all=new Set(HISTORICAL_LICENSED_PHOTOS.map(x=>x.fileId));
   assert.equal(all.size,HISTORICAL_LICENSED_PHOTOS.length,"All historical photo IDs must be unique");
   assert.ok(HISTORICAL_LICENSED_PHOTOS.every(x=>x.configurationExact===false));
@@ -865,7 +865,11 @@ test("McCormick X4.080 exact high-resolution files are real SHA-verified first-p
  const exact=tractor("McCormick","X4.080");
  exact.tractor_id="d0c1306b-f178-4c6e-8c2f-945e645fee79";
  const photos=tractorPhotos(exact);
- assert.equal(photos.length,1,"Derivatives must not add duplicate gallery items");
+ assert.equal(photos.length,2,"One existing photo and one genuinely different original; derivatives must not add gallery items");
+ assert.equal(new Set(photos.map(p=>p.fileId)).size,photos.length);
+ assert.equal(new Set(photos.map(p=>decodeURIComponent(p.sourcePage).replace(/_/g," "))).size,photos.length);
+ assert.ok(photos.some(p=>p.fileId==="mccormick-x4-080-archive-7bb98e41006e" && p.photographer==="MarcelX42"));
+ assert.ok(photos.some(p=>p.fileId===id));
  const photo=photos[0];
  assert.equal(photo.fileId,id);
  assert.equal(photo.photographer,"MB-one");
