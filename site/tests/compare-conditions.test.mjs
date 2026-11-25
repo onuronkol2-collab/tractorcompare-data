@@ -88,7 +88,7 @@ test("initial HTML and interactive comparison use the same caution function and 
   assert.match(compare,/conditionCaution: cx\(lang,"conditionCaution"\)/);
   assert.match(compare,/conditionCaution:string/);
   assert.match(compare,/role="rowheader"/);
-  assert.match(compare,/const visible=commonOnly\?shared:keys/);
+  assert.match(compare,/const visible=differentOnly\?different:commonOnly\?shared:keys/);
   assert.match(css,/\.tc-section \.tc-table \.tc-condition-caution/);
   assert.match(css,/overflow-wrap:anywhere/);
   assert.match(css,/grid-template-columns:repeat\(2,minmax\(0,1fr\)\)/);
@@ -136,7 +136,7 @@ test("manufacturer transmission note is specific and available for all ten langu
   assert.match(component,/requiresTransmissionCaution\(key,find\(left,key\),find\(right,key\)\)/);
   assert.match(component,/transmissionCaution: cx\(lang,"transmissionCaution"\)/);
   assert.match(component,/l10n\.transmissionCaution/);
-  assert.match(component,/const visible=commonOnly\?shared:keys/);
+  assert.match(component,/const visible=differentOnly\?different:commonOnly\?shared:keys/);
   assert.match(component,/role="note"/);
 });
 
