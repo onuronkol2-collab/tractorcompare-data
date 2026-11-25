@@ -1,0 +1,201 @@
+[
+  {
+    "brand": "Solis",
+    "model": "S 26 HST",
+    "tractorId": "45b7ce31-c2d1-492d-a2eb-8b081fc89c7f",
+    "fileId": "solis-s26-hst-sebleouf-2019",
+    "path": "7/70/Sommet_de_l%27%C3%89levage_2019_-_Tracteur_Solis_26_HST.jpg",
+    "photographer": "Sebleouf",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "width": 4032,
+    "height": 3016,
+    "sourcePage": "https://commons.wikimedia.org/wiki/File:Sommet_de_l%27%C3%89levage_2019_-_Tracteur_Solis_26_HST.jpg",
+    "originalUrl": "https://upload.wikimedia.org/wikipedia/commons/7/70/Sommet_de_l%27%C3%89levage_2019_-_Tracteur_Solis_26_HST.jpg",
+    "originalSha1": "7dd2eeea51b879a081bef0f396e1fcbd63f95326",
+    "originalSha256": "982ca09f42e48ed526e484452231c3bfc35aebaca5280744151dfe48287a45c5",
+    "originalBytes": 3529921,
+    "sourceArtifact": 15022230406,
+    "transferRun": 45615662897,
+    "transferJob": 139210268353,
+    "modelEvidence": "Source caption explicitly identifies Solis 26 HST at Sommet de l'Élevage 2019; whole tractor is visible with front loader and Solis markings. Current Turkish model has the same HST model name; generation and equipment not verified.",
+    "modelSources": [
+      "https://www.solisturkiye.com/solis-s-26-hst/"
+    ],
+    "scope": "Model illustration only; exact regional configuration and equipment not verified.",
+    "changes": "Proportional resize and JPEG compression; CC BY-SA 4.0 retained.",
+    "derivatives": [
+      {
+        "file": "solis-s26-hst-sebleouf-2019-480.jpg",
+        "width": 480,
+        "height": 359,
+        "sha256": "2048b6413806da2c7be86a989530166a834a37fa1bca8826d1e7401d0ccc373b",
+        "bytes": 49255
+      },
+      {
+        "file": "solis-s26-hst-sebleouf-2019-960.jpg",
+        "width": 960,
+        "height": 718,
+        "sha256": "97e523df6a64daf911d92af4ad2e8b4d8a3cb1f56f276e4d4cd8d248d452950b",
+        "bytes": 158316
+      },
+      {
+        "file": "solis-s26-hst-sebleouf-2019-1920.jpg",
+        "width": 1920,
+        "height": 1436,
+        "sha256": "0393678541ddd297cb10a0d9f53001abe5933ee683eb66e546fa980226a4e1c4",
+        "bytes": 512318
+      }
+    ]
+  },
+  {
+    "brand": "Solis",
+    "model": "90 HVAC Stage V",
+    "tractorId": "8760f728-4121-4f22-85c5-dbf5c99ab64b",
+    "fileId": "solis-s90-shuttle-xl-cabin-marcelx42-2025",
+    "path": "9/90/Solis_S90_Shuttle_XL_Cabin_Agritechnica_2025_%28DSC04064%29.jpg",
+    "photographer": "MarcelX42",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "width": 5847,
+    "height": 4385,
+    "sourcePage": "https://commons.wikimedia.org/wiki/File:Solis_S90_Shuttle_XL_Cabin_Agritechnica_2025_%28DSC04064%29.jpg",
+    "originalUrl": "https://upload.wikimedia.org/wikipedia/commons/9/90/Solis_S90_Shuttle_XL_Cabin_Agritechnica_2025_%28DSC04064%29.jpg",
+    "originalSha1": "b4ed72b5939e626575ff714f4b97e7ab604b2884",
+    "originalSha256": "232c7d9cd9c9933fa92fa3a64c550ddc375b11be8f90874dd59a29b6dcd2277a",
+    "originalBytes": 13179061,
+    "sourceArtifact": 15022230406,
+    "transferRun": 45615662897,
+    "transferJob": 139210268342,
+    "modelEvidence": "Source caption names S90 Shuttle XL Cabin Stage V (2025); whole cab tractor visible. Global and Turkish official S90 Stage V data match 4087 cc, 90 hp, 375 Nm, Stage V, 4WD, 12x12 standard shuttle and 3000/3500 kg lift. Fuel tank (116 vs 88 L) and pump (61 vs 65 L/min) differ; representative model illustration of another regional configuration ONLY, not exact HVAC Turkish trim.",
+    "modelSources": [
+      "https://solisworld.com/s90-shuttle-xl-cabin/",
+      "https://www.solisturkiye.com/solis-90-hvac-stage-5/"
+    ],
+    "scope": "Model illustration only; exact regional configuration and equipment not verified.",
+    "changes": "Proportional resize and JPEG compression; CC BY-SA 4.0 retained.",
+    "derivatives": [
+      {
+        "file": "solis-s90-shuttle-xl-cabin-marcelx42-2025-480.jpg",
+        "width": 480,
+        "height": 360,
+        "sha256": "1ac099f606c0cd4c29aafeaf49932d31bc8cadc5efd1fa04323ac6c6f78618b8",
+        "bytes": 51495
+      },
+      {
+        "file": "solis-s90-shuttle-xl-cabin-marcelx42-2025-960.jpg",
+        "width": 960,
+        "height": 720,
+        "sha256": "04c5aa9928d27863c224f49757a37e48946c89ec851c995420c7cfda84ad79e3",
+        "bytes": 153987
+      },
+      {
+        "file": "solis-s90-shuttle-xl-cabin-marcelx42-2025-1920.jpg",
+        "width": 1920,
+        "height": 1440,
+        "sha256": "8f83b96f9eecc3324dbc421af568ed74faafa129487856e6f56097c46d4548c8",
+        "bytes": 446762
+      }
+    ]
+  },
+  {
+    "brand": "TYM",
+    "model": "T3047",
+    "tractorId": "8f3833e6-7eea-4a5c-a7eb-caa01b065cd5",
+    "fileId": "tym-t3047-t475c-marcelx42-2023",
+    "path": "7/77/TYM_T475C_Agritechnica_2023_%28DSC03513%29.jpg",
+    "photographer": "MarcelX42",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "width": 6738,
+    "height": 3792,
+    "sourcePage": "https://commons.wikimedia.org/wiki/File:TYM_T475C_Agritechnica_2023_%28DSC03513%29.jpg",
+    "originalUrl": "https://upload.wikimedia.org/wikipedia/commons/7/77/TYM_T475C_Agritechnica_2023_%28DSC03513%29.jpg",
+    "originalSha1": "8dd7d3608ccae027ada98a646384c5c7676094b3",
+    "originalSha256": "5152f3bd10033c25bc942affcdd781f0906f8362102003438384be108a25172b",
+    "originalBytes": 13046657,
+    "sourceArtifact": 15022230406,
+    "transferRun": 45615662897,
+    "transferJob": 139210267787,
+    "modelEvidence": "Source caption names T475C, badge T475 and cab visible. Manufacturer explicitly maps T3047 to T475 and states foldable ROPS or heated cab availability. Representative cab version only.",
+    "modelSources": [
+      "https://www.tym.world/en/products/tractors/series-3/t475"
+    ],
+    "scope": "Model illustration only; exact regional configuration and equipment not verified.",
+    "changes": "Proportional resize and JPEG compression; CC BY-SA 4.0 retained.",
+    "derivatives": [
+      {
+        "file": "tym-t3047-t475c-marcelx42-2023-480.jpg",
+        "width": 480,
+        "height": 270,
+        "sha256": "afe8ea126166ddfecddb85036c378bee55489e8042cef80de9d91c1e1760c441",
+        "bytes": 30655
+      },
+      {
+        "file": "tym-t3047-t475c-marcelx42-2023-960.jpg",
+        "width": 960,
+        "height": 540,
+        "sha256": "37f6c5f1ab2ee95129bb282ffc063117e62141524afc3e175d85f27d8789867b",
+        "bytes": 93945
+      },
+      {
+        "file": "tym-t3047-t475c-marcelx42-2023-1920.jpg",
+        "width": 1920,
+        "height": 1081,
+        "sha256": "d117a923cdbb5bd3bc8d84c2fb7848d7a194f410a6678ca853ddf05ee6e89c46",
+        "bytes": 294872
+      }
+    ]
+  },
+  {
+    "brand": "TYM",
+    "model": "T4049",
+    "tractorId": "1e6d82f3-7a8a-4c3e-8aca-44f0e63f257d",
+    "fileId": "tym-t4049-t495sh-marcelx42-2025",
+    "path": "b/b8/TYM_T495SH_Agritechnica_2025_%28DSC04665%29.jpg",
+    "photographer": "MarcelX42",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "width": 6017,
+    "height": 4011,
+    "sourcePage": "https://commons.wikimedia.org/wiki/File:TYM_T495SH_Agritechnica_2025_%28DSC04665%29.jpg",
+    "originalUrl": "https://upload.wikimedia.org/wikipedia/commons/b/b8/TYM_T495SH_Agritechnica_2025_%28DSC04665%29.jpg",
+    "originalSha1": "c62ab9611b89b483b6742846523dbbd5830dbaac",
+    "originalSha256": "2a2d19ee55454cff18ebd2e6ae22765d8596cfa7547882f054701176aebec619",
+    "originalBytes": 13377031,
+    "sourceArtifact": 15022230406,
+    "transferRun": 45615662897,
+    "transferJob": 139210268036,
+    "modelEvidence": "Source caption identifies T495SH with TYM loader at Agritechnica 2025; rear view of complete tractor. OEM maps T4049 to T495 and lists hydrostatic or shuttle; Pronar and EDER explicitly identify T495SH variant within T495 model. Representative regional equipment, not exact specs.",
+    "modelSources": [
+      "https://tym.world/en/products/tractors/series-4/t495",
+      "https://pronar.pl/produkt/ciagnik-tym-t495/",
+      "https://eder-tym.de/produkt/t495/"
+    ],
+    "scope": "Model illustration only; exact regional configuration and equipment not verified.",
+    "changes": "Proportional resize and JPEG compression; CC BY-SA 4.0 retained.",
+    "derivatives": [
+      {
+        "file": "tym-t4049-t495sh-marcelx42-2025-480.jpg",
+        "width": 480,
+        "height": 320,
+        "sha256": "67b429fc5a1541d5bf36f0e6f7ed77966a1b302b73d4abd45b383a2967ccbc20",
+        "bytes": 46694
+      },
+      {
+        "file": "tym-t4049-t495sh-marcelx42-2025-960.jpg",
+        "width": 960,
+        "height": 640,
+        "sha256": "05d741f9e13506a2bbeac19a3f604a71821554eaf64ad1e1cc82c8e47442dd8f",
+        "bytes": 147540
+      },
+      {
+        "file": "tym-t4049-t495sh-marcelx42-2025-1920.jpg",
+        "width": 1920,
+        "height": 1280,
+        "sha256": "314a74c522f3a3c4d393d3704ff23170d660a2117c6d7a5a84e1b7bcb180e0ac",
+        "bytes": 459595
+      }
+    ]
+  }
+]
