@@ -4,8 +4,8 @@ import {reviewedIdentityFallback,reviewedIdentityFallbackHeadings} from "../src/
 import {specLabel} from "../src/lib/catalog.ts";
 const locales=["tr","zh","hi","pt-br","fr","de","ru","ja","es"];
 test("every reviewed stable-ID English display heading has a native fallback in all nine target languages",()=>{
- assert.equal(reviewedIdentityFallbackHeadings.length,232);
- assert.equal(new Set(reviewedIdentityFallbackHeadings).size,232);
+ assert.equal(reviewedIdentityFallbackHeadings.length,272);
+ assert.equal(new Set(reviewedIdentityFallbackHeadings).size,272);
  for(const heading of reviewedIdentityFallbackHeadings){
   for(const lang of locales){
    assert.notEqual(reviewedIdentityFallback(heading,heading,lang),heading,lang+" "+heading);
@@ -64,4 +64,13 @@ test("fourth reviewed batch preserves power ratings, front/rear PTO and hydrauli
  }
  for(const label of ["Pump Capacity","Intercooler","Engine Max Power Hp 2000 25 Ec","Liftomatic"])assert.equal(reviewedIdentityFallback(label,label,"tr"),label);
  assert.equal(reviewedIdentityFallback("Battery Capacity","Battery capacity already localized","tr"),"Battery capacity already localized");
+});
+
+
+test("fifth batch retains vehicle configuration, measurement units and operating distinctions",()=>{
+ for(const lang of locales){
+  const t=label=>reviewedIdentityFallback(label,label,lang);
+  for(const [label,pattern] of [["Engine Gross Horsepower",/HP/],["Permissible Gvw 2wd Kg",/2WD|2RM/],["Wheelbase 2wd Mm",/mm|мм/],["Hydraulic Steering Pump Flow Lpm",/L\/min|L\/dk|л\/мин/],["Height To ROPS",/ROPS/],["Height To Top ROPS Or Cab",/ROPS/]])assert.match(t(label),pattern,lang+" "+label);
+  for(const [a,b] of [["Max Speed 2wd Kmh","Min Speed 2wd Kmh"],["Unladen Cab 2wd Kg","Unladen Platform 2wd Kg"],["4WD Control","4WD Engagement Control"],["Weight Without Extra Ballast","Weight Without Ballast"],["Height To ROPS","Height To Top ROPS Or Cab"],["Ag Front Tyre","Ag Rear Tyre"],["Optional Electronic Remotes","Standard Electronic Remotes"]])assert.notEqual(t(a),t(b),lang);
+ }
 });
