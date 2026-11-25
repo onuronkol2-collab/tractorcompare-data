@@ -118,3 +118,11 @@ test("explicit market facet respects documented geographic scope and never hides
  assert.match(html,/\["market",state.market\]/);
  assert.equal((html.match(/if\(marketFacet\)marketFacet.value="";/g)||[]).length,2);
 });
+
+test("empty catalogue recovery shares the filter reset and normalizes stale incoming URL state",()=>{
+  const source=readFileSync(new URL("../src/components/TractorCatalog.astro",import.meta.url),"utf8");
+  assert.match(source,/id="catalog-empty-reset" class="catalog-empty-reset" hidden/);
+  assert.match(source,/facetReset\?\.addEventListener\("click",resetFilters\)/);
+  assert.match(source,/emptyReset\?\.addEventListener\("click",resetFilters\)/);
+  assert.match(source,/if\(search && facetPanel && cards.length\) syncSearchURL\(search.value\)/);
+});

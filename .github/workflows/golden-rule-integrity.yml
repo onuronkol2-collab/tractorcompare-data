@@ -28,3 +28,6 @@ jobs:
 
       - name: Verify CodeQL incident recovery policy (offline, no retries or writes)
         run: node --test scripts/codeql-recovery.test.mjs
+
+      - name: Verify automated nominal catalogue evidence and preserved release gates (offline)
+        run: node --test site/tests/tractor-split-evidence-review.test.mjs

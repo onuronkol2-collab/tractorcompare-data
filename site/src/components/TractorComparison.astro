@@ -235,6 +235,7 @@ const labelsPayload = JSON.stringify({
           </table>
         </div>
         <p id="tc-load-error" role="alert" hidden></p>
+        <button id="tc-retry" type="button" class="button button-primary" hidden>{cx(lang,"retry")}</button>
       </> : <div class="tc-empty">
         <h2>{t(lang,"comparisonPreparing")}</h2>
         <p>{t(lang,"comparisonNeedsTwo")}</p>
@@ -251,7 +252,7 @@ const labelsPayload = JSON.stringify({
 
 <script>
   import { normalizeTractorQuery } from "../lib/search";
-  import { differentPublishedEntries } from "../lib/compare-display.mjs";
+  import { differentPublishedEntries, isPublishedSpecList } from "../lib/compare-display.mjs";
   import { nextComboboxOption } from "../lib/combobox-navigation.mjs";
   import { requiresConditionCaution, requiresTransmissionCaution } from "../lib/compare-conditions";
   type Spec = { key:string; label:string; value:string; unit:string|null; context:string|null; rpm:number|null; source:string|null; independent:boolean; notice:string|null };
@@ -366,7 +367,9 @@ const labelsPayload = JSON.stringify({
       if (!request) {
         request = fetch(dataDirectory + encodeURIComponent(model.id) + ".json").then(async response => {
           if (!response.ok) throw new Error("Comparison data unavailable");
-          return await response.json() as Spec[];
+          const payload: unknown = await response.json();
+          if (!isPublishedSpecList(payload)) throw new Error("Invalid published comparison data");
+          return payload as Spec[];
         }).finally(() => pending.delete(model.id));
         pending.set(model.id, request);
       }
@@ -385,6 +388,17 @@ const labelsPayload = JSON.stringify({
       specGroups.set(model, groups);
       return groups;
     }
+    const retry=document.querySelector<HTMLButtonElement>("#tc-retry");
+    function syncSelection(left:Model,right:Model){
+      const url=new URL(window.location.href);
+      url.searchParams.set("left",left.id);url.searchParams.set("right",right.id);
+      if(differentOnly)url.searchParams.set("view","different");
+      else if(commonOnly)url.searchParams.set("view","shared");
+      else url.searchParams.delete("view");
+      window.history.replaceState(null,"",url.pathname+url.search);
+      // Let shared navigation refresh locale destinations after each selection.
+      window.dispatchEvent(new Event("tractorvs:route-state-changed"));
+    }
     let revision = 0;
     async function render(){
       const current = ++revision;
@@ -396,6 +410,9 @@ const labelsPayload = JSON.stringify({
       }
       const left=byId(leftSelect.value),right=byId(rightSelect.value);
       if(!left||!right)return;
+      // Preserve selected IDs and view while loading or after a failed request.
+      syncSelection(left,right);
+      if(retry)retry.hidden=true;
       const error = document.querySelector<HTMLElement>("#tc-load-error");
       if (error) error.hidden = true;
       if (!left.specs || !right.specs) {
@@ -419,6 +436,7 @@ const labelsPayload = JSON.stringify({
               error.hidden = false;
               error.textContent = l10n.loadError;
             }
+            if(retry)retry.hidden=false;
           }
           return;
         }
@@ -470,14 +488,7 @@ const labelsPayload = JSON.stringify({
         for(const note of notes)addText(warnings,"p",note);
         warnings.hidden=!notes.length;
       }
-      const url=new URL(window.location.href);
-      url.searchParams.set("left",left.id);url.searchParams.set("right",right.id);
-      if(differentOnly)url.searchParams.set("view","different");
-      else if(commonOnly)url.searchParams.set("view","shared");
-      else url.searchParams.delete("view");
-      window.history.replaceState(null,"",url.pathname+url.search);
-      // Let shared navigation refresh locale destinations after each selection.
-      window.dispatchEvent(new Event("tractorvs:route-state-changed"));
+
     }
     function makeCombobox(side:"left"|"right",select:HTMLSelectElement){
       const input=document.querySelector<HTMLInputElement>("#tc-"+side+"-search");
@@ -573,6 +584,7 @@ const labelsPayload = JSON.stringify({
       if(differentNote)differentNote.hidden=!differentOnly;
     }
     syncFilterControls();
+    retry?.addEventListener("click",()=>render());
     function setFilter(view:"all"|"shared"|"different"){
       commonOnly=view==="shared";
       differentOnly=view==="different";
@@ -588,6 +600,7 @@ const labelsPayload = JSON.stringify({
 </script>
 
 <style is:global>
+  #tc-retry[hidden]{display:none}
   .tc-hero { padding: 75px 0 65px; background: linear-gradient(115deg,#101a16,#1c3424); color:#f2f7ef; }
   .tc-hero h1 { margin:0; font-size:clamp(38px,5.5vw,62px); letter-spacing:-.06em; }
   .tc-hero h1 em { font-style:normal; color:#b7df91; }

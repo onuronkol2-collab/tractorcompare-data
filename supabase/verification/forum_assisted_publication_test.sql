@@ -33,19 +33,19 @@ RESET ROLE;
 SELECT set_config('request.jwt.claims','{}',false);
 -- Test the limited execution role without granting it access to underlying tables.
 SET ROLE tc_forum_assisted_executor;
-DO $ BEGIN
+DO $$ BEGIN
  IF has_table_privilege(current_user,'public.tc_forum_topics','INSERT') OR
     has_table_privilege(current_user,'public.tc_forum_assisted_grants','SELECT') OR
     has_table_privilege(current_user,'tc_assisted_private.publication_audit','INSERT')
  THEN RAISE EXCEPTION 'Executor has direct table privileges'; END IF;
-END $;
+END $$;
 RESET ROLE;
-DO $ BEGIN
+DO $$ BEGIN
  BEGIN
   PERFORM tc_assisted_private.publish_topic(NULL,NULL,NULL,NULL,NULL,NULL,NULL);
   RAISE EXCEPTION 'Unscoped administrator call accepted';
  EXCEPTION WHEN raise_exception THEN IF SQLERRM<>'Publisher unavailable' THEN RAISE; END IF; END;
-END $;
+END $$;
 CREATE FUNCTION pg_temp.assisted_test_publish(p_grant uuid,p_request uuid,p_locale text,p_category text,p_title text,p_body text,p_tractor uuid DEFAULT NULL)
 RETURNS TABLE(topic_id uuid,slug text) LANGUAGE plpgsql SECURITY INVOKER AS $helper$
 BEGIN
@@ -53,7 +53,7 @@ BEGIN
  RETURN QUERY SELECT p.topic_id,p.slug FROM tc_assisted_private.publish_topic(p_grant,p_request,p_locale,p_category,p_title,p_body,p_tractor) p;
  RESET ROLE;
 END $helper$;
-DO $ DECLARE g uuid; topic uuid; same_topic uuid; n integer;
+DO $$ DECLARE g uuid; topic uuid; same_topic uuid; n integer;
 BEGIN
  SELECT id INTO g FROM public.tc_forum_assisted_grants WHERE NOT revoked;
  BEGIN

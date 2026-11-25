@@ -27,12 +27,16 @@ test("shared Astro layout emits build-time provenance with no URL, SEO or tracke
   assert.doesNotMatch(layout, /<meta name="tractorvs-release-sha" content="(?:[a-f0-9]{40})"/);
 });
 
-test("live push QA waits for its exact deployed SHA on both public pages", () => {
-  assert.match(liveQa, /if: github\.event_name == 'push'/);
-  assert.match(liveQa, /grep -Fq "name=\\\"tractorvs-release-sha\\\" content=\\\"\$\{GITHUB_SHA\}\\\"" \/tmp\/tractorvs-compare-live\.html/);
-  assert.match(liveQa, /grep -Fq "name=\\\"tractorvs-release-sha\\\" content=\\\"\$\{GITHUB_SHA\}\\\"" \/tmp\/tractorvs-catalog-live\.html/);
-  assert.match(liveQa, /if github\.event_name == 'push'|github\.event_name == 'push'/);
-  assert.match(liveQa, /No live test result|Do not claim that the new release passed live QA/);
+test("live push QA requires coherent verified release provenance on both public pages", () => {
+  const readiness = source("../scripts/live-release-readiness.mjs");
+  assert.match(liveQa, /if: github\.event_name == 'push' \|\| github\.event_name == 'workflow_dispatch'/);
+  assert.match(liveQa, /node site\/scripts\/live-release-readiness\.mjs "\$GITHUB_SHA" \/tr\/compare\/ \/tr\/tractors\//);
+  assert.match(readiness, /releaseFromHtml\(await res\.text\(\)\)/);
+  assert.match(readiness, /common&&common!==observed/);
+  assert.match(readiness, /observed!==expected&&!await acceptDescendant\(expected,observed\)/);
+  assert.match(readiness, /merge_base_commit\?\.sha===sha/);
+  assert.match(readiness, /DEPLOYMENT_PENDING: requested release not visible; no content assertions performed/);
+  assert.ok(liveQa.indexOf("node site/scripts/live-release-readiness.mjs") < liveQa.indexOf("npx playwright test"));
 });
 
 test("production SHA comparison requires exactly one real, matching static meta tag", () => {

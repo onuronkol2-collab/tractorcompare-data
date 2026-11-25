@@ -4,7 +4,7 @@ import { routeCatalogueEvidence } from "./tractor-split-evidence-review.mjs";
 function groupCandidates(records) {
   if (!Array.isArray(records)) throw new Error("Expected an array of catalogue records");
   const result = {
-    releaseReview: [], requiredReview: [], heldModels: [], photoReview: [],
+    automaticRelease: [], releaseReview: [], requiredReview: [], heldModels: [], photoReview: [],
     heldPhotos: [], missingPhotos: [], heldClaims: [], invalidRecords: [],
   };
   for (const [index, record] of records.entries()) {
@@ -15,7 +15,9 @@ function groupCandidates(records) {
       result.invalidRecords.push({ index, reason: error.message });
       continue;
     }
-    if (route.technicalRoute === "route_to_existing_release_review") {
+    if (route.technicalRoute === "route_to_automated_nominal_release") {
+      result.automaticRelease.push(index);
+    } else if (route.technicalRoute === "route_to_existing_release_review") {
       result.releaseReview.push(index);
     } else if (route.modelReasons.length === 1 && route.modelReasons[0] === "requiredReview"
         && record.modelGates.requiredReview === "pending") {

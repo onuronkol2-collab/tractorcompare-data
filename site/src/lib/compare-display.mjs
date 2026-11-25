@@ -10,3 +10,14 @@ export function differentPublishedEntries(left, right) {
   return a.length !== b.length || a.some((entry, index) => entry !== b[index]);
 }
 
+
+// Malformed successful HTTP responses must follow the same recovery path as network errors.
+export function isPublishedSpecList(payload) {
+  const nullableString = value => value == null || typeof value === "string";
+  return Array.isArray(payload) && payload.every(spec =>
+    spec !== null && typeof spec === "object" &&
+    typeof spec.key === "string" && spec.key.trim().length > 0 &&
+    typeof spec.label === "string" && typeof spec.value === "string" &&
+    ["unit","context","source","notice"].every(key=>nullableString(spec[key])) &&
+    (spec.rpm == null || (typeof spec.rpm === "number" && Number.isFinite(spec.rpm))));
+}
