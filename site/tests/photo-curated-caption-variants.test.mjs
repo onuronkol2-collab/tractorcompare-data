@@ -1,6 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import {readFileSync} from "node:fs";
+import {createHash} from "node:crypto";
 
 const registry=JSON.parse(readFileSync(new URL("../docs/photo-curated-caption-and-alias-candidates-20261122.json",import.meta.url),"utf8"));
 const approvedSource=readFileSync(new URL("../src/lib/tractor-photos.ts",import.meta.url),"utf8")+
@@ -14,6 +15,9 @@ const promotedWithEvidence=new Set([
  "tym-t2025p-t25-marcelx42-2025"
 ]);
 const wave2Proof=JSON.parse(readFileSync(new URL("../docs/photo-import-evidence-mccormick-tym-wave2-20261122.json",import.meta.url),"utf8"));
+// The old research snapshot remains unchanged. One formerly held caption has
+// since received actual source bytes, model-family proof and UUID-only scope.
+const recoveredProof=JSON.parse(readFileSync(new URL("../docs/photo-evidence-solis-tym-four-20261125.json",import.meta.url),"utf8"));
 
 
 test("caption research stays fail-closed and only SHA-proven candidates graduate to approved photos",()=>{
@@ -48,6 +52,20 @@ test("caption research stays fail-closed and only SHA-proven candidates graduate
       assert.equal(verified.derivatives.length,3);
       assert.deepEqual(new Set(verified.derivatives.map(d=>d.width)),new Set([480,960,1920]));
       assert.equal(verified.approvedToPublish,false,"The staging ledger never self-authorizes release");
+    }else if(candidate.fileId==="tym-t4049-t495sh-marcelx42-2025"){
+      const p=recoveredProof.find(x=>x.fileId===candidate.fileId);
+      assert.ok(p,"A formerly held photo requires an explicit new evidence ledger");
+      assert.equal(p.tractorId,candidate.target.tractor_id);
+      assert.equal(p.brand,candidate.target.brand);assert.equal(p.model,candidate.target.model);
+      assert.equal(decodeURIComponent(p.sourcePage),decodeURIComponent(candidate.source.fileUrl));
+      assert.equal(p.photographer,candidate.source.creator);assert.equal(p.license,candidate.source.license);
+      assert.match(p.originalSha1,/^[a-f0-9]{40}$/);assert.match(p.originalSha256,/^[a-f0-9]{64}$/);assert.ok(p.originalBytes>0);
+      assert.ok(p.modelSources.includes(candidate.evidence.manufacturerAliasUrl));
+      assert.ok(p.modelSources.includes("https://pronar.pl/produkt/ciagnik-tym-t495/"));
+      assert.ok(p.modelSources.includes("https://eder-tym.de/produkt/t495/"));
+      assert.match(p.scope,/Model illustration only/);assert.match(p.modelEvidence,/not exact specs/);
+      assert.ok(approvedSource.includes(p.fileId));assert.deepEqual(p.derivatives.map(d=>d.width),[480,960,1920]);
+      for(const d of p.derivatives){const bytes=readFileSync(new URL("../public/images/tractors/"+d.file,import.meta.url));assert.equal(bytes.length,d.bytes);assert.equal(createHash("sha256").update(bytes).digest("hex"),d.sha256);}
     }else{
       assert.ok(!approvedSource.includes(candidate.fileId),"An unverified/ambiguous candidate was published: "+candidate.fileId);
     }
@@ -71,7 +89,7 @@ test("TYM T3048 F50CHN research is pinned to the exact published tractor UUID",(
   assert.match(approvedSource,/photo\.tractorId===tractor\.tractor_id/);
 });
 
-test("near-model or contested rights leads remain explicitly quarantined",()=>{
+test("historical quarantine remains auditable; unresolved near-model or contested rights leads remain unpublished",()=>{
   const held=new Set([
     "sonalika-di30-baagban-tagooty-2024",
     "tym-t6130-t130-mbone-2023",
@@ -84,6 +102,7 @@ test("near-model or contested rights leads remain explicitly quarantined",()=>{
     assert.equal(lead.evidence.exactModel,false);
     assert.equal(lead.review.publicationAllowed,false);
     assert.ok(typeof lead.review.reason==="string"&&lead.review.reason.length>24);
+    if(lead.fileId!=="tym-t4049-t495sh-marcelx42-2025")assert.ok(!approvedSource.includes(lead.fileId));
   }
   assert.match(quarantined.find(x=>x.fileId.startsWith("sonalika")).review.reason,/commercial/i);
   assert.match(quarantined.find(x=>x.fileId.startsWith("tym")).review.reason,/T130/);
