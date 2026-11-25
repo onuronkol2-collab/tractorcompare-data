@@ -203,6 +203,6 @@ test("live comparison locale links keep the latest selected IDs without modifyin
   assert.match(live,/await checkDestinations\(TYM_T475,TYM_F36\)/);
   assert.match(live,/await page\.locator\("\.locale-menu > summary"\)\.click\(\)/);
   assert.match(workflow,/COMP[A-Z_]*_PREDEPLOY:/);
-  assert.match(workflow,/data-language-sync="selection"/);
+  assert.match(workflow,/node site\/scripts\/live-release-readiness\.mjs "\$GITHUB_SHA" \/tr\/compare\/ \/tr\/tractors\//);
   assert.match(workflow,/site\/src\/layouts\/SiteLayout\.astro/);
 });

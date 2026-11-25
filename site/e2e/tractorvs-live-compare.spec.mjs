@@ -402,7 +402,10 @@ test("live mobile comparison announces loading, recovers from a failed request a
   await expect(page.locator("#tc-rows tr")).toHaveCount(0);
   await page.unroute(failingUrl);
 
-  await chooseTractor(page,"right","T3047");
+  await expect.poll(()=>new URL(page.url()).searchParams.get("right")).toBe(TYM_T475);
+  await expect(page.locator("#tc-retry")).toBeVisible();
+  await page.locator("#tc-retry").click();
+  await expect(page.locator("#tc-retry")).toBeHidden();
   await expect(page.locator("#tc-load-error")).toBeHidden();
   await expect(page.locator("#tc-rows")).toHaveAttribute("aria-busy","false");
   await expect(page.locator("#tc-rows tr").first()).toBeVisible();
@@ -410,4 +413,31 @@ test("live mobile comparison announces loading, recovers from a failed request a
   await expect.poll(()=>new URL(page.url()).searchParams.get("right")).toBe(TYM_T475);
   await expect(page.locator('link[rel="canonical"]')).toHaveAttribute(
     "href","https://tractorvs.com/tr/compare/");
+});
+
+test("live different-entry view and empty catalogue reset survive real user interactions",async({page})=>{
+  test.skip(process.env.COMPARE_QA_PREDEPLOY==="true","New controls require the verified production release.");
+  await page.goto(tractorUrl(TYM_F36,TYM_T475),{waitUntil:"domcontentloaded"});
+  const banner=page.locator("#tractorvs-analytics-banner");
+  if(await banner.isVisible())await page.locator("#tractorvs-analytics-reject").click();
+  await expect(banner).toBeHidden();
+  await expect(page.locator("#tc-rows tr").first()).toBeVisible();
+  await expect(page.locator('[data-language-sync="selection"]')).toHaveCount(1);
+  await page.locator("#tc-different").click();
+  await expect(page.locator("#tc-different")).toHaveAttribute("aria-pressed","true");
+  await expect(page.locator("#tc-different-note")).toBeVisible();
+  await expect.poll(()=>new URL(page.url()).searchParams.get("view")).toBe("different");
+  await page.reload({waitUntil:"domcontentloaded"});
+  await expect(page.locator("#tc-different")).toHaveAttribute("aria-pressed","true");
+  await page.locator("#tc-all").click();
+  await expect(page.locator("#tc-rows td a[href^='https://']").first()).toBeVisible();
+  await page.goto("/tr/tractors/?q=zzzz-qa-no-model-zzz&brand=invalid-qa-brand&power=invalid",{waitUntil:"domcontentloaded"});
+  await expect(page.locator('[data-research-facets="published"]')).toBeVisible();
+  await expect.poll(()=>new URL(page.url()).searchParams.has("brand")).toBe(false);
+  await expect(page.locator("#catalog-no-results")).toBeVisible();
+  await page.locator("#catalog-empty-reset").click();
+  await expect(page.locator("#tractor-search")).toBeFocused();
+  await expect(page.locator("#catalog-empty-reset")).toBeHidden();
+  await expect(page.locator(".tractor-card:visible").first()).toBeVisible();
+  await expect.poll(()=>new URL(page.url()).searchParams.has("q")).toBe(false);
 });
