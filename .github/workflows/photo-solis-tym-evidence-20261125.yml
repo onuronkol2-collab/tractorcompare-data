@@ -1,0 +1,32 @@
+name: TractorVS Solis and TYM original evidence (review only)
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - "site/scripts/review-solis-tym-photo-candidates-20261125.mjs"
+      - ".github/workflows/photo-solis-tym-evidence-20261125.yml"
+permissions:
+  contents: read
+concurrency:
+  group: tractorvs-solis-tym-source-evidence-20261125
+  cancel-in-progress: false
+jobs:
+  collect_candidate_evidence:
+    if: github.head_ref == 'photos/solis-tym-evidence-20261125' && github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22.23.4"
+      - name: Collect six originals with rights and byte verification
+        run: node site/scripts/review-solis-tym-photo-candidates-20261125.mjs
+      - uses: actions/upload-artifact@v7
+        if: always()
+        with:
+          name: tractorvs-solis-tym-photo-review-20261125
+          path: solis-tym-photo-review-20261125/
+          retention-days: 7
