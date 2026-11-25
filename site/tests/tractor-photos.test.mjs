@@ -14,7 +14,7 @@ const tractor=(brand_name,model_name)=>({
   engine:null,transmission:null,drivetrain:null,weight_kg:null,specifications:[]
 });
 test("only exact matching tractor model identity receives a verified photo",()=>{
-  assert.equal(APPROVED_TRACTOR_PHOTOS.length,119);
+  assert.equal(APPROVED_TRACTOR_PHOTOS.length,123);
   assert.equal(tractorPhotos(tractor("Belarus","82.1")).length,4);
   assert.equal(tractorPhotos(tractor("Belarus","80.1")).length,1);
   assert.equal(tractorPhotos(tractor("Belarus","132N")).length,1);
@@ -615,7 +615,7 @@ test("McCormick X5.085 and TYM T6115/T2025P have exact licensed files, source pr
 });
 
 test("historic photo batch is staged with rights and does not create records",()=>{
-  assert.equal(HISTORICAL_LICENSED_PHOTOS.length,104);
+  assert.equal(HISTORICAL_LICENSED_PHOTOS.length,108);
   const all=new Set(HISTORICAL_LICENSED_PHOTOS.map(x=>x.fileId));
   assert.equal(all.size,HISTORICAL_LICENSED_PHOTOS.length,"All historical photo IDs must be unique");
   assert.ok(HISTORICAL_LICENSED_PHOTOS.every(x=>x.configurationExact===false));
