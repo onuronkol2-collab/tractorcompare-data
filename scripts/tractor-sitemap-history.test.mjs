@@ -4,7 +4,7 @@ import {mkdtempSync,mkdirSync,writeFileSync,readFileSync,rmSync} from "node:fs";
 import {tmpdir} from "node:os";
 import {join,dirname} from "node:path";
 import {createHash} from "node:crypto";
-import {significantContentDigest,deriveHistory,auditBuiltSitemap,extractPublishedUrls,migrateDigestCheckpoint,DIGEST_ALGORITHM,historicalModelSlugs,prepareHistoricalCatalogSource,ORIGIN} from "./tractor-sitemap-history.mjs";
+import {significantContentDigest,deriveHistory,auditBuiltSitemap,extractPublishedUrls,migrateDigestCheckpoint,DIGEST_ALGORITHM,historicalModelSlugs,prepareHistoricalCatalogSource,verifyRebuiltCheckpoint,ORIGIN} from "./tractor-sitemap-history.mjs";
 
 const a=ORIGIN+"/", b=ORIGIN+"/tr/tractors/safe-model/";
 const hash=s=>createHash("sha256").update(s).digest("hex");
@@ -328,4 +328,26 @@ test("historical build scopes to exact prior published model slugs, never curren
  const incomplete={version:1,pages:{...pages}};
  delete incomplete.pages[ORIGIN+"/ja/tractors/"+slug+"/"];
  assert.throws(()=>historicalModelSlugs(incomplete),/identity inventory incomplete/);
+});
+
+
+test("final rebuilt HTML and XML must match candidate ledger despite concurrent database updates",()=>{
+ const ctx=setup();
+ try{
+  auditBuiltSitemap({...ctx,now:date1,minPages:2});
+  assert.deepEqual(verifyRebuiltCheckpoint(ctx),{verifiedPages:2,verifiedDates:0});
+  ctx.write(b,"Concurrent verified technical change");
+  assert.throws(()=>verifyRebuiltCheckpoint(ctx),/Rebuilt catalogue drift/);
+  auditBuiltSitemap({...ctx,now:date2,minPages:2});
+  assert.throws(()=>verifyRebuiltCheckpoint(ctx),/XML lastmod mismatch/);
+  const sitemap=join(ctx.dist,"sitemap-0.xml");
+  const xml=readFileSync(sitemap,"utf8").replace("<loc>"+b+"</loc>","<loc>"+b+"</loc><lastmod>"+date2.toISOString()+"</lastmod>");
+  writeFileSync(sitemap,xml);
+  assert.deepEqual(verifyRebuiltCheckpoint(ctx),{verifiedPages:2,verifiedDates:1});
+  writeFileSync(sitemap,xml.replace(date2.toISOString(),date1.toISOString()));
+  assert.throws(()=>verifyRebuiltCheckpoint(ctx),/XML lastmod mismatch/);
+  writeFileSync(sitemap,xml);
+  writeFileSync(ctx.lastmodPath,JSON.stringify({version:1,dates:{}}));
+  assert.throws(()=>verifyRebuiltCheckpoint(ctx),/date map differs/);
+ }finally{rmSync(ctx.root,{recursive:true,force:true});}
 });

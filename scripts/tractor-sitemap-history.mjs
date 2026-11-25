@@ -280,6 +280,44 @@ export function auditBuiltSitemap({dist=join(ROOT,"site/dist"),historyPath=HISTO
   writeFileSync(lastmodPath,JSON.stringify(result.lastmod,null,2)+"\n");
   return result.summary;
 }
+// A second production build can see concurrent public DB changes even
+// if Git HEAD never moved. Verify the actual rebuilt HTML and emitted dates
+// against the candidate checkpoint before allowing any persistent write.
+export function verifyRebuiltCheckpoint({dist=join(ROOT,"site/dist"),historyPath=HISTORY_FILE,lastmodPath=LASTMOD_FILE}={}){
+  const history=loadJson(historyPath,null), map=loadJson(lastmodPath,null);
+  if(history?.version!==1||history.digestAlgorithm!==DIGEST_ALGORITHM||!history.pages||map?.version!==1||!map.dates)
+    reject("Invalid rebuilt sitemap checkpoint");
+  const urls=extractPublishedUrls(dist);
+  if(urls.length!==Object.keys(history.pages).length)
+    reject("Rebuilt catalogue drift: page inventory changed");
+  const expectedDates={};
+  for(const url of urls){
+    const page=history.pages[url];
+    if(!page||significantContentDigest(readPublishedHtml(dist,url),url)!==page.digest)
+      reject("Rebuilt catalogue drift: rendered page changed: "+url);
+    if(page.modified!=null)expectedDates[new URL(url).pathname]=page.modified;
+  }
+  const sorted=o=>JSON.stringify(Object.entries(o).sort(([a],[b])=>a.localeCompare(b)));
+  if(sorted(expectedDates)!==sorted(map.dates))reject("Rebuilt sitemap date map differs from history");
+  const index=readFileSync(join(dist,"sitemap-index.xml"),"utf8");
+  const seen=new Set();
+  for(const child of locs(index)){
+    const path=new URL(child).pathname;
+    if(!/^\/sitemap-[0-9]+\.xml$/.test(path))continue;
+    const xml=readFileSync(join(dist,path.slice(1)),"utf8");
+    for(const [,entry] of xml.matchAll(/<url>([\s\S]*?)<\/url>/g)){
+      const entries=locs(entry);
+      if(entries.length!==1||!history.pages[entries[0]]||seen.has(entries[0]))reject("Invalid rebuilt sitemap URL");
+      const url=entries[0];seen.add(url);
+      const dates=[...entry.matchAll(/<lastmod>([^<]+)<\/lastmod>/g)].map(m=>m[1]);
+      const expected=history.pages[url].modified;
+      if(expected==null?dates.length!==0:dates.length!==1||!Number.isFinite(Date.parse(dates[0]))||Date.parse(dates[0])!==Date.parse(expected))
+        reject("Rebuilt sitemap XML lastmod mismatch: "+url);
+    }
+  }
+  if(seen.size!==urls.length)reject("Incomplete rebuilt sitemap XML verification");
+  return {verifiedPages:urls.length,verifiedDates:Object.keys(expectedDates).length};
+}
 if(process.argv[1]&&resolve(process.argv[1])===fileURLToPath(import.meta.url)){
   try{
     if(process.argv[2]==="--prepare-historical-catalog"){
@@ -294,6 +332,8 @@ if(process.argv[1]&&resolve(process.argv[1])===fileURLToPath(import.meta.url)){
       if(!previous||previous.digestAlgorithm)reject("Unexpected historical migration ledger");
       writeFileSync(catalogPath,prepareHistoricalCatalogSource(original,previous));
       console.log("TRACTORVS_HISTORICAL_MODEL_SCOPE "+historicalModelSlugs(previous).length);
+    }else if(process.argv[2]==="--verify-rebuilt-checkpoint"&&process.argv.length===3){
+      console.log("TRACTORVS_REBUILT_CHECKPOINT "+JSON.stringify(verifyRebuiltCheckpoint()));
     }else if(process.argv.length===2){
       console.log("TRACTORVS_CONTENT_VERIFIED_LASTMOD "+JSON.stringify(auditBuiltSitemap()));
     }else reject("Unknown sitemap history argument");
