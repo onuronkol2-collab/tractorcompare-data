@@ -871,7 +871,8 @@ const schema=indexable?{
  }
  const resetFilters=()=>{
   if(input)input.value="";
-  selected="all";modelChoice="";pageLimit=FORUM_PAGE_SIZE;
+  modelChoice="";pageLimit=FORUM_PAGE_SIZE;
+  selected="all";
   filter();input?.focus();
  };
  clear?.addEventListener("click",resetFilters);
