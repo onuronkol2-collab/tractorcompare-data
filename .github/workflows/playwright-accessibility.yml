@@ -20,6 +20,12 @@ on:
   schedule:
     - cron: "23 5 * * 3"
 
+# Superseded PR revisions must not occupy runners needed by the current batch.
+# Keep push, scheduled and manually dispatched checks independent.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.run_id }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
 permissions:
   contents: read
 
