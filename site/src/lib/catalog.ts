@@ -1,3 +1,4 @@
+import {reviewedIdentityFallback} from "./reviewed-identity-heading-fallback.ts";
 import { REVIEWED_TURKISH_SOURCE_LABELS_EN } from "./reviewed-turkish-source-labels-en.ts";
 import type { Locale } from "./locales.ts";
 import { localizedCategoryName, localizedSpecificationName } from "./spec-i18n.ts";
@@ -2381,6 +2382,10 @@ const AUDIT_20261125_LOOKUP=new Map(Object.entries(AUDIT_20261125_EXACT_LABELS).
   locale,new Map(terms.map(([name,label])=>[audit20261125HeadingKey(name),label]))
 ]));
 export function specLabel(spec: PublicSpec, lang: Locale): string {
+  const current=baseSpecLabel(spec,lang);
+  return lang==="en"?current:reviewedIdentityFallback(baseSpecLabel(spec,"en"),current,lang);
+}
+function baseSpecLabel(spec: PublicSpec, lang: Locale): string {
   const corrected=AUDIT_20261125_LOOKUP.get(lang)?.get(audit20261125HeadingKey(spec.spec_name));
   if(corrected)return corrected;
   // Exact source-qualified labels must not lose optional and OEM context.
