@@ -9,7 +9,7 @@ import {readdirSync,readFileSync} from "node:fs";
 import {join,relative,resolve} from "node:path";
 import {fileURLToPath} from "node:url";
 
-const titleTag=/<title\b[^>]*>([\s\S]*?)<\/title\s*>/gi;
+import {scanHeadTags} from "./verify-sitewide-meta-descriptions.mjs";
 const h1Tag=/<h1\b[^>]*>([\s\S]*?)<\/h1\s*>/i;
 const locales=new Set(["tr","zh","hi","pt-br","fr","de","ru","ja","es"]);
 // Audit browser-visible text, not HTML source byte length: "&amp;" is one
@@ -39,7 +39,8 @@ export function inspectSeoTitle(html,file="index.html"){
      && /naver-site-verification:/i.test(html))return null;
   if(!/<html\b/i.test(html))return null;
   const head=html.match(/<head\b[^>]*>([\s\S]*?)<\/head\s*>/i)?.[1];
-  const matches=head?[...head.matchAll(titleTag)].map(x=>clean(x[1])):[];
+  // Title is RCDATA: a literal angle-bracket string is text, not an element.
+  const matches=head?scanHeadTags(head).titles.map(x=>unescapeText(x).replace(/\s+/g," ").trim()):[];
   const title=matches[0]||"";
   const isModel=/(?:^|\/)tractors\/[^/]+\/index\.html$/.test(file);
   const heading=clean(html.match(h1Tag)?.[1]||"");

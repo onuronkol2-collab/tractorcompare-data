@@ -2,6 +2,9 @@
 // It deliberately reports technical headings, NOT source evidence or raw specs.
 import {readFileSync,writeFileSync,existsSync,mkdirSync} from "node:fs";
 import {resolve,dirname} from "node:path";
+import {scanHeadTags} from "./verify-sitewide-meta-descriptions.mjs";
+import {readOpeningTagAttribute as attr} from "./seo-html-attributes.mjs";
+import {reviewedIdentityFallbackHeadings} from "../src/lib/reviewed-identity-heading-fallback.ts";
 const DIST=process.env.TRANSLATION_DIST_ROOT?.trim() ? resolve(process.env.TRANSLATION_DIST_ROOT) : null;
 const BASE="https://tractorvs.com";
 const locales=["en","tr","zh","hi","pt-br","fr","de","ru","ja","es"];
@@ -69,7 +72,6 @@ const identitySkippedPages=[];
 const requireSpecIdentities=process.env.TRANSLATION_REQUIRE_SPEC_IDENTITIES==="true";
 const verifyMetadata=process.env.TRANSLATION_VALIDATE_SEO==="true";
 const expectedHtmlLang={en:"en",tr:"tr",zh:"zh-Hans",hi:"hi","pt-br":"pt-BR",fr:"fr",de:"de",ru:"ru",ja:"ja",es:"es"};
-const attr=(tag,key)=>tag.match(new RegExp("\\b"+key+"=[\\\"']([^\\\"']+)[\\\"']","i"))?.[1]||null;
 
 /**
  * Published specification IDs are stable across locale-specific grouping and
@@ -96,10 +98,11 @@ function readSpecIdentityLabels(html,expectedLabels){
 function inspectSeoHead(html,locale,url){
   const docLang=attr(html.match(/<html\b[^>]*>/i)?.[0]||"","lang");
   if(docLang!==expectedHtmlLang[locale])errors.push("Incorrect HTML language "+url+" "+docLang);
-  if(/<meta\b[^>]*name=["']robots["'][^>]*noindex/i.test(html)||
-     /<meta\b[^>]*content=["'][^"']*noindex[^"']*["'][^>]*name=["']robots["']/i.test(html))
+  const head=html.match(/<head\b[^>]*>([\s\S]*?)<\/head\s*>/i)?.[1]||"";
+  const {links,metas}=scanHeadTags(head);
+  if(metas.some(tag=>["robots","googlebot","bingbot"].includes((attr(tag,"name")||"").toLowerCase())
+     && /\bnoindex\b/i.test(attr(tag,"content")||"")))
     errors.push("Published model unexpectedly noindex "+url);
-  const links=[...html.matchAll(/<link\b[^>]*>/gi)].map(x=>x[0]);
   const canon=links.filter(x=>attr(x,"rel")==="canonical");
   if(canon.length!==1||attr(canon[0],"href")!==url)errors.push("Wrong self-canonical "+url);
   const alts=links.filter(x=>attr(x,"rel")==="alternate"&&attr(x,"hreflang"));
@@ -240,13 +243,29 @@ const identityHeadingCounts=Object.fromEntries(locales.slice(1).map(locale=>[
 const identityOccurrenceCounts=Object.fromEntries(locales.slice(1).map(locale=>[
   locale,identityRemaining.filter(item=>item.locale===locale).reduce((n,item)=>n+item.count,0)
 ]));
+const reviewedIdentitySet=new Set(reviewedIdentityFallbackHeadings);
+const reviewedIdentityRegressions=identityRemaining.filter(item=>reviewedIdentitySet.has(item.english));
+const reviewedIdentityOccurrences=reviewedIdentityRegressions.reduce((n,item)=>n+item.count,0);
 const identitySummary={
+  reviewedHeadingCount:reviewedIdentitySet.size,
+  reviewedRemainingPairs:reviewedIdentityRegressions.length,
+  reviewedRemainingOccurrences:reviewedIdentityOccurrences,
   comparedPairs:identityComparedPairs,skippedPairs:identitySkippedPairs,
   pagesWithStableIds:identityRows.size,pagesWithoutStableIds:identitySkippedPages.length,
   identicalHeadingCounts:identityHeadingCounts,
   identicalOccurrenceCounts:identityOccurrenceCounts
 };
 console.log("LANGUAGE_IDENTITY_AUDIT "+JSON.stringify(identitySummary));
+for(const locale of locales.slice(1)){
+  const candidates=identityRemaining.filter(item=>item.locale===locale);
+  // Review inventory, not confirmed translation errors: codes, trademarks and
+  // shared words can legitimately remain equal. Surface high-impact candidates
+  // in CI logs as well as the full downloadable report.
+  console.log("LANGUAGE_IDENTITY_REVIEW "+JSON.stringify({
+    locale,headings:candidates.length,occurrences:identityOccurrenceCounts[locale],
+    top:candidates.slice(0,40)
+  }));
+}
 
 const missingHeadingCounts=Object.fromEntries(locales.slice(1).map(l=>[l,suspects.filter(x=>x.locale===l).length]));
 const occurrenceCounts=Object.fromEntries(locales.slice(1).map(l=>[l,suspects.filter(x=>x.locale===l).reduce((sum,x)=>sum+x.count,0)]));
@@ -294,5 +313,18 @@ if(process.env.TRANSLATION_ZERO_LOCALES?.trim()){
     }
   }
 }
+if(process.env.TRANSLATION_REVIEWED_IDENTITY_GATE==="true"||process.env.TRANSLATION_STRICT==="true"){
+  if(reviewedIdentityOccurrences){
+    console.error("TRANSLATION_AUDIT_REVIEWED_IDENTITY_REGRESSION "+JSON.stringify({
+      pairs:reviewedIdentityRegressions.length,occurrences:reviewedIdentityOccurrences,
+      examples:reviewedIdentityRegressions.slice(0,30)
+    }));
+    process.exitCode=1;
+  }
+  if(identitySkippedPages.length){
+    console.error("TRANSLATION_AUDIT_REVIEWED_IDENTITY_COVERAGE "+identitySkippedPages.length);
+    process.exitCode=1;
+  }
+}
 if(errors.length)process.exitCode=1;
-if(process.env.TRANSLATION_STRICT==="true" && suspects.length>0)process.exitCode=1;
+if(process.env.TRANSLATION_STRICT==="true" && (suspects.length>0 || englishLeakage.length>0))process.exitCode=1;

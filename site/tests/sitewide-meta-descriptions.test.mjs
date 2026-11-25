@@ -151,3 +151,12 @@ test("whole-build reuse is advisory and excludes noindex content",()=>{
   assert.deepEqual(report.reuse.crossLocale[0].locales,["de","en"]);
  }finally{rmSync(root,{recursive:true,force:true});}
 });
+
+
+test("inert templates, nested templates and noscript cannot supply canonical or descriptions",()=>{
+ const hidden='<template><meta name="description" content="fake"><template><meta name="description" content="nested"></template></template>'+
+ '<noscript><meta name="description" content="inactive"></noscript>';
+ assert.deepEqual(inspectMetaDescription(page(hidden)).errors,["missing-or-duplicate-description"]);
+ assert.equal(inspectMetaDescription(page(hidden+'<meta name="description" content="Real evidence">')).description,"Real evidence");
+ assert.equal(inspectMetaDescription('<html><head><template><link rel="canonical" href="https://tractorvs.com/"></template><meta name="description" content="fake"></head></html>'),null);
+});

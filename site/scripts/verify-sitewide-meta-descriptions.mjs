@@ -21,7 +21,8 @@ import {readOpeningTagAttribute as attribute} from "./seo-html-attributes.mjs";
  * nodes in place, respecting quoted attributes and their embedded '>' signs.
  */
 export function scanHeadTags(head){
-  const links=[],metas=[];
+  const links=[],metas=[],titles=[];
+  let templateDepth=0;
   let cursor=0;
   while(cursor<head.length){
     const start=head.indexOf("<",cursor);
@@ -54,20 +55,28 @@ export function scanHeadTags(head){
     }
     if(end<0)break;
     cursor=end+1;
-    if(match[1])continue; // closing tag
     const name=match[2].toLowerCase();
+    if(match[1]){
+      if(name==="template"&&templateDepth)templateDepth--;
+      continue;
+    }
+    if(name==="template"){templateDepth++;continue;}
     const tag=head.slice(start,cursor);
-    if(name==="link")links.push(tag);
-    else if(name==="meta")metas.push(tag);
-    if(name==="script"||name==="style"){
-      // HTML rawtext: apparent tags inside script/style are not DOM tags.
+    if(!templateDepth){
+      if(name==="link")links.push(tag);
+      else if(name==="meta")metas.push(tag);
+    }
+    if(["script","style","title","textarea","noscript"].includes(name)){
+      // Raw text/RCDATA and inert head noscript: do not count embedded markup.
       const closing=new RegExp("</"+name+"(?=[\\s>])[^>]*>","gi");
       closing.lastIndex=cursor;
-      if(!closing.exec(head))break;
+      const endTag=closing.exec(head);
+      if(!endTag)break;
+      if(name==="title"&&!templateDepth)titles.push(head.slice(cursor,endTag.index));
       cursor=closing.lastIndex;
     }
   }
-  return {links,metas};
+  return {links,metas,titles};
 }
 const displayText=value=>value.replace(/&(?:amp|lt|gt|quot|apos|nbsp|#(?:x[0-9a-f]+|[0-9]+));/gi,token=>{
   const key=token.slice(1,-1).toLowerCase();

@@ -10,6 +10,8 @@ on:
       - "site/scripts/published-translation-audit.mjs"
       - "site/src/lib/spec-i18n.ts"
       - "site/src/lib/catalog.ts"
+      - "site/src/lib/reviewed-identity-heading-fallback.ts"
+      - "site/tests/identity-heading-fallback.test.mjs"
       - "site/src/lib/published-spec-translations.ts"
       - "site/src/lib/reviewed-public-spec-headings.ts"
       - "site/tests/reviewed-public-spec-headings.test.mjs"
@@ -19,6 +21,8 @@ on:
       - "site/tests/reviewed-turkish-source-labels-en.test.mjs"
       - "site/tests/english-source-leakage-20261122.test.mjs"
       - "site/tests/fixtures/english-source-leakage-20261122.json"
+      - "site/scripts/verify-sitewide-meta-descriptions.mjs"
+      - "site/scripts/seo-html-attributes.mjs"
       - "site/tests/live-reviewed-spec-headings-20261121.test.mjs"
       - "site/tests/residual-public-spec-translations.test.mjs"
       - "site/tests/published-translation-built-audit.test.mjs"
@@ -39,6 +43,7 @@ jobs:
           TRANSLATION_STRICT: ${{ github.event_name == 'schedule' && 'true' || 'false' }}
           TRANSLATION_MIN_MODELS: "379"
           TRANSLATION_VALIDATE_SEO: "true"
+          TRANSLATION_REQUIRE_SPEC_IDENTITIES: "true"
           TRANSLATION_AUDIT_CONCURRENCY: "6"
           TRANSLATION_REPORT_PATH: site/.translation-audit/live.json
         run: node site/scripts/published-translation-audit.mjs
@@ -88,7 +93,8 @@ jobs:
           TRANSLATION_MAX_TR_OCCURRENCES: "0"
           TRANSLATION_REQUIRE_SPEC_IDENTITIES: "true"
           TRANSLATION_MAX_EN_SOURCE_OCCURRENCES: "0"
-          TRANSLATION_ZERO_LOCALES: "tr,zh,hi,de,ru,ja"
+          TRANSLATION_ZERO_LOCALES: "tr,zh,hi,de,ru,ja,pt-br,fr,es"
+          TRANSLATION_REVIEWED_IDENTITY_GATE: "true"
           TRANSLATION_VALIDATE_SEO: "true"
           TRANSLATION_AUDIT_CONCURRENCY: "8"
           TRANSLATION_REPORT_PATH: site/.translation-audit/preview.json
