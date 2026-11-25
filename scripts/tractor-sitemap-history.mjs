@@ -216,6 +216,31 @@ function readPublishedHtml(dist,url){
   if(!existsSync(htmlPath))reject("Sitemap page not generated: "+url);
   return readFileSync(htmlPath,"utf8");
 }
+// Reconstruct only the historically published model identities in the
+// disposable, pinned checkout. New public models can arrive between builds;
+// never alter Supabase or the current production build to recreate history.
+export function historicalModelSlugs(previous){
+  const urls=Object.keys(previous.pages||{}).filter(isModelPage);
+  const slugs=urls.filter(url=>new URL(url).pathname.startsWith("/tractors/"))
+    .map(url=>new URL(url).pathname.split("/")[2]).sort();
+  const locales=["en","tr","zh","hi","pt-br","fr","de","ru","ja","es"];
+  const expected=new Set(slugs.flatMap(slug=>locales.map(lang=>ORIGIN+
+    (lang==="en"?"":"/"+lang)+"/tractors/"+slug+"/")));
+  if(!slugs.length||slugs.some(slug=>!/-[0-9a-f]{8}$/.test(slug))||
+    expected.size!==urls.length||urls.some(url=>!expected.has(url)))
+    reject("Historical model identity inventory incomplete");
+  return slugs;
+}
+export function prepareHistoricalCatalogSource(source,previous){
+  const slugs=historicalModelSlugs(previous);
+  const anchor="  const tractors = [...groups.values()].map((tractor) => {";
+  if(source.split(anchor).length!==2)reject("Unexpected historical catalogue source");
+  const patch="  const historicalSlugs = new Set("+JSON.stringify(slugs)+");\n"+
+    "  const historicalTractors = [...groups.values()].filter(tractor => historicalSlugs.has(tractor.slug));\n"+
+    "  if (historicalTractors.length !== historicalSlugs.size || new Set(historicalTractors.map(tractor => tractor.slug)).size !== historicalSlugs.size) throw new Error('Historical public catalogue identity mismatch');\n"+
+    "  const tractors = historicalTractors.map((tractor) => {";
+  return source.replace(anchor,patch);
+}
 // Migrate only by reconstructing EVERY persisted old hash. Unknown or
 // changed historical inputs fail closed; never reset dates or seed over them.
 export function migrateDigestCheckpoint(previous,legacyDist){
@@ -256,6 +281,22 @@ export function auditBuiltSitemap({dist=join(ROOT,"site/dist"),historyPath=HISTO
   return result.summary;
 }
 if(process.argv[1]&&resolve(process.argv[1])===fileURLToPath(import.meta.url)){
-  try{console.log("TRACTORVS_CONTENT_VERIFIED_LASTMOD "+JSON.stringify(auditBuiltSitemap()));}
+  try{
+    if(process.argv[2]==="--prepare-historical-catalog"){
+      const checkout=resolve(ROOT,"sitemap-legacy-checkpoint");
+      const expected="c86bc0f39906d53e1e3805f724185fb1b3ace767";
+      if(execFileSync("git",["rev-parse","HEAD"],{cwd:checkout,encoding:"utf8"}).trim()!==expected)
+        reject("Unexpected historical checkpoint revision");
+      const catalogPath=join(checkout,"site/src/lib/catalog.ts");
+      const original=execFileSync("git",["show","HEAD:site/src/lib/catalog.ts"],{cwd:checkout,encoding:"utf8"});
+      if(readFileSync(catalogPath,"utf8")!==original)reject("Historical catalogue source already modified");
+      const previous=loadJson(HISTORY_FILE,null);
+      if(!previous||previous.digestAlgorithm)reject("Unexpected historical migration ledger");
+      writeFileSync(catalogPath,prepareHistoricalCatalogSource(original,previous));
+      console.log("TRACTORVS_HISTORICAL_MODEL_SCOPE "+historicalModelSlugs(previous).length);
+    }else if(process.argv.length===2){
+      console.log("TRACTORVS_CONTENT_VERIFIED_LASTMOD "+JSON.stringify(auditBuiltSitemap()));
+    }else reject("Unknown sitemap history argument");
+  }
   catch(e){console.error(e);process.exitCode=1;}
 }

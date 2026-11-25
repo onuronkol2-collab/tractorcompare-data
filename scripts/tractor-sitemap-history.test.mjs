@@ -4,7 +4,7 @@ import {mkdtempSync,mkdirSync,writeFileSync,readFileSync,rmSync} from "node:fs";
 import {tmpdir} from "node:os";
 import {join,dirname} from "node:path";
 import {createHash} from "node:crypto";
-import {significantContentDigest,deriveHistory,auditBuiltSitemap,extractPublishedUrls,migrateDigestCheckpoint,DIGEST_ALGORITHM,ORIGIN} from "./tractor-sitemap-history.mjs";
+import {significantContentDigest,deriveHistory,auditBuiltSitemap,extractPublishedUrls,migrateDigestCheckpoint,DIGEST_ALGORITHM,historicalModelSlugs,prepareHistoricalCatalogSource,ORIGIN} from "./tractor-sitemap-history.mjs";
 
 const a=ORIGIN+"/", b=ORIGIN+"/tr/tractors/safe-model/";
 const hash=s=>createHash("sha256").update(s).digest("hex");
@@ -310,4 +310,22 @@ test("legacy migration verifies every old hash and preserves all dates, updates 
   assert.equal(next.significant_changes,1);
   assert.equal(JSON.parse(readFileSync(current.lastmodPath)).dates["/tr/tractors/safe-model/"],date2.toISOString());
  }finally{rmSync(legacy.root,{recursive:true,force:true});rmSync(current.root,{recursive:true,force:true});}
+});
+
+
+test("historical build scopes to exact prior published model slugs, never current inventory",()=>{
+ const slug="known-tractor-abcd1234";
+ const locales=["en","tr","zh","hi","pt-br","fr","de","ru","ja","es"];
+ const pages=Object.fromEntries(locales.map(lang=>[ORIGIN+(lang==="en"?"":"/"+lang)+"/tractors/"+slug+"/",{digest:hash(lang),modified:null}]));
+ const previous={version:1,pages:{...pages,[ORIGIN+"/"]:{digest:hash("home"),modified:null}}};
+ assert.deepEqual(historicalModelSlugs(previous),[slug]);
+ const source="before\n  const tractors = [...groups.values()].map((tractor) => {\nafter";
+ const patched=prepareHistoricalCatalogSource(source,previous);
+ assert.match(patched,/historicalSlugs = new Set\(\["known-tractor-abcd1234"\]\)/);
+ assert.match(patched,/filter\(tractor => historicalSlugs\.has\(tractor\.slug\)\)/);
+ assert.match(patched,/Historical public catalogue identity mismatch/);
+ assert.throws(()=>prepareHistoricalCatalogSource("unexpected",previous),/Unexpected historical catalogue source/);
+ const incomplete={version:1,pages:{...pages}};
+ delete incomplete.pages[ORIGIN+"/ja/tractors/"+slug+"/"];
+ assert.throws(()=>historicalModelSlugs(incomplete),/identity inventory incomplete/);
 });

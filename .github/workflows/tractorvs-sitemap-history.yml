@@ -107,6 +107,9 @@ jobs:
           ref: c86bc0f39906d53e1e3805f724185fb1b3ace767
           path: sitemap-legacy-checkpoint
           persist-credentials: false
+      - name: Scope disposable historical build to prior published model identities
+        if: steps.digest_migration.outputs.required == 'true'
+        run: node scripts/tractor-sitemap-history.mjs --prepare-historical-catalog
       - name: Build historical checkpoint using anonymous RLS catalogue
         if: steps.digest_migration.outputs.required == 'true'
         working-directory: sitemap-legacy-checkpoint/site
@@ -169,6 +172,9 @@ jobs:
           ref: c86bc0f39906d53e1e3805f724185fb1b3ace767
           path: sitemap-legacy-checkpoint
           persist-credentials: false
+      - name: Scope disposable historical build to prior published model identities
+        if: steps.digest_migration.outputs.required == 'true'
+        run: node scripts/tractor-sitemap-history.mjs --prepare-historical-catalog
       - name: Build historical checkpoint using anonymous RLS catalogue
         if: steps.digest_migration.outputs.required == 'true'
         working-directory: sitemap-legacy-checkpoint/site
