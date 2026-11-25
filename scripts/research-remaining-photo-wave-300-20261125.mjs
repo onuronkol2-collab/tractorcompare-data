@@ -14,138 +14,14 @@ const unique=[...new Map(prior.models.map(r=>[r.tractor_id,r])).values()];
 const missing=unique.filter(r=>!APPROVED_TRACTOR_PHOTOS.some(p=>photoMatchesTractor(p,{tractor_id:r.tractor_id,brand_name:r.brand,model_name:r.model})));
 const previous=JSON.parse(await readFile("previous-wave/report.json","utf8")); const second=JSON.parse(await readFile("second-wave/report.json","utf8")); const visited=new Set([...previous.selectedModels,...second.selectedModels].map(r=>r.tractor_id));
 const priorities=["Yanmar","Mahindra","Sonalika","Swaraj","TYM","McCormick","Kioti","Agrale","LS Tractor","Iseki","Solis"];
-// New direct source-page leads discovered by indexed web search, not the exhausted archive query.
+// New discovery lane: enumerate actual event collections rather than repeat empty brand queries.
 const direct=[
-  [
-    "Belarus",
-    "1221.3",
-    "Belarus MTZ-1221 3 tractor.jpg",
-    "Belarus 1221.3 (open day 2017) 1.jpg"
-  ],
-  [
-    "Belarus",
-    "952",
-    "Belarus 952.jpg",
-    "Belarus 952 (new).jpg"
-  ],
-  [
-    "Belarus",
-    "952.3",
-    "Belarus 952.3 Tractor in Bucharest 2011.jpg"
-  ],
-  [
-    "Belarus",
-    "952.4",
-    "Belarus 952.4 tractor.jpg",
-    "Belarus 952.4 tractor 2.jpg"
-  ],
-  [
-    "Belarus",
-    "920.2",
-    "Belarus 920.2 tractor.jpg"
-  ],
-  [
-    "Belarus",
-    "1220.4",
-    "Belarus 1220.4.jpg"
-  ],
-  [
-    "Belarus",
-    "892.2",
-    "Belarus 892.2, 2025 Dunapataj.jpg",
-    "Космос, МТЗ-892.2 на Желтоксане.jpg"
-  ],
-  [
-    "Belarus",
-    "922.3",
-    "Алматы, Беларус-922.3 на Кулымбетова-Бруно (1).jpg"
-  ],
-  [
-    "Belarus",
-    "923.4",
-    "Belarus 923.4 (open day 2017) 2.jpg"
-  ],
-  [
-    "Belarus",
-    "510",
-    "Belarus 510 tractor, Minsk Tractor Works.jpg",
-    "Belarus 510 (open day 2017) 1.jpg"
-  ],
-  [
-    "Belarus",
-    "572",
-    "Belazs MTZ 572.jpg"
-  ],
-  [
-    "Steyr",
-    "6240 ABSOLUT CVT",
-    "Steyr Absolut 6240.jpg"
-  ],
-  [
-    "Steyr",
-    "4075 KOMPAKT",
-    "Steyr 4075 Kompakt.jpg"
-  ],
-  [
-    "Steyr",
-    "4115 KOMPAKT",
-    "Steyr Kompakt 4115.jpg"
-  ],
-  [
-    "Steyr",
-    "4105 KOMPAKT",
-    "2018-06-28 (801) Steyr 4105 Kompakt in Kirchberg an der Pielach.jpg"
-  ],
-  [
-    "Steyr",
-    "4085 KOMPAKT",
-    "Steyr 4085 Kompakti Ecotech.jpg"
-  ],
-  [
-    "Steyr",
-    "4095 KOMPAKT",
-    "Steyr 4095 Kompakt mit Kuhn BRP28 Mulch- und Häckselgerät.jpg"
-  ],
-  [
-    "Steyr",
-    "6340 TERRUS CVT",
-    "Steyr 6340 Terrus CVT Agritechnica 2023 (DSC04861).jpg"
-  ],
-  [
-    "Steyr",
-    "6200 IMPULS",
-    "Steyr 6200 Impuls CVT Agritechnica 2025 (DSC03498).jpg"
-  ],
-  [
-    "Steyr",
-    "6280 ABSOLUT CVT",
-    "Steyr 6280 Absolut CVT agra 2024 (DSC02603).jpg",
-    "Steyr 6280 Absolut CVT Öko-Feldtage 2025 (DSC01877).jpg",
-    "Steyr 6280 Absolut CVT Öko-Feldtage 2025 (DSC02133).jpg"
-  ],
-  [
-    "Steyr",
-    "6440 CERVUS CVT",
-    "Steyr 6440 Cervus CVT Agritechnica 2025 (DSC04360).jpg",
-    "Steyr 6440 Cervus CVT Agritechnica 2025 (DSC08437).jpg"
-  ],
-  [
-    "Steyr",
-    "4130 EXPERT CVT",
-    "Steyr 4130 Expert CVT agra 2024 (DSC01621).jpg",
-    "Steyr 4130 Expert CVT agra 2026 (DSC1525).jpg"
-  ],
-  [
-    "Steyr",
-    "4140 EXPERT CVT",
-    "Steyr 4140 Expert CVT Agritechnica 2023 (DSC05407).jpg",
-    "Steyr 4140 Expert CVT Kommunal Agritechnica 2025 (DSC05835).jpg"
-  ]
+ ["Başak Traktör","5075 Compact","Başak 5075 Kompakt Red Power Agritechnica 2025 (DSC03675).jpg","Başak 5075 Kompakt Red Power Agritechnica 2025 (DSC06958).jpg","Başak 5075 Kompakt Red Power Cabin Agritechnica 2023 (DSC04437).jpg"]
 ];
 const missingIds=new Set(missing.map(r=>r.tractor_id));
-const targets=missing.filter(r=>direct.some(([brand,model])=>r.brand===brand&&r.model.toUpperCase()===model.toUpperCase()));
+const targets=missing;
 const hasPrior=[];
-const report={generatedAt:new Date().toISOString(),scope:"Archived public sitemap model identities checked against current registry; not full live catalogue",sourceArchive:14994831046,mode:"new exact source pages for currently missing Belarus and Steyr models",publicModelCount:unique.length,missingModelCount:missing.length,selectedModels:targets.map(({tractor_id,brand,model,variant})=>({tractor_id,brand,model,variant})),candidateCount:0,downloaded:0,publicationCount:0,allowedToPublish:false,errors:[],queries:[],entries:[]};
+const report={generatedAt:new Date().toISOString(),scope:"Archived public sitemap model identities checked against current registry; not full live catalogue",sourceArchive:14994831046,mode:"event archive collections and exact local-language aliases, missing UUIDs only",publicModelCount:unique.length,missingModelCount:missing.length,selectedModels:targets.map(({tractor_id,brand,model,variant})=>({tractor_id,brand,model,variant})),candidateCount:0,downloaded:0,publicationCount:0,allowedToPublish:false,errors:[],queries:[],entries:[]};
 const sleep=ms=>new Promise(r=>setTimeout(r,ms));
 const deadline=Date.now()+12*60*1000;
 const withinBudget=()=>Date.now()<deadline;
@@ -178,7 +54,35 @@ async function query(params){
  try{return await fetchCommonsJson(u,{maxAttempts:1});}
  catch(e){report.errors.push({stage:"query",error:String(e)});if(e instanceof CommonsCooldownError)paused=true;return null}
 }
-// Two discovery waves returned zero new leads. Do not repeat those searches.
+// The collections below are indexed public event archives, not another brand keyword search.
+// Keep the metadata/download phase within the same bounded provider budget.
+const collections=[
+ "Category:Agritechnica 2025 (supported by Wikimedia Deutschland)",
+ "Category:Agritechnica 2023 (supported by Wikimedia Deutschland)",
+ "Category:DLG-Feldtage 2026 (supported by Wikimedia Deutschland)",
+ "Category:Başak Traktör at Agritechnica 2025",
+ "Category:Başak Traktör at Agritechnica 2023",
+ "Category:Belarus 512"
+];
+const discoverUntil=Date.now()+Math.min(4*60*1000,Math.max(0,deadline-Date.now()-5*60*1000));
+const attemptedTitles=new Set(prior.models.flatMap(r=>(r.candidates||[]).map(c=>normalizeTitle(c.fileTitle))));
+for(const category of collections){
+ let continuation={};
+ do{
+  if(paused||!withinBudget()||Date.now()>=discoverUntil)break;
+  const data=await query({list:"categorymembers",cmtitle:category,cmtype:"file",cmlimit:500,...continuation});
+  const members=data?.query?.categorymembers||[];
+  report.queries.push({kind:"event collection",category,returned:members.length,completed:Boolean(data),continuation:Boolean(data?.continue)});
+  for(const item of members){
+   const key=normalizeTitle(item.title);
+   if(held.has(key)||registrySources.has(key)||attemptedTitles.has(key))continue;
+   const rows=targets.filter(r=>match(r,item.title));
+   if(rows.length)add(item.title,rows,"new event collection file title; actual image and rights review required");
+  }
+  continuation=data?.continue||null;
+ }while(continuation);
+}
+
 await writeFile(root+"/report.json",JSON.stringify(report,null,2));
 const sorted=[...leads.values()].filter(x=>!held.has(normalizeTitle(x.title))).sort((a,b)=>Number(b.kinds.includes("archive"))-Number(a.kinds.includes("archive"))||a.targets.length-b.targets.length||a.title.localeCompare(b.title));
 const selected=[],counts=new Map();
