@@ -1,7 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import {readFileSync} from "node:fs";
-import {previewOriginFromComments,hasPreviewRelease,previewCandidates,verifyPreviewAssets} from "../scripts/verify-mobile-preview-assets.mjs";
+import {previewOriginFromComments,previewOriginFromBranch,hasPreviewRelease,currentPreview,verifyPreviewIdentity,previewCandidates,verifyPreviewAssets} from "../scripts/verify-mobile-preview-assets.mjs";
 
 const ORIGIN="https://test-preview-tractorvs-site.onuronkol2.workers.dev";
 const HEAD="a".repeat(40);
@@ -60,4 +60,28 @@ test("preview asset verification rejects production and unrelated workers before
   await assert.rejects(verifyPreviewAssets({origin,fetchFn}),/No cross-domain or production/);
  }
  assert.equal(count,0);
+});
+
+
+test("missing bot comment has safe branch alias fallback, never bypasses exact release SHA",async()=>{
+ const branch="fix/edge-and-live-audit-hardening-20261125";
+ const origin=previewOriginFromBranch(branch);
+ assert.equal(origin,"https://fix-edge-and-live-audit-hardening-20261125-tractorvs-site.onuronkol2.workers.dev");
+ for(const name of ["main","https://evil.example","a".repeat(60),"../foo","",null])assert.equal(previewOriginFromBranch(name),null);
+ const html=sha=>'<html><head><meta name="tractorvs-release-sha" content="'+sha+'"></head></html>';
+ const calls=[],options={pr:"700",sha:HEAD,token:"test-read-token",branch,attempts:2,pause:async()=>{}};
+ let homepageCount=0;
+ const mock=async(url,opts)=>{
+  calls.push(url);assert.equal(opts.redirect,"error");
+  if(url.startsWith("https://api.github.com/"))return Response.json([]);
+  assert.equal(url,origin+"/");assert.equal(opts.headers.Authorization,undefined);
+  homepageCount++;
+  return new Response(html(homepageCount===1?"b".repeat(40):HEAD),{headers:{"Content-Type":"text/html"}});
+ };
+ assert.equal(await currentPreview({...options,fetchFn:mock}),origin);
+ assert.equal(homepageCount,2);
+ await assert.rejects(currentPreview({...options,fetchFn:async(url)=>url.startsWith("https://api.github.com/")?Response.json([]):new Response(html("b".repeat(40)),{headers:{"Content-Type":"text/html"}})}),/PREVIEW_DEPLOYMENT_PENDING/);
+ assert.equal(hasPreviewRelease(html(HEAD)+html(HEAD),HEAD),false);
+ assert.equal((await verifyPreviewIdentity(origin,HEAD,async()=>new Response(html("b".repeat(40)),{headers:{"Content-Type":"text/html"}}))).ready,false);
+ await assert.rejects(verifyPreviewIdentity(origin,HEAD,async()=>new Response("",{status:429})),/rate limited/);
 });
