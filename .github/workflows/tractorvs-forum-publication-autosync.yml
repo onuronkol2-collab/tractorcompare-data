@@ -7,6 +7,8 @@ name: TractorVS published forum static content refresh
 # this workflow may refresh its already-public fingerprint; it never grants approval.
 # 24 Nov 2026: request immediate refresh for all ten approved locales of the
 # tractor brand origins article. Only existing anonymous public fingerprint sync runs.
+## 25 Nov 2026: refresh five approved topics (50 locale rows), including the 2026-only recall revision.
+# No runtime logic, permission, source approval or scheduling changes.
 on:
   # GitHub schedules are best effort and can be delayed; avoid hour boundaries.
   # Recheck public RLS views every ten minutes (cheap when unchanged).
