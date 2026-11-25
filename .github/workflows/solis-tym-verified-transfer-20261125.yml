@@ -1,0 +1,97 @@
+name: TractorVS Solis TYM reviewed derivative transfer (review only)
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - '.github/workflows/solis-tym-verified-transfer-20261125.yml'
+permissions:
+  contents: read
+  actions: read
+jobs:
+  prepare:
+    if: github.head_ref == 'photos/recover-verified-solis-tym-20261125' && github.event.pull_request.head.repo.full_name == github.repository
+    name: Prepare ${{ matrix.photo.id }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    strategy:
+      fail-fast: false
+      max-parallel: 3
+      matrix:
+        photo:
+          - id: solis-s26-hst-sebleouf-2019
+            index: 1
+            sha256: '982ca09f42e48ed526e484452231c3bfc35aebaca5280744151dfe48287a45c5'
+            width: 4032
+            height: 3016
+            format: JPEG
+          - id: solis-s90-shuttle-xl-cabin-marcelx42-2025
+            index: 4
+            sha256: '232c7d9cd9c9933fa92fa3a64c550ddc375b11be8f90874dd59a29b6dcd2277a'
+            width: 5847
+            height: 4385
+            format: JPEG
+          - id: tym-t3047-t475c-marcelx42-2023
+            index: 5
+            sha256: '5152f3bd10033c25bc942affcdd781f0906f8362102003438384be108a25172b'
+            width: 6738
+            height: 3792
+            format: JPEG
+          - id: tym-t4049-t495sh-marcelx42-2025
+            index: 6
+            sha256: '2a2d19ee55454cff18ebd2e6ae22765d8596cfa7547882f054701176aebec619'
+            width: 6017
+            height: 4011
+            format: JPEG
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: tractorvs-solis-tym-photo-review-20261125
+          run-id: 45614679027
+          github-token: ${{ github.token }}
+          path: recovered
+      - name: Prepare isolated image processing environment
+        run: |
+          python -m venv /tmp/tractorvs-photo-venv
+          /tmp/tractorvs-photo-venv/bin/pip install --disable-pip-version-check Pillow==12.0.0
+      - name: Verify known original and encode resized public CC BY-SA derivative
+        env:
+          PHOTO_ID: ${{ matrix.photo.id }}
+          INDEX: ${{ matrix.photo.index }}
+          SHA: ${{ matrix.photo.sha256 }}
+          WIDTH: ${{ matrix.photo.width }}
+          HEIGHT: ${{ matrix.photo.height }}
+          FORMAT: ${{ matrix.photo.format }}
+        run: |
+          /tmp/tractorvs-photo-venv/bin/python - <<'PY'
+          import pathlib, hashlib, base64, json, os
+          from PIL import Image, ImageOps
+          pid=os.environ['PHOTO_ID']; idx=int(os.environ['INDEX'])
+          report=json.loads(next(pathlib.Path('recovered').rglob('report.json')).read_text())
+          row=report['entries'][idx-1]; m=row['metadata']
+          assert m['extmetadata']['LicenseShortName']['value']=='CC BY-SA 4.0'
+          assert row['sha256']==os.environ['SHA']
+          files=list(pathlib.Path('recovered').rglob('candidate-'+str(idx)+'.jpg'))
+          assert len(files)==1
+          raw=files[0].read_bytes()
+          assert hashlib.sha256(raw).hexdigest()==os.environ['SHA']
+          assert hashlib.sha1(raw).hexdigest()==m['sha1']
+          im=Image.open(files[0]); assert im.format==os.environ['FORMAT']
+          assert im.size==(int(os.environ['WIDTH']),int(os.environ['HEIGHT']))
+          im.seek(0); im.load(); im=ImageOps.exif_transpose(im).convert('RGB')
+          for w in [480,960,1920]:
+              h=round(im.height*w/im.width)
+              assert w<=im.width
+              p=pathlib.Path(f'{pid}-{w}.jpg')
+              im.resize((w,h),Image.Resampling.LANCZOS).save(p,'JPEG',quality=84,optimize=True)
+              b=p.read_bytes()
+              with Image.open(p) as check: check.load(); assert check.format=='JPEG' and check.size==(w,h)
+              enc=base64.b64encode(b).decode()
+              chunks=[enc[i:i+12000] for i in range(0,len(enc),12000)]
+              print('PUBLIC_PHOTO_META '+json.dumps({'file':p.name,'width':w,'height':h,'sha256':hashlib.sha256(b).hexdigest(),'bytes':len(b),'chunks':len(chunks)}))
+              for i,c in enumerate(chunks): print(f'PUBLIC_PHOTO_CHUNK {p.name} {i} {c}')
+          PY
+      - uses: actions/upload-artifact@v7
+        with:
+          name: transfer-${{ matrix.photo.id }}
+          path: ${{ matrix.photo.id }}-*.jpg
+          retention-days: 7
