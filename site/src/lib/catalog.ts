@@ -665,7 +665,510 @@ const REVIEWED_SOURCE_EN_LOOKUP=new Map(
     reviewedEnglishSourceKey(name),english
   ])
 );
+// Exact display headings observed in the 469-model, ten-locale preview audit
+// (Actions 45562645152). Scope corrections to observed locale and source label.
+// Never translate the evidence, raw value, model, unit or measurement standard.
+const audit20261125HeadingKey=(name:string)=>name.normalize("NFC").trim()
+  .replace(/_/g," ").replace(/\s+/g," ").replace(/\s*\/\s*/g,"/")
+  .toLocaleLowerCase("tr").replaceAll("ı","i");
+const AUDIT_20261125_EXACT_LABELS: Partial<Record<Locale, [string,string][]>> = {
+  "en": [
+    [
+      "Arka Ağırlık Takımı",
+      "Rear ballast set"
+    ],
+    [
+      "Azami Motor Gücü",
+      "Maximum engine power"
+    ],
+    [
+      "Azami Motor Gücü (KW)",
+      "Maximum engine power (kW)"
+    ],
+    [
+      "Dört Çeker Kumandası",
+      "4WD control"
+    ],
+    [
+      "Ön Ağırlık Takımı",
+      "Front ballast set"
+    ],
+    [
+      "Ön Diferansiyel Kilidi",
+      "Front differential lock"
+    ],
+    [
+      "Ön İz Genişliği",
+      "Front track width"
+    ],
+    [
+      "Akü Devre Kesici",
+      "Battery disconnect switch"
+    ],
+    [
+      "Arka Diferansiyel Kumandası",
+      "Rear differential control"
+    ],
+    [
+      "Ayak Freni Kontrolü",
+      "Foot brake control"
+    ],
+    [
+      "Ayak Freni Kumandası",
+      "Foot brake control"
+    ],
+    [
+      "Azami Güç Motor Devri",
+      "Engine speed at maximum power"
+    ],
+    [
+      "Azami Hidrolik Pompa Basıncı",
+      "Maximum hydraulic pump pressure"
+    ],
+    [
+      "Azami Motor Gücü (ISO 14396, Hp)",
+      "Maximum engine power (ISO 14396, hp)"
+    ],
+    [
+      "Azami Motor Gücü (ISO 14396, KW)",
+      "Maximum engine power (ISO 14396, kW)"
+    ],
+    [
+      "Dört Çeker Kontrolü",
+      "4WD control"
+    ],
+    [
+      "Dört Tekerden Frenleme",
+      "Four-wheel braking"
+    ],
+    [
+      "Ek Ağırlıksız Traktör Ağırlığı",
+      "Tractor weight without additional ballast"
+    ],
+    [
+      "Güç Değerindeki Motor Devri",
+      "Engine speed at stated power"
+    ],
+    [
+      "Hidrolik Çıkış",
+      "Hydraulic outlet"
+    ],
+    [
+      "Hidrolik Çıkış / Valf",
+      "Hydraulic outlet / valve"
+    ],
+    [
+      "Hız Aralığı",
+      "Speed range"
+    ],
+    [
+      "İleri / Geri Vites Seçenekleri",
+      "Forward / reverse gear options"
+    ],
+    [
+      "Nominal Motor Gücü",
+      "Rated engine power"
+    ],
+    [
+      "Nominal Motor Gücündeki Devir",
+      "Engine speed at rated power"
+    ],
+    [
+      "Ön / Arka Lastik Ölçüsü",
+      "Front / rear tyre size"
+    ],
+    [
+      "Ön / Arka Lastik Opsiyonları",
+      "Front / rear tyre options"
+    ],
+    [
+      "Ön Ağırlık",
+      "Front ballast"
+    ],
+    [
+      "Ön Hidrolik Güç Çıkışı (Opsiyon)",
+      "Optional front hydraulic power outlet"
+    ],
+    [
+      "Ön PTO Devri (Opsiyon)",
+      "Optional front PTO speed"
+    ],
+    [
+      "Ön Üç Nokta Askı Kapasitesi (Opsiyon)",
+      "Optional front three-point hitch capacity"
+    ],
+    [
+      "Ön/Arka Lastik Seçenekleri",
+      "Front / rear tyre options"
+    ],
+    [
+      "Operatör İstasyonu",
+      "Operator station"
+    ],
+    [
+      "Park Freni Kontrolü",
+      "Parking brake control"
+    ],
+    [
+      "Park Freni Kumandası",
+      "Parking brake control"
+    ],
+    [
+      "PTO Debriyajı",
+      "PTO clutch"
+    ],
+    [
+      "PTO İçin Gereken Motor Devri",
+      "Engine speed required for PTO"
+    ],
+    [
+      "Şanzıman Debriyajı",
+      "Transmission clutch"
+    ],
+    [
+      "Toplam Uzunluk (Ön Ağırlıklarla)",
+      "Overall length with front ballast"
+    ]
+  ],
+  "tr": [
+    [
+      "Forward/Reverse Ranges Or Gears",
+      "İleri/geri kademe veya vitesler"
+    ],
+    [
+      "Differential Lock Control",
+      "Diferansiyel kilidi kumandası"
+    ],
+    [
+      "Hydraulic Oil Circuit",
+      "Hidrolik yağ devresi"
+    ],
+    [
+      "Maximum Front Axle Load",
+      "Azami ön aks yükü"
+    ],
+    [
+      "Maximum Rear Axle Load",
+      "Azami arka aks yükü"
+    ],
+    [
+      "Permissible Total Weight",
+      "İzin verilen toplam ağırlık"
+    ],
+    [
+      "Standard Forward Speed",
+      "Standart ileri sürüş hızı"
+    ],
+    [
+      "Standard Gears",
+      "Standart vitesler"
+    ],
+    [
+      "Automatic Transmission Ranges",
+      "Otomatik şanzıman kademeleri"
+    ],
+    [
+      "Creeper Option",
+      "Sürüngen vites seçeneği"
+    ],
+    [
+      "Creeper Transmission",
+      "Sürüngen vitesli şanzıman"
+    ],
+    [
+      "Hydraulic Control Modules Additional Optional",
+      "İlave opsiyonel hidrolik kumanda modülleri"
+    ],
+    [
+      "Hydraulic Control Modules Standard",
+      "Standart hidrolik kumanda modülleri"
+    ],
+    [
+      "Hydraulic Main Flow Standard",
+      "Standart ana hidrolik debi"
+    ],
+    [
+      "Overall Length Range",
+      "Toplam uzunluk aralığı"
+    ],
+    [
+      "Rear Equipment Deck Load Capacity",
+      "Arka ekipman platformu yük kapasitesi"
+    ],
+    [
+      "Standard Transmission Speed Range",
+      "Standart şanzıman hız aralığı"
+    ],
+    [
+      "Front 3-Point Hitch Lift Capacity (Optional)",
+      "Ön üç nokta askı kaldırma kapasitesi (opsiyonel)"
+    ],
+    [
+      "Hitch Lift Capacity",
+      "Askı sistemi kaldırma kapasitesi"
+    ],
+    [
+      "Lifting Capacity (Features)",
+      "Kaldırma kapasitesi (donanım özellikleri)"
+    ],
+    [
+      "LPM (Liter Per Minute)",
+      "LPM (litre/dakika)"
+    ],
+    [
+      "Main Hydraulic Flow - Optional Pump",
+      "Ana hidrolik debi - opsiyonel pompa"
+    ],
+    [
+      "Main Hydraulic Flow - Standard",
+      "Ana hidrolik debi - standart"
+    ],
+    [
+      "Rear Hitch Lift",
+      "Arka askı kaldırma kapasitesi"
+    ],
+    [
+      "Standard Front Ballast",
+      "Standart ön balast"
+    ],
+    [
+      "Synchronised Gearbox",
+      "Senkromeçli şanzıman"
+    ],
+    [
+      "Travel Ranges",
+      "Sürüş kademeleri"
+    ]
+  ],
+  "zh": [
+    [
+      "Arka Diferansiyel Kilidi",
+      "后差速锁"
+    ],
+    [
+      "Arka Diferansiyel Kumandası",
+      "后差速器控制"
+    ],
+    [
+      "Dört Çeker Kontrolü",
+      "四轮驱动控制"
+    ],
+    [
+      "Dört Çeker Kumandası",
+      "四轮驱动控制"
+    ],
+    [
+      "Gross Engine Horsepower",
+      "发动机总马力"
+    ],
+    [
+      "Gross Weight(Kg) (With Std. Ballast)",
+      "总重量（kg，含标准配重）"
+    ],
+    [
+      "Length Range",
+      "长度范围"
+    ],
+    [
+      "Motor Hava Filtresi",
+      "发动机空气滤清器"
+    ],
+    [
+      "Nominal Engine Power",
+      "发动机额定功率"
+    ],
+    [
+      "Nominal Motor Gücü",
+      "发动机额定功率"
+    ],
+    [
+      "Ön Diferansiyel Kilidi",
+      "前差速锁"
+    ]
+  ],
+  "hi": [
+    [
+      "Engine Max Torque Boost",
+      "बूस्ट मोड में अधिकतम इंजन टॉर्क"
+    ],
+    [
+      "Engine Max Torque Normal",
+      "सामान्य मोड में अधिकतम इंजन टॉर्क"
+    ],
+    [
+      "Fuel Injection",
+      "ईंधन इंजेक्शन"
+    ],
+    [
+      "Manufacturer Engine Power Boost Max Kw",
+      "निर्माता के अनुसार बूस्ट मोड में अधिकतम इंजन शक्ति (kW)"
+    ],
+    [
+      "Manufacturer Engine Power Normal Max Kw",
+      "निर्माता के अनुसार सामान्य मोड में अधिकतम इंजन शक्ति (kW)"
+    ],
+    [
+      "Power Bulge",
+      "रेटेड शक्ति से अधिक उपलब्ध शक्ति"
+    ],
+    [
+      "Weight Without Extra Ballast",
+      "अतिरिक्त बैलास्ट के बिना वजन"
+    ],
+    [
+      "Manufacturer Engine Power Kw",
+      "निर्माता द्वारा बताई इंजन शक्ति (kW)"
+    ],
+    [
+      "Maximum Front Axle Load",
+      "अगले एक्सल पर अधिकतम भार"
+    ],
+    [
+      "Maximum Rear Axle Load",
+      "पिछले एक्सल पर अधिकतम भार"
+    ],
+    [
+      "Permissible Total Weight",
+      "अनुमत कुल वजन"
+    ],
+    [
+      "Air Filter",
+      "एयर फ़िल्टर"
+    ],
+    [
+      "Block Heater",
+      "इंजन ब्लॉक हीटर"
+    ],
+    [
+      "Engine Speed At Peak Power",
+      "अधिकतम शक्ति पर इंजन की घूर्णन गति"
+    ],
+    [
+      "Engine Speed At Peak Torque",
+      "अधिकतम टॉर्क पर इंजन की घूर्णन गति"
+    ],
+    [
+      "Intercooler",
+      "इंटरकूलर"
+    ],
+    [
+      "Nominal Power KW",
+      "नाममात्र शक्ति (kW)"
+    ],
+    [
+      "Rear Equipment Deck Load Capacity",
+      "पिछले उपकरण प्लेटफ़ॉर्म की भार क्षमता"
+    ],
+    [
+      "Battery",
+      "बैटरी"
+    ],
+    [
+      "Injection Type",
+      "इंजेक्शन का प्रकार"
+    ],
+    [
+      "Length Range",
+      "लंबाई की सीमा"
+    ],
+    [
+      "Manufacturer Engine Power",
+      "निर्माता द्वारा बताई इंजन शक्ति"
+    ]
+  ],
+  "de": [
+    [
+      "Manufacturer Three-Point Lift Capacity",
+      "Dreipunkt-Hubkraft laut Hersteller"
+    ],
+    [
+      "PTO Control",
+      "Zapfwellenbetätigung"
+    ],
+    [
+      "Optional Front PTO Clutch",
+      "Optionale Frontzapfwellenkupplung"
+    ],
+    [
+      "Optional Front PTO Spline Count",
+      "Keilzahl der optionalen Frontzapfwelle"
+    ]
+  ],
+  "ru": [
+    [
+      "Maximum Front Axle Load",
+      "Максимальная нагрузка на переднюю ось"
+    ],
+    [
+      "Maximum Rear Axle Load",
+      "Максимальная нагрузка на заднюю ось"
+    ],
+    [
+      "Permissible Total Weight",
+      "Допустимая полная масса"
+    ],
+    [
+      "Advertised Engine Power",
+      "Заявленная мощность двигателя"
+    ],
+    [
+      "Cylinder Count",
+      "Число цилиндров"
+    ],
+    [
+      "Engine Cylinders",
+      "Цилиндры двигателя"
+    ],
+    [
+      "Engine Power Category",
+      "Категория мощности двигателя"
+    ],
+    [
+      "Rear Equipment Deck Load Capacity",
+      "Грузоподъёмность задней платформы для оборудования"
+    ],
+    [
+      "Engine Horsepower",
+      "Мощность двигателя в лошадиных силах"
+    ],
+    [
+      "Motor Hava Filtresi",
+      "Воздушный фильтр двигателя"
+    ],
+    [
+      "Nominal Engine Power",
+      "Номинальная мощность двигателя"
+    ],
+    [
+      "Nominal Motor Gücü",
+      "Номинальная мощность двигателя"
+    ]
+  ],
+  "ja": [
+    [
+      "Alternator",
+      "オルタネーター"
+    ],
+    [
+      "Battery",
+      "バッテリー"
+    ],
+    [
+      "Injection Type",
+      "噴射方式"
+    ],
+    [
+      "Manufacturer Engine Power",
+      "メーカー公表のエンジン出力"
+    ]
+  ]
+};
+const AUDIT_20261125_LOOKUP=new Map(Object.entries(AUDIT_20261125_EXACT_LABELS).map(([locale,terms])=>[
+  locale,new Map(terms.map(([name,label])=>[audit20261125HeadingKey(name),label]))
+]));
 export function specLabel(spec: PublicSpec, lang: Locale): string {
+  const corrected=AUDIT_20261125_LOOKUP.get(lang)?.get(audit20261125HeadingKey(spec.spec_name));
+  if(corrected)return corrected;
   // Exact source-qualified labels must not lose optional and OEM context.
   const sourceHeading=oem20261122SpecLabel(spec.spec_name,lang);
   if(sourceHeading)return sourceHeading;
