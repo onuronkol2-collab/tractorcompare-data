@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import {MAX_REQUESTS,key,selectPublishedMissing,classifyOpenverseResult,researchIndependentSources} from "../scripts/photo-openverse-independent-batch.mjs";
+import {MAX_REQUESTS,key,selectPublishedMissing,summarizePublishedPhotoCoverage,classifyOpenverseResult,researchIndependentSources} from "../scripts/photo-openverse-independent-batch.mjs";
 
 const pub=(brand,model,id)=>({brand,model,status:"published",tractor_id:id,pageUrl:"https://tractorvs.com/tractors/"+id+"/"});
 const valid=(title="McCormick X5.085 tractor",source="flickr",license="by-sa",licenseUrl="https://creativecommons.org/licenses/by-sa/4.0/")=>({
@@ -210,4 +210,15 @@ test("reused results stay deduplicated and capped across queries; request failur
    fetchFn:async()=>{throw Error("network");}});
  assert.equal(failure.status,"partial");
  assert.equal(failure.queries_sent,1);
+});
+
+test("full registry coverage counts published UUIDs, not duplicate routes or files",()=>{
+ const rows=[pub("TYM","T3048","a"),pub("TYM","T3048","b"),pub("McCormick","X5.085","c"),{...pub("TYM","T3048","a"),pageUrl:"https://tractorvs.com/tractors/alternate/"}];
+ const photos=[{brand:"TYM",model:"T3048",tractorId:"a"},{brand:"TYM",model:"T3048",tractorId:"a"}];
+ const result=summarizePublishedPhotoCoverage(rows,photos);
+ assert.deepEqual([result.total,result.registered,result.missing],[3,1,2]);
+ assert.equal(result.brands.reduce((n,x)=>n+x.missing,0),2);
+ assert.deepEqual(result.missing_models.find(x=>x.brand==="TYM").missingTractorIds,["b"]);
+ assert.match(result.verification,/not live HTTP/);
+ assert.throws(()=>summarizePublishedPhotoCoverage([...rows,{...rows[0],status:"draft"}],photos),/non-public/);
 });
