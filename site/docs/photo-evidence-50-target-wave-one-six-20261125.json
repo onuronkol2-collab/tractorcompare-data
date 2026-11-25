@@ -167,26 +167,26 @@
     "brand": "Başak Traktör",
     "model": "3026",
     "tractorId": "2bc6ed35-ed73-4a0d-9edb-53462f0045fc",
-    "fileId": "basak-3026-rear-marcelx42-2025",
-    "path": "8/8e/Ba%C5%9Fak_3026_Agritechnica_2025_%28DSC03729%29.jpg",
+    "fileId": "basak-3026-front-marcelx42-2025",
+    "path": "c/c6/Ba%C5%9Fak_3026_Agritechnica_2025_%28DSC03713%29.jpg",
     "photographer": "MarcelX42",
     "license": "CC BY-SA 4.0",
     "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
-    "sourcePage": "https://commons.wikimedia.org/wiki/File:Ba%C5%9Fak_3026_Agritechnica_2025_%28DSC03729%29.jpg",
-    "originalUrl": "https://upload.wikimedia.org/wikipedia/commons/8/8e/Ba%C5%9Fak_3026_Agritechnica_2025_%28DSC03729%29.jpg",
-    "width": 6224,
-    "height": 4672,
-    "originalSha1": "3e74b63f8829f2c399cf98e0362a667143a1baa7",
-    "originalSha256": "96b1bf0693c83079a417e996fc6f289a1175df2de49fdda03679be7fbf9bf969",
-    "originalBytes": 21421789,
+    "sourcePage": "https://commons.wikimedia.org/wiki/File:Ba%C5%9Fak_3026_Agritechnica_2025_%28DSC03713%29.jpg",
+    "originalUrl": "https://upload.wikimedia.org/wikipedia/commons/c/c6/Ba%C5%9Fak_3026_Agritechnica_2025_%28DSC03713%29.jpg",
+    "width": 6139,
+    "height": 4604,
+    "originalSha1": "c8a68e0146981dd8493ade796a352a139bf0a528",
+    "originalSha256": "82bff80f67a77f1f2a03059c434179bb90a8676cb26d096113eb6d46f11afc85",
+    "originalBytes": 15258189,
     "originalFormat": "JPEG",
     "originalFrameCount": 1,
     "selectedFrame": 0,
     "sourceArtifact": 15037422585,
     "transferRun": 45646982097,
-    "transferJob": 139320491942,
-    "description": "Schrägansicht des Hecks eines Başak 3026 Stage V, ausgestellt auf der Agritechnica 2025.",
-    "modelEvidence": "Rear view of Başak 3026 Stage V at same exhibition, source caption matches model; distinct angle, not duplicate crop.",
+    "transferJob": 139320491801,
+    "description": "Schrägansicht der Front eines Başak 3026 Stage V, ausgestellt auf der Agritechnica 2025.",
+    "modelEvidence": "Başak 3026 Stage V front view at Agritechnica 2025; OEM 3026 compact 4WD model matches, not exact 2026 production year.",
     "modelSources": [
       "https://basaktraktor.com.tr/urunler/traktorler/bahce-traktorleri/3026"
     ],
@@ -195,25 +195,25 @@
     "changes": "Proportional resize and JPEG compression, CC BY-SA 4.0 retained.",
     "derivatives": [
       {
-        "file": "basak-3026-rear-marcelx42-2025-480.jpg",
+        "file": "basak-3026-front-marcelx42-2025-480.jpg",
         "width": 480,
         "height": 360,
-        "bytes": 57720,
-        "sha256": "7d34ea924ac87f210fab9d7192d3d85d799f62ca92a2e41dd13acf2057c32169"
+        "bytes": 45889,
+        "sha256": "26be57d0f92e6a0f58d54fc265191d901378b228c24dc08d7f62d2f276cfaf26"
       },
       {
-        "file": "basak-3026-rear-marcelx42-2025-960.jpg",
+        "file": "basak-3026-front-marcelx42-2025-960.jpg",
         "width": 960,
-        "height": 721,
-        "bytes": 184547,
-        "sha256": "87a4d041ca3092c63eadb85c981c0bd85587a92f29471e5f86fd82534b10993f"
+        "height": 720,
+        "bytes": 142240,
+        "sha256": "073106f01747336115c0cae2561f07cc87bf4989348286c6aeb6bc8048d28fd8"
       },
       {
-        "file": "basak-3026-rear-marcelx42-2025-1920.jpg",
+        "file": "basak-3026-front-marcelx42-2025-1920.jpg",
         "width": 1920,
-        "height": 1441,
-        "bytes": 583717,
-        "sha256": "c08c970ff024e5fb093f07574e86a39a77172f99708cbfe4d203213129d6b159"
+        "height": 1440,
+        "bytes": 453903,
+        "sha256": "7e76044c59ffff9179678fdb528879ec300024af151f007aa6ecb79bdd729a2a"
       }
     ]
   }

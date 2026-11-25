@@ -941,7 +941,7 @@ const candidates=[
   {"brand":"Başak Traktör","model":"2055","tractorId":"d1258ec7-f544-4d8b-b5a3-dee2d2b15a6b","fileId":"basak-2055-kompakt-marcelx42-2023","path":"e/e1/Ba%C5%9Fak_2055_Kompakt_Agritechnica_2023_%28DSC04448%29.jpg","photographer":"MarcelX42","license":"CC BY-SA 4.0","width":7008,"height":3944,"resizedDerivative":true},
   {"brand":"Bobcat","model":"CT2540","tractorId":"70e438cb-c57c-4744-bf9f-2ae0a38e35b6","fileId":"bobcat-ct2540-marcelx42-2025","path":"8/8a/Bobcat_CT2540_Agritechnica_2025_%28DSC05725%29.jpg","photographer":"MarcelX42","license":"CC BY-SA 4.0","width":6224,"height":4672,"resizedDerivative":true},
   {"brand":"Bobcat","model":"CT4058","tractorId":"cafcb2bc-d2a4-452e-bdc8-3a52e9a5db81","fileId":"bobcat-ct4058-marcelx42-2025","path":"f/fd/Bobcat_CT4058_Agritechnica_2025_%28DSC08950%29.jpg","photographer":"MarcelX42","license":"CC BY-SA 4.0","width":6030,"height":4523,"resizedDerivative":true},
-  {"brand":"Başak Traktör","model":"3026","tractorId":"2bc6ed35-ed73-4a0d-9edb-53462f0045fc","fileId":"basak-3026-rear-marcelx42-2025","path":"8/8e/Ba%C5%9Fak_3026_Agritechnica_2025_%28DSC03729%29.jpg","photographer":"MarcelX42","license":"CC BY-SA 4.0","width":6224,"height":4672,"resizedDerivative":true},
+  {"brand":"Başak Traktör","model":"3026","tractorId":"2bc6ed35-ed73-4a0d-9edb-53462f0045fc","fileId":"basak-3026-front-marcelx42-2025","path":"c/c6/Ba%C5%9Fak_3026_Agritechnica_2025_%28DSC03713%29.jpg","photographer":"MarcelX42","license":"CC BY-SA 4.0","width":6139,"height":4604,"resizedDerivative":true},
 ] as const;
 function licenseUrl(name:string):string{
   if(name==="CC0")return "https://creativecommons.org/publicdomain/zero/1.0/";

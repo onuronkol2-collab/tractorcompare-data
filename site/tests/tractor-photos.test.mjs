@@ -1205,10 +1205,10 @@ test("Three salvaged Hattat and TAFE photos are UUID-scoped representative image
  }
 });
 
-test("Four user-approved Başak and Bobcat photos are UUID-scoped representative images with ten-language rights",()=>{
+test("Four front or side Başak and Bobcat photos are UUID-scoped representative images with ten-language rights",()=>{
  const entries=JSON.parse(readFileSync(new URL("../docs/photo-evidence-50-target-wave-one-six-20261125.json",import.meta.url),"utf8"));
  assert.equal(entries.length,4);assert.equal(new Set(entries.map(e=>e.tractorId)).size,4);
- for(const excluded of ["basak-2055-rear-mbone-2023","basak-3026-front-marcelx42-2025"]){assert.ok(!APPROVED_TRACTOR_PHOTOS.some(p=>p.fileId===excluded));for(const width of [480,960,1920])assert.throws(()=>readFileSync(new URL("../public/images/tractors/"+excluded+"-"+width+".jpg",import.meta.url)),{code:"ENOENT"});}
+ for(const excluded of ["basak-2055-rear-mbone-2023","basak-3026-rear-marcelx42-2025"]){assert.ok(!APPROVED_TRACTOR_PHOTOS.some(p=>p.fileId===excluded));for(const width of [480,960,1920])assert.throws(()=>readFileSync(new URL("../public/images/tractors/"+excluded+"-"+width+".jpg",import.meta.url)),{code:"ENOENT"});}
  for(const e of entries){
  const exact={...tractor(e.brand,e.model),tractor_id:e.tractorId};const p=tractorPhotos(exact).find(x=>x.fileId===e.fileId);
  assert.ok(p,e.fileId);if(e.copyrightEvidence==="commons-own-work-self-license"){assert.equal(p.copyrightOwner,e.photographer);assert.equal(p.copyrightEvidence,e.copyrightEvidence);assert.equal(decodeURIComponent(p.copyrightClaimUrl),decodeURIComponent(e.sourcePage));}else{assert.equal(p.copyrightOwner,undefined);assert.equal(p.copyrightClaimUrl,undefined);assert.equal(p.copyrightEvidence,undefined);}assert.deepEqual(e.derivatives.map(d=>d.width),[480,960,1920]);if(e.originalFormat==='MPO'){assert.equal(e.originalFrameCount,2);assert.equal(e.selectedFrame,0);assert.match(e.changes,/primary frame/);}assert.equal(p.configurationExact,false);assert.equal(p.resizedDerivative,true);assert.equal(p.licenseName,e.license);assert.equal(p.photographer,e.photographer);assert.equal(decodeURIComponent(p.sourcePage),decodeURIComponent(e.sourcePage));
