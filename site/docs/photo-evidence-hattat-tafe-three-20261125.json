@@ -1,0 +1,162 @@
+[
+  {
+    "brand": "Hattat",
+    "model": "B 3105",
+    "tractorId": "5b745a3d-b5f6-4635-b90a-b77c61709cfe",
+    "fileId": "hattat-b3105-matti-blume-2023",
+    "path": "e/e4/Hattat_B_3105%2C_Agritechnica_2023%2C_Hanover_%28P1160245%29.jpg",
+    "photographer": "Matti Blume",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "width": 4608,
+    "height": 3456,
+    "sourcePage": "https://commons.wikimedia.org/wiki/File:Hattat_B_3105%2C_Agritechnica_2023%2C_Hanover_%28P1160245%29.jpg",
+    "originalUrl": "https://upload.wikimedia.org/wikipedia/commons/e/e4/Hattat_B_3105%2C_Agritechnica_2023%2C_Hanover_%28P1160245%29.jpg",
+    "originalSha1": "f8a4e8a5f400263c1714219667401d686f31265b",
+    "originalSha256": "39e75e351c608eaaac23a37dd74045c2485307f7a8a866684502db25f13734b6",
+    "originalBytes": 9546739,
+    "originalFormat": "JPEG",
+    "sourceArtifact": 15034494127,
+    "transferRun": 45641111049,
+    "transferJob": 139299699282,
+    "modelEvidence": "Visible HATTAT B 3105 and Common Rail badges, open ROPS and driven front axle; Commons caption identifies exact model at Agritechnica 2023. OEM B3000 Stage V brochure and price list establish B3105 ROPS 4WD Stage V. Exact equipment/year not asserted.",
+    "modelSources": [
+      "https://www.hattattraktor.com.tr/Upload/Sayfa/3000B_STAGEV_EN.pdf",
+      "https://www.hattattraktor.com.tr/price-list",
+      "https://www.hattattraktor.com/traktorler/hattat-traktor/hattat-b3000-stage-5"
+    ],
+    "scope": "Model illustration only; exact equipment and configuration not verified.",
+    "copyrightEvidence": "commons-own-work-self-license",
+    "changes": "Proportional resize and JPEG compression; CC BY-SA 4.0 retained.",
+    "derivatives": [
+      {
+        "file": "hattat-b3105-matti-blume-2023-480.jpg",
+        "width": 480,
+        "height": 360,
+        "sha256": "0fc4618718f6b21315449f863d20ecec0a8661da3408db374e8d5b2598621e80",
+        "bytes": 50182
+      },
+      {
+        "file": "hattat-b3105-matti-blume-2023-960.jpg",
+        "width": 960,
+        "height": 720,
+        "sha256": "5b1bdc1a698b6e472067bfe1252fe844322a890d8e97ea39104e9ff4aa78322f",
+        "bytes": 158183
+      },
+      {
+        "file": "hattat-b3105-matti-blume-2023-1920.jpg",
+        "width": 1920,
+        "height": 1440,
+        "sha256": "79b267dc08fa44deec3c42daf07ccd3700fad10d97459092889775954625fbe8",
+        "bytes": 486964
+      }
+    ]
+  },
+  {
+    "brand": "Hattat",
+    "model": "B 3105",
+    "tractorId": "5b745a3d-b5f6-4635-b90a-b77c61709cfe",
+    "fileId": "hattat-b3105-marcelx42-2023",
+    "path": "c/ce/Hattat_B3105_Agritechnica_2023_%28DSC04248%29.jpg",
+    "photographer": "MarcelX42",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "width": 7008,
+    "height": 3944,
+    "sourcePage": "https://commons.wikimedia.org/wiki/File:Hattat_B3105_Agritechnica_2023_%28DSC04248%29.jpg",
+    "originalUrl": "https://upload.wikimedia.org/wikipedia/commons/c/ce/Hattat_B3105_Agritechnica_2023_%28DSC04248%29.jpg",
+    "originalSha1": "324a4760f41b1fe0a243c7d899556423f1bb7079",
+    "originalSha256": "05d3307c6a28d42292cc389709636240805558e1369abca8d83f2352488a4ee5",
+    "originalBytes": 14471867,
+    "originalFormat": "JPEG",
+    "sourceArtifact": 15034494127,
+    "transferRun": 45641111049,
+    "transferJob": 139299699870,
+    "modelEvidence": "Visible HATTAT B3105 badge, open ROPS and four driven wheels; Commons caption identifies B3105 4WD. OEM documents match Stage V model family. Distinct front angle, second photographer. Exact equipment/year not asserted.",
+    "modelSources": [
+      "https://www.hattattraktor.com.tr/Upload/Sayfa/3000B_STAGEV_EN.pdf",
+      "https://www.hattattraktor.com.tr/price-list",
+      "https://www.hattattraktor.com/traktorler/hattat-traktor/hattat-b3000-stage-5"
+    ],
+    "scope": "Model illustration only; exact equipment and configuration not verified.",
+    "copyrightEvidence": "commons-own-work-self-license",
+    "changes": "Proportional resize and JPEG compression; CC BY-SA 4.0 retained.",
+    "derivatives": [
+      {
+        "file": "hattat-b3105-marcelx42-2023-480.jpg",
+        "width": 480,
+        "height": 270,
+        "sha256": "a4f62c91c2d9561381afca21dec09d21182918438a075a7fed949c13a01b36fd",
+        "bytes": 39133
+      },
+      {
+        "file": "hattat-b3105-marcelx42-2023-960.jpg",
+        "width": 960,
+        "height": 540,
+        "sha256": "2e296a5bf21d6453476e2d7fa916302ccf6cdeb32ddeb6a302e9e9a8b792dffb",
+        "bytes": 129198
+      },
+      {
+        "file": "hattat-b3105-marcelx42-2023-1920.jpg",
+        "width": 1920,
+        "height": 1081,
+        "sha256": "57c099ab1e328b313bd5530f738456734c914a70182dc3737b4ca3d05e5c0c51",
+        "bytes": 417934
+      }
+    ]
+  },
+  {
+    "brand": "TAFE",
+    "model": "7515 CAB Advanced",
+    "tractorId": "2009a1ab-5c09-4484-8356-0ce5b957ae27",
+    "fileId": "tafe-7515-cab-advanced-representative-marcelx42-2023",
+    "path": "a/a6/TAFE_7515_Cab_Agritechnica_2023_%28DSC06665%29.jpg",
+    "photographer": "MarcelX42",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "width": 7008,
+    "height": 3944,
+    "sourcePage": "https://commons.wikimedia.org/wiki/File:TAFE_7515_Cab_Agritechnica_2023_%28DSC06665%29.jpg",
+    "originalUrl": "https://upload.wikimedia.org/wikipedia/commons/a/a6/TAFE_7515_Cab_Agritechnica_2023_%28DSC06665%29.jpg",
+    "originalSha1": "66fef0f9eb34f01ffa4032d647ee17b9d2693fd4",
+    "originalSha256": "63dd78d2b4f045cb4befe370073bd53f74351805fa7a4160052e6ceb46dd2118",
+    "originalBytes": 8617508,
+    "originalFormat": "MPO",
+    "selectedFrame": 0,
+    "originalFrameCount": 2,
+    "sourceArtifact": 15034494127,
+    "transferRun": 45641328173,
+    "transferJob": 139300451079,
+    "modelEvidence": "Readable TAFE 7515 badge and cab; source caption identifies 7515 CAB. OEM standard and Advanced CAB share 74 HP, 2600 cc, Stage V, 4WD, 75 L; standard 12F/4R and 2145 kg lift vs Advanced 12F/12R and 2500 kg lift. Representative of base 7515 cab model only, not exact Advanced trim. Verified two-frame MPO, frame 0 7008x3944 selected, frame 1 1920x1080 decoded.",
+    "modelSources": [
+      "https://www.tafetractors.com/en-tr/products/tafe-7515-cab-4wd",
+      "https://www.tafetractors.com/en-tr/products/tafe-7515-cab-advanced-4wd"
+    ],
+    "scope": "Model illustration only; exact equipment and configuration not verified.",
+    "copyrightEvidence": "commons-own-work-self-license",
+    "changes": "Extract verified primary frame, proportional resize and JPEG compression; CC BY-SA 4.0 retained.",
+    "derivatives": [
+      {
+        "file": "tafe-7515-cab-advanced-representative-marcelx42-2023-480.jpg",
+        "width": 480,
+        "height": 270,
+        "sha256": "8e2fa238f784e1c13a45256a281e95a4d5b586d9222b2ee519da784fd150930d",
+        "bytes": 41058
+      },
+      {
+        "file": "tafe-7515-cab-advanced-representative-marcelx42-2023-960.jpg",
+        "width": 960,
+        "height": 540,
+        "sha256": "bfff8eb6692599f868e4f987c376ee2294ce1bf361bb293b4bb8d724d7304b3e",
+        "bytes": 128635
+      },
+      {
+        "file": "tafe-7515-cab-advanced-representative-marcelx42-2023-1920.jpg",
+        "width": 1920,
+        "height": 1081,
+        "sha256": "4a0fe1bb211c44c6004cf2d4af8f0a7cf3b24fed1ae3fe83c419aae3abaee762",
+        "bytes": 396046
+      }
+    ]
+  }
+]
