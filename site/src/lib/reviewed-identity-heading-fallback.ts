@@ -2010,7 +2010,7 @@ const rows:readonly (readonly string[])[]=[
     "Longueur avec relevage avant en position de transport",
     "Länge mit Fronthubwerk in Transportstellung",
     "Длина с передней навеской в транспортном положении",
-    "前部リンクを輸送位置にしたときの全長",
+    "フロントリンケージを輸送位置にしたときの全長",
     "Longitud con enganche delantero en posición de transporte"
   ],
   [
@@ -2022,7 +2022,7 @@ const rows:readonly (readonly string[])[]=[
     "Longueur avec relevage avant abaissé",
     "Länge mit abgesenktem Fronthubwerk",
     "Длина с опущенной передней навеской",
-    "前部リンクを下げたときの全長",
+    "フロントリンケージを下げたときの全長",
     "Longitud con enganche delantero bajado"
   ],
   [
@@ -2087,7 +2087,7 @@ const rows:readonly (readonly string[])[]=[
   ],
   [
     "Unladen Weight With Cab And All-Wheel Drive",
-    "Kabinli ve dört tekerlekten çekişli yüksüz ağırlık",
+    "Kabinli ve tüm tekerleklerden çekişli yüksüz ağırlık",
     "带驾驶室和全轮驱动的空载重量",
     "कैब और ऑल-व्हील ड्राइव सहित खाली भार",
     "Peso sem carga com cabine e tração integral",
@@ -2171,9 +2171,9 @@ const rows:readonly (readonly string[])[]=[
   ],
   [
     "Crop Clearance",
-    "Ürün altı geçiş yüksekliği",
+    "Bitkilerin üzerinden geçiş yüksekliği",
     "作物通过间隙",
-    "फसल निकासी ऊँचाई",
+    "फसल के ऊपर से गुजरने की उपलब्ध ऊँचाई",
     "Vão livre para a cultura",
     "Dégagement pour les cultures",
     "Kulturpflanzen-Durchgangshöhe",
@@ -2226,7 +2226,7 @@ const rows:readonly (readonly string[])[]=[
     "Capacité du pont avant",
     "Vorderachskapazität",
     "Грузоподъёмность переднего моста",
-    "前車軸容量",
+    "前車軸の負荷容量",
     "Capacidad del eje delantero"
   ],
   [
