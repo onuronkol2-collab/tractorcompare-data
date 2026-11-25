@@ -1,0 +1,37 @@
+name: Forum delegated publication isolated SQL checks
+on:
+  pull_request:
+    paths:
+      - "supabase/sql/forum_assisted_publication_candidate.sql"
+      - "supabase/rollback/forum_assisted_publication_rollback.sql"
+      - "supabase/verification/forum_assisted_publication_*"
+      - ".github/workflows/forum-assisted-publication-check.yml"
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  isolated-sql:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    services:
+      postgres:
+        image: postgres:17
+        env:
+          POSTGRES_PASSWORD: disposable-fixture-only
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 12
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Apply fixture, candidate and regression assertions
+        env:
+          FIXTURE_CONTAINER: ${{ job.services.postgres.id }}
+        run: |
+          set -euo pipefail
+          for file in supabase/verification/forum_assisted_publication_fixture.sql supabase/sql/forum_assisted_publication_candidate.sql supabase/verification/forum_assisted_publication_test.sql supabase/rollback/forum_assisted_publication_rollback.sql; do
+            docker exec -i "$FIXTURE_CONTAINER" psql -U postgres -d postgres -v ON_ERROR_STOP=1 < "$file"
+          done
