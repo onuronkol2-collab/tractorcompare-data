@@ -95,7 +95,9 @@ export function extractPublishedUrls(dist){
   if(!seen.size)reject("No HTML page URL listed in generated sitemaps");
   return [...seen].sort();
 }
-export function significantContentDigest(html,url){
+export const DIGEST_ALGORITHM="astro-market-price-hash-v2";
+export function significantContentDigest(html,url,{legacy=false}={}){
+
   const main=html.match(/<main\b[^>]*>([\s\S]*?)<\/main>/i)?.[1];
   const title=html.match(/<title\b[^>]*>([\s\S]*?)<\/title>/i)?.[1];
   const desc=html.match(/<meta\b[^>]*name=["']description["'][^>]*>/i)?.[0]||"";
@@ -122,7 +124,17 @@ export function significantContentDigest(html,url){
     if([...tag.matchAll(idAttribute)].length!==1)return tag;
     return tag.replace(idAttribute,"");
   });
-  return createHash("sha256").update([normalize(title),normalize(desc),significantMain].join("\n")).digest("hex");
+  // The public checkpoint comparison (run 45649911745) proved that the
+  // generated price component module filename changes on every model page
+  // even when its static content is identical. Ignore ONLY the cache-busting
+  // suffix of this exact empty, local module script. Preserve its presence,
+  // component identity, all other attributes, inline JSON, and all content.
+  const stableMain=legacy?significantMain:significantMain.replace(
+    /<script\b[^>]*><\/script>/gi,tag=>{
+      if(!/\stype="module"(?=\s|>)/.test(tag))return tag;
+      return tag.replace(/(\ssrc="\/_astro\/TractorMarketPrice\.astro_astro_type_script_index_0_lang\.)[A-Za-z0-9_-]{8,32}(\.js")(?=\s|>)/g,"$1__BUILD_HASH__$2");
+    });
+  return createHash("sha256").update([normalize(title),normalize(desc),stableMain].join("\n")).digest("hex");
 }
 export function deriveHistory({pages,previous,now=new Date(),minPages=100,reviewedPr497Copy=false,reviewedPr467Copy=false}){
   if(!previous||previous.version!==1||!previous.pages||typeof previous.pages!=="object")
@@ -132,7 +144,7 @@ export function deriveHistory({pages,previous,now=new Date(),minPages=100,review
   if(existing && pages.length<Math.ceil(existing*0.95))
     reject("Public sitemap shrinking over 5%; manual review required");
   const baseline=existing===0;
-  const updated={version:1,pages:{}};
+  const updated={version:1,pages:{},...(previous.digestAlgorithm?{digestAlgorithm:previous.digestAlgorithm}:{})};
   const dates={version:1,dates:{}};
   let changed=0,added=0;
   const oldModelUrls=Object.keys(previous.pages).filter(isModelPage);
@@ -199,16 +211,44 @@ export function deriveHistory({pages,previous,now=new Date(),minPages=100,review
   if(previous.reviewedBulkCopyPr467===true)updated.reviewedBulkCopyPr467=true;
   return {history:updated,lastmod:dates,summary:{baseline,pages:pages.length,significant_changes:changed,new_pages:added,dated_pages:Object.keys(dates.dates).length,reviewed_bulk_copy_pr497:updated.reviewedBulkCopyPr497===true,reviewed_bulk_copy_pr467:updated.reviewedBulkCopyPr467===true}};
 }
-export function auditBuiltSitemap({dist=join(ROOT,"site/dist"),historyPath=HISTORY_FILE,lastmodPath=LASTMOD_FILE,now=new Date(),minPages=100}={}){
+function readPublishedHtml(dist,url){
+  const htmlPath=join(dist,new URL(url).pathname.substring(1),"index.html");
+  if(!existsSync(htmlPath))reject("Sitemap page not generated: "+url);
+  return readFileSync(htmlPath,"utf8");
+}
+// Migrate only by reconstructing EVERY persisted old hash. Unknown or
+// changed historical inputs fail closed; never reset dates or seed over them.
+export function migrateDigestCheckpoint(previous,legacyDist){
+  if(previous.version!==1||!previous.pages||previous.digestAlgorithm)
+    reject("Invalid legacy digest checkpoint");
+  if(!legacyDist)reject("Legacy digest migration requires the verified historical build");
+  const urls=extractPublishedUrls(legacyDist);
+  if(urls.length!==Object.keys(previous.pages).length)
+    reject("Legacy digest migration inventory mismatch");
+  const pages={};
+  for(const url of urls){
+    const html=readPublishedHtml(legacyDist,url);
+    const old=previous.pages[url];
+    if(!old||significantContentDigest(html,url,{legacy:true})!==old.digest)
+      reject("Legacy digest migration cannot reproduce checkpoint: "+url);
+    pages[url]={...old,digest:significantContentDigest(html,url)};
+  }
+  return {...previous,pages,digestAlgorithm:DIGEST_ALGORITHM};
+}
+export function auditBuiltSitemap({dist=join(ROOT,"site/dist"),historyPath=HISTORY_FILE,lastmodPath=LASTMOD_FILE,now=new Date(),minPages=100,legacyDist=process.env.SITEMAP_LEGACY_DIST}={}){
   const urls=extractPublishedUrls(dist);
-  const pages=urls.map(url=>{
-    const u=new URL(url);
-    const htmlPath=join(dist,u.pathname.substring(1),"index.html");
-    if(!existsSync(htmlPath))reject("Sitemap page not generated: "+url);
-    const html=readFileSync(htmlPath,"utf8");
-    return [url,significantContentDigest(html,url)];
-  });
-  const previous=loadJson(historyPath,{version:1,pages:{}});
+  const pages=urls.map(url=>[url,significantContentDigest(readPublishedHtml(dist,url),url)]);
+  let previous=loadJson(historyPath,{version:1,pages:{}});
+  if(previous.version!==1||!previous.pages||typeof previous.pages!=="object")
+    reject("Invalid previous history checkpoint");
+  if(previous.digestAlgorithm && previous.digestAlgorithm!==DIGEST_ALGORITHM)
+    reject("Unknown sitemap digest algorithm");
+  if(!previous.digestAlgorithm){
+    if(Object.keys(previous.pages).length){
+      previous=migrateDigestCheckpoint(previous,legacyDist);
+      console.log("TRACTORVS_DIGEST_MIGRATION "+JSON.stringify({verifiedLegacyPages:Object.keys(previous.pages).length,algorithm:DIGEST_ALGORITHM}));
+    }else previous={...previous,digestAlgorithm:DIGEST_ALGORITHM};
+  }
   const result=deriveHistory({pages,previous,now,minPages,reviewedPr497Copy:hasReviewedPr497Source(),reviewedPr467Copy:hasReviewedPr467Sources()});
   // Write only on successful full inspection; no silent partial sitemap.
   writeFileSync(historyPath,JSON.stringify(result.history,null,2)+"\n");

@@ -96,6 +96,31 @@ jobs:
           SUPABASE_ANON_KEY: ${{ secrets.TRACTORVS_SUPABASE_ANON_JWT }}
           MIN_PUBLIC_TRACTOR_PAGES: "100"
         run: npm run build:production
+      - name: Determine whether legacy digest migration is required
+        id: digest_migration
+        run: |
+          node --input-type=module -e 'import {readFileSync} from "node:fs"; const h=JSON.parse(readFileSync("seo/sitemap-content-history.json","utf8")); console.log("required="+(!h.digestAlgorithm&&Object.keys(h.pages).length>0))' >> "$GITHUB_OUTPUT"
+      - name: Reconstruct exact reviewed historical checkpoint for one-time migration
+        if: steps.digest_migration.outputs.required == 'true'
+        uses: actions/checkout@v4
+        with:
+          ref: c86bc0f39906d53e1e3805f724185fb1b3ace767
+          path: sitemap-legacy-checkpoint
+          persist-credentials: false
+      - name: Build historical checkpoint using anonymous RLS catalogue
+        if: steps.digest_migration.outputs.required == 'true'
+        working-directory: sitemap-legacy-checkpoint/site
+        env:
+          SITE_URL: https://tractorvs.com
+          PUBLIC_INDEXING_ENABLED: "true"
+          WORKERS_CI_BRANCH: main
+          SUPABASE_URL: https://aaufxtcvnzgavtlintiv.supabase.co
+          SUPABASE_ANON_KEY: ${{ secrets.TRACTORVS_SUPABASE_ANON_JWT }}
+          MIN_PUBLIC_TRACTOR_PAGES: "100"
+        run: |
+          npm ci --no-audit --no-fund
+          npm run build:production
+          echo "SITEMAP_LEGACY_DIST=$GITHUB_WORKSPACE/sitemap-legacy-checkpoint/site/dist" >> "$GITHUB_ENV"
       - name: Validate unchanged lastmod plus genuine significant HTML changes
         run: node scripts/tractor-sitemap-history.mjs
       - name: Keep PR preview read-only
@@ -133,6 +158,31 @@ jobs:
           SUPABASE_ANON_KEY: ${{ secrets.TRACTORVS_SUPABASE_ANON_JWT }}
           MIN_PUBLIC_TRACTOR_PAGES: "100"
         run: npm run build:production
+      - name: Determine whether legacy digest migration is required
+        id: digest_migration
+        run: |
+          node --input-type=module -e 'import {readFileSync} from "node:fs"; const h=JSON.parse(readFileSync("seo/sitemap-content-history.json","utf8")); console.log("required="+(!h.digestAlgorithm&&Object.keys(h.pages).length>0))' >> "$GITHUB_OUTPUT"
+      - name: Reconstruct exact reviewed historical checkpoint for one-time migration
+        if: steps.digest_migration.outputs.required == 'true'
+        uses: actions/checkout@v4
+        with:
+          ref: c86bc0f39906d53e1e3805f724185fb1b3ace767
+          path: sitemap-legacy-checkpoint
+          persist-credentials: false
+      - name: Build historical checkpoint using anonymous RLS catalogue
+        if: steps.digest_migration.outputs.required == 'true'
+        working-directory: sitemap-legacy-checkpoint/site
+        env:
+          SITE_URL: https://tractorvs.com
+          PUBLIC_INDEXING_ENABLED: "true"
+          WORKERS_CI_BRANCH: main
+          SUPABASE_URL: https://aaufxtcvnzgavtlintiv.supabase.co
+          SUPABASE_ANON_KEY: ${{ secrets.TRACTORVS_SUPABASE_ANON_JWT }}
+          MIN_PUBLIC_TRACTOR_PAGES: "100"
+        run: |
+          npm ci --no-audit --no-fund
+          npm run build:production
+          echo "SITEMAP_LEGACY_DIST=$GITHUB_WORKSPACE/sitemap-legacy-checkpoint/site/dist" >> "$GITHUB_ENV"
       - name: Inspect rendered HTML and update only changed page timestamps
         run: node scripts/tractor-sitemap-history.mjs
       - name: Rebuild and verify full production sitemap with provenance dates

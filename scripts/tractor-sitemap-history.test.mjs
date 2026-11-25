@@ -4,7 +4,7 @@ import {mkdtempSync,mkdirSync,writeFileSync,readFileSync,rmSync} from "node:fs";
 import {tmpdir} from "node:os";
 import {join,dirname} from "node:path";
 import {createHash} from "node:crypto";
-import {significantContentDigest,deriveHistory,auditBuiltSitemap,extractPublishedUrls,ORIGIN} from "./tractor-sitemap-history.mjs";
+import {significantContentDigest,deriveHistory,auditBuiltSitemap,extractPublishedUrls,migrateDigestCheckpoint,DIGEST_ALGORITHM,ORIGIN} from "./tractor-sitemap-history.mjs";
 
 const a=ORIGIN+"/", b=ORIGIN+"/tr/tractors/safe-model/";
 const hash=s=>createHash("sha256").update(s).digest("hex");
@@ -256,4 +256,58 @@ test("sitemap provenance runs before shared HTML inputs merge, not just componen
   assert.match(workflow,/if ! changed_paths="\$\(git diff --name-only "\$AUDITED_BASE" origin\/main\)"; then/);
   assert.ok(workflow.includes("seo/sitemap-content-history\\.json$"),"A concurrent history checkpoint invalidates the audited baseline");
   assert.ok(workflow.includes("package(-lock)?\\.json$"),"Dependency changes invalidate the audited build");
+});
+
+
+test("only the exact generated market-price module cache hash is ignored",()=>{
+ const module=hash=>'<script type="module" src="/_astro/TractorMarketPrice.astro_astro_type_script_index_0_lang.'+hash+'.js"></script>';
+ const old=sample(b,'<p>95 HP</p>'+module("Db5Sr4d7")+'<script type="application/json">{"value":95}</script>');
+ const updated=old.replace("Db5Sr4d7","B7Ok9FpF");
+ assert.equal(significantContentDigest(old,b),significantContentDigest(updated,b));
+ assert.notEqual(significantContentDigest(old,b,{legacy:true}),significantContentDigest(updated,b,{legacy:true}));
+ for(const change of [
+  updated.replace("95 HP","105 HP"),
+  updated.replace('{"value":95}','{"value":105}'),
+  updated.replace('type="module"','type="text/javascript"'),
+  updated.replace('type="module"','type="module" integrity="sha256-example"'),
+  updated.replace("TractorMarketPrice","OtherComponent"),
+  updated.replace(module("B7Ok9FpF"),""),
+ ]) assert.notEqual(significantContentDigest(old,b),significantContentDigest(change,b));
+ const external=sample(b,'<script type="module" src="https://example.org/TractorMarketPrice.astro_astro_type_script_index_0_lang.Db5Sr4d7.js"></script>');
+ assert.notEqual(significantContentDigest(external,b),significantContentDigest(external.replace("Db5Sr4d7","B7Ok9FpF"),b));
+});
+
+test("legacy migration verifies every old hash and preserves all dates, updates only actual differences",()=>{
+ const legacy=setup(),current=setup();
+ try{
+  const component=hash=>'<script type="module" src="/_astro/TractorMarketPrice.astro_astro_type_script_index_0_lang.'+hash+'.js"></script>';
+  legacy.write(b,"Real tractor page"+component("Db5Sr4d7"));
+  current.write(b,"Real tractor page"+component("B7Ok9FpF"));
+  const read=(ctx,url)=>readFileSync(join(ctx.dist,new URL(url).pathname.slice(1),"index.html"),"utf8");
+  const previous={version:1,pages:{
+   [a]:{digest:significantContentDigest(read(legacy,a),a,{legacy:true}),modified:null},
+   [b]:{digest:significantContentDigest(read(legacy,b),b,{legacy:true}),modified:date1.toISOString()}
+  },reviewedBulkCopyPr497:true};
+  writeFileSync(current.historyPath,JSON.stringify(previous));
+  writeFileSync(current.lastmodPath,JSON.stringify({version:1,dates:{"/tr/tractors/safe-model/":date1.toISOString()}}));
+  assert.throws(()=>auditBuiltSitemap({...current,now:date2,minPages:2,legacyDist:null}),/requires the verified historical build/);
+  const oldHistory=readFileSync(current.historyPath,"utf8"),oldDates=readFileSync(current.lastmodPath,"utf8");
+  legacy.write(a,"Unexpected baseline corruption");
+  assert.throws(()=>auditBuiltSitemap({...current,now:date2,minPages:2,legacyDist:legacy.dist}),/cannot reproduce checkpoint/);
+  assert.equal(readFileSync(current.historyPath,"utf8"),oldHistory);
+  assert.equal(readFileSync(current.lastmodPath,"utf8"),oldDates);
+  legacy.write(a,"Real homepage");
+  const migrated=migrateDigestCheckpoint(previous,legacy.dist);
+  assert.equal(migrated.pages[b].modified,date1.toISOString());
+  assert.equal(migrated.pages[a].modified,null);
+  const result=auditBuiltSitemap({...current,now:date2,minPages:2,legacyDist:legacy.dist});
+  assert.equal(result.significant_changes,0);
+  assert.equal(JSON.parse(readFileSync(current.historyPath)).digestAlgorithm,DIGEST_ALGORITHM);
+  assert.equal(JSON.parse(readFileSync(current.historyPath)).reviewedBulkCopyPr497,true);
+  assert.equal(JSON.parse(readFileSync(current.lastmodPath)).dates["/tr/tractors/safe-model/"],date1.toISOString());
+  current.write(b,"Corrected real engine specification"+component("B7Ok9FpF"));
+  const next=auditBuiltSitemap({...current,now:date2,minPages:2,legacyDist:null});
+  assert.equal(next.significant_changes,1);
+  assert.equal(JSON.parse(readFileSync(current.lastmodPath)).dates["/tr/tractors/safe-model/"],date2.toISOString());
+ }finally{rmSync(legacy.root,{recursive:true,force:true});rmSync(current.root,{recursive:true,force:true});}
 });
