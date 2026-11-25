@@ -1,0 +1,90 @@
+name: TractorVS Lindner reviewed derivative transfer (review only)
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - '.github/workflows/lindner-verified-transfer-20261125.yml'
+permissions:
+  contents: read
+  actions: read
+jobs:
+  prepare:
+    name: Prepare ${{ matrix.photo.id }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    strategy:
+      fail-fast: false
+      max-parallel: 3
+      matrix:
+        photo:
+          - id: lindner-lintrac-160-ldrive-marcelx42-front
+            index: 2
+            sha256: '53d59c4132185f5f1f689063a9d0bdb1075d2e3a6817bccc562673c9ab43eda9'
+            width: 5959
+            height: 4469
+            format: JPEG
+          - id: lindner-lintrac-160-ldrive-marcelx42-rear
+            index: 3
+            sha256: '50ea2b67d7b578de15e9f5973bd9caacd2bd43f4c4bbc706a56ba991ebd01ca8'
+            width: 6143
+            height: 4611
+            format: JPEG
+          - id: lindner-lintrac-95-ls-alpin-marcelx42
+            index: 5
+            sha256: '24a69a0e17585bb1cbf6dfd07b49a2c7d2662c8e07bf6824dab8d9c2b7bae06b'
+            width: 6680
+            height: 3759
+            format: JPEG
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: tractorvs-curated-source-review-20261125
+          run-id: 45544041768
+          github-token: ${{ github.token }}
+          path: recovered
+      - name: Prepare isolated image processing environment
+        run: |
+          python -m venv /tmp/tractorvs-photo-venv
+          /tmp/tractorvs-photo-venv/bin/pip install --disable-pip-version-check Pillow==12.0.0
+      - name: Verify known original and encode resized public CC BY-SA derivative
+        env:
+          PHOTO_ID: ${{ matrix.photo.id }}
+          INDEX: ${{ matrix.photo.index }}
+          SHA: ${{ matrix.photo.sha256 }}
+          WIDTH: ${{ matrix.photo.width }}
+          HEIGHT: ${{ matrix.photo.height }}
+          FORMAT: ${{ matrix.photo.format }}
+        run: |
+          /tmp/tractorvs-photo-venv/bin/python - <<'PY'
+          import pathlib, hashlib, base64, json, os
+          from PIL import Image, ImageOps
+          pid=os.environ['PHOTO_ID']; idx=int(os.environ['INDEX'])
+          report=json.loads(next(pathlib.Path('recovered').rglob('report.json')).read_text())
+          row=report['entries'][idx-1]; m=row['metadata']
+          assert m['extmetadata']['LicenseShortName']['value']=='CC BY-SA 4.0'
+          assert row['sha256']==os.environ['SHA']
+          files=list(pathlib.Path('recovered').rglob('candidate-'+str(idx)+'.jpg'))
+          assert len(files)==1
+          raw=files[0].read_bytes()
+          assert hashlib.sha256(raw).hexdigest()==os.environ['SHA']
+          assert hashlib.sha1(raw).hexdigest()==m['sha1']
+          im=Image.open(files[0]); assert im.format==os.environ['FORMAT']
+          assert im.size==(int(os.environ['WIDTH']),int(os.environ['HEIGHT']))
+          im.seek(0); im.load(); im=ImageOps.exif_transpose(im).convert('RGB')
+          for w in [480,960,1920]:
+              h=round(im.height*w/im.width)
+              assert w<=im.width
+              p=pathlib.Path(f'{pid}-{w}.jpg')
+              im.resize((w,h),Image.Resampling.LANCZOS).save(p,'JPEG',quality=84,optimize=True)
+              b=p.read_bytes()
+              with Image.open(p) as check: check.load(); assert check.format=='JPEG' and check.size==(w,h)
+              enc=base64.b64encode(b).decode()
+              chunks=[enc[i:i+12000] for i in range(0,len(enc),12000)]
+              print('PUBLIC_PHOTO_META '+json.dumps({'file':p.name,'width':w,'height':h,'sha256':hashlib.sha256(b).hexdigest(),'bytes':len(b),'chunks':len(chunks)}))
+              for i,c in enumerate(chunks): print(f'PUBLIC_PHOTO_CHUNK {p.name} {i} {c}')
+          PY
+      - uses: actions/upload-artifact@v7
+        with:
+          name: transfer-${{ matrix.photo.id }}
+          path: ${{ matrix.photo.id }}-*.jpg
+          retention-days: 7
