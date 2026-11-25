@@ -52,3 +52,19 @@ test("only metadata is curated; visible H1, topic schema and published locality 
  assert.match(source,/indexable=\{eligible\}/);
  assert.match(source,/availableLocales=\{availableLocales\}/);
 });
+
+
+test("all ten approved origin-research metadata titles retain year and locale with exact source guards",()=>{
+ const origins="b11d1ad6-f0cc-4a18-ab83-9d18ccc2f7ea";
+ const pairs=VERIFIED_FORUM_TITLE_PAIRS[origins];
+ assert.equal(Object.keys(pairs).length,10);
+ assert.deepEqual(Object.keys(pairs).sort(),["en","tr","zh","hi","pt-br","fr","de","ru","ja","es"].sort());
+ for(const [lang,[original,short]] of Object.entries(pairs)){
+  assert.equal(sourceAwareForumSeoTitle(origins,lang,original),short);
+  assert.ok(short.includes("2026"),lang);
+  assert.ok(short.length<=60,lang);
+  assert.ok(short.length<original.length+12,lang);
+  assert.equal(sourceAwareForumSeoTitle(origins,lang,original+" edited"),original+" edited | TractorVS");
+ }
+ assert.equal(new Set(Object.values(pairs).map(p=>p[1])).size,10);
+});

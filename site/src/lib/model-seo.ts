@@ -7,6 +7,7 @@ import { t } from "./ui.ts";
 import { marketDisplayName } from "./market-display.ts";
 import {primaryTractorPhoto,tractorPhotoAlt} from "./tractor-photos.ts";
 import {matchedHeadlinePowerSource} from "./model-evidence-answers.ts";
+import {reviewedLongTitleRow} from "./reviewed-long-model-title-identities.ts";
 
 /** The original manufacturer identity, equipment and market are never inferred. */
 /** Editorial microcopy for actual, published model facts.
@@ -406,9 +407,9 @@ export function modelSeoMetadata(tractor: TractorRecord, lang: Locale) {
     : reviewedSourceNotes
       ? reviewedSourceNotes.markets.map(region=>marketDisplayName(region,lang)).join(" / ")
     : marketDisplayName(rawMarket, lang);
-  const buildTitle=(titleVariant:string|null,titleMarket=marketLabel)=>{
+  const buildTitle=(titleVariant:string|null,titleMarket=marketLabel,reviewedLong=false)=>{
   const qualifiers = [
-    titleVariant && titleVariant.length <= 48 ? titleVariant : null,
+    titleVariant && (reviewedLong || titleVariant.length <= 48) ? titleVariant : null,
     titleMarket, tractor.model_year == null ? null : String(tractor.model_year)
   ].filter((part):part is string=>Boolean(part));
   const identityQualifiers=qualifiers.length ? " — " + qualifiers.join(" · ") : "";
@@ -453,7 +454,23 @@ export function modelSeoMetadata(tractor: TractorRecord, lang: Locale) {
   const restoredIsekiVariant=tractor.brand_name==="Iseki" && rawMarket==="Europe" &&
     reviewedIdentity.variant!==variantLabel && Boolean(reviewedIdentity.variant) &&
     reviewedIdentity.variant!.length<=48 && Boolean(variantLabel && variantLabel.length>48);
-  const title=t97 ? buildTitle("Cabin / ROPS",SHORT_INTERNATIONAL_TITLE[lang])
+  const reviewedLong=reviewedLongTitleRow(tractor.brand_name,tractor.model_name,rawVariant,rawMarket,tractor.model_year ?? null);
+  // An explicitly reviewed real configuration is more important than length.
+  // Do not choose the previous shorter title if it had lost the entire variant.
+  // For these exact reviewed records preserve a native technical title noun
+  // even when the full mechanical configuration exceeds the advisory budget.
+  // This avoids identical ES/PT-BR titles without deleting factual qualifiers.
+  const reviewedLongTitle=reviewedLong ? buildTitle(reviewedLong.variant, reviewedLong.market
+    ? marketDisplayName(reviewedLong.market,lang) : marketLabel, true) : null;
+  const needsLocalizedLongNoun=reviewedLong && tractor.brand_name==="Antonio Carraro" &&
+    ["TONY 8700 V","TONY 8900 TRG"].includes(tractor.model_name) &&
+    (lang==="es" || lang==="pt-br") && reviewedLongTitle &&
+    !reviewedLongTitle.includes(CONCISE_SPECS_TITLE[lang]);
+  const title=needsLocalizedLongNoun
+    ? reviewedLongTitle!.replace(model+" — ",model+" "+CONCISE_SPECS_TITLE[lang]+" — ")
+    : reviewedLong ? buildTitle(reviewedLong.variant, reviewedLong.market
+    ? marketDisplayName(reviewedLong.market,lang) : marketLabel, true)
+    : t97 ? buildTitle("Cabin / ROPS",SHORT_INTERNATIONAL_TITLE[lang])
     : txgs ? buildTitle("4WD hydrostatic / ROPS") : restoredIsekiVariant ? remainingTitle : shorterTitle;
 
   const copy = MODEL_COPY[lang];
