@@ -7,6 +7,8 @@ const checks = new Map([
   ["AGENTS.md", [
     "ALTIN KURAL", "TAM ENTEGRASYON", "GitHub", "Supabase",
     "### Katalog verisini toplu doğrulama ve canlıya aktarma",
+    "Kanıta dayalı otomatik katalog yayın kontrolü", "automated_evidence_review",
+    "(supabase/docs/tractor-automated-nominal-release-20261125.md)",
     "### Ücretsiz araçlardan maksimum fayda", "ChatGPT’nin daha iyi yaptığı",
     "Yalnızca ücretsiz sürümleri", "kullanıcıya bağlantı isteği gönder",
     "Firecrawl", "Microsoft Clarity", "PostHog", "OpenSEO",

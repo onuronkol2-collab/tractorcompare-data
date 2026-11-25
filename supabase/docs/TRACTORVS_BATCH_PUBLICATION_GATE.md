@@ -24,6 +24,8 @@ explicit missing-photo disclosure; no substitute model image is allowed.
 
 ## 2 — Promotion (only after real database review)
 
+Since 25 November 2026, the owner-approved [automated nominal evidence control](tractor-automated-nominal-release-20261125.md) replaces routine human review for qualified nominal technical records. Existing private structural candidate labels and the read-only inventory do not authorize status changes. Special review requirements for non-nominal claims and other content remain unchanged. The automated decision must be bound to actual evidence and the exact unchanged data snapshot before the transactional release below.
+
 The public site is built from the invoker-security
 `public.tractorvs_public_specs` view, not from generic open Supabase tables.
 Verify `supabase/verification/verify_tractorvs_public_catalog_view.sql` first:
