@@ -163,7 +163,7 @@ const fixturePicker=()=>{
   const controls=["left","right"].map((side,index)=>
     '<div class="tc-picker-side"><div class="tc-searchbox"><input class="tc-combo-input" id="tc-'+side+'-search" aria-label="'+side+'" role="combobox" aria-expanded="false" aria-controls="tc-'+side+'-results" aria-autocomplete="list"><div class="tc-picker-results" id="tc-'+side+'-results" role="listbox" hidden></div></div><select class="tc-native-select" id="tc-'+side+'"><option value="qa-a" '+(index===0?"selected":"")+'>QA Tractor A</option><option value="qa-b" '+(index===1?"selected":"")+'>QA Tractor B</option></select></div>'
   ).join("");
-  return '<section class="tc-section"><div id="tc-picker" class="tc-picker" data-directory="/comparison-data/tr/">'+controls+'</div><button id="tc-all" aria-pressed="true">All</button><button id="tc-shared" aria-pressed="false">Shared</button><button id="tc-different" aria-pressed="false" hidden>Different</button><p id="tc-different-note" hidden>Different published entries only</p><p id="tc-no-shared" hidden></p><p id="tc-summary"></p><table class="tc-table"><tbody id="tc-rows"></tbody></table></section>';
+  return '<section class="tc-section"><div id="tc-picker" class="tc-picker" data-directory="/comparison-data/tr/">'+controls+'</div><div class="tc-table-bar"><div class="tc-table-bar-title"><h2>QA comparison</h2></div><div class="tc-filters" role="group" aria-label="Comparison filters"><button id="tc-all" type="button" aria-pressed="true">All</button><button id="tc-shared" type="button" aria-pressed="false">Shared</button><button id="tc-different" type="button" aria-pressed="false" hidden>Different</button></div></div><p id="tc-different-note" hidden>Different published entries only</p><p id="tc-no-shared" hidden></p><p id="tc-summary"></p><table class="tc-table"><tbody id="tc-rows"></tbody></table></section>';
 };
 test("comparison combobox retains input focus and differing-data view is shareable",async({page})=>{
   await page.route(url=>url.pathname==="/tr/compare/",async route=>{
@@ -194,6 +194,16 @@ test("comparison combobox retains input focus and differing-data view is shareab
   await expect(options.first()).toHaveAttribute("tabindex","-1");
   await input.press("Tab");
   await expect(input).toHaveAttribute("aria-expanded","false");
+  // Tab can move to the next model combobox and legitimately open its list.
+  // Dismiss it by keyboard, then leave the picker before clicking filters.
+  const nextInput=page.locator("#tc-right-search");
+  if(await nextInput.evaluate(el=>el===document.activeElement)){
+    await expect(nextInput).toHaveAttribute("aria-expanded","true");
+    await nextInput.press("Escape");
+    await expect(nextInput).toHaveAttribute("aria-expanded","false");
+  }
+  await expect(page.locator("#tc-left-results")).toBeHidden();
+  await expect(page.locator("#tc-right-results")).toBeHidden();
   const fixture=await page.locator("#tc-rows th").filter({hasText:"QA Equal"}).count()>0;
   const diff=page.locator("#tc-different");
   await diff.click();
