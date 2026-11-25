@@ -12,7 +12,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          ref: 636f1a5a0bec35abf527a3f3bc9a8f6a397940
+          ref: 636f1a5a0bec35abf527a3f3bc9a8f8a6a397940
       - uses: actions/setup-node@v4
         with:
           node-version: "22.23.4"
@@ -20,7 +20,7 @@ jobs:
         run: |
           python3 - <<'PY'
           import urllib.request, re, time, json, concurrent.futures
-          target="636f1a5a0bec35abf527a3f3bc9a8f6a397940"
+          target="636f1a5a0bec35abf527a3f3bc9a8f8a6a397940"
           paths=["/tractors/"]+["/"+l+"/tractors/" for l in ["tr","zh","hi","pt-br","fr","de","ru","ja","es"]]
           def check(path):
               url="https://tractorvs.com"+path
