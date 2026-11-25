@@ -42,6 +42,24 @@ function missingInventory(records,approved){
  });
  return {missing,missingPublishedRecords:missingPublishedIds.size};
 }
+// Public-only registry checkpoint. This is not live image-byte verification.
+export function summarizePublishedPhotoCoverage(records,approved=APPROVED_TRACTOR_PHOTOS){
+ const inventory=missingInventory(records,approved);
+ const missingIds=new Set(inventory.missing.flatMap(row=>row.missingTractorIds));
+ const unique=new Map(records.map(row=>[String(row.tractor_id),row]));
+ const brands=new Map();
+ for(const [id,row] of unique){
+  const b=norm(row.brand);
+  if(!brands.has(b))brands.set(b,{brand:row.brand,total:0,registered:0,missing:0});
+  const group=brands.get(b);
+  group.total++;
+  if(missingIds.has(id))group.missing++;else group.registered++;
+ }
+ return {scope:"published sitemap identities only",verification:"registry match; not live HTTP or file integrity",
+  total:unique.size,registered:unique.size-missingIds.size,missing:missingIds.size,
+  brands:[...brands.values()].sort((a,b)=>b.missing-a.missing||a.brand.localeCompare(b.brand)),
+  missing_models:inventory.missing};
+}
 function rotateMissing(inventory,index,limit){
  if(!Number.isSafeInteger(index)||index<0||!Number.isInteger(limit)||limit<1||limit>MAX_REQUESTS)throw Error("Unsafe batch settings");
  const {missing,missingPublishedRecords}=inventory;
@@ -160,6 +178,11 @@ export async function researchIndependentSources(records,{fetchFn=fetch,approved
 }
 export async function main(){
  const data=JSON.parse(await readFile(PUBLIC_REPORT_DIR+"/published-model-inventory.json","utf8"));
+ // Persist the full exact-ID inventory before any provider request or cooldown.
+ await mkdir(PUBLIC_REPORT_DIR,{recursive:true});
+ const coverage=summarizePublishedPhotoCoverage(data);
+ await writeFile(PUBLIC_REPORT_DIR+"/published-photo-coverage.json",JSON.stringify(coverage,null,2)+"\n");
+ console.log("TRACTORVS_PHOTO_REGISTRY_COVERAGE "+JSON.stringify({total:coverage.total,registered:coverage.registered,missing:coverage.missing}));
  const dateIndex=Math.floor(Date.now()/86400000);
  const result=await researchIndependentSources(data,{index:dateIndex,limit:MAX_REQUESTS});
  await mkdir(PUBLIC_REPORT_DIR,{recursive:true});
