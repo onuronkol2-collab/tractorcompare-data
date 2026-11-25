@@ -40,3 +40,8 @@ test("second reviewed batch preserves measurement standards and qualifiers",()=>
  }
  assert.equal(reviewedIdentityFallback("Engine Max Power Hp 2000 25 Ec","Engine Max Power Hp 2000 25 Ec","fr"),"Engine Max Power Hp 2000 25 Ec");
 });
+
+
+test("maximum operating pressure cannot collapse into unqualified working pressure",()=>{
+ for(const lang of locales)assert.notEqual(reviewedIdentityFallback("Maximum Hydraulic Operating Pressure","Maximum Hydraulic Operating Pressure",lang),reviewedIdentityFallback("Hydraulic Working Pressure","Hydraulic Working Pressure",lang),lang);
+});
