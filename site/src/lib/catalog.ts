@@ -1161,6 +1161,1220 @@ const AUDIT_20261125_EXACT_LABELS: Partial<Record<Locale, [string,string][]>> = 
       "Manufacturer Engine Power",
       "メーカー公表のエンジン出力"
     ]
+  ],
+  "pt-br": [
+    [
+      "Forward Travel Speed",
+      "Velocidade de deslocamento à frente"
+    ],
+    [
+      "Inside Turning Radius",
+      "Raio interno de giro"
+    ],
+    [
+      "Axle Type",
+      "Tipo de eixo"
+    ],
+    [
+      "Estimated Base Tractor Weight",
+      "Peso estimado do trator na configuração básica"
+    ],
+    [
+      "Recommended Operating Gross Weight",
+      "Peso bruto operacional recomendado"
+    ],
+    [
+      "Manufacturer Listed Weight",
+      "Peso informado pelo fabricante"
+    ],
+    [
+      "Three-Point Linkage Category",
+      "Categoria do engate de três pontos"
+    ],
+    [
+      "Maximum Travel Speed",
+      "Velocidade máxima de deslocamento"
+    ],
+    [
+      "Mid PTO Speed",
+      "Rotação da TDP central"
+    ],
+    [
+      "Axle Oscillation",
+      "Oscilação do eixo"
+    ],
+    [
+      "Height Cab",
+      "Altura com cabine"
+    ],
+    [
+      "Rear Hitch Category",
+      "Categoria do engate traseiro"
+    ],
+    [
+      "Travel Speed Range",
+      "Faixa de velocidades de deslocamento"
+    ],
+    [
+      "Standard Drawbar Category",
+      "Categoria da barra de tração padrão"
+    ],
+    [
+      "Standard Front Ballast",
+      "Lastro dianteiro padrão"
+    ],
+    [
+      "Weight Without Extra Ballast",
+      "Peso sem lastro adicional"
+    ],
+    [
+      "4WD Control",
+      "Comando da tração nas quatro rodas"
+    ],
+    [
+      "Automatic Front Differential Lock",
+      "Bloqueio automático do diferencial dianteiro"
+    ],
+    [
+      "Hitch Category",
+      "Categoria do engate"
+    ],
+    [
+      "Overall Length Range",
+      "Faixa de comprimento total"
+    ],
+    [
+      "PowerShuttle",
+      "Inversor de marcha PowerShuttle"
+    ],
+    [
+      "PTO Speeds",
+      "Rotações da TDP"
+    ],
+    [
+      "Standard Rear Ballast",
+      "Lastro traseiro padrão"
+    ],
+    [
+      "Cab Glazing Area",
+      "Área envidraçada da cabine"
+    ],
+    [
+      "Differential Lock Control",
+      "Comando do bloqueio do diferencial"
+    ],
+    [
+      "Drive",
+      "Tração"
+    ],
+    [
+      "Front Tyre",
+      "Pneu dianteiro"
+    ],
+    [
+      "Manufacturer Drivetrain",
+      "Sistema de tração informado pelo fabricante"
+    ],
+    [
+      "Maximum Front Axle Load",
+      "Carga máxima no eixo dianteiro"
+    ],
+    [
+      "Maximum Rear Axle Load",
+      "Carga máxima no eixo traseiro"
+    ],
+    [
+      "Optional Rear PTO Speeds",
+      "Rotações opcionais da TDP traseira"
+    ],
+    [
+      "Oscillation",
+      "Oscilação"
+    ],
+    [
+      "Permissible Total Weight",
+      "Peso total admissível"
+    ],
+    [
+      "PTO Actuation",
+      "Acionamento da TDP"
+    ],
+    [
+      "Pto Speed Count",
+      "Número de rotações selecionáveis da TDP"
+    ],
+    [
+      "Rear Tyre",
+      "Pneu traseiro"
+    ],
+    [
+      "Standard Forward Speed",
+      "Velocidade à frente padrão"
+    ],
+    [
+      "Standard Track Model",
+      "Modelo de esteira padrão"
+    ],
+    [
+      "Track Width Options",
+      "Opções de largura"
+    ],
+    [
+      "Automatic Transmission Ranges",
+      "Faixas da transmissão automática"
+    ],
+    [
+      "Axle Suspension",
+      "Suspensão do eixo"
+    ],
+    [
+      "Creeper Option",
+      "Opção de super-redutor"
+    ],
+    [
+      "Creeper Transmission",
+      "Transmissão com super-redutor"
+    ],
+    [
+      "Equipped Weight",
+      "Peso equipado"
+    ],
+    [
+      "Front / Rear Track Width",
+      "Bitola dianteira / traseira"
+    ],
+    [
+      "Front Wheel Track Agricultural",
+      "Bitola dianteira agrícola"
+    ],
+    [
+      "Kabin Iklimlendirme",
+      "Climatização da cabine"
+    ],
+    [
+      "Manufacturer Weight",
+      "Peso informado pelo fabricante"
+    ],
+    [
+      "PTO",
+      "Tomada de potência (TDP)"
+    ],
+    [
+      "PTO Rated Engine Speed",
+      "Rotação nominal do motor para a TDP"
+    ],
+    [
+      "PTO Speed",
+      "Rotação da TDP"
+    ],
+    [
+      "Rear Equipment Deck Load Capacity",
+      "Capacidade de carga da plataforma traseira de equipamentos"
+    ],
+    [
+      "Rear PTO Speed",
+      "Rotação da TDP traseira"
+    ],
+    [
+      "Rear PTO Speed Count",
+      "Número de rotações selecionáveis da TDP traseira"
+    ],
+    [
+      "Rear Wheel Track Agricultural",
+      "Bitola traseira agrícola"
+    ],
+    [
+      "Standard Transmission Speed Range",
+      "Faixa de velocidades da transmissão padrão"
+    ],
+    [
+      "Three-Point Hitch Category",
+      "Categoria do engate de três pontos"
+    ],
+    [
+      "Turning Radius Without Brakes",
+      "Raio de giro sem freios"
+    ],
+    [
+      "Base Weight",
+      "Peso básico"
+    ],
+    [
+      "Central Tyre Inflation",
+      "Calibragem centralizada dos pneus"
+    ],
+    [
+      "Engine RPM For 1000 PTO",
+      "Rotação do motor para TDP a 1.000 rpm"
+    ],
+    [
+      "Engine RPM For 540 PTO",
+      "Rotação do motor para TDP a 540 rpm"
+    ],
+    [
+      "Front Track (Standard)",
+      "Bitola dianteira (padrão)"
+    ],
+    [
+      "Front Track Standard",
+      "Bitola dianteira padrão"
+    ],
+    [
+      "Front Tyre, 2WD Configuration",
+      "Pneu dianteiro, configuração 2WD"
+    ],
+    [
+      "Front Tyre, 4WD Configuration",
+      "Pneu dianteiro, configuração 4WD"
+    ],
+    [
+      "Ground Clearance",
+      "Vão livre do solo"
+    ],
+    [
+      "Hitch Lift Capacity At Hitch End",
+      "Capacidade de elevação na extremidade do engate"
+    ],
+    [
+      "HıZ Aralığı",
+      "Faixa de velocidades"
+    ],
+    [
+      "İLeri / Geri Vites SeçEnekleri",
+      "Opções de marchas à frente e à ré"
+    ],
+    [
+      "Injection Type",
+      "Tipo de injeção"
+    ],
+    [
+      "Length With Hitch",
+      "Comprimento com engate"
+    ],
+    [
+      "Listed Tire Package",
+      "Conjunto de pneus informado"
+    ],
+    [
+      "Manufacturer Engine Power",
+      "Potência do motor informada pelo fabricante"
+    ],
+    [
+      "Manufacturer Listed Model Year",
+      "Ano-modelo informado pelo fabricante"
+    ],
+    [
+      "Maximum Forward Speed At 2000 Rpm",
+      "Velocidade máxima à frente a 2.000 rpm"
+    ],
+    [
+      "Maximum Forward Speed At 2200 Rpm",
+      "Velocidade máxima à frente a 2.200 rpm"
+    ],
+    [
+      "Minimum Forward Speed At 2000 Rpm",
+      "Velocidade mínima à frente a 2.000 rpm"
+    ],
+    [
+      "Minimum Forward Speed At 2200 Rpm",
+      "Velocidade mínima à frente a 2.200 rpm"
+    ],
+    [
+      "Optional Track Model",
+      "Modelo de esteira opcional"
+    ],
+    [
+      "Overall Width",
+      "Largura total"
+    ],
+    [
+      "Pitch",
+      "Passo"
+    ],
+    [
+      "Rear PTO Speeds",
+      "Rotações da TDP traseira"
+    ],
+    [
+      "Rear Track (Standard)",
+      "Bitola traseira (padrão)"
+    ],
+    [
+      "Rear Track Standard",
+      "Bitola traseira padrão"
+    ],
+    [
+      "Rear Tyre Options",
+      "Opções de pneus traseiros"
+    ],
+    [
+      "ROPS Height",
+      "Altura da estrutura ROPS"
+    ],
+    [
+      "ŞAnzıMan Debriyajı",
+      "Embreagem da transmissão"
+    ],
+    [
+      "Shipping / Unladen Weight",
+      "Peso de transporte / sem carga"
+    ],
+    [
+      "Three-Point Lift Capacity",
+      "Capacidade de elevação do engate de três pontos"
+    ],
+    [
+      "Track Width Front / Rear",
+      "Bitola dianteira / traseira"
+    ],
+    [
+      "Travel Ranges",
+      "Faixas de deslocamento"
+    ],
+    [
+      "Weight For 2WD Version",
+      "Peso da versão 2WD"
+    ],
+    [
+      "Weight For 4WD Version",
+      "Peso da versão 4WD"
+    ],
+    [
+      "Weight With Air Cab",
+      "Peso com cabine Air"
+    ],
+    [
+      "Weight With Protector Cab",
+      "Peso com cabine Protector"
+    ],
+    [
+      "Weight Without Additional Ballast",
+      "Peso sem lastro adicional"
+    ],
+    [
+      "Wheelbase For 2WD Version",
+      "Distância entre eixos da versão 2WD"
+    ],
+    [
+      "Wheelbase For 4WD Version",
+      "Distância entre eixos da versão 4WD"
+    ]
+  ],
+  "fr": [
+    [
+      "Differential Lock",
+      "Blocage de différentiel"
+    ],
+    [
+      "Axle Type",
+      "Type d’essieu"
+    ],
+    [
+      "Estimated Base Tractor Weight",
+      "Masse estimée du tracteur de base"
+    ],
+    [
+      "Recommended Operating Gross Weight",
+      "Masse totale recommandée en service"
+    ],
+    [
+      "Manufacturer Listed Weight",
+      "Masse indiquée par le constructeur"
+    ],
+    [
+      "Three-Point Linkage Category",
+      "Catégorie de l’attelage trois points"
+    ],
+    [
+      "Maximum Travel Speed",
+      "Vitesse maximale de déplacement"
+    ],
+    [
+      "Axle Oscillation",
+      "Oscillation de l’essieu"
+    ],
+    [
+      "Rear Hitch Category",
+      "Catégorie de l’attelage arrière"
+    ],
+    [
+      "Travel Speed Range",
+      "Plage de vitesses de déplacement"
+    ],
+    [
+      "Differential Lock Control",
+      "Commande du blocage de différentiel"
+    ],
+    [
+      "Front Track Width Range",
+      "Plage de voies avant"
+    ],
+    [
+      "Length Without Front Weights",
+      "Longueur sans masses avant"
+    ],
+    [
+      "Rear PTO Coupling And Gears",
+      "Accouplement et engrenages de prise de force arrière"
+    ],
+    [
+      "Rear Track Width Range",
+      "Plage de voies arrière"
+    ],
+    [
+      "Standard Drawbar Category",
+      "Catégorie de la barre d’attelage de série"
+    ],
+    [
+      "PowerShuttle",
+      "Inverseur PowerShuttle"
+    ],
+    [
+      "PTO Speeds",
+      "Régimes de prise de force"
+    ],
+    [
+      "4WD Engagement When Braking",
+      "Enclenchement des quatre roues motrices au freinage"
+    ],
+    [
+      "Cab Glazing Area",
+      "Surface vitrée de la cabine"
+    ],
+    [
+      "Drive",
+      "Transmission aux roues"
+    ],
+    [
+      "Forward Travel Speed",
+      "Vitesse d’avancement"
+    ],
+    [
+      "Front Tyre",
+      "Pneu avant"
+    ],
+    [
+      "Front Tyre Size (Option 1)",
+      "Dimension du pneu avant (option 1)"
+    ],
+    [
+      "Manufacturer Drivetrain",
+      "Chaîne cinématique indiquée par le constructeur"
+    ],
+    [
+      "Maximum Front Axle Load",
+      "Charge maximale sur l’essieu avant"
+    ],
+    [
+      "Maximum Rear Axle Load",
+      "Charge maximale sur l’essieu arrière"
+    ],
+    [
+      "Optional Rear PTO Speeds",
+      "Régimes optionnels de la prise de force arrière"
+    ],
+    [
+      "Oscillation",
+      "Oscillation mécanique"
+    ],
+    [
+      "Parking Brake Actuation",
+      "Actionnement du frein de stationnement"
+    ],
+    [
+      "Permissible Total Weight",
+      "Masse totale admissible"
+    ],
+    [
+      "PTO Actuation",
+      "Actionnement de la prise de force"
+    ],
+    [
+      "Pto Speed Count",
+      "Nombre de régimes de prise de force"
+    ],
+    [
+      "Rear Service Brake Type",
+      "Type de frein de service arrière"
+    ],
+    [
+      "Rear Three-Point Hitch Category",
+      "Catégorie de l’attelage trois points arrière"
+    ],
+    [
+      "Rear Tyre",
+      "Pneu arrière"
+    ],
+    [
+      "Rear Tyre Size (Option 1)",
+      "Dimension du pneu arrière (option 1)"
+    ],
+    [
+      "Reverse Travel Speed",
+      "Vitesse de déplacement en marche arrière"
+    ],
+    [
+      "Standard Forward Speed",
+      "Vitesse d’avancement de série"
+    ],
+    [
+      "Standard Track Model",
+      "Modèle de chenille de série"
+    ],
+    [
+      "Track Width Options",
+      "Options de largeur"
+    ],
+    [
+      "4WD Engagement",
+      "Enclenchement des quatre roues motrices"
+    ],
+    [
+      "Automatic Transmission Ranges",
+      "Gammes de la transmission automatique"
+    ],
+    [
+      "Axle Suspension",
+      "Suspension de l’essieu"
+    ],
+    [
+      "Creeper Option",
+      "Option de vitesses rampantes"
+    ],
+    [
+      "Creeper Transmission",
+      "Transmission à vitesses rampantes"
+    ],
+    [
+      "Equipped Weight",
+      "Masse avec équipement"
+    ],
+    [
+      "Factory Cabin With A/C — Listed Configuration",
+      "Cabine d’usine climatisée — configuration indiquée"
+    ],
+    [
+      "Front Wheel Track Agricultural",
+      "Voie avant en configuration agricole"
+    ],
+    [
+      "Manufacturer Catalog Status",
+      "Statut au catalogue du constructeur"
+    ],
+    [
+      "Manufacturer Weight",
+      "Masse indiquée par le constructeur"
+    ],
+    [
+      "Operator Enclosure",
+      "Enceinte du poste de conduite"
+    ],
+    [
+      "Parking Brake",
+      "Frein de stationnement"
+    ],
+    [
+      "PTO",
+      "Prise de force"
+    ],
+    [
+      "PTO Rated Engine Speed",
+      "Régime nominal du moteur pour la prise de force"
+    ],
+    [
+      "PTO Speed",
+      "Régime de prise de force"
+    ],
+    [
+      "Rear Brakes",
+      "Freins arrière"
+    ],
+    [
+      "Rear Equipment Deck Load Capacity",
+      "Capacité de charge de la plateforme arrière pour équipements"
+    ],
+    [
+      "Rear PTO Speed Count",
+      "Nombre de régimes de prise de force arrière"
+    ],
+    [
+      "Rear Wheel Track Agricultural",
+      "Voie arrière en configuration agricole"
+    ],
+    [
+      "Standard Transmission Speed Range",
+      "Plage de vitesses de la transmission de série"
+    ],
+    [
+      "Three-Point Hitch Category",
+      "Catégorie de l’attelage trois points"
+    ],
+    [
+      "Turning Radius Without Brakes",
+      "Rayon de braquage sans freinage"
+    ],
+    [
+      "Akü Devre Kesici",
+      "Coupe-batterie"
+    ],
+    [
+      "Arka AğıRlıK TakıMı",
+      "Jeu de masses arrière"
+    ],
+    [
+      "Arka Diferansiyel Kumandası",
+      "Commande du différentiel arrière"
+    ],
+    [
+      "Ayak Freni Kontrolü",
+      "Commande du frein à pied"
+    ],
+    [
+      "Ayak Freni Kumandası",
+      "Commande du frein à pied"
+    ],
+    [
+      "Base Weight",
+      "Masse de base"
+    ],
+    [
+      "Central Tyre Inflation",
+      "Gonflage centralisé des pneus"
+    ],
+    [
+      "DöRt çEker Kontrolü",
+      "Commande des quatre roues motrices"
+    ],
+    [
+      "Engine RPM For 1000 PTO",
+      "Régime moteur pour prise de force à 1 000 tr/min"
+    ],
+    [
+      "Engine RPM For 540 PTO",
+      "Régime moteur pour prise de force à 540 tr/min"
+    ],
+    [
+      "Front Track (Standard)",
+      "Voie avant (de série)"
+    ],
+    [
+      "Front Track Standard",
+      "Voie avant de série"
+    ],
+    [
+      "Front Tyre, 2WD Configuration",
+      "Pneu avant, configuration 2 roues motrices"
+    ],
+    [
+      "Front Tyre, 4WD Configuration",
+      "Pneu avant, configuration 4 roues motrices"
+    ],
+    [
+      "Ground Clearance",
+      "Garde au sol"
+    ],
+    [
+      "Hitch Lift Capacity At Hitch End",
+      "Capacité de relevage à l’extrémité de l’attelage"
+    ],
+    [
+      "HıZ Aralığı",
+      "Plage de vitesses"
+    ],
+    [
+      "İLeri / Geri Vites SeçEnekleri",
+      "Options de rapports avant et arrière"
+    ],
+    [
+      "Length With Hitch",
+      "Longueur avec attelage"
+    ],
+    [
+      "Manufacturer Tractor Weight",
+      "Masse du tracteur indiquée par le constructeur"
+    ],
+    [
+      "Maximum Forward Speed At 2000 Rpm",
+      "Vitesse maximale en marche avant à 2 000 tr/min"
+    ],
+    [
+      "Maximum Forward Speed At 2200 Rpm",
+      "Vitesse maximale en marche avant à 2 200 tr/min"
+    ],
+    [
+      "Minimum Forward Speed At 2000 Rpm",
+      "Vitesse minimale en marche avant à 2 000 tr/min"
+    ],
+    [
+      "Minimum Forward Speed At 2200 Rpm",
+      "Vitesse minimale en marche avant à 2 200 tr/min"
+    ],
+    [
+      "ÖN / Arka Lastik öLçüSü",
+      "Dimensions des pneus avant / arrière"
+    ],
+    [
+      "ÖN AğıRlıK",
+      "Lestage avant"
+    ],
+    [
+      "ÖN AğıRlıK TakıMı",
+      "Jeu de masses avant"
+    ],
+    [
+      "ÖN Iz GenişLiğI",
+      "Voie avant"
+    ],
+    [
+      "ÖN/Arka Lastik SeçEnekleri",
+      "Options de pneus avant / arrière"
+    ],
+    [
+      "Optional Track Model",
+      "Modèle de chenille en option"
+    ],
+    [
+      "Park Freni Kontrolü",
+      "Commande du frein de stationnement"
+    ],
+    [
+      "Park Freni Kumandası",
+      "Commande du frein de stationnement"
+    ],
+    [
+      "PTO Control",
+      "Commande de prise de force"
+    ],
+    [
+      "PTO Debriyajı",
+      "Embrayage de prise de force"
+    ],
+    [
+      "PTO IçIn Gereken Motor Devri",
+      "Régime moteur requis pour la prise de force"
+    ],
+    [
+      "Rear PTO Speeds",
+      "Régimes de prise de force arrière"
+    ],
+    [
+      "Rear Track (Standard)",
+      "Voie arrière (de série)"
+    ],
+    [
+      "Rear Track Standard",
+      "Voie arrière de série"
+    ],
+    [
+      "Rear Tyre Options",
+      "Options de pneus arrière"
+    ],
+    [
+      "ROPS Height",
+      "Hauteur de la structure ROPS"
+    ],
+    [
+      "ŞAnzıMan Debriyajı",
+      "Embrayage de transmission"
+    ],
+    [
+      "Servis Freni",
+      "Frein de service"
+    ],
+    [
+      "Servis Frenleri",
+      "Freins de service"
+    ],
+    [
+      "Shipping / Unladen Weight",
+      "Masse à l’expédition / à vide"
+    ],
+    [
+      "Three-Point Lift Capacity",
+      "Capacité de relevage trois points"
+    ],
+    [
+      "Toplam Uzunluk (öN AğıRlıKlarla)",
+      "Longueur hors tout avec masses avant"
+    ],
+    [
+      "Travel Ranges",
+      "Gammes de déplacement"
+    ],
+    [
+      "Weight For 2WD Version",
+      "Masse de la version 2 roues motrices"
+    ],
+    [
+      "Weight For 4WD Version",
+      "Masse de la version 4 roues motrices"
+    ],
+    [
+      "Wheelbase For 2WD Version",
+      "Empattement de la version 2 roues motrices"
+    ],
+    [
+      "Wheelbase For 4WD Version",
+      "Empattement de la version 4 roues motrices"
+    ]
+  ],
+  "es": [
+    [
+      "Forward Travel Speed",
+      "Velocidad de avance"
+    ],
+    [
+      "Inside Turning Radius",
+      "Radio interior de giro"
+    ],
+    [
+      "Axle Type",
+      "Tipo de eje"
+    ],
+    [
+      "Estimated Base Tractor Weight",
+      "Peso estimado del tractor básico"
+    ],
+    [
+      "Recommended Operating Gross Weight",
+      "Peso bruto operativo recomendado"
+    ],
+    [
+      "Manufacturer Listed Weight",
+      "Peso indicado por el fabricante"
+    ],
+    [
+      "Three-Point Linkage Category",
+      "Categoría del enganche de tres puntos"
+    ],
+    [
+      "Maximum Travel Speed",
+      "Velocidad máxima de desplazamiento"
+    ],
+    [
+      "Mid PTO Speed",
+      "Régimen de la TDF central"
+    ],
+    [
+      "Axle Oscillation",
+      "Oscilación del eje"
+    ],
+    [
+      "Height Cab",
+      "Altura con cabina"
+    ],
+    [
+      "Rear Hitch Category",
+      "Categoría del enganche trasero"
+    ],
+    [
+      "Standard Drawbar Category",
+      "Categoría de la barra de tiro de serie"
+    ],
+    [
+      "Standard Front Ballast",
+      "Lastre delantero de serie"
+    ],
+    [
+      "Weight Without Extra Ballast",
+      "Peso sin lastre adicional"
+    ],
+    [
+      "4WD Control",
+      "Mando de la tracción a las cuatro ruedas"
+    ],
+    [
+      "Automatic Front Differential Lock",
+      "Bloqueo automático del diferencial delantero"
+    ],
+    [
+      "Hitch Category",
+      "Categoría del enganche"
+    ],
+    [
+      "Overall Length Range",
+      "Rango de longitud total"
+    ],
+    [
+      "PTO Speeds",
+      "Regímenes de la TDF"
+    ],
+    [
+      "Standard Rear Ballast",
+      "Lastre trasero de serie"
+    ],
+    [
+      "Cab Glazing Area",
+      "Superficie acristalada de la cabina"
+    ],
+    [
+      "Drive",
+      "Tracción"
+    ],
+    [
+      "Front Tyre",
+      "Neumático delantero"
+    ],
+    [
+      "Manufacturer Drivetrain",
+      "Tren motriz indicado por el fabricante"
+    ],
+    [
+      "Maximum Front Axle Load",
+      "Carga máxima sobre el eje delantero"
+    ],
+    [
+      "Maximum Rear Axle Load",
+      "Carga máxima sobre el eje trasero"
+    ],
+    [
+      "Optional Rear PTO Speeds",
+      "Regímenes opcionales de la TDF trasera"
+    ],
+    [
+      "Oscillation",
+      "Oscilación"
+    ],
+    [
+      "Permissible Total Weight",
+      "Peso total admisible"
+    ],
+    [
+      "PTO Actuation",
+      "Accionamiento de la TDF"
+    ],
+    [
+      "Pto Speed Count",
+      "Número de regímenes de la TDF"
+    ],
+    [
+      "Rear Tyre",
+      "Neumático trasero"
+    ],
+    [
+      "Standard Track Model",
+      "Modelo de oruga de serie"
+    ],
+    [
+      "Track Width Options",
+      "Opciones de anchura"
+    ],
+    [
+      "Automatic Transmission Ranges",
+      "Gamas de la transmisión automática"
+    ],
+    [
+      "Axle Suspension",
+      "Suspensión del eje"
+    ],
+    [
+      "Equipped Weight",
+      "Peso con equipamiento"
+    ],
+    [
+      "Front / Rear Track Width",
+      "Ancho de vía delantero / trasero"
+    ],
+    [
+      "Front Wheel Track Agricultural",
+      "Ancho de vía delantero en configuración agrícola"
+    ],
+    [
+      "Kabin Iklimlendirme",
+      "Climatización de la cabina"
+    ],
+    [
+      "Manufacturer Weight",
+      "Peso indicado por el fabricante"
+    ],
+    [
+      "PTO",
+      "Toma de fuerza (TDF)"
+    ],
+    [
+      "PTO Rated Engine Speed",
+      "Régimen nominal del motor para la TDF"
+    ],
+    [
+      "PTO Speed",
+      "Régimen de la TDF"
+    ],
+    [
+      "Rear Equipment Deck Load Capacity",
+      "Capacidad de carga de la plataforma trasera de equipos"
+    ],
+    [
+      "Rear PTO Speed",
+      "Régimen de la TDF trasera"
+    ],
+    [
+      "Rear PTO Speed Count",
+      "Número de regímenes de la TDF trasera"
+    ],
+    [
+      "Rear Wheel Track Agricultural",
+      "Ancho de vía trasero en configuración agrícola"
+    ],
+    [
+      "Three-Point Hitch Category",
+      "Categoría del enganche de tres puntos"
+    ],
+    [
+      "Turning Radius Without Brakes",
+      "Radio de giro sin frenos"
+    ],
+    [
+      "Base Weight",
+      "Peso básico"
+    ],
+    [
+      "Central Tyre Inflation",
+      "Inflado centralizado de los neumáticos"
+    ],
+    [
+      "Engine RPM For 1000 PTO",
+      "Régimen del motor para TDF a 1.000 rpm"
+    ],
+    [
+      "Engine RPM For 540 PTO",
+      "Régimen del motor para TDF a 540 rpm"
+    ],
+    [
+      "Front Track (Standard)",
+      "Ancho de vía delantero (de serie)"
+    ],
+    [
+      "Front Track Standard",
+      "Ancho de vía delantero de serie"
+    ],
+    [
+      "Front Tyre, 2WD Configuration",
+      "Neumático delantero, configuración 2WD"
+    ],
+    [
+      "Front Tyre, 4WD Configuration",
+      "Neumático delantero, configuración 4WD"
+    ],
+    [
+      "Ground Clearance",
+      "Altura libre al suelo"
+    ],
+    [
+      "Hitch Lift Capacity At Hitch End",
+      "Capacidad de elevación en el extremo del enganche"
+    ],
+    [
+      "Injection Type",
+      "Tipo de inyección"
+    ],
+    [
+      "Length With Hitch",
+      "Longitud con enganche"
+    ],
+    [
+      "Listed Tire Package",
+      "Conjunto de neumáticos indicado"
+    ],
+    [
+      "Manufacturer Engine Power",
+      "Potencia del motor indicada por el fabricante"
+    ],
+    [
+      "Manufacturer Listed Model Year",
+      "Año del modelo indicado por el fabricante"
+    ],
+    [
+      "Maximum Forward Speed At 2000 Rpm",
+      "Velocidad máxima de avance a 2.000 rpm"
+    ],
+    [
+      "Maximum Forward Speed At 2200 Rpm",
+      "Velocidad máxima de avance a 2.200 rpm"
+    ],
+    [
+      "Minimum Forward Speed At 2000 Rpm",
+      "Velocidad mínima de avance a 2.000 rpm"
+    ],
+    [
+      "Minimum Forward Speed At 2200 Rpm",
+      "Velocidad mínima de avance a 2.200 rpm"
+    ],
+    [
+      "Optional Track Model",
+      "Modelo de oruga opcional"
+    ],
+    [
+      "Overall Width",
+      "Anchura total"
+    ],
+    [
+      "Pitch",
+      "Paso"
+    ],
+    [
+      "Rear PTO Speeds",
+      "Regímenes de la TDF trasera"
+    ],
+    [
+      "Rear Track (Standard)",
+      "Ancho de vía trasero (de serie)"
+    ],
+    [
+      "Rear Track Standard",
+      "Ancho de vía trasero de serie"
+    ],
+    [
+      "Rear Tyre Options",
+      "Opciones de neumáticos traseros"
+    ],
+    [
+      "ROPS Height",
+      "Altura de la estructura ROPS"
+    ],
+    [
+      "Shipping / Unladen Weight",
+      "Peso de transporte / sin carga"
+    ],
+    [
+      "Three-Point Lift Capacity",
+      "Capacidad de elevación del enganche de tres puntos"
+    ],
+    [
+      "Track Width Front / Rear",
+      "Ancho de vía delantero / trasero"
+    ],
+    [
+      "Travel Ranges",
+      "Gamas de desplazamiento"
+    ],
+    [
+      "Weight For 2WD Version",
+      "Peso de la versión 2WD"
+    ],
+    [
+      "Weight For 4WD Version",
+      "Peso de la versión 4WD"
+    ],
+    [
+      "Weight With Air Cab",
+      "Peso con cabina Air"
+    ],
+    [
+      "Weight With Protector Cab",
+      "Peso con cabina Protector"
+    ],
+    [
+      "Weight Without Additional Ballast",
+      "Peso sin lastre adicional"
+    ],
+    [
+      "Wheelbase For 2WD Version",
+      "Distancia entre ejes de la versión 2WD"
+    ],
+    [
+      "Wheelbase For 4WD Version",
+      "Distancia entre ejes de la versión 4WD"
+    ]
   ]
 };
 const AUDIT_20261125_LOOKUP=new Map(Object.entries(AUDIT_20261125_EXACT_LABELS).map(([locale,terms])=>[
