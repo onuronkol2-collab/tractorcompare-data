@@ -9,7 +9,7 @@ jobs:
   live:
     if: github.head_ref == 'qa/hattat-tafe-three-live-proof-20261125' && github.event.pull_request.head.repo.full_name == github.repository
     runs-on: ubuntu-latest
-    timeout-minutes: 7
+    timeout-minutes: 12
     steps:
       - uses: actions/checkout@v4
         with:
@@ -54,7 +54,7 @@ jobs:
                   b,mime=fetch(path);p=Page();p.feed(b.decode("utf-8"));errors=[]
                   if mime!="text/html":errors.append("mime")
                   if p.canon!=[origin+path]:errors.append("canonical")
-                  if len(p.sha)!=1 or not re.fullmatch(r"[0-9a-f]{40}",p.sha[0] or ""):errors.append("release")
+                  if len(p.sha)!=1 or p.sha[0] not in accepted:errors.append("release mismatch")
                   if not any(e["fileId"] in str(x) for x in p.images):errors.append("model photo missing")
                   if e["sourcePage"] not in p.sources:errors.append("source attribution")
                   if e["licenseUrl"] not in p.licenses:errors.append("license attribution")
@@ -68,11 +68,15 @@ jobs:
                   if len(b)!=d["bytes"] or hashlib.sha256(b).hexdigest()!=d["sha256"]:errors.append("bytes/hash")
                   return {"group":"jpeg","path":path,"errors":errors}
               except Exception as ex:return {"group":"jpeg","path":path,"errors":[str(ex)]}
-          for attempt in range(4):
+          accepted={"15a635b8cd53706a9cb4da87c451d551a7031133","473e507e82f0c27ba80b1aa081f5e8478ccc1d50"} # verified descendant includes unchanged photo assets
+          for attempt in range(16):
               probe=model(("en",evidence[0]))
               print("PHOTO_RELEASE_READY",json.dumps(probe),flush=True)
-              if not probe["errors"]:break
-              if attempt<3:time.sleep(20)
+              if len(probe.get("release",[]))==1 and probe["release"][0] in accepted:break
+              if attempt<15:time.sleep(20)
+          else:
+              print("PHOTO_RELEASE_DEPLOYMENT_PENDING",json.dumps({"expected":sorted(accepted),"observed":probe.get("release",[]),"contentChecks":0}),flush=True)
+              raise SystemExit(2)
           with concurrent.futures.ThreadPoolExecutor(max_workers=4) as pool:
               results=list(pool.map(model,[(lang,e) for lang in locales for e in evidence]))+list(pool.map(image,[d for e in evidence for d in e["derivatives"]]))
           for x in results:
