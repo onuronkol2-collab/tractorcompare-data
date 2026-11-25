@@ -95,7 +95,9 @@ export function extractPublishedUrls(dist){
   if(!seen.size)reject("No HTML page URL listed in generated sitemaps");
   return [...seen].sort();
 }
-export function significantContentDigest(html,url){
+export const DIGEST_ALGORITHM="astro-market-price-hash-v2";
+export function significantContentDigest(html,url,{legacy=false}={}){
+
   const main=html.match(/<main\b[^>]*>([\s\S]*?)<\/main>/i)?.[1];
   const title=html.match(/<title\b[^>]*>([\s\S]*?)<\/title>/i)?.[1];
   const desc=html.match(/<meta\b[^>]*name=["']description["'][^>]*>/i)?.[0]||"";
@@ -122,7 +124,20 @@ export function significantContentDigest(html,url){
     if([...tag.matchAll(idAttribute)].length!==1)return tag;
     return tag.replace(idAttribute,"");
   });
-  return createHash("sha256").update([normalize(title),normalize(desc),significantMain].join("\n")).digest("hex");
+  // The public checkpoint comparison (run 45649911745) proved that the
+  // generated price component module filename changes on every model page
+  // even when its static content is identical. Ignore ONLY the cache-busting
+  // suffix of this exact empty, local module script. Preserve its presence,
+  // component identity, all other attributes, inline JSON, and all content.
+  const stableMain=legacy?significantMain:significantMain.replace(
+    /<script(?=[\s/>])[^>]*><\/script(?=[\s/>])[^>]*>/gi,tag=>{
+      // Include browser-tolerated end-tag whitespace and attributes
+      // (CodeQL js/bad-tag-filter). Keep the original tag and delimiters:
+      // this is a digest-only substitution, never an HTML sanitizer.
+      if(!/\stype="module"(?=\s|>)/.test(tag))return tag;
+      return tag.replace(/(\ssrc="\/_astro\/TractorMarketPrice\.astro_astro_type_script_index_0_lang\.)[A-Za-z0-9_-]{8,32}(\.js")(?=\s|>)/g,"$1__BUILD_HASH__$2");
+    });
+  return createHash("sha256").update([normalize(title),normalize(desc),stableMain].join("\n")).digest("hex");
 }
 export function deriveHistory({pages,previous,now=new Date(),minPages=100,reviewedPr497Copy=false,reviewedPr467Copy=false}){
   if(!previous||previous.version!==1||!previous.pages||typeof previous.pages!=="object")
@@ -132,7 +147,7 @@ export function deriveHistory({pages,previous,now=new Date(),minPages=100,review
   if(existing && pages.length<Math.ceil(existing*0.95))
     reject("Public sitemap shrinking over 5%; manual review required");
   const baseline=existing===0;
-  const updated={version:1,pages:{}};
+  const updated={version:1,pages:{},...(previous.digestAlgorithm?{digestAlgorithm:previous.digestAlgorithm}:{})};
   const dates={version:1,dates:{}};
   let changed=0,added=0;
   const oldModelUrls=Object.keys(previous.pages).filter(isModelPage);
@@ -199,23 +214,132 @@ export function deriveHistory({pages,previous,now=new Date(),minPages=100,review
   if(previous.reviewedBulkCopyPr467===true)updated.reviewedBulkCopyPr467=true;
   return {history:updated,lastmod:dates,summary:{baseline,pages:pages.length,significant_changes:changed,new_pages:added,dated_pages:Object.keys(dates.dates).length,reviewed_bulk_copy_pr497:updated.reviewedBulkCopyPr497===true,reviewed_bulk_copy_pr467:updated.reviewedBulkCopyPr467===true}};
 }
-export function auditBuiltSitemap({dist=join(ROOT,"site/dist"),historyPath=HISTORY_FILE,lastmodPath=LASTMOD_FILE,now=new Date(),minPages=100}={}){
+function readPublishedHtml(dist,url){
+  const htmlPath=join(dist,new URL(url).pathname.substring(1),"index.html");
+  if(!existsSync(htmlPath))reject("Sitemap page not generated: "+url);
+  return readFileSync(htmlPath,"utf8");
+}
+// Reconstruct only the historically published model identities in the
+// disposable, pinned checkout. New public models can arrive between builds;
+// never alter Supabase or the current production build to recreate history.
+export function historicalModelSlugs(previous){
+  const urls=Object.keys(previous.pages||{}).filter(isModelPage);
+  const slugs=urls.filter(url=>new URL(url).pathname.startsWith("/tractors/"))
+    .map(url=>new URL(url).pathname.split("/")[2]).sort();
+  const locales=["en","tr","zh","hi","pt-br","fr","de","ru","ja","es"];
+  const expected=new Set(slugs.flatMap(slug=>locales.map(lang=>ORIGIN+
+    (lang==="en"?"":"/"+lang)+"/tractors/"+slug+"/")));
+  if(!slugs.length||slugs.some(slug=>!/-[0-9a-f]{8}$/.test(slug))||
+    expected.size!==urls.length||urls.some(url=>!expected.has(url)))
+    reject("Historical model identity inventory incomplete");
+  return slugs;
+}
+export function prepareHistoricalCatalogSource(source,previous){
+  const slugs=historicalModelSlugs(previous);
+  const anchor="  const tractors = [...groups.values()].map((tractor) => {";
+  if(source.split(anchor).length!==2)reject("Unexpected historical catalogue source");
+  const patch="  const historicalSlugs = new Set("+JSON.stringify(slugs)+");\n"+
+    "  const historicalTractors = [...groups.values()].filter(tractor => historicalSlugs.has(tractor.slug));\n"+
+    "  if (historicalTractors.length !== historicalSlugs.size || new Set(historicalTractors.map(tractor => tractor.slug)).size !== historicalSlugs.size) throw new Error('Historical public catalogue identity mismatch');\n"+
+    "  const tractors = historicalTractors.map((tractor) => {";
+  return source.replace(anchor,patch);
+}
+// Migrate only by reconstructing EVERY persisted old hash. Unknown or
+// changed historical inputs fail closed; never reset dates or seed over them.
+export function migrateDigestCheckpoint(previous,legacyDist){
+  if(previous.version!==1||!previous.pages||previous.digestAlgorithm)
+    reject("Invalid legacy digest checkpoint");
+  if(!legacyDist)reject("Legacy digest migration requires the verified historical build");
+  const urls=extractPublishedUrls(legacyDist);
+  if(urls.length!==Object.keys(previous.pages).length)
+    reject("Legacy digest migration inventory mismatch");
+  const pages={};
+  for(const url of urls){
+    const html=readPublishedHtml(legacyDist,url);
+    const old=previous.pages[url];
+    if(!old||significantContentDigest(html,url,{legacy:true})!==old.digest)
+      reject("Legacy digest migration cannot reproduce checkpoint: "+url);
+    pages[url]={...old,digest:significantContentDigest(html,url)};
+  }
+  return {...previous,pages,digestAlgorithm:DIGEST_ALGORITHM};
+}
+export function auditBuiltSitemap({dist=join(ROOT,"site/dist"),historyPath=HISTORY_FILE,lastmodPath=LASTMOD_FILE,now=new Date(),minPages=100,legacyDist=process.env.SITEMAP_LEGACY_DIST}={}){
   const urls=extractPublishedUrls(dist);
-  const pages=urls.map(url=>{
-    const u=new URL(url);
-    const htmlPath=join(dist,u.pathname.substring(1),"index.html");
-    if(!existsSync(htmlPath))reject("Sitemap page not generated: "+url);
-    const html=readFileSync(htmlPath,"utf8");
-    return [url,significantContentDigest(html,url)];
-  });
-  const previous=loadJson(historyPath,{version:1,pages:{}});
+  const pages=urls.map(url=>[url,significantContentDigest(readPublishedHtml(dist,url),url)]);
+  let previous=loadJson(historyPath,{version:1,pages:{}});
+  if(previous.version!==1||!previous.pages||typeof previous.pages!=="object")
+    reject("Invalid previous history checkpoint");
+  if(previous.digestAlgorithm && previous.digestAlgorithm!==DIGEST_ALGORITHM)
+    reject("Unknown sitemap digest algorithm");
+  if(!previous.digestAlgorithm){
+    if(Object.keys(previous.pages).length){
+      previous=migrateDigestCheckpoint(previous,legacyDist);
+      console.log("TRACTORVS_DIGEST_MIGRATION "+JSON.stringify({verifiedLegacyPages:Object.keys(previous.pages).length,algorithm:DIGEST_ALGORITHM}));
+    }else previous={...previous,digestAlgorithm:DIGEST_ALGORITHM};
+  }
   const result=deriveHistory({pages,previous,now,minPages,reviewedPr497Copy:hasReviewedPr497Source(),reviewedPr467Copy:hasReviewedPr467Sources()});
   // Write only on successful full inspection; no silent partial sitemap.
   writeFileSync(historyPath,JSON.stringify(result.history,null,2)+"\n");
   writeFileSync(lastmodPath,JSON.stringify(result.lastmod,null,2)+"\n");
   return result.summary;
 }
+// A second production build can see concurrent public DB changes even
+// if Git HEAD never moved. Verify the actual rebuilt HTML and emitted dates
+// against the candidate checkpoint before allowing any persistent write.
+export function verifyRebuiltCheckpoint({dist=join(ROOT,"site/dist"),historyPath=HISTORY_FILE,lastmodPath=LASTMOD_FILE}={}){
+  const history=loadJson(historyPath,null), map=loadJson(lastmodPath,null);
+  if(history?.version!==1||history.digestAlgorithm!==DIGEST_ALGORITHM||!history.pages||map?.version!==1||!map.dates)
+    reject("Invalid rebuilt sitemap checkpoint");
+  const urls=extractPublishedUrls(dist);
+  if(urls.length!==Object.keys(history.pages).length)
+    reject("Rebuilt catalogue drift: page inventory changed");
+  const expectedDates={};
+  for(const url of urls){
+    const page=history.pages[url];
+    if(!page||significantContentDigest(readPublishedHtml(dist,url),url)!==page.digest)
+      reject("Rebuilt catalogue drift: rendered page changed: "+url);
+    if(page.modified!=null)expectedDates[new URL(url).pathname]=page.modified;
+  }
+  const sorted=o=>JSON.stringify(Object.entries(o).sort(([a],[b])=>a.localeCompare(b)));
+  if(sorted(expectedDates)!==sorted(map.dates))reject("Rebuilt sitemap date map differs from history");
+  const index=readFileSync(join(dist,"sitemap-index.xml"),"utf8");
+  const seen=new Set();
+  for(const child of locs(index)){
+    const path=new URL(child).pathname;
+    if(!/^\/sitemap-[0-9]+\.xml$/.test(path))continue;
+    const xml=readFileSync(join(dist,path.slice(1)),"utf8");
+    for(const [,entry] of xml.matchAll(/<url>([\s\S]*?)<\/url>/g)){
+      const entries=locs(entry);
+      if(entries.length!==1||!history.pages[entries[0]]||seen.has(entries[0]))reject("Invalid rebuilt sitemap URL");
+      const url=entries[0];seen.add(url);
+      const dates=[...entry.matchAll(/<lastmod>([^<]+)<\/lastmod>/g)].map(m=>m[1]);
+      const expected=history.pages[url].modified;
+      if(expected==null?dates.length!==0:dates.length!==1||!Number.isFinite(Date.parse(dates[0]))||Date.parse(dates[0])!==Date.parse(expected))
+        reject("Rebuilt sitemap XML lastmod mismatch: "+url);
+    }
+  }
+  if(seen.size!==urls.length)reject("Incomplete rebuilt sitemap XML verification");
+  return {verifiedPages:urls.length,verifiedDates:Object.keys(expectedDates).length};
+}
 if(process.argv[1]&&resolve(process.argv[1])===fileURLToPath(import.meta.url)){
-  try{console.log("TRACTORVS_CONTENT_VERIFIED_LASTMOD "+JSON.stringify(auditBuiltSitemap()));}
+  try{
+    if(process.argv[2]==="--prepare-historical-catalog"){
+      const checkout=resolve(ROOT,"sitemap-legacy-checkpoint");
+      const expected="c86bc0f39906d53e1e3805f724185fb1b3ace767";
+      if(execFileSync("git",["rev-parse","HEAD"],{cwd:checkout,encoding:"utf8"}).trim()!==expected)
+        reject("Unexpected historical checkpoint revision");
+      const catalogPath=join(checkout,"site/src/lib/catalog.ts");
+      const original=execFileSync("git",["show","HEAD:site/src/lib/catalog.ts"],{cwd:checkout,encoding:"utf8"});
+      if(readFileSync(catalogPath,"utf8")!==original)reject("Historical catalogue source already modified");
+      const previous=loadJson(HISTORY_FILE,null);
+      if(!previous||previous.digestAlgorithm)reject("Unexpected historical migration ledger");
+      writeFileSync(catalogPath,prepareHistoricalCatalogSource(original,previous));
+      console.log("TRACTORVS_HISTORICAL_MODEL_SCOPE "+historicalModelSlugs(previous).length);
+    }else if(process.argv[2]==="--verify-rebuilt-checkpoint"&&process.argv.length===3){
+      console.log("TRACTORVS_REBUILT_CHECKPOINT "+JSON.stringify(verifyRebuiltCheckpoint()));
+    }else if(process.argv.length===2){
+      console.log("TRACTORVS_CONTENT_VERIFIED_LASTMOD "+JSON.stringify(auditBuiltSitemap()));
+    }else reject("Unknown sitemap history argument");
+  }
   catch(e){console.error(e);process.exitCode=1;}
 }

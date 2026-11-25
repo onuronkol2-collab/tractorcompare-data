@@ -15,20 +15,31 @@ on:
   push:
     branches: [main]
     paths:
+      # Shared catalogue, metadata, translations, routes and styles can all
+      # change the significant HTML digest, even without editing TractorDetail.
       - "site/src/**"
       - "!site/src/data/sitemap-lastmod.json"
+      - "site/public/**"
       - "site/astro.config.mjs"
+      - "site/package.json"
+      - "site/package-lock.json"
+      - "site/scripts/production-release-gate.mjs"
+      - "site/scripts/verify-*.mjs"
       - "scripts/tractor-sitemap-history.mjs"
       - "scripts/tractor-sitemap-history.test.mjs"
       - ".github/workflows/tractorvs-sitemap-history.yml"
   pull_request:
     paths:
-      # Model detail presentation can affect thousands of published HTML
-      # digests. Run the *real* source/RLS-backed sitemap guard BEFORE merge.
-      - "site/src/components/TractorDetail.astro"
-      - "site/src/components/TractorPhoto.astro"
-      - "site/src/styles/model-research-toc.css"
+      # Shared catalogue, metadata, translations, routes and styles can all
+      # change the significant HTML digest, even without editing TractorDetail.
+      - "site/src/**"
+      - "!site/src/data/sitemap-lastmod.json"
+      - "site/public/**"
       - "site/astro.config.mjs"
+      - "site/package.json"
+      - "site/package-lock.json"
+      - "site/scripts/production-release-gate.mjs"
+      - "site/scripts/verify-*.mjs"
       - "scripts/tractor-sitemap-history.mjs"
       - "scripts/tractor-sitemap-history.test.mjs"
       - ".github/workflows/tractorvs-sitemap-history.yml"
@@ -85,8 +96,48 @@ jobs:
           SUPABASE_ANON_KEY: ${{ secrets.TRACTORVS_SUPABASE_ANON_JWT }}
           MIN_PUBLIC_TRACTOR_PAGES: "100"
         run: npm run build:production
+      - name: Determine whether legacy digest migration is required
+        id: digest_migration
+        run: |
+          node --input-type=module -e 'import {readFileSync} from "node:fs"; const h=JSON.parse(readFileSync("seo/sitemap-content-history.json","utf8")); console.log("required="+(!h.digestAlgorithm&&Object.keys(h.pages).length>0))' >> "$GITHUB_OUTPUT"
+      - name: Reconstruct exact reviewed historical checkpoint for one-time migration
+        if: steps.digest_migration.outputs.required == 'true'
+        uses: actions/checkout@v4
+        with:
+          ref: c86bc0f39906d53e1e3805f724185fb1b3ace767
+          path: sitemap-legacy-checkpoint
+          persist-credentials: false
+      - name: Scope disposable historical build to prior published model identities
+        if: steps.digest_migration.outputs.required == 'true'
+        run: node scripts/tractor-sitemap-history.mjs --prepare-historical-catalog
+      - name: Build historical checkpoint using anonymous RLS catalogue
+        if: steps.digest_migration.outputs.required == 'true'
+        working-directory: sitemap-legacy-checkpoint/site
+        env:
+          SITE_URL: https://tractorvs.com
+          PUBLIC_INDEXING_ENABLED: "true"
+          WORKERS_CI_BRANCH: main
+          SUPABASE_URL: https://aaufxtcvnzgavtlintiv.supabase.co
+          SUPABASE_ANON_KEY: ${{ secrets.TRACTORVS_SUPABASE_ANON_JWT }}
+          MIN_PUBLIC_TRACTOR_PAGES: "100"
+        run: |
+          npm ci --no-audit --no-fund
+          npm run build:production
+          echo "SITEMAP_LEGACY_DIST=$GITHUB_WORKSPACE/sitemap-legacy-checkpoint/site/dist" >> "$GITHUB_ENV"
       - name: Validate unchanged lastmod plus genuine significant HTML changes
         run: node scripts/tractor-sitemap-history.mjs
+      - name: Rebuild and verify full production sitemap with provenance dates
+        working-directory: site
+        env:
+          SITE_URL: https://tractorvs.com
+          PUBLIC_INDEXING_ENABLED: "true"
+          WORKERS_CI_BRANCH: main
+          SUPABASE_URL: https://aaufxtcvnzgavtlintiv.supabase.co
+          SUPABASE_ANON_KEY: ${{ secrets.TRACTORVS_SUPABASE_ANON_JWT }}
+          MIN_PUBLIC_TRACTOR_PAGES: "100"
+        run: npm run build:production
+      - name: Verify rebuilt HTML and emitted dates against candidate checkpoint
+        run: node scripts/tractor-sitemap-history.mjs --verify-rebuilt-checkpoint
       - name: Keep PR preview read-only
         run: |
           test "${GITHUB_EVENT_NAME}" = "pull_request"
@@ -122,6 +173,34 @@ jobs:
           SUPABASE_ANON_KEY: ${{ secrets.TRACTORVS_SUPABASE_ANON_JWT }}
           MIN_PUBLIC_TRACTOR_PAGES: "100"
         run: npm run build:production
+      - name: Determine whether legacy digest migration is required
+        id: digest_migration
+        run: |
+          node --input-type=module -e 'import {readFileSync} from "node:fs"; const h=JSON.parse(readFileSync("seo/sitemap-content-history.json","utf8")); console.log("required="+(!h.digestAlgorithm&&Object.keys(h.pages).length>0))' >> "$GITHUB_OUTPUT"
+      - name: Reconstruct exact reviewed historical checkpoint for one-time migration
+        if: steps.digest_migration.outputs.required == 'true'
+        uses: actions/checkout@v4
+        with:
+          ref: c86bc0f39906d53e1e3805f724185fb1b3ace767
+          path: sitemap-legacy-checkpoint
+          persist-credentials: false
+      - name: Scope disposable historical build to prior published model identities
+        if: steps.digest_migration.outputs.required == 'true'
+        run: node scripts/tractor-sitemap-history.mjs --prepare-historical-catalog
+      - name: Build historical checkpoint using anonymous RLS catalogue
+        if: steps.digest_migration.outputs.required == 'true'
+        working-directory: sitemap-legacy-checkpoint/site
+        env:
+          SITE_URL: https://tractorvs.com
+          PUBLIC_INDEXING_ENABLED: "true"
+          WORKERS_CI_BRANCH: main
+          SUPABASE_URL: https://aaufxtcvnzgavtlintiv.supabase.co
+          SUPABASE_ANON_KEY: ${{ secrets.TRACTORVS_SUPABASE_ANON_JWT }}
+          MIN_PUBLIC_TRACTOR_PAGES: "100"
+        run: |
+          npm ci --no-audit --no-fund
+          npm run build:production
+          echo "SITEMAP_LEGACY_DIST=$GITHUB_WORKSPACE/sitemap-legacy-checkpoint/site/dist" >> "$GITHUB_ENV"
       - name: Inspect rendered HTML and update only changed page timestamps
         run: node scripts/tractor-sitemap-history.mjs
       - name: Rebuild and verify full production sitemap with provenance dates
@@ -134,6 +213,8 @@ jobs:
           SUPABASE_ANON_KEY: ${{ secrets.TRACTORVS_SUPABASE_ANON_JWT }}
           MIN_PUBLIC_TRACTOR_PAGES: "100"
         run: npm run build:production
+      - name: Verify rebuilt HTML and emitted dates against candidate checkpoint
+        run: node scripts/tractor-sitemap-history.mjs --verify-rebuilt-checkpoint
       - name: Commit only an audited, real content change checkpoint
         if: ${{ !(github.event_name == 'workflow_dispatch' && inputs.dry_run == true) }}
         run: |
@@ -150,8 +231,13 @@ jobs:
             # or rebase stale content over a changed published site.
             for attempt in 1 2 3; do
               git fetch origin main
-              if git diff --name-only "$AUDITED_BASE" origin/main |
-                grep -Eq '^(site/src/|site/astro.config.mjs|site/public/)'; then
+              # A failed comparison must never be mistaken for no changes.
+              if ! changed_paths="$(git diff --name-only "$AUDITED_BASE" origin/main)"; then
+                echo "::error::Could not compare audited revision with main; refusing stale provenance write."
+                exit 1
+              fi
+              if printf '%s\n' "$changed_paths" |
+                grep -Eq '^(site/(src/|public/|scripts/|astro\.config\.mjs$|package(-lock)?\.json$)|scripts/tractor-sitemap-history(\.test)?\.mjs$|seo/sitemap-content-history\.json$|\.github/workflows/tractorvs-sitemap-history\.yml$)'; then
                 echo "::error::Public-site input changed during sitemap audit; refusing to record stale lastmod. A scheduled run will rebuild from the new source."
                 exit 1
               fi
