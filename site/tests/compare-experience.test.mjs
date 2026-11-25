@@ -94,3 +94,30 @@ test("market and country labels are localized; underlying model identity is neve
   assert.equal(localizedCountryName("DE","de"),"Deutschland");
   assert.notEqual(localizedCountryName("FR","fr"),localizedCountryName("FR","tr"));
 });
+
+import {differentPublishedEntries,nextComparisonOption} from "../src/lib/compare-display.mjs";
+test("different entries never interpret missing values as differences or normalize measurements",()=>{
+  const a={value:"100",unit:"hp",context:"rated",rpm:2200,notice:null,source:"https://example.com/a"};
+  assert.equal(differentPublishedEntries([a],[]),false);
+  assert.equal(differentPublishedEntries([],[a]),false);
+  assert.equal(differentPublishedEntries([a],[{...a,source:"https://example.com/b"}]),false);
+  for(const patch of [{value:"101"},{unit:"kW"},{context:"peak"},{rpm:2100},{notice:"Different conditions"}]){
+    assert.equal(differentPublishedEntries([a],[{...a,...patch}]),true);
+  }
+  const b={...a,value:"80"};
+  assert.equal(differentPublishedEntries([a,b],[b,a]),false);
+  assert.equal(differentPublishedEntries([a],[a,b]),true);
+  assert.match(compare,/differentOnly\?different:commonOnly\?shared:keys/);
+  assert.match(compare,/id="tc-different"/);
+  assert.match(compare,/url\.searchParams\.set\("view","different"\)/);
+});
+test("combobox keyboard selects the first or last option from no selection",()=>{
+  assert.equal(nextComparisonOption(-1,8,1),0);
+  assert.equal(nextComparisonOption(-1,8,-1),7);
+  assert.equal(nextComparisonOption(0,8,-1),7);
+  assert.equal(nextComparisonOption(7,8,1),0);
+  assert.equal(nextComparisonOption(-1,0,1),-1);
+  assert.match(compare,/button\.tabIndex=-1/);
+  assert.match(compare,/event\.isComposing/);
+  assert.match(compare,/event\.key==="Tab"/);
+});

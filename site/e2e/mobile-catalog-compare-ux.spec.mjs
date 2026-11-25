@@ -141,3 +141,27 @@ test("synthetic source CSS keeps mobile comparison model columns and readable ci
   await expect(row).toHaveCSS("border-color","rgb(75, 144, 96)");
   expect(await noDocumentOverflow(page)).toBe(true);
 });
+
+test("comparison combobox retains input focus and differing-data view is shareable",async({page})=>{
+  await page.goto("/tr/compare/",{waitUntil:"domcontentloaded"});
+  const input=page.locator("#tc-left-search");
+  test.skip(!(await input.isVisible()),"No published comparison fixtures in the inert local build.");
+  await input.focus();
+  const options=page.locator("#tc-left-results .tc-result");
+  await expect(options.first()).toBeVisible();
+  await input.press("ArrowUp");
+  await expect(input).toHaveAttribute("aria-activedescendant",await options.last().getAttribute("id"));
+  await expect(input).toBeFocused();
+  await expect(options.first()).toHaveAttribute("tabindex","-1");
+  await input.press("Tab");
+  await expect(input).toHaveAttribute("aria-expanded","false");
+  const diff=page.locator("#tc-different");
+  await diff.click();
+  await expect(diff).toHaveAttribute("aria-pressed","true");
+  await expect(page.locator("#tc-different-note")).toBeVisible();
+  await expect.poll(()=>new URL(page.url()).searchParams.get("view")).toBe("different");
+  await page.reload({waitUntil:"domcontentloaded"});
+  await expect(diff).toHaveAttribute("aria-pressed","true");
+  await page.locator("#tc-all").click();
+  await expect.poll(()=>new URL(page.url()).searchParams.get("view")).toBe(null);
+});
