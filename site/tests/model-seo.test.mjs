@@ -820,3 +820,29 @@ test("reviewed Turkish and regional model titles preserve exact equipment and so
  assert.equal((modelSeoMetadata(farm,"en").title.match(/India/g)||[]).length,1);
  assert.ok(modelSeoMetadata({...farm,variant:"India / 2WD / different gearing"},"en").title.includes("different gearing"));
 });
+
+
+test("full live SEO audit follow-up preserves reviewed model identity and compact metadata",async()=>{
+ const {REVIEWED_LONG_TITLE_ROWS}=await import("../src/lib/reviewed-long-model-title-identities.ts");
+ const locales=["en","tr","zh","hi","pt-br","fr","de","ru","ja","es"];
+ const names=["TONY 8700 V","TONY 8900 TRG","804 Fruit Garden Cabin","804.4 Fruit Garden ROPS","YM347","YM359"];
+ const rows=REVIEWED_LONG_TITLE_ROWS.filter(row=>names.includes(row.model));
+ assert.equal(rows.length,6);
+ for(const row of rows){
+  const m={...tractor,brand_name:row.brand,model_name:row.model,variant:row.rawVariant,market:row.rawMarket,model_year:row.year,horsepower:null};
+  const titles=new Set(),snippets=new Set();
+  for(const lang of locales){
+   const meta=modelSeoMetadata(m,lang);
+   assert.ok(meta.title.includes(row.brand+" "+row.model),lang);
+   assert.ok(meta.title.includes(row.variant),lang+" full reviewed equipment");
+   assert.ok(meta.title.length<=105,lang+" "+meta.title);
+   assert.ok(meta.searchDescription.length<=160,lang+" "+meta.searchDescription);
+   assert.ok(meta.description.includes(row.rawVariant),lang+" raw evidence");
+   assert.equal(modelStructuredData(m,lang,"https://tractorvs.example")["@graph"][2].disambiguatingDescription,row.rawVariant+" · "+row.rawMarket);
+   assert.doesNotMatch(meta.searchDescription,/114 HP/);
+   titles.add(meta.title);snippets.add(meta.searchDescription);
+  }
+  assert.equal(titles.size,10,row.model+" locale title identity");
+  assert.equal(snippets.size,10,row.model+" locale snippet identity");
+ }
+});
