@@ -5,6 +5,7 @@ on:
     paths:
       - ".github/workflows/live-website-audit.yml"
       - "site/scripts/live-website-audit.mjs"
+      - "site/tests/owner-audit-control.test.mjs"
       - "site/scripts/live-public-response.mjs"
       - "site/scripts/live-lastmod-proof.mjs"
       - "site/scripts/live-release-readiness.mjs"
@@ -29,6 +30,7 @@ on:
     paths:
       - ".github/workflows/live-website-audit.yml"
       - "site/scripts/live-website-audit.mjs"
+      - "site/tests/owner-audit-control.test.mjs"
       - "site/scripts/live-public-response.mjs"
       - "site/scripts/live-lastmod-proof.mjs"
       - "site/scripts/live-release-readiness.mjs"
@@ -48,6 +50,8 @@ on:
       - "site/tests/seo-html-attributes.test.mjs"
       - "site/scripts/production-sitemap-inventory.mjs"
       - "site/tests/production-sitemap-inventory.test.mjs"
+  issue_comment:
+    types: [created]
   workflow_dispatch:
     inputs:
       mode:
@@ -70,15 +74,49 @@ permissions:
 
 jobs:
   inspect:
+    # Only owner-authored, newly created commands on the dedicated open issue.
+    # Never interpolate a comment into a shell, URL, ref, or environment.
+    if: >-
+      github.event_name == 'pull_request' ||
+      github.event_name == 'workflow_dispatch' ||
+      github.event_name == 'schedule' ||
+      github.event_name == 'push' ||
+      (github.event_name == 'issue_comment' &&
+       github.repository == 'onuronkol2-collab/tractorcompare-data' &&
+       github.ref == 'refs/heads/main' &&
+       github.event.action == 'created' &&
+       github.event.issue.number == 747 &&
+       github.event.issue.state == 'open' &&
+       !github.event.issue.pull_request &&
+       github.event.comment.author_association == 'OWNER' &&
+       github.event.comment.user.type == 'User' &&
+       github.event.comment.user.id == 356616554 &&
+       github.event.sender.id == 356616554 &&
+       (github.event.comment.body == '/tractorvs-audit full-seo' ||
+        github.event.comment.body == '/tractorvs-audit all'))
+    concurrency:
+      group: ${{ github.workflow }}-${{ github.event_name == 'pull_request' && format('pr-{0}', github.event.pull_request.number) || 'production' }}
+      cancel-in-progress: false
     runs-on: ubuntu-latest
     timeout-minutes: 35
     steps:
       - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
       - uses: actions/setup-node@v4
         with:
           node-version: "22.23.4"
       - name: Test sitemap boundaries and real HTML meta-attribute parsing
         run: node --experimental-strip-types --test site/tests/live-public-response-security.test.mjs site/tests/live-lastmod-proof.test.mjs site/tests/live-release-readiness.test.mjs site/tests/live-stylesheets.test.mjs site/tests/production-sitemap-inventory.test.mjs site/tests/seo-html-attributes.test.mjs site/tests/production-internal-link-graph.test.mjs
+      - name: Test owner-only on-demand audit control
+        run: node --test site/tests/owner-audit-control.test.mjs
+      - name: Verify requested audit release before live measurements
+        if: github.event_name == 'issue_comment'
+        id: audit_release
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          TRACTORVS_REQUIRE_WORKERS_BUILD: "true"
+        run: node site/scripts/live-release-readiness.mjs "$GITHUB_SHA" / /tr/tractors/ /fr/articles/
       - name: Inspect workers.dev preview
         env:
           TRACTORVS_AUDIT_ORIGIN: https://tractorvs-site.onuronkol2.workers.dev
@@ -95,19 +133,31 @@ jobs:
         if: github.event_name == 'pull_request'
         run: echo "Full live-sitemap SEO requires deployment; PR tests validate its new source checks, production live audit runs after main updates."
       - name: Verify live sitemap dates against exact deployed revision
+        id: audit_lastmod
         if: github.event_name != 'pull_request'
         env:
           GITHUB_TOKEN: ${{ github.token }}
           TRACTORVS_REQUIRE_WORKERS_BUILD: "true"
         run: node site/scripts/live-lastmod-proof.mjs "$GITHUB_SHA"
       - name: Verify full sitemap inventory and inspect live SEO (daily rotating sample; weekly all pages)
-        if: ${{ !cancelled() && github.event_name != 'pull_request' }}
+        if: ${{ !cancelled() && github.event_name != 'pull_request' && (github.event_name != 'issue_comment' || (steps.audit_release.outcome == 'success' && steps.audit_lastmod.outcome == 'success')) }}
         env:
           TRACTORVS_SEO_EVIDENCE_PATH: ${{ runner.temp }}/tractorvs-seo-audit-details.json
-          TRACTORVS_SEO_AUDIT_MODE: ${{ (github.event_name == 'workflow_dispatch' && inputs.mode == 'full' || github.event.schedule == '0 7 * * 0') && 'full' || 'daily' }}
+          TRACTORVS_SEO_AUDIT_MODE: ${{ (github.event_name == 'issue_comment' || github.event_name == 'workflow_dispatch' && inputs.mode == 'full' || github.event.schedule == '0 7 * * 0') && 'full' || 'daily' }}
         run: |
           set -o pipefail
           node site/scripts/production-seo-audit.mjs 2>&1 | tee "$RUNNER_TEMP/tractorvs-seo-audit.log"
+      - name: Confirm same served release after requested audit
+        if: github.event_name == 'issue_comment'
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          TRACTORVS_REQUIRE_WORKERS_BUILD: "true"
+          RELEASE_SHA: ${{ steps.audit_release.outputs.release_sha }}
+        run: |
+          set -euo pipefail
+          test -n "$RELEASE_SHA"
+          node site/scripts/live-release-readiness.mjs "$RELEASE_SHA" / /tr/tractors/ /fr/articles/
+          grep -Fx "release_sha=$RELEASE_SHA" "$GITHUB_OUTPUT"
       - name: Preserve live SEO scope and result evidence
         if: always() && github.event_name != 'pull_request'
         uses: actions/upload-artifact@v7
