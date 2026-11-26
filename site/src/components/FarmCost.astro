@@ -1,0 +1,84 @@
+---
+import SiteLayout from "../layouts/SiteLayout.astro";
+import {localizedPath,LOCALE_TAGS,type Locale} from "../lib/locales";
+import {farmCostText} from "../lib/farm-cost-i18n";
+import {farmCost} from "../lib/farm-cost.mjs";
+interface Props {lang:Locale}
+const {lang}=Astro.props;
+const c=farmCostText(lang);
+const fields=[
+ ["area",10,0.0001,1000000],["width",3,0.01,100],["speed",6,0.01,100],["efficiency",75,0.01,100],
+ ["fuel",8,0,10000],["price",1,0,1e9],["annualHours",200,0,8760],["other",0,0,1e12],["fixed",0,0,1e15]
+] as const;
+const initial=farmCost(Object.fromEntries(fields.map(([key,value])=>[key,value])));
+const metrics=["capacity","time","litres","hourly","perHa","perDekar","fieldCost","annualFuel","annualTotal"] as const;
+const number=new Intl.NumberFormat(LOCALE_TAGS[lang],{maximumSignificantDigits:6});
+---
+<SiteLayout lang={lang} title={c.title+" | TractorVS"} description={c.description}>
+ <section class="container cost-page" data-farm-cost data-locale={LOCALE_TAGS[lang]} data-invalid={c.invalid}>
+  <h1>{c.title}</h1>
+  <p>{c.description}</p>
+  <p class="cost-note">{c.note}</p>
+  <div class="cost-grid">
+   <form id="farm-cost-form">
+    {fields.map(([key,value,min,max])=><label>{c[key]}<input name={key} type="number" inputmode="decimal" value={value} min={min} max={max} step="any" required /></label>)}
+    <button type="submit">{c.calculate}</button>
+    <p id="farm-cost-error" role="alert" hidden>{c.invalid}</p>
+   </form>
+   <dl class="cost-results" aria-live="polite" aria-atomic="true">
+    {metrics.map(key=><div><dt>{c[key]}</dt><dd><output form="farm-cost-form" data-cost-result={key}>{number.format(initial[key])}</output></dd></div>)}
+   </dl>
+  </div>
+  <h2>{c.method}</h2>
+  <p>{c.formula}</p>
+  <h2>{c.sources}</h2>
+  <ul>
+   <li><a href="https://www.extension.iastate.edu/AGDM/crops/html/a3-24.html" lang="en">Iowa State University Extension — Estimating the Field Capacity of Farm Machines</a></li>
+   <li><a href="https://www.extension.iastate.edu/AGDM/crops/html/a3-29.html" lang="en">Iowa State University Extension — Estimating Farm Machinery Costs</a></li>
+  </ul>
+  <p><a href={localizedPath(lang,"/farm-advisor/")}>{c.advisor}</a></p>
+ </section>
+</SiteLayout>
+<script>
+ import {farmCost} from "../lib/farm-cost.mjs";
+ const root=document.querySelector<HTMLElement>("[data-farm-cost]");
+ const form=document.querySelector<HTMLFormElement>("#farm-cost-form");
+ const error=document.querySelector<HTMLElement>("#farm-cost-error");
+ if(root&&form&&error){
+  const format=new Intl.NumberFormat(root.dataset.locale,{maximumSignificantDigits:6});
+  form.addEventListener("submit",event=>{
+   event.preventDefault();
+   try{
+    if(!form.checkValidity())throw new Error("Invalid form");
+    const values=Object.fromEntries([...new FormData(form)].map(([key,value])=>[key,String(value).trim()===""?NaN:Number(value)]));
+    const result=farmCost(values);
+    for(const node of root.querySelectorAll<HTMLOutputElement>("[data-cost-result]")){
+     const key=node.dataset.costResult as keyof typeof result;
+     node.textContent=format.format(result[key]);
+    }
+    error.hidden=true;
+   }catch{
+    error.hidden=false;
+    for(const node of root.querySelectorAll("[data-cost-result]"))node.textContent="—";
+   }
+  });
+  form.addEventListener("input",()=>{
+   error.hidden=true;
+   for(const node of root.querySelectorAll("[data-cost-result]"))node.textContent="—";
+  });
+ }
+</script>
+<style>
+ .cost-page{padding-block:clamp(1.5rem,4vw,3rem);max-width:1100px}
+ .cost-page p{max-width:78ch;line-height:1.7}
+ .cost-note{border-inline-start:3px solid currentColor;padding-inline-start:1rem}
+ .cost-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,20rem),1fr));gap:1.5rem;margin-block:2rem}
+ form,.cost-results{display:grid;gap:.8rem;align-content:start;margin:0;padding:1rem;border:1px solid #708478;border-radius:.8rem}
+ label{display:grid;gap:.35rem;font-weight:600}
+ input,button{font:inherit;min-height:44px;border:1px solid #708478;border-radius:.4rem;padding:.5rem;max-width:100%;color:inherit;background:transparent}
+ button{background:#245b39;color:#fff;font-weight:700;cursor:pointer}
+ .cost-results div{display:grid;gap:.2rem;border-bottom:1px solid #708478;padding-bottom:.6rem}
+ dt{font-size:.95rem}
+ dd{font-size:1.2rem;font-weight:700;margin:0;overflow-wrap:anywhere}
+ a{overflow-wrap:anywhere}
+</style>
