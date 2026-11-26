@@ -1,3 +1,5 @@
+import {scanHeadTags} from "./verify-sitewide-meta-descriptions.mjs";
+import {readOpeningTagAttribute as attr} from "./seo-html-attributes.mjs";
 /**
  * Fail-closed production release gate for TractorVS Cloudflare Workers Builds.
  * No credentials are printed or written; only build-time environment values
@@ -78,6 +80,20 @@ export function verifyProductionConfiguration(env=process.env,dir=process.cwd())
  return {origin:expectedOrigin,worker:wrangler.name};
 }
 
+// Parse the actual head link, not a substring anywhere in generated HTML.
+export function hasExactCanonical(html,expected){
+ const head=html.match(/<head\b[^>]*>([\s\S]*?)<\/head\s*>/i)?.[1];
+ if(!head)return false;
+ const links=scanHeadTags(head).links.filter(tag=>(attr(tag,"rel")||"").toLowerCase().split(/\s+/).includes("canonical"));
+ if(links.length!==1)return false;
+ const href=attr(links[0],"href");
+ if(!href)return false;
+ try{
+  const a=new URL(href),b=new URL(expected);
+  return !a.username&&!a.password&&!a.search&&!a.hash&&a.protocol==="https:"&&a.href===b.href;
+ }catch{return false}
+}
+
 function readText(path){
  insist(existsSync(path),"Expected generated file is missing: "+path.replace(projectRoot,"site"));
  return readFileSync(path,"utf8");
@@ -91,8 +107,8 @@ export function verifyProductionArtifacts({dir=projectRoot,origin=expectedOrigin
  const sitemap=readText(join(dist,"sitemap-index.xml"));
  insist(!/noindex,nofollow|content="noindex/i.test(html),"English homepage is marked noindex.");
  insist(!/noindex,nofollow|content="noindex/i.test(tr),"Turkish homepage is marked noindex.");
- insist(html.includes('rel="canonical"')&&html.includes(origin),"English canonical is missing or wrong.");
- insist(tr.includes('rel="canonical"')&&tr.includes(origin+"/tr/"),"Turkish canonical is missing or wrong.");
+ insist(hasExactCanonical(html,new URL("/",origin).href),"English canonical is missing or wrong.");
+ insist(hasExactCanonical(tr,new URL("/tr/",origin).href),"Turkish canonical is missing or wrong.");
  insist(robots.includes("Allow: /")&&!/Disallow:\s*\//.test(robots),"robots.txt blocks search engines.");
  insist(robots.includes(origin+"/sitemap-index.xml"),"robots.txt does not reference production sitemap.");
  insist(sitemap.includes("sitemap-"),"Sitemap index is empty.");
@@ -130,7 +146,7 @@ export function verifyProductionArtifacts({dir=projectRoot,origin=expectedOrigin
   const publicUrl=origin+"/"+route+"/";
   insist(!/noindex,nofollow|content="noindex/i.test(article),
     "Editorial hub cannot be noindex: "+route);
-  insist(article.includes('rel="canonical" href="'+publicUrl+'"'),
+  insist(hasExactCanonical(article,publicUrl),
     "Editorial hub has wrong canonical: "+route);
   insist(article.includes('lang="'+locale+'"'),
     "Editorial hub has wrong language: "+route);
