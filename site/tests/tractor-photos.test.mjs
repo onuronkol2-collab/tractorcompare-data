@@ -672,7 +672,10 @@ test("source-backed copyright notices cover approved Google warning images in al
  const expected=new Set([...originalThree,...reviewedTwenty,...exactTym,"zetor-forterra-140-hd-maindistorsion","belarus-132n-picture30-2011","mccormick-x7-621-barzkowice-zwiadowca21-2026","landini-5-110-roboshift-marcelx42-2023"]);
  expected.add("hattat-b3105-marcelx42-2023");
  expected.add("tafe-7515-cab-advanced-representative-marcelx42-2023");
- assert.equal(expected.size,32);
+ // Commons source pages independently checked 2026-11-26: own work, author self-license, matching original SHA-1.
+ expected.add("jcb-6260-marcelx42-2025");
+ expected.add("jcb-6300-marcelx42-2025");
+ assert.equal(expected.size,34);
  const actual=APPROVED_TRACTOR_PHOTOS.filter(p=>p.copyrightOwner);
  assert.deepEqual(new Set(actual.map(p=>p.fileId)),expected,
    "Unexpected ownership claims must undergo separate review before publication");
