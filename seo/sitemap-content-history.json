@@ -18,8 +18,8 @@
       "modified": "2026-11-22T08:02:35.845Z"
     },
     "https://tractorvs.com/compare/": {
-      "digest": "5fb2d356db7bc6c5f1d40ae17f86fcd8b44cf787298a96c10f9ae8174f828473",
-      "modified": "2026-11-26T12:36:43.036Z"
+      "digest": "8c4177cc1e701d069632585a2c70b0980af281747cc1539c9f06261db7c90e0e",
+      "modified": "2026-11-26T16:46:31.883Z"
     },
     "https://tractorvs.com/compare/deutz-fahr-5090-d-gs-vs-5100-d-gs/": {
       "digest": "922999b9696029c032d6b1c71856522e23db46cc43479dd85fbb929909556a66",
@@ -34,8 +34,8 @@
       "modified": "2026-11-24T16:26:42.582Z"
     },
     "https://tractorvs.com/de/compare/": {
-      "digest": "3941ac8c50bb067435f1b1ac237023483c02360947bb1ff345dce7a3c005c270",
-      "modified": "2026-11-26T12:36:43.036Z"
+      "digest": "7959d8fb7971b0c8bc7d104c19b84bab91d162669dce6a8507128b0cce05a116",
+      "modified": "2026-11-26T16:46:31.883Z"
     },
     "https://tractorvs.com/de/farm-advisor/": {
       "digest": "2a266271a714aab6f22aa27088b4b9ee0282fa861351f35d850a1d86978209bc",
@@ -58,8 +58,8 @@
       "modified": "2026-11-24T16:26:42.582Z"
     },
     "https://tractorvs.com/de/tractors/": {
-      "digest": "e6e919600127b9b8284184019ffe81b9aead331889d88f29210effd59956694c",
-      "modified": "2026-11-26T14:34:08.311Z"
+      "digest": "05bfe59ad08a921fbd0130743b55c4031da4cd4d3bda504231c0fcbb93c1afbb",
+      "modified": "2026-11-26T16:46:31.883Z"
     },
     "https://tractorvs.com/de/tractors/agrale-4125-0b53e944/": {
       "digest": "36574345740c503986e3dd94ff07e6786745e1c2772fe5b4c4bf4f9ed58771f0",
@@ -1070,8 +1070,8 @@
       "modified": "2026-11-25T16:35:52.123Z"
     },
     "https://tractorvs.com/de/tractors/solis-75-dt-mr-39a48550/": {
-      "digest": "ba6487f91ae720d9148784a3c2b08e6b0646c60a99723fcfd3df7b289b556516",
-      "modified": "2026-11-25T16:35:52.123Z"
+      "digest": "6039f975db6f5ca4296e0ee76fbe313aeba5f4bad7dc13e35e18122bfdd3840b",
+      "modified": "2026-11-26T16:46:31.883Z"
     },
     "https://tractorvs.com/de/tractors/solis-75-hvac-stage-v-948b5823/": {
       "digest": "955d77209b7f981ae74868ec1ef08f5197c38c319fb4d68e5177231677a38b55",
@@ -1986,8 +1986,8 @@
       "modified": "2026-11-24T16:26:42.582Z"
     },
     "https://tractorvs.com/es/compare/": {
-      "digest": "1bfa771e50a0d38d63daf564b2e1464eaf499514d68a5b3f616936b7b9518067",
-      "modified": "2026-11-26T12:36:43.036Z"
+      "digest": "cc81e8068ec2d8f6ed15d1f82e21a74400deb3a2edbb883d3ee47c9d1bda3f09",
+      "modified": "2026-11-26T16:46:31.883Z"
     },
     "https://tractorvs.com/es/farm-advisor/": {
       "digest": "256b50c78bd6e910fb9f7b4fbad911c13062e67b5d15c18c8d303907af8a60ec",
@@ -2010,8 +2010,8 @@
       "modified": "2026-11-24T16:26:42.582Z"
     },
     "https://tractorvs.com/es/tractors/": {
-      "digest": "a4ac4a395ed716bfc222aa675da1cec471aeb8ded279c137a7740038f871b6ff",
-      "modified": "2026-11-26T14:34:08.311Z"
+      "digest": "20f6fdc0d267a5c1dce52539135186a84b5ef9a86f10d9695b31b6bdb1e7695c",
+      "modified": "2026-11-26T16:46:31.883Z"
     },
     "https://tractorvs.com/es/tractors/agrale-4125-0b53e944/": {
       "digest": "abcb07fb16cdf248a69b85c352b898552f8d21780beaaeb840f0b354d853f0bf",
@@ -3022,8 +3022,8 @@
       "modified": "2026-11-25T16:35:52.123Z"
     },
     "https://tractorvs.com/es/tractors/solis-75-dt-mr-39a48550/": {
-      "digest": "114a959f4dbce043e9899eab5dbfc5aeee876cf8c4b7c99b143bdd57bee595c0",
-      "modified": "2026-11-25T16:35:52.123Z"
+      "digest": "172e35a58e13eb77cd25c04dc7953e4a3503e09fc682d23cbd5e0ac102e0340b",
+      "modified": "2026-11-26T16:46:31.883Z"
     },
     "https://tractorvs.com/es/tractors/solis-75-hvac-stage-v-948b5823/": {
       "digest": "cd2ee6de19dd3de340bdbd71bd32e47b4e4bf544f997afdd530b22c08573a4b4",
@@ -3942,8 +3942,8 @@
       "modified": "2026-11-24T16:26:42.582Z"
     },
     "https://tractorvs.com/fr/compare/": {
-      "digest": "5a0a39cf969ac5389784807af8c77ec931919cf8708a70451d240bfff76a9294",
-      "modified": "2026-11-26T12:36:43.036Z"
+      "digest": "efc0cb45f0c25dbd45652292d3883a3cca261f322d8bde8589050634c7644cdf",
+      "modified": "2026-11-26T16:46:31.883Z"
     },
     "https://tractorvs.com/fr/farm-advisor/": {
       "digest": "6f7eb337d4392d14e282c646018f28d898a88966ca2ab24495f3b9deb5be1f57",
@@ -3966,8 +3966,8 @@
       "modified": "2026-11-24T16:26:42.582Z"
     },
     "https://tractorvs.com/fr/tractors/": {
-      "digest": "387e02bafdd42c140205ffa6e5be7544bc6139c646965a42300d2e661023808c",
-      "modified": "2026-11-26T14:34:08.311Z"
+      "digest": "18e2ed6eeed20b32cd360bf7aedd3cb5262e273a125879ab852f394cd5db6249",
+      "modified": "2026-11-26T16:46:31.883Z"
     },
     "https://tractorvs.com/fr/tractors/agrale-4125-0b53e944/": {
       "digest": "d662b70a31428979d56405d1f68e450f1d9e1b41620fbaa2e3d5f7c6c1749d4f",
@@ -4978,8 +4978,8 @@
       "modified": "2026-11-25T16:35:52.123Z"
     },
     "https://tractorvs.com/fr/tractors/solis-75-dt-mr-39a48550/": {
-      "digest": "164b8d4aa4586bc734e6ab2ae1082e3773c4a894fa53d3e0164dd5dfc0b237dd",
-      "modified": "2026-11-25T16:35:52.123Z"
+      "digest": "a619547c666cafa178b48f35db05fbfbf16730491f69f0079c794cd984760b56",
+      "modified": "2026-11-26T16:46:31.883Z"
     },
     "https://tractorvs.com/fr/tractors/solis-75-hvac-stage-v-948b5823/": {
       "digest": "9c746b36a9e5242e5ee17ad26f370b5860fd4816d6d4c466fa843a01e68f6a92",
@@ -5918,8 +5918,8 @@
       "modified": "2026-11-24T16:26:42.582Z"
     },
     "https://tractorvs.com/hi/compare/": {
-      "digest": "7324784e4c78971216bd2f751f07ddef63032e4320342efcbe5cc7fd71723714",
-      "modified": "2026-11-26T12:36:43.036Z"
+      "digest": "c7365fd23202650604f17d5e37eaec447573124a8c4c0339b5305198b7aa2d3c",
+      "modified": "2026-11-26T16:46:31.883Z"
     },
     "https://tractorvs.com/hi/farm-advisor/": {
       "digest": "29976687271f05fa11150d165b85e7ccb9942860d5294e5e8a3978ef31d4365c",
@@ -5942,8 +5942,8 @@
       "modified": "2026-11-24T16:26:42.582Z"
     },
     "https://tractorvs.com/hi/tractors/": {
-      "digest": "857c016c0f5dcc86095b430bb5c0cbbf54730cd157cccff186444896e41ed8d4",
-      "modified": "2026-11-26T14:34:08.311Z"
+      "digest": "2483f6f31714830e75adf1df2b958eccff28e0b8df51e5f48f9c1a67ec29f080",
+      "modified": "2026-11-26T16:46:31.883Z"
     },
     "https://tractorvs.com/hi/tractors/agrale-4125-0b53e944/": {
       "digest": "aa56fda8a664ee27e803b132189f34260cc35e05e1fee91569f3c5f6cdf3788d",
@@ -6954,8 +6954,8 @@
       "modified": "2026-11-25T16:35:52.123Z"
     },
     "https://tractorvs.com/hi/tractors/solis-75-dt-mr-39a48550/": {
-      "digest": "20447ec439a411f0a0ae93974020b1dd270aec2332af93ad49270e647b053e46",
-      "modified": "2026-11-25T16:35:52.123Z"
+      "digest": "e2d7143be0f6d0734fba458fae8907c82875002d8f1b07608f5f6bf1134d5cb5",
+      "modified": "2026-11-26T16:46:31.883Z"
     },
     "https://tractorvs.com/hi/tractors/solis-75-hvac-stage-v-948b5823/": {
       "digest": "570dc1d5daf91633aa083a8a27249ec4222cd6b8a69c78afbf19260e414b47ee",
@@ -7870,8 +7870,8 @@
       "modified": "2026-11-24T16:26:42.582Z"
     },
     "https://tractorvs.com/ja/compare/": {
-      "digest": "23bff03f7ec14921659c4ffd085706c3ad8ecf5cda8f969a37ed75dc5fd5e0b5",
-      "modified": "2026-11-26T12:36:43.036Z"
+      "digest": "87d3358b9109490117de2b93729fe69e954d209d9416d84fbd3f5c8c24a62630",
+      "modified": "2026-11-26T16:46:31.883Z"
     },
     "https://tractorvs.com/ja/farm-advisor/": {
       "digest": "6595e219c2013155f064f5640c2b78915c92087143a3abee47ad5880657d19c0",
@@ -7894,8 +7894,8 @@
       "modified": "2026-11-24T16:26:42.582Z"
     },
     "https://tractorvs.com/ja/tractors/": {
-      "digest": "5d3713be6183d09e981f60d4b379a7e8c3aed06785be143fd4324e0db2bf5cda",
-      "modified": "2026-11-26T14:34:08.311Z"
+      "digest": "82ee6050c9225a6ed2588f8b69d8442358250a4a1145f6f10906926e6ab97b57",
+      "modified": "2026-11-26T16:46:31.883Z"
     },
     "https://tractorvs.com/ja/tractors/agrale-4125-0b53e944/": {
       "digest": "ba5b8f27ecbce207b91f4ce8b7dce89a982d4fe058c296268d69feb001e2caa3",
@@ -8906,8 +8906,8 @@
       "modified": "2026-11-25T16:35:52.123Z"
     },
     "https://tractorvs.com/ja/tractors/solis-75-dt-mr-39a48550/": {
-      "digest": "11e15605508e24b678b05dfeed8ab327437146fb8c3e73e206182834f8fdd6d8",
-      "modified": "2026-11-25T16:35:52.123Z"
+      "digest": "6ebcf3de9dac397e9a97517b5cfc4a1e167c0291ffbbe0633fd946320a7f4c27",
+      "modified": "2026-11-26T16:46:31.883Z"
     },
     "https://tractorvs.com/ja/tractors/solis-75-hvac-stage-v-948b5823/": {
       "digest": "b7de938783a56db7987aa77ec801ba33ab47d3d842f0190f8954bdfdb1dd46f9",
@@ -9830,8 +9830,8 @@
       "modified": "2026-11-24T16:26:42.582Z"
     },
     "https://tractorvs.com/pt-br/compare/": {
-      "digest": "4a062c9c26b26c0e2d5c390e8a9015b478568185fac0a3748660db07b5a15f24",
-      "modified": "2026-11-26T12:36:43.036Z"
+      "digest": "5c32e0a51d506836276cb07f283d7f952a0f66d3f4d0d4df157253477234703d",
+      "modified": "2026-11-26T16:46:31.883Z"
     },
     "https://tractorvs.com/pt-br/farm-advisor/": {
       "digest": "339d858a0242ad4f287cdce4c54dd0f80c93fe10f0539bbb6bddb1483d86994e",
@@ -9854,8 +9854,8 @@
       "modified": "2026-11-24T16:26:42.582Z"
     },
     "https://tractorvs.com/pt-br/tractors/": {
-      "digest": "6fb4851af6206e92fdb0480033b7695b69e7fe90819392f1609db78de76af382",
-      "modified": "2026-11-26T14:34:08.311Z"
+      "digest": "dd3b51103893a39b7f4df44c05c7b25d27ad53fe041b3fb239434750a3fd183d",
+      "modified": "2026-11-26T16:46:31.883Z"
     },
     "https://tractorvs.com/pt-br/tractors/agrale-4125-0b53e944/": {
       "digest": "d4715e6ae557334dbf69e95d7ca05f3bb01f93112507be9afd338c3ee3eadafa",
@@ -10866,8 +10866,8 @@
       "modified": "2026-11-25T16:35:52.123Z"
     },
     "https://tractorvs.com/pt-br/tractors/solis-75-dt-mr-39a48550/": {
-      "digest": "4c21c550cd5145ff2efae7ff2df7093f4e7cd8594c083455d917a72ba81c36c3",
-      "modified": "2026-11-25T16:35:52.123Z"
+      "digest": "a31be53d64203c1a0fc3ba0401876b2a0083e234aa335eeaa1abf82556dd10ec",
+      "modified": "2026-11-26T16:46:31.883Z"
     },
     "https://tractorvs.com/pt-br/tractors/solis-75-hvac-stage-v-948b5823/": {
       "digest": "ba36643a89573f57c2744c6f098a467d44cf875d131b11cb44919723f88cf8e0",
@@ -11786,8 +11786,8 @@
       "modified": "2026-11-24T16:26:42.582Z"
     },
     "https://tractorvs.com/ru/compare/": {
-      "digest": "2704b16b3616eaf8401bf4104e184f7d06b9404d927c042882468b3f5862dd49",
-      "modified": "2026-11-26T12:36:43.036Z"
+      "digest": "2e0e248bb879a8474b0ba173f8d701f7508a4e7c22ad95ff6c54e637a43dd633",
+      "modified": "2026-11-26T16:46:31.883Z"
     },
     "https://tractorvs.com/ru/farm-advisor/": {
       "digest": "466f6ed1483f24e42801210a3e676a337413bd1500469ea1c21f2b43dda79886",
@@ -11810,8 +11810,8 @@
       "modified": "2026-11-24T16:26:42.582Z"
     },
     "https://tractorvs.com/ru/tractors/": {
-      "digest": "18228eb8c7008c7f7099d0efa2e8bff34612ac2fdf5121c97f9e70075332fe68",
-      "modified": "2026-11-26T14:34:08.311Z"
+      "digest": "a3b106401cc8c432eb4dea1e7c3f5cb85ea9c0c4166d8fc22d55d78f6ca987ce",
+      "modified": "2026-11-26T16:46:31.883Z"
     },
     "https://tractorvs.com/ru/tractors/agrale-4125-0b53e944/": {
       "digest": "c5f2b06e1c65083d36c899280fdf130b7c449282a71c3e1d64d51645f9e11677",
@@ -12822,8 +12822,8 @@
       "modified": "2026-11-25T16:35:52.123Z"
     },
     "https://tractorvs.com/ru/tractors/solis-75-dt-mr-39a48550/": {
-      "digest": "87c87c6f3199ec879da7b06b243536a80008759fdd66e4d96d3c94be7b04dad7",
-      "modified": "2026-11-25T16:35:52.123Z"
+      "digest": "2f30e388687227c533ed4aaa421bbb192dcf011ef6cb5561da0f97a5ba8d74ce",
+      "modified": "2026-11-26T16:46:31.883Z"
     },
     "https://tractorvs.com/ru/tractors/solis-75-hvac-stage-v-948b5823/": {
       "digest": "fb0728cae494fe25d69c3b88f72e9d831453df9a9f891250ec787f9058b2b1f2",
@@ -13746,8 +13746,8 @@
       "modified": "2026-11-22T08:02:35.845Z"
     },
     "https://tractorvs.com/tr/compare/": {
-      "digest": "e23d4e2e52efdced5b74e49b11ce09deff7501b99242ae51afbdfd135e64fa25",
-      "modified": "2026-11-26T12:36:43.036Z"
+      "digest": "9a35dea6f3d93de67d41346e3235fcd1de61041794c0e6c09298445748434ee7",
+      "modified": "2026-11-26T16:46:31.883Z"
     },
     "https://tractorvs.com/tr/compare/deutz-fahr-5090-d-gs-vs-5100-d-gs/": {
       "digest": "0f223596935ecf9cf2a0972e5fd862ac566c38ba2f83123a156634df383d9733",
@@ -13794,8 +13794,8 @@
       "modified": "2026-11-24T16:26:42.582Z"
     },
     "https://tractorvs.com/tr/tractors/": {
-      "digest": "2e2e55fdef71414a6ed8f6a49112a92890e734eac9589fea16c02061bff1c04f",
-      "modified": "2026-11-26T14:34:08.311Z"
+      "digest": "2ee7b568ff9fc778b3b1c53ae420e9de0288dccf437285d9aafbb08b6c8e5952",
+      "modified": "2026-11-26T16:46:31.883Z"
     },
     "https://tractorvs.com/tr/tractors/agrale-4125-0b53e944/": {
       "digest": "566af38f7f35909958d4363cbd20112694e0b5260414f0692f03f7b61f59e2f1",
@@ -14806,8 +14806,8 @@
       "modified": "2026-11-25T16:35:52.123Z"
     },
     "https://tractorvs.com/tr/tractors/solis-75-dt-mr-39a48550/": {
-      "digest": "d211dee567018e34300229d40c662ff266f6c4b25effa9436346a54fa9b43ef2",
-      "modified": "2026-11-25T16:35:52.123Z"
+      "digest": "6fb9a247d3fd4d3703ce1aec7e2422d1c6b89b41aa803d993a9b9edde79d93fe",
+      "modified": "2026-11-26T16:46:31.883Z"
     },
     "https://tractorvs.com/tr/tractors/solis-75-hvac-stage-v-948b5823/": {
       "digest": "a438d40472f67cacc793e2b4e357d1b1a8092a97fc2b536888ca609d30b8d419",
@@ -15714,8 +15714,8 @@
       "modified": "2026-11-25T18:45:20.601Z"
     },
     "https://tractorvs.com/tractors/": {
-      "digest": "352fa81a6454cd8e05545e6c1fea376ecd7b62584a00c50b482df1cc518f4193",
-      "modified": "2026-11-26T14:34:08.311Z"
+      "digest": "d8fded5e410369111c389418f2b2110c283b9763b1ef8ba64275ea18bea6c155",
+      "modified": "2026-11-26T16:46:31.883Z"
     },
     "https://tractorvs.com/tractors/agrale-4125-0b53e944/": {
       "digest": "9d6347d39f6e1023a8ade8cc63474ad6e4ed14ae4d2065746b5851c8a42e2558",
@@ -16726,8 +16726,8 @@
       "modified": "2026-11-24T18:13:53.928Z"
     },
     "https://tractorvs.com/tractors/solis-75-dt-mr-39a48550/": {
-      "digest": "3d5264d5a48ca81aee9a68e9b2f7410723ee490d1d55f1e023b36db034f9e1f5",
-      "modified": "2026-11-24T18:13:53.928Z"
+      "digest": "8afe60a4d695379cb59d86a81b6ad4bb481daac31c27c8b7a756066d407abb15",
+      "modified": "2026-11-26T16:46:31.883Z"
     },
     "https://tractorvs.com/tractors/solis-75-hvac-stage-v-948b5823/": {
       "digest": "128d897d25a6d56221e666f848fb5a58d3f8aacf1f64fada1cf5a9c10df0f152",
@@ -17642,8 +17642,8 @@
       "modified": "2026-11-24T16:26:42.582Z"
     },
     "https://tractorvs.com/zh/compare/": {
-      "digest": "27abfeebf4958bc809aaa16495c3b1af71e528cee48925f02c5707c4adfb177a",
-      "modified": "2026-11-26T12:36:43.036Z"
+      "digest": "6e666263f4e71ad94c7b81308082cb4e1b7eb5a12ac704e3024d150b0d1e34b9",
+      "modified": "2026-11-26T16:46:31.883Z"
     },
     "https://tractorvs.com/zh/farm-advisor/": {
       "digest": "c3086f6475cd1203955dd6ea881224d3b39f2deffb6823c3edb0aadfa00f7725",
@@ -17666,8 +17666,8 @@
       "modified": "2026-11-24T16:26:42.582Z"
     },
     "https://tractorvs.com/zh/tractors/": {
-      "digest": "a0e8461d92f7b4aca25fd7782bd33c620d8ae84d0dc1fc91dd0b8d4f1df3fd07",
-      "modified": "2026-11-26T14:34:08.311Z"
+      "digest": "d4340e34e66359e56771ece29c6ca791ab7ed44a5edbc55796546d621a0de765",
+      "modified": "2026-11-26T16:46:31.883Z"
     },
     "https://tractorvs.com/zh/tractors/agrale-4125-0b53e944/": {
       "digest": "ef078495984463ec1a19842e3b6cf9983a413dc6ec8e10bf84d978a1b73dfa9e",
@@ -18678,8 +18678,8 @@
       "modified": "2026-11-25T16:35:52.123Z"
     },
     "https://tractorvs.com/zh/tractors/solis-75-dt-mr-39a48550/": {
-      "digest": "c7f24842a4ab8561f66b64b5c21943fa9e93e1dedbe15f9c5f77211cc78715a5",
-      "modified": "2026-11-25T16:35:52.123Z"
+      "digest": "870565199bfa3aded84ce8f0cecf669964ccd69fbf473482f3ea676b1d703f37",
+      "modified": "2026-11-26T16:46:31.883Z"
     },
     "https://tractorvs.com/zh/tractors/solis-75-hvac-stage-v-948b5823/": {
       "digest": "d04b4d59f0b1de0d3b93e789c6ce4d5bfa9fb88e0c732a388f85f3fe5b23ed30",
