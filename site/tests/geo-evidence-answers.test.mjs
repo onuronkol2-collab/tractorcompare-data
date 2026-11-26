@@ -259,3 +259,27 @@ test("all ten locales preserve exact model, short variant and recorded scope in 
   assert.ok(!unsafe.question.includes("<script>")&&!unsafe.answer.includes("a\nb"),locale);
  }
 });
+
+
+test("six additional exact technical fields retain the original six in all ten locales",()=>{
+ const rows=[spec("engine_rated_power","114","hp"),spec("pto_power_hp","89","hp"),spec("engine_displacement","3.6","L"),spec("rear_lift_capacity_kg","4500","kg"),spec("wheelbase_mm","2355","mm"),spec("fuel_tank_capacity","135","L"),spec("engine_cylinders","4",null),spec("hydraulic_main_flow","70","L/min",{measurement_standard:"at rated engine speed",rated_rpm:2200}),spec("hydraulic_implement_flow","55","lpm"),spec("hydraulic_total_flow","95","L/min"),spec("hydraulic_steering_flow","25","L/min"),spec("ground_clearance","450","mm",{measurement_standard:"under rear axle"})];
+ const expected=["rated-power","pto-power","engine-displacement","rear-hitch-lift","wheelbase","fuel","engine-cylinders","hydraulic-main-flow","hydraulic-implement-flow","hydraulic-total-flow","hydraulic-steering-flow","ground-clearance"];
+ for(const lang of LOCALES){
+  const out=modelEvidenceAnswers({...base,specifications:rows},lang);
+  assert.deepEqual(out.map(x=>x.id),expected,lang);
+  assert.ok(out.every(x=>x.sourceUrl===source&&x.question.includes("McCormick X5.120")&&x.answer.includes("McCormick X5.120")&&!/\\{[nv]\\}|undefined|NaN/.test(x.answer+x.question)),lang);
+  assert.match(out[7].measurementNote,/at rated engine speed/);
+  assert.match(out[11].measurementNote,/under rear axle/);
+  assert.equal(new Set(out.slice(6).map(x=>x.question)).size,6);
+  assert.ok(out.slice(6).every(x=>x.guidePath===null));
+ }
+});
+test("additional answer evidence rejects wrong units, fractional counts, ranges, optional or distinct measurement keys",()=>{
+ const bad=[spec("engine_cylinders","3.5","count"),spec("hydraulic_main_flow","70","gpm"),spec("hydraulic_implement_flow","50-70","L/min"),spec("hydraulic_total_flow","100","L",{measurement_standard:"reservoir"}),spec("hydraulic_steering_flow","25","L/min",{evidence_text:null}),spec("ground_clearance","45","cm"),spec("ground_clearance_rear","450","mm"),spec("hydraulic_pump_optional_flow","80","L/min")];
+ for(const lang of LOCALES)assert.deepEqual(modelEvidenceAnswers({...base,specifications:bad},lang),[],lang);
+ const valid=spec("hydraulic_main_flow","70","L/min");
+ for(const other of [spec("hydraulic_main_flow","80","L/min"),spec("hydraulic_main_flow","70","L/min",{rated_rpm:2100}),spec("hydraulic_main_flow","70","L/min",{measurement_standard:"optional pump"})]){
+  assert.deepEqual(modelEvidenceAnswers({...base,specifications:[valid,other]},"en"),[]);
+ }
+ assert.deepEqual(modelEvidenceAnswers({...base,specifications:[valid,spec("hydraulic_total_flow","100","L/min"),spec("hydraulic_steering_flow","30","L/min")]},"en").map(a=>a.id),["hydraulic-main-flow","hydraulic-total-flow","hydraulic-steering-flow"]);
+});
