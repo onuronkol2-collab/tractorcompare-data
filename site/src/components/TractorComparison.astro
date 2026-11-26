@@ -90,6 +90,9 @@ const labelsPayload = JSON.stringify({
   noShared: cx(lang,"noShared"),
   noDifferent: cx(lang,"noDifferent"),
   specs: t(lang,"specifications"),
+  visible: cx(lang,"visibleRows"),
+  shareCopied: cx(lang,"shareCopied"),
+  shareManual: cx(lang,"shareManual"),
 }).replace(/</g, "\\u003c");
 ---
 <SiteLayout
@@ -204,7 +207,13 @@ const labelsPayload = JSON.stringify({
             <button type="button" id="tc-shared" aria-pressed={String(initiallySharedOnly)}>{cx(lang,"shared")}</button>
             <button type="button" id="tc-different" aria-pressed="false" hidden>{cx(lang,"different")}</button>
             <button type="button" id="tc-print" class="tc-print" hidden disabled>{printLabel[lang]}</button>
+            <button type="button" id="tc-share" class="tc-share" aria-controls="tc-share-panel" hidden disabled>{cx(lang,"shareLink")}</button>
           </div>
+        </div>
+        <div id="tc-share-panel" class="tc-share-panel" hidden>
+          <label for="tc-share-url">{cx(lang,"shareUrl")}</label>
+          <input id="tc-share-url" type="url" readonly spellcheck="false" autocomplete="off" dir="ltr" />
+          <p id="tc-share-status" role="status" aria-live="polite"></p>
         </div>
         <p id="tc-different-note" class="tc-note" hidden>{cx(lang,"differentNote")}</p>
         <p id="tc-no-shared" class="tc-no-shared" role="status" hidden>{cx(lang,"noShared")}</p>
@@ -254,7 +263,7 @@ const labelsPayload = JSON.stringify({
 
 <script>
   import { normalizeTractorQuery } from "../lib/search";
-  import { differentPublishedEntries, isPublishedSpecList } from "../lib/compare-display.mjs";
+  import { differentPublishedEntries, isPublishedSpecList, comparisonShareUrl } from "../lib/compare-display.mjs";
   import { nextComboboxOption } from "../lib/combobox-navigation.mjs";
   import { requiresConditionCaution, requiresTransmissionCaution } from "../lib/compare-conditions";
   type Spec = { key:string; label:string; value:string; unit:string|null; context:string|null; rpm:number|null; source:string|null; independent:boolean; notice:string|null };
@@ -282,6 +291,7 @@ const labelsPayload = JSON.stringify({
       missing:string;source:string;independent:string;loadError:string;loading:string;context:string;conditionCaution:string;transmissionCaution:string;search:string;noResults:string;
       results:string;selected:string;exploreModel:string;shared:string;
       summary:string;noShared:string;noDifferent:string;specs:string;
+      visible:string;shareCopied:string;shareManual:string;
     };
     const modelIndex = new Map(models.map(model => [model.id, model]));
     const byId = (id:string) => modelIndex.get(id);
@@ -407,7 +417,45 @@ const labelsPayload = JSON.stringify({
       printButton.hidden=false;
       printButton.addEventListener("click",()=>{if(!printButton.disabled)window.print();});
     }
+    const shareButton=document.querySelector<HTMLButtonElement>("#tc-share");
+    const sharePanel=document.querySelector<HTMLElement>("#tc-share-panel");
+    const shareInput=document.querySelector<HTMLInputElement>("#tc-share-url");
+    const shareStatus=document.querySelector<HTMLElement>("#tc-share-status");
+    let shareHref:string|null=null;
+    let shareAttempt=0;
+    function resetShare(){
+      ++shareAttempt;
+      shareHref=null;
+      if(shareButton)shareButton.disabled=true;
+      if(sharePanel)sharePanel.hidden=true;
+      if(shareInput)shareInput.value="";
+      if(shareStatus)shareStatus.textContent="";
+    }
+    if(shareButton&&sharePanel&&shareInput&&shareStatus){
+      shareButton.hidden=false;
+      shareButton.addEventListener("click",async()=>{
+        if(shareButton.disabled||!shareHref)return;
+        const href=shareHref;
+        const attempt=++shareAttempt;
+        sharePanel.hidden=false;
+        shareInput.value=href;
+        shareStatus.textContent=l10n.shareManual;
+        try{
+          if(!navigator.clipboard?.writeText)throw new Error("Clipboard unavailable");
+          await navigator.clipboard.writeText(href);
+          if(attempt===shareAttempt)shareStatus.textContent=l10n.shareCopied;
+        }catch{
+          // A denied/unavailable clipboard must not prevent manual copying.
+          // Do not steal focus from a subsequent user action or stale selection.
+          if(attempt===shareAttempt&&document.activeElement===shareButton){
+            shareInput.focus();shareInput.select();
+          }
+        }
+      });
+      shareInput.addEventListener("click",()=>shareInput.select());
+    }
     async function render(){
+      resetShare();
       if(printButton)printButton.disabled=true;
       const current = ++revision;
       if(leftSelect.value===rightSelect.value&&models.length>1){
@@ -482,8 +530,11 @@ const labelsPayload = JSON.stringify({
       tbody.replaceChildren(fragment);
       tbody.setAttribute("aria-busy","false");
       if(printButton)printButton.disabled=visible.length===0;
+      shareHref=comparisonShareUrl(window.location.href,left.id,right.id,differentOnly?"different":commonOnly?"shared":"all");
+      if(shareButton)shareButton.disabled=!shareHref;
       const summary=document.querySelector<HTMLElement>("#tc-summary");
-      if(summary)summary.textContent=shared.length+" "+l10n.summary+" · "+keys.length+" "+l10n.specs;
+      const format=new Intl.NumberFormat(lang);
+      if(summary)summary.textContent=format.format(shared.length)+" "+l10n.summary+" · "+format.format(keys.length)+" "+l10n.specs+" · "+l10n.visible+": "+format.format(visible.length);
       const empty=document.querySelector<HTMLElement>("#tc-no-shared");
       if(empty){
         empty.hidden=!((commonOnly&&!shared.length)||(differentOnly&&!different.length));

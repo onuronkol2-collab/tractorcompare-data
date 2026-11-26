@@ -144,3 +144,22 @@ test("malformed comparison responses fail closed and valid empty records remain 
   assert.match(component,/if\(retry\)retry.hidden=false/);
   assert.match(component,/if \(!isPublishedSpecList\(payload\)\) throw/);
 });
+
+import {comparisonShareUrl} from "../src/lib/compare-display.mjs";
+test("comparison links retain locale, distinct selected IDs and filter without unrelated URL data",()=>{
+  const raw="https://user:pass@tractorvs.com/pt-br/compare/?utm_source=ads&token=private&left=old&view=old#fragment";
+  for(const view of ["all","shared","different"]){
+    const url=new URL(comparisonShareUrl(raw,"model-a","model-b",view));
+    assert.equal(url.origin,"https://tractorvs.com");
+    assert.equal(url.pathname,"/pt-br/compare/");
+    assert.equal(url.username,"");assert.equal(url.password,"");assert.equal(url.hash,"");
+    assert.deepEqual([...url.searchParams.entries()],[["left","model-a"],["right","model-b"],...(view==="all"?[]:[["view",view]])]);
+  }
+  for(const args of [["javascript:alert(1)","a","b","all"],["not a URL","a","b","all"],[raw,"a","a","all"],[raw,"","b","all"],[raw,"a","b","unknown"]])assert.equal(comparisonShareUrl(...args),null);
+  for(const locale of LOCALES) for(const key of ["shareLink","shareUrl","shareCopied","shareManual","visibleRows"]) assert.ok(compareText(locale,key).trim());
+  assert.match(compare,/id="tc-share"[^>]+hidden disabled/);
+  assert.match(compare,/id="tc-share-url"[^>]+readonly/);
+  assert.match(compare,/id="tc-share-status" role="status" aria-live="polite"/);
+  assert.match(compare,/resetShare\(\);\s*if\(printButton\)/);
+  assert.match(compare,/if\(attempt===shareAttempt\)/);
+});

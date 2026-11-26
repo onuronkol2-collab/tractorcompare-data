@@ -220,3 +220,14 @@
   #main .tc-table .tc-cell-model { display: none; }
   #main .tc-filters button[aria-pressed="true"] { background: white; color: black; border: 1px solid #777; }
 }
+
+/* Share only the selected models and view; keep a manual path for restricted browsers. */
+#main .tc-filters .tc-share { border: 1px solid #b8d3b5; min-height: 44px; max-width: 100%; overflow-wrap: anywhere; }
+#main .tc-filters .tc-share[hidden], #main .tc-share-panel[hidden] { display: none; }
+#main .tc-filters .tc-share:disabled { opacity: .65; cursor: not-allowed; }
+#main .tc-share-panel { display: grid; gap: 8px; min-width: 0; padding: 14px; margin: 12px 0; border: 1px solid #ccddcf; border-radius: 12px; background: #f7faf4; color: #203f2a; }
+#main .tc-share-panel label { font-weight: 750; }
+#main .tc-share-panel input { width: 100%; min-width: 0; box-sizing: border-box; padding: 10px; border: 1px solid #769e7c; border-radius: 8px; min-height: 44px; font: inherit; font-size: 16px; color: #194e32; background: white; }
+#main .tc-share-panel input:focus-visible { outline: 3px solid #175c37; outline-offset: 2px; }
+#main .tc-share-panel p { margin: 0; font-size: 14px; overflow-wrap: anywhere; }
+@media print { #main .tc-share-panel, #main .tc-share { display: none !important; } }
