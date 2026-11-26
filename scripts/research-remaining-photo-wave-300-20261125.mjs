@@ -17,11 +17,16 @@ const missing=unique.filter(r=>!confirmedLater.has(r.tractor_id)&&!APPROVED_TRAC
 const previous=JSON.parse(await readFile("previous-wave/report.json","utf8")); const second=JSON.parse(await readFile("second-wave/report.json","utf8")); const visited=new Set([...previous.selectedModels,...second.selectedModels].map(r=>r.tractor_id));
 const priorities=["Yanmar","Mahindra","Sonalika","Swaraj","TYM","McCormick","Kioti","Agrale","LS Tractor","Iseki","Solis"];
 // New discovery lane: enumerate actual event collections rather than repeat empty brand queries.
-const direct=[]; // Previously published Başak 5075 wave must not be repeated.
+// Direct file leads: same model-number family supported by OEM pages; visual and rights gates remain mandatory.
+const direct=[
+ ["Zetor","FORTERRA 140","Zetor Forterra 140 HD.jpg","Zetor Forterra 140 HSX.jpg"],
+ ["Mahindra","JIVO 245 VINEYARD","Mahindra JIVO 245 DI 4WD Agritechnica 2017 - Front and left side.jpg"],
+ ["Antonio Carraro","TIGRE 3800 F","Eko-Las - Antonio Carraro Tigre 3800 - 05.09.2025 12-42-28.jpg"]
+];
 const missingIds=new Set(missing.map(r=>r.tractor_id));
 const targets=missing;
 const hasPrior=[];
-const report={generatedAt:new Date().toISOString(),scope:"Archived public sitemap model identities checked against current registry; not full live catalogue",sourceArchive:14994831046,mode:"nested category discovery; previously scanned root files excluded; missing UUIDs only; #731 excluded; branch registry must be rechecked against main before promotion",publicModelCount:unique.length,missingModelCount:missing.length,selectedModels:targets.map(({tractor_id,brand,model,variant})=>({tractor_id,brand,model,variant})),candidateCount:0,downloaded:0,publicationCount:0,allowedToPublish:false,errors:[],queries:[],entries:[]};
+const report={generatedAt:new Date().toISOString(),scope:"Archived public sitemap model identities checked against current registry; not full live catalogue",sourceArchive:14994831046,mode:"direct OEM model-family leads; no repeated collection queries; visual review and current-main dedup required",publicModelCount:unique.length,missingModelCount:missing.length,selectedModels:targets.map(({tractor_id,brand,model,variant})=>({tractor_id,brand,model,variant})),candidateCount:0,downloaded:0,publicationCount:0,allowedToPublish:false,errors:[],queries:[],entries:[]};
 const sleep=ms=>new Promise(r=>setTimeout(r,ms));
 const deadline=Date.now()+12*60*1000;
 const withinBudget=()=>Date.now()<deadline;
@@ -56,25 +61,7 @@ async function query(params){
 }
 // The collections below are indexed public event archives, not another brand keyword search.
 // Keep the metadata/download phase within the same bounded provider budget.
-const collections=[
- "Category:Agritechnica 2019",
- "Category:Farmtrac tractors in Germany",
- "Category:TYM tractors in Germany",
- "Category:TAFE tractors in Germany",
- "Category:Quality images of tractors in Germany",
- "Category:Tractors in Japan",
- "Category:Yanmar tractors in Japan",
- "Category:Iseki tractors",
- "Category:Tractors in India",
- "Category:Mahindra tractors in India",
- "Category:Swaraj tractors",
- "Category:Sonalika tractors",
- "Category:Mahindra tractors",
- "Category:Yanmar tractors",
- "Category:Valtra tractors in Germany",
- "Category:New Holland tractors in Germany",
- "Category:John Deere tractors in Germany"
-];
+const collections=[]; // 140 completed root/nested requests yielded zero; use direct file metadata only.
 const discoverUntil=Date.now()+Math.min(4*60*1000,Math.max(0,deadline-Date.now()-5*60*1000));
 const attemptedTitles=new Set(prior.models.flatMap(r=>(r.candidates||[]).map(c=>normalizeTitle(c.fileTitle))));
 // Previous run enumerated root files only: nested model/series categories were invisible.
