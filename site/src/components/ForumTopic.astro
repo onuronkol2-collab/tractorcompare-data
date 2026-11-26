@@ -7,6 +7,7 @@ import {relatedForumTopics} from "../lib/forum-discovery.mjs";
 import {FORUM_THREAD_NAV_TEXT} from "../lib/forum-thread-nav-i18n.ts";
 import {THREAD_TOOLS} from "../lib/forum-thread-tools-i18n.ts";
 import {SOLUTION_TEXT} from "../lib/forum-solution-i18n.ts";
+import ForumReporting from "./ForumReporting.astro";
 import "../styles/forum-readable.css";
 import ForumMediaGallery from "./ForumMediaGallery.astro";
 import {forumText as ft} from "../lib/forum-i18n.ts";
@@ -109,7 +110,7 @@ const schema=eligible?{
     </p>}
    </article>
    <div class="forum-thread-actions" data-thread-engagement
-       data-thread-id={topic.topic_id} data-thread-config={engagementConfig}
+       data-thread-id={topic.topic_id} data-thread-config={engagementConfig} data-report-target=""
        data-thread-copy={engagementCopy}>
       <div class="forum-thread-counters">
        <span title={mt(lang,"readsDetail")}>{mt(lang,"memberReads")}: <strong data-thread-read-count>—</strong></span>
@@ -137,7 +138,7 @@ const schema=eligible?{
       <button type="button" data-thread-action="clear">{tools.clear}</button>
       <p data-thread-filter-status role="status" aria-live="polite"></p>
     </div>
-    {replies.map(({reply,original},i)=><article class="forum-reply" id={"reply-"+reply.id} data-static-reply-id={reply.id} data-solution-reply-id={solutionEligible?original.id:undefined}>
+    {replies.map(({reply,original},i)=><article class="forum-reply" id={"reply-"+reply.id} data-static-reply-id={reply.id} data-report-target={original.id} data-solution-reply-id={solutionEligible?original.id:undefined}>
       <div class="reply-meta">
        <a href={"#reply-"+reply.id}>#{i+1}</a>
        <time datetime={reply.created_at}>{forumDate(reply.created_at,lang)}</time>
@@ -165,6 +166,7 @@ const schema=eligible?{
       <div data-live-reply-grid hidden></div>
     </div>
    </section>
+   <ForumReporting lang={lang} config={engagementCfg} topicId={topic.topic_id}/>
    <ForumComposer lang={lang} mode="reply" topicId={topic.topic_id}/>
    {related.length>0&&<section class="forum-related" aria-labelledby="forum-related-heading">
      <h2 id="forum-related-heading">{relatedLabel[lang]}</h2>
