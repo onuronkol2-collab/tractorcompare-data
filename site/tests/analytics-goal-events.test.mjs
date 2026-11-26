@@ -8,6 +8,7 @@ test("only real, defined product destinations generate analytics events in all t
   assert.equal(LOCALES.length,10);
   for (const locale of LOCALES) {
     const prefix=locale==="en"?"":"/"+locale;
+    assert.equal(analyticsGoalForPath(prefix+"/guides/farm-cost-calculator/"),"tractor_farm_tools_view",locale);
     assert.equal(analyticsGoalForPath(prefix+"/farm-advisor/"),"tractor_advisor_view",locale);
     assert.equal(analyticsGoalForPath(prefix+"/compare/"),"tractor_compare_view",locale);
     assert.equal(analyticsGoalForPath(prefix+"/compare/deutz-fahr-5090-d-gs-vs-5100-d-gs/"),

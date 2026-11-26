@@ -1,0 +1,7 @@
+---
+import FarmCost from "../../../../components/FarmCost.astro";
+import {NEW_LOCALES} from "../../../../lib/locales";
+export function getStaticPaths(){return NEW_LOCALES.map(locale=>({params:{locale},props:{locale}}));}
+const {locale}=Astro.props;
+---
+<FarmCost lang={locale} />
