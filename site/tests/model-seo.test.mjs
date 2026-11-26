@@ -870,11 +870,14 @@ test("nominal search facts use manufacturer-reviewed capacity, not guessed speci
 
 
 test("Valtra A75 A85 A95: ES and PT-BR nominal displacement descriptions are distinct and retain exact source identity",()=>{
- const base={...tractor.specifications[0],canonical_key:"engine_displacement_l",spec_name:"Engine displacement",spec_value:"3.3",unit:"l",measurement_standard:"Official brochure",source_publisher:"Valtra",source_url:"https://www.valtra.com/catalog.pdf"};
+ const base={...tractor.specifications[0],canonical_key:"engine_displacement_l",spec_name:"Engine displacement",spec_value:"3.3",unit:"l",measurement_standard:"Official brochure",source_publisher:"Valtra",source_url:"https://www.valtra.com/a-series.html",evidence_text:"Reviewed manufacturer displacement fixture"};
  for(const model_name of ["A75","A85","A95"]){
-  const row={...tractor,brand_name:"Valtra",model_name,variant:"A Series Gen5 Stage V / Gear lever, optional HiTech 2",market:"International (2025 brochure)",model_year:null,horsepower:null,specifications:[base]};
+  const row={...tractor,brand_name:"Valtra",brand_website_url:"https://www.valtra.com/",model_name,variant:"A Series Gen5 Stage V / Gear lever, optional HiTech 2",market:"International (2025 brochure)",model_year:null,horsepower:null,specifications:[base]};
   const es=modelSeoMetadata(row,"es"),pt=modelSeoMetadata(row,"pt-br");
   assert.notEqual(es.searchDescription,pt.searchDescription);
+  assert.match(pt.searchDescription,/cilindrada do motor de 3,3 L/);
+  assert.match(es.searchDescription,/cilindrada de 3,3 L/);
+  assert.doesNotMatch(modelSeoMetadata({...row,specifications:[{...base,source_url:null}]},"pt-br").searchDescription,/cilindrada do motor de 3,3 L/);
   for(const meta of [es,pt]){assert.ok(meta.searchDescription.includes("Valtra "+model_name));assert.ok(meta.searchDescription.includes("3,3 L"));assert.ok(meta.searchDescription.length<=160);}
  }
 });

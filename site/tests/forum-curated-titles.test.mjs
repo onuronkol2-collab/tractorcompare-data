@@ -74,9 +74,14 @@ test("26 Nov live audit: 26 reviewed localized forum titles retain the 2026 subj
  const {LIVE_REVIEWED_FORUM_TITLE_PAIRS}=await import("../src/lib/forum-curated-titles.mjs");
  const counts=Object.values(LIVE_REVIEWED_FORUM_TITLE_PAIRS).map(rows=>Object.keys(rows).length);
  assert.deepEqual(counts,[8,8,8,2]);
+ const snippets=new Set();
  for(const [id,rows] of Object.entries(LIVE_REVIEWED_FORUM_TITLE_PAIRS))for(const [lang,[original,short]] of Object.entries(rows)){
   assert.equal(sourceAwareForumSeoTitle(id,lang,original),short);
   assert.ok(short.includes("2026")&&short.length<=60&&short.length<original.length+12,lang+" "+short);
   assert.equal(sourceAwareForumSeoTitle(id,lang,original+" edited"),original+" edited | TractorVS");
+  assert.equal(sourceAwareForumSeoTitle("different-topic",lang,original),original+" | TractorVS");
+  assert.ok(!snippets.has(short),lang+" duplicate curated title");
+  snippets.add(short);
  }
+ assert.equal(snippets.size,26);
 });
