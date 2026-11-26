@@ -7,7 +7,7 @@ import {readFileSync,readdirSync,existsSync} from "node:fs";
 import {resolve,join} from "node:path";
 import {fileURLToPath} from "node:url";
 import {scanHeadTags} from "./verify-sitewide-meta-descriptions.mjs";
-import {readOpeningTagAttribute as attr} from "./seo-html-attributes.mjs";
+import {readOpeningTagAttribute as attr,googleIndexingBlockedByMeta} from "./seo-html-attributes.mjs";
 
 const defaultRoot=resolve(fileURLToPath(new URL("../",import.meta.url)));
 export const PUBLIC_LOCALES=["en","tr","zh","hi","pt-br","fr","de","ru","ja","es"];
@@ -70,14 +70,15 @@ export function verifyModelDiscoveryMarkup({
  const url=origin+path;
  check(catalogLinks.has(path),"Missing server-rendered catalogue link to "+path);
  const head=html.match(/<head\b[^>]*>([\s\S]*?)<\/head\s*>/i)?.[1]||"";
- const annotations=inspectLocaleAnnotations(scanHeadTags(head).links);
+ const {links,metas}=scanHeadTags(head);
+ const annotations=inspectLocaleAnnotations(links);
  check(annotations.errors.length===0,
    "Conflicting model SEO annotations: "+url+" "+annotations.errors.join("; "));
  check(annotations.canonical.length===1&&annotations.canonical[0]===url,
    "Missing, duplicate or wrong model canonical: "+url);
  check(html.includes('name="robots" content="index,follow'),
    "Published model is not explicitly indexable: "+url);
- check(!/<meta[^>]*name="robots"[^>]*content="[^"]*noindex/i.test(html),
+ check(!googleIndexingBlockedByMeta(metas),
    "Published model has noindex: "+url);
  for(const [alternateLocale,tag] of Object.entries(PUBLIC_LOCALE_TAGS)){
   const alternate=origin+modelPath(alternateLocale,slug);
@@ -124,7 +125,8 @@ export function verifyPublishedSiteInventory({
  for(const locale of PUBLIC_LOCALES){
   const prefix=locale==="en"?"":locale+"/";
   const home=read(join(dist,prefix+"index.html"));
-  check(!/content="noindex/i.test(home),"Public homepage is noindex: "+locale);
+  const homeHead=home.match(/<head\b[^>]*>([\s\S]*?)<\/head\s*>/i)?.[1]||"";
+  check(!googleIndexingBlockedByMeta(scanHeadTags(homeHead).metas),"Public homepage is noindex: "+locale);
   const slugs=modelPaths(join(dist,prefix+"tractors"));
   check(slugs.length===modelSlugs.length,
     "Missing "+locale+" model pages: "+slugs.length+" vs "+modelSlugs.length);
