@@ -15,3 +15,13 @@ export function technicalGuideSearchTitle(slug,locale,headline){
  const pair=reviewed[slug]?.[locale];
  return pair&&headline===pair[0]?pair[1]:headline;
 }
+
+// Only the three audited guide/locale/original-title combinations are curated.
+// The source component and independently reviewable draft pins remain unchanged.
+export function reviewedTechnicalGuideMetadataTitle(path,locale,title){
+ const match=/^\/guides\/(pto-and-power-take-off|tractor-hydraulic-lift-explained)\/$/.exec(path);
+ if(!match)return title;
+ const pair=reviewed[match[1]]?.[locale];
+ if(!pair || title!==editorialSearchTitle(pair[0]))return title;
+ return editorialSearchTitle(pair[1]);
+}

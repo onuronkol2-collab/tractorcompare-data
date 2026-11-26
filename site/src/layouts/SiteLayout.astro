@@ -12,6 +12,7 @@ import {farmCostText} from "../lib/farm-cost-i18n";
 import { LOCALES, LOCALE_NAMES, LOCALE_TAGS, localizedPath, unlocalizedPath, type Locale } from "../lib/locales";
 import { t } from "../lib/ui";
 import { verifiedReleaseSha } from "../lib/release-provenance.mjs";
+import { reviewedTechnicalGuideMetadataTitle } from "../lib/editorial-seo-title.mjs";
 import { advisorText as tx } from "../lib/advisor-i18n";
 import {forumText as forumCopy} from "../lib/forum-i18n.ts";
 import {memberText as memberCopy} from "../lib/member-i18n.ts";
@@ -29,7 +30,7 @@ interface Props {
   availableLocales?: readonly Locale[];
 }
 
-const { lang, title, description, structuredData = null, ogImage = null, ogImageAlt = null, ogType = "website", indexable = true, availableLocales = LOCALES, indexableLocales = availableLocales } = Astro.props;
+const { lang, title: sourceTitle, description, structuredData = null, ogImage = null, ogImageAlt = null, ogType = "website", indexable = true, availableLocales = LOCALES, indexableLocales = availableLocales } = Astro.props;
 // Escape literal HTML opener characters before embedding JSON-LD from database text.
 const structuredJson = structuredData ? JSON.stringify(structuredData).replace(/</g, "\\u003c") : null;
 // Cloudflare Workers Builds provides this public commit identity at build time.
@@ -40,6 +41,8 @@ const indexingEnabled =
 const homePath = localizedPath(lang, "/");
 const analyticsCopy = analyticsText(lang);
 const plainPath = unlocalizedPath(Astro.url.pathname);
+// Metadata-only curation: preserve the exact reviewed article rendering blob.
+const title = reviewedTechnicalGuideMetadataTitle(plainPath, lang, sourceTitle);
 const catalogPath = localizedPath(lang, "/tractors/");
 const comparePath = localizedPath(lang, "/compare/");
 const advisorPath = localizedPath(lang, "/farm-advisor/");
