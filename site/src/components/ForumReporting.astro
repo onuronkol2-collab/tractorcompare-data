@@ -1,0 +1,37 @@
+---
+import type {Locale} from "../lib/locales.ts";
+import {REPORT_TEXT} from "../lib/forum-reporting-i18n.ts";
+interface Props{lang:Locale;config:{url:string;key:string}|null;topicId?:string;moderation?:boolean}
+const {lang,config,topicId,moderation=false}=Astro.props;
+const copy=REPORT_TEXT[lang];
+const payload=JSON.stringify(config?{...config,lang,topicId}:null);
+---
+<div data-forum-reporting data-reporting-config={payload} hidden>
+ {moderation&&<section data-report-queue aria-labelledby="forum-moderation-heading" hidden>
+  <div class="moderation-heading"><h2 id="forum-moderation-heading">{copy.queue}</h2><button type="button" data-report-refresh>{copy.refresh}</button></div>
+  <p data-report-status role="status" aria-live="polite"></p>
+  <ul data-report-list aria-label={copy.pending}></ul>
+ </section>}
+</div>
+<style>
+[data-forum-reporting][hidden],[data-report-queue][hidden],:global(.forum-report-control form[hidden]){display:none!important}
+[data-report-queue]{margin:18px 0;padding:18px;border:1px solid #c9d8cb;border-radius:12px;background:#fff;color:#203f28}
+.moderation-heading{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px}
+.moderation-heading h2{margin:0;font-size:1.25rem}
+[data-report-list]{list-style:none;padding:0;margin:0}
+[data-report-list] :global(li){padding:12px 0;border-top:1px solid #dfe7df;overflow-wrap:anywhere}
+[data-report-list] :global(p){margin:5px 0}
+[data-report-list] :global(a){font-weight:700;color:#1e5232;text-decoration:underline}
+[data-report-queue] :global(button),:global(.forum-report-control button){min-height:44px;padding:8px 12px;border:1px solid #b6c8b8;background:#f5f8f3;color:#234b2d;border-radius:8px;font:inherit;cursor:pointer;margin:4px}
+[data-report-queue] :global(button:disabled),:global(.forum-report-control button:disabled){opacity:.7;cursor:default}
+[data-report-queue] :global(button:focus-visible),:global(.forum-report-control button:focus-visible),:global(.forum-report-control select:focus-visible){outline:3px solid #397f4c;outline-offset:2px}
+:global(.forum-report-control){margin:8px 0;max-width:100%}
+:global(.forum-report-control form){display:flex;align-items:center;flex-wrap:wrap;gap:8px}
+:global(.forum-report-control select){min-height:44px;max-width:100%;font:inherit;padding:6px;border:1px solid #b6c8b8;border-radius:6px}
+:global(.forum-report-control p){font-size:.9rem;overflow-wrap:anywhere}
+</style>
+<script>
+import {initForumReporting} from "../lib/forum-reporting-client.ts";
+const root=document.querySelector<HTMLElement>("[data-forum-reporting]");
+if(root)initForumReporting(root);
+</script>

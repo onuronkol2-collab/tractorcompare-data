@@ -74,6 +74,7 @@ export function initForumLiveReplies(root:HTMLElement){
    for(const row of rows){
     const article=make("article");article.className="forum-live-reply";article.id="reply-"+row.id;
     article.dataset.solutionReplyId=row.id;
+    article.dataset.reportTarget=row.id;
     const meta=make("p");meta.className="forum-live-reply-meta";
     const time=make("time");time.dateTime=row.created_at;time.textContent=date.format(new Date(row.created_at));meta.append(time);
     if(row.locale!==cfg.lang){const language=make("bdi");language.lang=row.locale;language.textContent=" · "+row.locale;meta.append(language)}
