@@ -15,7 +15,14 @@ test("shared language links preserve route queries and avoid repeated DOM update
   }
   const origin="https://tractorvs.com";
   class Link {
-    constructor(path,code){this.value=path;this.dataset={languageCode:code};this.writes=0;this.handlers=new Map();}
+    constructor(path,code){
+      this.value=path;this.dataset={languageCode:code};this.writes=0;this.handlers=new Map();
+      this.relTokens=new Set();
+      this.relList={toggle:(token,force)=>{
+        if(force)this.relTokens.add(token);else this.relTokens.delete(token);
+        return this.relTokens.has(token);
+      }};
+    }
     get href(){return new URL(this.value,origin).href;}
     set href(value){this.writes++;this.value=value;}
     getAttribute(name){assert.equal(name,"href");return this.value;}
@@ -29,6 +36,7 @@ test("shared language links preserve route queries and avoid repeated DOM update
   vm.runInNewContext(stripTypeScriptTypes(source.slice(start,end)),{document:{querySelectorAll:()=>links},window,URL:CountedURL});
   assert.equal(constructions,10);
   assert.equal(links.reduce((sum,l)=>sum+l.writes,0),0);
+  assert.ok(links.every(l=>!l.relTokens.has("nofollow")));
   for(const name of ["pointerdown","focus","contextmenu","click","auxclick"])links[0].handlers.get(name)();
   assert.equal(constructions,10);
   const query="?left=alpha&right=beta";
@@ -39,6 +47,8 @@ test("shared language links preserve route queries and avoid repeated DOM update
   assert.equal(links[1].value,"/tr/compare/"+query);
   assert.equal(links[9].value,"/es/compare/"+query);
   assert.equal(untouched.value,"/other/");
+  assert.ok(links.slice(0,10).every(l=>l.relTokens.has("nofollow")));
+  assert.equal(untouched.relTokens.has("nofollow"),false);
   for(const name of ["pointerdown","focus","contextmenu","click","auxclick"])links[1].handlers.get(name)();
   assert.equal(constructions,20);
   assert.equal(links.reduce((sum,l)=>sum+l.writes,0),10);
@@ -52,4 +62,5 @@ test("shared language links preserve route queries and avoid repeated DOM update
   assert.equal(links[0].value,"/compare/");
   assert.equal(links[1].value,"/tr/compare/");
   assert.equal(untouched.writes,0);
+  assert.ok(links.every(l=>!l.relTokens.has("nofollow")));
 });
