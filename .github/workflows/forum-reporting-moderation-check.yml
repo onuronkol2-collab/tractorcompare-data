@@ -1,0 +1,52 @@
+name: Forum reporting and moderator isolated checks
+on:
+  pull_request:
+    paths:
+      - "supabase/sql/forum_reporting_moderation_release.sql"
+      - "supabase/verification/forum_reporting_moderation_test.sql"
+      - "supabase/verification/forum_solutions_reporting_fixture.sql"
+      - "supabase/rollback/forum_reporting_moderation_rollback.sql"
+      - "scripts/forum-reporting-concurrency-test.sh"
+      - "scripts/check-sql-dollar-delimiters.mjs"
+      - ".github/workflows/forum-reporting-moderation-check.yml"
+permissions:
+  contents: read
+jobs:
+  isolated-moderation:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    services:
+      postgres:
+        image: postgres:17
+        env:
+          POSTGRES_PASSWORD: disposable-fixture-only
+          PGUSER: postgres
+          PGDATABASE: postgres
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 12
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Fast SQL and shell syntax checks
+        run: |
+          node scripts/check-sql-dollar-delimiters.mjs --self-test supabase/sql/forum_reporting_moderation_release.sql supabase/verification/forum_reporting_moderation_test.sql supabase/rollback/forum_reporting_moderation_rollback.sql
+          bash -n scripts/forum-reporting-concurrency-test.sh
+      - name: Verify permissions, retention and concurrent quota
+        env:
+          FIXTURE_CONTAINER: ${{ job.services.postgres.id }}
+        run: |
+          set -euo pipefail
+          for file in supabase/verification/forum_solutions_reporting_fixture.sql supabase/sql/forum_reporting_moderation_release.sql supabase/verification/forum_reporting_moderation_test.sql; do
+            echo "::group::$file"
+            docker exec -i "$FIXTURE_CONTAINER" psql -X -U postgres -d postgres -v ON_ERROR_STOP=1 -f - < "$file"
+            echo "::endgroup::"
+          done
+          bash scripts/forum-reporting-concurrency-test.sh "$FIXTURE_CONTAINER"
+          docker exec -i "$FIXTURE_CONTAINER" psql -X -U postgres -d postgres -v ON_ERROR_STOP=1 -f - < supabase/rollback/forum_reporting_moderation_rollback.sql
