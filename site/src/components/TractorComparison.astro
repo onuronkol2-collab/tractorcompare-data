@@ -14,6 +14,7 @@ import "../styles/compare-experience.css";
 
 interface Props { lang: Locale; }
 const { lang } = Astro.props;
+const printLabel: Record<Locale,string> = { en:"Print comparison", tr:"Karşılaştırmayı yazdır", de:"Vergleich drucken", fr:"Imprimer la comparaison", es:"Imprimir comparación", "pt-br":"Imprimir comparação", ru:"Распечатать сравнение", zh:"打印对比", ja:"比較を印刷", hi:"तुलना प्रिंट करें" };
 
 const catalog = await getPublicCatalog();
 
@@ -202,6 +203,7 @@ const labelsPayload = JSON.stringify({
             <button type="button" id="tc-all" aria-pressed={String(!initiallySharedOnly)}>{cx(lang,"all")}</button>
             <button type="button" id="tc-shared" aria-pressed={String(initiallySharedOnly)}>{cx(lang,"shared")}</button>
             <button type="button" id="tc-different" aria-pressed="false" hidden>{cx(lang,"different")}</button>
+            <button type="button" id="tc-print" class="tc-print" hidden disabled>{printLabel[lang]}</button>
           </div>
         </div>
         <p id="tc-different-note" class="tc-note" hidden>{cx(lang,"differentNote")}</p>
@@ -400,7 +402,13 @@ const labelsPayload = JSON.stringify({
       window.dispatchEvent(new Event("tractorvs:route-state-changed"));
     }
     let revision = 0;
+    const printButton=document.querySelector<HTMLButtonElement>("#tc-print");
+    if(printButton){
+      printButton.hidden=false;
+      printButton.addEventListener("click",()=>{if(!printButton.disabled)window.print();});
+    }
     async function render(){
+      if(printButton)printButton.disabled=true;
       const current = ++revision;
       if(leftSelect.value===rightSelect.value&&models.length>1){
         if(changedSide==="right")
@@ -473,6 +481,7 @@ const labelsPayload = JSON.stringify({
       }
       tbody.replaceChildren(fragment);
       tbody.setAttribute("aria-busy","false");
+      if(printButton)printButton.disabled=visible.length===0;
       const summary=document.querySelector<HTMLElement>("#tc-summary");
       if(summary)summary.textContent=shared.length+" "+l10n.summary+" · "+keys.length+" "+l10n.specs;
       const empty=document.querySelector<HTMLElement>("#tc-no-shared");

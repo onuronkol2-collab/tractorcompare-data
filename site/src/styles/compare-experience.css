@@ -193,3 +193,30 @@
     box-shadow: 0 0 0 2px rgb(63 132 77 / 11%);
   }
 }
+
+/* Print the currently displayed, source-backed comparison without app chrome.
+   Native browser printing also works without a new dependency or tracking. */
+#main .tc-filters .tc-print { border: 1px solid #b8d3b5; }
+#main .tc-filters .tc-print[hidden] { display: none; }
+#main .tc-filters .tc-print:disabled { opacity: .65; cursor: not-allowed; }
+@media print {
+  body:has(#main .tc-section) { background: white; color: black; }
+  body:has(#main .tc-section) :is(.site-header,.site-footer,.skip-link) { display: none !important; }
+  #main .tc-hero { background: white; color: black; padding: 0; overflow: visible; }
+  #main .tc-hero .tc-hero-content { display: block; }
+  #main .tc-hero :is(h1,p,em) { color: black; }
+  #main .tc-hero h1 { font-size: 22pt; }
+  #main .tc-hero-visual, #main .tc-picker, #main .tc-workspace-intro,
+  #main .tc-print, #main .tc-filters button:not([aria-pressed="true"]) { display: none !important; }
+  #main .tc-section { background: white; padding: 0; }
+  #main :is(.tc-section,.tc-hero) > .container { width: 100%; }
+  #main .tc-table-wrap { overflow: visible; box-shadow: none; border: 0; }
+  #main .tc-table { display: table; width: 100%; min-width: 0; border-collapse: collapse; table-layout: fixed; }
+  #main .tc-table thead { display: table-header-group; }
+  #main .tc-table tbody { display: table-row-group; }
+  #main .tc-table tr { display: table-row; break-inside: avoid; }
+  #main .tc-table :is(th,td) { display: table-cell; position: static; width: auto; padding: 6pt; border: 1px solid #777; color: black; background: white; overflow-wrap: anywhere; }
+  #main .tc-table :is(.tc-entry strong,.tc-entry small,.tc-entry a,.tc-missing,.tc-condition-caution) { color: black; font-size: 10pt; }
+  #main .tc-table .tc-cell-model { display: none; }
+  #main .tc-filters button[aria-pressed="true"] { background: white; color: black; border: 1px solid #777; }
+}
