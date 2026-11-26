@@ -14,6 +14,7 @@ import {readFileSync,readdirSync,existsSync} from "node:fs";
 import {resolve,basename,join} from "node:path";
 import {fileURLToPath} from "node:url";
 import {verifyPublishedSiteInventory} from "./verify-published-site-inventory.mjs";
+import {verifyBuiltSitemapHtml} from "./verify-built-sitemap-html.mjs";
 import {verifyUnifiedSitemapIndex} from "./verify-unified-sitemap-index.mjs";
 import {auditBuiltImageAlts} from "./verify-sitewide-image-alts.mjs";
 import {auditBuiltSeoTitles} from "./verify-sitewide-seo-titles.mjs";
@@ -115,6 +116,8 @@ export function verifyProductionArtifacts({dir=projectRoot,origin=expectedOrigin
  // Deployment is blocked if independently generated forum/image maps are not
  // in the master index. GSC/Bing need only receive the root index in future.
  verifyUnifiedSitemapIndex({dist,origin});
+ const sitemapHtml=verifyBuiltSitemapHtml(dist);
+ console.log("TRACTORVS_BUILT_SITEMAP_HTML "+JSON.stringify(sitemapHtml));
  // Fail the production build if any published model image loses its actual
  // license, source, verified owner notice or safe no-notice status.
  const imageRights=auditBuiltModelImageRights({dist,origin});
