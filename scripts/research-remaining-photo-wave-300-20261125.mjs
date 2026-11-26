@@ -19,9 +19,22 @@ const priorities=["Yanmar","Mahindra","Sonalika","Swaraj","TYM","McCormick","Kio
 // New discovery lane: enumerate actual event collections rather than repeat empty brand queries.
 // Direct file leads: same model-number family supported by OEM pages; visual and rights gates remain mandatory.
 const direct=[
- ["Zetor","FORTERRA 140","Zetor Forterra 140 HD.jpg","Zetor Forterra 140 HSX.jpg"],
- ["Mahindra","JIVO 245 VINEYARD","Mahindra JIVO 245 DI 4WD Agritechnica 2017 - Front and left side.jpg"],
- ["Antonio Carraro","TIGRE 3800 F","Eko-Las - Antonio Carraro Tigre 3800 - 05.09.2025 12-42-28.jpg"]
+  [
+    "Solis",
+    "75 DT MR",
+    "Solis 75 Allrad-Traktor.jpg",
+    "Solis 75 reddingsbrigade.JPG"
+  ],
+  [
+    "Solis",
+    "90 DT MR",
+    "Solis 90 cabine.jpg"
+  ],
+  [
+    "Sonalika",
+    "90 WT",
+    "Sonalika Worldtrac 90.jpg"
+  ]
 ];
 const missingIds=new Set(missing.map(r=>r.tractor_id));
 const targets=missing;
@@ -34,6 +47,7 @@ const strip=s=>String(s||"").replace(/<[^>]*>/g," ").replace(/&amp;/g,"&").repla
 const normalizeTitle=t=>{try{return decodeURIComponent(String(t)).replace(/_/g," ").replace(/^.*\/wiki\/File:/i,"File:").trim().toLowerCase()}catch{return ""}};
 const registrySources=new Set(APPROVED_TRACTOR_PHOTOS.map(p=>normalizeTitle(p.sourcePage)));
 const leads=new Map();
+report.directPreflight=[];
 function add(title,rows,kind){
  if(!title?.startsWith("File:")||registrySources.has(normalizeTitle(title)))return;
  if(!/\.jpe?g$/i.test(title)||title.length>230)return;
@@ -49,7 +63,7 @@ const held=new Set(["File:IRUM Tagro 102 Agritechnica 2019 - Front and right sid
 for(const row of [...(previous.entries||[]),...(second.entries||[])])held.add(normalizeTitle(row.title));
 // Preserve user-rejected and retired rear views, and already staged files from the earlier wave.
 for(const title of ["File:Lindner Lintrac 160 LDrive Agritechnica 2025 (DSC08778).jpg","File:TYM T25 Agritechnica 2025 (DSC04675).jpg","File:TYM T115 Agritechnica 2025 (DSC04663).jpg"])held.add(normalizeTitle(title));
-for(const [brand,model,...titles] of direct){const rows=targets.filter(r=>r.brand===brand&&r.model.toUpperCase()===model.toUpperCase());if(!rows.length)continue;for(const name of titles){const title="File:"+name;if(!held.has(normalizeTitle(title)))add(title,rows,"indexed exact source page; visual inspection required");}}
+for(const [brand,model,...titles] of direct){const rows=targets.filter(r=>r.brand===brand&&r.model.toUpperCase()===model.toUpperCase());for(const name of titles){const title="File:"+name,key=normalizeTitle(title);const reason=!rows.length?"no missing target":held.has(key)?"prior hold":registrySources.has(key)?"already registered":"eligible for source review";report.directPreflight.push({title,brand,model,targetIds:rows.map(r=>r.tractor_id),reason});if(reason==="eligible for source review")add(title,rows,"indexed model-family source page; visual and OEM review required");}}
 let paused=false;
 async function query(params){
  if(paused||!withinBudget())return null;
