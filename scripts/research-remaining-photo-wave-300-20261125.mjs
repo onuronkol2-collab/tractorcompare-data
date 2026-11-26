@@ -21,7 +21,7 @@ const direct=[]; // Previously published Başak 5075 wave must not be repeated.
 const missingIds=new Set(missing.map(r=>r.tractor_id));
 const targets=missing;
 const hasPrior=[];
-const report={generatedAt:new Date().toISOString(),scope:"Archived public sitemap model identities checked against current registry; not full live catalogue",sourceArchive:14994831046,mode:"regional and older event collection discovery, missing UUIDs only; #731 excluded; branch registry must be rechecked against main before promotion",publicModelCount:unique.length,missingModelCount:missing.length,selectedModels:targets.map(({tractor_id,brand,model,variant})=>({tractor_id,brand,model,variant})),candidateCount:0,downloaded:0,publicationCount:0,allowedToPublish:false,errors:[],queries:[],entries:[]};
+const report={generatedAt:new Date().toISOString(),scope:"Archived public sitemap model identities checked against current registry; not full live catalogue",sourceArchive:14994831046,mode:"nested category discovery; previously scanned root files excluded; missing UUIDs only; #731 excluded; branch registry must be rechecked against main before promotion",publicModelCount:unique.length,missingModelCount:missing.length,selectedModels:targets.map(({tractor_id,brand,model,variant})=>({tractor_id,brand,model,variant})),candidateCount:0,downloaded:0,publicationCount:0,allowedToPublish:false,errors:[],queries:[],entries:[]};
 const sleep=ms=>new Promise(r=>setTimeout(r,ms));
 const deadline=Date.now()+12*60*1000;
 const withinBudget=()=>Date.now()<deadline;
@@ -77,22 +77,41 @@ const collections=[
 ];
 const discoverUntil=Date.now()+Math.min(4*60*1000,Math.max(0,deadline-Date.now()-5*60*1000));
 const attemptedTitles=new Set(prior.models.flatMap(r=>(r.candidates||[]).map(c=>normalizeTitle(c.fileTitle))));
-for(const category of collections){
+// Previous run enumerated root files only: nested model/series categories were invisible.
+// Discover subcategories first, then visit each distinct child with bounded breadth-first traversal.
+const queue=collections.map(category=>({category,depth:0,root:true}));
+const seenCategories=new Set(collections);
+let nestedFiles=0,nestedCategories=0;
+while(queue.length&&!paused&&withinBudget()&&Date.now()<discoverUntil){
+ const {category,depth,root}=queue.shift();
  let continuation={};
  do{
   if(paused||!withinBudget()||Date.now()>=discoverUntil)break;
-  const data=await query({list:"categorymembers",cmtitle:category,cmtype:"file",cmlimit:500,...continuation});
+  const data=await query({list:"categorymembers",cmtitle:category,cmtype:root?"subcat":"file|subcat",cmlimit:500,...continuation});
   const members=data?.query?.categorymembers||[];
-  report.queries.push({kind:"regional/event collection",category,returned:members.length,completed:Boolean(data),continuation:Boolean(data?.continue)});
+  report.queries.push({kind:root?"new subcategory discovery":"nested collection",category,depth,returned:members.length,completed:Boolean(data),continuation:Boolean(data?.continue)});
+  const children=[];
   for(const item of members){
+   if(item.ns===14&&depth<3&&item.title?.startsWith("Category:")&&!seenCategories.has(item.title)){
+    seenCategories.add(item.title);children.push({category:item.title,depth:depth+1,root:false});nestedCategories++;
+    continue;
+   }
+   if(item.ns!==6)continue;
+   nestedFiles++;
    const key=normalizeTitle(item.title);
    if(held.has(key)||registrySources.has(key)||attemptedTitles.has(key))continue;
    const rows=targets.filter(r=>match(r,item.title));
-   if(rows.length)add(item.title,rows,"new event collection file title; actual image and rights review required");
+   if(rows.length)add(item.title,rows,"new nested collection file title; actual image and rights review required");
   }
+  // Model-specific categories first, rather than unrelated event infrastructure.
+  children.sort((a,b)=>Number(targets.some(r=>match(r,b.category)))-Number(targets.some(r=>match(r,a.category)))||a.category.localeCompare(b.category));
+  const exactChildren=children.filter(c=>targets.some(r=>match(r,c.category)));
+  queue.unshift(...exactChildren);
+  queue.push(...children.filter(c=>!exactChildren.includes(c)));
   continuation=data?.continue||null;
  }while(continuation);
 }
+report.nestedDiscovery={categoriesQueued:nestedCategories,filesExamined:nestedFiles,unvisitedCategories:queue.length,discoveryTimeLimitReached:Date.now()>=discoverUntil};
 
 await writeFile(root+"/report.json",JSON.stringify(report,null,2));
 const sorted=[...leads.values()].filter(x=>!held.has(normalizeTitle(x.title))).sort((a,b)=>Number(b.kinds.includes("archive"))-Number(a.kinds.includes("archive"))||a.targets.length-b.targets.length||a.title.localeCompare(b.title));
@@ -139,5 +158,5 @@ for(const row of ready){
 }
 report.providerPaused=paused;report.timeBudgetReached=!withinBudget();report.originalsValidated=report.downloaded;
 await writeFile(root+"/report.json",JSON.stringify(report,null,2));
-console.log("BULK_PHOTO_WAVE "+JSON.stringify({publicModels:unique.length,missing:missing.length,selected:targets.length,archiveLeads:hasPrior.length,queries:report.queries.length,matchedFiles:report.candidateCount,metadataSelected:selected.length,downloaded:report.downloaded,errors:report.errors.length,providerPaused:paused,publicationCount:0}));
+console.log("BULK_PHOTO_WAVE "+JSON.stringify({publicModels:unique.length,missing:missing.length,selected:targets.length,archiveLeads:hasPrior.length,queries:report.queries.length,nestedDiscovery:report.nestedDiscovery,matchedFiles:report.candidateCount,metadataSelected:selected.length,downloaded:report.downloaded,errors:report.errors.length,providerPaused:paused,publicationCount:0}));
 if(paused||report.errors.length||report.timeBudgetReached)process.exitCode=1;
