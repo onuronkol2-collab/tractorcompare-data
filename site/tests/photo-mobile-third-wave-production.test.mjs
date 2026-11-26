@@ -1,3 +1,4 @@
+import {matchesExactOrigin} from "../../supabase/functions/_shared/evidence-text.mjs";
 import test from "node:test";
 import assert from "node:assert/strict";
 import {readFileSync} from "node:fs";
@@ -27,7 +28,7 @@ function makeFetch({wrongMime=false,corruptSha=false,badCredit=false,heldLeak=fa
  let requests=0;
  const fetchFn=async(url,options)=>{
   requests++;
-  assert.ok(url.startsWith(origin));
+  assert.ok(matchesExactOrigin(url,origin));
   assert.equal(options.redirect,"error");
   const path=new URL(url).pathname;
   if(path==="/image-sitemap.xml")return new Response(sitemap,{status:200,
@@ -54,7 +55,9 @@ test("twelve third-wave rights sources are distinct already-licensed originals",
  for(const x of sources){
   assert.ok(x.photographer?.trim());
   assert.match(x.licenseName,/^CC BY-SA (3\.0|4\.0)$/);
-  assert.match(x.sourcePage,/^https:\/\/commons\.wikimedia\.org\/wiki\/File:/);
+  const source=new URL(x.sourcePage);
+  assert.ok(matchesExactOrigin(source,"https://commons.wikimedia.org"));
+  assert.ok(source.pathname.startsWith("/wiki/File:"));
   assert.equal(x.configurationExact,false);
  }
 });
