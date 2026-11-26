@@ -3,6 +3,7 @@ import assert from "node:assert/strict";
 import {readFileSync} from "node:fs";
 import {LOCALES,localizedPath} from "../src/lib/locales.ts";
 import {editorialHubTranslation} from "../src/lib/editorial-hub-i18n.ts";
+import {catalogEditorialLinks} from "../src/lib/catalog-editorial-links.ts";
 
 const read=path=>readFileSync(new URL("../src/"+path,import.meta.url),"utf8");
 const home=read("components/HomeExperience.astro");
@@ -74,4 +75,26 @@ test("reviewed GS comparison is a natural SSR link only on verified EN/TR homepa
  }
  for(const lang of LOCALES.filter(x=>x!=="en"&&x!=="tr"))
   assert.ok(!["en","tr"].includes(lang),lang+" must not receive untranslated comparison");
+});
+
+test("catalog exposes published editorial resources in ten languages, without invented glossary routes",()=>{
+ const catalog=read("components/TractorCatalog.astro");
+ assert.match(catalog,/const editorial = catalogEditorialLinks\(lang\)/);
+ assert.match(catalog,/<nav class="catalog-editorial-links" aria-label=\{editorial.label\}>/);
+ assert.match(catalog,/editorial.links.map\(link=><a href=\{link.href\}>/);
+ assert.match(catalog,/\.catalog-editorial-links a\{[^}]*min-height:44px/);
+ assert.match(catalog,/\.catalog-editorial-links a:focus-visible/);
+ for(const lang of LOCALES){
+  const {label,links}=catalogEditorialLinks(lang);
+  assert.ok(label.trim().length>2);
+  const expected=["/articles/","/guides/choosing-a-tractor/"];
+  if(lang==="en"||lang==="tr") expected.push("/guides/tractor-technical-terms/");
+  assert.deepEqual(links.map(x=>x.href),expected.map(x=>localizedPath(lang,x)));
+  assert.ok(links.every(x=>x.label.trim().length>2));
+  if(lang!=="en"&&lang!=="tr"){
+   const copy=editorialHubTranslation(lang);
+   assert.equal(links[0].label,copy?.heading);
+   assert.equal(links[1].label,copy?.cards[0][0]);
+  }
+ }
 });

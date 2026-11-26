@@ -15,8 +15,10 @@ import { localizedCountryName } from "../lib/country-display";
 import {catalogBrandIndex,BRAND_NAV_COPY,CATALOG_SEARCH_TITLES,CATALOG_FILTER_COPY} from "../lib/catalog-brand-index.mjs";
 import {CATALOG_FACET_COPY,CATALOG_MARKET_COPY} from "../lib/catalog-facets.mjs";
 import {listedBrandCollections} from "../lib/brand-discovery-pilot.mjs";
+import {catalogEditorialLinks} from "../lib/catalog-editorial-links.ts";
 interface Props { lang: Locale; }
 const { lang } = Astro.props;
+const editorial = catalogEditorialLinks(lang);
 
 const catalog = await getPublicCatalog();
 const title = CATALOG_SEARCH_TITLES[lang] + " | TractorVS";
@@ -68,6 +70,9 @@ const pricePayload = JSON.stringify({
         <a href={localizedPath(lang,"/farm-advisor/")}>{tx(lang,"nav")} ↗</a>
         <a href={localizedPath(lang,"/guides/farm-cost-calculator/")}>{farmCostText(lang).nav} ↗</a>
       </div>
+      <nav class="catalog-editorial-links" aria-label={editorial.label}>
+        {editorial.links.map(link=><a href={link.href}>{link.label} <span aria-hidden="true">↗</span></a>)}
+      </nav>
       <div class="catalog-toolbar">
         <label for="tractor-search">{t(lang,"findTractor")}</label>
         <input id="tractor-search" type="search" placeholder={t(lang,"searchPlaceholder")}
@@ -432,6 +437,11 @@ const pricePayload = JSON.stringify({
 </script>
 
 <style is:global>
+  .catalog-editorial-links{display:flex;flex-wrap:wrap;gap:8px 12px;margin:0 0 16px;}
+  .catalog-editorial-links a{display:inline-flex;align-items:center;gap:6px;min-height:44px;padding:8px 12px;border:1px solid #81a88a;border-radius:8px;background:#edf6e6;color:#1e4b2b;font-size:14px;font-weight:650;line-height:1.4;text-decoration:underline;text-underline-offset:3px;}
+  .catalog-editorial-links a:focus-visible{outline:3px solid #285d34;outline-offset:2px;}
+  .catalog-editorial-links a:hover{background:#e0efe2;}
+
   .catalog-empty-reset{display:inline-flex;align-items:center;min-height:44px;padding:10px 16px;border:1px solid #769e7c;border-radius:9px;color:#194e32;background:#fff;font:inherit;font-weight:750;cursor:pointer}
   .catalog-empty-reset[hidden]{display:none}
   .catalog-empty-reset:focus-visible{outline:3px solid #438c57;outline-offset:3px}
