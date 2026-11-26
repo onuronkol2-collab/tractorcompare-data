@@ -116,6 +116,7 @@ export function initForumLive(root:HTMLElement):void{
    for(const row of approved)if(!byId.has(row.topic_id))byId.set(row.topic_id,row);
    const fragment=document.createDocumentFragment();
    const modelLabels=new Map([...document.querySelectorAll<HTMLOptionElement>("[data-forum-tractor] option")].map(option=>[option.value,option.textContent||""]));
+   const modelBrands=new Map([...document.querySelectorAll<HTMLOptionElement>("[data-forum-tractor] option")].map(option=>[option.value,option.dataset.forumBrand||""]));
    for(const row of byId.values()){
     const article=make("article");article.className="community-topic forum-live-topic";
     article.dataset.forumTopic="";article.dataset.forumTopicId=row.topic_id;
@@ -125,8 +126,10 @@ export function initForumLive(root:HTMLElement):void{
     const modelId=typeof row.tractor_id==="string"&&uuid.test(row.tractor_id)?row.tractor_id:"";
     const modelLabel=modelLabels.get(modelId)||"";
     article.dataset.forumModelId=modelId;
+    article.dataset.forumBrand=modelBrands.get(modelId)||"";
     article.dataset.forumModelLabel=modelLabel;
     article.dataset.forumSearch=forumSearchText(row.title+" "+row.body+" "+modelLabel,cfg!.lang);
+    article.dataset.forumTitleSearch=forumSearchText(row.title,cfg!.lang);
     const meta=make("p");meta.className="forum-live-meta";
     const time=make("time");time.dateTime=row.created_at;
     time.textContent=dateFormatter.format(new Date(row.created_at));meta.append(time);

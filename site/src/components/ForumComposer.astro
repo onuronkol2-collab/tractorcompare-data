@@ -200,7 +200,7 @@ const strings=JSON.stringify({
       <label>{ft(lang,"model")}
        <select name="tractor_id" data-forum-tractor>
         <option value="">{ft(lang,"noModel")}</option>
-        {choices.map(t=><option value={t.tractor_id}>{t.brand_name} {t.model_name}{t.variant?" · "+t.variant:""}</option>)}
+        {choices.map(t=><option value={t.tractor_id} data-forum-brand={t.brand_name}>{t.brand_name} {t.model_name}{t.variant?" · "+t.variant:""}</option>)}
        </select>
       </label>
      </>}

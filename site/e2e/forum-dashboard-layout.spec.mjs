@@ -1,4 +1,5 @@
 import {test,expect} from "@playwright/test";
+import {FORUM_VIEWS,FORUM_PRIVATE_VIEWS,FORUM_MEMBER_ANCHOR} from "../src/lib/forum-community.mjs";
 const firstId="49c767e4-c0ce-42a8-a423-6985f770e1b7";
 const firstTopic="3c45305b-5eea-49eb-9d6e-2f3bbb809b66";
 const secondId="8f8118b4-5773-4dc6-826d-174d7a732cbb";
@@ -37,7 +38,10 @@ test("real public-only topics survive redesign, navigation and honest extra tabs
  await expect(page.locator("[data-forum-live-root]")).toBeHidden();
  await views.locator('[data-forum-view="following"]').click();
  await expect(page.locator('[data-forum-special="following"]')).toBeVisible();
- await expect(page.locator('[data-forum-special="following"] a[href="#forum-compose"]')).toBeVisible();
+ const memberCta=page.locator('[data-forum-special="following"] [data-forum-private-cta]');
+ await expect(memberCta).toBeVisible();
+ await expect(memberCta).toHaveAttribute("href","#"+FORUM_MEMBER_ANCHOR);
+ await expect(page.locator("#"+FORUM_MEMBER_ANCHOR)).toBeVisible();
  await views.locator('[data-forum-view="latest"]').click();
  await expect(live).toHaveCount(2);
  await expect(page.locator("#forum-compose")).toBeVisible();
@@ -62,17 +66,22 @@ test("filter sidebar, compact tags and old category buttons stay synchronized",a
  await page.locator('[data-forum-clear]').click();
  await expect(live.first()).toBeVisible();
 });
-test("all locales expose the same five navigable views with localized copy",async({page})=>{
+test("all locales expose the same navigable views with localized copy",async({page})=>{
  for(const lang of ["en","tr","de","fr","es","pt-br","ru","ja","zh","hi"]){
   const path=lang==="en"?"/forum/":"/"+lang+"/forum/";
   await page.goto(path);
   const tabs=page.locator("[data-forum-view]");
-  await expect(tabs).toHaveCount(5);
-  await tabs.nth(4).click();
+  await expect(tabs).toHaveCount(FORUM_VIEWS.length);
+  expect(await tabs.evaluateAll(nodes=>nodes.map(node=>node.getAttribute('data-forum-view')))).toEqual(FORUM_VIEWS);
+  await page.locator('[data-forum-view="events"]').click();
   await expect(page.locator('[data-forum-special="events"]')).toBeVisible();
   await expect(page.locator('[data-forum-special="events"] p').first()).not.toBeEmpty();
-  await tabs.nth(3).click();
-  await expect(page.locator('[data-forum-special="following"] p')).not.toBeEmpty();
+  for(const view of FORUM_PRIVATE_VIEWS){
+   await page.locator('[data-forum-view="'+view+'"]').click();
+   await expect(page.locator('[data-forum-special="following"]')).toBeVisible();
+   await expect(page.locator('[data-forum-special="following"] p')).not.toBeEmpty();
+   await expect(page.locator('[data-forum-view="'+view+'"]')).toHaveAttribute("aria-pressed","true");
+  }
  }
 });
 test("mobile cards and tabs have no horizontal document overflow",async({page})=>{
