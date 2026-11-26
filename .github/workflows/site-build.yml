@@ -132,3 +132,7 @@ jobs:
             grep -q 'hreflang="pt-BR"' "$path"
             grep -q 'hreflang="zh-Hans"' "$path"
           done
+
+      - name: Exercise actual model HTML with synthetic catalogue fixtures in ten languages
+        if: github.event_name == 'pull_request'
+        run: node site/scripts/verify-nominal-catalogue-preview.mjs

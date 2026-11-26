@@ -1078,6 +1078,7 @@ const AUDIT_20261125_EXACT_LABELS: Partial<Record<Locale, [string,string][]>> = 
     ]
   ],
   "de": [
+    ["Hitch control","Hubwerksregelung"],
     [
       "Manufacturer Three-Point Lift Capacity",
       "Dreipunkt-Hubkraft laut Hersteller"
@@ -1164,6 +1165,17 @@ const AUDIT_20261125_EXACT_LABELS: Partial<Record<Locale, [string,string][]>> = 
     ]
   ],
   "pt-br": [
+    ["Front agricultural tire","Pneu agrícola dianteiro"],
+    ["Rear agricultural tire","Pneu agrícola traseiro"],
+    ["Front industrial tire","Pneu industrial dianteiro"],
+    ["Rear industrial tire","Pneu industrial traseiro"],
+    ["Front R14 tire option","Opção de pneu dianteiro R14"],
+    ["Rear R14 tire option","Opção de pneu traseiro R14"],
+    ["Front tread","Bitola dianteira"],
+    ["Rear tread","Bitola traseira"],
+    ["Front turf tire","Pneu dianteiro para gramados"],
+    ["Rear turf tire","Pneu traseiro para gramados"],
+    ["Overall height","Altura total"],
     [
       "Forward Travel Speed",
       "Velocidade de deslocamento à frente"
@@ -1562,6 +1574,16 @@ const AUDIT_20261125_EXACT_LABELS: Partial<Record<Locale, [string,string][]>> = 
     ]
   ],
   "fr": [
+    ["Front agricultural tire","Pneu agricole avant"],
+    ["Rear agricultural tire","Pneu agricole arrière"],
+    ["Front industrial tire","Pneu industriel avant"],
+    ["Rear industrial tire","Pneu industriel arrière"],
+    ["Front R14 tire option","Option de pneu avant R14"],
+    ["Rear R14 tire option","Option de pneu arrière R14"],
+    ["Front tread","Voie avant"],
+    ["Rear tread","Voie arrière"],
+    ["Front turf tire","Pneu avant pour gazon"],
+    ["Rear turf tire","Pneu arrière pour gazon"],
     [
       "Differential Lock",
       "Blocage de différentiel"
@@ -2020,6 +2042,17 @@ const AUDIT_20261125_EXACT_LABELS: Partial<Record<Locale, [string,string][]>> = 
     ]
   ],
   "es": [
+    ["Front agricultural tire","Neumático agrícola delantero"],
+    ["Rear agricultural tire","Neumático agrícola trasero"],
+    ["Front industrial tire","Neumático industrial delantero"],
+    ["Rear industrial tire","Neumático industrial trasero"],
+    ["Front R14 tire option","Opción de neumático delantero R14"],
+    ["Rear R14 tire option","Opción de neumático trasero R14"],
+    ["Front tread","Ancho de vía delantero"],
+    ["Rear tread","Ancho de vía trasero"],
+    ["Front turf tire","Neumático delantero para césped"],
+    ["Rear turf tire","Neumático trasero para césped"],
+    ["Overall height","Altura total"],
     [
       "Forward Travel Speed",
       "Velocidad de avance"
@@ -2452,6 +2485,9 @@ const reviewedLegacyDocuments = new Map([
   ["https://www.antoniocarraro.it/au/catalogue/Panther_22M", "web_page"],
   ["https://www.swarajtractors.com/products", "product_catalog"],
   ["https://www.yanmar.com/tr/agri/products/tractor/", "product_catalog"],
+  // Original manufacturer international technical table read 2026-11-25.
+  // The catalog source type is permitted for this exact document only.
+  ["https://ytocorp.com/5-5-2-90-110hp-tractor-nlx-nly-series.html", "official_product_catalog"],
 ]);
 
 // Distributor copy of STEYR edition 15S0019COMINB (11/2014); the original CDN location is retired.
@@ -2526,6 +2562,8 @@ const approvedManufacturerHosts: Record<string, string[]> = {
 // The original German F36 brochure is served from TYM's named Umbraco media
 // tenant. Only THIS reviewed exact PDF is permitted, never the shared CDN root.
 const approvedExactManufacturerDocuments: Record<string, string[]> = {
+  // YTO International original technical table; no whole-domain or other document approval.
+  "yto": ["https://ytocorp.com/5-5-2-90-110hp-tractor-nlx-nly-series.html"],
   "belarus": [
     "https://mtz.ru/novosti/13-rukovodstva/48-belarus-80-1-82-1-820-rukovodstvo-po-ekspluatatsii",
   ],
