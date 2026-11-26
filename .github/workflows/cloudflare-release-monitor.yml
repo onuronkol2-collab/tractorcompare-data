@@ -52,44 +52,8 @@ jobs:
           # Never print raw API data, commands, environment_variables, or author.
           print("CF_LATEST_BUILD "+json.dumps({"id":uid(b["build_uuid"]),"status":b.get("status") if b.get("status") in ("queued","initializing","running","stopped") else None,"outcome":b.get("build_outcome") if b.get("build_outcome") in ("success","fail","skipped","cancelled","terminated") else None,"commit":sha(m.get("commit_hash")),"main":m.get("branch")=="main","created_on":date(b.get("created_on"))}))
           PY
-  public-snapshot:
-    if: (github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main') || (github.event_name == 'pull_request' && github.head_ref == 'ops/cloudflare-release-monitor-20261126' && github.event.pull_request.head.repo.full_name == github.repository)
-    runs-on: ubuntu-latest
-    timeout-minutes: 3
-    steps:
-      - name: Read public production SHA in ten languages (no secrets)
+      - name: Record scope and independent production QA gate
         run: |
-          python3 - <<'PY'
-          from html.parser import HTMLParser
-          import urllib.request,urllib.error,json,re,concurrent.futures,threading
-          class Page(HTMLParser):
-              def __init__(self): super().__init__();self.shas=[];self.canon=[]
-              def handle_starttag(self,tag,attrs):
-                  a=dict(attrs)
-                  if tag=="meta" and a.get("name")=="tractorvs-release-sha": self.shas.append(a.get("content"))
-                  if tag=="link" and "canonical" in a.get("rel","").split(): self.canon.append(a.get("href"))
-          class NoRedirect(urllib.request.HTTPRedirectHandler):
-              def redirect_request(self,*args,**kwargs): return None
-          cooldown=threading.Event()
-          origin="https://tractorvs.com"
-          def inspect(locale):
-              if cooldown.is_set(): return {"locale":locale,"ok":False,"error":"cooldown"}
-              url=origin+("/" if locale=="en" else "/"+locale+"/")
-              try:
-                  with urllib.request.build_opener(NoRedirect).open(urllib.request.Request(url,headers={"Cache-Control":"no-cache","Accept":"text/html"}),timeout=10) as r:
-                      if r.headers.get("Retry-After"): cooldown.set();raise ValueError()
-                      if r.status!=200 or r.headers.get_content_type()!="text/html": raise ValueError()
-                      p=Page();p.feed(r.read(3000000).decode("utf-8"))
-                      if len(p.shas)!=1 or not re.fullmatch("[a-f0-9]{40}",p.shas[0] or "") or p.canon!=[url]: raise ValueError()
-                      return {"locale":locale,"ok":True,"sha":p.shas[0]}
-              except urllib.error.HTTPError as e:
-                  if e.code in (401,403,429) or e.headers.get("Retry-After"): cooldown.set()
-                  ray=e.headers.get("CF-Ray","")
-                  return {"locale":locale,"ok":False,"http":e.code,"cf_ray":ray if re.fullmatch("[0-9a-fA-F]{8,32}-[A-Z]{3}",ray) else None,"challenge":e.headers.get("cf-mitigated")=="challenge"}
-              except Exception: return {"locale":locale,"ok":False,"error":"network or invalid release marker"}
-          with concurrent.futures.ThreadPoolExecutor(max_workers=2) as pool:
-              rows=list(pool.map(inspect,["en","tr","zh","hi","pt-br","fr","de","ru","ja","es"]))
-          coherent=all(x["ok"] for x in rows) and len({x.get("sha") for x in rows})==1
-          print("CF_PUBLIC_SNAPSHOT "+json.dumps({"coherent":coherent,"routes":rows,"scope":"HTML snapshot only; not target ancestry, build matching or browser functionality"}))
-          if not coherent: raise SystemExit("PUBLIC_VERIFICATION_BLOCKED: production HTML not verified; Cloudflare metadata is a separate check")
-          PY
+          echo "Cloudflare metadata only; this is not live HTML, target SHA ancestry or interaction proof." >> "$GITHUB_STEP_SUMMARY"
+          echo "Required independent production evidence: TractorVS live comparison interaction QA (all four browser projects, exact served release, ten locales)." >> "$GITHUB_STEP_SUMMARY"
+          echo "Browser Integrity Check blocked Python public requests in run 45850217598; do not retry that client or change security settings." >> "$GITHUB_STEP_SUMMARY"
