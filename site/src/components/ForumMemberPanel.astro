@@ -1,4 +1,5 @@
 ---
+import {FORUM_MEMBER_ANCHOR} from "../lib/forum-community.mjs";
 import {memberText as mt,MEMBER_TEXT} from "../lib/member-i18n.ts";
 import {publicForumClientConfig} from "../lib/forum.ts";
 import {localizedPath,type Locale} from "../lib/locales.ts";
@@ -11,7 +12,7 @@ const cfg=publicForumClientConfig() ?? (
 const publicConfig=JSON.stringify(cfg);
 const copy=JSON.stringify(MEMBER_TEXT[lang]);
 ---
-<section id="forum-members" class="member-community" data-community-members
+<section id={FORUM_MEMBER_ANCHOR} class="member-community" data-community-members
  data-member-config={publicConfig} data-member-copy={copy} data-member-lang={lang}>
  <header class="member-intro">
   <h2>{mt(lang,"memberHeading")}</h2>
