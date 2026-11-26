@@ -23,7 +23,9 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ github.token }}
           TRACTORVS_REQUIRE_WORKERS_BUILD: "true"
-        run: node site/scripts/live-release-readiness.mjs ac912ca8737502a78ce8c0af1388a15955cde67d /compare/ /tractors/basak-traktor-5075-compact-20e382ea/ /tr/compare/ /tr/tractors/basak-traktor-5075-compact-20e382ea/ /zh/compare/ /zh/tractors/basak-traktor-5075-compact-20e382ea/ /hi/compare/ /hi/tractors/basak-traktor-5075-compact-20e382ea/ /pt-br/compare/ /pt-br/tractors/basak-traktor-5075-compact-20e382ea/ /fr/compare/ /fr/tractors/basak-traktor-5075-compact-20e382ea/ /de/compare/ /de/tractors/basak-traktor-5075-compact-20e382ea/ /ru/compare/ /ru/tractors/basak-traktor-5075-compact-20e382ea/ /ja/compare/ /ja/tractors/basak-traktor-5075-compact-20e382ea/ /es/compare/ /es/tractors/basak-traktor-5075-compact-20e382ea/
+        # The shared readiness API allows at most ten paths. The evidence step
+        # below checks all twenty HTML routes against this same verified SHA.
+        run: node site/scripts/live-release-readiness.mjs ac912ca8737502a78ce8c0af1388a15955cde67d /compare/ /tractors/basak-traktor-5075-compact-20e382ea/ /tr/compare/ /tr/tractors/basak-traktor-5075-compact-20e382ea/ /zh/compare/ /zh/tractors/basak-traktor-5075-compact-20e382ea/ /hi/compare/ /hi/tractors/basak-traktor-5075-compact-20e382ea/ /es/compare/ /es/tractors/basak-traktor-5075-compact-20e382ea/
       - name: Verify 10 localized photo pages, nine JPEGs and ten comparison pages
         env:
           RELEASE_SHA: ${{ steps.readiness.outputs.release_sha }}
