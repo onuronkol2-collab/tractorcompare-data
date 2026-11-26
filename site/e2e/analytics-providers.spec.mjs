@@ -66,3 +66,28 @@ test("previous rejection remains effective after consent version upgrade", async
   await expect(page.locator("#tractorvs-analytics-banner")).toBeHidden();
   await assertProviderScripts(page, 0);
 });
+
+test("local consent fixtures do not even attempt analytics network requests", async ({ page }) => {
+  const attempted = [];
+  page.on("request", request => {
+    const host = new URL(request.url()).hostname;
+    if (["www.googletagmanager.com", "www.clarity.ms", "static.cloudflareinsights.com"].includes(host)) attempted.push(host);
+  });
+  await page.goto("/tr/", { waitUntil: "domcontentloaded" });
+  await page.locator("#tractorvs-analytics-accept").click();
+  await assertProviderScripts(page, 1);
+  for (const selector of Object.values(scriptSelector)) {
+    await expect(page.locator(selector)).toHaveAttribute("type", "application/json");
+  }
+  await page.reload({ waitUntil: "networkidle" });
+  await assertProviderScripts(page, 1);
+  expect(attempted).toEqual([]);
+});
+
+test("auth payload suppresses all providers even with stored approval", async ({ page }) => {
+  await page.goto("/tr/compare/", { waitUntil: "domcontentloaded" });
+  await page.locator("#tractorvs-analytics-accept").click();
+  await page.goto("/tr/compare/?code=fixture", { waitUntil: "domcontentloaded" });
+  await assertProviderScripts(page, 0);
+  expect(await page.evaluate(() => window.dataLayer || [])).toEqual([]);
+});

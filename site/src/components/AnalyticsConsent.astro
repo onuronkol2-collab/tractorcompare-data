@@ -33,9 +33,12 @@ const c = analyticsText(lang);
 <script>
   import { ANALYTICS_CHOICE_KEY, GA4_MEASUREMENT_ID, CLARITY_PROJECT_ID, CLOUDFLARE_WEB_ANALYTICS_TOKEN } from "../lib/analytics-i18n.ts";
   import { analyticsGoalForPath } from "../lib/analytics-goals.ts";
+  import { analyticsEnvironment, isGoogleAccountReferral } from "../lib/analytics-environment.ts";
   import { PRODUCT_ACTION_EVENTS, ADVISOR_CALCULATION_DONE_EVENT } from "../lib/analytics-product-actions";
   import {FARM_TOOL_DONE_EVENT} from "../lib/analytics-product-actions";
 
+  // Capture eligibility before any provider can load. Local tests use inert scripts.
+  const environment = analyticsEnvironment(window.location.href);
   type AnalyticsChoice = "accepted" | "rejected";
   const banner = document.getElementById("tractorvs-analytics-banner");
   const openSettings = document.getElementById("tractorvs-analytics-settings");
@@ -75,6 +78,7 @@ const c = analyticsText(lang);
   }
 
   function loadAnalyticsOnlyAfterConsent() {
+    if (environment === "off") return;
     if (document.querySelector("script[data-tractorvs-ga4]")) return;
     analyticsWindow.dataLayer = analyticsWindow.dataLayer || [];
     // Google gtag.js consumes the Arguments object from each gtag call.
@@ -100,6 +104,7 @@ const c = analyticsText(lang);
     analyticsWindow.gtag("js", new Date());
     analyticsWindow.gtag("config", GA4_MEASUREMENT_ID, {
       send_page_view: true,
+      ...(isGoogleAccountReferral(document.referrer) ? { ignore_referrer: true } : {}),
     });
     // Product engagement is measured only after explicit analytics consent.
     // The event name represents a page type, never a tractor ID or search term.
@@ -110,12 +115,15 @@ const c = analyticsText(lang);
     script.dataset.tractorvsGa4 = "";
     script.src = "https://www.googletagmanager.com/gtag/js?id="
       + encodeURIComponent(GA4_MEASUREMENT_ID);
+    // A data block retains inspectable fixture attributes without executing or fetching vendor code.
+    if (environment === "local-fixture") script.type = "application/json";
     document.head.appendChild(script);
   }
 
   // Clarity is strictly opt-in: no script, request or cookie before approval.
   // Queue the ConsentV2 signal before loading the third-party script.
   function loadClarityOnlyAfterConsent() {
+    if (environment === "off") return;
     if (document.querySelector("script[data-tractorvs-clarity]")) return;
     clarityWindow.clarity = clarityWindow.clarity || function clarity() {
       (clarityWindow.clarity!.q = clarityWindow.clarity!.q || []).push(arguments);
@@ -129,6 +137,8 @@ const c = analyticsText(lang);
     script.async = true;
     script.dataset.tractorvsClarity = "";
     script.src = "https://www.clarity.ms/tag/" + encodeURIComponent(CLARITY_PROJECT_ID);
+    // A data block retains inspectable fixture attributes without executing or fetching vendor code.
+    if (environment === "local-fixture") script.type = "application/json";
     document.head.appendChild(script);
   }
 
@@ -137,6 +147,7 @@ const c = analyticsText(lang);
   // This manual beacon is opt-in and uses the existing, publicly visible
   // Cloudflare site token; it is not loaded before consent.
   function loadCloudflareOnlyAfterConsent() {
+    if (environment === "off") return;
     if (document.querySelector('script[src*="static.cloudflareinsights.com/beacon.min.js"]')) return;
     const script = document.createElement("script");
     script.type = "module";
@@ -144,6 +155,8 @@ const c = analyticsText(lang);
     script.dataset.tractorvsCloudflare = "";
     script.dataset.cfBeacon = JSON.stringify({ token: CLOUDFLARE_WEB_ANALYTICS_TOKEN });
     script.src = "https://static.cloudflareinsights.com/beacon.min.js";
+    // A data block retains inspectable fixture attributes without executing or fetching vendor code.
+    if (environment === "local-fixture") script.type = "application/json";
     document.head.appendChild(script);
   }
 
