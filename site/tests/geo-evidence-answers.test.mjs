@@ -283,3 +283,18 @@ test("additional answer evidence rejects wrong units, fractional counts, ranges,
  }
  assert.deepEqual(modelEvidenceAnswers({...base,specifications:[valid,spec("hydraulic_total_flow","100","L/min"),spec("hydraulic_steering_flow","30","L/min")]},"en").map(a=>a.id),["hydraulic-main-flow","hydraulic-total-flow","hydraulic-steering-flow"]);
 });
+
+
+test("catalogue-observed units preserve US gallons and inches, and Turkish adet remains a count",()=>{
+ const rows=[spec("engine_cylinders","3","adet"),spec("hydraulic_main_flow","18.5","US gpm"),spec("hydraulic_implement_flow","15","US gal/min"),spec("ground_clearance","14.2","in")];
+ for(const lang of LOCALES){
+  const answers=modelEvidenceAnswers({...base,specifications:rows},lang);
+  assert.deepEqual(answers.map(a=>a.id),["engine-cylinders","hydraulic-main-flow","hydraulic-implement-flow","ground-clearance"],lang);
+  assert.ok(answers[1].answer.includes("US gal/min")&&answers[2].answer.includes("US gal/min"),lang);
+  assert.ok(answers[3].answer.includes(" in")&&!answers[3].answer.includes(" mm"),lang);
+  assert.ok(answers.every(a=>!a.answer.includes("{u}")),lang);
+ }
+ assert.deepEqual(modelEvidenceAnswers({...base,specifications:[spec("hydraulic_main_flow","18.5","US gpm"),spec("hydraulic_main_flow","18.5","L/min")]},"en"),[]);
+ assert.deepEqual(modelEvidenceAnswers({...base,specifications:[spec("ground_clearance","14","in"),spec("ground_clearance","14","mm")]},"en"),[]);
+ assert.deepEqual(modelEvidenceAnswers({...base,specifications:[spec("hydraulic_main_flow","20","gpm")]},"en"),[]);
+});
