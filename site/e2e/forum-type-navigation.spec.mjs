@@ -1,4 +1,5 @@
 import {test,expect} from "@playwright/test";
+import {FORUM_VIEWS} from "../src/lib/forum-community.mjs";
 const font=async(locator)=>locator.evaluate(el=>Number.parseFloat(getComputedStyle(el).fontSize));
 
 test("forum dashboard typography is readable on desktop, preserving key actions",async({page})=>{
@@ -46,7 +47,7 @@ test("same visible navigation hierarchy survives language expansion",async({page
  await page.setViewportSize({width:1200,height:900});
  for(const locale of ["en","de","fr","es","pt-br","ru","ja","zh","hi"]){
   await page.goto(locale==="en"?"/forum/":"/"+locale+"/forum/");
-  await expect(page.locator(".forum-view-tabs [data-forum-view]")).toHaveCount(7);
+  await expect(page.locator(".forum-view-tabs [data-forum-view]")).toHaveCount(FORUM_VIEWS.length);
   const nav=page.locator(".forum-view-button").first();
   expect(await font(nav)).toBeGreaterThanOrEqual(14);
   const width=await page.evaluate(()=>document.documentElement.scrollWidth-innerWidth);
