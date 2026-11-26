@@ -7,6 +7,7 @@ import "../styles/forum-readable.css";
 import ForumDashboardPanels from "./ForumDashboardPanels.astro";
 import {FORUM_DASHBOARD_TEXT} from "../lib/forum-dashboard-i18n.ts";
 import {FORUM_BROWSE_TEXT} from "../lib/forum-browse-i18n.ts";
+import {FORUM_COMMUNITY_TEXT} from "../lib/forum-community-i18n.ts";
 import {forumModelOptions} from "../lib/forum-browse.mjs";
 import {forumText as ft,FORUM_CATEGORY_KEYS} from "../lib/forum-i18n.ts";
 import {memberText as mt} from "../lib/member-i18n.ts";
@@ -32,6 +33,7 @@ const publicTopics=await allPublicForumTopics();
 const topics=publicTopics.filter(topic=>topic.locale===lang);
 const dashboard=FORUM_DASHBOARD_TEXT[lang];
 const browse=FORUM_BROWSE_TEXT[lang];
+const discovery=FORUM_COMMUNITY_TEXT[lang];
 // Count approved original replies once. Translations must not inflate engagement.
 const replies=await allPublicForumReplies();
 const activityByTopic=forumActivityByTopic(replies);
@@ -81,7 +83,7 @@ const schema=indexable?{
 ---
 <SiteLayout lang={lang} title={(ft(lang,"heading")+" | TractorVS").length<=60?ft(lang,"heading")+" | TractorVS":ft(lang,"heading")}
  description={forumHubSeoDescription(lang,ft(lang,"intro"))} indexable={indexable} indexableLocales={indexableLocales} structuredData={schema}>
- <div class="community-shell" data-forum-dashboard-copy={JSON.stringify(dashboard)}>
+ <div class="community-shell" data-forum-dashboard-copy={JSON.stringify({...dashboard,...discovery})}>
   <header class="community-hero">
    <div class="container community-hero-inner">
     <div class="community-hero-copy">
@@ -117,11 +119,11 @@ const schema=indexable?{
    <div class="community-primary-column">
    <section class="community-list" aria-label={ft(lang,"all")}>
     <nav class="forum-view-tabs" id="forum-dashboard-tabs" aria-label={dashboard.topics}>
-     {(["latest","popular","unanswered","following","events"] as const).map((key,index)=>
+     {(["latest","popular","unanswered","following","saved","unread","events"] as const).map((key,index)=>
       <button type="button" data-forum-view={key} aria-pressed={index===0?"true":"false"}
         class:list={["forum-view-button",index===0&&"is-active"]}>
-       <span class="forum-view-icon" aria-hidden="true">{({latest:"◷",popular:"♨",unanswered:"◉",following:"◇",events:"▤"} as const)[key]}</span>
-       <span>{dashboard[key]}</span>
+       <span class="forum-view-icon" aria-hidden="true">{({latest:"◷",popular:"♨",unanswered:"◉",following:"◇",saved:"☆",unread:"●",events:"▤"} as const)[key]}</span>
+       <span>{key==="saved"||key==="unread"?discovery[key]:dashboard[key]}</span>
       </button>)}
     </nav>
     <p class="forum-view-description" data-forum-view-hint>{dashboard.latestHint}</p>
@@ -145,7 +147,7 @@ const schema=indexable?{
       </label>
       <div class="forum-browse-controls" data-forum-browse-controls hidden>
        <label>{ft(lang,"model")}<select data-forum-model-filter><option value="">{browse.allModels}</option>{modelOptions.map((model:{id:string;label:string})=><option value={model.id}>{model.label}</option>)}</select></label>
-       <label>{browse.sort}<select data-forum-sort><option value="newest">{browse.newest}</option><option value="activity">{browse.activity}</option></select></label>
+       <label>{browse.sort}<select data-forum-sort><option value="newest">{browse.newest}</option><option value="activity">{browse.activity}</option><option value="relevance">{discovery.relevance}</option></select></label>
       </div>
       <div class="community-tabs" role="group" aria-label={ft(lang,"category")}>
        <button class="is-active" type="button" data-forum-category="all" aria-pressed="true">{ft(lang,"all")}</button>
@@ -163,7 +165,7 @@ const schema=indexable?{
        const activity=latestForumActivity(topic.created_at,activityByTopic.get(topic.topic_id));
        return <article class="community-topic" data-forum-topic data-forum-topic-id={topic.topic_id}
          data-forum-reply-count={replyCounts.get(topic.topic_id)||0} data-forum-published-at={topic.created_at}
-         data-forum-activity-at={activity} data-forum-model-id={model?.tractor_id||""} data-forum-model-label={model?model.brand_name+" "+model.model_name+(model.variant?" · "+model.variant:""):""}
+         data-forum-activity-at={activity} data-forum-latest-reply-at={activityByTopic.get(topic.topic_id)||""} data-forum-title-search={forumSearchText(topic.title,lang)} data-forum-model-id={model?.tractor_id||""} data-forum-model-label={model?model.brand_name+" "+model.model_name+(model.variant?" · "+model.variant:""):""}
          data-forum-search={forumSearchText([topic.title,topic.body,model?.brand_name,model?.model_name,ft(lang,topic.category),replySearch.get(topic.topic_id)].filter(Boolean).join(" "),lang)}
          data-forum-topic-category={topic.category}>
          <span class="community-topic-avatar" aria-hidden="true">{topic.title.trim().slice(0,1).toLocaleUpperCase(lang==="pt-br"?"pt-BR":lang)}</span>
@@ -210,9 +212,9 @@ const schema=indexable?{
     </section>
     <section class="forum-special-view" data-forum-special="following" hidden aria-labelledby="forum-following-title">
       <span class="forum-special-icon" aria-hidden="true">◇</span>
-      <h3 id="forum-following-title">{dashboard.followingHeading}</h3>
+      <h3 id="forum-following-title" data-forum-private-heading>{dashboard.followingHeading}</h3>
       <p data-forum-following-status role="status" aria-live="polite">{dashboard.followingBody}</p>
-      <a href="#forum-compose">{dashboard.followingCta}</a>
+      <a href="#forum-members">{dashboard.followingCta}</a>
     </section>
     <section class="forum-special-view" data-forum-special="events" hidden aria-labelledby="forum-events-title">
       <span class="forum-special-icon" aria-hidden="true">▤</span>
@@ -643,6 +645,7 @@ const schema=indexable?{
  import {forumSearchTerms,matchesForumTerms} from "../lib/forum-discovery.mjs";
  import {FORUM_PAGE_SIZE,forumBrowseOrder,forumBrowseWindow,forumModelOptions} from "../lib/forum-browse.mjs";
  import {readForumSession} from "../lib/forum-session-store.mjs";
+ import {forumSearchRank,forumHasNewReply,forumPrivateIds} from "../lib/forum-community.mjs";
  const shell=document.querySelector<HTMLElement>("[data-forum-dashboard-copy]");
  const copy=JSON.parse(shell?.dataset.forumDashboardCopy||"{}") as Record<string,string>;
  const liveRoot=document.querySelector<HTMLElement>("[data-forum-live-root]");
@@ -680,16 +683,18 @@ const schema=indexable?{
  const browseBody=document.querySelector<HTMLElement>("[data-forum-browse-body]");
  const eventsPanel=document.querySelector<HTMLElement>('[data-forum-special="events"]');
  const followStatus=document.querySelector<HTMLElement>("[data-forum-following-status]");
+ const privateHeading=document.querySelector<HTMLElement>("[data-forum-private-heading]");
  const topicList=document.querySelector<HTMLElement>("#forum-topic-list");
  const empty=document.querySelector<HTMLElement>(".community-empty");
  const starter=document.querySelector<HTMLElement>(".community-starter");
  const heading=document.querySelector<HTMLElement>(".community-section-header");
- const isView=(v:string)=>["latest","popular","unanswered","following","events"].includes(v);
+ const isView=(v:string)=>["latest","popular","unanswered","following","saved","unread","events"].includes(v);
  const requestedCategory=new URLSearchParams(location.search).get("category")||"";
  let selected=allCategoryButtons.some(button=>(button.dataset.forumCategory||button.dataset.forumRailCategory||button.dataset.forumTagCategory)===requestedCategory)?requestedCategory:"all";
  let view=isView(new URLSearchParams(location.search).get("view")||"")?
    (new URLSearchParams(location.search).get("view")||"latest"):"latest";
- let followed=new Set<string>(),followState:"guest"|"loading"|"ready"|"error"="guest";
+ const isPrivateView=()=>["following","saved","unread"].includes(view);
+ let followed=new Map<string,string>(),followState:"guest"|"loading"|"ready"|"error"="guest";
  let followRequest=0;
  const lang=document.documentElement.lang.toLowerCase()==="pt-br"?"pt-br":document.documentElement.lang.slice(0,2);
  const countFormatter=new Intl.NumberFormat(lang==="pt-br"?"pt-BR":lang);
@@ -716,7 +721,9 @@ const schema=indexable?{
    const rows=[...grid.querySelectorAll<HTMLElement>(":scope > [data-forum-topic]")];
    const facts=(el:HTMLElement)=>({publishedAt:el.dataset.forumPublishedAt,activityAt:el.dataset.forumActivityAt,replies:el.hasAttribute("data-forum-reply-count")?replyCount(el):null});
    const mode=view==="popular"?"popular":sortSelect?.value==="activity"?"activity":"newest";
-   const ordered=[...rows].sort((a,b)=>forumBrowseOrder(facts(a),facts(b),mode));
+   const terms=sortSelect?.value==="relevance"&&view!=="popular"?forumSearchTerms(input?.value||"",lang):[];
+   const score=(el:HTMLElement)=>forumSearchRank(el.dataset.forumTitleSearch,el.dataset.forumSearch,terms);
+   const ordered=[...rows].sort((a,b)=>(terms.length?score(b)-score(a):0)||forumBrowseOrder(facts(a),facts(b),mode));
    // Avoid reparenting every card on each search keystroke. Keep focus and open details intact when already ordered.
    if(ordered.some((row,index)=>row!==rows[index]))for(const row of ordered)grid.append(row);
   }
@@ -763,12 +770,13 @@ const schema=indexable?{
    const items=cards(),hasTopics=items.length>0;
    updateModels(items);
    updatePublicCounts(items);
-   const canList=view!=="events"&&(view!=="following"||followState==="ready");
+   const canList=view!=="events"&&(!isPrivateView()||followState==="ready");
    const visibleList=canList&&hasTopics;
    if(filters)filters.hidden=!visibleList;
    if(browseControls)browseControls.hidden=!visibleList;
    if(sortSelect)sortSelect.disabled=view==="popular";
-   if(followingPanel)followingPanel.hidden=view!=="following";
+   if(followingPanel)followingPanel.hidden=!isPrivateView();
+   if(privateHeading)privateHeading.textContent=view==="saved"?copy.savedHint:view==="unread"?copy.unreadHint:copy.followingHeading;
    if(eventsPanel)eventsPanel.hidden=view!=="events";
    if(heading)heading.hidden=view==="events";
    if(topicList)topicList.hidden=!canList;
@@ -786,7 +794,7 @@ const schema=indexable?{
     const inCategory=selected==="all"||card.dataset.forumTopicCategory===selected;
     const inSearch=matchesForumTerms(card.dataset.forumSearch,q);
     const inView=view==="unanswered"?card.hasAttribute("data-forum-reply-count")&&replyCount(card)===0:
-      view==="following"?followed.has(card.dataset.forumTopicId||""):
+      isPrivateView()?followed.has(card.dataset.forumTopicId||"")&&(view!=="unread"||forumHasNewReply(followed.get(card.dataset.forumTopicId||""),card.dataset.forumLatestReplyAt)):
       view==="events"?false:true;
     const inModel=!modelChoice||card.dataset.forumModelId===modelChoice;
     if(visibleList&&inCategory&&inSearch&&inView&&inModel)matches.push(card);
@@ -829,35 +837,35 @@ const schema=indexable?{
    if(browseTitle&&browseEmpty)browseTitle.textContent=view==="popular"?copy.popular:copy.unanswered;
    if(browseBody&&browseEmpty)browseBody.textContent=view==="popular"?copy.popularNote:copy.noUnanswered;
    if(noResults&&browseEmpty)noResults.hidden=true;
-   if(followStatus&&view==="following"){
+   if(followStatus&&isPrivateView()){
     followStatus.textContent=followState==="ready"?
-      (count>0?copy.followingBody:copy.followEmpty):
-      followState==="error"?copy.followError:copy.followingBody;
+      (count>0?(copy[view+"Hint"]||copy.followingBody):view==="saved"?copy.empty:view==="unread"?copy.unreadEmpty:copy.followEmpty):
+      followState==="error"?copy.failed:followState==="loading"?copy.loading:copy.guest;
    }
 
  };
  async function loadFollowing(){
   const version=++followRequest;
+  const requestedView=view;
   const session=readForumSession();
   const cfg=JSON.parse(liveRoot?.dataset.forumLiveConfig||"null") as {url:string;key:string}|null;
   if(!session?.access||!cfg){followState="guest";followed.clear();filter();return;}
   followState="loading";followed.clear();filter();
   try{
-   const params=new URLSearchParams({select:"topic_id",limit:"200"});
-   const response=await fetch(cfg.url+"/rest/v1/tc_member_topic_follows?"+params,{
+   const saved=requestedView==="saved";
+   const params=new URLSearchParams({select:saved?"topic_id":"topic_id,last_seen_at",order:"created_at.desc",limit:"200"});
+   const response=await fetch(cfg.url+"/rest/v1/"+(saved?"tc_member_bookmarks":"tc_member_topic_follows")+"?"+params,{
     headers:{"apikey":cfg.key,"Accept":"application/json",
      Authorization:"Bearer "+session.access},cache:"no-store",
     signal:AbortSignal.timeout(12000)
    });
    if(!response.ok)throw Error("follow service unavailable");
    const rows=await response.json();
-   if(version!==followRequest)return;
-   if(!Array.isArray(rows))throw Error("invalid follow response");
-   followed=new Set(rows.map(x=>String(x?.topic_id||""))
-    .filter(x=>/^[a-f0-9-]{36}$/i.test(x)));
+   if(version!==followRequest||view!==requestedView||readForumSession()?.access!==session.access)return;
+   followed=forumPrivateIds(rows);
    followState="ready";
   }catch{
-   if(version!==followRequest)return;
+   if(version!==followRequest||view!==requestedView||readForumSession()?.access!==session.access)return;
    followed.clear();followState="error";
   }
   filter();
@@ -865,9 +873,10 @@ const schema=indexable?{
  function openView(next:string){
   if(!isView(next))return;
   view=next;
+  ++followRequest;followed.clear();followState="guest";
   pageLimit=FORUM_PAGE_SIZE;
   filter();
-  if(view==="following")void loadFollowing();
+  if(isPrivateView())void loadFollowing();
  }
  const resetFilters=()=>{
   if(input)input.value="";
@@ -910,8 +919,8 @@ const schema=indexable?{
    document.querySelector("#forum-dashboard-tabs")?.scrollIntoView({block:"start",behavior:"smooth"});
   });
  window.addEventListener("tractorvs-forum-session",()=>{
-  if(view==="following")void loadFollowing();
+  if(isPrivateView())void loadFollowing();
  });
  filter();
- if(view==="following")void loadFollowing();
+ if(isPrivateView())void loadFollowing();
 </script>
