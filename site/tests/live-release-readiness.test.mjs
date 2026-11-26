@@ -50,3 +50,15 @@ test("immutable non-descendant relationships avoid repeated GitHub comparisons",
  const verify=mainDescendantVerifier({fetchFn:async()=>{calls++;return Response.json({status:"behind",behind_by:1})}});
  assert.equal(await verify(B,A),false);assert.equal(await verify(B,A),false);assert.equal(calls,1);
 });
+
+test("readiness accepts ten routes but rejects eleven before any network request", async()=>{
+ const paths=Array.from({length:10},(_,i)=>"/qa-"+i+"/");
+ let calls=0;
+ const fetchFn=async()=>{calls++;return page(A);};
+ const r=await waitForProductionRelease({target:A,paths,fetchFn,attempts:1});
+ assert.equal(r.status,"ready");assert.equal(calls,10);assert.equal(r.observed,A);
+ calls=0;
+ await assert.rejects(waitForProductionRelease({target:A,paths:[...paths,"/qa-extra/"],fetchFn}),/Invalid readiness routes/);
+ await assert.rejects(waitForProductionRelease({target:A,paths:[],fetchFn}),/Invalid readiness routes/);
+ assert.equal(calls,0,"Invalid input must fail before network access");
+});
