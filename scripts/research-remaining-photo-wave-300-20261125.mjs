@@ -18,23 +18,11 @@ const previous=JSON.parse(await readFile("previous-wave/report.json","utf8")); c
 const priorities=["Yanmar","Mahindra","Sonalika","Swaraj","TYM","McCormick","Kioti","Agrale","LS Tractor","Iseki","Solis"];
 // New discovery lane: enumerate actual event collections rather than repeat empty brand queries.
 // Direct file leads: same model-number family supported by OEM pages; visual and rights gates remain mandatory.
+// Previously reviewed Solis/Sonalika Worldtrac originals are retained in artifact 15106478195; do not re-download.
+// New candidate is distinct from the previously held 09555 left-front file.
+// Actual angle, distance, identity, rights, and original bytes must be reviewed before publication.
 const direct=[
-  [
-    "Solis",
-    "75 DT MR",
-    "Solis 75 Allrad-Traktor.jpg",
-    "Solis 75 reddingsbrigade.JPG"
-  ],
-  [
-    "Solis",
-    "90 DT MR",
-    "Solis 90 cabine.jpg"
-  ],
-  [
-    "Sonalika",
-    "90 WT",
-    "Sonalika Worldtrac 90.jpg"
-  ]
+  ["Sonalika","DI 30 Baagban","Sonalika Baagban DI-30Rx Tractor Coorg Feb24 A7C 09554.jpg"]
 ];
 const missingIds=new Set(missing.map(r=>r.tractor_id));
 const targets=missing;
