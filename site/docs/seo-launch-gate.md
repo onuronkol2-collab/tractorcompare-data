@@ -28,3 +28,22 @@ Indexing is enabled only when a trusted production build explicitly sets **PUBLI
 ## Rollback boundaries
 
 Website SEO changes are isolated to `site/`; undo a specific change by reverting its Git commit, rerunning checks and redeploying. The SQL index is a separate optional deployment: if already applied, drop only the dedicated index as a reviewed DDL operation. Do not run data-cleaning UPDATE/DELETE for identity conflicts without an evidence-based review.
+
+## Permanent Search Console regression protocol — 26 November 2026
+
+Apply to every release, not only SEO PRs. Keep an evidence-linked queue in #196 and #404; image rights in #338, HTTPS/WWW in #181. Do not publish private Search Console exports or analytics numbers to the public repository.
+
+| Observed report class | Prevention and acceptance |
+| --- | --- |
+| Crawled / discovered, currently not indexed | All intended pages must be real canonical HTML, internally reachable, substantive, source-backed and appropriately localized. Full static sitemap discovery graph blocks disconnected pages; existing daily/weekly live crawl and GSC URL Inspection distinguish technical regressions from Google's selection/delay. Do not promise indexing. |
+| Excluded by noindex | Block robots/googlebot noindex or none on submitted HTML before deploy, and restrictive X-Robots-Tag in the live audit. Retain noindex for private, unapproved, preview and other deliberately excluded routes; never remove it in bulk. |
+| Alternate page with proper canonical / page with redirect | Only final canonical HTTPS pages belong in page sitemaps; verify actual HTTP status and canonical, redirect destination and path/locale preservation via existing live checks. Expected aliases are not errors. Meta refresh on submitted HTML blocks deployment. |
+| Wrong/missing canonical, locale, sitemap membership | Full built HTML check parses actual head; exactly one self-canonical, reciprocal hreflang only for existing published locale destinations, correct HTML lang and x-default. Reuse typed sitemap inventory; image references are not extra HTML pages. |
+| Historical product rich-result warnings (offers/review/aggregateRating) | Noncommercial model catalogue remains Thing/WebPage/BreadcrumbList, no false commercial/rating metadata. Preserve existing JSON-LD production audit and tests. |
+| ImageObject acquireLicensePage / copyrightNotice | Preserve verified real license/source/credit/owner gates. Unknown owner or CC0 must never receive fabricated copyrightNotice. Missing optional fields are not necessarily invalid rich results. |
+| Title/meta advisories, duplicate language metadata | Preserve technical identity and genuine localization; run existing full-build metadata checks. Length guidance is not a hard indexing requirement. |
+| HTTP/WWW, 404/soft 404, 5xx, mobile, lastmod | Preserve existing HTTP normalization, real status and content checks, Cloudflare served-release proof, asset integrity, mobile/accessibility and evidence-based lastmod. New observed issues require targeted reproduction and negative regression tests. |
+
+Release sequence: exact latest head CI, CodeQL and applicable Cloudflare preview; check current main compatibility; merge; confirm trusted Cloudflare production revision and actual public responses; full sitemap/HTML audit on the served revision. Weekly full and daily rotating audit are existing workflows; do not create redundant jobs. Use the owner-only on-demand audit only after verified activation (#747/#748). Compare GSC report dates and indexed eligible URL cohorts over time; request exact affected URL examples where available, inspect in batches, distinguish expected exclusions, and use Search Console validation only after confirmed fixes. Record new/recurring issue classes and add a test at the earliest appropriate release boundary. A green build or sitemap submission is not evidence that Google indexed a page.
+
+Official references: https://developers.google.com/search/help/crawling-index-faq ; https://developers.google.com/search/docs/crawling-indexing/consolidate-duplicate-urls ; https://developers.google.com/search/docs/crawling-indexing/block-indexing ; https://developers.google.com/search/docs/appearance/structured-data/image-license-metadata ; https://developers.google.com/search/docs/crawling-indexing/troubleshoot-crawling-errors .

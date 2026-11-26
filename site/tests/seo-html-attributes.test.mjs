@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import {readOpeningTagAttribute as attr} from "../scripts/seo-html-attributes.mjs";
+import {readOpeningTagAttribute as attr,googleIndexingBlockedByMeta,indexBlockingResponseHeader} from "../scripts/seo-html-attributes.mjs";
 
 test("real live forum description with Turkish apostrophe is not truncated",()=>{
  const html='<meta name="description" content="Avrupa'+"'"+
@@ -39,4 +39,24 @@ test("parser does not mistake URL syntax and spaces in a quoted value for new at
  assert.equal(attr(tag,"href"),"https://tractorvs.com/tr/tractors/?q=foo&lang=en");
  assert.equal(attr(tag,"hreflang"),"tr");
  assert.equal(attr(tag,"rel"),"alternate");
+});
+
+test("published pages reject restrictive Google-specific meta and none shorthand",()=>{
+ for(const tag of [
+  '<meta name="googlebot" content="noindex,follow">',
+  '<meta content="NONE" name="ROBOTS">',
+  '<meta name="GoogleBot" content="index, NONE">',
+  '<meta name="robots" content="index,follow,noindex">'
+ ])assert.equal(googleIndexingBlockedByMeta([tag]),true,tag);
+ assert.equal(googleIndexingBlockedByMeta(['<meta name="robots" content="index,follow">','<meta name="googlebot" content="none">']),true);
+ for(const tag of [
+  '<meta name="bingbot" content="noindex">',
+  '<meta name="googlebot-news" content="noindex">',
+  '<meta name="robots" content="index,follow,max-snippet:0">',
+  '<meta name="description" content="none noindex">'
+ ])assert.equal(googleIndexingBlockedByMeta([tag]),false,tag);
+});
+test("response header catches none as well as noindex",()=>{
+ for(const value of ["none","NOINDEX, follow","googlebot: none","googlebot: noindex"])assert.equal(indexBlockingResponseHeader(value),true);
+ for(const value of [null,"index, follow","max-snippet: 0","noindexing"])assert.equal(indexBlockingResponseHeader(value),false);
 });
