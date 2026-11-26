@@ -115,8 +115,127 @@ export const VERIFIED_FORUM_TITLE_PAIRS = Object.freeze({
   }
 });
 
+// Exact source-title pairs observed in the full 26 Nov live SEO audit.
+// New edits never inherit older wording; only a matching title is curated.
+export const LIVE_REVIEWED_FORUM_TITLE_PAIRS = Object.freeze({
+  "c474e2d9-2044-4178-9aa3-ac227cb64dd8": {
+    "tr": [
+      "2026'da Çiftçilik Hâlâ Kazandırıyor mu? Dünya Tarım Ekonomisi ve Çiftçilerin Geleceği",
+      "2026'da Çiftçilik Kazandırıyor mu? Küresel Tarım Ekonomisi"
+    ],
+    "en": [
+      "Will Farming Still Be Profitable in 2026? The Global Agricultural Economy and the Future of Farmers",
+      "Is Farming Profitable in 2026? Global Farm Economics"
+    ],
+    "hi": [
+      "क्या 2026 में खेती अभी भी लाभदायक रहेगी? वैश्विक कृषि अर्थव्यवस्था और किसानों का भविष्य",
+      "2026 में खेती का मुनाफ़ा और वैश्विक कृषि अर्थव्यवस्था"
+    ],
+    "fr": [
+      "L'agriculture sera-t-elle encore rentable en 2026 ? L'économie agricole mondiale et l'avenir des agriculteurs",
+      "Agriculture en 2026 : rentabilité et économie mondiale"
+    ],
+    "pt-br": [
+      "Em 2026, a agricultura ainda será lucrativa? A economia agrícola mundial e o futuro dos agricultores",
+      "Agricultura em 2026: lucro e economia global"
+    ],
+    "de": [
+      "Lohnt sich die Landwirtschaft im Jahr 2026 noch? Die weltweite Agrarwirtschaft und die Zukunft der Landwirte",
+      "Landwirtschaft 2026: Rentabilität und Weltagrarwirtschaft"
+    ],
+    "ru": [
+      "Будет ли сельское хозяйство по-прежнему приносить доход в 2026 году? Мировая экономика сельского хозяйства и будущее фермеров",
+      "Сельское хозяйство в 2026 году: доходы и мировой рынок"
+    ],
+    "es": [
+      "¿Seguirá siendo rentable la agricultura en 2026? La economía agrícola mundial y el futuro de los agricultores",
+      "Agricultura en 2026: rentabilidad y economía mundial"
+    ]
+  },
+  "126eb9c8-05aa-4a06-b9cb-92d2c28e6f2a": {
+    "tr": [
+      "2026'da Traktör Fiyatları Neden Bu Kadar Yükseldi? Küresel Traktör Piyasası ve Artan Maliyetler",
+      "2026 Traktör Fiyatları: Küresel Piyasa ve Maliyetler"
+    ],
+    "en": [
+      "Why Have Tractor Prices Risen So Much in 2026? The Global Tractor Market and Rising Costs",
+      "Why Tractor Prices Rose in 2026: Global Market and Costs"
+    ],
+    "hi": [
+      "2026 में ट्रैक्टरों की कीमतें इतनी क्यों बढ़ीं? वैश्विक ट्रैक्टर बाजार और बढ़ती लागत",
+      "2026 में ट्रैक्टरों की कीमतें: वैश्विक बाजार और लागत"
+    ],
+    "pt-br": [
+      "Por que os preços dos tratores subiram tanto em 2026? O mercado global de tratores e o aumento dos custos",
+      "Preços dos tratores em 2026: mercado global e custos"
+    ],
+    "fr": [
+      "Pourquoi les prix des tracteurs ont-ils autant augmenté en 2026 ? Le marché mondial des tracteurs et la hausse des coûts",
+      "Prix des tracteurs en 2026 : marché mondial et coûts"
+    ],
+    "de": [
+      "Warum sind die Traktorpreise im Jahr 2026 so stark gestiegen? Der globale Traktormarkt und die steigenden Kosten",
+      "Traktorpreise 2026: Weltmarkt und steigende Kosten"
+    ],
+    "ru": [
+      "Почему в 2026 году цены на тракторы так сильно выросли? Мировой рынок тракторов и рост затрат",
+      "Цены на тракторы в 2026 году: мировой рынок и затраты"
+    ],
+    "es": [
+      "¿Por qué han subido tanto los precios de los tractores en 2026? El mercado mundial de tractores y el aumento de los costes",
+      "Precios de tractores en 2026: mercado mundial y costes"
+    ]
+  },
+  "9f82b9f3-7aab-41ee-8588-a0a383f80694": {
+    "en": [
+      "2026 Tractor Faults: Documented Safety Defects and Recalls",
+      "2026 Tractor Faults: Safety Defects and Recalls"
+    ],
+    "tr": [
+      "2026 Traktör Arızaları: Belgelenen Güvenlik Kusurları ve Geri Çağırmalar",
+      "2026 Traktör Arızaları: Güvenlik ve Geri Çağırmalar"
+    ],
+    "hi": [
+      "2026 में ट्रैक्टर की खराबियाँ: दर्ज सुरक्षा दोष और रिकॉल",
+      "2026 में ट्रैक्टर की खराबियाँ: सुरक्षा दोष और रिकॉल"
+    ],
+    "pt-br": [
+      "Falhas em tratores em 2026: defeitos de segurança documentados e recalls",
+      "Falhas em tratores em 2026: segurança e recalls"
+    ],
+    "fr": [
+      "Pannes de tracteurs en 2026 : défauts de sécurité documentés et rappels",
+      "Pannes de tracteurs en 2026 : sécurité et rappels"
+    ],
+    "ru": [
+      "Неисправности тракторов в 2026 году: документированные дефекты безопасности и отзывы",
+      "Тракторы в 2026 году: дефекты безопасности и отзывы"
+    ],
+    "de": [
+      "Traktorprobleme 2026: Dokumentierte Sicherheitsmängel und Rückrufe",
+      "Traktorprobleme 2026: Sicherheitsmängel und Rückrufe"
+    ],
+    "es": [
+      "Averías de tractores en 2026: defectos de seguridad documentados y llamadas a revisión",
+      "Averías de tractores 2026: seguridad y llamadas a revisión"
+    ]
+  },
+  "713ab252-a925-4ab7-b2c8-a30ce5b86706": {
+    "hi": [
+      "2026 ट्रैक्टर डीलर संतुष्टि रैंकिंग: ब्रांड और अंक",
+      "2026 ट्रैक्टर डीलर संतुष्टि: ब्रांड और अंक"
+    ],
+    "es": [
+      "Clasificación de satisfacción de concesionarios de tractores 2026: marcas y puntuaciones",
+      "Satisfacción de concesionarios de tractores 2026"
+    ]
+  }
+});
+
 export function sourceAwareForumSeoTitle(topicId, locale, publishedTitle) {
  const title = String(publishedTitle ?? "");
- const pair = VERIFIED_FORUM_TITLE_PAIRS[topicId]?.[locale];
+ const current = LIVE_REVIEWED_FORUM_TITLE_PAIRS[topicId]?.[locale];
+ const prior = VERIFIED_FORUM_TITLE_PAIRS[topicId]?.[locale];
+ const pair = current && title === current[0] ? current : prior;
  return pair && title === pair[0] ? pair[1] : title + " | TractorVS";
 }

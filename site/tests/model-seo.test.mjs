@@ -851,7 +851,7 @@ test("full live SEO audit follow-up preserves reviewed model identity and compac
 test("nominal search facts use manufacturer-reviewed capacity, not guessed specifications, in ten locales",()=>{
  const base={...tractor.specifications[0],canonical_key:"engine_displacement_l",spec_name:"Displacement",spec_value:"3",unit:"l",measurement_standard:null};
  const row={...tractor,variant:null,market:null,horsepower:null,specifications:[base]};
- const labels={en:/Manufacturer: 3 L engine displacement/,tr:/Üretici verisi: 3 L motor hacmi/,zh:/发动机排量 3 L/,hi:/इंजन क्षमता: 3 L/,"pt-br":/cilindrada de 3 L/,fr:/cylindrée de 3 L/,de:/3 l Hubraum/,ru:/объём двигателя 3 л/,ja:/排気量：3 L/,es:/cilindrada de 3 L/};
+ const labels={en:/Manufacturer: 3 L engine displacement/,tr:/Üretici verisi: 3 L motor hacmi/,zh:/发动机排量 3 L/,hi:/इंजन क्षमता: 3 L/,"pt-br":/cilindrada do motor de 3 L/,fr:/cylindrée de 3 L/,de:/3 l Hubraum/,ru:/объём двигателя 3 л/,ja:/排気量：3 L/,es:/cilindrada de 3 L/};
  for(const [lang,re] of Object.entries(labels)){
   const meta=modelSeoMetadata(row,lang);
   assert.match(meta.searchDescription,re,lang);
@@ -866,4 +866,18 @@ test("nominal search facts use manufacturer-reviewed capacity, not guessed speci
  assert.doesNotMatch(modelSeoMetadata({...row,specifications:[{...tank,canonical_key:"fuel_consumption_l_h"}]},"tr").searchDescription,/60 L yakıt deposu/);
  const independent={...base,source_type:"independent_catalog",source_publisher:"TractorData",source_url:"https://www.tractordata.com/farm-tractors/example.html"};
  assert.doesNotMatch(modelSeoMetadata({...row,specifications:[independent]},"en").searchDescription,/Manufacturer: 3 L/);
+});
+
+
+test("Valtra A75 A85 A95: ES and PT-BR nominal displacement descriptions are distinct and retain exact source identity",()=>{
+ const base={...tractor.specifications[0],canonical_key:"engine_displacement_l",spec_name:"Engine displacement",spec_value:"3.3",unit:"l",measurement_standard:"Official brochure",source_publisher:"Valtra",source_url:"https://www.valtra.com/a-series.html",evidence_text:"Reviewed manufacturer displacement fixture"};
+ for(const model_name of ["A75","A85","A95"]){
+  const row={...tractor,brand_name:"Valtra",brand_website_url:"https://www.valtra.com/",model_name,variant:"A Series Gen5 Stage V / Gear lever, optional HiTech 2",market:"International (2025 brochure)",model_year:null,horsepower:null,specifications:[base]};
+  const es=modelSeoMetadata(row,"es"),pt=modelSeoMetadata(row,"pt-br");
+  assert.notEqual(es.searchDescription,pt.searchDescription);
+  assert.match(pt.searchDescription,/cilindrada do motor de 3,3 L/);
+  assert.match(es.searchDescription,/cilindrada de 3,3 L/);
+  assert.doesNotMatch(modelSeoMetadata({...row,specifications:[{...base,source_url:null}]},"pt-br").searchDescription,/cilindrada do motor de 3,3 L/);
+  for(const meta of [es,pt]){assert.ok(meta.searchDescription.includes("Valtra "+model_name));assert.ok(meta.searchDescription.includes("3,3 L"));assert.ok(meta.searchDescription.length<=160);}
+ }
 });
