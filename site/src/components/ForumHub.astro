@@ -146,6 +146,7 @@ const schema=indexable?{
        <input type="search" id="forum-filter" autocomplete="off" placeholder={ft(lang,"search")}/>
       </label>
       <div class="forum-browse-controls" data-forum-browse-controls hidden>
+       <label>{discovery.brand}<select data-forum-brand-filter><option value="">{discovery.allBrands}</option></select></label>
        <label>{ft(lang,"model")}<select data-forum-model-filter><option value="">{browse.allModels}</option>{modelOptions.map((model:{id:string;label:string})=><option value={model.id}>{model.label}</option>)}</select></label>
        <label>{browse.sort}<select data-forum-sort><option value="newest">{browse.newest}</option><option value="activity">{browse.activity}</option><option value="relevance">{discovery.relevance}</option></select></label>
       </div>
@@ -165,7 +166,7 @@ const schema=indexable?{
        const activity=latestForumActivity(topic.created_at,activityByTopic.get(topic.topic_id));
        return <article class="community-topic" data-forum-topic data-forum-topic-id={topic.topic_id}
          data-forum-reply-count={replyCounts.get(topic.topic_id)||0} data-forum-published-at={topic.created_at}
-         data-forum-activity-at={activity} data-forum-latest-reply-at={activityByTopic.get(topic.topic_id)||""} data-forum-title-search={forumSearchText(topic.title,lang)} data-forum-model-id={model?.tractor_id||""} data-forum-model-label={model?model.brand_name+" "+model.model_name+(model.variant?" · "+model.variant:""):""}
+         data-forum-activity-at={activity} data-forum-latest-reply-at={activityByTopic.get(topic.topic_id)||""} data-forum-title-search={forumSearchText(topic.title,lang)} data-forum-brand={model?.brand_name||""} data-forum-model-id={model?.tractor_id||""} data-forum-model-label={model?model.brand_name+" "+model.model_name+(model.variant?" · "+model.variant:""):""}
          data-forum-search={forumSearchText([topic.title,topic.body,model?.brand_name,model?.model_name,ft(lang,topic.category),replySearch.get(topic.topic_id)].filter(Boolean).join(" "),lang)}
          data-forum-topic-category={topic.category}>
          <span class="community-topic-avatar" aria-hidden="true">{topic.title.trim().slice(0,1).toLocaleUpperCase(lang==="pt-br"?"pt-BR":lang)}</span>
@@ -664,6 +665,8 @@ const schema=indexable?{
  const countLabel=document.querySelector<HTMLElement>("[data-forum-match-count]");
  const browseControls=document.querySelector<HTMLElement>("[data-forum-browse-controls]");
  const modelFilter=document.querySelector<HTMLSelectElement>("[data-forum-model-filter]");
+ const brandFilter=document.querySelector<HTMLSelectElement>("[data-forum-brand-filter]");
+ let brandChoice="";
  const sortSelect=document.querySelector<HTMLSelectElement>("[data-forum-sort]");
  const pagination=document.querySelector<HTMLElement>("[data-forum-pagination]");
  const pageCount=document.querySelector<HTMLElement>("[data-forum-page-count]");
@@ -750,9 +753,19 @@ const schema=indexable?{
    setText(el,"("+format(byCategory.get(el.dataset.forumTagCount||"")||0)+")");
   }
  };
+ const updateBrands=(items:HTMLElement[])=>{
+  if(!brandFilter)return;
+  const brands=[...new Set(items.map(card=>card.dataset.forumBrand||"").filter(Boolean))].sort(new Intl.Collator(lang,{numeric:true,sensitivity:"base"}).compare);
+  if(brandChoice&&!brands.includes(brandChoice))brands.push(brandChoice);
+  const signature=JSON.stringify(brands);
+  if(brandFilter.dataset.optionsSignature!==signature){
+   const first=brandFilter.options[0];brandFilter.replaceChildren(first,...brands.map(brand=>new Option(brand,brand)));brandFilter.dataset.optionsSignature=signature;
+  }
+  brandFilter.value=brandChoice;brandFilter.disabled=brands.length===0;
+ };
  const updateModels=(items:HTMLElement[])=>{
   if(!modelFilter)return;
-  const rows=items.map(card=>({id:card.dataset.forumModelId||"",label:card.dataset.forumModelLabel||modelLabels.get(card.dataset.forumModelId||"")||""}));
+  const rows=items.filter(card=>!brandChoice||card.dataset.forumBrand===brandChoice).map(card=>({id:card.dataset.forumModelId||"",label:card.dataset.forumModelLabel||modelLabels.get(card.dataset.forumModelId||"")||""}));
   if(modelChoice&&modelLabels.has(modelChoice))rows.push({id:modelChoice,label:modelLabels.get(modelChoice)||""});
   const options=forumModelOptions(rows,lang);
   const signature=JSON.stringify(options);
@@ -768,6 +781,7 @@ const schema=indexable?{
    const q=forumSearchTerms(input?.value||"",lang);
    sortPublicRows();
    const items=cards(),hasTopics=items.length>0;
+   updateBrands(items);
    updateModels(items);
    updatePublicCounts(items);
    const canList=view!=="events"&&(!isPrivateView()||followState==="ready");
@@ -796,7 +810,7 @@ const schema=indexable?{
     const inView=view==="unanswered"?card.hasAttribute("data-forum-reply-count")&&replyCount(card)===0:
       isPrivateView()?followed.has(card.dataset.forumTopicId||"")&&(view!=="unread"||forumHasNewReply(followed.get(card.dataset.forumTopicId||""),card.dataset.forumLatestReplyAt)):
       view==="events"?false:true;
-    const inModel=!modelChoice||card.dataset.forumModelId===modelChoice;
+    const inModel=(!modelChoice||card.dataset.forumModelId===modelChoice)&&(!brandChoice||card.dataset.forumBrand===brandChoice);
     if(visibleList&&inCategory&&inSearch&&inView&&inModel)matches.push(card);
    }
    const window=forumBrowseWindow(matches,pageLimit);
@@ -811,7 +825,7 @@ const schema=indexable?{
     const liveStatus=liveRoot.querySelector("[data-forum-live-status]");
     liveRoot.hidden=!visibleLive&&!liveStatus?.textContent?.trim();
    }
-   const allFiltered=q.length>0||selected!=="all"||!!modelChoice;
+   const allFiltered=q.length>0||selected!=="all"||!!modelChoice||!!brandChoice;
    // Respect deliberate category choices; never silently clear a zero-result filter.
    // Instead offer a visible route back to the real published discussions.
    if(emptyHelp)emptyHelp.hidden=!(view==="latest"&&canList&&hasTopics&&count===0&&allFiltered);
@@ -880,7 +894,7 @@ const schema=indexable?{
  }
  const resetFilters=()=>{
   if(input)input.value="";
-  modelChoice="";pageLimit=FORUM_PAGE_SIZE;
+  modelChoice="";brandChoice="";pageLimit=FORUM_PAGE_SIZE;
   selected="all";
   filter();input?.focus();
  };
@@ -891,6 +905,7 @@ const schema=indexable?{
   resetFilters();
  });
  input?.addEventListener("input",()=>{pageLimit=FORUM_PAGE_SIZE;filter()});
+ brandFilter?.addEventListener("change",()=>{brandChoice=brandFilter.value;modelChoice="";pageLimit=FORUM_PAGE_SIZE;filter()});
  modelFilter?.addEventListener("change",()=>{modelChoice=modelFilter.value;pageLimit=FORUM_PAGE_SIZE;filter()});
  sortSelect?.addEventListener("change",()=>{pageLimit=FORUM_PAGE_SIZE;filter()});
  showMore?.addEventListener("click",()=>{
