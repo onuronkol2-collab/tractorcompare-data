@@ -6,10 +6,13 @@ on:
       - ".github/workflows/mobile-performance-audit.yml"
       - "site/scripts/mobile-lighthouse-summary.mjs"
       - "site/tests/mobile-lighthouse-summary.test.mjs"
+      - "site/tests/owner-audit-control.test.mjs"
       - "site/scripts/live-home-photo-evidence.mjs"
       - "site/tests/live-home-photo-evidence.test.mjs"
       - "site/scripts/catalog-mobile-html-baseline.mjs"
       - "site/tests/catalog-mobile-html-baseline.test.mjs"
+  issue_comment:
+    types: [created]
   workflow_dispatch:
   # Free weekly mobile baseline, Monday 07:37 Europe/Istanbul (04:37 UTC).
   schedule:
@@ -17,13 +20,38 @@ on:
 
 permissions:
   contents: read
+  checks: read
 
 jobs:
   mobile_lighthouse:
+    # Only owner-authored, newly created commands on the dedicated open issue.
+    # Never interpolate a comment into a shell, URL, ref, or environment.
+    if: >-
+      github.event_name == 'pull_request' ||
+      github.event_name == 'workflow_dispatch' ||
+      github.event_name == 'schedule' ||
+      (github.event_name == 'issue_comment' &&
+       github.repository == 'onuronkol2-collab/tractorcompare-data' &&
+       github.ref == 'refs/heads/main' &&
+       github.event.action == 'created' &&
+       github.event.issue.number == 747 &&
+       github.event.issue.state == 'open' &&
+       !github.event.issue.pull_request &&
+       github.event.comment.author_association == 'OWNER' &&
+       github.event.comment.user.type == 'User' &&
+       github.event.comment.user.id == 356616554 &&
+       github.event.sender.id == 356616554 &&
+       (github.event.comment.body == '/tractorvs-audit mobile-performance' ||
+        github.event.comment.body == '/tractorvs-audit all'))
+    concurrency:
+      group: ${{ github.workflow }}-${{ github.event_name == 'pull_request' && format('pr-{0}', github.event.pull_request.number) || 'production' }}
+      cancel-in-progress: false
     runs-on: ubuntu-latest
     timeout-minutes: 40
     steps:
       - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
       - name: Check Chrome and Node
         run: |
           node --version
@@ -32,6 +60,15 @@ jobs:
         run: node --test site/tests/mobile-lighthouse-summary.test.mjs
       - name: Test catalogue HTML footprint parser without network access
         run: node --test site/tests/catalog-mobile-html-baseline.test.mjs
+      - name: Test owner-only on-demand audit control
+        run: node --test site/tests/owner-audit-control.test.mjs
+      - name: Verify requested audit release before live measurements
+        if: github.event_name == 'issue_comment'
+        id: audit_release
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          TRACTORVS_REQUIRE_WORKERS_BUILD: "true"
+        run: node site/scripts/live-release-readiness.mjs "$GITHUB_SHA" / /tr/tractors/ /fr/articles/
       - name: Measure live ten-locale catalogue HTML footprint and crawlable SSR links
         if: github.event_name != 'pull_request'
         run: node site/scripts/catalog-mobile-html-baseline.mjs
@@ -56,6 +93,17 @@ jobs:
           done < /tmp/tractorvs-lighthouse/routes.txt
           node site/scripts/mobile-lighthouse-summary.mjs
 
+      - name: Confirm same served release after requested audit
+        if: github.event_name == 'issue_comment'
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          TRACTORVS_REQUIRE_WORKERS_BUILD: "true"
+          RELEASE_SHA: ${{ steps.audit_release.outputs.release_sha }}
+        run: |
+          set -euo pipefail
+          test -n "$RELEASE_SHA"
+          node site/scripts/live-release-readiness.mjs "$RELEASE_SHA" / /tr/tractors/ /fr/articles/
+          grep -Fx "release_sha=$RELEASE_SHA" "$GITHUB_OUTPUT"
       - name: Upload diagnostic Lighthouse JSON
         if: always()
         uses: actions/upload-artifact@v7
