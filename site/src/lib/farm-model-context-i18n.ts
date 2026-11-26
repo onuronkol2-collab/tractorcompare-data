@@ -1,5 +1,5 @@
 import type {Locale} from "./locales";
-const keys=["choose","select","facts","empty","open","caution","fieldArea","operatingPerHa","operatingField","areaUnit"] as const;
+const keys=["choose","select","facts","empty","open","caution","fieldArea","operatingPerHa","operatingField","areaUnit","search","matches","noMatch"] as const;
 const rows:Record<Locale,readonly string[]>={
   "en": [
     "Choose a published tractor model",
@@ -11,7 +11,10 @@ const rows:Record<Locale,readonly string[]>={
     "Field area",
     "Operating cost per hectare (fuel + other hourly costs)",
     "Field operating cost (excluding annual fixed costs)",
-    "Area unit"
+    "Area unit",
+    "Search brand, model, variant or market",
+    "Matching models",
+    "No matching model"
   ],
   "tr": [
     "Yayımlanmış bir traktör modeli seç",
@@ -23,7 +26,10 @@ const rows:Record<Locale,readonly string[]>={
     "Tarla alanı",
     "Hektar başına işletme gideri (yakıt + diğer saatlik giderler)",
     "Tarla işletme gideri (yıllık sabit giderler hariç)",
-    "Alan birimi"
+    "Alan birimi",
+    "Marka, model, varyant veya pazar ara",
+    "Eşleşen modeller",
+    "Eşleşen model yok"
   ],
   "de": [
     "Veröffentlichtes Traktormodell auswählen",
@@ -35,7 +41,10 @@ const rows:Record<Locale,readonly string[]>={
     "Feldfläche",
     "Betriebskosten je Hektar (Kraftstoff + weitere Stundenkosten)",
     "Betriebskosten der Fläche (ohne jährliche Fixkosten)",
-    "Flächeneinheit"
+    "Flächeneinheit",
+    "Marke, Modell, Variante oder Markt suchen",
+    "Passende Modelle",
+    "Kein passendes Modell"
   ],
   "fr": [
     "Choisir un modèle de tracteur publié",
@@ -47,7 +56,10 @@ const rows:Record<Locale,readonly string[]>={
     "Surface de la parcelle",
     "Coût d’utilisation par hectare (carburant + autres coûts horaires)",
     "Coût d’utilisation de la parcelle (hors coûts fixes annuels)",
-    "Unité de surface"
+    "Unité de surface",
+    "Rechercher marque, modèle, variante ou marché",
+    "Modèles correspondants",
+    "Aucun modèle correspondant"
   ],
   "es": [
     "Elegir un modelo de tractor publicado",
@@ -59,7 +71,10 @@ const rows:Record<Locale,readonly string[]>={
     "Superficie del campo",
     "Coste operativo por hectárea (combustible + otros costes horarios)",
     "Coste operativo del campo (sin costes fijos anuales)",
-    "Unidad de superficie"
+    "Unidad de superficie",
+    "Buscar marca, modelo, variante o mercado",
+    "Modelos coincidentes",
+    "Ningún modelo coincide"
   ],
   "pt-br": [
     "Escolher um modelo de trator publicado",
@@ -71,7 +86,10 @@ const rows:Record<Locale,readonly string[]>={
     "Área do talhão",
     "Custo operacional por hectare (combustível + outros custos por hora)",
     "Custo operacional do talhão (sem custos fixos anuais)",
-    "Unidade de área"
+    "Unidade de área",
+    "Pesquisar marca, modelo, versão ou mercado",
+    "Modelos correspondentes",
+    "Nenhum modelo encontrado"
   ],
   "ru": [
     "Выберите опубликованную модель трактора",
@@ -83,7 +101,10 @@ const rows:Record<Locale,readonly string[]>={
     "Площадь поля",
     "Эксплуатационные затраты на гектар (топливо + прочие почасовые расходы)",
     "Эксплуатационные затраты на поле (без годовых постоянных затрат)",
-    "Единица площади"
+    "Единица площади",
+    "Поиск марки, модели, варианта или рынка",
+    "Подходящие модели",
+    "Нет совпадений"
   ],
   "zh": [
     "选择已发布的拖拉机型号",
@@ -95,7 +116,10 @@ const rows:Record<Locale,readonly string[]>={
     "田块面积",
     "每公顷运行成本（燃油＋其他小时成本）",
     "田块运行成本（不含年度固定成本）",
-    "面积单位"
+    "面积单位",
+    "搜索品牌、型号、版本或市场",
+    "匹配型号",
+    "没有匹配的型号"
   ],
   "ja": [
     "公開済みトラクター型式を選択",
@@ -107,7 +131,10 @@ const rows:Record<Locale,readonly string[]>={
     "圃場面積",
     "1 ha当たり運用費（燃料＋その他時間費用）",
     "圃場運用費（年間固定費を除く）",
-    "面積単位"
+    "面積単位",
+    "ブランド、型式、仕様、市場を検索",
+    "一致する型式",
+    "一致する型式なし"
   ],
   "hi": [
     "प्रकाशित ट्रैक्टर मॉडल चुनें",
@@ -119,7 +146,10 @@ const rows:Record<Locale,readonly string[]>={
     "खेत का क्षेत्रफल",
     "प्रति हेक्टेयर संचालन लागत (ईंधन + अन्य प्रति घंटा खर्च)",
     "खेत संचालन लागत (वार्षिक स्थिर खर्च छोड़कर)",
-    "क्षेत्रफल इकाई"
+    "क्षेत्रफल इकाई",
+    "ब्रांड, मॉडल, वैरिएंट या बाज़ार खोजें",
+    "मिलते मॉडल",
+    "कोई मिलता मॉडल नहीं"
   ]
 };
 export function farmModelText(lang:Locale):Record<typeof keys[number],string>{return Object.fromEntries(keys.map((key,i)=>[key,rows[lang][i]])) as Record<typeof keys[number],string>}

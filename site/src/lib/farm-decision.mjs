@@ -54,3 +54,6 @@ export function maintenanceTotals(records){
  for(const value of records){const row=validateMaintenanceNote(value);totals.count++;totals.fuel+=row.fuel;totals.cost+=row.cost;}
  return totals;
 }
+
+/** Parse only a versioned export. Never treat arbitrary files as trusted records. */
+export function parseMaintenanceExport(raw){if(typeof raw!=="string"||raw.length>262144)throw new RangeError("Invalid history file");const value=JSON.parse(raw);if(!value||value.version!==2)throw new RangeError("Unsupported export");return {version:2,records:readMaintenanceHistory(value)};}

@@ -1,5 +1,5 @@
 import type {Locale} from "./locales";
-const keys=["finance","purchase","deposit","rate","months","resale","years","rent","hours","operating","payment","interest","depreciation","ownership","rental","units","amount","power","area","equipment","available","required","pto","flow","lift","matched","insufficient","unknown","manual","used","identity","history","safety","engine","drive","hydraulic","tyres","mechanic","print","note","financeNote","unitNote","equipmentNote","usedNote","journal","model","meter","fuel","cost","save","remove","export","privateNote","saved","storageError","historyTitle","addRecord","deleteAll","totalRecords","totalFuel","totalCost","recordLimit","copyResult","copied","copyFailed","breakEven","noBreakEven","breakEvenNote","enableJs","unitChoice"] as const;
+const keys=["finance","purchase","deposit","rate","months","resale","years","rent","hours","operating","payment","interest","depreciation","ownership","rental","units","amount","power","area","equipment","available","required","pto","flow","lift","matched","insufficient","unknown","manual","used","identity","history","safety","engine","drive","hydraulic","tyres","mechanic","print","note","financeNote","unitNote","equipmentNote","usedNote","journal","model","meter","fuel","cost","save","remove","export","privateNote","saved","storageError","historyTitle","addRecord","deleteAll","totalRecords","totalFuel","totalCost","recordLimit","copyResult","copied","copyFailed","breakEven","noBreakEven","breakEvenNote","enableJs","unitChoice","importHistory","confirmImport","confirmDelete","invalidFile","imported"] as const;
 const rows:Record<Locale,readonly string[]>={
   "en": [
     "Purchase, loan and rental costs",
@@ -71,7 +71,12 @@ const rows:Record<Locale,readonly string[]>={
     "No positive break-even point",
     "Break-even uses annual depreciation divided by the difference between rental and owner hourly costs; excludes financing and other unentered costs.",
     "Enable JavaScript to use interactive tools; explanations remain available.",
-    "Input unit"
+    "Input unit",
+    "Import exported history (replaces existing records)",
+    "Replace current saved records with this file?",
+    "Delete all saved records on this device?",
+    "Invalid history file; existing records were preserved.",
+    "History imported"
   ],
   "tr": [
     "Satın alma, kredi ve kiralama maliyetleri",
@@ -143,7 +148,12 @@ const rows:Record<Locale,readonly string[]>={
     "Pozitif başa baş noktası yok",
     "Başa baş hesabı yıllık amortismanın kiralama ile sahibin saatlik gideri arasındaki farka bölünmesidir; finansman ve girilmeyen giderler hariçtir.",
     "Etkileşimli araçlar için JavaScript'i etkinleştir; açıklamalar okunabilir.",
-    "Giriş birimi"
+    "Giriş birimi",
+    "Dışa aktarılan geçmişi içe al (mevcut kayıtları değiştirir)",
+    "Mevcut kayıtlar bu dosyayla değiştirilsin mi?",
+    "Bu cihazdaki tüm kayıtlar silinsin mi?",
+    "Geçersiz geçmiş dosyası; mevcut kayıtlar korundu.",
+    "Geçmiş içe aktarıldı"
   ],
   "de": [
     "Kauf-, Kredit- und Mietkosten",
@@ -215,7 +225,12 @@ const rows:Record<Locale,readonly string[]>={
     "Kein positiver Schnittpunkt",
     "Kostengleichheit = Jahresabschreibung geteilt durch die Differenz zwischen Miet- und eigenen Stundenkosten; Finanzierung und nicht erfasste Kosten ausgeschlossen.",
     "JavaScript für interaktive Werkzeuge aktivieren; Erklärungen bleiben verfügbar.",
-    "Eingabeeinheit"
+    "Eingabeeinheit",
+    "Exportierten Verlauf importieren (ersetzt vorhandene Einträge)",
+    "Gespeicherte Einträge durch diese Datei ersetzen?",
+    "Alle Einträge auf diesem Gerät löschen?",
+    "Ungültige Verlaufsdatei; vorhandene Einträge blieben erhalten.",
+    "Verlauf importiert"
   ],
   "fr": [
     "Coûts d’achat, de crédit et de location",
@@ -287,7 +302,12 @@ const rows:Record<Locale,readonly string[]>={
     "Aucun seuil positif",
     "Seuil = amortissement annuel divisé par la différence entre tarif de location et coût horaire de propriété ; hors financement et coûts non saisis.",
     "Activez JavaScript pour les outils interactifs ; les explications restent disponibles.",
-    "Unité saisie"
+    "Unité saisie",
+    "Importer l’historique exporté (remplace les entrées)",
+    "Remplacer les entrées par ce fichier ?",
+    "Supprimer toutes les entrées de cet appareil ?",
+    "Fichier invalide ; les entrées existantes sont conservées.",
+    "Historique importé"
   ],
   "es": [
     "Costes de compra, préstamo y alquiler",
@@ -359,7 +379,12 @@ const rows:Record<Locale,readonly string[]>={
     "No hay punto de equilibrio positivo",
     "Equilibrio = depreciación anual dividida por la diferencia entre alquiler y coste horario propio; excluye financiación y costes no introducidos.",
     "Activa JavaScript para las herramientas interactivas; las explicaciones siguen disponibles.",
-    "Unidad de entrada"
+    "Unidad de entrada",
+    "Importar historial exportado (reemplaza registros)",
+    "¿Reemplazar los registros con este archivo?",
+    "¿Eliminar todos los registros del dispositivo?",
+    "Archivo no válido; se conservaron los registros existentes.",
+    "Historial importado"
   ],
   "pt-br": [
     "Custos de compra, financiamento e aluguel",
@@ -431,7 +456,12 @@ const rows:Record<Locale,readonly string[]>={
     "Sem ponto de equilíbrio positivo",
     "Equilíbrio = depreciação anual dividida pela diferença entre aluguel e custo horário próprio; exclui financiamento e custos não informados.",
     "Ative JavaScript para ferramentas interativas; as explicações permanecem disponíveis.",
-    "Unidade de entrada"
+    "Unidade de entrada",
+    "Importar histórico exportado (substitui registros)",
+    "Substituir registros salvos por este arquivo?",
+    "Excluir todos os registros deste dispositivo?",
+    "Arquivo inválido; registros existentes preservados.",
+    "Histórico importado"
   ],
   "ru": [
     "Расходы на покупку, кредит и аренду",
@@ -503,7 +533,12 @@ const rows:Record<Locale,readonly string[]>={
     "Нет положительной точки равенства",
     "Равенство затрат = годовая амортизация / разница между арендной и собственной часовой стоимостью; без финансирования и невведённых затрат.",
     "Включите JavaScript для интерактивных инструментов; пояснения доступны.",
-    "Единица ввода"
+    "Единица ввода",
+    "Импорт истории (заменяет записи)",
+    "Заменить сохранённые записи этим файлом?",
+    "Удалить все записи на устройстве?",
+    "Неверный файл; прежние записи сохранены.",
+    "История импортирована"
   ],
   "zh": [
     "购置、贷款和租赁成本",
@@ -575,7 +610,12 @@ const rows:Record<Locale,readonly string[]>={
     "无正的平衡点",
     "平衡工时＝年折旧除以租赁和自有设备小时成本之差；不含融资及未输入的成本。",
     "启用 JavaScript 使用交互工具；说明仍可阅读。",
-    "输入单位"
+    "输入单位",
+    "导入已导出的历史（替换现有记录）",
+    "用此文件替换当前记录？",
+    "删除此设备上的所有记录？",
+    "历史文件无效；现有记录已保留。",
+    "已导入历史"
   ],
   "ja": [
     "購入・ローン・レンタル費用",
@@ -647,7 +687,12 @@ const rows:Record<Locale,readonly string[]>={
     "正の分岐点なし",
     "分岐時間＝年間減価償却費÷レンタルと自己保有の時間費用の差。資金調達費や未入力費用は除きます。",
     "対話ツールには JavaScript を有効にしてください。説明は閲覧できます。",
-    "入力単位"
+    "入力単位",
+    "出力した履歴を読み込む（既存記録を置換）",
+    "現在の記録をこのファイルで置換しますか？",
+    "この端末の全記録を削除しますか？",
+    "無効な履歴ファイル。既存記録は保持されました。",
+    "履歴を読み込みました"
   ],
   "hi": [
     "खरीद, ऋण और किराये की लागत",
@@ -719,7 +764,12 @@ const rows:Record<Locale,readonly string[]>={
     "धनात्मक बराबरी बिंदु नहीं",
     "बराबरी = वार्षिक मूल्यह्रास / किराये और अपने प्रति घंटा खर्च का अंतर; वित्तपोषण और दर्ज न किए गए खर्च शामिल नहीं।",
     "इंटरैक्टिव उपकरणों के लिए JavaScript चालू करें; विवरण पढ़ सकते हैं।",
-    "इनपुट इकाई"
+    "इनपुट इकाई",
+    "निर्यात किया इतिहास आयात करें (पुराने रिकॉर्ड बदलेंगे)",
+    "इस फ़ाइल से मौजूदा रिकॉर्ड बदलें?",
+    "इस डिवाइस के सभी रिकॉर्ड हटाएँ?",
+    "अमान्य इतिहास फ़ाइल; पुराने रिकॉर्ड सुरक्षित हैं।",
+    "इतिहास आयात हुआ"
   ]
 };
 export function farmDecisionText(lang:Locale):Record<typeof keys[number],string>{

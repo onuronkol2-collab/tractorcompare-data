@@ -1,8 +1,5 @@
 ---
 import SiteLayout from "../layouts/SiteLayout.astro";
-import {equipmentModelFragment} from "../lib/farm-model-fragment.mjs";
-import {farmDecisionText} from "../lib/farm-decision-i18n";
-import {farmCostText} from "../lib/farm-cost-i18n";
 import "../styles/model-research-toc.css";
 import TractorMarketPrice from "./TractorMarketPrice.astro";
 import ModelSourceIndex from "./ModelSourceIndex.astro";
@@ -136,7 +133,6 @@ const summaryItems = [
       </article>)}</div>
       <p class="model-answer-method"><a href={localizedPath(answerMethodLocale,"/methodology/")} hreflang={lang==="en"||lang==="tr"?undefined:answerMethodLocale}>{answerCopy.method} ↗</a></p>
     </section>}
-    <a class="model-spec-glossary-banner" href={localizedPath(lang,"/guides/farm-cost-calculator/")+equipmentModelFragment(tractor.slug)}><strong>{farmDecisionText(lang).equipment}</strong><span>{farmCostText(lang).nav} ↗</span></a>
     {modelDiscussions.length>0&&<section class="model-forum-topics" aria-labelledby="model-forum-heading">
       <h2 id="model-forum-heading">{discussionTitle[lang]}</h2>
       <ul>{modelDiscussions.map(topic=><li><a href={localizedPath(lang,"/forum/"+topic.slug+"/")}>{topic.title}</a><small>{forumCopy(lang,topic.category)}</small></li>)}</ul>

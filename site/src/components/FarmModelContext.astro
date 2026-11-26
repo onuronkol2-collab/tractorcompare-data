@@ -9,13 +9,15 @@ const {lang}=Astro.props;
 const c=farmModelText(lang);
 const models=(await getPublicCatalog()).tractors.map(tractor=>equipmentContext(tractor,lang)).sort((a,b)=>a.name.localeCompare(b.name));
 ---
-<div class="model-context" data-model-context data-empty={c.empty} data-source={advisorText(lang,"factSource")}>
+<div class="model-context" data-model-context data-empty={c.empty} data-source={advisorText(lang,"factSource")} data-no-match={c.noMatch} data-matches={c.matches}>
+ <label>{c.search}<input type="search" data-model-search maxlength="120" autocomplete="off" disabled /></label><p role="status" data-model-search-status></p>
  <label>{c.choose}<select data-equipment-model disabled><option value="">{c.select}</option>{models.map(model=><option value={model.slug} data-model-link={model.href} data-model-facts={JSON.stringify(model.facts)}>{model.name}</option>)}</select></label>
  <p>{c.caution}</p>
  <div data-model-details hidden aria-live="polite"><h3>{c.facts}</h3><p data-model-empty hidden>{c.empty}</p><ul data-model-facts-list></ul><a data-model-page hidden>{c.open}</a></div>
 </div>
 <script>
  import {equipmentModelSlug} from "../lib/farm-model-fragment.mjs";
+ import {matchingModelIndexes} from "../lib/farm-model-search.mjs";
  const root=document.querySelector<HTMLElement>("[data-model-context]");
  if(root){
   const select=root.querySelector<HTMLSelectElement>("[data-equipment-model]");
@@ -43,6 +45,10 @@ const models=(await getPublicCatalog()).tractors.map(tractor=>equipmentContext(t
      if(href&&/^\/(?:[a-z-]+\/)?tractors\/[a-z0-9-]+\/$/.test(href)){page.href=href;page.hidden=false;}
     }catch{list.replaceChildren();empty.hidden=false;}
    };
+   const input=root.querySelector<HTMLInputElement>("[data-model-search]");const searchStatus=root.querySelector("[data-model-search-status]");
+   const placeholder=select.options[0],options=Array.from(select.options).slice(1),names=options.map(option=>option.textContent||"");
+   const filter=()=>{if(!input)return;const selected=select.value;const matches=matchingModelIndexes(names,input.value);const visible=matches.map(index=>options[index]);select.replaceChildren(placeholder,...visible);if(visible.some(option=>option.value===selected))select.value=selected;else select.value="";if(searchStatus)searchStatus.textContent=matches.length?(root.dataset.matches||"")+": "+matches.length:(root.dataset.noMatch||"");render();};
+   if(input){input.disabled=false;input.addEventListener("input",filter);}
    select.disabled=false;select.addEventListener("change",render);
    const slug=equipmentModelSlug(window.location.hash);
    if(slug&&Array.from(select.options).some(option=>option.value===slug)){select.value=slug;render();document.getElementById("farm-equipment")?.scrollIntoView();}
@@ -52,7 +58,7 @@ const models=(await getPublicCatalog()).tractors.map(tractor=>equipmentContext(t
 <style>
  .model-context{border:1px solid #708478;border-radius:.7rem;padding:1rem;margin-block:1rem;min-width:0}
  .model-context label{display:grid;gap:.5rem}
- select{max-width:100%;width:100%;min-height:44px;font:inherit}
+ select,input{max-width:100%;width:100%;min-height:44px;font:inherit;box-sizing:border-box}
  ul{padding-inline-start:1.4rem}
  li{margin-block:.65rem;overflow-wrap:anywhere}
 </style>

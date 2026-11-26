@@ -18,7 +18,7 @@ test("localized farm tools calculate, fail closed and keep explicitly saved note
  await expect(journal.locator('[name="fuel"]')).toHaveValue("");
  await journal.locator('[name="fuel"]').fill("5");await journal.locator('[name="cost"]').fill("10");await journal.getByRole("button",{name:"Kayıt ekle"}).click();
  await expect(page.locator('[data-history-total="count"]')).toHaveText("2");await expect(page.locator('[data-history-total="fuel"]')).toHaveText("15");await expect(page.locator('[data-history-total="cost"]')).toHaveText("60");
- await journal.getByRole("button",{name:"Tüm kayıtları sil"}).click();await expect(journal.locator('[name="model"]')).toHaveValue("");
+ page.once("dialog",dialog=>dialog.accept());await journal.getByRole("button",{name:"Tüm kayıtları sil"}).click();await expect(journal.locator('[name="model"]')).toHaveValue("");
  await expect.poll(()=>page.evaluate(()=>localStorage.getItem("tractorvs:maintenance-note:v1"))).toBeNull();
  await expect.poll(()=>page.evaluate(()=>document.documentElement.scrollWidth-document.documentElement.clientWidth)).toBeLessThanOrEqual(2);
 });
@@ -35,3 +35,5 @@ test("calculations count only after consent, with no values, and no history even
  await page.locator("#farm-cost-form button").click();await expect.poll(events).toEqual([["event","tractor_farm_tools_view"],["event","tractor_farm_tool_calculated"]]);
  await page.locator('#farm-cost-form [name="area"]').fill("0");await page.locator("#farm-cost-form button").click();expect((await events()).length).toBe(2);
 });
+
+test("maintenance export import is validated, confirmed and local",async({page})=>{await page.goto("/tr/guides/farm-cost-calculator/");await page.locator("#tractorvs-analytics-reject").click();const input=page.locator("[data-import-history]");await expect(input).toBeEnabled();const valid={version:2,records:[{model:"Fixture",meter:10,fuel:2,cost:3}]};page.once("dialog",dialog=>dialog.accept());await input.setInputFiles({name:"history.json",mimeType:"application/json",buffer:Buffer.from(JSON.stringify(valid))});await expect(page.locator('[data-history-total="count"]')).toHaveText("1");await input.setInputFiles({name:"bad.json",mimeType:"application/json",buffer:Buffer.from("{}")});await expect(page.locator('[data-history-total="count"]')).toHaveText("1");await expect(page.locator("[data-journal-status]")).toContainText("Geçersiz");});

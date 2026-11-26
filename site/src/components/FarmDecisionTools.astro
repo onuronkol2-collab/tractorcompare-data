@@ -11,7 +11,7 @@ const metrics=["payment","interest","depreciation","ownership","rental","breakEv
 const compat=["pto","flow","lift"] as const;
 const checklist=["identity","history","safety","engine","drive","hydraulic","tyres","mechanic"] as const;
 ---
-<div data-farm-decisions data-locale={LOCALE_TAGS[lang]} data-invalid={common.invalid} data-no-break-even={c.noBreakEven} data-copied={c.copied} data-copy-failed={c.copyFailed} data-limit={c.recordLimit}>
+<div data-farm-decisions data-locale={LOCALE_TAGS[lang]} data-invalid={common.invalid} data-no-break-even={c.noBreakEven} data-copied={c.copied} data-copy-failed={c.copyFailed} data-limit={c.recordLimit} data-confirm-import={c.confirmImport} data-confirm-delete={c.confirmDelete} data-invalid-file={c.invalidFile} data-imported={c.imported}>
  <noscript><p>{c.enableJs}</p></noscript>
  <nav aria-label={common.nav} class="decision-nav">
   <a href="#farm-finance">{c.finance}</a><a href="#farm-units">{c.units}</a><a href="#farm-equipment">{c.equipment}</a><a href="#farm-used">{c.used}</a><a href="#farm-journal">{c.journal}</a>
@@ -58,13 +58,13 @@ const checklist=["identity","history","safety","engine","drive","hydraulic","tyr
    <div class="decision-nav"><button type="submit">{c.addRecord}</button><button data-delete type="button">{c.deleteAll}</button><button data-export type="button">{c.export}</button></div>
    <p data-journal-status data-saved={c.saved} data-storage-error={c.storageError} role="status"></p><p data-error role="alert" hidden>{common.invalid}</p></fieldset>
   </form>
-  <p>{c.recordLimit}</p><h3>{c.historyTitle}</h3>
+  <p>{c.recordLimit}</p><label>{c.importHistory}<input type="file" data-import-history accept=".json,application/json" disabled /></label><h3>{c.historyTitle}</h3>
   <dl class="decision-grid" aria-live="polite"><div><dt>{c.totalRecords}</dt><dd data-history-total="count">0</dd></div><div><dt>{c.totalFuel}</dt><dd data-history-total="fuel">0</dd></div><div><dt>{c.totalCost}</dt><dd data-history-total="cost">0</dd></div></dl>
   <div class="history-scroll"><table><thead><tr>{["model","meter","fuel","cost"].map(key=><th scope="col">{c[key as "model"|"meter"|"fuel"|"cost"]}</th>)}</tr></thead><tbody data-history-rows></tbody></table></div>
  </section>
 </div>
 <script>
- import {ownershipCost,convertFarmUnit,implementScreen,validateMaintenanceNote,readMaintenanceHistory,appendMaintenanceRecord,maintenanceTotals,MAX_MAINTENANCE_RECORDS} from "../lib/farm-decision.mjs";
+ import {ownershipCost,convertFarmUnit,implementScreen,validateMaintenanceNote,readMaintenanceHistory,appendMaintenanceRecord,maintenanceTotals,MAX_MAINTENANCE_RECORDS,parseMaintenanceExport} from "../lib/farm-decision.mjs";
  import {FARM_TOOL_DONE_EVENT} from "../lib/analytics-product-actions";
  const root=document.querySelector<HTMLElement>("[data-farm-decisions]");
  const key="tractorvs:maintenance-note:v1";
@@ -124,7 +124,8 @@ const checklist=["identity","history","safety","engine","drive","hydraulic","tyr
   for(const fieldset of root.querySelectorAll<HTMLFieldSetElement>("[data-tool-controls]"))fieldset.disabled=false;
   root.querySelector("[data-copy]")?.addEventListener("click",async()=>{const form=forms.find(form=>form.dataset.decision==="finance");if(!form)return;const target=form.querySelector("[data-copy-status]");const entries=[...form.querySelectorAll("[data-finance-result]")];if(!target||entries.some(el=>el.textContent==="—"))return;const result=entries.map(el=>(el.previousElementSibling?.textContent||"")+": "+el.textContent).join("\n");try{await navigator.clipboard.writeText(result);target.textContent=root.dataset.copied||"";}catch{target.textContent=root.dataset.copyFailed||"";}});
   root.querySelector("[data-print]")?.addEventListener("click",()=>window.print());
-  root.querySelector("[data-delete]")?.addEventListener("click",()=>{try{localStorage.removeItem(key);journal?.reset();renderHistory([]);if(status)status.textContent="";}catch{journalStatus("storageError");}});
+  root.querySelector("[data-delete]")?.addEventListener("click",()=>{if(!window.confirm(root.dataset.confirmDelete||""))return;try{localStorage.removeItem(key);journal?.reset();renderHistory([]);if(status)status.textContent="";}catch{journalStatus("storageError");}});
+  const upload=root.querySelector<HTMLInputElement>("[data-import-history]");if(upload){upload.disabled=false;upload.addEventListener("change",async()=>{const file=upload.files?.[0];upload.value="";if(!file)return;try{if(file.size>262144)throw new RangeError("File too large");const imported=parseMaintenanceExport(await file.text());if(!window.confirm(root.dataset.confirmImport||""))return;localStorage.setItem(key,JSON.stringify(imported));journal?.reset();renderHistory(imported.records);if(status)status.textContent=root.dataset.imported||"";}catch{if(status)status.textContent=root.dataset.invalidFile||"";}});}
   root.querySelector("[data-export]")?.addEventListener("click",()=>{try{const records=history();if(!records.length)return;const url=URL.createObjectURL(new Blob([JSON.stringify({version:2,records},null,2)],{type:"application/json"}));const link=document.createElement("a");link.href=url;link.download="tractorvs-maintenance.json";link.click();setTimeout(()=>URL.revokeObjectURL(url),1000);}catch{journalStatus("storageError");}});
  }
 </script>
