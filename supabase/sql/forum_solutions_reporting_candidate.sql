@@ -77,7 +77,7 @@ WITH CHECK (
 );
 -- Atomic daily quota. The private counter is never writable by API clients.
 -- Increment participates in the report transaction: failed/duplicate inserts
--- do not consume a slot. A successful report cannot refund its quota.
+-- including ON CONFLICT DO NOTHING do not consume a slot. A successful report cannot refund its quota.
 CREATE SCHEMA tc_forum_reporting_private;
 REVOKE ALL ON SCHEMA tc_forum_reporting_private FROM PUBLIC,anon,authenticated,service_role;
 CREATE TABLE tc_forum_reporting_private.daily_report_quota (
@@ -105,7 +105,7 @@ BEGIN
 END
 $quota$;
 REVOKE ALL ON FUNCTION tc_forum_reporting_private.enforce_daily_report_quota() FROM PUBLIC,anon,authenticated,service_role;
-CREATE TRIGGER tc_forum_daily_report_quota BEFORE INSERT ON public.tc_forum_content_reports
+CREATE TRIGGER tc_forum_daily_report_quota AFTER INSERT ON public.tc_forum_content_reports
 FOR EACH ROW EXECUTE FUNCTION tc_forum_reporting_private.enforce_daily_report_quota();
 
 -- Only the trusted moderation service can read or change report status.
