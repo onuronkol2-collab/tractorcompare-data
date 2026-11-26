@@ -1,3 +1,9 @@
+// Single navigation contract used by SSR, client and browser QA.
+export const FORUM_VIEWS=Object.freeze(["latest","popular","unanswered","following","saved","unread","events"]);
+export const FORUM_PRIVATE_VIEWS=Object.freeze(["following","saved","unread"]);
+export const FORUM_MEMBER_ANCHOR="forum-members";
+export const isForumView=value=>FORUM_VIEWS.includes(value);
+export const isForumPrivateView=value=>FORUM_PRIVATE_VIEWS.includes(value);
 // No private data is persisted. These helpers only rank already-visible rows.
 export function forumSearchRank(title,body,terms){
  if(!terms.length)return 0;
