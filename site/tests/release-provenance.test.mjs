@@ -29,7 +29,8 @@ test("shared Astro layout emits build-time provenance with no URL, SEO or tracke
 
 test("live push QA requires coherent verified release provenance on both public pages", () => {
   const readiness = source("../scripts/live-release-readiness.mjs");
-  assert.match(liveQa, /if: github\.event_name == 'push' \|\| github\.event_name == 'workflow_dispatch'/);
+  assert.match(liveQa, /if: github\.event_name != 'pull_request'\s+env:\s+GITHUB_TOKEN:/);
+  assert.match(liveQa, /TRACTORVS_EXACT_SNAPSHOT: "true"/g);
   assert.match(liveQa, /node site\/scripts\/live-release-readiness\.mjs "\$GITHUB_SHA" \/tr\/compare\/ \/tr\/tractors\//);
   assert.match(readiness, /releaseFromHtml\(await res\.text\(\)\)/);
   assert.match(readiness, /common&&common!==observed/);
@@ -39,6 +40,22 @@ test("live push QA requires coherent verified release provenance on both public 
   assert.ok(liveQa.indexOf("node site/scripts/live-release-readiness.mjs") < liveQa.indexOf("npx playwright test"));
   assert.match(liveQa,/TRACTORVS_REQUIRE_WORKERS_BUILD: "true"/);
   assert.match(liveQa,/needs: \[release-readiness, live-browser-projects\]/);
+});
+
+test("trusted main sitemap completion supersedes only obsolete production QA", () => {
+  assert.match(liveQa, /workflow_run:\s+workflows: \["TractorVS evidence-based sitemap lastmod ledger"\]\s+types: \[completed\]\s+branches: \[main\]/);
+  const trusted = "github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.head_branch == 'main' && github.event.workflow_run.head_repository.full_name == github.repository && github.event.workflow_run.event != 'pull_request' && github.event.workflow_run.head_sha != github.sha";
+  const eligible = "github.event_name != 'workflow_run' || (" + trusted + ")";
+  const production = "github.event_name == 'push' || (github.event_name == 'workflow_run' && " + trusted + ")";
+  assert.ok(liveQa.includes("release-readiness:\n    # Ignore PR, failed and unchanged ledger runs. Never execute their artifacts.\n    if: $" + "{{ " + eligible + " }}"));
+  assert.ok(liveQa.includes("if: $" + "{{ always() && (" + eligible + ") }}"));
+  assert.ok(liveQa.includes("cancel-in-progress: $" + "{{ " + production + " }}"));
+  assert.ok(liveQa.includes("(" + production + ") && 'production-push-main'"));
+  assert.match(liveQa, /permissions:\s+contents: read\s+checks: read/);
+  assert.doesNotMatch(liveQa, /actions\/download-artifact|permissions:\s+write-all/);
+  assert.equal((liveQa.match(/TRACTORVS_EXACT_SNAPSHOT: "true"/g) || []).length, 2, "Both exact snapshot guards must survive");
+  assert.match(liveQa, /max-parallel: 2/);
+  assert.match(liveQa, /test "\$RELEASE_RESULT" = success\s+test "\$MATRIX_RESULT" = success/);
 });
 
 test("production SHA comparison requires exactly one real, matching static meta tag", () => {
