@@ -11,17 +11,17 @@ await mkdir(root+"/originals",{recursive:true});
 const prior=JSON.parse(await readFile(archive+"/report.json","utf8"));
 if(prior.runStatus!=="complete"||prior.models.some(r=>r.status!=="published"||!r.tractor_id||!r.brand||!r.model))throw Error("No verified public archive");
 const unique=[...new Map(prior.models.map(r=>[r.tractor_id,r])).values()];
-const missing=unique.filter(r=>!APPROVED_TRACTOR_PHOTOS.some(p=>photoMatchesTractor(p,{tractor_id:r.tractor_id,brand_name:r.brand,model_name:r.model})));
+// #731/#735 production-confirmed first-photo UUID; branch registry predates this release.
+const confirmedLater=new Set(["20e382ea-5464-4128-a15a-b7bc304ef01f"]);
+const missing=unique.filter(r=>!confirmedLater.has(r.tractor_id)&&!APPROVED_TRACTOR_PHOTOS.some(p=>photoMatchesTractor(p,{tractor_id:r.tractor_id,brand_name:r.brand,model_name:r.model})));
 const previous=JSON.parse(await readFile("previous-wave/report.json","utf8")); const second=JSON.parse(await readFile("second-wave/report.json","utf8")); const visited=new Set([...previous.selectedModels,...second.selectedModels].map(r=>r.tractor_id));
 const priorities=["Yanmar","Mahindra","Sonalika","Swaraj","TYM","McCormick","Kioti","Agrale","LS Tractor","Iseki","Solis"];
 // New discovery lane: enumerate actual event collections rather than repeat empty brand queries.
-const direct=[
- ["Başak Traktör","5075 Compact","Başak 5075 Kompakt Red Power Agritechnica 2025 (DSC03675).jpg","Başak 5075 Kompakt Red Power Agritechnica 2025 (DSC06958).jpg","Başak 5075 Kompakt Red Power Cabin Agritechnica 2023 (DSC04437).jpg"]
-];
+const direct=[]; // Previously published Başak 5075 wave must not be repeated.
 const missingIds=new Set(missing.map(r=>r.tractor_id));
 const targets=missing;
 const hasPrior=[];
-const report={generatedAt:new Date().toISOString(),scope:"Archived public sitemap model identities checked against current registry; not full live catalogue",sourceArchive:14994831046,mode:"event archive collections and exact local-language aliases, missing UUIDs only",publicModelCount:unique.length,missingModelCount:missing.length,selectedModels:targets.map(({tractor_id,brand,model,variant})=>({tractor_id,brand,model,variant})),candidateCount:0,downloaded:0,publicationCount:0,allowedToPublish:false,errors:[],queries:[],entries:[]};
+const report={generatedAt:new Date().toISOString(),scope:"Archived public sitemap model identities checked against current registry; not full live catalogue",sourceArchive:14994831046,mode:"regional and older event collection discovery, missing UUIDs only; #731 excluded; branch registry must be rechecked against main before promotion",publicModelCount:unique.length,missingModelCount:missing.length,selectedModels:targets.map(({tractor_id,brand,model,variant})=>({tractor_id,brand,model,variant})),candidateCount:0,downloaded:0,publicationCount:0,allowedToPublish:false,errors:[],queries:[],entries:[]};
 const sleep=ms=>new Promise(r=>setTimeout(r,ms));
 const deadline=Date.now()+12*60*1000;
 const withinBudget=()=>Date.now()<deadline;
@@ -57,12 +57,23 @@ async function query(params){
 // The collections below are indexed public event archives, not another brand keyword search.
 // Keep the metadata/download phase within the same bounded provider budget.
 const collections=[
- "Category:Agritechnica 2025 (supported by Wikimedia Deutschland)",
- "Category:Agritechnica 2023 (supported by Wikimedia Deutschland)",
- "Category:DLG-Feldtage 2026 (supported by Wikimedia Deutschland)",
- "Category:Başak Traktör at Agritechnica 2025",
- "Category:Başak Traktör at Agritechnica 2023",
- "Category:Belarus 512"
+ "Category:Agritechnica 2019",
+ "Category:Farmtrac tractors in Germany",
+ "Category:TYM tractors in Germany",
+ "Category:TAFE tractors in Germany",
+ "Category:Quality images of tractors in Germany",
+ "Category:Tractors in Japan",
+ "Category:Yanmar tractors in Japan",
+ "Category:Iseki tractors",
+ "Category:Tractors in India",
+ "Category:Mahindra tractors in India",
+ "Category:Swaraj tractors",
+ "Category:Sonalika tractors",
+ "Category:Mahindra tractors",
+ "Category:Yanmar tractors",
+ "Category:Valtra tractors in Germany",
+ "Category:New Holland tractors in Germany",
+ "Category:John Deere tractors in Germany"
 ];
 const discoverUntil=Date.now()+Math.min(4*60*1000,Math.max(0,deadline-Date.now()-5*60*1000));
 const attemptedTitles=new Set(prior.models.flatMap(r=>(r.candidates||[]).map(c=>normalizeTitle(c.fileTitle))));
@@ -72,7 +83,7 @@ for(const category of collections){
   if(paused||!withinBudget()||Date.now()>=discoverUntil)break;
   const data=await query({list:"categorymembers",cmtitle:category,cmtype:"file",cmlimit:500,...continuation});
   const members=data?.query?.categorymembers||[];
-  report.queries.push({kind:"event collection",category,returned:members.length,completed:Boolean(data),continuation:Boolean(data?.continue)});
+  report.queries.push({kind:"regional/event collection",category,returned:members.length,completed:Boolean(data),continuation:Boolean(data?.continue)});
   for(const item of members){
    const key=normalizeTitle(item.title);
    if(held.has(key)||registrySources.has(key)||attemptedTitles.has(key))continue;
