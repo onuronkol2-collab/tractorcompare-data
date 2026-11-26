@@ -1,6 +1,12 @@
 name: TractorVS lightweight Cloudflare release monitor
 on:
   workflow_dispatch:
+    inputs:
+      target_sha:
+        description: 'Optional full commit SHA for GitHub checks only (Cloudflare remains current metadata)'
+        required: false
+        type: string
+        default: ''
   pull_request:
     branches: [main]
     paths: ['.github/workflows/cloudflare-release-monitor.yml']
@@ -57,3 +63,63 @@ jobs:
           echo "Cloudflare metadata only; this is not live HTML, target SHA ancestry or interaction proof." >> "$GITHUB_STEP_SUMMARY"
           echo "Required independent production evidence: TractorVS live comparison interaction QA (all four browser projects, exact served release, ten locales)." >> "$GITHUB_STEP_SUMMARY"
           echo "Browser Integrity Check blocked Python public requests in run 45850217598; do not retry that client or change security settings." >> "$GITHUB_STEP_SUMMARY"
+  github-checks-snapshot:
+    # Observational report only; never a substitute for required checks.
+    if: (github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main') || (github.event_name == 'pull_request' && github.head_ref == 'ops/cloudflare-release-monitor-20261126' && github.event.pull_request.head.repo.full_name == github.repository)
+    permissions:
+      checks: read
+      statuses: read
+      contents: read
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - name: Read exact-SHA GitHub checks without new tests or credentials
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TARGET_SHA: ${{ inputs.target_sha }}
+          PR_HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+          EVENT_SHA: ${{ github.sha }}
+        run: |
+          python3 - <<'PY'
+          import json, os, re, urllib.request, urllib.error
+          base="https://api.github.com/repos/onuronkol2-collab/tractorcompare-data"
+          token=os.environ["GH_TOKEN"]
+          class NoRedirect(urllib.request.HTTPRedirectHandler):
+              def redirect_request(self,*args,**kwargs): return None
+          opener=urllib.request.build_opener(NoRedirect)
+          def get(path):
+              req=urllib.request.Request(base+path,headers={"Authorization":"Bearer "+token,"Accept":"application/vnd.github+json","X-GitHub-Api-Version":"2022-11-28"},method="GET")
+              try:
+                  with opener.open(req,timeout=10) as r:
+                      if r.headers.get("Retry-After"): raise SystemExit("GitHub cooldown requested")
+                      raw=r.read(8000001)
+                      if len(raw)>8000000: raise SystemExit("GitHub response exceeds bound")
+                      return json.loads(raw), 'rel="next"' in r.headers.get("Link","")
+              except urllib.error.HTTPError as e:
+                  raise SystemExit("GitHub API HTTP "+str(e.code))
+              except Exception:
+                  raise SystemExit("GitHub API network or response error")
+          def pages(path,key):
+              rows=[]
+              for page in range(1,6):
+                  data,more=get(path+("&" if "?" in path else "?")+"per_page=100&page="+str(page))
+                  rows.extend(data[key])
+                  if not more:
+                      return rows
+              raise SystemExit("Incomplete GitHub pagination; do not infer missing checks")
+          targets=[("requested",os.environ["TARGET_SHA"])] if os.environ["TARGET_SHA"] else [("pr-head",os.environ["PR_HEAD_SHA"]),("event-commit",os.environ["EVENT_SHA"])]
+          seen=set()
+          for scope,sha in targets:
+              if not sha or sha in seen: continue
+              if not re.fullmatch("[0-9a-f]{40}",sha): raise SystemExit("Full lowercase commit SHA required")
+              seen.add(sha)
+              checks=pages("/commits/"+sha+"/check-runs?filter=latest","check_runs")
+              statuses=pages("/commits/"+sha+"/status","statuses")
+              rows=[{"id":c["id"],"name":str(c["name"])[:200],"app":str((c.get("app") or {}).get("slug",""))[:80],"status":c.get("status"),"conclusion":c.get("conclusion"),"head_sha":c.get("head_sha")} for c in checks]
+              legacy=[{"context":str(c.get("context",""))[:200],"state":c.get("state")} for c in statuses]
+              security=[c for c in rows if re.search(r"codeql|code scanning",c["name"],re.I) or c["app"]=="github-code-scanning"]
+              report={"scope":scope,"sha":sha,"checks":rows,"commit_statuses":legacy,"codeql_candidates":security,"codeql_visibility":"candidate_checks_present" if security else "not_observed","merge_authorized":False}
+              print("GH_CHECKS_SNAPSHOT "+json.dumps(report,ensure_ascii=True))
+              print("GH_CODEQL_SNAPSHOT "+json.dumps({"scope":scope,"sha":sha,"candidates":security,"note":"Missing, skipped, neutral or running is not a verified security pass; candidate names alone are not required-check policy."},ensure_ascii=True))
+          if not seen: raise SystemExit("No target SHA")
+          PY
