@@ -46,7 +46,7 @@ test("same visible navigation hierarchy survives language expansion",async({page
  await page.setViewportSize({width:1200,height:900});
  for(const locale of ["en","de","fr","es","pt-br","ru","ja","zh","hi"]){
   await page.goto(locale==="en"?"/forum/":"/"+locale+"/forum/");
-  await expect(page.locator(".forum-view-tabs [data-forum-view]")).toHaveCount(5);
+  await expect(page.locator(".forum-view-tabs [data-forum-view]")).toHaveCount(7);
   const nav=page.locator(".forum-view-button").first();
   expect(await font(nav)).toBeGreaterThanOrEqual(14);
   const width=await page.evaluate(()=>document.documentElement.scrollWidth-innerWidth);
