@@ -91,7 +91,6 @@ const summaryItems = [
       <span class="model-compare-copy"><strong>{cx(lang,"cta")}</strong><small>{cx(lang,"ctaHint")}</small></span>
       <span class="model-compare-arrow" aria-hidden="true">↗</span>
     </a>
-    <ResearchWorkspace lang={lang} mode="model" modelId={tractor.tractor_id} />
     <TractorPhoto tractor={tractor} lang={lang} mode="hero" />
     {summaryItems.length>0&&<>
       <div class="model-summary-grid">{summaryItems.map((item)=>
@@ -197,6 +196,7 @@ const summaryItems = [
       </a>
     </div>
   </section>}
+  <ResearchWorkspace slot="visitor-tools" lang={lang} mode="model" modelId={tractor.tractor_id} />
 </SiteLayout>
 
 <style>

@@ -1,9 +1,9 @@
 import {test,expect} from "@playwright/test";
 test("device research keeps a favorite across locales, saves comparison and clears records",async({page})=>{
  await page.goto("/tr/tractors/",{waitUntil:"domcontentloaded"});
- const cards=page.locator(".tractor-card[data-research-id]");
+ const cards=page.locator(".tractor-card");
  test.skip((await cards.count())<2,"Offline build lacks two published models.");
- const first=cards.first(),model=await first.getAttribute("data-research-id");
+ const first=cards.first(),model=await first.locator("[data-price-for]").getAttribute("data-price-for");
  const detail=await first.locator(".tractor-card-main").getAttribute("href");
  await page.goto(detail,{waitUntil:"domcontentloaded"});
  const favorite=page.locator("[data-research-favorite]");

@@ -61,7 +61,6 @@ const pricePayload = JSON.stringify({
   <section class="catalog-section"><div class="container">
     {catalog.configured && catalog.tractors.length > 0 ? <>
       {catalog.tractors.length > 1 && <p style="margin:0 0 24px;"><a class="button button-primary" href={localizedPath(lang,"/compare/")}>{t(lang,"comparePublished")} ↗</a></p>}
-      <ResearchWorkspace lang={lang} mode="catalog" />
       <div class="catalog-price-filter">
         <label for="catalog-price-country">{tx(lang,"country")}</label>
         <select id="catalog-price-country">
@@ -166,7 +165,7 @@ const pricePayload = JSON.stringify({
       </svg>
       <form id="catalog-compare" action={localizedPath(lang,"/compare/")} method="get" hidden></form>
       <div class:list={["tractor-card-grid", { "tractor-card-grid--two": catalog.tractors.length === 2, "tractor-card-grid--large": catalog.tractors.length >= 100 }]} id="tractor-card-grid" tabindex="-1">
-        {catalog.tractors.map((tractor)=><article class="tractor-card" data-research-id={tractor.tractor_id}
+        {catalog.tractors.map((tractor)=><article class="tractor-card"
           id={firstBrandCard.get(tractor.brand_name)===tractor.tractor_id?brandAnchor.get(tractor.brand_name):undefined}
           data-search={[tractor.brand_name,tractor.model_name,tractor.variant||"",tractor.market||"",tractor.engine||""].join(" ").toLowerCase()}
           data-brand={tractor.brand_name} data-power={tractor.horsepower??""} data-year={tractor.model_year??""} data-market={tractor.market??""}
@@ -215,6 +214,7 @@ const pricePayload = JSON.stringify({
   </div></section>
 
   <script type="application/json" id="catalog-price-payload" set:html={pricePayload}></script>
+  <Fragment slot="visitor-tools">{catalog.configured && catalog.tractors.length > 0 && <ResearchWorkspace lang={lang} mode="catalog" />}</Fragment>
 </SiteLayout>
 
 <script>

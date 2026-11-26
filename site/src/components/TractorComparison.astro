@@ -196,7 +196,6 @@ const labelsPayload = JSON.stringify({
             </a>
           </div>
         </div>
-        <ResearchWorkspace lang={lang} mode="compare" />
         <div class="tc-table-bar">
           <div class="tc-table-bar-title">
             <span class="tc-step-number">02</span><div>
@@ -259,6 +258,7 @@ const labelsPayload = JSON.stringify({
 
   <script type="application/json" id="tc-payload" set:html={payload}></script>
   <script type="application/json" id="tc-i18n" set:html={labelsPayload}></script>
+  <Fragment slot="visitor-tools">{models.length >= 2 && <ResearchWorkspace lang={lang} mode="compare" />}</Fragment>
 </SiteLayout>
 
 

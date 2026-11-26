@@ -35,7 +35,12 @@ const copy=JSON.stringify(c).replace(/</g,"\\u003c");
   import {RESEARCH_KEY,readResearch,writeResearch,normalizeResearch,toggleFavorite,rememberModel,
     saveComparison,removeComparison,availableResearch} from "../lib/research-state.mjs";
   const root=document.querySelector<HTMLElement>("#research-workspace");
-  if(root){
+  const target=root?.dataset.mode==="model"?document.querySelector(".model-compare-action"):
+    root?.dataset.mode==="catalog"?document.querySelector(".catalog-price-filter"):
+    root?.dataset.mode==="compare"?document.querySelector(".tc-table-bar"):null;
+  if(root&&target){
+    // Keep visitor-state controls out of initial editorial HTML; mount them in the normal reading order after hydration.
+    target.insertAdjacentElement(root.dataset.mode==="model"?"afterend":"beforebegin",root);
     const c=JSON.parse(root.querySelector("[data-research-copy]")?.textContent||"{}") as Record<string,string>;
     const mode=root.dataset.mode;
     const modelId=root.dataset.modelId||"";
@@ -57,8 +62,8 @@ const copy=JSON.stringify(c).replace(/</g,"\\u003c");
       storage=undefined;message(c.error);
       for(const button of root.querySelectorAll<HTMLButtonElement>("button"))button.disabled=true;
     };
-    for(const card of document.querySelectorAll<HTMLElement>(".tractor-card[data-research-id]")){
-      const key=card.dataset.researchId;
+    for(const card of document.querySelectorAll<HTMLElement>(".tractor-card")){
+      const key=card.querySelector<HTMLElement>("[data-price-for]")?.dataset.priceFor;
       const link=card.querySelector<HTMLAnchorElement>(".tractor-card-main");
       const name=card.querySelector("h2")?.textContent;
       const context=card.querySelector(".tractor-card-meta")?.textContent?.trim();
@@ -125,7 +130,7 @@ const copy=JSON.stringify(c).replace(/</g,"\\u003c");
     try{storage=window.localStorage;state=readResearch(storage);}
     catch{unavailable();}
     root.hidden=false;
-    if(details&&window.location.hash==="#research-workspace")details.open=true;
+    if(details&&window.location.hash==="#research-workspace"){details.open=true;root.scrollIntoView({block:"start"});}
     render();
     if(storage&&mode==="model"&&modelId)mutate(s=>rememberModel(s,modelId),false);
     favorite?.addEventListener("click",()=>mutate(s=>toggleFavorite(s,modelId)));
