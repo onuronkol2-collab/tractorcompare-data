@@ -8,6 +8,7 @@ import LocaleSuggestion from "../components/LocaleSuggestion.astro";
 import AnalyticsConsent from "../components/AnalyticsConsent.astro";
 import { analyticsText } from "../lib/analytics-i18n.ts";
 import { brand } from "../config/brand";
+import {farmCostText} from "../lib/farm-cost-i18n";
 import { LOCALES, LOCALE_NAMES, LOCALE_TAGS, localizedPath, unlocalizedPath, type Locale } from "../lib/locales";
 import { t } from "../lib/ui";
 import { verifiedReleaseSha } from "../lib/release-provenance.mjs";
@@ -183,6 +184,7 @@ const openGraphLocale: Record<Locale, string> = {
             <summary class:list={{"is-current-section":section==="resources"}}>{t(lang,"navResources")} <span aria-hidden="true">▾</span></summary>
             <div class="resource-nav-links">
               <a href={guidePath}>{t(lang,"guideLink")}</a>
+              <a href={localizedPath(lang,"/guides/farm-cost-calculator/")}>{farmCostText(lang).nav}</a>
               <a href={glossaryPath}>{t(lang,"navTechnicalTerms")}{lang!=="tr"&&lang!=="en"?" (EN)":""}</a>
               <a href={methodologyPath}>{t(lang,"methodologyLink")}{lang!=="tr"&&lang!=="en"?" (EN)":""}</a>
               <a href={homePath+"#data"}>{t(lang,"navData")}</a>
@@ -239,6 +241,7 @@ const openGraphLocale: Record<Locale, string> = {
               <a href={forumPath+"#forum-register-heading"}>{memberCopy(lang,"register")}</a>
               <div class="mobile-nav-group-label">{t(lang,"navResources")}</div>
               <a href={guidePath}>{t(lang,"guideLink")}</a>
+              <a href={localizedPath(lang,"/guides/farm-cost-calculator/")}>{farmCostText(lang).nav}</a>
               <a href={glossaryPath}>{t(lang,"navTechnicalTerms")}{lang!=="tr"&&lang!=="en"?" (EN)":""}</a>
               <a href={methodologyPath}>{t(lang,"methodologyLink")}{lang!=="tr"&&lang!=="en"?" (EN)":""}</a>
               <a href={homePath+"#data"}>{t(lang,"navData")}</a>
@@ -291,6 +294,7 @@ const openGraphLocale: Record<Locale, string> = {
             <h2>{t(lang,"navResources")}</h2>
             <a href={articlesPath}>{editorialLabel[lang]}</a>
             <a href={guidePath}>{t(lang,"guideLink")}</a>
+              <a href={localizedPath(lang,"/guides/farm-cost-calculator/")}>{farmCostText(lang).nav}</a>
             <a href={glossaryPath}>{t(lang,"navTechnicalTerms")}{lang!=="tr"&&lang!=="en"?" (EN)":""}</a>
             <a href={methodologyPath}>{t(lang,"methodologyLink")}{lang!=="tr"&&lang!=="en"?" (EN)":""}</a>
           </section>

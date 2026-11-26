@@ -4,13 +4,15 @@ export type AnalyticsGoal =
   | "tractor_advisor_view"
   | "tractor_compare_view"
   | "tractor_comparison_read"
-  | "tractor_model_view";
+  | "tractor_model_view"
+  | "tractor_farm_tools_view";
 
 const LOCALE_PREFIX = /^\/(?:tr|zh|hi|pt-br|fr|de|ru|ja|es)(?=\/)/;
 
 export function analyticsGoalForPath(pathname: string): AnalyticsGoal | null {
   if (typeof pathname !== "string" || !pathname.startsWith("/")) return null;
   const path = pathname.replace(LOCALE_PREFIX, "");
+  if (path === "/guides/farm-cost-calculator/") return "tractor_farm_tools_view";
   if (path === "/farm-advisor/") return "tractor_advisor_view";
   if (path === "/compare/") return "tractor_compare_view";
   if (/^\/compare\/[a-z0-9-]+\/$/.test(path)) return "tractor_comparison_read";

@@ -3,7 +3,10 @@
 export const PRODUCT_ACTION_EVENTS = Object.freeze({
   compareLaunch: "tractor_compare_launch",
   advisorCalculated: "tractor_advisor_calculated",
+  farmToolCalculated: "tractor_farm_tool_calculated",
 } as const);
 
 // The advisor emits this local DOM event only after rendering valid results.
 export const ADVISOR_CALCULATION_DONE_EVENT = "tractorvs:advisor-calculation-complete" as const;
+
+export const FARM_TOOL_DONE_EVENT = "tractorvs:farm-tool-calculation-complete" as const;

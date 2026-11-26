@@ -1,0 +1,82 @@
+---
+import {getPublicCatalog} from "../lib/catalog";
+import {equipmentContext} from "../lib/farm-model-context";
+import {farmModelText} from "../lib/farm-model-context-i18n";
+import {advisorText} from "../lib/advisor-i18n";
+import {farmExtrasText} from "../lib/farm-extras-i18n";
+import {localizedPath} from "../lib/locales";
+import type {Locale} from "../lib/locales";
+interface Props{lang:Locale}
+const {lang}=Astro.props;
+const c=farmModelText(lang), x=farmExtrasText(lang);
+const models=(await getPublicCatalog()).tractors.map(tractor=>equipmentContext(tractor,lang)).sort((a,b)=>a.name.localeCompare(b.name));
+---
+<div class="model-context" data-model-context data-empty={c.empty} data-source={advisorText(lang,"factSource")} data-no-match={c.noMatch} data-matches={c.matches} data-empty-list={x.empty} data-remove={x.remove} data-full={x.full} data-storage-error={x.storageError} data-compare-path={localizedPath(lang,"/compare/")}>
+ <label>{c.search}<input type="search" data-model-search maxlength="120" autocomplete="off" disabled /></label><p role="status" data-model-search-status></p>
+ <label>{c.choose}<select data-equipment-model disabled><option value="">{c.select}</option>{models.map(model=><option value={model.slug} data-model-id={model.id} data-model-link={model.href} data-model-facts={JSON.stringify(model.facts)}>{model.name}</option>)}</select></label>
+ <p>{c.caution}</p>
+ <button type="button" data-shortlist-add disabled>{x.add}</button>
+ <section data-shortlist data-clarity-mask="true"><h3>{x.shortlist}</h3><p>{x.local}</p><p data-shortlist-status role="status">{x.empty}</p><ul data-shortlist-rows></ul><p>{x.selectTwo}</p><button data-shortlist-compare type="button" disabled>{x.compare}</button></section>
+ <div data-model-details hidden aria-live="polite"><h3>{c.facts}</h3><p data-model-empty hidden>{c.empty}</p><ul data-model-facts-list></ul><a data-model-page hidden>{c.open}</a></div>
+</div>
+<script>
+ import {equipmentModelSlug} from "../lib/farm-model-fragment.mjs";
+ import {matchingModelIndexes} from "../lib/farm-model-search.mjs";
+ import {readShortlist,addShortlist} from "../lib/farm-extras.mjs";
+ const root=document.querySelector<HTMLElement>("[data-model-context]");
+ if(root){
+  const select=root.querySelector<HTMLSelectElement>("[data-equipment-model]");
+  const details=root.querySelector<HTMLElement>("[data-model-details]");
+  const list=root.querySelector("[data-model-facts-list]");
+  const empty=root.querySelector<HTMLElement>("[data-model-empty]");
+  const page=root.querySelector<HTMLAnchorElement>("[data-model-page]");
+  if(select&&details&&list&&empty&&page){
+   const render=()=>{
+    list.replaceChildren();page.hidden=true;empty.hidden=true;details.hidden=!select.value;
+    if(!select.value)return;
+    const option=select.selectedOptions[0];if(!option)return;
+    try{
+     const facts=JSON.parse(option.dataset.modelFacts||"[]");
+     if(!Array.isArray(facts)||facts.length>5)throw new Error("Invalid facts");
+     for(const fact of facts){
+      if(typeof fact.label!=="string"||typeof fact.value!=="string"||typeof fact.source!=="string")continue;
+      const url=new URL(fact.source);if(url.protocol!=="https:"&&url.protocol!=="http:")continue;
+      const li=document.createElement("li"),label=document.createElement("strong"),source=document.createElement("a");
+      label.textContent=fact.label+": ";source.textContent=root.dataset.source||"";source.href=url.href;source.rel="noopener noreferrer";source.target="_blank";
+      li.append(label,document.createTextNode(fact.value+" · "),source);list.append(li);
+     }
+     empty.hidden=list.childElementCount!==0;
+     const href=option.dataset.modelLink;
+     if(href&&/^\/(?:[a-z-]+\/)?tractors\/[a-z0-9-]+\/$/.test(href)){page.href=href;page.hidden=false;}
+    }catch{list.replaceChildren();empty.hidden=false;}
+   };
+   const input=root.querySelector<HTMLInputElement>("[data-model-search]");const searchStatus=root.querySelector("[data-model-search-status]");
+   const placeholder=select.options[0],options=Array.from(select.options).slice(1),names=options.map(option=>option.textContent||"");
+   const filter=()=>{if(!input)return;const selected=select.value;const matches=matchingModelIndexes(names,input.value);const visible=matches.map(index=>options[index]);select.replaceChildren(placeholder,...visible);if(visible.some(option=>option.value===selected))select.value=selected;else select.value="";if(searchStatus)searchStatus.textContent=matches.length?(root.dataset.matches||"")+": "+matches.length:(root.dataset.noMatch||"");render();};
+   if(input){input.disabled=false;input.addEventListener("input",filter);}
+   const add=root.querySelector<HTMLButtonElement>("[data-shortlist-add]"),compare=root.querySelector<HTMLButtonElement>("[data-shortlist-compare]"),saved=root.querySelector("[data-shortlist-rows]"),status=root.querySelector("[data-shortlist-status]");
+   const storageKey="tractorvs:model-shortlist:v1";let items:string[]=[];const selected=new Set<string>();
+   const modelBySlug=new Map(options.map(option=>[option.value,option]));
+   const persist=(next:string[])=>{try{localStorage.setItem(storageKey,JSON.stringify(next));items=next;return true;}catch{if(status)status.textContent=root.dataset.storageError||"";return false;}};
+   const renderSaved=()=>{if(!saved||!status||!compare)return;saved.replaceChildren();for(const slug of items){const option=modelBySlug.get(slug);if(!option)continue;const row=document.createElement("li"),label=document.createElement("label"),check=document.createElement("input"),button=document.createElement("button");check.type="checkbox";check.checked=selected.has(slug);label.append(check,document.createTextNode(option.textContent||slug));check.addEventListener("change",()=>{if(check.checked)selected.add(slug);else selected.delete(slug);compare.disabled=selected.size!==2;});button.type="button";button.textContent=root.dataset.remove||"";button.addEventListener("click",()=>{if(persist(items.filter(item=>item!==slug))){selected.delete(slug);renderSaved();}});row.append(label,button);saved.append(row);}status.textContent=saved.childElementCount?String(saved.childElementCount):root.dataset.emptyList||"";compare.disabled=selected.size!==2;};
+   try{items=readShortlist(JSON.parse(localStorage.getItem(storageKey)||"[]")).filter(slug=>modelBySlug.has(slug));renderSaved();}catch{if(status)status.textContent=root.dataset.storageError||"";}
+   if(add){add.disabled=false;add.addEventListener("click",()=>{if(!select.value||!modelBySlug.has(select.value))return;try{if(persist(addShortlist(items,select.value)))renderSaved();}catch{if(status)status.textContent=root.dataset.full||"";}});}
+   if(compare)compare.addEventListener("click",()=>{if(selected.size!==2)return;const ids=[...selected].map(slug=>modelBySlug.get(slug)?.dataset.modelId);const path=root.dataset.comparePath||"";if(ids.some(id=>!id||! /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(id))||!/^\/(?:[a-z-]+\/)?compare\/$/.test(path))return;const query=new URLSearchParams({left:ids[0]!,right:ids[1]!});window.location.assign(path+"?"+query.toString());});
+   select.disabled=false;select.addEventListener("change",render);
+   const slug=equipmentModelSlug(window.location.hash);
+   if(slug&&Array.from(select.options).some(option=>option.value===slug)){select.value=slug;render();document.getElementById("farm-equipment")?.scrollIntoView();}
+  }
+ }
+</script>
+<style>
+ .model-context{border:1px solid #708478;border-radius:.7rem;padding:1rem;margin-block:1rem;min-width:0}
+ .model-context label{display:grid;gap:.5rem}
+ select,input{max-width:100%;width:100%;min-height:44px;font:inherit;box-sizing:border-box}
+ ul{padding-inline-start:1.4rem}
+ li{margin-block:.65rem;overflow-wrap:anywhere}
+ button{font:inherit;min-height:44px;padding:.5rem .8rem;border:1px solid #708478;border-radius:.4rem;background:#245b39;color:white;cursor:pointer}
+ button:disabled{opacity:.55;cursor:default}
+ [data-shortlist] :global(li){display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:.5rem}
+ [data-shortlist] :global(label){display:flex;align-items:center;gap:.5rem}
+ [data-shortlist] :global(input[type=checkbox]){width:1.15rem;min-height:1.15rem}
+</style>

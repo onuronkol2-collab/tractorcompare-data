@@ -1,0 +1,101 @@
+---
+import SiteLayout from "../layouts/SiteLayout.astro";
+import FarmDecisionTools from "./FarmDecisionTools.astro";
+import FarmScenarioTools from "./FarmScenarioTools.astro";
+import {farmExtrasText} from "../lib/farm-extras-i18n";
+import {localizedPath,LOCALE_TAGS,type Locale} from "../lib/locales";
+import {farmCostText} from "../lib/farm-cost-i18n";
+import {farmDecisionText} from "../lib/farm-decision-i18n";
+import {farmModelText} from "../lib/farm-model-context-i18n";
+import {farmCost} from "../lib/farm-cost.mjs";
+interface Props {lang:Locale}
+const {lang}=Astro.props;
+const c=farmCostText(lang), d=farmDecisionText(lang), m=farmModelText(lang);
+const fields=[
+ ["area",10,0.0001,10000000000],["width",3,0.01,100],["speed",6,0.01,100],["efficiency",75,0.01,100],
+ ["fuel",8,0,10000],["price",1,0,1e9],["annualHours",200,0,8760],["other",0,0,1e12],["fixed",0,0,1e15]
+] as const;
+const initial=farmCost(Object.fromEntries(fields.map(([key,value])=>[key,value])));
+const metrics=["capacity","time","litres","hourly","perHa","perDekar","fieldCost","operatingPerHa","operatingField","annualFuel","annualTotal"] as const;
+const number=new Intl.NumberFormat(LOCALE_TAGS[lang],{maximumSignificantDigits:6});
+---
+<SiteLayout lang={lang} title={c.title+" | TractorVS"} description={c.description}>
+ <section class="container cost-page" data-farm-cost data-locale={LOCALE_TAGS[lang]} data-invalid={c.invalid} data-copied={d.copied} data-copy-failed={d.copyFailed}>
+  <h1>{c.title}</h1>
+  <p>{c.description}</p>
+  <p class="cost-note">{c.note}</p>
+  <div class="cost-grid">
+   <form id="farm-cost-form" data-clarity-mask="true"><fieldset data-cost-controls disabled>
+    <noscript><p>{d.enableJs}</p></noscript>
+    {fields.map(([key,value,min,max])=><><label>{key==="area"?m.fieldArea:c[key]}<input name={key} type="number" inputmode="decimal" value={value} min={min} max={max} step="any" required /></label>{key==="area"&&<label>{m.areaUnit}<select name="areaUnit">{[["ha","ha"],["decare","decare / dekar"],["acre","acre"],["m2","m²"],["mu","亩 (mǔ)"],["tan","反 (tan)"]].map(([value,label])=><option value={value}>{label}</option>)}</select></label>}</>)}
+    <button type="submit">{c.calculate}</button>
+    <p id="farm-cost-error" role="alert" hidden>{c.invalid}</p></fieldset>
+   </form>
+   <dl class="cost-results" aria-live="polite" aria-atomic="true" data-clarity-mask="true">
+    {metrics.map(key=><div><dt>{key==="operatingPerHa"||key==="operatingField"?m[key]:c[key]}</dt><dd><output form="farm-cost-form" data-cost-result={key}>{number.format(initial[key])}</output></dd></div>)}
+   </dl>
+  </div>
+  <button data-copy-cost type="button" disabled>{d.copyResult}</button><p data-cost-copy-status role="status"></p>
+  <nav aria-label={c.nav} style="display:flex;flex-wrap:wrap;gap:1rem"><a href="#farm-scenarios">{farmExtrasText(lang).scenario}</a><a href="#farm-service">{farmExtrasText(lang).service}</a></nav>
+  <FarmScenarioTools lang={lang} />
+  <FarmDecisionTools lang={lang} />
+  <h2>{c.method}</h2>
+  <p>{c.formula}</p>
+  <h2>{c.sources}</h2>
+  <ul>
+   <li><a href="https://www.extension.iastate.edu/AGDM/crops/html/a3-24.html" lang="en">Iowa State University Extension — Estimating the Field Capacity of Farm Machines</a></li>
+   <li><a href="https://www.extension.iastate.edu/AGDM/crops/html/a3-29.html" lang="en">Iowa State University Extension — Estimating Farm Machinery Costs</a></li>
+  </ul>
+  <p><a href={localizedPath(lang,"/farm-advisor/")}>{c.advisor}</a></p>
+ </section>
+</SiteLayout>
+<script>
+ import {farmCost,farmAreaInHectares} from "../lib/farm-cost.mjs";
+ import {FARM_TOOL_DONE_EVENT} from "../lib/analytics-product-actions";
+ const root=document.querySelector<HTMLElement>("[data-farm-cost]");
+ const form=document.querySelector<HTMLFormElement>("#farm-cost-form");
+ const error=document.querySelector<HTMLElement>("#farm-cost-error");
+ if(root&&form&&error){
+  const format=new Intl.NumberFormat(root.dataset.locale,{maximumSignificantDigits:6});
+  form.addEventListener("submit",event=>{
+   event.preventDefault();
+   try{
+    if(!form.checkValidity())throw new Error("Invalid form");
+    const values=Object.fromEntries([...new FormData(form)].map(([key,value])=>[key,String(value).trim()===""?NaN:Number(value)]));
+    values.area=farmAreaInHectares(values.area,String(new FormData(form).get("areaUnit")));
+    const result=farmCost(values);
+    for(const node of root.querySelectorAll<HTMLOutputElement>("[data-cost-result]")){
+     const key=node.dataset.costResult as keyof typeof result;
+     node.textContent=format.format(result[key]);
+    }
+    error.hidden=true;
+    window.dispatchEvent(new Event(FARM_TOOL_DONE_EVENT));
+   }catch{
+    error.hidden=false;
+    for(const node of root.querySelectorAll("[data-cost-result]"))node.textContent="—";
+   }
+  });
+  form.addEventListener("input",()=>{
+   error.hidden=true;
+   const status=root.querySelector("[data-cost-copy-status]");if(status)status.textContent="";
+   for(const node of root.querySelectorAll("[data-cost-result]"))node.textContent="—";
+  });
+  const controls=form.querySelector<HTMLFieldSetElement>("[data-cost-controls]");if(controls)controls.disabled=false;
+  const copy=root.querySelector<HTMLButtonElement>("[data-copy-cost]");if(copy){copy.disabled=false;copy.addEventListener("click",async()=>{const status=root.querySelector("[data-cost-copy-status]");const entries=[...root.querySelectorAll("[data-cost-result]")];if(!status||entries.some(el=>el.textContent==="—"))return;const text=entries.map(el=>(el.parentElement?.previousElementSibling?.textContent||"")+": "+el.textContent).join("\n");try{await navigator.clipboard.writeText(text);status.textContent=root.dataset.copied||"";}catch{status.textContent=root.dataset.copyFailed||"";}});}
+ }
+</script>
+<style>
+ .cost-page{padding-block:clamp(1.5rem,4vw,3rem);max-width:1100px}
+ .cost-page p{max-width:78ch;line-height:1.7}
+ .cost-note{border-inline-start:3px solid currentColor;padding-inline-start:1rem}
+ .cost-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,20rem),1fr));gap:1.5rem;margin-block:2rem}
+ form,.cost-results{display:grid;gap:.8rem;align-content:start;margin:0;padding:1rem;border:1px solid #708478;border-radius:.8rem}
+ fieldset[data-cost-controls]{display:grid;gap:.8rem;border:0;margin:0;padding:0;min-inline-size:0}
+ label{display:grid;gap:.35rem;font-weight:600}
+ input,select,button{font:inherit;min-height:44px;border:1px solid #708478;border-radius:.4rem;padding:.5rem;max-width:100%;color:inherit;background:transparent}
+ button{background:#245b39;color:#fff;font-weight:700;cursor:pointer}
+ .cost-results div{display:grid;gap:.2rem;border-bottom:1px solid #708478;padding-bottom:.6rem}
+ dt{font-size:.95rem}
+ dd{font-size:1.2rem;font-weight:700;margin:0;overflow-wrap:anywhere}
+ a{overflow-wrap:anywhere}
+</style>
