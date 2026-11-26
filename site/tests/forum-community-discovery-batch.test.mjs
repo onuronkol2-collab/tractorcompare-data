@@ -46,3 +46,12 @@ test("navigation contract includes all required capabilities and a real member t
  assert.ok(hub.includes('href={"#"+FORUM_MEMBER_ANCHOR}'));
  assert.ok(panel.includes("id={FORUM_MEMBER_ANCHOR}"));
 });
+
+test("navigation browser tests use named views rather than stale positional/count assertions",()=>{
+ for(const filename of ["forum-dashboard-layout.spec.mjs","forum-type-navigation.spec.mjs"]){
+  const browser=readFileSync(new URL("../e2e/"+filename,import.meta.url),"utf8");
+  assert.match(browser,/FORUM_VIEWS\.length/,filename);
+  assert.doesNotMatch(browser,/tabs\.nth\(\d+\)/,filename);
+  assert.doesNotMatch(browser,/\[data-forum-special="following"\] a\[href="#forum-compose"\]/,filename);
+ }
+});
