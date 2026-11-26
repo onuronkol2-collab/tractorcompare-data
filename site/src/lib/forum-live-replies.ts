@@ -73,12 +73,14 @@ export function initForumLiveReplies(root:HTMLElement){
    const fragment=document.createDocumentFragment();
    for(const row of rows){
     const article=make("article");article.className="forum-live-reply";article.id="reply-"+row.id;
+    article.dataset.solutionReplyId=row.id;
     const meta=make("p");meta.className="forum-live-reply-meta";
     const time=make("time");time.dateTime=row.created_at;time.textContent=date.format(new Date(row.created_at));meta.append(time);
     if(row.locale!==cfg.lang){const language=make("bdi");language.lang=row.locale;language.textContent=" · "+row.locale;meta.append(language)}
     const body=make("div");body.lang=row.locale;renderBody(row.body,body);article.append(meta,body);fragment.append(article);
    }
    grid.replaceChildren(fragment);
+   document.dispatchEvent(new Event("tractorvs-forum-live-replies-updated"));
    total.textContent=String(base+rows.length);
    heading.hidden=!rows.length;grid.hidden=!rows.length;root.hidden=!rows.length;status.textContent="";
   }catch{
