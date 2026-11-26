@@ -6,7 +6,8 @@ export function ownershipCost(x){
  const principal=purchase-deposit;
  const payment=rate===0?principal/months:principal*rate/(-Math.expm1(-months*Math.log1p(rate)));
  const depreciation=(purchase-resale)/years;
- return {payment,interest:Math.max(0,payment*months-principal),depreciation,ownership:depreciation+operating*hours,rental:rent*hours};
+ const breakEven=rent>operating&&depreciation>0?depreciation/(rent-operating):null;
+ return {payment,interest:Math.max(0,payment*months-principal),depreciation,ownership:depreciation+operating*hours,rental:rent*hours,breakEven:Number.isFinite(breakEven)?breakEven:null};
 }
 const power={kW:1,HP:0.7456998715822702,PS:0.73549875};
 const area={ha:10000,decare:1000,acre:4046.8564224};
@@ -31,4 +32,25 @@ export function implementScreen(pairs){
 export function validateMaintenanceNote(value){
  if(!value||typeof value.model!=="string"||!value.model.trim()||value.model.length>80)throw new RangeError("Invalid note");
  return {model:value.model.trim(),meter:number(value.meter,0,1e7),fuel:number(value.fuel,0,1e6),cost:number(value.cost,0,1e12)};
+}
+
+export const MAX_MAINTENANCE_RECORDS=200;
+/** A versioned, bounded local-only history; legacy single note is preserved. */
+export function readMaintenanceHistory(value){
+ if(value===null)return [];
+ if(value&&value.version===2){
+  if(!Array.isArray(value.records)||value.records.length>MAX_MAINTENANCE_RECORDS)throw new RangeError("Invalid history");
+  return value.records.map(validateMaintenanceNote);
+ }
+ return [validateMaintenanceNote(value)];
+}
+export function appendMaintenanceRecord(records,note){
+ if(!Array.isArray(records)||records.length>=MAX_MAINTENANCE_RECORDS)throw new RangeError("History full");
+ return {version:2,records:[...records.map(validateMaintenanceNote),validateMaintenanceNote(note)]};
+}
+export function maintenanceTotals(records){
+ if(!Array.isArray(records)||records.length>MAX_MAINTENANCE_RECORDS)throw new RangeError("Invalid history");
+ const totals={count:0,fuel:0,cost:0};
+ for(const value of records){const row=validateMaintenanceNote(value);totals.count++;totals.fuel+=row.fuel;totals.cost+=row.cost;}
+ return totals;
 }
