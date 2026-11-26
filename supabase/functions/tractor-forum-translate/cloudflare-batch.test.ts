@@ -29,7 +29,11 @@ Deno.test("Nine-language trial rejects disabled gates and missing credentials wi
 Deno.test("One bounded synthetic batch checks all nine locales and never accesses a forum or database",async()=>{
  const codes:string[]=[];
  const fetchFn=async(uri:RequestInfo|URL,options:RequestInit)=>{
-  assert.match(String(uri),/api.cloudflare.com\/client\/v4\/accounts\/[a-f0-9]{32}\/ai\/run\/@cf\/meta\/m2m100-1.2b$/);
+  const url=new URL(String(uri));
+  assert.equal(url.origin,"https://api.cloudflare.com");
+  assert.equal(url.username,"");assert.equal(url.password,"");
+  assert.equal(url.search,"");assert.equal(url.hash,"");
+  assert.equal(url.pathname,"/client/v4/accounts/"+config.accountId+"/ai/run/@cf/meta/m2m100-1.2b");
   assert.equal(options.method,"POST");
   const body=JSON.parse(String(options.body));
   assert.equal(body.text,SMOKE_SOURCE);

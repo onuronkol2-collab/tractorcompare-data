@@ -1,0 +1,10 @@
+import test from "node:test";import assert from "node:assert/strict";
+import {equipmentContext} from "../src/lib/farm-model-context.ts";
+import {equipmentModelFragment,equipmentModelSlug} from "../src/lib/farm-model-fragment.mjs";
+import {farmModelText} from "../src/lib/farm-model-context-i18n.ts";
+import {LOCALES} from "../src/lib/locales.ts";
+const spec=(key,value,unit,extra={})=>({spec_id:key,spec_name:key,canonical_key:key,spec_value:value,unit,evidence_text:"Reviewed manufacturer brochure excerpt",verified_at:"2026-11-21T00:00:00Z",source_type:"manufacturer_specification",source_url:"https://www.basaktraktor.com.tr/technical-specifications",measurement_standard:null,rated_rpm:null,...extra});
+const model={slug:"basak-2075-test",brand_name:"Başak Traktör",model_name:"2075",variant:"4WD",market:"Turkey",model_year:2026,specifications:[spec("pto_speeds","540","rpm"),spec("rear_lift_capacity","2000","kg"),spec("rear_lift_capacity","2200","kg"),spec("hydraulic_main_flow","60","L/min",{source_url:"https://untrusted.example/spec"}),spec("engine_power","75","hp")]};
+test("equipment context contains only reviewed exact-model facts, not conflicting lift, unknown hydraulic or engine HP as PTO",()=>{const x=equipmentContext(model,"tr");assert.equal(x.href,"/tr/tractors/basak-2075-test/");assert.equal(x.facts.length,1);assert.equal(x.facts[0].value,"540 rpm");assert.match(x.name,/4WD.*Turkey.*2026/);});
+test("model fragments are strictly validated, not URLs or arbitrary selectors",()=>{const x=equipmentModelFragment(model.slug);assert.equal(equipmentModelSlug(x),model.slug);for(const s of ["https://evil.example","x?foo","x/y","",null])assert.equal(equipmentModelSlug(equipmentModelFragment(s)),null);});
+test("ten locales have explicit translated context and cost labels",()=>{for(const lang of LOCALES)assert.ok(Object.values(farmModelText(lang)).every(x=>typeof x==="string"&&x.trim()));});

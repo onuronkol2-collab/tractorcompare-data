@@ -1,3 +1,4 @@
+import {evidenceText} from "../../supabase/functions/_shared/evidence-text.mjs";
 // Read-only translation regression probe over all 10 published model URLs.
 // It deliberately reports technical headings, NOT source evidence or raw specs.
 import {readFileSync,writeFileSync,existsSync,mkdirSync} from "node:fs";
@@ -8,14 +9,7 @@ import {reviewedIdentityFallbackHeadings} from "../src/lib/reviewed-identity-hea
 const DIST=process.env.TRANSLATION_DIST_ROOT?.trim() ? resolve(process.env.TRANSLATION_DIST_ROOT) : null;
 const BASE="https://tractorvs.com";
 const locales=["en","tr","zh","hi","pt-br","fr","de","ru","ja","es"];
-const unescape=s=>s.replace(/&(?:amp|quot|lt|gt|#(?:x[0-9a-f]+|\d+));/gi,entity=>{
-  const code=entity.slice(1,-1);
-  if(code==="amp")return "&";if(code==="quot")return '"';
-  if(code==="lt")return "<";if(code==="gt")return ">";
-  if(code.startsWith("#x"))return String.fromCodePoint(parseInt(code.slice(2),16));
-  if(code.startsWith("#"))return String.fromCodePoint(parseInt(code.slice(1),10));
-  return entity;
-}).replace(/<[^>]+>/g,"").replace(/\s+/g," ").trim();
+const unescape=s=>evidenceText(s,{separator:""});
 async function get(path){
   if(DIST){
     const url=new URL(path,BASE);

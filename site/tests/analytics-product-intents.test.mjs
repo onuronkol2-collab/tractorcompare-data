@@ -9,7 +9,8 @@ const component=(name)=>readFileSync(new URL("../src/components/"+name+".astro",
 test("product-action events use only non-identifying names",()=>{
  assert.deepEqual(PRODUCT_ACTION_EVENTS,{
   compareLaunch:"tractor_compare_launch",
-  advisorCalculated:"tractor_advisor_calculated"
+  advisorCalculated:"tractor_advisor_calculated",
+  farmToolCalculated:"tractor_farm_tool_calculated"
  });
  for(const value of Object.values(PRODUCT_ACTION_EVENTS)){
   assert.match(value,/^[a-z][a-z0-9_]{0,39}$/);
@@ -47,3 +48,5 @@ test("advisor emits success signal only after validated results render",()=>{
  assert.ok(dispatch>shown&&failed>dispatch);
  assert.equal(source.match(/dispatchEvent\(new Event\(ADVISOR_CALCULATION_DONE_EVENT\)\)/g)?.length,1);
 });
+
+test("farm calculator telemetry has a single allowlisted anonymous event and uses the consent gate",()=>{const source=component("AnalyticsConsent");assert.match(source,/window\.addEventListener\(FARM_TOOL_DONE_EVENT, \(\) => \{trackAnonymousAction\(PRODUCT_ACTION_EVENTS\.farmToolCalculated\)/);});

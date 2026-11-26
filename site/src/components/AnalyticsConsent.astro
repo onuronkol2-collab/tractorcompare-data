@@ -34,6 +34,7 @@ const c = analyticsText(lang);
   import { ANALYTICS_CHOICE_KEY, GA4_MEASUREMENT_ID, CLARITY_PROJECT_ID, CLOUDFLARE_WEB_ANALYTICS_TOKEN } from "../lib/analytics-i18n.ts";
   import { analyticsGoalForPath } from "../lib/analytics-goals.ts";
   import { PRODUCT_ACTION_EVENTS, ADVISOR_CALCULATION_DONE_EVENT } from "../lib/analytics-product-actions";
+  import {FARM_TOOL_DONE_EVENT} from "../lib/analytics-product-actions";
 
   type AnalyticsChoice = "accepted" | "rejected";
   const banner = document.getElementById("tractorvs-analytics-banner");
@@ -236,6 +237,8 @@ const c = analyticsText(lang);
   window.addEventListener(ADVISOR_CALCULATION_DONE_EVENT, () => {
     trackAnonymousAction(PRODUCT_ACTION_EVENTS.advisorCalculated);
   });
+
+  window.addEventListener(FARM_TOOL_DONE_EVENT, () => {trackAnonymousAction(PRODUCT_ACTION_EVENTS.farmToolCalculated);});
 
   accept?.addEventListener("click", () => choose("accepted"));
   reject?.addEventListener("click", () => choose("rejected"));

@@ -7,6 +7,7 @@ import { compareText } from "../lib/compare-ux";
 import { t } from "../lib/ui";
 import { marketDisplayName } from "../lib/market-display";
 import { advisorText as tx } from "../lib/advisor-i18n";
+import {farmCostText} from "../lib/farm-cost-i18n";
 import { COUNTRIES_BY_LOCALE } from "../lib/farm-advisor";
 import { MARKET_COUNTRIES, matchingPrice, formatMarketPriceRange } from "../lib/market-prices";
 import { pricedCatalogModels } from "../lib/catalog-price-payload.ts";
@@ -65,6 +66,7 @@ const pricePayload = JSON.stringify({
           )}
         </select>
         <a href={localizedPath(lang,"/farm-advisor/")}>{tx(lang,"nav")} ↗</a>
+        <a href={localizedPath(lang,"/guides/farm-cost-calculator/")}>{farmCostText(lang).nav} ↗</a>
       </div>
       <div class="catalog-toolbar">
         <label for="tractor-search">{t(lang,"findTractor")}</label>

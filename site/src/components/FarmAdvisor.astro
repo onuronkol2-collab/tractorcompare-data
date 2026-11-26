@@ -5,6 +5,7 @@ import { getPublicCatalog } from "../lib/catalog";
 import { advisorText as tx } from "../lib/advisor-i18n";
 import { extractAdvisorFacts } from "../lib/advisor-evidence";
 import { t } from "../lib/ui";
+import {farmCostText} from "../lib/farm-cost-i18n";
 import {
   COUNTRY_AREA_UNITS, COUNTRIES_BY_LOCALE, FARM_IMPLEMENT_TYPES,
 } from "../lib/farm-advisor";
@@ -51,6 +52,7 @@ const areaUnitOptions = [
       <h1>{heading}</h1>
       <p>{tx(lang,"lead")}</p>
       <a class="advisor-return" href={localizedPath(lang,"/tractors/")}>← {t(lang,"navCatalog")}</a>
+      <p><a href={localizedPath(lang,"/guides/farm-cost-calculator/")}>{farmCostText(lang).nav}</a></p>
     </div>
   </section>
 

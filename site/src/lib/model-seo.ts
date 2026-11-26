@@ -6,7 +6,7 @@ import { localizedPath, type Locale } from "./locales.ts";
 import { t } from "./ui.ts";
 import { marketDisplayName } from "./market-display.ts";
 import {primaryTractorPhoto,tractorPhotoAlt} from "./tractor-photos.ts";
-import {matchedHeadlinePowerSource} from "./model-evidence-answers.ts";
+import {matchedHeadlinePowerSource,nominalManufacturerSnippet} from "./model-evidence-answers.ts";
 import {reviewedLongTitleRow} from "./reviewed-long-model-title-identities.ts";
 
 /** The original manufacturer identity, equipment and market are never inferred. */
@@ -499,10 +499,11 @@ export function modelSeoMetadata(tractor: TractorRecord, lang: Locale) {
   const powerSentence=tractor.horsepower == null ? null : (hasInternationalSonalikaContext(tractor)
     ? SONALIKA_EXPORT_COPY[lang].hpDescription(tractor.horsepower)
     : headlinePower ? copy.power(tractor.horsepower) : null);
+  const nominalSentence=nominalManufacturerSnippet(tractor,lang);
   const manufacturerSentence=sourceCount ? copy.withSources : (independentCount ? null : copy.withoutSources);
   const independentSentence=independentCount ? INDEPENDENT_SOURCE_COPY[lang].seoOnlyIndependent : null;
   const noteSentence=variantContext && lang === "en" ? copy.note(variantContext.replace(/[.。।]+$/u, "")) : null;
-  const segments = [identity+".",countSentence,powerSentence,manufacturerSentence,independentSentence,noteSentence]
+  const segments = [identity+".",countSentence,powerSentence,nominalSentence,manufacturerSentence,independentSentence,noteSentence]
     .filter((part):part is string=>Boolean(part));
   const description=segments.join(" ");
   // The full, source-aware editorial explanation remains visible on the page.
@@ -542,6 +543,7 @@ export function modelSeoMetadata(tractor: TractorRecord, lang: Locale) {
     addSentence(powerSentence);
   }
   if(!independentPower&&independentSentence)addIndependent();
+  addSentence(nominalSentence);
   addSentence(countSentence);
   addSentence(manufacturerSentence);
   addSentence(noteSentence);
