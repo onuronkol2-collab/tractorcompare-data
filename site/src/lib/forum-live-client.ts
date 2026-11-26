@@ -127,6 +127,7 @@ export function initForumLive(root:HTMLElement):void{
     article.dataset.forumModelId=modelId;
     article.dataset.forumModelLabel=modelLabel;
     article.dataset.forumSearch=forumSearchText(row.title+" "+row.body+" "+modelLabel,cfg!.lang);
+    article.dataset.forumTitleSearch=forumSearchText(row.title,cfg!.lang);
     const meta=make("p");meta.className="forum-live-meta";
     const time=make("time");time.dateTime=row.created_at;
     time.textContent=dateFormatter.format(new Date(row.created_at));meta.append(time);
