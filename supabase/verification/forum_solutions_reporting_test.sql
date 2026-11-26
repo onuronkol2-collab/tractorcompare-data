@@ -100,4 +100,29 @@ DO $ BEGIN IF NOT EXISTS(SELECT 1 FROM public.tc_forum_accepted_solutions WHERE 
 DELETE FROM public.tc_forum_accepted_solutions WHERE topic_id='10000000-0000-4000-8000-000000000001';
 DO $$ BEGIN IF EXISTS(SELECT 1 FROM public.tc_forum_accepted_solutions) THEN RAISE EXCEPTION 'Owner cannot remove solution'; END IF; END $$;
 RESET ROLE;
+-- Prove duplicate/denied attempts did not consume quota; use real successful
+-- inserts only inside the disposable database.
+DO $ BEGIN
+ IF (SELECT reports_submitted FROM tc_forum_reporting_private.daily_report_quota WHERE reporter_id='00000000-0000-4000-8000-000000000001')<>2 THEN RAISE EXCEPTION 'Failed reports consumed quota'; END IF;
+ IF has_schema_privilege('authenticated','tc_forum_reporting_private','USAGE') OR has_schema_privilege('anon','tc_forum_reporting_private','USAGE') THEN RAISE EXCEPTION 'Private quota schema accessible'; END IF;
+ IF has_function_privilege('authenticated','tc_forum_reporting_private.enforce_daily_report_quota()','EXECUTE') THEN RAISE EXCEPTION 'Quota function executable directly'; END IF;
+END $;
+INSERT INTO public.tc_forum_topics(id,author_id,status,category)
+SELECT ('30000000-0000-4000-8000-'||lpad(n::text,12,'0'))::uuid,'00000000-0000-4000-8000-000000000002','published','questions'
+FROM generate_series(1,9) n;
+SET ROLE authenticated;
+SELECT set_config('request.jwt.claims','{"sub":"00000000-0000-4000-8000-000000000001","email":"a@example.invalid","is_anonymous":false}',false);
+INSERT INTO public.tc_forum_content_reports(topic_id,reason)
+SELECT ('30000000-0000-4000-8000-'||lpad(n::text,12,'0'))::uuid,'spam' FROM generate_series(1,8) n;
+DO $ BEGIN
+ BEGIN
+  INSERT INTO public.tc_forum_content_reports(topic_id,reason) VALUES ('30000000-0000-4000-8000-000000000009','spam');
+  RAISE EXCEPTION 'Eleventh report accepted';
+ EXCEPTION WHEN check_violation THEN IF SQLERRM<>'Daily report limit reached' THEN RAISE; END IF; END;
+END $;
+RESET ROLE;
+DO $ BEGIN
+ IF (SELECT reports_submitted FROM tc_forum_reporting_private.daily_report_quota WHERE reporter_id='00000000-0000-4000-8000-000000000001')<>10 THEN RAISE EXCEPTION 'Quota incorrect'; END IF;
+ IF (SELECT count(*) FROM public.tc_forum_content_reports WHERE reporter_id='00000000-0000-4000-8000-000000000001')<>10 THEN RAISE EXCEPTION 'Rejected report persisted'; END IF;
+END $;
 SELECT 'Solution and private report security fixture passed' AS result;
