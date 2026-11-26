@@ -6,11 +6,11 @@ test("localized farm tools calculate, fail closed and keep explicitly saved note
  const fuel=page.locator("#farm-cost-form");await fuel.getByRole("button",{name:"Hesapla"}).click();
  await expect(page.locator('[data-cost-result="capacity"]')).toHaveText("1,35");
  await fuel.locator('[name="area"]').fill("100");await fuel.locator('[name="areaUnit"]').selectOption("decare");await fuel.getByRole("button",{name:"Hesapla"}).click();await expect(page.locator('[data-cost-result="capacity"]')).toHaveText("1,35");await expect(page.locator("[data-equipment-model]")).toBeEnabled();
- const finance=page.locator('[data-decision="finance"]');await finance.getByRole("button").click();
+ const finance=page.locator('[data-decision="finance"]');await finance.getByRole("button",{name:"Hesapla",exact:true}).click();
  await expect(finance.locator('[data-finance-result="depreciation"]')).toHaveText("3.000");
- const equipment=page.locator('[data-decision="equipment"]');await equipment.getByRole("button").click();
+ const equipment=page.locator('[data-decision="equipment"]');await equipment.getByRole("button",{name:"Hesapla",exact:true}).click();
  await expect(equipment.locator("[data-equipment-result]")).toHaveText("Yetersiz bilgi");
- await equipment.locator('[name="ptoAvailable"]').fill("20");await equipment.locator('[name="ptoRequired"]').fill("30");await equipment.getByRole("button").click();
+ await equipment.locator('[name="ptoAvailable"]').fill("20");await equipment.locator('[name="ptoRequired"]').fill("30");await equipment.getByRole("button",{name:"Hesapla",exact:true}).click();
  await expect(equipment.locator("[data-equipment-result]")).toHaveText("En az bir eşik karşılanmıyor");
  const journal=page.locator('[data-decision="journal"]');await journal.locator('[name="model"]').fill("Fixture tractor");await journal.locator('[name="meter"]').fill("100");await journal.locator('[name="fuel"]').fill("10");await journal.locator('[name="cost"]').fill("50");await journal.getByRole("button",{name:"Kayıt ekle"}).click();
  await expect(journal.getByRole("status")).toHaveText("Bu cihaza kaydedildi");
