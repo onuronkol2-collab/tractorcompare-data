@@ -369,3 +369,44 @@ test("digest-only script normalization covers browser-tolerated closing tags wit
  assert.notEqual(significantContentDigest(sample(b,module("Db5Sr4d7","</script>")),b),
   significantContentDigest(sample(b,module("Db5Sr4d7","</script data-extra=\"kept\">")),b));
 });
+
+test("visitor-state crawl hints preserve historical lastmod but not changed destinations or content",()=>{
+ const id="609cbd59-a8f5-4859-8147-70097ec38946";
+ for(const locale of ["","/tr","/zh","/hi","/pt-br","/fr","/de","/ru","/ja","/es"]){
+  for(const path of ["/compare/?left="+id,"/forum/?tractor="+id,"/tractors/?q=John%20Deere"]){
+   const href=locale+path;
+   const link='<a class="example" href="'+href+'" data-astro-cid-scope>Real label</a>';
+   const original=sample(b,link);
+   const changed=original.replace('href="'+href+'"','href="'+href+'" rel="nofollow"');
+   const before=significantContentDigest(original,b);
+   assert.equal(significantContentDigest(changed,b),before);
+   assert.notEqual(significantContentDigest(changed,b,{legacy:true}),before);
+   assert.notEqual(significantContentDigest(changed.replace("Real label","Updated label"),b),before);
+   assert.notEqual(significantContentDigest(changed.replace(href,href+"x"),b),before);
+   assert.notEqual(significantContentDigest(changed.replace('rel="nofollow"','rel="nofollow sponsored"'),b),before);
+   assert.notEqual(significantContentDigest(changed.replace('rel="nofollow"','rel="nofollow" rel="nofollow"'),b),before);
+   assert.notEqual(significantContentDigest(changed.replace("data-astro-cid-scope","data-astro-cid-changed"),b),before);
+  }
+ }
+ for(const href of ["/tractors/","/tractors/example/","https://example.com/tractors/?q=John","/forum/?tractor=invalid","/compare/?left="+id+"&right="+id]){
+  const original=sample(b,'<a href="'+href+'">Meaningful link</a>');
+  assert.notEqual(significantContentDigest(original,b),significantContentDigest(original.replace('">Meaningful','" rel="nofollow">Meaningful'),b));
+ }
+});
+test("mass visitor-state-only release retains dates and keeps the real content guard",()=>{
+ const id="609cbd59-a8f5-4859-8147-70097ec38946";
+ const previous={version:1,digestAlgorithm:DIGEST_ALGORITHM,pages:{}},pages=[];
+ for(let n=0;n<120;n++){
+  const url=ORIGIN+"/tractors/audited-model-"+n+"/";
+  const original=sample(url,'<a href="/compare/?left='+id+'">Compare</a> <p>95 HP</p>');
+  const changed=original.replace('">Compare','" rel="nofollow">Compare');
+  previous.pages[url]={digest:significantContentDigest(original,url),modified:date1.toISOString()};
+  pages.push([url,significantContentDigest(changed,url)]);
+ }
+ const result=deriveHistory({pages,previous,now:date2});
+ assert.equal(result.summary.significant_changes,0);
+ assert.deepEqual(result.history,previous);
+ assert.ok(Object.values(result.lastmod.dates).every(x=>x===date1.toISOString()));
+ const genuinelyChanged=pages.map(([url,digest])=>[url,hash(digest+"actual content change")]);
+ assert.throws(()=>deriveHistory({pages:genuinelyChanged,previous,now:date2}),/manual SEO review/);
+});
