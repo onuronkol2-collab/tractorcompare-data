@@ -1,0 +1,7 @@
+# CodeQL security boundary batch — 2026-11-26
+
+The verified GitHub CodeQL inventory displayed ten high-severity alerts on main; nine had concrete paths/issue descriptions in the retrieved report (eight unique files). The tenth incomplete URL-substring alert had no path in the retrieved summary. It remains unresolved until the actual alert location and new scan are inspected; do not claim ten closures. No alerts have been dismissed and default CodeQL settings are unchanged.
+
+Changes: shared conservative plain-text evidence extraction with one bounded entity decode and raw-text/comment removal; exact parsed URL checks in test fixtures; exact head canonical validation rather than substring checking; JSON-LD text remains plain text. Regression tests cover deceptive origins, credentials, ports, double-encoded entities, out-of-range numeric entities, comments, raw script/style tags, malformed markup, and fake/duplicate canonical. This helper is NOT a general HTML sanitizer and must not be inserted into HTML without context-sensitive escaping.
+
+Release: require current PR checks and default CodeQL, inspect each original open alert before closure, reconcile main and verify actual production SHA. No database mutation, paid service, credential change or test bypass. Collector Edge Function code is changed in GitHub only; its production deployment is separately gated by tests and function version verification. If an alert remains, inspect its precise source/trace and fix it rather than suppressing it.
