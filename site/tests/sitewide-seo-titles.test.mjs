@@ -144,3 +144,15 @@ test("only real head title elements count, not comments, scripts, inert template
  assert.equal(inspectSeoTitle(fake+'<title>TYM T3035 &lt;technical&gt; Specs</title>'+tail,path).title,"TYM T3035 <technical> Specs");
  assert.ok(inspectSeoTitle(fake+'<title>TYM T3035</title><title>Duplicate</title>'+tail,path).errors.includes("missing-or-duplicate-title"));
 });
+
+
+test("editorial metadata omits optional branding before cutting meaningful wording",async()=>{
+ const {editorialSearchTitle,technicalGuideSearchTitle}=await import("../src/lib/editorial-seo-title.mjs");
+ const titles=["Traktör yakıt maliyeti ve tarla süresi hesaplayıcısı","Traktor-Rechner für Dieselverbrauch und Feldarbeit","Calculateur de carburant et de temps de travail du tracteur","Calculadora de combustible y tiempo de trabajo del tractor","Calculadora de combustível e tempo de trabalho do trator","Калькулятор расхода топлива и времени работы трактора"];
+ for(const title of titles){assert.equal(editorialSearchTitle(title),title);assert.ok(title.length<=60);}
+ assert.equal(editorialSearchTitle("Short title"),"Short title | TractorVS");
+ const long="A real long editorial title with meaningful information that must never disappear";
+ assert.equal(editorialSearchTitle(long),long);
+ const cases=[["pto-and-power-take-off","tr","Traktörde PTO (Kuyruk Mili) Nedir? 540, 540E ve 1000 Devir Rehberi",["PTO","Kuyruk Mili","540","540E","1000"]],["tractor-hydraulic-lift-explained","tr","Traktörde Hidrolik Kaldırma Kapasitesi Nedir? 610 mm, Debi ve Basınç",["Hidrolik","610 mm","Debi","Basınç"]],["tractor-hydraulic-lift-explained","en","Tractor Hydraulic Lift Capacity Explained: Flow, Pressure and 610 mm",["Hydraulic","Lift","Flow","Pressure","610 mm"]]];
+ for(const [slug,locale,headline,words] of cases){const title=technicalGuideSearchTitle(slug,locale,headline);assert.ok(editorialSearchTitle(title).length<=60);for(const word of words)assert.ok(title.includes(word));assert.equal(technicalGuideSearchTitle(slug,locale,headline+" changed"),headline+" changed");}
+});

@@ -1,5 +1,6 @@
 ---
 import SiteLayout from "../layouts/SiteLayout.astro";
+import {editorialSearchTitle,technicalGuideSearchTitle} from "../lib/editorial-seo-title.mjs";
 import {guidePhotos} from "../lib/editorial-photos.ts";
 import {TECHNICAL_DEEP_DIVES,getTechnicalDeepDive,type TechnicalDeepDiveSlug} from "../lib/tractor-technical-deep-dives.ts";
 import {GLOSSARY_TERMS} from "../lib/tractor-glossary.ts";
@@ -27,8 +28,7 @@ const relatedTerms=guide.glossary.map(id=>{
  return term;
 });
 const headline=guide.title[lang];
-const brandedTitle = headline+" | TractorVS";
-const searchTitle = brandedTitle.length <= 60 ? brandedTitle : headline;
+const searchTitle = editorialSearchTitle(technicalGuideSearchTitle(slug,lang,headline));
 const description=guide.description[lang];
 // Update a page's date only when its actual content or visible source register changes.
 const hasPowerStandards = slug === "tractor-engine-power-and-torque";

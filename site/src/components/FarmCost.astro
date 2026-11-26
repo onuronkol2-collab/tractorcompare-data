@@ -1,5 +1,6 @@
 ---
 import SiteLayout from "../layouts/SiteLayout.astro";
+import {editorialSearchTitle} from "../lib/editorial-seo-title.mjs";
 import FarmDecisionTools from "./FarmDecisionTools.astro";
 import FarmScenarioTools from "./FarmScenarioTools.astro";
 import {farmExtrasText} from "../lib/farm-extras-i18n";
@@ -20,7 +21,7 @@ const initial=farmCost(Object.fromEntries(fields.map(([key,value])=>[key,value])
 const metrics=["capacity","time","litres","hourly","perHa","perDekar","fieldCost","operatingPerHa","operatingField","annualFuel","annualTotal"] as const;
 const number=new Intl.NumberFormat(LOCALE_TAGS[lang],{maximumSignificantDigits:6});
 ---
-<SiteLayout lang={lang} title={c.title+" | TractorVS"} description={c.description}>
+<SiteLayout lang={lang} title={editorialSearchTitle(c.title)} description={c.description}>
  <section class="container cost-page" data-farm-cost data-locale={LOCALE_TAGS[lang]} data-invalid={c.invalid} data-copied={d.copied} data-copy-failed={d.copyFailed}>
   <h1>{c.title}</h1>
   <p>{c.description}</p>
