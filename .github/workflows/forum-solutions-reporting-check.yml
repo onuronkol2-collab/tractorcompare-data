@@ -1,0 +1,50 @@
+name: Forum solutions and reporting isolated SQL checks
+on:
+  pull_request:
+    paths:
+      - "supabase/sql/forum_solutions_reporting_candidate.sql"
+      - "supabase/rollback/forum_solutions_reporting_rollback.sql"
+      - "supabase/verification/forum_solutions_reporting_*"
+      - ".github/workflows/forum-solutions-reporting-check.yml"
+      - "scripts/check-sql-dollar-delimiters.mjs"
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  isolated-sql:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    services:
+      postgres:
+        image: postgres:17
+        env:
+          POSTGRES_PASSWORD: disposable-fixture-only
+          # libpq defaults also apply to pg_isready inside the container.
+          PGUSER: postgres
+          PGDATABASE: postgres
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 12
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Set up Node.js for SQL preflight
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Fail fast on corrupted SQL delimiters
+        run: |
+          node scripts/check-sql-dollar-delimiters.mjs --self-test supabase/verification/forum_solutions_reporting_fixture.sql supabase/sql/forum_solutions_reporting_candidate.sql supabase/verification/forum_solutions_reporting_test.sql supabase/rollback/forum_solutions_reporting_rollback.sql
+      - name: Apply fixture, candidate, security assertions and rollback
+        env:
+          FIXTURE_CONTAINER: ${{ job.services.postgres.id }}
+        run: |
+          set -euo pipefail
+          for file in supabase/verification/forum_solutions_reporting_fixture.sql supabase/sql/forum_solutions_reporting_candidate.sql supabase/verification/forum_solutions_reporting_test.sql supabase/rollback/forum_solutions_reporting_rollback.sql; do
+            echo "::group::$file"
+            docker exec -i "$FIXTURE_CONTAINER" psql -U postgres -d postgres -v ON_ERROR_STOP=1 -f - < "$file"
+            echo "::endgroup::"
+          done

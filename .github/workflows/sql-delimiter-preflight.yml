@@ -1,0 +1,28 @@
+name: SQL delimiter integrity preflight
+on:
+  pull_request:
+    paths:
+      - "**/*.sql"
+      - "scripts/check-sql-dollar-delimiters.mjs"
+      - ".github/workflows/sql-delimiter-preflight.yml"
+permissions:
+  contents: read
+jobs:
+  check-changed-sql:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Verify changed SQL files against PR merge base
+        shell: bash
+        run: |
+          set -euo pipefail
+          git diff --name-only -z --diff-filter=ACMR HEAD^1 HEAD -- '*.sql' > "$RUNNER_TEMP/changed-sql-files"
+          mapfile -d '' -t files < "$RUNNER_TEMP/changed-sql-files"
+          node scripts/check-sql-dollar-delimiters.mjs --self-test "${files[@]}"
