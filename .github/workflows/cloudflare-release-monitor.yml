@@ -6,7 +6,7 @@ on:
     paths: ['.github/workflows/cloudflare-release-monitor.yml']
 permissions: {}
 jobs:
-  monitor:
+  cloudflare-metadata:
     if: (github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main') || (github.event_name == 'pull_request' && github.head_ref == 'ops/cloudflare-release-monitor-20261126' && github.event.pull_request.head.repo.full_name == github.repository)
     runs-on: ubuntu-latest
     timeout-minutes: 3
@@ -52,6 +52,11 @@ jobs:
           # Never print raw API data, commands, environment_variables, or author.
           print("CF_LATEST_BUILD "+json.dumps({"id":uid(b["build_uuid"]),"status":b.get("status") if b.get("status") in ("queued","initializing","running","stopped") else None,"outcome":b.get("build_outcome") if b.get("build_outcome") in ("success","fail","skipped","cancelled","terminated") else None,"commit":sha(m.get("commit_hash")),"main":m.get("branch")=="main","created_on":date(b.get("created_on"))}))
           PY
+  public-snapshot:
+    if: (github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main') || (github.event_name == 'pull_request' && github.head_ref == 'ops/cloudflare-release-monitor-20261126' && github.event.pull_request.head.repo.full_name == github.repository)
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
       - name: Read public production SHA in ten languages (no secrets)
         run: |
           python3 - <<'PY'
@@ -78,12 +83,13 @@ jobs:
                       if len(p.shas)!=1 or not re.fullmatch("[a-f0-9]{40}",p.shas[0] or "") or p.canon!=[url]: raise ValueError()
                       return {"locale":locale,"ok":True,"sha":p.shas[0]}
               except urllib.error.HTTPError as e:
-                  if e.code==429 or e.headers.get("Retry-After"): cooldown.set()
-                  return {"locale":locale,"ok":False,"http":e.code}
+                  if e.code in (401,403,429) or e.headers.get("Retry-After"): cooldown.set()
+                  ray=e.headers.get("CF-Ray","")
+                  return {"locale":locale,"ok":False,"http":e.code,"cf_ray":ray if re.fullmatch("[0-9a-fA-F]{8,32}-[A-Z]{3}",ray) else None,"challenge":e.headers.get("cf-mitigated")=="challenge"}
               except Exception: return {"locale":locale,"ok":False,"error":"network or invalid release marker"}
           with concurrent.futures.ThreadPoolExecutor(max_workers=2) as pool:
               rows=list(pool.map(inspect,["en","tr","zh","hi","pt-br","fr","de","ru","ja","es"]))
           coherent=all(x["ok"] for x in rows) and len({x.get("sha") for x in rows})==1
           print("CF_PUBLIC_SNAPSHOT "+json.dumps({"coherent":coherent,"routes":rows,"scope":"HTML snapshot only; not target ancestry, build matching or browser functionality"}))
-          if not coherent: raise SystemExit("Production snapshot incomplete")
+          if not coherent: raise SystemExit("PUBLIC_VERIFICATION_BLOCKED: production HTML not verified; Cloudflare metadata is a separate check")
           PY
