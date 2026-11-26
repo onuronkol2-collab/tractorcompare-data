@@ -36,3 +36,21 @@ test("public catalog parity checks all ten locales without truncating beyond 500
  assert.deepEqual(inspectCatalogParity(paths),[]);
  paths.set("/ja/tractors/",[]);assert.equal(inspectCatalogParity(paths)[0].path,"/ja/tractors/");
 });
+
+test("live indexing checks use real head and Googlebot restrictions",()=>{
+ const add=tag=>input.body.replace("<head>","<head>"+tag);
+ for(const tag of ['<meta content="none" name="googlebot">','<meta name=robots content=NONE>'])
+  assert.ok(inspectPublicPage({...input,body:add(tag)}).includes("noindex"));
+ assert.ok(inspectPublicPage({...input,headerRobots:"googlebot: none"}).includes("noindex"));
+ assert.ok(inspectPublicPage({...input,body:add('<meta http-equiv="refresh" content="0; url=/">')}).includes("meta-refresh"));
+ for(const tag of ['<!-- <meta name="robots" content="noindex"> -->','<script>const x = \'<meta name="robots" content="none">\';</script>','<template><link rel="canonical" href="/wrong/"></template>'])
+  assert.deepEqual(inspectPublicPage({...input,body:add(tag)}),[]);
+ const fake=input.body.replace('<link href="'+origin+'/tr/" rel="canonical">','<!-- <link rel="canonical" href="'+origin+'/tr/"> -->');
+ assert.ok(inspectPublicPage({...input,body:fake}).includes("canonical-mismatch"));
+});
+test("public robots probe detects partial locale blocks but ignores unrelated bot groups",()=>{
+ const robots={path:"/robots.txt",status:200,finalPath:"/robots.txt",contentType:"text/plain",production:true};
+ const base="Sitemap: "+origin+"/sitemap-index.xml\nUser-agent: *\nAllow: /\n";
+ assert.deepEqual(inspectPublicPage({...robots,body:base+"User-agent: Otherbot\nDisallow: /\n"}),[]);
+ assert.ok(inspectPublicPage({...robots,body:base+"User-agent: Googlebot\nDisallow: /tr/tractors/\n"}).includes("robots-block-public-path"));
+});

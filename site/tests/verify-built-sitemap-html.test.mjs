@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import {inspectSitemapHtml} from "../scripts/verify-built-sitemap-html.mjs";
+import {inspectSitemapHtml,inspectUnlistedBuiltPage} from "../scripts/verify-built-sitemap-html.mjs";
 const origin="https://tractorvs.com";
 const en=origin+"/guides/test/",tr=origin+"/tr/guides/test/";
 const pages=new Set([en,tr]);
@@ -22,4 +22,14 @@ test("blocks wrong/duplicate canonical, nonexistent or missing reciprocal locale
  assert.ok(inspectSitemapHtml(doc(base.replace('<link rel="alternate" hreflang="tr" href="'+tr+'">','')),en,pages).includes("hreflang-tr"));
  assert.ok(inspectSitemapHtml(doc(base,"de"),en,pages).includes("wrong-html-language"));
  assert.ok(inspectSitemapHtml(doc(base.replace('hreflang="x-default"','hreflang="de"')),en,pages).includes("wrong-x-default"));
+});
+
+test("reverse inventory detects omitted public routes without publishing legitimate exclusions",()=>{
+ const hidden=origin+"/forum/pending/";
+ const own='<link rel="canonical" href="'+hidden+'">';
+ assert.deepEqual(inspectUnlistedBuiltPage(doc(own),hidden,pages),["unlisted-indexable-canonical"]);
+ assert.deepEqual(inspectUnlistedBuiltPage(doc(own+'<meta name="robots" content="noindex">'),hidden,pages),[]);
+ assert.deepEqual(inspectUnlistedBuiltPage(doc('<link rel="canonical" href="'+en+'">'),hidden,pages),[]);
+ assert.deepEqual(inspectUnlistedBuiltPage(doc('<link rel="canonical" href="https://example.org/">'),hidden,pages),["unlisted-invalid-canonical-target"]);
+ assert.deepEqual(inspectUnlistedBuiltPage(doc('<!-- '+own+' -->'),hidden,pages),["unlisted-missing-canonical"]);
 });

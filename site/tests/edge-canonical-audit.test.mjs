@@ -66,3 +66,14 @@ test("notices become visible without making www DNS absence falsely look like fa
   assert.equal(report.notices.length,2);
   assert.equal(report.passed,true);
 });
+
+test("edge probe ignores inert metadata and rejects Googlebot none and refresh",async()=>{
+ const base=healthyFetch().fetchFn;
+ for(const [tag,expected] of [['<!-- <meta name="robots" content="noindex"> -->',true],['<meta name="googlebot" content="none">',false],['<meta content="0; url=/" http-equiv="refresh">',false]]){
+  const fetchFn=async(url,options)=>{
+   if(!url.startsWith("https://tractorvs.com/"))return base(url,options);
+   return new Response(canonicalHtml(url).replace("<head>","<head>"+tag),{headers:{"content-type":"text/html"}});
+  };
+  assert.equal((await inspectCanonicalEdge({fetchFn,paths:[]})).passed,expected);
+ }
+});

@@ -1,5 +1,7 @@
 // Read-only public response checks. No arbitrary remote target or redirect.
-import {readOpeningTagAttribute} from "./seo-html-attributes.mjs";
+import {readOpeningTagAttribute,indexBlockingResponseHeader} from "./seo-html-attributes.mjs";
+import {readIndexingHead} from "./indexing-head.mjs";
+import {blockedCanonicalPaths} from "./canonical-robots-coverage.mjs";
 export const PRODUCTION_ORIGIN="https://tractorvs.com";
 export const PUBLIC_LOCALES=["en","tr","zh","hi","pt-br","fr","de","ru","ja","es"];
 const localePrefix=lang=>lang==="en"?"":"/"+lang;
@@ -16,18 +18,20 @@ export function inspectPublicPage({path,status,finalPath,contentType,body,header
  if(path==="/robots.txt"){
   if(!/^text\/plain(?:;|$)/i.test(contentType||""))errors.push("robots-mime");
   if(production&&!html.includes("Sitemap: "+PRODUCTION_ORIGIN+"/sitemap-index.xml"))errors.push("missing-robots-sitemap");
-  if(production&&/^Disallow:\s*\/\s*$/im.test(html))errors.push("robots-block-all");
+  if(production){
+   try{if(blockedCanonicalPaths(html,[...HOME_PATHS,...CATALOG_PATHS]).length)errors.push("robots-block-public-path");}
+   catch{errors.push("robots-unverifiable");}
+  }
  }else if(path==="/sitemap-index.xml"){
   if(!/^(?:application|text)\/xml(?:;|$)/i.test(contentType||""))errors.push("sitemap-mime");
   if(!/<sitemapindex(?:\s|>)/.test(html))errors.push("invalid-sitemap-root");
  }else{
   if(!/^text\/html(?:;|$)/i.test(contentType||""))errors.push("html-mime");
-  const links=[...html.matchAll(/<link\b[^>]*>/gi)].map(m=>m[0]);
-  const canon=links.filter(tag=>(attr(tag,"rel")||"").toLowerCase()==="canonical").map(tag=>attr(tag,"href"));
-  const metas=[...html.matchAll(/<meta\b[^>]*>/gi)].map(m=>m[0]);
+  const head=readIndexingHead(html);
   if(production){
-   if(canon.length!==1||canon[0]!==PRODUCTION_ORIGIN+path)errors.push("canonical-mismatch");
-   if(/\bnoindex\b/i.test(headerRobots||"")||metas.some(t=>(attr(t,"name")||"").toLowerCase()==="robots"&&/\bnoindex\b/i.test(attr(t,"content")||"")))errors.push("noindex");
+   if(!head.hasHead||head.canonical.length!==1||head.canonical[0]!==PRODUCTION_ORIGIN+path)errors.push("canonical-mismatch");
+   if(head.noindex||indexBlockingResponseHeader(headerRobots))errors.push("noindex");
+   if(head.refresh)errors.push("meta-refresh");
   }
   if(!/<h1(?:\s|>)/i.test(html))errors.push("missing-h1");
   if(!/<main(?:\s|>)/i.test(html))errors.push("missing-main");

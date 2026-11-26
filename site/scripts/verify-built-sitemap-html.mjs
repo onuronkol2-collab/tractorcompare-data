@@ -3,6 +3,8 @@
  * Shares the live sitemap inventory and discovery graph implementations. */
 import {readFileSync,readdirSync} from "node:fs";
 import {join} from "node:path";
+import {readIndexingHead} from "./indexing-head.mjs";
+import {blockedCanonicalPaths} from "./canonical-robots-coverage.mjs";
 import {parseProductionSitemapInventory} from "./production-sitemap-inventory.mjs";
 import {scanHeadTags} from "./verify-sitewide-meta-descriptions.mjs";
 import {readOpeningTagAttribute as attr,googleIndexingBlockedByMeta} from "./seo-html-attributes.mjs";
@@ -37,11 +39,46 @@ export function inspectSitemapHtml(html,url,pages){
   errors.push("wrong-x-default");
  return errors;
 }
+// Reverse inventory: no silently omitted public directory-format routes.
+// Verification HTML files and 404.html are not generated directory routes.
+export function inspectUnlistedBuiltPage(html,url,pages){
+ if(pages.has(url))return [];
+ const h=readIndexingHead(html);
+ if(h.noindex)return [];
+ if(!h.hasHead||h.canonical.length!==1||!h.canonical[0])return ["unlisted-missing-canonical"];
+ if(h.canonical[0]===url)return ["unlisted-indexable-canonical"];
+ if(!pages.has(h.canonical[0]))return ["unlisted-invalid-canonical-target"];
+ if(h.refresh)return ["unlisted-meta-refresh-review"];
+ return [];
+}
+function verifyReverseInventory(dist,pages){
+ let excluded=0;
+ function visit(dir,segments=[]){
+  for(const entry of readdirSync(dir,{withFileTypes:true})){
+   const file=join(dir,entry.name);
+   if(entry.isDirectory())visit(file,[...segments,entry.name]);
+   else if(entry.isFile()&&entry.name==="index.html"){
+    if(segments.some(s=>! /^[A-Za-z0-9._~-]+$/.test(s)||s==="."||s===".."))
+     fail("unsupported generated route");
+    const url=ORIGIN+"/"+(segments.length?segments.join("/")+"/":"");
+    if(pages.has(url))continue;
+    const errors=inspectUnlistedBuiltPage(readFileSync(file,"utf8"),url,pages);
+    if(errors.length)fail(url+" "+errors.join(", "));
+    excluded++;
+   }
+  }
+ }
+ visit(dist);
+ return excluded;
+}
 export function verifyBuiltSitemapHtml(dist){
  const indexXml=readFileSync(join(dist,"sitemap-index.xml"),"utf8");
  const children=new Map(readdirSync(dist).filter(n=>/^(?:sitemap-\d+|forum-sitemap|image-sitemap)\.xml$/.test(n))
   .map(n=>[ORIGIN+"/"+n,readFileSync(join(dist,n),"utf8")]));
  const inventory=parseProductionSitemapInventory({indexXml,children});
+ const blocked=blockedCanonicalPaths(readFileSync(join(dist,"robots.txt"),"utf8"),[...inventory.pages].map(url=>new URL(url).pathname));
+ if(blocked.length)fail("Googlebot-blocked sitemap paths: "+blocked.slice(0,10).join(", "));
+ const excluded=verifyReverseInventory(dist,inventory.pages);
  const observed=new Map();
  for(const url of inventory.pages){
   const path=new URL(url).pathname;
@@ -60,5 +97,5 @@ export function verifyBuiltSitemapHtml(dist){
  const graph=summarizeCanonicalGraph(inventory.pages,observed,{fullCoverage:true,roots});
  if(!graph.complete||graph.noIncomingCount!==0||graph.unreachableCount!==0)
   fail("canonical discovery graph incomplete or disconnected: "+JSON.stringify({complete:graph.complete,noIncoming:graph.noIncoming?.slice(0,10),unreachable:graph.unreachable?.slice(0,10)}));
- return {pages:inventory.pages.size,modelPages:inventory.modelCount,edges:graph.verifiedEdges,reachable:graph.reachableObserved};
+ return {pages:inventory.pages.size,modelPages:inventory.modelCount,edges:graph.verifiedEdges,reachable:graph.reachableObserved,excludedDirectoryPages:excluded};
 }
