@@ -1,6 +1,8 @@
 ---
 import SiteLayout from "../layouts/SiteLayout.astro";
 import FarmDecisionTools from "./FarmDecisionTools.astro";
+import FarmScenarioTools from "./FarmScenarioTools.astro";
+import {farmExtrasText} from "../lib/farm-extras-i18n";
 import {localizedPath,LOCALE_TAGS,type Locale} from "../lib/locales";
 import {farmCostText} from "../lib/farm-cost-i18n";
 import {farmDecisionText} from "../lib/farm-decision-i18n";
@@ -34,6 +36,8 @@ const number=new Intl.NumberFormat(LOCALE_TAGS[lang],{maximumSignificantDigits:6
    </dl>
   </div>
   <button data-copy-cost type="button" disabled>{d.copyResult}</button><p data-cost-copy-status role="status"></p>
+  <nav aria-label={c.nav} style="display:flex;flex-wrap:wrap;gap:1rem"><a href="#farm-scenarios">{farmExtrasText(lang).scenario}</a><a href="#farm-service">{farmExtrasText(lang).service}</a></nav>
+  <FarmScenarioTools lang={lang} />
   <FarmDecisionTools lang={lang} />
   <h2>{c.method}</h2>
   <p>{c.formula}</p>

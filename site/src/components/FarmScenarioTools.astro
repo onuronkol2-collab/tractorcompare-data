@@ -1,0 +1,68 @@
+---
+import {farmExtrasText} from "../lib/farm-extras-i18n";
+import {farmCostText} from "../lib/farm-cost-i18n";
+import {farmModelText} from "../lib/farm-model-context-i18n";
+import {LOCALE_TAGS,type Locale} from "../lib/locales";
+interface Props{lang:Locale}
+const {lang}=Astro.props;
+const c=farmExtrasText(lang), common=farmCostText(lang), m=farmModelText(lang);
+const fields=[["width",3,4,0.01,100],["speed",6,6,0.01,100],["efficiency",75,75,0.01,100],["fuel",8,10,0,10000],["other",0,0,0,1e12]] as const;
+const metrics=[["time",common.time],["litres",common.litres],["operatingField",m.operatingField]] as const;
+---
+<div class="extra-tools" data-extra-tools data-locale={LOCALE_TAGS[lang]}>
+ <section id="farm-scenarios" data-clarity-mask="true">
+  <h2>{c.scenario}</h2><p>{c.intro}</p><p>{common.note}</p>
+  <form data-extra-form="scenario"><fieldset data-extra-controls disabled>
+   <div class="extra-grid">
+    <label>{m.fieldArea}<input name="area" type="number" min="0.0001" max="10000000000" step="any" value="10" required /></label>
+    <label>{m.areaUnit}<select name="unit">{["ha","decare","acre","m2","mu","tan"].map(unit=><option>{unit}</option>)}</select></label>
+    <label>{common.price}<input name="price" type="number" min="0" max="1000000000" step="any" value="1" required /></label>
+   </div>
+   <div class="extra-grid">{["a","b"].map(side=><fieldset><legend>{side==="a"?c.a:c.b}</legend>{fields.map(([key,a,b,min,max])=><label>{common[key]}<input name={side+"-"+key} type="number" min={min} max={max} step="any" value={side==="a"?a:b} required /></label>)}</fieldset>)}</div>
+   <button type="submit">{common.calculate}</button><p data-extra-error role="alert" hidden>{common.invalid}</p>
+  </fieldset></form>
+  <div class="extra-table" aria-live="polite"><table><thead><tr><th scope="col">{common.method}</th><th scope="col">{c.a}</th><th scope="col">{c.b}</th><th scope="col">{c.delta}</th></tr></thead><tbody>{metrics.map(([key,label])=><tr><th scope="row">{label}</th>{["left","right","difference"].map(side=><td data-scenario-result={side+"-"+key}>—</td>)}</tr>)}</tbody></table></div>
+ </section>
+ <section id="farm-service" data-clarity-mask="true"><h2>{c.service}</h2><p>{c.serviceNote}</p>
+  <form data-extra-form="service"><fieldset data-extra-controls disabled><div class="extra-grid">{[["last",c.last,100],["current",c.current,150],["interval",c.interval,250]].map(([key,label,value])=><label>{label}<input name={key} type="number" min={key==="interval"?0.01:0} max="10000000" step="any" value={value} required /></label>)}</div><button type="submit">{common.calculate}</button><p data-extra-error role="alert" hidden>{common.invalid}</p></fieldset></form>
+  <dl class="extra-grid" aria-live="polite">{[["next",c.next],["remaining",c.remaining],["overdue",c.overdue]].map(([key,label])=><div><dt>{label}</dt><dd data-service-result={key}>—</dd></div>)}</dl>
+ </section>
+</div>
+<script>
+ import {compareFieldScenarios,serviceInterval} from "../lib/farm-extras.mjs";
+ import {FARM_TOOL_DONE_EVENT} from "../lib/analytics-product-actions";
+ const root=document.querySelector<HTMLElement>("[data-extra-tools]");
+ if(root){
+  const fmt=new Intl.NumberFormat(root.dataset.locale,{maximumSignificantDigits:7});
+  for(const form of root.querySelectorAll<HTMLFormElement>("[data-extra-form]")){
+   const section=form.closest("section");if(!section)continue;
+   const error=form.querySelector<HTMLElement>("[data-extra-error]");
+   const results=[...section.querySelectorAll<HTMLElement>("[data-scenario-result],[data-service-result]")];
+   form.addEventListener("input",()=>{if(error)error.hidden=true;for(const el of results)el.textContent="—";});
+   form.addEventListener("submit",event=>{event.preventDefault();try{
+    const data=new FormData(form);const n=(key:string)=>{const v=data.get(key);return typeof v==="string"&&v.trim()?Number(v):NaN;};
+    if(!form.checkValidity())throw Error("Invalid input");
+    if(form.dataset.extraForm==="scenario"){
+     const side=(name:string)=>Object.fromEntries(["width","speed","efficiency","fuel","other"].map(key=>[key,n(name+"-"+key)]));
+     const result=compareFieldScenarios({area:n("area"),price:n("price"),unit:String(data.get("unit"))},side("a"),side("b"));
+     for(const el of results){const [group,key]=(el.dataset.scenarioResult||"").split("-");el.textContent=fmt.format(result[group as keyof typeof result][key as "time"|"litres"|"operatingField"]);}
+    }else{const result=serviceInterval(n("last"),n("current"),n("interval"));for(const el of results)el.textContent=fmt.format(result[el.dataset.serviceResult as keyof typeof result]);}
+    if(error)error.hidden=true;window.dispatchEvent(new Event(FARM_TOOL_DONE_EVENT));
+   }catch{if(error)error.hidden=false;for(const el of results)el.textContent="—";}});
+   const controls=form.querySelector<HTMLFieldSetElement>("[data-extra-controls]");if(controls)controls.disabled=false;
+  }
+ }
+</script>
+<style>
+ .extra-tools section{margin-block:2rem;padding:clamp(.8rem,2.5vw,1.6rem);border:1px solid #708478;border-radius:.8rem;scroll-margin-top:6rem}
+ .extra-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,13rem),1fr));gap:1rem;margin-block:1rem}
+ fieldset{min-width:0;border:1px solid #708478;padding:.8rem}
+ fieldset[data-extra-controls]{border:0;padding:0;margin:0}
+ label{display:grid;gap:.35rem;margin-block:.5rem;min-width:0}
+ input,select,button{font:inherit;min-height:44px;max-width:100%;min-width:0;box-sizing:border-box;border:1px solid #708478;border-radius:.4rem;padding:.5rem;color:inherit;background:transparent}
+ button{background:#245b39;color:white;cursor:pointer}
+ .extra-table{max-width:100%;overflow-x:auto;margin-block:1rem}
+ table{width:100%;border-collapse:collapse}
+ th,td{padding:.6rem;border-bottom:1px solid #708478;text-align:start;overflow-wrap:anywhere}
+ dd{font-weight:700;margin:0}
+</style>

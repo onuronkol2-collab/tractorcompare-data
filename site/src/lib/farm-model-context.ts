@@ -11,5 +11,5 @@ export function equipmentContext(tractor:TractorRecord,lang:Locale){
  }));
  const power=modelEvidenceAnswers(safe,lang).find(item=>item.id==="pto-power");
  if(power)facts.push({label:power.question,value:power.answer,source:power.sourceUrl});
- return {slug:tractor.slug,name:[tractor.brand_name,tractor.model_name,tractor.variant,tractor.market,tractor.model_year].filter(Boolean).join(" · "),href:localizedPath(lang,"/tractors/"+tractor.slug+"/"),facts};
+ return {id:tractor.tractor_id,slug:tractor.slug,name:[tractor.brand_name,tractor.model_name,tractor.variant,tractor.market,tractor.model_year].filter(Boolean).join(" · "),href:localizedPath(lang,"/tractors/"+tractor.slug+"/"),facts};
 }
