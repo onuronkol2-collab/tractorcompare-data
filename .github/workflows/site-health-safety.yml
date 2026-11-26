@@ -80,3 +80,38 @@ jobs:
           node-version: '22.23.4'
       - name: Audit lockfile against registry advisories (no install, no fixes)
         run: npm audit --audit-level=high --json
+  forum-clock:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    services:
+      postgres:
+        image: postgres:17
+        env:
+          POSTGRES_PASSWORD: disposable-fixture-only
+          PGUSER: postgres
+          PGDATABASE: postgres
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 12
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Validate server timestamps and retain delegated publication controls
+        env:
+          FIXTURE_CONTAINER: ${{ job.services.postgres.id }}
+        run: |
+          set -euo pipefail
+          dir=supabase/maintenance/site-health-20261126
+          sql() { docker exec -i "$FIXTURE_CONTAINER" psql -U postgres -d postgres -v ON_ERROR_STOP=1 -f - < "$1"; }
+          sql supabase/verification/forum_assisted_publication_fixture.sql
+          sql "$dir/clock-fixture.sql"
+          sql supabase/sql/forum_assisted_publication_candidate.sql
+          sql supabase/verification/forum_assisted_owner_only_setup.sql
+          sql "$dir/clock-apply.sql"
+          sql "$dir/clock-test.sql"
+          sql supabase/verification/forum_assisted_publication_test.sql
+          sql "$dir/clock-rollback.sql"
+          docker exec "$FIXTURE_CONTAINER" psql -U postgres -d postgres -v ON_ERROR_STOP=1 -Atc "select to_regprocedure('public.tc_forum_server_insert_guard()') is null and not exists(select 1 from pg_trigger where tgname='tc_forum_00_server_insert_guard');" | grep -x t
