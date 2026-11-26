@@ -1,0 +1,182 @@
+[
+  {
+    "brand": "Başak Traktör",
+    "model": "5075 Compact",
+    "tractorId": "20e382ea-5464-4128-a15a-b7bc304ef01f",
+    "fileId": "basak-traktor-5075-compact-archive-e5791f64a266",
+    "path": "a/a7/Ba%C5%9Fak_5075_Kompakt_Red_Power_Cabin_Agritechnica_2023_%28DSC04437%29.jpg",
+    "photographer": "MarcelX42",
+    "license": "CC BY-SA 4.0",
+    "width": 7008,
+    "height": 3944,
+    "resizedDerivative": true,
+    "sourcePage": "https://commons.wikimedia.org/wiki/File:Ba%C5%9Fak_5075_Kompakt_Red_Power_Cabin_Agritechnica_2023_%28DSC04437%29.jpg",
+    "sourcePageOriginal": "https://commons.wikimedia.org/wiki/File:Ba%C5%9Fak_5075_Kompakt_Red_Power_Cabin_Agritechnica_2023_(DSC04437).jpg",
+    "originalUrl": "https://upload.wikimedia.org/wikipedia/commons/a/a7/Ba%C5%9Fak_5075_Kompakt_Red_Power_Cabin_Agritechnica_2023_%28DSC04437%29.jpg",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "originalSha256": "e5791f64a2666f526cf36c573934c43c6f937d4b3d4551d7f9bfab54d1a047e2",
+    "originalSha1": "06019a80f0629a0296d05f8c23168b40c7c65bbb",
+    "originalBytes": 14136630,
+    "originalFormat": "JPEG",
+    "originalFrameCount": 1,
+    "selectedFrame": 0,
+    "sourceArtifact": 15053207271,
+    "sourceRun": 45679142676,
+    "candidate": "candidate-001.jpg",
+    "description": "Schrägansicht der Front eines Başak 5075 Kompakt Red Power Cabin, ausgestellt auf der Agritechnica 2023.",
+    "targetVariant": "Platform · Türkiye",
+    "angle": "visually-reviewed-front-side-or-front-quarter",
+    "modelEvidence": "Reviewed all three front three-quarter views. Commons captions identify 5075 Kompakt/Compact Red Power; OEM distinguishes cab and platform versions of 5075 Compact. Representative model-family photo only, not a platform equipment claim.",
+    "modelSources": [
+      "https://basaktraktor.com.tr/urunler/traktorler/tarla-traktorleri/5075kompakt",
+      "https://basaktraktor.com.tr/urunler/traktorler/tarla-traktorleri/5075-kompakt",
+      "https://basaktraktor.com.tr/fiyat-listesi"
+    ],
+    "scope": "Representative model photo, not exact variant configuration.",
+    "copyrightEvidence": "commons-attribution-license-verified-no-owner-claim",
+    "changes": "Verified primary frame; proportional resize and JPEG compression; source license retained.",
+    "derivatives": [
+      {
+        "file": "basak-traktor-5075-compact-archive-e5791f64a266-480.jpg",
+        "width": 480,
+        "height": 270,
+        "bytes": 40098,
+        "sha256": "378c331f91179aefdb4a566d34071b62f0ae75635b649a0d54b3be069d7b60fd"
+      },
+      {
+        "file": "basak-traktor-5075-compact-archive-e5791f64a266-960.jpg",
+        "width": 960,
+        "height": 540,
+        "bytes": 128805,
+        "sha256": "97e15eaadd223b48d6b3d90d3ab73b74bcff158daf93da1ce25d6bf5d505199c"
+      },
+      {
+        "file": "basak-traktor-5075-compact-archive-e5791f64a266-1920.jpg",
+        "width": 1920,
+        "height": 1081,
+        "bytes": 405954,
+        "sha256": "1bfad709c5735265810b15a3e780924d0fb7023e7fca8784398a74d6f31a95a9"
+      }
+    ]
+  },
+  {
+    "brand": "Başak Traktör",
+    "model": "5075 Compact",
+    "tractorId": "20e382ea-5464-4128-a15a-b7bc304ef01f",
+    "fileId": "basak-traktor-5075-compact-archive-8c9f61acfca4",
+    "path": "f/f2/Ba%C5%9Fak_5075_Kompakt_Red_Power_Agritechnica_2025_%28DSC06958%29.jpg",
+    "photographer": "MarcelX42",
+    "license": "CC BY-SA 4.0",
+    "width": 6100,
+    "height": 4575,
+    "resizedDerivative": true,
+    "sourcePage": "https://commons.wikimedia.org/wiki/File:Ba%C5%9Fak_5075_Kompakt_Red_Power_Agritechnica_2025_%28DSC06958%29.jpg",
+    "sourcePageOriginal": "https://commons.wikimedia.org/wiki/File:Ba%C5%9Fak_5075_Kompakt_Red_Power_Agritechnica_2025_(DSC06958).jpg",
+    "originalUrl": "https://upload.wikimedia.org/wikipedia/commons/f/f2/Ba%C5%9Fak_5075_Kompakt_Red_Power_Agritechnica_2025_%28DSC06958%29.jpg",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "originalSha256": "8c9f61acfca4b66288457a01e32f02e439de3a07c556ff238f0798f5452a43b2",
+    "originalSha1": "c118fd4d520bdc50d16154eb249eb878ffc7429a",
+    "originalBytes": 17085729,
+    "originalFormat": "JPEG",
+    "originalFrameCount": 1,
+    "selectedFrame": 0,
+    "sourceArtifact": 15053207271,
+    "sourceRun": 45679142676,
+    "candidate": "candidate-002.jpg",
+    "description": "Schrägansicht der Front eines Başak 5075 Kompakt/Compact Red Power, ausgestellt auf der Agritechnica 2025.",
+    "targetVariant": "Platform · Türkiye",
+    "angle": "visually-reviewed-front-side-or-front-quarter",
+    "modelEvidence": "Reviewed all three front three-quarter views. Commons captions identify 5075 Kompakt/Compact Red Power; OEM distinguishes cab and platform versions of 5075 Compact. Representative model-family photo only, not a platform equipment claim.",
+    "modelSources": [
+      "https://basaktraktor.com.tr/urunler/traktorler/tarla-traktorleri/5075kompakt",
+      "https://basaktraktor.com.tr/urunler/traktorler/tarla-traktorleri/5075-kompakt",
+      "https://basaktraktor.com.tr/fiyat-listesi"
+    ],
+    "scope": "Representative model photo, not exact variant configuration.",
+    "copyrightEvidence": "commons-attribution-license-verified-no-owner-claim",
+    "changes": "Verified primary frame; proportional resize and JPEG compression; source license retained.",
+    "derivatives": [
+      {
+        "file": "basak-traktor-5075-compact-archive-8c9f61acfca4-480.jpg",
+        "width": 480,
+        "height": 360,
+        "bytes": 49948,
+        "sha256": "9cb0659f88e542ba5f2e8f101cb67ccbb66f22bcc415040b99b59bd69b40f2aa"
+      },
+      {
+        "file": "basak-traktor-5075-compact-archive-8c9f61acfca4-960.jpg",
+        "width": 960,
+        "height": 720,
+        "bytes": 164447,
+        "sha256": "f3aff7720da5319d3cdf86f3b31bfd1913757b8b44b440bc3bd6b60c37c028b7"
+      },
+      {
+        "file": "basak-traktor-5075-compact-archive-8c9f61acfca4-1920.jpg",
+        "width": 1920,
+        "height": 1440,
+        "bytes": 550967,
+        "sha256": "7a58623f06bece10cd9560e0e8254c8e6bfac0657542a820ac6d16bb45d84e1a"
+      }
+    ]
+  },
+  {
+    "brand": "Başak Traktör",
+    "model": "5075 Compact",
+    "tractorId": "20e382ea-5464-4128-a15a-b7bc304ef01f",
+    "fileId": "basak-traktor-5075-compact-archive-510e8e5b6dd9",
+    "path": "f/f3/Ba%C5%9Fak_5075_Kompakt_Red_Power_Agritechnica_2025_%28DSC03675%29.jpg",
+    "photographer": "MarcelX42",
+    "license": "CC BY-SA 4.0",
+    "width": 6102,
+    "height": 4576,
+    "resizedDerivative": true,
+    "sourcePage": "https://commons.wikimedia.org/wiki/File:Ba%C5%9Fak_5075_Kompakt_Red_Power_Agritechnica_2025_%28DSC03675%29.jpg",
+    "sourcePageOriginal": "https://commons.wikimedia.org/wiki/File:Ba%C5%9Fak_5075_Kompakt_Red_Power_Agritechnica_2025_(DSC03675).jpg",
+    "originalUrl": "https://upload.wikimedia.org/wikipedia/commons/f/f3/Ba%C5%9Fak_5075_Kompakt_Red_Power_Agritechnica_2025_%28DSC03675%29.jpg",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "originalSha256": "510e8e5b6dd9740d3be6ce3c62cf1e3bf3b0fdbf79e22c7e5a0119b937a86f44",
+    "originalSha1": "133dfb642306c558d81d03a68600126b7af44dd3",
+    "originalBytes": 16932158,
+    "originalFormat": "JPEG",
+    "originalFrameCount": 1,
+    "selectedFrame": 0,
+    "sourceArtifact": 15053207271,
+    "sourceRun": 45679142676,
+    "candidate": "candidate-003.jpg",
+    "description": "Schrägansicht der Front eines Başak 5075 Kompakt/Compact Red Power, ausgestellt auf der Agritechnica 2025.",
+    "targetVariant": "Platform · Türkiye",
+    "angle": "visually-reviewed-front-side-or-front-quarter",
+    "modelEvidence": "Reviewed all three front three-quarter views. Commons captions identify 5075 Kompakt/Compact Red Power; OEM distinguishes cab and platform versions of 5075 Compact. Representative model-family photo only, not a platform equipment claim.",
+    "modelSources": [
+      "https://basaktraktor.com.tr/urunler/traktorler/tarla-traktorleri/5075kompakt",
+      "https://basaktraktor.com.tr/urunler/traktorler/tarla-traktorleri/5075-kompakt",
+      "https://basaktraktor.com.tr/fiyat-listesi"
+    ],
+    "scope": "Representative model photo, not exact variant configuration.",
+    "copyrightEvidence": "commons-attribution-license-verified-no-owner-claim",
+    "changes": "Verified primary frame; proportional resize and JPEG compression; source license retained.",
+    "derivatives": [
+      {
+        "file": "basak-traktor-5075-compact-archive-510e8e5b6dd9-480.jpg",
+        "width": 480,
+        "height": 360,
+        "bytes": 54585,
+        "sha256": "782050412c27567254bb36b3dd30efbf0af967200383c0e8a1a8053250841737"
+      },
+      {
+        "file": "basak-traktor-5075-compact-archive-510e8e5b6dd9-960.jpg",
+        "width": 960,
+        "height": 720,
+        "bytes": 179874,
+        "sha256": "06b5b8d096b08fb803001b84818eb88fd8a0540d02b1c712fb3b84b1f2ccc14c"
+      },
+      {
+        "file": "basak-traktor-5075-compact-archive-510e8e5b6dd9-1920.jpg",
+        "width": 1920,
+        "height": 1440,
+        "bytes": 596252,
+        "sha256": "e069137ab0aa595a54a93b47fb58f6038a2fb2fabc9ca4fbb876578a392e26fe"
+      }
+    ]
+  }
+]
