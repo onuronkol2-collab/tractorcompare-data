@@ -18,8 +18,8 @@
       "modified": "2026-11-22T08:02:35.845Z"
     },
     "https://tractorvs.com/compare/": {
-      "digest": "4c315467a4480afb88fbe2e7679a2bc346303fe92df437668cc34d60277edf64",
-      "modified": "2026-11-26T04:01:55.903Z"
+      "digest": "7a92b4dc4c398bea000fc1c397606b5bf1a628bf41d9495dab7828caff93233a",
+      "modified": "2026-11-26T06:48:25.172Z"
     },
     "https://tractorvs.com/compare/deutz-fahr-5090-d-gs-vs-5100-d-gs/": {
       "digest": "922999b9696029c032d6b1c71856522e23db46cc43479dd85fbb929909556a66",
@@ -34,8 +34,8 @@
       "modified": "2026-11-24T16:26:42.582Z"
     },
     "https://tractorvs.com/de/compare/": {
-      "digest": "314b28f7c338049102ab7e872e67bf661a02c4561f2ac31ba152fcc2c7863709",
-      "modified": "2026-11-26T04:01:55.903Z"
+      "digest": "d9d138bee01e7838df82eff4db09363939e98f6e03cac4cf56b5bd100fd80a3e",
+      "modified": "2026-11-26T06:48:25.172Z"
     },
     "https://tractorvs.com/de/farm-advisor/": {
       "digest": "62c79cfc9107261e787f41d64af1da0593217089fa023b9cf5a1df48126a5111",
@@ -54,8 +54,8 @@
       "modified": "2026-11-24T16:26:42.582Z"
     },
     "https://tractorvs.com/de/tractors/": {
-      "digest": "f793f9cc3ff70ffc0ae5498464e9f81e10ba0dd02764dd8a8f75abf69c904475",
-      "modified": "2026-11-25T18:45:20.601Z"
+      "digest": "2ffbfd2a417d67888852b27419dd0d15f827ddac78e6a692352d9bbb3d5689bc",
+      "modified": "2026-11-26T06:48:25.172Z"
     },
     "https://tractorvs.com/de/tractors/agrale-4125-0b53e944/": {
       "digest": "538e5049a25ab19ae37b655ca9cac3ecebe27379c4029f584b227c891067a100",
@@ -182,8 +182,8 @@
       "modified": "2026-11-26T04:53:03.558Z"
     },
     "https://tractorvs.com/de/tractors/basak-traktor-5075-compact-20e382ea/": {
-      "digest": "de27f0da4dffc37e244b5c44dbb21c603b511632b64e7c37fe430503fc85d04e",
-      "modified": "2026-11-26T03:33:30.917Z"
+      "digest": "efd339459a8f795d9b8b3f9411844a6323a941442bb69cc978176e0778ba95ba",
+      "modified": "2026-11-26T06:48:25.172Z"
     },
     "https://tractorvs.com/de/tractors/basak-traktor-5120-01590869/": {
       "digest": "90bbe3610f0e4349b522ca1302f1a995d80fe86bffdbf9a48ad18dc30fc762ed",
@@ -1954,8 +1954,8 @@
       "modified": "2026-11-24T16:26:42.582Z"
     },
     "https://tractorvs.com/es/compare/": {
-      "digest": "9c6f15410447026de9bc8b46338728fd7117b23a86b0608d51972ce267821bd2",
-      "modified": "2026-11-26T04:01:55.903Z"
+      "digest": "182578a4ad29193fa935157d7617d6e3c12abac1bcb87a72756f128e87e644f1",
+      "modified": "2026-11-26T06:48:25.172Z"
     },
     "https://tractorvs.com/es/farm-advisor/": {
       "digest": "6976560c606098bf213087d4f5921197076142f7f7ca1a4fa8aa59a5dbd9c21d",
@@ -1974,8 +1974,8 @@
       "modified": "2026-11-24T16:26:42.582Z"
     },
     "https://tractorvs.com/es/tractors/": {
-      "digest": "5af780ea9c1912bf04bc9a281e1ee918cda4375eb8136a51ebaa799ace5768cd",
-      "modified": "2026-11-25T18:45:20.601Z"
+      "digest": "537ddd67e079d2a7b925b56879337afc82977f0d964800a82b6187a877cc5415",
+      "modified": "2026-11-26T06:48:25.172Z"
     },
     "https://tractorvs.com/es/tractors/agrale-4125-0b53e944/": {
       "digest": "59ec4f3ad773c52b9291b05a206cf8ddafbc6bbba1cf0f95924fefe874dcbaa8",
@@ -2102,8 +2102,8 @@
       "modified": "2026-11-26T04:53:03.558Z"
     },
     "https://tractorvs.com/es/tractors/basak-traktor-5075-compact-20e382ea/": {
-      "digest": "b4ceef099cee27ddfc8bcb74716fa6f75345353e6efaea8e5ad2358b77df1f5b",
-      "modified": "2026-11-25T16:35:52.123Z"
+      "digest": "be1ace6f3cdb358b930c39514071a7a7b3659ac82bb5ee5942e32209308f2f9d",
+      "modified": "2026-11-26T06:48:25.172Z"
     },
     "https://tractorvs.com/es/tractors/basak-traktor-5120-01590869/": {
       "digest": "47c3af20ed3ad2ec893f5173837a33fd03dea28051f96d7ae9a77e8f7b54e537",
@@ -3878,8 +3878,8 @@
       "modified": "2026-11-24T16:26:42.582Z"
     },
     "https://tractorvs.com/fr/compare/": {
-      "digest": "751ce1dbab6ac487a1da2013aad243f0e8aee8e78b3d042cff2d859dbdda6a43",
-      "modified": "2026-11-26T04:01:55.903Z"
+      "digest": "64e92273b7678ed9736e88b884b8cccfb62032527ba226b791acec31abe76923",
+      "modified": "2026-11-26T06:48:25.172Z"
     },
     "https://tractorvs.com/fr/farm-advisor/": {
       "digest": "67ad73c24f3f8a4e8c84a867610994df9041ccf9642e42e87fc4a6facdc01abd",
@@ -3898,8 +3898,8 @@
       "modified": "2026-11-24T16:26:42.582Z"
     },
     "https://tractorvs.com/fr/tractors/": {
-      "digest": "19f3d6f4dc2edc97e40629f7cd603b9a69eef84bda1511ed7adb95c0890501e1",
-      "modified": "2026-11-25T18:45:20.601Z"
+      "digest": "6d1ddc35757c67eb21a06e5a953cdcb0294a4cfbe1da2c30d2cbd1e4987cd4e9",
+      "modified": "2026-11-26T06:48:25.172Z"
     },
     "https://tractorvs.com/fr/tractors/agrale-4125-0b53e944/": {
       "digest": "3174b87f3e143c336c50228412b7be2177fd0d15d345b7a77cf9ea6c25fa2bd8",
@@ -4026,8 +4026,8 @@
       "modified": "2026-11-26T04:53:03.558Z"
     },
     "https://tractorvs.com/fr/tractors/basak-traktor-5075-compact-20e382ea/": {
-      "digest": "18b4dbbdd28dbb253e722c81e68ccf425d5d7a114db39f3406b4fd1b21c6f1ce",
-      "modified": "2026-11-25T16:35:52.123Z"
+      "digest": "a64afff4109529cacf4b6b00f3438c12ec55d082e594e80558b4b4d80c7d1533",
+      "modified": "2026-11-26T06:48:25.172Z"
     },
     "https://tractorvs.com/fr/tractors/basak-traktor-5120-01590869/": {
       "digest": "927269d309c725d22dead62a18d79d52f960109e6d66d7bdb51baee25b4f7f37",
@@ -5818,8 +5818,8 @@
       "modified": "2026-11-24T16:26:42.582Z"
     },
     "https://tractorvs.com/hi/compare/": {
-      "digest": "8279621a8592c8a6da42611d75c061ff80b1722632ffd1cd5627d06e67176d7b",
-      "modified": "2026-11-26T04:01:55.903Z"
+      "digest": "72fd1622a8110b21c06def08cd7f6c11ec9a1888d349729149f460727f69570a",
+      "modified": "2026-11-26T06:48:25.172Z"
     },
     "https://tractorvs.com/hi/farm-advisor/": {
       "digest": "15110f4f5917338098706957443b42ad5dd04d07f252686913c78e416118929e",
@@ -5838,8 +5838,8 @@
       "modified": "2026-11-24T16:26:42.582Z"
     },
     "https://tractorvs.com/hi/tractors/": {
-      "digest": "3c5552376de1a6955384f23c31035e1c8c63439e734b23e2399d2c5f25bec359",
-      "modified": "2026-11-25T18:45:20.601Z"
+      "digest": "761a37c6ff6414f847b4f63dccab968654e749855ed32b6ac1b011f1f46f5100",
+      "modified": "2026-11-26T06:48:25.172Z"
     },
     "https://tractorvs.com/hi/tractors/agrale-4125-0b53e944/": {
       "digest": "b3677db7d04d5a4eaff5c6944a8962652ea5011e23e03ccc30e8ff87644d5ee0",
@@ -5966,8 +5966,8 @@
       "modified": "2026-11-26T04:53:03.558Z"
     },
     "https://tractorvs.com/hi/tractors/basak-traktor-5075-compact-20e382ea/": {
-      "digest": "ff7ce96a46c40af6f1ff929a8338e42dbaff60fae7d6b50db88910ef7b269e46",
-      "modified": "2026-11-25T16:35:52.123Z"
+      "digest": "e10fa162af7da55b9995169cdf440848bfd3945c70b9107b4916c903dc846343",
+      "modified": "2026-11-26T06:48:25.172Z"
     },
     "https://tractorvs.com/hi/tractors/basak-traktor-5120-01590869/": {
       "digest": "415ba00a35d41c39f0c570a800609c311d4acf5649446e67d253b4a051d1fe87",
@@ -7738,8 +7738,8 @@
       "modified": "2026-11-24T16:26:42.582Z"
     },
     "https://tractorvs.com/ja/compare/": {
-      "digest": "e6d0329f3d015cd7bd44376aaa40b437d23bd69ab46b8ac5d6ded5c628fd40e9",
-      "modified": "2026-11-26T04:01:55.903Z"
+      "digest": "768c5f8122dcd51a775126490a2dcec0c091d8c2236f36ddc191a12d07812e57",
+      "modified": "2026-11-26T06:48:25.172Z"
     },
     "https://tractorvs.com/ja/farm-advisor/": {
       "digest": "cfd8b38b34300694a36458131a4de92637263dc33ed7a1bd8282070a7de9b952",
@@ -7758,8 +7758,8 @@
       "modified": "2026-11-24T16:26:42.582Z"
     },
     "https://tractorvs.com/ja/tractors/": {
-      "digest": "0fbb5487324a0bcef39efe57e861f362ca15a29f419076240f722f706c821424",
-      "modified": "2026-11-25T18:45:20.601Z"
+      "digest": "6887e9e17576f162e3701c5ffa060296f9a0eadb1a3f317f64247c3d5755bdfd",
+      "modified": "2026-11-26T06:48:25.172Z"
     },
     "https://tractorvs.com/ja/tractors/agrale-4125-0b53e944/": {
       "digest": "5d7afd40823744e8968d0ffd1bc6dee0fd5a3304cab7e759858630ed1d91a596",
@@ -7886,8 +7886,8 @@
       "modified": "2026-11-26T04:53:03.558Z"
     },
     "https://tractorvs.com/ja/tractors/basak-traktor-5075-compact-20e382ea/": {
-      "digest": "b3c7416139750dccc08e9d84fb28b88f485ce8bd9aeaf7cd36eb1ffbe29cc85c",
-      "modified": "2026-11-25T16:35:52.123Z"
+      "digest": "1ce5b653f9d632e30d5a232291cead188b318bf879fdfb503c444bc72c374019",
+      "modified": "2026-11-26T06:48:25.172Z"
     },
     "https://tractorvs.com/ja/tractors/basak-traktor-5120-01590869/": {
       "digest": "6fbccf56ba2a0453aeefdf50ca2c8f2c943ccf1cff0b71a2fc23bf2f8f66ae5d",
@@ -9666,8 +9666,8 @@
       "modified": "2026-11-24T16:26:42.582Z"
     },
     "https://tractorvs.com/pt-br/compare/": {
-      "digest": "2359d437357f8aaf6366ff92a880d532273ea243164afd9168d2ee6654bcd85a",
-      "modified": "2026-11-26T04:01:55.903Z"
+      "digest": "2547bfb27029e373162e46ab60028ac26576c8f6809c3f4e3cabd003b1d2117f",
+      "modified": "2026-11-26T06:48:25.172Z"
     },
     "https://tractorvs.com/pt-br/farm-advisor/": {
       "digest": "4bc89384bde6155b2c00f82edc476a6fa18d3c62b5a71a3b93ce736f6eba3eab",
@@ -9686,8 +9686,8 @@
       "modified": "2026-11-24T16:26:42.582Z"
     },
     "https://tractorvs.com/pt-br/tractors/": {
-      "digest": "353d504b1847498e30809165841b686b3d69a7b202c755679f5ea938d75e252f",
-      "modified": "2026-11-25T18:45:20.601Z"
+      "digest": "e511f39c76311114fbea304ae495d53ac4cc2d3a012d6aceab98786e9635b616",
+      "modified": "2026-11-26T06:48:25.172Z"
     },
     "https://tractorvs.com/pt-br/tractors/agrale-4125-0b53e944/": {
       "digest": "866ce641fd3dece2f8d0ca6409e19ef4f8cd3aac1179e84cca2074a565d1ee31",
@@ -9814,8 +9814,8 @@
       "modified": "2026-11-26T04:53:03.558Z"
     },
     "https://tractorvs.com/pt-br/tractors/basak-traktor-5075-compact-20e382ea/": {
-      "digest": "79505311e1573defe8211f7bb54747fda26a7de960d9284809c6ad84a5375cab",
-      "modified": "2026-11-25T16:35:52.123Z"
+      "digest": "891747864d234078e017130ec73ce9af6f607735255ed28f99bc386bc1c29786",
+      "modified": "2026-11-26T06:48:25.172Z"
     },
     "https://tractorvs.com/pt-br/tractors/basak-traktor-5120-01590869/": {
       "digest": "75af2d2d68a197d371155232687e7e0996805cb8e47ca68597af6b0fe111953d",
@@ -11590,8 +11590,8 @@
       "modified": "2026-11-24T16:26:42.582Z"
     },
     "https://tractorvs.com/ru/compare/": {
-      "digest": "2e78971d09a73031ffb23458cf27ae24659ce7e20ae8f99ed8da89317d6ba02b",
-      "modified": "2026-11-26T04:01:55.903Z"
+      "digest": "f845768c1f42bd2858a8b1fdca86e13b035e0c7681ad295b234e2661a639e3b9",
+      "modified": "2026-11-26T06:48:25.172Z"
     },
     "https://tractorvs.com/ru/farm-advisor/": {
       "digest": "d6d97fa096b75dd093605ff3904c757309f593ccf0d3c363087775756861732f",
@@ -11610,8 +11610,8 @@
       "modified": "2026-11-24T16:26:42.582Z"
     },
     "https://tractorvs.com/ru/tractors/": {
-      "digest": "bff9eebdfece6ea97b7655f83f9a72e8a55eedbce42fb990c8f950e7df298a1e",
-      "modified": "2026-11-25T18:45:20.601Z"
+      "digest": "4be8d2fd05ee4e9da0a74af4e79262145363999e40f76d9b76d0e1243c00768d",
+      "modified": "2026-11-26T06:48:25.172Z"
     },
     "https://tractorvs.com/ru/tractors/agrale-4125-0b53e944/": {
       "digest": "d6f9c73e7d8cbc00c63c109e0b96b7b99ae954e576cc872d07e6fb0493953a6a",
@@ -11738,8 +11738,8 @@
       "modified": "2026-11-26T04:53:03.558Z"
     },
     "https://tractorvs.com/ru/tractors/basak-traktor-5075-compact-20e382ea/": {
-      "digest": "b46ac8207dedc5989688ac4f31971efeb0709f37d20bdbe480d3acdb4c2d5b40",
-      "modified": "2026-11-25T16:35:52.123Z"
+      "digest": "56019f7aef53e1fc39e54b05528c93203155accae26015ef5700e519025eaff2",
+      "modified": "2026-11-26T06:48:25.172Z"
     },
     "https://tractorvs.com/ru/tractors/basak-traktor-5120-01590869/": {
       "digest": "779a91e1f79e08f6e2a33f9f899b0c35ff6ead5a65e50c0c12f88186b7b43a02",
@@ -13518,8 +13518,8 @@
       "modified": "2026-11-22T08:02:35.845Z"
     },
     "https://tractorvs.com/tr/compare/": {
-      "digest": "58ebd24d6dc0d7e5094fe88f746e07a8f9b3914065978e11d2ba0f29a93f666f",
-      "modified": "2026-11-26T04:01:55.903Z"
+      "digest": "39cd9331598fea6acc6468ef29f1792649ed8d3050ba7c1f98b047fd7e850860",
+      "modified": "2026-11-26T06:48:25.172Z"
     },
     "https://tractorvs.com/tr/compare/deutz-fahr-5090-d-gs-vs-5100-d-gs/": {
       "digest": "0f223596935ecf9cf2a0972e5fd862ac566c38ba2f83123a156634df383d9733",
@@ -13562,8 +13562,8 @@
       "modified": "2026-11-24T16:26:42.582Z"
     },
     "https://tractorvs.com/tr/tractors/": {
-      "digest": "3ff6c16a797ae364a1e00bffbef1b6abde84ae1cc829523e67f793449b5a98ff",
-      "modified": "2026-11-25T18:45:20.601Z"
+      "digest": "1d55a6f9f5adda7835dcdb483d98a4e43fa38a8a805dd15bdd3fc0c3e1de662c",
+      "modified": "2026-11-26T06:48:25.172Z"
     },
     "https://tractorvs.com/tr/tractors/agrale-4125-0b53e944/": {
       "digest": "ad66328a63aa0e72539816f3a8fb01d4f89f093a6d3a62563a554e1efd5a687c",
@@ -13690,8 +13690,8 @@
       "modified": "2026-11-26T04:53:03.558Z"
     },
     "https://tractorvs.com/tr/tractors/basak-traktor-5075-compact-20e382ea/": {
-      "digest": "5e8e68579e4452fa3d4dfdee34499b3483f7ad2ea9f6918a3946d7ced1107e22",
-      "modified": "2026-11-25T16:35:52.123Z"
+      "digest": "e49cfc561144017f562102c6be118c6cd9dbecc0d9102f2ef95ea78328c8c422",
+      "modified": "2026-11-26T06:48:25.172Z"
     },
     "https://tractorvs.com/tr/tractors/basak-traktor-5120-01590869/": {
       "digest": "8a4b4012b5f7a43794987364a0b22fae9812b11ac0cc6715bfe7b7174b57c80b",
@@ -15454,8 +15454,8 @@
       "modified": "2026-11-25T18:45:20.601Z"
     },
     "https://tractorvs.com/tractors/": {
-      "digest": "475cfd5b21f67fd57c37b9fa02fb322e13a5086a06dc55f52f61642a658171d3",
-      "modified": "2026-11-25T18:45:20.601Z"
+      "digest": "8711ef411a082f1546d1b54358712b3fd2e593354acb11854f6545be59093c4a",
+      "modified": "2026-11-26T06:48:25.172Z"
     },
     "https://tractorvs.com/tractors/agrale-4125-0b53e944/": {
       "digest": "62ff459d3cbb03908cdfff8c6b03a48d0795432e247004ad37af0ecb6ee31ff6",
@@ -15582,8 +15582,8 @@
       "modified": "2026-11-26T04:53:03.558Z"
     },
     "https://tractorvs.com/tractors/basak-traktor-5075-compact-20e382ea/": {
-      "digest": "16a55b29350a7915d5de2c24e96daa5662cfdbe27a996372254f23d77b136eb8",
-      "modified": "2026-11-25T16:35:52.123Z"
+      "digest": "8712004869b5b5866f3afc905df044224b9ab0dc01af3f4a25261a87127112b8",
+      "modified": "2026-11-26T06:48:25.172Z"
     },
     "https://tractorvs.com/tractors/basak-traktor-5120-01590869/": {
       "digest": "9841e4696785a4b466494440b389f65dd866e8e200d211ced2a1e662de24374a",
@@ -17354,8 +17354,8 @@
       "modified": "2026-11-24T16:26:42.582Z"
     },
     "https://tractorvs.com/zh/compare/": {
-      "digest": "e0fb2114942142f3c1780d9a9d956ee934882616a210ec832b52dfb478cc6711",
-      "modified": "2026-11-26T04:01:55.903Z"
+      "digest": "bcebb87e838a6ff1c90e37c43153a5a2eecd13e6be1336962979ae950036e75b",
+      "modified": "2026-11-26T06:48:25.172Z"
     },
     "https://tractorvs.com/zh/farm-advisor/": {
       "digest": "7af38845364ce628d1e5ffa4953ff0113609bbd5f15fb2607475093873294ace",
@@ -17374,8 +17374,8 @@
       "modified": "2026-11-24T16:26:42.582Z"
     },
     "https://tractorvs.com/zh/tractors/": {
-      "digest": "666d0ffd66b461027c178cc6d3f37b77ee9dbed248cabb759331b182f6814aa6",
-      "modified": "2026-11-25T18:45:20.601Z"
+      "digest": "c9dd205de193998ac78c872c2d4249ca3f5f7f8432c193288da0242b32c8c2b3",
+      "modified": "2026-11-26T06:48:25.172Z"
     },
     "https://tractorvs.com/zh/tractors/agrale-4125-0b53e944/": {
       "digest": "ef47a83d3474c07af023699cd60f4da1074fd6e21e252891f0dbfc67aac2fbe2",
@@ -17502,8 +17502,8 @@
       "modified": "2026-11-26T04:53:03.558Z"
     },
     "https://tractorvs.com/zh/tractors/basak-traktor-5075-compact-20e382ea/": {
-      "digest": "ae297816f4d61a15a4d8fae1cbaaeac353ac2df8e0b4623b6f529305aa2645b2",
-      "modified": "2026-11-25T16:35:52.123Z"
+      "digest": "93870b0c8893452ab63b8bded20df3fc06bce7804dc961f718906934c93ed564",
+      "modified": "2026-11-26T06:48:25.172Z"
     },
     "https://tractorvs.com/zh/tractors/basak-traktor-5120-01590869/": {
       "digest": "937566d148c9b64d5321f9ed26c9d01417427c8da98402133b109f9d82980519",
