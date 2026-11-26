@@ -1,0 +1,39 @@
+name: TractorVS verified release readiness (staged)
+# Trusted base-only workflow: never check out or execute PR code.
+# This status is NOT required until direct-main writers are migrated and
+# an owner validates the full release ruleset. No automatic merge here.
+on:
+  pull_request_target:
+    branches: [main]
+    types: [opened, synchronize, reopened, ready_for_review, edited]
+    paths:
+      - "site/src/**"
+  workflow_dispatch:
+    inputs:
+      pr_number:
+        description: "Same-repository pull request number"
+        type: string
+        required: true
+permissions: {}
+concurrency:
+  group: tractorvs-readiness-${{ github.event.pull_request.number || inputs.pr_number }}
+  cancel-in-progress: true
+jobs:
+  readiness:
+    if: github.repository == 'onuronkol2-collab/tractorcompare-data' && (github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main' || github.event_name == 'pull_request_target' && github.event.pull_request.head.repo.full_name == github.repository)
+    runs-on: ubuntu-24.04
+    timeout-minutes: 18
+    permissions:
+      contents: read
+      checks: read
+      pull-requests: read
+      statuses: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.base.sha || github.sha }}
+          persist-credentials: false
+      - name: Evaluate exact current SHA from trusted base
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: node scripts/tractorvs-release-readiness.mjs
