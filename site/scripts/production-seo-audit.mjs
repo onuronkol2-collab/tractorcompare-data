@@ -1,4 +1,5 @@
 import {localStylesheets,stylesheetProblem} from "./live-stylesheets.mjs";
+import {comparisonSampleId,comparisonDataProblems} from "./comparison-data-indexing.mjs";
 import {readIndexingHead} from "./indexing-head.mjs";
 import {blockedCanonicalPaths} from "./canonical-robots-coverage.mjs";
 import {scanHeadTags,inspectMetaDescription,descriptionReuseGroups} from "./verify-sitewide-meta-descriptions.mjs";
@@ -137,6 +138,7 @@ const modelTitleRecords=[];
 const descriptionRecords=[];
 const descriptionLengths={over160:0,byLocale:Object.fromEntries(Object.keys(languages).map(l=>[l,0]))};
 const stylesheetRefs=new Map();
+const comparisonSamples=new Map();
 // The 60-character threshold is crawler guidance, not a Google requirement.
 // Track it across checked locales as an advisory, without deleting exact
 // model/variant/market/year disambiguators or blocking correct long titles.
@@ -169,6 +171,8 @@ for(let i=0;i<urls.length;i+=8){
    }
    if(readIndexingHead(body).refresh)error("meta-refresh",p,"Canonical sitemap target is a client-side redirect");
    const file=p.slice(1)+"index.html";
+   const hub=/^\/(?:(tr|zh|hi|pt-br|fr|de|ru|ja|es)\/)?compare\/$/.exec(p);
+   if(hub){const id=comparisonSampleId(body);if(id)comparisonSamples.set(hub[1]||"en",id);else error("comparison-sample",p,"No published comparison model ID in SSR");}
    const meta=metadata(body,file);
    for(const asset of localStylesheets(meta.links,page)){
      const entry=stylesheetRefs.get(asset) ?? {example:p,pages:0};
@@ -283,6 +287,21 @@ for(let i=0;i<urls.length;i+=8){
   }catch(e){fetchFailures++;error("page-fetch",page,String(e));}
  }));
 }
+// Inspect actual resource responses, not only the deployed _headers source.
+// The comparison UI still needs these JSON files to render technical values.
+let comparisonDataChecked=0;
+for(const locale of Object.keys(languages)){
+ const id=comparisonSamples.get(locale);
+ if(!id){error("comparison-sample-missing",locale,"No canonical comparison sample");continue;}
+ const path="/comparison-data/"+locale+"/"+id+".json";
+ try{
+  const {response,body}=await fetchPage(path);
+  const reasons=comparisonDataProblems(response,body);
+  for(const reason of reasons)error("comparison-data-indexing",path,reason);
+  if(!reasons.length)comparisonDataChecked++;
+ }catch(e){error("comparison-data-fetch",path,String(e));}
+}
+console.log("TRACTORVS_COMPARISON_DATA_INDEXING "+JSON.stringify({checked:comparisonSamples.size,passed:comparisonDataChecked}));
 for (const [asset,refs] of stylesheetRefs) {
   let reason;
   try {
@@ -327,7 +346,7 @@ const report={
   descriptionAdvisories:descriptionLengths,
   sameLocaleDescriptionGroups:descriptionReuse.sameLocale.length,
   crossLocaleDescriptionGroups:descriptionReuse.crossLocale.length,
-  internalLinkSummary,
+  internalLinkSummary,comparisonDataChecked,
   errors:problems.length,warnings:warnings.length,
 };
 console.log("TRACTORVS_SEO_AUDIT_REPORT "+JSON.stringify(report));

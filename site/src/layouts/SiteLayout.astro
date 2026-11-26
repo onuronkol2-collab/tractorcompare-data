@@ -216,7 +216,7 @@ const openGraphLocale: Record<Locale, string> = {
             </summary>
             <div class="locale-options" role="group" aria-label={t(lang,"selectLanguage")}>
               {languageChoices.map((choice) =>
-                <a href={choice.url} hreflang={LOCALE_TAGS[choice.lang]}
+                <a href={choice.url} rel={choice.url.includes("?")?"nofollow":undefined} hreflang={LOCALE_TAGS[choice.lang]}
                   lang={LOCALE_TAGS[choice.lang]} data-language-choice data-language-code={choice.lang}
                   aria-current={choice.lang===lang ? "page" : undefined}>{choice.label}</a>
               )}
@@ -335,6 +335,8 @@ const openGraphLocale: Record<Locale, string> = {
       destination.search = window.location.search;
       const next = destination.pathname + destination.search;
       if (link.getAttribute("href") !== next) link.href = next;
+      // Canonical locale anchors remain crawlable; visitor state is not a new page.
+      link.relList.toggle("nofollow",Boolean(destination.search));
     }
     lastSyncedSearch = window.location.search;
   };

@@ -85,7 +85,7 @@ const summaryItems = [
       {tractor.market&&<span>{marketDisplayName(tractor.market,lang)}</span>}
       {tractor.brand_country&&<span>{BRAND_COUNTRY_LABEL[lang]} · {brandCountryName(tractor.brand_country,lang)}</span>}
     </div>
-    <a class="model-compare-action" href={compareUrl}>
+    <a class="model-compare-action" href={compareUrl} rel="nofollow">
       <span class="model-compare-symbol" aria-hidden="true">⇄</span>
       <span class="model-compare-copy"><strong>{cx(lang,"cta")}</strong><small>{cx(lang,"ctaHint")}</small></span>
       <span class="model-compare-arrow" aria-hidden="true">↗</span>
@@ -138,7 +138,7 @@ const summaryItems = [
       <ul>{modelDiscussions.map(topic=><li><a href={localizedPath(lang,"/forum/"+topic.slug+"/")}>{topic.title}</a><small>{forumCopy(lang,topic.category)}</small></li>)}</ul>
     </section>}
     <a class="model-forum-discussion"
-      href={localizedPath(lang,"/forum/")+"?tractor="+encodeURIComponent(tractor.tractor_id)}>
+      href={localizedPath(lang,"/forum/")+"?tractor="+encodeURIComponent(tractor.tractor_id)} rel="nofollow">
       <strong>{forumCopy(lang,"name")} · {forumCopy(lang,"compose")}</strong>
       <span>{forumCopy(lang,"intro")} ↗</span>
     </a>
@@ -162,7 +162,7 @@ const summaryItems = [
     : <div class="catalog-empty"><h2>{t(lang,"noModelSpecs")}</h2></div>}
     <ModelSourceIndex tractor={tractor} lang={lang} />
     <div class="model-bottom-actions">
-      <a class="button button-primary" href={compareUrl}>{cx(lang,"cta")} <span aria-hidden="true">⇄</span></a>
+      <a class="button button-primary" href={compareUrl} rel="nofollow">{cx(lang,"cta")} <span aria-hidden="true">⇄</span></a>
       <a class="button button-secondary" href={listingUrl}>{t(lang,"backToCatalog")} <span aria-hidden="true">↗</span></a>
     </div>
   </div></section>

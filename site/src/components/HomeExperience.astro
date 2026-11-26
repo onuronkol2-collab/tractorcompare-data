@@ -219,7 +219,7 @@ const suggestionPayload = JSON.stringify(catalogue.tractors.map((tractor) => ({
           <strong>{d(lang,"brandsHeading")}</strong>
           <div>
             {brands.map(([brand,number]) => (
-              <a href={catalogUrl + "?q=" + encodeURIComponent(brand)}>
+              <a href={catalogUrl + "?q=" + encodeURIComponent(brand)} rel="nofollow">
                 {brand}<span aria-hidden="true"> · {number}</span>
               </a>
             ))}
