@@ -225,16 +225,37 @@ test("all locales keep the existing fail-closed evidence gate",()=>{
  for(const locale of LOCALES)assert.deepEqual(modelEvidenceAnswers(model,locale),[],locale);
 });
 
-test("English and Turkish legacy answer text, formatting and guide links stay unchanged",()=>{
+test("English and Turkish preserve evidence formatting and guide links while distinguishing variants",()=>{
  const model={...base,variant:"4WD",specifications:[
   spec("engine_rated_power","114","hp",{rated_rpm:2200,measurement_standard:"ECE R120"}),
   spec("wheelbase_mm","2355","mm")
  ]};
  for(const locale of ["en","tr"]){
   const answers=modelEvidenceAnswers(model,locale);
-  assert.deepEqual(answers,modelEvidenceAnswers({...model,variant:null},locale));
+  const unqualified=modelEvidenceAnswers({...model,variant:null},locale);
+  assert.notEqual(answers[0].question,unqualified[0].question);
+  assert.ok(answers.every(a=>a.question.includes("4WD")&&a.answer.includes("McCormick X5.120 (4WD)")));
+  assert.deepEqual(answers.map(a=>a.sourceUrl),unqualified.map(a=>a.sourceUrl));
   assert.equal(answers[0].guidePath,"/guides/tractor-engine-power-and-torque/");
   assert.equal(answers[0].measurementNote,locale==="en"?"2,200 rpm":"2.200 dev/dk");
   assert.match(answers[0].answer,/ECE R120/);
+ }
+});
+
+
+test("all ten locales preserve exact model, short variant and recorded scope in direct answers",()=>{
+ const model={...base,variant:"GEAR",market:"Europe",model_year:2024,specifications:[spec("fuel_tank_capacity","150","L")]};
+ for(const locale of LOCALES){
+  const a=modelEvidenceAnswers(model,locale)[0];
+  assert.ok(a.question.includes("McCormick X5.120 (GEAR)")&&a.answer.includes("McCormick X5.120 (GEAR)"),locale);
+  assert.ok(a.question.includes("2024")&&a.answer.includes("2024"),locale);
+  const other=modelEvidenceAnswers({...model,variant:"HST",market:"US",model_year:2025},locale)[0];
+  assert.notEqual(a.question,other.question,locale);
+  assert.notEqual(a.answer,other.answer,locale);
+  assert.equal(a.sourceUrl,other.sourceUrl,locale);
+  const absent=modelEvidenceAnswers({...model,variant:null,market:null,model_year:null},locale)[0];
+  assert.ok(!absent.question.includes("GEAR")&&!absent.answer.includes("2024"),locale);
+  const unsafe=modelEvidenceAnswers({...model,variant:"<script>",market:"a\nb",model_year:null},locale)[0];
+  assert.ok(!unsafe.question.includes("<script>")&&!unsafe.answer.includes("a\nb"),locale);
  }
 });

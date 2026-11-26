@@ -10,6 +10,7 @@ import type {PublicSpec,TractorRecord} from "./catalog.ts";
 import {officialManufacturerSourceUrl,reviewedIndependentSourceUrl} from "./catalog.ts";
 
 import {LOCALE_TAGS,type Locale} from "./locales.ts";
+import {marketDisplayName} from "./market-display.ts";
 import {MODEL_ANSWER_UI,localizedEvidenceCopy,hasModelAnswerTermGuides,type AnswerField} from "./model-evidence-answer-i18n.ts";
 
 export type AnswerLanguage=Locale;
@@ -146,53 +147,53 @@ const text={
  en:{
   rated:(name:string,v:string,s:string)=>({
    question:`What verified engine power is reported for ${name}?`,
-   answer:`A reviewed source reports ${v} hp of engine power${s}. This is an engine measurement, not a PTO or drawbar power test. Check the exact model and test conditions in the linked source.`,
+   answer:`${name}: A reviewed source reports ${v} hp of engine power${s}. This is an engine measurement, not a PTO or drawbar power test. Check the exact model and test conditions in the linked source.`,
   }),
   pto:(name:string,v:string,s:string)=>({
    question:`What published PTO power is documented for ${name}?`,
-   answer:`A reviewed source reports ${v} hp at the PTO${s}. PTO output should not be confused with rated engine power. Verify the speed and test method before comparing another model.`,
+   answer:`${name}: A reviewed source reports ${v} hp at the PTO${s}. PTO output should not be confused with rated engine power. Verify the speed and test method before comparing another model.`,
   }),
   "engine-displacement":(name:string,v:string,s:string)=>({
    question:`What is the documented engine displacement of ${name}?`,
-   answer:`The reviewed technical source lists an engine displacement of ${v} litres${s}. Displacement is engine volume, not horsepower or fuel consumption. Check the exact variant in the linked source.`,
+   answer:`${name}: The reviewed technical source lists an engine displacement of ${v} litres${s}. Displacement is engine volume, not horsepower or fuel consumption. Check the exact variant in the linked source.`,
   }),
   "rear-hitch-lift":(name:string,v:string,s:string)=>({
    question:`What rear hitch lift capacity is documented for ${name}?`,
-   answer:`A reviewed source lists ${v} kg for the rear hitch lift capacity${s}. Capacity depends on the measurement point and fitted equipment; confirm the conditions before comparing tractors.`,
+   answer:`${name}: A reviewed source lists ${v} kg for the rear hitch lift capacity${s}. Capacity depends on the measurement point and fitted equipment; confirm the conditions before comparing tractors.`,
   }),
   wheelbase:(name:string,v:string,s:string)=>({
    question:`What is the documented wheelbase of ${name}?`,
-   answer:`The reviewed specification gives a wheelbase of ${v} mm${s}. Wheelbase is the distance between front and rear axle centres, not the tractor's overall length.`,
+   answer:`${name}: The reviewed specification gives a wheelbase of ${v} mm${s}. Wheelbase is the distance between front and rear axle centres, not the tractor's overall length.`,
   }),
   fuel:(name:string,v:string,s:string)=>({
    question:`How large is the documented fuel tank of ${name}?`,
-   answer:`The reviewed source lists a fuel tank capacity of ${v} litres${s}. Tank size does not tell you the tractor's fuel consumption per hour.`,
+   answer:`${name}: The reviewed source lists a fuel tank capacity of ${v} litres${s}. Tank size does not tell you the tractor's fuel consumption per hour.`,
   })
  },
  tr:{
   rated:(name:string,v:string,s:string)=>({
    question:`${name} modelinin kaynaklı motor gücü kaç beygir?`,
-   answer:`İncelenen kaynakta motor gücü ${v} HP olarak belirtiliyor${s}. Bu değer kuyruk mili veya tekerleklerde ölçülen güç değildir. Doğru model ve test koşullarını bağlantılı kaynaktan kontrol edin.`,
+   answer:`${name}: İncelenen kaynakta motor gücü ${v} HP olarak belirtiliyor${s}. Bu değer kuyruk mili veya tekerleklerde ölçülen güç değildir. Doğru model ve test koşullarını bağlantılı kaynaktan kontrol edin.`,
   }),
   pto:(name:string,v:string,s:string)=>({
    question:`${name} modelinin belgelenmiş kuyruk mili gücü kaç HP?`,
-   answer:`İncelenen kaynak kuyruk mili gücünü ${v} HP olarak veriyor${s}. Bu sayı motor beygiriyle aynı şey değildir. Başka traktörle karşılaştırırken PTO devrini ve ölçüm yöntemini kontrol edin.`,
+   answer:`${name}: İncelenen kaynak kuyruk mili gücünü ${v} HP olarak veriyor${s}. Bu sayı motor beygiriyle aynı şey değildir. Başka traktörle karşılaştırırken PTO devrini ve ölçüm yöntemini kontrol edin.`,
   }),
   "engine-displacement":(name:string,v:string,s:string)=>({
    question:`${name} modelinin belgelenmiş motor hacmi kaç litre?`,
-   answer:`İncelenen teknik kaynakta motor hacmi ${v} litre olarak belirtiliyor${s}. Motor hacmi, beygir gücü veya yakıt tüketimi değildir. Varyantı bağlantılı kaynaktan kontrol edin.`,
+   answer:`${name}: İncelenen teknik kaynakta motor hacmi ${v} litre olarak belirtiliyor${s}. Motor hacmi, beygir gücü veya yakıt tüketimi değildir. Varyantı bağlantılı kaynaktan kontrol edin.`,
   }),
   "rear-hitch-lift":(name:string,v:string,s:string)=>({
    question:`${name} modelinin belgelenmiş arka kaldırma kapasitesi kaç kilogram?`,
-   answer:`İncelenen kaynak arka askı kaldırma kapasitesini ${v} kg olarak veriyor${s}. Değer ölçüm noktasına ve takılı donanıma bağlı olabilir; modelleri karşılaştırmadan önce koşulları kontrol edin.`,
+   answer:`${name}: İncelenen kaynak arka askı kaldırma kapasitesini ${v} kg olarak veriyor${s}. Değer ölçüm noktasına ve takılı donanıma bağlı olabilir; modelleri karşılaştırmadan önce koşulları kontrol edin.`,
   }),
   wheelbase:(name:string,v:string,s:string)=>({
    question:`${name} modelinin dingil mesafesi kaç milimetre?`,
-   answer:`Kaynağa bağlı teknik değere göre dingil mesafesi ${v} mm${s}. Bu, ön ve arka aksların merkezleri arasındaki mesafedir; traktörün toplam uzunluğu değildir.`,
+   answer:`${name}: Kaynağa bağlı teknik değere göre dingil mesafesi ${v} mm${s}. Bu, ön ve arka aksların merkezleri arasındaki mesafedir; traktörün toplam uzunluğu değildir.`,
   }),
   fuel:(name:string,v:string,s:string)=>({
    question:`${name} modelinin mazot deposu kaç litre?`,
-   answer:`İncelenen teknik kaynakta yakıt deposu ${v} litre olarak belirtiliyor${s}. Depo hacmi, traktörün saatte kaç litre yakıt tükettiğini göstermez.`,
+   answer:`${name}: İncelenen teknik kaynakta yakıt deposu ${v} litre olarak belirtiliyor${s}. Depo hacmi, traktörün saatte kaç litre yakıt tükettiğini göstermez.`,
   })
  }
 } as const;
@@ -205,12 +206,23 @@ function safeStandard(s:string|null):string {
  if(!s||s.length>90||/[<>\r\n]/.test(s))return "";
  return s;
 }
-export function modelEvidenceAnswers(tractor:Pick<TractorRecord,"brand_name"|"model_name"|"specifications">&Partial<Pick<TractorRecord,"variant">>,lang:AnswerLanguage):EvidenceAnswer[]{
+export function modelEvidenceAnswers(tractor:Pick<TractorRecord,"brand_name"|"model_name"|"specifications">&Partial<Pick<TractorRecord,"variant"|"market"|"model_year">>,lang:AnswerLanguage):EvidenceAnswer[]{
  const baseName=tractor.brand_name+" "+tractor.model_name;
  const variant=tractor.variant?.trim();
  // Preserve short, actual variant identities such as GEAR vs HST; long
  // source/marketing notes remain in the original visible record and source.
- const name=lang!=="en"&&lang!=="tr"&&variant&&variant.length<=24&&!/[<>\r\n]/.test(variant)&&!baseName.toLowerCase().includes(variant.toLowerCase())?baseName+" ("+variant+")":baseName;
+ const shortIdentity=(value:string|null|undefined,max:number):string|null=>{
+  const clean=value?.trim();
+  return clean&&clean.length<=max&&!/[<>\r\n]/.test(clean)?clean:null;
+ };
+ const shortVariant=shortIdentity(variant,24);
+ const variantName=shortVariant&&!baseName.toLowerCase().includes(shortVariant.toLowerCase())?baseName+" ("+shortVariant+")":baseName;
+ // Recorded identity only; no market or year inferred from page language.
+ const market=shortIdentity(tractor.market,40);
+ const localizedMarket=market?shortIdentity(marketDisplayName(market,lang),60):null;
+ const year=Number.isInteger(tractor.model_year)&&Number(tractor.model_year)>0?String(tractor.model_year):null;
+ const scope=[localizedMarket,year].filter(Boolean).join(" · ");
+ const name=variantName+(scope?" — "+scope:"");
  const answers:EvidenceAnswer[]=[];
  for(const field of fields){
   const found=selectUnambiguous(tractor.specifications,field,tractor.brand_name);
