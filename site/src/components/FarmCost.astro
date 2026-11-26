@@ -1,5 +1,6 @@
 ---
 import SiteLayout from "../layouts/SiteLayout.astro";
+import FarmDecisionTools from "./FarmDecisionTools.astro";
 import {localizedPath,LOCALE_TAGS,type Locale} from "../lib/locales";
 import {farmCostText} from "../lib/farm-cost-i18n";
 import {farmCost} from "../lib/farm-cost.mjs";
@@ -29,6 +30,7 @@ const number=new Intl.NumberFormat(LOCALE_TAGS[lang],{maximumSignificantDigits:6
     {metrics.map(key=><div><dt>{c[key]}</dt><dd><output form="farm-cost-form" data-cost-result={key}>{number.format(initial[key])}</output></dd></div>)}
    </dl>
   </div>
+  <FarmDecisionTools lang={lang} />
   <h2>{c.method}</h2>
   <p>{c.formula}</p>
   <h2>{c.sources}</h2>

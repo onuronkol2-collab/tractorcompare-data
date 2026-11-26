@@ -1,0 +1,119 @@
+---
+import {farmDecisionText} from "../lib/farm-decision-i18n";
+import {farmCostText} from "../lib/farm-cost-i18n";
+import {LOCALE_TAGS,type Locale} from "../lib/locales";
+interface Props{lang:Locale}
+const {lang}=Astro.props;
+const c=farmDecisionText(lang), common=farmCostText(lang);
+const finance=[["purchase",50000,0,1e12],["deposit",10000,0,1e12],["rate",5,0,100],["months",60,1,600],["resale",20000,0,1e12],["years",10,0.1,100],["rent",50,0,1e9],["hours",200,0,8760],["operating",20,0,1e9]] as const;
+const metrics=["payment","interest","depreciation","ownership","rental"] as const;
+const compat=["pto","flow","lift"] as const;
+const checklist=["identity","history","safety","engine","drive","hydraulic","tyres","mechanic"] as const;
+---
+<div data-farm-decisions data-locale={LOCALE_TAGS[lang]} data-invalid={common.invalid}>
+ <nav aria-label={common.nav} class="decision-nav">
+  <a href="#farm-finance">{c.finance}</a><a href="#farm-units">{c.units}</a><a href="#farm-equipment">{c.equipment}</a><a href="#farm-used">{c.used}</a><a href="#farm-journal">{c.journal}</a>
+ </nav>
+ <section class="decision-card" id="farm-finance">
+  <h2>{c.finance}</h2><p>{c.note}</p>
+  <form data-decision="finance">
+   <div class="decision-grid">{finance.map(([key,value,min,max])=><label>{c[key]}<input name={key} type="number" inputmode="decimal" value={value} min={min} max={max} step={key==="months"?"1":"any"} required /></label>)}</div>
+   <button type="submit">{common.calculate}</button>
+   <dl aria-live="polite" class="decision-grid">{metrics.map(key=><div><dt>{c[key]}</dt><dd data-finance-result={key}>—</dd></div>)}</dl>
+   <p data-error role="alert" hidden>{common.invalid}</p>
+  </form>
+  <p>{c.financeNote}</p>
+  <ul><li><a lang="en" href="https://www.extension.iastate.edu/Agdm/crops/html/a3-29.html">Iowa State University — Estimating Farm Machinery Costs</a></li><li><a lang="en" href="https://www.consumerfinance.gov/ask-cfpb/how-do-mortgage-lenders-calculate-monthly-payments-en-1965/">CFPB — Fixed monthly payment formula</a></li></ul>
+ </section>
+ <section class="decision-card" id="farm-units">
+  <h2>{c.units}</h2><p>{c.unitNote}</p>
+  <form data-decision="units">
+   <div class="decision-grid"><label>{c.amount}<input name="value" type="number" inputmode="decimal" min="0" max="1000000000000" step="any" value="100" required /></label>
+   <label>{c.units}<select name="unit"><optgroup label={c.power}>{["HP","PS","kW"].map(key=><option value={key}>{key}</option>)}</optgroup><optgroup label={c.area}>{["ha","decare","acre"].map(key=><option value={key}>{key}</option>)}</optgroup></select></label></div>
+   <button type="submit">{common.calculate}</button><output data-unit-result aria-live="polite">—</output><p data-error role="alert" hidden>{common.invalid}</p>
+  </form><p><a lang="en" href="https://www.nist.gov/pml/special-publication-811/nist-guide-si-appendix-b-conversion-factors/nist-guide-si-appendix-b9">NIST — SI conversion factors</a></p>
+ </section>
+ <section class="decision-card" id="farm-equipment">
+  <h2>{c.equipment}</h2><p>{c.equipmentNote}</p>
+  <form data-decision="equipment">
+   {compat.map(key=><fieldset><legend>{c[key]}</legend><div class="decision-grid"><label>{c.available}<input type="number" name={key+"Available"} min="0" max="1000000000" step="any" inputmode="decimal"/></label><label>{c.required}<input type="number" name={key+"Required"} min="0" max="1000000000" step="any" inputmode="decimal"/></label></div></fieldset>)}
+   <button type="submit">{common.calculate}</button><p data-equipment-result data-matched={c.matched} data-insufficient={c.insufficient} data-unknown={c.unknown} aria-live="polite">{c.unknown}</p><p>{c.manual}</p><p data-error role="alert" hidden>{common.invalid}</p>
+  </form>
+  <p><a lang="en" href="https://www.canr.msu.edu/resources/bulletin-e-3515-used-farm-equipment-markets-planning-the-purchase">Michigan State University Extension — Used Farm Equipment Markets: Planning the Purchase</a></p>
+ </section>
+ <section class="decision-card" id="farm-used">
+  <h2>{c.used}</h2><p>{c.usedNote}</p>
+  <ul class="inspection-list">{checklist.map(key=><li><label><input type="checkbox"/> {c[key]}</label></li>)}</ul>
+  <button data-print type="button">{c.print}</button>
+  <p><a lang="en" href="https://extension.umn.edu/agriculture/farm-operations-and-systems/small-farms/buying-a-used-tractor">University of Minnesota Extension — Buying a used tractor</a></p>
+ </section>
+ <section class="decision-card" id="farm-journal">
+  <h2>{c.journal}</h2><p>{c.privateNote}</p>
+  <form data-decision="journal">
+   <div class="decision-grid"><label>{c.model}<input name="model" maxlength="80" required autocomplete="off"/></label><label>{c.meter}<input name="meter" type="number" min="0" max="10000000" step="any" required/></label><label>{c.fuel}<input name="fuel" type="number" min="0" max="1000000" step="any" required/></label><label>{c.cost}<input name="cost" type="number" min="0" max="1000000000000" step="any" required/></label></div>
+   <div class="decision-nav"><button type="submit">{c.save}</button><button data-delete type="button">{c.remove}</button><button data-export type="button">{c.export}</button></div>
+   <p data-journal-status data-saved={c.saved} data-storage-error={c.storageError} role="status"></p><p data-error role="alert" hidden>{common.invalid}</p>
+  </form>
+ </section>
+</div>
+<script>
+ import {ownershipCost,convertFarmUnit,implementScreen,validateMaintenanceNote} from "../lib/farm-decision.mjs";
+ const root=document.querySelector<HTMLElement>("[data-farm-decisions]");
+ const key="tractorvs:maintenance-note:v1";
+ if(root){
+  const fmt=new Intl.NumberFormat(root.dataset.locale,{maximumSignificantDigits:7});
+  const forms=[...root.querySelectorAll<HTMLFormElement>("form[data-decision]")];
+  const read=(data:FormData,name:string)=>{const val=data.get(name);return typeof val==="string"&&val.trim()!==""?Number(val):NaN;};
+  const status=root.querySelector<HTMLElement>("[data-journal-status]");
+  const journal=forms.find(form=>form.dataset.decision==="journal");
+  const journalStatus=(name:"saved"|"storageError")=>{if(status)status.textContent=status.dataset[name]||"";};
+  const restore=()=>{if(!journal)return;try{const raw=localStorage.getItem(key);if(!raw)return;const note=validateMaintenanceNote(JSON.parse(raw));for(const [name,value] of Object.entries(note)){const field=journal.elements.namedItem(name);if(field instanceof HTMLInputElement)field.value=String(value);}journalStatus("saved");}catch{journalStatus("storageError");}};
+  restore();
+  for(const form of forms){
+   const error=form.querySelector<HTMLElement>("[data-error]");
+   form.addEventListener("input",()=>{
+    if(error)error.hidden=true;
+    for(const el of form.querySelectorAll<HTMLElement>("[data-finance-result],[data-unit-result]"))el.textContent="—";
+    const equip=form.querySelector<HTMLElement>("[data-equipment-result]");if(equip)equip.textContent=equip.dataset.unknown||"";
+   });
+   form.addEventListener("submit",event=>{
+    event.preventDefault();if(error)error.hidden=true;
+    const data=new FormData(form);
+    try{
+     if(!form.checkValidity())throw Error("Invalid form");
+     if(form.dataset.decision==="finance"){
+      const result=ownershipCost(Object.fromEntries([...data].map(([name])=>[name,read(data,name)])));
+      for(const el of form.querySelectorAll<HTMLElement>("[data-finance-result]"))el.textContent=fmt.format(result[el.dataset.financeResult as keyof typeof result]);
+     }else if(form.dataset.decision==="units"){
+      const result=convertFarmUnit(read(data,"value"),String(data.get("unit")));
+      const el=form.querySelector<HTMLElement>("[data-unit-result]");if(el)el.textContent=Object.entries(result).map(([u,v])=>fmt.format(v)+" "+u).join(" · ");
+     }else if(form.dataset.decision==="equipment"){
+      const result=implementScreen(["pto","flow","lift"].map(name=>["Available","Required"].map(suffix=>{const v=read(data,name+suffix);return Number.isNaN(v)?null:v;})));
+      const el=form.querySelector<HTMLElement>("[data-equipment-result]");if(el)el.textContent=el.dataset[result]||"";
+     }else if(form.dataset.decision==="journal"){
+      const note=validateMaintenanceNote({model:data.get("model"),meter:read(data,"meter"),fuel:read(data,"fuel"),cost:read(data,"cost")});
+      try{localStorage.setItem(key,JSON.stringify(note));journalStatus("saved");}catch{journalStatus("storageError");}
+     }
+    }catch{if(error)error.hidden=false;}
+   });
+  }
+  root.querySelector("[data-print]")?.addEventListener("click",()=>window.print());
+  root.querySelector("[data-delete]")?.addEventListener("click",()=>{try{localStorage.removeItem(key);journal?.reset();if(status)status.textContent="";}catch{journalStatus("storageError");}});
+  root.querySelector("[data-export]")?.addEventListener("click",()=>{try{const raw=localStorage.getItem(key);if(!raw)return;const note=validateMaintenanceNote(JSON.parse(raw));const url=URL.createObjectURL(new Blob([JSON.stringify(note,null,2)],{type:"application/json"}));const link=document.createElement("a");link.href=url;link.download="tractorvs-maintenance.json";link.click();setTimeout(()=>URL.revokeObjectURL(url),1000);}catch{journalStatus("storageError");}});
+ }
+</script>
+<style>
+ .decision-card{margin-block:2rem;padding:clamp(.8rem,2.5vw,1.6rem);border:1px solid #708478;border-radius:.8rem;scroll-margin-top:6rem}
+ .decision-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,14rem),1fr));gap:.8rem;margin-block:1rem}
+ .decision-nav{display:flex;flex-wrap:wrap;gap:1rem;margin-block:1.5rem}
+ .decision-card label{display:grid;gap:.35rem;min-width:0}
+ .decision-card input:not([type=checkbox]),.decision-card select,.decision-card button{font:inherit;min-height:44px;max-width:100%;min-width:0;border:1px solid #708478;border-radius:.4rem;padding:.5rem;color:inherit;background:transparent}
+ .decision-card button{background:#245b39;color:white;cursor:pointer;font-weight:600}
+ .decision-card fieldset{min-width:0;margin-block:.8rem;border:1px solid #708478}
+ .decision-card dd{font-weight:700;margin:0;overflow-wrap:anywhere}
+ .decision-card output{display:block;margin-block:1rem;overflow-wrap:anywhere}
+ .inspection-list{list-style:none;padding:0}
+ .inspection-list label{display:flex;align-items:center;gap:.75rem;min-height:44px}
+ .inspection-list input{flex:none;width:1.2rem;height:1.2rem}
+ @media print{.decision-nav,.decision-card:not(#farm-used),#farm-used button{display:none!important}}
+</style>

@@ -8,6 +8,7 @@ import { homeDiscoveryText as d } from "../lib/home-discovery-ui";
 import { localizedPath, type Locale } from "../lib/locales";
 import { t } from "../lib/ui";
 import { advisorText as tx } from "../lib/advisor-i18n";
+import {farmCostText} from "../lib/farm-cost-i18n";
 import { editorialHubTranslation } from "../lib/editorial-hub-i18n";
 import {DEUTZ_5D_GS_PILOT,curatedDeutz5DPair} from "../lib/deutz-5d-editorial.ts";
 import {listedBrandCollections} from "../lib/brand-discovery-pilot.mjs";
@@ -124,6 +125,7 @@ const suggestionPayload = JSON.stringify(catalogue.tractors.map((tractor) => ({
         <div class="home-hero-links">
           <a href={compareUrl}>{t(lang,"navCompare")} <span aria-hidden="true">↗</span></a>
           <a href={advisorUrl}>{tx(lang,"nav")} <span aria-hidden="true">↗</span></a>
+          <a href={localizedPath(lang,"/guides/farm-cost-calculator/")}>{farmCostText(lang).nav} <span aria-hidden="true">↗</span></a>
         </div>
       </div>
       <div class="home-preview" aria-label="TractorVS">
