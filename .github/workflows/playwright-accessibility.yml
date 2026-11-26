@@ -32,7 +32,10 @@ permissions:
 jobs:
   browser-projects:
     # Run every existing project independently; no early cancellation on failure.
-    runs-on: ubuntu-latest
+    # Pin the browser dependency environment: ubuntu-latest moved to 26.04,
+    # whose Microsoft APT feed returned HTTP 403 during the #755 mobile install.
+    # Revalidate browser dependencies before deliberately upgrading this image.
+    runs-on: ubuntu-24.04
     timeout-minutes: 25
     strategy:
       fail-fast: false
