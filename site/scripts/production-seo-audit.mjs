@@ -6,7 +6,7 @@ import {inspectDocumentImageAlts,inspectUndocumentedEmptyImageAlts} from "./veri
 import {hasBibliographicTitleLeak,inspectSeoTitle,crossLocaleModelTitleGroups} from "./verify-sitewide-seo-titles.mjs";
 import {writeFileSync} from "node:fs";
 import {extractCanonicalAnchors,summarizeCanonicalGraph} from "./production-internal-link-graph.mjs";
-import {readOpeningTagAttribute} from "./seo-html-attributes.mjs";
+import {readOpeningTagAttribute,googleIndexingBlockedByMeta,indexBlockingResponseHeader} from "./seo-html-attributes.mjs";
 import {inspectLocaleAnnotations} from "./verify-published-site-inventory.mjs";
 import {parseProductionSitemapInventory,selectProductionSeoPages,reviewedPairSitemapCoverage,resolveProductionSeoMode,verifyProductionSeoCoverage} from "./production-sitemap-inventory.mjs";
 // Read-only production SEO coverage audit. No credentials or writes.
@@ -50,7 +50,7 @@ function metadata(html,file){
   links,
   title:title?.title||"",titleErrors:title?.errors||["missing-document-title"],
   description:description?.description||"",descriptionErrors:description?.errors||[], robots:m("robots")||"",
-  noindex:metas.some(tag=>(attr(tag,"name")||"").toLowerCase()==="robots" && /\bnoindex\b/i.test(attr(tag,"content")||"")),
+  noindex:googleIndexingBlockedByMeta(metas),
   canonical:annotations.canonical,
   alternates:annotations.alternates,
   annotationErrors:annotations.errors,
@@ -156,8 +156,8 @@ for(let i=0;i<urls.length;i+=8){
    }
    const {body,response}=await fetchPage(page);
    if(response.status!==200){error("page-http",p,"HTTP "+response.status);return;}
-   if(/\bnoindex\b/i.test(response.headers.get("x-robots-tag")||""))
-    error("blocked-header",p,"X-Robots-Tag noindex on production");
+   if(indexBlockingResponseHeader(response.headers.get("x-robots-tag")))
+    error("blocked-header",p,"Restrictive X-Robots-Tag on production; review directive scope");
    const file=p.slice(1)+"index.html";
    const meta=metadata(body,file);
    for(const asset of localStylesheets(meta.links,page)){
@@ -167,7 +167,7 @@ for(let i=0;i<urls.length;i+=8){
    }
    const social=inspectSocialMetadata(body,p);
    for(const reason of social?.errors ?? [])error("social-metadata",p,reason);
-   if(meta.noindex)error("blocked-meta",p,"A robots meta tag contains noindex");
+   if(meta.noindex)error("blocked-meta",p,"Robots or Googlebot meta blocks indexing (noindex or none)");
    for(const reason of meta.titleErrors)error("title-integrity",p,reason);
    for(const reason of meta.descriptionErrors)error("description-integrity",p,reason);
    if(meta.canonical.length!==1 || meta.canonical[0]!==page)
