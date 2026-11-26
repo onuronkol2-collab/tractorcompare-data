@@ -18,10 +18,10 @@
   },
   "dependencies": {
     "@astrojs/sitemap": "3.7.6",
-    "astro": "7.4.12"
+    "astro": "7.4.13"
   },
   "devDependencies": {
-    "wrangler": "4.162.0"
+    "wrangler": "4.166.0"
   },
   "packageManager": "npm@10.9.2"
 }
