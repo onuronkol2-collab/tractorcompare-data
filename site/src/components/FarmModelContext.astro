@@ -31,7 +31,8 @@ const models=(await getPublicCatalog()).tractors.map(tractor=>equipmentContext(t
   const empty=root.querySelector<HTMLElement>("[data-model-empty]");
   const page=root.querySelector<HTMLAnchorElement>("[data-model-page]");
   if(select&&details&&list&&empty&&page){
-   const render=()=>{
+   const add=root.querySelector<HTMLButtonElement>("[data-shortlist-add]");
+   const render=()=>{if(add)add.disabled=!select.value;
     list.replaceChildren();page.hidden=true;empty.hidden=true;details.hidden=!select.value;
     if(!select.value)return;
     const option=select.selectedOptions[0];if(!option)return;
@@ -40,7 +41,7 @@ const models=(await getPublicCatalog()).tractors.map(tractor=>equipmentContext(t
      if(!Array.isArray(facts)||facts.length>5)throw new Error("Invalid facts");
      for(const fact of facts){
       if(typeof fact.label!=="string"||typeof fact.value!=="string"||typeof fact.source!=="string")continue;
-      const url=new URL(fact.source);if(url.protocol!=="https:"&&url.protocol!=="http:")continue;
+      let url:URL;try{url=new URL(fact.source);}catch{continue;}if((url.protocol!=="https:"&&url.protocol!=="http:")||url.username||url.password)continue;
       const li=document.createElement("li"),label=document.createElement("strong"),source=document.createElement("a");
       label.textContent=fact.label+": ";source.textContent=root.dataset.source||"";source.href=url.href;source.rel="noopener noreferrer";source.target="_blank";
       li.append(label,document.createTextNode(fact.value+" · "),source);list.append(li);
@@ -54,15 +55,15 @@ const models=(await getPublicCatalog()).tractors.map(tractor=>equipmentContext(t
    const placeholder=select.options[0],options=Array.from(select.options).slice(1),names=options.map(option=>option.textContent||"");
    const filter=()=>{if(!input)return;const selected=select.value;const matches=matchingModelIndexes(names,input.value);const visible=matches.map(index=>options[index]);select.replaceChildren(placeholder,...visible);if(visible.some(option=>option.value===selected))select.value=selected;else select.value="";if(searchStatus)searchStatus.textContent=matches.length?(root.dataset.matches||"")+": "+matches.length:(root.dataset.noMatch||"");render();};
    if(input){input.disabled=false;input.addEventListener("input",filter);}
-   const add=root.querySelector<HTMLButtonElement>("[data-shortlist-add]"),compare=root.querySelector<HTMLButtonElement>("[data-shortlist-compare]"),saved=root.querySelector("[data-shortlist-rows]"),status=root.querySelector("[data-shortlist-status]");
+   const compare=root.querySelector<HTMLButtonElement>("[data-shortlist-compare]"),saved=root.querySelector("[data-shortlist-rows]"),status=root.querySelector("[data-shortlist-status]");
    const storageKey="tractorvs:model-shortlist:v1";let items:string[]=[];const selected=new Set<string>();
    const modelBySlug=new Map(options.map(option=>[option.value,option]));
    const persist=(next:string[])=>{try{localStorage.setItem(storageKey,JSON.stringify(next));items=next;return true;}catch{if(status)status.textContent=root.dataset.storageError||"";return false;}};
    const renderSaved=()=>{if(!saved||!status||!compare)return;saved.replaceChildren();for(const slug of items){const option=modelBySlug.get(slug);if(!option)continue;const row=document.createElement("li"),label=document.createElement("label"),check=document.createElement("input"),button=document.createElement("button");check.type="checkbox";check.checked=selected.has(slug);label.append(check,document.createTextNode(option.textContent||slug));check.addEventListener("change",()=>{if(check.checked)selected.add(slug);else selected.delete(slug);compare.disabled=selected.size!==2;});button.type="button";button.textContent=root.dataset.remove||"";button.addEventListener("click",()=>{if(persist(items.filter(item=>item!==slug))){selected.delete(slug);renderSaved();}});row.append(label,button);saved.append(row);}status.textContent=saved.childElementCount?String(saved.childElementCount):root.dataset.emptyList||"";compare.disabled=selected.size!==2;};
    try{items=readShortlist(JSON.parse(localStorage.getItem(storageKey)||"[]")).filter(slug=>modelBySlug.has(slug));renderSaved();}catch{if(status)status.textContent=root.dataset.storageError||"";}
-   if(add){add.disabled=false;add.addEventListener("click",()=>{if(!select.value||!modelBySlug.has(select.value))return;try{if(persist(addShortlist(items,select.value)))renderSaved();}catch{if(status)status.textContent=root.dataset.full||"";}});}
+   if(add){add.addEventListener("click",()=>{if(!select.value||!modelBySlug.has(select.value))return;try{if(persist(addShortlist(items,select.value)))renderSaved();}catch{if(status)status.textContent=root.dataset.full||"";}});}
    if(compare)compare.addEventListener("click",()=>{if(selected.size!==2)return;const ids=[...selected].map(slug=>modelBySlug.get(slug)?.dataset.modelId);const path=root.dataset.comparePath||"";if(ids.some(id=>!id||! /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(id))||!/^\/(?:[a-z-]+\/)?compare\/$/.test(path))return;const query=new URLSearchParams({left:ids[0]!,right:ids[1]!});window.location.assign(path+"?"+query.toString());});
-   select.disabled=false;select.addEventListener("change",render);
+   select.disabled=false;select.addEventListener("change",render);render();
    const slug=equipmentModelSlug(window.location.hash);
    if(slug&&Array.from(select.options).some(option=>option.value===slug)){select.value=slug;render();document.getElementById("farm-equipment")?.scrollIntoView();}
   }
@@ -77,6 +78,6 @@ const models=(await getPublicCatalog()).tractors.map(tractor=>equipmentContext(t
  button{font:inherit;min-height:44px;padding:.5rem .8rem;border:1px solid #708478;border-radius:.4rem;background:#245b39;color:white;cursor:pointer}
  button:disabled{opacity:.55;cursor:default}
  [data-shortlist] :global(li){display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:.5rem}
- [data-shortlist] :global(label){display:flex;align-items:center;gap:.5rem}
+ [data-shortlist] :global(label){display:flex;align-items:center;gap:.5rem;min-height:44px;max-width:100%;overflow-wrap:anywhere}
  [data-shortlist] :global(input[type=checkbox]){width:1.15rem;min-height:1.15rem}
 </style>

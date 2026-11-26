@@ -3,6 +3,7 @@ import SiteLayout from "../layouts/SiteLayout.astro";
 import FarmDecisionTools from "./FarmDecisionTools.astro";
 import FarmScenarioTools from "./FarmScenarioTools.astro";
 import {farmExtrasText} from "../lib/farm-extras-i18n";
+import {farmWorkedExample} from "../lib/farm-worked-example";
 import {localizedPath,LOCALE_TAGS,type Locale} from "../lib/locales";
 import {farmCostText} from "../lib/farm-cost-i18n";
 import {farmDecisionText} from "../lib/farm-decision-i18n";
@@ -10,7 +11,7 @@ import {farmModelText} from "../lib/farm-model-context-i18n";
 import {farmCost} from "../lib/farm-cost.mjs";
 interface Props {lang:Locale}
 const {lang}=Astro.props;
-const c=farmCostText(lang), d=farmDecisionText(lang), m=farmModelText(lang);
+const c=farmCostText(lang), d=farmDecisionText(lang), m=farmModelText(lang), x=farmExtrasText(lang), example=farmWorkedExample[lang];
 const fields=[
  ["area",10,0.0001,10000000000],["width",3,0.01,100],["speed",6,0.01,100],["efficiency",75,0.01,100],
  ["fuel",8,0,10000],["price",1,0,1e9],["annualHours",200,0,8760],["other",0,0,1e12],["fixed",0,0,1e15]
@@ -24,6 +25,7 @@ const number=new Intl.NumberFormat(LOCALE_TAGS[lang],{maximumSignificantDigits:6
   <h1>{c.title}</h1>
   <p>{c.description}</p>
   <p class="cost-note">{c.note}</p>
+  <nav class="farm-tool-jump" aria-label={c.nav}><a href="#farm-cost-form">{c.title}</a><a href="#farm-scenarios">{x.scenario}</a><a href="#farm-service">{x.service}</a><a href="#farm-finance">{d.finance}</a><a href="#farm-units">{d.units}</a><a href="#farm-equipment">{d.equipment}</a><a href="#farm-used">{d.used}</a><a href="#farm-journal">{d.journal}</a></nav>
   <div class="cost-grid">
    <form id="farm-cost-form" data-clarity-mask="true"><fieldset data-cost-controls disabled>
     <noscript><p>{d.enableJs}</p></noscript>
@@ -36,7 +38,7 @@ const number=new Intl.NumberFormat(LOCALE_TAGS[lang],{maximumSignificantDigits:6
    </dl>
   </div>
   <button data-copy-cost type="button" disabled>{d.copyResult}</button><p data-cost-copy-status role="status"></p>
-  <nav aria-label={c.nav} style="display:flex;flex-wrap:wrap;gap:1rem"><a href="#farm-scenarios">{farmExtrasText(lang).scenario}</a><a href="#farm-service">{farmExtrasText(lang).service}</a></nav>
+  <section class="farm-example"><h2>{example[0]}</h2><p>{example[1]}</p></section>
   <FarmScenarioTools lang={lang} />
   <FarmDecisionTools lang={lang} />
   <h2>{c.method}</h2>
@@ -46,7 +48,7 @@ const number=new Intl.NumberFormat(LOCALE_TAGS[lang],{maximumSignificantDigits:6
    <li><a href="https://www.extension.iastate.edu/AGDM/crops/html/a3-24.html" lang="en">Iowa State University Extension — Estimating the Field Capacity of Farm Machines</a></li>
    <li><a href="https://www.extension.iastate.edu/AGDM/crops/html/a3-29.html" lang="en">Iowa State University Extension — Estimating Farm Machinery Costs</a></li>
   </ul>
-  <p><a href={localizedPath(lang,"/farm-advisor/")}>{c.advisor}</a></p>
+  <nav class="farm-tool-jump" aria-label={c.advisor}><a href={localizedPath(lang,"/farm-advisor/")}>{c.advisor}</a><a href={localizedPath(lang,"/tractors/")}>{example[2]}</a><a href={localizedPath(lang,"/compare/")}>{example[3]}</a></nav>
  </section>
 </SiteLayout>
 <script>
@@ -57,6 +59,7 @@ const number=new Intl.NumberFormat(LOCALE_TAGS[lang],{maximumSignificantDigits:6
  const error=document.querySelector<HTMLElement>("#farm-cost-error");
  if(root&&form&&error){
   const format=new Intl.NumberFormat(root.dataset.locale,{maximumSignificantDigits:6});
+  const copy=root.querySelector<HTMLButtonElement>("[data-copy-cost]");
   form.addEventListener("submit",event=>{
    event.preventDefault();
    try{
@@ -68,25 +71,31 @@ const number=new Intl.NumberFormat(LOCALE_TAGS[lang],{maximumSignificantDigits:6
      const key=node.dataset.costResult as keyof typeof result;
      node.textContent=format.format(result[key]);
     }
-    error.hidden=true;
+    error.hidden=true;if(copy)copy.disabled=false;
     window.dispatchEvent(new Event(FARM_TOOL_DONE_EVENT));
    }catch{
-    error.hidden=false;
+    error.hidden=false;if(copy)copy.disabled=true;
     for(const node of root.querySelectorAll("[data-cost-result]"))node.textContent="—";
    }
   });
   form.addEventListener("input",()=>{
-   error.hidden=true;
+   error.hidden=true;if(copy)copy.disabled=true;
    const status=root.querySelector("[data-cost-copy-status]");if(status)status.textContent="";
    for(const node of root.querySelectorAll("[data-cost-result]"))node.textContent="—";
   });
   const controls=form.querySelector<HTMLFieldSetElement>("[data-cost-controls]");if(controls)controls.disabled=false;
-  const copy=root.querySelector<HTMLButtonElement>("[data-copy-cost]");if(copy){copy.disabled=false;copy.addEventListener("click",async()=>{const status=root.querySelector("[data-cost-copy-status]");const entries=[...root.querySelectorAll("[data-cost-result]")];if(!status||entries.some(el=>el.textContent==="—"))return;const text=entries.map(el=>(el.parentElement?.previousElementSibling?.textContent||"")+": "+el.textContent).join("\n");try{await navigator.clipboard.writeText(text);status.textContent=root.dataset.copied||"";}catch{status.textContent=root.dataset.copyFailed||"";}});}
+  if(copy){copy.disabled=false;copy.addEventListener("click",async()=>{const status=root.querySelector("[data-cost-copy-status]");const entries=[...root.querySelectorAll("[data-cost-result]")];if(!status||entries.some(el=>el.textContent==="—"))return;const text=entries.map(el=>(el.parentElement?.previousElementSibling?.textContent||"")+": "+el.textContent).join("\n");try{await navigator.clipboard.writeText(text);status.textContent=root.dataset.copied||"";}catch{status.textContent=root.dataset.copyFailed||"";}});}
  }
 </script>
 <style>
  .cost-page{padding-block:clamp(1.5rem,4vw,3rem);max-width:1100px}
  .cost-page p{max-width:78ch;line-height:1.7}
+ .farm-tool-jump{display:flex;flex-wrap:wrap;gap:.5rem;margin-block:1.25rem}
+ .farm-tool-jump a{display:inline-flex;align-items:center;min-height:44px;padding:.4rem .75rem;border:1px solid #708478;border-radius:.5rem;box-sizing:border-box;max-width:100%}
+ .farm-example{border-inline-start:3px solid currentColor;padding-inline-start:1rem;margin-block:1.5rem}
+ #farm-cost-form{scroll-margin-top:6rem}
+ button:disabled{opacity:.55;cursor:default}
+ @media print{.cost-page:has(#farm-used) > :not([data-farm-decisions]){display:none!important}}
  .cost-note{border-inline-start:3px solid currentColor;padding-inline-start:1rem}
  .cost-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,20rem),1fr));gap:1.5rem;margin-block:2rem}
  form,.cost-results{display:grid;gap:.8rem;align-content:start;margin:0;padding:1rem;border:1px solid #708478;border-radius:.8rem}

@@ -22,7 +22,7 @@ const checklist=["identity","history","safety","engine","drive","hydraulic","tyr
    <div class="decision-grid">{finance.map(([key,value,min,max])=><label>{c[key]}<input name={key} type="number" inputmode="decimal" value={value} min={min} max={max} step={key==="months"?"1":"any"} required /></label>)}</div>
    <button type="submit">{common.calculate}</button>
    <dl aria-live="polite" class="decision-grid">{metrics.map(key=><div><dt>{c[key]}</dt><dd data-finance-result={key}>—</dd></div>)}</dl>
-   <button data-copy type="button">{c.copyResult}</button><p data-copy-status role="status"></p>
+   <button data-copy type="button" disabled>{c.copyResult}</button><p data-copy-status role="status"></p>
    <p data-error role="alert" hidden>{common.invalid}</p></fieldset>
   </form>
   <p>{c.financeNote}</p><p>{c.breakEvenNote}</p>
@@ -93,6 +93,7 @@ const checklist=["identity","history","safety","engine","drive","hydraulic","tyr
    const error=form.querySelector<HTMLElement>("[data-error]");
    form.addEventListener("input",()=>{
     if(error)error.hidden=true;
+    const copy=form.querySelector<HTMLButtonElement>("[data-copy]");if(copy)copy.disabled=true;
     const copyStatus=form.querySelector("[data-copy-status]");if(copyStatus)copyStatus.textContent="";
     for(const el of form.querySelectorAll<HTMLElement>("[data-finance-result],[data-unit-result]"))el.textContent="—";
     const equip=form.querySelector<HTMLElement>("[data-equipment-result]");if(equip)equip.textContent=equip.dataset.unknown||"";
@@ -105,6 +106,7 @@ const checklist=["identity","history","safety","engine","drive","hydraulic","tyr
      if(form.dataset.decision==="finance"){
       const result=ownershipCost(Object.fromEntries([...data].map(([name])=>[name,read(data,name)])));
       for(const el of form.querySelectorAll<HTMLElement>("[data-finance-result]")){const value=result[el.dataset.financeResult as keyof typeof result];el.textContent=value===null?(root.dataset.noBreakEven||"—"):fmt.format(value);}
+      const copy=form.querySelector<HTMLButtonElement>("[data-copy]");if(copy)copy.disabled=false;
       window.dispatchEvent(new Event(FARM_TOOL_DONE_EVENT));
      }else if(form.dataset.decision==="units"){
       const result=convertFarmUnit(read(data,"value"),String(data.get("unit")));
@@ -118,7 +120,7 @@ const checklist=["identity","history","safety","engine","drive","hydraulic","tyr
       const note=validateMaintenanceNote({model:data.get("model"),meter:read(data,"meter"),fuel:read(data,"fuel"),cost:read(data,"cost")});
       try{const records=history();if(records.length>=MAX_MAINTENANCE_RECORDS){if(status)status.textContent=root.dataset.limit||"";return;}const next=appendMaintenanceRecord(records,note);localStorage.setItem(key,JSON.stringify(next));renderHistory(next.records);for(const name of ["fuel","cost"]){const field=form.elements.namedItem(name);if(field instanceof HTMLInputElement)field.value="";}journalStatus("saved");}catch{journalStatus("storageError");}
      }
-    }catch{if(error)error.hidden=false;}
+    }catch{if(error)error.hidden=false;const copy=form.querySelector<HTMLButtonElement>("[data-copy]");if(copy)copy.disabled=true;}
    });
   }
   for(const fieldset of root.querySelectorAll<HTMLFieldSetElement>("[data-tool-controls]"))fieldset.disabled=false;
@@ -136,6 +138,7 @@ const checklist=["identity","history","safety","engine","drive","hydraulic","tyr
  .decision-card label{display:grid;gap:.35rem;min-width:0}
  .decision-card input:not([type=checkbox]),.decision-card select,.decision-card button{font:inherit;min-height:44px;max-width:100%;min-width:0;border:1px solid #708478;border-radius:.4rem;padding:.5rem;color:inherit;background:transparent}
  .decision-card button{background:#245b39;color:white;cursor:pointer;font-weight:600}
+ .decision-card button:disabled{opacity:.55;cursor:default}
  .decision-card fieldset{min-width:0;margin-block:.8rem;border:1px solid #708478}
  .decision-card fieldset[data-tool-controls]{border:0;padding:0;margin:0;min-inline-size:0}
  .history-scroll{overflow-x:auto;max-width:100%}
