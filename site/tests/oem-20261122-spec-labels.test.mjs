@@ -9,7 +9,10 @@ const headings=[
  "Wheel arrangement"
 ];
 test("all nine exact OEM source-qualified headings have nine nonempty language labels",()=>{
- assert.deepEqual(Object.keys(OEM_20261122_SPEC_LABELS).sort(),headings.sort());
+ // This legacy contract protects the original nine source-qualified headings.
+ // The dictionary is intentionally extensible; nominal-source-heading-coverage.test.mjs
+ // independently protects the complete new 35-heading set.
+ for(const heading of headings) assert.ok(Object.hasOwn(OEM_20261122_SPEC_LABELS,heading),heading+" missing");
  for(const heading of headings){
   for(const locale of targets){
    const translated=oem20261122SpecLabel(heading,locale);
