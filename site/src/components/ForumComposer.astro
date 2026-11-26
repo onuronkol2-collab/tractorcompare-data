@@ -1073,18 +1073,24 @@ for(const widget of widgets){
   if(!/^[0-9]{6,8}$/.test(code)||!email){msg(copy.codeError);return}
   const button=verifyForm.querySelector<HTMLButtonElement>('button[type="submit"]');
   if(button?.disabled)return;
+  const requestAttempt=++activeAuthAttempt;
+  const requestedEmail=email;
   if(button)button.disabled=true;
   msg(copy.loading||"...");
   try{
    const res=await fetch(cfg.url+"/auth/v1/verify",{
-    method:"POST",headers:header(),body:JSON.stringify({email,token:code,type:"email"}),
+    method:"POST",headers:header(),body:JSON.stringify({email:requestedEmail,token:code,type:"email"}),
     signal:AbortSignal.timeout(15000)
    });
+   if(requestAttempt!==activeAuthAttempt)return;
    if(!res.ok){msg(res.status===429?copy.retryLater:res.status>=500?copy.authRequired:copy.codeError);return}
    const data=await res.json();
+   if(requestAttempt!==activeAuthAttempt)return;
    msg("");
-   if(!await verifySession(data.access_token,typeof data.refresh_token==="string"?data.refresh_token:""))msg(copy.authRequired);
-  }catch{msg(copy.authRequired)}
+   const verification=verifySession(data.access_token,typeof data.refresh_token==="string"?data.refresh_token:"");
+   const verificationAttempt=activeAuthAttempt;
+   if(!await verification&&verificationAttempt===activeAuthAttempt)msg(copy.authRequired);
+  }catch{if(requestAttempt===activeAuthAttempt)msg(copy.authRequired)}
   finally{if(button)button.disabled=false}
  });
  logout?.addEventListener("click",()=>{
@@ -1144,7 +1150,7 @@ for(const widget of widgets){
     headers:{...header(token),Prefer:"return=minimal"},
     body:JSON.stringify(row),signal:AbortSignal.timeout(18000)});
    if(!res.ok){
-    if(res.status===401){saveDraft();clearForumSession();setLogin(false);msg(copy.authRequired);return}
+    if(res.status===401){++activeAuthAttempt;saveDraft();clearForumSession();setLogin(false);msg(copy.authRequired);return}
     const error=await res.json().catch(()=>({}));
     msg(/^Daily forum (topic|reply) limit reached$/.test(error.message)?copy.limitError:res.status===429?copy.retryLater:copy.postError);
     return;
