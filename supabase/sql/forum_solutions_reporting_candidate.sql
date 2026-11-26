@@ -18,6 +18,13 @@ USING (
  EXISTS(SELECT 1 FROM public.tc_forum_topics t WHERE t.id=topic_id AND t.status='published' AND t.category IN ('questions','maintenance'))
  AND EXISTS(SELECT 1 FROM public.tc_forum_replies r WHERE r.id=reply_id AND r.topic_id=tc_forum_accepted_solutions.topic_id AND r.status='published')
 );
+-- The owner can replace/remove a stale selection after a reply is moderated.
+-- This reveals only the selection the owner made, not the hidden reply body.
+CREATE POLICY tc_solution_owner_read ON public.tc_forum_accepted_solutions FOR SELECT TO authenticated
+USING (
+ (SELECT auth.uid()) IS NOT NULL AND coalesce((SELECT auth.jwt())->>'is_anonymous','false')='false'
+ AND EXISTS(SELECT 1 FROM public.tc_forum_topics t WHERE t.id=topic_id AND t.author_id=(SELECT auth.uid()) AND t.status='published' AND t.category IN ('questions','maintenance'))
+);
 CREATE POLICY tc_solution_owner_insert ON public.tc_forum_accepted_solutions FOR INSERT TO authenticated
 WITH CHECK (
  (SELECT auth.uid()) IS NOT NULL AND coalesce((SELECT auth.jwt())->>'is_anonymous','false')='false'
