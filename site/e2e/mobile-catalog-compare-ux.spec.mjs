@@ -164,9 +164,16 @@ const fixturePicker=()=>{
   const controls=["left","right"].map((side,index)=>
     '<div class="tc-picker-side"><div class="tc-searchbox"><input class="tc-combo-input" id="tc-'+side+'-search" aria-label="'+side+'" role="combobox" aria-expanded="false" aria-controls="tc-'+side+'-results" aria-autocomplete="list"><div class="tc-picker-results" id="tc-'+side+'-results" role="listbox" hidden></div></div><select class="tc-native-select" id="tc-'+side+'"><option value="qa-a" '+(index===0?"selected":"")+'>QA Tractor A</option><option value="qa-b" '+(index===1?"selected":"")+'>QA Tractor B</option><option value="qa-c">QA Tractor C</option></select></div>'
   ).join("");
-  return '<section class="tc-section"><div id="tc-picker" class="tc-picker" data-directory="/comparison-data/tr/">'+controls+'</div><div class="tc-table-bar"><div class="tc-table-bar-title"><h2>QA comparison</h2></div><div class="tc-filters" role="group" aria-label="Comparison filters"><button id="tc-all" type="button" aria-pressed="true">All</button><button id="tc-shared" type="button" aria-pressed="false">Shared</button><button id="tc-different" type="button" aria-pressed="false" hidden>Different</button></div></div><p id="tc-different-note" hidden>Different published entries only</p><p id="tc-no-shared" hidden></p><p id="tc-summary"></p><p id="tc-load-error" role="alert" hidden></p><button type="button" id="tc-retry" hidden>Retry</button><table class="tc-table"><tbody id="tc-rows"></tbody></table></section>';
+  return '<section class="tc-section"><div id="tc-picker" class="tc-picker" data-directory="/comparison-data/tr/">'+controls+'</div><div class="tc-table-bar"><div class="tc-table-bar-title"><h2>QA comparison</h2></div><div class="tc-filters" role="group" aria-label="Comparison filters"><button id="tc-all" type="button" aria-pressed="true">All</button><button id="tc-shared" type="button" aria-pressed="false">Shared</button><button id="tc-different" type="button" aria-pressed="false" hidden>Different</button><button id="tc-print" type="button" hidden disabled>Print</button><button id="tc-share" type="button" aria-controls="tc-share-panel" hidden disabled>Copy</button></div></div><div id="tc-share-panel" hidden><label for="tc-share-url">Link</label><input id="tc-share-url" readonly><p id="tc-share-status" role="status"></p></div><p id="tc-different-note" hidden>Different published entries only</p><p id="tc-no-shared" hidden></p><p id="tc-summary"></p><p id="tc-load-error" role="alert" hidden></p><button type="button" id="tc-retry" hidden>Retry</button><table class="tc-table"><tbody id="tc-rows"></tbody></table></section>';
 };
 test("comparison combobox retains input focus and differing-data view is shareable",async({page})=>{
+  await page.addInitScript(()=>{
+    window.__qaClipboardReject=true;
+    Object.defineProperty(navigator,"clipboard",{configurable:true,value:{writeText:async text=>{
+      if(window.__qaClipboardReject)throw new Error("Clipboard denied in test");
+      window.__qaCopiedUrl=text;
+    }}});
+  });
   await page.route(url=>url.pathname==="/tr/compare/",async route=>{
     const response=await route.fetch();
     let html=await response.text();
@@ -177,7 +184,7 @@ test("comparison combobox retains input focus and differing-data view is shareab
     }
     await route.fulfill({response,body:html});
   });
-  await page.goto("/tr/compare/",{waitUntil:"load"});
+  await page.goto("/tr/compare/?utm_source=qa&unrelated=omit#fragment",{waitUntil:"load"});
   // Exercise the actual consent controls rather than forcing a click through
   // the fixed mobile banner. The user's rejection must persist across reload.
   const consentBanner=page.locator("#tractorvs-analytics-banner");
@@ -214,11 +221,29 @@ test("comparison combobox retains input focus and differing-data view is shareab
     await expect(page.locator("#tc-rows th")).toHaveText(["QA Difference"]);
   }
   await expect.poll(()=>new URL(page.url()).searchParams.get("view")).toBe("different");
+  const share=page.locator("#tc-share");
+  await expect(share).toBeEnabled();
+  await share.click();
+  await expect(page.locator("#tc-share-panel")).toBeVisible();
+  const link=await page.locator("#tc-share-url").inputValue();
+  const copied=new URL(link);
+  const selected=new URL(page.url());
+  expect(copied.pathname).toBe("/tr/compare/");
+  expect([...copied.searchParams.entries()]).toEqual([["left",selected.searchParams.get("left")],["right",selected.searchParams.get("right")],["view","different"]]);
+  expect(copied.hash).toBe("");
+  await expect(page.locator("#tc-share-status")).toContainText("Otomatik kopyalama");
+  await page.evaluate(()=>{window.__qaClipboardReject=false;});
+  await share.click();
+  await expect(page.locator("#tc-share-status")).toHaveText("Karşılaştırma bağlantısı kopyalandı.");
+  expect(await page.evaluate(()=>window.__qaCopiedUrl)).toBe(link);
   await page.reload({waitUntil:"load"});
   await expect(consentBanner).toBeHidden();
   await expect(diff).toHaveAttribute("aria-pressed","true");
   if(fixture)await expect(page.locator("#tc-rows th")).toHaveText(["QA Difference"]);
   await page.locator("#tc-shared").click();
+  await expect(page.locator("#tc-share-panel")).toBeHidden();
+  await expect(page.locator("#tc-share-url")).toHaveValue("");
+  await expect(page.locator("#tc-summary")).toContainText("Gösterilen satır");
   if(fixture)await expect(page.locator("#tc-rows th")).toHaveText(["QA Difference","QA Equal"]);
   await page.locator("#tc-all").click();
   if(fixture)await expect(page.locator("#tc-rows th")).toHaveText(["QA Difference","QA Equal","QA Missing"]);
@@ -234,6 +259,8 @@ test("comparison combobox retains input focus and differing-data view is shareab
     await page.locator("#tc-right-results .tc-result").first().click();
     await expect.poll(()=>new URL(page.url()).searchParams.get("right")).toBe("qa-c");
     await expect(page.locator("#tc-load-error")).toBeVisible();
+    await expect(page.locator("#tc-share")).toBeDisabled();
+    await expect(page.locator("#tc-print")).toBeDisabled();
     await expect(page.locator("#tc-rows")).toHaveAttribute("aria-busy","false");
     await expect(page.locator("#tc-rows tr")).toHaveCount(0);
     await page.locator("#tc-retry").click();
@@ -241,6 +268,11 @@ test("comparison combobox retains input focus and differing-data view is shareab
     await expect(page.locator("#tc-retry")).toBeHidden();
     await expect(page.locator("#tc-rows")).toHaveAttribute("aria-busy","false");
     await expect(page.locator("#tc-rows")).toContainText("5");
+    await expect(page.locator("#tc-share")).toBeEnabled();
+    await expect(page.locator("#tc-print")).toBeEnabled();
+    await page.evaluate(()=>{window.print=()=>{document.body.dataset.printRequested="true";};});
+    await page.locator("#tc-print").click();
+    await expect(page.locator("body")).toHaveAttribute("data-print-requested","true");
     expect(requests).toBe(2);
   }
 });

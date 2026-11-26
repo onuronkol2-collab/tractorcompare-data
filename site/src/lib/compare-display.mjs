@@ -21,3 +21,18 @@ export function isPublishedSpecList(payload) {
     ["unit","context","source","notice"].every(key=>nullableString(spec[key])) &&
     (spec.rpm == null || (typeof spec.rpm === "number" && Number.isFinite(spec.rpm))));
 }
+
+// Copy only the active comparison state. Never propagate tracking, unknown
+// query parameters, fragments, or URL credentials into the share link.
+export function comparisonShareUrl(href, left, right, view = "all") {
+  if (typeof left !== "string" || typeof right !== "string" || !left || !right || left === right) return null;
+  try {
+    const url = new URL(href);
+    if (!["https:", "http:"].includes(url.protocol)) return null;
+    if (!["all", "shared", "different"].includes(view)) return null;
+    url.username = ""; url.password = ""; url.hash = ""; url.search = "";
+    url.searchParams.set("left", left); url.searchParams.set("right", right);
+    if (view !== "all") url.searchParams.set("view", view);
+    return url.href;
+  } catch { return null; }
+}
