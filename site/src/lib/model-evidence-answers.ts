@@ -107,6 +107,41 @@ export function matchedHeadlinePowerSource(
  return {value:candidate.value,sourceUrl:candidate.sourceUrl,sourceType:candidate.sourceType};
 }
 
+// Short nominal facts for search previews. Reuse the exact reviewed evidence
+// gate. Do not summarize PTO, lift, test performance or fuel consumption here:
+// those require additional measurement context. Manufacturer-only provenance
+// is explicit; independent or ambiguous values remain in their own context.
+const NOMINAL_SNIPPET_COPY:Record<Locale,{displacement:(n:string)=>string;tank:(n:string)=>string}>={
+ en:{displacement:n=>`Manufacturer: ${n} L engine displacement.`,tank:n=>`Manufacturer: ${n} L fuel tank.`},
+ tr:{displacement:n=>`Üretici verisi: ${n} L motor hacmi.`,tank:n=>`Üretici verisi: ${n} L yakıt deposu.`},
+ zh:{displacement:n=>`厂家数据：发动机排量 ${n} L。`,tank:n=>`厂家数据：油箱容积 ${n} L。`},
+ hi:{displacement:n=>`निर्माता के अनुसार इंजन क्षमता: ${n} L।`,tank:n=>`निर्माता के अनुसार ईंधन टैंक: ${n} L।`},
+ "pt-br":{displacement:n=>`Fabricante: cilindrada de ${n} L.`,tank:n=>`Fabricante: tanque de combustível de ${n} L.`},
+ fr:{displacement:n=>`Constructeur : cylindrée de ${n} L.`,tank:n=>`Constructeur : réservoir de carburant de ${n} L.`},
+ de:{displacement:n=>`Herstellerangabe: ${n} l Hubraum.`,tank:n=>`Herstellerangabe: ${n} l Kraftstofftank.`},
+ ru:{displacement:n=>`По данным производителя: объём двигателя ${n} л.`,tank:n=>`По данным производителя: топливный бак ${n} л.`},
+ ja:{displacement:n=>`メーカー公表の排気量：${n} L。`,tank:n=>`メーカー公表の燃料タンク容量：${n} L。`},
+ es:{displacement:n=>`Fabricante: cilindrada de ${n} L.`,tank:n=>`Fabricante: depósito de combustible de ${n} L.`},
+};
+export function nominalManufacturerSnippet(
+ tractor:Pick<TractorRecord,"brand_name"|"specifications">,lang:Locale
+):string|null {
+ for(const id of ["engine-displacement","fuel"] as const){
+  const field=fields.find(f=>f.id===id);
+  if(!field)continue;
+  const candidate=selectUnambiguous(tractor.specifications,field,tractor.brand_name);
+  if(!candidate||candidate.sourceType!=="manufacturer"||candidate.ratedRpm!==null)continue;
+  // These are nominal capacities, not a measured output. Leave any explicitly
+  // conditional or equipment-dependent values to the complete technical row.
+  const standard=candidate.standard?.trim();
+  if(standard&&!/^(?:official brochure|manufacturer specification|manufacturer brochure)$/i.test(standard))continue;
+  const n=formatNumber(candidate.value,lang);
+  const copy=NOMINAL_SNIPPET_COPY[lang];
+  return id==="engine-displacement"?copy.displacement(n):copy.tank(n);
+ }
+ return null;
+}
+
 const text={
  en:{
   rated:(name:string,v:string,s:string)=>({
