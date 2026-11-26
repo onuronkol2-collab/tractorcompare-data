@@ -1,0 +1,8 @@
+# Forum solution and reporting foundation (2026-11-26)
+
+This additive candidate is deliberately separate from production deployment and existing member permissions.
+
+- One solution per published question or maintenance topic. Only the authenticated, non-anonymous topic author may select, replace or remove a published reply belonging to that topic. The public selection disappears if the reply or topic is moderated. The author can repair a stale selection without access to the hidden reply body.
+- Content reports contain only fixed reason codes, target identifiers and authenticated reporter identity. A member can submit once per target. No visitor/member report-list access, no user-controlled status or reporter identity, and no automatic removal of content. Trusted server-side moderation is the only reader. No new public service-role access.
+- This is not a completed moderation dashboard, notification service, or anti-spam system. Before exposing report controls, add a concurrency-safe account-level quota and trusted moderator authorization workflow. Before exposing solution controls, validate exact API projection, all ten locales, owner/session switching, hidden-reply behavior and browser regression. No new paid service.
+- Run the disposable PostgreSQL 17 workflow first. Its data is synthetic and never copied to production. Before any production application check current relation shape, grants, RLS, PostgreSQL version, absence of conflicting objects, and deployment compatibility. Apply in a transaction and separately verify grants, policy definitions and anonymous visibility. Do not claim deployment from a passing fixture. Preserve any actual user records before invoking rollback; the rollback file is for the new tables only.
