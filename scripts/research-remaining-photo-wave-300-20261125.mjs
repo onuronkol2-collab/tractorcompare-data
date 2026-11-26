@@ -22,7 +22,28 @@ const priorities=["Yanmar","Mahindra","Sonalika","Swaraj","TYM","McCormick","Kio
 // New candidate is distinct from the previously held 09555 left-front file.
 // Actual angle, distance, identity, rights, and original bytes must be reviewed before publication.
 const direct=[
-  ["Sonalika","DI 30 Baagban","Sonalika Baagban DI-30Rx Tractor Coorg Feb24 A7C 09554.jpg"]
+  [
+    "Solis",
+    "90 DT MR",
+    "Solis S90 Shuttle XL Cabin Agritechnica 2025 (DSC07324).jpg",
+    "Solis S90 Shuttle XL ROPS Agritechnica 2023 (DSC05275).jpg"
+  ],
+  [
+    "Steyr",
+    "6220 ABSOLUT CVT",
+    "Steyr 6220 CVT mit Kuhn Cultimer L 400 -20211009-RM-153704.jpg",
+    "Steyr 6220 CVT mit Kuhn Cultimer L 400 -20211009-RM-153750.jpg"
+  ],
+  [
+    "Deutz-Fahr",
+    "5090 D",
+    "Deutz-Fahr 5090.D5 mit Lochmann Spritze.jpg"
+  ],
+  [
+    "Belarus",
+    "1025.2",
+    "Belarus 1025.jpg"
+  ]
 ];
 const missingIds=new Set(missing.map(r=>r.tractor_id));
 const targets=missing;
