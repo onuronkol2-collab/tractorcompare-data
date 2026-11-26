@@ -1,0 +1,118 @@
+[
+  {
+    "brand": "Solis",
+    "model": "75 DT MR",
+    "tractorId": "39a48550-4804-4700-9a81-ebb5a37ccacd",
+    "fileId": "solis-75-dt-mr-archive-efda60cc81d9",
+    "path": "1/1f/Solis_75_reddingsbrigade.JPG",
+    "photographer": "Jairvink",
+    "license": "CC BY-SA 4.0",
+    "width": 4608,
+    "height": 3456,
+    "resizedDerivative": true,
+    "sourcePage": "https://commons.wikimedia.org/wiki/File:Solis_75_reddingsbrigade.JPG",
+    "sourcePageOriginal": "https://commons.wikimedia.org/wiki/File:Solis_75_reddingsbrigade.JPG",
+    "originalUrl": "https://upload.wikimedia.org/wikipedia/commons/1/1f/Solis_75_reddingsbrigade.JPG",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "originalSha256": "efda60cc81d978a6d4f14c4dbab287eb8bd6146c9d7658902bbb7a1d6e38f1f4",
+    "originalSha1": "d71388a275d11ada407355d9d25a716148bc0492",
+    "originalBytes": 5137804,
+    "originalFormat": "JPEG",
+    "originalFrameCount": 1,
+    "selectedFrame": 0,
+    "sourceArtifact": 15106478195,
+    "sourceRun": 45800488931,
+    "candidate": "candidate-001.jpg",
+    "description": "Deze krachtige Solis 75 is een goede aanvulling op de uitrusting van de reddingsbrigade.",
+    "targetVariant": "ROPS · geniş lastik · Türkiye · 2026",
+    "angle": "visually-reviewed-front-side-or-front-quarter",
+    "modelEvidence": "Reviewed both front-quarter views in artifact 15106478195. Commons captions identify Solis 75; OEM S75 DT MR identifies the 4WD family. Orange rescue ROPS and older blue cab configurations are representative, not exact trim claims.",
+    "modelSources": [
+      "https://www.solisturkiye.com/solis-75-dt-mr/"
+    ],
+    "scope": "Representative model photo, not exact variant configuration.",
+    "copyrightEvidence": "commons-attribution-license-verified-no-owner-claim",
+    "changes": "Verified primary frame; proportional resize and JPEG compression; source license retained.",
+    "derivatives": [
+      {
+        "file": "solis-75-dt-mr-archive-efda60cc81d9-480.jpg",
+        "width": 480,
+        "height": 360,
+        "bytes": 27788,
+        "sha256": "ff3b7291040ff61814cb2b00ae43ebc843c787ae09b06a88f9b64dd9afbd9f81"
+      },
+      {
+        "file": "solis-75-dt-mr-archive-efda60cc81d9-960.jpg",
+        "width": 960,
+        "height": 720,
+        "bytes": 96179,
+        "sha256": "5affd66605725f1f7c0cd4cbd26c8963945d6613562b052b254941d2243af8fd"
+      },
+      {
+        "file": "solis-75-dt-mr-archive-efda60cc81d9-1920.jpg",
+        "width": 1920,
+        "height": 1440,
+        "bytes": 342629,
+        "sha256": "2acac94175791f745d92f18e0f25fe96ab75e7ae2c028128ea61df38e3d98dde"
+      }
+    ]
+  },
+  {
+    "brand": "Solis",
+    "model": "75 DT MR",
+    "tractorId": "39a48550-4804-4700-9a81-ebb5a37ccacd",
+    "fileId": "solis-75-dt-mr-archive-3d0ff88dfa21",
+    "path": "a/a7/Solis_75_Allrad-Traktor.jpg",
+    "photographer": "JoachimKohler-HB",
+    "license": "CC BY-SA 4.0",
+    "width": 4000,
+    "height": 3500,
+    "resizedDerivative": true,
+    "sourcePage": "https://commons.wikimedia.org/wiki/File:Solis_75_Allrad-Traktor.jpg",
+    "sourcePageOriginal": "https://commons.wikimedia.org/wiki/File:Solis_75_Allrad-Traktor.jpg",
+    "originalUrl": "https://upload.wikimedia.org/wikipedia/commons/a/a7/Solis_75_Allrad-Traktor.jpg",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "originalSha256": "3d0ff88dfa21ca7bf68872320096e1258daa2817e05e54a6d7f61064efd18120",
+    "originalSha1": "a0d4fd75bee0f1aedee57d8ef2b3d1adfa708489",
+    "originalBytes": 9328525,
+    "originalFormat": "JPEG",
+    "originalFrameCount": 1,
+    "selectedFrame": 0,
+    "sourceArtifact": 15106478195,
+    "sourceRun": 45800488931,
+    "candidate": "candidate-003.jpg",
+    "description": "Solis 75 Allrad-Traktor",
+    "targetVariant": "ROPS · geniş lastik · Türkiye · 2026",
+    "angle": "visually-reviewed-front-side-or-front-quarter",
+    "modelEvidence": "Reviewed both front-quarter views in artifact 15106478195. Commons captions identify Solis 75; OEM S75 DT MR identifies the 4WD family. Orange rescue ROPS and older blue cab configurations are representative, not exact trim claims.",
+    "modelSources": [
+      "https://www.solisturkiye.com/solis-75-dt-mr/"
+    ],
+    "scope": "Representative model photo, not exact variant configuration.",
+    "copyrightEvidence": "commons-attribution-license-verified-no-owner-claim",
+    "changes": "Verified primary frame; proportional resize and JPEG compression; source license retained.",
+    "derivatives": [
+      {
+        "file": "solis-75-dt-mr-archive-3d0ff88dfa21-480.jpg",
+        "width": 480,
+        "height": 420,
+        "bytes": 55172,
+        "sha256": "3d66f966cfc68a70d27cd96143f808eb1a5dad3f9c7129cb47e722f3c76ac1e8"
+      },
+      {
+        "file": "solis-75-dt-mr-archive-3d0ff88dfa21-960.jpg",
+        "width": 960,
+        "height": 840,
+        "bytes": 184002,
+        "sha256": "a0247bc64e0e189e5590ae0919df03abd003856b2402b4ffd8ea60a24beb53ca"
+      },
+      {
+        "file": "solis-75-dt-mr-archive-3d0ff88dfa21-1920.jpg",
+        "width": 1920,
+        "height": 1680,
+        "bytes": 615510,
+        "sha256": "08515d8f677ba4e02478fb33d1a1b55d1262880c31d5bf06ea7e7fb51360ef78"
+      }
+    ]
+  }
+]
