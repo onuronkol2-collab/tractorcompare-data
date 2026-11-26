@@ -11,6 +11,8 @@
  */
 import { fileURLToPath } from "node:url";
 import { resolve } from "node:path";
+import {readIndexingHead} from "./indexing-head.mjs";
+import {indexBlockingResponseHeader} from "./seo-html-attributes.mjs";
 
 export const PREFERRED_ORIGIN = "https://tractorvs.com";
 export const PATHS = ["/", "/tr/", "/tr/tractors/"];
@@ -85,16 +87,14 @@ export async function inspectCanonicalEdge({fetchFn = fetch, paths = PATHS} = {}
       }
       const type=response.headers.get("content-type")||"";
       const html=await response.text();
-      const canonical=(html.match(/<link\b[^>]*\brel=["']canonical["'][^>]*\bhref=["']([^"']+)["']/i)||[])[1]
-        ||(html.match(/<link\b[^>]*\bhref=["']([^"']+)["'][^>]*\brel=["']canonical["']/i)||[])[1];
-      const canonicalCount=(html.match(/<link\b[^>]*\brel=["']canonical["']/gi)||[]).length;
-      const noindex=/<meta\b[^>]*\bname=["']robots["'][^>]*\bcontent=["'][^"']*noindex/i.test(html) ||
-        /noindex/i.test(response.headers.get("x-robots-tag")||"");
-      const good=type.includes("text/html") && canonical===url && canonicalCount===1 && !noindex;
-      results.push({url,status,canonical,canonicalCount,noindex,ok:good});
+      const head=readIndexingHead(html);
+      const canonical=head.canonical[0]??null,canonicalCount=head.canonical.length;
+      const noindex=head.noindex||indexBlockingResponseHeader(response.headers.get("x-robots-tag"));
+      const good=/^text\/html(?:;|$)/i.test(type)&&head.hasHead&&canonical===url&&canonicalCount===1&&!noindex&&!head.refresh;
+      results.push({url,status,canonical,canonicalCount,noindex,refresh:head.refresh,ok:good});
       if(!good)issues.push({code:"https-canonical",url,
         message:"HTTPS canonical inconsistency: content-type="+type+
-          " canonical="+String(canonical)+" tags="+canonicalCount+" noindex="+noindex});
+          " canonical="+String(canonical)+" tags="+canonicalCount+" noindex="+noindex+" meta-refresh="+head.refresh});
     } catch(error) {
       issues.push({code:"https-unavailable",url,
         message:"Failed to verify HTTPS canonical: "+String(error?.message||error).slice(0,180)});

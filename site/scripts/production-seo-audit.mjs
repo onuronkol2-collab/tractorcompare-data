@@ -1,4 +1,6 @@
 import {localStylesheets,stylesheetProblem} from "./live-stylesheets.mjs";
+import {readIndexingHead} from "./indexing-head.mjs";
+import {blockedCanonicalPaths} from "./canonical-robots-coverage.mjs";
 import {scanHeadTags,inspectMetaDescription,descriptionReuseGroups} from "./verify-sitewide-meta-descriptions.mjs";
 import {inspectSocialMetadata} from "./verify-sitewide-social-metadata.mjs";
 import {inspectVisibleMainImages} from "./seo-main-markup.mjs";
@@ -60,7 +62,7 @@ function metadata(html,file){
  };
 }
 const robots=await fetchPage("/robots.txt");
-if(robots.response.status!==200 || /^Disallow:\s*\/\s*$/im.test(robots.body))
+if(robots.response.status!==200 || !/^text\/plain(?:;|$)/i.test(robots.response.headers.get("content-type")||""))
   error("robots-blocked","/robots.txt","Robots blocks or fails");
 if(!robots.body.includes("Sitemap: "+BASE+"/sitemap-index.xml"))
   error("robots-sitemap","/robots.txt","Missing production sitemap");
@@ -86,6 +88,10 @@ catch(e){
  process.exit(1); // Never make 3,882 page requests after a broken public inventory.
 }
 const unique=inventory.pages;
+try {
+ const blocked=blockedCanonicalPaths(robots.body,[...unique].map(url=>new URL(url).pathname));
+ for(const path of blocked)error("robots-path-blocked",path,"Googlebot rule disallows a canonical sitemap page");
+}catch(e){error("robots-unverifiable","/robots.txt",String(e?.message||e));}
 // A source-reviewed published article must not disappear from the ONE live
 // HTML sitemap while its public URL still responds. Only actual fetched XML
 // membership counts; audit-tool "inSitemap" heuristics are not evidence.
@@ -158,6 +164,10 @@ for(let i=0;i<urls.length;i+=8){
    if(response.status!==200){error("page-http",p,"HTTP "+response.status);return;}
    if(indexBlockingResponseHeader(response.headers.get("x-robots-tag")))
     error("blocked-header",p,"Restrictive X-Robots-Tag on production; review directive scope");
+   if(!/^text\/html(?:;|$)/i.test(response.headers.get("content-type")||"")){
+    error("page-mime",p,"Canonical sitemap target did not return HTML");return;
+   }
+   if(readIndexingHead(body).refresh)error("meta-refresh",p,"Canonical sitemap target is a client-side redirect");
    const file=p.slice(1)+"index.html";
    const meta=metadata(body,file);
    for(const asset of localStylesheets(meta.links,page)){
