@@ -129,7 +129,24 @@ export function significantContentDigest(html,url,{legacy=false}={}){
   // even when its static content is identical. Ignore ONLY the cache-busting
   // suffix of this exact empty, local module script. Preserve its presence,
   // component identity, all other attributes, inline JSON, and all content.
-  const stableMain=legacy?significantMain:significantMain.replace(
+  // A rel=nofollow hint on an already-existing visitor-state link does not
+  // change editorial content or its destination. Normalize ONLY the exact
+  // utility-link forms introduced by PR #753 (compare left ID, forum tractor
+  // ID, and catalogue brand search); preserve href, label, every other rel,
+  // attributes and all actual page content. Keep old checkpoint hashes valid.
+  // This is a digest-only substitution, not HTML rewriting or sanitization.
+  const visitorStateMain=legacy?significantMain:significantMain.replace(
+    /<a(?=[\s/>])(?:[^"'<>]|"[^"]*"|'[^']*')*>/gi,tag=>{
+      const route=tag.match(/(?:^<a|\s)href="([^"]*)"(?=\s|>)/i)?.[1];
+      if(!route)return tag;
+      const path=/^\/(?:(?:tr|zh|hi|pt-br|fr|de|ru|ja|es)\/)?(?:(?:compare\/\?left=|forum\/\?tractor=)[0-9a-f]{8}(?:-[0-9a-f]{4}){3}-[0-9a-f]{12}|tractors\/\?q=(?:[A-Za-z0-9_.!~*'()-]|%[0-9a-f]{2})+)$/i;
+      if(!path.test(route))return tag;
+      // Require the exact generated adjacent href/rel pair, without consuming
+      // any other rel tokens or accepting duplicated rel attributes.
+      if([...tag.matchAll(/\srel\s*=/gi)].length!==1)return tag;
+      return tag.replace(/(\shref="[^"]*") rel="nofollow"(?=\s|>)/, "$1");
+    });
+  const stableMain=legacy?visitorStateMain:visitorStateMain.replace(
     /<script(?=[\s/>])[^>]*><\/script(?=[\s/>])[^>]*>/gi,tag=>{
       // Include browser-tolerated end-tag whitespace and attributes
       // (CodeQL js/bad-tag-filter). Keep the original tag and delimiters:

@@ -262,8 +262,10 @@ const pricePayload = JSON.stringify({
       refresh(selected as MarketCountry);
       const next=countryAwareCatalogUrl(window.location.href,selected,[...allowedCountries]);
       history.replaceState(history.state,"",next);
-      for(const link of document.querySelectorAll<HTMLAnchorElement>("[data-language-choice]"))
+      for(const link of document.querySelectorAll<HTMLAnchorElement>("[data-language-choice]")){
         link.href=countryAwareCatalogUrl(link.href,selected,[...allowedCountries]);
+        link.relList.toggle("nofollow",Boolean(new URL(link.href).search));
+      }
     });
     if (!manuallySelected) fetch("/api/visitor-country",{credentials:"same-origin",cache:"no-store"})
       .then(r=>r.ok?r.json():null)
@@ -377,6 +379,7 @@ const pricePayload = JSON.stringify({
         else destination.searchParams.delete(key);
       }
       if(link.href!==destination.href)link.href=destination.pathname+destination.search+destination.hash;
+      link.relList.toggle("nofollow",Boolean(destination.search));
     }
     // Shared navigation handles other dynamic route state consistently.
     if(routeChanged)window.dispatchEvent(new Event("tractorvs:route-state-changed"));

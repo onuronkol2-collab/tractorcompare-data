@@ -412,6 +412,7 @@ const labelsPayload = JSON.stringify({
       window.dispatchEvent(new Event("tractorvs:route-state-changed"));
     }
     let revision = 0;
+    let firstRender=true;
     const printButton=document.querySelector<HTMLButtonElement>("#tc-print");
     if(printButton){
       printButton.hidden=false;
@@ -467,7 +468,10 @@ const labelsPayload = JSON.stringify({
       const left=byId(leftSelect.value),right=byId(rightSelect.value);
       if(!left||!right)return;
       // Preserve selected IDs and view while loading or after a failed request.
-      syncSelection(left,right);
+      // A clean, shared catalogue entry must stay canonical on first load.
+      // Only explicit selection/view state or subsequent interaction writes IDs.
+      if(!firstRender||params.has("left")||params.has("right")||params.has("view"))syncSelection(left,right);
+      firstRender=false;
       if(retry)retry.hidden=true;
       const error = document.querySelector<HTMLElement>("#tc-load-error");
       if (error) error.hidden = true;
