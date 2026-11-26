@@ -1,0 +1,89 @@
+name: TractorVS lightweight Cloudflare release monitor
+on:
+  workflow_dispatch:
+  pull_request:
+    branches: [main]
+    paths: ['.github/workflows/cloudflare-release-monitor.yml']
+permissions: {}
+jobs:
+  monitor:
+    if: (github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main') || (github.event_name == 'pull_request' && github.head_ref == 'ops/cloudflare-release-monitor-20261126' && github.event.pull_request.head.repo.full_name == github.repository)
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - name: Read only Cloudflare deployment and build metadata
+        env:
+          CF_TOKEN: ${{ secrets.CLOUDFLARE_READ_TOKEN }}
+        run: |
+          python3 - <<'PY'
+          import os,json,re,urllib.request,urllib.error
+          from urllib.parse import urlencode
+          from uuid import UUID
+          token=os.environ.get("CF_TOKEN")
+          if not token: raise SystemExit("CLOUDFLARE_READ_TOKEN unavailable")
+          class NoRedirect(urllib.request.HTTPRedirectHandler):
+              def redirect_request(self,*args,**kwargs): return None
+          opener=urllib.request.build_opener(NoRedirect)
+          base="https://api.cloudflare.com/client/v4/accounts/42935faed946fdb2a2171156eaa7c221"
+          def get(path):
+              req=urllib.request.Request(base+path,headers={"Authorization":"Bearer "+token,"Accept":"application/json"},method="GET")
+              try:
+                  with opener.open(req,timeout=12) as r:
+                      if r.headers.get("Retry-After"): raise SystemExit("Cloudflare cooldown requested")
+                      data=json.loads(r.read(4000000))
+              except urllib.error.HTTPError as e:
+                  raise SystemExit("Cloudflare API HTTP "+str(e.code))
+              except Exception:
+                  raise SystemExit("Cloudflare API network or response error")
+              if data.get("success") is not True: raise SystemExit("Cloudflare API rejected request")
+              return data["result"]
+          def uid(value): return str(UUID(value))
+          def sha(value): return value if isinstance(value,str) and re.fullmatch("[0-9a-f]{40}",value) else None
+          def date(value): return value if isinstance(value,str) and re.fullmatch("[0-9T:.Z+\\-]{10,40}",value) else None
+          deployment=get("/workers/scripts/tractorvs-site/deployments?per_page=1")["deployments"][0]
+          print("CF_ACTIVE_DEPLOYMENT "+json.dumps({"id":uid(deployment["id"]),"created_on":date(deployment.get("created_on")),"versions":[{"id":uid(v["version_id"]),"percentage":float(v["percentage"])} for v in deployment["versions"]]}))
+          scripts=get("/workers/scripts")
+          tag=next(x["tag"] for x in scripts if x["id"]=="tractorvs-site")
+          if not re.fullmatch("[0-9a-fA-F-]{32,36}",tag): raise SystemExit("Unexpected Worker tag")
+          builds=get("/builds/builds/latest?"+urlencode({"external_script_ids":tag})).get("builds") or {}
+          b=builds.get(tag)
+          if not b: raise SystemExit("No latest build metadata returned")
+          m=b.get("build_trigger_metadata") or {}
+          # Never print raw API data, commands, environment_variables, or author.
+          print("CF_LATEST_BUILD "+json.dumps({"id":uid(b["build_uuid"]),"status":b.get("status") if b.get("status") in ("queued","initializing","running","stopped") else None,"outcome":b.get("build_outcome") if b.get("build_outcome") in ("success","fail","skipped","cancelled","terminated") else None,"commit":sha(m.get("commit_hash")),"main":m.get("branch")=="main","created_on":date(b.get("created_on"))}))
+          PY
+      - name: Read public production SHA in ten languages (no secrets)
+        run: |
+          python3 - <<'PY'
+          from html.parser import HTMLParser
+          import urllib.request,urllib.error,json,re,concurrent.futures,threading
+          class Page(HTMLParser):
+              def __init__(self): super().__init__();self.shas=[];self.canon=[]
+              def handle_starttag(self,tag,attrs):
+                  a=dict(attrs)
+                  if tag=="meta" and a.get("name")=="tractorvs-release-sha": self.shas.append(a.get("content"))
+                  if tag=="link" and "canonical" in a.get("rel","").split(): self.canon.append(a.get("href"))
+          class NoRedirect(urllib.request.HTTPRedirectHandler):
+              def redirect_request(self,*args,**kwargs): return None
+          cooldown=threading.Event()
+          origin="https://tractorvs.com"
+          def inspect(locale):
+              if cooldown.is_set(): return {"locale":locale,"ok":False,"error":"cooldown"}
+              url=origin+("/" if locale=="en" else "/"+locale+"/")
+              try:
+                  with urllib.request.build_opener(NoRedirect).open(urllib.request.Request(url,headers={"Cache-Control":"no-cache","Accept":"text/html"}),timeout=10) as r:
+                      if r.headers.get("Retry-After"): cooldown.set();raise ValueError()
+                      if r.status!=200 or r.headers.get_content_type()!="text/html": raise ValueError()
+                      p=Page();p.feed(r.read(3000000).decode("utf-8"))
+                      if len(p.shas)!=1 or not re.fullmatch("[a-f0-9]{40}",p.shas[0] or "") or p.canon!=[url]: raise ValueError()
+                      return {"locale":locale,"ok":True,"sha":p.shas[0]}
+              except urllib.error.HTTPError as e:
+                  if e.code==429 or e.headers.get("Retry-After"): cooldown.set()
+                  return {"locale":locale,"ok":False,"http":e.code}
+              except Exception: return {"locale":locale,"ok":False,"error":"network or invalid release marker"}
+          with concurrent.futures.ThreadPoolExecutor(max_workers=2) as pool:
+              rows=list(pool.map(inspect,["en","tr","zh","hi","pt-br","fr","de","ru","ja","es"]))
+          coherent=all(x["ok"] for x in rows) and len({x.get("sha") for x in rows})==1
+          print("CF_PUBLIC_SNAPSHOT "+json.dumps({"coherent":coherent,"routes":rows,"scope":"HTML snapshot only; not target ancestry, build matching or browser functionality"}))
+          if not coherent: raise SystemExit("Production snapshot incomplete")
+          PY
