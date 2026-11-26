@@ -1,0 +1,5 @@
+# UI/UX enhancement — 26 November 2026
+
+Scope: keyboard focus on mixed contrast surfaces, complex-script heading tracking, high contrast mode, printable source-backed comparison. No data, SEO metadata, photos, authentication, analytics, permissions, dependencies, or other PR changes. Print only uses the current rendered selection/filter; it is disabled while data is pending, on error, and for an empty table. Source links, row headers, units and condition warnings remain in the printed table. No claims about field CWV or full WCAG conformance without measurements.
+
+Acceptance: existing unit/build/CodeQL/Playwright/axe and Cloudflare gates, plus the new browser spec covering 10 languages and print. Review actual screenshots at mobile/tablet/desktop before broader redesign. Rollback: revert this PR; no database migration. Follow AGENTS.md and check exact commit and production readiness before declaring live. Browser screenshot baseline not available in the initiating session; do not mistake source inspection for visual verification.
