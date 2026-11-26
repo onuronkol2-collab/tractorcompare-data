@@ -75,6 +75,39 @@ WITH CHECK (
  AND EXISTS(SELECT 1 FROM public.tc_forum_topics t WHERE t.id=topic_id AND t.status='published')
  AND (reply_id IS NULL OR EXISTS(SELECT 1 FROM public.tc_forum_replies r WHERE r.id=reply_id AND r.topic_id=tc_forum_content_reports.topic_id AND r.status='published'))
 );
+-- Atomic daily quota. The private counter is never writable by API clients.
+-- Increment participates in the report transaction: failed/duplicate inserts
+-- do not consume a slot. A successful report cannot refund its quota.
+CREATE SCHEMA tc_forum_reporting_private;
+REVOKE ALL ON SCHEMA tc_forum_reporting_private FROM PUBLIC,anon,authenticated,service_role;
+CREATE TABLE tc_forum_reporting_private.daily_report_quota (
+ reporter_id uuid NOT NULL REFERENCES auth.users(id) ON DELETE CASCADE,
+ report_day date NOT NULL,
+ reports_submitted integer NOT NULL CHECK(reports_submitted BETWEEN 1 AND 10),
+ PRIMARY KEY(reporter_id,report_day)
+);
+ALTER TABLE tc_forum_reporting_private.daily_report_quota ENABLE ROW LEVEL SECURITY;
+REVOKE ALL ON tc_forum_reporting_private.daily_report_quota FROM PUBLIC,anon,authenticated,service_role;
+CREATE FUNCTION tc_forum_reporting_private.enforce_daily_report_quota()
+RETURNS trigger LANGUAGE plpgsql SECURITY DEFINER SET search_path=pg_catalog AS $quota$
+DECLARE caller uuid:=auth.uid();
+BEGIN
+ IF caller IS NULL OR NEW.reporter_id IS DISTINCT FROM caller
+    OR coalesce(auth.jwt()->>'is_anonymous','false')<>'false'
+    OR nullif(auth.jwt()->>'email','') IS NULL
+ THEN RAISE EXCEPTION 'Authentication required' USING ERRCODE='42501'; END IF;
+ INSERT INTO tc_forum_reporting_private.daily_report_quota AS q(reporter_id,report_day,reports_submitted)
+ VALUES(caller,(now() AT TIME ZONE 'UTC')::date,1)
+ ON CONFLICT(reporter_id,report_day) DO UPDATE SET reports_submitted=q.reports_submitted+1
+ WHERE q.reports_submitted<10;
+ IF NOT FOUND THEN RAISE EXCEPTION 'Daily report limit reached' USING ERRCODE='23514'; END IF;
+ RETURN NEW;
+END
+$quota$;
+REVOKE ALL ON FUNCTION tc_forum_reporting_private.enforce_daily_report_quota() FROM PUBLIC,anon,authenticated,service_role;
+CREATE TRIGGER tc_forum_daily_report_quota BEFORE INSERT ON public.tc_forum_content_reports
+FOR EACH ROW EXECUTE FUNCTION tc_forum_reporting_private.enforce_daily_report_quota();
+
 -- Only the trusted moderation service can read or change report status.
 -- Submitting a report never hides or deletes a post automatically.
 COMMIT;
