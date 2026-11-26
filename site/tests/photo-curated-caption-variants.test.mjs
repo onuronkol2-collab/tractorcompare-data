@@ -61,8 +61,8 @@ test("caption research stays fail-closed and only SHA-proven candidates graduate
       assert.equal(p.photographer,candidate.source.creator);assert.equal(p.license,candidate.source.license);
       assert.match(p.originalSha1,/^[a-f0-9]{40}$/);assert.match(p.originalSha256,/^[a-f0-9]{64}$/);assert.ok(p.originalBytes>0);
       assert.ok(p.modelSources.includes(candidate.evidence.manufacturerAliasUrl));
-      assert.ok(p.modelSources.includes("https://pronar.pl/produkt/ciagnik-tym-t495/"));
-      assert.ok(p.modelSources.includes("https://eder-tym.de/produkt/t495/"));
+      assert.ok(p.modelSources.some(value=>new URL(value).href===new URL("/produkt/ciagnik-tym-t495/","https://pronar.pl").href));
+      assert.ok(p.modelSources.some(value=>new URL(value).href===new URL("/produkt/t495/","https://eder-tym.de").href));
       assert.match(p.scope,/Model illustration only/);assert.match(p.modelEvidence,/not exact specs/);
       assert.ok(approvedSource.includes(p.fileId));assert.deepEqual(p.derivatives.map(d=>d.width),[480,960,1920]);
       for(const d of p.derivatives){const bytes=readFileSync(new URL("../public/images/tractors/"+d.file,import.meta.url));assert.equal(bytes.length,d.bytes);assert.equal(createHash("sha256").update(bytes).digest("hex"),d.sha256);}

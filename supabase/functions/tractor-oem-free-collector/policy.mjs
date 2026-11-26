@@ -1,3 +1,4 @@
+import {evidenceText} from "../_shared/evidence-text.mjs";
 // TractorVS OEM source transport. Zero AI/paid calls, no auto-publication.
 // Shared by the private Supabase worker and Node's unit tests.
 export const MAX_PER_RUN=3;
@@ -120,16 +121,7 @@ export function validModelMention(text,model){
  if(/^(?:[A-Z]{1,3}|[0-9]{1,3})(?:\\s|$)/i.test(after))return false;
  return true;
 }
-export function scrubMarkup(html){
- let str=String(html).replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi," ")
-  .replace(/<style\b[^>]*>[\s\S]*?<\/style>/gi," ")
-  .replace(/<!--[\s\S]*?-->/g," ")
-  .replace(/<[^>]*>/g," ");
- str=str.replace(/&(nbsp|amp|lt|gt|quot|#39);/gi,(m,p)=>({
-  nbsp:" ",amp:"&",lt:"<",gt:">",quot:'"',"#39":"'"
- })[p.toLowerCase()]||m);
- return str.replace(/\s+/g," ").trim();
-}
+export function scrubMarkup(html){return evidenceText(html);}
 // Conservative robots.txt evaluation. Unknown/unreachable robots: do NOT crawl.
 // Respect exact UA or wildcard rules; unsupported giant robots files are blocked.
 // Crawl-delay is handled by single-host-per-run scheduling (at least 2 hours).

@@ -2,8 +2,8 @@
   "version": 1,
   "pages": {
     "https://tractorvs.com/": {
-      "digest": "79531967eaf9dc42e00f1fe4f43e91ebd20e24aafdd26edffe8085c3f9d89ae1",
-      "modified": "2026-11-25T17:34:09.896Z"
+      "digest": "9dc6f0632903967dbc1e8a9e6bfc15b138dd38ea321f72a1465770355e99df06",
+      "modified": "2026-11-26T12:36:43.036Z"
     },
     "https://tractorvs.com/articles/": {
       "digest": "a22ac47998f82d2b8426a43cba5780deab1550bd512ff7dc9066613092553adc",
@@ -18,28 +18,28 @@
       "modified": "2026-11-22T08:02:35.845Z"
     },
     "https://tractorvs.com/compare/": {
-      "digest": "2aacd756af8528f1a99da18b88dc625434306597891c5bf2b9c505bb2ad1e7fc",
-      "modified": "2026-11-26T09:36:10.632Z"
+      "digest": "5fb2d356db7bc6c5f1d40ae17f86fcd8b44cf787298a96c10f9ae8174f828473",
+      "modified": "2026-11-26T12:36:43.036Z"
     },
     "https://tractorvs.com/compare/deutz-fahr-5090-d-gs-vs-5100-d-gs/": {
       "digest": "922999b9696029c032d6b1c71856522e23db46cc43479dd85fbb929909556a66",
       "modified": "2026-11-23T16:20:24.281Z"
     },
     "https://tractorvs.com/de/": {
-      "digest": "f7ab64ed9f2456cefb48ea7da9b919bc0c33acd887c499f19b0a167491418812",
-      "modified": "2026-11-25T17:34:09.896Z"
+      "digest": "311397917d985e2d71389dcce8354376cd8d2090e48de74fe7e21bc67431cc36",
+      "modified": "2026-11-26T12:36:43.036Z"
     },
     "https://tractorvs.com/de/articles/": {
       "digest": "9cce9f9a36c605c632ee48dff4ecd8c4081fa5dae572b36eafe256ac8d2f2263",
       "modified": "2026-11-24T16:26:42.582Z"
     },
     "https://tractorvs.com/de/compare/": {
-      "digest": "bfa9a636d4fc9f57b6d560b0be0c0ea0934104b67775fe1058c51f94e9c7890e",
-      "modified": "2026-11-26T09:36:10.632Z"
+      "digest": "3941ac8c50bb067435f1b1ac237023483c02360947bb1ff345dce7a3c005c270",
+      "modified": "2026-11-26T12:36:43.036Z"
     },
     "https://tractorvs.com/de/farm-advisor/": {
-      "digest": "62c79cfc9107261e787f41d64af1da0593217089fa023b9cf5a1df48126a5111",
-      "modified": "2026-11-25T16:35:52.123Z"
+      "digest": "eb6c57163f0a698ed8736547388a90e8f44561882745fc6bb300bbb11c049f64",
+      "modified": "2026-11-26T12:36:43.036Z"
     },
     "https://tractorvs.com/de/guides/choosing-a-tractor/": {
       "digest": "acc98b0e38785c5bb7351954a96e7befc0334131c983ee46d8c6b2b857b3a780",
@@ -54,8 +54,8 @@
       "modified": "2026-11-24T16:26:42.582Z"
     },
     "https://tractorvs.com/de/tractors/": {
-      "digest": "2ffbfd2a417d67888852b27419dd0d15f827ddac78e6a692352d9bbb3d5689bc",
-      "modified": "2026-11-26T06:48:25.172Z"
+      "digest": "b34e062e7708f07dff1cfa451a7447108520fdaf4e32cdb9ea229cd0666608c1",
+      "modified": "2026-11-26T12:36:43.036Z"
     },
     "https://tractorvs.com/de/tractors/agrale-4125-0b53e944/": {
       "digest": "538e5049a25ab19ae37b655ca9cac3ecebe27379c4029f584b227c891067a100",
@@ -166,24 +166,36 @@
       "modified": "2026-11-25T04:05:53.437Z"
     },
     "https://tractorvs.com/de/tractors/basak-traktor-2055-d1258ec7/": {
-      "digest": "7146e0c3ae5188d9dadb81ea5c593a3787cf21d0ea18e7e0f9da1041ab37df92",
-      "modified": "2026-11-26T04:53:03.558Z"
+      "digest": "4ea1731cfe1dd8bdde37d850c3ab03d701ea98b7d04e89128c52993b97d40f85",
+      "modified": "2026-11-26T12:36:43.036Z"
     },
     "https://tractorvs.com/de/tractors/basak-traktor-2075-bk-9ef236be/": {
-      "digest": "fc241813c788281b9038849ae577989c73bed9ba1554955f97cd0450096ec13d",
-      "modified": "2026-11-26T04:53:03.558Z"
+      "digest": "52a141aeaf595adea7d566845b532529f9fa893668deb5caa13d89eb943ac17a",
+      "modified": "2026-11-26T12:36:43.036Z"
     },
     "https://tractorvs.com/de/tractors/basak-traktor-2075-bt-ddb654b6/": {
-      "digest": "11973af9461fbe1647a841a8629302c10f6bab7b9ef87d972b75737a21e398c3",
-      "modified": "2026-11-24T18:13:53.928Z"
+      "digest": "655b8cf5a2aadadaf139eddc5c383a4df023c937356a74c4c53f66bb8e9b069c",
+      "modified": "2026-11-26T12:36:43.036Z"
+    },
+    "https://tractorvs.com/de/tractors/basak-traktor-2080-bb-65db1295/": {
+      "digest": "6be99afc576ef10e27fd02ad4c9792ddf8fe80933b2d37c92f4532757697da64",
+      "modified": "2026-11-26T12:36:43.036Z"
+    },
+    "https://tractorvs.com/de/tractors/basak-traktor-2090-s-eb3a7f45/": {
+      "digest": "9321f1c8202ab899cd0e038c99e312fa8b70c66ab45dae93ec0d87be369b4b5b",
+      "modified": "2026-11-26T12:36:43.036Z"
     },
     "https://tractorvs.com/de/tractors/basak-traktor-3026-2bc6ed35/": {
-      "digest": "7d252961b61377bfa68449a6d7d660bbedba14da977b65108cd1ed71ab5f82e4",
-      "modified": "2026-11-26T04:53:03.558Z"
+      "digest": "a62618be5f9f07b2cd875d3b34f98b25df36b15a934a1063c94f46ad26870b8a",
+      "modified": "2026-11-26T12:36:43.036Z"
     },
     "https://tractorvs.com/de/tractors/basak-traktor-5075-compact-20e382ea/": {
-      "digest": "efd339459a8f795d9b8b3f9411844a6323a941442bb69cc978176e0778ba95ba",
-      "modified": "2026-11-26T06:48:25.172Z"
+      "digest": "48a73c38b031d9054cb3eb4d4c589a22a08568c6486709c441a60da701644523",
+      "modified": "2026-11-26T12:36:43.036Z"
+    },
+    "https://tractorvs.com/de/tractors/basak-traktor-5075-red-power-e5132178/": {
+      "digest": "ddf17ce6763b09db9f522547b0a11c575eeeef00015f57f9062e92ed30782629",
+      "modified": "2026-11-26T12:36:43.036Z"
     },
     "https://tractorvs.com/de/tractors/basak-traktor-5120-01590869/": {
       "digest": "90bbe3610f0e4349b522ca1302f1a995d80fe86bffdbf9a48ad18dc30fc762ed",
@@ -1857,6 +1869,22 @@
       "digest": "305c6aa817d43e621126272775ee3ded37f520f3bcda3f69b17d2718d97a4027",
       "modified": "2026-11-24T18:04:40.415Z"
     },
+    "https://tractorvs.com/de/tractors/yto-nlx1054-1-cda27b2a/": {
+      "digest": "7f426297612655feacd2efcdf7aa7fdbafc00c935a309b8aa7354ecaafe0fb95",
+      "modified": "2026-11-26T12:36:43.036Z"
+    },
+    "https://tractorvs.com/de/tractors/yto-nlx1104-1-bb8df687/": {
+      "digest": "8eb8f09cd9891da6bd36964b7b97cf7fcc12dc5f230d05d8c892d01f3bacfdf5",
+      "modified": "2026-11-26T12:36:43.036Z"
+    },
+    "https://tractorvs.com/de/tractors/yto-nlx904-1-8067fc24/": {
+      "digest": "6a2b82efca9dcd0c9875646e749745aa473b115f62b5a0a930a5cc8edcc015ab",
+      "modified": "2026-11-26T12:36:43.036Z"
+    },
+    "https://tractorvs.com/de/tractors/yto-nlx954-1-746e118b/": {
+      "digest": "535808ff3ae94de11d36a6096116145b9ac6235ff212a27fe529fda7255c6f57",
+      "modified": "2026-11-26T12:36:43.036Z"
+    },
     "https://tractorvs.com/de/tractors/zetor-5100-03752cb7/": {
       "digest": "46f63fcb0edd5e67766545a15d8516cb6de76a9ffb1bb3bbb7876b96f698c9be",
       "modified": "2026-11-25T16:35:52.123Z"
@@ -1946,20 +1974,20 @@
       "modified": "2026-11-25T18:45:20.601Z"
     },
     "https://tractorvs.com/es/": {
-      "digest": "c1e1c986b55bd7b71502a10128cec6127763a6fec09575c633a284123460d76f",
-      "modified": "2026-11-25T17:34:09.896Z"
+      "digest": "a0d861fadf9842fb952a2faf5cb04b5c0809aad1eb2450e89c757fe77092d1c0",
+      "modified": "2026-11-26T12:36:43.036Z"
     },
     "https://tractorvs.com/es/articles/": {
       "digest": "bdb48056cf70631e4bf66f4d96e825f1ddccbf4ea1cbae9bf064674cf5f89895",
       "modified": "2026-11-24T16:26:42.582Z"
     },
     "https://tractorvs.com/es/compare/": {
-      "digest": "9e83a2f8bfbd1efbf46d3b449ccbecdcd044ad9500edc4713bb0d0fc70641494",
-      "modified": "2026-11-26T09:36:10.632Z"
+      "digest": "1bfa771e50a0d38d63daf564b2e1464eaf499514d68a5b3f616936b7b9518067",
+      "modified": "2026-11-26T12:36:43.036Z"
     },
     "https://tractorvs.com/es/farm-advisor/": {
-      "digest": "6976560c606098bf213087d4f5921197076142f7f7ca1a4fa8aa59a5dbd9c21d",
-      "modified": "2026-11-25T16:35:52.123Z"
+      "digest": "7b6ff65397058cf79db789d5ffeff83f52ae5643b3b9dbbd2ed820d53c3c5e0e",
+      "modified": "2026-11-26T12:36:43.036Z"
     },
     "https://tractorvs.com/es/guides/choosing-a-tractor/": {
       "digest": "b1a38e2e8c95d29d38a3f9d5bbf8050212ab529d55835bf6ded427f21ed8cc7e",
@@ -1974,8 +2002,8 @@
       "modified": "2026-11-24T16:26:42.582Z"
     },
     "https://tractorvs.com/es/tractors/": {
-      "digest": "537ddd67e079d2a7b925b56879337afc82977f0d964800a82b6187a877cc5415",
-      "modified": "2026-11-26T06:48:25.172Z"
+      "digest": "95adb3c3e3a35946635addcfdf262dc79372fb017030b88c000cbf237faec141",
+      "modified": "2026-11-26T12:36:43.036Z"
     },
     "https://tractorvs.com/es/tractors/agrale-4125-0b53e944/": {
       "digest": "59ec4f3ad773c52b9291b05a206cf8ddafbc6bbba1cf0f95924fefe874dcbaa8",
@@ -2086,24 +2114,36 @@
       "modified": "2026-11-25T16:35:52.123Z"
     },
     "https://tractorvs.com/es/tractors/basak-traktor-2055-d1258ec7/": {
-      "digest": "1f8b0dfc3b48dc58d786f47487aac1e1065b9643cde0d1dbd1e1a8f70e0f1dfa",
-      "modified": "2026-11-25T18:32:44.999Z"
+      "digest": "e7eb7512d71ac4dfac177f853da3dad927ab132c8a5d7ac4ca976e368a7fa21c",
+      "modified": "2026-11-26T12:36:43.036Z"
     },
     "https://tractorvs.com/es/tractors/basak-traktor-2075-bk-9ef236be/": {
-      "digest": "501115e56861ae56e0d81c67cdb58264151a1b3de30c27f65a1bbeea45e8d2b2",
-      "modified": "2026-11-26T04:53:03.558Z"
+      "digest": "e72f3ef591532b3c8c4224dc49485e51546500e2730cbf404b0f4ac56673b928",
+      "modified": "2026-11-26T12:36:43.036Z"
     },
     "https://tractorvs.com/es/tractors/basak-traktor-2075-bt-ddb654b6/": {
-      "digest": "25402152ccdcc6e6ebb3f9c4ac05ef9fb4e71d4788f3a3cc8cb6b21399badd6e",
-      "modified": "2026-11-25T16:35:52.123Z"
+      "digest": "ab42e4ae9514e850f6c93a45f70037545a414bfa035a4fe9d875ad9ffbae912b",
+      "modified": "2026-11-26T12:36:43.036Z"
+    },
+    "https://tractorvs.com/es/tractors/basak-traktor-2080-bb-65db1295/": {
+      "digest": "638549b721ece52c541ebf9d94b795a779cc13e57d00b1c18e86d8d4b11cc6df",
+      "modified": "2026-11-26T12:36:43.036Z"
+    },
+    "https://tractorvs.com/es/tractors/basak-traktor-2090-s-eb3a7f45/": {
+      "digest": "d3cf5d78d5e7978e70dcf77df57694ead779f6dbf1eedbc2634ba7c735ac06d7",
+      "modified": "2026-11-26T12:36:43.036Z"
     },
     "https://tractorvs.com/es/tractors/basak-traktor-3026-2bc6ed35/": {
-      "digest": "61e6d39fa8e43669a69556407528affd08482168a1ed95fc8d5e2709b3a146d0",
-      "modified": "2026-11-26T04:53:03.558Z"
+      "digest": "95cd7ca20ee6f47a8669d31e37c4aadccbeb7b1a644265d1bbcf9e3dc67a5d5d",
+      "modified": "2026-11-26T12:36:43.036Z"
     },
     "https://tractorvs.com/es/tractors/basak-traktor-5075-compact-20e382ea/": {
-      "digest": "be1ace6f3cdb358b930c39514071a7a7b3659ac82bb5ee5942e32209308f2f9d",
-      "modified": "2026-11-26T06:48:25.172Z"
+      "digest": "a21d6d53168a9736f7d44728d8ead35b4305d135fb39e25b2dca50e333108561",
+      "modified": "2026-11-26T12:36:43.036Z"
+    },
+    "https://tractorvs.com/es/tractors/basak-traktor-5075-red-power-e5132178/": {
+      "digest": "6110d88496ab5d1c81859a3eb5f16b863f253f3a75d64d170583a9493ccbf43c",
+      "modified": "2026-11-26T12:36:43.036Z"
     },
     "https://tractorvs.com/es/tractors/basak-traktor-5120-01590869/": {
       "digest": "47c3af20ed3ad2ec893f5173837a33fd03dea28051f96d7ae9a77e8f7b54e537",
@@ -3777,6 +3817,22 @@
       "digest": "e65f2dbab24d8e4aa7cf58733c608f73b19c3942fb35d19b8bc0d1a834fb3ec3",
       "modified": "2026-11-24T18:04:40.415Z"
     },
+    "https://tractorvs.com/es/tractors/yto-nlx1054-1-cda27b2a/": {
+      "digest": "10b95ef10dd37069d424dfaec39e640f75e01bf1d38e5394fac68c7cf9969ea7",
+      "modified": "2026-11-26T12:36:43.036Z"
+    },
+    "https://tractorvs.com/es/tractors/yto-nlx1104-1-bb8df687/": {
+      "digest": "bbe88147487a1587ee44c4d557895df9cdd8e2860ddca6267a47af6390116b32",
+      "modified": "2026-11-26T12:36:43.036Z"
+    },
+    "https://tractorvs.com/es/tractors/yto-nlx904-1-8067fc24/": {
+      "digest": "c8aeb653e1f8a337105cdd101a821dbf36b85170e5a54ede5d7136a967a00800",
+      "modified": "2026-11-26T12:36:43.036Z"
+    },
+    "https://tractorvs.com/es/tractors/yto-nlx954-1-746e118b/": {
+      "digest": "39a75d99c39eec22714a6b9311427617afc085d6573811f36b8cdaeb41f9dc3d",
+      "modified": "2026-11-26T12:36:43.036Z"
+    },
     "https://tractorvs.com/es/tractors/zetor-5100-03752cb7/": {
       "digest": "112dd1685c39a1b37444855c5567d7e91f97747419940dfb32d42793a73791d7",
       "modified": "2026-11-25T16:35:52.123Z"
@@ -3866,24 +3922,24 @@
       "modified": "2026-11-25T18:45:20.601Z"
     },
     "https://tractorvs.com/farm-advisor/": {
-      "digest": "ecec083605b81bba33d73eda9ac737cd268292a2f1a45e4014287db0ffd81727",
-      "modified": "2026-11-25T16:35:52.123Z"
+      "digest": "2fd6fcd4a163758b9ca99e88294eb0fd163c30fbbbe63602ef5ee761b0ed62ce",
+      "modified": "2026-11-26T12:36:43.036Z"
     },
     "https://tractorvs.com/fr/": {
-      "digest": "e2ab1f749cb3920215a5d0a91e58245dcdfddba3ffc9a40e7ebbc673ce7c98bd",
-      "modified": "2026-11-25T17:34:09.896Z"
+      "digest": "71311038dc7f0028587c39eeb35e60f72cec2b128e14fa57b29a1bcbd948e277",
+      "modified": "2026-11-26T12:36:43.036Z"
     },
     "https://tractorvs.com/fr/articles/": {
       "digest": "4a6ade76cf3c3ad17590b25a3c3290bfa43c878f3fe79c923cfc4b99766edbed",
       "modified": "2026-11-24T16:26:42.582Z"
     },
     "https://tractorvs.com/fr/compare/": {
-      "digest": "d25abb7bb25bc61dee6f54af18eb75e650e25d120957a3d95eee231d3585b385",
-      "modified": "2026-11-26T09:36:10.632Z"
+      "digest": "5a0a39cf969ac5389784807af8c77ec931919cf8708a70451d240bfff76a9294",
+      "modified": "2026-11-26T12:36:43.036Z"
     },
     "https://tractorvs.com/fr/farm-advisor/": {
-      "digest": "67ad73c24f3f8a4e8c84a867610994df9041ccf9642e42e87fc4a6facdc01abd",
-      "modified": "2026-11-25T16:35:52.123Z"
+      "digest": "0ceaf3c064d8ff33e458de56603dc752e74bf320527bd5c5cae76446174ebc05",
+      "modified": "2026-11-26T12:36:43.036Z"
     },
     "https://tractorvs.com/fr/guides/choosing-a-tractor/": {
       "digest": "c1d4a891053a117f4d26b0fbe43fcc365ce9bb70ed72e2dfba60abaf90180b1e",
@@ -3898,8 +3954,8 @@
       "modified": "2026-11-24T16:26:42.582Z"
     },
     "https://tractorvs.com/fr/tractors/": {
-      "digest": "6d1ddc35757c67eb21a06e5a953cdcb0294a4cfbe1da2c30d2cbd1e4987cd4e9",
-      "modified": "2026-11-26T06:48:25.172Z"
+      "digest": "4bef983979777e01a7981aec7b0e752758b48e835670b8fed9bc789d40e46d29",
+      "modified": "2026-11-26T12:36:43.036Z"
     },
     "https://tractorvs.com/fr/tractors/agrale-4125-0b53e944/": {
       "digest": "3174b87f3e143c336c50228412b7be2177fd0d15d345b7a77cf9ea6c25fa2bd8",
@@ -4010,24 +4066,36 @@
       "modified": "2026-11-25T16:35:52.123Z"
     },
     "https://tractorvs.com/fr/tractors/basak-traktor-2055-d1258ec7/": {
-      "digest": "9d177d74038c105b81ff339981ff80e4851473872cb43d5b9e66f10a9b2b003f",
-      "modified": "2026-11-26T04:53:03.558Z"
+      "digest": "ab5b47f89eb93bdcd6572aaf784a616c2e7bd1b13b5a4166468869ca9fe78382",
+      "modified": "2026-11-26T12:36:43.036Z"
     },
     "https://tractorvs.com/fr/tractors/basak-traktor-2075-bk-9ef236be/": {
-      "digest": "e84f124ddbcf3e173bf3b645dda65c74a0c2e233995ab88a5e8e65bc37f1673c",
-      "modified": "2026-11-25T16:35:52.123Z"
+      "digest": "3d22368634d99116d53d76db4b130b33df182d7f8227fe20abd5183477135129",
+      "modified": "2026-11-26T12:36:43.036Z"
     },
     "https://tractorvs.com/fr/tractors/basak-traktor-2075-bt-ddb654b6/": {
-      "digest": "a1b1f3303ffeab37b8b291906a32630b3cf790ce2ac95b0a530d71da7b05c086",
-      "modified": "2026-11-24T18:13:53.928Z"
+      "digest": "93602556175c2041073c2a9e44e2d229ce1a5400015a181015ed714f5691070b",
+      "modified": "2026-11-26T12:36:43.036Z"
+    },
+    "https://tractorvs.com/fr/tractors/basak-traktor-2080-bb-65db1295/": {
+      "digest": "cb87f9e387ee6cec8d610e9f7122f8a70d8413c650140695f7553ad23aed21ab",
+      "modified": "2026-11-26T12:36:43.036Z"
+    },
+    "https://tractorvs.com/fr/tractors/basak-traktor-2090-s-eb3a7f45/": {
+      "digest": "c7eed04ab87bed9dfb7c4e62c0c008ff81c38693ed2e574107a31917ff4d29d0",
+      "modified": "2026-11-26T12:36:43.036Z"
     },
     "https://tractorvs.com/fr/tractors/basak-traktor-3026-2bc6ed35/": {
-      "digest": "8d1174c7b5bd0907a29e9daa2a209da7d38efd8bb52e9890bdde891536b281a8",
-      "modified": "2026-11-26T04:53:03.558Z"
+      "digest": "42972a85d194dc7e69b611e17cc77307af919fda436573b1d09776cce57a54f5",
+      "modified": "2026-11-26T12:36:43.036Z"
     },
     "https://tractorvs.com/fr/tractors/basak-traktor-5075-compact-20e382ea/": {
-      "digest": "a64afff4109529cacf4b6b00f3438c12ec55d082e594e80558b4b4d80c7d1533",
-      "modified": "2026-11-26T06:48:25.172Z"
+      "digest": "beb1a681b1d568557a9c2ecda016f991f39c3dd64049165a3b719d1a28ea9c65",
+      "modified": "2026-11-26T12:36:43.036Z"
+    },
+    "https://tractorvs.com/fr/tractors/basak-traktor-5075-red-power-e5132178/": {
+      "digest": "a867e2a5f503ff3cc3e054ae45ff5877ce740894f1d3f3a9e89383ff64d62170",
+      "modified": "2026-11-26T12:36:43.036Z"
     },
     "https://tractorvs.com/fr/tractors/basak-traktor-5120-01590869/": {
       "digest": "927269d309c725d22dead62a18d79d52f960109e6d66d7bdb51baee25b4f7f37",
@@ -5701,6 +5769,22 @@
       "digest": "6b2ff29e6f174f6b2b5c37446a41ac2195ab3ebc191d143e979db6c831ec728b",
       "modified": "2026-11-24T18:04:40.415Z"
     },
+    "https://tractorvs.com/fr/tractors/yto-nlx1054-1-cda27b2a/": {
+      "digest": "e96da19929a6e4ed2342ab0b5a3fe57a7306b301dfd8d34593d102f90bdd8d63",
+      "modified": "2026-11-26T12:36:43.036Z"
+    },
+    "https://tractorvs.com/fr/tractors/yto-nlx1104-1-bb8df687/": {
+      "digest": "e4728501cfee1a8667eff88d00a3be24817f8f71f1b180d7099466a657ba8553",
+      "modified": "2026-11-26T12:36:43.036Z"
+    },
+    "https://tractorvs.com/fr/tractors/yto-nlx904-1-8067fc24/": {
+      "digest": "1946f0b00b2c09ff38e557d609b8f5ca3fdb6c8b27952304df76376a26515eec",
+      "modified": "2026-11-26T12:36:43.036Z"
+    },
+    "https://tractorvs.com/fr/tractors/yto-nlx954-1-746e118b/": {
+      "digest": "1c68c40bab154f6a23ef7e0a1ee8e08dfd1d0a655de7571959ed1a4e97dfbe4c",
+      "modified": "2026-11-26T12:36:43.036Z"
+    },
     "https://tractorvs.com/fr/tractors/zetor-5100-03752cb7/": {
       "digest": "ad5e7c2fef550061b7602bf76f8a58b5c49fe405ed97efc8e08cf41b87960838",
       "modified": "2026-11-25T16:35:52.123Z"
@@ -5810,20 +5894,20 @@
       "modified": "2026-11-24T16:20:05.453Z"
     },
     "https://tractorvs.com/hi/": {
-      "digest": "2d52507dcb4bc00c19a15eed534149e02712b68f1f5320c8e05a0424fb778f47",
-      "modified": "2026-11-25T17:34:09.896Z"
+      "digest": "2d25a1a89b9ccc71cdb5caf69d03a16f72354b6c1843f9e5b5e4e655747bd99a",
+      "modified": "2026-11-26T12:36:43.036Z"
     },
     "https://tractorvs.com/hi/articles/": {
       "digest": "1dd3e6fa62b3d37f34dfb83496f61d3855a83279c8a5c6613c48e6f0cbf69ac6",
       "modified": "2026-11-24T16:26:42.582Z"
     },
     "https://tractorvs.com/hi/compare/": {
-      "digest": "a5d39bf7968c3cf1e3e316e9dd17e5f8a418be5af8884e733fefef8898f22c0f",
-      "modified": "2026-11-26T09:36:10.632Z"
+      "digest": "7324784e4c78971216bd2f751f07ddef63032e4320342efcbe5cc7fd71723714",
+      "modified": "2026-11-26T12:36:43.036Z"
     },
     "https://tractorvs.com/hi/farm-advisor/": {
-      "digest": "15110f4f5917338098706957443b42ad5dd04d07f252686913c78e416118929e",
-      "modified": "2026-11-25T16:35:52.123Z"
+      "digest": "721194c6d3e6687c629868a0135d1a90583de6ebd8ce463c768db3654eaa84d4",
+      "modified": "2026-11-26T12:36:43.036Z"
     },
     "https://tractorvs.com/hi/guides/choosing-a-tractor/": {
       "digest": "182a472bc39c4e8c2c4754f4ffe4a35e8c60044329742a12c926273a58b527e3",
@@ -5838,8 +5922,8 @@
       "modified": "2026-11-24T16:26:42.582Z"
     },
     "https://tractorvs.com/hi/tractors/": {
-      "digest": "761a37c6ff6414f847b4f63dccab968654e749855ed32b6ac1b011f1f46f5100",
-      "modified": "2026-11-26T06:48:25.172Z"
+      "digest": "5df53199aab3135df37bf0acc2b1671726690c5090bb9f41b91bfd74fbff8cf8",
+      "modified": "2026-11-26T12:36:43.036Z"
     },
     "https://tractorvs.com/hi/tractors/agrale-4125-0b53e944/": {
       "digest": "b3677db7d04d5a4eaff5c6944a8962652ea5011e23e03ccc30e8ff87644d5ee0",
@@ -5950,24 +6034,36 @@
       "modified": "2026-11-25T04:05:53.437Z"
     },
     "https://tractorvs.com/hi/tractors/basak-traktor-2055-d1258ec7/": {
-      "digest": "4c0f8f8431a591dcf20354ec277c590a63a5368c2acb4d4b08a2f916835bc11b",
-      "modified": "2026-11-26T04:53:03.558Z"
+      "digest": "66d079b1d11c03f883aa7076492599f23b8415f8416375ae3aa30b0af10f1193",
+      "modified": "2026-11-26T12:36:43.036Z"
     },
     "https://tractorvs.com/hi/tractors/basak-traktor-2075-bk-9ef236be/": {
-      "digest": "ac4864e648fc52a1082807baf99e9c271d0dc2444718ca516af8b48d7e857624",
-      "modified": "2026-11-26T04:53:03.558Z"
+      "digest": "6e2a1b1cae38b25ee7ed156e1d020567aeac820fccc73c335d8068c940351b74",
+      "modified": "2026-11-26T12:36:43.036Z"
     },
     "https://tractorvs.com/hi/tractors/basak-traktor-2075-bt-ddb654b6/": {
-      "digest": "f6b27779c0bdcb6c3e9e352f1753bbefa6e6c12ba72b4fef996af483b8692547",
-      "modified": "2026-11-24T18:13:53.928Z"
+      "digest": "ab6a52b6b046e749e426601fa12d6d4d7793cc2ca1d300802f02b05e4d2dab72",
+      "modified": "2026-11-26T12:36:43.036Z"
+    },
+    "https://tractorvs.com/hi/tractors/basak-traktor-2080-bb-65db1295/": {
+      "digest": "e04b39ae13c33301363a1cf71fc1cd1e5239fee3447099a5afaa677b9a21d33c",
+      "modified": "2026-11-26T12:36:43.036Z"
+    },
+    "https://tractorvs.com/hi/tractors/basak-traktor-2090-s-eb3a7f45/": {
+      "digest": "c881b8b166a8ea645da363a2c913a43fc58266244c01ebf9d86a0362471ddaf7",
+      "modified": "2026-11-26T12:36:43.036Z"
     },
     "https://tractorvs.com/hi/tractors/basak-traktor-3026-2bc6ed35/": {
-      "digest": "1416d6083af0859a220f30ebed54231bf4d48cf648dd401a9261b775c2758941",
-      "modified": "2026-11-26T04:53:03.558Z"
+      "digest": "cfc1f83052d591673342ea8304117a5c5cf8220f7a352782c5446458a9407bec",
+      "modified": "2026-11-26T12:36:43.036Z"
     },
     "https://tractorvs.com/hi/tractors/basak-traktor-5075-compact-20e382ea/": {
-      "digest": "e10fa162af7da55b9995169cdf440848bfd3945c70b9107b4916c903dc846343",
-      "modified": "2026-11-26T06:48:25.172Z"
+      "digest": "0adec5a724710f4607f2dfe7b800302579a70de00321f545a83a00a461a78b92",
+      "modified": "2026-11-26T12:36:43.036Z"
+    },
+    "https://tractorvs.com/hi/tractors/basak-traktor-5075-red-power-e5132178/": {
+      "digest": "0b4e32c72921b58080ded1a8bbf34c14be864be3f8b209307e8b8dc4d7c68fc8",
+      "modified": "2026-11-26T12:36:43.036Z"
     },
     "https://tractorvs.com/hi/tractors/basak-traktor-5120-01590869/": {
       "digest": "415ba00a35d41c39f0c570a800609c311d4acf5649446e67d253b4a051d1fe87",
@@ -7641,6 +7737,22 @@
       "digest": "2b9e9e332cecaad4b9f3575219c89ef6a3410933b9e27cb2a4c3bfe46d5a7d90",
       "modified": "2026-11-24T18:04:40.415Z"
     },
+    "https://tractorvs.com/hi/tractors/yto-nlx1054-1-cda27b2a/": {
+      "digest": "17d35290b5f68b8b6f4e7c606ee42ce38423e1cc6d2ac6a265d9a8fb36ebb758",
+      "modified": "2026-11-26T12:36:43.036Z"
+    },
+    "https://tractorvs.com/hi/tractors/yto-nlx1104-1-bb8df687/": {
+      "digest": "8ba3dfbc36cfbf22d17b49ec9a9038c008fcf4a8e87f1ffb6dd651f220026a27",
+      "modified": "2026-11-26T12:36:43.036Z"
+    },
+    "https://tractorvs.com/hi/tractors/yto-nlx904-1-8067fc24/": {
+      "digest": "4f34d9ddf34153468e2c5c16936e33c7a8eaccf08e557f00f13c00c8741337ec",
+      "modified": "2026-11-26T12:36:43.036Z"
+    },
+    "https://tractorvs.com/hi/tractors/yto-nlx954-1-746e118b/": {
+      "digest": "594ede785f1a25781bca9928cd7a85f6ee1bbb946a18434c3e69e29a9b94662b",
+      "modified": "2026-11-26T12:36:43.036Z"
+    },
     "https://tractorvs.com/hi/tractors/zetor-5100-03752cb7/": {
       "digest": "34ba91e12cf6ebff515bca5d0256668cb5cef272951dafad8180b7f3c547d775",
       "modified": "2026-11-25T16:35:52.123Z"
@@ -7730,20 +7842,20 @@
       "modified": "2026-11-25T18:45:20.601Z"
     },
     "https://tractorvs.com/ja/": {
-      "digest": "816c0583bbc0226bf6e7db1d52db89aa066db8f94577d4ff729a8894b91763c4",
-      "modified": "2026-11-25T17:34:09.896Z"
+      "digest": "854175860a895e25f4e07c52362a788c13166a97969ae834e5daead967db8960",
+      "modified": "2026-11-26T12:36:43.036Z"
     },
     "https://tractorvs.com/ja/articles/": {
       "digest": "e7227b3b4bcb7c68aaa26c0f04f9c1bf76670c6a5107a8003d3f3ad226099b83",
       "modified": "2026-11-24T16:26:42.582Z"
     },
     "https://tractorvs.com/ja/compare/": {
-      "digest": "017f6c6ffb45d5d4bea9c66ad2a75bf5a1f4df3c6f79058d853096d02826fde1",
-      "modified": "2026-11-26T09:36:10.632Z"
+      "digest": "23bff03f7ec14921659c4ffd085706c3ad8ecf5cda8f969a37ed75dc5fd5e0b5",
+      "modified": "2026-11-26T12:36:43.036Z"
     },
     "https://tractorvs.com/ja/farm-advisor/": {
-      "digest": "cfd8b38b34300694a36458131a4de92637263dc33ed7a1bd8282070a7de9b952",
-      "modified": "2026-11-25T16:35:52.123Z"
+      "digest": "ad68314c4ce32723910250387f1312d800045010604814ae9dbfc2252fb93d4f",
+      "modified": "2026-11-26T12:36:43.036Z"
     },
     "https://tractorvs.com/ja/guides/choosing-a-tractor/": {
       "digest": "3b72ae07966123309d9613efe318636ac1a028d9500feddbedf32aba6fa643fe",
@@ -7758,8 +7870,8 @@
       "modified": "2026-11-24T16:26:42.582Z"
     },
     "https://tractorvs.com/ja/tractors/": {
-      "digest": "6887e9e17576f162e3701c5ffa060296f9a0eadb1a3f317f64247c3d5755bdfd",
-      "modified": "2026-11-26T06:48:25.172Z"
+      "digest": "4dac39f434768b115a4d90b9f955313176375f28456670961a642916d31c8f2f",
+      "modified": "2026-11-26T12:36:43.036Z"
     },
     "https://tractorvs.com/ja/tractors/agrale-4125-0b53e944/": {
       "digest": "5d7afd40823744e8968d0ffd1bc6dee0fd5a3304cab7e759858630ed1d91a596",
@@ -7870,24 +7982,36 @@
       "modified": "2026-11-25T04:05:53.437Z"
     },
     "https://tractorvs.com/ja/tractors/basak-traktor-2055-d1258ec7/": {
-      "digest": "33037778295639dfeae90713a82e39d0aea1524975c2d6e8ba16a254a3a71c2e",
-      "modified": "2026-11-26T04:53:03.558Z"
+      "digest": "cd5b9ebe9d167c386d855364f9607ba89267c9aca5aa8bfda904223ac16589da",
+      "modified": "2026-11-26T12:36:43.036Z"
     },
     "https://tractorvs.com/ja/tractors/basak-traktor-2075-bk-9ef236be/": {
-      "digest": "bb99d2c168690acd0b10168db2db06d656a7e1d9d8c5dc2bac17964fa99a4c6b",
-      "modified": "2026-11-26T04:53:03.558Z"
+      "digest": "8ed5f1ab9850e12322e76a839a8a978b6baf2308748923378631af9528c05a96",
+      "modified": "2026-11-26T12:36:43.036Z"
     },
     "https://tractorvs.com/ja/tractors/basak-traktor-2075-bt-ddb654b6/": {
-      "digest": "6de13a43a7c708b001fe0c657ea2d64548528b92fb7009a2827cede310749ade",
-      "modified": "2026-11-24T18:13:53.928Z"
+      "digest": "6602eb3e8a39f8a662d36d938cfc493f462a6b7bd9d680599ddf226261e5ce58",
+      "modified": "2026-11-26T12:36:43.036Z"
+    },
+    "https://tractorvs.com/ja/tractors/basak-traktor-2080-bb-65db1295/": {
+      "digest": "60cc37fe56cb7c9cf11ea9b0294964c79f4d8a6f530477f071125372b62064b3",
+      "modified": "2026-11-26T12:36:43.036Z"
+    },
+    "https://tractorvs.com/ja/tractors/basak-traktor-2090-s-eb3a7f45/": {
+      "digest": "99ff283896f0349f7afb374c6d788b4ff2272b217fb7dd44a631d56296d233b1",
+      "modified": "2026-11-26T12:36:43.036Z"
     },
     "https://tractorvs.com/ja/tractors/basak-traktor-3026-2bc6ed35/": {
-      "digest": "9cb821c8919f8d3d0ff7771bfc9e0176c57baef183cf1973320938f5c20954a1",
-      "modified": "2026-11-26T04:53:03.558Z"
+      "digest": "2de604ab1d86e7bd209860cb8929527bdad73e7a1d6ff37437144c7833794df0",
+      "modified": "2026-11-26T12:36:43.036Z"
     },
     "https://tractorvs.com/ja/tractors/basak-traktor-5075-compact-20e382ea/": {
-      "digest": "1ce5b653f9d632e30d5a232291cead188b318bf879fdfb503c444bc72c374019",
-      "modified": "2026-11-26T06:48:25.172Z"
+      "digest": "cb21ba9c1fe888d0eed704591201cbcd0f593d4e82e10310c5bc2c467e90eba5",
+      "modified": "2026-11-26T12:36:43.036Z"
+    },
+    "https://tractorvs.com/ja/tractors/basak-traktor-5075-red-power-e5132178/": {
+      "digest": "c0629b1d3be0e39b17607abfecfeaa817077040a33a5a16bc54091d72594d0c9",
+      "modified": "2026-11-26T12:36:43.036Z"
     },
     "https://tractorvs.com/ja/tractors/basak-traktor-5120-01590869/": {
       "digest": "6fbccf56ba2a0453aeefdf50ca2c8f2c943ccf1cff0b71a2fc23bf2f8f66ae5d",
@@ -9561,6 +9685,22 @@
       "digest": "3f34a158074d7b63828c9bca0e2c90990b35fd64ed2ed058a7ecdb0b120de14e",
       "modified": "2026-11-24T18:04:40.415Z"
     },
+    "https://tractorvs.com/ja/tractors/yto-nlx1054-1-cda27b2a/": {
+      "digest": "02c977da6c803dae0efb87bcd827790e51e2cdf58c28f19ca83c3d9d9ec7ad25",
+      "modified": "2026-11-26T12:36:43.036Z"
+    },
+    "https://tractorvs.com/ja/tractors/yto-nlx1104-1-bb8df687/": {
+      "digest": "7b73118f37907addfac82c7d38c2548040fc0f156fbb3f63dea421c1c7fb8b0a",
+      "modified": "2026-11-26T12:36:43.036Z"
+    },
+    "https://tractorvs.com/ja/tractors/yto-nlx904-1-8067fc24/": {
+      "digest": "a6829712e47d0eb080f848a7238bc3aceeb42133e15c730bd96c4c7716649433",
+      "modified": "2026-11-26T12:36:43.036Z"
+    },
+    "https://tractorvs.com/ja/tractors/yto-nlx954-1-746e118b/": {
+      "digest": "3e6813239966174ed0f35b0c593b37771b99edebd681a850b6c29560b8235052",
+      "modified": "2026-11-26T12:36:43.036Z"
+    },
     "https://tractorvs.com/ja/tractors/zetor-5100-03752cb7/": {
       "digest": "40feebc7fc47440ee6a12e60d74ea67ec6ed283277c35dc895cf7ffcabcfde07",
       "modified": "2026-11-25T16:35:52.123Z"
@@ -9658,20 +9798,20 @@
       "modified": null
     },
     "https://tractorvs.com/pt-br/": {
-      "digest": "2afa94a53d1e621b6589204fafe92796b8a5cba3d5bcd29d8b5e953c46ee69eb",
-      "modified": "2026-11-25T17:34:09.896Z"
+      "digest": "50815ebfa2389fbbbc1f629efbd7abdce552fe8b6c4c87ec3dfb99edd754b230",
+      "modified": "2026-11-26T12:36:43.036Z"
     },
     "https://tractorvs.com/pt-br/articles/": {
       "digest": "10ec54bd81ea3854a508000ce24ff618520893d7ecde37011f24d97042a3a46f",
       "modified": "2026-11-24T16:26:42.582Z"
     },
     "https://tractorvs.com/pt-br/compare/": {
-      "digest": "59f230728937ae2526a091115cc06536602f93b80c6d8c6242b3d013f50cb267",
-      "modified": "2026-11-26T09:36:10.632Z"
+      "digest": "4a062c9c26b26c0e2d5c390e8a9015b478568185fac0a3748660db07b5a15f24",
+      "modified": "2026-11-26T12:36:43.036Z"
     },
     "https://tractorvs.com/pt-br/farm-advisor/": {
-      "digest": "4bc89384bde6155b2c00f82edc476a6fa18d3c62b5a71a3b93ce736f6eba3eab",
-      "modified": "2026-11-25T16:35:52.123Z"
+      "digest": "35f87b05309dd8635dec344e73a8259a3e32a21e41b85e89578b44722ebcda6e",
+      "modified": "2026-11-26T12:36:43.036Z"
     },
     "https://tractorvs.com/pt-br/guides/choosing-a-tractor/": {
       "digest": "4547c1623e77bc94554e228d8ec08a89cfd907bf3b528ccc1dd806a2ea8c676a",
@@ -9686,8 +9826,8 @@
       "modified": "2026-11-24T16:26:42.582Z"
     },
     "https://tractorvs.com/pt-br/tractors/": {
-      "digest": "e511f39c76311114fbea304ae495d53ac4cc2d3a012d6aceab98786e9635b616",
-      "modified": "2026-11-26T06:48:25.172Z"
+      "digest": "78ef5e995a375f8ef47db67a3ae7af13cae3a5a5156544ceb904c7b61f39a4c4",
+      "modified": "2026-11-26T12:36:43.036Z"
     },
     "https://tractorvs.com/pt-br/tractors/agrale-4125-0b53e944/": {
       "digest": "866ce641fd3dece2f8d0ca6409e19ef4f8cd3aac1179e84cca2074a565d1ee31",
@@ -9798,24 +9938,36 @@
       "modified": "2026-11-25T16:35:52.123Z"
     },
     "https://tractorvs.com/pt-br/tractors/basak-traktor-2055-d1258ec7/": {
-      "digest": "361b6bb9ef1f9a929299bc28e998d312c4080579d242ca352dfd90414b734a6c",
-      "modified": "2026-11-25T18:32:44.999Z"
+      "digest": "285c360aa1131b473b6cc3d8beaf3ecf4df3c0e505e4d7080af08a8510c860c8",
+      "modified": "2026-11-26T12:36:43.036Z"
     },
     "https://tractorvs.com/pt-br/tractors/basak-traktor-2075-bk-9ef236be/": {
-      "digest": "637b876ce4547300066bc039ac3979c5e1b486f17e68202e1cfc5d94b3060285",
-      "modified": "2026-11-26T04:53:03.558Z"
+      "digest": "2a35ea1a1db50178083f2eb8f861d2f96b68ef696417338e511a5f14b4b7b862",
+      "modified": "2026-11-26T12:36:43.036Z"
     },
     "https://tractorvs.com/pt-br/tractors/basak-traktor-2075-bt-ddb654b6/": {
-      "digest": "4893ae50f6ae33efd63d18d3b13babe8c5b6429d949874ba3cb902a798cb155a",
-      "modified": "2026-11-24T18:13:53.928Z"
+      "digest": "638fdb743538e32239e98dfe9bbcaae0a875e99f5e819fbf003b4d1d2f8e27cf",
+      "modified": "2026-11-26T12:36:43.036Z"
+    },
+    "https://tractorvs.com/pt-br/tractors/basak-traktor-2080-bb-65db1295/": {
+      "digest": "b0f285a3467ac98118d6336a55a2f412de84dfbff82ff95ccfab6c690521618b",
+      "modified": "2026-11-26T12:36:43.036Z"
+    },
+    "https://tractorvs.com/pt-br/tractors/basak-traktor-2090-s-eb3a7f45/": {
+      "digest": "742ca5d04321f537e6feeb119bf8b1e206505b666dd338f7c2d3d598b7197036",
+      "modified": "2026-11-26T12:36:43.036Z"
     },
     "https://tractorvs.com/pt-br/tractors/basak-traktor-3026-2bc6ed35/": {
-      "digest": "90cf360d514b6cc52766e4a80e067b8838390a1f93443c12effbb638c352fd2b",
-      "modified": "2026-11-26T04:53:03.558Z"
+      "digest": "d5336712544bf5d86db9c8a65545c1fa93b459c6ef59daf5b20e7eb21bbe9bcd",
+      "modified": "2026-11-26T12:36:43.036Z"
     },
     "https://tractorvs.com/pt-br/tractors/basak-traktor-5075-compact-20e382ea/": {
-      "digest": "891747864d234078e017130ec73ce9af6f607735255ed28f99bc386bc1c29786",
-      "modified": "2026-11-26T06:48:25.172Z"
+      "digest": "92e05f0c5bf0cb808cd7cead084d3c133a962a36676f00767b2555883157b847",
+      "modified": "2026-11-26T12:36:43.036Z"
+    },
+    "https://tractorvs.com/pt-br/tractors/basak-traktor-5075-red-power-e5132178/": {
+      "digest": "772110a4faeded69a198be8c9378e6c0db78210e3b7ee3a2da629040f88b3a8b",
+      "modified": "2026-11-26T12:36:43.036Z"
     },
     "https://tractorvs.com/pt-br/tractors/basak-traktor-5120-01590869/": {
       "digest": "75af2d2d68a197d371155232687e7e0996805cb8e47ca68597af6b0fe111953d",
@@ -11489,6 +11641,22 @@
       "digest": "bd9521f58f65c04908c032cecdec9842916355617bd7c860c11bd48c4f5d0f19",
       "modified": "2026-11-24T18:04:40.415Z"
     },
+    "https://tractorvs.com/pt-br/tractors/yto-nlx1054-1-cda27b2a/": {
+      "digest": "0b8669eb91fc528b76f832bcfd99a4147c800145e75934f402426e66b1155b38",
+      "modified": "2026-11-26T12:36:43.036Z"
+    },
+    "https://tractorvs.com/pt-br/tractors/yto-nlx1104-1-bb8df687/": {
+      "digest": "21fe8ec5bfef1693495209ada2e5466e4da7f7190bee9d571eebab56afede034",
+      "modified": "2026-11-26T12:36:43.036Z"
+    },
+    "https://tractorvs.com/pt-br/tractors/yto-nlx904-1-8067fc24/": {
+      "digest": "0f6d163c84759d6c9861fcb8b94b470d27dd23e7ee60de70b26f6c5c60994561",
+      "modified": "2026-11-26T12:36:43.036Z"
+    },
+    "https://tractorvs.com/pt-br/tractors/yto-nlx954-1-746e118b/": {
+      "digest": "733e48e42a35dbf8b322e8194e22ff6dbd26fe53467f1bee563b56eada8f072c",
+      "modified": "2026-11-26T12:36:43.036Z"
+    },
     "https://tractorvs.com/pt-br/tractors/zetor-5100-03752cb7/": {
       "digest": "90a76248d1beec910690d158978c5699b0d8ff548d28c5bd7e8a418488725ad5",
       "modified": "2026-11-25T16:35:52.123Z"
@@ -11582,20 +11750,20 @@
       "modified": "2026-11-24T16:26:42.582Z"
     },
     "https://tractorvs.com/ru/": {
-      "digest": "607c7cc937f2f8329e5bc89275cfef2750db5b5f3ce29bd647d31a1b37794121",
-      "modified": "2026-11-25T17:34:09.896Z"
+      "digest": "81904ed6a25d7e6b80efcf78e1521ba0672736584c4a96664b101695a207d053",
+      "modified": "2026-11-26T12:36:43.036Z"
     },
     "https://tractorvs.com/ru/articles/": {
       "digest": "83f2b8b29637582a4fd73e4032eaf3277f45b572b08ed19445bece909c458085",
       "modified": "2026-11-24T16:26:42.582Z"
     },
     "https://tractorvs.com/ru/compare/": {
-      "digest": "823e9f502c55f032c3455cbd93a4f4a6f783ea189847a22b457832e2963f2a01",
-      "modified": "2026-11-26T09:36:10.632Z"
+      "digest": "2704b16b3616eaf8401bf4104e184f7d06b9404d927c042882468b3f5862dd49",
+      "modified": "2026-11-26T12:36:43.036Z"
     },
     "https://tractorvs.com/ru/farm-advisor/": {
-      "digest": "d6d97fa096b75dd093605ff3904c757309f593ccf0d3c363087775756861732f",
-      "modified": "2026-11-25T16:35:52.123Z"
+      "digest": "9830fe1e032c673c8a2442515a4c8841062cd8773dc548ac3183525a66dc885b",
+      "modified": "2026-11-26T12:36:43.036Z"
     },
     "https://tractorvs.com/ru/guides/choosing-a-tractor/": {
       "digest": "0aa1ab2f5e2ea379edf42d5ef3becdda7c6ec1fb49f661a79b788c5ce5095d7b",
@@ -11610,8 +11778,8 @@
       "modified": "2026-11-24T16:26:42.582Z"
     },
     "https://tractorvs.com/ru/tractors/": {
-      "digest": "4be8d2fd05ee4e9da0a74af4e79262145363999e40f76d9b76d0e1243c00768d",
-      "modified": "2026-11-26T06:48:25.172Z"
+      "digest": "a3c7c6b38e6775ca859ca22305881e5dbea64e87653cbdd185ab1f0db318d8a7",
+      "modified": "2026-11-26T12:36:43.036Z"
     },
     "https://tractorvs.com/ru/tractors/agrale-4125-0b53e944/": {
       "digest": "d6f9c73e7d8cbc00c63c109e0b96b7b99ae954e576cc872d07e6fb0493953a6a",
@@ -11722,24 +11890,36 @@
       "modified": "2026-11-25T16:35:52.123Z"
     },
     "https://tractorvs.com/ru/tractors/basak-traktor-2055-d1258ec7/": {
-      "digest": "15faa79e179b167a627c8e81cacd8ff24ac8cc86ec298c9d6aadf8cce2ef9f7a",
-      "modified": "2026-11-26T04:53:03.558Z"
+      "digest": "d0a714ba5c04f52bc85fbcf8fb197b3ff5b19334865983a45dc64a9dfc261b5c",
+      "modified": "2026-11-26T12:36:43.036Z"
     },
     "https://tractorvs.com/ru/tractors/basak-traktor-2075-bk-9ef236be/": {
-      "digest": "1a21ee727df2f5871431455695f671be44214928e9ae6c7ed5c82cef3fd146a7",
-      "modified": "2026-11-26T04:53:03.558Z"
+      "digest": "33682f571feadabd60af482350618d4fc2a27981a742b74693c1db5cb7c96ba4",
+      "modified": "2026-11-26T12:36:43.036Z"
     },
     "https://tractorvs.com/ru/tractors/basak-traktor-2075-bt-ddb654b6/": {
-      "digest": "18525c9a96e19d302dc11c3da906424cf08d7d640b45e68a041da421ab380843",
-      "modified": "2026-11-25T16:35:52.123Z"
+      "digest": "f534fbf1f723664f1b59caefc32ba63ee80758c67decdd6288bc0b9033c9647b",
+      "modified": "2026-11-26T12:36:43.036Z"
+    },
+    "https://tractorvs.com/ru/tractors/basak-traktor-2080-bb-65db1295/": {
+      "digest": "7b6cd7a4fb897c7ce003d7e8bc1aff07062087e7fa559f93a97f0a11ee4fae0c",
+      "modified": "2026-11-26T12:36:43.036Z"
+    },
+    "https://tractorvs.com/ru/tractors/basak-traktor-2090-s-eb3a7f45/": {
+      "digest": "16a354a253fcd39cfe0d1cb1acd01bde75516d92985790ea3423ba7790d1bee0",
+      "modified": "2026-11-26T12:36:43.036Z"
     },
     "https://tractorvs.com/ru/tractors/basak-traktor-3026-2bc6ed35/": {
-      "digest": "1d10ea1e1aa21408c451028e118a23069f5c9a502cb12652137c9b21b4fbfd30",
-      "modified": "2026-11-26T04:53:03.558Z"
+      "digest": "3a0a5f9fb5a6366cfa5ab040a159703ae2c72e784e6a20295a508efbdcebdd71",
+      "modified": "2026-11-26T12:36:43.036Z"
     },
     "https://tractorvs.com/ru/tractors/basak-traktor-5075-compact-20e382ea/": {
-      "digest": "56019f7aef53e1fc39e54b05528c93203155accae26015ef5700e519025eaff2",
-      "modified": "2026-11-26T06:48:25.172Z"
+      "digest": "c602cf9f0badf2238b8ba05f47b44ff6d391632885a4f24a6e7ad8ba1dabe9f4",
+      "modified": "2026-11-26T12:36:43.036Z"
+    },
+    "https://tractorvs.com/ru/tractors/basak-traktor-5075-red-power-e5132178/": {
+      "digest": "175bf08dea46dcc7aa4dda76fec56123c0b5f1da3c9eddcbbabe85306e5af00c",
+      "modified": "2026-11-26T12:36:43.036Z"
     },
     "https://tractorvs.com/ru/tractors/basak-traktor-5120-01590869/": {
       "digest": "779a91e1f79e08f6e2a33f9f899b0c35ff6ead5a65e50c0c12f88186b7b43a02",
@@ -13413,6 +13593,22 @@
       "digest": "00e5ad3a8a1fd815d0a576849c134021e8f706739cb2f1f2dd5845efb31cd129",
       "modified": "2026-11-24T18:04:40.415Z"
     },
+    "https://tractorvs.com/ru/tractors/yto-nlx1054-1-cda27b2a/": {
+      "digest": "10b2d4a1c2ac65cd57b07400eb1f429b14322f90bd9180b592aae81f8f9328bb",
+      "modified": "2026-11-26T12:36:43.036Z"
+    },
+    "https://tractorvs.com/ru/tractors/yto-nlx1104-1-bb8df687/": {
+      "digest": "4ce69fe7dc19e7ad1b305be72fd25c4b7be907cc0f494913968d43b360cf7b59",
+      "modified": "2026-11-26T12:36:43.036Z"
+    },
+    "https://tractorvs.com/ru/tractors/yto-nlx904-1-8067fc24/": {
+      "digest": "e2d8257bff89689c568d6dffbcf84dc3a0df1ede7040d08563b3344454773c06",
+      "modified": "2026-11-26T12:36:43.036Z"
+    },
+    "https://tractorvs.com/ru/tractors/yto-nlx954-1-746e118b/": {
+      "digest": "3415424277e019f88349b36415d9ba9dc1e3eea0c4bd1c25ac6e8c679a9e75e6",
+      "modified": "2026-11-26T12:36:43.036Z"
+    },
     "https://tractorvs.com/ru/tractors/zetor-5100-03752cb7/": {
       "digest": "3310512fd3b09d85ce2cf9a95fb3d60ca82ff5d15317810a7bb6dafbeee34a21",
       "modified": "2026-11-25T16:35:52.123Z"
@@ -13502,8 +13698,8 @@
       "modified": "2026-11-25T18:45:20.601Z"
     },
     "https://tractorvs.com/tr/": {
-      "digest": "147ef7c4dce3f09585d479b9b75eed7900f31c0ea758df97bd52af7a4452a6fa",
-      "modified": "2026-11-25T17:34:09.896Z"
+      "digest": "6cdf09fd0f8ec0843d202f5b0d8576fda829fe4748ca8c1683b5b57251a7216d",
+      "modified": "2026-11-26T12:36:43.036Z"
     },
     "https://tractorvs.com/tr/articles/": {
       "digest": "75d1132252a6b94ba476a895c078b5f180c697c16484cb41b026573a16aabb99",
@@ -13518,16 +13714,16 @@
       "modified": "2026-11-22T08:02:35.845Z"
     },
     "https://tractorvs.com/tr/compare/": {
-      "digest": "f7a0a2bb3c3a076bf93ed0c2ed290bb56402d695f791e73a64ffd8d50a32050b",
-      "modified": "2026-11-26T09:36:10.632Z"
+      "digest": "e23d4e2e52efdced5b74e49b11ce09deff7501b99242ae51afbdfd135e64fa25",
+      "modified": "2026-11-26T12:36:43.036Z"
     },
     "https://tractorvs.com/tr/compare/deutz-fahr-5090-d-gs-vs-5100-d-gs/": {
       "digest": "0f223596935ecf9cf2a0972e5fd862ac566c38ba2f83123a156634df383d9733",
       "modified": "2026-11-23T16:20:24.281Z"
     },
     "https://tractorvs.com/tr/farm-advisor/": {
-      "digest": "f8c01a56fa80e6947389cd30dedf71ed9adab65ba1dae767a4c6fc713116ce13",
-      "modified": "2026-11-25T16:35:52.123Z"
+      "digest": "eea2839c306a356d657320aa4698ef27380fbf260e051418d6ff90444f3485bc",
+      "modified": "2026-11-26T12:36:43.036Z"
     },
     "https://tractorvs.com/tr/guides/choosing-a-tractor/": {
       "digest": "11c88ba0738bb3c87249f11db80f4130fbfd238a4e8fc58849bc385efa714b93",
@@ -13562,8 +13758,8 @@
       "modified": "2026-11-24T16:26:42.582Z"
     },
     "https://tractorvs.com/tr/tractors/": {
-      "digest": "1d55a6f9f5adda7835dcdb483d98a4e43fa38a8a805dd15bdd3fc0c3e1de662c",
-      "modified": "2026-11-26T06:48:25.172Z"
+      "digest": "6085a9e92b8cf0cfa60d46c70120ef8b75729ccf3c21eee706ae73415320c7c3",
+      "modified": "2026-11-26T12:36:43.036Z"
     },
     "https://tractorvs.com/tr/tractors/agrale-4125-0b53e944/": {
       "digest": "ad66328a63aa0e72539816f3a8fb01d4f89f093a6d3a62563a554e1efd5a687c",
@@ -13674,24 +13870,36 @@
       "modified": "2026-11-25T16:35:52.123Z"
     },
     "https://tractorvs.com/tr/tractors/basak-traktor-2055-d1258ec7/": {
-      "digest": "7992351abbd4f01c1fc8b084ec5d643775ee56b89de80915c38d9349c1cb4468",
-      "modified": "2026-11-26T04:53:03.558Z"
+      "digest": "17c75e943fde17eeb229f9357112cc210461b8fe048bb3d0bd199fb8932c1c51",
+      "modified": "2026-11-26T12:36:43.036Z"
     },
     "https://tractorvs.com/tr/tractors/basak-traktor-2075-bk-9ef236be/": {
-      "digest": "767036303979d0fddaa37e0101c9be0ee41c76a13c82d82e76d612092acf05d1",
-      "modified": "2026-11-24T18:13:53.928Z"
+      "digest": "27c10146f22f874c1e9a0f0658840c46a37bc12c28f8afc1e7f92756c3a2ec09",
+      "modified": "2026-11-26T12:36:43.036Z"
     },
     "https://tractorvs.com/tr/tractors/basak-traktor-2075-bt-ddb654b6/": {
-      "digest": "6c85dd74b3a926b46002f4d249ab77ebeb48495f13ed032b5cc2fcdfa818b46a",
-      "modified": "2026-11-24T18:13:53.928Z"
+      "digest": "af702fe7e64a497aaa7cb64aa3058b1105aa4d0de273d28f563783edd42a8054",
+      "modified": "2026-11-26T12:36:43.036Z"
+    },
+    "https://tractorvs.com/tr/tractors/basak-traktor-2080-bb-65db1295/": {
+      "digest": "eec6cf5b57b523f5b3f02fd27136c5a4097e32ddd89a96bcb14a8550b96590ed",
+      "modified": "2026-11-26T12:36:43.036Z"
+    },
+    "https://tractorvs.com/tr/tractors/basak-traktor-2090-s-eb3a7f45/": {
+      "digest": "54d7f3ddb482dc3f3ba4e79e39ff8b61e9745c1229aac91afac77caf918dff90",
+      "modified": "2026-11-26T12:36:43.036Z"
     },
     "https://tractorvs.com/tr/tractors/basak-traktor-3026-2bc6ed35/": {
-      "digest": "ec5e1f2e75a7e62c0ae4d6b35357e4d85833d79c59328463cfedf6cc087e7e85",
-      "modified": "2026-11-26T04:53:03.558Z"
+      "digest": "ff230716b92213b0f80a9f206504dbe96a3db3107ea9005e53ab55eebb34d3c1",
+      "modified": "2026-11-26T12:36:43.036Z"
     },
     "https://tractorvs.com/tr/tractors/basak-traktor-5075-compact-20e382ea/": {
-      "digest": "e49cfc561144017f562102c6be118c6cd9dbecc0d9102f2ef95ea78328c8c422",
-      "modified": "2026-11-26T06:48:25.172Z"
+      "digest": "c798cf1dad925813b562398913cb005c687240325e90eb34e30e590441edf1fc",
+      "modified": "2026-11-26T12:36:43.036Z"
+    },
+    "https://tractorvs.com/tr/tractors/basak-traktor-5075-red-power-e5132178/": {
+      "digest": "db96280ddf5ff7e35ec3c2cf5cdb6fc663aa380df8221209d5d12ae46efe24b4",
+      "modified": "2026-11-26T12:36:43.036Z"
     },
     "https://tractorvs.com/tr/tractors/basak-traktor-5120-01590869/": {
       "digest": "8a4b4012b5f7a43794987364a0b22fae9812b11ac0cc6715bfe7b7174b57c80b",
@@ -15365,6 +15573,22 @@
       "digest": "d7e228d3b5464ec2c00994a22731091c51d5d59878b460d2eeead483cc44f8f7",
       "modified": "2026-11-24T18:04:40.415Z"
     },
+    "https://tractorvs.com/tr/tractors/yto-nlx1054-1-cda27b2a/": {
+      "digest": "200369bef4cf12fc272d61f219dae230f09e0b83423b65eaaee20faba5bedf84",
+      "modified": "2026-11-26T12:36:43.036Z"
+    },
+    "https://tractorvs.com/tr/tractors/yto-nlx1104-1-bb8df687/": {
+      "digest": "2dab09adbd03d5c77db3e6bc639c50f8b73747f9823b6530964128b7bbc05675",
+      "modified": "2026-11-26T12:36:43.036Z"
+    },
+    "https://tractorvs.com/tr/tractors/yto-nlx904-1-8067fc24/": {
+      "digest": "fe513a36ed6691f02679e7d73f650fc3f07402a74b0208aec30684fac9858877",
+      "modified": "2026-11-26T12:36:43.036Z"
+    },
+    "https://tractorvs.com/tr/tractors/yto-nlx954-1-746e118b/": {
+      "digest": "136ca306cb5e53243e857298ac3a0857bf39c4dad3462003aee673e95e6db130",
+      "modified": "2026-11-26T12:36:43.036Z"
+    },
     "https://tractorvs.com/tr/tractors/zetor-5100-03752cb7/": {
       "digest": "eed56ea589f6912467ea32d55654d5935083f3ac2ea418caa6a12e4b984f7b1d",
       "modified": "2026-11-25T16:35:52.123Z"
@@ -15454,8 +15678,8 @@
       "modified": "2026-11-25T18:45:20.601Z"
     },
     "https://tractorvs.com/tractors/": {
-      "digest": "8711ef411a082f1546d1b54358712b3fd2e593354acb11854f6545be59093c4a",
-      "modified": "2026-11-26T06:48:25.172Z"
+      "digest": "a8c8bae720550445a7bd4e5654af989f1abc3060d384eebdf54ee2fbd4198db7",
+      "modified": "2026-11-26T12:36:43.036Z"
     },
     "https://tractorvs.com/tractors/agrale-4125-0b53e944/": {
       "digest": "62ff459d3cbb03908cdfff8c6b03a48d0795432e247004ad37af0ecb6ee31ff6",
@@ -15566,24 +15790,36 @@
       "modified": "2026-11-25T04:05:53.437Z"
     },
     "https://tractorvs.com/tractors/basak-traktor-2055-d1258ec7/": {
-      "digest": "3414b0299eb8bc27a0555e1b5c7902f27b145cd55abafb78b4dadf44b6127abb",
-      "modified": "2026-11-26T04:53:03.558Z"
+      "digest": "f1959a8a49fa548993b5115286ef36aee171fb5a495fc7635f57c37aefad92a2",
+      "modified": "2026-11-26T12:36:43.036Z"
     },
     "https://tractorvs.com/tractors/basak-traktor-2075-bk-9ef236be/": {
-      "digest": "c100ca5c21a74761e000be35e3b6d2a70fa7b599aecec5cf2f06fe0a7180df5f",
-      "modified": "2026-11-26T04:53:03.558Z"
+      "digest": "2c2a67ae80c1ee9f9c13864a3f8a9b44e2317fb14575b8dbd1ccf46162789a9e",
+      "modified": "2026-11-26T12:36:43.036Z"
     },
     "https://tractorvs.com/tractors/basak-traktor-2075-bt-ddb654b6/": {
-      "digest": "50cc04af04a8066df41aace98f55e80d29df6b12c9a328b1aeeadbd92df922c5",
-      "modified": "2026-11-24T18:13:53.928Z"
+      "digest": "2ab8f9625d4098491ad481f0fed7a8b25c46bcb4405f4e56bb44872d32edba51",
+      "modified": "2026-11-26T12:36:43.036Z"
+    },
+    "https://tractorvs.com/tractors/basak-traktor-2080-bb-65db1295/": {
+      "digest": "db3223ee2ef51e53c82e13bd1121a09c867f005a8f8146be12416ed37b2cd945",
+      "modified": "2026-11-26T12:36:43.036Z"
+    },
+    "https://tractorvs.com/tractors/basak-traktor-2090-s-eb3a7f45/": {
+      "digest": "8d3feb56adad987b783a6984d280d755db297e78b43368a310c48e90f713668f",
+      "modified": "2026-11-26T12:36:43.036Z"
     },
     "https://tractorvs.com/tractors/basak-traktor-3026-2bc6ed35/": {
-      "digest": "40b555bd31f19d015ebcbffebf18f780db627cc6d6691e069d304e1f73dcbfe8",
-      "modified": "2026-11-26T04:53:03.558Z"
+      "digest": "efbe0eb0d08a2147d96b1cf43f5d67cebb82d9186e045798f6d04fc9463e4ec6",
+      "modified": "2026-11-26T12:36:43.036Z"
     },
     "https://tractorvs.com/tractors/basak-traktor-5075-compact-20e382ea/": {
-      "digest": "8712004869b5b5866f3afc905df044224b9ab0dc01af3f4a25261a87127112b8",
-      "modified": "2026-11-26T06:48:25.172Z"
+      "digest": "3ff700a0afe520d5c5e25c8b73e946863676ee1ec0a376cb4a8ff7062442f82c",
+      "modified": "2026-11-26T12:36:43.036Z"
+    },
+    "https://tractorvs.com/tractors/basak-traktor-5075-red-power-e5132178/": {
+      "digest": "8387eaf06eb0fff6cd06457d56f61e6c36653b4ae3ebc57286a6ea9e389e2f42",
+      "modified": "2026-11-26T12:36:43.036Z"
     },
     "https://tractorvs.com/tractors/basak-traktor-5120-01590869/": {
       "digest": "9841e4696785a4b466494440b389f65dd866e8e200d211ced2a1e662de24374a",
@@ -17257,6 +17493,22 @@
       "digest": "0f7b10775bc2ed2dfb7106ed37d2e1f7fa016b1e2cc1ca555e59cb178e2e8b5a",
       "modified": "2026-11-24T18:04:40.415Z"
     },
+    "https://tractorvs.com/tractors/yto-nlx1054-1-cda27b2a/": {
+      "digest": "b3d81d0b567ee07b40cce6a77e446a9ffbc04c9151a63ba91dff9d6da3cc8029",
+      "modified": "2026-11-26T12:36:43.036Z"
+    },
+    "https://tractorvs.com/tractors/yto-nlx1104-1-bb8df687/": {
+      "digest": "f13a629c3c2bff45a962a97419fed699cf006f7c9282da2e7b3e244c498e022c",
+      "modified": "2026-11-26T12:36:43.036Z"
+    },
+    "https://tractorvs.com/tractors/yto-nlx904-1-8067fc24/": {
+      "digest": "ec48e934a7aa160f8d41734ff7bd278b3e8f8e62552c7eeadf7adef7df89dbac",
+      "modified": "2026-11-26T12:36:43.036Z"
+    },
+    "https://tractorvs.com/tractors/yto-nlx954-1-746e118b/": {
+      "digest": "df5aa85b442a56c03cb79fb29cde2c929b8afd21c49274ac251db776bd2fb0ed",
+      "modified": "2026-11-26T12:36:43.036Z"
+    },
     "https://tractorvs.com/tractors/zetor-5100-03752cb7/": {
       "digest": "1e7bf805f909de9626100e0696d082be07fab0e4bc8245d99fe2aa8b7f3daefc",
       "modified": "2026-11-24T19:01:41.839Z"
@@ -17346,20 +17598,20 @@
       "modified": "2026-11-25T18:45:20.601Z"
     },
     "https://tractorvs.com/zh/": {
-      "digest": "70b44d3825b79af9c3d03baa1050f0aa2c2ebfc1234b9ce74fe72447e23c1f08",
-      "modified": "2026-11-25T17:34:09.896Z"
+      "digest": "c673636e6c3dc47bd4e3e2c30774eea38036d32975168bfef7ee06b95ac5aca9",
+      "modified": "2026-11-26T12:36:43.036Z"
     },
     "https://tractorvs.com/zh/articles/": {
       "digest": "5e6ee9807459baae052b17e309edce3c5271e3b0dfb6c00aaa8433a08ac323d1",
       "modified": "2026-11-24T16:26:42.582Z"
     },
     "https://tractorvs.com/zh/compare/": {
-      "digest": "e744e7b174fb253090bec908e9bd969fa8b8cf30162dcb426f78d3212011fd25",
-      "modified": "2026-11-26T09:36:10.632Z"
+      "digest": "27abfeebf4958bc809aaa16495c3b1af71e528cee48925f02c5707c4adfb177a",
+      "modified": "2026-11-26T12:36:43.036Z"
     },
     "https://tractorvs.com/zh/farm-advisor/": {
-      "digest": "7af38845364ce628d1e5ffa4953ff0113609bbd5f15fb2607475093873294ace",
-      "modified": "2026-11-25T16:35:52.123Z"
+      "digest": "6906e2df72550b006a9a3b3212bec77c4f8d1f07432242456592b72b6c934eb0",
+      "modified": "2026-11-26T12:36:43.036Z"
     },
     "https://tractorvs.com/zh/guides/choosing-a-tractor/": {
       "digest": "5a3e53c6e32392c8b9c1e19830ba7d37146aa48dfce472d6abf7212810b227cb",
@@ -17374,8 +17626,8 @@
       "modified": "2026-11-24T16:26:42.582Z"
     },
     "https://tractorvs.com/zh/tractors/": {
-      "digest": "c9dd205de193998ac78c872c2d4249ca3f5f7f8432c193288da0242b32c8c2b3",
-      "modified": "2026-11-26T06:48:25.172Z"
+      "digest": "61fa10c587ba0234b901f313ddb796fd54609443867512bcad8b0f755d951473",
+      "modified": "2026-11-26T12:36:43.036Z"
     },
     "https://tractorvs.com/zh/tractors/agrale-4125-0b53e944/": {
       "digest": "ef47a83d3474c07af023699cd60f4da1074fd6e21e252891f0dbfc67aac2fbe2",
@@ -17486,24 +17738,36 @@
       "modified": "2026-11-25T04:05:53.437Z"
     },
     "https://tractorvs.com/zh/tractors/basak-traktor-2055-d1258ec7/": {
-      "digest": "5d91697e4fd44644a09a87d7fcb536952924dacc788b8c425d2bb880e53db9d0",
-      "modified": "2026-11-26T04:53:03.558Z"
+      "digest": "92842d43a659f4155103a99b03af52b755d768d60a05a230361a6d5dd0cd93bb",
+      "modified": "2026-11-26T12:36:43.036Z"
     },
     "https://tractorvs.com/zh/tractors/basak-traktor-2075-bk-9ef236be/": {
-      "digest": "eb5e9a67ac403f9bd1f1d23a225744f6d6400d47cc5a0a56976d948d973025ad",
-      "modified": "2026-11-26T04:53:03.558Z"
+      "digest": "8352955a1683d3ef650d89fc3c403115ab191ca7ef5bd04d451b68dc5588393d",
+      "modified": "2026-11-26T12:36:43.036Z"
     },
     "https://tractorvs.com/zh/tractors/basak-traktor-2075-bt-ddb654b6/": {
-      "digest": "4d0b0e3690f1df7ad9e29a59f89cb71b079bd8e923e88d7d6c128612c107254a",
-      "modified": "2026-11-24T18:13:53.928Z"
+      "digest": "48986fcd48b8b5ea41a8c8c64b713d21646c98b5d78c7037671d16b1d04bbf2a",
+      "modified": "2026-11-26T12:36:43.036Z"
+    },
+    "https://tractorvs.com/zh/tractors/basak-traktor-2080-bb-65db1295/": {
+      "digest": "6cd1b03a6f72b17a7528c87b7b641685ec5bb8a438e48950b0ba14361f1348e7",
+      "modified": "2026-11-26T12:36:43.036Z"
+    },
+    "https://tractorvs.com/zh/tractors/basak-traktor-2090-s-eb3a7f45/": {
+      "digest": "71d47f7f0aa8e5667e9586cdb522b644b319da3567850ad1c06e4193730dafef",
+      "modified": "2026-11-26T12:36:43.036Z"
     },
     "https://tractorvs.com/zh/tractors/basak-traktor-3026-2bc6ed35/": {
-      "digest": "a324a651c1378ac009251dced6d9d6c6392524596db885b029cf0b1cb3b56e98",
-      "modified": "2026-11-26T04:53:03.558Z"
+      "digest": "c8e8765ec060ae5e0b3687c3d5db79a1fa482d388e27caf732e5268ed07c0036",
+      "modified": "2026-11-26T12:36:43.036Z"
     },
     "https://tractorvs.com/zh/tractors/basak-traktor-5075-compact-20e382ea/": {
-      "digest": "93870b0c8893452ab63b8bded20df3fc06bce7804dc961f718906934c93ed564",
-      "modified": "2026-11-26T06:48:25.172Z"
+      "digest": "5dcf1fcc6bbff1b7f9d42c311fa8f4b57df442261fedcfd71cb18403a5ce3261",
+      "modified": "2026-11-26T12:36:43.036Z"
+    },
+    "https://tractorvs.com/zh/tractors/basak-traktor-5075-red-power-e5132178/": {
+      "digest": "93b9afea8dc52f0f394835c1d3ea538fbdf1254bcf8f3f1ca10c1a2ede9419b2",
+      "modified": "2026-11-26T12:36:43.036Z"
     },
     "https://tractorvs.com/zh/tractors/basak-traktor-5120-01590869/": {
       "digest": "937566d148c9b64d5321f9ed26c9d01417427c8da98402133b109f9d82980519",
@@ -19176,6 +19440,22 @@
     "https://tractorvs.com/zh/tractors/yanmar-yt359-a61cb039/": {
       "digest": "212a54638de476cabf7beb4c3df1881c69833434e5300ea7b1cd11adbb3b7a3d",
       "modified": "2026-11-24T18:04:40.415Z"
+    },
+    "https://tractorvs.com/zh/tractors/yto-nlx1054-1-cda27b2a/": {
+      "digest": "42827734e194af962097a74473f1e611d5c4db7dab4b414228006b713c63ee2d",
+      "modified": "2026-11-26T12:36:43.036Z"
+    },
+    "https://tractorvs.com/zh/tractors/yto-nlx1104-1-bb8df687/": {
+      "digest": "3d7b59f003a22cee57b676f07739f06af927b5db796b8115ae65a166a225c815",
+      "modified": "2026-11-26T12:36:43.036Z"
+    },
+    "https://tractorvs.com/zh/tractors/yto-nlx904-1-8067fc24/": {
+      "digest": "3814a18e0d2b8684d275f7232b51231867445886e9b640c9651a8021e57fc36a",
+      "modified": "2026-11-26T12:36:43.036Z"
+    },
+    "https://tractorvs.com/zh/tractors/yto-nlx954-1-746e118b/": {
+      "digest": "37d687b399a352055e1b891413db696826452daa7c0746d412922787ae39f152",
+      "modified": "2026-11-26T12:36:43.036Z"
     },
     "https://tractorvs.com/zh/tractors/zetor-5100-03752cb7/": {
       "digest": "5065dc414a287df34674989c68230e2ec252bf542e743484947ffd5534681e58",

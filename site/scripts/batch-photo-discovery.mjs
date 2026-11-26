@@ -21,7 +21,8 @@ const PRIVATE_OUTPUT=process.env.TRACTOR_IMAGE_PRIVATE_REPORT_DIR?resolve(proces
 const USER_AGENT="TractorVS/1.0 (tractorvs.com; public photo license research)";
 const REQUEST_LIMIT=4;
 const delay=ms=>new Promise(r=>setTimeout(r,ms));
-const stripTags=s=>String(s||"").replace(/<[^>]*>/g,"").replace(/&amp;/g,"&").replace(/&quot;/g,'"').trim();
+// JSON-LD names are already text, not HTML. Preserve literal entity spellings.
+const cleanName=s=>typeof s==="string"?s.replace(/\s+/g," ").trim():"";
 const norm=s=>String(s||"").normalize("NFKD").replace(/[\u0300-\u036f]/g,"").toLowerCase()
   .replace(/\u0131/g,"i").replace(/[^a-z0-9]+/g,"");
 async function get(url,asJson=false){
@@ -56,7 +57,7 @@ async function publicInventory(){
             const data=JSON.parse(raw);
             const item=(data["@graph"]||[]).find(x=>x["@type"]==="Thing" && x.identifier);
             if(item){
-              const name=stripTags(item.name||"").trim();
+              const name=cleanName(item.name);
               const {brand,model}=splitBrandModel(name);
               return {brand,model,variant:item.disambiguatingDescription||null,
                 status:"published",pageUrl:link,tractor_id:item.identifier};
