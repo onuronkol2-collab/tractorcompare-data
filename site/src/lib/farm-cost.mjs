@@ -11,5 +11,8 @@ export function farmCost(input) {
  const hourly=input.fuel*input.price;
  const perHa=hourly/capacity;
  const annualFuel=input.annualHours*hourly;
- return {capacity,time,litres,hourly,perHa,perDekar:perHa/10,fieldCost:litres*input.price,annualFuel,annualTotal:input.annualHours*(hourly+input.other)+input.fixed};
+ return {capacity,time,litres,hourly,perHa,perDekar:perHa/10,fieldCost:litres*input.price,operatingPerHa:(hourly+input.other)/capacity,operatingField:time*(hourly+input.other),annualFuel,annualTotal:input.annualHours*(hourly+input.other)+input.fixed};
 }
+
+const AREA_SQM=Object.freeze({ha:10000,decare:1000,acre:4046.8564224,m2:1,mu:10000/15,tan:991.73553719});
+export function farmAreaInHectares(value,unit){if(typeof value!=="number"||!Number.isFinite(value)||value<=0||typeof unit!=="string"||!Object.hasOwn(AREA_SQM,unit))throw new RangeError("Invalid area");const ha=value*AREA_SQM[unit]/10000;if(ha<0.0001||ha>1000000)throw new RangeError("Invalid area");return ha;}

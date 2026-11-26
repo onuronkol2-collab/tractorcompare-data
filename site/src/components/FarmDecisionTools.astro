@@ -1,5 +1,6 @@
 ---
 import {farmDecisionText} from "../lib/farm-decision-i18n";
+import FarmModelContext from "./FarmModelContext.astro";
 import {farmCostText} from "../lib/farm-cost-i18n";
 import {LOCALE_TAGS,type Locale} from "../lib/locales";
 interface Props{lang:Locale}
@@ -37,11 +38,12 @@ const checklist=["identity","history","safety","engine","drive","hydraulic","tyr
  </section>
  <section class="decision-card" id="farm-equipment">
   <h2>{c.equipment}</h2><p>{c.equipmentNote}</p>
+  <FarmModelContext lang={lang} />
   <form data-decision="equipment" data-clarity-mask="true"><fieldset data-tool-controls disabled>
    {compat.map(key=><fieldset><legend>{c[key]}</legend><div class="decision-grid"><label>{c.available}<input type="number" name={key+"Available"} min="0" max="1000000000" step="any" inputmode="decimal"/></label><label>{c.required}<input type="number" name={key+"Required"} min="0" max="1000000000" step="any" inputmode="decimal"/></label></div></fieldset>)}
    <button type="submit">{common.calculate}</button><p data-equipment-result data-matched={c.matched} data-insufficient={c.insufficient} data-unknown={c.unknown} aria-live="polite">{c.unknown}</p><p>{c.manual}</p><p data-error role="alert" hidden>{common.invalid}</p></fieldset>
   </form>
-  <p><a lang="en" href="https://www.canr.msu.edu/resources/bulletin-e-3515-used-farm-equipment-markets-planning-the-purchase">Michigan State University Extension — Used Farm Equipment Markets: Planning the Purchase</a></p>
+  <p><a lang="en" href="https://extension.psu.edu/managing-machinery-and-equipment">Penn State Extension — Managing Machinery and Equipment</a></p>
  </section>
  <section class="decision-card" id="farm-used">
   <h2>{c.used}</h2><p>{c.usedNote}</p>

@@ -1,6 +1,6 @@
 import {test} from "node:test";
 import assert from "node:assert/strict";
-import {farmCost} from "../src/lib/farm-cost.mjs";
+import {farmCost,farmAreaInHectares} from "../src/lib/farm-cost.mjs";
 import {farmCostText} from "../src/lib/farm-cost-i18n.ts";
 import {LOCALES} from "../src/lib/locales.ts";
 const base={area:10,width:3,speed:6,efficiency:75,fuel:8,price:2,annualHours:200,other:4,fixed:100};
@@ -29,3 +29,5 @@ test("all ten locales have complete distinct human-readable calculator strings",
  }
  assert.equal(new Set(LOCALES.map(lang=>farmCostText(lang).title)).size,10);
 });
+
+test("international area units and operating cost exclude annual fixed costs",()=>{assert.equal(farmAreaInHectares(100,"decare"),10);assert.ok(Math.abs(farmAreaInHectares(1,"acre")-0.40468564224)<1e-12);assert.equal(farmAreaInHectares(15,"mu"),1);assert.throws(()=>farmAreaInHectares(1,"constructor"));assert.throws(()=>farmAreaInHectares(0,"ha"));const x=farmCost(base);assert.ok(Math.abs(x.operatingField-(16+4)*x.time)<1e-9);assert.ok(Math.abs(x.operatingPerHa*10-x.operatingField)<1e-9);});

@@ -5,6 +5,7 @@ test("localized farm tools calculate, fail closed and keep explicitly saved note
  await expect(page.locator("h1")).toContainText("Traktör yakıt maliyeti");
  const fuel=page.locator("#farm-cost-form");await fuel.getByRole("button",{name:"Hesapla"}).click();
  await expect(page.locator('[data-cost-result="capacity"]')).toHaveText("1,35");
+ await fuel.locator('[name="area"]').fill("100");await fuel.locator('[name="areaUnit"]').selectOption("decare");await fuel.getByRole("button",{name:"Hesapla"}).click();await expect(page.locator('[data-cost-result="capacity"]')).toHaveText("1,35");await expect(page.locator("[data-equipment-model]")).toBeEnabled();
  const finance=page.locator('[data-decision="finance"]');await finance.getByRole("button").click();
  await expect(finance.locator('[data-finance-result="depreciation"]')).toHaveText("3.000");
  const equipment=page.locator('[data-decision="equipment"]');await equipment.getByRole("button").click();
