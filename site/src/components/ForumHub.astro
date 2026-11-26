@@ -2,6 +2,7 @@
 import SiteLayout from "../layouts/SiteLayout.astro";
 import ForumComposer from "./ForumComposer.astro";
 import ForumMemberPanel from "./ForumMemberPanel.astro";
+import ForumReporting from "./ForumReporting.astro";
 import ForumDashboardRail from "./ForumDashboardRail.astro";
 import "../styles/forum-readable.css";
 import ForumDashboardPanels from "./ForumDashboardPanels.astro";
@@ -248,6 +249,7 @@ const schema=indexable?{
    </aside>
    </div>
    <ForumMemberPanel lang={lang}/>
+   <ForumReporting lang={lang} config={liveConfig} moderation={true}/>
    <p class="community-help"><a href={localizedPath(lang,"/tractors/")}>{ft(lang,"help")} ↗</a></p>
   </div>
  </div>
