@@ -1,0 +1,82 @@
+name: Site health isolated RLS and dependency safety
+on:
+  pull_request:
+    paths:
+      - 'supabase/maintenance/site-health-20261126/**'
+      - 'supabase/verification/forum_solutions_reporting_*.sql'
+      - 'supabase/sql/forum_solutions_reporting_candidate.sql'
+      - '.github/workflows/site-health-safety.yml'
+      - 'package-lock.json'
+      - 'package.json'
+      - 'site/package.json'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  isolated-rls:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    strategy:
+      fail-fast: false
+      matrix:
+        stage: [baseline, candidate, rollback]
+    services:
+      postgres:
+        image: postgres:17
+        env:
+          POSTGRES_PASSWORD: disposable-fixture-only
+          PGUSER: postgres
+          PGDATABASE: postgres
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 12
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Run existing forum real-role tests against each schema stage
+        env:
+          FIXTURE_CONTAINER: ${{ job.services.postgres.id }}
+          STAGE: ${{ matrix.stage }}
+        run: |
+          set -euo pipefail
+          dir=supabase/maintenance/site-health-20261126
+          sql() { docker exec -i "$FIXTURE_CONTAINER" psql -U postgres -d postgres -v ON_ERROR_STOP=1 -f - < "$1"; }
+          sql supabase/verification/forum_solutions_reporting_fixture.sql
+          sql supabase/sql/forum_solutions_reporting_candidate.sql
+          sql "$dir/fixture-private.sql"
+          if [ "$STAGE" != baseline ]; then
+            sql "$dir/apply.sql"
+            sql "$dir/assert-applied.sql"
+          fi
+          if [ "$STAGE" = rollback ]; then
+            sql "$dir/rollback.sql"
+            sql "$dir/assert-restored.sql"
+          fi
+          sql "$dir/assert-boundaries.sql"
+          sql supabase/verification/forum_solutions_reporting_test.sql
+      - name: Reject stale policy definition in disposable fixture
+        if: matrix.stage == 'baseline'
+        env:
+          FIXTURE_CONTAINER: ${{ job.services.postgres.id }}
+        run: |
+          set -euo pipefail
+          docker exec "$FIXTURE_CONTAINER" psql -U postgres -d postgres -v ON_ERROR_STOP=1 -c "alter policy tc_solution_owner_read on public.tc_forum_accepted_solutions using (false);"
+          if docker exec -i "$FIXTURE_CONTAINER" psql -U postgres -d postgres -v ON_ERROR_STOP=1 -f - < supabase/maintenance/site-health-20261126/apply.sql; then
+            echo "Drift guard failed"; exit 1
+          fi
+          docker exec "$FIXTURE_CONTAINER" psql -U postgres -d postgres -v ON_ERROR_STOP=1 -Atc "select to_regclass('tc_assisted_private.tc_publication_audit_grant_idx') is null and to_regclass('tc_forum_reporting_private.tc_review_audit_reviewer_idx') is null;" | grep -x t
+  dependency-audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22.23.4'
+      - name: Audit lockfile against registry advisories (no install, no fixes)
+        run: npm audit --audit-level=high --json
