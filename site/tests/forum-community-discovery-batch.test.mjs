@@ -1,7 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import {readFileSync} from "node:fs";
-import {forumSearchRank,forumHasNewReply,forumPrivateIds} from "../src/lib/forum-community.mjs";
+import {forumSearchRank,forumHasNewReply,forumPrivateIds,FORUM_VIEWS,FORUM_PRIVATE_VIEWS,FORUM_MEMBER_ANCHOR,isForumView,isForumPrivateView} from "../src/lib/forum-community.mjs";
 import {FORUM_COMMUNITY_TEXT} from "../src/lib/forum-community-i18n.ts";
 test("title relevance outweighs body-only matches; no fabricated relevance",()=>{
  assert.ok(forumSearchRank("john deere", "john deere hydraulic",["john","deere"])>forumSearchRank("hydraulic", "john deere hydraulic",["john","deere"]));
@@ -30,4 +30,19 @@ test("ten complete locales and public/private boundaries remain explicit",()=>{
  assert.match(hub,/readForumSession\(\)\?\.access!==session.access/);
  assert.match(hub,/indexable=\{indexable\}/);
  assert.doesNotMatch(hub,/service_role/);
+});
+
+test("navigation contract includes all required capabilities and a real member target",()=>{
+ assert.deepEqual(FORUM_VIEWS,["latest","popular","unanswered","following","saved","unread","events"]);
+ assert.deepEqual(FORUM_PRIVATE_VIEWS,["following","saved","unread"]);
+ assert.equal(new Set(FORUM_VIEWS).size,FORUM_VIEWS.length);
+ assert.equal(isForumView("unknown"),false);
+ assert.equal(isForumPrivateView("latest"),false);
+ assert.ok(FORUM_PRIVATE_VIEWS.every(isForumView));
+ const hub=readFileSync(new URL("../src/components/ForumHub.astro",import.meta.url),"utf8");
+ const panel=readFileSync(new URL("../src/components/ForumMemberPanel.astro",import.meta.url),"utf8");
+ assert.equal(FORUM_MEMBER_ANCHOR,"forum-members");
+ assert.match(hub,/data-forum-private-cta/);
+ assert.ok(hub.includes('href={"#"+FORUM_MEMBER_ANCHOR}'));
+ assert.ok(panel.includes("id={FORUM_MEMBER_ANCHOR}"));
 });
