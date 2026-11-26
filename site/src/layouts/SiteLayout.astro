@@ -345,6 +345,19 @@ const openGraphLocale: Record<Locale, string> = {
   // search, resources and language panels predictable for touch and keyboards.
   const disclosures = [...document.querySelectorAll<HTMLDetailsElement>(".site-header details[data-site-disclosure]")];
   for (const disclosure of disclosures) {
+    // Pointer activation does not consistently focus native summaries in WebKit.
+    // Keep native Tab/Enter/Space behavior and offer an explicit keyboard route
+    // into link disclosures without turning ordinary navigation into an ARIA menu.
+    const summary = disclosure.querySelector<HTMLElement>("summary");
+    summary?.addEventListener("keydown", (event) => {
+      if (event.key !== "ArrowDown" && event.key !== "ArrowUp") return;
+      const links = [...disclosure.querySelectorAll<HTMLAnchorElement>("a[href]")];
+      if (!links.length) return;
+      event.preventDefault();
+      disclosure.open = true;
+      const target = event.key === "ArrowDown" ? links[0] : links[links.length - 1];
+      target?.focus();
+    });
     disclosure.addEventListener("toggle", () => {
       if (!disclosure.open) return;
       for (const other of disclosures) if (other !== disclosure) other.open = false;

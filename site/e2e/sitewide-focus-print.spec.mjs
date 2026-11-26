@@ -10,11 +10,23 @@ for(const locale of locales){
     await page.keyboard.press("Tab");
     await expect(page.locator(".skip-link")).toBeFocused();
     const toggle=page.locator(".locale-menu > summary");
-    await toggle.click();
-    await page.keyboard.press("Tab");
+    // Explicitly start from the summary: a pointer click is not a portable
+    // way to establish keyboard focus in WebKit.
+    await toggle.focus();
+    await expect(toggle).toBeFocused();
+    await page.keyboard.press("Enter");
+    await expect(page.locator(".locale-menu")).toHaveAttribute("open","");
+    await page.keyboard.press("ArrowDown");
     const link=page.locator(".locale-options a").first();
     await expect(link).toBeFocused();
     expect(await link.evaluate(el=>getComputedStyle(el).outlineColor)).toBe("rgb(23, 92, 55)");
+    await page.keyboard.press("Escape");
+    await expect(toggle).toBeFocused();
+    await expect(page.locator(".locale-menu")).not.toHaveAttribute("open","");
+    await page.keyboard.press("ArrowUp");
+    await expect(page.locator(".locale-options a").last()).toBeFocused();
+    await page.keyboard.press("Escape");
+    await expect(toggle).toBeFocused();
     expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+2)).toBe(true);
     if(["hi","ja","zh"].includes(locale))expect(await page.locator("main h1").evaluate(el=>getComputedStyle(el).letterSpacing)).toBe("normal");
   });
