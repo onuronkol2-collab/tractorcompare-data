@@ -93,9 +93,10 @@ UPDATE public.tc_forum_replies SET status='pending' WHERE id='20000000-0000-4000
 SET ROLE anon;
 DO $$ BEGIN IF EXISTS(SELECT 1 FROM public.tc_forum_accepted_solutions) THEN RAISE EXCEPTION 'Hidden reply still visible as solution'; END IF; END $$;
 RESET ROLE;
-UPDATE public.tc_forum_replies SET status='published' WHERE id='20000000-0000-4000-8000-000000000002';
 SET ROLE authenticated;
 SELECT set_config('request.jwt.claims','{"sub":"00000000-0000-4000-8000-000000000001","email":"a@example.invalid","is_anonymous":false}',false);
+UPDATE public.tc_forum_accepted_solutions SET reply_id='20000000-0000-4000-8000-000000000001' WHERE topic_id='10000000-0000-4000-8000-000000000001';
+DO $ BEGIN IF NOT EXISTS(SELECT 1 FROM public.tc_forum_accepted_solutions WHERE reply_id='20000000-0000-4000-8000-000000000001') THEN RAISE EXCEPTION 'Owner cannot repair moderated solution'; END IF; END $;
 DELETE FROM public.tc_forum_accepted_solutions WHERE topic_id='10000000-0000-4000-8000-000000000001';
 DO $$ BEGIN IF EXISTS(SELECT 1 FROM public.tc_forum_accepted_solutions) THEN RAISE EXCEPTION 'Owner cannot remove solution'; END IF; END $$;
 RESET ROLE;
