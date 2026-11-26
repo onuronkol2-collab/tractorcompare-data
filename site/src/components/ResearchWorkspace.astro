@@ -15,6 +15,8 @@ const copy=JSON.stringify(c).replace(/</g,"\\u003c");
     <a href={localizedPath(lang,"/tractors/")+"#research-workspace"}>{c.open} ↗</a>
   </div> : <>
     {mode==="compare"&&<button type="button" data-research-save disabled>{c.save}</button>}
+    <details data-research-details>
+    <summary>{c.open}</summary>
     {mode==="catalog"&&<>
       <h3>{c.favorites}</h3><ul data-research-list="favorites"></ul>
       <a data-research-compare-two hidden>{c.compareTwo}</a>
@@ -24,6 +26,7 @@ const copy=JSON.stringify(c).replace(/</g,"\\u003c");
     <h3>{c.saved}</h3><ul data-research-list="comparisons"></ul>
     <p>{c.unavailable}</p>
     <button type="button" data-research-clear>{c.clearAll}</button>
+    </details>
   </>}
   <p data-research-status role="status" aria-live="polite"></p>
   <script type="application/json" data-research-copy set:html={copy}></script>
@@ -36,6 +39,7 @@ const copy=JSON.stringify(c).replace(/</g,"\\u003c");
     const c=JSON.parse(root.querySelector("[data-research-copy]")?.textContent||"{}") as Record<string,string>;
     const mode=root.dataset.mode;
     const modelId=root.dataset.modelId||"";
+    const details=root.querySelector<HTMLDetailsElement>("[data-research-details]");
     const favorite=root.querySelector<HTMLButtonElement>("[data-research-favorite]");
     const save=root.querySelector<HTMLButtonElement>("[data-research-save]");
     const clear=root.querySelector<HTMLButtonElement>("[data-research-clear]");
@@ -95,7 +99,8 @@ const copy=JSON.stringify(c).replace(/</g,"\\u003c");
         if(!root!.querySelector("[data-research-list='"+kind+"']"))continue;
         const rows=visible[kind].map(id=>{
           const item=document.createElement("li"), model=models.get(id)!;
-          item.append(makeLink(model.name,model.href),makeLink(c.compare,compareHref(id)));
+          const compare=makeLink(c.compare,compareHref(id));compare.setAttribute("aria-label",c.compare+": "+model.name);
+          item.append(makeLink(model.name,model.href),compare);
           if(kind==="favorites")item.append(makeRemove(model.name,()=>mutate(s=>toggleFavorite(s,id))));
           return item;
         });
@@ -120,10 +125,11 @@ const copy=JSON.stringify(c).replace(/</g,"\\u003c");
     try{storage=window.localStorage;state=readResearch(storage);}
     catch{unavailable();}
     root.hidden=false;
+    if(details&&window.location.hash==="#research-workspace")details.open=true;
     render();
     if(storage&&mode==="model"&&modelId)mutate(s=>rememberModel(s,modelId),false);
     favorite?.addEventListener("click",()=>mutate(s=>toggleFavorite(s,modelId)));
-    save?.addEventListener("click",()=>{const pair=currentPair();if(pair)mutate(s=>saveComparison(s,pair));});
+    save?.addEventListener("click",()=>{const pair=currentPair();if(pair){mutate(s=>saveComparison(s,pair));if(details)details.open=true;}});
     clearRecent?.addEventListener("click",()=>mutate(s=>({...s,recent:[]})));
     clear?.addEventListener("click",()=>{if(window.confirm(c.confirm))mutate(()=>normalizeResearch(null));});
     if(save&&share)new MutationObserver(()=>{save.disabled=!storage||!currentPair();}).observe(share,{attributes:true,attributeFilter:["disabled"]});
@@ -137,6 +143,7 @@ const copy=JSON.stringify(c).replace(/</g,"\\u003c");
   .research-workspace{margin:18px 0;padding:18px;border:1px solid #cbdacb;border-radius:12px;background:#f7faf5;color:#203a29;overflow-wrap:anywhere}
   .research-workspace[hidden],.research-workspace [hidden]{display:none!important}
   .research-workspace h2{font-size:19px;margin:0 0 6px;color:#203a29}
+  .research-workspace summary{min-height:44px;display:list-item;padding:10px 0;font-weight:700;color:#235d37;cursor:pointer}
   .research-workspace h3{font-size:15px;margin:14px 0 5px;color:#203a29}
   .research-workspace p{font-size:14px;margin:6px 0;color:#405b46}
   .research-workspace ul{margin:0 0 8px;padding:0;list-style:none}
@@ -146,6 +153,6 @@ const copy=JSON.stringify(c).replace(/</g,"\\u003c");
   .research-workspace button{padding:8px 12px;border:1px solid #8cae91;border-radius:8px;background:white;cursor:pointer;text-decoration:none}
   .research-workspace button[aria-pressed="true"]{background:#dcead9}
   .research-workspace button:disabled{opacity:.65;cursor:default}
-  .research-workspace :is(button,a):focus-visible{outline:3px solid #ae6d19;outline-offset:2px}
+  .research-workspace :is(button,a,summary):focus-visible{outline:3px solid #ae6d19;outline-offset:2px}
   @media print{.research-workspace{display:none!important}}
 </style>
