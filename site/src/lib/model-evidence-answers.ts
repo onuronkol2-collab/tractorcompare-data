@@ -116,7 +116,7 @@ const NOMINAL_SNIPPET_COPY:Record<Locale,{displacement:(n:string)=>string;tank:(
  tr:{displacement:n=>`Üretici verisi: ${n} L motor hacmi.`,tank:n=>`Üretici verisi: ${n} L yakıt deposu.`},
  zh:{displacement:n=>`厂家数据：发动机排量 ${n} L。`,tank:n=>`厂家数据：油箱容积 ${n} L。`},
  hi:{displacement:n=>`निर्माता के अनुसार इंजन क्षमता: ${n} L।`,tank:n=>`निर्माता के अनुसार ईंधन टैंक: ${n} L।`},
- "pt-br":{displacement:n=>`Fabricante: cilindrada de ${n} L.`,tank:n=>`Fabricante: tanque de combustível de ${n} L.`},
+ "pt-br":{displacement:n=>`Fabricante: cilindrada do motor de ${n} L.`,tank:n=>`Fabricante: tanque de combustível de ${n} L.`},
  fr:{displacement:n=>`Constructeur : cylindrée de ${n} L.`,tank:n=>`Constructeur : réservoir de carburant de ${n} L.`},
  de:{displacement:n=>`Herstellerangabe: ${n} l Hubraum.`,tank:n=>`Herstellerangabe: ${n} l Kraftstofftank.`},
  ru:{displacement:n=>`По данным производителя: объём двигателя ${n} л.`,tank:n=>`По данным производителя: топливный бак ${n} л.`},

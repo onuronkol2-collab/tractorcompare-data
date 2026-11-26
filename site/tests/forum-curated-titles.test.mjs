@@ -68,3 +68,23 @@ test("all ten approved origin-research metadata titles retain year and locale wi
  }
  assert.equal(new Set(Object.values(pairs).map(p=>p[1])).size,10);
 });
+
+test("16 audited economic forum titles use exact native-language guards and preserve original H1",()=>{
+ const ids=["c474e2d9-2044-4178-9aa3-ac227cb64dd8","126eb9c8-05aa-4a06-b9cb-92d2c28e6f2a"];
+ const snippets=new Set();
+ for(const id of ids){
+  const pairs=VERIFIED_FORUM_TITLE_PAIRS[id];
+  assert.deepEqual(Object.keys(pairs).sort(),["en","tr","hi","pt-br","fr","de","ru","es"].sort());
+  for(const [locale,[original,short]] of Object.entries(pairs)){
+   assert.ok(original.length+12>60);
+   assert.ok(short.length<=60 && short.includes("2026"),locale);
+   assert.equal(sourceAwareForumSeoTitle(id,locale,original),short);
+   assert.equal(sourceAwareForumSeoTitle(id,locale,original+" edited"),original+" edited | TractorVS");
+   assert.equal(sourceAwareForumSeoTitle("different-topic",locale,original),original+" | TractorVS");
+   assert.ok(!snippets.has(short),locale+" duplicate curated title");
+   snippets.add(short);
+  }
+  for(const locale of ["zh","ja"])assert.equal(sourceAwareForumSeoTitle(id,locale,"Existing original"),"Existing original | TractorVS");
+ }
+ assert.equal(snippets.size,16);
+});

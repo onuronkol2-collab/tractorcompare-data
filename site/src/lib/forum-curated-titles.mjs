@@ -112,7 +112,75 @@ export const VERIFIED_FORUM_TITLE_PAIRS = Object.freeze({
       "拖拉机品牌来自哪个国家？全球品牌归属及生产地（2026年）",
       "拖拉机品牌：来源国、归属与生产地（2026年） | TractorVS"
     ]
-  }
+  },
+    "c474e2d9-2044-4178-9aa3-ac227cb64dd8": {
+      "en": [
+        "Will Farming Still Be Profitable in 2026? The Global Agricultural Economy and the Future of Farmers",
+        "Is Farming Still Profitable in 2026? | TractorVS"
+      ],
+      "tr": [
+        "2026'da Çiftçilik Hâlâ Kazandırıyor mu? Dünya Tarım Ekonomisi ve Çiftçilerin Geleceği",
+        "2026'da Çiftçilik Hâlâ Kazandırıyor mu? | TractorVS"
+      ],
+      "hi": [
+        "क्या 2026 में खेती अभी भी लाभदायक रहेगी? वैश्विक कृषि अर्थव्यवस्था और किसानों का भविष्य",
+        "क्या 2026 में खेती लाभदायक है? | TractorVS"
+      ],
+      "pt-br": [
+        "Em 2026, a agricultura ainda será lucrativa? A economia agrícola mundial e o futuro dos agricultores",
+        "A agricultura ainda é lucrativa em 2026? | TractorVS"
+      ],
+      "fr": [
+        "L'agriculture sera-t-elle encore rentable en 2026 ? L'économie agricole mondiale et l'avenir des agriculteurs",
+        "Agriculture : encore rentable en 2026 ? | TractorVS"
+      ],
+      "de": [
+        "Lohnt sich die Landwirtschaft im Jahr 2026 noch? Die weltweite Agrarwirtschaft und die Zukunft der Landwirte",
+        "Lohnt sich Landwirtschaft 2026 noch? | TractorVS"
+      ],
+      "ru": [
+        "Будет ли сельское хозяйство по-прежнему приносить доход в 2026 году? Мировая экономика сельского хозяйства и будущее фермеров",
+        "Рентабельно ли сельское хозяйство в 2026 году? | TractorVS"
+      ],
+      "es": [
+        "¿Seguirá siendo rentable la agricultura en 2026? La economía agrícola mundial y el futuro de los agricultores",
+        "¿Sigue siendo rentable la agricultura en 2026? | TractorVS"
+      ]
+    },
+    "126eb9c8-05aa-4a06-b9cb-92d2c28e6f2a": {
+      "en": [
+        "Why Have Tractor Prices Risen So Much in 2026? The Global Tractor Market and Rising Costs",
+        "Why Are Tractor Prices Rising in 2026? | TractorVS"
+      ],
+      "tr": [
+        "2026'da Traktör Fiyatları Neden Bu Kadar Yükseldi? Küresel Traktör Piyasası ve Artan Maliyetler",
+        "2026'da Traktör Fiyatları Neden Yükseldi? | TractorVS"
+      ],
+      "hi": [
+        "2026 में ट्रैक्टरों की कीमतें इतनी क्यों बढ़ीं? वैश्विक ट्रैक्टर बाजार और बढ़ती लागत",
+        "2026 में ट्रैक्टर महँगे क्यों हुए? | TractorVS"
+      ],
+      "pt-br": [
+        "Por que os preços dos tratores subiram tanto em 2026? O mercado global de tratores e o aumento dos custos",
+        "Por que os tratores encareceram em 2026? | TractorVS"
+      ],
+      "fr": [
+        "Pourquoi les prix des tracteurs ont-ils autant augmenté en 2026 ? Le marché mondial des tracteurs et la hausse des coûts",
+        "Pourquoi les tracteurs coûtent plus cher en 2026 ?"
+      ],
+      "de": [
+        "Warum sind die Traktorpreise im Jahr 2026 so stark gestiegen? Der globale Traktormarkt und die steigenden Kosten",
+        "Warum steigen die Traktorpreise 2026? | TractorVS"
+      ],
+      "ru": [
+        "Почему в 2026 году цены на тракторы так сильно выросли? Мировой рынок тракторов и рост затрат",
+        "Почему тракторы подорожали в 2026 году? | TractorVS"
+      ],
+      "es": [
+        "¿Por qué han subido tanto los precios de los tractores en 2026? El mercado mundial de tractores y el aumento de los costes",
+        "¿Por qué suben los precios de los tractores en 2026?"
+      ]
+    }
 });
 
 export function sourceAwareForumSeoTitle(topicId, locale, publishedTitle) {
