@@ -21,34 +21,11 @@ const priorities=["Yanmar","Mahindra","Sonalika","Swaraj","TYM","McCormick","Kio
 // Previously reviewed Solis/Sonalika Worldtrac originals are retained in artifact 15106478195; do not re-download.
 // New candidate is distinct from the previously held 09555 left-front file.
 // Actual angle, distance, identity, rights, and original bytes must be reviewed before publication.
-const direct=[
-  [
-    "Solis",
-    "90 DT MR",
-    "Solis S90 Shuttle XL Cabin Agritechnica 2025 (DSC07324).jpg",
-    "Solis S90 Shuttle XL ROPS Agritechnica 2023 (DSC05275).jpg"
-  ],
-  [
-    "Steyr",
-    "6220 ABSOLUT CVT",
-    "Steyr 6220 CVT mit Kuhn Cultimer L 400 -20211009-RM-153704.jpg",
-    "Steyr 6220 CVT mit Kuhn Cultimer L 400 -20211009-RM-153750.jpg"
-  ],
-  [
-    "Deutz-Fahr",
-    "5090 D",
-    "Deutz-Fahr 5090.D5 mit Lochmann Spritze.jpg"
-  ],
-  [
-    "Belarus",
-    "1025.2",
-    "Belarus 1025.jpg"
-  ]
-];
+const direct=[]; // six preceding leads already archived in artifact 15131897602
 const missingIds=new Set(missing.map(r=>r.tractor_id));
 const targets=missing;
 const hasPrior=[];
-const report={generatedAt:new Date().toISOString(),scope:"Archived public sitemap model identities checked against current registry; not full live catalogue",sourceArchive:14994831046,mode:"direct OEM model-family leads; no repeated collection queries; visual review and current-main dedup required",publicModelCount:unique.length,missingModelCount:missing.length,selectedModels:targets.map(({tractor_id,brand,model,variant})=>({tractor_id,brand,model,variant})),candidateCount:0,downloaded:0,publicationCount:0,allowedToPublish:false,errors:[],queries:[],entries:[]};
+const report={generatedAt:new Date().toISOString(),scope:"Archived public sitemap model identities checked against current registry; not full live catalogue",sourceArchive:14994831046,mode:"new event and photographer collections; root files and children; no repeat of archived six leads; review required",publicModelCount:unique.length,missingModelCount:missing.length,selectedModels:targets.map(({tractor_id,brand,model,variant})=>({tractor_id,brand,model,variant})),candidateCount:0,downloaded:0,publicationCount:0,allowedToPublish:false,errors:[],queries:[],entries:[]};
 const sleep=ms=>new Promise(r=>setTimeout(r,ms));
 const deadline=Date.now()+12*60*1000;
 const withinBudget=()=>Date.now()<deadline;
@@ -68,7 +45,7 @@ function add(title,rows,kind){
 }
 const match=(r,t)=>matchesPhotoFileModel(r.brand,r.model,t)||matchesManufacturerPhotoAlias(r.brand,r.model,t);
 // Existing known rejected files are never silently rediscovered.
-const held=new Set(["File:IRUM Tagro 102 Agritechnica 2019 - Front and right side.jpg","File:Solis 50.jpg","File:Tractors in Afghanistan.jpg","File:Eko-Las - Valtra N155 - 05.09.2025 13-24-29.jpg","File:Same Dorado 90.4 mit Agrar Swissline 7000.jpg","File:Sonalika Baagban DI-30Rx Tractor Left Front Coorg Feb24 A7C 09555.jpg"].map(normalizeTitle));
+const held=new Set(["File:Belarus 1025.jpg","File:Deutz-Fahr 5090.D5 mit Lochmann Spritze.jpg","File:Steyr 6220 CVT mit Kuhn Cultimer L 400 -20211009-RM-153750.jpg","File:Steyr 6220 CVT mit Kuhn Cultimer L 400 -20211009-RM-153704.jpg","File:Solis S90 Shuttle XL ROPS Agritechnica 2023 (DSC05275).jpg","File:Solis S90 Shuttle XL Cabin Agritechnica 2025 (DSC07324).jpg","File:Sonalika Baagban DI-30Rx Tractor Coorg Feb24 A7C 09554.jpg","File:IRUM Tagro 102 Agritechnica 2019 - Front and right side.jpg","File:Solis 50.jpg","File:Tractors in Afghanistan.jpg","File:Eko-Las - Valtra N155 - 05.09.2025 13-24-29.jpg","File:Same Dorado 90.4 mit Agrar Swissline 7000.jpg","File:Sonalika Baagban DI-30Rx Tractor Left Front Coorg Feb24 A7C 09555.jpg"].map(normalizeTitle));
 for(const row of [...(previous.entries||[]),...(second.entries||[])])held.add(normalizeTitle(row.title));
 // Preserve user-rejected and retired rear views, and already staged files from the earlier wave.
 for(const title of ["File:Lindner Lintrac 160 LDrive Agritechnica 2025 (DSC08778).jpg","File:TYM T25 Agritechnica 2025 (DSC04675).jpg","File:TYM T115 Agritechnica 2025 (DSC04663).jpg"])held.add(normalizeTitle(title));
@@ -84,12 +61,13 @@ async function query(params){
 }
 // The collections below are indexed public event archives, not another brand keyword search.
 // Keep the metadata/download phase within the same bounded provider budget.
-const collections=[]; // 140 completed root/nested requests yielded zero; use direct file metadata only.
+const collections=["Category:Agra 2022","Category:Agra 2024","Category:Agra 2026","Category:DLG-Feldtage 2026","Category:Öko-Feldtage 2025","Category:Agritechnica 2017","Category:EIMA International","Category:Tractors by Bene Riobó","Category:Zetor tractors by numbers","Category:Antonio Carraro tractors","Category:Deutz-Fahr tractors by numbers","Category:McCormick (Argo) tractors by numbers","Category:Belarus tractors by numbers"];
 const discoverUntil=Date.now()+Math.min(4*60*1000,Math.max(0,deadline-Date.now()-5*60*1000));
 const attemptedTitles=new Set(prior.models.flatMap(r=>(r.candidates||[]).map(c=>normalizeTitle(c.fileTitle))));
 // Previous run enumerated root files only: nested model/series categories were invisible.
 // Discover subcategories first, then visit each distinct child with bounded breadth-first traversal.
 const queue=collections.map(category=>({category,depth:0,root:true}));
+// Root collection files must also be examined; previous subcat-only roots missed direct files.
 const seenCategories=new Set(collections);
 let nestedFiles=0,nestedCategories=0;
 while(queue.length&&!paused&&withinBudget()&&Date.now()<discoverUntil){
@@ -97,7 +75,7 @@ while(queue.length&&!paused&&withinBudget()&&Date.now()<discoverUntil){
  let continuation={};
  do{
   if(paused||!withinBudget()||Date.now()>=discoverUntil)break;
-  const data=await query({list:"categorymembers",cmtitle:category,cmtype:root?"subcat":"file|subcat",cmlimit:500,...continuation});
+  const data=await query({list:"categorymembers",cmtitle:category,cmtype:"file|subcat",cmlimit:500,...continuation});
   const members=data?.query?.categorymembers||[];
   report.queries.push({kind:root?"new subcategory discovery":"nested collection",category,depth,returned:members.length,completed:Boolean(data),continuation:Boolean(data?.continue)});
   const children=[];
