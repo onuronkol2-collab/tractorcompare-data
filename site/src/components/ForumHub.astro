@@ -8,6 +8,7 @@ import ForumDashboardPanels from "./ForumDashboardPanels.astro";
 import {FORUM_DASHBOARD_TEXT} from "../lib/forum-dashboard-i18n.ts";
 import {FORUM_BROWSE_TEXT} from "../lib/forum-browse-i18n.ts";
 import {FORUM_COMMUNITY_TEXT} from "../lib/forum-community-i18n.ts";
+import {FORUM_VIEWS,FORUM_MEMBER_ANCHOR} from "../lib/forum-community.mjs";
 import {forumModelOptions} from "../lib/forum-browse.mjs";
 import {forumText as ft,FORUM_CATEGORY_KEYS} from "../lib/forum-i18n.ts";
 import {memberText as mt} from "../lib/member-i18n.ts";
@@ -119,7 +120,7 @@ const schema=indexable?{
    <div class="community-primary-column">
    <section class="community-list" aria-label={ft(lang,"all")}>
     <nav class="forum-view-tabs" id="forum-dashboard-tabs" aria-label={dashboard.topics}>
-     {(["latest","popular","unanswered","following","saved","unread","events"] as const).map((key,index)=>
+     {(FORUM_VIEWS as readonly ("latest"|"popular"|"unanswered"|"following"|"saved"|"unread"|"events")[]).map((key,index)=>
       <button type="button" data-forum-view={key} aria-pressed={index===0?"true":"false"}
         class:list={["forum-view-button",index===0&&"is-active"]}>
        <span class="forum-view-icon" aria-hidden="true">{({latest:"◷",popular:"♨",unanswered:"◉",following:"◇",saved:"☆",unread:"●",events:"▤"} as const)[key]}</span>
@@ -215,7 +216,7 @@ const schema=indexable?{
       <span class="forum-special-icon" aria-hidden="true">◇</span>
       <h3 id="forum-following-title" data-forum-private-heading>{dashboard.followingHeading}</h3>
       <p data-forum-following-status role="status" aria-live="polite">{dashboard.followingBody}</p>
-      <a href="#forum-members">{dashboard.followingCta}</a>
+      <a href={"#"+FORUM_MEMBER_ANCHOR} data-forum-private-cta>{dashboard.followingCta}</a>
     </section>
     <section class="forum-special-view" data-forum-special="events" hidden aria-labelledby="forum-events-title">
       <span class="forum-special-icon" aria-hidden="true">▤</span>
@@ -646,7 +647,7 @@ const schema=indexable?{
  import {forumSearchTerms,matchesForumTerms} from "../lib/forum-discovery.mjs";
  import {FORUM_PAGE_SIZE,forumBrowseOrder,forumBrowseWindow,forumModelOptions} from "../lib/forum-browse.mjs";
  import {readForumSession} from "../lib/forum-session-store.mjs";
- import {forumSearchRank,forumHasNewReply,forumPrivateIds} from "../lib/forum-community.mjs";
+ import {forumSearchRank,forumHasNewReply,forumPrivateIds,isForumView,isForumPrivateView} from "../lib/forum-community.mjs";
  const shell=document.querySelector<HTMLElement>("[data-forum-dashboard-copy]");
  const copy=JSON.parse(shell?.dataset.forumDashboardCopy||"{}") as Record<string,string>;
  const liveRoot=document.querySelector<HTMLElement>("[data-forum-live-root]");
@@ -691,12 +692,12 @@ const schema=indexable?{
  const empty=document.querySelector<HTMLElement>(".community-empty");
  const starter=document.querySelector<HTMLElement>(".community-starter");
  const heading=document.querySelector<HTMLElement>(".community-section-header");
- const isView=(v:string)=>["latest","popular","unanswered","following","saved","unread","events"].includes(v);
+ const isView=isForumView;
  const requestedCategory=new URLSearchParams(location.search).get("category")||"";
  let selected=allCategoryButtons.some(button=>(button.dataset.forumCategory||button.dataset.forumRailCategory||button.dataset.forumTagCategory)===requestedCategory)?requestedCategory:"all";
  let view=isView(new URLSearchParams(location.search).get("view")||"")?
    (new URLSearchParams(location.search).get("view")||"latest"):"latest";
- const isPrivateView=()=>["following","saved","unread"].includes(view);
+ const isPrivateView=()=>isForumPrivateView(view);
  let followed=new Map<string,string>(),followState:"guest"|"loading"|"ready"|"error"="guest";
  let followRequest=0;
  const lang=document.documentElement.lang.toLowerCase()==="pt-br"?"pt-br":document.documentElement.lang.slice(0,2);
