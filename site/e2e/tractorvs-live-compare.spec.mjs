@@ -441,3 +441,44 @@ test("live different-entry view and empty catalogue reset survive real user inte
   await expect(page.locator(".tractor-card:visible").first()).toBeVisible();
   await expect.poll(()=>new URL(page.url()).searchParams.has("q")).toBe(false);
 });
+
+// These ten read-only public calculator tests work on the #739 baseline and
+// subsequent revisions. Browser-local fixture data is isolated per test.
+// No accounts, analytics opt-in, remote data writes, or external sources.
+for(const lang of ["en","tr","zh","hi","pt-br","fr","de","ru","ja","es"]){
+ test("live farm tools "+lang+" calculation and local shortlist",async({page})=>{
+  const prefix=lang==="en"?"":"/"+lang;
+  const route=prefix+"/guides/farm-cost-calculator/";
+  const response=await page.goto(route,{waitUntil:"domcontentloaded"});expect(response?.status()).toBe(200);
+  const reject=page.locator("#tractorvs-analytics-reject");if(await reject.isVisible())await reject.click();
+  await expect(page.locator('link[rel="canonical"]')).toHaveAttribute("href","https://tractorvs.com"+route);
+  const root=page.locator("[data-farm-cost]"),locale=await root.getAttribute("data-locale");
+  expect(locale).toBeTruthy();
+  const format=(value,digits=7)=>page.evaluate(({locale,value,digits})=>new Intl.NumberFormat(locale,{maximumSignificantDigits:digits}).format(value),{locale,value,digits});
+  const fuel=page.locator("#farm-cost-form");
+  await fuel.locator('[name="area"]').fill("100");await fuel.locator('[name="areaUnit"]').selectOption("decare");await fuel.locator('button[type="submit"]').click();
+  await expect(page.locator('[data-cost-result="capacity"]')).toHaveText(await format(1.35,6));
+  await expect(page.locator('[data-cost-result="litres"]')).toHaveText(await format(10/1.35*8,6));
+  const finance=page.locator('[data-decision="finance"]');await finance.locator('button[type="submit"]').click();
+  await expect(finance.locator('[data-finance-result="depreciation"]')).toHaveText(await format(3000));
+  const units=page.locator('[data-decision="units"]');await units.locator('[name="unit"]').selectOption("ha");await units.locator('button[type="submit"]').click();await expect(units.locator("[data-unit-result]")).toContainText("decare");
+  const equipment=page.locator('[data-decision="equipment"]');await equipment.locator('[name="ptoAvailable"]').fill("20");await equipment.locator('[name="ptoRequired"]').fill("30");await equipment.locator('button[type="submit"]').click();
+  const eq=equipment.locator("[data-equipment-result]");await expect(eq).toHaveText(await eq.getAttribute("data-insufficient"));
+  await page.locator('[data-extra-form="scenario"] button[type="submit"]').click();await expect(page.locator('[data-scenario-result="left-time"]')).not.toHaveText("—");
+  await page.locator('[data-extra-form="service"] button[type="submit"]').click();await expect(page.locator('[data-service-result="remaining"]')).toHaveText(await format(200));
+  const journal=page.locator('[data-decision="journal"]');
+  for(const [name,value] of [["model","QA local only"],["meter","100"],["fuel","10"],["cost","50"]])await journal.locator('[name="'+name+'"]').fill(value);
+  await journal.locator('button[type="submit"]').click();await expect(page.locator('[data-history-total="count"]')).toHaveText(await format(1));
+  const select=page.locator("[data-equipment-model]");await expect(select).toBeEnabled();
+  const options=await select.locator("option[data-model-id]").evaluateAll(rows=>rows.slice(0,2).map(o=>({slug:o.value,id:o.dataset.modelId})));
+  expect(options).toHaveLength(2);
+  for(const option of options){expect(option.id).toMatch(/^[0-9a-f-]{36}$/i);await select.selectOption(option.slug);await page.locator("[data-shortlist-add]").click();}
+  await page.reload({waitUntil:"domcontentloaded"});await expect(page.locator("[data-shortlist-rows] li")).toHaveCount(2);await expect(page.locator('[data-history-total="count"]')).toHaveText(await format(1));
+  await page.locator("[data-shortlist-rows] input").nth(0).check();await page.locator("[data-shortlist-rows] input").nth(1).check();await expect(page.locator("[data-shortlist-compare]")).toBeEnabled();
+  await expect.poll(()=>page.evaluate(()=>document.documentElement.scrollWidth-document.documentElement.clientWidth)).toBeLessThanOrEqual(2);
+  // Comparison is a read-only navigation, not a submitted database mutation.
+  await page.locator("[data-shortlist-compare]").click();
+  await expect.poll(()=>new URL(page.url()).pathname).toBe(prefix+"/compare/");
+  expect(new URL(page.url()).searchParams.get("left")).toBe(options[0].id);expect(new URL(page.url()).searchParams.get("right")).toBe(options[1].id);
+ });
+}

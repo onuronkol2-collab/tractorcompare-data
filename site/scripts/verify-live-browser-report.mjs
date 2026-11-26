@@ -1,7 +1,7 @@
 import {readFileSync,appendFileSync} from "node:fs";
 import {pathToFileURL} from "node:url";
 const projects=["chromium","firefox","webkit","mobile-chromium"];
-// #705 baseline: 43 cases per project, 11 run on PR and 32 intentionally
+// #739 calculator coverage: 53 cases per project, 21 run on PR and 32 intentionally
 // deferred until release. A new test may raise coverage, never silently lower it.
 export function verifyLiveBrowserReport(report,project,predeploy=false){
  if(!projects.includes(project)||typeof predeploy!=="boolean")throw Error("Invalid project scope");
@@ -31,8 +31,10 @@ export function verifyLiveBrowserReport(report,project,predeploy=false){
   for(const child of suite.suites??[])visit(child);
  }
  report.suites.forEach(visit);
- if(passed!==stats.expected||skipped!==stats.skipped||passed+skipped<43||
-    (predeploy?(passed<11||skipped!==32):(passed<43||skipped!==0)))throw Error("Missing or inconsistent execution evidence");
+ const farmLocales=["en","tr","zh","hi","pt-br","fr","de","ru","ja","es"];
+ if(farmLocales.some(lang=>!seen.has("live farm tools "+lang+" calculation and local shortlist")))throw Error("Missing localized farm tool evidence");
+ if(passed!==stats.expected||skipped!==stats.skipped||passed+skipped<53||
+    (predeploy?(passed<21||skipped!==32):(passed<53||skipped!==0)))throw Error("Missing or inconsistent execution evidence");
  if(!Number.isFinite(stats.duration)||stats.duration<0)throw Error("Missing duration evidence");
  return {project,scope:predeploy?"predeployment":"production",passed,skipped,flaky:0,durationMs:stats.duration};
 }
