@@ -125,9 +125,8 @@ const suggestionPayload = JSON.stringify(catalogue.tractors.map((tractor) => ({
           <p class="home-search-status" id="home-search-status" role="status" aria-live="polite"></p>
         </form>
         <div class="home-hero-links">
-          <a href={compareUrl}>{t(lang,"navCompare")} <span aria-hidden="true">↗</span></a>
-          <a href={advisorUrl}>{tx(lang,"nav")} <span aria-hidden="true">↗</span></a>
-          <a href={localizedPath(lang,"/guides/farm-cost-calculator/")}>{farmCostText(lang).nav} <span aria-hidden="true">↗</span></a>
+          <a href={selectionGuideUrl}>{t(lang,"guideLink")} <span aria-hidden="true">↗</span></a>
+          <a href={articlesUrl}>{editorialPreview.browse} <span aria-hidden="true">↗</span></a>
         </div>
       </div>
       <div class="home-preview" aria-label="TractorVS">
@@ -135,22 +134,32 @@ const suggestionPayload = JSON.stringify(catalogue.tractors.map((tractor) => ({
           <span class="home-kicker"><span class="home-live-dot" aria-hidden="true"></span>TractorVS</span>
           <span class="home-preview-label">{t(lang,"publishedOnly")}</span>
         </div>
-        <div class="home-tractor-art" aria-hidden="true">
-          <div class="home-orbit home-orbit-a"></div><div class="home-orbit home-orbit-b"></div>
-          <svg viewBox="0 0 520 310" fill="none" role="presentation">
-            <path d="M75 215h307l36-58h-78l-34-83h-96l-25 75H115l-40 66Z" fill="#243c30" stroke="#a8c5a5" stroke-width="2.3"/>
-            <path d="M211 75h95l33 82H191l20-82Z" fill="#52745a" stroke="#b9d3b3" stroke-width="2.3"/>
-            <path d="M230 87h64l21 57h-98l13-57Z" fill="#a9c8ad" fill-opacity=".26"/>
-            <path d="M115 149h90v66H75l40-66Z" fill="#314b3b" stroke="#a8c5a5" stroke-width="2.3"/>
-            <path d="M338 157h80l-36 58h-20l-24-58Z" fill="#314b3b" stroke="#a8c5a5" stroke-width="2.3"/>
-            <path d="M193 77h113" stroke="#d7e7d4" stroke-width="3" stroke-linecap="round"/>
-            <circle cx="147" cy="222" r="53" fill="#111b16" stroke="#a8c5a5" stroke-width="4"/>
-            <circle cx="147" cy="222" r="28" fill="#345340" stroke="#d1e1cd" stroke-width="2.5"/>
-            <circle cx="365" cy="222" r="37" fill="#111b16" stroke="#a8c5a5" stroke-width="4"/>
-            <circle cx="365" cy="222" r="18" fill="#345340" stroke="#d1e1cd" stroke-width="2.5"/>
-            <path d="M58 279h400" stroke="#77917c" stroke-width="2" stroke-linecap="round" stroke-dasharray="3 8" opacity=".65"/>
-          </svg>
-        </div>
+        <section class="home-task-panel" aria-labelledby="home-choices-title">
+          <h2 id="home-choices-title">{d(lang,"startHeading")}</h2>
+          <p class="home-task-intro">{d(lang,"startIntro")}</p>
+          <div class="home-action-grid">
+            <a class="home-action-card" href={catalogUrl}>
+              <span class="home-action-symbol" aria-hidden="true">⌕</span>
+              <div><h3>{t(lang,"navCatalog")}</h3><p>{d(lang,"catalogCardBody")}</p></div>
+              <span class="home-task-arrow" aria-hidden="true">↗</span>
+            </a>
+            <a class="home-action-card home-action-card--accent" href={compareUrl}>
+              <span class="home-action-symbol" aria-hidden="true">⇄</span>
+              <div><h3>{t(lang,"navCompare")}</h3><p>{d(lang,"compareCardBody")}</p></div>
+              <span class="home-task-arrow" aria-hidden="true">↗</span>
+            </a>
+            <a class="home-action-card" href={advisorUrl}>
+              <span class="home-action-symbol" aria-hidden="true">✳</span>
+              <div><h3>{tx(lang,"nav")}</h3><p>{d(lang,"advisorCardBody")}</p></div>
+              <span class="home-task-arrow" aria-hidden="true">↗</span>
+            </a>
+            <a class="home-action-card" href={localizedPath(lang,"/guides/farm-cost-calculator/")}>
+              <span class="home-action-symbol" aria-hidden="true">∑</span>
+              <div><h3>{farmCostText(lang).nav}</h3><p>{d(lang,"costCardBody")}</p></div>
+              <span class="home-task-arrow" aria-hidden="true">↗</span>
+            </a>
+          </div>
+        </section>
         {spotlight ? (
           <a class="home-spotlight" href={detailBase + spotlight.slug + "/"}>
             <div>
@@ -167,41 +176,6 @@ const suggestionPayload = JSON.stringify(catalogue.tractors.map((tractor) => ({
           <div><strong>{count}</strong><span>{t(lang,"publishedModels")}</span></div>
           <div><strong>{brandCounts.size}</strong><span>{d(lang,"brandsCount")}</span></div>
         </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="home-choices" aria-labelledby="home-choices-title">
-    <div class="container">
-      <div class="home-section-heading">
-        <div>
-          <p class="home-section-kicker">{h(lang,"featuresEyebrow")}</p>
-          <h2 id="home-choices-title">{d(lang,"startHeading")}</h2>
-          <p>{d(lang,"startIntro")}</p>
-        </div>
-      </div>
-      <div class="home-action-grid">
-        <a class="home-action-card" href={catalogUrl}>
-          <span class="home-action-symbol" aria-hidden="true">⌕</span>
-          <span class="home-action-overline">01</span>
-          <h3>{t(lang,"navCatalog")}</h3>
-          <p>{d(lang,"catalogCardBody")}</p>
-          <span class="home-card-action">{h(lang,"heroCta")} <span aria-hidden="true">↗</span></span>
-        </a>
-        <a class="home-action-card home-action-card--accent" href={compareUrl}>
-          <span class="home-action-symbol" aria-hidden="true">⇄</span>
-          <span class="home-action-overline">02</span>
-          <h3>{t(lang,"navCompare")}</h3>
-          <p>{d(lang,"compareCardBody")}</p>
-          <span class="home-card-action">{t(lang,"navCompare")} <span aria-hidden="true">↗</span></span>
-        </a>
-        <a class="home-action-card" href={advisorUrl}>
-          <span class="home-action-symbol" aria-hidden="true">✳</span>
-          <span class="home-action-overline">03</span>
-          <h3>{tx(lang,"nav")}</h3>
-          <p>{d(lang,"advisorCardBody")}</p>
-          <span class="home-card-action">{tx(lang,"nav")} <span aria-hidden="true">↗</span></span>
-        </a>
       </div>
     </div>
   </section>

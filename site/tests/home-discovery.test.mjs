@@ -107,3 +107,23 @@ test("homepage search preserves IME entry, touch scrolling and meaningful option
  assert.match(css,/\.home-search-empty-inline\[hidden\] \{ display: none; \}/);
  assert.match(css,/48dvh/);
 });
+
+
+test("homepage prioritizes four real research tasks directly inside the hero",()=>{
+ const panel=home.slice(home.indexOf('<section class="home-task-panel"'),home.indexOf('{spotlight ? ('));
+ assert.match(panel,/aria-labelledby="home-choices-title"/);
+ assert.equal((panel.match(/<a class="home-action-card/g)||[]).length,4);
+ assert.match(panel,/href=\{catalogUrl\}/);
+ assert.match(panel,/href=\{compareUrl\}/);
+ assert.match(panel,/href=\{advisorUrl\}/);
+ assert.match(panel,/href=\{localizedPath\(lang,"\/guides\/farm-cost-calculator\/"\)\}/);
+ assert.doesNotMatch(home,/class="home-tractor-art"|<section class="home-choices"/);
+ assert.ok(home.indexOf('class="home-find"')<home.indexOf('class="home-task-panel"'));
+ assert.ok(home.indexOf('class="home-task-panel"')<home.indexOf('class="home-models"'));
+ assert.match(home,/\{count\}/);
+ assert.match(home,/\{brandCounts.size\}/);
+ assert.match(home,/<TractorPhoto tractor=\{tractor\}/);
+ assert.equal(HOME_DISCOVERY.costCardBody.length,10);
+ assert.match(css,/\.home-task-panel \.home-action-grid/);
+ assert.match(css,/grid-template-columns: auto minmax\(0,1fr\) auto/);
+});
