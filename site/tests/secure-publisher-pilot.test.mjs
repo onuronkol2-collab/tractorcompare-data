@@ -53,3 +53,19 @@ test("credential pilot has no scheduled, PR, or write-permission workflow trigge
  assert.ok(w.includes("persist-credentials: false"));
  assert.doesNotMatch(w,/contents:\s*write|pull-requests:\s*write|schedule:|pull_request_target:/);
 });
+
+test("pilot reports only fixed safe failure stage and status, never credential or API body",async()=>{
+ const codes=[];
+ const diagnostic=v=>codes.push(v);
+ const m=fixture();
+ await assert.rejects(runReadonlyPilot({env:{...env,APP_PRIVATE_KEY:"invalid-private-key-sentinel"},now,...m,diagnostic}));
+ assert.deepEqual(codes.pop(),{stage:"KEY_PARSE_OR_SIGN",httpStatus:null});
+ assert.equal(m.calls.length,0);
+ const denied=fixture();
+ await assert.rejects(runReadonlyPilot({env,now,...denied,diagnostic,fetchFn:async()=>({ok:false,status:401,json:async()=>({message:"secret sentinel"})})}));
+ assert.deepEqual(codes.pop(),{stage:"APP_AUTH",httpStatus:401});
+ for(const [opts,expected] of [[{extraRepo:true},{stage:"REPOSITORY_SCOPE",httpStatus:null}],[{failRead:true},{stage:"MAIN_READ",httpStatus:403}],[{failRevoke:true},{stage:"TOKEN_REVOKE",httpStatus:403}]]){
+  await assert.rejects(runReadonlyPilot({env,now,...fixture(opts),diagnostic}));
+  assert.deepEqual(codes.pop(),expected);
+ }
+});
