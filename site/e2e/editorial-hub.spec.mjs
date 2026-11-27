@@ -258,8 +258,8 @@ test("wide guide and review tables remain keyboard-scrollable and labeled at 390
 
 test("official PTO and hydraulic safety sources are scoped to the right published bilingual guides",async({page})=>{
  const examples=[
-  {slug:"pto-and-power-take-off",source:"https://www.hse.gov.uk/agriculture/topics/machinery/safe-use-1.htm",other:"https://www.hse.gov.uk/agriculture/topics/machinery/fluid.htm",tr:"motor kapalıyken",en:"stop the engine, remove the key"},
-  {slug:"tractor-hydraulic-lift-explained",source:"https://www.hse.gov.uk/agriculture/topics/machinery/fluid.htm",other:"https://www.hse.gov.uk/agriculture/topics/machinery/safe-use-1.htm",tr:"kaçakları elle aramayın",en:"Never feel for a pressurized hydraulic leak"}
+  {slug:"pto-and-power-take-off",source:"https://www.hse.gov.uk/agriculture/topics/machinery/safe-use-1.htm",other:"https://www.hse.gov.uk/agriculture/topics/machinery/fluid.htm",tr:"park frenini uygulayın, kumandaları boş konuma alın ve PTO tahrikini kapatın, motoru durdurun, anahtarı çıkarın ve tüm hareketin durmasını bekleyin",en:"secure the parking brake, place the controls in neutral and switch off the PTO drive, shut down the engine, take out the key and wait for all movement to cease",trEnergy:"Kalan enerji kaynaklarını güvenli biçimde ayırmak için kılavuzlara uyun",enEnergy:"Follow the manuals for isolating any remaining energy sources",modified:"2026-11-27"},
+  {slug:"tractor-hydraulic-lift-explained",source:"https://www.hse.gov.uk/agriculture/topics/machinery/fluid.htm",other:"https://www.hse.gov.uk/agriculture/topics/machinery/safe-use-1.htm",tr:"kaçakları elle aramayın",en:"Never feel for a pressurized hydraulic leak",modified:"2026-11-22"}
  ];
  for(const locale of ["","tr/"]){
   for(const check of examples){
@@ -269,10 +269,13 @@ test("official PTO and hydraulic safety sources are scoped to the right publishe
    await expect(page.locator('.learn-further a[href="'+check.source+'"]')).toHaveCount(1);
    await expect(page.locator('.learn-further a[href="'+check.other+'"]')).toHaveCount(0);
    await expect(page.locator(".learn-chapter").last()).toContainText(locale==="tr/"?check.tr:check.en);
-   const schema=(await page.locator('script[type="application/ld+json"]').textContent())||"";
-   expect(schema,route+" TechArticle citation").toContain(check.source);
-   expect(schema,route+" article modified date").toContain("2026-11-22");
-   expect(schema,route+" wrong cross-article citation").not.toContain(check.other);
+   if(check.trEnergy) await expect(page.locator(".learn-chapter").last()).toContainText(locale==="tr/"?check.trEnergy:check.enEnergy);
+   const schema=JSON.parse((await page.locator('script[type="application/ld+json"]').textContent())||"{}");
+   const article=schema["@graph"]?.find(node=>node["@type"]==="TechArticle");
+   expect(article,route+" TechArticle").toBeTruthy();
+   expect(article.citation,route+" TechArticle citation").toContain(check.source);
+   expect(article.dateModified,route+" article modified date").toBe(check.modified);
+   expect(article.citation,route+" wrong cross-article citation").not.toContain(check.other);
   }
   await page.goto("/"+locale+"guides/tractor-engine-power-and-torque/",{waitUntil:"domcontentloaded"});
   await expect(page.locator('.learn-further a[href*="hse.gov.uk"]')).toHaveCount(0);
@@ -363,7 +366,7 @@ for(const locales of [["en","tr","zh","hi","pt-br"],["fr","de","ru","ja","es"]])
  await page.setViewportSize({width:390,height:844});
  for(const lang of locales){
   for(const [path,n,source] of [
-   ["/guides/choosing-a-tractor/",9,"#guide-sources-heading"],
+   ["/guides/choosing-a-tractor/",11,"#guide-sources-heading"],
    ["/reviews/basak-2075-bk/",7,"#review-references-heading"]
   ]){
    await page.goto((lang==="en"?"":"/"+lang)+path,{waitUntil:"domcontentloaded"});
@@ -372,6 +375,10 @@ for(const locales of [["en","tr","zh","hi","pt-br"],["fr","de","ru","ja","es"]])
    await expect(toc).toBeVisible();
    const links=toc.locator("a[href^='#']");
    await expect(links).toHaveCount(n);
+   if(path==="/guides/choosing-a-tractor/"){
+    const hrefs=await links.evaluateAll(nodes=>nodes.map(node=>node.getAttribute("href")));
+    expect(hrefs,lang+" complete guide section navigation").toEqual([...Array.from({length:6},(_,i)=>"#guide-section-"+(i+1)),"#guide-dimensions-heading","#power-converter-heading","#guide-practical-heading","#guide-checklist-heading","#guide-sources-heading"]);
+   }
    for(const link of await links.all()){
     const target=await link.getAttribute("href");
     await expect(page.locator(target)).toHaveCount(1);
@@ -379,6 +386,15 @@ for(const locales of [["en","tr","zh","hi","pt-br"],["fr","de","ru","ja","es"]])
     expect((await link.boundingBox())?.height??0).toBeGreaterThanOrEqual(44);
    }
    if(path==="/guides/choosing-a-tractor/"){
+    for(const id of ["#guide-dimensions-heading","#guide-practical-heading"]){
+     const newJump=toc.locator('a[href="'+id+'"]');
+     await expect(newJump).toHaveCount(1);
+     await newJump.focus();
+     await expect(newJump).toBeFocused();
+     await page.keyboard.press("Enter");
+     await expect(page.locator(id)).toBeInViewport();
+     expect(new URL(page.url()).hash).toBe(id);
+    }
     const jump=toc.locator('a[href="#power-converter-heading"]');
     await expect(jump).toHaveCount(1);
     await jump.focus();
