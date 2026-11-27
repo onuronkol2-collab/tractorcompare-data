@@ -10,6 +10,7 @@ const identity=s=>typeof s==="string"&&/^[a-zA-Z0-9_-]{1,200}$/.test(s);
 export function normalizeBrowserFile(value){
  if(typeof value!=="string")throw Error("Missing test file");
  let file=value.replaceAll("\\","/");
+ if(file.startsWith("/")||/^[a-z]:/i.test(file))throw Error("Invalid test path");
  if(file.startsWith("site/e2e/"))file=file.slice(5);
  else if(!file.startsWith("e2e/"))file="e2e/"+file;
  if(!validFile(file))throw Error("Invalid test path");

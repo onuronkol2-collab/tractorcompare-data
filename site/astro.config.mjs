@@ -2,6 +2,7 @@ import { defineConfig } from "astro/config";
 import sitemap from "@astrojs/sitemap";
 import {readFileSync} from "node:fs";
 import {buildConcurrency} from "./scripts/build-performance-policy.mjs";
+import {buildResourceProfile} from "./scripts/build-resource-profile.mjs";
 
 // Only dates backed by a persistent rendered-content change audit are used.
 // Never put the build time into every sitemap <lastmod>.
@@ -20,7 +21,9 @@ export default defineConfig({
     format: "directory",
     concurrency: buildConcurrency(process.env.TRACTORVS_ASTRO_CONCURRENCY),
   },
-  integrations: indexingEnabled ? [sitemap({
+  integrations: [
+    ...(process.env.TRACTORVS_BUILD_PROFILE==="true"?[buildResourceProfile()]:[]),
+    ...(indexingEnabled ? [sitemap({
     // These sitemap documents are built separately; include both in the single
     // root index so submitting sitemap-index.xml discovers ALL public content.
     // Keep the forum out of Astro's normal page list: only independently
@@ -47,5 +50,6 @@ export default defineConfig({
     },
     // hreflang is already emitted in each page head; unused XML namespaces are not needed.
     namespaces: { news: false, image: false, video: false, xhtml: false },
-  })] : [],
+  })] : []),
+  ],
 });
