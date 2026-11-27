@@ -57,3 +57,15 @@ export function evaluate({sha,checks,statuses}) {
   }
   return {state:"success",reason:"exact SHA checks passed; independent publication authorization required"};
 }
+
+ // Completion events may be absent, ambiguous, stale or foreign. Never infer
+ // a PR from a branch name or accept a check's conclusion as release evidence.
+export function completionCandidate(event) {
+  const run=event?.workflow_run ?? event?.check_run;
+  if(!run) return null;
+  if(event.workflow_run && (run.event!=="pull_request" || run.head_repository?.full_name!==REPO)) return null;
+  if(event.check_run && (run.app?.slug!=="cloudflare-workers-and-pages" || run.name!=="Workers Builds: tractorvs-site")) return null;
+  if(!validSha(run.head_sha) || !Array.isArray(run.pull_requests) || run.pull_requests.length!==1) return null;
+  const number=run.pull_requests[0]?.number;
+  return Number.isSafeInteger(number)&&number>0?{number,sha:run.head_sha}:null;
+}
