@@ -139,3 +139,22 @@ test("catalogue and brand research surfaces preserve real links and readable tec
  assert.match(toc,/\.model-spec-group\[id\]\{scroll-margin-top:7rem\}/);
  assert.match(toc,/\.model-spec-toc a\{line-height:1\.5\}/);
 });
+
+
+test("technical editorial reading remains reachable with native links and short viewport reflow",()=>{
+ const layout=file("styles/research-layout.css");
+ const access=file("styles/interaction-accessibility.css");
+ const glossary=file("components/TractorGlossary.astro");
+ const guide=file("components/TractorSelectionGuide.astro");
+ const deep=file("components/TractorTechnicalDeepDive.astro");
+ assert.match(layout,/@media \(min-width: 861px\) and \(max-height: 720px\)\s*\{\s*#main \.learn-toc \{ position: static; \}/);
+ assert.match(layout,/#main \.glossary-search-box input \{\s*font-size: max\(16px, 1rem\)/);
+ assert.match(layout,/#main \.glossary-qa-list summary \{ min-height: 44px/);
+ assert.match(layout,/\.glossary-card-header a \{[^}]*min-width: 44px;[^}]*min-height: 44px/);
+ assert.match(layout,/\.learn-source-case-table,\.guide-table-scroll/);
+ assert.match(access,/\.learn-source-case-table:focus-visible/);
+ assert.match(access,/\.learn-next,\.glossary-next,\.guide-next,\.editorial-cta/);
+ assert.match(glossary,/id="glossary-search-status" role="status" aria-live="polite"/);
+ assert.match(guide,/class="guide-table-scroll" role="region" tabindex="0"/);
+ assert.match(deep,/class="learn-source-case-table" role="region" tabindex="0"/);
+});

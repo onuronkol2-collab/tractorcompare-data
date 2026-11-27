@@ -79,3 +79,26 @@ html:is(:lang(hi), :lang(ja), :lang(zh)) #main :is(h1,h2,h3,h4) {
     outline-color: Highlight !important;
   }
 }
+
+
+/* Light editorial surfaces need the darker focus ring; keep the separate
+   dark hero and existing forced-colors behavior. */
+#main :is(.learn-content,.glossary-content,.editorial-body,.tractor-guide)
+ :is(a,button,summary,input,[tabindex="0"]):focus-visible {
+  outline: 3px solid #175c37;
+  outline-offset: 3px;
+}
+#main :is(.learn-next,.glossary-next,.guide-next,.editorial-cta)
+ :is(a,button):focus-visible {
+  outline-color: #b7df91;
+}
+#main .learn-source-case-table:focus-visible {
+  outline: 3px solid #175c37;
+  outline-offset: -3px;
+}
+@media (forced-colors: active) {
+  #main :is(.learn-content,.glossary-content,.editorial-body,.tractor-guide)
+   :is(a,button,summary,input,[tabindex="0"]):focus-visible {
+    outline-color: Highlight !important;
+  }
+}
