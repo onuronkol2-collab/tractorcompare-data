@@ -25,7 +25,7 @@ jobs:
   scan:
     if: github.repository == 'onuronkol2-collab/tractorcompare-data' && github.ref == 'refs/heads/main' && github.actor == 'onuronkol2-collab' && vars.TRACTORVS_PR_ONLY_CUTOVER == 'true' && (github.event_name == 'workflow_dispatch' || github.event.issue.pull_request && startsWith(github.event.comment.body, 'TRACTORVS TEST RELEASE '))
     runs-on: ubuntu-24.04
-    timeout-minutes: 8
+    timeout-minutes: 22
     permissions:
       contents: read
       pull-requests: read

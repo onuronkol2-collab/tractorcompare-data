@@ -86,6 +86,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ github.token }}
           TRACTORVS_REQUIRE_WORKERS_BUILD: "true"
+          TRACTORVS_REQUIRE_EXACT_TARGET: "true"
           TRACTORVS_BUILD_COMPLETION_EVENT: ${{ github.event_name == 'check_run' }}
         run: |
           test "$GITHUB_REF" = refs/heads/main
