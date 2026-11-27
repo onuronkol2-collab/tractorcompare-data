@@ -1,6 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import {candidatePlan,openPublicationCandidate,REPO} from "../../scripts/tractorvs-publication-candidate.mjs";
+import {createHash} from "node:crypto";
+import {candidatePlan,openPublicationCandidate,reconcileExpiredMachineCandidate,REPO} from "../../scripts/tractorvs-publication-candidate.mjs";
 const baseSha="a".repeat(40),tree="b".repeat(40),newTree="c".repeat(40),commit="d".repeat(40);
 const cat={path:"site/src/data/public-catalog-sync.json",content:JSON.stringify({fingerprint:"e".repeat(64),scope:"aaufxtcvnzgavtlintiv",source:"anon_public_view",published_models:300})};
 const forum={path:"site/src/data/public-forum-sync.json",content:JSON.stringify({fingerprint:"f".repeat(64),scope:"aaufxtcvnzgavtlintiv",source:"anon_public_forum_views",public_topics:0})};
@@ -65,4 +66,32 @@ test("orphan recovery accepts only the exact tree and parent; concurrent changes
   const n=mock(bad);await assert.rejects(openPublicationCandidate({...input,token:"fake",dryRun:false,fetchFn:n.fetchFn}));
   assert.ok(!n.calls.some(c=>c.path==="/pulls"&&c.method==="POST"));
  }
+});
+
+test("expired untouched App candidate may only be closed, never merged or deleted",async()=>{
+ const plan=candidatePlan({kind:"catalog",baseSha,files:[cat]}),current="9".repeat(40),now=Date.parse("2026-11-27T16:00:00.000Z");
+ const old=new Date(now-30*60000).toISOString(),recent=new Date(now-60000).toISOString();
+ const body="Evidence base: "+baseSha+"\nCandidate digest: "+plan.digest+"\nPR-only staging. Independent release authorization and all applicable checks required.";
+ const pr={number:42,state:"open",draft:false,merged:false,user:{login:"tractorvs-secure-publisher[bot]"},title:"Publication candidate: catalog",body,created_at:old,updated_at:old,head:{sha:commit,ref:plan.branch,repo:{full_name:REPO}},base:{ref:"main",sha:current,repo:{full_name:REPO}},requested_reviewers:[],requested_teams:[],labels:[],assignees:[]};
+ function mock({override={},comment=false,review=false,changed=false,wrongBlob=false,moved=false}={}){
+  let reads=0;const writes=[];
+  const api=async(path,method="GET",data,missing,raw)=>{
+   if(method!=="GET"){writes.push({path,method,data});return {...pr,state:"closed"};}
+   if(path==="/pulls/42")return {...pr,...override,...(changed&&++reads>1?{updated_at:recent}:{})};
+   if(path==="/git/commits/"+commit)return {sha:commit,parents:[{sha:baseSha}]};
+   if(path==="/contents/"+cat.path+"?ref="+commit){assert.equal(raw,true);return cat.content;}
+   if(path.startsWith("/compare/"))return {status:"ahead",ahead_by:1,behind_by:0,files:[{filename:cat.path,status:"modified",sha:wrongBlob?tree:createHash("sha1").update("blob "+Buffer.byteLength(cat.content)+"\0").update(cat.content).digest("hex")}]};
+   if(path==="/pulls/42/reviews?per_page=100")return review?[{}]:[];
+   if(path==="/issues/42/comments?per_page=100")return comment?[{}]:[];
+   if(path==="/git/ref/heads/"+plan.branch)return {ref:"refs/heads/"+plan.branch,object:{type:"commit",sha:commit}};
+   if(path==="/git/ref/heads/main")return {object:{sha:moved?tree:current}};
+   throw Error("unexpected endpoint");
+  };return {api,writes};
+ }
+ const good=mock();assert.equal(await reconcileExpiredMachineCandidate({api:good.api,number:42,baseSha:current,now}),true);
+ assert.deepEqual(good.writes,[{path:"/pulls/42",method:"PATCH",data:{state:"closed"}}]);
+ for(const options of [{override:{user:{login:"owner"}}},{override:{draft:true}},{override:{created_at:recent}},{override:{updated_at:recent}},{override:{requested_reviewers:[{}]}},{override:{labels:[{}]}},{comment:true},{review:true},{changed:true}]){
+  const m=mock(options);assert.equal(await reconcileExpiredMachineCandidate({api:m.api,number:42,baseSha:current,now}),false);assert.equal(m.writes.length,0);
+ }
+ for(const options of [{override:{body:"changed"}},{wrongBlob:true},{moved:true}]){const m=mock(options);await assert.rejects(reconcileExpiredMachineCandidate({api:m.api,number:42,baseSha:current,now}));assert.equal(m.writes.length,0);}
 });

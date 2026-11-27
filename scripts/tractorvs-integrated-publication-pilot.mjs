@@ -110,7 +110,7 @@ async function publish(env){
   const api=gh(env.GH_TOKEN);await mainIs(api,base);
   assertProtectedReleaseRule(await api(repoPath+"/rulesets/28247144"));
  }
- const result=await withAppToken(env,token=>openPublicationCandidate({repo:REPO,ref:env.GITHUB_REF,kind,baseSha:base,files:payload.files,token,dryRun:false}),{mask:v=>console.log("::add-mask::"+v)});
+ const result=await withAppToken(env,token=>openPublicationCandidate({repo:REPO,ref:env.GITHUB_REF,kind,baseSha:base,files:payload.files,token,dryRun:false,reconcileStale:env.PILOT_AUTOMATIC==="true"}),{mask:v=>console.log("::add-mask::"+v)});
  console.log("Candidate opened; token revoked; not authorized to merge. "+JSON.stringify({number:result.number,sha:result.sha,kind}));
 }
 async function verify(env){
