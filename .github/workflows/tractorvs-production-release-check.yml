@@ -4,12 +4,20 @@ on:
   pull_request:
     paths:
       - "site/**"
+      - "package.json"
+      - "package-lock.json"
+      - "site/package-lock.json"
+      - "wrangler.jsonc"
       - "scripts/tractor-publication-autosync.mjs"
       - ".github/workflows/tractorvs-production-release-check.yml"
   push:
     branches: [main]
     paths:
       - "site/**"
+      - "package.json"
+      - "package-lock.json"
+      - "site/package-lock.json"
+      - "wrangler.jsonc"
       - ".github/workflows/tractorvs-production-release-check.yml"
   workflow_dispatch:
 
@@ -46,6 +54,9 @@ jobs:
           CACHE_HIT: ${{ steps.node_setup.outputs.cache-hit }}
         run: |
           printf 'npm download cache hit: %s\n' "${CACHE_HIT:-unknown}" >> "$GITHUB_STEP_SUMMARY"
+      - name: Validate production release gate and Worker configuration parity
+        run: node site/scripts/verify-cloudflare-build-contract.mjs
+
       - name: Install declared workspace dependencies
         run: npm ci --prefer-offline --no-audit --no-fund
       - name: Verify exactly the Cloudflare production bundle, without deploying

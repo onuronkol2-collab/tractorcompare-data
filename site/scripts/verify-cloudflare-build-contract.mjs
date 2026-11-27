@@ -1,11 +1,13 @@
 /** Static CI guard: Cloudflare settings are external, but repo commands/config must not drift. */
 import {readFileSync,existsSync} from "node:fs";
 import {resolve} from "node:path";
+import {verifyDependencyContract,verifyWorkerRouteContract} from "./ci-lockfile-contract.mjs";
 const root=resolve(import.meta.dirname,"../../");
 const load=(p)=>JSON.parse(readFileSync(resolve(root,p),"utf8"));
 const fail=(msg)=>{throw new Error("[TractorVS BUILD CONTRACT] "+msg);};
 const repoPkg=load("package.json"),sitePkg=load("site/package.json");
 const rootWrangler=load("wrangler.jsonc"),siteWrangler=load("site/wrangler.jsonc");
+verifyWorkerRouteContract(rootWrangler,siteWrangler);
 for(const [label,pkg] of [["root",repoPkg],["site",sitePkg]]){
  if(pkg.packageManager!=="npm@10.9.2")fail(label+" package manager is not pinned");
  if(!pkg.scripts["build:production"]||!pkg.scripts["deploy:verified"]||!pkg.scripts["build:cloudflare"])
@@ -30,6 +32,7 @@ for(const file of [".node-version","site/.node-version"]){
 if(!existsSync(resolve(root,"site/scripts/production-release-gate.mjs")))
  fail("Missing production release gate.");
 const repoLock=load("package-lock.json"),siteLock=load("site/package-lock.json");
+verifyDependencyContract({sitePkg,repoLock,siteLock});
 for(const [label,lock,name] of [
  ["root",repoLock,"tractorvs-repository"],["site",siteLock,"tractorvs-site"]
 ]){

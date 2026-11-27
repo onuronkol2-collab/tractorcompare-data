@@ -4,6 +4,7 @@
  * or claim real-user performance gains.
  */
 import {readFileSync} from "node:fs";
+import {proveExactPhotoPreview} from "./exact-photo-preview-proof.mjs";
 import {createHash} from "node:crypto";
 import {fileURLToPath} from "node:url";
 import {resolve} from "node:path";
@@ -84,8 +85,13 @@ export async function provePreviewBatch15({fetchImpl=fetch,delay=ms=>
  console.log("TRACTORVS_BATCH15_PREVIEW_SUMMARY "+JSON.stringify(result));
  return result;
 }
+async function proveCurrentBatch15() {
+ const result=await proveExactPhotoPreview({items:expectedPreviewAssets(),pr:process.env.PREVIEW_PR_NUMBER,sha:process.env.PREVIEW_HEAD_SHA,token:process.env.GH_TOKEN,branch:process.env.PREVIEW_HEAD_BRANCH,log:row=>console.log("TRACTORVS_EXACT_PREVIEW_EVIDENCE "+JSON.stringify(row))});
+ console.log("TRACTORVS_EXACT_PREVIEW_SUMMARY "+JSON.stringify(result));
+ return result;
+}
 if(process.argv[1]&&resolve(process.argv[1])===fileURLToPath(import.meta.url))
- provePreviewBatch15().catch(error=>{
+ proveCurrentBatch15().catch(error=>{
    console.error("TRACTORVS_BATCH15_PREVIEW_BLOCKED "+error.message);
    process.exitCode=1;
  });

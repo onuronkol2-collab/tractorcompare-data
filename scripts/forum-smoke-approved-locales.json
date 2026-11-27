@@ -1,0 +1,20 @@
+{
+  "schema": "tractorvs-forum-smoke-approval-v1",
+  "topicId": "713ab252-a925-4ab7-b2c8-a30ce5b86706",
+  "approvedLocales": [
+    "en",
+    "tr",
+    "de",
+    "fr",
+    "pt-br",
+    "ru",
+    "es",
+    "hi",
+    "ja",
+    "zh"
+  ],
+  "heldLocales": [],
+  "reviewDate": "2026-11-25",
+  "evidence": "https://github.com/onuronkol2-collab/tractorcompare-data/issues/720#issuecomment-7172610184",
+  "syncPR": 721
+}

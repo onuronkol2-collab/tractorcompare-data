@@ -22,6 +22,13 @@ on:
       - "site/tests/browser-runner-contract.test.mjs"
       - "site/package.json"
       - "package-lock.json"
+      - "site/package-lock.json"
+      - "package.json"
+      - "wrangler.jsonc"
+      - "site/wrangler.jsonc"
+      - "site/scripts/verify-cloudflare-build-contract.mjs"
+      - "site/scripts/ci-lockfile-contract.mjs"
+      - "site/tests/ci-lockfile-contract.test.mjs"
   workflow_dispatch:
   schedule:
     - cron: "23 5 * * 3"
@@ -85,6 +92,9 @@ jobs:
           CACHE_HIT: ${{ steps.node_setup.outputs.cache-hit }}
         run: |
           printf 'npm download cache hit: %s\n' "${CACHE_HIT:-unknown}" >> "$GITHUB_STEP_SUMMARY"
+      - name: Validate production release gate and Worker configuration parity
+        run: node site/scripts/verify-cloudflare-build-contract.mjs
+
       - name: Install production build dependencies from lockfile
         run: npm ci --prefer-offline --no-audit --no-fund
       - name: Install pinned test-only tools without modifying repository lockfile

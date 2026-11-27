@@ -4,6 +4,7 @@
  * GitHub main merge / preview availability are not production delivery.
  */
 import {readFileSync} from "node:fs";
+import {proveExactPhotoPreview} from "./exact-photo-preview-proof.mjs";
 import {createHash} from "node:crypto";
 import {resolve} from "node:path";
 import {fileURLToPath} from "node:url";
@@ -68,8 +69,13 @@ export async function verifyThirdWavePreview({origin=THIRD_WAVE_PREVIEW,
  console.log("TRACTORVS_THIRD_WAVE_PREVIEW_SUMMARY "+JSON.stringify(summary));
  return summary;
 }
+async function proveCurrentThirdWave() {
+ const result=await proveExactPhotoPreview({items:exactThirdWaveAssets(),pr:process.env.PREVIEW_PR_NUMBER,sha:process.env.PREVIEW_HEAD_SHA,token:process.env.GH_TOKEN,branch:process.env.PREVIEW_HEAD_BRANCH,log:row=>console.log("TRACTORVS_EXACT_PREVIEW_EVIDENCE "+JSON.stringify(row))});
+ console.log("TRACTORVS_EXACT_PREVIEW_SUMMARY "+JSON.stringify(result));
+ return result;
+}
 if(process.argv[1]&&resolve(process.argv[1])===fileURLToPath(import.meta.url))
- verifyThirdWavePreview().catch(e=>{
+ proveCurrentThirdWave().catch(e=>{
   console.error("TRACTORVS_THIRD_WAVE_PREVIEW_BLOCKED "+String(e?.message||e));
   process.exitCode=1;
  });
