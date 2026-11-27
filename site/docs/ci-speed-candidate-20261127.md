@@ -70,3 +70,5 @@ References: https://playwright.dev/docs/test-sharding ; https://playwright.dev/d
 
 ## TEST correction — PR #778
 - Initial candidate a2917ee: two workflow definitions failed before any job was created (runs 46039077680 and 46039076031). Shared cache summary plain scalar contained a colon-space inside shell quotes; switched to YAML literal block and added a regression contract. Existing test steps and gates unchanged. Release readiness outside automated UI scope requires separate release review; do not bypass. TEST only, no production publication.
+
+- First real unit suite: 1,246/1,247 passed, zero skips; both site and translation preview failed only the existing sitemap integration source contract (test seo-brand-sitemap-alias). Retained original explicit indexingEnabled conditional, append optional profiler separately in each branch; no change to the existing assertion or sitemap/noindex logic. Require fresh all-green suite at new head. See run 46039098982.

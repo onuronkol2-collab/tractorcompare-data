@@ -13,6 +13,7 @@ if(recordedDates.version!==1||typeof recordedDates.dates!=="object")
 
 const siteUrl = process.env.SITE_URL;
 const indexingEnabled = process.env.PUBLIC_INDEXING_ENABLED === "true" && Boolean(siteUrl);
+const profileIntegrations = process.env.TRACTORVS_BUILD_PROFILE === "true" ? [buildResourceProfile()] : [];
 
 export default defineConfig({
   ...(siteUrl ? { site: siteUrl } : {}),
@@ -21,9 +22,7 @@ export default defineConfig({
     format: "directory",
     concurrency: buildConcurrency(process.env.TRACTORVS_ASTRO_CONCURRENCY),
   },
-  integrations: [
-    ...(process.env.TRACTORVS_BUILD_PROFILE==="true"?[buildResourceProfile()]:[]),
-    ...(indexingEnabled ? [sitemap({
+  integrations: indexingEnabled ? [sitemap({
     // These sitemap documents are built separately; include both in the single
     // root index so submitting sitemap-index.xml discovers ALL public content.
     // Keep the forum out of Astro's normal page list: only independently
@@ -50,6 +49,5 @@ export default defineConfig({
     },
     // hreflang is already emitted in each page head; unused XML namespaces are not needed.
     namespaces: { news: false, image: false, video: false, xhtml: false },
-  })] : []),
-  ],
+  }), ...profileIntegrations] : profileIntegrations,
 });
