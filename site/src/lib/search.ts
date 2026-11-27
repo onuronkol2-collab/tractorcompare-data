@@ -1,13 +1,12 @@
+import { normalizeModelSearch } from "./farm-model-search.mjs";
+
 /**
- * Normalize catalog queries for accent-insensitive brand and model searches.
- * Preserves non-Latin scripts for the ten localized interfaces.
- * The original model identity is never changed or stored in normalized form.
+ * Share the farm-model selector's Latin-only accent folding. NFC preserves
+ * Cyrillic breve/diaeresis and Japanese voicing; whitespace is canonicalized
+ * for ranking. Published model names, variants and URLs remain untouched.
  */
 export function normalizeTractorQuery(value: string): string {
-  return value.trim().normalize("NFKD")
-    .toLocaleLowerCase()
-    .replace(/[\u0300-\u036f]/g, "")
-    .replace(/ı/g, "i");
+  return normalizeModelSearch(value);
 }
 
 

@@ -9,7 +9,7 @@ export function forumSearchText(value,locale="en"){
  const language=locale==="pt-br"?"pt-BR":locale;
  const lowered=String(value??"").normalize("NFKC").toLocaleLowerCase(language);
  if(!LATIN_LOCALES.has(locale))return lowered;
- return lowered.normalize("NFD").replace(/\p{M}/gu,"")
+ return lowered.normalize("NFD").replace(/(\p{Script=Latin})\p{M}+/gu,"$1")
   .replaceAll("ı","i").replaceAll("ß","ss").replaceAll("æ","ae")
   .replaceAll("œ","oe").replaceAll("ø","o").replaceAll("ł","l")
   .normalize("NFC");
