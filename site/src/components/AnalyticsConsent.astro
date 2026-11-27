@@ -205,29 +205,47 @@ const c = analyticsText(lang);
       loadClarityOnlyAfterConsent();
       loadCloudflareOnlyAfterConsent();
     } else {
-      // Always remove old identifiers, including those from the previous
-      // GA4-only consent flow, even if no current script has loaded.
-      clearAnalyticsFirstPartyCookies();
-      clearClarityFirstPartyCookies();
-      // A previously loaded tag cannot be un-loaded safely. Deny subsequent
-      // measurement and reload with the rejected preference so it stays absent.
-      if (document.querySelector("script[data-tractorvs-ga4]") ||
-          document.querySelector("script[data-tractorvs-clarity]") ||
-          document.querySelector("script[data-tractorvs-cloudflare]")) {
-        // Immediately revoke Clarity consent before reloading the page.
-        clarityWindow.clarity?.("consentv2", {
-          ad_Storage: "denied", analytics_Storage: "denied",
-        });
-        analyticsWindow.gtag?.("consent", "update", {
-          analytics_storage: "denied",
-          ad_storage: "denied",
-          ad_user_data: "denied",
-          ad_personalization: "denied",
-        });
-        window.location.reload();
-      }
+      revokeAnalytics();
     }
   }
+
+  function revokeAnalytics() {
+    // Clear identifiers even if the provider has not loaded on this page.
+    clearAnalyticsFirstPartyCookies();
+    clearClarityFirstPartyCookies();
+    // A loaded script cannot be safely unloaded. Signal denial immediately,
+    // then reload with the stored preference. The same path is used across tabs.
+    if (document.querySelector("script[data-tractorvs-ga4]") ||
+        document.querySelector("script[data-tractorvs-clarity]") ||
+        document.querySelector("script[data-tractorvs-cloudflare]")) {
+      clarityWindow.clarity?.("consentv2", {
+        ad_Storage: "denied", analytics_Storage: "denied",
+      });
+      analyticsWindow.gtag?.("consent", "update", {
+        analytics_storage: "denied",
+        ad_storage: "denied",
+        ad_user_data: "denied",
+        ad_personalization: "denied",
+      });
+      window.location.reload();
+    }
+  }
+
+  // Consent applies to this origin, not just the tab where it was withdrawn.
+  // A removed/cleared preference must not silently re-enable analytics.
+  // Never write storage from this handler or grant consent on another tab's behalf.
+  window.addEventListener("storage", (event) => {
+    if (event.key !== ANALYTICS_CHOICE_KEY && event.key !== null) return;
+    try {
+      if (event.storageArea !== window.localStorage) return;
+    } catch {
+      return;
+    }
+    const choice = storedChoice();
+    if (choice === "accepted") return;
+    if (banner) banner.hidden = choice === "rejected";
+    revokeAnalytics();
+  });
 
   // Only action names are sent. Never read form contents, search terms,
   // model IDs or visitor information; preserve the native form navigation.

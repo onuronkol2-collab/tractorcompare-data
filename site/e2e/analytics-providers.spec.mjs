@@ -91,3 +91,42 @@ test("auth payload suppresses all providers even with stored approval", async ({
   await assertProviderScripts(page, 0);
   expect(await page.evaluate(() => window.dataLayer || [])).toEqual([]);
 });
+
+test("withdrawal in a second tab stops analytics in an already open tab", async ({ page, context }) => {
+  await context.route("**/*", (route) => {
+    const target = new URL(route.request().url());
+    return ["127.0.0.1", "localhost"].includes(target.hostname) ? route.continue() : route.abort();
+  });
+  await page.goto("/tr/", { waitUntil: "domcontentloaded" });
+  await page.locator("#tractorvs-analytics-accept").click();
+  await assertProviderScripts(page, 1);
+
+  const second = await context.newPage();
+  await second.goto("/tr/", { waitUntil: "domcontentloaded" });
+  await assertProviderScripts(second, 1);
+  await second.locator("#tractorvs-analytics-settings").click();
+  await second.locator("#tractorvs-analytics-reject").click();
+  await assertProviderScripts(second, 0);
+  await assertProviderScripts(page, 0);
+  await expect(page.locator("#tractorvs-analytics-banner")).toBeHidden();
+  expect(await page.evaluate(() => localStorage.getItem("tractorvs_analytics_choice_v3"))).toBe("rejected");
+  await second.close();
+});
+
+test("clearing consent in another tab requires fresh approval", async ({ page, context }) => {
+  await context.route("**/*", (route) => {
+    const target = new URL(route.request().url());
+    return ["127.0.0.1", "localhost"].includes(target.hostname) ? route.continue() : route.abort();
+  });
+  await page.goto("/tr/", { waitUntil: "domcontentloaded" });
+  await page.locator("#tractorvs-analytics-accept").click();
+  await assertProviderScripts(page, 1);
+  const second = await context.newPage();
+  await second.goto("/tr/", { waitUntil: "domcontentloaded" });
+  await assertProviderScripts(second, 1);
+  await second.evaluate(() => localStorage.clear());
+  await assertProviderScripts(page, 0);
+  await expect(page.locator("#tractorvs-analytics-banner")).toBeVisible();
+  expect(await page.evaluate(() => localStorage.getItem("tractorvs_analytics_choice_v3"))).toBeNull();
+  await second.close();
+});
