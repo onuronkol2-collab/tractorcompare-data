@@ -13,6 +13,11 @@ on:
       - "site/tests/live-browser-report.test.mjs"
       - ".github/workflows/tractorvs-compare-live-browser-qa.yml"
   workflow_dispatch:
+  # Trusted production build completion and a fixed owner-only QA command.
+  check_run:
+    types: [completed]
+  issue_comment:
+    types: [created]
   # GITHUB_TOKEN ledger commits do not trigger another push workflow. The
   # successful trusted main ledger completion can supersede stale live QA.
   workflow_run:
@@ -47,14 +52,19 @@ permissions:
 concurrency:
   # Isolate production pushes from read-only PR checks and scheduled QA.
   # A newer production push supersedes an older run against stale content;
+  # External build completion and owner requests share the group but do not
+  # cancel a running matrix: they are bounded follow-up runs.
   # this never cancels CI jobs in other workflows.
-  group: tractorvs-live-compare-qa-${{ (github.event_name == 'push' || (github.event_name == 'workflow_run' && github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.head_branch == 'main' && github.event.workflow_run.head_repository.full_name == github.repository && github.event.workflow_run.event != 'pull_request' && github.event.workflow_run.head_sha != github.sha)) && 'production-push-main' || format('{0}-{1}', github.event_name, github.event.pull_request.number || (github.event_name == 'workflow_run' && github.run_id) || github.ref) }}
+  group: >-
+    tractorvs-live-compare-qa-${{ ((github.event_name == 'push' && github.ref == 'refs/heads/main') || (github.event_name == 'workflow_run' && github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.head_branch == 'main' && github.event.workflow_run.head_repository.full_name == github.repository && github.event.workflow_run.event != 'pull_request' && github.event.workflow_run.head_sha != github.sha) || (github.event_name == 'check_run' && github.ref == 'refs/heads/main' && github.event.repository.full_name == 'onuronkol2-collab/tractorcompare-data' && github.event.check_run.app.id == 85455 && github.event.check_run.app.slug == 'cloudflare-workers-and-pages' && github.event.check_run.name == 'Workers Builds: tractorvs-site' && github.event.check_run.conclusion == 'success' && github.event.check_run.head_sha == github.sha) || (github.event_name == 'issue_comment' && github.ref == 'refs/heads/main' && github.event.repository.full_name == 'onuronkol2-collab/tractorcompare-data' && github.event.issue.number == 767 && !github.event.issue.pull_request && github.event.comment.author_association == 'OWNER' && github.event.comment.user.id == github.event.repository.owner.id && github.event.comment.user.login == github.repository_owner && github.event.comment.user.type == 'User' && github.actor == github.repository_owner && github.event.comment.body == format('QA LIVE {0}', github.sha))) && 'production-push-main' || format('{0}-{1}', github.event_name, github.event.pull_request.number || ((github.event_name == 'workflow_run' || github.event_name == 'check_run' || github.event_name == 'issue_comment') && github.run_id) || github.ref) }}
   cancel-in-progress: ${{ github.event_name == 'push' || (github.event_name == 'workflow_run' && github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.head_branch == 'main' && github.event.workflow_run.head_repository.full_name == github.repository && github.event.workflow_run.event != 'pull_request' && github.event.workflow_run.head_sha != github.sha) }}
 
 jobs:
   release-readiness:
-    # Ignore PR, failed and unchanged ledger runs. Never execute their artifacts.
-    if: ${{ github.event_name != 'workflow_run' || (github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.head_branch == 'main' && github.event.workflow_run.head_repository.full_name == github.repository && github.event.workflow_run.event != 'pull_request' && github.event.workflow_run.head_sha != github.sha) }}
+    # Reject unrelated, failed, stale, preview or unauthorized events before
+    # provisioning any runner. No event data is executed as a shell command.
+    if: >-
+      ${{ github.event_name == 'pull_request' || ((github.event_name == 'push' || github.event_name == 'schedule' || github.event_name == 'workflow_dispatch') && github.ref == 'refs/heads/main') || (github.event_name == 'workflow_run' && github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.head_branch == 'main' && github.event.workflow_run.head_repository.full_name == github.repository && github.event.workflow_run.event != 'pull_request' && github.event.workflow_run.head_sha != github.sha) || (github.event_name == 'check_run' && github.ref == 'refs/heads/main' && github.event.repository.full_name == 'onuronkol2-collab/tractorcompare-data' && github.event.check_run.app.id == 85455 && github.event.check_run.app.slug == 'cloudflare-workers-and-pages' && github.event.check_run.name == 'Workers Builds: tractorvs-site' && github.event.check_run.conclusion == 'success' && github.event.check_run.head_sha == github.sha) || (github.event_name == 'issue_comment' && github.ref == 'refs/heads/main' && github.event.repository.full_name == 'onuronkol2-collab/tractorcompare-data' && github.event.issue.number == 767 && !github.event.issue.pull_request && github.event.comment.author_association == 'OWNER' && github.event.comment.user.id == github.event.repository.owner.id && github.event.comment.user.login == github.repository_owner && github.event.comment.user.type == 'User' && github.actor == github.repository_owner && github.event.comment.body == format('QA LIVE {0}', github.sha)) }}
     # One inexpensive shared gate, before any runner installs a browser.
     runs-on: ubuntu-latest
     timeout-minutes: 25
@@ -62,9 +72,14 @@ jobs:
       release_sha: ${{ steps.release.outputs.release_sha }}
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
       - uses: actions/setup-node@v4
         with:
           node-version: "22.23.4"
+      - name: Verify trusted event checkout
+        run: test "$(git rev-parse HEAD)" = "$GITHUB_SHA"
       - name: Await coherent verified Cloudflare release (bounded)
         id: release
         if: github.event_name != 'pull_request'
@@ -103,6 +118,9 @@ jobs:
       RELEASE_SHA: ${{ needs.release-readiness.outputs.release_sha }}
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
       - uses: actions/setup-node@v4
         with:
           node-version: "22.23.4"
@@ -147,7 +165,8 @@ jobs:
   production-browser:
     # Preserve the existing aggregate check name; no success on a missing job.
     needs: [release-readiness, live-browser-projects]
-    if: ${{ always() && (github.event_name != 'workflow_run' || (github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.head_branch == 'main' && github.event.workflow_run.head_repository.full_name == github.repository && github.event.workflow_run.event != 'pull_request' && github.event.workflow_run.head_sha != github.sha)) }}
+    if: >-
+      ${{ always() && (github.event_name == 'pull_request' || ((github.event_name == 'push' || github.event_name == 'schedule' || github.event_name == 'workflow_dispatch') && github.ref == 'refs/heads/main') || (github.event_name == 'workflow_run' && github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.head_branch == 'main' && github.event.workflow_run.head_repository.full_name == github.repository && github.event.workflow_run.event != 'pull_request' && github.event.workflow_run.head_sha != github.sha) || (github.event_name == 'check_run' && github.ref == 'refs/heads/main' && github.event.repository.full_name == 'onuronkol2-collab/tractorcompare-data' && github.event.check_run.app.id == 85455 && github.event.check_run.app.slug == 'cloudflare-workers-and-pages' && github.event.check_run.name == 'Workers Builds: tractorvs-site' && github.event.check_run.conclusion == 'success' && github.event.check_run.head_sha == github.sha) || (github.event_name == 'issue_comment' && github.ref == 'refs/heads/main' && github.event.repository.full_name == 'onuronkol2-collab/tractorcompare-data' && github.event.issue.number == 767 && !github.event.issue.pull_request && github.event.comment.author_association == 'OWNER' && github.event.comment.user.id == github.event.repository.owner.id && github.event.comment.user.login == github.repository_owner && github.event.comment.user.type == 'User' && github.actor == github.repository_owner && github.event.comment.body == format('QA LIVE {0}', github.sha))) }}
     runs-on: ubuntu-latest
     timeout-minutes: 4
     steps:
