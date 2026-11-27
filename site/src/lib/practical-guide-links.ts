@@ -3,6 +3,7 @@ import {farmCostText} from "./farm-cost-i18n.ts";
 import {farmExtrasText} from "./farm-extras-i18n.ts";
 import {farmDecisionText} from "./farm-decision-i18n.ts";
 import {t} from "./ui.ts";
+import {advisorText} from "./advisor-i18n.ts";
 
 // Both routes are published in all ten languages. These are same-page
 // fragment destinations, not additional indexable URLs or compatibility claims.
@@ -62,6 +63,7 @@ export function practicalGuideLinks(lang:Locale){
  const [heading,description,returnNote]=copy[lang];
  const base=localizedPath(lang,"/guides/farm-cost-calculator/");
  return {heading,description,returnNote,guide:{href:localizedPath(lang,"/guides/choosing-a-tractor/"),label:t(lang,"guideLink")},
+ advisor:{href:localizedPath(lang,"/farm-advisor/"),label:advisorText(lang,"heading")},
  links:[
   {href:base+"#farm-scenarios",label:farmExtrasText(lang).scenario},
   {href:base+"#farm-equipment",label:farmDecisionText(lang).equipment},
@@ -114,5 +116,19 @@ const archiveToolCopy:Record<Locale,readonly [string,string]>={
 };
 export function editorialPracticalTools(lang:Locale){
  const [heading,description]=archiveToolCopy[lang];
- return {heading,description,primary:{href:localizedPath(lang,"/guides/farm-cost-calculator/"),label:farmCostText(lang).title},links:practicalGuideLinks(lang).links.slice(0,2)};
+ return {heading,description,primary:{href:localizedPath(lang,"/guides/farm-cost-calculator/"),label:farmCostText(lang).title},links:practicalGuideLinks(lang).links.slice(0,2),advisor:practicalGuideLinks(lang).advisor};
 }
+
+
+export const ADVISOR_DISCOVERY_NOTE:Record<Locale,string>={
+  "en": "Use your land and equipment requirements to screen published models. Results are suggestions, not a guarantee of suitability.",
+  "tr": "Arazi ve ekipman gereksinimlerinle yayımlanmış modelleri ön elemeden geçir. Sonuçlar öneridir, uygunluk garantisi değildir.",
+  "zh": "根据农地和农具需求初步筛选已发布的机型。结果仅供参考，不保证适用性。",
+  "hi": "भूमि और उपकरण की आवश्यकताओं के आधार पर प्रकाशित मॉडलों की प्रारंभिक छँटाई करें। परिणाम सुझाव हैं, उपयुक्तता की गारंटी नहीं।",
+  "pt-br": "Faça uma triagem dos modelos publicados conforme sua área e seus implementos. Os resultados são sugestões, não garantia de adequação.",
+  "fr": "Présélectionnez les modèles publiés selon vos terres et vos outils. Les résultats sont des suggestions, sans garantie d’adéquation.",
+  "de": "Grenzen Sie veröffentlichte Modelle anhand Ihrer Flächen- und Geräteanforderungen ein. Die Ergebnisse sind Vorschläge, keine Eignungsgarantie.",
+  "ru": "Выполните предварительный отбор опубликованных моделей по требованиям хозяйства и орудий. Результаты — рекомендации, а не гарантия пригодности.",
+  "ja": "農地や作業機の条件から公開済み機種を絞り込みます。結果は候補の提案であり、適合性を保証しません。",
+  "es": "Filtra los modelos publicados según tus terrenos y aperos. Los resultados son sugerencias, no una garantía de idoneidad."
+};

@@ -98,3 +98,20 @@ test("ten published selection guides link to actual scenario, equipment and cost
   assert.ok([c.heading,c.description,c.returnNote,c.guide.label,...c.links.map(x=>x.label)].every(x=>typeof x==="string"&&x.trim()));
  }
 });
+
+
+test("published selection guides and advisors link to one another in every locale",async()=>{
+ const {practicalGuideLinks,ADVISOR_DISCOVERY_NOTE}=await import("../src/lib/practical-guide-links.ts");
+ const guide=read("components/TractorSelectionGuide.astro");
+ const advisor=read("components/FarmAdvisor.astro");
+ assert.match(guide,/href=\{practicalGuideLinks\(lang\)\.advisor\.href\}/);
+ assert.match(guide,/ADVISOR_DISCOVERY_NOTE\[lang\]/);
+ assert.match(advisor,/href=\{localizedPath\(lang,"\/guides\/choosing-a-tractor\/"\)\}/);
+ assert.match(read("pages/[locale]/farm-advisor/index.astro"),/NEW_LOCALES\.map/);
+ for(const lang of LOCALES){
+  const p=practicalGuideLinks(lang);
+  assert.equal(p.advisor.href,localizedPath(lang,"/farm-advisor/"));
+  assert.ok(p.advisor.label.trim()&&ADVISOR_DISCOVERY_NOTE[lang].trim());
+ }
+ assert.equal(new Set(Object.values(ADVISOR_DISCOVERY_NOTE)).size,10);
+});

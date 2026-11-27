@@ -123,3 +123,14 @@ test("archive reflects the existing guide's actual editorial review date",()=>{
  assert.ok(date);
  assert.ok(hub.includes('path:"/guides/choosing-a-tractor/",checked:"'+date+'"'));
 });
+
+
+test("archive promotes the existing localized selection advisor without counting it as an article",async()=>{
+ const {editorialPracticalTools}=await import("../src/lib/practical-guide-links.ts");
+ const {LOCALES,localizedPath}=await import("../src/lib/locales.ts");
+ const hub=file("src/components/EditorialHub.astro");
+ const practical=hub.slice(hub.indexOf('<section class="editorial-practical"'),hub.indexOf('<section class="editorial-trust"'));
+ assert.match(practical,/href=\{practical\.advisor\.href\}/);
+ assert.doesNotMatch(practical,/data-editorial-card|data-editorial-section-count/);
+ for(const lang of LOCALES)assert.equal(editorialPracticalTools(lang).advisor.href,localizedPath(lang,"/farm-advisor/"));
+});

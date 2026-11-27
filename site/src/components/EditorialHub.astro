@@ -1,6 +1,6 @@
 ---
 import SiteLayout from "../layouts/SiteLayout.astro";
-import {editorialPracticalTools} from "../lib/practical-guide-links.ts";
+import {editorialPracticalTools,ADVISOR_DISCOVERY_NOTE} from "../lib/practical-guide-links.ts";
 import {localizedPath,LOCALES,LOCALE_TAGS,type Locale} from "../lib/locales.ts";
 import {editorialHubTranslation} from "../lib/editorial-hub-i18n.ts";
 import {EDITORIAL_DISCOVERY,EDITORIAL_READING_LANGUAGE} from "../lib/editorial-discovery-i18n.mjs";
@@ -211,6 +211,8 @@ const schema={
     <h2 id="editorial-practical-heading">{practical.heading}</h2>
     <p>{practical.description}</p>
     <ul><li><a href={practical.primary.href}>{practical.primary.label}</a></li>{practical.links.map(link=><li><a href={link.href}>{link.label}</a></li>)}</ul>
+    <p>{ADVISOR_DISCOVERY_NOTE[lang]}</p>
+    <a href={practical.advisor.href}>{practical.advisor.label}</a>
    </section>
    <section class="editorial-trust" aria-labelledby="editorial-trust-heading">
     <h2 id="editorial-trust-heading">{copy.trust}</h2>

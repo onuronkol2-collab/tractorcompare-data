@@ -1,6 +1,6 @@
 ---
 import SiteLayout from "../layouts/SiteLayout.astro";
-import {practicalGuideLinks} from "../lib/practical-guide-links.ts";
+import {practicalGuideLinks,ADVISOR_DISCOVERY_NOTE} from "../lib/practical-guide-links.ts";
 import EditorialContents from "./EditorialContents.astro";
 import PowerUnitConverter from "./PowerUnitConverter.astro";
 import {POWER_UNIT_COPY} from "../lib/power-unit-copy.ts";
@@ -256,6 +256,8 @@ const schema={
         <h2 id="guide-practical-heading">{practicalGuideLinks(lang).heading}</h2>
         <p>{practicalGuideLinks(lang).description}</p>
         <ul>{practicalGuideLinks(lang).links.map(link=><li><a href={link.href}>{link.label}</a></li>)}</ul>
+        <p>{ADVISOR_DISCOVERY_NOTE[lang]}</p>
+        <a href={practicalGuideLinks(lang).advisor.href}>{practicalGuideLinks(lang).advisor.label}</a>
       </section>
       <section class="guide-checklist" aria-labelledby="guide-checklist-heading">
         <h2 id="guide-checklist-heading" tabindex="-1">{copy.worksheetTitle}</h2>
