@@ -57,3 +57,17 @@ export function verifiedModelSources(model){
   }
   return [...sources.values()];
 }
+
+
+/** Coverage of the public collection, not the manufacturer's whole range. */
+export function brandMarketCoverage(models){
+ const groups=new Map();
+ for(const model of models){
+  const market=typeof model.market==="string"&&model.market.trim()?model.market:null;
+  const group=groups.get(market)||{market,records:0,withSources:0};
+  group.records++;
+  if(verifiedModelSources(model).length)group.withSources++;
+  groups.set(market,group);
+ }
+ return [...groups.values()];
+}

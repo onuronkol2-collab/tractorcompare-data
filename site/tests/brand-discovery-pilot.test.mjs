@@ -96,3 +96,24 @@ test("brand discovery retains all server rendered links and adds optional local 
  assert.match(view,/role="status" aria-live="polite"/);
  assert.match(view,/availableLocales=\{\["en","tr"\]\}/);
 });
+
+
+test("market coverage counts records once and preserves unknown and distinct market identities",async()=>{
+ const {brandMarketCoverage}=await import("../src/lib/brand-discovery-pilot.mjs");
+ const a=make("TAFE",4,"published");
+ a[0].market="Turkey";a[1].market="Turkey";a[1].specifications=[];a[2].market="India";a[3].market=null;
+ assert.deepEqual(brandMarketCoverage(a),[{market:"Turkey",records:2,withSources:1},{market:"India",records:1,withSources:1},{market:null,records:1,withSources:1}]);
+ assert.deepEqual(brandMarketCoverage([]),[]);
+});
+test("same-brand exact pair selection preserves SSR links and rejects duplicate choices",()=>{
+ const view=source("src/components/BrandDiscovery.astro");
+ assert.match(view,/brandMarketCoverage\(models\)/);
+ assert.match(view,/data-brand-pair action=\{localizedPath\(lang,"\/compare\/"\)\} method="get" hidden/);
+ assert.match(view,/select name="left" required/);
+ assert.match(view,/select name="right" required/);
+ assert.match(view,/left.value===right.value/);
+ assert.match(view,/if\(submit.disabled\)event.preventDefault\(\)/);
+ assert.match(view,/data-brand-source-only/);
+ assert.match(view,/record.dataset.sourced==="yes"/);
+ assert.match(view,/modelPrefix\+model.slug\+"\/"/);
+});

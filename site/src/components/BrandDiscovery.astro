@@ -3,7 +3,7 @@ import SiteLayout from "../layouts/SiteLayout.astro";
 import {localizedPath, type Locale} from "../lib/locales";
 import {normalizeTractorQuery} from "../lib/search";
 import {marketDisplayName} from "../lib/market-display";
-import {verifiedModelSources} from "../lib/brand-discovery-pilot.mjs";
+import {verifiedModelSources,brandMarketCoverage} from "../lib/brand-discovery-pilot.mjs";
 import type {TractorRecord} from "../lib/catalog";
 
 interface Pilot {name:string; slug:string;}
@@ -58,7 +58,12 @@ const copy=turkish
 const filterCopy=turkish
  ?{query:"Marka içinde model, varyant veya pazar ara",market:"Pazar",all:"Tüm pazarlar",reset:"Filtreleri temizle",results:"görünen kayıt",empty:"Eşleşen kayıt yok. Model adını veya pazar filtresini değiştirin.",compareModel:"Bu modeli karşılaştır"}
  :{query:"Search model, variant or market within this brand",market:"Market",all:"All markets",reset:"Clear filters",results:"visible records",empty:"No matching records. Change the model query or market filter.",compareModel:"Compare this model"};
-const marketOptions=[...new Set(models.map(model=>model.market).filter((market):market is string=>typeof market==="string"&&market.trim().length>0))].map(market=>({value:market,label:marketDisplayName(market,lang)})).sort((a,b)=>a.label.localeCompare(b.label,lang));
+const marketOptions=[...new Set(models.map(model=>model.market).filter((market):market is string=>typeof market==="string"&&market.trim().length>0))].map(market=>({value:market,label:marketDisplayName(market,lang)||market})).sort((a,b)=>a.label.localeCompare(b.label,lang));
+const coverageCopy=turkish
+ ?{heading:"Pazara göre katalog kapsamı",note:"Sayılar yalnızca burada yayımlanmış kayıtları gösterir. Kaynak bağlantısı, bütün teknik alanların doğrulandığı anlamına gelmez.",unknown:"Pazar belirtilmemiş",sourceOnly:"Kaynak bağlantısı bulunan kayıtlar",pair:"İki modeli seç ve karşılaştır",left:"Birinci model",right:"İkinci model",choose:"Model seç",different:"İki farklı model seçin.",js:"Seçim ve karşılaştırma için JavaScript gerekir. Aşağıdaki model bağlantıları her durumda kullanılabilir."}
+ :{heading:"Catalogue coverage by market",note:"Counts describe records published here only. A source link does not establish verification of every technical field.",unknown:"Market not specified",sourceOnly:"Records with evidence links",pair:"Choose two models to compare",left:"First model",right:"Second model",choose:"Select a model",different:"Select two different models.",js:"Model selection and comparison require JavaScript. Individual model links below remain available."};
+const coverage=brandMarketCoverage(models).map(group=>({...group,label:group.market?marketDisplayName(group.market,lang)||group.market:coverageCopy.unknown})).sort((a,b)=>b.records-a.records||a.label.localeCompare(b.label,lang));
+const pairLabel=(model:TractorRecord)=>[name+" "+model.model_name,model.variant,model.market?marketDisplayName(model.market,lang):null,model.model_year].filter(Boolean).join(" · ");
 const sourceById=new Map(models.map(model=>[model.tractor_id,verifiedModelSources(model)]));
 const sourcedCount=models.filter(model=>(sourceById.get(model.tractor_id)||[]).length>0).length;
 const countSpecs=models.reduce((sum,model)=>sum+model.specifications.length,0);
@@ -97,17 +102,36 @@ const schema={
       <a href={localizedPath(lang,"/compare/")}>{copy.compare}</a>
       <a href={localizedPath(lang,"/methodology/")}>{copy.methodology}</a>
     </div>
+    <section class="brand-coverage" aria-labelledby="brand-coverage-heading">
+      <h2 id="brand-coverage-heading">{coverageCopy.heading}</h2>
+      <p>{coverageCopy.note}</p>
+      <div class="brand-coverage-scroll" role="region" aria-labelledby="brand-coverage-heading" tabindex="0">
+        <table><thead><tr><th scope="col">{copy.market}</th><th scope="col">{copy.count}</th><th scope="col">{copy.sources}</th></tr></thead>
+        <tbody>{coverage.map(group=><tr><th scope="row">{group.label}</th><td>{group.records}</td><td>{group.withSources}</td></tr>)}</tbody></table>
+      </div>
+    </section>
+    <section class="brand-pair" aria-labelledby="brand-pair-heading">
+      <h2 id="brand-pair-heading">{coverageCopy.pair}</h2>
+      <noscript><p>{coverageCopy.js}</p></noscript>
+      <form data-brand-pair action={localizedPath(lang,"/compare/")} method="get" hidden>
+        <label>{coverageCopy.left}<select name="left" required><option value="">{coverageCopy.choose}</option>{models.map(model=><option value={model.tractor_id}>{pairLabel(model)}</option>)}</select></label>
+        <label>{coverageCopy.right}<select name="right" required><option value="">{coverageCopy.choose}</option>{models.map(model=><option value={model.tractor_id}>{pairLabel(model)}</option>)}</select></label>
+        <button type="submit" disabled>{copy.compare}</button>
+        <p data-brand-pair-error role="alert" hidden>{coverageCopy.different}</p>
+      </form>
+    </section>
     <section aria-labelledby="brand-model-heading">
       <h2 id="brand-model-heading">{copy.models}</h2>
       <div class="brand-filter" data-brand-filter hidden>
         <label>{filterCopy.query}<input type="search" maxlength="100" data-brand-query autocomplete="off" /></label>
         {marketOptions.length>1&&<label>{filterCopy.market}<select data-brand-market><option value="">{filterCopy.all}</option>{marketOptions.map(market=><option value={market.value}>{market.label}</option>)}</select></label>}
+        <label class="brand-source-filter"><input type="checkbox" data-brand-source-only />{coverageCopy.sourceOnly}</label>
         <button type="button" data-brand-reset>{filterCopy.reset}</button>
         <p role="status" aria-live="polite" data-brand-status data-suffix={filterCopy.results}>{models.length} {filterCopy.results}</p>
         <p data-brand-empty hidden>{filterCopy.empty}</p>
       </div>
       <ul class="brand-model-grid">
-        {models.map(model=><li data-brand-record data-search={normalizeTractorQuery([name,model.model_name,model.variant,model.model_year,model.market,model.market?marketDisplayName(model.market,lang):null].filter(Boolean).join(" "))} data-market={model.market||""}>
+        {models.map(model=><li data-brand-record data-search={normalizeTractorQuery([name,model.model_name,model.variant,model.model_year,model.market,model.market?marketDisplayName(model.market,lang):null].filter(Boolean).join(" "))} data-market={model.market||""} data-sourced={(sourceById.get(model.tractor_id)||[]).length>0?"yes":"no"}>
           <article class="brand-model">
             <h3><a href={modelPrefix+model.slug+"/"}>{name} {model.model_name}</a></h3>
             {model.variant&&<p class="brand-variant">{model.variant.split(";")[0].trim()}</p>}
@@ -138,6 +162,7 @@ const schema={
  const panel=document.querySelector<HTMLElement>("[data-brand-filter]");
  const query=panel?.querySelector<HTMLInputElement>("[data-brand-query]");
  const market=panel?.querySelector<HTMLSelectElement>("[data-brand-market]");
+ const sourceOnly=panel?.querySelector<HTMLInputElement>("[data-brand-source-only]");
  const reset=panel?.querySelector<HTMLButtonElement>("[data-brand-reset]");
  const status=panel?.querySelector<HTMLElement>("[data-brand-status]");
  const empty=panel?.querySelector<HTMLElement>("[data-brand-empty]");
@@ -147,7 +172,7 @@ const schema={
    const terms=normalizeTractorQuery(query.value).split(/\s+/).filter(Boolean);
    let count=0;
    for(const record of records){
-    const match=(!market?.value||record.dataset.market===market.value)&&matchesTractorTerms(record.dataset.search||"",terms);
+    const match=(!sourceOnly?.checked||record.dataset.sourced==="yes")&&(!market?.value||record.dataset.market===market.value)&&matchesTractorTerms(record.dataset.search||"",terms);
     record.hidden=!match;
     if(match)count++;
    }
@@ -156,8 +181,25 @@ const schema={
   };
   query.addEventListener("input",update);
   market?.addEventListener("change",update);
-  reset.addEventListener("click",()=>{query.value="";if(market)market.value="";update();query.focus();});
+  sourceOnly?.addEventListener("change",update);
+  reset.addEventListener("click",()=>{query.value="";if(market)market.value="";if(sourceOnly)sourceOnly.checked=false;update();query.focus();});
   panel.hidden=false;
+ }
+ const pair=document.querySelector<HTMLFormElement>("[data-brand-pair]");
+ const left=pair?.querySelector<HTMLSelectElement>('select[name="left"]');
+ const right=pair?.querySelector<HTMLSelectElement>('select[name="right"]');
+ const submit=pair?.querySelector<HTMLButtonElement>('button[type="submit"]');
+ const pairError=pair?.querySelector<HTMLElement>("[data-brand-pair-error]");
+ if(pair&&left&&right&&submit&&pairError){
+  const updatePair=()=>{
+   const same=Boolean(left.value&&right.value&&left.value===right.value);
+   pairError.hidden=!same;
+   submit.disabled=!left.value||!right.value||same;
+  };
+  pair.addEventListener("change",updatePair);
+  pair.addEventListener("submit",event=>{updatePair();if(submit.disabled)event.preventDefault();});
+  updatePair();
+  pair.hidden=false;
  }
 </script>
 <style>
@@ -204,4 +246,23 @@ const schema={
  .brand-filter button{color:#fff;background:#245b39;cursor:pointer;font-weight:750;white-space:normal}
  .brand-filter :is(input,select,button):focus-visible{outline:3px solid #175c37;outline-offset:2px}
  .brand-filter p{flex-basis:100%;margin:0;font-size:14px;color:#405948;line-height:1.6}
+ .brand-coverage,.brand-pair{margin-block:24px;padding:clamp(14px,3vw,24px);border:1px solid #c8ddce;border-radius:14px;background:#f5faf4;min-inline-size:0}
+ .brand-coverage h2,.brand-pair h2{margin:0 0 12px;font-size:clamp(20px,2.5vw,28px)}
+ .brand-coverage p,.brand-pair p{line-height:1.65;color:#405948}
+ .brand-coverage-scroll{overflow-x:auto;max-width:100%}
+ .brand-coverage-scroll table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}
+ .brand-coverage-scroll :is(th,td){text-align:start;padding:12px 8px;border-bottom:1px solid #c8ddce;overflow-wrap:anywhere}
+ .brand-coverage-scroll thead th{background:#e4efe0}
+ .brand-pair form{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+ .brand-pair form[hidden],.brand-pair [hidden]{display:none!important}
+ .brand-pair label{display:grid;gap:6px;min-width:0;font-weight:700}
+ .brand-pair select,.brand-pair button{font:inherit;min-height:44px;min-width:0;max-width:100%;border:1px solid #78977e;border-radius:8px;padding:10px}
+ .brand-pair select{background:#fff;color:#183424;font-size:max(16px,1rem)}
+ .brand-pair button{grid-column:1/-1;background:#245b39;color:white;font-weight:750;cursor:pointer}
+ .brand-pair button:disabled{opacity:.6;cursor:default}
+ .brand-pair [role="alert"]{grid-column:1/-1;margin:0}
+ .brand-filter .brand-source-filter{display:flex;align-items:center;gap:8px;min-height:44px}
+ .brand-filter .brand-source-filter input{min-height:0;width:20px;height:20px;flex:none;accent-color:#245b39}
+ .brand-pair :is(select,button):focus-visible,.brand-coverage-scroll:focus-visible{outline:3px solid #175c37;outline-offset:2px}
+ @media(max-width:520px){.brand-pair form{grid-template-columns:minmax(0,1fr)}}
 </style>
