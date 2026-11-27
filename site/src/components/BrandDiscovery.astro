@@ -2,6 +2,8 @@
 import SiteLayout from "../layouts/SiteLayout.astro";
 import {localizedPath, type Locale} from "../lib/locales";
 import {brandDirectoryText} from "../lib/brand-directory-i18n.ts";
+import {modelCitationCopy,modelPageCitation} from "../lib/model-page-citation.ts";
+import {modelSourceIndex} from "../lib/model-source-index.ts";
 import {normalizeTractorQuery} from "../lib/search";
 import {marketDisplayName} from "../lib/market-display";
 import {verifiedModelSources,brandMarketCoverage} from "../lib/brand-discovery-pilot.mjs";
@@ -65,6 +67,9 @@ const coverageCopy=turkish
  :{heading:"Catalogue coverage by market",note:"Counts describe records published here only. A source link does not establish verification of every technical field.",unknown:"Market not specified",sourceOnly:"Records with evidence links",pair:"Choose two models to compare",left:"First model",right:"Second model",choose:"Select a model",different:"Select two different models.",js:"Model selection and comparison require JavaScript. Individual model links below remain available."};
 const coverage=brandMarketCoverage(models).map(group=>({...group,label:group.market?marketDisplayName(group.market,lang)||group.market:coverageCopy.unknown})).sort((a,b)=>b.records-a.records||a.label.localeCompare(b.label,lang));
 const pairLabel=(model:TractorRecord)=>[name+" "+model.model_name,model.variant,model.market?marketDisplayName(model.market,lang):null,model.model_year].filter(Boolean).join(" · ");
+const citationCopy=modelCitationCopy(lang);
+const citations=new Map(import.meta.env.PUBLIC_INDEXING_ENABLED==="true"&&Astro.site?
+ models.filter(model=>modelSourceIndex(model).documents.length>0).map(model=>[model.tractor_id,modelPageCitation(model,lang,origin)]):[]);
 const sourceById=new Map(models.map(model=>[model.tractor_id,verifiedModelSources(model)]));
 const sourcedCount=models.filter(model=>(sourceById.get(model.tractor_id)||[]).length>0).length;
 const countSpecs=models.reduce((sum,model)=>sum+model.specifications.length,0);
@@ -152,6 +157,13 @@ const schema={
                   {copy.evidence}{source.publisher?" — "+source.publisher:""} <span aria-hidden="true">↗</span>
                 </a>)}
             </div>
+            {citations.get(model.tractor_id)&&<details class="brand-model-citation" data-model-citation data-success={citationCopy.success} data-failure={citationCopy.failure}>
+              <summary>{citationCopy.heading}</summary>
+              <p>{citationCopy.note}</p>
+              <textarea rows="3" readonly aria-label={citationCopy.heading}>{citations.get(model.tractor_id)}</textarea>
+              <button type="button" data-copy-citation hidden>{citationCopy.button}</button>
+              <p role="status" data-citation-status></p>
+            </details>}
           </article>
         </li>)}
       </ul>
@@ -202,6 +214,17 @@ const schema={
   pair.addEventListener("submit",event=>{updatePair();if(submit.disabled)event.preventDefault();});
   updatePair();
   pair.hidden=false;
+ }
+ for(const root of document.querySelectorAll<HTMLElement>("[data-model-citation]")){
+  const field=root.querySelector<HTMLTextAreaElement>("textarea");
+  const button=root.querySelector<HTMLButtonElement>("[data-copy-citation]");
+  const status=root.querySelector<HTMLElement>("[data-citation-status]");
+  if(!field||!button||!status||!navigator.clipboard?.writeText)continue;
+  button.addEventListener("click",async()=>{
+   try{await navigator.clipboard.writeText(field.value);status.textContent=root.dataset.success||"";}
+   catch{field.focus();field.select();status.textContent=root.dataset.failure||"";}
+  });
+  button.hidden=false;
  }
 </script>
 <style>
@@ -267,4 +290,11 @@ const schema={
  .brand-filter .brand-source-filter input{min-height:0;width:20px;height:20px;flex:none;accent-color:#245b39}
  .brand-pair :is(select,button):focus-visible,.brand-coverage-scroll:focus-visible{outline:3px solid #175c37;outline-offset:2px}
  @media(max-width:520px){.brand-pair form{grid-template-columns:minmax(0,1fr)}}
+ .brand-model-citation{border-top:1px solid #d9e5d6;padding-top:10px;min-width:0;overflow-wrap:anywhere}
+ .brand-model-citation summary{cursor:pointer;font-weight:750;line-height:1.5;min-height:44px;align-content:center}
+ .brand-model-citation p{font-size:14px;line-height:1.65;color:#405948}
+ .brand-model-citation textarea{display:block;width:100%;box-sizing:border-box;padding:10px;border:1px solid #8ca992;border-radius:8px;background:#fff;color:#234b32;font:inherit;resize:vertical}
+ .brand-model-citation button{margin-top:10px;padding:8px 14px;min-height:44px;background:#245b39;color:#fff;border:0;border-radius:8px;cursor:pointer;font:inherit}
+ .brand-model-citation button[hidden]{display:none}
+ .brand-model-citation :is(summary,button,textarea):focus-visible{outline:3px solid #175c37;outline-offset:3px}
 </style>

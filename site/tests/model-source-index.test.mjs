@@ -135,8 +135,8 @@ test("model citation points to the real localized catalogue page and preserves i
   assert.ok(Object.values(modelCitationCopy(lang)).every(v=>v.trim()));
   assert.equal(modelPageCitation({...row,slug:"../other"},lang,new URL("https://tractorvs.com/")),null);
  }
- const view=readFileSync(new URL("../src/components/ModelSourceIndex.astro",import.meta.url),"utf8");
- assert.match(view,/sources.documents.length > 0/);
+ const view=readFileSync(new URL("../src/components/BrandDiscovery.astro",import.meta.url),"utf8");
+ assert.match(view,/modelSourceIndex\(model\).documents.length>0/);
  assert.match(view,/PUBLIC_INDEXING_ENABLED==="true"&&Astro.site/);
  assert.match(view,/readonly aria-label/);
  assert.match(view,/navigator.clipboard.writeText\(field.value\)/);

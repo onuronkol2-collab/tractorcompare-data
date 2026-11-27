@@ -1,6 +1,5 @@
 ---
 import type { Locale } from "../lib/locales.ts";
-import {modelCitationCopy,modelPageCitation} from "../lib/model-page-citation.ts";
 import type { TractorRecord } from "../lib/catalog.ts";
 import { modelSourceIndex, MODEL_SOURCE_COPY } from "../lib/model-source-index.ts";
 
@@ -8,8 +7,6 @@ interface Props { tractor: TractorRecord; lang: Locale; }
 const { tractor, lang } = Astro.props;
 const sources = modelSourceIndex(tractor);
 const copy = MODEL_SOURCE_COPY[lang];
-const citationCopy=modelCitationCopy(lang);
-const citation=import.meta.env.PUBLIC_INDEXING_ENABLED==="true"&&Astro.site?modelPageCitation(tractor,lang,Astro.site):null;
 ---
 {sources.documents.length > 0 && (
   <section class="model-sources" aria-labelledby="model-source-index-title">
@@ -41,37 +38,9 @@ const citation=import.meta.env.PUBLIC_INDEXING_ENABLED==="true"&&Astro.site?mode
     </ul>
     {sources.remainingDocuments > 0 && <p class="model-sources-more">{copy.more}</p>}
     <p class="model-sources-caution">{copy.caution}</p>
-    {citation&&<div class="model-citation" data-model-citation data-success={citationCopy.success} data-failure={citationCopy.failure}>
-      <h3>{citationCopy.heading}</h3>
-      <p>{citationCopy.note}</p>
-      <textarea rows="3" readonly aria-label={citationCopy.heading}>{citation}</textarea>
-      <button type="button" data-copy-citation hidden>{citationCopy.button}</button>
-      <p role="status" data-citation-status></p>
-    </div>}
   </section>
 )}
-<script>
- for(const root of document.querySelectorAll<HTMLElement>("[data-model-citation]")){
-  const field=root.querySelector<HTMLTextAreaElement>("textarea");
-  const button=root.querySelector<HTMLButtonElement>("[data-copy-citation]");
-  const status=root.querySelector<HTMLElement>("[data-citation-status]");
-  if(!field||!button||!status||!navigator.clipboard?.writeText)continue;
-  button.addEventListener("click",async()=>{
-   try{await navigator.clipboard.writeText(field.value);status.textContent=root.dataset.success||"";}
-   catch{field.focus();field.select();status.textContent=root.dataset.failure||"";}
-  });
-  button.hidden=false;
- }
-</script>
 <style>
- .model-citation{border-top:1px solid #d9e5d6;padding-top:18px;margin-top:18px;min-width:0}
- .model-citation h3{font-size:17px;color:#164c32;margin:0 0 8px}
- .model-citation p{font-size:13px;line-height:1.7;color:#435849}
- .model-citation textarea{display:block;width:100%;box-sizing:border-box;padding:10px;border:1px solid #8ca992;border-radius:8px;background:#fff;color:#234b32;font:inherit;resize:vertical}
- .model-citation button{margin-top:10px;padding:8px 14px;min-height:44px;background:#245b39;color:#fff;border:0;border-radius:8px;cursor:pointer;font:inherit}
- .model-citation button[hidden]{display:none}
- .model-citation :is(button,textarea):focus-visible{outline:3px solid #39784a;outline-offset:3px}
-
   .model-sources { margin:40px 0 28px; padding:clamp(18px,3vw,29px); background:#f5f8f2; border:1px solid #c9ddc8; border-radius:17px; }
   .model-sources-heading { display:flex; align-items:start; justify-content:space-between; flex-wrap:wrap; gap:18px; }
   .model-sources-kicker { color:#3b7854; font-size:11px; font-weight:850; letter-spacing:.1em; margin:0 0 8px; }
@@ -79,22 +48,17 @@ const citation=import.meta.env.PUBLIC_INDEXING_ENABLED==="true"&&Astro.site?mode
   .model-sources-heading p:not(.model-sources-kicker) { margin:0 0 18px; max-width:780px; font-size:14px; line-height:1.8; color:#385544; }
   .model-sources-count { display:flex; flex-direction:column; gap:3px; padding:10px 14px; min-width:108px; background:white; border:1px solid #d7e5d4; border-radius:12px; }
   .model-sources-count strong { font-size:26px; color:#185435; line-height:1.2; }
-  .model-sources-count span { font-size:13px; color:#476b50; line-height:1.5; }
+  .model-sources-count span { font-size:11px; color:#476b50; line-height:1.5; }
   .model-sources-list { list-style:none; padding:0; margin:0; display:grid; gap:11px; grid-template-columns:repeat(auto-fit,minmax(min(100%,270px),1fr)); }
   .model-sources-list li { background:#fff; border:1px solid #dce8d7; border-radius:12px; padding:14px 16px; min-width:0; display:flex; flex-direction:column; gap:7px; }
-  .model-source-type { font-size:13px; font-weight:800; color:#2b6d48; }
+  .model-source-type { font-size:11px; font-weight:800; color:#2b6d48; }
   .model-sources-list a { display:flex; flex-direction:column; gap:3px; color:#174f37; overflow-wrap:anywhere; text-underline-offset:3px; }
-  .model-sources-list a strong { font-size:16px; line-height:1.5; text-decoration:underline; }
-  .model-sources-list a span { font-size:14px; line-height:1.55; color:#446550; }
-  .model-sources-list small { font-size:13px; color:#405948; line-height:1.6; overflow-wrap:anywhere; }
+  .model-sources-list a strong { font-size:14px; line-height:1.4; }
+  .model-sources-list a span { font-size:12px; line-height:1.5; color:#446550; }
+  .model-sources-list small { font-size:11px; color:#526b55; line-height:1.5; }
   .model-source-reviewed { color:#41654d; font-size:11px; line-height:1.6; }
   .model-source-reviewed time { font-weight:750; font-variant-numeric:tabular-nums; }
   .model-sources-more { margin:14px 0 0; font-size:13px; color:#395c48; line-height:1.6; }
   .model-sources-caution { margin:19px 0 0; border-top:1px solid #d9e5d6; padding-top:14px; color:#435849; font-size:13px; line-height:1.8; }
-  .model-sources a:focus-visible { outline:3px solid #175c37; outline-offset:3px; border-radius:4px; }
-  .model-sources-heading > div,.model-sources-count{min-inline-size:0;max-inline-size:100%;overflow-wrap:anywhere}
-  .model-sources-list a{min-height:44px;justify-content:center}
-  .model-citation p,.model-sources-caution,.model-sources-more{font-size:14px;line-height:1.7;overflow-wrap:anywhere}
-  .model-citation button{max-inline-size:100%;overflow-wrap:anywhere}
-  @media(max-width:480px){.model-sources-count{min-width:0;width:100%}}
+  .model-sources a:focus-visible { outline:3px solid #9ac493; outline-offset:3px; border-radius:4px; }
 </style>

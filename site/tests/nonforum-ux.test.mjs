@@ -134,8 +134,8 @@ test("catalogue and brand research surfaces preserve real links and readable tec
  assert.match(brand,/href=\{source\.url\}/);
  assert.match(brand,/\.brand-model-links a\{[^}]*text-decoration:underline/);
  assert.match(source,/href=\{source\.url\}/);
- assert.match(source,/\.model-sources-list a strong \{ font-size:16px/);
- assert.match(source,/\.model-sources-list small \{ font-size:13px/);
+ assert.match(style,/\.model-sources-list a strong \{ font-size:16px/);
+ assert.match(style,/\.model-sources-list small \{ font-size:13px/);
  assert.match(toc,/\.model-spec-group\[id\]\{scroll-margin-top:7rem\}/);
  assert.match(toc,/\.model-spec-toc a\{line-height:1\.5\}/);
 });

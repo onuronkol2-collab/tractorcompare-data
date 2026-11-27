@@ -531,3 +531,14 @@ html:is(:lang(hi), :lang(zh), :lang(ja)) #main :is(.tractor-card-specs small,
   #main .cost-page .extra-table th,
   #main .cost-page .extra-table td { min-inline-size: 4.5rem; }
 }
+
+/* Source-card presentation only; keep existing model HTML and source attribution unchanged. */
+#main .model-sources-list a strong { font-size:16px; line-height:1.5; text-decoration:underline; }
+#main .model-sources-list a span { font-size:14px; line-height:1.55; }
+#main .model-sources-list small { font-size:13px; line-height:1.6; color:#405948; overflow-wrap:anywhere; }
+#main :is(.model-source-type,.model-sources-count span) { font-size:13px; }
+#main .model-sources-heading>div { min-inline-size:0; max-inline-size:100%; overflow-wrap:anywhere; }
+#main .model-sources-list a { min-height:44px; justify-content:center; }
+#main :is(.model-sources-caution,.model-sources-more) { font-size:14px; line-height:1.7; overflow-wrap:anywhere; }
+#main .model-sources a:focus-visible { outline:3px solid #175c37; outline-offset:3px; }
+@media(max-width:480px){#main .model-sources-count{min-width:0;width:100%}}
