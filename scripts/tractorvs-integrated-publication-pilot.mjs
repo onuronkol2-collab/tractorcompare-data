@@ -4,11 +4,12 @@ import {join,resolve} from "node:path";
 import {fileURLToPath} from "node:url";
 import {isDeepStrictEqual} from "node:util";
 import {REPO,candidatePlan,openPublicationCandidate} from "./tractorvs-publication-candidate.mjs";
-import {APP_ID,assertPilotContext,appJwt} from "./tractorvs-secure-publisher-pilot.mjs";
+import {APP_ID,appJwt} from "./tractorvs-secure-publisher-pilot.mjs";
 import {fingerprintPublicViewWithBoundedRetry,guardMassUnpublish} from "./tractor-publication-autosync.mjs";
 import {fingerprintPublicForum} from "./tractor-forum-publication-autosync.mjs";
 import {extractPublishedUrls,significantContentDigest,auditBuiltSitemap,ROOT} from "./tractor-sitemap-history.mjs";
 import {validateCandidateIdentity,verifyFreshPublicSnapshot,verifySitemapTransition} from "./tractorvs-publication-evidence.mjs";
+import {assertProtectedReleaseRule} from "./tractorvs-protected-candidate-policy.mjs";
 const PATHS={catalog:["site/src/data/public-catalog-sync.json"],forum:["site/src/data/public-forum-sync.json"],sitemap:["seo/sitemap-content-history.json","site/src/data/sitemap-lastmod.json"]};
 const bot="tractorvs-secure-publisher[bot]",context="TractorVS / independent publication evidence";
 const ok=(v,message)=>{if(!v)throw Error(message);};
@@ -18,7 +19,10 @@ const read=p=>readFileSync(join(ROOT,p),"utf8");
 const json=p=>JSON.parse(read(p));
 export function validateEnvironment(env,mode){
  ok(env.GITHUB_REPOSITORY===REPO&&env.GITHUB_REF==="refs/heads/main"&&sha(env.GITHUB_SHA),"Untrusted main execution");
- ok(mode==="verify"?["pull_request_target","workflow_dispatch"].includes(env.GITHUB_EVENT_NAME):env.GITHUB_EVENT_NAME==="workflow_dispatch","Unexpected event");
+ const automatic=env.PILOT_AUTOMATIC==="true"&&env.CUTOVER_ENABLED==="true";
+ ok(mode==="verify"?["pull_request_target","workflow_dispatch"].includes(env.GITHUB_EVENT_NAME):
+    env.GITHUB_EVENT_NAME==="workflow_dispatch"||automatic&&["schedule","push"].includes(env.GITHUB_EVENT_NAME),"Unexpected event");
+ if(env.PILOT_AUTOMATIC==="true")ok(automatic,"Automatic cutover not explicitly enabled");
 }
 export function validatePayload(payload,kind,base){
  ok(validKind(kind)&&payload?.kind===kind&&payload.baseSha===base&&sha(base),"Candidate payload context mismatch");
@@ -43,7 +47,8 @@ function gh(token,fetchFn=fetch){
 const repoPath="/repos/"+REPO;
 async function mainIs(api,base){ok((await api(repoPath+"/git/ref/heads/main")).object?.sha===base,"Main changed; rebuild evidence");}
 export async function withAppToken(env,work,{fetchFn=fetch,mask=()=>{}}={}){
- assertPilotContext(env);
+ validateEnvironment(env,"publish");
+ ok(env.APP_ID===APP_ID&&Boolean(env.APP_PRIVATE_KEY),"Missing or wrong App credential");
  const jwt=appJwt(env.APP_PRIVATE_KEY,env.APP_ID);mask(jwt);
  const api=gh(jwt,fetchFn),app=await api("/app"),installation=await api(repoPath+"/installation");
  ok(app.id===Number(APP_ID)&&app.slug==="tractorvs-secure-publisher"&&installation.app_id===Number(APP_ID)&&Number.isSafeInteger(installation.id)&&installation.id>0&&!installation.suspended_at&&installation.repository_selection==="selected","Unexpected App installation");
@@ -97,6 +102,10 @@ async function publish(env){
  validateEnvironment(env,"publish");ok(env.PILOT_CREATE==="true","Candidate creation not authorized");
  const payload=JSON.parse(readFileSync(env.PAYLOAD_PATH,"utf8")),kind=env.PILOT_KIND,base=env.GITHUB_SHA;
  validatePayload(payload,kind,base);
+ if(env.PILOT_AUTOMATIC==="true"){
+  const api=gh(env.GH_TOKEN);await mainIs(api,base);
+  assertProtectedReleaseRule(await api(repoPath+"/rulesets/28247144"));
+ }
  const result=await withAppToken(env,token=>openPublicationCandidate({repo:REPO,ref:env.GITHUB_REF,kind,baseSha:base,files:payload.files,token,dryRun:false}),{mask:v=>console.log("::add-mask::"+v)});
  console.log("Candidate opened; token revoked; not authorized to merge. "+JSON.stringify({number:result.number,sha:result.sha,kind}));
 }

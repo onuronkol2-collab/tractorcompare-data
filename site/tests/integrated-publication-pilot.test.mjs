@@ -8,6 +8,8 @@ test("integrated pilot rejects non-main, wrong repo and unauthorized events",()=
  validateEnvironment(env,"publish");validateEnvironment({...env,GITHUB_EVENT_NAME:"pull_request_target"},"verify");
  for(const x of [{GITHUB_REF:"refs/heads/other"},{GITHUB_REPOSITORY:"other/repo"},{GITHUB_SHA:"bad"},{GITHUB_EVENT_NAME:"schedule"}])assert.throws(()=>validateEnvironment({...env,...x},"publish"));
  assert.throws(()=>validateEnvironment({...env,GITHUB_EVENT_NAME:"pull_request_target"},"publish"));
+ validateEnvironment({...env,GITHUB_EVENT_NAME:"schedule",PILOT_AUTOMATIC:"true",CUTOVER_ENABLED:"true"},"publish");
+ assert.throws(()=>validateEnvironment({...env,GITHUB_EVENT_NAME:"schedule",PILOT_AUTOMATIC:"true",CUTOVER_ENABLED:"false"},"publish"));
 });
 test("integrated candidate artifacts bind exact kind, main and permitted paths",()=>{
  const files=[{path:"site/src/data/public-catalog-sync.json",content:JSON.stringify({fingerprint:"b".repeat(64),scope:"aaufxtcvnzgavtlintiv",source:"anon_public_view"})}];

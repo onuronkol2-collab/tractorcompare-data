@@ -50,7 +50,7 @@ jobs:
       - name: Check anonymity, pagination, no publish and safe revision behaviour
         run: node --test scripts/tractor-forum-publication-autosync.test.mjs
   sync:
-    if: github.event_name != 'pull_request' && github.repository == 'onuronkol2-collab/tractorcompare-data' && github.ref == 'refs/heads/main'
+    if: github.event_name != 'pull_request' && github.repository == 'onuronkol2-collab/tractorcompare-data' && github.ref == 'refs/heads/main' && vars.TRACTORVS_PR_ONLY_CUTOVER != 'true'
     needs: validate
     runs-on: ubuntu-latest
     timeout-minutes: 7
@@ -67,3 +67,15 @@ jobs:
           TRACTORVS_SUPABASE_ANON_JWT: ${{ secrets.TRACTORVS_SUPABASE_ANON_JWT }}
           TRACTORVS_FORUM_DRY_RUN: ${{ github.event_name == 'workflow_dispatch' && inputs.dry_run == true }}
         run: node scripts/tractor-forum-publication-autosync.mjs
+
+  protected_candidate:
+    needs: validate
+    if: github.event_name != 'pull_request' && github.repository == 'onuronkol2-collab/tractorcompare-data' && github.ref == 'refs/heads/main' && vars.TRACTORVS_PR_ONLY_CUTOVER == 'true'
+    permissions:
+      contents: read
+    uses: ./.github/workflows/tractorvs-integrated-publication-pilot.yml
+    with:
+      kind: forum
+      create_candidate: ${{ github.event_name != 'workflow_dispatch' || inputs.dry_run == false }}
+      automatic: true
+    secrets: inherit

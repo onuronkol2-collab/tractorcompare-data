@@ -1,5 +1,5 @@
 name: TractorVS integrated publication candidate pilot
-# Manual shadow path only. Existing scheduled writers remain in service.
+# Manual pilot or explicitly gated reusable writer. Default legacy routes unchanged.
 on:
   workflow_dispatch:
     inputs:
@@ -13,13 +13,24 @@ on:
         type: boolean
         default: false
         required: true
+  workflow_call:
+    inputs:
+      kind:
+        type: string
+        required: true
+      create_candidate:
+        type: boolean
+        required: true
+      automatic:
+        type: boolean
+        default: false
 permissions: {}
 concurrency:
-  group: tractorvs-integrated-publication-pilot
+  group: tractorvs-integrated-publication-${{ inputs.kind }}
   cancel-in-progress: false
 jobs:
   prepare:
-    if: github.repository == 'onuronkol2-collab/tractorcompare-data' && github.ref == 'refs/heads/main'
+    if: github.repository == 'onuronkol2-collab/tractorcompare-data' && github.ref == 'refs/heads/main' && (github.event_name == 'workflow_dispatch' && !inputs.automatic || inputs.automatic && vars.TRACTORVS_PR_ONLY_CUTOVER == 'true')
     runs-on: ubuntu-24.04
     timeout-minutes: 25
     permissions:
@@ -51,6 +62,8 @@ jobs:
         id: candidate
         env:
           PILOT_KIND: ${{ inputs.kind }}
+          PILOT_AUTOMATIC: ${{ inputs.automatic || false }}
+          CUTOVER_ENABLED: ${{ vars.TRACTORVS_PR_ONLY_CUTOVER }}
           GH_TOKEN: ${{ github.token }}
           TRACTORVS_SUPABASE_ANON_JWT: ${{ secrets.TRACTORVS_SUPABASE_ANON_JWT }}
           PAYLOAD_PATH: ${{ runner.temp }}/publication-candidate.json
@@ -84,6 +97,9 @@ jobs:
       - name: Create scoped App PR only and revoke token
         env:
           PILOT_KIND: ${{ inputs.kind }}
+          PILOT_AUTOMATIC: ${{ inputs.automatic || false }}
+          CUTOVER_ENABLED: ${{ vars.TRACTORVS_PR_ONLY_CUTOVER }}
+          GH_TOKEN: ${{ github.token }}
           PILOT_CREATE: "true"
           PAYLOAD_PATH: ${{ runner.temp }}/publication-candidate/publication-candidate.json
           APP_ID: ${{ vars.TRACTORVS_PUBLISHER_APP_ID }}

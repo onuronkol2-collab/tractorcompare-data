@@ -49,7 +49,7 @@ jobs:
 
   sync_public_only:
     needs: tests
-    if: github.event_name != 'pull_request' && github.repository == 'onuronkol2-collab/tractorcompare-data' && github.ref == 'refs/heads/main'
+    if: github.event_name != 'pull_request' && github.repository == 'onuronkol2-collab/tractorcompare-data' && github.ref == 'refs/heads/main' && vars.TRACTORVS_PR_ONLY_CUTOVER != 'true'
     runs-on: ubuntu-latest
     timeout-minutes: 7
     permissions:
@@ -65,3 +65,15 @@ jobs:
           TRACTORVS_SUPABASE_ANON_JWT: ${{ secrets.TRACTORVS_SUPABASE_ANON_JWT }}
           TRACTORVS_CATALOG_DRY_RUN: ${{ github.event_name == 'workflow_dispatch' && inputs.dry_run == true }}
         run: node scripts/tractor-publication-autosync.mjs
+
+  protected_candidate:
+    needs: tests
+    if: github.event_name != 'pull_request' && github.repository == 'onuronkol2-collab/tractorcompare-data' && github.ref == 'refs/heads/main' && vars.TRACTORVS_PR_ONLY_CUTOVER == 'true'
+    permissions:
+      contents: read
+    uses: ./.github/workflows/tractorvs-integrated-publication-pilot.yml
+    with:
+      kind: catalog
+      create_candidate: ${{ github.event_name != 'workflow_dispatch' || inputs.dry_run == false }}
+      automatic: true
+    secrets: inherit
