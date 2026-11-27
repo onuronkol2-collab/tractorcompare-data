@@ -21,19 +21,21 @@ test("rejects extra paths, duplicates, missing sitemap file, wrong source, wrong
  await assert.rejects(openPublicationCandidate({...input,repo:"foreign/repo"}),/trusted main/);
  await assert.rejects(openPublicationCandidate({...input,dryRun:false}),/credential missing/);
 });
-function mock({moveAt=0,existing=[],failRef=false}={}){
- let reads=0;const calls=[];
+function mock({moveAt=0,existing=[],failRef=false,orphan=false,wrongParent=false,wrongTree=false,moveRef=false,latePending=false}={}){
+ let reads=0,created=false,pullReads=0,refReads=0;const calls=[];
  const fetchFn=async(url,options)=>{
   const path=new URL(url).pathname.split("/repos/"+REPO)[1];
   const method=options.method,body=options.body?JSON.parse(options.body):null;
   calls.push({path,method,body});
   const reply=(data,status=200)=>({ok:status>=200&&status<300,status,json:async()=>data});
   if(path==="/git/ref/heads/main")return reply({object:{sha:++reads===moveAt?"9".repeat(40):baseSha}});
-  if(path==="/pulls"&&method==="GET")return reply(existing);
+  if(path==="/pulls"&&method==="GET")return reply(++pullReads===2&&latePending?[{head:{ref:"ops/publication-candidate/catalog/other"}}]:existing);
+  if(path.startsWith("/git/ref/heads/ops/publication-candidate/")){refReads++;return orphan||created?reply({ref:path.replace("/git/ref/","refs/"),object:{sha:moveRef&&refReads>1?tree:commit,type:"commit"}}):reply({},404);}
+  if(path==="/git/commits/"+commit)return reply({sha:commit,tree:{sha:wrongTree?tree:newTree},parents:[{sha:wrongParent?tree:baseSha}]});
   if(path==="/git/commits/"+baseSha)return reply({tree:{sha:tree}});
   if(path==="/git/trees")return reply({sha:newTree},201);
   if(path==="/git/commits"&&method==="POST")return reply({sha:commit},201);
-  if(path==="/git/refs")return reply({},failRef?422:201);
+  if(path==="/git/refs"){created=!failRef;return reply({},failRef?422:201);}
   if(path==="/pulls"&&method==="POST")return reply({number:42,head:{sha:commit},base:{ref:"main"}},201);
   throw Error("unexpected endpoint");
  };
@@ -52,5 +54,15 @@ test("stale main, outstanding candidate and ref collision fail closed without PR
  for(const options of [{moveAt:1},{moveAt:2},{moveAt:3},{existing:[{head:{ref:"ops/publication-candidate/catalog/old"}}]},{existing:Array.from({length:100},()=>({}))},{failRef:true}]){
   const m=mock(options);await assert.rejects(openPublicationCandidate({...input,token:"fake",dryRun:false,fetchFn:m.fetchFn}));
   assert.ok(!m.calls.some(c=>c.path==="/pulls"&&c.method==="POST"));
+ }
+});
+
+test("orphan recovery accepts only the exact tree and parent; concurrent changes stop PR creation",async()=>{
+ const m=mock({orphan:true});const result=await openPublicationCandidate({...input,token:"fake",dryRun:false,fetchFn:m.fetchFn});
+ assert.equal(result.sha,commit);
+ assert.deepEqual(m.calls.filter(c=>c.method!=="GET").map(c=>c.path),["/git/trees","/pulls"]);
+ for(const bad of [{orphan:true,wrongParent:true},{orphan:true,wrongTree:true},{moveRef:true},{latePending:true},{moveAt:4}]){
+  const n=mock(bad);await assert.rejects(openPublicationCandidate({...input,token:"fake",dryRun:false,fetchFn:n.fetchFn}));
+  assert.ok(!n.calls.some(c=>c.path==="/pulls"&&c.method==="POST"));
  }
 });

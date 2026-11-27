@@ -27,8 +27,9 @@ export async function openPublicationCandidate({repo,ref,kind,baseSha,files,toke
  const plan=candidatePlan({kind,baseSha,files});
  if(dryRun)return {dryRun:true,branch:plan.branch,digest:plan.digest,paths:plan.files.map(f=>f.path)};
  if(!token)throw Error("Candidate transport credential missing");
- const api=async(path,method="GET",body)=>{
+ const api=async(path,method="GET",body,allowMissing=false)=>{
   const r=await fetchFn("https://api.github.com/repos/"+REPO+path,{method,redirect:"error",signal:AbortSignal.timeout(25000),headers:{Authorization:"Bearer "+token,Accept:"application/vnd.github+json","X-GitHub-Api-Version":"2022-11-28",...(body?{"Content-Type":"application/json"}:{})},...(body?{body:JSON.stringify(body)}:{})});
+  if(allowMissing && method==="GET" && r.status===404)return null;
   if(!r.ok)throw Error("Candidate API HTTP "+r.status+" at "+method+" "+path);
   return r.json();
  };
@@ -40,10 +41,25 @@ export async function openPublicationCandidate({repo,ref,kind,baseSha,files,toke
  if(!shaOk(base.tree?.sha))throw Error("Missing base tree");
  const tree=await api("/git/trees","POST",{base_tree:base.tree.sha,tree:plan.files});
  if(!shaOk(tree.sha)||tree.sha===base.tree.sha)throw Error("No changed candidate tree");
- const commit=await api("/git/commits","POST",{message:"chore(publication): verified "+kind+" candidate",tree:tree.sha,parents:[baseSha]});
- if(!shaOk(commit.sha))throw Error("Candidate commit missing");
+ const refPath="/git/ref/heads/"+plan.branch;
+ const old=await api(refPath,"GET",undefined,true);
+ let commit;
+ if(old){
+  // Only a byte-identical candidate on the same verified parent is recoverable.
+  if(!shaOk(old.object?.sha)||old.object?.type!=="commit"||old.ref!=="refs/heads/"+plan.branch)throw Error("Unverified orphan candidate ref");
+  commit=await api("/git/commits/"+old.object.sha);
+  if(commit.sha!==old.object.sha||commit.tree?.sha!==tree.sha||commit.parents?.length!==1||commit.parents[0].sha!==baseSha)throw Error("Orphan candidate does not match exact parent and tree");
+ }else{
+  commit=await api("/git/commits","POST",{message:"chore(publication): verified "+kind+" candidate",tree:tree.sha,parents:[baseSha]});
+  if(!shaOk(commit.sha))throw Error("Candidate commit missing");
+  await checkBase();
+  await api("/git/refs","POST",{ref:"refs/heads/"+plan.branch,sha:commit.sha});
+ }
  await checkBase();
- await api("/git/refs","POST",{ref:"refs/heads/"+plan.branch,sha:commit.sha});
+ const current=await api(refPath);
+ if(current.ref!=="refs/heads/"+plan.branch||current.object?.type!=="commit"||current.object?.sha!==commit.sha)throw Error("Candidate ref moved before PR creation");
+ const pending=await api("/pulls?state=open&base=main&per_page=100");
+ if(!Array.isArray(pending)||pending.length>=100||pending.some(p=>p.head?.ref?.startsWith("ops/publication-candidate/"+kind+"/")))throw Error("Outstanding or incomplete candidate inventory; reconcile first");
  await checkBase();
  const pr=await api("/pulls","POST",{title:"Publication candidate: "+kind,head:plan.branch,base:"main",body:"Evidence base: "+baseSha+"\nCandidate digest: "+plan.digest+"\nPR-only staging. Independent release authorization and all applicable checks required."});
  if(!Number.isSafeInteger(pr.number)||pr.head?.sha!==commit.sha||pr.base?.ref!=="main")throw Error("Candidate PR not confirmed");
