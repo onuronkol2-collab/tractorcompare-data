@@ -1,5 +1,6 @@
 ---
 import SiteLayout from "../layouts/SiteLayout.astro";
+import ResearchWorkspace from "./ResearchWorkspace.astro";
 import { getPublicCatalog } from "../lib/catalog";
 import { comparisonSpecs } from "../lib/comparison-specs";
 import { requiresConditionCaution, requiresTransmissionCaution } from "../lib/compare-conditions";
@@ -257,6 +258,7 @@ const labelsPayload = JSON.stringify({
 
   <script type="application/json" id="tc-payload" set:html={payload}></script>
   <script type="application/json" id="tc-i18n" set:html={labelsPayload}></script>
+  <Fragment slot="visitor-tools">{models.length >= 2 && <ResearchWorkspace lang={lang} mode="compare" />}</Fragment>
 </SiteLayout>
 
 

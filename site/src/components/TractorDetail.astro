@@ -1,5 +1,6 @@
 ---
 import SiteLayout from "../layouts/SiteLayout.astro";
+import ResearchWorkspace from "./ResearchWorkspace.astro";
 import "../styles/model-research-toc.css";
 import TractorMarketPrice from "./TractorMarketPrice.astro";
 import ModelSourceIndex from "./ModelSourceIndex.astro";
@@ -195,6 +196,7 @@ const summaryItems = [
       </a>
     </div>
   </section>}
+  <ResearchWorkspace slot="visitor-tools" lang={lang} mode="model" modelId={tractor.tractor_id} />
 </SiteLayout>
 
 <style>
