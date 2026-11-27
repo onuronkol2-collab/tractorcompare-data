@@ -1,12 +1,13 @@
 ---
 import SiteLayout from "../layouts/SiteLayout.astro";
 import {practicalGuideLinks} from "../lib/practical-guide-links.ts";
+import {catalogEditorialLinks} from "../lib/catalog-editorial-links.ts";
 import {editorialSearchTitle} from "../lib/editorial-seo-title.mjs";
 import FarmDecisionTools from "./FarmDecisionTools.astro";
 import FarmScenarioTools from "./FarmScenarioTools.astro";
 import {farmExtrasText} from "../lib/farm-extras-i18n";
 import {farmWorkedExample} from "../lib/farm-worked-example";
-import {localizedPath,LOCALE_TAGS,type Locale} from "../lib/locales";
+import {localizedPath,LOCALE_TAGS,RELATED_PAGES_LABELS,type Locale} from "../lib/locales";
 import {farmCostText} from "../lib/farm-cost-i18n";
 import {farmDecisionText} from "../lib/farm-decision-i18n";
 import {farmModelText} from "../lib/farm-model-context-i18n";
@@ -51,6 +52,7 @@ const number=new Intl.NumberFormat(LOCALE_TAGS[lang],{maximumSignificantDigits:6
    <li><a href="https://www.extension.iastate.edu/AGDM/crops/html/a3-29.html" lang="en">Iowa State University Extension — Estimating Farm Machinery Costs</a></li>
   </ul>
   <p class="cost-note">{practicalGuideLinks(lang).returnNote} <a href={practicalGuideLinks(lang).guide.href}>{practicalGuideLinks(lang).guide.label}</a></p>
+  <nav class="farm-tool-jump" aria-label={RELATED_PAGES_LABELS[lang]}><a href={catalogEditorialLinks(lang).links[0].href}>{catalogEditorialLinks(lang).links[0].label}</a></nav>
   <nav class="farm-tool-jump" aria-label={c.advisor}><a href={localizedPath(lang,"/farm-advisor/")}>{c.advisor}</a><a href={localizedPath(lang,"/tractors/")}>{example[2]}</a><a href={localizedPath(lang,"/compare/")}>{example[3]}</a></nav>
  </section>
 </SiteLayout>

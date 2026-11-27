@@ -94,3 +94,32 @@ test("ten-language article cards use readable metadata without inventing new rou
  assert.match(hub,/href=\{entryHref\(entry\)\}/);
  assert.match(hub,/englishOnly\(entry\)/);
 });
+
+
+test("editorial archive exposes actual localized tools without inflating article counts",async()=>{
+ const {editorialPracticalTools}=await import("../src/lib/practical-guide-links.ts");
+ const {LOCALES,localizedPath}=await import("../src/lib/locales.ts");
+ const hub=file("src/components/EditorialHub.astro");
+ const cost=file("src/components/FarmCost.astro");
+ const practical=hub.slice(hub.indexOf('<section class="editorial-practical"'),hub.indexOf('<section class="editorial-trust"'));
+ assert.ok(practical.length>0);
+ assert.match(practical,/href=\{practical\.primary\.href\}/);
+ assert.match(practical,/practical\.links\.map/);
+ assert.doesNotMatch(practical,/data-editorial-card|data-editorial-section-count/);
+ assert.match(hub,/const articleCount=entries\.length\+extraReview/);
+ assert.match(cost,/catalogEditorialLinks\(lang\)\.links\[0\]\.href/);
+ for(const lang of LOCALES){
+  const c=editorialPracticalTools(lang);
+  const base=localizedPath(lang,"/guides/farm-cost-calculator/");
+  assert.equal(c.primary.href,base);
+  assert.deepEqual(c.links.map(x=>x.href),[base+"#farm-scenarios",base+"#farm-equipment"]);
+  assert.ok([c.heading,c.description,c.primary.label,...c.links.map(x=>x.label)].every(v=>v.trim()));
+ }
+});
+test("archive reflects the existing guide's actual editorial review date",()=>{
+ const guide=file("src/components/TractorSelectionGuide.astro");
+ const hub=file("src/components/EditorialHub.astro");
+ const date=/const reviewedOn="(\d{4}-\d{2}-\d{2})"/.exec(guide)?.[1];
+ assert.ok(date);
+ assert.ok(hub.includes('path:"/guides/choosing-a-tractor/",checked:"'+date+'"'));
+});

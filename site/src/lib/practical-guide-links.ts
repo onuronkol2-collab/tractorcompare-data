@@ -68,3 +68,51 @@ export function practicalGuideLinks(lang:Locale){
   {href:base+"#farm-cost-form",label:farmCostText(lang).title}
  ]};
 }
+
+
+const archiveToolCopy:Record<Locale,readonly [string,string]>={
+  "en": [
+    "Practical farming calculators",
+    "Apply your own measurements to field-work planning, fuel costs and equipment screening. These are interactive tools, not additional articles or model test results."
+  ],
+  "tr": [
+    "Uygulamalı tarım hesaplayıcıları",
+    "Tarla işlerini, yakıt giderlerini ve ekipman gereksinimlerini kendi ölçümlerinle değerlendir. Bunlar etkileşimli araçlardır; yeni makale veya model testi değildir."
+  ],
+  "de": [
+    "Praktische Landwirtschaftsrechner",
+    "Planen Sie Feldarbeit, Kraftstoffkosten und Geräteanforderungen mit eigenen Messwerten. Dies sind interaktive Werkzeuge, keine zusätzlichen Artikel oder Modelltests."
+  ],
+  "fr": [
+    "Calculateurs agricoles pratiques",
+    "Planifiez les travaux, les coûts de carburant et vérifiez les besoins des outils avec vos propres mesures. Il s’agit d’outils interactifs, pas d’articles ni d’essais supplémentaires."
+  ],
+  "es": [
+    "Calculadoras agrícolas prácticas",
+    "Planifica el trabajo, los costes de combustible y los requisitos de los aperos con tus propias mediciones. Son herramientas interactivas, no nuevos artículos ni ensayos de modelos."
+  ],
+  "pt-br": [
+    "Calculadoras agrícolas práticas",
+    "Planeje o trabalho de campo, os custos de combustível e as exigências dos implementos com suas próprias medições. São ferramentas interativas, não novos artigos nem testes de modelos."
+  ],
+  "hi": [
+    "व्यावहारिक कृषि कैलकुलेटर",
+    "अपने मापों से खेत का काम, ईंधन लागत और उपकरण की आवश्यकताएँ जाँचें। ये इंटरैक्टिव उपकरण हैं, अतिरिक्त लेख या मॉडल परीक्षण नहीं।"
+  ],
+  "zh": [
+    "实用农业计算器",
+    "使用自己的测量数据规划田间作业、燃油成本和农具需求。这些是交互工具，并非新增文章或机型测试。"
+  ],
+  "ja": [
+    "実用農業計算ツール",
+    "実測値を使って圃場作業、燃料費、作業機の要件を検討できます。追加の記事や機種試験ではなく、操作できる計算ツールです。"
+  ],
+  "ru": [
+    "Практические сельскохозяйственные калькуляторы",
+    "Планируйте полевые работы, расходы топлива и проверку требований к орудиям по своим измерениям. Это интерактивные инструменты, а не новые статьи или испытания моделей."
+  ]
+};
+export function editorialPracticalTools(lang:Locale){
+ const [heading,description]=archiveToolCopy[lang];
+ return {heading,description,primary:{href:localizedPath(lang,"/guides/farm-cost-calculator/"),label:farmCostText(lang).title},links:practicalGuideLinks(lang).links.slice(0,2)};
+}
