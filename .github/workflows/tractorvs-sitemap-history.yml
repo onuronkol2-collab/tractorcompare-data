@@ -48,7 +48,8 @@ on:
 concurrency:
   # Read-only PRs have no shared writes; keep main's single writer serialized.
   group: ${{ github.event_name == 'pull_request' && format('tractorvs-sitemap-history-pr-{0}', github.event.pull_request.number) || 'tractorvs-sitemap-history-main' }}
-  cancel-in-progress: false
+  # Only obsolete, read-only previews for the same PR may be cancelled.
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 permissions:
   contents: read
 
@@ -83,10 +84,12 @@ jobs:
         with:
           node-version: "22.23.4"
           cache: npm
-          cache-dependency-path: site/package-lock.json
+          cache-dependency-path: |
+            package-lock.json
+            site/package-lock.json
       - name: Install pinned Astro production dependencies
         working-directory: site
-        run: npm ci --no-audit --no-fund
+        run: npm ci --prefer-offline --no-audit --no-fund
       - name: Build actual published catalogue without deployment
         working-directory: site
         env:
@@ -122,7 +125,7 @@ jobs:
           SUPABASE_ANON_KEY: ${{ secrets.TRACTORVS_SUPABASE_ANON_JWT }}
           MIN_PUBLIC_TRACTOR_PAGES: "100"
         run: |
-          npm ci --no-audit --no-fund
+          npm ci --prefer-offline --no-audit --no-fund
           npm run build:production
           echo "SITEMAP_LEGACY_DIST=$GITHUB_WORKSPACE/sitemap-legacy-checkpoint/site/dist" >> "$GITHUB_ENV"
       - name: Validate unchanged lastmod plus genuine significant HTML changes
@@ -163,10 +166,12 @@ jobs:
         with:
           node-version: "22.23.4"
           cache: npm
-          cache-dependency-path: site/package-lock.json
+          cache-dependency-path: |
+            package-lock.json
+            site/package-lock.json
       - name: Install pinned Astro production dependencies
         working-directory: site
-        run: npm ci --no-audit --no-fund
+        run: npm ci --prefer-offline --no-audit --no-fund
       - name: Build exact published catalogue using anonymous RLS view
         working-directory: site
         env:
@@ -202,7 +207,7 @@ jobs:
           SUPABASE_ANON_KEY: ${{ secrets.TRACTORVS_SUPABASE_ANON_JWT }}
           MIN_PUBLIC_TRACTOR_PAGES: "100"
         run: |
-          npm ci --no-audit --no-fund
+          npm ci --prefer-offline --no-audit --no-fund
           npm run build:production
           echo "SITEMAP_LEGACY_DIST=$GITHUB_WORKSPACE/sitemap-legacy-checkpoint/site/dist" >> "$GITHUB_ENV"
       - name: Inspect rendered HTML and update only changed page timestamps

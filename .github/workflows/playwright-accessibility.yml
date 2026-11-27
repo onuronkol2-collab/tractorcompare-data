@@ -14,6 +14,9 @@ on:
       - "site/tests/model-discovery.test.mjs"
       - "site/tests/published-site-inventory.test.mjs"
       - "site/playwright.config.mjs"
+      - "site/scripts/browser-timing-summary.mjs"
+      - "site/tests/browser-timing-summary.test.mjs"
+      - "site/tests/browser-runner-contract.test.mjs"
       - "site/package.json"
       - "package-lock.json"
   workflow_dispatch:
@@ -76,7 +79,7 @@ jobs:
       - name: Install production build dependencies from lockfile
         run: npm ci --prefer-offline --no-audit --no-fund
       - name: Install pinned test-only tools without modifying repository lockfile
-        run: npm install --no-save --package-lock=false --ignore-scripts @playwright/test@1.65.1 @axe-core/playwright@4.14.0
+        run: npm install --prefer-offline --no-save --package-lock=false --ignore-scripts @playwright/test@1.65.1 @axe-core/playwright@4.14.0
       - name: Install only the required engine
         env:
           BROWSER_ENGINE: ${{ matrix.engine }}
@@ -87,10 +90,17 @@ jobs:
           TRACTORVS_FORUM_BROWSER_TEST: "true"
         run: npm run build
       - name: Execute complete project smoke and axe accessibility baseline
+        id: browser_execution
         env:
           BROWSER_PROJECT: ${{ matrix.project }}
           BROWSER_SHARD: ${{ matrix.shard }}
+          TRACTORVS_BROWSER_JSON_REPORT: ${{ runner.temp }}/tractorvs-browser-timing.json
         run: npx playwright test --config site/playwright.config.mjs --project="$BROWSER_PROJECT" --shard="$BROWSER_SHARD"
+      - name: Summarize browser timing and executed evidence
+        if: ${{ !cancelled() && steps.browser_execution.outcome != 'skipped' && steps.browser_execution.outcome != '' }}
+        env:
+          TIMING_LABEL: ${{ matrix.evidence }}
+        run: node site/scripts/browser-timing-summary.mjs "$RUNNER_TEMP/tractorvs-browser-timing.json" "$TIMING_LABEL"
       - name: Upload diagnostics and axe findings
         if: always()
         uses: actions/upload-artifact@v7
@@ -99,6 +109,7 @@ jobs:
           path: |
             site/playwright-report
             site/test-results
+            ${{ runner.temp }}/tractorvs-browser-timing.json
           if-no-files-found: ignore
           retention-days: 7
 

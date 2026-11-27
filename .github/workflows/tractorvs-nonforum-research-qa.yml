@@ -85,7 +85,7 @@ jobs:
       - name: Install locked project and pinned QA tools
         run: |
           npm ci --prefer-offline --no-audit --no-fund
-          npm install --no-save --package-lock=false --ignore-scripts @playwright/test@1.65.1
+          npm install --prefer-offline --no-save --package-lock=false --ignore-scripts @playwright/test@1.65.1
       - name: Test execution evidence gate (offline)
         run: node --test site/tests/research-qa-report.test.mjs
       - name: List predeployment test inventory (not a live UX pass)

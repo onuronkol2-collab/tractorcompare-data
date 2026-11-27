@@ -131,7 +131,7 @@ jobs:
       - name: Install locked project and pinned browser QA tools
         run: |
           npm ci --prefer-offline --no-audit --no-fund
-          npm install --no-save --package-lock=false --ignore-scripts @playwright/test@1.65.1
+          npm install --prefer-offline --no-save --package-lock=false --ignore-scripts @playwright/test@1.65.1
       - name: Install only the required browser engine
         env:
           BROWSER_ENGINE: ${{ matrix.engine }}

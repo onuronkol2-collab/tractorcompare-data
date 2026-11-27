@@ -69,7 +69,7 @@ test("filter sidebar, compact tags and old category buttons stay synchronized",a
 for(const locales of [["en","tr","zh","hi","pt-br"],["fr","de","ru","ja","es"]]) test("all locales expose the same navigable views with localized copy: "+locales.join(","),async({page})=>{
  for(const lang of locales){
   const path=lang==="en"?"/forum/":"/"+lang+"/forum/";
-  await page.goto(path);
+  await page.goto(path,{waitUntil:"domcontentloaded"});
   const tabs=page.locator("[data-forum-view]");
   await expect(tabs).toHaveCount(FORUM_VIEWS.length);
   expect(await tabs.evaluateAll(nodes=>nodes.map(node=>node.getAttribute('data-forum-view')))).toEqual(FORUM_VIEWS);
