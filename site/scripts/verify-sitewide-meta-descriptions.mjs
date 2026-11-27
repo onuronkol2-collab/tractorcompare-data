@@ -24,6 +24,9 @@ export function scanHeadTags(head){
   const links=[],metas=[],titles=[];
   let templateDepth=0;
   let cursor=0;
+  // Sticky matching reads the original string at the exact tag offset,
+  // avoiding repeated suffix allocations without changing tag boundaries.
+  const opening=/<(\/?)([a-z][a-z0-9:-]*)/iy;
   while(cursor<head.length){
     const start=head.indexOf("<",cursor);
     if(start<0)break;
@@ -33,7 +36,8 @@ export function scanHeadTags(head){
       cursor=close+3;
       continue;
     }
-    const match=/^<(\/?)([a-z][a-z0-9:-]*)/i.exec(head.slice(start));
+    opening.lastIndex=start;
+    const match=opening.exec(head);
     if(!match){cursor=start+1;continue;}
     const afterName=start+match[0].length;
     if(afterName>=head.length||!/[\s/>]/.test(head[afterName])){

@@ -49,12 +49,11 @@ function imageAttribute(tag,target){
   return null;
 }
 
-export function inspectDocumentImageAlts(html){
-  // Ignore script/style/textarea and HTML comments during token scanning,
-  // not by sanitizing and rewriting HTML. This never generates executable markup.
-  // Alternation consumes ignored regions before any inner <img> can be seen.
+// One token scan serves both audits. Keep the public standalone inspectors
+// and their report shapes unchanged; no DOM rewrite or new accepted exception.
+function inspectImageEvidence(html){
   let images=0,nonemptyAlt=0,emptyAlt=0;
-  const missingAlt=[];
+  const missingAlt=[],undocumentedEmptyAlt=[];
   for(const match of html.matchAll(IGNORED_OR_IMG)){
     if(!/^<img\b/i.test(match[0]))continue;
     const tag=match[0];
@@ -65,40 +64,30 @@ export function inspectDocumentImageAlts(html){
       missingAlt.push({index:images,src:(src?.value||"").slice(0,180)});
     }else if(alt.value===""){
       emptyAlt++;
+      const src=imageAttribute(tag,"src")?.value||"";
+      const srcset=imageAttribute(tag,"srcset")?.value||"";
+      const id=imageAttribute(tag,"id")?.value||"";
+      const role=imageAttribute(tag,"role")?.value||"";
+      const ariaHidden=imageAttribute(tag,"aria-hidden")?.value||"";
+      // Avatar text is redundant; the dormant lightbox has no source yet.
+      if(src==="/images/forum-member-default.svg"&&!srcset)continue;
+      if(id==="tractor-photo-dialog-img"&&!src&&!srcset)continue;
+      if(role==="presentation"||role==="none"||ariaHidden==="true")continue;
+      undocumentedEmptyAlt.push({index:images,src:src.slice(0,180),id});
     }else{
       nonemptyAlt++;
     }
   }
+  return {images,nonemptyAlt,emptyAlt,missingAlt,undocumentedEmptyAlt};
+}
+
+export function inspectDocumentImageAlts(html){
+  const {images,nonemptyAlt,emptyAlt,missingAlt}=inspectImageEvidence(html);
   return {images,nonemptyAlt,emptyAlt,missingAlt};
 }
 
-/**
- * A real, already-loaded image with alt="" needs an explicit decorative
- * reason. Do not treat blank alt as "missing"; require a visible semantic
- * exception instead. The forum avatar is redundant with adjacent member name.
- * The empty lightbox image has no src until the click handler supplies src
- * and a description together. Neither should become SEO keyword stuffing.
- */
 export function inspectUndocumentedEmptyImageAlts(html){
-  let index=0;
-  const suspicious=[];
-  for(const match of html.matchAll(IGNORED_OR_IMG)){
-    if(!/^<img\b/i.test(match[0]))continue;
-    index++;
-    const tag=match[0];
-    const alt=imageAttribute(tag,"alt");
-    if(!alt||alt.value!=="")continue;
-    const src=imageAttribute(tag,"src")?.value||"";
-    const srcset=imageAttribute(tag,"srcset")?.value||"";
-    const id=imageAttribute(tag,"id")?.value||"";
-    const role=imageAttribute(tag,"role")?.value||"";
-    const ariaHidden=imageAttribute(tag,"aria-hidden")?.value||"";
-    if(src==="/images/forum-member-default.svg"&&!srcset)continue;
-    if(id==="tractor-photo-dialog-img"&&!src&&!srcset)continue;
-    if(role==="presentation"||role==="none"||ariaHidden==="true")continue;
-    suspicious.push({index,src:src.slice(0,180),id});
-  }
-  return suspicious;
+  return inspectImageEvidence(html).undocumentedEmptyAlt;
 }
 
 export function auditBuiltImageAlts(dist){
@@ -112,13 +101,13 @@ export function auditBuiltImageAlts(dist){
       }else if(entry.isFile()&&entry.name.endsWith(".html")){
         const file=relative(root,path).replaceAll("\\","/");
         const html=readFileSync(path,"utf8");
-        const page=inspectDocumentImageAlts(html);
+        const page=inspectImageEvidence(html);
         summary.htmlPages++;
         summary.images+=page.images;
         summary.nonemptyAlt+=page.nonemptyAlt;
         summary.emptyAlt+=page.emptyAlt;
         for(const issue of page.missingAlt)summary.missingAlt.push({file,...issue});
-        for(const issue of inspectUndocumentedEmptyImageAlts(html))
+        for(const issue of page.undocumentedEmptyAlt)
           summary.undocumentedEmptyAlt.push({file,...issue});
       }
     }

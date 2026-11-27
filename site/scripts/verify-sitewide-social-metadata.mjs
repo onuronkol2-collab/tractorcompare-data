@@ -13,8 +13,17 @@ export function inspectSocialMetadata(html,file="index.html"){
   const canonical=links.find(tag=>readAttr(tag,"rel")?.toLowerCase().split(/\s+/).includes("canonical"));
   if(!canonical || metas.some(tag=>readAttr(tag,"name")?.toLowerCase()==="robots" &&
     /\bnoindex\b/i.test(readAttr(tag,"content")||"")))return null;
-  const errors=[],get=name=>metas.filter(tag=>(readAttr(tag,"property")||readAttr(tag,"name"))?.toLowerCase()===name)
-    .map(tag=>readAttr(tag,"content"));
+  // Index each metadata name once; retain ordering and duplicate entries.
+  // Keep property-before-name precedence identical to the original inspector.
+  const byName=new Map();
+  for(const tag of metas){
+    const name=(readAttr(tag,"property")||readAttr(tag,"name"))?.toLowerCase();
+    if(!name)continue;
+    const values=byName.get(name)??[];
+    values.push(readAttr(tag,"content"));
+    byName.set(name,values);
+  }
+  const errors=[],get=name=>byName.get(name)??[];
   const values={};
   for(const tag of ["og:title","og:type","og:description","og:url","og:image","twitter:card","twitter:image"]){
     const matches=get(tag);
