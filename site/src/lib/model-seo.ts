@@ -116,7 +116,7 @@ const CONCISE_SPECS_TITLE:Record<Locale,string>={
 // Preserve every existing evidence/identity sentence; add a cue only if it fits.
 const COMPARE_SEARCH_PILOT: Partial<Record<Locale, readonly string[]>> = {
   tr:["tafe-6028-m-9686ae98","tumosan-8095-163f043b","landini-5-085-afbb2f1e","valtra-a85-70571d3c"],
-  de:["ls-tractor-j27-e424cd0c","valtra-n175-caa65b80"],
+  de:["ls-tractor-j27-e424cd0c","ls-tractor-j27-19685234","valtra-n175-caa65b80"],
   hi:["sonalika-125-812d14fd","swaraj-735-fe-7c7b069f"],
   en:["swaraj-735-fe-7c7b069f","swaraj-744-xt-c16bdd6d"],
   "pt-br":["tafe-6028-m-9686ae98"],
@@ -130,7 +130,10 @@ const COMPARE_SEARCH_CUE: Partial<Record<Locale,string>> = {
 export function addReviewedCompareSearchCue(
   description:string, tractor:Pick<TractorRecord,"slug"|"specifications">, lang:Locale
 ):string {
-  const cue=COMPARE_SEARCH_CUE[lang];
+  // Both exact J27 records are publicly available (GEAR and HST).
+  // Avoid implying equal transmission or performance; this is a navigation cue.
+  const isJ27Variant=lang==="de"&&["ls-tractor-j27-e424cd0c","ls-tractor-j27-19685234"].includes(tractor.slug);
+  const cue=isJ27Variant?"Varianten vergleichen.":COMPARE_SEARCH_CUE[lang];
   if(!cue || !tractor.specifications.length || !COMPARE_SEARCH_PILOT[lang]?.includes(tractor.slug))return description;
   if(description.includes(cue) || description.length+1+cue.length>160)return description;
   return description+" "+cue;

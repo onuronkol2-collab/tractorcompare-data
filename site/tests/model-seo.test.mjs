@@ -885,7 +885,7 @@ test("Valtra A75 A85 A95: ES and PT-BR nominal displacement descriptions are dis
 
 test("reviewed search-intent pilot adds only a real localized compare cue without dropping evidence",async()=>{
   const {addReviewedCompareSearchCue}=await import("../src/lib/model-seo.ts");
-  const cases=[["tr","tafe-6028-m-9686ae98","Modelleri karşılaştırın."],["de","ls-tractor-j27-e424cd0c","Modelle vergleichen."],["hi","sonalika-125-812d14fd","मॉडल की तुलना करें।"],["en","swaraj-735-fe-7c7b069f","Compare models."],["pt-br","tafe-6028-m-9686ae98","Compare modelos."]];
+  const cases=[["tr","tafe-6028-m-9686ae98","Modelleri karşılaştırın."],["de","ls-tractor-j27-e424cd0c","Varianten vergleichen."],["de","ls-tractor-j27-19685234","Varianten vergleichen."],["de","valtra-n175-caa65b80","Modelle vergleichen."],["hi","sonalika-125-812d14fd","मॉडल की तुलना करें।"],["en","swaraj-735-fe-7c7b069f","Compare models."],["pt-br","tafe-6028-m-9686ae98","Compare modelos."]];
   for(const [locale,slug,cue] of cases){
     const row={...tractor,slug};
     const evidence="Exact model. 114 HP.";
@@ -906,4 +906,21 @@ test("reviewed search-intent pilot adds only a real localized compare cue withou
   assert.equal(pilot.searchDescription,original.searchDescription+" Compare models.");
   const detail=readFileSync(new URL("../src/components/TractorDetail.astro",import.meta.url),"utf8");
   assert.match(detail,/class="model-compare-action" href=\{compareUrl\}/);
+});
+
+
+test("German LS J27 GEAR and HST retain separate exact identities while exposing a variant comparison cue",async()=>{
+ const {addReviewedCompareSearchCue}=await import("../src/lib/model-seo.ts");
+ const base={...tractor,brand_name:"LS Tractor",model_name:"J27",market:"global",model_year:null,horsepower:null};
+ const gear={...base,slug:"ls-tractor-j27-e424cd0c",variant:"GEAR"};
+ const hst={...base,slug:"ls-tractor-j27-19685234",variant:"HST"};
+ const a=modelSeoMetadata(gear,"de"),b=modelSeoMetadata(hst,"de");
+ assert.notEqual(a.title,b.title);
+ assert.match(a.title,/GEAR/);assert.match(b.title,/HST/);
+ assert.doesNotMatch(a.title,/HST/);assert.doesNotMatch(b.title,/GEAR/);
+ assert.match(a.searchDescription,/GEAR/);assert.match(b.searchDescription,/HST/);
+ for(const row of [gear,hst]){
+  assert.equal(addReviewedCompareSearchCue("LS Tractor J27 "+row.variant+".",row,"de"),"LS Tractor J27 "+row.variant+". Varianten vergleichen.");
+  assert.equal(addReviewedCompareSearchCue("LS Tractor J27.",row,"en"),"LS Tractor J27.");
+ }
 });
