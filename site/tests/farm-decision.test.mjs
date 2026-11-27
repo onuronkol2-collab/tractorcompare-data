@@ -1,5 +1,5 @@
 import {test} from "node:test";import assert from "node:assert/strict";
-import {ownershipCost,convertFarmUnit,implementScreen,validateMaintenanceNote,readMaintenanceHistory,appendMaintenanceRecord,maintenanceTotals,parseMaintenanceExport} from "../src/lib/farm-decision.mjs";
+import {ownershipCost,convertFarmUnit,implementScreen,implementScreenDetails,FARM_AREA_UNITS,validateMaintenanceNote,readMaintenanceHistory,appendMaintenanceRecord,maintenanceTotals,parseMaintenanceExport} from "../src/lib/farm-decision.mjs";
 import {farmDecisionText} from "../src/lib/farm-decision-i18n.ts";
 import {LOCALES} from "../src/lib/locales.ts";
 const base={purchase:50000,deposit:10000,rate:5,months:60,resale:20000,years:10,rent:50,hours:200,operating:20};
@@ -20,3 +20,27 @@ test("break-even is positive only when rent exceeds running cost and depreciatio
 test("maintenance history preserves legacy notes, appends, totals, rejects corrupt and oversized history",()=>{const note={model:"A",meter:10,fuel:3,cost:20};const old=readMaintenanceHistory(note);const next=appendMaintenanceRecord(old,{model:"B",meter:20,fuel:4,cost:30});assert.deepEqual(maintenanceTotals(readMaintenanceHistory(next)),{count:2,fuel:7,cost:50});assert.equal(old.length,1);assert.deepEqual(readMaintenanceHistory(null),[]);assert.throws(()=>appendMaintenanceRecord(Array(200).fill(note),note));assert.throws(()=>readMaintenanceHistory({version:2,records:[{...note,fuel:-1}]}));assert.throws(()=>readMaintenanceHistory({version:2,records:Array(201).fill(note)}));});
 
 test("portable local history import rejects invalid, oversize and unsupported exports",()=>{const valid={version:2,records:[{model:"A",meter:1,fuel:2,cost:3}]};assert.deepEqual(parseMaintenanceExport(JSON.stringify(valid)),valid);for(const input of ["{}","null","not json","x".repeat(262145),JSON.stringify({...valid,records:[{...valid.records[0],cost:-1}]})])assert.throws(()=>parseMaintenanceExport(input));});
+
+import {AREA_SQM,farmAreaInHectares} from "../src/lib/farm-cost.mjs";
+import {farmDecisionEnhancementText} from "../src/lib/farm-decision-enhancement-i18n.ts";
+test("all six area units share one reversible conversion table with field tools",()=>{
+ assert.deepEqual(FARM_AREA_UNITS,["ha","decare","acre","m2","mu","tan"]);
+ for(const unit of FARM_AREA_UNITS){
+  const x=convertFarmUnit(100,unit);assert.ok(Math.abs(x.ha-farmAreaInHectares(100,unit))<1e-12);
+  for(const target of FARM_AREA_UNITS)assert.ok(Math.abs(convertFarmUnit(x[target],target)[unit]-100)<1e-10);
+ }
+ assert.equal(convertFarmUnit(1,"ha").mu,15);
+ assert.equal(convertFarmUnit(1,"ha").m2,10000);
+ assert.equal(convertFarmUnit(0,"tan").m2,0);
+ assert.ok(Object.isFrozen(AREA_SQM));
+});
+test("equipment margins preserve deficits, exact equality and missing evidence",()=>{
+ assert.deepEqual(implementScreenDetails([[20,30],[40,40],[null,1000]]),{state:"insufficient",rows:[{state:"insufficient",margin:-10},{state:"matched",margin:0},{state:"unknown",margin:null}]});
+ assert.equal(implementScreenDetails([[35,30],[40,40],[null,1000]]).state,"unknown");
+ assert.equal(implementScreenDetails([[35,30],[40,40],[1200,1000]]).rows[2].margin,200);
+ for(const bad of [NaN,Infinity,-1,1e10,"20"])assert.equal(implementScreenDetails([[bad,null],[40,30],[1200,1000]]).state,"unknown");
+});
+test("decision detail and checklist copy are complete in all ten locales",()=>{
+ for(const locale of LOCALES){const copy=farmDecisionEnhancementText(locale);assert.equal(Object.keys(copy).length,6);assert.ok(Object.values(copy).every(v=>typeof v==="string"&&v.trim()));}
+ assert.equal(new Set(LOCALES.map(l=>farmDecisionEnhancementText(l).progress)).size,10);
+});

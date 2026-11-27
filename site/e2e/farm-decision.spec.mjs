@@ -41,3 +41,19 @@ test("maintenance export import is validated, confirmed and local",async({page})
 test("field scenario and service interval calculators use valid inputs",async({page})=>{await page.goto("/tr/guides/farm-cost-calculator/");await page.locator("#tractorvs-analytics-reject").click();await page.locator('[data-extra-form="scenario"] button').click();await expect(page.locator('[data-scenario-result="left-time"]')).not.toHaveText("—");await page.locator('[data-extra-form="service"] button').click();await expect(page.locator('[data-service-result="remaining"]')).toHaveText("200");await expect(page.locator('[data-service-result="next"]')).toHaveText("350");});
 
 test("copy controls fail closed for uncalculated or stale results",async({page})=>{await page.goto("/tr/guides/farm-cost-calculator/");await page.locator("#tractorvs-analytics-reject").click();const add=page.locator("[data-shortlist-add]");await expect(add).toBeDisabled();const cost=page.locator("[data-copy-cost]"),form=page.locator("#farm-cost-form");await expect(cost).toBeEnabled();await form.locator('[name="area"]').fill("20");await expect(cost).toBeDisabled();await form.locator('button[type="submit"]').click();await expect(cost).toBeEnabled();const finance=page.locator('[data-decision="finance"]'),copy=finance.locator("[data-copy]");await expect(copy).toBeDisabled();await finance.locator('button[type="submit"]').click();await expect(copy).toBeEnabled();await finance.locator('[name="purchase"]').fill("100000");await expect(copy).toBeDisabled();await expect(page.locator(".farm-tool-jump").first().locator("a")).toHaveCount(8);});
+
+test("six area units, per-threshold margins and used-tractor checklist progress",async({page})=>{
+ await page.goto("/tr/guides/farm-cost-calculator/");await page.locator("#tractorvs-analytics-reject").click();
+ const units=page.locator('[data-decision="units"]');const choice=units.locator('[name="unit"]');
+ for(const unit of ["ha","decare","acre","m2","mu","tan"])await expect(choice.locator('option[value="'+unit+'"]')).toHaveCount(1);
+ await units.locator('[name="value"]').fill("15");await choice.selectOption("mu");await units.locator('button[type="submit"]').click();await expect(units.locator("[data-unit-result]")).toContainText("1 ha");
+ const equipment=page.locator('[data-decision="equipment"]');await equipment.locator('[name="ptoAvailable"]').fill("20");await equipment.locator('[name="ptoRequired"]').fill("30");await equipment.locator('[name="flowAvailable"]').fill("40");await equipment.locator('[name="flowRequired"]').fill("40");await equipment.locator('button[type="submit"]').click();
+ await expect(equipment.locator('[data-equipment-margin="pto"]')).toContainText("-10 kW");
+ await expect(equipment.locator('[data-equipment-margin="flow"]')).toContainText("0 L/min");
+ await expect(equipment.locator('[data-equipment-margin="lift"]')).toHaveText("Yetersiz bilgi");
+ await equipment.locator('[name="ptoAvailable"]').fill("35");await expect(equipment.locator("[data-equipment-breakdown]")).toBeHidden();
+ const inspection=page.locator("#farm-used");await expect(inspection.locator("[data-inspection-count]")).toHaveText("0 / 8");await expect(inspection.locator("[data-inspection-reset]")).toBeDisabled();
+ await inspection.locator('input[type="checkbox"]').first().check();await inspection.locator('input[type="checkbox"]').nth(1).check();await expect(inspection.locator("[data-inspection-count]")).toHaveText("2 / 8");
+ await inspection.locator("[data-inspection-reset]").click();await expect(inspection.locator("[data-inspection-count]")).toHaveText("0 / 8");
+ await expect.poll(()=>page.evaluate(()=>document.documentElement.scrollWidth-document.documentElement.clientWidth)).toBeLessThanOrEqual(2);
+});

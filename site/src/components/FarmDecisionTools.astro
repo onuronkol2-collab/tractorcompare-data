@@ -2,10 +2,14 @@
 import {farmDecisionText} from "../lib/farm-decision-i18n";
 import FarmModelContext from "./FarmModelContext.astro";
 import {farmCostText} from "../lib/farm-cost-i18n";
+import {FARM_AREA_UNITS} from "../lib/farm-decision.mjs";
+import {farmDecisionEnhancementText} from "../lib/farm-decision-enhancement-i18n";
 import {LOCALE_TAGS,type Locale} from "../lib/locales";
 interface Props{lang:Locale}
 const {lang}=Astro.props;
-const c=farmDecisionText(lang), common=farmCostText(lang);
+const c=farmDecisionText(lang), common=farmCostText(lang), extra=farmDecisionEnhancementText(lang);
+const areaLabels:Record<string,string>={m2:"m²",mu:"亩 (mǔ)",tan:"反 (tan)"};
+const equipmentUnits={pto:"kW",flow:"L/min",lift:"kg"} as const;
 const finance=[["purchase",50000,0,1e12],["deposit",10000,0,1e12],["rate",5,0,100],["months",60,1,600],["resale",20000,0,1e12],["years",10,0.1,100],["rent",50,0,1e9],["hours",200,0,8760],["operating",20,0,1e9]] as const;
 const metrics=["payment","interest","depreciation","ownership","rental","breakEven"] as const;
 const compat=["pto","flow","lift"] as const;
@@ -32,7 +36,7 @@ const checklist=["identity","history","safety","engine","drive","hydraulic","tyr
   <h2>{c.units}</h2><p>{c.unitNote}</p>
   <form data-decision="units"><fieldset data-tool-controls disabled>
    <div class="decision-grid"><label>{c.amount}<input name="value" type="number" inputmode="decimal" min="0" max="1000000000000" step="any" value="100" required /></label>
-   <label>{c.unitChoice}<select name="unit"><optgroup label={c.power}>{["HP","PS","kW"].map(key=><option value={key}>{key}</option>)}</optgroup><optgroup label={c.area}>{["ha","decare","acre"].map(key=><option value={key}>{key}</option>)}</optgroup></select></label></div>
+   <label>{c.unitChoice}<select name="unit"><optgroup label={c.power}>{["HP","PS","kW"].map(key=><option value={key}>{key}</option>)}</optgroup><optgroup label={c.area}>{FARM_AREA_UNITS.map(key=><option value={key}>{areaLabels[key]||key}</option>)}</optgroup></select></label></div>
    <button type="submit">{common.calculate}</button><output data-unit-result aria-live="polite">—</output><p data-error role="alert" hidden>{common.invalid}</p></fieldset>
   </form><p><a lang="en" href="https://www.nist.gov/pml/special-publication-811/nist-guide-si-appendix-b-conversion-factors/nist-guide-si-appendix-b9">NIST — SI conversion factors</a></p>
  </section>
@@ -41,14 +45,15 @@ const checklist=["identity","history","safety","engine","drive","hydraulic","tyr
   <FarmModelContext lang={lang} />
   <form data-decision="equipment" data-clarity-mask="true"><fieldset data-tool-controls disabled>
    {compat.map(key=><fieldset><legend>{c[key]}</legend><div class="decision-grid"><label>{c.available}<input type="number" name={key+"Available"} min="0" max="1000000000" step="any" inputmode="decimal"/></label><label>{c.required}<input type="number" name={key+"Required"} min="0" max="1000000000" step="any" inputmode="decimal"/></label></div></fieldset>)}
-   <button type="submit">{common.calculate}</button><p data-equipment-result data-matched={c.matched} data-insufficient={c.insufficient} data-unknown={c.unknown} aria-live="polite">{c.unknown}</p><p>{c.manual}</p><p data-error role="alert" hidden>{common.invalid}</p></fieldset>
+   <button type="submit">{common.calculate}</button><p data-equipment-result data-matched={c.matched} data-insufficient={c.insufficient} data-unknown={c.unknown} aria-live="polite">{c.unknown}</p><div data-equipment-breakdown hidden><h3>{extra.breakdown}</h3><p>{extra.marginNote}</p><dl class="decision-grid">{compat.map(key=><div><dt>{c[key]}</dt><dd data-equipment-margin={key} data-unit={equipmentUnits[key]} data-matched={extra.met} data-insufficient={extra.short} data-unknown={c.unknown}>—</dd></div>)}</dl></div><p>{c.manual}</p><p data-error role="alert" hidden>{common.invalid}</p></fieldset>
   </form>
   <p><a lang="en" href="https://extension.psu.edu/managing-machinery-and-equipment">Penn State Extension — Managing Machinery and Equipment</a></p>
  </section>
  <section class="decision-card" id="farm-used">
   <h2>{c.used}</h2><p>{c.usedNote}</p>
+  <div data-inspection-progress hidden><label for="farm-inspection-progress">{extra.progress}</label><progress id="farm-inspection-progress" value="0" max={checklist.length}></progress><p data-inspection-count aria-live="polite">0 / {checklist.length}</p></div>
   <ul class="inspection-list">{checklist.map(key=><li><label><input type="checkbox"/> {c[key]}</label></li>)}</ul>
-  <button data-print type="button">{c.print}</button>
+  <div class="decision-nav"><button data-print type="button">{c.print}</button><button data-inspection-reset type="button" hidden>{extra.reset}</button></div>
   <p><a lang="en" href="https://extension.umn.edu/agriculture/farm-operations-and-systems/small-farms/buying-a-used-tractor">University of Minnesota Extension — Buying a used tractor</a></p>
  </section>
  <section class="decision-card" id="farm-journal" data-clarity-mask="true">
@@ -64,13 +69,15 @@ const checklist=["identity","history","safety","engine","drive","hydraulic","tyr
  </section>
 </div>
 <script>
- import {ownershipCost,convertFarmUnit,implementScreen,validateMaintenanceNote,readMaintenanceHistory,appendMaintenanceRecord,maintenanceTotals,MAX_MAINTENANCE_RECORDS,parseMaintenanceExport} from "../lib/farm-decision.mjs";
+ import {ownershipCost,convertFarmUnit,implementScreenDetails,validateMaintenanceNote,readMaintenanceHistory,appendMaintenanceRecord,maintenanceTotals,MAX_MAINTENANCE_RECORDS,parseMaintenanceExport} from "../lib/farm-decision.mjs";
  import {FARM_TOOL_DONE_EVENT} from "../lib/analytics-product-actions";
  const root=document.querySelector<HTMLElement>("[data-farm-decisions]");
  const key="tractorvs:maintenance-note:v1";
  if(root){
   const fmt=new Intl.NumberFormat(root.dataset.locale,{maximumSignificantDigits:7});
   const forms=[...root.querySelectorAll<HTMLFormElement>("form[data-decision]")];
+  const signed=new Intl.NumberFormat(root.dataset.locale,{maximumSignificantDigits:7,signDisplay:"exceptZero"});
+  const clearEquipment=(form:HTMLFormElement)=>{const breakdown=form.querySelector<HTMLElement>("[data-equipment-breakdown]");if(breakdown)breakdown.hidden=true;for(const el of form.querySelectorAll("[data-equipment-margin]"))el.textContent="—";};
   const read=(data:FormData,name:string)=>{const val=data.get(name);return typeof val==="string"&&val.trim()!==""?Number(val):NaN;};
   const status=root.querySelector<HTMLElement>("[data-journal-status]");
   const journal=forms.find(form=>form.dataset.decision==="journal");
@@ -96,7 +103,7 @@ const checklist=["identity","history","safety","engine","drive","hydraulic","tyr
     const copy=form.querySelector<HTMLButtonElement>("[data-copy]");if(copy)copy.disabled=true;
     const copyStatus=form.querySelector("[data-copy-status]");if(copyStatus)copyStatus.textContent="";
     for(const el of form.querySelectorAll<HTMLElement>("[data-finance-result],[data-unit-result]"))el.textContent="—";
-    const equip=form.querySelector<HTMLElement>("[data-equipment-result]");if(equip)equip.textContent=equip.dataset.unknown||"";
+    const equip=form.querySelector<HTMLElement>("[data-equipment-result]");if(equip){equip.textContent=equip.dataset.unknown||"";clearEquipment(form);}
    });
    form.addEventListener("submit",event=>{
     event.preventDefault();if(error)error.hidden=true;
@@ -110,12 +117,16 @@ const checklist=["identity","history","safety","engine","drive","hydraulic","tyr
       window.dispatchEvent(new Event(FARM_TOOL_DONE_EVENT));
      }else if(form.dataset.decision==="units"){
       const result=convertFarmUnit(read(data,"value"),String(data.get("unit")));
-      const el=form.querySelector<HTMLElement>("[data-unit-result]");if(el)el.textContent=Object.entries(result).map(([u,v])=>fmt.format(v)+" "+u).join(" · ");
+      const el=form.querySelector<HTMLElement>("[data-unit-result]");if(el)el.textContent=Object.entries(result).map(([u,v])=>fmt.format(v)+" "+(u==="m2"?"m²":u==="mu"?"亩 (mǔ)":u==="tan"?"反 (tan)":u)).join(" · ");
       window.dispatchEvent(new Event(FARM_TOOL_DONE_EVENT));
      }else if(form.dataset.decision==="equipment"){
-      const result=implementScreen(["pto","flow","lift"].map(name=>["Available","Required"].map(suffix=>{const v=read(data,name+suffix);return Number.isNaN(v)?null:v;})));
-      const el=form.querySelector<HTMLElement>("[data-equipment-result]");if(el)el.textContent=el.dataset[result]||"";
-      if(result!=="unknown")window.dispatchEvent(new Event(FARM_TOOL_DONE_EVENT));
+      const result=implementScreenDetails(["pto","flow","lift"].map(name=>["Available","Required"].map(suffix=>{const v=read(data,name+suffix);return Number.isNaN(v)?null:v;})));
+      const el=form.querySelector<HTMLElement>("[data-equipment-result]");if(el)el.textContent=el.dataset[result.state]||"";
+      const breakdown=form.querySelector<HTMLElement>("[data-equipment-breakdown]");
+      const margins=[...form.querySelectorAll<HTMLElement>("[data-equipment-margin]")];
+      margins.forEach((node,i)=>{const row=result.rows[i];node.textContent=(node.dataset[row.state]||"")+(row.margin===null?"":" · "+signed.format(row.margin)+" "+(node.dataset.unit||""));});
+      if(breakdown)breakdown.hidden=false;
+      if(result.state!=="unknown")window.dispatchEvent(new Event(FARM_TOOL_DONE_EVENT));
      }else if(form.dataset.decision==="journal"){
       const note=validateMaintenanceNote({model:data.get("model"),meter:read(data,"meter"),fuel:read(data,"fuel"),cost:read(data,"cost")});
       try{const records=history();if(records.length>=MAX_MAINTENANCE_RECORDS){if(status)status.textContent=root.dataset.limit||"";return;}const next=appendMaintenanceRecord(records,note);localStorage.setItem(key,JSON.stringify(next));renderHistory(next.records);for(const name of ["fuel","cost"]){const field=form.elements.namedItem(name);if(field instanceof HTMLInputElement)field.value="";}journalStatus("saved");}catch{journalStatus("storageError");}
@@ -126,6 +137,13 @@ const checklist=["identity","history","safety","engine","drive","hydraulic","tyr
   for(const fieldset of root.querySelectorAll<HTMLFieldSetElement>("[data-tool-controls]"))fieldset.disabled=false;
   root.querySelector("[data-copy]")?.addEventListener("click",async()=>{const form=forms.find(form=>form.dataset.decision==="finance");if(!form)return;const target=form.querySelector("[data-copy-status]");const entries=[...form.querySelectorAll("[data-finance-result]")];if(!target||entries.some(el=>el.textContent==="—"))return;const result=entries.map(el=>(el.previousElementSibling?.textContent||"")+": "+el.textContent).join("\n");try{await navigator.clipboard.writeText(result);target.textContent=root.dataset.copied||"";}catch{target.textContent=root.dataset.copyFailed||"";}});
   root.querySelector("[data-print]")?.addEventListener("click",()=>window.print());
+  const inspection=root.querySelector<HTMLElement>("#farm-used");
+  if(inspection){
+   const boxes=[...inspection.querySelectorAll<HTMLInputElement>("input[type=checkbox]")];
+   const progress=inspection.querySelector<HTMLProgressElement>("progress");const count=inspection.querySelector("[data-inspection-count]");const reset=inspection.querySelector<HTMLButtonElement>("[data-inspection-reset]");const block=inspection.querySelector<HTMLElement>("[data-inspection-progress]");
+   const refresh=()=>{const checked=boxes.filter(box=>box.checked).length;if(progress){progress.max=boxes.length;progress.value=checked;}if(count)count.textContent=fmt.format(checked)+" / "+fmt.format(boxes.length);if(reset)reset.disabled=checked===0;};
+   if(block)block.hidden=false;if(reset){reset.hidden=false;reset.addEventListener("click",()=>{for(const box of boxes)box.checked=false;refresh();});}for(const box of boxes)box.addEventListener("change",refresh);refresh();
+  }
   root.querySelector("[data-delete]")?.addEventListener("click",()=>{if(!window.confirm(root.dataset.confirmDelete||""))return;try{localStorage.removeItem(key);journal?.reset();renderHistory([]);if(status)status.textContent="";}catch{journalStatus("storageError");}});
   const upload=root.querySelector<HTMLInputElement>("[data-import-history]");if(upload){upload.disabled=false;upload.addEventListener("change",async()=>{const file=upload.files?.[0];upload.value="";if(!file)return;try{if(file.size>262144)throw new RangeError("File too large");const imported=parseMaintenanceExport(await file.text());if(!window.confirm(root.dataset.confirmImport||""))return;localStorage.setItem(key,JSON.stringify(imported));journal?.reset();renderHistory(imported.records);if(status)status.textContent=root.dataset.imported||"";}catch{if(status)status.textContent=root.dataset.invalidFile||"";}});}
   root.querySelector("[data-export]")?.addEventListener("click",()=>{try{const records=history();if(!records.length)return;const url=URL.createObjectURL(new Blob([JSON.stringify({version:2,records},null,2)],{type:"application/json"}));const link=document.createElement("a");link.href=url;link.download="tractorvs-maintenance.json";link.click();setTimeout(()=>URL.revokeObjectURL(url),1000);}catch{journalStatus("storageError");}});
@@ -150,5 +168,9 @@ const checklist=["identity","history","safety","engine","drive","hydraulic","tyr
  .inspection-list{list-style:none;padding:0}
  .inspection-list label{display:flex;align-items:center;gap:.75rem;min-height:44px}
  .inspection-list input{flex:none;width:1.2rem;height:1.2rem}
+ [data-inspection-progress] progress{display:block;width:100%;max-width:30rem;height:1rem;accent-color:#245b39;margin-block:.5rem}
+ [data-inspection-progress] p{font-weight:600}
+ [data-equipment-breakdown]{margin-block:1rem;overflow-wrap:anywhere}
+ [data-equipment-breakdown][hidden],[data-inspection-progress][hidden],button[data-inspection-reset][hidden]{display:none!important}
  @media print{.decision-nav,.decision-card:not(#farm-used),#farm-used button{display:none!important}}
 </style>
