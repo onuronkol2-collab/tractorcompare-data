@@ -107,3 +107,16 @@ test("shared form focus and readable research surfaces keep existing behavior an
  assert.match(advisor,/\.advisor-result-facts small\{display:block;color:#405948;font-size:14px/);
  assert.match(advisor,/recommendTractors/);
 });
+
+
+test("narrow navigation and forum reading styles retain native controls and visible links",()=>{
+ const shared=file("styles/global.css");
+ const forum=file("styles/forum-readable.css");
+ const shell=file("layouts/SiteLayout.astro");
+ assert.match(shared,/@media \(max-width: 420px\)[\s\S]*?\.mobile-menu-search-row\s*\{\s*grid-template-columns: minmax\(0, 1fr\)/);
+ assert.match(shell,/<details class="mobile-nav" data-site-disclosure>/);
+ assert.match(shell,/<form class="mobile-menu-search"/);
+ assert.match(forum,/\.forum-topic-toc summary\{[^}]*min-height:44px/);
+ assert.match(forum,/\.forum-topic-toc li a\{[^}]*text-decoration:underline/);
+ assert.match(forum,/overscroll-behavior-inline: contain/);
+});

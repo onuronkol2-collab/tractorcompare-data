@@ -137,7 +137,7 @@
 #main .forum-thread .forum-topic-toc{margin:0 0 26px;padding:14px 17px;
  border:1px solid #d5e6d1;border-radius:12px;background:#f7fbf5}
 #main .forum-thread .forum-topic-toc summary{font-size:16px;font-weight:850;
- color:#215e3b;line-height:1.5;cursor:pointer;min-height:30px}
+ color:#215e3b;line-height:1.5;cursor:pointer;min-height:44px}
 #main .forum-thread .forum-topic-toc-count{display:inline-flex;align-items:center;
  justify-content:center;min-width:26px;min-height:26px;margin-inline-start:10px;
  border-radius:50%;background:#deedd7;color:#215435;font-size:13px}
@@ -145,7 +145,7 @@
 #main .forum-thread .forum-topic-toc ol{margin:0;padding-inline-start:25px;
  display:grid;gap:7px}
 #main .forum-thread .forum-topic-toc li{font-size:14px;line-height:1.55}
-#main .forum-thread .forum-topic-toc li a{color:#1d6240}
+#main .forum-thread .forum-topic-toc li a{color:#1d6240;text-decoration:underline;text-underline-offset:.18em;overflow-wrap:anywhere}
 #main .forum-thread .forum-home-button:focus-visible,
 #main .forum-thread .forum-jump-replies:focus-visible,
 #main .forum-thread .forum-topic-toc summary:focus-visible,
@@ -218,4 +218,28 @@
 @media(max-width:720px){
  #main .community-shell .forum-empty-help-top{align-items:stretch}
  #main .community-shell .forum-empty-help button{width:100%}
+}
+
+
+/* Thread and member navigation: improve long localized labels without
+   changing account behavior, moderation, tab state or published content. */
+#main .forum-thread .forum-rich-text :is(a,code) {
+  overflow-wrap: anywhere;
+}
+#main .forum-thread .forum-topic-toc summary {
+  overflow-wrap: anywhere;
+}
+#main .forum-thread .forum-topic-toc li a:focus-visible {
+  outline: 3px solid #175c37;
+  outline-offset: 2px;
+}
+#main .community-shell :is(.member-toolbar-buttons button,.forum-view-button,
+  .forum-empty-help button,.forum-side-tags button) {
+  max-inline-size: 100%;
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+#main .forum-thread .forum-table-wrap {
+  max-inline-size: 100%;
+  overscroll-behavior-inline: contain;
 }

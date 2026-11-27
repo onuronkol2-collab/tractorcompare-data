@@ -78,3 +78,61 @@
 .tractor-photo-gallery--compare .tractor-photo-placeholder strong{font-size:14px}
 .tractor-photo-gallery--catalog .tractor-photo-placeholder span,
 .tractor-photo-gallery--compare .tractor-photo-placeholder span{font-size:12px}
+
+
+/* Photo controls: use a dark/light inset ring on unpredictable image
+   backgrounds and retain the real native dialog and licensed caption. */
+.tractor-photo-button:focus-visible {
+  outline: 3px solid #fff;
+  outline-offset: -3px;
+  box-shadow: inset 0 0 0 6px #175c37;
+}
+.tractor-photo-button:focus-visible::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  border: 3px solid #fff;
+  box-shadow: inset 0 0 0 3px #175c37;
+  border-radius: inherit;
+}
+.tractor-photo-dialog-caption,
+.tractor-photo-caption,
+.tractor-photo-short-credit {
+  min-inline-size: 0;
+  overflow-wrap: anywhere;
+}
+.tractor-photo-dialog-caption a {
+  min-inline-size: 0;
+  max-inline-size: 100%;
+  overflow-wrap: anywhere;
+}
+.tractor-photo-placeholder {
+  overflow-wrap: anywhere;
+}
+@media (max-width: 420px) {
+  .tractor-photo-gallery--catalog .tractor-photo-placeholder,
+  .tractor-photo-gallery--compare .tractor-photo-placeholder {
+    aspect-ratio: auto;
+    min-block-size: 9rem;
+  }
+  .tractor-photo-dialog-content {
+    padding: max(9px, env(safe-area-inset-top)) max(9px, env(safe-area-inset-right))
+      max(9px, env(safe-area-inset-bottom)) max(9px, env(safe-area-inset-left));
+  }
+  .tractor-photo-close {
+    top: max(12px, env(safe-area-inset-top));
+    right: max(12px, env(safe-area-inset-right));
+  }
+}
+@media (forced-colors: active) {
+  .tractor-photo-button:focus-visible {
+    outline: 3px solid Highlight;
+    outline-offset: -3px;
+  }
+  .tractor-photo-button:focus-visible::after {
+    border-color: Highlight;
+    box-shadow: none;
+  }
+}
