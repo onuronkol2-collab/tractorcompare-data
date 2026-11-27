@@ -10,7 +10,8 @@ import {fingerprintPublicForum} from "./tractor-forum-publication-autosync.mjs";
 import {extractPublishedUrls,significantContentDigest,auditBuiltSitemap,ROOT} from "./tractor-sitemap-history.mjs";
 import {validateCandidateIdentity,verifyFreshPublicSnapshot,verifySitemapTransition} from "./tractorvs-publication-evidence.mjs";
 import {assertProtectedReleaseRule} from "./tractorvs-protected-candidate-policy.mjs";
-const PATHS={catalog:["site/src/data/public-catalog-sync.json"],forum:["site/src/data/public-forum-sync.json"],sitemap:["seo/sitemap-content-history.json","site/src/data/sitemap-lastmod.json"]};
+import {assessRecovery,verifyRecovery} from "./tractorvs-forum-recovery-evidence.mjs";
+const PATHS={catalog:["site/src/data/public-catalog-sync.json"],forum:["site/src/data/public-forum-sync.json"],"forum-recovery":["site/src/data/public-forum-sync.json"],sitemap:["seo/sitemap-content-history.json","site/src/data/sitemap-lastmod.json"]};
 const bot="tractorvs-secure-publisher[bot]",context="TractorVS / independent publication evidence";
 const ok=(v,message)=>{if(!v)throw Error(message);};
 const sha=v=>typeof v==="string"&&/^[a-f0-9]{40}$/.test(v);
@@ -80,6 +81,9 @@ async function prepare(env){
    const previous=JSON.parse(before[0].content),history=JSON.parse(files[0].content);
    verifySitemapTransition({previous,history,lastmod:JSON.parse(files[1].content),renderedPages:renderedPages(),generatedAt:sitemapTimestamp(previous,history)});
   }
+ }else if(kind==="forum-recovery"){
+  const proposal=await assessRecovery({previous:JSON.parse(before[0].content),jwt:env.TRACTORVS_SUPABASE_ANON_JWT});
+  files=proposal?[{path:PATHS[kind][0],content:JSON.stringify(proposal,null,2)+"\n"}]:before;
  }else{
   const previous=JSON.parse(before[0].content);
   const reader=kind==="catalog"?fingerprintPublicViewWithBoundedRetry:fingerprintPublicForum;
@@ -129,7 +133,8 @@ async function verify(env){
   if(kind==="sitemap"){
    const previous=json(PATHS[kind][0]),history=JSON.parse(files[0].content);
    verifySitemapTransition({previous,history,lastmod:JSON.parse(files[1].content),renderedPages:renderedPages(),generatedAt:sitemapTimestamp(previous,history)});
-  }else await verifyFreshPublicSnapshot({kind,previous:json(PATHS[kind][0]),submitted:JSON.parse(files[0].content),jwt:env.TRACTORVS_SUPABASE_ANON_JWT});
+  }else if(kind==="forum-recovery")await verifyRecovery({previous:json(PATHS[kind][0]),submitted:JSON.parse(files[0].content),jwt:env.TRACTORVS_SUPABASE_ANON_JWT});
+  else await verifyFreshPublicSnapshot({kind,previous:json(PATHS[kind][0]),submitted:JSON.parse(files[0].content),jwt:env.TRACTORVS_SUPABASE_ANON_JWT});
   await mainIs(api,base);
   await status("success","Exact App candidate independently verified against current main and public source");
   console.log("Independent evidence passed for "+kind+" exact head "+head+"; no merge authorized.");

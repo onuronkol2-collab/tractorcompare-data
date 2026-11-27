@@ -17,8 +17,8 @@ const common=[
  {name:"CodeQL",appId:security},{name:"Workers Builds: tractorvs-site",appId:cf}
 ];
 export function requiredCandidateChecks(kind){
- if(!["catalog","forum","sitemap"].includes(kind))throw Error("Invalid candidate category");
- return [...common,...(kind==="catalog"?[A("tests",wf("tractorvs-publication-autosync"))]:kind==="forum"?[A("validate",wf("tractorvs-forum-publication-autosync"))]:[])];
+ if(!["catalog","forum","sitemap","forum-recovery"].includes(kind))throw Error("Invalid candidate category");
+ return [...common,...(kind==="catalog"?[A("tests",wf("tractorvs-publication-autosync"))]:["forum","forum-recovery"].includes(kind)?[A("validate",wf("tractorvs-forum-publication-autosync"))]:[])];
 }
 const assert=(x,msg)=>{if(!x)throw Error(msg);};
 export function assertProtectedReleaseRule(rule){
