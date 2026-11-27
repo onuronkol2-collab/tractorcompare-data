@@ -119,7 +119,7 @@ const schema={
 .brand-heading p{font-size:clamp(15px,1.7vw,18px);line-height:1.7;color:#345742}
 .brand-facts{display:flex;flex-wrap:wrap;gap:14px;margin:28px 0}
 .brand-facts div{flex:1 1 170px;border:1px solid #c8ddce;background:#f5faf4;border-radius:14px;padding:18px}
-.brand-facts dt{font-size:12px;color:#41674e;font-weight:700;line-height:1.5}
+.brand-facts dt{font-size:14px;color:#41674e;font-weight:700;line-height:1.5}
 .brand-facts dd{font-size:25px;font-weight:900;margin:8px 0 0;color:#17472a}
 .brand-tools{display:flex;gap:12px;flex-wrap:wrap;margin:20px 0 40px}
 .brand-tools a{display:inline-flex;min-height:44px;align-items:center;padding:9px 16px;border:1px solid #2b7544;border-radius:10px;color:#14562d;font-weight:800;text-decoration:none}
@@ -130,10 +130,18 @@ const schema={
 .brand-model h3 a{text-decoration:underline;text-decoration-color:#93b69a;text-underline-offset:4px}
 .brand-model dl{margin:0;display:flex;flex-direction:column;gap:6px}
 .brand-model dl div{display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px}
-.brand-model dt{font-size:13px;color:#58725c}.brand-model dd{font-size:13px;font-weight:800;margin:0}
+.brand-model dt{font-size:14px;color:#405948;line-height:1.55}.brand-model dd{font-size:15px;font-weight:800;margin:0;line-height:1.55;font-variant-numeric:tabular-nums}
 .brand-variant,.brand-spec-count,.brand-unknown{font-size:13px;color:#47644d;margin:0;line-height:1.5}
 .brand-model-links{display:flex;flex-direction:column;gap:10px;margin-top:auto;padding-top:8px}
-.brand-model-links a{font-size:13px;line-height:1.5;overflow-wrap:anywhere}
+.brand-model-links a{font-size:14px;line-height:1.6;overflow-wrap:anywhere;text-decoration:underline;text-underline-offset:.18em}
 .model-detail-link{font-weight:800}
 .brand-disclaimer{margin-top:28px;font-size:13px;line-height:1.7;color:#486452}
+/* Long model identities and evidence labels must stay readable at text zoom. */
+.brand-facts div,.brand-model-grid>li,.brand-model,.brand-model dl div{min-inline-size:0;overflow-wrap:anywhere}
+.brand-facts dd{font-variant-numeric:tabular-nums}
+.brand-model h3 a{text-decoration-color:currentColor}
+.brand-model-links .model-detail-link{display:inline-flex;align-items:center;min-height:44px;align-self:flex-start}
+.brand-tools a{max-inline-size:100%;overflow-wrap:anywhere}
+.brand-variant,.brand-spec-count,.brand-unknown,.brand-disclaimer{font-size:14px;line-height:1.65}
+@media(max-width:480px){.brand-facts{gap:10px}.brand-facts div{flex-basis:100%;padding:14px}.brand-tools a{flex:1 1 100%;justify-content:center;text-align:center}}
 </style>

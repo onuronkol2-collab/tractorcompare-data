@@ -120,3 +120,22 @@ test("narrow navigation and forum reading styles retain native controls and visi
  assert.match(forum,/\.forum-topic-toc li a\{[^}]*text-decoration:underline/);
  assert.match(forum,/overscroll-behavior-inline: contain/);
 });
+
+
+test("catalogue and brand research surfaces preserve real links and readable technical evidence",()=>{
+ const style=file("styles/research-layout.css");
+ const brand=file("components/BrandDiscovery.astro");
+ const source=file("components/ModelSourceIndex.astro");
+ const toc=file("styles/model-research-toc.css");
+ assert.match(style,/\.catalog-search-feedback button/);
+ assert.match(style,/\.catalog-price-filter select/);
+ assert.match(style,/min-height: 48px/);
+ assert.match(brand,/href=\{modelPrefix\+model\.slug\+"\/"\}/);
+ assert.match(brand,/href=\{source\.url\}/);
+ assert.match(brand,/\.brand-model-links a\{[^}]*text-decoration:underline/);
+ assert.match(source,/href=\{source\.url\}/);
+ assert.match(source,/\.model-sources-list a strong \{ font-size:16px/);
+ assert.match(source,/\.model-sources-list small \{ font-size:13px/);
+ assert.match(toc,/\.model-spec-group\[id\]\{scroll-margin-top:7rem\}/);
+ assert.match(toc,/\.model-spec-toc a\{line-height:1\.5\}/);
+});

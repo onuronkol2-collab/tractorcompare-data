@@ -79,17 +79,22 @@ const citation=import.meta.env.PUBLIC_INDEXING_ENABLED==="true"&&Astro.site?mode
   .model-sources-heading p:not(.model-sources-kicker) { margin:0 0 18px; max-width:780px; font-size:14px; line-height:1.8; color:#385544; }
   .model-sources-count { display:flex; flex-direction:column; gap:3px; padding:10px 14px; min-width:108px; background:white; border:1px solid #d7e5d4; border-radius:12px; }
   .model-sources-count strong { font-size:26px; color:#185435; line-height:1.2; }
-  .model-sources-count span { font-size:11px; color:#476b50; line-height:1.5; }
+  .model-sources-count span { font-size:13px; color:#476b50; line-height:1.5; }
   .model-sources-list { list-style:none; padding:0; margin:0; display:grid; gap:11px; grid-template-columns:repeat(auto-fit,minmax(min(100%,270px),1fr)); }
   .model-sources-list li { background:#fff; border:1px solid #dce8d7; border-radius:12px; padding:14px 16px; min-width:0; display:flex; flex-direction:column; gap:7px; }
-  .model-source-type { font-size:11px; font-weight:800; color:#2b6d48; }
+  .model-source-type { font-size:13px; font-weight:800; color:#2b6d48; }
   .model-sources-list a { display:flex; flex-direction:column; gap:3px; color:#174f37; overflow-wrap:anywhere; text-underline-offset:3px; }
-  .model-sources-list a strong { font-size:14px; line-height:1.4; }
-  .model-sources-list a span { font-size:12px; line-height:1.5; color:#446550; }
-  .model-sources-list small { font-size:11px; color:#526b55; line-height:1.5; }
+  .model-sources-list a strong { font-size:16px; line-height:1.5; text-decoration:underline; }
+  .model-sources-list a span { font-size:14px; line-height:1.55; color:#446550; }
+  .model-sources-list small { font-size:13px; color:#405948; line-height:1.6; overflow-wrap:anywhere; }
   .model-source-reviewed { color:#41654d; font-size:11px; line-height:1.6; }
   .model-source-reviewed time { font-weight:750; font-variant-numeric:tabular-nums; }
   .model-sources-more { margin:14px 0 0; font-size:13px; color:#395c48; line-height:1.6; }
   .model-sources-caution { margin:19px 0 0; border-top:1px solid #d9e5d6; padding-top:14px; color:#435849; font-size:13px; line-height:1.8; }
-  .model-sources a:focus-visible { outline:3px solid #9ac493; outline-offset:3px; border-radius:4px; }
+  .model-sources a:focus-visible { outline:3px solid #175c37; outline-offset:3px; border-radius:4px; }
+  .model-sources-heading > div,.model-sources-count{min-inline-size:0;max-inline-size:100%;overflow-wrap:anywhere}
+  .model-sources-list a{min-height:44px;justify-content:center}
+  .model-citation p,.model-sources-caution,.model-sources-more{font-size:14px;line-height:1.7;overflow-wrap:anywhere}
+  .model-citation button{max-inline-size:100%;overflow-wrap:anywhere}
+  @media(max-width:480px){.model-sources-count{min-width:0;width:100%}}
 </style>

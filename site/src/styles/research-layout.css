@@ -362,3 +362,31 @@ body { line-height: 1.55; }
 html:is(:lang(hi), :lang(zh), :lang(ja)) #main :is(.tractor-card-specs small,
   .model-summary-grid small,.tc-result-main small,.advisor-field,
   .editorial-card .editorial-language-note) { letter-spacing: normal; }
+
+
+/* Catalogue controls: improve discovery without changing the filters,
+   model SSR links, market calculations or other workspace changes. */
+#main :is(.catalog-facet-heading button,.catalog-search-feedback button,
+          .catalog-brand-directory a,.catalog-compare-model) {
+  min-height: 44px;
+  max-inline-size: 100%;
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+#main :is(.catalog-price-filter,.catalog-facet-panel,.catalog-brand-directory) {
+  min-inline-size: 0;
+}
+#main .catalog-price-filter label {
+  font-size: .9375rem;
+  line-height: 1.55;
+  overflow-wrap: anywhere;
+}
+#main :is(.catalog-facet-fields select,.catalog-price-filter select) {
+  min-height: 48px;
+  font-size: max(16px, 1rem);
+}
+#main .catalog-price-filter a { text-underline-offset: .18em; }
+@media(max-width:480px) {
+  #main .catalog-price-filter { align-items: stretch; }
+  #main .catalog-price-filter select { flex: 1 1 100%; width: 100%; }
+}
