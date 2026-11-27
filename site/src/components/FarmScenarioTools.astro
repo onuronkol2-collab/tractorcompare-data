@@ -1,5 +1,5 @@
 ---
-import {farmExtrasText,farmScenarioDensityText} from "../lib/farm-extras-i18n";
+import {farmExtrasText,farmScenarioDensityText,farmScenarioWindowText} from "../lib/farm-extras-i18n";
 import {farmCostText} from "../lib/farm-cost-i18n";
 import {farmModelText} from "../lib/farm-model-context-i18n";
 import {LOCALE_TAGS,type Locale} from "../lib/locales";
@@ -7,22 +7,23 @@ interface Props{lang:Locale}
 const {lang}=Astro.props;
 const c=farmExtrasText(lang), common=farmCostText(lang), m=farmModelText(lang);
 const fields=[["width",3,4,0.01,100],["speed",6,6,0.01,100],["efficiency",75,75,0.01,100],["fuel",8,10,0,10000],["other",0,0,0,1e12]] as const;
-const density=farmScenarioDensityText(lang);
-const metrics=[["capacity",common.capacity],["time",common.time],["litres",common.litres],["fuelPerHa",density.fuelPerHa],["fuelPerDecare",density.fuelPerDecare],["fieldCost",common.fieldCost],["perHa",common.perHa],["perDekar",common.perDekar],["operatingField",m.operatingField],["operatingPerHa",m.operatingPerHa],["operatingPerDecare",density.operatingPerDecare]] as const;
+const density=farmScenarioDensityText(lang), plan=farmScenarioWindowText(lang);
+const metrics=[["capacity",common.capacity],["dailyAreaHa",plan.dailyAreaHa],["dailyAreaDecare",plan.dailyAreaDecare],["time",common.time],["equivalentDays",plan.equivalentDays],["litres",common.litres],["fuelPerHa",density.fuelPerHa],["fuelPerDecare",density.fuelPerDecare],["fieldCost",common.fieldCost],["perHa",common.perHa],["perDekar",common.perDekar],["operatingField",m.operatingField],["operatingPerHa",m.operatingPerHa],["operatingPerDecare",density.operatingPerDecare]] as const;
 ---
 <div class="extra-tools" data-extra-tools data-locale={LOCALE_TAGS[lang]}>
  <section id="farm-scenarios" data-clarity-mask="true">
-  <h2>{c.scenario}</h2><p>{c.intro}</p><p>{density.direction}</p><p>{common.note}</p>
+  <h2>{c.scenario}</h2><p>{c.intro}</p><p>{density.direction}</p><p>{common.note}</p><p id="scenario-window-note">{plan.note}</p>
   <form data-extra-form="scenario"><fieldset data-extra-controls disabled>
    <div class="extra-grid">
     <label>{m.fieldArea}<input name="area" type="number" min="0.0001" max="10000000000" step="any" value="10" required /></label>
     <label>{m.areaUnit}<select name="unit">{["ha","decare","acre","m2","mu","tan"].map(unit=><option>{unit}</option>)}</select></label>
     <label>{common.price}<input name="price" type="number" min="0" max="1000000000" step="any" value="1" required /></label>
+    <label>{plan.hours}<input name="dailyHours" type="number" inputmode="decimal" min="0.01" max="24" step="any" value="8" aria-describedby="scenario-window-note" required /></label>
    </div>
    <div class="extra-grid">{["a","b"].map(side=><fieldset><legend>{side==="a"?c.a:c.b}</legend>{fields.map(([key,a,b,min,max])=><label>{common[key]}<input name={side+"-"+key} type="number" min={min} max={max} step="any" value={side==="a"?a:b} required /></label>)}</fieldset>)}</div>
    <button type="submit">{common.calculate}</button><p data-extra-error role="alert" hidden>{common.invalid}</p>
   </fieldset></form>
-  <div class="extra-table" aria-live="polite"><table><thead><tr><th scope="col">{common.method}</th><th scope="col">{c.a}</th><th scope="col">{c.b}</th><th scope="col">{c.delta}</th></tr></thead><tbody>{metrics.map(([key,label])=><tr><th scope="row">{label}</th>{["left","right","difference"].map(side=><td data-scenario-result={side+"-"+key}>—</td>)}</tr>)}</tbody></table></div>
+  <div class="extra-table" role="region" aria-label={c.scenario} tabindex="0" aria-live="polite"><table><thead><tr><th scope="col">{plan.metric}</th><th scope="col">{c.a}</th><th scope="col">{c.b}</th><th scope="col">{c.delta}</th></tr></thead><tbody>{metrics.map(([key,label])=><tr><th scope="row">{label}</th>{["left","right","difference"].map(side=><td data-scenario-result={side+"-"+key}>—</td>)}</tr>)}</tbody></table></div>
  </section>
  <section id="farm-service" data-clarity-mask="true"><h2>{c.service}</h2><p>{c.serviceNote}</p>
   <form data-extra-form="service"><fieldset data-extra-controls disabled><div class="extra-grid">{[["last",c.last,100],["current",c.current,150],["interval",c.interval,250]].map(([key,label,value])=><label>{label}<input name={key} type="number" min={key==="interval"?0.01:0} max="10000000" step="any" value={value} required /></label>)}</div><button type="submit">{common.calculate}</button><p data-extra-error role="alert" hidden>{common.invalid}</p></fieldset></form>
@@ -46,7 +47,7 @@ const metrics=[["capacity",common.capacity],["time",common.time],["litres",commo
     if(!form.checkValidity())throw Error("Invalid input");
     if(form.dataset.extraForm==="scenario"){
      const side=(name:string)=>Object.fromEntries(["width","speed","efficiency","fuel","other"].map(key=>[key,n(name+"-"+key)]));
-     const result=compareFieldScenarios({area:n("area"),price:n("price"),unit:String(data.get("unit"))},side("a"),side("b"));
+     const result=compareFieldScenarios({area:n("area"),price:n("price"),unit:String(data.get("unit")),dailyHours:n("dailyHours")},side("a"),side("b"));
      for(const el of results){const [group,key]=(el.dataset.scenarioResult||"").split("-");const values=group==="left"?result.left:group==="right"?result.right:result.difference;const value=(values as Record<string,number>)[key];el.textContent=(group==="difference"?signed:fmt).format(value);}
     }else{const result=serviceInterval(n("last"),n("current"),n("interval"));for(const el of results)el.textContent=fmt.format(result[el.dataset.serviceResult as keyof typeof result]);}
     if(error)error.hidden=true;window.dispatchEvent(new Event(FARM_TOOL_DONE_EVENT));
@@ -63,7 +64,8 @@ const metrics=[["capacity",common.capacity],["time",common.time],["litres",commo
  label{display:grid;gap:.35rem;margin-block:.5rem;min-width:0}
  input,select,button{font:inherit;min-height:44px;max-width:100%;min-width:0;box-sizing:border-box;border:1px solid #708478;border-radius:.4rem;padding:.5rem;color:inherit;background:transparent}
  button{background:#245b39;color:white;cursor:pointer}
- .extra-table{max-width:100%;overflow-x:auto;margin-block:1rem}
+ .extra-table{max-width:100%;overflow-x:auto;margin-block:1rem;overscroll-behavior-inline:contain}
+ .extra-table:focus-visible{outline:3px solid currentColor;outline-offset:3px}
  table{width:100%;border-collapse:collapse}
  th,td{padding:.6rem;border-bottom:1px solid #708478;text-align:start;overflow-wrap:anywhere}
  dd{font-weight:700;margin:0}

@@ -1,8 +1,8 @@
 # Ten-language search-intent research — 2026-11-27
 
-Qualitative public search-result sample; no keyword-volume estimate or ranking claim. Search terms are candidate topics, not measured TractorVS query impressions. Preserve local market distinctions.
+Candidate search-intent research list; individual example URLs are not yet independently revalidated. No keyword-volume estimate or ranking claim. Search terms are candidate topics, not measured TractorVS query impressions. Preserve local market distinctions.
 
-| Locale | Search intent and public example |
+| Locale | Candidate search intent and example URL to verify |
 |---|---|
 | en | tractor diesel consumption per acre/hour — https://www.khetitools.com/tractor-diesel-consumption-calculator |
 | tr | dekar başına mazot maliyeti — https://tarlatakip.app/blog/traktor-yakit-takibi-dekar-basina-mazot-maliyeti |

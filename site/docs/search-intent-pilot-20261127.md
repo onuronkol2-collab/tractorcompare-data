@@ -2,7 +2,7 @@
 
 Status: prepared, not tested or released. No private analytics counts are published.
 
-## Public reference observations
+## Candidate public references (individual page checks pending)
 - [TractorData](https://www.tractordata.com/compare/): two-model comparison and full specification links.
 - [LECTURA Specs](https://specs.lectura.de/de/type/landmaschinen/allrad-traktoren-ls/j27-gear-1167135): transmission-specific German technical page; Gear and HST are not interchangeable.
 - [Tractor Junction](https://www.tractorjunction.com/hi/compare-tractors/): Hindi comparison intent; local-market price claims must not be inferred.
@@ -18,7 +18,7 @@ Status: prepared, not tested or released. No private analytics counts are publis
 - [Sonalika International](https://international.sonalika.com/product/sonalika-125/): international listing; do not infer Indian availability or measured rated engine power.
 - [Meksanlar](https://meksanlar.com/traktor/tumosan-8095): dealer model page and purchasing intent.
 
-This is initial public reference research, not a 30-domain competitor traffic, backlink, or keyword-volume audit. The public links are examples, not evidence of relative rankings. No competitor text, specifications or media are copied.
+These are research leads, not a verified 30-domain competitor audit. The feature descriptions and exact public links require independent page-by-page revalidation before external use. The Search Console landing-page evidence in the follow-up is separate and was actually checked. No competitor text, specifications or media are copied.
 
 ## Change
 Use the already-present model comparison action in the search description of twelve selected landing pages across EN/TR/DE/HI/PT-BR only where the entire existing evidence-aware description and a short localized sentence fit within the existing advisory length. Do not change URLs, exact model or market, numerical claims, source provenance, visible copy, JSON-LD, or out-of-pilot pages. Empty specification records are excluded.

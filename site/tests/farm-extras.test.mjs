@@ -27,3 +27,24 @@ test("scenario density labels exist in ten languages",async()=>{
  const {farmScenarioDensityText}=await import("../src/lib/farm-extras-i18n.ts");
  for(const lang of LOCALES)assert.equal(Object.values(farmScenarioDensityText(lang)).filter(v=>typeof v==="string"&&v.trim()).length,4);
 });
+
+
+test("daily work window compares field area and fractional workdays with no hidden default",()=>{
+ const a={width:2,speed:5,efficiency:100,fuel:8,other:4},b={...a,width:4};
+ const shared={area:160,unit:"decare",price:2};
+ const x=compareFieldScenarios({...shared,dailyHours:4},a,b);
+ assert.equal(x.left.dailyAreaHa,4);assert.equal(x.right.dailyAreaHa,8);
+ assert.equal(x.left.dailyAreaDecare,40);assert.equal(x.right.dailyAreaDecare,80);
+ assert.equal(x.left.equivalentDays,4);assert.equal(x.right.equivalentDays,2);
+ assert.equal(x.difference.equivalentDays,-2);
+ assert.equal(compareFieldScenarios({...shared,dailyHours:8},a,b).left.equivalentDays,2);
+ assert.equal(compareFieldScenarios({...shared,dailyHours:24},a,b).left.dailyAreaHa,24);
+ const prior=compareFieldScenarios(shared,a,b);
+ assert.ok(!("dailyAreaHa" in prior.left));
+ assert.equal(x.left.time,prior.left.time);assert.equal(x.left.fieldCost,prior.left.fieldCost);
+ for(const dailyHours of [0,-1,25,NaN,Infinity,"4",null,.001])assert.throws(()=>compareFieldScenarios({...shared,dailyHours},a,b),RangeError);
+});
+test("daily window labels and scope limitations are supplied in all ten languages",async()=>{
+ const {farmScenarioWindowText}=await import("../src/lib/farm-extras-i18n.ts");
+ for(const lang of LOCALES)assert.equal(Object.values(farmScenarioWindowText(lang)).filter(v=>typeof v==="string"&&v.trim()).length,6);
+});

@@ -1,8 +1,8 @@
 # Regional competitor and practical field-tools research — 2026-11-27
 
-Read-only public reference scan, continued from search-intent-pilot-20261127.md. These are observations of visible features, not measured search volumes, traffic or backlink estimates. Marketplaces and official/extension sources are references rather than direct rivals.
+Candidate reference list, continued from search-intent-pilot-20261127.md. Individual competitor URLs and feature descriptions are leads pending independent page-by-page verification, not confirmed observations or measured traffic. Marketplaces and extension sources are not automatically direct competitors.
 
-| Additional reference | Market / observed feature |
+| Additional reference | Market / feature to verify |
 |---|---|
 | [TractorsCompare](https://tractorscompare.com/en) | Global, searchable specifications and educational guides |
 | [TractorGrid](https://tractorgrid.com/) | Global, traceable sources and three-model comparison |
@@ -28,3 +28,7 @@ Independent method references: [Iowa State field capacity](https://www.extension
 ## Prepared product improvement
 
 Reuse existing field scenario calculator rather than adding duplicate indexed pages. Add field capacity, consumption per hectare and 0.1 ha, total field fuel cost, fuel cost per hectare and decare, and operating cost per hectare and 0.1 ha. All derived from existing user-input math. Display signed B minus A differences and clarify that higher capacity is not itself higher cost. Existing shared farm-cost.mjs remains untouched because other open PRs include that path. No new model-specific measurements, currency defaults, tracking, database or routes. Ten language labels supplied; language and browser verification pending explicit TEST. Verify actual output with existing required CI, independent calculation fixtures, localized mobile layouts and published release evidence. Public research is initial; detailed competitor traffic/backlinks and ten-market keyword volumes remain unverified.
+
+
+## Follow-up: work-window planning
+Verified public methods: [Iowa State — Estimating the Field Capacity of Farm Machines](https://www.extension.iastate.edu/AGDM/crops/html/a3-24.html), [Iowa State — Machinery Management](https://www.extension.iastate.edu/AgDM/crops/html/a3-25.html) (minimum daily capacity from available work days), [Penn State — Managing Machinery and Equipment](https://extension.psu.edu/managing-machinery-and-equipment) (width, speed and efficiency). The new daily work-window fields reuse effective hourly capacity, multiply by available field hours, and divide total field time by those hours for fractional workdays. Exclude transport and major breaks, avoid counting ordinary field delays twice. Eight hours is an illustrative editable default, not a recommendation or forecast. Preserve existing arithmetic without the new optional parameter. Verify in explicit TEST; no test or live release initiated.
