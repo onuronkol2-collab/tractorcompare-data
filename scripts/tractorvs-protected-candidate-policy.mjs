@@ -10,7 +10,7 @@ const common=[
  A("build",wf("site-build")),
  A("verify_production",wf("tractorvs-production-release-check")),
  A("browser-smoke",wf("playwright-accessibility")),
- ...["chromium, chromium","firefox, firefox","webkit, webkit","mobile-chromium, chromium"].map(n=>A("browser-projects ("+n+")",wf("playwright-accessibility"))),
+ ...["chromium, chromium, 1/1, chromium","firefox, firefox, 1/1, firefox","webkit, webkit, 1/2, webkit-shard-1","webkit, webkit, 2/2, webkit-shard-2","mobile-chromium, chromium, 1/1, mobile-chromium"].map(n=>A("browser-projects ("+n+")",wf("playwright-accessibility"))),
  A("tests",wf("tractorvs-sitemap-history")),
  A("preview_reconcile",wf("tractorvs-sitemap-history")),
  ...["actions","python","javascript-typescript"].map(n=>A("Analyze ("+n+")","dynamic/github-code-scanning/codeql","dynamic")),
