@@ -15,6 +15,9 @@ on:
       - "site/tests/published-site-inventory.test.mjs"
       - "site/playwright.config.mjs"
       - "site/scripts/browser-timing-summary.mjs"
+      - "site/scripts/browser-duration-evidence.mjs"
+      - "site/scripts/browser-duration-planner.mjs"
+      - "site/tests/browser-duration-evidence.test.mjs"
       - "site/tests/browser-timing-summary.test.mjs"
       - "site/tests/browser-runner-contract.test.mjs"
       - "site/package.json"
@@ -72,10 +75,15 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
+        id: node_setup
         with:
           node-version: "22.23.4"
           cache: npm
           cache-dependency-path: package-lock.json
+      - name: Report npm download cache status
+        env:
+          CACHE_HIT: ${{ steps.node_setup.outputs.cache-hit }}
+        run: printf "npm download cache hit: %s\\n" "${CACHE_HIT:-unknown}" >> "$GITHUB_STEP_SUMMARY"
       - name: Install production build dependencies from lockfile
         run: npm ci --prefer-offline --no-audit --no-fund
       - name: Install pinned test-only tools without modifying repository lockfile
@@ -101,6 +109,12 @@ jobs:
         env:
           TIMING_LABEL: ${{ matrix.evidence }}
         run: node site/scripts/browser-timing-summary.mjs "$RUNNER_TEMP/tractorvs-browser-timing.json" "$TIMING_LABEL"
+      - name: Record compact historical duration sample
+        if: ${{ !cancelled() && steps.browser_execution.outcome == 'success' }}
+        env:
+          BROWSER_PROJECT: ${{ matrix.project }}
+          BROWSER_SHARD: ${{ matrix.shard }}
+        run: node site/scripts/browser-duration-evidence.mjs compact "$RUNNER_TEMP/tractorvs-browser-timing.json" "$RUNNER_TEMP/tractorvs-browser-duration.json"
       - name: Upload diagnostics and axe findings
         if: always()
         uses: actions/upload-artifact@v7
@@ -110,6 +124,7 @@ jobs:
             site/playwright-report
             site/test-results
             ${{ runner.temp }}/tractorvs-browser-timing.json
+            ${{ runner.temp }}/tractorvs-browser-duration.json
           if-no-files-found: ignore
           retention-days: 7
 
