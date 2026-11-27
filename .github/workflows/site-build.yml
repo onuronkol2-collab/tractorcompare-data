@@ -48,7 +48,7 @@ jobs:
           cache-dependency-path: package-lock.json
 
       - name: Install workspace dependencies
-        run: npm ci --no-audit --no-fund
+        run: npm ci --prefer-offline --no-audit --no-fund
 
       - name: Test conservative specification deduplication
         run: npm run test --workspace=tractorvs-site

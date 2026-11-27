@@ -32,6 +32,8 @@ permissions:
 jobs:
   browser-projects:
     # Run every existing project independently; no early cancellation on failure.
+    # The measured WebKit project is the critical path. Split it across two
+    # isolated runners, retaining full coverage and the existing aggregate.
     # Pin the browser dependency environment: ubuntu-latest moved to 26.04,
     # whose Microsoft APT feed returned HTTP 403 during the #755 mobile install.
     # Revalidate browser dependencies before deliberately upgrading this image.
@@ -39,17 +41,29 @@ jobs:
     timeout-minutes: 25
     strategy:
       fail-fast: false
-      max-parallel: 4
+      max-parallel: 5
       matrix:
         include:
           - project: chromium
             engine: chromium
+            shard: '1/1'
+            evidence: chromium
           - project: firefox
             engine: firefox
+            shard: '1/1'
+            evidence: firefox
           - project: webkit
             engine: webkit
+            shard: '1/2'
+            evidence: webkit-shard-1
+          - project: webkit
+            engine: webkit
+            shard: '2/2'
+            evidence: webkit-shard-2
           - project: mobile-chromium
             engine: chromium
+            shard: '1/1'
+            evidence: mobile-chromium
     env:
       CI: "true"
     steps:
@@ -58,8 +72,9 @@ jobs:
         with:
           node-version: "22.23.4"
           cache: npm
+          cache-dependency-path: package-lock.json
       - name: Install production build dependencies from lockfile
-        run: npm ci --no-audit --no-fund
+        run: npm ci --prefer-offline --no-audit --no-fund
       - name: Install pinned test-only tools without modifying repository lockfile
         run: npm install --no-save --package-lock=false --ignore-scripts @playwright/test@1.65.1 @axe-core/playwright@4.14.0
       - name: Install only the required engine
@@ -74,12 +89,13 @@ jobs:
       - name: Execute complete project smoke and axe accessibility baseline
         env:
           BROWSER_PROJECT: ${{ matrix.project }}
-        run: npx playwright test --config site/playwright.config.mjs --project="$BROWSER_PROJECT"
+          BROWSER_SHARD: ${{ matrix.shard }}
+        run: npx playwright test --config site/playwright.config.mjs --project="$BROWSER_PROJECT" --shard="$BROWSER_SHARD"
       - name: Upload diagnostics and axe findings
         if: always()
         uses: actions/upload-artifact@v7
         with:
-          name: tractorvs-browser-smoke-artifacts-${{ matrix.project }}
+          name: tractorvs-browser-smoke-artifacts-${{ matrix.evidence }}
           path: |
             site/playwright-report
             site/test-results
@@ -93,10 +109,10 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 4
     steps:
-      - name: Require success of all four projects
+      - name: Require success of all four projects including both WebKit shards
         env:
           MATRIX_RESULT: ${{ needs.browser-projects.result }}
         run: |
           test "$MATRIX_RESULT" = success
-          echo "All four configured browser projects completed successfully."
+          echo "All four configured browser projects completed successfully, including both WebKit shards."
           echo "Check per-project executed/passed/skipped/flaky counts. Inert preview QA is not live production evidence." >> "$GITHUB_STEP_SUMMARY"
