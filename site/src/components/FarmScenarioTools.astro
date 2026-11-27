@@ -1,5 +1,5 @@
 ---
-import {farmExtrasText} from "../lib/farm-extras-i18n";
+import {farmExtrasText,farmScenarioDensityText} from "../lib/farm-extras-i18n";
 import {farmCostText} from "../lib/farm-cost-i18n";
 import {farmModelText} from "../lib/farm-model-context-i18n";
 import {LOCALE_TAGS,type Locale} from "../lib/locales";
@@ -7,11 +7,12 @@ interface Props{lang:Locale}
 const {lang}=Astro.props;
 const c=farmExtrasText(lang), common=farmCostText(lang), m=farmModelText(lang);
 const fields=[["width",3,4,0.01,100],["speed",6,6,0.01,100],["efficiency",75,75,0.01,100],["fuel",8,10,0,10000],["other",0,0,0,1e12]] as const;
-const metrics=[["time",common.time],["litres",common.litres],["operatingField",m.operatingField]] as const;
+const density=farmScenarioDensityText(lang);
+const metrics=[["capacity",common.capacity],["time",common.time],["litres",common.litres],["fuelPerHa",density.fuelPerHa],["fuelPerDecare",density.fuelPerDecare],["fieldCost",common.fieldCost],["perHa",common.perHa],["perDekar",common.perDekar],["operatingField",m.operatingField],["operatingPerHa",m.operatingPerHa],["operatingPerDecare",density.operatingPerDecare]] as const;
 ---
 <div class="extra-tools" data-extra-tools data-locale={LOCALE_TAGS[lang]}>
  <section id="farm-scenarios" data-clarity-mask="true">
-  <h2>{c.scenario}</h2><p>{c.intro}</p><p>{common.note}</p>
+  <h2>{c.scenario}</h2><p>{c.intro}</p><p>{density.direction}</p><p>{common.note}</p>
   <form data-extra-form="scenario"><fieldset data-extra-controls disabled>
    <div class="extra-grid">
     <label>{m.fieldArea}<input name="area" type="number" min="0.0001" max="10000000000" step="any" value="10" required /></label>
@@ -34,6 +35,7 @@ const metrics=[["time",common.time],["litres",common.litres],["operatingField",m
  const root=document.querySelector<HTMLElement>("[data-extra-tools]");
  if(root){
   const fmt=new Intl.NumberFormat(root.dataset.locale,{maximumSignificantDigits:7});
+  const signed=new Intl.NumberFormat(root.dataset.locale,{maximumSignificantDigits:7,signDisplay:"exceptZero"});
   for(const form of root.querySelectorAll<HTMLFormElement>("[data-extra-form]")){
    const section=form.closest("section");if(!section)continue;
    const error=form.querySelector<HTMLElement>("[data-extra-error]");
@@ -45,7 +47,7 @@ const metrics=[["time",common.time],["litres",common.litres],["operatingField",m
     if(form.dataset.extraForm==="scenario"){
      const side=(name:string)=>Object.fromEntries(["width","speed","efficiency","fuel","other"].map(key=>[key,n(name+"-"+key)]));
      const result=compareFieldScenarios({area:n("area"),price:n("price"),unit:String(data.get("unit"))},side("a"),side("b"));
-     for(const el of results){const [group,key]=(el.dataset.scenarioResult||"").split("-");el.textContent=fmt.format(result[group as keyof typeof result][key as "time"|"litres"|"operatingField"]);}
+     for(const el of results){const [group,key]=(el.dataset.scenarioResult||"").split("-");const values=group==="left"?result.left:group==="right"?result.right:result.difference;const value=(values as Record<string,number>)[key];el.textContent=(group==="difference"?signed:fmt).format(value);}
     }else{const result=serviceInterval(n("last"),n("current"),n("interval"));for(const el of results)el.textContent=fmt.format(result[el.dataset.serviceResult as keyof typeof result]);}
     if(error)error.hidden=true;window.dispatchEvent(new Event(FARM_TOOL_DONE_EVENT));
    }catch{if(error)error.hidden=false;for(const el of results)el.textContent="—";}});

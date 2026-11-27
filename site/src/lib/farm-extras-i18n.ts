@@ -243,3 +243,68 @@ const rows:Record<Locale,readonly string[]>={
   ]
 };
 export function farmExtrasText(lang:Locale):Record<typeof keys[number],string>{return Object.fromEntries(keys.map((key,i)=>[key,rows[lang][i]])) as Record<typeof keys[number],string>;}
+
+
+const scenarioDensity:Record<Locale,readonly [string,string,string,string]>={
+  "en": [
+    "Fuel use per hectare (L/ha)",
+    "Fuel use per 0.1 ha (L)",
+    "Operating cost per 0.1 ha",
+    "A positive difference means a larger value in B; larger field capacity is not the same as larger cost."
+  ],
+  "tr": [
+    "Hektar başına yakıt (L/ha)",
+    "Dekar başına yakıt (L/da)",
+    "Dekar başına işletme gideri",
+    "Pozitif fark B’de daha büyük değer demektir; daha yüksek iş kapasitesi, daha yüksek maliyet anlamına gelmez."
+  ],
+  "de": [
+    "Kraftstoffverbrauch je Hektar (L/ha)",
+    "Kraftstoffverbrauch je 0,1 ha (L)",
+    "Betriebskosten je 0,1 ha",
+    "Eine positive Differenz bedeutet einen größeren Wert in B; eine höhere Flächenleistung ist nicht gleichbedeutend mit höheren Kosten."
+  ],
+  "fr": [
+    "Consommation par hectare (L/ha)",
+    "Consommation par 0,1 ha (L)",
+    "Coût d’utilisation par 0,1 ha",
+    "Une différence positive indique une valeur plus élevée pour B ; un débit de chantier supérieur ne signifie pas un coût supérieur."
+  ],
+  "es": [
+    "Consumo por hectárea (L/ha)",
+    "Consumo por 0,1 ha (L)",
+    "Coste operativo por 0,1 ha",
+    "Una diferencia positiva indica un valor mayor en B; una mayor capacidad de campo no equivale a un mayor coste."
+  ],
+  "pt-br": [
+    "Consumo por hectare (L/ha)",
+    "Consumo por 0,1 ha (L)",
+    "Custo operacional por 0,1 ha",
+    "Uma diferença positiva indica um valor maior em B; maior capacidade de campo não significa maior custo."
+  ],
+  "ru": [
+    "Расход топлива на гектар (л/га)",
+    "Расход топлива на 0,1 га (л)",
+    "Эксплуатационные затраты на 0,1 га",
+    "Положительная разница означает большее значение у B; более высокая производительность не означает более высокие затраты."
+  ],
+  "zh": [
+    "每公顷油耗（升/公顷）",
+    "每0.1公顷油耗（升）",
+    "每0.1公顷运行成本",
+    "正差值表示B的数值更大；作业能力更高并不等于成本更高。"
+  ],
+  "ja": [
+    "1 ha当たり燃料消費量（L/ha）",
+    "0.1 ha当たり燃料消費量（L）",
+    "0.1 ha当たり運用費",
+    "正の差はBの値が大きいことを示します。作業能率が高いことと費用が高いことは同じではありません。"
+  ],
+  "hi": [
+    "प्रति हेक्टेयर ईंधन (L/ha)",
+    "प्रति 0.1 हेक्टेयर ईंधन (L)",
+    "प्रति 0.1 हेक्टेयर संचालन लागत",
+    "धनात्मक अंतर का मतलब B का मान अधिक है; अधिक कार्य क्षमता का मतलब अधिक लागत नहीं है।"
+  ]
+};
+export function farmScenarioDensityText(lang:Locale){const [fuelPerHa,fuelPerDecare,operatingPerDecare,direction]=scenarioDensity[lang];return {fuelPerHa,fuelPerDecare,operatingPerDecare,direction};}
