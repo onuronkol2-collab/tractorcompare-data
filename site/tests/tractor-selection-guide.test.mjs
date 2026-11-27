@@ -115,3 +115,14 @@ test("published selection guides and advisors link to one another in every local
  }
  assert.equal(new Set(Object.values(ADVISOR_DISCOVERY_NOTE)).size,10);
 });
+
+
+test("selection guide includes a translated physical-fit checklist without claiming safety approval",async()=>{
+ const {GUIDE_DIMENSION_COPY}=await import("../src/lib/guide-dimension-copy.ts");
+ const guide=read("components/TractorSelectionGuide.astro");
+ assert.match(guide,/id="guide-dimensions-heading"/);
+ assert.match(guide,/GUIDE_DIMENSION_COPY\[lang\]\.slice\(1,4\)/);
+ assert.match(guide,/GUIDE_DIMENSION_COPY\[lang\]\[4\]/);
+ for(const lang of LOCALES){assert.equal(GUIDE_DIMENSION_COPY[lang].length,5);assert.ok(GUIDE_DIMENSION_COPY[lang].every(v=>v.trim().length>12));}
+ assert.equal(new Set(LOCALES.map(l=>GUIDE_DIMENSION_COPY[l][0])).size,10);
+});
