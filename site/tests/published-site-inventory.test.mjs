@@ -125,3 +125,14 @@ test("published model head rejects conflicting or hidden annotations instead of 
  assert.throws(()=>verifyModelDiscoveryMarkup({...options,html:comment}),/Missing reciprocal hreflang de/);
  assert.equal(verifyModelDiscoveryMarkup({...options,html:html.replace('hreflang="pt-BR"','hreflang="PT-br"')}),true);
 });
+
+
+test("duplicate published model URL across sitemap shards is not hidden by deduplication",()=>{
+ const root=fixture();
+ try{
+  put(root,"dist/sitemap-1.xml","<urlset><loc>https://tractorvs.com/tr/tractors/tractor-a/</loc></urlset>");
+  assert.throws(()=>verifyPublishedSiteInventory({projectRoot:root,configuredMinimum:1}),/Duplicate published model URL in sitemap/);
+  unlinkSync(join(root,"dist/sitemap-1.xml"));
+  assert.equal(verifyPublishedSiteInventory({projectRoot:root,configuredMinimum:1}).models,2);
+ }finally{rmSync(root,{recursive:true,force:true});}
+});
