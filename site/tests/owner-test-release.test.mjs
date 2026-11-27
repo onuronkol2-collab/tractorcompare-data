@@ -23,7 +23,7 @@ test("legacy and full sharded matrices only; missing shard remains required",()=
  assert.equal(browserRequiredNames([{name:"browser-projects (fake)"}]),null);
 });
 function fixture(sharded){
- const runs=[],names=sharded?SHARDED_BROWSER_NAMES:LEGACY_BROWSER_NAMES,req=requiredCandidateChecks("sitemap",names.map(name=>({name})));
+ const runs=[],names=sharded?SHARDED_BROWSER_NAMES:LEGACY_BROWSER_NAMES,req=[...requiredCandidateChecks("sitemap").filter(r=>!r.name.startsWith("browser-projects (")),...names.map(name=>({name,appId:15368,path:".github/workflows/playwright-accessibility.yml",event:"pull_request"}))];
  const checks=req.map((r,i)=>{const id=i+1,runId=100+i;if(r.path)runs.push({id:runId,path:r.path,event:r.event,head_sha:head,repository:{full_name:REPO},head_repository:{full_name:REPO},status:"completed",conclusion:"success"});return {id,name:r.name,app:{id:r.appId},head_sha:head,status:"completed",conclusion:"success",details_url:"https://github.com/"+REPO+"/actions/runs/"+runId+"/job/"+id};});
  return {selection,checks,runs,statuses:[]};
 }

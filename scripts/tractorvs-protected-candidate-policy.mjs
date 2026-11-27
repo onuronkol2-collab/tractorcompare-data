@@ -1,4 +1,3 @@
-import {browserRequiredNames} from "./tractorvs-browser-checks.mjs";
 // Pure fail-closed policy for the protected candidate release path.
 export const REPO="onuronkol2-collab/tractorcompare-data";
 export const INDEPENDENT_CONTEXT="TractorVS / independent publication evidence";
@@ -17,10 +16,9 @@ const common=[
  ...["actions","python","javascript-typescript"].map(n=>A("Analyze ("+n+")","dynamic/github-code-scanning/codeql","dynamic")),
  {name:"CodeQL",appId:security},{name:"Workers Builds: tractorvs-site",appId:cf}
 ];
-export function requiredCandidateChecks(kind,checks=[]){
+export function requiredCandidateChecks(kind){
  if(!["catalog","forum","sitemap","forum-recovery"].includes(kind))throw Error("Invalid candidate category");
- const browser=browserRequiredNames(checks); if(!browser)throw Error("Mixed or unknown browser matrix");
- return [...common.filter(r=>!r.name.startsWith("browser-projects (")),...browser.map(n=>A(n,wf("playwright-accessibility"))),...(kind==="catalog"?[A("tests",wf("tractorvs-publication-autosync"))]:["forum","forum-recovery"].includes(kind)?[A("validate",wf("tractorvs-forum-publication-autosync"))]:[])];
+ return [...common,...(kind==="catalog"?[A("tests",wf("tractorvs-publication-autosync"))]:["forum","forum-recovery"].includes(kind)?[A("validate",wf("tractorvs-forum-publication-autosync"))]:[])];
 }
 const assert=(x,msg)=>{if(!x)throw Error(msg);};
 export function assertProtectedReleaseRule(rule){
@@ -55,8 +53,7 @@ export function trustedStatusRun(s,runs,base,path){
 }
 export function evaluateCandidateChecks({kind,sha,base,checks,statuses,runs,now=Date.now()}){
  if(!shaOk(sha)||!shaOk(base)||!Array.isArray(checks)||!Array.isArray(statuses)||!Array.isArray(runs)||checks.some(c=>c.head_sha!==sha))return {state:"failure",reason:"Invalid exact-head evidence"};
- if(!browserRequiredNames(checks))return {state:"failure",reason:"Mixed or unknown browser matrix"};
- const req=requiredCandidateChecks(kind,checks);
+ const req=requiredCandidateChecks(kind);
  const matches=(c,r)=>c.name===r.name&&c.app?.id===r.appId&&(!r.path||verifiedRun(c,runs,sha,r.path,r.event));
  for(const r of req){
   const found=checks.filter(c=>matches(c,r));

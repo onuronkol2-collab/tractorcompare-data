@@ -1,4 +1,3 @@
-import {browserRequiredNames} from "./tractorvs-browser-checks.mjs";
 // Advisory first-stage gate. Never grants publication or merges by itself.
 export const REPO = "onuronkol2-collab/tractorcompare-data";
 export const CONTEXT = "TractorVS / verified release readiness";
@@ -55,10 +54,7 @@ export function evaluate({sha,checks,statuses,advisoryRuns=[]}) {
   if (!validSha(sha) || !Array.isArray(checks) || !Array.isArray(statuses)) return {state:"failure",reason:"invalid evidence"};
   if (checks.some(c=>c.head_sha!==sha)) return {state:"failure",reason:"wrong SHA in check list"};
   checks=checks.filter(c=>!isOwnAdvisoryCheck(c,sha,advisoryRuns));
-  const browser=browserRequiredNames(checks);
-  if(!browser)return {state:"failure",reason:"Mixed or unknown browser matrix"};
-  const required=[...REQUIRED.filter(([n])=>!n.startsWith("browser-projects (")),...browser.map(n=>[n,"github-actions"])];
-  for (const [name,app] of required) {
+  for (const [name,app] of REQUIRED) {
     const matches=checks.filter(c=>c.name===name && c.app?.slug===app && c.head_sha===sha);
     if (matches.length>1) return {state:"failure",reason:"ambiguous check: "+name};
     if (matches.length===1 && matches[0].status==="completed" && matches[0].conclusion!=="success")
@@ -76,7 +72,7 @@ export function evaluate({sha,checks,statuses,advisoryRuns=[]}) {
   const other=statuses.filter(s=>s.context!==CONTEXT);
   if (other.some(s=>["error","failure"].includes(s.state))) return {state:"failure",reason:"commit status failed"};
   if (other.some(s=>s.state!=="success") || checks.some(c=>c.status!=="completed")) return {state:"pending",reason:"checks running"};
-  for (const [name,app] of required) {
+  for (const [name,app] of REQUIRED) {
     if (!checks.some(c=>c.name===name && c.app?.slug===app && c.head_sha===sha && c.status==="completed" && c.conclusion==="success"))
       return {state:"pending",reason:"missing check: "+name};
   }

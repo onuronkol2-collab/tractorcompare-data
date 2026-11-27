@@ -26,7 +26,8 @@ const allowedSkip=(c,runs,head)=>c.app?.id===15368&&runs.some(r=>r.id===actionRu
 export function assessOwnerEvidence({selection,checks,statuses,runs,files=[]}){
  const {head,base}=selection;
  if(!sha(head)||!sha(base)||!Array.isArray(checks)||!Array.isArray(statuses)||!Array.isArray(runs)||!browserRequiredNames(checks)||checks.some(c=>c.head_sha!==head))return false;
- const req=requiredCandidateChecks("sitemap",checks);
+ const req=requiredCandidateChecks("sitemap").filter(r=>!r.name.startsWith("browser-projects ("));
+ req.push(...browserRequiredNames(checks).map(name=>({name,appId:15368,path:wf("playwright-accessibility"),event:"pull_request"})));
  if(files.some(f=>/^(supabase\/|\.github\/workflows\/site-health-safety\.yml$)/.test(f.filename)))for(const name of ["isolated-rls (baseline)","isolated-rls (candidate)","isolated-rls (rollback)","dependency-audit","forum-clock"])req.push({name,appId:15368,path:wf("site-health-safety"),event:"pull_request"});
  if(files.some(f=>/^site\/src\//.test(f.filename)))req.push({name:"production-research-browser",appId:15368,path:wf("tractorvs-nonforum-research-qa"),event:"pull_request"});
  for(const r of req){const found=checks.filter(c=>origin(c,r,runs,head));if(found.length!==1||found[0].status!=="completed"||found[0].conclusion!=="success")return false;}
