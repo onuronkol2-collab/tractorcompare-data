@@ -87,3 +87,23 @@ test("reading-language labels are complete and coverage placeholders are intact"
   assert.ok(labels.coverage.includes("{local}")&&labels.coverage.includes("{total}"));
  }
 });
+
+
+test("shared form focus and readable research surfaces keep existing behavior and locale coverage",()=>{
+ const styles=file("styles/interaction-accessibility.css");
+ const layout=file("styles/research-layout.css");
+ const advisor=file("components/FarmAdvisor.astro");
+ assert.match(styles,/\.tc-picker-side \.tc-combo-input/);
+ assert.match(styles,/\.catalog-toolbar input/);
+ assert.match(styles,/\.advisor-budget-input:focus-within/);
+ assert.match(styles,/\.cost-page textarea/);
+ assert.match(styles,/forced-colors: active/);
+ assert.match(styles,/prefers-reduced-motion: reduce/);
+ assert.match(layout,/\.tc-result-main small/);
+ assert.match(layout,/\.cost-page \.history-scroll/);
+ assert.match(layout,/font-variant-numeric: tabular-nums/);
+ assert.match(layout,/font-size: max\(16px, 1rem\)/);
+ assert.match(advisor,/\.advisor-fact-note\{color:#405948;font-size:13px;line-height:1.6/);
+ assert.match(advisor,/\.advisor-result-facts small\{display:block;color:#405948;font-size:14px/);
+ assert.match(advisor,/recommendTractors/);
+});

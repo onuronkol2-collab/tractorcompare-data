@@ -1,0 +1,17 @@
+# Sitewide interface refinement — 27 November 2026
+
+Scope: original maximum growth instruction, section 14 (home, brands, model details, comparison, search, filters, forum, articles, calculators, navigation, accounts, images, type, contrast, spacing, hierarchy, tables, graphics, empty/error/loading states, buttons, interactions and accessibility). Existing deep-green palette, native controls, responsive card layouts, image rights, SEO, privacy/auth and prior functionality are retained. This is a source-code inspection and draft implementation, not a screenshot-based visual or accessibility audit. No live screenshot or Clarity session replay was inspected in this turn.
+
+## Findings and implementation
+- Existing shared style files already establish a design system, keyboard and reduced-motion controls, forum readability, responsive cards and technical source links. Avoid rewriting these.
+- Comparison search control explicitly suppresses outlines; use high-specificity scoped keyboard indicator in shared accessibility CSS. Keep current control and focus semantics.
+- Advisor budget wrapper clips overflow; focus indicator on the outer wrapper makes entry distinguishable without changing the field layout.
+- Advisor result facts and condition notes had 10px type, muted color; enlarge to 13–14px and existing darker green text. Improve safety disclosure sizing and readable variant labels without modifying calculations or recommendations.
+- Improve readable empty-result messages, comparison option metadata, measurement warnings, numeric alignment, tool input text sizing, wrapping of localized labels and scrollable table edges. Existing mobile navigation, licensed images and cards are preserved rather than redesigned.
+- No new dependency, animated surface, JS listener, tracking, account feature or route. This touches shared presentation on all ten languages. Avoid writing model/compare/decision components being changed by other PRs.
+
+## Remaining visual acceptance — explicit TEST required
+- Desktop/tablet/mobile at 320/390/768/1024/1440 CSS px; 200% zoom and long locale labels.
+- Home search, brand/model lists and filters, technical source cards and photos, compare two models, farm advisor form/results, calculator/decision tools, articles, forum/account dialogs, nav/footer. Verify loading/empty/error/keyboard/contrast/forced-colors/reduced-motion, logical focus order, table scroll and no loss of information. Check actual rendered screenshots, axe-core and existing Playwright gates when authorized, not now.
+- Open #775/#758 workspace and #757 privacy work remain separate; no conflicts with the eight inspected PR file lists for these four edited paths.
+- Measure task completion and engagement with available lawful first-party data after production; no inferred conversion or traffic improvement.

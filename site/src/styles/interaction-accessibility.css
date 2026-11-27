@@ -52,3 +52,30 @@ html:is(:lang(hi), :lang(ja), :lang(zh)) #main :is(h1,h2,h3,h4) {
     outline-offset: -2px;
   }
 }
+
+
+/* Cross-page form focus: component-level outline:none must not override the
+   shared visible indicator. Native select and text controls remain usable. */
+#main :is(.catalog-toolbar input, .tc-picker-side .tc-combo-input,
+  .home-search-row input, #editorial-query,
+  .cost-page input:not([type="checkbox"]), .cost-page select,
+  .cost-page textarea, .advisor-field input, .advisor-field select,
+  .model-citation textarea):focus-visible {
+  outline: 3px solid #175c37;
+  outline-offset: 2px;
+}
+#main .advisor-budget-input:focus-within {
+  outline: 3px solid #175c37;
+  outline-offset: 2px;
+}
+/* Avoid clipping keyboard focus on the deliberately scrollable tables. */
+#main :is(.extra-table, .guide-table-scroll, .forum-table-wrap)[tabindex="0"]:focus-visible {
+  outline: 3px solid #175c37;
+  outline-offset: -3px;
+}
+@media (forced-colors: active) {
+  #main :is(.catalog-toolbar input, .tc-picker-side .tc-combo-input,
+    .home-search-row input, #editorial-query, .advisor-budget-input):is(:focus-visible,:focus-within) {
+    outline-color: Highlight !important;
+  }
+}

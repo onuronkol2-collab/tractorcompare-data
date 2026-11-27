@@ -302,3 +302,63 @@ body { line-height: 1.55; }
   #main :is(.home-action-card, .home-featured-card,
             .tractor-card, .editorial-card):hover { transform: none; }
 }
+
+
+/* Shared mobile-first reading and control refinements. Use existing surfaces
+   and palette; do not change display/hidden states or table semantics. */
+#main :is(.catalog-no-results, .catalog-empty p, .tc-no-options,
+          #editorial-no-results p) {
+  color: #405948;
+  font-size: .9375rem;
+  line-height: 1.65;
+  overflow-wrap: anywhere;
+}
+#main :is(.tc-result-main small, .tc-selected-preview small,
+          .tc-selected-preview em, .tc-table .tc-condition-caution) {
+  font-size: .875rem;
+  line-height: 1.55;
+  overflow-wrap: anywhere;
+}
+#main :is(.cost-page .cost-results, .extra-table,
+          .guide-table-scroll, .history-scroll) {
+  font-variant-numeric: tabular-nums;
+}
+#main :is(.cost-page .extra-table, .cost-page .history-scroll, .guide-table-scroll) {
+  max-inline-size: 100%;
+  overscroll-behavior-inline: contain;
+}
+#main .cost-page :is(input:not([type="checkbox"]):not([type="radio"]),select,textarea) {
+  font-size: max(16px, 1rem);
+  min-inline-size: 0;
+  max-inline-size: 100%;
+  line-height: 1.5;
+}
+#main .cost-page :is(label,button,output,dd,th,td) {
+  overflow-wrap: anywhere;
+}
+#main :is(.model-citation textarea, .cost-page textarea) {
+  font-size: max(16px, 1rem);
+  line-height: 1.5;
+}
+#main :is(.guide-practical li, .editorial-practical li) {
+  line-height: 1.7;
+  margin-block: .35rem;
+  overflow-wrap: anywhere;
+}
+@media (max-width: 48rem) {
+  #main :is(.catalog-toolbar, .tc-filters, .editorial-search-row,
+            .cost-grid, .extra-grid, .decision-grid) { min-inline-size: 0; }
+  #main :is(.tc-filters button, .farm-tool-jump a, .advisor-step-jumps a) {
+    max-inline-size: 100%;
+    overflow-wrap: anywhere;
+  }
+  #main .cost-page .extra-table :is(th,td) {
+    font-size: .875rem;
+    line-height: 1.5;
+    padding: .625rem;
+  }
+}
+/* Preserve user text sizing and avoid overly tight tracking in longer scripts. */
+html:is(:lang(hi), :lang(zh), :lang(ja)) #main :is(.tractor-card-specs small,
+  .model-summary-grid small,.tc-result-main small,.advisor-field,
+  .editorial-card .editorial-language-note) { letter-spacing: normal; }
