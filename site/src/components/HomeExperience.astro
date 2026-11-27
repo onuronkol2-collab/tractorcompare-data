@@ -77,6 +77,7 @@ const homeSchema={
  "@context":"https://schema.org",
  "@graph":[
   {"@type":"Organization","@id":siteUrl+"#organization",name:"TractorVS",url:siteUrl,
+   logo:new URL("/images/tractorvs-organization-logo.svg",siteUrl).toString(),
    description:"Independent agricultural machinery specifications and tractor comparisons."},
   {"@type":"WebSite","@id":siteUrl+"#website",url:siteUrl,name:"TractorVS",
    publisher:{"@id":siteUrl+"#organization"},
