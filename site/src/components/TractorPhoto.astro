@@ -6,6 +6,7 @@ import type {Locale} from "../lib/locales";
 interface Props { tractor:TractorRecord;lang:Locale;mode?:"hero"|"catalog"|"compare"; sprite?:boolean; slotSizes?:string; }
 const {tractor,lang,mode="hero",sprite=false,slotSizes}=Astro.props;
 const photos=tractorPhotos(tractor);
+// Only the hero gallery renders all approved photos; catalog/compare cards keep one.
 const visiblePhotos=mode==="hero" ? photos : photos.slice(0,1);
 const renderedPhotos=visiblePhotos.map(photo=>({photo,mobile:approvedMobilePhotoFormats(photo.fileId)}));
 const label=tractorPhotoAlt(tractor,lang);
