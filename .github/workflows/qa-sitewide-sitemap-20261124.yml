@@ -1,0 +1,187 @@
+name: Read-only sitewide live sitemap audit
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/qa-sitewide-sitemap-20261124.yml'
+permissions:
+  contents: read
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - name: Existing full sitemap coverage guard
+        run: node scripts/tractor-bing-sitemap-coverage.mjs
+      - name: Inventory XML and compare public database snapshot
+        if: always()
+        run: |
+          python3 - <<'PY'
+          import urllib.request, xml.etree.ElementTree as ET, collections, json, re
+          from urllib.parse import urlsplit
+          root="https://tractorvs.com"
+          def fetch(path):
+              with urllib.request.urlopen(urllib.request.Request(path,headers={"User-Agent":"TractorVS-sitemap-audit/1.0","Cache-Control":"no-cache"}),timeout=25) as r:
+                  print("HTTP",path,r.status,r.headers.get_content_type(),flush=True)
+                  return r.read().decode()
+          robots=fetch(root+"/robots.txt")
+          index=ET.fromstring(fetch(root+"/sitemap-index.xml"))
+          children=[x.text for x in index.findall(".//{*}loc")]
+          print("CHILDREN",json.dumps(children))
+          print("ROBOTS",json.dumps([x for x in robots.splitlines() if x.lower().startswith("sitemap:")]))
+          main=[]; forum=[]; images=[]; image_files=set(); lastmods={}
+          for url in children:
+              tree=ET.fromstring(fetch(url)); entries=tree.findall("{*}url"); locs=[x.findtext("{*}loc") for x in entries]
+              dates=[x.findtext("{*}lastmod") for x in entries if x.findtext("{*}lastmod")]
+              print("XML",json.dumps({"url":url,"count":len(locs),"duplicates":len(locs)-len(set(locs)),"lastmod_count":len(dates),"latest":max(dates,default=None)}))
+              if url.endswith("/image-sitemap.xml"):
+                  images+=locs
+                  image_files.update(x.text for e in entries for x in e.findall(".//{http://www.google.com/schemas/sitemap-image/1.1}loc"))
+              elif url.endswith("/forum-sitemap.xml"):forum+=locs
+              else:main+=locs
+          locales=["en","tr","zh","hi","pt-br","fr","de","ru","ja","es"]; buckets=collections.defaultdict(set); types=collections.Counter()
+          for url in main:
+              parts=urlsplit(url).path.strip("/").split("/")
+              l=parts.pop(0) if parts[0] in locales[1:] else "en"
+              types[(parts[0] if parts else "") or "home"]+=1
+              if len(parts)==2 and parts[0]=="tractors":buckets[l].add(parts[1])
+          expected_forum=set(root+x for x in ["/de/forum/2020-2027-traktor-kronik-arizalari-ve-sorunlu-modeller-9f82b9f37aab41ee8588a0a383f80694/","/de/forum/2026-traktor-bayi-memnuniyeti-siralamasi-markalar-ve-puanlar-713ab252a9254ab7b2c8a30ce5b86706/","/de/forum/traktor-markalari-hangi-ulkenin-dunya-traktor-markalari-ve-uretim-yerleri-2026-b11d1ad6f0cc4a18ab839d18ccc2f7ea/","/forum/2020-2027-traktor-kronik-arizalari-ve-sorunlu-modeller-9f82b9f37aab41ee8588a0a383f80694/","/forum/2026-traktor-bayi-memnuniyeti-siralamasi-markalar-ve-puanlar-713ab252a9254ab7b2c8a30ce5b86706/","/forum/traktor-markalari-hangi-ulkenin-dunya-traktor-markalari-ve-uretim-yerleri-2026-b11d1ad6f0cc4a18ab839d18ccc2f7ea/","/es/forum/2020-2027-traktor-kronik-arizalari-ve-sorunlu-modeller-9f82b9f37aab41ee8588a0a383f80694/","/es/forum/traktor-markalari-hangi-ulkenin-dunya-traktor-markalari-ve-uretim-yerleri-2026-b11d1ad6f0cc4a18ab839d18ccc2f7ea/","/fr/forum/2020-2027-traktor-kronik-arizalari-ve-sorunlu-modeller-9f82b9f37aab41ee8588a0a383f80694/","/fr/forum/2026-traktor-bayi-memnuniyeti-siralamasi-markalar-ve-puanlar-713ab252a9254ab7b2c8a30ce5b86706/","/fr/forum/traktor-markalari-hangi-ulkenin-dunya-traktor-markalari-ve-uretim-yerleri-2026-b11d1ad6f0cc4a18ab839d18ccc2f7ea/","/hi/forum/2020-2027-traktor-kronik-arizalari-ve-sorunlu-modeller-9f82b9f37aab41ee8588a0a383f80694/","/hi/forum/traktor-markalari-hangi-ulkenin-dunya-traktor-markalari-ve-uretim-yerleri-2026-b11d1ad6f0cc4a18ab839d18ccc2f7ea/","/ja/forum/2020-2027-traktor-kronik-arizalari-ve-sorunlu-modeller-9f82b9f37aab41ee8588a0a383f80694/","/ja/forum/traktor-markalari-hangi-ulkenin-dunya-traktor-markalari-ve-uretim-yerleri-2026-b11d1ad6f0cc4a18ab839d18ccc2f7ea/","/pt-br/forum/2020-2027-traktor-kronik-arizalari-ve-sorunlu-modeller-9f82b9f37aab41ee8588a0a383f80694/","/pt-br/forum/2026-traktor-bayi-memnuniyeti-siralamasi-markalar-ve-puanlar-713ab252a9254ab7b2c8a30ce5b86706/","/pt-br/forum/traktor-markalari-hangi-ulkenin-dunya-traktor-markalari-ve-uretim-yerleri-2026-b11d1ad6f0cc4a18ab839d18ccc2f7ea/","/ru/forum/2020-2027-traktor-kronik-arizalari-ve-sorunlu-modeller-9f82b9f37aab41ee8588a0a383f80694/","/ru/forum/2026-traktor-bayi-memnuniyeti-siralamasi-markalar-ve-puanlar-713ab252a9254ab7b2c8a30ce5b86706/","/ru/forum/traktor-markalari-hangi-ulkenin-dunya-traktor-markalari-ve-uretim-yerleri-2026-b11d1ad6f0cc4a18ab839d18ccc2f7ea/","/tr/forum/2020-2027-traktor-kronik-arizalari-ve-sorunlu-modeller-9f82b9f37aab41ee8588a0a383f80694/","/tr/forum/2026-traktor-bayi-memnuniyeti-siralamasi-markalar-ve-puanlar-713ab252a9254ab7b2c8a30ce5b86706/","/tr/forum/traktor-markalari-hangi-ulkenin-dunya-traktor-markalari-ve-uretim-yerleri-2026-b11d1ad6f0cc4a18ab839d18ccc2f7ea/","/zh/forum/2020-2027-traktor-kronik-arizalari-ve-sorunlu-modeller-9f82b9f37aab41ee8588a0a383f80694/","/zh/forum/traktor-markalari-hangi-ulkenin-dunya-traktor-markalari-ve-uretim-yerleri-2026-b11d1ad6f0cc4a18ab839d18ccc2f7ea/"])
+          actual_forum=set(x for x in forum if re.fullmatch(r"/(?:(?:tr|zh|hi|pt-br|fr|de|ru|ja|es)/)?forum/[^/]+/",urlsplit(x).path))
+          report={"main":len(main),"forum":len(forum),"distinct":len(set(main+forum)),"image_page_refs":len(images),"distinct_image_files":len(image_files),"orphan_image_pages":len(set(images)-set(main+forum)),"cross_map_duplicates":len(set(main)&set(forum)),"models_per_locale":{l:len(buckets[l]) for l in locales},"model_parity":all(buckets[l]==buckets["en"] for l in locales),"db_expected_models":469,"model_count_match":all(len(buckets[l])==469 for l in locales),"forum_topic_urls":len(actual_forum),"db_expected_forum":len(expected_forum),"missing_forum":sorted(expected_forum-actual_forum),"extra_forum":sorted(actual_forum-expected_forum),"page_types":dict(types),"example_model":sorted(buckets["en"])[:3]}
+          print("INVENTORY",json.dumps(report),flush=True)
+          PY
+      - name: Verify merged SEO title package on live domain
+        if: always()
+        run: |
+          python3 - <<'PY'
+          import urllib.request, re, html, json
+          from concurrent.futures import ThreadPoolExecutor
+          base="https://tractorvs.com"
+          locales=["en","tr","de","es","fr","pt-br","hi","ru","ja","zh"]
+          def check(l):
+              root=base+("" if l=="en" else "/"+l)+"/tractors/"
+              rows=[]
+              for model in ["farmtrac-45-powermaxx-8acb2304","iseki-t97-series-3e6886c4"]:
+                  url=root+model+"/"
+                  try:
+                      with urllib.request.urlopen(urllib.request.Request(url,headers={"User-Agent":"TractorVS-public-release-audit/1.0","Cache-Control":"no-cache"}),timeout=20) as res:
+                          body=res.read().decode()
+                          m=re.search(r"<title[^>]*>(.*?)</title>",body,re.S|re.I)
+                          title=html.unescape(m.group(1)).strip() if m else ""
+                          if model.startswith("iseki"):
+                              verified="Cabin" in title and "ROPS" in title and "ISEKI global catalogue" not in title
+                          else:
+                              verified="2WD" in title and "constant-mesh 8F+2R" in title and "India / 2WD" not in title
+                          rows.append({"locale":l,"model":model,"status":res.status,"title":title,"updated":verified})
+                  except Exception as e: rows.append({"locale":l,"model":model,"updated":False,"error":str(e)})
+              return rows
+          with ThreadPoolExecutor(max_workers=3) as pool:
+              result=[row for rows in pool.map(check,locales) for row in rows]
+          for row in result: print("TITLE_LIVE",json.dumps(row,ensure_ascii=False))
+          print("TITLE_LIVE_TOTAL",sum(x["updated"] for x in result),len(result))
+          if not all(x["updated"] for x in result): raise SystemExit(1)
+          PY
+      - name: Verify all 540 merged title pages on the live domain
+        run: |
+          python3 - <<'PY'
+          import urllib.request, urllib.error, xml.etree.ElementTree as ET, html, json, re, time, collections
+          from html.parser import HTMLParser
+          from concurrent.futures import ThreadPoolExecutor
+          from urllib.parse import urlsplit
+          base="https://tractorvs.com"
+          models=json.loads("[{\"slug\":\"agrale-4125-0b53e944\",\"name\":\"Agrale 4125\",\"variant\":\"original\",\"year\":null},{\"slug\":\"agrale-4233-e3ed3f24\",\"name\":\"Agrale 4233\",\"variant\":\"isodiametric\",\"year\":null},{\"slug\":\"agrale-525-fb5e66a6\",\"name\":\"Agrale 525\",\"variant\":\"Agrale 3 cyl, 8F×8R\",\"year\":null},{\"slug\":\"agrale-575-compact-5a960051\",\"name\":\"Agrale 575 Compact\",\"variant\":\"Perkins 1104D-44, 15F×15R\",\"year\":null},{\"slug\":\"agrale-575-super-d3f67001\",\"name\":\"Agrale 575 Super\",\"variant\":\"Perkins 1104D-44, 15F×15R\",\"year\":null},{\"slug\":\"agrale-6185-6294988c\",\"name\":\"Agrale 6185\",\"variant\":\"MWM 229-6 TCE, factory cab, 24F×12R\",\"year\":null},{\"slug\":\"agrale-7215-5d2edc98\",\"name\":\"Agrale 7215\",\"variant\":\"MWM Maxx Force 6.0A, synchronized mechanical\",\"year\":null},{\"slug\":\"antonio-carraro-mach-4-r-f267b552\",\"name\":\"Antonio Carraro MACH 4 R\",\"variant\":\"8900 R, Stage V, 4 rubber tracks, ROPS or cab\",\"year\":null},{\"slug\":\"antonio-carraro-panther-26-h-48e8caec\",\"name\":\"Antonio Carraro Panther 26 H\",\"variant\":\"Stage V, 3-range hydrostatic 4WD\",\"year\":null},{\"slug\":\"antonio-carraro-panther-26-m-da7afde6\",\"name\":\"Antonio Carraro Panther 26 M\",\"variant\":\"Stage V, 4WD mechanical 9F×3R\",\"year\":null},{\"slug\":\"antonio-carraro-sn-6800-v-321df789\",\"name\":\"Antonio Carraro SN 6800 V\",\"variant\":\"Stage V, TORA, S90 16F×16R, ROPS/RedCab\",\"year\":null},{\"slug\":\"antonio-carraro-tc-6800-f-ef4320ef\",\"name\":\"Antonio Carraro TC 6800 F\",\"variant\":\"Stage V, TORA, S90 16F×16R, ROPS\",\"year\":null},{\"slug\":\"antonio-carraro-tgf-7800-s-44929c2c\",\"name\":\"Antonio Carraro TGF 7800 S\",\"variant\":\"Yanmar 3319cc, Stage V, 16F×16R, ROPS\",\"year\":null},{\"slug\":\"antonio-carraro-tony-8700-v-057ddf74\",\"name\":\"Antonio Carraro TONY 8700 V\",\"variant\":\"Stage V, mechanical-hydrostatic hybrid, Deutz 2900cc, cab\",\"year\":null},{\"slug\":\"antonio-carraro-tony-8900-trg-7fa6422c\",\"name\":\"Antonio Carraro TONY 8900 TRG\",\"variant\":\"Kubota 3769cc, Stage V, 4 automated SIM ranges, ROPS\",\"year\":null},{\"slug\":\"antonio-carraro-trx-5800-cf9f7eff\",\"name\":\"Antonio Carraro TRX 5800\",\"variant\":\"Stage V, S90 16F×16R, ROPS/RedCab\",\"year\":null},{\"slug\":\"antonio-carraro-trx-7800-s-b678b91d\",\"name\":\"Antonio Carraro TRX 7800 S\",\"variant\":\"Yanmar 3319cc, Stage V, reversible 16F×16R, ROPS\",\"year\":null},{\"slug\":\"armatrac-804-fruit-garden-cabin-619e4fd9\",\"name\":\"ArmaTrac 804 Fruit Garden Cabin\",\"variant\":\"Perkins, Stage IIIA\",\"year\":null},{\"slug\":\"armatrac-804-4-fruit-garden-rops-362ad12b\",\"name\":\"ArmaTrac 804.4 Fruit Garden ROPS\",\"variant\":\"Perkins, Stage IIIA\",\"year\":null},{\"slug\":\"belarus-1025-2-0c77919f\",\"name\":\"Belarus 1025.2\",\"variant\":\"D-245S Stage I, 16F+8R\",\"year\":null},{\"slug\":\"belarus-1221-3-6ed6e4a3\",\"name\":\"Belarus 1221.3\",\"variant\":\"Agromeh D-260.2S2 Stage II, 16F+8R or optional 24F+12R\",\"year\":null},{\"slug\":\"mahindra-arjun-555-di-2c1a6638\",\"name\":\"Mahindra ARJUN 555 DI\",\"variant\":\"8F+2R\",\"year\":null},{\"slug\":\"mahindra-arjun-605-di-i-bee5e88f\",\"name\":\"Mahindra ARJUN 605 DI i\",\"variant\":\"8F+2R\",\"year\":null},{\"slug\":\"mahindra-arjun-605-di-ms-739db984\",\"name\":\"Mahindra ARJUN 605 DI MS\",\"variant\":\"8F+2R\",\"year\":null},{\"slug\":\"mahindra-arjun-605-di-ms-v1-163dbb9b\",\"name\":\"Mahindra ARJUN 605 DI MS V1\",\"variant\":\"16F+4R\",\"year\":null},{\"slug\":\"mahindra-jivo-305-di-4wd-vineyard-ac32976d\",\"name\":\"Mahindra JIVO 305 DI 4WD VINEYARD\",\"variant\":\"8F×4R\",\"year\":null},{\"slug\":\"mahindra-novo-605-di-4wd-v1-585b5da9\",\"name\":\"Mahindra NOVO 605 DI 4WD V1\",\"variant\":\"15F×15R\",\"year\":null},{\"slug\":\"mahindra-novo-605-di-ps-4wd-v1-f6267c8d\",\"name\":\"Mahindra NOVO 605 DI PS 4WD V1\",\"variant\":\"15F×15R\",\"year\":null},{\"slug\":\"mahindra-novo-605-di-v1-9658df33\",\"name\":\"Mahindra NOVO 605 DI V1\",\"variant\":\"2WD or 4WD family, 15F×3R\",\"year\":null},{\"slug\":\"mahindra-novo-655-di-pp-v1-b51998b3\",\"name\":\"Mahindra NOVO 655 DI PP V1\",\"variant\":\"2WD, 15F×15R\",\"year\":null},{\"slug\":\"mahindra-oja-3132-adfcfeb9\",\"name\":\"Mahindra OJA 3132\",\"variant\":\"4WD, 8F×8R, single clutch, synchro shuttle\",\"year\":null},{\"slug\":\"mahindra-oja-3136-413bd1b9\",\"name\":\"Mahindra OJA 3136\",\"variant\":\"4WD, 12F×12R, single clutch, synchro shuttle\",\"year\":null},{\"slug\":\"mahindra-oja-3140-52acafb7\",\"name\":\"Mahindra OJA 3140\",\"variant\":\"4WD, 12F×12R, single clutch, synchro shuttle\",\"year\":null},{\"slug\":\"solis-60-hvac-stage-v-ee86ff52\",\"name\":\"Solis 60 HVAC Stage V\",\"variant\":\"4WD, HVAC, radial tyres, 12F/12R\",\"year\":2026},{\"slug\":\"solis-75-hvac-stage-v-948b5823\",\"name\":\"Solis 75 HVAC Stage V\",\"variant\":\"4WD, HVAC, radial tyres, 12F/12R\",\"year\":2025},{\"slug\":\"solis-90-hvac-stage-v-8760f728\",\"name\":\"Solis 90 HVAC Stage V\",\"variant\":\"4WD, HVAC, radial tyres, 12F/12R\",\"year\":2025},{\"slug\":\"sonalika-di-42-p-2d79ca05\",\"name\":\"Sonalika DI 42 P+\",\"variant\":\"2WD family, Sikander/Sikander-Rx/DLX-Rx options\",\"year\":null},{\"slug\":\"sonalika-di-734-d5d14815\",\"name\":\"Sonalika DI 734\",\"variant\":\"2WD, single clutch, 8F+2R, brake/steering options\",\"year\":null},{\"slug\":\"sonalika-di-734-power-plus-fb435078\",\"name\":\"Sonalika DI 734 Power Plus\",\"variant\":\"2WD, 8F×2R centre gear, standard/Rx trims\",\"year\":null},{\"slug\":\"sonalika-di-740-iii-3a46f879\",\"name\":\"Sonalika DI 740 III\",\"variant\":\"2WD, HDM/Super/Sikander options\",\"year\":null},{\"slug\":\"sonalika-rx-42-8d846784\",\"name\":\"Sonalika RX 42\",\"variant\":\"2WD, Sikander family, steering/clutch options\",\"year\":null},{\"slug\":\"sonalika-tiger-di-50-67d959b0\",\"name\":\"Sonalika Tiger DI 50\",\"variant\":\"2WD, clutch/gearbox/rear tyre options\",\"year\":null},{\"slug\":\"valtra-a75-da1deb5d\",\"name\":\"Valtra A75\",\"variant\":\"Gen5 Stage V, gear lever, optional HiTech 2\",\"year\":null},{\"slug\":\"valtra-a85-70571d3c\",\"name\":\"Valtra A85\",\"variant\":\"Gen5 Stage V, gear lever, optional HiTech 2\",\"year\":null},{\"slug\":\"valtra-a95-6690f0d3\",\"name\":\"Valtra A95\",\"variant\":\"Gen5 Stage V, gear lever, optional HiTech 2\",\"year\":null},{\"slug\":\"versatile-405-862c433c\",\"name\":\"Versatile 405\",\"variant\":\"4WD, narrow frame, Stage V, Cat TA19 powershift\",\"year\":null},{\"slug\":\"versatile-430-7bd1f29c\",\"name\":\"Versatile 430\",\"variant\":\"4WD, narrow frame, Stage V, Cat TA19 powershift\",\"year\":null},{\"slug\":\"versatile-460-259a5389\",\"name\":\"Versatile 460\",\"variant\":\"4WD, narrow frame, Stage V, Cat TA19 powershift\",\"year\":null},{\"slug\":\"versatile-530-ef3c1117\",\"name\":\"Versatile 530\",\"variant\":\"4WD, large frame, Stage V, Cat TA22 powershift\",\"year\":null},{\"slug\":\"versatile-580-4a09051c\",\"name\":\"Versatile 580\",\"variant\":\"4WD, large frame, Stage V, Cat TA22 powershift\",\"year\":null},{\"slug\":\"versatile-620-08b724f4\",\"name\":\"Versatile 620\",\"variant\":\"4WD, large frame, Stage V, Cat TA22 powershift\",\"year\":null},{\"slug\":\"yanmar-ym347-493cf706\",\"name\":\"Yanmar YM347\",\"variant\":\"YM3, synchronized 8F/8R shuttle, ROPS\",\"year\":null},{\"slug\":\"yanmar-ym359-116d05e9\",\"name\":\"Yanmar YM359\",\"variant\":\"YM3, synchronized 8F/8R shuttle, ROPS\",\"year\":null}]")
+          forums=json.loads("[{\"locale\":\"de\",\"slug\":\"traktor-markalari-hangi-ulkenin-dunya-traktor-markalari-ve-uretim-yerleri-2026-b11d1ad6f0cc4a18ab839d18ccc2f7ea\",\"title\":\"Traktormarken: Herkunft, Eigentümer, Werke (2026)\"},{\"locale\":\"en\",\"slug\":\"traktor-markalari-hangi-ulkenin-dunya-traktor-markalari-ve-uretim-yerleri-2026-b11d1ad6f0cc4a18ab839d18ccc2f7ea\",\"title\":\"Tractor brands: origins, owners and factories (2026)\"},{\"locale\":\"es\",\"slug\":\"traktor-markalari-hangi-ulkenin-dunya-traktor-markalari-ve-uretim-yerleri-2026-b11d1ad6f0cc4a18ab839d18ccc2f7ea\",\"title\":\"Marcas de tractores: origen, dueños y fábricas (2026)\"},{\"locale\":\"fr\",\"slug\":\"traktor-markalari-hangi-ulkenin-dunya-traktor-markalari-ve-uretim-yerleri-2026-b11d1ad6f0cc4a18ab839d18ccc2f7ea\",\"title\":\"Marques de tracteurs : origine, propriétaires, usines (2026)\"},{\"locale\":\"hi\",\"slug\":\"traktor-markalari-hangi-ulkenin-dunya-traktor-markalari-ve-uretim-yerleri-2026-b11d1ad6f0cc4a18ab839d18ccc2f7ea\",\"title\":\"ट्रैक्टर ब्रांड: देश, स्वामी और उत्पादन स्थल (2026)\"},{\"locale\":\"ja\",\"slug\":\"traktor-markalari-hangi-ulkenin-dunya-traktor-markalari-ve-uretim-yerleri-2026-b11d1ad6f0cc4a18ab839d18ccc2f7ea\",\"title\":\"トラクターブランドの発祥国・所有企業・生産地（2026年） | TractorVS\"},{\"locale\":\"pt-br\",\"slug\":\"traktor-markalari-hangi-ulkenin-dunya-traktor-markalari-ve-uretim-yerleri-2026-b11d1ad6f0cc4a18ab839d18ccc2f7ea\",\"title\":\"Marcas de tratores: origem, donos e fábricas (2026)\"},{\"locale\":\"ru\",\"slug\":\"traktor-markalari-hangi-ulkenin-dunya-traktor-markalari-ve-uretim-yerleri-2026-b11d1ad6f0cc4a18ab839d18ccc2f7ea\",\"title\":\"Марки тракторов: страны, владельцы и производство (2026)\"},{\"locale\":\"tr\",\"slug\":\"traktor-markalari-hangi-ulkenin-dunya-traktor-markalari-ve-uretim-yerleri-2026-b11d1ad6f0cc4a18ab839d18ccc2f7ea\",\"title\":\"Traktör Markaları: Ülkeler, Sahipleri ve Üretim (2026)\"},{\"locale\":\"zh\",\"slug\":\"traktor-markalari-hangi-ulkenin-dunya-traktor-markalari-ve-uretim-yerleri-2026-b11d1ad6f0cc4a18ab839d18ccc2f7ea\",\"title\":\"拖拉机品牌：来源国、归属与生产地（2026年） | TractorVS\"}]")
+          locales=["en","tr","zh","hi","pt-br","fr","de","ru","ja","es"]
+          def url(locale,section,slug):
+              return base+("" if locale=="en" else "/"+locale)+"/"+section+"/"+slug+"/"
+          class Head(HTMLParser):
+              def __init__(self):
+                  super().__init__(convert_charrefs=True)
+                  self.titles=[];self.canonicals=[];self.robots=[];self.lang="";self.title=False
+              def handle_starttag(self,tag,attrs):
+                  a=dict(attrs)
+                  if tag=="html":self.lang=a.get("lang","")
+                  if tag=="title":self.title=True;self.titles.append("")
+                  if tag=="link" and a.get("rel","").lower()=="canonical":self.canonicals.append(a.get("href",""))
+                  if tag=="meta" and a.get("name","").lower() in ("robots","googlebot"):self.robots.append(a.get("content","").lower())
+              def handle_endtag(self,tag):
+                  if tag=="title":self.title=False
+              def handle_data(self,data):
+                  if self.title and self.titles:self.titles[-1]+=data
+          def fetch(u):
+              for i in range(3):
+                  try:
+                      with urllib.request.urlopen(urllib.request.Request(u,headers={"User-Agent":"TractorVS-live-release-qa/1.0","Cache-Control":"no-cache"}),timeout=25) as r:
+                          return r.status,r.geturl(),r.headers,r.read().decode("utf-8")
+                  except urllib.error.HTTPError as e:
+                      if e.code not in (429,502,503,504) or i==2:raise
+                      delay=e.headers.get("Retry-After","")
+                      if delay.isdigit() and int(delay)>30:raise
+                      time.sleep(int(delay) if delay.isdigit() else 2*(i+1))
+                  except (TimeoutError,urllib.error.URLError):
+                      if i==2:raise
+                      time.sleep(2*(i+1))
+          tasks=[{"locale":l,"url":url(l,"tractors",m["slug"]),"name":m["name"],"variant":m["variant"],"year":m["year"],"group":m["slug"]} for m in models for l in locales]
+          tasks += [{"locale":f["locale"],"url":url(f["locale"],"forum",f["slug"]),"exact":f["title"],"group":"forum-origin"} for f in forums]
+          def check(t):
+              issues=[];title=""
+              try:
+                  status,final,headers,body=fetch(t["url"])
+                  p=Head();p.feed(body)
+                  title=p.titles[0].strip() if len(p.titles)==1 else ""
+                  if status!=200 or final!=t["url"] or headers.get_content_type()!="text/html":issues.append("http")
+                  if p.canonicals!=[t["url"]]:issues.append("canonical")
+                  if "noindex" in (" ".join(p.robots)+" "+headers.get("X-Robots-Tag","")).lower():issues.append("noindex")
+                  lang={"zh":"zh-hans","pt-br":"pt-br"}.get(t["locale"],t["locale"])
+                  if p.lang.lower()!=lang:issues.append("language")
+                  if "exact" in t:
+                      if title!=t["exact"]:issues.append("title")
+                  else:
+                      if t["name"] not in title or t["variant"] not in title or (t["year"] is not None and str(t["year"]) not in title):issues.append("title")
+              except Exception as e:issues.append(str(e))
+              return {"url":t["url"],"locale":t["locale"],"group":t["group"],"title":title,"issues":issues}
+          # Avoid 540 requests against an outdated deployment. Check two exact
+          # sentinels with bounded retry; no new deployment or paid API calls.
+          sentinel=[next(t for t in tasks if t["group"]=="forum-origin" and t["locale"]=="tr"),next(t for t in tasks if t["group"].startswith("antonio-carraro-tony-8700-v") and t["locale"]=="en")]
+          ready=False
+          for i in range(10):
+              s=[check(t) for t in sentinel]
+              print("BATCH_READINESS",json.dumps({"attempt":i+1,"checks":s},ensure_ascii=False),flush=True)
+              if all(not x["issues"] for x in s):ready=True;break
+              if i<9:time.sleep(15)
+          if not ready:raise SystemExit("Live deployment not yet verified; no broad crawl performed")
+          index=ET.fromstring(fetch(base+"/sitemap-index.xml")[3]);listed=set()
+          for loc in index.findall(".//{*}loc"):
+              if not loc.text.endswith("/image-sitemap.xml"):
+                  if urlsplit(loc.text).netloc!="tractorvs.com":raise SystemExit("Unexpected sitemap origin")
+                  tree=ET.fromstring(fetch(loc.text)[3])
+                  listed.update(e.findtext("{*}loc") for e in tree.findall("{*}url"))
+          with ThreadPoolExecutor(max_workers=6) as pool:results=list(pool.map(check,tasks))
+          for x in results:
+              if x["url"] not in listed:x["issues"].append("sitemap")
+          groups=collections.defaultdict(list)
+          for x in results:groups[x["group"]].append(x)
+          for group,items in groups.items():
+              if len(set(x["title"] for x in items))!=len(items):
+                  for x in items:x["issues"].append("cross-locale duplicate")
+          failed=[x for x in results if x["issues"]]
+          print("BATCH_LIVE_RESULT",json.dumps({"expected":540,"checked":len(results),"passed":len(results)-len(failed),"failed":len(failed),"models":len(models),"forum":len(forums),"per_locale":{l:sum(not x["issues"] for x in results if x["locale"]==l) for l in locales}},ensure_ascii=False),flush=True)
+          for x in failed[:50]:print("BATCH_LIVE_ERROR",json.dumps(x,ensure_ascii=False),flush=True)
+          if len(results)!=540 or failed:raise SystemExit(1)
+          PY
+      - name: Daily production SEO audit across all page types and rotating model sample
+        if: always()
+        env:
+          TRACTORVS_SEO_AUDIT_MODE: daily
+          TRACTORVS_SEO_EVIDENCE_PATH: ${{ runner.temp }}/qa-production-seo.json
+        run: node site/scripts/production-seo-audit.mjs
+      - name: Preserve detailed read-only report
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: qa-production-seo
+          path: ${{ runner.temp }}/qa-production-seo.json
+          if-no-files-found: warn
+          retention-days: 7
