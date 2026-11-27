@@ -1,0 +1,30 @@
+name: TractorVS secure publisher write event pilot
+# Owner-reviewed manual pilot only; never merges or deploys production.
+on:
+  workflow_dispatch:
+permissions: {}
+concurrency:
+  group: tractorvs-secure-publisher-pilot
+  cancel-in-progress: false
+jobs:
+  write-event-pilot:
+    if: github.repository == 'onuronkol2-collab/tractorcompare-data' && github.ref == 'refs/heads/main' && github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    environment: secure-publisher
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+      - name: Verify trusted main revision
+        run: |
+          test "$GITHUB_REF" = 'refs/heads/main'
+          test "$(git rev-parse HEAD)" = "$GITHUB_SHA"
+      - name: Create isolated draft PR and revoke scoped App token
+        env:
+          APP_ID: ${{ vars.TRACTORVS_PUBLISHER_APP_ID }}
+          APP_PRIVATE_KEY: ${{ secrets.TRACTORVS_PUBLISHER_PRIVATE_KEY }}
+        run: node scripts/tractorvs-secure-publisher-write-pilot.mjs
