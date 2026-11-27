@@ -48,7 +48,7 @@ const powerCaseRows=powerCase?[
 const hasHydraulicSafety = slug === "tractor-hydraulic-lift-explained";
 const hasPtoSafety = slug === "pto-and-power-take-off";
 const hasEditorialUpdate = hasPowerStandards || hasHydraulicSafety || hasPtoSafety;
-const editedOn = hasEditorialUpdate ? "2026-11-22" : "2026-11-20";
+const editedOn = hasPtoSafety ? "2026-11-27" : (hasEditorialUpdate ? "2026-11-22" : "2026-11-20");
 // These citations are already displayed as clickable sources in the guide.
 // Keep JSON-LD evidence in exact sync with user-visible references.
 const citedDocuments=[
@@ -193,7 +193,7 @@ const structuredData={
        {hasHydraulicSafety && <li><a href="https://www.hse.gov.uk/agriculture/topics/machinery/fluid.htm" target="_blank" rel="noopener noreferrer">{tr?"HSE — yüksek basınçlı hidrolik sıvı enjeksiyon tehlikeleri":"HSE — high-pressure hydraulic fluid injection hazards"} ↗</a></li>}
        {hasPtoSafety && <li><a href="https://www.hse.gov.uk/agriculture/topics/machinery/safe-use-1.htm" target="_blank" rel="noopener noreferrer">{tr?"HSE — tarım makinelerinde güvenli durdurma prosedürü":"HSE — safe stop procedure for agricultural machinery"} ↗</a></li>}
       </ul>
-      <small>{tr ? ("Editoryal kontrol: " + (hasEditorialUpdate ? "22 Kasım 2026" : "20 Kasım 2026")) : ("Editorial review: " + (hasEditorialUpdate ? "22 November 2026" : "20 November 2026"))}</small>
+      <small>{tr ? ("Editoryal kontrol: " + (hasPtoSafety ? "27 Kasım 2026" : (hasEditorialUpdate ? "22 Kasım 2026" : "20 Kasım 2026"))) : ("Editorial review: " + (hasPtoSafety ? "27 November 2026" : (hasEditorialUpdate ? "22 November 2026" : "20 November 2026")))}</small>
      </section>
     </div>
    </div>

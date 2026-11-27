@@ -101,11 +101,11 @@ export const TECHNICAL_DEEP_DIVES = [
         "paragraphs": {
           "tr": [
             "Bir ekipman almadan önce üç temel soruyla başlayın: Makine 540 mı 1000 devir mi istiyor? Yaklaşık kaç beygirlik PTO gücüne ihtiyaç duyuyor? Kardan milinin bağlantısı traktörünüze uyuyor mu? Bu üç bilgi yoksa yalnızca traktörün marka ve beygirine bakarak karar vermeyin.",
-            "Sonra ekipmanın ağırlığına, arka askı bağlantısına ve gerekiyorsa hidrolik hortumlarına bakın. Kuyruk mili uyumlu olsa bile askı ya da ağırlık uygun olmayabilir. En önemlisi: Dönen şafta hiçbir zaman yaklaşmayın, korumasız çalıştırmayın, bağlantıyı motor kapalıyken ve tüm hareket durduğunda yapın."
+            "Sonra ekipmanın ağırlığına, arka askı bağlantısına ve gerekiyorsa hidrolik hortumlarına bakın. Kuyruk mili uyumlu olsa bile askı ya da ağırlık uygun olmayabilir. Dönen şafta yaklaşmayın ve korumasız çalıştırmayın. Bağlantı veya ayar öncesinde traktör ve ekipman kılavuzlarını izleyin: park frenini uygulayın, kumandaları boş konuma alın ve PTO tahrikini kapatın, motoru durdurun, anahtarı çıkarın ve tüm hareketin durmasını bekleyin. Kalan enerji kaynaklarını güvenli biçimde ayırmak için kılavuzlara uyun."
           ],
           "en": [
             "Write down the implement's permitted PTO speeds and power requirement. Then compare verified tractor PTO power, selectable speed modes, spline geometry and coupling dimensions. An unlisted feature is unknown—not automatically present.",
-            "Finally consider hitch category, implement mass and any required hydraulic couplers. PTO compatibility is only part of the overall machine match. Never operate an unguarded rotating shaft. Before making or adjusting a PTO connection, follow the tractor and implement manuals: apply the parking brake, disengage power, stop the engine, remove the key and wait until every moving part has stopped."
+            "Finally consider hitch category, implement mass and any required hydraulic couplers. PTO compatibility is only part of the overall machine match. Never operate an unguarded rotating shaft. Before making or adjusting a PTO connection, follow the tractor and implement manuals: secure the parking brake, place the controls in neutral and switch off the PTO drive, shut down the engine, take out the key and wait for all movement to cease. Follow the manuals for isolating any remaining energy sources."
           ]
         }
       }

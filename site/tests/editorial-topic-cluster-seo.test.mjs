@@ -111,3 +111,16 @@ test("sourced manufacturer hp notation is not silently equated with metric PS",(
  assert.match(component,/22 November 2026/);
  assert.match(component,/hasPowerStandards\?\[/);
 });
+
+
+test("PTO safe-stop source includes neutral controls and remaining energy isolation in both published languages",()=>{
+ const article=file("lib/tractor-technical-deep-dives.ts");
+ const component=file("components/TractorTechnicalDeepDive.astro");
+ const hub=file("components/EditorialHub.astro");
+ assert.match(article,/place the controls in neutral and switch off the PTO drive/);
+ assert.match(article,/isolating any remaining energy sources/);
+ assert.match(article,/kumandaları boş konuma alın ve PTO tahrikini kapatın/);
+ assert.match(article,/Kalan enerji kaynaklarını güvenli biçimde ayırmak/);
+ assert.match(component,/hasPtoSafety \? "2026-11-27"/);
+ assert.match(hub,/path:"\/guides\/pto-and-power-take-off\/",checked:"2026-11-27"/);
+});

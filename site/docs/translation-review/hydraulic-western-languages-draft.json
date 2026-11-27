@@ -1,7 +1,7 @@
 {
   "state": "draft-needs-independent-editorial-review",
-  "sourceBlobSha": "853424394588964819f45e85b60d4dbcfdaa9e18",
-  "sourceComponentBlobSha": "e8a86025ece122ad013843e9d3305843970f60f5",
+  "sourceBlobSha": "78604b9ee14c51676e3e6d1841c1217c5a16eb59",
+  "sourceComponentBlobSha": "00f5fe82a209aca2153a8a10aca46a3c408821c2",
   "sourceSlug": "tractor-hydraulic-lift-explained",
   "sourceLanguage": "en",
   "sourceComponent": "site/src/components/TractorTechnicalDeepDive.astro",
