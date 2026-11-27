@@ -51,6 +51,8 @@ jobs:
     needs: tests
     runs-on: ubuntu-latest
     timeout-minutes: 7
+    outputs:
+      recovery_needed: ${{ steps.verify.outcome == 'failure' && steps.verify.outputs.audited == 'true' }}
     permissions:
       contents: write
       issues: write
@@ -71,7 +73,7 @@ jobs:
         continue-on-error: true
         run: node scripts/tractor-forum-live-ui-smoke.mjs
       - name: Request at most two bounded recovery builds per day for proven drift
-        if: steps.verify.outcome == 'failure' && steps.verify.outputs.audited == 'true'
+        if: steps.verify.outcome == 'failure' && steps.verify.outputs.audited == 'true' && vars.TRACTORVS_PR_ONLY_CUTOVER != 'true'
         continue-on-error: true
         env:
           GITHUB_TOKEN: ${{ github.token }}
@@ -106,3 +108,15 @@ jobs:
         run: |
           echo "::error::Forum database/public website divergence detected. Review the persistent issue."
           exit 1
+
+  protected_recovery:
+    needs: [tests, live]
+    if: always() && needs.tests.result == 'success' && needs.live.outputs.recovery_needed == 'true' && github.event_name != 'pull_request' && github.repository == 'onuronkol2-collab/tractorcompare-data' && github.ref == 'refs/heads/main' && vars.TRACTORVS_PR_ONLY_CUTOVER == 'true'
+    permissions:
+      contents: read
+    uses: ./.github/workflows/tractorvs-integrated-publication-pilot.yml
+    with:
+      kind: forum-recovery
+      create_candidate: true
+      automatic: true
+    secrets: inherit

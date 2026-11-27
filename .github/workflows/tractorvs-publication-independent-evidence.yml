@@ -16,7 +16,7 @@ on:
         required: true
       kind:
         type: choice
-        options: [catalog, forum, sitemap]
+        options: [catalog, forum, sitemap, forum-recovery]
         required: true
 permissions: {}
 concurrency:
@@ -57,5 +57,5 @@ jobs:
           GH_TOKEN: ${{ github.token }}
           TRACTORVS_SUPABASE_ANON_JWT: ${{ secrets.TRACTORVS_SUPABASE_ANON_JWT }}
           PILOT_PR: ${{ github.event.pull_request.number || inputs.pr_number }}
-          PILOT_KIND: ${{ inputs.kind || (startsWith(github.event.pull_request.head.ref, 'ops/publication-candidate/catalog/') && 'catalog' || startsWith(github.event.pull_request.head.ref, 'ops/publication-candidate/forum/') && 'forum' || 'sitemap') }}
+          PILOT_KIND: ${{ inputs.kind || (startsWith(github.event.pull_request.head.ref, 'ops/publication-candidate/catalog/') && 'catalog' || startsWith(github.event.pull_request.head.ref, 'ops/publication-candidate/forum/') && 'forum' || startsWith(github.event.pull_request.head.ref, 'ops/publication-candidate/forum-recovery/') && 'forum-recovery' || 'sitemap') }}
         run: node scripts/tractorvs-integrated-publication-pilot.mjs verify

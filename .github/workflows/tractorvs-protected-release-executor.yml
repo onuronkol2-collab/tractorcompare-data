@@ -1,0 +1,101 @@
+name: TractorVS protected candidate release executor
+# Disabled by default. Read-only manual scan available before owner cutover.
+on:
+  workflow_dispatch:
+    inputs:
+      execute:
+        description: Execute a verified release only when repository cutover is enabled
+        type: boolean
+        default: false
+        required: true
+  schedule:
+    - cron: "4,14,24,34,44,54 * * * *"
+permissions: {}
+concurrency:
+  group: tractorvs-protected-candidate-release
+  cancel-in-progress: false
+jobs:
+  scan:
+    if: github.repository == 'onuronkol2-collab/tractorcompare-data' && github.ref == 'refs/heads/main' && (github.event_name == 'workflow_dispatch' || vars.TRACTORVS_PR_ONLY_CUTOVER == 'true')
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    permissions:
+      contents: read
+      pull-requests: read
+      checks: read
+      actions: read
+      statuses: read
+    outputs:
+      ready: ${{ steps.scan.outputs.ready }}
+      number: ${{ steps.scan.outputs.number }}
+      head: ${{ steps.scan.outputs.head }}
+      kind: ${{ steps.scan.outputs.kind }}
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+      - name: Verify trusted revision
+        run: test "$(git rev-parse HEAD)" = "$GITHUB_SHA"
+      - name: Scan exact current candidate checks and independent evidence
+        id: scan
+        env:
+          GH_TOKEN: ${{ github.token }}
+          CUTOVER_ENABLED: ${{ vars.TRACTORVS_PR_ONLY_CUTOVER }}
+          EXECUTE_RELEASE: ${{ github.event_name == 'schedule' || inputs.execute }}
+        run: node scripts/tractorvs-protected-release-executor.mjs scan
+  merge:
+    needs: scan
+    if: needs.scan.outputs.ready == 'true' && vars.TRACTORVS_PR_ONLY_CUTOVER == 'true' && (github.event_name == 'schedule' || inputs.execute) && github.repository == 'onuronkol2-collab/tractorcompare-data' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 6
+    environment: secure-publisher
+    permissions:
+      contents: read
+      pull-requests: read
+      checks: read
+      actions: read
+      statuses: read
+    outputs:
+      merged_sha: ${{ steps.release.outputs.merged_sha }}
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+      - name: Verify trusted revision
+        run: test "$(git rev-parse HEAD)" = "$GITHUB_SHA"
+      - name: Recheck and squash merge exact protected App candidate
+        id: release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TRACTORVS_SUPABASE_ANON_JWT: ${{ secrets.TRACTORVS_SUPABASE_ANON_JWT }}
+          APP_ID: ${{ vars.TRACTORVS_PUBLISHER_APP_ID }}
+          APP_PRIVATE_KEY: ${{ secrets.TRACTORVS_PUBLISHER_PRIVATE_KEY }}
+          CUTOVER_ENABLED: ${{ vars.TRACTORVS_PR_ONLY_CUTOVER }}
+          EXECUTE_RELEASE: "true"
+          RELEASE_PR: ${{ needs.scan.outputs.number }}
+          RELEASE_HEAD: ${{ needs.scan.outputs.head }}
+          RELEASE_KIND: ${{ needs.scan.outputs.kind }}
+        run: node scripts/tractorvs-protected-release-executor.mjs execute
+  verify-live:
+    needs: merge
+    if: needs.merge.outputs.merged_sha != ''
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    permissions:
+      contents: read
+      checks: read
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+      - name: Verify deployed release marker on all ten language roots and trusted Workers build
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          TRACTORVS_REQUIRE_WORKERS_BUILD: "true"
+          TARGET_RELEASE: ${{ needs.merge.outputs.merged_sha }}
+        run: node site/scripts/live-release-readiness.mjs "$TARGET_RELEASE" / /tr/ /zh/ /hi/ /pt-br/ /fr/ /de/ /ru/ /ja/ /es/
+      - name: Record independent browser and content verification boundary
+        run: echo "Release marker and Workers build only; the separate live browser and content audits remain required." >> "$GITHUB_STEP_SUMMARY"

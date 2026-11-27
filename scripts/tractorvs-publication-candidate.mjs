@@ -5,6 +5,7 @@ export const REPO="onuronkol2-collab/tractorcompare-data";
 const ALLOWED=Object.freeze({
  catalog:["site/src/data/public-catalog-sync.json"],
  forum:["site/src/data/public-forum-sync.json"],
+ "forum-recovery":["site/src/data/public-forum-sync.json"],
  sitemap:["seo/sitemap-content-history.json","site/src/data/sitemap-lastmod.json"]
 });
 const shaOk=s=>typeof s==="string"&&/^[a-f0-9]{40}$/.test(s);
@@ -25,6 +26,7 @@ export function candidatePlan({kind,baseSha,files}){
 export async function openPublicationCandidate({repo,ref,kind,baseSha,files,token,fetchFn=fetch,dryRun=true}){
  if(repo!==REPO||ref!=="refs/heads/main")throw Error("Candidate writer must run on trusted main");
  const plan=candidatePlan({kind,baseSha,files});
+ const conflicts=p=>{const ref=p.head?.ref??"";return ref.startsWith("ops/publication-candidate/"+kind+"/")||(["forum","forum-recovery"].includes(kind)&&["forum","forum-recovery"].some(k=>ref.startsWith("ops/publication-candidate/"+k+"/")));};
  if(dryRun)return {dryRun:true,branch:plan.branch,digest:plan.digest,paths:plan.files.map(f=>f.path)};
  if(!token)throw Error("Candidate transport credential missing");
  const api=async(path,method="GET",body,allowMissing=false)=>{
@@ -36,7 +38,7 @@ export async function openPublicationCandidate({repo,ref,kind,baseSha,files,toke
  const checkBase=async()=>{const r=await api("/git/ref/heads/main");if(r.object?.sha!==baseSha)throw Error("Main moved: rebuild candidate evidence");};
  await checkBase();
  const existing=await api("/pulls?state=open&base=main&per_page=100");
- if(!Array.isArray(existing)||existing.length>=100||existing.some(p=>p.head?.ref?.startsWith("ops/publication-candidate/"+kind+"/")))throw Error("Outstanding or incomplete candidate inventory; reconcile first");
+ if(!Array.isArray(existing)||existing.length>=100||existing.some(conflicts))throw Error("Outstanding or incomplete candidate inventory; reconcile first");
  const base=await api("/git/commits/"+baseSha);
  if(!shaOk(base.tree?.sha))throw Error("Missing base tree");
  const tree=await api("/git/trees","POST",{base_tree:base.tree.sha,tree:plan.files});
@@ -59,7 +61,7 @@ export async function openPublicationCandidate({repo,ref,kind,baseSha,files,toke
  const current=await api(refPath);
  if(current.ref!=="refs/heads/"+plan.branch||current.object?.type!=="commit"||current.object?.sha!==commit.sha)throw Error("Candidate ref moved before PR creation");
  const pending=await api("/pulls?state=open&base=main&per_page=100");
- if(!Array.isArray(pending)||pending.length>=100||pending.some(p=>p.head?.ref?.startsWith("ops/publication-candidate/"+kind+"/")))throw Error("Outstanding or incomplete candidate inventory; reconcile first");
+ if(!Array.isArray(pending)||pending.length>=100||pending.some(conflicts))throw Error("Outstanding or incomplete candidate inventory; reconcile first");
  await checkBase();
  const pr=await api("/pulls","POST",{title:"Publication candidate: "+kind,head:plan.branch,base:"main",body:"Evidence base: "+baseSha+"\nCandidate digest: "+plan.digest+"\nPR-only staging. Independent release authorization and all applicable checks required."});
  if(!Number.isSafeInteger(pr.number)||pr.head?.sha!==commit.sha||pr.base?.ref!=="main")throw Error("Candidate PR not confirmed");
