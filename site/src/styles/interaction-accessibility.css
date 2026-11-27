@@ -102,3 +102,22 @@ html:is(:lang(hi), :lang(ja), :lang(zh)) #main :is(h1,h2,h3,h4) {
     outline-color: Highlight !important;
   }
 }
+
+
+/* Account and editor keyboard focus; avoid a clipped outline on the
+   existing overflow-hidden auth disclosure. */
+#main :is(.community-composer,.member-community)
+ :is(a,button,summary,input,select,textarea,[tabindex="0"]):focus-visible {
+  outline: 3px solid #175c37;
+  outline-offset: 2px;
+}
+#main .community-composer .forum-auth-gate>summary:focus-visible,
+#main .forum-editor-preview-table:focus-visible {
+  outline-offset: -3px;
+}
+@media (forced-colors: active) {
+  #main :is(.community-composer,.member-community)
+   :is(a,button,summary,input,select,textarea,[tabindex="0"]):focus-visible {
+    outline-color: Highlight !important;
+  }
+}

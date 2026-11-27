@@ -243,3 +243,83 @@
   max-inline-size: 100%;
   overscroll-behavior-inline: contain;
 }
+
+
+/* Account and composer presentation only. Preserve native controls, hidden
+   and disabled states, session handling, consent and all validation rules. */
+#main :is(.community-composer,.member-community) {
+  min-inline-size: 0;
+}
+#main :is(.community-composer form,.community-composer label,
+          .member-own form,.member-own label,.member-toolbar-identity) {
+  min-inline-size: 0;
+  overflow-wrap: anywhere;
+}
+#main :is(.community-composer,.member-own)
+  :is(input:not([type="checkbox"]):not([type="radio"]),select,textarea) {
+  font-size: max(16px, 1rem);
+  min-inline-size: 0;
+  max-inline-size: 100%;
+  line-height: 1.5;
+}
+#main :is(.community-composer .forum-password-reveal,
+          .community-composer .forum-checkbox,.member-own .member-check) {
+  min-height: 44px;
+  padding-block: .375rem;
+  line-height: 1.6;
+  cursor: pointer;
+}
+#main :is(.forum-password-reveal,.forum-checkbox,.member-check) input[type="checkbox"] {
+  flex: none;
+}
+#main :is(.community-composer .forum-remember small,.member-note,
+          .forum-editor-hint,.forum-editor-privacy,.forum-editor-photo-list small,
+          .forum-editor-count) {
+  font-size: .875rem;
+  line-height: 1.65;
+  overflow-wrap: anywhere;
+}
+#main :is(.community-composer [role="status"],.member-community [role="status"])
+ :where(a) {
+  text-decoration: underline;
+  overflow-wrap: anywhere;
+}
+#main :is(.community-composer .forum-message,.forum-editor-status,
+          .member-own [data-profile-status],.member-community [data-leader-empty],
+          .member-community [data-recent-members-status]) {
+  font-size: .9375rem;
+  line-height: 1.65;
+  overflow-wrap: anywhere;
+}
+#main :is(.community-composer button,.leaderboard-modes button,
+          .member-dialog-top button,.member-toolbar-buttons button) {
+  min-height: 44px;
+  max-inline-size: 100%;
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+#main .member-dialog-top { flex-wrap: wrap; }
+#main .member-dialog-top h3 { min-inline-size: 0; }
+#main .member-community dialog {
+  max-inline-size: min(94vw, 540px);
+  max-block-size: 90vh;
+  max-block-size: 90dvh;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+#main .forum-emoji-grid {
+  width: min(330px, 100%);
+  max-width: 100%;
+  box-sizing: border-box;
+  grid-template-columns: repeat(auto-fit,minmax(44px,1fr));
+}
+#main .forum-emoji-grid button { padding-inline: 4px; }
+#main .forum-editor-preview-table { overscroll-behavior-inline: contain; }
+@media(max-width: 480px) {
+  #main .community-composer :is(.forum-auth-buttons,.forum-social) button:not([hidden]) {
+    flex: 1 1 100%;
+    max-width: 100%;
+  }
+  #main .member-toolbar-identity { min-width: 0; }
+  #main .member-community dialog { padding: clamp(14px,4vw,22px); }
+}
