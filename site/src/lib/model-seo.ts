@@ -111,6 +111,31 @@ const CONCISE_SPECS_TITLE:Record<Locale,string>={
   ru:"Характеристики",ja:"仕様",es:"Datos técnicos"
 };
 
+// Bounded search-intent pilot: only the reviewed landing pages. The actual
+// compare action already exists on TractorDetail, including without hydration.
+// Preserve every existing evidence/identity sentence; add a cue only if it fits.
+const COMPARE_SEARCH_PILOT: Partial<Record<Locale, readonly string[]>> = {
+  tr:["tafe-6028-m-9686ae98","tumosan-8095-163f043b","landini-5-085-afbb2f1e","valtra-a85-70571d3c"],
+  de:["ls-tractor-j27-e424cd0c","valtra-n175-caa65b80"],
+  hi:["sonalika-125-812d14fd","swaraj-735-fe-7c7b069f"],
+  en:["swaraj-735-fe-7c7b069f","swaraj-744-xt-c16bdd6d"],
+  "pt-br":["tafe-6028-m-9686ae98"],
+};
+const COMPARE_SEARCH_CUE: Partial<Record<Locale,string>> = {
+  tr:"Modelleri karşılaştırın.",de:"Modelle vergleichen.",
+  hi:"मॉडल की तुलना करें।",en:"Compare models.","pt-br":"Compare modelos.",
+};
+
+/** Append only an honest navigation benefit, not a technical or ranking claim. */
+export function addReviewedCompareSearchCue(
+  description:string, tractor:Pick<TractorRecord,"slug"|"specifications">, lang:Locale
+):string {
+  const cue=COMPARE_SEARCH_CUE[lang];
+  if(!cue || !tractor.specifications.length || !COMPARE_SEARCH_PILOT[lang]?.includes(tractor.slug))return description;
+  if(description.includes(cue) || description.length+1+cue.length>160)return description;
+  return description+" "+cue;
+}
+
 /** Keep original source/variant notes available without pretending to translate them. */
 export function originalVariantNote(tractor:Pick<TractorRecord,"variant">):string|null {
   return tractor.variant?.split(";").slice(1).join(";").trim() || null;
@@ -572,6 +597,7 @@ export function modelSeoMetadata(tractor: TractorRecord, lang: Locale) {
     const compact=model+" — "+CONCISE_SPECS_TITLE[lang]+" ("+qualifiers+").";
     if(compact.length<=160 && compact.length<searchDescription.length)searchDescription=compact;
   }
+  searchDescription=addReviewedCompareSearchCue(searchDescription,tractor,lang);
   return {title,description,searchDescription};
 }
 
