@@ -1,7 +1,14 @@
 import {readFile} from "node:fs/promises";
 import {REPO,CONTEXT,eligible,evaluate,validSha} from "./tractorvs-release-readiness-policy.mjs";
 const event=JSON.parse(await readFile(process.env.GITHUB_EVENT_PATH,"utf8"));
-const n=event.pull_request?.number ?? Number(event.inputs?.pr_number);
+// Completion events run only from the trusted default branch. Resolve exactly
+// one candidate PR and bind the decision to its current head, never event code.
+const completion=event.workflow_run ?? event.check_run;
+const candidates=completion?.pull_requests ?? [];
+const n=event.pull_request?.number ?? (completion && candidates.length===1 ? candidates[0].number : Number(event.inputs?.pr_number));
+if(completion && (!Array.isArray(candidates)||candidates.length!==1)){
+ console.log("Completion event has no unique PR; no status write");process.exit(0);
+}
 if (process.env.GITHUB_REPOSITORY!==REPO || !Number.isSafeInteger(n) || n<1) throw Error("Invalid repository/PR");
 const token=process.env.GH_TOKEN;
 if(!token) throw Error("Readiness token unavailable");
@@ -24,6 +31,7 @@ const getPR=async()=> (await api("/pulls/"+n)).data;
 const pr=await getPR();
 const sha=pr.head?.sha;
 if(!validSha(sha))throw Error("Invalid head");
+if(completion && completion.head_sha!==sha){console.log("Superseded completion; no status write");process.exit(0);}
 if(event.pull_request && event.pull_request.head?.sha!==sha){console.log("Superseded event");process.exit(0);}
 if(pr.head?.repo?.full_name!==REPO || pr.base?.repo?.full_name!==REPO){console.log("Foreign PR: no writes");process.exit(0);}
 const files=await pages("/pulls/"+n+"/files");
@@ -38,7 +46,7 @@ const status=async(state,description)=>{
 if(!eligible(pr,files)){await status("failure","Outside initial automated UI scope; separate release review required");process.exit(0);}
 if(!await status("pending","Waiting for current SHA release evidence"))process.exit(0);
 try{
- const deadline=Date.now()+15*60_000;
+ const deadline=Date.now()+(completion?60_000:15*60_000);
  while(Date.now()<deadline){
   const current=await getPR();
   if(current.head.sha!==sha||current.state!=="open"){console.log("Superseded/closed PR");process.exit(0);}
@@ -58,6 +66,7 @@ try{
    await status(decision.state,decision.reason);console.log(decision);process.exit(0);
   }
   console.log(decision.reason);
+  if(completion){await status("pending",decision.reason);process.exit(0);}
   await new Promise(resolve=>setTimeout(resolve,30000));
  }
  await status("failure","Evidence deadline expired; no automatic publication");
