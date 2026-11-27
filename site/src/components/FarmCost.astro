@@ -1,5 +1,6 @@
 ---
 import SiteLayout from "../layouts/SiteLayout.astro";
+import {practicalGuideLinks} from "../lib/practical-guide-links.ts";
 import {editorialSearchTitle} from "../lib/editorial-seo-title.mjs";
 import FarmDecisionTools from "./FarmDecisionTools.astro";
 import FarmScenarioTools from "./FarmScenarioTools.astro";
@@ -49,6 +50,7 @@ const number=new Intl.NumberFormat(LOCALE_TAGS[lang],{maximumSignificantDigits:6
    <li><a href="https://www.extension.iastate.edu/AGDM/crops/html/a3-24.html" lang="en">Iowa State University Extension — Estimating the Field Capacity of Farm Machines</a></li>
    <li><a href="https://www.extension.iastate.edu/AGDM/crops/html/a3-29.html" lang="en">Iowa State University Extension — Estimating Farm Machinery Costs</a></li>
   </ul>
+  <p class="cost-note">{practicalGuideLinks(lang).returnNote} <a href={practicalGuideLinks(lang).guide.href}>{practicalGuideLinks(lang).guide.label}</a></p>
   <nav class="farm-tool-jump" aria-label={c.advisor}><a href={localizedPath(lang,"/farm-advisor/")}>{c.advisor}</a><a href={localizedPath(lang,"/tractors/")}>{example[2]}</a><a href={localizedPath(lang,"/compare/")}>{example[3]}</a></nav>
  </section>
 </SiteLayout>

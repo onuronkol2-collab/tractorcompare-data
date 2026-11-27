@@ -75,3 +75,26 @@ test("guide is discoverable in all ten locales without fake EN fallbacks",()=>{
   assert.match(read("components/TractorSelectionGuide.astro"),/availableLocales=\{LOCALES\}/);
   assert.match(methodology,/href=\{tr\?"\/tr\/guides\/choosing-a-tractor\/":"\/guides\/choosing-a-tractor\/"\}/);
 });
+
+
+test("ten published selection guides link to actual scenario, equipment and cost sections and back",async()=>{
+ const {practicalGuideLinks}=await import("../src/lib/practical-guide-links.ts");
+ const guide=read("components/TractorSelectionGuide.astro");
+ const cost=read("components/FarmCost.astro");
+ const scenario=read("components/FarmScenarioTools.astro");
+ const decision=read("components/FarmDecisionTools.astro");
+ assert.match(guide,/id="guide-practical-heading"/);
+ assert.match(guide,/practicalGuideLinks\(lang\)\.links\.map/);
+ assert.match(cost,/href=\{practicalGuideLinks\(lang\)\.guide\.href\}/);
+ assert.match(scenario,/id="farm-scenarios"/);
+ assert.match(decision,/id="farm-equipment"/);
+ assert.match(cost,/id="farm-cost-form"/);
+ assert.match(read("pages/[locale]/guides/farm-cost-calculator/index.astro"),/NEW_LOCALES\.map/);
+ for(const lang of LOCALES){
+  const c=practicalGuideLinks(lang);
+  const base=localizedPath(lang,"/guides/farm-cost-calculator/");
+  assert.deepEqual(c.links.map(x=>x.href),["#farm-scenarios","#farm-equipment","#farm-cost-form"].map(x=>base+x));
+  assert.equal(c.guide.href,localizedPath(lang,"/guides/choosing-a-tractor/"));
+  assert.ok([c.heading,c.description,c.returnNote,c.guide.label,...c.links.map(x=>x.label)].every(x=>typeof x==="string"&&x.trim()));
+ }
+});

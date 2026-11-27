@@ -1,5 +1,6 @@
 ---
 import SiteLayout from "../layouts/SiteLayout.astro";
+import {practicalGuideLinks} from "../lib/practical-guide-links.ts";
 import EditorialContents from "./EditorialContents.astro";
 import PowerUnitConverter from "./PowerUnitConverter.astro";
 import {POWER_UNIT_COPY} from "../lib/power-unit-copy.ts";
@@ -238,6 +239,7 @@ const schema={
       <EditorialContents lang={lang} items={[
         ...copy.sections.map((section,index)=>({id:"guide-section-"+(index+1),label:section.title})),
         {id:"power-converter-heading",label:POWER_UNIT_COPY[lang].heading},
+        {id:"guide-practical-heading",label:practicalGuideLinks(lang).heading},
         {id:"guide-checklist-heading",label:copy.worksheetTitle},
         {id:"guide-sources-heading",label:copy.sourceTitle}
       ]}/>
@@ -250,6 +252,11 @@ const schema={
         </li>)}
       </ol>
       <PowerUnitConverter lang={lang} />
+      <section class="guide-practical" aria-labelledby="guide-practical-heading">
+        <h2 id="guide-practical-heading">{practicalGuideLinks(lang).heading}</h2>
+        <p>{practicalGuideLinks(lang).description}</p>
+        <ul>{practicalGuideLinks(lang).links.map(link=><li><a href={link.href}>{link.label}</a></li>)}</ul>
+      </section>
       <section class="guide-checklist" aria-labelledby="guide-checklist-heading">
         <h2 id="guide-checklist-heading" tabindex="-1">{copy.worksheetTitle}</h2>
         <div class="guide-table-scroll" role="region" tabindex="0" aria-labelledby="guide-checklist-heading">
@@ -297,6 +304,11 @@ const schema={
   .guide-inline-sources a{margin-right:10px}
   .guide-table-scroll{overflow-x:auto;overscroll-behavior-inline:contain}
   .guide-table-scroll:focus-visible{outline:3px solid #39784a;outline-offset:3px;border-radius:4px}
+  .guide-practical{margin:24px 0;padding:clamp(16px,3vw,24px);border:1px solid #c9ddc7;border-radius:12px;background:#f1f5ec}
+  .guide-practical ul{padding-inline-start:20px;margin-bottom:0}
+  .guide-practical a{display:inline-flex;align-items:center;min-height:44px}
+  .guide-practical a:focus-visible{outline:3px solid #39784a;outline-offset:3px}
+  #guide-practical-heading{scroll-margin-top:24px}
   .guide-checklist{padding:27px 0}
   #guide-checklist-heading,#guide-sources-heading{scroll-margin-top:24px}
   .guide-checklist table{width:100%;border-collapse:collapse;min-width:560px;font-size:14px;line-height:1.6}
