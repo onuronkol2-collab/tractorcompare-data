@@ -1,6 +1,6 @@
 // Trusted-main, read-only release serialization barrier. No credential or status writes.
 // The two protected release workflows already serialize through one concurrency group.
-import {REPO,actionRunId} from "./tractorvs-protected-candidate-policy.mjs";
+import {REPO} from "./tractorvs-protected-candidate-policy.mjs";
 import {waitForProductionRelease} from "../site/scripts/live-release-readiness.mjs";
 const workflow=".github/workflows/tractorvs-compare-live-browser-qa.yml";
 const shaOk=s=>typeof s==="string"&&/^[a-f0-9]{40}$/.test(s);

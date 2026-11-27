@@ -1,5 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
+import {readFileSync} from "node:fs";
 import {assessProductionBarrier,assertProductionSettled,waitForProductionBarrier,PRODUCTION_REQUIRED_JOBS} from "../../scripts/tractorvs-production-barrier.mjs";
 const base="a".repeat(40),repo="onuronkol2-collab/tractorcompare-data",at="2026-11-27T17:00:00Z",end="2026-11-27T17:10:00Z";
 function fixture(){
@@ -31,4 +32,17 @@ test("final barrier refuses stale served SHA and moved main; bounded wait never 
  await assert.rejects(assertProductionSettled(async()=>({data:{object:{sha:"c".repeat(40)}}}),base,{inspect,verifyServed:async()=>({status:"ready",expected:base,observed:base})}),/Main changed/);
  assert.equal((await assertProductionSettled(api,base,{inspect,verifyServed:async()=>({status:"ready",expected:base,observed:base})})).state,"ready");
  let calls=0;await assert.rejects(waitForProductionBarrier(api,base,{attempts:2,pause:async()=>{},inspect:async()=>{calls++;return {state:"pending",reason:"test"};}}),/bounded wait expired/);assert.equal(calls,2);
+});
+
+test("both protected publishers share serialization and barrier changes trigger complete candidate CI",()=>{
+ for(const file of ["playwright-accessibility","tractorvs-sitemap-history"]){
+ const w=readFileSync(new URL("../../.github/workflows/"+file+".yml",import.meta.url),"utf8");
+ const pr=w.split("  pull_request:\n")[1].split("\nconcurrency:")[0].split("\n  workflow_dispatch:")[0];
+ assert.ok(pr.includes("scripts/tractorvs-production-barrier.mjs"));assert.ok(pr.includes("site/tests/production-release-barrier.test.mjs"));
+ }
+ const owner=readFileSync(new URL("../../scripts/tractorvs-owner-test-release.mjs",import.meta.url),"utf8");
+ const machine=readFileSync(new URL("../../scripts/tractorvs-protected-release-executor.mjs",import.meta.url),"utf8");
+ assert.ok(owner.indexOf("await assertProductionSettled(api,base);",owner.indexOf("const result=await withAppToken"))<owner.indexOf('const m=(await write("/pulls/"+number+"/merge"'));
+ assert.ok(machine.indexOf("await productionBarrier(api,base);")<machine.indexOf("const merged=await getResult"));
+ for(const file of ["tractorvs-owner-test-release","tractorvs-protected-release-executor"]){const w=readFileSync(new URL("../../.github/workflows/"+file+".yml",import.meta.url),"utf8");assert.ok(w.includes("tractorvs-protected-candidate-release"));assert.match(w,/cancel-in-progress: false/);}
 });
