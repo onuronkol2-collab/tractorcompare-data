@@ -36,3 +36,11 @@ test("browser matrix retains a complete partition and unique diagnostic names",(
   assert.ok(source.includes('tractorvs-browser-smoke-artifacts-${{ matrix.evidence }}'));
   assert.match(source,/test "\$MATRIX_RESULT" = success/);
 });
+
+test("cache summary shell commands use YAML block scalars",()=>{
+ for(const file of ["playwright-accessibility.yml","tractorvs-production-release-check.yml"]){
+  const source=readFileSync(new URL("../../.github/workflows/"+file,import.meta.url),"utf8");
+  assert.match(source,/run: \|\n\s+printf 'npm download cache hit: %s\\n'/);
+  assert.doesNotMatch(source,/run: printf[^\n]*cache hit:/);
+ }
+});

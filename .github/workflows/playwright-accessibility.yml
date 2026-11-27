@@ -83,7 +83,8 @@ jobs:
       - name: Report npm download cache status
         env:
           CACHE_HIT: ${{ steps.node_setup.outputs.cache-hit }}
-        run: printf "npm download cache hit: %s\\n" "${CACHE_HIT:-unknown}" >> "$GITHUB_STEP_SUMMARY"
+        run: |
+          printf 'npm download cache hit: %s\n' "${CACHE_HIT:-unknown}" >> "$GITHUB_STEP_SUMMARY"
       - name: Install production build dependencies from lockfile
         run: npm ci --prefer-offline --no-audit --no-fund
       - name: Install pinned test-only tools without modifying repository lockfile
