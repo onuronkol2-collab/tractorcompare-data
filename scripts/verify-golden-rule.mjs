@@ -6,6 +6,7 @@ import { readFileSync } from "node:fs";
 const checks = new Map([
   ["AGENTS.md", [
     "ALTIN KURAL", "TAM ENTEGRASYON", "GitHub", "Supabase",
+    "BAĞLAYICI KULLANICI KOMUT DÜZENİ", "ayrı YAYINLA komutu veya rutin kullanıcı onayı beklemeden",
     "### Katalog verisini toplu doğrulama ve canlıya aktarma",
     "Kanıta dayalı otomatik katalog yayın kontrolü", "automated_evidence_review",
     "(supabase/docs/tractor-automated-nominal-release-20261125.md)",
