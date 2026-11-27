@@ -1323,3 +1323,12 @@ test("Solis 75 DT MR representative front photos retain exact UUID, license and 
     }
   }
 });
+
+test("indexed photo selection exactly matches the full scan for every approved identity and representative alias",async()=>{
+ const {photoMatchesTractor}=await import("../src/lib/tractor-photos.ts");
+ for(const photo of APPROVED_TRACTOR_PHOTOS){
+  const lookups=[{brand_name:photo.brand,model_name:photo.model,tractor_id:photo.tractorId},{brand_name:photo.brand,model_name:photo.model,tractor_id:"wrong-uuid"},{brand_name:photo.brand.toUpperCase(),model_name:photo.model}];
+  for(const alias of photo.illustrativeOn??[])lookups.push({brand_name:photo.brand,model_name:alias.model,tractor_id:alias.tractorId});
+  for(const lookup of lookups)assert.deepEqual(tractorPhotos(lookup),APPROVED_TRACTOR_PHOTOS.filter(p=>photoMatchesTractor(p,lookup)));
+ }
+});

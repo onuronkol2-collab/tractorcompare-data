@@ -160,3 +160,23 @@ test("new retry attempt's HTTP error remains fatal after discarding changed-coun
   assert.deepEqual(calls,[0,500,0],"no partial rows or third retry after the new attempt fails");
  } finally{globalThis.fetch=original;}
 });
+
+test("1000-row pilot preserves exact inventory and lower provider caps",async()=>{
+ for(const opts of [{},{shortPage:250}]){
+  const stub=mockPostgrest(2000,opts);
+  try{
+   const rows=await fetchPublicRows(endpoint,"sb_publishable_test",false,1000);
+   assert.deepEqual(rows,Array.from({length:2000},(_,row)=>({row})));
+   assert.deepEqual(stub.requests.map(r=>r.offset),opts.shortPage?[0,250,500,750,1000,1250,1500,1750]:[0,1000]);
+   assert.ok(stub.requests.every(r=>r.limit===1000));
+   await assert.rejects(fetchPublicRows(endpoint,"sb_publishable_test",false,1500),/Invalid public catalogue page size/);
+  }finally{stub.restore();}
+ }
+});
+test("later explicit changed count fails before accepting even a full page",async()=>{
+ const original=globalThis.fetch;
+ try{
+  globalThis.fetch=async input=>{const offset=Number(new URL(input).searchParams.get("offset"));return Response.json(Array.from({length:500},(_,i)=>({row:offset+i})),{headers:{"content-range":offset===0?"0-499/1000":"500-999/1100"}});};
+  await assert.rejects(fetchPublicRows(endpoint,"sb_publishable_test",false),/count changed/);
+ }finally{globalThis.fetch=original;}
+});

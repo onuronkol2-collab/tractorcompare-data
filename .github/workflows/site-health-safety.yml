@@ -10,6 +10,10 @@ on:
       - 'package.json'
       - 'site/package.json'
   workflow_dispatch:
+concurrency:
+  # Isolated disposable PR fixtures; never cancel a separate manual audit.
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.run_id }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 permissions:
   contents: read
 jobs:

@@ -58,7 +58,7 @@ test("sign in, recover a draft, publish directly and check its status",async({pa
   posted.push({...request.postDataJSON(),user:sessionUser});
   return route.fulfill({status:201});
  });
- await page.goto("/tr/forum/");
+ await page.goto("/tr/forum/",{waitUntil:"domcontentloaded"});
  const reject=page.locator("#tractorvs-analytics-reject");
  if(await reject.isVisible())await reject.click();
  const compose=page.locator("#forum-compose");

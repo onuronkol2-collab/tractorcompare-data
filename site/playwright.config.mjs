@@ -16,7 +16,7 @@ export default defineConfig({
   forbidOnly: Boolean(process.env.CI),
   retries: process.env.CI ? 1 : 0,
   workers: process.env.CI ? 2 : undefined,
-  reporter: process.env.CI ? [["list"], ["html", { open: "never", outputFolder: "playwright-report" }]] : "list",
+  reporter: process.env.CI ? [["list"], ["html", { open: "never", outputFolder: "playwright-report" }], ...(process.env.TRACTORVS_BROWSER_JSON_REPORT ? [["json", {outputFile:process.env.TRACTORVS_BROWSER_JSON_REPORT}]] : [])] : "list",
   outputDir: "test-results",
   use: {
     baseURL,

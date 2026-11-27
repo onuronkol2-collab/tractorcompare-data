@@ -6,8 +6,8 @@ import {decodeEvidenceEntities,evidenceText} from "../../supabase/functions/_sha
  * record overlength titles, never silently truncate model / market / year /
  * equipment identity to make an arbitrary score. Structural errors fail CI.
  */
-import {readdirSync,readFileSync} from "node:fs";
-import {join,relative,resolve} from "node:path";
+import {builtHtmlDocuments} from "./built-html-documents.mjs";
+import {resolve} from "node:path";
 import {fileURLToPath} from "node:url";
 
 import {scanHeadTags} from "./verify-sitewide-meta-descriptions.mjs";
@@ -24,7 +24,7 @@ const clean=s=>evidenceText(s,{separator:""});
 export const hasBibliographicTitleLeak=title=>
   /\b(?:brochure|manufacturer\s+(?:data|model|configuration|specification)|OEM\s+PDF|official\s+PDF)\b/i.test(title);
 
-export function inspectSeoTitle(html,file="index.html"){
+export function inspectSeoTitle(html,file="index.html",parsedHead){
   // Search-engine ownership challenge files are not editorial pages. Their
   // verification bytes must remain untouched (even if they contain <html>).
   if(/^yandex_[a-f0-9]+\.html$/i.test(file)
@@ -34,7 +34,7 @@ export function inspectSeoTitle(html,file="index.html"){
   if(!/<html\b/i.test(html))return null;
   const head=html.match(/<head\b[^>]*>([\s\S]*?)<\/head\s*>/i)?.[1];
   // Title is RCDATA: a literal angle-bracket string is text, not an element.
-  const matches=head?scanHeadTags(head).titles.map(x=>unescapeText(x).replace(/\s+/g," ").trim()):[];
+  const matches=head?(parsedHead??scanHeadTags(head)).titles.map(x=>unescapeText(x).replace(/\s+/g," ").trim()):[];
   const title=matches[0]||"";
   const isModel=/(?:^|\/)tractors\/[^/]+\/index\.html$/.test(file);
   const heading=clean(html.match(h1Tag)?.[1]||"");
@@ -73,57 +73,59 @@ export function crossLocaleModelTitleGroups(records){
     .sort((a,b)=>a.slug.localeCompare(b.slug)||a.title.localeCompare(b.title));
 }
 
-export function auditBuiltSeoTitles(dir){
-  const root=resolve(dir);
+export function createSeoTitleCollector(root){
   const summary={
     htmlDocuments:0,modelPages:0,over60:0,over105:0,over160:0,
     byLocale:{},errors:[],duplicates:[],longExamples:[],bibliographyExamples:[],bibliographyTitles:0
   };
   const modelTitles=new Map();
   const modelTitleRecords=[];
-  function walk(directory){
-    for(const entry of readdirSync(directory,{withFileTypes:true})){
-      const path=join(directory,entry.name);
-      if(entry.isDirectory())walk(path);
-      else if(entry.isFile()&&entry.name.endsWith(".html")){
-        const file=relative(root,path).replaceAll("\\","/");
-        const page=inspectSeoTitle(readFileSync(path,"utf8"),file);
-        if(!page)continue;
-        summary.htmlDocuments++;
-        if(page.isModel)summary.modelPages++;
-        for(const code of page.errors)summary.errors.push({file,code});
-        const group=summary.byLocale[page.locale]??={pages:0,over60:0,over105:0,over160:0};
-        group.pages++;
-        if(page.length>60){
-          summary.over60++;
-          group.over60++;
-          if(summary.longExamples.length<30)
-            summary.longExamples.push({file,length:page.length,title:page.title.slice(0,180)});
-        }
-        if(page.isModel&&hasBibliographicTitleLeak(page.title)){
-          summary.bibliographyTitles++;
-          if(summary.bibliographyExamples.length<25)
-            summary.bibliographyExamples.push({file,title:page.title.slice(0,180)});
-        }
-        if(page.length>105){summary.over105++;group.over105++;}
-        if(page.length>160){summary.over160++;group.over160++;}
-        // A localized title must identify exactly one model page. We report
-        // duplicates for editorial QA rather than hiding a real variant.
-        if(page.isModel && page.title){
-          modelTitleRecords.push({file,title:page.title});
-          const key=page.locale+"::"+page.title;
-          const previous=modelTitles.get(key);
-          if(previous&&previous!==file)
-            summary.duplicates.push({file,previous,title:page.title.slice(0,160)});
-          else modelTitles.set(key,file);
-        }
+  return {
+    add(file,html,parsedHead){
+      const page=inspectSeoTitle(html,file,parsedHead);
+      if(!page)return;
+      summary.htmlDocuments++;
+      if(page.isModel)summary.modelPages++;
+      for(const code of page.errors)summary.errors.push({file,code});
+      const group=summary.byLocale[page.locale]??={pages:0,over60:0,over105:0,over160:0};
+      group.pages++;
+      if(page.length>60){
+        summary.over60++;
+        group.over60++;
+        if(summary.longExamples.length<30)
+          summary.longExamples.push({file,length:page.length,title:page.title.slice(0,180)});
       }
+      if(page.isModel&&hasBibliographicTitleLeak(page.title)){
+        summary.bibliographyTitles++;
+        if(summary.bibliographyExamples.length<25)
+          summary.bibliographyExamples.push({file,title:page.title.slice(0,180)});
+      }
+      if(page.length>105){summary.over105++;group.over105++;}
+      if(page.length>160){summary.over160++;group.over160++;}
+      // A localized title must identify exactly one model page. We report
+      // duplicates for editorial QA rather than hiding a real variant.
+      if(page.isModel && page.title){
+        modelTitleRecords.push({file,title:page.title});
+        const key=page.locale+"::"+page.title;
+        const previous=modelTitles.get(key);
+        if(previous&&previous!==file)
+          summary.duplicates.push({file,previous,title:page.title.slice(0,160)});
+        else modelTitles.set(key,file);
+      }
+    },
+    finish(){
+      if(!summary.htmlDocuments)throw Error("No HTML documents found for title QA");
+      summary.crossLocaleCandidates=crossLocaleModelTitleGroups(modelTitleRecords);
+      return summary;
     }
-  }
-  walk(root);
-  if(!summary.htmlDocuments)throw Error("No HTML documents found for title QA");
-  summary.crossLocaleCandidates=crossLocaleModelTitleGroups(modelTitleRecords);
-  return summary;
+  };
+}
+
+export function auditBuiltSeoTitles(dir){
+  const root=resolve(dir);
+  const collector=createSeoTitleCollector(root);
+  for(const {file,html} of builtHtmlDocuments(root))collector.add(file,html);
+  return collector.finish();
 }
 
 if(process.argv[1]&&resolve(process.argv[1])===fileURLToPath(import.meta.url)){

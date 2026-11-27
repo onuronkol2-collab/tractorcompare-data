@@ -1,6 +1,8 @@
 import { defineConfig } from "astro/config";
 import sitemap from "@astrojs/sitemap";
 import {readFileSync} from "node:fs";
+import {buildConcurrency} from "./scripts/build-performance-policy.mjs";
+import {buildResourceProfile} from "./scripts/build-resource-profile.mjs";
 
 // Only dates backed by a persistent rendered-content change audit are used.
 // Never put the build time into every sitemap <lastmod>.
@@ -11,12 +13,14 @@ if(recordedDates.version!==1||typeof recordedDates.dates!=="object")
 
 const siteUrl = process.env.SITE_URL;
 const indexingEnabled = process.env.PUBLIC_INDEXING_ENABLED === "true" && Boolean(siteUrl);
+const profileIntegrations = process.env.TRACTORVS_BUILD_PROFILE === "true" ? [buildResourceProfile()] : [];
 
 export default defineConfig({
   ...(siteUrl ? { site: siteUrl } : {}),
   output: "static",
   build: {
     format: "directory",
+    concurrency: buildConcurrency(process.env.TRACTORVS_ASTRO_CONCURRENCY),
   },
   integrations: indexingEnabled ? [sitemap({
     // These sitemap documents are built separately; include both in the single
@@ -45,5 +49,5 @@ export default defineConfig({
     },
     // hreflang is already emitted in each page head; unused XML namespaces are not needed.
     namespaces: { news: false, image: false, video: false, xhtml: false },
-  })] : [],
+  }), ...profileIntegrations] : profileIntegrations,
 });

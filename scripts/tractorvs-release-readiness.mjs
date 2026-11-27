@@ -46,6 +46,10 @@ const status=async(state,description)=>{
 if(!eligible(pr,files)){await status("failure","Outside initial automated UI scope; separate release review required");process.exit(0);}
 if(!await status("pending","Waiting for current SHA release evidence"))process.exit(0);
 const advisoryRunCache=new Map();
+// The candidate SHA is fixed; a successful ancestry comparison remains valid
+// for the identical immutable main SHA. Still fetch main on every iteration
+// and recheck it immediately before any terminal status write.
+let comparedMain=null;
 try{
  const deadline=Date.now()+(completion?60_000:15*60_000);
  while(Date.now()<deadline){
@@ -54,10 +58,16 @@ try{
   if(!eligible(current,files)){await status("failure","Eligibility changed");process.exit(0);}
   const main=(await api("/branches/main")).data.commit.sha;
   if(!validSha(main))throw Error("Invalid main SHA");
-  const comparison=(await api("/compare/"+main+"..."+sha)).data;
-  if(!["ahead","identical"].includes(comparison.status)){await status("failure","Update branch with current main and rerun all checks");process.exit(0);}
-  const checks=await pages("/commits/"+sha+"/check-runs?filter=latest","check_runs");
-  const statuses=await pages("/commits/"+sha+"/statuses");
+  if(comparedMain!==main){
+   const comparison=(await api("/compare/"+main+"..."+sha)).data;
+   if(!["ahead","identical"].includes(comparison.status)){await status("failure","Update branch with current main and rerun all checks");process.exit(0);}
+   comparedMain=main;
+  }
+  // Independent, read-only evidence for the same exact candidate SHA.
+  const [checks,statuses]=await Promise.all([
+   pages("/commits/"+sha+"/check-runs?filter=latest","check_runs"),
+   pages("/commits/"+sha+"/statuses")
+  ]);
   // API statuses are newest first; ignore older status attempts.
   const latest=[...new Map(statuses.slice().reverse().map(s=>[s.context,s])).values()];
   const ids=[...new Set(checks.map(readinessRunId).filter(id=>id!==null))];

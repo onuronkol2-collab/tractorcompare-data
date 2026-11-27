@@ -62,3 +62,7 @@ test("readiness accepts ten routes but rejects eleven before any network request
  await assert.rejects(waitForProductionRelease({target:A,paths:[],fetchFn}),/Invalid readiness routes/);
  assert.equal(calls,0,"Invalid input must fail before network access");
 });
+
+test("duplicate readiness paths fail before any network request",async()=>{
+ let calls=0;await assert.rejects(waitForProductionRelease({target:A,paths:["/tr/","/tr/"],fetchFn:async()=>{calls++;return page(A)}}),/Invalid readiness routes/);assert.equal(calls,0);
+});

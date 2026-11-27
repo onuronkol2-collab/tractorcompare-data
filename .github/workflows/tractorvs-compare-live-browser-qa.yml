@@ -86,6 +86,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ github.token }}
           TRACTORVS_REQUIRE_WORKERS_BUILD: "true"
+          TRACTORVS_BUILD_COMPLETION_EVENT: ${{ github.event_name == 'check_run' }}
         run: |
           test "$GITHUB_REF" = refs/heads/main
           node site/scripts/live-release-readiness.mjs "$GITHUB_SHA" /tr/compare/ /tr/tractors/
@@ -95,7 +96,9 @@ jobs:
 
   live-browser-projects:
     needs: release-readiness
-    runs-on: ubuntu-latest
+    # Match the known browser-compatible baseline image; keep the two-project
+    # production request budget unchanged until origin/WAF evidence permits more.
+    runs-on: ubuntu-24.04
     timeout-minutes: 30
     strategy:
       fail-fast: false
@@ -128,8 +131,8 @@ jobs:
           cache-dependency-path: package-lock.json
       - name: Install locked project and pinned browser QA tools
         run: |
-          npm ci --no-audit --no-fund
-          npm install --no-save --package-lock=false --ignore-scripts @playwright/test@1.65.1
+          npm ci --prefer-offline --no-audit --no-fund
+          npm install --prefer-offline --no-save --package-lock=false --ignore-scripts @playwright/test@1.65.1
       - name: Install only the required browser engine
         env:
           BROWSER_ENGINE: ${{ matrix.engine }}

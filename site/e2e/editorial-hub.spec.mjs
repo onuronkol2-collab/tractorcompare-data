@@ -294,10 +294,10 @@ test("published Başak maximum engine-power label matches manufacturer across re
 });
 
 
-test("reading-language coverage and filter agree with actual published article routes in all ten languages",async({page})=>{
+for(const locales of [["en","tr","zh","hi","pt-br"],["fr","de","ru","ja","es"]]) test("reading-language coverage and filter agree with actual published article routes: "+locales.join(","),async({page})=>{
  test.setTimeout(90000);
  await page.setViewportSize({width:320,height:800});
- for(const locale of ["en","tr","zh","hi","pt-br","fr","de","ru","ja","es"]){
+ for(const locale of locales){
   const path=(locale==="en"?"":"/"+locale)+"/articles/";
   const same=["en","tr"].includes(locale);
   const total=same?7:6;
@@ -358,10 +358,10 @@ test("all published article links and coverage remain accessible without JavaScr
 });
 
 
-test("full-text guide and model review offer localized source and section jumps in every language",async({page})=>{
+for(const locales of [["en","tr","zh","hi","pt-br"],["fr","de","ru","ja","es"]]) test("full-text guide and model review offer localized source and section jumps: "+locales.join(","),async({page})=>{
  test.setTimeout(120000);
  await page.setViewportSize({width:390,height:844});
- for(const lang of ["en","tr","zh","hi","pt-br","fr","de","ru","ja","es"]){
+ for(const lang of locales){
   for(const [path,n,source] of [
    ["/guides/choosing-a-tractor/",9,"#guide-sources-heading"],
    ["/reviews/basak-2075-bk/",7,"#review-references-heading"]

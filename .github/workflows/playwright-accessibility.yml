@@ -14,6 +14,12 @@ on:
       - "site/tests/model-discovery.test.mjs"
       - "site/tests/published-site-inventory.test.mjs"
       - "site/playwright.config.mjs"
+      - "site/scripts/browser-timing-summary.mjs"
+      - "site/scripts/browser-duration-evidence.mjs"
+      - "site/scripts/browser-duration-planner.mjs"
+      - "site/tests/browser-duration-evidence.test.mjs"
+      - "site/tests/browser-timing-summary.test.mjs"
+      - "site/tests/browser-runner-contract.test.mjs"
       - "site/package.json"
       - "package-lock.json"
   workflow_dispatch:
@@ -32,6 +38,8 @@ permissions:
 jobs:
   browser-projects:
     # Run every existing project independently; no early cancellation on failure.
+    # The measured WebKit project is the critical path. Split it across two
+    # isolated runners, retaining full coverage and the existing aggregate.
     # Pin the browser dependency environment: ubuntu-latest moved to 26.04,
     # whose Microsoft APT feed returned HTTP 403 during the #755 mobile install.
     # Revalidate browser dependencies before deliberately upgrading this image.
@@ -39,29 +47,48 @@ jobs:
     timeout-minutes: 25
     strategy:
       fail-fast: false
-      max-parallel: 4
+      max-parallel: 5
       matrix:
         include:
           - project: chromium
             engine: chromium
+            shard: '1/1'
+            evidence: chromium
           - project: firefox
             engine: firefox
+            shard: '1/1'
+            evidence: firefox
           - project: webkit
             engine: webkit
+            shard: '1/2'
+            evidence: webkit-shard-1
+          - project: webkit
+            engine: webkit
+            shard: '2/2'
+            evidence: webkit-shard-2
           - project: mobile-chromium
             engine: chromium
+            shard: '1/1'
+            evidence: mobile-chromium
     env:
       CI: "true"
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
+        id: node_setup
         with:
           node-version: "22.23.4"
           cache: npm
+          cache-dependency-path: package-lock.json
+      - name: Report npm download cache status
+        env:
+          CACHE_HIT: ${{ steps.node_setup.outputs.cache-hit }}
+        run: |
+          printf 'npm download cache hit: %s\n' "${CACHE_HIT:-unknown}" >> "$GITHUB_STEP_SUMMARY"
       - name: Install production build dependencies from lockfile
-        run: npm ci --no-audit --no-fund
+        run: npm ci --prefer-offline --no-audit --no-fund
       - name: Install pinned test-only tools without modifying repository lockfile
-        run: npm install --no-save --package-lock=false --ignore-scripts @playwright/test@1.65.1 @axe-core/playwright@4.14.0
+        run: npm install --prefer-offline --no-save --package-lock=false --ignore-scripts @playwright/test@1.65.1 @axe-core/playwright@4.14.0
       - name: Install only the required engine
         env:
           BROWSER_ENGINE: ${{ matrix.engine }}
@@ -72,17 +99,33 @@ jobs:
           TRACTORVS_FORUM_BROWSER_TEST: "true"
         run: npm run build
       - name: Execute complete project smoke and axe accessibility baseline
+        id: browser_execution
         env:
           BROWSER_PROJECT: ${{ matrix.project }}
-        run: npx playwright test --config site/playwright.config.mjs --project="$BROWSER_PROJECT"
+          BROWSER_SHARD: ${{ matrix.shard }}
+          TRACTORVS_BROWSER_JSON_REPORT: ${{ runner.temp }}/tractorvs-browser-timing.json
+        run: npx playwright test --config site/playwright.config.mjs --project="$BROWSER_PROJECT" --shard="$BROWSER_SHARD"
+      - name: Summarize browser timing and executed evidence
+        if: ${{ !cancelled() && steps.browser_execution.outcome != 'skipped' && steps.browser_execution.outcome != '' }}
+        env:
+          TIMING_LABEL: ${{ matrix.evidence }}
+        run: node site/scripts/browser-timing-summary.mjs "$RUNNER_TEMP/tractorvs-browser-timing.json" "$TIMING_LABEL"
+      - name: Record compact historical duration sample
+        if: ${{ !cancelled() && steps.browser_execution.outcome == 'success' }}
+        env:
+          BROWSER_PROJECT: ${{ matrix.project }}
+          BROWSER_SHARD: ${{ matrix.shard }}
+        run: node site/scripts/browser-duration-evidence.mjs compact "$RUNNER_TEMP/tractorvs-browser-timing.json" "$RUNNER_TEMP/tractorvs-browser-duration.json"
       - name: Upload diagnostics and axe findings
         if: always()
         uses: actions/upload-artifact@v7
         with:
-          name: tractorvs-browser-smoke-artifacts-${{ matrix.project }}
+          name: tractorvs-browser-smoke-artifacts-${{ matrix.evidence }}
           path: |
             site/playwright-report
             site/test-results
+            ${{ runner.temp }}/tractorvs-browser-timing.json
+            ${{ runner.temp }}/tractorvs-browser-duration.json
           if-no-files-found: ignore
           retention-days: 7
 
@@ -93,10 +136,10 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 4
     steps:
-      - name: Require success of all four projects
+      - name: Require success of all four projects including both WebKit shards
         env:
           MATRIX_RESULT: ${{ needs.browser-projects.result }}
         run: |
           test "$MATRIX_RESULT" = success
-          echo "All four configured browser projects completed successfully."
+          echo "All four configured browser projects completed successfully, including both WebKit shards."
           echo "Check per-project executed/passed/skipped/flaky counts. Inert preview QA is not live production evidence." >> "$GITHUB_STEP_SUMMARY"

@@ -2,12 +2,16 @@
 import TractorDetail from "../../../components/TractorDetail.astro";
 import { getPublicCatalog } from "../../../lib/catalog";
 import { NEW_LOCALES } from "../../../lib/locales";
+import { prepareModelDiscovery } from "../../../lib/related-tractors";
 export async function getStaticPaths() {
   const catalog = await getPublicCatalog();
-  return NEW_LOCALES.flatMap((locale) => catalog.tractors.map((tractor) => ({
-    params: { locale, slug: tractor.slug }, props: { locale, tractor },
+  // All eight locale routes use identical published model identities.
+  // Keep the existing locale-first route order; no cross-build cache.
+  const prepared = prepareModelDiscovery(catalog.tractors);
+  return NEW_LOCALES.flatMap((locale) => prepared.map(({tractor,moreModels}) => ({
+    params: { locale, slug: tractor.slug }, props: { locale, tractor, moreModels },
   })));
 }
-const { locale, tractor } = Astro.props;
+const { locale, tractor, moreModels } = Astro.props;
 ---
-<TractorDetail lang={locale} tractor={tractor} />
+<TractorDetail lang={locale} tractor={tractor} preparedMoreModels={moreModels} />

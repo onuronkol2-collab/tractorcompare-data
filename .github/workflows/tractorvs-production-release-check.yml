@@ -36,10 +36,18 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
+        id: node_setup
         with:
           node-version: "22.23.4"
+          cache: npm
+          cache-dependency-path: package-lock.json
+      - name: Report npm download cache status
+        env:
+          CACHE_HIT: ${{ steps.node_setup.outputs.cache-hit }}
+        run: |
+          printf 'npm download cache hit: %s\n' "${CACHE_HIT:-unknown}" >> "$GITHUB_STEP_SUMMARY"
       - name: Install declared workspace dependencies
-        run: npm ci --no-audit --no-fund
+        run: npm ci --prefer-offline --no-audit --no-fund
       - name: Verify exactly the Cloudflare production bundle, without deploying
         working-directory: site
         env:
@@ -48,6 +56,7 @@ jobs:
           SUPABASE_URL: https://aaufxtcvnzgavtlintiv.supabase.co
           SUPABASE_ANON_KEY: ${{ secrets.TRACTORVS_SUPABASE_ANON_JWT }}
           WORKERS_CI_BRANCH: main
+          TRACTORVS_BUILD_PROFILE: "true"
         run: |
           if [ -z "$SUPABASE_ANON_KEY" ]; then
             echo "::error::Read-only TRACTORVS_SUPABASE_ANON_JWT secret missing"; exit 1

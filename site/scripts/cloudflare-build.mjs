@@ -22,14 +22,22 @@ function runBuild(env){
 }
 export function buildForCloudflare(env=process.env){
  const mode=buildMode(env.WORKERS_CI_BRANCH);
+ const totalStart=performance.now();
+ // Timings are diagnostic only, with no environment or credentials logged.
+ const phase=(name,fn)=>{
+  const start=performance.now();
+  try{return fn();}
+  finally{if(env.TRACTORVS_BUILD_PROFILE==="true")console.log("TRACTORVS_BUILD_PHASE "+JSON.stringify({mode,phase:name,elapsedMs:Math.round(performance.now()-start)}));}
+ };
  if(mode==="preview"){
   console.log("[TractorVS] Building isolated noindex preview branch.");
-  runBuild({...env,PUBLIC_INDEXING_ENABLED:"false",SITE_URL:""});
+  phase("astro",()=>runBuild({...env,PUBLIC_INDEXING_ENABLED:"false",SITE_URL:""}));
   return {mode};
  }
- preflight(env);
- runBuild(env);
- const check=postflight(env);
+ phase("preflight",()=>preflight(env));
+ phase("astro",()=>runBuild(env));
+ const check=phase("postflight",()=>postflight(env));
+ if(env.TRACTORVS_BUILD_PROFILE==="true")console.log("TRACTORVS_BUILD_TOTAL "+JSON.stringify({mode,elapsedMs:Math.round(performance.now()-totalStart)}));
  console.log("[TractorVS] Production bundle has passed all release checks.");
  return {mode,...check};
 }

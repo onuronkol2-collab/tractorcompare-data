@@ -24,12 +24,12 @@ import { HEADLINE_PROVENANCE_COPY } from "../lib/headline-provenance-i18n.ts";
 import {forumText as forumCopy} from "../lib/forum-i18n.ts";
 import {modelForumTopics} from "../lib/forum.ts";
 import {editorialHubTranslation} from "../lib/editorial-hub-i18n.ts";
-interface Props { lang: Locale; tractor: TractorRecord; }
-const { lang, tractor } = Astro.props;
+interface Props { lang: Locale; tractor: TractorRecord; preparedMoreModels?: readonly TractorRecord[]; }
+const { lang, tractor, preparedMoreModels } = Astro.props;
 const modelDiscussions=await modelForumTopics(lang,tractor.tractor_id);
 const discussionTitle:Record<Locale,string>={en:"Discussions about this tractor",tr:"Bu traktör hakkındaki forum konuları",zh:"关于这款拖拉机的讨论",hi:"इस ट्रैक्टर पर चर्चाएँ","pt-br":"Discussões sobre este trator",fr:"Discussions sur ce tracteur",de:"Diskussionen zu diesem Traktor",ru:"Обсуждения этого трактора",ja:"このトラクターに関する話題",es:"Debates sobre este tractor"};
 // Same read-only, published-only catalogue already used by getStaticPaths.
-const moreModels = modelDiscoveryLinks(tractor,(await getPublicCatalog()).tractors);
+const moreModels = preparedMoreModels ?? modelDiscoveryLinks(tractor,(await getPublicCatalog()).tractors);
 const hasBasak2075Analysis = tractor.brand_name.toLocaleLowerCase("tr").includes("başak") &&
   (tractor.model_name.trim().toLocaleLowerCase("tr")==="2075 bk" ||
    tractor.model_name.trim().toLocaleLowerCase("tr")==="2075 bt");
