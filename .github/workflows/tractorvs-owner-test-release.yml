@@ -1,0 +1,95 @@
+name: TractorVS owner TEST protected release
+# Explicit owner authorization only. No scheduled general PR merging.
+on:
+  issue_comment:
+    types: [created]
+  workflow_dispatch:
+    inputs:
+      pr_number:
+        description: Exact reviewed PR number
+        required: true
+        type: string
+      head_sha:
+        description: Exact tested PR head SHA
+        required: true
+        type: string
+      base_sha:
+        description: Exact tested main base SHA
+        required: true
+        type: string
+permissions: {}
+concurrency:
+  group: ${{ github.actor == 'onuronkol2-collab' && (github.event_name == 'workflow_dispatch' || github.event.issue.pull_request && startsWith(github.event.comment.body, 'TRACTORVS TEST RELEASE ')) && 'tractorvs-protected-candidate-release' || format('tractorvs-ignored-{0}', github.run_id) }}
+  cancel-in-progress: false
+jobs:
+  scan:
+    if: github.repository == 'onuronkol2-collab/tractorcompare-data' && github.ref == 'refs/heads/main' && github.actor == 'onuronkol2-collab' && vars.TRACTORVS_PR_ONLY_CUTOVER == 'true' && (github.event_name == 'workflow_dispatch' || github.event.issue.pull_request && startsWith(github.event.comment.body, 'TRACTORVS TEST RELEASE '))
+    runs-on: ubuntu-24.04
+    timeout-minutes: 8
+    permissions:
+      contents: read
+      pull-requests: read
+      issues: read
+      checks: read
+      actions: read
+      statuses: read
+    outputs:
+      ready: ${{ steps.scan.outputs.ready }}
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+      - run: test "$(git rev-parse HEAD)" = "$GITHUB_SHA"
+      - id: scan
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: node scripts/tractorvs-owner-test-release.mjs scan
+  merge:
+    needs: scan
+    if: needs.scan.outputs.ready == 'true' && vars.TRACTORVS_PR_ONLY_CUTOVER == 'true'
+    environment: secure-publisher
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    permissions:
+      contents: read
+      pull-requests: read
+      issues: read
+      checks: read
+      actions: read
+      statuses: read
+    outputs:
+      merged_sha: ${{ steps.merge.outputs.merged_sha }}
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+      - run: test "$(git rev-parse HEAD)" = "$GITHUB_SHA"
+      - id: merge
+        env:
+          GH_TOKEN: ${{ github.token }}
+          APP_ID: ${{ vars.TRACTORVS_PUBLISHER_APP_ID }}
+          APP_PRIVATE_KEY: ${{ secrets.TRACTORVS_PUBLISHER_PRIVATE_KEY }}
+          CUTOVER_ENABLED: ${{ vars.TRACTORVS_PR_ONLY_CUTOVER }}
+          PILOT_OWNER_RELEASE: "true"
+        run: node scripts/tractorvs-owner-test-release.mjs merge
+  verify-live:
+    needs: merge
+    if: needs.merge.outputs.merged_sha != ''
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    permissions:
+      contents: read
+      checks: read
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+      - env:
+          GITHUB_TOKEN: ${{ github.token }}
+          TRACTORVS_REQUIRE_WORKERS_BUILD: "true"
+          TARGET_RELEASE: ${{ needs.merge.outputs.merged_sha }}
+        run: node site/scripts/live-release-readiness.mjs "$TARGET_RELEASE" / /tr/ /zh/ /hi/ /pt-br/ /fr/ /de/ /ru/ /ja/ /es/
+      - run: echo "Release marker and trusted build verified; changed-feature live audits remain required." >> "$GITHUB_STEP_SUMMARY"

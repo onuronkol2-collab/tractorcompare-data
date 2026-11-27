@@ -22,3 +22,8 @@ Bu yöntem gelecekteki hataları azaltır; **mutlak, değiştirilemez AI belleğ
 ## Kalıcı geliştirme hızı ve kalite tercihi — 25 Kasım 2026
 
 Her görevde AGENTS.md içindeki Maksimum Geliştirme Hızı kuralını ve `site/docs/maximum-quality-throughput-20261125.md` rehberini uygula. İlgili işleri en geniş güvenli toplu pakette tamamla; çakışmayan işleri paralel yürüt; güncel SHA'ya bağlı başarılı testleri ve kaynak kanıtlarını yeniden kullan. Dört tarayıcı ve tam canlı doğrulama, güvenlik, SEO, veri ve lisans kapıları korunur. Test/dağıtım zaman kaybını ölç, yalnız gerçek nedeni gider, ücretsiz altyapı kullan, kullanıcıya gereksiz onay sorusu sorma. GitHub kaydı hesap içi bellek veya ChatGPT Proje Talimatları alanının otomatik güncellendiği anlamına gelmez.
+
+
+## Bağlayıcı komut düzeni — 27 Kasım 2026
+
+DEVAM yalnız hazırlık ve geliştirme, TEST zorunlu testler + hata düzeltme + başarılıysa güvenli yayın + canlı doğrulamadır. Ayrı YAYINLA beklenmez. Zorunlu güvenlik onayları ve bağımsız inceleme korunur. Genel geliştirme PR’larında yetkili TEST oturumu güncel head/base ve bütün gerekli kontrolleri doğruladıktan sonra `TRACTORVS TEST RELEASE <head_sha> <base_sha>` biçiminde yalnız repo sahibi kimliğinden PR yorumu gönderir; erişim bunu desteklemiyorsa mevcut korumalı standart yol veya sahibi tarafından çalıştırılan `TractorVS owner TEST protected release` kullanılır. Komut PR açıklamasından, etiketten, dış kullanıcıdan ya da DEVAM oturumundan çıkarılamaz. Altyapı ve güvenlik değişiklikleri için secure-publisher onayı ve gereken kapsam incelemesi korunur. SHA değişirse yeniden doğrula. Canlı 10 dil ve değişen işlev kanıtı olmadan bitirme.

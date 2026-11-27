@@ -1,0 +1,47 @@
+import test from "node:test";
+import assert from "node:assert/strict";
+import {browserRequiredNames,LEGACY_BROWSER_NAMES,SHARDED_BROWSER_NAMES} from "../../scripts/tractorvs-browser-checks.mjs";
+import {authorization,assessOwnerEvidence,matchesAuthorizedPR,OWNER,OWNER_ID,WORKFLOW} from "../../scripts/tractorvs-owner-test-release-policy.mjs";
+import {REPO,requiredCandidateChecks} from "../../scripts/tractorvs-protected-candidate-policy.mjs";
+const head="a".repeat(40),base="b".repeat(40),now=Date.parse("2026-11-27T17:00:00Z");
+const env={GITHUB_REPOSITORY:REPO,GITHUB_REF:"refs/heads/main",GITHUB_WORKFLOW_REF:REPO+"/"+WORKFLOW+"@refs/heads/main",GITHUB_ACTOR:OWNER,GITHUB_TRIGGERING_ACTOR:OWNER,GITHUB_ACTOR_ID:String(OWNER_ID),GITHUB_EVENT_NAME:"issue_comment",GITHUB_SHA:base};
+const date=new Date(now).toISOString(),user={login:OWNER,id:OWNER_ID};
+const event={action:"created",sender:user,issue:{number:42,pull_request:{}},comment:{id:42,body:"TRACTORVS TEST RELEASE "+head+" "+base,author_association:"OWNER",user,created_at:date,updated_at:date}};
+const selection={number:42,head,base,commentId:42};
+test("owner exact authorization rejects wrong actor, fork, edited/expired comment, old main, wrong workflow",()=>{
+ assert.deepEqual(authorization(event,env,now),selection);
+ for(const change of [{GITHUB_ACTOR:"other"},{GITHUB_TRIGGERING_ACTOR:"other"},{GITHUB_ACTOR_ID:"1"},{GITHUB_REF:"refs/heads/other"},{GITHUB_SHA:head},{GITHUB_WORKFLOW_REF:"other"},{GITHUB_EVENT_NAME:"schedule"}])assert.equal(authorization(event,{...env,...change},now),null);
+ assert.equal(authorization({...event,action:"edited"},env,now),null);
+ assert.equal(authorization({...event,comment:{...event.comment,user:{login:OWNER,id:1}}},env,now),null);
+ assert.equal(authorization({...event,comment:{...event.comment,updated_at:"different"}},env,now),null);
+ assert.equal(authorization(event,env,now+7200001),null);
+});
+test("legacy and full sharded matrices only; missing shard remains required",()=>{
+ assert.deepEqual(browserRequiredNames([]),LEGACY_BROWSER_NAMES);
+ assert.deepEqual(browserRequiredNames([{name:SHARDED_BROWSER_NAMES[0]}]),SHARDED_BROWSER_NAMES);
+ assert.equal(browserRequiredNames([{name:LEGACY_BROWSER_NAMES[0]},{name:SHARDED_BROWSER_NAMES[0]}]),null);
+ assert.equal(browserRequiredNames([{name:"browser-projects (fake)"}]),null);
+});
+function fixture(sharded){
+ const runs=[],names=sharded?SHARDED_BROWSER_NAMES:LEGACY_BROWSER_NAMES,req=[...requiredCandidateChecks("sitemap").filter(r=>!r.name.startsWith("browser-projects (")),...names.map(name=>({name,appId:15368,path:".github/workflows/playwright-accessibility.yml",event:"pull_request"}))];
+ const checks=req.map((r,i)=>{const id=i+1,runId=100+i;if(r.path)runs.push({id:runId,path:r.path,event:r.event,head_sha:head,repository:{full_name:REPO},head_repository:{full_name:REPO},status:"completed",conclusion:"success"});return {id,name:r.name,app:{id:r.appId},head_sha:head,status:"completed",conclusion:"success",details_url:"https://github.com/"+REPO+"/actions/runs/"+runId+"/job/"+id};});
+ return {selection,checks,runs,statuses:[]};
+}
+test("release evidence rejects missing/failed shard, fake workflow, other failed status and added DB risk without RLS checks",()=>{
+ for(const sharded of [false,true]){
+  const f=fixture(sharded);assert.equal(assessOwnerEvidence(f),true);
+  assert.equal(assessOwnerEvidence({...f,checks:f.checks.slice(1)}),false);
+  assert.equal(assessOwnerEvidence({...f,checks:f.checks.filter(c=>c.name!==(sharded?SHARDED_BROWSER_NAMES[3]:LEGACY_BROWSER_NAMES[2]))}),false);
+  assert.equal(assessOwnerEvidence({...f,runs:f.runs.slice(1)}),false);
+  assert.equal(assessOwnerEvidence({...f,statuses:[{context:"unknown",state:"failure"}]}),false);
+  assert.equal(assessOwnerEvidence({...f,files:[{filename:"supabase/migrations/x.sql"}]}),false);
+ }
+});
+test("exact same repository PR only; drafts and outdated SHA rejected",()=>{
+ const pr={number:42,state:"open",draft:false,user,head:{sha:head,ref:"ci/reviewed",repo:{full_name:REPO}},base:{sha:base,ref:"main",repo:{full_name:REPO}},mergeable:true,mergeable_state:"clean",changed_files:1,title:"Reviewed improvement"};
+ const files=[{filename:"site/tests/x.mjs"}];assert.equal(matchesAuthorizedPR(pr,selection,files),true);
+ assert.equal(matchesAuthorizedPR({...pr,draft:true},selection,files),false);
+ assert.equal(matchesAuthorizedPR({...pr,title:"TEST only"},selection,files),false);
+ assert.equal(matchesAuthorizedPR({...pr,head:{...pr.head,sha:base}},selection,files),false);
+ assert.equal(matchesAuthorizedPR(pr,selection,[]),false);
+});

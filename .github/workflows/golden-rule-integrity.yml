@@ -31,3 +31,6 @@ jobs:
 
       - name: Verify automated nominal catalogue evidence and preserved release gates (offline)
         run: node --test site/tests/tractor-split-evidence-review.test.mjs
+
+      - name: Verify owner TEST release authorization and complete browser matrices (offline)
+        run: node --test site/tests/owner-test-release.test.mjs site/tests/auto-release-readiness.test.mjs site/tests/protected-candidate-policy.test.mjs site/tests/protected-release-executor.test.mjs

@@ -21,8 +21,10 @@ const json=p=>JSON.parse(read(p));
 export function validateEnvironment(env,mode){
  ok(env.GITHUB_REPOSITORY===REPO&&env.GITHUB_REF==="refs/heads/main"&&sha(env.GITHUB_SHA),"Untrusted main execution");
  const automatic=env.PILOT_AUTOMATIC==="true"&&env.CUTOVER_ENABLED==="true";
+ const ownerRelease=env.PILOT_OWNER_RELEASE==="true"&&env.CUTOVER_ENABLED==="true"&&env.GITHUB_ACTOR==="onuronkol2-collab"&&env.GITHUB_TRIGGERING_ACTOR==="onuronkol2-collab"&&env.GITHUB_ACTOR_ID==="356616554"&&env.GITHUB_WORKFLOW_REF===REPO+"/.github/workflows/tractorvs-owner-test-release.yml@refs/heads/main";
+ if(env.PILOT_OWNER_RELEASE==="true")ok(ownerRelease,"Untrusted owner release context");
  ok(mode==="verify"?["pull_request_target","workflow_dispatch"].includes(env.GITHUB_EVENT_NAME):
-    env.GITHUB_EVENT_NAME==="workflow_dispatch"||automatic&&["schedule","push"].includes(env.GITHUB_EVENT_NAME),"Unexpected event");
+    env.GITHUB_EVENT_NAME==="workflow_dispatch"||automatic&&["schedule","push"].includes(env.GITHUB_EVENT_NAME)||ownerRelease&&env.GITHUB_EVENT_NAME==="issue_comment","Unexpected event");
  if(env.PILOT_AUTOMATIC==="true")ok(automatic,"Automatic cutover not explicitly enabled");
 }
 export function validatePayload(payload,kind,base){
