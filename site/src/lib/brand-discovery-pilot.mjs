@@ -23,7 +23,8 @@ export function listedBrandCollections(publicCatalog){
       item && item.brand_name===pilot.name &&
       (!Object.hasOwn(item,"status") || item.status==="published") &&
       typeof item.tractor_id==="string" && item.tractor_id.length>0 &&
-      typeof item.slug==="string" && item.slug.length>0 &&
+      typeof item.model_name==="string" && item.model_name.trim().length>0 &&
+      typeof item.slug==="string" && /^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(item.slug) &&
       Array.isArray(item.specifications));
     const ids=models.map(model=>model.tractor_id);
     const slugs=models.map(model=>model.slug);
@@ -40,13 +41,13 @@ export function listedBrandCollections(publicCatalog){
 
 export function verifiedModelSources(model){
   const sources=new Map();
-  for(const spec of model.specifications||[]){
+  for(const spec of Array.isArray(model?.specifications)?model.specifications:[]){
     if(!spec?.verified_at || typeof spec.source_url!=="string")continue;
     try{
       const url=new URL(spec.source_url);
-      if(!["https:","http:"].includes(url.protocol))continue;
+      if(!["https:","http:"].includes(url.protocol)||url.username||url.password)continue;
       if(!sources.has(url.href)){
-        sources.set(url.href,{url:url.href,publisher:spec.source_publisher?.trim()||null});
+        sources.set(url.href,{url:url.href,publisher:typeof spec.source_publisher==="string"?spec.source_publisher.trim()||null:null});
       }
     }catch{continue}
   }

@@ -363,7 +363,7 @@ test("full-text guide and model review offer localized source and section jumps 
  await page.setViewportSize({width:390,height:844});
  for(const lang of ["en","tr","zh","hi","pt-br","fr","de","ru","ja","es"]){
   for(const [path,n,source] of [
-   ["/guides/choosing-a-tractor/",8,"#guide-sources-heading"],
+   ["/guides/choosing-a-tractor/",9,"#guide-sources-heading"],
    ["/reviews/basak-2075-bk/",7,"#review-references-heading"]
   ]){
    await page.goto((lang==="en"?"":"/"+lang)+path,{waitUntil:"domcontentloaded"});
@@ -377,6 +377,39 @@ test("full-text guide and model review offer localized source and section jumps 
     await expect(page.locator(target)).toHaveCount(1);
     expect((await link.textContent()).trim()).not.toBe("");
     expect((await link.boundingBox())?.height??0).toBeGreaterThanOrEqual(44);
+   }
+   if(path==="/guides/choosing-a-tractor/"){
+    const jump=toc.locator('a[href="#power-converter-heading"]');
+    await expect(jump).toHaveCount(1);
+    await jump.focus();
+    await expect(jump).toBeFocused();
+    await page.keyboard.press("Enter");
+    await expect(page.locator("#power-converter-heading")).toBeInViewport();
+    expect(new URL(page.url()).hash).toBe("#power-converter-heading");
+    const converter=page.locator("[data-power-converter]");
+    await expect(converter).toHaveCount(1);
+    const amount=converter.locator("[data-power-amount]");
+    const unit=converter.locator("[data-power-unit]");
+    const result=converter.locator("[data-power-results]");
+    const error=converter.locator("[data-power-error]");
+    const kw=converter.locator('[data-power-value="kw"]');
+    const display=(value)=>new Intl.NumberFormat(lang==="zh"?"zh-CN":lang==="pt-br"?"pt-BR":lang,{maximumFractionDigits:4}).format(value);
+    await expect(amount).toBeEnabled();
+    await expect(unit).toBeEnabled();
+    await amount.fill("100");
+    await unit.selectOption("hp");
+    await expect(kw).toHaveText(display(74.57));
+    await unit.selectOption("ps");
+    await expect(kw).toHaveText(display(73.5499));
+    await amount.fill("-1");
+    await expect(amount).toHaveAttribute("aria-invalid","true");
+    await expect(error).toBeVisible();
+    await expect(result).toBeHidden();
+    await amount.fill("0");
+    await expect(amount).toHaveAttribute("aria-invalid","false");
+    await expect(error).toBeHidden();
+    await expect(result).toBeVisible();
+    await expect(kw).toHaveText(display(0));
    }
    const sources=toc.locator('a[href="'+source+'"]');
    await sources.focus();

@@ -1,0 +1,74 @@
+---
+import type {Locale} from "../lib/locales.ts";
+import {POWER_UNIT_COPY} from "../lib/power-unit-copy.ts";
+import {convertPower,POWER_SOURCE} from "../lib/power-unit-converter.mjs";
+interface Props {lang:Locale}
+const {lang}=Astro.props;
+const copy=POWER_UNIT_COPY[lang];
+const locale=lang==="zh"?"zh-CN":lang==="pt-br"?"pt-BR":lang;
+const example=convertPower(100,"kw")!;
+const formatter=new Intl.NumberFormat(locale,{maximumFractionDigits:4});
+const units=[{key:"kw",label:"kW"},{key:"hp",label:copy.mechanical},{key:"ps",label:copy.metric}] as const;
+---
+<section class="power-converter" aria-labelledby="power-converter-heading" data-power-converter data-locale={locale} data-invalid={copy.invalid}>
+  <h2 id="power-converter-heading" tabindex="-1">{copy.heading}</h2>
+  <p>{copy.intro}</p>
+  <fieldset data-power-controls disabled>
+    <div class="power-controls">
+      <label for="power-amount">{copy.amount}<input id="power-amount" type="number" inputmode="decimal" min="0" max="1000000" step="any" value="100" data-power-amount /></label>
+      <label for="power-unit">{copy.unit}<select id="power-unit" data-power-unit>{units.map(unit=><option value={unit.key}>{unit.label}</option>)}</select></label>
+    </div>
+  </fieldset>
+  <noscript><p>{copy.enable}</p></noscript>
+  <p class="power-error" data-power-error role="status" hidden></p>
+  <div aria-live="polite" aria-atomic="true" data-power-results>
+    <p><strong>{copy.result}</strong></p>
+    <dl>{units.map(unit=><div><dt>{unit.label}</dt><dd data-power-value={unit.key}>{formatter.format(example[unit.key])}</dd></div>)}</dl>
+  </div>
+  <p>{copy.note}</p>
+  <a href={POWER_SOURCE} hreflang="en" target="_blank" rel="noopener noreferrer">{copy.source} (EN)</a>
+</section>
+<script>
+  import {convertPower,POWER_UNITS} from "../lib/power-unit-converter.mjs";
+  for(const root of document.querySelectorAll<HTMLElement>("[data-power-converter]")){
+    const controls=root.querySelector<HTMLFieldSetElement>("[data-power-controls]");
+    const input=root.querySelector<HTMLInputElement>("[data-power-amount]");
+    const unit=root.querySelector<HTMLSelectElement>("[data-power-unit]");
+    const error=root.querySelector<HTMLElement>("[data-power-error]");
+    const results=root.querySelector<HTMLElement>("[data-power-results]");
+    if(!controls||!input||!unit||!error||!results)continue;
+    const format=new Intl.NumberFormat(root.dataset.locale||"en",{maximumFractionDigits:4});
+    const update=()=>{
+      const converted=input.validity.valid?convertPower(input.valueAsNumber,unit.value):null;
+      input.setAttribute("aria-invalid",String(!converted));
+      error.hidden=Boolean(converted);
+      error.textContent=converted?"":root.dataset.invalid||"";
+      results.hidden=!converted;
+      if(!converted)return;
+      for(const key of POWER_UNITS){
+        const output=root.querySelector<HTMLElement>(`[data-power-value="${key}"]`);
+        if(output)output.textContent=format.format(converted[key]);
+      }
+    };
+    input.addEventListener("input",update);
+    unit.addEventListener("change",update);
+    controls.disabled=false;
+    update();
+  }
+</script>
+<style>
+  .power-converter{padding:clamp(18px,4vw,28px);margin:28px 0;border:1px solid #cadbc6;border-radius:14px;background:#eef5e9;color:#1e3427}
+  .power-converter h2{scroll-margin-top:24px}
+  .power-converter p{line-height:1.7;margin:12px 0}
+  fieldset{border:0;padding:0;margin:18px 0;min-width:0}
+  .power-controls,dl{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+  label{display:grid;gap:6px;font-weight:650;min-width:0}
+  input,select{box-sizing:border-box;width:100%;min-width:0;min-height:44px;padding:8px;border:1px solid #748b75;border-radius:6px;background:white;color:#173424;font:inherit;font-size:16px}
+  input:focus-visible,select:focus-visible{outline:3px solid #23643b;outline-offset:3px}
+  dl{grid-template-columns:repeat(3,minmax(0,1fr));margin:0}
+  dl div{padding:12px;background:white;border-radius:8px;min-width:0;overflow-wrap:anywhere}
+  dt{font-size:14px}dd{font-size:clamp(18px,3vw,25px);font-weight:750;margin:4px 0 0;font-variant-numeric:tabular-nums}
+  .power-error{color:#8c251e;font-weight:650}
+  [hidden]{display:none!important}
+  @media(max-width:520px){.power-controls,dl{grid-template-columns:1fr}}
+</style>

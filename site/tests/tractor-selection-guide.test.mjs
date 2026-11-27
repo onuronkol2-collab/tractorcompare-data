@@ -17,7 +17,8 @@ test("tractor selection guide renders authentic reciprocal ten-language pages",(
   assert.match(read("pages/[locale]/guides/choosing-a-tractor/index.astro"),/NEW_LOCALES\.map/);
   assert.match(guide,/Traktör seçerken nelere dikkat edilmeli/);
   assert.match(guide,/How to choose a tractor beyond horsepower/);
-  assert.match(guide,/datetime="2026-11-19"/);
+  assert.match(guide,/datetime=\{reviewedOn\}/);
+  assert.match(guide,/const reviewedOn="2026-11-27"/);
   assert.ok((guide.match(/question:/g)||[]).length>=12,"each of six topics must have an actual check question in both languages");
   assert.match(guide,/<table>/);
   assert.match(guide,/<th scope="row">/);

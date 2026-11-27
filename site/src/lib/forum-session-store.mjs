@@ -16,6 +16,10 @@ function nonemptyToken(value){
  return typeof value==="string"&&value.length>0&&value.length<=12000;
 }
 function storage(name){try{return window[name]}catch{return null}}
+// A storage object may be accessible while individual operations throw
+// (browser privacy policies, disabled storage, or sandboxed contexts).
+function readItem(store,key){try{return store?.getItem(key)??null}catch{return null}}
+function removeItem(store,key){try{store?.removeItem(key)}catch{}}
 function parseSaved(raw,now=Date.now()){
  try{
   const data=JSON.parse(raw||"null");
@@ -27,13 +31,12 @@ function parseSaved(raw,now=Date.now()){
 }
 export function readForumSession(){
  const durable=storage("localStorage");
- const record=parseSaved(durable?.getItem(FORUM_SESSION_KEY));
- if(!record&&durable?.getItem(FORUM_SESSION_KEY)){
-  try{durable.removeItem(FORUM_SESSION_KEY)}catch{}
- }
+ const raw=readItem(durable,FORUM_SESSION_KEY);
+ const record=parseSaved(raw);
+ if(!record&&raw)removeItem(durable,FORUM_SESSION_KEY);
  const tab=storage("sessionStorage");
- const access=tab?.getItem(FORUM_ACCESS_KEY)||"";
- const refresh=tab?.getItem(FORUM_REFRESH_KEY)||"";
+ const access=readItem(tab,FORUM_ACCESS_KEY)||"";
+ const refresh=readItem(tab,FORUM_REFRESH_KEY)||"";
  // A valid shared record wins if another tab rotated the refresh token.
  if(record)return record;
  return nonemptyToken(access)?{access,refresh:nonemptyToken(refresh)?refresh:"",remember:false}:null;
@@ -49,7 +52,7 @@ export function rememberForumSession(access,refresh,remember=false){
  const durable=storage("localStorage");
  try{
   if(remember&&nonemptyToken(refresh)){
-   const current=parseSaved(durable?.getItem(FORUM_SESSION_KEY));
+   const current=parseSaved(readItem(durable,FORUM_SESSION_KEY));
    // Do not write identical tokens on every /auth/v1/user success: in
    // multiple open tabs, a storage event would otherwise trigger another
    // verification + write in the sibling tab, creating a feedback loop.
@@ -63,9 +66,10 @@ export function rememberForumSession(access,refresh,remember=false){
 }
 export function clearForumSession({persistent=true}={}){
  const tab=storage("sessionStorage");
- try{tab?.removeItem(FORUM_ACCESS_KEY);tab?.removeItem(FORUM_REFRESH_KEY)}catch{}
- if(persistent)try{storage("localStorage")?.removeItem(FORUM_SESSION_KEY)}catch{}
+ removeItem(tab,FORUM_ACCESS_KEY);
+ removeItem(tab,FORUM_REFRESH_KEY);
+ if(persistent)removeItem(storage("localStorage"),FORUM_SESSION_KEY);
 }
 export function isForumRemembered(){
- return Boolean(parseSaved(storage("localStorage")?.getItem(FORUM_SESSION_KEY)));
+ return Boolean(parseSaved(readItem(storage("localStorage"),FORUM_SESSION_KEY)));
 }

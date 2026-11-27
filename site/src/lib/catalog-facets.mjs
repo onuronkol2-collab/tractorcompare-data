@@ -47,20 +47,32 @@ export function normalizedFacetState(params,brands=[]) {
     sort:VALID_SORT.includes(sort)?sort:"brand",
   };
 }
+// The catalogue DOM carries decimal strings; data callers may supply numbers.
+// Do not silently coerce blanks, booleans, arrays, hex or negative values into
+// a known engine power/year. Invalid values remain visible in the default
+// catalogue, but are excluded from numerical filters and sorted last.
+function knownCatalogueNumber(value,field) {
+  if(typeof value!=="number" &&
+    (typeof value!=="string" || !/^\d+(?:\.\d+)?$/.test(value.trim())))return null;
+  const number=Number(value);
+  if(!Number.isFinite(number)||number<=0)return null;
+  if(field==="year"&&(!Number.isInteger(number)||number>9999))return null;
+  return number;
+}
 export function matchesCatalogueFacet(row,state) {
   if(state.brand && row.brand!==state.brand)return false;
   if(state.market&&!matchesDocumentedCatalogueMarket(row.market??null,state.market))return false;
   if(state.power) {
-    const hp=Number(row.power);
-    if(row.power==null || row.power==="" || !Number.isFinite(hp))return false;
+    const hp=knownCatalogueNumber(row.power,"power");
+    if(hp===null)return false;
     if(state.power==="up50" && hp>50)return false;
     if(state.power==="p51" && !(hp>50&&hp<=100))return false;
     if(state.power==="p101" && !(hp>100&&hp<=150))return false;
     if(state.power==="over150" && hp<=150)return false;
   }
   if(state.year) {
-    const year=Number(row.year);
-    if(row.year==null||!Number.isInteger(year))return false;
+    const year=knownCatalogueNumber(row.year,"year");
+    if(year===null)return false;
     if(state.year==="recent" && year<2020)return false;
     if(state.year==="older" && year>=2020)return false;
   }
@@ -70,11 +82,9 @@ export function compareCatalogueRows(a,b,sort) {
   const name=(x)=>String(x.name||"");
   const fallback=()=>name(a).localeCompare(name(b),"en",{sensitivity:"base"});
   const numeric=(field,descending)=>{
-    const left=Number(a[field]),right=Number(b[field]);
-    const validL=a[field]!=null&&a[field]!==""&&Number.isFinite(left);
-    const validR=b[field]!=null&&b[field]!==""&&Number.isFinite(right);
-    if(validL!==validR)return validL?-1:1;
-    if(!validL)return fallback();
+    const left=knownCatalogueNumber(a[field],field),right=knownCatalogueNumber(b[field],field);
+    if(left===null)return right===null?fallback():1;
+    if(right===null)return -1;
     return (left-right)*(descending?-1:1)||fallback();
   };
   if(sort==="newest")return numeric("year",true);
