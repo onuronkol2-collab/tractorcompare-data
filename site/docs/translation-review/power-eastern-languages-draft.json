@@ -1,6 +1,6 @@
 {
   "state": "draft-needs-independent-editorial-review",
-  "sourceBlobSha": "853424394588964819f45e85b60d4dbcfdaa9e18",
+  "sourceBlobSha": "78604b9ee14c51676e3e6d1841c1217c5a16eb59",
   "sourceSlug": "tractor-engine-power-and-torque",
   "sourceLanguage": "en",
   "sourceComponent": "site/src/components/TractorTechnicalDeepDive.astro",
@@ -351,6 +351,6 @@
       "verification": "この記事は技術教育を目的としており、実機試験、部品の分解、トラクターの所有経験を主張するものではありません。特定の機種の数値は製造元の資料で正確な型式、年式、市場、装備を確認してください。独立した試験がある場合は、その試験方法を比較します。"
     }
   },
-  "sourceComponentBlobSha": "e8a86025ece122ad013843e9d3305843970f60f5",
+  "sourceComponentBlobSha": "00f5fe82a209aca2153a8a10aca46a3c408821c2",
   "translationScope": "Main article, comparison note, verification disclosure and six source labels. Conditional Deutz-Fahr GS case/table and related links, UI, photo credits and glossary integration remain pending. Not for publication."
 }

@@ -4,6 +4,7 @@ import TractorPhoto from "./TractorPhoto.astro";
 import "../styles/home-experience.css";
 import { getPublicCatalog } from "../lib/catalog";
 import { homeText as h } from "../lib/home-ui";
+import {brandDirectoryText} from "../lib/brand-directory-i18n.ts";
 import { homeDiscoveryText as d } from "../lib/home-discovery-ui";
 import { localizedPath, type Locale } from "../lib/locales";
 import { t } from "../lib/ui";
@@ -77,6 +78,7 @@ const homeSchema={
  "@context":"https://schema.org",
  "@graph":[
   {"@type":"Organization","@id":siteUrl+"#organization",name:"TractorVS",url:siteUrl,
+   logo:new URL("/images/tractorvs-organization-logo.svg",siteUrl).toString(),
    description:"Independent agricultural machinery specifications and tractor comparisons."},
   {"@type":"WebSite","@id":siteUrl+"#website",url:siteUrl,name:"TractorVS",
    publisher:{"@id":siteUrl+"#organization"},
@@ -112,20 +114,20 @@ const suggestionPayload = JSON.stringify(catalogue.tractors.map((tractor) => ({
               </span>
               <input id="home-model-query" name="q" type="search" autocomplete="off"
                 role="combobox" aria-autocomplete="list" aria-expanded="false"
-                aria-controls="home-search-results"
+                aria-controls="home-search-results" aria-describedby="home-search-hint"
                 placeholder={d(lang,"searchPlaceholder")} maxlength="100" />
               <button type="submit">{d(lang,"searchButton")} <span aria-hidden="true">→</span></button>
             </div>
             <div class="home-search-results" id="home-search-results" role="listbox"
               aria-label={d(lang,"suggestionsHeading")} hidden></div>
           </div>
-          <p class="home-search-note">{d(lang,"searchHint")}</p>
+          <p class="home-search-note" id="home-search-hint">{d(lang,"searchHint")}</p>
+          <p class="home-search-empty home-search-empty-inline" id="home-search-empty" aria-hidden="true" hidden>{d(lang,"suggestionsNone")}</p>
           <p class="home-search-status" id="home-search-status" role="status" aria-live="polite"></p>
         </form>
         <div class="home-hero-links">
-          <a href={compareUrl}>{t(lang,"navCompare")} <span aria-hidden="true">↗</span></a>
-          <a href={advisorUrl}>{tx(lang,"nav")} <span aria-hidden="true">↗</span></a>
-          <a href={localizedPath(lang,"/guides/farm-cost-calculator/")}>{farmCostText(lang).nav} <span aria-hidden="true">↗</span></a>
+          <a href={selectionGuideUrl}>{t(lang,"guideLink")} <span aria-hidden="true">↗</span></a>
+          <a href={articlesUrl}>{editorialPreview.browse} <span aria-hidden="true">↗</span></a>
         </div>
       </div>
       <div class="home-preview" aria-label="TractorVS">
@@ -133,22 +135,32 @@ const suggestionPayload = JSON.stringify(catalogue.tractors.map((tractor) => ({
           <span class="home-kicker"><span class="home-live-dot" aria-hidden="true"></span>TractorVS</span>
           <span class="home-preview-label">{t(lang,"publishedOnly")}</span>
         </div>
-        <div class="home-tractor-art" aria-hidden="true">
-          <div class="home-orbit home-orbit-a"></div><div class="home-orbit home-orbit-b"></div>
-          <svg viewBox="0 0 520 310" fill="none" role="presentation">
-            <path d="M75 215h307l36-58h-78l-34-83h-96l-25 75H115l-40 66Z" fill="#243c30" stroke="#a8c5a5" stroke-width="2.3"/>
-            <path d="M211 75h95l33 82H191l20-82Z" fill="#52745a" stroke="#b9d3b3" stroke-width="2.3"/>
-            <path d="M230 87h64l21 57h-98l13-57Z" fill="#a9c8ad" fill-opacity=".26"/>
-            <path d="M115 149h90v66H75l40-66Z" fill="#314b3b" stroke="#a8c5a5" stroke-width="2.3"/>
-            <path d="M338 157h80l-36 58h-20l-24-58Z" fill="#314b3b" stroke="#a8c5a5" stroke-width="2.3"/>
-            <path d="M193 77h113" stroke="#d7e7d4" stroke-width="3" stroke-linecap="round"/>
-            <circle cx="147" cy="222" r="53" fill="#111b16" stroke="#a8c5a5" stroke-width="4"/>
-            <circle cx="147" cy="222" r="28" fill="#345340" stroke="#d1e1cd" stroke-width="2.5"/>
-            <circle cx="365" cy="222" r="37" fill="#111b16" stroke="#a8c5a5" stroke-width="4"/>
-            <circle cx="365" cy="222" r="18" fill="#345340" stroke="#d1e1cd" stroke-width="2.5"/>
-            <path d="M58 279h400" stroke="#77917c" stroke-width="2" stroke-linecap="round" stroke-dasharray="3 8" opacity=".65"/>
-          </svg>
-        </div>
+        <section class="home-task-panel" aria-labelledby="home-choices-title">
+          <h2 id="home-choices-title">{d(lang,"startHeading")}</h2>
+          <p class="home-task-intro">{d(lang,"startIntro")}</p>
+          <div class="home-action-grid">
+            <a class="home-action-card" href={catalogUrl}>
+              <span class="home-action-symbol" aria-hidden="true">⌕</span>
+              <div><h3>{t(lang,"navCatalog")}</h3><p>{d(lang,"catalogCardBody")}</p></div>
+              <span class="home-task-arrow" aria-hidden="true">↗</span>
+            </a>
+            <a class="home-action-card home-action-card--accent" href={compareUrl}>
+              <span class="home-action-symbol" aria-hidden="true">⇄</span>
+              <div><h3>{t(lang,"navCompare")}</h3><p>{d(lang,"compareCardBody")}</p></div>
+              <span class="home-task-arrow" aria-hidden="true">↗</span>
+            </a>
+            <a class="home-action-card" href={advisorUrl}>
+              <span class="home-action-symbol" aria-hidden="true">✳</span>
+              <div><h3>{tx(lang,"nav")}</h3><p>{d(lang,"advisorCardBody")}</p></div>
+              <span class="home-task-arrow" aria-hidden="true">↗</span>
+            </a>
+            <a class="home-action-card" href={localizedPath(lang,"/guides/farm-cost-calculator/")}>
+              <span class="home-action-symbol" aria-hidden="true">∑</span>
+              <div><h3>{farmCostText(lang).nav}</h3><p>{d(lang,"costCardBody")}</p></div>
+              <span class="home-task-arrow" aria-hidden="true">↗</span>
+            </a>
+          </div>
+        </section>
         {spotlight ? (
           <a class="home-spotlight" href={detailBase + spotlight.slug + "/"}>
             <div>
@@ -169,41 +181,6 @@ const suggestionPayload = JSON.stringify(catalogue.tractors.map((tractor) => ({
     </div>
   </section>
 
-  <section class="home-choices" aria-labelledby="home-choices-title">
-    <div class="container">
-      <div class="home-section-heading">
-        <div>
-          <p class="home-section-kicker">{h(lang,"featuresEyebrow")}</p>
-          <h2 id="home-choices-title">{d(lang,"startHeading")}</h2>
-          <p>{d(lang,"startIntro")}</p>
-        </div>
-      </div>
-      <div class="home-action-grid">
-        <a class="home-action-card" href={catalogUrl}>
-          <span class="home-action-symbol" aria-hidden="true">⌕</span>
-          <span class="home-action-overline">01</span>
-          <h3>{t(lang,"navCatalog")}</h3>
-          <p>{d(lang,"catalogCardBody")}</p>
-          <span class="home-card-action">{h(lang,"heroCta")} <span aria-hidden="true">↗</span></span>
-        </a>
-        <a class="home-action-card home-action-card--accent" href={compareUrl}>
-          <span class="home-action-symbol" aria-hidden="true">⇄</span>
-          <span class="home-action-overline">02</span>
-          <h3>{t(lang,"navCompare")}</h3>
-          <p>{d(lang,"compareCardBody")}</p>
-          <span class="home-card-action">{t(lang,"navCompare")} <span aria-hidden="true">↗</span></span>
-        </a>
-        <a class="home-action-card" href={advisorUrl}>
-          <span class="home-action-symbol" aria-hidden="true">✳</span>
-          <span class="home-action-overline">03</span>
-          <h3>{tx(lang,"nav")}</h3>
-          <p>{d(lang,"advisorCardBody")}</p>
-          <span class="home-card-action">{tx(lang,"nav")} <span aria-hidden="true">↗</span></span>
-        </a>
-      </div>
-    </div>
-  </section>
-
   <section class="home-models" id="models" aria-labelledby="home-models-title">
     <div class="container">
       <div class="home-section-heading home-section-heading--split">
@@ -217,6 +194,7 @@ const suggestionPayload = JSON.stringify(catalogue.tractors.map((tractor) => ({
       {brands.length > 0 && (
         <nav class="home-brand-row" aria-label={d(lang,"brandsHeading")}>
           <strong>{d(lang,"brandsHeading")}</strong>
+          <a class="home-all-brands" href={localizedPath(lang,"/brands/")}>{brandDirectoryText(lang)[12]} <span aria-hidden="true">↗</span></a>
           <div>
             {brands.map(([brand,number]) => (
               <a href={catalogUrl + "?q=" + encodeURIComponent(brand)} rel="nofollow">
@@ -350,40 +328,46 @@ const suggestionPayload = JSON.stringify(catalogue.tractors.map((tractor) => ({
   const popup = document.querySelector<HTMLDivElement>("#home-search-results");
   const form = document.querySelector<HTMLFormElement>(".home-find");
   const status = document.querySelector<HTMLElement>("#home-search-status");
+  const emptyMessage = document.querySelector<HTMLElement>("#home-search-empty");
   const data = document.querySelector<HTMLScriptElement>("#home-suggestions-data");
   const l10n = document.querySelector<HTMLScriptElement>("#home-suggestions-i18n");
-  if (input && popup && form && status && data && l10n) {
+  if (input && popup && form && status && emptyMessage && data && l10n) {
     const models = JSON.parse(data.textContent || "[]") as TractorSuggestion[];
     const labels = JSON.parse(l10n.textContent || "{}") as {
       heading:string; noResults:string; results:string; specs:string;
     };
     let selectedIndex = -1;
+    let composing = false;
     const options = () => Array.from(popup.querySelectorAll<HTMLAnchorElement>(".home-search-option"));
-    const select = (index: number) => {
+    const select = (index: number, reveal = true) => {
       selectedIndex = index;
       for (const [i, option] of options().entries())
         option.setAttribute("aria-selected", String(i === index));
       const chosen = options()[index];
       if (chosen) {
         input.setAttribute("aria-activedescendant", chosen.id);
-        chosen.scrollIntoView({block:"nearest"});
+        if (reveal) chosen.scrollIntoView({block:"nearest",inline:"nearest"});
       } else input.removeAttribute("aria-activedescendant");
     };
     const close = () => {
       popup.hidden = true;
+      emptyMessage.hidden = true;
       input.setAttribute("aria-expanded","false");
       select(-1);
       status.textContent = "";
     };
     const render = () => {
       const query = input.value.trim();
+      if (composing) return;
       popup.replaceChildren();
+      emptyMessage.hidden = true;
       select(-1);
       if (!query) { close(); return; }
       const hits = findTractorSuggestions(models,query,6);
       if (hits.length) {
         const heading = document.createElement("p");
         heading.className = "home-search-results-heading";
+        heading.setAttribute("aria-hidden","true");
         heading.textContent = labels.heading;
         popup.appendChild(heading);
         for (const [index, model] of hits.entries()) {
@@ -415,26 +399,29 @@ const suggestionPayload = JSON.stringify(catalogue.tractors.map((tractor) => ({
           arrow.setAttribute("aria-hidden","true");
           arrow.textContent = "↗";
           option.append(nameBox,arrow);
-          option.addEventListener("pointermove", () => {
-            if (selectedIndex !== index) select(index);
+          option.addEventListener("pointermove", (event) => {
+            if (event.pointerType === "mouse" && selectedIndex !== index) select(index,false);
           });
           popup.appendChild(option);
         }
         status.textContent = hits.length + " " + labels.results;
       } else {
-        const empty = document.createElement("p");
-        empty.className = "home-search-empty";
-        empty.textContent = labels.noResults;
-        popup.appendChild(empty);
+        close();
+        emptyMessage.hidden = false;
         status.textContent = labels.noResults;
+        return;
       }
       popup.hidden = false;
       input.setAttribute("aria-expanded","true");
     };
-    input.addEventListener("input",render);
+    input.addEventListener("compositionstart",() => { composing = true; close(); });
+    input.addEventListener("compositionend",() => { composing = false; if (document.activeElement === input) render(); });
+    input.addEventListener("input",(event) => {
+      if (!composing && !(event instanceof InputEvent && event.isComposing)) render();
+    });
     input.addEventListener("focus",render);
     input.addEventListener("keydown",(event) => {
-      if (event.isComposing || event.keyCode === 229) return;
+      if (composing || event.isComposing || event.keyCode === 229) return;
       if (event.key === "Tab") { if (!popup.hidden) close(); return; }
       if (event.key === "Escape") {
         if (!popup.hidden) { event.preventDefault(); close(); }

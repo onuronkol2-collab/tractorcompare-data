@@ -37,3 +37,24 @@ test("failed member queries must never masquerade as no public members",()=>{
  assert.match(members,/bookmarkEmpty\.textContent=txt\.memberLoadError/);
  assert.match(members,/followingEmpty\.textContent=txt\.memberLoadError/);
 });
+
+
+test("account and composer layout retains native auth controls while improving mobile and keyboard access",()=>{
+ const css=read("../src/styles/forum-readable.css");
+ const focus=read("../src/styles/interaction-accessibility.css");
+ const composer=read("../src/components/ForumComposer.astro");
+ const editor=read("../src/components/ForumEditor.astro");
+ assert.match(css,/font-size: max\(16px, 1rem\)/);
+ assert.match(css,/\.community-composer \.forum-password-reveal/);
+ assert.match(css,/\.member-community dialog \{[^}]*max-block-size: 90dvh/);
+ assert.match(css,/\.forum-emoji-grid \{[^}]*grid-template-columns: repeat\(auto-fit,minmax\(44px,1fr\)\)/);
+ assert.match(focus,/\.community-composer \.forum-auth-gate>summary:focus-visible/);
+ assert.match(focus,/outline-offset: -3px/);
+ assert.match(composer,/autocomplete="new-password"/);
+ assert.match(composer,/autocomplete="current-password"/);
+ assert.match(composer,/autocomplete="one-time-code"/);
+ assert.match(composer,/data-forum-oauth="google" hidden disabled/);
+ assert.match(members,/name="show_leaderboard"/);
+ assert.match(editor,/data-editor-rights/);
+ assert.match(editor,/data-editor-count[^>]*aria-live="off"/);
+});

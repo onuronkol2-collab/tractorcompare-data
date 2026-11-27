@@ -243,3 +243,153 @@ const rows:Record<Locale,readonly string[]>={
   ]
 };
 export function farmExtrasText(lang:Locale):Record<typeof keys[number],string>{return Object.fromEntries(keys.map((key,i)=>[key,rows[lang][i]])) as Record<typeof keys[number],string>;}
+
+
+const scenarioDensity:Record<Locale,readonly [string,string,string,string]>={
+  "en": [
+    "Fuel use per hectare (L/ha)",
+    "Fuel use per 0.1 ha (L)",
+    "Operating cost per 0.1 ha",
+    "A positive difference means a larger value in B; larger field capacity is not the same as larger cost."
+  ],
+  "tr": [
+    "Hektar başına yakıt (L/ha)",
+    "Dekar başına yakıt (L/da)",
+    "Dekar başına işletme gideri",
+    "Pozitif fark B’de daha büyük değer demektir; daha yüksek iş kapasitesi, daha yüksek maliyet anlamına gelmez."
+  ],
+  "de": [
+    "Kraftstoffverbrauch je Hektar (L/ha)",
+    "Kraftstoffverbrauch je 0,1 ha (L)",
+    "Betriebskosten je 0,1 ha",
+    "Eine positive Differenz bedeutet einen größeren Wert in B; eine höhere Flächenleistung ist nicht gleichbedeutend mit höheren Kosten."
+  ],
+  "fr": [
+    "Consommation par hectare (L/ha)",
+    "Consommation par 0,1 ha (L)",
+    "Coût d’utilisation par 0,1 ha",
+    "Une différence positive indique une valeur plus élevée pour B ; un débit de chantier supérieur ne signifie pas un coût supérieur."
+  ],
+  "es": [
+    "Consumo por hectárea (L/ha)",
+    "Consumo por 0,1 ha (L)",
+    "Coste operativo por 0,1 ha",
+    "Una diferencia positiva indica un valor mayor en B; una mayor capacidad de campo no equivale a un mayor coste."
+  ],
+  "pt-br": [
+    "Consumo por hectare (L/ha)",
+    "Consumo por 0,1 ha (L)",
+    "Custo operacional por 0,1 ha",
+    "Uma diferença positiva indica um valor maior em B; maior capacidade de campo não significa maior custo."
+  ],
+  "ru": [
+    "Расход топлива на гектар (л/га)",
+    "Расход топлива на 0,1 га (л)",
+    "Эксплуатационные затраты на 0,1 га",
+    "Положительная разница означает большее значение у B; более высокая производительность не означает более высокие затраты."
+  ],
+  "zh": [
+    "每公顷油耗（升/公顷）",
+    "每0.1公顷油耗（升）",
+    "每0.1公顷运行成本",
+    "正差值表示B的数值更大；作业能力更高并不等于成本更高。"
+  ],
+  "ja": [
+    "1 ha当たり燃料消費量（L/ha）",
+    "0.1 ha当たり燃料消費量（L）",
+    "0.1 ha当たり運用費",
+    "正の差はBの値が大きいことを示します。作業能率が高いことと費用が高いことは同じではありません。"
+  ],
+  "hi": [
+    "प्रति हेक्टेयर ईंधन (L/ha)",
+    "प्रति 0.1 हेक्टेयर ईंधन (L)",
+    "प्रति 0.1 हेक्टेयर संचालन लागत",
+    "धनात्मक अंतर का मतलब B का मान अधिक है; अधिक कार्य क्षमता का मतलब अधिक लागत नहीं है।"
+  ]
+};
+export function farmScenarioDensityText(lang:Locale){const [fuelPerHa,fuelPerDecare,operatingPerDecare,direction]=scenarioDensity[lang];return {fuelPerHa,fuelPerDecare,operatingPerDecare,direction};}
+
+
+const scenarioWindow:Record<Locale,readonly [string,string,string,string,string,string]>={
+  "en": [
+    "Daily hours available for field work (h)",
+    "Daily field capacity (ha/day)",
+    "Daily field capacity (0.1 ha/day)",
+    "Equivalent workdays",
+    "Metric",
+    "Use the hours available at the field, excluding transport, major interruptions and rest breaks. Field efficiency already allows for turns and normal field delays. Eight hours is an example, not a safe work limit or a weather forecast."
+  ],
+  "tr": [
+    "Günlük kullanılabilir tarla çalışma süresi (sa)",
+    "Günlük işlenebilir alan (ha/gün)",
+    "Günlük işlenebilir alan (da/gün)",
+    "Tahmini çalışma günü (kesirli)",
+    "Ölçüt",
+    "Tarladaki kullanılabilir süreyi gir; ulaşım, uzun kesintiler ve dinlenme molalarını çıkar. Tarla verimi dönüşleri ve normal tarla içi gecikmeleri zaten hesaba katar. Sekiz saat yalnızca örnektir, güvenli çalışma sınırı veya hava tahmini değildir."
+  ],
+  "de": [
+    "Verfügbare Feldarbeitszeit pro Tag (h)",
+    "Tägliche Flächenleistung (ha/Tag)",
+    "Tägliche Flächenleistung (0,1 ha/Tag)",
+    "Rechnerische Arbeitstage",
+    "Kennzahl",
+    "Geben Sie die verfügbare Feldzeit ohne Anfahrt, größere Unterbrechungen und Ruhepausen ein. Der Feldwirkungsgrad berücksichtigt Wenden und übliche Verzögerungen im Feld bereits. Acht Stunden sind nur ein Beispiel, keine sichere Arbeitszeitgrenze oder Wetterprognose."
+  ],
+  "fr": [
+    "Temps disponible au champ par jour (h)",
+    "Surface travaillée par jour (ha/jour)",
+    "Surface travaillée par jour (0,1 ha/jour)",
+    "Jours de travail équivalents",
+    "Indicateur",
+    "Saisissez le temps disponible au champ hors transport, interruptions importantes et pauses. L’efficacité au champ tient déjà compte des demi-tours et retards habituels. Huit heures ne sont qu’un exemple, ni une limite de travail sûre ni une prévision météo."
+  ],
+  "es": [
+    "Horas disponibles de trabajo en campo al día (h)",
+    "Capacidad diaria de campo (ha/día)",
+    "Capacidad diaria de campo (0,1 ha/día)",
+    "Días de trabajo equivalentes",
+    "Indicador",
+    "Introduce las horas disponibles en el campo sin transporte, interrupciones importantes ni descansos. La eficiencia de campo ya incluye giros y demoras habituales. Ocho horas son un ejemplo, no un límite seguro de trabajo ni una previsión meteorológica."
+  ],
+  "pt-br": [
+    "Horas disponíveis no campo por dia (h)",
+    "Capacidade diária de campo (ha/dia)",
+    "Capacidade diária de campo (0,1 ha/dia)",
+    "Dias de trabalho equivalentes",
+    "Indicador",
+    "Informe o tempo disponível no campo sem transporte, interrupções prolongadas e pausas. A eficiência de campo já considera manobras e atrasos normais. Oito horas são apenas um exemplo, não um limite seguro de trabalho nem previsão do tempo."
+  ],
+  "ru": [
+    "Доступное время полевых работ в сутки (ч)",
+    "Суточная производительность (га/сутки)",
+    "Суточная производительность (0,1 га/сутки)",
+    "Расчётное число рабочих дней",
+    "Показатель",
+    "Укажите время, доступное в поле, без переездов, длительных остановок и перерывов на отдых. Полевая эффективность уже учитывает развороты и обычные задержки. Восемь часов — лишь пример, не безопасный предел работы и не прогноз погоды."
+  ],
+  "zh": [
+    "每天可用于田间作业的时间（小时）",
+    "每日作业面积（公顷/天）",
+    "每日作业面积（0.1公顷/天）",
+    "折算作业天数",
+    "指标",
+    "输入在田间可用的时间，扣除运输、长时间中断和休息。田间效率已考虑转弯和常规田间延误。八小时只是示例，并非安全作业时限或天气预报。"
+  ],
+  "ja": [
+    "1日の圃場作業可能時間（h）",
+    "1日当たり作業面積（ha/日）",
+    "1日当たり作業面積（0.1 ha/日）",
+    "換算作業日数",
+    "指標",
+    "移動、長時間の中断、休憩を除いた圃場での利用可能時間を入力してください。圃場作業効率には旋回や通常の圃場内の遅れが含まれます。8時間は例であり、安全な作業時間の上限や天気予報ではありません。"
+  ],
+  "hi": [
+    "प्रतिदिन खेत के काम के लिए उपलब्ध घंटे (h)",
+    "दैनिक कार्य क्षमता (हेक्टेयर/दिन)",
+    "दैनिक कार्य क्षमता (0.1 हेक्टेयर/दिन)",
+    "समतुल्य कार्य दिवस",
+    "मापदंड",
+    "खेत में उपलब्ध समय भरें; परिवहन, लंबे व्यवधान और आराम के समय को घटाएँ। क्षेत्रीय कार्य दक्षता में मोड़ और सामान्य खेत की देरी पहले से शामिल हैं। आठ घंटे केवल उदाहरण हैं, सुरक्षित कार्य सीमा या मौसम पूर्वानुमान नहीं।"
+  ]
+};
+export function farmScenarioWindowText(lang:Locale){const [hours,dailyAreaHa,dailyAreaDecare,equivalentDays,metric,note]=scenarioWindow[lang];return {hours,dailyAreaHa,dailyAreaDecare,equivalentDays,metric,note};}

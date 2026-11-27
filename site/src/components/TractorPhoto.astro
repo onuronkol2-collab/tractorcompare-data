@@ -31,7 +31,7 @@ const label=tractorPhotoAlt(tractor,lang);
       data-photo-url={photo.fullUrl} data-photo-label={label+(photos.length>1?" — "+(index+1):"")}
       data-photo-credit={photo.photographer} data-photo-source={photo.sourcePage}
       data-photo-license={photo.licenseUrl} data-photo-license-name={photo.licenseName}
-      aria-label={photoText(lang,"open")+": "+label}>
+      aria-label={photoText(lang,"open")+": "+label+(visiblePhotos.length>1?" — "+(index+1)+"/"+visiblePhotos.length:"")}>
       <picture>
         {mobile && <source type="image/webp"
           media="(max-width:760px) and (max-resolution:2dppx)"

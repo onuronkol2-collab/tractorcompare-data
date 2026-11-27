@@ -65,8 +65,11 @@ test("PTO and hydraulic articles preserve safety meaning in both languages with 
  assert.ok(pto&&hydraulic);
  const ptoTurkish=pto.sections.flatMap(x=>x.paragraphs.tr).join(" ");
  const ptoEnglish=pto.sections.flatMap(x=>x.paragraphs.en).join(" ");
- assert.match(ptoTurkish,/motor kapalıyken ve tüm hareket durduğunda/);
- assert.match(ptoEnglish,/parking brake, disengage power, stop the engine, remove the key/);
+ // The revised safe-stop text must retain EVERY safety step in both languages.
+ assert.match(ptoTurkish,/park frenini uygulayın, kumandaları boş konuma alın ve PTO tahrikini kapatın, motoru durdurun, anahtarı çıkarın ve tüm hareketin durmasını bekleyin/);
+ assert.match(ptoTurkish,/Kalan enerji kaynaklarını güvenli biçimde ayırmak için kılavuzlara uyun/);
+ assert.match(ptoEnglish,/secure the parking brake, place the controls in neutral and switch off the PTO drive, shut down the engine, take out the key and wait for all movement to cease/);
+ assert.match(ptoEnglish,/Follow the manuals for isolating any remaining energy sources/);
  const hydTurkish=hydraulic.sections.flatMap(x=>x.paragraphs.tr).join(" ");
  const hydEnglish=hydraulic.sections.flatMap(x=>x.paragraphs.en).join(" ");
  assert.match(hydTurkish,/kaçakları elle aramayın/);

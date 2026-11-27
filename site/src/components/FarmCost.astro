@@ -1,11 +1,14 @@
 ---
 import SiteLayout from "../layouts/SiteLayout.astro";
+import {farmToolPageData} from "../lib/farm-tool-page-data.ts";
+import {practicalGuideLinks} from "../lib/practical-guide-links.ts";
+import {catalogEditorialLinks} from "../lib/catalog-editorial-links.ts";
 import {editorialSearchTitle} from "../lib/editorial-seo-title.mjs";
 import FarmDecisionTools from "./FarmDecisionTools.astro";
 import FarmScenarioTools from "./FarmScenarioTools.astro";
 import {farmExtrasText} from "../lib/farm-extras-i18n";
 import {farmWorkedExample} from "../lib/farm-worked-example";
-import {localizedPath,LOCALE_TAGS,type Locale} from "../lib/locales";
+import {localizedPath,LOCALE_TAGS,RELATED_PAGES_LABELS,BREADCRUMB_LABELS,type Locale} from "../lib/locales";
 import {farmCostText} from "../lib/farm-cost-i18n";
 import {farmDecisionText} from "../lib/farm-decision-i18n";
 import {farmModelText} from "../lib/farm-model-context-i18n";
@@ -14,15 +17,17 @@ interface Props {lang:Locale}
 const {lang}=Astro.props;
 const c=farmCostText(lang), d=farmDecisionText(lang), m=farmModelText(lang), x=farmExtrasText(lang), example=farmWorkedExample[lang];
 const fields=[
- ["area",10,0.0001,10000000000],["width",3,0.01,100],["speed",6,0.01,100],["efficiency",75,0.01,100],
+ ["area",10,0.0001,1000000],["width",3,0.01,100],["speed",6,0.01,100],["efficiency",75,0.01,100],
  ["fuel",8,0,10000],["price",1,0,1e9],["annualHours",200,0,8760],["other",0,0,1e12],["fixed",0,0,1e15]
 ] as const;
 const initial=farmCost(Object.fromEntries(fields.map(([key,value])=>[key,value])));
 const metrics=["capacity","time","litres","hourly","perHa","perDekar","fieldCost","operatingPerHa","operatingField","annualFuel","annualTotal"] as const;
 const number=new Intl.NumberFormat(LOCALE_TAGS[lang],{maximumSignificantDigits:6});
+const schema=import.meta.env.PUBLIC_INDEXING_ENABLED==="true"&&Astro.site?farmToolPageData(lang,"/guides/farm-cost-calculator/",Astro.site,c.title,c.description):null;
 ---
-<SiteLayout lang={lang} title={editorialSearchTitle(c.title)} description={c.description}>
+<SiteLayout lang={lang} title={editorialSearchTitle(c.title)} description={c.description} structuredData={schema}>
  <section class="container cost-page" data-farm-cost data-locale={LOCALE_TAGS[lang]} data-invalid={c.invalid} data-copied={d.copied} data-copy-failed={d.copyFailed}>
+  <nav class="tool-breadcrumb" aria-label={BREADCRUMB_LABELS[lang]}><a href={localizedPath(lang,"/")}>TractorVS</a><span aria-hidden="true">/</span><span aria-current="page">{c.title}</span></nav>
   <h1>{c.title}</h1>
   <p>{c.description}</p>
   <p class="cost-note">{c.note}</p>
@@ -49,11 +54,14 @@ const number=new Intl.NumberFormat(LOCALE_TAGS[lang],{maximumSignificantDigits:6
    <li><a href="https://www.extension.iastate.edu/AGDM/crops/html/a3-24.html" lang="en">Iowa State University Extension — Estimating the Field Capacity of Farm Machines</a></li>
    <li><a href="https://www.extension.iastate.edu/AGDM/crops/html/a3-29.html" lang="en">Iowa State University Extension — Estimating Farm Machinery Costs</a></li>
   </ul>
+  <p class="cost-note">{practicalGuideLinks(lang).returnNote} <a href={practicalGuideLinks(lang).guide.href}>{practicalGuideLinks(lang).guide.label}</a></p>
+  <nav class="farm-tool-jump" aria-label={RELATED_PAGES_LABELS[lang]}><a href={catalogEditorialLinks(lang).links[0].href}>{catalogEditorialLinks(lang).links[0].label}</a></nav>
   <nav class="farm-tool-jump" aria-label={c.advisor}><a href={localizedPath(lang,"/farm-advisor/")}>{c.advisor}</a><a href={localizedPath(lang,"/tractors/")}>{example[2]}</a><a href={localizedPath(lang,"/compare/")}>{example[3]}</a></nav>
  </section>
 </SiteLayout>
 <script>
  import {farmCost,farmAreaInHectares} from "../lib/farm-cost.mjs";
+ import {bindFarmAreaInputBounds} from "../lib/farm-area-input.mjs";
  import {FARM_TOOL_DONE_EVENT} from "../lib/analytics-product-actions";
  const root=document.querySelector<HTMLElement>("[data-farm-cost]");
  const form=document.querySelector<HTMLFormElement>("#farm-cost-form");
@@ -70,7 +78,8 @@ const number=new Intl.NumberFormat(LOCALE_TAGS[lang],{maximumSignificantDigits:6
     const result=farmCost(values);
     for(const node of root.querySelectorAll<HTMLOutputElement>("[data-cost-result]")){
      const key=node.dataset.costResult as keyof typeof result;
-     node.textContent=format.format(result[key]);
+     const value=result[key];if(typeof value!=="number"||!Number.isFinite(value))throw new Error("Invalid result");
+     node.textContent=format.format(value);
     }
     error.hidden=true;if(copy)copy.disabled=false;
     window.dispatchEvent(new Event(FARM_TOOL_DONE_EVENT));
@@ -84,11 +93,15 @@ const number=new Intl.NumberFormat(LOCALE_TAGS[lang],{maximumSignificantDigits:6
    const status=root.querySelector("[data-cost-copy-status]");if(status)status.textContent="";
    for(const node of root.querySelectorAll("[data-cost-result]"))node.textContent="—";
   });
+  bindFarmAreaInputBounds(form,"areaUnit");
   const controls=form.querySelector<HTMLFieldSetElement>("[data-cost-controls]");if(controls)controls.disabled=false;
   if(copy){copy.disabled=false;copy.addEventListener("click",async()=>{const status=root.querySelector("[data-cost-copy-status]");const entries=[...root.querySelectorAll("[data-cost-result]")];if(!status||entries.some(el=>el.textContent==="—"))return;const text=entries.map(el=>(el.parentElement?.previousElementSibling?.textContent||"")+": "+el.textContent).join("\n");try{await navigator.clipboard.writeText(text);status.textContent=root.dataset.copied||"";}catch{status.textContent=root.dataset.copyFailed||"";}});}
  }
 </script>
 <style>
+ .tool-breadcrumb{display:flex;flex-wrap:wrap;align-items:center;gap:.5rem;font-size:.875rem;margin-bottom:.75rem;overflow-wrap:anywhere}
+ .tool-breadcrumb a{display:inline-flex;align-items:center;min-height:44px;text-decoration:underline;text-underline-offset:3px}
+ .tool-breadcrumb a:focus-visible{outline:2px solid currentColor;outline-offset:3px}
  .cost-page{padding-block:clamp(1.5rem,4vw,3rem);max-width:1100px}
  .cost-page p{max-width:78ch;line-height:1.7}
  .farm-tool-jump{display:flex;flex-wrap:wrap;gap:.5rem;margin-block:1.25rem}

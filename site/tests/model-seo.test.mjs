@@ -881,3 +881,46 @@ test("Valtra A75 A85 A95: ES and PT-BR nominal displacement descriptions are dis
   for(const meta of [es,pt]){assert.ok(meta.searchDescription.includes("Valtra "+model_name));assert.ok(meta.searchDescription.includes("3,3 L"));assert.ok(meta.searchDescription.length<=160);}
  }
 });
+
+
+test("reviewed search-intent pilot adds only a real localized compare cue without dropping evidence",async()=>{
+  const {addReviewedCompareSearchCue}=await import("../src/lib/model-seo.ts");
+  const cases=[["tr","tafe-6028-m-9686ae98","Modelleri karşılaştırın."],["de","ls-tractor-j27-e424cd0c","Varianten vergleichen."],["de","ls-tractor-j27-19685234","Varianten vergleichen."],["de","valtra-n175-caa65b80","Modelle vergleichen."],["hi","sonalika-125-812d14fd","मॉडल की तुलना करें।"],["en","swaraj-735-fe-7c7b069f","Compare models."],["pt-br","tafe-6028-m-9686ae98","Compare modelos."]];
+  for(const [locale,slug,cue] of cases){
+    const row={...tractor,slug};
+    const evidence="Exact model. 114 HP.";
+    assert.equal(addReviewedCompareSearchCue(evidence,row,locale),evidence+" "+cue);
+    const boundary="x".repeat(160-cue.length-1);
+    assert.equal(addReviewedCompareSearchCue(boundary,row,locale).length,160);
+    assert.equal(addReviewedCompareSearchCue(boundary+"x",row,locale),boundary+"x");
+    assert.equal(addReviewedCompareSearchCue(evidence,{...row,specifications:[]},locale),evidence);
+    assert.equal(addReviewedCompareSearchCue(evidence,{...row,slug:"other-model"},locale),evidence);
+    assert.equal(addReviewedCompareSearchCue(evidence+" "+cue,row,locale),evidence+" "+cue);
+  }
+  assert.equal(addReviewedCompareSearchCue("Exact model.",{...tractor,slug:"tafe-6028-m-9686ae98"},"ja"),"Exact model.");
+  const row={...tractor,slug:"swaraj-735-fe-7c7b069f",variant:null,market:null,horsepower:null,specifications:[{...tractor.specifications[0],source_url:null}]};
+  const original=modelSeoMetadata({...row,slug:"outside-pilot"},"en");
+  const pilot=modelSeoMetadata(row,"en");
+  assert.equal(pilot.title,original.title);
+  assert.equal(pilot.description,original.description);
+  assert.equal(pilot.searchDescription,original.searchDescription+" Compare models.");
+  const detail=readFileSync(new URL("../src/components/TractorDetail.astro",import.meta.url),"utf8");
+  assert.match(detail,/class="model-compare-action" href=\{compareUrl\}/);
+});
+
+
+test("German LS J27 GEAR and HST retain separate exact identities while exposing a variant comparison cue",async()=>{
+ const {addReviewedCompareSearchCue}=await import("../src/lib/model-seo.ts");
+ const base={...tractor,brand_name:"LS Tractor",model_name:"J27",market:"global",model_year:null,horsepower:null};
+ const gear={...base,slug:"ls-tractor-j27-e424cd0c",variant:"GEAR"};
+ const hst={...base,slug:"ls-tractor-j27-19685234",variant:"HST"};
+ const a=modelSeoMetadata(gear,"de"),b=modelSeoMetadata(hst,"de");
+ assert.notEqual(a.title,b.title);
+ assert.match(a.title,/GEAR/);assert.match(b.title,/HST/);
+ assert.doesNotMatch(a.title,/HST/);assert.doesNotMatch(b.title,/GEAR/);
+ assert.match(a.searchDescription,/GEAR/);assert.match(b.searchDescription,/HST/);
+ for(const row of [gear,hst]){
+  assert.equal(addReviewedCompareSearchCue("LS Tractor J27 "+row.variant+".",row,"de"),"LS Tractor J27 "+row.variant+". Varianten vergleichen.");
+  assert.equal(addReviewedCompareSearchCue("LS Tractor J27.",row,"en"),"LS Tractor J27.");
+ }
+});

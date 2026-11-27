@@ -16,3 +16,14 @@ test("catalog photo credits use accessible 24px+ hit areas and visible keyboard 
  assert.match(rule,/min-height:2[4-9]px/);
  assert.match(css,/\.tractor-photo-short-credit a:focus-visible/);
 });
+
+
+test("multi-photo controls have unique ordinal labels and image-independent focus treatment",()=>{
+ assert.match(photo,/aria-label=\{photoText\(lang,"open"\)\+": "\+label\+\(visiblePhotos\.length>1\?" — "\+\(index\+1\)\+"\/"\+visiblePhotos\.length:""\)\}/);
+ assert.match(css,/\.tractor-photo-button:focus-visible::after\s*\{/);
+ assert.match(css,/pointer-events: none/);
+ assert.match(css,/forced-colors: active/);
+ assert.match(css,/env\(safe-area-inset-top\)/);
+ assert.match(photo,/href=\{photo\.sourcePage\}/);
+ assert.match(photo,/href=\{photo\.licenseUrl\}/);
+});

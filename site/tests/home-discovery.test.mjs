@@ -90,3 +90,40 @@ test("home hero editorial links directly to the two published glossary locales",
   assert.match(home,/lang==="tr"\?"Traktör teknik terimleri ve parçaları":"Tractor technical terms and parts"/);
   assert.match(css,/\.home-editorial-resource \.home-outline-link:focus-visible/);
 });
+
+
+test("homepage search preserves IME entry, touch scrolling and meaningful option identity",()=>{
+ assert.match(home,/compositionstart/);
+ assert.match(home,/compositionend/);
+ assert.match(home,/event instanceof InputEvent && event.isComposing/);
+ assert.match(home,/if \(composing \|\| event.isComposing/);
+ assert.match(home,/event.pointerType === "mouse" && selectedIndex !== index\) select\(index,false\)/);
+ assert.match(home,/if \(reveal\) chosen.scrollIntoView/);
+ assert.match(home,/aria-describedby="home-search-hint"/);
+ assert.match(home,/id="home-search-empty" aria-hidden="true" hidden/);
+ assert.match(home,/close\(\);\s*emptyMessage.hidden = false;\s*status.textContent = labels.noResults/);
+ assert.doesNotMatch(home,/popup.appendChild\(empty\)/);
+ assert.doesNotMatch(css,/-webkit-line-clamp: 2/);
+ assert.match(css,/\.home-search-empty-inline\[hidden\] \{ display: none; \}/);
+ assert.match(css,/48dvh/);
+});
+
+
+test("homepage prioritizes four real research tasks directly inside the hero",()=>{
+ const panel=home.slice(home.indexOf('<section class="home-task-panel"'),home.indexOf('{spotlight ? ('));
+ assert.match(panel,/aria-labelledby="home-choices-title"/);
+ assert.equal((panel.match(/<a class="home-action-card/g)||[]).length,4);
+ assert.match(panel,/href=\{catalogUrl\}/);
+ assert.match(panel,/href=\{compareUrl\}/);
+ assert.match(panel,/href=\{advisorUrl\}/);
+ assert.match(panel,/href=\{localizedPath\(lang,"\/guides\/farm-cost-calculator\/"\)\}/);
+ assert.doesNotMatch(home,/class="home-tractor-art"|<section class="home-choices"/);
+ assert.ok(home.indexOf('class="home-find"')<home.indexOf('class="home-task-panel"'));
+ assert.ok(home.indexOf('class="home-task-panel"')<home.indexOf('class="home-models"'));
+ assert.match(home,/\{count\}/);
+ assert.match(home,/\{brandCounts.size\}/);
+ assert.match(home,/<TractorPhoto tractor=\{tractor\}/);
+ assert.equal(HOME_DISCOVERY.costCardBody.length,10);
+ assert.match(css,/\.home-task-panel \.home-action-grid/);
+ assert.match(css,/grid-template-columns: auto minmax\(0,1fr\) auto/);
+});

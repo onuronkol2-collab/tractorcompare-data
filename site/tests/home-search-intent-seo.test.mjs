@@ -39,3 +39,14 @@ test("English and Turkish homepage metadata describes real search, compare and a
   assert.match(home, /<SiteLayout lang=\{lang\} title=\{seoTitle\} description=\{seoDescription\} structuredData=\{homeSchema\}>/);
   assert.match(home, /description:seoDescription/);
 });
+
+
+test("shared homepage organization declares a stable, scalable first-party logo", () => {
+  assert.match(home, /"@type":"Organization","@id":siteUrl\+"#organization"/);
+  assert.match(home, /logo:new URL\("\/images\/tractorvs-organization-logo\.svg",siteUrl\)\.toString\(\)/);
+  const logo = read("public/images/tractorvs-organization-logo.svg");
+  const existingIcon = read("public/favicon.svg");
+  assert.match(logo, /width="128" height="128" viewBox="0 0 64 64"/);
+  assert.equal(logo.replace('width="128" height="128" ', ""), existingIcon,
+    "Organization logo is the existing brand mark, not a tractor photograph");
+});

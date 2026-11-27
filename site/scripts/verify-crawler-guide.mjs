@@ -22,6 +22,11 @@ export function verifyCrawlerGuide(sourcePath, builtPath) {
     "https://tractorvs.com/tr/articles/",
     "https://tractorvs.com/guides/choosing-a-tractor/",
     "https://tractorvs.com/reviews/basak-2075-bk/",
+    "https://tractorvs.com/guides/farm-cost-calculator/",
+    "https://tractorvs.com/tr/guides/farm-cost-calculator/",
+    "https://tractorvs.com/farm-advisor/",
+    "https://tractorvs.com/tr/farm-advisor/",
+    "not certified compatibility",
   ]) {
     assert.ok(guide.includes(required), `Missing from llms.txt: ${required}`);
   }

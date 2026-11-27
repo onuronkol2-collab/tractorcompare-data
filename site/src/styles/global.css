@@ -742,3 +742,36 @@ button, input { font: inherit; }
   overflow-wrap: anywhere;
 }
 #main .home-brand-row a { font-size: 14px; min-height: 44px; }
+
+
+/* Small-screen navigation: keep the native disclosure and real links.
+   Long local-language search labels must not squeeze the editable field. */
+.site-header :is(.mobile-menu-search-row,.header-search-row) > * {
+  min-inline-size: 0;
+  max-inline-size: 100%;
+}
+.site-header :is(.mobile-menu-search button,.header-search-form button) {
+  white-space: normal;
+  overflow-wrap: anywhere;
+  line-height: 1.5;
+}
+.site-header .mobile-nav-links a {
+  min-inline-size: 0;
+  overflow-wrap: anywhere;
+}
+.site-header .mobile-menu-search input::placeholder,
+.site-header .header-search-form input::placeholder {
+  color: #53665a;
+  opacity: 1;
+}
+@media (max-width: 420px) {
+  .site-header .mobile-menu-search-row {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .site-header .mobile-menu-search-row button {
+    width: 100%;
+  }
+  .site-header .mobile-nav-links {
+    padding: 8px;
+  }
+}

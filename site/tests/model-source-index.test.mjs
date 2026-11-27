@@ -121,3 +121,24 @@ test("source verification dates are visibly rendered only when linked and publis
  assert.match(sourceView,/copy\.recordReviewed/);
  for(const locale of LOCALES)assert.ok(MODEL_SOURCE_COPY[locale].recordReviewed.length>=8);
 });
+
+
+test("model citation points to the real localized catalogue page and preserves identity",async()=>{
+ const {modelPageCitation,modelCitationCopy}=await import("../src/lib/model-page-citation.ts");
+ const {localizedPath}=await import("../src/lib/locales.ts");
+ const row={slug:"mccormick-x5-120",brand_name:"McCormick",model_name:"X5.120",variant:"Exact variant; original source note",market:"Europe",model_year:2025};
+ for(const lang of LOCALES){
+  const citation=modelPageCitation(row,lang,new URL("https://tractorvs.com/"));
+  assert.ok(citation.includes("McCormick X5.120")&&citation.includes("Exact variant")&&citation.includes("2025"));
+  assert.ok(citation.endsWith("https://tractorvs.com"+localizedPath(lang,"/tractors/"+row.slug+"/")));
+  assert.doesNotMatch(citation,/original source note|undefined/);
+  assert.ok(Object.values(modelCitationCopy(lang)).every(v=>v.trim()));
+  assert.equal(modelPageCitation({...row,slug:"../other"},lang,new URL("https://tractorvs.com/")),null);
+ }
+ const view=readFileSync(new URL("../src/components/BrandDiscovery.astro",import.meta.url),"utf8");
+ assert.match(view,/modelSourceIndex\(model\).documents.length>0/);
+ assert.match(view,/PUBLIC_INDEXING_ENABLED==="true"&&Astro.site/);
+ assert.match(view,/readonly aria-label/);
+ assert.match(view,/navigator.clipboard.writeText\(field.value\)/);
+ assert.doesNotMatch(view,/localStorage|sessionStorage|fetch\(/);
+});

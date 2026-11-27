@@ -1,5 +1,6 @@
 ---
 import SiteLayout from "../layouts/SiteLayout.astro";
+import {editorialPracticalTools,ADVISOR_DISCOVERY_NOTE} from "../lib/practical-guide-links.ts";
 import {localizedPath,LOCALES,LOCALE_TAGS,type Locale} from "../lib/locales.ts";
 import {editorialHubTranslation} from "../lib/editorial-hub-i18n.ts";
 import {EDITORIAL_DISCOVERY,EDITORIAL_READING_LANGUAGE} from "../lib/editorial-discovery-i18n.mjs";
@@ -8,6 +9,7 @@ interface Props {lang:Locale}
 const {lang}=Astro.props;
 const searchCopy=EDITORIAL_DISCOVERY[lang];
 const readingCopy=EDITORIAL_READING_LANGUAGE[lang];
+const practical=editorialPracticalTools(lang);
 const tr=lang==="tr";
 const root=Astro.site||new URL("https://tractorvs.com");
 const pagePath=localizedPath(lang,"/articles/");
@@ -57,7 +59,7 @@ const texts=tr ? {
 const localized=editorialHubTranslation(lang);
 const copy=localized??texts;
 const entries=[
- {type:"guide",path:"/guides/choosing-a-tractor/",checked:"2026-11-19",
+ {type:"guide",path:"/guides/choosing-a-tractor/",checked:"2026-11-27",
   title:{tr:"Traktör seçerken nelere dikkat edilmeli?",en:"How to choose a tractor beyond horsepower"},
   summary:{tr:"Arazi, ekipman, çekiş, servis ve PTO koşullarını pratik bir karar listesine dönüştürün.",en:"Build a practical decision checklist for land, implements, traction, servicing and PTO."}},
  {type:"guide",path:"/guides/tractor-technical-terms/",checked:"2026-11-20",
@@ -69,7 +71,7 @@ const entries=[
  {type:"guide",path:"/guides/tractor-hydraulic-lift-explained/",checked:"2026-11-20",
   title:{tr:"Hidrolik kaldırma kapasitesi nasıl okunur?",en:"Understanding hydraulic lift capacity"},
   summary:{tr:"Pompa debisi, bağlantı noktası ve kaldırma kapasitesi arasındaki farkları inceleyin.",en:"Distinguish pump flow, lift rating and where the force is measured."}},
- {type:"guide",path:"/guides/pto-and-power-take-off/",checked:"2026-11-20",
+ {type:"guide",path:"/guides/pto-and-power-take-off/",checked:"2026-11-27",
   title:{tr:"Kuyruk mili (PTO) ne işe yarar?",en:"How tractor PTO works"},
   summary:{tr:"PTO hızı, güç, bağlantı ve ekipman güvenliği kavramlarını ayırın.",en:"Learn about PTO speed, power, connections and implement safety."}},
  {type:"review",path:"/reviews/basak-2075-bk/",checked:"2026-11-19",
@@ -205,6 +207,13 @@ const schema={
       </article>
     </li>}</ol>
    </section>
+   <section class="editorial-practical" aria-labelledby="editorial-practical-heading">
+    <h2 id="editorial-practical-heading">{practical.heading}</h2>
+    <p>{practical.description}</p>
+    <ul><li><a href={practical.primary.href}>{practical.primary.label}</a></li>{practical.links.map(link=><li><a href={link.href}>{link.label}</a></li>)}</ul>
+    <p>{ADVISOR_DISCOVERY_NOTE[lang]}</p>
+    <a href={practical.advisor.href}>{practical.advisor.label}</a>
+   </section>
    <section class="editorial-trust" aria-labelledby="editorial-trust-heading">
     <h2 id="editorial-trust-heading">{copy.trust}</h2>
     <div class="editorial-rules">
@@ -271,6 +280,12 @@ const schema={
   }
 </script>
 <style>
+ .editorial-practical{padding:clamp(16px,3vw,26px);margin:24px 0;border:1px solid #bbd3bd;border-radius:15px;background:#eef7eb;color:#18452d}
+ .editorial-practical h2{margin:0 0 10px;font-size:clamp(21px,2.6vw,28px)}
+ .editorial-practical p{line-height:1.7}
+ .editorial-practical ul{padding-inline-start:20px;margin-bottom:0;display:grid;gap:4px}
+ .editorial-practical a{display:inline-flex;align-items:center;min-height:44px;color:#215537;text-decoration:underline;text-underline-offset:3px;overflow-wrap:anywhere}
+ .editorial-practical a:focus-visible{outline:3px solid #387c4b;outline-offset:3px}
  .editorial-discovery{padding:clamp(16px,2vw,23px);margin:0 0 35px;border:1px solid #bbd3bd;border-radius:15px;background:linear-gradient(110deg,#eef7eb,#fff)}
  .editorial-discovery[hidden],.editorial-discovery button[hidden],#editorial-no-results[hidden],.editorial-grid li[hidden]{display:none!important}
  .editorial-discovery label{display:block;font-size:clamp(16px,2vw,20px);font-weight:850;color:#18452d;margin-bottom:12px}

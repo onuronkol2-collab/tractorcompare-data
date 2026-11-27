@@ -302,3 +302,243 @@ body { line-height: 1.55; }
   #main :is(.home-action-card, .home-featured-card,
             .tractor-card, .editorial-card):hover { transform: none; }
 }
+
+
+/* Shared mobile-first reading and control refinements. Use existing surfaces
+   and palette; do not change display/hidden states or table semantics. */
+#main :is(.catalog-no-results, .catalog-empty p, .tc-no-options,
+          #editorial-no-results p) {
+  color: #405948;
+  font-size: .9375rem;
+  line-height: 1.65;
+  overflow-wrap: anywhere;
+}
+#main :is(.tc-result-main small, .tc-selected-preview small,
+          .tc-selected-preview em, .tc-table .tc-condition-caution) {
+  font-size: .875rem;
+  line-height: 1.55;
+  overflow-wrap: anywhere;
+}
+#main :is(.cost-page .cost-results, .extra-table,
+          .guide-table-scroll, .history-scroll) {
+  font-variant-numeric: tabular-nums;
+}
+#main :is(.cost-page .extra-table, .cost-page .history-scroll, .guide-table-scroll) {
+  max-inline-size: 100%;
+  overscroll-behavior-inline: contain;
+}
+#main .cost-page :is(input:not([type="checkbox"]):not([type="radio"]),select,textarea) {
+  font-size: max(16px, 1rem);
+  min-inline-size: 0;
+  max-inline-size: 100%;
+  line-height: 1.5;
+}
+#main .cost-page :is(label,button,output,dd,th,td) {
+  overflow-wrap: anywhere;
+}
+#main :is(.model-citation textarea, .cost-page textarea) {
+  font-size: max(16px, 1rem);
+  line-height: 1.5;
+}
+#main :is(.guide-practical li, .editorial-practical li) {
+  line-height: 1.7;
+  margin-block: .35rem;
+  overflow-wrap: anywhere;
+}
+@media (max-width: 48rem) {
+  #main :is(.catalog-toolbar, .tc-filters, .editorial-search-row,
+            .cost-grid, .extra-grid, .decision-grid) { min-inline-size: 0; }
+  #main :is(.tc-filters button, .farm-tool-jump a, .advisor-step-jumps a) {
+    max-inline-size: 100%;
+    overflow-wrap: anywhere;
+  }
+  #main .cost-page .extra-table :is(th,td) {
+    font-size: .875rem;
+    line-height: 1.5;
+    padding: .625rem;
+  }
+}
+/* Preserve user text sizing and avoid overly tight tracking in longer scripts. */
+html:is(:lang(hi), :lang(zh), :lang(ja)) #main :is(.tractor-card-specs small,
+  .model-summary-grid small,.tc-result-main small,.advisor-field,
+  .editorial-card .editorial-language-note) { letter-spacing: normal; }
+
+
+/* Catalogue controls: improve discovery without changing the filters,
+   model SSR links, market calculations or other workspace changes. */
+#main :is(.catalog-facet-heading button,.catalog-search-feedback button,
+          .catalog-brand-directory a,.catalog-compare-model) {
+  min-height: 44px;
+  max-inline-size: 100%;
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+#main :is(.catalog-price-filter,.catalog-facet-panel,.catalog-brand-directory) {
+  min-inline-size: 0;
+}
+#main .catalog-price-filter label {
+  font-size: .9375rem;
+  line-height: 1.55;
+  overflow-wrap: anywhere;
+}
+#main :is(.catalog-facet-fields select,.catalog-price-filter select) {
+  min-height: 48px;
+  font-size: max(16px, 1rem);
+}
+#main .catalog-price-filter a { text-underline-offset: .18em; }
+@media(max-width:480px) {
+  #main .catalog-price-filter { align-items: stretch; }
+  #main .catalog-price-filter select { flex: 1 1 100%; width: 100%; }
+}
+
+
+/* Editorial reading: preserve source text, headings, native disclosure
+   semantics, article language availability and real link destinations. */
+#main :is(.learn-body,.learn-toc,.learn-source-case,.guide-body,
+          .guide-practical,.guide-sources,.glossary-search-box,
+          .editorial-search-row,.editorial-card-footer) {
+  min-inline-size: 0;
+}
+#main :is(.learn-toc a,.glossary-quick-nav a,.glossary-see-part,
+          .guide-actions a,.learn-related-terms>div a,.learn-next-buttons a,
+          .editorial-cta a) {
+  min-height: 44px;
+  max-inline-size: 100%;
+  overflow-wrap: anywhere;
+  line-height: 1.5;
+}
+#main .learn-toc a { font-size: .9375rem; align-items: center; }
+#main :is(.glossary-quick-nav a,.glossary-see-part,.guide-actions a,
+          .learn-related-terms>div a,.learn-next-buttons a,.editorial-cta a) {
+  display: inline-flex;
+  align-items: center;
+}
+#main .learn-toc a span { color: #405948; }
+#main .glossary-search-box input {
+  font-size: max(16px, 1rem);
+  min-inline-size: 0;
+  max-inline-size: 100%;
+  line-height: 1.5;
+}
+#main .glossary-search-box input::placeholder { color: #53665a; opacity: 1; }
+#main .glossary-qa-list summary { min-height: 44px; padding-block: .5rem; }
+#main .glossary-card-header h3 { min-inline-size: 0; overflow-wrap: anywhere; }
+#main .glossary-card-header a {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  min-width: 44px;
+  min-height: 44px;
+}
+#main :is(.learn-source-case-table,.guide-table-scroll) {
+  max-inline-size: 100%;
+  overscroll-behavior-inline: contain;
+  font-variant-numeric: tabular-nums;
+}
+#main :is(.learn-source-case-table,.guide-table-scroll) th {
+  overflow-wrap: anywhere;
+}
+#main :is(.learn-further a,.guide-inline-sources a,.guide-sources a) {
+  overflow-wrap: anywhere;
+  text-decoration: underline;
+  text-underline-offset: .18em;
+}
+#main .editorial-card h3 a { text-decoration-color: currentColor; }
+#main :is(.editorial-search-row button,#editorial-reset,.editorial-card-footer a) {
+  max-inline-size: 100%;
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+#main .editorial-search-row input { max-inline-size: 100%; }
+/* At short viewport heights the entire contents list must remain reachable
+   by ordinary page scrolling, without a second scrollable menu. */
+@media (min-width: 861px) and (max-height: 720px) {
+  #main .learn-toc { position: static; }
+}
+@media (max-width: 480px) {
+  #main :is(.guide-actions a,.learn-hero-actions a,
+            .glossary-hero-actions a,.editorial-search-row button) {
+    flex: 1 1 100%;
+    text-align: center;
+    justify-content: center;
+  }
+  #main :is(.learn-keypoint,.learn-further,.glossary-method,
+            .glossary-card,.guide-sources,.guide-next) {
+    padding-inline: clamp(14px, 4vw, 20px);
+  }
+  #main .editorial-search-row input { flex-basis: 100%; }
+}
+
+
+/* Farm results: separate form inputs from computed output without changing
+   calculations, initial values, source conditions or hidden/disabled states. */
+@media screen {
+  #main .cost-page :is(.cost-grid,.extra-grid,.decision-grid,
+                      .cost-results,.extra-tools section,.decision-card) {
+    min-inline-size: 0;
+  }
+  #main .cost-page :is(.cost-results,.extra-tools dl.extra-grid,
+                      .decision-card dl.decision-grid) {
+    background: #f3f8f0;
+    border: 1px solid #c6ddc6;
+    border-radius: 12px;
+    padding: clamp(.75rem, 2vw, 1.125rem);
+  }
+  #main .cost-page :is(.cost-results div,.extra-tools dl.extra-grid>div,
+                      .decision-card dl.decision-grid>div) {
+    min-inline-size: 0;
+    overflow-wrap: anywhere;
+  }
+  #main .cost-page :is(.cost-results dt,.extra-tools dl.extra-grid dt,
+                      .decision-card dl.decision-grid dt) {
+    font-size: .9375rem;
+    line-height: 1.55;
+    color: #405948;
+  }
+  #main .cost-page :is(.cost-results dd,.extra-tools dl.extra-grid dd,
+                      .decision-card dl.decision-grid dd) {
+    font-size: clamp(1.125rem, 2vw, 1.375rem);
+    font-weight: 750;
+    font-variant-numeric: tabular-nums;
+    line-height: 1.4;
+    color: #174c32;
+  }
+  #main .cost-page .extra-table thead th {
+    background: #e4efe0;
+    color: #234b32;
+  }
+  #main .cost-page .extra-table tbody th { background: #f3f8f0; }
+  #main .cost-page .extra-table tbody tr:nth-child(even) td { background: #f8faf6; }
+  #main .cost-page :is([data-extra-error],[data-error]):not([hidden]) {
+    color: #4c3a1b;
+    background: #fff7e8;
+    border-inline-start: 4px solid #94671e;
+    padding: .75rem;
+    border-radius: 6px;
+    overflow-wrap: anywhere;
+  }
+  #main .cost-page :is([data-extra-error],[data-error])[hidden] { display: none; }
+}
+@media screen and (max-width:480px) {
+  #main .cost-page .decision-nav { gap: .5rem; }
+  #main .cost-page .decision-nav :is(a,button) {
+    flex: 1 1 auto;
+    max-inline-size: 100%;
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
+  #main .cost-page .extra-table th,
+  #main .cost-page .extra-table td { min-inline-size: 4.5rem; }
+}
+
+/* Source-card presentation only; keep existing model HTML and source attribution unchanged. */
+#main .model-sources-list a strong { font-size:16px; line-height:1.5; text-decoration:underline; }
+#main .model-sources-list a span { font-size:14px; line-height:1.55; }
+#main .model-sources-list small { font-size:13px; line-height:1.6; color:#405948; overflow-wrap:anywhere; }
+#main :is(.model-source-type,.model-sources-count span) { font-size:13px; }
+#main .model-sources-heading>div { min-inline-size:0; max-inline-size:100%; overflow-wrap:anywhere; }
+#main .model-sources-list a { min-height:44px; justify-content:center; }
+#main :is(.model-sources-caution,.model-sources-more) { font-size:14px; line-height:1.7; overflow-wrap:anywhere; }
+#main .model-sources a:focus-visible { outline:3px solid #175c37; outline-offset:3px; }
+@media(max-width:480px){#main .model-sources-count{min-width:0;width:100%}}

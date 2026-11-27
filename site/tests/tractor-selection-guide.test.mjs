@@ -75,3 +75,54 @@ test("guide is discoverable in all ten locales without fake EN fallbacks",()=>{
   assert.match(read("components/TractorSelectionGuide.astro"),/availableLocales=\{LOCALES\}/);
   assert.match(methodology,/href=\{tr\?"\/tr\/guides\/choosing-a-tractor\/":"\/guides\/choosing-a-tractor\/"\}/);
 });
+
+
+test("ten published selection guides link to actual scenario, equipment and cost sections and back",async()=>{
+ const {practicalGuideLinks}=await import("../src/lib/practical-guide-links.ts");
+ const guide=read("components/TractorSelectionGuide.astro");
+ const cost=read("components/FarmCost.astro");
+ const scenario=read("components/FarmScenarioTools.astro");
+ const decision=read("components/FarmDecisionTools.astro");
+ assert.match(guide,/id="guide-practical-heading"/);
+ assert.match(guide,/practicalGuideLinks\(lang\)\.links\.map/);
+ assert.match(cost,/href=\{practicalGuideLinks\(lang\)\.guide\.href\}/);
+ assert.match(scenario,/id="farm-scenarios"/);
+ assert.match(decision,/id="farm-equipment"/);
+ assert.match(cost,/id="farm-cost-form"/);
+ assert.match(read("pages/[locale]/guides/farm-cost-calculator/index.astro"),/NEW_LOCALES\.map/);
+ for(const lang of LOCALES){
+  const c=practicalGuideLinks(lang);
+  const base=localizedPath(lang,"/guides/farm-cost-calculator/");
+  assert.deepEqual(c.links.map(x=>x.href),["#farm-scenarios","#farm-equipment","#farm-cost-form"].map(x=>base+x));
+  assert.equal(c.guide.href,localizedPath(lang,"/guides/choosing-a-tractor/"));
+  assert.ok([c.heading,c.description,c.returnNote,c.guide.label,...c.links.map(x=>x.label)].every(x=>typeof x==="string"&&x.trim()));
+ }
+});
+
+
+test("published selection guides and advisors link to one another in every locale",async()=>{
+ const {practicalGuideLinks,ADVISOR_DISCOVERY_NOTE}=await import("../src/lib/practical-guide-links.ts");
+ const guide=read("components/TractorSelectionGuide.astro");
+ const advisor=read("components/FarmAdvisor.astro");
+ assert.match(guide,/href=\{practicalGuideLinks\(lang\)\.advisor\.href\}/);
+ assert.match(guide,/ADVISOR_DISCOVERY_NOTE\[lang\]/);
+ assert.match(advisor,/href=\{localizedPath\(lang,"\/guides\/choosing-a-tractor\/"\)\}/);
+ assert.match(read("pages/[locale]/farm-advisor/index.astro"),/NEW_LOCALES\.map/);
+ for(const lang of LOCALES){
+  const p=practicalGuideLinks(lang);
+  assert.equal(p.advisor.href,localizedPath(lang,"/farm-advisor/"));
+  assert.ok(p.advisor.label.trim()&&ADVISOR_DISCOVERY_NOTE[lang].trim());
+ }
+ assert.equal(new Set(Object.values(ADVISOR_DISCOVERY_NOTE)).size,10);
+});
+
+
+test("selection guide includes a translated physical-fit checklist without claiming safety approval",async()=>{
+ const {GUIDE_DIMENSION_COPY}=await import("../src/lib/guide-dimension-copy.ts");
+ const guide=read("components/TractorSelectionGuide.astro");
+ assert.match(guide,/id="guide-dimensions-heading"/);
+ assert.match(guide,/GUIDE_DIMENSION_COPY\[lang\]\.slice\(1,4\)/);
+ assert.match(guide,/GUIDE_DIMENSION_COPY\[lang\]\[4\]/);
+ for(const lang of LOCALES){assert.equal(GUIDE_DIMENSION_COPY[lang].length,5);assert.ok(GUIDE_DIMENSION_COPY[lang].every(v=>v.trim().length>12));}
+ assert.equal(new Set(LOCALES.map(l=>GUIDE_DIMENSION_COPY[l][0])).size,10);
+});

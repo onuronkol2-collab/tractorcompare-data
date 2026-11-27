@@ -1,5 +1,5 @@
 /**
- * Two editorially scoped TractorVS brand discovery pilots.
+ * Explicit demand-led TractorVS brand discovery pilots.
  * No global auto-generation of thin manufacturer pages.
  * Input MUST originate from getPublicCatalog(), the reviewed published-only
  * Supabase view. A defensive status gate also rejects draft/archived rows if
@@ -8,6 +8,9 @@
 export const BRAND_DISCOVERY_PILOTS=Object.freeze([
   Object.freeze({name:"McCormick",slug:"mccormick"}),
   Object.freeze({name:"Valtra",slug:"valtra"}),
+  Object.freeze({name:"TAFE",slug:"tafe",minimumSourceRecords:10}),
+  Object.freeze({name:"Sonalika",slug:"sonalika",minimumSourceRecords:10}),
+  Object.freeze({name:"Swaraj",slug:"swaraj",minimumSourceRecords:10}),
 ]);
 export const MIN_PUBLISHED_BRAND_MODELS=10;
 
@@ -31,6 +34,7 @@ export function listedBrandCollections(publicCatalog){
     if(new Set(ids).size!==ids.length||new Set(slugs).size!==slugs.length)
       throw new Error("Duplicate published brand identity for "+pilot.name);
     if(models.length<MIN_PUBLISHED_BRAND_MODELS)continue;
+    if(pilot.minimumSourceRecords && models.filter(model=>verifiedModelSources(model).length>0).length<pilot.minimumSourceRecords)continue;
     models.sort((a,b)=>a.model_name.localeCompare(b.model_name,"en",{numeric:true})||
       String(a.variant||"").localeCompare(String(b.variant||""),"en")||
       a.slug.localeCompare(b.slug,"en"));
@@ -52,4 +56,18 @@ export function verifiedModelSources(model){
     }catch{continue}
   }
   return [...sources.values()];
+}
+
+
+/** Coverage of the public collection, not the manufacturer's whole range. */
+export function brandMarketCoverage(models){
+ const groups=new Map();
+ for(const model of models){
+  const market=typeof model.market==="string"&&model.market.trim()?model.market:null;
+  const group=groups.get(market)||{market,records:0,withSources:0};
+  group.records++;
+  if(verifiedModelSources(model).length)group.withSources++;
+  groups.set(market,group);
+ }
+ return [...groups.values()];
 }

@@ -87,3 +87,95 @@ test("reading-language labels are complete and coverage placeholders are intact"
   assert.ok(labels.coverage.includes("{local}")&&labels.coverage.includes("{total}"));
  }
 });
+
+
+test("shared form focus and readable research surfaces keep existing behavior and locale coverage",()=>{
+ const styles=file("styles/interaction-accessibility.css");
+ const layout=file("styles/research-layout.css");
+ const advisor=file("components/FarmAdvisor.astro");
+ assert.match(styles,/\.tc-picker-side \.tc-combo-input/);
+ assert.match(styles,/\.catalog-toolbar input/);
+ assert.match(styles,/\.advisor-budget-input:focus-within/);
+ assert.match(styles,/\.cost-page textarea/);
+ assert.match(styles,/forced-colors: active/);
+ assert.match(styles,/prefers-reduced-motion: reduce/);
+ assert.match(layout,/\.tc-result-main small/);
+ assert.match(layout,/\.cost-page \.history-scroll/);
+ assert.match(layout,/font-variant-numeric: tabular-nums/);
+ assert.match(layout,/font-size: max\(16px, 1rem\)/);
+ assert.match(advisor,/\.advisor-fact-note\{color:#405948;font-size:13px;line-height:1.6/);
+ assert.match(advisor,/\.advisor-result-facts small\{display:block;color:#405948;font-size:14px/);
+ assert.match(advisor,/recommendTractors/);
+});
+
+
+test("narrow navigation and forum reading styles retain native controls and visible links",()=>{
+ const shared=file("styles/global.css");
+ const forum=file("styles/forum-readable.css");
+ const shell=file("layouts/SiteLayout.astro");
+ assert.match(shared,/@media \(max-width: 420px\)[\s\S]*?\.mobile-menu-search-row\s*\{\s*grid-template-columns: minmax\(0, 1fr\)/);
+ assert.match(shell,/<details class="mobile-nav" data-site-disclosure>/);
+ assert.match(shell,/<form class="mobile-menu-search"/);
+ assert.match(forum,/\.forum-topic-toc summary\{[^}]*min-height:44px/);
+ assert.match(forum,/\.forum-topic-toc li a\{[^}]*text-decoration:underline/);
+ assert.match(forum,/overscroll-behavior-inline: contain/);
+});
+
+
+test("catalogue and brand research surfaces preserve real links and readable technical evidence",()=>{
+ const style=file("styles/research-layout.css");
+ const brand=file("components/BrandDiscovery.astro");
+ const source=file("components/ModelSourceIndex.astro");
+ const toc=file("styles/model-research-toc.css");
+ assert.match(style,/\.catalog-search-feedback button/);
+ assert.match(style,/\.catalog-price-filter select/);
+ assert.match(style,/min-height: 48px/);
+ assert.match(brand,/href=\{modelPrefix\+model\.slug\+"\/"\}/);
+ assert.match(brand,/href=\{source\.url\}/);
+ assert.match(brand,/\.brand-model-links a\{[^}]*text-decoration:underline/);
+ assert.match(source,/href=\{source\.url\}/);
+ assert.match(style,/\.model-sources-list a strong \{ font-size:16px/);
+ assert.match(style,/\.model-sources-list small \{ font-size:13px/);
+ assert.match(toc,/\.model-spec-group\[id\]\{scroll-margin-top:7rem\}/);
+ assert.match(toc,/\.model-spec-toc a\{line-height:1\.5\}/);
+});
+
+
+test("technical editorial reading remains reachable with native links and short viewport reflow",()=>{
+ const layout=file("styles/research-layout.css");
+ const access=file("styles/interaction-accessibility.css");
+ const glossary=file("components/TractorGlossary.astro");
+ const guide=file("components/TractorSelectionGuide.astro");
+ const deep=file("components/TractorTechnicalDeepDive.astro");
+ assert.match(layout,/@media \(min-width: 861px\) and \(max-height: 720px\)\s*\{\s*#main \.learn-toc \{ position: static; \}/);
+ assert.match(layout,/#main \.glossary-search-box input \{\s*font-size: max\(16px, 1rem\)/);
+ assert.match(layout,/#main \.glossary-qa-list summary \{ min-height: 44px/);
+ assert.match(layout,/\.glossary-card-header a \{[^}]*min-width: 44px;[^}]*min-height: 44px/);
+ assert.match(layout,/\.learn-source-case-table,\.guide-table-scroll/);
+ assert.match(access,/\.learn-source-case-table:focus-visible/);
+ assert.match(access,/\.learn-next,\.glossary-next,\.guide-next,\.editorial-cta/);
+ assert.match(glossary,/id="glossary-search-status" role="status" aria-live="polite"/);
+ assert.match(guide,/class="guide-table-scroll" role="region" tabindex="0"/);
+ assert.match(deep,/class="learn-source-case-table" role="region" tabindex="0"/);
+});
+
+
+test("comparison presentation retains source-backed rows and native recovery with narrow-screen controls",()=>{
+ const css=file("styles/compare-experience.css");
+ const compare=file("components/TractorComparison.astro");
+ assert.match(css,/#main \.tc-section \.tc-entry a \{[^}]*min-height: 44px/);
+ assert.match(css,/@media screen and \(max-width:390px\)/);
+ assert.match(css,/max-height: min\(260px, 45dvh\)/);
+ assert.match(css,/\.tc-entry \+ \.tc-entry/);
+ assert.match(css,/#tc-load-error:not\(\[hidden\]\)/);
+ assert.match(css,/#tc-load-error\[hidden\] \{ display: none; \}/);
+ assert.match(css,/@media print/);
+ assert.match(compare,/<table class="tc-table" role="table">/);
+ assert.match(compare,/<th scope="row" role="rowheader">/);
+ assert.match(compare,/href=\{spec\.source\}/);
+ assert.match(compare,/requiresConditionCaution/);
+ assert.match(compare,/requiresTransmissionCaution/);
+ assert.match(compare,/id="tc-load-error" role="alert" hidden/);
+ assert.match(compare,/id="tc-retry" type="button"/);
+ assert.match(compare,/id="tc-share-url" type="url" readonly/);
+});
