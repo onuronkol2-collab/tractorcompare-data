@@ -45,7 +45,10 @@ export function marketDisplayName(market:string|null,locale:Locale):string|null 
   if(!market)return null;
   const normalized = market.trim().toLocaleLowerCase("en-US");
   const marketKey = normalized === "türkiye" ? "turkey" : normalized === "uk" ? "united kingdom" : normalized;
-  return MARKET[marketKey]?.[locale]||market;
+  // Only exact country/region identities are localized. Preserve descriptive
+  // market strings (e.g. Europe / UK 2025 manufacturer brochure) verbatim.
+  if (Object.hasOwn(MARKET,marketKey)) return MARKET[marketKey][locale] || market;
+  return localizedRegion(marketKey,locale,market);
 }
 
 const COUNTRY_CODES = new Map(Object.entries({
@@ -53,6 +56,10 @@ const COUNTRY_CODES = new Map(Object.entries({
   belarus: "BY", austria: "AT", "czech republic": "CZ", japan: "JP",
   brazil: "BR", türkiye: "TR", turkey: "TR", canada: "CA", uk: "GB",
   "united kingdom": "GB", germany: "DE",
+  "united states": "US", usa: "US", us: "US", france: "FR", spain: "ES",
+  china: "CN", russia: "RU", romania: "RO", moldova: "MD", kazakhstan: "KZ",
+  australia: "AU", "south africa": "ZA", portugal: "PT", mexico: "MX",
+  poland: "PL", pakistan: "PK", serbia: "RS", argentina: "AR",
 }));
 
 export const BRAND_COUNTRY_LABEL: Record<Locale, string> = {
@@ -63,13 +70,22 @@ export const BRAND_COUNTRY_LABEL: Record<Locale, string> = {
 
 const regionNames = new Map<Locale, Intl.DisplayNames>();
 
-export function brandCountryName(country: string, locale: Locale): string {
-  const code = COUNTRY_CODES.get(country.trim().toLowerCase());
-  if (!code) return country;
-  let names = regionNames.get(locale);
-  if (!names) {
-    names = new Intl.DisplayNames([locale], { type: "region" });
-    regionNames.set(locale, names);
+function localizedRegion(key:string,locale:Locale,original:string):string {
+  const code = COUNTRY_CODES.get(key);
+  if (!code) return original;
+  try {
+    let names = regionNames.get(locale);
+    if (!names) {
+      names = new Intl.DisplayNames([locale], { type: "region", fallback:"none" });
+      regionNames.set(locale, names);
+    }
+    return names.of(code) || original;
+  } catch {
+    // A runtime with incomplete ICU must not break catalogue or SEO rendering.
+    return original;
   }
-  return names.of(code) || country;
+}
+
+export function brandCountryName(country: string, locale: Locale): string {
+  return localizedRegion(country.trim().toLowerCase(),locale,country);
 }
