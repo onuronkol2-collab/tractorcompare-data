@@ -19,19 +19,28 @@ export function appJwt(key,id=APP_ID,now=Date.now()){
  const payload=enc({alg:"RS256",typ:"JWT"})+"."+enc({iat:t-60,exp:t+480,iss:id});
  return payload+"."+createSign("RSA-SHA256").update(payload).end().sign(key).toString("base64url");
 }
-export async function runReadonlyPilot({env,fetchFn=fetch,mask=()=>{},now=Date.now()}){
+// Only fixed diagnostic codes and validated HTTP status are logged; never raw errors or key text.
+const diagnosticCodes=new Set(["CONTEXT","KEY_PARSE_OR_SIGN","APP_AUTH","INSTALLATION_LOOKUP","INSTALLATION_SCOPE","TOKEN_GRANT","TOKEN_SCOPE","REPOSITORY_SCOPE","MAIN_READ","TOKEN_REVOKE"]);
+export async function runReadonlyPilot({env,fetchFn=fetch,mask=()=>{},now=Date.now(),diagnostic=()=>{}}){
+ let stage="CONTEXT",status=null;
+ try{
  assertPilotContext(env);
+ stage="KEY_PARSE_OR_SIGN";
  const jwt=appJwt(env.APP_PRIVATE_KEY,env.APP_ID,now);
  mask(jwt);
  async function request(path,credential,method="GET",body){
+  status=null;
   const r=await fetchFn(API+path,{method,redirect:"error",signal:AbortSignal.timeout(15000),
    headers:{Authorization:"Bearer "+credential,Accept:"application/vnd.github+json","X-GitHub-Api-Version":"2022-11-28",...(body?{"Content-Type":"application/json"}:{})},...(body?{body:JSON.stringify(body)}:{})});
-  if(!r.ok)fail("GitHub API rejected "+method+" "+path+" ("+r.status+")");
+  if(!r.ok){status=Number.isInteger(r.status)&&r.status>=400&&r.status<=599?r.status:null;fail("GitHub API rejected "+method+" "+path+" ("+r.status+")");}
   return r.status===204?null:r.json();
  }
+ stage="APP_AUTH";
  const app=await request("/app",jwt);
  if(app?.id!==Number(APP_ID)||typeof app.slug!=="string"||!app.slug)fail("Unexpected GitHub App identity");
+ stage="INSTALLATION_LOOKUP";
  const installation=await request("/repos/"+REPO+"/installation",jwt);
+ stage="INSTALLATION_SCOPE";
  if(installation.app_id!==Number(APP_ID)||!idOk(installation.id)||installation.suspended_at||installation.repository_selection!=="selected")
   fail("Unexpected installation scope");
  if(installation.permissions?.contents!=="write"||installation.permissions?.pull_requests!=="write"||installation.permissions?.metadata!=="read"||
@@ -39,22 +48,35 @@ export async function runReadonlyPilot({env,fetchFn=fetch,mask=()=>{},now=Date.n
   fail("Unexpected installed permissions");
  let token;
  try{
+  stage="TOKEN_GRANT";
   const grant=await request("/app/installations/"+installation.id+"/access_tokens",jwt,"POST",{repositories:["tractorcompare-data"],permissions:{contents:"read",pull_requests:"read"}});
   token=grant?.token;
   if(typeof token!=="string"||!token)fail("No installation token");
   mask(token);
+  stage="TOKEN_SCOPE";
   if(grant.permissions?.contents!=="read"||grant.permissions?.pull_requests!=="read"||Object.values(grant.permissions??{}).some(v=>v!=="read"))
    fail("Token is not strictly read only");
+  stage="REPOSITORY_SCOPE";
   const access=await request("/installation/repositories?per_page=100",token);
   if(access.total_count!==1||access.repositories?.length!==1||access.repositories[0].full_name!==REPO)fail("Token repository scope mismatch");
+  stage="MAIN_READ";
   const branch=await request("/repos/"+REPO+"/branches/main",token);
   if(!shaOk(branch.commit?.sha))fail("Cannot read trusted main SHA");
   return {appId:app.id,appSlug:app.slug,installationId:installation.id,main:branch.commit.sha};
- }finally{if(typeof token==="string"&&token)await request("/installation/token",token,"DELETE");}
+ }finally{if(typeof token==="string"&&token){
+  const previousStage=stage,previousStatus=status;
+  stage="TOKEN_REVOKE";
+  await request("/installation/token",token,"DELETE");
+  stage=previousStage;status=previousStatus;
+ }}
+ }catch(error){
+  diagnostic({stage:diagnosticCodes.has(stage)?stage:"CONTEXT",httpStatus:status});
+  throw error;
+ }
 }
 if(process.argv[1]&&resolve(process.argv[1])===fileURLToPath(import.meta.url)){
  try{
-  const result=await runReadonlyPilot({env:process.env,mask:v=>console.log("::add-mask::"+v)});
+  const result=await runReadonlyPilot({env:process.env,mask:v=>console.log("::add-mask::"+v),diagnostic:({stage,httpStatus})=>console.error("Pilot diagnostic: "+stage+(httpStatus===null?"":" HTTP "+httpStatus))});
   console.log("Read-only installation pilot: one repository, read-only token revoked; main SHA accessible.");
   console.log(JSON.stringify(result));
  }catch{
