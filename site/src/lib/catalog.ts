@@ -292,12 +292,15 @@ function getPublicApiKey(): { key: string; isLegacyJwt: boolean } {
  *
  * Inconsistent counts/ranges fail closed: never publish a partial catalogue.
  */
-export async function fetchPublicRows(endpoint: URL, apiKey: string, isLegacyJwt: boolean): Promise<unknown[]> {
+export async function fetchPublicRows(endpoint: URL, apiKey: string, isLegacyJwt: boolean, pageSize = 500): Promise<unknown[]> {
   const allRows: unknown[] = [];
-  const pageSize = 500;
+  if (pageSize !== 500 && pageSize !== 1000) throw new Error("Invalid public catalogue page size");
   const maximumRows = 50_000;
   let knownTotal: number | null = null;
   let offset = 0;
+  let requests = 0;
+  let reportedBytes = 0, sizedResponses = 0;
+  const started = performance.now();
 
   while (offset < maximumRows) {
     const pageUrl = new URL(endpoint);
@@ -313,6 +316,7 @@ export async function fetchPublicRows(endpoint: URL, apiKey: string, isLegacyJwt
     // keys are not JWTs. Never use a service-role or secret key.
     if (isLegacyJwt) headers.Authorization = "Bearer " + apiKey;
 
+    requests++;
     const response = await fetch(pageUrl, {
       method: "GET",
       headers,
@@ -327,6 +331,8 @@ export async function fetchPublicRows(endpoint: URL, apiKey: string, isLegacyJwt
       );
     }
 
+    const length = response.headers.get("content-length");
+    if(length !== null && /^\d+$/.test(length) && Number.isSafeInteger(Number(length))){reportedBytes += Number(length);sizedResponses++;}
     const payload: unknown = await response.json();
     if (!Array.isArray(payload)) {
       throw new Error("Supabase public catalogue returned an unexpected response at offset " + offset + ".");
@@ -350,6 +356,10 @@ export async function fetchPublicRows(endpoint: URL, apiKey: string, isLegacyJwt
       }
     }
 
+    // A later numeric total, when supplied by PostgREST, must agree with the first.
+    // Do not mistake an unknown (*) total for an exact count.
+    const laterTotal=contentRange.match(/\/(\d+)$/);
+    if(offset>0&&laterTotal&&Number(laterTotal[1])!==knownTotal)throw new Error("Supabase public catalogue count changed during the build; retry a new build.");
     if (payload.length) {
       const rowRange = contentRange.match(/^(\d+)-(\d+)\/(?:\d+|\*)$/);
       if (!rowRange || Number(rowRange[1]) !== offset ||
@@ -365,7 +375,14 @@ export async function fetchPublicRows(endpoint: URL, apiKey: string, isLegacyJwt
 
     allRows.push(...payload);
     offset += payload.length;
-    if (offset === knownTotal) return allRows;
+    if (offset === knownTotal) {
+      if (process.env.TRACTORVS_BUILD_PROFILE === "true") {
+        console.log("TRACTORVS_CATALOG_TIMING " + JSON.stringify({
+          rows: allRows.length, requests, pageSize, reportedBytes:sizedResponses===requests?reportedBytes:null, sizedResponses, elapsedMs: Math.round(performance.now() - started)
+        }));
+      }
+      return allRows;
+    }
 
     // Server-side page size may be lower than 500: advance by actual rows.
     if (payload.length === 0) {
@@ -384,10 +401,10 @@ export async function fetchPublicRows(endpoint: URL, apiKey: string, isLegacyJwt
  * build failures. No writes, elevated keys, guessed values or partial pages.
  */
 export async function fetchPublicRowsWithCountDriftRetry(
-  endpoint:URL, apiKey:string, isLegacyJwt:boolean
+  endpoint:URL, apiKey:string, isLegacyJwt:boolean, pageSize=500
 ):Promise<unknown[]>{
   try {
-    return await fetchPublicRows(endpoint,apiKey,isLegacyJwt);
+    return await fetchPublicRows(endpoint,apiKey,isLegacyJwt,pageSize);
   } catch (error) {
     if (!(error instanceof Error) ||
         error.message!=="Supabase public catalogue count changed during the build; retry a new build.")
@@ -395,7 +412,7 @@ export async function fetchPublicRowsWithCountDriftRetry(
     console.warn("[TractorVS] Published catalogue count changed between pages; restarting the complete read once.");
     // The failed call's rows were scoped to fetchPublicRows and discarded.
     // A second mismatch still throws, blocking the build rather than hiding it.
-    return await fetchPublicRows(endpoint,apiKey,isLegacyJwt);
+    return await fetchPublicRows(endpoint,apiKey,isLegacyJwt,pageSize);
   }
 }
 
@@ -435,7 +452,11 @@ async function loadPublicCatalog(): Promise<PublicCatalog> {
   ].join(","));
   endpoint.searchParams.set("order", "brand_name.asc,model_name.asc,tractor_id.asc,spec_id.asc");
 
-  const payload = await fetchPublicRowsWithCountDriftRetry(endpoint, apiKey.key, apiKey.isLegacyJwt);
+  // Opt-in benchmark only. The existing safe 500-row default remains.
+  const requestedPageSize=process.env.TRACTORVS_CATALOG_PAGE_SIZE;
+  if(requestedPageSize!==undefined&&requestedPageSize!=="500"&&requestedPageSize!=="1000")
+    throw new Error("TRACTORVS_CATALOG_PAGE_SIZE must be 500 or 1000");
+  const payload = await fetchPublicRowsWithCountDriftRetry(endpoint, apiKey.key, apiKey.isLegacyJwt,requestedPageSize==="1000"?1000:500);
   const groups = new Map<string, TractorRecord>();
 
   for (const rawRow of payload) {

@@ -20,19 +20,20 @@ export function morePublishedTractors(
   const ranked = published.filter(item =>
     item.tractor_id !== current.tractor_id && item.slug !== current.slug
   );
-  return ranked.sort((a,b) => {
-    const rank = (item:TractorRecord) => {
+  // Compute rank once per record, rather than for every sort comparison.
+  const rank = (item:TractorRecord) => {
       const sameBrand = item.brand_name.trim().toLocaleLowerCase("en") === brand ? 0 : 1;
       const sameModel = sameBrand===0 && item.model_name.trim().toLocaleLowerCase("en") === model ? 0 : 1;
       const sameMarket = market && item.market?.trim().toLocaleLowerCase("en") === market ? 0 : 1;
       const powerGap = current.horsepower != null && item.horsepower != null
         ? Math.abs(item.horsepower-current.horsepower) : Number.MAX_SAFE_INTEGER;
       return [sameBrand,sameModel,sameMarket,powerGap] as const;
-    };
-    const left = rank(a),right = rank(b);
+  };
+  return ranked.map(item=>({item,score:rank(item)})).sort((a,b)=>{
+    const left=a.score,right=b.score;
     return left[0]-right[0] || left[1]-right[1] || left[2]-right[2]
-      || left[3]-right[3] || a.slug.localeCompare(b.slug,"en");
-  }).slice(0,max);
+      || left[3]-right[3] || a.item.slug.localeCompare(b.item.slug,"en");
+  }).slice(0,max).map(entry=>entry.item);
 }
 
 
@@ -76,4 +77,11 @@ export function sourceMatchedMarketPeer(current:TractorRecord,published:readonly
     matchedHeadlinePowerSource(item)!==null
   ).sort((a,b)=>Math.abs(a.horsepower!-power)-Math.abs(b.horsepower!-power)||a.slug.localeCompare(b.slug,"en"));
   return matches[0]??null;
+}
+
+// Explicit static-route preparation, not a global memoized result. A new
+// published snapshot always computes fresh results. Returned lists are readonly
+// so parallel rendering cannot mutate another locale's navigation order.
+export function prepareModelDiscovery(published:readonly TractorRecord[]){
+ return published.map(tractor=>({tractor,moreModels:Object.freeze(modelDiscoveryLinks(tractor,published))}));
 }

@@ -226,10 +226,18 @@ export const APPROVED_TRACTOR_PHOTOS:readonly TractorPhoto[]=PHOTO_ORIGINS.map(s
   displayUrl:"/images/tractors/"+source.fileId+"-960.jpg",
   fullUrl:"/images/tractors/"+source.fileId+"-1920.jpg",
 }));
+// Static, curated source inventory; preserve the first match and original order.
+const approvedByFileId=new Map<string,TractorPhoto>();
+const approvedByBrand=new Map<string,TractorPhoto[]>();
+for(const photo of APPROVED_TRACTOR_PHOTOS){
+  if(!approvedByFileId.has(photo.fileId))approvedByFileId.set(photo.fileId,photo);
+  const key=norm(photo.brand),group=approvedByBrand.get(key)??[];
+  group.push(photo);approvedByBrand.set(key,group);
+}
 export function resolveApprovedPhotoSource(pathname:string):string|null {
   const m=/^\/images\/tractors\/([a-z0-9-]+)-(480|960|1920)\.jpg$/.exec(pathname);
   if(!m)return null;
-  const photo=APPROVED_TRACTOR_PHOTOS.find(item=>item.fileId===m[1]);
+  const photo=approvedByFileId.get(m[1]);
   const origin=photo ? m[2]==="480" ? photo.originThumbUrl
     : m[2]==="960" ? photo.originDisplayUrl : photo.originFullUrl : null;
   // Refuse unrecognized domains, invalid Commons paths and non-standard
@@ -258,7 +266,8 @@ export function photoMatchesTractor(
   return true;
 }
 export function tractorPhotos(tractor:TractorPhotoLookup):TractorPhoto[]{
-  return APPROVED_TRACTOR_PHOTOS.filter(photo=>photoMatchesTractor(photo,tractor));
+  // Index only narrows candidates; every original UUID/model check remains.
+  return (approvedByBrand.get(norm(tractor.brand_name))??[]).filter(photo=>photoMatchesTractor(photo,tractor));
 }
 export function primaryTractorPhoto(tractor:Pick<TractorRecord,"brand_name"|"model_name">):TractorPhoto|null{
   return tractorPhotos(tractor)[0]||null;

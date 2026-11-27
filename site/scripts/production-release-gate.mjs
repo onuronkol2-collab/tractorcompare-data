@@ -16,10 +16,7 @@ import {fileURLToPath} from "node:url";
 import {verifyPublishedSiteInventory} from "./verify-published-site-inventory.mjs";
 import {verifyBuiltSitemapHtml} from "./verify-built-sitemap-html.mjs";
 import {verifyUnifiedSitemapIndex} from "./verify-unified-sitemap-index.mjs";
-import {auditBuiltImageAlts} from "./verify-sitewide-image-alts.mjs";
-import {auditBuiltSeoTitles} from "./verify-sitewide-seo-titles.mjs";
-import {auditBuiltMetaDescriptions} from "./verify-sitewide-meta-descriptions.mjs";
-import {auditBuiltSocialMetadata} from "./verify-sitewide-social-metadata.mjs";
+import {auditAllBuiltHtml} from "./audit-all-built-html.mjs";
 import {auditBuiltAstroAssets} from "./verify-static-assets-version-compat.mjs";
 import {auditBuiltModelImageRights} from "./verify-built-model-image-rights.mjs";
 import {hasReleaseSha,verifiedReleaseSha} from "../src/lib/release-provenance.mjs";
@@ -197,7 +194,7 @@ export function verifyProductionArtifacts({dir=projectRoot,origin=expectedOrigin
  // Check ALL built HTML: also noindex forum pages, header/footer images, and
  // dormant lightboxes outside <main>. A missing alt blocks release, but a
  // deliberate alt="" is valid and must not be replaced with SEO filler.
- const imageAlt=auditBuiltImageAlts(dist);
+ const {imageAlt,social,titleAudit,metaAudit}=auditAllBuiltHtml(dist);
  insist(imageAlt.missingAlt.length===0,
    "Missing image alt attributes on "+imageAlt.missingAlt.length+" built images: "+
    JSON.stringify(imageAlt.missingAlt.slice(0,8)));
@@ -208,7 +205,6 @@ export function verifyProductionArtifacts({dir=projectRoot,origin=expectedOrigin
  // its real identity even when the sitemap and generic title test still pass.
  // 60 characters is advisory, NOT a hard Google limit: report it, never
  // arbitrarily delete true model, market, variant or year details.
- const social=auditBuiltSocialMetadata(dist);
  insist(social.errors.length===0,
    "Incomplete or inconsistent social metadata: "+JSON.stringify(social.errors.slice(0,12)));
  insist(social.brandFallbackPages>0,
@@ -220,7 +216,6 @@ export function verifyProductionArtifacts({dir=projectRoot,origin=expectedOrigin
  console.log("TRACTORVS_PRODUCTION_SOCIAL_METADATA "+JSON.stringify({
    indexablePages:social.indexablePages,brandedPreviews:social.brandFallbackPages,errors:social.errors.length
  }));
- const titleAudit=auditBuiltSeoTitles(dist);
  insist(titleAudit.errors.length===0,
    "Missing/multiple title or wrong model identity on "+titleAudit.errors.length+
    " generated pages: "+JSON.stringify(titleAudit.errors.slice(0,8)));
@@ -230,7 +225,6 @@ export function verifyProductionArtifacts({dir=projectRoot,origin=expectedOrigin
  // Every canonical, indexable HTML page must have exactly one nonblank meta
  // description. Long descriptions are editorial advisories, not ranking errors.
  // Noindex previews / ownership pages are intentionally outside this check.
- const metaAudit=auditBuiltMetaDescriptions(dist);
  insist(metaAudit.errors.length===0,
    "Missing, empty or duplicate descriptions on "+metaAudit.errors.length+
    " indexable pages: "+JSON.stringify(metaAudit.errors.slice(0,8)));

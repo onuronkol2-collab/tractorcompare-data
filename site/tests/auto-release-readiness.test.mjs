@@ -56,3 +56,9 @@ test("readiness does not wait on its own independently verified advisory job",()
  const pending=checks();pending[0].status="in_progress";pending[0].conclusion=null;assert.equal(evaluateWith(self,[run],pending),"pending");
  assert.equal(evaluateWith(self,[run],checks().slice(1)),"pending");
 });
+
+test("advisory readiness requires every actual browser matrix shard, including both WebKit jobs",()=>{
+ const names=["browser-projects (chromium, chromium, 1/1, chromium)","browser-projects (firefox, firefox, 1/1, firefox)","browser-projects (webkit, webkit, 1/2, webkit-shard-1)","browser-projects (webkit, webkit, 2/2, webkit-shard-2)","browser-projects (mobile-chromium, chromium, 1/1, mobile-chromium)"];
+ assert.deepEqual(REQUIRED.filter(([n])=>n.startsWith("browser-projects (")).map(([n])=>n),names);
+ for(const name of names){assert.equal(decide(checks().filter(c=>c.name!==name)),"pending");assert.equal(decide(checks().map(c=>c.name===name?{...c,conclusion:"failure"}:c)),"failure");}
+});

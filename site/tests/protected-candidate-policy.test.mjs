@@ -34,3 +34,11 @@ test("all three existing writers are mutually exclusive with gated reusable path
   assert.match(s,/vars\.TRACTORVS_PR_ONLY_CUTOVER != 'true'/);assert.match(s,/vars\.TRACTORVS_PR_ONLY_CUTOVER == 'true'/);assert.match(s,/uses: \.\/\.github\/workflows\/tractorvs-integrated-publication-pilot\.yml/);
  }
 });
+
+test("protected release requires exact complete new browser matrix from its trusted workflow",()=>{
+ const names=["browser-projects (chromium, chromium, 1/1, chromium)","browser-projects (firefox, firefox, 1/1, firefox)","browser-projects (webkit, webkit, 1/2, webkit-shard-1)","browser-projects (webkit, webkit, 2/2, webkit-shard-2)","browser-projects (mobile-chromium, chromium, 1/1, mobile-chromium)"];
+ const workflow=readFileSync(new URL("../../.github/workflows/playwright-accessibility.yml",import.meta.url),"utf8");
+ const entries=[...workflow.matchAll(/- project: ([\w-]+)\n +engine: ([\w-]+)\n +shard: '(\d+\/\d+)'\n +evidence: ([\w-]+)/g)].map(m=>"browser-projects ("+m.slice(1).join(", ")+")");
+ assert.deepEqual([...entries].sort(),[...names].sort());
+ for(const kind of ["catalog","forum","sitemap","forum-recovery"]){const x=fixture(kind);assert.deepEqual(requiredCandidateChecks(kind).filter(r=>r.name.startsWith("browser-projects (")).map(r=>r.name),names);for(const name of names){assert.notEqual(evaluateCandidateChecks({...x,checks:x.checks.filter(c=>c.name!==name)}).state,"success");assert.equal(evaluateCandidateChecks({...x,checks:x.checks.map(c=>c.name===name?{...c,conclusion:"failure"}:c)}).state,"failure");}}
+});

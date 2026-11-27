@@ -5,6 +5,7 @@ on:
     paths:
       - "site/**"
       - "package.json"
+      - "package-lock.json"
       - "wrangler.jsonc"
       - "supabase/migrations/20261115000400_tractorvs_public_catalog_view.sql"
       - "supabase/rollback/20261115000400_tractorvs_public_catalog_view_rollback.sql"
@@ -19,6 +20,7 @@ on:
       - "supabase/verification/preflight_tractorvs_public_catalog_view.sql"
       - "wrangler.jsonc"
       - "package.json"
+      - "package-lock.json"
       - "supabase/migrations/20261115000400_tractorvs_public_catalog_view.sql"
       - "supabase/rollback/20261115000400_tractorvs_public_catalog_view_rollback.sql"
       - "supabase/verification/verify_tractorvs_public_catalog_view.sql"
@@ -48,7 +50,7 @@ jobs:
           cache-dependency-path: package-lock.json
 
       - name: Install workspace dependencies
-        run: npm ci --no-audit --no-fund
+        run: npm ci --prefer-offline --no-audit --no-fund
 
       - name: Test conservative specification deduplication
         run: npm run test --workspace=tractorvs-site

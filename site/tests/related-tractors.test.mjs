@@ -96,3 +96,15 @@ test("same-market source-matched cross-brand discovery adds one link without rep
  assert.equal(sourceMatchedMarketPeer(current,catalogue.filter(x=>x!==good)),null);
  for(const lang of LOCALES)assert.equal(localizedPath(lang,"/tractors/"+good.slug+"/"),(lang==="en"?"":"/"+lang)+"/tractors/landini/");
 });
+
+test("static locale preparation preserves model order and exact direct discovery results; fresh input never reuses stale data",async()=>{
+ const {prepareModelDiscovery,modelDiscoveryLinks}=await import("../src/lib/related-tractors.ts");
+ const a=make("a","Example","Europe",80),b=make("b","Example","Europe",90),c=make("c","Example","Europe",100);
+ const first=prepareModelDiscovery([a,b]);
+ assert.deepEqual(first.map(x=>x.tractor),[a,b]);
+ assert.ok(first.every(x=>Object.isFrozen(x.moreModels)));
+ for(const row of first)assert.deepEqual(row.moreModels,modelDiscoveryLinks(row.tractor,[a,b]));
+ const next=prepareModelDiscovery([a,b,c]);
+ assert.ok(next[0].moreModels.includes(c));assert.ok(!first[0].moreModels.includes(c));
+ for(const row of next)assert.deepEqual(row.moreModels,modelDiscoveryLinks(row.tractor,[a,b,c]));
+});
