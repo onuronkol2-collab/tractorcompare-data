@@ -72,3 +72,27 @@ test("all same-brand models receive a second discovery path even with sparse pow
   assert.equal(inbound.size,family.length);
   assert.deepEqual(modelDiscoveryLinks(singleton,published),morePublishedTractors(singleton,published));
 });
+
+
+test("same-market source-matched cross-brand discovery adds one link without replacing catalogue links",async()=>{
+ const {modelDiscoveryLinks,sourceMatchedMarketPeer}=await import("../src/lib/related-tractors.ts");
+ const backed=(slug,brand,market,hp,url,extra={})=>({...make(slug,brand,market,hp),specifications:[{spec_id:slug,canonical_key:"engine_rated_power",spec_name:"Engine power",spec_value:String(hp),unit:"hp",comparison_class:"engine",measurement_standard:"manufacturer specification",rated_rpm:null,evidence_text:"Exact model manufacturer table",verified_at:"2026-11-20T10:00:00Z",source_url:url,source_type:"manufacturer_specification",source_publisher:brand,...extra}]});
+ const current=backed("x5","McCormick","Europe",100,"https://www.mccormick-tractors.com/catalog.pdf");
+ const good=backed("landini","Landini","Europe",103,"https://www.landini.it/catalog.pdf");
+ const unknown=backed("unknown","Landini",null,100,"https://www.landini.it/catalog.pdf");
+ const otherMarket=backed("us","Landini","US",100,"https://www.landini.it/catalog.pdf");
+ const unsupported=backed("unsupported","Landini","Europe",100,"https://www.landini.it/catalog.pdf",{evidence_text:null});
+ const wrongUnit=backed("wrong-unit","Landini","Europe",100,"https://www.landini.it/catalog.pdf",{unit:"kW"});
+ const far=backed("far","Landini","Europe",125,"https://www.landini.it/catalog.pdf");
+ const siblings=[1,2,3,4].map(n=>make("x"+n,"McCormick","Europe",100+n));
+ const catalogue=[current,good,unknown,otherMarket,unsupported,wrongUnit,far,...siblings];
+ assert.equal(sourceMatchedMarketPeer(current,catalogue)?.slug,"landini");
+ const links=modelDiscoveryLinks(current,catalogue);
+ assert.deepEqual(links.slice(0,3),morePublishedTractors(current,catalogue));
+ assert.equal(links.filter(x=>x.slug==="landini").length,1);
+ assert.ok(links.length<=5);
+ assert.equal(sourceMatchedMarketPeer({...current,market:"International"},catalogue),null);
+ assert.equal(sourceMatchedMarketPeer({...current,specifications:[]},catalogue),null);
+ assert.equal(sourceMatchedMarketPeer(current,catalogue.filter(x=>x!==good)),null);
+ for(const lang of LOCALES)assert.equal(localizedPath(lang,"/tractors/"+good.slug+"/"),(lang==="en"?"":"/"+lang)+"/tractors/landini/");
+});

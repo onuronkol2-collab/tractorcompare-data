@@ -13,6 +13,8 @@ import {LOCALE_TAGS,type Locale} from "./locales.ts";
 import {marketDisplayName} from "./market-display.ts";
 import {MODEL_ANSWER_UI,localizedEvidenceCopy,hasModelAnswerTermGuides,type AnswerField} from "./model-evidence-answer-i18n.ts";
 
+import {additionalEvidenceCopy,isAdditionalAnswerField,type AdditionalAnswerField} from "./additional-model-answer-i18n.ts";
+
 export type AnswerLanguage=Locale;
 export interface EvidenceAnswer {
   id:string;
@@ -33,7 +35,7 @@ type Candidate={
   key:string;
 };
 type Field={
- id:AnswerField;
+ id:AnswerField|AdditionalAnswerField;
  keys:readonly string[];
  unit:string;
  min:number;
@@ -48,6 +50,12 @@ const fields:readonly Field[]=[
  {id:"rear-hitch-lift",keys:["rear_lift_capacity","rear_lift_capacity_kg","rear_hitch_lift_capacity_kg"],unit:"kg",min:100,max:30000},
  {id:"wheelbase",keys:["wheelbase","wheelbase_mm"],unit:"mm",min:800,max:7000},
  {id:"fuel",keys:["fuel_tank_capacity","fuel_tank_capacity_l"],unit:"l",min:5,max:3000},
+ {id:"engine-cylinders",keys:["engine_cylinders"],unit:"count",min:1,max:16},
+ {id:"hydraulic-main-flow",keys:["hydraulic_main_flow"],unit:"l/min",min:1,max:500},
+ {id:"hydraulic-implement-flow",keys:["hydraulic_implement_flow"],unit:"l/min",min:1,max:500},
+ {id:"hydraulic-total-flow",keys:["hydraulic_total_flow"],unit:"l/min",min:1,max:800},
+ {id:"hydraulic-steering-flow",keys:["hydraulic_steering_flow"],unit:"l/min",min:1,max:300},
+ {id:"ground-clearance",keys:["ground_clearance"],unit:"mm",min:50,max:2000},
 ];
 
 function evidenceSource(spec:PublicSpec,brand:string){
@@ -56,14 +64,28 @@ function evidenceSource(spec:PublicSpec,brand:string){
  const independent=reviewedIndependentSourceUrl(spec);
  return independent?{sourceUrl:independent,sourceType:"independent" as const}:null;
 }
-function parseValue(spec:PublicSpec,field:Field):number|null {
+function evidenceUnit(spec:PublicSpec,field:Field):string|null {
  const unit=(spec.unit||"").trim().toLowerCase().replace("litres","l").replace("liters","l");
- if(field.unit==="l"&&unit!=="l"&&unit!=="liter"&&unit!=="litre")return null;
- if(field.unit!== "l"&&unit!==field.unit)return null;
+ if(field.unit==="count")return ["","count","cylinder","cylinders","adet"].includes(unit)?"count":null;
+ if(field.unit==="l/min"){
+  if(["l/min","lpm"].includes(unit))return "l/min";
+  if(["us gal/min","us gpm"].includes(unit))return "US gal/min";
+  return null;
+ }
+ if(field.id==="ground-clearance")return ["mm","in"].includes(unit)?unit:null;
+ if(field.unit==="l")return ["l","liter","litre"].includes(unit)?"l":null;
+ return unit===field.unit?unit:null;
+}
+function parseValue(spec:PublicSpec,field:Field):number|null {
+ const unit=evidenceUnit(spec,field);
+ if(unit===null)return null;
  const raw=spec.spec_value.trim();
  if(!/^\d{1,5}(?:[.,]\d{1,2})?$/.test(raw))return null;
  const value=Number(raw.replace(",","."));
- return Number.isFinite(value)&&value>=field.min&&value<=field.max?value:null;
+ // Inches have a distinct plausibility interval; do not convert or round.
+ const min=unit==="in"?2:field.min;
+ const max=unit==="in"?80:field.max;
+ return Number.isFinite(value)&&value>=min&&value<=max&&(field.unit!=="count"||Number.isInteger(value))?value:null;
 }
 function selectUnambiguous(rows:PublicSpec[],field:Field,brand:string):Candidate|null{
  const candidates:Candidate[]=[];
@@ -79,7 +101,9 @@ function selectUnambiguous(rows:PublicSpec[],field:Field,brand:string):Candidate
   const standard=spec.measurement_standard?.trim()||null;
   const ratedRpm=spec.rated_rpm??null;
   if(ratedRpm!==null && (!Number.isFinite(ratedRpm)||ratedRpm<=0))return null;
-  candidates.push({value,unit:field.unit,...source,standard,ratedRpm,key});
+  const unit=evidenceUnit(spec,field);
+  if(unit===null)return null;
+  candidates.push({value,unit,...source,standard,ratedRpm,key});
  }
  if(!candidates.length)return null;
  // Rated, gross and maximum power measurements can differ. Do not average or
@@ -87,7 +111,7 @@ function selectUnambiguous(rows:PublicSpec[],field:Field,brand:string):Candidate
  const uniqueValues=new Set(candidates.map(c=>c.value));
  const standards=new Set(candidates.map(c=>c.standard?.toLowerCase()||""));
  const keys=new Set(candidates.map(c=>c.key));
- if(uniqueValues.size!==1||standards.size!==1||new Set(candidates.map(c=>c.ratedRpm)).size!==1||(field.id==="rated-power"&&keys.size>1))return null;
+ if(uniqueValues.size!==1||standards.size!==1||new Set(candidates.map(c=>c.unit)).size!==1||new Set(candidates.map(c=>c.ratedRpm)).size!==1||(field.id==="rated-power"&&keys.size>1))return null;
  return candidates.sort((a,b)=>
   Number(b.sourceType==="manufacturer")-Number(a.sourceType==="manufacturer") ||
   a.sourceUrl.localeCompare(b.sourceUrl))[0];
@@ -231,9 +255,9 @@ export function modelEvidenceAnswers(tractor:Pick<TractorRecord,"brand_name"|"mo
   const standard=originalLanguage?safeStandard(found.standard):"";
   const standardSuffix=standard?(lang==="tr"?" (ölçüm bilgisi: "+standard+")":" (reported context: "+standard+")"):"";
   const rpm=found.ratedRpm===null?null:formatNumber(found.ratedRpm,lang)+" "+MODEL_ANSWER_UI[lang].rpm;
-  const measurementNote=[standard?null:found.standard,rpm].filter(Boolean).join(" · ")||null;
+  const measurementNote=[standard&&!isAdditionalAnswerField(field.id)?null:found.standard,rpm].filter(Boolean).join(" · ")||null;
   const v=formatNumber(found.value,lang);
-  const copy=lang==="en"||lang==="tr"
+  const copy=isAdditionalAnswerField(field.id)?additionalEvidenceCopy(lang,field.id,name,v,found.unit):lang==="en"||lang==="tr"
    ? (text[lang] as Record<string,(n:string,v:string,s:string)=>{question:string;answer:string}>)[field.id==="rated-power"?"rated":field.id==="pto-power"?"pto":field.id](name,v,standardSuffix)
    : localizedEvidenceCopy(lang,field.id,name,v);
   answers.push({
@@ -244,7 +268,7 @@ export function modelEvidenceAnswers(tractor:Pick<TractorRecord,"brand_name"|"mo
      field.id==="rear-hitch-lift"?"/guides/tractor-hydraulic-lift-explained/":
      null
   });
-  if(answers.length===6)break;
+  // At most one answer per exact field; keep every independently qualified original fact.
  }
  return answers;
 }
