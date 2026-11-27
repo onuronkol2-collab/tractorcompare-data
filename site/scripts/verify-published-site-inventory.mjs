@@ -115,8 +115,17 @@ export function verifyPublishedSiteInventory({
    " of "+snapshot.published_models);
  const entries=readdirSync(dist).filter(s=>/^sitemap-\d+\.xml$/.test(s));
  check(entries.length>0,"Missing actual XML sitemap entries");
- const sitemapLocs=new Set(entries.flatMap(name=>
-   [...read(join(dist,name)).matchAll(/<loc>([^<]+)<\/loc>/g)].map(match=>match[1])));
+ const rawSitemapLocs=entries.flatMap(name=>
+   [...read(join(dist,name)).matchAll(/<loc>([^<]+)<\/loc>/g)].map(match=>match[1]));
+ const sitemapLocs=new Set(rawSitemapLocs);
+ // Do not let a Set silently hide duplicate published model URLs across XML shards.
+ const modelPrefixes=PUBLIC_LOCALES.map(locale=>origin+"/"+(locale==="en"?"":locale+"/")+"tractors/");
+ const seenModelUrls=new Set();
+ for(const url of rawSitemapLocs){
+  if(!modelPrefixes.some(prefix=>url.startsWith(prefix)&&url!==prefix))continue;
+  check(!seenModelUrls.has(url),"Duplicate published model URL in sitemap: "+url);
+  seenModelUrls.add(url);
+ }
  check(sitemapLocs.size>0,"XML sitemap is empty");
  const imageSitemap=read(join(dist,"image-sitemap.xml"));
  check(imageSitemap.includes("<urlset")&&imageSitemap.includes("</urlset>"),
