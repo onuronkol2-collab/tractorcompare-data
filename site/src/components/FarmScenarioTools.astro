@@ -15,7 +15,7 @@ const metrics=[["capacity",common.capacity],["dailyAreaHa",plan.dailyAreaHa],["d
   <h2>{c.scenario}</h2><p>{c.intro}</p><p>{density.direction}</p><p>{common.note}</p><p id="scenario-window-note">{plan.note}</p>
   <form data-extra-form="scenario"><fieldset data-extra-controls disabled>
    <div class="extra-grid">
-    <label>{m.fieldArea}<input name="area" type="number" min="0.0001" max="10000000000" step="any" value="10" required /></label>
+    <label>{m.fieldArea}<input name="area" type="number" min="0.0001" max="1000000" step="any" value="10" required /></label>
     <label>{m.areaUnit}<select name="unit">{["ha","decare","acre","m2","mu","tan"].map(unit=><option>{unit}</option>)}</select></label>
     <label>{common.price}<input name="price" type="number" min="0" max="1000000000" step="any" value="1" required /></label>
     <label>{plan.hours}<input name="dailyHours" type="number" inputmode="decimal" min="0.01" max="24" step="any" value="8" aria-describedby="scenario-window-note" required /></label>
@@ -32,6 +32,7 @@ const metrics=[["capacity",common.capacity],["dailyAreaHa",plan.dailyAreaHa],["d
 </div>
 <script>
  import {compareFieldScenarios,serviceInterval} from "../lib/farm-extras.mjs";
+ import {bindFarmAreaInputBounds} from "../lib/farm-area-input.mjs";
  import {FARM_TOOL_DONE_EVENT} from "../lib/analytics-product-actions";
  const root=document.querySelector<HTMLElement>("[data-extra-tools]");
  if(root){
@@ -48,10 +49,11 @@ const metrics=[["capacity",common.capacity],["dailyAreaHa",plan.dailyAreaHa],["d
     if(form.dataset.extraForm==="scenario"){
      const side=(name:string)=>Object.fromEntries(["width","speed","efficiency","fuel","other"].map(key=>[key,n(name+"-"+key)]));
      const result=compareFieldScenarios({area:n("area"),price:n("price"),unit:String(data.get("unit")),dailyHours:n("dailyHours")},side("a"),side("b"));
-     for(const el of results){const [group,key]=(el.dataset.scenarioResult||"").split("-");const values=group==="left"?result.left:group==="right"?result.right:result.difference;const value=(values as Record<string,number>)[key];el.textContent=(group==="difference"?signed:fmt).format(value);}
+     for(const el of results){const [group,key]=(el.dataset.scenarioResult||"").split("-");const values=group==="left"?result.left:group==="right"?result.right:result.difference;if(group!=="left"&&group!=="right"&&group!=="difference")throw Error("Invalid result group");const value=(values as Record<string,number|undefined>)[key];if(typeof value!=="number"||!Number.isFinite(value))throw Error("Invalid result value");el.textContent=(group==="difference"?signed:fmt).format(value);}
     }else{const result=serviceInterval(n("last"),n("current"),n("interval"));for(const el of results)el.textContent=fmt.format(result[el.dataset.serviceResult as keyof typeof result]);}
     if(error)error.hidden=true;window.dispatchEvent(new Event(FARM_TOOL_DONE_EVENT));
    }catch{if(error)error.hidden=false;for(const el of results)el.textContent="—";}});
+   if(form.dataset.extraForm==="scenario")bindFarmAreaInputBounds(form,"unit");
    const controls=form.querySelector<HTMLFieldSetElement>("[data-extra-controls]");if(controls)controls.disabled=false;
   }
  }

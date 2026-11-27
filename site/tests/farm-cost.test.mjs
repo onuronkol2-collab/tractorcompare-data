@@ -57,3 +57,28 @@ test("farm planning metadata describes real locale pages without unsupported ric
   }
  }
 });
+
+
+test("area input bounds follow the selected unit and the existing calculation engine",async()=>{
+ const {farmAreaInputBounds}=await import("../src/lib/farm-area-input.mjs");
+ const {AREA_SQM}=await import("../src/lib/farm-cost.mjs");
+ const {readFileSync}=await import("node:fs");
+ for(const unit of Object.keys(AREA_SQM)){
+  const {min,max}=farmAreaInputBounds(unit);
+  assert.ok(min>0&&max>min);
+  assert.ok(Math.abs(farmAreaInHectares(min,unit)-0.0001)<1e-12);
+  assert.ok(Math.abs(farmAreaInHectares(max,unit)-1000000)<1e-5);
+  assert.throws(()=>farmAreaInHectares(min*.999,unit),RangeError);
+  assert.throws(()=>farmAreaInHectares(max*1.001,unit),RangeError);
+ }
+ assert.deepEqual(farmAreaInputBounds("ha"),{min:.0001,max:1000000});
+ assert.throws(()=>farmAreaInputBounds("constructor"),RangeError);
+ assert.throws(()=>farmAreaInputBounds("unknown"),RangeError);
+ const helper=readFileSync(new URL("../src/lib/farm-area-input.mjs",import.meta.url),"utf8");
+ assert.doesNotMatch(helper,/area\.value\s*=/);
+ const cost=readFileSync(new URL("../src/components/FarmCost.astro",import.meta.url),"utf8");
+ const scenarios=readFileSync(new URL("../src/components/FarmScenarioTools.astro",import.meta.url),"utf8");
+ assert.match(cost,/bindFarmAreaInputBounds\(form,"areaUnit"\)/);
+ assert.match(scenarios,/bindFarmAreaInputBounds\(form,"unit"\)/);
+ for(const source of [cost,scenarios])assert.match(source,/!Number\.isFinite\(value\)/);
+});
