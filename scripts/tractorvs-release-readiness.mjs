@@ -1,5 +1,5 @@
 import {readFile} from "node:fs/promises";
-import {REPO,CONTEXT,eligible,evaluate,validSha,completionCandidate} from "./tractorvs-release-readiness-policy.mjs";
+import {REPO,CONTEXT,eligible,evaluate,validSha,completionCandidate,readinessRunId} from "./tractorvs-release-readiness-policy.mjs";
 const event=JSON.parse(await readFile(process.env.GITHUB_EVENT_PATH,"utf8"));
 // Completion events run only from the trusted default branch. Resolve exactly
 // one candidate PR and bind the decision to its current head, never event code.
@@ -45,6 +45,7 @@ const status=async(state,description)=>{
 };
 if(!eligible(pr,files)){await status("failure","Outside initial automated UI scope; separate release review required");process.exit(0);}
 if(!await status("pending","Waiting for current SHA release evidence"))process.exit(0);
+const advisoryRunCache=new Map();
 try{
  const deadline=Date.now()+(completion?60_000:15*60_000);
  while(Date.now()<deadline){
@@ -59,7 +60,12 @@ try{
   const statuses=await pages("/commits/"+sha+"/statuses");
   // API statuses are newest first; ignore older status attempts.
   const latest=[...new Map(statuses.slice().reverse().map(s=>[s.context,s])).values()];
-  const decision=evaluate({sha,checks,statuses:latest});
+  const ids=[...new Set(checks.map(readinessRunId).filter(id=>id!==null))];
+  for(const id of ids) {
+   if(!advisoryRunCache.has(id)) advisoryRunCache.set(id,(await api("/actions/runs/"+id)).data);
+  }
+  const advisoryRuns=ids.map(id=>advisoryRunCache.get(id));
+  const decision=evaluate({sha,checks,statuses:latest,advisoryRuns});
   if(decision.state!=="pending"){
    const finalMain=(await api("/branches/main")).data.commit.sha;
    if(finalMain!==main){await status("failure","Main moved; update and revalidate");process.exit(0);}
