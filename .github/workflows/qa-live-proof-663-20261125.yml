@@ -1,0 +1,51 @@
+name: Read-only live proof of release 663
+on:
+  pull_request:
+    branches: [main]
+    paths: ['.github/workflows/qa-live-proof-663-20261125.yml']
+permissions:
+  contents: read
+jobs:
+  live:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: 636f1a5a0bec35abf527a3f3bc9a8f8a6a397940
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22.23.4"
+      - name: Verify exact production release in every locale
+        run: |
+          python3 - <<'PY'
+          import urllib.request, re, time, json, concurrent.futures
+          target="636f1a5a0bec35abf527a3f3bc9a8f8a6a397940"
+          paths=["/tractors/"]+["/"+l+"/tractors/" for l in ["tr","zh","hi","pt-br","fr","de","ru","ja","es"]]
+          def check(path):
+              url="https://tractorvs.com"+path
+              with urllib.request.urlopen(urllib.request.Request(url,headers={"User-Agent":"TractorVS release QA read-only","Cache-Control":"no-cache"}),timeout=20) as r:
+                  assert r.status==200 and r.geturl()==url
+                  html=r.read().decode("utf-8")
+                  sha=re.search(r'<meta[^>]*name="tractorvs-release-sha"[^>]*content="([a-f0-9]{40})"',html)
+                  if not sha:
+                      sha=re.search(r'<meta[^>]*content="([a-f0-9]{40})"[^>]*name="tractorvs-release-sha"',html)
+                  return {"path":path,"sha":sha.group(1) if sha else None}
+          for attempt in range(4):
+              with concurrent.futures.ThreadPoolExecutor(max_workers=4) as pool: rows=list(pool.map(check,paths))
+              print("RELEASE_663_SHA_PROOF",json.dumps(rows),flush=True)
+              if all(row["sha"]==target for row in rows):break
+              if attempt<3:time.sleep(15)
+          assert all(row["sha"]==target for row in rows), "Expected production release not verified"
+          PY
+      - name: Verify all live technical headings and SEO invariants
+        env:
+          TRANSLATION_MIN_MODELS: "469"
+          TRANSLATION_MAX_EN_SOURCE_OCCURRENCES: "0"
+          TRANSLATION_ZERO_LOCALES: "tr,zh,hi,de,ru,ja,pt-br,fr,es"
+          TRANSLATION_REVIEWED_IDENTITY_GATE: "true"
+          TRANSLATION_REQUIRE_SPEC_IDENTITIES: "true"
+          TRANSLATION_VALIDATE_SEO: "true"
+          TRANSLATION_AUDIT_CONCURRENCY: "6"
+          TRANSLATION_STRICT: "false"
+        run: node site/scripts/published-translation-audit.mjs
