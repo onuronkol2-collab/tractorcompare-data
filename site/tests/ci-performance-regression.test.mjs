@@ -22,3 +22,11 @@ test("inventory proves exact IDs and file mapping, not just equal counts",()=>{
  assert.equal(compareBrowserInventory({...args,inventory:[{id:"id1",file},{id:"id2",file:"e2e/b.spec.mjs"}]}).complete,false);
  assert.throws(()=>compareBrowserInventory({...args,headSha:"b".repeat(40)}),/mismatch/);
 });
+
+test("median improvement does not hide slow-tail regression and negative skip counts are invalid",()=>{
+ const baseline=[sample("a",100),sample("b",100),sample("c",100)];
+ const candidate=[sample("d",60),sample("e",60),sample("f",200)];
+ const result=comparePerformance({baseline,candidate,metric:"wallMs"});
+ assert.equal(result.status,"improvement");assert.equal(result.baselineP95,100);assert.equal(result.candidateP95,200);assert.equal(result.p95ChangePct,100);
+ assert.equal(comparePerformance({baseline:baseline.map(r=>({...r,skipped:-1})),candidate:candidate.map(r=>({...r,skipped:-1})),metric:"wallMs"}).status,"incomparable");
+});
