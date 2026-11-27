@@ -1,0 +1,63 @@
+name: Read-only live proof of release 686
+on:
+  pull_request:
+    branches: [main]
+    paths: ['.github/workflows/qa-live-proof-686-20261125.yml']
+permissions:
+  contents: read
+jobs:
+  live:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22.23.4"
+      - name: Check merged revision is present
+        run: git merge-base --is-ancestor fcc7f15ff66f84a419540a006826cff917dd6d44 HEAD
+      - name: Require production release readiness
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: node site/scripts/live-release-readiness.mjs fcc7f15ff66f84a419540a006826cff917dd6d44
+      - name: Verify production includes merged release in every locale
+        run: |
+          python3 - <<'PY'
+          import urllib.request, re, time, json, concurrent.futures, subprocess
+          target="fcc7f15ff66f84a419540a006826cff917dd6d44"
+          paths=["/tractors/"]+["/"+l+"/tractors/" for l in ["tr","zh","hi","pt-br","fr","de","ru","ja","es"]]
+          def check(path):
+              url="https://tractorvs.com"+path
+              with urllib.request.urlopen(urllib.request.Request(url,headers={"User-Agent":"TractorVS release QA read-only","Cache-Control":"no-cache"}),timeout=20) as r:
+                  assert r.status==200 and r.geturl()==url
+                  html=r.read().decode("utf-8")
+                  sha=re.search(r'<meta[^>]*name="tractorvs-release-sha"[^>]*content="([a-f0-9]{40})"',html)
+                  if not sha:
+                      sha=re.search(r'<meta[^>]*content="([a-f0-9]{40})"[^>]*name="tractorvs-release-sha"',html)
+                  return {"path":path,"sha":sha.group(1) if sha else None}
+          def contains(rev):
+              if not rev: return False
+              return subprocess.run(['git','merge-base','--is-ancestor',target,rev],stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL).returncode==0
+          for attempt in range(8):
+              with concurrent.futures.ThreadPoolExecutor(max_workers=4) as pool: rows=list(pool.map(check,paths))
+              print("RELEASE_686_SHA_PROOF",json.dumps(rows),flush=True)
+              if all(contains(row["sha"]) for row in rows):break
+              if attempt<7:
+                  time.sleep(30)
+                  subprocess.run(['git','fetch','origin','main'],check=True,stdout=subprocess.DEVNULL)
+          assert all(contains(row["sha"]) for row in rows), "Expected production release not verified"
+          PY
+      - name: Verify all live technical headings and SEO invariants
+        env:
+          TRANSLATION_MIN_MODELS: "469"
+          TRANSLATION_MAX_EN_SOURCE_OCCURRENCES: "0"
+          TRANSLATION_ZERO_LOCALES: "tr,zh,hi,de,ru,ja,pt-br,fr,es"
+          TRANSLATION_REVIEWED_IDENTITY_GATE: "true"
+          TRANSLATION_REQUIRE_SPEC_IDENTITIES: "true"
+          TRANSLATION_VALIDATE_SEO: "true"
+          TRANSLATION_AUDIT_CONCURRENCY: "6"
+          TRANSLATION_STRICT: "false"
+        run: node site/scripts/published-translation-audit.mjs
