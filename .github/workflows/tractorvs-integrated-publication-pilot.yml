@@ -1,0 +1,91 @@
+name: TractorVS integrated publication candidate pilot
+# Manual shadow path only. Existing scheduled writers remain in service.
+on:
+  workflow_dispatch:
+    inputs:
+      kind:
+        description: Public writer to exercise
+        type: choice
+        options: [catalog, forum, sitemap]
+        required: true
+      create_candidate:
+        description: Create a real candidate only for genuine public changes
+        type: boolean
+        default: false
+        required: true
+permissions: {}
+concurrency:
+  group: tractorvs-integrated-publication-pilot
+  cancel-in-progress: false
+jobs:
+  prepare:
+    if: github.repository == 'onuronkol2-collab/tractorcompare-data' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    permissions:
+      contents: read
+    outputs:
+      changed: ${{ steps.candidate.outputs.changed }}
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+      - name: Verify trusted revision
+        run: test "$(git rev-parse HEAD)" = "$GITHUB_SHA"
+      - name: Install pinned workspace dependencies for sitemap render
+        if: inputs.kind == 'sitemap'
+        run: npm ci --no-audit --no-fund
+      - name: Render trusted current main for sitemap candidate
+        if: inputs.kind == 'sitemap'
+        working-directory: site
+        env:
+          SITE_URL: https://tractorvs.com
+          PUBLIC_INDEXING_ENABLED: "true"
+          WORKERS_CI_BRANCH: main
+          SUPABASE_URL: https://aaufxtcvnzgavtlintiv.supabase.co
+          SUPABASE_ANON_KEY: ${{ secrets.TRACTORVS_SUPABASE_ANON_JWT }}
+          MIN_PUBLIC_TRACTOR_PAGES: "100"
+        run: npm run build:production
+      - name: Prepare exact-file candidate with real public evidence
+        id: candidate
+        env:
+          PILOT_KIND: ${{ inputs.kind }}
+          GH_TOKEN: ${{ github.token }}
+          TRACTORVS_SUPABASE_ANON_JWT: ${{ secrets.TRACTORVS_SUPABASE_ANON_JWT }}
+          PAYLOAD_PATH: ${{ runner.temp }}/publication-candidate.json
+        run: node scripts/tractorvs-integrated-publication-pilot.mjs prepare
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        if: steps.candidate.outputs.changed == 'true' && inputs.create_candidate
+        with:
+          name: exact-publication-candidate
+          path: ${{ runner.temp }}/publication-candidate.json
+          retention-days: 1
+          if-no-files-found: error
+  create-candidate:
+    needs: prepare
+    if: needs.prepare.outputs.changed == 'true' && inputs.create_candidate && github.repository == 'onuronkol2-collab/tractorcompare-data' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    environment: secure-publisher
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+      - name: Verify trusted revision
+        run: test "$(git rev-parse HEAD)" = "$GITHUB_SHA"
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
+        with:
+          name: exact-publication-candidate
+          path: ${{ runner.temp }}/publication-candidate
+      - name: Create scoped App PR only and revoke token
+        env:
+          PILOT_KIND: ${{ inputs.kind }}
+          PILOT_CREATE: "true"
+          PAYLOAD_PATH: ${{ runner.temp }}/publication-candidate/publication-candidate.json
+          APP_ID: ${{ vars.TRACTORVS_PUBLISHER_APP_ID }}
+          APP_PRIVATE_KEY: ${{ secrets.TRACTORVS_PUBLISHER_PRIVATE_KEY }}
+        run: node scripts/tractorvs-integrated-publication-pilot.mjs publish
