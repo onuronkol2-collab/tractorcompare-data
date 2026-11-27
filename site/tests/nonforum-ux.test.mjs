@@ -158,3 +158,24 @@ test("technical editorial reading remains reachable with native links and short 
  assert.match(guide,/class="guide-table-scroll" role="region" tabindex="0"/);
  assert.match(deep,/class="learn-source-case-table" role="region" tabindex="0"/);
 });
+
+
+test("comparison presentation retains source-backed rows and native recovery with narrow-screen controls",()=>{
+ const css=file("styles/compare-experience.css");
+ const compare=file("components/TractorComparison.astro");
+ assert.match(css,/#main \.tc-section \.tc-entry a \{[^}]*min-height: 44px/);
+ assert.match(css,/@media screen and \(max-width:390px\)/);
+ assert.match(css,/max-height: min\(260px, 45dvh\)/);
+ assert.match(css,/\.tc-entry \+ \.tc-entry/);
+ assert.match(css,/#tc-load-error:not\(\[hidden\]\)/);
+ assert.match(css,/#tc-load-error\[hidden\] \{ display: none; \}/);
+ assert.match(css,/@media print/);
+ assert.match(compare,/<table class="tc-table" role="table">/);
+ assert.match(compare,/<th scope="row" role="rowheader">/);
+ assert.match(compare,/href=\{spec\.source\}/);
+ assert.match(compare,/requiresConditionCaution/);
+ assert.match(compare,/requiresTransmissionCaution/);
+ assert.match(compare,/id="tc-load-error" role="alert" hidden/);
+ assert.match(compare,/id="tc-retry" type="button"/);
+ assert.match(compare,/id="tc-share-url" type="url" readonly/);
+});

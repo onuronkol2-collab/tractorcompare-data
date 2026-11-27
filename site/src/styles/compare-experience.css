@@ -156,7 +156,7 @@
 #main .tc-section .tc-entry a {
   display: inline-flex;
   align-items: center;
-  min-height: 36px;
+  min-height: 44px;
   max-width: 100%;
   width: fit-content;
   font-size: 14px;
@@ -231,3 +231,105 @@
 #main .tc-share-panel input:focus-visible { outline: 3px solid #175c37; outline-offset: 2px; }
 #main .tc-share-panel p { margin: 0; font-size: 14px; overflow-wrap: anywhere; }
 @media print { #main .tc-share-panel, #main .tc-share { display: none !important; } }
+
+
+/* Comparison reading and recovery. Screen-only overrides preserve the
+   existing printable table, source links and model selection logic. */
+@media screen {
+  #main .tc-section :is(.tc-picker-side,.tc-result-main,.tc-selected-preview,
+                        .tc-table-bar-title>div,.tc-table-wrap,.tc-entry) {
+    min-inline-size: 0;
+    max-inline-size: 100%;
+    overflow-wrap: anywhere;
+  }
+  #main .tc-section .tc-picker-results {
+    max-height: min(345px, 50vh);
+    max-height: min(345px, 50dvh);
+    overscroll-behavior: contain;
+  }
+  #main .tc-section .tc-result-main strong {
+    font-size: 1rem;
+    line-height: 1.5;
+    overflow-wrap: anywhere;
+  }
+  #main .tc-section .tc-result[aria-selected="true"] {
+    box-shadow: inset 3px 0 #285b40;
+  }
+  #main .tc-section .tc-filters button[aria-pressed="true"] {
+    text-decoration: underline;
+    text-underline-offset: .2em;
+  }
+  #main .tc-section :is(.tc-filters button,.tc-selected-preview,.tc-empty a) {
+    max-inline-size: 100%;
+    overflow-wrap: anywhere;
+  }
+  #main .tc-section .tc-native-select {
+    min-height: 48px;
+    font-size: max(16px, 1rem);
+  }
+  #main .tc-section .tc-entry strong {
+    font-variant-numeric: tabular-nums;
+    overflow-wrap: anywhere;
+  }
+  #main .tc-section .tc-entry + .tc-entry {
+    border-block-start: 1px solid #dce7da;
+    padding-block-start: .75rem;
+  }
+  #main .tc-section .tc-missing {
+    color: #405948;
+    font-size: .875rem;
+    line-height: 1.6;
+    overflow-wrap: anywhere;
+  }
+  #main .tc-section #tc-load-error:not([hidden]) {
+    padding: .875rem 1rem;
+    margin-block: 1rem;
+    border: 1px solid #d5b77d;
+    border-inline-start: 4px solid #94671e;
+    border-radius: 9px;
+    background: #fff7e8;
+    color: #4c3a1b;
+    font-size: .9375rem;
+    line-height: 1.65;
+    overflow-wrap: anywhere;
+  }
+  #main .tc-section #tc-retry {
+    min-height: 44px;
+    max-inline-size: 100%;
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
+  #main .tc-section #tc-retry[hidden],
+  #main .tc-section #tc-load-error[hidden] { display: none; }
+  #main .tc-section :is(.tc-entry a,.tc-result,.tc-filters button,
+                        .tc-native-select,#tc-retry,.tc-selected-preview):focus-visible {
+    outline: 3px solid #175c37;
+    outline-offset: 2px;
+  }
+}
+@media screen and (max-width:690px) {
+  #main .tc-section .tc-picker-results {
+    max-height: min(260px, 45vh);
+    max-height: min(260px, 45dvh);
+  }
+  #main .tc-section .tc-filters { width: 100%; min-inline-size: 0; }
+  #main .tc-section .tc-filters button { flex: 1 1 auto; white-space: normal; }
+}
+@media screen and (max-width:390px) {
+  #main .tc-section .tc-table :is(thead th,tbody td) { padding: 10px 8px; }
+  #main .tc-section .tc-table tbody th { padding: 12px 10px; }
+  #main .tc-section .tc-table .tc-cell-model { font-size: .875rem; }
+  #main .tc-section .tc-entry strong { font-size: 1.0625rem; }
+  #main .tc-section .tc-entry a { font-size: .875rem; }
+}
+@media screen and (forced-colors: active) {
+  #main .tc-section .tc-result[aria-selected="true"],
+  #main .tc-section .tc-filters button[aria-pressed="true"] {
+    outline: 2px solid Highlight;
+    outline-offset: -2px;
+  }
+  #main .tc-section :is(.tc-entry a,.tc-result,.tc-filters button,
+                        .tc-native-select,#tc-retry,.tc-selected-preview):focus-visible {
+    outline-color: Highlight !important;
+  }
+}
