@@ -150,7 +150,7 @@ jobs:
 
   build_and_reconcile:
     needs: tests
-    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main' && vars.TRACTORVS_PR_ONLY_CUTOVER != 'true'
     runs-on: ubuntu-latest
     timeout-minutes: 25
     permissions:
@@ -280,3 +280,15 @@ jobs:
           echo "Dates are added ONLY to pages that changed after a previously audited rendered HTML checkpoint." >> "$GITHUB_STEP_SUMMARY"
           echo "Unchanged pages preserve previous dates; old pages with unknown modification dates remain without lastmod." >> "$GITHUB_STEP_SUMMARY"
           echo "A GitHub commit is not proof of Cloudflare deployment or search indexing." >> "$GITHUB_STEP_SUMMARY"
+
+  protected_candidate:
+    needs: tests
+    if: github.event_name != 'pull_request' && github.repository == 'onuronkol2-collab/tractorcompare-data' && github.ref == 'refs/heads/main' && vars.TRACTORVS_PR_ONLY_CUTOVER == 'true'
+    permissions:
+      contents: read
+    uses: ./.github/workflows/tractorvs-integrated-publication-pilot.yml
+    with:
+      kind: sitemap
+      create_candidate: ${{ github.event_name != 'workflow_dispatch' || inputs.dry_run == false }}
+      automatic: true
+    secrets: inherit
