@@ -31,8 +31,29 @@ export function eligible(pr, files) {
     /^(site\/src\/(components|pages|layouts|styles|lib)\/|site\/(e2e|tests|docs)\/)/.test(f.filename) &&
     !/(auth|consent|analytic|security|privacy|photo|image|forum|supabase|catalog|translation|license|legal|moderation|release|sitemap|robots|canonical|indexnow|payment|secret|token)/i.test(f.filename));
 }
-export function evaluate({sha,checks,statuses}) {
+// Exclude only this advisory workflow's own verified job from its inputs.
+// A job name or GitHub Actions app slug alone is not proof of origin.
+export const READINESS_WORKFLOW = ".github/workflows/tractorvs-release-readiness.yml";
+export function readinessRunId(check) {
+  if (check?.name !== "readiness" || check.app?.slug !== "github-actions" ||
+      !Number.isSafeInteger(check.id) || typeof check.details_url !== "string") return null;
+  const match = check.details_url.match(/^https:\/\/github\.com\/onuronkol2-collab\/tractorcompare-data\/actions\/runs\/([1-9][0-9]*)\/job\/([1-9][0-9]*)$/);
+  if (!match || Number(match[2]) !== check.id) return null;
+  const id = Number(match[1]);
+  return Number.isSafeInteger(id) ? id : null;
+}
+export function isOwnAdvisoryCheck(check, sha, runs) {
+  const id = readinessRunId(check);
+  return id !== null && check.head_sha === sha && Array.isArray(runs) &&
+    runs.some(run => run.id === id && run.path === READINESS_WORKFLOW &&
+      run.repository?.full_name === REPO && run.head_repository?.full_name === REPO &&
+      run.head_sha === sha && ["pull_request_target","workflow_run","check_run","workflow_dispatch"].includes(run.event));
+}
+
+export function evaluate({sha,checks,statuses,advisoryRuns=[]}) {
   if (!validSha(sha) || !Array.isArray(checks) || !Array.isArray(statuses)) return {state:"failure",reason:"invalid evidence"};
+  if (checks.some(c=>c.head_sha!==sha)) return {state:"failure",reason:"wrong SHA in check list"};
+  checks=checks.filter(c=>!isOwnAdvisoryCheck(c,sha,advisoryRuns));
   for (const [name,app] of REQUIRED) {
     const matches=checks.filter(c=>c.name===name && c.app?.slug===app && c.head_sha===sha);
     if (matches.length>1) return {state:"failure",reason:"ambiguous check: "+name};
