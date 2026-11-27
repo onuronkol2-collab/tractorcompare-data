@@ -18,7 +18,7 @@ const api=client(env.GH_TOKEN),get=async(a,p)=>(await a(p)).data;
 async function pages(path,key){
  const result=[];for(let page=1;page<=5;page++){const {data,more}=await api(path+(path.includes("?")?"&":"?")+"per_page=100&page="+page);const a=key?data[key]:data;must(Array.isArray(a),"Incomplete inventory");result.push(...a);if(!more)return result;}throw Error("Pagination limit");
 }
-async function verify(){
+async function verify({allowClosed=false}={}){
  must(authorization(event,env),"Authorization expired or invalid");
  if(commentId!==null){
   const c=await get(api,"/issues/comments/"+commentId);
@@ -27,6 +27,10 @@ async function verify(){
  assertProtectedReleaseRule(await get(api,"/rulesets/28247144"));
  must((await get(api,"/git/ref/heads/main")).object?.sha===base,"Main changed; new TEST evidence required");
  const pr=await get(api,"/pulls/"+number);
+ if(allowClosed&&pr.number===number&&pr.state==="closed"){
+  console.log("No release: exact PR is already closed. Protected ruleset verified; no credentials or writes used.");
+  return false;
+ }
  const [files,checks,statuses,reviews]=await Promise.all([pages("/pulls/"+number+"/files"),pages("/commits/"+head+"/check-runs?filter=latest","check_runs"),pages("/commits/"+head+"/statuses"),pages("/pulls/"+number+"/reviews")]);
  must(matchesAuthorizedPR(pr,selection,files),"Not the reviewed exact open owner PR");
  const cmp=await get(api,"/compare/"+base+"..."+head);must(cmp.status==="ahead"&&cmp.behind_by===0&&cmp.merge_base_commit?.sha===base,"PR not current with main");
@@ -37,11 +41,15 @@ async function verify(){
  const runs=[];for(let i=0;i<ids.length;i+=8)runs.push(...await Promise.all(ids.slice(i,i+8).map(id=>get(api,"/actions/runs/"+id))));
  must(assessOwnerEvidence({selection,files,checks,statuses,runs}),"Exact trusted technical evidence incomplete or failed");
  console.log("Exact owner-authorized PR and technical evidence verified: #"+number+" "+head);
+ return true;
 }
 try{
- await verify();
- if(process.argv[2]==="scan")appendFileSync(env.GITHUB_OUTPUT,"ready=true\n");
+ if(process.argv[2]==="scan"){
+  const ready=await verify({allowClosed:true});
+  appendFileSync(env.GITHUB_OUTPUT,"ready="+ready+"\n");
+ }
  else if(process.argv[2]==="merge"){
+  await verify();
   must(env.PILOT_OWNER_RELEASE==="true"&&env.CUTOVER_ENABLED==="true","Protected owner release disabled");
   const result=await withAppToken(env,async token=>{
    const write=client(token);
