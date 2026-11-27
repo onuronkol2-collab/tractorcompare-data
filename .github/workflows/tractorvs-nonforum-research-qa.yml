@@ -38,12 +38,14 @@ permissions:
   contents: read
 
 concurrency:
-  group: tractorvs-nonforum-research-qa
-  cancel-in-progress: false
+  # PR inventory is isolated from real production QA; only a superseded
+  # inventory for the same PR may be cancelled. Live requests stay serialized.
+  group: tractorvs-nonforum-research-qa-${{ github.event_name == 'pull_request' && format('pr-{0}', github.event.pull_request.number) || 'production' }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 jobs:
   production-research-browser:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 45
     env:
       CI: "true"
@@ -54,6 +56,7 @@ jobs:
         with:
           node-version: "22.23.4"
           cache: npm
+          cache-dependency-path: package-lock.json
       # Cloudflare deploys in parallel to Actions. Never claim actual site
       # interaction unless every changed public route reflects this release.
       - name: Await verified production research UI (bounded)
@@ -81,7 +84,7 @@ jobs:
           fi
       - name: Install locked project and pinned QA tools
         run: |
-          npm ci --no-audit --no-fund
+          npm ci --prefer-offline --no-audit --no-fund
           npm install --no-save --package-lock=false --ignore-scripts @playwright/test@1.65.1
       - name: Test execution evidence gate (offline)
         run: node --test site/tests/research-qa-report.test.mjs

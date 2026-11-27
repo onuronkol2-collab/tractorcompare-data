@@ -66,8 +66,8 @@ test("filter sidebar, compact tags and old category buttons stay synchronized",a
  await page.locator('[data-forum-clear]').click();
  await expect(live.first()).toBeVisible();
 });
-test("all locales expose the same navigable views with localized copy",async({page})=>{
- for(const lang of ["en","tr","de","fr","es","pt-br","ru","ja","zh","hi"]){
+for(const locales of [["en","tr","zh","hi","pt-br"],["fr","de","ru","ja","es"]]) test("all locales expose the same navigable views with localized copy: "+locales.join(","),async({page})=>{
+ for(const lang of locales){
   const path=lang==="en"?"/forum/":"/"+lang+"/forum/";
   await page.goto(path);
   const tabs=page.locator("[data-forum-view]");
