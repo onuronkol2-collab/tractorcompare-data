@@ -6,8 +6,8 @@
  * do not pad, invent facts or truncate technical identities to reach a score.
  * Noindex previews and search-engine ownership files are not editorial pages.
  */
-import {readdirSync,readFileSync} from "node:fs";
-import {join,relative,resolve} from "node:path";
+import {builtHtmlDocuments} from "./built-html-documents.mjs";
+import {resolve} from "node:path";
 import {fileURLToPath} from "node:url";
 import {readOpeningTagAttribute as attribute} from "./seo-html-attributes.mjs";
 
@@ -92,12 +92,12 @@ const displayText=value=>value.replace(/&(?:amp|lt|gt|quot|apos|nbsp|#(?:x[0-9a-
 
 const locales=new Set(["tr","zh","hi","pt-br","fr","de","ru","ja","es"]);
 
-export function inspectMetaDescription(html,file="index.html"){
+export function inspectMetaDescription(html,file="index.html",parsedHead){
   if(!/<html\b/i.test(html))return null;
   const head=html.match(/<head\b[^>]*>([\s\S]*?)<\/head\s*>/i)?.[1];
   if(!head)return null;
   // Inspect source tags directly: do not strip markup into newly joined tags.
-  const {links,metas}=scanHeadTags(head);
+  const {links,metas}=parsedHead??scanHeadTags(head);
   const canonical=links.some(tag=>(attribute(tag,"rel")||"").toLowerCase().split(/\s+/).includes("canonical"));
   const noindex=metas.some(tag=>(attribute(tag,"name")||"").toLowerCase()==="robots"
     && /\bnoindex\b/i.test(attribute(tag,"content")||""));
@@ -143,38 +143,40 @@ export function descriptionReuseGroups(records){
   };
 }
 
-export function auditBuiltMetaDescriptions(directory){
-  const root=resolve(directory);
+export function createMetaDescriptionCollector(root){
   const result={htmlDocuments:0,indexablePages:0,over160:0,byLocale:{},errors:[],longExamples:[]};
   const records=[];
-  function scan(current){
-    for(const entry of readdirSync(current,{withFileTypes:true})){
-      const path=join(current,entry.name);
-      if(entry.isDirectory())scan(path);
-      else if(entry.isFile()&&entry.name.endsWith(".html")){
-        const file=relative(root,path).replaceAll("\\","/");
-        result.htmlDocuments++;
-        const meta=inspectMetaDescription(readFileSync(path,"utf8"),file);
-        if(!meta)continue;
-        result.indexablePages++;
-        if(!meta.errors.length)records.push({file,description:meta.description});
-        const group=result.byLocale[meta.locale]??={pages:0,over160:0};
-        group.pages++;
-        for(const code of meta.errors)result.errors.push({file,code});
-        if(meta.length>160){
-          result.over160++;
-          group.over160++;
-          if(result.longExamples.length<20)
-            result.longExamples.push({file,length:meta.length});
-        }
+  return {
+    add(file,html,parsedHead){
+      result.htmlDocuments++;
+      const meta=inspectMetaDescription(html,file,parsedHead);
+      if(!meta)return;
+      result.indexablePages++;
+      if(!meta.errors.length)records.push({file,description:meta.description});
+      const group=result.byLocale[meta.locale]??={pages:0,over160:0};
+      group.pages++;
+      for(const code of meta.errors)result.errors.push({file,code});
+      if(meta.length>160){
+        result.over160++;
+        group.over160++;
+        if(result.longExamples.length<20)
+          result.longExamples.push({file,length:meta.length});
       }
+    },
+    finish(){
+      if(result.htmlDocuments===0)throw Error("No HTML documents found for meta-description QA");
+      if(result.indexablePages===0)throw Error("No canonical indexable pages found for meta-description QA");
+      result.reuse=descriptionReuseGroups(records);
+      return result;
     }
-  }
-  scan(root);
-  if(result.htmlDocuments===0)throw Error("No HTML documents found for meta-description QA");
-  if(result.indexablePages===0)throw Error("No canonical indexable pages found for meta-description QA");
-  result.reuse=descriptionReuseGroups(records);
-  return result;
+  };
+}
+
+export function auditBuiltMetaDescriptions(directory){
+  const root=resolve(directory);
+  const collector=createMetaDescriptionCollector(root);
+  for(const {file,html} of builtHtmlDocuments(root))collector.add(file,html);
+  return collector.finish();
 }
 
 if(process.argv[1]&&resolve(process.argv[1])===fileURLToPath(import.meta.url)){

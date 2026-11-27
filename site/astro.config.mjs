@@ -1,6 +1,7 @@
 import { defineConfig } from "astro/config";
 import sitemap from "@astrojs/sitemap";
 import {readFileSync} from "node:fs";
+import {buildConcurrency} from "./scripts/build-performance-policy.mjs";
 
 // Only dates backed by a persistent rendered-content change audit are used.
 // Never put the build time into every sitemap <lastmod>.
@@ -17,6 +18,7 @@ export default defineConfig({
   output: "static",
   build: {
     format: "directory",
+    concurrency: buildConcurrency(process.env.TRACTORVS_ASTRO_CONCURRENCY),
   },
   integrations: indexingEnabled ? [sitemap({
     // These sitemap documents are built separately; include both in the single

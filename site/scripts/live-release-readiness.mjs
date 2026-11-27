@@ -12,7 +12,7 @@ export function releaseFromHtml(html){
 export async function waitForProductionRelease({target,fetchFn=fetch,acceptDescendant=async()=>false,sleep=ms=>new Promise(r=>setTimeout(r,ms)),attempts=16,intervalMs=20000,paths=["/"],confirmRelease=async()=>true,log=()=>{}}={}){
  const expected=verifiedReleaseSha(target);
  if(!expected||!Number.isInteger(attempts)||attempts<1||attempts>46||!Number.isInteger(intervalMs)||intervalMs<0||intervalMs>20000)throw Error("Invalid readiness configuration");
- if(!Array.isArray(paths)||!paths.length||paths.length>10||paths.some(path=>typeof path!=="string"||!/^\/(?:[a-z0-9-]+\/)*$/.test(path)))throw Error("Invalid readiness routes");
+ if(!Array.isArray(paths)||!paths.length||paths.length>10||new Set(paths).size!==paths.length||paths.some(path=>typeof path!=="string"||!/^\/(?:[a-z0-9-]+\/)*$/.test(path)))throw Error("Invalid readiness routes");
  let observed=null,reason="unavailable";
  for(let attempt=1;attempt<=attempts;attempt++){
   let common=null,allReady=true;
@@ -79,6 +79,9 @@ if(process.argv[1]&&resolve(process.argv[1])===fileURLToPath(import.meta.url)){
   const result=await waitForProductionRelease({
    target:process.argv[2],paths:process.argv.length>3?process.argv.slice(3):["/"],
    attempts:strict?1:requireBuild?46:16,
+   // A trusted successful build event is already checked by the workflow.
+   // Slightly faster polling only in that case; all route/SHA/build gates stay.
+   intervalMs:requireBuild&&process.env.TRACTORVS_BUILD_COMPLETION_EVENT==="true"?15000:20000,
    acceptDescendant:strict?async()=>false:mainDescendantVerifier({token}),
    confirmRelease:requireBuild?trustedWorkersRelease({token}):async()=>true,
    log:row=>console.log("TRACTORVS_RELEASE_READINESS "+JSON.stringify(row))

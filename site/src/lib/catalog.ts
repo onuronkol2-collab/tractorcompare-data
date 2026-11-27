@@ -298,6 +298,8 @@ export async function fetchPublicRows(endpoint: URL, apiKey: string, isLegacyJwt
   const maximumRows = 50_000;
   let knownTotal: number | null = null;
   let offset = 0;
+  let requests = 0;
+  const started = performance.now();
 
   while (offset < maximumRows) {
     const pageUrl = new URL(endpoint);
@@ -313,6 +315,7 @@ export async function fetchPublicRows(endpoint: URL, apiKey: string, isLegacyJwt
     // keys are not JWTs. Never use a service-role or secret key.
     if (isLegacyJwt) headers.Authorization = "Bearer " + apiKey;
 
+    requests++;
     const response = await fetch(pageUrl, {
       method: "GET",
       headers,
@@ -365,7 +368,14 @@ export async function fetchPublicRows(endpoint: URL, apiKey: string, isLegacyJwt
 
     allRows.push(...payload);
     offset += payload.length;
-    if (offset === knownTotal) return allRows;
+    if (offset === knownTotal) {
+      if (process.env.TRACTORVS_BUILD_PROFILE === "true") {
+        console.log("TRACTORVS_CATALOG_TIMING " + JSON.stringify({
+          rows: allRows.length, requests, elapsedMs: Math.round(performance.now() - started)
+        }));
+      }
+      return allRows;
+    }
 
     // Server-side page size may be lower than 500: advance by actual rows.
     if (payload.length === 0) {

@@ -1,15 +1,15 @@
 /** Verify complete, unique, consistent share metadata on every published canonical HTML page. */
-import {readdirSync,readFileSync} from "node:fs";
-import {join,relative,resolve} from "node:path";
+import {builtHtmlDocuments} from "./built-html-documents.mjs";
+import {resolve} from "node:path";
 import {fileURLToPath} from "node:url";
 
 import {readOpeningTagAttribute as readAttr} from "./seo-html-attributes.mjs";
 import {scanHeadTags} from "./verify-sitewide-meta-descriptions.mjs";
 
-export function inspectSocialMetadata(html,file="index.html"){
+export function inspectSocialMetadata(html,file="index.html",parsedHead){
   const head=/<head\b[^>]*>([\s\S]*?)<\/head\s*>/i.exec(html)?.[1];
   if(!head)return null;
-  const {metas,links}=scanHeadTags(head);
+  const {metas,links}=parsedHead??scanHeadTags(head);
   const canonical=links.find(tag=>readAttr(tag,"rel")?.toLowerCase().split(/\s+/).includes("canonical"));
   if(!canonical || metas.some(tag=>readAttr(tag,"name")?.toLowerCase()==="robots" &&
     /\bnoindex\b/i.test(readAttr(tag,"content")||"")))return null;
@@ -53,28 +53,32 @@ export function inspectSocialMetadata(html,file="index.html"){
   }
   return {file,errors,brandFallback};
 }
-export function auditBuiltSocialMetadata(directory){
-  const root=resolve(directory),summary={htmlDocuments:0,indexablePages:0,brandFallbackPages:0,errors:[]};
-  function scan(dir){
-    for(const item of readdirSync(dir,{withFileTypes:true})){
-      const full=join(dir,item.name);
-      if(item.isDirectory())scan(full);
-      else if(item.isFile()&&item.name.endsWith(".html")){
-        summary.htmlDocuments++;
-        const name=relative(root,full).replaceAll("\\","/");
-        const found=inspectSocialMetadata(readFileSync(full,"utf8"),name);
-        if(!found)continue;
-        summary.indexablePages++;
-        if(found.brandFallback)summary.brandFallbackPages++;
-        for(const code of found.errors)summary.errors.push({file:name,code});
-      }
+export function createSocialMetadataCollector(root){
+  const summary={htmlDocuments:0,indexablePages:0,brandFallbackPages:0,errors:[]};
+  return {
+    add(file,html,parsedHead){
+      summary.htmlDocuments++;
+      const found=inspectSocialMetadata(html,file,parsedHead);
+      if(!found)return;
+      summary.indexablePages++;
+      if(found.brandFallback)summary.brandFallbackPages++;
+      for(const code of found.errors)summary.errors.push({file,code});
+    },
+    finish(){
+      if(!summary.htmlDocuments || !summary.indexablePages)
+        throw Error("No canonical indexable HTML pages found for social metadata audit");
+      return summary;
     }
-  }
-  scan(root);
-  if(!summary.htmlDocuments || !summary.indexablePages)
-    throw Error("No canonical indexable HTML pages found for social metadata audit");
-  return summary;
+  };
 }
+
+export function auditBuiltSocialMetadata(directory){
+  const root=resolve(directory);
+  const collector=createSocialMetadataCollector(root);
+  for(const {file,html} of builtHtmlDocuments(root))collector.add(file,html);
+  return collector.finish();
+}
+
 if(process.argv[1] && resolve(process.argv[1])===fileURLToPath(import.meta.url)){
   const report=auditBuiltSocialMetadata(process.argv[2]||"site/dist");
   console.log("TRACTORVS_SOCIAL_META_AUDIT "+JSON.stringify(report));

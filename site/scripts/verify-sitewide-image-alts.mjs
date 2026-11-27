@@ -10,8 +10,8 @@
  * images, and for an unpopulated image element that gets a meaningful alt when
  * activated. Never invent keyword-heavy alt text to satisfy a crawler score.
  */
-import {readdirSync,readFileSync} from "node:fs";
-import {join,relative,resolve} from "node:path";
+import {builtHtmlDocuments} from "./built-html-documents.mjs";
+import {resolve} from "node:path";
 import {fileURLToPath} from "node:url";
 
 const IGNORED_OR_IMG=/<!--[\s\S]*?-->|<(script|style|textarea)\b[^>]*>[\s\S]*?<\/\1\s*>|<img\b(?:[^>\"']|\"[^\"]*\"|'[^']*')*>/gi;
@@ -90,31 +90,31 @@ export function inspectUndocumentedEmptyImageAlts(html){
   return inspectImageEvidence(html).undocumentedEmptyAlt;
 }
 
+export function createImageAltCollector(root){
+  const summary={htmlPages:0,images:0,nonemptyAlt:0,emptyAlt:0,missingAlt:[],undocumentedEmptyAlt:[]};
+  return {
+    add(file,html){
+      const page=inspectImageEvidence(html);
+      summary.htmlPages++;
+      summary.images+=page.images;
+      summary.nonemptyAlt+=page.nonemptyAlt;
+      summary.emptyAlt+=page.emptyAlt;
+      for(const issue of page.missingAlt)summary.missingAlt.push({file,...issue});
+      for(const issue of page.undocumentedEmptyAlt)
+        summary.undocumentedEmptyAlt.push({file,...issue});
+    },
+    finish(){
+      if(summary.htmlPages===0)throw Error("Image-alt audit: no built HTML files found in "+root);
+      return summary;
+    }
+  };
+}
+
 export function auditBuiltImageAlts(dist){
   const root=resolve(dist);
-  const summary={htmlPages:0,images:0,nonemptyAlt:0,emptyAlt:0,missingAlt:[],undocumentedEmptyAlt:[]};
-  function scan(dir){
-    for(const entry of readdirSync(dir,{withFileTypes:true})){
-      const path=join(dir,entry.name);
-      if(entry.isDirectory()){
-        scan(path);
-      }else if(entry.isFile()&&entry.name.endsWith(".html")){
-        const file=relative(root,path).replaceAll("\\","/");
-        const html=readFileSync(path,"utf8");
-        const page=inspectImageEvidence(html);
-        summary.htmlPages++;
-        summary.images+=page.images;
-        summary.nonemptyAlt+=page.nonemptyAlt;
-        summary.emptyAlt+=page.emptyAlt;
-        for(const issue of page.missingAlt)summary.missingAlt.push({file,...issue});
-        for(const issue of page.undocumentedEmptyAlt)
-          summary.undocumentedEmptyAlt.push({file,...issue});
-      }
-    }
-  }
-  scan(root);
-  if(summary.htmlPages===0)throw Error("Image-alt audit: no built HTML files found in "+root);
-  return summary;
+  const collector=createImageAltCollector(root);
+  for(const {file,html} of builtHtmlDocuments(root))collector.add(file,html);
+  return collector.finish();
 }
 
 if(process.argv[1]&&resolve(process.argv[1])===fileURLToPath(import.meta.url)){

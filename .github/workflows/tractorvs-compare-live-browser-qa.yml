@@ -86,6 +86,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ github.token }}
           TRACTORVS_REQUIRE_WORKERS_BUILD: "true"
+          TRACTORVS_BUILD_COMPLETION_EVENT: ${{ github.event_name == 'check_run' }}
         run: |
           test "$GITHUB_REF" = refs/heads/main
           node site/scripts/live-release-readiness.mjs "$GITHUB_SHA" /tr/compare/ /tr/tractors/
