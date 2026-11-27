@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import {REPO,CONTEXT,REQUIRED,eligible,evaluate,completionCandidate} from "../../scripts/tractorvs-release-readiness-policy.mjs";
+import {REPO,CONTEXT,REQUIRED,eligible,evaluate,completionCandidate,READINESS_WORKFLOW,readinessRunId} from "../../scripts/tractorvs-release-readiness-policy.mjs";
 const sha="a".repeat(40);
 const checks=()=>REQUIRED.map(([name,slug])=>({name,app:{slug},head_sha:sha,status:"completed",conclusion:"success"}));
 const decide=(c=checks(),statuses=[])=>evaluate({sha,checks:c,statuses}).state;
@@ -39,4 +39,20 @@ test("completion events must identify one exact trusted PR head",()=>{
  assert.equal(completionCandidate({check_run:{...check,app:{slug:"github-actions"}}}),null);
  assert.equal(completionCandidate({check_run:{...check,name:"other"}}),null);
  assert.equal(completionCandidate({}),null);
+});
+
+test("readiness does not wait on its own independently verified advisory job",()=>{
+ const self={id:140319714165,name:"readiness",app:{slug:"github-actions"},head_sha:sha,status:"in_progress",conclusion:null,details_url:"https://github.com/"+REPO+"/actions/runs/45942491508/job/140319714165"};
+ const run={id:45942491508,path:READINESS_WORKFLOW,repository:{full_name:REPO},head_repository:{full_name:REPO},head_sha:sha,event:"pull_request_target"};
+ const evaluateWith=(candidate=self,evidence=[run],other=checks())=>evaluate({sha,checks:[...other,candidate],statuses:[],advisoryRuns:evidence}).state;
+ assert.equal(readinessRunId(self),run.id);
+ assert.equal(evaluateWith(),"success");
+ assert.equal(evaluateWith({...self,status:"completed",conclusion:"cancelled"}),"success");
+ assert.equal(evaluateWith(self,[]),"pending");
+ for(const evidence of [{...run,path:".github/workflows/unrelated.yml"},{...run,head_sha:"b".repeat(40)},{...run,repository:{full_name:"fork/repo"}},{...run,head_repository:{full_name:"fork/repo"}},{...run,event:"pull_request"}])assert.equal(evaluateWith(self,[evidence]),"pending");
+ assert.equal(evaluateWith({...self,details_url:self.details_url.replace("/job/140319714165","/job/1")}),"pending");
+ assert.equal(evaluateWith({...self,head_sha:"b".repeat(40)}),"failure");
+ const failed=checks();failed[0].conclusion="failure";assert.equal(evaluateWith(self,[run],failed),"failure");
+ const pending=checks();pending[0].status="in_progress";pending[0].conclusion=null;assert.equal(evaluateWith(self,[run],pending),"pending");
+ assert.equal(evaluateWith(self,[run],checks().slice(1)),"pending");
 });
