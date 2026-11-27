@@ -215,6 +215,20 @@ jobs:
         run: npm run build:production
       - name: Verify rebuilt HTML and emitted dates against candidate checkpoint
         run: node scripts/tractor-sitemap-history.mjs --verify-rebuilt-checkpoint
+      - name: Plan exact-file sitemap PR candidate (manual dry run only)
+        if: github.event_name == 'workflow_dispatch' && inputs.dry_run == true
+        run: |
+          if git diff --quiet -- seo/sitemap-content-history.json site/src/data/sitemap-lastmod.json; then
+            echo "No changed sitemap candidate."
+          else
+            node --input-type=module <<'NODE'
+            import {readFileSync} from "node:fs";
+            import {openPublicationCandidate} from "./scripts/tractorvs-publication-candidate.mjs";
+            const files=["seo/sitemap-content-history.json","site/src/data/sitemap-lastmod.json"].map(path=>({path,content:readFileSync(path,"utf8")}));
+            const result=await openPublicationCandidate({repo:process.env.GITHUB_REPOSITORY,ref:process.env.GITHUB_REF,baseSha:process.env.GITHUB_SHA,kind:"sitemap",files,dryRun:true});
+            console.log("Candidate plan only:",result.branch,result.digest);
+            NODE
+          fi
       - name: Commit only an audited, real content change checkpoint
         if: ${{ !(github.event_name == 'workflow_dispatch' && inputs.dry_run == true) }}
         run: |
