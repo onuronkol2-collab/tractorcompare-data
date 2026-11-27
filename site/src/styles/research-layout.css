@@ -469,3 +469,65 @@ html:is(:lang(hi), :lang(zh), :lang(ja)) #main :is(.tractor-card-specs small,
   }
   #main .editorial-search-row input { flex-basis: 100%; }
 }
+
+
+/* Farm results: separate form inputs from computed output without changing
+   calculations, initial values, source conditions or hidden/disabled states. */
+@media screen {
+  #main .cost-page :is(.cost-grid,.extra-grid,.decision-grid,
+                      .cost-results,.extra-tools section,.decision-card) {
+    min-inline-size: 0;
+  }
+  #main .cost-page :is(.cost-results,.extra-tools dl.extra-grid,
+                      .decision-card dl.decision-grid) {
+    background: #f3f8f0;
+    border: 1px solid #c6ddc6;
+    border-radius: 12px;
+    padding: clamp(.75rem, 2vw, 1.125rem);
+  }
+  #main .cost-page :is(.cost-results div,.extra-tools dl.extra-grid>div,
+                      .decision-card dl.decision-grid>div) {
+    min-inline-size: 0;
+    overflow-wrap: anywhere;
+  }
+  #main .cost-page :is(.cost-results dt,.extra-tools dl.extra-grid dt,
+                      .decision-card dl.decision-grid dt) {
+    font-size: .9375rem;
+    line-height: 1.55;
+    color: #405948;
+  }
+  #main .cost-page :is(.cost-results dd,.extra-tools dl.extra-grid dd,
+                      .decision-card dl.decision-grid dd) {
+    font-size: clamp(1.125rem, 2vw, 1.375rem);
+    font-weight: 750;
+    font-variant-numeric: tabular-nums;
+    line-height: 1.4;
+    color: #174c32;
+  }
+  #main .cost-page .extra-table thead th {
+    background: #e4efe0;
+    color: #234b32;
+  }
+  #main .cost-page .extra-table tbody th { background: #f3f8f0; }
+  #main .cost-page .extra-table tbody tr:nth-child(even) td { background: #f8faf6; }
+  #main .cost-page :is([data-extra-error],[data-error]):not([hidden]) {
+    color: #4c3a1b;
+    background: #fff7e8;
+    border-inline-start: 4px solid #94671e;
+    padding: .75rem;
+    border-radius: 6px;
+    overflow-wrap: anywhere;
+  }
+  #main .cost-page :is([data-extra-error],[data-error])[hidden] { display: none; }
+}
+@media screen and (max-width:480px) {
+  #main .cost-page .decision-nav { gap: .5rem; }
+  #main .cost-page .decision-nav :is(a,button) {
+    flex: 1 1 auto;
+    max-inline-size: 100%;
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
+  #main .cost-page .extra-table th,
+  #main .cost-page .extra-table td { min-inline-size: 4.5rem; }
+}

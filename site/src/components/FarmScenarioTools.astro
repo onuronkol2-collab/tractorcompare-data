@@ -1,7 +1,7 @@
 ---
 import {farmExtrasText,farmScenarioDensityText,farmScenarioWindowText} from "../lib/farm-extras-i18n";
 import {farmCostText} from "../lib/farm-cost-i18n";
-import {FARM_SCENARIO_EXAMPLE_COPY,farmScenarioExample} from "../lib/farm-scenario-example.ts";
+import {FARM_SCENARIO_EXAMPLE_COPY,FARM_EXAMPLE_BAR_NOTE,exampleBarWidths,farmScenarioExample} from "../lib/farm-scenario-example.ts";
 import {farmModelText} from "../lib/farm-model-context-i18n";
 import {LOCALE_TAGS,type Locale} from "../lib/locales";
 interface Props{lang:Locale}
@@ -15,8 +15,8 @@ const exampleRows=[
  [common.width,worked.a.width,worked.b.width],
  [common.fuel,worked.a.fuel,worked.b.fuel],
  [common.capacity,worked.result.left.capacity,worked.result.right.capacity],
- [common.time,worked.result.left.time,worked.result.right.time],
- [common.litres,worked.result.left.litres,worked.result.right.litres],
+ [common.time,worked.result.left.time,worked.result.right.time,true],
+ [common.litres,worked.result.left.litres,worked.result.right.litres,true],
  [density.fuelPerHa,worked.result.left.fuelPerHa,worked.result.right.fuelPerHa],
  [density.fuelPerDecare,worked.result.left.fuelPerDecare,worked.result.right.fuelPerDecare],
  [plan.equivalentDays,worked.result.left.equivalentDays,worked.result.right.equivalentDays]
@@ -40,9 +40,17 @@ const metrics=[["capacity",common.capacity],["dailyAreaHa",plan.dailyAreaHa],["d
   <div class="scenario-worked">
    <h3 id="scenario-worked-heading">{workedCopy[0]}</h3>
    <p>{workedCopy[1]}</p>
+   <p class="scenario-bar-note">{FARM_EXAMPLE_BAR_NOTE[lang]}</p>
    <div class="extra-table" role="region" aria-labelledby="scenario-worked-heading" tabindex="0">
     <table><thead><tr><th scope="col">{plan.metric}</th><th scope="col">{c.a}</th><th scope="col">{c.b}</th></tr></thead>
-     <tbody>{exampleRows.map(([label,a,b])=><tr><th scope="row">{label}</th><td>{exampleFormat.format(a!)}</td><td>{exampleFormat.format(b!)}</td></tr>)}</tbody>
+     <tbody>{exampleRows.map(([label,a,b,showBars])=>{
+      const bars=showBars?exampleBarWidths(a!,b!):null;
+      return <tr><th scope="row">{label}</th>{[a,b].map((value,i)=><td><span class="scenario-example-value">{exampleFormat.format(value!)}</span>
+       {bars&&<svg class="scenario-example-bar" viewBox="0 0 100 8" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+        <rect width="100" height="8" rx="2" class="scenario-bar-track" />
+        <rect width={bars[i]} height="8" rx="2" class="scenario-bar-fill" />
+       </svg>}</td>)}</tr>;
+     })}</tbody>
     </table>
    </div>
    <p>{workedCopy[2]}</p>
@@ -95,4 +103,10 @@ const metrics=[["capacity",common.capacity],["dailyAreaHa",plan.dailyAreaHa],["d
  table{width:100%;border-collapse:collapse}
  th,td{padding:.6rem;border-bottom:1px solid #708478;text-align:start;overflow-wrap:anywhere}
  dd{font-weight:700;margin:0}
+ .scenario-bar-note{font-size:.875rem;line-height:1.65;color:#405948}
+ .scenario-example-value{font-weight:700;font-variant-numeric:tabular-nums}
+ .scenario-example-bar{display:block;width:100%;max-width:12rem;height:.625rem;margin-top:.4rem}
+ .scenario-bar-track{fill:#e0ebdd}
+ .scenario-bar-fill{fill:#39784a}
+ @media(forced-colors:active){.scenario-bar-track{fill:Canvas;stroke:CanvasText;stroke-width:1}.scenario-bar-fill{fill:CanvasText}}
 </style>

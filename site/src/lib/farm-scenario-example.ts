@@ -58,3 +58,23 @@ export function farmScenarioExample(){
  const b={...a,width:4,fuel:12};
  return {shared,a,b,result:compareFieldScenarios(shared,a,b)};
 }
+
+export const FARM_EXAMPLE_BAR_NOTE:Record<Locale,string>={
+  "en": "For rows with bars, the larger value fills the scale. Bars compare A and B only within the same row; they do not represent a target or safety limit.",
+  "tr": "Çubuklu satırlarda büyük değer ölçeği doldurur. Çubuklar yalnızca aynı satırdaki A ve B değerlerini karşılaştırır; hedef veya güvenlik sınırı göstermez.",
+  "zh": "带条形图的行以较大值为满刻度。条形图仅比较同一行的A和B，不表示目标或安全上限。",
+  "hi": "पट्टियों वाली पंक्तियों में बड़ा मान पूरा पैमाना भरता है। पट्टियाँ केवल उसी पंक्ति में A और B की तुलना करती हैं; वे लक्ष्य या सुरक्षा सीमा नहीं दर्शातीं।",
+  "pt-br": "Nas linhas com barras, o maior valor preenche a escala. As barras comparam A e B somente na mesma linha; não indicam uma meta nem um limite de segurança.",
+  "fr": "Dans les lignes avec des barres, la plus grande valeur remplit l’échelle. Les barres comparent A et B uniquement sur la même ligne ; elles ne représentent ni un objectif ni une limite de sécurité.",
+  "de": "Bei Zeilen mit Balken füllt der größere Wert die Skala. Die Balken vergleichen A und B nur innerhalb derselben Zeile; sie zeigen weder einen Zielwert noch eine Sicherheitsgrenze.",
+  "ru": "В строках с полосами большее значение заполняет шкалу. Полосы сравнивают A и B только в одной строке; они не обозначают цель или предел безопасности.",
+  "ja": "棒がある行では大きい値が目盛り全体を占めます。棒は同じ行のAとBのみを比較し、目標値や安全上限を示すものではありません。",
+  "es": "En las filas con barras, el valor mayor llena la escala. Las barras comparan A y B solo dentro de la misma fila; no representan un objetivo ni un límite de seguridad."
+};
+
+/** Zero-based relative scale; no cross-unit comparison or performance rating. */
+export function exampleBarWidths(a:number,b:number):readonly [number,number]|null{
+ if(!Number.isFinite(a)||!Number.isFinite(b)||a<0||b<0)return null;
+ const max=Math.max(a,b);
+ return max===0?[0,0]:[a/max*100,b/max*100];
+}

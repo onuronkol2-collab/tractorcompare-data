@@ -65,3 +65,21 @@ test("server-rendered worked scenario distinguishes hourly and area consumption"
  assert.match(view,/exampleRows\.map/);
  assert.match(view,/aria-labelledby="scenario-worked-heading"/);
 });
+
+
+test("worked example bars share a zero-based scale only within each metric",async()=>{
+ const {exampleBarWidths,FARM_EXAMPLE_BAR_NOTE,farmScenarioExample}=await import("../src/lib/farm-scenario-example.ts");
+ const {readFileSync}=await import("node:fs");
+ const {result}=farmScenarioExample();
+ assert.deepEqual(exampleBarWidths(result.left.time,result.right.time),[100,50]);
+ assert.deepEqual(exampleBarWidths(result.left.litres,result.right.litres),[100,75]);
+ assert.deepEqual(exampleBarWidths(0,0),[0,0]);
+ assert.deepEqual(exampleBarWidths(0,4),[0,100]);
+ for(const a of [-1,NaN,Infinity])assert.equal(exampleBarWidths(a,2),null);
+ for(const lang of LOCALES)assert.ok(FARM_EXAMPLE_BAR_NOTE[lang].trim().length>20);
+ const view=readFileSync(new URL("../src/components/FarmScenarioTools.astro",import.meta.url),"utf8");
+ assert.match(view,/class="scenario-example-bar"[^>]*aria-hidden="true"/);
+ assert.match(view,/width=\{bars\[i\]\}/);
+ assert.match(view,/exampleFormat\.format\(value!\)/);
+ assert.match(view,/FARM_EXAMPLE_BAR_NOTE\[lang\]/);
+});
