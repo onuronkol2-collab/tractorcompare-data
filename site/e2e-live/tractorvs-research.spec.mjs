@@ -15,7 +15,7 @@ for(const lang of LANGUAGES){
   test("live "+lang.code+" licensed tractor research, technical navigation, advisor and source library",async({page})=>{
     test.skip(process.env.RESEARCH_QA_PREDEPLOY==="true",
       "This test must use the NEW Cloudflare release, never an older production snapshot.");
-    test.setTimeout(110_000);
+    test.setTimeout(180_000);
     const root=lang.code==="en"?"/":"/"+lang.code+"/";
     const home=await page.goto(root,{waitUntil:"domcontentloaded"});
     expect(home?.status(),"home HTTP").toBe(200);
@@ -55,6 +55,55 @@ for(const lang of LANGUAGES){
     }
     // We keep every manufacturer citation; no numeric tractor spec is edited.
     await expect(page.locator(".model-spec-card").first()).toBeVisible();
+
+    // Genuine local-only research journey on the production release. The
+    // private UI must never pollute the initial editorial HTML checkpoint.
+    const raw=await opened.text();
+    const initialMain=raw.match(/<main\b[^>]*>([\s\S]*?)<\/main>/i)?.[1];
+    expect(initialMain).toBeTruthy();
+    expect(initialMain).not.toContain('id="research-workspace"');
+    const favorite=page.locator("#main [data-research-favorite]");
+    await expect(favorite).toBeVisible();
+    await expect(favorite).toHaveAttribute("aria-pressed","false");
+    await favorite.click();
+    await expect(favorite).toHaveAttribute("aria-pressed","true");
+    const modelId=await page.locator("#research-workspace").getAttribute("data-model-id");
+    expect(modelId).toMatch(/^[0-9a-f-]{36}$/);
+    await page.reload({waitUntil:"domcontentloaded"});
+    await expect(favorite).toHaveAttribute("aria-pressed","true");
+    const catalog=await page.goto(root+"tractors/#research-workspace",{waitUntil:"domcontentloaded"});
+    expect(catalog?.status()).toBe(200);
+    const workspace=page.locator("#main #research-workspace");
+    await expect(workspace).toBeVisible();
+    await expect(workspace.locator('[data-research-list="favorites"] li a')).toHaveCount(2);
+    const other=await page.locator(".tractor-card").evaluateAll((cards,id)=>
+      cards.find(card=>card.querySelector("[data-price-for]")?.getAttribute("data-price-for")!==id)
+        ?.querySelector(".tractor-card-main")?.getAttribute("href"),modelId);
+    expect(other).toBeTruthy();
+    await page.goto(other,{waitUntil:"domcontentloaded"});
+    await expect(favorite).toBeVisible();
+    await favorite.click();
+    await expect(favorite).toHaveAttribute("aria-pressed","true");
+    await page.goto(root+"tractors/#research-workspace",{waitUntil:"domcontentloaded"});
+    await expect(workspace.locator('[data-research-list="favorites"] li a')).toHaveCount(4);
+    await workspace.locator("[data-research-compare-two]").click();
+    await expect(page.locator("#tc-share")).toBeEnabled();
+    await page.locator("#tc-shared").click();
+    const save=page.locator("#main [data-research-save]");
+    await expect(save).toBeEnabled();
+    await save.click();
+    const saved=page.locator('[data-research-list="comparisons"] li a');
+    await expect(saved).toHaveCount(1);
+    const savedHref=await saved.getAttribute("href");
+    expect(new URL(savedHref,page.url()).searchParams.get("view")).toBe("shared");
+    await page.goto(root+"tractors/#research-workspace",{waitUntil:"domcontentloaded"});
+    await expect(saved).toHaveCount(1);
+    await workspace.locator("[data-research-clear-recent]").click();
+    await expect(workspace.locator('[data-research-list="recent"] li a')).toHaveCount(0);
+    page.once("dialog",dialog=>dialog.accept());
+    await workspace.locator("[data-research-clear]").click();
+    await expect(workspace.locator('[data-research-list="favorites"] li a')).toHaveCount(0);
+    await expect(saved).toHaveCount(0);
 
     const articles=await page.goto(root+"articles/",{waitUntil:"domcontentloaded"});
     expect(articles?.status(),"published articles").toBe(200);

@@ -1,5 +1,6 @@
 ---
 import SiteLayout from "../layouts/SiteLayout.astro";
+import ResearchWorkspace from "./ResearchWorkspace.astro";
 import TractorPhoto from "./TractorPhoto.astro";
 import { getPublicCatalog } from "../lib/catalog";
 import { localizedPath, type Locale } from "../lib/locales";
@@ -213,6 +214,7 @@ const pricePayload = JSON.stringify({
   </div></section>
 
   <script type="application/json" id="catalog-price-payload" set:html={pricePayload}></script>
+  <Fragment slot="visitor-tools">{catalog.configured && catalog.tractors.length > 0 && <ResearchWorkspace lang={lang} mode="catalog" />}</Fragment>
 </SiteLayout>
 
 <script>
