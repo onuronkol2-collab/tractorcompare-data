@@ -1,14 +1,14 @@
 import {readFile} from "node:fs/promises";
-import {REPO,CONTEXT,eligible,evaluate,validSha} from "./tractorvs-release-readiness-policy.mjs";
+import {REPO,CONTEXT,eligible,evaluate,validSha,completionCandidate} from "./tractorvs-release-readiness-policy.mjs";
 const event=JSON.parse(await readFile(process.env.GITHUB_EVENT_PATH,"utf8"));
 // Completion events run only from the trusted default branch. Resolve exactly
 // one candidate PR and bind the decision to its current head, never event code.
-const completion=event.workflow_run ?? event.check_run;
-const candidates=completion?.pull_requests ?? [];
-const n=event.pull_request?.number ?? (completion && candidates.length===1 ? candidates[0].number : Number(event.inputs?.pr_number));
-if(completion && (!Array.isArray(candidates)||candidates.length!==1)){
- console.log("Completion event has no unique PR; no status write");process.exit(0);
+const isCompletion=Boolean(event.workflow_run || event.check_run);
+const completion=completionCandidate(event);
+if(isCompletion && !completion){
+ console.log("Completion event has no unique trusted PR; no status write");process.exit(0);
 }
+const n=event.pull_request?.number ?? completion?.number ?? Number(event.inputs?.pr_number);
 if (process.env.GITHUB_REPOSITORY!==REPO || !Number.isSafeInteger(n) || n<1) throw Error("Invalid repository/PR");
 const token=process.env.GH_TOKEN;
 if(!token) throw Error("Readiness token unavailable");
@@ -31,7 +31,7 @@ const getPR=async()=> (await api("/pulls/"+n)).data;
 const pr=await getPR();
 const sha=pr.head?.sha;
 if(!validSha(sha))throw Error("Invalid head");
-if(completion && completion.head_sha!==sha){console.log("Superseded completion; no status write");process.exit(0);}
+if(completion && completion.sha!==sha){console.log("Superseded completion; no status write");process.exit(0);}
 if(event.pull_request && event.pull_request.head?.sha!==sha){console.log("Superseded event");process.exit(0);}
 if(pr.head?.repo?.full_name!==REPO || pr.base?.repo?.full_name!==REPO){console.log("Foreign PR: no writes");process.exit(0);}
 const files=await pages("/pulls/"+n+"/files");
