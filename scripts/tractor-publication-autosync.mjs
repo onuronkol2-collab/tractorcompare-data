@@ -1,3 +1,4 @@
+import {openPublicationCandidate} from "./tractorvs-publication-candidate.mjs";
 // Zero-paid, public-view-only publication monitor.
 // Never reads draft tractors, never writes Supabase, never uses a service role.
 // A changed fingerprint updates a small site file to request a fresh Cloudflare
@@ -130,7 +131,7 @@ export function guardMassUnpublish(previous,current){
   " models (floor "+floor+"). Review the Supabase published-status changes before a new site commit.");
 }
 
-export async function runPublicationSync({repo,ref,jwt,token,fetchFn=fetch,dryRun=false,now=new Date()}) {
+export async function runPublicationSync({repo,ref,jwt,token,fetchFn=fetch,dryRun=false,now=new Date(),candidateBaseSha}) {
   validateScope(repo,ref);
   let latest=await fingerprintPublicViewWithBoundedRetry({jwt,fetchFn});
   let stored=await getRecordedSnapshot({token,fetchFn});
@@ -144,8 +145,12 @@ export async function runPublicationSync({repo,ref,jwt,token,fetchFn=fetch,dryRu
         reason:attempt===0?"public_catalogue_unchanged":"public_catalogue_already_synced_after_conflict",...latest};
     }
     guardMassUnpublish(stored.record,latest);
-    if(dryRun)return {changed:true,committed:false,reason:"dry_run_no_commit",...latest};
     const payload=JSON.stringify({...latest,generated_at:now.toISOString()},null,2)+"\n";
+    if(candidateBaseSha){
+      const candidate=await openPublicationCandidate({repo,ref,kind:"catalog",baseSha:candidateBaseSha,files:[{path:SNAPSHOT_PATH,content:payload}],dryRun:true});
+      return {changed:true,committed:false,reason:"candidate_plan_no_commit",candidate,...latest};
+    }
+    if(dryRun)return {changed:true,committed:false,reason:"dry_run_no_commit",...latest};
     const message="chore(site): sync public catalogue revision ("+latest.published_models+" models)";
     const request={message,branch:"main",content:Buffer.from(payload,"utf8").toString("base64")};
     if(stored.sha)request.sha=stored.sha;
@@ -173,6 +178,7 @@ export async function main(){
     jwt:process.env.TRACTORVS_SUPABASE_ANON_JWT,
     token:process.env.GITHUB_TOKEN,
     dryRun:process.env.TRACTORVS_CATALOG_DRY_RUN==="true",
+    candidateBaseSha:process.env.TRACTORVS_CATALOG_DRY_RUN==="true"?process.env.GITHUB_SHA:undefined,
   });
   const line="TractorVS public-site sync: "+result.reason+"; published_models="+
     result.published_models+"; public_rows="+result.public_rows+"; committed="+result.committed;
