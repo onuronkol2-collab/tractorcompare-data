@@ -78,3 +78,10 @@ export function sourceMatchedMarketPeer(current:TractorRecord,published:readonly
   ).sort((a,b)=>Math.abs(a.horsepower!-power)-Math.abs(b.horsepower!-power)||a.slug.localeCompare(b.slug,"en"));
   return matches[0]??null;
 }
+
+// Explicit static-route preparation, not a global memoized result. A new
+// published snapshot always computes fresh results. Returned lists are readonly
+// so parallel rendering cannot mutate another locale's navigation order.
+export function prepareModelDiscovery(published:readonly TractorRecord[]){
+ return published.map(tractor=>({tractor,moreModels:Object.freeze(modelDiscoveryLinks(tractor,published))}));
+}

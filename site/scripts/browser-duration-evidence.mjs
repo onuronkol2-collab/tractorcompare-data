@@ -61,6 +61,25 @@ export function mergeBrowserEvidence(parts){
  }
  return {runId:p.runId,attempt:p.attempt,headSha:p.headSha,project:p.project,successful:true,files:[...files.values()].filter(f=>f.passed>0).sort((a,b)=>a.file.localeCompare(b.file,"en"))};
 }
+// Compare an independently produced current unsharded inventory against every
+// actual shard. Listing and execution must refer to the same candidate SHA;
+// neither a success counter nor historical timing is sufficient.
+export function compareBrowserInventory({inventory,parts,headSha,project}){
+ if(!sha(headSha)||!projects.has(project)||!Array.isArray(inventory)||!inventory.length||inventory.length>100000)throw Error("Invalid inventory");
+ const expected=new Map();
+ for(const row of inventory){
+  if(!identity(row.id)||!validFile(row.file)||expected.has(row.id))throw Error("Duplicate or invalid inventory ID");
+  expected.set(row.id,row.file);
+ }
+ // Reuse complete-part metadata, result validation, and duplicate-ID guards.
+ const combined=mergeBrowserEvidence(parts);
+ if(combined.headSha!==headSha||combined.project!==project)throw Error("Inventory release mismatch");
+ const actual=new Map(parts.flatMap(p=>p.cases.map(c=>[c.id,c.file])));
+ const missing=[...expected.keys()].filter(id=>!actual.has(id));
+ const extra=[...actual.keys()].filter(id=>!expected.has(id));
+ const mismatched=[...expected.keys()].filter(id=>actual.has(id)&&actual.get(id)!==expected.get(id));
+ return {complete:!missing.length&&!extra.length&&!mismatched.length,expected:expected.size,actual:actual.size,missing,extra,mismatched};
+}
 if(process.argv[1]&&pathToFileURL(process.argv[1]).href===import.meta.url){
  const [mode,input,output]=process.argv.slice(2);
  if(mode==="compact"){
