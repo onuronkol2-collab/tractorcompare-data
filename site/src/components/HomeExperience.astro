@@ -4,6 +4,7 @@ import TractorPhoto from "./TractorPhoto.astro";
 import "../styles/home-experience.css";
 import { getPublicCatalog } from "../lib/catalog";
 import { homeText as h } from "../lib/home-ui";
+import {brandDirectoryText} from "../lib/brand-directory-i18n.ts";
 import { homeDiscoveryText as d } from "../lib/home-discovery-ui";
 import { localizedPath, type Locale } from "../lib/locales";
 import { t } from "../lib/ui";
@@ -193,6 +194,7 @@ const suggestionPayload = JSON.stringify(catalogue.tractors.map((tractor) => ({
       {brands.length > 0 && (
         <nav class="home-brand-row" aria-label={d(lang,"brandsHeading")}>
           <strong>{d(lang,"brandsHeading")}</strong>
+          <a class="home-all-brands" href={localizedPath(lang,"/brands/")}>{brandDirectoryText(lang)[12]} <span aria-hidden="true">↗</span></a>
           <div>
             {brands.map(([brand,number]) => (
               <a href={catalogUrl + "?q=" + encodeURIComponent(brand)} rel="nofollow">

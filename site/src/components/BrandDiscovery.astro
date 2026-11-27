@@ -1,6 +1,7 @@
 ---
 import SiteLayout from "../layouts/SiteLayout.astro";
 import {localizedPath, type Locale} from "../lib/locales";
+import {brandDirectoryText} from "../lib/brand-directory-i18n.ts";
 import {normalizeTractorQuery} from "../lib/search";
 import {marketDisplayName} from "../lib/market-display";
 import {verifiedModelSources,brandMarketCoverage} from "../lib/brand-discovery-pilot.mjs";
@@ -84,6 +85,7 @@ const schema={
     <nav class="brand-breadcrumbs" aria-label={copy.crumb}>
       <a href={localizedPath(lang,"/")}>{copy.home}</a><span aria-hidden="true">/</span>
       <a href={localizedPath(lang,"/tractors/")}>{copy.catalog}</a><span aria-hidden="true">/</span>
+      <a href={localizedPath(lang,"/brands/")}>{brandDirectoryText(lang)[0]}</a><span aria-hidden="true">/</span>
       <span aria-current="page">{name}</span>
     </nav>
     <header class="brand-heading">
