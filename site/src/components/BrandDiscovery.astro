@@ -1,6 +1,7 @@
 ---
 import SiteLayout from "../layouts/SiteLayout.astro";
 import {localizedPath, type Locale} from "../lib/locales";
+import {normalizeTractorQuery} from "../lib/search";
 import {marketDisplayName} from "../lib/market-display";
 import {verifiedModelSources} from "../lib/brand-discovery-pilot.mjs";
 import type {TractorRecord} from "../lib/catalog";
@@ -25,7 +26,13 @@ const copy=turkish
       count:"Yayımlanmış kayıt",sources:"Kaynak bağlantısı bulunan kayıt",specs:"Teknik özellik kaydı",
       context:name==="McCormick"
         ?"Benzer model adları farklı pazar, varyant veya aktarma seçeneklerini temsil edebilir. Karşılaştırmadan önce her kaydın ayrıntılı teknik ölçümünü ve kaynaklarını inceleyin."
-        :"Motor gücü, PTO gücü ve çekiş gücü farklı ölçümlerdir. Bu Valtra kayıtlarında mevcutsa kaynaklı motor gücü gösterilir; eksik ölçümler tahmin edilmez.",
+        :name==="Valtra"
+        ?"Motor gücü, PTO gücü ve çekiş gücü farklı ölçümlerdir. Bu Valtra kayıtlarında mevcutsa kaynaklı motor gücü gösterilir; eksik ölçümler tahmin edilmez."
+        :name==="TAFE"
+          ?"Türkiye, Hindistan ve ihracat pazarlarındaki model adları benzer olabilir. Çekiş düzeni, motor ve şanzıman bilgilerini kayıt bazında, kaynaklarıyla kontrol edin."
+          :name==="Sonalika"
+            ?"Güç sınıfı etiketi, ölçülmüş PTO veya anma motor gücü değildir. Uluslararası ve yerel pazar kayıtlarını birbirinin yerine kullanmayın."
+            :"Motor gücü, PTO gücü ve ölçüm koşullarını ayırın. Benzer Swaraj model adlarında pazar ve donanım ayrıntılarını kaynak belgesinden kontrol edin.",
       models:"Yayımlanmış modeller",open:"Modeli ve tüm kaynaklarını incele",power:"Motor gücü",year:"Belirtilen model yılı",
       market:"Pazar",specCount:"teknik özellik",evidence:"Doğrulama kaynağı",unknown:"Kaynaklı özet güç değeri yok",
       methodology:"Veri doğrulama yöntemimiz",compare:"Traktörleri karşılaştır",disclaimer:"Eksik yıl, varyant veya teknik alanlar bilinmiyorsa boş bırakılır. Üreticiye ait olmayan bağımsız bir bilgi platformudur."
@@ -37,11 +44,21 @@ const copy=turkish
       count:"Published records",sources:"Records with evidence links",specs:"Technical data entries",
       context:name==="McCormick"
         ?"Similar model names may represent different markets, variants or transmissions. Check each model’s individual technical measurements and sources before comparing."
-        :"Engine power, PTO power and drawbar power describe different measurements. These Valtra records display source-backed engine power when available; missing measurements are never guessed.",
+        :name==="Valtra"
+        ?"Engine power, PTO power and drawbar power describe different measurements. These Valtra records display source-backed engine power when available; missing measurements are never guessed."
+        :name==="TAFE"
+          ?"Model names can be similar across Türkiye, India and export markets. Check drivetrain, engine and transmission details against each record’s sources."
+          :name==="Sonalika"
+            ?"A horsepower category is not measured PTO power or rated engine power. Do not treat international and local market records as interchangeable."
+            :"Distinguish engine power, PTO power and measurement conditions. For similarly named Swaraj models, check market and equipment details against the source document.",
       models:"Published models",open:"Inspect model and all sources",power:"Engine power",year:"Specified model year",
       market:"Market",specCount:"technical entries",evidence:"Evidence source",unknown:"No verified summary power available",
       methodology:"Our data methodology",compare:"Compare tractors",disclaimer:"Unknown years, variants and technical facts stay unfilled. TractorVS is independent and is not the manufacturer."
     };
+const filterCopy=turkish
+ ?{query:"Marka içinde model, varyant veya pazar ara",market:"Pazar",all:"Tüm pazarlar",reset:"Filtreleri temizle",results:"görünen kayıt",empty:"Eşleşen kayıt yok. Model adını veya pazar filtresini değiştirin.",compareModel:"Bu modeli karşılaştır"}
+ :{query:"Search model, variant or market within this brand",market:"Market",all:"All markets",reset:"Clear filters",results:"visible records",empty:"No matching records. Change the model query or market filter.",compareModel:"Compare this model"};
+const marketOptions=[...new Set(models.map(model=>model.market).filter((market):market is string=>typeof market==="string"&&market.trim().length>0))].map(market=>({value:market,label:marketDisplayName(market,lang)})).sort((a,b)=>a.label.localeCompare(b.label,lang));
 const sourceById=new Map(models.map(model=>[model.tractor_id,verifiedModelSources(model)]));
 const sourcedCount=models.filter(model=>(sourceById.get(model.tractor_id)||[]).length>0).length;
 const countSpecs=models.reduce((sum,model)=>sum+model.specifications.length,0);
@@ -82,8 +99,15 @@ const schema={
     </div>
     <section aria-labelledby="brand-model-heading">
       <h2 id="brand-model-heading">{copy.models}</h2>
+      <div class="brand-filter" data-brand-filter hidden>
+        <label>{filterCopy.query}<input type="search" maxlength="100" data-brand-query autocomplete="off" /></label>
+        {marketOptions.length>1&&<label>{filterCopy.market}<select data-brand-market><option value="">{filterCopy.all}</option>{marketOptions.map(market=><option value={market.value}>{market.label}</option>)}</select></label>}
+        <button type="button" data-brand-reset>{filterCopy.reset}</button>
+        <p role="status" aria-live="polite" data-brand-status data-suffix={filterCopy.results}>{models.length} {filterCopy.results}</p>
+        <p data-brand-empty hidden>{filterCopy.empty}</p>
+      </div>
       <ul class="brand-model-grid">
-        {models.map(model=><li>
+        {models.map(model=><li data-brand-record data-search={normalizeTractorQuery([name,model.model_name,model.variant,model.model_year,model.market,model.market?marketDisplayName(model.market,lang):null].filter(Boolean).join(" "))} data-market={model.market||""}>
           <article class="brand-model">
             <h3><a href={modelPrefix+model.slug+"/"}>{name} {model.model_name}</a></h3>
             {model.variant&&<p class="brand-variant">{model.variant.split(";")[0].trim()}</p>}
@@ -96,6 +120,7 @@ const schema={
             <p class="brand-spec-count">{model.specifications.length} {copy.specCount}</p>
             <div class="brand-model-links">
               <a class="model-detail-link" href={modelPrefix+model.slug+"/"}>{copy.open}</a>
+              <a href={localizedPath(lang,"/compare/")+"?left="+encodeURIComponent(model.tractor_id)} rel="nofollow">{filterCopy.compareModel} <span aria-hidden="true">↗</span></a>
               {(sourceById.get(model.tractor_id)||[]).slice(0,1).map(source=>
                 <a href={source.url} target="_blank" rel="noopener noreferrer">
                   {copy.evidence}{source.publisher?" — "+source.publisher:""} <span aria-hidden="true">↗</span>
@@ -108,6 +133,33 @@ const schema={
     <p class="brand-disclaimer">{copy.disclaimer}</p>
   </section>
 </SiteLayout>
+<script>
+ import {normalizeTractorQuery,matchesTractorTerms} from "../lib/search";
+ const panel=document.querySelector<HTMLElement>("[data-brand-filter]");
+ const query=panel?.querySelector<HTMLInputElement>("[data-brand-query]");
+ const market=panel?.querySelector<HTMLSelectElement>("[data-brand-market]");
+ const reset=panel?.querySelector<HTMLButtonElement>("[data-brand-reset]");
+ const status=panel?.querySelector<HTMLElement>("[data-brand-status]");
+ const empty=panel?.querySelector<HTMLElement>("[data-brand-empty]");
+ const records=[...document.querySelectorAll<HTMLElement>("[data-brand-record]")];
+ if(panel&&query&&reset&&status&&empty&&records.length){
+  const update=()=>{
+   const terms=normalizeTractorQuery(query.value).split(/\s+/).filter(Boolean);
+   let count=0;
+   for(const record of records){
+    const match=(!market?.value||record.dataset.market===market.value)&&matchesTractorTerms(record.dataset.search||"",terms);
+    record.hidden=!match;
+    if(match)count++;
+   }
+   status.textContent=new Intl.NumberFormat(document.documentElement.lang).format(count)+" "+status.dataset.suffix;
+   empty.hidden=count!==0;
+  };
+  query.addEventListener("input",update);
+  market?.addEventListener("change",update);
+  reset.addEventListener("click",()=>{query.value="";if(market)market.value="";update();query.focus();});
+  panel.hidden=false;
+ }
+</script>
 <style>
 .brand-discovery{padding-top:clamp(24px,5vw,56px);padding-bottom:72px}
 .brand-breadcrumbs{display:flex;flex-wrap:wrap;gap:8px;align-items:center;font-size:13px;margin-bottom:26px;color:#355a42}
@@ -144,4 +196,12 @@ const schema={
 .brand-tools a{max-inline-size:100%;overflow-wrap:anywhere}
 .brand-variant,.brand-spec-count,.brand-unknown,.brand-disclaimer{font-size:14px;line-height:1.65}
 @media(max-width:480px){.brand-facts{gap:10px}.brand-facts div{flex-basis:100%;padding:14px}.brand-tools a{flex:1 1 100%;justify-content:center;text-align:center}}
+ .brand-filter{display:flex;flex-wrap:wrap;align-items:end;gap:12px;padding:16px;margin:0 0 20px;background:#f3f8f0;border:1px solid #c8ddce;border-radius:12px}
+ .brand-filter[hidden],.brand-filter [hidden],.brand-model-grid>li[hidden]{display:none!important}
+ .brand-filter label{display:grid;gap:6px;flex:1 1 210px;min-inline-size:0;font-weight:700;color:#244b34}
+ .brand-filter input,.brand-filter select,.brand-filter button{font:inherit;min-height:44px;max-width:100%;min-width:0;border:1px solid #78977e;border-radius:8px;padding:9px;color:#183424;background:#fff}
+ .brand-filter input,.brand-filter select{font-size:max(16px,1rem)}
+ .brand-filter button{color:#fff;background:#245b39;cursor:pointer;font-weight:750;white-space:normal}
+ .brand-filter :is(input,select,button):focus-visible{outline:3px solid #175c37;outline-offset:2px}
+ .brand-filter p{flex-basis:100%;margin:0;font-size:14px;color:#405948;line-height:1.6}
 </style>
