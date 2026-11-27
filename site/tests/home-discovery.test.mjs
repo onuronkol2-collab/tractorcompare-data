@@ -90,3 +90,20 @@ test("home hero editorial links directly to the two published glossary locales",
   assert.match(home,/lang==="tr"\?"Traktör teknik terimleri ve parçaları":"Tractor technical terms and parts"/);
   assert.match(css,/\.home-editorial-resource \.home-outline-link:focus-visible/);
 });
+
+
+test("homepage search preserves IME entry, touch scrolling and meaningful option identity",()=>{
+ assert.match(home,/compositionstart/);
+ assert.match(home,/compositionend/);
+ assert.match(home,/event instanceof InputEvent && event.isComposing/);
+ assert.match(home,/if \(composing \|\| event.isComposing/);
+ assert.match(home,/event.pointerType === "mouse" && selectedIndex !== index\) select\(index,false\)/);
+ assert.match(home,/if \(reveal\) chosen.scrollIntoView/);
+ assert.match(home,/aria-describedby="home-search-hint"/);
+ assert.match(home,/id="home-search-empty" aria-hidden="true" hidden/);
+ assert.match(home,/close\(\);\s*emptyMessage.hidden = false;\s*status.textContent = labels.noResults/);
+ assert.doesNotMatch(home,/popup.appendChild\(empty\)/);
+ assert.doesNotMatch(css,/-webkit-line-clamp: 2/);
+ assert.match(css,/\.home-search-empty-inline\[hidden\] \{ display: none; \}/);
+ assert.match(css,/48dvh/);
+});

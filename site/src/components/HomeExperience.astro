@@ -113,14 +113,15 @@ const suggestionPayload = JSON.stringify(catalogue.tractors.map((tractor) => ({
               </span>
               <input id="home-model-query" name="q" type="search" autocomplete="off"
                 role="combobox" aria-autocomplete="list" aria-expanded="false"
-                aria-controls="home-search-results"
+                aria-controls="home-search-results" aria-describedby="home-search-hint"
                 placeholder={d(lang,"searchPlaceholder")} maxlength="100" />
               <button type="submit">{d(lang,"searchButton")} <span aria-hidden="true">→</span></button>
             </div>
             <div class="home-search-results" id="home-search-results" role="listbox"
               aria-label={d(lang,"suggestionsHeading")} hidden></div>
           </div>
-          <p class="home-search-note">{d(lang,"searchHint")}</p>
+          <p class="home-search-note" id="home-search-hint">{d(lang,"searchHint")}</p>
+          <p class="home-search-empty home-search-empty-inline" id="home-search-empty" aria-hidden="true" hidden>{d(lang,"suggestionsNone")}</p>
           <p class="home-search-status" id="home-search-status" role="status" aria-live="polite"></p>
         </form>
         <div class="home-hero-links">
@@ -351,40 +352,46 @@ const suggestionPayload = JSON.stringify(catalogue.tractors.map((tractor) => ({
   const popup = document.querySelector<HTMLDivElement>("#home-search-results");
   const form = document.querySelector<HTMLFormElement>(".home-find");
   const status = document.querySelector<HTMLElement>("#home-search-status");
+  const emptyMessage = document.querySelector<HTMLElement>("#home-search-empty");
   const data = document.querySelector<HTMLScriptElement>("#home-suggestions-data");
   const l10n = document.querySelector<HTMLScriptElement>("#home-suggestions-i18n");
-  if (input && popup && form && status && data && l10n) {
+  if (input && popup && form && status && emptyMessage && data && l10n) {
     const models = JSON.parse(data.textContent || "[]") as TractorSuggestion[];
     const labels = JSON.parse(l10n.textContent || "{}") as {
       heading:string; noResults:string; results:string; specs:string;
     };
     let selectedIndex = -1;
+    let composing = false;
     const options = () => Array.from(popup.querySelectorAll<HTMLAnchorElement>(".home-search-option"));
-    const select = (index: number) => {
+    const select = (index: number, reveal = true) => {
       selectedIndex = index;
       for (const [i, option] of options().entries())
         option.setAttribute("aria-selected", String(i === index));
       const chosen = options()[index];
       if (chosen) {
         input.setAttribute("aria-activedescendant", chosen.id);
-        chosen.scrollIntoView({block:"nearest"});
+        if (reveal) chosen.scrollIntoView({block:"nearest",inline:"nearest"});
       } else input.removeAttribute("aria-activedescendant");
     };
     const close = () => {
       popup.hidden = true;
+      emptyMessage.hidden = true;
       input.setAttribute("aria-expanded","false");
       select(-1);
       status.textContent = "";
     };
     const render = () => {
       const query = input.value.trim();
+      if (composing) return;
       popup.replaceChildren();
+      emptyMessage.hidden = true;
       select(-1);
       if (!query) { close(); return; }
       const hits = findTractorSuggestions(models,query,6);
       if (hits.length) {
         const heading = document.createElement("p");
         heading.className = "home-search-results-heading";
+        heading.setAttribute("aria-hidden","true");
         heading.textContent = labels.heading;
         popup.appendChild(heading);
         for (const [index, model] of hits.entries()) {
@@ -416,26 +423,29 @@ const suggestionPayload = JSON.stringify(catalogue.tractors.map((tractor) => ({
           arrow.setAttribute("aria-hidden","true");
           arrow.textContent = "↗";
           option.append(nameBox,arrow);
-          option.addEventListener("pointermove", () => {
-            if (selectedIndex !== index) select(index);
+          option.addEventListener("pointermove", (event) => {
+            if (event.pointerType === "mouse" && selectedIndex !== index) select(index,false);
           });
           popup.appendChild(option);
         }
         status.textContent = hits.length + " " + labels.results;
       } else {
-        const empty = document.createElement("p");
-        empty.className = "home-search-empty";
-        empty.textContent = labels.noResults;
-        popup.appendChild(empty);
+        close();
+        emptyMessage.hidden = false;
         status.textContent = labels.noResults;
+        return;
       }
       popup.hidden = false;
       input.setAttribute("aria-expanded","true");
     };
-    input.addEventListener("input",render);
+    input.addEventListener("compositionstart",() => { composing = true; close(); });
+    input.addEventListener("compositionend",() => { composing = false; if (document.activeElement === input) render(); });
+    input.addEventListener("input",(event) => {
+      if (!composing && !(event instanceof InputEvent && event.isComposing)) render();
+    });
     input.addEventListener("focus",render);
     input.addEventListener("keydown",(event) => {
-      if (event.isComposing || event.keyCode === 229) return;
+      if (composing || event.isComposing || event.keyCode === 229) return;
       if (event.key === "Tab") { if (!popup.hidden) close(); return; }
       if (event.key === "Escape") {
         if (!popup.hidden) { event.preventDefault(); close(); }

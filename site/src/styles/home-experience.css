@@ -202,8 +202,7 @@
 .home-search-option-brand { color: #43684b; font-size: 12px; font-weight: 800; }
 .home-search-option-identity strong { font-size: 16px; line-height: 1.35; }
 .home-search-option-identity small {
-  color: #53665a; font-size: 12px; line-height: 1.5; overflow: hidden;
-  display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2;
+  color: #405948; font-size: 14px; line-height: 1.55; overflow-wrap: anywhere;
 }
 .home-search-option-arrow {
   display: grid; place-items: center; flex: none; width: 34px; height: 34px;
@@ -217,4 +216,32 @@
 @media(max-width:620px) {
   .home-search-results { max-height: min(340px,48vh); }
   .home-search-option { min-height: 64px; padding: 9px; }
+}
+
+
+/* Search identity is essential: do not truncate different variants into
+   identical-looking options. Preserve native scrolling on touch screens. */
+.home-search-option-identity strong { overflow-wrap: anywhere; }
+.home-search-option-identity small { overflow-wrap: anywhere; }
+.home-search-option[aria-selected="true"] {
+  box-shadow: inset 3px 0 #285b40;
+}
+.home-search-empty-inline {
+  margin: 10px 0 0;
+  padding: 12px 14px;
+  border: 1px solid #cedfca;
+  border-radius: 10px;
+  background: #fff;
+  color: #405948;
+  line-height: 1.6;
+  overflow-wrap: anywhere;
+}
+.home-search-empty-inline[hidden] { display: none; }
+@media(max-width:620px) {
+  .home-search-results { max-height: min(340px,48vh); max-height: min(340px,48dvh); }
+  .home-search-option-arrow { width: 28px; height: 28px; }
+  .home-search-row button { white-space: normal; overflow-wrap: anywhere; }
+}
+@media(forced-colors: active) {
+  .home-search-option[aria-selected="true"] { outline: 2px solid Highlight; outline-offset: -2px; }
 }
