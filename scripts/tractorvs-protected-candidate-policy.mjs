@@ -21,9 +21,18 @@ export function requiredCandidateChecks(kind){
  return [...common,...(kind==="catalog"?[A("tests",wf("tractorvs-publication-autosync"))]:["forum","forum-recovery"].includes(kind)?[A("validate",wf("tractorvs-forum-publication-autosync"))]:[])];
 }
 const assert=(x,msg)=>{if(!x)throw Error(msg);};
+// Owner-visible API verified zero bypass actors and no owner bypass for this revision.
+// GitHub hides bypass_actors from tokens without ruleset-write permission.
+// https://docs.github.com/en/rest/repos/rules#get-a-repository-ruleset
+const VERIFIED_RULE_REVISION=Date.parse("2026-11-27T19:56:36.616+03:00");
+const VERIFIED_RULE_NODE="RRS_lACqUmVwb3NpdG9yec5W49omzgGvBGg";
 export function assertProtectedReleaseRule(rule){
  assert(rule?.id===28247144&&rule.target==="branch"&&rule.source===REPO&&rule.enforcement==="active","Secure release ruleset is not active");
- assert(rule.bypass_actors?.length===0&&rule.conditions?.ref_name?.exclude?.length===0&&rule.conditions?.ref_name?.include?.length===1&&rule.conditions.ref_name.include[0]==="~DEFAULT_BRANCH","Unexpected branch targeting or bypass");
+ const visible=Object.hasOwn(rule,"bypass_actors");
+ const empty=Array.isArray(rule.bypass_actors)&&rule.bypass_actors.length===0;
+ const pinned=rule.node_id===VERIFIED_RULE_NODE&&Date.parse(rule.updated_at)===VERIFIED_RULE_REVISION;
+ assert((visible?empty:pinned)&&(!Object.hasOwn(rule,"current_user_can_bypass")||rule.current_user_can_bypass==="never"),"Ruleset bypass evidence missing, changed or unsafe; obtain fresh owner-visible attestation");
+ assert(rule.conditions?.ref_name?.exclude?.length===0&&rule.conditions?.ref_name?.include?.length===1&&rule.conditions.ref_name.include[0]==="~DEFAULT_BRANCH","Unexpected branch targeting");
  const rules=rule.rules??[],status=rules.find(x=>x.type==="required_status_checks")?.parameters;
  assert(["deletion","non_fast_forward","pull_request"].every(k=>rules.some(r=>r.type===k))&&status?.strict_required_status_checks_policy===true&&status.do_not_enforce_on_create===false&&status.required_status_checks?.some(x=>x.context==="Verify AGENTS and agent instructions"&&x.integration_id===actions),"Required protection missing");
  return true;

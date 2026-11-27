@@ -42,3 +42,12 @@ test("protected release requires exact complete new browser matrix from its trus
  assert.deepEqual([...entries].sort(),[...names].sort());
  for(const kind of ["catalog","forum","sitemap","forum-recovery"]){const x=fixture(kind);assert.deepEqual(requiredCandidateChecks(kind).filter(r=>r.name.startsWith("browser-projects (")).map(r=>r.name),names);for(const name of names){assert.notEqual(evaluateCandidateChecks({...x,checks:x.checks.filter(c=>c.name!==name)}).state,"success");assert.equal(evaluateCandidateChecks({...x,checks:x.checks.map(c=>c.name===name?{...c,conclusion:"failure"}:c)}).state,"failure");}}
 });
+
+
+test("limited token may omit bypass actors only on the exact owner-attested ruleset revision",()=>{
+ const {bypass_actors,...limited}=rule;
+ const pinned={...limited,node_id:"RRS_lACqUmVwb3NpdG9yec5W49omzgGvBGg",updated_at:"2026-11-27T19:56:36.616+03:00",current_user_can_bypass:"never"};
+ assert.equal(assertProtectedReleaseRule(pinned),true);
+ assert.equal(assertProtectedReleaseRule({...pinned,updated_at:"2026-11-27T16:56:36.616Z"}),true);
+ for(const x of [limited,{...pinned,updated_at:"2026-11-27T20:00:00+03:00"},{...pinned,node_id:"wrong"},{...pinned,bypass_actors:null},{...pinned,bypass_actors:[{}]},{...pinned,current_user_can_bypass:"always"},{...pinned,enforcement:"disabled"},{...pinned,rules:rule.rules.slice(0,3)}])assert.throws(()=>assertProtectedReleaseRule(x));
+});
