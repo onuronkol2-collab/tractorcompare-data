@@ -1,0 +1,31 @@
+name: TractorVS secure publisher credential pilot (read only)
+# Manual one-time proof only. Do not add the private key until an owner has
+# enabled the environment reviewer safeguard and reviewed this exact main code.
+on:
+  workflow_dispatch:
+permissions: {}
+concurrency:
+  group: tractorvs-secure-publisher-pilot
+  cancel-in-progress: false
+jobs:
+  credential-pilot:
+    if: github.repository == 'onuronkol2-collab/tractorcompare-data' && github.ref == 'refs/heads/main' && github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    environment: secure-publisher
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+      - name: Verify exact trusted pilot revision
+        run: |
+          test "$GITHUB_REF" = 'refs/heads/main'
+          test "$(git rev-parse HEAD)" = "$GITHUB_SHA"
+      - name: Verify and revoke scoped read-only installation token
+        env:
+          APP_ID: ${{ vars.TRACTORVS_PUBLISHER_APP_ID }}
+          APP_PRIVATE_KEY: ${{ secrets.TRACTORVS_PUBLISHER_PRIVATE_KEY }}
+        run: node scripts/tractorvs-secure-publisher-pilot.mjs

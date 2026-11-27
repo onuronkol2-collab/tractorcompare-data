@@ -1,3 +1,4 @@
+import {openPublicationCandidate} from "./tractorvs-publication-candidate.mjs";
 /**
  * TractorVS zero-paid, anon-only forum revision listener.
  *
@@ -63,7 +64,7 @@ async function fetchRevision({token,fetchFn}){
   throw Error("Current forum revision is invalid");
  return {sha:data.sha,record:JSON.parse(Buffer.from(data.content.replace(/\s/g,""),"base64").toString("utf8"))};
 }
-export async function runForumSync({repo,ref,jwt,token,fetchFn=fetch,dryRun=false,now=new Date()}){
+export async function runForumSync({repo,ref,jwt,token,fetchFn=fetch,dryRun=false,now=new Date(),candidateBaseSha}){
  validateScope(repo,ref);validateAnon(jwt);
  if(!token)throw Error("Repository-only GitHub token required.");
  let latest=await fingerprintPublicForum({jwt,fetchFn});
@@ -75,8 +76,12 @@ export async function runForumSync({repo,ref,jwt,token,fetchFn=fetch,dryRun=fals
   if(previous.record?.fingerprint===latest.fingerprint)
    return {changed:false,committed:false,
     reason:attempt===0?"public_forum_unchanged":"public_forum_already_synced_after_conflict",...latest};
-  if(dryRun)return {changed:true,committed:false,reason:"dry_run_no_commit",...latest};
   const payload=JSON.stringify({...latest,generated_at:now.toISOString()},null,2)+"\n";
+  if(candidateBaseSha){
+   const candidate=await openPublicationCandidate({repo,ref,kind:"forum",baseSha:candidateBaseSha,files:[{path:REVISION_PATH,content:payload}],dryRun:true});
+   return {changed:true,committed:false,reason:"candidate_plan_no_commit",candidate,...latest};
+  }
+  if(dryRun)return {changed:true,committed:false,reason:"dry_run_no_commit",...latest};
   const request={message:"chore(site): refresh moderated forum public pages ("+latest.public_topics+" locale topics)",
    branch:"main",content:Buffer.from(payload).toString("base64")};
   if(previous.sha)request.sha=previous.sha;
@@ -100,7 +105,8 @@ export async function runForumSync({repo,ref,jwt,token,fetchFn=fetch,dryRun=fals
 if(process.argv[1]&&resolve(process.argv[1])===fileURLToPath(import.meta.url)){
  const r=await runForumSync({repo:process.env.GITHUB_REPOSITORY,ref:process.env.GITHUB_REF,
   jwt:process.env.TRACTORVS_SUPABASE_ANON_JWT,token:process.env.GITHUB_TOKEN,
-  dryRun:process.env.TRACTORVS_FORUM_DRY_RUN==="true"});
+  dryRun:process.env.TRACTORVS_FORUM_DRY_RUN==="true",
+  candidateBaseSha:process.env.TRACTORVS_FORUM_DRY_RUN==="true"?process.env.GITHUB_SHA:undefined});
  const summary="TractorVS forum sync: "+r.reason+"; public_locale_topics="+r.public_topics+
  "; indexed_eligible="+r.indexable_topics+"; visible_replies="+r.public_replies+"; commit="+r.committed;
  console.log(summary);

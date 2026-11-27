@@ -170,3 +170,12 @@ test("forum repeated 409 and authorization 403 fail closed without unbounded ret
   assert.equal(api.calls.filter(c=>c.url.includes("supabase.co")).length,code===409?6:3);
  }
 });
+
+test("forum manual candidate plan does not create any revision or PR",async()=>{
+ const m=mock({topics:[topic]});
+ const result=await runForumSync({...base,dryRun:true,candidateBaseSha:'a'.repeat(40),fetchFn:m.fetchFn});
+ assert.equal(result.committed,false);assert.equal(result.changed,true);
+ assert.equal(result.candidate.dryRun,true);assert.equal(result.reason,"candidate_plan_no_commit");
+ assert.ok(result.candidate.branch.startsWith("ops/publication-candidate/forum/"));
+ assert.ok(m.calls.every(c=>c.method==='GET'));
+});

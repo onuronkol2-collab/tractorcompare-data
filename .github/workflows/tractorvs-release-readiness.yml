@@ -34,7 +34,7 @@ concurrency:
   cancel-in-progress: false
 jobs:
   readiness:
-    if: github.repository == 'onuronkol2-collab/tractorcompare-data' && (github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main' || github.event_name == 'pull_request_target' && github.event.pull_request.head.repo.full_name == github.repository || github.event_name == 'workflow_run' && github.event.workflow_run.event == 'pull_request' && github.event.workflow_run.head_repository.full_name == github.repository || github.event_name == 'check_run' && github.event.check_run.app.slug == 'cloudflare-workers-and-pages')
+    if: github.repository == 'onuronkol2-collab/tractorcompare-data' && github.ref == 'refs/heads/main' && (github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main' || github.event_name == 'pull_request_target' && github.event.pull_request.head.repo.full_name == github.repository || github.event_name == 'workflow_run' && github.event.workflow_run.event == 'pull_request' && github.event.workflow_run.head_repository.full_name == github.repository || github.event_name == 'check_run' && github.event.check_run.app.slug == 'cloudflare-workers-and-pages')
     runs-on: ubuntu-24.04
     timeout-minutes: 18
     permissions:
@@ -46,8 +46,14 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          ref: ${{ github.event.pull_request.base.sha || github.sha }}
+          ref: ${{ github.sha }}
           persist-credentials: false
+      - name: Verify trusted event checkout
+        run: |
+          test "$GITHUB_REF" = 'refs/heads/main'
+          test "$(git rev-parse HEAD)" = "$GITHUB_SHA"
+          test -f scripts/tractorvs-release-readiness.mjs
+          test -f scripts/tractorvs-release-readiness-policy.mjs
       - name: Evaluate exact current SHA from trusted base
         env:
           GH_TOKEN: ${{ github.token }}

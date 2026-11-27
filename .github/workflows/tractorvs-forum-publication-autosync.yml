@@ -23,6 +23,9 @@ on:
       - ".github/workflows/tractorvs-forum-publication-autosync.yml"
       - "scripts/tractor-forum-publication-autosync.mjs"
       - "scripts/tractor-forum-publication-autosync.test.mjs"
+      - "site/src/data/public-forum-sync.json"
+      - "scripts/tractorvs-publication-candidate.mjs"
+      - "site/tests/publication-candidate.test.mjs"
   workflow_dispatch:
     inputs:
       dry_run:

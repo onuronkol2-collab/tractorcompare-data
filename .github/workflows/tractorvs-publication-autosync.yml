@@ -18,6 +18,9 @@ on:
       - ".github/workflows/tractorvs-publication-autosync.yml"
       - "scripts/tractor-publication-autosync.mjs"
       - "scripts/tractor-publication-autosync.test.mjs"
+      - "site/src/data/public-catalog-sync.json"
+      - "scripts/tractorvs-publication-candidate.mjs"
+      - "site/tests/publication-candidate.test.mjs"
   workflow_dispatch:
     inputs:
       dry_run:

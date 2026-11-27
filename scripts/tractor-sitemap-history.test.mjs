@@ -251,8 +251,14 @@ test("sitemap provenance runs before shared HTML inputs merge, not just componen
     "scripts/tractor-sitemap-history.mjs","scripts/tractor-sitemap-history.test.mjs",
     ".github/workflows/tractorvs-sitemap-history.yml"];
   assert.deepEqual(patterns(push),expected);
-  assert.deepEqual(patterns(pr),expected,"All significant source inputs must receive the same premerge guard");
-  assert.ok(expected.indexOf("!site/src/data/sitemap-lastmod.json")>expected.indexOf("site/src/**"),"Ledger-only generated updates must remain excluded");
+  // Preserve all significant source inputs. Candidate-only revisions must
+  // also be checked before merge without creating a main writer loop.
+  const expectedPr=expected.flatMap(p=>p==="!site/src/data/sitemap-lastmod.json"?
+    ["seo/sitemap-content-history.json","scripts/tractorvs-publication-candidate.mjs","site/tests/publication-candidate.test.mjs"]:[p]);
+  assert.deepEqual(patterns(pr),expectedPr,"Every source input and ledger candidate requires the premerge guard");
+  assert.ok(expected.indexOf("!site/src/data/sitemap-lastmod.json")>expected.indexOf("site/src/**"),"Generated ledger-only updates remain excluded from the main writer trigger");
+  assert.ok(!patterns(pr).includes("!site/src/data/sitemap-lastmod.json"));
+  assert.ok(workflow.includes("git diff --exit-code HEAD -- seo/sitemap-content-history.json site/src/data/sitemap-lastmod.json"),"A candidate preview must reject repaired submitted bytes");
   assert.match(workflow,/if ! changed_paths="\$\(git diff --name-only "\$AUDITED_BASE" origin\/main\)"; then/);
   assert.ok(workflow.includes("seo/sitemap-content-history\\.json$"),"A concurrent history checkpoint invalidates the audited baseline");
   assert.ok(workflow.includes("package(-lock)?\\.json$"),"Dependency changes invalidate the audited build");

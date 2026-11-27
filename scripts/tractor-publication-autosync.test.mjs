@@ -277,3 +277,12 @@ test("second GitHub 409 and 403 fail closed, without looping or authorization by
   assert.equal(api.calls.length,deniedStatus===409?2:1);
  }
 });
+
+test("catalog manual candidate plan does not create any revision or PR",async()=>{
+ const m=fakeApi();
+ const result=await runPublicationSync({...base,dryRun:true,candidateBaseSha:'a'.repeat(40),fetchFn:m.fetchFn});
+ assert.equal(result.committed,false);assert.equal(result.changed,true);
+ assert.equal(result.candidate.dryRun,true);assert.equal(result.reason,"candidate_plan_no_commit");
+ assert.ok(result.candidate.branch.startsWith("ops/publication-candidate/catalog/"));
+ assert.deepEqual(m.calls,['supabase:GET','github:GET']);
+});
