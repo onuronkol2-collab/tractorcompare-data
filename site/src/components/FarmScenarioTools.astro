@@ -1,6 +1,7 @@
 ---
 import {farmExtrasText,farmScenarioDensityText,farmScenarioWindowText} from "../lib/farm-extras-i18n";
 import {farmCostText} from "../lib/farm-cost-i18n";
+import {FARM_SCENARIO_EXAMPLE_COPY,farmScenarioExample} from "../lib/farm-scenario-example.ts";
 import {farmModelText} from "../lib/farm-model-context-i18n";
 import {LOCALE_TAGS,type Locale} from "../lib/locales";
 interface Props{lang:Locale}
@@ -8,6 +9,18 @@ const {lang}=Astro.props;
 const c=farmExtrasText(lang), common=farmCostText(lang), m=farmModelText(lang);
 const fields=[["width",3,4,0.01,100],["speed",6,6,0.01,100],["efficiency",75,75,0.01,100],["fuel",8,10,0,10000],["other",0,0,0,1e12]] as const;
 const density=farmScenarioDensityText(lang), plan=farmScenarioWindowText(lang);
+const worked=farmScenarioExample(), workedCopy=FARM_SCENARIO_EXAMPLE_COPY[lang];
+const exampleFormat=new Intl.NumberFormat(LOCALE_TAGS[lang],{maximumFractionDigits:3});
+const exampleRows=[
+ [common.width,worked.a.width,worked.b.width],
+ [common.fuel,worked.a.fuel,worked.b.fuel],
+ [common.capacity,worked.result.left.capacity,worked.result.right.capacity],
+ [common.time,worked.result.left.time,worked.result.right.time],
+ [common.litres,worked.result.left.litres,worked.result.right.litres],
+ [density.fuelPerHa,worked.result.left.fuelPerHa,worked.result.right.fuelPerHa],
+ [density.fuelPerDecare,worked.result.left.fuelPerDecare,worked.result.right.fuelPerDecare],
+ [plan.equivalentDays,worked.result.left.equivalentDays,worked.result.right.equivalentDays]
+] as const;
 const metrics=[["capacity",common.capacity],["dailyAreaHa",plan.dailyAreaHa],["dailyAreaDecare",plan.dailyAreaDecare],["time",common.time],["equivalentDays",plan.equivalentDays],["litres",common.litres],["fuelPerHa",density.fuelPerHa],["fuelPerDecare",density.fuelPerDecare],["fieldCost",common.fieldCost],["perHa",common.perHa],["perDekar",common.perDekar],["operatingField",m.operatingField],["operatingPerHa",m.operatingPerHa],["operatingPerDecare",density.operatingPerDecare]] as const;
 ---
 <div class="extra-tools" data-extra-tools data-locale={LOCALE_TAGS[lang]}>
@@ -24,6 +37,16 @@ const metrics=[["capacity",common.capacity],["dailyAreaHa",plan.dailyAreaHa],["d
    <button type="submit">{common.calculate}</button><p data-extra-error role="alert" hidden>{common.invalid}</p>
   </fieldset></form>
   <div class="extra-table" role="region" aria-label={c.scenario} tabindex="0" aria-live="polite"><table><thead><tr><th scope="col">{plan.metric}</th><th scope="col">{c.a}</th><th scope="col">{c.b}</th><th scope="col">{c.delta}</th></tr></thead><tbody>{metrics.map(([key,label])=><tr><th scope="row">{label}</th>{["left","right","difference"].map(side=><td data-scenario-result={side+"-"+key}>—</td>)}</tr>)}</tbody></table></div>
+  <div class="scenario-worked">
+   <h3 id="scenario-worked-heading">{workedCopy[0]}</h3>
+   <p>{workedCopy[1]}</p>
+   <div class="extra-table" role="region" aria-labelledby="scenario-worked-heading" tabindex="0">
+    <table><thead><tr><th scope="col">{plan.metric}</th><th scope="col">{c.a}</th><th scope="col">{c.b}</th></tr></thead>
+     <tbody>{exampleRows.map(([label,a,b])=><tr><th scope="row">{label}</th><td>{exampleFormat.format(a!)}</td><td>{exampleFormat.format(b!)}</td></tr>)}</tbody>
+    </table>
+   </div>
+   <p>{workedCopy[2]}</p>
+  </div>
  </section>
  <section id="farm-service" data-clarity-mask="true"><h2>{c.service}</h2><p>{c.serviceNote}</p>
   <form data-extra-form="service"><fieldset data-extra-controls disabled><div class="extra-grid">{[["last",c.last,100],["current",c.current,150],["interval",c.interval,250]].map(([key,label,value])=><label>{label}<input name={key} type="number" min={key==="interval"?0.01:0} max="10000000" step="any" value={value} required /></label>)}</div><button type="submit">{common.calculate}</button><p data-extra-error role="alert" hidden>{common.invalid}</p></fieldset></form>
@@ -67,6 +90,7 @@ const metrics=[["capacity",common.capacity],["dailyAreaHa",plan.dailyAreaHa],["d
  input,select,button{font:inherit;min-height:44px;max-width:100%;min-width:0;box-sizing:border-box;border:1px solid #708478;border-radius:.4rem;padding:.5rem;color:inherit;background:transparent}
  button{background:#245b39;color:white;cursor:pointer}
  .extra-table{max-width:100%;overflow-x:auto;margin-block:1rem;overscroll-behavior-inline:contain}
+ .scenario-worked{margin-top:1.5rem;border-top:1px solid #708478;padding-top:1rem}
  .extra-table:focus-visible{outline:3px solid currentColor;outline-offset:3px}
  table{width:100%;border-collapse:collapse}
  th,td{padding:.6rem;border-bottom:1px solid #708478;text-align:start;overflow-wrap:anywhere}

@@ -48,3 +48,20 @@ test("daily window labels and scope limitations are supplied in all ten language
  const {farmScenarioWindowText}=await import("../src/lib/farm-extras-i18n.ts");
  for(const lang of LOCALES)assert.equal(Object.values(farmScenarioWindowText(lang)).filter(v=>typeof v==="string"&&v.trim()).length,6);
 });
+
+
+test("server-rendered worked scenario distinguishes hourly and area consumption",async()=>{
+ const {farmScenarioExample,FARM_SCENARIO_EXAMPLE_COPY}=await import("../src/lib/farm-scenario-example.ts");
+ const {readFileSync}=await import("node:fs");
+ const {a,b,result}=farmScenarioExample();
+ assert.ok(b.fuel>a.fuel);
+ assert.equal(result.left.capacity,.8);assert.equal(result.right.capacity,1.6);
+ assert.equal(result.left.time,10);assert.equal(result.right.time,5);
+ assert.equal(result.left.litres,80);assert.equal(result.right.litres,60);
+ assert.equal(result.left.fuelPerHa,10);assert.equal(result.right.fuelPerHa,7.5);
+ assert.equal(result.left.equivalentDays,2);assert.equal(result.right.equivalentDays,1);
+ for(const lang of LOCALES)assert.equal(FARM_SCENARIO_EXAMPLE_COPY[lang].filter(v=>v.trim()).length,3);
+ const view=readFileSync(new URL("../src/components/FarmScenarioTools.astro",import.meta.url),"utf8");
+ assert.match(view,/exampleRows\.map/);
+ assert.match(view,/aria-labelledby="scenario-worked-heading"/);
+});
