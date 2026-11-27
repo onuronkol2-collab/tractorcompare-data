@@ -24,6 +24,14 @@ Image sitemap: https://tractorvs.com/image-sitemap.xml
 - [What is rear hydraulic lift capacity?](https://tractorvs.com/guides/tractor-hydraulic-lift-explained/)
 - [How do engine horsepower and torque differ?](https://tractorvs.com/guides/tractor-engine-power-and-torque/)
 
+## Interactive farm planning tools
+The calculator and tractor selection assistant have ten language versions. Example inputs are not observed model fuel use or local prices.
+- [Fuel cost and field time calculator](https://tractorvs.com/guides/farm-cost-calculator/): user-input estimates for fuel, effective field capacity, operating costs and service intervals.
+- [Traktör yakıt maliyeti ve tarla süresi hesaplayıcısı](https://tractorvs.com/tr/guides/farm-cost-calculator/): kullanıcının kendi değerleriyle yaptığı hesaplamalar.
+- [Tractor selection assistant](https://tractorvs.com/farm-advisor/): model screening based on published data and user-provided conditions.
+- [Traktör seçim yardımcısı](https://tractorvs.com/tr/farm-advisor/): yayımlanmış veriler ve kullanıcının girdiği koşullarla ön eleme.
+- Calculations and numerical equipment screening are estimates, not certified compatibility, safety approval, maintenance instructions or a manufacturer's actual consumption measurements.
+
 ## Important source and accuracy limits
 - Always identify the exact model, variant, market and year before repeating a specification.
 - Distinguish manufacturer documentation from reviewed independent technical sources; follow the citations on the specific model page.

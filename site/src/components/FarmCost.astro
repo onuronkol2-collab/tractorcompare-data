@@ -1,5 +1,6 @@
 ---
 import SiteLayout from "../layouts/SiteLayout.astro";
+import {farmToolPageData} from "../lib/farm-tool-page-data.ts";
 import {practicalGuideLinks} from "../lib/practical-guide-links.ts";
 import {catalogEditorialLinks} from "../lib/catalog-editorial-links.ts";
 import {editorialSearchTitle} from "../lib/editorial-seo-title.mjs";
@@ -7,7 +8,7 @@ import FarmDecisionTools from "./FarmDecisionTools.astro";
 import FarmScenarioTools from "./FarmScenarioTools.astro";
 import {farmExtrasText} from "../lib/farm-extras-i18n";
 import {farmWorkedExample} from "../lib/farm-worked-example";
-import {localizedPath,LOCALE_TAGS,RELATED_PAGES_LABELS,type Locale} from "../lib/locales";
+import {localizedPath,LOCALE_TAGS,RELATED_PAGES_LABELS,BREADCRUMB_LABELS,type Locale} from "../lib/locales";
 import {farmCostText} from "../lib/farm-cost-i18n";
 import {farmDecisionText} from "../lib/farm-decision-i18n";
 import {farmModelText} from "../lib/farm-model-context-i18n";
@@ -22,9 +23,11 @@ const fields=[
 const initial=farmCost(Object.fromEntries(fields.map(([key,value])=>[key,value])));
 const metrics=["capacity","time","litres","hourly","perHa","perDekar","fieldCost","operatingPerHa","operatingField","annualFuel","annualTotal"] as const;
 const number=new Intl.NumberFormat(LOCALE_TAGS[lang],{maximumSignificantDigits:6});
+const schema=import.meta.env.PUBLIC_INDEXING_ENABLED==="true"&&Astro.site?farmToolPageData(lang,"/guides/farm-cost-calculator/",Astro.site,c.title,c.description):null;
 ---
-<SiteLayout lang={lang} title={editorialSearchTitle(c.title)} description={c.description}>
+<SiteLayout lang={lang} title={editorialSearchTitle(c.title)} description={c.description} structuredData={schema}>
  <section class="container cost-page" data-farm-cost data-locale={LOCALE_TAGS[lang]} data-invalid={c.invalid} data-copied={d.copied} data-copy-failed={d.copyFailed}>
+  <nav class="tool-breadcrumb" aria-label={BREADCRUMB_LABELS[lang]}><a href={localizedPath(lang,"/")}>TractorVS</a><span aria-hidden="true">/</span><span aria-current="page">{c.title}</span></nav>
   <h1>{c.title}</h1>
   <p>{c.description}</p>
   <p class="cost-note">{c.note}</p>
@@ -93,6 +96,9 @@ const number=new Intl.NumberFormat(LOCALE_TAGS[lang],{maximumSignificantDigits:6
  }
 </script>
 <style>
+ .tool-breadcrumb{display:flex;flex-wrap:wrap;align-items:center;gap:.5rem;font-size:.875rem;margin-bottom:.75rem;overflow-wrap:anywhere}
+ .tool-breadcrumb a{display:inline-flex;align-items:center;min-height:44px;text-decoration:underline;text-underline-offset:3px}
+ .tool-breadcrumb a:focus-visible{outline:2px solid currentColor;outline-offset:3px}
  .cost-page{padding-block:clamp(1.5rem,4vw,3rem);max-width:1100px}
  .cost-page p{max-width:78ch;line-height:1.7}
  .farm-tool-jump{display:flex;flex-wrap:wrap;gap:.5rem;margin-block:1.25rem}

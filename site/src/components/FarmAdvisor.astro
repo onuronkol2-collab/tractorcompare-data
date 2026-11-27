@@ -1,6 +1,7 @@
 ---
 import SiteLayout from "../layouts/SiteLayout.astro";
-import { localizedPath, type Locale } from "../lib/locales";
+import {farmToolPageData} from "../lib/farm-tool-page-data.ts";
+import { localizedPath, BREADCRUMB_LABELS, type Locale } from "../lib/locales";
 import { getPublicCatalog } from "../lib/catalog";
 import { advisorText as tx } from "../lib/advisor-i18n";
 import { extractAdvisorFacts } from "../lib/advisor-evidence";
@@ -25,6 +26,7 @@ const published = catalog.tractors.map((tractor) => ({
 }));
 const bundle = JSON.stringify({ published, lang }).replace(/</g,"\\u003c");
 const heading = tx(lang,"heading");
+const schema=import.meta.env.PUBLIC_INDEXING_ENABLED==="true"&&Astro.site?farmToolPageData(lang,"/farm-advisor/",Astro.site,heading,tx(lang,"lead")):null;
 const extras = [
   {name:"soil",options:["light","medium","heavy"]},
   {name:"terrain",options:["flat","rolling","steep"]},
@@ -45,9 +47,10 @@ const areaUnitOptions = [
   ["m2","m²"],
 ];
 ---
-<SiteLayout lang={lang} title={heading+" | TractorVS"} description={tx(lang,"lead")}>
+<SiteLayout lang={lang} title={heading+" | TractorVS"} description={tx(lang,"lead")} structuredData={schema}>
   <section class="advisor-hero">
     <div class="container advisor-hero-inner">
+      <nav class="tool-breadcrumb" aria-label={BREADCRUMB_LABELS[lang]}><a href={localizedPath(lang,"/")}>TractorVS</a><span aria-hidden="true">/</span><span aria-current="page">{heading}</span></nav>
       <p class="eyebrow"><span class="eyebrow-mark"></span>TRACTORVS</p>
       <h1>{heading}</h1>
       <p>{tx(lang,"lead")}</p>

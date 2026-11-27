@@ -31,3 +31,29 @@ test("all ten locales have complete distinct human-readable calculator strings",
 });
 
 test("international area units and operating cost exclude annual fixed costs",()=>{assert.equal(farmAreaInHectares(100,"decare"),10);assert.ok(Math.abs(farmAreaInHectares(1,"acre")-0.40468564224)<1e-12);assert.equal(farmAreaInHectares(15,"mu"),1);assert.throws(()=>farmAreaInHectares(1,"constructor"));assert.throws(()=>farmAreaInHectares(0,"ha"));const x=farmCost(base);assert.ok(Math.abs(x.operatingField-(16+4)*x.time)<1e-9);assert.ok(Math.abs(x.operatingPerHa*10-x.operatingField)<1e-9);});
+
+
+test("farm planning metadata describes real locale pages without unsupported rich result claims",async()=>{
+ const {farmToolPageData}=await import("../src/lib/farm-tool-page-data.ts");
+ const {localizedPath,LOCALE_TAGS}=await import("../src/lib/locales.ts");
+ const {readFileSync}=await import("node:fs");
+ const root=new URL("https://tractorvs.com/");
+ for(const lang of LOCALES){
+  const c=farmCostText(lang);
+  for(const [path,component] of [["/guides/farm-cost-calculator/","FarmCost"],["/farm-advisor/","FarmAdvisor"]]){
+   const data=farmToolPageData(lang,path,root,c.title,c.description);
+   const [page,crumb]=data["@graph"];
+   const url=new URL(localizedPath(lang,path),root).toString();
+   assert.equal(page.url,url);assert.equal(page.inLanguage,LOCALE_TAGS[lang]);
+   assert.equal(page.name,c.title);assert.equal(page.description,c.description);
+   assert.equal(page.breadcrumb["@id"],crumb["@id"]);
+   assert.deepEqual(crumb.itemListElement.map(x=>x.item),[new URL(localizedPath(lang,"/"),root).toString(),url]);
+   assert.equal(crumb.itemListElement[1].name,page.name);
+   assert.doesNotMatch(JSON.stringify(data),/AggregateRating|SoftwareApplication|WebApplication|"offers"|"review"/);
+   const source=readFileSync(new URL("../src/components/"+component+".astro",import.meta.url),"utf8");
+   assert.match(source,/PUBLIC_INDEXING_ENABLED==="true"&&Astro.site/);
+   assert.match(source,/structuredData=\{schema\}/);
+   assert.match(source,/class="tool-breadcrumb" aria-label=\{BREADCRUMB_LABELS\[lang\]\}/);
+  }
+ }
+});
