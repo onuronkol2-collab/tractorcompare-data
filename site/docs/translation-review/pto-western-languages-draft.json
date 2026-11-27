@@ -76,7 +76,7 @@
           "anchor": "nasil-calisir",
           "title": "Welche Aufgabe hat die Zapfwelle?",
           "paragraphs": [
-            "Die Drehbewegung des Motors gelangt über den Antriebsstrang zu einem hinteren oder vorderen Leistungsabtrieb. Mit einer passenden, geschützten Gelenkwelle treibt das Gerät damit seine Messer, seinen Rotor oder seine Pumpe an. Das Ziehen und das Antreiben eines Geräts sind unterschiedliche Aufgaben; Reifentraktion und Zapfwellenleistung erfüllen deshalb unterschiedliche Funktionen.",
+            "Die Drehbewegung des Motors gelangt über den Antriebsstrang zu einem hinteren oder vorderen Leistungsabtrieb. Mit einer passenden, geschützten Gelenkwelle treibt das Gerät damit seine Messer, seinen Rotor oder seine Pumpe an. Das Ziehen und das Antreiben eines Geräts sind unterschiedliche Aufgaben; Zugkraft der Reifen und Zapfwellenleistung erfüllen deshalb unterschiedliche Funktionen.",
             "Eine Bodenfräse bewegt sich über das Feld, während sich ihr Rotor dreht. Diese Anforderungen dürfen nicht durch eine einzige Leistungszahl beschrieben werden. Suchen Sie getrennte Angaben zur Motor- und Zapfwellenleistung."
           ]
         },
@@ -93,7 +93,7 @@
           "title": "Zapfwellenleistung und Anschlussmaße prüfen",
           "paragraphs": [
             "Motorleistung wird am Motor gemessen; Zapfwellenleistung steht an der Abtriebswelle zur Verfügung und kann wegen Übertragungsverlusten geringer sein. Vergleichen Sie die geforderte Geräteleistung mit der Zapfwellenleistung bei gleicher Einheit und Prüfgrundlage.",
-            "Durchmesser und Verzahnungszahl der Zapfwelle bestimmen die Anschlussgeometrie. Wellen mit unterschiedlichen Verzahnungen sind nicht austauschbar. Prüfen Sie in der Geräteanleitung die zulässige Wellenlänge, den Winkel, die Schutzeinrichtungen und die Anschlussart."
+            "Durchmesser und Anzahl der Keilwellenzähne der Zapfwelle bestimmen die Anschlussgeometrie. Wellen mit unterschiedlichen Verzahnungen sind nicht austauschbar. Prüfen Sie in der Geräteanleitung die zulässige Wellenlänge, den Winkel, die Schutzeinrichtungen und die Anschlussart."
           ]
         },
         {
@@ -109,7 +109,7 @@
           "title": "Kompatibilität vor dem Gerätekauf prüfen",
           "paragraphs": [
             "Notieren Sie zulässige Zapfwellendrehzahlen und Leistungsbedarf des Geräts. Vergleichen Sie dann belegte Zapfwellenleistung, verfügbare Drehzahlstufen, Verzahnung und Anschlussmaße des Traktors. Eine nicht aufgeführte Eigenschaft ist unbekannt und nicht automatisch vorhanden.",
-            "Berücksichtigen Sie schließlich Anbaukategorie, Gerätemasse und erforderliche Hydraulikanschlüsse. Zapfwellenkompatibilität ist nur ein Teil der gesamten Eignung. Betreiben Sie niemals eine ungeschützte rotierende Welle. Befolgen Sie vor Anschluss oder Einstellung die Anleitungen von Traktor und Gerät: Feststellbremse anziehen, Antrieb auskuppeln, Motor abstellen, Schlüssel abziehen und warten, bis alle beweglichen Teile stillstehen."
+            "Berücksichtigen Sie schließlich Kategorie der Anbauvorrichtung, Gerätemasse und erforderliche Hydraulikanschlüsse. Zapfwellenkompatibilität ist nur ein Teil der gesamten Eignung. Betreiben Sie niemals eine ungeschützte rotierende Welle. Befolgen Sie vor Anschluss oder Einstellung die Anleitungen von Traktor und Gerät: Feststellbremse anziehen, Zapfwellenantrieb ausschalten, Motor abstellen, Schlüssel abziehen und warten, bis alle beweglichen Teile stillstehen."
           ]
         }
       ],
@@ -121,7 +121,7 @@
       ]
     },
     "fr": {
-      "title": "Qu’est-ce que la prise de force (PDF/PTO) d’un tracteur ? 540, 540E et 1000 tr/min",
+      "title": "Qu’est-ce que la prise de force (PTO) d’un tracteur ? 540, 540E et 1000 tr/min",
       "description": "Comprendre la prise de force du tracteur, les différences entre 540, 540E et 1000 tr/min et les vérifications de compatibilité et de sécurité des outils.",
       "lead": "Comment une faucheuse tourne-t-elle lorsque le tracteur avance ? La prise de force transmet la puissance mécanique à l’outil. La mention PTO sur une fiche technique ne garantit pas la compatibilité de tous les outils : régime, accouplement et puissance disponible sont des questions distinctes.",
       "comparisonNote": "Si une faucheuse exige 540 tr/min, vérifiez d’abord que la prise de force du tracteur peut fournir ce régime. Vérifiez ensuite l’accouplement et la puissance à la prise de force requise. La puissance du moteur ne répond pas à ces questions.",
@@ -163,7 +163,7 @@
           "title": "Vérifier la compatibilité avant l’achat d’un outil",
           "paragraphs": [
             "Notez les régimes de prise de force autorisés et la puissance nécessaire à l’outil. Comparez ensuite la puissance vérifiée du tracteur à la prise de force, ses régimes disponibles, la géométrie des cannelures et les dimensions d’accouplement. Une caractéristique non indiquée est inconnue, et non automatiquement présente.",
-            "Tenez également compte de la catégorie d’attelage, de la masse de l’outil et des raccords hydrauliques nécessaires. La compatibilité de la prise de force n’est qu’une partie de l’adéquation globale. N’utilisez jamais un arbre tournant non protégé. Avant le raccordement ou le réglage, suivez les notices du tracteur et de l’outil : serrez le frein de stationnement, désengagez l’entraînement, arrêtez le moteur, retirez la clé et attendez l’arrêt complet de toutes les pièces mobiles."
+            "Tenez également compte de la catégorie d’attelage, de la masse de l’outil et des raccords hydrauliques nécessaires. La compatibilité de la prise de force n’est qu’une partie de l’adéquation globale. N’utilisez jamais un arbre tournant non protégé. Avant le raccordement ou le réglage, suivez les notices du tracteur et de l’outil : serrez le frein de stationnement, désengagez la prise de force, arrêtez le moteur, retirez la clé et attendez l’arrêt complet de toutes les pièces mobiles."
           ]
         }
       ],
@@ -217,7 +217,7 @@
           "title": "Comprobación de compatibilidad antes de comprar un apero",
           "paragraphs": [
             "Anote los regímenes de TDF permitidos y la potencia requerida por el apero. Compare después la potencia verificada de la TDF del tractor, los regímenes seleccionables, las estrías y las dimensiones de conexión. Una característica no indicada es desconocida, no necesariamente presente.",
-            "Considere finalmente la categoría del enganche, la masa del apero y los acoplamientos hidráulicos necesarios. La compatibilidad de la TDF es solo parte de la adecuación total. Nunca utilice un eje giratorio sin protección. Antes de conectar o ajustar la TDF, siga los manuales del tractor y del apero: aplique el freno de estacionamiento, desacople la transmisión de potencia, apague el motor, retire la llave y espere a que todas las piezas móviles se detengan."
+            "Considere finalmente la categoría del enganche, la masa del apero y los acoplamientos hidráulicos necesarios. La compatibilidad de la TDF es solo parte de la adecuación total. Nunca utilice un eje giratorio sin protección. Antes de conectar o ajustar la TDF, siga los manuales del tractor y del apero: aplique el freno de estacionamiento, desconecte la toma de fuerza, apague el motor, retire la llave y espere a que todas las piezas móviles se detengan."
           ]
         }
       ],
@@ -271,7 +271,7 @@
           "title": "Verificação de compatibilidade antes da compra",
           "paragraphs": [
             "Anote as rotações permitidas da TDP e a potência exigida pelo implemento. Compare a potência comprovada da TDP do trator, as rotações selecionáveis, as estrias e as dimensões de acoplamento. Uma característica não informada é desconhecida, não automaticamente presente.",
-            "Considere também a categoria do engate, a massa do implemento e os acoplamentos hidráulicos necessários. Compatibilidade da TDP é apenas parte da adequação do conjunto. Nunca opere um eixo giratório desprotegido. Antes de conectar ou ajustar a TDP, siga os manuais do trator e do implemento: acione o freio de estacionamento, desengate a transmissão de potência, desligue o motor, retire a chave e espere até que todas as partes móveis parem."
+            "Considere também a categoria do engate, a massa do implemento e os acoplamentos hidráulicos necessários. A compatibilidade da TDP é apenas parte da adequação do conjunto. Nunca opere um eixo giratório desprotegido. Antes de conectar ou ajustar a TDP, siga os manuais do trator e do implemento: acione o freio de estacionamento, desative a TDP, desligue o motor, retire a chave e espere até que todas as partes móveis parem."
           ]
         }
       ],
