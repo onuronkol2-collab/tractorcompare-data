@@ -1,6 +1,6 @@
 import {test} from "node:test";
 import assert from "node:assert/strict";
-import {parseProductionSitemapInventory,selectProductionSeoPages,REVIEWED_PAIR_PATHS,reviewedPairSitemapCoverage,resolveProductionSeoMode,verifyProductionSeoCoverage} from "../scripts/production-sitemap-inventory.mjs";
+import {parseProductionSitemapInventory,selectProductionSeoPages,REVIEWED_PAIR_PATHS,reviewedPairSitemapCoverage,FARM_TOOL_PATHS,farmToolSitemapCoverage,resolveProductionSeoMode,verifyProductionSeoCoverage} from "../scripts/production-sitemap-inventory.mjs";
 const BASE="https://tractorvs.com";
 const langs=["en","tr","zh","hi","pt-br","fr","de","ru","ja","es"];
 const fileNames=["sitemap-0.xml","forum-sitemap.xml","image-sitemap.xml"];
@@ -125,4 +125,24 @@ test("full and daily coverage require actual exact page inspection, not just a g
  assert.throws(()=>verifyProductionSeoCoverage(inventory,full,full.slice(1),"full"),/Incomplete/);
  assert.throws(()=>verifyProductionSeoCoverage(inventory,full,[...full.slice(1),full[1]],"full"),/duplicate/);
  assert.throws(()=>verifyProductionSeoCoverage(inventory,daily,[...daily.slice(1),page("/not-inspected/")],"daily"),/Incomplete/);
+});
+
+
+test("all twenty existing localized farm tools must be present in actual HTML sitemap inventory",()=>{
+ const f=fixture();
+ const expected=langs.flatMap(lang=>["/farm-advisor/","/guides/farm-cost-calculator/"].map(path=>(lang==="en"?"":"/"+lang)+path));
+ assert.deepEqual(FARM_TOOL_PATHS,expected);
+ assert.equal(new Set(FARM_TOOL_PATHS).size,20);
+ const urls=expected.map(page);
+ assert.deepEqual(farmToolSitemapCoverage(parseProductionSitemapInventory(f)).missing,urls);
+ f.children[f.childUrls[0]]=urlset([...f.html,...urls]);
+ const coverage=farmToolSitemapCoverage(parseProductionSitemapInventory(f));
+ assert.equal(coverage.expected,20);assert.equal(coverage.listed,20);
+ assert.deepEqual(coverage.missing,[]);
+ const missing=page("/tr/guides/farm-cost-calculator/");
+ f.children[f.childUrls[0]]=urlset([...f.html,...urls.filter(url=>url!==missing)]);
+ const partial=farmToolSitemapCoverage(parseProductionSitemapInventory(f));
+ assert.equal(partial.listed,19);assert.deepEqual(partial.missing,[missing]);
+ assert.deepEqual(farmToolSitemapCoverage({htmlPages:new Set(),imagePages:new Set(urls),forumPages:new Set(urls)}).missing,urls);
+ assert.throws(()=>farmToolSitemapCoverage(null),/Missing parsed HTML sitemap inventory/);
 });

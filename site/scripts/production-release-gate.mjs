@@ -1,3 +1,4 @@
+import {FARM_TOOL_PATHS} from "./production-sitemap-inventory.mjs";
 import {scanHeadTags} from "./verify-sitewide-meta-descriptions.mjs";
 import {readOpeningTagAttribute as attr} from "./seo-html-attributes.mjs";
 /**
@@ -136,6 +137,16 @@ export function verifyProductionArtifacts({dir=projectRoot,origin=expectedOrigin
  const editorialSitemaps=readdirSync(dist)
   .filter(name=>name.startsWith("sitemap-")&&name.endsWith(".xml")&&name!=="sitemap-index.xml")
   .map(name=>readText(join(dist,name))).join("\n");
+ // These existing localized utilities must be present in the HTML sitemap,
+ // and must have a real canonical HTML file in the same production artifact.
+ for(const path of FARM_TOOL_PATHS){
+  const publicUrl=new URL(path,origin).href;
+  const page=readText(join(dist,path.slice(1),"index.html"));
+  insist(hasExactCanonical(page,publicUrl),"Farm tool has wrong canonical: "+path);
+  insist(!/noindex,nofollow|content="noindex/i.test(page),"Farm tool cannot be noindex: "+path);
+  insist(editorialSitemaps.includes("<loc>"+publicUrl+"</loc>"),"Farm tool missing from generated HTML sitemap: "+path);
+ }
+
  for(const [route,locale] of [
   ["articles","en"],["tr/articles","tr"],["zh/articles","zh-Hans"],
   ["hi/articles","hi"],["pt-br/articles","pt-BR"],["fr/articles","fr"],

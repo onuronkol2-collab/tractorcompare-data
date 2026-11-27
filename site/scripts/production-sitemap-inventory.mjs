@@ -28,6 +28,20 @@ export function reviewedPairSitemapCoverage(inventory){
 }
 
 const LOCALES=["en","tr","zh","hi","pt-br","fr","de","ru","ja","es"];
+/** Existing public tools are real localized HTML pages, not image/forum entries. */
+export const FARM_TOOL_PATHS=Object.freeze(LOCALES.flatMap(locale=>{
+ const prefix=locale==="en"?"":"/"+locale;
+ return [prefix+"/farm-advisor/",prefix+"/guides/farm-cost-calculator/"];
+}));
+export function farmToolSitemapCoverage(inventory){
+ if(!(inventory?.htmlPages instanceof Set))
+  throw Error("[TractorVS SEO inventory] Missing parsed HTML sitemap inventory");
+ const required=FARM_TOOL_PATHS.map(path=>SITE+path);
+ const missing=required.filter(url=>!inventory.htmlPages.has(url));
+ return {expected:required.length,listed:required.length-missing.length,missing,
+  source:"fetched_master_index_and_html_children"};
+}
+
 function invalid(msg){throw Error("[TractorVS SEO inventory] "+msg);}
 function normalized(raw){
  if(typeof raw!=="string")invalid("Non-string sitemap URL");

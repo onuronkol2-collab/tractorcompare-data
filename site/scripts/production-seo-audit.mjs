@@ -11,7 +11,7 @@ import {writeFileSync} from "node:fs";
 import {extractCanonicalAnchors,summarizeCanonicalGraph} from "./production-internal-link-graph.mjs";
 import {readOpeningTagAttribute,googleIndexingBlockedByMeta,indexBlockingResponseHeader} from "./seo-html-attributes.mjs";
 import {inspectLocaleAnnotations} from "./verify-published-site-inventory.mjs";
-import {parseProductionSitemapInventory,selectProductionSeoPages,reviewedPairSitemapCoverage,resolveProductionSeoMode,verifyProductionSeoCoverage} from "./production-sitemap-inventory.mjs";
+import {parseProductionSitemapInventory,selectProductionSeoPages,reviewedPairSitemapCoverage,farmToolSitemapCoverage,resolveProductionSeoMode,verifyProductionSeoCoverage} from "./production-sitemap-inventory.mjs";
 // Read-only production SEO coverage audit. No credentials or writes.
 const BASE = "https://tractorvs.com";
 const languages = {en:"en",tr:"tr",zh:"zh-Hans",hi:"hi","pt-br":"pt-BR",fr:"fr",de:"de",ru:"ru",ja:"ja",es:"es"};
@@ -96,6 +96,10 @@ try {
 // A source-reviewed published article must not disappear from the ONE live
 // HTML sitemap while its public URL still responds. Only actual fetched XML
 // membership counts; audit-tool "inSitemap" heuristics are not evidence.
+const farmTools=farmToolSitemapCoverage(inventory);
+console.log("TRACTORVS_FARM_TOOL_SITEMAP_LIVE "+JSON.stringify(farmTools));
+for(const url of farmTools.missing)
+ error("farm-tool-sitemap-missing",url,"Published localized tool absent from fetched HTML sitemap; inspect deployment and sitemap membership");
 const publishedPair=reviewedPairSitemapCoverage(inventory);
 console.log("TRACTORVS_REVIEWED_PAIR_SITEMAP_LIVE "+JSON.stringify(publishedPair));
 for(const url of publishedPair.missing)
