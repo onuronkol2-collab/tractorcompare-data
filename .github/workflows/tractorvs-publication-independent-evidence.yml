@@ -1,0 +1,61 @@
+name: TractorVS independent publication candidate evidence
+# Trusted main only; never checks out candidate code or grants a merge.
+on:
+  pull_request_target:
+    branches: [main]
+    types: [opened, synchronize, reopened, ready_for_review]
+    paths:
+      - 'site/src/data/public-catalog-sync.json'
+      - 'site/src/data/public-forum-sync.json'
+      - 'seo/sitemap-content-history.json'
+      - 'site/src/data/sitemap-lastmod.json'
+  workflow_dispatch:
+    inputs:
+      pr_number:
+        type: string
+        required: true
+      kind:
+        type: choice
+        options: [catalog, forum, sitemap]
+        required: true
+permissions: {}
+concurrency:
+  group: tractorvs-independent-publication-${{ github.event.pull_request.number || inputs.pr_number }}
+  cancel-in-progress: false
+jobs:
+  independent-evidence:
+    if: github.repository == 'onuronkol2-collab/tractorcompare-data' && github.ref == 'refs/heads/main' && (github.event_name == 'workflow_dispatch' || github.event.pull_request.user.login == 'tractorvs-secure-publisher[bot]' && github.event.pull_request.head.repo.full_name == github.repository && startsWith(github.event.pull_request.head.ref, 'ops/publication-candidate/'))
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    permissions:
+      contents: read
+      pull-requests: read
+      statuses: write
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+      - name: Verify trusted revision
+        run: test "$(git rev-parse HEAD)" = "$GITHUB_SHA"
+      - name: Install pinned workspace dependencies for independent sitemap render
+        if: inputs.kind == 'sitemap' || startsWith(github.event.pull_request.head.ref, 'ops/publication-candidate/sitemap/')
+        run: npm ci --no-audit --no-fund
+      - name: Render trusted current main independently
+        if: inputs.kind == 'sitemap' || startsWith(github.event.pull_request.head.ref, 'ops/publication-candidate/sitemap/')
+        working-directory: site
+        env:
+          SITE_URL: https://tractorvs.com
+          PUBLIC_INDEXING_ENABLED: "true"
+          WORKERS_CI_BRANCH: main
+          SUPABASE_URL: https://aaufxtcvnzgavtlintiv.supabase.co
+          SUPABASE_ANON_KEY: ${{ secrets.TRACTORVS_SUPABASE_ANON_JWT }}
+          MIN_PUBLIC_TRACTOR_PAGES: "100"
+        run: npm run build:production
+      - name: Recompute source evidence and record exact-head advisory status
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TRACTORVS_SUPABASE_ANON_JWT: ${{ secrets.TRACTORVS_SUPABASE_ANON_JWT }}
+          PILOT_PR: ${{ github.event.pull_request.number || inputs.pr_number }}
+          PILOT_KIND: ${{ inputs.kind || (startsWith(github.event.pull_request.head.ref, 'ops/publication-candidate/catalog/') && 'catalog' || startsWith(github.event.pull_request.head.ref, 'ops/publication-candidate/forum/') && 'forum' || 'sitemap') }}
+        run: node scripts/tractorvs-integrated-publication-pilot.mjs verify
