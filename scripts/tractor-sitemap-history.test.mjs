@@ -256,7 +256,9 @@ test("sitemap provenance runs before shared HTML inputs merge, not just componen
   const expectedPr=expected.flatMap(p=>p==="!site/src/data/sitemap-lastmod.json"?
     ["seo/sitemap-content-history.json","scripts/tractorvs-publication-candidate.mjs","site/tests/publication-candidate.test.mjs"]:[p]);
   const releaseBarrierInputs=["scripts/tractorvs-production-barrier.mjs","scripts/tractorvs-owner-test-release.mjs","scripts/tractorvs-protected-release-executor.mjs","site/tests/production-release-barrier.test.mjs"];
-  assert.deepEqual(patterns(pr),["scripts/tractorvs-owner-test-release-policy.mjs","site/tests/owner-test-release.test.mjs",...releaseBarrierInputs,...expectedPr],"Every source input, release policy, release barrier and ledger candidate requires the premerge guard");
+  // Photo infrastructure requires the same premerge evidence, but must not start the main ledger writer.
+  const photoResearchInputs=[".github/workflows/batch-photo-research.yml",".github/workflows/photo-research-validation.yml","site/scripts/photo-*.mjs","site/scripts/photo-*.py","site/scripts/batch-photo-discovery.mjs","site/scripts/archive-brand-photo-discovery.mjs","site/scripts/extract-archived-tractor-inventory.py","site/tests/photo-*.test.mjs","site/tests/photo-*.py","site/tests/fixtures/photo-offline-fetch.mjs"];
+  assert.deepEqual(patterns(pr),[...photoResearchInputs,"scripts/tractorvs-owner-test-release-policy.mjs","site/tests/owner-test-release.test.mjs",...releaseBarrierInputs,...expectedPr],"Every source input, release policy, release barrier and ledger candidate requires the premerge guard");
   assert.ok(expected.indexOf("!site/src/data/sitemap-lastmod.json")>expected.indexOf("site/src/**"),"Generated ledger-only updates remain excluded from the main writer trigger");
   assert.ok(!patterns(pr).includes("!site/src/data/sitemap-lastmod.json"));
   assert.ok(workflow.includes("git diff --exit-code HEAD -- seo/sitemap-content-history.json site/src/data/sitemap-lastmod.json"),"A candidate preview must reject repaired submitted bytes");
