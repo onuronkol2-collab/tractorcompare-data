@@ -1,0 +1,30 @@
+name: TractorVS Hattat TAFE Valtra source review (no deploy)
+on:
+  pull_request:
+    branches: [main]
+    paths: ['site/scripts/review-hattat-tafe-valtra-photo-candidates-20261125.mjs', '.github/workflows/photo-hattat-tafe-valtra-review-20261125.yml']
+permissions:
+  contents: read
+concurrency:
+  group: tractorvs-hattat-tafe-valtra-review-20261125
+  cancel-in-progress: false
+jobs:
+  collect:
+    if: github.head_ref == 'photos/hattat-tafe-valtra-research-20261125' && github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    timeout-minutes: 9
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22.23.4"
+      - name: Collect rights metadata and originals with hard cooldown and per-file error isolation
+        run: node site/scripts/review-hattat-tafe-valtra-photo-candidates-20261125.mjs
+      - uses: actions/upload-artifact@v7
+        if: always()
+        with:
+          name: tractorvs-hattat-tafe-valtra-photo-review-20261125
+          path: hattat-tafe-valtra-photo-review-20261125/
+          retention-days: 7
