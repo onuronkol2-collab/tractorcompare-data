@@ -1,0 +1,73 @@
+name: TractorVS two existing photo source repair (review only)
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - '.github/workflows/photo-repair-two-20261124.yml'
+      - 'site/scripts/photo-repair-two-20261124.mjs'
+permissions:
+  contents: read
+jobs:
+  recover:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22.23.4'
+      - name: Verify and download already-approved original photos
+        id: source
+        continue-on-error: true
+        run: node site/scripts/photo-repair-two-20261124.mjs
+      - name: Prepare image processor
+        run: |
+          python -m venv /tmp/tractorvs-photo-venv
+          /tmp/tractorvs-photo-venv/bin/pip install --disable-pip-version-check Pillow==12.0.0
+      - name: Compare existing image and prepare missing sizes without publishing
+        run: |
+          /tmp/tractorvs-photo-venv/bin/python - <<'PY'
+          import pathlib,hashlib,json,base64
+          from PIL import Image,ImageOps,ImageChops,ImageStat
+          root=pathlib.Path('photo-repair-evidence')
+          report=json.loads((root/'report.json').read_text())
+          errors=[]; ready=[]
+          for row in report['entries']:
+              try:
+                  pid=row['id']; raw=(root/row['file']).read_bytes()
+                  assert hashlib.sha256(raw).hexdigest()==row['sha256']
+                  orig=Image.open(root/row['file']);orig.seek(0);orig.load()
+                  assert orig.size==(row['width'],row['height'])
+                  im=ImageOps.exif_transpose(orig).convert('RGB')
+                  old=Image.open('site/public/images/tractors/'+pid+'-480.jpg').convert('RGB')
+                  assert abs(im.width/im.height-old.width/old.height)<0.03
+                  avg=ImageStat.Stat(ImageChops.difference(im.resize(old.size,Image.Resampling.LANCZOS),old)).mean
+                  assert max(avg)<20, str(avg)
+                  proof={'fileId':pid,'sourcePage':row['metadata']['descriptionurl'],'author':'MarcelX42','license':'CC BY-SA 4.0','sourceSha256':row['sha256'],'sourceSha1':row['metadata']['sha1'],'meanRgbDifferenceAgainstExisting480':avg,'derivatives':[]}
+                  for w in [960,1920]:
+                      h=round(im.height*w/im.width);p=root/f'{pid}-{w}.jpg'
+                      im.resize((w,h),Image.Resampling.LANCZOS).save(p,'JPEG',quality=85,optimize=True)
+                      b=p.read_bytes()
+                      with Image.open(p) as check: check.load(); assert check.size==(w,h)
+                      enc=base64.b64encode(b).decode(); chunks=[enc[i:i+12000] for i in range(0,len(enc),12000)]
+                      meta={'file':p.name,'width':w,'height':h,'bytes':len(b),'sha256':hashlib.sha256(b).hexdigest(),'chunks':len(chunks)}
+                      proof['derivatives'].append(meta)
+                      print('PUBLIC_PHOTO_META '+json.dumps(meta))
+                      for i,c in enumerate(chunks):print(f'PUBLIC_PHOTO_CHUNK {p.name} {i} {c}')
+                  ready.append(proof)
+              except Exception as e:errors.append({'fileId':row['id'],'error':str(e)})
+          (root/'repair-proof.json').write_text(json.dumps({'ready':ready,'errors':errors,'publicationCount':0},indent=2))
+          print('PHOTO_REPAIR_SUMMARY '+json.dumps({'ready':len(ready),'errors':errors}))
+          if errors or len(ready)!=2:raise SystemExit(1)
+          PY
+      - uses: actions/upload-artifact@v7
+        if: always()
+        with:
+          name: tractorvs-two-existing-photo-repair-review
+          path: photo-repair-evidence
+          retention-days: 7
+      - name: Preserve source gate
+        if: always()
+        env:
+          SOURCE: ${{ steps.source.outcome }}
+        run: test "$SOURCE" = success
