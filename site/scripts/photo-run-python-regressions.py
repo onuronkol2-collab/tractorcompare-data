@@ -16,6 +16,8 @@ required = {
     'photo-shared-original-budget-test.py',
     'photo-public-artifact-guard-test.py',
     'photo-reviewed-batch-test.py',
+    'photo-private-archive-test.py',
+    'photo-private-archive-policy-test.py',
 }
 paths = sorted(root.glob('photo-*-test.py'))
 missing = required - {p.name for p in paths}
