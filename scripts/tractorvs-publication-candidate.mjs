@@ -56,12 +56,19 @@ export async function reconcileExpiredMachineCandidate({api,number,baseSha,now=D
  const get=()=>api("/pulls/"+number);
  const pr=await get(),kind=machineKind(pr);
  // Never touch fresh candidates, drafts, human-managed PRs or other branches.
- if(!kind||!untouched(pr)||pr.base.sha!==baseSha||pr.number!==number)return false;
+ if(!kind||!untouched(pr)||!shaOk(pr.base.sha)||pr.number!==number)return false;
  const created=Date.parse(pr.created_at),updated=Date.parse(pr.updated_at);
  if(!Number.isFinite(created)||!Number.isFinite(updated)||now-created<25*60000||now-updated<25*60000)return false;
  const head=pr.head.sha,commit=await api("/git/commits/"+head);
  assert(commit.sha===head&&commit.parents?.length===1&&shaOk(commit.parents[0].sha),"Unverified old candidate parent");
  const oldBase=commit.parents[0].sha;
+ // The pull API can retain the recorded base SHA even after main advances.
+ // Only the exact verified parent or the requested current main is acceptable.
+ if(pr.base.sha!==baseSha&&pr.base.sha!==oldBase)return false;
+ if(pr.base.sha!==baseSha){
+  const ancestry=await api("/compare/"+oldBase+"..."+baseSha+"?per_page=1");
+  if(ancestry.status!=="ahead"||ancestry.behind_by!==0||ancestry.merge_base_commit?.sha!==oldBase)return false;
+ }
  const files=await Promise.all(ALLOWED[kind].map(async path=>({path,content:await api("/contents/"+path+"?ref="+head,"GET",undefined,false,true)})));
  const plan=candidatePlan({kind,baseSha:oldBase,files});
  assert(pr.head.ref===plan.branch&&pr.body===candidateBody(plan),"Unverified old candidate identity");
@@ -72,7 +79,7 @@ export async function reconcileExpiredMachineCandidate({api,number,baseSha,now=D
  const hasDiscussion=async()=>{const [reviews,comments]=await Promise.all([api("/pulls/"+number+"/reviews?per_page=100"),api("/issues/"+number+"/comments?per_page=100")]);return !Array.isArray(reviews)||!Array.isArray(comments)||reviews.length!==0||comments.length>=100||comments.some(c=>!isPreviewReceipt(c,head));};
  if(await hasDiscussion())return false;
  const fresh=await get(),ref=await api("/git/ref/heads/"+plan.branch);
- if(!untouched(fresh)||fresh.head.sha!==head||fresh.head.ref!==plan.branch||fresh.body!==pr.body||fresh.updated_at!==pr.updated_at||fresh.base.sha!==baseSha||fresh.title!==pr.title||await hasDiscussion())return false;
+ if(!untouched(fresh)||fresh.head.sha!==head||fresh.head.ref!==plan.branch||fresh.body!==pr.body||fresh.updated_at!==pr.updated_at||fresh.base.sha!==pr.base.sha||fresh.title!==pr.title||await hasDiscussion())return false;
  assert(ref.ref==="refs/heads/"+plan.branch&&ref.object?.type==="commit"&&ref.object.sha===head,"Old candidate ref changed");
  assert((await api("/git/ref/heads/main")).object?.sha===baseSha,"Main changed before reconciliation");
  // Close only, never delete a branch, force-push, merge, change content or reviews.

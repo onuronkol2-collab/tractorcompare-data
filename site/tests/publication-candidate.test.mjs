@@ -73,13 +73,14 @@ test("expired untouched App candidate may only be closed, never merged or delete
  const old=new Date(now-30*60000).toISOString(),recent=new Date(now-60000).toISOString();
  const body="Evidence base: "+baseSha+"\nCandidate digest: "+plan.digest+"\nPR-only staging. Independent release authorization and all applicable checks required.";
  const pr={number:42,state:"open",draft:false,merged:false,user:{login:"tractorvs-secure-publisher[bot]"},title:"Publication candidate: catalog",body,created_at:old,updated_at:old,head:{sha:commit,ref:plan.branch,repo:{full_name:REPO}},base:{ref:"main",sha:current,repo:{full_name:REPO}},requested_reviewers:[],requested_teams:[],labels:[],assignees:[]};
- function mock({override={},comment=false,commentRows=null,review=false,changed=false,wrongBlob=false,moved=false}={}){
+ function mock({override={},comment=false,commentRows=null,review=false,changed=false,wrongBlob=false,moved=false,ancestryMismatch=false,baseChanged=false}={}){
   let reads=0;const writes=[];
   const api=async(path,method="GET",data,missing,raw)=>{
    if(method!=="GET"){writes.push({path,method,data});return {...pr,state:"closed"};}
-   if(path==="/pulls/42")return {...pr,...override,...(changed&&++reads>1?{updated_at:recent}:{})};
+   if(path==="/pulls/42")return {...pr,...override,...(++reads>1?{...(changed?{updated_at:recent}:{}),...(baseChanged?{base:{...pr.base,sha:current}}:{})}:{})};
    if(path==="/git/commits/"+commit)return {sha:commit,parents:[{sha:baseSha}]};
    if(path==="/contents/"+cat.path+"?ref="+commit){assert.equal(raw,true);return cat.content;}
+   if(path==="/compare/"+baseSha+"..."+current+"?per_page=1")return {status:ancestryMismatch?"diverged":"ahead",behind_by:ancestryMismatch?1:0,merge_base_commit:{sha:ancestryMismatch?tree:baseSha}};
    if(path.startsWith("/compare/"))return {status:"ahead",ahead_by:1,behind_by:0,files:[{filename:cat.path,status:"modified",sha:wrongBlob?tree:createHash("sha1").update("blob "+Buffer.byteLength(cat.content)+"\0").update(cat.content).digest("hex")}]};
    if(path==="/pulls/42/reviews?per_page=100")return review?[{}]:[];
    if(path==="/issues/42/comments?per_page=100")return commentRows??(comment?[{}]:[]);
@@ -92,6 +93,11 @@ test("expired untouched App candidate may only be closed, never merged or delete
  const preview=mock({commentRows:[receipt]});assert.equal(await reconcileExpiredMachineCandidate({api:preview.api,number:42,baseSha:current,now}),true);assert.equal(preview.writes.length,1);
  for(const rows of [[receipt,{}],[{...receipt,user:{...receipt.user,id:1}}],[{...receipt,performed_via_github_app:null}],[{...receipt,body:receipt.body.replace(commit.slice(0,7),"0000000")}],[{...receipt,body:receipt.body.replace("https://dash.cloudflare.com/","https://evil.example/?next=https://dash.cloudflare.com/")}],[{...receipt,body:receipt.body.replace("https://dash.cloudflare.com/","https://dash.cloudflare.com.evil.example/")}],[{...receipt,body:receipt.body.replace("https://preview-tractorvs-site.onuronkol2.workers.dev","https://preview-tractorvs-site.onuronkol2.workers.dev.evil.example")}],Array.from({length:100},()=>receipt)]){
   const m=mock({commentRows:rows});assert.equal(await reconcileExpiredMachineCandidate({api:m.api,number:42,baseSha:current,now}),false);assert.equal(m.writes.length,0);
+ }
+ const staleBase={...pr.base,sha:baseSha};
+ const stale=mock({override:{base:staleBase}});assert.equal(await reconcileExpiredMachineCandidate({api:stale.api,number:42,baseSha:current,now}),true);assert.deepEqual(stale.writes,[{path:"/pulls/42",method:"PATCH",data:{state:"closed"}}]);
+ for(const options of [{override:{base:staleBase},ancestryMismatch:true},{override:{base:staleBase},baseChanged:true},{override:{base:{...pr.base,sha:tree}}},{override:{base:staleBase,user:{login:"onuronkol2-collab"}}},{override:{base:staleBase},comment:true},{override:{base:staleBase},review:true}]){
+  const m=mock(options);assert.equal(await reconcileExpiredMachineCandidate({api:m.api,number:42,baseSha:current,now}),false);assert.equal(m.writes.length,0);
  }
  const good=mock();assert.equal(await reconcileExpiredMachineCandidate({api:good.api,number:42,baseSha:current,now}),true);
  assert.deepEqual(good.writes,[{path:"/pulls/42",method:"PATCH",data:{state:"closed"}}]);

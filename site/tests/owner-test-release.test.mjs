@@ -112,3 +112,13 @@ test("operator instructions arm TEST before completion while retaining merge gat
  assert.equal(conditionalSkipEvidence(skip,[{...run,status:"completed",conclusion:"failure"}],head,[good,skip]),"invalid");
  assert.equal(conditionalSkipEvidence(skip,[run],head,[skip]),"invalid");
  });
+
+ test("permanent operator record binds shared conditional proof and exact release recovery",async()=>{
+ const {readFile}=await import("node:fs/promises");
+ const guide=await readFile(new URL("../../AGENTS.md",import.meta.url),"utf8");
+ const doc=await readFile(new URL("../docs/release-readiness-conditional-jobs-20261128.md",import.meta.url),"utf8");
+ assert.match(guide,/site\/docs\/release-readiness-conditional-jobs-20261128\.md/);
+ assert.match(guide,/conditionalSkipEvidence/);
+ assert.match(guide,/Kapalı fakat unmerged PR yayın sayılmaz/);
+ for(const evidence of ["46117725171","46131004893","46131210132","bec88f046230f44e5b504440a16f4337c568e10b"])assert.ok(doc.includes(evidence));
+ });
