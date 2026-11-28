@@ -4,8 +4,26 @@ import {REPO,CONTEXT,REQUIRED,eligible,evaluate,completionCandidate,READINESS_WO
 const sha="a".repeat(40);
 const checks=()=>REQUIRED.map(([name,slug])=>({name,app:{slug},head_sha:sha,status:"completed",conclusion:"success"}));
 const decide=(c=checks(),statuses=[])=>evaluate({sha,checks:c,statuses}).state;
-test("all exact required checks and only documented ledger skip are accepted",()=>{
- assert.equal(decide([...checks(),{name:"build_and_reconcile",app:{slug:"github-actions"},head_sha:sha,status:"completed",conclusion:"skipped"}]),"success");
+test("all exact required checks pass but unproven ledger skips fail",()=>{
+ assert.equal(decide(),"success");
+ assert.equal(decide([...checks(),{name:"build_and_reconcile",app:{slug:"github-actions"},head_sha:sha,status:"completed",conclusion:"skipped"}]),"failure");
+});
+test("PR #793: shared proof recognizes only exact successful production-only skips",()=>{
+ const categories=[["tractorvs-sitemap-history","tests",["build_and_reconcile","protected_candidate"]],["tractorvs-publication-autosync","tests",["sync_public_only","protected_candidate"]],["tractorvs-forum-publication-autosync","validate",["sync","protected_candidate"]],["tractorvs-forum-translation","check",["status"]]];
+ for(const [path,prerequisite,names] of categories){
+  const run={id:123,path:".github/workflows/"+path+".yml",event:"pull_request",head_sha:sha,repository:{full_name:REPO},head_repository:{full_name:REPO},status:"completed",conclusion:"success"};
+  const job=(id,name,conclusion)=>({id,name,app:{id:15368,slug:"github-actions"},head_sha:sha,status:"completed",conclusion,details_url:"https://github.com/"+REPO+"/actions/runs/123/job/"+id});
+  const good=job(1,prerequisite,"success"),skips=names.map((n,i)=>job(i+2,n,"skipped"));
+  const checkList=[...checks(),good,...skips];
+  const evaluateWith=(rows=checkList,runs=[run])=>evaluate({sha,checks:rows,statuses:[],advisoryRuns:runs}).state;
+  assert.equal(evaluateWith(),"success");
+  assert.equal(evaluateWith(checkList,[{...run,status:"in_progress",conclusion:null}]),"pending");
+  for(const bad of [{...run,conclusion:"failure"},{...run,head_sha:"b".repeat(40)},{...run,event:"push"},{...run,path:".github/workflows/other.yml"},{...run,head_repository:{full_name:"other/repo"}}])assert.equal(evaluateWith(checkList,[bad]),"failure");
+  for(const rows of [[...checks(),...skips],[...checkList,good],[...checks(),{...good,conclusion:"failure"},...skips],[...checks(),{...good,details_url:good.details_url.replace("/runs/123/","/runs/124/")},...skips],[...checkList,job(99,"unknown","skipped")],[...checks(),good,...skips.map(c=>({...c,app:{id:1,slug:"github-actions"}}))]])assert.equal(evaluateWith(rows),"failure");
+  assert.equal(evaluateWith(checkList,[]),"failure");
+  assert.equal(evaluateWith([...checkList,job(99,"CodeQL","failure")]),"failure");
+  assert.equal(evaluate({sha,checks:checkList,statuses:[{context:"other",state:"failure"}],advisoryRuns:[run]}).state,"failure");
+ }
 });
 test("missing, pending, failed, skipped, wrong SHA and spoofed apps never pass",()=>{
  assert.equal(decide(checks().slice(1)),"pending");
