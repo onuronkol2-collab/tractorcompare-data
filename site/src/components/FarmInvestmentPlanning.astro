@@ -71,7 +71,8 @@ const taskFields=[["area",m.fieldArea,0.0001,1000000],["passes",c.passes,1,100],
      const data=new FormData(form);
      const read=(name:string,optional=false)=>{const value=data.get(name);return typeof value==="string"&&value.trim()!==""?Number(value):optional?null:NaN;};
      if(form.dataset.planning==="investment"){
-      const input=Object.fromEntries(["price","down","annualRate","termMonths","annualHours","annualHectares","fuelPerHour","fuelPrice","maintenancePerHour","otherPerHour","annualFixed","rentalPerHour"].map(name=>[name,read(name,["annualHectares","rentalPerHour"].includes(name))]));
+      const required=(name:string)=>read(name) ?? NaN;
+      const input={price:required("price"),down:required("down"),annualRate:required("annualRate"),termMonths:required("termMonths"),annualHours:required("annualHours"),annualHectares:read("annualHectares",true),fuelPerHour:required("fuelPerHour"),fuelPrice:required("fuelPrice"),maintenancePerHour:required("maintenancePerHour"),otherPerHour:required("otherPerHour"),annualFixed:required("annualFixed"),rentalPerHour:read("rentalPerHour",true)};
       const out=investmentScenarios({...input,resale:[1,3,5,10].map(y=>read("resale"+y,true))});
       const payment=result.querySelector("[data-payment]");if(payment)payment.textContent=render(out.monthlyPayment);
       for(const row of result.querySelectorAll<HTMLElement>("[data-year]")){
@@ -79,7 +80,7 @@ const taskFields=[["area",m.fieldArea,0.0001,1000000],["passes",c.passes,1,100],
        for(const el of row.querySelectorAll<HTMLElement>("[data-metric]"))el.textContent=render(scenario[el.dataset.metric as "total"|"loanBalance"|"interestPaid"|"perHour"|"perHectare"|"rental"]);
       }
      }else{
-      const tasks=[1,2].map(i=>({...Object.fromEntries(["area","passes","width","speed","efficiency","fuel","price","other"].map(k=>[k,read(i+"-"+k)])),unit:String(data.get(i+"-unit"))}));
+      const tasks=[1,2].map(i=>{const n=(key:string)=>read(i+"-"+key) ?? NaN;return {area:n("area"),passes:n("passes"),width:n("width"),speed:n("speed"),efficiency:n("efficiency"),fuel:n("fuel"),price:n("price"),other:n("other"),unit:String(data.get(i+"-unit"))};});
       const out=planSequentialFieldWork(tasks);
       for(const el of result.querySelectorAll<HTMLElement>("[data-total]"))el.textContent=render(out.totals[el.dataset.total as keyof typeof out.totals]);
      }

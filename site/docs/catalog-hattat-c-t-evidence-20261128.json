@@ -1,0 +1,3222 @@
+{
+  "schema": "tractorvs-research-evidence-v1",
+  "researchedOn": "2026-11-28",
+  "status": "research_only_not_importable",
+  "sourcePolicy": "OEM PDF factual observations; indexed tables readable, original screenshots not accessible. All held for source/identity/canonical review. No date/stock/reliability inference.",
+  "models": [
+    {
+      "brand": "Hattat",
+      "model": "T4075",
+      "variant": "Stage V / 4WD / 12F12R (station identity pending)",
+      "market": "Türkiye",
+      "modelYear": null,
+      "sourceUrl": "https://www.hattattraktor.com.tr/Upload/Sayfa/T4000%20Stage%205-1.pdf",
+      "sourceType": "manufacturer",
+      "existingDraftId": "e46ffc0e-ef95-460f-a75d-dbf31ef0f22b",
+      "disposition": "hold_for_review",
+      "sourceRead": "indexed PDF table; original screenshot unavailable",
+      "specs": [
+        {
+          "name": "emissions_standard",
+          "value": "Stage V",
+          "unit": null,
+          "locator": "T4075 / Stage V / 4WD / 12F12R (station identity pending) / Engine / emissions",
+          "context": null
+        },
+        {
+          "name": "engine_model",
+          "value": "F28TCA",
+          "unit": null,
+          "locator": "T4075 / Stage V / 4WD / 12F12R (station identity pending) / Engine / code",
+          "context": null
+        },
+        {
+          "name": "engine_max_power",
+          "value": "50",
+          "unit": "kW",
+          "locator": "T4075 / Stage V / 4WD / 12F12R (station identity pending) / Engine / maximum power",
+          "context": "ISO 14396; 2300 rpm"
+        },
+        {
+          "name": "engine_max_power_manufacturer_label",
+          "value": "68",
+          "unit": "hp",
+          "locator": "T4075 / Stage V / 4WD / 12F12R (station identity pending) / Engine / maximum power",
+          "context": "ISO 14396; 2300 rpm; OEM paired label"
+        },
+        {
+          "name": "maximum_power_speed",
+          "value": "2300",
+          "unit": "rpm",
+          "locator": "T4075 / Stage V / 4WD / 12F12R (station identity pending) / Engine / maximum power speed",
+          "context": null
+        },
+        {
+          "name": "engine_torque",
+          "value": "323",
+          "unit": "Nm",
+          "locator": "T4075 / Stage V / 4WD / 12F12R (station identity pending) / Engine / maximum torque",
+          "context": "1400 rpm"
+        },
+        {
+          "name": "peak_torque_speed",
+          "value": "1400",
+          "unit": "rpm",
+          "locator": "T4075 / Stage V / 4WD / 12F12R (station identity pending) / Engine / maximum torque speed",
+          "context": null
+        },
+        {
+          "name": "engine_displacement",
+          "value": "2797",
+          "unit": "cm³",
+          "locator": "T4075 / Stage V / 4WD / 12F12R (station identity pending) / Engine / displacement",
+          "context": null
+        },
+        {
+          "name": "engine_cylinders",
+          "value": "4",
+          "unit": "count",
+          "locator": "T4075 / Stage V / 4WD / 12F12R (station identity pending) / Engine / cylinders",
+          "context": null
+        },
+        {
+          "name": "engine_aspiration",
+          "value": "Turbo intercooler",
+          "unit": null,
+          "locator": "T4075 / Stage V / 4WD / 12F12R (station identity pending) / Engine / aspiration",
+          "context": null
+        },
+        {
+          "name": "fuel_tank_capacity",
+          "value": "120",
+          "unit": "L",
+          "locator": "T4075 / Stage V / 4WD / 12F12R (station identity pending) / Engine / fuel tank",
+          "context": null
+        },
+        {
+          "name": "adblue_tank_capacity",
+          "value": "16",
+          "unit": "L",
+          "locator": "T4075 / Stage V / 4WD / 12F12R (station identity pending) / Engine / AdBlue",
+          "context": null
+        },
+        {
+          "name": "forward_gears",
+          "value": "12",
+          "unit": "count",
+          "locator": "T4075 / Stage V / 4WD / 12F12R (station identity pending) / Gearbox / gear count",
+          "context": null
+        },
+        {
+          "name": "reverse_gears",
+          "value": "12",
+          "unit": "count",
+          "locator": "T4075 / Stage V / 4WD / 12F12R (station identity pending) / Gearbox / gear count",
+          "context": null
+        },
+        {
+          "name": "transmission_clutch",
+          "value": "Dry dual disc",
+          "unit": null,
+          "locator": "T4075 / Stage V / 4WD / 12F12R (station identity pending) / Gearbox / clutch",
+          "context": null
+        },
+        {
+          "name": "maximum_travel_speed",
+          "value": "40",
+          "unit": "km/h",
+          "locator": "T4075 / Stage V / 4WD / 12F12R (station identity pending) / Gearbox / maximum speed",
+          "context": null
+        },
+        {
+          "name": "drivetrain",
+          "value": "4WD",
+          "unit": null,
+          "locator": "T4075 / Stage V / 4WD / 12F12R (station identity pending) / Model heading",
+          "context": null
+        },
+        {
+          "name": "rear_pto_speeds",
+          "value": "540/540E",
+          "unit": "rpm",
+          "locator": "T4075 / Stage V / 4WD / 12F12R (station identity pending) / PTO / speeds",
+          "context": null
+        },
+        {
+          "name": "pto_type",
+          "value": "Independent",
+          "unit": null,
+          "locator": "T4075 / Stage V / 4WD / 12F12R (station identity pending) / PTO / type",
+          "context": null
+        },
+        {
+          "name": "differential_lock_control",
+          "value": "Electrohydraulic",
+          "unit": null,
+          "locator": "T4075 / Stage V / 4WD / 12F12R (station identity pending) / Axle / differential lock",
+          "context": null
+        },
+        {
+          "name": "four_wheel_drive_control",
+          "value": "Electrohydraulic",
+          "unit": null,
+          "locator": "T4075 / Stage V / 4WD / 12F12R (station identity pending) / Axle / 4WD",
+          "context": null
+        },
+        {
+          "name": "hydraulic_pump_max_flow",
+          "value": "45",
+          "unit": "L/min",
+          "locator": "T4075 / Stage V / 4WD / 12F12R (station identity pending) / Hydraulics / pump",
+          "context": "Maximum pump flow; not guaranteed implement flow"
+        },
+        {
+          "name": "hydraulic_pressure",
+          "value": "190",
+          "unit": "bar",
+          "locator": "T4075 / Stage V / 4WD / 12F12R (station identity pending) / Hydraulics / pressure",
+          "context": null
+        },
+        {
+          "name": "hydraulic_outlet_count",
+          "value": "6",
+          "unit": "count",
+          "locator": "T4075 / Stage V / 4WD / 12F12R (station identity pending) / Hydraulics / outlets",
+          "context": null
+        },
+        {
+          "name": "hydraulic_valve_count",
+          "value": "3",
+          "unit": "count",
+          "locator": "T4075 / Stage V / 4WD / 12F12R (station identity pending) / Hydraulics / valves",
+          "context": null
+        },
+        {
+          "name": "rear_lift_capacity",
+          "value": "3000",
+          "unit": "kg",
+          "locator": "T4075 / Stage V / 4WD / 12F12R (station identity pending) / Hydraulics / maximum lift",
+          "context": "Measurement point unspecified"
+        },
+        {
+          "name": "hydraulic_lift_control",
+          "value": "Electrohydraulic",
+          "unit": null,
+          "locator": "T4075 / Stage V / 4WD / 12F12R (station identity pending) / Hydraulics / control",
+          "context": null
+        },
+        {
+          "name": "auto_lift",
+          "value": "Standard",
+          "unit": null,
+          "locator": "T4075 / Stage V / 4WD / 12F12R (station identity pending) / Hydraulics / Auto Lift",
+          "context": null
+        },
+        {
+          "name": "unladen_weight",
+          "value": "4130",
+          "unit": "kg",
+          "locator": "T4075 / Stage V / 4WD / 12F12R (station identity pending) / Weights / unladen",
+          "context": null
+        },
+        {
+          "name": "overall_length",
+          "value": "4291",
+          "unit": "mm",
+          "locator": "T4075 / Stage V / 4WD / 12F12R (station identity pending) / Dimensions / length",
+          "context": "Excluding front weights"
+        },
+        {
+          "name": "wheelbase",
+          "value": "2391",
+          "unit": "mm",
+          "locator": "T4075 / Stage V / 4WD / 12F12R (station identity pending) / Dimensions / wheelbase",
+          "context": null
+        },
+        {
+          "name": "overall_width",
+          "value": "2040",
+          "unit": "mm",
+          "locator": "T4075 / Stage V / 4WD / 12F12R (station identity pending) / Dimensions / width",
+          "context": null
+        },
+        {
+          "name": "overall_height",
+          "value": "2821",
+          "unit": "mm",
+          "locator": "T4075 / Stage V / 4WD / 12F12R (station identity pending) / Dimensions / height",
+          "context": null
+        },
+        {
+          "name": "front_track",
+          "value": "1210–1440",
+          "unit": "mm",
+          "locator": "T4075 / Stage V / 4WD / 12F12R (station identity pending) / Dimensions / front track",
+          "context": null
+        },
+        {
+          "name": "rear_track",
+          "value": "1440–1560",
+          "unit": "mm",
+          "locator": "T4075 / Stage V / 4WD / 12F12R (station identity pending) / Dimensions / rear track",
+          "context": null
+        },
+        {
+          "name": "front_pto_speed",
+          "value": "1000",
+          "unit": "rpm",
+          "locator": "T4075 / Stage V / 4WD / 12F12R (station identity pending) / PTO / front PTO",
+          "context": "Availability standard vs option not stated"
+        }
+      ],
+      "notes": [
+        "PDF column explicitly 4WD, but cab not specified in header. Existing draft is a reconciliation lead only. Do not infer optional front PTO availability or claim implement flow. Screenshot unavailable; original visual review required."
+      ]
+    },
+    {
+      "brand": "Hattat",
+      "model": "T4085",
+      "variant": "Stage V / 4WD / 12F12R (station identity pending)",
+      "market": "Türkiye",
+      "modelYear": null,
+      "sourceUrl": "https://www.hattattraktor.com.tr/Upload/Sayfa/T4000%20Stage%205-1.pdf",
+      "sourceType": "manufacturer",
+      "existingDraftId": "4db13914-8f21-46e9-aaed-d6df9e7ea8ff",
+      "disposition": "hold_for_review",
+      "sourceRead": "indexed PDF table; original screenshot unavailable",
+      "specs": [
+        {
+          "name": "emissions_standard",
+          "value": "Stage V",
+          "unit": null,
+          "locator": "T4085 / Stage V / 4WD / 12F12R (station identity pending) / Engine / emissions",
+          "context": null
+        },
+        {
+          "name": "engine_model",
+          "value": "F28TCA",
+          "unit": null,
+          "locator": "T4085 / Stage V / 4WD / 12F12R (station identity pending) / Engine / code",
+          "context": null
+        },
+        {
+          "name": "engine_max_power",
+          "value": "55",
+          "unit": "kW",
+          "locator": "T4085 / Stage V / 4WD / 12F12R (station identity pending) / Engine / maximum power",
+          "context": "ISO 14396; 2300 rpm"
+        },
+        {
+          "name": "engine_max_power_manufacturer_label",
+          "value": "75",
+          "unit": "hp",
+          "locator": "T4085 / Stage V / 4WD / 12F12R (station identity pending) / Engine / maximum power",
+          "context": "ISO 14396; 2300 rpm; OEM paired label"
+        },
+        {
+          "name": "maximum_power_speed",
+          "value": "2300",
+          "unit": "rpm",
+          "locator": "T4085 / Stage V / 4WD / 12F12R (station identity pending) / Engine / maximum power speed",
+          "context": null
+        },
+        {
+          "name": "engine_torque",
+          "value": "375",
+          "unit": "Nm",
+          "locator": "T4085 / Stage V / 4WD / 12F12R (station identity pending) / Engine / maximum torque",
+          "context": "1400 rpm"
+        },
+        {
+          "name": "peak_torque_speed",
+          "value": "1400",
+          "unit": "rpm",
+          "locator": "T4085 / Stage V / 4WD / 12F12R (station identity pending) / Engine / maximum torque speed",
+          "context": null
+        },
+        {
+          "name": "engine_displacement",
+          "value": "2797",
+          "unit": "cm³",
+          "locator": "T4085 / Stage V / 4WD / 12F12R (station identity pending) / Engine / displacement",
+          "context": null
+        },
+        {
+          "name": "engine_cylinders",
+          "value": "4",
+          "unit": "count",
+          "locator": "T4085 / Stage V / 4WD / 12F12R (station identity pending) / Engine / cylinders",
+          "context": null
+        },
+        {
+          "name": "engine_aspiration",
+          "value": "Turbo intercooler",
+          "unit": null,
+          "locator": "T4085 / Stage V / 4WD / 12F12R (station identity pending) / Engine / aspiration",
+          "context": null
+        },
+        {
+          "name": "fuel_tank_capacity",
+          "value": "120",
+          "unit": "L",
+          "locator": "T4085 / Stage V / 4WD / 12F12R (station identity pending) / Engine / fuel tank",
+          "context": null
+        },
+        {
+          "name": "adblue_tank_capacity",
+          "value": "16",
+          "unit": "L",
+          "locator": "T4085 / Stage V / 4WD / 12F12R (station identity pending) / Engine / AdBlue",
+          "context": null
+        },
+        {
+          "name": "forward_gears",
+          "value": "12",
+          "unit": "count",
+          "locator": "T4085 / Stage V / 4WD / 12F12R (station identity pending) / Gearbox / gear count",
+          "context": null
+        },
+        {
+          "name": "reverse_gears",
+          "value": "12",
+          "unit": "count",
+          "locator": "T4085 / Stage V / 4WD / 12F12R (station identity pending) / Gearbox / gear count",
+          "context": null
+        },
+        {
+          "name": "transmission_clutch",
+          "value": "Dry dual disc",
+          "unit": null,
+          "locator": "T4085 / Stage V / 4WD / 12F12R (station identity pending) / Gearbox / clutch",
+          "context": null
+        },
+        {
+          "name": "maximum_travel_speed",
+          "value": "40",
+          "unit": "km/h",
+          "locator": "T4085 / Stage V / 4WD / 12F12R (station identity pending) / Gearbox / maximum speed",
+          "context": null
+        },
+        {
+          "name": "drivetrain",
+          "value": "4WD",
+          "unit": null,
+          "locator": "T4085 / Stage V / 4WD / 12F12R (station identity pending) / Model heading",
+          "context": null
+        },
+        {
+          "name": "rear_pto_speeds",
+          "value": "540/540E",
+          "unit": "rpm",
+          "locator": "T4085 / Stage V / 4WD / 12F12R (station identity pending) / PTO / speeds",
+          "context": null
+        },
+        {
+          "name": "pto_type",
+          "value": "Independent",
+          "unit": null,
+          "locator": "T4085 / Stage V / 4WD / 12F12R (station identity pending) / PTO / type",
+          "context": null
+        },
+        {
+          "name": "differential_lock_control",
+          "value": "Electrohydraulic",
+          "unit": null,
+          "locator": "T4085 / Stage V / 4WD / 12F12R (station identity pending) / Axle / differential lock",
+          "context": null
+        },
+        {
+          "name": "four_wheel_drive_control",
+          "value": "Electrohydraulic",
+          "unit": null,
+          "locator": "T4085 / Stage V / 4WD / 12F12R (station identity pending) / Axle / 4WD",
+          "context": null
+        },
+        {
+          "name": "hydraulic_pump_max_flow",
+          "value": "45",
+          "unit": "L/min",
+          "locator": "T4085 / Stage V / 4WD / 12F12R (station identity pending) / Hydraulics / pump",
+          "context": "Maximum pump flow; not guaranteed implement flow"
+        },
+        {
+          "name": "hydraulic_pressure",
+          "value": "190",
+          "unit": "bar",
+          "locator": "T4085 / Stage V / 4WD / 12F12R (station identity pending) / Hydraulics / pressure",
+          "context": null
+        },
+        {
+          "name": "hydraulic_outlet_count",
+          "value": "6",
+          "unit": "count",
+          "locator": "T4085 / Stage V / 4WD / 12F12R (station identity pending) / Hydraulics / outlets",
+          "context": null
+        },
+        {
+          "name": "hydraulic_valve_count",
+          "value": "3",
+          "unit": "count",
+          "locator": "T4085 / Stage V / 4WD / 12F12R (station identity pending) / Hydraulics / valves",
+          "context": null
+        },
+        {
+          "name": "rear_lift_capacity",
+          "value": "3000",
+          "unit": "kg",
+          "locator": "T4085 / Stage V / 4WD / 12F12R (station identity pending) / Hydraulics / maximum lift",
+          "context": "Measurement point unspecified"
+        },
+        {
+          "name": "hydraulic_lift_control",
+          "value": "Electrohydraulic",
+          "unit": null,
+          "locator": "T4085 / Stage V / 4WD / 12F12R (station identity pending) / Hydraulics / control",
+          "context": null
+        },
+        {
+          "name": "auto_lift",
+          "value": "Standard",
+          "unit": null,
+          "locator": "T4085 / Stage V / 4WD / 12F12R (station identity pending) / Hydraulics / Auto Lift",
+          "context": null
+        },
+        {
+          "name": "unladen_weight",
+          "value": "4130",
+          "unit": "kg",
+          "locator": "T4085 / Stage V / 4WD / 12F12R (station identity pending) / Weights / unladen",
+          "context": null
+        },
+        {
+          "name": "overall_length",
+          "value": "4291",
+          "unit": "mm",
+          "locator": "T4085 / Stage V / 4WD / 12F12R (station identity pending) / Dimensions / length",
+          "context": "Excluding front weights"
+        },
+        {
+          "name": "wheelbase",
+          "value": "2391",
+          "unit": "mm",
+          "locator": "T4085 / Stage V / 4WD / 12F12R (station identity pending) / Dimensions / wheelbase",
+          "context": null
+        },
+        {
+          "name": "overall_width",
+          "value": "2040",
+          "unit": "mm",
+          "locator": "T4085 / Stage V / 4WD / 12F12R (station identity pending) / Dimensions / width",
+          "context": null
+        },
+        {
+          "name": "overall_height",
+          "value": "2821",
+          "unit": "mm",
+          "locator": "T4085 / Stage V / 4WD / 12F12R (station identity pending) / Dimensions / height",
+          "context": null
+        },
+        {
+          "name": "front_track",
+          "value": "1210–1440",
+          "unit": "mm",
+          "locator": "T4085 / Stage V / 4WD / 12F12R (station identity pending) / Dimensions / front track",
+          "context": null
+        },
+        {
+          "name": "rear_track",
+          "value": "1440–1560",
+          "unit": "mm",
+          "locator": "T4085 / Stage V / 4WD / 12F12R (station identity pending) / Dimensions / rear track",
+          "context": null
+        },
+        {
+          "name": "front_pto_speed",
+          "value": "1000",
+          "unit": "rpm",
+          "locator": "T4085 / Stage V / 4WD / 12F12R (station identity pending) / PTO / front PTO",
+          "context": "Availability standard vs option not stated"
+        }
+      ],
+      "notes": [
+        "PDF column explicitly 4WD, but cab not specified in header. Existing draft is a reconciliation lead only. Do not infer optional front PTO availability or claim implement flow. Screenshot unavailable; original visual review required."
+      ]
+    },
+    {
+      "brand": "Hattat",
+      "model": "T4095",
+      "variant": "Stage V / 4WD / 24F24R (station identity pending)",
+      "market": "Türkiye",
+      "modelYear": null,
+      "sourceUrl": "https://www.hattattraktor.com.tr/Upload/Sayfa/T4000%20Stage%205-1.pdf",
+      "sourceType": "manufacturer",
+      "existingDraftId": "42a91e8e-558f-4464-81ce-97f3d98c2bd2",
+      "disposition": "hold_for_review",
+      "sourceRead": "indexed PDF table; original screenshot unavailable",
+      "specs": [
+        {
+          "name": "emissions_standard",
+          "value": "Stage V",
+          "unit": null,
+          "locator": "T4095 / Stage V / 4WD / 24F24R (station identity pending) / Engine / emissions",
+          "context": null
+        },
+        {
+          "name": "engine_model",
+          "value": "F28TCA",
+          "unit": null,
+          "locator": "T4095 / Stage V / 4WD / 24F24R (station identity pending) / Engine / code",
+          "context": null
+        },
+        {
+          "name": "engine_max_power",
+          "value": "67",
+          "unit": "kW",
+          "locator": "T4095 / Stage V / 4WD / 24F24R (station identity pending) / Engine / maximum power",
+          "context": "ISO 14396; 2300 rpm"
+        },
+        {
+          "name": "engine_max_power_manufacturer_label",
+          "value": "91",
+          "unit": "hp",
+          "locator": "T4095 / Stage V / 4WD / 24F24R (station identity pending) / Engine / maximum power",
+          "context": "ISO 14396; 2300 rpm; OEM paired label"
+        },
+        {
+          "name": "maximum_power_speed",
+          "value": "2300",
+          "unit": "rpm",
+          "locator": "T4095 / Stage V / 4WD / 24F24R (station identity pending) / Engine / maximum power speed",
+          "context": null
+        },
+        {
+          "name": "engine_torque",
+          "value": "382",
+          "unit": "Nm",
+          "locator": "T4095 / Stage V / 4WD / 24F24R (station identity pending) / Engine / maximum torque",
+          "context": "1500 rpm"
+        },
+        {
+          "name": "peak_torque_speed",
+          "value": "1500",
+          "unit": "rpm",
+          "locator": "T4095 / Stage V / 4WD / 24F24R (station identity pending) / Engine / maximum torque speed",
+          "context": null
+        },
+        {
+          "name": "engine_displacement",
+          "value": "2797",
+          "unit": "cm³",
+          "locator": "T4095 / Stage V / 4WD / 24F24R (station identity pending) / Engine / displacement",
+          "context": null
+        },
+        {
+          "name": "engine_cylinders",
+          "value": "4",
+          "unit": "count",
+          "locator": "T4095 / Stage V / 4WD / 24F24R (station identity pending) / Engine / cylinders",
+          "context": null
+        },
+        {
+          "name": "engine_aspiration",
+          "value": "Turbo intercooler",
+          "unit": null,
+          "locator": "T4095 / Stage V / 4WD / 24F24R (station identity pending) / Engine / aspiration",
+          "context": null
+        },
+        {
+          "name": "fuel_tank_capacity",
+          "value": "120",
+          "unit": "L",
+          "locator": "T4095 / Stage V / 4WD / 24F24R (station identity pending) / Engine / fuel tank",
+          "context": null
+        },
+        {
+          "name": "adblue_tank_capacity",
+          "value": "16",
+          "unit": "L",
+          "locator": "T4095 / Stage V / 4WD / 24F24R (station identity pending) / Engine / AdBlue",
+          "context": null
+        },
+        {
+          "name": "forward_gears",
+          "value": "24",
+          "unit": "count",
+          "locator": "T4095 / Stage V / 4WD / 24F24R (station identity pending) / Gearbox / gear count",
+          "context": null
+        },
+        {
+          "name": "reverse_gears",
+          "value": "24",
+          "unit": "count",
+          "locator": "T4095 / Stage V / 4WD / 24F24R (station identity pending) / Gearbox / gear count",
+          "context": null
+        },
+        {
+          "name": "transmission_clutch",
+          "value": "Dry dual disc",
+          "unit": null,
+          "locator": "T4095 / Stage V / 4WD / 24F24R (station identity pending) / Gearbox / clutch",
+          "context": null
+        },
+        {
+          "name": "maximum_travel_speed",
+          "value": "40",
+          "unit": "km/h",
+          "locator": "T4095 / Stage V / 4WD / 24F24R (station identity pending) / Gearbox / maximum speed",
+          "context": null
+        },
+        {
+          "name": "drivetrain",
+          "value": "4WD",
+          "unit": null,
+          "locator": "T4095 / Stage V / 4WD / 24F24R (station identity pending) / Model heading",
+          "context": null
+        },
+        {
+          "name": "rear_pto_speeds",
+          "value": "540/540E",
+          "unit": "rpm",
+          "locator": "T4095 / Stage V / 4WD / 24F24R (station identity pending) / PTO / speeds",
+          "context": null
+        },
+        {
+          "name": "pto_type",
+          "value": "Independent",
+          "unit": null,
+          "locator": "T4095 / Stage V / 4WD / 24F24R (station identity pending) / PTO / type",
+          "context": null
+        },
+        {
+          "name": "differential_lock_control",
+          "value": "Electrohydraulic",
+          "unit": null,
+          "locator": "T4095 / Stage V / 4WD / 24F24R (station identity pending) / Axle / differential lock",
+          "context": null
+        },
+        {
+          "name": "four_wheel_drive_control",
+          "value": "Electrohydraulic",
+          "unit": null,
+          "locator": "T4095 / Stage V / 4WD / 24F24R (station identity pending) / Axle / 4WD",
+          "context": null
+        },
+        {
+          "name": "hydraulic_pump_max_flow",
+          "value": "65",
+          "unit": "L/min",
+          "locator": "T4095 / Stage V / 4WD / 24F24R (station identity pending) / Hydraulics / pump",
+          "context": "Maximum pump flow; not guaranteed implement flow"
+        },
+        {
+          "name": "hydraulic_pressure",
+          "value": "190",
+          "unit": "bar",
+          "locator": "T4095 / Stage V / 4WD / 24F24R (station identity pending) / Hydraulics / pressure",
+          "context": null
+        },
+        {
+          "name": "hydraulic_outlet_count",
+          "value": "8",
+          "unit": "count",
+          "locator": "T4095 / Stage V / 4WD / 24F24R (station identity pending) / Hydraulics / outlets",
+          "context": null
+        },
+        {
+          "name": "hydraulic_valve_count",
+          "value": "4",
+          "unit": "count",
+          "locator": "T4095 / Stage V / 4WD / 24F24R (station identity pending) / Hydraulics / valves",
+          "context": null
+        },
+        {
+          "name": "rear_lift_capacity",
+          "value": "4500",
+          "unit": "kg",
+          "locator": "T4095 / Stage V / 4WD / 24F24R (station identity pending) / Hydraulics / maximum lift",
+          "context": "Measurement point unspecified"
+        },
+        {
+          "name": "hydraulic_lift_control",
+          "value": "Electrohydraulic",
+          "unit": null,
+          "locator": "T4095 / Stage V / 4WD / 24F24R (station identity pending) / Hydraulics / control",
+          "context": null
+        },
+        {
+          "name": "auto_lift",
+          "value": "Standard",
+          "unit": null,
+          "locator": "T4095 / Stage V / 4WD / 24F24R (station identity pending) / Hydraulics / Auto Lift",
+          "context": null
+        },
+        {
+          "name": "unladen_weight",
+          "value": "4250",
+          "unit": "kg",
+          "locator": "T4095 / Stage V / 4WD / 24F24R (station identity pending) / Weights / unladen",
+          "context": null
+        },
+        {
+          "name": "overall_length",
+          "value": "4291",
+          "unit": "mm",
+          "locator": "T4095 / Stage V / 4WD / 24F24R (station identity pending) / Dimensions / length",
+          "context": "Excluding front weights"
+        },
+        {
+          "name": "wheelbase",
+          "value": "2391",
+          "unit": "mm",
+          "locator": "T4095 / Stage V / 4WD / 24F24R (station identity pending) / Dimensions / wheelbase",
+          "context": null
+        },
+        {
+          "name": "overall_width",
+          "value": "2040",
+          "unit": "mm",
+          "locator": "T4095 / Stage V / 4WD / 24F24R (station identity pending) / Dimensions / width",
+          "context": null
+        },
+        {
+          "name": "overall_height",
+          "value": "2821",
+          "unit": "mm",
+          "locator": "T4095 / Stage V / 4WD / 24F24R (station identity pending) / Dimensions / height",
+          "context": null
+        },
+        {
+          "name": "front_track",
+          "value": "1210–1440",
+          "unit": "mm",
+          "locator": "T4095 / Stage V / 4WD / 24F24R (station identity pending) / Dimensions / front track",
+          "context": null
+        },
+        {
+          "name": "rear_track",
+          "value": "1440–1560",
+          "unit": "mm",
+          "locator": "T4095 / Stage V / 4WD / 24F24R (station identity pending) / Dimensions / rear track",
+          "context": null
+        },
+        {
+          "name": "front_pto_speed",
+          "value": "1000",
+          "unit": "rpm",
+          "locator": "T4095 / Stage V / 4WD / 24F24R (station identity pending) / PTO / front PTO",
+          "context": "Availability standard vs option not stated"
+        }
+      ],
+      "notes": [
+        "PDF column explicitly 4WD, but cab not specified in header. Existing draft is a reconciliation lead only. Do not infer optional front PTO availability or claim implement flow. Screenshot unavailable; original visual review required."
+      ]
+    },
+    {
+      "brand": "Hattat",
+      "model": "T4105",
+      "variant": "Stage V / 4WD / 24F24R (station identity pending)",
+      "market": "Türkiye",
+      "modelYear": null,
+      "sourceUrl": "https://www.hattattraktor.com.tr/Upload/Sayfa/T4000%20Stage%205-1.pdf",
+      "sourceType": "manufacturer",
+      "existingDraftId": "211b1462-4d6d-4b07-bb94-1384083ab29b",
+      "disposition": "hold_for_review",
+      "sourceRead": "indexed PDF table; original screenshot unavailable",
+      "specs": [
+        {
+          "name": "emissions_standard",
+          "value": "Stage V",
+          "unit": null,
+          "locator": "T4105 / Stage V / 4WD / 24F24R (station identity pending) / Engine / emissions",
+          "context": null
+        },
+        {
+          "name": "engine_model",
+          "value": "F28TCA",
+          "unit": null,
+          "locator": "T4105 / Stage V / 4WD / 24F24R (station identity pending) / Engine / code",
+          "context": null
+        },
+        {
+          "name": "engine_max_power",
+          "value": "75",
+          "unit": "kW",
+          "locator": "T4105 / Stage V / 4WD / 24F24R (station identity pending) / Engine / maximum power",
+          "context": "ISO 14396; 2300 rpm"
+        },
+        {
+          "name": "engine_max_power_manufacturer_label",
+          "value": "102",
+          "unit": "hp",
+          "locator": "T4105 / Stage V / 4WD / 24F24R (station identity pending) / Engine / maximum power",
+          "context": "ISO 14396; 2300 rpm; OEM paired label"
+        },
+        {
+          "name": "maximum_power_speed",
+          "value": "2300",
+          "unit": "rpm",
+          "locator": "T4105 / Stage V / 4WD / 24F24R (station identity pending) / Engine / maximum power speed",
+          "context": null
+        },
+        {
+          "name": "engine_torque",
+          "value": "415",
+          "unit": "Nm",
+          "locator": "T4105 / Stage V / 4WD / 24F24R (station identity pending) / Engine / maximum torque",
+          "context": "1500 rpm"
+        },
+        {
+          "name": "peak_torque_speed",
+          "value": "1500",
+          "unit": "rpm",
+          "locator": "T4105 / Stage V / 4WD / 24F24R (station identity pending) / Engine / maximum torque speed",
+          "context": null
+        },
+        {
+          "name": "engine_displacement",
+          "value": "2797",
+          "unit": "cm³",
+          "locator": "T4105 / Stage V / 4WD / 24F24R (station identity pending) / Engine / displacement",
+          "context": null
+        },
+        {
+          "name": "engine_cylinders",
+          "value": "4",
+          "unit": "count",
+          "locator": "T4105 / Stage V / 4WD / 24F24R (station identity pending) / Engine / cylinders",
+          "context": null
+        },
+        {
+          "name": "engine_aspiration",
+          "value": "Turbo intercooler",
+          "unit": null,
+          "locator": "T4105 / Stage V / 4WD / 24F24R (station identity pending) / Engine / aspiration",
+          "context": null
+        },
+        {
+          "name": "fuel_tank_capacity",
+          "value": "120",
+          "unit": "L",
+          "locator": "T4105 / Stage V / 4WD / 24F24R (station identity pending) / Engine / fuel tank",
+          "context": null
+        },
+        {
+          "name": "adblue_tank_capacity",
+          "value": "16",
+          "unit": "L",
+          "locator": "T4105 / Stage V / 4WD / 24F24R (station identity pending) / Engine / AdBlue",
+          "context": null
+        },
+        {
+          "name": "forward_gears",
+          "value": "24",
+          "unit": "count",
+          "locator": "T4105 / Stage V / 4WD / 24F24R (station identity pending) / Gearbox / gear count",
+          "context": null
+        },
+        {
+          "name": "reverse_gears",
+          "value": "24",
+          "unit": "count",
+          "locator": "T4105 / Stage V / 4WD / 24F24R (station identity pending) / Gearbox / gear count",
+          "context": null
+        },
+        {
+          "name": "transmission_clutch",
+          "value": "Dry dual disc",
+          "unit": null,
+          "locator": "T4105 / Stage V / 4WD / 24F24R (station identity pending) / Gearbox / clutch",
+          "context": null
+        },
+        {
+          "name": "maximum_travel_speed",
+          "value": "40",
+          "unit": "km/h",
+          "locator": "T4105 / Stage V / 4WD / 24F24R (station identity pending) / Gearbox / maximum speed",
+          "context": null
+        },
+        {
+          "name": "drivetrain",
+          "value": "4WD",
+          "unit": null,
+          "locator": "T4105 / Stage V / 4WD / 24F24R (station identity pending) / Model heading",
+          "context": null
+        },
+        {
+          "name": "rear_pto_speeds",
+          "value": "540/540E",
+          "unit": "rpm",
+          "locator": "T4105 / Stage V / 4WD / 24F24R (station identity pending) / PTO / speeds",
+          "context": null
+        },
+        {
+          "name": "pto_type",
+          "value": "Independent",
+          "unit": null,
+          "locator": "T4105 / Stage V / 4WD / 24F24R (station identity pending) / PTO / type",
+          "context": null
+        },
+        {
+          "name": "differential_lock_control",
+          "value": "Electrohydraulic",
+          "unit": null,
+          "locator": "T4105 / Stage V / 4WD / 24F24R (station identity pending) / Axle / differential lock",
+          "context": null
+        },
+        {
+          "name": "four_wheel_drive_control",
+          "value": "Electrohydraulic",
+          "unit": null,
+          "locator": "T4105 / Stage V / 4WD / 24F24R (station identity pending) / Axle / 4WD",
+          "context": null
+        },
+        {
+          "name": "hydraulic_pump_max_flow",
+          "value": "65",
+          "unit": "L/min",
+          "locator": "T4105 / Stage V / 4WD / 24F24R (station identity pending) / Hydraulics / pump",
+          "context": "Maximum pump flow; not guaranteed implement flow"
+        },
+        {
+          "name": "hydraulic_pressure",
+          "value": "190",
+          "unit": "bar",
+          "locator": "T4105 / Stage V / 4WD / 24F24R (station identity pending) / Hydraulics / pressure",
+          "context": null
+        },
+        {
+          "name": "hydraulic_outlet_count",
+          "value": "8",
+          "unit": "count",
+          "locator": "T4105 / Stage V / 4WD / 24F24R (station identity pending) / Hydraulics / outlets",
+          "context": null
+        },
+        {
+          "name": "hydraulic_valve_count",
+          "value": "4",
+          "unit": "count",
+          "locator": "T4105 / Stage V / 4WD / 24F24R (station identity pending) / Hydraulics / valves",
+          "context": null
+        },
+        {
+          "name": "rear_lift_capacity",
+          "value": "4500",
+          "unit": "kg",
+          "locator": "T4105 / Stage V / 4WD / 24F24R (station identity pending) / Hydraulics / maximum lift",
+          "context": "Measurement point unspecified"
+        },
+        {
+          "name": "hydraulic_lift_control",
+          "value": "Electrohydraulic",
+          "unit": null,
+          "locator": "T4105 / Stage V / 4WD / 24F24R (station identity pending) / Hydraulics / control",
+          "context": null
+        },
+        {
+          "name": "auto_lift",
+          "value": "Standard",
+          "unit": null,
+          "locator": "T4105 / Stage V / 4WD / 24F24R (station identity pending) / Hydraulics / Auto Lift",
+          "context": null
+        },
+        {
+          "name": "unladen_weight",
+          "value": "4250",
+          "unit": "kg",
+          "locator": "T4105 / Stage V / 4WD / 24F24R (station identity pending) / Weights / unladen",
+          "context": null
+        },
+        {
+          "name": "overall_length",
+          "value": "4291",
+          "unit": "mm",
+          "locator": "T4105 / Stage V / 4WD / 24F24R (station identity pending) / Dimensions / length",
+          "context": "Excluding front weights"
+        },
+        {
+          "name": "wheelbase",
+          "value": "2391",
+          "unit": "mm",
+          "locator": "T4105 / Stage V / 4WD / 24F24R (station identity pending) / Dimensions / wheelbase",
+          "context": null
+        },
+        {
+          "name": "overall_width",
+          "value": "2040",
+          "unit": "mm",
+          "locator": "T4105 / Stage V / 4WD / 24F24R (station identity pending) / Dimensions / width",
+          "context": null
+        },
+        {
+          "name": "overall_height",
+          "value": "2821",
+          "unit": "mm",
+          "locator": "T4105 / Stage V / 4WD / 24F24R (station identity pending) / Dimensions / height",
+          "context": null
+        },
+        {
+          "name": "front_track",
+          "value": "1210–1440",
+          "unit": "mm",
+          "locator": "T4105 / Stage V / 4WD / 24F24R (station identity pending) / Dimensions / front track",
+          "context": null
+        },
+        {
+          "name": "rear_track",
+          "value": "1440–1560",
+          "unit": "mm",
+          "locator": "T4105 / Stage V / 4WD / 24F24R (station identity pending) / Dimensions / rear track",
+          "context": null
+        },
+        {
+          "name": "front_pto_speed",
+          "value": "1000",
+          "unit": "rpm",
+          "locator": "T4105 / Stage V / 4WD / 24F24R (station identity pending) / PTO / front PTO",
+          "context": "Availability standard vs option not stated"
+        }
+      ],
+      "notes": [
+        "PDF column explicitly 4WD, but cab not specified in header. Existing draft is a reconciliation lead only. Do not infer optional front PTO availability or claim implement flow. Screenshot unavailable; original visual review required."
+      ]
+    },
+    {
+      "brand": "Hattat",
+      "model": "T4115",
+      "variant": "Stage V / 4WD / 24F24R semi-automatic (station identity pending)",
+      "market": "Türkiye",
+      "modelYear": null,
+      "sourceUrl": "https://www.hattattraktor.com.tr/Upload/Sayfa/T4000%20Stage%205-1.pdf",
+      "sourceType": "manufacturer",
+      "existingDraftId": "bb209c0d-3550-4d29-b6e4-16d3322e950d",
+      "disposition": "hold_for_review",
+      "sourceRead": "indexed PDF table; original screenshot unavailable",
+      "specs": [
+        {
+          "name": "emissions_standard",
+          "value": "Stage V",
+          "unit": null,
+          "locator": "T4115 / Stage V / 4WD / 24F24R semi-automatic (station identity pending) / Engine / emissions",
+          "context": null
+        },
+        {
+          "name": "engine_model",
+          "value": "F36",
+          "unit": null,
+          "locator": "T4115 / Stage V / 4WD / 24F24R semi-automatic (station identity pending) / Engine / code",
+          "context": null
+        },
+        {
+          "name": "engine_max_power",
+          "value": "83",
+          "unit": "kW",
+          "locator": "T4115 / Stage V / 4WD / 24F24R semi-automatic (station identity pending) / Engine / maximum power",
+          "context": "ISO 14396; 2200 rpm"
+        },
+        {
+          "name": "engine_max_power_manufacturer_label",
+          "value": "113",
+          "unit": "hp",
+          "locator": "T4115 / Stage V / 4WD / 24F24R semi-automatic (station identity pending) / Engine / maximum power",
+          "context": "ISO 14396; 2200 rpm; OEM paired label"
+        },
+        {
+          "name": "maximum_power_speed",
+          "value": "2200",
+          "unit": "rpm",
+          "locator": "T4115 / Stage V / 4WD / 24F24R semi-automatic (station identity pending) / Engine / maximum power speed",
+          "context": null
+        },
+        {
+          "name": "engine_torque",
+          "value": "460",
+          "unit": "Nm",
+          "locator": "T4115 / Stage V / 4WD / 24F24R semi-automatic (station identity pending) / Engine / maximum torque",
+          "context": "1400 rpm"
+        },
+        {
+          "name": "peak_torque_speed",
+          "value": "1400",
+          "unit": "rpm",
+          "locator": "T4115 / Stage V / 4WD / 24F24R semi-automatic (station identity pending) / Engine / maximum torque speed",
+          "context": null
+        },
+        {
+          "name": "engine_displacement",
+          "value": "3595",
+          "unit": "cm³",
+          "locator": "T4115 / Stage V / 4WD / 24F24R semi-automatic (station identity pending) / Engine / displacement",
+          "context": null
+        },
+        {
+          "name": "engine_cylinders",
+          "value": "4",
+          "unit": "count",
+          "locator": "T4115 / Stage V / 4WD / 24F24R semi-automatic (station identity pending) / Engine / cylinders",
+          "context": null
+        },
+        {
+          "name": "engine_aspiration",
+          "value": "Turbo intercooler",
+          "unit": null,
+          "locator": "T4115 / Stage V / 4WD / 24F24R semi-automatic (station identity pending) / Engine / aspiration",
+          "context": null
+        },
+        {
+          "name": "fuel_tank_capacity",
+          "value": "130",
+          "unit": "L",
+          "locator": "T4115 / Stage V / 4WD / 24F24R semi-automatic (station identity pending) / Engine / fuel tank",
+          "context": null
+        },
+        {
+          "name": "adblue_tank_capacity",
+          "value": "16",
+          "unit": "L",
+          "locator": "T4115 / Stage V / 4WD / 24F24R semi-automatic (station identity pending) / Engine / AdBlue",
+          "context": null
+        },
+        {
+          "name": "forward_gears",
+          "value": "24",
+          "unit": "count",
+          "locator": "T4115 / Stage V / 4WD / 24F24R semi-automatic (station identity pending) / Gearbox / gear count",
+          "context": null
+        },
+        {
+          "name": "reverse_gears",
+          "value": "24",
+          "unit": "count",
+          "locator": "T4115 / Stage V / 4WD / 24F24R semi-automatic (station identity pending) / Gearbox / gear count",
+          "context": null
+        },
+        {
+          "name": "transmission_clutch",
+          "value": "Electrohydraulic wet",
+          "unit": null,
+          "locator": "T4115 / Stage V / 4WD / 24F24R semi-automatic (station identity pending) / Gearbox / clutch",
+          "context": null
+        },
+        {
+          "name": "maximum_travel_speed",
+          "value": "40",
+          "unit": "km/h",
+          "locator": "T4115 / Stage V / 4WD / 24F24R semi-automatic (station identity pending) / Gearbox / maximum speed",
+          "context": null
+        },
+        {
+          "name": "drivetrain",
+          "value": "4WD",
+          "unit": null,
+          "locator": "T4115 / Stage V / 4WD / 24F24R semi-automatic (station identity pending) / Model heading",
+          "context": null
+        },
+        {
+          "name": "rear_pto_speeds",
+          "value": "540/540E",
+          "unit": "rpm",
+          "locator": "T4115 / Stage V / 4WD / 24F24R semi-automatic (station identity pending) / PTO / speeds",
+          "context": null
+        },
+        {
+          "name": "pto_type",
+          "value": "Independent",
+          "unit": null,
+          "locator": "T4115 / Stage V / 4WD / 24F24R semi-automatic (station identity pending) / PTO / type",
+          "context": null
+        },
+        {
+          "name": "differential_lock_control",
+          "value": "Electrohydraulic",
+          "unit": null,
+          "locator": "T4115 / Stage V / 4WD / 24F24R semi-automatic (station identity pending) / Axle / differential lock",
+          "context": null
+        },
+        {
+          "name": "four_wheel_drive_control",
+          "value": "Electrohydraulic",
+          "unit": null,
+          "locator": "T4115 / Stage V / 4WD / 24F24R semi-automatic (station identity pending) / Axle / 4WD",
+          "context": null
+        },
+        {
+          "name": "hydraulic_pump_max_flow",
+          "value": "80",
+          "unit": "L/min",
+          "locator": "T4115 / Stage V / 4WD / 24F24R semi-automatic (station identity pending) / Hydraulics / pump",
+          "context": "Maximum pump flow; not guaranteed implement flow"
+        },
+        {
+          "name": "hydraulic_pressure",
+          "value": "190",
+          "unit": "bar",
+          "locator": "T4115 / Stage V / 4WD / 24F24R semi-automatic (station identity pending) / Hydraulics / pressure",
+          "context": null
+        },
+        {
+          "name": "hydraulic_outlet_count",
+          "value": "8",
+          "unit": "count",
+          "locator": "T4115 / Stage V / 4WD / 24F24R semi-automatic (station identity pending) / Hydraulics / outlets",
+          "context": null
+        },
+        {
+          "name": "hydraulic_valve_count",
+          "value": "4",
+          "unit": "count",
+          "locator": "T4115 / Stage V / 4WD / 24F24R semi-automatic (station identity pending) / Hydraulics / valves",
+          "context": null
+        },
+        {
+          "name": "rear_lift_capacity",
+          "value": "5500",
+          "unit": "kg",
+          "locator": "T4115 / Stage V / 4WD / 24F24R semi-automatic (station identity pending) / Hydraulics / maximum lift",
+          "context": "Measurement point unspecified"
+        },
+        {
+          "name": "hydraulic_lift_control",
+          "value": "Electrohydraulic",
+          "unit": null,
+          "locator": "T4115 / Stage V / 4WD / 24F24R semi-automatic (station identity pending) / Hydraulics / control",
+          "context": null
+        },
+        {
+          "name": "auto_lift",
+          "value": "Standard",
+          "unit": null,
+          "locator": "T4115 / Stage V / 4WD / 24F24R semi-automatic (station identity pending) / Hydraulics / Auto Lift",
+          "context": null
+        },
+        {
+          "name": "unladen_weight",
+          "value": "4800",
+          "unit": "kg",
+          "locator": "T4115 / Stage V / 4WD / 24F24R semi-automatic (station identity pending) / Weights / unladen",
+          "context": null
+        },
+        {
+          "name": "overall_length",
+          "value": "4531",
+          "unit": "mm",
+          "locator": "T4115 / Stage V / 4WD / 24F24R semi-automatic (station identity pending) / Dimensions / length",
+          "context": "Excluding front weights"
+        },
+        {
+          "name": "wheelbase",
+          "value": "2507",
+          "unit": "mm",
+          "locator": "T4115 / Stage V / 4WD / 24F24R semi-automatic (station identity pending) / Dimensions / wheelbase",
+          "context": null
+        },
+        {
+          "name": "overall_width",
+          "value": "2040",
+          "unit": "mm",
+          "locator": "T4115 / Stage V / 4WD / 24F24R semi-automatic (station identity pending) / Dimensions / width",
+          "context": null
+        },
+        {
+          "name": "overall_height",
+          "value": "2917",
+          "unit": "mm",
+          "locator": "T4115 / Stage V / 4WD / 24F24R semi-automatic (station identity pending) / Dimensions / height",
+          "context": null
+        },
+        {
+          "name": "front_track",
+          "value": "1210–1440",
+          "unit": "mm",
+          "locator": "T4115 / Stage V / 4WD / 24F24R semi-automatic (station identity pending) / Dimensions / front track",
+          "context": null
+        },
+        {
+          "name": "rear_track",
+          "value": "1440–1560",
+          "unit": "mm",
+          "locator": "T4115 / Stage V / 4WD / 24F24R semi-automatic (station identity pending) / Dimensions / rear track",
+          "context": null
+        },
+        {
+          "name": "front_pto_speed",
+          "value": "1000",
+          "unit": "rpm",
+          "locator": "T4115 / Stage V / 4WD / 24F24R semi-automatic (station identity pending) / PTO / front PTO",
+          "context": "Availability standard vs option not stated"
+        },
+        {
+          "name": "power_shuttle",
+          "value": "Standard electronic",
+          "unit": null,
+          "locator": "T4115 / Stage V / 4WD / 24F24R semi-automatic (station identity pending) / Gearbox / Power Shuttle",
+          "context": null
+        },
+        {
+          "name": "power_shift",
+          "value": "Standard two-stage",
+          "unit": null,
+          "locator": "T4115 / Stage V / 4WD / 24F24R semi-automatic (station identity pending) / Gearbox / Power Shift",
+          "context": null
+        }
+      ],
+      "notes": [
+        "PDF column explicitly 4WD, but cab not specified in header. Existing draft is a reconciliation lead only. Do not infer optional front PTO availability or claim implement flow. Screenshot unavailable; original visual review required."
+      ]
+    },
+    {
+      "brand": "Hattat",
+      "model": "T4125",
+      "variant": "Stage V / 4WD / 24F24R semi-automatic (station identity pending)",
+      "market": "Türkiye",
+      "modelYear": null,
+      "sourceUrl": "https://www.hattattraktor.com.tr/Upload/Sayfa/T4000%20Stage%205-1.pdf",
+      "sourceType": "manufacturer",
+      "existingDraftId": "26e12514-ff8a-4919-8a42-a6c405d048aa",
+      "disposition": "hold_for_review",
+      "sourceRead": "indexed PDF table; original screenshot unavailable",
+      "specs": [
+        {
+          "name": "emissions_standard",
+          "value": "Stage V",
+          "unit": null,
+          "locator": "T4125 / Stage V / 4WD / 24F24R semi-automatic (station identity pending) / Engine / emissions",
+          "context": null
+        },
+        {
+          "name": "engine_model",
+          "value": "F36",
+          "unit": null,
+          "locator": "T4125 / Stage V / 4WD / 24F24R semi-automatic (station identity pending) / Engine / code",
+          "context": null
+        },
+        {
+          "name": "engine_max_power",
+          "value": "90",
+          "unit": "kW",
+          "locator": "T4125 / Stage V / 4WD / 24F24R semi-automatic (station identity pending) / Engine / maximum power",
+          "context": "ISO 14396; 2300 rpm"
+        },
+        {
+          "name": "engine_max_power_manufacturer_label",
+          "value": "122",
+          "unit": "hp",
+          "locator": "T4125 / Stage V / 4WD / 24F24R semi-automatic (station identity pending) / Engine / maximum power",
+          "context": "ISO 14396; 2300 rpm; OEM paired label"
+        },
+        {
+          "name": "maximum_power_speed",
+          "value": "2300",
+          "unit": "rpm",
+          "locator": "T4125 / Stage V / 4WD / 24F24R semi-automatic (station identity pending) / Engine / maximum power speed",
+          "context": null
+        },
+        {
+          "name": "engine_torque",
+          "value": "490",
+          "unit": "Nm",
+          "locator": "T4125 / Stage V / 4WD / 24F24R semi-automatic (station identity pending) / Engine / maximum torque",
+          "context": "1400 rpm"
+        },
+        {
+          "name": "peak_torque_speed",
+          "value": "1400",
+          "unit": "rpm",
+          "locator": "T4125 / Stage V / 4WD / 24F24R semi-automatic (station identity pending) / Engine / maximum torque speed",
+          "context": null
+        },
+        {
+          "name": "engine_displacement",
+          "value": "3595",
+          "unit": "cm³",
+          "locator": "T4125 / Stage V / 4WD / 24F24R semi-automatic (station identity pending) / Engine / displacement",
+          "context": null
+        },
+        {
+          "name": "engine_cylinders",
+          "value": "4",
+          "unit": "count",
+          "locator": "T4125 / Stage V / 4WD / 24F24R semi-automatic (station identity pending) / Engine / cylinders",
+          "context": null
+        },
+        {
+          "name": "engine_aspiration",
+          "value": "Turbo intercooler",
+          "unit": null,
+          "locator": "T4125 / Stage V / 4WD / 24F24R semi-automatic (station identity pending) / Engine / aspiration",
+          "context": null
+        },
+        {
+          "name": "fuel_tank_capacity",
+          "value": "130",
+          "unit": "L",
+          "locator": "T4125 / Stage V / 4WD / 24F24R semi-automatic (station identity pending) / Engine / fuel tank",
+          "context": null
+        },
+        {
+          "name": "adblue_tank_capacity",
+          "value": "16",
+          "unit": "L",
+          "locator": "T4125 / Stage V / 4WD / 24F24R semi-automatic (station identity pending) / Engine / AdBlue",
+          "context": null
+        },
+        {
+          "name": "forward_gears",
+          "value": "24",
+          "unit": "count",
+          "locator": "T4125 / Stage V / 4WD / 24F24R semi-automatic (station identity pending) / Gearbox / gear count",
+          "context": null
+        },
+        {
+          "name": "reverse_gears",
+          "value": "24",
+          "unit": "count",
+          "locator": "T4125 / Stage V / 4WD / 24F24R semi-automatic (station identity pending) / Gearbox / gear count",
+          "context": null
+        },
+        {
+          "name": "transmission_clutch",
+          "value": "Electrohydraulic wet",
+          "unit": null,
+          "locator": "T4125 / Stage V / 4WD / 24F24R semi-automatic (station identity pending) / Gearbox / clutch",
+          "context": null
+        },
+        {
+          "name": "maximum_travel_speed",
+          "value": "40",
+          "unit": "km/h",
+          "locator": "T4125 / Stage V / 4WD / 24F24R semi-automatic (station identity pending) / Gearbox / maximum speed",
+          "context": null
+        },
+        {
+          "name": "drivetrain",
+          "value": "4WD",
+          "unit": null,
+          "locator": "T4125 / Stage V / 4WD / 24F24R semi-automatic (station identity pending) / Model heading",
+          "context": null
+        },
+        {
+          "name": "rear_pto_speeds",
+          "value": "540/540E",
+          "unit": "rpm",
+          "locator": "T4125 / Stage V / 4WD / 24F24R semi-automatic (station identity pending) / PTO / speeds",
+          "context": null
+        },
+        {
+          "name": "pto_type",
+          "value": "Independent",
+          "unit": null,
+          "locator": "T4125 / Stage V / 4WD / 24F24R semi-automatic (station identity pending) / PTO / type",
+          "context": null
+        },
+        {
+          "name": "differential_lock_control",
+          "value": "Electrohydraulic",
+          "unit": null,
+          "locator": "T4125 / Stage V / 4WD / 24F24R semi-automatic (station identity pending) / Axle / differential lock",
+          "context": null
+        },
+        {
+          "name": "four_wheel_drive_control",
+          "value": "Electrohydraulic",
+          "unit": null,
+          "locator": "T4125 / Stage V / 4WD / 24F24R semi-automatic (station identity pending) / Axle / 4WD",
+          "context": null
+        },
+        {
+          "name": "hydraulic_pump_max_flow",
+          "value": "80",
+          "unit": "L/min",
+          "locator": "T4125 / Stage V / 4WD / 24F24R semi-automatic (station identity pending) / Hydraulics / pump",
+          "context": "Maximum pump flow; not guaranteed implement flow"
+        },
+        {
+          "name": "hydraulic_pressure",
+          "value": "190",
+          "unit": "bar",
+          "locator": "T4125 / Stage V / 4WD / 24F24R semi-automatic (station identity pending) / Hydraulics / pressure",
+          "context": null
+        },
+        {
+          "name": "hydraulic_outlet_count",
+          "value": "8",
+          "unit": "count",
+          "locator": "T4125 / Stage V / 4WD / 24F24R semi-automatic (station identity pending) / Hydraulics / outlets",
+          "context": null
+        },
+        {
+          "name": "hydraulic_valve_count",
+          "value": "4",
+          "unit": "count",
+          "locator": "T4125 / Stage V / 4WD / 24F24R semi-automatic (station identity pending) / Hydraulics / valves",
+          "context": null
+        },
+        {
+          "name": "rear_lift_capacity",
+          "value": "5500",
+          "unit": "kg",
+          "locator": "T4125 / Stage V / 4WD / 24F24R semi-automatic (station identity pending) / Hydraulics / maximum lift",
+          "context": "Measurement point unspecified"
+        },
+        {
+          "name": "hydraulic_lift_control",
+          "value": "Electrohydraulic",
+          "unit": null,
+          "locator": "T4125 / Stage V / 4WD / 24F24R semi-automatic (station identity pending) / Hydraulics / control",
+          "context": null
+        },
+        {
+          "name": "auto_lift",
+          "value": "Standard",
+          "unit": null,
+          "locator": "T4125 / Stage V / 4WD / 24F24R semi-automatic (station identity pending) / Hydraulics / Auto Lift",
+          "context": null
+        },
+        {
+          "name": "unladen_weight",
+          "value": "4800",
+          "unit": "kg",
+          "locator": "T4125 / Stage V / 4WD / 24F24R semi-automatic (station identity pending) / Weights / unladen",
+          "context": null
+        },
+        {
+          "name": "overall_length",
+          "value": "4531",
+          "unit": "mm",
+          "locator": "T4125 / Stage V / 4WD / 24F24R semi-automatic (station identity pending) / Dimensions / length",
+          "context": "Excluding front weights"
+        },
+        {
+          "name": "wheelbase",
+          "value": "2507",
+          "unit": "mm",
+          "locator": "T4125 / Stage V / 4WD / 24F24R semi-automatic (station identity pending) / Dimensions / wheelbase",
+          "context": null
+        },
+        {
+          "name": "overall_width",
+          "value": "2040",
+          "unit": "mm",
+          "locator": "T4125 / Stage V / 4WD / 24F24R semi-automatic (station identity pending) / Dimensions / width",
+          "context": null
+        },
+        {
+          "name": "overall_height",
+          "value": "2917",
+          "unit": "mm",
+          "locator": "T4125 / Stage V / 4WD / 24F24R semi-automatic (station identity pending) / Dimensions / height",
+          "context": null
+        },
+        {
+          "name": "front_track",
+          "value": "1210–1440",
+          "unit": "mm",
+          "locator": "T4125 / Stage V / 4WD / 24F24R semi-automatic (station identity pending) / Dimensions / front track",
+          "context": null
+        },
+        {
+          "name": "rear_track",
+          "value": "1440–1560",
+          "unit": "mm",
+          "locator": "T4125 / Stage V / 4WD / 24F24R semi-automatic (station identity pending) / Dimensions / rear track",
+          "context": null
+        },
+        {
+          "name": "front_pto_speed",
+          "value": "1000",
+          "unit": "rpm",
+          "locator": "T4125 / Stage V / 4WD / 24F24R semi-automatic (station identity pending) / PTO / front PTO",
+          "context": "Availability standard vs option not stated"
+        },
+        {
+          "name": "power_shuttle",
+          "value": "Standard electronic",
+          "unit": null,
+          "locator": "T4125 / Stage V / 4WD / 24F24R semi-automatic (station identity pending) / Gearbox / Power Shuttle",
+          "context": null
+        },
+        {
+          "name": "power_shift",
+          "value": "Standard two-stage",
+          "unit": null,
+          "locator": "T4125 / Stage V / 4WD / 24F24R semi-automatic (station identity pending) / Gearbox / Power Shift",
+          "context": null
+        }
+      ],
+      "notes": [
+        "PDF column explicitly 4WD, but cab not specified in header. Existing draft is a reconciliation lead only. Do not infer optional front PTO availability or claim implement flow. Screenshot unavailable; original visual review required."
+      ]
+    },
+    {
+      "brand": "Hattat",
+      "model": "C 3055",
+      "variant": "Stage V / 4WD / rear ROPS / 12F12R",
+      "market": "Türkiye",
+      "modelYear": null,
+      "sourceUrl": "https://www.hattattraktor.com.tr/Upload/Sayfa/C3000%20Stage%205-2.pdf",
+      "sourceType": "manufacturer",
+      "existingDraftId": "994ecfc2-22c2-49b1-806b-1aeff50e201b",
+      "disposition": "hold_for_review",
+      "sourceRead": "indexed PDF table; original screenshot unavailable",
+      "specs": [
+        {
+          "name": "emissions_standard",
+          "value": "Stage V",
+          "unit": null,
+          "locator": "C 3055 / Stage V / 4WD / rear ROPS / 12F12R / Engine / emissions",
+          "context": null
+        },
+        {
+          "name": "engine_model",
+          "value": "F28TCA",
+          "unit": null,
+          "locator": "C 3055 / Stage V / 4WD / rear ROPS / 12F12R / Engine / code",
+          "context": null
+        },
+        {
+          "name": "engine_max_power",
+          "value": "43",
+          "unit": "kW",
+          "locator": "C 3055 / Stage V / 4WD / rear ROPS / 12F12R / Engine / maximum power",
+          "context": "Measurement standard not stated in extracted table; 2300 rpm"
+        },
+        {
+          "name": "engine_max_power_manufacturer_label",
+          "value": "58",
+          "unit": "hp",
+          "locator": "C 3055 / Stage V / 4WD / rear ROPS / 12F12R / Engine / maximum power",
+          "context": "Measurement standard not stated in extracted table; 2300 rpm; OEM paired label"
+        },
+        {
+          "name": "maximum_power_speed",
+          "value": "2300",
+          "unit": "rpm",
+          "locator": "C 3055 / Stage V / 4WD / rear ROPS / 12F12R / Engine / maximum power speed",
+          "context": null
+        },
+        {
+          "name": "engine_torque",
+          "value": "250",
+          "unit": "Nm",
+          "locator": "C 3055 / Stage V / 4WD / rear ROPS / 12F12R / Engine / maximum torque",
+          "context": "1400 rpm"
+        },
+        {
+          "name": "peak_torque_speed",
+          "value": "1400",
+          "unit": "rpm",
+          "locator": "C 3055 / Stage V / 4WD / rear ROPS / 12F12R / Engine / maximum torque speed",
+          "context": null
+        },
+        {
+          "name": "engine_displacement",
+          "value": "2797",
+          "unit": "cm³",
+          "locator": "C 3055 / Stage V / 4WD / rear ROPS / 12F12R / Engine / displacement",
+          "context": null
+        },
+        {
+          "name": "engine_cylinders",
+          "value": "4",
+          "unit": "count",
+          "locator": "C 3055 / Stage V / 4WD / rear ROPS / 12F12R / Engine / cylinders",
+          "context": null
+        },
+        {
+          "name": "engine_aspiration",
+          "value": "Turbo intercooler",
+          "unit": null,
+          "locator": "C 3055 / Stage V / 4WD / rear ROPS / 12F12R / Engine / aspiration",
+          "context": null
+        },
+        {
+          "name": "fuel_tank_capacity",
+          "value": "80",
+          "unit": "L",
+          "locator": "C 3055 / Stage V / 4WD / rear ROPS / 12F12R / Engine / fuel tank",
+          "context": null
+        },
+        {
+          "name": "forward_gears",
+          "value": "12",
+          "unit": "count",
+          "locator": "C 3055 / Stage V / 4WD / rear ROPS / 12F12R / Gearbox / gear count",
+          "context": null
+        },
+        {
+          "name": "reverse_gears",
+          "value": "12",
+          "unit": "count",
+          "locator": "C 3055 / Stage V / 4WD / rear ROPS / 12F12R / Gearbox / gear count",
+          "context": null
+        },
+        {
+          "name": "transmission_clutch",
+          "value": "Dry dual disc",
+          "unit": null,
+          "locator": "C 3055 / Stage V / 4WD / rear ROPS / 12F12R / Gearbox / clutch",
+          "context": null
+        },
+        {
+          "name": "maximum_travel_speed",
+          "value": "37",
+          "unit": "km/h",
+          "locator": "C 3055 / Stage V / 4WD / rear ROPS / 12F12R / Gearbox / maximum speed",
+          "context": null
+        },
+        {
+          "name": "drivetrain",
+          "value": "4WD",
+          "unit": null,
+          "locator": "C 3055 / Stage V / 4WD / rear ROPS / 12F12R / Model heading",
+          "context": null
+        },
+        {
+          "name": "rear_pto_speeds",
+          "value": "540/540E",
+          "unit": "rpm",
+          "locator": "C 3055 / Stage V / 4WD / rear ROPS / 12F12R / PTO / speeds",
+          "context": null
+        },
+        {
+          "name": "pto_type",
+          "value": "Independent",
+          "unit": null,
+          "locator": "C 3055 / Stage V / 4WD / rear ROPS / 12F12R / PTO / type",
+          "context": null
+        },
+        {
+          "name": "differential_lock_control",
+          "value": "Electrohydraulic",
+          "unit": null,
+          "locator": "C 3055 / Stage V / 4WD / rear ROPS / 12F12R / Axle / differential lock",
+          "context": null
+        },
+        {
+          "name": "four_wheel_drive_control",
+          "value": "Electrohydraulic",
+          "unit": null,
+          "locator": "C 3055 / Stage V / 4WD / rear ROPS / 12F12R / Axle / 4WD",
+          "context": null
+        },
+        {
+          "name": "hydraulic_pump_max_flow",
+          "value": "45",
+          "unit": "L/min",
+          "locator": "C 3055 / Stage V / 4WD / rear ROPS / 12F12R / Hydraulics / pump",
+          "context": "Maximum pump flow; not guaranteed implement flow"
+        },
+        {
+          "name": "hydraulic_pressure",
+          "value": "190",
+          "unit": "bar",
+          "locator": "C 3055 / Stage V / 4WD / rear ROPS / 12F12R / Hydraulics / pressure",
+          "context": null
+        },
+        {
+          "name": "hydraulic_outlet_count",
+          "value": "6",
+          "unit": "count",
+          "locator": "C 3055 / Stage V / 4WD / rear ROPS / 12F12R / Hydraulics / outlets",
+          "context": null
+        },
+        {
+          "name": "hydraulic_valve_count",
+          "value": "3",
+          "unit": "count",
+          "locator": "C 3055 / Stage V / 4WD / rear ROPS / 12F12R / Hydraulics / valves",
+          "context": null
+        },
+        {
+          "name": "rear_lift_capacity",
+          "value": "3000",
+          "unit": "kg",
+          "locator": "C 3055 / Stage V / 4WD / rear ROPS / 12F12R / Hydraulics / maximum lift",
+          "context": "Measurement point unspecified"
+        },
+        {
+          "name": "hydraulic_lift_control",
+          "value": "Mechanical",
+          "unit": null,
+          "locator": "C 3055 / Stage V / 4WD / rear ROPS / 12F12R / Hydraulics / control",
+          "context": null
+        },
+        {
+          "name": "auto_lift",
+          "value": "Standard",
+          "unit": null,
+          "locator": "C 3055 / Stage V / 4WD / rear ROPS / 12F12R / Hydraulics / Auto Lift",
+          "context": null
+        },
+        {
+          "name": "unladen_weight",
+          "value": "2900",
+          "unit": "kg",
+          "locator": "C 3055 / Stage V / 4WD / rear ROPS / 12F12R / Weights / unladen",
+          "context": null
+        },
+        {
+          "name": "overall_length",
+          "value": "3889",
+          "unit": "mm",
+          "locator": "C 3055 / Stage V / 4WD / rear ROPS / 12F12R / Dimensions / length",
+          "context": "Excluding front weights"
+        },
+        {
+          "name": "wheelbase",
+          "value": "2180",
+          "unit": "mm",
+          "locator": "C 3055 / Stage V / 4WD / rear ROPS / 12F12R / Dimensions / wheelbase",
+          "context": null
+        },
+        {
+          "name": "overall_width",
+          "value": "2040",
+          "unit": "mm",
+          "locator": "C 3055 / Stage V / 4WD / rear ROPS / 12F12R / Dimensions / width",
+          "context": null
+        },
+        {
+          "name": "overall_height",
+          "value": "2445",
+          "unit": "mm",
+          "locator": "C 3055 / Stage V / 4WD / rear ROPS / 12F12R / Dimensions / height",
+          "context": null
+        },
+        {
+          "name": "front_track",
+          "value": "1140–1560",
+          "unit": "mm",
+          "locator": "C 3055 / Stage V / 4WD / rear ROPS / 12F12R / Dimensions / front track",
+          "context": null
+        },
+        {
+          "name": "rear_track",
+          "value": "1210–1440",
+          "unit": "mm",
+          "locator": "C 3055 / Stage V / 4WD / rear ROPS / 12F12R / Dimensions / rear track",
+          "context": null
+        },
+        {
+          "name": "maximum_travel_speed_engine_rpm",
+          "value": "2350",
+          "unit": "rpm",
+          "locator": "C 3055 / Stage V / 4WD / rear ROPS / 12F12R / Gearbox / maximum speed",
+          "context": null
+        }
+      ],
+      "notes": [
+        "C3000 table explicitly distinguishes rear ROPS and cab. Width differs between columns; verify against original visual before admission. No AdBlue capacity inferred from dash. Stage 3A/4A Perkins brochure must not be merged into FPT Stage V. Screenshot unavailable."
+      ]
+    },
+    {
+      "brand": "Hattat",
+      "model": "C 3055",
+      "variant": "Stage V / 4WD / cab / 12F12R",
+      "market": "Türkiye",
+      "modelYear": null,
+      "sourceUrl": "https://www.hattattraktor.com.tr/Upload/Sayfa/C3000%20Stage%205-2.pdf",
+      "sourceType": "manufacturer",
+      "existingDraftId": "ca2013d3-4f6d-4e25-9bf7-42b7cdc10b5c",
+      "disposition": "hold_for_review",
+      "sourceRead": "indexed PDF table; original screenshot unavailable",
+      "specs": [
+        {
+          "name": "emissions_standard",
+          "value": "Stage V",
+          "unit": null,
+          "locator": "C 3055 / Stage V / 4WD / cab / 12F12R / Engine / emissions",
+          "context": null
+        },
+        {
+          "name": "engine_model",
+          "value": "F28TCA",
+          "unit": null,
+          "locator": "C 3055 / Stage V / 4WD / cab / 12F12R / Engine / code",
+          "context": null
+        },
+        {
+          "name": "engine_max_power",
+          "value": "43",
+          "unit": "kW",
+          "locator": "C 3055 / Stage V / 4WD / cab / 12F12R / Engine / maximum power",
+          "context": "Measurement standard not stated in extracted table; 2300 rpm"
+        },
+        {
+          "name": "engine_max_power_manufacturer_label",
+          "value": "58",
+          "unit": "hp",
+          "locator": "C 3055 / Stage V / 4WD / cab / 12F12R / Engine / maximum power",
+          "context": "Measurement standard not stated in extracted table; 2300 rpm; OEM paired label"
+        },
+        {
+          "name": "maximum_power_speed",
+          "value": "2300",
+          "unit": "rpm",
+          "locator": "C 3055 / Stage V / 4WD / cab / 12F12R / Engine / maximum power speed",
+          "context": null
+        },
+        {
+          "name": "engine_torque",
+          "value": "250",
+          "unit": "Nm",
+          "locator": "C 3055 / Stage V / 4WD / cab / 12F12R / Engine / maximum torque",
+          "context": "1400 rpm"
+        },
+        {
+          "name": "peak_torque_speed",
+          "value": "1400",
+          "unit": "rpm",
+          "locator": "C 3055 / Stage V / 4WD / cab / 12F12R / Engine / maximum torque speed",
+          "context": null
+        },
+        {
+          "name": "engine_displacement",
+          "value": "2797",
+          "unit": "cm³",
+          "locator": "C 3055 / Stage V / 4WD / cab / 12F12R / Engine / displacement",
+          "context": null
+        },
+        {
+          "name": "engine_cylinders",
+          "value": "4",
+          "unit": "count",
+          "locator": "C 3055 / Stage V / 4WD / cab / 12F12R / Engine / cylinders",
+          "context": null
+        },
+        {
+          "name": "engine_aspiration",
+          "value": "Turbo intercooler",
+          "unit": null,
+          "locator": "C 3055 / Stage V / 4WD / cab / 12F12R / Engine / aspiration",
+          "context": null
+        },
+        {
+          "name": "fuel_tank_capacity",
+          "value": "80",
+          "unit": "L",
+          "locator": "C 3055 / Stage V / 4WD / cab / 12F12R / Engine / fuel tank",
+          "context": null
+        },
+        {
+          "name": "forward_gears",
+          "value": "12",
+          "unit": "count",
+          "locator": "C 3055 / Stage V / 4WD / cab / 12F12R / Gearbox / gear count",
+          "context": null
+        },
+        {
+          "name": "reverse_gears",
+          "value": "12",
+          "unit": "count",
+          "locator": "C 3055 / Stage V / 4WD / cab / 12F12R / Gearbox / gear count",
+          "context": null
+        },
+        {
+          "name": "transmission_clutch",
+          "value": "Dry dual disc",
+          "unit": null,
+          "locator": "C 3055 / Stage V / 4WD / cab / 12F12R / Gearbox / clutch",
+          "context": null
+        },
+        {
+          "name": "maximum_travel_speed",
+          "value": "37",
+          "unit": "km/h",
+          "locator": "C 3055 / Stage V / 4WD / cab / 12F12R / Gearbox / maximum speed",
+          "context": null
+        },
+        {
+          "name": "drivetrain",
+          "value": "4WD",
+          "unit": null,
+          "locator": "C 3055 / Stage V / 4WD / cab / 12F12R / Model heading",
+          "context": null
+        },
+        {
+          "name": "rear_pto_speeds",
+          "value": "540/540E",
+          "unit": "rpm",
+          "locator": "C 3055 / Stage V / 4WD / cab / 12F12R / PTO / speeds",
+          "context": null
+        },
+        {
+          "name": "pto_type",
+          "value": "Independent",
+          "unit": null,
+          "locator": "C 3055 / Stage V / 4WD / cab / 12F12R / PTO / type",
+          "context": null
+        },
+        {
+          "name": "differential_lock_control",
+          "value": "Electrohydraulic",
+          "unit": null,
+          "locator": "C 3055 / Stage V / 4WD / cab / 12F12R / Axle / differential lock",
+          "context": null
+        },
+        {
+          "name": "four_wheel_drive_control",
+          "value": "Electrohydraulic",
+          "unit": null,
+          "locator": "C 3055 / Stage V / 4WD / cab / 12F12R / Axle / 4WD",
+          "context": null
+        },
+        {
+          "name": "hydraulic_pump_max_flow",
+          "value": "45",
+          "unit": "L/min",
+          "locator": "C 3055 / Stage V / 4WD / cab / 12F12R / Hydraulics / pump",
+          "context": "Maximum pump flow; not guaranteed implement flow"
+        },
+        {
+          "name": "hydraulic_pressure",
+          "value": "190",
+          "unit": "bar",
+          "locator": "C 3055 / Stage V / 4WD / cab / 12F12R / Hydraulics / pressure",
+          "context": null
+        },
+        {
+          "name": "hydraulic_outlet_count",
+          "value": "6",
+          "unit": "count",
+          "locator": "C 3055 / Stage V / 4WD / cab / 12F12R / Hydraulics / outlets",
+          "context": null
+        },
+        {
+          "name": "hydraulic_valve_count",
+          "value": "3",
+          "unit": "count",
+          "locator": "C 3055 / Stage V / 4WD / cab / 12F12R / Hydraulics / valves",
+          "context": null
+        },
+        {
+          "name": "rear_lift_capacity",
+          "value": "3000",
+          "unit": "kg",
+          "locator": "C 3055 / Stage V / 4WD / cab / 12F12R / Hydraulics / maximum lift",
+          "context": "Measurement point unspecified"
+        },
+        {
+          "name": "hydraulic_lift_control",
+          "value": "Mechanical",
+          "unit": null,
+          "locator": "C 3055 / Stage V / 4WD / cab / 12F12R / Hydraulics / control",
+          "context": null
+        },
+        {
+          "name": "auto_lift",
+          "value": "Standard",
+          "unit": null,
+          "locator": "C 3055 / Stage V / 4WD / cab / 12F12R / Hydraulics / Auto Lift",
+          "context": null
+        },
+        {
+          "name": "unladen_weight",
+          "value": "3350",
+          "unit": "kg",
+          "locator": "C 3055 / Stage V / 4WD / cab / 12F12R / Weights / unladen",
+          "context": null
+        },
+        {
+          "name": "overall_length",
+          "value": "3934",
+          "unit": "mm",
+          "locator": "C 3055 / Stage V / 4WD / cab / 12F12R / Dimensions / length",
+          "context": "Excluding front weights"
+        },
+        {
+          "name": "wheelbase",
+          "value": "2180",
+          "unit": "mm",
+          "locator": "C 3055 / Stage V / 4WD / cab / 12F12R / Dimensions / wheelbase",
+          "context": null
+        },
+        {
+          "name": "overall_width",
+          "value": "1760",
+          "unit": "mm",
+          "locator": "C 3055 / Stage V / 4WD / cab / 12F12R / Dimensions / width",
+          "context": null
+        },
+        {
+          "name": "overall_height",
+          "value": "2632",
+          "unit": "mm",
+          "locator": "C 3055 / Stage V / 4WD / cab / 12F12R / Dimensions / height",
+          "context": null
+        },
+        {
+          "name": "front_track",
+          "value": "1140–1340",
+          "unit": "mm",
+          "locator": "C 3055 / Stage V / 4WD / cab / 12F12R / Dimensions / front track",
+          "context": null
+        },
+        {
+          "name": "rear_track",
+          "value": "1210–1490",
+          "unit": "mm",
+          "locator": "C 3055 / Stage V / 4WD / cab / 12F12R / Dimensions / rear track",
+          "context": null
+        },
+        {
+          "name": "maximum_travel_speed_engine_rpm",
+          "value": "2350",
+          "unit": "rpm",
+          "locator": "C 3055 / Stage V / 4WD / cab / 12F12R / Gearbox / maximum speed",
+          "context": null
+        }
+      ],
+      "notes": [
+        "C3000 table explicitly distinguishes rear ROPS and cab. Width differs between columns; verify against original visual before admission. No AdBlue capacity inferred from dash. Stage 3A/4A Perkins brochure must not be merged into FPT Stage V. Screenshot unavailable."
+      ]
+    },
+    {
+      "brand": "Hattat",
+      "model": "C 3065",
+      "variant": "Stage V / 4WD / rear ROPS / 12F12R",
+      "market": "Türkiye",
+      "modelYear": null,
+      "sourceUrl": "https://www.hattattraktor.com.tr/Upload/Sayfa/C3000%20Stage%205-2.pdf",
+      "sourceType": "manufacturer",
+      "existingDraftId": "5a8e4d85-8c67-4d0e-b84a-0ac07c56475a",
+      "disposition": "hold_for_review",
+      "sourceRead": "indexed PDF table; original screenshot unavailable",
+      "specs": [
+        {
+          "name": "emissions_standard",
+          "value": "Stage V",
+          "unit": null,
+          "locator": "C 3065 / Stage V / 4WD / rear ROPS / 12F12R / Engine / emissions",
+          "context": null
+        },
+        {
+          "name": "engine_model",
+          "value": "F28TCA",
+          "unit": null,
+          "locator": "C 3065 / Stage V / 4WD / rear ROPS / 12F12R / Engine / code",
+          "context": null
+        },
+        {
+          "name": "engine_max_power",
+          "value": "50",
+          "unit": "kW",
+          "locator": "C 3065 / Stage V / 4WD / rear ROPS / 12F12R / Engine / maximum power",
+          "context": "Measurement standard not stated in extracted table; 2300 rpm"
+        },
+        {
+          "name": "engine_max_power_manufacturer_label",
+          "value": "68",
+          "unit": "hp",
+          "locator": "C 3065 / Stage V / 4WD / rear ROPS / 12F12R / Engine / maximum power",
+          "context": "Measurement standard not stated in extracted table; 2300 rpm; OEM paired label"
+        },
+        {
+          "name": "maximum_power_speed",
+          "value": "2300",
+          "unit": "rpm",
+          "locator": "C 3065 / Stage V / 4WD / rear ROPS / 12F12R / Engine / maximum power speed",
+          "context": null
+        },
+        {
+          "name": "engine_torque",
+          "value": "323",
+          "unit": "Nm",
+          "locator": "C 3065 / Stage V / 4WD / rear ROPS / 12F12R / Engine / maximum torque",
+          "context": "1400 rpm"
+        },
+        {
+          "name": "peak_torque_speed",
+          "value": "1400",
+          "unit": "rpm",
+          "locator": "C 3065 / Stage V / 4WD / rear ROPS / 12F12R / Engine / maximum torque speed",
+          "context": null
+        },
+        {
+          "name": "engine_displacement",
+          "value": "2797",
+          "unit": "cm³",
+          "locator": "C 3065 / Stage V / 4WD / rear ROPS / 12F12R / Engine / displacement",
+          "context": null
+        },
+        {
+          "name": "engine_cylinders",
+          "value": "4",
+          "unit": "count",
+          "locator": "C 3065 / Stage V / 4WD / rear ROPS / 12F12R / Engine / cylinders",
+          "context": null
+        },
+        {
+          "name": "engine_aspiration",
+          "value": "Turbo intercooler",
+          "unit": null,
+          "locator": "C 3065 / Stage V / 4WD / rear ROPS / 12F12R / Engine / aspiration",
+          "context": null
+        },
+        {
+          "name": "fuel_tank_capacity",
+          "value": "80",
+          "unit": "L",
+          "locator": "C 3065 / Stage V / 4WD / rear ROPS / 12F12R / Engine / fuel tank",
+          "context": null
+        },
+        {
+          "name": "forward_gears",
+          "value": "12",
+          "unit": "count",
+          "locator": "C 3065 / Stage V / 4WD / rear ROPS / 12F12R / Gearbox / gear count",
+          "context": null
+        },
+        {
+          "name": "reverse_gears",
+          "value": "12",
+          "unit": "count",
+          "locator": "C 3065 / Stage V / 4WD / rear ROPS / 12F12R / Gearbox / gear count",
+          "context": null
+        },
+        {
+          "name": "transmission_clutch",
+          "value": "Dry dual disc",
+          "unit": null,
+          "locator": "C 3065 / Stage V / 4WD / rear ROPS / 12F12R / Gearbox / clutch",
+          "context": null
+        },
+        {
+          "name": "maximum_travel_speed",
+          "value": "37",
+          "unit": "km/h",
+          "locator": "C 3065 / Stage V / 4WD / rear ROPS / 12F12R / Gearbox / maximum speed",
+          "context": null
+        },
+        {
+          "name": "drivetrain",
+          "value": "4WD",
+          "unit": null,
+          "locator": "C 3065 / Stage V / 4WD / rear ROPS / 12F12R / Model heading",
+          "context": null
+        },
+        {
+          "name": "rear_pto_speeds",
+          "value": "540/540E",
+          "unit": "rpm",
+          "locator": "C 3065 / Stage V / 4WD / rear ROPS / 12F12R / PTO / speeds",
+          "context": null
+        },
+        {
+          "name": "pto_type",
+          "value": "Independent",
+          "unit": null,
+          "locator": "C 3065 / Stage V / 4WD / rear ROPS / 12F12R / PTO / type",
+          "context": null
+        },
+        {
+          "name": "differential_lock_control",
+          "value": "Electrohydraulic",
+          "unit": null,
+          "locator": "C 3065 / Stage V / 4WD / rear ROPS / 12F12R / Axle / differential lock",
+          "context": null
+        },
+        {
+          "name": "four_wheel_drive_control",
+          "value": "Electrohydraulic",
+          "unit": null,
+          "locator": "C 3065 / Stage V / 4WD / rear ROPS / 12F12R / Axle / 4WD",
+          "context": null
+        },
+        {
+          "name": "hydraulic_pump_max_flow",
+          "value": "45",
+          "unit": "L/min",
+          "locator": "C 3065 / Stage V / 4WD / rear ROPS / 12F12R / Hydraulics / pump",
+          "context": "Maximum pump flow; not guaranteed implement flow"
+        },
+        {
+          "name": "hydraulic_pressure",
+          "value": "190",
+          "unit": "bar",
+          "locator": "C 3065 / Stage V / 4WD / rear ROPS / 12F12R / Hydraulics / pressure",
+          "context": null
+        },
+        {
+          "name": "hydraulic_outlet_count",
+          "value": "6",
+          "unit": "count",
+          "locator": "C 3065 / Stage V / 4WD / rear ROPS / 12F12R / Hydraulics / outlets",
+          "context": null
+        },
+        {
+          "name": "hydraulic_valve_count",
+          "value": "3",
+          "unit": "count",
+          "locator": "C 3065 / Stage V / 4WD / rear ROPS / 12F12R / Hydraulics / valves",
+          "context": null
+        },
+        {
+          "name": "rear_lift_capacity",
+          "value": "3000",
+          "unit": "kg",
+          "locator": "C 3065 / Stage V / 4WD / rear ROPS / 12F12R / Hydraulics / maximum lift",
+          "context": "Measurement point unspecified"
+        },
+        {
+          "name": "hydraulic_lift_control",
+          "value": "Mechanical",
+          "unit": null,
+          "locator": "C 3065 / Stage V / 4WD / rear ROPS / 12F12R / Hydraulics / control",
+          "context": null
+        },
+        {
+          "name": "auto_lift",
+          "value": "Standard",
+          "unit": null,
+          "locator": "C 3065 / Stage V / 4WD / rear ROPS / 12F12R / Hydraulics / Auto Lift",
+          "context": null
+        },
+        {
+          "name": "unladen_weight",
+          "value": "2900",
+          "unit": "kg",
+          "locator": "C 3065 / Stage V / 4WD / rear ROPS / 12F12R / Weights / unladen",
+          "context": null
+        },
+        {
+          "name": "overall_length",
+          "value": "3889",
+          "unit": "mm",
+          "locator": "C 3065 / Stage V / 4WD / rear ROPS / 12F12R / Dimensions / length",
+          "context": "Excluding front weights"
+        },
+        {
+          "name": "wheelbase",
+          "value": "2180",
+          "unit": "mm",
+          "locator": "C 3065 / Stage V / 4WD / rear ROPS / 12F12R / Dimensions / wheelbase",
+          "context": null
+        },
+        {
+          "name": "overall_width",
+          "value": "2040",
+          "unit": "mm",
+          "locator": "C 3065 / Stage V / 4WD / rear ROPS / 12F12R / Dimensions / width",
+          "context": null
+        },
+        {
+          "name": "overall_height",
+          "value": "2445",
+          "unit": "mm",
+          "locator": "C 3065 / Stage V / 4WD / rear ROPS / 12F12R / Dimensions / height",
+          "context": null
+        },
+        {
+          "name": "front_track",
+          "value": "1140–1560",
+          "unit": "mm",
+          "locator": "C 3065 / Stage V / 4WD / rear ROPS / 12F12R / Dimensions / front track",
+          "context": null
+        },
+        {
+          "name": "rear_track",
+          "value": "1210–1440",
+          "unit": "mm",
+          "locator": "C 3065 / Stage V / 4WD / rear ROPS / 12F12R / Dimensions / rear track",
+          "context": null
+        },
+        {
+          "name": "maximum_travel_speed_engine_rpm",
+          "value": "2350",
+          "unit": "rpm",
+          "locator": "C 3065 / Stage V / 4WD / rear ROPS / 12F12R / Gearbox / maximum speed",
+          "context": null
+        }
+      ],
+      "notes": [
+        "C3000 table explicitly distinguishes rear ROPS and cab. Width differs between columns; verify against original visual before admission. No AdBlue capacity inferred from dash. Stage 3A/4A Perkins brochure must not be merged into FPT Stage V. Screenshot unavailable."
+      ]
+    },
+    {
+      "brand": "Hattat",
+      "model": "C 3065",
+      "variant": "Stage V / 4WD / cab / 12F12R",
+      "market": "Türkiye",
+      "modelYear": null,
+      "sourceUrl": "https://www.hattattraktor.com.tr/Upload/Sayfa/C3000%20Stage%205-2.pdf",
+      "sourceType": "manufacturer",
+      "existingDraftId": "ebfc3bce-6943-4c0b-974b-4ddb63228a94",
+      "disposition": "hold_for_review",
+      "sourceRead": "indexed PDF table; original screenshot unavailable",
+      "specs": [
+        {
+          "name": "emissions_standard",
+          "value": "Stage V",
+          "unit": null,
+          "locator": "C 3065 / Stage V / 4WD / cab / 12F12R / Engine / emissions",
+          "context": null
+        },
+        {
+          "name": "engine_model",
+          "value": "F28TCA",
+          "unit": null,
+          "locator": "C 3065 / Stage V / 4WD / cab / 12F12R / Engine / code",
+          "context": null
+        },
+        {
+          "name": "engine_max_power",
+          "value": "50",
+          "unit": "kW",
+          "locator": "C 3065 / Stage V / 4WD / cab / 12F12R / Engine / maximum power",
+          "context": "Measurement standard not stated in extracted table; 2300 rpm"
+        },
+        {
+          "name": "engine_max_power_manufacturer_label",
+          "value": "68",
+          "unit": "hp",
+          "locator": "C 3065 / Stage V / 4WD / cab / 12F12R / Engine / maximum power",
+          "context": "Measurement standard not stated in extracted table; 2300 rpm; OEM paired label"
+        },
+        {
+          "name": "maximum_power_speed",
+          "value": "2300",
+          "unit": "rpm",
+          "locator": "C 3065 / Stage V / 4WD / cab / 12F12R / Engine / maximum power speed",
+          "context": null
+        },
+        {
+          "name": "engine_torque",
+          "value": "323",
+          "unit": "Nm",
+          "locator": "C 3065 / Stage V / 4WD / cab / 12F12R / Engine / maximum torque",
+          "context": "1400 rpm"
+        },
+        {
+          "name": "peak_torque_speed",
+          "value": "1400",
+          "unit": "rpm",
+          "locator": "C 3065 / Stage V / 4WD / cab / 12F12R / Engine / maximum torque speed",
+          "context": null
+        },
+        {
+          "name": "engine_displacement",
+          "value": "2797",
+          "unit": "cm³",
+          "locator": "C 3065 / Stage V / 4WD / cab / 12F12R / Engine / displacement",
+          "context": null
+        },
+        {
+          "name": "engine_cylinders",
+          "value": "4",
+          "unit": "count",
+          "locator": "C 3065 / Stage V / 4WD / cab / 12F12R / Engine / cylinders",
+          "context": null
+        },
+        {
+          "name": "engine_aspiration",
+          "value": "Turbo intercooler",
+          "unit": null,
+          "locator": "C 3065 / Stage V / 4WD / cab / 12F12R / Engine / aspiration",
+          "context": null
+        },
+        {
+          "name": "fuel_tank_capacity",
+          "value": "80",
+          "unit": "L",
+          "locator": "C 3065 / Stage V / 4WD / cab / 12F12R / Engine / fuel tank",
+          "context": null
+        },
+        {
+          "name": "forward_gears",
+          "value": "12",
+          "unit": "count",
+          "locator": "C 3065 / Stage V / 4WD / cab / 12F12R / Gearbox / gear count",
+          "context": null
+        },
+        {
+          "name": "reverse_gears",
+          "value": "12",
+          "unit": "count",
+          "locator": "C 3065 / Stage V / 4WD / cab / 12F12R / Gearbox / gear count",
+          "context": null
+        },
+        {
+          "name": "transmission_clutch",
+          "value": "Dry dual disc",
+          "unit": null,
+          "locator": "C 3065 / Stage V / 4WD / cab / 12F12R / Gearbox / clutch",
+          "context": null
+        },
+        {
+          "name": "maximum_travel_speed",
+          "value": "37",
+          "unit": "km/h",
+          "locator": "C 3065 / Stage V / 4WD / cab / 12F12R / Gearbox / maximum speed",
+          "context": null
+        },
+        {
+          "name": "drivetrain",
+          "value": "4WD",
+          "unit": null,
+          "locator": "C 3065 / Stage V / 4WD / cab / 12F12R / Model heading",
+          "context": null
+        },
+        {
+          "name": "rear_pto_speeds",
+          "value": "540/540E",
+          "unit": "rpm",
+          "locator": "C 3065 / Stage V / 4WD / cab / 12F12R / PTO / speeds",
+          "context": null
+        },
+        {
+          "name": "pto_type",
+          "value": "Independent",
+          "unit": null,
+          "locator": "C 3065 / Stage V / 4WD / cab / 12F12R / PTO / type",
+          "context": null
+        },
+        {
+          "name": "differential_lock_control",
+          "value": "Electrohydraulic",
+          "unit": null,
+          "locator": "C 3065 / Stage V / 4WD / cab / 12F12R / Axle / differential lock",
+          "context": null
+        },
+        {
+          "name": "four_wheel_drive_control",
+          "value": "Electrohydraulic",
+          "unit": null,
+          "locator": "C 3065 / Stage V / 4WD / cab / 12F12R / Axle / 4WD",
+          "context": null
+        },
+        {
+          "name": "hydraulic_pump_max_flow",
+          "value": "45",
+          "unit": "L/min",
+          "locator": "C 3065 / Stage V / 4WD / cab / 12F12R / Hydraulics / pump",
+          "context": "Maximum pump flow; not guaranteed implement flow"
+        },
+        {
+          "name": "hydraulic_pressure",
+          "value": "190",
+          "unit": "bar",
+          "locator": "C 3065 / Stage V / 4WD / cab / 12F12R / Hydraulics / pressure",
+          "context": null
+        },
+        {
+          "name": "hydraulic_outlet_count",
+          "value": "6",
+          "unit": "count",
+          "locator": "C 3065 / Stage V / 4WD / cab / 12F12R / Hydraulics / outlets",
+          "context": null
+        },
+        {
+          "name": "hydraulic_valve_count",
+          "value": "3",
+          "unit": "count",
+          "locator": "C 3065 / Stage V / 4WD / cab / 12F12R / Hydraulics / valves",
+          "context": null
+        },
+        {
+          "name": "rear_lift_capacity",
+          "value": "3000",
+          "unit": "kg",
+          "locator": "C 3065 / Stage V / 4WD / cab / 12F12R / Hydraulics / maximum lift",
+          "context": "Measurement point unspecified"
+        },
+        {
+          "name": "hydraulic_lift_control",
+          "value": "Mechanical",
+          "unit": null,
+          "locator": "C 3065 / Stage V / 4WD / cab / 12F12R / Hydraulics / control",
+          "context": null
+        },
+        {
+          "name": "auto_lift",
+          "value": "Standard",
+          "unit": null,
+          "locator": "C 3065 / Stage V / 4WD / cab / 12F12R / Hydraulics / Auto Lift",
+          "context": null
+        },
+        {
+          "name": "unladen_weight",
+          "value": "3350",
+          "unit": "kg",
+          "locator": "C 3065 / Stage V / 4WD / cab / 12F12R / Weights / unladen",
+          "context": null
+        },
+        {
+          "name": "overall_length",
+          "value": "3934",
+          "unit": "mm",
+          "locator": "C 3065 / Stage V / 4WD / cab / 12F12R / Dimensions / length",
+          "context": "Excluding front weights"
+        },
+        {
+          "name": "wheelbase",
+          "value": "2180",
+          "unit": "mm",
+          "locator": "C 3065 / Stage V / 4WD / cab / 12F12R / Dimensions / wheelbase",
+          "context": null
+        },
+        {
+          "name": "overall_width",
+          "value": "1760",
+          "unit": "mm",
+          "locator": "C 3065 / Stage V / 4WD / cab / 12F12R / Dimensions / width",
+          "context": null
+        },
+        {
+          "name": "overall_height",
+          "value": "2632",
+          "unit": "mm",
+          "locator": "C 3065 / Stage V / 4WD / cab / 12F12R / Dimensions / height",
+          "context": null
+        },
+        {
+          "name": "front_track",
+          "value": "1140–1340",
+          "unit": "mm",
+          "locator": "C 3065 / Stage V / 4WD / cab / 12F12R / Dimensions / front track",
+          "context": null
+        },
+        {
+          "name": "rear_track",
+          "value": "1210–1490",
+          "unit": "mm",
+          "locator": "C 3065 / Stage V / 4WD / cab / 12F12R / Dimensions / rear track",
+          "context": null
+        },
+        {
+          "name": "maximum_travel_speed_engine_rpm",
+          "value": "2350",
+          "unit": "rpm",
+          "locator": "C 3065 / Stage V / 4WD / cab / 12F12R / Gearbox / maximum speed",
+          "context": null
+        }
+      ],
+      "notes": [
+        "C3000 table explicitly distinguishes rear ROPS and cab. Width differs between columns; verify against original visual before admission. No AdBlue capacity inferred from dash. Stage 3A/4A Perkins brochure must not be merged into FPT Stage V. Screenshot unavailable."
+      ]
+    },
+    {
+      "brand": "Hattat",
+      "model": "C 3085",
+      "variant": "Stage V / 4WD / rear ROPS / 12F12R",
+      "market": "Türkiye",
+      "modelYear": null,
+      "sourceUrl": "https://www.hattattraktor.com.tr/Upload/Sayfa/C3000%20Stage%205-2.pdf",
+      "sourceType": "manufacturer",
+      "existingDraftId": "ce94a369-87d1-46ae-84e7-de9d9ab744c1",
+      "disposition": "hold_for_review",
+      "sourceRead": "indexed PDF table; original screenshot unavailable",
+      "specs": [
+        {
+          "name": "emissions_standard",
+          "value": "Stage V",
+          "unit": null,
+          "locator": "C 3085 / Stage V / 4WD / rear ROPS / 12F12R / Engine / emissions",
+          "context": null
+        },
+        {
+          "name": "engine_model",
+          "value": "F28TCA",
+          "unit": null,
+          "locator": "C 3085 / Stage V / 4WD / rear ROPS / 12F12R / Engine / code",
+          "context": null
+        },
+        {
+          "name": "engine_max_power",
+          "value": "55",
+          "unit": "kW",
+          "locator": "C 3085 / Stage V / 4WD / rear ROPS / 12F12R / Engine / maximum power",
+          "context": "Measurement standard not stated in extracted table; 2300 rpm"
+        },
+        {
+          "name": "engine_max_power_manufacturer_label",
+          "value": "75",
+          "unit": "hp",
+          "locator": "C 3085 / Stage V / 4WD / rear ROPS / 12F12R / Engine / maximum power",
+          "context": "Measurement standard not stated in extracted table; 2300 rpm; OEM paired label"
+        },
+        {
+          "name": "maximum_power_speed",
+          "value": "2300",
+          "unit": "rpm",
+          "locator": "C 3085 / Stage V / 4WD / rear ROPS / 12F12R / Engine / maximum power speed",
+          "context": null
+        },
+        {
+          "name": "engine_torque",
+          "value": "375",
+          "unit": "Nm",
+          "locator": "C 3085 / Stage V / 4WD / rear ROPS / 12F12R / Engine / maximum torque",
+          "context": "1400 rpm"
+        },
+        {
+          "name": "peak_torque_speed",
+          "value": "1400",
+          "unit": "rpm",
+          "locator": "C 3085 / Stage V / 4WD / rear ROPS / 12F12R / Engine / maximum torque speed",
+          "context": null
+        },
+        {
+          "name": "engine_displacement",
+          "value": "2797",
+          "unit": "cm³",
+          "locator": "C 3085 / Stage V / 4WD / rear ROPS / 12F12R / Engine / displacement",
+          "context": null
+        },
+        {
+          "name": "engine_cylinders",
+          "value": "4",
+          "unit": "count",
+          "locator": "C 3085 / Stage V / 4WD / rear ROPS / 12F12R / Engine / cylinders",
+          "context": null
+        },
+        {
+          "name": "engine_aspiration",
+          "value": "Turbo intercooler",
+          "unit": null,
+          "locator": "C 3085 / Stage V / 4WD / rear ROPS / 12F12R / Engine / aspiration",
+          "context": null
+        },
+        {
+          "name": "fuel_tank_capacity",
+          "value": "80",
+          "unit": "L",
+          "locator": "C 3085 / Stage V / 4WD / rear ROPS / 12F12R / Engine / fuel tank",
+          "context": null
+        },
+        {
+          "name": "forward_gears",
+          "value": "12",
+          "unit": "count",
+          "locator": "C 3085 / Stage V / 4WD / rear ROPS / 12F12R / Gearbox / gear count",
+          "context": null
+        },
+        {
+          "name": "reverse_gears",
+          "value": "12",
+          "unit": "count",
+          "locator": "C 3085 / Stage V / 4WD / rear ROPS / 12F12R / Gearbox / gear count",
+          "context": null
+        },
+        {
+          "name": "transmission_clutch",
+          "value": "Dry dual disc",
+          "unit": null,
+          "locator": "C 3085 / Stage V / 4WD / rear ROPS / 12F12R / Gearbox / clutch",
+          "context": null
+        },
+        {
+          "name": "maximum_travel_speed",
+          "value": "37",
+          "unit": "km/h",
+          "locator": "C 3085 / Stage V / 4WD / rear ROPS / 12F12R / Gearbox / maximum speed",
+          "context": null
+        },
+        {
+          "name": "drivetrain",
+          "value": "4WD",
+          "unit": null,
+          "locator": "C 3085 / Stage V / 4WD / rear ROPS / 12F12R / Model heading",
+          "context": null
+        },
+        {
+          "name": "rear_pto_speeds",
+          "value": "540/540E",
+          "unit": "rpm",
+          "locator": "C 3085 / Stage V / 4WD / rear ROPS / 12F12R / PTO / speeds",
+          "context": null
+        },
+        {
+          "name": "pto_type",
+          "value": "Independent",
+          "unit": null,
+          "locator": "C 3085 / Stage V / 4WD / rear ROPS / 12F12R / PTO / type",
+          "context": null
+        },
+        {
+          "name": "differential_lock_control",
+          "value": "Electrohydraulic",
+          "unit": null,
+          "locator": "C 3085 / Stage V / 4WD / rear ROPS / 12F12R / Axle / differential lock",
+          "context": null
+        },
+        {
+          "name": "four_wheel_drive_control",
+          "value": "Electrohydraulic",
+          "unit": null,
+          "locator": "C 3085 / Stage V / 4WD / rear ROPS / 12F12R / Axle / 4WD",
+          "context": null
+        },
+        {
+          "name": "hydraulic_pump_max_flow",
+          "value": "45",
+          "unit": "L/min",
+          "locator": "C 3085 / Stage V / 4WD / rear ROPS / 12F12R / Hydraulics / pump",
+          "context": "Maximum pump flow; not guaranteed implement flow"
+        },
+        {
+          "name": "hydraulic_pressure",
+          "value": "190",
+          "unit": "bar",
+          "locator": "C 3085 / Stage V / 4WD / rear ROPS / 12F12R / Hydraulics / pressure",
+          "context": null
+        },
+        {
+          "name": "hydraulic_outlet_count",
+          "value": "6",
+          "unit": "count",
+          "locator": "C 3085 / Stage V / 4WD / rear ROPS / 12F12R / Hydraulics / outlets",
+          "context": null
+        },
+        {
+          "name": "hydraulic_valve_count",
+          "value": "3",
+          "unit": "count",
+          "locator": "C 3085 / Stage V / 4WD / rear ROPS / 12F12R / Hydraulics / valves",
+          "context": null
+        },
+        {
+          "name": "rear_lift_capacity",
+          "value": "3000",
+          "unit": "kg",
+          "locator": "C 3085 / Stage V / 4WD / rear ROPS / 12F12R / Hydraulics / maximum lift",
+          "context": "Measurement point unspecified"
+        },
+        {
+          "name": "hydraulic_lift_control",
+          "value": "Mechanical",
+          "unit": null,
+          "locator": "C 3085 / Stage V / 4WD / rear ROPS / 12F12R / Hydraulics / control",
+          "context": null
+        },
+        {
+          "name": "auto_lift",
+          "value": "Standard",
+          "unit": null,
+          "locator": "C 3085 / Stage V / 4WD / rear ROPS / 12F12R / Hydraulics / Auto Lift",
+          "context": null
+        },
+        {
+          "name": "unladen_weight",
+          "value": "2900",
+          "unit": "kg",
+          "locator": "C 3085 / Stage V / 4WD / rear ROPS / 12F12R / Weights / unladen",
+          "context": null
+        },
+        {
+          "name": "overall_length",
+          "value": "3889",
+          "unit": "mm",
+          "locator": "C 3085 / Stage V / 4WD / rear ROPS / 12F12R / Dimensions / length",
+          "context": "Excluding front weights"
+        },
+        {
+          "name": "wheelbase",
+          "value": "2180",
+          "unit": "mm",
+          "locator": "C 3085 / Stage V / 4WD / rear ROPS / 12F12R / Dimensions / wheelbase",
+          "context": null
+        },
+        {
+          "name": "overall_width",
+          "value": "2040",
+          "unit": "mm",
+          "locator": "C 3085 / Stage V / 4WD / rear ROPS / 12F12R / Dimensions / width",
+          "context": null
+        },
+        {
+          "name": "overall_height",
+          "value": "2445",
+          "unit": "mm",
+          "locator": "C 3085 / Stage V / 4WD / rear ROPS / 12F12R / Dimensions / height",
+          "context": null
+        },
+        {
+          "name": "front_track",
+          "value": "1140–1560",
+          "unit": "mm",
+          "locator": "C 3085 / Stage V / 4WD / rear ROPS / 12F12R / Dimensions / front track",
+          "context": null
+        },
+        {
+          "name": "rear_track",
+          "value": "1210–1440",
+          "unit": "mm",
+          "locator": "C 3085 / Stage V / 4WD / rear ROPS / 12F12R / Dimensions / rear track",
+          "context": null
+        },
+        {
+          "name": "maximum_travel_speed_engine_rpm",
+          "value": "2350",
+          "unit": "rpm",
+          "locator": "C 3085 / Stage V / 4WD / rear ROPS / 12F12R / Gearbox / maximum speed",
+          "context": null
+        }
+      ],
+      "notes": [
+        "C3000 table explicitly distinguishes rear ROPS and cab. Width differs between columns; verify against original visual before admission. No AdBlue capacity inferred from dash. Stage 3A/4A Perkins brochure must not be merged into FPT Stage V. Screenshot unavailable."
+      ]
+    },
+    {
+      "brand": "Hattat",
+      "model": "C 3085",
+      "variant": "Stage V / 4WD / cab / 12F12R",
+      "market": "Türkiye",
+      "modelYear": null,
+      "sourceUrl": "https://www.hattattraktor.com.tr/Upload/Sayfa/C3000%20Stage%205-2.pdf",
+      "sourceType": "manufacturer",
+      "existingDraftId": "82197f04-30b5-43d8-8073-f78eefa0bffe",
+      "disposition": "hold_for_review",
+      "sourceRead": "indexed PDF table; original screenshot unavailable",
+      "specs": [
+        {
+          "name": "emissions_standard",
+          "value": "Stage V",
+          "unit": null,
+          "locator": "C 3085 / Stage V / 4WD / cab / 12F12R / Engine / emissions",
+          "context": null
+        },
+        {
+          "name": "engine_model",
+          "value": "F28TCA",
+          "unit": null,
+          "locator": "C 3085 / Stage V / 4WD / cab / 12F12R / Engine / code",
+          "context": null
+        },
+        {
+          "name": "engine_max_power",
+          "value": "55",
+          "unit": "kW",
+          "locator": "C 3085 / Stage V / 4WD / cab / 12F12R / Engine / maximum power",
+          "context": "Measurement standard not stated in extracted table; 2300 rpm"
+        },
+        {
+          "name": "engine_max_power_manufacturer_label",
+          "value": "75",
+          "unit": "hp",
+          "locator": "C 3085 / Stage V / 4WD / cab / 12F12R / Engine / maximum power",
+          "context": "Measurement standard not stated in extracted table; 2300 rpm; OEM paired label"
+        },
+        {
+          "name": "maximum_power_speed",
+          "value": "2300",
+          "unit": "rpm",
+          "locator": "C 3085 / Stage V / 4WD / cab / 12F12R / Engine / maximum power speed",
+          "context": null
+        },
+        {
+          "name": "engine_torque",
+          "value": "375",
+          "unit": "Nm",
+          "locator": "C 3085 / Stage V / 4WD / cab / 12F12R / Engine / maximum torque",
+          "context": "1400 rpm"
+        },
+        {
+          "name": "peak_torque_speed",
+          "value": "1400",
+          "unit": "rpm",
+          "locator": "C 3085 / Stage V / 4WD / cab / 12F12R / Engine / maximum torque speed",
+          "context": null
+        },
+        {
+          "name": "engine_displacement",
+          "value": "2797",
+          "unit": "cm³",
+          "locator": "C 3085 / Stage V / 4WD / cab / 12F12R / Engine / displacement",
+          "context": null
+        },
+        {
+          "name": "engine_cylinders",
+          "value": "4",
+          "unit": "count",
+          "locator": "C 3085 / Stage V / 4WD / cab / 12F12R / Engine / cylinders",
+          "context": null
+        },
+        {
+          "name": "engine_aspiration",
+          "value": "Turbo intercooler",
+          "unit": null,
+          "locator": "C 3085 / Stage V / 4WD / cab / 12F12R / Engine / aspiration",
+          "context": null
+        },
+        {
+          "name": "fuel_tank_capacity",
+          "value": "80",
+          "unit": "L",
+          "locator": "C 3085 / Stage V / 4WD / cab / 12F12R / Engine / fuel tank",
+          "context": null
+        },
+        {
+          "name": "forward_gears",
+          "value": "12",
+          "unit": "count",
+          "locator": "C 3085 / Stage V / 4WD / cab / 12F12R / Gearbox / gear count",
+          "context": null
+        },
+        {
+          "name": "reverse_gears",
+          "value": "12",
+          "unit": "count",
+          "locator": "C 3085 / Stage V / 4WD / cab / 12F12R / Gearbox / gear count",
+          "context": null
+        },
+        {
+          "name": "transmission_clutch",
+          "value": "Dry dual disc",
+          "unit": null,
+          "locator": "C 3085 / Stage V / 4WD / cab / 12F12R / Gearbox / clutch",
+          "context": null
+        },
+        {
+          "name": "maximum_travel_speed",
+          "value": "37",
+          "unit": "km/h",
+          "locator": "C 3085 / Stage V / 4WD / cab / 12F12R / Gearbox / maximum speed",
+          "context": null
+        },
+        {
+          "name": "drivetrain",
+          "value": "4WD",
+          "unit": null,
+          "locator": "C 3085 / Stage V / 4WD / cab / 12F12R / Model heading",
+          "context": null
+        },
+        {
+          "name": "rear_pto_speeds",
+          "value": "540/540E",
+          "unit": "rpm",
+          "locator": "C 3085 / Stage V / 4WD / cab / 12F12R / PTO / speeds",
+          "context": null
+        },
+        {
+          "name": "pto_type",
+          "value": "Independent",
+          "unit": null,
+          "locator": "C 3085 / Stage V / 4WD / cab / 12F12R / PTO / type",
+          "context": null
+        },
+        {
+          "name": "differential_lock_control",
+          "value": "Electrohydraulic",
+          "unit": null,
+          "locator": "C 3085 / Stage V / 4WD / cab / 12F12R / Axle / differential lock",
+          "context": null
+        },
+        {
+          "name": "four_wheel_drive_control",
+          "value": "Electrohydraulic",
+          "unit": null,
+          "locator": "C 3085 / Stage V / 4WD / cab / 12F12R / Axle / 4WD",
+          "context": null
+        },
+        {
+          "name": "hydraulic_pump_max_flow",
+          "value": "45",
+          "unit": "L/min",
+          "locator": "C 3085 / Stage V / 4WD / cab / 12F12R / Hydraulics / pump",
+          "context": "Maximum pump flow; not guaranteed implement flow"
+        },
+        {
+          "name": "hydraulic_pressure",
+          "value": "190",
+          "unit": "bar",
+          "locator": "C 3085 / Stage V / 4WD / cab / 12F12R / Hydraulics / pressure",
+          "context": null
+        },
+        {
+          "name": "hydraulic_outlet_count",
+          "value": "6",
+          "unit": "count",
+          "locator": "C 3085 / Stage V / 4WD / cab / 12F12R / Hydraulics / outlets",
+          "context": null
+        },
+        {
+          "name": "hydraulic_valve_count",
+          "value": "3",
+          "unit": "count",
+          "locator": "C 3085 / Stage V / 4WD / cab / 12F12R / Hydraulics / valves",
+          "context": null
+        },
+        {
+          "name": "rear_lift_capacity",
+          "value": "3000",
+          "unit": "kg",
+          "locator": "C 3085 / Stage V / 4WD / cab / 12F12R / Hydraulics / maximum lift",
+          "context": "Measurement point unspecified"
+        },
+        {
+          "name": "hydraulic_lift_control",
+          "value": "Mechanical",
+          "unit": null,
+          "locator": "C 3085 / Stage V / 4WD / cab / 12F12R / Hydraulics / control",
+          "context": null
+        },
+        {
+          "name": "auto_lift",
+          "value": "Standard",
+          "unit": null,
+          "locator": "C 3085 / Stage V / 4WD / cab / 12F12R / Hydraulics / Auto Lift",
+          "context": null
+        },
+        {
+          "name": "unladen_weight",
+          "value": "3350",
+          "unit": "kg",
+          "locator": "C 3085 / Stage V / 4WD / cab / 12F12R / Weights / unladen",
+          "context": null
+        },
+        {
+          "name": "overall_length",
+          "value": "3934",
+          "unit": "mm",
+          "locator": "C 3085 / Stage V / 4WD / cab / 12F12R / Dimensions / length",
+          "context": "Excluding front weights"
+        },
+        {
+          "name": "wheelbase",
+          "value": "2180",
+          "unit": "mm",
+          "locator": "C 3085 / Stage V / 4WD / cab / 12F12R / Dimensions / wheelbase",
+          "context": null
+        },
+        {
+          "name": "overall_width",
+          "value": "1760",
+          "unit": "mm",
+          "locator": "C 3085 / Stage V / 4WD / cab / 12F12R / Dimensions / width",
+          "context": null
+        },
+        {
+          "name": "overall_height",
+          "value": "2632",
+          "unit": "mm",
+          "locator": "C 3085 / Stage V / 4WD / cab / 12F12R / Dimensions / height",
+          "context": null
+        },
+        {
+          "name": "front_track",
+          "value": "1140–1340",
+          "unit": "mm",
+          "locator": "C 3085 / Stage V / 4WD / cab / 12F12R / Dimensions / front track",
+          "context": null
+        },
+        {
+          "name": "rear_track",
+          "value": "1210–1490",
+          "unit": "mm",
+          "locator": "C 3085 / Stage V / 4WD / cab / 12F12R / Dimensions / rear track",
+          "context": null
+        },
+        {
+          "name": "maximum_travel_speed_engine_rpm",
+          "value": "2350",
+          "unit": "rpm",
+          "locator": "C 3085 / Stage V / 4WD / cab / 12F12R / Gearbox / maximum speed",
+          "context": null
+        }
+      ],
+      "notes": [
+        "C3000 table explicitly distinguishes rear ROPS and cab. Width differs between columns; verify against original visual before admission. No AdBlue capacity inferred from dash. Stage 3A/4A Perkins brochure must not be merged into FPT Stage V. Screenshot unavailable."
+      ]
+    }
+  ]
+}

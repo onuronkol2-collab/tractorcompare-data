@@ -29,6 +29,8 @@ test("sequential passes use existing metric field arithmetic",()=>{
  assert.equal(out.totals.litres,200);
  assert.equal(out.totals.operatingCost,450);
  assert.throws(()=>planSequentialFieldWork([{...task,passes:0}]));
+ assert.throws(()=>planSequentialFieldWork(Array(2)));
+ assert.throws(()=>planSequentialFieldWork([null]));
 });
 const row={evidence:"independent_reviewed",metric:"pto_power_kw",value:100,modelId:"a",reportId:"r",reportLocator:"p. 3",protocol:"example",protocolVersion:"1",loadPoint:"rated",configuration:"standard",measurementBasis:"shaft",unit:"kW"};
 test("measured comparisons fail closed on missing or unequal metadata",()=>{
