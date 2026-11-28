@@ -7,11 +7,11 @@ on:
         type: choice
         options: [bootstrap, restore, research]
         default: restore
-  # Bootstrap is deliberately manual-first. Re-enable the existing daily
-  # schedule ONLY after a trusted checkpoint has been sealed and a second
-  # manual run has restored it successfully. Do not trigger on merge/push.
-  # schedule:
-  #   - cron: "15 4 * * *"
+  # Trusted bootstrap 46162937175 and restore 46163066513 succeeded.
+  # 20:15 Europe/Istanbul (17:15 UTC), after the initial 24h migration hold.
+  # A later cooldown defers provider research without resetting the checkpoint.
+  schedule:
+    - cron: "15 17 * * *"
 permissions:
   contents: read
   actions: read
@@ -47,26 +47,31 @@ jobs:
       - name: Apply recorded operator-reviewed Commons cooldown before provider requests
         id: recorded_hold
         run: node site/scripts/photo-apply-provider-hold.mjs site/docs/photo-commons-recorded-hold-20261128.json
+      - name: Resolve scheduled or manual research mode after restoring cooldown
+        id: mode
+        env:
+          REQUESTED_MODE: ${{ inputs.mode }}
+        run: node site/scripts/photo-research-run-mode.mjs
       - name: Export only model identities from historical tractor archive
-        if: inputs.mode == 'research'
+        if: steps.mode.outputs.mode == 'research'
         run: python site/scripts/extract-archived-tractor-inventory.py
       # Acquire live public model identities ONCE. The next step combines this
       # inventory with archival models in brand-batched Commons queries.
       - name: Snapshot public published model identity from live sitemap
         id: inventory
-        if: inputs.mode == 'research'
+        if: steps.mode.outputs.mode == 'research'
         continue-on-error: true
         run: node site/scripts/batch-photo-discovery.mjs --inventory-only
       # Preserve the archives and stage outcomes even when a source fails.
       # The final quality gate must still fail on any incomplete research.
       - name: Search licensed candidates for archived AND current models by brand
         id: archive
-        if: inputs.mode == 'research'
+        if: steps.mode.outputs.mode == 'research'
         continue-on-error: true
         run: node site/scripts/archive-brand-photo-discovery.mjs
       - name: Cross-check ALL published models against same-run Commons brand evidence
         id: published
-        if: inputs.mode == 'research'
+        if: steps.mode.outputs.mode == 'research'
         continue-on-error: true
         run: node site/scripts/batch-photo-discovery.mjs
       # Second independent index, distinct from Wikimedia Commons. No rights
@@ -75,12 +80,12 @@ jobs:
       # report records partial errors without ever changing Commons QA gates.
       - name: Discover independent Flickr and Europeana CC candidates via Openverse (no publishing)
         id: openverse
-        if: inputs.mode == 'research' && steps.inventory.outcome == 'success'
+        if: steps.mode.outputs.mode == 'research' && steps.inventory.outcome == 'success'
         continue-on-error: true
         run: node --experimental-strip-types site/scripts/photo-openverse-independent-batch.mjs
       - name: Compute exact missing public model identities
         id: coverage
-        if: inputs.mode == 'research' && steps.restore.outcome == 'success' && steps.inventory.outcome == 'success'
+        if: steps.mode.outputs.mode == 'research' && steps.restore.outcome == 'success' && steps.inventory.outcome == 'success'
         continue-on-error: true
         run: node --experimental-strip-types site/scripts/photo-unified-coverage.mjs photo-discovery-report/published-model-inventory.json photo-discovery-report/coverage.json
       # Private Commons review packets/originals are deliberately NOT collected in this public
@@ -120,11 +125,11 @@ jobs:
           if-no-files-found: error
       - name: Guard public research artifact boundary
         id: public_guard
-        if: always() && inputs.mode == 'research'
+        if: always() && steps.mode.outputs.mode == 'research'
         run: python site/scripts/photo-public-artifact-guard.py photo-discovery-report
       - name: Archive public-only source research without publishing drafts
         id: public_report
-        if: always() && inputs.mode == 'research' && steps.public_guard.outcome == 'success'
+        if: always() && steps.mode.outputs.mode == 'research' && steps.public_guard.outcome == 'success'
         uses: actions/upload-artifact@v7
         with:
           name: tractorvs-all-model-photo-research
@@ -144,7 +149,8 @@ jobs:
       - name: Fail closed unless both stages and research report are complete
         if: always()
         env:
-          MODE: ${{ inputs.mode }}
+          MODE: ${{ steps.mode.outputs.mode }}
+          MODE_OUTCOME: ${{ steps.mode.outcome }}
           INVENTORY_OUTCOME: ${{ steps.inventory.outcome }}
           ARCHIVE_OUTCOME: ${{ steps.archive.outcome }}
           PUBLISHED_OUTCOME: ${{ steps.published.outcome }}
@@ -160,10 +166,12 @@ jobs:
         run: |
           test "$RESTORE_OUTCOME" = "success"
           test "$RECORDED_HOLD_OUTCOME" = "success"
+          test "$MODE_OUTCOME" = "success"
           test "$SEAL_OUTCOME" = "success"
           test "$PERSIST_OUTCOME" = "success"
           case "$MODE" in
             bootstrap|restore) exit 0 ;;
+            deferred) echo "Research deferred by active Commons cooldown; checkpoint preserved"; exit 0 ;;
             research) ;;
             *) exit 1 ;;
           esac
