@@ -1,3 +1,4 @@
+import {conditionalSkipEvidence} from "./tractorvs-owner-test-release-policy.mjs";
 // Advisory first-stage gate. Never grants publication or merges by itself.
 export const REPO = "onuronkol2-collab/tractorcompare-data";
 export const CONTEXT = "TractorVS / verified release readiness";
@@ -61,18 +62,23 @@ export function evaluate({sha,checks,statuses,advisoryRuns=[]}) {
     if (matches.length===1 && matches[0].status==="completed" && matches[0].conclusion!=="success")
       return {state:"failure",reason:"required check failed: "+name};
   }
+  let conditionalPending=false;
   for (const c of checks) {
     if (c.head_sha!==sha) return {state:"failure",reason:"wrong SHA in check list"};
     if (c.status!=="completed") continue;
     if (c.conclusion==="success") continue;
-    // Main-only ledger writer is intentionally skipped in a PR; its
-    // independent preview_reconcile check above must actually pass.
-    if (c.name==="build_and_reconcile" && c.app?.slug==="github-actions" && c.conclusion==="skipped") continue;
+    // Production-only skips are accepted solely with the same proof as the
+    // protected owner executor; unknown or forged skips remain failures.
+    if(c.conclusion==="skipped"){
+      const proof=conditionalSkipEvidence(c,advisoryRuns,sha,checks);
+      if(proof==="verified")continue;
+      if(proof==="pending"){conditionalPending=true;continue;}
+    }
     return {state:"failure",reason:"non-success check: "+c.name};
   }
   const other=statuses.filter(s=>s.context!==CONTEXT);
   if (other.some(s=>["error","failure"].includes(s.state))) return {state:"failure",reason:"commit status failed"};
-  if (other.some(s=>s.state!=="success") || checks.some(c=>c.status!=="completed")) return {state:"pending",reason:"checks running"};
+  if (conditionalPending || other.some(s=>s.state!=="success") || checks.some(c=>c.status!=="completed")) return {state:"pending",reason:"checks running"};
   for (const [name,app] of REQUIRED) {
     if (!checks.some(c=>c.name===name && c.app?.slug===app && c.head_sha===sha && c.status==="completed" && c.conclusion==="success"))
       return {state:"pending",reason:"missing check: "+name};

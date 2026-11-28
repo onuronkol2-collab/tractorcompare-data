@@ -1,3 +1,4 @@
+import {actionRunId} from "./tractorvs-protected-candidate-policy.mjs";
 import {readFile} from "node:fs/promises";
 import {REPO,CONTEXT,eligible,evaluate,validSha,completionCandidate,readinessRunId} from "./tractorvs-release-readiness-policy.mjs";
 const event=JSON.parse(await readFile(process.env.GITHUB_EVENT_PATH,"utf8"));
@@ -70,9 +71,12 @@ try{
   ]);
   // API statuses are newest first; ignore older status attempts.
   const latest=[...new Map(statuses.slice().reverse().map(s=>[s.context,s])).values()];
-  const ids=[...new Set(checks.map(readinessRunId).filter(id=>id!==null))];
+  const ids=[...new Set(checks.flatMap(c=>[readinessRunId(c),c.conclusion==="skipped"?actionRunId(c):null]).filter(id=>id!==null))];
+  if(ids.length>80)throw Error("Unexpected run inventory");
   for(const id of ids) {
-   if(!advisoryRunCache.has(id)) advisoryRunCache.set(id,(await api("/actions/runs/"+id)).data);
+   // Never freeze an in-progress result: skipped writer evidence is valid only
+   // after its originating run has completed successfully.
+   if(advisoryRunCache.get(id)?.status!=="completed") advisoryRunCache.set(id,(await api("/actions/runs/"+id)).data);
   }
   const advisoryRuns=ids.map(id=>advisoryRunCache.get(id));
   const decision=evaluate({sha,checks,statuses:latest,advisoryRuns});
