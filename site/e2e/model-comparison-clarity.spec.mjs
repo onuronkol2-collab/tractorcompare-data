@@ -39,13 +39,6 @@ test("published model price change announces selected market without moving focu
  await select.selectOption(chosen.value);
  await expect(page.locator(".model-market-sr-status")).toContainText(chosen.label);
  await expect(select).toBeFocused();
- const hasPrice=await page.locator("[data-model-price-source]").isVisible();
- const recovery=page.locator("[data-model-price-recovery]");
- if(hasPrice)await expect(recovery).toBeHidden();
- else {
-  await expect(recovery).toBeVisible();
-  await expect(recovery.locator("a")).toHaveAttribute("href","/tr/guides/farm-cost-calculator/");
- }
  const sourceLinks=page.locator(".model-sources-list a");
  for(const link of await sourceLinks.all()){
   expect((await link.boundingBox())?.height??0).toBeGreaterThanOrEqual(44);

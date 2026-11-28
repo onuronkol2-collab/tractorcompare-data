@@ -3,14 +3,12 @@ import type { TractorRecord } from "../lib/catalog";
 import { advisorText as t } from "../lib/advisor-i18n";
 import { COUNTRIES_BY_LOCALE } from "../lib/farm-advisor";
 import { MARKET_COUNTRIES, matchingPrice, formatMarketPriceRange } from "../lib/market-prices";
-import {localizedPath,type Locale} from "../lib/locales";
-import {RESEARCH_RECOVERY} from "../lib/research-recovery-i18n.ts";
+import type { Locale } from "../lib/locales";
 import { localizedCountryName } from "../lib/country-display";
 interface Props {tractor:TractorRecord;lang:Locale}
 const {tractor,lang} = Astro.props;
 const selected=COUNTRIES_BY_LOCALE[lang]||"US";
 const price=matchingPrice(tractor,selected);
-const recovery=RESEARCH_RECOVERY[lang];
 const payload=JSON.stringify({
   tractor_id:tractor.tractor_id, brand_name:tractor.brand_name,
   model_name:tractor.model_name, variant:tractor.variant,
@@ -41,7 +39,6 @@ const payload=JSON.stringify({
       {price?t(lang,"source")+": "+price.sourceName+" ↗":""}
     </a></p>
     <p class="model-market-price-note">{t(lang,"priceNote")}</p>
-    <div class="model-price-recovery" data-model-price-recovery hidden={!!price}><p>{recovery[4]}</p><a href={localizedPath(lang,"/guides/farm-cost-calculator/")}>{recovery[5]} <span aria-hidden="true">→</span></a></div>
     <script type="application/json" data-price-model-payload set:html={payload}></script>
   </div>
 </section>
@@ -56,8 +53,7 @@ const payload=JSON.stringify({
     const value=block.querySelector<HTMLElement>("[data-model-price-value]");
     const details=block.querySelector<HTMLElement>("[data-model-price-details]");
     const link=block.querySelector<HTMLAnchorElement>("[data-model-price-source]");
-    const recovery=block.querySelector<HTMLElement>("[data-model-price-recovery]");
-    if(!raw || !select || !value || !details || !link || !recovery) return;
+    if(!raw || !select || !value || !details || !link) return;
     const tractor=JSON.parse(raw.textContent||"{}") as {
       brand_name:string;model_name:string;variant:string|null;
       market:string|null;model_year:number|null;lang:Locale;
@@ -76,7 +72,6 @@ const payload=JSON.stringify({
       value.textContent=p?formatMarketPriceRange(p,tractor.lang):advisorText(tractor.lang,"priceUnknown");
       details.textContent=p?p.configuration+" · "+advisorText(tractor.lang,"date")+": "+p.observedOn:"";
       link.hidden=!p;
-      recovery.hidden=!!p;
       link.href=p?.sourceUrl||"#";
       link.textContent=p?advisorText(tractor.lang,"source")+": "+p.sourceName+" ↗":"";
       const message=[select.selectedOptions[0]?.textContent?.trim(),value.textContent,details.textContent].filter(Boolean).join(" · ");
@@ -111,7 +106,4 @@ const payload=JSON.stringify({
 .model-market-price :is(a,select):focus-visible{outline:3px solid #175c37;outline-offset:3px}
 @media(max-width:520px){.model-market-heading label{display:grid;width:100%}.model-market-heading select{width:100%}}
 @media(forced-colors:active){.model-market-price :is(a,select):focus-visible{outline-color:Highlight}}
- .model-price-recovery[hidden]{display:none!important}
- .model-price-recovery{margin-top:16px;padding:14px 16px;border:1px solid #d7ddcc;border-radius:9px;background:#f6f3e9;color:#405948}
- .model-price-recovery p{font-size:.9375rem;line-height:1.6;margin:0;overflow-wrap:anywhere}
 </style>
