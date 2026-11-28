@@ -6,7 +6,12 @@ const prBlock=s=>s.slice(s.indexOf('  pull_request:'),s.indexOf('\npermissions:'
 test('photo research never creates a skipped main-only job on pull requests',()=>{
  const research=read('batch-photo-research');
  assert.doesNotMatch(research,/pull_request/);
- assert.match(research,/schedule:/);
+ // Manual-first migration: do not treat commented-out schedule as an active schedule.
+ // A protected follow-up may restore the schedule only after real bootstrap and restore proof.
+ assert.match(research,/^  workflow_dispatch:/m);
+ assert.doesNotMatch(research,/^  (schedule|push):/m);
+ assert.match(research,/options: \[bootstrap, restore, research\]/);
+ assert.match(research,/default: restore/);
  assert.match(research,/research_all_models:/);
  assert.match(research,/group: tractorvs-all-model-photo-research/);
  const validation=read('photo-research-validation');
@@ -22,4 +27,17 @@ test('photo infrastructure changes trigger required release evidence',()=>{
   const block=prBlock(read(workflow));
   for(const pattern of patterns)assert.ok(block.includes('- "'+pattern+'"'),workflow+': '+pattern);
  }
+});
+test('bootstrap and restore never contact image providers or upload raw private review packets',()=>{
+ const research=read('batch-photo-research');
+ for(const id of ['inventory','archive','published','openverse','coverage']) {
+  const re=new RegExp('id: '+id+'\\n\\s+if: inputs\\.mode == \'research\'');
+  assert.match(research,re,id);
+ }
+ assert.match(research,/id: independent\n\s+if: steps\.coverage\.outcome == 'success'/);
+ assert.match(research,/id: checkpoint_privacy/);
+ assert.match(research,/data\.get\("files"\) != \{\}/);
+ assert.match(research,/id: seal\n\s+if: always\(\) && steps\.checkpoint_privacy\.outcome == 'success'/);
+ assert.match(research,/bootstrap\|restore\) exit 0/);
+ assert.doesNotMatch(research,/run:.*photo-commons-collect|run:.*photo-original-acquisition|photo-discovery-report\/commons-collector\.json/);
 });
