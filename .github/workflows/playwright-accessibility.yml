@@ -3,6 +3,8 @@ name: TractorVS browser smoke and accessibility baseline
 on:
   pull_request:
     paths:
+      - "scripts/tractorvs-owner-test-release-policy.mjs"
+      - "site/tests/owner-test-release.test.mjs"
       - "scripts/tractorvs-production-barrier.mjs"
       - "scripts/tractorvs-owner-test-release.mjs"
       - "scripts/tractorvs-protected-release-executor.mjs"
