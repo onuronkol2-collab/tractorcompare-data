@@ -86,3 +86,18 @@ test("pending technical inventory never converts terminal checks into success",(
  assert.equal(pendingOwnerChecks([{status:"completed",conclusion:"neutral"}]),false);
  for(const conclusion of ["failure","cancelled","timed_out","action_required","stale","startup_failure"])assert.throws(()=>pendingOwnerChecks([{status:"completed",conclusion},{status:"in_progress"}]),/Terminal technical check/);
 });
+
+// Keep the durable operator instruction consistent with the pre-armed executor.
+test("operator instructions arm TEST before completion while retaining merge gates",async()=>{
+ const {readFile}=await import("node:fs/promises");
+ const guide=await readFile(new URL("../../AGENTS.md",import.meta.url),"utf8");
+ assert.match(guide,/PR hazır olup testler başlatıldığında/);
+ assert.match(guide,/testlerin bitmesini beklemeden, salt okunur korumalı owner TEST taramasını/);
+ assert.match(guide,/Merge yalnız tüm zorunlu kontroller başarılı ve yayın koşulları sağlanmışsa gerçekleşir/);
+ assert.doesNotMatch(guide,/TEST kapsamında tüm kontroller başarılı olunca güvenilir repo sahibi kimliğinden exact/);
+ const policy=await readFile(new URL("../../.github/workflows/tractorvs-owner-test-release.yml",import.meta.url),"utf8");
+ const scan=policy.slice(policy.indexOf("  scan:"),policy.indexOf("  merge:"));
+ assert.match(scan,/timeout-minutes: 45/);
+ assert.doesNotMatch(scan,/APP_PRIVATE_KEY|APP_ID|secure-publisher/);
+ assert.match(policy,/needs\.scan\.outputs\.ready == 'true'/);
+});
