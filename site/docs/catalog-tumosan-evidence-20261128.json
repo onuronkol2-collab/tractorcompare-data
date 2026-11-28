@@ -2405,14 +2405,14 @@
           "value": "4",
           "unit": "count",
           "locator": "5255S / Hydraulics",
-          "context": null
+          "context": "OEM hydraulic power outlets; not valve pairs or pump flow"
         },
         {
           "name": "rear_lift_capacity",
           "value": "2200",
           "unit": "kg",
           "locator": "5255S / Hydraulics",
-          "context": "Measurement point unspecified"
+          "context": "OEM hydraulic lifting capacity; rear location and measurement point not explicit; canonical mapping held"
         },
         {
           "name": "wheelbase",
@@ -2426,26 +2426,27 @@
           "value": "3810",
           "unit": "mm",
           "locator": "5255S / Dimensions / length",
-          "context": null
+          "context": "Common model-level length; station-specific length not stated"
         },
         {
           "name": "ground_clearance",
           "value": "260",
           "unit": "mm",
           "locator": "5255S / Dimensions / 4WD ground clearance",
-          "context": "OEM specifies 360/70R28"
+          "context": "OEM specifies 360/70R28; tyre option rows repeat 360/70R24 despite dimension row specifying 360/70R28; do not infer fitted tyre"
         },
         {
           "name": "unladen_weight",
           "value": "2450",
           "unit": "kg",
           "locator": "5255S / Weight / 4WD",
-          "context": null
+          "context": "4WD unladen mass; operator station not explicit in weight row"
         }
       ],
       "notes": [
         "Existing 2026 draft candidate, technical page undated. 6000 ROPS does not inherit cab weight. Distinct N and S tank and dimensions. Preserve tyre condition; not all tyre rows agree."
-      ]
+      ],
+      "sourceRead": "Official Turkish OEM series comparison table re-read 2026-11-28, all existing observation values reconciled. Exact catalogue identity pending; common model-level specifications do not establish every station configuration."
     },
     {
       "brand": "Tümosan",
@@ -2589,14 +2590,14 @@
           "value": "4",
           "unit": "count",
           "locator": "5265S / Hydraulics",
-          "context": null
+          "context": "OEM hydraulic power outlets; not valve pairs or pump flow"
         },
         {
           "name": "rear_lift_capacity",
           "value": "2200",
           "unit": "kg",
           "locator": "5265S / Hydraulics",
-          "context": "Measurement point unspecified"
+          "context": "OEM hydraulic lifting capacity; rear location and measurement point not explicit; canonical mapping held"
         },
         {
           "name": "wheelbase",
@@ -2610,26 +2611,27 @@
           "value": "3810",
           "unit": "mm",
           "locator": "5265S / Dimensions / length",
-          "context": null
+          "context": "Common model-level length; station-specific length not stated"
         },
         {
           "name": "ground_clearance",
           "value": "260",
           "unit": "mm",
           "locator": "5265S / Dimensions / 4WD ground clearance",
-          "context": "OEM specifies 360/70R28"
+          "context": "OEM specifies 360/70R28; tyre option rows repeat 360/70R24 despite dimension row specifying 360/70R28; do not infer fitted tyre"
         },
         {
           "name": "unladen_weight",
           "value": "2450",
           "unit": "kg",
           "locator": "5265S / Weight / 4WD",
-          "context": null
+          "context": "4WD unladen mass; operator station not explicit in weight row"
         }
       ],
       "notes": [
         "Existing 2026 draft candidate, technical page undated. 6000 ROPS does not inherit cab weight. Distinct N and S tank and dimensions. Preserve tyre condition; not all tyre rows agree."
-      ]
+      ],
+      "sourceRead": "Official Turkish OEM series comparison table re-read 2026-11-28, all existing observation values reconciled. Exact catalogue identity pending; common model-level specifications do not establish every station configuration."
     },
     {
       "brand": "Tümosan",
@@ -2773,14 +2775,14 @@
           "value": "4",
           "unit": "count",
           "locator": "5255N / Hydraulics",
-          "context": null
+          "context": "OEM hydraulic power outlets; not valve pairs or pump flow"
         },
         {
           "name": "rear_lift_capacity",
           "value": "2200",
           "unit": "kg",
           "locator": "5255N / Hydraulics",
-          "context": "Measurement point unspecified"
+          "context": "OEM hydraulic lifting capacity; rear location and measurement point not explicit; canonical mapping held"
         },
         {
           "name": "wheelbase",
@@ -2794,26 +2796,27 @@
           "value": "3800",
           "unit": "mm",
           "locator": "5255N / Dimensions / length",
-          "context": null
+          "context": "Common model-level length; station-specific length not stated"
         },
         {
           "name": "ground_clearance",
           "value": "265",
           "unit": "mm",
           "locator": "5255N / Dimensions / 4WD ground clearance",
-          "context": "OEM specifies 360/70R24"
+          "context": "OEM specifies 360/70R24; not a universal clearance across tyres"
         },
         {
           "name": "unladen_weight",
           "value": "2450",
           "unit": "kg",
           "locator": "5255N / Weight / 4WD",
-          "context": null
+          "context": "4WD unladen mass; operator station not explicit in weight row"
         }
       ],
       "notes": [
         "Existing 2026 draft candidate, technical page undated. 6000 ROPS does not inherit cab weight. Distinct N and S tank and dimensions. Preserve tyre condition; not all tyre rows agree."
-      ]
+      ],
+      "sourceRead": "Official Turkish OEM series comparison table re-read 2026-11-28, all existing observation values reconciled. Exact catalogue identity pending; common model-level specifications do not establish every station configuration. Combined canopy/cab height does not establish ROPS-specific height."
     },
     {
       "brand": "Tümosan",
@@ -2957,14 +2960,14 @@
           "value": "4",
           "unit": "count",
           "locator": "5265N / Hydraulics",
-          "context": null
+          "context": "OEM hydraulic power outlets; not valve pairs or pump flow"
         },
         {
           "name": "rear_lift_capacity",
           "value": "2200",
           "unit": "kg",
           "locator": "5265N / Hydraulics",
-          "context": "Measurement point unspecified"
+          "context": "OEM hydraulic lifting capacity; rear location and measurement point not explicit; canonical mapping held"
         },
         {
           "name": "wheelbase",
@@ -2978,26 +2981,27 @@
           "value": "3800",
           "unit": "mm",
           "locator": "5265N / Dimensions / length",
-          "context": null
+          "context": "Common model-level length; station-specific length not stated"
         },
         {
           "name": "ground_clearance",
           "value": "265",
           "unit": "mm",
           "locator": "5265N / Dimensions / 4WD ground clearance",
-          "context": "OEM specifies 360/70R24"
+          "context": "OEM specifies 360/70R24; not a universal clearance across tyres"
         },
         {
           "name": "unladen_weight",
           "value": "2450",
           "unit": "kg",
           "locator": "5265N / Weight / 4WD",
-          "context": null
+          "context": "4WD unladen mass; operator station not explicit in weight row"
         }
       ],
       "notes": [
         "Existing 2026 draft candidate, technical page undated. 6000 ROPS does not inherit cab weight. Distinct N and S tank and dimensions. Preserve tyre condition; not all tyre rows agree."
-      ]
+      ],
+      "sourceRead": "Official Turkish OEM series comparison table re-read 2026-11-28, all existing observation values reconciled. Exact catalogue identity pending; common model-level specifications do not establish every station configuration. Combined canopy/cab height does not establish ROPS-specific height."
     },
     {
       "brand": "Tümosan",
@@ -3141,14 +3145,14 @@
           "value": "4",
           "unit": "count",
           "locator": "6055 / Hydraulics",
-          "context": null
+          "context": "OEM hydraulic power outlets; not valve pairs or pump flow"
         },
         {
           "name": "rear_lift_capacity",
           "value": "2200",
           "unit": "kg",
           "locator": "6055 / Hydraulics",
-          "context": "Measurement point unspecified"
+          "context": "OEM hydraulic lifting capacity; rear location and measurement point not explicit; canonical mapping held"
         },
         {
           "name": "wheelbase",
@@ -3162,26 +3166,27 @@
           "value": "3900",
           "unit": "mm",
           "locator": "6055 / Dimensions / length",
-          "context": null
+          "context": "Common model-level length; station-specific length not stated"
         },
         {
           "name": "ground_clearance",
           "value": "350",
           "unit": "mm",
           "locator": "6055 / Dimensions / 4WD ground clearance",
-          "context": "OEM specifies 380/85R30"
+          "context": "OEM specifies 380/85R30; common model-level value"
         },
         {
           "name": "unladen_weight",
           "value": "3000",
           "unit": "kg",
           "locator": "6055 / Weight / cab",
-          "context": null
+          "context": "Cab unladen mass; not transferable to ROPS"
         }
       ],
       "notes": [
         "Existing 2026 draft candidate, technical page undated. 6000 ROPS does not inherit cab weight. Distinct N and S tank and dimensions. Preserve tyre condition; not all tyre rows agree."
-      ]
+      ],
+      "sourceRead": "Official Turkish OEM series comparison table re-read 2026-11-28, all existing observation values reconciled. Exact catalogue identity pending; common model-level specifications do not establish every station configuration."
     },
     {
       "brand": "Tümosan",
@@ -3325,14 +3330,14 @@
           "value": "4",
           "unit": "count",
           "locator": "6055 / Hydraulics",
-          "context": null
+          "context": "OEM hydraulic power outlets; not valve pairs or pump flow"
         },
         {
           "name": "rear_lift_capacity",
           "value": "2200",
           "unit": "kg",
           "locator": "6055 / Hydraulics",
-          "context": "Measurement point unspecified"
+          "context": "OEM hydraulic lifting capacity; rear location and measurement point not explicit; canonical mapping held"
         },
         {
           "name": "wheelbase",
@@ -3346,19 +3351,20 @@
           "value": "3900",
           "unit": "mm",
           "locator": "6055 / Dimensions / length",
-          "context": null
+          "context": "Common model-level length; station-specific length not stated"
         },
         {
           "name": "ground_clearance",
           "value": "350",
           "unit": "mm",
           "locator": "6055 / Dimensions / 4WD ground clearance",
-          "context": "OEM specifies 380/85R30"
+          "context": "OEM specifies 380/85R30; common model-level value"
         }
       ],
       "notes": [
         "Existing 2026 draft candidate, technical page undated. 6000 ROPS does not inherit cab weight. Distinct N and S tank and dimensions. Preserve tyre condition; not all tyre rows agree."
-      ]
+      ],
+      "sourceRead": "Official Turkish OEM series comparison table re-read 2026-11-28, all existing observation values reconciled. Exact catalogue identity pending; common model-level specifications do not establish every station configuration. Canopy-labelled rear ballast row exists but canopy unladen mass not supplied."
     },
     {
       "brand": "Tümosan",
@@ -3502,14 +3508,14 @@
           "value": "4",
           "unit": "count",
           "locator": "6065 / Hydraulics",
-          "context": null
+          "context": "OEM hydraulic power outlets; not valve pairs or pump flow"
         },
         {
           "name": "rear_lift_capacity",
           "value": "2200",
           "unit": "kg",
           "locator": "6065 / Hydraulics",
-          "context": "Measurement point unspecified"
+          "context": "OEM hydraulic lifting capacity; rear location and measurement point not explicit; canonical mapping held"
         },
         {
           "name": "wheelbase",
@@ -3523,26 +3529,27 @@
           "value": "3900",
           "unit": "mm",
           "locator": "6065 / Dimensions / length",
-          "context": null
+          "context": "Common model-level length; station-specific length not stated"
         },
         {
           "name": "ground_clearance",
           "value": "350",
           "unit": "mm",
           "locator": "6065 / Dimensions / 4WD ground clearance",
-          "context": "OEM specifies 380/85R30"
+          "context": "OEM specifies 380/85R30; common model-level value"
         },
         {
           "name": "unladen_weight",
           "value": "3000",
           "unit": "kg",
           "locator": "6065 / Weight / cab",
-          "context": null
+          "context": "Cab unladen mass; not transferable to ROPS"
         }
       ],
       "notes": [
         "Existing 2026 draft candidate, technical page undated. 6000 ROPS does not inherit cab weight. Distinct N and S tank and dimensions. Preserve tyre condition; not all tyre rows agree."
-      ]
+      ],
+      "sourceRead": "Official Turkish OEM series comparison table re-read 2026-11-28, all existing observation values reconciled. Exact catalogue identity pending; common model-level specifications do not establish every station configuration."
     },
     {
       "brand": "Tümosan",
@@ -3686,14 +3693,14 @@
           "value": "4",
           "unit": "count",
           "locator": "6065 / Hydraulics",
-          "context": null
+          "context": "OEM hydraulic power outlets; not valve pairs or pump flow"
         },
         {
           "name": "rear_lift_capacity",
           "value": "2200",
           "unit": "kg",
           "locator": "6065 / Hydraulics",
-          "context": "Measurement point unspecified"
+          "context": "OEM hydraulic lifting capacity; rear location and measurement point not explicit; canonical mapping held"
         },
         {
           "name": "wheelbase",
@@ -3707,19 +3714,20 @@
           "value": "3900",
           "unit": "mm",
           "locator": "6065 / Dimensions / length",
-          "context": null
+          "context": "Common model-level length; station-specific length not stated"
         },
         {
           "name": "ground_clearance",
           "value": "350",
           "unit": "mm",
           "locator": "6065 / Dimensions / 4WD ground clearance",
-          "context": "OEM specifies 380/85R30"
+          "context": "OEM specifies 380/85R30; common model-level value"
         }
       ],
       "notes": [
         "Existing 2026 draft candidate, technical page undated. 6000 ROPS does not inherit cab weight. Distinct N and S tank and dimensions. Preserve tyre condition; not all tyre rows agree."
-      ]
+      ],
+      "sourceRead": "Official Turkish OEM series comparison table re-read 2026-11-28, all existing observation values reconciled. Exact catalogue identity pending; common model-level specifications do not establish every station configuration. Canopy-labelled rear ballast row exists but canopy unladen mass not supplied."
     },
     {
       "brand": "Tümosan",
