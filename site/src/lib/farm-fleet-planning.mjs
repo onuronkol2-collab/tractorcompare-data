@@ -22,3 +22,14 @@ export function estimateSequentialWorkdays(hours,dailyHours){
  if(!Number.isFinite(days))throw new RangeError("Invalid workdays");
  return days;
 }
+
+/** User-supplied sequential working window; no calendar or weather prediction. */
+export function estimateFieldWindow(hours,dailyHours,days){
+ const workdays=estimateSequentialWorkdays(hours,dailyHours);
+ if(days===null)return {workdays,requiredDailyHours:null,availableHours:null,remainingHours:null};
+ if(typeof days!=="number"||!Number.isFinite(days)||days<0.1||days>3660)throw new RangeError("Invalid available days");
+ const requiredDailyHours=hours/days;
+ if(!Number.isFinite(requiredDailyHours))throw new RangeError("Unrepresentable work requirement");
+ const availableHours=dailyHours===null?null:days*dailyHours;
+ return {workdays,requiredDailyHours,availableHours,remainingHours:availableHours===null?null:availableHours-hours};
+}

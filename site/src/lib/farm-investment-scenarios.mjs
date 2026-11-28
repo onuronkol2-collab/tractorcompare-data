@@ -49,12 +49,10 @@ export function investmentScenarios(input){
   const fuelExposure=hours*fuel*fuelPrice*year;
   const fuelPriceLow=total===null?null:total-fuelExposure*0.2;
   const fuelPriceHigh=total===null?null:total+fuelExposure*0.2;
-  // Rental equivalence at this horizon: a hypothetical hourly rate, not a quote.
-  const equivalentRentalRate=safeRatio(hours*year);
   results.push({years:year,operating,interestPaid:interest,loanPayments:paid,loanBalance:balance,
    saleProceeds:resale[index],total,perHour:safeRatio(hours*year),
    perHectare:safeRatio(hectares===null?null:hectares*year),
-   fuelPriceLow,fuelPriceHigh,equivalentRentalRate,rental,rentalDifference:total===null||rental===null?null:total-rental});
+   fuelPriceLow,fuelPriceHigh,rental,rentalDifference:total===null||rental===null?null:total-rental});
  }
  return {monthlyPayment:payment,annualOperating,scenarios:results};
 }

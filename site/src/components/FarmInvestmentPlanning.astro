@@ -1,4 +1,5 @@
 ---
+import {fieldWindowText} from "../lib/farm-field-window-i18n";
 import {fuelSensitivityText} from "../lib/farm-fuel-sensitivity-i18n";
 import {investmentPlanningText} from "../lib/farm-investment-planning-i18n";
 import {farmDecisionText} from "../lib/farm-decision-i18n";
@@ -9,6 +10,7 @@ interface Props {lang:Locale}
 const {lang}=Astro.props;
 const c=investmentPlanningText(lang), d=farmDecisionText(lang), f=farmCostText(lang), m=farmModelText(lang);
 const sensitivity=fuelSensitivityText(lang);
+const fieldWindow=fieldWindowText(lang);
 const years=[1,3,5,10];
 const operationSlots=[1,2,3,4,5,6];
 const fields=[
@@ -44,13 +46,13 @@ const taskFields=[["area",m.fieldArea,0.0001,1000000],["passes",c.passes,1,100],
  <details id="farm-field-plan">
   <summary>{c.fleet}</summary>
   <p>{c.multiFleetNote}</p>
-  <form data-planning="fleet" data-clarity-mask="true" autocomplete="off" data-report-title={c.fleet} data-report-note={c.multiFleetNote}>
+  <form data-planning="fleet" data-clarity-mask="true" autocomplete="off" data-report-title={c.fleet} data-report-note={c.multiFleetNote+" "+fieldWindow.note}>
    <fieldset disabled data-planning-controls>
-    <div class="planning-grid"><label>{c.operationCount}<select name="operationCount">{operationSlots.map(i=><option value={i} selected={i===2}>{i}</option>)}</select></label><label>{c.dailyHours}<input name="dailyHours" type="number" inputmode="decimal" min="0.1" max="24" step="any"/></label></div>
+    <div class="planning-grid"><label>{c.operationCount}<select name="operationCount">{operationSlots.map(i=><option value={i} selected={i===2}>{i}</option>)}</select></label><label>{c.dailyHours}<input name="dailyHours" type="number" inputmode="decimal" min="0.1" max="24" step="any"/></label><label>{fieldWindow.days}<input name="availableDays" type="number" inputmode="decimal" min="0.1" max="3660" step="any"/></label></div>
     <div class="planning-grid">{operationSlots.map(i=><fieldset class="task" data-task-slot={i} hidden={i>2} disabled={i>2}><legend>{c.operation} {i}</legend>{taskFields.map(([key,label,min,max])=><label>{label}<input name={i+"-"+key} type="number" inputmode="decimal" min={min} max={max} step={key==="passes"?"1":"any"} required/></label>)}<label>{m.areaUnit}<select name={i+"-unit"}>{["ha","decare","acre","m2","mu","tan"].map(unit=><option value={unit}>{unit==="m2"?"m²":unit}</option>)}</select></label></fieldset>)}</div>
     <button type="submit">{f.calculate}</button>
     <p data-planning-error role="alert" hidden>{f.invalid}</p>
-    <div data-planning-results hidden aria-live="polite" aria-atomic="true"><h3>{c.fleetTotal}</h3><p><span data-report-label>{c.dayEstimate}</span>: <output data-workdays>—</output></p><dl class="planning-grid">{taskMetrics.map(([key,label])=><div><dt>{label}</dt><dd data-total={key}>—</dd></div>)}</dl><div class="planning-grid">{operationSlots.map(i=><section class="result-card" data-task-result={i} hidden={i>2}><h4>{c.operation} {i}</h4><dl>{taskMetrics.map(([key,label])=><div><dt>{label}</dt><dd data-task-metric={key}>—</dd></div>)}</dl></section>)}</div></div>
+    <div data-planning-results hidden aria-live="polite" aria-atomic="true"><h3>{c.fleetTotal}</h3><p><span data-report-label>{c.dayEstimate}</span>: <output data-workdays>—</output></p><p>{fieldWindow.note}</p><dl class="planning-grid">{[["requiredDailyHours",fieldWindow.required],["availableHours",fieldWindow.available],["remainingHours",fieldWindow.remaining]].map(([key,label])=><div><dt>{label}</dt><dd data-window={key}>—</dd></div>)}</dl><dl class="planning-grid">{taskMetrics.map(([key,label])=><div><dt>{label}</dt><dd data-total={key}>—</dd></div>)}</dl><div class="planning-grid">{operationSlots.map(i=><section class="result-card" data-task-result={i} hidden={i>2}><h4>{c.operation} {i}</h4><dl>{taskMetrics.map(([key,label])=><div><dt>{label}</dt><dd data-task-metric={key}>—</dd></div>)}</dl></section>)}</div></div>
     <div data-report-actions hidden class="report-actions"><p>{c.reportPrivacy}</p><button type="button" data-report-copy>{d.copyResult}</button><button type="button" data-report-download>{c.downloadReport}</button><p data-report-status role="status"></p></div>
    </fieldset>
   </form>
@@ -58,7 +60,7 @@ const taskFields=[["area",m.fieldArea,0.0001,1000000],["passes",c.passes,1,100],
 </section>
 <script>
  import {investmentScenarios} from "../lib/farm-investment-scenarios.mjs";
- import {planSequentialFieldWork,estimateSequentialWorkdays} from "../lib/farm-fleet-planning.mjs";
+ import {planSequentialFieldWork,estimateFieldWindow} from "../lib/farm-fleet-planning.mjs";
  import {farmAreaInputBounds} from "../lib/farm-area-input.mjs";
  import {buildPlanningReport} from "../lib/farm-planning-report.mjs";
  import {FARM_TOOL_DONE_EVENT} from "../lib/analytics-product-actions";
@@ -80,14 +82,14 @@ const taskFields=[["area",m.fieldArea,0.0001,1000000],["passes",c.passes,1,100],
    const status=form.querySelector<HTMLElement>("[data-report-status]");
    if(!result||!error||!controls||!actions||!status)continue;
    let revision=0;
-   const clear=()=>{revision++;actions.hidden=true;status.textContent="";result.hidden=true;error.hidden=true;for(const node of result.querySelectorAll("[data-payment],[data-metric],[data-total],[data-task-metric],[data-workdays]"))node.textContent="—";};
+   const clear=()=>{revision++;actions.hidden=true;status.textContent="";result.hidden=true;error.hidden=true;for(const node of result.querySelectorAll("[data-payment],[data-metric],[data-total],[data-task-metric],[data-workdays],[data-window]"))node.textContent="—";};
    form.addEventListener("input",clear);form.addEventListener("change",clear);form.addEventListener("reset",clear);form.addEventListener("invalid",()=>{clear();error.hidden=false;},true);
    const report=()=>{
     if(result.hidden||actions.hidden)return null;
     const blocks:{title:string,entries:[string,string][]}[]=[];
     const directEntries=(scope:HTMLElement)=>{
      const entries:[string,string][]=[];
-     for(const output of scope.querySelectorAll<HTMLElement>("[data-payment],[data-workdays],[data-total],[data-metric],[data-task-metric]")){
+     for(const output of scope.querySelectorAll<HTMLElement>("[data-payment],[data-workdays],[data-total],[data-metric],[data-task-metric],[data-window]")){
       if(output.closest("[hidden]"))continue;
       if(scope===result&&output.closest("[data-year],[data-task-result]"))continue;
       const label=output.matches("dd")?output.previousElementSibling?.textContent:output.parentElement?.querySelector("[data-report-label]")?.textContent;
@@ -137,7 +139,9 @@ const taskFields=[["area",m.fieldArea,0.0001,1000000],["passes",c.passes,1,100],
       const count=Number(data.get("operationCount"));if(!Number.isInteger(count)||count<1||count>6)throw Error("Invalid operation count");
       const tasks=Array.from({length:count},(_,index)=>index+1).map(i=>{const n=(key:string)=>read(i+"-"+key) ?? NaN;return {area:n("area"),passes:n("passes"),width:n("width"),speed:n("speed"),efficiency:n("efficiency"),fuel:n("fuel"),price:n("price"),other:n("other"),unit:String(data.get(i+"-unit"))};});
       const out=planSequentialFieldWork(tasks);
-      const workdays=result.querySelector("[data-workdays]");if(workdays)workdays.textContent=render(estimateSequentialWorkdays(out.totals.hours,read("dailyHours",true)));
+      const windowPlan=estimateFieldWindow(out.totals.hours,read("dailyHours",true),read("availableDays",true));
+      const workdays=result.querySelector("[data-workdays]");if(workdays)workdays.textContent=render(windowPlan.workdays);
+      for(const el of result.querySelectorAll<HTMLElement>("[data-window]"))el.textContent=render(windowPlan[el.dataset.window as keyof typeof windowPlan]);
       for(const el of result.querySelectorAll<HTMLElement>("[data-total]"))el.textContent=render(out.totals[el.dataset.total as keyof typeof out.totals]);
       for(const card of result.querySelectorAll<HTMLElement>("[data-task-result]")){
        const row=out.rows[Number(card.dataset.taskResult)-1];card.hidden=!row;if(!row)continue;
