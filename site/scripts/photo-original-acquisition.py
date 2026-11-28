@@ -18,6 +18,9 @@ FORMATS={'image/jpeg':('JPEG','jpg'),'image/png':('PNG','png'),'image/webp':('WE
 LICENSES={'CC0 1.0','CC BY 2.0','CC BY 2.5','CC BY 3.0','CC BY 4.0','CC BY-SA 2.0','CC BY-SA 2.5','CC BY-SA 3.0','CC BY-SA 4.0','verified_public_domain'}
 class NoRedirect(HTTPRedirectHandler):
     def redirect_request(self,*args,**kwargs): return None
+class StatePersistenceError(RuntimeError):
+    """Never continue provider requests after an uncertain ledger write."""
+
 class Deferred(Exception):
     def __init__(self,seconds,reason): self.seconds=seconds; super().__init__(reason)
 
@@ -177,9 +180,25 @@ def validate_ledger(state):
     if set(state['held']) & set(state['completed']):
         raise ValueError('conflicting completed and held records; recover manually')
 
-def acquire(rows,root,state_path,*,limit=12,fetcher=get_bytes,now=time.time,delay=time.sleep,shared_budget=None):
+def verified_seed_path(r,root,seed_root):
+    # Only a reviewed manifest with exact SHA256 may address recovered bytes.
+    # Never infer rights, identity, or the source from a cache filename.
+    digest=r.get('expected_sha256')
+    if not digest:return None
+    name=f"{digest}.{FORMATS[r['expected_mime']][1]}"
+    for directory in (root,seed_root):
+        if directory is not None and os.path.lexists(directory/name):
+            return directory,name
+    return None
+
+def acquire(rows,root,state_path,*,limit=12,fetcher=get_bytes,now=time.time,delay=time.sleep,shared_budget=None,state_persist=None,provider_gate=None,seed_root=None):
     if not isinstance(rows,list) or type(limit) is not int or not 1<=limit<=50: raise ValueError('invalid manifest or request budget')
     root.mkdir(mode=0o700,parents=True,exist_ok=True);root=root.resolve();state_path=state_path.resolve();state_path.parent.mkdir(mode=0o700,parents=True,exist_ok=True)
+    if seed_root is not None:
+        seed_root=Path(seed_root)
+        if seed_root.is_symlink() or not seed_root.is_dir() or stat.S_IMODE(seed_root.stat().st_mode)&0o077:
+            raise ValueError('existing private seed directory required')
+        seed_root=seed_root.resolve()
     lock=state_path.with_suffix(state_path.suffix+'.lock');fd=os.open(lock,os.O_CREAT|os.O_EXCL|os.O_WRONLY,0o600)
     try:
         state=json.loads(state_path.read_text()) if state_path.exists() else {'version':1,'paused_until':{},'completed':{},'held':{}}
@@ -189,6 +208,12 @@ def acquire(rows,root,state_path,*,limit=12,fetcher=get_bytes,now=time.time,dela
         if not isinstance(retry,dict): raise ValueError('invalid retry ledger; recover manually')
         for k,v in retry.items():
             if not re.fullmatch(r'[0-9a-f]{64}',k) or not isinstance(v,dict) or type(v.get('attempts')) is not int or not 1<=v['attempts']<=1000000 or type(v.get('next_at')) not in (int,float) or not 0<=v['next_at']<1e12: raise ValueError('invalid retry record; recover manually')
+        def save_state():
+            try:
+                atomic_json(state_path,state)
+                if state_persist is not None:state_persist(state)
+            except Exception as e:
+                raise StatePersistenceError("acquisition ledger persistence failed; stop provider requests") from e
         results=[];attempts=0;transport_paused=set()
         # Real Commons HTTP never runs without a shared reservation. Test fixtures can inject a mock.
         budget=shared_budget if shared_budget is not None else (shared_commons_command if fetcher is get_bytes or os.environ.get('TRACTORVS_COMMONS_BUDGET_FILE') or os.environ.get('TRACTORVS_REQUIRE_SHARED_COMMONS_BUDGET')=='1' else None)
@@ -198,17 +223,34 @@ def acquire(rows,root,state_path,*,limit=12,fetcher=get_bytes,now=time.time,dela
             try:
                 p=validate(r)
                 key=hashlib.sha256(json.dumps([p,r['source_image_url'],r.get('expected_sha1'),r.get('expected_sha256'),r['tractor_id']],ensure_ascii=False).encode()).hexdigest()
-                if key in state['completed']:
+                legacy_key=hashlib.sha256(json.dumps([p,r['source_image_url'],r.get('expected_sha1'),None,r['tractor_id']],ensure_ascii=False).encode()).hexdigest()
+                seed=verified_seed_path(r,root,seed_root)
+                if key in state['held'] or legacy_key in state['held']:
+                    report.update(status='held_previous_failure',reason=state['held'].get(key,state['held'].get(legacy_key)))
+                elif key in state['completed']:
                     previous=state['completed'][key]
                     raw=read_cached_original(root,previous['local_path'])
                     report.update(status='reused_verified_original',record=store(root,r,raw))
-                elif key in state['held']: report.update(status='held_previous_failure',reason=state['held'][key])
+                elif seed is not None:
+                    # This is a local read, not a provider request. Even during a
+                    # cooldown we can reuse exact bytes with current rights review.
+                    raw=read_cached_original(*seed)
+                    rec=store(root,r,raw)
+                    state['completed'][key]={'local_path':rec['local_path']}
+                    retry.pop(key,None)
+                    save_state()
+                    report.update(status='reused_verified_original',record=rec)
                 elif p in transport_paused: report.update(status='provider_transport_deferred')
                 elif state['paused_until'].get(p,0)>now(): report.update(status='provider_paused')
                 elif retry.get(key,{}).get('next_at',0)>now(): report.update(status='transport_retry_deferred',next_at=retry[key]['next_at'])
                 elif attempts>=limit: report.update(status='request_budget_deferred')
                 elif p=='commons' and commons_state_failed: report.update(status='shared_budget_unavailable')
                 else:
+                    if provider_gate is not None:
+                        reason=provider_gate(r,state)
+                        if reason:
+                            report.update(status='private_acquisition_deferred',reason=reason)
+                            results.append(report);continue
                     if p=='commons' and budget is not None:
                         try:
                             reservation=budget('reserve')
@@ -228,7 +270,7 @@ def acquire(rows,root,state_path,*,limit=12,fetcher=get_bytes,now=time.time,dela
                             except Exception:
                                 commons_state_failed=True
                                 report.update(status='shared_budget_unavailable',reason='shared cooldown persistence failed')
-                                atomic_json(state_path,state)
+                                save_state()
                                 # A lost global cooldown is unsafe for subsequent metadata stages.
                                 # Raise before sealing any trusted shared checkpoint.
                                 raise RuntimeError('shared Commons cooldown persistence failed')
@@ -243,16 +285,16 @@ def acquire(rows,root,state_path,*,limit=12,fetcher=get_bytes,now=time.time,dela
                         else:
                             # Identity, integrity, permissions and other unknown errors remain held.
                             state['held'][key]=type(e).__name__;retry.pop(key,None);report.update(status='held_for_review',reason=type(e).__name__)
-                    atomic_json(state_path,state)
+                    save_state()
                     if attempts<limit: delay(2)
             except Exception as e:
-                if commons_state_failed and isinstance(e,RuntimeError): raise
+                if isinstance(e,StatePersistenceError) or (commons_state_failed and isinstance(e,RuntimeError)): raise
                 report.update(status='held',reason=str(e)[:180])
             results.append(report)
         return {'publication_authorized':False,'attempts':attempts,'records':results}
     finally: os.close(fd);lock.unlink()
 
 def main():
-    p=argparse.ArgumentParser();p.add_argument('manifest',type=Path);p.add_argument('private_original_root',type=Path);p.add_argument('state',type=Path);p.add_argument('report',type=Path);a=p.parse_args()
-    result=acquire(json.loads(a.manifest.read_text()),a.private_original_root,a.state);atomic_json(a.report,result)
+    p=argparse.ArgumentParser();p.add_argument('manifest',type=Path);p.add_argument('private_original_root',type=Path);p.add_argument('state',type=Path);p.add_argument('report',type=Path);p.add_argument('--seed-root',type=Path);a=p.parse_args()
+    result=acquire(json.loads(a.manifest.read_text()),a.private_original_root,a.state,seed_root=a.seed_root);atomic_json(a.report,result)
 if __name__=='__main__':main()
