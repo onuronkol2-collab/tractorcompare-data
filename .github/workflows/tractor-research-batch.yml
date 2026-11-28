@@ -66,7 +66,7 @@ jobs:
     timeout-minutes: 5
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v7
         with:
           node-version: "22"
       - name: Test offline multi-model PDF indexing with synthetic documents only
@@ -95,7 +95,7 @@ jobs:
       actions: write
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v7
         with:
           node-version: "22"
       - name: Enforce UTC daily and monthly dispatch ceilings before any paid work

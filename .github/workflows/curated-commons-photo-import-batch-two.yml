@@ -22,7 +22,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           persist-credentials: true
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v7
         with:
           node-version: "22.23.4"
       - name: Verify three exact Commons File titles, copyright, CC BY-SA license, and all first-party JPEGs
