@@ -75,7 +75,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 4
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - uses: actions/setup-node@v4
         with:
           node-version: "22.23.4"
@@ -96,7 +96,7 @@ jobs:
     permissions:
       contents: read
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - uses: actions/setup-node@v4
         with:
           node-version: "22.23.4"
@@ -123,7 +123,7 @@ jobs:
           node --input-type=module -e 'import {readFileSync} from "node:fs"; const h=JSON.parse(readFileSync("seo/sitemap-content-history.json","utf8")); console.log("required="+(!h.digestAlgorithm&&Object.keys(h.pages).length>0))' >> "$GITHUB_OUTPUT"
       - name: Reconstruct exact reviewed historical checkpoint for one-time migration
         if: steps.digest_migration.outputs.required == 'true'
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           ref: c86bc0f39906d53e1e3805f724185fb1b3ace767
           path: sitemap-legacy-checkpoint
@@ -176,7 +176,7 @@ jobs:
     permissions:
       contents: write
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           persist-credentials: true
       - uses: actions/setup-node@v4
@@ -205,7 +205,7 @@ jobs:
           node --input-type=module -e 'import {readFileSync} from "node:fs"; const h=JSON.parse(readFileSync("seo/sitemap-content-history.json","utf8")); console.log("required="+(!h.digestAlgorithm&&Object.keys(h.pages).length>0))' >> "$GITHUB_OUTPUT"
       - name: Reconstruct exact reviewed historical checkpoint for one-time migration
         if: steps.digest_migration.outputs.required == 'true'
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           ref: c86bc0f39906d53e1e3805f724185fb1b3ace767
           path: sitemap-legacy-checkpoint

@@ -71,7 +71,7 @@ jobs:
     outputs:
       release_sha: ${{ steps.release.outputs.release_sha }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           ref: ${{ github.sha }}
           persist-credentials: false
@@ -121,7 +121,7 @@ jobs:
       BROWSER_PROJECT: ${{ matrix.project }}
       RELEASE_SHA: ${{ needs.release-readiness.outputs.release_sha }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           ref: ${{ github.sha }}
           persist-credentials: false
