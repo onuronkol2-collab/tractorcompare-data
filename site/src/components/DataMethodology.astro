@@ -1,6 +1,6 @@
 ---
 import SiteLayout from "../layouts/SiteLayout.astro";
-import type {Locale} from "../lib/locales";
+import {localizedPath,BREADCRUMB_LABELS} from "../lib/locales";
 
 interface Props {lang:"en"|"tr";}
 const {lang}=Astro.props;
@@ -9,6 +9,7 @@ const title=tr?"TractorVS Verileri Nasıl Doğrular? | Kaynak ve Yöntem":"How T
 const description=tr
   ?"TractorVS teknik veri kaynaklarını, farklı varyantları, görsel kullanım haklarını ve veri sınırlamalarını nasıl ele alıyor?"
   :"How TractorVS handles tractor identity, manufacturer documentation, technical specifications, photo licenses and limitations.";
+const sectionIds=["published-models","source-evidence","comparisons","photo-rights","prices-and-experience","corrections"] as const;
 const sections=tr?[
  {heading:"Hangi modeller yayımlanır?",body:[
   "Sitedeki traktör sayfaları, yalnızca yayımlanmış modellerin yer aldığı herkese açık katalogdan oluşturulur. Taslak ve arşiv modelleri otomatik olarak indekslenen model sayfalarına dönüştürülmez.",
@@ -64,16 +65,34 @@ const sections=tr?[
 <SiteLayout lang={lang} title={title} description={description} availableLocales={["en","tr"]}>
   <article class="method-page">
     <div class="container method-container">
+      <nav class="method-crumb" aria-label={BREADCRUMB_LABELS[lang]}><a href={localizedPath(lang,"/")}>TractorVS</a><span aria-hidden="true">/</span><span aria-current="page">{tr?"Veri doğrulama yöntemi":"Data methodology"}</span></nav>
       <p class="method-overline">{tr?"TRACTORVS · ŞEFFAFLIK":"TRACTORVS · TRANSPARENCY"}</p>
       <h1>{tr?"TractorVS verileri nasıl doğrular?":"How TractorVS checks its tractor data"}</h1>
       <p class="method-lead">{tr
         ?"Model kimliği, teknik belgeler, karşılaştırmalar ve görseller için hangi kanıtları kullandığımızı ve sınırlarımızı burada açıklıyoruz."
         :"How model identity, engineering documents, comparison data and media rights are handled—and where verification remains limited."}</p>
       <p class="method-updated"><strong>{tr?"Son güncelleme:":"Last updated:"}</strong> <time datetime="2026-11-19">{tr?"19 Kasım 2026":"19 November 2026"}</time></p>
-      {sections.map((section)=> <section class="method-section">
-        <h2>{section.heading}</h2>
+      <section class="method-in-brief" aria-labelledby="method-brief-title"><h2 id="method-brief-title">{tr?"Bir bakışta yaklaşımımız":"Our approach at a glance"}</h2><ul>{(tr?["Tam model ve varyantı ayırt ederiz.","Kaynak bağlantısını, kanıtı ve ölçüm koşullarını birlikte değerlendiririz.","Eksik teknik değeri, fiyatı veya saha testi sonucunu tahmin etmeyiz."]:["Distinguish the exact model and variant.","Review the source link, supporting evidence and measurement conditions together.","Do not guess missing technical values, prices or field-test results."]).map(item=><li>{item}</li>)}</ul></section>
+      <nav class="method-toc" data-reading-contents aria-labelledby="method-toc-heading">
+        <h2 id="method-toc-heading" tabindex="-1">{tr?"Bu sayfada":"On this page"}</h2>
+        <ol>{sections.map((section,index)=><li><a href={"#"+sectionIds[index]}>{section.heading}</a></li>)}</ol>
+      </nav>
+      {sections.map((section,index)=> <section class="method-section" id={sectionIds[index]} aria-labelledby={sectionIds[index]+"-heading"}>
+        <h2 id={sectionIds[index]+"-heading"}>{section.heading}</h2>
         {section.body.map((line)=><p>{line}</p>)}
+        {sectionIds[index]==="corrections"&&<div class="method-correction">
+          <h3>{tr?"Düzeltme bildirirken neleri eklemelisiniz?":"What to include in a correction report"}</h3>
+          <ul>{(tr?["TractorVS model sayfasının bağlantısı ve tam varyant","Hatalı olduğunu düşündüğünüz teknik değer ve birimi","Önerdiğiniz düzeltmeyi destekleyen belge, sayfa veya kaynak bağlantısı","Varsa ölçüm standardı, model yılı ve pazar bilgisi"]:["Link to the TractorVS model page and exact variant","The specification and unit you believe are incorrect","Document, page or source link supporting the proposed correction","Measurement standard, model year and market when available"]).map(item=><li>{item}</li>)}</ul>
+          <p>{tr?"Kişisel bilgilerinizi, şifrelerinizi veya özel belgelerinizi herkese açık bildirimlerde paylaşmayın.":"Do not share personal information, passwords or private documents in public reports."}</p>
+          <a href="https://github.com/onuronkol2-collab/tractorcompare-data/issues" rel="noopener noreferrer" target="_blank">{tr?"Herkese açık GitHub hata bildirimleri":"Public GitHub issue reports"} <span aria-hidden="true">↗</span></a>
+        </div>}
       </section>)}
+      <p class="method-contents-return"><a href="#method-toc-heading" data-reading-return>{tr?"İçindekilere dön":"Back to contents"} <span aria-hidden="true">↑</span></a></p>
+      <nav class="method-next" aria-label={tr?"Araştırmanıza devam edin":"Continue your research"}>
+        <a href={localizedPath(lang,"/tractors/")}>{tr?"Traktör kataloğu":"Tractor catalogue"}</a>
+        <a href={localizedPath(lang,"/compare/")}>{tr?"Traktör karşılaştırma":"Compare tractors"}</a>
+        <a href={localizedPath(lang,"/articles/")}>{tr?"Makaleler ve rehberler":"Articles and guides"}</a>
+      </nav>
       <p class="method-guide-link">
         <a href={tr?"/tr/guides/choosing-a-tractor/":"/guides/choosing-a-tractor/"}>
           {tr?"İlgili rehber: Traktör seçerken teknik veriler nasıl karşılaştırılır?":"Related guide: How to compare tractor specifications before choosing"}
@@ -93,6 +112,10 @@ const sections=tr?[
     </div>
   </article>
 </SiteLayout>
+<script>
+  import {syncReadingLocation} from "../lib/reading-location.ts";
+  syncReadingLocation();
+</script>
 <style>
   .method-guide-link a{display:inline-block;padding:12px 17px;border-radius:9px;background:#def0d9;font-weight:750;color:#195b32;text-decoration:underline;text-underline-offset:3px}
   .method-guide-link a:focus-visible{outline:3px solid #2e8552;outline-offset:2px}
@@ -111,4 +134,23 @@ const sections=tr?[
   .method-references a{color:#185c32;text-decoration:underline;text-underline-offset:3px;overflow-wrap:anywhere}
   .method-references a:focus-visible{outline:3px solid #2e8552;outline-offset:3px}
   @media(max-width:620px){.method-page{padding:40px 0 60px}.method-references{padding:20px}}
+  .method-crumb{display:flex;flex-wrap:wrap;gap:10px;align-items:center;font-size:14px;line-height:1.5;margin-bottom:20px}
+  .method-crumb a,.method-toc a,.method-next a,.method-correction a{color:#185c32;text-decoration:underline;text-underline-offset:3px;overflow-wrap:anywhere}
+  .method-toc,.method-correction{border:1px solid #cee1c7;border-radius:9px;padding:clamp(16px,3vw,24px);background:#fff;margin-block:20px}
+  .method-toc h2,.method-correction h3{font-size:1.15rem;margin:0 0 10px;line-height:1.4}
+  .method-toc ol,.method-correction ul{padding-inline-start:22px;line-height:1.65;margin-block:8px}
+  .method-toc a,.method-next a,.method-correction a{display:inline-flex;align-items:center;min-height:44px;font-weight:700}
+  .method-section{scroll-margin-top:24px}
+  .method-next{display:flex;gap:10px 20px;flex-wrap:wrap;padding-block:12px;border-block:1px solid #dce7d7}
+  .method-correction p{font-size:.9375rem}
+  .method-page a:focus-visible{outline:3px solid #2e8552;outline-offset:3px}
+  @media(forced-colors:active){.method-page a:focus-visible{outline-color:Highlight}}
+ .method-in-brief{margin:20px 0;padding:clamp(16px,3vw,24px);border:1px solid #d7ddcc;background:#f6f3e9;border-radius:9px;color:#23472f}
+ .method-in-brief h2{margin:0 0 10px;font-size:clamp(20px,2.5vw,26px);line-height:1.35}
+ .method-in-brief ul{margin:0;padding-inline-start:22px;line-height:1.7}
+ .method-in-brief li+li{margin-top:6px}
+ .method-toc a[aria-current="location"]{font-weight:800;background:#e4efde;border-radius:5px;padding-inline:6px;text-decoration-thickness:2px}
+ .method-contents-return a{display:inline-flex;align-items:center;gap:8px;min-height:44px;font-weight:750}
+ @media print{.method-contents-return{display:none}}
+ @media(forced-colors:active){.method-toc a[aria-current="location"]{outline:2px solid Highlight;outline-offset:-2px}}
 </style>

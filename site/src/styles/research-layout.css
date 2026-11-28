@@ -542,3 +542,71 @@ html:is(:lang(hi), :lang(zh), :lang(ja)) #main :is(.tractor-card-specs small,
 #main :is(.model-sources-caution,.model-sources-more) { font-size:14px; line-height:1.7; overflow-wrap:anywhere; }
 #main .model-sources a:focus-visible { outline:3px solid #175c37; outline-offset:3px; }
 @media(max-width:480px){#main .model-sources-count{min-width:0;width:100%}}
+
+/* Decision centre: common geometry and state indicators. No navigation links,
+   disclosure state, tracking, content or metadata are changed here. */
+@media screen {
+  :root {
+    --ui-radius: 9px;
+    --ui-shadow: none;
+    --ui-shadow-hover: none;
+  }
+  #main :is(.catalog-hero,.model-hero,.advisor-hero,.tc-hero,.editorial-hero) {
+    background: #14251c;
+  }
+  #main :is(.home-action-card,.home-featured-card,.tractor-card,.editorial-card,
+            .model-answer-card,.model-spec-card,.advisor-form,.community-starter-card) {
+    border-radius: var(--ui-radius);
+  }
+  #main :is(.home-action-card,.home-featured-card,.tractor-card,.editorial-card):hover {
+    transform: none;
+    box-shadow: none;
+  }
+  .site-header :is(.mobile-nav,.locale-menu,.resource-nav-menu,.header-search-menu)[open]>summary {
+    background-color: #304b37;
+    outline: 1px solid #b7df91;
+    outline-offset: -1px;
+  }
+  .site-header :is(.mobile-nav-links,.locale-options,.resource-nav-links,.header-search-form) {
+    border-radius: 9px;
+    max-block-size: min(72vh, 640px);
+    max-block-size: min(72dvh, 640px);
+    overscroll-behavior: contain;
+    scroll-padding-block: 8px;
+  }
+  .site-header :is(.mobile-nav-links,.locale-options,.resource-nav-links) a {
+    min-block-size: 44px;
+    min-inline-size: 0;
+    overflow-wrap: anywhere;
+  }
+  .site-header .locale-options a {
+    display: flex;
+    align-items: center;
+    font-size: .9375rem;
+    line-height: 1.5;
+  }
+  .site-header :is(.locale-options,.mobile-nav-links) a[aria-current="page"] {
+    border-inline-start: 3px solid #285b40;
+    text-decoration: underline;
+    text-underline-offset: .2em;
+  }
+  .site-header .resource-nav-menu>summary.is-current-section {
+    text-decoration: underline;
+    text-underline-offset: .3em;
+  }
+  .site-footer .footer-group :is(a,button) { max-inline-size: 100%; white-space: normal; }
+  .site-footer .footer-group h2 { overflow-wrap: anywhere; }
+}
+@media screen and (max-width: 375px) {
+  .site-header .mobile-nav-links { grid-template-columns: minmax(0,1fr); }
+  .site-footer .footer-links { grid-template-columns: minmax(0,1fr); gap: 1rem; }
+  .site-header .header-inner { min-inline-size: 0; }
+  .site-header .header-actions { min-inline-size: 0; }
+}
+@media screen and (max-height: 480px) {
+  .site-header :is(.mobile-nav-links,.locale-options,.resource-nav-links,.header-search-form) {
+    max-block-size: 55vh;
+    max-block-size: 55dvh;
+    overflow-y: auto;
+  }
+}

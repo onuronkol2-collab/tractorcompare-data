@@ -2,10 +2,13 @@
 import {FORUM_DASHBOARD_TEXT} from "../lib/forum-dashboard-i18n.ts";
 import {forumText as ft,FORUM_CATEGORY_KEYS} from "../lib/forum-i18n.ts";
 import {localizedPath,type Locale} from "../lib/locales.ts";
+import {t} from "../lib/ui";
+import {FORUM_RESEARCH_COPY} from "../lib/forum-research-i18n.ts";
 import type {ForumTopic} from "../lib/forum.ts";
 interface Props {lang:Locale; topics:ForumTopic[]; replyCount:number}
 const {lang,topics,replyCount}=Astro.props;
 const copy=FORUM_DASHBOARD_TEXT[lang];
+const research=FORUM_RESEARCH_COPY[lang];
 const num=(n:number)=>n.toLocaleString(lang==="pt-br"?"pt-BR":lang);
 const categories=FORUM_CATEGORY_KEYS.map(key=>({key,count:topics.filter(t=>t.category===key).length}))
  .sort((a,b)=>b.count-a.count).slice(0,5);
@@ -31,6 +34,16 @@ const categories=FORUM_CATEGORY_KEYS.map(key=>({key,count:topics.filter(t=>t.cat
   <h2 class="forum-side-title"><span aria-hidden="true">♧</span> {copy.people}</h2>
   <p>{copy.peopleBody}</p>
   <a class="forum-side-link" href="#forum-members">{copy.peopleLink} <span aria-hidden="true">↗</span></a>
+ </section>
+ <section class="forum-side-panel forum-side-research" aria-labelledby="forum-side-research-title">
+  <h2 class="forum-side-title" id="forum-side-research-title">{research[0]}</h2>
+  <p>{research[1]}</p>
+  <nav aria-labelledby="forum-side-research-title">
+   <a class="forum-side-link" href={localizedPath(lang,"/tractors/")}>{t(lang,"navCatalog")}</a>
+   <a class="forum-side-link" href={localizedPath(lang,"/compare/")}>{t(lang,"navCompare")}</a>
+   <a class="forum-side-link" href={localizedPath(lang,"/guides/choosing-a-tractor/")}>{t(lang,"guideLink")}</a>
+  </nav>
+  <details class="forum-question-help"><summary>{research[2]}</summary><ul>{research.slice(3).map(item=><li>{item}</li>)}</ul><a class="forum-side-link" href="#forum-compose">{copy.joinLink} <span aria-hidden="true">→</span></a></details>
  </section>
  <section class="forum-side-panel forum-side-events">
   <h2 class="forum-side-title"><span aria-hidden="true">▤</span> {copy.eventsHeading}</h2>
@@ -93,4 +106,19 @@ const categories=FORUM_CATEGORY_KEYS.map(key=>({key,count:topics.filter(t=>t.cat
  .forum-side-panel{padding:16px}
  .forum-side-stats,.forum-side-join{grid-column:auto}
 }
+ .forum-side-research nav{display:grid;gap:7px}
+ .forum-side-research a{min-width:0;overflow-wrap:anywhere;line-height:1.5}
+ .forum-side-panel{border-radius:9px;box-shadow:none}
+ .forum-side-events{background:#f3f8f0}
+ .forum-side-join{background:#203b2b}
+ @media(forced-colors:active){.forum-dashboard-panels a:focus-visible,.forum-dashboard-panels button:focus-visible{outline-color:Highlight}}
+ .forum-side-research{background:#f6f3e9;border-color:#d7ddcc}
+ .forum-side-research .forum-side-title{font-size:1.125rem;line-height:1.4}
+ .forum-side-research>p,.forum-question-help li{font-size:.9375rem;line-height:1.65;color:#405948}
+ .forum-side-link,.forum-side-tags button{min-height:44px;font-size:.875rem;overflow-wrap:anywhere}
+ .forum-question-help{margin-top:14px;border-top:1px solid #d7ddcc;padding-top:9px}
+ .forum-question-help summary{cursor:pointer;min-height:44px;display:list-item;align-content:center;font-weight:750;color:#24583b;line-height:1.5;overflow-wrap:anywhere}
+ .forum-question-help ul{padding-inline-start:22px;margin:5px 0 12px}
+ .forum-question-help summary:focus-visible{outline:3px solid #175c37;outline-offset:3px}
+ @media(forced-colors:active){.forum-question-help summary:focus-visible{outline-color:Highlight}}
 </style>

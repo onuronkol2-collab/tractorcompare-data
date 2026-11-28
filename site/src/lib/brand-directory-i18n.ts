@@ -17,7 +17,7 @@ export const BRAND_DIRECTORY_COPY:Record<Locale,readonly [string,string,string,s
   ],
   "tr": [
     "Traktör markaları ve üreticileri",
-    "Yayımlanmış modelleri marka, pazar ve mevcut kaynak bağlantılarıyla keşfet. Bu liste üreticilerin tüm ürünlerini değil, katalog kapsamımızı gösterir.",
+    "Yayımlanmış modelleri marka, pazar ve mevcut kaynak bağlantılarıyla keşfedin. Bu liste üreticilerin tüm ürünlerini değil, katalog kapsamımızı gösterir.",
     "Markalar",
     "Yayımlanmış kayıtlar",
     "Kaynak bağlantılı kayıtlar",
@@ -25,10 +25,10 @@ export const BRAND_DIRECTORY_COPY:Record<Locale,readonly [string,string,string,s
     "Marka ara",
     "Aramayı temizle",
     "Eşleşen marka yok.",
-    "Katalog modellerini gör",
+    "Katalog modellerini görün",
     "Marka araştırma merkezi",
     "Pazar belirtilmemiş",
-    "Tüm traktör markalarını keşfet"
+    "Tüm traktör markalarını keşfedin"
   ],
   "zh": [
     "拖拉机品牌与制造商",

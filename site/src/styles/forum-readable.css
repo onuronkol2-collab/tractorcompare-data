@@ -323,3 +323,24 @@
   #main .member-toolbar-identity { min-width: 0; }
   #main .member-community dialog { padding: clamp(14px,4vw,22px); }
 }
+
+/* Decision-centre visual continuity, without changing ForumHub behaviour. */
+#main .community-shell .community-hero{background:#14251c;padding-block:clamp(24px,4vw,52px)}
+#main .community-shell .community-hero h1{line-height:1.2;overflow-wrap:anywhere;letter-spacing:-.02em}
+#main .community-shell .community-hero p:not(.community-kicker){line-height:1.65}
+#main .community-shell .community-hero-links .compose-link{display:inline-flex;align-items:center;min-height:44px;max-inline-size:100%;overflow-wrap:anywhere}
+#main .community-shell .community-topic h3 a{text-decoration-color:#8fa996;text-underline-offset:.17em}
+#main .community-shell .community-topic h3 a:hover{text-decoration-color:currentColor}
+#main .community-shell .community-topic,#main .community-shell .forum-dashboard-rail,#main .community-shell .forum-empty-help{border-radius:9px;box-shadow:none}
+#main .community-shell .community-topic-content{min-inline-size:0}
+#main .community-shell .forum-view-button,#main .community-shell .community-tabs button{overflow-wrap:anywhere}
+@media(max-width:620px){
+ #main .community-shell .community-hero-links{gap:8px}
+ #main .community-shell .community-hero-links .compose-link{padding:10px 12px}
+ #main .community-shell .community-topic-content>p{font-size:15px}
+}
+@media(forced-colors:active){
+ #main .community-shell :is(a,button,input,select,summary):focus-visible,
+ #main .forum-thread :is(a,button,input,select,summary):focus-visible{outline:3px solid Highlight;outline-offset:3px}
+ #main .community-shell [aria-pressed=true]{outline:2px solid Highlight;outline-offset:-2px}
+}

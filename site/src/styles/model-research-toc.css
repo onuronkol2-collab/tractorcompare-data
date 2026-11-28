@@ -13,3 +13,37 @@
 .model-spec-toc>div,.model-spec-toc a{min-inline-size:0;max-inline-size:100%}
 .model-spec-toc a{line-height:1.5}
 .model-spec-toc a:focus-visible{outline-offset:2px}
+
+/* Shared decision-centre style. Existing measurements, links, and warnings
+   remain intact; no model text is added or removed by these rules. */
+@media screen {
+ #main .model-hero{background:#14251c}
+ #main .model-hero h1{line-height:1.18;overflow-wrap:anywhere}
+ #main .model-hero .model-hero-description{line-height:1.65}
+ #main .model-hero .model-compare-action{background:#d5ecbf;border-radius:9px;box-shadow:none;min-height:64px}
+ #main .model-hero .model-compare-action:hover{transform:none;background:#e2f3d1;box-shadow:none}
+ #main .model-hero .model-compare-copy{overflow-wrap:anywhere}
+ #main .model-spec-section .model-spec-toc{background:#f3f8f0;border-radius:9px}
+ #main .model-spec-section .model-spec-card{min-inline-size:0;overflow-wrap:anywhere;border-radius:9px}
+ #main .model-spec-section .model-spec-top{flex-wrap:wrap;gap:6px}
+ #main .model-spec-section .model-spec-top h4{min-inline-size:0;line-height:1.45;overflow-wrap:anywhere}
+ #main .model-spec-section .model-spec-glossary-link{width:44px;height:44px;margin-inline:0}
+ #main .model-spec-section .model-spec-value{font-variant-numeric:tabular-nums;line-height:1.4;overflow-wrap:anywhere}
+ #main .model-spec-section .model-spec-note{font-size:.875rem;line-height:1.6}
+ #main .model-spec-section .model-spec-warning{font-size:.9375rem;line-height:1.65}
+ #main .model-spec-section .model-spec-warning strong{font-size:.875rem}
+ #main .model-spec-section :is(.model-answer-links a,.model-answer-method a,.model-spec-source a){
+   display:inline-flex;align-items:center;min-height:44px;max-inline-size:100%;overflow-wrap:anywhere;
+   text-decoration:underline;text-underline-offset:.18em;
+ }
+ #main .model-spec-section :is(.model-evidence-answers,.model-answer-card,.model-forum-topics,.model-forum-discussion){border-radius:9px}
+ #main .model-spec-section :is(.model-spec-toc a,.model-spec-glossary-link,.model-spec-source a,.model-answer-links a,.model-answer-method a):focus-visible{outline:3px solid #175c37;outline-offset:3px}
+}
+@media screen and (max-width:480px){
+ #main .model-spec-section .model-spec-grid{grid-template-columns:minmax(0,1fr)}
+ #main .model-spec-section .model-spec-card{padding:14px}
+ #main .model-hero .model-compare-copy small{font-size:.875rem}
+}
+@media screen and (forced-colors:active){
+ #main .model-spec-section :is(a,button,summary):focus-visible,#main .model-hero :is(a,button,summary):focus-visible{outline:3px solid Highlight;outline-offset:3px}
+}

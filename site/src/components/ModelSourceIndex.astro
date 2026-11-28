@@ -1,5 +1,7 @@
 ---
-import type { Locale } from "../lib/locales.ts";
+import {localizedPath,type Locale} from "../lib/locales.ts";
+import {MODEL_SOURCE_DISCOVERY} from "../lib/model-source-discovery-i18n.ts";
+import {sourceScopeText} from "../lib/model-source-scope.ts";
 import type { TractorRecord } from "../lib/catalog.ts";
 import { modelSourceIndex, MODEL_SOURCE_COPY } from "../lib/model-source-index.ts";
 
@@ -7,6 +9,11 @@ interface Props { tractor: TractorRecord; lang: Locale; }
 const { tractor, lang } = Astro.props;
 const sources = modelSourceIndex(tractor);
 const copy = MODEL_SOURCE_COPY[lang];
+const discovery=MODEL_SOURCE_DISCOVERY[lang];
+const number=new Intl.NumberFormat(lang);
+const scope=sourceScopeText(tractor.brand_name+" "+tractor.model_name,sources,lang);
+const methodLocale=lang==="tr"?"tr":"en";
+const hasBoth=sources.documents.some(doc=>doc.kind==="manufacturer")&&sources.documents.some(doc=>doc.kind==="independent");
 ---
 {sources.documents.length > 0 && (
   <section class="model-sources" aria-labelledby="model-source-index-title">
@@ -16,30 +23,60 @@ const copy = MODEL_SOURCE_COPY[lang];
         <h2 id="model-source-index-title">{copy.title}</h2>
         <p>{copy.introduction}</p>
       </div>
-      <div class="model-sources-count" aria-label={sources.linkedSpecifications + " " + copy.linked}>
-        <strong>{sources.linkedSpecifications}</strong>
+      <div class="model-sources-count" aria-label={number.format(sources.linkedSpecifications) + " " + copy.linked}>
+        <strong>{number.format(sources.linkedSpecifications)}</strong>
         <span>{copy.linked}</span>
       </div>
     </div>
+    <p class="model-source-scope">{scope.summary}</p>
+    {scope.scope&&<p class="model-source-scope-note">{scope.scope}</p>}
+    {hasBoth&&<div class="model-source-discovery" data-source-discovery hidden>
+      <fieldset><legend>{discovery[0]}</legend>
+        <label><input type="radio" name="model-source-kind" value="all" checked/><span>{discovery[1]}</span></label>
+        <label><input type="radio" name="model-source-kind" value="manufacturer"/><span>{copy.official}</span></label>
+        <label><input type="radio" name="model-source-kind" value="independent"/><span>{copy.independent}</span></label>
+      </fieldset>
+      <p role="status" aria-atomic="true" data-source-status data-template={discovery[2]}>{discovery[2].replace("{count}",number.format(sources.documents.length))}</p>
+    </div>}
     <ul class="model-sources-list">
       {sources.documents.map((source) => (
-        <li>
+        <li data-source-kind={source.kind}>
           <span class="model-source-type">{source.kind === "manufacturer" ? copy.official : copy.independent}</span>
           <a href={source.url} target="_blank" rel="noopener noreferrer">
             <strong>{source.publisher}</strong>
             <span>{source.hostname} <span aria-hidden="true">↗</span></span>
           </a>
-          <small>{source.specificationCount} {copy.linked}</small>
+          <small>{number.format(source.specificationCount)} {copy.linked}</small>
           {source.latestRecordVerification && <small class="model-source-reviewed">
             {copy.recordReviewed}: <time datetime={source.latestRecordVerification}>{source.latestRecordVerification}</time>
           </small>}
         </li>
       ))}
     </ul>
-    {sources.remainingDocuments > 0 && <p class="model-sources-more">{copy.more}</p>}
     <p class="model-sources-caution">{copy.caution}</p>
+    <a class="model-source-method" href={localizedPath(methodLocale,"/methodology/")} hreflang={methodLocale}>{discovery[3]} <span aria-hidden="true">↗</span></a>
   </section>
 )}
+<script>
+  document.querySelectorAll<HTMLElement>(".model-sources").forEach(section=>{
+    const controls=section.querySelector<HTMLElement>("[data-source-discovery]");
+    const status=controls?.querySelector<HTMLElement>("[data-source-status]");
+    const choices=[...section.querySelectorAll<HTMLInputElement>('input[name="model-source-kind"]')];
+    const rows=[...section.querySelectorAll<HTMLElement>("[data-source-kind]")];
+    if(!controls||!status||choices.length!==3||!rows.length)return;
+    const number=new Intl.NumberFormat(document.documentElement.lang);
+    const update=()=>{
+      const selected=choices.find(choice=>choice.checked)?.value||"all";
+      let count=0;
+      rows.forEach(row=>{const visible=selected==="all"||row.dataset.sourceKind===selected;row.hidden=!visible;if(visible)count++;});
+      const message=(status.dataset.template||"").replace("{count}",number.format(count));
+      if(status.textContent!==message)status.textContent=message;
+    };
+    choices.forEach(choice=>choice.addEventListener("change",update));
+    controls.hidden=false;update();
+    window.addEventListener("pageshow",update);
+  });
+</script>
 <style>
   .model-sources { margin:40px 0 28px; padding:clamp(18px,3vw,29px); background:#f5f8f2; border:1px solid #c9ddc8; border-radius:17px; }
   .model-sources-heading { display:flex; align-items:start; justify-content:space-between; flex-wrap:wrap; gap:18px; }
@@ -61,4 +98,29 @@ const copy = MODEL_SOURCE_COPY[lang];
   .model-sources-more { margin:14px 0 0; font-size:13px; color:#395c48; line-height:1.6; }
   .model-sources-caution { margin:19px 0 0; border-top:1px solid #d9e5d6; padding-top:14px; color:#435849; font-size:13px; line-height:1.8; }
   .model-sources a:focus-visible { outline:3px solid #9ac493; outline-offset:3px; border-radius:4px; }
+  /* Preserve the actual SSR evidence text and source order. */
+  .model-sources,.model-sources-list li,.model-sources-count{border-radius:9px}
+  .model-sources-heading>div{min-inline-size:0;max-inline-size:100%;overflow-wrap:anywhere}
+  .model-sources-heading p:not(.model-sources-kicker){font-size:.9375rem;line-height:1.65}
+  .model-sources-count strong{font-variant-numeric:tabular-nums}
+  .model-sources-list a{min-block-size:44px;justify-content:center;text-decoration:underline;line-height:1.5}
+  .model-sources-list a strong{font-size:1rem}
+  .model-sources-list a span,.model-sources-list small,.model-source-type,.model-sources-count span{font-size:.8125rem;line-height:1.55}
+  .model-sources-caution,.model-sources-more{font-size:.875rem;line-height:1.65}
+  .model-sources a:focus-visible{outline-color:#175c37}
+  @media(max-width:520px){.model-sources-count{flex-direction:row;align-items:center;gap:10px;min-width:0}.model-sources-list{grid-template-columns:minmax(0,1fr)}}
+  @media(forced-colors:active){.model-sources a:focus-visible{outline-color:Highlight}}
+  .model-source-discovery[hidden],.model-sources-list li[hidden]{display:none!important}
+  .model-source-discovery{margin:0 0 14px;padding:12px;background:white;border:1px solid #c9ddc8;border-radius:9px}
+  .model-source-discovery fieldset{display:flex;flex-wrap:wrap;gap:4px 16px;border:0;padding:0;margin:0;min-width:0}
+  .model-source-discovery legend{font-weight:800;color:#24583b;line-height:1.5}
+  .model-source-discovery label{display:flex;align-items:center;gap:8px;min-height:44px;cursor:pointer;overflow-wrap:anywhere;min-width:0}
+  .model-source-discovery input{width:20px;height:20px;accent-color:#285b40;flex:none;margin:0}
+  .model-source-discovery p{font-size:.875rem;line-height:1.5;color:#405948;margin:4px 0 0}
+  .model-source-method{display:inline-flex;align-items:center;min-height:44px;font-weight:750;text-decoration:underline;text-underline-offset:3px;color:#205a37;overflow-wrap:anywhere}
+  .model-source-discovery input:focus-visible,.model-source-method:focus-visible{outline:3px solid #175c37;outline-offset:3px}
+  @media(forced-colors:active){.model-source-discovery input:focus-visible,.model-source-method:focus-visible{outline-color:Highlight}}
+  @media print{.model-source-discovery{display:none!important}.model-sources-list li[hidden]{display:flex!important}}
+  .model-source-scope{font-size:.9375rem;line-height:1.65;font-weight:750;color:#244a32;margin:0 0 10px;overflow-wrap:anywhere}
+  .model-source-scope-note{font-size:.875rem;line-height:1.65;color:#405948;margin:0 0 14px;overflow-wrap:anywhere}
 </style>

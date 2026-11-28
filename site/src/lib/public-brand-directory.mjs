@@ -15,13 +15,16 @@ export function publicBrandDirectory(input){
   ids.add(row.tractor_id);slugs.add(row.slug);
   const name=row.brand_name.trim();
   let group=groups.get(name);
-  if(!group){group={sources:0,markets:new Set(),unknownMarket:0};groups.set(name,group);}
-  if(verifiedModelSources(row).length)group.sources++;
-  if(typeof row.market==="string"&&row.market.trim())group.markets.add(row.market);
-  else group.unknownMarket++;
+  if(!group){group={sources:0,markets:new Set(),sourceMarkets:new Set(),unknownMarket:0};groups.set(name,group);}
+  const linked=verifiedModelSources(row).length>0;
+  if(linked)group.sources++;
+  if(typeof row.market==="string"&&row.market.trim()){
+   group.markets.add(row.market);
+   if(linked)group.sourceMarkets.add(row.market);
+  }else group.unknownMarket++;
  }
  return catalogBrandIndex(rows).map(brand=>{
   const group=groups.get(brand.name);
-  return {...brand,withSources:group.sources,markets:[...group.markets],unknownMarket:group.unknownMarket};
+  return {...brand,withSources:group.sources,markets:[...group.markets],sourceMarkets:[...group.sourceMarkets],unknownMarket:group.unknownMarket};
  });
 }

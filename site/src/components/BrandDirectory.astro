@@ -8,9 +8,14 @@ import {normalizeTractorQuery} from "../lib/search";
 import {brandDirectoryText} from "../lib/brand-directory-i18n.ts";
 import {publicBrandDirectory} from "../lib/public-brand-directory.mjs";
 import {listedBrandCollections} from "../lib/brand-discovery-pilot.mjs";
+import {BRAND_FILTER_COPY} from "../lib/brand-filter-i18n.ts";
+import {RESEARCH_RECOVERY} from "../lib/research-recovery-i18n.ts";
+import {disambiguateMarketLabels} from "../lib/market-choice-labels.mjs";
 interface Props{lang:Locale}
 const {lang}=Astro.props;
 const c=brandDirectoryText(lang);
+const filters=BRAND_FILTER_COPY[lang];
+const recovery=RESEARCH_RECOVERY[lang];
 const catalog=await getPublicCatalog();
 const directory=publicBrandDirectory(catalog.tractors);
 const indexable=catalog.configured&&directory.length>0;
@@ -19,7 +24,10 @@ const catalogPath=localizedPath(lang,"/tractors/");
 const number=new Intl.NumberFormat(LOCALE_TAGS[lang]);
 const total=directory.reduce((sum,row)=>sum+row.count,0);
 const sources=directory.reduce((sum,row)=>sum+row.withSources,0);
-const labels=(markets:string[])=>markets.map(m=>marketDisplayName(m,lang)||m).sort((a,b)=>a.localeCompare(b,lang));
+const rawMarketChoices=[...new Set(directory.flatMap(row=>row.markets))].map(value=>({value,label:marketDisplayName(value,lang)||value}));
+const marketChoices=disambiguateMarketLabels(rawMarketChoices).sort((a,b)=>a.label.localeCompare(b.label,lang)||a.value.localeCompare(b.value));
+const marketLabels=new Map(marketChoices.map(choice=>[choice.value,choice.label]));
+const labels=(markets:string[])=>markets.map(m=>marketLabels.get(m)||m).sort((a,b)=>a.localeCompare(b,lang));
 const origin=Astro.site||new URL("https://tractorvs.com");
 const canonical=new URL(localizedPath(lang,"/brands/"),origin).href;
 const schema={"@context":"https://schema.org","@type":"CollectionPage",name:c[0],description:c[1],url:canonical,inLanguage:LOCALE_TAGS[lang]};
@@ -36,18 +44,21 @@ const schema={"@context":"https://schema.org","@type":"CollectionPage",name:c[0]
    </dl>
    <div class="directory-controls" data-directory-controls hidden>
     <label>{c[6]}<input data-directory-query type="search" maxlength="100" autocomplete="off"/></label>
-    <button data-directory-clear type="button">{c[7]}</button>
+    <label>{filters[0]}<select data-directory-market><option value="">{filters[1]}</option>{marketChoices.map(m=><option value={m.value}>{m.label}</option>)}</select></label>
+    <label class="directory-source-filter"><input type="checkbox" data-directory-sources/> <span>{filters[2]}</span></label>
+    <button data-directory-clear type="button">{filters[5]}</button>
+    <p>{filters[3]}</p>
     <p role="status" aria-live="polite" data-directory-status data-label={c[2]}>{number.format(directory.length)} {c[2]}</p>
-    <p data-directory-empty hidden>{c[8]}</p>
+    <div class="directory-recovery" data-directory-empty hidden><p>{filters[4]}</p><h2>{recovery[0]}</h2><div class="directory-recovery-actions"><button type="button" data-directory-relax="query" hidden>{recovery[1]}</button><button type="button" data-directory-relax="market" hidden>{recovery[2]}</button><button type="button" data-directory-relax="sources" hidden>{recovery[3]}</button><button type="button" data-directory-relax="all">{filters[5]}</button></div></div>
    </div>
    <ul class="directory-grid">
-    {directory.map(row=><li data-directory-brand data-key={normalizeTractorQuery(row.name)}>
+    {directory.map(row=><li data-directory-brand data-key={normalizeTractorQuery(row.name)} data-markets={JSON.stringify(row.markets)} data-source-markets={JSON.stringify(row.sourceMarkets)} data-source-count={row.withSources}>
       <h2>{row.name}</h2>
       <dl><div><dt>{c[3]}</dt><dd>{number.format(row.count)}</dd></div><div><dt>{c[4]}</dt><dd>{number.format(row.withSources)}</dd></div></dl>
       <p class="directory-markets"><strong>{c[5]}:</strong> {labels(row.markets).join(" · ")||c[11]}{row.unknownMarket&&row.markets.length?" · "+c[11]:""}</p>
       <div class="directory-links">
-       <a href={catalogPath+"#"+row.anchorId}>{c[9]} <span aria-hidden="true">↗</span></a>
-       {guides.has(row.name)&&<a href={localizedPath(lang,"/brands/"+guides.get(row.name)+"/")}>{c[10]} <span aria-hidden="true">↗</span></a>}
+       <a href={catalogPath+"#"+row.anchorId}>{c[9]}: {row.name} <span aria-hidden="true">↗</span></a>
+       {guides.has(row.name)&&<a href={localizedPath(lang,"/brands/"+guides.get(row.name)+"/")}>{c[10]}: {row.name} <span aria-hidden="true">↗</span></a>}
       </div>
     </li>)}
    </ul>
@@ -57,22 +68,51 @@ const schema={"@context":"https://schema.org","@type":"CollectionPage",name:c[0]
 </SiteLayout>
 <script>
  import {normalizeTractorQuery,matchesTractorTerms} from "../lib/search";
+ import {matchesDirectoryEvidence} from "../lib/brand-directory-filter.mjs";
  const controls=document.querySelector<HTMLElement>("[data-directory-controls]");
  const input=controls?.querySelector<HTMLInputElement>("[data-directory-query]");
  const clear=controls?.querySelector<HTMLButtonElement>("[data-directory-clear]");
+ const market=controls?.querySelector<HTMLSelectElement>("[data-directory-market]");
+ const sources=controls?.querySelector<HTMLInputElement>("[data-directory-sources]");
  const status=controls?.querySelector<HTMLElement>("[data-directory-status]");
  const empty=controls?.querySelector<HTMLElement>("[data-directory-empty]");
  const cards=[...document.querySelectorAll<HTMLElement>("[data-directory-brand]")];
- if(controls&&input&&clear&&status&&empty){
+ if(controls&&input&&clear&&status&&empty&&market&&sources){
+  const metadata=cards.map(card=>({markets:JSON.parse(card.dataset.markets||"[]") as string[],sourceMarkets:JSON.parse(card.dataset.sourceMarkets||"[]") as string[],withSources:Number(card.dataset.sourceCount||0)}));
+  const formatter=new Intl.NumberFormat(document.documentElement.lang);
+  const relax=[...empty.querySelectorAll<HTMLButtonElement>("[data-directory-relax]")];
   const update=()=>{
    const terms=normalizeTractorQuery(input.value).split(/\s+/).filter(Boolean);let count=0;
-   for(const card of cards){const match=matchesTractorTerms(card.dataset.key||"",terms);card.hidden=!match;if(match)count++;}
-   status.textContent=new Intl.NumberFormat(document.documentElement.lang).format(count)+" "+status.dataset.label;
+   cards.forEach((card,i)=>{
+    const match=matchesTractorTerms(card.dataset.key||"",terms)&&matchesDirectoryEvidence(metadata[i],market.value,sources.checked);
+    card.hidden=!match;if(match)count++;
+   });
+   const message=formatter.format(count)+" "+status.dataset.label;
+   if(status.textContent!==message)status.textContent=message;
    empty.hidden=count!==0;
+   if(count===0){
+    for(const button of relax){
+     const key=button.dataset.directoryRelax;
+     if(key==="all")continue;
+     const active=key==="query"?terms.length>0:key==="market"?!!market.value:sources.checked;
+     const possible=active&&cards.some((card,i)=>matchesTractorTerms(card.dataset.key||"",key==="query"?[]:terms)&&matchesDirectoryEvidence(metadata[i],key==="market"?"":market.value,key==="sources"?false:sources.checked));
+     button.hidden=!possible;
+    }
+   }
   };
   input.addEventListener("input",update);
-  clear.addEventListener("click",()=>{input.value="";update();input.focus();});
+  market.addEventListener("change",update);
+  sources.addEventListener("change",update);
+  clear.addEventListener("click",()=>{input.value="";market.value="";sources.checked=false;update();input.focus();});
+  relax.forEach(button=>button.addEventListener("click",()=>{
+   const key=button.dataset.directoryRelax;
+   if(key==="query"||key==="all")input.value="";
+   if(key==="market"||key==="all")market.value="";
+   if(key==="sources"||key==="all")sources.checked=false;
+   update();input.focus();
+  }));
   controls.hidden=false;
+  update();
  }
 </script>
 <style>
@@ -99,5 +139,16 @@ const schema={"@context":"https://schema.org","@type":"CollectionPage",name:c[0]
  .directory-markets{font-size:14px;margin:0}
  .directory-links{display:grid;gap:5px;margin-top:auto}
  .directory-links a{display:flex;align-items:center;gap:6px;min-height:44px;text-decoration:underline;text-underline-offset:3px;color:#245b39;font-weight:700}
- .brand-directory :is(a,input,button):focus-visible{outline:3px solid #175c37;outline-offset:3px}
+ .brand-directory :is(a,input,button,select):focus-visible{outline:3px solid #175c37;outline-offset:3px}
+ .directory-controls select{font:inherit;min-height:44px;border:1px solid #78977e;border-radius:8px;padding:10px;background:#fff;color:#183424;max-width:100%;min-width:0}
+ .directory-controls .directory-source-filter{flex:1 1 100%;display:flex;align-items:center;min-height:44px;gap:10px}
+ .directory-source-filter input{width:20px;height:20px;min-height:0;padding:0;margin:0;flex:none;accent-color:#245b39}
+ .directory-summary div,.directory-grid li,.directory-controls{border-radius:9px}
+ .directory-sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+ @media(forced-colors:active){.brand-directory :is(a,input,button,select):focus-visible{outline-color:Highlight}}
+ .directory-recovery{flex-basis:100%;background:#f6f3e9;border:1px solid #d7ddcc;border-radius:9px;padding:16px;min-width:0}
+ .directory-recovery h2{font-size:1.125rem;line-height:1.4;margin:10px 0}
+ .directory-recovery-actions{display:flex;flex-wrap:wrap;gap:8px}
+ .directory-recovery-actions button{background:#fff;color:#205a37;overflow-wrap:anywhere;text-align:start}
+ .directory-recovery-actions button:last-child{background:#245b39;color:#fff}
 </style>
