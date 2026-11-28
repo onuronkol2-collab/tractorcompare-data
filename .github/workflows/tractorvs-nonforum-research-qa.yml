@@ -53,7 +53,7 @@ jobs:
       CI: "true"
       RESEARCH_QA_PREDEPLOY: ${{ github.event_name == 'pull_request' }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - uses: actions/setup-node@v4
         with:
           node-version: "22.23.4"
