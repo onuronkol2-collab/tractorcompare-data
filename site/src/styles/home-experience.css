@@ -494,3 +494,21 @@
 @media(max-width:375px){.home-search-option{gap:6px;padding:9px 8px}.home-search-option-arrow{width:24px;height:24px;font-size:16px}}
 @media(max-height:480px){.home-search-results{max-height:44vh;max-height:44dvh}}
 @media(forced-colors:active){.home-search-option[aria-selected="true"]{outline-color:Highlight}}
+
+/* #796: 320px localized reflow. Constrain intrinsic tracks and long words,
+   never hide horizontal overflow or truncate translated labels. */
+@media (max-width:620px) {
+  .home-evidence-layout,.home-featured-grid,.home-editorial-grid { grid-template-columns:minmax(0,1fr); }
+  .home-section-heading--split>div,.home-last-inner>div,.home-evidence-layout>*,
+  .home-featured-card,.home-editorial-card,.home-editorial-resource>*,.home-brand-row>div {
+    min-inline-size:0; max-inline-size:100%;
+  }
+  .home-section-heading h2,.home-evidence :is(h2,h3,p,a),.home-last h2,
+  .home-editorial-card :is(h3,p),.home-editorial-resource p,.home-featured-facts,
+  .home-featured-link,.home-community p { overflow-wrap:anywhere; }
+  .home-last .button,.home-hero-links a,.home-outline-link {
+    min-inline-size:0; max-inline-size:100%; white-space:normal; overflow-wrap:anywhere;
+  }
+  .home-last .button { gap:10px; padding-block:10px; }
+  .home-featured-facts>span { min-inline-size:0; max-inline-size:100%; }
+}

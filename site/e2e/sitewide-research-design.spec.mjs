@@ -56,8 +56,8 @@ test("catalogue and editorial evidence links stay legible without changing navig
 
 test("narrow multilingual homepage reflows without clipping research links",async({page})=>{
   await page.setViewportSize({width:320,height:720});
-  for(const locale of ["tr","de","hi","ja","pt-br"]){
-    const response=await page.goto("/"+locale+"/",{waitUntil:"domcontentloaded"});
+  for(const locale of ["en","tr","zh","hi","pt-br","fr","de","ru","ja","es"]){
+    const response=await page.goto(locale==="en"?"/":"/"+locale+"/",{waitUntil:"domcontentloaded"});
     expect(response?.status()).toBe(200);
     await expect(page.locator("h1")).toHaveCount(1);
     expect(await noDocumentOverflow(page),locale).toBe(true);

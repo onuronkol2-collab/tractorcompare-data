@@ -18,7 +18,7 @@ test.describe("optional language suggestion",()=>{
   await expect(suggestion).toBeHidden();
  });
 });
-for(const locale of ["tr","de","hi","ja"]){
+for(const locale of ["tr","de","hi","ja","fr","ru","es","pt-br","zh"]){
  test("compact mobile navigation and locale panel: "+locale,async({page})=>{
   await page.setViewportSize({width:320,height:480});
   await page.goto("/"+locale+"/");
@@ -30,7 +30,7 @@ for(const locale of ["tr","de","hi","ja"]){
   await expect(nav).toBeVisible();
   await expect(nav.locator('a[href="/'+locale+'/compare/"]')).toHaveCount(1);
   expect((await nav.boundingBox())?.width??999).toBeLessThanOrEqual(320);
-  const overflow=await page.evaluate(()=>({width:document.documentElement.scrollWidth,viewport:innerWidth,offenders:[...document.querySelectorAll(".site-header *")].filter(el=>{const r=el.getBoundingClientRect();return r.width>0&&(r.right>innerWidth+1||r.left< -1)}).map(el=>({tag:el.tagName,class:String(el.className).slice(0,100)})).slice(0,8)}));
+  const overflow=await page.evaluate(()=>({width:document.documentElement.scrollWidth,viewport:innerWidth,offenders:[...document.querySelectorAll("body *")].filter(el=>{const r=el.getBoundingClientRect();return r.width>0&&(r.right>innerWidth+1||r.left< -1)}).map(el=>({tag:el.tagName,class:String(el.className).slice(0,100),left:el.getBoundingClientRect().left,right:el.getBoundingClientRect().right})).slice(0,8)}));
   expect(overflow.width,JSON.stringify(overflow)).toBeLessThanOrEqual(overflow.viewport+1);
   await page.keyboard.press("Escape");
   await expect(menu).not.toHaveAttribute("open","");

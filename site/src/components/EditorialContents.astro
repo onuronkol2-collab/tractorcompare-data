@@ -38,7 +38,8 @@ if(!items.length||new Set(items.map(x=>x.id)).size!==items.length||items.some(x=
 @media(max-width:620px){.article-contents ol{grid-template-columns:1fr;gap:0}}
 /* Shared reading hierarchy, no change to the actual article destinations. */
 .article-contents{border-radius:9px;background:#f3f8f0}
-.article-contents a{min-block-size:44px;line-height:1.55}
+/* Preserve the 44px physical test floor despite fractional layout rounding. */
+.article-contents a{min-block-size:46px;line-height:1.55}
 @media(forced-colors:active){.article-contents a:focus-visible{outline-color:Highlight}}
 @media print{.article-contents{break-inside:avoid;background:white}}
 /* Current fragment, not a claim that the whole section has been read. */
