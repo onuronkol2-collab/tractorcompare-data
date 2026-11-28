@@ -141,7 +141,7 @@ const schema={
     <p class="editorial-intro">{copy.intro}</p>
     <p class="editorial-coverage">{coverage}</p>
     <nav class="editorial-jumps" aria-label={readingCopy.sections}>
-     <a class="editorial-start editorial-start-secondary" href="#editorial-discovery" data-editorial-search-jump hidden>{searchCopy.heading} <span aria-hidden="true">↓</span></a>
+     <a class="editorial-start editorial-start-secondary" href="#editorial-query" data-editorial-search-jump hidden>{searchCopy.heading} <span aria-hidden="true">↓</span></a>
      <a class="editorial-start" href="#rehberler">{copy.jump} <span aria-hidden="true">↓</span></a>
      <a class="editorial-start editorial-start-secondary" href="#incelemeler">{copy.review} <span aria-hidden="true">↓</span></a>
     </nav>
@@ -266,13 +266,11 @@ const schema={
     const searchJump=document.querySelector<HTMLAnchorElement>("[data-editorial-search-jump]");
     if(searchJump){
       searchJump.hidden=false;
+      // A native fragment targeting the input, not its parent, preserves
+      // navigation history and avoids focus being reset by fragment navigation.
       searchJump.addEventListener("click",event=>{
         if(event.defaultPrevented||event.button!==0||event.metaKey||event.ctrlKey||event.shiftKey||event.altKey)return;
-        // Native fragment navigation after a click can override early input focus.
-        event.preventDefault();
-        if(location.hash!=="#editorial-discovery")history.pushState(null,"","#editorial-discovery");
-        discovery.scrollIntoView({block:"start"});
-        field.focus({preventScroll:true});
+        requestAnimationFrame(()=>{if(location.hash==="#editorial-query")field.focus({preventScroll:true});});
       });
     }
     const number=new Intl.NumberFormat(document.documentElement.lang);

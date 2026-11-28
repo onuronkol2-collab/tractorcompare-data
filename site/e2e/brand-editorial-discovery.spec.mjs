@@ -6,7 +6,7 @@ test("editorial search jump and reset preserve actual article links",async({page
  await jump.click();
  const input=page.locator("#editorial-query");
  await expect(input).toBeFocused();
- expect(new URL(page.url()).hash).toBe("#editorial-discovery");
+ expect(new URL(page.url()).hash).toBe("#editorial-query");
  await expect(input).toBeInViewport();
  const cards=page.locator("[data-editorial-card]");
  const count=await cards.count();

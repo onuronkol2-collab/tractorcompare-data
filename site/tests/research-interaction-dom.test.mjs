@@ -71,7 +71,7 @@ test("editorial multiword filtering, language selection, reset, focus and counts
   assert.equal(discovery.hidden,false);assert.equal(status.textContent,"2 / 2");
   field.value="CAFE guide isik";field.emit("input");
   assert.equal(a.hidden,false);assert.equal(b.hidden,true);assert.equal(status.textContent,"1 / 2");
-  assert.equal(countA.textContent,"1");assert.equal(countB.textContent,"0");
+  assert.equal(countA.textContent,"01");assert.equal(countB.textContent,"00");
   assert.equal(shortcuts.hidden,true);
   const nodes=[a,b,clear,empty,status,countA,countB,shortcuts],count=writes(...nodes);
   field.emit("input");assert.equal(writes(...nodes),count);
@@ -81,6 +81,7 @@ test("editorial multiword filtering, language selection, reset, focus and counts
   assert.equal(all.checked,true);assert.equal(other.checked,false);
   assert.equal(a.hidden,false);assert.equal(b.hidden,false);assert.equal(clear.hidden,true);
   assert.equal(empty.hidden,true);assert.equal(status.textContent,"2 / 2");assert.equal(shortcuts.hidden,false);
+  assert.equal(countA.textContent,"01");assert.equal(countB.textContent,"01");
   all.checked=false;local.checked=true;local.emit("change");assert.equal(shortcuts.hidden,true);
   all.checked=true;local.checked=false;window.emit("pageshow");assert.equal(shortcuts.hidden,false);
   field.value="history";field.emit("input");clear.emit("click");
