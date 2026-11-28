@@ -21,7 +21,7 @@ const taskFields=[["area",m.fieldArea,0.0001,1000000],["passes",c.passes,1,100],
 <section id="farm-investment-planning" class="planning" data-investment-planning data-locale={LOCALE_TAGS[lang]} data-unknown={c.unknown} data-copied={d.copied} data-copy-failed={d.copyFailed} data-export-failed={c.exportFailed}>
  <h2>{c.title}</h2>
  <noscript><p>{d.enableJs}</p></noscript>
- <details>
+ <details id="farm-ownership-plan">
   <summary>{c.ownership}</summary>
   <p>{c.note}</p>
   <form data-planning="investment" data-clarity-mask="true" autocomplete="off" data-report-title={c.ownership} data-report-note={c.note+" "+c.differenceNote}>
@@ -39,7 +39,7 @@ const taskFields=[["area",m.fieldArea,0.0001,1000000],["passes",c.passes,1,100],
   </form>
   <p><a lang="en" href="https://www.ontario.ca/page/budgeting-farm-machinery-costs">Ontario — Budgeting farm machinery costs</a> · <a lang="en" href="https://ahdb.org.uk/knowledge-library/machinery-costing-calculator">AHDB — Machinery costing calculator</a></p>
  </details>
- <details>
+ <details id="farm-field-plan">
   <summary>{c.fleet}</summary>
   <p>{c.multiFleetNote}</p>
   <form data-planning="fleet" data-clarity-mask="true" autocomplete="off" data-report-title={c.fleet} data-report-note={c.multiFleetNote}>
@@ -61,6 +61,13 @@ const taskFields=[["area",m.fieldArea,0.0001,1000000],["passes",c.passes,1,100],
  import {buildPlanningReport} from "../lib/farm-planning-report.mjs";
  import {FARM_TOOL_DONE_EVENT} from "../lib/analytics-product-actions";
  for(const root of document.querySelectorAll<HTMLElement>("[data-investment-planning]")){
+  const revealLinkedPlan=()=>{
+   const hash=window.location.hash;
+   if(hash!=="#farm-ownership-plan"&&hash!=="#farm-field-plan")return;
+   const target=root.querySelector<HTMLDetailsElement>(hash);
+   if(target)target.open=true;
+  };
+  revealLinkedPlan();window.addEventListener("hashchange",revealLinkedPlan);
   const format=new Intl.NumberFormat(root.dataset.locale,{maximumSignificantDigits:7});
   const render=(value:number|null)=>value===null?(root.dataset.unknown||"—"):Number.isFinite(value)?format.format(value):"—";
   for(const form of root.querySelectorAll<HTMLFormElement>("form[data-planning]")){
@@ -157,7 +164,7 @@ const taskFields=[["area",m.fieldArea,0.0001,1000000],["passes",c.passes,1,100],
 </script>
 <style>
  .planning{margin-block:2rem;scroll-margin-top:6rem}
- details{border:1px solid #708478;border-radius:.8rem;padding:1rem;margin-block:1rem}
+ details{scroll-margin-top:6rem;border:1px solid #708478;border-radius:.8rem;padding:1rem;margin-block:1rem}
  summary{cursor:pointer;font-weight:700;min-height:44px;align-content:center}
  summary:focus-visible,input:focus-visible,select:focus-visible,button:focus-visible{outline:2px solid currentColor;outline-offset:2px}
  .planning-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,14rem),1fr));gap:1rem;margin-block:1rem}

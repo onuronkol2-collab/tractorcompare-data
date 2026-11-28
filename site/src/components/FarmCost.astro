@@ -33,7 +33,7 @@ const schema=import.meta.env.PUBLIC_INDEXING_ENABLED==="true"&&Astro.site?farmTo
   <h1>{c.title}</h1>
   <p>{c.description}</p>
   <p class="cost-note">{c.note}</p>
-  <nav class="farm-tool-jump" aria-label={c.nav}><a href="#farm-cost-form">{c.title}</a><a href="#farm-scenarios">{x.scenario}</a><a href="#farm-service">{x.service}</a><a href="#farm-finance">{d.finance}</a><a href="#farm-investment-planning">{investmentPlanningText(lang).title}</a><a href="#farm-units">{d.units}</a><a href="#farm-equipment">{d.equipment}</a><a href="#farm-used">{d.used}</a><a href="#farm-journal">{d.journal}</a></nav>
+  <nav class="farm-tool-jump" aria-label={c.nav}><a href="#farm-cost-form">{c.title}</a><a href="#farm-scenarios">{x.scenario}</a><a href="#farm-service">{x.service}</a><a href="#farm-finance">{d.finance}</a><a href="#farm-ownership-plan">{investmentPlanningText(lang).ownership}</a><a href="#farm-field-plan">{investmentPlanningText(lang).fleet}</a><a href="#farm-units">{d.units}</a><a href="#farm-equipment">{d.equipment}</a><a href="#farm-used">{d.used}</a><a href="#farm-journal">{d.journal}</a></nav>
   <div class="cost-grid">
    <form id="farm-cost-form" data-clarity-mask="true"><fieldset data-cost-controls disabled>
     <noscript><p>{d.enableJs}</p></noscript>
