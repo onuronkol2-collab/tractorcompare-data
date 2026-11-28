@@ -1,0 +1,4086 @@
+{
+  "schema": "tractorvs-research-evidence-v1",
+  "researchedOn": "2026-11-28",
+  "status": "research_only_not_importable",
+  "sourcePolicy": "OEM PDF extracted factual fields, not independent reliability/performance tests. Visual screenshot attempts failed; all records held for original review. No database writes or new model-year assumptions.",
+  "models": [
+    {
+      "brand": "Erkunt",
+      "model": "Kısmet 50 E-T",
+      "variant": "CRD5 eCapra / 4WD / platform / 8F8R",
+      "market": "Türkiye",
+      "modelYear": null,
+      "sourceUrl": "https://erkunttraktor.com.tr/assets/model_dosyalar/pdfs/KismetTarlaCRD5.pdf?t=20260416151221",
+      "sourceType": "manufacturer",
+      "existingDraftId": "f9d42c83-43f4-4f7d-9556-63a4ee2d5d8f",
+      "disposition": "hold_for_review",
+      "sourceRead": "indexed PDF text; page screenshot unavailable",
+      "specs": [
+        {
+          "name": "engine_max_power_normal",
+          "value": "52",
+          "unit": "HP",
+          "locator": "Technical table / Kısmet 50 E-T / Engine / maximum normal mode",
+          "context": "OEM HP label; not rated"
+        },
+        {
+          "name": "engine_max_power_normal_kw",
+          "value": "38.7",
+          "unit": "kW",
+          "locator": "Technical table / Kısmet 50 E-T / Engine / maximum normal mode",
+          "context": null
+        },
+        {
+          "name": "engine_max_power_boost",
+          "value": "57",
+          "unit": "HP",
+          "locator": "Technical table / Kısmet 50 E-T / Engine / maximum boost",
+          "context": "Separate boost operating mode"
+        },
+        {
+          "name": "engine_max_power_boost_kw",
+          "value": "42.5",
+          "unit": "kW",
+          "locator": "Technical table / Kısmet 50 E-T / Engine / maximum boost",
+          "context": null
+        },
+        {
+          "name": "engine_torque_normal",
+          "value": "230",
+          "unit": "Nm",
+          "locator": "Technical table / Kısmet 50 E-T / Engine / maximum torque",
+          "context": "1500 rpm"
+        },
+        {
+          "name": "engine_torque_boost",
+          "value": "251",
+          "unit": "Nm",
+          "locator": "Technical table / Kısmet 50 E-T / Engine / maximum torque boost",
+          "context": "1500 rpm"
+        },
+        {
+          "name": "peak_torque_speed",
+          "value": "1500",
+          "unit": "rpm",
+          "locator": "Technical table / Kısmet 50 E-T / Engine",
+          "context": null
+        },
+        {
+          "name": "maximum_power_speed",
+          "value": "2100",
+          "unit": "rpm",
+          "locator": "Technical table / Kısmet 50 E-T / Engine",
+          "context": null
+        },
+        {
+          "name": "engine_family",
+          "value": "HCE eCapra",
+          "unit": null,
+          "locator": "Technical table / Kısmet 50 E-T / Engine",
+          "context": null
+        },
+        {
+          "name": "engine_cylinders",
+          "value": "3",
+          "unit": "count",
+          "locator": "Technical table / Kısmet 50 E-T / Engine",
+          "context": null
+        },
+        {
+          "name": "engine_displacement",
+          "value": "2.98",
+          "unit": "L",
+          "locator": "Technical table / Kısmet 50 E-T / Engine",
+          "context": null
+        },
+        {
+          "name": "engine_aspiration",
+          "value": "Turbo intercooler",
+          "unit": null,
+          "locator": "Technical table / Kısmet 50 E-T / Engine",
+          "context": null
+        },
+        {
+          "name": "emissions_standard",
+          "value": "Stage V",
+          "unit": null,
+          "locator": "Technical table / Kısmet 50 E-T / Engine",
+          "context": null
+        },
+        {
+          "name": "fuel_tank_capacity",
+          "value": "40",
+          "unit": "L",
+          "locator": "Technical table / Kısmet 50 E-T / Engine",
+          "context": null
+        },
+        {
+          "name": "fuel_injection",
+          "value": "Common rail",
+          "unit": null,
+          "locator": "Technical table / Kısmet 50 E-T / Engine",
+          "context": null
+        },
+        {
+          "name": "forward_gears",
+          "value": "8",
+          "unit": "count",
+          "locator": "Technical table / Kısmet 50 E-T / Transmission",
+          "context": null
+        },
+        {
+          "name": "reverse_gears",
+          "value": "8",
+          "unit": "count",
+          "locator": "Technical table / Kısmet 50 E-T / Transmission",
+          "context": null
+        },
+        {
+          "name": "transmission_type",
+          "value": "Fully synchronized mechanical",
+          "unit": null,
+          "locator": "Technical table / Kısmet 50 E-T / Transmission",
+          "context": null
+        },
+        {
+          "name": "hydraulic_outlet_count",
+          "value": "4",
+          "unit": "count",
+          "locator": "Technical table / Kısmet 50 E-T / Hydraulics",
+          "context": "Not flow or valve count"
+        },
+        {
+          "name": "hydraulic_pressure",
+          "value": "190",
+          "unit": "bar",
+          "locator": "Technical table / Kısmet 50 E-T / Hydraulics",
+          "context": null
+        },
+        {
+          "name": "rear_lift_capacity",
+          "value": "2200",
+          "unit": "kg",
+          "locator": "Technical table / Kısmet 50 E-T / Hydraulics",
+          "context": "Maximum; measurement point unspecified"
+        },
+        {
+          "name": "hydraulic_control",
+          "value": "Mechanical",
+          "unit": null,
+          "locator": "Technical table / Kısmet 50 E-T / Hydraulics",
+          "context": null
+        },
+        {
+          "name": "rear_pto_speeds",
+          "value": "540/540E",
+          "unit": "rpm",
+          "locator": "Technical table / Kısmet 50 E-T / PTO",
+          "context": null
+        },
+        {
+          "name": "pto_type",
+          "value": "Independent",
+          "unit": null,
+          "locator": "Technical table / Kısmet 50 E-T / PTO",
+          "context": null
+        },
+        {
+          "name": "wheelbase",
+          "value": "2059",
+          "unit": "mm",
+          "locator": "Technical table / Kısmet 50 E-T / Dimensions",
+          "context": null
+        },
+        {
+          "name": "overall_length",
+          "value": "3617",
+          "unit": "mm",
+          "locator": "Technical table / Kısmet 50 E-T / Dimensions",
+          "context": null
+        },
+        {
+          "name": "overall_width",
+          "value": "1747",
+          "unit": "mm",
+          "locator": "Technical table / Kısmet 50 E-T / Dimensions",
+          "context": null
+        },
+        {
+          "name": "overall_height",
+          "value": "2320",
+          "unit": "mm",
+          "locator": "Technical table / Kısmet 50 E-T / Dimensions",
+          "context": "4WD platform, no additional weights"
+        },
+        {
+          "name": "unballasted_weight",
+          "value": "2360",
+          "unit": "kg",
+          "locator": "Technical table / Kısmet 50 E-T / Weights",
+          "context": "4WD platform, no additional weights"
+        },
+        {
+          "name": "min_travel_speed",
+          "value": "2.55",
+          "unit": "km/h",
+          "locator": "Technical table / Kısmet 50 E-T / Transmission",
+          "context": "8F8R"
+        },
+        {
+          "name": "max_travel_speed",
+          "value": "36.84",
+          "unit": "km/h",
+          "locator": "Technical table / Kısmet 50 E-T / Transmission",
+          "context": "8F8R"
+        }
+      ],
+      "notes": [
+        "Screenshot fetch failed; confirm original PDF and variant before admission. E-B front-ROPS versus platform wording needs reconciliation. No date or model year inferred."
+      ]
+    },
+    {
+      "brand": "Erkunt",
+      "model": "Kısmet 55 E-T",
+      "variant": "CRD5 eCapra / 4WD / platform / 8F8R",
+      "market": "Türkiye",
+      "modelYear": null,
+      "sourceUrl": "https://erkunttraktor.com.tr/assets/model_dosyalar/pdfs/KismetTarlaCRD5.pdf?t=20260416151221",
+      "sourceType": "manufacturer",
+      "existingDraftId": "024497b4-79b3-4c15-b9dc-c1897635b5a1",
+      "disposition": "hold_for_review",
+      "sourceRead": "indexed PDF text; page screenshot unavailable",
+      "specs": [
+        {
+          "name": "engine_max_power_normal",
+          "value": "57",
+          "unit": "HP",
+          "locator": "Technical table / Kısmet 55 E-T / Engine / maximum normal mode",
+          "context": "OEM HP label; not rated"
+        },
+        {
+          "name": "engine_max_power_normal_kw",
+          "value": "42.5",
+          "unit": "kW",
+          "locator": "Technical table / Kısmet 55 E-T / Engine / maximum normal mode",
+          "context": null
+        },
+        {
+          "name": "engine_max_power_boost",
+          "value": "63",
+          "unit": "HP",
+          "locator": "Technical table / Kısmet 55 E-T / Engine / maximum boost",
+          "context": "Separate boost operating mode"
+        },
+        {
+          "name": "engine_max_power_boost_kw",
+          "value": "46.9",
+          "unit": "kW",
+          "locator": "Technical table / Kısmet 55 E-T / Engine / maximum boost",
+          "context": null
+        },
+        {
+          "name": "engine_torque_normal",
+          "value": "251",
+          "unit": "Nm",
+          "locator": "Technical table / Kısmet 55 E-T / Engine / maximum torque",
+          "context": "1500 rpm"
+        },
+        {
+          "name": "engine_torque_boost",
+          "value": "280",
+          "unit": "Nm",
+          "locator": "Technical table / Kısmet 55 E-T / Engine / maximum torque boost",
+          "context": "1500 rpm"
+        },
+        {
+          "name": "peak_torque_speed",
+          "value": "1500",
+          "unit": "rpm",
+          "locator": "Technical table / Kısmet 55 E-T / Engine",
+          "context": null
+        },
+        {
+          "name": "maximum_power_speed",
+          "value": "2100",
+          "unit": "rpm",
+          "locator": "Technical table / Kısmet 55 E-T / Engine",
+          "context": null
+        },
+        {
+          "name": "engine_family",
+          "value": "HCE eCapra",
+          "unit": null,
+          "locator": "Technical table / Kısmet 55 E-T / Engine",
+          "context": null
+        },
+        {
+          "name": "engine_cylinders",
+          "value": "3",
+          "unit": "count",
+          "locator": "Technical table / Kısmet 55 E-T / Engine",
+          "context": null
+        },
+        {
+          "name": "engine_displacement",
+          "value": "2.98",
+          "unit": "L",
+          "locator": "Technical table / Kısmet 55 E-T / Engine",
+          "context": null
+        },
+        {
+          "name": "engine_aspiration",
+          "value": "Turbo intercooler",
+          "unit": null,
+          "locator": "Technical table / Kısmet 55 E-T / Engine",
+          "context": null
+        },
+        {
+          "name": "emissions_standard",
+          "value": "Stage V",
+          "unit": null,
+          "locator": "Technical table / Kısmet 55 E-T / Engine",
+          "context": null
+        },
+        {
+          "name": "fuel_tank_capacity",
+          "value": "40",
+          "unit": "L",
+          "locator": "Technical table / Kısmet 55 E-T / Engine",
+          "context": null
+        },
+        {
+          "name": "fuel_injection",
+          "value": "Common rail",
+          "unit": null,
+          "locator": "Technical table / Kısmet 55 E-T / Engine",
+          "context": null
+        },
+        {
+          "name": "forward_gears",
+          "value": "8",
+          "unit": "count",
+          "locator": "Technical table / Kısmet 55 E-T / Transmission",
+          "context": null
+        },
+        {
+          "name": "reverse_gears",
+          "value": "8",
+          "unit": "count",
+          "locator": "Technical table / Kısmet 55 E-T / Transmission",
+          "context": null
+        },
+        {
+          "name": "transmission_type",
+          "value": "Fully synchronized mechanical",
+          "unit": null,
+          "locator": "Technical table / Kısmet 55 E-T / Transmission",
+          "context": null
+        },
+        {
+          "name": "hydraulic_outlet_count",
+          "value": "4",
+          "unit": "count",
+          "locator": "Technical table / Kısmet 55 E-T / Hydraulics",
+          "context": "Not flow or valve count"
+        },
+        {
+          "name": "hydraulic_pressure",
+          "value": "190",
+          "unit": "bar",
+          "locator": "Technical table / Kısmet 55 E-T / Hydraulics",
+          "context": null
+        },
+        {
+          "name": "rear_lift_capacity",
+          "value": "2200",
+          "unit": "kg",
+          "locator": "Technical table / Kısmet 55 E-T / Hydraulics",
+          "context": "Maximum; measurement point unspecified"
+        },
+        {
+          "name": "hydraulic_control",
+          "value": "Mechanical",
+          "unit": null,
+          "locator": "Technical table / Kısmet 55 E-T / Hydraulics",
+          "context": null
+        },
+        {
+          "name": "rear_pto_speeds",
+          "value": "540/540E",
+          "unit": "rpm",
+          "locator": "Technical table / Kısmet 55 E-T / PTO",
+          "context": null
+        },
+        {
+          "name": "pto_type",
+          "value": "Independent",
+          "unit": null,
+          "locator": "Technical table / Kısmet 55 E-T / PTO",
+          "context": null
+        },
+        {
+          "name": "wheelbase",
+          "value": "2059",
+          "unit": "mm",
+          "locator": "Technical table / Kısmet 55 E-T / Dimensions",
+          "context": null
+        },
+        {
+          "name": "overall_length",
+          "value": "3617",
+          "unit": "mm",
+          "locator": "Technical table / Kısmet 55 E-T / Dimensions",
+          "context": null
+        },
+        {
+          "name": "overall_width",
+          "value": "1747",
+          "unit": "mm",
+          "locator": "Technical table / Kısmet 55 E-T / Dimensions",
+          "context": null
+        },
+        {
+          "name": "overall_height",
+          "value": "2320",
+          "unit": "mm",
+          "locator": "Technical table / Kısmet 55 E-T / Dimensions",
+          "context": "4WD platform, no additional weights"
+        },
+        {
+          "name": "unballasted_weight",
+          "value": "2360",
+          "unit": "kg",
+          "locator": "Technical table / Kısmet 55 E-T / Weights",
+          "context": "4WD platform, no additional weights"
+        },
+        {
+          "name": "min_travel_speed",
+          "value": "2.55",
+          "unit": "km/h",
+          "locator": "Technical table / Kısmet 55 E-T / Transmission",
+          "context": "8F8R"
+        },
+        {
+          "name": "max_travel_speed",
+          "value": "36.84",
+          "unit": "km/h",
+          "locator": "Technical table / Kısmet 55 E-T / Transmission",
+          "context": "8F8R"
+        }
+      ],
+      "notes": [
+        "Screenshot fetch failed; confirm original PDF and variant before admission. E-B front-ROPS versus platform wording needs reconciliation. No date or model year inferred."
+      ]
+    },
+    {
+      "brand": "Erkunt",
+      "model": "Kısmet 58 E",
+      "variant": "CRD5 eCapra / 4WD / cab / 8F8R",
+      "market": "Türkiye",
+      "modelYear": null,
+      "sourceUrl": "https://erkunttraktor.com.tr/assets/model_dosyalar/pdfs/KismetTarlaCRD5.pdf?t=20260416151221",
+      "sourceType": "manufacturer",
+      "existingDraftId": "d288f9c8-d360-48af-858a-175e3e1a3b40",
+      "disposition": "hold_for_review",
+      "sourceRead": "indexed PDF text; page screenshot unavailable",
+      "specs": [
+        {
+          "name": "engine_max_power_normal",
+          "value": "57",
+          "unit": "HP",
+          "locator": "Technical table / Kısmet 58 E / Engine / maximum normal mode",
+          "context": "OEM HP label; not rated"
+        },
+        {
+          "name": "engine_max_power_normal_kw",
+          "value": "42.5",
+          "unit": "kW",
+          "locator": "Technical table / Kısmet 58 E / Engine / maximum normal mode",
+          "context": null
+        },
+        {
+          "name": "engine_max_power_boost",
+          "value": "63",
+          "unit": "HP",
+          "locator": "Technical table / Kısmet 58 E / Engine / maximum boost",
+          "context": "Separate boost operating mode"
+        },
+        {
+          "name": "engine_max_power_boost_kw",
+          "value": "46.9",
+          "unit": "kW",
+          "locator": "Technical table / Kısmet 58 E / Engine / maximum boost",
+          "context": null
+        },
+        {
+          "name": "engine_torque_normal",
+          "value": "251",
+          "unit": "Nm",
+          "locator": "Technical table / Kısmet 58 E / Engine / maximum torque",
+          "context": "1500 rpm"
+        },
+        {
+          "name": "engine_torque_boost",
+          "value": "280",
+          "unit": "Nm",
+          "locator": "Technical table / Kısmet 58 E / Engine / maximum torque boost",
+          "context": "1500 rpm"
+        },
+        {
+          "name": "peak_torque_speed",
+          "value": "1500",
+          "unit": "rpm",
+          "locator": "Technical table / Kısmet 58 E / Engine",
+          "context": null
+        },
+        {
+          "name": "maximum_power_speed",
+          "value": "2100",
+          "unit": "rpm",
+          "locator": "Technical table / Kısmet 58 E / Engine",
+          "context": null
+        },
+        {
+          "name": "engine_family",
+          "value": "HCE eCapra",
+          "unit": null,
+          "locator": "Technical table / Kısmet 58 E / Engine",
+          "context": null
+        },
+        {
+          "name": "engine_cylinders",
+          "value": "3",
+          "unit": "count",
+          "locator": "Technical table / Kısmet 58 E / Engine",
+          "context": null
+        },
+        {
+          "name": "engine_displacement",
+          "value": "2.98",
+          "unit": "L",
+          "locator": "Technical table / Kısmet 58 E / Engine",
+          "context": null
+        },
+        {
+          "name": "engine_aspiration",
+          "value": "Turbo intercooler",
+          "unit": null,
+          "locator": "Technical table / Kısmet 58 E / Engine",
+          "context": null
+        },
+        {
+          "name": "emissions_standard",
+          "value": "Stage V",
+          "unit": null,
+          "locator": "Technical table / Kısmet 58 E / Engine",
+          "context": null
+        },
+        {
+          "name": "fuel_tank_capacity",
+          "value": "62",
+          "unit": "L",
+          "locator": "Technical table / Kısmet 58 E / Engine",
+          "context": null
+        },
+        {
+          "name": "fuel_injection",
+          "value": "Common rail",
+          "unit": null,
+          "locator": "Technical table / Kısmet 58 E / Engine",
+          "context": null
+        },
+        {
+          "name": "forward_gears",
+          "value": "8",
+          "unit": "count",
+          "locator": "Technical table / Kısmet 58 E / Transmission",
+          "context": null
+        },
+        {
+          "name": "reverse_gears",
+          "value": "8",
+          "unit": "count",
+          "locator": "Technical table / Kısmet 58 E / Transmission",
+          "context": null
+        },
+        {
+          "name": "transmission_type",
+          "value": "Fully synchronized mechanical",
+          "unit": null,
+          "locator": "Technical table / Kısmet 58 E / Transmission",
+          "context": null
+        },
+        {
+          "name": "hydraulic_outlet_count",
+          "value": "4",
+          "unit": "count",
+          "locator": "Technical table / Kısmet 58 E / Hydraulics",
+          "context": "Not flow or valve count"
+        },
+        {
+          "name": "hydraulic_pressure",
+          "value": "190",
+          "unit": "bar",
+          "locator": "Technical table / Kısmet 58 E / Hydraulics",
+          "context": null
+        },
+        {
+          "name": "rear_lift_capacity",
+          "value": "2200",
+          "unit": "kg",
+          "locator": "Technical table / Kısmet 58 E / Hydraulics",
+          "context": "Maximum; measurement point unspecified"
+        },
+        {
+          "name": "hydraulic_control",
+          "value": "Mechanical",
+          "unit": null,
+          "locator": "Technical table / Kısmet 58 E / Hydraulics",
+          "context": null
+        },
+        {
+          "name": "rear_pto_speeds",
+          "value": "540/540E",
+          "unit": "rpm",
+          "locator": "Technical table / Kısmet 58 E / PTO",
+          "context": null
+        },
+        {
+          "name": "pto_type",
+          "value": "Independent",
+          "unit": null,
+          "locator": "Technical table / Kısmet 58 E / PTO",
+          "context": null
+        },
+        {
+          "name": "wheelbase",
+          "value": "2064",
+          "unit": "mm",
+          "locator": "Technical table / Kısmet 58 E / Dimensions",
+          "context": null
+        },
+        {
+          "name": "overall_length",
+          "value": "3711",
+          "unit": "mm",
+          "locator": "Technical table / Kısmet 58 E / Dimensions",
+          "context": null
+        },
+        {
+          "name": "overall_width",
+          "value": "1735",
+          "unit": "mm",
+          "locator": "Technical table / Kısmet 58 E / Dimensions",
+          "context": null
+        },
+        {
+          "name": "overall_height",
+          "value": "2420",
+          "unit": "mm",
+          "locator": "Technical table / Kısmet 58 E / Dimensions",
+          "context": "4WD cab, no additional weights"
+        },
+        {
+          "name": "unballasted_weight",
+          "value": "3160",
+          "unit": "kg",
+          "locator": "Technical table / Kısmet 58 E / Weights",
+          "context": "4WD cab, no additional weights"
+        },
+        {
+          "name": "min_travel_speed",
+          "value": "1.99",
+          "unit": "km/h",
+          "locator": "Technical table / Kısmet 58 E / Transmission",
+          "context": "8F8R"
+        },
+        {
+          "name": "max_travel_speed",
+          "value": "29",
+          "unit": "km/h",
+          "locator": "Technical table / Kısmet 58 E / Transmission",
+          "context": "8F8R"
+        },
+        {
+          "name": "optional_gearbox",
+          "value": "12F/12R",
+          "unit": null,
+          "locator": "Technical table / Kısmet 58 E / Transmission",
+          "context": "Not standard"
+        }
+      ],
+      "notes": [
+        "Screenshot fetch failed; confirm original PDF and variant before admission. E-B front-ROPS versus platform wording needs reconciliation. No date or model year inferred."
+      ]
+    },
+    {
+      "brand": "Erkunt",
+      "model": "Kısmet 50 E-B",
+      "variant": "CRD5 eCapra / 4WD / front ROPS / platform (identity pending) / 8F8R",
+      "market": "Türkiye",
+      "modelYear": null,
+      "sourceUrl": "https://erkunttraktor.com.tr/assets/model_dosyalar/pdfs/KismetBahceCRD5.pdf?t=20260412095614",
+      "sourceType": "manufacturer",
+      "existingDraftId": null,
+      "disposition": "hold_for_review",
+      "sourceRead": "indexed PDF text; page screenshot unavailable",
+      "specs": [
+        {
+          "name": "engine_max_power_normal",
+          "value": "52",
+          "unit": "HP",
+          "locator": "Technical table / Kısmet 50 E-B / Engine / maximum normal mode",
+          "context": "OEM HP label; not rated"
+        },
+        {
+          "name": "engine_max_power_normal_kw",
+          "value": "38.7",
+          "unit": "kW",
+          "locator": "Technical table / Kısmet 50 E-B / Engine / maximum normal mode",
+          "context": null
+        },
+        {
+          "name": "engine_max_power_boost",
+          "value": "57",
+          "unit": "HP",
+          "locator": "Technical table / Kısmet 50 E-B / Engine / maximum boost",
+          "context": "Separate boost operating mode"
+        },
+        {
+          "name": "engine_max_power_boost_kw",
+          "value": "42.5",
+          "unit": "kW",
+          "locator": "Technical table / Kısmet 50 E-B / Engine / maximum boost",
+          "context": null
+        },
+        {
+          "name": "engine_torque_normal",
+          "value": "230",
+          "unit": "Nm",
+          "locator": "Technical table / Kısmet 50 E-B / Engine / maximum torque",
+          "context": "1500 rpm"
+        },
+        {
+          "name": "engine_torque_boost",
+          "value": "251",
+          "unit": "Nm",
+          "locator": "Technical table / Kısmet 50 E-B / Engine / maximum torque boost",
+          "context": "1500 rpm"
+        },
+        {
+          "name": "peak_torque_speed",
+          "value": "1500",
+          "unit": "rpm",
+          "locator": "Technical table / Kısmet 50 E-B / Engine",
+          "context": null
+        },
+        {
+          "name": "maximum_power_speed",
+          "value": "2100",
+          "unit": "rpm",
+          "locator": "Technical table / Kısmet 50 E-B / Engine",
+          "context": null
+        },
+        {
+          "name": "engine_family",
+          "value": "HCE eCapra",
+          "unit": null,
+          "locator": "Technical table / Kısmet 50 E-B / Engine",
+          "context": null
+        },
+        {
+          "name": "engine_cylinders",
+          "value": "3",
+          "unit": "count",
+          "locator": "Technical table / Kısmet 50 E-B / Engine",
+          "context": null
+        },
+        {
+          "name": "engine_displacement",
+          "value": "2.98",
+          "unit": "L",
+          "locator": "Technical table / Kısmet 50 E-B / Engine",
+          "context": null
+        },
+        {
+          "name": "engine_aspiration",
+          "value": "Turbo intercooler",
+          "unit": null,
+          "locator": "Technical table / Kısmet 50 E-B / Engine",
+          "context": null
+        },
+        {
+          "name": "emissions_standard",
+          "value": "Stage V",
+          "unit": null,
+          "locator": "Technical table / Kısmet 50 E-B / Engine",
+          "context": null
+        },
+        {
+          "name": "fuel_tank_capacity",
+          "value": "40",
+          "unit": "L",
+          "locator": "Technical table / Kısmet 50 E-B / Engine",
+          "context": null
+        },
+        {
+          "name": "fuel_injection",
+          "value": "Common rail",
+          "unit": null,
+          "locator": "Technical table / Kısmet 50 E-B / Engine",
+          "context": null
+        },
+        {
+          "name": "forward_gears",
+          "value": "8",
+          "unit": "count",
+          "locator": "Technical table / Kısmet 50 E-B / Transmission",
+          "context": null
+        },
+        {
+          "name": "reverse_gears",
+          "value": "8",
+          "unit": "count",
+          "locator": "Technical table / Kısmet 50 E-B / Transmission",
+          "context": null
+        },
+        {
+          "name": "transmission_type",
+          "value": "Fully synchronized mechanical",
+          "unit": null,
+          "locator": "Technical table / Kısmet 50 E-B / Transmission",
+          "context": null
+        },
+        {
+          "name": "hydraulic_outlet_count",
+          "value": "4",
+          "unit": "count",
+          "locator": "Technical table / Kısmet 50 E-B / Hydraulics",
+          "context": "Not flow or valve count"
+        },
+        {
+          "name": "hydraulic_pressure",
+          "value": "190",
+          "unit": "bar",
+          "locator": "Technical table / Kısmet 50 E-B / Hydraulics",
+          "context": null
+        },
+        {
+          "name": "rear_lift_capacity",
+          "value": "2200",
+          "unit": "kg",
+          "locator": "Technical table / Kısmet 50 E-B / Hydraulics",
+          "context": "Maximum; measurement point unspecified"
+        },
+        {
+          "name": "hydraulic_control",
+          "value": "Mechanical",
+          "unit": null,
+          "locator": "Technical table / Kısmet 50 E-B / Hydraulics",
+          "context": null
+        },
+        {
+          "name": "rear_pto_speeds",
+          "value": "540/540E",
+          "unit": "rpm",
+          "locator": "Technical table / Kısmet 50 E-B / PTO",
+          "context": null
+        },
+        {
+          "name": "pto_type",
+          "value": "Independent",
+          "unit": null,
+          "locator": "Technical table / Kısmet 50 E-B / PTO",
+          "context": null
+        },
+        {
+          "name": "wheelbase",
+          "value": "2045",
+          "unit": "mm",
+          "locator": "Technical table / Kısmet 50 E-B / Dimensions",
+          "context": null
+        },
+        {
+          "name": "overall_length",
+          "value": "3650",
+          "unit": "mm",
+          "locator": "Technical table / Kısmet 50 E-B / Dimensions",
+          "context": null
+        },
+        {
+          "name": "overall_width",
+          "value": "1480",
+          "unit": "mm",
+          "locator": "Technical table / Kısmet 50 E-B / Dimensions",
+          "context": null
+        },
+        {
+          "name": "overall_height",
+          "value": "2370",
+          "unit": "mm",
+          "locator": "Technical table / Kısmet 50 E-B / Dimensions",
+          "context": "4WD platform, no additional weights"
+        },
+        {
+          "name": "unballasted_weight",
+          "value": "2360",
+          "unit": "kg",
+          "locator": "Technical table / Kısmet 50 E-B / Weights",
+          "context": "4WD platform, no additional weights"
+        },
+        {
+          "name": "min_travel_speed",
+          "value": "2.65",
+          "unit": "km/h",
+          "locator": "Technical table / Kısmet 50 E-B / Transmission",
+          "context": "8F8R"
+        },
+        {
+          "name": "max_travel_speed",
+          "value": "38.82",
+          "unit": "km/h",
+          "locator": "Technical table / Kısmet 50 E-B / Transmission",
+          "context": "8F8R"
+        }
+      ],
+      "notes": [
+        "Screenshot fetch failed; confirm original PDF and variant before admission. E-B front-ROPS versus platform wording needs reconciliation. No date or model year inferred."
+      ]
+    },
+    {
+      "brand": "Erkunt",
+      "model": "Kısmet 55 E-B",
+      "variant": "CRD5 eCapra / 4WD / front ROPS / platform (identity pending) / 8F8R",
+      "market": "Türkiye",
+      "modelYear": null,
+      "sourceUrl": "https://erkunttraktor.com.tr/assets/model_dosyalar/pdfs/KismetBahceCRD5.pdf?t=20260412095614",
+      "sourceType": "manufacturer",
+      "existingDraftId": "fb29666c-1e9d-4073-a33b-29b4ad750896",
+      "disposition": "hold_for_review",
+      "sourceRead": "indexed PDF text; page screenshot unavailable",
+      "specs": [
+        {
+          "name": "engine_max_power_normal",
+          "value": "57",
+          "unit": "HP",
+          "locator": "Technical table / Kısmet 55 E-B / Engine / maximum normal mode",
+          "context": "OEM HP label; not rated"
+        },
+        {
+          "name": "engine_max_power_normal_kw",
+          "value": "42.5",
+          "unit": "kW",
+          "locator": "Technical table / Kısmet 55 E-B / Engine / maximum normal mode",
+          "context": null
+        },
+        {
+          "name": "engine_max_power_boost",
+          "value": "63",
+          "unit": "HP",
+          "locator": "Technical table / Kısmet 55 E-B / Engine / maximum boost",
+          "context": "Separate boost operating mode"
+        },
+        {
+          "name": "engine_max_power_boost_kw",
+          "value": "46.9",
+          "unit": "kW",
+          "locator": "Technical table / Kısmet 55 E-B / Engine / maximum boost",
+          "context": null
+        },
+        {
+          "name": "engine_torque_normal",
+          "value": "251",
+          "unit": "Nm",
+          "locator": "Technical table / Kısmet 55 E-B / Engine / maximum torque",
+          "context": "1500 rpm"
+        },
+        {
+          "name": "engine_torque_boost",
+          "value": "280",
+          "unit": "Nm",
+          "locator": "Technical table / Kısmet 55 E-B / Engine / maximum torque boost",
+          "context": "1500 rpm"
+        },
+        {
+          "name": "peak_torque_speed",
+          "value": "1500",
+          "unit": "rpm",
+          "locator": "Technical table / Kısmet 55 E-B / Engine",
+          "context": null
+        },
+        {
+          "name": "maximum_power_speed",
+          "value": "2100",
+          "unit": "rpm",
+          "locator": "Technical table / Kısmet 55 E-B / Engine",
+          "context": null
+        },
+        {
+          "name": "engine_family",
+          "value": "HCE eCapra",
+          "unit": null,
+          "locator": "Technical table / Kısmet 55 E-B / Engine",
+          "context": null
+        },
+        {
+          "name": "engine_cylinders",
+          "value": "3",
+          "unit": "count",
+          "locator": "Technical table / Kısmet 55 E-B / Engine",
+          "context": null
+        },
+        {
+          "name": "engine_displacement",
+          "value": "2.98",
+          "unit": "L",
+          "locator": "Technical table / Kısmet 55 E-B / Engine",
+          "context": null
+        },
+        {
+          "name": "engine_aspiration",
+          "value": "Turbo intercooler",
+          "unit": null,
+          "locator": "Technical table / Kısmet 55 E-B / Engine",
+          "context": null
+        },
+        {
+          "name": "emissions_standard",
+          "value": "Stage V",
+          "unit": null,
+          "locator": "Technical table / Kısmet 55 E-B / Engine",
+          "context": null
+        },
+        {
+          "name": "fuel_tank_capacity",
+          "value": "40",
+          "unit": "L",
+          "locator": "Technical table / Kısmet 55 E-B / Engine",
+          "context": null
+        },
+        {
+          "name": "fuel_injection",
+          "value": "Common rail",
+          "unit": null,
+          "locator": "Technical table / Kısmet 55 E-B / Engine",
+          "context": null
+        },
+        {
+          "name": "forward_gears",
+          "value": "8",
+          "unit": "count",
+          "locator": "Technical table / Kısmet 55 E-B / Transmission",
+          "context": null
+        },
+        {
+          "name": "reverse_gears",
+          "value": "8",
+          "unit": "count",
+          "locator": "Technical table / Kısmet 55 E-B / Transmission",
+          "context": null
+        },
+        {
+          "name": "transmission_type",
+          "value": "Fully synchronized mechanical",
+          "unit": null,
+          "locator": "Technical table / Kısmet 55 E-B / Transmission",
+          "context": null
+        },
+        {
+          "name": "hydraulic_outlet_count",
+          "value": "4",
+          "unit": "count",
+          "locator": "Technical table / Kısmet 55 E-B / Hydraulics",
+          "context": "Not flow or valve count"
+        },
+        {
+          "name": "hydraulic_pressure",
+          "value": "190",
+          "unit": "bar",
+          "locator": "Technical table / Kısmet 55 E-B / Hydraulics",
+          "context": null
+        },
+        {
+          "name": "rear_lift_capacity",
+          "value": "2200",
+          "unit": "kg",
+          "locator": "Technical table / Kısmet 55 E-B / Hydraulics",
+          "context": "Maximum; measurement point unspecified"
+        },
+        {
+          "name": "hydraulic_control",
+          "value": "Mechanical",
+          "unit": null,
+          "locator": "Technical table / Kısmet 55 E-B / Hydraulics",
+          "context": null
+        },
+        {
+          "name": "rear_pto_speeds",
+          "value": "540/540E",
+          "unit": "rpm",
+          "locator": "Technical table / Kısmet 55 E-B / PTO",
+          "context": null
+        },
+        {
+          "name": "pto_type",
+          "value": "Independent",
+          "unit": null,
+          "locator": "Technical table / Kısmet 55 E-B / PTO",
+          "context": null
+        },
+        {
+          "name": "wheelbase",
+          "value": "2045",
+          "unit": "mm",
+          "locator": "Technical table / Kısmet 55 E-B / Dimensions",
+          "context": null
+        },
+        {
+          "name": "overall_length",
+          "value": "3650",
+          "unit": "mm",
+          "locator": "Technical table / Kısmet 55 E-B / Dimensions",
+          "context": null
+        },
+        {
+          "name": "overall_width",
+          "value": "1480",
+          "unit": "mm",
+          "locator": "Technical table / Kısmet 55 E-B / Dimensions",
+          "context": null
+        },
+        {
+          "name": "overall_height",
+          "value": "2370",
+          "unit": "mm",
+          "locator": "Technical table / Kısmet 55 E-B / Dimensions",
+          "context": "4WD platform, no additional weights"
+        },
+        {
+          "name": "unballasted_weight",
+          "value": "2360",
+          "unit": "kg",
+          "locator": "Technical table / Kısmet 55 E-B / Weights",
+          "context": "4WD platform, no additional weights"
+        },
+        {
+          "name": "min_travel_speed",
+          "value": "2.65",
+          "unit": "km/h",
+          "locator": "Technical table / Kısmet 55 E-B / Transmission",
+          "context": "8F8R"
+        },
+        {
+          "name": "max_travel_speed",
+          "value": "38.82",
+          "unit": "km/h",
+          "locator": "Technical table / Kısmet 55 E-B / Transmission",
+          "context": "8F8R"
+        }
+      ],
+      "notes": [
+        "Screenshot fetch failed; confirm original PDF and variant before admission. E-B front-ROPS versus platform wording needs reconciliation. No date or model year inferred."
+      ]
+    },
+    {
+      "brand": "Erkunt",
+      "model": "Bereket 65 Meyveci",
+      "variant": "CRD5 eCapra / 4WD / platform / 16F8R",
+      "market": "Türkiye",
+      "modelYear": null,
+      "sourceUrl": "https://erkunttraktor.com.tr/assets/model_dosyalar/pdfs/MeyveciCRD5Brosurecapra.pdf?t=20260217112128",
+      "sourceType": "manufacturer",
+      "existingDraftId": "0eb2d7ea-8cfe-4a80-ab4d-febb3042b48c",
+      "disposition": "hold_for_review",
+      "sourceRead": "indexed PDF text; page screenshot unavailable",
+      "specs": [
+        {
+          "name": "engine_max_power_normal",
+          "value": "63",
+          "unit": "HP",
+          "locator": "Technical table / Bereket 65 Meyveci / Engine / maximum normal mode",
+          "context": "OEM HP label; not rated"
+        },
+        {
+          "name": "engine_max_power_normal_kw",
+          "value": "46.9",
+          "unit": "kW",
+          "locator": "Technical table / Bereket 65 Meyveci / Engine / maximum normal mode",
+          "context": null
+        },
+        {
+          "name": "engine_max_power_boost",
+          "value": "67",
+          "unit": "HP",
+          "locator": "Technical table / Bereket 65 Meyveci / Engine / maximum boost",
+          "context": "Separate boost operating mode"
+        },
+        {
+          "name": "engine_max_power_boost_kw",
+          "value": "49.9",
+          "unit": "kW",
+          "locator": "Technical table / Bereket 65 Meyveci / Engine / maximum boost",
+          "context": null
+        },
+        {
+          "name": "engine_torque_normal",
+          "value": "280",
+          "unit": "Nm",
+          "locator": "Technical table / Bereket 65 Meyveci / Engine / maximum torque",
+          "context": "1500 rpm"
+        },
+        {
+          "name": "engine_torque_boost",
+          "value": "295",
+          "unit": "Nm",
+          "locator": "Technical table / Bereket 65 Meyveci / Engine / maximum torque boost",
+          "context": "1500 rpm"
+        },
+        {
+          "name": "peak_torque_speed",
+          "value": "1500",
+          "unit": "rpm",
+          "locator": "Technical table / Bereket 65 Meyveci / Engine",
+          "context": null
+        },
+        {
+          "name": "maximum_power_speed",
+          "value": "2100",
+          "unit": "rpm",
+          "locator": "Technical table / Bereket 65 Meyveci / Engine",
+          "context": null
+        },
+        {
+          "name": "engine_family",
+          "value": "HCE eCapra",
+          "unit": null,
+          "locator": "Technical table / Bereket 65 Meyveci / Engine",
+          "context": null
+        },
+        {
+          "name": "engine_cylinders",
+          "value": "3",
+          "unit": "count",
+          "locator": "Technical table / Bereket 65 Meyveci / Engine",
+          "context": null
+        },
+        {
+          "name": "engine_displacement",
+          "value": "2.98",
+          "unit": "L",
+          "locator": "Technical table / Bereket 65 Meyveci / Engine",
+          "context": null
+        },
+        {
+          "name": "engine_aspiration",
+          "value": "Turbo intercooler",
+          "unit": null,
+          "locator": "Technical table / Bereket 65 Meyveci / Engine",
+          "context": null
+        },
+        {
+          "name": "emissions_standard",
+          "value": "Stage V",
+          "unit": null,
+          "locator": "Technical table / Bereket 65 Meyveci / Engine",
+          "context": null
+        },
+        {
+          "name": "fuel_tank_capacity",
+          "value": "70",
+          "unit": "L",
+          "locator": "Technical table / Bereket 65 Meyveci / Engine",
+          "context": null
+        },
+        {
+          "name": "fuel_injection",
+          "value": "Common rail",
+          "unit": null,
+          "locator": "Technical table / Bereket 65 Meyveci / Engine",
+          "context": null
+        },
+        {
+          "name": "forward_gears",
+          "value": "16",
+          "unit": "count",
+          "locator": "Technical table / Bereket 65 Meyveci / Transmission",
+          "context": null
+        },
+        {
+          "name": "reverse_gears",
+          "value": "8",
+          "unit": "count",
+          "locator": "Technical table / Bereket 65 Meyveci / Transmission",
+          "context": null
+        },
+        {
+          "name": "transmission_type",
+          "value": "ZF mechanical synchromesh",
+          "unit": null,
+          "locator": "Technical table / Bereket 65 Meyveci / Transmission",
+          "context": null
+        },
+        {
+          "name": "hydraulic_outlet_count",
+          "value": "4",
+          "unit": "count",
+          "locator": "Technical table / Bereket 65 Meyveci / Hydraulics",
+          "context": "Not flow or valve count"
+        },
+        {
+          "name": "hydraulic_pressure",
+          "value": "190",
+          "unit": "bar",
+          "locator": "Technical table / Bereket 65 Meyveci / Hydraulics",
+          "context": null
+        },
+        {
+          "name": "rear_lift_capacity",
+          "value": "2800",
+          "unit": "kg",
+          "locator": "Technical table / Bereket 65 Meyveci / Hydraulics",
+          "context": "Maximum; measurement point unspecified"
+        },
+        {
+          "name": "hydraulic_control",
+          "value": "Mechanical",
+          "unit": null,
+          "locator": "Technical table / Bereket 65 Meyveci / Hydraulics",
+          "context": null
+        },
+        {
+          "name": "rear_pto_speeds",
+          "value": "540/540E",
+          "unit": "rpm",
+          "locator": "Technical table / Bereket 65 Meyveci / PTO",
+          "context": null
+        },
+        {
+          "name": "pto_type",
+          "value": "Independent",
+          "unit": null,
+          "locator": "Technical table / Bereket 65 Meyveci / PTO",
+          "context": null
+        },
+        {
+          "name": "wheelbase",
+          "value": "2126",
+          "unit": "mm",
+          "locator": "Technical table / Bereket 65 Meyveci / Dimensions",
+          "context": null
+        },
+        {
+          "name": "overall_length",
+          "value": "3783",
+          "unit": "mm",
+          "locator": "Technical table / Bereket 65 Meyveci / Dimensions",
+          "context": null
+        },
+        {
+          "name": "overall_width",
+          "value": "1680",
+          "unit": "mm",
+          "locator": "Technical table / Bereket 65 Meyveci / Dimensions",
+          "context": null
+        },
+        {
+          "name": "overall_height",
+          "value": "2473",
+          "unit": "mm",
+          "locator": "Technical table / Bereket 65 Meyveci / Dimensions",
+          "context": "Platform without additional weights"
+        },
+        {
+          "name": "unballasted_weight",
+          "value": "2925",
+          "unit": "kg",
+          "locator": "Technical table / Bereket 65 Meyveci / Weights",
+          "context": "Platform without additional weights"
+        },
+        {
+          "name": "front_track",
+          "value": "1235–1625",
+          "unit": "mm",
+          "locator": "Technical table / Bereket 65 Meyveci / Dimensions",
+          "context": null
+        },
+        {
+          "name": "rear_track",
+          "value": "1190–1800",
+          "unit": "mm",
+          "locator": "Technical table / Bereket 65 Meyveci / Dimensions",
+          "context": null
+        },
+        {
+          "name": "optional_gearbox",
+          "value": "32F/16R",
+          "unit": null,
+          "locator": "Technical table / Bereket 65 Meyveci / Transmission",
+          "context": "Optional creeper"
+        }
+      ],
+      "notes": [
+        "Do not merge Deutz and eCapra. Confirm front ROPS identity versus brochure platform. Screenshot unavailable."
+      ]
+    },
+    {
+      "brand": "Erkunt",
+      "model": "Nimet 70 Meyveci",
+      "variant": "CRD5 eCapra / 4WD / platform / 16F8R",
+      "market": "Türkiye",
+      "modelYear": null,
+      "sourceUrl": "https://erkunttraktor.com.tr/assets/model_dosyalar/pdfs/MeyveciCRD5Brosurecapra.pdf?t=20260217112128",
+      "sourceType": "manufacturer",
+      "existingDraftId": "98cb2b11-2ea8-4642-83bc-5c3faa0c4f6a",
+      "disposition": "hold_for_review",
+      "sourceRead": "indexed PDF text; page screenshot unavailable",
+      "specs": [
+        {
+          "name": "engine_max_power_normal",
+          "value": "67",
+          "unit": "HP",
+          "locator": "Technical table / Nimet 70 Meyveci / Engine / maximum normal mode",
+          "context": "OEM HP label; not rated"
+        },
+        {
+          "name": "engine_max_power_normal_kw",
+          "value": "49.9",
+          "unit": "kW",
+          "locator": "Technical table / Nimet 70 Meyveci / Engine / maximum normal mode",
+          "context": null
+        },
+        {
+          "name": "engine_max_power_boost",
+          "value": "74",
+          "unit": "HP",
+          "locator": "Technical table / Nimet 70 Meyveci / Engine / maximum boost",
+          "context": "Separate boost operating mode"
+        },
+        {
+          "name": "engine_max_power_boost_kw",
+          "value": "54.8",
+          "unit": "kW",
+          "locator": "Technical table / Nimet 70 Meyveci / Engine / maximum boost",
+          "context": null
+        },
+        {
+          "name": "engine_torque_normal",
+          "value": "295",
+          "unit": "Nm",
+          "locator": "Technical table / Nimet 70 Meyveci / Engine / maximum torque",
+          "context": "1500 rpm"
+        },
+        {
+          "name": "engine_torque_boost",
+          "value": "308",
+          "unit": "Nm",
+          "locator": "Technical table / Nimet 70 Meyveci / Engine / maximum torque boost",
+          "context": "1500 rpm"
+        },
+        {
+          "name": "peak_torque_speed",
+          "value": "1500",
+          "unit": "rpm",
+          "locator": "Technical table / Nimet 70 Meyveci / Engine",
+          "context": null
+        },
+        {
+          "name": "maximum_power_speed",
+          "value": "2100",
+          "unit": "rpm",
+          "locator": "Technical table / Nimet 70 Meyveci / Engine",
+          "context": null
+        },
+        {
+          "name": "engine_family",
+          "value": "HCE eCapra",
+          "unit": null,
+          "locator": "Technical table / Nimet 70 Meyveci / Engine",
+          "context": null
+        },
+        {
+          "name": "engine_cylinders",
+          "value": "3",
+          "unit": "count",
+          "locator": "Technical table / Nimet 70 Meyveci / Engine",
+          "context": null
+        },
+        {
+          "name": "engine_displacement",
+          "value": "2.98",
+          "unit": "L",
+          "locator": "Technical table / Nimet 70 Meyveci / Engine",
+          "context": null
+        },
+        {
+          "name": "engine_aspiration",
+          "value": "Turbo intercooler",
+          "unit": null,
+          "locator": "Technical table / Nimet 70 Meyveci / Engine",
+          "context": null
+        },
+        {
+          "name": "emissions_standard",
+          "value": "Stage V",
+          "unit": null,
+          "locator": "Technical table / Nimet 70 Meyveci / Engine",
+          "context": null
+        },
+        {
+          "name": "fuel_tank_capacity",
+          "value": "70",
+          "unit": "L",
+          "locator": "Technical table / Nimet 70 Meyveci / Engine",
+          "context": null
+        },
+        {
+          "name": "fuel_injection",
+          "value": "Common rail",
+          "unit": null,
+          "locator": "Technical table / Nimet 70 Meyveci / Engine",
+          "context": null
+        },
+        {
+          "name": "forward_gears",
+          "value": "16",
+          "unit": "count",
+          "locator": "Technical table / Nimet 70 Meyveci / Transmission",
+          "context": null
+        },
+        {
+          "name": "reverse_gears",
+          "value": "8",
+          "unit": "count",
+          "locator": "Technical table / Nimet 70 Meyveci / Transmission",
+          "context": null
+        },
+        {
+          "name": "transmission_type",
+          "value": "ZF mechanical synchromesh",
+          "unit": null,
+          "locator": "Technical table / Nimet 70 Meyveci / Transmission",
+          "context": null
+        },
+        {
+          "name": "hydraulic_outlet_count",
+          "value": "4",
+          "unit": "count",
+          "locator": "Technical table / Nimet 70 Meyveci / Hydraulics",
+          "context": "Not flow or valve count"
+        },
+        {
+          "name": "hydraulic_pressure",
+          "value": "190",
+          "unit": "bar",
+          "locator": "Technical table / Nimet 70 Meyveci / Hydraulics",
+          "context": null
+        },
+        {
+          "name": "rear_lift_capacity",
+          "value": "2800",
+          "unit": "kg",
+          "locator": "Technical table / Nimet 70 Meyveci / Hydraulics",
+          "context": "Maximum; measurement point unspecified"
+        },
+        {
+          "name": "hydraulic_control",
+          "value": "Mechanical",
+          "unit": null,
+          "locator": "Technical table / Nimet 70 Meyveci / Hydraulics",
+          "context": null
+        },
+        {
+          "name": "rear_pto_speeds",
+          "value": "540/540E",
+          "unit": "rpm",
+          "locator": "Technical table / Nimet 70 Meyveci / PTO",
+          "context": null
+        },
+        {
+          "name": "pto_type",
+          "value": "Independent",
+          "unit": null,
+          "locator": "Technical table / Nimet 70 Meyveci / PTO",
+          "context": null
+        },
+        {
+          "name": "wheelbase",
+          "value": "2126",
+          "unit": "mm",
+          "locator": "Technical table / Nimet 70 Meyveci / Dimensions",
+          "context": null
+        },
+        {
+          "name": "overall_length",
+          "value": "3783",
+          "unit": "mm",
+          "locator": "Technical table / Nimet 70 Meyveci / Dimensions",
+          "context": null
+        },
+        {
+          "name": "overall_width",
+          "value": "1680",
+          "unit": "mm",
+          "locator": "Technical table / Nimet 70 Meyveci / Dimensions",
+          "context": null
+        },
+        {
+          "name": "overall_height",
+          "value": "2473",
+          "unit": "mm",
+          "locator": "Technical table / Nimet 70 Meyveci / Dimensions",
+          "context": "Platform without additional weights"
+        },
+        {
+          "name": "unballasted_weight",
+          "value": "2930",
+          "unit": "kg",
+          "locator": "Technical table / Nimet 70 Meyveci / Weights",
+          "context": "Platform without additional weights"
+        },
+        {
+          "name": "front_track",
+          "value": "1235–1625",
+          "unit": "mm",
+          "locator": "Technical table / Nimet 70 Meyveci / Dimensions",
+          "context": null
+        },
+        {
+          "name": "rear_track",
+          "value": "1190–1800",
+          "unit": "mm",
+          "locator": "Technical table / Nimet 70 Meyveci / Dimensions",
+          "context": null
+        },
+        {
+          "name": "optional_gearbox",
+          "value": "32F/16R",
+          "unit": null,
+          "locator": "Technical table / Nimet 70 Meyveci / Transmission",
+          "context": "Optional creeper"
+        }
+      ],
+      "notes": [
+        "Do not merge Deutz and eCapra. Confirm front ROPS identity versus brochure platform. Screenshot unavailable."
+      ]
+    },
+    {
+      "brand": "Erkunt",
+      "model": "Servet 80.4 Meyveci",
+      "variant": "CRD5 eCapra / 4WD / platform / 16F8R",
+      "market": "Türkiye",
+      "modelYear": null,
+      "sourceUrl": "https://erkunttraktor.com.tr/assets/model_dosyalar/pdfs/MeyveciCRD5Brosurecapra.pdf?t=20260217112128",
+      "sourceType": "manufacturer",
+      "existingDraftId": "34e90acd-b163-424f-b76b-61835250e3cc",
+      "disposition": "hold_for_review",
+      "sourceRead": "indexed PDF text; page screenshot unavailable",
+      "specs": [
+        {
+          "name": "engine_max_power_normal",
+          "value": "70",
+          "unit": "HP",
+          "locator": "Technical table / Servet 80.4 Meyveci / Engine / maximum normal mode",
+          "context": "OEM HP label; not rated"
+        },
+        {
+          "name": "engine_max_power_normal_kw",
+          "value": "52.2",
+          "unit": "kW",
+          "locator": "Technical table / Servet 80.4 Meyveci / Engine / maximum normal mode",
+          "context": null
+        },
+        {
+          "name": "engine_max_power_boost",
+          "value": "75",
+          "unit": "HP",
+          "locator": "Technical table / Servet 80.4 Meyveci / Engine / maximum boost",
+          "context": "Separate boost operating mode"
+        },
+        {
+          "name": "engine_max_power_boost_kw",
+          "value": "55.7",
+          "unit": "kW",
+          "locator": "Technical table / Servet 80.4 Meyveci / Engine / maximum boost",
+          "context": null
+        },
+        {
+          "name": "engine_torque_normal",
+          "value": "320",
+          "unit": "Nm",
+          "locator": "Technical table / Servet 80.4 Meyveci / Engine / maximum torque",
+          "context": "1400 rpm"
+        },
+        {
+          "name": "engine_torque_boost",
+          "value": "346",
+          "unit": "Nm",
+          "locator": "Technical table / Servet 80.4 Meyveci / Engine / maximum torque boost",
+          "context": "1400 rpm"
+        },
+        {
+          "name": "peak_torque_speed",
+          "value": "1400",
+          "unit": "rpm",
+          "locator": "Technical table / Servet 80.4 Meyveci / Engine",
+          "context": null
+        },
+        {
+          "name": "maximum_power_speed",
+          "value": "2100",
+          "unit": "rpm",
+          "locator": "Technical table / Servet 80.4 Meyveci / Engine",
+          "context": null
+        },
+        {
+          "name": "engine_family",
+          "value": "NEF eCapra",
+          "unit": null,
+          "locator": "Technical table / Servet 80.4 Meyveci / Engine",
+          "context": null
+        },
+        {
+          "name": "engine_cylinders",
+          "value": "4",
+          "unit": "count",
+          "locator": "Technical table / Servet 80.4 Meyveci / Engine",
+          "context": null
+        },
+        {
+          "name": "engine_displacement",
+          "value": "3.5",
+          "unit": "L",
+          "locator": "Technical table / Servet 80.4 Meyveci / Engine",
+          "context": null
+        },
+        {
+          "name": "engine_aspiration",
+          "value": "Turbo intercooler",
+          "unit": null,
+          "locator": "Technical table / Servet 80.4 Meyveci / Engine",
+          "context": null
+        },
+        {
+          "name": "emissions_standard",
+          "value": "Stage V",
+          "unit": null,
+          "locator": "Technical table / Servet 80.4 Meyveci / Engine",
+          "context": null
+        },
+        {
+          "name": "fuel_tank_capacity",
+          "value": "70",
+          "unit": "L",
+          "locator": "Technical table / Servet 80.4 Meyveci / Engine",
+          "context": null
+        },
+        {
+          "name": "fuel_injection",
+          "value": "Common rail",
+          "unit": null,
+          "locator": "Technical table / Servet 80.4 Meyveci / Engine",
+          "context": null
+        },
+        {
+          "name": "forward_gears",
+          "value": "16",
+          "unit": "count",
+          "locator": "Technical table / Servet 80.4 Meyveci / Transmission",
+          "context": null
+        },
+        {
+          "name": "reverse_gears",
+          "value": "8",
+          "unit": "count",
+          "locator": "Technical table / Servet 80.4 Meyveci / Transmission",
+          "context": null
+        },
+        {
+          "name": "transmission_type",
+          "value": "Mechanical synchromesh",
+          "unit": null,
+          "locator": "Technical table / Servet 80.4 Meyveci / Transmission",
+          "context": null
+        },
+        {
+          "name": "hydraulic_outlet_count",
+          "value": "4",
+          "unit": "count",
+          "locator": "Technical table / Servet 80.4 Meyveci / Hydraulics",
+          "context": "Not flow or valve count"
+        },
+        {
+          "name": "hydraulic_pressure",
+          "value": "190",
+          "unit": "bar",
+          "locator": "Technical table / Servet 80.4 Meyveci / Hydraulics",
+          "context": null
+        },
+        {
+          "name": "rear_lift_capacity",
+          "value": "2800",
+          "unit": "kg",
+          "locator": "Technical table / Servet 80.4 Meyveci / Hydraulics",
+          "context": "Maximum; measurement point unspecified"
+        },
+        {
+          "name": "hydraulic_control",
+          "value": "Mechanical",
+          "unit": null,
+          "locator": "Technical table / Servet 80.4 Meyveci / Hydraulics",
+          "context": null
+        },
+        {
+          "name": "rear_pto_speeds",
+          "value": "540/540E",
+          "unit": "rpm",
+          "locator": "Technical table / Servet 80.4 Meyveci / PTO",
+          "context": null
+        },
+        {
+          "name": "pto_type",
+          "value": "Independent",
+          "unit": null,
+          "locator": "Technical table / Servet 80.4 Meyveci / PTO",
+          "context": null
+        },
+        {
+          "name": "wheelbase",
+          "value": "2100–2130",
+          "unit": "mm",
+          "locator": "Technical table / Servet 80.4 Meyveci / Dimensions",
+          "context": null
+        },
+        {
+          "name": "overall_length",
+          "value": "3970",
+          "unit": "mm",
+          "locator": "Technical table / Servet 80.4 Meyveci / Dimensions",
+          "context": null
+        },
+        {
+          "name": "overall_width",
+          "value": "1680",
+          "unit": "mm",
+          "locator": "Technical table / Servet 80.4 Meyveci / Dimensions",
+          "context": null
+        },
+        {
+          "name": "overall_height",
+          "value": "2481",
+          "unit": "mm",
+          "locator": "Technical table / Servet 80.4 Meyveci / Dimensions",
+          "context": "Platform without additional weights"
+        },
+        {
+          "name": "unballasted_weight",
+          "value": "3000",
+          "unit": "kg",
+          "locator": "Technical table / Servet 80.4 Meyveci / Weights",
+          "context": "Platform without additional weights"
+        },
+        {
+          "name": "front_track",
+          "value": "1235–1625",
+          "unit": "mm",
+          "locator": "Technical table / Servet 80.4 Meyveci / Dimensions",
+          "context": null
+        },
+        {
+          "name": "rear_track",
+          "value": "1190–1800",
+          "unit": "mm",
+          "locator": "Technical table / Servet 80.4 Meyveci / Dimensions",
+          "context": null
+        },
+        {
+          "name": "optional_gearbox",
+          "value": "32F/16R",
+          "unit": null,
+          "locator": "Technical table / Servet 80.4 Meyveci / Transmission",
+          "context": "Optional creeper"
+        }
+      ],
+      "notes": [
+        "Do not merge Deutz and eCapra. Confirm front ROPS identity versus brochure platform. Screenshot unavailable."
+      ]
+    },
+    {
+      "brand": "Erkunt",
+      "model": "Kıymet 95 Meyveci Lüks",
+      "variant": "CRD5 eCapra / 4WD / platform / 16F16R",
+      "market": "Türkiye",
+      "modelYear": null,
+      "sourceUrl": "https://erkunttraktor.com.tr/assets/model_dosyalar/pdfs/MeyveciCRD5Brosurecapra.pdf?t=20260217112128",
+      "sourceType": "manufacturer",
+      "existingDraftId": null,
+      "disposition": "hold_for_review",
+      "sourceRead": "indexed PDF text; page screenshot unavailable",
+      "specs": [
+        {
+          "name": "engine_max_power_normal",
+          "value": "93",
+          "unit": "HP",
+          "locator": "Technical table / Kıymet 95 Meyveci Lüks / Engine / maximum normal mode",
+          "context": "OEM HP label; not rated"
+        },
+        {
+          "name": "engine_max_power_normal_kw",
+          "value": "68.5",
+          "unit": "kW",
+          "locator": "Technical table / Kıymet 95 Meyveci Lüks / Engine / maximum normal mode",
+          "context": null
+        },
+        {
+          "name": "engine_max_power_boost",
+          "value": "101",
+          "unit": "HP",
+          "locator": "Technical table / Kıymet 95 Meyveci Lüks / Engine / maximum boost",
+          "context": "Separate boost operating mode"
+        },
+        {
+          "name": "engine_max_power_boost_kw",
+          "value": "74.5",
+          "unit": "kW",
+          "locator": "Technical table / Kıymet 95 Meyveci Lüks / Engine / maximum boost",
+          "context": null
+        },
+        {
+          "name": "engine_torque_normal",
+          "value": "394",
+          "unit": "Nm",
+          "locator": "Technical table / Kıymet 95 Meyveci Lüks / Engine / maximum torque",
+          "context": "1400 rpm"
+        },
+        {
+          "name": "engine_torque_boost",
+          "value": "419",
+          "unit": "Nm",
+          "locator": "Technical table / Kıymet 95 Meyveci Lüks / Engine / maximum torque boost",
+          "context": "1400 rpm"
+        },
+        {
+          "name": "peak_torque_speed",
+          "value": "1400",
+          "unit": "rpm",
+          "locator": "Technical table / Kıymet 95 Meyveci Lüks / Engine",
+          "context": null
+        },
+        {
+          "name": "maximum_power_speed",
+          "value": "2100",
+          "unit": "rpm",
+          "locator": "Technical table / Kıymet 95 Meyveci Lüks / Engine",
+          "context": null
+        },
+        {
+          "name": "engine_family",
+          "value": "NEF eCapra",
+          "unit": null,
+          "locator": "Technical table / Kıymet 95 Meyveci Lüks / Engine",
+          "context": null
+        },
+        {
+          "name": "engine_cylinders",
+          "value": "4",
+          "unit": "count",
+          "locator": "Technical table / Kıymet 95 Meyveci Lüks / Engine",
+          "context": null
+        },
+        {
+          "name": "engine_displacement",
+          "value": "3.5",
+          "unit": "L",
+          "locator": "Technical table / Kıymet 95 Meyveci Lüks / Engine",
+          "context": null
+        },
+        {
+          "name": "engine_aspiration",
+          "value": "Turbo intercooler",
+          "unit": null,
+          "locator": "Technical table / Kıymet 95 Meyveci Lüks / Engine",
+          "context": null
+        },
+        {
+          "name": "emissions_standard",
+          "value": "Stage V",
+          "unit": null,
+          "locator": "Technical table / Kıymet 95 Meyveci Lüks / Engine",
+          "context": null
+        },
+        {
+          "name": "fuel_tank_capacity",
+          "value": "80",
+          "unit": "L",
+          "locator": "Technical table / Kıymet 95 Meyveci Lüks / Engine",
+          "context": null
+        },
+        {
+          "name": "fuel_injection",
+          "value": "Common rail",
+          "unit": null,
+          "locator": "Technical table / Kıymet 95 Meyveci Lüks / Engine",
+          "context": null
+        },
+        {
+          "name": "forward_gears",
+          "value": "16",
+          "unit": "count",
+          "locator": "Technical table / Kıymet 95 Meyveci Lüks / Transmission",
+          "context": null
+        },
+        {
+          "name": "reverse_gears",
+          "value": "16",
+          "unit": "count",
+          "locator": "Technical table / Kıymet 95 Meyveci Lüks / Transmission",
+          "context": null
+        },
+        {
+          "name": "transmission_type",
+          "value": "ZF PowerShift",
+          "unit": null,
+          "locator": "Technical table / Kıymet 95 Meyveci Lüks / Transmission",
+          "context": null
+        },
+        {
+          "name": "hydraulic_outlet_count",
+          "value": "6",
+          "unit": "count",
+          "locator": "Technical table / Kıymet 95 Meyveci Lüks / Hydraulics",
+          "context": "Not flow or valve count"
+        },
+        {
+          "name": "hydraulic_pressure",
+          "value": "190",
+          "unit": "bar",
+          "locator": "Technical table / Kıymet 95 Meyveci Lüks / Hydraulics",
+          "context": null
+        },
+        {
+          "name": "rear_lift_capacity",
+          "value": "3200",
+          "unit": "kg",
+          "locator": "Technical table / Kıymet 95 Meyveci Lüks / Hydraulics",
+          "context": "Maximum; measurement point unspecified"
+        },
+        {
+          "name": "hydraulic_control",
+          "value": "Mechanical",
+          "unit": null,
+          "locator": "Technical table / Kıymet 95 Meyveci Lüks / Hydraulics",
+          "context": null
+        },
+        {
+          "name": "rear_pto_speeds",
+          "value": "430/540/540E/1000",
+          "unit": "rpm",
+          "locator": "Technical table / Kıymet 95 Meyveci Lüks / PTO",
+          "context": null
+        },
+        {
+          "name": "pto_type",
+          "value": "Independent",
+          "unit": null,
+          "locator": "Technical table / Kıymet 95 Meyveci Lüks / PTO",
+          "context": null
+        },
+        {
+          "name": "wheelbase",
+          "value": "2100–2130",
+          "unit": "mm",
+          "locator": "Technical table / Kıymet 95 Meyveci Lüks / Dimensions",
+          "context": null
+        },
+        {
+          "name": "overall_length",
+          "value": "3970",
+          "unit": "mm",
+          "locator": "Technical table / Kıymet 95 Meyveci Lüks / Dimensions",
+          "context": null
+        },
+        {
+          "name": "overall_width",
+          "value": "1680",
+          "unit": "mm",
+          "locator": "Technical table / Kıymet 95 Meyveci Lüks / Dimensions",
+          "context": null
+        },
+        {
+          "name": "overall_height",
+          "value": "2481",
+          "unit": "mm",
+          "locator": "Technical table / Kıymet 95 Meyveci Lüks / Dimensions",
+          "context": "Platform without additional weights"
+        },
+        {
+          "name": "unballasted_weight",
+          "value": "3100",
+          "unit": "kg",
+          "locator": "Technical table / Kıymet 95 Meyveci Lüks / Weights",
+          "context": "Platform without additional weights"
+        },
+        {
+          "name": "front_track",
+          "value": "1235–1625",
+          "unit": "mm",
+          "locator": "Technical table / Kıymet 95 Meyveci Lüks / Dimensions",
+          "context": null
+        },
+        {
+          "name": "rear_track",
+          "value": "1190–1800",
+          "unit": "mm",
+          "locator": "Technical table / Kıymet 95 Meyveci Lüks / Dimensions",
+          "context": null
+        },
+        {
+          "name": "adblue_tank_capacity",
+          "value": "13",
+          "unit": "L",
+          "locator": "Technical table / Kıymet 95 Meyveci Lüks / Engine",
+          "context": null
+        }
+      ],
+      "notes": [
+        "Do not merge Deutz and eCapra. Confirm front ROPS identity versus brochure platform. Screenshot unavailable."
+      ]
+    },
+    {
+      "brand": "Erkunt",
+      "model": "Servet 80.4 Meyveci",
+      "variant": "CRD5 Deutz / 4WD / front ROPS / 16F8R",
+      "market": "Türkiye",
+      "modelYear": null,
+      "sourceUrl": "https://erkunttraktor.com.tr/assets/model_dosyalar/pdfs/MeyveciDeutzCRD5.pdf?t=20260419015531",
+      "sourceType": "manufacturer",
+      "existingDraftId": null,
+      "disposition": "hold_for_review",
+      "sourceRead": "indexed PDF text; page screenshot unavailable",
+      "specs": [
+        {
+          "name": "engine_max_power",
+          "value": "75",
+          "unit": "HP",
+          "locator": "Technical table / Servet 80.4 Meyveci / Engine",
+          "context": "OEM maximum, not nominal"
+        },
+        {
+          "name": "engine_max_power_kw",
+          "value": "55.4",
+          "unit": "kW",
+          "locator": "Technical table / Servet 80.4 Meyveci / Engine",
+          "context": null
+        },
+        {
+          "name": "engine_model",
+          "value": "C5ET55EA",
+          "unit": null,
+          "locator": "Technical table / Servet 80.4 Meyveci / Engine / Deutz TCD 2.9",
+          "context": null
+        },
+        {
+          "name": "engine_torque",
+          "value": "375",
+          "unit": "Nm",
+          "locator": "Technical table / Servet 80.4 Meyveci / Engine",
+          "context": "1400 rpm"
+        },
+        {
+          "name": "peak_torque_speed",
+          "value": "1400",
+          "unit": "rpm",
+          "locator": "Technical table / Servet 80.4 Meyveci / Engine",
+          "context": null
+        },
+        {
+          "name": "engine_cylinders",
+          "value": "4",
+          "unit": "count",
+          "locator": "Technical table / Servet 80.4 Meyveci / Engine",
+          "context": null
+        },
+        {
+          "name": "engine_displacement",
+          "value": "2.92",
+          "unit": "L",
+          "locator": "Technical table / Servet 80.4 Meyveci / Engine",
+          "context": null
+        },
+        {
+          "name": "engine_aspiration",
+          "value": "Turbo intercooler",
+          "unit": null,
+          "locator": "Technical table / Servet 80.4 Meyveci / Engine",
+          "context": null
+        },
+        {
+          "name": "emissions_standard",
+          "value": "Stage V",
+          "unit": null,
+          "locator": "Technical table / Servet 80.4 Meyveci / Engine",
+          "context": null
+        },
+        {
+          "name": "rear_lift_capacity",
+          "value": "2800",
+          "unit": "kg",
+          "locator": "Technical table / Servet 80.4 Meyveci / Hydraulics",
+          "context": "Measurement point unspecified"
+        },
+        {
+          "name": "rear_pto_speeds",
+          "value": "540/540E",
+          "unit": "rpm",
+          "locator": "Technical table / Servet 80.4 Meyveci / PTO",
+          "context": null
+        },
+        {
+          "name": "pto_type",
+          "value": "Independent",
+          "unit": null,
+          "locator": "Technical table / Servet 80.4 Meyveci / PTO",
+          "context": null
+        },
+        {
+          "name": "wheelbase",
+          "value": "2270",
+          "unit": "mm",
+          "locator": "Technical table / Servet 80.4 Meyveci / Dimensions",
+          "context": null
+        },
+        {
+          "name": "overall_length",
+          "value": "3970",
+          "unit": "mm",
+          "locator": "Technical table / Servet 80.4 Meyveci / Dimensions",
+          "context": null
+        },
+        {
+          "name": "overall_width",
+          "value": "1540–2150",
+          "unit": "mm",
+          "locator": "Technical table / Servet 80.4 Meyveci / Dimensions",
+          "context": null
+        },
+        {
+          "name": "overall_height",
+          "value": "2481",
+          "unit": "mm",
+          "locator": "Technical table / Servet 80.4 Meyveci / Dimensions",
+          "context": "Platform, no extra weights"
+        },
+        {
+          "name": "unballasted_weight",
+          "value": "3010",
+          "unit": "kg",
+          "locator": "Technical table / Servet 80.4 Meyveci / Weights",
+          "context": "Platform, no extra weights"
+        },
+        {
+          "name": "front_track",
+          "value": "1235–1625",
+          "unit": "mm",
+          "locator": "Technical table / Servet 80.4 Meyveci / Dimensions",
+          "context": null
+        },
+        {
+          "name": "rear_track",
+          "value": "1190–1800",
+          "unit": "mm",
+          "locator": "Technical table / Servet 80.4 Meyveci / Dimensions",
+          "context": null
+        }
+      ],
+      "notes": [
+        "Model heading in brochure is Servet 80M / Kıymet 95M; verify exact detail-page identity and gearbox separately. Screenshot unavailable."
+      ]
+    },
+    {
+      "brand": "Erkunt",
+      "model": "Kıymet 95 Meyveci Lüks",
+      "variant": "CRD5 Deutz / 4WD / front ROPS / 16F16R",
+      "market": "Türkiye",
+      "modelYear": null,
+      "sourceUrl": "https://erkunttraktor.com.tr/assets/model_dosyalar/pdfs/MeyveciDeutzCRD5.pdf?t=20260419015531",
+      "sourceType": "manufacturer",
+      "existingDraftId": "94996f14-ccd8-440b-87cd-b8a9cdf3a911",
+      "disposition": "hold_for_review",
+      "sourceRead": "indexed PDF text; page screenshot unavailable",
+      "specs": [
+        {
+          "name": "engine_max_power",
+          "value": "95.2",
+          "unit": "HP",
+          "locator": "Technical table / Kıymet 95 Meyveci Lüks / Engine",
+          "context": "OEM maximum, not nominal"
+        },
+        {
+          "name": "engine_max_power_kw",
+          "value": "70",
+          "unit": "kW",
+          "locator": "Technical table / Kıymet 95 Meyveci Lüks / Engine",
+          "context": null
+        },
+        {
+          "name": "engine_model",
+          "value": "C5VT63E",
+          "unit": null,
+          "locator": "Technical table / Kıymet 95 Meyveci Lüks / Engine / Deutz TCD 2.9",
+          "context": null
+        },
+        {
+          "name": "engine_torque",
+          "value": "400",
+          "unit": "Nm",
+          "locator": "Technical table / Kıymet 95 Meyveci Lüks / Engine",
+          "context": "1600 rpm"
+        },
+        {
+          "name": "peak_torque_speed",
+          "value": "1600",
+          "unit": "rpm",
+          "locator": "Technical table / Kıymet 95 Meyveci Lüks / Engine",
+          "context": null
+        },
+        {
+          "name": "engine_cylinders",
+          "value": "4",
+          "unit": "count",
+          "locator": "Technical table / Kıymet 95 Meyveci Lüks / Engine",
+          "context": null
+        },
+        {
+          "name": "engine_displacement",
+          "value": "2.92",
+          "unit": "L",
+          "locator": "Technical table / Kıymet 95 Meyveci Lüks / Engine",
+          "context": null
+        },
+        {
+          "name": "engine_aspiration",
+          "value": "Turbo intercooler",
+          "unit": null,
+          "locator": "Technical table / Kıymet 95 Meyveci Lüks / Engine",
+          "context": null
+        },
+        {
+          "name": "emissions_standard",
+          "value": "Stage V",
+          "unit": null,
+          "locator": "Technical table / Kıymet 95 Meyveci Lüks / Engine",
+          "context": null
+        },
+        {
+          "name": "rear_lift_capacity",
+          "value": "3200",
+          "unit": "kg",
+          "locator": "Technical table / Kıymet 95 Meyveci Lüks / Hydraulics",
+          "context": "Measurement point unspecified"
+        },
+        {
+          "name": "rear_pto_speeds",
+          "value": "430/540/540E/1000",
+          "unit": "rpm",
+          "locator": "Technical table / Kıymet 95 Meyveci Lüks / PTO",
+          "context": null
+        },
+        {
+          "name": "pto_type",
+          "value": "Independent",
+          "unit": null,
+          "locator": "Technical table / Kıymet 95 Meyveci Lüks / PTO",
+          "context": null
+        },
+        {
+          "name": "wheelbase",
+          "value": "2270",
+          "unit": "mm",
+          "locator": "Technical table / Kıymet 95 Meyveci Lüks / Dimensions",
+          "context": null
+        },
+        {
+          "name": "overall_length",
+          "value": "3970",
+          "unit": "mm",
+          "locator": "Technical table / Kıymet 95 Meyveci Lüks / Dimensions",
+          "context": null
+        },
+        {
+          "name": "overall_width",
+          "value": "1540–2150",
+          "unit": "mm",
+          "locator": "Technical table / Kıymet 95 Meyveci Lüks / Dimensions",
+          "context": null
+        },
+        {
+          "name": "overall_height",
+          "value": "2481",
+          "unit": "mm",
+          "locator": "Technical table / Kıymet 95 Meyveci Lüks / Dimensions",
+          "context": "Platform, no extra weights"
+        },
+        {
+          "name": "unballasted_weight",
+          "value": "3100",
+          "unit": "kg",
+          "locator": "Technical table / Kıymet 95 Meyveci Lüks / Weights",
+          "context": "Platform, no extra weights"
+        },
+        {
+          "name": "front_track",
+          "value": "1235–1625",
+          "unit": "mm",
+          "locator": "Technical table / Kıymet 95 Meyveci Lüks / Dimensions",
+          "context": null
+        },
+        {
+          "name": "rear_track",
+          "value": "1190–1800",
+          "unit": "mm",
+          "locator": "Technical table / Kıymet 95 Meyveci Lüks / Dimensions",
+          "context": null
+        }
+      ],
+      "notes": [
+        "Model heading in brochure is Servet 80M / Kıymet 95M; verify exact detail-page identity and gearbox separately. Screenshot unavailable."
+      ]
+    },
+    {
+      "brand": "Erkunt",
+      "model": "Kudret 100 Lüks",
+      "variant": "CRD5 eCapra / 4WD cab / 16F16R",
+      "market": "Türkiye",
+      "modelYear": null,
+      "sourceUrl": "https://erkunttraktor.com.tr/assets/model_dosyalar/pdfs/BuyukLuksCRD5.pdf?t=20260316110456",
+      "sourceType": "manufacturer",
+      "existingDraftId": "25dc608f-66ad-401b-b9be-2387d1d443b9",
+      "disposition": "hold_for_review",
+      "sourceRead": "indexed PDF text; page screenshot unavailable",
+      "specs": [
+        {
+          "name": "engine_max_power_normal",
+          "value": "103",
+          "unit": "HP",
+          "locator": "Technical table / Kudret 100 Lüks / Engine / normal maximum",
+          "context": "HP and kW paired labels retained; inconsistent conversion not corrected"
+        },
+        {
+          "name": "engine_max_power_boost",
+          "value": "111",
+          "unit": "HP",
+          "locator": "Technical table / Kudret 100 Lüks / Engine / boost maximum",
+          "context": null
+        },
+        {
+          "name": "engine_max_power_normal_kw",
+          "value": "75",
+          "unit": "kW",
+          "locator": "Technical table / Kudret 100 Lüks / Engine",
+          "context": null
+        },
+        {
+          "name": "engine_max_power_boost_kw",
+          "value": "82",
+          "unit": "kW",
+          "locator": "Technical table / Kudret 100 Lüks / Engine",
+          "context": null
+        },
+        {
+          "name": "engine_torque_normal",
+          "value": "428",
+          "unit": "Nm",
+          "locator": "Technical table / Kudret 100 Lüks / Engine",
+          "context": "1400 rpm"
+        },
+        {
+          "name": "engine_torque_boost",
+          "value": "450",
+          "unit": "Nm",
+          "locator": "Technical table / Kudret 100 Lüks / Engine",
+          "context": "1400 rpm"
+        },
+        {
+          "name": "peak_torque_speed",
+          "value": "1400",
+          "unit": "rpm",
+          "locator": "Technical table / Kudret 100 Lüks / Engine",
+          "context": null
+        },
+        {
+          "name": "engine_cylinders",
+          "value": "4",
+          "unit": "count",
+          "locator": "Technical table / Kudret 100 Lüks / Engine",
+          "context": null
+        },
+        {
+          "name": "fuel_tank_capacity",
+          "value": "110",
+          "unit": "L",
+          "locator": "Technical table / Kudret 100 Lüks / Engine",
+          "context": null
+        },
+        {
+          "name": "adblue_tank_capacity",
+          "value": "20",
+          "unit": "L",
+          "locator": "Technical table / Kudret 100 Lüks / Engine",
+          "context": null
+        },
+        {
+          "name": "transmission_type",
+          "value": "ZF PowerShift",
+          "unit": null,
+          "locator": "Technical table / Kudret 100 Lüks / Transmission",
+          "context": null
+        },
+        {
+          "name": "optional_gearbox",
+          "value": "16F/8R PowerShuttle",
+          "unit": null,
+          "locator": "Technical table / Kudret 100 Lüks / Transmission",
+          "context": null
+        },
+        {
+          "name": "hydraulic_outlet_count",
+          "value": "8",
+          "unit": "count",
+          "locator": "Technical table / Kudret 100 Lüks / Hydraulics",
+          "context": null
+        },
+        {
+          "name": "rear_lift_capacity",
+          "value": "5000",
+          "unit": "kg",
+          "locator": "Technical table / Kudret 100 Lüks / Hydraulics",
+          "context": "Measurement point unspecified"
+        },
+        {
+          "name": "pto_type",
+          "value": "Independent four speeds",
+          "unit": null,
+          "locator": "Technical table / Kudret 100 Lüks / PTO",
+          "context": null
+        },
+        {
+          "name": "wheelbase",
+          "value": "2415",
+          "unit": "mm",
+          "locator": "Technical table / Kudret 100 Lüks / Dimensions",
+          "context": null
+        },
+        {
+          "name": "overall_width",
+          "value": "2082",
+          "unit": "mm",
+          "locator": "Technical table / Kudret 100 Lüks / Dimensions",
+          "context": null
+        },
+        {
+          "name": "unballasted_weight",
+          "value": "4320",
+          "unit": "kg",
+          "locator": "Technical table / Kudret 100 Lüks / Weights",
+          "context": "Cab, no extra weights"
+        }
+      ],
+      "notes": [
+        "Text extraction has merged cells. Only explicitly repeated/readable entries captured; no assumption from missing column. Screenshot unavailable; require original visual check."
+      ]
+    },
+    {
+      "brand": "Erkunt",
+      "model": "Haşmet 110 Lüks",
+      "variant": "CRD5 eCapra / 4WD cab / 16F16R",
+      "market": "Türkiye",
+      "modelYear": null,
+      "sourceUrl": "https://erkunttraktor.com.tr/assets/model_dosyalar/pdfs/BuyukLuksCRD5.pdf?t=20260316110456",
+      "sourceType": "manufacturer",
+      "existingDraftId": "3ad7b2b4-6472-417e-a961-162d4ff56c3b",
+      "disposition": "hold_for_review",
+      "sourceRead": "indexed PDF text; page screenshot unavailable",
+      "specs": [
+        {
+          "name": "engine_max_power_normal",
+          "value": "109",
+          "unit": "HP",
+          "locator": "Technical table / Haşmet 110 Lüks / Engine / normal maximum",
+          "context": "HP and kW paired labels retained; inconsistent conversion not corrected"
+        },
+        {
+          "name": "engine_max_power_boost",
+          "value": "116",
+          "unit": "HP",
+          "locator": "Technical table / Haşmet 110 Lüks / Engine / boost maximum",
+          "context": null
+        },
+        {
+          "name": "engine_max_power_normal_kw",
+          "value": "82",
+          "unit": "kW",
+          "locator": "Technical table / Haşmet 110 Lüks / Engine",
+          "context": null
+        },
+        {
+          "name": "engine_max_power_boost_kw",
+          "value": "85.7",
+          "unit": "kW",
+          "locator": "Technical table / Haşmet 110 Lüks / Engine",
+          "context": null
+        },
+        {
+          "name": "engine_torque_normal",
+          "value": "444",
+          "unit": "Nm",
+          "locator": "Technical table / Haşmet 110 Lüks / Engine",
+          "context": "1400 rpm"
+        },
+        {
+          "name": "engine_torque_boost",
+          "value": "456",
+          "unit": "Nm",
+          "locator": "Technical table / Haşmet 110 Lüks / Engine",
+          "context": "1400 rpm"
+        },
+        {
+          "name": "peak_torque_speed",
+          "value": "1400",
+          "unit": "rpm",
+          "locator": "Technical table / Haşmet 110 Lüks / Engine",
+          "context": null
+        },
+        {
+          "name": "engine_cylinders",
+          "value": "4",
+          "unit": "count",
+          "locator": "Technical table / Haşmet 110 Lüks / Engine",
+          "context": null
+        },
+        {
+          "name": "fuel_tank_capacity",
+          "value": "110",
+          "unit": "L",
+          "locator": "Technical table / Haşmet 110 Lüks / Engine",
+          "context": null
+        },
+        {
+          "name": "adblue_tank_capacity",
+          "value": "20",
+          "unit": "L",
+          "locator": "Technical table / Haşmet 110 Lüks / Engine",
+          "context": null
+        },
+        {
+          "name": "transmission_type",
+          "value": "ZF PowerShift",
+          "unit": null,
+          "locator": "Technical table / Haşmet 110 Lüks / Transmission",
+          "context": null
+        },
+        {
+          "name": "optional_gearbox",
+          "value": "16F/8R PowerShuttle",
+          "unit": null,
+          "locator": "Technical table / Haşmet 110 Lüks / Transmission",
+          "context": null
+        },
+        {
+          "name": "hydraulic_outlet_count",
+          "value": "8",
+          "unit": "count",
+          "locator": "Technical table / Haşmet 110 Lüks / Hydraulics",
+          "context": null
+        },
+        {
+          "name": "rear_lift_capacity",
+          "value": "5000",
+          "unit": "kg",
+          "locator": "Technical table / Haşmet 110 Lüks / Hydraulics",
+          "context": "Measurement point unspecified"
+        },
+        {
+          "name": "pto_type",
+          "value": "Independent four speeds",
+          "unit": null,
+          "locator": "Technical table / Haşmet 110 Lüks / PTO",
+          "context": null
+        },
+        {
+          "name": "wheelbase",
+          "value": "2415",
+          "unit": "mm",
+          "locator": "Technical table / Haşmet 110 Lüks / Dimensions",
+          "context": null
+        },
+        {
+          "name": "overall_width",
+          "value": "2082",
+          "unit": "mm",
+          "locator": "Technical table / Haşmet 110 Lüks / Dimensions",
+          "context": null
+        },
+        {
+          "name": "unballasted_weight",
+          "value": "4350",
+          "unit": "kg",
+          "locator": "Technical table / Haşmet 110 Lüks / Weights",
+          "context": "Cab, no extra weights"
+        }
+      ],
+      "notes": [
+        "Text extraction has merged cells. Only explicitly repeated/readable entries captured; no assumption from missing column. Screenshot unavailable; require original visual check."
+      ]
+    },
+    {
+      "brand": "Erkunt",
+      "model": "Kudret 100 Lüks",
+      "variant": "CRD5 Deutz / 4WD cab / 16F16R",
+      "market": "Türkiye",
+      "modelYear": null,
+      "sourceUrl": "https://erkunttraktor.com.tr/assets/model_dosyalar/pdfs/BuyukLuksDeutzCRD5.pdf?t=20260217213339",
+      "sourceType": "manufacturer",
+      "existingDraftId": null,
+      "disposition": "hold_for_review",
+      "sourceRead": "indexed PDF text; page screenshot unavailable",
+      "specs": [
+        {
+          "name": "engine_max_power",
+          "value": "101.3",
+          "unit": "HP",
+          "locator": "Technical table / Kudret 100 Lüks / Engine",
+          "context": "OEM maximum"
+        },
+        {
+          "name": "engine_max_power_kw",
+          "value": "74.5",
+          "unit": "kW",
+          "locator": "Technical table / Kudret 100 Lüks / Engine",
+          "context": null
+        },
+        {
+          "name": "engine_model",
+          "value": "Deutz TCD 3.6 L4 C5VT74E",
+          "unit": null,
+          "locator": "Technical table / Kudret 100 Lüks / Engine",
+          "context": null
+        },
+        {
+          "name": "engine_torque",
+          "value": "420",
+          "unit": "Nm",
+          "locator": "Technical table / Kudret 100 Lüks / Engine",
+          "context": "1600 rpm"
+        },
+        {
+          "name": "peak_torque_speed",
+          "value": "1600",
+          "unit": "rpm",
+          "locator": "Technical table / Kudret 100 Lüks / Engine",
+          "context": null
+        },
+        {
+          "name": "engine_cylinders",
+          "value": "4",
+          "unit": "count",
+          "locator": "Technical table / Kudret 100 Lüks / Engine",
+          "context": null
+        },
+        {
+          "name": "engine_displacement",
+          "value": "3.6",
+          "unit": "L",
+          "locator": "Technical table / Kudret 100 Lüks / Engine",
+          "context": null
+        },
+        {
+          "name": "engine_aspiration",
+          "value": "Turbo intercooler",
+          "unit": null,
+          "locator": "Technical table / Kudret 100 Lüks / Engine",
+          "context": null
+        },
+        {
+          "name": "emissions_standard",
+          "value": "Stage V",
+          "unit": null,
+          "locator": "Technical table / Kudret 100 Lüks / Engine",
+          "context": null
+        },
+        {
+          "name": "fuel_tank_capacity",
+          "value": "110",
+          "unit": "L",
+          "locator": "Technical table / Kudret 100 Lüks / Engine",
+          "context": null
+        },
+        {
+          "name": "adblue_tank_capacity",
+          "value": "13",
+          "unit": "L",
+          "locator": "Technical table / Kudret 100 Lüks / Engine",
+          "context": null
+        },
+        {
+          "name": "fuel_injection",
+          "value": "Common rail",
+          "unit": null,
+          "locator": "Technical table / Kudret 100 Lüks / Engine",
+          "context": null
+        },
+        {
+          "name": "forward_gears",
+          "value": "16",
+          "unit": "count",
+          "locator": "Technical table / Kudret 100 Lüks / Transmission",
+          "context": null
+        },
+        {
+          "name": "reverse_gears",
+          "value": "16",
+          "unit": "count",
+          "locator": "Technical table / Kudret 100 Lüks / Transmission",
+          "context": null
+        },
+        {
+          "name": "transmission_type",
+          "value": "ZF PowerShift",
+          "unit": null,
+          "locator": "Technical table / Kudret 100 Lüks / Transmission",
+          "context": null
+        },
+        {
+          "name": "hydraulic_outlet_count",
+          "value": "8",
+          "unit": "count",
+          "locator": "Technical table / Kudret 100 Lüks / Hydraulics",
+          "context": "Not flow or valve count"
+        },
+        {
+          "name": "hydraulic_pressure",
+          "value": "190",
+          "unit": "bar",
+          "locator": "Technical table / Kudret 100 Lüks / Hydraulics",
+          "context": null
+        },
+        {
+          "name": "rear_lift_capacity",
+          "value": "5000",
+          "unit": "kg",
+          "locator": "Technical table / Kudret 100 Lüks / Hydraulics",
+          "context": "Maximum; measurement point unspecified"
+        },
+        {
+          "name": "hydraulic_control",
+          "value": "Electrohydraulic",
+          "unit": null,
+          "locator": "Technical table / Kudret 100 Lüks / Hydraulics",
+          "context": null
+        },
+        {
+          "name": "rear_pto_speeds",
+          "value": "430/540/540E/1000",
+          "unit": "rpm",
+          "locator": "Technical table / Kudret 100 Lüks / PTO",
+          "context": null
+        },
+        {
+          "name": "pto_type",
+          "value": "Independent",
+          "unit": null,
+          "locator": "Technical table / Kudret 100 Lüks / PTO",
+          "context": null
+        },
+        {
+          "name": "wheelbase",
+          "value": "2404",
+          "unit": "mm",
+          "locator": "Technical table / Kudret 100 Lüks / Dimensions",
+          "context": null
+        },
+        {
+          "name": "overall_length",
+          "value": "4748",
+          "unit": "mm",
+          "locator": "Technical table / Kudret 100 Lüks / Dimensions",
+          "context": null
+        },
+        {
+          "name": "overall_width",
+          "value": "2082",
+          "unit": "mm",
+          "locator": "Technical table / Kudret 100 Lüks / Dimensions",
+          "context": null
+        },
+        {
+          "name": "overall_height",
+          "value": "2926",
+          "unit": "mm",
+          "locator": "Technical table / Kudret 100 Lüks / Dimensions",
+          "context": "Cab, no additional weights"
+        },
+        {
+          "name": "unballasted_weight",
+          "value": "4600",
+          "unit": "kg",
+          "locator": "Technical table / Kudret 100 Lüks / Weights",
+          "context": "Cab, no additional weights"
+        },
+        {
+          "name": "min_travel_speed",
+          "value": "2.33",
+          "unit": "km/h",
+          "locator": "Technical table / Kudret 100 Lüks / Transmission",
+          "context": null
+        },
+        {
+          "name": "max_travel_speed",
+          "value": "37.63",
+          "unit": "km/h",
+          "locator": "Technical table / Kudret 100 Lüks / Transmission",
+          "context": null
+        }
+      ],
+      "notes": [
+        "Deutz engine specification distinct from eCapra. Optional transmission not assigned automatically. Screenshot unavailable."
+      ]
+    },
+    {
+      "brand": "Erkunt",
+      "model": "Haşmet 110 Lüks",
+      "variant": "CRD5 Deutz / 4WD cab / 16F16R",
+      "market": "Türkiye",
+      "modelYear": null,
+      "sourceUrl": "https://erkunttraktor.com.tr/assets/model_dosyalar/pdfs/BuyukLuksDeutzCRD5.pdf?t=20260217213339",
+      "sourceType": "manufacturer",
+      "existingDraftId": null,
+      "disposition": "hold_for_review",
+      "sourceRead": "indexed PDF text; page screenshot unavailable",
+      "specs": [
+        {
+          "name": "engine_max_power",
+          "value": "110",
+          "unit": "HP",
+          "locator": "Technical table / Haşmet 110 Lüks / Engine",
+          "context": "OEM maximum"
+        },
+        {
+          "name": "engine_max_power_kw",
+          "value": "80.9",
+          "unit": "kW",
+          "locator": "Technical table / Haşmet 110 Lüks / Engine",
+          "context": null
+        },
+        {
+          "name": "engine_model",
+          "value": "Deutz TCD 3.6 L4 C5VT77E",
+          "unit": null,
+          "locator": "Technical table / Haşmet 110 Lüks / Engine",
+          "context": null
+        },
+        {
+          "name": "engine_torque",
+          "value": "440",
+          "unit": "Nm",
+          "locator": "Technical table / Haşmet 110 Lüks / Engine",
+          "context": "1600 rpm"
+        },
+        {
+          "name": "peak_torque_speed",
+          "value": "1600",
+          "unit": "rpm",
+          "locator": "Technical table / Haşmet 110 Lüks / Engine",
+          "context": null
+        },
+        {
+          "name": "engine_cylinders",
+          "value": "4",
+          "unit": "count",
+          "locator": "Technical table / Haşmet 110 Lüks / Engine",
+          "context": null
+        },
+        {
+          "name": "engine_displacement",
+          "value": "3.6",
+          "unit": "L",
+          "locator": "Technical table / Haşmet 110 Lüks / Engine",
+          "context": null
+        },
+        {
+          "name": "engine_aspiration",
+          "value": "Turbo intercooler",
+          "unit": null,
+          "locator": "Technical table / Haşmet 110 Lüks / Engine",
+          "context": null
+        },
+        {
+          "name": "emissions_standard",
+          "value": "Stage V",
+          "unit": null,
+          "locator": "Technical table / Haşmet 110 Lüks / Engine",
+          "context": null
+        },
+        {
+          "name": "fuel_tank_capacity",
+          "value": "110",
+          "unit": "L",
+          "locator": "Technical table / Haşmet 110 Lüks / Engine",
+          "context": null
+        },
+        {
+          "name": "adblue_tank_capacity",
+          "value": "13",
+          "unit": "L",
+          "locator": "Technical table / Haşmet 110 Lüks / Engine",
+          "context": null
+        },
+        {
+          "name": "fuel_injection",
+          "value": "Common rail",
+          "unit": null,
+          "locator": "Technical table / Haşmet 110 Lüks / Engine",
+          "context": null
+        },
+        {
+          "name": "forward_gears",
+          "value": "16",
+          "unit": "count",
+          "locator": "Technical table / Haşmet 110 Lüks / Transmission",
+          "context": null
+        },
+        {
+          "name": "reverse_gears",
+          "value": "16",
+          "unit": "count",
+          "locator": "Technical table / Haşmet 110 Lüks / Transmission",
+          "context": null
+        },
+        {
+          "name": "transmission_type",
+          "value": "ZF PowerShift",
+          "unit": null,
+          "locator": "Technical table / Haşmet 110 Lüks / Transmission",
+          "context": null
+        },
+        {
+          "name": "hydraulic_outlet_count",
+          "value": "8",
+          "unit": "count",
+          "locator": "Technical table / Haşmet 110 Lüks / Hydraulics",
+          "context": "Not flow or valve count"
+        },
+        {
+          "name": "hydraulic_pressure",
+          "value": "190",
+          "unit": "bar",
+          "locator": "Technical table / Haşmet 110 Lüks / Hydraulics",
+          "context": null
+        },
+        {
+          "name": "rear_lift_capacity",
+          "value": "5000",
+          "unit": "kg",
+          "locator": "Technical table / Haşmet 110 Lüks / Hydraulics",
+          "context": "Maximum; measurement point unspecified"
+        },
+        {
+          "name": "hydraulic_control",
+          "value": "Electrohydraulic",
+          "unit": null,
+          "locator": "Technical table / Haşmet 110 Lüks / Hydraulics",
+          "context": null
+        },
+        {
+          "name": "rear_pto_speeds",
+          "value": "430/540/540E/1000",
+          "unit": "rpm",
+          "locator": "Technical table / Haşmet 110 Lüks / PTO",
+          "context": null
+        },
+        {
+          "name": "pto_type",
+          "value": "Independent",
+          "unit": null,
+          "locator": "Technical table / Haşmet 110 Lüks / PTO",
+          "context": null
+        },
+        {
+          "name": "wheelbase",
+          "value": "2404",
+          "unit": "mm",
+          "locator": "Technical table / Haşmet 110 Lüks / Dimensions",
+          "context": null
+        },
+        {
+          "name": "overall_length",
+          "value": "4748",
+          "unit": "mm",
+          "locator": "Technical table / Haşmet 110 Lüks / Dimensions",
+          "context": null
+        },
+        {
+          "name": "overall_width",
+          "value": "2082",
+          "unit": "mm",
+          "locator": "Technical table / Haşmet 110 Lüks / Dimensions",
+          "context": null
+        },
+        {
+          "name": "overall_height",
+          "value": "2926",
+          "unit": "mm",
+          "locator": "Technical table / Haşmet 110 Lüks / Dimensions",
+          "context": "Cab, no additional weights"
+        },
+        {
+          "name": "unballasted_weight",
+          "value": "4600",
+          "unit": "kg",
+          "locator": "Technical table / Haşmet 110 Lüks / Weights",
+          "context": "Cab, no additional weights"
+        },
+        {
+          "name": "min_travel_speed",
+          "value": "2.33",
+          "unit": "km/h",
+          "locator": "Technical table / Haşmet 110 Lüks / Transmission",
+          "context": null
+        },
+        {
+          "name": "max_travel_speed",
+          "value": "37.63",
+          "unit": "km/h",
+          "locator": "Technical table / Haşmet 110 Lüks / Transmission",
+          "context": null
+        }
+      ],
+      "notes": [
+        "Deutz engine specification distinct from eCapra. Optional transmission not assigned automatically. Screenshot unavailable."
+      ]
+    },
+    {
+      "brand": "Erkunt",
+      "model": "Hasret 125 Lüks",
+      "variant": "CRD5 Deutz / 4WD cab / 16F16R",
+      "market": "Türkiye",
+      "modelYear": null,
+      "sourceUrl": "https://erkunttraktor.com.tr/assets/model_dosyalar/pdfs/BuyukLuksDeutzCRD5.pdf?t=20260217213339",
+      "sourceType": "manufacturer",
+      "existingDraftId": "5b8f6398-3f41-430c-abc7-5a444278295a",
+      "disposition": "hold_for_review",
+      "sourceRead": "indexed PDF text; page screenshot unavailable",
+      "specs": [
+        {
+          "name": "engine_max_power",
+          "value": "126.5",
+          "unit": "HP",
+          "locator": "Technical table / Hasret 125 Lüks / Engine",
+          "context": "OEM maximum"
+        },
+        {
+          "name": "engine_max_power_kw",
+          "value": "93",
+          "unit": "kW",
+          "locator": "Technical table / Hasret 125 Lüks / Engine",
+          "context": null
+        },
+        {
+          "name": "engine_model",
+          "value": "Deutz TCD 3.6 L4 C5VT88E",
+          "unit": null,
+          "locator": "Technical table / Hasret 125 Lüks / Engine",
+          "context": null
+        },
+        {
+          "name": "engine_torque",
+          "value": "500",
+          "unit": "Nm",
+          "locator": "Technical table / Hasret 125 Lüks / Engine",
+          "context": "1600 rpm"
+        },
+        {
+          "name": "peak_torque_speed",
+          "value": "1600",
+          "unit": "rpm",
+          "locator": "Technical table / Hasret 125 Lüks / Engine",
+          "context": null
+        },
+        {
+          "name": "engine_cylinders",
+          "value": "4",
+          "unit": "count",
+          "locator": "Technical table / Hasret 125 Lüks / Engine",
+          "context": null
+        },
+        {
+          "name": "engine_displacement",
+          "value": "3.6",
+          "unit": "L",
+          "locator": "Technical table / Hasret 125 Lüks / Engine",
+          "context": null
+        },
+        {
+          "name": "engine_aspiration",
+          "value": "Turbo intercooler",
+          "unit": null,
+          "locator": "Technical table / Hasret 125 Lüks / Engine",
+          "context": null
+        },
+        {
+          "name": "emissions_standard",
+          "value": "Stage V",
+          "unit": null,
+          "locator": "Technical table / Hasret 125 Lüks / Engine",
+          "context": null
+        },
+        {
+          "name": "fuel_tank_capacity",
+          "value": "110",
+          "unit": "L",
+          "locator": "Technical table / Hasret 125 Lüks / Engine",
+          "context": null
+        },
+        {
+          "name": "adblue_tank_capacity",
+          "value": "13",
+          "unit": "L",
+          "locator": "Technical table / Hasret 125 Lüks / Engine",
+          "context": null
+        },
+        {
+          "name": "fuel_injection",
+          "value": "Common rail",
+          "unit": null,
+          "locator": "Technical table / Hasret 125 Lüks / Engine",
+          "context": null
+        },
+        {
+          "name": "forward_gears",
+          "value": "16",
+          "unit": "count",
+          "locator": "Technical table / Hasret 125 Lüks / Transmission",
+          "context": null
+        },
+        {
+          "name": "reverse_gears",
+          "value": "16",
+          "unit": "count",
+          "locator": "Technical table / Hasret 125 Lüks / Transmission",
+          "context": null
+        },
+        {
+          "name": "transmission_type",
+          "value": "ZF PowerShift",
+          "unit": null,
+          "locator": "Technical table / Hasret 125 Lüks / Transmission",
+          "context": null
+        },
+        {
+          "name": "hydraulic_outlet_count",
+          "value": "8",
+          "unit": "count",
+          "locator": "Technical table / Hasret 125 Lüks / Hydraulics",
+          "context": "Not flow or valve count"
+        },
+        {
+          "name": "hydraulic_pressure",
+          "value": "190",
+          "unit": "bar",
+          "locator": "Technical table / Hasret 125 Lüks / Hydraulics",
+          "context": null
+        },
+        {
+          "name": "rear_lift_capacity",
+          "value": "5000",
+          "unit": "kg",
+          "locator": "Technical table / Hasret 125 Lüks / Hydraulics",
+          "context": "Maximum; measurement point unspecified"
+        },
+        {
+          "name": "hydraulic_control",
+          "value": "Electrohydraulic",
+          "unit": null,
+          "locator": "Technical table / Hasret 125 Lüks / Hydraulics",
+          "context": null
+        },
+        {
+          "name": "rear_pto_speeds",
+          "value": "430/540/540E/1000",
+          "unit": "rpm",
+          "locator": "Technical table / Hasret 125 Lüks / PTO",
+          "context": null
+        },
+        {
+          "name": "pto_type",
+          "value": "Independent",
+          "unit": null,
+          "locator": "Technical table / Hasret 125 Lüks / PTO",
+          "context": null
+        },
+        {
+          "name": "wheelbase",
+          "value": "2404",
+          "unit": "mm",
+          "locator": "Technical table / Hasret 125 Lüks / Dimensions",
+          "context": null
+        },
+        {
+          "name": "overall_length",
+          "value": "4748",
+          "unit": "mm",
+          "locator": "Technical table / Hasret 125 Lüks / Dimensions",
+          "context": null
+        },
+        {
+          "name": "overall_width",
+          "value": "2082",
+          "unit": "mm",
+          "locator": "Technical table / Hasret 125 Lüks / Dimensions",
+          "context": null
+        },
+        {
+          "name": "overall_height",
+          "value": "2926",
+          "unit": "mm",
+          "locator": "Technical table / Hasret 125 Lüks / Dimensions",
+          "context": "Cab, no additional weights"
+        },
+        {
+          "name": "unballasted_weight",
+          "value": "4600",
+          "unit": "kg",
+          "locator": "Technical table / Hasret 125 Lüks / Weights",
+          "context": "Cab, no additional weights"
+        },
+        {
+          "name": "min_travel_speed",
+          "value": "2.33",
+          "unit": "km/h",
+          "locator": "Technical table / Hasret 125 Lüks / Transmission",
+          "context": null
+        },
+        {
+          "name": "max_travel_speed",
+          "value": "37.63",
+          "unit": "km/h",
+          "locator": "Technical table / Hasret 125 Lüks / Transmission",
+          "context": null
+        }
+      ],
+      "notes": [
+        "Deutz engine specification distinct from eCapra. Optional transmission not assigned automatically. Screenshot unavailable."
+      ]
+    },
+    {
+      "brand": "Hattat",
+      "model": "240 G",
+      "variant": "Stage V / Bahçe / 2WD / 12F12R",
+      "market": "Türkiye",
+      "modelYear": null,
+      "sourceUrl": "https://www.hattattraktor.com.tr/Upload/Sayfa/240%20G%20Stage%205.pdf",
+      "sourceType": "manufacturer",
+      "existingDraftId": null,
+      "disposition": "hold_for_review",
+      "sourceRead": "indexed PDF text; page screenshot unavailable",
+      "specs": [
+        {
+          "name": "engine_model",
+          "value": "FPT F28TC",
+          "unit": null,
+          "locator": "Technical table / 240 G / Engine",
+          "context": null
+        },
+        {
+          "name": "emissions_standard",
+          "value": "Stage V",
+          "unit": null,
+          "locator": "Technical table / 240 G / Engine",
+          "context": null
+        },
+        {
+          "name": "engine_max_power",
+          "value": "37",
+          "unit": "kW",
+          "locator": "Technical table / 240 G / Engine",
+          "context": "ISO14396 at 2300 rpm"
+        },
+        {
+          "name": "engine_max_power_oem_label",
+          "value": "50",
+          "unit": "hp",
+          "locator": "Technical table / 240 G / Engine",
+          "context": "ISO14396 at 2300 rpm"
+        },
+        {
+          "name": "maximum_power_speed",
+          "value": "2300",
+          "unit": "rpm",
+          "locator": "Technical table / 240 G / Engine",
+          "context": null
+        },
+        {
+          "name": "engine_torque",
+          "value": "210",
+          "unit": "Nm",
+          "locator": "Technical table / 240 G / Engine",
+          "context": "1400 rpm"
+        },
+        {
+          "name": "engine_displacement",
+          "value": "2797",
+          "unit": "cm³",
+          "locator": "Technical table / 240 G / Engine",
+          "context": null
+        },
+        {
+          "name": "engine_cylinders",
+          "value": "4",
+          "unit": "count",
+          "locator": "Technical table / 240 G / Engine",
+          "context": null
+        },
+        {
+          "name": "engine_aspiration",
+          "value": "Turbo",
+          "unit": null,
+          "locator": "Technical table / 240 G / Engine",
+          "context": null
+        },
+        {
+          "name": "fuel_tank_capacity",
+          "value": "70",
+          "unit": "L",
+          "locator": "Technical table / 240 G / Engine",
+          "context": null
+        },
+        {
+          "name": "forward_gears",
+          "value": "12",
+          "unit": "count",
+          "locator": "Technical table / 240 G / Transmission",
+          "context": null
+        },
+        {
+          "name": "reverse_gears",
+          "value": "12",
+          "unit": "count",
+          "locator": "Technical table / 240 G / Transmission",
+          "context": null
+        },
+        {
+          "name": "rear_pto_speeds",
+          "value": "540/540E",
+          "unit": "rpm",
+          "locator": "Technical table / 240 G / PTO",
+          "context": null
+        },
+        {
+          "name": "hydraulic_pump_max_flow",
+          "value": "45",
+          "unit": "L/min",
+          "locator": "Technical table / 240 G / Hydraulics",
+          "context": "Pump maximum; not implement flow"
+        },
+        {
+          "name": "hydraulic_pressure",
+          "value": "190",
+          "unit": "bar",
+          "locator": "Technical table / 240 G / Hydraulics",
+          "context": null
+        },
+        {
+          "name": "hydraulic_outlet_count",
+          "value": "4",
+          "unit": "count",
+          "locator": "Technical table / 240 G / Hydraulics",
+          "context": null
+        },
+        {
+          "name": "hydraulic_valve_count",
+          "value": "2",
+          "unit": "count",
+          "locator": "Technical table / 240 G / Hydraulics",
+          "context": null
+        },
+        {
+          "name": "rear_lift_capacity",
+          "value": "2500",
+          "unit": "kg",
+          "locator": "Technical table / 240 G / Hydraulics",
+          "context": "Measurement point unspecified"
+        },
+        {
+          "name": "wheelbase",
+          "value": "2250",
+          "unit": "mm",
+          "locator": "Technical table / 240 G / Dimensions",
+          "context": null
+        },
+        {
+          "name": "overall_length",
+          "value": "3920",
+          "unit": "mm",
+          "locator": "Technical table / 240 G / Dimensions",
+          "context": null
+        },
+        {
+          "name": "overall_width",
+          "value": "1770",
+          "unit": "mm",
+          "locator": "Technical table / 240 G / Dimensions",
+          "context": null
+        },
+        {
+          "name": "overall_height",
+          "value": "2593",
+          "unit": "mm",
+          "locator": "Technical table / 240 G / Dimensions",
+          "context": "Unladen; length excludes front weights"
+        },
+        {
+          "name": "unballasted_weight",
+          "value": "2500",
+          "unit": "kg",
+          "locator": "Technical table / 240 G / Weights",
+          "context": "Unladen; length excludes front weights"
+        }
+      ],
+      "notes": [
+        "Existing generic Stage V draft 8b5a25ee-f8e4-4dde-826a-11a8f97c989c is unresolved parent, not duplicated as exact identity. PDF extracted rows appear out of order; confirm screenshot or original before accepting dimensions and weights."
+      ]
+    },
+    {
+      "brand": "Hattat",
+      "model": "240 G",
+      "variant": "Stage V / Bahçe / 4WD / 12F12R",
+      "market": "Türkiye",
+      "modelYear": null,
+      "sourceUrl": "https://www.hattattraktor.com.tr/Upload/Sayfa/240%20G%20Stage%205.pdf",
+      "sourceType": "manufacturer",
+      "existingDraftId": null,
+      "disposition": "hold_for_review",
+      "sourceRead": "indexed PDF text; page screenshot unavailable",
+      "specs": [
+        {
+          "name": "engine_model",
+          "value": "FPT F28TC",
+          "unit": null,
+          "locator": "Technical table / 240 G / Engine",
+          "context": null
+        },
+        {
+          "name": "emissions_standard",
+          "value": "Stage V",
+          "unit": null,
+          "locator": "Technical table / 240 G / Engine",
+          "context": null
+        },
+        {
+          "name": "engine_max_power",
+          "value": "37",
+          "unit": "kW",
+          "locator": "Technical table / 240 G / Engine",
+          "context": "ISO14396 at 2300 rpm"
+        },
+        {
+          "name": "engine_max_power_oem_label",
+          "value": "50",
+          "unit": "hp",
+          "locator": "Technical table / 240 G / Engine",
+          "context": "ISO14396 at 2300 rpm"
+        },
+        {
+          "name": "maximum_power_speed",
+          "value": "2300",
+          "unit": "rpm",
+          "locator": "Technical table / 240 G / Engine",
+          "context": null
+        },
+        {
+          "name": "engine_torque",
+          "value": "210",
+          "unit": "Nm",
+          "locator": "Technical table / 240 G / Engine",
+          "context": "1400 rpm"
+        },
+        {
+          "name": "engine_displacement",
+          "value": "2797",
+          "unit": "cm³",
+          "locator": "Technical table / 240 G / Engine",
+          "context": null
+        },
+        {
+          "name": "engine_cylinders",
+          "value": "4",
+          "unit": "count",
+          "locator": "Technical table / 240 G / Engine",
+          "context": null
+        },
+        {
+          "name": "engine_aspiration",
+          "value": "Turbo",
+          "unit": null,
+          "locator": "Technical table / 240 G / Engine",
+          "context": null
+        },
+        {
+          "name": "fuel_tank_capacity",
+          "value": "70",
+          "unit": "L",
+          "locator": "Technical table / 240 G / Engine",
+          "context": null
+        },
+        {
+          "name": "forward_gears",
+          "value": "12",
+          "unit": "count",
+          "locator": "Technical table / 240 G / Transmission",
+          "context": null
+        },
+        {
+          "name": "reverse_gears",
+          "value": "12",
+          "unit": "count",
+          "locator": "Technical table / 240 G / Transmission",
+          "context": null
+        },
+        {
+          "name": "rear_pto_speeds",
+          "value": "540/540E",
+          "unit": "rpm",
+          "locator": "Technical table / 240 G / PTO",
+          "context": null
+        },
+        {
+          "name": "hydraulic_pump_max_flow",
+          "value": "45",
+          "unit": "L/min",
+          "locator": "Technical table / 240 G / Hydraulics",
+          "context": "Pump maximum; not implement flow"
+        },
+        {
+          "name": "hydraulic_pressure",
+          "value": "190",
+          "unit": "bar",
+          "locator": "Technical table / 240 G / Hydraulics",
+          "context": null
+        },
+        {
+          "name": "hydraulic_outlet_count",
+          "value": "4",
+          "unit": "count",
+          "locator": "Technical table / 240 G / Hydraulics",
+          "context": null
+        },
+        {
+          "name": "hydraulic_valve_count",
+          "value": "2",
+          "unit": "count",
+          "locator": "Technical table / 240 G / Hydraulics",
+          "context": null
+        },
+        {
+          "name": "rear_lift_capacity",
+          "value": "2500",
+          "unit": "kg",
+          "locator": "Technical table / 240 G / Hydraulics",
+          "context": "Measurement point unspecified"
+        },
+        {
+          "name": "wheelbase",
+          "value": "2180",
+          "unit": "mm",
+          "locator": "Technical table / 240 G / Dimensions",
+          "context": null
+        },
+        {
+          "name": "overall_length",
+          "value": "3920",
+          "unit": "mm",
+          "locator": "Technical table / 240 G / Dimensions",
+          "context": null
+        },
+        {
+          "name": "overall_width",
+          "value": "1770",
+          "unit": "mm",
+          "locator": "Technical table / 240 G / Dimensions",
+          "context": null
+        },
+        {
+          "name": "overall_height",
+          "value": "2593",
+          "unit": "mm",
+          "locator": "Technical table / 240 G / Dimensions",
+          "context": "Unladen; length excludes front weights"
+        },
+        {
+          "name": "unballasted_weight",
+          "value": "2800",
+          "unit": "kg",
+          "locator": "Technical table / 240 G / Weights",
+          "context": "Unladen; length excludes front weights"
+        }
+      ],
+      "notes": [
+        "Existing generic Stage V draft 8b5a25ee-f8e4-4dde-826a-11a8f97c989c is unresolved parent, not duplicated as exact identity. PDF extracted rows appear out of order; confirm screenshot or original before accepting dimensions and weights."
+      ]
+    },
+    {
+      "brand": "Hattat",
+      "model": "240 G",
+      "variant": "Stage V / Tarla / 2WD / 12F12R",
+      "market": "Türkiye",
+      "modelYear": null,
+      "sourceUrl": "https://www.hattattraktor.com.tr/Upload/Sayfa/240%20G%20Stage%205.pdf",
+      "sourceType": "manufacturer",
+      "existingDraftId": null,
+      "disposition": "hold_for_review",
+      "sourceRead": "indexed PDF text; page screenshot unavailable",
+      "specs": [
+        {
+          "name": "engine_model",
+          "value": "FPT F28TC",
+          "unit": null,
+          "locator": "Technical table / 240 G / Engine",
+          "context": null
+        },
+        {
+          "name": "emissions_standard",
+          "value": "Stage V",
+          "unit": null,
+          "locator": "Technical table / 240 G / Engine",
+          "context": null
+        },
+        {
+          "name": "engine_max_power",
+          "value": "37",
+          "unit": "kW",
+          "locator": "Technical table / 240 G / Engine",
+          "context": "ISO14396 at 2300 rpm"
+        },
+        {
+          "name": "engine_max_power_oem_label",
+          "value": "50",
+          "unit": "hp",
+          "locator": "Technical table / 240 G / Engine",
+          "context": "ISO14396 at 2300 rpm"
+        },
+        {
+          "name": "maximum_power_speed",
+          "value": "2300",
+          "unit": "rpm",
+          "locator": "Technical table / 240 G / Engine",
+          "context": null
+        },
+        {
+          "name": "engine_torque",
+          "value": "210",
+          "unit": "Nm",
+          "locator": "Technical table / 240 G / Engine",
+          "context": "1400 rpm"
+        },
+        {
+          "name": "engine_displacement",
+          "value": "2797",
+          "unit": "cm³",
+          "locator": "Technical table / 240 G / Engine",
+          "context": null
+        },
+        {
+          "name": "engine_cylinders",
+          "value": "4",
+          "unit": "count",
+          "locator": "Technical table / 240 G / Engine",
+          "context": null
+        },
+        {
+          "name": "engine_aspiration",
+          "value": "Turbo",
+          "unit": null,
+          "locator": "Technical table / 240 G / Engine",
+          "context": null
+        },
+        {
+          "name": "fuel_tank_capacity",
+          "value": "80",
+          "unit": "L",
+          "locator": "Technical table / 240 G / Engine",
+          "context": null
+        },
+        {
+          "name": "forward_gears",
+          "value": "12",
+          "unit": "count",
+          "locator": "Technical table / 240 G / Transmission",
+          "context": null
+        },
+        {
+          "name": "reverse_gears",
+          "value": "12",
+          "unit": "count",
+          "locator": "Technical table / 240 G / Transmission",
+          "context": null
+        },
+        {
+          "name": "rear_pto_speeds",
+          "value": "540/540E",
+          "unit": "rpm",
+          "locator": "Technical table / 240 G / PTO",
+          "context": null
+        },
+        {
+          "name": "hydraulic_pump_max_flow",
+          "value": "45",
+          "unit": "L/min",
+          "locator": "Technical table / 240 G / Hydraulics",
+          "context": "Pump maximum; not implement flow"
+        },
+        {
+          "name": "hydraulic_pressure",
+          "value": "190",
+          "unit": "bar",
+          "locator": "Technical table / 240 G / Hydraulics",
+          "context": null
+        },
+        {
+          "name": "hydraulic_outlet_count",
+          "value": "4",
+          "unit": "count",
+          "locator": "Technical table / 240 G / Hydraulics",
+          "context": null
+        },
+        {
+          "name": "hydraulic_valve_count",
+          "value": "2",
+          "unit": "count",
+          "locator": "Technical table / 240 G / Hydraulics",
+          "context": null
+        },
+        {
+          "name": "rear_lift_capacity",
+          "value": "2500",
+          "unit": "kg",
+          "locator": "Technical table / 240 G / Hydraulics",
+          "context": "Measurement point unspecified"
+        },
+        {
+          "name": "wheelbase",
+          "value": "2250",
+          "unit": "mm",
+          "locator": "Technical table / 240 G / Dimensions",
+          "context": null
+        },
+        {
+          "name": "overall_length",
+          "value": "3890",
+          "unit": "mm",
+          "locator": "Technical table / 240 G / Dimensions",
+          "context": null
+        },
+        {
+          "name": "overall_width",
+          "value": "2040",
+          "unit": "mm",
+          "locator": "Technical table / 240 G / Dimensions",
+          "context": null
+        },
+        {
+          "name": "overall_height",
+          "value": "2445",
+          "unit": "mm",
+          "locator": "Technical table / 240 G / Dimensions",
+          "context": "Unladen; length excludes front weights"
+        },
+        {
+          "name": "unballasted_weight",
+          "value": "2600",
+          "unit": "kg",
+          "locator": "Technical table / 240 G / Weights",
+          "context": "Unladen; length excludes front weights"
+        }
+      ],
+      "notes": [
+        "Existing generic Stage V draft 8b5a25ee-f8e4-4dde-826a-11a8f97c989c is unresolved parent, not duplicated as exact identity. PDF extracted rows appear out of order; confirm screenshot or original before accepting dimensions and weights."
+      ]
+    },
+    {
+      "brand": "Hattat",
+      "model": "240 G",
+      "variant": "Stage V / Tarla / 4WD / 12F12R",
+      "market": "Türkiye",
+      "modelYear": null,
+      "sourceUrl": "https://www.hattattraktor.com.tr/Upload/Sayfa/240%20G%20Stage%205.pdf",
+      "sourceType": "manufacturer",
+      "existingDraftId": null,
+      "disposition": "hold_for_review",
+      "sourceRead": "indexed PDF text; page screenshot unavailable",
+      "specs": [
+        {
+          "name": "engine_model",
+          "value": "FPT F28TC",
+          "unit": null,
+          "locator": "Technical table / 240 G / Engine",
+          "context": null
+        },
+        {
+          "name": "emissions_standard",
+          "value": "Stage V",
+          "unit": null,
+          "locator": "Technical table / 240 G / Engine",
+          "context": null
+        },
+        {
+          "name": "engine_max_power",
+          "value": "37",
+          "unit": "kW",
+          "locator": "Technical table / 240 G / Engine",
+          "context": "ISO14396 at 2300 rpm"
+        },
+        {
+          "name": "engine_max_power_oem_label",
+          "value": "50",
+          "unit": "hp",
+          "locator": "Technical table / 240 G / Engine",
+          "context": "ISO14396 at 2300 rpm"
+        },
+        {
+          "name": "maximum_power_speed",
+          "value": "2300",
+          "unit": "rpm",
+          "locator": "Technical table / 240 G / Engine",
+          "context": null
+        },
+        {
+          "name": "engine_torque",
+          "value": "210",
+          "unit": "Nm",
+          "locator": "Technical table / 240 G / Engine",
+          "context": "1400 rpm"
+        },
+        {
+          "name": "engine_displacement",
+          "value": "2797",
+          "unit": "cm³",
+          "locator": "Technical table / 240 G / Engine",
+          "context": null
+        },
+        {
+          "name": "engine_cylinders",
+          "value": "4",
+          "unit": "count",
+          "locator": "Technical table / 240 G / Engine",
+          "context": null
+        },
+        {
+          "name": "engine_aspiration",
+          "value": "Turbo",
+          "unit": null,
+          "locator": "Technical table / 240 G / Engine",
+          "context": null
+        },
+        {
+          "name": "fuel_tank_capacity",
+          "value": "80",
+          "unit": "L",
+          "locator": "Technical table / 240 G / Engine",
+          "context": null
+        },
+        {
+          "name": "forward_gears",
+          "value": "12",
+          "unit": "count",
+          "locator": "Technical table / 240 G / Transmission",
+          "context": null
+        },
+        {
+          "name": "reverse_gears",
+          "value": "12",
+          "unit": "count",
+          "locator": "Technical table / 240 G / Transmission",
+          "context": null
+        },
+        {
+          "name": "rear_pto_speeds",
+          "value": "540/540E",
+          "unit": "rpm",
+          "locator": "Technical table / 240 G / PTO",
+          "context": null
+        },
+        {
+          "name": "hydraulic_pump_max_flow",
+          "value": "45",
+          "unit": "L/min",
+          "locator": "Technical table / 240 G / Hydraulics",
+          "context": "Pump maximum; not implement flow"
+        },
+        {
+          "name": "hydraulic_pressure",
+          "value": "190",
+          "unit": "bar",
+          "locator": "Technical table / 240 G / Hydraulics",
+          "context": null
+        },
+        {
+          "name": "hydraulic_outlet_count",
+          "value": "4",
+          "unit": "count",
+          "locator": "Technical table / 240 G / Hydraulics",
+          "context": null
+        },
+        {
+          "name": "hydraulic_valve_count",
+          "value": "2",
+          "unit": "count",
+          "locator": "Technical table / 240 G / Hydraulics",
+          "context": null
+        },
+        {
+          "name": "rear_lift_capacity",
+          "value": "2500",
+          "unit": "kg",
+          "locator": "Technical table / 240 G / Hydraulics",
+          "context": "Measurement point unspecified"
+        },
+        {
+          "name": "wheelbase",
+          "value": "2180",
+          "unit": "mm",
+          "locator": "Technical table / 240 G / Dimensions",
+          "context": null
+        },
+        {
+          "name": "overall_length",
+          "value": "3890",
+          "unit": "mm",
+          "locator": "Technical table / 240 G / Dimensions",
+          "context": null
+        },
+        {
+          "name": "overall_width",
+          "value": "2040",
+          "unit": "mm",
+          "locator": "Technical table / 240 G / Dimensions",
+          "context": null
+        },
+        {
+          "name": "overall_height",
+          "value": "2445",
+          "unit": "mm",
+          "locator": "Technical table / 240 G / Dimensions",
+          "context": "Unladen; length excludes front weights"
+        },
+        {
+          "name": "unballasted_weight",
+          "value": "2900",
+          "unit": "kg",
+          "locator": "Technical table / 240 G / Weights",
+          "context": "Unladen; length excludes front weights"
+        }
+      ],
+      "notes": [
+        "Existing generic Stage V draft 8b5a25ee-f8e4-4dde-826a-11a8f97c989c is unresolved parent, not duplicated as exact identity. PDF extracted rows appear out of order; confirm screenshot or original before accepting dimensions and weights."
+      ]
+    }
+  ]
+}
