@@ -12,3 +12,13 @@ export function planSequentialFieldWork(tasks){
  });
  return {rows,totals:rows.reduce((a,b)=>({workedAreaHa:a.workedAreaHa+b.workedAreaHa,hours:a.hours+b.hours,litres:a.litres+b.litres,operatingCost:a.operatingCost+b.operatingCost}),{workedAreaHa:0,hours:0,litres:0,operatingCost:0})};
 }
+
+/** Fractional workdays, not a calendar or weather forecast. Null means unknown. */
+export function estimateSequentialWorkdays(hours,dailyHours){
+ if(typeof hours!=="number"||!Number.isFinite(hours)||hours<0)throw new RangeError("Invalid work hours");
+ if(dailyHours===null)return null;
+ if(typeof dailyHours!=="number"||!Number.isFinite(dailyHours)||dailyHours<0.1||dailyHours>24)throw new RangeError("Invalid daily hours");
+ const days=hours/dailyHours;
+ if(!Number.isFinite(days))throw new RangeError("Invalid workdays");
+ return days;
+}

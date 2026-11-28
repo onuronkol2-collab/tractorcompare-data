@@ -1,7 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import {investmentScenarios} from "../src/lib/farm-investment-scenarios.mjs";
-import {planSequentialFieldWork} from "../src/lib/farm-fleet-planning.mjs";
+import {planSequentialFieldWork,estimateSequentialWorkdays} from "../src/lib/farm-fleet-planning.mjs";
 import {compareIndependentMeasurements} from "../src/lib/independent-measurement-comparison.mjs";
 const investment={price:120000,down:0,annualRate:0,termMonths:24,annualHours:100,annualHectares:50,fuelPerHour:5,fuelPrice:2,maintenancePerHour:3,otherPerHour:0,annualFixed:100,rentalPerHour:100,resale:[90000,70000,null,30000]};
 test("ownership horizon includes remaining principal exactly once",()=>{
@@ -56,4 +56,17 @@ test("full deposit incurs no financing interest and no missing-value assumptions
  assert.equal(out.scenarios[1].interestPaid,0);
  assert.equal(out.scenarios[1].perHectare,null);
  assert.equal(out.scenarios[1].total,124200);
+});
+
+test("one to six sequential operations and optional daily working time",()=>{
+ const task={area:10,unit:"ha",passes:1,width:2,speed:5,efficiency:100,fuel:4,price:2,other:1};
+ const one=planSequentialFieldWork([task]),six=planSequentialFieldWork(Array.from({length:6},()=>task));
+ assert.equal(one.totals.hours,10);
+ assert.equal(six.totals.hours,60);
+ assert.equal(six.rows.length,6);
+ assert.equal(estimateSequentialWorkdays(six.totals.hours,8),7.5);
+ assert.equal(estimateSequentialWorkdays(six.totals.hours,null),null);
+ assert.equal(estimateSequentialWorkdays(0,8),0);
+ for(const invalid of [0,25,NaN,"8",undefined])assert.throws(()=>estimateSequentialWorkdays(60,invalid));
+ assert.throws(()=>estimateSequentialWorkdays(-1,8));
 });
