@@ -6,6 +6,7 @@ import "../styles/interaction-accessibility.css";
 import PhotoLightbox from "../components/PhotoLightbox.astro";
 import LocaleSuggestion from "../components/LocaleSuggestion.astro";
 import AnalyticsConsent from "../components/AnalyticsConsent.astro";
+import { isInfolinksRoute } from "../lib/infolinks-policy.mjs";
 import { analyticsText } from "../lib/analytics-i18n.ts";
 import { brand } from "../config/brand";
 import {farmCostText} from "../lib/farm-cost-i18n";
@@ -41,6 +42,8 @@ const indexingEnabled =
 const homePath = localizedPath(lang, "/");
 const analyticsCopy = analyticsText(lang);
 const plainPath = unlocalizedPath(Astro.url.pathname);
+// Publish inert onboarding metadata only. No runtime ad loader is mounted.
+const infolinksPending = indexingEnabled && Astro.site?.origin === "https://tractorvs.com" && (plainPath === "/" || isInfolinksRoute(plainPath));
 // Metadata-only curation: preserve the exact reviewed article rendering blob.
 const title = reviewedTechnicalGuideMetadataTitle(plainPath, lang, sourceTitle);
 const catalogPath = localizedPath(lang, "/tractors/");
@@ -317,6 +320,7 @@ const openGraphLocale: Record<Locale, string> = {
     </footer>
     <PhotoLightbox lang={lang} />
     <AnalyticsConsent lang={lang} />
+    {infolinksPending && <script is:inline type="application/json" id="tractorvs-infolinks-pending">{"infolinks_pid":3450022,"infolinks_wsid":0,"script":"https://resources.infolinks.com/js/infolinks_main.js","status":"pending-inactive"}</script>}
   </body>
 </html>
 <script>
