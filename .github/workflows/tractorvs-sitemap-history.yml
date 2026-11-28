@@ -30,6 +30,8 @@ on:
       - ".github/workflows/tractorvs-sitemap-history.yml"
   pull_request:
     paths:
+      - "scripts/tractorvs-owner-test-release-policy.mjs"
+      - "site/tests/owner-test-release.test.mjs"
       # Ledger-only candidates must run the independent read-only preview.
       - "site/src/**"
       - "seo/sitemap-content-history.json"

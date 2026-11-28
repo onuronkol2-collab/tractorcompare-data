@@ -3,6 +3,8 @@ name: TractorVS non-forum research UX production QA
 on:
   pull_request:
     paths:
+      # Owner release requires this inventory for every site source change.
+      - "site/src/**"
       - "site/src/components/HomeExperience.astro"
       - "site/src/components/TractorPhoto.astro"
       - "site/src/styles/home-experience.css"
