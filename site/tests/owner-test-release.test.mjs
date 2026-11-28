@@ -1,7 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import {browserRequiredNames,LEGACY_BROWSER_NAMES,SHARDED_BROWSER_NAMES} from "../../scripts/tractorvs-browser-checks.mjs";
-import {authorization,assessOwnerEvidence,allowedSkip,pendingOwnerChecks,waitForOwnerEvidence,matchesAuthorizedPR,OWNER,OWNER_ID,WORKFLOW} from "../../scripts/tractorvs-owner-test-release-policy.mjs";
+import {authorization,assessOwnerEvidence,allowedSkip,conditionalSkipEvidence,pendingOwnerChecks,waitForOwnerEvidence,matchesAuthorizedPR,OWNER,OWNER_ID,WORKFLOW} from "../../scripts/tractorvs-owner-test-release-policy.mjs";
 import {REPO,requiredCandidateChecks} from "../../scripts/tractorvs-protected-candidate-policy.mjs";
 const head="a".repeat(40),base="b".repeat(40),now=Date.parse("2026-11-27T17:00:00Z");
 const env={GITHUB_REPOSITORY:REPO,GITHUB_REF:"refs/heads/main",GITHUB_WORKFLOW_REF:REPO+"/"+WORKFLOW+"@refs/heads/main",GITHUB_ACTOR:OWNER,GITHUB_TRIGGERING_ACTOR:OWNER,GITHUB_ACTOR_ID:String(OWNER_ID),GITHUB_EVENT_NAME:"issue_comment",GITHUB_SHA:base};
@@ -101,3 +101,14 @@ test("operator instructions arm TEST before completion while retaining merge gat
  assert.doesNotMatch(scan,/APP_PRIVATE_KEY|APP_ID|secure-publisher/);
  assert.match(policy,/needs\.scan\.outputs\.ready == 'true'/);
 });
+
+ test("conditional evidence never grants permission before its originating run completes",()=>{
+ const run={id:123,path:".github/workflows/tractorvs-sitemap-history.yml",event:"pull_request",head_sha:head,repository:{full_name:REPO},head_repository:{full_name:REPO},status:"in_progress",conclusion:null};
+ const job=(id,name,conclusion)=>({id,name,app:{id:15368},head_sha:head,status:"completed",conclusion,details_url:"https://github.com/"+REPO+"/actions/runs/123/job/"+id});
+ const good=job(1,"tests","success"),skip=job(2,"protected_candidate","skipped");
+ assert.equal(conditionalSkipEvidence(skip,[run],head,[good,skip]),"pending");
+ assert.equal(allowedSkip(skip,[run],head,[good,skip]),false);
+ assert.equal(conditionalSkipEvidence(skip,[{...run,status:"completed",conclusion:"success"}],head,[good,skip]),"verified");
+ assert.equal(conditionalSkipEvidence(skip,[{...run,status:"completed",conclusion:"failure"}],head,[good,skip]),"invalid");
+ assert.equal(conditionalSkipEvidence(skip,[run],head,[skip]),"invalid");
+ });

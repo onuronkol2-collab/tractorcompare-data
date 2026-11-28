@@ -30,14 +30,21 @@ const conditionalJobs=new Map([
  [wf("tractorvs-forum-publication-autosync"),{names:["sync","protected_candidate"],prerequisite:"validate"}],
  [wf("tractorvs-forum-translation"),{names:["status"],prerequisite:"check"}]
 ]);
-export function allowedSkip(c,runs,head,checks){
- if(c.app?.id!==15368||c.head_sha!==head||c.status!=="completed"||c.conclusion!=="skipped")return false;
+// A conditional writer is never accepted by its name alone. Both evaluators
+// share this exact same-repository, same-head, same-run prerequisite check.
+export function conditionalSkipEvidence(c,runs,head,checks){
+ if(c.app?.id!==15368||c.head_sha!==head||c.status!=="completed"||c.conclusion!=="skipped")return "invalid";
  const run=runs.find(r=>r.id===actionRunId(c));
- if(!run||run.event!=="pull_request"||run.repository?.full_name!==REPO||run.head_repository?.full_name!==REPO||run.head_sha!==head||run.status!=="completed"||run.conclusion!=="success")return false;
+ if(!run||run.event!=="pull_request"||run.repository?.full_name!==REPO||run.head_repository?.full_name!==REPO||run.head_sha!==head)return "invalid";
  const rule=conditionalJobs.get(run.path);
- if(!rule?.names.includes(c.name))return false;
+ if(!rule?.names.includes(c.name))return "invalid";
  const prerequisite=checks.filter(x=>x.name===rule.prerequisite&&x.app?.id===15368&&x.head_sha===head&&actionRunId(x)===run.id);
- return prerequisite.length===1&&prerequisite[0].status==="completed"&&prerequisite[0].conclusion==="success";
+ if(prerequisite.length!==1||prerequisite[0].status!=="completed"||prerequisite[0].conclusion!=="success")return "invalid";
+ if(run.status==="completed")return run.conclusion==="success"?"verified":"invalid";
+ return ["queued","in_progress","waiting","pending","requested"].includes(run.status)&&run.conclusion==null?"pending":"invalid";
+}
+export function allowedSkip(c,runs,head,checks){
+ return conditionalSkipEvidence(c,runs,head,checks)==="verified";
 }
 export function assessOwnerEvidence({selection,checks,statuses,runs,files=[]}){
  const {head,base}=selection;
