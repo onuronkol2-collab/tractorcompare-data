@@ -30,6 +30,17 @@ on:
       - ".github/workflows/tractorvs-sitemap-history.yml"
   pull_request:
     paths:
+      # Owner TEST requires full browser and sitemap evidence even for photo infrastructure.
+      - ".github/workflows/batch-photo-research.yml"
+      - ".github/workflows/photo-research-validation.yml"
+      - "site/scripts/photo-*.mjs"
+      - "site/scripts/photo-*.py"
+      - "site/scripts/batch-photo-discovery.mjs"
+      - "site/scripts/archive-brand-photo-discovery.mjs"
+      - "site/scripts/extract-archived-tractor-inventory.py"
+      - "site/tests/photo-*.test.mjs"
+      - "site/tests/photo-*.py"
+      - "site/tests/fixtures/photo-offline-fetch.mjs"
       - "scripts/tractorvs-owner-test-release-policy.mjs"
       - "site/tests/owner-test-release.test.mjs"
       - "scripts/tractorvs-production-barrier.mjs"
