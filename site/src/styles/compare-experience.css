@@ -333,3 +333,30 @@
     outline-color: Highlight !important;
   }
 }
+
+/* Consistent task-first hierarchy: remove decorative comparison mock cards,
+   not real model photos or technical rows. Print styles remain unchanged. */
+@media screen {
+ #main .tc-hero{background:#14251c;padding-block:clamp(24px,4vw,52px)}
+ #main .tc-hero .tc-hero-content{grid-template-columns:minmax(0,1fr);gap:0}
+ #main .tc-hero .tc-hero-visual{display:none}
+ #main .tc-hero h1{font-size:clamp(29px,4.2vw,52px);line-height:1.18;overflow-wrap:anywhere}
+ #main .tc-section{padding-block:clamp(24px,3.5vw,48px) 64px}
+ #main .tc-section .tc-picker,#main .tc-section .tc-table-wrap{border-radius:9px;box-shadow:none}
+ #main .tc-section .tc-step-number,#main .tc-section .tc-selected-preview{border-radius:9px}
+ #main .tc-section .tc-swap{box-shadow:none}
+ #main .tc-section .tc-workspace-intro,#main .tc-section .tc-table-bar-title{align-items:flex-start}
+ #main .tc-section .tc-note{font-size:.9375rem;line-height:1.65;overflow-wrap:anywhere}
+ #main .tc-section .tc-table .tc-condition-caution{font-size:.875rem;line-height:1.6}
+ #main .tc-section .tc-entry small{font-size:.875rem;line-height:1.6;overflow-wrap:anywhere}
+ #main .tc-section .tc-combo-input:focus-visible{outline:3px solid #175c37;outline-offset:2px}
+}
+@media screen and (max-width:690px){
+ #main .tc-section .tc-table-wrap{border:0}
+ #main .tc-section .tc-table tr{border-radius:9px}
+ #main .tc-section .tc-table :is(th,td){overflow-wrap:anywhere}
+ #main .tc-section .tc-table .tc-cell-model{border-block-end:1px solid #c9ddc8;padding-bottom:6px}
+}
+@media screen and (forced-colors:active){
+ #main .tc-section .tc-combo-input:focus-visible{outline-color:Highlight}
+}

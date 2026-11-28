@@ -2,6 +2,11 @@
 import SiteLayout from "../layouts/SiteLayout.astro";
 import {practicalGuideLinks,ADVISOR_DISCOVERY_NOTE} from "../lib/practical-guide-links.ts";
 import EditorialContents from "./EditorialContents.astro";
+import {BACK_TO_CONTENTS} from "../lib/reading-navigation-i18n.ts";
+import GuideResearchChecklist from "./GuideResearchChecklist.astro";
+import {GUIDE_RESEARCH_COPY} from "../lib/guide-research-copy.ts";
+import {RETURN_TO_RESEARCH} from "../lib/guide-research-return-i18n.ts";
+import {GUIDE_ANSWER_COPY} from "../lib/guide-answer-copy.ts";
 import PowerUnitConverter from "./PowerUnitConverter.astro";
 import {POWER_UNIT_COPY} from "../lib/power-unit-copy.ts";
 import {GUIDE_DIMENSION_COPY} from "../lib/guide-dimension-copy.ts";
@@ -13,6 +18,7 @@ import {editorialHubTranslation} from "../lib/editorial-hub-i18n";
 interface Props { lang: Locale; }
 const {lang}=Astro.props;
 const tr=lang==="tr";
+const answer=GUIDE_ANSWER_COPY[lang];
 const sources=[
   {url:"https://www.oecd.org/en/topics/tractors.html",
    en:"OECD — Standard Codes for official tractor testing",
@@ -237,22 +243,33 @@ const schema={
       <p class="guide-lead">{copy.lead}</p>
       <p class="guide-date"><strong>{copy.updated}:</strong> <time datetime={reviewedOn}>{pageDate}</time></p>
       <p class="guide-honesty">{copy.noTest}</p>
+      <section class="guide-direct-answer" aria-labelledby="guide-direct-answer-heading">
+        <h2 id="guide-direct-answer-heading">{answer[0]}</h2><p>{answer[1]}</p>
+      </section>
       <EditorialContents lang={lang} items={[
         ...copy.sections.map((section,index)=>({id:"guide-section-"+(index+1),label:section.title})),
+        {id:"guide-example-heading",label:answer[2]},
         {id:"guide-dimensions-heading",label:GUIDE_DIMENSION_COPY[lang][0]},
         {id:"power-converter-heading",label:POWER_UNIT_COPY[lang].heading},
         {id:"guide-practical-heading",label:practicalGuideLinks(lang).heading},
         {id:"guide-checklist-heading",label:copy.worksheetTitle},
         {id:"guide-sources-heading",label:copy.sourceTitle}
       ]}/>
+      <p class="guide-research-entry" data-guide-research-entry hidden><a href="#guide-research-heading">{GUIDE_RESEARCH_COPY[lang][0]} <span aria-hidden="true">↓</span></a></p>
       <ol class="guide-steps">
         {copy.sections.map((section,index)=><li id={"guide-section-"+(index+1)} tabindex="-1">
           <h2><span aria-hidden="true">{index+1}.</span> {section.title}</h2>
           {section.paragraphs.map(p=><p>{p}</p>)}
           <p class="guide-question">{section.question}</p>
+          <p class="guide-research-return" data-guide-research-return hidden><a href={"#guide-research-question-"+(index+1)}>{RETURN_TO_RESEARCH[lang]} <span aria-hidden="true">↓</span></a></p>
           <p class="guide-inline-sources">{copy.sourcePrefix}: {section.refs.map((idx)=><a href={sources[idx].url} hreflang="en" target="_blank" rel="noopener noreferrer">{sourceLabel(idx)} (EN)</a>)}</p>
         </li>)}
       </ol>
+      <p class="guide-contents-return"><a href="#article-contents-heading" data-reading-return>{BACK_TO_CONTENTS[lang]} <span aria-hidden="true">↑</span></a></p>
+      <section class="guide-comparison-example" aria-labelledby="guide-example-heading">
+        <h2 id="guide-example-heading" tabindex="-1">{answer[2]}</h2><p>{answer[3]}</p>
+        <p>{answer[4]}: <a href={sources[0].url} hreflang="en" target="_blank" rel="noopener noreferrer">{sourceLabel(0)} (EN)</a> · <a href={sources[2].url} hreflang="en" target="_blank" rel="noopener noreferrer">{sourceLabel(2)} (EN)</a></p>
+      </section>
       <section class="guide-practical" aria-labelledby="guide-dimensions-heading">
         <h2 id="guide-dimensions-heading" tabindex="-1">{GUIDE_DIMENSION_COPY[lang][0]}</h2>
         <ul>{GUIDE_DIMENSION_COPY[lang].slice(1,4).map(item=><li>{item}</li>)}</ul>
@@ -260,7 +277,7 @@ const schema={
       </section>
       <PowerUnitConverter lang={lang} />
       <section class="guide-practical" aria-labelledby="guide-practical-heading">
-        <h2 id="guide-practical-heading">{practicalGuideLinks(lang).heading}</h2>
+        <h2 id="guide-practical-heading" tabindex="-1">{practicalGuideLinks(lang).heading}</h2>
         <p>{practicalGuideLinks(lang).description}</p>
         <ul>{practicalGuideLinks(lang).links.map(link=><li><a href={link.href}>{link.label}</a></li>)}</ul>
         <p>{ADVISOR_DISCOVERY_NOTE[lang]}</p>
@@ -275,12 +292,14 @@ const schema={
           </table>
         </div>
       </section>
+      <GuideResearchChecklist lang={lang} questions={copy.sections.map((section,index)=>({question:section.question,href:"#guide-section-"+(index+1)}))}/>
       <section class="guide-sources" aria-labelledby="guide-sources-heading">
         <h2 id="guide-sources-heading" tabindex="-1">{copy.sourceTitle}</h2>
         <p>{copy.sourceIntro}</p>
         <ol>{sources.map((s,idx)=><li><a href={s.url} hreflang="en" target="_blank" rel="noopener noreferrer">{sourceLabel(idx)} (EN)</a></li>)}</ol>
         <p><strong>{copy.limits}</strong></p>
       </section>
+      <p class="guide-contents-return"><a href="#article-contents-heading" data-reading-return>{BACK_TO_CONTENTS[lang]} <span aria-hidden="true">↑</span></a></p>
       <section class="guide-next" aria-labelledby="guide-next-heading">
         <h2 id="guide-next-heading">{copy.ctaTitle}</h2>
         <p>{copy.ctaDesc}</p>
@@ -334,4 +353,20 @@ const schema={
   .guide-actions a{display:inline-block;background:#eaf5e6;padding:10px 15px;border-radius:8px;font-size:14px;font-weight:750;color:#18542e;text-decoration:none}
   .guide-actions a:hover,.guide-actions a:focus-visible{text-decoration:underline;outline-offset:3px}
   @media(max-width:620px){.tractor-guide{padding:28px 0 60px}.guide-sources,.guide-next{padding:21px}.guide-steps>li{padding:20px 0}}
+ .guide-contents-return{margin:12px 0 22px}
+ .guide-contents-return a{display:inline-flex;align-items:center;gap:8px;min-height:44px;font-weight:750;overflow-wrap:anywhere}
+ @media print{.guide-contents-return{display:none}}
+ .guide-research-entry[hidden]{display:none!important}
+ .guide-research-entry{margin:12px 0 20px}
+ .guide-research-entry a{display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:8px 14px;border:1px solid #9ebd99;border-radius:8px;background:#e4efde;color:#205a37;font-weight:750;overflow-wrap:anywhere}
+ @media print{.guide-research-entry{display:none!important}}
+ .guide-research-return[hidden]{display:none!important}
+ .guide-research-return{margin:6px 0 12px}
+ .guide-research-return a{display:inline-flex;align-items:center;gap:6px;min-height:44px;font-weight:700;overflow-wrap:anywhere}
+ @media print{.guide-research-return{display:none!important}}
+ .guide-direct-answer,.guide-comparison-example{margin-block:22px;padding:clamp(16px,3vw,24px);border:1px solid #d7ddcc;border-radius:9px;background:#f6f3e9;color:#23472f;overflow-wrap:anywhere}
+ .guide-direct-answer h2,.guide-comparison-example h2{font-size:clamp(20px,2.5vw,27px);line-height:1.35;margin:0 0 10px;scroll-margin-block-start:24px}
+ .guide-direct-answer p,.guide-comparison-example p{line-height:1.7;margin:0}
+ .guide-comparison-example p+p{margin-top:12px;font-size:.9375rem}
+ .guide-comparison-example a{display:inline-flex;align-items:center;min-height:44px}
 </style>

@@ -17,10 +17,14 @@ const labels={
 const title=labels[lang];
 if(!items.length||new Set(items.map(x=>x.id)).size!==items.length||items.some(x=>!x.label.trim()||!/^[a-z][a-z0-9-]*$/.test(x.id)))throw Error("Invalid editorial contents");
 ---
-<nav class="article-contents" aria-labelledby="article-contents-heading">
- <h2 id="article-contents-heading">{title}</h2>
+<nav class="article-contents" id="article-contents" data-reading-contents aria-labelledby="article-contents-heading">
+ <h2 id="article-contents-heading" tabindex="-1">{title}</h2>
  <ol>{items.map(item=><li><a href={"#"+item.id}>{item.label}</a></li>)}</ol>
 </nav>
+<script>
+  import {syncReadingLocation} from "../lib/reading-location.ts";
+  syncReadingLocation();
+</script>
 <style>
 /* The long article jump must land at the destination without a scrolling
    animation competing with native focus or late viewport changes. */
@@ -32,4 +36,14 @@ if(!items.length||new Set(items.map(x=>x.id)).size!==items.length||items.some(x=
 .article-contents a{display:flex;align-items:center;min-height:46px;color:#215b35;text-decoration:underline;text-underline-offset:3px;font-size:15px;line-height:1.5;overflow-wrap:anywhere}
 .article-contents a:focus-visible{outline:3px solid #39784a;outline-offset:2px;border-radius:4px}
 @media(max-width:620px){.article-contents ol{grid-template-columns:1fr;gap:0}}
+/* Shared reading hierarchy, no change to the actual article destinations. */
+.article-contents{border-radius:9px;background:#f3f8f0}
+/* Preserve the 44px physical test floor despite fractional layout rounding. */
+.article-contents a{min-block-size:46px;line-height:1.55}
+@media(forced-colors:active){.article-contents a:focus-visible{outline-color:Highlight}}
+@media print{.article-contents{break-inside:avoid;background:white}}
+/* Current fragment, not a claim that the whole section has been read. */
+.article-contents a[aria-current="location"]{font-weight:800;background:#e4efde;border-radius:5px;padding-inline:6px;text-decoration-thickness:2px}
+.article-contents h2:focus-visible{outline:3px solid #175c37;outline-offset:3px}
+@media(forced-colors:active){.article-contents a[aria-current="location"]{outline:2px solid Highlight;outline-offset:-2px}}
 </style>

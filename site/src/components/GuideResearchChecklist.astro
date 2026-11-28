@@ -1,0 +1,78 @@
+---
+import type {Locale} from "../lib/locales.ts";
+import {GUIDE_RESEARCH_COPY} from "../lib/guide-research-copy.ts";
+interface Props{lang:Locale;questions:{question:string;href:string}[]}
+const {lang,questions}=Astro.props;
+const c=GUIDE_RESEARCH_COPY[lang];
+const number=new Intl.NumberFormat(lang);
+const initial=c[2].replace("{done}",number.format(0)).replace("{total}",number.format(questions.length));
+---
+{questions.length>0&&<section class="guide-research" data-guide-research hidden aria-labelledby="guide-research-heading">
+ <h2 id="guide-research-heading" tabindex="-1">{c[0]}</h2>
+ <p>{c[1]}</p>
+ <p data-research-status role="status" aria-atomic="true" data-template={c[2]}>{initial}</p>
+ <progress data-research-progress max={questions.length} value="0" aria-labelledby="guide-research-heading"></progress>
+ <ul>
+  {questions.map((item,index)=><li id={"guide-research-question-"+(index+1)} tabindex="-1">
+   <label><input type="checkbox" data-research-check autocomplete="off"/><span>{item.question}</span></label>
+   <a href={item.href} aria-label={c[4]+": "+item.question}>{c[4]} <span aria-hidden="true">↗</span></a>
+  </li>)}
+ </ul>
+ <button type="button" data-research-reset>{c[3]}</button>
+</section>}
+<script>
+ document.querySelectorAll<HTMLElement>("[data-guide-research]").forEach(root=>{
+  const checks=[...root.querySelectorAll<HTMLInputElement>("[data-research-check]")];
+  const status=root.querySelector<HTMLElement>("[data-research-status]");
+  const progress=root.querySelector<HTMLProgressElement>("[data-research-progress]");
+  const reset=root.querySelector<HTMLButtonElement>("[data-research-reset]");
+  if(!checks.length||!status||!progress||!reset)return;
+  const number=new Intl.NumberFormat(document.documentElement.lang);
+  const update=()=>{
+   const done=checks.filter(check=>check.checked).length;
+   progress.value=done;
+   const message=(status.dataset.template||"").replace("{done}",number.format(done)).replace("{total}",number.format(checks.length));
+   if(status.textContent!==message)status.textContent=message;
+  };
+  checks.forEach(check=>{check.checked=false;check.addEventListener("change",update);});
+  // Browser back/forward caching may restore control state: keep the visible count in sync.
+  window.addEventListener("pageshow",update);
+  reset.addEventListener("click",()=>{checks.forEach(check=>check.checked=false);update();});
+  // No cookies, local storage, server requests or personal data persistence.
+  root.hidden=false;update();
+  const entry=document.querySelector<HTMLElement>("[data-guide-research-entry]");
+  if(entry)entry.hidden=false;
+  document.querySelectorAll<HTMLElement>("[data-guide-research-return]").forEach(wrapper=>{
+   const link=wrapper.querySelector<HTMLAnchorElement>("a");
+   const target=link?document.getElementById(link.hash.slice(1)):null;
+   if(!link||!target||!root.contains(target))return;
+   wrapper.hidden=false;
+   link.addEventListener("click",event=>{
+    if(event.defaultPrevented||event.button!==0||event.ctrlKey||event.metaKey||event.shiftKey||event.altKey)return;
+    target.focus({preventScroll:true});
+   });
+  });
+  // A direct fragment may have been loaded while the enhancement was hidden.
+  const destination=document.getElementById(location.hash.slice(1));
+  if(destination&&root.contains(destination))destination.scrollIntoView({block:"start"});
+ });
+</script>
+<style>
+ .guide-research[hidden]{display:none!important}
+ .guide-research{padding:clamp(16px,3vw,26px);margin:24px 0;background:#f3f8f0;border:1px solid #c9ddc7;border-radius:9px;color:#23472f;min-width:0}
+ .guide-research h2{scroll-margin-block-start:24px;font-size:clamp(21px,2.6vw,28px);margin:0 0 12px;line-height:1.4}
+ .guide-research p{line-height:1.65;overflow-wrap:anywhere}
+ .guide-research [data-research-status]{font-weight:750;font-variant-numeric:tabular-nums;margin:14px 0 5px}
+ .guide-research progress{display:block;width:100%;height:14px;accent-color:#285b40}
+ .guide-research ul{list-style:none;padding:0;margin:14px 0;display:grid;gap:8px}
+ .guide-research li{scroll-margin-block-start:24px;min-width:0;background:white;border:1px solid #d3e3d0;border-radius:9px;padding:10px 12px}
+ .guide-research label{display:flex;align-items:flex-start;gap:10px;min-height:44px;cursor:pointer;line-height:1.55;overflow-wrap:anywhere}
+ .guide-research input{width:20px;height:20px;flex:none;accent-color:#285b40;margin:3px 0 0}
+ .guide-research a{display:inline-flex;align-items:center;min-height:44px;font-size:.875rem;color:#205a37;text-decoration:underline;overflow-wrap:anywhere}
+ .guide-research button{min-height:44px;max-width:100%;padding:10px 14px;border:1px solid #7c9f80;border-radius:8px;background:white;color:#205a37;font:inherit;font-weight:700;cursor:pointer;overflow-wrap:anywhere}
+ .guide-research :is(input,a,button,h2):focus-visible{outline:3px solid #175c37;outline-offset:3px}
+ @media(forced-colors:active){.guide-research :is(input,a,button):focus-visible{outline-color:Highlight}}
+ @media print{.guide-research button{display:none}.guide-research li{break-inside:avoid}}
+ .guide-research li:focus-visible{outline:3px solid #175c37;outline-offset:3px}
+ @media(forced-colors:active){.guide-research li:focus-visible{outline-color:Highlight}}
+</style>

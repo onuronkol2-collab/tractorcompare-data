@@ -2,6 +2,11 @@
 
 > Bu dosya, TractorVS / TractorCompare AI projesinde çalışan yapay zekâ asistanları ve geliştiriciler için proje düzeyinde başvuru kaynağıdır. Mevcut güvenlik, yayınlama, araştırma ve SEO kurallarını tamamlar; onlarla çatışıyorsa daha güvenli ve kanıta dayalı kuralı uygula.
 
+## KALICI İKİ TEMEL HATA KURALI — 28 Kasım 2026
+
+1. **Hata karşısında eylem:** Kullanıcının açık tam yetkisiyle mevcut yetkili işte tespit edilen hatayı yalnız raporlayıp durma; güncel kaynak ve logları incele, güvenli kapsamda kök neden düzeltmesini uygula, yetkili TEST kapsamındaki gerekli kontrolleri yeniden çalıştır ve mevcut korumalı yayın zincirini tamamla. Durum sorgusunda zaten TEST yetkisi verilmiş ve açık olan işin doğrulanmış hatasını gidermek için yeniden rutin onay bekleme. DEVAM aşamasında hazırlık ile TEST/yayın ayrımı ve zorunlu güvenlik/onay sınırları korunur; yeni ilgisiz işler başlatılmaz.
+2. **Öğrenerek ilerleme:** Her doğrulanmış hatayı sınıflandır, kök nedeni ve etkilenen benzer yolları araştır, kalıcı çözüm ve anlamlı regresyon testi/ön kontrol ekle; kaynak SHA, olay kanıtı, düzeltme ve yeniden test sonucunu proje kayıtlarına işle. Aynı sınıftaki sorunlarda bu öğrenimleri uygula. Başarısız veya eksik kanıtı gizleme, testleri gevşetme ya da sonsuz tekrar yapma; erişim/harici onay veya gerçek teknik engel varsa yapılan işlemleri ve kalan engeli açıkça bildir. Sıfır hata garantisi değil, ölçülebilir tekrar önleme ve kanıtlı tamamlanma esastır.
+
 ## BAĞLAYICI KULLANICI KOMUT DÜZENİ — 27 Kasım 2026
 
 Kullanıcının açık onayı: yalnızca **DEVAM** ve **TEST** komutları yeterlidir. Bu güncel hüküm, önceki ayrı YAYINLA komutu zorunluluğunu ve bununla çelişen eski görev sıralamalarını geçersiz kılar; zorunlu güvenlik ve kalite kapıları değişmez.
@@ -9,7 +14,7 @@ Kullanıcının açık onayı: yalnızca **DEVAM** ve **TEST** komutları yeterl
 - **DEVAM:** Mevcut yetkili kapsamda toplu araştırma, geliştirme, ekleme ve düzeltme yap; çalışma kayıtlarını hazırla. Açıkça TEST yetkisi verilmeden test, build, lint, typecheck, CodeQL, Playwright, CI/CD, bunları tetikleyen push/PR, merge veya canlı yayın başlatma. Salt-okunur durum/kanıt incelemesi ve çevrimdışı taslak hazırlığı serbesttir.
 - **TEST:** Birikmiş yetkili değişiklikleri çakışma kontrolüyle topla; mevcut zorunlu testleri ve güvenlik kontrollerini çalıştır. Hata varsa kök nedeni düzelt, etkilenen kontrolleri güncel SHA üzerinde tekrarla. Tüm gerekli kontroller başarılı olduğunda **ayrı YAYINLA komutu veya rutin kullanıcı onayı beklemeden** korumalı birleştirme ve Cloudflare üretim yayınını gerçekleştir; uygun güvenli otomatik yayın mekanizmasını kullan. Başarısız, eksik, atlanan zorunlu veya eski SHA'ya ait kontrol yayın yetkisi vermez.
 - **Canlı doğrulama:** Gerçek merge SHA, Cloudflare üretim sürümü, 10 dil ve değişen işlevlerin canlı kabul kontrollerini doğrula. Canlı kanıt yoksa tamamlandı deme. Zorunlu bağımsız inceleme, secure-publisher ortamı ve varsa geçerli zorunlu onaylar, dal koruması, erişim yetkisi, RLS, lisans, kaynak ve ücretsiz kullanım sınırlarını aşma; kullanıcıdan yalnız gerçekten zorunlu harici onay/erişim gerektiğinde iste. Motorun kapsamadığı PR'ları aday kimliği taklidiyle yayımlama; mevcut korumalı standart yayın yolunu kullan.
-- **Durum sorgusu:** Salt doğrulama yap; TEST yetkisi olmadan yeni test veya yayın başlatma. YAYINLA artık zorunlu ayrı bir komut değildir. Bu talimat diğer sohbetlerde de geçerli proje çalışma standardıdır. Otomasyonların yeniden etkinleştirilmesi için ayrıca yetki gerekir; önceden duraklatılan görevleri kendiliğinden açma.
+- **Durum sorgusu:** Yeni iş için salt doğrulama yap; açık ve daha önce TEST yetkisi verilmiş işte doğrulanmış hatayı yukarıdaki iki temel kurala göre gider. TEST yetkisi olmadan yeni test veya yayın başlatma. YAYINLA artık zorunlu ayrı bir komut değildir. Bu talimat diğer sohbetlerde de geçerli proje çalışma standardıdır. Otomasyonların yeniden etkinleştirilmesi için ayrıca yetki gerekir; önceden duraklatılan görevleri kendiliğinden açma.
 
 ## KALICI TAM YETKİ, KESİNTİSİZ GELİŞTİRME VE OTOMATİK YAYIN — 27 Kasım 2026
 

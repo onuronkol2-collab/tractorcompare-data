@@ -121,3 +121,26 @@ html:is(:lang(hi), :lang(ja), :lang(zh)) #main :is(h1,h2,h3,h4) {
     outline-color: Highlight !important;
   }
 }
+
+/* Keep visible focus on the current disclosure and its independently
+   scrollable contents. Do not override native open/close or focus ownership. */
+.site-header details[data-site-disclosure]>summary:focus-visible {
+  outline:3px solid #b7df91;
+  outline-offset:3px;
+}
+.site-header :is(.mobile-nav-links,.locale-options,.resource-nav-links,.header-search-form)
+  :is(a,input,button):focus-visible {
+  outline:3px solid #175c37;
+  outline-offset:-2px;
+}
+@media (forced-colors:active) {
+  .site-header details[data-site-disclosure][open]>summary,
+  .site-header :is(.locale-options,.mobile-nav-links) a[aria-current="page"] {
+    outline:2px solid Highlight;
+    outline-offset:-2px;
+  }
+}
+
+/* A programmatically focused reading heading is a real navigation destination. */
+#main :is(#article-contents-heading,#method-toc-heading):focus-visible{outline:3px solid #175c37;outline-offset:3px}
+@media(forced-colors:active){#main :is(#article-contents-heading,#method-toc-heading):focus-visible{outline-color:Highlight}}

@@ -11,20 +11,29 @@
 </div>
 <script>
   import {suggestedLocale} from "../lib/locale-hint";
-  import {LOCALE_NAMES} from "../lib/locales";
+  import {LOCALE_NAMES,LOCALE_TAGS} from "../lib/locales";
+  import {LOCALE_SUGGESTION_COPY} from "../lib/locale-suggestion-i18n.ts";
   const banner=document.getElementById("locale-suggestion");
   const link=document.getElementById("locale-suggestion-link") as HTMLAnchorElement|null;
   const dismiss=document.getElementById("locale-suggestion-dismiss");
+  const copy=banner?.querySelector<HTMLElement>(".locale-suggestion-copy");
   const locale=suggestedLocale(navigator.language);
   let dismissed=false;
   try{ dismissed=sessionStorage.getItem("tractorvs_locale_suggestion_dismissed")==="1"; }catch{}
-  if(banner && link && locale && !dismissed){
+  if(banner && link && dismiss && copy && locale && !dismissed){
+    const text=LOCALE_SUGGESTION_COPY[locale];
+    banner.lang=LOCALE_TAGS[locale];
+    banner.setAttribute("aria-label",text[0]);
+    copy.textContent=text[1];
+    dismiss.setAttribute("aria-label",text[2]);
     link.href="/language/"+locale+"/?next="+encodeURIComponent("/"+locale+"/");
-    link.lang=locale;
+    link.lang=LOCALE_TAGS[locale];
     link.textContent=LOCALE_NAMES[locale]+" →";
     banner.hidden=false;
-    dismiss?.addEventListener("click",()=>{
+    dismiss.addEventListener("click",()=>{
+      const hadFocus=document.activeElement===dismiss;
       banner.hidden=true;
+      if(hadFocus)document.querySelector<HTMLElement>("#home-model-query")?.focus({preventScroll:true});
       try{sessionStorage.setItem("tractorvs_locale_suggestion_dismissed","1");}catch{}
     });
   }
@@ -39,4 +48,9 @@
   .locale-suggestion button{border:1px solid #8fb395;border-radius:999px;background:transparent;
     color:#244732;padding:0;width:32px;height:32px;font-size:22px;cursor:pointer}
   .locale-suggestion :is(a,button):focus-visible{outline:3px solid #276a3a;outline-offset:3px}
+  .locale-suggestion a{display:inline-flex;align-items:center;min-height:44px;max-inline-size:100%;overflow-wrap:anywhere}
+  .locale-suggestion-copy{min-inline-size:0;overflow-wrap:anywhere}
+  .locale-suggestion button{width:44px;height:44px;flex:none}
+  @media(max-width:375px){.locale-suggestion{gap:6px 10px;padding:9px 12px}}
+  @media(forced-colors:active){.locale-suggestion :is(a,button):focus-visible{outline-color:Highlight}}
 </style>

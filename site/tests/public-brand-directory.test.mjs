@@ -3,6 +3,7 @@ import assert from "node:assert/strict";
 import {readFileSync} from "node:fs";
 import {LOCALES} from "../src/lib/locales.ts";
 import {publicBrandDirectory} from "../src/lib/public-brand-directory.mjs";
+import {matchesDirectoryEvidence} from "../src/lib/brand-directory-filter.mjs";
 import {catalogBrandIndex} from "../src/lib/catalog-brand-index.mjs";
 import {BRAND_DIRECTORY_COPY} from "../src/lib/brand-directory-i18n.ts";
 const read=path=>readFileSync(new URL("../"+path,import.meta.url),"utf8");
@@ -31,4 +32,18 @@ test("ten real localized directory routes and SSR catalogue anchor links",()=>{
  assert.match(view,/lang==="en"\|\|lang==="tr"/);
  assert.match(read("src/components/HomeExperience.astro"),/localizedPath\(lang,"\/brands\/"\)/);
  assert.match(read("src/components/BrandDiscovery.astro"),/localizedPath\(lang,"\/brands\/"\)/);
+});
+
+test("source and market filters intersect on the same published model, never different records",()=>{
+ const evidence={verified_at:"2026-11-27",source_url:"https://example.org/spec"};
+ const models=[row("a","TAFE","India",[evidence]),row("b","TAFE","Europe"),
+  row("c","TAFE","Europe",[evidence],"draft"),row("d","TAFE",null,[evidence])];
+ const [brand]=publicBrandDirectory(models);
+ assert.deepEqual(brand.sourceMarkets,["India"]);
+ assert.equal(brand.withSources,2);
+ assert.equal(matchesDirectoryEvidence(brand,"Europe",false),true);
+ assert.equal(matchesDirectoryEvidence(brand,"Europe",true),false);
+ assert.equal(matchesDirectoryEvidence(brand,"India",true),true);
+ assert.equal(matchesDirectoryEvidence(brand,"",true),true);
+ assert.equal(matchesDirectoryEvidence(brand,"Global",false),false);
 });

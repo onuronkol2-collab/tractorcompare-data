@@ -8,11 +8,11 @@ import {brandDirectoryText} from "../lib/brand-directory-i18n.ts";
 import { homeDiscoveryText as d } from "../lib/home-discovery-ui";
 import { localizedPath, type Locale } from "../lib/locales";
 import { t } from "../lib/ui";
-import { advisorText as tx } from "../lib/advisor-i18n";
-import {farmCostText} from "../lib/farm-cost-i18n";
 import { editorialHubTranslation } from "../lib/editorial-hub-i18n";
 import {DEUTZ_5D_GS_PILOT,curatedDeutz5DPair} from "../lib/deutz-5d-editorial.ts";
 import {listedBrandCollections} from "../lib/brand-discovery-pilot.mjs";
+import { CATALOG_FACET_COPY, VALID_POWER, matchesCatalogueFacet } from "../lib/catalog-facets.mjs";
+import { forumText } from "../lib/forum-i18n.ts";
 
 interface Props { lang: Locale; seoTitle?: string; seoDescription?: string }
 const { lang, seoTitle = "TractorVS | " + h(lang,"seoTitle"),
@@ -29,6 +29,11 @@ const catalogUrl = localizedPath(lang, "/tractors/");
 const compareUrl = localizedPath(lang, "/compare/");
 const advisorUrl = localizedPath(lang, "/farm-advisor/");
 const articlesUrl = localizedPath(lang, "/articles/");
+const forumUrl = localizedPath(lang, "/forum/");
+const methodologyLocale = lang === "tr" ? "tr" : "en";
+const methodologyUrl = localizedPath(methodologyLocale, "/methodology/");
+const facetCopy = CATALOG_FACET_COPY[lang];
+const powerGroups = VALID_POWER.map(power => ({ power, count: catalogue.tractors.filter(tractor => matchesCatalogueFacet({power:tractor.horsepower}, {power})).length })).filter(group => group.count > 0);
 const selectionGuideUrl = localizedPath(lang, "/guides/choosing-a-tractor/");
 // These two editorial language editions are actually published; never invent an untranslated route.
 const glossaryUrl = (lang==="tr" || lang==="en") ? localizedPath(lang, "/guides/tractor-technical-terms/") : null;
@@ -90,7 +95,7 @@ const homeSchema={
 };
 const suggestionPayload = JSON.stringify(catalogue.tractors.map((tractor) => ({
   brand: tractor.brand_name, model: tractor.model_name,
-  variant: tractor.variant, year: tractor.model_year,
+  variant: tractor.variant, market: tractor.market, engine: tractor.engine, year: tractor.model_year,
   horsepower: tractor.horsepower, specs: tractor.specifications.length,
   url: detailBase + tractor.slug + "/",
 }))).replace(/</g, "\\u003c");
@@ -122,13 +127,14 @@ const suggestionPayload = JSON.stringify(catalogue.tractors.map((tractor) => ({
               aria-label={d(lang,"suggestionsHeading")} hidden></div>
           </div>
           <p class="home-search-note" id="home-search-hint">{d(lang,"searchHint")}</p>
-          <p class="home-search-empty home-search-empty-inline" id="home-search-empty" aria-hidden="true" hidden>{d(lang,"suggestionsNone")}</p>
+          <a class="home-source-method" href="#data">{h(lang,"heroSecondary")} <span aria-hidden="true">↘</span></a>
+          <div class="home-search-empty home-search-empty-inline" id="home-search-empty" hidden><p aria-hidden="true">{d(lang,"suggestionsNone")}</p><div class="home-search-recovery-actions"><button type="button" data-home-edit-search>{d(lang,"editSearch")}</button><a href={catalogUrl}>{d(lang,"browseAllModels")}</a></div></div>
           <p class="home-search-status" id="home-search-status" role="status" aria-live="polite"></p>
         </form>
-        <div class="home-hero-links">
+        <nav class="home-hero-links" aria-label={editorialPreview.heading}>
           <a href={selectionGuideUrl}>{t(lang,"guideLink")} <span aria-hidden="true">↗</span></a>
           <a href={articlesUrl}>{editorialPreview.browse} <span aria-hidden="true">↗</span></a>
-        </div>
+        </nav>
       </div>
       <div class="home-preview" aria-label="TractorVS">
         <div class="home-preview-head">
@@ -141,25 +147,26 @@ const suggestionPayload = JSON.stringify(catalogue.tractors.map((tractor) => ({
           <div class="home-action-grid">
             <a class="home-action-card" href={catalogUrl}>
               <span class="home-action-symbol" aria-hidden="true">⌕</span>
-              <div><h3>{t(lang,"navCatalog")}</h3><p>{d(lang,"catalogCardBody")}</p></div>
+              <div><h3>{d(lang,"taskFind")}</h3><p>{d(lang,"catalogCardBody")}</p></div>
               <span class="home-task-arrow" aria-hidden="true">↗</span>
             </a>
             <a class="home-action-card home-action-card--accent" href={compareUrl}>
               <span class="home-action-symbol" aria-hidden="true">⇄</span>
-              <div><h3>{t(lang,"navCompare")}</h3><p>{d(lang,"compareCardBody")}</p></div>
+              <div><h3>{d(lang,"taskCompare")}</h3><p>{d(lang,"compareCardBody")}</p></div>
               <span class="home-task-arrow" aria-hidden="true">↗</span>
             </a>
             <a class="home-action-card" href={advisorUrl}>
               <span class="home-action-symbol" aria-hidden="true">✳</span>
-              <div><h3>{tx(lang,"nav")}</h3><p>{d(lang,"advisorCardBody")}</p></div>
+              <div><h3>{d(lang,"taskWork")}</h3><p>{d(lang,"advisorCardBody")}</p></div>
               <span class="home-task-arrow" aria-hidden="true">↗</span>
             </a>
             <a class="home-action-card" href={localizedPath(lang,"/guides/farm-cost-calculator/")}>
               <span class="home-action-symbol" aria-hidden="true">∑</span>
-              <div><h3>{farmCostText(lang).nav}</h3><p>{d(lang,"costCardBody")}</p></div>
+              <div><h3>{d(lang,"taskCost")}</h3><p>{d(lang,"costCardBody")}</p></div>
               <span class="home-task-arrow" aria-hidden="true">↗</span>
             </a>
           </div>
+          <div class="home-task-guide"><p>{d(lang,"taskUnsure")}</p><a href={selectionGuideUrl}>{d(lang,"taskGuide")} <span aria-hidden="true">→</span></a></div>
         </section>
         {spotlight ? (
           <a class="home-spotlight" href={detailBase + spotlight.slug + "/"}>
@@ -217,6 +224,20 @@ const suggestionPayload = JSON.stringify(catalogue.tractors.map((tractor) => ({
           </div>
         </nav>
       )}
+      {powerGroups.length > 0 && (
+        <nav class="home-power-discovery" aria-labelledby="home-power-title">
+          <div><h3 id="home-power-title">{d(lang,"powerHeading")}</h3><p>{d(lang,"powerHint")}</p></div>
+          <div class="home-power-options">
+            {powerGroups.map(({power,count}) => (
+              <a href={catalogUrl+"?power="+encodeURIComponent(power)} rel="nofollow" class="home-power-option">
+                <strong>{facetCopy[power as keyof typeof facetCopy]}</strong>
+                <span>{new Intl.NumberFormat(lang).format(count)} {d(lang,"modelsLabel")}</span>
+                <span class="home-power-arrow" aria-hidden="true">→</span>
+              </a>
+            ))}
+          </div>
+        </nav>
+      )}
       <div class="home-featured-grid" data-research-gallery="licensed">
         {featured.map((tractor) => (
           <article class="home-featured-card">
@@ -233,6 +254,7 @@ const suggestionPayload = JSON.stringify(catalogue.tractors.map((tractor) => ({
               </div>
               <span class="home-featured-link">{d(lang,"modelDetails")} <span aria-hidden="true">↗</span></span>
             </a>
+            <a class="home-featured-compare" href={compareUrl+"?left="+encodeURIComponent(tractor.tractor_id)} rel="nofollow"><span>{d(lang,"compareThisModel")}<span class="home-visually-hidden">: {tractor.brand_name} {tractor.model_name}{tractor.variant ? " · "+tractor.variant : ""}</span></span><span aria-hidden="true">⇄</span></a>
           </article>
         ))}
       </div>
@@ -294,8 +316,18 @@ const suggestionPayload = JSON.stringify(catalogue.tractors.map((tractor) => ({
         <span class="home-evidence-number" aria-hidden="true">✓</span>
         <h3>{h(lang,"approachTitle")}</h3>
         <p>{h(lang,"approachBody")}</p>
-        <a href={catalogUrl}>{h(lang,"heroCta")} <span aria-hidden="true">↗</span></a>
+        <a href={methodologyUrl} hreflang={methodologyLocale}>{t(lang,"methodologyLink")}{lang!==methodologyLocale?" (EN)":""} <span aria-hidden="true">↗</span></a>
       </div>
+    </div>
+  </section>
+
+  <section class="home-community" aria-labelledby="home-community-title">
+    <div class="container home-community-inner">
+      <div>
+        <h2 id="home-community-title">{forumText(lang,"heading")}</h2>
+        <p>{d(lang,"communityBody")}</p>
+      </div>
+      <a class="home-outline-link" href={forumUrl}>{forumText(lang,"name")} <span aria-hidden="true">→</span></a>
     </div>
   </section>
 
@@ -311,8 +343,8 @@ const suggestionPayload = JSON.stringify(catalogue.tractors.map((tractor) => ({
 
   <script type="application/json" id="home-suggestions-data" set:html={suggestionPayload}></script>
   <script type="application/json" id="home-suggestions-i18n" set:html={JSON.stringify({
-  heading: d(lang,"suggestionsHeading"), noResults: d(lang,"suggestionsNone"),
-  results: d(lang,"suggestionsCount"), specs: t(lang,"specifications"),
+  locale: lang, heading: d(lang,"suggestionsHeading"), noResults: d(lang,"suggestionsNone"),
+  results: d(lang,"suggestionsCount"), specs: t(lang,"specifications"), all: d(lang,"allMatchingModels"),
 }).replace(/</g,"\\u003c")}></script>
 </SiteLayout>
 
@@ -321,6 +353,8 @@ const suggestionPayload = JSON.stringify(catalogue.tractors.map((tractor) => ({
 
 <script>
   import { findTractorSuggestions } from "../lib/search";
+  import { marketDisplayName } from "../lib/market-display";
+  import type { Locale } from "../lib/locales";
   import { nextComboboxOption } from "../lib/combobox-navigation.mjs";
   import type { TractorSuggestion } from "../lib/search";
 
@@ -334,8 +368,9 @@ const suggestionPayload = JSON.stringify(catalogue.tractors.map((tractor) => ({
   if (input && popup && form && status && emptyMessage && data && l10n) {
     const models = JSON.parse(data.textContent || "[]") as TractorSuggestion[];
     const labels = JSON.parse(l10n.textContent || "{}") as {
-      heading:string; noResults:string; results:string; specs:string;
+      locale:Locale; heading:string; noResults:string; results:string; specs:string; all:string;
     };
+    const number = new Intl.NumberFormat(labels.locale);
     let selectedIndex = -1;
     let composing = false;
     const options = () => Array.from(popup.querySelectorAll<HTMLAnchorElement>(".home-search-option"));
@@ -363,7 +398,8 @@ const suggestionPayload = JSON.stringify(catalogue.tractors.map((tractor) => ({
       emptyMessage.hidden = true;
       select(-1);
       if (!query) { close(); return; }
-      const hits = findTractorSuggestions(models,query,6);
+      const matches = findTractorSuggestions(models,query,7);
+      const hits = matches.slice(0,6);
       if (hits.length) {
         const heading = document.createElement("p");
         heading.className = "home-search-results-heading";
@@ -386,14 +422,25 @@ const suggestionPayload = JSON.stringify(catalogue.tractors.map((tractor) => ({
           brand.textContent = model.brand;
           const name = document.createElement("strong");
           name.textContent = model.model;
+          const identity = document.createElement("small");
+          identity.className="home-search-option-variant";
+          const originalMarket=model.market?.trim();
+          const translatedMarket=marketDisplayName(originalMarket||null,labels.locale);
+          // Show the original searchable market beside its translation when
+          // they differ; the catalogue query still uses the recorded values.
+          const market=translatedMarket&&originalMarket&&translatedMarket!==originalMarket
+            ? translatedMarket+" ("+originalMarket+")" : translatedMarket||originalMarket;
+          identity.textContent=[model.variant?.trim(),market,model.engine?.trim()].filter(Boolean).join(" · ");
           const detail = document.createElement("small");
+          detail.className="home-search-option-facts";
           detail.textContent = [
-            model.variant?.split(";")[0]?.trim(),
             model.year == null ? null : String(model.year),
-            model.horsepower == null ? null : model.horsepower + " HP",
-            model.specs + " " + labels.specs,
+            model.horsepower == null ? null : number.format(model.horsepower) + " HP",
+            number.format(model.specs) + " " + labels.specs,
           ].filter(Boolean).join(" · ");
-          nameBox.append(brand,name,detail);
+          nameBox.append(brand,name);
+          if(identity.textContent)nameBox.append(identity);
+          nameBox.append(detail);
           const arrow = document.createElement("span");
           arrow.className = "home-search-option-arrow";
           arrow.setAttribute("aria-hidden","true");
@@ -404,7 +451,25 @@ const suggestionPayload = JSON.stringify(catalogue.tractors.map((tractor) => ({
           });
           popup.appendChild(option);
         }
-        status.textContent = hits.length + " " + labels.results;
+        if (matches.length > hits.length) {
+          const all = document.createElement("a");
+          const destination = new URL(form.action,location.href);
+          destination.searchParams.set("q",query);
+          all.href = destination.href;
+          all.className = "home-search-option home-search-option-all";
+          all.id = "home-search-option-" + hits.length;
+          all.setAttribute("role","option");
+          all.setAttribute("aria-selected","false");
+          all.tabIndex = -1;
+          all.rel = "nofollow";
+          all.textContent = labels.all;
+          all.addEventListener("mousedown",event => event.preventDefault());
+          all.addEventListener("pointermove",event => {
+            if (event.pointerType === "mouse" && selectedIndex !== hits.length) select(hits.length,false);
+          });
+          popup.appendChild(all);
+        }
+        status.textContent = number.format(hits.length) + " " + labels.results + (matches.length > hits.length ? " · " + labels.all : "");
       } else {
         close();
         emptyMessage.hidden = false;
@@ -424,7 +489,7 @@ const suggestionPayload = JSON.stringify(catalogue.tractors.map((tractor) => ({
       if (composing || event.isComposing || event.keyCode === 229) return;
       if (event.key === "Tab") { if (!popup.hidden) close(); return; }
       if (event.key === "Escape") {
-        if (!popup.hidden) { event.preventDefault(); close(); }
+        if (!popup.hidden || !emptyMessage.hidden) { event.preventDefault(); close(); }
         return;
       }
       if (event.key === "ArrowDown" || event.key === "ArrowUp") {
@@ -438,6 +503,16 @@ const suggestionPayload = JSON.stringify(catalogue.tractors.map((tractor) => ({
         const link = options()[selectedIndex];
         if (link) { event.preventDefault(); window.location.assign(link.href); }
       }
+    });
+    // Explicit recovery keeps the query available for editing and does not navigate away.
+    emptyMessage.querySelector<HTMLButtonElement>("[data-home-edit-search]")?.addEventListener("click",()=>{
+      input.focus();
+      input.select();
+      close();
+    });
+    // Recovery actions are normal Tab stops, not listbox options.
+    emptyMessage.addEventListener("keydown",event=>{
+      if(event.key==="Escape") { event.preventDefault(); input.focus(); close(); }
     });
     document.addEventListener("pointerdown",(event) => {
       if (event.target instanceof Node && !form.contains(event.target)) close();

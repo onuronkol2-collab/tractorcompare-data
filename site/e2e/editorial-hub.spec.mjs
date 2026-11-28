@@ -366,7 +366,7 @@ for(const locales of [["en","tr","zh","hi","pt-br"],["fr","de","ru","ja","es"]])
  await page.setViewportSize({width:390,height:844});
  for(const lang of locales){
   for(const [path,n,source] of [
-   ["/guides/choosing-a-tractor/",11,"#guide-sources-heading"],
+   ["/guides/choosing-a-tractor/",12,"#guide-sources-heading"],
    ["/reviews/basak-2075-bk/",7,"#review-references-heading"]
   ]){
    await page.goto((lang==="en"?"":"/"+lang)+path,{waitUntil:"domcontentloaded"});
@@ -377,7 +377,7 @@ for(const locales of [["en","tr","zh","hi","pt-br"],["fr","de","ru","ja","es"]])
    await expect(links).toHaveCount(n);
    if(path==="/guides/choosing-a-tractor/"){
     const hrefs=await links.evaluateAll(nodes=>nodes.map(node=>node.getAttribute("href")));
-    expect(hrefs,lang+" complete guide section navigation").toEqual([...Array.from({length:6},(_,i)=>"#guide-section-"+(i+1)),"#guide-dimensions-heading","#power-converter-heading","#guide-practical-heading","#guide-checklist-heading","#guide-sources-heading"]);
+    expect(hrefs,lang+" complete guide section navigation").toEqual([...Array.from({length:6},(_,i)=>"#guide-section-"+(i+1)),"#guide-example-heading","#guide-dimensions-heading","#power-converter-heading","#guide-practical-heading","#guide-checklist-heading","#guide-sources-heading"]);
    }
    for(const link of await links.all()){
     const target=await link.getAttribute("href");

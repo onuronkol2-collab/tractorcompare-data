@@ -76,6 +76,8 @@ test("editorial search only hides SSR-published cards, without creating new inde
   assert.match(hub,/entries\.filter\(x=>x.type==="guide"\)/);
   assert.match(hub,/entries\.filter\(x=>x.type==="review"\)/);
   assert.doesNotMatch(hub,/window\.history|history\.pushState|history\.replaceState/);
+  assert.match(hub,/href="#editorial-query" data-editorial-search-jump/);
+  assert.match(hub,/minimumIntegerDigits:2/);
 });
 
 test("reading-language labels are complete and coverage placeholders are intact",()=>{
