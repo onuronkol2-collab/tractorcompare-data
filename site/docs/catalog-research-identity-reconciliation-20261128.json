@@ -1,0 +1,2142 @@
+{
+  "status": "research_only_not_importable",
+  "asOf": "2026-11-28",
+  "snapshotMain": "df1fd86845b7bcd2d21a7bf5e609a5ca3a5d2a35",
+  "parent": "f8d7db9fa56941f59f219f1ca54ea088cf285e76",
+  "counts": {
+    "new_name_candidate": 36,
+    "existing_id_requires_identity_review": 47,
+    "same_name_requires_variant_review": 18
+  },
+  "duplicateIds": [],
+  "rows": [
+    {
+      "brand": "Fendt",
+      "model": "513 Vario",
+      "variant": "500 Vario Gen4 / standard tractor",
+      "market": "United Kingdom",
+      "packet": "catalog-oem-evidence-20261128.json",
+      "fields": 45,
+      "existingDraftId": null,
+      "matched": null,
+      "sameName": [],
+      "disposition": "new_name_candidate",
+      "sourceRead": "Official UK technical HTML re-read 2026-11-28; original fields reviewed; catalogue identity and canonical mapping pending"
+    },
+    {
+      "brand": "Fendt",
+      "model": "514 Vario",
+      "variant": "500 Vario Gen4 / standard tractor",
+      "market": "United Kingdom",
+      "packet": "catalog-oem-evidence-20261128.json",
+      "fields": 45,
+      "existingDraftId": null,
+      "matched": null,
+      "sameName": [],
+      "disposition": "new_name_candidate",
+      "sourceRead": "Official UK technical HTML re-read 2026-11-28; original fields reviewed; catalogue identity and canonical mapping pending"
+    },
+    {
+      "brand": "Fendt",
+      "model": "515 Vario",
+      "variant": "500 Vario Gen4 / standard tractor",
+      "market": "United Kingdom",
+      "packet": "catalog-oem-evidence-20261128.json",
+      "fields": 45,
+      "existingDraftId": null,
+      "matched": null,
+      "sameName": [],
+      "disposition": "new_name_candidate",
+      "sourceRead": "Official UK technical HTML re-read 2026-11-28; original fields reviewed; catalogue identity and canonical mapping pending"
+    },
+    {
+      "brand": "Fendt",
+      "model": "516 Vario",
+      "variant": "500 Vario Gen4 / standard tractor",
+      "market": "United Kingdom",
+      "packet": "catalog-oem-evidence-20261128.json",
+      "fields": 45,
+      "existingDraftId": "1bae67cf-91d7-43e6-aeed-d3f86c2984ab",
+      "matched": {
+        "model": "516 Vario",
+        "variant": null,
+        "market": "global",
+        "status": "draft",
+        "year": null
+      },
+      "sameName": [
+        {
+          "id": "1bae67cf-91d7-43e6-aeed-d3f86c2984ab",
+          "variant": null,
+          "market": "global",
+          "status": "draft"
+        }
+      ],
+      "disposition": "existing_id_requires_identity_review",
+      "sourceRead": "Official UK technical HTML re-read 2026-11-28; original fields reviewed; catalogue identity and canonical mapping pending"
+    },
+    {
+      "brand": "CLAAS",
+      "model": "Arion 660",
+      "variant": "CMATIC",
+      "market": "Türkiye",
+      "packet": "catalog-oem-evidence-20261128.json",
+      "fields": 4,
+      "existingDraftId": "dd466322-6443-4c03-9cf4-b19a96ce7adc",
+      "matched": {
+        "model": "Arion 660",
+        "variant": null,
+        "market": "global",
+        "status": "draft",
+        "year": null
+      },
+      "sameName": [
+        {
+          "id": "dd466322-6443-4c03-9cf4-b19a96ce7adc",
+          "variant": null,
+          "market": "global",
+          "status": "draft"
+        }
+      ],
+      "disposition": "existing_id_requires_identity_review",
+      "sourceRead": null
+    },
+    {
+      "brand": "CLAAS",
+      "model": "Arion 650",
+      "variant": "CMATIC",
+      "market": "Türkiye",
+      "packet": "catalog-oem-evidence-20261128.json",
+      "fields": 4,
+      "existingDraftId": null,
+      "matched": null,
+      "sameName": [],
+      "disposition": "new_name_candidate",
+      "sourceRead": null
+    },
+    {
+      "brand": "CLAAS",
+      "model": "Arion 630",
+      "variant": "CMATIC",
+      "market": "Türkiye",
+      "packet": "catalog-oem-evidence-20261128.json",
+      "fields": 4,
+      "existingDraftId": null,
+      "matched": null,
+      "sameName": [],
+      "disposition": "new_name_candidate",
+      "sourceRead": null
+    },
+    {
+      "brand": "CLAAS",
+      "model": "Arion 610",
+      "variant": "CMATIC",
+      "market": "Türkiye",
+      "packet": "catalog-oem-evidence-20261128.json",
+      "fields": 4,
+      "existingDraftId": null,
+      "matched": null,
+      "sameName": [],
+      "disposition": "new_name_candidate",
+      "sourceRead": null
+    },
+    {
+      "brand": "CLAAS",
+      "model": "Arion 650",
+      "variant": "HEXASHIFT",
+      "market": "Türkiye",
+      "packet": "catalog-oem-evidence-20261128.json",
+      "fields": 4,
+      "existingDraftId": null,
+      "matched": null,
+      "sameName": [],
+      "disposition": "new_name_candidate",
+      "sourceRead": null
+    },
+    {
+      "brand": "CLAAS",
+      "model": "Arion 630",
+      "variant": "HEXASHIFT",
+      "market": "Türkiye",
+      "packet": "catalog-oem-evidence-20261128.json",
+      "fields": 4,
+      "existingDraftId": null,
+      "matched": null,
+      "sameName": [],
+      "disposition": "new_name_candidate",
+      "sourceRead": null
+    },
+    {
+      "brand": "CLAAS",
+      "model": "Arion 610",
+      "variant": "HEXASHIFT",
+      "market": "Türkiye",
+      "packet": "catalog-oem-evidence-20261128.json",
+      "fields": 4,
+      "existingDraftId": null,
+      "matched": null,
+      "sameName": [],
+      "disposition": "new_name_candidate",
+      "sourceRead": null
+    },
+    {
+      "brand": "CLAAS",
+      "model": "Arion 570",
+      "variant": "CMATIC",
+      "market": "Türkiye",
+      "packet": "catalog-oem-evidence-20261128.json",
+      "fields": 4,
+      "existingDraftId": null,
+      "matched": null,
+      "sameName": [],
+      "disposition": "new_name_candidate",
+      "sourceRead": null
+    },
+    {
+      "brand": "CLAAS",
+      "model": "Arion 550",
+      "variant": "CMATIC",
+      "market": "Türkiye",
+      "packet": "catalog-oem-evidence-20261128.json",
+      "fields": 4,
+      "existingDraftId": null,
+      "matched": null,
+      "sameName": [],
+      "disposition": "new_name_candidate",
+      "sourceRead": null
+    },
+    {
+      "brand": "CLAAS",
+      "model": "Arion 530",
+      "variant": "CMATIC",
+      "market": "Türkiye",
+      "packet": "catalog-oem-evidence-20261128.json",
+      "fields": 4,
+      "existingDraftId": null,
+      "matched": null,
+      "sameName": [],
+      "disposition": "new_name_candidate",
+      "sourceRead": null
+    },
+    {
+      "brand": "CLAAS",
+      "model": "Arion 510",
+      "variant": "CMATIC",
+      "market": "Türkiye",
+      "packet": "catalog-oem-evidence-20261128.json",
+      "fields": 4,
+      "existingDraftId": null,
+      "matched": null,
+      "sameName": [],
+      "disposition": "new_name_candidate",
+      "sourceRead": null
+    },
+    {
+      "brand": "CLAAS",
+      "model": "Arion 550",
+      "variant": "HEXASHIFT",
+      "market": "Türkiye",
+      "packet": "catalog-oem-evidence-20261128.json",
+      "fields": 4,
+      "existingDraftId": null,
+      "matched": null,
+      "sameName": [],
+      "disposition": "new_name_candidate",
+      "sourceRead": null
+    },
+    {
+      "brand": "CLAAS",
+      "model": "Arion 530",
+      "variant": "HEXASHIFT",
+      "market": "Türkiye",
+      "packet": "catalog-oem-evidence-20261128.json",
+      "fields": 4,
+      "existingDraftId": null,
+      "matched": null,
+      "sameName": [],
+      "disposition": "new_name_candidate",
+      "sourceRead": null
+    },
+    {
+      "brand": "CLAAS",
+      "model": "Arion 510",
+      "variant": "HEXASHIFT",
+      "market": "Türkiye",
+      "packet": "catalog-oem-evidence-20261128.json",
+      "fields": 4,
+      "existingDraftId": null,
+      "matched": null,
+      "sameName": [],
+      "disposition": "new_name_candidate",
+      "sourceRead": null
+    },
+    {
+      "brand": "Case IH",
+      "model": "Farmall 110A",
+      "variant": "Medium Utility / cab / 4WD / Stage V",
+      "market": "US",
+      "packet": "catalog-oem-evidence-20261128.json",
+      "fields": 6,
+      "existingDraftId": "f59ebde9-0e07-49fb-90a0-b39d7aad6875",
+      "matched": {
+        "model": "Farmall 110A",
+        "variant": null,
+        "market": "global",
+        "status": "draft",
+        "year": null
+      },
+      "sameName": [
+        {
+          "id": "f59ebde9-0e07-49fb-90a0-b39d7aad6875",
+          "variant": null,
+          "market": "global",
+          "status": "draft"
+        }
+      ],
+      "disposition": "existing_id_requires_identity_review",
+      "sourceRead": null
+    },
+    {
+      "brand": "John Deere",
+      "model": "6M 125",
+      "variant": "Australian catalogue / transmission options",
+      "market": "Australia",
+      "packet": "catalog-oem-evidence-20261128.json",
+      "fields": 8,
+      "existingDraftId": "773f7c38-a37b-4f84-b60c-db0b8f656d07",
+      "matched": {
+        "model": "6M 125",
+        "variant": null,
+        "market": "global",
+        "status": "draft",
+        "year": null
+      },
+      "sameName": [
+        {
+          "id": "773f7c38-a37b-4f84-b60c-db0b8f656d07",
+          "variant": null,
+          "market": "global",
+          "status": "draft"
+        }
+      ],
+      "disposition": "existing_id_requires_identity_review",
+      "sourceRead": "Official AU HTML re-read 2026-11-28; product header and feature text matched; catalogue identity pending"
+    },
+    {
+      "brand": "Kubota",
+      "model": "M7040",
+      "variant": "4WD / ROPS / V3307-DI / 8F8R",
+      "market": "Philippines",
+      "packet": "catalog-oem-evidence-20261128.json",
+      "fields": 40,
+      "existingDraftId": "1ed827e4-0f57-4f9a-be45-9d7ffb49542b",
+      "matched": {
+        "model": "M7040",
+        "variant": null,
+        "market": "global",
+        "status": "draft",
+        "year": null
+      },
+      "sameName": [
+        {
+          "id": "1ed827e4-0f57-4f9a-be45-9d7ffb49542b",
+          "variant": null,
+          "market": "global",
+          "status": "draft"
+        }
+      ],
+      "disposition": "existing_id_requires_identity_review",
+      "sourceRead": "Official Philippines HTML re-read 2026-11-28; technical table matched; catalogue admission pending"
+    },
+    {
+      "brand": "Kubota",
+      "model": "M6-141 Utility",
+      "variant": "Stage V / V6108-TIE5",
+      "market": "Türkiye",
+      "packet": "catalog-oem-evidence-20261128.json",
+      "fields": 9,
+      "existingDraftId": "43bb24a3-9cb0-4e06-8583-5c5fb9e15619",
+      "matched": {
+        "model": "M6-141",
+        "variant": null,
+        "market": "global",
+        "status": "draft",
+        "year": null
+      },
+      "sameName": [],
+      "disposition": "existing_id_requires_identity_review",
+      "sourceRead": null
+    },
+    {
+      "brand": "Tümosan",
+      "model": "8165",
+      "variant": "8100 series / Stage IIIA / 4WD cab / 12F/12R",
+      "market": "Türkiye",
+      "packet": "catalog-tumosan-evidence-20261128.json",
+      "fields": 19,
+      "existingDraftId": null,
+      "matched": null,
+      "sameName": [
+        {
+          "id": "acd7b4a1-311c-4836-90d1-94e175578e6e",
+          "variant": "Stage V · 4WD · 12F/12R · kabin",
+          "market": "Türkiye",
+          "status": "draft"
+        }
+      ],
+      "disposition": "same_name_requires_variant_review",
+      "sourceRead": null
+    },
+    {
+      "brand": "Tümosan",
+      "model": "8175",
+      "variant": "8100 series / Stage IIIA / 4WD cab / 12F/12R",
+      "market": "Türkiye",
+      "packet": "catalog-tumosan-evidence-20261128.json",
+      "fields": 19,
+      "existingDraftId": null,
+      "matched": null,
+      "sameName": [
+        {
+          "id": "2ff304db-1925-40df-a15a-3c3d49c66c08",
+          "variant": "Stage V · 4WD · 12F/12R · kabin",
+          "market": "Türkiye",
+          "status": "draft"
+        }
+      ],
+      "disposition": "same_name_requires_variant_review",
+      "sourceRead": null
+    },
+    {
+      "brand": "Tümosan",
+      "model": "8185",
+      "variant": "8100 series / Stage IIIA / 4WD cab / 12F/12R",
+      "market": "Türkiye",
+      "packet": "catalog-tumosan-evidence-20261128.json",
+      "fields": 19,
+      "existingDraftId": null,
+      "matched": null,
+      "sameName": [
+        {
+          "id": "d3e4a84c-249e-4dde-aa89-2f71a6ca529f",
+          "variant": "Stage V · 4WD · 12F/12R · kabin",
+          "market": "Türkiye",
+          "status": "draft"
+        }
+      ],
+      "disposition": "same_name_requires_variant_review",
+      "sourceRead": null
+    },
+    {
+      "brand": "Tümosan",
+      "model": "8195",
+      "variant": "8100 series / Stage IIIA / 4WD cab / 12F/12R",
+      "market": "Türkiye",
+      "packet": "catalog-tumosan-evidence-20261128.json",
+      "fields": 19,
+      "existingDraftId": null,
+      "matched": null,
+      "sameName": [
+        {
+          "id": "ff05cb89-38fa-476d-a2b5-6f1f56a7c117",
+          "variant": "Stage V · 4WD · 12F/12R · kabin",
+          "market": "Türkiye",
+          "status": "draft"
+        }
+      ],
+      "disposition": "same_name_requires_variant_review",
+      "sourceRead": null
+    },
+    {
+      "brand": "Tümosan",
+      "model": "8105",
+      "variant": "8100 series / Stage IIIA / 4WD cab / 12F/12R",
+      "market": "Türkiye",
+      "packet": "catalog-tumosan-evidence-20261128.json",
+      "fields": 19,
+      "existingDraftId": null,
+      "matched": null,
+      "sameName": [
+        {
+          "id": "87bdfddf-5a6e-495e-a659-4ed882d2af81",
+          "variant": "Stage V · 4WD · 12F/12R · kabin",
+          "market": "Türkiye",
+          "status": "draft"
+        }
+      ],
+      "disposition": "same_name_requires_variant_review",
+      "sourceRead": null
+    },
+    {
+      "brand": "Tümosan",
+      "model": "8170",
+      "variant": "8100 series / Stage IIIA / 4WD cab / 16F/16R",
+      "market": "Türkiye",
+      "packet": "catalog-tumosan-evidence-20261128.json",
+      "fields": 19,
+      "existingDraftId": null,
+      "matched": null,
+      "sameName": [],
+      "disposition": "new_name_candidate",
+      "sourceRead": null
+    },
+    {
+      "brand": "Tümosan",
+      "model": "8180",
+      "variant": "8100 series / Stage IIIA / 4WD cab / 16F/16R",
+      "market": "Türkiye",
+      "packet": "catalog-tumosan-evidence-20261128.json",
+      "fields": 19,
+      "existingDraftId": null,
+      "matched": null,
+      "sameName": [],
+      "disposition": "new_name_candidate",
+      "sourceRead": null
+    },
+    {
+      "brand": "Tümosan",
+      "model": "8190",
+      "variant": "8100 series / Stage IIIA / 4WD cab / 16F/16R",
+      "market": "Türkiye",
+      "packet": "catalog-tumosan-evidence-20261128.json",
+      "fields": 19,
+      "existingDraftId": null,
+      "matched": null,
+      "sameName": [],
+      "disposition": "new_name_candidate",
+      "sourceRead": null
+    },
+    {
+      "brand": "Tümosan",
+      "model": "8100",
+      "variant": "8100 series / Stage IIIA / 4WD cab / 16F/16R",
+      "market": "Türkiye",
+      "packet": "catalog-tumosan-evidence-20261128.json",
+      "fields": 19,
+      "existingDraftId": null,
+      "matched": null,
+      "sameName": [],
+      "disposition": "new_name_candidate",
+      "sourceRead": null
+    },
+    {
+      "brand": "Tümosan",
+      "model": "8110",
+      "variant": "8100 series / Stage IIIA / 4WD cab / 16F/16R",
+      "market": "Türkiye",
+      "packet": "catalog-tumosan-evidence-20261128.json",
+      "fields": 19,
+      "existingDraftId": null,
+      "matched": null,
+      "sameName": [],
+      "disposition": "new_name_candidate",
+      "sourceRead": null
+    },
+    {
+      "brand": "Tümosan",
+      "model": "81.100",
+      "variant": "81 Premium / Stage IIIA / 4WD cab / 16F16R PowerShuttle",
+      "market": "Türkiye",
+      "packet": "catalog-tumosan-evidence-20261128.json",
+      "fields": 15,
+      "existingDraftId": null,
+      "matched": null,
+      "sameName": [
+        {
+          "id": "fad03255-7690-4a3c-8c05-5e5990e83f52",
+          "variant": "Stage V · 4WD · 16F/16R PS · kabin",
+          "market": "Türkiye",
+          "status": "draft"
+        }
+      ],
+      "disposition": "same_name_requires_variant_review",
+      "sourceRead": null
+    },
+    {
+      "brand": "Tümosan",
+      "model": "81.110",
+      "variant": "81 Premium / Stage IIIA / 4WD cab / 16F16R PowerShuttle",
+      "market": "Türkiye",
+      "packet": "catalog-tumosan-evidence-20261128.json",
+      "fields": 15,
+      "existingDraftId": null,
+      "matched": null,
+      "sameName": [
+        {
+          "id": "0c781747-5aac-48cd-a747-5274e7308475",
+          "variant": "Stage V · 4WD · 16F/16R PS · kabin",
+          "market": "Türkiye",
+          "status": "draft"
+        }
+      ],
+      "disposition": "same_name_requires_variant_review",
+      "sourceRead": null
+    },
+    {
+      "brand": "Tümosan",
+      "model": "90.85",
+      "variant": "90 Retro / Stage V / 4WD / 24F24R Hi-Lo / cab",
+      "market": "Türkiye",
+      "packet": "catalog-tumosan-evidence-20261128.json",
+      "fields": 16,
+      "existingDraftId": "cb46907e-d5e9-42f9-9505-11b4f04d2395",
+      "matched": {
+        "model": "90.85",
+        "variant": "90 Retro · Stage V · 4WD · 24F/24R · kabin",
+        "market": "Türkiye",
+        "status": "draft",
+        "year": 2026
+      },
+      "sameName": [
+        {
+          "id": "cb46907e-d5e9-42f9-9505-11b4f04d2395",
+          "variant": "90 Retro · Stage V · 4WD · 24F/24R · kabin",
+          "market": "Türkiye",
+          "status": "draft"
+        }
+      ],
+      "disposition": "existing_id_requires_identity_review",
+      "sourceRead": null
+    },
+    {
+      "brand": "Tümosan",
+      "model": "90.95",
+      "variant": "90 Retro / Stage V / 4WD / 24F24R Hi-Lo / cab",
+      "market": "Türkiye",
+      "packet": "catalog-tumosan-evidence-20261128.json",
+      "fields": 16,
+      "existingDraftId": "42b39ef3-a3f7-45bd-977c-39a2774a1cf2",
+      "matched": {
+        "model": "90.95",
+        "variant": "90 Retro · Stage V · 4WD · 24F/24R · kabin",
+        "market": "Türkiye",
+        "status": "draft",
+        "year": 2026
+      },
+      "sameName": [
+        {
+          "id": "42b39ef3-a3f7-45bd-977c-39a2774a1cf2",
+          "variant": "90 Retro · Stage V · 4WD · 24F/24R · kabin",
+          "market": "Türkiye",
+          "status": "draft"
+        }
+      ],
+      "disposition": "existing_id_requires_identity_review",
+      "sourceRead": null
+    },
+    {
+      "brand": "Tümosan",
+      "model": "90.105",
+      "variant": "90 Retro / Stage V / 4WD / 24F24R Hi-Lo / cab",
+      "market": "Türkiye",
+      "packet": "catalog-tumosan-evidence-20261128.json",
+      "fields": 16,
+      "existingDraftId": "35cba890-c710-47e1-ba62-63821a8d1af6",
+      "matched": {
+        "model": "90.105",
+        "variant": "90 Retro · Stage V · 4WD · 24F/24R · kabin",
+        "market": "Türkiye",
+        "status": "draft",
+        "year": 2026
+      },
+      "sameName": [
+        {
+          "id": "35cba890-c710-47e1-ba62-63821a8d1af6",
+          "variant": "90 Retro · Stage V · 4WD · 24F/24R · kabin",
+          "market": "Türkiye",
+          "status": "draft"
+        }
+      ],
+      "disposition": "existing_id_requires_identity_review",
+      "sourceRead": null
+    },
+    {
+      "brand": "Tümosan",
+      "model": "90.115",
+      "variant": "90 Retro / Stage V / 4WD / 24F24R Hi-Lo / cab",
+      "market": "Türkiye",
+      "packet": "catalog-tumosan-evidence-20261128.json",
+      "fields": 16,
+      "existingDraftId": "28a6d6a7-9548-4a51-8130-a4ef63a037de",
+      "matched": {
+        "model": "90.115",
+        "variant": "90 Retro · Stage V · 4WD · 24F/24R · kabin",
+        "market": "Türkiye",
+        "status": "draft",
+        "year": 2026
+      },
+      "sameName": [
+        {
+          "id": "28a6d6a7-9548-4a51-8130-a4ef63a037de",
+          "variant": "90 Retro · Stage V · 4WD · 24F/24R · kabin",
+          "market": "Türkiye",
+          "status": "draft"
+        }
+      ],
+      "disposition": "existing_id_requires_identity_review",
+      "sourceRead": null
+    },
+    {
+      "brand": "Tümosan",
+      "model": "5255S",
+      "variant": "Stage V / 4WD / 8F8R / ROPS",
+      "market": "Türkiye",
+      "packet": "catalog-tumosan-evidence-20261128.json",
+      "fields": 24,
+      "existingDraftId": "684e0de7-d70e-4b2f-8a6f-0a6f6803a3dc",
+      "matched": {
+        "model": "5255S",
+        "variant": "Stage V · 4WD · 8F/8R · ROPS",
+        "market": "Türkiye",
+        "status": "draft",
+        "year": 2026
+      },
+      "sameName": [
+        {
+          "id": "684e0de7-d70e-4b2f-8a6f-0a6f6803a3dc",
+          "variant": "Stage V · 4WD · 8F/8R · ROPS",
+          "market": "Türkiye",
+          "status": "draft"
+        }
+      ],
+      "disposition": "existing_id_requires_identity_review",
+      "sourceRead": null
+    },
+    {
+      "brand": "Tümosan",
+      "model": "5265S",
+      "variant": "Stage V / 4WD / 8F8R / ROPS",
+      "market": "Türkiye",
+      "packet": "catalog-tumosan-evidence-20261128.json",
+      "fields": 24,
+      "existingDraftId": "a4483ce8-62c0-4a7f-b0e0-7730a525fd6e",
+      "matched": {
+        "model": "5265S",
+        "variant": "Stage V · 4WD · 8F/8R · ROPS",
+        "market": "Türkiye",
+        "status": "draft",
+        "year": 2026
+      },
+      "sameName": [
+        {
+          "id": "a4483ce8-62c0-4a7f-b0e0-7730a525fd6e",
+          "variant": "Stage V · 4WD · 8F/8R · ROPS",
+          "market": "Türkiye",
+          "status": "draft"
+        }
+      ],
+      "disposition": "existing_id_requires_identity_review",
+      "sourceRead": null
+    },
+    {
+      "brand": "Tümosan",
+      "model": "5255N",
+      "variant": "Stage V / 4WD / 8F8R / ROPS",
+      "market": "Türkiye",
+      "packet": "catalog-tumosan-evidence-20261128.json",
+      "fields": 24,
+      "existingDraftId": "48e03139-0aa6-43e2-9943-8c8c2d446fbb",
+      "matched": {
+        "model": "5255N",
+        "variant": "Stage V · 4WD · 8F/8R · ROPS",
+        "market": "Türkiye",
+        "status": "draft",
+        "year": 2026
+      },
+      "sameName": [
+        {
+          "id": "48e03139-0aa6-43e2-9943-8c8c2d446fbb",
+          "variant": "Stage V · 4WD · 8F/8R · ROPS",
+          "market": "Türkiye",
+          "status": "draft"
+        }
+      ],
+      "disposition": "existing_id_requires_identity_review",
+      "sourceRead": null
+    },
+    {
+      "brand": "Tümosan",
+      "model": "5265N",
+      "variant": "Stage V / 4WD / 8F8R / ROPS",
+      "market": "Türkiye",
+      "packet": "catalog-tumosan-evidence-20261128.json",
+      "fields": 24,
+      "existingDraftId": "87fac145-fd21-46c8-9608-b27d48a8ebb8",
+      "matched": {
+        "model": "5265N",
+        "variant": "Stage V · 4WD · 8F/8R · ROPS",
+        "market": "Türkiye",
+        "status": "draft",
+        "year": 2026
+      },
+      "sameName": [
+        {
+          "id": "87fac145-fd21-46c8-9608-b27d48a8ebb8",
+          "variant": "Stage V · 4WD · 8F/8R · ROPS",
+          "market": "Türkiye",
+          "status": "draft"
+        }
+      ],
+      "disposition": "existing_id_requires_identity_review",
+      "sourceRead": null
+    },
+    {
+      "brand": "Tümosan",
+      "model": "6055",
+      "variant": "Stage V / 4WD / 8F8R / cab",
+      "market": "Türkiye",
+      "packet": "catalog-tumosan-evidence-20261128.json",
+      "fields": 24,
+      "existingDraftId": "31765e18-8d13-4409-8bda-46493834043d",
+      "matched": {
+        "model": "6055",
+        "variant": "Stage V · 4WD · 8F/8R · kabin",
+        "market": "Türkiye",
+        "status": "draft",
+        "year": 2026
+      },
+      "sameName": [
+        {
+          "id": "31765e18-8d13-4409-8bda-46493834043d",
+          "variant": "Stage V · 4WD · 8F/8R · kabin",
+          "market": "Türkiye",
+          "status": "draft"
+        },
+        {
+          "id": "c4fecd51-d287-4f5b-9fdf-55fcf07233ff",
+          "variant": "Stage V · 4WD · 8F/8R · ROPS",
+          "market": "Türkiye",
+          "status": "draft"
+        }
+      ],
+      "disposition": "existing_id_requires_identity_review",
+      "sourceRead": null
+    },
+    {
+      "brand": "Tümosan",
+      "model": "6055",
+      "variant": "Stage V / 4WD / 8F8R / ROPS",
+      "market": "Türkiye",
+      "packet": "catalog-tumosan-evidence-20261128.json",
+      "fields": 23,
+      "existingDraftId": "c4fecd51-d287-4f5b-9fdf-55fcf07233ff",
+      "matched": {
+        "model": "6055",
+        "variant": "Stage V · 4WD · 8F/8R · ROPS",
+        "market": "Türkiye",
+        "status": "draft",
+        "year": 2026
+      },
+      "sameName": [
+        {
+          "id": "31765e18-8d13-4409-8bda-46493834043d",
+          "variant": "Stage V · 4WD · 8F/8R · kabin",
+          "market": "Türkiye",
+          "status": "draft"
+        },
+        {
+          "id": "c4fecd51-d287-4f5b-9fdf-55fcf07233ff",
+          "variant": "Stage V · 4WD · 8F/8R · ROPS",
+          "market": "Türkiye",
+          "status": "draft"
+        }
+      ],
+      "disposition": "existing_id_requires_identity_review",
+      "sourceRead": null
+    },
+    {
+      "brand": "Tümosan",
+      "model": "6065",
+      "variant": "Stage V / 4WD / 8F8R / cab",
+      "market": "Türkiye",
+      "packet": "catalog-tumosan-evidence-20261128.json",
+      "fields": 24,
+      "existingDraftId": "d9c568da-4870-4990-9771-a3ebccaa5c59",
+      "matched": {
+        "model": "6065",
+        "variant": "Stage V · 4WD · 8F/8R · kabin",
+        "market": "Türkiye",
+        "status": "draft",
+        "year": 2026
+      },
+      "sameName": [
+        {
+          "id": "d9c568da-4870-4990-9771-a3ebccaa5c59",
+          "variant": "Stage V · 4WD · 8F/8R · kabin",
+          "market": "Türkiye",
+          "status": "draft"
+        },
+        {
+          "id": "67847b6f-cfd3-4b72-939d-057729079bb4",
+          "variant": "Stage V · 4WD · 8F/8R · ROPS",
+          "market": "Türkiye",
+          "status": "draft"
+        }
+      ],
+      "disposition": "existing_id_requires_identity_review",
+      "sourceRead": null
+    },
+    {
+      "brand": "Tümosan",
+      "model": "6065",
+      "variant": "Stage V / 4WD / 8F8R / ROPS",
+      "market": "Türkiye",
+      "packet": "catalog-tumosan-evidence-20261128.json",
+      "fields": 23,
+      "existingDraftId": "67847b6f-cfd3-4b72-939d-057729079bb4",
+      "matched": {
+        "model": "6065",
+        "variant": "Stage V · 4WD · 8F/8R · ROPS",
+        "market": "Türkiye",
+        "status": "draft",
+        "year": 2026
+      },
+      "sameName": [
+        {
+          "id": "d9c568da-4870-4990-9771-a3ebccaa5c59",
+          "variant": "Stage V · 4WD · 8F/8R · kabin",
+          "market": "Türkiye",
+          "status": "draft"
+        },
+        {
+          "id": "67847b6f-cfd3-4b72-939d-057729079bb4",
+          "variant": "Stage V · 4WD · 8F/8R · ROPS",
+          "market": "Türkiye",
+          "status": "draft"
+        }
+      ],
+      "disposition": "existing_id_requires_identity_review",
+      "sourceRead": null
+    },
+    {
+      "brand": "Tümosan",
+      "model": "4050",
+      "variant": "Stage V / 2WD / 8F2R / ROPS",
+      "market": "Türkiye",
+      "packet": "catalog-tumosan-evidence-20261128.json",
+      "fields": 20,
+      "existingDraftId": "413a3284-c235-456a-aa67-e0fd5e20f434",
+      "matched": {
+        "model": "4050",
+        "variant": "Stage V · 2WD · 8F/2R · ROPS",
+        "market": "Türkiye",
+        "status": "draft",
+        "year": 2026
+      },
+      "sameName": [
+        {
+          "id": "413a3284-c235-456a-aa67-e0fd5e20f434",
+          "variant": "Stage V · 2WD · 8F/2R · ROPS",
+          "market": "Türkiye",
+          "status": "draft"
+        },
+        {
+          "id": "a5b53e21-9d9e-478e-ae6b-99a7131512e2",
+          "variant": "Stage V · 4WD · 8F/2R · ROPS",
+          "market": "Türkiye",
+          "status": "draft"
+        }
+      ],
+      "disposition": "existing_id_requires_identity_review",
+      "sourceRead": null
+    },
+    {
+      "brand": "Tümosan",
+      "model": "4050",
+      "variant": "Stage V / 4WD / 8F2R / ROPS",
+      "market": "Türkiye",
+      "packet": "catalog-tumosan-evidence-20261128.json",
+      "fields": 20,
+      "existingDraftId": "a5b53e21-9d9e-478e-ae6b-99a7131512e2",
+      "matched": {
+        "model": "4050",
+        "variant": "Stage V · 4WD · 8F/2R · ROPS",
+        "market": "Türkiye",
+        "status": "draft",
+        "year": 2026
+      },
+      "sameName": [
+        {
+          "id": "413a3284-c235-456a-aa67-e0fd5e20f434",
+          "variant": "Stage V · 2WD · 8F/2R · ROPS",
+          "market": "Türkiye",
+          "status": "draft"
+        },
+        {
+          "id": "a5b53e21-9d9e-478e-ae6b-99a7131512e2",
+          "variant": "Stage V · 4WD · 8F/2R · ROPS",
+          "market": "Türkiye",
+          "status": "draft"
+        }
+      ],
+      "disposition": "existing_id_requires_identity_review",
+      "sourceRead": null
+    },
+    {
+      "brand": "Tümosan",
+      "model": "4250",
+      "variant": "Stage V / 2WD / 8F2R / ROPS",
+      "market": "Türkiye",
+      "packet": "catalog-tumosan-evidence-20261128.json",
+      "fields": 20,
+      "existingDraftId": "e87e1038-5979-468a-a87c-61d23b50a5b8",
+      "matched": {
+        "model": "4250",
+        "variant": "Stage V · 2WD · 8F/2R · ROPS",
+        "market": "Türkiye",
+        "status": "draft",
+        "year": 2026
+      },
+      "sameName": [
+        {
+          "id": "e87e1038-5979-468a-a87c-61d23b50a5b8",
+          "variant": "Stage V · 2WD · 8F/2R · ROPS",
+          "market": "Türkiye",
+          "status": "draft"
+        },
+        {
+          "id": "8f38b8ea-0f20-44ab-8f91-77717b2c4b04",
+          "variant": "Stage V · 4WD · 8F/2R · ROPS",
+          "market": "Türkiye",
+          "status": "draft"
+        }
+      ],
+      "disposition": "existing_id_requires_identity_review",
+      "sourceRead": null
+    },
+    {
+      "brand": "Tümosan",
+      "model": "4250",
+      "variant": "Stage V / 4WD / 8F2R / ROPS",
+      "market": "Türkiye",
+      "packet": "catalog-tumosan-evidence-20261128.json",
+      "fields": 20,
+      "existingDraftId": "8f38b8ea-0f20-44ab-8f91-77717b2c4b04",
+      "matched": {
+        "model": "4250",
+        "variant": "Stage V · 4WD · 8F/2R · ROPS",
+        "market": "Türkiye",
+        "status": "draft",
+        "year": 2026
+      },
+      "sameName": [
+        {
+          "id": "e87e1038-5979-468a-a87c-61d23b50a5b8",
+          "variant": "Stage V · 2WD · 8F/2R · ROPS",
+          "market": "Türkiye",
+          "status": "draft"
+        },
+        {
+          "id": "8f38b8ea-0f20-44ab-8f91-77717b2c4b04",
+          "variant": "Stage V · 4WD · 8F/2R · ROPS",
+          "market": "Türkiye",
+          "status": "draft"
+        }
+      ],
+      "disposition": "existing_id_requires_identity_review",
+      "sourceRead": null
+    },
+    {
+      "brand": "Tümosan",
+      "model": "81.100 Evo",
+      "variant": "Stage V / PowerShift 30F15R",
+      "market": "Türkiye",
+      "packet": "catalog-tumosan-evidence-20261128.json",
+      "fields": 6,
+      "existingDraftId": null,
+      "matched": null,
+      "sameName": [],
+      "disposition": "new_name_candidate",
+      "sourceRead": null
+    },
+    {
+      "brand": "Erkunt",
+      "model": "Kısmet 50 E-T",
+      "variant": "CRD5 eCapra / 4WD / platform / 8F8R",
+      "market": "Türkiye",
+      "packet": "catalog-erkunt-hattat-evidence-20261128.json",
+      "fields": 31,
+      "existingDraftId": "f9d42c83-43f4-4f7d-9556-63a4ee2d5d8f",
+      "matched": {
+        "model": "Kısmet 50 E-T",
+        "variant": "CRD5 eCapra · 4WD · platform · 8F/8R",
+        "market": "Türkiye",
+        "status": "draft",
+        "year": null
+      },
+      "sameName": [
+        {
+          "id": "f9d42c83-43f4-4f7d-9556-63a4ee2d5d8f",
+          "variant": "CRD5 eCapra · 4WD · platform · 8F/8R",
+          "market": "Türkiye",
+          "status": "draft"
+        }
+      ],
+      "disposition": "existing_id_requires_identity_review",
+      "sourceRead": "indexed PDF text; page screenshot unavailable"
+    },
+    {
+      "brand": "Erkunt",
+      "model": "Kısmet 55 E-T",
+      "variant": "CRD5 eCapra / 4WD / platform / 8F8R",
+      "market": "Türkiye",
+      "packet": "catalog-erkunt-hattat-evidence-20261128.json",
+      "fields": 31,
+      "existingDraftId": "024497b4-79b3-4c15-b9dc-c1897635b5a1",
+      "matched": {
+        "model": "Kısmet 55 E-T",
+        "variant": "CRD5 eCapra · 4WD · platform · 8F/8R",
+        "market": "Türkiye",
+        "status": "draft",
+        "year": null
+      },
+      "sameName": [
+        {
+          "id": "024497b4-79b3-4c15-b9dc-c1897635b5a1",
+          "variant": "CRD5 eCapra · 4WD · platform · 8F/8R",
+          "market": "Türkiye",
+          "status": "draft"
+        }
+      ],
+      "disposition": "existing_id_requires_identity_review",
+      "sourceRead": "indexed PDF text; page screenshot unavailable"
+    },
+    {
+      "brand": "Erkunt",
+      "model": "Kısmet 58 E",
+      "variant": "CRD5 eCapra / 4WD / cab / 8F8R",
+      "market": "Türkiye",
+      "packet": "catalog-erkunt-hattat-evidence-20261128.json",
+      "fields": 32,
+      "existingDraftId": "d288f9c8-d360-48af-858a-175e3e1a3b40",
+      "matched": {
+        "model": "Kısmet 58 E",
+        "variant": "CRD5 eCapra · 4WD · kabin · 8F/8R",
+        "market": "Türkiye",
+        "status": "draft",
+        "year": null
+      },
+      "sameName": [
+        {
+          "id": "d288f9c8-d360-48af-858a-175e3e1a3b40",
+          "variant": "CRD5 eCapra · 4WD · kabin · 8F/8R",
+          "market": "Türkiye",
+          "status": "draft"
+        }
+      ],
+      "disposition": "existing_id_requires_identity_review",
+      "sourceRead": "indexed PDF text; page screenshot unavailable"
+    },
+    {
+      "brand": "Erkunt",
+      "model": "Kısmet 50 E-B",
+      "variant": "CRD5 eCapra / 4WD / front ROPS / platform (identity pending) / 8F8R",
+      "market": "Türkiye",
+      "packet": "catalog-erkunt-hattat-evidence-20261128.json",
+      "fields": 31,
+      "existingDraftId": null,
+      "matched": null,
+      "sameName": [],
+      "disposition": "new_name_candidate",
+      "sourceRead": "indexed PDF text; page screenshot unavailable"
+    },
+    {
+      "brand": "Erkunt",
+      "model": "Kısmet 55 E-B",
+      "variant": "CRD5 eCapra / 4WD / front ROPS / platform (identity pending) / 8F8R",
+      "market": "Türkiye",
+      "packet": "catalog-erkunt-hattat-evidence-20261128.json",
+      "fields": 31,
+      "existingDraftId": "fb29666c-1e9d-4073-a33b-29b4ad750896",
+      "matched": {
+        "model": "Kısmet 55 E-B",
+        "variant": "CRD5 eCapra · 4WD · platform · 8F/8R",
+        "market": "Türkiye",
+        "status": "draft",
+        "year": null
+      },
+      "sameName": [
+        {
+          "id": "fb29666c-1e9d-4073-a33b-29b4ad750896",
+          "variant": "CRD5 eCapra · 4WD · platform · 8F/8R",
+          "market": "Türkiye",
+          "status": "draft"
+        }
+      ],
+      "disposition": "existing_id_requires_identity_review",
+      "sourceRead": "indexed PDF text; page screenshot unavailable"
+    },
+    {
+      "brand": "Erkunt",
+      "model": "Bereket 65 Meyveci",
+      "variant": "CRD5 eCapra / 4WD / platform / 16F8R",
+      "market": "Türkiye",
+      "packet": "catalog-erkunt-hattat-evidence-20261128.json",
+      "fields": 32,
+      "existingDraftId": "0eb2d7ea-8cfe-4a80-ab4d-febb3042b48c",
+      "matched": {
+        "model": "Bereket 65 Meyveci",
+        "variant": "CRD5 eCapra · 4WD · ROPS · 16F/8R",
+        "market": "Türkiye",
+        "status": "draft",
+        "year": null
+      },
+      "sameName": [
+        {
+          "id": "0eb2d7ea-8cfe-4a80-ab4d-febb3042b48c",
+          "variant": "CRD5 eCapra · 4WD · ROPS · 16F/8R",
+          "market": "Türkiye",
+          "status": "draft"
+        }
+      ],
+      "disposition": "existing_id_requires_identity_review",
+      "sourceRead": "indexed PDF text; page screenshot unavailable"
+    },
+    {
+      "brand": "Erkunt",
+      "model": "Nimet 70 Meyveci",
+      "variant": "CRD5 eCapra / 4WD / platform / 16F8R",
+      "market": "Türkiye",
+      "packet": "catalog-erkunt-hattat-evidence-20261128.json",
+      "fields": 32,
+      "existingDraftId": "98cb2b11-2ea8-4642-83bc-5c3faa0c4f6a",
+      "matched": {
+        "model": "Nimet 70 Meyveci",
+        "variant": "CRD5 eCapra · 4WD · ROPS · 16F/8R",
+        "market": "Türkiye",
+        "status": "draft",
+        "year": null
+      },
+      "sameName": [
+        {
+          "id": "98cb2b11-2ea8-4642-83bc-5c3faa0c4f6a",
+          "variant": "CRD5 eCapra · 4WD · ROPS · 16F/8R",
+          "market": "Türkiye",
+          "status": "draft"
+        }
+      ],
+      "disposition": "existing_id_requires_identity_review",
+      "sourceRead": "indexed PDF text; page screenshot unavailable"
+    },
+    {
+      "brand": "Erkunt",
+      "model": "Servet 80.4 Meyveci",
+      "variant": "CRD5 eCapra / 4WD / platform / 16F8R",
+      "market": "Türkiye",
+      "packet": "catalog-erkunt-hattat-evidence-20261128.json",
+      "fields": 32,
+      "existingDraftId": "34e90acd-b163-424f-b76b-61835250e3cc",
+      "matched": {
+        "model": "Servet 80.4 Meyveci",
+        "variant": "CRD5 eCapra · 4WD · ROPS · 16F/8R",
+        "market": "Türkiye",
+        "status": "draft",
+        "year": null
+      },
+      "sameName": [
+        {
+          "id": "34e90acd-b163-424f-b76b-61835250e3cc",
+          "variant": "CRD5 eCapra · 4WD · ROPS · 16F/8R",
+          "market": "Türkiye",
+          "status": "draft"
+        }
+      ],
+      "disposition": "existing_id_requires_identity_review",
+      "sourceRead": "indexed PDF text; page screenshot unavailable"
+    },
+    {
+      "brand": "Erkunt",
+      "model": "Kıymet 95 Meyveci Lüks",
+      "variant": "CRD5 eCapra / 4WD / platform / 16F16R",
+      "market": "Türkiye",
+      "packet": "catalog-erkunt-hattat-evidence-20261128.json",
+      "fields": 32,
+      "existingDraftId": null,
+      "matched": null,
+      "sameName": [
+        {
+          "id": "94996f14-ccd8-440b-87cd-b8a9cdf3a911",
+          "variant": "CRD5 Deutz · 4WD · ROPS · 16F/16R",
+          "market": "Türkiye",
+          "status": "draft"
+        }
+      ],
+      "disposition": "same_name_requires_variant_review",
+      "sourceRead": "indexed PDF text; page screenshot unavailable"
+    },
+    {
+      "brand": "Erkunt",
+      "model": "Servet 80.4 Meyveci",
+      "variant": "CRD5 Deutz / 4WD / front ROPS / 16F8R",
+      "market": "Türkiye",
+      "packet": "catalog-erkunt-hattat-evidence-20261128.json",
+      "fields": 19,
+      "existingDraftId": null,
+      "matched": null,
+      "sameName": [
+        {
+          "id": "34e90acd-b163-424f-b76b-61835250e3cc",
+          "variant": "CRD5 eCapra · 4WD · ROPS · 16F/8R",
+          "market": "Türkiye",
+          "status": "draft"
+        }
+      ],
+      "disposition": "same_name_requires_variant_review",
+      "sourceRead": "indexed PDF text; page screenshot unavailable"
+    },
+    {
+      "brand": "Erkunt",
+      "model": "Kıymet 95 Meyveci Lüks",
+      "variant": "CRD5 Deutz / 4WD / front ROPS / 16F16R",
+      "market": "Türkiye",
+      "packet": "catalog-erkunt-hattat-evidence-20261128.json",
+      "fields": 19,
+      "existingDraftId": "94996f14-ccd8-440b-87cd-b8a9cdf3a911",
+      "matched": {
+        "model": "Kıymet 95 Meyveci Lüks",
+        "variant": "CRD5 Deutz · 4WD · ROPS · 16F/16R",
+        "market": "Türkiye",
+        "status": "draft",
+        "year": null
+      },
+      "sameName": [
+        {
+          "id": "94996f14-ccd8-440b-87cd-b8a9cdf3a911",
+          "variant": "CRD5 Deutz · 4WD · ROPS · 16F/16R",
+          "market": "Türkiye",
+          "status": "draft"
+        }
+      ],
+      "disposition": "existing_id_requires_identity_review",
+      "sourceRead": "indexed PDF text; page screenshot unavailable"
+    },
+    {
+      "brand": "Erkunt",
+      "model": "Kudret 100 Lüks",
+      "variant": "CRD5 eCapra / 4WD cab / 16F16R",
+      "market": "Türkiye",
+      "packet": "catalog-erkunt-hattat-evidence-20261128.json",
+      "fields": 18,
+      "existingDraftId": "25dc608f-66ad-401b-b9be-2387d1d443b9",
+      "matched": {
+        "model": "Kudret 100 Lüks",
+        "variant": "CRD5 eCapra · 4WD · kabin · 16F/16R",
+        "market": "Türkiye",
+        "status": "draft",
+        "year": null
+      },
+      "sameName": [
+        {
+          "id": "25dc608f-66ad-401b-b9be-2387d1d443b9",
+          "variant": "CRD5 eCapra · 4WD · kabin · 16F/16R",
+          "market": "Türkiye",
+          "status": "draft"
+        }
+      ],
+      "disposition": "existing_id_requires_identity_review",
+      "sourceRead": "indexed PDF text; page screenshot unavailable"
+    },
+    {
+      "brand": "Erkunt",
+      "model": "Haşmet 110 Lüks",
+      "variant": "CRD5 eCapra / 4WD cab / 16F16R",
+      "market": "Türkiye",
+      "packet": "catalog-erkunt-hattat-evidence-20261128.json",
+      "fields": 18,
+      "existingDraftId": "3ad7b2b4-6472-417e-a961-162d4ff56c3b",
+      "matched": {
+        "model": "Haşmet 110 Lüks",
+        "variant": "CRD5 eCapra · 4WD · kabin · 16F/16R",
+        "market": "Türkiye",
+        "status": "draft",
+        "year": null
+      },
+      "sameName": [
+        {
+          "id": "3ad7b2b4-6472-417e-a961-162d4ff56c3b",
+          "variant": "CRD5 eCapra · 4WD · kabin · 16F/16R",
+          "market": "Türkiye",
+          "status": "draft"
+        }
+      ],
+      "disposition": "existing_id_requires_identity_review",
+      "sourceRead": "indexed PDF text; page screenshot unavailable"
+    },
+    {
+      "brand": "Erkunt",
+      "model": "Kudret 100 Lüks",
+      "variant": "CRD5 Deutz / 4WD cab / 16F16R",
+      "market": "Türkiye",
+      "packet": "catalog-erkunt-hattat-evidence-20261128.json",
+      "fields": 28,
+      "existingDraftId": null,
+      "matched": null,
+      "sameName": [
+        {
+          "id": "25dc608f-66ad-401b-b9be-2387d1d443b9",
+          "variant": "CRD5 eCapra · 4WD · kabin · 16F/16R",
+          "market": "Türkiye",
+          "status": "draft"
+        }
+      ],
+      "disposition": "same_name_requires_variant_review",
+      "sourceRead": "indexed PDF text; page screenshot unavailable"
+    },
+    {
+      "brand": "Erkunt",
+      "model": "Haşmet 110 Lüks",
+      "variant": "CRD5 Deutz / 4WD cab / 16F16R",
+      "market": "Türkiye",
+      "packet": "catalog-erkunt-hattat-evidence-20261128.json",
+      "fields": 28,
+      "existingDraftId": null,
+      "matched": null,
+      "sameName": [
+        {
+          "id": "3ad7b2b4-6472-417e-a961-162d4ff56c3b",
+          "variant": "CRD5 eCapra · 4WD · kabin · 16F/16R",
+          "market": "Türkiye",
+          "status": "draft"
+        }
+      ],
+      "disposition": "same_name_requires_variant_review",
+      "sourceRead": "indexed PDF text; page screenshot unavailable"
+    },
+    {
+      "brand": "Erkunt",
+      "model": "Hasret 125 Lüks",
+      "variant": "CRD5 Deutz / 4WD cab / 16F16R",
+      "market": "Türkiye",
+      "packet": "catalog-erkunt-hattat-evidence-20261128.json",
+      "fields": 28,
+      "existingDraftId": "5b8f6398-3f41-430c-abc7-5a444278295a",
+      "matched": {
+        "model": "Hasret 125 Lüks",
+        "variant": "CRD5 Deutz · 4WD · kabin · 16F/16R",
+        "market": "Türkiye",
+        "status": "draft",
+        "year": null
+      },
+      "sameName": [
+        {
+          "id": "5b8f6398-3f41-430c-abc7-5a444278295a",
+          "variant": "CRD5 Deutz · 4WD · kabin · 16F/16R",
+          "market": "Türkiye",
+          "status": "draft"
+        }
+      ],
+      "disposition": "existing_id_requires_identity_review",
+      "sourceRead": "indexed PDF text; page screenshot unavailable"
+    },
+    {
+      "brand": "Hattat",
+      "model": "240 G",
+      "variant": "Stage V / Bahçe / 2WD / 12F12R",
+      "market": "Türkiye",
+      "packet": "catalog-erkunt-hattat-evidence-20261128.json",
+      "fields": 23,
+      "existingDraftId": null,
+      "matched": null,
+      "sameName": [
+        {
+          "id": "8b5a25ee-f8e4-4dde-826a-11a8f97c989c",
+          "variant": "Stage V",
+          "market": "Türkiye",
+          "status": "draft"
+        }
+      ],
+      "disposition": "same_name_requires_variant_review",
+      "sourceRead": "indexed PDF text; page screenshot unavailable"
+    },
+    {
+      "brand": "Hattat",
+      "model": "240 G",
+      "variant": "Stage V / Bahçe / 4WD / 12F12R",
+      "market": "Türkiye",
+      "packet": "catalog-erkunt-hattat-evidence-20261128.json",
+      "fields": 23,
+      "existingDraftId": null,
+      "matched": null,
+      "sameName": [
+        {
+          "id": "8b5a25ee-f8e4-4dde-826a-11a8f97c989c",
+          "variant": "Stage V",
+          "market": "Türkiye",
+          "status": "draft"
+        }
+      ],
+      "disposition": "same_name_requires_variant_review",
+      "sourceRead": "indexed PDF text; page screenshot unavailable"
+    },
+    {
+      "brand": "Hattat",
+      "model": "240 G",
+      "variant": "Stage V / Tarla / 2WD / 12F12R",
+      "market": "Türkiye",
+      "packet": "catalog-erkunt-hattat-evidence-20261128.json",
+      "fields": 23,
+      "existingDraftId": null,
+      "matched": null,
+      "sameName": [
+        {
+          "id": "8b5a25ee-f8e4-4dde-826a-11a8f97c989c",
+          "variant": "Stage V",
+          "market": "Türkiye",
+          "status": "draft"
+        }
+      ],
+      "disposition": "same_name_requires_variant_review",
+      "sourceRead": "indexed PDF text; page screenshot unavailable"
+    },
+    {
+      "brand": "Hattat",
+      "model": "240 G",
+      "variant": "Stage V / Tarla / 4WD / 12F12R",
+      "market": "Türkiye",
+      "packet": "catalog-erkunt-hattat-evidence-20261128.json",
+      "fields": 23,
+      "existingDraftId": null,
+      "matched": null,
+      "sameName": [
+        {
+          "id": "8b5a25ee-f8e4-4dde-826a-11a8f97c989c",
+          "variant": "Stage V",
+          "market": "Türkiye",
+          "status": "draft"
+        }
+      ],
+      "disposition": "same_name_requires_variant_review",
+      "sourceRead": "indexed PDF text; page screenshot unavailable"
+    },
+    {
+      "brand": "Hattat",
+      "model": "T4075",
+      "variant": "Stage V / 4WD / 12F12R (station identity pending)",
+      "market": "Türkiye",
+      "packet": "catalog-hattat-c-t-evidence-20261128.json",
+      "fields": 36,
+      "existingDraftId": "e46ffc0e-ef95-460f-a75d-dbf31ef0f22b",
+      "matched": {
+        "model": "T4075",
+        "variant": "Stage V · 4WD · kabin · 12F/12R",
+        "market": "Türkiye",
+        "status": "draft",
+        "year": null
+      },
+      "sameName": [
+        {
+          "id": "e46ffc0e-ef95-460f-a75d-dbf31ef0f22b",
+          "variant": "Stage V · 4WD · kabin · 12F/12R",
+          "market": "Türkiye",
+          "status": "draft"
+        }
+      ],
+      "disposition": "existing_id_requires_identity_review",
+      "sourceRead": "indexed PDF table; original screenshot unavailable"
+    },
+    {
+      "brand": "Hattat",
+      "model": "T4085",
+      "variant": "Stage V / 4WD / 12F12R (station identity pending)",
+      "market": "Türkiye",
+      "packet": "catalog-hattat-c-t-evidence-20261128.json",
+      "fields": 36,
+      "existingDraftId": "4db13914-8f21-46e9-aaed-d6df9e7ea8ff",
+      "matched": {
+        "model": "T4085",
+        "variant": "Stage V · 4WD · kabin · 12F/12R",
+        "market": "Türkiye",
+        "status": "draft",
+        "year": null
+      },
+      "sameName": [
+        {
+          "id": "4db13914-8f21-46e9-aaed-d6df9e7ea8ff",
+          "variant": "Stage V · 4WD · kabin · 12F/12R",
+          "market": "Türkiye",
+          "status": "draft"
+        }
+      ],
+      "disposition": "existing_id_requires_identity_review",
+      "sourceRead": "indexed PDF table; original screenshot unavailable"
+    },
+    {
+      "brand": "Hattat",
+      "model": "T4095",
+      "variant": "Stage V / 4WD / 24F24R (station identity pending)",
+      "market": "Türkiye",
+      "packet": "catalog-hattat-c-t-evidence-20261128.json",
+      "fields": 36,
+      "existingDraftId": "42a91e8e-558f-4464-81ce-97f3d98c2bd2",
+      "matched": {
+        "model": "T4095",
+        "variant": "Stage V · 4WD · kabin · 24F/24R",
+        "market": "Türkiye",
+        "status": "draft",
+        "year": null
+      },
+      "sameName": [
+        {
+          "id": "42a91e8e-558f-4464-81ce-97f3d98c2bd2",
+          "variant": "Stage V · 4WD · kabin · 24F/24R",
+          "market": "Türkiye",
+          "status": "draft"
+        }
+      ],
+      "disposition": "existing_id_requires_identity_review",
+      "sourceRead": "indexed PDF table; original screenshot unavailable"
+    },
+    {
+      "brand": "Hattat",
+      "model": "T4105",
+      "variant": "Stage V / 4WD / 24F24R (station identity pending)",
+      "market": "Türkiye",
+      "packet": "catalog-hattat-c-t-evidence-20261128.json",
+      "fields": 36,
+      "existingDraftId": "211b1462-4d6d-4b07-bb94-1384083ab29b",
+      "matched": {
+        "model": "T4105",
+        "variant": "Stage V · 4WD · kabin · 24F/24R",
+        "market": "Türkiye",
+        "status": "draft",
+        "year": null
+      },
+      "sameName": [
+        {
+          "id": "211b1462-4d6d-4b07-bb94-1384083ab29b",
+          "variant": "Stage V · 4WD · kabin · 24F/24R",
+          "market": "Türkiye",
+          "status": "draft"
+        }
+      ],
+      "disposition": "existing_id_requires_identity_review",
+      "sourceRead": "indexed PDF table; original screenshot unavailable"
+    },
+    {
+      "brand": "Hattat",
+      "model": "T4115",
+      "variant": "Stage V / 4WD / 24F24R semi-automatic (station identity pending)",
+      "market": "Türkiye",
+      "packet": "catalog-hattat-c-t-evidence-20261128.json",
+      "fields": 38,
+      "existingDraftId": "bb209c0d-3550-4d29-b6e4-16d3322e950d",
+      "matched": {
+        "model": "T4115",
+        "variant": "Stage V",
+        "market": "Türkiye",
+        "status": "draft",
+        "year": null
+      },
+      "sameName": [
+        {
+          "id": "bb209c0d-3550-4d29-b6e4-16d3322e950d",
+          "variant": "Stage V",
+          "market": "Türkiye",
+          "status": "draft"
+        }
+      ],
+      "disposition": "existing_id_requires_identity_review",
+      "sourceRead": "indexed PDF table; original screenshot unavailable"
+    },
+    {
+      "brand": "Hattat",
+      "model": "T4125",
+      "variant": "Stage V / 4WD / 24F24R semi-automatic (station identity pending)",
+      "market": "Türkiye",
+      "packet": "catalog-hattat-c-t-evidence-20261128.json",
+      "fields": 38,
+      "existingDraftId": "26e12514-ff8a-4919-8a42-a6c405d048aa",
+      "matched": {
+        "model": "T4125",
+        "variant": "Stage V",
+        "market": "Türkiye",
+        "status": "draft",
+        "year": null
+      },
+      "sameName": [
+        {
+          "id": "26e12514-ff8a-4919-8a42-a6c405d048aa",
+          "variant": "Stage V",
+          "market": "Türkiye",
+          "status": "draft"
+        }
+      ],
+      "disposition": "existing_id_requires_identity_review",
+      "sourceRead": "indexed PDF table; original screenshot unavailable"
+    },
+    {
+      "brand": "Hattat",
+      "model": "C 3055",
+      "variant": "Stage V / 4WD / rear ROPS / 12F12R",
+      "market": "Türkiye",
+      "packet": "catalog-hattat-c-t-evidence-20261128.json",
+      "fields": 35,
+      "existingDraftId": "994ecfc2-22c2-49b1-806b-1aeff50e201b",
+      "matched": {
+        "model": "C 3055",
+        "variant": "Stage V · 4WD · ROPS · 12F/12R",
+        "market": "Türkiye",
+        "status": "draft",
+        "year": null
+      },
+      "sameName": [
+        {
+          "id": "ca2013d3-4f6d-4e25-9bf7-42b7cdc10b5c",
+          "variant": "Stage V · 4WD · kabin · 12F/12R",
+          "market": "Türkiye",
+          "status": "draft"
+        },
+        {
+          "id": "994ecfc2-22c2-49b1-806b-1aeff50e201b",
+          "variant": "Stage V · 4WD · ROPS · 12F/12R",
+          "market": "Türkiye",
+          "status": "draft"
+        }
+      ],
+      "disposition": "existing_id_requires_identity_review",
+      "sourceRead": "indexed PDF table; original screenshot unavailable"
+    },
+    {
+      "brand": "Hattat",
+      "model": "C 3055",
+      "variant": "Stage V / 4WD / cab / 12F12R",
+      "market": "Türkiye",
+      "packet": "catalog-hattat-c-t-evidence-20261128.json",
+      "fields": 35,
+      "existingDraftId": "ca2013d3-4f6d-4e25-9bf7-42b7cdc10b5c",
+      "matched": {
+        "model": "C 3055",
+        "variant": "Stage V · 4WD · kabin · 12F/12R",
+        "market": "Türkiye",
+        "status": "draft",
+        "year": null
+      },
+      "sameName": [
+        {
+          "id": "ca2013d3-4f6d-4e25-9bf7-42b7cdc10b5c",
+          "variant": "Stage V · 4WD · kabin · 12F/12R",
+          "market": "Türkiye",
+          "status": "draft"
+        },
+        {
+          "id": "994ecfc2-22c2-49b1-806b-1aeff50e201b",
+          "variant": "Stage V · 4WD · ROPS · 12F/12R",
+          "market": "Türkiye",
+          "status": "draft"
+        }
+      ],
+      "disposition": "existing_id_requires_identity_review",
+      "sourceRead": "indexed PDF table; original screenshot unavailable"
+    },
+    {
+      "brand": "Hattat",
+      "model": "C 3065",
+      "variant": "Stage V / 4WD / rear ROPS / 12F12R",
+      "market": "Türkiye",
+      "packet": "catalog-hattat-c-t-evidence-20261128.json",
+      "fields": 35,
+      "existingDraftId": "5a8e4d85-8c67-4d0e-b84a-0ac07c56475a",
+      "matched": {
+        "model": "C 3065",
+        "variant": "Stage V · 4WD · ROPS · 12F/12R",
+        "market": "Türkiye",
+        "status": "draft",
+        "year": null
+      },
+      "sameName": [
+        {
+          "id": "ebfc3bce-6943-4c0b-974b-4ddb63228a94",
+          "variant": "Stage V · 4WD · kabin · 12F/12R",
+          "market": "Türkiye",
+          "status": "draft"
+        },
+        {
+          "id": "5a8e4d85-8c67-4d0e-b84a-0ac07c56475a",
+          "variant": "Stage V · 4WD · ROPS · 12F/12R",
+          "market": "Türkiye",
+          "status": "draft"
+        }
+      ],
+      "disposition": "existing_id_requires_identity_review",
+      "sourceRead": "indexed PDF table; original screenshot unavailable"
+    },
+    {
+      "brand": "Hattat",
+      "model": "C 3065",
+      "variant": "Stage V / 4WD / cab / 12F12R",
+      "market": "Türkiye",
+      "packet": "catalog-hattat-c-t-evidence-20261128.json",
+      "fields": 35,
+      "existingDraftId": "ebfc3bce-6943-4c0b-974b-4ddb63228a94",
+      "matched": {
+        "model": "C 3065",
+        "variant": "Stage V · 4WD · kabin · 12F/12R",
+        "market": "Türkiye",
+        "status": "draft",
+        "year": null
+      },
+      "sameName": [
+        {
+          "id": "ebfc3bce-6943-4c0b-974b-4ddb63228a94",
+          "variant": "Stage V · 4WD · kabin · 12F/12R",
+          "market": "Türkiye",
+          "status": "draft"
+        },
+        {
+          "id": "5a8e4d85-8c67-4d0e-b84a-0ac07c56475a",
+          "variant": "Stage V · 4WD · ROPS · 12F/12R",
+          "market": "Türkiye",
+          "status": "draft"
+        }
+      ],
+      "disposition": "existing_id_requires_identity_review",
+      "sourceRead": "indexed PDF table; original screenshot unavailable"
+    },
+    {
+      "brand": "Hattat",
+      "model": "C 3085",
+      "variant": "Stage V / 4WD / rear ROPS / 12F12R",
+      "market": "Türkiye",
+      "packet": "catalog-hattat-c-t-evidence-20261128.json",
+      "fields": 35,
+      "existingDraftId": "ce94a369-87d1-46ae-84e7-de9d9ab744c1",
+      "matched": {
+        "model": "C 3085",
+        "variant": "Stage V · 4WD · ROPS · 12F/12R",
+        "market": "Türkiye",
+        "status": "draft",
+        "year": null
+      },
+      "sameName": [
+        {
+          "id": "82197f04-30b5-43d8-8073-f78eefa0bffe",
+          "variant": "Stage V · 4WD · kabin · 12F/12R",
+          "market": "Türkiye",
+          "status": "draft"
+        },
+        {
+          "id": "ce94a369-87d1-46ae-84e7-de9d9ab744c1",
+          "variant": "Stage V · 4WD · ROPS · 12F/12R",
+          "market": "Türkiye",
+          "status": "draft"
+        }
+      ],
+      "disposition": "existing_id_requires_identity_review",
+      "sourceRead": "indexed PDF table; original screenshot unavailable"
+    },
+    {
+      "brand": "Hattat",
+      "model": "C 3085",
+      "variant": "Stage V / 4WD / cab / 12F12R",
+      "market": "Türkiye",
+      "packet": "catalog-hattat-c-t-evidence-20261128.json",
+      "fields": 35,
+      "existingDraftId": "82197f04-30b5-43d8-8073-f78eefa0bffe",
+      "matched": {
+        "model": "C 3085",
+        "variant": "Stage V · 4WD · kabin · 12F/12R",
+        "market": "Türkiye",
+        "status": "draft",
+        "year": null
+      },
+      "sameName": [
+        {
+          "id": "82197f04-30b5-43d8-8073-f78eefa0bffe",
+          "variant": "Stage V · 4WD · kabin · 12F/12R",
+          "market": "Türkiye",
+          "status": "draft"
+        },
+        {
+          "id": "ce94a369-87d1-46ae-84e7-de9d9ab744c1",
+          "variant": "Stage V · 4WD · ROPS · 12F/12R",
+          "market": "Türkiye",
+          "status": "draft"
+        }
+      ],
+      "disposition": "existing_id_requires_identity_review",
+      "sourceRead": "indexed PDF table; original screenshot unavailable"
+    },
+    {
+      "brand": "Erkunt",
+      "model": "Nimet 75 E+",
+      "variant": "CRD5 Deutz / 4WD cab / 24F24R",
+      "market": "Türkiye",
+      "packet": "catalog-erkunt-deutz-eplus-evidence-20261128.json",
+      "fields": 32,
+      "existingDraftId": null,
+      "matched": null,
+      "sameName": [
+        {
+          "id": "39be175c-7003-4cd8-9a7f-eaebc4801468",
+          "variant": "CRD5 eCapra · 4WD · kabin · 24F/24R",
+          "market": "Türkiye",
+          "status": "published"
+        }
+      ],
+      "disposition": "same_name_requires_variant_review",
+      "sourceRead": "PDF text retrieved; screenshot failed"
+    },
+    {
+      "brand": "Erkunt",
+      "model": "Kıymet 90 E+",
+      "variant": "CRD5 Deutz / 4WD cab / 24F24R",
+      "market": "Türkiye",
+      "packet": "catalog-erkunt-deutz-eplus-evidence-20261128.json",
+      "fields": 33,
+      "existingDraftId": null,
+      "matched": null,
+      "sameName": [
+        {
+          "id": "705d9291-e4e1-4f7f-9945-fac6509667ea",
+          "variant": "CRD5 eCapra · 4WD · kabin · 24F/24R",
+          "market": "Türkiye",
+          "status": "draft"
+        }
+      ],
+      "disposition": "same_name_requires_variant_review",
+      "sourceRead": "PDF text retrieved; screenshot failed"
+    },
+    {
+      "brand": "Erkunt",
+      "model": "Kudret 105 E+",
+      "variant": "CRD5 Deutz / 4WD cab / 24F24R",
+      "market": "Türkiye",
+      "packet": "catalog-erkunt-deutz-eplus-evidence-20261128.json",
+      "fields": 33,
+      "existingDraftId": null,
+      "matched": null,
+      "sameName": [
+        {
+          "id": "14e8a37e-3ac7-44a2-9c0f-190fed98b331",
+          "variant": "CRD5 eCapra · 4WD · kabin · 24F/24R",
+          "market": "Türkiye",
+          "status": "draft"
+        }
+      ],
+      "disposition": "same_name_requires_variant_review",
+      "sourceRead": "PDF text retrieved; screenshot failed"
+    },
+    {
+      "brand": "Case IH",
+      "model": "Puma 150X",
+      "variant": "Stage V / semi-automatic 18F6R",
+      "market": "Türkiye",
+      "packet": "catalog-caseih-claas-evidence-20261128.json",
+      "fields": 38,
+      "existingDraftId": null,
+      "matched": null,
+      "sameName": [],
+      "disposition": "new_name_candidate",
+      "sourceRead": "Official manufacturer HTML technical table read 2026-11-28; catalogue identity and canonical admission pending"
+    },
+    {
+      "brand": "Case IH",
+      "model": "Puma 150",
+      "variant": "Stage V / semi-automatic 19F6R (full automatic option)",
+      "market": "Türkiye",
+      "packet": "catalog-caseih-claas-evidence-20261128.json",
+      "fields": 39,
+      "existingDraftId": "dd9a91f5-5da4-4de7-b91b-c62a70102b2e",
+      "matched": {
+        "model": "Puma 150",
+        "variant": null,
+        "market": "global",
+        "status": "draft",
+        "year": null
+      },
+      "sameName": [
+        {
+          "id": "dd9a91f5-5da4-4de7-b91b-c62a70102b2e",
+          "variant": null,
+          "market": "global",
+          "status": "draft"
+        }
+      ],
+      "disposition": "existing_id_requires_identity_review",
+      "sourceRead": "Official manufacturer HTML technical table read 2026-11-28; catalogue identity and canonical admission pending"
+    },
+    {
+      "brand": "Case IH",
+      "model": "Puma 165",
+      "variant": "Stage V / semi-automatic 19F6R (full automatic option)",
+      "market": "Türkiye",
+      "packet": "catalog-caseih-claas-evidence-20261128.json",
+      "fields": 39,
+      "existingDraftId": null,
+      "matched": null,
+      "sameName": [],
+      "disposition": "new_name_candidate",
+      "sourceRead": "Official manufacturer HTML technical table read 2026-11-28; catalogue identity and canonical admission pending"
+    },
+    {
+      "brand": "Case IH",
+      "model": "Puma 185",
+      "variant": "Stage V / full automatic 19F6R",
+      "market": "Türkiye",
+      "packet": "catalog-caseih-claas-evidence-20261128.json",
+      "fields": 40,
+      "existingDraftId": null,
+      "matched": null,
+      "sameName": [],
+      "disposition": "new_name_candidate",
+      "sourceRead": "Official manufacturer HTML technical table read 2026-11-28; catalogue identity and canonical admission pending"
+    },
+    {
+      "brand": "Case IH",
+      "model": "Puma 185 CVX AFSC",
+      "variant": "Stage V / CVX AFSC",
+      "market": "Türkiye",
+      "packet": "catalog-caseih-claas-evidence-20261128.json",
+      "fields": 38,
+      "existingDraftId": null,
+      "matched": null,
+      "sameName": [],
+      "disposition": "new_name_candidate",
+      "sourceRead": "Official manufacturer HTML technical table read 2026-11-28; catalogue identity and canonical admission pending"
+    },
+    {
+      "brand": "Case IH",
+      "model": "Puma 200",
+      "variant": "Stage V / full automatic 19F6R",
+      "market": "Türkiye",
+      "packet": "catalog-caseih-claas-evidence-20261128.json",
+      "fields": 40,
+      "existingDraftId": null,
+      "matched": null,
+      "sameName": [],
+      "disposition": "new_name_candidate",
+      "sourceRead": "Official manufacturer HTML technical table read 2026-11-28; catalogue identity and canonical admission pending"
+    },
+    {
+      "brand": "Case IH",
+      "model": "Puma 200 CVX AFSC",
+      "variant": "Stage V / CVX AFSC",
+      "market": "Türkiye",
+      "packet": "catalog-caseih-claas-evidence-20261128.json",
+      "fields": 38,
+      "existingDraftId": null,
+      "matched": null,
+      "sameName": [],
+      "disposition": "new_name_candidate",
+      "sourceRead": "Official manufacturer HTML technical table read 2026-11-28; catalogue identity and canonical admission pending"
+    },
+    {
+      "brand": "Case IH",
+      "model": "Puma 220",
+      "variant": "Stage V / full automatic 19F6R",
+      "market": "Türkiye",
+      "packet": "catalog-caseih-claas-evidence-20261128.json",
+      "fields": 40,
+      "existingDraftId": null,
+      "matched": null,
+      "sameName": [],
+      "disposition": "new_name_candidate",
+      "sourceRead": "Official manufacturer HTML technical table read 2026-11-28; catalogue identity and canonical admission pending"
+    },
+    {
+      "brand": "Case IH",
+      "model": "Puma 220 CVX AFSC",
+      "variant": "Stage V / CVX AFSC",
+      "market": "Türkiye",
+      "packet": "catalog-caseih-claas-evidence-20261128.json",
+      "fields": 38,
+      "existingDraftId": null,
+      "matched": null,
+      "sameName": [],
+      "disposition": "new_name_candidate",
+      "sourceRead": "Official manufacturer HTML technical table read 2026-11-28; catalogue identity and canonical admission pending"
+    },
+    {
+      "brand": "Case IH",
+      "model": "Puma 240 CVX AFSC",
+      "variant": "Stage V / CVX AFSC",
+      "market": "Türkiye",
+      "packet": "catalog-caseih-claas-evidence-20261128.json",
+      "fields": 38,
+      "existingDraftId": null,
+      "matched": null,
+      "sameName": [],
+      "disposition": "new_name_candidate",
+      "sourceRead": "Official manufacturer HTML technical table read 2026-11-28; catalogue identity and canonical admission pending"
+    },
+    {
+      "brand": "Case IH",
+      "model": "Puma 260 CVX AFSC",
+      "variant": "Stage V / CVX AFSC",
+      "market": "Türkiye",
+      "packet": "catalog-caseih-claas-evidence-20261128.json",
+      "fields": 36,
+      "existingDraftId": null,
+      "matched": null,
+      "sameName": [],
+      "disposition": "new_name_candidate",
+      "sourceRead": "Official manufacturer HTML technical table read 2026-11-28; catalogue identity and canonical admission pending"
+    },
+    {
+      "brand": "CLAAS",
+      "model": "Axion 870",
+      "variant": "CMATIC",
+      "market": "Türkiye",
+      "packet": "catalog-caseih-claas-evidence-20261128.json",
+      "fields": 7,
+      "existingDraftId": "d916534e-ac35-469c-9adf-73581ef762ed",
+      "matched": {
+        "model": "Axion 870",
+        "variant": null,
+        "market": "global",
+        "status": "draft",
+        "year": null
+      },
+      "sameName": [
+        {
+          "id": "d916534e-ac35-469c-9adf-73581ef762ed",
+          "variant": null,
+          "market": "global",
+          "status": "draft"
+        }
+      ],
+      "disposition": "existing_id_requires_identity_review",
+      "sourceRead": "Official manufacturer HTML technical table read 2026-11-28; catalogue identity and canonical admission pending"
+    },
+    {
+      "brand": "CLAAS",
+      "model": "Axion 850",
+      "variant": "CMATIC",
+      "market": "Türkiye",
+      "packet": "catalog-caseih-claas-evidence-20261128.json",
+      "fields": 7,
+      "existingDraftId": null,
+      "matched": null,
+      "sameName": [],
+      "disposition": "new_name_candidate",
+      "sourceRead": "Official manufacturer HTML technical table read 2026-11-28; catalogue identity and canonical admission pending"
+    },
+    {
+      "brand": "CLAAS",
+      "model": "Axion 830",
+      "variant": "CMATIC",
+      "market": "Türkiye",
+      "packet": "catalog-caseih-claas-evidence-20261128.json",
+      "fields": 7,
+      "existingDraftId": null,
+      "matched": null,
+      "sameName": [],
+      "disposition": "new_name_candidate",
+      "sourceRead": "Official manufacturer HTML technical table read 2026-11-28; catalogue identity and canonical admission pending"
+    },
+    {
+      "brand": "CLAAS",
+      "model": "Axion 810",
+      "variant": "CMATIC",
+      "market": "Türkiye",
+      "packet": "catalog-caseih-claas-evidence-20261128.json",
+      "fields": 7,
+      "existingDraftId": null,
+      "matched": null,
+      "sameName": [],
+      "disposition": "new_name_candidate",
+      "sourceRead": "Official manufacturer HTML technical table read 2026-11-28; catalogue identity and canonical admission pending"
+    }
+  ],
+  "allowedToPublish": false
+}
