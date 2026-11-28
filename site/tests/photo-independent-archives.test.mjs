@@ -1,0 +1,12 @@
+import test from 'node:test';import assert from 'node:assert/strict';
+import {buildArchiveURL,archiveLeads,retryAfter,discover} from '../scripts/photo-independent-archives.mjs';
+import {emptyQueueState} from '../scripts/photo-provider-queue-draft.mjs';
+const id='00000000-0000-4000-8000-000000000001';
+const target={brand:'Valtra',model:'A115',tractorIds:[id]};
+const coverage={missing:1,missing_models:[{brand:target.brand,model:target.model,missingTractorIds:[id]}]};
+test('fixed origin with encoded query',()=>{const u=buildArchiveURL('finna',{brand:'Valtra&foo=1',model:'A115'});assert.equal(u.origin,'https://api.finna.fi');assert.equal(u.searchParams.get('lookfor'),'Valtra&foo=1 A115');assert.equal(u.searchParams.has('foo'),false)});
+test('strict model leads never approve publication',()=>{const leads=archiveLeads('finna',{status:'OK',records:[{id:'abc',title:'Valtra A115'},{id:'wrong',title:'Valtra A110'}]},target);assert.equal(leads.length,1);assert.equal(leads[0].publishable,false)});
+test('rate limited provider does not block second provider',async()=>{const calls=[];const r=await discover(coverage,emptyQueueState(),{now:()=>1000,delay:async()=>{},fetchFn:async u=>{calls.push(u.hostname);return u.hostname==='api.finna.fi'?new Response('',{status:429,headers:{'retry-after':'172800'}}):new Response(JSON.stringify({results:[]}),{headers:{'content-type':'application/json'}})}});assert.deepEqual(calls,['api.finna.fi','www.loc.gov']);assert.equal(r.state.cooldowns[0].until,172801000);assert.equal(r.report.outcomes[1].disposition,'no_match')});
+test('malformed result is retryable, not empty success',async()=>{const r=await discover(coverage,emptyQueueState(),{now:()=>1000,delay:async()=>{},fetchFn:async()=>new Response('{}',{headers:{'content-type':'application/json'}})});assert.ok(r.report.outcomes.every(o=>o.disposition==='retryable'))});
+test('reject arbitrary external loc item URL',()=>{assert.equal(archiveLeads('loc',{results:[{id:'https://example.org/item/x',title:'Valtra A115'}]},target).length,0)});
+test('Retry-After seconds',()=>assert.equal(retryAfter('120',0),120000));

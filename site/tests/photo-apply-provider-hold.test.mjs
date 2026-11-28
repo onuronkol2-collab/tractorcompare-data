@@ -1,0 +1,10 @@
+import {test} from 'node:test';
+import assert from 'node:assert/strict';
+import {applyRecordedHold} from '../scripts/photo-apply-provider-hold.mjs';
+import {initialBudget} from '../scripts/photo-shared-commons-budget.mjs';
+const observedAt=100000000, cooldownUntil=observedAt+86400000;
+const hold={version:1,provider:'commons',reason:'upstream_http_429',observedAt,cooldownUntil};
+test('restored earlier cooldown is extended without consuming reservation',()=>{const state={...initialBudget(),requests:[observedAt-1]};assert.deepEqual(applyRecordedHold(state,hold,observedAt+1),{...state,cooldownUntil});});
+test('longer existing cooldown cannot be shortened',()=>{const state={...initialBudget(),cooldownUntil:cooldownUntil+86400000};assert.deepEqual(applyRecordedHold(state,hold,observedAt+1),state);});
+test('expired hold does not trigger repeated 24h pause',()=>{const state=initialBudget();assert.deepEqual(applyRecordedHold(state,hold,cooldownUntil+1),state);});
+test('reject invalid provider, dates, and backward clock',()=>{for(const bad of [{...hold,provider:'flickr'},{...hold,cooldownUntil:observedAt}, {...hold,observedAt:observedAt+10}])assert.throws(()=>applyRecordedHold(initialBudget(),bad,observedAt+1));});

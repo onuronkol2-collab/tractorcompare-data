@@ -1,47 +1,72 @@
 name: TractorVS batch photo research
 on:
   workflow_dispatch:
-  # Daily 07:15 Europe/Istanbul: one shared Commons brand discovery for historical + all live models.
-  schedule:
-    - cron: "15 4 * * *"
-  # Runs once after this schedule change is merged; CI checks PRs separately.
-  push:
-    branches: [main]
-    paths:
-      - ".github/workflows/batch-photo-research.yml"
+    inputs:
+      mode:
+        description: 'First bootstrap, verify restore, or research (no photo publication)'
+        type: choice
+        options: [bootstrap, restore, research]
+        default: restore
+  # Bootstrap is deliberately manual-first. Re-enable the existing daily
+  # schedule ONLY after a trusted checkpoint has been sealed and a second
+  # manual run has restored it successfully. Do not trigger on merge/push.
+  # schedule:
+  #   - cron: "15 4 * * *"
 permissions:
   contents: read
+  actions: read
 
 concurrency:
-  # All real provider research remains in one serialized lane.
+  # Existing #799 contract: PR validation is a separate workflow.
+  # All real provider research remains in one serialized main-only lane.
   group: tractorvs-all-model-photo-research
   cancel-in-progress: false
 
 jobs:
   research_all_models:
+    if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
-    timeout-minutes: 25
+    timeout-minutes: 35
+    env:
+      TRACTORVS_COMMONS_BUDGET_FILE: research-state/commons-budget.json
+      TRACTORVS_REQUIRE_SHARED_COMMONS_BUDGET: '1'
+      TRACTORVS_SHARED_COMMONS_LANE: '1'
     steps:
       - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
       - uses: actions/setup-node@v4
         with:
           node-version: "22.23.4"
+      - name: Restore latest trusted shared checkpoint
+        id: restore
+        env:
+          GH_TOKEN: ${{ github.token }}
+          BOOTSTRAP: ${{ inputs.mode == 'bootstrap' }}
+        run: bash site/scripts/photo-restore-research-state.sh
+      - name: Apply recorded operator-reviewed Commons cooldown before provider requests
+        id: recorded_hold
+        run: node site/scripts/photo-apply-provider-hold.mjs site/docs/photo-commons-recorded-hold-20261128.json
       - name: Export only model identities from historical tractor archive
+        if: inputs.mode == 'research'
         run: python site/scripts/extract-archived-tractor-inventory.py
       # Acquire live public model identities ONCE. The next step combines this
       # inventory with archival models in brand-batched Commons queries.
       - name: Snapshot public published model identity from live sitemap
         id: inventory
+        if: inputs.mode == 'research'
         continue-on-error: true
         run: node site/scripts/batch-photo-discovery.mjs --inventory-only
       # Preserve the archives and stage outcomes even when a source fails.
       # The final quality gate must still fail on any incomplete research.
       - name: Search licensed candidates for archived AND current models by brand
         id: archive
+        if: inputs.mode == 'research'
         continue-on-error: true
         run: node site/scripts/archive-brand-photo-discovery.mjs
       - name: Cross-check ALL published models against same-run Commons brand evidence
         id: published
+        if: inputs.mode == 'research'
         continue-on-error: true
         run: node site/scripts/batch-photo-discovery.mjs
       # Second independent index, distinct from Wikimedia Commons. No rights
@@ -50,24 +75,98 @@ jobs:
       # report records partial errors without ever changing Commons QA gates.
       - name: Discover independent Flickr and Europeana CC candidates via Openverse (no publishing)
         id: openverse
-        if: steps.inventory.outcome == 'success'
+        if: inputs.mode == 'research' && steps.inventory.outcome == 'success'
         continue-on-error: true
         run: node --experimental-strip-types site/scripts/photo-openverse-independent-batch.mjs
-      - name: Archive copyright and identity research without publishing drafts
-        if: always()
+      - name: Compute exact missing public model identities
+        id: coverage
+        if: inputs.mode == 'research' && steps.restore.outcome == 'success' && steps.inventory.outcome == 'success'
+        continue-on-error: true
+        run: node --experimental-strip-types site/scripts/photo-unified-coverage.mjs photo-discovery-report/published-model-inventory.json photo-discovery-report/coverage.json
+      # Private Commons review packets/originals are deliberately NOT collected in this public
+      # Actions lane until a separate authenticated storage and retrieval path is verified.
+      - name: Independently research Finna and Library of Congress
+        id: independent
+        if: steps.coverage.outcome == 'success'
+        continue-on-error: true
+        run: node site/scripts/photo-independent-archives.mjs photo-discovery-report/coverage.json research-state/independent-state.json photo-discovery-report/independent-archives.json
+      - name: Reject private collector snapshots in public checkpoint
+        id: checkpoint_privacy
+        if: always() && steps.restore.outcome == 'success' && steps.recorded_hold.outcome == 'success'
+        run: |
+          python - <<'PYCODE'
+          import json
+          with open("research-state/commons-collector.json") as f:
+              data = json.load(f)
+          if data.get("files") != {}:
+              raise SystemExit("Private collector checkpoint must remain outside public Actions")
+          PYCODE
+      - name: Seal shared checkpoint
+        id: seal
+        if: always() && steps.checkpoint_privacy.outcome == 'success'
+        run: python site/scripts/photo-research-checkpoint.py seal research-state "$GITHUB_RUN_ID"
+      - name: Retain checkpoint for the next trusted main run
+        id: persist
+        if: always() && steps.seal.outcome == 'success'
+        uses: actions/upload-artifact@v7
+        with:
+          name: tractorvs-shared-photo-state
+          path: |
+            research-state/commons-budget.json
+            research-state/commons-collector.json
+            research-state/independent-state.json
+            research-state/checkpoint.json
+          retention-days: 90
+          if-no-files-found: error
+      - name: Guard public research artifact boundary
+        id: public_guard
+        if: always() && inputs.mode == 'research'
+        run: python site/scripts/photo-public-artifact-guard.py photo-discovery-report
+      - name: Archive public-only source research without publishing drafts
+        id: public_report
+        if: always() && inputs.mode == 'research' && steps.public_guard.outcome == 'success'
         uses: actions/upload-artifact@v7
         with:
           name: tractorvs-all-model-photo-research
-          path: photo-discovery-report
+          path: |
+            photo-discovery-report/archived-tractor-models.json
+            photo-discovery-report/archived-image-candidates.json
+            photo-discovery-report/published-model-inventory.json
+            photo-discovery-report/public-image-candidates.json
+            photo-discovery-report/report.json
+            photo-discovery-report/summary.csv
+            photo-discovery-report/published-photo-coverage.json
+            photo-discovery-report/openverse-independent-provider-review.json
+            photo-discovery-report/coverage.json
+            photo-discovery-report/independent-archives.json
           retention-days: 30
+          if-no-files-found: error
       - name: Fail closed unless both stages and research report are complete
         if: always()
         env:
+          MODE: ${{ inputs.mode }}
           INVENTORY_OUTCOME: ${{ steps.inventory.outcome }}
           ARCHIVE_OUTCOME: ${{ steps.archive.outcome }}
           PUBLISHED_OUTCOME: ${{ steps.published.outcome }}
           OPENVERSE_OUTCOME: ${{ steps.openverse.outcome }}
+          RESTORE_OUTCOME: ${{ steps.restore.outcome }}
+          RECORDED_HOLD_OUTCOME: ${{ steps.recorded_hold.outcome }}
+          COVERAGE_OUTCOME: ${{ steps.coverage.outcome }}
+          INDEPENDENT_OUTCOME: ${{ steps.independent.outcome }}
+          SEAL_OUTCOME: ${{ steps.seal.outcome }}
+          PERSIST_OUTCOME: ${{ steps.persist.outcome }}
+          PUBLIC_GUARD_OUTCOME: ${{ steps.public_guard.outcome }}
+          PUBLIC_REPORT_OUTCOME: ${{ steps.public_report.outcome }}
         run: |
+          test "$RESTORE_OUTCOME" = "success"
+          test "$RECORDED_HOLD_OUTCOME" = "success"
+          test "$SEAL_OUTCOME" = "success"
+          test "$PERSIST_OUTCOME" = "success"
+          case "$MODE" in
+            bootstrap|restore) exit 0 ;;
+            research) ;;
+            *) exit 1 ;;
+          esac
           echo "Live inventory outcome: $INVENTORY_OUTCOME"
           echo "Archive research outcome: $ARCHIVE_OUTCOME"
           echo "Published model research outcome: $PUBLISHED_OUTCOME"
@@ -76,3 +175,8 @@ jobs:
           test "$INVENTORY_OUTCOME" = "success"
           test "$ARCHIVE_OUTCOME" = "success"
           test "$PUBLISHED_OUTCOME" = "success"
+          test "$OPENVERSE_OUTCOME" = "success"
+          test "$COVERAGE_OUTCOME" = "success"
+          test "$INDEPENDENT_OUTCOME" = "success"
+          test "$PUBLIC_GUARD_OUTCOME" = "success"
+          test "$PUBLIC_REPORT_OUTCOME" = "success"

@@ -1,0 +1,10 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {emptyQueueState,planPhotoJobs,recordPhotoOutcome} from '../scripts/photo-provider-queue-draft.mjs';
+const id='00000000-0000-4000-8000-000000000001', id2='00000000-0000-4000-8000-000000000002';
+const coverage={missing:2,missing_models:[{brand:'McCormick',model:'X5.100',missingTractorIds:[id,id2]}]};
+const opts={now:1000000,enabledProviders:['commons','openverse'],budgets:{commons:1,openverse:1}};
+test('one query for multiple missing variants; independent providers',()=>{const p=planPhotoJobs(coverage,emptyQueueState(),opts);assert.equal(p.jobs.length,2);assert.equal(p.jobs[0].tractorIds.length,2);assert.equal(p.publicationAuthorized,false);});
+test('429 pauses only affected provider and honors longer Retry-After',()=>{const s=recordPhotoOutcome(emptyQueueState(),{provider:'commons',tractorIds:[id],disposition:'rate_limited',retryAfterMs:3*86400000},{now:opts.now});const p=planPhotoJobs(coverage,s,opts);assert.deepEqual(p.jobs.map(j=>j.provider),['openverse']);assert.equal(p.providers[0].until,opts.now+3*86400000);});
+test('no-result not same as rate-limit; rejected or candidate-found is held',()=>{const s=recordPhotoOutcome(emptyQueueState(),{provider:'commons',tractorIds:[id],disposition:'rights_rejected',evidenceRef:'review:123'},{now:opts.now});const p=planPhotoJobs(coverage,s,opts);assert.deepEqual(p.jobs[0].tractorIds,[id2]);assert.throws(()=>recordPhotoOutcome(s,{provider:'commons',tractorIds:[id],disposition:'candidate_found',evidenceRef:'review:456'},{now:opts.now}));});
+test('incomplete inventory or unbudgeted provider fails closed',()=>{assert.throws(()=>planPhotoJobs({...coverage,missing:3},emptyQueueState(),opts));assert.throws(()=>planPhotoJobs(coverage,emptyQueueState(),{...opts,enabledProviders:['flickr']}));});
