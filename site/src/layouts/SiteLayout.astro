@@ -262,6 +262,8 @@ const openGraphLocale: Record<Locale, string> = {
       {lang==="en" && Astro.url.pathname==="/" && <LocaleSuggestion />}
       <slot />
     </main>
+    {/* Device-only UI is mounted after hydration, outside the editorial HTML checkpoint. */}
+    <slot name="visitor-tools" />
 
     <footer class="site-footer">
       <div class="container footer-main">

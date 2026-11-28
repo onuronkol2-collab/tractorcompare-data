@@ -1,0 +1,163 @@
+---
+import {localizedPath,type Locale} from "../lib/locales.ts";
+import {researchText} from "../lib/research-i18n.ts";
+interface Props { lang:Locale; mode:"model"|"catalog"|"compare"; modelId?:string; }
+const {lang,mode,modelId}=Astro.props;
+const c=researchText(lang);
+const copy=JSON.stringify(c).replace(/</g,"\\u003c");
+---
+<section id="research-workspace" class="research-workspace" data-mode={mode} data-model-id={modelId}
+  data-compare-path={localizedPath(lang,"/compare/")} aria-labelledby="research-workspace-heading" hidden>
+  <h2 id="research-workspace-heading">{c.title}</h2>
+  <p>{c.local}</p>
+  {mode==="model" ? <div class="research-actions">
+    <button type="button" data-research-favorite aria-pressed="false">{c.favorite}</button>
+    <a href={localizedPath(lang,"/tractors/")+"#research-workspace"}>{c.open} ↗</a>
+  </div> : <>
+    {mode==="compare"&&<button type="button" data-research-save disabled>{c.save}</button>}
+    <details data-research-details>
+    <summary>{c.open}</summary>
+    {mode==="catalog"&&<>
+      <h3>{c.favorites}</h3><ul data-research-list="favorites"></ul>
+      <a data-research-compare-two hidden>{c.compareTwo}</a>
+      <h3>{c.recent}</h3><ul data-research-list="recent"></ul>
+      <button type="button" data-research-clear-recent>{c.clearRecent}</button>
+    </>}
+    <h3>{c.saved}</h3><ul data-research-list="comparisons"></ul>
+    <p>{c.unavailable}</p>
+    <button type="button" data-research-clear>{c.clearAll}</button>
+    </details>
+  </>}
+  <p data-research-status role="status" aria-live="polite"></p>
+  <script type="application/json" data-research-copy set:html={copy}></script>
+</section>
+<script>
+  import {RESEARCH_KEY,readResearch,writeResearch,normalizeResearch,toggleFavorite,rememberModel,
+    saveComparison,removeComparison,availableResearch} from "../lib/research-state.mjs";
+  const root=document.querySelector<HTMLElement>("#research-workspace");
+  const target=root?.dataset.mode==="model"?document.querySelector(".model-compare-action"):
+    root?.dataset.mode==="catalog"?document.querySelector(".catalog-price-filter"):
+    root?.dataset.mode==="compare"?document.querySelector(".tc-table-bar"):null;
+  if(root&&target){
+    // Keep visitor-state controls out of initial editorial HTML; mount them in the normal reading order after hydration.
+    target.insertAdjacentElement(root.dataset.mode==="model"?"afterend":"beforebegin",root);
+    const c=JSON.parse(root.querySelector("[data-research-copy]")?.textContent||"{}") as Record<string,string>;
+    const mode=root.dataset.mode;
+    const modelId=root.dataset.modelId||"";
+    const details=root.querySelector<HTMLDetailsElement>("[data-research-details]");
+    const favorite=root.querySelector<HTMLButtonElement>("[data-research-favorite]");
+    const save=root.querySelector<HTMLButtonElement>("[data-research-save]");
+    const clear=root.querySelector<HTMLButtonElement>("[data-research-clear]");
+    const clearRecent=root.querySelector<HTMLButtonElement>("[data-research-clear-recent]");
+    const compareTwo=root.querySelector<HTMLAnchorElement>("[data-research-compare-two]");
+    const status=root.querySelector<HTMLElement>("[data-research-status]");
+    const left=document.querySelector<HTMLSelectElement>("#tc-left");
+    const right=document.querySelector<HTMLSelectElement>("#tc-right");
+    const share=document.querySelector<HTMLButtonElement>("#tc-share");
+    const models=new Map<string,{name:string;href:string}>();
+    let storage:Storage|undefined;
+    let state=normalizeResearch(null);
+    const message=(text:string)=>{if(status)status.textContent=text;};
+    const unavailable=()=>{
+      storage=undefined;message(c.error);
+      for(const button of root.querySelectorAll<HTMLButtonElement>("button"))button.disabled=true;
+    };
+    for(const card of document.querySelectorAll<HTMLElement>(".tractor-card")){
+      const key=card.querySelector<HTMLElement>("[data-price-for]")?.dataset.priceFor;
+      const link=card.querySelector<HTMLAnchorElement>(".tractor-card-main");
+      const name=card.querySelector("h2")?.textContent;
+      const context=card.querySelector(".tractor-card-meta")?.textContent?.trim();
+      if(key&&link&&name)models.set(key,{name:[name,context].filter(Boolean).join(" · "),href:link.href});
+    }
+    if(left)for(const option of left.options)models.set(option.value,{name:option.text,href:""});
+    const published=new Set(models.keys());
+    const compareHref=(a:string,b?:string,view="all")=>{
+      const p=new URLSearchParams({left:a});
+      if(b)p.set("right",b);
+      if(view!=="all")p.set("view",view);
+      return (root.dataset.comparePath||"/compare/")+"?"+p.toString();
+    };
+    function currentPair(){
+      if(!left||!right||!share||share.disabled||left.value===right.value||
+        !published.has(left.value)||!published.has(right.value))return null;
+      const view=document.querySelector("#tc-different")?.getAttribute("aria-pressed")==="true"?"different":
+        document.querySelector("#tc-shared")?.getAttribute("aria-pressed")==="true"?"shared":"all";
+      return {left:left.value,right:right.value,view};
+    }
+    const makeLink=(name:string,href:string)=>{
+      const a=document.createElement("a");a.textContent=name;a.href=href;return a;
+    };
+    function makeRemove(label:string,action:()=>void){
+      const button=document.createElement("button");button.type="button";button.textContent=c.remove;
+      button.setAttribute("aria-label",c.remove+": "+label);button.addEventListener("click",action);return button;
+    }
+    function list(name:string,items:HTMLLIElement[]){
+      const node=root!.querySelector("[data-research-list='"+name+"']");
+      if(!node)return;
+      if(!items.length){const empty=document.createElement("li");empty.textContent=c.empty;items=[empty];}
+      node.replaceChildren(...items);
+    }
+    function render(){
+      if(favorite){const active=state.favorites.includes(modelId);favorite.textContent=active?c.unfavorite:c.favorite;favorite.setAttribute("aria-pressed",String(active));}
+      const visible=availableResearch(state,published);
+      for(const kind of ["favorites","recent"] as const){
+        if(!root!.querySelector("[data-research-list='"+kind+"']"))continue;
+        const rows=visible[kind].map(id=>{
+          const item=document.createElement("li"), model=models.get(id)!;
+          const compare=makeLink(c.compare,compareHref(id));compare.setAttribute("aria-label",c.compare+": "+model.name);
+          item.append(makeLink(model.name,model.href),compare);
+          if(kind==="favorites")item.append(makeRemove(model.name,()=>mutate(s=>toggleFavorite(s,id))));
+          return item;
+        });
+        list(kind,rows);
+      }
+      if(compareTwo){compareTwo.hidden=visible.favorites.length<2;if(!compareTwo.hidden)compareTwo.href=compareHref(visible.favorites[0],visible.favorites[1]);}
+      if(clearRecent)clearRecent.disabled=!storage||state.recent.length===0;
+      if(clear)clear.disabled=!storage||!(state.recent.length||state.favorites.length||state.comparisons.length);
+      list("comparisons",visible.comparisons.map(pair=>{
+        const item=document.createElement("li");
+        const label=models.get(pair.left)!.name+" ↔ "+models.get(pair.right)!.name;
+        item.append(makeLink(label,compareHref(pair.left,pair.right,pair.view)),makeRemove(label,()=>mutate(s=>removeComparison(s,pair))));
+        return item;
+      }));
+      if(save)save.disabled=!storage||!currentPair();
+    }
+    function mutate(action:(value:typeof state)=>typeof state,announce=true){
+      if(!storage)return;
+      try{state=writeResearch(storage,action(readResearch(storage)));render();if(announce)message(c.done);}
+      catch{unavailable();}
+    }
+    try{storage=window.localStorage;state=readResearch(storage);}
+    catch{unavailable();}
+    root.hidden=false;
+    if(details&&window.location.hash==="#research-workspace"){details.open=true;root.scrollIntoView({block:"start"});}
+    render();
+    if(storage&&mode==="model"&&modelId)mutate(s=>rememberModel(s,modelId),false);
+    favorite?.addEventListener("click",()=>mutate(s=>toggleFavorite(s,modelId)));
+    save?.addEventListener("click",()=>{const pair=currentPair();if(pair){mutate(s=>saveComparison(s,pair));if(details)details.open=true;}});
+    clearRecent?.addEventListener("click",()=>mutate(s=>({...s,recent:[]})));
+    clear?.addEventListener("click",()=>{if(window.confirm(c.confirm))mutate(()=>normalizeResearch(null));});
+    if(save&&share)new MutationObserver(()=>{save.disabled=!storage||!currentPair();}).observe(share,{attributes:true,attributeFilter:["disabled"]});
+    window.addEventListener("storage",event=>{
+      if(!storage||event.storageArea!==storage||(event.key!==RESEARCH_KEY&&event.key!==null))return;
+      try{state=readResearch(storage);render();}catch{unavailable();}
+    });
+  }
+</script>
+<style is:global>
+  .research-workspace{margin:18px 0;padding:18px;border:1px solid #cbdacb;border-radius:12px;background:#f7faf5;color:#203a29;overflow-wrap:anywhere}
+  .research-workspace[hidden],.research-workspace [hidden]{display:none!important}
+  .research-workspace h2{font-size:19px;margin:0 0 6px;color:#203a29}
+  .research-workspace summary{min-height:44px;display:list-item;padding:10px 0;font-weight:700;color:#235d37;cursor:pointer}
+  .research-workspace h3{font-size:15px;margin:14px 0 5px;color:#203a29}
+  .research-workspace p{font-size:14px;margin:6px 0;color:#405b46}
+  .research-workspace ul{margin:0 0 8px;padding:0;list-style:none}
+  .research-workspace li,.research-workspace .research-actions{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+  .research-workspace li{border-top:1px solid #dbe5d9;padding:5px 0}
+  .research-workspace a,.research-workspace button{display:inline-flex;align-items:center;min-height:44px;max-width:100%;font:inherit;font-size:14px;font-weight:700;color:#235d37;text-decoration:underline;text-underline-offset:3px}
+  .research-workspace button{padding:8px 12px;border:1px solid #8cae91;border-radius:8px;background:white;cursor:pointer;text-decoration:none}
+  .research-workspace button[aria-pressed="true"]{background:#dcead9}
+  .research-workspace button:disabled{opacity:.65;cursor:default}
+  .research-workspace :is(button,a,summary):focus-visible{outline:3px solid #ae6d19;outline-offset:2px}
+  @media print{.research-workspace{display:none!important}}
+</style>
