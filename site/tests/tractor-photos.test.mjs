@@ -14,7 +14,7 @@ const tractor=(brand_name,model_name)=>({
   engine:null,transmission:null,drivetrain:null,weight_kg:null,specifications:[]
 });
 test("only exact matching tractor model identity receives a verified photo",()=>{
-  assert.equal(APPROVED_TRACTOR_PHOTOS.length,167);
+  assert.equal(APPROVED_TRACTOR_PHOTOS.length,166);
   assert.equal(tractorPhotos(tractor("Belarus","82.1")).length,4);
   assert.equal(tractorPhotos(tractor("Belarus","80.1")).length,1);
   assert.equal(tractorPhotos(tractor("Belarus","132N")).length,1);
@@ -615,7 +615,7 @@ test("McCormick X5.085 and TYM T6115/T2025P have exact licensed files, source pr
 });
 
 test("historic photo batch is staged with rights and does not create records",()=>{
-  assert.equal(HISTORICAL_LICENSED_PHOTOS.length,152);
+  assert.equal(HISTORICAL_LICENSED_PHOTOS.length,151);
   const all=new Set(HISTORICAL_LICENSED_PHOTOS.map(x=>x.fileId));
   assert.equal(all.size,HISTORICAL_LICENSED_PHOTOS.length,"All historical photo IDs must be unique");
   assert.ok(HISTORICAL_LICENSED_PHOTOS.every(x=>x.configurationExact===false));
@@ -1170,10 +1170,20 @@ test("Lindner two retained front or side photos are UUID-scoped representative i
  assert.equal(tractorPhotos({...tractor("Lindner","Lintrac 95 LS"),tractor_id:"092125c4-ef05-44ac-a2b3-9c653dda01f4"}).length,1);
 });
 
-test("Four salvaged Solis and TYM photos are UUID-scoped representative images with ten-language rights",()=>{
+test("Three retained Solis and TYM photos retain rights; retired rear image stays unavailable",()=>{
  const entries=JSON.parse(readFileSync(new URL("../docs/photo-evidence-solis-tym-four-20261125.json",import.meta.url),"utf8"));
+ const retirement=JSON.parse(readFileSync(new URL("../docs/photo-retirement-tym-t4049-20261128.json",import.meta.url),"utf8"));
  assert.equal(entries.length,4);
- for(const e of entries){
+ const retired=entries.find(e=>e.fileId===retirement.fileId);
+ assert.ok(retired);assert.equal(retired.originalSha256,retirement.originalSha256);assert.equal(retired.tractorId,retirement.tractorId);
+ assert.equal(retirement.reason,"rear_quarter");
+ assert.ok(!APPROVED_TRACTOR_PHOTOS.some(x=>x.fileId===retired.fileId));
+ const retiredTractor={...tractor(retired.brand,retired.model),tractor_id:retired.tractorId};
+ assert.equal(tractorPhotos(retiredTractor).length,0);
+ for(const d of retired.derivatives){assert.ok(!existsSync(new URL("../public/images/tractors/"+d.file,import.meta.url)));assert.equal(resolveApprovedPhotoSource("/images/tractors/"+d.file),null);}
+ for(const locale of LOCALES)assert.ok(!modelStructuredData(retiredTractor,locale,"https://tractorvs.com/")["@graph"].some(x=>x["@type"]==="ImageObject"));
+ const retained=entries.filter(e=>e.fileId!==retirement.fileId);assert.equal(retained.length,3);
+ for(const e of retained){
  const exact={...tractor(e.brand,e.model),tractor_id:e.tractorId};const p=tractorPhotos(exact).find(x=>x.fileId===e.fileId);
  assert.ok(p,e.fileId);assert.equal(p.configurationExact,false);assert.equal(p.resizedDerivative,true);assert.equal(p.licenseName,e.license);assert.equal(p.photographer,e.photographer);assert.equal(decodeURIComponent(p.sourcePage),decodeURIComponent(e.sourcePage));
  for(const other of [{...exact,tractor_id:"00000000-0000-4000-8000-000000000000"},{...exact,model_name:e.model+" WRONG"},{...exact,brand_name:"Other"}])assert.ok(!tractorPhotos(other).some(x=>x.fileId===p.fileId));

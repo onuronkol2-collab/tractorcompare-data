@@ -1,7 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import {readFileSync} from "node:fs";
-import {createHash} from "node:crypto";
+import {readFileSync,existsSync} from "node:fs";
+
 
 const registry=JSON.parse(readFileSync(new URL("../docs/photo-curated-caption-and-alias-candidates-20261122.json",import.meta.url),"utf8"));
 const approvedSource=readFileSync(new URL("../src/lib/tractor-photos.ts",import.meta.url),"utf8")+
@@ -15,8 +15,7 @@ const promotedWithEvidence=new Set([
  "tym-t2025p-t25-marcelx42-2025"
 ]);
 const wave2Proof=JSON.parse(readFileSync(new URL("../docs/photo-import-evidence-mccormick-tym-wave2-20261122.json",import.meta.url),"utf8"));
-// The old research snapshot remains unchanged. One formerly held caption has
-// since received actual source bytes, model-family proof and UUID-only scope.
+// Preserve the old source-byte proof, even when a previously released photo is retired for its angle.
 const recoveredProof=JSON.parse(readFileSync(new URL("../docs/photo-evidence-solis-tym-four-20261125.json",import.meta.url),"utf8"));
 
 
@@ -64,8 +63,10 @@ test("caption research stays fail-closed and only SHA-proven candidates graduate
       assert.ok(p.modelSources.some(value=>new URL(value).href===new URL("/produkt/ciagnik-tym-t495/","https://pronar.pl").href));
       assert.ok(p.modelSources.some(value=>new URL(value).href===new URL("/produkt/t495/","https://eder-tym.de").href));
       assert.match(p.scope,/Model illustration only/);assert.match(p.modelEvidence,/not exact specs/);
-      assert.ok(approvedSource.includes(p.fileId));assert.deepEqual(p.derivatives.map(d=>d.width),[480,960,1920]);
-      for(const d of p.derivatives){const bytes=readFileSync(new URL("../public/images/tractors/"+d.file,import.meta.url));assert.equal(bytes.length,d.bytes);assert.equal(createHash("sha256").update(bytes).digest("hex"),d.sha256);}
+      const retired=JSON.parse(readFileSync(new URL("../docs/photo-retirement-tym-t4049-20261128.json",import.meta.url),"utf8"));
+      assert.equal(retired.fileId,p.fileId);assert.equal(retired.originalSha256,p.originalSha256);assert.equal(retired.reason,"rear_quarter");
+      assert.match(p.modelEvidence,/rear view/);assert.ok(!approvedSource.includes(p.fileId));assert.deepEqual(p.derivatives.map(d=>d.width),[480,960,1920]);
+      for(const d of p.derivatives){assert.match(d.sha256,/^[a-f0-9]{64}$/);assert.ok(d.bytes>0);assert.ok(!existsSync(new URL("../public/images/tractors/"+d.file,import.meta.url)));}
     }else{
       assert.ok(!approvedSource.includes(candidate.fileId),"An unverified/ambiguous candidate was published: "+candidate.fileId);
     }
@@ -102,7 +103,7 @@ test("historical quarantine remains auditable; unresolved near-model or conteste
     assert.equal(lead.evidence.exactModel,false);
     assert.equal(lead.review.publicationAllowed,false);
     assert.ok(typeof lead.review.reason==="string"&&lead.review.reason.length>24);
-    if(lead.fileId!=="tym-t4049-t495sh-marcelx42-2025")assert.ok(!approvedSource.includes(lead.fileId));
+    assert.ok(!approvedSource.includes(lead.fileId));
   }
   assert.match(quarantined.find(x=>x.fileId.startsWith("sonalika")).review.reason,/commercial/i);
   assert.match(quarantined.find(x=>x.fileId.startsWith("tym")).review.reason,/T130/);
