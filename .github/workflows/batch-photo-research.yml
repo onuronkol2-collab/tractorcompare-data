@@ -9,49 +9,16 @@ on:
     branches: [main]
     paths:
       - ".github/workflows/batch-photo-research.yml"
-  pull_request:
-    paths:
-      - ".github/workflows/batch-photo-research.yml"
-      - "site/scripts/batch-photo-discovery.mjs"
-      - "site/scripts/photo-sitemap-fetch.mjs"
-      - "site/scripts/photo-source-response.mjs"
-      - "site/scripts/photo-private-inventory.mjs"
-      - "site/scripts/photo-archive-candidate-index.mjs"
-      - "site/scripts/photo-commons-http.mjs"
-      - "site/scripts/photo-research-model-union.mjs"
-      - "site/scripts/photo-research-quality-gate.mjs"
-      - "site/scripts/photo-exact-coverage-gate.mjs"
-      - "site/scripts/extract-archived-tractor-inventory.py"
-      - "site/scripts/archive-brand-photo-discovery.mjs"
-      - "site/scripts/photo-model-identity.mjs"
-      - "site/scripts/photo-license-check.mjs"
-      - "site/scripts/photo-openverse-independent-batch.mjs"
-      - "site/scripts/photo-model-aliases.mjs"
-      - "site/tests/photo-*.test.mjs"
-      - "site/tests/fixtures/photo-offline-fetch.mjs"
 permissions:
   contents: read
 
 concurrency:
-  # Pull-request tests must not queue behind the long daily live research.
-  # Main pushes, schedules and manual runs remain in one research lane.
-  group: ${{ github.event_name == 'pull_request' && github.ref || 'tractorvs-all-model-photo-research' }}
+  # All real provider research remains in one serialized lane.
+  group: tractorvs-all-model-photo-research
   cancel-in-progress: false
 
 jobs:
-  validate_photo_research:
-    if: github.event_name == 'pull_request'
-    runs-on: ubuntu-latest
-    timeout-minutes: 5
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: "22.23.4"
-      - name: Validate model identity and image license checks without downloading all photos
-        run: node --test site/tests/photo-*.test.mjs
   research_all_models:
-    if: github.event_name != 'pull_request'
     runs-on: ubuntu-latest
     timeout-minutes: 25
     steps:

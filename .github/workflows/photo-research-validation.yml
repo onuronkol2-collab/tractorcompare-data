@@ -1,0 +1,30 @@
+name: TractorVS photo research validation
+on:
+  pull_request:
+    paths:
+      - ".github/workflows/batch-photo-research.yml"
+      - ".github/workflows/photo-research-validation.yml"
+      - "site/scripts/photo-*.mjs"
+      - "site/scripts/photo-*.py"
+      - "site/scripts/batch-photo-discovery.mjs"
+      - "site/scripts/archive-brand-photo-discovery.mjs"
+      - "site/scripts/extract-archived-tractor-inventory.py"
+      - "site/tests/photo-*.test.mjs"
+      - "site/tests/photo-*.py"
+      - "site/tests/fixtures/photo-offline-fetch.mjs"
+permissions:
+  contents: read
+concurrency:
+  group: tractorvs-photo-research-validation-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+jobs:
+  validate_photo_research:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22.23.4"
+      - name: Validate model identity and image license checks without downloading all photos
+        run: node --test site/tests/photo-*.test.mjs
