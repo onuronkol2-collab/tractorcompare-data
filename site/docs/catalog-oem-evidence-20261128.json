@@ -34,7 +34,8 @@
           "value": "99",
           "unit": "kW",
           "locator": "513 Vario column / maximum power",
-          "context": "Non-DP; standard not separately specified in row"
+          "context": "Non-DP maximum; ECE R120 confirmed by manufacturer press release",
+          "supportingSourceUrl": "https://www.fendt.com/uk/compact-tractor-for-professionals-the-fendt-500-vario-gen4-series"
         },
         {
           "name": "rated_power_with_dp",
@@ -305,11 +306,68 @@
           "locator": "513 Vario column / Dimensions / wheelbase",
           "context": null,
           "sourceUrl": "https://api.fendt.com/techdata/GB/en/1520018/Fendt%20500%20Vario%20Gen4"
+        },
+        {
+          "name": "engine_model",
+          "value": "AGCO Power CORE50",
+          "unit": null,
+          "locator": "513 Vario / Engine introduction",
+          "context": null,
+          "sourceUrl": "https://www.fendt.com/uk/compact-tractor-for-professionals-the-fendt-500-vario-gen4-series"
+        },
+        {
+          "name": "engine_cylinders",
+          "value": "4",
+          "unit": "count",
+          "locator": "513 Vario / Engine introduction",
+          "context": null,
+          "sourceUrl": "https://www.fendt.com/uk/compact-tractor-for-professionals-the-fendt-500-vario-gen4-series"
+        },
+        {
+          "name": "emissions_standard",
+          "value": "Stage V",
+          "unit": null,
+          "locator": "513 Vario / Engine introduction",
+          "context": "European specification",
+          "sourceUrl": "https://www.fendt.com/uk/compact-tractor-for-professionals-the-fendt-500-vario-gen4-series"
+        },
+        {
+          "name": "front_tyres_option_1",
+          "value": "540/65R28",
+          "unit": null,
+          "locator": "513 Vario / Tyres / first front option",
+          "context": "Optional",
+          "sourceUrl": "https://api.fendt.com/techdata/GB/en/1520018/Fendt%20500%20Vario%20Gen4"
+        },
+        {
+          "name": "rear_tyres_option_1",
+          "value": "650/65R38",
+          "unit": null,
+          "locator": "513 Vario / Tyres / first rear option",
+          "context": "Optional",
+          "sourceUrl": "https://api.fendt.com/techdata/GB/en/1520018/Fendt%20500%20Vario%20Gen4"
+        },
+        {
+          "name": "front_tyres_option_2",
+          "value": "VF 600/60R28",
+          "unit": null,
+          "locator": "513 Vario / Tyres / second front option",
+          "context": "Optional",
+          "sourceUrl": "https://api.fendt.com/techdata/GB/en/1520018/Fendt%20500%20Vario%20Gen4"
+        },
+        {
+          "name": "rear_tyres_option_2",
+          "value": "VF 710/60R38",
+          "unit": null,
+          "locator": "513 Vario / Tyres / second rear option",
+          "context": "Optional; preserve OEM label",
+          "sourceUrl": "https://api.fendt.com/techdata/GB/en/1520018/Fendt%20500%20Vario%20Gen4"
         }
       ],
       "notes": [
         "Secondary OEM source https://www.fendt.com/uk/agricultural-machinery/tractors/fendt-500-vario-gen4 supports PTO, weights, lift and optional pump. No automatic assignment of existing global 516 draft; generation/market identity must be reconciled.",
-        "Official detailed HTML table re-read (engine through weights); 109 L/min base pump and 152 L/min option are not interchangeable. Turning value withheld: technical table labels 10.1 m radius while overview calls it turning circle. Do not resolve by guessing."
+        "Official detailed HTML table re-read (engine through weights); 109 L/min base pump and 152 L/min option are not interchangeable. Turning value withheld: technical table labels 10.1 m radius while overview calls it turning circle. Do not resolve by guessing.",
+        "Manufacturer press release dated 2025-08-26 confirms CORE50, four cylinders, European Stage V and non-DP maximum under ECE R120. First deliveries planned spring 2026; do not assign model year or infer actual availability. Technical table uses 109 L/min; release rounds to 110, preserve exact table."
       ],
       "sourceRead": "Official UK technical HTML re-read 2026-11-28; original fields reviewed; catalogue identity and canonical mapping pending"
     },
@@ -343,7 +401,8 @@
           "value": "106",
           "unit": "kW",
           "locator": "514 Vario column / maximum power",
-          "context": "Non-DP; standard not separately specified in row"
+          "context": "Non-DP maximum; ECE R120 confirmed by manufacturer press release",
+          "supportingSourceUrl": "https://www.fendt.com/uk/compact-tractor-for-professionals-the-fendt-500-vario-gen4-series"
         },
         {
           "name": "rated_power_with_dp",
@@ -614,11 +673,68 @@
           "locator": "514 Vario column / Dimensions / wheelbase",
           "context": null,
           "sourceUrl": "https://api.fendt.com/techdata/GB/en/1520018/Fendt%20500%20Vario%20Gen4"
+        },
+        {
+          "name": "engine_model",
+          "value": "AGCO Power CORE50",
+          "unit": null,
+          "locator": "514 Vario / Engine introduction",
+          "context": null,
+          "sourceUrl": "https://www.fendt.com/uk/compact-tractor-for-professionals-the-fendt-500-vario-gen4-series"
+        },
+        {
+          "name": "engine_cylinders",
+          "value": "4",
+          "unit": "count",
+          "locator": "514 Vario / Engine introduction",
+          "context": null,
+          "sourceUrl": "https://www.fendt.com/uk/compact-tractor-for-professionals-the-fendt-500-vario-gen4-series"
+        },
+        {
+          "name": "emissions_standard",
+          "value": "Stage V",
+          "unit": null,
+          "locator": "514 Vario / Engine introduction",
+          "context": "European specification",
+          "sourceUrl": "https://www.fendt.com/uk/compact-tractor-for-professionals-the-fendt-500-vario-gen4-series"
+        },
+        {
+          "name": "front_tyres_option_1",
+          "value": "480/70R28",
+          "unit": null,
+          "locator": "514 Vario / Tyres / first front option",
+          "context": "Optional",
+          "sourceUrl": "https://api.fendt.com/techdata/GB/en/1520018/Fendt%20500%20Vario%20Gen4"
+        },
+        {
+          "name": "rear_tyres_option_1",
+          "value": "580/70R38",
+          "unit": null,
+          "locator": "514 Vario / Tyres / first rear option",
+          "context": "Optional",
+          "sourceUrl": "https://api.fendt.com/techdata/GB/en/1520018/Fendt%20500%20Vario%20Gen4"
+        },
+        {
+          "name": "front_tyres_option_2",
+          "value": "VF 600/60R28",
+          "unit": null,
+          "locator": "514 Vario / Tyres / second front option",
+          "context": "Optional",
+          "sourceUrl": "https://api.fendt.com/techdata/GB/en/1520018/Fendt%20500%20Vario%20Gen4"
+        },
+        {
+          "name": "rear_tyres_option_2",
+          "value": "VF 710/60/R38",
+          "unit": null,
+          "locator": "514 Vario / Tyres / second rear option",
+          "context": "Optional; preserve OEM label",
+          "sourceUrl": "https://api.fendt.com/techdata/GB/en/1520018/Fendt%20500%20Vario%20Gen4"
         }
       ],
       "notes": [
         "Secondary OEM source https://www.fendt.com/uk/agricultural-machinery/tractors/fendt-500-vario-gen4 supports PTO, weights, lift and optional pump. No automatic assignment of existing global 516 draft; generation/market identity must be reconciled.",
-        "Official detailed HTML table re-read (engine through weights); 109 L/min base pump and 152 L/min option are not interchangeable. Turning value withheld: technical table labels 10.1 m radius while overview calls it turning circle. Do not resolve by guessing."
+        "Official detailed HTML table re-read (engine through weights); 109 L/min base pump and 152 L/min option are not interchangeable. Turning value withheld: technical table labels 10.1 m radius while overview calls it turning circle. Do not resolve by guessing.",
+        "Manufacturer press release dated 2025-08-26 confirms CORE50, four cylinders, European Stage V and non-DP maximum under ECE R120. First deliveries planned spring 2026; do not assign model year or infer actual availability. Technical table uses 109 L/min; release rounds to 110, preserve exact table."
       ],
       "sourceRead": "Official UK technical HTML re-read 2026-11-28; original fields reviewed; catalogue identity and canonical mapping pending"
     },
@@ -652,7 +768,8 @@
           "value": "113",
           "unit": "kW",
           "locator": "515 Vario column / maximum power",
-          "context": "Non-DP; standard not separately specified in row"
+          "context": "Non-DP maximum; ECE R120 confirmed by manufacturer press release",
+          "supportingSourceUrl": "https://www.fendt.com/uk/compact-tractor-for-professionals-the-fendt-500-vario-gen4-series"
         },
         {
           "name": "rated_power_with_dp",
@@ -923,11 +1040,68 @@
           "locator": "515 Vario column / Dimensions / wheelbase",
           "context": null,
           "sourceUrl": "https://api.fendt.com/techdata/GB/en/1520018/Fendt%20500%20Vario%20Gen4"
+        },
+        {
+          "name": "engine_model",
+          "value": "AGCO Power CORE50",
+          "unit": null,
+          "locator": "515 Vario / Engine introduction",
+          "context": null,
+          "sourceUrl": "https://www.fendt.com/uk/compact-tractor-for-professionals-the-fendt-500-vario-gen4-series"
+        },
+        {
+          "name": "engine_cylinders",
+          "value": "4",
+          "unit": "count",
+          "locator": "515 Vario / Engine introduction",
+          "context": null,
+          "sourceUrl": "https://www.fendt.com/uk/compact-tractor-for-professionals-the-fendt-500-vario-gen4-series"
+        },
+        {
+          "name": "emissions_standard",
+          "value": "Stage V",
+          "unit": null,
+          "locator": "515 Vario / Engine introduction",
+          "context": "European specification",
+          "sourceUrl": "https://www.fendt.com/uk/compact-tractor-for-professionals-the-fendt-500-vario-gen4-series"
+        },
+        {
+          "name": "front_tyres_option_1",
+          "value": "480/70R28",
+          "unit": null,
+          "locator": "515 Vario / Tyres / first front option",
+          "context": "Optional",
+          "sourceUrl": "https://api.fendt.com/techdata/GB/en/1520018/Fendt%20500%20Vario%20Gen4"
+        },
+        {
+          "name": "rear_tyres_option_1",
+          "value": "580/70R38",
+          "unit": null,
+          "locator": "515 Vario / Tyres / first rear option",
+          "context": "Optional",
+          "sourceUrl": "https://api.fendt.com/techdata/GB/en/1520018/Fendt%20500%20Vario%20Gen4"
+        },
+        {
+          "name": "front_tyres_option_2",
+          "value": "VF 600/60R28",
+          "unit": null,
+          "locator": "515 Vario / Tyres / second front option",
+          "context": "Optional",
+          "sourceUrl": "https://api.fendt.com/techdata/GB/en/1520018/Fendt%20500%20Vario%20Gen4"
+        },
+        {
+          "name": "rear_tyres_option_2",
+          "value": "VF 710/60R38",
+          "unit": null,
+          "locator": "515 Vario / Tyres / second rear option",
+          "context": "Optional; preserve OEM label",
+          "sourceUrl": "https://api.fendt.com/techdata/GB/en/1520018/Fendt%20500%20Vario%20Gen4"
         }
       ],
       "notes": [
         "Secondary OEM source https://www.fendt.com/uk/agricultural-machinery/tractors/fendt-500-vario-gen4 supports PTO, weights, lift and optional pump. No automatic assignment of existing global 516 draft; generation/market identity must be reconciled.",
-        "Official detailed HTML table re-read (engine through weights); 109 L/min base pump and 152 L/min option are not interchangeable. Turning value withheld: technical table labels 10.1 m radius while overview calls it turning circle. Do not resolve by guessing."
+        "Official detailed HTML table re-read (engine through weights); 109 L/min base pump and 152 L/min option are not interchangeable. Turning value withheld: technical table labels 10.1 m radius while overview calls it turning circle. Do not resolve by guessing.",
+        "Manufacturer press release dated 2025-08-26 confirms CORE50, four cylinders, European Stage V and non-DP maximum under ECE R120. First deliveries planned spring 2026; do not assign model year or infer actual availability. Technical table uses 109 L/min; release rounds to 110, preserve exact table."
       ],
       "sourceRead": "Official UK technical HTML re-read 2026-11-28; original fields reviewed; catalogue identity and canonical mapping pending"
     },
@@ -961,7 +1135,8 @@
           "value": "121",
           "unit": "kW",
           "locator": "516 Vario column / maximum power",
-          "context": "Non-DP; standard not separately specified in row"
+          "context": "Non-DP maximum; ECE R120 confirmed by manufacturer press release",
+          "supportingSourceUrl": "https://www.fendt.com/uk/compact-tractor-for-professionals-the-fendt-500-vario-gen4-series"
         },
         {
           "name": "rated_power_with_dp",
@@ -1232,11 +1407,68 @@
           "locator": "516 Vario column / Dimensions / wheelbase",
           "context": null,
           "sourceUrl": "https://api.fendt.com/techdata/GB/en/1520018/Fendt%20500%20Vario%20Gen4"
+        },
+        {
+          "name": "engine_model",
+          "value": "AGCO Power CORE50",
+          "unit": null,
+          "locator": "516 Vario / Engine introduction",
+          "context": null,
+          "sourceUrl": "https://www.fendt.com/uk/compact-tractor-for-professionals-the-fendt-500-vario-gen4-series"
+        },
+        {
+          "name": "engine_cylinders",
+          "value": "4",
+          "unit": "count",
+          "locator": "516 Vario / Engine introduction",
+          "context": null,
+          "sourceUrl": "https://www.fendt.com/uk/compact-tractor-for-professionals-the-fendt-500-vario-gen4-series"
+        },
+        {
+          "name": "emissions_standard",
+          "value": "Stage V",
+          "unit": null,
+          "locator": "516 Vario / Engine introduction",
+          "context": "European specification",
+          "sourceUrl": "https://www.fendt.com/uk/compact-tractor-for-professionals-the-fendt-500-vario-gen4-series"
+        },
+        {
+          "name": "front_tyres_option_1",
+          "value": "480/70R28",
+          "unit": null,
+          "locator": "516 Vario / Tyres / first front option",
+          "context": "Optional",
+          "sourceUrl": "https://api.fendt.com/techdata/GB/en/1520018/Fendt%20500%20Vario%20Gen4"
+        },
+        {
+          "name": "rear_tyres_option_1",
+          "value": "580/70R38",
+          "unit": null,
+          "locator": "516 Vario / Tyres / first rear option",
+          "context": "Optional",
+          "sourceUrl": "https://api.fendt.com/techdata/GB/en/1520018/Fendt%20500%20Vario%20Gen4"
+        },
+        {
+          "name": "front_tyres_option_2",
+          "value": "VF 600/60R28",
+          "unit": null,
+          "locator": "516 Vario / Tyres / second front option",
+          "context": "Optional",
+          "sourceUrl": "https://api.fendt.com/techdata/GB/en/1520018/Fendt%20500%20Vario%20Gen4"
+        },
+        {
+          "name": "rear_tyres_option_2",
+          "value": "VF 710/60R38",
+          "unit": null,
+          "locator": "516 Vario / Tyres / second rear option",
+          "context": "Optional; preserve OEM label",
+          "sourceUrl": "https://api.fendt.com/techdata/GB/en/1520018/Fendt%20500%20Vario%20Gen4"
         }
       ],
       "notes": [
         "Secondary OEM source https://www.fendt.com/uk/agricultural-machinery/tractors/fendt-500-vario-gen4 supports PTO, weights, lift and optional pump. No automatic assignment of existing global 516 draft; generation/market identity must be reconciled.",
-        "Official detailed HTML table re-read (engine through weights); 109 L/min base pump and 152 L/min option are not interchangeable. Turning value withheld: technical table labels 10.1 m radius while overview calls it turning circle. Do not resolve by guessing."
+        "Official detailed HTML table re-read (engine through weights); 109 L/min base pump and 152 L/min option are not interchangeable. Turning value withheld: technical table labels 10.1 m radius while overview calls it turning circle. Do not resolve by guessing.",
+        "Manufacturer press release dated 2025-08-26 confirms CORE50, four cylinders, European Stage V and non-DP maximum under ECE R120. First deliveries planned spring 2026; do not assign model year or infer actual availability. Technical table uses 109 L/min; release rounds to 110, preserve exact table."
       ],
       "sourceRead": "Official UK technical HTML re-read 2026-11-28; original fields reviewed; catalogue identity and canonical mapping pending"
     },
@@ -1985,7 +2217,8 @@
       ],
       "notes": [
         "Existing global draft headline 135 is max, not rated; do not change global record without market identity review.",
-        "Manufacturer describes IPM applicability to qualifying PTO/transport operations and optional hydraulic IPM; not permanent additional power. The 4.3 m turning radius is cab-specific."
+        "Manufacturer describes IPM applicability to qualifying PTO/transport operations and optional hydraulic IPM; not permanent additional power. The 4.3 m turning radius is cab-specific.",
+        "The distinct MY20 catalogue search index at https://www.deere.com.au/en/tractors/6m-series-my20/ reports different dimensions/power; direct open failed. Treat as identity lead only, never transfer values to current AU entry."
       ],
       "sourceRead": "Official AU HTML re-read 2026-11-28; product header and feature text matched; catalogue identity pending"
     },
@@ -2271,6 +2504,30 @@
           "unit": "rpm",
           "locator": "PTO / shaft and engine speed",
           "context": "At 540 PTO rpm",
+          "sourceUrl": "https://kubota.com.ph/product/m7040/"
+        },
+        {
+          "name": "battery_voltage",
+          "value": "12",
+          "unit": "V",
+          "locator": "Engine / battery",
+          "context": null,
+          "sourceUrl": "https://kubota.com.ph/product/m7040/"
+        },
+        {
+          "name": "battery_reserve_capacity",
+          "value": "160",
+          "unit": "min",
+          "locator": "Engine / battery",
+          "context": "RC",
+          "sourceUrl": "https://kubota.com.ph/product/m7040/"
+        },
+        {
+          "name": "battery_cca",
+          "value": "900",
+          "unit": "A",
+          "locator": "Engine / battery",
+          "context": "Cold cranking amps",
           "sourceUrl": "https://kubota.com.ph/product/m7040/"
         }
       ],

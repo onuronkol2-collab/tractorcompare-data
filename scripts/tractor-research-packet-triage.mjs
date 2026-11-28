@@ -14,12 +14,13 @@ export function triageResearchPacket(packet){
   if(seen.has(key))reasons.push("repeated_identity");seen.add(key);
   if(m.existingDraftId!=null){
    if(typeof m.existingDraftId!=="string"||!/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(m.existingDraftId))throw new Error("Invalid draft ID");
-   if(draftIds.has(m.existingDraftId))reasons.push("repeated_draft_reference");
-   draftIds.set(m.existingDraftId,key);
+   const draftKey=m.existingDraftId.toLowerCase();
+   if(draftIds.has(draftKey))reasons.push("repeated_draft_reference");
+   draftIds.set(draftKey,key);
   }
   const fields=new Map();
   for(const s of m.specs){
-   if(!s||!present(s.name)||!present(s.value)||!present(s.locator)||(s.unit!=null&&!present(s.unit))||(s.context!=null&&!present(s.context))||(s.sourceUrl!=null&&!httpsUrl(s.sourceUrl)))throw new Error("Invalid observation");
+   if(!s||!present(s.name)||!present(s.value)||!present(s.locator)||(s.unit!=null&&!present(s.unit))||(s.context!=null&&!present(s.context))||(s.sourceUrl!=null&&!httpsUrl(s.sourceUrl))||(s.supportingSourceUrl!=null&&!httpsUrl(s.supportingSourceUrl)))throw new Error("Invalid observation");
    const k=JSON.stringify([s.name,s.unit??null,s.context??null]);
    if(fields.has(k))reasons.push(fields.get(k)===s.value?"repeated_observation":"conflicting_observation");
    fields.set(k,s.value);
@@ -30,4 +31,16 @@ export function triageResearchPacket(packet){
   rows.push({brand:m.brand,model:m.model,variant:m.variant,market:m.market,observationCount:m.specs.length,reasons:[...new Set(reasons)],state:"held"});
  }
  return {rows,models:rows.length,observations:rows.reduce((n,m)=>n+m.observationCount,0),allowedToPublish:false,publicationCount:0};
+}
+
+/** Aggregate across files without promoting any candidate or modifying originals. */
+export function triageResearchPackets(packets){
+ if(!Array.isArray(packets)||packets.length<1||packets.length>100)throw new Error("Invalid packet collection");
+ const models=[];
+ for(const packet of packets){
+  triageResearchPacket(packet);
+  if(models.length+packet.models.length>2000)throw new Error("Too many models");
+  for(const model of packet.models)models.push(model);
+ }
+ return triageResearchPacket({schema:"tractorvs-research-evidence-v1",status:"research_only_not_importable",models});
 }
