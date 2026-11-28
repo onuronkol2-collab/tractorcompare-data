@@ -269,7 +269,8 @@ const schema={
       const terms=normalizeTractorQuery(field.value).split(/\s+/).filter(Boolean);
       const reading=languages.find(input=>input.checked)?.value||"all";
       // Shortcuts are unfiltered by design; hide them while users narrow the library.
-      if(shortcuts)shortcuts.hidden=terms.length>0||reading!=="all";
+      const hideShortcuts=terms.length>0||reading!=="all";
+      if(shortcuts&&shortcuts.hidden!==hideShortcuts)shortcuts.hidden=hideShortcuts;
       let visible=0;
       rows.forEach((row,i)=>{
         const match=(reading==="all"||row.dataset.readingLanguage===reading)&&matchesTractorTerms(titles[i],terms);

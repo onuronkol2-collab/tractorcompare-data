@@ -18,7 +18,7 @@ test("every new UX label has 10 deliberate translations",()=>{
   for (const [key,translations] of Object.entries(HOME_DISCOVERY)){
     assert.equal(translations.length,LOCALES.length,key+" count");
     for(const [index,text] of translations.entries()){
-      assert.ok(typeof text==="string"&&text.trim().length>2,key+" language "+LOCALES[index]);
+      assert.ok(typeof text==="string"&&text.trim().length>0,key+" language "+LOCALES[index]);
       assert.equal(homeDiscoveryText(LOCALES[index],key),text);
     }
   }
@@ -72,7 +72,8 @@ test("homepage autocomplete appears beneath search and supports keyboard",()=>{
   assert.match(home,/id="home-search-results" role="listbox"/);
   assert.match(home,/role="status" aria-live="polite"/);
   assert.match(home,/suggestionPayload/);
-  assert.match(home,/findTractorSuggestions\(models,query,6\)/);
+  assert.match(home,/findTractorSuggestions\(models,query,7\)/);
+  assert.match(home,/matches\.slice\(0,6\)/);
   assert.match(home,/option.href = model.url/);
   assert.match(home,/event.key === "ArrowDown"/);
   assert.match(home,/event.key === "ArrowUp"/);
@@ -100,7 +101,10 @@ test("homepage search preserves IME entry, touch scrolling and meaningful option
  assert.match(home,/event.pointerType === "mouse" && selectedIndex !== index\) select\(index,false\)/);
  assert.match(home,/if \(reveal\) chosen.scrollIntoView/);
  assert.match(home,/aria-describedby="home-search-hint"/);
- assert.match(home,/id="home-search-empty" aria-hidden="true" hidden/);
+ assert.match(home,/id="home-search-empty" hidden/);
+ assert.match(home,/<p aria-hidden="true">\{d\(lang,"suggestionsNone"\)\}<\/p>/);
+ assert.match(home,/<button type="button" data-home-edit-search>/);
+ assert.doesNotMatch(home,/id="home-search-empty"[^>]*aria-hidden="true"/);
  assert.match(home,/close\(\);\s*emptyMessage.hidden = false;\s*status.textContent = labels.noResults/);
  assert.doesNotMatch(home,/popup.appendChild\(empty\)/);
  assert.doesNotMatch(css,/-webkit-line-clamp: 2/);

@@ -87,7 +87,7 @@ test("catalog exposes published editorial resources in ten languages, without in
  for(const lang of LOCALES){
   const {label,links}=catalogEditorialLinks(lang);
   assert.ok(label.trim().length>2);
-  const expected=["/articles/","/guides/choosing-a-tractor/"];
+  const expected=["/articles/","/guides/choosing-a-tractor/","/brands/"];
   if(lang==="en"||lang==="tr") expected.push("/guides/tractor-technical-terms/");
   assert.deepEqual(links.map(x=>x.href),expected.map(x=>localizedPath(lang,x)));
   assert.ok(links.every(x=>x.label.trim().length>2));
