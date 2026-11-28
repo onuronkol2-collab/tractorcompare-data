@@ -1,0 +1,1623 @@
+{
+  "schema": "tractorvs-research-evidence-v1",
+  "researchedOn": "2026-11-28",
+  "status": "research_only_not_importable",
+  "sourcePolicy": "Manufacturer declarations, not independent tests or reliability claims. Locators describe visible HTML headings and columns, not verbatim excerpts. No verification timestamps or canonical keys assigned until identity and admission review. No database writes.",
+  "models": [
+    {
+      "brand": "Fendt",
+      "model": "513 Vario",
+      "variant": "500 Vario Gen4 / standard tractor",
+      "market": "United Kingdom",
+      "modelYear": null,
+      "sourceUrl": "https://api.fendt.com/techdata/GB/en/1520018/Fendt%20500%20Vario%20Gen4",
+      "sourceType": "manufacturer",
+      "existingDraftId": null,
+      "disposition": "hold_for_review",
+      "specs": [
+        {
+          "name": "rated_engine_power",
+          "value": "99",
+          "unit": "kW",
+          "locator": "513 Vario column / rated power",
+          "context": "Non-DP; standard not separately specified in row"
+        },
+        {
+          "name": "rated_engine_power_manufacturer_label",
+          "value": "134",
+          "unit": "hp",
+          "locator": "513 Vario column / rated power",
+          "context": "OEM paired kW/hp; preserve manufacturer unit, do not infer mechanical hp"
+        },
+        {
+          "name": "maximum_engine_power",
+          "value": "99",
+          "unit": "kW",
+          "locator": "513 Vario column / maximum power",
+          "context": "Non-DP; standard not separately specified in row"
+        },
+        {
+          "name": "rated_power_with_dp",
+          "value": "106",
+          "unit": "kW",
+          "locator": "513 Vario column / rated power with DP",
+          "context": "ECE R 120; DynamicPerformance"
+        },
+        {
+          "name": "maximum_power_with_dp",
+          "value": "106",
+          "unit": "kW",
+          "locator": "513 Vario column / maximum power with DP",
+          "context": "ECE R 120; DynamicPerformance"
+        },
+        {
+          "name": "maximum_power_with_dp_manufacturer_label",
+          "value": "144",
+          "unit": "hp",
+          "locator": "513 Vario column / maximum power with DP",
+          "context": "OEM paired unit, DP ECE R 120"
+        },
+        {
+          "name": "engine_displacement",
+          "value": "5017",
+          "unit": "cm³",
+          "locator": "513 Vario column / cubic capacity",
+          "context": null
+        },
+        {
+          "name": "engine_rated_speed",
+          "value": "1900",
+          "unit": "rpm",
+          "locator": "513 Vario column / rated speed",
+          "context": null
+        },
+        {
+          "name": "engine_torque",
+          "value": "651",
+          "unit": "Nm",
+          "locator": "513 Vario column / max torque",
+          "context": "Peak torque; rpm not provided in cited row"
+        },
+        {
+          "name": "fuel_tank_capacity",
+          "value": "290",
+          "unit": "L",
+          "locator": "513 Vario column / fuel level",
+          "context": null
+        },
+        {
+          "name": "adblue_tank_capacity",
+          "value": "35",
+          "unit": "L",
+          "locator": "513 Vario column / AdBlue tank",
+          "context": null
+        },
+        {
+          "name": "exhaust_aftertreatment",
+          "value": "SCR+DPF",
+          "unit": null,
+          "locator": "513 Vario column / exhaust gas after-treatment",
+          "context": null
+        },
+        {
+          "name": "transmission",
+          "value": "TA120 VarioDrive",
+          "unit": null,
+          "locator": "513 Vario column / transmission type",
+          "context": null
+        },
+        {
+          "name": "rear_pto_speeds",
+          "value": "540/540E/1000/1000E",
+          "unit": "rpm",
+          "locator": "UK product page technical specification table / 513 Vario column",
+          "context": null,
+          "sourceUrl": "https://www.fendt.com/uk/agricultural-machinery/tractors/fendt-500-vario-gen4"
+        },
+        {
+          "name": "rear_lift_capacity",
+          "value": "7890",
+          "unit": "daN",
+          "locator": "UK product page technical specification table / 513 Vario column",
+          "context": "Maximum; force not mass; measurement point not stated",
+          "sourceUrl": "https://www.fendt.com/uk/agricultural-machinery/tractors/fendt-500-vario-gen4"
+        },
+        {
+          "name": "front_lift_capacity",
+          "value": "3420",
+          "unit": "daN",
+          "locator": "UK product page technical specification table / 513 Vario column",
+          "context": "Maximum; force not mass",
+          "sourceUrl": "https://www.fendt.com/uk/agricultural-machinery/tractors/fendt-500-vario-gen4"
+        },
+        {
+          "name": "operating_weight",
+          "value": "6700",
+          "unit": "kg",
+          "locator": "UK product page technical specification table / 513 Vario column",
+          "context": "Common accessories ±5%",
+          "sourceUrl": "https://www.fendt.com/uk/agricultural-machinery/tractors/fendt-500-vario-gen4"
+        },
+        {
+          "name": "maximum_permissible_weight",
+          "value": "11750",
+          "unit": "kg",
+          "locator": "UK product page technical specification table / 513 Vario column",
+          "context": null,
+          "sourceUrl": "https://www.fendt.com/uk/agricultural-machinery/tractors/fendt-500-vario-gen4"
+        },
+        {
+          "name": "hydraulic_pump_option",
+          "value": "152",
+          "unit": "L/min",
+          "locator": "UK product page technical specification table / 513 Vario column",
+          "context": "Option 1; not standard flow",
+          "sourceUrl": "https://www.fendt.com/uk/agricultural-machinery/tractors/fendt-500-vario-gen4"
+        }
+      ],
+      "notes": [
+        "Secondary OEM source https://www.fendt.com/uk/agricultural-machinery/tractors/fendt-500-vario-gen4 supports PTO, weights, lift and optional pump. No automatic assignment of existing global 516 draft; generation/market identity must be reconciled."
+      ]
+    },
+    {
+      "brand": "Fendt",
+      "model": "514 Vario",
+      "variant": "500 Vario Gen4 / standard tractor",
+      "market": "United Kingdom",
+      "modelYear": null,
+      "sourceUrl": "https://api.fendt.com/techdata/GB/en/1520018/Fendt%20500%20Vario%20Gen4",
+      "sourceType": "manufacturer",
+      "existingDraftId": null,
+      "disposition": "hold_for_review",
+      "specs": [
+        {
+          "name": "rated_engine_power",
+          "value": "106",
+          "unit": "kW",
+          "locator": "514 Vario column / rated power",
+          "context": "Non-DP; standard not separately specified in row"
+        },
+        {
+          "name": "rated_engine_power_manufacturer_label",
+          "value": "144",
+          "unit": "hp",
+          "locator": "514 Vario column / rated power",
+          "context": "OEM paired kW/hp; preserve manufacturer unit, do not infer mechanical hp"
+        },
+        {
+          "name": "maximum_engine_power",
+          "value": "106",
+          "unit": "kW",
+          "locator": "514 Vario column / maximum power",
+          "context": "Non-DP; standard not separately specified in row"
+        },
+        {
+          "name": "rated_power_with_dp",
+          "value": "113",
+          "unit": "kW",
+          "locator": "514 Vario column / rated power with DP",
+          "context": "ECE R 120; DynamicPerformance"
+        },
+        {
+          "name": "maximum_power_with_dp",
+          "value": "113",
+          "unit": "kW",
+          "locator": "514 Vario column / maximum power with DP",
+          "context": "ECE R 120; DynamicPerformance"
+        },
+        {
+          "name": "maximum_power_with_dp_manufacturer_label",
+          "value": "154",
+          "unit": "hp",
+          "locator": "514 Vario column / maximum power with DP",
+          "context": "OEM paired unit, DP ECE R 120"
+        },
+        {
+          "name": "engine_displacement",
+          "value": "5017",
+          "unit": "cm³",
+          "locator": "514 Vario column / cubic capacity",
+          "context": null
+        },
+        {
+          "name": "engine_rated_speed",
+          "value": "1900",
+          "unit": "rpm",
+          "locator": "514 Vario column / rated speed",
+          "context": null
+        },
+        {
+          "name": "engine_torque",
+          "value": "698",
+          "unit": "Nm",
+          "locator": "514 Vario column / max torque",
+          "context": "Peak torque; rpm not provided in cited row"
+        },
+        {
+          "name": "fuel_tank_capacity",
+          "value": "290",
+          "unit": "L",
+          "locator": "514 Vario column / fuel level",
+          "context": null
+        },
+        {
+          "name": "adblue_tank_capacity",
+          "value": "35",
+          "unit": "L",
+          "locator": "514 Vario column / AdBlue tank",
+          "context": null
+        },
+        {
+          "name": "exhaust_aftertreatment",
+          "value": "SCR+DPF",
+          "unit": null,
+          "locator": "514 Vario column / exhaust gas after-treatment",
+          "context": null
+        },
+        {
+          "name": "transmission",
+          "value": "TA120 VarioDrive",
+          "unit": null,
+          "locator": "514 Vario column / transmission type",
+          "context": null
+        },
+        {
+          "name": "rear_pto_speeds",
+          "value": "540/540E/1000/1000E",
+          "unit": "rpm",
+          "locator": "UK product page technical specification table / 514 Vario column",
+          "context": null,
+          "sourceUrl": "https://www.fendt.com/uk/agricultural-machinery/tractors/fendt-500-vario-gen4"
+        },
+        {
+          "name": "rear_lift_capacity",
+          "value": "7890",
+          "unit": "daN",
+          "locator": "UK product page technical specification table / 514 Vario column",
+          "context": "Maximum; force not mass; measurement point not stated",
+          "sourceUrl": "https://www.fendt.com/uk/agricultural-machinery/tractors/fendt-500-vario-gen4"
+        },
+        {
+          "name": "front_lift_capacity",
+          "value": "3420",
+          "unit": "daN",
+          "locator": "UK product page technical specification table / 514 Vario column",
+          "context": "Maximum; force not mass",
+          "sourceUrl": "https://www.fendt.com/uk/agricultural-machinery/tractors/fendt-500-vario-gen4"
+        },
+        {
+          "name": "operating_weight",
+          "value": "6850",
+          "unit": "kg",
+          "locator": "UK product page technical specification table / 514 Vario column",
+          "context": "Common accessories ±5%",
+          "sourceUrl": "https://www.fendt.com/uk/agricultural-machinery/tractors/fendt-500-vario-gen4"
+        },
+        {
+          "name": "maximum_permissible_weight",
+          "value": "11750",
+          "unit": "kg",
+          "locator": "UK product page technical specification table / 514 Vario column",
+          "context": null,
+          "sourceUrl": "https://www.fendt.com/uk/agricultural-machinery/tractors/fendt-500-vario-gen4"
+        },
+        {
+          "name": "hydraulic_pump_option",
+          "value": "152",
+          "unit": "L/min",
+          "locator": "UK product page technical specification table / 514 Vario column",
+          "context": "Option 1; not standard flow",
+          "sourceUrl": "https://www.fendt.com/uk/agricultural-machinery/tractors/fendt-500-vario-gen4"
+        }
+      ],
+      "notes": [
+        "Secondary OEM source https://www.fendt.com/uk/agricultural-machinery/tractors/fendt-500-vario-gen4 supports PTO, weights, lift and optional pump. No automatic assignment of existing global 516 draft; generation/market identity must be reconciled."
+      ]
+    },
+    {
+      "brand": "Fendt",
+      "model": "515 Vario",
+      "variant": "500 Vario Gen4 / standard tractor",
+      "market": "United Kingdom",
+      "modelYear": null,
+      "sourceUrl": "https://api.fendt.com/techdata/GB/en/1520018/Fendt%20500%20Vario%20Gen4",
+      "sourceType": "manufacturer",
+      "existingDraftId": null,
+      "disposition": "hold_for_review",
+      "specs": [
+        {
+          "name": "rated_engine_power",
+          "value": "113",
+          "unit": "kW",
+          "locator": "515 Vario column / rated power",
+          "context": "Non-DP; standard not separately specified in row"
+        },
+        {
+          "name": "rated_engine_power_manufacturer_label",
+          "value": "154",
+          "unit": "hp",
+          "locator": "515 Vario column / rated power",
+          "context": "OEM paired kW/hp; preserve manufacturer unit, do not infer mechanical hp"
+        },
+        {
+          "name": "maximum_engine_power",
+          "value": "113",
+          "unit": "kW",
+          "locator": "515 Vario column / maximum power",
+          "context": "Non-DP; standard not separately specified in row"
+        },
+        {
+          "name": "rated_power_with_dp",
+          "value": "121",
+          "unit": "kW",
+          "locator": "515 Vario column / rated power with DP",
+          "context": "ECE R 120; DynamicPerformance"
+        },
+        {
+          "name": "maximum_power_with_dp",
+          "value": "121",
+          "unit": "kW",
+          "locator": "515 Vario column / maximum power with DP",
+          "context": "ECE R 120; DynamicPerformance"
+        },
+        {
+          "name": "maximum_power_with_dp_manufacturer_label",
+          "value": "164",
+          "unit": "hp",
+          "locator": "515 Vario column / maximum power with DP",
+          "context": "OEM paired unit, DP ECE R 120"
+        },
+        {
+          "name": "engine_displacement",
+          "value": "5017",
+          "unit": "cm³",
+          "locator": "515 Vario column / cubic capacity",
+          "context": null
+        },
+        {
+          "name": "engine_rated_speed",
+          "value": "1900",
+          "unit": "rpm",
+          "locator": "515 Vario column / rated speed",
+          "context": null
+        },
+        {
+          "name": "engine_torque",
+          "value": "745",
+          "unit": "Nm",
+          "locator": "515 Vario column / max torque",
+          "context": "Peak torque; rpm not provided in cited row"
+        },
+        {
+          "name": "fuel_tank_capacity",
+          "value": "290",
+          "unit": "L",
+          "locator": "515 Vario column / fuel level",
+          "context": null
+        },
+        {
+          "name": "adblue_tank_capacity",
+          "value": "35",
+          "unit": "L",
+          "locator": "515 Vario column / AdBlue tank",
+          "context": null
+        },
+        {
+          "name": "exhaust_aftertreatment",
+          "value": "SCR+DPF",
+          "unit": null,
+          "locator": "515 Vario column / exhaust gas after-treatment",
+          "context": null
+        },
+        {
+          "name": "transmission",
+          "value": "TA120 VarioDrive",
+          "unit": null,
+          "locator": "515 Vario column / transmission type",
+          "context": null
+        },
+        {
+          "name": "rear_pto_speeds",
+          "value": "540/540E/1000/1000E",
+          "unit": "rpm",
+          "locator": "UK product page technical specification table / 515 Vario column",
+          "context": null,
+          "sourceUrl": "https://www.fendt.com/uk/agricultural-machinery/tractors/fendt-500-vario-gen4"
+        },
+        {
+          "name": "rear_lift_capacity",
+          "value": "7890",
+          "unit": "daN",
+          "locator": "UK product page technical specification table / 515 Vario column",
+          "context": "Maximum; force not mass; measurement point not stated",
+          "sourceUrl": "https://www.fendt.com/uk/agricultural-machinery/tractors/fendt-500-vario-gen4"
+        },
+        {
+          "name": "front_lift_capacity",
+          "value": "3420",
+          "unit": "daN",
+          "locator": "UK product page technical specification table / 515 Vario column",
+          "context": "Maximum; force not mass",
+          "sourceUrl": "https://www.fendt.com/uk/agricultural-machinery/tractors/fendt-500-vario-gen4"
+        },
+        {
+          "name": "operating_weight",
+          "value": "6850",
+          "unit": "kg",
+          "locator": "UK product page technical specification table / 515 Vario column",
+          "context": "Common accessories ±5%",
+          "sourceUrl": "https://www.fendt.com/uk/agricultural-machinery/tractors/fendt-500-vario-gen4"
+        },
+        {
+          "name": "maximum_permissible_weight",
+          "value": "11750",
+          "unit": "kg",
+          "locator": "UK product page technical specification table / 515 Vario column",
+          "context": null,
+          "sourceUrl": "https://www.fendt.com/uk/agricultural-machinery/tractors/fendt-500-vario-gen4"
+        },
+        {
+          "name": "hydraulic_pump_option",
+          "value": "152",
+          "unit": "L/min",
+          "locator": "UK product page technical specification table / 515 Vario column",
+          "context": "Option 1; not standard flow",
+          "sourceUrl": "https://www.fendt.com/uk/agricultural-machinery/tractors/fendt-500-vario-gen4"
+        }
+      ],
+      "notes": [
+        "Secondary OEM source https://www.fendt.com/uk/agricultural-machinery/tractors/fendt-500-vario-gen4 supports PTO, weights, lift and optional pump. No automatic assignment of existing global 516 draft; generation/market identity must be reconciled."
+      ]
+    },
+    {
+      "brand": "Fendt",
+      "model": "516 Vario",
+      "variant": "500 Vario Gen4 / standard tractor",
+      "market": "United Kingdom",
+      "modelYear": null,
+      "sourceUrl": "https://api.fendt.com/techdata/GB/en/1520018/Fendt%20500%20Vario%20Gen4",
+      "sourceType": "manufacturer",
+      "existingDraftId": "1bae67cf-91d7-43e6-aeed-d3f86c2984ab",
+      "disposition": "hold_for_review",
+      "specs": [
+        {
+          "name": "rated_engine_power",
+          "value": "121",
+          "unit": "kW",
+          "locator": "516 Vario column / rated power",
+          "context": "Non-DP; standard not separately specified in row"
+        },
+        {
+          "name": "rated_engine_power_manufacturer_label",
+          "value": "164",
+          "unit": "hp",
+          "locator": "516 Vario column / rated power",
+          "context": "OEM paired kW/hp; preserve manufacturer unit, do not infer mechanical hp"
+        },
+        {
+          "name": "maximum_engine_power",
+          "value": "121",
+          "unit": "kW",
+          "locator": "516 Vario column / maximum power",
+          "context": "Non-DP; standard not separately specified in row"
+        },
+        {
+          "name": "rated_power_with_dp",
+          "value": "128",
+          "unit": "kW",
+          "locator": "516 Vario column / rated power with DP",
+          "context": "ECE R 120; DynamicPerformance"
+        },
+        {
+          "name": "maximum_power_with_dp",
+          "value": "128",
+          "unit": "kW",
+          "locator": "516 Vario column / maximum power with DP",
+          "context": "ECE R 120; DynamicPerformance"
+        },
+        {
+          "name": "maximum_power_with_dp_manufacturer_label",
+          "value": "174",
+          "unit": "hp",
+          "locator": "516 Vario column / maximum power with DP",
+          "context": "OEM paired unit, DP ECE R 120"
+        },
+        {
+          "name": "engine_displacement",
+          "value": "5017",
+          "unit": "cm³",
+          "locator": "516 Vario column / cubic capacity",
+          "context": null
+        },
+        {
+          "name": "engine_rated_speed",
+          "value": "1900",
+          "unit": "rpm",
+          "locator": "516 Vario column / rated speed",
+          "context": null
+        },
+        {
+          "name": "engine_torque",
+          "value": "792",
+          "unit": "Nm",
+          "locator": "516 Vario column / max torque",
+          "context": "Peak torque; rpm not provided in cited row"
+        },
+        {
+          "name": "fuel_tank_capacity",
+          "value": "290",
+          "unit": "L",
+          "locator": "516 Vario column / fuel level",
+          "context": null
+        },
+        {
+          "name": "adblue_tank_capacity",
+          "value": "35",
+          "unit": "L",
+          "locator": "516 Vario column / AdBlue tank",
+          "context": null
+        },
+        {
+          "name": "exhaust_aftertreatment",
+          "value": "SCR+DPF",
+          "unit": null,
+          "locator": "516 Vario column / exhaust gas after-treatment",
+          "context": null
+        },
+        {
+          "name": "transmission",
+          "value": "TA120 VarioDrive",
+          "unit": null,
+          "locator": "516 Vario column / transmission type",
+          "context": null
+        },
+        {
+          "name": "rear_pto_speeds",
+          "value": "540/540E/1000/1000E",
+          "unit": "rpm",
+          "locator": "UK product page technical specification table / 516 Vario column",
+          "context": null,
+          "sourceUrl": "https://www.fendt.com/uk/agricultural-machinery/tractors/fendt-500-vario-gen4"
+        },
+        {
+          "name": "rear_lift_capacity",
+          "value": "7890",
+          "unit": "daN",
+          "locator": "UK product page technical specification table / 516 Vario column",
+          "context": "Maximum; force not mass; measurement point not stated",
+          "sourceUrl": "https://www.fendt.com/uk/agricultural-machinery/tractors/fendt-500-vario-gen4"
+        },
+        {
+          "name": "front_lift_capacity",
+          "value": "3420",
+          "unit": "daN",
+          "locator": "UK product page technical specification table / 516 Vario column",
+          "context": "Maximum; force not mass",
+          "sourceUrl": "https://www.fendt.com/uk/agricultural-machinery/tractors/fendt-500-vario-gen4"
+        },
+        {
+          "name": "operating_weight",
+          "value": "6850",
+          "unit": "kg",
+          "locator": "UK product page technical specification table / 516 Vario column",
+          "context": "Common accessories ±5%",
+          "sourceUrl": "https://www.fendt.com/uk/agricultural-machinery/tractors/fendt-500-vario-gen4"
+        },
+        {
+          "name": "maximum_permissible_weight",
+          "value": "11750",
+          "unit": "kg",
+          "locator": "UK product page technical specification table / 516 Vario column",
+          "context": null,
+          "sourceUrl": "https://www.fendt.com/uk/agricultural-machinery/tractors/fendt-500-vario-gen4"
+        },
+        {
+          "name": "hydraulic_pump_option",
+          "value": "152",
+          "unit": "L/min",
+          "locator": "UK product page technical specification table / 516 Vario column",
+          "context": "Option 1; not standard flow",
+          "sourceUrl": "https://www.fendt.com/uk/agricultural-machinery/tractors/fendt-500-vario-gen4"
+        }
+      ],
+      "notes": [
+        "Secondary OEM source https://www.fendt.com/uk/agricultural-machinery/tractors/fendt-500-vario-gen4 supports PTO, weights, lift and optional pump. No automatic assignment of existing global 516 draft; generation/market identity must be reconciled."
+      ]
+    },
+    {
+      "brand": "CLAAS",
+      "model": "Arion 660",
+      "variant": "CMATIC",
+      "market": "Türkiye",
+      "modelYear": null,
+      "sourceUrl": "https://www.claas.com/tr-tr/tarim-makineleri/traktoerler/arion-600-500",
+      "sourceType": "manufacturer",
+      "existingDraftId": "dd466322-6443-4c03-9cf4-b19a96ce7adc",
+      "disposition": "hold_for_review",
+      "specs": [
+        {
+          "name": "engine_cylinders",
+          "value": "6",
+          "unit": "count",
+          "locator": "660 CMATIC / Özellikler / Silindir",
+          "context": null
+        },
+        {
+          "name": "engine_displacement",
+          "value": "6.8",
+          "unit": "L",
+          "locator": "660 CMATIC / Özellikler / Silindir hacmi",
+          "context": null
+        },
+        {
+          "name": "maximum_engine_power_oem_label",
+          "value": "205",
+          "unit": "BG",
+          "locator": "660 CMATIC / Özellikler / Maks. güç ECE R 120",
+          "context": "OEM table max ECE R120; boost status not separated; no nominal power inferred"
+        },
+        {
+          "name": "transmission",
+          "value": "CMATIC continuous variable",
+          "unit": null,
+          "locator": "660 CMATIC / Özellikler / Şanzıman",
+          "context": null
+        }
+      ],
+      "notes": [
+        "Keep CMATIC and HEXASHIFT separate. 660 old global draft has different power categories; do not overwrite or label 205 BG as unboosted. Four facts alone may not meet public catalogue admission threshold."
+      ]
+    },
+    {
+      "brand": "CLAAS",
+      "model": "Arion 650",
+      "variant": "CMATIC",
+      "market": "Türkiye",
+      "modelYear": null,
+      "sourceUrl": "https://www.claas.com/tr-tr/tarim-makineleri/traktoerler/arion-600-500",
+      "sourceType": "manufacturer",
+      "existingDraftId": null,
+      "disposition": "hold_for_review",
+      "specs": [
+        {
+          "name": "engine_cylinders",
+          "value": "6",
+          "unit": "count",
+          "locator": "650 CMATIC / Özellikler / Silindir",
+          "context": null
+        },
+        {
+          "name": "engine_displacement",
+          "value": "6.8",
+          "unit": "L",
+          "locator": "650 CMATIC / Özellikler / Silindir hacmi",
+          "context": null
+        },
+        {
+          "name": "maximum_engine_power_oem_label",
+          "value": "185",
+          "unit": "BG",
+          "locator": "650 CMATIC / Özellikler / Maks. güç ECE R 120",
+          "context": "OEM table max ECE R120; boost status not separated; no nominal power inferred"
+        },
+        {
+          "name": "transmission",
+          "value": "CMATIC continuous variable",
+          "unit": null,
+          "locator": "650 CMATIC / Özellikler / Şanzıman",
+          "context": null
+        }
+      ],
+      "notes": [
+        "Keep CMATIC and HEXASHIFT separate. 660 old global draft has different power categories; do not overwrite or label 205 BG as unboosted. Four facts alone may not meet public catalogue admission threshold."
+      ]
+    },
+    {
+      "brand": "CLAAS",
+      "model": "Arion 630",
+      "variant": "CMATIC",
+      "market": "Türkiye",
+      "modelYear": null,
+      "sourceUrl": "https://www.claas.com/tr-tr/tarim-makineleri/traktoerler/arion-600-500",
+      "sourceType": "manufacturer",
+      "existingDraftId": null,
+      "disposition": "hold_for_review",
+      "specs": [
+        {
+          "name": "engine_cylinders",
+          "value": "6",
+          "unit": "count",
+          "locator": "630 CMATIC / Özellikler / Silindir",
+          "context": null
+        },
+        {
+          "name": "engine_displacement",
+          "value": "6.8",
+          "unit": "L",
+          "locator": "630 CMATIC / Özellikler / Silindir hacmi",
+          "context": null
+        },
+        {
+          "name": "maximum_engine_power_oem_label",
+          "value": "165",
+          "unit": "BG",
+          "locator": "630 CMATIC / Özellikler / Maks. güç ECE R 120",
+          "context": "OEM table max ECE R120; boost status not separated; no nominal power inferred"
+        },
+        {
+          "name": "transmission",
+          "value": "CMATIC continuous variable",
+          "unit": null,
+          "locator": "630 CMATIC / Özellikler / Şanzıman",
+          "context": null
+        }
+      ],
+      "notes": [
+        "Keep CMATIC and HEXASHIFT separate. 660 old global draft has different power categories; do not overwrite or label 205 BG as unboosted. Four facts alone may not meet public catalogue admission threshold."
+      ]
+    },
+    {
+      "brand": "CLAAS",
+      "model": "Arion 610",
+      "variant": "CMATIC",
+      "market": "Türkiye",
+      "modelYear": null,
+      "sourceUrl": "https://www.claas.com/tr-tr/tarim-makineleri/traktoerler/arion-600-500",
+      "sourceType": "manufacturer",
+      "existingDraftId": null,
+      "disposition": "hold_for_review",
+      "specs": [
+        {
+          "name": "engine_cylinders",
+          "value": "6",
+          "unit": "count",
+          "locator": "610 CMATIC / Özellikler / Silindir",
+          "context": null
+        },
+        {
+          "name": "engine_displacement",
+          "value": "6.8",
+          "unit": "L",
+          "locator": "610 CMATIC / Özellikler / Silindir hacmi",
+          "context": null
+        },
+        {
+          "name": "maximum_engine_power_oem_label",
+          "value": "145",
+          "unit": "BG",
+          "locator": "610 CMATIC / Özellikler / Maks. güç ECE R 120",
+          "context": "OEM table max ECE R120; boost status not separated; no nominal power inferred"
+        },
+        {
+          "name": "transmission",
+          "value": "CMATIC continuous variable",
+          "unit": null,
+          "locator": "610 CMATIC / Özellikler / Şanzıman",
+          "context": null
+        }
+      ],
+      "notes": [
+        "Keep CMATIC and HEXASHIFT separate. 660 old global draft has different power categories; do not overwrite or label 205 BG as unboosted. Four facts alone may not meet public catalogue admission threshold."
+      ]
+    },
+    {
+      "brand": "CLAAS",
+      "model": "Arion 650",
+      "variant": "HEXASHIFT",
+      "market": "Türkiye",
+      "modelYear": null,
+      "sourceUrl": "https://www.claas.com/tr-tr/tarim-makineleri/traktoerler/arion-600-500",
+      "sourceType": "manufacturer",
+      "existingDraftId": null,
+      "disposition": "hold_for_review",
+      "specs": [
+        {
+          "name": "engine_cylinders",
+          "value": "6",
+          "unit": "count",
+          "locator": "650 HEXASHIFT / Özellikler / Silindir",
+          "context": null
+        },
+        {
+          "name": "engine_displacement",
+          "value": "6.8",
+          "unit": "L",
+          "locator": "650 HEXASHIFT / Özellikler / Silindir hacmi",
+          "context": null
+        },
+        {
+          "name": "maximum_engine_power_oem_label",
+          "value": "185",
+          "unit": "BG",
+          "locator": "650 HEXASHIFT / Özellikler / Maks. güç ECE R 120",
+          "context": "OEM table max ECE R120; boost status not separated; no nominal power inferred"
+        },
+        {
+          "name": "transmission",
+          "value": "HEXASHIFT / REVERSHIFT 24F/24R",
+          "unit": null,
+          "locator": "650 HEXASHIFT / Özellikler / Şanzıman",
+          "context": null
+        }
+      ],
+      "notes": [
+        "Keep CMATIC and HEXASHIFT separate. 660 old global draft has different power categories; do not overwrite or label 205 BG as unboosted. Four facts alone may not meet public catalogue admission threshold."
+      ]
+    },
+    {
+      "brand": "CLAAS",
+      "model": "Arion 630",
+      "variant": "HEXASHIFT",
+      "market": "Türkiye",
+      "modelYear": null,
+      "sourceUrl": "https://www.claas.com/tr-tr/tarim-makineleri/traktoerler/arion-600-500",
+      "sourceType": "manufacturer",
+      "existingDraftId": null,
+      "disposition": "hold_for_review",
+      "specs": [
+        {
+          "name": "engine_cylinders",
+          "value": "6",
+          "unit": "count",
+          "locator": "630 HEXASHIFT / Özellikler / Silindir",
+          "context": null
+        },
+        {
+          "name": "engine_displacement",
+          "value": "6.8",
+          "unit": "L",
+          "locator": "630 HEXASHIFT / Özellikler / Silindir hacmi",
+          "context": null
+        },
+        {
+          "name": "maximum_engine_power_oem_label",
+          "value": "165",
+          "unit": "BG",
+          "locator": "630 HEXASHIFT / Özellikler / Maks. güç ECE R 120",
+          "context": "OEM table max ECE R120; boost status not separated; no nominal power inferred"
+        },
+        {
+          "name": "transmission",
+          "value": "HEXASHIFT / REVERSHIFT 24F/24R",
+          "unit": null,
+          "locator": "630 HEXASHIFT / Özellikler / Şanzıman",
+          "context": null
+        }
+      ],
+      "notes": [
+        "Keep CMATIC and HEXASHIFT separate. 660 old global draft has different power categories; do not overwrite or label 205 BG as unboosted. Four facts alone may not meet public catalogue admission threshold."
+      ]
+    },
+    {
+      "brand": "CLAAS",
+      "model": "Arion 610",
+      "variant": "HEXASHIFT",
+      "market": "Türkiye",
+      "modelYear": null,
+      "sourceUrl": "https://www.claas.com/tr-tr/tarim-makineleri/traktoerler/arion-600-500",
+      "sourceType": "manufacturer",
+      "existingDraftId": null,
+      "disposition": "hold_for_review",
+      "specs": [
+        {
+          "name": "engine_cylinders",
+          "value": "6",
+          "unit": "count",
+          "locator": "610 HEXASHIFT / Özellikler / Silindir",
+          "context": null
+        },
+        {
+          "name": "engine_displacement",
+          "value": "6.8",
+          "unit": "L",
+          "locator": "610 HEXASHIFT / Özellikler / Silindir hacmi",
+          "context": null
+        },
+        {
+          "name": "maximum_engine_power_oem_label",
+          "value": "145",
+          "unit": "BG",
+          "locator": "610 HEXASHIFT / Özellikler / Maks. güç ECE R 120",
+          "context": "OEM table max ECE R120; boost status not separated; no nominal power inferred"
+        },
+        {
+          "name": "transmission",
+          "value": "HEXASHIFT / REVERSHIFT 24F/24R",
+          "unit": null,
+          "locator": "610 HEXASHIFT / Özellikler / Şanzıman",
+          "context": null
+        }
+      ],
+      "notes": [
+        "Keep CMATIC and HEXASHIFT separate. 660 old global draft has different power categories; do not overwrite or label 205 BG as unboosted. Four facts alone may not meet public catalogue admission threshold."
+      ]
+    },
+    {
+      "brand": "CLAAS",
+      "model": "Arion 570",
+      "variant": "CMATIC",
+      "market": "Türkiye",
+      "modelYear": null,
+      "sourceUrl": "https://www.claas.com/tr-tr/tarim-makineleri/traktoerler/arion-600-500",
+      "sourceType": "manufacturer",
+      "existingDraftId": null,
+      "disposition": "hold_for_review",
+      "specs": [
+        {
+          "name": "engine_cylinders",
+          "value": "4",
+          "unit": "count",
+          "locator": "570 CMATIC / Özellikler / Silindir",
+          "context": null
+        },
+        {
+          "name": "engine_displacement",
+          "value": "4.5",
+          "unit": "L",
+          "locator": "570 CMATIC / Özellikler / Silindir hacmi",
+          "context": null
+        },
+        {
+          "name": "maximum_engine_power_oem_label",
+          "value": "180",
+          "unit": "BG",
+          "locator": "570 CMATIC / Özellikler / Maks. güç ECE R 120",
+          "context": "OEM table max ECE R120; boost status not separated; no nominal power inferred"
+        },
+        {
+          "name": "transmission",
+          "value": "CMATIC continuous variable",
+          "unit": null,
+          "locator": "570 CMATIC / Özellikler / Şanzıman",
+          "context": null
+        }
+      ],
+      "notes": [
+        "Keep CMATIC and HEXASHIFT separate. 660 old global draft has different power categories; do not overwrite or label 205 BG as unboosted. Four facts alone may not meet public catalogue admission threshold."
+      ]
+    },
+    {
+      "brand": "CLAAS",
+      "model": "Arion 550",
+      "variant": "CMATIC",
+      "market": "Türkiye",
+      "modelYear": null,
+      "sourceUrl": "https://www.claas.com/tr-tr/tarim-makineleri/traktoerler/arion-600-500",
+      "sourceType": "manufacturer",
+      "existingDraftId": null,
+      "disposition": "hold_for_review",
+      "specs": [
+        {
+          "name": "engine_cylinders",
+          "value": "4",
+          "unit": "count",
+          "locator": "550 CMATIC / Özellikler / Silindir",
+          "context": null
+        },
+        {
+          "name": "engine_displacement",
+          "value": "4.5",
+          "unit": "L",
+          "locator": "550 CMATIC / Özellikler / Silindir hacmi",
+          "context": null
+        },
+        {
+          "name": "maximum_engine_power_oem_label",
+          "value": "165",
+          "unit": "BG",
+          "locator": "550 CMATIC / Özellikler / Maks. güç ECE R 120",
+          "context": "OEM table max ECE R120; boost status not separated; no nominal power inferred"
+        },
+        {
+          "name": "transmission",
+          "value": "CMATIC continuous variable",
+          "unit": null,
+          "locator": "550 CMATIC / Özellikler / Şanzıman",
+          "context": null
+        }
+      ],
+      "notes": [
+        "Keep CMATIC and HEXASHIFT separate. 660 old global draft has different power categories; do not overwrite or label 205 BG as unboosted. Four facts alone may not meet public catalogue admission threshold."
+      ]
+    },
+    {
+      "brand": "CLAAS",
+      "model": "Arion 530",
+      "variant": "CMATIC",
+      "market": "Türkiye",
+      "modelYear": null,
+      "sourceUrl": "https://www.claas.com/tr-tr/tarim-makineleri/traktoerler/arion-600-500",
+      "sourceType": "manufacturer",
+      "existingDraftId": null,
+      "disposition": "hold_for_review",
+      "specs": [
+        {
+          "name": "engine_cylinders",
+          "value": "4",
+          "unit": "count",
+          "locator": "530 CMATIC / Özellikler / Silindir",
+          "context": null
+        },
+        {
+          "name": "engine_displacement",
+          "value": "4.5",
+          "unit": "L",
+          "locator": "530 CMATIC / Özellikler / Silindir hacmi",
+          "context": null
+        },
+        {
+          "name": "maximum_engine_power_oem_label",
+          "value": "145",
+          "unit": "BG",
+          "locator": "530 CMATIC / Özellikler / Maks. güç ECE R 120",
+          "context": "OEM table max ECE R120; boost status not separated; no nominal power inferred"
+        },
+        {
+          "name": "transmission",
+          "value": "CMATIC continuous variable",
+          "unit": null,
+          "locator": "530 CMATIC / Özellikler / Şanzıman",
+          "context": null
+        }
+      ],
+      "notes": [
+        "Keep CMATIC and HEXASHIFT separate. 660 old global draft has different power categories; do not overwrite or label 205 BG as unboosted. Four facts alone may not meet public catalogue admission threshold."
+      ]
+    },
+    {
+      "brand": "CLAAS",
+      "model": "Arion 510",
+      "variant": "CMATIC",
+      "market": "Türkiye",
+      "modelYear": null,
+      "sourceUrl": "https://www.claas.com/tr-tr/tarim-makineleri/traktoerler/arion-600-500",
+      "sourceType": "manufacturer",
+      "existingDraftId": null,
+      "disposition": "hold_for_review",
+      "specs": [
+        {
+          "name": "engine_cylinders",
+          "value": "4",
+          "unit": "count",
+          "locator": "510 CMATIC / Özellikler / Silindir",
+          "context": null
+        },
+        {
+          "name": "engine_displacement",
+          "value": "4.5",
+          "unit": "L",
+          "locator": "510 CMATIC / Özellikler / Silindir hacmi",
+          "context": null
+        },
+        {
+          "name": "maximum_engine_power_oem_label",
+          "value": "125",
+          "unit": "BG",
+          "locator": "510 CMATIC / Özellikler / Maks. güç ECE R 120",
+          "context": "OEM table max ECE R120; boost status not separated; no nominal power inferred"
+        },
+        {
+          "name": "transmission",
+          "value": "CMATIC continuous variable",
+          "unit": null,
+          "locator": "510 CMATIC / Özellikler / Şanzıman",
+          "context": null
+        }
+      ],
+      "notes": [
+        "Keep CMATIC and HEXASHIFT separate. 660 old global draft has different power categories; do not overwrite or label 205 BG as unboosted. Four facts alone may not meet public catalogue admission threshold."
+      ]
+    },
+    {
+      "brand": "CLAAS",
+      "model": "Arion 550",
+      "variant": "HEXASHIFT",
+      "market": "Türkiye",
+      "modelYear": null,
+      "sourceUrl": "https://www.claas.com/tr-tr/tarim-makineleri/traktoerler/arion-600-500",
+      "sourceType": "manufacturer",
+      "existingDraftId": null,
+      "disposition": "hold_for_review",
+      "specs": [
+        {
+          "name": "engine_cylinders",
+          "value": "4",
+          "unit": "count",
+          "locator": "550 HEXASHIFT / Özellikler / Silindir",
+          "context": null
+        },
+        {
+          "name": "engine_displacement",
+          "value": "4.5",
+          "unit": "L",
+          "locator": "550 HEXASHIFT / Özellikler / Silindir hacmi",
+          "context": null
+        },
+        {
+          "name": "maximum_engine_power_oem_label",
+          "value": "165",
+          "unit": "BG",
+          "locator": "550 HEXASHIFT / Özellikler / Maks. güç ECE R 120",
+          "context": "OEM table max ECE R120; boost status not separated; no nominal power inferred"
+        },
+        {
+          "name": "transmission",
+          "value": "HEXASHIFT / REVERSHIFT 24F/24R",
+          "unit": null,
+          "locator": "550 HEXASHIFT / Özellikler / Şanzıman",
+          "context": null
+        }
+      ],
+      "notes": [
+        "Keep CMATIC and HEXASHIFT separate. 660 old global draft has different power categories; do not overwrite or label 205 BG as unboosted. Four facts alone may not meet public catalogue admission threshold."
+      ]
+    },
+    {
+      "brand": "CLAAS",
+      "model": "Arion 530",
+      "variant": "HEXASHIFT",
+      "market": "Türkiye",
+      "modelYear": null,
+      "sourceUrl": "https://www.claas.com/tr-tr/tarim-makineleri/traktoerler/arion-600-500",
+      "sourceType": "manufacturer",
+      "existingDraftId": null,
+      "disposition": "hold_for_review",
+      "specs": [
+        {
+          "name": "engine_cylinders",
+          "value": "4",
+          "unit": "count",
+          "locator": "530 HEXASHIFT / Özellikler / Silindir",
+          "context": null
+        },
+        {
+          "name": "engine_displacement",
+          "value": "4.5",
+          "unit": "L",
+          "locator": "530 HEXASHIFT / Özellikler / Silindir hacmi",
+          "context": null
+        },
+        {
+          "name": "maximum_engine_power_oem_label",
+          "value": "145",
+          "unit": "BG",
+          "locator": "530 HEXASHIFT / Özellikler / Maks. güç ECE R 120",
+          "context": "OEM table max ECE R120; boost status not separated; no nominal power inferred"
+        },
+        {
+          "name": "transmission",
+          "value": "HEXASHIFT / REVERSHIFT 24F/24R",
+          "unit": null,
+          "locator": "530 HEXASHIFT / Özellikler / Şanzıman",
+          "context": null
+        }
+      ],
+      "notes": [
+        "Keep CMATIC and HEXASHIFT separate. 660 old global draft has different power categories; do not overwrite or label 205 BG as unboosted. Four facts alone may not meet public catalogue admission threshold."
+      ]
+    },
+    {
+      "brand": "CLAAS",
+      "model": "Arion 510",
+      "variant": "HEXASHIFT",
+      "market": "Türkiye",
+      "modelYear": null,
+      "sourceUrl": "https://www.claas.com/tr-tr/tarim-makineleri/traktoerler/arion-600-500",
+      "sourceType": "manufacturer",
+      "existingDraftId": null,
+      "disposition": "hold_for_review",
+      "specs": [
+        {
+          "name": "engine_cylinders",
+          "value": "4",
+          "unit": "count",
+          "locator": "510 HEXASHIFT / Özellikler / Silindir",
+          "context": null
+        },
+        {
+          "name": "engine_displacement",
+          "value": "4.5",
+          "unit": "L",
+          "locator": "510 HEXASHIFT / Özellikler / Silindir hacmi",
+          "context": null
+        },
+        {
+          "name": "maximum_engine_power_oem_label",
+          "value": "125",
+          "unit": "BG",
+          "locator": "510 HEXASHIFT / Özellikler / Maks. güç ECE R 120",
+          "context": "OEM table max ECE R120; boost status not separated; no nominal power inferred"
+        },
+        {
+          "name": "transmission",
+          "value": "HEXASHIFT / REVERSHIFT 24F/24R",
+          "unit": null,
+          "locator": "510 HEXASHIFT / Özellikler / Şanzıman",
+          "context": null
+        }
+      ],
+      "notes": [
+        "Keep CMATIC and HEXASHIFT separate. 660 old global draft has different power categories; do not overwrite or label 205 BG as unboosted. Four facts alone may not meet public catalogue admission threshold."
+      ]
+    },
+    {
+      "brand": "Case IH",
+      "model": "Farmall 110A",
+      "variant": "Medium Utility / cab / 4WD / Stage V",
+      "market": "US",
+      "modelYear": null,
+      "sourceUrl": "https://www.caseih.com/en-us/unitedstates/products/tractors/farmall-utility-series/farmall-medium-utility-a-series/farmall-medium-utility-110a",
+      "sourceType": "manufacturer",
+      "existingDraftId": "f59ebde9-0e07-49fb-90a0-b39d7aad6875",
+      "disposition": "hold_for_review",
+      "specs": [
+        {
+          "name": "engine_power_advertised",
+          "value": "110",
+          "unit": "HP",
+          "locator": "Product summary / Horsepower",
+          "context": "Advertised up to; no rating standard stated"
+        },
+        {
+          "name": "pto_power_advertised",
+          "value": "93",
+          "unit": "HP",
+          "locator": "Product summary / PTO Horsepower",
+          "context": "No test basis specified"
+        },
+        {
+          "name": "operator_station",
+          "value": "Cab",
+          "unit": null,
+          "locator": "Product summary / Operator Area",
+          "context": null
+        },
+        {
+          "name": "drivetrain",
+          "value": "4WD",
+          "unit": null,
+          "locator": "Product summary / Traction",
+          "context": null
+        },
+        {
+          "name": "transmission",
+          "value": "Electronic power shuttle",
+          "unit": null,
+          "locator": "Product summary / Transmission",
+          "context": null
+        },
+        {
+          "name": "emissions_standard",
+          "value": "Stage V",
+          "unit": null,
+          "locator": "Product summary / Emissions compliance",
+          "context": null
+        }
+      ],
+      "notes": [
+        "Do not replace old Farmall 100A brochure variant (90 PTO hp) with this medium-utility variant (93 PTO hp). Need configuration-specific brochure and separate identity decision."
+      ]
+    },
+    {
+      "brand": "John Deere",
+      "model": "6M 125",
+      "variant": "Australian catalogue / transmission options",
+      "market": "Australia",
+      "modelYear": null,
+      "sourceUrl": "https://www.deere.com.au/en/tractors/utility-tractors/6-family-utility-tractors/6m-125-tractor/",
+      "sourceType": "manufacturer",
+      "existingDraftId": "773f7c38-a37b-4f84-b60c-db0b8f656d07",
+      "disposition": "hold_for_review",
+      "specs": [
+        {
+          "name": "rated_engine_power",
+          "value": "125",
+          "unit": "hp",
+          "locator": "6M 125 heading / Engine HP",
+          "context": "Rated"
+        },
+        {
+          "name": "maximum_engine_power",
+          "value": "135",
+          "unit": "hp",
+          "locator": "6M 125 heading / Engine HP",
+          "context": "Max; not rated"
+        },
+        {
+          "name": "engine_displacement",
+          "value": "4.5",
+          "unit": "L",
+          "locator": "6M 125 product summary",
+          "context": null
+        },
+        {
+          "name": "engine_cylinders",
+          "value": "4",
+          "unit": "count",
+          "locator": "6M 125 product summary",
+          "context": null
+        },
+        {
+          "name": "transmission_options",
+          "value": "PQT / AQT / CQT / IVT",
+          "unit": null,
+          "locator": "6M 125 product summary",
+          "context": "Alternatives not simultaneous equipment"
+        },
+        {
+          "name": "ipm_boost_up_to",
+          "value": "20",
+          "unit": "hp",
+          "locator": "6M 125 heading / Boost with IPM",
+          "context": "Non-stationary PTO and transport applications"
+        },
+        {
+          "name": "wheelbase_cab",
+          "value": "2400",
+          "unit": "mm",
+          "locator": "Maneuverability / short wheelbase cab",
+          "context": "Does not apply to OOS"
+        }
+      ],
+      "notes": [
+        "Existing global draft headline 135 is max, not rated; do not change global record without market identity review."
+      ]
+    },
+    {
+      "brand": "Kubota",
+      "model": "M7040",
+      "variant": "4WD / ROPS / V3307-DI / 8F8R",
+      "market": "Philippines",
+      "modelYear": null,
+      "sourceUrl": "https://kubota.com.ph/product/m7040/",
+      "sourceType": "manufacturer",
+      "existingDraftId": "1ed827e4-0f57-4f9a-be45-9d7ffb49542b",
+      "disposition": "hold_for_review",
+      "specs": [
+        {
+          "name": "drivetrain",
+          "value": "4WD",
+          "unit": null,
+          "locator": "Drive system",
+          "context": null
+        },
+        {
+          "name": "engine_model",
+          "value": "V3307-DI",
+          "unit": null,
+          "locator": "Engine / Model",
+          "context": null
+        },
+        {
+          "name": "engine_cylinders",
+          "value": "4",
+          "unit": "count",
+          "locator": "Engine / No. of cylinder",
+          "context": null
+        },
+        {
+          "name": "engine_displacement",
+          "value": "3.331",
+          "unit": "L",
+          "locator": "Engine / Total displacement",
+          "context": null
+        },
+        {
+          "name": "engine_net_power",
+          "value": "50.7",
+          "unit": "kW",
+          "locator": "Engine / net power",
+          "context": "Net, OEM also lists 68 HP and 68.9 PS"
+        },
+        {
+          "name": "pto_power",
+          "value": "46.2",
+          "unit": "kW",
+          "locator": "Engine / Power Drive Shaft",
+          "context": "OEM also lists 61.95 HP and 62.81 PS; test standard not stated"
+        },
+        {
+          "name": "engine_rated_speed",
+          "value": "2600",
+          "unit": "rpm",
+          "locator": "Engine / Rated revolution",
+          "context": null
+        },
+        {
+          "name": "engine_torque",
+          "value": "232",
+          "unit": "Nm",
+          "locator": "Engine / maximum torque",
+          "context": "Torque rpm unstated"
+        },
+        {
+          "name": "fuel_tank_capacity",
+          "value": "65",
+          "unit": "L",
+          "locator": "Engine / fuel tank",
+          "context": null
+        },
+        {
+          "name": "overall_length",
+          "value": "3445",
+          "unit": "mm",
+          "locator": "Dimension / overall length",
+          "context": "Without three-point linkage"
+        },
+        {
+          "name": "overall_width",
+          "value": "1860",
+          "unit": "mm",
+          "locator": "Dimension / overall width",
+          "context": null
+        },
+        {
+          "name": "overall_height",
+          "value": "2265",
+          "unit": "mm",
+          "locator": "Dimension / overall height",
+          "context": "With ROPS"
+        },
+        {
+          "name": "wheelbase",
+          "value": "2050",
+          "unit": "mm",
+          "locator": "Dimension / wheel base",
+          "context": null
+        },
+        {
+          "name": "ground_clearance",
+          "value": "415",
+          "unit": "mm",
+          "locator": "Dimension / min ground clearance",
+          "context": null
+        },
+        {
+          "name": "weight",
+          "value": "2090",
+          "unit": "kg",
+          "locator": "Dimension / weight",
+          "context": "Weight type unspecified"
+        },
+        {
+          "name": "transmission",
+          "value": "8F/8R gear shift",
+          "unit": null,
+          "locator": "Traveling System / Transmission",
+          "context": null
+        },
+        {
+          "name": "hydraulic_pump_capacity",
+          "value": "41.6",
+          "unit": "L/min",
+          "locator": "Hydraulic Unit / Pump capacity",
+          "context": "Total vs implement flow not stated"
+        },
+        {
+          "name": "hydraulic_system_pressure",
+          "value": "19.1",
+          "unit": "MPa",
+          "locator": "Hydraulic Unit / System pressure",
+          "context": null
+        },
+        {
+          "name": "hitch_category",
+          "value": "1 and 2",
+          "unit": null,
+          "locator": "Hydraulic Unit / 3-point hitch",
+          "context": null
+        },
+        {
+          "name": "rear_lift_capacity",
+          "value": "2300",
+          "unit": "kg",
+          "locator": "Hydraulic Unit / At lift points",
+          "context": "At lift points"
+        },
+        {
+          "name": "rear_lift_capacity",
+          "value": "1800",
+          "unit": "kg",
+          "locator": "Hydraulic Unit / 24 in. behind lift points",
+          "context": "610 mm behind lift points"
+        },
+        {
+          "name": "rear_pto_speed",
+          "value": "540",
+          "unit": "rpm",
+          "locator": "Power Take Off Shaft / PTO/engine speed",
+          "context": "Engine 2205 rpm"
+        },
+        {
+          "name": "rear_pto_splines",
+          "value": "6",
+          "unit": "count",
+          "locator": "Power Take Off Shaft / Rear PTO",
+          "context": null
+        }
+      ],
+      "notes": [
+        "Gross power cell is blank. Do not infer from marketed 70HP label or other region manual."
+      ]
+    },
+    {
+      "brand": "Kubota",
+      "model": "M6-141 Utility",
+      "variant": "Stage V / V6108-TIE5",
+      "market": "Türkiye",
+      "modelYear": null,
+      "sourceUrl": "https://ktt.kubota-eu.com/agriculture/products/m6-141-utility/",
+      "sourceType": "manufacturer",
+      "existingDraftId": "43bb24a3-9cb0-4e06-8583-5c5fb9e15619",
+      "disposition": "hold_for_review",
+      "specs": [
+        {
+          "name": "engine_model",
+          "value": "V6108-TIE5",
+          "unit": null,
+          "locator": "M6-141 Utility model table",
+          "context": null
+        },
+        {
+          "name": "engine_displacement",
+          "value": "6124",
+          "unit": "cm³",
+          "locator": "M6-141 Utility model table",
+          "context": null
+        },
+        {
+          "name": "engine_power_advertised",
+          "value": "105.5",
+          "unit": "kW",
+          "locator": "M6-141 Utility model table",
+          "context": "OEM also lists 143.4 hp; no power category or test standard given"
+        },
+        {
+          "name": "wheelbase",
+          "value": "2680",
+          "unit": "mm",
+          "locator": "M6-141 Utility model table",
+          "context": null
+        },
+        {
+          "name": "emissions_standard",
+          "value": "EU Stage V",
+          "unit": null,
+          "locator": "Motor section",
+          "context": null
+        },
+        {
+          "name": "transmission",
+          "value": "Intelli-Shift 24F/24R",
+          "unit": null,
+          "locator": "Şanzıman section",
+          "context": null
+        },
+        {
+          "name": "transmission_creeper_option",
+          "value": "32F/32R",
+          "unit": null,
+          "locator": "Şanzıman section",
+          "context": "Optional creeper"
+        },
+        {
+          "name": "hitch_category",
+          "value": "III",
+          "unit": null,
+          "locator": "Hidrolik sistem section",
+          "context": null
+        },
+        {
+          "name": "rear_lift_capacity_advertised",
+          "value": "6100",
+          "unit": "kg",
+          "locator": "Hidrolik sistem section",
+          "context": "Category III; location not specified; same text also mentions 5000 kg, retain conflict note"
+        }
+      ],
+      "notes": [
+        "Hold lift claim until brochure clarifies options and measuring point. Do not use general M6-141 global draft as confirmed identical."
+      ]
+    }
+  ]
+}
