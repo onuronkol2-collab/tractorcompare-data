@@ -22,11 +22,12 @@ test('document consent not persisted or restored',()=>{
  assert.doesNotMatch(source,/localStorage\.getItem|setItem\(AD_CHOICE_KEY,\s*choice\)/);
  assert.match(source,/if \(event.persisted\) denyAndReload/);
 });
-test('both flags required, adsense preserved',()=>{
- for(const path of ['../src/layouts/SiteLayout.astro','../src/components/AnalyticsPrivacy.astro']){
- const source=readFileSync(new URL(path,import.meta.url),'utf8');
- assert.ok(source.includes('PUBLIC_INFOLINKS_ENABLED === "true" && import.meta.env.PUBLIC_INFOLINKS_CONSENT_VERIFIED === "true"'));
- }
+test('production onboarding metadata is inert; no ad component mounted',()=>{
  const layout=readFileSync(new URL('../src/layouts/SiteLayout.astro',import.meta.url),'utf8');
  assert.match(layout,/name="google-adsense-account"/);
+ assert.doesNotMatch(layout,/import InfolinksConsent|<InfolinksConsent|PUBLIC_INFOLINKS_ENABLED/);
+ assert.match(layout,/indexingEnabled && Astro\.site\?\.origin === "https:\/\/tractorvs\.com" && \(plainPath === "\/" \|\| isInfolinksRoute\(plainPath\)\)/);
+ const block=layout.match(/<script is:inline type="application\/json" id="tractorvs-infolinks-pending">([^<]+)<\/script>/);
+ assert.ok(block);
+ assert.deepEqual(JSON.parse(block[1]),{infolinks_pid:INFOLINKS_PID,infolinks_wsid:INFOLINKS_WSID,script:INFOLINKS_SRC,status:'pending-inactive'});
 });

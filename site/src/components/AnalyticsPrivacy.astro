@@ -2,12 +2,9 @@
 import SiteLayout from "../layouts/SiteLayout.astro";
 import { analyticsText } from "../lib/analytics-i18n.ts";
 import type { Locale } from "../lib/locales.ts";
-import { infolinksCopy } from "../lib/infolinks-i18n.ts";
 interface Props { lang: Locale; }
 const { lang } = Astro.props;
 const copy = analyticsText(lang);
-const ad = infolinksCopy[lang];
-const adEnabled = import.meta.env.PUBLIC_INFOLINKS_ENABLED === "true" && import.meta.env.PUBLIC_INFOLINKS_CONSENT_VERIFIED === "true" && Astro.site?.origin === "https://tractorvs.com" && import.meta.env.PUBLIC_INDEXING_ENABLED === "true";
 ---
 <SiteLayout
   lang={lang}
@@ -27,7 +24,6 @@ const adEnabled = import.meta.env.PUBLIC_INFOLINKS_ENABLED === "true" && import.
       <p>{copy.cloudflareCollect}</p>
       <p><a href="https://developers.cloudflare.com/speed/observatory/rum-beacon/#privacy-information"
           target="_blank" rel="noopener noreferrer">{copy.cloudflareInfo} ↗</a></p>
-      {adEnabled && <><h2>{ad[0]}</h2><p>{ad[1]}</p><p>{ad[5]}</p><p><a href="https://sites0001.infolinks.com/privacy-policy" target="_blank" rel="noopener noreferrer">{ad[4]}</a></p></>}
       <h2>{copy.settings}</h2>
       <p>{copy.privacyChoice}</p>
       <p>
