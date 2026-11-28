@@ -252,8 +252,8 @@ export const TECHNICAL_DEEP_DIVES = [
       "en": "Tractor Horsepower and Torque: HP, PS, kW and PTO Compared"
     },
     "description": {
-      "tr": "Traktör motor gücü, tork ve PTO değerlerini karşılaştırın. HP, PS ve kW farklarını öğrenin; devirden mil gücü veya tork hesaplayın.",
-      "en": "Compare tractor engine horsepower, torque and PTO ratings. Understand hp, PS and kW, and calculate shaft power or torque from RPM."
+      "tr": "Traktörde beygir gücü neyi gösterir? HP, PS, kW, tork, nominal güç, boost ve PTO farklarını gerçek kullanım örnekleriyle öğrenin.",
+      "en": "A practical guide to tractor horsepower, PS and kW, rated versus maximum output, torque and how to compare engine and PTO ratings."
     },
     "lead": {
       "tr": "Traktör bakarken en çok sorulan soru “Kaç beygir?” olur. Ama iki traktörün ikisinde de 100 beygir yazması, tarlada her işi aynı yapacakları anlamına gelmez. Çünkü güç, tork ve kuyruk miline aktarılan güç farklı şeylerdir. Ayrıca kataloglarda HP, PS ve kW gibi farklı birimler kullanılır. Gelin bu terimleri günlük örneklerle tanıyalım ve hangi sayıya ne zaman bakacağımızı anlayalım.",
