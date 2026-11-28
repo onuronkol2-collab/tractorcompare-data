@@ -33,7 +33,20 @@ test("sequential passes use existing metric field arithmetic",()=>{
 const row={evidence:"independent_reviewed",metric:"pto_power_kw",value:100,modelId:"a",reportId:"r",reportLocator:"p. 3",protocol:"example",protocolVersion:"1",loadPoint:"rated",configuration:"standard",measurementBasis:"shaft",unit:"kW"};
 test("measured comparisons fail closed on missing or unequal metadata",()=>{
  assert.deepEqual(compareIndependentMeasurements(row,{...row,modelId:"b",value:110}),{state:"matched_metadata",difference:10,percent:10});
- assert.equal(compareIndependentMeasurements(row,{...row,loadPoint:"partial"}).difference,null);
+ assert.equal(compareIndependentMeasurements(row,{...row,modelId:"b",loadPoint:"partial"}).difference,null);
  assert.equal(compareIndependentMeasurements(row,{...row,evidence:"manufacturer"}).state,"insufficient_evidence");
  assert.equal(compareIndependentMeasurements(row,{...row,reportLocator:""}).state,"insufficient_evidence");
+});
+
+test("same model and wrong canonical measurement units never rank",()=>{
+ assert.equal(compareIndependentMeasurements(row,{...row,value:110}).state,"same_model");
+ assert.equal(compareIndependentMeasurements({...row,unit:"hp"},{...row,modelId:"b",unit:"hp"}).state,"insufficient_evidence");
+});
+test("full deposit incurs no financing interest and no missing-value assumptions",()=>{
+ const out=investmentScenarios({...investment,down:investment.price,annualRate:10,resale:[null,0,null,0],annualHectares:0});
+ assert.equal(out.monthlyPayment,0);
+ assert.equal(out.scenarios[0].total,null);
+ assert.equal(out.scenarios[1].interestPaid,0);
+ assert.equal(out.scenarios[1].perHectare,null);
+ assert.equal(out.scenarios[1].total,124200);
 });
