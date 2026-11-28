@@ -1,0 +1,94 @@
+name: TractorVS four new front photographs and rear retirement live proof
+on:
+  pull_request:
+    branches: [main]
+    paths: ['.github/workflows/qa-four-front-photo-live-proof-20261125.yml']
+permissions:
+  contents: read
+jobs:
+  live:
+    if: github.head_ref == 'qa/four-front-photo-live-proof-20261125' && github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22.23.4"
+      - name: Require deployed target or verified main descendant with trusted Workers build
+        id: readiness
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          TRACTORVS_REQUIRE_WORKERS_BUILD: "true"
+        run: node site/scripts/live-release-readiness.mjs 1944ecef773fb30aad6ca25c4241b69ed8fc0d2b / /tr/
+      - name: Verify forty model pages, twelve JPEG hashes and nine removed rear assets
+        env:
+          RELEASE_SHA: ${{ steps.readiness.outputs.release_sha }}
+        run: |
+          python3 - <<'PY'
+          import concurrent.futures, hashlib, json, os, re, urllib.request, urllib.error
+          from pathlib import Path
+          from html.parser import HTMLParser
+          origin="https://tractorvs.com"
+          release=os.environ["RELEASE_SHA"]
+          assert re.fullmatch(r"[a-f0-9]{40}",release)
+          locales=["en","tr","zh","hi","pt-br","fr","de","ru","ja","es"]
+          evidence=json.loads(Path("site/docs/photo-evidence-50-target-wave-one-six-20261125.json").read_text())
+          routes={"d1258ec7-f544-4d8b-b5a3-dee2d2b15a6b":"basak-traktor-2055-d1258ec7","2bc6ed35-ed73-4a0d-9edb-53462f0045fc":"basak-traktor-3026-2bc6ed35","70e438cb-c57c-4744-bf9f-2ae0a38e35b6":"bobcat-ct2540-70e438cb","cafcb2bc-d2a4-452e-bdc8-3a52e9a5db81":"bobcat-ct4058-cafcb2bc"}
+          assert len(evidence)==4 and {e["tractorId"] for e in evidence}==set(routes)
+          assert len({e["originalSha256"] for e in evidence})==4
+          rear=["lindner-lintrac-160-ldrive-marcelx42-rear","tym-t2025p-t25-rear-marcelx42-2025","tym-t6115-t115-rear-marcelx42-2025"]
+          class Page(HTMLParser):
+              def __init__(self):
+                  super().__init__(convert_charrefs=True)
+                  self.canon=[];self.sha=[];self.sources=[];self.licenses=[];self.images=[]
+              def handle_starttag(self,tag,attrs):
+                  a=dict(attrs)
+                  if tag=="link" and "canonical" in a.get("rel","").lower().split():self.canon.append(a.get("href"))
+                  if tag=="meta" and a.get("name")=="tractorvs-release-sha":self.sha.append(a.get("content"))
+                  if "data-photo-source" in a:self.sources.append(a["data-photo-source"])
+                  if "data-photo-license" in a:self.licenses.append(a["data-photo-license"])
+                  if tag=="img":self.images.append(a)
+          def fetch(path):
+              url=origin+path
+              req=urllib.request.Request(url,headers={"User-Agent":"TractorVS release verification (read-only; GitHub Actions)","Accept-Encoding":"identity","Cache-Control":"no-cache"})
+              with urllib.request.urlopen(req,timeout=20) as r:
+                  if r.status!=200 or r.geturl()!=url:raise ValueError("unexpected HTTP status or redirect")
+                  data=r.read(12000001)
+                  if len(data)>12000000:raise ValueError("response too large")
+                  return data,r.headers.get_content_type()
+          def model(item):
+              lang,e=item
+              path=("" if lang=="en" else "/"+lang)+"/tractors/"+routes[e["tractorId"]]+"/"
+              b,mime=fetch(path);p=Page();p.feed(b.decode("utf-8"))
+              assert mime=="text/html" and p.canon==[origin+path] and p.sha==[release], "page or release mismatch"
+              assert any(e["fileId"] in str(x) for x in p.images), "missing image"
+              assert e["sourcePage"] in p.sources and e["licenseUrl"] in p.licenses, "missing attribution"
+              return {"group":"model","path":path,"release":release}
+          def image(d):
+              path="/images/tractors/"+d["file"];b,mime=fetch(path)
+              assert mime=="image/jpeg" and b.startswith(b"\xff\xd8"), "JPEG MIME/signature"
+              assert len(b)==d["bytes"] and hashlib.sha256(b).hexdigest()==d["sha256"], "bytes/hash"
+              return {"group":"jpeg","path":path}
+          def removed(path):
+              try:fetch(path)
+              except urllib.error.HTTPError as e:
+                  if e.code in (404,410):return {"group":"removed","path":path,"status":e.code}
+                  raise
+              raise ValueError("retired asset still accessible: "+path)
+          def run(item):
+              fn,arg=item
+              try:return {"ok":True,**fn(arg)}
+              except Exception as e:return {"ok":False,"group":fn.__name__,"item":str(arg)[:220],"error":str(e)}
+          work=[(model,(lang,e)) for lang in locales for e in evidence]+[(image,d) for e in evidence for d in e["derivatives"]]+[(removed,"/images/tractors/"+f+"-"+str(w)+".jpg") for f in rear for w in (480,960,1920)]
+          assert len(work)==61
+          with concurrent.futures.ThreadPoolExecutor(max_workers=2) as pool:results=list(pool.map(run,work))
+          last=model(("en",evidence[0]))
+          assert last["release"]==release
+          for row in results:
+              if not row["ok"]:print("PHOTO_RELEASE_ERROR",json.dumps(row),flush=True)
+          print("PHOTO_RELEASE_LIVE_RESULT",json.dumps({"release":release,"checked":len(results),"passed":sum(x["ok"] for x in results),"newUniquePhotos":4 if all(x["ok"] for x in results) else 0}),flush=True)
+          assert all(x["ok"] for x in results)
+          PY
