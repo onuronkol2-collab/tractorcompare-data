@@ -47,3 +47,14 @@
 @media screen and (forced-colors:active){
  #main .model-spec-section :is(a,button,summary):focus-visible,#main .model-hero :is(a,button,summary):focus-visible{outline:3px solid Highlight;outline-offset:3px}
 }
+
+/* Model market presentation only: keep scoped component identity and SSR
+   content byte-stable for the existing sitemap provenance checkpoint. */
+#main .model-market-heading label{display:flex;align-items:center;flex-wrap:wrap;gap:8px;min-inline-size:0;max-inline-size:100%}
+#main .model-market-heading select{margin-left:0;min-inline-size:0;max-inline-size:100%;font-size:max(16px,1rem)}
+#main .model-market-price :is(.model-market-price-details,.model-market-price-note){font-size:.875rem;overflow-wrap:anywhere}
+#main .model-market-price-value{font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
+#main .model-market-price a:not([hidden]){display:inline-flex;align-items:center;min-height:44px;overflow-wrap:anywhere}
+#main .model-market-price :is(a,select):focus-visible{outline:3px solid #175c37;outline-offset:3px}
+@media(max-width:520px){#main .model-market-heading label{display:grid;width:100%}#main .model-market-heading select{width:100%}}
+@media(forced-colors:active){#main .model-market-price :is(a,select):focus-visible{outline-color:Highlight}}

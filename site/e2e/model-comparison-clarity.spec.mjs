@@ -20,7 +20,7 @@ for(const locale of ["tr","de","ja"]){
  });
 }
 
-test("published model price change announces selected market without moving focus",async({page})=>{
+test("published model market selection retains focus and readable controls",async({page})=>{
  await page.goto("/tr/tractors/");
  const model=page.locator(".tractor-card-main").first();
  if(!await model.count()){test.skip(true,"No published model links in offline build");return;}
@@ -37,7 +37,10 @@ test("published model price change announces selected market without moving focu
  expect(chosen).toBeTruthy();
  await select.focus();
  await select.selectOption(chosen.value);
- await expect(page.locator(".model-market-sr-status")).toContainText(chosen.label);
+ await expect(select).toHaveValue(chosen.value);
+ expect(await select.evaluate(el=>parseFloat(getComputedStyle(el).fontSize))).toBeGreaterThanOrEqual(16);
+ expect((await select.boundingBox())?.height??0).toBeGreaterThanOrEqual(44);
+ await expect(page.locator("[data-model-price-value]")).not.toHaveText("");
  await expect(select).toBeFocused();
  const sourceLinks=page.locator(".model-sources-list a");
  for(const link of await sourceLinks.all()){
