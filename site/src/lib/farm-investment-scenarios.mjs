@@ -24,7 +24,10 @@ export function investmentScenarios(input){
  const horizons=[1,3,5,10];
  const resale=horizons.map((_,i)=>input.resale[i]===null?null:bounded(input.resale[i],0,1e12,"resale"));
  const principal=price-down, rate=annualRate/1200;
- const payment=rate===0?principal/term:principal*(rate/(-Math.expm1(-term*Math.log1p(rate))));
+ const discount=-Math.expm1(-term*Math.log1p(rate));
+ // At the floating-point limit the annuity converges to equal principal payments.
+ const payment=rate===0||discount===0?principal/term:principal*(rate/discount);
+ if(!Number.isFinite(payment))throw new RangeError("Unrepresentable payment");
  const annualOperating=hours*(fuel*fuelPrice+maintenance+other)+fixed;
  // Amortize only as far as the longest requested horizon. Pay outstanding principal on sale.
  let balance=principal,paid=0,interest=0;

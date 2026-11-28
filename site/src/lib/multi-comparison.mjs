@@ -11,7 +11,7 @@ export function multiComparisonRows(models,view="all",locale="en"){
  const ids=new Set(),groups=new Map();
  for(let i=0;i<models.length;i++){
   const model=models[i];
-  if(!model||!validId(model.id)||ids.has(model.id)||!isPublishedSpecList(model.specs))throw new RangeError("Invalid model");
+  if(!model||!validId(model.id)||ids.has(model.id)||!isPublishedSpecList(Array.isArray(model.specs)?Array.from(model.specs):model.specs))throw new RangeError("Invalid model");
   ids.add(model.id);
   for(const spec of model.specs){
    let group=groups.get(spec.key);
@@ -32,7 +32,7 @@ export function multiComparisonRows(models,view="all",locale="en"){
  * Strict origin/path checks ensure this cannot share arbitrary external targets.
  */
 export function multiComparisonShareUrl(href,ids,view="all"){
- if(!Array.isArray(ids)||ids.length<2||ids.length>4||!ids.every(validId)||new Set(ids).size!==ids.length||!modes.has(view))return null;
+ if(!Array.isArray(ids)||ids.length<2||ids.length>4||!Array.from(ids).every(validId)||new Set(ids).size!==ids.length||!modes.has(view))return null;
  try{
   const url=new URL(href);
   if(url.origin!=="https://tractorvs.com"||url.username||url.password||!/^\/(?:tr\/|zh\/|hi\/|pt-br\/|fr\/|de\/|ru\/|ja\/|es\/)?compare\/$/.test(url.pathname))return null;

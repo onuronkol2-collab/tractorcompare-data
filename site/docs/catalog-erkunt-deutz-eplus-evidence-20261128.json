@@ -1,0 +1,747 @@
+{
+  "schema": "tractorvs-research-evidence-v1",
+  "researchedOn": "2026-11-28",
+  "status": "research_only_not_importable",
+  "models": [
+    {
+      "brand": "Erkunt",
+      "model": "Nimet 75 E+",
+      "variant": "CRD5 Deutz / 4WD cab / 24F24R",
+      "market": "Türkiye",
+      "modelYear": null,
+      "existingDraftId": null,
+      "disposition": "hold_for_review",
+      "sourceUrl": "https://erkunttraktor.com.tr/assets/model_dosyalar/pdfs/E%2BCRD5_deutz_brosur.pdf?t=20260313164821",
+      "sourceType": "manufacturer",
+      "sourceRead": "PDF text retrieved; screenshot failed",
+      "identitySourceUrl": "https://erkunttraktor.com.tr/Modeller",
+      "specs": [
+        {
+          "name": "engine_max_power",
+          "value": "55.4",
+          "unit": "kW",
+          "locator": "Technical table / Nimet 75 E+ / maximum output",
+          "context": "Manufacturer maximum; standard not stated"
+        },
+        {
+          "name": "engine_max_power_manufacturer_label",
+          "value": "75.3",
+          "unit": "hp",
+          "locator": "Technical table / Nimet 75 E+ / maximum output",
+          "context": "Manufacturer paired label; not a converted mechanical hp"
+        },
+        {
+          "name": "engine_model",
+          "value": "Deutz TCD 2.9 C5ET55EA",
+          "unit": null,
+          "locator": "Technical table / Nimet 75 E+ / engine model",
+          "context": null
+        },
+        {
+          "name": "engine_torque",
+          "value": "375",
+          "unit": "Nm",
+          "locator": "Technical table / Nimet 75 E+ / maximum torque",
+          "context": "1400 rpm"
+        },
+        {
+          "name": "peak_torque_speed",
+          "value": "1400",
+          "unit": "rpm",
+          "locator": "Technical table / Nimet 75 E+ / peak torque speed",
+          "context": null
+        },
+        {
+          "name": "emissions_standard",
+          "value": "Stage V",
+          "unit": null,
+          "locator": "Technical table / Nimet 75 E+ / emissions",
+          "context": null
+        },
+        {
+          "name": "engine_cylinders",
+          "value": "4",
+          "unit": "count",
+          "locator": "Technical table / Nimet 75 E+ / cylinders",
+          "context": null
+        },
+        {
+          "name": "engine_aspiration",
+          "value": "Turbo intercooler",
+          "unit": null,
+          "locator": "Technical table / Nimet 75 E+ / aspiration",
+          "context": null
+        },
+        {
+          "name": "engine_displacement",
+          "value": "2.92",
+          "unit": "L",
+          "locator": "Technical table / Nimet 75 E+ / displacement",
+          "context": null
+        },
+        {
+          "name": "fuel_tank_capacity",
+          "value": "110",
+          "unit": "L",
+          "locator": "Technical table / Nimet 75 E+ / fuel tank",
+          "context": null
+        },
+        {
+          "name": "fuel_injection",
+          "value": "Common rail",
+          "unit": null,
+          "locator": "Technical table / Nimet 75 E+ / injection",
+          "context": null
+        },
+        {
+          "name": "transmission_type",
+          "value": "Fully synchronized forward/reverse",
+          "unit": null,
+          "locator": "Technical table / Nimet 75 E+ / gearbox type",
+          "context": null
+        },
+        {
+          "name": "forward_gears",
+          "value": "24",
+          "unit": "count",
+          "locator": "Technical table / Nimet 75 E+ / 4WD gearbox",
+          "context": null
+        },
+        {
+          "name": "reverse_gears",
+          "value": "24",
+          "unit": "count",
+          "locator": "Technical table / Nimet 75 E+ / 4WD gearbox",
+          "context": null
+        },
+        {
+          "name": "front_differential_lock",
+          "value": "Mechanical",
+          "unit": null,
+          "locator": "Technical table / Nimet 75 E+ / front differential",
+          "context": null
+        },
+        {
+          "name": "rear_differential_lock",
+          "value": "Mechanical",
+          "unit": null,
+          "locator": "Technical table / Nimet 75 E+ / rear differential",
+          "context": null
+        },
+        {
+          "name": "four_wheel_drive_control",
+          "value": "Electrohydraulic",
+          "unit": null,
+          "locator": "Technical table / Nimet 75 E+ / 4WD control",
+          "context": null
+        },
+        {
+          "name": "min_travel_speed",
+          "value": "0.43",
+          "unit": "km/h",
+          "locator": "Technical table / Nimet 75 E+ / speed range",
+          "context": "24F24R"
+        },
+        {
+          "name": "max_travel_speed",
+          "value": "32.78",
+          "unit": "km/h",
+          "locator": "Technical table / Nimet 75 E+ / speed range",
+          "context": "24F24R"
+        },
+        {
+          "name": "hydraulic_control",
+          "value": "Mechanical",
+          "unit": null,
+          "locator": "Technical table / Nimet 75 E+ / hydraulic control",
+          "context": null
+        },
+        {
+          "name": "hydraulic_outlet_count",
+          "value": "6",
+          "unit": "count",
+          "locator": "Technical table / Nimet 75 E+ / hydraulic outlets",
+          "context": "Not pump flow"
+        },
+        {
+          "name": "hydraulic_pressure",
+          "value": "190",
+          "unit": "bar",
+          "locator": "Technical table / Nimet 75 E+ / working pressure",
+          "context": null
+        },
+        {
+          "name": "rear_lift_capacity",
+          "value": "3000",
+          "unit": "kg",
+          "locator": "Technical table / Nimet 75 E+ / maximum lift",
+          "context": "Measurement point unspecified"
+        },
+        {
+          "name": "pto_type",
+          "value": "Independent two speeds",
+          "unit": null,
+          "locator": "Technical table / Nimet 75 E+ / PTO",
+          "context": null
+        },
+        {
+          "name": "rear_pto_speeds",
+          "value": "540/540E",
+          "unit": "rpm",
+          "locator": "Technical table / Nimet 75 E+ / PTO speeds",
+          "context": null
+        },
+        {
+          "name": "wheelbase",
+          "value": "2327",
+          "unit": "mm",
+          "locator": "Technical table / Nimet 75 E+ / 4WD wheelbase",
+          "context": null
+        },
+        {
+          "name": "overall_length",
+          "value": "4112",
+          "unit": "mm",
+          "locator": "Technical table / Nimet 75 E+ / 4WD length",
+          "context": null
+        },
+        {
+          "name": "overall_width",
+          "value": "1990",
+          "unit": "mm",
+          "locator": "Technical table / Nimet 75 E+ / width",
+          "context": null
+        },
+        {
+          "name": "overall_height",
+          "value": "2720",
+          "unit": "mm",
+          "locator": "Technical table / Nimet 75 E+ / 4WD cab height",
+          "context": null
+        },
+        {
+          "name": "front_track",
+          "value": "1500–1900",
+          "unit": "mm",
+          "locator": "Technical table / Nimet 75 E+ / 4WD front track",
+          "context": null
+        },
+        {
+          "name": "rear_track",
+          "value": "1500–1900",
+          "unit": "mm",
+          "locator": "Technical table / Nimet 75 E+ / 4WD rear track",
+          "context": null
+        },
+        {
+          "name": "unballasted_weight",
+          "value": "3700",
+          "unit": "kg",
+          "locator": "Technical table / Nimet 75 E+ / 4WD cab weight",
+          "context": "Without extra weights"
+        }
+      ],
+      "notes": [
+        "Do not match to existing eCapra models by model name alone. Recheck current catalogue before admission. Original visual review outstanding."
+      ]
+    },
+    {
+      "brand": "Erkunt",
+      "model": "Kıymet 90 E+",
+      "variant": "CRD5 Deutz / 4WD cab / 24F24R",
+      "market": "Türkiye",
+      "modelYear": null,
+      "existingDraftId": null,
+      "disposition": "hold_for_review",
+      "sourceUrl": "https://erkunttraktor.com.tr/assets/model_dosyalar/pdfs/E%2BCRD5_deutz_brosur.pdf?t=20260313164821",
+      "sourceType": "manufacturer",
+      "sourceRead": "PDF text retrieved; screenshot failed",
+      "identitySourceUrl": "https://erkunttraktor.com.tr/Modeller",
+      "specs": [
+        {
+          "name": "engine_max_power",
+          "value": "65",
+          "unit": "kW",
+          "locator": "Technical table / Kıymet 90 E+ / maximum output",
+          "context": "Manufacturer maximum; standard not stated"
+        },
+        {
+          "name": "engine_max_power_manufacturer_label",
+          "value": "88.4",
+          "unit": "hp",
+          "locator": "Technical table / Kıymet 90 E+ / maximum output",
+          "context": "Manufacturer paired label; not a converted mechanical hp"
+        },
+        {
+          "name": "engine_model",
+          "value": "Deutz TCD 2.9 C5VT65E",
+          "unit": null,
+          "locator": "Technical table / Kıymet 90 E+ / engine model",
+          "context": null
+        },
+        {
+          "name": "engine_torque",
+          "value": "388",
+          "unit": "Nm",
+          "locator": "Technical table / Kıymet 90 E+ / maximum torque",
+          "context": "1600 rpm"
+        },
+        {
+          "name": "peak_torque_speed",
+          "value": "1600",
+          "unit": "rpm",
+          "locator": "Technical table / Kıymet 90 E+ / peak torque speed",
+          "context": null
+        },
+        {
+          "name": "emissions_standard",
+          "value": "Stage V",
+          "unit": null,
+          "locator": "Technical table / Kıymet 90 E+ / emissions",
+          "context": null
+        },
+        {
+          "name": "engine_cylinders",
+          "value": "4",
+          "unit": "count",
+          "locator": "Technical table / Kıymet 90 E+ / cylinders",
+          "context": null
+        },
+        {
+          "name": "engine_aspiration",
+          "value": "Turbo intercooler",
+          "unit": null,
+          "locator": "Technical table / Kıymet 90 E+ / aspiration",
+          "context": null
+        },
+        {
+          "name": "engine_displacement",
+          "value": "2.92",
+          "unit": "L",
+          "locator": "Technical table / Kıymet 90 E+ / displacement",
+          "context": null
+        },
+        {
+          "name": "fuel_tank_capacity",
+          "value": "110",
+          "unit": "L",
+          "locator": "Technical table / Kıymet 90 E+ / fuel tank",
+          "context": null
+        },
+        {
+          "name": "fuel_injection",
+          "value": "Common rail",
+          "unit": null,
+          "locator": "Technical table / Kıymet 90 E+ / injection",
+          "context": null
+        },
+        {
+          "name": "adblue_tank_capacity",
+          "value": "13",
+          "unit": "L",
+          "locator": "Technical table / Kıymet 90 E+ / AdBlue",
+          "context": null
+        },
+        {
+          "name": "transmission_type",
+          "value": "Fully synchronized forward/reverse",
+          "unit": null,
+          "locator": "Technical table / Kıymet 90 E+ / gearbox type",
+          "context": null
+        },
+        {
+          "name": "forward_gears",
+          "value": "24",
+          "unit": "count",
+          "locator": "Technical table / Kıymet 90 E+ / 4WD gearbox",
+          "context": null
+        },
+        {
+          "name": "reverse_gears",
+          "value": "24",
+          "unit": "count",
+          "locator": "Technical table / Kıymet 90 E+ / 4WD gearbox",
+          "context": null
+        },
+        {
+          "name": "front_differential_lock",
+          "value": "Mechanical",
+          "unit": null,
+          "locator": "Technical table / Kıymet 90 E+ / front differential",
+          "context": null
+        },
+        {
+          "name": "rear_differential_lock",
+          "value": "Mechanical",
+          "unit": null,
+          "locator": "Technical table / Kıymet 90 E+ / rear differential",
+          "context": null
+        },
+        {
+          "name": "four_wheel_drive_control",
+          "value": "Electrohydraulic",
+          "unit": null,
+          "locator": "Technical table / Kıymet 90 E+ / 4WD control",
+          "context": null
+        },
+        {
+          "name": "min_travel_speed",
+          "value": "0.43",
+          "unit": "km/h",
+          "locator": "Technical table / Kıymet 90 E+ / speed range",
+          "context": "24F24R"
+        },
+        {
+          "name": "max_travel_speed",
+          "value": "32.78",
+          "unit": "km/h",
+          "locator": "Technical table / Kıymet 90 E+ / speed range",
+          "context": "24F24R"
+        },
+        {
+          "name": "hydraulic_control",
+          "value": "Mechanical",
+          "unit": null,
+          "locator": "Technical table / Kıymet 90 E+ / hydraulic control",
+          "context": null
+        },
+        {
+          "name": "hydraulic_outlet_count",
+          "value": "6",
+          "unit": "count",
+          "locator": "Technical table / Kıymet 90 E+ / hydraulic outlets",
+          "context": "Not pump flow"
+        },
+        {
+          "name": "hydraulic_pressure",
+          "value": "190",
+          "unit": "bar",
+          "locator": "Technical table / Kıymet 90 E+ / working pressure",
+          "context": null
+        },
+        {
+          "name": "rear_lift_capacity",
+          "value": "3000",
+          "unit": "kg",
+          "locator": "Technical table / Kıymet 90 E+ / maximum lift",
+          "context": "Measurement point unspecified"
+        },
+        {
+          "name": "pto_type",
+          "value": "Independent two speeds",
+          "unit": null,
+          "locator": "Technical table / Kıymet 90 E+ / PTO",
+          "context": null
+        },
+        {
+          "name": "rear_pto_speeds",
+          "value": "540/540E",
+          "unit": "rpm",
+          "locator": "Technical table / Kıymet 90 E+ / PTO speeds",
+          "context": null
+        },
+        {
+          "name": "wheelbase",
+          "value": "2327",
+          "unit": "mm",
+          "locator": "Technical table / Kıymet 90 E+ / 4WD wheelbase",
+          "context": null
+        },
+        {
+          "name": "overall_length",
+          "value": "4112",
+          "unit": "mm",
+          "locator": "Technical table / Kıymet 90 E+ / 4WD length",
+          "context": null
+        },
+        {
+          "name": "overall_width",
+          "value": "1990",
+          "unit": "mm",
+          "locator": "Technical table / Kıymet 90 E+ / width",
+          "context": null
+        },
+        {
+          "name": "overall_height",
+          "value": "2720",
+          "unit": "mm",
+          "locator": "Technical table / Kıymet 90 E+ / 4WD cab height",
+          "context": null
+        },
+        {
+          "name": "front_track",
+          "value": "1500–1900",
+          "unit": "mm",
+          "locator": "Technical table / Kıymet 90 E+ / 4WD front track",
+          "context": null
+        },
+        {
+          "name": "rear_track",
+          "value": "1500–1900",
+          "unit": "mm",
+          "locator": "Technical table / Kıymet 90 E+ / 4WD rear track",
+          "context": null
+        },
+        {
+          "name": "unballasted_weight",
+          "value": "3890",
+          "unit": "kg",
+          "locator": "Technical table / Kıymet 90 E+ / 4WD cab weight",
+          "context": "Without extra weights"
+        }
+      ],
+      "notes": [
+        "Do not match to existing eCapra models by model name alone. Recheck current catalogue before admission. Original visual review outstanding."
+      ]
+    },
+    {
+      "brand": "Erkunt",
+      "model": "Kudret 105 E+",
+      "variant": "CRD5 Deutz / 4WD cab / 24F24R",
+      "market": "Türkiye",
+      "modelYear": null,
+      "existingDraftId": null,
+      "disposition": "hold_for_review",
+      "sourceUrl": "https://erkunttraktor.com.tr/assets/model_dosyalar/pdfs/E%2BCRD5_deutz_brosur.pdf?t=20260313164821",
+      "sourceType": "manufacturer",
+      "sourceRead": "PDF text retrieved; screenshot failed",
+      "identitySourceUrl": "https://erkunttraktor.com.tr/Modeller",
+      "specs": [
+        {
+          "name": "engine_max_power",
+          "value": "75",
+          "unit": "kW",
+          "locator": "Technical table / Kudret 105 E+ / maximum output",
+          "context": "Manufacturer maximum; standard not stated"
+        },
+        {
+          "name": "engine_max_power_manufacturer_label",
+          "value": "102",
+          "unit": "hp",
+          "locator": "Technical table / Kudret 105 E+ / maximum output",
+          "context": "Manufacturer paired label; not a converted mechanical hp"
+        },
+        {
+          "name": "engine_model",
+          "value": "Deutz TCD 2.9 C5VT70E",
+          "unit": null,
+          "locator": "Technical table / Kudret 105 E+ / engine model",
+          "context": null
+        },
+        {
+          "name": "engine_torque",
+          "value": "400",
+          "unit": "Nm",
+          "locator": "Technical table / Kudret 105 E+ / maximum torque",
+          "context": "1600 rpm"
+        },
+        {
+          "name": "peak_torque_speed",
+          "value": "1600",
+          "unit": "rpm",
+          "locator": "Technical table / Kudret 105 E+ / peak torque speed",
+          "context": null
+        },
+        {
+          "name": "emissions_standard",
+          "value": "Stage V",
+          "unit": null,
+          "locator": "Technical table / Kudret 105 E+ / emissions",
+          "context": null
+        },
+        {
+          "name": "engine_cylinders",
+          "value": "4",
+          "unit": "count",
+          "locator": "Technical table / Kudret 105 E+ / cylinders",
+          "context": null
+        },
+        {
+          "name": "engine_aspiration",
+          "value": "Turbo intercooler",
+          "unit": null,
+          "locator": "Technical table / Kudret 105 E+ / aspiration",
+          "context": null
+        },
+        {
+          "name": "engine_displacement",
+          "value": "2.92",
+          "unit": "L",
+          "locator": "Technical table / Kudret 105 E+ / displacement",
+          "context": null
+        },
+        {
+          "name": "fuel_tank_capacity",
+          "value": "110",
+          "unit": "L",
+          "locator": "Technical table / Kudret 105 E+ / fuel tank",
+          "context": null
+        },
+        {
+          "name": "fuel_injection",
+          "value": "Common rail",
+          "unit": null,
+          "locator": "Technical table / Kudret 105 E+ / injection",
+          "context": null
+        },
+        {
+          "name": "adblue_tank_capacity",
+          "value": "13",
+          "unit": "L",
+          "locator": "Technical table / Kudret 105 E+ / AdBlue",
+          "context": null
+        },
+        {
+          "name": "transmission_type",
+          "value": "Fully synchronized forward/reverse",
+          "unit": null,
+          "locator": "Technical table / Kudret 105 E+ / gearbox type",
+          "context": null
+        },
+        {
+          "name": "forward_gears",
+          "value": "24",
+          "unit": "count",
+          "locator": "Technical table / Kudret 105 E+ / 4WD gearbox",
+          "context": null
+        },
+        {
+          "name": "reverse_gears",
+          "value": "24",
+          "unit": "count",
+          "locator": "Technical table / Kudret 105 E+ / 4WD gearbox",
+          "context": null
+        },
+        {
+          "name": "front_differential_lock",
+          "value": "Mechanical",
+          "unit": null,
+          "locator": "Technical table / Kudret 105 E+ / front differential",
+          "context": null
+        },
+        {
+          "name": "rear_differential_lock",
+          "value": "Mechanical",
+          "unit": null,
+          "locator": "Technical table / Kudret 105 E+ / rear differential",
+          "context": null
+        },
+        {
+          "name": "four_wheel_drive_control",
+          "value": "Electrohydraulic",
+          "unit": null,
+          "locator": "Technical table / Kudret 105 E+ / 4WD control",
+          "context": null
+        },
+        {
+          "name": "min_travel_speed",
+          "value": "0.43",
+          "unit": "km/h",
+          "locator": "Technical table / Kudret 105 E+ / speed range",
+          "context": "24F24R"
+        },
+        {
+          "name": "max_travel_speed",
+          "value": "32.78",
+          "unit": "km/h",
+          "locator": "Technical table / Kudret 105 E+ / speed range",
+          "context": "24F24R"
+        },
+        {
+          "name": "hydraulic_control",
+          "value": "Mechanical",
+          "unit": null,
+          "locator": "Technical table / Kudret 105 E+ / hydraulic control",
+          "context": null
+        },
+        {
+          "name": "hydraulic_outlet_count",
+          "value": "6",
+          "unit": "count",
+          "locator": "Technical table / Kudret 105 E+ / hydraulic outlets",
+          "context": "Not pump flow"
+        },
+        {
+          "name": "hydraulic_pressure",
+          "value": "190",
+          "unit": "bar",
+          "locator": "Technical table / Kudret 105 E+ / working pressure",
+          "context": null
+        },
+        {
+          "name": "rear_lift_capacity",
+          "value": "3400",
+          "unit": "kg",
+          "locator": "Technical table / Kudret 105 E+ / maximum lift",
+          "context": "Measurement point unspecified"
+        },
+        {
+          "name": "pto_type",
+          "value": "Independent two speeds",
+          "unit": null,
+          "locator": "Technical table / Kudret 105 E+ / PTO",
+          "context": null
+        },
+        {
+          "name": "rear_pto_speeds",
+          "value": "540/540E",
+          "unit": "rpm",
+          "locator": "Technical table / Kudret 105 E+ / PTO speeds",
+          "context": null
+        },
+        {
+          "name": "wheelbase",
+          "value": "2327",
+          "unit": "mm",
+          "locator": "Technical table / Kudret 105 E+ / 4WD wheelbase",
+          "context": null
+        },
+        {
+          "name": "overall_length",
+          "value": "4112",
+          "unit": "mm",
+          "locator": "Technical table / Kudret 105 E+ / 4WD length",
+          "context": null
+        },
+        {
+          "name": "overall_width",
+          "value": "1990",
+          "unit": "mm",
+          "locator": "Technical table / Kudret 105 E+ / width",
+          "context": null
+        },
+        {
+          "name": "overall_height",
+          "value": "2720",
+          "unit": "mm",
+          "locator": "Technical table / Kudret 105 E+ / 4WD cab height",
+          "context": null
+        },
+        {
+          "name": "front_track",
+          "value": "1500–1900",
+          "unit": "mm",
+          "locator": "Technical table / Kudret 105 E+ / 4WD front track",
+          "context": null
+        },
+        {
+          "name": "rear_track",
+          "value": "1500–1900",
+          "unit": "mm",
+          "locator": "Technical table / Kudret 105 E+ / 4WD rear track",
+          "context": null
+        },
+        {
+          "name": "unballasted_weight",
+          "value": "3920",
+          "unit": "kg",
+          "locator": "Technical table / Kudret 105 E+ / 4WD cab weight",
+          "context": "Without extra weights"
+        }
+      ],
+      "notes": [
+        "Do not match to existing eCapra models by model name alone. Recheck current catalogue before admission. Original visual review outstanding."
+      ]
+    }
+  ]
+}

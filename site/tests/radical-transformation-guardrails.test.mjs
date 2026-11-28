@@ -28,10 +28,15 @@ test("multi share strips tracking and rejects wrong paths, origins and duplicate
  assert.equal(multiComparisonShareUrl("https://tractorvs.com.evil.test/compare/",["a","b"]),null);
  assert.equal(multiComparisonShareUrl("https://tractorvs.com/other/",["a","b"]),null);
  assert.equal(multiComparisonShareUrl("https://tractorvs.com/compare/",["a","a"]),null);
+ assert.equal(multiComparisonShareUrl("https://tractorvs.com/compare/",["a",,"c"]),null);
+ assert.throws(()=>multiComparisonRows([{id:"a",specs:Array(2)},models[1]]));
 });
 test("investment avoids sparse resale and infinite per-unit output",()=>{
  const v={price:100,down:100,annualRate:0,termMonths:1,annualHours:Number.MIN_VALUE,annualHectares:Number.MIN_VALUE,fuelPerHour:0,fuelPrice:0,maintenancePerHour:0,otherPerHour:0,annualFixed:0,rentalPerHour:null,resale:[0,0,0,0]};
  assert.equal(investmentScenarios(v).scenarios[0].perHour,null);
  assert.equal(investmentScenarios(v).scenarios[0].perHectare,null);
  assert.throws(()=>investmentScenarios({...v,resale:Array(4)}));
+ const tiny=investmentScenarios({...v,down:0,annualRate:Number.MIN_VALUE,termMonths:12});
+ assert.ok(Number.isFinite(tiny.monthlyPayment));
+ assert.ok(Number.isFinite(tiny.scenarios[0].total));
 });
