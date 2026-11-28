@@ -10,6 +10,10 @@ test("ownership horizon includes remaining principal exactly once",()=>{
  assert.equal(out.scenarios[0].loanBalance,60000);
  assert.equal(out.scenarios[0].total,31400);
  assert.equal(out.scenarios[0].perHour,314);
+ assert.equal(out.scenarios[0].operating,1400);
+ assert.equal(out.scenarios[0].rental,10000);
+ assert.equal(out.scenarios[0].rentalDifference,21400);
+ assert.equal(out.scenarios[2].rentalDifference,null);
  assert.equal(out.scenarios[1].loanBalance,0);
  assert.equal(out.scenarios[2].total,null);
 });
@@ -28,6 +32,7 @@ test("sequential passes use existing metric field arithmetic",()=>{
  assert.equal(out.totals.hours,50);
  assert.equal(out.totals.litres,200);
  assert.equal(out.totals.operatingCost,450);
+ assert.deepEqual(out.rows,[{workedAreaHa:20,hours:25,litres:100,operatingCost:225},{workedAreaHa:20,hours:25,litres:100,operatingCost:225}]);
  assert.throws(()=>planSequentialFieldWork([{...task,passes:0}]));
  assert.throws(()=>planSequentialFieldWork(Array(2)));
  assert.throws(()=>planSequentialFieldWork([null]));

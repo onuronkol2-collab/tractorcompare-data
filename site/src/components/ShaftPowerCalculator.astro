@@ -2,6 +2,7 @@
 interface Props {lang:"en"|"tr"}
 const {lang}=Astro.props;
 const tr=lang==="tr";
+const inverse=tr?{title:"Güçten tork hesaplama",intro:"Aynı mildeki mekanik güç ve devirden torku hesaplayın.",power:"Mekanik güç (kW)",result:"Hesaplanan tork"}:{title:"Calculate torque from power",intro:"Calculate torque from mechanical power and speed at the same shaft.",power:"Mechanical power (kW)",result:"Calculated torque"};
 const c=tr?{
  title:"Tork, devir ve güç hesaplayıcısı",intro:"Aynı milin aynı çalışma noktasındaki tork ve devir değerlerinden mekanik gücü hesaplayın. Bu, bir traktörün ölçülmüş performansı değildir.",
  torque:"Tork (N·m)",rpm:"Dönme hızı (dev/dk)",calculate:"Hesapla",invalid:"Pozitif, geçerli sayılar girin.",result:"Hesaplanan mekanik güç",warning:"Motorun azami torkunu farklı bir devirdeki nominal güçle birleştirmeyin. Motor ve PTO mili değerlerini birbirine dönüştürmez; çekişi, yakıt tüketimini veya ekipman uyumunu tahmin etmez.",example:"Örnek: aynı milde 400 N·m ve 1.800 dev/dk yaklaşık 75,4 kW verir. Bu, varsayımsal eğitim örneğidir.",js:"Etkileşimli hesaplama için JavaScript gerekir."
@@ -26,33 +27,39 @@ const c=tr?{
    <p data-shaft-result hidden aria-live="polite">{c.result}: <output data-shaft-output></output></p>
   </fieldset>
  </form>
+ <details class="shaft-inverse"><summary>{inverse.title}</summary><p>{inverse.intro}</p><p><code>T (N·m) = P (kW) × 60000 / (2π × n (rpm))</code></p>
+  <form data-shaft-form data-mode="torque" data-clarity-mask="true" autocomplete="off"><fieldset disabled><div class="shaft-fields"><label>{inverse.power}<input name="power" type="number" inputmode="decimal" min="0.000001" max="10000000" step="any" required /></label><label>{c.rpm}<input name="rpm" type="number" inputmode="decimal" min="0.000001" max="100000" step="any" required /></label></div><button type="submit">{c.calculate}</button><p role="alert" data-shaft-error hidden>{c.invalid}</p><p data-shaft-result hidden aria-live="polite">{inverse.result}: <output data-shaft-output></output></p></fieldset></form>
+ </details>
  <noscript><p>{c.js}</p></noscript>
  <p>{c.warning}</p>
 </section>
 <script>
- import {shaftPowerAtPoint} from "../lib/shaft-power-calculator.mjs";
+ import {shaftPowerAtPoint,shaftTorqueAtPoint} from "../lib/shaft-power-calculator.mjs";
  for(const root of document.querySelectorAll<HTMLElement>("[data-shaft-tool]")){
-  const form=root.querySelector<HTMLFormElement>("[data-shaft-form]");
+  for(const form of root.querySelectorAll<HTMLFormElement>("[data-shaft-form]")){
   const fieldset=form?.querySelector<HTMLFieldSetElement>("fieldset");
-  const output=root.querySelector<HTMLOutputElement>("[data-shaft-output]");
-  const result=root.querySelector<HTMLElement>("[data-shaft-result]");
-  const error=root.querySelector<HTMLElement>("[data-shaft-error]");
+  const output=form.querySelector<HTMLOutputElement>("[data-shaft-output]");
+  const result=form.querySelector<HTMLElement>("[data-shaft-result]");
+  const error=form.querySelector<HTMLElement>("[data-shaft-error]");
   if(!form||!fieldset||!output||!result||!error)continue;
   const fmt=new Intl.NumberFormat(root.dataset.locale,{maximumSignificantDigits:6});
   const clear=()=>{output.textContent="";result.hidden=true;error.hidden=true;};
   form.addEventListener("input",clear);
+  form.addEventListener("reset",clear);
+  form.addEventListener("invalid",()=>{clear();error.hidden=false;},true);
   form.addEventListener("submit",e=>{
    e.preventDefault();clear();
    try{
     if(!form.checkValidity())throw new Error("Invalid form");
     const values=new FormData(form);
     const read=(key:string)=>{const v=values.get(key);return typeof v==="string"&&v.trim()?Number(v):NaN;};
-    const p=shaftPowerAtPoint(read("torque"),read("rpm"));
-    output.textContent=fmt.format(p.kw)+" kW · "+fmt.format(p.hp)+" hp · "+fmt.format(p.ps)+" PS";
+    if(form.dataset.mode==="torque")output.textContent=fmt.format(shaftTorqueAtPoint(read("power"),read("rpm")))+" N·m";
+    else{const p=shaftPowerAtPoint(read("torque"),read("rpm"));output.textContent=fmt.format(p.kw)+" kW · "+fmt.format(p.hp)+" hp · "+fmt.format(p.ps)+" PS";}
     result.hidden=false;
    }catch{error.hidden=false;}
   });
   fieldset.disabled=false;
+  }
  }
 </script>
 <style>
@@ -63,6 +70,9 @@ const c=tr?{
  .shaft-tool input,.shaft-tool button{min-height:44px;min-width:0;max-width:100%;font:inherit;border:1px solid #708478;border-radius:.4rem;padding:.5rem}
  .shaft-tool button{margin-block:.8rem;background:#245b39;color:white;font-weight:600;cursor:pointer}
  .shaft-tool input:focus-visible,.shaft-tool button:focus-visible{outline:2px solid currentColor;outline-offset:2px}
+ .shaft-inverse{margin-block:1rem;border-top:1px solid #708478;padding-block:1rem}
+ .shaft-inverse summary{cursor:pointer;font-weight:700;min-height:44px;align-content:center}
+ .shaft-inverse summary:focus-visible{outline:2px solid currentColor;outline-offset:2px}
  .shaft-tool output{font-weight:700}
  [hidden]{display:none!important}
 </style>

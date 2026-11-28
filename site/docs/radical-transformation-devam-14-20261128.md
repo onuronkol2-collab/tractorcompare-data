@@ -1,0 +1,6 @@
+# DEVAM 14 — decision tools: user-facing output and inverse torque
+Detached parent b3eb25de5757b3218faaa458a9aea4f75654c112; current main df1fd86845b7bcd2d21a7bf5e609a5ca3a5d2a35. #775/#758 both still change TractorComparison.astro; deliberately left untouched. New 2–4 comparison engine remains unintegrated.
+- Ownership planning exposes existing operating total and ownership minus rental difference at all four horizons, with sign and missing-value explanation in ten locales. No new market price or cost assumption.
+- Sequential field work exposes each operation as well as aggregate values; correct fuel label. Reset/invalid input clears stale results. Private inputs/results remain masked; no new network or persistence.
+- EN/TR shaft guide now exposes inverse torque from power and rpm in a separate local form with same-shaft caveat; independent form DOM scoping and stale-value clearing.
+- Authored assertions for existing result contracts and new inverse UI; no tests, lint, build, CI, ref update, PR, merge or deployment. No new technical catalogue observations; 101 research configurations, 2373 observations, 7 historical price leads remain held. Translation and browser review pending. 

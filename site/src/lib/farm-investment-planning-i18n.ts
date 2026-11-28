@@ -202,4 +202,17 @@ const rows:Record<Locale,readonly string[]>={
     "データなし"
   ]
 };
-export function investmentPlanningText(lang:Locale){return Object.fromEntries(keys.map((k,i)=>[k,rows[lang][i]])) as Record<typeof keys[number],string>;}
+const extraKeys=["horizonOperating","rentalDifference","differenceNote","fleetTotal","fleetFuel"] as const;
+const extraRows:Record<Locale,readonly string[]>={
+ en:["Operating cost over the period","Ownership cost minus rental cost","A negative difference means the entered ownership scenario costs less than the entered rental scenario; a positive difference means it costs more. Missing resale or rental values leave the difference unknown.","Combined operations","Fuel used (L)"],
+ tr:["Dönem boyunca işletme maliyeti","Sahiplik maliyeti eksi kiralama maliyeti","Negatif fark, girilen sahiplik senaryosunun kiralamadan daha düşük maliyetli; pozitif fark, daha yüksek maliyetli olduğunu gösterir. Satış değeri veya kiralama bedeli bilinmiyorsa fark hesaplanmaz.","İşlemlerin toplamı","Tüketilen yakıt (L)"],
+ zh:["期间运行成本","持有成本减租赁成本","负差值表示输入的持有方案成本较低，正差值表示较高。转售价值或租赁费未知时不计算差值。","各项作业合计","燃油消耗（L）"],
+ hi:["अवधि की परिचालन लागत","स्वामित्व लागत घटा किराया लागत","ऋणात्मक अंतर का अर्थ है कि दर्ज स्वामित्व लागत किराये से कम है, धनात्मक अंतर का अर्थ है अधिक लागत। पुनर्विक्रय या किराया अज्ञात हो तो अंतर नहीं निकाला जाता।","सभी कार्यों का योग","ईंधन खपत (लीटर)"],
+ "pt-br":["Custo operacional no período","Custo de propriedade menos custo de aluguel","Uma diferença negativa indica que o cenário de propriedade informado custa menos que o aluguel; uma diferença positiva indica custo maior. Sem valor de revenda ou aluguel, a diferença fica desconhecida.","Total das operações","Combustível consumido (L)"],
+ fr:["Coût de fonctionnement sur la période","Coût de détention moins coût de location","Un écart négatif indique un coût de détention saisi inférieur à celui de la location ; un écart positif indique un coût supérieur. Sans valeur de revente ou de location, l’écart reste inconnu.","Total des opérations","Carburant consommé (L)"],
+ de:["Betriebskosten im Zeitraum","Besitzkosten abzüglich Mietkosten","Eine negative Differenz bedeutet geringere Kosten im eingegebenen Besitzszenario als bei Miete, eine positive höhere Kosten. Ohne Restwert oder Mietkosten bleibt die Differenz unbekannt.","Summe der Arbeitsgänge","Kraftstoffverbrauch (L)"],
+ ru:["Эксплуатационные затраты за период","Затраты на владение минус затраты на аренду","Отрицательная разница означает меньшие затраты на владение по введённым данным, положительная — большие. Без стоимости перепродажи или аренды разница не рассчитывается.","Сумма операций","Расход топлива (л)"],
+ ja:["期間中の運転費用","保有費用からレンタル費用を引いた差額","負の差額は入力した保有費用がレンタル費用より低く、正の差額は高いことを示します。売却額またはレンタル費用が不明なら差額は計算されません。","作業の合計","燃料消費量（L）"],
+ es:["Coste de funcionamiento del período","Coste de propiedad menos coste de alquiler","Una diferencia negativa indica que el escenario de propiedad introducido cuesta menos que el alquiler; una positiva indica un coste mayor. Sin valor de reventa o alquiler, no se calcula la diferencia.","Total de las operaciones","Combustible consumido (L)"]
+};
+export function investmentPlanningText(lang:Locale){return Object.fromEntries([...keys.map((k,i)=>[k,rows[lang][i]]),...extraKeys.map((k,i)=>[k,extraRows[lang][i]])]) as Record<typeof keys[number]|typeof extraKeys[number],string>;}

@@ -21,5 +21,8 @@ test("calculator appears only on existing power guide with explicit limitations"
  assert.match(tool,/aynı çalışma noktasındaki/);
  assert.match(tool,/same shaft and operating point/);
  assert.match(tool,/hypothetical educational example/);
+ assert.match(tool,/data-mode="torque"/);
+ assert.match(tool,/shaftTorqueAtPoint\(read\("power"\),read\("rpm"\)\)/);
+ assert.match(tool,/form\.querySelector<HTMLOutputElement>/);
  assert.doesNotMatch(tool,/localStorage|fetch\(|innerHTML/);
 });
