@@ -73,7 +73,7 @@ test("expired untouched App candidate may only be closed, never merged or delete
  const old=new Date(now-30*60000).toISOString(),recent=new Date(now-60000).toISOString();
  const body="Evidence base: "+baseSha+"\nCandidate digest: "+plan.digest+"\nPR-only staging. Independent release authorization and all applicable checks required.";
  const pr={number:42,state:"open",draft:false,merged:false,user:{login:"tractorvs-secure-publisher[bot]"},title:"Publication candidate: catalog",body,created_at:old,updated_at:old,head:{sha:commit,ref:plan.branch,repo:{full_name:REPO}},base:{ref:"main",sha:current,repo:{full_name:REPO}},requested_reviewers:[],requested_teams:[],labels:[],assignees:[]};
- function mock({override={},comment=false,review=false,changed=false,wrongBlob=false,moved=false}={}){
+ function mock({override={},comment=false,commentRows=null,review=false,changed=false,wrongBlob=false,moved=false}={}){
   let reads=0;const writes=[];
   const api=async(path,method="GET",data,missing,raw)=>{
    if(method!=="GET"){writes.push({path,method,data});return {...pr,state:"closed"};}
@@ -82,11 +82,16 @@ test("expired untouched App candidate may only be closed, never merged or delete
    if(path==="/contents/"+cat.path+"?ref="+commit){assert.equal(raw,true);return cat.content;}
    if(path.startsWith("/compare/"))return {status:"ahead",ahead_by:1,behind_by:0,files:[{filename:cat.path,status:"modified",sha:wrongBlob?tree:createHash("sha1").update("blob "+Buffer.byteLength(cat.content)+"\0").update(cat.content).digest("hex")}]};
    if(path==="/pulls/42/reviews?per_page=100")return review?[{}]:[];
-   if(path==="/issues/42/comments?per_page=100")return comment?[{}]:[];
+   if(path==="/issues/42/comments?per_page=100")return commentRows??(comment?[{}]:[]);
    if(path==="/git/ref/heads/"+plan.branch)return {ref:"refs/heads/"+plan.branch,object:{type:"commit",sha:commit}};
    if(path==="/git/ref/heads/main")return {object:{sha:moved?tree:current}};
    throw Error("unexpected endpoint");
   };return {api,writes};
+ }
+ const receipt={user:{id:73139402,login:"cloudflare-workers-and-pages[bot]",type:"Bot"},author_association:"NONE",performed_via_github_app:{id:85455,slug:"cloudflare-workers-and-pages",owner:{login:"cloudflare"}},body:"## 🚀 Deploying Preview to Cloudflare 🚀\n<!-- Preview URL -->\n### Preview URL: https://preview-tractorvs-site.onuronkol2.workers.dev (commit "+commit.slice(0,7)+")\n<!-- Preview Deployments -->\nhttps://dash.cloudflare.com/"};
+ const preview=mock({commentRows:[receipt]});assert.equal(await reconcileExpiredMachineCandidate({api:preview.api,number:42,baseSha:current,now}),true);assert.equal(preview.writes.length,1);
+ for(const rows of [[receipt,{}],[{...receipt,user:{...receipt.user,id:1}}],[{...receipt,performed_via_github_app:null}],[{...receipt,body:receipt.body.replace(commit.slice(0,7),"0000000")}],Array.from({length:100},()=>receipt)]){
+  const m=mock({commentRows:rows});assert.equal(await reconcileExpiredMachineCandidate({api:m.api,number:42,baseSha:current,now}),false);assert.equal(m.writes.length,0);
  }
  const good=mock();assert.equal(await reconcileExpiredMachineCandidate({api:good.api,number:42,baseSha:current,now}),true);
  assert.deepEqual(good.writes,[{path:"/pulls/42",method:"PATCH",data:{state:"closed"}}]);

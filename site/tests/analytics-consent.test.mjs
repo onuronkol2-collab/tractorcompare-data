@@ -135,7 +135,16 @@ test("previous GA-only approval cannot silently load Clarity and old cookies are
   assert.match(banner,/return legacyChoice === "rejected" \? "rejected" : null/);
   assert.match(banner,/function clearClarityFirstPartyCookies\(\)/);
   assert.match(banner,/\^_cl\(\?:ck\|sk\)\$/);
-  assert.match(banner,/clearAnalyticsFirstPartyCookies\(\);\s*clearClarityFirstPartyCookies\(\);\s*\/\/ A previously loaded tag/);
+  const revokeStart=banner.indexOf("function revokeAnalytics()");
+  const revokeEnd=banner.indexOf('window.addEventListener("storage"',revokeStart);
+  assert.ok(revokeStart>=0 && revokeEnd>revokeStart);
+  const revoke=banner.slice(revokeStart,revokeEnd);
+  assert.match(revoke,/clearAnalyticsFirstPartyCookies\(\);\s*clearClarityFirstPartyCookies\(\);/);
+  assert.match(revoke,/clarityWindow\.clarity\?\.\("consentv2",\s*\{[\s\S]*?analytics_Storage:\s*"denied"/);
+  assert.match(revoke,/analyticsWindow\.gtag\?\.\("consent", "update", \{[\s\S]*?analytics_storage:\s*"denied"/);
+  assert.match(revoke,/window\.location\.reload\(\)/);
+  assert.match(banner,/else \{\s*revokeAnalytics\(\);\s*\}/);
+  assert.match(banner,/window\.addEventListener\("storage",[\s\S]*?if \(choice === "accepted"\) return;[\s\S]*?revokeAnalytics\(\);/);
   assert.doesNotMatch(layout,/<script[^>]+clarity\.ms/);
 });
 

@@ -1,7 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import {readFileSync} from "node:fs";
-import {REPO,requiredCandidateChecks,assertProtectedReleaseRule,evaluateCandidateChecks,INDEPENDENT_CONTEXT} from "../../scripts/tractorvs-protected-candidate-policy.mjs";
+import {REPO,requiredCandidateChecks,assertProtectedReleaseRule,evaluateCandidateChecks,trustedIndependentRun,INDEPENDENT_CONTEXT} from "../../scripts/tractorvs-protected-candidate-policy.mjs";
 const head="a".repeat(40),base="b".repeat(40),now=Date.parse("2026-11-27T16:00:00Z");
 const rule={id:28247144,target:"branch",source:REPO,enforcement:"active",bypass_actors:[],conditions:{ref_name:{include:["~DEFAULT_BRANCH"],exclude:[]}},rules:[{type:"deletion"},{type:"non_fast_forward"},{type:"pull_request"},{type:"required_status_checks",parameters:{strict_required_status_checks_policy:true,do_not_enforce_on_create:false,required_status_checks:[{context:"Verify AGENTS and agent instructions",integration_id:15368}]}}]};
 test("reject disabled, bypassed, incomplete or wrongly targeted protection",()=>{
@@ -14,9 +14,10 @@ function fixture(kind){
  if(r.path)runs.push({id:runId,path:r.path,event:r.event,head_sha:head,repository:{full_name:REPO},head_repository:{full_name:REPO}});
  return {id,name:r.name,app:{id:r.appId},head_sha:head,status:"completed",conclusion:"success",details_url:"https://github.com/"+REPO+"/actions/runs/"+runId+"/job/"+id};
  });
- runs.push({id:999,path:".github/workflows/tractorvs-publication-independent-evidence.yml",event:"pull_request_target",head_sha:base,repository:{full_name:REPO},status:"completed",conclusion:"success"});
+ const repoApi="https://api.github.com/repos/"+REPO;
+ runs.push({id:999,path:".github/workflows/tractorvs-publication-independent-evidence.yml",event:"pull_request_target",head_sha:head,repository:{full_name:REPO},head_repository:{full_name:REPO},status:"completed",conclusion:"success",pull_requests:[{number:42,url:repoApi+"/pulls/42",head:{sha:head,repo:{url:repoApi}},base:{sha:base,ref:"main",repo:{url:repoApi}}}]});
  const statuses=[{context:INDEPENDENT_CONTEXT,state:"success",creator:{login:"github-actions[bot]"},target_url:"https://github.com/"+REPO+"/actions/runs/999",updated_at:new Date(now).toISOString()}];
- return {kind,sha:head,base,checks,runs,statuses,now};
+ return {number:42,kind,sha:head,base,checks,runs,statuses,now};
 }
 test("all category evidence required, exact workflow origin resolves duplicate tests",()=>{
  for(const kind of ["catalog","forum","sitemap"]){
@@ -50,4 +51,18 @@ test("limited token may omit bypass actors only on the exact owner-attested rule
  assert.equal(assertProtectedReleaseRule(pinned),true);
  assert.equal(assertProtectedReleaseRule({...pinned,updated_at:"2026-11-27T16:56:36.616Z"}),true);
  for(const x of [limited,{...pinned,updated_at:"2026-11-27T20:00:00+03:00"},{...pinned,node_id:"wrong"},{...pinned,bypass_actors:null},{...pinned,bypass_actors:[{}]},{...pinned,current_user_can_bypass:"always"},{...pinned,enforcement:"disabled"},{...pinned,rules:rule.rules.slice(0,3)}])assert.throws(()=>assertProtectedReleaseRule(x));
+});
+
+test("independent target event binds exact PR head and trusted base rather than run head alone",()=>{
+ const x=fixture("sitemap"),run=x.runs.at(-1),p=run.pull_requests[0],s=x.statuses[0],selection={number:42,head,base};
+ assert.equal(trustedIndependentRun(s,x.runs,selection),true);
+ for(const bad of [{...run,head_sha:base},{...run,pull_requests:[]},{...run,pull_requests:[{...p,number:43}]},{...run,pull_requests:[{...p,base:{...p.base,sha:head}}]},{...run,pull_requests:[{...p,base:{...p.base,ref:"other"}}]},{...run,pull_requests:[{...p,head:{...p.head,repo:{url:"https://api.github.com/repos/other/repo"}}}]},{...run,pull_requests:[p,p]},{...run,head_repository:{full_name:"other/repo"}},{...run,conclusion:"failure"},{...run,event:"workflow_run"}]){
+  const runs=[...x.runs.slice(0,-1),bad];
+  assert.notEqual(evaluateCandidateChecks({...x,runs}).state,"success");
+ }
+ assert.equal(trustedIndependentRun({...s,creator:{login:"other[bot]"}},x.runs,selection),false);
+ const dispatch={...run,event:"workflow_dispatch",head_sha:base,pull_requests:[]};
+ assert.equal(trustedIndependentRun(s,[dispatch],selection),true);
+ assert.equal(trustedIndependentRun(s,[{...dispatch,head_sha:head}],selection),false);
+ assert.notEqual(evaluateCandidateChecks({...x,now:now+21*60000}).state,"success");
 });

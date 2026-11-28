@@ -60,7 +60,22 @@ export function trustedStatusRun(s,runs,base,path){
  if(!m)return false;
  return runs.some(r=>r.id===Number(m[1])&&r.path===path&&r.repository?.full_name===REPO&&r.head_sha===base&&["pull_request_target","workflow_dispatch","workflow_run","check_run"].includes(r.event)&&r.status==="completed"&&r.conclusion==="success");
 }
-export function evaluateCandidateChecks({kind,sha,base,checks,statuses,runs,now=Date.now()}){
+// GitHub pull_request_target run metadata reports the PR head SHA, even
+// though the trusted workflow checks out GITHUB_SHA (the base). Require the
+// API's exact same-repository PR association; never accept a head-only match.
+export function trustedIndependentRun(status,runs,{number,head,base}){
+ if(!shaOk(head)||!shaOk(base)||!Number.isSafeInteger(number)||number<1||status?.creator?.login!=="github-actions[bot]")return false;
+ const m=typeof status.target_url==="string"&&status.target_url.match(/^https:\/\/github\.com\/onuronkol2-collab\/tractorcompare-data\/actions\/runs\/([1-9][0-9]*)$/);
+ if(!m)return false;
+ const run=runs.find(r=>r.id===Number(m[1]));
+ if(!run||run.path!==wf("tractorvs-publication-independent-evidence")||run.repository?.full_name!==REPO||run.status!=="completed"||run.conclusion!=="success")return false;
+ if(run.event==="workflow_dispatch")return run.head_sha===base&&run.head_repository?.full_name===REPO;
+ if(run.event!=="pull_request_target"||run.head_sha!==head||run.head_repository?.full_name!==REPO||!Array.isArray(run.pull_requests))return false;
+ const repoApi="https://api.github.com/repos/"+REPO;
+ const matches=run.pull_requests.filter(p=>p.number===number&&p.url===repoApi+"/pulls/"+number&&p.head?.sha===head&&p.base?.sha===base&&p.base?.ref==="main"&&p.head?.repo?.url===repoApi&&p.base?.repo?.url===repoApi);
+ return matches.length===1;
+}
+export function evaluateCandidateChecks({number,kind,sha,base,checks,statuses,runs,now=Date.now()}){
  if(!shaOk(sha)||!shaOk(base)||!Array.isArray(checks)||!Array.isArray(statuses)||!Array.isArray(runs)||checks.some(c=>c.head_sha!==sha))return {state:"failure",reason:"Invalid exact-head evidence"};
  const req=requiredCandidateChecks(kind);
  const matches=(c,r)=>c.name===r.name&&c.app?.id===r.appId&&(!r.path||verifiedRun(c,runs,sha,r.path,r.event));
@@ -82,7 +97,7 @@ export function evaluateCandidateChecks({kind,sha,base,checks,statuses,runs,now=
   if(s.state!=="success")return {state:s.state==="pending"?"pending":"failure",reason:"Non-success commit status"};
  }
  const evidence=latest.find(s=>s.context===INDEPENDENT_CONTEXT);
- if(!evidence||!trustedStatusRun(evidence,runs,base,wf("tractorvs-publication-independent-evidence")))return {state:"pending",reason:"Independent trusted evidence missing"};
+ if(!evidence||!trustedIndependentRun(evidence,runs,{number,head:sha,base}))return {state:"pending",reason:"Independent trusted evidence missing"};
  const at=Date.parse(evidence.updated_at??evidence.created_at);
  if(!Number.isFinite(at)||at>now+1000||now-at>20*60*1000)return {state:"failure",reason:"Independent evidence expired"};
  return {state:"success",reason:"Exact category checks and independent evidence verified; no merge authorization implied"};

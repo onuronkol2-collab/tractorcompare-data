@@ -13,7 +13,7 @@ test("executor only accepts exact App candidate and explicitly enabled trusted m
  for(const p of [{...pr,draft:true},{...pr,user:{login:"owner"}},{...pr,title:"other"},{...pr,head:{...pr.head,ref:"ops/other"}}])assert.equal(candidateKind(p),null);
  for(const e of [{CUTOVER_ENABLED:"false"},{EXECUTE_RELEASE:"false"},{GITHUB_REF:"refs/heads/feature"},{GITHUB_EVENT_NAME:"pull_request"}])assert.throws(()=>assertExecutionEnabled({...env,...e}));
 });
-function mock({disabled=false,moved=false,stale=false,headMoved=false,mergeFailed=false,sourceFailed=false}={}){
+function mock({disabled=false,moved=false,stale=false,headMoved=false,mergeFailed=false,sourceFailed=false,barrierPending=false}={}){
  const writes=[];let read=0,checks=0;
  const api=async(path,method="GET",body)=>{
   if(path==="/rulesets/28247144")return {data:disabled?{...rule,enforcement:"disabled"}:rule};
@@ -24,12 +24,13 @@ function mock({disabled=false,moved=false,stale=false,headMoved=false,mergeFaile
  };
  const check=async()=>({state:stale&&++checks===2?"pending":"ready",...selection});
  const recheckSource=async()=>{if(sourceFailed)throw Error("source changed");};
- return {api,writeApi:api,check,recheckSource,writes};
+ const productionBarrier=async()=>{if(barrierPending)throw Error("PRODUCTION_QA_PENDING");};
+ return {api,writeApi:api,check,recheckSource,productionBarrier,writes};
 }
 test("merge performs only exact-head squash after repeated checks and protected base",async()=>{
  const m=mock();const r=await mergeExact({...m,selection});assert.equal(r.mergedSha,merged);
  assert.equal(m.writes.length,1);assert.equal(m.writes[0].method,"PUT");assert.equal(m.writes[0].body.sha,head);assert.equal(m.writes[0].body.merge_method,"squash");
- for(const o of [{disabled:true},{moved:true},{stale:true},{headMoved:true},{sourceFailed:true}]){
+ for(const o of [{disabled:true},{moved:true},{stale:true},{headMoved:true},{sourceFailed:true},{barrierPending:true}]){
   const x=mock(o);await assert.rejects(mergeExact({...x,selection}));assert.equal(x.writes.length,0);
  }
  const f=mock({mergeFailed:true});await assert.rejects(mergeExact({...f,selection}));assert.equal(f.writes.length,1);

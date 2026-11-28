@@ -3,6 +3,7 @@ import {readFileSync,appendFileSync} from "node:fs";
 import {authorization,matchesAuthorizedPR,assessOwnerEvidence,OWNER,OWNER_ID} from "./tractorvs-owner-test-release-policy.mjs";
 import {REPO,assertProtectedReleaseRule,actionRunId} from "./tractorvs-protected-candidate-policy.mjs";
 import {withAppToken} from "./tractorvs-integrated-publication-pilot.mjs";
+import {assertProductionSettled,waitForProductionBarrier} from "./tractorvs-production-barrier.mjs";
 const env=process.env,root="https://api.github.com/repos/"+REPO;
 const event=JSON.parse(readFileSync(env.GITHUB_EVENT_PATH,"utf8"));
 const must=(v,m)=>{if(!v)throw Error(m);};
@@ -46,10 +47,12 @@ async function verify({allowClosed=false}={}){
 try{
  if(process.argv[2]==="scan"){
   const ready=await verify({allowClosed:true});
+  if(ready){await waitForProductionBarrier(api,base);await verify();await assertProductionSettled(api,base);}
   appendFileSync(env.GITHUB_OUTPUT,"ready="+ready+"\n");
  }
  else if(process.argv[2]==="merge"){
   await verify();
+  await assertProductionSettled(api,base);
   must(env.PILOT_OWNER_RELEASE==="true"&&env.CUTOVER_ENABLED==="true","Protected owner release disabled");
   const result=await withAppToken(env,async token=>{
    const write=client(token);
@@ -58,6 +61,7 @@ try{
    must((await get(write,"/git/ref/heads/main")).object?.sha===base,"Main changed");
    const pr=await get(write,"/pulls/"+number);
    must(pr.head?.sha===head&&pr.base?.sha===base&&pr.state==="open"&&!pr.draft&&pr.mergeable===true,"PR changed");
+   await assertProductionSettled(api,base);
    const m=(await write("/pulls/"+number+"/merge","PUT",{sha:head,merge_method:"squash",commit_title:"chore: owner TEST verified release (#"+number+")"})).data;
    must(m?.merged===true&&/^[a-f0-9]{40}$/.test(m.sha),"Merge not confirmed");
    const final=await get(write,"/pulls/"+number);must(final.merged===true&&final.merge_commit_sha===m.sha&&final.head.sha===head,"Merged identity mismatch");return m.sha;

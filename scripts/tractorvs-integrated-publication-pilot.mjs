@@ -145,6 +145,39 @@ async function verify(env){
   throw e;
  }
 }
+// Never log raw exception messages, payloads, paths, response bodies or secrets.
+const PILOT_FAILURE_CODES=new Map([
+ ["Outstanding candidate requires reconciliation","candidate_reconciliation_required"],
+ ["Outstanding or incomplete candidate inventory; reconcile first","candidate_inventory_blocked"],
+ ["Incomplete candidate inventory","candidate_inventory_incomplete"],
+ ["Main moved: rebuild candidate evidence","base_moved"],
+ ["Main changed; rebuild evidence","base_moved"],
+ ["Main changed before reconciliation","base_moved"],
+ ["Candidate ref moved before PR creation","candidate_ref_moved"],
+ ["Unverified old candidate identity","candidate_identity_unverified"],
+ ["Unverified old candidate bytes","candidate_bytes_unverified"],
+ ["Unverified old candidate parent","candidate_parent_unverified"],
+ ["Old candidate ref changed","candidate_ref_moved"],
+ ["Candidate closure not confirmed","candidate_closure_unconfirmed"],
+ ["Missing or wrong App credential","app_credentials_invalid"],
+ ["Unexpected App installation","app_installation_invalid"],
+ ["Unexpected installed permissions","app_permissions_invalid"],
+ ["Unexpected token permissions","app_permissions_invalid"],
+ ["Token repository mismatch","app_repository_mismatch"],
+ ["Token grant failed","app_token_grant_failed"],
+ ["Candidate payload context mismatch","candidate_payload_invalid"],
+ ["No changed candidate tree","candidate_tree_unchanged"],
+ ["Untrusted main execution","untrusted_execution"],
+ ["Unexpected event","untrusted_event"]
+]);
+export function publicationPilotFailure(mode,error){
+ const phase=["prepare","publish","verify"].includes(mode)?mode:"unknown";
+ const message=error instanceof Error?error.message:"";
+ const known=PILOT_FAILURE_CODES.get(message);
+ const http=/^GitHub request failed HTTP ([1-5][0-9]{2})$/.exec(message)
+   ?? /^Candidate API HTTP ([1-5][0-9]{2}) at (?:GET|POST|PATCH|DELETE) \/[^\r\n]*$/.exec(message);
+ return {phase,code:known??(http?"github_http_"+http[1]:"unclassified_failure")};
+}
 if(process.argv[1]&&resolve(process.argv[1])===fileURLToPath(import.meta.url)){
  try{
   const mode=process.argv[2];
@@ -152,5 +185,5 @@ if(process.argv[1]&&resolve(process.argv[1])===fileURLToPath(import.meta.url)){
   else if(mode==="publish")await publish(process.env);
   else if(mode==="verify")await verify(process.env);
   else throw Error("Unknown pilot mode");
- }catch{console.error("Publication candidate pilot failed closed; inspect scope, freshness and source evidence.");process.exitCode=1;}
+ }catch(error){const {phase,code}=publicationPilotFailure(process.argv[2],error);console.error("Publication candidate pilot failed closed; phase="+phase+" code="+code+".");process.exitCode=1;}
 }

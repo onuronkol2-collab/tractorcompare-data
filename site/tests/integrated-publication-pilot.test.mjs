@@ -1,7 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import {readFileSync} from "node:fs";
-import {validateEnvironment,validatePayload,sitemapTimestamp} from "../../scripts/tractorvs-integrated-publication-pilot.mjs";
+import {validateEnvironment,validatePayload,sitemapTimestamp,publicationPilotFailure} from "../../scripts/tractorvs-integrated-publication-pilot.mjs";
 const base="a".repeat(40),repo="onuronkol2-collab/tractorcompare-data";
 const env={GITHUB_REPOSITORY:repo,GITHUB_REF:"refs/heads/main",GITHUB_SHA:base,GITHUB_EVENT_NAME:"workflow_dispatch"};
 test("integrated pilot rejects non-main, wrong repo and unauthorized events",()=>{
@@ -32,4 +32,14 @@ test("manual candidate secret isolated from build and verification remains advis
  assert.doesNotMatch(publish,/npm ci|contents: write/);
  assert.doesNotMatch(v,/APP_PRIVATE_KEY|contents: write|pull-requests: write/);
  assert.match(v,/ref: \$\{\{ github.sha \}\}/);
+});
+
+test("pilot failure diagnostics retain fail-closed classification without exposing exception data",()=>{
+ assert.deepEqual(publicationPilotFailure("publish",Error("Outstanding candidate requires reconciliation")),{phase:"publish",code:"candidate_reconciliation_required"});
+ assert.deepEqual(publicationPilotFailure("publish",Error("Main moved: rebuild candidate evidence")),{phase:"publish",code:"base_moved"});
+ assert.deepEqual(publicationPilotFailure("publish",Error("Candidate API HTTP 403 at POST /private/path?token=SECRET")),{phase:"publish",code:"github_http_403"});
+ assert.deepEqual(publicationPilotFailure("verify",Error("GitHub request failed HTTP 422")),{phase:"verify",code:"github_http_422"});
+ for(const error of [Error("PRIVATE_KEY=SECRET"),Error("GitHub request failed HTTP 403 SECRET"),"token=SECRET",null]){
+  assert.deepEqual(publicationPilotFailure("SECRET",error),{phase:"unknown",code:"unclassified_failure"});
+ }
 });
