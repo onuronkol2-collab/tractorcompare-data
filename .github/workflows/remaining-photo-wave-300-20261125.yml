@@ -1,0 +1,57 @@
+name: TractorVS bulk missing photo review wave (no deploy)
+on:
+  pull_request:
+    branches: [main]
+    paths: ['scripts/research-remaining-photo-wave-300-20261125.mjs', 'scripts/prepare-remaining-photo-wave-300-20261125.py', '.github/workflows/remaining-photo-wave-300-20261125.yml']
+permissions:
+  contents: read
+  actions: read
+concurrency:
+  group: tractorvs-remaining-photo-wave-300-20261125
+  cancel-in-progress: false
+jobs:
+  research:
+    if: github.head_ref == 'photos/300-target-remaining-wave-20261125' && github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22.23.4"
+      - uses: actions/download-artifact@v4
+        with:
+          name: tractorvs-all-model-photo-research
+          run-id: 45553104579
+          github-token: ${{ github.token }}
+          path: prior-photo-research
+      - uses: actions/download-artifact@v4
+        with:
+          name: tractorvs-bulk-missing-photo-review-20261125
+          run-id: 45646293705
+          github-token: ${{ github.token }}
+          path: previous-wave
+      - uses: actions/download-artifact@v4
+        with:
+          name: tractorvs-category-missing-photo-review-20261125
+          run-id: 45648133063
+          github-token: ${{ github.token }}
+          path: second-wave
+      - name: Deduplicate both prior waves and research remaining missing UUIDs
+        run: node --experimental-strip-types scripts/research-remaining-photo-wave-300-20261125.mjs
+      - name: Full decode and derive JPEG review files from any verified partial originals
+        if: always()
+        run: |
+          python3 -m pip install --disable-pip-version-check 'Pillow==12.0.0'
+          python3 scripts/prepare-remaining-photo-wave-300-20261125.py
+      - uses: actions/upload-artifact@v7
+        if: always()
+        with:
+          name: tractorvs-remaining-photo-review-300-20261125
+          path: |
+            bulk-photo-wave-evidence/report.json
+            bulk-photo-wave-evidence/derivatives/
+            bulk-photo-wave-evidence/contact-*.jpg
+          retention-days: 7
