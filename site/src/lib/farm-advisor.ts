@@ -34,8 +34,10 @@ export const COUNTRIES_BY_LOCALE: Record<string,MarketCountry> = {
 
 export function areaToHectares(amount: number, unit: AreaUnit): number {
   if (!Number.isFinite(amount) || amount <= 0 || amount > 1e10) throw new Error("Invalid farm area");
-  if (!(unit in AREA_SQM)) throw new Error("Unsupported area unit");
-  return amount * AREA_SQM[unit] / 10000;
+  if (!Object.hasOwn(AREA_SQM,unit)) throw new Error("Unsupported area unit");
+  const hectares=amount * AREA_SQM[unit] / 10000;
+  if (!Number.isFinite(hectares)||hectares>1000000) throw new Error("Invalid farm area");
+  return hectares;
 }
 
 export type Crop = "grain" | "vegetables" | "orchard" | "vineyard" | "rice" | "pasture" | "mixed";
@@ -80,6 +82,15 @@ export interface FarmInputs {
 export function horsepowerScreening(input: FarmInputs): { min: number; max: number; reasons:string[] } {
   if (!Number.isFinite(input.hectares) || input.hectares <= 0 || input.hectares > 1000000) throw new Error("Invalid hectares");
   if (!Number.isFinite(input.annualHours) || input.annualHours < 0 || input.annualHours > 8760) throw new Error("Invalid annual hours");
+  const choices: readonly [unknown,readonly string[]][] = [
+    [input.country, MARKET_COUNTRIES], [input.crop,["grain","vegetables","orchard","vineyard","rice","pasture","mixed"]],
+    [input.terrain,["flat","rolling","steep"]], [input.soil,["light","medium","heavy"]],
+    [input.operation,["light","general","heavy"]], [input.implement,["light","medium","heavy"]],
+    [input.trailer,["none","light","heavy"]], [input.condition,["new","used","either"]],
+  ];
+  if(choices.some(([value,allowed])=>typeof value!=="string"||!allowed.includes(value)))throw new Error("Invalid farm options");
+  if(input.budget!==null&&(!Number.isFinite(input.budget)||input.budget<0))throw new Error("Invalid budget");
+  if(input.implements!==undefined&&!Array.isArray(input.implements))throw new Error("Invalid implements");
   const ha = input.hectares;
   let min = ha < 2 ? 18 : ha < 10 ? 28 : ha < 30 ? 45 : ha < 80 ? 65 : 100;
   let max = ha < 2 ? 40 : ha < 10 ? 65 : ha < 30 ? 95 : ha < 80 ? 145 : 210;
@@ -90,7 +101,7 @@ export function horsepowerScreening(input: FarmInputs): { min: number; max: numb
   if (input.operation === "heavy") bump(18, 30, "workload");
   else if (input.operation === "light") bump(-7,-8, "workload");
   const selectedTools = [...new Set(input.implements || [])];
-  if (selectedTools.some((tool) => !(tool in FARM_IMPLEMENT_INTENSITY))) throw new Error("Unknown implement");
+  if (selectedTools.some((tool) => !Object.hasOwn(FARM_IMPLEMENT_INTENSITY,tool))) throw new Error("Unknown implement");
   if (input.plowBodies != null && (!Number.isInteger(input.plowBodies) || input.plowBodies < 2 || input.plowBodies > 6)) throw new Error("Invalid plow share count");
   if (input.laserWidthMeters != null && (!Number.isFinite(input.laserWidthMeters) || input.laserWidthMeters < 2 || input.laserWidthMeters > 9)) throw new Error("Invalid laser working width");
   const implementIntensity = selectedTools.length
@@ -146,7 +157,7 @@ const REVIEWED_MARKET_ALIASES: Readonly<Record<string,string>> = {
 };
 function marketCompatibility(market: string | null, country: MarketCountry): "matched" | "unknown" | "excluded" {
   const original=String(market || "").toLowerCase().trim();
-  const m = REVIEWED_MARKET_ALIASES[original] ?? original;
+  const m = Object.hasOwn(REVIEWED_MARKET_ALIASES,original) ? REVIEWED_MARKET_ALIASES[original] : original;
   if (m === "europe / turkey") return ["TR","FR","DE","ES"].includes(country) ? "matched" : "excluded";
   if (!m || m === "global" || m === "international") return "unknown";
   if (["turkey", "türkiye", "tr"].includes(m)) return country === "TR" ? "matched" : "excluded";
@@ -159,7 +170,7 @@ function marketCompatibility(market: string | null, country: MarketCountry): "ma
     spain:"ES", españa:"ES",
     türkiye:"TR", turkey:"TR",
   };
-  if (exactCountries[m]) return exactCountries[m] === country ? "matched" : "excluded";
+  if (Object.hasOwn(exactCountries,m)) return exactCountries[m] === country ? "matched" : "excluded";
   if (m === "south africa") return "excluded";
   if (m.toUpperCase() === country) return "matched";
   // Unknown country-scoped markets are not treated as global inventory.

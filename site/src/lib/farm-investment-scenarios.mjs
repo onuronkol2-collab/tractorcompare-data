@@ -22,9 +22,9 @@ export function investmentScenarios(input){
  const rent=input.rentalPerHour===null?null:bounded(input.rentalPerHour,0,1e9,"rentalPerHour");
  if(!Array.isArray(input.resale)||input.resale.length!==4)throw new RangeError("Four resale values required");
  const horizons=[1,3,5,10];
- const resale=input.resale.map(v=>v===null?null:bounded(v,0,1e12,"resale"));
+ const resale=horizons.map((_,i)=>input.resale[i]===null?null:bounded(input.resale[i],0,1e12,"resale"));
  const principal=price-down, rate=annualRate/1200;
- const payment=rate===0?principal/term:principal*rate/(-Math.expm1(-term*Math.log1p(rate)));
+ const payment=rate===0?principal/term:principal*(rate/(-Math.expm1(-term*Math.log1p(rate))));
  const annualOperating=hours*(fuel*fuelPrice+maintenance+other)+fixed;
  // Amortize only as far as the longest requested horizon. Pay outstanding principal on sale.
  let balance=principal,paid=0,interest=0;
@@ -40,10 +40,11 @@ export function investmentScenarios(input){
   const operating=annualOperating*year;
   const assetAndFinancing=down+paid+balance;
   const total=resale[index]===null?null:assetAndFinancing+operating-resale[index];
+  const safeRatio=denominator=>{if(total===null||denominator===null||denominator===0)return null;const value=total/denominator;return Number.isFinite(value)?value:null;};
   const rental=rent===null?null:rent*hours*year;
   results.push({years:year,operating,interestPaid:interest,loanPayments:paid,loanBalance:balance,
-   saleProceeds:resale[index],total,perHour:total===null||hours===0?null:total/(hours*year),
-   perHectare:total===null||hectares===null||hectares===0?null:total/(hectares*year),
+   saleProceeds:resale[index],total,perHour:safeRatio(hours*year),
+   perHectare:safeRatio(hectares===null?null:hectares*year),
    rental,rentalDifference:total===null||rental===null?null:total-rental});
  }
  return {monthlyPayment:payment,annualOperating,scenarios:results};

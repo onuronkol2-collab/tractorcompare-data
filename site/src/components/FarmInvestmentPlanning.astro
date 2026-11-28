@@ -52,7 +52,7 @@ const taskFields=[["area",m.fieldArea,0.0001,1000000],["passes",c.passes,1,100],
 <script>
  import {investmentScenarios} from "../lib/farm-investment-scenarios.mjs";
  import {planSequentialFieldWork} from "../lib/farm-fleet-planning.mjs";
- import {AREA_SQM} from "../lib/farm-cost.mjs";
+ import {farmAreaInputBounds} from "../lib/farm-area-input.mjs";
  import {FARM_TOOL_DONE_EVENT} from "../lib/analytics-product-actions";
  for(const root of document.querySelectorAll<HTMLElement>("[data-investment-planning]")){
   const format=new Intl.NumberFormat(root.dataset.locale,{maximumSignificantDigits:7});
@@ -86,7 +86,7 @@ const taskFields=[["area",m.fieldArea,0.0001,1000000],["passes",c.passes,1,100],
      result.hidden=false;window.dispatchEvent(new Event(FARM_TOOL_DONE_EVENT));
     }catch{clear();error.hidden=false;}
    });
-   if(form.dataset.planning==="fleet"){for(const i of [1,2]){const area=form.elements.namedItem(i+"-area");const unit=form.elements.namedItem(i+"-unit");if(area instanceof HTMLInputElement&&unit instanceof HTMLSelectElement){const bounds=()=>{const factor=AREA_SQM[unit.value as keyof typeof AREA_SQM];if(factor){area.min=String(.0001*10000/factor);area.max=String(1000000*10000/factor);}};unit.addEventListener("change",bounds);bounds();}}}
+   if(form.dataset.planning==="fleet"){for(const i of [1,2]){const area=form.elements.namedItem(i+"-area");const unit=form.elements.namedItem(i+"-unit");if(area instanceof HTMLInputElement&&unit instanceof HTMLSelectElement){const bounds=()=>{const {min,max}=farmAreaInputBounds(unit.value);area.min=String(min);area.max=String(max);};unit.addEventListener("change",bounds);bounds();}}}
    controls.disabled=false;
   }
  }
