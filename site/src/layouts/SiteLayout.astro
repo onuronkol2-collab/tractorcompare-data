@@ -6,6 +6,8 @@ import "../styles/interaction-accessibility.css";
 import PhotoLightbox from "../components/PhotoLightbox.astro";
 import LocaleSuggestion from "../components/LocaleSuggestion.astro";
 import AnalyticsConsent from "../components/AnalyticsConsent.astro";
+import InfolinksConsent from "../components/InfolinksConsent.astro";
+import { isInfolinksRoute } from "../lib/infolinks-policy.mjs";
 import { analyticsText } from "../lib/analytics-i18n.ts";
 import { brand } from "../config/brand";
 import {farmCostText} from "../lib/farm-cost-i18n";
@@ -41,6 +43,8 @@ const indexingEnabled =
 const homePath = localizedPath(lang, "/");
 const analyticsCopy = analyticsText(lang);
 const plainPath = unlocalizedPath(Astro.url.pathname);
+// Keep disabled until provider approval, verified CMP and format review.
+const infolinksEnabled = import.meta.env.PUBLIC_INFOLINKS_ENABLED === "true" && import.meta.env.PUBLIC_INFOLINKS_CONSENT_VERIFIED === "true" && Astro.site?.origin === "https://tractorvs.com" && import.meta.env.PUBLIC_INDEXING_ENABLED === "true";
 // Metadata-only curation: preserve the exact reviewed article rendering blob.
 const title = reviewedTechnicalGuideMetadataTitle(plainPath, lang, sourceTitle);
 const catalogPath = localizedPath(lang, "/tractors/");
@@ -317,6 +321,7 @@ const openGraphLocale: Record<Locale, string> = {
     </footer>
     <PhotoLightbox lang={lang} />
     <AnalyticsConsent lang={lang} />
+    {infolinksEnabled && <InfolinksConsent lang={lang} eligible={indexingEnabled && isInfolinksRoute(plainPath)} />}
   </body>
 </html>
 <script>

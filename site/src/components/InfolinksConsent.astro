@@ -1,0 +1,86 @@
+---
+import type { Locale } from '../lib/locales.ts';
+import { infolinksCopy } from '../lib/infolinks-i18n.ts';
+interface Props { lang: Locale; eligible: boolean; }
+const { lang, eligible } = Astro.props;
+const [settings,disclosure,accept,reject,privacy,note] = infolinksCopy[lang];
+---
+<section class="tv-ad-settings" data-tv-infolinks data-eligible={String(eligible)}>
+  <details>
+    <summary>{settings}</summary>
+    <p>{disclosure}</p>
+    <p><a href="https://sites0001.infolinks.com/privacy-policy" rel="noopener noreferrer" target="_blank">{privacy}</a></p>
+    <div class="tv-ad-actions">
+      <button type="button" data-ad-choice="accepted" aria-pressed="false">{accept}</button>
+      <button type="button" data-ad-choice="rejected" aria-pressed="false">{reject}</button>
+    </div>
+    <p>{note}</p>
+  </details>
+</section>
+<script>
+  import { AD_CHOICE_KEY, INFOLINKS_PID, INFOLINKS_WSID, INFOLINKS_SRC, isInfolinksAllowed } from '../lib/infolinks-policy.mjs';
+  const root = document.querySelector<HTMLElement>('[data-tv-infolinks]');
+  type Choice = 'accepted' | 'rejected';
+  const w = window as Window & { infolinks_pid?: number; infolinks_wsid?: number };
+  const marker = 'script[data-tractorvs-infolinks]';
+  // Document-scoped only. Never restore a persisted grant.
+  let currentChoice: Choice | null = null;
+  function reflect(choice: Choice | null) {
+    root?.querySelectorAll<HTMLButtonElement>('button[data-ad-choice]').forEach(button => {
+      button.setAttribute('aria-pressed', String(button.dataset.adChoice === choice));
+    });
+  }
+  function load() {
+    if (!root || !isInfolinksAllowed({enabled:true,origin:location.origin,
+      eligible:root.dataset.eligible === 'true',search:location.search,hash:location.hash,
+      choice:currentChoice}) || document.querySelector(marker)) return;
+    w.infolinks_pid = INFOLINKS_PID;
+    w.infolinks_wsid = INFOLINKS_WSID;
+    const script = document.createElement('script');
+    script.async = true;
+    script.dataset.tractorvsInfolinks = '';
+    script.src = INFOLINKS_SRC;
+    document.body.appendChild(script);
+  }
+  function revoke() {
+    // Loaded third-party code cannot be unloaded. Provider withdrawal API remains a release gate.
+    if (document.querySelector(marker)) location.reload();
+  }
+  function choose(choice: Choice) {
+    currentChoice = choice;
+    reflect(currentChoice);
+    if (choice === 'rejected') {
+      try { localStorage.setItem(AD_CHOICE_KEY, 'rejected:' + crypto.randomUUID()); } catch {}
+      revoke();
+    } else load();
+  }
+  root?.querySelectorAll<HTMLButtonElement>('button[data-ad-choice]').forEach(button => {
+    button.addEventListener('click', () => {
+      const choice = button.dataset.adChoice;
+      if (choice === 'accepted' || choice === 'rejected') choose(choice);
+    });
+  });
+  function denyAndReload() {
+    currentChoice = null;
+    reflect(currentChoice);
+    revoke();
+  }
+  window.addEventListener('storage', event => {
+    if (event.key === AD_CHOICE_KEY || event.key === null) denyAndReload();
+  });
+  window.addEventListener('pageshow', event => {
+    if (event.persisted) denyAndReload();
+  });
+  window.addEventListener('hashchange', denyAndReload);
+  window.addEventListener('popstate', denyAndReload);
+  window.addEventListener('tractorvs:route-state-changed', denyAndReload);
+  reflect(currentChoice);
+</script>
+<style>
+  .tv-ad-settings { max-width: 48rem; margin: 1rem auto; padding: 0 1rem; font-size: .9rem; }
+  summary { cursor: pointer; font-weight: 600; }
+  .tv-ad-actions { display: flex; flex-wrap: wrap; gap: .5rem; }
+  button { min-height: 44px; padding: .5rem .75rem; border: 1px solid currentColor; border-radius: .5rem; background: transparent; color: inherit; cursor: pointer; }
+  button[aria-pressed="true"] { font-weight: 700; outline: 2px solid currentColor; }
+  :is(summary,button,a):focus-visible { outline: 3px solid currentColor; outline-offset: 3px; }
+</style>
