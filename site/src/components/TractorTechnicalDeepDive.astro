@@ -1,5 +1,6 @@
 ---
 import SiteLayout from "../layouts/SiteLayout.astro";
+import ShaftPowerCalculator from "./ShaftPowerCalculator.astro";
 import {guidePhotos} from "../lib/editorial-photos.ts";
 import {TECHNICAL_DEEP_DIVES,getTechnicalDeepDive,type TechnicalDeepDiveSlug} from "../lib/tractor-technical-deep-dives.ts";
 import {GLOSSARY_TERMS} from "../lib/tractor-glossary.ts";
@@ -48,7 +49,7 @@ const powerCaseRows=powerCase?[
 const hasHydraulicSafety = slug === "tractor-hydraulic-lift-explained";
 const hasPtoSafety = slug === "pto-and-power-take-off";
 const hasEditorialUpdate = hasPowerStandards || hasHydraulicSafety || hasPtoSafety;
-const editedOn = hasPtoSafety ? "2026-11-27" : (hasEditorialUpdate ? "2026-11-22" : "2026-11-20");
+const editedOn = hasPowerStandards ? "2026-11-28" : hasPtoSafety ? "2026-11-27" : (hasEditorialUpdate ? "2026-11-22" : "2026-11-20");
 // These citations are already displayed as clickable sources in the guide.
 // Keep JSON-LD evidence in exact sync with user-visible references.
 const citedDocuments=[
@@ -56,6 +57,7 @@ const citedDocuments=[
  "https://www.oecd.org/en/topics/tractors.html",
  ...(powerCase?[DEUTZ_5D_GS_PILOT.source]:[]),
  ...(hasPowerStandards?[
+  "https://technische-antriebselemente.de/en/academy/modul-1-lastprofil/drehmoment-leistung-drehzahl/",
   "https://eur-lex.europa.eu/eli/reg/2019/405/oj/eng",
   "https://www.dlg.org/en/magazin/survey-tests/tractor-model-descriptions-no-standardised-information",
   "https://www.nist.gov/pml/special-publication-811/nist-guide-si-appendix-b-conversion-factors/nist-guide-si-appendix-b9",
@@ -141,6 +143,7 @@ const structuredData={
        <h2>{section.title[lang]}</h2>
        {section.paragraphs[lang].map(paragraph=><p>{paragraph}</p>)}
      </section>)}
+     {hasPowerStandards && <ShaftPowerCalculator lang={lang} />}
      {powerCase && <section class="learn-chapter learn-source-case" aria-labelledby="learn-source-case-heading">
        <p class="learn-chapter-index">{tr?"KAYNAKLI GERÇEK MODEL ÖRNEĞİ":"SOURCE-BASED REAL MODEL EXAMPLE"}</p>
        <h2 id="learn-source-case-heading">{tr
@@ -185,6 +188,7 @@ const structuredData={
        <li><a href="https://tractortestlab.unl.edu/" target="_blank" rel="noopener noreferrer">{tr?"Nebraska Traktör Test Laboratuvarı":"Nebraska Tractor Test Laboratory"} ↗</a></li>
        <li><a href="https://www.oecd.org/en/topics/tractors.html" target="_blank" rel="noopener noreferrer">{tr?"OECD traktör test kodları":"OECD tractor testing codes"} ↗</a></li>
        {hasPowerStandards && <>
+        <li><a href="https://technische-antriebselemente.de/en/academy/modul-1-lastprofil/drehmoment-leistung-drehzahl/" target="_blank" rel="noopener noreferrer">{tr?"TEA Academy — tork, güç ve dönme hızı ilişkisi":"TEA Academy — torque, power and rotational speed"} ↗</a></li>
         <li><a href="https://eur-lex.europa.eu/eli/reg/2019/405/oj/eng" target="_blank" rel="noopener noreferrer">{tr?"UN/ECE R120 — resmî motor gücü ölçüm düzenlemesi":"UN/ECE R120 — official engine power measurement regulation"} ↗</a></li>
         <li><a href="https://www.dlg.org/en/magazin/survey-tests/tractor-model-descriptions-no-standardised-information" target="_blank" rel="noopener noreferrer">{tr?"DLG test merkezi — traktör güç beyanları neden farklı?":"DLG Test Centre — why tractor power claims differ"} ↗</a></li>
         <li><a href="https://www.nist.gov/pml/special-publication-811/nist-guide-si-appendix-b-conversion-factors/nist-guide-si-appendix-b9" target="_blank" rel="noopener noreferrer">{tr?"NIST — mekanik hp ve metrik PS güç birimi dönüşüm katsayıları":"NIST — mechanical horsepower and metric PS conversion factors"} ↗</a></li>
@@ -193,7 +197,7 @@ const structuredData={
        {hasHydraulicSafety && <li><a href="https://www.hse.gov.uk/agriculture/topics/machinery/fluid.htm" target="_blank" rel="noopener noreferrer">{tr?"HSE — yüksek basınçlı hidrolik sıvı enjeksiyon tehlikeleri":"HSE — high-pressure hydraulic fluid injection hazards"} ↗</a></li>}
        {hasPtoSafety && <li><a href="https://www.hse.gov.uk/agriculture/topics/machinery/safe-use-1.htm" target="_blank" rel="noopener noreferrer">{tr?"HSE — tarım makinelerinde güvenli durdurma prosedürü":"HSE — safe stop procedure for agricultural machinery"} ↗</a></li>}
       </ul>
-      <small>{tr ? ("Editoryal kontrol: " + (hasPtoSafety ? "27 Kasım 2026" : (hasEditorialUpdate ? "22 Kasım 2026" : "20 Kasım 2026"))) : ("Editorial review: " + (hasPtoSafety ? "27 November 2026" : (hasEditorialUpdate ? "22 November 2026" : "20 November 2026")))}</small>
+      <small>{tr ? ("Editoryal kontrol: " + (hasPowerStandards ? "28 Kasım 2026" : hasPtoSafety ? "27 Kasım 2026" : (hasEditorialUpdate ? "22 Kasım 2026" : "20 Kasım 2026"))) : ("Editorial review: " + (hasPowerStandards ? "28 November 2026" : hasPtoSafety ? "27 November 2026" : (hasEditorialUpdate ? "22 November 2026" : "20 November 2026")))}</small>
      </section>
     </div>
    </div>

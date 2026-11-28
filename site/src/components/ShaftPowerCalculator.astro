@@ -1,0 +1,68 @@
+---
+interface Props {lang:"en"|"tr"}
+const {lang}=Astro.props;
+const tr=lang==="tr";
+const c=tr?{
+ title:"Tork, devir ve güç hesaplayıcısı",intro:"Aynı milin aynı çalışma noktasındaki tork ve devir değerlerinden mekanik gücü hesaplayın. Bu, bir traktörün ölçülmüş performansı değildir.",
+ torque:"Tork (N·m)",rpm:"Dönme hızı (dev/dk)",calculate:"Hesapla",invalid:"Pozitif, geçerli sayılar girin.",result:"Hesaplanan mekanik güç",warning:"Motorun azami torkunu farklı bir devirdeki nominal güçle birleştirmeyin. Motor ve PTO mili değerlerini birbirine dönüştürmez; çekişi, yakıt tüketimini veya ekipman uyumunu tahmin etmez.",example:"Örnek: aynı milde 400 N·m ve 1.800 dev/dk yaklaşık 75,4 kW verir. Bu, varsayımsal eğitim örneğidir.",js:"Etkileşimli hesaplama için JavaScript gerekir."
+}:{
+ title:"Torque, RPM and power calculator",intro:"Calculate mechanical power from torque and rotational speed at the same shaft and operating point. This is not a measured tractor performance result.",
+ torque:"Torque (N·m)",rpm:"Rotational speed (rpm)",calculate:"Calculate",invalid:"Enter valid positive numbers.",result:"Calculated mechanical power",warning:"Do not combine peak engine torque with a rated-power speed from another operating point. This does not convert engine to PTO power, predict drawbar performance, fuel consumption or equipment compatibility.",example:"Example: 400 N·m at 1,800 rpm on the same shaft gives approximately 75.4 kW. This is a hypothetical educational example.",js:"JavaScript is required for interactive calculation."
+};
+---
+<section class="shaft-tool" aria-labelledby="shaft-title" data-shaft-tool data-locale={lang==="tr"?"tr-TR":"en-US"}>
+ <h2 id="shaft-title">{c.title}</h2>
+ <p>{c.intro}</p>
+ <p><code>P (kW) = T (N·m) × n (rpm) × 2π / 60000</code></p>
+ <p>{c.example}</p>
+ <form data-shaft-form data-clarity-mask="true" autocomplete="off">
+  <fieldset disabled>
+   <div class="shaft-fields">
+    <label>{c.torque}<input name="torque" type="number" inputmode="decimal" min="0.000001" max="1000000" step="any" required /></label>
+    <label>{c.rpm}<input name="rpm" type="number" inputmode="decimal" min="0.000001" max="100000" step="any" required /></label>
+   </div>
+   <button type="submit">{c.calculate}</button>
+   <p role="alert" data-shaft-error hidden>{c.invalid}</p>
+   <p data-shaft-result hidden aria-live="polite">{c.result}: <output data-shaft-output></output></p>
+  </fieldset>
+ </form>
+ <noscript><p>{c.js}</p></noscript>
+ <p>{c.warning}</p>
+</section>
+<script>
+ import {shaftPowerAtPoint} from "../lib/shaft-power-calculator.mjs";
+ for(const root of document.querySelectorAll<HTMLElement>("[data-shaft-tool]")){
+  const form=root.querySelector<HTMLFormElement>("[data-shaft-form]");
+  const fieldset=form?.querySelector<HTMLFieldSetElement>("fieldset");
+  const output=root.querySelector<HTMLOutputElement>("[data-shaft-output]");
+  const result=root.querySelector<HTMLElement>("[data-shaft-result]");
+  const error=root.querySelector<HTMLElement>("[data-shaft-error]");
+  if(!form||!fieldset||!output||!result||!error)continue;
+  const fmt=new Intl.NumberFormat(root.dataset.locale,{maximumSignificantDigits:6});
+  const clear=()=>{output.textContent="";result.hidden=true;error.hidden=true;};
+  form.addEventListener("input",clear);
+  form.addEventListener("submit",e=>{
+   e.preventDefault();clear();
+   try{
+    if(!form.checkValidity())throw new Error("Invalid form");
+    const values=new FormData(form);
+    const read=(key:string)=>{const v=values.get(key);return typeof v==="string"&&v.trim()?Number(v):NaN;};
+    const p=shaftPowerAtPoint(read("torque"),read("rpm"));
+    output.textContent=fmt.format(p.kw)+" kW · "+fmt.format(p.hp)+" hp · "+fmt.format(p.ps)+" PS";
+    result.hidden=false;
+   }catch{error.hidden=false;}
+  });
+  fieldset.disabled=false;
+ }
+</script>
+<style>
+ .shaft-tool{border:1px solid #708478;padding:clamp(.8rem,3vw,1.5rem);border-radius:.75rem;margin-block:2rem;overflow-wrap:anywhere}
+ .shaft-tool fieldset{border:0;padding:0;margin:0;min-inline-size:0}
+ .shaft-fields{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,12rem),1fr));gap:.8rem}
+ .shaft-fields label{display:grid;gap:.4rem}
+ .shaft-tool input,.shaft-tool button{min-height:44px;min-width:0;max-width:100%;font:inherit;border:1px solid #708478;border-radius:.4rem;padding:.5rem}
+ .shaft-tool button{margin-block:.8rem;background:#245b39;color:white;font-weight:600;cursor:pointer}
+ .shaft-tool input:focus-visible,.shaft-tool button:focus-visible{outline:2px solid currentColor;outline-offset:2px}
+ .shaft-tool output{font-weight:700}
+ [hidden]{display:none!important}
+</style>
