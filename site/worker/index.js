@@ -172,6 +172,20 @@ const routes = {
           isFallback=Boolean(source);
         }
       }
+      // A full-size legacy request can have neither a 1920 nor a 960
+      // source during a provider incident. All remaining legacy approvals
+      // have a real local 480 sibling. Use that exact approved asset last,
+      // never an invented high-resolution file or an unrelated photo.
+      if(!source&&isFullSize){
+        const siblingPath=url.pathname.replace(/-1920\.jpg$/,"-480.jpg");
+        if(resolveApprovedPhotoSource(siblingPath)){
+          const sibling=new URL(url);sibling.pathname=siblingPath;sibling.search="";
+          const local=await env.ASSETS.fetch(new Request(sibling,{method:"GET"}));
+          if(local.ok&&(local.headers.get("Content-Type")||"").toLowerCase().startsWith("image/jpeg")){
+            source=local;isFallback=true;fallbackSize="480";fallbackLocal=true;
+          }
+        }
+      }
       if(!source)
         return new Response("Photo source unavailable",{status:502,headers:{"Cache-Control":"no-store"}});
       return new Response(method==="HEAD"?null:source.body,{
