@@ -547,7 +547,7 @@ html:is(:lang(hi), :lang(zh), :lang(ja)) #main :is(.tractor-card-specs small,
    disclosure state, tracking, content or metadata are changed here. */
 @media screen {
   :root {
-    --ui-radius: 9px;
+    --ui-radius: 18px;
     --ui-shadow: none;
     --ui-shadow-hover: none;
   }
@@ -609,4 +609,19 @@ html:is(:lang(hi), :lang(zh), :lang(ja)) #main :is(.tractor-card-specs small,
     max-block-size: 55dvh;
     overflow-y: auto;
   }
+}
+
+/* Regression: keep shared geometry and readable labels at the established floor.
+   Bound the mobile disclosure to its actual containing header; long localized
+   search controls must never impose an intrinsic minimum track width. */
+@media screen and (max-width:375px){
+ .site-header .header-inner{max-inline-size:calc(100% - 36px)}
+ .site-header .brand-lockup{min-inline-size:0;max-inline-size:100%}
+ .site-header .header-actions{width:100%;max-inline-size:100%;justify-content:flex-end;flex-wrap:wrap}
+ .site-header .mobile-nav-links{box-sizing:border-box;inset-inline:12px;width:auto;max-inline-size:calc(100% - 24px);grid-template-columns:minmax(0,1fr)}
+ .site-header .mobile-nav-links>*{min-inline-size:0;max-inline-size:100%;overflow-wrap:anywhere}
+ .site-header .mobile-menu-search{min-inline-size:0;max-inline-size:100%}
+ .site-header .mobile-menu-search-row{grid-template-columns:minmax(0,1fr)}
+ .site-header .mobile-menu-search-row>*{min-inline-size:0;max-inline-size:100%}
+ .site-header .mobile-menu-search input{width:100%;min-inline-size:0}
 }

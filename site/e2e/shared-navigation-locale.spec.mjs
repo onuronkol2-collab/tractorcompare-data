@@ -30,7 +30,8 @@ for(const locale of ["tr","de","hi","ja"]){
   await expect(nav).toBeVisible();
   await expect(nav.locator('a[href="/'+locale+'/compare/"]')).toHaveCount(1);
   expect((await nav.boundingBox())?.width??999).toBeLessThanOrEqual(320);
-  expect(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth+1)).toBe(false);
+  const overflow=await page.evaluate(()=>({width:document.documentElement.scrollWidth,viewport:innerWidth,offenders:[...document.querySelectorAll(".site-header *")].filter(el=>{const r=el.getBoundingClientRect();return r.width>0&&(r.right>innerWidth+1||r.left< -1)}).map(el=>({tag:el.tagName,class:String(el.className).slice(0,100)})).slice(0,8)}));
+  expect(overflow.width,JSON.stringify(overflow)).toBeLessThanOrEqual(overflow.viewport+1);
   await page.keyboard.press("Escape");
   await expect(menu).not.toHaveAttribute("open","");
   const languages=page.locator(".locale-menu");

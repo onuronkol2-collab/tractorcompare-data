@@ -11,6 +11,7 @@ const {lang}=Astro.props;
 const searchCopy=EDITORIAL_DISCOVERY[lang];
 const readingCopy=EDITORIAL_READING_LANGUAGE[lang];
 const number=new Intl.NumberFormat(LOCALE_TAGS[lang]);
+const sectionNumber=new Intl.NumberFormat(LOCALE_TAGS[lang],{minimumIntegerDigits:2});
 const practical=editorialPracticalTools(lang);
 const tr=lang==="tr";
 const intent=EDITORIAL_INTENT_COPY[lang];
@@ -170,7 +171,7 @@ const schema={
    <section class="editorial-section" id="rehberler" aria-labelledby="editorial-guide-title">
     <div class="editorial-section-title">
      <div><h2 id="editorial-guide-title">{copy.guides}</h2><p>{copy.guidesIntro}</p></div>
-     <span data-editorial-section-count>{number.format(articles.length)}</span>
+     <span data-editorial-section-count>{sectionNumber.format(articles.length)}</span>
     </div>
     <ol class="editorial-grid">{articles.map(entry=><li data-editorial-card data-reading-language={englishOnly(entry)?"other":"local"}>
       <article class="editorial-card">
@@ -187,7 +188,7 @@ const schema={
    <section class="editorial-section" id="incelemeler" aria-labelledby="editorial-review-title">
     <div class="editorial-section-title">
      <div><h2 id="editorial-review-title">{copy.review}</h2><p>{copy.reviewIntro}</p></div>
-     <span data-editorial-section-count>{number.format(reviews.length+extraReview)}</span>
+     <span data-editorial-section-count>{sectionNumber.format(reviews.length+extraReview)}</span>
     </div>
     <ol class="editorial-grid">{reviews.map(entry=><li data-editorial-card data-reading-language={englishOnly(entry)?"other":"local"}>
       <article class="editorial-card">
@@ -263,8 +264,19 @@ const schema={
     }));
     discovery.hidden=false;
     const searchJump=document.querySelector<HTMLAnchorElement>("[data-editorial-search-jump]");
-    if(searchJump){searchJump.hidden=false;searchJump.addEventListener("click",()=>field.focus({preventScroll:true}));}
+    if(searchJump){
+      searchJump.hidden=false;
+      searchJump.addEventListener("click",event=>{
+        if(event.defaultPrevented||event.button!==0||event.metaKey||event.ctrlKey||event.shiftKey||event.altKey)return;
+        // Native fragment navigation after a click can override early input focus.
+        event.preventDefault();
+        if(location.hash!=="#editorial-discovery")history.pushState(null,"","#editorial-discovery");
+        discovery.scrollIntoView({block:"start"});
+        field.focus({preventScroll:true});
+      });
+    }
     const number=new Intl.NumberFormat(document.documentElement.lang);
+    const sectionNumber=new Intl.NumberFormat(document.documentElement.lang,{minimumIntegerDigits:2});
     const paint=()=>{
       const terms=normalizeTractorQuery(field.value).split(/\s+/).filter(Boolean);
       const reading=languages.find(input=>input.checked)?.value||"all";
@@ -278,7 +290,7 @@ const schema={
         if(match)visible++;
       });
       sections.forEach(section=>{
-        const count=number.format(section.rows.filter(row=>!row.hidden).length);
+        const count=sectionNumber.format(section.rows.filter(row=>!row.hidden).length);
         if(section.count&&section.count.textContent!==count)section.count.textContent=count;
       });
       const hideClear=!terms.length;

@@ -21,8 +21,11 @@ for(const locale of ["en","tr"]){
 for(const locale of ["tr","de","ja"]){
  test("forum research links: "+locale,async({page})=>{
   await page.goto("/"+locale+"/forum/");
-  const links=page.locator(".forum-side-research a");
+  const links=page.locator(".forum-side-research nav a");
   await expect(links).toHaveCount(3);
+  const help=page.locator(".forum-side-research .forum-question-help");
+  await expect(help.locator("a")).toHaveAttribute("href","#forum-compose");
+  await expect(help.locator("summary")).toBeVisible();
   for(const [i,path] of ["/tractors/","/compare/","/guides/choosing-a-tractor/"].entries()){
    await expect(links.nth(i)).toHaveAttribute("href","/"+locale+path);
   }
