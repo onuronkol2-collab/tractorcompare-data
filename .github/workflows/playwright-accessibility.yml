@@ -3,6 +3,8 @@ name: TractorVS browser smoke and accessibility baseline
 on:
   pull_request:
     paths:
+      - "scripts/tractorvs-owner-test-release-policy.mjs"
+      - "site/tests/owner-test-release.test.mjs"
       - ".github/workflows/playwright-accessibility.yml"
       - ".github/dependabot.yml"
       - "site/src/**"
