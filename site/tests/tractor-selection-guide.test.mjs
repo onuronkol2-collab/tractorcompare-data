@@ -89,11 +89,14 @@ test("ten published selection guides link to actual scenario, equipment and cost
  assert.match(scenario,/id="farm-scenarios"/);
  assert.match(decision,/id="farm-equipment"/);
  assert.match(cost,/id="farm-cost-form"/);
+ const planning=read("components/FarmInvestmentPlanning.astro");
+ assert.match(planning,/id="farm-ownership-plan"/);
+ assert.match(planning,/id="farm-field-plan"/);
  assert.match(read("pages/[locale]/guides/farm-cost-calculator/index.astro"),/NEW_LOCALES\.map/);
  for(const lang of LOCALES){
   const c=practicalGuideLinks(lang);
   const base=localizedPath(lang,"/guides/farm-cost-calculator/");
-  assert.deepEqual(c.links.map(x=>x.href),["#farm-scenarios","#farm-equipment","#farm-cost-form"].map(x=>base+x));
+  assert.deepEqual(c.links.map(x=>x.href),["#farm-scenarios","#farm-equipment","#farm-cost-form","#farm-ownership-plan","#farm-field-plan"].map(x=>base+x));
   assert.equal(c.guide.href,localizedPath(lang,"/guides/choosing-a-tractor/"));
   assert.ok([c.heading,c.description,c.returnNote,c.guide.label,...c.links.map(x=>x.label)].every(x=>typeof x==="string"&&x.trim()));
  }

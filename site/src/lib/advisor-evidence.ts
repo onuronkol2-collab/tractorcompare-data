@@ -79,8 +79,9 @@ export function extractAdvisorFacts(
   }[]>();
 
   for (const spec of tractor.specifications) {
-    const kind = CANONICAL_FACTS[(spec.canonical_key || "").trim()];
-    if (!kind) continue;
+    const key=(spec.canonical_key || "").trim();
+    if (!Object.hasOwn(CANONICAL_FACTS,key)) continue;
+    const kind = CANONICAL_FACTS[key];
     const value = safeValue(spec, kind);
     if (!value) continue;
     const official = officialManufacturerSourceUrl(spec, tractor.brand_name);
@@ -114,6 +115,8 @@ export function extractAdvisorFacts(
 export function selectAdvisorFacts(
   facts: AdvisorFact[], input: FarmInputs, limit = 3,
 ): AdvisorFact[] {
+  const max=Number.isFinite(limit)?Math.max(0,Math.min(3,Math.trunc(limit))):0;
+  if(max===0)return [];
   const tools = new Set(input.implements || []);
   const wanted: AdvisorFactKind[] = [];
   if (["rotavator", "mower", "baler", "sprayer"].some(tool => tools.has(tool as never)))
@@ -135,7 +138,7 @@ export function selectAdvisorFacts(
       continue; // distinct measures; one context-rich hydraulic fact per card
     const fact = byKind.get(kind);
     if (fact && !matches.includes(fact)) matches.push(fact);
-    if (matches.length >= Math.max(0, Math.min(3, limit))) break;
+    if (matches.length >= max) break;
   }
   return matches;
 }

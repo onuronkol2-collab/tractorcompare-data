@@ -112,7 +112,7 @@ test("editorial archive exposes actual localized tools without inflating article
   const c=editorialPracticalTools(lang);
   const base=localizedPath(lang,"/guides/farm-cost-calculator/");
   assert.equal(c.primary.href,base);
-  assert.deepEqual(c.links.map(x=>x.href),[base+"#farm-scenarios",base+"#farm-equipment"]);
+  assert.deepEqual(c.links.map(x=>x.href),[base+"#farm-scenarios",base+"#farm-equipment",base+"#farm-ownership-plan",base+"#farm-field-plan"]);
   assert.ok([c.heading,c.description,c.primary.label,...c.links.map(x=>x.label)].every(v=>v.trim()));
  }
 });
