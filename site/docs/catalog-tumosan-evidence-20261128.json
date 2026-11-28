@@ -3849,14 +3849,14 @@
           "value": "4",
           "unit": "count",
           "locator": "4050 / Hydraulics",
-          "context": null
+          "context": "Manufacturer lists number of hydraulic outlets, not flow rate or valve pairs"
         },
         {
           "name": "rear_lift_capacity",
           "value": "2200",
           "unit": "kg",
           "locator": "4050 / Hydraulics",
-          "context": "Measurement point unspecified"
+          "context": "Manufacturer lists hydraulic lift capacity only; rear location and measurement point not stated; canonical mapping held"
         },
         {
           "name": "wheelbase",
@@ -3870,12 +3870,13 @@
           "value": "3900",
           "unit": "mm",
           "locator": "4050 / Dimensions",
-          "context": null
+          "context": "One common listed length; exact operator station and drive-specific length not separately specified"
         }
       ],
       "notes": [
         "Keep 2WD and 4WD separate; do not assign 4WD controls or cab weight to 2WD/ROPS."
-      ]
+      ],
+      "sourceRead": "Official Turkish model HTML technical table re-read 2026-11-28; 20 existing observations per candidate reconciled. 2WD/4WD wheelbase explicitly differentiated; ROPS/station configuration and exact catalogue identity still held."
     },
     {
       "brand": "Tümosan",
@@ -4005,14 +4006,14 @@
           "value": "4",
           "unit": "count",
           "locator": "4050 / Hydraulics",
-          "context": null
+          "context": "Manufacturer lists number of hydraulic outlets, not flow rate or valve pairs"
         },
         {
           "name": "rear_lift_capacity",
           "value": "2200",
           "unit": "kg",
           "locator": "4050 / Hydraulics",
-          "context": "Measurement point unspecified"
+          "context": "Manufacturer lists hydraulic lift capacity only; rear location and measurement point not stated; canonical mapping held"
         },
         {
           "name": "wheelbase",
@@ -4026,12 +4027,13 @@
           "value": "3900",
           "unit": "mm",
           "locator": "4050 / Dimensions",
-          "context": null
+          "context": "One common listed length; exact operator station and drive-specific length not separately specified"
         }
       ],
       "notes": [
         "Keep 2WD and 4WD separate; do not assign 4WD controls or cab weight to 2WD/ROPS."
-      ]
+      ],
+      "sourceRead": "Official Turkish model HTML technical table re-read 2026-11-28; 20 existing observations per candidate reconciled. 2WD/4WD wheelbase explicitly differentiated; ROPS/station configuration and exact catalogue identity still held."
     },
     {
       "brand": "Tümosan",
@@ -4161,14 +4163,14 @@
           "value": "4",
           "unit": "count",
           "locator": "4250 / Hydraulics",
-          "context": null
+          "context": "Manufacturer lists number of hydraulic outlets, not flow rate or valve pairs"
         },
         {
           "name": "rear_lift_capacity",
           "value": "2200",
           "unit": "kg",
           "locator": "4250 / Hydraulics",
-          "context": "Measurement point unspecified"
+          "context": "Manufacturer lists hydraulic lift capacity only; rear location and measurement point not stated; canonical mapping held"
         },
         {
           "name": "wheelbase",
@@ -4182,12 +4184,13 @@
           "value": "3810",
           "unit": "mm",
           "locator": "4250 / Dimensions",
-          "context": null
+          "context": "One common listed length; exact operator station and drive-specific length not separately specified"
         }
       ],
       "notes": [
         "Keep 2WD and 4WD separate; do not assign 4WD controls or cab weight to 2WD/ROPS."
-      ]
+      ],
+      "sourceRead": "Official Turkish model HTML technical table re-read 2026-11-28; 20 existing observations per candidate reconciled. 2WD/4WD wheelbase explicitly differentiated; ROPS/station configuration and exact catalogue identity still held."
     },
     {
       "brand": "Tümosan",
@@ -4317,14 +4320,14 @@
           "value": "4",
           "unit": "count",
           "locator": "4250 / Hydraulics",
-          "context": null
+          "context": "Manufacturer lists number of hydraulic outlets, not flow rate or valve pairs"
         },
         {
           "name": "rear_lift_capacity",
           "value": "2200",
           "unit": "kg",
           "locator": "4250 / Hydraulics",
-          "context": "Measurement point unspecified"
+          "context": "Manufacturer lists hydraulic lift capacity only; rear location and measurement point not stated; canonical mapping held"
         },
         {
           "name": "wheelbase",
@@ -4338,12 +4341,13 @@
           "value": "3810",
           "unit": "mm",
           "locator": "4250 / Dimensions",
-          "context": null
+          "context": "One common listed length; exact operator station and drive-specific length not separately specified"
         }
       ],
       "notes": [
         "Keep 2WD and 4WD separate; do not assign 4WD controls or cab weight to 2WD/ROPS."
-      ]
+      ],
+      "sourceRead": "Official Turkish model HTML technical table re-read 2026-11-28; 20 existing observations per candidate reconciled. 2WD/4WD wheelbase explicitly differentiated; ROPS/station configuration and exact catalogue identity still held."
     },
     {
       "brand": "Tümosan",
