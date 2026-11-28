@@ -4,6 +4,7 @@ import {farmExtrasText} from "./farm-extras-i18n.ts";
 import {farmDecisionText} from "./farm-decision-i18n.ts";
 import {t} from "./ui.ts";
 import {advisorText} from "./advisor-i18n.ts";
+import {investmentPlanningText} from "./farm-investment-planning-i18n.ts";
 
 // Both routes are published in all ten languages. These are same-page
 // fragment destinations, not additional indexable URLs or compatibility claims.
@@ -67,7 +68,9 @@ export function practicalGuideLinks(lang:Locale){
  links:[
   {href:base+"#farm-scenarios",label:farmExtrasText(lang).scenario},
   {href:base+"#farm-equipment",label:farmDecisionText(lang).equipment},
-  {href:base+"#farm-cost-form",label:farmCostText(lang).title}
+  {href:base+"#farm-cost-form",label:farmCostText(lang).title},
+  {href:base+"#farm-ownership-plan",label:investmentPlanningText(lang).ownership},
+  {href:base+"#farm-field-plan",label:investmentPlanningText(lang).fleet}
  ]};
 }
 
@@ -116,7 +119,7 @@ const archiveToolCopy:Record<Locale,readonly [string,string]>={
 };
 export function editorialPracticalTools(lang:Locale){
  const [heading,description]=archiveToolCopy[lang];
- return {heading,description,primary:{href:localizedPath(lang,"/guides/farm-cost-calculator/"),label:farmCostText(lang).title},links:practicalGuideLinks(lang).links.slice(0,2),advisor:practicalGuideLinks(lang).advisor};
+ return {heading,description,primary:{href:localizedPath(lang,"/guides/farm-cost-calculator/"),label:farmCostText(lang).title},links:practicalGuideLinks(lang).links.filter(link=>!link.href.endsWith("#farm-cost-form")),advisor:practicalGuideLinks(lang).advisor};
 }
 
 
