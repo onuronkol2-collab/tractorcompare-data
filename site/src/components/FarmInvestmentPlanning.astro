@@ -1,4 +1,5 @@
 ---
+import {fuelSensitivityText} from "../lib/farm-fuel-sensitivity-i18n";
 import {investmentPlanningText} from "../lib/farm-investment-planning-i18n";
 import {farmDecisionText} from "../lib/farm-decision-i18n";
 import {farmCostText} from "../lib/farm-cost-i18n";
@@ -7,6 +8,7 @@ import {LOCALE_TAGS,type Locale} from "../lib/locales";
 interface Props {lang:Locale}
 const {lang}=Astro.props;
 const c=investmentPlanningText(lang), d=farmDecisionText(lang), f=farmCostText(lang), m=farmModelText(lang);
+const sensitivity=fuelSensitivityText(lang);
 const years=[1,3,5,10];
 const operationSlots=[1,2,3,4,5,6];
 const fields=[
@@ -14,7 +16,7 @@ const fields=[
  ["annualHours",d.hours,0,8760,true],["annualHectares",c.area,0,1e7,false],["fuelPerHour",f.fuel,0,10000,true],["fuelPrice",f.price,0,1e9,true],
  ["maintenancePerHour",c.maintenance,0,1e9,true],["otherPerHour",f.other,0,1e9,true],["annualFixed",f.fixed,0,1e12,true],["rentalPerHour",d.rent,0,1e9,false]
 ] as const;
-const metrics=[["total",c.total],["loanBalance",c.balance],["interestPaid",c.interest],["perHour",c.perHour],["perHectare",c.perHa],["rental",c.rental],["operating",c.horizonOperating],["rentalDifference",c.rentalDifference]] as const;
+const metrics=[["total",c.total],["loanBalance",c.balance],["interestPaid",c.interest],["perHour",c.perHour],["perHectare",c.perHa],["rental",c.rental],["operating",c.horizonOperating],["rentalDifference",c.rentalDifference],["fuelPriceLow",sensitivity.low],["fuelPriceHigh",sensitivity.high]] as const;
 const taskMetrics=[["workedAreaHa",c.workedArea],["hours",f.time],["litres",c.fleetFuel],["operatingCost",c.operating]] as const;
 const taskFields=[["area",m.fieldArea,0.0001,1000000],["passes",c.passes,1,100],["width",f.width,.01,100],["speed",f.speed,.01,100],["efficiency",f.efficiency,.01,100],["fuel",f.fuel,0,10000],["price",f.price,0,1e9],["other",f.other,0,1e12]] as const;
 ---
@@ -24,14 +26,14 @@ const taskFields=[["area",m.fieldArea,0.0001,1000000],["passes",c.passes,1,100],
  <details id="farm-ownership-plan">
   <summary>{c.ownership}</summary>
   <p>{c.note}</p>
-  <form data-planning="investment" data-clarity-mask="true" autocomplete="off" data-report-title={c.ownership} data-report-note={c.note+" "+c.differenceNote}>
+  <form data-planning="investment" data-clarity-mask="true" autocomplete="off" data-report-title={c.ownership} data-report-note={c.note+" "+c.differenceNote+" "+sensitivity.note}>
    <fieldset disabled data-planning-controls>
     <div class="planning-grid">{fields.map(([key,label,min,max,required])=><label>{label}<input name={key} type="number" inputmode="decimal" min={min} max={max} step={key==="termMonths"?"1":"any"} required={required}/></label>)}</div>
     <div class="planning-grid">{years.map(year=><label>{d.resale} — {d.years}: {year}<input type="number" name={"resale"+year} min="0" max="1000000000000" step="any" inputmode="decimal"/></label>)}</div>
     <button type="submit">{f.calculate}</button>
     <p data-planning-error role="alert" hidden>{f.invalid}</p>
     <div data-planning-results hidden aria-live="polite" aria-atomic="true">
-     <p><span data-report-label>{d.payment}</span>: <output data-payment>—</output></p><p>{c.differenceNote}</p>
+     <p><span data-report-label>{d.payment}</span>: <output data-payment>—</output></p><p>{c.differenceNote}</p><p>{sensitivity.note}</p>
      <div class="planning-grid">{years.map(year=><section class="result-card" data-year={year}><h3>{d.years}: {year}</h3><dl>{metrics.map(([key,label])=><div><dt>{label}</dt><dd data-metric={key}>—</dd></div>)}</dl></section>)}</div>
     </div>
     <div data-report-actions hidden class="report-actions"><p>{c.reportPrivacy}</p><button type="button" data-report-copy>{d.copyResult}</button><button type="button" data-report-download>{c.downloadReport}</button><p data-report-status role="status"></p></div>
@@ -129,7 +131,7 @@ const taskFields=[["area",m.fieldArea,0.0001,1000000],["passes",c.passes,1,100],
       const payment=result.querySelector("[data-payment]");if(payment)payment.textContent=render(out.monthlyPayment);
       for(const row of result.querySelectorAll<HTMLElement>("[data-year]")){
        const scenario=out.scenarios.find(s=>s.years===Number(row.dataset.year));if(!scenario)throw Error("Unknown horizon");
-       for(const el of row.querySelectorAll<HTMLElement>("[data-metric]"))el.textContent=render(scenario[el.dataset.metric as "total"|"loanBalance"|"interestPaid"|"perHour"|"perHectare"|"rental"|"operating"|"rentalDifference"]);
+       for(const el of row.querySelectorAll<HTMLElement>("[data-metric]"))el.textContent=render(scenario[el.dataset.metric as "total"|"loanBalance"|"interestPaid"|"perHour"|"perHectare"|"rental"|"operating"|"rentalDifference"|"fuelPriceLow"|"fuelPriceHigh"]);
       }
      }else{
       const count=Number(data.get("operationCount"));if(!Number.isInteger(count)||count<1||count>6)throw Error("Invalid operation count");

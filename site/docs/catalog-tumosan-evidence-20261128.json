@@ -27,7 +27,7 @@
           "value": "65",
           "unit": "HP",
           "locator": "8165 / Motor / nominal output",
-          "context": "Manufacturer HP label, standard and rated rpm unspecified"
+          "context": "OEM nominal engine power row; HP label, measurement standard and rated RPM not stated"
         },
         {
           "name": "engine_cylinders",
@@ -132,28 +132,29 @@
           "value": "4",
           "unit": "count",
           "locator": "8165 / Hydraulics / outlets",
-          "context": "Not flow rate or spool count"
+          "context": "Hydraulic outlet count, not pump flow or valve pairs"
         },
         {
           "name": "rear_lift_capacity",
           "value": "2200",
           "unit": "kg",
           "locator": "8165 / Hydraulics / lift",
-          "context": "Measurement point unspecified"
+          "context": "Hydraulic lifting capacity; location and measurement point not explicit; canonical mapping held"
         },
         {
           "name": "unladen_weight",
           "value": "3500",
           "unit": "kg",
           "locator": "8165 / Weight / 4WD cab",
-          "context": "OEM row has odd count×kg label; verify with brochure before publication"
+          "context": "OEM 4WD cab unladen mass row; row unit label is malformed (adetxkg), verify canonical mass unit before admission"
         }
       ],
       "notes": [
         "Legacy Stage IIIA only; no assumed model year or current availability.",
         "Do NOT merge into Stage V draft acd7b4a1-311c-4836-90d1-94e175578e6e.",
         "Manufacturer category comparison table, not marketing feature text."
-      ]
+      ],
+      "sourceRead": "Original manufacturer Turkish series table re-read 2026-11-28; existing field observations reconciled; exact catalogue identity and admission held. Stage IIIA configuration, not the current Stage V series."
     },
     {
       "brand": "Tümosan",
@@ -178,7 +179,7 @@
           "value": "76",
           "unit": "HP",
           "locator": "8175 / Motor / nominal output",
-          "context": "Manufacturer HP label, standard and rated rpm unspecified"
+          "context": "OEM nominal engine power row; HP label, measurement standard and rated RPM not stated"
         },
         {
           "name": "engine_cylinders",
@@ -283,28 +284,29 @@
           "value": "4",
           "unit": "count",
           "locator": "8175 / Hydraulics / outlets",
-          "context": "Not flow rate or spool count"
+          "context": "Hydraulic outlet count, not pump flow or valve pairs"
         },
         {
           "name": "rear_lift_capacity",
           "value": "2200",
           "unit": "kg",
           "locator": "8175 / Hydraulics / lift",
-          "context": "Measurement point unspecified"
+          "context": "Hydraulic lifting capacity; location and measurement point not explicit; canonical mapping held"
         },
         {
           "name": "unladen_weight",
           "value": "3500",
           "unit": "kg",
           "locator": "8175 / Weight / 4WD cab",
-          "context": "OEM row has odd count×kg label; verify with brochure before publication"
+          "context": "OEM 4WD cab unladen mass row; row unit label is malformed (adetxkg), verify canonical mass unit before admission"
         }
       ],
       "notes": [
         "Legacy Stage IIIA only; no assumed model year or current availability.",
         "Do NOT merge into Stage V draft 2ff304db-1925-40df-a15a-3c3d49c66c08.",
         "Manufacturer category comparison table, not marketing feature text."
-      ]
+      ],
+      "sourceRead": "Original manufacturer Turkish series table re-read 2026-11-28; existing field observations reconciled; exact catalogue identity and admission held. Stage IIIA configuration, not the current Stage V series."
     },
     {
       "brand": "Tümosan",
@@ -329,7 +331,7 @@
           "value": "85",
           "unit": "HP",
           "locator": "8185 / Motor / nominal output",
-          "context": "Manufacturer HP label, standard and rated rpm unspecified"
+          "context": "OEM nominal engine power row; HP label, measurement standard and rated RPM not stated"
         },
         {
           "name": "engine_cylinders",
@@ -434,28 +436,29 @@
           "value": "4",
           "unit": "count",
           "locator": "8185 / Hydraulics / outlets",
-          "context": "Not flow rate or spool count"
+          "context": "Hydraulic outlet count, not pump flow or valve pairs"
         },
         {
           "name": "rear_lift_capacity",
           "value": "4000",
           "unit": "kg",
           "locator": "8185 / Hydraulics / lift",
-          "context": "Measurement point unspecified"
+          "context": "Hydraulic lifting capacity; location and measurement point not explicit; canonical mapping held"
         },
         {
           "name": "unladen_weight",
           "value": "3500",
           "unit": "kg",
           "locator": "8185 / Weight / 4WD cab",
-          "context": "OEM row has odd count×kg label; verify with brochure before publication"
+          "context": "OEM 4WD cab unladen mass row; row unit label is malformed (adetxkg), verify canonical mass unit before admission"
         }
       ],
       "notes": [
         "Legacy Stage IIIA only; no assumed model year or current availability.",
         "Do NOT merge into Stage V draft d3e4a84c-249e-4dde-aa89-2f71a6ca529f.",
         "Manufacturer category comparison table, not marketing feature text."
-      ]
+      ],
+      "sourceRead": "Original manufacturer Turkish series table re-read 2026-11-28; existing field observations reconciled; exact catalogue identity and admission held. Stage IIIA configuration, not the current Stage V series."
     },
     {
       "brand": "Tümosan",
@@ -480,7 +483,7 @@
           "value": "95",
           "unit": "HP",
           "locator": "8195 / Motor / nominal output",
-          "context": "Manufacturer HP label, standard and rated rpm unspecified"
+          "context": "OEM nominal engine power row; HP label, measurement standard and rated RPM not stated"
         },
         {
           "name": "engine_cylinders",
@@ -585,28 +588,29 @@
           "value": "4",
           "unit": "count",
           "locator": "8195 / Hydraulics / outlets",
-          "context": "Not flow rate or spool count"
+          "context": "Hydraulic outlet count, not pump flow or valve pairs"
         },
         {
           "name": "rear_lift_capacity",
           "value": "4000",
           "unit": "kg",
           "locator": "8195 / Hydraulics / lift",
-          "context": "Measurement point unspecified"
+          "context": "Hydraulic lifting capacity; location and measurement point not explicit; canonical mapping held"
         },
         {
           "name": "unladen_weight",
           "value": "3500",
           "unit": "kg",
           "locator": "8195 / Weight / 4WD cab",
-          "context": "OEM row has odd count×kg label; verify with brochure before publication"
+          "context": "OEM 4WD cab unladen mass row; row unit label is malformed (adetxkg), verify canonical mass unit before admission"
         }
       ],
       "notes": [
         "Legacy Stage IIIA only; no assumed model year or current availability.",
         "Do NOT merge into Stage V draft ff05cb89-38fa-476d-a2b5-6f1f56a7c117.",
         "Manufacturer category comparison table, not marketing feature text."
-      ]
+      ],
+      "sourceRead": "Original manufacturer Turkish series table re-read 2026-11-28; existing field observations reconciled; exact catalogue identity and admission held. Stage IIIA configuration, not the current Stage V series."
     },
     {
       "brand": "Tümosan",
@@ -631,7 +635,7 @@
           "value": "105",
           "unit": "HP",
           "locator": "8105 / Motor / nominal output",
-          "context": "Manufacturer HP label, standard and rated rpm unspecified"
+          "context": "OEM nominal engine power row; HP label, measurement standard and rated RPM not stated"
         },
         {
           "name": "engine_cylinders",
@@ -736,28 +740,29 @@
           "value": "4",
           "unit": "count",
           "locator": "8105 / Hydraulics / outlets",
-          "context": "Not flow rate or spool count"
+          "context": "Hydraulic outlet count, not pump flow or valve pairs"
         },
         {
           "name": "rear_lift_capacity",
           "value": "4000",
           "unit": "kg",
           "locator": "8105 / Hydraulics / lift",
-          "context": "Measurement point unspecified"
+          "context": "Hydraulic lifting capacity; location and measurement point not explicit; canonical mapping held"
         },
         {
           "name": "unladen_weight",
           "value": "3500",
           "unit": "kg",
           "locator": "8105 / Weight / 4WD cab",
-          "context": "OEM row has odd count×kg label; verify with brochure before publication"
+          "context": "OEM 4WD cab unladen mass row; row unit label is malformed (adetxkg), verify canonical mass unit before admission"
         }
       ],
       "notes": [
         "Legacy Stage IIIA only; no assumed model year or current availability.",
         "Do NOT merge into Stage V draft 87bdfddf-5a6e-495e-a659-4ed882d2af81.",
         "Manufacturer category comparison table, not marketing feature text."
-      ]
+      ],
+      "sourceRead": "Original manufacturer Turkish series table re-read 2026-11-28; existing field observations reconciled; exact catalogue identity and admission held. Stage IIIA configuration, not the current Stage V series."
     },
     {
       "brand": "Tümosan",
@@ -782,7 +787,7 @@
           "value": "65",
           "unit": "HP",
           "locator": "8170 / Motor / nominal output",
-          "context": "Manufacturer HP label, standard and rated rpm unspecified"
+          "context": "OEM nominal engine power row; HP label, measurement standard and rated RPM not stated"
         },
         {
           "name": "engine_cylinders",
@@ -887,27 +892,28 @@
           "value": "6",
           "unit": "count",
           "locator": "8170 / Hydraulics / outlets",
-          "context": "Not flow rate or spool count"
+          "context": "Hydraulic outlet count, not pump flow or valve pairs"
         },
         {
           "name": "rear_lift_capacity",
           "value": "2200",
           "unit": "kg",
           "locator": "8170 / Hydraulics / lift",
-          "context": "Measurement point unspecified"
+          "context": "Hydraulic lifting capacity; location and measurement point not explicit; canonical mapping held"
         },
         {
           "name": "unladen_weight",
           "value": "3500",
           "unit": "kg",
           "locator": "8170 / Weight / 4WD cab",
-          "context": "OEM row has odd count×kg label; verify with brochure before publication"
+          "context": "OEM 4WD cab unladen mass row; row unit label is malformed (adetxkg), verify canonical mass unit before admission"
         }
       ],
       "notes": [
         "Legacy Stage IIIA only; no assumed model year or current availability.",
         "Manufacturer category comparison table, not marketing feature text."
-      ]
+      ],
+      "sourceRead": "Original manufacturer Turkish series table re-read 2026-11-28; existing field observations reconciled; exact catalogue identity and admission held. Stage IIIA configuration, not the current Stage V series."
     },
     {
       "brand": "Tümosan",
@@ -932,7 +938,7 @@
           "value": "76",
           "unit": "HP",
           "locator": "8180 / Motor / nominal output",
-          "context": "Manufacturer HP label, standard and rated rpm unspecified"
+          "context": "OEM nominal engine power row; HP label, measurement standard and rated RPM not stated"
         },
         {
           "name": "engine_cylinders",
@@ -1037,27 +1043,28 @@
           "value": "6",
           "unit": "count",
           "locator": "8180 / Hydraulics / outlets",
-          "context": "Not flow rate or spool count"
+          "context": "Hydraulic outlet count, not pump flow or valve pairs"
         },
         {
           "name": "rear_lift_capacity",
           "value": "2200",
           "unit": "kg",
           "locator": "8180 / Hydraulics / lift",
-          "context": "Measurement point unspecified"
+          "context": "Hydraulic lifting capacity; location and measurement point not explicit; canonical mapping held"
         },
         {
           "name": "unladen_weight",
           "value": "3500",
           "unit": "kg",
           "locator": "8180 / Weight / 4WD cab",
-          "context": "OEM row has odd count×kg label; verify with brochure before publication"
+          "context": "OEM 4WD cab unladen mass row; row unit label is malformed (adetxkg), verify canonical mass unit before admission"
         }
       ],
       "notes": [
         "Legacy Stage IIIA only; no assumed model year or current availability.",
         "Manufacturer category comparison table, not marketing feature text."
-      ]
+      ],
+      "sourceRead": "Original manufacturer Turkish series table re-read 2026-11-28; existing field observations reconciled; exact catalogue identity and admission held. Stage IIIA configuration, not the current Stage V series."
     },
     {
       "brand": "Tümosan",
@@ -1082,7 +1089,7 @@
           "value": "85",
           "unit": "HP",
           "locator": "8190 / Motor / nominal output",
-          "context": "Manufacturer HP label, standard and rated rpm unspecified"
+          "context": "OEM nominal engine power row; HP label, measurement standard and rated RPM not stated"
         },
         {
           "name": "engine_cylinders",
@@ -1187,27 +1194,28 @@
           "value": "6",
           "unit": "count",
           "locator": "8190 / Hydraulics / outlets",
-          "context": "Not flow rate or spool count"
+          "context": "Hydraulic outlet count, not pump flow or valve pairs"
         },
         {
           "name": "rear_lift_capacity",
           "value": "4000",
           "unit": "kg",
           "locator": "8190 / Hydraulics / lift",
-          "context": "Measurement point unspecified"
+          "context": "Hydraulic lifting capacity; location and measurement point not explicit; canonical mapping held"
         },
         {
           "name": "unladen_weight",
           "value": "3500",
           "unit": "kg",
           "locator": "8190 / Weight / 4WD cab",
-          "context": "OEM row has odd count×kg label; verify with brochure before publication"
+          "context": "OEM 4WD cab unladen mass row; row unit label is malformed (adetxkg), verify canonical mass unit before admission"
         }
       ],
       "notes": [
         "Legacy Stage IIIA only; no assumed model year or current availability.",
         "Manufacturer category comparison table, not marketing feature text."
-      ]
+      ],
+      "sourceRead": "Original manufacturer Turkish series table re-read 2026-11-28; existing field observations reconciled; exact catalogue identity and admission held. Stage IIIA configuration, not the current Stage V series."
     },
     {
       "brand": "Tümosan",
@@ -1232,7 +1240,7 @@
           "value": "95",
           "unit": "HP",
           "locator": "8100 / Motor / nominal output",
-          "context": "Manufacturer HP label, standard and rated rpm unspecified"
+          "context": "OEM nominal engine power row; HP label, measurement standard and rated RPM not stated"
         },
         {
           "name": "engine_cylinders",
@@ -1337,27 +1345,28 @@
           "value": "6",
           "unit": "count",
           "locator": "8100 / Hydraulics / outlets",
-          "context": "Not flow rate or spool count"
+          "context": "Hydraulic outlet count, not pump flow or valve pairs"
         },
         {
           "name": "rear_lift_capacity",
           "value": "4000",
           "unit": "kg",
           "locator": "8100 / Hydraulics / lift",
-          "context": "Measurement point unspecified"
+          "context": "Hydraulic lifting capacity; location and measurement point not explicit; canonical mapping held"
         },
         {
           "name": "unladen_weight",
           "value": "3500",
           "unit": "kg",
           "locator": "8100 / Weight / 4WD cab",
-          "context": "OEM row has odd count×kg label; verify with brochure before publication"
+          "context": "OEM 4WD cab unladen mass row; row unit label is malformed (adetxkg), verify canonical mass unit before admission"
         }
       ],
       "notes": [
         "Legacy Stage IIIA only; no assumed model year or current availability.",
         "Manufacturer category comparison table, not marketing feature text."
-      ]
+      ],
+      "sourceRead": "Original manufacturer Turkish series table re-read 2026-11-28; existing field observations reconciled; exact catalogue identity and admission held. Stage IIIA configuration, not the current Stage V series."
     },
     {
       "brand": "Tümosan",
@@ -1382,7 +1391,7 @@
           "value": "105",
           "unit": "HP",
           "locator": "8110 / Motor / nominal output",
-          "context": "Manufacturer HP label, standard and rated rpm unspecified"
+          "context": "OEM nominal engine power row; HP label, measurement standard and rated RPM not stated"
         },
         {
           "name": "engine_cylinders",
@@ -1487,27 +1496,28 @@
           "value": "6",
           "unit": "count",
           "locator": "8110 / Hydraulics / outlets",
-          "context": "Not flow rate or spool count"
+          "context": "Hydraulic outlet count, not pump flow or valve pairs"
         },
         {
           "name": "rear_lift_capacity",
           "value": "4000",
           "unit": "kg",
           "locator": "8110 / Hydraulics / lift",
-          "context": "Measurement point unspecified"
+          "context": "Hydraulic lifting capacity; location and measurement point not explicit; canonical mapping held"
         },
         {
           "name": "unladen_weight",
           "value": "3500",
           "unit": "kg",
           "locator": "8110 / Weight / 4WD cab",
-          "context": "OEM row has odd count×kg label; verify with brochure before publication"
+          "context": "OEM 4WD cab unladen mass row; row unit label is malformed (adetxkg), verify canonical mass unit before admission"
         }
       ],
       "notes": [
         "Legacy Stage IIIA only; no assumed model year or current availability.",
         "Manufacturer category comparison table, not marketing feature text."
-      ]
+      ],
+      "sourceRead": "Original manufacturer Turkish series table re-read 2026-11-28; existing field observations reconciled; exact catalogue identity and admission held. Stage IIIA configuration, not the current Stage V series."
     },
     {
       "brand": "Tümosan",
@@ -1515,7 +1525,7 @@
       "variant": "81 Premium / Stage IIIA / 4WD cab / 16F16R PowerShuttle",
       "market": "Türkiye",
       "modelYear": null,
-      "sourceUrl": "https://www.tumosan.com.tr/tr/urun-kategori/xxx-10",
+      "sourceUrl": "https://www.tumosan.com.tr/tr/urun-kategori/81-premium-serisi",
       "sourceType": "manufacturer",
       "existingDraftId": null,
       "disposition": "hold_for_review",
@@ -1532,7 +1542,7 @@
           "value": "95",
           "unit": "HP",
           "locator": "81.100 / Motor / nominal output",
-          "context": "Manufacturer HP label, standard and rated rpm unspecified"
+          "context": "OEM nominal engine power row; HP label, measurement standard and rated RPM not stated"
         },
         {
           "name": "engine_cylinders",
@@ -1616,19 +1626,20 @@
           "value": "6",
           "unit": "count",
           "locator": "81.100 / Hydraulics",
-          "context": null
+          "context": "Hydraulic outlet count, not pump flow or valve pairs"
         },
         {
           "name": "rear_lift_capacity",
           "value": "4000",
           "unit": "kg",
           "locator": "81.100 / Hydraulics",
-          "context": "Measurement point unspecified"
+          "context": "Hydraulic lifting capacity; location and measurement point not explicit; canonical mapping held"
         }
       ],
       "notes": [
         "Category table is Stage IIIA despite Stage V search snippet. Do not merge into fad03255-7690-4a3c-8c05-5e5990e83f52."
-      ]
+      ],
+      "sourceRead": "Original manufacturer Turkish series table re-read 2026-11-28; existing field observations reconciled; exact catalogue identity and admission held. Stage IIIA configuration, not the current Stage V series. Original URL now redirects to 81 Premium series page, which also lists different Stage V models."
     },
     {
       "brand": "Tümosan",
@@ -1636,7 +1647,7 @@
       "variant": "81 Premium / Stage IIIA / 4WD cab / 16F16R PowerShuttle",
       "market": "Türkiye",
       "modelYear": null,
-      "sourceUrl": "https://www.tumosan.com.tr/tr/urun-kategori/xxx-10",
+      "sourceUrl": "https://www.tumosan.com.tr/tr/urun-kategori/81-premium-serisi",
       "sourceType": "manufacturer",
       "existingDraftId": null,
       "disposition": "hold_for_review",
@@ -1653,7 +1664,7 @@
           "value": "105",
           "unit": "HP",
           "locator": "81.110 / Motor / nominal output",
-          "context": "Manufacturer HP label, standard and rated rpm unspecified"
+          "context": "OEM nominal engine power row; HP label, measurement standard and rated RPM not stated"
         },
         {
           "name": "engine_cylinders",
@@ -1737,19 +1748,20 @@
           "value": "6",
           "unit": "count",
           "locator": "81.110 / Hydraulics",
-          "context": null
+          "context": "Hydraulic outlet count, not pump flow or valve pairs"
         },
         {
           "name": "rear_lift_capacity",
           "value": "4000",
           "unit": "kg",
           "locator": "81.110 / Hydraulics",
-          "context": "Measurement point unspecified"
+          "context": "Hydraulic lifting capacity; location and measurement point not explicit; canonical mapping held"
         }
       ],
       "notes": [
         "Category table is Stage IIIA despite Stage V search snippet. Do not merge into 0c781747-5aac-48cd-a747-5274e7308475."
-      ]
+      ],
+      "sourceRead": "Original manufacturer Turkish series table re-read 2026-11-28; existing field observations reconciled; exact catalogue identity and admission held. Stage IIIA configuration, not the current Stage V series. Original URL now redirects to 81 Premium series page, which also lists different Stage V models."
     },
     {
       "brand": "Tümosan",
