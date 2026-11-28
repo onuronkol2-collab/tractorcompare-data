@@ -18,22 +18,23 @@ const metrics=[["total",c.total],["loanBalance",c.balance],["interestPaid",c.int
 const taskMetrics=[["workedAreaHa",c.workedArea],["hours",f.time],["litres",c.fleetFuel],["operatingCost",c.operating]] as const;
 const taskFields=[["area",m.fieldArea,0.0001,1000000],["passes",c.passes,1,100],["width",f.width,.01,100],["speed",f.speed,.01,100],["efficiency",f.efficiency,.01,100],["fuel",f.fuel,0,10000],["price",f.price,0,1e9],["other",f.other,0,1e12]] as const;
 ---
-<section id="farm-investment-planning" class="planning" data-investment-planning data-locale={LOCALE_TAGS[lang]} data-unknown={c.unknown}>
+<section id="farm-investment-planning" class="planning" data-investment-planning data-locale={LOCALE_TAGS[lang]} data-unknown={c.unknown} data-copied={d.copied} data-copy-failed={d.copyFailed} data-export-failed={c.exportFailed}>
  <h2>{c.title}</h2>
  <noscript><p>{d.enableJs}</p></noscript>
  <details>
   <summary>{c.ownership}</summary>
   <p>{c.note}</p>
-  <form data-planning="investment" data-clarity-mask="true" autocomplete="off">
+  <form data-planning="investment" data-clarity-mask="true" autocomplete="off" data-report-title={c.ownership} data-report-note={c.note+" "+c.differenceNote}>
    <fieldset disabled data-planning-controls>
     <div class="planning-grid">{fields.map(([key,label,min,max,required])=><label>{label}<input name={key} type="number" inputmode="decimal" min={min} max={max} step={key==="termMonths"?"1":"any"} required={required}/></label>)}</div>
     <div class="planning-grid">{years.map(year=><label>{d.resale} — {d.years}: {year}<input type="number" name={"resale"+year} min="0" max="1000000000000" step="any" inputmode="decimal"/></label>)}</div>
     <button type="submit">{f.calculate}</button>
     <p data-planning-error role="alert" hidden>{f.invalid}</p>
     <div data-planning-results hidden aria-live="polite" aria-atomic="true">
-     <p>{d.payment}: <output data-payment>—</output></p><p>{c.differenceNote}</p>
+     <p><span data-report-label>{d.payment}</span>: <output data-payment>—</output></p><p>{c.differenceNote}</p>
      <div class="planning-grid">{years.map(year=><section class="result-card" data-year={year}><h3>{d.years}: {year}</h3><dl>{metrics.map(([key,label])=><div><dt>{label}</dt><dd data-metric={key}>—</dd></div>)}</dl></section>)}</div>
     </div>
+    <div data-report-actions hidden class="report-actions"><p>{c.reportPrivacy}</p><button type="button" data-report-copy>{d.copyResult}</button><button type="button" data-report-download>{c.downloadReport}</button><p data-report-status role="status"></p></div>
    </fieldset>
   </form>
   <p><a lang="en" href="https://www.ontario.ca/page/budgeting-farm-machinery-costs">Ontario — Budgeting farm machinery costs</a> · <a lang="en" href="https://ahdb.org.uk/knowledge-library/machinery-costing-calculator">AHDB — Machinery costing calculator</a></p>
@@ -41,13 +42,14 @@ const taskFields=[["area",m.fieldArea,0.0001,1000000],["passes",c.passes,1,100],
  <details>
   <summary>{c.fleet}</summary>
   <p>{c.multiFleetNote}</p>
-  <form data-planning="fleet" data-clarity-mask="true" autocomplete="off">
+  <form data-planning="fleet" data-clarity-mask="true" autocomplete="off" data-report-title={c.fleet} data-report-note={c.multiFleetNote}>
    <fieldset disabled data-planning-controls>
     <div class="planning-grid"><label>{c.operationCount}<select name="operationCount">{operationSlots.map(i=><option value={i} selected={i===2}>{i}</option>)}</select></label><label>{c.dailyHours}<input name="dailyHours" type="number" inputmode="decimal" min="0.1" max="24" step="any"/></label></div>
     <div class="planning-grid">{operationSlots.map(i=><fieldset class="task" data-task-slot={i} hidden={i>2} disabled={i>2}><legend>{c.operation} {i}</legend>{taskFields.map(([key,label,min,max])=><label>{label}<input name={i+"-"+key} type="number" inputmode="decimal" min={min} max={max} step={key==="passes"?"1":"any"} required/></label>)}<label>{m.areaUnit}<select name={i+"-unit"}>{["ha","decare","acre","m2","mu","tan"].map(unit=><option value={unit}>{unit==="m2"?"m²":unit}</option>)}</select></label></fieldset>)}</div>
     <button type="submit">{f.calculate}</button>
     <p data-planning-error role="alert" hidden>{f.invalid}</p>
-    <div data-planning-results hidden aria-live="polite" aria-atomic="true"><h3>{c.fleetTotal}</h3><p>{c.dayEstimate}: <output data-workdays>—</output></p><dl class="planning-grid">{taskMetrics.map(([key,label])=><div><dt>{label}</dt><dd data-total={key}>—</dd></div>)}</dl><div class="planning-grid">{operationSlots.map(i=><section class="result-card" data-task-result={i} hidden={i>2}><h4>{c.operation} {i}</h4><dl>{taskMetrics.map(([key,label])=><div><dt>{label}</dt><dd data-task-metric={key}>—</dd></div>)}</dl></section>)}</div></div>
+    <div data-planning-results hidden aria-live="polite" aria-atomic="true"><h3>{c.fleetTotal}</h3><p><span data-report-label>{c.dayEstimate}</span>: <output data-workdays>—</output></p><dl class="planning-grid">{taskMetrics.map(([key,label])=><div><dt>{label}</dt><dd data-total={key}>—</dd></div>)}</dl><div class="planning-grid">{operationSlots.map(i=><section class="result-card" data-task-result={i} hidden={i>2}><h4>{c.operation} {i}</h4><dl>{taskMetrics.map(([key,label])=><div><dt>{label}</dt><dd data-task-metric={key}>—</dd></div>)}</dl></section>)}</div></div>
+    <div data-report-actions hidden class="report-actions"><p>{c.reportPrivacy}</p><button type="button" data-report-copy>{d.copyResult}</button><button type="button" data-report-download>{c.downloadReport}</button><p data-report-status role="status"></p></div>
    </fieldset>
   </form>
  </details>
@@ -56,6 +58,7 @@ const taskFields=[["area",m.fieldArea,0.0001,1000000],["passes",c.passes,1,100],
  import {investmentScenarios} from "../lib/farm-investment-scenarios.mjs";
  import {planSequentialFieldWork,estimateSequentialWorkdays} from "../lib/farm-fleet-planning.mjs";
  import {farmAreaInputBounds} from "../lib/farm-area-input.mjs";
+ import {buildPlanningReport} from "../lib/farm-planning-report.mjs";
  import {FARM_TOOL_DONE_EVENT} from "../lib/analytics-product-actions";
  for(const root of document.querySelectorAll<HTMLElement>("[data-investment-planning]")){
   const format=new Intl.NumberFormat(root.dataset.locale,{maximumSignificantDigits:7});
@@ -64,9 +67,48 @@ const taskFields=[["area",m.fieldArea,0.0001,1000000],["passes",c.passes,1,100],
    const result=form.querySelector<HTMLElement>("[data-planning-results]");
    const error=form.querySelector<HTMLElement>("[data-planning-error]");
    const controls=form.querySelector<HTMLFieldSetElement>("[data-planning-controls]");
-   if(!result||!error||!controls)continue;
-   const clear=()=>{result.hidden=true;error.hidden=true;for(const node of result.querySelectorAll("[data-payment],[data-metric],[data-total],[data-task-metric],[data-workdays]"))node.textContent="—";};
+   const actions=form.querySelector<HTMLElement>("[data-report-actions]");
+   const status=form.querySelector<HTMLElement>("[data-report-status]");
+   if(!result||!error||!controls||!actions||!status)continue;
+   let revision=0;
+   const clear=()=>{revision++;actions.hidden=true;status.textContent="";result.hidden=true;error.hidden=true;for(const node of result.querySelectorAll("[data-payment],[data-metric],[data-total],[data-task-metric],[data-workdays]"))node.textContent="—";};
    form.addEventListener("input",clear);form.addEventListener("change",clear);form.addEventListener("reset",clear);form.addEventListener("invalid",()=>{clear();error.hidden=false;},true);
+   const report=()=>{
+    if(result.hidden||actions.hidden)return null;
+    const blocks:{title:string,entries:[string,string][]}[]=[];
+    const directEntries=(scope:HTMLElement)=>{
+     const entries:[string,string][]=[];
+     for(const output of scope.querySelectorAll<HTMLElement>("[data-payment],[data-workdays],[data-total],[data-metric],[data-task-metric]")){
+      if(output.closest("[hidden]"))continue;
+      if(scope===result&&output.closest("[data-year],[data-task-result]"))continue;
+      const label=output.matches("dd")?output.previousElementSibling?.textContent:output.parentElement?.querySelector("[data-report-label]")?.textContent;
+      if(label&&output.textContent)entries.push([label,output.textContent]);
+     }
+     return entries;
+    };
+    const main=directEntries(result);if(main.length)blocks.push({title:"",entries:main});
+    for(const card of result.querySelectorAll<HTMLElement>("[data-year],[data-task-result]")){
+     if(card.hidden)continue;
+     blocks.push({title:card.querySelector("h3,h4")?.textContent||"",entries:directEntries(card)});
+    }
+    return buildPlanningReport(form.dataset.reportTitle||"",form.dataset.reportNote||"",blocks);
+   };
+   form.querySelector<HTMLButtonElement>("[data-report-copy]")?.addEventListener("click",async()=>{
+    const current=++revision;
+    try{const content=report();if(content===null)return;await navigator.clipboard.writeText(content);if(current===revision)status.textContent=root.dataset.copied||"";}
+    catch{if(current===revision)status.textContent=root.dataset.copyFailed||"";}
+   });
+   form.querySelector<HTMLButtonElement>("[data-report-download]")?.addEventListener("click",()=>{
+    revision++;status.textContent="";
+    let url:string|undefined;
+    try{
+     const content=report();if(content===null)return;
+     url=URL.createObjectURL(new Blob([content],{type:"text/plain;charset=utf-8"}));
+     const link=document.createElement("a");link.href=url;link.download=form.dataset.planning==="fleet"?"tractorvs-field-plan.txt":"tractorvs-ownership-plan.txt";
+     document.body.append(link);try{link.click();}finally{link.remove();}
+    }catch{status.textContent=root.dataset.exportFailed||"";}
+    finally{if(url){const objectUrl=url;setTimeout(()=>URL.revokeObjectURL(objectUrl),1000);}}
+   });
    form.addEventListener("submit",event=>{
     event.preventDefault();clear();
     try{
@@ -93,7 +135,7 @@ const taskFields=[["area",m.fieldArea,0.0001,1000000],["passes",c.passes,1,100],
        for(const el of card.querySelectorAll<HTMLElement>("[data-task-metric]"))el.textContent=render(row[el.dataset.taskMetric as keyof typeof row]);
       }
      }
-     result.hidden=false;window.dispatchEvent(new Event(FARM_TOOL_DONE_EVENT));
+     result.hidden=false;actions.hidden=false;window.dispatchEvent(new Event(FARM_TOOL_DONE_EVENT));
     }catch{clear();error.hidden=false;}
    });
    if(form.dataset.planning==="fleet"){
@@ -125,6 +167,8 @@ const taskFields=[["area",m.fieldArea,0.0001,1000000],["passes",c.passes,1,100],
  input,select,button{font:inherit;min-height:44px;min-width:0;max-width:100%;border:1px solid #708478;border-radius:.4rem;padding:.5rem;color:inherit;background:transparent}
  button{background:#245b39;color:white;font-weight:600;cursor:pointer}
  button:disabled{opacity:.55}
+ .report-actions{display:flex;gap:.65rem;flex-wrap:wrap;align-items:center;margin-block:1rem}
+ .report-actions p{flex-basis:100%;margin:0;overflow-wrap:anywhere}
  dd{margin:0;font-weight:700;overflow-wrap:anywhere}
  dl div{margin-block:.5rem}
  [hidden]{display:none!important}

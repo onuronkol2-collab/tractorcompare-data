@@ -228,4 +228,57 @@ const fleetRows:Record<Locale,readonly string[]>={
  ja:["作業数","1日当たりの作業可能時間（任意）","推定作業日数","同じ通貨で1～6件の順次作業を計画します。繰り返し作業は延べ作業面積として数えます。日数は入力した作業時間に基づき、並行作業、輸送、停止時間、天候、機器の安全性は評価しません。"],
  es:["Número de operaciones","Horas de trabajo disponibles al día (opcional)","Días de trabajo estimados","Planifica de 1 a 6 operaciones sucesivas en una sola moneda. Las pasadas repetidas cuentan como superficie trabajada, no como terrenos distintos. Los días se basan en las horas introducidas; no se estiman trabajos simultáneos, transporte, paradas, clima ni seguridad del equipo."]
 };
-export function investmentPlanningText(lang:Locale){return Object.fromEntries([...keys.map((k,i)=>[k,rows[lang][i]]),...extraKeys.map((k,i)=>[k,extraRows[lang][i]]),...fleetKeys.map((k,i)=>[k,fleetRows[lang][i]])]) as Record<typeof keys[number]|typeof extraKeys[number]|typeof fleetKeys[number],string>;}
+const reportKeys=["downloadReport","reportPrivacy","exportFailed"] as const;
+const reportRows:Record<Locale,readonly string[]>={
+  "en": [
+    "Download results (.txt)",
+    "The copied or downloaded report contains calculated results and limitations. Share only with people you trust.",
+    "Could not prepare the download."
+  ],
+  "tr": [
+    "Sonuçları indir (.txt)",
+    "Kopyalanan veya indirilen rapor hesaplanan sonuçları ve sınırlamaları içerir. Yalnızca güvendiğiniz kişilerle paylaşın.",
+    "İndirme hazırlanamadı."
+  ],
+  "zh": [
+    "下载结果（.txt）",
+    "复制或下载的报告包含计算结果及限制。请仅与信任的人分享。",
+    "无法准备下载。"
+  ],
+  "hi": [
+    "परिणाम डाउनलोड करें (.txt)",
+    "कॉपी या डाउनलोड की गई रिपोर्ट में गणना के परिणाम और सीमाएँ हैं। केवल भरोसेमंद लोगों से साझा करें।",
+    "डाउनलोड तैयार नहीं हो सका।"
+  ],
+  "pt-br": [
+    "Baixar resultados (.txt)",
+    "O relatório copiado ou baixado contém resultados calculados e limitações. Compartilhe apenas com pessoas de confiança.",
+    "Não foi possível preparar o download."
+  ],
+  "fr": [
+    "Télécharger les résultats (.txt)",
+    "Le rapport copié ou téléchargé contient les résultats calculés et leurs limites. Partagez-le uniquement avec des personnes de confiance.",
+    "Impossible de préparer le téléchargement."
+  ],
+  "de": [
+    "Ergebnisse herunterladen (.txt)",
+    "Der kopierte oder heruntergeladene Bericht enthält berechnete Ergebnisse und Einschränkungen. Nur mit vertrauenswürdigen Personen teilen.",
+    "Der Download konnte nicht vorbereitet werden."
+  ],
+  "ru": [
+    "Скачать результаты (.txt)",
+    "Скопированный или скачанный отчёт содержит результаты расчёта и ограничения. Делитесь им только с теми, кому доверяете.",
+    "Не удалось подготовить загрузку."
+  ],
+  "ja": [
+    "結果をダウンロード（.txt）",
+    "コピーまたはダウンロードしたレポートには計算結果と制約が含まれます。信頼できる相手とのみ共有してください。",
+    "ダウンロードを準備できませんでした。"
+  ],
+  "es": [
+    "Descargar resultados (.txt)",
+    "El informe copiado o descargado contiene los resultados calculados y sus limitaciones. Compártelo solo con personas de confianza.",
+    "No se pudo preparar la descarga."
+  ]
+};
+export function investmentPlanningText(lang:Locale){return Object.fromEntries([...keys.map((k,i)=>[k,rows[lang][i]]),...extraKeys.map((k,i)=>[k,extraRows[lang][i]]),...fleetKeys.map((k,i)=>[k,fleetRows[lang][i]]),...reportKeys.map((k,i)=>[k,reportRows[lang][i]])]) as Record<typeof keys[number]|typeof extraKeys[number]|typeof fleetKeys[number]|typeof reportKeys[number],string>;}
