@@ -124,6 +124,8 @@ const routes = {
       // to an unreviewed image or another model; the fallback goes through
       // the exact same fixed photo-ID / resolution allowlist.
       const isFullSize=url.pathname.endsWith("-1920.jpg");
+      const isDisplaySize=url.pathname.endsWith("-960.jpg");
+      let upstreamHold=false;
       const loadPhoto=async(source,timeoutMs)=>{
         try{
           const origin=await fetch(source,{
@@ -131,6 +133,11 @@ const routes = {
             headers:{"User-Agent":"TractorVS image gallery (+https://tractorvs.com/)"},
             cf:{cacheEverything:true,cacheTtl:604800}
           });
+          // Do not issue a second source request on explicit provider throttling,
+          // access denial, service unavailability or any Retry-After response.
+          if([403,429,503].includes(origin.status)||origin.headers.has("retry-after")){
+            upstreamHold=true;return null;
+          }
           return origin.ok &&
             (origin.headers.get("content-type")||"").toLowerCase().startsWith("image/jpeg")
               ? origin : null;
@@ -138,13 +145,29 @@ const routes = {
       };
       let source=await loadPhoto(upstream,isFullSize?12000:20000);
       let isFallback=false;
+      let fallbackSize="960",fallbackLocal=false;
+      // If a legacy approved photo has an incomplete local derivative set,
+      // use only its exact allowlisted, genuinely smaller local sibling.
+      // Never upscale, invent bytes, fetch another tractor, or disguise the
+      // fallback as an actual 960px/1920px derivative.
+      if(!source&&(isFullSize||isDisplaySize)){
+        const siblingSize=isFullSize?"960":"480";
+        const siblingPath=url.pathname.replace(/-(?:960|1920)\.jpg$/,"-"+siblingSize+".jpg");
+        if(resolveApprovedPhotoSource(siblingPath)){
+          const sibling=new URL(url);sibling.pathname=siblingPath;sibling.search="";
+          const local=await env.ASSETS.fetch(new Request(sibling,{method:"GET"}));
+          if(local.ok&&(local.headers.get("Content-Type")||"").toLowerCase().startsWith("image/jpeg")){
+            source=local;isFallback=true;fallbackSize=siblingSize;fallbackLocal=true;
+          }
+        }
+      }
       if(!source&&isFullSize){
         // The only alternative is the 960px version of this *same*
         // vetted Commons file. Re-check the allowlist instead of editing
         // the external URL or guessing another model photo.
         const fallbackPath=url.pathname.replace(/-1920\.jpg$/,"-960.jpg");
         const fallback=resolveApprovedPhotoSource(fallbackPath);
-        if(fallback){
+        if(fallback&&!upstreamHold){
           source=await loadPhoto(fallback,12000);
           isFallback=Boolean(source);
         }
@@ -159,7 +182,8 @@ const routes = {
           "Cache-Control":isFallback?"public, max-age=600, s-maxage=1800"
             :"public, max-age=86400, s-maxage=604800",
           "X-Content-Type-Options":"nosniff",
-          ...(isFallback?{"X-TractorVS-Image-Fallback":"960"}:{})
+          ...(isFallback?{"X-TractorVS-Image-Fallback":fallbackSize}:{}),
+          ...(fallbackLocal?{"X-TractorVS-Image-Source":"local"}:{})
         }
       });
     }

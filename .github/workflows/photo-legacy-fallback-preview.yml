@@ -1,0 +1,37 @@
+name: TractorVS legacy image fallback preview
+on:
+  pull_request:
+    paths:
+      - "site/worker/index.js"
+      - "site/tests/photo-worker-fallback.test.mjs"
+      - "site/scripts/photo-legacy-fallback-preview.mjs"
+      - ".github/workflows/photo-legacy-fallback-preview.yml"
+permissions:
+  contents: read
+  checks: read
+  issues: read
+  pull-requests: read
+concurrency:
+  group: legacy-photo-preview-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+jobs:
+  legacy_photo_preview:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22.23.4"
+      - name: Verify exact approved photo fallback regressions
+        run: node --experimental-strip-types --test site/tests/photo-worker-fallback.test.mjs site/tests/photo-worker-local-first.test.mjs
+      - name: Verify Q225 exact preview SHA and real JPEG bytes
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PREVIEW_HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+          PREVIEW_HEAD_BRANCH: ${{ github.head_ref }}
+          PREVIEW_PR_NUMBER: ${{ github.event.pull_request.number }}
+        run: node --experimental-strip-types site/scripts/photo-legacy-fallback-preview.mjs
