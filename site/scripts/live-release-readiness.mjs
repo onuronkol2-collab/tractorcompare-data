@@ -82,7 +82,7 @@ if(process.argv[1]&&resolve(process.argv[1])===fileURLToPath(import.meta.url)){
    // A trusted successful build event is already checked by the workflow.
    // Slightly faster polling only in that case; all route/SHA/build gates stay.
    intervalMs:requireBuild&&process.env.TRACTORVS_BUILD_COMPLETION_EVENT==="true"?15000:20000,
-   acceptDescendant:strict?async()=>false:mainDescendantVerifier({token}),
+   acceptDescendant:strict||process.env.TRACTORVS_REQUIRE_EXACT_TARGET==="true"?async()=>false:mainDescendantVerifier({token}),
    confirmRelease:requireBuild?trustedWorkersRelease({token}):async()=>true,
    log:row=>console.log("TRACTORVS_RELEASE_READINESS "+JSON.stringify(row))
   });

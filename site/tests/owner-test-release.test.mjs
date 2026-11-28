@@ -1,7 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import {browserRequiredNames,LEGACY_BROWSER_NAMES,SHARDED_BROWSER_NAMES} from "../../scripts/tractorvs-browser-checks.mjs";
-import {authorization,assessOwnerEvidence,allowedSkip,matchesAuthorizedPR,OWNER,OWNER_ID,WORKFLOW} from "../../scripts/tractorvs-owner-test-release-policy.mjs";
+import {authorization,assessOwnerEvidence,allowedSkip,pendingOwnerChecks,waitForOwnerEvidence,matchesAuthorizedPR,OWNER,OWNER_ID,WORKFLOW} from "../../scripts/tractorvs-owner-test-release-policy.mjs";
 import {REPO,requiredCandidateChecks} from "../../scripts/tractorvs-protected-candidate-policy.mjs";
 const head="a".repeat(40),base="b".repeat(40),now=Date.parse("2026-11-27T17:00:00Z");
 const env={GITHUB_REPOSITORY:REPO,GITHUB_REF:"refs/heads/main",GITHUB_WORKFLOW_REF:REPO+"/"+WORKFLOW+"@refs/heads/main",GITHUB_ACTOR:OWNER,GITHUB_TRIGGERING_ACTOR:OWNER,GITHUB_ACTOR_ID:String(OWNER_ID),GITHUB_EVENT_NAME:"issue_comment",GITHUB_SHA:base};
@@ -67,4 +67,22 @@ test("conditional PR jobs require same successful workflow run and read-only pre
  assert.equal(assessOwnerEvidence({...f,files:[{filename:"AGENTS.md"}]}),false);
  assert.equal(assessOwnerEvidence({...f,files:[{filename:"scripts/tractorvs-publication-candidate.mjs"}]}),false);
  assert.equal(assessOwnerEvidence({...f,files:[{filename:"site/src/components/AnalyticsConsent.astro"}]}),false);
+});
+
+test("early owner TEST waits for complete evidence, then releases without hourly scheduler",async()=>{
+ const sequence=[null,null,true];const pauses=[],reports=[];
+ assert.equal(await waitForOwnerEvidence(async()=>sequence.shift(),{attempts:4,pause:async ms=>pauses.push(ms),report:s=>reports.push(s)}),true);
+ assert.deepEqual(pauses,[30000,30000]);assert.equal(reports.length,1);
+ assert.equal(await waitForOwnerEvidence(async()=>false,{pause:async()=>assert.fail("closed PR must not retry")}),false);
+ await assert.rejects(waitForOwnerEvidence(async()=>{throw Error("Main changed");},{pause:async()=>assert.fail("invalid authorization must not retry")}),/Main changed/);
+ await assert.rejects(waitForOwnerEvidence(async()=>null,{attempts:2,pause:async()=>{}}),/bounded wait expired/);
+ await assert.rejects(waitForOwnerEvidence(async()=>undefined,{attempts:2,pause:async()=>{}}),/Invalid owner evidence result/);
+ await assert.rejects(waitForOwnerEvidence(async()=>true,{attempts:41}),/Invalid owner evidence attempts/);
+});
+test("pending technical inventory never converts terminal checks into success",()=>{
+ assert.equal(pendingOwnerChecks([]),true);
+ assert.equal(pendingOwnerChecks([{status:"queued",conclusion:null}]),true);
+ assert.equal(pendingOwnerChecks([{status:"completed",conclusion:"success"}]),false);
+ assert.equal(pendingOwnerChecks([{status:"completed",conclusion:"neutral"}]),false);
+ for(const conclusion of ["failure","cancelled","timed_out","action_required","stale","startup_failure"])assert.throws(()=>pendingOwnerChecks([{status:"completed",conclusion},{status:"in_progress"}]),/Terminal technical check/);
 });

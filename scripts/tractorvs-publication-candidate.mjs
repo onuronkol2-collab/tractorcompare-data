@@ -35,6 +35,22 @@ function machineKind(pr){
 function untouched(pr){
  return pr?.state==="open"&&!pr.draft&&pr.user?.login===BOT&&pr.head?.repo?.full_name===REPO&&pr.base?.repo?.full_name===REPO&&pr.base?.ref==="main"&&shaOk(pr.head?.sha)&&Number.isSafeInteger(pr.number)&&pr.number>0&&Array.isArray(pr.requested_reviewers)&&pr.requested_reviewers.length===0&&Array.isArray(pr.requested_teams)&&pr.requested_teams.length===0&&Array.isArray(pr.labels)&&pr.labels.length===0&&Array.isArray(pr.assignees)&&pr.assignees.length===0;
 }
+// Cloudflare posts a machine-generated preview receipt on every build.
+ // It is not human discussion or approval. Only this exact verified app/bot,
+ // association and receipt shape may be ignored; never ignore other comments.
+function isPreviewReceipt(comment,head){
+ const user=comment?.user,app=comment?.performed_via_github_app,body=comment?.body;
+ if(user?.id!==73139402||user.login!=="cloudflare-workers-and-pages[bot]"||user.type!=="Bot"||comment.author_association!=="NONE"||app?.id!==85455||app.slug!=="cloudflare-workers-and-pages"||app.owner?.login!=="cloudflare"||typeof body!=="string"||body.length>100000||!body.startsWith("## 🚀 Deploying Preview to Cloudflare 🚀\n<!-- Preview URL -->\n")||!body.includes("<!-- Preview Deployments -->"))return false;
+ const heading=body.match(/^### Preview URL: (https:\/\/[^\s]+) \(commit ([a-f0-9]{7})\)$/m);
+ if(!heading||heading[2]!==head.slice(0,7))return false;
+ try{
+  const preview=new URL(heading[1]);
+  if(preview.protocol!=="https:"||preview.username||preview.password||preview.port||preview.pathname!=="/"||preview.search||preview.hash||!/^[-a-z0-9]+-tractorvs-site\.onuronkol2\.workers\.dev$/.test(preview.hostname))return false;
+  return [...body.matchAll(/href="([^"\s]+)"/g)].some(match=>{
+   try{const link=new URL(match[1]);return link.origin==="https://dash.cloudflare.com"&&!link.username&&!link.password;}catch{return false;}
+  });
+ }catch{return false;}
+}
 export async function reconcileExpiredMachineCandidate({api,number,baseSha,now=Date.now()}){
  assert(Number.isSafeInteger(number)&&number>0&&shaOk(baseSha)&&Number.isFinite(now),"Invalid reconciliation input");
  const get=()=>api("/pulls/"+number);
@@ -53,7 +69,7 @@ export async function reconcileExpiredMachineCandidate({api,number,baseSha,now=D
  assert(diff.status==="ahead"&&diff.ahead_by===1&&diff.behind_by===0&&diff.files?.length===plan.files.length&&plan.files.every(f=>diff.files.some(x=>x.filename===f.path&&x.status==="modified"&&x.sha===blobSha(f.content))),"Unverified old candidate bytes");
  // Source evidence expires after 20 minutes. A candidate older than 25 minutes
  // is reconciled only if it is still exactly machine-generated and untouched.
- const hasDiscussion=async()=>{const [reviews,comments]=await Promise.all([api("/pulls/"+number+"/reviews?per_page=100"),api("/issues/"+number+"/comments?per_page=100")]);return !Array.isArray(reviews)||!Array.isArray(comments)||reviews.length!==0||comments.length!==0;};
+ const hasDiscussion=async()=>{const [reviews,comments]=await Promise.all([api("/pulls/"+number+"/reviews?per_page=100"),api("/issues/"+number+"/comments?per_page=100")]);return !Array.isArray(reviews)||!Array.isArray(comments)||reviews.length!==0||comments.length>=100||comments.some(c=>!isPreviewReceipt(c,head));};
  if(await hasDiscussion())return false;
  const fresh=await get(),ref=await api("/git/ref/heads/"+plan.branch);
  if(!untouched(fresh)||fresh.head.sha!==head||fresh.head.ref!==plan.branch||fresh.body!==pr.body||fresh.updated_at!==pr.updated_at||fresh.base.sha!==baseSha||fresh.title!==pr.title||await hasDiscussion())return false;

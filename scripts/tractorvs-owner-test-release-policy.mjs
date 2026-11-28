@@ -61,3 +61,23 @@ export function assessOwnerEvidence({selection,checks,statuses,runs,files=[]}){
  }
  return true;
 }
+
+// Read-only preauthorization wait. Only null means evidence is not ready;
+// false is a closed/no-op PR; thrown identity, review or terminal errors stop.
+export function pendingOwnerChecks(checks){
+ if(!Array.isArray(checks))throw Error("Invalid owner check inventory");
+ const terminal=new Set(["failure","cancelled","timed_out","action_required","stale","startup_failure"]);
+ if(checks.some(c=>c.status==="completed"&&terminal.has(c.conclusion)))throw Error("Terminal technical check did not pass; new TEST evidence required");
+ return checks.length===0||checks.some(c=>c.status!=="completed");
+}
+export async function waitForOwnerEvidence(verify,{attempts=40,pause=ms=>new Promise(r=>setTimeout(r,ms)),report=()=>{}}={}){
+ if(!Number.isSafeInteger(attempts)||attempts<1||attempts>40)throw Error("Invalid owner evidence attempts");
+ for(let i=0;i<attempts;i++){
+  const result=await verify();
+  if(result===true||result===false)return result;
+  if(result!==null)throw Error("Invalid owner evidence result");
+  if(i===0||i%4===3)report("OWNER_TEST_PENDING: exact technical evidence incomplete");
+  if(i+1<attempts)await pause(30000);
+ }
+ throw Error("OWNER_TEST_PENDING: bounded wait expired; no merge performed");
+}

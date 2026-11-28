@@ -25,7 +25,9 @@ jobs:
   scan:
     if: github.repository == 'onuronkol2-collab/tractorcompare-data' && github.ref == 'refs/heads/main' && github.actor == 'onuronkol2-collab' && vars.TRACTORVS_PR_ONLY_CUTOVER == 'true' && (github.event_name == 'workflow_dispatch' || github.event.issue.pull_request && startsWith(github.event.comment.body, 'TRACTORVS TEST RELEASE '))
     runs-on: ubuntu-24.04
-    timeout-minutes: 8
+    # Wait only in the read-only scan, never while holding the App credential.
+    # 20 min technical evidence + 16 min production barrier + API margin.
+    timeout-minutes: 45
     permissions:
       contents: read
       pull-requests: read

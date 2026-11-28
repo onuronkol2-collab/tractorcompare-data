@@ -5,6 +5,10 @@ on:
     paths:
       - "scripts/tractorvs-owner-test-release-policy.mjs"
       - "site/tests/owner-test-release.test.mjs"
+      - "scripts/tractorvs-production-barrier.mjs"
+      - "scripts/tractorvs-owner-test-release.mjs"
+      - "scripts/tractorvs-protected-release-executor.mjs"
+      - "site/tests/production-release-barrier.test.mjs"
       - ".github/workflows/playwright-accessibility.yml"
       - ".github/dependabot.yml"
       - "site/src/**"

@@ -6,6 +6,7 @@ import {validateCandidateIdentity,verifyFreshPublicSnapshot} from "./tractorvs-p
 import {verifyRecovery} from "./tractorvs-forum-recovery-evidence.mjs";
 import {withAppToken,sitemapTimestamp} from "./tractorvs-integrated-publication-pilot.mjs";
 import {REPO,assertProtectedReleaseRule,evaluateCandidateChecks,actionRunId} from "./tractorvs-protected-candidate-policy.mjs";
+import {inspectProductionBarrier,assertProductionSettled} from "./tractorvs-production-barrier.mjs";
 const bot="tractorvs-secure-publisher[bot]",root="/repos/"+REPO;
 const paths={catalog:["site/src/data/public-catalog-sync.json"],forum:["site/src/data/public-forum-sync.json"],"forum-recovery":["site/src/data/public-forum-sync.json"],sitemap:["seo/sitemap-content-history.json","site/src/data/sitemap-lastmod.json"]};
 const sha=x=>typeof x==="string"&&/^[a-f0-9]{40}$/.test(x);
@@ -54,7 +55,7 @@ async function inspect(api,n,base,now=Date.now()){
  const ids=[...new Set([...checks.map(actionRunId),...latest.map(statusRunId)].filter(v=>v!==null))];
  ok(ids.length<=50,"Unexpected run inventory");
  const runs=await Promise.all(ids.map(id=>get(api,"/actions/runs/"+id)));
- const decision=evaluateCandidateChecks({kind,sha:head,base,checks,statuses,runs,now});
+ const decision=evaluateCandidateChecks({number:n,kind,sha:head,base,checks,statuses,runs,now});
  if(decision.state!=="success")return decision;
  const reviews=await pages(api,"/pulls/"+n+"/reviews");
  const reviewByUser=new Map(reviews.filter(r=>r.user?.login&&["APPROVED","CHANGES_REQUESTED","DISMISSED"].includes(r.state)).map(r=>[r.user.login,r.state]));
@@ -66,7 +67,7 @@ async function inspect(api,n,base,now=Date.now()){
  if(!Number.isFinite(Date.parse(at))||Date.parse(at)>now+1000||now-Date.parse(at)>20*60000)return {state:"blocked",reason:"Candidate source timestamp expired"};
  return {state:"ready",number:n,head,base,kind,previous:records[0],submitted:submitted[0]};
 }
-export async function mergeExact({api,writeApi,selection,check=inspect,recheckSource=async()=>{},now=Date.now()}){
+export async function mergeExact({api,writeApi,selection,check=inspect,recheckSource=async()=>{},productionBarrier=assertProductionSettled,now=Date.now()}){
  const {number,head,base,kind}=selection;
  ok(Number.isSafeInteger(number)&&number>0&&sha(head)&&sha(base)&&Object.hasOwn(paths,kind),"Invalid release selection");
  assertProtectedReleaseRule(await get(api,"/rulesets/28247144"));
@@ -82,6 +83,7 @@ export async function mergeExact({api,writeApi,selection,check=inspect,recheckSo
  const pr=await get(writeApi,"/pulls/"+number);
  ok(candidateKind(pr)===kind&&pr.head.sha===head&&pr.base.sha===base&&pr.mergeable===true,"PR changed before merge");
  // Strict GitHub up-to-date rule closes the base race; expected SHA closes head race.
+ await productionBarrier(api,base);
  const merged=await getResult(writeApi,"/pulls/"+number+"/merge","PUT",{sha:head,merge_method:"squash",commit_title:"chore(publication): verified "+kind+" release (#"+number+")"});
  ok(merged?.merged===true&&sha(merged.sha),"Merge not confirmed");
  const final=await get(writeApi,"/pulls/"+number);
@@ -101,6 +103,8 @@ async function scan(env){
   if(result.state!=="ready"){console.log("Candidate #"+pr.number+": "+result.state);continue;}
   if(env.EXECUTE_RELEASE!=="true"||env.CUTOVER_ENABLED!=="true"){console.log("Ready candidate #"+pr.number+" (read-only preview; execution disabled)");return;}
   assertProtectedReleaseRule(await get(api,"/rulesets/28247144"));
+  const barrier=await inspectProductionBarrier(api,base);
+  if(barrier.state!=="ready"){console.log("PRODUCTION_QA_PENDING: "+barrier.reason+"; no merge this scan");return;}
   appendFileSync(env.GITHUB_OUTPUT,["ready=true","number="+result.number,"head="+result.head,"base="+result.base,"kind="+result.kind].join("\n")+"\n");return;
  }
  console.log("No independently verified, current candidate ready for release.");
@@ -109,6 +113,7 @@ async function execute(env){
  assertExecutionEnabled(env);
  const selection={number:Number(env.RELEASE_PR),head:env.RELEASE_HEAD,base:env.GITHUB_SHA,kind:env.RELEASE_KIND};
  const api=client(env.GH_TOKEN);
+ await assertProductionSettled(api,selection.base);
  // The App key is consumed only in this trusted-main job; no candidate code/build.
  const result=await withAppToken({...env,PILOT_AUTOMATIC:"true"},token=>mergeExact({api,writeApi:client(token),selection,recheckSource:async c=>{
   if(c.kind==="forum-recovery")await verifyRecovery({previous:c.previous,submitted:c.submitted,jwt:env.TRACTORVS_SUPABASE_ANON_JWT});
