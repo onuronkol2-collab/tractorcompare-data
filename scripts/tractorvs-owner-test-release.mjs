@@ -1,6 +1,6 @@
 // Trusted-main only; never checkout, import, build or run candidate code.
 import {readFileSync,appendFileSync} from "node:fs";
-import {authorization,matchesAuthorizedPR,assessOwnerEvidence,OWNER,OWNER_ID} from "./tractorvs-owner-test-release-policy.mjs";
+import {authorization,matchesAuthorizedPR,assessOwnerEvidence,pendingOwnerChecks,waitForOwnerEvidence,OWNER,OWNER_ID} from "./tractorvs-owner-test-release-policy.mjs";
 import {REPO,assertProtectedReleaseRule,actionRunId} from "./tractorvs-protected-candidate-policy.mjs";
 import {withAppToken} from "./tractorvs-integrated-publication-pilot.mjs";
 import {assertProductionSettled,waitForProductionBarrier} from "./tractorvs-production-barrier.mjs";
@@ -19,7 +19,7 @@ const api=client(env.GH_TOKEN),get=async(a,p)=>(await a(p)).data;
 async function pages(path,key){
  const result=[];for(let page=1;page<=5;page++){const {data,more}=await api(path+(path.includes("?")?"&":"?")+"per_page=100&page="+page);const a=key?data[key]:data;must(Array.isArray(a),"Incomplete inventory");result.push(...a);if(!more)return result;}throw Error("Pagination limit");
 }
-async function verify({allowClosed=false}={}){
+async function verify({allowClosed=false,allowPending=false}={}){
  must(authorization(event,env),"Authorization expired or invalid");
  if(commentId!==null){
   const c=await get(api,"/issues/comments/"+commentId);
@@ -37,16 +37,19 @@ async function verify({allowClosed=false}={}){
  const cmp=await get(api,"/compare/"+base+"..."+head);must(cmp.status==="ahead"&&cmp.behind_by===0&&cmp.merge_base_commit?.sha===base,"PR not current with main");
  const by=new Map(reviews.filter(x=>x.user?.login&&["APPROVED","CHANGES_REQUESTED","DISMISSED"].includes(x.state)).map(x=>[x.user.login,x.state]));
  must(![...by.values()].includes("CHANGES_REQUESTED"),"Outstanding review");
+ if(allowPending&&pendingOwnerChecks(checks))return null;
  const statusId=s=>{const m=typeof s.target_url==="string"&&s.target_url.match(/^https:\/\/github\.com\/onuronkol2-collab\/tractorcompare-data\/actions\/runs\/([1-9][0-9]*)$/);return m?Number(m[1]):null;};
  const ids=[...new Set([...checks.map(actionRunId),...statuses.map(statusId)].filter(x=>Number.isSafeInteger(x)&&x>0))];must(ids.length<=80,"Unexpected run inventory");
  const runs=[];for(let i=0;i<ids.length;i+=8)runs.push(...await Promise.all(ids.slice(i,i+8).map(id=>get(api,"/actions/runs/"+id))));
- must(assessOwnerEvidence({selection,files,checks,statuses,runs}),"Exact trusted technical evidence incomplete or failed");
+ const complete=assessOwnerEvidence({selection,files,checks,statuses,runs});
+ if(!complete&&allowPending)return null;
+ must(complete,"Exact trusted technical evidence incomplete or failed");
  console.log("Exact owner-authorized PR and technical evidence verified: #"+number+" "+head);
  return true;
 }
 try{
  if(process.argv[2]==="scan"){
-  const ready=await verify({allowClosed:true});
+  const ready=await waitForOwnerEvidence(()=>verify({allowClosed:true,allowPending:true}),{report:message=>console.log(message)});
   if(ready){await waitForProductionBarrier(api,base);await verify();await assertProductionSettled(api,base);}
   appendFileSync(env.GITHUB_OUTPUT,"ready="+ready+"\n");
  }
