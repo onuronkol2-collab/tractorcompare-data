@@ -1,0 +1,3426 @@
+{
+  "schema": "tractorvs-research-evidence-v1",
+  "researchedOn": "2026-11-28",
+  "status": "research_only_not_importable",
+  "models": [
+    {
+      "brand": "Case IH",
+      "model": "Puma 150X",
+      "variant": "Stage V / semi-automatic 18F6R",
+      "market": "Türkiye",
+      "modelYear": null,
+      "sourceUrl": "https://www.caseih.com.tr/traktorler/puma-serisi",
+      "sourceType": "manufacturer",
+      "existingDraftId": null,
+      "disposition": "hold_for_review",
+      "sourceRead": "Official manufacturer HTML technical table read 2026-11-28; catalogue identity and canonical admission pending",
+      "specs": [
+        {
+          "name": "engine_rated_power",
+          "value": "150",
+          "unit": "HP",
+          "locator": "Puma 150X / Stage V / semi-automatic 18F6R / Engine / nominal",
+          "context": "ECE R120; non-boost"
+        },
+        {
+          "name": "engine_max_power",
+          "value": "165",
+          "unit": "HP",
+          "locator": "Puma 150X / Stage V / semi-automatic 18F6R / Engine / maximum",
+          "context": "ECE R120; non-boost"
+        },
+        {
+          "name": "engine_rated_power_with_boost",
+          "value": "175",
+          "unit": "HP",
+          "locator": "Puma 150X / Stage V / semi-automatic 18F6R / Engine / nominal with additional power",
+          "context": "ECE R120; boost"
+        },
+        {
+          "name": "engine_max_power_with_boost",
+          "value": "190",
+          "unit": "HP",
+          "locator": "Puma 150X / Stage V / semi-automatic 18F6R / Engine / maximum with additional power",
+          "context": "ECE R120; boost"
+        },
+        {
+          "name": "engine_rated_speed",
+          "value": "2200",
+          "unit": "rpm",
+          "locator": "Puma 150X / Stage V / semi-automatic 18F6R / Engine / nominal speed",
+          "context": null
+        },
+        {
+          "name": "engine_cylinders",
+          "value": "6",
+          "unit": "count",
+          "locator": "Puma 150X / Stage V / semi-automatic 18F6R / Engine / cylinders",
+          "context": null
+        },
+        {
+          "name": "engine_displacement",
+          "value": "6.7",
+          "unit": "L",
+          "locator": "Puma 150X / Stage V / semi-automatic 18F6R / Engine / displacement",
+          "context": null
+        },
+        {
+          "name": "engine_aspiration",
+          "value": "Turbo intercooler",
+          "unit": null,
+          "locator": "Puma 150X / Stage V / semi-automatic 18F6R / Engine / aspiration",
+          "context": null
+        },
+        {
+          "name": "emissions_standard",
+          "value": "Stage V",
+          "unit": null,
+          "locator": "Puma 150X / Stage V / semi-automatic 18F6R / Engine / emissions",
+          "context": null
+        },
+        {
+          "name": "fuel_injection",
+          "value": "Common rail",
+          "unit": null,
+          "locator": "Puma 150X / Stage V / semi-automatic 18F6R / Engine / injection",
+          "context": null
+        },
+        {
+          "name": "engine_torque",
+          "value": "700",
+          "unit": "Nm",
+          "locator": "Puma 150X / Stage V / semi-automatic 18F6R / Engine / torque without boost",
+          "context": "1500 rpm"
+        },
+        {
+          "name": "engine_torque_with_boost",
+          "value": "805",
+          "unit": "Nm",
+          "locator": "Puma 150X / Stage V / semi-automatic 18F6R / Engine / torque with additional power",
+          "context": "1500 rpm"
+        },
+        {
+          "name": "torque_reserve",
+          "value": "44",
+          "unit": "%",
+          "locator": "Puma 150X / Stage V / semi-automatic 18F6R / Engine / torque reserve",
+          "context": null
+        },
+        {
+          "name": "fuel_tank_capacity",
+          "value": "330",
+          "unit": "L",
+          "locator": "Puma 150X / Stage V / semi-automatic 18F6R / Engine / fuel tank",
+          "context": null
+        },
+        {
+          "name": "adblue_tank_capacity",
+          "value": "48",
+          "unit": "L",
+          "locator": "Puma 150X / Stage V / semi-automatic 18F6R / Engine / AdBlue tank",
+          "context": null
+        },
+        {
+          "name": "transmission_type",
+          "value": "Semi-automatic",
+          "unit": null,
+          "locator": "Puma 150X / Stage V / semi-automatic 18F6R / Transmission / options",
+          "context": null
+        },
+        {
+          "name": "forward_gears",
+          "value": "18",
+          "unit": "count",
+          "locator": "Puma 150X / Stage V / semi-automatic 18F6R / Transmission / gear count",
+          "context": null
+        },
+        {
+          "name": "reverse_gears",
+          "value": "6",
+          "unit": "count",
+          "locator": "Puma 150X / Stage V / semi-automatic 18F6R / Transmission / gear count",
+          "context": null
+        },
+        {
+          "name": "automatic_differential_lock",
+          "value": "Standard",
+          "unit": null,
+          "locator": "Puma 150X / Stage V / semi-automatic 18F6R / Transmission / automatic differential",
+          "context": null
+        },
+        {
+          "name": "automatic_4wd_control",
+          "value": "Standard",
+          "unit": null,
+          "locator": "Puma 150X / Stage V / semi-automatic 18F6R / Transmission / automatic 4WD",
+          "context": null
+        },
+        {
+          "name": "rear_lift_capacity",
+          "value": "8647",
+          "unit": "kg",
+          "locator": "Puma 150X / Stage V / semi-automatic 18F6R / Hydraulics / maximum lift",
+          "context": "Measurement point unspecified"
+        },
+        {
+          "name": "hydraulic_outlet_count",
+          "value": "8",
+          "unit": "count",
+          "locator": "Puma 150X / Stage V / semi-automatic 18F6R / Hydraulics / outlets",
+          "context": null
+        },
+        {
+          "name": "hydraulic_outlet_control",
+          "value": "Mechanical",
+          "unit": null,
+          "locator": "Puma 150X / Stage V / semi-automatic 18F6R / Hydraulics / outlet control",
+          "context": null
+        },
+        {
+          "name": "rear_pto_speeds",
+          "value": "540/540E/1000",
+          "unit": "rpm",
+          "locator": "Puma 150X / Stage V / semi-automatic 18F6R / PTO / speed options",
+          "context": null
+        },
+        {
+          "name": "engine_speed_at_540_pto",
+          "value": "1969",
+          "unit": "rpm",
+          "locator": "Puma 150X / Stage V / semi-automatic 18F6R / PTO / corresponding engine speed",
+          "context": null
+        },
+        {
+          "name": "engine_speed_at_540e_pto",
+          "value": "1546",
+          "unit": "rpm",
+          "locator": "Puma 150X / Stage V / semi-automatic 18F6R / PTO / corresponding engine speed",
+          "context": null
+        },
+        {
+          "name": "engine_speed_at_1000_pto",
+          "value": "1893",
+          "unit": "rpm",
+          "locator": "Puma 150X / Stage V / semi-automatic 18F6R / PTO / corresponding engine speed",
+          "context": null
+        },
+        {
+          "name": "wheelbase",
+          "value": "2789",
+          "unit": "mm",
+          "locator": "Puma 150X / Stage V / semi-automatic 18F6R / Dimensions / wheelbase",
+          "context": null
+        },
+        {
+          "name": "overall_length",
+          "value": "5316",
+          "unit": "mm",
+          "locator": "Puma 150X / Stage V / semi-automatic 18F6R / Dimensions / length",
+          "context": null
+        },
+        {
+          "name": "overall_height",
+          "value": "3026",
+          "unit": "mm",
+          "locator": "Puma 150X / Stage V / semi-automatic 18F6R / Dimensions / height",
+          "context": null
+        },
+        {
+          "name": "front_track",
+          "value": "1325–2285",
+          "unit": "mm",
+          "locator": "Puma 150X / Stage V / semi-automatic 18F6R / Dimensions / front track",
+          "context": null
+        },
+        {
+          "name": "rear_track",
+          "value": "1430–2230",
+          "unit": "mm",
+          "locator": "Puma 150X / Stage V / semi-automatic 18F6R / Dimensions / rear track",
+          "context": null
+        },
+        {
+          "name": "unballasted_weight",
+          "value": "6782",
+          "unit": "kg",
+          "locator": "Puma 150X / Stage V / semi-automatic 18F6R / Weights / without additional ballast",
+          "context": null
+        },
+        {
+          "name": "standard_front_tyres",
+          "value": "420/85R28",
+          "unit": null,
+          "locator": "Puma 150X / Stage V / semi-automatic 18F6R / Tyres / standard front",
+          "context": null
+        },
+        {
+          "name": "standard_rear_tyres",
+          "value": "520/85R38",
+          "unit": null,
+          "locator": "Puma 150X / Stage V / semi-automatic 18F6R / Tyres / standard rear",
+          "context": null
+        },
+        {
+          "name": "cab_suspension",
+          "value": "Standard",
+          "unit": null,
+          "locator": "Puma 150X / Stage V / semi-automatic 18F6R / Equipment / cab suspension",
+          "context": null
+        },
+        {
+          "name": "front_axle_suspension",
+          "value": "Standard",
+          "unit": null,
+          "locator": "Puma 150X / Stage V / semi-automatic 18F6R / Equipment / front axle suspension",
+          "context": null
+        },
+        {
+          "name": "front_hitch",
+          "value": "Optional",
+          "unit": null,
+          "locator": "Puma 150X / Stage V / semi-automatic 18F6R / Equipment / front hitch",
+          "context": null
+        }
+      ],
+      "notes": [
+        "OEM table groups 185/200/220 full automatic and CVX AFSC in pairs; slash values mapped in listed order, must confirm brochure before admission. HP is OEM label, not silently converted. Blank 260 normal torque and boosted rated power remain unknown. No reliability claims or model year inference. Existing generic Puma 150 draft is only a reconciliation lead."
+      ]
+    },
+    {
+      "brand": "Case IH",
+      "model": "Puma 150",
+      "variant": "Stage V / semi-automatic 19F6R (full automatic option)",
+      "market": "Türkiye",
+      "modelYear": null,
+      "sourceUrl": "https://www.caseih.com.tr/traktorler/puma-serisi",
+      "sourceType": "manufacturer",
+      "existingDraftId": "dd9a91f5-5da4-4de7-b91b-c62a70102b2e",
+      "disposition": "hold_for_review",
+      "sourceRead": "Official manufacturer HTML technical table read 2026-11-28; catalogue identity and canonical admission pending",
+      "specs": [
+        {
+          "name": "engine_rated_power",
+          "value": "150",
+          "unit": "HP",
+          "locator": "Puma 150 / Stage V / semi-automatic 19F6R (full automatic option) / Engine / nominal",
+          "context": "ECE R120; non-boost"
+        },
+        {
+          "name": "engine_max_power",
+          "value": "165",
+          "unit": "HP",
+          "locator": "Puma 150 / Stage V / semi-automatic 19F6R (full automatic option) / Engine / maximum",
+          "context": "ECE R120; non-boost"
+        },
+        {
+          "name": "engine_rated_power_with_boost",
+          "value": "175",
+          "unit": "HP",
+          "locator": "Puma 150 / Stage V / semi-automatic 19F6R (full automatic option) / Engine / nominal with additional power",
+          "context": "ECE R120; boost"
+        },
+        {
+          "name": "engine_max_power_with_boost",
+          "value": "190",
+          "unit": "HP",
+          "locator": "Puma 150 / Stage V / semi-automatic 19F6R (full automatic option) / Engine / maximum with additional power",
+          "context": "ECE R120; boost"
+        },
+        {
+          "name": "engine_rated_speed",
+          "value": "2200",
+          "unit": "rpm",
+          "locator": "Puma 150 / Stage V / semi-automatic 19F6R (full automatic option) / Engine / nominal speed",
+          "context": null
+        },
+        {
+          "name": "engine_cylinders",
+          "value": "6",
+          "unit": "count",
+          "locator": "Puma 150 / Stage V / semi-automatic 19F6R (full automatic option) / Engine / cylinders",
+          "context": null
+        },
+        {
+          "name": "engine_displacement",
+          "value": "6.7",
+          "unit": "L",
+          "locator": "Puma 150 / Stage V / semi-automatic 19F6R (full automatic option) / Engine / displacement",
+          "context": null
+        },
+        {
+          "name": "engine_aspiration",
+          "value": "Turbo intercooler",
+          "unit": null,
+          "locator": "Puma 150 / Stage V / semi-automatic 19F6R (full automatic option) / Engine / aspiration",
+          "context": null
+        },
+        {
+          "name": "emissions_standard",
+          "value": "Stage V",
+          "unit": null,
+          "locator": "Puma 150 / Stage V / semi-automatic 19F6R (full automatic option) / Engine / emissions",
+          "context": null
+        },
+        {
+          "name": "fuel_injection",
+          "value": "Common rail",
+          "unit": null,
+          "locator": "Puma 150 / Stage V / semi-automatic 19F6R (full automatic option) / Engine / injection",
+          "context": null
+        },
+        {
+          "name": "engine_torque",
+          "value": "700",
+          "unit": "Nm",
+          "locator": "Puma 150 / Stage V / semi-automatic 19F6R (full automatic option) / Engine / torque without boost",
+          "context": "1500 rpm"
+        },
+        {
+          "name": "engine_torque_with_boost",
+          "value": "805",
+          "unit": "Nm",
+          "locator": "Puma 150 / Stage V / semi-automatic 19F6R (full automatic option) / Engine / torque with additional power",
+          "context": "1500 rpm"
+        },
+        {
+          "name": "torque_reserve",
+          "value": "44",
+          "unit": "%",
+          "locator": "Puma 150 / Stage V / semi-automatic 19F6R (full automatic option) / Engine / torque reserve",
+          "context": null
+        },
+        {
+          "name": "fuel_tank_capacity",
+          "value": "330",
+          "unit": "L",
+          "locator": "Puma 150 / Stage V / semi-automatic 19F6R (full automatic option) / Engine / fuel tank",
+          "context": null
+        },
+        {
+          "name": "adblue_tank_capacity",
+          "value": "48",
+          "unit": "L",
+          "locator": "Puma 150 / Stage V / semi-automatic 19F6R (full automatic option) / Engine / AdBlue tank",
+          "context": null
+        },
+        {
+          "name": "transmission_type",
+          "value": "Semi-automatic",
+          "unit": null,
+          "locator": "Puma 150 / Stage V / semi-automatic 19F6R (full automatic option) / Transmission / options",
+          "context": null
+        },
+        {
+          "name": "forward_gears",
+          "value": "19",
+          "unit": "count",
+          "locator": "Puma 150 / Stage V / semi-automatic 19F6R (full automatic option) / Transmission / gear count",
+          "context": null
+        },
+        {
+          "name": "reverse_gears",
+          "value": "6",
+          "unit": "count",
+          "locator": "Puma 150 / Stage V / semi-automatic 19F6R (full automatic option) / Transmission / gear count",
+          "context": null
+        },
+        {
+          "name": "automatic_differential_lock",
+          "value": "Standard",
+          "unit": null,
+          "locator": "Puma 150 / Stage V / semi-automatic 19F6R (full automatic option) / Transmission / automatic differential",
+          "context": null
+        },
+        {
+          "name": "automatic_4wd_control",
+          "value": "Standard",
+          "unit": null,
+          "locator": "Puma 150 / Stage V / semi-automatic 19F6R (full automatic option) / Transmission / automatic 4WD",
+          "context": null
+        },
+        {
+          "name": "rear_lift_capacity",
+          "value": "8647",
+          "unit": "kg",
+          "locator": "Puma 150 / Stage V / semi-automatic 19F6R (full automatic option) / Hydraulics / maximum lift",
+          "context": "Measurement point unspecified"
+        },
+        {
+          "name": "hydraulic_outlet_count",
+          "value": "8",
+          "unit": "count",
+          "locator": "Puma 150 / Stage V / semi-automatic 19F6R (full automatic option) / Hydraulics / outlets",
+          "context": null
+        },
+        {
+          "name": "hydraulic_outlet_control",
+          "value": "Electronic",
+          "unit": null,
+          "locator": "Puma 150 / Stage V / semi-automatic 19F6R (full automatic option) / Hydraulics / outlet control",
+          "context": null
+        },
+        {
+          "name": "rear_pto_speeds",
+          "value": "540/540E/1000",
+          "unit": "rpm",
+          "locator": "Puma 150 / Stage V / semi-automatic 19F6R (full automatic option) / PTO / speed options",
+          "context": null
+        },
+        {
+          "name": "engine_speed_at_540_pto",
+          "value": "1969",
+          "unit": "rpm",
+          "locator": "Puma 150 / Stage V / semi-automatic 19F6R (full automatic option) / PTO / corresponding engine speed",
+          "context": null
+        },
+        {
+          "name": "engine_speed_at_540e_pto",
+          "value": "1546",
+          "unit": "rpm",
+          "locator": "Puma 150 / Stage V / semi-automatic 19F6R (full automatic option) / PTO / corresponding engine speed",
+          "context": null
+        },
+        {
+          "name": "engine_speed_at_1000_pto",
+          "value": "1893",
+          "unit": "rpm",
+          "locator": "Puma 150 / Stage V / semi-automatic 19F6R (full automatic option) / PTO / corresponding engine speed",
+          "context": null
+        },
+        {
+          "name": "wheelbase",
+          "value": "2789",
+          "unit": "mm",
+          "locator": "Puma 150 / Stage V / semi-automatic 19F6R (full automatic option) / Dimensions / wheelbase",
+          "context": null
+        },
+        {
+          "name": "overall_length",
+          "value": "5316",
+          "unit": "mm",
+          "locator": "Puma 150 / Stage V / semi-automatic 19F6R (full automatic option) / Dimensions / length",
+          "context": null
+        },
+        {
+          "name": "overall_height",
+          "value": "3026",
+          "unit": "mm",
+          "locator": "Puma 150 / Stage V / semi-automatic 19F6R (full automatic option) / Dimensions / height",
+          "context": null
+        },
+        {
+          "name": "front_track",
+          "value": "1325–2285",
+          "unit": "mm",
+          "locator": "Puma 150 / Stage V / semi-automatic 19F6R (full automatic option) / Dimensions / front track",
+          "context": null
+        },
+        {
+          "name": "rear_track",
+          "value": "1430–2230",
+          "unit": "mm",
+          "locator": "Puma 150 / Stage V / semi-automatic 19F6R (full automatic option) / Dimensions / rear track",
+          "context": null
+        },
+        {
+          "name": "unballasted_weight",
+          "value": "6782",
+          "unit": "kg",
+          "locator": "Puma 150 / Stage V / semi-automatic 19F6R (full automatic option) / Weights / without additional ballast",
+          "context": null
+        },
+        {
+          "name": "standard_front_tyres",
+          "value": "420/85R28",
+          "unit": null,
+          "locator": "Puma 150 / Stage V / semi-automatic 19F6R (full automatic option) / Tyres / standard front",
+          "context": null
+        },
+        {
+          "name": "standard_rear_tyres",
+          "value": "520/85R38",
+          "unit": null,
+          "locator": "Puma 150 / Stage V / semi-automatic 19F6R (full automatic option) / Tyres / standard rear",
+          "context": null
+        },
+        {
+          "name": "cab_suspension",
+          "value": "Standard",
+          "unit": null,
+          "locator": "Puma 150 / Stage V / semi-automatic 19F6R (full automatic option) / Equipment / cab suspension",
+          "context": null
+        },
+        {
+          "name": "front_axle_suspension",
+          "value": "Standard",
+          "unit": null,
+          "locator": "Puma 150 / Stage V / semi-automatic 19F6R (full automatic option) / Equipment / front axle suspension",
+          "context": null
+        },
+        {
+          "name": "front_hitch",
+          "value": "Optional",
+          "unit": null,
+          "locator": "Puma 150 / Stage V / semi-automatic 19F6R (full automatic option) / Equipment / front hitch",
+          "context": null
+        },
+        {
+          "name": "front_pto",
+          "value": "Optional",
+          "unit": null,
+          "locator": "Puma 150 / Stage V / semi-automatic 19F6R (full automatic option) / Equipment / front PTO",
+          "context": null
+        }
+      ],
+      "notes": [
+        "OEM table groups 185/200/220 full automatic and CVX AFSC in pairs; slash values mapped in listed order, must confirm brochure before admission. HP is OEM label, not silently converted. Blank 260 normal torque and boosted rated power remain unknown. No reliability claims or model year inference. Existing generic Puma 150 draft is only a reconciliation lead."
+      ]
+    },
+    {
+      "brand": "Case IH",
+      "model": "Puma 165",
+      "variant": "Stage V / semi-automatic 19F6R (full automatic option)",
+      "market": "Türkiye",
+      "modelYear": null,
+      "sourceUrl": "https://www.caseih.com.tr/traktorler/puma-serisi",
+      "sourceType": "manufacturer",
+      "existingDraftId": null,
+      "disposition": "hold_for_review",
+      "sourceRead": "Official manufacturer HTML technical table read 2026-11-28; catalogue identity and canonical admission pending",
+      "specs": [
+        {
+          "name": "engine_rated_power",
+          "value": "165",
+          "unit": "HP",
+          "locator": "Puma 165 / Stage V / semi-automatic 19F6R (full automatic option) / Engine / nominal",
+          "context": "ECE R120; non-boost"
+        },
+        {
+          "name": "engine_max_power",
+          "value": "180",
+          "unit": "HP",
+          "locator": "Puma 165 / Stage V / semi-automatic 19F6R (full automatic option) / Engine / maximum",
+          "context": "ECE R120; non-boost"
+        },
+        {
+          "name": "engine_rated_power_with_boost",
+          "value": "190",
+          "unit": "HP",
+          "locator": "Puma 165 / Stage V / semi-automatic 19F6R (full automatic option) / Engine / nominal with additional power",
+          "context": "ECE R120; boost"
+        },
+        {
+          "name": "engine_max_power_with_boost",
+          "value": "210",
+          "unit": "HP",
+          "locator": "Puma 165 / Stage V / semi-automatic 19F6R (full automatic option) / Engine / maximum with additional power",
+          "context": "ECE R120; boost"
+        },
+        {
+          "name": "engine_rated_speed",
+          "value": "2200",
+          "unit": "rpm",
+          "locator": "Puma 165 / Stage V / semi-automatic 19F6R (full automatic option) / Engine / nominal speed",
+          "context": null
+        },
+        {
+          "name": "engine_cylinders",
+          "value": "6",
+          "unit": "count",
+          "locator": "Puma 165 / Stage V / semi-automatic 19F6R (full automatic option) / Engine / cylinders",
+          "context": null
+        },
+        {
+          "name": "engine_displacement",
+          "value": "6.7",
+          "unit": "L",
+          "locator": "Puma 165 / Stage V / semi-automatic 19F6R (full automatic option) / Engine / displacement",
+          "context": null
+        },
+        {
+          "name": "engine_aspiration",
+          "value": "Turbo intercooler",
+          "unit": null,
+          "locator": "Puma 165 / Stage V / semi-automatic 19F6R (full automatic option) / Engine / aspiration",
+          "context": null
+        },
+        {
+          "name": "emissions_standard",
+          "value": "Stage V",
+          "unit": null,
+          "locator": "Puma 165 / Stage V / semi-automatic 19F6R (full automatic option) / Engine / emissions",
+          "context": null
+        },
+        {
+          "name": "fuel_injection",
+          "value": "Common rail",
+          "unit": null,
+          "locator": "Puma 165 / Stage V / semi-automatic 19F6R (full automatic option) / Engine / injection",
+          "context": null
+        },
+        {
+          "name": "engine_torque",
+          "value": "770",
+          "unit": "Nm",
+          "locator": "Puma 165 / Stage V / semi-automatic 19F6R (full automatic option) / Engine / torque without boost",
+          "context": "1500 rpm"
+        },
+        {
+          "name": "engine_torque_with_boost",
+          "value": "875",
+          "unit": "Nm",
+          "locator": "Puma 165 / Stage V / semi-automatic 19F6R (full automatic option) / Engine / torque with additional power",
+          "context": "1500 rpm"
+        },
+        {
+          "name": "torque_reserve",
+          "value": "44",
+          "unit": "%",
+          "locator": "Puma 165 / Stage V / semi-automatic 19F6R (full automatic option) / Engine / torque reserve",
+          "context": null
+        },
+        {
+          "name": "fuel_tank_capacity",
+          "value": "330",
+          "unit": "L",
+          "locator": "Puma 165 / Stage V / semi-automatic 19F6R (full automatic option) / Engine / fuel tank",
+          "context": null
+        },
+        {
+          "name": "adblue_tank_capacity",
+          "value": "48",
+          "unit": "L",
+          "locator": "Puma 165 / Stage V / semi-automatic 19F6R (full automatic option) / Engine / AdBlue tank",
+          "context": null
+        },
+        {
+          "name": "transmission_type",
+          "value": "Semi-automatic",
+          "unit": null,
+          "locator": "Puma 165 / Stage V / semi-automatic 19F6R (full automatic option) / Transmission / options",
+          "context": null
+        },
+        {
+          "name": "forward_gears",
+          "value": "19",
+          "unit": "count",
+          "locator": "Puma 165 / Stage V / semi-automatic 19F6R (full automatic option) / Transmission / gear count",
+          "context": null
+        },
+        {
+          "name": "reverse_gears",
+          "value": "6",
+          "unit": "count",
+          "locator": "Puma 165 / Stage V / semi-automatic 19F6R (full automatic option) / Transmission / gear count",
+          "context": null
+        },
+        {
+          "name": "automatic_differential_lock",
+          "value": "Standard",
+          "unit": null,
+          "locator": "Puma 165 / Stage V / semi-automatic 19F6R (full automatic option) / Transmission / automatic differential",
+          "context": null
+        },
+        {
+          "name": "automatic_4wd_control",
+          "value": "Standard",
+          "unit": null,
+          "locator": "Puma 165 / Stage V / semi-automatic 19F6R (full automatic option) / Transmission / automatic 4WD",
+          "context": null
+        },
+        {
+          "name": "rear_lift_capacity",
+          "value": "8647",
+          "unit": "kg",
+          "locator": "Puma 165 / Stage V / semi-automatic 19F6R (full automatic option) / Hydraulics / maximum lift",
+          "context": "Measurement point unspecified"
+        },
+        {
+          "name": "hydraulic_outlet_count",
+          "value": "8",
+          "unit": "count",
+          "locator": "Puma 165 / Stage V / semi-automatic 19F6R (full automatic option) / Hydraulics / outlets",
+          "context": null
+        },
+        {
+          "name": "hydraulic_outlet_control",
+          "value": "Electronic",
+          "unit": null,
+          "locator": "Puma 165 / Stage V / semi-automatic 19F6R (full automatic option) / Hydraulics / outlet control",
+          "context": null
+        },
+        {
+          "name": "rear_pto_speeds",
+          "value": "540/540E/1000",
+          "unit": "rpm",
+          "locator": "Puma 165 / Stage V / semi-automatic 19F6R (full automatic option) / PTO / speed options",
+          "context": null
+        },
+        {
+          "name": "engine_speed_at_540_pto",
+          "value": "1969",
+          "unit": "rpm",
+          "locator": "Puma 165 / Stage V / semi-automatic 19F6R (full automatic option) / PTO / corresponding engine speed",
+          "context": null
+        },
+        {
+          "name": "engine_speed_at_540e_pto",
+          "value": "1546",
+          "unit": "rpm",
+          "locator": "Puma 165 / Stage V / semi-automatic 19F6R (full automatic option) / PTO / corresponding engine speed",
+          "context": null
+        },
+        {
+          "name": "engine_speed_at_1000_pto",
+          "value": "1893",
+          "unit": "rpm",
+          "locator": "Puma 165 / Stage V / semi-automatic 19F6R (full automatic option) / PTO / corresponding engine speed",
+          "context": null
+        },
+        {
+          "name": "wheelbase",
+          "value": "2789",
+          "unit": "mm",
+          "locator": "Puma 165 / Stage V / semi-automatic 19F6R (full automatic option) / Dimensions / wheelbase",
+          "context": null
+        },
+        {
+          "name": "overall_length",
+          "value": "5316",
+          "unit": "mm",
+          "locator": "Puma 165 / Stage V / semi-automatic 19F6R (full automatic option) / Dimensions / length",
+          "context": null
+        },
+        {
+          "name": "overall_height",
+          "value": "3026",
+          "unit": "mm",
+          "locator": "Puma 165 / Stage V / semi-automatic 19F6R (full automatic option) / Dimensions / height",
+          "context": null
+        },
+        {
+          "name": "front_track",
+          "value": "1325–2285",
+          "unit": "mm",
+          "locator": "Puma 165 / Stage V / semi-automatic 19F6R (full automatic option) / Dimensions / front track",
+          "context": null
+        },
+        {
+          "name": "rear_track",
+          "value": "1430–2230",
+          "unit": "mm",
+          "locator": "Puma 165 / Stage V / semi-automatic 19F6R (full automatic option) / Dimensions / rear track",
+          "context": null
+        },
+        {
+          "name": "unballasted_weight",
+          "value": "6782",
+          "unit": "kg",
+          "locator": "Puma 165 / Stage V / semi-automatic 19F6R (full automatic option) / Weights / without additional ballast",
+          "context": null
+        },
+        {
+          "name": "standard_front_tyres",
+          "value": "420/85R28",
+          "unit": null,
+          "locator": "Puma 165 / Stage V / semi-automatic 19F6R (full automatic option) / Tyres / standard front",
+          "context": null
+        },
+        {
+          "name": "standard_rear_tyres",
+          "value": "520/85R38",
+          "unit": null,
+          "locator": "Puma 165 / Stage V / semi-automatic 19F6R (full automatic option) / Tyres / standard rear",
+          "context": null
+        },
+        {
+          "name": "cab_suspension",
+          "value": "Standard",
+          "unit": null,
+          "locator": "Puma 165 / Stage V / semi-automatic 19F6R (full automatic option) / Equipment / cab suspension",
+          "context": null
+        },
+        {
+          "name": "front_axle_suspension",
+          "value": "Standard",
+          "unit": null,
+          "locator": "Puma 165 / Stage V / semi-automatic 19F6R (full automatic option) / Equipment / front axle suspension",
+          "context": null
+        },
+        {
+          "name": "front_hitch",
+          "value": "Optional",
+          "unit": null,
+          "locator": "Puma 165 / Stage V / semi-automatic 19F6R (full automatic option) / Equipment / front hitch",
+          "context": null
+        },
+        {
+          "name": "front_pto",
+          "value": "Optional",
+          "unit": null,
+          "locator": "Puma 165 / Stage V / semi-automatic 19F6R (full automatic option) / Equipment / front PTO",
+          "context": null
+        }
+      ],
+      "notes": [
+        "OEM table groups 185/200/220 full automatic and CVX AFSC in pairs; slash values mapped in listed order, must confirm brochure before admission. HP is OEM label, not silently converted. Blank 260 normal torque and boosted rated power remain unknown. No reliability claims or model year inference. Existing generic Puma 150 draft is only a reconciliation lead."
+      ]
+    },
+    {
+      "brand": "Case IH",
+      "model": "Puma 185",
+      "variant": "Stage V / full automatic 19F6R",
+      "market": "Türkiye",
+      "modelYear": null,
+      "sourceUrl": "https://www.caseih.com.tr/traktorler/puma-serisi",
+      "sourceType": "manufacturer",
+      "existingDraftId": null,
+      "disposition": "hold_for_review",
+      "sourceRead": "Official manufacturer HTML technical table read 2026-11-28; catalogue identity and canonical admission pending",
+      "specs": [
+        {
+          "name": "engine_rated_power",
+          "value": "180",
+          "unit": "HP",
+          "locator": "Puma 185 / Stage V / full automatic 19F6R / Engine / nominal",
+          "context": "ECE R120; non-boost"
+        },
+        {
+          "name": "engine_max_power",
+          "value": "200",
+          "unit": "HP",
+          "locator": "Puma 185 / Stage V / full automatic 19F6R / Engine / maximum",
+          "context": "ECE R120; non-boost"
+        },
+        {
+          "name": "engine_rated_power_with_boost",
+          "value": "205",
+          "unit": "HP",
+          "locator": "Puma 185 / Stage V / full automatic 19F6R / Engine / nominal with additional power",
+          "context": "ECE R120; boost"
+        },
+        {
+          "name": "engine_max_power_with_boost",
+          "value": "225",
+          "unit": "HP",
+          "locator": "Puma 185 / Stage V / full automatic 19F6R / Engine / maximum with additional power",
+          "context": "ECE R120; boost"
+        },
+        {
+          "name": "engine_rated_speed",
+          "value": "2200",
+          "unit": "rpm",
+          "locator": "Puma 185 / Stage V / full automatic 19F6R / Engine / nominal speed",
+          "context": null
+        },
+        {
+          "name": "engine_cylinders",
+          "value": "6",
+          "unit": "count",
+          "locator": "Puma 185 / Stage V / full automatic 19F6R / Engine / cylinders",
+          "context": null
+        },
+        {
+          "name": "engine_displacement",
+          "value": "6.7",
+          "unit": "L",
+          "locator": "Puma 185 / Stage V / full automatic 19F6R / Engine / displacement",
+          "context": null
+        },
+        {
+          "name": "engine_aspiration",
+          "value": "Turbo intercooler",
+          "unit": null,
+          "locator": "Puma 185 / Stage V / full automatic 19F6R / Engine / aspiration",
+          "context": null
+        },
+        {
+          "name": "emissions_standard",
+          "value": "Stage V",
+          "unit": null,
+          "locator": "Puma 185 / Stage V / full automatic 19F6R / Engine / emissions",
+          "context": null
+        },
+        {
+          "name": "fuel_injection",
+          "value": "Common rail",
+          "unit": null,
+          "locator": "Puma 185 / Stage V / full automatic 19F6R / Engine / injection",
+          "context": null
+        },
+        {
+          "name": "engine_torque",
+          "value": "840",
+          "unit": "Nm",
+          "locator": "Puma 185 / Stage V / full automatic 19F6R / Engine / torque without boost",
+          "context": "1500 rpm"
+        },
+        {
+          "name": "engine_torque_with_boost",
+          "value": "940",
+          "unit": "Nm",
+          "locator": "Puma 185 / Stage V / full automatic 19F6R / Engine / torque with additional power",
+          "context": "1500 rpm"
+        },
+        {
+          "name": "torque_reserve",
+          "value": "44",
+          "unit": "%",
+          "locator": "Puma 185 / Stage V / full automatic 19F6R / Engine / torque reserve",
+          "context": null
+        },
+        {
+          "name": "fuel_tank_capacity",
+          "value": "470",
+          "unit": "L",
+          "locator": "Puma 185 / Stage V / full automatic 19F6R / Engine / fuel tank",
+          "context": null
+        },
+        {
+          "name": "adblue_tank_capacity",
+          "value": "54",
+          "unit": "L",
+          "locator": "Puma 185 / Stage V / full automatic 19F6R / Engine / AdBlue tank",
+          "context": null
+        },
+        {
+          "name": "transmission_type",
+          "value": "Full automatic",
+          "unit": null,
+          "locator": "Puma 185 / Stage V / full automatic 19F6R / Transmission / options",
+          "context": null
+        },
+        {
+          "name": "forward_gears",
+          "value": "19",
+          "unit": "count",
+          "locator": "Puma 185 / Stage V / full automatic 19F6R / Transmission / gear count",
+          "context": null
+        },
+        {
+          "name": "reverse_gears",
+          "value": "6",
+          "unit": "count",
+          "locator": "Puma 185 / Stage V / full automatic 19F6R / Transmission / gear count",
+          "context": null
+        },
+        {
+          "name": "automatic_differential_lock",
+          "value": "Standard",
+          "unit": null,
+          "locator": "Puma 185 / Stage V / full automatic 19F6R / Transmission / automatic differential",
+          "context": null
+        },
+        {
+          "name": "automatic_4wd_control",
+          "value": "Standard",
+          "unit": null,
+          "locator": "Puma 185 / Stage V / full automatic 19F6R / Transmission / automatic 4WD",
+          "context": null
+        },
+        {
+          "name": "rear_lift_capacity",
+          "value": "8647",
+          "unit": "kg",
+          "locator": "Puma 185 / Stage V / full automatic 19F6R / Hydraulics / maximum lift",
+          "context": "Measurement point unspecified"
+        },
+        {
+          "name": "hydraulic_outlet_count",
+          "value": "8",
+          "unit": "count",
+          "locator": "Puma 185 / Stage V / full automatic 19F6R / Hydraulics / outlets",
+          "context": null
+        },
+        {
+          "name": "hydraulic_outlet_control",
+          "value": "Electronic",
+          "unit": null,
+          "locator": "Puma 185 / Stage V / full automatic 19F6R / Hydraulics / outlet control",
+          "context": null
+        },
+        {
+          "name": "rear_pto_speeds",
+          "value": "540/540E/1000/1000E",
+          "unit": "rpm",
+          "locator": "Puma 185 / Stage V / full automatic 19F6R / PTO / speed options",
+          "context": null
+        },
+        {
+          "name": "engine_speed_at_540_pto",
+          "value": "1931",
+          "unit": "rpm",
+          "locator": "Puma 185 / Stage V / full automatic 19F6R / PTO / corresponding engine speed",
+          "context": null
+        },
+        {
+          "name": "engine_speed_at_540e_pto",
+          "value": "1598",
+          "unit": "rpm",
+          "locator": "Puma 185 / Stage V / full automatic 19F6R / PTO / corresponding engine speed",
+          "context": null
+        },
+        {
+          "name": "engine_speed_at_1000_pto",
+          "value": "1912",
+          "unit": "rpm",
+          "locator": "Puma 185 / Stage V / full automatic 19F6R / PTO / corresponding engine speed",
+          "context": null
+        },
+        {
+          "name": "engine_speed_at_1000e_pto",
+          "value": "1583",
+          "unit": "rpm",
+          "locator": "Puma 185 / Stage V / full automatic 19F6R / PTO / corresponding engine speed",
+          "context": null
+        },
+        {
+          "name": "wheelbase",
+          "value": "2884",
+          "unit": "mm",
+          "locator": "Puma 185 / Stage V / full automatic 19F6R / Dimensions / wheelbase",
+          "context": null
+        },
+        {
+          "name": "overall_length",
+          "value": "5467",
+          "unit": "mm",
+          "locator": "Puma 185 / Stage V / full automatic 19F6R / Dimensions / length",
+          "context": null
+        },
+        {
+          "name": "overall_height",
+          "value": "3068",
+          "unit": "mm",
+          "locator": "Puma 185 / Stage V / full automatic 19F6R / Dimensions / height",
+          "context": null
+        },
+        {
+          "name": "front_track",
+          "value": "1538–2260",
+          "unit": "mm",
+          "locator": "Puma 185 / Stage V / full automatic 19F6R / Dimensions / front track",
+          "context": null
+        },
+        {
+          "name": "rear_track",
+          "value": "1530–2230",
+          "unit": "mm",
+          "locator": "Puma 185 / Stage V / full automatic 19F6R / Dimensions / rear track",
+          "context": null
+        },
+        {
+          "name": "unballasted_weight",
+          "value": "7300",
+          "unit": "kg",
+          "locator": "Puma 185 / Stage V / full automatic 19F6R / Weights / without additional ballast",
+          "context": null
+        },
+        {
+          "name": "standard_front_tyres",
+          "value": "480/70R30",
+          "unit": null,
+          "locator": "Puma 185 / Stage V / full automatic 19F6R / Tyres / standard front",
+          "context": null
+        },
+        {
+          "name": "standard_rear_tyres",
+          "value": "620/70R42",
+          "unit": null,
+          "locator": "Puma 185 / Stage V / full automatic 19F6R / Tyres / standard rear",
+          "context": null
+        },
+        {
+          "name": "cab_suspension",
+          "value": "Standard",
+          "unit": null,
+          "locator": "Puma 185 / Stage V / full automatic 19F6R / Equipment / cab suspension",
+          "context": null
+        },
+        {
+          "name": "front_axle_suspension",
+          "value": "Standard",
+          "unit": null,
+          "locator": "Puma 185 / Stage V / full automatic 19F6R / Equipment / front axle suspension",
+          "context": null
+        },
+        {
+          "name": "front_hitch",
+          "value": "Optional",
+          "unit": null,
+          "locator": "Puma 185 / Stage V / full automatic 19F6R / Equipment / front hitch",
+          "context": null
+        },
+        {
+          "name": "front_pto",
+          "value": "Optional",
+          "unit": null,
+          "locator": "Puma 185 / Stage V / full automatic 19F6R / Equipment / front PTO",
+          "context": null
+        }
+      ],
+      "notes": [
+        "OEM table groups 185/200/220 full automatic and CVX AFSC in pairs; slash values mapped in listed order, must confirm brochure before admission. HP is OEM label, not silently converted. Blank 260 normal torque and boosted rated power remain unknown. No reliability claims or model year inference. Existing generic Puma 150 draft is only a reconciliation lead."
+      ]
+    },
+    {
+      "brand": "Case IH",
+      "model": "Puma 185 CVX AFSC",
+      "variant": "Stage V / CVX AFSC",
+      "market": "Türkiye",
+      "modelYear": null,
+      "sourceUrl": "https://www.caseih.com.tr/traktorler/puma-serisi",
+      "sourceType": "manufacturer",
+      "existingDraftId": null,
+      "disposition": "hold_for_review",
+      "sourceRead": "Official manufacturer HTML technical table read 2026-11-28; catalogue identity and canonical admission pending",
+      "specs": [
+        {
+          "name": "engine_rated_power",
+          "value": "180",
+          "unit": "HP",
+          "locator": "Puma 185 CVX AFSC / Stage V / CVX AFSC / Engine / nominal",
+          "context": "ECE R120; non-boost"
+        },
+        {
+          "name": "engine_max_power",
+          "value": "200",
+          "unit": "HP",
+          "locator": "Puma 185 CVX AFSC / Stage V / CVX AFSC / Engine / maximum",
+          "context": "ECE R120; non-boost"
+        },
+        {
+          "name": "engine_rated_power_with_boost",
+          "value": "205",
+          "unit": "HP",
+          "locator": "Puma 185 CVX AFSC / Stage V / CVX AFSC / Engine / nominal with additional power",
+          "context": "ECE R120; boost"
+        },
+        {
+          "name": "engine_max_power_with_boost",
+          "value": "225",
+          "unit": "HP",
+          "locator": "Puma 185 CVX AFSC / Stage V / CVX AFSC / Engine / maximum with additional power",
+          "context": "ECE R120; boost"
+        },
+        {
+          "name": "engine_rated_speed",
+          "value": "2200",
+          "unit": "rpm",
+          "locator": "Puma 185 CVX AFSC / Stage V / CVX AFSC / Engine / nominal speed",
+          "context": null
+        },
+        {
+          "name": "engine_cylinders",
+          "value": "6",
+          "unit": "count",
+          "locator": "Puma 185 CVX AFSC / Stage V / CVX AFSC / Engine / cylinders",
+          "context": null
+        },
+        {
+          "name": "engine_displacement",
+          "value": "6.7",
+          "unit": "L",
+          "locator": "Puma 185 CVX AFSC / Stage V / CVX AFSC / Engine / displacement",
+          "context": null
+        },
+        {
+          "name": "engine_aspiration",
+          "value": "Turbo intercooler",
+          "unit": null,
+          "locator": "Puma 185 CVX AFSC / Stage V / CVX AFSC / Engine / aspiration",
+          "context": null
+        },
+        {
+          "name": "emissions_standard",
+          "value": "Stage V",
+          "unit": null,
+          "locator": "Puma 185 CVX AFSC / Stage V / CVX AFSC / Engine / emissions",
+          "context": null
+        },
+        {
+          "name": "fuel_injection",
+          "value": "Common rail",
+          "unit": null,
+          "locator": "Puma 185 CVX AFSC / Stage V / CVX AFSC / Engine / injection",
+          "context": null
+        },
+        {
+          "name": "engine_torque",
+          "value": "840",
+          "unit": "Nm",
+          "locator": "Puma 185 CVX AFSC / Stage V / CVX AFSC / Engine / torque without boost",
+          "context": "1500 rpm"
+        },
+        {
+          "name": "engine_torque_with_boost",
+          "value": "940",
+          "unit": "Nm",
+          "locator": "Puma 185 CVX AFSC / Stage V / CVX AFSC / Engine / torque with additional power",
+          "context": "1500 rpm"
+        },
+        {
+          "name": "torque_reserve",
+          "value": "44",
+          "unit": "%",
+          "locator": "Puma 185 CVX AFSC / Stage V / CVX AFSC / Engine / torque reserve",
+          "context": null
+        },
+        {
+          "name": "fuel_tank_capacity",
+          "value": "470",
+          "unit": "L",
+          "locator": "Puma 185 CVX AFSC / Stage V / CVX AFSC / Engine / fuel tank",
+          "context": null
+        },
+        {
+          "name": "adblue_tank_capacity",
+          "value": "54",
+          "unit": "L",
+          "locator": "Puma 185 CVX AFSC / Stage V / CVX AFSC / Engine / AdBlue tank",
+          "context": null
+        },
+        {
+          "name": "transmission_type",
+          "value": "CVX continuously variable",
+          "unit": null,
+          "locator": "Puma 185 CVX AFSC / Stage V / CVX AFSC / Transmission / options",
+          "context": null
+        },
+        {
+          "name": "automatic_differential_lock",
+          "value": "Standard",
+          "unit": null,
+          "locator": "Puma 185 CVX AFSC / Stage V / CVX AFSC / Transmission / automatic differential",
+          "context": null
+        },
+        {
+          "name": "automatic_4wd_control",
+          "value": "Standard",
+          "unit": null,
+          "locator": "Puma 185 CVX AFSC / Stage V / CVX AFSC / Transmission / automatic 4WD",
+          "context": null
+        },
+        {
+          "name": "rear_lift_capacity",
+          "value": "10464",
+          "unit": "kg",
+          "locator": "Puma 185 CVX AFSC / Stage V / CVX AFSC / Hydraulics / maximum lift",
+          "context": "Measurement point unspecified"
+        },
+        {
+          "name": "hydraulic_outlet_count",
+          "value": "8",
+          "unit": "count",
+          "locator": "Puma 185 CVX AFSC / Stage V / CVX AFSC / Hydraulics / outlets",
+          "context": null
+        },
+        {
+          "name": "hydraulic_outlet_control",
+          "value": "Electronic",
+          "unit": null,
+          "locator": "Puma 185 CVX AFSC / Stage V / CVX AFSC / Hydraulics / outlet control",
+          "context": null
+        },
+        {
+          "name": "rear_pto_speeds",
+          "value": "540/540E/1000/1000E",
+          "unit": "rpm",
+          "locator": "Puma 185 CVX AFSC / Stage V / CVX AFSC / PTO / speed options",
+          "context": null
+        },
+        {
+          "name": "engine_speed_at_540_pto",
+          "value": "1931",
+          "unit": "rpm",
+          "locator": "Puma 185 CVX AFSC / Stage V / CVX AFSC / PTO / corresponding engine speed",
+          "context": null
+        },
+        {
+          "name": "engine_speed_at_540e_pto",
+          "value": "1598",
+          "unit": "rpm",
+          "locator": "Puma 185 CVX AFSC / Stage V / CVX AFSC / PTO / corresponding engine speed",
+          "context": null
+        },
+        {
+          "name": "engine_speed_at_1000_pto",
+          "value": "1912",
+          "unit": "rpm",
+          "locator": "Puma 185 CVX AFSC / Stage V / CVX AFSC / PTO / corresponding engine speed",
+          "context": null
+        },
+        {
+          "name": "engine_speed_at_1000e_pto",
+          "value": "1583",
+          "unit": "rpm",
+          "locator": "Puma 185 CVX AFSC / Stage V / CVX AFSC / PTO / corresponding engine speed",
+          "context": null
+        },
+        {
+          "name": "wheelbase",
+          "value": "2884",
+          "unit": "mm",
+          "locator": "Puma 185 CVX AFSC / Stage V / CVX AFSC / Dimensions / wheelbase",
+          "context": null
+        },
+        {
+          "name": "overall_length",
+          "value": "5467",
+          "unit": "mm",
+          "locator": "Puma 185 CVX AFSC / Stage V / CVX AFSC / Dimensions / length",
+          "context": null
+        },
+        {
+          "name": "overall_height",
+          "value": "3068",
+          "unit": "mm",
+          "locator": "Puma 185 CVX AFSC / Stage V / CVX AFSC / Dimensions / height",
+          "context": null
+        },
+        {
+          "name": "front_track",
+          "value": "1538–2260",
+          "unit": "mm",
+          "locator": "Puma 185 CVX AFSC / Stage V / CVX AFSC / Dimensions / front track",
+          "context": null
+        },
+        {
+          "name": "rear_track",
+          "value": "1530–2230",
+          "unit": "mm",
+          "locator": "Puma 185 CVX AFSC / Stage V / CVX AFSC / Dimensions / rear track",
+          "context": null
+        },
+        {
+          "name": "unballasted_weight",
+          "value": "7632",
+          "unit": "kg",
+          "locator": "Puma 185 CVX AFSC / Stage V / CVX AFSC / Weights / without additional ballast",
+          "context": null
+        },
+        {
+          "name": "standard_front_tyres",
+          "value": "480/70R30",
+          "unit": null,
+          "locator": "Puma 185 CVX AFSC / Stage V / CVX AFSC / Tyres / standard front",
+          "context": null
+        },
+        {
+          "name": "standard_rear_tyres",
+          "value": "620/70R42",
+          "unit": null,
+          "locator": "Puma 185 CVX AFSC / Stage V / CVX AFSC / Tyres / standard rear",
+          "context": null
+        },
+        {
+          "name": "cab_suspension",
+          "value": "Standard",
+          "unit": null,
+          "locator": "Puma 185 CVX AFSC / Stage V / CVX AFSC / Equipment / cab suspension",
+          "context": null
+        },
+        {
+          "name": "front_axle_suspension",
+          "value": "Standard",
+          "unit": null,
+          "locator": "Puma 185 CVX AFSC / Stage V / CVX AFSC / Equipment / front axle suspension",
+          "context": null
+        },
+        {
+          "name": "front_hitch",
+          "value": "Optional",
+          "unit": null,
+          "locator": "Puma 185 CVX AFSC / Stage V / CVX AFSC / Equipment / front hitch",
+          "context": null
+        },
+        {
+          "name": "front_pto",
+          "value": "Optional",
+          "unit": null,
+          "locator": "Puma 185 CVX AFSC / Stage V / CVX AFSC / Equipment / front PTO",
+          "context": null
+        }
+      ],
+      "notes": [
+        "OEM table groups 185/200/220 full automatic and CVX AFSC in pairs; slash values mapped in listed order, must confirm brochure before admission. HP is OEM label, not silently converted. Blank 260 normal torque and boosted rated power remain unknown. No reliability claims or model year inference. Existing generic Puma 150 draft is only a reconciliation lead."
+      ]
+    },
+    {
+      "brand": "Case IH",
+      "model": "Puma 200",
+      "variant": "Stage V / full automatic 19F6R",
+      "market": "Türkiye",
+      "modelYear": null,
+      "sourceUrl": "https://www.caseih.com.tr/traktorler/puma-serisi",
+      "sourceType": "manufacturer",
+      "existingDraftId": null,
+      "disposition": "hold_for_review",
+      "sourceRead": "Official manufacturer HTML technical table read 2026-11-28; catalogue identity and canonical admission pending",
+      "specs": [
+        {
+          "name": "engine_rated_power",
+          "value": "200",
+          "unit": "HP",
+          "locator": "Puma 200 / Stage V / full automatic 19F6R / Engine / nominal",
+          "context": "ECE R120; non-boost"
+        },
+        {
+          "name": "engine_max_power",
+          "value": "220",
+          "unit": "HP",
+          "locator": "Puma 200 / Stage V / full automatic 19F6R / Engine / maximum",
+          "context": "ECE R120; non-boost"
+        },
+        {
+          "name": "engine_rated_power_with_boost",
+          "value": "225",
+          "unit": "HP",
+          "locator": "Puma 200 / Stage V / full automatic 19F6R / Engine / nominal with additional power",
+          "context": "ECE R120; boost"
+        },
+        {
+          "name": "engine_max_power_with_boost",
+          "value": "245",
+          "unit": "HP",
+          "locator": "Puma 200 / Stage V / full automatic 19F6R / Engine / maximum with additional power",
+          "context": "ECE R120; boost"
+        },
+        {
+          "name": "engine_rated_speed",
+          "value": "2200",
+          "unit": "rpm",
+          "locator": "Puma 200 / Stage V / full automatic 19F6R / Engine / nominal speed",
+          "context": null
+        },
+        {
+          "name": "engine_cylinders",
+          "value": "6",
+          "unit": "count",
+          "locator": "Puma 200 / Stage V / full automatic 19F6R / Engine / cylinders",
+          "context": null
+        },
+        {
+          "name": "engine_displacement",
+          "value": "6.7",
+          "unit": "L",
+          "locator": "Puma 200 / Stage V / full automatic 19F6R / Engine / displacement",
+          "context": null
+        },
+        {
+          "name": "engine_aspiration",
+          "value": "Turbo intercooler",
+          "unit": null,
+          "locator": "Puma 200 / Stage V / full automatic 19F6R / Engine / aspiration",
+          "context": null
+        },
+        {
+          "name": "emissions_standard",
+          "value": "Stage V",
+          "unit": null,
+          "locator": "Puma 200 / Stage V / full automatic 19F6R / Engine / emissions",
+          "context": null
+        },
+        {
+          "name": "fuel_injection",
+          "value": "Common rail",
+          "unit": null,
+          "locator": "Puma 200 / Stage V / full automatic 19F6R / Engine / injection",
+          "context": null
+        },
+        {
+          "name": "engine_torque",
+          "value": "930",
+          "unit": "Nm",
+          "locator": "Puma 200 / Stage V / full automatic 19F6R / Engine / torque without boost",
+          "context": "1500 rpm"
+        },
+        {
+          "name": "engine_torque_with_boost",
+          "value": "1035",
+          "unit": "Nm",
+          "locator": "Puma 200 / Stage V / full automatic 19F6R / Engine / torque with additional power",
+          "context": "1500 rpm"
+        },
+        {
+          "name": "torque_reserve",
+          "value": "44",
+          "unit": "%",
+          "locator": "Puma 200 / Stage V / full automatic 19F6R / Engine / torque reserve",
+          "context": null
+        },
+        {
+          "name": "fuel_tank_capacity",
+          "value": "470",
+          "unit": "L",
+          "locator": "Puma 200 / Stage V / full automatic 19F6R / Engine / fuel tank",
+          "context": null
+        },
+        {
+          "name": "adblue_tank_capacity",
+          "value": "54",
+          "unit": "L",
+          "locator": "Puma 200 / Stage V / full automatic 19F6R / Engine / AdBlue tank",
+          "context": null
+        },
+        {
+          "name": "transmission_type",
+          "value": "Full automatic",
+          "unit": null,
+          "locator": "Puma 200 / Stage V / full automatic 19F6R / Transmission / options",
+          "context": null
+        },
+        {
+          "name": "forward_gears",
+          "value": "19",
+          "unit": "count",
+          "locator": "Puma 200 / Stage V / full automatic 19F6R / Transmission / gear count",
+          "context": null
+        },
+        {
+          "name": "reverse_gears",
+          "value": "6",
+          "unit": "count",
+          "locator": "Puma 200 / Stage V / full automatic 19F6R / Transmission / gear count",
+          "context": null
+        },
+        {
+          "name": "automatic_differential_lock",
+          "value": "Standard",
+          "unit": null,
+          "locator": "Puma 200 / Stage V / full automatic 19F6R / Transmission / automatic differential",
+          "context": null
+        },
+        {
+          "name": "automatic_4wd_control",
+          "value": "Standard",
+          "unit": null,
+          "locator": "Puma 200 / Stage V / full automatic 19F6R / Transmission / automatic 4WD",
+          "context": null
+        },
+        {
+          "name": "rear_lift_capacity",
+          "value": "8647",
+          "unit": "kg",
+          "locator": "Puma 200 / Stage V / full automatic 19F6R / Hydraulics / maximum lift",
+          "context": "Measurement point unspecified"
+        },
+        {
+          "name": "hydraulic_outlet_count",
+          "value": "8",
+          "unit": "count",
+          "locator": "Puma 200 / Stage V / full automatic 19F6R / Hydraulics / outlets",
+          "context": null
+        },
+        {
+          "name": "hydraulic_outlet_control",
+          "value": "Electronic",
+          "unit": null,
+          "locator": "Puma 200 / Stage V / full automatic 19F6R / Hydraulics / outlet control",
+          "context": null
+        },
+        {
+          "name": "rear_pto_speeds",
+          "value": "540/540E/1000/1000E",
+          "unit": "rpm",
+          "locator": "Puma 200 / Stage V / full automatic 19F6R / PTO / speed options",
+          "context": null
+        },
+        {
+          "name": "engine_speed_at_540_pto",
+          "value": "1931",
+          "unit": "rpm",
+          "locator": "Puma 200 / Stage V / full automatic 19F6R / PTO / corresponding engine speed",
+          "context": null
+        },
+        {
+          "name": "engine_speed_at_540e_pto",
+          "value": "1598",
+          "unit": "rpm",
+          "locator": "Puma 200 / Stage V / full automatic 19F6R / PTO / corresponding engine speed",
+          "context": null
+        },
+        {
+          "name": "engine_speed_at_1000_pto",
+          "value": "1912",
+          "unit": "rpm",
+          "locator": "Puma 200 / Stage V / full automatic 19F6R / PTO / corresponding engine speed",
+          "context": null
+        },
+        {
+          "name": "engine_speed_at_1000e_pto",
+          "value": "1583",
+          "unit": "rpm",
+          "locator": "Puma 200 / Stage V / full automatic 19F6R / PTO / corresponding engine speed",
+          "context": null
+        },
+        {
+          "name": "wheelbase",
+          "value": "2884",
+          "unit": "mm",
+          "locator": "Puma 200 / Stage V / full automatic 19F6R / Dimensions / wheelbase",
+          "context": null
+        },
+        {
+          "name": "overall_length",
+          "value": "5467",
+          "unit": "mm",
+          "locator": "Puma 200 / Stage V / full automatic 19F6R / Dimensions / length",
+          "context": null
+        },
+        {
+          "name": "overall_height",
+          "value": "3068",
+          "unit": "mm",
+          "locator": "Puma 200 / Stage V / full automatic 19F6R / Dimensions / height",
+          "context": null
+        },
+        {
+          "name": "front_track",
+          "value": "1538–2260",
+          "unit": "mm",
+          "locator": "Puma 200 / Stage V / full automatic 19F6R / Dimensions / front track",
+          "context": null
+        },
+        {
+          "name": "rear_track",
+          "value": "1530–2230",
+          "unit": "mm",
+          "locator": "Puma 200 / Stage V / full automatic 19F6R / Dimensions / rear track",
+          "context": null
+        },
+        {
+          "name": "unballasted_weight",
+          "value": "7300",
+          "unit": "kg",
+          "locator": "Puma 200 / Stage V / full automatic 19F6R / Weights / without additional ballast",
+          "context": null
+        },
+        {
+          "name": "standard_front_tyres",
+          "value": "480/70R30",
+          "unit": null,
+          "locator": "Puma 200 / Stage V / full automatic 19F6R / Tyres / standard front",
+          "context": null
+        },
+        {
+          "name": "standard_rear_tyres",
+          "value": "620/70R42",
+          "unit": null,
+          "locator": "Puma 200 / Stage V / full automatic 19F6R / Tyres / standard rear",
+          "context": null
+        },
+        {
+          "name": "cab_suspension",
+          "value": "Standard",
+          "unit": null,
+          "locator": "Puma 200 / Stage V / full automatic 19F6R / Equipment / cab suspension",
+          "context": null
+        },
+        {
+          "name": "front_axle_suspension",
+          "value": "Standard",
+          "unit": null,
+          "locator": "Puma 200 / Stage V / full automatic 19F6R / Equipment / front axle suspension",
+          "context": null
+        },
+        {
+          "name": "front_hitch",
+          "value": "Optional",
+          "unit": null,
+          "locator": "Puma 200 / Stage V / full automatic 19F6R / Equipment / front hitch",
+          "context": null
+        },
+        {
+          "name": "front_pto",
+          "value": "Optional",
+          "unit": null,
+          "locator": "Puma 200 / Stage V / full automatic 19F6R / Equipment / front PTO",
+          "context": null
+        }
+      ],
+      "notes": [
+        "OEM table groups 185/200/220 full automatic and CVX AFSC in pairs; slash values mapped in listed order, must confirm brochure before admission. HP is OEM label, not silently converted. Blank 260 normal torque and boosted rated power remain unknown. No reliability claims or model year inference. Existing generic Puma 150 draft is only a reconciliation lead."
+      ]
+    },
+    {
+      "brand": "Case IH",
+      "model": "Puma 200 CVX AFSC",
+      "variant": "Stage V / CVX AFSC",
+      "market": "Türkiye",
+      "modelYear": null,
+      "sourceUrl": "https://www.caseih.com.tr/traktorler/puma-serisi",
+      "sourceType": "manufacturer",
+      "existingDraftId": null,
+      "disposition": "hold_for_review",
+      "sourceRead": "Official manufacturer HTML technical table read 2026-11-28; catalogue identity and canonical admission pending",
+      "specs": [
+        {
+          "name": "engine_rated_power",
+          "value": "200",
+          "unit": "HP",
+          "locator": "Puma 200 CVX AFSC / Stage V / CVX AFSC / Engine / nominal",
+          "context": "ECE R120; non-boost"
+        },
+        {
+          "name": "engine_max_power",
+          "value": "220",
+          "unit": "HP",
+          "locator": "Puma 200 CVX AFSC / Stage V / CVX AFSC / Engine / maximum",
+          "context": "ECE R120; non-boost"
+        },
+        {
+          "name": "engine_rated_power_with_boost",
+          "value": "225",
+          "unit": "HP",
+          "locator": "Puma 200 CVX AFSC / Stage V / CVX AFSC / Engine / nominal with additional power",
+          "context": "ECE R120; boost"
+        },
+        {
+          "name": "engine_max_power_with_boost",
+          "value": "245",
+          "unit": "HP",
+          "locator": "Puma 200 CVX AFSC / Stage V / CVX AFSC / Engine / maximum with additional power",
+          "context": "ECE R120; boost"
+        },
+        {
+          "name": "engine_rated_speed",
+          "value": "2200",
+          "unit": "rpm",
+          "locator": "Puma 200 CVX AFSC / Stage V / CVX AFSC / Engine / nominal speed",
+          "context": null
+        },
+        {
+          "name": "engine_cylinders",
+          "value": "6",
+          "unit": "count",
+          "locator": "Puma 200 CVX AFSC / Stage V / CVX AFSC / Engine / cylinders",
+          "context": null
+        },
+        {
+          "name": "engine_displacement",
+          "value": "6.7",
+          "unit": "L",
+          "locator": "Puma 200 CVX AFSC / Stage V / CVX AFSC / Engine / displacement",
+          "context": null
+        },
+        {
+          "name": "engine_aspiration",
+          "value": "Turbo intercooler",
+          "unit": null,
+          "locator": "Puma 200 CVX AFSC / Stage V / CVX AFSC / Engine / aspiration",
+          "context": null
+        },
+        {
+          "name": "emissions_standard",
+          "value": "Stage V",
+          "unit": null,
+          "locator": "Puma 200 CVX AFSC / Stage V / CVX AFSC / Engine / emissions",
+          "context": null
+        },
+        {
+          "name": "fuel_injection",
+          "value": "Common rail",
+          "unit": null,
+          "locator": "Puma 200 CVX AFSC / Stage V / CVX AFSC / Engine / injection",
+          "context": null
+        },
+        {
+          "name": "engine_torque",
+          "value": "930",
+          "unit": "Nm",
+          "locator": "Puma 200 CVX AFSC / Stage V / CVX AFSC / Engine / torque without boost",
+          "context": "1500 rpm"
+        },
+        {
+          "name": "engine_torque_with_boost",
+          "value": "1035",
+          "unit": "Nm",
+          "locator": "Puma 200 CVX AFSC / Stage V / CVX AFSC / Engine / torque with additional power",
+          "context": "1500 rpm"
+        },
+        {
+          "name": "torque_reserve",
+          "value": "44",
+          "unit": "%",
+          "locator": "Puma 200 CVX AFSC / Stage V / CVX AFSC / Engine / torque reserve",
+          "context": null
+        },
+        {
+          "name": "fuel_tank_capacity",
+          "value": "470",
+          "unit": "L",
+          "locator": "Puma 200 CVX AFSC / Stage V / CVX AFSC / Engine / fuel tank",
+          "context": null
+        },
+        {
+          "name": "adblue_tank_capacity",
+          "value": "54",
+          "unit": "L",
+          "locator": "Puma 200 CVX AFSC / Stage V / CVX AFSC / Engine / AdBlue tank",
+          "context": null
+        },
+        {
+          "name": "transmission_type",
+          "value": "CVX continuously variable",
+          "unit": null,
+          "locator": "Puma 200 CVX AFSC / Stage V / CVX AFSC / Transmission / options",
+          "context": null
+        },
+        {
+          "name": "automatic_differential_lock",
+          "value": "Standard",
+          "unit": null,
+          "locator": "Puma 200 CVX AFSC / Stage V / CVX AFSC / Transmission / automatic differential",
+          "context": null
+        },
+        {
+          "name": "automatic_4wd_control",
+          "value": "Standard",
+          "unit": null,
+          "locator": "Puma 200 CVX AFSC / Stage V / CVX AFSC / Transmission / automatic 4WD",
+          "context": null
+        },
+        {
+          "name": "rear_lift_capacity",
+          "value": "10464",
+          "unit": "kg",
+          "locator": "Puma 200 CVX AFSC / Stage V / CVX AFSC / Hydraulics / maximum lift",
+          "context": "Measurement point unspecified"
+        },
+        {
+          "name": "hydraulic_outlet_count",
+          "value": "8",
+          "unit": "count",
+          "locator": "Puma 200 CVX AFSC / Stage V / CVX AFSC / Hydraulics / outlets",
+          "context": null
+        },
+        {
+          "name": "hydraulic_outlet_control",
+          "value": "Electronic",
+          "unit": null,
+          "locator": "Puma 200 CVX AFSC / Stage V / CVX AFSC / Hydraulics / outlet control",
+          "context": null
+        },
+        {
+          "name": "rear_pto_speeds",
+          "value": "540/540E/1000/1000E",
+          "unit": "rpm",
+          "locator": "Puma 200 CVX AFSC / Stage V / CVX AFSC / PTO / speed options",
+          "context": null
+        },
+        {
+          "name": "engine_speed_at_540_pto",
+          "value": "1931",
+          "unit": "rpm",
+          "locator": "Puma 200 CVX AFSC / Stage V / CVX AFSC / PTO / corresponding engine speed",
+          "context": null
+        },
+        {
+          "name": "engine_speed_at_540e_pto",
+          "value": "1598",
+          "unit": "rpm",
+          "locator": "Puma 200 CVX AFSC / Stage V / CVX AFSC / PTO / corresponding engine speed",
+          "context": null
+        },
+        {
+          "name": "engine_speed_at_1000_pto",
+          "value": "1912",
+          "unit": "rpm",
+          "locator": "Puma 200 CVX AFSC / Stage V / CVX AFSC / PTO / corresponding engine speed",
+          "context": null
+        },
+        {
+          "name": "engine_speed_at_1000e_pto",
+          "value": "1583",
+          "unit": "rpm",
+          "locator": "Puma 200 CVX AFSC / Stage V / CVX AFSC / PTO / corresponding engine speed",
+          "context": null
+        },
+        {
+          "name": "wheelbase",
+          "value": "2884",
+          "unit": "mm",
+          "locator": "Puma 200 CVX AFSC / Stage V / CVX AFSC / Dimensions / wheelbase",
+          "context": null
+        },
+        {
+          "name": "overall_length",
+          "value": "5467",
+          "unit": "mm",
+          "locator": "Puma 200 CVX AFSC / Stage V / CVX AFSC / Dimensions / length",
+          "context": null
+        },
+        {
+          "name": "overall_height",
+          "value": "3068",
+          "unit": "mm",
+          "locator": "Puma 200 CVX AFSC / Stage V / CVX AFSC / Dimensions / height",
+          "context": null
+        },
+        {
+          "name": "front_track",
+          "value": "1538–2260",
+          "unit": "mm",
+          "locator": "Puma 200 CVX AFSC / Stage V / CVX AFSC / Dimensions / front track",
+          "context": null
+        },
+        {
+          "name": "rear_track",
+          "value": "1530–2230",
+          "unit": "mm",
+          "locator": "Puma 200 CVX AFSC / Stage V / CVX AFSC / Dimensions / rear track",
+          "context": null
+        },
+        {
+          "name": "unballasted_weight",
+          "value": "7632",
+          "unit": "kg",
+          "locator": "Puma 200 CVX AFSC / Stage V / CVX AFSC / Weights / without additional ballast",
+          "context": null
+        },
+        {
+          "name": "standard_front_tyres",
+          "value": "480/70R30",
+          "unit": null,
+          "locator": "Puma 200 CVX AFSC / Stage V / CVX AFSC / Tyres / standard front",
+          "context": null
+        },
+        {
+          "name": "standard_rear_tyres",
+          "value": "620/70R42",
+          "unit": null,
+          "locator": "Puma 200 CVX AFSC / Stage V / CVX AFSC / Tyres / standard rear",
+          "context": null
+        },
+        {
+          "name": "cab_suspension",
+          "value": "Standard",
+          "unit": null,
+          "locator": "Puma 200 CVX AFSC / Stage V / CVX AFSC / Equipment / cab suspension",
+          "context": null
+        },
+        {
+          "name": "front_axle_suspension",
+          "value": "Standard",
+          "unit": null,
+          "locator": "Puma 200 CVX AFSC / Stage V / CVX AFSC / Equipment / front axle suspension",
+          "context": null
+        },
+        {
+          "name": "front_hitch",
+          "value": "Optional",
+          "unit": null,
+          "locator": "Puma 200 CVX AFSC / Stage V / CVX AFSC / Equipment / front hitch",
+          "context": null
+        },
+        {
+          "name": "front_pto",
+          "value": "Optional",
+          "unit": null,
+          "locator": "Puma 200 CVX AFSC / Stage V / CVX AFSC / Equipment / front PTO",
+          "context": null
+        }
+      ],
+      "notes": [
+        "OEM table groups 185/200/220 full automatic and CVX AFSC in pairs; slash values mapped in listed order, must confirm brochure before admission. HP is OEM label, not silently converted. Blank 260 normal torque and boosted rated power remain unknown. No reliability claims or model year inference. Existing generic Puma 150 draft is only a reconciliation lead."
+      ]
+    },
+    {
+      "brand": "Case IH",
+      "model": "Puma 220",
+      "variant": "Stage V / full automatic 19F6R",
+      "market": "Türkiye",
+      "modelYear": null,
+      "sourceUrl": "https://www.caseih.com.tr/traktorler/puma-serisi",
+      "sourceType": "manufacturer",
+      "existingDraftId": null,
+      "disposition": "hold_for_review",
+      "sourceRead": "Official manufacturer HTML technical table read 2026-11-28; catalogue identity and canonical admission pending",
+      "specs": [
+        {
+          "name": "engine_rated_power",
+          "value": "220",
+          "unit": "HP",
+          "locator": "Puma 220 / Stage V / full automatic 19F6R / Engine / nominal",
+          "context": "ECE R120; non-boost"
+        },
+        {
+          "name": "engine_max_power",
+          "value": "240",
+          "unit": "HP",
+          "locator": "Puma 220 / Stage V / full automatic 19F6R / Engine / maximum",
+          "context": "ECE R120; non-boost"
+        },
+        {
+          "name": "engine_rated_power_with_boost",
+          "value": "240",
+          "unit": "HP",
+          "locator": "Puma 220 / Stage V / full automatic 19F6R / Engine / nominal with additional power",
+          "context": "ECE R120; boost"
+        },
+        {
+          "name": "engine_max_power_with_boost",
+          "value": "260",
+          "unit": "HP",
+          "locator": "Puma 220 / Stage V / full automatic 19F6R / Engine / maximum with additional power",
+          "context": "ECE R120; boost"
+        },
+        {
+          "name": "engine_rated_speed",
+          "value": "2200",
+          "unit": "rpm",
+          "locator": "Puma 220 / Stage V / full automatic 19F6R / Engine / nominal speed",
+          "context": null
+        },
+        {
+          "name": "engine_cylinders",
+          "value": "6",
+          "unit": "count",
+          "locator": "Puma 220 / Stage V / full automatic 19F6R / Engine / cylinders",
+          "context": null
+        },
+        {
+          "name": "engine_displacement",
+          "value": "6.7",
+          "unit": "L",
+          "locator": "Puma 220 / Stage V / full automatic 19F6R / Engine / displacement",
+          "context": null
+        },
+        {
+          "name": "engine_aspiration",
+          "value": "Turbo intercooler",
+          "unit": null,
+          "locator": "Puma 220 / Stage V / full automatic 19F6R / Engine / aspiration",
+          "context": null
+        },
+        {
+          "name": "emissions_standard",
+          "value": "Stage V",
+          "unit": null,
+          "locator": "Puma 220 / Stage V / full automatic 19F6R / Engine / emissions",
+          "context": null
+        },
+        {
+          "name": "fuel_injection",
+          "value": "Common rail",
+          "unit": null,
+          "locator": "Puma 220 / Stage V / full automatic 19F6R / Engine / injection",
+          "context": null
+        },
+        {
+          "name": "engine_torque",
+          "value": "1000",
+          "unit": "Nm",
+          "locator": "Puma 220 / Stage V / full automatic 19F6R / Engine / torque without boost",
+          "context": "1500 rpm"
+        },
+        {
+          "name": "engine_torque_with_boost",
+          "value": "1100",
+          "unit": "Nm",
+          "locator": "Puma 220 / Stage V / full automatic 19F6R / Engine / torque with additional power",
+          "context": "1500 rpm"
+        },
+        {
+          "name": "torque_reserve",
+          "value": "44",
+          "unit": "%",
+          "locator": "Puma 220 / Stage V / full automatic 19F6R / Engine / torque reserve",
+          "context": null
+        },
+        {
+          "name": "fuel_tank_capacity",
+          "value": "470",
+          "unit": "L",
+          "locator": "Puma 220 / Stage V / full automatic 19F6R / Engine / fuel tank",
+          "context": null
+        },
+        {
+          "name": "adblue_tank_capacity",
+          "value": "54",
+          "unit": "L",
+          "locator": "Puma 220 / Stage V / full automatic 19F6R / Engine / AdBlue tank",
+          "context": null
+        },
+        {
+          "name": "transmission_type",
+          "value": "Full automatic",
+          "unit": null,
+          "locator": "Puma 220 / Stage V / full automatic 19F6R / Transmission / options",
+          "context": null
+        },
+        {
+          "name": "forward_gears",
+          "value": "19",
+          "unit": "count",
+          "locator": "Puma 220 / Stage V / full automatic 19F6R / Transmission / gear count",
+          "context": null
+        },
+        {
+          "name": "reverse_gears",
+          "value": "6",
+          "unit": "count",
+          "locator": "Puma 220 / Stage V / full automatic 19F6R / Transmission / gear count",
+          "context": null
+        },
+        {
+          "name": "automatic_differential_lock",
+          "value": "Standard",
+          "unit": null,
+          "locator": "Puma 220 / Stage V / full automatic 19F6R / Transmission / automatic differential",
+          "context": null
+        },
+        {
+          "name": "automatic_4wd_control",
+          "value": "Standard",
+          "unit": null,
+          "locator": "Puma 220 / Stage V / full automatic 19F6R / Transmission / automatic 4WD",
+          "context": null
+        },
+        {
+          "name": "rear_lift_capacity",
+          "value": "8647",
+          "unit": "kg",
+          "locator": "Puma 220 / Stage V / full automatic 19F6R / Hydraulics / maximum lift",
+          "context": "Measurement point unspecified"
+        },
+        {
+          "name": "hydraulic_outlet_count",
+          "value": "8",
+          "unit": "count",
+          "locator": "Puma 220 / Stage V / full automatic 19F6R / Hydraulics / outlets",
+          "context": null
+        },
+        {
+          "name": "hydraulic_outlet_control",
+          "value": "Electronic",
+          "unit": null,
+          "locator": "Puma 220 / Stage V / full automatic 19F6R / Hydraulics / outlet control",
+          "context": null
+        },
+        {
+          "name": "rear_pto_speeds",
+          "value": "540/540E/1000/1000E",
+          "unit": "rpm",
+          "locator": "Puma 220 / Stage V / full automatic 19F6R / PTO / speed options",
+          "context": null
+        },
+        {
+          "name": "engine_speed_at_540_pto",
+          "value": "1931",
+          "unit": "rpm",
+          "locator": "Puma 220 / Stage V / full automatic 19F6R / PTO / corresponding engine speed",
+          "context": null
+        },
+        {
+          "name": "engine_speed_at_540e_pto",
+          "value": "1598",
+          "unit": "rpm",
+          "locator": "Puma 220 / Stage V / full automatic 19F6R / PTO / corresponding engine speed",
+          "context": null
+        },
+        {
+          "name": "engine_speed_at_1000_pto",
+          "value": "1912",
+          "unit": "rpm",
+          "locator": "Puma 220 / Stage V / full automatic 19F6R / PTO / corresponding engine speed",
+          "context": null
+        },
+        {
+          "name": "engine_speed_at_1000e_pto",
+          "value": "1583",
+          "unit": "rpm",
+          "locator": "Puma 220 / Stage V / full automatic 19F6R / PTO / corresponding engine speed",
+          "context": null
+        },
+        {
+          "name": "wheelbase",
+          "value": "2884",
+          "unit": "mm",
+          "locator": "Puma 220 / Stage V / full automatic 19F6R / Dimensions / wheelbase",
+          "context": null
+        },
+        {
+          "name": "overall_length",
+          "value": "5467",
+          "unit": "mm",
+          "locator": "Puma 220 / Stage V / full automatic 19F6R / Dimensions / length",
+          "context": null
+        },
+        {
+          "name": "overall_height",
+          "value": "3068",
+          "unit": "mm",
+          "locator": "Puma 220 / Stage V / full automatic 19F6R / Dimensions / height",
+          "context": null
+        },
+        {
+          "name": "front_track",
+          "value": "1538–2260",
+          "unit": "mm",
+          "locator": "Puma 220 / Stage V / full automatic 19F6R / Dimensions / front track",
+          "context": null
+        },
+        {
+          "name": "rear_track",
+          "value": "1530–2230",
+          "unit": "mm",
+          "locator": "Puma 220 / Stage V / full automatic 19F6R / Dimensions / rear track",
+          "context": null
+        },
+        {
+          "name": "unballasted_weight",
+          "value": "7300",
+          "unit": "kg",
+          "locator": "Puma 220 / Stage V / full automatic 19F6R / Weights / without additional ballast",
+          "context": null
+        },
+        {
+          "name": "standard_front_tyres",
+          "value": "480/70R30",
+          "unit": null,
+          "locator": "Puma 220 / Stage V / full automatic 19F6R / Tyres / standard front",
+          "context": null
+        },
+        {
+          "name": "standard_rear_tyres",
+          "value": "620/70R42",
+          "unit": null,
+          "locator": "Puma 220 / Stage V / full automatic 19F6R / Tyres / standard rear",
+          "context": null
+        },
+        {
+          "name": "cab_suspension",
+          "value": "Standard",
+          "unit": null,
+          "locator": "Puma 220 / Stage V / full automatic 19F6R / Equipment / cab suspension",
+          "context": null
+        },
+        {
+          "name": "front_axle_suspension",
+          "value": "Standard",
+          "unit": null,
+          "locator": "Puma 220 / Stage V / full automatic 19F6R / Equipment / front axle suspension",
+          "context": null
+        },
+        {
+          "name": "front_hitch",
+          "value": "Optional",
+          "unit": null,
+          "locator": "Puma 220 / Stage V / full automatic 19F6R / Equipment / front hitch",
+          "context": null
+        },
+        {
+          "name": "front_pto",
+          "value": "Optional",
+          "unit": null,
+          "locator": "Puma 220 / Stage V / full automatic 19F6R / Equipment / front PTO",
+          "context": null
+        }
+      ],
+      "notes": [
+        "OEM table groups 185/200/220 full automatic and CVX AFSC in pairs; slash values mapped in listed order, must confirm brochure before admission. HP is OEM label, not silently converted. Blank 260 normal torque and boosted rated power remain unknown. No reliability claims or model year inference. Existing generic Puma 150 draft is only a reconciliation lead."
+      ]
+    },
+    {
+      "brand": "Case IH",
+      "model": "Puma 220 CVX AFSC",
+      "variant": "Stage V / CVX AFSC",
+      "market": "Türkiye",
+      "modelYear": null,
+      "sourceUrl": "https://www.caseih.com.tr/traktorler/puma-serisi",
+      "sourceType": "manufacturer",
+      "existingDraftId": null,
+      "disposition": "hold_for_review",
+      "sourceRead": "Official manufacturer HTML technical table read 2026-11-28; catalogue identity and canonical admission pending",
+      "specs": [
+        {
+          "name": "engine_rated_power",
+          "value": "220",
+          "unit": "HP",
+          "locator": "Puma 220 CVX AFSC / Stage V / CVX AFSC / Engine / nominal",
+          "context": "ECE R120; non-boost"
+        },
+        {
+          "name": "engine_max_power",
+          "value": "240",
+          "unit": "HP",
+          "locator": "Puma 220 CVX AFSC / Stage V / CVX AFSC / Engine / maximum",
+          "context": "ECE R120; non-boost"
+        },
+        {
+          "name": "engine_rated_power_with_boost",
+          "value": "240",
+          "unit": "HP",
+          "locator": "Puma 220 CVX AFSC / Stage V / CVX AFSC / Engine / nominal with additional power",
+          "context": "ECE R120; boost"
+        },
+        {
+          "name": "engine_max_power_with_boost",
+          "value": "260",
+          "unit": "HP",
+          "locator": "Puma 220 CVX AFSC / Stage V / CVX AFSC / Engine / maximum with additional power",
+          "context": "ECE R120; boost"
+        },
+        {
+          "name": "engine_rated_speed",
+          "value": "2200",
+          "unit": "rpm",
+          "locator": "Puma 220 CVX AFSC / Stage V / CVX AFSC / Engine / nominal speed",
+          "context": null
+        },
+        {
+          "name": "engine_cylinders",
+          "value": "6",
+          "unit": "count",
+          "locator": "Puma 220 CVX AFSC / Stage V / CVX AFSC / Engine / cylinders",
+          "context": null
+        },
+        {
+          "name": "engine_displacement",
+          "value": "6.7",
+          "unit": "L",
+          "locator": "Puma 220 CVX AFSC / Stage V / CVX AFSC / Engine / displacement",
+          "context": null
+        },
+        {
+          "name": "engine_aspiration",
+          "value": "Turbo intercooler",
+          "unit": null,
+          "locator": "Puma 220 CVX AFSC / Stage V / CVX AFSC / Engine / aspiration",
+          "context": null
+        },
+        {
+          "name": "emissions_standard",
+          "value": "Stage V",
+          "unit": null,
+          "locator": "Puma 220 CVX AFSC / Stage V / CVX AFSC / Engine / emissions",
+          "context": null
+        },
+        {
+          "name": "fuel_injection",
+          "value": "Common rail",
+          "unit": null,
+          "locator": "Puma 220 CVX AFSC / Stage V / CVX AFSC / Engine / injection",
+          "context": null
+        },
+        {
+          "name": "engine_torque",
+          "value": "1000",
+          "unit": "Nm",
+          "locator": "Puma 220 CVX AFSC / Stage V / CVX AFSC / Engine / torque without boost",
+          "context": "1500 rpm"
+        },
+        {
+          "name": "engine_torque_with_boost",
+          "value": "1100",
+          "unit": "Nm",
+          "locator": "Puma 220 CVX AFSC / Stage V / CVX AFSC / Engine / torque with additional power",
+          "context": "1500 rpm"
+        },
+        {
+          "name": "torque_reserve",
+          "value": "44",
+          "unit": "%",
+          "locator": "Puma 220 CVX AFSC / Stage V / CVX AFSC / Engine / torque reserve",
+          "context": null
+        },
+        {
+          "name": "fuel_tank_capacity",
+          "value": "470",
+          "unit": "L",
+          "locator": "Puma 220 CVX AFSC / Stage V / CVX AFSC / Engine / fuel tank",
+          "context": null
+        },
+        {
+          "name": "adblue_tank_capacity",
+          "value": "54",
+          "unit": "L",
+          "locator": "Puma 220 CVX AFSC / Stage V / CVX AFSC / Engine / AdBlue tank",
+          "context": null
+        },
+        {
+          "name": "transmission_type",
+          "value": "CVX continuously variable",
+          "unit": null,
+          "locator": "Puma 220 CVX AFSC / Stage V / CVX AFSC / Transmission / options",
+          "context": null
+        },
+        {
+          "name": "automatic_differential_lock",
+          "value": "Standard",
+          "unit": null,
+          "locator": "Puma 220 CVX AFSC / Stage V / CVX AFSC / Transmission / automatic differential",
+          "context": null
+        },
+        {
+          "name": "automatic_4wd_control",
+          "value": "Standard",
+          "unit": null,
+          "locator": "Puma 220 CVX AFSC / Stage V / CVX AFSC / Transmission / automatic 4WD",
+          "context": null
+        },
+        {
+          "name": "rear_lift_capacity",
+          "value": "10464",
+          "unit": "kg",
+          "locator": "Puma 220 CVX AFSC / Stage V / CVX AFSC / Hydraulics / maximum lift",
+          "context": "Measurement point unspecified"
+        },
+        {
+          "name": "hydraulic_outlet_count",
+          "value": "8",
+          "unit": "count",
+          "locator": "Puma 220 CVX AFSC / Stage V / CVX AFSC / Hydraulics / outlets",
+          "context": null
+        },
+        {
+          "name": "hydraulic_outlet_control",
+          "value": "Electronic",
+          "unit": null,
+          "locator": "Puma 220 CVX AFSC / Stage V / CVX AFSC / Hydraulics / outlet control",
+          "context": null
+        },
+        {
+          "name": "rear_pto_speeds",
+          "value": "540/540E/1000/1000E",
+          "unit": "rpm",
+          "locator": "Puma 220 CVX AFSC / Stage V / CVX AFSC / PTO / speed options",
+          "context": null
+        },
+        {
+          "name": "engine_speed_at_540_pto",
+          "value": "1931",
+          "unit": "rpm",
+          "locator": "Puma 220 CVX AFSC / Stage V / CVX AFSC / PTO / corresponding engine speed",
+          "context": null
+        },
+        {
+          "name": "engine_speed_at_540e_pto",
+          "value": "1598",
+          "unit": "rpm",
+          "locator": "Puma 220 CVX AFSC / Stage V / CVX AFSC / PTO / corresponding engine speed",
+          "context": null
+        },
+        {
+          "name": "engine_speed_at_1000_pto",
+          "value": "1912",
+          "unit": "rpm",
+          "locator": "Puma 220 CVX AFSC / Stage V / CVX AFSC / PTO / corresponding engine speed",
+          "context": null
+        },
+        {
+          "name": "engine_speed_at_1000e_pto",
+          "value": "1583",
+          "unit": "rpm",
+          "locator": "Puma 220 CVX AFSC / Stage V / CVX AFSC / PTO / corresponding engine speed",
+          "context": null
+        },
+        {
+          "name": "wheelbase",
+          "value": "2884",
+          "unit": "mm",
+          "locator": "Puma 220 CVX AFSC / Stage V / CVX AFSC / Dimensions / wheelbase",
+          "context": null
+        },
+        {
+          "name": "overall_length",
+          "value": "5467",
+          "unit": "mm",
+          "locator": "Puma 220 CVX AFSC / Stage V / CVX AFSC / Dimensions / length",
+          "context": null
+        },
+        {
+          "name": "overall_height",
+          "value": "3068",
+          "unit": "mm",
+          "locator": "Puma 220 CVX AFSC / Stage V / CVX AFSC / Dimensions / height",
+          "context": null
+        },
+        {
+          "name": "front_track",
+          "value": "1538–2260",
+          "unit": "mm",
+          "locator": "Puma 220 CVX AFSC / Stage V / CVX AFSC / Dimensions / front track",
+          "context": null
+        },
+        {
+          "name": "rear_track",
+          "value": "1530–2230",
+          "unit": "mm",
+          "locator": "Puma 220 CVX AFSC / Stage V / CVX AFSC / Dimensions / rear track",
+          "context": null
+        },
+        {
+          "name": "unballasted_weight",
+          "value": "7632",
+          "unit": "kg",
+          "locator": "Puma 220 CVX AFSC / Stage V / CVX AFSC / Weights / without additional ballast",
+          "context": null
+        },
+        {
+          "name": "standard_front_tyres",
+          "value": "480/70R30",
+          "unit": null,
+          "locator": "Puma 220 CVX AFSC / Stage V / CVX AFSC / Tyres / standard front",
+          "context": null
+        },
+        {
+          "name": "standard_rear_tyres",
+          "value": "620/70R42",
+          "unit": null,
+          "locator": "Puma 220 CVX AFSC / Stage V / CVX AFSC / Tyres / standard rear",
+          "context": null
+        },
+        {
+          "name": "cab_suspension",
+          "value": "Standard",
+          "unit": null,
+          "locator": "Puma 220 CVX AFSC / Stage V / CVX AFSC / Equipment / cab suspension",
+          "context": null
+        },
+        {
+          "name": "front_axle_suspension",
+          "value": "Standard",
+          "unit": null,
+          "locator": "Puma 220 CVX AFSC / Stage V / CVX AFSC / Equipment / front axle suspension",
+          "context": null
+        },
+        {
+          "name": "front_hitch",
+          "value": "Optional",
+          "unit": null,
+          "locator": "Puma 220 CVX AFSC / Stage V / CVX AFSC / Equipment / front hitch",
+          "context": null
+        },
+        {
+          "name": "front_pto",
+          "value": "Optional",
+          "unit": null,
+          "locator": "Puma 220 CVX AFSC / Stage V / CVX AFSC / Equipment / front PTO",
+          "context": null
+        }
+      ],
+      "notes": [
+        "OEM table groups 185/200/220 full automatic and CVX AFSC in pairs; slash values mapped in listed order, must confirm brochure before admission. HP is OEM label, not silently converted. Blank 260 normal torque and boosted rated power remain unknown. No reliability claims or model year inference. Existing generic Puma 150 draft is only a reconciliation lead."
+      ]
+    },
+    {
+      "brand": "Case IH",
+      "model": "Puma 240 CVX AFSC",
+      "variant": "Stage V / CVX AFSC",
+      "market": "Türkiye",
+      "modelYear": null,
+      "sourceUrl": "https://www.caseih.com.tr/traktorler/puma-serisi",
+      "sourceType": "manufacturer",
+      "existingDraftId": null,
+      "disposition": "hold_for_review",
+      "sourceRead": "Official manufacturer HTML technical table read 2026-11-28; catalogue identity and canonical admission pending",
+      "specs": [
+        {
+          "name": "engine_rated_power",
+          "value": "240",
+          "unit": "HP",
+          "locator": "Puma 240 CVX AFSC / Stage V / CVX AFSC / Engine / nominal",
+          "context": "ECE R120; non-boost"
+        },
+        {
+          "name": "engine_max_power",
+          "value": "260",
+          "unit": "HP",
+          "locator": "Puma 240 CVX AFSC / Stage V / CVX AFSC / Engine / maximum",
+          "context": "ECE R120; non-boost"
+        },
+        {
+          "name": "engine_rated_power_with_boost",
+          "value": "260",
+          "unit": "HP",
+          "locator": "Puma 240 CVX AFSC / Stage V / CVX AFSC / Engine / nominal with additional power",
+          "context": "ECE R120; boost"
+        },
+        {
+          "name": "engine_max_power_with_boost",
+          "value": "270",
+          "unit": "HP",
+          "locator": "Puma 240 CVX AFSC / Stage V / CVX AFSC / Engine / maximum with additional power",
+          "context": "ECE R120; boost"
+        },
+        {
+          "name": "engine_rated_speed",
+          "value": "2200",
+          "unit": "rpm",
+          "locator": "Puma 240 CVX AFSC / Stage V / CVX AFSC / Engine / nominal speed",
+          "context": null
+        },
+        {
+          "name": "engine_cylinders",
+          "value": "6",
+          "unit": "count",
+          "locator": "Puma 240 CVX AFSC / Stage V / CVX AFSC / Engine / cylinders",
+          "context": null
+        },
+        {
+          "name": "engine_displacement",
+          "value": "6.7",
+          "unit": "L",
+          "locator": "Puma 240 CVX AFSC / Stage V / CVX AFSC / Engine / displacement",
+          "context": null
+        },
+        {
+          "name": "engine_aspiration",
+          "value": "Turbo intercooler",
+          "unit": null,
+          "locator": "Puma 240 CVX AFSC / Stage V / CVX AFSC / Engine / aspiration",
+          "context": null
+        },
+        {
+          "name": "emissions_standard",
+          "value": "Stage V",
+          "unit": null,
+          "locator": "Puma 240 CVX AFSC / Stage V / CVX AFSC / Engine / emissions",
+          "context": null
+        },
+        {
+          "name": "fuel_injection",
+          "value": "Common rail",
+          "unit": null,
+          "locator": "Puma 240 CVX AFSC / Stage V / CVX AFSC / Engine / injection",
+          "context": null
+        },
+        {
+          "name": "engine_torque",
+          "value": "1100",
+          "unit": "Nm",
+          "locator": "Puma 240 CVX AFSC / Stage V / CVX AFSC / Engine / torque without boost",
+          "context": "1500 rpm"
+        },
+        {
+          "name": "engine_torque_with_boost",
+          "value": "1160",
+          "unit": "Nm",
+          "locator": "Puma 240 CVX AFSC / Stage V / CVX AFSC / Engine / torque with additional power",
+          "context": "1500 rpm"
+        },
+        {
+          "name": "torque_reserve",
+          "value": "40",
+          "unit": "%",
+          "locator": "Puma 240 CVX AFSC / Stage V / CVX AFSC / Engine / torque reserve",
+          "context": null
+        },
+        {
+          "name": "fuel_tank_capacity",
+          "value": "470",
+          "unit": "L",
+          "locator": "Puma 240 CVX AFSC / Stage V / CVX AFSC / Engine / fuel tank",
+          "context": null
+        },
+        {
+          "name": "adblue_tank_capacity",
+          "value": "54",
+          "unit": "L",
+          "locator": "Puma 240 CVX AFSC / Stage V / CVX AFSC / Engine / AdBlue tank",
+          "context": null
+        },
+        {
+          "name": "transmission_type",
+          "value": "CVX continuously variable",
+          "unit": null,
+          "locator": "Puma 240 CVX AFSC / Stage V / CVX AFSC / Transmission / options",
+          "context": null
+        },
+        {
+          "name": "automatic_differential_lock",
+          "value": "Standard",
+          "unit": null,
+          "locator": "Puma 240 CVX AFSC / Stage V / CVX AFSC / Transmission / automatic differential",
+          "context": null
+        },
+        {
+          "name": "automatic_4wd_control",
+          "value": "Standard",
+          "unit": null,
+          "locator": "Puma 240 CVX AFSC / Stage V / CVX AFSC / Transmission / automatic 4WD",
+          "context": null
+        },
+        {
+          "name": "rear_lift_capacity",
+          "value": "10464",
+          "unit": "kg",
+          "locator": "Puma 240 CVX AFSC / Stage V / CVX AFSC / Hydraulics / maximum lift",
+          "context": "Measurement point unspecified"
+        },
+        {
+          "name": "hydraulic_outlet_count",
+          "value": "8",
+          "unit": "count",
+          "locator": "Puma 240 CVX AFSC / Stage V / CVX AFSC / Hydraulics / outlets",
+          "context": null
+        },
+        {
+          "name": "hydraulic_outlet_control",
+          "value": "Electronic",
+          "unit": null,
+          "locator": "Puma 240 CVX AFSC / Stage V / CVX AFSC / Hydraulics / outlet control",
+          "context": null
+        },
+        {
+          "name": "rear_pto_speeds",
+          "value": "540/540E/1000/1000E",
+          "unit": "rpm",
+          "locator": "Puma 240 CVX AFSC / Stage V / CVX AFSC / PTO / speed options",
+          "context": null
+        },
+        {
+          "name": "engine_speed_at_540_pto",
+          "value": "1931",
+          "unit": "rpm",
+          "locator": "Puma 240 CVX AFSC / Stage V / CVX AFSC / PTO / corresponding engine speed",
+          "context": null
+        },
+        {
+          "name": "engine_speed_at_540e_pto",
+          "value": "1598",
+          "unit": "rpm",
+          "locator": "Puma 240 CVX AFSC / Stage V / CVX AFSC / PTO / corresponding engine speed",
+          "context": null
+        },
+        {
+          "name": "engine_speed_at_1000_pto",
+          "value": "1912",
+          "unit": "rpm",
+          "locator": "Puma 240 CVX AFSC / Stage V / CVX AFSC / PTO / corresponding engine speed",
+          "context": null
+        },
+        {
+          "name": "engine_speed_at_1000e_pto",
+          "value": "1583",
+          "unit": "rpm",
+          "locator": "Puma 240 CVX AFSC / Stage V / CVX AFSC / PTO / corresponding engine speed",
+          "context": null
+        },
+        {
+          "name": "wheelbase",
+          "value": "2884",
+          "unit": "mm",
+          "locator": "Puma 240 CVX AFSC / Stage V / CVX AFSC / Dimensions / wheelbase",
+          "context": null
+        },
+        {
+          "name": "overall_length",
+          "value": "5467",
+          "unit": "mm",
+          "locator": "Puma 240 CVX AFSC / Stage V / CVX AFSC / Dimensions / length",
+          "context": null
+        },
+        {
+          "name": "overall_height",
+          "value": "3068",
+          "unit": "mm",
+          "locator": "Puma 240 CVX AFSC / Stage V / CVX AFSC / Dimensions / height",
+          "context": null
+        },
+        {
+          "name": "front_track",
+          "value": "1538–2260",
+          "unit": "mm",
+          "locator": "Puma 240 CVX AFSC / Stage V / CVX AFSC / Dimensions / front track",
+          "context": null
+        },
+        {
+          "name": "rear_track",
+          "value": "1530–2230",
+          "unit": "mm",
+          "locator": "Puma 240 CVX AFSC / Stage V / CVX AFSC / Dimensions / rear track",
+          "context": null
+        },
+        {
+          "name": "unballasted_weight",
+          "value": "7632",
+          "unit": "kg",
+          "locator": "Puma 240 CVX AFSC / Stage V / CVX AFSC / Weights / without additional ballast",
+          "context": null
+        },
+        {
+          "name": "standard_front_tyres",
+          "value": "480/70R30",
+          "unit": null,
+          "locator": "Puma 240 CVX AFSC / Stage V / CVX AFSC / Tyres / standard front",
+          "context": null
+        },
+        {
+          "name": "standard_rear_tyres",
+          "value": "620/70R42",
+          "unit": null,
+          "locator": "Puma 240 CVX AFSC / Stage V / CVX AFSC / Tyres / standard rear",
+          "context": null
+        },
+        {
+          "name": "cab_suspension",
+          "value": "Standard",
+          "unit": null,
+          "locator": "Puma 240 CVX AFSC / Stage V / CVX AFSC / Equipment / cab suspension",
+          "context": null
+        },
+        {
+          "name": "front_axle_suspension",
+          "value": "Standard",
+          "unit": null,
+          "locator": "Puma 240 CVX AFSC / Stage V / CVX AFSC / Equipment / front axle suspension",
+          "context": null
+        },
+        {
+          "name": "front_hitch",
+          "value": "Optional",
+          "unit": null,
+          "locator": "Puma 240 CVX AFSC / Stage V / CVX AFSC / Equipment / front hitch",
+          "context": null
+        },
+        {
+          "name": "front_pto",
+          "value": "Optional",
+          "unit": null,
+          "locator": "Puma 240 CVX AFSC / Stage V / CVX AFSC / Equipment / front PTO",
+          "context": null
+        }
+      ],
+      "notes": [
+        "OEM table groups 185/200/220 full automatic and CVX AFSC in pairs; slash values mapped in listed order, must confirm brochure before admission. HP is OEM label, not silently converted. Blank 260 normal torque and boosted rated power remain unknown. No reliability claims or model year inference. Existing generic Puma 150 draft is only a reconciliation lead."
+      ]
+    },
+    {
+      "brand": "Case IH",
+      "model": "Puma 260 CVX AFSC",
+      "variant": "Stage V / CVX AFSC",
+      "market": "Türkiye",
+      "modelYear": null,
+      "sourceUrl": "https://www.caseih.com.tr/traktorler/puma-serisi",
+      "sourceType": "manufacturer",
+      "existingDraftId": null,
+      "disposition": "hold_for_review",
+      "sourceRead": "Official manufacturer HTML technical table read 2026-11-28; catalogue identity and canonical admission pending",
+      "specs": [
+        {
+          "name": "engine_rated_power",
+          "value": "260",
+          "unit": "HP",
+          "locator": "Puma 260 CVX AFSC / Stage V / CVX AFSC / Engine / nominal",
+          "context": "ECE R120; non-boost"
+        },
+        {
+          "name": "engine_max_power",
+          "value": "280",
+          "unit": "HP",
+          "locator": "Puma 260 CVX AFSC / Stage V / CVX AFSC / Engine / maximum",
+          "context": "ECE R120; non-boost"
+        },
+        {
+          "name": "engine_max_power_with_boost",
+          "value": "300",
+          "unit": "HP",
+          "locator": "Puma 260 CVX AFSC / Stage V / CVX AFSC / Engine / maximum with additional power",
+          "context": "ECE R120; boost"
+        },
+        {
+          "name": "engine_rated_speed",
+          "value": "2200",
+          "unit": "rpm",
+          "locator": "Puma 260 CVX AFSC / Stage V / CVX AFSC / Engine / nominal speed",
+          "context": null
+        },
+        {
+          "name": "engine_cylinders",
+          "value": "6",
+          "unit": "count",
+          "locator": "Puma 260 CVX AFSC / Stage V / CVX AFSC / Engine / cylinders",
+          "context": null
+        },
+        {
+          "name": "engine_displacement",
+          "value": "6.7",
+          "unit": "L",
+          "locator": "Puma 260 CVX AFSC / Stage V / CVX AFSC / Engine / displacement",
+          "context": null
+        },
+        {
+          "name": "engine_aspiration",
+          "value": "Turbo intercooler",
+          "unit": null,
+          "locator": "Puma 260 CVX AFSC / Stage V / CVX AFSC / Engine / aspiration",
+          "context": null
+        },
+        {
+          "name": "emissions_standard",
+          "value": "Stage V",
+          "unit": null,
+          "locator": "Puma 260 CVX AFSC / Stage V / CVX AFSC / Engine / emissions",
+          "context": null
+        },
+        {
+          "name": "fuel_injection",
+          "value": "Common rail",
+          "unit": null,
+          "locator": "Puma 260 CVX AFSC / Stage V / CVX AFSC / Engine / injection",
+          "context": null
+        },
+        {
+          "name": "engine_torque_with_boost",
+          "value": "1250",
+          "unit": "Nm",
+          "locator": "Puma 260 CVX AFSC / Stage V / CVX AFSC / Engine / torque with additional power",
+          "context": "1500 rpm"
+        },
+        {
+          "name": "torque_reserve",
+          "value": "39",
+          "unit": "%",
+          "locator": "Puma 260 CVX AFSC / Stage V / CVX AFSC / Engine / torque reserve",
+          "context": null
+        },
+        {
+          "name": "fuel_tank_capacity",
+          "value": "470",
+          "unit": "L",
+          "locator": "Puma 260 CVX AFSC / Stage V / CVX AFSC / Engine / fuel tank",
+          "context": null
+        },
+        {
+          "name": "adblue_tank_capacity",
+          "value": "54",
+          "unit": "L",
+          "locator": "Puma 260 CVX AFSC / Stage V / CVX AFSC / Engine / AdBlue tank",
+          "context": null
+        },
+        {
+          "name": "transmission_type",
+          "value": "CVX continuously variable",
+          "unit": null,
+          "locator": "Puma 260 CVX AFSC / Stage V / CVX AFSC / Transmission / options",
+          "context": null
+        },
+        {
+          "name": "automatic_differential_lock",
+          "value": "Standard",
+          "unit": null,
+          "locator": "Puma 260 CVX AFSC / Stage V / CVX AFSC / Transmission / automatic differential",
+          "context": null
+        },
+        {
+          "name": "automatic_4wd_control",
+          "value": "Standard",
+          "unit": null,
+          "locator": "Puma 260 CVX AFSC / Stage V / CVX AFSC / Transmission / automatic 4WD",
+          "context": null
+        },
+        {
+          "name": "rear_lift_capacity",
+          "value": "10464",
+          "unit": "kg",
+          "locator": "Puma 260 CVX AFSC / Stage V / CVX AFSC / Hydraulics / maximum lift",
+          "context": "Measurement point unspecified"
+        },
+        {
+          "name": "hydraulic_outlet_count",
+          "value": "8",
+          "unit": "count",
+          "locator": "Puma 260 CVX AFSC / Stage V / CVX AFSC / Hydraulics / outlets",
+          "context": null
+        },
+        {
+          "name": "hydraulic_outlet_control",
+          "value": "Electronic",
+          "unit": null,
+          "locator": "Puma 260 CVX AFSC / Stage V / CVX AFSC / Hydraulics / outlet control",
+          "context": null
+        },
+        {
+          "name": "rear_pto_speeds",
+          "value": "540/540E/1000/1000E",
+          "unit": "rpm",
+          "locator": "Puma 260 CVX AFSC / Stage V / CVX AFSC / PTO / speed options",
+          "context": null
+        },
+        {
+          "name": "engine_speed_at_540_pto",
+          "value": "1931",
+          "unit": "rpm",
+          "locator": "Puma 260 CVX AFSC / Stage V / CVX AFSC / PTO / corresponding engine speed",
+          "context": null
+        },
+        {
+          "name": "engine_speed_at_540e_pto",
+          "value": "1598",
+          "unit": "rpm",
+          "locator": "Puma 260 CVX AFSC / Stage V / CVX AFSC / PTO / corresponding engine speed",
+          "context": null
+        },
+        {
+          "name": "engine_speed_at_1000_pto",
+          "value": "1912",
+          "unit": "rpm",
+          "locator": "Puma 260 CVX AFSC / Stage V / CVX AFSC / PTO / corresponding engine speed",
+          "context": null
+        },
+        {
+          "name": "engine_speed_at_1000e_pto",
+          "value": "1583",
+          "unit": "rpm",
+          "locator": "Puma 260 CVX AFSC / Stage V / CVX AFSC / PTO / corresponding engine speed",
+          "context": null
+        },
+        {
+          "name": "wheelbase",
+          "value": "2884",
+          "unit": "mm",
+          "locator": "Puma 260 CVX AFSC / Stage V / CVX AFSC / Dimensions / wheelbase",
+          "context": null
+        },
+        {
+          "name": "overall_length",
+          "value": "5467",
+          "unit": "mm",
+          "locator": "Puma 260 CVX AFSC / Stage V / CVX AFSC / Dimensions / length",
+          "context": null
+        },
+        {
+          "name": "overall_height",
+          "value": "3068",
+          "unit": "mm",
+          "locator": "Puma 260 CVX AFSC / Stage V / CVX AFSC / Dimensions / height",
+          "context": null
+        },
+        {
+          "name": "front_track",
+          "value": "1538–2260",
+          "unit": "mm",
+          "locator": "Puma 260 CVX AFSC / Stage V / CVX AFSC / Dimensions / front track",
+          "context": null
+        },
+        {
+          "name": "rear_track",
+          "value": "1530–2230",
+          "unit": "mm",
+          "locator": "Puma 260 CVX AFSC / Stage V / CVX AFSC / Dimensions / rear track",
+          "context": null
+        },
+        {
+          "name": "unballasted_weight",
+          "value": "7632",
+          "unit": "kg",
+          "locator": "Puma 260 CVX AFSC / Stage V / CVX AFSC / Weights / without additional ballast",
+          "context": null
+        },
+        {
+          "name": "standard_front_tyres",
+          "value": "480/70R30",
+          "unit": null,
+          "locator": "Puma 260 CVX AFSC / Stage V / CVX AFSC / Tyres / standard front",
+          "context": null
+        },
+        {
+          "name": "standard_rear_tyres",
+          "value": "620/70R42",
+          "unit": null,
+          "locator": "Puma 260 CVX AFSC / Stage V / CVX AFSC / Tyres / standard rear",
+          "context": null
+        },
+        {
+          "name": "cab_suspension",
+          "value": "Standard",
+          "unit": null,
+          "locator": "Puma 260 CVX AFSC / Stage V / CVX AFSC / Equipment / cab suspension",
+          "context": null
+        },
+        {
+          "name": "front_axle_suspension",
+          "value": "Standard",
+          "unit": null,
+          "locator": "Puma 260 CVX AFSC / Stage V / CVX AFSC / Equipment / front axle suspension",
+          "context": null
+        },
+        {
+          "name": "front_hitch",
+          "value": "Optional",
+          "unit": null,
+          "locator": "Puma 260 CVX AFSC / Stage V / CVX AFSC / Equipment / front hitch",
+          "context": null
+        },
+        {
+          "name": "front_pto",
+          "value": "Optional",
+          "unit": null,
+          "locator": "Puma 260 CVX AFSC / Stage V / CVX AFSC / Equipment / front PTO",
+          "context": null
+        }
+      ],
+      "notes": [
+        "OEM table groups 185/200/220 full automatic and CVX AFSC in pairs; slash values mapped in listed order, must confirm brochure before admission. HP is OEM label, not silently converted. Blank 260 normal torque and boosted rated power remain unknown. No reliability claims or model year inference. Existing generic Puma 150 draft is only a reconciliation lead."
+      ]
+    },
+    {
+      "brand": "CLAAS",
+      "model": "Axion 870",
+      "variant": "CMATIC",
+      "market": "Türkiye",
+      "modelYear": null,
+      "sourceUrl": "https://www.claas.com/tr-tr/tarim-makineleri/traktoerler/axion-800",
+      "sourceType": "manufacturer",
+      "existingDraftId": "d916534e-ac35-469c-9adf-73581ef762ed",
+      "disposition": "hold_for_review",
+      "sourceRead": "Official manufacturer HTML technical table read 2026-11-28; catalogue identity and canonical admission pending",
+      "specs": [
+        {
+          "name": "engine_cylinders",
+          "value": "6",
+          "unit": "count",
+          "locator": "Axion 870 / CMATIC / Technical data / cylinder count",
+          "context": null
+        },
+        {
+          "name": "engine_displacement",
+          "value": "6.7",
+          "unit": "L",
+          "locator": "Axion 870 / CMATIC / Technical data / displacement",
+          "context": null
+        },
+        {
+          "name": "engine_max_power_oem_label",
+          "value": "295",
+          "unit": "BG",
+          "locator": "Axion 870 / CMATIC / Technical data / maximum power",
+          "context": "ECE R120; boost state not specified"
+        },
+        {
+          "name": "transmission_type",
+          "value": "CMATIC continuously variable",
+          "unit": null,
+          "locator": "Axion 870 / CMATIC / Technical data / transmission",
+          "context": null
+        },
+        {
+          "name": "forward_speed_range",
+          "value": "0.05–50",
+          "unit": "km/h",
+          "locator": "Axion 870 / CMATIC / Series CMATIC feature / speed range",
+          "context": "Series description, configuration and legal speed limit may differ"
+        },
+        {
+          "name": "engine_speed_at_50_kmh",
+          "value": "1600",
+          "unit": "rpm",
+          "locator": "Axion 870 / CMATIC / Series CMATIC feature / road speed",
+          "context": "At stated maximum speed"
+        },
+        {
+          "name": "engine_speed_at_40_kmh",
+          "value": "1300",
+          "unit": "rpm",
+          "locator": "Axion 870 / CMATIC / Series CMATIC feature / road speed",
+          "context": "At stated maximum speed"
+        }
+      ],
+      "notes": [
+        "Power category remains maximum OEM BG; do not infer nominal or boost value. Seven facts insufficient to assume admission. Existing global draft must be reconciled. Series marketing fuel saving excluded."
+      ]
+    },
+    {
+      "brand": "CLAAS",
+      "model": "Axion 850",
+      "variant": "CMATIC",
+      "market": "Türkiye",
+      "modelYear": null,
+      "sourceUrl": "https://www.claas.com/tr-tr/tarim-makineleri/traktoerler/axion-800",
+      "sourceType": "manufacturer",
+      "existingDraftId": null,
+      "disposition": "hold_for_review",
+      "sourceRead": "Official manufacturer HTML technical table read 2026-11-28; catalogue identity and canonical admission pending",
+      "specs": [
+        {
+          "name": "engine_cylinders",
+          "value": "6",
+          "unit": "count",
+          "locator": "Axion 850 / CMATIC / Technical data / cylinder count",
+          "context": null
+        },
+        {
+          "name": "engine_displacement",
+          "value": "6.7",
+          "unit": "L",
+          "locator": "Axion 850 / CMATIC / Technical data / displacement",
+          "context": null
+        },
+        {
+          "name": "engine_max_power_oem_label",
+          "value": "264",
+          "unit": "BG",
+          "locator": "Axion 850 / CMATIC / Technical data / maximum power",
+          "context": "ECE R120; boost state not specified"
+        },
+        {
+          "name": "transmission_type",
+          "value": "CMATIC continuously variable",
+          "unit": null,
+          "locator": "Axion 850 / CMATIC / Technical data / transmission",
+          "context": null
+        },
+        {
+          "name": "forward_speed_range",
+          "value": "0.05–50",
+          "unit": "km/h",
+          "locator": "Axion 850 / CMATIC / Series CMATIC feature / speed range",
+          "context": "Series description, configuration and legal speed limit may differ"
+        },
+        {
+          "name": "engine_speed_at_50_kmh",
+          "value": "1600",
+          "unit": "rpm",
+          "locator": "Axion 850 / CMATIC / Series CMATIC feature / road speed",
+          "context": "At stated maximum speed"
+        },
+        {
+          "name": "engine_speed_at_40_kmh",
+          "value": "1300",
+          "unit": "rpm",
+          "locator": "Axion 850 / CMATIC / Series CMATIC feature / road speed",
+          "context": "At stated maximum speed"
+        }
+      ],
+      "notes": [
+        "Power category remains maximum OEM BG; do not infer nominal or boost value. Seven facts insufficient to assume admission. Existing global draft must be reconciled. Series marketing fuel saving excluded."
+      ]
+    },
+    {
+      "brand": "CLAAS",
+      "model": "Axion 830",
+      "variant": "CMATIC",
+      "market": "Türkiye",
+      "modelYear": null,
+      "sourceUrl": "https://www.claas.com/tr-tr/tarim-makineleri/traktoerler/axion-800",
+      "sourceType": "manufacturer",
+      "existingDraftId": null,
+      "disposition": "hold_for_review",
+      "sourceRead": "Official manufacturer HTML technical table read 2026-11-28; catalogue identity and canonical admission pending",
+      "specs": [
+        {
+          "name": "engine_cylinders",
+          "value": "6",
+          "unit": "count",
+          "locator": "Axion 830 / CMATIC / Technical data / cylinder count",
+          "context": null
+        },
+        {
+          "name": "engine_displacement",
+          "value": "6.7",
+          "unit": "L",
+          "locator": "Axion 830 / CMATIC / Technical data / displacement",
+          "context": null
+        },
+        {
+          "name": "engine_max_power_oem_label",
+          "value": "235",
+          "unit": "BG",
+          "locator": "Axion 830 / CMATIC / Technical data / maximum power",
+          "context": "ECE R120; boost state not specified"
+        },
+        {
+          "name": "transmission_type",
+          "value": "CMATIC continuously variable",
+          "unit": null,
+          "locator": "Axion 830 / CMATIC / Technical data / transmission",
+          "context": null
+        },
+        {
+          "name": "forward_speed_range",
+          "value": "0.05–50",
+          "unit": "km/h",
+          "locator": "Axion 830 / CMATIC / Series CMATIC feature / speed range",
+          "context": "Series description, configuration and legal speed limit may differ"
+        },
+        {
+          "name": "engine_speed_at_50_kmh",
+          "value": "1600",
+          "unit": "rpm",
+          "locator": "Axion 830 / CMATIC / Series CMATIC feature / road speed",
+          "context": "At stated maximum speed"
+        },
+        {
+          "name": "engine_speed_at_40_kmh",
+          "value": "1300",
+          "unit": "rpm",
+          "locator": "Axion 830 / CMATIC / Series CMATIC feature / road speed",
+          "context": "At stated maximum speed"
+        }
+      ],
+      "notes": [
+        "Power category remains maximum OEM BG; do not infer nominal or boost value. Seven facts insufficient to assume admission. Existing global draft must be reconciled. Series marketing fuel saving excluded."
+      ]
+    },
+    {
+      "brand": "CLAAS",
+      "model": "Axion 810",
+      "variant": "CMATIC",
+      "market": "Türkiye",
+      "modelYear": null,
+      "sourceUrl": "https://www.claas.com/tr-tr/tarim-makineleri/traktoerler/axion-800",
+      "sourceType": "manufacturer",
+      "existingDraftId": null,
+      "disposition": "hold_for_review",
+      "sourceRead": "Official manufacturer HTML technical table read 2026-11-28; catalogue identity and canonical admission pending",
+      "specs": [
+        {
+          "name": "engine_cylinders",
+          "value": "6",
+          "unit": "count",
+          "locator": "Axion 810 / CMATIC / Technical data / cylinder count",
+          "context": null
+        },
+        {
+          "name": "engine_displacement",
+          "value": "6.7",
+          "unit": "L",
+          "locator": "Axion 810 / CMATIC / Technical data / displacement",
+          "context": null
+        },
+        {
+          "name": "engine_max_power_oem_label",
+          "value": "215",
+          "unit": "BG",
+          "locator": "Axion 810 / CMATIC / Technical data / maximum power",
+          "context": "ECE R120; boost state not specified"
+        },
+        {
+          "name": "transmission_type",
+          "value": "CMATIC continuously variable",
+          "unit": null,
+          "locator": "Axion 810 / CMATIC / Technical data / transmission",
+          "context": null
+        },
+        {
+          "name": "forward_speed_range",
+          "value": "0.05–50",
+          "unit": "km/h",
+          "locator": "Axion 810 / CMATIC / Series CMATIC feature / speed range",
+          "context": "Series description, configuration and legal speed limit may differ"
+        },
+        {
+          "name": "engine_speed_at_50_kmh",
+          "value": "1600",
+          "unit": "rpm",
+          "locator": "Axion 810 / CMATIC / Series CMATIC feature / road speed",
+          "context": "At stated maximum speed"
+        },
+        {
+          "name": "engine_speed_at_40_kmh",
+          "value": "1300",
+          "unit": "rpm",
+          "locator": "Axion 810 / CMATIC / Series CMATIC feature / road speed",
+          "context": "At stated maximum speed"
+        }
+      ],
+      "notes": [
+        "Power category remains maximum OEM BG; do not infer nominal or boost value. Seven facts insufficient to assume admission. Existing global draft must be reconciled. Series marketing fuel saving excluded."
+      ]
+    }
+  ]
+}
