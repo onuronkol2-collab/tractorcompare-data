@@ -1,0 +1,66 @@
+{
+  "status": "review_only_not_importable",
+  "reviewedOn": "2026-11-28",
+  "records": [
+    {
+      "brand": "Fendt",
+      "model": "513 Vario",
+      "sourceUrl": "https://api.fendt.com/techdata/GB/en/1520018/Fendt%20500%20Vario%20Gen4",
+      "scope": "existing 19 field observations and 19 added observations",
+      "status": "source_text_reviewed_identity_pending",
+      "issues": [
+        "10.1 m turning radius/circle label discrepancy; excluded"
+      ]
+    },
+    {
+      "brand": "Fendt",
+      "model": "514 Vario",
+      "sourceUrl": "https://api.fendt.com/techdata/GB/en/1520018/Fendt%20500%20Vario%20Gen4",
+      "scope": "existing 19 field observations and 19 added observations",
+      "status": "source_text_reviewed_identity_pending",
+      "issues": [
+        "10.1 m turning radius/circle label discrepancy; excluded"
+      ]
+    },
+    {
+      "brand": "Fendt",
+      "model": "515 Vario",
+      "sourceUrl": "https://api.fendt.com/techdata/GB/en/1520018/Fendt%20500%20Vario%20Gen4",
+      "scope": "existing 19 field observations and 19 added observations",
+      "status": "source_text_reviewed_identity_pending",
+      "issues": [
+        "10.1 m turning radius/circle label discrepancy; excluded"
+      ]
+    },
+    {
+      "brand": "Fendt",
+      "model": "516 Vario",
+      "sourceUrl": "https://api.fendt.com/techdata/GB/en/1520018/Fendt%20500%20Vario%20Gen4",
+      "scope": "existing 19 field observations and 19 added observations",
+      "status": "source_text_reviewed_identity_pending",
+      "issues": [
+        "10.1 m turning radius/circle label discrepancy; excluded"
+      ]
+    },
+    {
+      "brand": "Kubota",
+      "model": "M7040",
+      "sourceUrl": "https://kubota.com.ph/product/m7040/",
+      "scope": "23 existing and 14 additional field observations",
+      "status": "source_text_reviewed_identity_pending",
+      "issues": [
+        "Gross power and turning radius blank; weight type not specified"
+      ]
+    },
+    {
+      "brand": "John Deere",
+      "model": "6M 125",
+      "sourceUrl": "https://www.deere.com.au/en/tractors/utility-tractors/6-family-utility-tractors/6m-125-tractor/",
+      "scope": "7 existing and 1 additional field observations",
+      "status": "source_text_reviewed_identity_pending",
+      "issues": [
+        "Cab-only dimension; existing global record is not automatically identical"
+      ]
+    }
+  ]
+}

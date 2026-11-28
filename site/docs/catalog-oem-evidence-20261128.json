@@ -153,11 +153,165 @@
           "locator": "UK product page technical specification table / 513 Vario column",
           "context": "Option 1; not standard flow",
           "sourceUrl": "https://www.fendt.com/uk/agricultural-machinery/tractors/fendt-500-vario-gen4"
+        },
+        {
+          "name": "forward_speed_range",
+          "value": "0.02–50",
+          "unit": "km/h",
+          "locator": "513 Vario column / Transmission / forward range",
+          "context": null,
+          "sourceUrl": "https://api.fendt.com/techdata/GB/en/1520018/Fendt%20500%20Vario%20Gen4"
+        },
+        {
+          "name": "reverse_speed_range",
+          "value": "0.02–33",
+          "unit": "km/h",
+          "locator": "513 Vario column / Transmission / reverse range",
+          "context": null,
+          "sourceUrl": "https://api.fendt.com/techdata/GB/en/1520018/Fendt%20500%20Vario%20Gen4"
+        },
+        {
+          "name": "maximum_travel_speed",
+          "value": "50",
+          "unit": "km/h",
+          "locator": "513 Vario column / Transmission / top speed",
+          "context": null,
+          "sourceUrl": "https://api.fendt.com/techdata/GB/en/1520018/Fendt%20500%20Vario%20Gen4"
+        },
+        {
+          "name": "front_pto_option",
+          "value": "1000",
+          "unit": "rpm",
+          "locator": "513 Vario column / Transmission / optional front PTO",
+          "context": "Optional",
+          "sourceUrl": "https://api.fendt.com/techdata/GB/en/1520018/Fendt%20500%20Vario%20Gen4"
+        },
+        {
+          "name": "hydraulic_variable_pump_standard",
+          "value": "109",
+          "unit": "L/min",
+          "locator": "513 Vario column / Hydraulics / variable flow pump",
+          "context": "Standard pump rating; not implement flow",
+          "sourceUrl": "https://api.fendt.com/techdata/GB/en/1520018/Fendt%20500%20Vario%20Gen4"
+        },
+        {
+          "name": "hydraulic_valves_power",
+          "value": "1/2/4",
+          "unit": "count",
+          "locator": "513 Vario column / Hydraulics / Power",
+          "context": "Front/centre/rear maximum",
+          "sourceUrl": "https://api.fendt.com/techdata/GB/en/1520018/Fendt%20500%20Vario%20Gen4"
+        },
+        {
+          "name": "hydraulic_valves_power_plus",
+          "value": "1/2/5",
+          "unit": "count",
+          "locator": "513 Vario column / Hydraulics / Power+",
+          "context": "Front/centre/rear maximum",
+          "sourceUrl": "https://api.fendt.com/techdata/GB/en/1520018/Fendt%20500%20Vario%20Gen4"
+        },
+        {
+          "name": "hydraulic_valves_profi",
+          "value": "2/3/5",
+          "unit": "count",
+          "locator": "513 Vario column / Hydraulics / Profi / Profi+",
+          "context": "Front/centre/rear maximum",
+          "sourceUrl": "https://api.fendt.com/techdata/GB/en/1520018/Fendt%20500%20Vario%20Gen4"
+        },
+        {
+          "name": "available_hydraulic_oil",
+          "value": "51",
+          "unit": "L",
+          "locator": "513 Vario column / Hydraulics / available oil volume",
+          "context": null,
+          "sourceUrl": "https://api.fendt.com/techdata/GB/en/1520018/Fendt%20500%20Vario%20Gen4"
+        },
+        {
+          "name": "battery_capacity",
+          "value": "180",
+          "unit": "Ah",
+          "locator": "513 Vario column / Electrical / battery",
+          "context": "12 V",
+          "sourceUrl": "https://api.fendt.com/techdata/GB/en/1520018/Fendt%20500%20Vario%20Gen4"
+        },
+        {
+          "name": "alternator_current",
+          "value": "200",
+          "unit": "A",
+          "locator": "513 Vario column / Electrical / alternator",
+          "context": "14 V",
+          "sourceUrl": "https://api.fendt.com/techdata/GB/en/1520018/Fendt%20500%20Vario%20Gen4"
+        },
+        {
+          "name": "standard_front_tyres",
+          "value": "480/65R28",
+          "unit": null,
+          "locator": "513 Vario column / Tyres / front standard",
+          "context": null,
+          "sourceUrl": "https://api.fendt.com/techdata/GB/en/1520018/Fendt%20500%20Vario%20Gen4"
+        },
+        {
+          "name": "standard_rear_tyres",
+          "value": "600/65R38",
+          "unit": null,
+          "locator": "513 Vario column / Tyres / rear standard",
+          "context": null,
+          "sourceUrl": "https://api.fendt.com/techdata/GB/en/1520018/Fendt%20500%20Vario%20Gen4"
+        },
+        {
+          "name": "overall_width",
+          "value": "2450",
+          "unit": "mm",
+          "locator": "513 Vario column / Dimensions / width",
+          "context": "Standard tyres",
+          "sourceUrl": "https://api.fendt.com/techdata/GB/en/1520018/Fendt%20500%20Vario%20Gen4"
+        },
+        {
+          "name": "overall_length",
+          "value": "4961",
+          "unit": "mm",
+          "locator": "513 Vario column / Dimensions / length",
+          "context": null,
+          "sourceUrl": "https://api.fendt.com/techdata/GB/en/1520018/Fendt%20500%20Vario%20Gen4"
+        },
+        {
+          "name": "cab_height_without_guidance",
+          "value": "2975",
+          "unit": "mm",
+          "locator": "513 Vario column / Dimensions / cab height",
+          "context": "Standard tyres, without Fendt Guide",
+          "sourceUrl": "https://api.fendt.com/techdata/GB/en/1520018/Fendt%20500%20Vario%20Gen4"
+        },
+        {
+          "name": "cab_height_with_guidance",
+          "value": "3025",
+          "unit": "mm",
+          "locator": "513 Vario column / Dimensions / cab height",
+          "context": "Standard tyres, with Fendt Guide",
+          "sourceUrl": "https://api.fendt.com/techdata/GB/en/1520018/Fendt%20500%20Vario%20Gen4"
+        },
+        {
+          "name": "maximum_ground_clearance",
+          "value": "470",
+          "unit": "mm",
+          "locator": "513 Vario column / Dimensions / maximum clearance",
+          "context": null,
+          "sourceUrl": "https://api.fendt.com/techdata/GB/en/1520018/Fendt%20500%20Vario%20Gen4"
+        },
+        {
+          "name": "wheelbase",
+          "value": "2560",
+          "unit": "mm",
+          "locator": "513 Vario column / Dimensions / wheelbase",
+          "context": null,
+          "sourceUrl": "https://api.fendt.com/techdata/GB/en/1520018/Fendt%20500%20Vario%20Gen4"
         }
       ],
       "notes": [
-        "Secondary OEM source https://www.fendt.com/uk/agricultural-machinery/tractors/fendt-500-vario-gen4 supports PTO, weights, lift and optional pump. No automatic assignment of existing global 516 draft; generation/market identity must be reconciled."
-      ]
+        "Secondary OEM source https://www.fendt.com/uk/agricultural-machinery/tractors/fendt-500-vario-gen4 supports PTO, weights, lift and optional pump. No automatic assignment of existing global 516 draft; generation/market identity must be reconciled.",
+        "Official detailed HTML table re-read (engine through weights); 109 L/min base pump and 152 L/min option are not interchangeable. Turning value withheld: technical table labels 10.1 m radius while overview calls it turning circle. Do not resolve by guessing."
+      ],
+      "sourceRead": "Official UK technical HTML re-read 2026-11-28; original fields reviewed; catalogue identity and canonical mapping pending"
     },
     {
       "brand": "Fendt",
@@ -308,11 +462,165 @@
           "locator": "UK product page technical specification table / 514 Vario column",
           "context": "Option 1; not standard flow",
           "sourceUrl": "https://www.fendt.com/uk/agricultural-machinery/tractors/fendt-500-vario-gen4"
+        },
+        {
+          "name": "forward_speed_range",
+          "value": "0.02–50",
+          "unit": "km/h",
+          "locator": "514 Vario column / Transmission / forward range",
+          "context": null,
+          "sourceUrl": "https://api.fendt.com/techdata/GB/en/1520018/Fendt%20500%20Vario%20Gen4"
+        },
+        {
+          "name": "reverse_speed_range",
+          "value": "0.02–33",
+          "unit": "km/h",
+          "locator": "514 Vario column / Transmission / reverse range",
+          "context": null,
+          "sourceUrl": "https://api.fendt.com/techdata/GB/en/1520018/Fendt%20500%20Vario%20Gen4"
+        },
+        {
+          "name": "maximum_travel_speed",
+          "value": "50",
+          "unit": "km/h",
+          "locator": "514 Vario column / Transmission / top speed",
+          "context": null,
+          "sourceUrl": "https://api.fendt.com/techdata/GB/en/1520018/Fendt%20500%20Vario%20Gen4"
+        },
+        {
+          "name": "front_pto_option",
+          "value": "1000",
+          "unit": "rpm",
+          "locator": "514 Vario column / Transmission / optional front PTO",
+          "context": "Optional",
+          "sourceUrl": "https://api.fendt.com/techdata/GB/en/1520018/Fendt%20500%20Vario%20Gen4"
+        },
+        {
+          "name": "hydraulic_variable_pump_standard",
+          "value": "109",
+          "unit": "L/min",
+          "locator": "514 Vario column / Hydraulics / variable flow pump",
+          "context": "Standard pump rating; not implement flow",
+          "sourceUrl": "https://api.fendt.com/techdata/GB/en/1520018/Fendt%20500%20Vario%20Gen4"
+        },
+        {
+          "name": "hydraulic_valves_power",
+          "value": "1/2/4",
+          "unit": "count",
+          "locator": "514 Vario column / Hydraulics / Power",
+          "context": "Front/centre/rear maximum",
+          "sourceUrl": "https://api.fendt.com/techdata/GB/en/1520018/Fendt%20500%20Vario%20Gen4"
+        },
+        {
+          "name": "hydraulic_valves_power_plus",
+          "value": "1/2/5",
+          "unit": "count",
+          "locator": "514 Vario column / Hydraulics / Power+",
+          "context": "Front/centre/rear maximum",
+          "sourceUrl": "https://api.fendt.com/techdata/GB/en/1520018/Fendt%20500%20Vario%20Gen4"
+        },
+        {
+          "name": "hydraulic_valves_profi",
+          "value": "2/3/5",
+          "unit": "count",
+          "locator": "514 Vario column / Hydraulics / Profi / Profi+",
+          "context": "Front/centre/rear maximum",
+          "sourceUrl": "https://api.fendt.com/techdata/GB/en/1520018/Fendt%20500%20Vario%20Gen4"
+        },
+        {
+          "name": "available_hydraulic_oil",
+          "value": "51",
+          "unit": "L",
+          "locator": "514 Vario column / Hydraulics / available oil volume",
+          "context": null,
+          "sourceUrl": "https://api.fendt.com/techdata/GB/en/1520018/Fendt%20500%20Vario%20Gen4"
+        },
+        {
+          "name": "battery_capacity",
+          "value": "180",
+          "unit": "Ah",
+          "locator": "514 Vario column / Electrical / battery",
+          "context": "12 V",
+          "sourceUrl": "https://api.fendt.com/techdata/GB/en/1520018/Fendt%20500%20Vario%20Gen4"
+        },
+        {
+          "name": "alternator_current",
+          "value": "200",
+          "unit": "A",
+          "locator": "514 Vario column / Electrical / alternator",
+          "context": "14 V",
+          "sourceUrl": "https://api.fendt.com/techdata/GB/en/1520018/Fendt%20500%20Vario%20Gen4"
+        },
+        {
+          "name": "standard_front_tyres",
+          "value": "540/65R28",
+          "unit": null,
+          "locator": "514 Vario column / Tyres / front standard",
+          "context": null,
+          "sourceUrl": "https://api.fendt.com/techdata/GB/en/1520018/Fendt%20500%20Vario%20Gen4"
+        },
+        {
+          "name": "standard_rear_tyres",
+          "value": "650/65R38",
+          "unit": null,
+          "locator": "514 Vario column / Tyres / rear standard",
+          "context": null,
+          "sourceUrl": "https://api.fendt.com/techdata/GB/en/1520018/Fendt%20500%20Vario%20Gen4"
+        },
+        {
+          "name": "overall_width",
+          "value": "2450",
+          "unit": "mm",
+          "locator": "514 Vario column / Dimensions / width",
+          "context": "Standard tyres",
+          "sourceUrl": "https://api.fendt.com/techdata/GB/en/1520018/Fendt%20500%20Vario%20Gen4"
+        },
+        {
+          "name": "overall_length",
+          "value": "4961",
+          "unit": "mm",
+          "locator": "514 Vario column / Dimensions / length",
+          "context": null,
+          "sourceUrl": "https://api.fendt.com/techdata/GB/en/1520018/Fendt%20500%20Vario%20Gen4"
+        },
+        {
+          "name": "cab_height_without_guidance",
+          "value": "2975",
+          "unit": "mm",
+          "locator": "514 Vario column / Dimensions / cab height",
+          "context": "Standard tyres, without Fendt Guide",
+          "sourceUrl": "https://api.fendt.com/techdata/GB/en/1520018/Fendt%20500%20Vario%20Gen4"
+        },
+        {
+          "name": "cab_height_with_guidance",
+          "value": "3025",
+          "unit": "mm",
+          "locator": "514 Vario column / Dimensions / cab height",
+          "context": "Standard tyres, with Fendt Guide",
+          "sourceUrl": "https://api.fendt.com/techdata/GB/en/1520018/Fendt%20500%20Vario%20Gen4"
+        },
+        {
+          "name": "maximum_ground_clearance",
+          "value": "470",
+          "unit": "mm",
+          "locator": "514 Vario column / Dimensions / maximum clearance",
+          "context": null,
+          "sourceUrl": "https://api.fendt.com/techdata/GB/en/1520018/Fendt%20500%20Vario%20Gen4"
+        },
+        {
+          "name": "wheelbase",
+          "value": "2560",
+          "unit": "mm",
+          "locator": "514 Vario column / Dimensions / wheelbase",
+          "context": null,
+          "sourceUrl": "https://api.fendt.com/techdata/GB/en/1520018/Fendt%20500%20Vario%20Gen4"
         }
       ],
       "notes": [
-        "Secondary OEM source https://www.fendt.com/uk/agricultural-machinery/tractors/fendt-500-vario-gen4 supports PTO, weights, lift and optional pump. No automatic assignment of existing global 516 draft; generation/market identity must be reconciled."
-      ]
+        "Secondary OEM source https://www.fendt.com/uk/agricultural-machinery/tractors/fendt-500-vario-gen4 supports PTO, weights, lift and optional pump. No automatic assignment of existing global 516 draft; generation/market identity must be reconciled.",
+        "Official detailed HTML table re-read (engine through weights); 109 L/min base pump and 152 L/min option are not interchangeable. Turning value withheld: technical table labels 10.1 m radius while overview calls it turning circle. Do not resolve by guessing."
+      ],
+      "sourceRead": "Official UK technical HTML re-read 2026-11-28; original fields reviewed; catalogue identity and canonical mapping pending"
     },
     {
       "brand": "Fendt",
@@ -463,11 +771,165 @@
           "locator": "UK product page technical specification table / 515 Vario column",
           "context": "Option 1; not standard flow",
           "sourceUrl": "https://www.fendt.com/uk/agricultural-machinery/tractors/fendt-500-vario-gen4"
+        },
+        {
+          "name": "forward_speed_range",
+          "value": "0.02–50",
+          "unit": "km/h",
+          "locator": "515 Vario column / Transmission / forward range",
+          "context": null,
+          "sourceUrl": "https://api.fendt.com/techdata/GB/en/1520018/Fendt%20500%20Vario%20Gen4"
+        },
+        {
+          "name": "reverse_speed_range",
+          "value": "0.02–33",
+          "unit": "km/h",
+          "locator": "515 Vario column / Transmission / reverse range",
+          "context": null,
+          "sourceUrl": "https://api.fendt.com/techdata/GB/en/1520018/Fendt%20500%20Vario%20Gen4"
+        },
+        {
+          "name": "maximum_travel_speed",
+          "value": "50",
+          "unit": "km/h",
+          "locator": "515 Vario column / Transmission / top speed",
+          "context": null,
+          "sourceUrl": "https://api.fendt.com/techdata/GB/en/1520018/Fendt%20500%20Vario%20Gen4"
+        },
+        {
+          "name": "front_pto_option",
+          "value": "1000",
+          "unit": "rpm",
+          "locator": "515 Vario column / Transmission / optional front PTO",
+          "context": "Optional",
+          "sourceUrl": "https://api.fendt.com/techdata/GB/en/1520018/Fendt%20500%20Vario%20Gen4"
+        },
+        {
+          "name": "hydraulic_variable_pump_standard",
+          "value": "109",
+          "unit": "L/min",
+          "locator": "515 Vario column / Hydraulics / variable flow pump",
+          "context": "Standard pump rating; not implement flow",
+          "sourceUrl": "https://api.fendt.com/techdata/GB/en/1520018/Fendt%20500%20Vario%20Gen4"
+        },
+        {
+          "name": "hydraulic_valves_power",
+          "value": "1/2/4",
+          "unit": "count",
+          "locator": "515 Vario column / Hydraulics / Power",
+          "context": "Front/centre/rear maximum",
+          "sourceUrl": "https://api.fendt.com/techdata/GB/en/1520018/Fendt%20500%20Vario%20Gen4"
+        },
+        {
+          "name": "hydraulic_valves_power_plus",
+          "value": "1/2/5",
+          "unit": "count",
+          "locator": "515 Vario column / Hydraulics / Power+",
+          "context": "Front/centre/rear maximum",
+          "sourceUrl": "https://api.fendt.com/techdata/GB/en/1520018/Fendt%20500%20Vario%20Gen4"
+        },
+        {
+          "name": "hydraulic_valves_profi",
+          "value": "2/3/5",
+          "unit": "count",
+          "locator": "515 Vario column / Hydraulics / Profi / Profi+",
+          "context": "Front/centre/rear maximum",
+          "sourceUrl": "https://api.fendt.com/techdata/GB/en/1520018/Fendt%20500%20Vario%20Gen4"
+        },
+        {
+          "name": "available_hydraulic_oil",
+          "value": "51",
+          "unit": "L",
+          "locator": "515 Vario column / Hydraulics / available oil volume",
+          "context": null,
+          "sourceUrl": "https://api.fendt.com/techdata/GB/en/1520018/Fendt%20500%20Vario%20Gen4"
+        },
+        {
+          "name": "battery_capacity",
+          "value": "180",
+          "unit": "Ah",
+          "locator": "515 Vario column / Electrical / battery",
+          "context": "12 V",
+          "sourceUrl": "https://api.fendt.com/techdata/GB/en/1520018/Fendt%20500%20Vario%20Gen4"
+        },
+        {
+          "name": "alternator_current",
+          "value": "200",
+          "unit": "A",
+          "locator": "515 Vario column / Electrical / alternator",
+          "context": "14 V",
+          "sourceUrl": "https://api.fendt.com/techdata/GB/en/1520018/Fendt%20500%20Vario%20Gen4"
+        },
+        {
+          "name": "standard_front_tyres",
+          "value": "540/65R28",
+          "unit": null,
+          "locator": "515 Vario column / Tyres / front standard",
+          "context": null,
+          "sourceUrl": "https://api.fendt.com/techdata/GB/en/1520018/Fendt%20500%20Vario%20Gen4"
+        },
+        {
+          "name": "standard_rear_tyres",
+          "value": "650/65R38",
+          "unit": null,
+          "locator": "515 Vario column / Tyres / rear standard",
+          "context": null,
+          "sourceUrl": "https://api.fendt.com/techdata/GB/en/1520018/Fendt%20500%20Vario%20Gen4"
+        },
+        {
+          "name": "overall_width",
+          "value": "2450",
+          "unit": "mm",
+          "locator": "515 Vario column / Dimensions / width",
+          "context": "Standard tyres",
+          "sourceUrl": "https://api.fendt.com/techdata/GB/en/1520018/Fendt%20500%20Vario%20Gen4"
+        },
+        {
+          "name": "overall_length",
+          "value": "4961",
+          "unit": "mm",
+          "locator": "515 Vario column / Dimensions / length",
+          "context": null,
+          "sourceUrl": "https://api.fendt.com/techdata/GB/en/1520018/Fendt%20500%20Vario%20Gen4"
+        },
+        {
+          "name": "cab_height_without_guidance",
+          "value": "2975",
+          "unit": "mm",
+          "locator": "515 Vario column / Dimensions / cab height",
+          "context": "Standard tyres, without Fendt Guide",
+          "sourceUrl": "https://api.fendt.com/techdata/GB/en/1520018/Fendt%20500%20Vario%20Gen4"
+        },
+        {
+          "name": "cab_height_with_guidance",
+          "value": "3025",
+          "unit": "mm",
+          "locator": "515 Vario column / Dimensions / cab height",
+          "context": "Standard tyres, with Fendt Guide",
+          "sourceUrl": "https://api.fendt.com/techdata/GB/en/1520018/Fendt%20500%20Vario%20Gen4"
+        },
+        {
+          "name": "maximum_ground_clearance",
+          "value": "470",
+          "unit": "mm",
+          "locator": "515 Vario column / Dimensions / maximum clearance",
+          "context": null,
+          "sourceUrl": "https://api.fendt.com/techdata/GB/en/1520018/Fendt%20500%20Vario%20Gen4"
+        },
+        {
+          "name": "wheelbase",
+          "value": "2560",
+          "unit": "mm",
+          "locator": "515 Vario column / Dimensions / wheelbase",
+          "context": null,
+          "sourceUrl": "https://api.fendt.com/techdata/GB/en/1520018/Fendt%20500%20Vario%20Gen4"
         }
       ],
       "notes": [
-        "Secondary OEM source https://www.fendt.com/uk/agricultural-machinery/tractors/fendt-500-vario-gen4 supports PTO, weights, lift and optional pump. No automatic assignment of existing global 516 draft; generation/market identity must be reconciled."
-      ]
+        "Secondary OEM source https://www.fendt.com/uk/agricultural-machinery/tractors/fendt-500-vario-gen4 supports PTO, weights, lift and optional pump. No automatic assignment of existing global 516 draft; generation/market identity must be reconciled.",
+        "Official detailed HTML table re-read (engine through weights); 109 L/min base pump and 152 L/min option are not interchangeable. Turning value withheld: technical table labels 10.1 m radius while overview calls it turning circle. Do not resolve by guessing."
+      ],
+      "sourceRead": "Official UK technical HTML re-read 2026-11-28; original fields reviewed; catalogue identity and canonical mapping pending"
     },
     {
       "brand": "Fendt",
@@ -618,11 +1080,165 @@
           "locator": "UK product page technical specification table / 516 Vario column",
           "context": "Option 1; not standard flow",
           "sourceUrl": "https://www.fendt.com/uk/agricultural-machinery/tractors/fendt-500-vario-gen4"
+        },
+        {
+          "name": "forward_speed_range",
+          "value": "0.02–50",
+          "unit": "km/h",
+          "locator": "516 Vario column / Transmission / forward range",
+          "context": null,
+          "sourceUrl": "https://api.fendt.com/techdata/GB/en/1520018/Fendt%20500%20Vario%20Gen4"
+        },
+        {
+          "name": "reverse_speed_range",
+          "value": "0.02–33",
+          "unit": "km/h",
+          "locator": "516 Vario column / Transmission / reverse range",
+          "context": null,
+          "sourceUrl": "https://api.fendt.com/techdata/GB/en/1520018/Fendt%20500%20Vario%20Gen4"
+        },
+        {
+          "name": "maximum_travel_speed",
+          "value": "50",
+          "unit": "km/h",
+          "locator": "516 Vario column / Transmission / top speed",
+          "context": null,
+          "sourceUrl": "https://api.fendt.com/techdata/GB/en/1520018/Fendt%20500%20Vario%20Gen4"
+        },
+        {
+          "name": "front_pto_option",
+          "value": "1000",
+          "unit": "rpm",
+          "locator": "516 Vario column / Transmission / optional front PTO",
+          "context": "Optional",
+          "sourceUrl": "https://api.fendt.com/techdata/GB/en/1520018/Fendt%20500%20Vario%20Gen4"
+        },
+        {
+          "name": "hydraulic_variable_pump_standard",
+          "value": "109",
+          "unit": "L/min",
+          "locator": "516 Vario column / Hydraulics / variable flow pump",
+          "context": "Standard pump rating; not implement flow",
+          "sourceUrl": "https://api.fendt.com/techdata/GB/en/1520018/Fendt%20500%20Vario%20Gen4"
+        },
+        {
+          "name": "hydraulic_valves_power",
+          "value": "1/2/4",
+          "unit": "count",
+          "locator": "516 Vario column / Hydraulics / Power",
+          "context": "Front/centre/rear maximum",
+          "sourceUrl": "https://api.fendt.com/techdata/GB/en/1520018/Fendt%20500%20Vario%20Gen4"
+        },
+        {
+          "name": "hydraulic_valves_power_plus",
+          "value": "1/2/5",
+          "unit": "count",
+          "locator": "516 Vario column / Hydraulics / Power+",
+          "context": "Front/centre/rear maximum",
+          "sourceUrl": "https://api.fendt.com/techdata/GB/en/1520018/Fendt%20500%20Vario%20Gen4"
+        },
+        {
+          "name": "hydraulic_valves_profi",
+          "value": "2/3/5",
+          "unit": "count",
+          "locator": "516 Vario column / Hydraulics / Profi / Profi+",
+          "context": "Front/centre/rear maximum",
+          "sourceUrl": "https://api.fendt.com/techdata/GB/en/1520018/Fendt%20500%20Vario%20Gen4"
+        },
+        {
+          "name": "available_hydraulic_oil",
+          "value": "51",
+          "unit": "L",
+          "locator": "516 Vario column / Hydraulics / available oil volume",
+          "context": null,
+          "sourceUrl": "https://api.fendt.com/techdata/GB/en/1520018/Fendt%20500%20Vario%20Gen4"
+        },
+        {
+          "name": "battery_capacity",
+          "value": "180",
+          "unit": "Ah",
+          "locator": "516 Vario column / Electrical / battery",
+          "context": "12 V",
+          "sourceUrl": "https://api.fendt.com/techdata/GB/en/1520018/Fendt%20500%20Vario%20Gen4"
+        },
+        {
+          "name": "alternator_current",
+          "value": "200",
+          "unit": "A",
+          "locator": "516 Vario column / Electrical / alternator",
+          "context": "14 V",
+          "sourceUrl": "https://api.fendt.com/techdata/GB/en/1520018/Fendt%20500%20Vario%20Gen4"
+        },
+        {
+          "name": "standard_front_tyres",
+          "value": "540/65R28",
+          "unit": null,
+          "locator": "516 Vario column / Tyres / front standard",
+          "context": null,
+          "sourceUrl": "https://api.fendt.com/techdata/GB/en/1520018/Fendt%20500%20Vario%20Gen4"
+        },
+        {
+          "name": "standard_rear_tyres",
+          "value": "650/65R38",
+          "unit": null,
+          "locator": "516 Vario column / Tyres / rear standard",
+          "context": null,
+          "sourceUrl": "https://api.fendt.com/techdata/GB/en/1520018/Fendt%20500%20Vario%20Gen4"
+        },
+        {
+          "name": "overall_width",
+          "value": "2505",
+          "unit": "mm",
+          "locator": "516 Vario column / Dimensions / width",
+          "context": "Standard tyres",
+          "sourceUrl": "https://api.fendt.com/techdata/GB/en/1520018/Fendt%20500%20Vario%20Gen4"
+        },
+        {
+          "name": "overall_length",
+          "value": "4961",
+          "unit": "mm",
+          "locator": "516 Vario column / Dimensions / length",
+          "context": null,
+          "sourceUrl": "https://api.fendt.com/techdata/GB/en/1520018/Fendt%20500%20Vario%20Gen4"
+        },
+        {
+          "name": "cab_height_without_guidance",
+          "value": "2975",
+          "unit": "mm",
+          "locator": "516 Vario column / Dimensions / cab height",
+          "context": "Standard tyres, without Fendt Guide",
+          "sourceUrl": "https://api.fendt.com/techdata/GB/en/1520018/Fendt%20500%20Vario%20Gen4"
+        },
+        {
+          "name": "cab_height_with_guidance",
+          "value": "3025",
+          "unit": "mm",
+          "locator": "516 Vario column / Dimensions / cab height",
+          "context": "Standard tyres, with Fendt Guide",
+          "sourceUrl": "https://api.fendt.com/techdata/GB/en/1520018/Fendt%20500%20Vario%20Gen4"
+        },
+        {
+          "name": "maximum_ground_clearance",
+          "value": "470",
+          "unit": "mm",
+          "locator": "516 Vario column / Dimensions / maximum clearance",
+          "context": null,
+          "sourceUrl": "https://api.fendt.com/techdata/GB/en/1520018/Fendt%20500%20Vario%20Gen4"
+        },
+        {
+          "name": "wheelbase",
+          "value": "2560",
+          "unit": "mm",
+          "locator": "516 Vario column / Dimensions / wheelbase",
+          "context": null,
+          "sourceUrl": "https://api.fendt.com/techdata/GB/en/1520018/Fendt%20500%20Vario%20Gen4"
         }
       ],
       "notes": [
-        "Secondary OEM source https://www.fendt.com/uk/agricultural-machinery/tractors/fendt-500-vario-gen4 supports PTO, weights, lift and optional pump. No automatic assignment of existing global 516 draft; generation/market identity must be reconciled."
-      ]
+        "Secondary OEM source https://www.fendt.com/uk/agricultural-machinery/tractors/fendt-500-vario-gen4 supports PTO, weights, lift and optional pump. No automatic assignment of existing global 516 draft; generation/market identity must be reconciled.",
+        "Official detailed HTML table re-read (engine through weights); 109 L/min base pump and 152 L/min option are not interchangeable. Turning value withheld: technical table labels 10.1 m radius while overview calls it turning circle. Do not resolve by guessing."
+      ],
+      "sourceRead": "Official UK technical HTML re-read 2026-11-28; original fields reviewed; catalogue identity and canonical mapping pending"
     },
     {
       "brand": "CLAAS",
@@ -1357,11 +1973,21 @@
           "unit": "mm",
           "locator": "Maneuverability / short wheelbase cab",
           "context": "Does not apply to OOS"
+        },
+        {
+          "name": "turning_radius_cab",
+          "value": "4.3",
+          "unit": "m",
+          "locator": "Features / manoeuvrability",
+          "context": "Short-wheelbase cab only; does not apply to open station",
+          "sourceUrl": "https://www.deere.com.au/en/tractors/utility-tractors/6-family-utility-tractors/6m-125-tractor/"
         }
       ],
       "notes": [
-        "Existing global draft headline 135 is max, not rated; do not change global record without market identity review."
-      ]
+        "Existing global draft headline 135 is max, not rated; do not change global record without market identity review.",
+        "Manufacturer describes IPM applicability to qualifying PTO/transport operations and optional hydraulic IPM; not permanent additional power. The 4.3 m turning radius is cab-specific."
+      ],
+      "sourceRead": "Official AU HTML re-read 2026-11-28; product header and feature text matched; catalogue identity pending"
     },
     {
       "brand": "Kubota",
@@ -1534,11 +2160,125 @@
           "unit": "count",
           "locator": "Power Take Off Shaft / Rear PTO",
           "context": null
+        },
+        {
+          "name": "engine_bore",
+          "value": "94",
+          "unit": "mm",
+          "locator": "Engine / bore and stroke",
+          "context": null,
+          "sourceUrl": "https://kubota.com.ph/product/m7040/"
+        },
+        {
+          "name": "engine_stroke",
+          "value": "120",
+          "unit": "mm",
+          "locator": "Engine / bore and stroke",
+          "context": null,
+          "sourceUrl": "https://kubota.com.ph/product/m7040/"
+        },
+        {
+          "name": "engine_oil_capacity",
+          "value": "11",
+          "unit": "L",
+          "locator": "Engine / crankcase",
+          "context": "With filter",
+          "sourceUrl": "https://kubota.com.ph/product/m7040/"
+        },
+        {
+          "name": "engine_coolant_capacity",
+          "value": "8",
+          "unit": "L",
+          "locator": "Engine / coolant",
+          "context": null,
+          "sourceUrl": "https://kubota.com.ph/product/m7040/"
+        },
+        {
+          "name": "transmission_oil_capacity",
+          "value": "56",
+          "unit": "L",
+          "locator": "Engine / transmission case",
+          "context": null,
+          "sourceUrl": "https://kubota.com.ph/product/m7040/"
+        },
+        {
+          "name": "front_track",
+          "value": "1520",
+          "unit": "mm",
+          "locator": "Dimensions / tread",
+          "context": null,
+          "sourceUrl": "https://kubota.com.ph/product/m7040/"
+        },
+        {
+          "name": "rear_track",
+          "value": "1520–1720",
+          "unit": "mm",
+          "locator": "Dimensions / tread",
+          "context": null,
+          "sourceUrl": "https://kubota.com.ph/product/m7040/"
+        },
+        {
+          "name": "front_tyres",
+          "value": "9.5-24",
+          "unit": null,
+          "locator": "Travel system / tyre",
+          "context": null,
+          "sourceUrl": "https://kubota.com.ph/product/m7040/"
+        },
+        {
+          "name": "rear_tyres",
+          "value": "16.9-30",
+          "unit": null,
+          "locator": "Travel system / tyre",
+          "context": null,
+          "sourceUrl": "https://kubota.com.ph/product/m7040/"
+        },
+        {
+          "name": "steering",
+          "value": "Hydraulic power steering",
+          "unit": null,
+          "locator": "Travel system / steering",
+          "context": null,
+          "sourceUrl": "https://kubota.com.ph/product/m7040/"
+        },
+        {
+          "name": "clutch",
+          "value": "Dry single plate",
+          "unit": null,
+          "locator": "Travel system / clutch",
+          "context": null,
+          "sourceUrl": "https://kubota.com.ph/product/m7040/"
+        },
+        {
+          "name": "brake_type",
+          "value": "Mechanical multiple wet discs",
+          "unit": null,
+          "locator": "Travel system / brake",
+          "context": null,
+          "sourceUrl": "https://kubota.com.ph/product/m7040/"
+        },
+        {
+          "name": "hydraulic_control",
+          "value": "Position, draft and mixed control",
+          "unit": null,
+          "locator": "Hydraulic unit / control",
+          "context": "Top link sensing",
+          "sourceUrl": "https://kubota.com.ph/product/m7040/"
+        },
+        {
+          "name": "engine_speed_at_rear_pto",
+          "value": "2205",
+          "unit": "rpm",
+          "locator": "PTO / shaft and engine speed",
+          "context": "At 540 PTO rpm",
+          "sourceUrl": "https://kubota.com.ph/product/m7040/"
         }
       ],
       "notes": [
-        "Gross power cell is blank. Do not infer from marketed 70HP label or other region manual."
-      ]
+        "Gross power cell is blank. Do not infer from marketed 70HP label or other region manual.",
+        "Original HTML has blank gross power and turning radius fields: remain unknown. Source states weight but not weight type. Both lift rows remain separate."
+      ],
+      "sourceRead": "Official Philippines HTML re-read 2026-11-28; technical table matched; catalogue admission pending"
     },
     {
       "brand": "Kubota",
