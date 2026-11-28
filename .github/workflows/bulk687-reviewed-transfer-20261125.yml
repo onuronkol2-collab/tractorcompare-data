@@ -1,0 +1,72 @@
+name: TractorVS six reviewed batch photographs transfer (no deploy)
+on:
+  pull_request:
+    branches: [main]
+    paths: ['.github/workflows/bulk687-reviewed-transfer-20261125.yml']
+permissions:
+  contents: read
+  actions: read
+jobs:
+  transfer:
+    if: github.head_ref == 'photos/bulk687-reviewed-transfer-20261125' && github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    name: Transfer ${{ matrix.photo.id }}
+    strategy:
+      fail-fast: false
+      max-parallel: 3
+      matrix:
+        photo:
+          - candidate: 'candidate-006'
+            id: 'basak-2055-kompakt-marcelx42-2023'
+            sha: 'ceaecc7a4e0455bbca2f55d67970d1efac18be95a16a056cbda8b394b0e5ba79'
+          - candidate: 'candidate-005'
+            id: 'basak-2055-rear-mbone-2023'
+            sha: 'fbe3a6ab8878acc7648e50ac77a1eba80c70ba14bb8e8bd4aa2831ca5e3e95ee'
+          - candidate: 'candidate-007'
+            id: 'bobcat-ct2540-marcelx42-2025'
+            sha: '464ced9cf6f5f4aef444dd6c746238484582129b08e04ed02c4e13d987782415'
+          - candidate: 'candidate-008'
+            id: 'bobcat-ct4058-marcelx42-2025'
+            sha: 'c9e8549ee3c8e17f5916bef52d18c05e78267b3940bd759decd2f26653283cdc'
+          - candidate: 'candidate-009'
+            id: 'basak-3026-front-marcelx42-2025'
+            sha: '82bff80f67a77f1f2a03059c434179bb90a8676cb26d096113eb6d46f11afc85'
+          - candidate: 'candidate-010'
+            id: 'basak-3026-rear-marcelx42-2025'
+            sha: '96b1bf0693c83079a417e996fc6f289a1175df2de49fdda03679be7fbf9bf969'
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: tractorvs-bulk-missing-photo-review-20261125
+          run-id: 45646293705
+          github-token: ${{ github.token }}
+          path: reviewed
+      - name: Verify reviewed source and transfer only its three public licensed JPEGs
+        env:
+          CANDIDATE: ${{ matrix.photo.candidate }}
+          PHOTO_ID: ${{ matrix.photo.id }}
+          SOURCE_SHA: ${{ matrix.photo.sha }}
+        run: |
+          python3 - <<'PY'
+          import json,hashlib,base64,os,re
+          from pathlib import Path
+          root=Path("reviewed")
+          report=json.loads((root/"report.json").read_text())
+          name=os.environ["CANDIDATE"];fid=os.environ["PHOTO_ID"]
+          assert re.fullmatch(r"candidate-[0-9]{3}",name) and re.fullmatch(r"[a-z0-9-]+",fid)
+          rows=[r for r in report["entries"] if r.get("file")==name+".jpg"]
+          assert len(rows)==1
+          row=rows[0]
+          assert row["decoded"] and row["originalSha256"]==os.environ["SOURCE_SHA"]
+          assert row["license"]=="CC BY-SA 4.0" and row["credit"]=="Own work" and len(row["targets"])==1
+          assert [d["width"] for d in row["derivatives"]]==[480,960,1920]
+          print("PUBLIC_REVIEWED_SOURCE "+json.dumps({k:row[k] for k in ["title","sourcePage","sourceUrl","photographer","license","licenseUrl","description","credit","originalSha256","verifiedSha1","originalBytes","width","height","decodedFormat","decodedFrames","selectedFrame","targets"]}),flush=True)
+          for d in row["derivatives"]:
+              p=root/"derivatives"/d["file"];b=p.read_bytes()
+              assert len(b)==d["bytes"] and hashlib.sha256(b).hexdigest()==d["sha256"] and b[:3]==b"\xff\xd8\xff" and b[-2:]==b"\xff\xd9"
+              f=fid+"-"+str(d["width"])+".jpg"
+              enc=base64.b64encode(b).decode("ascii");chunks=[enc[i:i+12000] for i in range(0,len(enc),12000)]
+              print("PUBLIC_PHOTO_META "+json.dumps({**d,"file":f,"chunks":len(chunks)}),flush=True)
+              for i,c in enumerate(chunks):print(f"PUBLIC_PHOTO_CHUNK {f} {i} {c}",flush=True)
+          PY
