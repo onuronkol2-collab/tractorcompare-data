@@ -197,3 +197,39 @@ test("full-size failure prefers existing exact local 960 bytes over further netw
  });
  assert.deepEqual(calls,[upstream1920]);
 });
+
+test("all 72 legacy approvals retain exact local 480 on full-size failure and provider hold",async()=>{
+ const {readFileSync,existsSync}=await import("node:fs");
+ const {APPROVED_TRACTOR_PHOTOS}=await import("../src/lib/tractor-photos.ts");
+ const legacy=APPROVED_TRACTOR_PHOTOS.filter(p=>[960,1920].some(n=>!existsSync(new URL("../public/images/tractors/"+p.fileId+"-"+n+".jpg",import.meta.url))));
+ assert.ok(legacy.length>0);
+ for(const photo of legacy){
+  const p="/images/tractors/"+photo.fileId+"-1920.jpg",sibling=p.replace("-1920.jpg","-480.jpg");
+  const bytes=readFileSync(new URL("../public"+sibling,import.meta.url));
+  assert.ok(bytes.length>10000);assert.equal(bytes[0],255);assert.equal(bytes[1],216);
+  const local={ASSETS:{fetch:async req=>new URL(req.url).pathname===sibling?new Response(bytes,{headers:{"content-type":"image/jpeg"}}):new Response("missing",{status:404})}};
+  const calls=[];
+  await withFetch(async source=>{calls.push(String(source));return new Response("wait",{status:429,headers:{"Retry-After":"60"}});},async()=>{
+   const res=await worker.fetch(new Request("https://tractorvs.com"+p),local);
+   assert.equal(res.status,200,photo.fileId);assert.equal(res.headers.get("X-TractorVS-Image-Fallback"),"480");
+   assert.equal(res.headers.get("X-TractorVS-Image-Source"),"local");assert.match(res.headers.get("Cache-Control"),/s-maxage=1800/);
+   assert.deepEqual(Buffer.from(await res.arrayBuffer()),bytes);
+  });
+  assert.deepEqual(calls,[resolveApprovedPhotoSource(p)]);
+ }
+});
+test("full-size fallback retains remote 960 quality if available; otherwise exact 480 or real failure",async()=>{
+ for(const id of ["tafe-7515-d8c32d69","valtra-a85-af39c01a"]){
+  const p="/images/tractors/"+id+"-1920.jpg",sibling=p.replace("-1920.jpg","-480.jpg");
+  const local={ASSETS:{fetch:async req=>new URL(req.url).pathname===sibling?jpg():new Response("missing",{status:404})}};
+  for(const good of [true,false]){
+   const calls=[];
+   await withFetch(async source=>{calls.push(String(source));return good&&source===resolveApprovedPhotoSource(p.replace("-1920.jpg","-960.jpg"))?jpg():new Response("bad",{status:502});},async()=>{
+    const res=await worker.fetch(new Request("https://tractorvs.com"+p),local);
+    assert.equal(res.status,200);assert.equal(res.headers.get("X-TractorVS-Image-Fallback"),good?"960":"480");
+    assert.equal(res.headers.get("X-TractorVS-Image-Source"),good?null:"local");
+   });
+   assert.deepEqual(calls,[resolveApprovedPhotoSource(p),resolveApprovedPhotoSource(p.replace("-1920.jpg","-960.jpg"))]);
+  }
+ }
+});
