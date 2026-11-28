@@ -13,7 +13,7 @@
       "disposition": "hold_for_review",
       "sourceUrl": "https://erkunttraktor.com.tr/assets/model_dosyalar/pdfs/E%2BCRD5_deutz_brosur.pdf?t=20260313164821",
       "sourceType": "manufacturer",
-      "sourceRead": "PDF text retrieved; screenshot failed",
+      "sourceRead": "Original manufacturer brochure PDF page 2 visually reviewed 2026-11-28; source column and existing observations reconciled. Exact catalogue identity and canonical field mapping remain pending.",
       "identitySourceUrl": "https://erkunttraktor.com.tr/Modeller",
       "specs": [
         {
@@ -32,7 +32,7 @@
         },
         {
           "name": "engine_model",
-          "value": "Deutz TCD 2.9 C5ET55EA",
+          "value": "Deutz TCD 2.9 Lt C5ET55EA",
           "unit": null,
           "locator": "Technical table / Nimet 75 E+ / engine model",
           "context": null
@@ -119,7 +119,7 @@
           "value": "Mechanical",
           "unit": null,
           "locator": "Technical table / Nimet 75 E+ / front differential",
-          "context": null
+          "context": "Brochure row automatic front differential lock (4WD), value mechanical; do not infer locking behavior"
         },
         {
           "name": "rear_differential_lock",
@@ -175,7 +175,7 @@
           "value": "3000",
           "unit": "kg",
           "locator": "Technical table / Nimet 75 E+ / maximum lift",
-          "context": "Measurement point unspecified"
+          "context": "Brochure states maximum hydraulic lifting capacity; rear designation and measurement point not explicit; canonical mapping held"
         },
         {
           "name": "pto_type",
@@ -217,7 +217,7 @@
           "value": "2720",
           "unit": "mm",
           "locator": "Technical table / Nimet 75 E+ / 4WD cab height",
-          "context": null
+          "context": "Cab 4WD row; platform row separately also lists 2720 mm"
         },
         {
           "name": "front_track",
@@ -238,7 +238,7 @@
           "value": "3700",
           "unit": "kg",
           "locator": "Technical table / Nimet 75 E+ / 4WD cab weight",
-          "context": "Without extra weights"
+          "context": "4WD cab, without additional weights"
         }
       ],
       "notes": [
@@ -255,7 +255,7 @@
       "disposition": "hold_for_review",
       "sourceUrl": "https://erkunttraktor.com.tr/assets/model_dosyalar/pdfs/E%2BCRD5_deutz_brosur.pdf?t=20260313164821",
       "sourceType": "manufacturer",
-      "sourceRead": "PDF text retrieved; screenshot failed",
+      "sourceRead": "Original manufacturer brochure PDF page 2 visually reviewed 2026-11-28; source column and existing observations reconciled. Exact catalogue identity and canonical field mapping remain pending.",
       "identitySourceUrl": "https://erkunttraktor.com.tr/Modeller",
       "specs": [
         {
@@ -274,7 +274,7 @@
         },
         {
           "name": "engine_model",
-          "value": "Deutz TCD 2.9 C5VT65E",
+          "value": "Deutz TCD 2.9 L4 C5VT65E",
           "unit": null,
           "locator": "Technical table / Kıymet 90 E+ / engine model",
           "context": null
@@ -340,7 +340,7 @@
           "value": "13",
           "unit": "L",
           "locator": "Technical table / Kıymet 90 E+ / AdBlue",
-          "context": null
+          "context": "Brochure row shows 13; unit not printed, litres inferred, canonical unit held"
         },
         {
           "name": "transmission_type",
@@ -368,7 +368,7 @@
           "value": "Mechanical",
           "unit": null,
           "locator": "Technical table / Kıymet 90 E+ / front differential",
-          "context": null
+          "context": "Brochure row automatic front differential lock (4WD), value mechanical; do not infer locking behavior"
         },
         {
           "name": "rear_differential_lock",
@@ -424,7 +424,7 @@
           "value": "3000",
           "unit": "kg",
           "locator": "Technical table / Kıymet 90 E+ / maximum lift",
-          "context": "Measurement point unspecified"
+          "context": "Brochure states maximum hydraulic lifting capacity; rear designation and measurement point not explicit; canonical mapping held"
         },
         {
           "name": "pto_type",
@@ -466,7 +466,7 @@
           "value": "2720",
           "unit": "mm",
           "locator": "Technical table / Kıymet 90 E+ / 4WD cab height",
-          "context": null
+          "context": "Cab 4WD row; platform row separately also lists 2720 mm"
         },
         {
           "name": "front_track",
@@ -487,7 +487,7 @@
           "value": "3890",
           "unit": "kg",
           "locator": "Technical table / Kıymet 90 E+ / 4WD cab weight",
-          "context": "Without extra weights"
+          "context": "4WD cab, without additional weights"
         }
       ],
       "notes": [
@@ -504,7 +504,7 @@
       "disposition": "hold_for_review",
       "sourceUrl": "https://erkunttraktor.com.tr/assets/model_dosyalar/pdfs/E%2BCRD5_deutz_brosur.pdf?t=20260313164821",
       "sourceType": "manufacturer",
-      "sourceRead": "PDF text retrieved; screenshot failed",
+      "sourceRead": "Original manufacturer brochure PDF page 2 visually reviewed 2026-11-28; source column and existing observations reconciled. Exact catalogue identity and canonical field mapping remain pending.",
       "identitySourceUrl": "https://erkunttraktor.com.tr/Modeller",
       "specs": [
         {
@@ -523,7 +523,7 @@
         },
         {
           "name": "engine_model",
-          "value": "Deutz TCD 2.9 C5VT70E",
+          "value": "Deutz TCD 2.9 L4 C5VT70E",
           "unit": null,
           "locator": "Technical table / Kudret 105 E+ / engine model",
           "context": null
@@ -589,7 +589,7 @@
           "value": "13",
           "unit": "L",
           "locator": "Technical table / Kudret 105 E+ / AdBlue",
-          "context": null
+          "context": "Brochure row shows 13; unit not printed, litres inferred, canonical unit held"
         },
         {
           "name": "transmission_type",
@@ -617,7 +617,7 @@
           "value": "Mechanical",
           "unit": null,
           "locator": "Technical table / Kudret 105 E+ / front differential",
-          "context": null
+          "context": "Brochure row automatic front differential lock (4WD), value mechanical; do not infer locking behavior"
         },
         {
           "name": "rear_differential_lock",
@@ -673,7 +673,7 @@
           "value": "3400",
           "unit": "kg",
           "locator": "Technical table / Kudret 105 E+ / maximum lift",
-          "context": "Measurement point unspecified"
+          "context": "Brochure states maximum hydraulic lifting capacity; rear designation and measurement point not explicit; canonical mapping held"
         },
         {
           "name": "pto_type",
@@ -715,7 +715,7 @@
           "value": "2720",
           "unit": "mm",
           "locator": "Technical table / Kudret 105 E+ / 4WD cab height",
-          "context": null
+          "context": "Cab 4WD row; platform row separately also lists 2720 mm"
         },
         {
           "name": "front_track",
@@ -736,7 +736,7 @@
           "value": "3920",
           "unit": "kg",
           "locator": "Technical table / Kudret 105 E+ / 4WD cab weight",
-          "context": "Without extra weights"
+          "context": "4WD cab, without additional weights"
         }
       ],
       "notes": [

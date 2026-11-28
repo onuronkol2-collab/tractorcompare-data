@@ -2,7 +2,7 @@
   "schema": "tractorvs-historical-price-research-v1",
   "status": "research_only_not_importable",
   "observedListDate": "2026-01-01",
-  "sourceRead": "PDF text, screenshot failed",
+  "sourceRead": "Original PDF text and visual pages 2 and 4 reviewed 2026-11-28; 7/7 existing amounts matched. Historical only; exact catalogue identity and admission gates pending. URL query is not an immutable archive identifier.",
   "observations": [
     {
       "brand": "Erkunt",
@@ -16,9 +16,9 @@
       "taxIncluded": true,
       "taxRatePercent": 10,
       "sourceUrl": "https://erkunttraktor.com.tr/assets/model_dosyalar/2026_fiyat_listesi.pdf?t=1770558457",
-      "locator": "Deutz E+ series / Nimet 75 E+",
+      "locator": "PDF page 4 / DEUTZ E SERİSİ / Nimet 75 E+",
       "status": "historical_research_only",
-      "notes": "Not cash price, dealer quote, current price, availability or lower bound. Original screenshot unavailable. No recommendation scoring or price history import."
+      "notes": "Original dated PDF visual row and amount match. Not cash price, dealer quote, current price, availability or lower bound. Exact catalogue identity and immutable source preservation pending. No recommendation scoring or price history import."
     },
     {
       "brand": "Erkunt",
@@ -32,9 +32,9 @@
       "taxIncluded": true,
       "taxRatePercent": 10,
       "sourceUrl": "https://erkunttraktor.com.tr/assets/model_dosyalar/2026_fiyat_listesi.pdf?t=1770558457",
-      "locator": "Deutz E+ series / Kıymet 90 E+",
+      "locator": "PDF page 4 / DEUTZ E SERİSİ / Kıymet 90 E+",
       "status": "historical_research_only",
-      "notes": "Not cash price, dealer quote, current price, availability or lower bound. Original screenshot unavailable. No recommendation scoring or price history import."
+      "notes": "Original dated PDF visual row and amount match. Not cash price, dealer quote, current price, availability or lower bound. Exact catalogue identity and immutable source preservation pending. No recommendation scoring or price history import."
     },
     {
       "brand": "Erkunt",
@@ -48,9 +48,9 @@
       "taxIncluded": true,
       "taxRatePercent": 10,
       "sourceUrl": "https://erkunttraktor.com.tr/assets/model_dosyalar/2026_fiyat_listesi.pdf?t=1770558457",
-      "locator": "Deutz E+ series / Kudret 105 E+",
+      "locator": "PDF page 4 / DEUTZ E SERİSİ / Kudret 105 E+",
       "status": "historical_research_only",
-      "notes": "Not cash price, dealer quote, current price, availability or lower bound. Original screenshot unavailable. No recommendation scoring or price history import."
+      "notes": "Original dated PDF visual row and amount match. Not cash price, dealer quote, current price, availability or lower bound. Exact catalogue identity and immutable source preservation pending. No recommendation scoring or price history import."
     },
     {
       "brand": "Erkunt",
@@ -64,9 +64,9 @@
       "taxIncluded": true,
       "taxRatePercent": 10,
       "sourceUrl": "https://erkunttraktor.com.tr/assets/model_dosyalar/2026_fiyat_listesi.pdf?t=1770558457",
-      "locator": "eCapra E+ series / Nimet 75 E+",
+      "locator": "PDF page 2 / E-CAPRA E+ SERİSİ / Nimet 75 E+",
       "status": "historical_research_only",
-      "notes": "Not cash price, dealer quote, current price, availability or lower bound. Original screenshot unavailable. No recommendation scoring or price history import."
+      "notes": "Original dated PDF visual row and amount match. Not cash price, dealer quote, current price, availability or lower bound. Exact catalogue identity and immutable source preservation pending. No recommendation scoring or price history import."
     },
     {
       "brand": "Erkunt",
@@ -80,9 +80,9 @@
       "taxIncluded": true,
       "taxRatePercent": 10,
       "sourceUrl": "https://erkunttraktor.com.tr/assets/model_dosyalar/2026_fiyat_listesi.pdf?t=1770558457",
-      "locator": "eCapra E+ series / Servet 85 E+",
+      "locator": "PDF page 2 / E-CAPRA E+ SERİSİ / Servet 85 E+",
       "status": "historical_research_only",
-      "notes": "Not cash price, dealer quote, current price, availability or lower bound. Original screenshot unavailable. No recommendation scoring or price history import."
+      "notes": "Original dated PDF visual row and amount match. Not cash price, dealer quote, current price, availability or lower bound. Exact catalogue identity and immutable source preservation pending. No recommendation scoring or price history import."
     },
     {
       "brand": "Erkunt",
@@ -96,9 +96,9 @@
       "taxIncluded": true,
       "taxRatePercent": 10,
       "sourceUrl": "https://erkunttraktor.com.tr/assets/model_dosyalar/2026_fiyat_listesi.pdf?t=1770558457",
-      "locator": "eCapra E+ series / Kıymet 90 E+",
+      "locator": "PDF page 2 / E-CAPRA E+ SERİSİ / Kıymet 90 E+",
       "status": "historical_research_only",
-      "notes": "Not cash price, dealer quote, current price, availability or lower bound. Original screenshot unavailable. No recommendation scoring or price history import."
+      "notes": "Original dated PDF visual row and amount match. Not cash price, dealer quote, current price, availability or lower bound. Exact catalogue identity and immutable source preservation pending. No recommendation scoring or price history import."
     },
     {
       "brand": "Erkunt",
@@ -112,9 +112,9 @@
       "taxIncluded": true,
       "taxRatePercent": 10,
       "sourceUrl": "https://erkunttraktor.com.tr/assets/model_dosyalar/2026_fiyat_listesi.pdf?t=1770558457",
-      "locator": "eCapra E+ series / Kudret 105 E+",
+      "locator": "PDF page 2 / E-CAPRA E+ SERİSİ / Kudret 105 E+",
       "status": "historical_research_only",
-      "notes": "Not cash price, dealer quote, current price, availability or lower bound. Original screenshot unavailable. No recommendation scoring or price history import."
+      "notes": "Original dated PDF visual row and amount match. Not cash price, dealer quote, current price, availability or lower bound. Exact catalogue identity and immutable source preservation pending. No recommendation scoring or price history import."
     }
   ]
 }
