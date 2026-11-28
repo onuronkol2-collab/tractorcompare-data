@@ -1,0 +1,4407 @@
+{
+  "schema": "tractorvs-research-evidence-v1",
+  "researchedOn": "2026-11-28",
+  "status": "research_only_not_importable",
+  "sourcePolicy": "OEM technical observations only. No inferred year, independent test or reliability claims. Values and table context require identity and admission review. No database writes.",
+  "models": [
+    {
+      "brand": "Tümosan",
+      "model": "8165",
+      "variant": "8100 series / Stage IIIA / 4WD cab / 12F/12R",
+      "market": "Türkiye",
+      "modelYear": null,
+      "sourceUrl": "https://www.tumosan.com.tr/tr/urun-kategori/xxx-8",
+      "sourceType": "manufacturer",
+      "existingDraftId": null,
+      "disposition": "hold_for_review",
+      "specs": [
+        {
+          "name": "emissions_standard",
+          "value": "Stage IIIA",
+          "unit": null,
+          "locator": "8165 / Motor / emissions",
+          "context": null
+        },
+        {
+          "name": "rated_engine_power",
+          "value": "65",
+          "unit": "HP",
+          "locator": "8165 / Motor / nominal output",
+          "context": "Manufacturer HP label, standard and rated rpm unspecified"
+        },
+        {
+          "name": "engine_cylinders",
+          "value": "3",
+          "unit": "count",
+          "locator": "8165 / Motor / cylinders",
+          "context": null
+        },
+        {
+          "name": "engine_aspiration",
+          "value": "Turbo intercooler",
+          "unit": null,
+          "locator": "8165 / Motor / aspiration",
+          "context": null
+        },
+        {
+          "name": "engine_displacement",
+          "value": "2.9",
+          "unit": "L",
+          "locator": "8165 / Motor / displacement",
+          "context": null
+        },
+        {
+          "name": "engine_torque",
+          "value": "260",
+          "unit": "Nm",
+          "locator": "8165 / Motor / peak torque",
+          "context": "at 1500 rpm"
+        },
+        {
+          "name": "peak_torque_speed",
+          "value": "1500",
+          "unit": "rpm",
+          "locator": "8165 / Motor / peak torque speed",
+          "context": null
+        },
+        {
+          "name": "fuel_tank_capacity",
+          "value": "115",
+          "unit": "L",
+          "locator": "8165 / Motor / tank",
+          "context": null
+        },
+        {
+          "name": "transmission_type",
+          "value": "Mechanical synchromesh",
+          "unit": null,
+          "locator": "8165 / Transmission / gearbox",
+          "context": null
+        },
+        {
+          "name": "forward_gears",
+          "value": "12",
+          "unit": "count",
+          "locator": "8165 / Transmission / forward gears",
+          "context": null
+        },
+        {
+          "name": "reverse_gears",
+          "value": "12",
+          "unit": "count",
+          "locator": "8165 / Transmission / reverse gears",
+          "context": null
+        },
+        {
+          "name": "rear_pto_speeds",
+          "value": "540/540E",
+          "unit": "rpm",
+          "locator": "8165 / PTO / output speeds",
+          "context": null
+        },
+        {
+          "name": "pto_type",
+          "value": "Independent",
+          "unit": null,
+          "locator": "8165 / PTO / type",
+          "context": null
+        },
+        {
+          "name": "pto_control",
+          "value": "Mechanical",
+          "unit": null,
+          "locator": "8165 / PTO / control",
+          "context": null
+        },
+        {
+          "name": "engine_speed_at_540_pto",
+          "value": "2225",
+          "unit": "rpm",
+          "locator": "8165 / PTO / engine speed at 540",
+          "context": null
+        },
+        {
+          "name": "engine_speed_at_540e_pto",
+          "value": "1590",
+          "unit": "rpm",
+          "locator": "8165 / PTO / engine speed at 540E",
+          "context": null
+        },
+        {
+          "name": "hydraulic_outlet_count",
+          "value": "4",
+          "unit": "count",
+          "locator": "8165 / Hydraulics / outlets",
+          "context": "Not flow rate or spool count"
+        },
+        {
+          "name": "rear_lift_capacity",
+          "value": "2200",
+          "unit": "kg",
+          "locator": "8165 / Hydraulics / lift",
+          "context": "Measurement point unspecified"
+        },
+        {
+          "name": "unladen_weight",
+          "value": "3500",
+          "unit": "kg",
+          "locator": "8165 / Weight / 4WD cab",
+          "context": "OEM row has odd count×kg label; verify with brochure before publication"
+        }
+      ],
+      "notes": [
+        "Legacy Stage IIIA only; no assumed model year or current availability.",
+        "Do NOT merge into Stage V draft acd7b4a1-311c-4836-90d1-94e175578e6e.",
+        "Manufacturer category comparison table, not marketing feature text."
+      ]
+    },
+    {
+      "brand": "Tümosan",
+      "model": "8175",
+      "variant": "8100 series / Stage IIIA / 4WD cab / 12F/12R",
+      "market": "Türkiye",
+      "modelYear": null,
+      "sourceUrl": "https://www.tumosan.com.tr/tr/urun-kategori/xxx-8",
+      "sourceType": "manufacturer",
+      "existingDraftId": null,
+      "disposition": "hold_for_review",
+      "specs": [
+        {
+          "name": "emissions_standard",
+          "value": "Stage IIIA",
+          "unit": null,
+          "locator": "8175 / Motor / emissions",
+          "context": null
+        },
+        {
+          "name": "rated_engine_power",
+          "value": "76",
+          "unit": "HP",
+          "locator": "8175 / Motor / nominal output",
+          "context": "Manufacturer HP label, standard and rated rpm unspecified"
+        },
+        {
+          "name": "engine_cylinders",
+          "value": "4",
+          "unit": "count",
+          "locator": "8175 / Motor / cylinders",
+          "context": null
+        },
+        {
+          "name": "engine_aspiration",
+          "value": "Turbo intercooler",
+          "unit": null,
+          "locator": "8175 / Motor / aspiration",
+          "context": null
+        },
+        {
+          "name": "engine_displacement",
+          "value": "3.9",
+          "unit": "L",
+          "locator": "8175 / Motor / displacement",
+          "context": null
+        },
+        {
+          "name": "engine_torque",
+          "value": "320",
+          "unit": "Nm",
+          "locator": "8175 / Motor / peak torque",
+          "context": "at 1500 rpm"
+        },
+        {
+          "name": "peak_torque_speed",
+          "value": "1500",
+          "unit": "rpm",
+          "locator": "8175 / Motor / peak torque speed",
+          "context": null
+        },
+        {
+          "name": "fuel_tank_capacity",
+          "value": "115",
+          "unit": "L",
+          "locator": "8175 / Motor / tank",
+          "context": null
+        },
+        {
+          "name": "transmission_type",
+          "value": "Mechanical synchromesh",
+          "unit": null,
+          "locator": "8175 / Transmission / gearbox",
+          "context": null
+        },
+        {
+          "name": "forward_gears",
+          "value": "12",
+          "unit": "count",
+          "locator": "8175 / Transmission / forward gears",
+          "context": null
+        },
+        {
+          "name": "reverse_gears",
+          "value": "12",
+          "unit": "count",
+          "locator": "8175 / Transmission / reverse gears",
+          "context": null
+        },
+        {
+          "name": "rear_pto_speeds",
+          "value": "540/540E",
+          "unit": "rpm",
+          "locator": "8175 / PTO / output speeds",
+          "context": null
+        },
+        {
+          "name": "pto_type",
+          "value": "Independent",
+          "unit": null,
+          "locator": "8175 / PTO / type",
+          "context": null
+        },
+        {
+          "name": "pto_control",
+          "value": "Mechanical",
+          "unit": null,
+          "locator": "8175 / PTO / control",
+          "context": null
+        },
+        {
+          "name": "engine_speed_at_540_pto",
+          "value": "2225",
+          "unit": "rpm",
+          "locator": "8175 / PTO / engine speed at 540",
+          "context": null
+        },
+        {
+          "name": "engine_speed_at_540e_pto",
+          "value": "1590",
+          "unit": "rpm",
+          "locator": "8175 / PTO / engine speed at 540E",
+          "context": null
+        },
+        {
+          "name": "hydraulic_outlet_count",
+          "value": "4",
+          "unit": "count",
+          "locator": "8175 / Hydraulics / outlets",
+          "context": "Not flow rate or spool count"
+        },
+        {
+          "name": "rear_lift_capacity",
+          "value": "2200",
+          "unit": "kg",
+          "locator": "8175 / Hydraulics / lift",
+          "context": "Measurement point unspecified"
+        },
+        {
+          "name": "unladen_weight",
+          "value": "3500",
+          "unit": "kg",
+          "locator": "8175 / Weight / 4WD cab",
+          "context": "OEM row has odd count×kg label; verify with brochure before publication"
+        }
+      ],
+      "notes": [
+        "Legacy Stage IIIA only; no assumed model year or current availability.",
+        "Do NOT merge into Stage V draft 2ff304db-1925-40df-a15a-3c3d49c66c08.",
+        "Manufacturer category comparison table, not marketing feature text."
+      ]
+    },
+    {
+      "brand": "Tümosan",
+      "model": "8185",
+      "variant": "8100 series / Stage IIIA / 4WD cab / 12F/12R",
+      "market": "Türkiye",
+      "modelYear": null,
+      "sourceUrl": "https://www.tumosan.com.tr/tr/urun-kategori/xxx-8",
+      "sourceType": "manufacturer",
+      "existingDraftId": null,
+      "disposition": "hold_for_review",
+      "specs": [
+        {
+          "name": "emissions_standard",
+          "value": "Stage IIIA",
+          "unit": null,
+          "locator": "8185 / Motor / emissions",
+          "context": null
+        },
+        {
+          "name": "rated_engine_power",
+          "value": "85",
+          "unit": "HP",
+          "locator": "8185 / Motor / nominal output",
+          "context": "Manufacturer HP label, standard and rated rpm unspecified"
+        },
+        {
+          "name": "engine_cylinders",
+          "value": "4",
+          "unit": "count",
+          "locator": "8185 / Motor / cylinders",
+          "context": null
+        },
+        {
+          "name": "engine_aspiration",
+          "value": "Turbo intercooler",
+          "unit": null,
+          "locator": "8185 / Motor / aspiration",
+          "context": null
+        },
+        {
+          "name": "engine_displacement",
+          "value": "3.9",
+          "unit": "L",
+          "locator": "8185 / Motor / displacement",
+          "context": null
+        },
+        {
+          "name": "engine_torque",
+          "value": "340",
+          "unit": "Nm",
+          "locator": "8185 / Motor / peak torque",
+          "context": "at 1500 rpm"
+        },
+        {
+          "name": "peak_torque_speed",
+          "value": "1500",
+          "unit": "rpm",
+          "locator": "8185 / Motor / peak torque speed",
+          "context": null
+        },
+        {
+          "name": "fuel_tank_capacity",
+          "value": "115",
+          "unit": "L",
+          "locator": "8185 / Motor / tank",
+          "context": null
+        },
+        {
+          "name": "transmission_type",
+          "value": "Mechanical synchromesh",
+          "unit": null,
+          "locator": "8185 / Transmission / gearbox",
+          "context": null
+        },
+        {
+          "name": "forward_gears",
+          "value": "12",
+          "unit": "count",
+          "locator": "8185 / Transmission / forward gears",
+          "context": null
+        },
+        {
+          "name": "reverse_gears",
+          "value": "12",
+          "unit": "count",
+          "locator": "8185 / Transmission / reverse gears",
+          "context": null
+        },
+        {
+          "name": "rear_pto_speeds",
+          "value": "540/540E",
+          "unit": "rpm",
+          "locator": "8185 / PTO / output speeds",
+          "context": null
+        },
+        {
+          "name": "pto_type",
+          "value": "Independent",
+          "unit": null,
+          "locator": "8185 / PTO / type",
+          "context": null
+        },
+        {
+          "name": "pto_control",
+          "value": "Mechanical",
+          "unit": null,
+          "locator": "8185 / PTO / control",
+          "context": null
+        },
+        {
+          "name": "engine_speed_at_540_pto",
+          "value": "2225",
+          "unit": "rpm",
+          "locator": "8185 / PTO / engine speed at 540",
+          "context": null
+        },
+        {
+          "name": "engine_speed_at_540e_pto",
+          "value": "1590",
+          "unit": "rpm",
+          "locator": "8185 / PTO / engine speed at 540E",
+          "context": null
+        },
+        {
+          "name": "hydraulic_outlet_count",
+          "value": "4",
+          "unit": "count",
+          "locator": "8185 / Hydraulics / outlets",
+          "context": "Not flow rate or spool count"
+        },
+        {
+          "name": "rear_lift_capacity",
+          "value": "4000",
+          "unit": "kg",
+          "locator": "8185 / Hydraulics / lift",
+          "context": "Measurement point unspecified"
+        },
+        {
+          "name": "unladen_weight",
+          "value": "3500",
+          "unit": "kg",
+          "locator": "8185 / Weight / 4WD cab",
+          "context": "OEM row has odd count×kg label; verify with brochure before publication"
+        }
+      ],
+      "notes": [
+        "Legacy Stage IIIA only; no assumed model year or current availability.",
+        "Do NOT merge into Stage V draft d3e4a84c-249e-4dde-aa89-2f71a6ca529f.",
+        "Manufacturer category comparison table, not marketing feature text."
+      ]
+    },
+    {
+      "brand": "Tümosan",
+      "model": "8195",
+      "variant": "8100 series / Stage IIIA / 4WD cab / 12F/12R",
+      "market": "Türkiye",
+      "modelYear": null,
+      "sourceUrl": "https://www.tumosan.com.tr/tr/urun-kategori/xxx-8",
+      "sourceType": "manufacturer",
+      "existingDraftId": null,
+      "disposition": "hold_for_review",
+      "specs": [
+        {
+          "name": "emissions_standard",
+          "value": "Stage IIIA",
+          "unit": null,
+          "locator": "8195 / Motor / emissions",
+          "context": null
+        },
+        {
+          "name": "rated_engine_power",
+          "value": "95",
+          "unit": "HP",
+          "locator": "8195 / Motor / nominal output",
+          "context": "Manufacturer HP label, standard and rated rpm unspecified"
+        },
+        {
+          "name": "engine_cylinders",
+          "value": "4",
+          "unit": "count",
+          "locator": "8195 / Motor / cylinders",
+          "context": null
+        },
+        {
+          "name": "engine_aspiration",
+          "value": "Turbo intercooler",
+          "unit": null,
+          "locator": "8195 / Motor / aspiration",
+          "context": null
+        },
+        {
+          "name": "engine_displacement",
+          "value": "3.9",
+          "unit": "L",
+          "locator": "8195 / Motor / displacement",
+          "context": null
+        },
+        {
+          "name": "engine_torque",
+          "value": "370",
+          "unit": "Nm",
+          "locator": "8195 / Motor / peak torque",
+          "context": "at 1500 rpm"
+        },
+        {
+          "name": "peak_torque_speed",
+          "value": "1500",
+          "unit": "rpm",
+          "locator": "8195 / Motor / peak torque speed",
+          "context": null
+        },
+        {
+          "name": "fuel_tank_capacity",
+          "value": "115",
+          "unit": "L",
+          "locator": "8195 / Motor / tank",
+          "context": null
+        },
+        {
+          "name": "transmission_type",
+          "value": "Mechanical synchromesh",
+          "unit": null,
+          "locator": "8195 / Transmission / gearbox",
+          "context": null
+        },
+        {
+          "name": "forward_gears",
+          "value": "12",
+          "unit": "count",
+          "locator": "8195 / Transmission / forward gears",
+          "context": null
+        },
+        {
+          "name": "reverse_gears",
+          "value": "12",
+          "unit": "count",
+          "locator": "8195 / Transmission / reverse gears",
+          "context": null
+        },
+        {
+          "name": "rear_pto_speeds",
+          "value": "540/540E",
+          "unit": "rpm",
+          "locator": "8195 / PTO / output speeds",
+          "context": null
+        },
+        {
+          "name": "pto_type",
+          "value": "Independent",
+          "unit": null,
+          "locator": "8195 / PTO / type",
+          "context": null
+        },
+        {
+          "name": "pto_control",
+          "value": "Mechanical",
+          "unit": null,
+          "locator": "8195 / PTO / control",
+          "context": null
+        },
+        {
+          "name": "engine_speed_at_540_pto",
+          "value": "2225",
+          "unit": "rpm",
+          "locator": "8195 / PTO / engine speed at 540",
+          "context": null
+        },
+        {
+          "name": "engine_speed_at_540e_pto",
+          "value": "1590",
+          "unit": "rpm",
+          "locator": "8195 / PTO / engine speed at 540E",
+          "context": null
+        },
+        {
+          "name": "hydraulic_outlet_count",
+          "value": "4",
+          "unit": "count",
+          "locator": "8195 / Hydraulics / outlets",
+          "context": "Not flow rate or spool count"
+        },
+        {
+          "name": "rear_lift_capacity",
+          "value": "4000",
+          "unit": "kg",
+          "locator": "8195 / Hydraulics / lift",
+          "context": "Measurement point unspecified"
+        },
+        {
+          "name": "unladen_weight",
+          "value": "3500",
+          "unit": "kg",
+          "locator": "8195 / Weight / 4WD cab",
+          "context": "OEM row has odd count×kg label; verify with brochure before publication"
+        }
+      ],
+      "notes": [
+        "Legacy Stage IIIA only; no assumed model year or current availability.",
+        "Do NOT merge into Stage V draft ff05cb89-38fa-476d-a2b5-6f1f56a7c117.",
+        "Manufacturer category comparison table, not marketing feature text."
+      ]
+    },
+    {
+      "brand": "Tümosan",
+      "model": "8105",
+      "variant": "8100 series / Stage IIIA / 4WD cab / 12F/12R",
+      "market": "Türkiye",
+      "modelYear": null,
+      "sourceUrl": "https://www.tumosan.com.tr/tr/urun-kategori/xxx-8",
+      "sourceType": "manufacturer",
+      "existingDraftId": null,
+      "disposition": "hold_for_review",
+      "specs": [
+        {
+          "name": "emissions_standard",
+          "value": "Stage IIIA",
+          "unit": null,
+          "locator": "8105 / Motor / emissions",
+          "context": null
+        },
+        {
+          "name": "rated_engine_power",
+          "value": "105",
+          "unit": "HP",
+          "locator": "8105 / Motor / nominal output",
+          "context": "Manufacturer HP label, standard and rated rpm unspecified"
+        },
+        {
+          "name": "engine_cylinders",
+          "value": "4",
+          "unit": "count",
+          "locator": "8105 / Motor / cylinders",
+          "context": null
+        },
+        {
+          "name": "engine_aspiration",
+          "value": "Turbo intercooler",
+          "unit": null,
+          "locator": "8105 / Motor / aspiration",
+          "context": null
+        },
+        {
+          "name": "engine_displacement",
+          "value": "3.9",
+          "unit": "L",
+          "locator": "8105 / Motor / displacement",
+          "context": null
+        },
+        {
+          "name": "engine_torque",
+          "value": "400",
+          "unit": "Nm",
+          "locator": "8105 / Motor / peak torque",
+          "context": "at 1500 rpm"
+        },
+        {
+          "name": "peak_torque_speed",
+          "value": "1500",
+          "unit": "rpm",
+          "locator": "8105 / Motor / peak torque speed",
+          "context": null
+        },
+        {
+          "name": "fuel_tank_capacity",
+          "value": "115",
+          "unit": "L",
+          "locator": "8105 / Motor / tank",
+          "context": null
+        },
+        {
+          "name": "transmission_type",
+          "value": "Mechanical synchromesh",
+          "unit": null,
+          "locator": "8105 / Transmission / gearbox",
+          "context": null
+        },
+        {
+          "name": "forward_gears",
+          "value": "12",
+          "unit": "count",
+          "locator": "8105 / Transmission / forward gears",
+          "context": null
+        },
+        {
+          "name": "reverse_gears",
+          "value": "12",
+          "unit": "count",
+          "locator": "8105 / Transmission / reverse gears",
+          "context": null
+        },
+        {
+          "name": "rear_pto_speeds",
+          "value": "540/540E",
+          "unit": "rpm",
+          "locator": "8105 / PTO / output speeds",
+          "context": null
+        },
+        {
+          "name": "pto_type",
+          "value": "Independent",
+          "unit": null,
+          "locator": "8105 / PTO / type",
+          "context": null
+        },
+        {
+          "name": "pto_control",
+          "value": "Mechanical",
+          "unit": null,
+          "locator": "8105 / PTO / control",
+          "context": null
+        },
+        {
+          "name": "engine_speed_at_540_pto",
+          "value": "2225",
+          "unit": "rpm",
+          "locator": "8105 / PTO / engine speed at 540",
+          "context": null
+        },
+        {
+          "name": "engine_speed_at_540e_pto",
+          "value": "1590",
+          "unit": "rpm",
+          "locator": "8105 / PTO / engine speed at 540E",
+          "context": null
+        },
+        {
+          "name": "hydraulic_outlet_count",
+          "value": "4",
+          "unit": "count",
+          "locator": "8105 / Hydraulics / outlets",
+          "context": "Not flow rate or spool count"
+        },
+        {
+          "name": "rear_lift_capacity",
+          "value": "4000",
+          "unit": "kg",
+          "locator": "8105 / Hydraulics / lift",
+          "context": "Measurement point unspecified"
+        },
+        {
+          "name": "unladen_weight",
+          "value": "3500",
+          "unit": "kg",
+          "locator": "8105 / Weight / 4WD cab",
+          "context": "OEM row has odd count×kg label; verify with brochure before publication"
+        }
+      ],
+      "notes": [
+        "Legacy Stage IIIA only; no assumed model year or current availability.",
+        "Do NOT merge into Stage V draft 87bdfddf-5a6e-495e-a659-4ed882d2af81.",
+        "Manufacturer category comparison table, not marketing feature text."
+      ]
+    },
+    {
+      "brand": "Tümosan",
+      "model": "8170",
+      "variant": "8100 series / Stage IIIA / 4WD cab / 16F/16R",
+      "market": "Türkiye",
+      "modelYear": null,
+      "sourceUrl": "https://www.tumosan.com.tr/tr/urun-kategori/xxx-9",
+      "sourceType": "manufacturer",
+      "existingDraftId": null,
+      "disposition": "hold_for_review",
+      "specs": [
+        {
+          "name": "emissions_standard",
+          "value": "Stage IIIA",
+          "unit": null,
+          "locator": "8170 / Motor / emissions",
+          "context": null
+        },
+        {
+          "name": "rated_engine_power",
+          "value": "65",
+          "unit": "HP",
+          "locator": "8170 / Motor / nominal output",
+          "context": "Manufacturer HP label, standard and rated rpm unspecified"
+        },
+        {
+          "name": "engine_cylinders",
+          "value": "3",
+          "unit": "count",
+          "locator": "8170 / Motor / cylinders",
+          "context": null
+        },
+        {
+          "name": "engine_aspiration",
+          "value": "Turbo intercooler",
+          "unit": null,
+          "locator": "8170 / Motor / aspiration",
+          "context": null
+        },
+        {
+          "name": "engine_displacement",
+          "value": "2.9",
+          "unit": "L",
+          "locator": "8170 / Motor / displacement",
+          "context": null
+        },
+        {
+          "name": "engine_torque",
+          "value": "260",
+          "unit": "Nm",
+          "locator": "8170 / Motor / peak torque",
+          "context": "at 1500 rpm"
+        },
+        {
+          "name": "peak_torque_speed",
+          "value": "1500",
+          "unit": "rpm",
+          "locator": "8170 / Motor / peak torque speed",
+          "context": null
+        },
+        {
+          "name": "fuel_tank_capacity",
+          "value": "115",
+          "unit": "L",
+          "locator": "8170 / Motor / tank",
+          "context": null
+        },
+        {
+          "name": "transmission_type",
+          "value": "Mechanical synchromesh",
+          "unit": null,
+          "locator": "8170 / Transmission / gearbox",
+          "context": null
+        },
+        {
+          "name": "forward_gears",
+          "value": "16",
+          "unit": "count",
+          "locator": "8170 / Transmission / forward gears",
+          "context": null
+        },
+        {
+          "name": "reverse_gears",
+          "value": "16",
+          "unit": "count",
+          "locator": "8170 / Transmission / reverse gears",
+          "context": null
+        },
+        {
+          "name": "rear_pto_speeds",
+          "value": "540/540E",
+          "unit": "rpm",
+          "locator": "8170 / PTO / output speeds",
+          "context": null
+        },
+        {
+          "name": "pto_type",
+          "value": "Independent",
+          "unit": null,
+          "locator": "8170 / PTO / type",
+          "context": null
+        },
+        {
+          "name": "pto_control",
+          "value": "Electrohydraulic",
+          "unit": null,
+          "locator": "8170 / PTO / control",
+          "context": null
+        },
+        {
+          "name": "engine_speed_at_540_pto",
+          "value": "2225",
+          "unit": "rpm",
+          "locator": "8170 / PTO / engine speed at 540",
+          "context": null
+        },
+        {
+          "name": "engine_speed_at_540e_pto",
+          "value": "1590",
+          "unit": "rpm",
+          "locator": "8170 / PTO / engine speed at 540E",
+          "context": null
+        },
+        {
+          "name": "hydraulic_outlet_count",
+          "value": "6",
+          "unit": "count",
+          "locator": "8170 / Hydraulics / outlets",
+          "context": "Not flow rate or spool count"
+        },
+        {
+          "name": "rear_lift_capacity",
+          "value": "2200",
+          "unit": "kg",
+          "locator": "8170 / Hydraulics / lift",
+          "context": "Measurement point unspecified"
+        },
+        {
+          "name": "unladen_weight",
+          "value": "3500",
+          "unit": "kg",
+          "locator": "8170 / Weight / 4WD cab",
+          "context": "OEM row has odd count×kg label; verify with brochure before publication"
+        }
+      ],
+      "notes": [
+        "Legacy Stage IIIA only; no assumed model year or current availability.",
+        "Manufacturer category comparison table, not marketing feature text."
+      ]
+    },
+    {
+      "brand": "Tümosan",
+      "model": "8180",
+      "variant": "8100 series / Stage IIIA / 4WD cab / 16F/16R",
+      "market": "Türkiye",
+      "modelYear": null,
+      "sourceUrl": "https://www.tumosan.com.tr/tr/urun-kategori/xxx-9",
+      "sourceType": "manufacturer",
+      "existingDraftId": null,
+      "disposition": "hold_for_review",
+      "specs": [
+        {
+          "name": "emissions_standard",
+          "value": "Stage IIIA",
+          "unit": null,
+          "locator": "8180 / Motor / emissions",
+          "context": null
+        },
+        {
+          "name": "rated_engine_power",
+          "value": "76",
+          "unit": "HP",
+          "locator": "8180 / Motor / nominal output",
+          "context": "Manufacturer HP label, standard and rated rpm unspecified"
+        },
+        {
+          "name": "engine_cylinders",
+          "value": "4",
+          "unit": "count",
+          "locator": "8180 / Motor / cylinders",
+          "context": null
+        },
+        {
+          "name": "engine_aspiration",
+          "value": "Turbo intercooler",
+          "unit": null,
+          "locator": "8180 / Motor / aspiration",
+          "context": null
+        },
+        {
+          "name": "engine_displacement",
+          "value": "3.9",
+          "unit": "L",
+          "locator": "8180 / Motor / displacement",
+          "context": null
+        },
+        {
+          "name": "engine_torque",
+          "value": "320",
+          "unit": "Nm",
+          "locator": "8180 / Motor / peak torque",
+          "context": "at 1500 rpm"
+        },
+        {
+          "name": "peak_torque_speed",
+          "value": "1500",
+          "unit": "rpm",
+          "locator": "8180 / Motor / peak torque speed",
+          "context": null
+        },
+        {
+          "name": "fuel_tank_capacity",
+          "value": "115",
+          "unit": "L",
+          "locator": "8180 / Motor / tank",
+          "context": null
+        },
+        {
+          "name": "transmission_type",
+          "value": "Mechanical synchromesh",
+          "unit": null,
+          "locator": "8180 / Transmission / gearbox",
+          "context": null
+        },
+        {
+          "name": "forward_gears",
+          "value": "16",
+          "unit": "count",
+          "locator": "8180 / Transmission / forward gears",
+          "context": null
+        },
+        {
+          "name": "reverse_gears",
+          "value": "16",
+          "unit": "count",
+          "locator": "8180 / Transmission / reverse gears",
+          "context": null
+        },
+        {
+          "name": "rear_pto_speeds",
+          "value": "540/540E",
+          "unit": "rpm",
+          "locator": "8180 / PTO / output speeds",
+          "context": null
+        },
+        {
+          "name": "pto_type",
+          "value": "Independent",
+          "unit": null,
+          "locator": "8180 / PTO / type",
+          "context": null
+        },
+        {
+          "name": "pto_control",
+          "value": "Electrohydraulic",
+          "unit": null,
+          "locator": "8180 / PTO / control",
+          "context": null
+        },
+        {
+          "name": "engine_speed_at_540_pto",
+          "value": "2225",
+          "unit": "rpm",
+          "locator": "8180 / PTO / engine speed at 540",
+          "context": null
+        },
+        {
+          "name": "engine_speed_at_540e_pto",
+          "value": "1590",
+          "unit": "rpm",
+          "locator": "8180 / PTO / engine speed at 540E",
+          "context": null
+        },
+        {
+          "name": "hydraulic_outlet_count",
+          "value": "6",
+          "unit": "count",
+          "locator": "8180 / Hydraulics / outlets",
+          "context": "Not flow rate or spool count"
+        },
+        {
+          "name": "rear_lift_capacity",
+          "value": "2200",
+          "unit": "kg",
+          "locator": "8180 / Hydraulics / lift",
+          "context": "Measurement point unspecified"
+        },
+        {
+          "name": "unladen_weight",
+          "value": "3500",
+          "unit": "kg",
+          "locator": "8180 / Weight / 4WD cab",
+          "context": "OEM row has odd count×kg label; verify with brochure before publication"
+        }
+      ],
+      "notes": [
+        "Legacy Stage IIIA only; no assumed model year or current availability.",
+        "Manufacturer category comparison table, not marketing feature text."
+      ]
+    },
+    {
+      "brand": "Tümosan",
+      "model": "8190",
+      "variant": "8100 series / Stage IIIA / 4WD cab / 16F/16R",
+      "market": "Türkiye",
+      "modelYear": null,
+      "sourceUrl": "https://www.tumosan.com.tr/tr/urun-kategori/xxx-9",
+      "sourceType": "manufacturer",
+      "existingDraftId": null,
+      "disposition": "hold_for_review",
+      "specs": [
+        {
+          "name": "emissions_standard",
+          "value": "Stage IIIA",
+          "unit": null,
+          "locator": "8190 / Motor / emissions",
+          "context": null
+        },
+        {
+          "name": "rated_engine_power",
+          "value": "85",
+          "unit": "HP",
+          "locator": "8190 / Motor / nominal output",
+          "context": "Manufacturer HP label, standard and rated rpm unspecified"
+        },
+        {
+          "name": "engine_cylinders",
+          "value": "4",
+          "unit": "count",
+          "locator": "8190 / Motor / cylinders",
+          "context": null
+        },
+        {
+          "name": "engine_aspiration",
+          "value": "Turbo intercooler",
+          "unit": null,
+          "locator": "8190 / Motor / aspiration",
+          "context": null
+        },
+        {
+          "name": "engine_displacement",
+          "value": "3.9",
+          "unit": "L",
+          "locator": "8190 / Motor / displacement",
+          "context": null
+        },
+        {
+          "name": "engine_torque",
+          "value": "340",
+          "unit": "Nm",
+          "locator": "8190 / Motor / peak torque",
+          "context": "at 1500 rpm"
+        },
+        {
+          "name": "peak_torque_speed",
+          "value": "1500",
+          "unit": "rpm",
+          "locator": "8190 / Motor / peak torque speed",
+          "context": null
+        },
+        {
+          "name": "fuel_tank_capacity",
+          "value": "115",
+          "unit": "L",
+          "locator": "8190 / Motor / tank",
+          "context": null
+        },
+        {
+          "name": "transmission_type",
+          "value": "Mechanical synchromesh",
+          "unit": null,
+          "locator": "8190 / Transmission / gearbox",
+          "context": null
+        },
+        {
+          "name": "forward_gears",
+          "value": "16",
+          "unit": "count",
+          "locator": "8190 / Transmission / forward gears",
+          "context": null
+        },
+        {
+          "name": "reverse_gears",
+          "value": "16",
+          "unit": "count",
+          "locator": "8190 / Transmission / reverse gears",
+          "context": null
+        },
+        {
+          "name": "rear_pto_speeds",
+          "value": "540/540E",
+          "unit": "rpm",
+          "locator": "8190 / PTO / output speeds",
+          "context": null
+        },
+        {
+          "name": "pto_type",
+          "value": "Independent",
+          "unit": null,
+          "locator": "8190 / PTO / type",
+          "context": null
+        },
+        {
+          "name": "pto_control",
+          "value": "Electrohydraulic",
+          "unit": null,
+          "locator": "8190 / PTO / control",
+          "context": null
+        },
+        {
+          "name": "engine_speed_at_540_pto",
+          "value": "2225",
+          "unit": "rpm",
+          "locator": "8190 / PTO / engine speed at 540",
+          "context": null
+        },
+        {
+          "name": "engine_speed_at_540e_pto",
+          "value": "1590",
+          "unit": "rpm",
+          "locator": "8190 / PTO / engine speed at 540E",
+          "context": null
+        },
+        {
+          "name": "hydraulic_outlet_count",
+          "value": "6",
+          "unit": "count",
+          "locator": "8190 / Hydraulics / outlets",
+          "context": "Not flow rate or spool count"
+        },
+        {
+          "name": "rear_lift_capacity",
+          "value": "4000",
+          "unit": "kg",
+          "locator": "8190 / Hydraulics / lift",
+          "context": "Measurement point unspecified"
+        },
+        {
+          "name": "unladen_weight",
+          "value": "3500",
+          "unit": "kg",
+          "locator": "8190 / Weight / 4WD cab",
+          "context": "OEM row has odd count×kg label; verify with brochure before publication"
+        }
+      ],
+      "notes": [
+        "Legacy Stage IIIA only; no assumed model year or current availability.",
+        "Manufacturer category comparison table, not marketing feature text."
+      ]
+    },
+    {
+      "brand": "Tümosan",
+      "model": "8100",
+      "variant": "8100 series / Stage IIIA / 4WD cab / 16F/16R",
+      "market": "Türkiye",
+      "modelYear": null,
+      "sourceUrl": "https://www.tumosan.com.tr/tr/urun-kategori/xxx-9",
+      "sourceType": "manufacturer",
+      "existingDraftId": null,
+      "disposition": "hold_for_review",
+      "specs": [
+        {
+          "name": "emissions_standard",
+          "value": "Stage IIIA",
+          "unit": null,
+          "locator": "8100 / Motor / emissions",
+          "context": null
+        },
+        {
+          "name": "rated_engine_power",
+          "value": "95",
+          "unit": "HP",
+          "locator": "8100 / Motor / nominal output",
+          "context": "Manufacturer HP label, standard and rated rpm unspecified"
+        },
+        {
+          "name": "engine_cylinders",
+          "value": "4",
+          "unit": "count",
+          "locator": "8100 / Motor / cylinders",
+          "context": null
+        },
+        {
+          "name": "engine_aspiration",
+          "value": "Turbo intercooler",
+          "unit": null,
+          "locator": "8100 / Motor / aspiration",
+          "context": null
+        },
+        {
+          "name": "engine_displacement",
+          "value": "3.9",
+          "unit": "L",
+          "locator": "8100 / Motor / displacement",
+          "context": null
+        },
+        {
+          "name": "engine_torque",
+          "value": "370",
+          "unit": "Nm",
+          "locator": "8100 / Motor / peak torque",
+          "context": "at 1500 rpm"
+        },
+        {
+          "name": "peak_torque_speed",
+          "value": "1500",
+          "unit": "rpm",
+          "locator": "8100 / Motor / peak torque speed",
+          "context": null
+        },
+        {
+          "name": "fuel_tank_capacity",
+          "value": "115",
+          "unit": "L",
+          "locator": "8100 / Motor / tank",
+          "context": null
+        },
+        {
+          "name": "transmission_type",
+          "value": "Mechanical synchromesh",
+          "unit": null,
+          "locator": "8100 / Transmission / gearbox",
+          "context": null
+        },
+        {
+          "name": "forward_gears",
+          "value": "16",
+          "unit": "count",
+          "locator": "8100 / Transmission / forward gears",
+          "context": null
+        },
+        {
+          "name": "reverse_gears",
+          "value": "16",
+          "unit": "count",
+          "locator": "8100 / Transmission / reverse gears",
+          "context": null
+        },
+        {
+          "name": "rear_pto_speeds",
+          "value": "540/540E",
+          "unit": "rpm",
+          "locator": "8100 / PTO / output speeds",
+          "context": null
+        },
+        {
+          "name": "pto_type",
+          "value": "Independent",
+          "unit": null,
+          "locator": "8100 / PTO / type",
+          "context": null
+        },
+        {
+          "name": "pto_control",
+          "value": "Electrohydraulic",
+          "unit": null,
+          "locator": "8100 / PTO / control",
+          "context": null
+        },
+        {
+          "name": "engine_speed_at_540_pto",
+          "value": "2225",
+          "unit": "rpm",
+          "locator": "8100 / PTO / engine speed at 540",
+          "context": null
+        },
+        {
+          "name": "engine_speed_at_540e_pto",
+          "value": "1590",
+          "unit": "rpm",
+          "locator": "8100 / PTO / engine speed at 540E",
+          "context": null
+        },
+        {
+          "name": "hydraulic_outlet_count",
+          "value": "6",
+          "unit": "count",
+          "locator": "8100 / Hydraulics / outlets",
+          "context": "Not flow rate or spool count"
+        },
+        {
+          "name": "rear_lift_capacity",
+          "value": "4000",
+          "unit": "kg",
+          "locator": "8100 / Hydraulics / lift",
+          "context": "Measurement point unspecified"
+        },
+        {
+          "name": "unladen_weight",
+          "value": "3500",
+          "unit": "kg",
+          "locator": "8100 / Weight / 4WD cab",
+          "context": "OEM row has odd count×kg label; verify with brochure before publication"
+        }
+      ],
+      "notes": [
+        "Legacy Stage IIIA only; no assumed model year or current availability.",
+        "Manufacturer category comparison table, not marketing feature text."
+      ]
+    },
+    {
+      "brand": "Tümosan",
+      "model": "8110",
+      "variant": "8100 series / Stage IIIA / 4WD cab / 16F/16R",
+      "market": "Türkiye",
+      "modelYear": null,
+      "sourceUrl": "https://www.tumosan.com.tr/tr/urun-kategori/xxx-9",
+      "sourceType": "manufacturer",
+      "existingDraftId": null,
+      "disposition": "hold_for_review",
+      "specs": [
+        {
+          "name": "emissions_standard",
+          "value": "Stage IIIA",
+          "unit": null,
+          "locator": "8110 / Motor / emissions",
+          "context": null
+        },
+        {
+          "name": "rated_engine_power",
+          "value": "105",
+          "unit": "HP",
+          "locator": "8110 / Motor / nominal output",
+          "context": "Manufacturer HP label, standard and rated rpm unspecified"
+        },
+        {
+          "name": "engine_cylinders",
+          "value": "4",
+          "unit": "count",
+          "locator": "8110 / Motor / cylinders",
+          "context": null
+        },
+        {
+          "name": "engine_aspiration",
+          "value": "Turbo intercooler",
+          "unit": null,
+          "locator": "8110 / Motor / aspiration",
+          "context": null
+        },
+        {
+          "name": "engine_displacement",
+          "value": "3.9",
+          "unit": "L",
+          "locator": "8110 / Motor / displacement",
+          "context": null
+        },
+        {
+          "name": "engine_torque",
+          "value": "400",
+          "unit": "Nm",
+          "locator": "8110 / Motor / peak torque",
+          "context": "at 1500 rpm"
+        },
+        {
+          "name": "peak_torque_speed",
+          "value": "1500",
+          "unit": "rpm",
+          "locator": "8110 / Motor / peak torque speed",
+          "context": null
+        },
+        {
+          "name": "fuel_tank_capacity",
+          "value": "115",
+          "unit": "L",
+          "locator": "8110 / Motor / tank",
+          "context": null
+        },
+        {
+          "name": "transmission_type",
+          "value": "Mechanical synchromesh",
+          "unit": null,
+          "locator": "8110 / Transmission / gearbox",
+          "context": null
+        },
+        {
+          "name": "forward_gears",
+          "value": "16",
+          "unit": "count",
+          "locator": "8110 / Transmission / forward gears",
+          "context": null
+        },
+        {
+          "name": "reverse_gears",
+          "value": "16",
+          "unit": "count",
+          "locator": "8110 / Transmission / reverse gears",
+          "context": null
+        },
+        {
+          "name": "rear_pto_speeds",
+          "value": "540/540E",
+          "unit": "rpm",
+          "locator": "8110 / PTO / output speeds",
+          "context": null
+        },
+        {
+          "name": "pto_type",
+          "value": "Independent",
+          "unit": null,
+          "locator": "8110 / PTO / type",
+          "context": null
+        },
+        {
+          "name": "pto_control",
+          "value": "Electrohydraulic",
+          "unit": null,
+          "locator": "8110 / PTO / control",
+          "context": null
+        },
+        {
+          "name": "engine_speed_at_540_pto",
+          "value": "2225",
+          "unit": "rpm",
+          "locator": "8110 / PTO / engine speed at 540",
+          "context": null
+        },
+        {
+          "name": "engine_speed_at_540e_pto",
+          "value": "1590",
+          "unit": "rpm",
+          "locator": "8110 / PTO / engine speed at 540E",
+          "context": null
+        },
+        {
+          "name": "hydraulic_outlet_count",
+          "value": "6",
+          "unit": "count",
+          "locator": "8110 / Hydraulics / outlets",
+          "context": "Not flow rate or spool count"
+        },
+        {
+          "name": "rear_lift_capacity",
+          "value": "4000",
+          "unit": "kg",
+          "locator": "8110 / Hydraulics / lift",
+          "context": "Measurement point unspecified"
+        },
+        {
+          "name": "unladen_weight",
+          "value": "3500",
+          "unit": "kg",
+          "locator": "8110 / Weight / 4WD cab",
+          "context": "OEM row has odd count×kg label; verify with brochure before publication"
+        }
+      ],
+      "notes": [
+        "Legacy Stage IIIA only; no assumed model year or current availability.",
+        "Manufacturer category comparison table, not marketing feature text."
+      ]
+    },
+    {
+      "brand": "Tümosan",
+      "model": "81.100",
+      "variant": "81 Premium / Stage IIIA / 4WD cab / 16F16R PowerShuttle",
+      "market": "Türkiye",
+      "modelYear": null,
+      "sourceUrl": "https://www.tumosan.com.tr/tr/urun-kategori/xxx-10",
+      "sourceType": "manufacturer",
+      "existingDraftId": null,
+      "disposition": "hold_for_review",
+      "specs": [
+        {
+          "name": "emissions_standard",
+          "value": "Stage IIIA",
+          "unit": null,
+          "locator": "81.100 / Motor / emissions",
+          "context": null
+        },
+        {
+          "name": "rated_engine_power",
+          "value": "95",
+          "unit": "HP",
+          "locator": "81.100 / Motor / nominal output",
+          "context": "Manufacturer HP label, standard and rated rpm unspecified"
+        },
+        {
+          "name": "engine_cylinders",
+          "value": "4",
+          "unit": "count",
+          "locator": "81.100 / Motor / cylinders",
+          "context": null
+        },
+        {
+          "name": "engine_aspiration",
+          "value": "Turbo intercooler",
+          "unit": null,
+          "locator": "81.100 / Motor / aspiration",
+          "context": null
+        },
+        {
+          "name": "engine_displacement",
+          "value": "3.9",
+          "unit": "L",
+          "locator": "81.100 / Motor / displacement",
+          "context": null
+        },
+        {
+          "name": "engine_torque",
+          "value": "370",
+          "unit": "Nm",
+          "locator": "81.100 / Motor / peak torque",
+          "context": "at 1500 rpm"
+        },
+        {
+          "name": "peak_torque_speed",
+          "value": "1500",
+          "unit": "rpm",
+          "locator": "81.100 / Motor / peak torque speed",
+          "context": null
+        },
+        {
+          "name": "fuel_tank_capacity",
+          "value": "115",
+          "unit": "L",
+          "locator": "81.100 / Motor / tank",
+          "context": null
+        },
+        {
+          "name": "forward_gears",
+          "value": "16",
+          "unit": "count",
+          "locator": "81.100 / Transmission",
+          "context": null
+        },
+        {
+          "name": "reverse_gears",
+          "value": "16",
+          "unit": "count",
+          "locator": "81.100 / Transmission",
+          "context": null
+        },
+        {
+          "name": "shuttle",
+          "value": "PowerShuttle",
+          "unit": null,
+          "locator": "81.100 / Transmission",
+          "context": null
+        },
+        {
+          "name": "rear_pto_speeds",
+          "value": "540/540E",
+          "unit": "rpm",
+          "locator": "81.100 / PTO",
+          "context": null
+        },
+        {
+          "name": "pto_control",
+          "value": "Electrohydraulic",
+          "unit": null,
+          "locator": "81.100 / PTO",
+          "context": null
+        },
+        {
+          "name": "hydraulic_outlet_count",
+          "value": "6",
+          "unit": "count",
+          "locator": "81.100 / Hydraulics",
+          "context": null
+        },
+        {
+          "name": "rear_lift_capacity",
+          "value": "4000",
+          "unit": "kg",
+          "locator": "81.100 / Hydraulics",
+          "context": "Measurement point unspecified"
+        }
+      ],
+      "notes": [
+        "Category table is Stage IIIA despite Stage V search snippet. Do not merge into fad03255-7690-4a3c-8c05-5e5990e83f52."
+      ]
+    },
+    {
+      "brand": "Tümosan",
+      "model": "81.110",
+      "variant": "81 Premium / Stage IIIA / 4WD cab / 16F16R PowerShuttle",
+      "market": "Türkiye",
+      "modelYear": null,
+      "sourceUrl": "https://www.tumosan.com.tr/tr/urun-kategori/xxx-10",
+      "sourceType": "manufacturer",
+      "existingDraftId": null,
+      "disposition": "hold_for_review",
+      "specs": [
+        {
+          "name": "emissions_standard",
+          "value": "Stage IIIA",
+          "unit": null,
+          "locator": "81.110 / Motor / emissions",
+          "context": null
+        },
+        {
+          "name": "rated_engine_power",
+          "value": "105",
+          "unit": "HP",
+          "locator": "81.110 / Motor / nominal output",
+          "context": "Manufacturer HP label, standard and rated rpm unspecified"
+        },
+        {
+          "name": "engine_cylinders",
+          "value": "4",
+          "unit": "count",
+          "locator": "81.110 / Motor / cylinders",
+          "context": null
+        },
+        {
+          "name": "engine_aspiration",
+          "value": "Turbo intercooler",
+          "unit": null,
+          "locator": "81.110 / Motor / aspiration",
+          "context": null
+        },
+        {
+          "name": "engine_displacement",
+          "value": "3.9",
+          "unit": "L",
+          "locator": "81.110 / Motor / displacement",
+          "context": null
+        },
+        {
+          "name": "engine_torque",
+          "value": "400",
+          "unit": "Nm",
+          "locator": "81.110 / Motor / peak torque",
+          "context": "at 1500 rpm"
+        },
+        {
+          "name": "peak_torque_speed",
+          "value": "1500",
+          "unit": "rpm",
+          "locator": "81.110 / Motor / peak torque speed",
+          "context": null
+        },
+        {
+          "name": "fuel_tank_capacity",
+          "value": "115",
+          "unit": "L",
+          "locator": "81.110 / Motor / tank",
+          "context": null
+        },
+        {
+          "name": "forward_gears",
+          "value": "16",
+          "unit": "count",
+          "locator": "81.110 / Transmission",
+          "context": null
+        },
+        {
+          "name": "reverse_gears",
+          "value": "16",
+          "unit": "count",
+          "locator": "81.110 / Transmission",
+          "context": null
+        },
+        {
+          "name": "shuttle",
+          "value": "PowerShuttle",
+          "unit": null,
+          "locator": "81.110 / Transmission",
+          "context": null
+        },
+        {
+          "name": "rear_pto_speeds",
+          "value": "540/540E",
+          "unit": "rpm",
+          "locator": "81.110 / PTO",
+          "context": null
+        },
+        {
+          "name": "pto_control",
+          "value": "Electrohydraulic",
+          "unit": null,
+          "locator": "81.110 / PTO",
+          "context": null
+        },
+        {
+          "name": "hydraulic_outlet_count",
+          "value": "6",
+          "unit": "count",
+          "locator": "81.110 / Hydraulics",
+          "context": null
+        },
+        {
+          "name": "rear_lift_capacity",
+          "value": "4000",
+          "unit": "kg",
+          "locator": "81.110 / Hydraulics",
+          "context": "Measurement point unspecified"
+        }
+      ],
+      "notes": [
+        "Category table is Stage IIIA despite Stage V search snippet. Do not merge into 0c781747-5aac-48cd-a747-5274e7308475."
+      ]
+    },
+    {
+      "brand": "Tümosan",
+      "model": "90.85",
+      "variant": "90 Retro / Stage V / 4WD / 24F24R Hi-Lo / cab",
+      "market": "Türkiye",
+      "modelYear": null,
+      "sourceUrl": "https://www.tumosan.com.tr/tr/urun-kategori/90-retro-serisi-stage-v",
+      "sourceType": "manufacturer",
+      "existingDraftId": "cb46907e-d5e9-42f9-9505-11b4f04d2395",
+      "disposition": "hold_for_review",
+      "specs": [
+        {
+          "name": "emissions_standard",
+          "value": "Stage V",
+          "unit": null,
+          "locator": "90.85 / Motor / emissions",
+          "context": null
+        },
+        {
+          "name": "rated_engine_power",
+          "value": "85",
+          "unit": "HP",
+          "locator": "90.85 / Motor / nominal output",
+          "context": "Manufacturer HP label, standard and rated rpm unspecified"
+        },
+        {
+          "name": "engine_cylinders",
+          "value": "4",
+          "unit": "count",
+          "locator": "90.85 / Motor / cylinders",
+          "context": null
+        },
+        {
+          "name": "engine_aspiration",
+          "value": "Turbo intercooler",
+          "unit": null,
+          "locator": "90.85 / Motor / aspiration",
+          "context": null
+        },
+        {
+          "name": "engine_displacement",
+          "value": "3.9",
+          "unit": "L",
+          "locator": "90.85 / Motor / displacement",
+          "context": null
+        },
+        {
+          "name": "engine_torque",
+          "value": "480",
+          "unit": "Nm",
+          "locator": "90.85 / Motor / peak torque",
+          "context": "rpm not stated"
+        },
+        {
+          "name": "fuel_injection",
+          "value": "Common Rail",
+          "unit": null,
+          "locator": "90.85 / Motor",
+          "context": null
+        },
+        {
+          "name": "transmission_type",
+          "value": "Mechanical synchromesh / Power Hi-Lo",
+          "unit": null,
+          "locator": "90.85 / Transmission",
+          "context": null
+        },
+        {
+          "name": "forward_gears",
+          "value": "24",
+          "unit": "count",
+          "locator": "90.85 / Transmission",
+          "context": null
+        },
+        {
+          "name": "reverse_gears",
+          "value": "24",
+          "unit": "count",
+          "locator": "90.85 / Transmission",
+          "context": null
+        },
+        {
+          "name": "shuttle",
+          "value": "Mechanical",
+          "unit": null,
+          "locator": "90.85 / Transmission",
+          "context": null
+        },
+        {
+          "name": "rear_pto_speeds",
+          "value": "540/540E",
+          "unit": "rpm",
+          "locator": "90.85 / PTO",
+          "context": null
+        },
+        {
+          "name": "pto_control",
+          "value": "Electrohydraulic",
+          "unit": null,
+          "locator": "90.85 / PTO",
+          "context": null
+        },
+        {
+          "name": "hydraulic_control",
+          "value": "Electronic draft control",
+          "unit": null,
+          "locator": "90.85 / Hydraulics",
+          "context": null
+        },
+        {
+          "name": "hydraulic_outlet_count",
+          "value": "8",
+          "unit": "count",
+          "locator": "90.85 / Hydraulics",
+          "context": null
+        },
+        {
+          "name": "rear_lift_capacity",
+          "value": "5000",
+          "unit": "kg",
+          "locator": "90.85 / Hydraulics",
+          "context": "Measurement point unspecified"
+        }
+      ],
+      "notes": [
+        "Existing 2026 draft is a reconciliation candidate; undated technical page does not independently establish model year. All four table columns report 480 Nm, rpm missing. Do not extend to 90.125; no dedicated table column. Tyre rows appear identical front and rear; hold pending clarification."
+      ]
+    },
+    {
+      "brand": "Tümosan",
+      "model": "90.95",
+      "variant": "90 Retro / Stage V / 4WD / 24F24R Hi-Lo / cab",
+      "market": "Türkiye",
+      "modelYear": null,
+      "sourceUrl": "https://www.tumosan.com.tr/tr/urun-kategori/90-retro-serisi-stage-v",
+      "sourceType": "manufacturer",
+      "existingDraftId": "42b39ef3-a3f7-45bd-977c-39a2774a1cf2",
+      "disposition": "hold_for_review",
+      "specs": [
+        {
+          "name": "emissions_standard",
+          "value": "Stage V",
+          "unit": null,
+          "locator": "90.95 / Motor / emissions",
+          "context": null
+        },
+        {
+          "name": "rated_engine_power",
+          "value": "95",
+          "unit": "HP",
+          "locator": "90.95 / Motor / nominal output",
+          "context": "Manufacturer HP label, standard and rated rpm unspecified"
+        },
+        {
+          "name": "engine_cylinders",
+          "value": "4",
+          "unit": "count",
+          "locator": "90.95 / Motor / cylinders",
+          "context": null
+        },
+        {
+          "name": "engine_aspiration",
+          "value": "Turbo intercooler",
+          "unit": null,
+          "locator": "90.95 / Motor / aspiration",
+          "context": null
+        },
+        {
+          "name": "engine_displacement",
+          "value": "3.9",
+          "unit": "L",
+          "locator": "90.95 / Motor / displacement",
+          "context": null
+        },
+        {
+          "name": "engine_torque",
+          "value": "480",
+          "unit": "Nm",
+          "locator": "90.95 / Motor / peak torque",
+          "context": "rpm not stated"
+        },
+        {
+          "name": "fuel_injection",
+          "value": "Common Rail",
+          "unit": null,
+          "locator": "90.95 / Motor",
+          "context": null
+        },
+        {
+          "name": "transmission_type",
+          "value": "Mechanical synchromesh / Power Hi-Lo",
+          "unit": null,
+          "locator": "90.95 / Transmission",
+          "context": null
+        },
+        {
+          "name": "forward_gears",
+          "value": "24",
+          "unit": "count",
+          "locator": "90.95 / Transmission",
+          "context": null
+        },
+        {
+          "name": "reverse_gears",
+          "value": "24",
+          "unit": "count",
+          "locator": "90.95 / Transmission",
+          "context": null
+        },
+        {
+          "name": "shuttle",
+          "value": "Mechanical",
+          "unit": null,
+          "locator": "90.95 / Transmission",
+          "context": null
+        },
+        {
+          "name": "rear_pto_speeds",
+          "value": "540/540E",
+          "unit": "rpm",
+          "locator": "90.95 / PTO",
+          "context": null
+        },
+        {
+          "name": "pto_control",
+          "value": "Electrohydraulic",
+          "unit": null,
+          "locator": "90.95 / PTO",
+          "context": null
+        },
+        {
+          "name": "hydraulic_control",
+          "value": "Electronic draft control",
+          "unit": null,
+          "locator": "90.95 / Hydraulics",
+          "context": null
+        },
+        {
+          "name": "hydraulic_outlet_count",
+          "value": "8",
+          "unit": "count",
+          "locator": "90.95 / Hydraulics",
+          "context": null
+        },
+        {
+          "name": "rear_lift_capacity",
+          "value": "5000",
+          "unit": "kg",
+          "locator": "90.95 / Hydraulics",
+          "context": "Measurement point unspecified"
+        }
+      ],
+      "notes": [
+        "Existing 2026 draft is a reconciliation candidate; undated technical page does not independently establish model year. All four table columns report 480 Nm, rpm missing. Do not extend to 90.125; no dedicated table column. Tyre rows appear identical front and rear; hold pending clarification."
+      ]
+    },
+    {
+      "brand": "Tümosan",
+      "model": "90.105",
+      "variant": "90 Retro / Stage V / 4WD / 24F24R Hi-Lo / cab",
+      "market": "Türkiye",
+      "modelYear": null,
+      "sourceUrl": "https://www.tumosan.com.tr/tr/urun-kategori/90-retro-serisi-stage-v",
+      "sourceType": "manufacturer",
+      "existingDraftId": "35cba890-c710-47e1-ba62-63821a8d1af6",
+      "disposition": "hold_for_review",
+      "specs": [
+        {
+          "name": "emissions_standard",
+          "value": "Stage V",
+          "unit": null,
+          "locator": "90.105 / Motor / emissions",
+          "context": null
+        },
+        {
+          "name": "rated_engine_power",
+          "value": "105",
+          "unit": "HP",
+          "locator": "90.105 / Motor / nominal output",
+          "context": "Manufacturer HP label, standard and rated rpm unspecified"
+        },
+        {
+          "name": "engine_cylinders",
+          "value": "4",
+          "unit": "count",
+          "locator": "90.105 / Motor / cylinders",
+          "context": null
+        },
+        {
+          "name": "engine_aspiration",
+          "value": "Turbo intercooler",
+          "unit": null,
+          "locator": "90.105 / Motor / aspiration",
+          "context": null
+        },
+        {
+          "name": "engine_displacement",
+          "value": "3.9",
+          "unit": "L",
+          "locator": "90.105 / Motor / displacement",
+          "context": null
+        },
+        {
+          "name": "engine_torque",
+          "value": "480",
+          "unit": "Nm",
+          "locator": "90.105 / Motor / peak torque",
+          "context": "rpm not stated"
+        },
+        {
+          "name": "fuel_injection",
+          "value": "Common Rail",
+          "unit": null,
+          "locator": "90.105 / Motor",
+          "context": null
+        },
+        {
+          "name": "transmission_type",
+          "value": "Mechanical synchromesh / Power Hi-Lo",
+          "unit": null,
+          "locator": "90.105 / Transmission",
+          "context": null
+        },
+        {
+          "name": "forward_gears",
+          "value": "24",
+          "unit": "count",
+          "locator": "90.105 / Transmission",
+          "context": null
+        },
+        {
+          "name": "reverse_gears",
+          "value": "24",
+          "unit": "count",
+          "locator": "90.105 / Transmission",
+          "context": null
+        },
+        {
+          "name": "shuttle",
+          "value": "Mechanical",
+          "unit": null,
+          "locator": "90.105 / Transmission",
+          "context": null
+        },
+        {
+          "name": "rear_pto_speeds",
+          "value": "540/540E",
+          "unit": "rpm",
+          "locator": "90.105 / PTO",
+          "context": null
+        },
+        {
+          "name": "pto_control",
+          "value": "Electrohydraulic",
+          "unit": null,
+          "locator": "90.105 / PTO",
+          "context": null
+        },
+        {
+          "name": "hydraulic_control",
+          "value": "Electronic draft control",
+          "unit": null,
+          "locator": "90.105 / Hydraulics",
+          "context": null
+        },
+        {
+          "name": "hydraulic_outlet_count",
+          "value": "8",
+          "unit": "count",
+          "locator": "90.105 / Hydraulics",
+          "context": null
+        },
+        {
+          "name": "rear_lift_capacity",
+          "value": "5000",
+          "unit": "kg",
+          "locator": "90.105 / Hydraulics",
+          "context": "Measurement point unspecified"
+        }
+      ],
+      "notes": [
+        "Existing 2026 draft is a reconciliation candidate; undated technical page does not independently establish model year. All four table columns report 480 Nm, rpm missing. Do not extend to 90.125; no dedicated table column. Tyre rows appear identical front and rear; hold pending clarification."
+      ]
+    },
+    {
+      "brand": "Tümosan",
+      "model": "90.115",
+      "variant": "90 Retro / Stage V / 4WD / 24F24R Hi-Lo / cab",
+      "market": "Türkiye",
+      "modelYear": null,
+      "sourceUrl": "https://www.tumosan.com.tr/tr/urun-kategori/90-retro-serisi-stage-v",
+      "sourceType": "manufacturer",
+      "existingDraftId": "28a6d6a7-9548-4a51-8130-a4ef63a037de",
+      "disposition": "hold_for_review",
+      "specs": [
+        {
+          "name": "emissions_standard",
+          "value": "Stage V",
+          "unit": null,
+          "locator": "90.115 / Motor / emissions",
+          "context": null
+        },
+        {
+          "name": "rated_engine_power",
+          "value": "115",
+          "unit": "HP",
+          "locator": "90.115 / Motor / nominal output",
+          "context": "Manufacturer HP label, standard and rated rpm unspecified"
+        },
+        {
+          "name": "engine_cylinders",
+          "value": "4",
+          "unit": "count",
+          "locator": "90.115 / Motor / cylinders",
+          "context": null
+        },
+        {
+          "name": "engine_aspiration",
+          "value": "Turbo intercooler",
+          "unit": null,
+          "locator": "90.115 / Motor / aspiration",
+          "context": null
+        },
+        {
+          "name": "engine_displacement",
+          "value": "3.9",
+          "unit": "L",
+          "locator": "90.115 / Motor / displacement",
+          "context": null
+        },
+        {
+          "name": "engine_torque",
+          "value": "480",
+          "unit": "Nm",
+          "locator": "90.115 / Motor / peak torque",
+          "context": "rpm not stated"
+        },
+        {
+          "name": "fuel_injection",
+          "value": "Common Rail",
+          "unit": null,
+          "locator": "90.115 / Motor",
+          "context": null
+        },
+        {
+          "name": "transmission_type",
+          "value": "Mechanical synchromesh / Power Hi-Lo",
+          "unit": null,
+          "locator": "90.115 / Transmission",
+          "context": null
+        },
+        {
+          "name": "forward_gears",
+          "value": "24",
+          "unit": "count",
+          "locator": "90.115 / Transmission",
+          "context": null
+        },
+        {
+          "name": "reverse_gears",
+          "value": "24",
+          "unit": "count",
+          "locator": "90.115 / Transmission",
+          "context": null
+        },
+        {
+          "name": "shuttle",
+          "value": "Mechanical",
+          "unit": null,
+          "locator": "90.115 / Transmission",
+          "context": null
+        },
+        {
+          "name": "rear_pto_speeds",
+          "value": "540/540E",
+          "unit": "rpm",
+          "locator": "90.115 / PTO",
+          "context": null
+        },
+        {
+          "name": "pto_control",
+          "value": "Electrohydraulic",
+          "unit": null,
+          "locator": "90.115 / PTO",
+          "context": null
+        },
+        {
+          "name": "hydraulic_control",
+          "value": "Electronic draft control",
+          "unit": null,
+          "locator": "90.115 / Hydraulics",
+          "context": null
+        },
+        {
+          "name": "hydraulic_outlet_count",
+          "value": "8",
+          "unit": "count",
+          "locator": "90.115 / Hydraulics",
+          "context": null
+        },
+        {
+          "name": "rear_lift_capacity",
+          "value": "5000",
+          "unit": "kg",
+          "locator": "90.115 / Hydraulics",
+          "context": "Measurement point unspecified"
+        }
+      ],
+      "notes": [
+        "Existing 2026 draft is a reconciliation candidate; undated technical page does not independently establish model year. All four table columns report 480 Nm, rpm missing. Do not extend to 90.125; no dedicated table column. Tyre rows appear identical front and rear; hold pending clarification."
+      ]
+    },
+    {
+      "brand": "Tümosan",
+      "model": "5255S",
+      "variant": "Stage V / 4WD / 8F8R / ROPS",
+      "market": "Türkiye",
+      "modelYear": null,
+      "sourceUrl": "https://www.tumosan.com.tr/tr/urun-kategori/5200s-serisi-stage-v",
+      "sourceType": "manufacturer",
+      "existingDraftId": "684e0de7-d70e-4b2f-8a6f-0a6f6803a3dc",
+      "disposition": "hold_for_review",
+      "specs": [
+        {
+          "name": "emissions_standard",
+          "value": "Stage V",
+          "unit": null,
+          "locator": "5255S / Motor / emissions",
+          "context": null
+        },
+        {
+          "name": "rated_engine_power",
+          "value": "55",
+          "unit": "HP",
+          "locator": "5255S / Motor / nominal output",
+          "context": "Manufacturer HP label, standard and rated rpm unspecified"
+        },
+        {
+          "name": "engine_cylinders",
+          "value": "3",
+          "unit": "count",
+          "locator": "5255S / Motor / cylinders",
+          "context": null
+        },
+        {
+          "name": "engine_aspiration",
+          "value": "Turbo intercooler",
+          "unit": null,
+          "locator": "5255S / Motor / aspiration",
+          "context": null
+        },
+        {
+          "name": "engine_displacement",
+          "value": "2.9",
+          "unit": "L",
+          "locator": "5255S / Motor / displacement",
+          "context": null
+        },
+        {
+          "name": "engine_torque",
+          "value": "200",
+          "unit": "Nm",
+          "locator": "5255S / Motor / peak torque",
+          "context": "at 1500 rpm"
+        },
+        {
+          "name": "peak_torque_speed",
+          "value": "1500",
+          "unit": "rpm",
+          "locator": "5255S / Motor / peak torque speed",
+          "context": null
+        },
+        {
+          "name": "fuel_tank_capacity",
+          "value": "60",
+          "unit": "L",
+          "locator": "5255S / Motor / tank",
+          "context": null
+        },
+        {
+          "name": "fuel_injection",
+          "value": "Common Rail",
+          "unit": null,
+          "locator": "5255S / Motor",
+          "context": null
+        },
+        {
+          "name": "aftertreatment",
+          "value": "DOC+DPF",
+          "unit": null,
+          "locator": "5255S / Motor",
+          "context": null
+        },
+        {
+          "name": "torque_reserve",
+          "value": "12",
+          "unit": "%",
+          "locator": "5255S / Motor",
+          "context": null
+        },
+        {
+          "name": "transmission_type",
+          "value": "Mechanical synchromesh",
+          "unit": null,
+          "locator": "5255S / Transmission",
+          "context": null
+        },
+        {
+          "name": "forward_gears",
+          "value": "8",
+          "unit": "count",
+          "locator": "5255S / Transmission",
+          "context": null
+        },
+        {
+          "name": "reverse_gears",
+          "value": "8",
+          "unit": "count",
+          "locator": "5255S / Transmission",
+          "context": null
+        },
+        {
+          "name": "rear_pto_speeds",
+          "value": "540/540E",
+          "unit": "rpm",
+          "locator": "5255S / PTO",
+          "context": null
+        },
+        {
+          "name": "pto_type",
+          "value": "Independent",
+          "unit": null,
+          "locator": "5255S / PTO",
+          "context": null
+        },
+        {
+          "name": "engine_speed_at_540_pto",
+          "value": "2035",
+          "unit": "rpm",
+          "locator": "5255S / PTO",
+          "context": null
+        },
+        {
+          "name": "engine_speed_at_540e_pto",
+          "value": "1586",
+          "unit": "rpm",
+          "locator": "5255S / PTO",
+          "context": null
+        },
+        {
+          "name": "hydraulic_outlet_count",
+          "value": "4",
+          "unit": "count",
+          "locator": "5255S / Hydraulics",
+          "context": null
+        },
+        {
+          "name": "rear_lift_capacity",
+          "value": "2200",
+          "unit": "kg",
+          "locator": "5255S / Hydraulics",
+          "context": "Measurement point unspecified"
+        },
+        {
+          "name": "wheelbase",
+          "value": "1960",
+          "unit": "mm",
+          "locator": "5255S / Dimensions / 4WD",
+          "context": null
+        },
+        {
+          "name": "overall_length",
+          "value": "3810",
+          "unit": "mm",
+          "locator": "5255S / Dimensions / length",
+          "context": null
+        },
+        {
+          "name": "ground_clearance",
+          "value": "260",
+          "unit": "mm",
+          "locator": "5255S / Dimensions / 4WD ground clearance",
+          "context": "OEM specifies 360/70R28"
+        },
+        {
+          "name": "unladen_weight",
+          "value": "2450",
+          "unit": "kg",
+          "locator": "5255S / Weight / 4WD",
+          "context": null
+        }
+      ],
+      "notes": [
+        "Existing 2026 draft candidate, technical page undated. 6000 ROPS does not inherit cab weight. Distinct N and S tank and dimensions. Preserve tyre condition; not all tyre rows agree."
+      ]
+    },
+    {
+      "brand": "Tümosan",
+      "model": "5265S",
+      "variant": "Stage V / 4WD / 8F8R / ROPS",
+      "market": "Türkiye",
+      "modelYear": null,
+      "sourceUrl": "https://www.tumosan.com.tr/tr/urun-kategori/5200s-serisi-stage-v",
+      "sourceType": "manufacturer",
+      "existingDraftId": "a4483ce8-62c0-4a7f-b0e0-7730a525fd6e",
+      "disposition": "hold_for_review",
+      "specs": [
+        {
+          "name": "emissions_standard",
+          "value": "Stage V",
+          "unit": null,
+          "locator": "5265S / Motor / emissions",
+          "context": null
+        },
+        {
+          "name": "rated_engine_power",
+          "value": "65",
+          "unit": "HP",
+          "locator": "5265S / Motor / nominal output",
+          "context": "Manufacturer HP label, standard and rated rpm unspecified"
+        },
+        {
+          "name": "engine_cylinders",
+          "value": "3",
+          "unit": "count",
+          "locator": "5265S / Motor / cylinders",
+          "context": null
+        },
+        {
+          "name": "engine_aspiration",
+          "value": "Turbo intercooler",
+          "unit": null,
+          "locator": "5265S / Motor / aspiration",
+          "context": null
+        },
+        {
+          "name": "engine_displacement",
+          "value": "2.9",
+          "unit": "L",
+          "locator": "5265S / Motor / displacement",
+          "context": null
+        },
+        {
+          "name": "engine_torque",
+          "value": "250",
+          "unit": "Nm",
+          "locator": "5265S / Motor / peak torque",
+          "context": "at 1500 rpm"
+        },
+        {
+          "name": "peak_torque_speed",
+          "value": "1500",
+          "unit": "rpm",
+          "locator": "5265S / Motor / peak torque speed",
+          "context": null
+        },
+        {
+          "name": "fuel_tank_capacity",
+          "value": "60",
+          "unit": "L",
+          "locator": "5265S / Motor / tank",
+          "context": null
+        },
+        {
+          "name": "fuel_injection",
+          "value": "Common Rail",
+          "unit": null,
+          "locator": "5265S / Motor",
+          "context": null
+        },
+        {
+          "name": "aftertreatment",
+          "value": "DOC+DPF",
+          "unit": null,
+          "locator": "5265S / Motor",
+          "context": null
+        },
+        {
+          "name": "torque_reserve",
+          "value": "17",
+          "unit": "%",
+          "locator": "5265S / Motor",
+          "context": null
+        },
+        {
+          "name": "transmission_type",
+          "value": "Mechanical synchromesh",
+          "unit": null,
+          "locator": "5265S / Transmission",
+          "context": null
+        },
+        {
+          "name": "forward_gears",
+          "value": "8",
+          "unit": "count",
+          "locator": "5265S / Transmission",
+          "context": null
+        },
+        {
+          "name": "reverse_gears",
+          "value": "8",
+          "unit": "count",
+          "locator": "5265S / Transmission",
+          "context": null
+        },
+        {
+          "name": "rear_pto_speeds",
+          "value": "540/540E",
+          "unit": "rpm",
+          "locator": "5265S / PTO",
+          "context": null
+        },
+        {
+          "name": "pto_type",
+          "value": "Independent",
+          "unit": null,
+          "locator": "5265S / PTO",
+          "context": null
+        },
+        {
+          "name": "engine_speed_at_540_pto",
+          "value": "2035",
+          "unit": "rpm",
+          "locator": "5265S / PTO",
+          "context": null
+        },
+        {
+          "name": "engine_speed_at_540e_pto",
+          "value": "1586",
+          "unit": "rpm",
+          "locator": "5265S / PTO",
+          "context": null
+        },
+        {
+          "name": "hydraulic_outlet_count",
+          "value": "4",
+          "unit": "count",
+          "locator": "5265S / Hydraulics",
+          "context": null
+        },
+        {
+          "name": "rear_lift_capacity",
+          "value": "2200",
+          "unit": "kg",
+          "locator": "5265S / Hydraulics",
+          "context": "Measurement point unspecified"
+        },
+        {
+          "name": "wheelbase",
+          "value": "1960",
+          "unit": "mm",
+          "locator": "5265S / Dimensions / 4WD",
+          "context": null
+        },
+        {
+          "name": "overall_length",
+          "value": "3810",
+          "unit": "mm",
+          "locator": "5265S / Dimensions / length",
+          "context": null
+        },
+        {
+          "name": "ground_clearance",
+          "value": "260",
+          "unit": "mm",
+          "locator": "5265S / Dimensions / 4WD ground clearance",
+          "context": "OEM specifies 360/70R28"
+        },
+        {
+          "name": "unladen_weight",
+          "value": "2450",
+          "unit": "kg",
+          "locator": "5265S / Weight / 4WD",
+          "context": null
+        }
+      ],
+      "notes": [
+        "Existing 2026 draft candidate, technical page undated. 6000 ROPS does not inherit cab weight. Distinct N and S tank and dimensions. Preserve tyre condition; not all tyre rows agree."
+      ]
+    },
+    {
+      "brand": "Tümosan",
+      "model": "5255N",
+      "variant": "Stage V / 4WD / 8F8R / ROPS",
+      "market": "Türkiye",
+      "modelYear": null,
+      "sourceUrl": "https://www.tumosan.com.tr/tr/urun-kategori/5200n-serisi-stage-v",
+      "sourceType": "manufacturer",
+      "existingDraftId": "48e03139-0aa6-43e2-9943-8c8c2d446fbb",
+      "disposition": "hold_for_review",
+      "specs": [
+        {
+          "name": "emissions_standard",
+          "value": "Stage V",
+          "unit": null,
+          "locator": "5255N / Motor / emissions",
+          "context": null
+        },
+        {
+          "name": "rated_engine_power",
+          "value": "55",
+          "unit": "HP",
+          "locator": "5255N / Motor / nominal output",
+          "context": "Manufacturer HP label, standard and rated rpm unspecified"
+        },
+        {
+          "name": "engine_cylinders",
+          "value": "3",
+          "unit": "count",
+          "locator": "5255N / Motor / cylinders",
+          "context": null
+        },
+        {
+          "name": "engine_aspiration",
+          "value": "Turbo intercooler",
+          "unit": null,
+          "locator": "5255N / Motor / aspiration",
+          "context": null
+        },
+        {
+          "name": "engine_displacement",
+          "value": "2.9",
+          "unit": "L",
+          "locator": "5255N / Motor / displacement",
+          "context": null
+        },
+        {
+          "name": "engine_torque",
+          "value": "200",
+          "unit": "Nm",
+          "locator": "5255N / Motor / peak torque",
+          "context": "at 1500 rpm"
+        },
+        {
+          "name": "peak_torque_speed",
+          "value": "1500",
+          "unit": "rpm",
+          "locator": "5255N / Motor / peak torque speed",
+          "context": null
+        },
+        {
+          "name": "fuel_tank_capacity",
+          "value": "55",
+          "unit": "L",
+          "locator": "5255N / Motor / tank",
+          "context": null
+        },
+        {
+          "name": "fuel_injection",
+          "value": "Common Rail",
+          "unit": null,
+          "locator": "5255N / Motor",
+          "context": null
+        },
+        {
+          "name": "aftertreatment",
+          "value": "DOC+DPF",
+          "unit": null,
+          "locator": "5255N / Motor",
+          "context": null
+        },
+        {
+          "name": "torque_reserve",
+          "value": "12",
+          "unit": "%",
+          "locator": "5255N / Motor",
+          "context": null
+        },
+        {
+          "name": "transmission_type",
+          "value": "Mechanical synchromesh",
+          "unit": null,
+          "locator": "5255N / Transmission",
+          "context": null
+        },
+        {
+          "name": "forward_gears",
+          "value": "8",
+          "unit": "count",
+          "locator": "5255N / Transmission",
+          "context": null
+        },
+        {
+          "name": "reverse_gears",
+          "value": "8",
+          "unit": "count",
+          "locator": "5255N / Transmission",
+          "context": null
+        },
+        {
+          "name": "rear_pto_speeds",
+          "value": "540/540E",
+          "unit": "rpm",
+          "locator": "5255N / PTO",
+          "context": null
+        },
+        {
+          "name": "pto_type",
+          "value": "Independent",
+          "unit": null,
+          "locator": "5255N / PTO",
+          "context": null
+        },
+        {
+          "name": "engine_speed_at_540_pto",
+          "value": "2035",
+          "unit": "rpm",
+          "locator": "5255N / PTO",
+          "context": null
+        },
+        {
+          "name": "engine_speed_at_540e_pto",
+          "value": "1586",
+          "unit": "rpm",
+          "locator": "5255N / PTO",
+          "context": null
+        },
+        {
+          "name": "hydraulic_outlet_count",
+          "value": "4",
+          "unit": "count",
+          "locator": "5255N / Hydraulics",
+          "context": null
+        },
+        {
+          "name": "rear_lift_capacity",
+          "value": "2200",
+          "unit": "kg",
+          "locator": "5255N / Hydraulics",
+          "context": "Measurement point unspecified"
+        },
+        {
+          "name": "wheelbase",
+          "value": "1960",
+          "unit": "mm",
+          "locator": "5255N / Dimensions / 4WD",
+          "context": null
+        },
+        {
+          "name": "overall_length",
+          "value": "3800",
+          "unit": "mm",
+          "locator": "5255N / Dimensions / length",
+          "context": null
+        },
+        {
+          "name": "ground_clearance",
+          "value": "265",
+          "unit": "mm",
+          "locator": "5255N / Dimensions / 4WD ground clearance",
+          "context": "OEM specifies 360/70R24"
+        },
+        {
+          "name": "unladen_weight",
+          "value": "2450",
+          "unit": "kg",
+          "locator": "5255N / Weight / 4WD",
+          "context": null
+        }
+      ],
+      "notes": [
+        "Existing 2026 draft candidate, technical page undated. 6000 ROPS does not inherit cab weight. Distinct N and S tank and dimensions. Preserve tyre condition; not all tyre rows agree."
+      ]
+    },
+    {
+      "brand": "Tümosan",
+      "model": "5265N",
+      "variant": "Stage V / 4WD / 8F8R / ROPS",
+      "market": "Türkiye",
+      "modelYear": null,
+      "sourceUrl": "https://www.tumosan.com.tr/tr/urun-kategori/5200n-serisi-stage-v",
+      "sourceType": "manufacturer",
+      "existingDraftId": "87fac145-fd21-46c8-9608-b27d48a8ebb8",
+      "disposition": "hold_for_review",
+      "specs": [
+        {
+          "name": "emissions_standard",
+          "value": "Stage V",
+          "unit": null,
+          "locator": "5265N / Motor / emissions",
+          "context": null
+        },
+        {
+          "name": "rated_engine_power",
+          "value": "65",
+          "unit": "HP",
+          "locator": "5265N / Motor / nominal output",
+          "context": "Manufacturer HP label, standard and rated rpm unspecified"
+        },
+        {
+          "name": "engine_cylinders",
+          "value": "3",
+          "unit": "count",
+          "locator": "5265N / Motor / cylinders",
+          "context": null
+        },
+        {
+          "name": "engine_aspiration",
+          "value": "Turbo intercooler",
+          "unit": null,
+          "locator": "5265N / Motor / aspiration",
+          "context": null
+        },
+        {
+          "name": "engine_displacement",
+          "value": "2.9",
+          "unit": "L",
+          "locator": "5265N / Motor / displacement",
+          "context": null
+        },
+        {
+          "name": "engine_torque",
+          "value": "250",
+          "unit": "Nm",
+          "locator": "5265N / Motor / peak torque",
+          "context": "at 1500 rpm"
+        },
+        {
+          "name": "peak_torque_speed",
+          "value": "1500",
+          "unit": "rpm",
+          "locator": "5265N / Motor / peak torque speed",
+          "context": null
+        },
+        {
+          "name": "fuel_tank_capacity",
+          "value": "55",
+          "unit": "L",
+          "locator": "5265N / Motor / tank",
+          "context": null
+        },
+        {
+          "name": "fuel_injection",
+          "value": "Common Rail",
+          "unit": null,
+          "locator": "5265N / Motor",
+          "context": null
+        },
+        {
+          "name": "aftertreatment",
+          "value": "DOC+DPF",
+          "unit": null,
+          "locator": "5265N / Motor",
+          "context": null
+        },
+        {
+          "name": "torque_reserve",
+          "value": "17",
+          "unit": "%",
+          "locator": "5265N / Motor",
+          "context": null
+        },
+        {
+          "name": "transmission_type",
+          "value": "Mechanical synchromesh",
+          "unit": null,
+          "locator": "5265N / Transmission",
+          "context": null
+        },
+        {
+          "name": "forward_gears",
+          "value": "8",
+          "unit": "count",
+          "locator": "5265N / Transmission",
+          "context": null
+        },
+        {
+          "name": "reverse_gears",
+          "value": "8",
+          "unit": "count",
+          "locator": "5265N / Transmission",
+          "context": null
+        },
+        {
+          "name": "rear_pto_speeds",
+          "value": "540/540E",
+          "unit": "rpm",
+          "locator": "5265N / PTO",
+          "context": null
+        },
+        {
+          "name": "pto_type",
+          "value": "Independent",
+          "unit": null,
+          "locator": "5265N / PTO",
+          "context": null
+        },
+        {
+          "name": "engine_speed_at_540_pto",
+          "value": "2035",
+          "unit": "rpm",
+          "locator": "5265N / PTO",
+          "context": null
+        },
+        {
+          "name": "engine_speed_at_540e_pto",
+          "value": "1586",
+          "unit": "rpm",
+          "locator": "5265N / PTO",
+          "context": null
+        },
+        {
+          "name": "hydraulic_outlet_count",
+          "value": "4",
+          "unit": "count",
+          "locator": "5265N / Hydraulics",
+          "context": null
+        },
+        {
+          "name": "rear_lift_capacity",
+          "value": "2200",
+          "unit": "kg",
+          "locator": "5265N / Hydraulics",
+          "context": "Measurement point unspecified"
+        },
+        {
+          "name": "wheelbase",
+          "value": "1960",
+          "unit": "mm",
+          "locator": "5265N / Dimensions / 4WD",
+          "context": null
+        },
+        {
+          "name": "overall_length",
+          "value": "3800",
+          "unit": "mm",
+          "locator": "5265N / Dimensions / length",
+          "context": null
+        },
+        {
+          "name": "ground_clearance",
+          "value": "265",
+          "unit": "mm",
+          "locator": "5265N / Dimensions / 4WD ground clearance",
+          "context": "OEM specifies 360/70R24"
+        },
+        {
+          "name": "unladen_weight",
+          "value": "2450",
+          "unit": "kg",
+          "locator": "5265N / Weight / 4WD",
+          "context": null
+        }
+      ],
+      "notes": [
+        "Existing 2026 draft candidate, technical page undated. 6000 ROPS does not inherit cab weight. Distinct N and S tank and dimensions. Preserve tyre condition; not all tyre rows agree."
+      ]
+    },
+    {
+      "brand": "Tümosan",
+      "model": "6055",
+      "variant": "Stage V / 4WD / 8F8R / cab",
+      "market": "Türkiye",
+      "modelYear": null,
+      "sourceUrl": "https://www.tumosan.com.tr/tr/urun-kategori/6000-serisi-stage-v",
+      "sourceType": "manufacturer",
+      "existingDraftId": "31765e18-8d13-4409-8bda-46493834043d",
+      "disposition": "hold_for_review",
+      "specs": [
+        {
+          "name": "emissions_standard",
+          "value": "Stage V",
+          "unit": null,
+          "locator": "6055 / Motor / emissions",
+          "context": null
+        },
+        {
+          "name": "rated_engine_power",
+          "value": "55",
+          "unit": "HP",
+          "locator": "6055 / Motor / nominal output",
+          "context": "Manufacturer HP label, standard and rated rpm unspecified"
+        },
+        {
+          "name": "engine_cylinders",
+          "value": "3",
+          "unit": "count",
+          "locator": "6055 / Motor / cylinders",
+          "context": null
+        },
+        {
+          "name": "engine_aspiration",
+          "value": "Turbo intercooler",
+          "unit": null,
+          "locator": "6055 / Motor / aspiration",
+          "context": null
+        },
+        {
+          "name": "engine_displacement",
+          "value": "2.9",
+          "unit": "L",
+          "locator": "6055 / Motor / displacement",
+          "context": null
+        },
+        {
+          "name": "engine_torque",
+          "value": "200",
+          "unit": "Nm",
+          "locator": "6055 / Motor / peak torque",
+          "context": "at 1500 rpm"
+        },
+        {
+          "name": "peak_torque_speed",
+          "value": "1500",
+          "unit": "rpm",
+          "locator": "6055 / Motor / peak torque speed",
+          "context": null
+        },
+        {
+          "name": "fuel_tank_capacity",
+          "value": "60",
+          "unit": "L",
+          "locator": "6055 / Motor / tank",
+          "context": null
+        },
+        {
+          "name": "fuel_injection",
+          "value": "Common Rail",
+          "unit": null,
+          "locator": "6055 / Motor",
+          "context": null
+        },
+        {
+          "name": "aftertreatment",
+          "value": "DOC+DPF",
+          "unit": null,
+          "locator": "6055 / Motor",
+          "context": null
+        },
+        {
+          "name": "torque_reserve",
+          "value": "12",
+          "unit": "%",
+          "locator": "6055 / Motor",
+          "context": null
+        },
+        {
+          "name": "transmission_type",
+          "value": "Mechanical synchromesh",
+          "unit": null,
+          "locator": "6055 / Transmission",
+          "context": null
+        },
+        {
+          "name": "forward_gears",
+          "value": "8",
+          "unit": "count",
+          "locator": "6055 / Transmission",
+          "context": null
+        },
+        {
+          "name": "reverse_gears",
+          "value": "8",
+          "unit": "count",
+          "locator": "6055 / Transmission",
+          "context": null
+        },
+        {
+          "name": "rear_pto_speeds",
+          "value": "540/540E",
+          "unit": "rpm",
+          "locator": "6055 / PTO",
+          "context": null
+        },
+        {
+          "name": "pto_type",
+          "value": "Independent",
+          "unit": null,
+          "locator": "6055 / PTO",
+          "context": null
+        },
+        {
+          "name": "engine_speed_at_540_pto",
+          "value": "2035",
+          "unit": "rpm",
+          "locator": "6055 / PTO",
+          "context": null
+        },
+        {
+          "name": "engine_speed_at_540e_pto",
+          "value": "1586",
+          "unit": "rpm",
+          "locator": "6055 / PTO",
+          "context": null
+        },
+        {
+          "name": "hydraulic_outlet_count",
+          "value": "4",
+          "unit": "count",
+          "locator": "6055 / Hydraulics",
+          "context": null
+        },
+        {
+          "name": "rear_lift_capacity",
+          "value": "2200",
+          "unit": "kg",
+          "locator": "6055 / Hydraulics",
+          "context": "Measurement point unspecified"
+        },
+        {
+          "name": "wheelbase",
+          "value": "2090",
+          "unit": "mm",
+          "locator": "6055 / Dimensions / 4WD",
+          "context": null
+        },
+        {
+          "name": "overall_length",
+          "value": "3900",
+          "unit": "mm",
+          "locator": "6055 / Dimensions / length",
+          "context": null
+        },
+        {
+          "name": "ground_clearance",
+          "value": "350",
+          "unit": "mm",
+          "locator": "6055 / Dimensions / 4WD ground clearance",
+          "context": "OEM specifies 380/85R30"
+        },
+        {
+          "name": "unladen_weight",
+          "value": "3000",
+          "unit": "kg",
+          "locator": "6055 / Weight / cab",
+          "context": null
+        }
+      ],
+      "notes": [
+        "Existing 2026 draft candidate, technical page undated. 6000 ROPS does not inherit cab weight. Distinct N and S tank and dimensions. Preserve tyre condition; not all tyre rows agree."
+      ]
+    },
+    {
+      "brand": "Tümosan",
+      "model": "6055",
+      "variant": "Stage V / 4WD / 8F8R / ROPS",
+      "market": "Türkiye",
+      "modelYear": null,
+      "sourceUrl": "https://www.tumosan.com.tr/tr/urun-kategori/6000-serisi-stage-v",
+      "sourceType": "manufacturer",
+      "existingDraftId": "c4fecd51-d287-4f5b-9fdf-55fcf07233ff",
+      "disposition": "hold_for_review",
+      "specs": [
+        {
+          "name": "emissions_standard",
+          "value": "Stage V",
+          "unit": null,
+          "locator": "6055 / Motor / emissions",
+          "context": null
+        },
+        {
+          "name": "rated_engine_power",
+          "value": "55",
+          "unit": "HP",
+          "locator": "6055 / Motor / nominal output",
+          "context": "Manufacturer HP label, standard and rated rpm unspecified"
+        },
+        {
+          "name": "engine_cylinders",
+          "value": "3",
+          "unit": "count",
+          "locator": "6055 / Motor / cylinders",
+          "context": null
+        },
+        {
+          "name": "engine_aspiration",
+          "value": "Turbo intercooler",
+          "unit": null,
+          "locator": "6055 / Motor / aspiration",
+          "context": null
+        },
+        {
+          "name": "engine_displacement",
+          "value": "2.9",
+          "unit": "L",
+          "locator": "6055 / Motor / displacement",
+          "context": null
+        },
+        {
+          "name": "engine_torque",
+          "value": "200",
+          "unit": "Nm",
+          "locator": "6055 / Motor / peak torque",
+          "context": "at 1500 rpm"
+        },
+        {
+          "name": "peak_torque_speed",
+          "value": "1500",
+          "unit": "rpm",
+          "locator": "6055 / Motor / peak torque speed",
+          "context": null
+        },
+        {
+          "name": "fuel_tank_capacity",
+          "value": "60",
+          "unit": "L",
+          "locator": "6055 / Motor / tank",
+          "context": null
+        },
+        {
+          "name": "fuel_injection",
+          "value": "Common Rail",
+          "unit": null,
+          "locator": "6055 / Motor",
+          "context": null
+        },
+        {
+          "name": "aftertreatment",
+          "value": "DOC+DPF",
+          "unit": null,
+          "locator": "6055 / Motor",
+          "context": null
+        },
+        {
+          "name": "torque_reserve",
+          "value": "12",
+          "unit": "%",
+          "locator": "6055 / Motor",
+          "context": null
+        },
+        {
+          "name": "transmission_type",
+          "value": "Mechanical synchromesh",
+          "unit": null,
+          "locator": "6055 / Transmission",
+          "context": null
+        },
+        {
+          "name": "forward_gears",
+          "value": "8",
+          "unit": "count",
+          "locator": "6055 / Transmission",
+          "context": null
+        },
+        {
+          "name": "reverse_gears",
+          "value": "8",
+          "unit": "count",
+          "locator": "6055 / Transmission",
+          "context": null
+        },
+        {
+          "name": "rear_pto_speeds",
+          "value": "540/540E",
+          "unit": "rpm",
+          "locator": "6055 / PTO",
+          "context": null
+        },
+        {
+          "name": "pto_type",
+          "value": "Independent",
+          "unit": null,
+          "locator": "6055 / PTO",
+          "context": null
+        },
+        {
+          "name": "engine_speed_at_540_pto",
+          "value": "2035",
+          "unit": "rpm",
+          "locator": "6055 / PTO",
+          "context": null
+        },
+        {
+          "name": "engine_speed_at_540e_pto",
+          "value": "1586",
+          "unit": "rpm",
+          "locator": "6055 / PTO",
+          "context": null
+        },
+        {
+          "name": "hydraulic_outlet_count",
+          "value": "4",
+          "unit": "count",
+          "locator": "6055 / Hydraulics",
+          "context": null
+        },
+        {
+          "name": "rear_lift_capacity",
+          "value": "2200",
+          "unit": "kg",
+          "locator": "6055 / Hydraulics",
+          "context": "Measurement point unspecified"
+        },
+        {
+          "name": "wheelbase",
+          "value": "2090",
+          "unit": "mm",
+          "locator": "6055 / Dimensions / 4WD",
+          "context": null
+        },
+        {
+          "name": "overall_length",
+          "value": "3900",
+          "unit": "mm",
+          "locator": "6055 / Dimensions / length",
+          "context": null
+        },
+        {
+          "name": "ground_clearance",
+          "value": "350",
+          "unit": "mm",
+          "locator": "6055 / Dimensions / 4WD ground clearance",
+          "context": "OEM specifies 380/85R30"
+        }
+      ],
+      "notes": [
+        "Existing 2026 draft candidate, technical page undated. 6000 ROPS does not inherit cab weight. Distinct N and S tank and dimensions. Preserve tyre condition; not all tyre rows agree."
+      ]
+    },
+    {
+      "brand": "Tümosan",
+      "model": "6065",
+      "variant": "Stage V / 4WD / 8F8R / cab",
+      "market": "Türkiye",
+      "modelYear": null,
+      "sourceUrl": "https://www.tumosan.com.tr/tr/urun-kategori/6000-serisi-stage-v",
+      "sourceType": "manufacturer",
+      "existingDraftId": "d9c568da-4870-4990-9771-a3ebccaa5c59",
+      "disposition": "hold_for_review",
+      "specs": [
+        {
+          "name": "emissions_standard",
+          "value": "Stage V",
+          "unit": null,
+          "locator": "6065 / Motor / emissions",
+          "context": null
+        },
+        {
+          "name": "rated_engine_power",
+          "value": "65",
+          "unit": "HP",
+          "locator": "6065 / Motor / nominal output",
+          "context": "Manufacturer HP label, standard and rated rpm unspecified"
+        },
+        {
+          "name": "engine_cylinders",
+          "value": "3",
+          "unit": "count",
+          "locator": "6065 / Motor / cylinders",
+          "context": null
+        },
+        {
+          "name": "engine_aspiration",
+          "value": "Turbo intercooler",
+          "unit": null,
+          "locator": "6065 / Motor / aspiration",
+          "context": null
+        },
+        {
+          "name": "engine_displacement",
+          "value": "2.9",
+          "unit": "L",
+          "locator": "6065 / Motor / displacement",
+          "context": null
+        },
+        {
+          "name": "engine_torque",
+          "value": "250",
+          "unit": "Nm",
+          "locator": "6065 / Motor / peak torque",
+          "context": "at 1500 rpm"
+        },
+        {
+          "name": "peak_torque_speed",
+          "value": "1500",
+          "unit": "rpm",
+          "locator": "6065 / Motor / peak torque speed",
+          "context": null
+        },
+        {
+          "name": "fuel_tank_capacity",
+          "value": "60",
+          "unit": "L",
+          "locator": "6065 / Motor / tank",
+          "context": null
+        },
+        {
+          "name": "fuel_injection",
+          "value": "Common Rail",
+          "unit": null,
+          "locator": "6065 / Motor",
+          "context": null
+        },
+        {
+          "name": "aftertreatment",
+          "value": "DOC+DPF",
+          "unit": null,
+          "locator": "6065 / Motor",
+          "context": null
+        },
+        {
+          "name": "torque_reserve",
+          "value": "17",
+          "unit": "%",
+          "locator": "6065 / Motor",
+          "context": null
+        },
+        {
+          "name": "transmission_type",
+          "value": "Mechanical synchromesh",
+          "unit": null,
+          "locator": "6065 / Transmission",
+          "context": null
+        },
+        {
+          "name": "forward_gears",
+          "value": "8",
+          "unit": "count",
+          "locator": "6065 / Transmission",
+          "context": null
+        },
+        {
+          "name": "reverse_gears",
+          "value": "8",
+          "unit": "count",
+          "locator": "6065 / Transmission",
+          "context": null
+        },
+        {
+          "name": "rear_pto_speeds",
+          "value": "540/540E",
+          "unit": "rpm",
+          "locator": "6065 / PTO",
+          "context": null
+        },
+        {
+          "name": "pto_type",
+          "value": "Independent",
+          "unit": null,
+          "locator": "6065 / PTO",
+          "context": null
+        },
+        {
+          "name": "engine_speed_at_540_pto",
+          "value": "2035",
+          "unit": "rpm",
+          "locator": "6065 / PTO",
+          "context": null
+        },
+        {
+          "name": "engine_speed_at_540e_pto",
+          "value": "1586",
+          "unit": "rpm",
+          "locator": "6065 / PTO",
+          "context": null
+        },
+        {
+          "name": "hydraulic_outlet_count",
+          "value": "4",
+          "unit": "count",
+          "locator": "6065 / Hydraulics",
+          "context": null
+        },
+        {
+          "name": "rear_lift_capacity",
+          "value": "2200",
+          "unit": "kg",
+          "locator": "6065 / Hydraulics",
+          "context": "Measurement point unspecified"
+        },
+        {
+          "name": "wheelbase",
+          "value": "2090",
+          "unit": "mm",
+          "locator": "6065 / Dimensions / 4WD",
+          "context": null
+        },
+        {
+          "name": "overall_length",
+          "value": "3900",
+          "unit": "mm",
+          "locator": "6065 / Dimensions / length",
+          "context": null
+        },
+        {
+          "name": "ground_clearance",
+          "value": "350",
+          "unit": "mm",
+          "locator": "6065 / Dimensions / 4WD ground clearance",
+          "context": "OEM specifies 380/85R30"
+        },
+        {
+          "name": "unladen_weight",
+          "value": "3000",
+          "unit": "kg",
+          "locator": "6065 / Weight / cab",
+          "context": null
+        }
+      ],
+      "notes": [
+        "Existing 2026 draft candidate, technical page undated. 6000 ROPS does not inherit cab weight. Distinct N and S tank and dimensions. Preserve tyre condition; not all tyre rows agree."
+      ]
+    },
+    {
+      "brand": "Tümosan",
+      "model": "6065",
+      "variant": "Stage V / 4WD / 8F8R / ROPS",
+      "market": "Türkiye",
+      "modelYear": null,
+      "sourceUrl": "https://www.tumosan.com.tr/tr/urun-kategori/6000-serisi-stage-v",
+      "sourceType": "manufacturer",
+      "existingDraftId": "67847b6f-cfd3-4b72-939d-057729079bb4",
+      "disposition": "hold_for_review",
+      "specs": [
+        {
+          "name": "emissions_standard",
+          "value": "Stage V",
+          "unit": null,
+          "locator": "6065 / Motor / emissions",
+          "context": null
+        },
+        {
+          "name": "rated_engine_power",
+          "value": "65",
+          "unit": "HP",
+          "locator": "6065 / Motor / nominal output",
+          "context": "Manufacturer HP label, standard and rated rpm unspecified"
+        },
+        {
+          "name": "engine_cylinders",
+          "value": "3",
+          "unit": "count",
+          "locator": "6065 / Motor / cylinders",
+          "context": null
+        },
+        {
+          "name": "engine_aspiration",
+          "value": "Turbo intercooler",
+          "unit": null,
+          "locator": "6065 / Motor / aspiration",
+          "context": null
+        },
+        {
+          "name": "engine_displacement",
+          "value": "2.9",
+          "unit": "L",
+          "locator": "6065 / Motor / displacement",
+          "context": null
+        },
+        {
+          "name": "engine_torque",
+          "value": "250",
+          "unit": "Nm",
+          "locator": "6065 / Motor / peak torque",
+          "context": "at 1500 rpm"
+        },
+        {
+          "name": "peak_torque_speed",
+          "value": "1500",
+          "unit": "rpm",
+          "locator": "6065 / Motor / peak torque speed",
+          "context": null
+        },
+        {
+          "name": "fuel_tank_capacity",
+          "value": "60",
+          "unit": "L",
+          "locator": "6065 / Motor / tank",
+          "context": null
+        },
+        {
+          "name": "fuel_injection",
+          "value": "Common Rail",
+          "unit": null,
+          "locator": "6065 / Motor",
+          "context": null
+        },
+        {
+          "name": "aftertreatment",
+          "value": "DOC+DPF",
+          "unit": null,
+          "locator": "6065 / Motor",
+          "context": null
+        },
+        {
+          "name": "torque_reserve",
+          "value": "17",
+          "unit": "%",
+          "locator": "6065 / Motor",
+          "context": null
+        },
+        {
+          "name": "transmission_type",
+          "value": "Mechanical synchromesh",
+          "unit": null,
+          "locator": "6065 / Transmission",
+          "context": null
+        },
+        {
+          "name": "forward_gears",
+          "value": "8",
+          "unit": "count",
+          "locator": "6065 / Transmission",
+          "context": null
+        },
+        {
+          "name": "reverse_gears",
+          "value": "8",
+          "unit": "count",
+          "locator": "6065 / Transmission",
+          "context": null
+        },
+        {
+          "name": "rear_pto_speeds",
+          "value": "540/540E",
+          "unit": "rpm",
+          "locator": "6065 / PTO",
+          "context": null
+        },
+        {
+          "name": "pto_type",
+          "value": "Independent",
+          "unit": null,
+          "locator": "6065 / PTO",
+          "context": null
+        },
+        {
+          "name": "engine_speed_at_540_pto",
+          "value": "2035",
+          "unit": "rpm",
+          "locator": "6065 / PTO",
+          "context": null
+        },
+        {
+          "name": "engine_speed_at_540e_pto",
+          "value": "1586",
+          "unit": "rpm",
+          "locator": "6065 / PTO",
+          "context": null
+        },
+        {
+          "name": "hydraulic_outlet_count",
+          "value": "4",
+          "unit": "count",
+          "locator": "6065 / Hydraulics",
+          "context": null
+        },
+        {
+          "name": "rear_lift_capacity",
+          "value": "2200",
+          "unit": "kg",
+          "locator": "6065 / Hydraulics",
+          "context": "Measurement point unspecified"
+        },
+        {
+          "name": "wheelbase",
+          "value": "2090",
+          "unit": "mm",
+          "locator": "6065 / Dimensions / 4WD",
+          "context": null
+        },
+        {
+          "name": "overall_length",
+          "value": "3900",
+          "unit": "mm",
+          "locator": "6065 / Dimensions / length",
+          "context": null
+        },
+        {
+          "name": "ground_clearance",
+          "value": "350",
+          "unit": "mm",
+          "locator": "6065 / Dimensions / 4WD ground clearance",
+          "context": "OEM specifies 380/85R30"
+        }
+      ],
+      "notes": [
+        "Existing 2026 draft candidate, technical page undated. 6000 ROPS does not inherit cab weight. Distinct N and S tank and dimensions. Preserve tyre condition; not all tyre rows agree."
+      ]
+    },
+    {
+      "brand": "Tümosan",
+      "model": "4050",
+      "variant": "Stage V / 2WD / 8F2R / ROPS",
+      "market": "Türkiye",
+      "modelYear": null,
+      "sourceUrl": "https://www.tumosan.com.tr/tr/urunler/4050-stage-v",
+      "sourceType": "manufacturer",
+      "existingDraftId": "413a3284-c235-456a-aa67-e0fd5e20f434",
+      "disposition": "hold_for_review",
+      "specs": [
+        {
+          "name": "emissions_standard",
+          "value": "Stage V",
+          "unit": null,
+          "locator": "4050 / Motor / emissions",
+          "context": null
+        },
+        {
+          "name": "rated_engine_power",
+          "value": "48",
+          "unit": "HP",
+          "locator": "4050 / Motor / nominal output",
+          "context": "Manufacturer HP label, standard and rated rpm unspecified"
+        },
+        {
+          "name": "engine_cylinders",
+          "value": "3",
+          "unit": "count",
+          "locator": "4050 / Motor / cylinders",
+          "context": null
+        },
+        {
+          "name": "engine_aspiration",
+          "value": "Turbo intercooler",
+          "unit": null,
+          "locator": "4050 / Motor / aspiration",
+          "context": null
+        },
+        {
+          "name": "engine_displacement",
+          "value": "2.9",
+          "unit": "L",
+          "locator": "4050 / Motor / displacement",
+          "context": null
+        },
+        {
+          "name": "engine_torque",
+          "value": "165",
+          "unit": "Nm",
+          "locator": "4050 / Motor / peak torque",
+          "context": "at 1500 rpm"
+        },
+        {
+          "name": "peak_torque_speed",
+          "value": "1500",
+          "unit": "rpm",
+          "locator": "4050 / Motor / peak torque speed",
+          "context": null
+        },
+        {
+          "name": "fuel_tank_capacity",
+          "value": "60",
+          "unit": "L",
+          "locator": "4050 / Motor / tank",
+          "context": null
+        },
+        {
+          "name": "fuel_injection",
+          "value": "Common Rail",
+          "unit": null,
+          "locator": "4050 / Motor",
+          "context": null
+        },
+        {
+          "name": "aftertreatment",
+          "value": "DOC+DPF",
+          "unit": null,
+          "locator": "4050 / Motor",
+          "context": null
+        },
+        {
+          "name": "torque_reserve",
+          "value": "7",
+          "unit": "%",
+          "locator": "4050 / Motor",
+          "context": null
+        },
+        {
+          "name": "forward_gears",
+          "value": "8",
+          "unit": "count",
+          "locator": "4050 / Transmission",
+          "context": null
+        },
+        {
+          "name": "reverse_gears",
+          "value": "2",
+          "unit": "count",
+          "locator": "4050 / Transmission",
+          "context": null
+        },
+        {
+          "name": "rear_pto_speeds",
+          "value": "540",
+          "unit": "rpm",
+          "locator": "4050 / PTO",
+          "context": null
+        },
+        {
+          "name": "pto_type",
+          "value": "Independent",
+          "unit": null,
+          "locator": "4050 / PTO",
+          "context": null
+        },
+        {
+          "name": "engine_speed_at_540_pto",
+          "value": "2035",
+          "unit": "rpm",
+          "locator": "4050 / PTO",
+          "context": null
+        },
+        {
+          "name": "hydraulic_outlet_count",
+          "value": "4",
+          "unit": "count",
+          "locator": "4050 / Hydraulics",
+          "context": null
+        },
+        {
+          "name": "rear_lift_capacity",
+          "value": "2200",
+          "unit": "kg",
+          "locator": "4050 / Hydraulics",
+          "context": "Measurement point unspecified"
+        },
+        {
+          "name": "wheelbase",
+          "value": "2100",
+          "unit": "mm",
+          "locator": "4050 / Dimensions",
+          "context": "2WD"
+        },
+        {
+          "name": "overall_length",
+          "value": "3900",
+          "unit": "mm",
+          "locator": "4050 / Dimensions",
+          "context": null
+        }
+      ],
+      "notes": [
+        "Keep 2WD and 4WD separate; do not assign 4WD controls or cab weight to 2WD/ROPS."
+      ]
+    },
+    {
+      "brand": "Tümosan",
+      "model": "4050",
+      "variant": "Stage V / 4WD / 8F2R / ROPS",
+      "market": "Türkiye",
+      "modelYear": null,
+      "sourceUrl": "https://www.tumosan.com.tr/tr/urunler/4050-stage-v",
+      "sourceType": "manufacturer",
+      "existingDraftId": "a5b53e21-9d9e-478e-ae6b-99a7131512e2",
+      "disposition": "hold_for_review",
+      "specs": [
+        {
+          "name": "emissions_standard",
+          "value": "Stage V",
+          "unit": null,
+          "locator": "4050 / Motor / emissions",
+          "context": null
+        },
+        {
+          "name": "rated_engine_power",
+          "value": "48",
+          "unit": "HP",
+          "locator": "4050 / Motor / nominal output",
+          "context": "Manufacturer HP label, standard and rated rpm unspecified"
+        },
+        {
+          "name": "engine_cylinders",
+          "value": "3",
+          "unit": "count",
+          "locator": "4050 / Motor / cylinders",
+          "context": null
+        },
+        {
+          "name": "engine_aspiration",
+          "value": "Turbo intercooler",
+          "unit": null,
+          "locator": "4050 / Motor / aspiration",
+          "context": null
+        },
+        {
+          "name": "engine_displacement",
+          "value": "2.9",
+          "unit": "L",
+          "locator": "4050 / Motor / displacement",
+          "context": null
+        },
+        {
+          "name": "engine_torque",
+          "value": "165",
+          "unit": "Nm",
+          "locator": "4050 / Motor / peak torque",
+          "context": "at 1500 rpm"
+        },
+        {
+          "name": "peak_torque_speed",
+          "value": "1500",
+          "unit": "rpm",
+          "locator": "4050 / Motor / peak torque speed",
+          "context": null
+        },
+        {
+          "name": "fuel_tank_capacity",
+          "value": "60",
+          "unit": "L",
+          "locator": "4050 / Motor / tank",
+          "context": null
+        },
+        {
+          "name": "fuel_injection",
+          "value": "Common Rail",
+          "unit": null,
+          "locator": "4050 / Motor",
+          "context": null
+        },
+        {
+          "name": "aftertreatment",
+          "value": "DOC+DPF",
+          "unit": null,
+          "locator": "4050 / Motor",
+          "context": null
+        },
+        {
+          "name": "torque_reserve",
+          "value": "7",
+          "unit": "%",
+          "locator": "4050 / Motor",
+          "context": null
+        },
+        {
+          "name": "forward_gears",
+          "value": "8",
+          "unit": "count",
+          "locator": "4050 / Transmission",
+          "context": null
+        },
+        {
+          "name": "reverse_gears",
+          "value": "2",
+          "unit": "count",
+          "locator": "4050 / Transmission",
+          "context": null
+        },
+        {
+          "name": "rear_pto_speeds",
+          "value": "540",
+          "unit": "rpm",
+          "locator": "4050 / PTO",
+          "context": null
+        },
+        {
+          "name": "pto_type",
+          "value": "Independent",
+          "unit": null,
+          "locator": "4050 / PTO",
+          "context": null
+        },
+        {
+          "name": "engine_speed_at_540_pto",
+          "value": "2035",
+          "unit": "rpm",
+          "locator": "4050 / PTO",
+          "context": null
+        },
+        {
+          "name": "hydraulic_outlet_count",
+          "value": "4",
+          "unit": "count",
+          "locator": "4050 / Hydraulics",
+          "context": null
+        },
+        {
+          "name": "rear_lift_capacity",
+          "value": "2200",
+          "unit": "kg",
+          "locator": "4050 / Hydraulics",
+          "context": "Measurement point unspecified"
+        },
+        {
+          "name": "wheelbase",
+          "value": "2080",
+          "unit": "mm",
+          "locator": "4050 / Dimensions",
+          "context": "4WD"
+        },
+        {
+          "name": "overall_length",
+          "value": "3900",
+          "unit": "mm",
+          "locator": "4050 / Dimensions",
+          "context": null
+        }
+      ],
+      "notes": [
+        "Keep 2WD and 4WD separate; do not assign 4WD controls or cab weight to 2WD/ROPS."
+      ]
+    },
+    {
+      "brand": "Tümosan",
+      "model": "4250",
+      "variant": "Stage V / 2WD / 8F2R / ROPS",
+      "market": "Türkiye",
+      "modelYear": null,
+      "sourceUrl": "https://www.tumosan.com.tr/tr/urunler/4250-stage-v",
+      "sourceType": "manufacturer",
+      "existingDraftId": "e87e1038-5979-468a-a87c-61d23b50a5b8",
+      "disposition": "hold_for_review",
+      "specs": [
+        {
+          "name": "emissions_standard",
+          "value": "Stage V",
+          "unit": null,
+          "locator": "4250 / Motor / emissions",
+          "context": null
+        },
+        {
+          "name": "rated_engine_power",
+          "value": "48",
+          "unit": "HP",
+          "locator": "4250 / Motor / nominal output",
+          "context": "Manufacturer HP label, standard and rated rpm unspecified"
+        },
+        {
+          "name": "engine_cylinders",
+          "value": "3",
+          "unit": "count",
+          "locator": "4250 / Motor / cylinders",
+          "context": null
+        },
+        {
+          "name": "engine_aspiration",
+          "value": "Turbo intercooler",
+          "unit": null,
+          "locator": "4250 / Motor / aspiration",
+          "context": null
+        },
+        {
+          "name": "engine_displacement",
+          "value": "2.9",
+          "unit": "L",
+          "locator": "4250 / Motor / displacement",
+          "context": null
+        },
+        {
+          "name": "engine_torque",
+          "value": "165",
+          "unit": "Nm",
+          "locator": "4250 / Motor / peak torque",
+          "context": "at 1500 rpm"
+        },
+        {
+          "name": "peak_torque_speed",
+          "value": "1500",
+          "unit": "rpm",
+          "locator": "4250 / Motor / peak torque speed",
+          "context": null
+        },
+        {
+          "name": "fuel_tank_capacity",
+          "value": "60",
+          "unit": "L",
+          "locator": "4250 / Motor / tank",
+          "context": null
+        },
+        {
+          "name": "fuel_injection",
+          "value": "Common Rail",
+          "unit": null,
+          "locator": "4250 / Motor",
+          "context": null
+        },
+        {
+          "name": "aftertreatment",
+          "value": "DOC+DPF",
+          "unit": null,
+          "locator": "4250 / Motor",
+          "context": null
+        },
+        {
+          "name": "torque_reserve",
+          "value": "7",
+          "unit": "%",
+          "locator": "4250 / Motor",
+          "context": null
+        },
+        {
+          "name": "forward_gears",
+          "value": "8",
+          "unit": "count",
+          "locator": "4250 / Transmission",
+          "context": null
+        },
+        {
+          "name": "reverse_gears",
+          "value": "2",
+          "unit": "count",
+          "locator": "4250 / Transmission",
+          "context": null
+        },
+        {
+          "name": "rear_pto_speeds",
+          "value": "540",
+          "unit": "rpm",
+          "locator": "4250 / PTO",
+          "context": null
+        },
+        {
+          "name": "pto_type",
+          "value": "Independent",
+          "unit": null,
+          "locator": "4250 / PTO",
+          "context": null
+        },
+        {
+          "name": "engine_speed_at_540_pto",
+          "value": "2035",
+          "unit": "rpm",
+          "locator": "4250 / PTO",
+          "context": null
+        },
+        {
+          "name": "hydraulic_outlet_count",
+          "value": "4",
+          "unit": "count",
+          "locator": "4250 / Hydraulics",
+          "context": null
+        },
+        {
+          "name": "rear_lift_capacity",
+          "value": "2200",
+          "unit": "kg",
+          "locator": "4250 / Hydraulics",
+          "context": "Measurement point unspecified"
+        },
+        {
+          "name": "wheelbase",
+          "value": "1980",
+          "unit": "mm",
+          "locator": "4250 / Dimensions",
+          "context": "2WD"
+        },
+        {
+          "name": "overall_length",
+          "value": "3810",
+          "unit": "mm",
+          "locator": "4250 / Dimensions",
+          "context": null
+        }
+      ],
+      "notes": [
+        "Keep 2WD and 4WD separate; do not assign 4WD controls or cab weight to 2WD/ROPS."
+      ]
+    },
+    {
+      "brand": "Tümosan",
+      "model": "4250",
+      "variant": "Stage V / 4WD / 8F2R / ROPS",
+      "market": "Türkiye",
+      "modelYear": null,
+      "sourceUrl": "https://www.tumosan.com.tr/tr/urunler/4250-stage-v",
+      "sourceType": "manufacturer",
+      "existingDraftId": "8f38b8ea-0f20-44ab-8f91-77717b2c4b04",
+      "disposition": "hold_for_review",
+      "specs": [
+        {
+          "name": "emissions_standard",
+          "value": "Stage V",
+          "unit": null,
+          "locator": "4250 / Motor / emissions",
+          "context": null
+        },
+        {
+          "name": "rated_engine_power",
+          "value": "48",
+          "unit": "HP",
+          "locator": "4250 / Motor / nominal output",
+          "context": "Manufacturer HP label, standard and rated rpm unspecified"
+        },
+        {
+          "name": "engine_cylinders",
+          "value": "3",
+          "unit": "count",
+          "locator": "4250 / Motor / cylinders",
+          "context": null
+        },
+        {
+          "name": "engine_aspiration",
+          "value": "Turbo intercooler",
+          "unit": null,
+          "locator": "4250 / Motor / aspiration",
+          "context": null
+        },
+        {
+          "name": "engine_displacement",
+          "value": "2.9",
+          "unit": "L",
+          "locator": "4250 / Motor / displacement",
+          "context": null
+        },
+        {
+          "name": "engine_torque",
+          "value": "165",
+          "unit": "Nm",
+          "locator": "4250 / Motor / peak torque",
+          "context": "at 1500 rpm"
+        },
+        {
+          "name": "peak_torque_speed",
+          "value": "1500",
+          "unit": "rpm",
+          "locator": "4250 / Motor / peak torque speed",
+          "context": null
+        },
+        {
+          "name": "fuel_tank_capacity",
+          "value": "60",
+          "unit": "L",
+          "locator": "4250 / Motor / tank",
+          "context": null
+        },
+        {
+          "name": "fuel_injection",
+          "value": "Common Rail",
+          "unit": null,
+          "locator": "4250 / Motor",
+          "context": null
+        },
+        {
+          "name": "aftertreatment",
+          "value": "DOC+DPF",
+          "unit": null,
+          "locator": "4250 / Motor",
+          "context": null
+        },
+        {
+          "name": "torque_reserve",
+          "value": "7",
+          "unit": "%",
+          "locator": "4250 / Motor",
+          "context": null
+        },
+        {
+          "name": "forward_gears",
+          "value": "8",
+          "unit": "count",
+          "locator": "4250 / Transmission",
+          "context": null
+        },
+        {
+          "name": "reverse_gears",
+          "value": "2",
+          "unit": "count",
+          "locator": "4250 / Transmission",
+          "context": null
+        },
+        {
+          "name": "rear_pto_speeds",
+          "value": "540",
+          "unit": "rpm",
+          "locator": "4250 / PTO",
+          "context": null
+        },
+        {
+          "name": "pto_type",
+          "value": "Independent",
+          "unit": null,
+          "locator": "4250 / PTO",
+          "context": null
+        },
+        {
+          "name": "engine_speed_at_540_pto",
+          "value": "2035",
+          "unit": "rpm",
+          "locator": "4250 / PTO",
+          "context": null
+        },
+        {
+          "name": "hydraulic_outlet_count",
+          "value": "4",
+          "unit": "count",
+          "locator": "4250 / Hydraulics",
+          "context": null
+        },
+        {
+          "name": "rear_lift_capacity",
+          "value": "2200",
+          "unit": "kg",
+          "locator": "4250 / Hydraulics",
+          "context": "Measurement point unspecified"
+        },
+        {
+          "name": "wheelbase",
+          "value": "1960",
+          "unit": "mm",
+          "locator": "4250 / Dimensions",
+          "context": "4WD"
+        },
+        {
+          "name": "overall_length",
+          "value": "3810",
+          "unit": "mm",
+          "locator": "4250 / Dimensions",
+          "context": null
+        }
+      ],
+      "notes": [
+        "Keep 2WD and 4WD separate; do not assign 4WD controls or cab weight to 2WD/ROPS."
+      ]
+    },
+    {
+      "brand": "Tümosan",
+      "model": "81.100 Evo",
+      "variant": "Stage V / PowerShift 30F15R",
+      "market": "Türkiye",
+      "modelYear": null,
+      "sourceUrl": "https://www.tumosan.com.tr/tr/urunler/81100-evo",
+      "sourceType": "manufacturer",
+      "existingDraftId": null,
+      "disposition": "hold_for_review",
+      "specs": [
+        {
+          "name": "emissions_standard",
+          "value": "Stage V",
+          "unit": null,
+          "locator": "81.100 Evo / Search-indexed technical table",
+          "context": null
+        },
+        {
+          "name": "rated_engine_power",
+          "value": "95",
+          "unit": "HP",
+          "locator": "81.100 Evo / Search-indexed technical table / nominal",
+          "context": null
+        },
+        {
+          "name": "engine_cylinders",
+          "value": "4",
+          "unit": "count",
+          "locator": "81.100 Evo / Search-indexed technical table",
+          "context": null
+        },
+        {
+          "name": "engine_displacement",
+          "value": "3.9",
+          "unit": "L",
+          "locator": "81.100 Evo / Search-indexed technical table",
+          "context": null
+        },
+        {
+          "name": "forward_gears",
+          "value": "30",
+          "unit": "count",
+          "locator": "81.100 Evo / Search-indexed technical table",
+          "context": null
+        },
+        {
+          "name": "reverse_gears",
+          "value": "15",
+          "unit": "count",
+          "locator": "81.100 Evo / Search-indexed technical table",
+          "context": null
+        }
+      ],
+      "notes": [
+        "Search index only; direct fetch cache miss. Do not merge into 81.100 16F16R draft. Reopen original source before any admission."
+      ]
+    }
+  ]
+}
