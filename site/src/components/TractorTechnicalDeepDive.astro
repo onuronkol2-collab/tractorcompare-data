@@ -105,6 +105,7 @@ const structuredData={
     <div class="learn-hero-actions">
       <a class="learn-button" href="#icerik">{tr?"Rehberi oku":"Read the guide"} ↓</a>
       <a class="learn-button learn-quiet" href={compare}>{tr?"Traktör karşılaştır":"Compare tractors"} ↗</a>
+      {hasPowerStandards&&<a class="learn-button learn-quiet" href="#shaft-title">{tr?"Güç ve tork hesaplayıcısı":"Power and torque calculator"}</a>}
     </div>
    </div>
    {hero&&<figure class="learn-cover">
@@ -130,6 +131,8 @@ const structuredData={
     <nav class="learn-toc" aria-label={tr?"İçindekiler":"On this page"}>
      <strong>{tr?"BU REHBERDE":"IN THIS GUIDE"}</strong>
      {guide.sections.map((section,i)=><a href={"#"+section.anchor}><span>{String(i+1).padStart(2,"0")}</span>{section.title[lang]}</a>)}
+     {hasPowerStandards&&<a href="#shaft-title">{tr?"Güç ve tork hesaplayıcısı":"Power and torque calculator"}</a>}
+     {hasPtoSafety&&<a href={localizedPath(lang,"/guides/tractor-engine-power-and-torque/")+"#shaft-title"}>{tr?"Mil gücü ve tork hesaplayıcısı":"Shaft power and torque calculator"} ↗</a>}
      <a class="learn-toc-index" href={hub}>{tr?"96 terimli ana sözlük":"96-term main glossary"} ↗</a>
     </nav>
     <div class="learn-body">

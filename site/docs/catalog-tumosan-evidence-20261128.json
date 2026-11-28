@@ -1802,7 +1802,7 @@
           "value": "480",
           "unit": "Nm",
           "locator": "90.85 / Motor / peak torque",
-          "context": "rpm not stated"
+          "context": "OEM maximum torque; rpm not stated; same reported value in each listed model column, not an independent test"
         },
         {
           "name": "fuel_injection",
@@ -1865,19 +1865,20 @@
           "value": "8",
           "unit": "count",
           "locator": "90.85 / Hydraulics",
-          "context": null
+          "context": "OEM hydraulic power outlets; not pump flow or valve pairs"
         },
         {
           "name": "rear_lift_capacity",
           "value": "5000",
           "unit": "kg",
           "locator": "90.85 / Hydraulics",
-          "context": "Measurement point unspecified"
+          "context": "OEM hydraulic lift capacity; location and measurement point unspecified; canonical mapping held"
         }
       ],
       "notes": [
         "Existing 2026 draft is a reconciliation candidate; undated technical page does not independently establish model year. All four table columns report 480 Nm, rpm missing. Do not extend to 90.125; no dedicated table column. Tyre rows appear identical front and rear; hold pending clarification."
-      ]
+      ],
+      "sourceRead": "Official Turkish 90 Retro series comparison table re-read 2026-11-28; all 16 existing observations reconciled. Separate 90.125 now listed, not merged into these candidates. Exact catalogue identity remains held."
     },
     {
       "brand": "Tümosan",
@@ -1930,7 +1931,7 @@
           "value": "480",
           "unit": "Nm",
           "locator": "90.95 / Motor / peak torque",
-          "context": "rpm not stated"
+          "context": "OEM maximum torque; rpm not stated; same reported value in each listed model column, not an independent test"
         },
         {
           "name": "fuel_injection",
@@ -1993,19 +1994,20 @@
           "value": "8",
           "unit": "count",
           "locator": "90.95 / Hydraulics",
-          "context": null
+          "context": "OEM hydraulic power outlets; not pump flow or valve pairs"
         },
         {
           "name": "rear_lift_capacity",
           "value": "5000",
           "unit": "kg",
           "locator": "90.95 / Hydraulics",
-          "context": "Measurement point unspecified"
+          "context": "OEM hydraulic lift capacity; location and measurement point unspecified; canonical mapping held"
         }
       ],
       "notes": [
         "Existing 2026 draft is a reconciliation candidate; undated technical page does not independently establish model year. All four table columns report 480 Nm, rpm missing. Do not extend to 90.125; no dedicated table column. Tyre rows appear identical front and rear; hold pending clarification."
-      ]
+      ],
+      "sourceRead": "Official Turkish 90 Retro series comparison table re-read 2026-11-28; all 16 existing observations reconciled. Separate 90.125 now listed, not merged into these candidates. Exact catalogue identity remains held."
     },
     {
       "brand": "Tümosan",
@@ -2058,7 +2060,7 @@
           "value": "480",
           "unit": "Nm",
           "locator": "90.105 / Motor / peak torque",
-          "context": "rpm not stated"
+          "context": "OEM maximum torque; rpm not stated; same reported value in each listed model column, not an independent test"
         },
         {
           "name": "fuel_injection",
@@ -2121,19 +2123,20 @@
           "value": "8",
           "unit": "count",
           "locator": "90.105 / Hydraulics",
-          "context": null
+          "context": "OEM hydraulic power outlets; not pump flow or valve pairs"
         },
         {
           "name": "rear_lift_capacity",
           "value": "5000",
           "unit": "kg",
           "locator": "90.105 / Hydraulics",
-          "context": "Measurement point unspecified"
+          "context": "OEM hydraulic lift capacity; location and measurement point unspecified; canonical mapping held"
         }
       ],
       "notes": [
         "Existing 2026 draft is a reconciliation candidate; undated technical page does not independently establish model year. All four table columns report 480 Nm, rpm missing. Do not extend to 90.125; no dedicated table column. Tyre rows appear identical front and rear; hold pending clarification."
-      ]
+      ],
+      "sourceRead": "Official Turkish 90 Retro series comparison table re-read 2026-11-28; all 16 existing observations reconciled. Separate 90.125 now listed, not merged into these candidates. Exact catalogue identity remains held."
     },
     {
       "brand": "Tümosan",
@@ -2186,7 +2189,7 @@
           "value": "480",
           "unit": "Nm",
           "locator": "90.115 / Motor / peak torque",
-          "context": "rpm not stated"
+          "context": "OEM maximum torque; rpm not stated; same reported value in each listed model column, not an independent test"
         },
         {
           "name": "fuel_injection",
@@ -2249,19 +2252,20 @@
           "value": "8",
           "unit": "count",
           "locator": "90.115 / Hydraulics",
-          "context": null
+          "context": "OEM hydraulic power outlets; not pump flow or valve pairs"
         },
         {
           "name": "rear_lift_capacity",
           "value": "5000",
           "unit": "kg",
           "locator": "90.115 / Hydraulics",
-          "context": "Measurement point unspecified"
+          "context": "OEM hydraulic lift capacity; location and measurement point unspecified; canonical mapping held"
         }
       ],
       "notes": [
         "Existing 2026 draft is a reconciliation candidate; undated technical page does not independently establish model year. All four table columns report 480 Nm, rpm missing. Do not extend to 90.125; no dedicated table column. Tyre rows appear identical front and rear; hold pending clarification."
-      ]
+      ],
+      "sourceRead": "Official Turkish 90 Retro series comparison table re-read 2026-11-28; all 16 existing observations reconciled. Separate 90.125 now listed, not merged into these candidates. Exact catalogue identity remains held."
     },
     {
       "brand": "Tümosan",
