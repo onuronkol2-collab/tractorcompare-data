@@ -40,7 +40,16 @@ function untouched(pr){
  // association and receipt shape may be ignored; never ignore other comments.
 function isPreviewReceipt(comment,head){
  const user=comment?.user,app=comment?.performed_via_github_app,body=comment?.body;
- return user?.id===73139402&&user.login==="cloudflare-workers-and-pages[bot]"&&user.type==="Bot"&&comment.author_association==="NONE"&&app?.id===85455&&app.slug==="cloudflare-workers-and-pages"&&app.owner?.login==="cloudflare"&&typeof body==="string"&&body.length<=100000&&body.startsWith("## 🚀 Deploying Preview to Cloudflare 🚀\n<!-- Preview URL -->\n")&&body.includes("<!-- Preview Deployments -->")&&body.includes("(commit "+head.slice(0,7)+")")&&body.includes("tractorvs-site.onuronkol2.workers.dev")&&body.includes("https://dash.cloudflare.com/");
+ if(user?.id!==73139402||user.login!=="cloudflare-workers-and-pages[bot]"||user.type!=="Bot"||comment.author_association!=="NONE"||app?.id!==85455||app.slug!=="cloudflare-workers-and-pages"||app.owner?.login!=="cloudflare"||typeof body!=="string"||body.length>100000||!body.startsWith("## 🚀 Deploying Preview to Cloudflare 🚀\n<!-- Preview URL -->\n")||!body.includes("<!-- Preview Deployments -->"))return false;
+ const heading=body.match(/^### Preview URL: (https:\/\/[^\s]+) \(commit ([a-f0-9]{7})\)$/m);
+ if(!heading||heading[2]!==head.slice(0,7))return false;
+ try{
+  const preview=new URL(heading[1]);
+  if(preview.protocol!=="https:"||preview.username||preview.password||preview.port||preview.pathname!=="/"||preview.search||preview.hash||!/^[-a-z0-9]+-tractorvs-site\.onuronkol2\.workers\.dev$/.test(preview.hostname))return false;
+  return [...body.matchAll(/href="([^"\s]+)"/g)].some(match=>{
+   try{const link=new URL(match[1]);return link.origin==="https://dash.cloudflare.com"&&!link.username&&!link.password;}catch{return false;}
+  });
+ }catch{return false;}
 }
 export async function reconcileExpiredMachineCandidate({api,number,baseSha,now=Date.now()}){
  assert(Number.isSafeInteger(number)&&number>0&&shaOk(baseSha)&&Number.isFinite(now),"Invalid reconciliation input");
