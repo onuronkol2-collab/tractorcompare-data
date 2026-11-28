@@ -150,3 +150,50 @@ test("missing or incorrect local MIME fails closed, with no upstream or model sw
    assert.equal(post.status,405);
  });
 });
+
+test("legacy Q225 960 failure serves exact approved local 480 without another upstream request",async()=>{
+ const id="valtra-q225-a6c1308e",p="/images/tractors/"+id+"-960.jpg",sibling="/images/tractors/"+id+"-480.jpg";
+ const requests=[],outside=[];
+ const bytes=new Uint8Array([255,216,255,1,2,3,255,217]);
+ const localEnv={ASSETS:{fetch:async request=>{
+  const q=new URL(request.url).pathname;requests.push(q);
+  return q===sibling?new Response(bytes,{headers:{"Content-Type":"image/jpeg"}}):new Response("missing",{status:404});
+ }}};
+ await withFetch(async url=>{outside.push(String(url));return new Response("unavailable",{status:502});},async()=>{
+  const res=await worker.fetch(new Request("https://tractorvs.com"+p),localEnv);
+  assert.equal(res.status,200);assert.equal(res.headers.get("X-TractorVS-Image-Fallback"),"480");
+  assert.equal(res.headers.get("X-TractorVS-Image-Source"),"local");
+  assert.match(res.headers.get("Cache-Control"),/s-maxage=1800/);
+  assert.deepEqual(new Uint8Array(await res.arrayBuffer()),bytes);
+ });
+ assert.deepEqual(requests,[p,sibling]);assert.deepEqual(outside,[resolveApprovedPhotoSource(p)]);
+});
+test("local fallback never serves HTML or another photo; persistent failure stays red",async()=>{
+ const p=path(960),requests=[],outside=[];
+ const bad={ASSETS:{fetch:async req=>{requests.push(new URL(req.url).pathname);return new Response("<html>bad</html>",{headers:{"content-type":"text/html"}});}}};
+ await withFetch(async url=>{outside.push(String(url));return new Response("bad",{status:502});},async()=>{
+  const res=await worker.fetch(new Request("https://tractorvs.com"+p),bad);
+  assert.equal(res.status,502);assert.equal(res.headers.get("Cache-Control"),"no-store");
+ });
+ assert.deepEqual(requests,[p,path(480)]);assert.deepEqual(outside,[upstream960]);
+});
+test("provider throttling never falls through to another Commons request",async()=>{
+ for(const [status,headers] of [[429,{}],[403,{}],[503,{}],[502,{"Retry-After":"120"}]]){
+  const calls=[];
+  await withFetch(async url=>{calls.push(String(url));return new Response("wait",{status,headers});},async()=>{
+   const res=await worker.fetch(new Request("https://tractorvs.com"+path(1920)),env);
+   assert.equal(res.status,502);assert.equal(res.headers.get("Cache-Control"),"no-store");
+  });
+  assert.deepEqual(calls,[upstream1920]);
+ }
+});
+test("full-size failure prefers existing exact local 960 bytes over further network",async()=>{
+ const calls=[];
+ const localEnv={ASSETS:{fetch:async req=>new URL(req.url).pathname===path(960)?jpg():new Response("missing",{status:404})}};
+ await withFetch(async url=>{calls.push(String(url));return new Response("wait",{status:429});},async()=>{
+  const res=await worker.fetch(new Request("https://tractorvs.com"+path(1920),{method:"HEAD"}),localEnv);
+  assert.equal(res.status,200);assert.equal(res.headers.get("X-TractorVS-Image-Fallback"),"960");
+  assert.equal(res.headers.get("X-TractorVS-Image-Source"),"local");assert.equal(await res.text(),"");
+ });
+ assert.deepEqual(calls,[upstream1920]);
+});
