@@ -1,0 +1,109 @@
+---
+import {investmentPlanningText} from "../lib/farm-investment-planning-i18n";
+import {farmDecisionText} from "../lib/farm-decision-i18n";
+import {farmCostText} from "../lib/farm-cost-i18n";
+import {farmModelText} from "../lib/farm-model-context-i18n";
+import {LOCALE_TAGS,type Locale} from "../lib/locales";
+interface Props {lang:Locale}
+const {lang}=Astro.props;
+const c=investmentPlanningText(lang), d=farmDecisionText(lang), f=farmCostText(lang), m=farmModelText(lang);
+const years=[1,3,5,10];
+const fields=[
+ ["price",d.purchase,0,1e12,true],["down",d.deposit,0,1e12,true],["annualRate",d.rate,0,100,true],["termMonths",d.months,1,600,true],
+ ["annualHours",d.hours,0,8760,true],["annualHectares",c.area,0,1e7,false],["fuelPerHour",f.fuel,0,10000,true],["fuelPrice",f.price,0,1e9,true],
+ ["maintenancePerHour",c.maintenance,0,1e9,true],["otherPerHour",f.other,0,1e9,true],["annualFixed",f.fixed,0,1e12,true],["rentalPerHour",d.rent,0,1e9,false]
+] as const;
+const metrics=[["total",c.total],["loanBalance",c.balance],["interestPaid",c.interest],["perHour",c.perHour],["perHectare",c.perHa],["rental",c.rental]] as const;
+const taskFields=[["area",m.fieldArea,0.0001,1000000],["passes",c.passes,1,100],["width",f.width,.01,100],["speed",f.speed,.01,100],["efficiency",f.efficiency,.01,100],["fuel",f.fuel,0,10000],["price",f.price,0,1e9],["other",f.other,0,1e12]] as const;
+---
+<section id="farm-investment-planning" class="planning" data-investment-planning data-locale={LOCALE_TAGS[lang]} data-unknown={c.unknown}>
+ <h2>{c.title}</h2>
+ <noscript><p>{d.enableJs}</p></noscript>
+ <details>
+  <summary>{c.ownership}</summary>
+  <p>{c.note}</p>
+  <form data-planning="investment" data-clarity-mask="true" autocomplete="off">
+   <fieldset disabled data-planning-controls>
+    <div class="planning-grid">{fields.map(([key,label,min,max,required])=><label>{label}<input name={key} type="number" inputmode="decimal" min={min} max={max} step={key==="termMonths"?"1":"any"} required={required}/></label>)}</div>
+    <div class="planning-grid">{years.map(year=><label>{d.resale} — {d.years}: {year}<input type="number" name={"resale"+year} min="0" max="1000000000000" step="any" inputmode="decimal"/></label>)}</div>
+    <button type="submit">{f.calculate}</button>
+    <p data-planning-error role="alert" hidden>{f.invalid}</p>
+    <div data-planning-results hidden aria-live="polite" aria-atomic="true">
+     <p>{d.payment}: <output data-payment>—</output></p>
+     <div class="planning-grid">{years.map(year=><section class="result-card" data-year={year}><h3>{d.years}: {year}</h3><dl>{metrics.map(([key,label])=><div><dt>{label}</dt><dd data-metric={key}>—</dd></div>)}</dl></section>)}</div>
+    </div>
+   </fieldset>
+  </form>
+  <p><a lang="en" href="https://www.ontario.ca/page/budgeting-farm-machinery-costs">Ontario — Budgeting farm machinery costs</a> · <a lang="en" href="https://ahdb.org.uk/knowledge-library/machinery-costing-calculator">AHDB — Machinery costing calculator</a></p>
+ </details>
+ <details>
+  <summary>{c.fleet}</summary>
+  <p>{c.fleetNote}</p>
+  <form data-planning="fleet" data-clarity-mask="true" autocomplete="off">
+   <fieldset disabled data-planning-controls>
+    <div class="planning-grid">{[1,2].map(i=><fieldset class="task"><legend>{c.operation} {i}</legend>{taskFields.map(([key,label,min,max])=><label>{label}<input name={i+"-"+key} type="number" inputmode="decimal" min={min} max={max} step={key==="passes"?"1":"any"} required/></label>)}<label>{m.areaUnit}<select name={i+"-unit"}>{["ha","decare","acre","m2","mu","tan"].map(unit=><option value={unit}>{unit==="m2"?"m²":unit}</option>)}</select></label></fieldset>)}</div>
+    <button type="submit">{f.calculate}</button>
+    <p data-planning-error role="alert" hidden>{f.invalid}</p>
+    <div data-planning-results hidden aria-live="polite" aria-atomic="true"><dl class="planning-grid">{[["workedAreaHa",c.workedArea],["hours",f.time],["litres",f.litres],["operatingCost",c.operating]].map(([key,label])=><div><dt>{label}</dt><dd data-total={key}>—</dd></div>)}</dl></div>
+   </fieldset>
+  </form>
+ </details>
+</section>
+<script>
+ import {investmentScenarios} from "../lib/farm-investment-scenarios.mjs";
+ import {planSequentialFieldWork} from "../lib/farm-fleet-planning.mjs";
+ import {AREA_SQM} from "../lib/farm-cost.mjs";
+ import {FARM_TOOL_DONE_EVENT} from "../lib/analytics-product-actions";
+ for(const root of document.querySelectorAll<HTMLElement>("[data-investment-planning]")){
+  const format=new Intl.NumberFormat(root.dataset.locale,{maximumSignificantDigits:7});
+  const render=(value:number|null)=>value===null?(root.dataset.unknown||"—"):Number.isFinite(value)?format.format(value):"—";
+  for(const form of root.querySelectorAll<HTMLFormElement>("form[data-planning]")){
+   const result=form.querySelector<HTMLElement>("[data-planning-results]");
+   const error=form.querySelector<HTMLElement>("[data-planning-error]");
+   const controls=form.querySelector<HTMLFieldSetElement>("[data-planning-controls]");
+   if(!result||!error||!controls)continue;
+   const clear=()=>{result.hidden=true;error.hidden=true;for(const node of result.querySelectorAll("[data-payment],[data-metric],[data-total]"))node.textContent="—";};
+   form.addEventListener("input",clear);form.addEventListener("change",clear);
+   form.addEventListener("submit",event=>{
+    event.preventDefault();clear();
+    try{
+     if(!form.checkValidity())throw new Error("Invalid form");
+     const data=new FormData(form);
+     const read=(name:string,optional=false)=>{const value=data.get(name);return typeof value==="string"&&value.trim()!==""?Number(value):optional?null:NaN;};
+     if(form.dataset.planning==="investment"){
+      const input=Object.fromEntries(["price","down","annualRate","termMonths","annualHours","annualHectares","fuelPerHour","fuelPrice","maintenancePerHour","otherPerHour","annualFixed","rentalPerHour"].map(name=>[name,read(name,["annualHectares","rentalPerHour"].includes(name))]));
+      const out=investmentScenarios({...input,resale:[1,3,5,10].map(y=>read("resale"+y,true))});
+      const payment=result.querySelector("[data-payment]");if(payment)payment.textContent=render(out.monthlyPayment);
+      for(const row of result.querySelectorAll<HTMLElement>("[data-year]")){
+       const scenario=out.scenarios.find(s=>s.years===Number(row.dataset.year));if(!scenario)throw Error("Unknown horizon");
+       for(const el of row.querySelectorAll<HTMLElement>("[data-metric]"))el.textContent=render(scenario[el.dataset.metric as "total"|"loanBalance"|"interestPaid"|"perHour"|"perHectare"|"rental"]);
+      }
+     }else{
+      const tasks=[1,2].map(i=>({...Object.fromEntries(["area","passes","width","speed","efficiency","fuel","price","other"].map(k=>[k,read(i+"-"+k)])),unit:String(data.get(i+"-unit"))}));
+      const out=planSequentialFieldWork(tasks);
+      for(const el of result.querySelectorAll<HTMLElement>("[data-total]"))el.textContent=render(out.totals[el.dataset.total as keyof typeof out.totals]);
+     }
+     result.hidden=false;window.dispatchEvent(new Event(FARM_TOOL_DONE_EVENT));
+    }catch{clear();error.hidden=false;}
+   });
+   if(form.dataset.planning==="fleet"){for(const i of [1,2]){const area=form.elements.namedItem(i+"-area");const unit=form.elements.namedItem(i+"-unit");if(area instanceof HTMLInputElement&&unit instanceof HTMLSelectElement){const bounds=()=>{const factor=AREA_SQM[unit.value as keyof typeof AREA_SQM];if(factor){area.min=String(.0001*10000/factor);area.max=String(1000000*10000/factor);}};unit.addEventListener("change",bounds);bounds();}}}
+   controls.disabled=false;
+  }
+ }
+</script>
+<style>
+ .planning{margin-block:2rem;scroll-margin-top:6rem}
+ details{border:1px solid #708478;border-radius:.8rem;padding:1rem;margin-block:1rem}
+ summary{cursor:pointer;font-weight:700;min-height:44px;align-content:center}
+ summary:focus-visible,input:focus-visible,select:focus-visible,button:focus-visible{outline:2px solid currentColor;outline-offset:2px}
+ .planning-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,14rem),1fr));gap:1rem;margin-block:1rem}
+ fieldset{min-inline-size:0;border:0;margin:0;padding:0}
+ .task,.result-card{border:1px solid #708478;border-radius:.5rem;padding:.8rem;min-width:0}
+ label{display:grid;gap:.35rem;margin-block:.45rem}
+ input,select,button{font:inherit;min-height:44px;min-width:0;max-width:100%;border:1px solid #708478;border-radius:.4rem;padding:.5rem;color:inherit;background:transparent}
+ button{background:#245b39;color:white;font-weight:600;cursor:pointer}
+ button:disabled{opacity:.55}
+ dd{margin:0;font-weight:700;overflow-wrap:anywhere}
+ dl div{margin-block:.5rem}
+ [hidden]{display:none!important}
+</style>

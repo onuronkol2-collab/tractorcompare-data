@@ -5,6 +5,8 @@ import {practicalGuideLinks} from "../lib/practical-guide-links.ts";
 import {catalogEditorialLinks} from "../lib/catalog-editorial-links.ts";
 import {editorialSearchTitle} from "../lib/editorial-seo-title.mjs";
 import FarmDecisionTools from "./FarmDecisionTools.astro";
+import FarmInvestmentPlanning from "./FarmInvestmentPlanning.astro";
+import {investmentPlanningText} from "../lib/farm-investment-planning-i18n";
 import FarmScenarioTools from "./FarmScenarioTools.astro";
 import {farmExtrasText} from "../lib/farm-extras-i18n";
 import {farmWorkedExample} from "../lib/farm-worked-example";
@@ -31,7 +33,7 @@ const schema=import.meta.env.PUBLIC_INDEXING_ENABLED==="true"&&Astro.site?farmTo
   <h1>{c.title}</h1>
   <p>{c.description}</p>
   <p class="cost-note">{c.note}</p>
-  <nav class="farm-tool-jump" aria-label={c.nav}><a href="#farm-cost-form">{c.title}</a><a href="#farm-scenarios">{x.scenario}</a><a href="#farm-service">{x.service}</a><a href="#farm-finance">{d.finance}</a><a href="#farm-units">{d.units}</a><a href="#farm-equipment">{d.equipment}</a><a href="#farm-used">{d.used}</a><a href="#farm-journal">{d.journal}</a></nav>
+  <nav class="farm-tool-jump" aria-label={c.nav}><a href="#farm-cost-form">{c.title}</a><a href="#farm-scenarios">{x.scenario}</a><a href="#farm-service">{x.service}</a><a href="#farm-finance">{d.finance}</a><a href="#farm-investment-planning">{investmentPlanningText(lang).title}</a><a href="#farm-units">{d.units}</a><a href="#farm-equipment">{d.equipment}</a><a href="#farm-used">{d.used}</a><a href="#farm-journal">{d.journal}</a></nav>
   <div class="cost-grid">
    <form id="farm-cost-form" data-clarity-mask="true"><fieldset data-cost-controls disabled>
     <noscript><p>{d.enableJs}</p></noscript>
@@ -47,6 +49,7 @@ const schema=import.meta.env.PUBLIC_INDEXING_ENABLED==="true"&&Astro.site?farmTo
   <section class="farm-example"><h2>{example[0]}</h2><p>{example[1]}</p></section>
   <FarmScenarioTools lang={lang} />
   <FarmDecisionTools lang={lang} />
+  <FarmInvestmentPlanning lang={lang} />
   <h2>{c.method}</h2>
   <p>{c.formula}</p>
   <h2>{c.sources}</h2>
